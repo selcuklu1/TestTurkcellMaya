@@ -2,10 +2,10 @@ package common;
 
 import io.qameta.allure.Step;
 import page.*;
-import pageComponents.MainPage;
-import pageComponents.UstMenu;
 import pageComponents.IslemMesajlari;
+import pageComponents.MainPage;
 import pageComponents.SolMenu;
+import pageComponents.UstMenu;
 
 import static pageData.SolMenuData.*;
 
@@ -87,5 +87,11 @@ public class BasePage  {
     public YonetimHavuzuYonetimiPage yonetimHavuzuYonetimiPage(){
         return new YonetimHavuzuYonetimiPage();
     }
+
+    public BirimIcerikSablonlarPage birimIcerikSablonlarPage() {
+        return new BirimIcerikSablonlarPage();
+    }
+
+
     //endregion
 }

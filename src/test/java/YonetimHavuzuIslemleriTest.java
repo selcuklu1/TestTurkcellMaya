@@ -5,8 +5,6 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pageComponents.SolMenu;
-import pageData.SolMenuData;
 
 
 @Epic("Belgenet1Epic examples")
@@ -24,7 +22,7 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
     @Test(enabled = true, description = "Paylaştıklarım")
     public void TC02() {
 
-        page.ustMenuAc("Kullanıcı İşlemleri","Yönetim Havuzu Yönetimi");
+        page.ustMenuAc("Yönetim Havuzu Yönetimi");
         page.yonetimHavuzuYonetimiPage()
                 .YonetimHavuzuEkle()
                 .YonetimHavuzuAdiDoldur("Yeni Optiim Havuzu444")
