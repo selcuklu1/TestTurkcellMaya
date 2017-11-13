@@ -77,6 +77,7 @@
     <orderEntry type="library" name="Maven: org.testng:testng:6.11" level="project" />
     <orderEntry type="library" name="Maven: com.beust:jcommander:1.64" level="project" />
     <orderEntry type="library" name="Maven: org.yaml:snakeyaml:1.17" level="project" />
+<<<<<<< HEAD
     <orderEntry type="library" name="Maven: io.qameta.allure:allure-testng:2.0-BETA19" level="project" />
     <orderEntry type="library" name="Maven: io.qameta.allure:allure-descriptions-javadoc:2.0-BETA19" level="project" />
     <orderEntry type="library" name="Maven: commons-io:commons-io:2.5" level="project" />
@@ -209,5 +210,7 @@
     <orderEntry type="library" name="Maven: org.testng:testng:6.11" level="project" />
     <orderEntry type="library" name="Maven: com.beust:jcommander:1.64" level="project" />
     <orderEntry type="library" name="Maven: org.yaml:snakeyaml:1.17" level="project" />
+=======
+>>>>>>> 5454613b59db9c74d7b5e3570f0e5d08f988bc86
   </component>
 </module>
