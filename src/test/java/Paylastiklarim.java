@@ -43,10 +43,7 @@ public class Paylastiklarim extends BaseTest {
         System.out.println("Sezai");
         System.out.println("Ilyas");
         System.out.println("Sezai2");
-        System.out.println("Sezai3");
-        System.out.println("Sezai4");
-        System.out.println("Sezai5");
-        System.out.println("Sezai6");
+        System.out.println("Emre");
 
         toplama(3,4);
         toplama(3,5);
@@ -57,7 +54,9 @@ public class Paylastiklarim extends BaseTest {
     }
 
     public void aaa(){
+        System.out.println("Ilyas2");
         int i= 0;
         int x = 5;
+        int z = 15;
     }
 }

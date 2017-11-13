@@ -1,10 +1,7 @@
 package common;
 
 import io.qameta.allure.Step;
-import page.EvrakOlusturPage;
-import page.LoginPage;
-import page.PaylastiklarimPage;
-import page.PulYonetimiPage;
+import page.*;
 import pageComponents.MainPage;
 import pageComponents.UstMenu;
 import pageComponents.IslemMesajlari;
@@ -85,6 +82,10 @@ public class BasePage {
 
     public PaylastiklarimPage paylastiklarimPage() {
         return new PaylastiklarimPage();
+    }
+
+    public YonetimHavuzuYonetimiPage yonetimHavuzuYonetimiPage(){
+        return new YonetimHavuzuYonetimiPage();
     }
     //endregion
 }
