@@ -32,7 +32,7 @@ public class YonetimHavuzuYonetimiPage extends BaseLibrary {
     SelenideElement btnKullananBirimKaydet = $(By.id("birimForm:addBirimListButton"));
     SelenideElement tableKullananBirimListesi = $("tbody[id='yonetimHavuzuYonetimiEditorForm:yonetimHavuzuBirimDataTable_data']");
 
-    SelenideElement btnKullaniciTanimla = $(By.id("yonetimHavuzuYonetimiEditorForm:yonetimHavuzuKullaniciBirimDataTable:addNewKullaniciBirimLinkButton"));
+    SelenideElement btnKullaniciEkle = $(By.id("yonetimHavuzuYonetimiEditorForm:yonetimHavuzuKullaniciBirimDataTable:addNewYonetimHavuzuKullaniciBirimLinkButton"));
     SelenideElement txtKullaniciAdi = $(By.id("kullaniciBirimForm:kullaniciBirimList:LovText"));
     ElementsCollection treeKullanicilar = $$("div[id='kullaniciBirimForm:kullaniciBirimList:lovTree'] > ul > li");
     SelenideElement btnKullanicilarTreeKapat = $(By.id("kullaniciBirimForm:kullaniciBirimList:lovTreePanelKapat"));
@@ -91,7 +91,7 @@ public class YonetimHavuzuYonetimiPage extends BaseLibrary {
     }
 
     public YonetimHavuzuYonetimiPage KullaniciEkle() {
-        btnKullaniciTanimla.click();
+        btnKullaniciEkle.click();
         return this;
     }
 
