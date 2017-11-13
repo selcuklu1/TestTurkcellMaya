@@ -56,6 +56,7 @@ public class Paylastiklarim extends BaseTest {
     }
 
     public void aaa(){
+        System.out.println("Ilyas2");
         int i= 0;
         int x = 5;
         int z = 15;
