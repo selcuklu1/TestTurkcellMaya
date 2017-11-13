@@ -24,7 +24,7 @@ public class PullYonetimiTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TC9999: Yeni Pul Oluştur Testi")
-    public void yeniPulYonetimi() {
+    public void TC2215() {
         page.ustMenuAc("Pul Yönetimi");
 
         page.pulYonetimiPage()
