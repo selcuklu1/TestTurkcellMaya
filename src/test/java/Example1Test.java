@@ -2,25 +2,25 @@ import common.BasePage;
 import common.BaseTest;
 import org.testng.annotations.Test;
 
-public class TestClass3 extends BaseTest {
+public class Example1Test extends BaseTest {
 
     BasePage page = new BasePage();
 
     @Test
-    public void testName() {
+    public void TC100() {
         page.loginPage().login();
         page.ustMenuAc("Evrak Oluştur");
         page.evrakOlusturPage().konuKoduDoldur("010.10");
     }
 
     @Test
-    public void testName2() {
+    public void TC101() {
         page.loginPage().login();
         page.ustMenuAc("Evrak Oluştur");
     }
 
     @Test
-    public void testName3() {
+    public void TC102() {
         page.loginPage().login();
         page.ustMenuAc("Evrak Oluştur");
     }

@@ -10,7 +10,7 @@
     <!--</suite-files>-->
     <test name="BTest1">
         <classes>
-            <class name="TestClass1"/>
+            <class name="Example2Test"/>
         </classes>
     </test>
     <test name="BTest2">
@@ -20,7 +20,7 @@
     </test>
     <test name="BTest3">
         <classes>
-            <class name="TestClass3"/>
+            <class name="Example1Test"/>
         </classes>
     </test>
     <test name="BTest4">

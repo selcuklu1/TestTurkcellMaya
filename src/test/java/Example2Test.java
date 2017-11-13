@@ -14,7 +14,7 @@ import static pageData.MesajTipi.*;
 import static pageData.SolMenuData.*;
 
 @Feature("InParallel")
-public class TestClass1 extends BaseTest {
+public class Example2Test extends BaseTest {
 
     BasePage page = new BasePage();
 
