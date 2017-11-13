@@ -52,5 +52,6 @@ public class Paylastiklarim extends BaseTest {
 
     public void aaa(){
         int i= 0;
+        int x = 5;
     }
 }
