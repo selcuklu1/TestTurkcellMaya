@@ -21,6 +21,7 @@ public class TestClass1 extends BaseTest {
     @BeforeMethod
     public void loginBeforeTests() {
         page.loginPage().login();
+        int x = 6;
     }
 
     @Severity(SeverityLevel.TRIVIAL)
