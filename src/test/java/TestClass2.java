@@ -36,6 +36,19 @@ public class TestClass2 extends BaseTest {
         page.islemMesaji().beklenenMesajTipi(BASARILI);
     }
 
+    public void TC2yeniPulYonetimi() {
+        page.ustMenuAc("Pul Yönetimi");
+
+        page.pulYonetimiPage()
+                .yeniPulEkle()
+                .postaTipiSec("KEP")
+                .gramajiDoldur("12")
+                .tutariDoldur("10")
+                .yurtDisiSec(true)
+                .kaydet();
+        page.islemMesaji().beklenenMesajTipi(BASARILI);
+    }
+
     @Test(description = "Sol Memu açılması")
     public void solMenuTest() {
         page.solMenu(Bildirimler.Mesajlar);
