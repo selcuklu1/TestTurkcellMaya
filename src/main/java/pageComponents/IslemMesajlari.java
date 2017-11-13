@@ -14,6 +14,7 @@ import static pageData.MesajTipi.*;
 public class IslemMesajlari extends BaseLibrary {
 
     //
+    //
     //yeni env objeleri
     //div class="lobibox-notify lobibox-notify-success animated-fast fadeInDown notify-mini"
     //span lobibox-close
