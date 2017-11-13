@@ -42,6 +42,7 @@ public class Paylastiklarim extends BaseTest {
     public void TC1() {
         System.out.println("Sezai");
         System.out.println("Ilyas");
+        System.out.println("Sezai2");
         toplama(3,4);
     }
 
