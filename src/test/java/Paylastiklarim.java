@@ -38,7 +38,7 @@ public class Paylastiklarim extends BaseTest {
         page.islemMesaji().beklenenMesajTipi(MesajTipi.BASARILI);
     }
 
-    @Test()
+    @Test(enabled = true, description = "TC1")
     public void TC1() {
         System.out.println("Sezai");
         System.out.println("Ilyas");
