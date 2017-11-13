@@ -40,9 +40,12 @@ public class Paylastiklarim extends BaseTest {
 
     @Test()
     public void TC1() {
-
         System.out.println("Sezai");
         System.out.println("Ilyas");
+        toplama(3,4);
+    }
 
+    private void toplama(int i, int i1) {
+        int toplam = i + i1;
     }
 }
