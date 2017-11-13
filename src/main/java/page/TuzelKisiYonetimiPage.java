@@ -27,7 +27,7 @@ public class TuzelKisiYonetimiPage extends BaseLibrary {
         return this;
     }
 
-    public TuzelKisiYonetimiPage popupKepAdresiDoldru(String text) throws InterruptedException{
+    public TuzelKisiYonetimiPage popupKepAdresiDoldur(String text) throws InterruptedException{
         txtPopupKepAdresi.setValue(text);
         return this;
     }
