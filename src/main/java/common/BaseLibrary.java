@@ -21,7 +21,6 @@ import java.util.concurrent.TimeUnit;
 
 import static com.codeborne.selenide.Selenide.*;
 import static java.util.Locale.forLanguageTag;
-import static data.TestData.*;
 import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfElementLocated;
 
 public class BaseLibrary {
