@@ -9,6 +9,7 @@ import org.openqa.selenium.By;
 import static com.codeborne.selenide.Selenide.$;
 import static data.TestData.*;
 
+
 public class LoginPage extends BaseLibrary {
 
     private SelenideElement txtUsername = $(By.id("eForm:txtEKullaniciAdi"));
