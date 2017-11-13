@@ -40,6 +40,9 @@ public class Paylastiklarim extends BaseTest {
 
     @Test()
     public void TC1() {
+
         System.out.println("Sezai");
+        System.out.println("Ilyas");
+
     }
 }
