@@ -41,6 +41,6 @@ public class Paylastiklarim extends BaseTest {
     @Test()
     public void TC1() {
         System.out.println("Test1");
-
+        System.out.println("Test2");
     }
 }
