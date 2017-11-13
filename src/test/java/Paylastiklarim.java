@@ -48,4 +48,8 @@ public class Paylastiklarim extends BaseTest {
     private void toplama(int i, int i1) {
         int toplam = i + i1;
     }
+
+    public void aaa(){
+        int i= 0;
+    }
 }
