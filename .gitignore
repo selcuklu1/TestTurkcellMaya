@@ -21,6 +21,8 @@
 .idea/**/sqlDataSources.xml
 .idea/**/dynamic.xml
 .idea/**/uiDesigner.xml
+.idea/**/vcs.xml
+.idea/*
 
 # Gradle:
 .idea/**/gradle.xml
@@ -133,6 +135,7 @@ $RECYCLE.BIN/
 
 # End of https://www.gitignore.io/api/git,macos,maven,windows,intellij
 .idea/shelf/Huseyin_Tumer123456/shelved.patch
+<<<<<<< HEAD
 allure-results/00311cac-2771-4b18-a890-c90bb21a97f2-container.json
 *.json
 allure-results/06148042-deee-4121-bd05-d212c7c11752-attachment
@@ -141,3 +144,9 @@ allure-results/f23a26e5-8744-4348-8de7-450efeb1d6c5-attachment
 .idea/misc.xml
 .idea/misc.xml
 src/main/java/common/BaseTest.java
+=======
+
+#Allure
+allure-results/*
+
+>>>>>>> e7bc26bb231dcddce3d57436d49e582831734040
