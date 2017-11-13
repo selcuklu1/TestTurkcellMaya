@@ -11,7 +11,7 @@ import pageData.SolMenuData;
 import static pageData.SolMenuData.*;
 
 @Epic("Belgenet1Epic examples")
-public class Paylastiklarim extends BaseTest {
+public class PaylastiklarimTest extends BaseTest {
 
     BasePage page;
 
@@ -22,8 +22,8 @@ public class Paylastiklarim extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "Paylaştıklarım")
-    public void paylastiklarimSec() {
+    @Test(enabled = true, description = "Pull Yönetimi TC2215")
+    public void TC2215() {
         page.solMenu(IslemYaptiklarim.Paylastiklarim);
         page.paylastiklarimPage()
                 .satirSec(0)

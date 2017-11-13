@@ -15,7 +15,7 @@
     </test>
     <test name="BTest2">
         <classes>
-            <class name="TestClass2"/>
+            <class name="PullYonetimiTest"/>
         </classes>
     </test>
     <test name="BTest3">
@@ -25,7 +25,7 @@
     </test>
     <test name="BTest4">
         <classes>
-            <class name="Paylastiklarim"/>
+            <class name="PaylastiklarimTest"/>
         </classes>
     </test>
 </suite>

@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 
 @Epic("Belgenet1Epic examples")
 
-public class YonetimHavuzuIslemleri extends BaseTest {
+public class YonetimHavuzuIslemleriTest extends BaseTest {
 
     BasePage page = new BasePage();
 

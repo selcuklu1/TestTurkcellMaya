@@ -11,6 +11,8 @@ import pageComponents.belgenetElements.BelgenetFramework;
 
 import java.util.Locale;
 
+import static data.TestData.*;
+
 @Listeners({SettingsListener.class})
 public class BaseTest {
 
@@ -25,7 +27,7 @@ public class BaseTest {
 
         //region Selenide Driver Configuration
         //        Configuration.baseUrl = "http://94.55.114.18:8889/edys-web/sistemeGiris.xhtml";
-        Configuration.baseUrl = "http://www.belgenet.com.tr:8282/edys-web/sistemeGiris.xhtml";
+        Configuration.baseUrl = belgenetURL;
         Configuration.browser = "drivers.Firefox"; //
         //"org.openqa.selenium.Firefox.FirefoxDriver";
         Configuration.reportsFolder = "test-result/reports";

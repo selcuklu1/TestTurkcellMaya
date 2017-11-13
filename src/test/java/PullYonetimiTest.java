@@ -12,12 +12,13 @@ import static pageData.MesajTipi.*;
 import static pageData.SolMenuData.*;
 
 @Epic("Belgenet1Epic examples")
-public class TestClass2 extends BaseTest {
+public class PullYonetimiTest extends BaseTest {
 
-    BasePage page = new BasePage();
+    BasePage page;
 
     @BeforeMethod
     public void loginBeforeTests() {
+        page = new BasePage();
         page.loginPage().login();
     }
 
