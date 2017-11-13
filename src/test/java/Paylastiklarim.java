@@ -38,4 +38,8 @@ public class Paylastiklarim extends BaseTest {
         page.islemMesaji().beklenenMesajTipi(MesajTipi.BASARILI);
     }
 
+    @Test()
+    public void TC1() {
+        System.out.println("Test1");
+    }
 }

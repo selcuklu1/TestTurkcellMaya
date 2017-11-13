@@ -6,13 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="BelgenetTa" />
-        <module name="SelenideExample" />
+        <module name="belgenetTa" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="BelgenetTa" target="1.8" />
-      <module name="SelenideExample" target="1.8" />
+      <module name="belgenetTa" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
