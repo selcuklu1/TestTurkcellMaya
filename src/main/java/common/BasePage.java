@@ -9,7 +9,7 @@ import pageComponents.SolMenu;
 
 import static pageData.SolMenuData.*;
 
-public class BasePage {
+public class BasePage  {
 
     //region Ust Menu
     @Step("\"{ustMenuIsmi}\"->\"{altMenuIsmi}\" ust menu aç")

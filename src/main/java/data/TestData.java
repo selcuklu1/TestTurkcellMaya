@@ -7,5 +7,4 @@ public class TestData {
     public static final String belgenetURL2 = "http://www.belgenet.com.tr:8282/edys-web/mainInbox.xhtml";
     public static final String username = "optiim";
     public static final String password = "Avis1111";
-
 }

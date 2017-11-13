@@ -6,8 +6,6 @@ import io.qameta.allure.Step;
 import org.testng.Assert;
 import pageData.MesajTipi;
 
-import java.util.Locale;
-
 import static com.codeborne.selenide.Selenide.$;
 import static pageData.MesajTipi.*;
 
@@ -16,12 +14,15 @@ public class IslemMesajlari extends BaseLibrary {
     
     //yeni env objeleri
     //div class="lobibox-notify lobibox-notify-success animated-fast fadeInDown notify-mini"
+    //                          lobibox-notify-warning
     //span lobibox-close
     //div class=lobibox-notify-title
     //div class=lobibox-notify-msg
 
-    private SelenideElement islemMesajiTitle = $(".ui-growl-message  > .ui-growl-title");
-    private SelenideElement islemMesaji = $(".ui-growl-message p");
+    private SelenideElement islemMesajiTitle = $(".lobibox-notify-title");
+    private SelenideElement islemMesaji = $(".lobibox-notify-msg");
+//    private SelenideElement islemMesajiTitle = $(".ui-growl-message  > .ui-growl-title");
+//    private SelenideElement islemMesaji = $(".ui-growl-message p");
 
     @Step("Beklenen mesaj tipi \"{mesajTipi.BASARILI.value()}\"")
     public void beklenenMesajTipi(MesajTipi mesajTipi) {
