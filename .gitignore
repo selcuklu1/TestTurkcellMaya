@@ -19,6 +19,7 @@ belgenetTa.iml
 # Allure Report
 allure-results/*
 allure-results/
+allure-report/
 
 # Mac
 *.DS_Store

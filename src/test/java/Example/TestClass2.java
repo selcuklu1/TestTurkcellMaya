@@ -36,7 +36,7 @@ public class TestClass2 extends BaseTest {
                 .yurtDisiSec(true)
                 .indirimOraniDoldur("10")
                 .kaydet();
-        page.islemMesaji().beklenenMesajTipi(BASARILI);
+       // page.islemMesaji().beklenenMesajTipi(BASARILI);
     }
 
     public void TC2yeniPulYonetimi() {
