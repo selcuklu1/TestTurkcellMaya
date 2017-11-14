@@ -88,12 +88,13 @@ public class BasePage {
         return new TuzelKisiYonetimiPage();
     }
 
-    public BirimIcerikSablonlarPage BirimIcerikSablonlarPage() {
-        return new BirimIcerikSablonlarPage();
-    }
+//    public BirimIcerikSablonlarPage BirimIcerikSablonlarPage() {
+  //      return new BirimIcerikSablonlarPage();
+//    }
 
     public YonetimHavuzuYonetimiPage YonetimHavuzuYonetimiPage() {
         return new YonetimHavuzuYonetimiPage();
     }
+
     //endregion
 }
