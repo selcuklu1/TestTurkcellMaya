@@ -6,11 +6,8 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.commands.Exists;
 import common.BaseLibrary;
-import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
-import pageComponents.IslemMesajlari;
-import pageData.MesajTipi;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
@@ -35,7 +32,7 @@ public class YonetimHavuzuYonetimiPage extends BaseLibrary {
     SelenideElement btnKullananBirimKaydet = $(By.id("birimForm:addBirimListButton"));
     SelenideElement tableKullananBirimListesi = $("tbody[id='yonetimHavuzuYonetimiEditorForm:yonetimHavuzuBirimDataTable_data']");
 
-    SelenideElement btnKullaniciEkle = $(By.id("yonetimHavuzuYonetimiEditorForm:yonetimHavuzuKullaniciBirimDataTable:addNewYonetimHavuzuKullaniciBirimLinkButton"));
+    SelenideElement btnKullaniciTanimla = $(By.id("yonetimHavuzuYonetimiEditorForm:yonetimHavuzuKullaniciBirimDataTable:addNewKullaniciBirimLinkButton"));
     SelenideElement txtKullaniciAdi = $(By.id("kullaniciBirimForm:kullaniciBirimList:LovText"));
     ElementsCollection treeKullanicilar = $$("div[id='kullaniciBirimForm:kullaniciBirimList:lovTree'] > ul > li");
     SelenideElement btnKullanicilarTreeKapat = $(By.id("kullaniciBirimForm:kullaniciBirimList:lovTreePanelKapat"));
@@ -71,8 +68,7 @@ public class YonetimHavuzuYonetimiPage extends BaseLibrary {
 
     public YonetimHavuzuYonetimiPage YonetimHavuzuKaydet(){
         btnYonetimHavuzuKaydet.click();
-        tableYonetimHavuzuListesi.$(By.xpath("./tr[contains(., '"+ EklenilenHavuzAdi +"')]"))
-                .shouldBe(Condition.exist);
+        tableYonetimHavuzuListesi.$(By.xpath("./tr[contains(., '"+ EklenilenHavuzAdi +"')]")).shouldBe(Condition.exist);
         return this;
     }
 
@@ -88,16 +84,14 @@ public class YonetimHavuzuYonetimiPage extends BaseLibrary {
         return this;
     }
 
-    @Step("Birim kaydet")
     public YonetimHavuzuYonetimiPage KullananBirimKaydet(){
         btnKullananBirimKaydet.click();
-        new IslemMesajlari().beklenenMesajTipi(MesajTipi.BASARILI);
         tableKullananBirimListesi.$(By.xpath("./tr[contains(., '"+ EklenilenBirimAdi +"')]")).shouldBe(Condition.exist);
         return this;
     }
 
     public YonetimHavuzuYonetimiPage KullaniciEkle() {
-        btnKullaniciEkle.click();
+        btnKullaniciTanimla.click();
         return this;
     }
 

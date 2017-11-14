@@ -2,14 +2,14 @@ package common;
 
 import io.qameta.allure.Step;
 import page.*;
-import pageComponents.IslemMesajlari;
 import pageComponents.MainPage;
-import pageComponents.SolMenu;
 import pageComponents.UstMenu;
+import pageComponents.IslemMesajlari;
+import pageComponents.SolMenu;
 
 import static pageData.SolMenuData.*;
 
-public class BasePage  {
+public class BasePage {
 
     //region Ust Menu
     @Step("\"{ustMenuIsmi}\"->\"{altMenuIsmi}\" ust menu aç")
@@ -84,14 +84,8 @@ public class BasePage  {
         return new PaylastiklarimPage();
     }
 
-    public YonetimHavuzuYonetimiPage yonetimHavuzuYonetimiPage(){
-        return new YonetimHavuzuYonetimiPage();
+    public TuzelKisiYonetimiPage TuzelKisiYonetimiPage() {
+        return new TuzelKisiYonetimiPage();
     }
-
-    public BirimIcerikSablonlarPage birimIcerikSablonlarPage() {
-        return new BirimIcerikSablonlarPage();
-    }
-
-
     //endregion
 }

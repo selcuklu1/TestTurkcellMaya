@@ -11,7 +11,7 @@ import pageData.SolMenuData;
 import static pageData.SolMenuData.*;
 
 @Epic("Belgenet1Epic examples")
-public class PaylastiklarimTest extends BaseTest {
+public class Paylastiklarim extends BaseTest {
 
     BasePage page;
 
@@ -22,8 +22,8 @@ public class PaylastiklarimTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "Pull Yönetimi TC2215")
-    public void TC2215() {
+    @Test(enabled = true, description = "Paylaştıklarım")
+    public void paylastiklarimSec() {
         page.solMenu(IslemYaptiklarim.Paylastiklarim);
         page.paylastiklarimPage()
                 .satirSec(0)
@@ -38,7 +38,7 @@ public class PaylastiklarimTest extends BaseTest {
         page.islemMesaji().beklenenMesajTipi(MesajTipi.BASARILI);
     }
 
-    @Test(enabled = true, description = "TC1")
+    @Test()
     public void TC1() {
         System.out.println("Sezai");
         System.out.println("Ilyas");
@@ -47,6 +47,6 @@ public class PaylastiklarimTest extends BaseTest {
            System.out.println("sezai");
         System.out.println("sezai2");
         System.out.println("sezai3");
+        System.out.println("Test1");
     }
-
 }
