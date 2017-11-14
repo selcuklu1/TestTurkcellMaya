@@ -1,10 +1,14 @@
 package page;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
 import org.openqa.selenium.By;
+import org.testng.Assert;
 
+import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
 
@@ -45,7 +49,7 @@ public class EvrakOlusturPage extends BaseLibrary {
     SelenideElement txtOnayAkisi = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:17:akisLov:LovText"));
     SelenideElement btnOnayAkisiTemizle = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:17:akisLov:j_idt134"));
     SelenideElement btnOnayAkisiEdit = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:17:akisLov:j_idt135"));
-    SelenideElement btnOnayAkisiEkle = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:17:onayAkisiEkle"));
+    //SelenideElement btnOnayAkisiEkle = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:17:onayAkisiEkle"));
 
     //Editör tabı
     SelenideElement yeniGidenEvrakForm = $(By.id("cke_yeniGidenEvrakForm:ckeditorInstance_window1"));
@@ -132,6 +136,14 @@ public class EvrakOlusturPage extends BaseLibrary {
 
     //Evrak Notları
     SelenideElement btnKisiselNotEkle = $(By.id("yeniGidenEvrakForm:kisiselNotEkleDataTableId:kisiselNotEkleId"));
+
+    SelenideElement btnOnayAkisiEkle = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:onayAkisiEkle"));
+    //SelenideElement tableOnayAkisiEkleKullanicilar = $(By.xpath("//tbody[@id='yeniGidenEvrakForm:evrakBilgileriList:18:akisAdimLov:LovSecilenTable_data']/tr/td/div/table/tbody/tr/td"));
+    SelenideElement tableOnayAkisiEkleKullanicilar = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:akisAdimLov:LovSecilenTable_data"));
+
+    SelenideElement btnOnayAkisiKullaniciKullan = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:anlikAkisKullanButton"));
+    SelenideElement txtOnayAkisiKullanicilar = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:akisAdimLov:LovText"));
+    SelenideElement listOnayAkisikullanicilar = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:akisAdimLov:lovTree"));
 
 
 
@@ -244,6 +256,33 @@ public class EvrakOlusturPage extends BaseLibrary {
 
     public EvrakOlusturPage onayAkisiDoldur(boolean onayAkisi) throws InterruptedException {
         //TODO: Fonksiyonu yazılacak.
+        return this;
+    }
+
+    public EvrakOlusturPage onayAkisiEkle(){
+        btnOnayAkisiEkle.click();
+        return this;
+    }
+
+
+    public EvrakOlusturPage onayAkisiKullaniciKontrol(String _kullaniciAdi, String _kullaniciTipi){
+        tableOnayAkisiEkleKullanicilar.$(By.xpath("./tr[contains(., '"+_kullaniciAdi+"')]//select/option[@selected='selected' and contains(., '"+_kullaniciTipi+"')]")).shouldBe(Condition.exist);
+        return this;
+    }
+
+    public EvrakOlusturPage onayAkisiKullaniciTipiSec(String _kullaniciAdi, String _kullaniciTipi){
+        tableOnayAkisiEkleKullanicilar.$(By.xpath("./tr[contains(., '"+_kullaniciAdi+"')]")).selectOptionContainingText(_kullaniciTipi);
+        return this;
+    }
+
+    public EvrakOlusturPage onayAkisiKullaniciSec(String _kullaniciAdi){
+        txtOnayAkisiKullanicilar.setValue(_kullaniciAdi);
+        listOnayAkisikullanicilar.$(By.xpath("./ul/li[contains(., '"+ _kullaniciAdi +"')]")).click();
+        return this;
+    }
+
+    public EvrakOlusturPage onayAkisiKullan(){
+        btnOnayAkisiKullaniciKullan.click();
         return this;
     }
 }
