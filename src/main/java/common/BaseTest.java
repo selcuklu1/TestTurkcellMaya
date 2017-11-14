@@ -1,20 +1,21 @@
 package common;
 
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.WebDriverRunner;
 import listeners.SettingsListener;
+import org.openqa.selenium.Dimension;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Listeners;
 import pageComponents.belgenetElements.BelgenetFramework;
 
 import java.util.Locale;
 
-import static data.TestData.belgenetURL;
-
 @Listeners({SettingsListener.class})
 public class BaseTest {
 
     @BeforeClass
-    public void baseConfiguration() {
+    public void setUp() {
         Locale turkishLocal = new Locale("tr", "TR");
         Locale.setDefault(turkishLocal);
 
@@ -24,7 +25,7 @@ public class BaseTest {
 
         //region Selenide Driver Configuration
         //        Configuration.baseUrl = "http://94.55.114.18:8889/edys-web/sistemeGiris.xhtml";
-        Configuration.baseUrl = belgenetURL;
+        Configuration.baseUrl = "http://www.belgenet.com.tr:8282/edys-web/sistemeGiris.xhtml";
         Configuration.browser = "drivers.Firefox"; //
         //"org.openqa.selenium.Firefox.FirefoxDriver";
         Configuration.reportsFolder = "test-result/reports";
@@ -32,7 +33,7 @@ public class BaseTest {
         Configuration.savePageSource = false;
         Configuration.collectionsTimeout = 20000;
         Configuration.timeout = 20000;
-        Configuration.holdBrowserOpen = true;
+        Configuration.holdBrowserOpen = false;
 //        Configuration.startMaximized = true;
 //        Configuration.headless = true;
 //        Configuration.browserSize = "1024x768";

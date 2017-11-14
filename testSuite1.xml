@@ -3,9 +3,9 @@
 <suite thread-count="3" name="Test Suite" parallel="classes" verbose="1">
     <test name="BTest1">
         <classes>
-            <class name="Example2Test"/>
-            <class name="PullYonetimiTest"/>
-            <class name="Example1Test"/>
+            <class name="TestClass1"/>
+            <class name="TestClass2"/>
+            <class name="TestClass3"/>
         </classes>
     </test>
 </suite>

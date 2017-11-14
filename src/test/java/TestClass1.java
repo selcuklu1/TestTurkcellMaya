@@ -14,14 +14,13 @@ import static pageData.MesajTipi.*;
 import static pageData.SolMenuData.*;
 
 @Feature("InParallel")
-public class Example2Test extends BaseTest {
+public class TestClass1 extends BaseTest {
 
     BasePage page = new BasePage();
 
     @BeforeMethod
     public void loginBeforeTests() {
         page.loginPage().login();
-        int x = 6;
     }
 
     @Severity(SeverityLevel.TRIVIAL)

@@ -50,6 +50,8 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
                 .onayAkisiKullaniciTipiSec("Optiim TEST1", "İmzalama")
                 .onayAkisiKullan();
 
+        page.YonetimHavuzuYonetimiPage();
+
     }
 
 

@@ -12,19 +12,18 @@ import static pageData.MesajTipi.*;
 import static pageData.SolMenuData.*;
 
 @Epic("Belgenet1Epic examples")
-public class PullYonetimiTest extends BaseTest {
+public class TestClass2 extends BaseTest {
 
-    BasePage page;
+    BasePage page = new BasePage();
 
     @BeforeMethod
     public void loginBeforeTests() {
-        page = new BasePage();
         page.loginPage().login();
     }
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TC9999: Yeni Pul Oluştur Testi")
-    public void TC2215() {
+    public void yeniPulYonetimi() {
         page.ustMenuAc("Pul Yönetimi");
 
         page.pulYonetimiPage()
@@ -35,8 +34,19 @@ public class PullYonetimiTest extends BaseTest {
                 .yurtDisiSec(true)
                 .kaydet();
         page.islemMesaji().beklenenMesajTipi(BASARILI);
-        System.out.println("deneme can");
-        System.out.println("deneme can2");
+    }
+
+    public void TC2yeniPulYonetimi() {
+        page.ustMenuAc("Pul Yönetimi");
+
+        page.pulYonetimiPage()
+                .yeniPulEkle()
+                .postaTipiSec("KEP")
+                .gramajiDoldur("12")
+                .tutariDoldur("10")
+                .yurtDisiSec(true)
+                .kaydet();
+        page.islemMesaji().beklenenMesajTipi(BASARILI);
     }
 
     @Test(description = "Sol Memu açılması")

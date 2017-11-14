@@ -16,12 +16,6 @@ public class EvrakOlusturPage extends BaseLibrary {
 
     // dolar işareti $=findElement anlamına gelir, $$=findElements
 
-    SelenideElement btnPDFOnizleme = $("button[id^='yeniGidenEvrakForm:rightTab:uiRepeat'] span[class$='pdfOnIzleme']");
-    SelenideElement btnKaydet = $("button[id^='yeniGidenEvrakForm:rightTab:uiRepeat'] span[class$='kaydet']");
-    SelenideElement btnKaydetOnayaSun  = $("button[id^='yeniGidenEvrakForm:rightTab:uiRepeat'] span[class$='kaydetHavaleEt']");
-    SelenideElement btnPaylas  = $("button[id^='yeniGidenEvrakForm:rightTab:uiRepeat'] span[class$='evrakPaylas']");
-
-
     //Bilgileri tabı
     //SelenideElement txtKonuKodu = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:1:konuKoduLov:LovText"));
     SelenideElement txtKonuKodu = $("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='konuKoduLov:LovText']");
@@ -90,6 +84,7 @@ public class EvrakOlusturPage extends BaseLibrary {
     SelenideElement txtIlgileriMetinIlgiMetni = $(By.id("yeniGidenEvrakForm:ilgiIslemleriTabView:aciklamaTextArea"));
     SelenideElement btnIlgileriMetinEkle = $(By.id("yeniGidenEvrakForm:ilgiIslemleriTabView:aciklamaEkleButton"));
 
+
     //İlgileri tabı - Sistemde kayıtlı evrak ekle
     SelenideElement dateIlgileriSistemdeEvrakTarihiBaslangic = $(By.id("yeniGidenEvrakForm:ilgiIslemleriTabView:ilgiIslemleriEvrakTarihBasId_input"));
     SelenideElement dateIlgileriSistemdeEvrakTarihiSon = $(By.id("yeniGidenEvrakForm:ilgiIslemleriTabView:ilgiIslemleriEvrakTarihSonId_input"));
@@ -147,6 +142,7 @@ public class EvrakOlusturPage extends BaseLibrary {
 
 
 
+
     public void openTab(String tabName) {
         $(By.xpath("//div[@id='yeniGidenEvrakForm:leftTab:leftTab']//span[text()='" + tabName + "']//ancestor::tbody[1]//button")).click();
         $(By.id("yeniGidenEvrakForm:evrakBilgileriList")).shouldBe(visible);
@@ -158,7 +154,6 @@ public class EvrakOlusturPage extends BaseLibrary {
     }
 
     public EvrakOlusturPage konuKoduDoldur(String konuKodu) {
-        //TODO: Daha kısa metod yazılacak.
         String cssFirstPart = "*[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='konuKoduLov:";
         By input = By.cssSelector(cssFirstPart + "LovText']");
         By treeButton = By.cssSelector(cssFirstPart + "treeButton']");

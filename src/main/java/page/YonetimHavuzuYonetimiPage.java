@@ -6,11 +6,8 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.commands.Exists;
 import common.BaseLibrary;
-import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
-import pageComponents.IslemMesajlari;
-import pageData.MesajTipi;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
@@ -35,7 +32,7 @@ public class YonetimHavuzuYonetimiPage extends BaseLibrary {
     SelenideElement btnKullananBirimKaydet = $(By.id("birimForm:addBirimListButton"));
     SelenideElement tableKullananBirimListesi = $("tbody[id='yonetimHavuzuYonetimiEditorForm:yonetimHavuzuBirimDataTable_data']");
 
-    SelenideElement btnKullaniciEkle = $(By.id("yonetimHavuzuYonetimiEditorForm:yonetimHavuzuKullaniciBirimDataTable:addNewYonetimHavuzuKullaniciBirimLinkButton"));
+    SelenideElement btnKullaniciTanimla = $(By.id("yonetimHavuzuYonetimiEditorForm:yonetimHavuzuKullaniciBirimDataTable:addNewKullaniciBirimLinkButton"));
     SelenideElement txtKullaniciAdi = $(By.id("kullaniciBirimForm:kullaniciBirimList:LovText"));
     ElementsCollection treeKullanicilar = $$("div[id='kullaniciBirimForm:kullaniciBirimList:lovTree'] > ul > li");
     SelenideElement btnKullanicilarTreeKapat = $(By.id("kullaniciBirimForm:kullaniciBirimList:lovTreePanelKapat"));
@@ -47,68 +44,65 @@ public class YonetimHavuzuYonetimiPage extends BaseLibrary {
         //waitUntil(visibilityOfElementLocated(pageTitle));
     }
 
-    public YonetimHavuzuYonetimiPage birimSec(String _birimAdi){
+    public YonetimHavuzuYonetimiPage BirimSec(String _birimAdi){
         txtBirim.setValue(_birimAdi);
         treeBirimler.get(0).click();
         return this;
     }
 
-    public YonetimHavuzuYonetimiPage ara(){
+    public YonetimHavuzuYonetimiPage Ara(){
         btnAra.click();
         return this;
     }
 
-    public YonetimHavuzuYonetimiPage yonetimHavuzuEkle(){
+    public YonetimHavuzuYonetimiPage YonetimHavuzuEkle(){
         btnYonetimHavuzuEkle.click();
         return this;
     }
 
-    public YonetimHavuzuYonetimiPage yonetimHavuzuAdiDoldur(String _YonetimHavuzuAdi){
+    public YonetimHavuzuYonetimiPage YonetimHavuzuAdiDoldur(String _YonetimHavuzuAdi){
         EklenilenHavuzAdi = _YonetimHavuzuAdi;
         txtYonetimHavuzuAdi.setValue(_YonetimHavuzuAdi);
         return this;
     }
 
-    public YonetimHavuzuYonetimiPage yonetimHavuzuKaydet(){
+    public YonetimHavuzuYonetimiPage YonetimHavuzuKaydet(){
         btnYonetimHavuzuKaydet.click();
-        tableYonetimHavuzuListesi.$(By.xpath("./tr[contains(., '"+ EklenilenHavuzAdi +"')]"))
-                .shouldBe(Condition.exist);
+        tableYonetimHavuzuListesi.$(By.xpath("./tr[contains(., '"+ EklenilenHavuzAdi +"')]")).shouldBe(Condition.exist);
         return this;
     }
 
-    public YonetimHavuzuYonetimiPage kullananBirimiEkle(){
+    public YonetimHavuzuYonetimiPage KullananBirimiEkle(){
         btnBirimEkle.click();
         return this;
     }
 
-    public YonetimHavuzuYonetimiPage kullananBirimSec(String _birimAdi){
+    public YonetimHavuzuYonetimiPage KullananBirimSec(String _birimAdi){
         EklenilenBirimAdi = _birimAdi;
         txtKullananBirim.setValue(_birimAdi);
         treeKullananBirimler.get(0).click();
         return this;
     }
 
-    @Step("Birim kaydet")
-    public YonetimHavuzuYonetimiPage kullananBirimKaydet(){
+    public YonetimHavuzuYonetimiPage KullananBirimKaydet(){
         btnKullananBirimKaydet.click();
-        //new IslemMesajlari().beklenenMesajTipi(MesajTipi.BASARILI);
         tableKullananBirimListesi.$(By.xpath("./tr[contains(., '"+ EklenilenBirimAdi +"')]")).shouldBe(Condition.exist);
         return this;
     }
 
-    public YonetimHavuzuYonetimiPage kullaniciEkle() {
-        btnKullaniciEkle.click();
+    public YonetimHavuzuYonetimiPage KullaniciEkle() {
+        btnKullaniciTanimla.click();
         return this;
     }
 
-    public YonetimHavuzuYonetimiPage kullaniciSec(String _kullaniciAdi){
+    public YonetimHavuzuYonetimiPage KullaniciSec(String _kullaniciAdi){
         EklenilenKullaniciAdi = _kullaniciAdi;
         txtKullaniciAdi.setValue(_kullaniciAdi);
         treeKullanicilar.get(0).click();
         return this;
     }
 
-    public YonetimHavuzuYonetimiPage kullaniciKaydet(){
+    public YonetimHavuzuYonetimiPage KullaniciKaydet(){
         btnKullanicilarKaydet.click();
         tableKullaniciListesi.$(By.xpath("./tr[contains(., '"+ EklenilenKullaniciAdi +"')]")).shouldBe(Condition.exist);
         return this;
