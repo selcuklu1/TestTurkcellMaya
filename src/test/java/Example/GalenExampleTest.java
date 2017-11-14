@@ -1,4 +1,4 @@
-//import com.galenframework.api.Galen;
+package Example;//import com.galenframework.api.Galen;
 //import com.galenframework.api.GalenPageDump;
 //import com.galenframework.reports.GalenTestInfo;
 //import com.galenframework.reports.HtmlReportBuilder;
