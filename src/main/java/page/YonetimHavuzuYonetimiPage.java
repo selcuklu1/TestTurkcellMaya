@@ -91,7 +91,7 @@ public class YonetimHavuzuYonetimiPage extends BaseLibrary {
     @Step("Birim kaydet")
     public YonetimHavuzuYonetimiPage KullananBirimKaydet(){
         btnKullananBirimKaydet.click();
-        new IslemMesajlari().beklenenMesajTipi(MesajTipi.BASARILI);
+        //new IslemMesajlari().beklenenMesajTipi(MesajTipi.BASARILI);
         tableKullananBirimListesi.$(By.xpath("./tr[contains(., '"+ EklenilenBirimAdi +"')]")).shouldBe(Condition.exist);
         return this;
     }
