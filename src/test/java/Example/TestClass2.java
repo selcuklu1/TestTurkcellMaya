@@ -1,3 +1,5 @@
+package Example;
+
 import common.BasePage;
 import common.BaseTest;
 import io.qameta.allure.Epic;
@@ -24,6 +26,19 @@ public class TestClass2 extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TC9999: Yeni Pul Oluştur Testi")
     public void yeniPulYonetimi() {
+        page.ustMenuAc("Pul Yönetimi");
+
+        page.pulYonetimiPage()
+                .yeniPulEkle()
+                .postaTipiSec("KEP")
+                .gramajiDoldur("12")
+                .tutariDoldur("10")
+                .yurtDisiSec(true)
+                .kaydet();
+        page.islemMesaji().beklenenMesajTipi(BASARILI);
+    }
+
+    public void TC2yeniPulYonetimi() {
         page.ustMenuAc("Pul Yönetimi");
 
         page.pulYonetimiPage()
