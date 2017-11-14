@@ -69,7 +69,7 @@ public class BirimYonetimiPage extends BaseLibrary {
         return this;
     }
 
-    public BirimYonetimiPage altLogoyuDegistirGonder() throws InterruptedException{
+    public BirimYonetimiPage altLogoyuDegistir() throws InterruptedException{
         btnAltLogoyuDegistir.click();
         return this;
     }
@@ -79,7 +79,7 @@ public class BirimYonetimiPage extends BaseLibrary {
         return this;
     }
 
-    public BirimYonetimiPage solUstLogoEkleGonder() throws InterruptedException{
+    public BirimYonetimiPage solUstLogoEkle() throws InterruptedException{
         btnSolUstLogoEkle.click();
         return this;
     }
@@ -223,7 +223,7 @@ public class BirimYonetimiPage extends BaseLibrary {
         return  this;
     }
 
-    public BirimYonetimiPage duzenleGonder() throws InterruptedException{
+    public BirimYonetimiPage duzenle() throws InterruptedException{
         btnDuzenle.click();
         return this;
     }

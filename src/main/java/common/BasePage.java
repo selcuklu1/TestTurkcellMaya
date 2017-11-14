@@ -96,5 +96,10 @@ public class BasePage {
         return new YonetimHavuzuYonetimiPage();
     }
 
+    public OnayAkisYonetimiPage onayAkisYonetimiPage() {
+        return new OnayAkisYonetimiPage();
+    }
+
+
     //endregion
 }

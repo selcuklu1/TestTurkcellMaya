@@ -1,3 +1,5 @@
+package Example;
+
 import common.BasePage;
 import common.BaseTest;
 import org.testng.annotations.Test;

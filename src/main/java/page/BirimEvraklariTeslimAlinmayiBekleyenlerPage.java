@@ -7,7 +7,7 @@ import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Selenide.$;
 
-public class BirimEvraklariTeslimAlinmayiBekleyenler extends BaseLibrary {
+public class BirimEvraklariTeslimAlinmayiBekleyenlerPage extends BaseLibrary {
 
     SelenideElement f = $(By.xpath("//div[@id='mainInboxForm:inboxDataTable:filtersAccordion']//a[text()='Filtreler']/parent::h3"));
     SelenideElement cmbFiltre = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt10493_input"));
@@ -19,37 +19,37 @@ public class BirimEvraklariTeslimAlinmayiBekleyenler extends BaseLibrary {
 
 
     @Step("Filtrele alanını aç")
-    public BirimEvraklariTeslimAlinmayiBekleyenler filtreleAc (){
+    public BirimEvraklariTeslimAlinmayiBekleyenlerPage filtreleAc (){
         f.click();
         return this;
     }
 
     @Step("Filtere seç")
-    public BirimEvraklariTeslimAlinmayiBekleyenler filtreleSec (String value){
+    public BirimEvraklariTeslimAlinmayiBekleyenlerPage filtreleSec (String value){
         cmbFiltre.selectOption(value);
         return this;
     }
 
     @Step("Sayfada Ara alanı doldur")
-    public BirimEvraklariTeslimAlinmayiBekleyenler sayfadaAraDoldur (String value){
+    public BirimEvraklariTeslimAlinmayiBekleyenlerPage sayfadaAraDoldur (String value){
         txtSayfadaAra.sendKeys(value);
         return this;
     }
 
     @Step("Tarihi doldur")
-    public BirimEvraklariTeslimAlinmayiBekleyenler TarihiDoldur (String tarih){
+    public BirimEvraklariTeslimAlinmayiBekleyenlerPage TarihiDoldur (String tarih){
         dateTxtTarih.sendKeys(tarih);
         return this;
     }
 
     @Step("Tablodan rapor seç")
-    public BirimEvraklariTeslimAlinmayiBekleyenler raporSec (){
+    public BirimEvraklariTeslimAlinmayiBekleyenlerPage raporSec (){
         tblRapor.click();
         return this;
     }
 
     @Step("Telim Al ve Havale Yap butonana bas")
-    public BirimEvraklariTeslimAlinmayiBekleyenler havaleYap(){
+    public BirimEvraklariTeslimAlinmayiBekleyenlerPage havaleYap(){
         btnTeslimAlveHavaleYap.click();
         return this;
     }
