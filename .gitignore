@@ -1,8 +1,4 @@
-
-# Created by https://www.gitignore.io/api/git,macos,maven,windows,intellij
-
-### Git ###
-*.orig
+# Created by https://www.gitignore.io/api/macos,maven,windows,intellij
 
 ### Intellij ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and Webstorm
@@ -25,6 +21,8 @@
 # Gradle:
 .idea/**/gradle.xml
 .idea/**/libraries
+.idea/*
+.idea/
 
 # CMake
 cmake-build-debug/
@@ -39,6 +37,13 @@ cmake-build-debug/
 
 # IntelliJ
 /out/
+
+# Belgenet
+belgenetTa.iml
+
+# Allure Report
+allure-results/*
+allure-results/
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/
@@ -131,4 +136,4 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# End of https://www.gitignore.io/api/git,macos,maven,windows,intellij
+# End of https://www.gitignore.io/api/macos,maven,windows,intellij
