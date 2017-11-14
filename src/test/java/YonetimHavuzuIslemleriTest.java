@@ -24,15 +24,15 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
 
         page.ustMenuAc("Yönetim Havuzu Yönetimi");
         page.yonetimHavuzuYonetimiPage()
-                .YonetimHavuzuEkle()
-                .YonetimHavuzuAdiDoldur("Testdeneme1")
-                .KullananBirimiEkle()
-                .KullananBirimSec("OPTİİM BİRİM")
-                .KullananBirimKaydet()
-                .KullaniciEkle()
-                .KullaniciSec("Optiim TEST1")
-                .KullaniciKaydet()
-                .YonetimHavuzuKaydet();
+                .yonetimHavuzuEkle()
+                .yonetimHavuzuAdiDoldur("Testdeneme1")
+                .kullananBirimiEkle()
+                .kullananBirimSec("OPTİİM BİRİM")
+                .kullananBirimKaydet()
+                .kullaniciEkle()
+                .kullaniciSec("Optiim TEST1")
+                .kullaniciKaydet()
+                .yonetimHavuzuKaydet();
     }
 
 
