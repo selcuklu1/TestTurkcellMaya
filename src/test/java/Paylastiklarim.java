@@ -44,7 +44,7 @@ public class Paylastiklarim extends BaseTest {
         System.out.println("Ilyas");
         System.out.println("Sezai4");
         System.out.println("Emre");
-           System.out.println("sezai");
+        System.out.println("sezai");
         System.out.println("sezai2");
         System.out.println("sezai3");
         System.out.println("Test1");
