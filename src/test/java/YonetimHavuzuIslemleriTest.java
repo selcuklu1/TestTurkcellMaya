@@ -22,10 +22,13 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
     @Test(enabled = true, description = "Paylaştıklarım")
     public void TC02() {
 
+        /*
+
+
         page.ustMenuAc("Yönetim Havuzu Yönetimi");
         page.yonetimHavuzuYonetimiPage()
                 .yonetimHavuzuEkle()
-                .yonetimHavuzuAdiDoldur("Testdeneme1")
+                .yonetimHavuzuAdiDoldur("Testdeneme1122153")
                 .kullananBirimiEkle()
                 .kullananBirimSec("OPTİİM BİRİM")
                 .kullananBirimKaydet()
@@ -33,6 +36,20 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
                 .kullaniciSec("Optiim TEST1")
                 .kullaniciKaydet()
                 .yonetimHavuzuKaydet();
+
+
+
+
+         */
+
+        page.ustMenuAc("Evrak Oluştur");
+        page.evrakOlusturPage()
+                .onayAkisiEkle()
+                .onayAkisiKullaniciKontrol("Optiim OPTİİM", "Paraflama")
+                .onayAkisiKullaniciSec("Optiim TEST1")
+                .onayAkisiKullaniciTipiSec("Optiim TEST1", "İmzalama")
+                .onayAkisiKullan();
+
     }
 
 
