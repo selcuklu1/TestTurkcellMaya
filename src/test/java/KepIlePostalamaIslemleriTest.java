@@ -7,7 +7,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 @Epic("Belgenet1Epic examples")
-public class KepIlePostalamaIslemleri extends BaseTest {
+public class KepIlePostalamaIslemleriTest extends BaseTest {
 
     BasePage page;
 
