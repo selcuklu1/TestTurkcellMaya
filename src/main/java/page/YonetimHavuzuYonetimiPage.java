@@ -47,41 +47,41 @@ public class YonetimHavuzuYonetimiPage extends BaseLibrary {
         //waitUntil(visibilityOfElementLocated(pageTitle));
     }
 
-    public YonetimHavuzuYonetimiPage BirimSec(String _birimAdi){
+    public YonetimHavuzuYonetimiPage birimSec(String _birimAdi){
         txtBirim.setValue(_birimAdi);
         treeBirimler.get(0).click();
         return this;
     }
 
-    public YonetimHavuzuYonetimiPage Ara(){
+    public YonetimHavuzuYonetimiPage ara(){
         btnAra.click();
         return this;
     }
 
-    public YonetimHavuzuYonetimiPage YonetimHavuzuEkle(){
+    public YonetimHavuzuYonetimiPage yonetimHavuzuEkle(){
         btnYonetimHavuzuEkle.click();
         return this;
     }
 
-    public YonetimHavuzuYonetimiPage YonetimHavuzuAdiDoldur(String _YonetimHavuzuAdi){
+    public YonetimHavuzuYonetimiPage yonetimHavuzuAdiDoldur(String _YonetimHavuzuAdi){
         EklenilenHavuzAdi = _YonetimHavuzuAdi;
         txtYonetimHavuzuAdi.setValue(_YonetimHavuzuAdi);
         return this;
     }
 
-    public YonetimHavuzuYonetimiPage YonetimHavuzuKaydet(){
+    public YonetimHavuzuYonetimiPage yonetimHavuzuKaydet(){
         btnYonetimHavuzuKaydet.click();
         tableYonetimHavuzuListesi.$(By.xpath("./tr[contains(., '"+ EklenilenHavuzAdi +"')]"))
                 .shouldBe(Condition.exist);
         return this;
     }
 
-    public YonetimHavuzuYonetimiPage KullananBirimiEkle(){
+    public YonetimHavuzuYonetimiPage kullananBirimiEkle(){
         btnBirimEkle.click();
         return this;
     }
 
-    public YonetimHavuzuYonetimiPage KullananBirimSec(String _birimAdi){
+    public YonetimHavuzuYonetimiPage kullananBirimSec(String _birimAdi){
         EklenilenBirimAdi = _birimAdi;
         txtKullananBirim.setValue(_birimAdi);
         treeKullananBirimler.get(0).click();
@@ -89,26 +89,26 @@ public class YonetimHavuzuYonetimiPage extends BaseLibrary {
     }
 
     @Step("Birim kaydet")
-    public YonetimHavuzuYonetimiPage KullananBirimKaydet(){
+    public YonetimHavuzuYonetimiPage kullananBirimKaydet(){
         btnKullananBirimKaydet.click();
         //new IslemMesajlari().beklenenMesajTipi(MesajTipi.BASARILI);
         tableKullananBirimListesi.$(By.xpath("./tr[contains(., '"+ EklenilenBirimAdi +"')]")).shouldBe(Condition.exist);
         return this;
     }
 
-    public YonetimHavuzuYonetimiPage KullaniciEkle() {
+    public YonetimHavuzuYonetimiPage kullaniciEkle() {
         btnKullaniciEkle.click();
         return this;
     }
 
-    public YonetimHavuzuYonetimiPage KullaniciSec(String _kullaniciAdi){
+    public YonetimHavuzuYonetimiPage kullaniciSec(String _kullaniciAdi){
         EklenilenKullaniciAdi = _kullaniciAdi;
         txtKullaniciAdi.setValue(_kullaniciAdi);
         treeKullanicilar.get(0).click();
         return this;
     }
 
-    public YonetimHavuzuYonetimiPage KullaniciKaydet(){
+    public YonetimHavuzuYonetimiPage kullaniciKaydet(){
         btnKullanicilarKaydet.click();
         tableKullaniciListesi.$(By.xpath("./tr[contains(., '"+ EklenilenKullaniciAdi +"')]")).shouldBe(Condition.exist);
         return this;

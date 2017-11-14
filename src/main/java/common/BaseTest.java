@@ -32,7 +32,7 @@ public class BaseTest {
         Configuration.savePageSource = false;
         Configuration.collectionsTimeout = 20000;
         Configuration.timeout = 20000;
-        Configuration.holdBrowserOpen = false;
+        Configuration.holdBrowserOpen = true;
 //        Configuration.startMaximized = true;
 //        Configuration.headless = true;
 //        Configuration.browserSize = "1024x768";
