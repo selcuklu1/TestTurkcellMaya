@@ -40,6 +40,8 @@ cmake-build-debug/
 
 # Belgenet
 belgenetTa.iml
+belgenetTa
+belgenetTa/*
 
 # Allure Report
 allure-results/*
