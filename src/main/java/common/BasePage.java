@@ -92,7 +92,7 @@ public class BasePage {
   //      return new BirimIcerikSablonlarPage();
 //    }
 
-    public YonetimHavuzuYonetimiPage YonetimHavuzuYonetimiPage() {
+    public YonetimHavuzuYonetimiPage yonetimHavuzuYonetimiPage() {
         return new YonetimHavuzuYonetimiPage();
     }
 
