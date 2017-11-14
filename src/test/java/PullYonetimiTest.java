@@ -35,6 +35,7 @@ public class PullYonetimiTest extends BaseTest {
                 .yurtDisiSec(true)
                 .kaydet();
         page.islemMesaji().beklenenMesajTipi(BASARILI);
+        System.out.println("deneme can");
     }
 
     @Test(description = "Sol Memu açılması")
