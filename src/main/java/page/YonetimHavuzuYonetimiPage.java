@@ -6,8 +6,11 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.commands.Exists;
 import common.BaseLibrary;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
+import pageComponents.IslemMesajlari;
+import pageData.MesajTipi;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
@@ -68,7 +71,8 @@ public class YonetimHavuzuYonetimiPage extends BaseLibrary {
 
     public YonetimHavuzuYonetimiPage YonetimHavuzuKaydet(){
         btnYonetimHavuzuKaydet.click();
-        tableYonetimHavuzuListesi.$(By.xpath("./tr[contains(., '"+ EklenilenHavuzAdi +"')]")).shouldBe(Condition.exist);
+        tableYonetimHavuzuListesi.$(By.xpath("./tr[contains(., '"+ EklenilenHavuzAdi +"')]"))
+                .shouldBe(Condition.exist);
         return this;
     }
 
@@ -84,8 +88,10 @@ public class YonetimHavuzuYonetimiPage extends BaseLibrary {
         return this;
     }
 
+    @Step("Birim kaydet")
     public YonetimHavuzuYonetimiPage KullananBirimKaydet(){
         btnKullananBirimKaydet.click();
+        new IslemMesajlari().beklenenMesajTipi(MesajTipi.BASARILI);
         tableKullananBirimListesi.$(By.xpath("./tr[contains(., '"+ EklenilenBirimAdi +"')]")).shouldBe(Condition.exist);
         return this;
     }
