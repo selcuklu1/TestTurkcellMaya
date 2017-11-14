@@ -63,7 +63,6 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
         page.ustMenuAc("Yönetim Havuzu Yönetimi");
         page.yonetimHavuzuYonetimiPage()
                 .ara()
-                .yonetimHavuzuGuncelle("Optiim Yonetim Havuzu 01");
 
 
 
