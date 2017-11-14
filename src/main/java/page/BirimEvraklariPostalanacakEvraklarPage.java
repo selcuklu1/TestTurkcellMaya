@@ -6,7 +6,7 @@ import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Selenide.$;
 
-public class BirimEvraklariPostalanacakEvraklar extends BaseLibrary {
+public class BirimEvraklariPostalanacakEvraklarPage extends BaseLibrary {
 
     SelenideElement txtBirim = $(By.id("mainInboxForm:birimInboxFilterLov:LovText"));
     SelenideElement btnListele = $(By.id("mainInboxForm:birimEvraklariListeleButton"));
@@ -18,37 +18,37 @@ public class BirimEvraklariPostalanacakEvraklar extends BaseLibrary {
     SelenideElement dateBaslangicTarihi = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt368_input"));
     SelenideElement dateBitisTarihi = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt373_input"));
 
-    public BirimEvraklariPostalanacakEvraklar birimDoldur(String text) throws InterruptedException {
+    public BirimEvraklariPostalanacakEvraklarPage birimDoldur(String text) throws InterruptedException {
         txtBirim.setValue(text);
         return this;
     }
 
-    public BirimEvraklariPostalanacakEvraklar listeleGonder() throws InterruptedException {
+    public BirimEvraklariPostalanacakEvraklarPage listele() throws InterruptedException {
         btnListele.click();
         return this;
     }
 
-    public BirimEvraklariPostalanacakEvraklar filtreSec(String value) throws InterruptedException {
+    public BirimEvraklariPostalanacakEvraklarPage filtreSec(String value) throws InterruptedException {
         cmbFiltre.selectOption(value);
         return this;
     }
 
-    public BirimEvraklariPostalanacakEvraklar sayfadaAraDoldur(String text) throws InterruptedException {
+    public BirimEvraklariPostalanacakEvraklarPage sayfadaAraDoldur(String text) throws InterruptedException {
         txtSayfadaAra.setValue(text);
         return this;
     }
 
-    public BirimEvraklariPostalanacakEvraklar geldigiYerGonder() throws InterruptedException {
+    public BirimEvraklariPostalanacakEvraklarPage geldigiYer() throws InterruptedException {
         btnGeldigiYer.click();
         return this;
     }
 
-    public BirimEvraklariPostalanacakEvraklar baslangicTarihiDoldur(String text) throws InterruptedException {
+    public BirimEvraklariPostalanacakEvraklarPage baslangicTarihiDoldur(String text) throws InterruptedException {
         dateBaslangicTarihi.setValue(text);
         return this;
     }
 
-    public BirimEvraklariPostalanacakEvraklar bitisTarihiDoldur(String text) throws InterruptedException {
+    public BirimEvraklariPostalanacakEvraklarPage bitisTarihiDoldur(String text) throws InterruptedException {
         dateBitisTarihi.setValue(text);
         return this;
     }

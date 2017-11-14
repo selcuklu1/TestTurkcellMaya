@@ -11,7 +11,7 @@ import pageData.SolMenuData;
 import static pageData.SolMenuData.*;
 
 @Epic("Belgenet1Epic examples")
-public class Paylastiklarim extends BaseTest {
+public class PaylastiklarimTest extends BaseTest {
 
     BasePage page;
 
@@ -38,15 +38,4 @@ public class Paylastiklarim extends BaseTest {
         page.islemMesaji().beklenenMesajTipi(MesajTipi.BASARILI);
     }
 
-    @Test()
-    public void TC1() {
-        System.out.println("Sezai");
-        System.out.println("Ilyas");
-        System.out.println("Sezai4");
-        System.out.println("Emre");
-        System.out.println("sezai");
-        System.out.println("sezai2");
-        System.out.println("sezai3");
-        System.out.println("Test1");
-    }
 }

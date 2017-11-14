@@ -7,7 +7,7 @@ import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Selenide.$;
 
-public class BirimEvraklariTeslimAlinanlar extends BaseLibrary {
+public class BirimEvraklariTeslimAlinanlarPage extends BaseLibrary {
 
     SelenideElement f = $(By.xpath("//div[@id='mainInboxForm:inboxDataTable:filtersAccordion']//a[text()='Filtreler']/parent::h3"));
     SelenideElement cmbFiltre = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt10493_input"));
@@ -19,37 +19,37 @@ public class BirimEvraklariTeslimAlinanlar extends BaseLibrary {
 
 
     @Step("Filtrele alanını aç")
-    public BirimEvraklariTeslimAlinanlar filtreleAc (){
+    public BirimEvraklariTeslimAlinanlarPage filtreleAc (){
         f.click();
         return this;
     }
 
     @Step("Filtere seç")
-    public BirimEvraklariTeslimAlinanlar filtreleSec (String value){
+    public BirimEvraklariTeslimAlinanlarPage filtreleSec (String value){
         cmbFiltre.selectOption(value);
         return this;
     }
 
     @Step("Sayfada Ara alanı doldur")
-    public BirimEvraklariTeslimAlinanlar sayfadaAraDoldur (String value){
+    public BirimEvraklariTeslimAlinanlarPage sayfadaAraDoldur (String value){
         txtSayfadaAra.sendKeys(value);
         return this;
     }
 
     @Step("Tarihi doldur")
-    public BirimEvraklariTeslimAlinanlar TarihiDoldur (String tarih){
+    public BirimEvraklariTeslimAlinanlarPage TarihiDoldur (String tarih){
         dateTxtTarih.sendKeys(tarih);
         return this;
     }
 
     @Step("Tablodan rapor seç")
-    public BirimEvraklariTeslimAlinanlar raporSec (){
+    public BirimEvraklariTeslimAlinanlarPage raporSec (){
         tblRapor.click();
         return this;
     }
 
     @Step("Havale yap butonana bas")
-    public BirimEvraklariTeslimAlinanlar havaleYap(){
+    public BirimEvraklariTeslimAlinanlarPage havaleYap(){
         btnHavaleYap.click();
         return this;
     }

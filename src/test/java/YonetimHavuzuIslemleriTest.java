@@ -42,17 +42,18 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
 
          */
 
-        page.ustMenuAc("Evrak Oluştur");
-        page.evrakOlusturPage()
-                .onayAkisiEkle()
-                .onayAkisiKullaniciKontrol("Optiim OPTİİM", "Paraflama")
-                .onayAkisiKullaniciSec("Optiim TEST1")
-                .onayAkisiKullaniciTipiSec("Optiim TEST1", "İmzalama")
-                .onayAkisiKullan();
+//        page.ustMenuAc("Evrak Oluştur");
+//        page
+//                .onayAkisiEklePage()
+//                .onayAkisiKullaniciKontrol("Optiim OPTİİM", "Paraflama")
+//                .onayAkisiKullaniciSec("Optiim TEST1")
+//                .onayAkisiKullaniciTipiSec("Optiim TEST1", "İmzalama")
+//                .onayAkisiKullan();
+//
+//        page.YonetimHavuzuYonetimiPage();
+//
+//    }
 
-        page.YonetimHavuzuYonetimiPage();
 
-    }
-
-
+}
 }

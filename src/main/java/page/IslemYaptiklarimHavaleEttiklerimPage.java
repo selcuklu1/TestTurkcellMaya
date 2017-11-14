@@ -5,11 +5,9 @@ import common.BaseLibrary;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 
-import javax.lang.model.util.SimpleElementVisitor7;
-
 import static com.codeborne.selenide.Selenide.$;
 
-public class IslemYaptiklarimHavaleEttiklerim extends BaseLibrary {
+public class IslemYaptiklarimHavaleEttiklerimPage extends BaseLibrary {
 
     //SelenideElement pageTitle = $(By.cssSelector("#window1Dialog .ui-dialog-title"));
     SelenideElement f = $(By.xpath("//div[@id='mainInboxForm:inboxDataTable:filtersAccordion']//a[text()='Filtreler']/parent::h3"));
@@ -26,43 +24,43 @@ public class IslemYaptiklarimHavaleEttiklerim extends BaseLibrary {
 
 
     @Step("Filtrele alanını aç")
-    public IslemYaptiklarimHavaleEttiklerim filtreleAc (){
+    public IslemYaptiklarimHavaleEttiklerimPage filtreleAc (){
         f.click();
         return this;
     }
 
     @Step("Filtere seç")
-    public IslemYaptiklarimHavaleEttiklerim filtreleSec (String value){
+    public IslemYaptiklarimHavaleEttiklerimPage filtreleSec (String value){
         cmbFiltre.selectOption(value);
         return this;
     }
 
     @Step("Sayfada Ara alanı doldur")
-    public IslemYaptiklarimHavaleEttiklerim sayfadaAraDoldur (String value){
+    public IslemYaptiklarimHavaleEttiklerimPage sayfadaAraDoldur (String value){
         txtSayfadaAra.sendKeys(value);
         return this;
     }
 
     @Step("Başlangıç Tarihi doldur")
-    public IslemYaptiklarimHavaleEttiklerim baslangicTarihiDoldur (String tarih){
+    public IslemYaptiklarimHavaleEttiklerimPage baslangicTarihiDoldur (String tarih){
         dateTxtBaslangicTarihi.sendKeys(tarih);
         return this;
     }
 
     @Step("Bitiş Tarihi doldur")
-    public IslemYaptiklarimHavaleEttiklerim bitisTarihiDoldur (String tarih){
+    public IslemYaptiklarimHavaleEttiklerimPage bitisTarihiDoldur (String tarih){
         dateTxtBitisTarihi.sendKeys(tarih);
         return this;
     }
 
     @Step("Tablodan rapor seç")
-    public IslemYaptiklarimHavaleEttiklerim raporSec (){
+    public IslemYaptiklarimHavaleEttiklerimPage raporSec (){
         tblRapor.click();
         return this;
     }
 
     @Step("Havale yap butonana bas")
-    public IslemYaptiklarimHavaleEttiklerim havaleYap(){
+    public IslemYaptiklarimHavaleEttiklerimPage havaleYap(){
         btnHavaleYap.click();
         return this;
     }
