@@ -1,3 +1,4 @@
+
 # Created by https://www.gitignore.io/api/git,macos,maven,windows,intellij
 
 ### Git ###
@@ -22,6 +23,12 @@
 .idea/**/uiDesigner.xml
 .idea/**/vcs.xml
 .idea/*
+.idea/**/.name
+.idea/**/compiler
+.idea/**/encodings
+.idea/**/misc
+.idea/**/modules
+.idea/**/vcs
 
 # Gradle:
 .idea/**/gradle.xml
