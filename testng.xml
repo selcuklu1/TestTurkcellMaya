@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite thread-count="5" name="Test Suite" parallel="true" verbose="1">
+    <!--<listeners>-->
+    <!--<listener class-name="listeners.TestListener"></listener>-->
+    <!--</listeners>-->
+    <!--<suite-files>-->
+    <!--<suite-file path="testSuite1.xml"></suite-file>-->
+    <!--<suite-file path="testSuite2.xml"></suite-file>-->
+    <!--</suite-files>-->
+    <test name="BTest1">
+        <classes>
+            <class name="Example.TestClass1"/>
+        </classes>
+    </test>
+    <test name="BTest2">
+        <classes>
+            <class name="Example.TestClass2"/>
+        </classes>
+    </test>
+    <test name="BTest3">
+        <classes>
+            <class name="Example.TestClass3"/>
+        </classes>
+    </test>
+    <test name="BTest4">
+        <classes>
+            <class name="PaylastiklarimTest"/>
+        </classes>
+    </test>
+</suite>
