@@ -23,16 +23,7 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
     public void TC02() {
 
         page.ustMenuAc("Yönetim Havuzu Yönetimi");
-        page.yonetimHavuzuYonetimiPage()
-                .yonetimHavuzuEkle()
-                .yonetimHavuzuAdiDoldur("Testdeneme1")
-                .kullananBirimiEkle()
-                .kullananBirimSec("OPTİİM BİRİM")
-                .kullananBirimKaydet()
-                .kullaniciEkle()
-                .kullaniciSec("Optiim TEST1")
-                .kullaniciKaydet()
-                .yonetimHavuzuKaydet();
+        page.YonetimHavuzuYonetimiPage();
     }
 
 
