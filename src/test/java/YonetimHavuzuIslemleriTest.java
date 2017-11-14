@@ -50,7 +50,20 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
                 .onayAkisiKullaniciTipiSec("Optiim TEST1", "İmzalama")
                 .onayAkisiKullan();
 
-        page.YonetimHavuzuYonetimiPage();
+
+
+
+    }
+
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TC0001")
+    public void TC0001() {
+
+        page.ustMenuAc("Yönetim Havuzu Yönetimi");
+        page.yonetimHavuzuYonetimiPage()
+                .ara();
+
 
 
     }

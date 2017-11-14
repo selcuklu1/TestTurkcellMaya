@@ -26,6 +26,9 @@ public class YonetimHavuzuYonetimiPage extends BaseLibrary {
     SelenideElement btnYonetimHavuzuKaydet = $(By.id("yonetimHavuzuYonetimiEditorForm:saveYonetimHavuzuButton"));
     SelenideElement tableYonetimHavuzuListesi = $(By.xpath("//tbody[@id='yonetimHavuzuYonetimiListingForm:yonetimHavuzuDataTable_data']"));
 
+    ElementsCollection trYonetimHavuzuListesi = $$("tbody[id='yonetimHavuzuYonetimiListingForm:yonetimHavuzuDataTable_data'] tr[role='row']");
+
+
     SelenideElement btnBirimEkle = $(By.id("yonetimHavuzuYonetimiEditorForm:yonetimHavuzuBirimDataTable:addNewBirimLinkButton"));
     SelenideElement txtKullananBirim = $(By.id("birimForm:birimList:LovText"));
     ElementsCollection treeKullananBirimler = $$("div[id='birimForm:birimList:D1birimListlovDialogId'] > div[id='birimForm:birimList:lovTree'] > ul > li");
@@ -44,67 +47,74 @@ public class YonetimHavuzuYonetimiPage extends BaseLibrary {
         //waitUntil(visibilityOfElementLocated(pageTitle));
     }
 
-    public YonetimHavuzuYonetimiPage BirimSec(String _birimAdi){
+    public YonetimHavuzuYonetimiPage birimSec(String _birimAdi){
         txtBirim.setValue(_birimAdi);
         treeBirimler.get(0).click();
         return this;
     }
 
-    public YonetimHavuzuYonetimiPage Ara(){
+    public YonetimHavuzuYonetimiPage ara(){
         btnAra.click();
         return this;
     }
 
-    public YonetimHavuzuYonetimiPage YonetimHavuzuEkle(){
+    public YonetimHavuzuYonetimiPage yonetimHavuzuEkle(){
         btnYonetimHavuzuEkle.click();
         return this;
     }
 
-    public YonetimHavuzuYonetimiPage YonetimHavuzuAdiDoldur(String _YonetimHavuzuAdi){
+    public YonetimHavuzuYonetimiPage yonetimHavuzuAdiDoldur(String _YonetimHavuzuAdi){
         EklenilenHavuzAdi = _YonetimHavuzuAdi;
         txtYonetimHavuzuAdi.setValue(_YonetimHavuzuAdi);
         return this;
     }
 
-    public YonetimHavuzuYonetimiPage YonetimHavuzuKaydet(){
+    public YonetimHavuzuYonetimiPage yonetimHavuzuKaydet(){
         btnYonetimHavuzuKaydet.click();
         tableYonetimHavuzuListesi.$(By.xpath("./tr[contains(., '"+ EklenilenHavuzAdi +"')]")).shouldBe(Condition.exist);
         return this;
     }
 
-    public YonetimHavuzuYonetimiPage KullananBirimiEkle(){
+    public YonetimHavuzuYonetimiPage kullananBirimiEkle(){
         btnBirimEkle.click();
         return this;
     }
 
-    public YonetimHavuzuYonetimiPage KullananBirimSec(String _birimAdi){
+    public YonetimHavuzuYonetimiPage kullananBirimSec(String _birimAdi){
         EklenilenBirimAdi = _birimAdi;
         txtKullananBirim.setValue(_birimAdi);
         treeKullananBirimler.get(0).click();
         return this;
     }
 
-    public YonetimHavuzuYonetimiPage KullananBirimKaydet(){
+    public YonetimHavuzuYonetimiPage kullananBirimKaydet(){
         btnKullananBirimKaydet.click();
         tableKullananBirimListesi.$(By.xpath("./tr[contains(., '"+ EklenilenBirimAdi +"')]")).shouldBe(Condition.exist);
         return this;
     }
 
-    public YonetimHavuzuYonetimiPage KullaniciEkle() {
+    public YonetimHavuzuYonetimiPage kullaniciEkle() {
         btnKullaniciTanimla.click();
         return this;
     }
 
-    public YonetimHavuzuYonetimiPage KullaniciSec(String _kullaniciAdi){
+    public YonetimHavuzuYonetimiPage kullaniciSec(String _kullaniciAdi){
         EklenilenKullaniciAdi = _kullaniciAdi;
         txtKullaniciAdi.setValue(_kullaniciAdi);
         treeKullanicilar.get(0).click();
         return this;
     }
 
-    public YonetimHavuzuYonetimiPage KullaniciKaydet(){
+    public YonetimHavuzuYonetimiPage kullaniciKaydet(){
         btnKullanicilarKaydet.click();
         tableKullaniciListesi.$(By.xpath("./tr[contains(., '"+ EklenilenKullaniciAdi +"')]")).shouldBe(Condition.exist);
+        return this;
+    }
+
+    public YonetimHavuzuYonetimiPage yonetimHavuzuPasifYap(String yonetimHavuzuAdi){
+        trYonetimHavuzuListesi
+                .filterBy(Condition.text(yonetimHavuzuAdi)).get(0)
+                .$("button[id*='changeyonetimHavuzuStatusButton']").click();
         return this;
     }
 
