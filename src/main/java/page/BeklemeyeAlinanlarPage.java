@@ -21,13 +21,12 @@ public class BeklemeyeAlinanlarPage extends BaseLibrary {
     //Filtreler Acordion
     SelenideElement acordion = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion"));
 
-    public BeklemeyeAlinanlarPage acordionclick() throws InterruptedException {
+    public BeklemeyeAlinanlarPage acordion() throws InterruptedException {
         acordion.click();
         return this;
     }
 
-
-    public BeklemeyeAlinanlarPage solMenuGonder() throws InterruptedException {
+    public BeklemeyeAlinanlarPage solMenu() throws InterruptedException {
         solmenubeklemeyealinanlar.click();
         return this;
     }
@@ -42,7 +41,7 @@ public class BeklemeyeAlinanlarPage extends BaseLibrary {
         return this;
     }
 
-    public BeklemeyeAlinanlarPage gidecegiYerSecinizGonder() throws InterruptedException {
+    public BeklemeyeAlinanlarPage gidecegiYerSeciniz() throws InterruptedException {
         btnGidecegiYerSeciniz.click();
         return this;
     }
@@ -62,7 +61,7 @@ public class BeklemeyeAlinanlarPage extends BaseLibrary {
         return this;
     }
 
-    public BeklemeyeAlinanlarPage evrakGosterGonder() throws InterruptedException {
+    public BeklemeyeAlinanlarPage evrakGoster() {
         btnEvrakGoster.click();
         return this;
     }
