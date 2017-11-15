@@ -25,8 +25,8 @@ public class GercekKisiYonetimiTest extends BaseTest{
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "Gerçek Kişi Yönetimi TC1516")
     public void TC1516() {
-        page.ustMenuAc("Gerçek Kişi Yönetimi");
-        page.gercekKisiYonetimPage()
+       // page.ustMenuAc("Gerçek Kişi Yönetimi");
+/*        page.gercekKisiYonetimPage()
                 .yeniGercekKisiEkle()
                 .tcKimlikNoDoldur(lib.createMernisTCNO())
                 .onEkDoldur("Muh")
@@ -42,14 +42,18 @@ public class GercekKisiYonetimiTest extends BaseTest{
                 .iletisimBilgisiEpostaDoldur("test@turksat.com.tr")
                 .iletisimBilgisiKaydet()
 
-                .kaydet();
+                .kaydet();*/
 
         page.ustMenuAc("Evrak Oluştur");
         page.evrakOlusturPage()
                 .geregiSecimTipiSec("G")
-                .geregiDoldur("Sezai Çelik");
+                .geregiDoldur("Sezai Çelik")
+                .geregiAlaniKontrol("Sezai Çelik", "Mühendis", "Cumhuriyet Mahallesi", "P" );
 
+        page.evrakOlusturPage()
+                .openTab("Editör");
 
+        page.evrakOlusturPage().hitapKismiGetText();
 
     }
 }
