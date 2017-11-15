@@ -1,23 +1,21 @@
 package Example;
 
-import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.ElementsCollection;
 import common.BasePage;
 import common.BaseTest;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-//import pageComponents.belgenetElements.BelgenetElement;
 import pageComponents.belgenetElements.BelgenetElement;
-import pageComponents.belgenetElements.BelgenetFramework;
 
-import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Condition.exactText;
+import static com.codeborne.selenide.Condition.text;
 import static pageComponents.belgenetElements.BelgenetFramework.comboBox;
 import static pageComponents.belgenetElements.BelgenetFramework.comboLov;
-import static pageData.SolMenuData.*;
+import static pageData.SolMenuData.IslemBekleyenEvraklar;
+
+//import pageComponents.belgenetElements.BelgenetElement;
 
 
 public class BelgenetCustomElementsTest extends BaseTest {
@@ -38,7 +36,7 @@ public class BelgenetCustomElementsTest extends BaseTest {
         }
 
         public boolean isSelected(){
-            return combo.isComboLovSelected();
+            return combo.isLovSelected();
         }
     }
 
@@ -73,8 +71,8 @@ public class BelgenetCustomElementsTest extends BaseTest {
 //
 //
 //        BelgenetElement c = comboLov(locator).selectComboLov("010.10");
-//        System.out.println("getComboLovTitleText: " + c.getComboLovTitleText());
-//        c.getComboLovDetail().shouldHave(text("Mevzuat İşleri"));
+//        System.out.println("lastSelectedLovTitleText: " + c.lastSelectedLovTitleText());
+//        c.lastSelectedLovDetail().shouldHave(text("Mevzuat İşleri"));
 //        System.out.println("shouldHave: " + 1);
 //        BelgenetElement e = comboLov(locator).selectComboLov("010.10");
 //        System.out.println("visible: " + e.is(visible));
@@ -87,8 +85,8 @@ public class BelgenetCustomElementsTest extends BaseTest {
 //        comboLov(locator).selectComboLov("010.10");
 //                shouldHave(Condition.text("010.10"));
 
-//        System.out.println("title: " + comboLov(locator).getComboLovTitleText());
-//        System.out.println("detail: " + comboLov(locator).getComboLovDetailText());
+//        System.out.println("title: " + comboLov(locator).lastSelectedLovTitleText());
+//        System.out.println("detail: " + comboLov(locator).lastSelectedLovDetailText());
     }
 
     @Test(groups = {"FrameworkTest"}, enabled = true)
@@ -99,8 +97,8 @@ public class BelgenetCustomElementsTest extends BaseTest {
         comboLov(locator).selectComboLov("010.10")
                 .shouldHave(Condition.text("010.10"));
 
-        System.out.println("title: " + comboLov(locator).getComboLovTitleText());
-        System.out.println("detail: " + comboLov(locator).getComboLovDetailText());
+        System.out.println("title: " + comboLov(locator).lastSelectedLovTitleText());
+        System.out.println("detail: " + comboLov(locator).lastSelectedLovDetailText());
 
         //-----------------------------------
         page.ustMenuAc("Birim Yönetimi");
@@ -108,21 +106,21 @@ public class BelgenetCustomElementsTest extends BaseTest {
 
         cmlBirim.selectComboLov("opt")
                 .shouldHave(text("optiim"));
-        System.out.println("1. Birim seçili mi?: " + cmlBirim.isComboLovSelected());
-        cmlBirim.clearComboLov();
-        System.out.println("1. Birim seçili mi?: " + cmlBirim.isComboLovSelected());
+        System.out.println("1. Birim seçili mi?: " + cmlBirim.isLovSelected());
+        cmlBirim.clearLastSelectedLov();
+        System.out.println("1. Birim seçili mi?: " + cmlBirim.isLovSelected());
 
         System.out.println("\n================\n");
 
         cmlBirim.selectComboLov("opt");
-        System.out.println("2. Birim seçili mi?: " + cmlBirim.isComboLovSelected());
-        cmlBirim.getComboLovTitle().shouldHave(text("OPT"));
-        if (cmlBirim.getComboLovTitleText().equalsIgnoreCase("OPTİİM BİRİM"))
+        System.out.println("2. Birim seçili mi?: " + cmlBirim.isLovSelected());
+        cmlBirim.lastSelectedLovTitle().shouldHave(text("OPT"));
+        if (cmlBirim.lastSelectedLovTitleText().equalsIgnoreCase("OPTİİM BİRİM"))
             cmlBirim.selectComboLov("");
 
         cmlBirim.selectComboLov("opt");
-        cmlBirim.getComboLovTitle().shouldHave(exactText("OPTİİM BİRİM"));
-        System.out.println("2. Birim seçili mi?: " + cmlBirim.isComboLovSelected());
+        cmlBirim.lastSelectedLovTitle().shouldHave(exactText("OPTİİM BİRİM"));
+        System.out.println("2. Birim seçili mi?: " + cmlBirim.isLovSelected());
         //-----------------------------------
 
         //PageObject kullanım.

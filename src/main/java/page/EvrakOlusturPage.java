@@ -1,12 +1,16 @@
 package page;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import pageComponents.belgenetElements.BelgenetElement;
 
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
+import static pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 public class EvrakOlusturPage extends BaseLibrary {
 
@@ -20,7 +24,7 @@ public class EvrakOlusturPage extends BaseLibrary {
 
     //Bilgileri tabı
     //SelenideElement txtKonuKodu = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:1:konuKoduLov:LovText"));
-    SelenideElement txtKonuKodu = $("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='konuKoduLov:LovText']");
+    BelgenetElement txtKonuKodu = comboLov("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='konuKoduLov:LovText']");
     SelenideElement btnKonuKoduTree = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:1:konuKoduLov:treeButton"));
     SelenideElement txtKonu = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:3:konuTextArea"));
     SelenideElement txtKaldiralacakKlasorler = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:4:eklenecekKlasorlerLov:LovText"));
@@ -45,7 +49,7 @@ public class EvrakOlusturPage extends BaseLibrary {
     SelenideElement txtOnayAkisi = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:17:akisLov:LovText"));
     SelenideElement btnOnayAkisiTemizle = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:17:akisLov:j_idt134"));
     SelenideElement btnOnayAkisiEdit = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:17:akisLov:j_idt135"));
-    SelenideElement btnOnayAkisiEkle = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:17:onayAkisiEkle"));
+    //SelenideElement btnOnayAkisiEkle = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:17:onayAkisiEkle"));
 
     //Editör tabı
     SelenideElement yeniGidenEvrakForm = $(By.id("cke_yeniGidenEvrakForm:ckeditorInstance_window1"));
@@ -133,6 +137,14 @@ public class EvrakOlusturPage extends BaseLibrary {
     //Evrak Notları
     SelenideElement btnKisiselNotEkle = $(By.id("yeniGidenEvrakForm:kisiselNotEkleDataTableId:kisiselNotEkleId"));
 
+    SelenideElement btnOnayAkisiEkle = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:onayAkisiEkle"));
+    //SelenideElement tableOnayAkisiEkleKullanicilar = $(By.xpath("//tbody[@id='yeniGidenEvrakForm:evrakBilgileriList:18:akisAdimLov:LovSecilenTable_data']/tr/td/div/table/tbody/tr/td"));
+    SelenideElement tableOnayAkisiEkleKullanicilar = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:akisAdimLov:LovSecilenTable_data"));
+
+    SelenideElement btnOnayAkisiKullaniciKullan = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:anlikAkisKullanButton"));
+    BelgenetElement txtOnayAkisiKullanicilar = comboLov("[id$='akisAdimLov:LovText']");
+    SelenideElement listOnayAkisikullanicilar = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:akisAdimLov:lovTree"));
+
 
 
     public void openTab(String tabName) {
@@ -145,6 +157,7 @@ public class EvrakOlusturPage extends BaseLibrary {
                 , $("//div[@id='yeniGidenEvrakForm:leftTab:leftTab']//span[text()='" + tabName + "']//ancestor::tbody[1]//button"));
     }
 
+    @Step("Konu kodu doldur")
     public EvrakOlusturPage konuKoduDoldur(String konuKodu) {
         //TODO: Daha kısa metod yazılacak.
         String cssFirstPart = "*[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='konuKoduLov:";
@@ -171,6 +184,7 @@ public class EvrakOlusturPage extends BaseLibrary {
         return this;
     }
 
+    @Step("Konu doldur")
     public EvrakOlusturPage konuDoldur(String konu) throws InterruptedException {
         //sendKeys(txtKonu, konu, false); selenium
         txtKonu.sendKeys(konu); //selenide
@@ -244,6 +258,35 @@ public class EvrakOlusturPage extends BaseLibrary {
 
     public EvrakOlusturPage onayAkisiDoldur(boolean onayAkisi) throws InterruptedException {
         //TODO: Fonksiyonu yazılacak.
+        return this;
+    }
+
+    public EvrakOlusturPage onayAkisiEkle(String kullanici) {
+        btnOnayAkisiEkle.click();
+        txtOnayAkisiKullanicilar.selectComboLov(kullanici);
+
+        return this;
+    }
+
+
+    public EvrakOlusturPage onayAkisiKullaniciKontrol(String _kullaniciAdi, String _kullaniciTipi){
+        tableOnayAkisiEkleKullanicilar.$(By.xpath("./tr[contains(., '"+_kullaniciAdi+"')]//select/option[@selected='selected' and contains(., '"+_kullaniciTipi+"')]")).shouldBe(Condition.exist);
+        return this;
+    }
+
+    public EvrakOlusturPage onayAkisiKullaniciTipiSec(String _kullaniciAdi, String _kullaniciTipi){
+        tableOnayAkisiEkleKullanicilar.$(By.xpath("./tr[contains(., '"+_kullaniciAdi+"')]")).selectOptionContainingText(_kullaniciTipi);
+        return this;
+    }
+
+    public EvrakOlusturPage onayAkisiKullaniciSec(String _kullaniciAdi){
+        txtOnayAkisiKullanicilar.setValue(_kullaniciAdi);
+        listOnayAkisikullanicilar.$(By.xpath("./ul/li[contains(., '"+ _kullaniciAdi +"')]")).click();
+        return this;
+    }
+
+    public EvrakOlusturPage onayAkisiKullan(){
+        btnOnayAkisiKullaniciKullan.click();
         return this;
     }
 }

@@ -73,11 +73,12 @@ public class DriverEventListener extends BaseLibrary implements WebDriverEventLi
     }
 
     public void beforeClickOn(WebElement element, WebDriver driver) {
-        System.out.println("Will click on element.. " + element.toString());
+//        System.out.println("Will click on element.. " + element.toString());
     }
 
     public void afterClickOn(WebElement element, WebDriver driver) {
         System.out.println("Clicked on element.. " + element.toString());
+        waitForLoading(driver);
     }
 
     public void beforeChangeValueOf(WebElement element, WebDriver driver, CharSequence[] keysToSend) {

@@ -20,7 +20,7 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "Paylaştıklarım")
-    public void TC02() {
+    public void TC0002() {
 
         /*
 
@@ -42,18 +42,29 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
 
          */
 
-//        page.ustMenuAc("Evrak Oluştur");
-//        page
-//                .onayAkisiEklePage()
-//                .onayAkisiKullaniciKontrol("Optiim OPTİİM", "Paraflama")
-//                .onayAkisiKullaniciSec("Optiim TEST1")
-//                .onayAkisiKullaniciTipiSec("Optiim TEST1", "İmzalama")
-//                .onayAkisiKullan();
-//
-//        page.YonetimHavuzuYonetimiPage();
-//
-//    }
+        page.ustMenuAc("Evrak Oluştur");
+        page.evrakOlusturPage()
+                .onayAkisiEkle("optiim test1")
+                .onayAkisiKullaniciKontrol("Optiim OPTİİM", "Paraflama")
+                .onayAkisiKullaniciSec("Optiim TEST1")
+                .onayAkisiKullaniciTipiSec("Optiim TEST1", "İmzalama")
+                .onayAkisiKullan();
 
 
-}
+
+
+    }
+
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TC0001")
+    public void TC0001() {
+
+        page.ustMenuAc("Yönetim Havuzu Yönetimi");
+        page.yonetimHavuzuYonetimiPage()
+                .ara();
+
+
+
+    }
 }

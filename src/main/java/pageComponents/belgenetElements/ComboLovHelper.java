@@ -1,5 +1,6 @@
 package pageComponents.belgenetElements;
 
+import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.impl.ElementFinder;
@@ -8,114 +9,152 @@ import io.qameta.allure.Allure;
 import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
+import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 
 public class ComboLovHelper extends BaseLibrary{
 
-    private static String baseCssLocator;
-    private static String lovTextBy;
-    private static String lovSecilenBy;
-    private static String lovSecilenItemTitleBy;
-    private static String lovSecilenItemDetailBy;
+    private static String id;
 
-    static SelenideElement lovText;
-    static SelenideElement treeButton;
-    static SelenideElement lovTree;
-    static ElementsCollection lovTreeList;
-    static ElementsCollection lovTreeListSelectableItems;
-    static SelenideElement lovSecilen;
-    static SelenideElement lovSecilenItemTitle;
-    static SelenideElement lovSecilenItemDetail;
-    static SelenideElement lovInputTextleriTemizle;
-    static SelenideElement lovTreePanelKapat;
+    private static String lovText;
+
+    private static String treeButton;
+    private static String lovTree;
+    private static String lovTreeList;
+    private static String lovTreeListSelectableItems;
+
+    private static String lovSecilen;
+    private static String lovSecilenItemTitle;
+    private static String lovSecilenItemDetail;
+    private static String lovInputTextleriTemizle;
+
+    private static String lovTreePanelKapat;
 
     private static void setLocators(SelenideElement proxy) {
-
         if (proxy.attr("id").contains("LovText"))
-            baseCssLocator = "[id='" + proxy.attr("id").split("LovText")[0];
+            id = "[id*='" + proxy.attr("id").split("LovText")[0] + "']";
+        else if (proxy.attr("id").contains("LovSecilen"))
+            id = "[id*='" + proxy.attr("id").split("LovSecilen")[0] + "']";
         else
-            baseCssLocator = "[id='" + proxy.attr("id").split("LovSecilen")[0];
+            throw new RuntimeException("comboLov id alınamadı.");
 
-        lovTextBy = baseCssLocator + "LovText']";
-        lovSecilenBy = baseCssLocator + "LovSecilen']";
-        lovSecilenItemTitleBy = baseCssLocator + "LovSecilen'] .lovItemTitle";
-        lovSecilenItemDetailBy = baseCssLocator + "LovSecilen'] .lovItemDetail";
+        lovText = id + "[id$='LovText']";
 
-        lovText = $(lovTextBy);
-        treeButton = $(baseCssLocator + "treeButton']");
-        lovTree = $(baseCssLocator + "lovTree']");
-        lovTreeList = $$(baseCssLocator + "lovTree'] li");
-        lovTreeListSelectableItems = $$(baseCssLocator + "lovTree'] li span[class*='ui-tree-selectable-node']");
-        lovSecilen = $(lovSecilenBy);
-        lovSecilenItemTitle = $(lovSecilenItemTitleBy);
-        lovSecilenItemDetail = $(lovSecilenItemDetailBy);
-        lovInputTextleriTemizle = $(baseCssLocator + "LovSecilen'] button[onclick*='lovInputTextleriTemizle']");
-        lovTreePanelKapat = $(baseCssLocator + "lovTreePanelKapat']");
+        treeButton = id + "[id*='treeButton']";
+        lovTree = id + "[id$='lovTree']";
+        lovTreeList = id + "[id$='lovTree'] li";
+        lovTreeListSelectableItems = id + "[id*='lovTree'] li span[class*='ui-tree-selectable-node']";
 
+        lovSecilen = id + "[id*='LovSecilen']";
+        lovSecilenItemTitle = lovSecilen + " .lovItemTitle";
+        lovSecilenItemDetail = lovSecilen + " .lovItemDetail";
+        lovInputTextleriTemizle = lovSecilen + " button[onclick*='lovInputTextleriTemizle']";
+
+        lovTreePanelKapat = id + "[id*='lovTreePanelKapat']";
     }
 
-    public static BelgenetElement clearComboLov(SelenideElement proxy) {
+    public static BelgenetElement clearLastSelectedLov(SelenideElement proxy) {
         setLocators(proxy);
 
-        if (lovInputTextleriTemizle.exists())
-            lovInputTextleriTemizle.click();
+        ElementsCollection temizleButonlari = $$(lovInputTextleriTemizle).filter(visible);
+        int count = temizleButonlari.size();
+        if (count > 0)
+            temizleButonlari.get(count - 1).click();
 
-        lovText.shouldBe(visible);
-        return ElementFinder.wrap(BelgenetElement.class, null, By.cssSelector(lovTextBy), 0);
+        $$(lovInputTextleriTemizle).filter(visible).shouldHaveSize(count - 1);
+
+        return (BelgenetElement) proxy;
+//        return ElementFinder.wrap(BelgenetElement.class, null, By.cssSelector(lovText), 0);
+    }
+
+    public static BelgenetElement clearAllSelectedLov(SelenideElement proxy) {
+        setLocators(proxy);
+        int count = $$(lovInputTextleriTemizle).size();
+
+        for (int i = count - 1; i >= 0; i--) {
+            $$(lovInputTextleriTemizle).get(i).click();
+//            $$(lovInputTextleriTemizle).shouldHaveSize(i);
+        }
+
+        long t = Configuration.timeout;
+        Configuration.timeout = 0;
+        $(lovInputTextleriTemizle).shouldNotBe(exist);
+        Configuration.timeout = t;
+
+        return (BelgenetElement) proxy;
+//        return ElementFinder.wrap(BelgenetElement.class, null, By.cssSelector(lovText), 0);
     }
 
     public static BelgenetElement selectLov(SelenideElement proxy, String value) {
-
         setLocators(proxy);
 
-        if (lovInputTextleriTemizle.is(visible)) lovInputTextleriTemizle.click();
-        lovText.shouldBe(visible);
+        if (!$(lovText).is(visible) && $$(lovInputTextleriTemizle).size() == 1) {
+            $$(lovInputTextleriTemizle).get(0).click();
+            $(lovText).shouldBe(visible);
+        }
 
-        lovText.setValue(value);
+        int count = $$(lovSecilenItemTitle).filter(visible).size();
+        $(lovText).setValue(value);
+        $$(lovTreeListSelectableItems).shouldHave(sizeGreaterThan(0)).get(0).click();
+        $$(lovSecilenItemTitle).filter(visible).shouldHaveSize(count + 1);
 
-        lovTreeListSelectableItems.shouldHave(sizeGreaterThan(0)).get(0).click();
+        if ($(lovTreePanelKapat).is(visible)) $(lovTreePanelKapat).click();
 
-        lovText.shouldNotBe(visible);
-        lovSecilen.shouldBe(visible);
-        if (lovTreePanelKapat.is(visible)) lovTreePanelKapat.click();
+        Allure.addAttachment("Seçil değerleri:", $$(lovSecilenItemTitle).get(count).text()
+                + "\n" + $$(lovSecilenItemDetail).get(count).text());
 
-        Allure.addAttachment("Seçil değerleri:", lovSecilenItemTitle.text()
-                + "\n" + lovSecilenItemDetail.text());
+        if ($(lovText).is(visible))
+            return ElementFinder.wrap(BelgenetElement.class, null, By.cssSelector(lovText), 0);
+        else
+            return ElementFinder.wrap(BelgenetElement.class, null, By.cssSelector(lovSecilen), 0);
 
-        return ElementFinder.wrap(BelgenetElement.class, null, By.cssSelector(lovSecilenBy), 0);
     }
 
-    public static BelgenetElement selectedLovTitle(SelenideElement proxy) {
+    public static BelgenetElement lastSelectedLovTitle(SelenideElement proxy) {
         setLocators(proxy);
-        return ElementFinder.wrap(BelgenetElement.class, null, By.cssSelector(lovSecilenItemTitleBy), 0);
+
+        ElementsCollection titles = $$(lovSecilenItemTitle).filter(visible);
+        String xpath = titles.get(titles.size() - 1).parent().attr("id");
+        xpath = "//*[@id='" + xpath + "']//*[@class='lovItemTitle']";
+        return ElementFinder.wrap(BelgenetElement.class, null, By.xpath(xpath), 0);
     }
 
-    public static BelgenetElement selectedLovDetail(SelenideElement proxy) {
+    public static BelgenetElement lastSelectedLovDetail(SelenideElement proxy) {
         setLocators(proxy);
-        return ElementFinder.wrap(BelgenetElement.class, null, By.cssSelector(lovSecilenItemDetailBy), 0);
+
+        ElementsCollection details = $$(lovSecilenItemDetail).filter(visible);
+        String xpath = details.get(details.size() - 1).parent().attr("id");
+        xpath = "//*[@id='" + xpath + "']//*[@class='lovItemDetail']";
+
+        return ElementFinder.wrap(BelgenetElement.class, null, By.xpath(xpath), 0);
     }
 
-    public static String getSelectedLovValue(SelenideElement proxy) {
+    public static String getLastSelectedLovValue(SelenideElement proxy) {
         setLocators(proxy);
-        lovSecilen.shouldBe(visible);
-        return lovSecilenItemTitle.text()
-                + "\n" + lovSecilenItemDetail.text();
+
+        ElementsCollection title = $$(lovSecilenItemTitle).filter(visible);
+        return title.get(title.size() - 1).text()
+                + "\n" + title.get(title.size() - 1).text();
     }
 
-    public static String getSelectedLovTitle(SelenideElement proxy) {
+    public static String lastSelectedLovTitleText(SelenideElement proxy) {
         setLocators(proxy);
-        return lovSecilenItemTitle.shouldBe(visible).text().trim();
+
+        ElementsCollection title = $$(lovSecilenItemTitle).filter(visible);
+        return title.get(title.size() - 1).text().trim();
     }
 
-    public static String getSelectedLovDetail(SelenideElement proxy) {
+    public static String lastSelectedLovDetailText(SelenideElement proxy) {
         setLocators(proxy);
-        return lovSecilenItemDetail.shouldBe(visible).text().trim();
+
+        ElementsCollection title = $$(lovSecilenItemDetail).filter(visible);
+        return title.get(title.size() - 1).text().trim();
     }
 
-    public static Boolean isSelectedLov(SelenideElement proxy) {
+    public static Boolean isLovSelected(SelenideElement proxy) {
         setLocators(proxy);
-        return lovSecilen.is(visible);
+        return $(lovSecilen).is(visible);
     }
 }
