@@ -10,63 +10,70 @@ import static pageComponents.belgenetElements.ComboLovHelper.*;
 
 class ComboLov {
 
-    class ClearComboLov implements Command<BelgenetElement> {
+    class ClearLastSelectedLov implements Command<BelgenetElement> {
         @Override
         public BelgenetElement execute(SelenideElement proxy, WebElementSource locator, Object[] args) throws IOException {
-            return clearComboLov(proxy);
+            return clearLastSelectedLov(proxy);
+        }
+    }
+
+    class ClearAllSelectedLov implements Command<BelgenetElement> {
+        @Override
+        public BelgenetElement execute(SelenideElement proxy, WebElementSource locator, Object[] args) throws IOException {
+            return clearAllSelectedLov(proxy);
         }
     }
 
     class SelectLov implements Command<BelgenetElement> {
         @Override
         public BelgenetElement execute(SelenideElement proxy, WebElementSource locator, Object[] args) throws IOException {
-            if (args == null || args.length == 0 || args[0]=="")
-                return clearComboLov(proxy);
-            else
-                return selectLov(proxy,args[0].toString());
+//            if (args == null || args.length == 0 || args[0]=="")
+//                return clearLastSelectedLov(proxy);
+//            else
+            return selectLov(proxy, args[0].toString());
         }
     }
 
-    class GetSelectedLovValue implements Command<String> {
+    class GetLastSelectedLovValue implements Command<String> {
         @Override
         public String execute(SelenideElement proxy, WebElementSource locator, Object[] args) throws IOException {
-            return getSelectedLovValue(proxy);
+            return getLastSelectedLovValue(proxy);
         }
     }
 
-    class SelectedLovTitle implements Command<BelgenetElement> {
+    class LastSelectedLovTitle implements Command<BelgenetElement> {
         @Override
         public BelgenetElement execute(SelenideElement proxy, WebElementSource locator, Object[] args) throws IOException {
-            return selectedLovTitle(proxy);
+            return lastSelectedLovTitle(proxy);
         }
     }
 
-    class SelectedLovDetail implements Command<BelgenetElement> {
+    class LastSelectedLovDetail implements Command<BelgenetElement> {
         @Override
         public BelgenetElement execute(SelenideElement proxy, WebElementSource locator, Object[] args) throws IOException {
-            return selectedLovDetail(proxy);
+            return lastSelectedLovDetail(proxy);
         }
     }
 
-    class GetSelectedLovTitle implements Command<String> {
+    class LastSelectedLovTitleText implements Command<String> {
         @Override
         public String execute(SelenideElement proxy, WebElementSource locator, Object[] args) throws IOException {
-            return getSelectedLovTitle(proxy);
+            return lastSelectedLovTitleText(proxy);
         }
     }
 
-    class GetSelectedLovDetail implements Command<String> {
+    class LastSelectedLovDetailText implements Command<String> {
         @Override
         public String execute(SelenideElement proxy, WebElementSource locator, Object[] args) throws IOException {
-            return getSelectedLovDetail(proxy);
+            return lastSelectedLovDetailText(proxy);
         }
     }
 
-    class IsSelectedLov implements Command<Boolean>{
+    class IsLovSelected implements Command<Boolean> {
 
         @Override
         public Boolean execute(SelenideElement proxy, WebElementSource locator, Object[] args) throws IOException {
-            return isSelectedLov(proxy);
+            return isLovSelected(proxy);
         }
     }
 }

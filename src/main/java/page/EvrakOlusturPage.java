@@ -2,16 +2,15 @@ package page;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
-import org.testng.Assert;
+import pageComponents.belgenetElements.BelgenetElement;
 
-import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
+import static pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 public class EvrakOlusturPage extends BaseLibrary {
 
@@ -25,7 +24,7 @@ public class EvrakOlusturPage extends BaseLibrary {
 
     //Bilgileri tabı
     //SelenideElement txtKonuKodu = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:1:konuKoduLov:LovText"));
-    SelenideElement txtKonuKodu = $("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='konuKoduLov:LovText']");
+    BelgenetElement txtKonuKodu = comboLov("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='konuKoduLov:LovText']");
     SelenideElement btnKonuKoduTree = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:1:konuKoduLov:treeButton"));
     SelenideElement txtKonu = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:3:konuTextArea"));
     SelenideElement txtKaldiralacakKlasorler = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:4:eklenecekKlasorlerLov:LovText"));
@@ -143,7 +142,7 @@ public class EvrakOlusturPage extends BaseLibrary {
     SelenideElement tableOnayAkisiEkleKullanicilar = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:akisAdimLov:LovSecilenTable_data"));
 
     SelenideElement btnOnayAkisiKullaniciKullan = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:anlikAkisKullanButton"));
-    SelenideElement txtOnayAkisiKullanicilar = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:akisAdimLov:LovText"));
+    BelgenetElement txtOnayAkisiKullanicilar = comboLov("[id$='akisAdimLov:LovText']");
     SelenideElement listOnayAkisikullanicilar = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:akisAdimLov:lovTree"));
 
 
@@ -262,8 +261,10 @@ public class EvrakOlusturPage extends BaseLibrary {
         return this;
     }
 
-    public EvrakOlusturPage onayAkisiEkle(){
+    public EvrakOlusturPage onayAkisiEkle(String kullanici) {
         btnOnayAkisiEkle.click();
+        txtOnayAkisiKullanicilar.selectComboLov(kullanici);
+
         return this;
     }
 

@@ -44,7 +44,7 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
 
         page.ustMenuAc("Evrak Oluştur");
         page.evrakOlusturPage()
-                .onayAkisiEkle()
+                .onayAkisiEkle("optiim test1")
                 .onayAkisiKullaniciKontrol("Optiim OPTİİM", "Paraflama")
                 .onayAkisiKullaniciSec("Optiim TEST1")
                 .onayAkisiKullaniciTipiSec("Optiim TEST1", "İmzalama")

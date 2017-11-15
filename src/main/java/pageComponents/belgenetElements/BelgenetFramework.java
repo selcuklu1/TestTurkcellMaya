@@ -13,12 +13,13 @@ public class BelgenetFramework {
   public static void setUp() {
       //region ComboLov
       Commands.getInstance().add("selectComboLov", comboLov.new SelectLov());
-      Commands.getInstance().add("clearComboLov", comboLov.new ClearComboLov());
-      Commands.getInstance().add("getComboLovTitle", comboLov.new SelectedLovTitle());
-      Commands.getInstance().add("getComboLovDetail", comboLov.new SelectedLovDetail());
-      Commands.getInstance().add("getComboLovTitleText", comboLov.new GetSelectedLovTitle());
-      Commands.getInstance().add("getComboLovDetailText", comboLov.new GetSelectedLovDetail());
-      Commands.getInstance().add("isComboLovSelected", comboLov.new IsSelectedLov());
+      Commands.getInstance().add("clearLastSelectedLov", comboLov.new ClearLastSelectedLov());
+      Commands.getInstance().add("clearAllSelectedLov", comboLov.new ClearAllSelectedLov());
+      Commands.getInstance().add("lastSelectedLovTitle", comboLov.new LastSelectedLovTitle());
+      Commands.getInstance().add("lastSelectedLovDetail", comboLov.new LastSelectedLovDetail());
+      Commands.getInstance().add("lastSelectedLovTitleText", comboLov.new LastSelectedLovTitleText());
+      Commands.getInstance().add("lastSelectedLovDetailText", comboLov.new LastSelectedLovDetailText());
+      Commands.getInstance().add("isLovSelected", comboLov.new IsLovSelected());
       //endregion
       // region ComboBox
       Commands.getInstance().add("selectComboBox", comboBox.new SelectComboBox());
