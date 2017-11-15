@@ -2,6 +2,7 @@ package page;
 
 import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import pageComponents.belgenetElements.BelgenetElement;
 
@@ -123,11 +124,13 @@ public class GelenEvrakKayitPage extends BaseLibrary {
         return this;
     }
 
+    @Step("Kişi kurum seç")
     public GelenEvrakKayitPage evrakBilgileriListKisiKurumSec(String kisiKurum) {
         cmbEvrakBilgileriListKisiKurum.selectOptionByValue(kisiKurum);
         return this;
     }
 
+    @Step("Kişi kurum doldur")
     public GelenEvrakKayitPage evrakBilgileriListGeldigiKurumDoldur(String geldigiKurum) {
 
         txtEvrakBilgileriListGeldigiKurum.selectComboLov(geldigiKurum);

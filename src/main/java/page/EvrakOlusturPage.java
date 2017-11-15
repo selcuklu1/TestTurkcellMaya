@@ -1,7 +1,6 @@
 package page;
 
 import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
 import io.qameta.allure.Step;
@@ -9,7 +8,6 @@ import org.openqa.selenium.By;
 import org.testng.Assert;
 import pageComponents.belgenetElements.BelgenetElement;
 
-import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
 import static pageComponents.belgenetElements.BelgenetFramework.comboBox;
 import static pageComponents.belgenetElements.BelgenetFramework.comboLov;
@@ -156,13 +154,14 @@ public class EvrakOlusturPage extends BaseLibrary {
     BelgenetElement txtOnayAkisiKullanicilar = comboLov("[id$='akisAdimLov:LovText']");
     SelenideElement listOnayAkisikullanicilar = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:akisAdimLov:lovTree"));
 
-
+    @Step("\"{tabName}\" tab aç")
     public EvrakOlusturPage openTab(String tabName) {
         $(By.xpath("//div[@id='yeniGidenEvrakForm:leftTab:leftTab']//span[text()='" + tabName + "']//ancestor::tbody[1]//button")).click();
         //$(By.id("yeniGidenEvrakForm:evrakBilgileriList")).shouldBe(visible);
         return this;
     }
 
+    @Step("\"{tabName}\" tab aç")
     public EvrakOlusturPage openTabJS(String tabName) {
         executeJavaScript("arguments[0].click();"
                 , $("//div[@id='yeniGidenEvrakForm:leftTab:leftTab']//span[text()='" + tabName + "']//ancestor::tbody[1]//button"));
@@ -227,6 +226,7 @@ public class EvrakOlusturPage extends BaseLibrary {
         return this;
     }
 
+    @Step("Bilgi seçim tipi seç")
     public EvrakOlusturPage bilgiSecimTipiSec(String bilgi) {
         cmbBilgiSecimTipi.selectOptionByValue(bilgi);
         return this;
@@ -238,11 +238,13 @@ public class EvrakOlusturPage extends BaseLibrary {
         return this;
     }
 
+    @Step("Gereği seçim tipi seç")
     public EvrakOlusturPage geregiSecimTipiSec(String value) {
         cmbGeregiSecimTipi.selectOptionByValue(value);
         return this;
     }
 
+    @Step("Gereği doldur")
     public EvrakOlusturPage geregiDoldur(String geregi) {
         txtGeregi.selectComboLov(geregi);
         //shouldHave(Condition.text(geregi));
@@ -309,7 +311,7 @@ public class EvrakOlusturPage extends BaseLibrary {
     public EvrakOlusturPage hitapKismiAlaniKontrol(String sayin, String unvan, String ad, String soyad) {
         String getHitapAlani = editorHitapKismi.shouldHave(Condition.visible).getText();
         System.out.println(getHitapAlani);
-        String girilenHitapAlani = sayin + " " + unvan + " " + getIlkHarfBuyuk(ad) + " " + soyad.toUpperCase();
+        String girilenHitapAlani = sayin + " " + unvan + " " + toUpperCaseFirst(ad) + " " + soyad.toUpperCase();
         System.out.println(girilenHitapAlani);
         Assert.assertEquals(getHitapAlani.contains(girilenHitapAlani), true);
 

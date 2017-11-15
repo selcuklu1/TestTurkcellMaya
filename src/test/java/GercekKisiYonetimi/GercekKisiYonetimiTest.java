@@ -23,7 +23,7 @@ public class GercekKisiYonetimiTest extends BaseTest{
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "Gerçek Kişi Yönetimi TC1516")
+    @Test(enabled = true, description = "TC1516: Gerçek kişi tanımlama ve  kontrolü")
     public void TC1516() {
 
         String tcNO = page.baseLibrary().createMernisTCNO();

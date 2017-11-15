@@ -57,8 +57,6 @@ public class BasePage {
     }
     //endregion
 
-
-
     //region Sayfalr
 
     public IslemMesajlari islemMesaji() {

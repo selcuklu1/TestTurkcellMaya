@@ -95,6 +95,7 @@ public class BaseLibrary {
         return ret;
     }
 
+    //Dosya ekler
     public void uploadFile(String pathToFile) {
         try {
             $(By.xpath("//input[@class='dz-hidden-input']")).sendKeys(pathToFile);
@@ -123,6 +124,7 @@ public class BaseLibrary {
 //        }
 //    }
 
+    //Random numara üretir.
     public String randomNumber(int length) {
         Random r = new Random();
         List<Integer> digits = new ArrayList<Integer>();
@@ -143,6 +145,7 @@ public class BaseLibrary {
         return number;
     }
 
+    //Random text üretir.
     public String createRandomText(int textSize) {
         char[] chars = "abcdefghijklmnopqrstuvwxyz".toCharArray();
         StringBuilder sb = new StringBuilder();
@@ -156,6 +159,7 @@ public class BaseLibrary {
         return output;
     }
 
+    //yyyyMMddHHmmss formatına göre sysdate alır.
     public String getSysDate() {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
         LocalDateTime now = LocalDateTime.now();
@@ -165,6 +169,7 @@ public class BaseLibrary {
         return sysDate;
     }
 
+    //yyyy-MM-dd formatına göre sysdate alır.
     public String getSysDateForKis() {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDateTime now = LocalDateTime.now();
@@ -174,6 +179,7 @@ public class BaseLibrary {
         return sysDate;
     }
 
+    //Günün tarihinden sonraki bir tarihi alır.
     public String getAfterSysDate(int i) throws ParseException {
         String untildate = getSysDateForKis();// can take any date in current
         // format
@@ -208,6 +214,7 @@ public class BaseLibrary {
         return sysMonth;
     }
 
+    //Dosyanın bilgisayara inip inmediğini kontrol eder.
     public boolean isFileDownloaded(String downloadPath, String fileName) {
         boolean flag = false;
         File dir = new File(downloadPath);
@@ -221,6 +228,7 @@ public class BaseLibrary {
         return flag;
     }
 
+    //Bilgisayara indirilen dosyaları siler.
     public void deleteFile(String pathToFile) {
         try {
             File file = new File(pathToFile);
@@ -239,6 +247,7 @@ public class BaseLibrary {
         }
     }
 
+    //Random tc yaratır mernis sorgusundan geçecek şekilde.
     public String createMernisTCNO() {
         Vector<Integer> array = new Vector<Integer>();
         Random randomGenerator = new Random();
@@ -269,10 +278,20 @@ public class BaseLibrary {
         return res;
     }
 
-    public String getIlkHarfBuyuk(String text){
+    //Textin ilk harfini büyük yapar.
+    public String toUpperCaseFirst(String text){
         char ilkHarf = Character . toUpperCase ( text . charAt ( 0 ));
         text = ilkHarf + text . substring ( 1 );
     return text;
+    }
+
+    //Texti split edip : 'dan sonrasını alır.
+    public String splitString(String str) {
+        String[] parts = str.split(": ");// "004: 034556"
+        String part1 = parts[0]; // 004
+        String part2 = parts[1]; // 034556
+
+        return part2;
     }
 
 

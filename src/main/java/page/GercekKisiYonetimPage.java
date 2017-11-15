@@ -3,6 +3,7 @@ package page;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import pageComponents.belgenetElements.BelgenetElement;
 
@@ -42,11 +43,13 @@ public class GercekKisiYonetimPage extends BaseLibrary {
     SelenideElement btnIletisimBilgisiKaydet = $(By.id("gercekKisiBilgileriEditorForm:saveIletisimBilgisiButton"));
 
 
+    @Step("Yeni gerçek kişi ekle")
     public GercekKisiYonetimPage yeniGercekKisiEkle() {
         btnGercekKisiEkle.click();
         return this;
     }
 
+    @Step("Kaydet")
     public GercekKisiYonetimPage kaydet() {
         btnKaydet.click();
         if (btnEvetPopup.isDisplayed()) {
@@ -66,26 +69,31 @@ public class GercekKisiYonetimPage extends BaseLibrary {
         return this;
     }
 
+    @Step("Soyad doldur")
     public GercekKisiYonetimPage soyadDoldur(String text) {
         txtSoyad.setValue(text);
         return this;
     }
 
+    @Step("Ad doldur")
     public GercekKisiYonetimPage adDoldur(String text) {
         txtAd.setValue(text);
         return this;
     }
 
+    @Step("Ünvan doldur")
     public GercekKisiYonetimPage unvanDoldur(String text) {
         txtUnvan.setValue(text);
         return this;
     }
 
+    @Step("Ön ek doldur")
     public GercekKisiYonetimPage onEkDoldur(String text) {
         txtOnEk.setValue(text);
         return this;
     }
 
+    @Step("TC doldur")
     public GercekKisiYonetimPage tcKimlikNoDoldur(String text) {
         txtTCKimlikNo.setValue(text);
         createMernisTCNO();
@@ -117,21 +125,25 @@ public class GercekKisiYonetimPage extends BaseLibrary {
         return this;
     }
 
+    @Step("İletişim bilgileri ekle")
     public GercekKisiYonetimPage iletisimBilgileriEkle() {
         btnIletisimBilgileriEkle.click();
         return this;
     }
 
+    @Step("Adres doldur")
     public GercekKisiYonetimPage iletisimBilgisiAdresDoldur(String adres) {
         txtIletisimBilgisiAdres.sendKeys(adres);
         return this;
     }
 
+    @Step("İl doldur")
     public GercekKisiYonetimPage iletisimBilgisiIlDoldur(String il) {
         txtIletisimBilgisiIl.selectComboLov(il);
         return this;
     }
 
+    @Step("İlçe doldur")
     public GercekKisiYonetimPage iletisimBilgisiIlceDoldur(String ilce) {
         txtIletisimBilgisiIlce.selectComboLov(ilce);
         return this;
@@ -142,11 +154,13 @@ public class GercekKisiYonetimPage extends BaseLibrary {
         return this;
     }
 
+    @Step("Eposta doldur")
     public GercekKisiYonetimPage iletisimBilgisiEpostaDoldur(String eposta) {
         txtIletisimBilgisiEPosta.setValue(eposta);
         return this;
     }
 
+    @Step("İletişim bilgisi kaydet")
     public GercekKisiYonetimPage iletisimBilgisiKaydet() {
         btnIletisimBilgisiKaydet.click();
         return this;
