@@ -8,6 +8,7 @@ import pageComponents.belgenetElements.BelgenetElement;
 import java.beans.IntrospectionException;
 
 import static com.codeborne.selenide.Selenide.$;
+import static pageComponents.belgenetElements.BelgenetFramework.comboBox;
 import static pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 public class GercekKisiYonetimPage extends BaseLibrary {
@@ -31,7 +32,7 @@ public class GercekKisiYonetimPage extends BaseLibrary {
   //Yeni İletişim Bilgisi
     SelenideElement txtIletisimBilgisiAdres = $(By.id("gercekKisiBilgileriEditorForm:adresInput"));
    // SelenideElement txtIletisimBilgisiIl= $(By.id("gercekKisiBilgileriEditorForm:lovIl:lovInputPanel"));
-    BelgenetElement txtIletisimBilgisiIl = comboLov("gercekKisiBilgileriEditorForm:lovIl:lovInputPanel");
+    BelgenetElement txtIletisimBilgisiIl = comboBox("gercekKisiBilgileriEditorForm:lovIl:lovInputPanel");
     SelenideElement txtIletisimBilgisiIlce= $(By.id("gercekKisiBilgileriEditorForm:lovIlce:lovInputPanel"));
     SelenideElement txtIletisimBilgisiEPosta= $(By.id("gercekKisiBilgileriEditorForm:ePostaInput"));
     SelenideElement btnIletisimBilgisiKaydet= $(By.id("gercekKisiBilgileriEditorForm:saveIletisimBilgisiButton"));
@@ -119,7 +120,8 @@ public class GercekKisiYonetimPage extends BaseLibrary {
     }
 
     public GercekKisiYonetimPage iletisimBilgisiIlDoldur(String il) {
-        txtIletisimBilgisiIl.selectComboLov(il);
+        //txtIletisimBilgisiIl.selectComboLov(il);
+        //comboText(txtIletisimBilgisiIl);
         return this;
     }
 
