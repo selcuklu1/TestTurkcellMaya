@@ -244,4 +244,37 @@ public class BaseLibrary {
             e.printStackTrace();
         }
     }
+
+    public String createMernisTCNO() {
+
+        Vector<Integer> array = new Vector<Integer>();
+        Random randomGenerator = new Random();
+        array.add(new Integer(1 + randomGenerator.nextInt(9)));
+
+        for (int i=1;i<9;i++) array.add(randomGenerator.nextInt(10));
+
+        int t1 = 0;
+        for (int i=0;i<9;i+=2) t1 += array.elementAt(i);
+
+        int t2 = 0;
+        for (int i=1;i<8;i+=2) t2 += array.elementAt(i);
+
+        int x = ((t1*7)-t2)%10;
+
+        array.add(new Integer(x));
+
+        x=0;
+        for(int i=0;i<10;i++) x+= array.elementAt(i);
+
+        x= x % 10;
+        array.add(new Integer(x));
+
+        String res = "";
+        for(int i=0;i<11;i++) res = res + Integer.toString(array.elementAt(i));
+
+        System.out.println("Olusturulan TC Kimlik No:"+res);
+
+        return res;
+    }
+
 }

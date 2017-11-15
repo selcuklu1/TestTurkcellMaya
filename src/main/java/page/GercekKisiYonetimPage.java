@@ -3,90 +3,138 @@ package page;
 import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
 import org.openqa.selenium.By;
+import pageComponents.belgenetElements.BelgenetElement;
 
 import java.beans.IntrospectionException;
 
 import static com.codeborne.selenide.Selenide.$;
+import static pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 public class GercekKisiYonetimPage extends BaseLibrary {
 
-    SelenideElement txtTcKimlikNo = $(By.id("gercekKisiYonetimiListingForm:filterPanel:gercekKisiTcKimlikNoFilterInput"));
-    SelenideElement txtAd = $(By.id("gercekKisiYonetimiListingForm:filterPanel:gercekKisiAdFilterInput"));
-    SelenideElement txtSoyad = $(By.id("gercekKisiYonetimiListingForm:filterPanel:gercekKisiSoyadFilterInput"));
-    SelenideElement cmbDurum = $(By.id("gercekKisiYonetimiListingForm:filterPanel:durumSelectBox"));
+    SelenideElement btnGercekKisiEkle = $(By.id("gercekKisiYonetimiListingForm:gercekKisiDataTable:addNewGercekKisiButton"));
+    SelenideElement txtFiltreTCKimlikNo = $(By.id("gercekKisiYonetimiListingForm:filterPanel:gercekKisiTcKimlikNoFilterInput"));
+    SelenideElement txtFiltreAd = $(By.id("gercekKisiYonetimiListingForm:filterPanel:gercekKisiAdFilterInput"));
+    SelenideElement txtFiltreSoyad = $(By.id("gercekKisiYonetimiListingForm:filterPanel:gercekKisiSoyadFilterInput"));
+    SelenideElement cmbFiltreDurum = $(By.id("gercekKisiYonetimiListingForm:filterPanel:durumSelectBox"));
     SelenideElement btnAra = $(By.id("gercekKisiYonetimiListingForm:filterPanel:searchGercekKisiButton"));
-    SelenideElement txtDuzenleTcKimlikNo = $(By.id("gercekKisiYonetimiEditorForm:tcKimlikNoInput"));
+    SelenideElement txtTCKimlikNo = $(By.id("gercekKisiYonetimiEditorForm:tcKimlikNoInput"));
     SelenideElement txtOnEk = $(By.id("gercekKisiYonetimiEditorForm:onEkInput"));
     SelenideElement txtUnvan = $(By.id("gercekKisiYonetimiEditorForm:unvanId"));
-    SelenideElement txtDuzenleAd = $(By.id("gercekKisiYonetimiEditorForm:adInput"));
-    SelenideElement txtDuzenleSoyad = $(By.id("gercekKisiYonetimiEditorForm:soyadInput"));
+    SelenideElement txtAd = $(By.id("gercekKisiYonetimiEditorForm:adInput"));
+    SelenideElement txtSoyad = $(By.id("gercekKisiYonetimiEditorForm:soyadInput"));
     SelenideElement chkKepAdresiKullaniyor = $(By.id("gercekKisiYonetimiEditorForm:kepAdresiKullanimCheckbox_input"));
-    SelenideElement btnDuzenleKepAdresBilgiler = $(By.id("gercekKisiYonetimiEditorForm:kepBilgileriDataTable:addNewKepAdresiButton"));
+    SelenideElement btnKepAdresBilgiler = $(By.id("gercekKisiYonetimiEditorForm:kepBilgileriDataTable:addNewKepAdresiButton"));
     SelenideElement btnKaydet = $(By.id("gercekKisiYonetimiEditorForm:saveGercekKisiButton"));
+    SelenideElement btnIletisimBilgileriEkle = $(By.id("gercekKisiYonetimiEditorForm:iletisimBilgileriDataTable:addNewIletisimBilgisiButton"));
 
-    public GercekKisiYonetimPage kaydetGonder() throws InterruptedException{
+  //Yeni İletişim Bilgisi
+    SelenideElement txtIletisimBilgisiAdres = $(By.id("gercekKisiBilgileriEditorForm:adresInput"));
+   // SelenideElement txtIletisimBilgisiIl= $(By.id("gercekKisiBilgileriEditorForm:lovIl:lovInputPanel"));
+    BelgenetElement txtIletisimBilgisiIl = comboLov("gercekKisiBilgileriEditorForm:lovIl:lovInputPanel");
+    SelenideElement txtIletisimBilgisiIlce= $(By.id("gercekKisiBilgileriEditorForm:lovIlce:lovInputPanel"));
+    SelenideElement txtIletisimBilgisiEPosta= $(By.id("gercekKisiBilgileriEditorForm:ePostaInput"));
+    SelenideElement btnIletisimBilgisiKaydet= $(By.id("gercekKisiBilgileriEditorForm:saveIletisimBilgisiButton"));
+
+
+    public GercekKisiYonetimPage yeniGercekKisiEkle() {
+        btnGercekKisiEkle.click();
+        return this;
+    }
+
+    public GercekKisiYonetimPage kaydet() {
         btnKaydet.click();
         return this;
     }
 
-    public GercekKisiYonetimPage duzenleKepAdresBilgilerGonder() throws InterruptedException{
-        btnDuzenleKepAdresBilgiler.click();
+    public GercekKisiYonetimPage kepAdresBilgiler() {
+        btnKepAdresBilgiler.click();
         return this;
     }
 
-    public GercekKisiYonetimPage kepAdresiKullaniyor(boolean secim) throws InterruptedException{
+    public GercekKisiYonetimPage kepAdresiKullaniyor(boolean secim){
         chkKepAdresiKullaniyor.setSelected(secim);
         return this;
     }
 
-    public GercekKisiYonetimPage duzenleSoyadDoldur(String text) throws InterruptedException{
-        txtDuzenleSoyad.setValue(text);
-        return this;
-    }
-
-    public GercekKisiYonetimPage duzenleAdDoldur(String text) throws InterruptedException{
-        txtDuzenleAd.setValue(text);
-        return this;
-    }
-
-    public GercekKisiYonetimPage unvanDoldur(String text) throws InterruptedException{
-        txtUnvan.setValue(text);
-        return this;
-    }
-
-    public GercekKisiYonetimPage onEkDoldur(String text) throws InterruptedException{
-        txtOnEk.setValue(text);
-        return this;
-    }
-
-    public GercekKisiYonetimPage duzenleTcKimlikNoDoldur(String text) throws InterruptedException{
-        txtDuzenleTcKimlikNo.setValue(text);
-        return this;
-    }
-
-    public GercekKisiYonetimPage araGonder() throws InterruptedException{
-        btnAra.click();
-        return this;
-    }
-
-    public GercekKisiYonetimPage durumSec(String value) throws InterruptedException{
-       cmbDurum.selectOption(value);
-        return this;
-    }
-
-    public GercekKisiYonetimPage soyadDoldur(String text) throws InterruptedException{
+    public GercekKisiYonetimPage soyadDoldur(String text) {
         txtSoyad.setValue(text);
-        return  this;
+        return this;
     }
 
-    public GercekKisiYonetimPage adDoldur(String text) throws IntrospectionException{
+    public GercekKisiYonetimPage adDoldur(String text){
         txtAd.setValue(text);
         return this;
     }
 
-    public GercekKisiYonetimPage tcKimlikNoDoldur(String text) throws IntrospectionException{
-        txtTcKimlikNo.setValue(text);
+    public GercekKisiYonetimPage unvanDoldur(String text){
+        txtUnvan.setValue(text);
         return this;
     }
 
+    public GercekKisiYonetimPage onEkDoldur(String text) {
+        txtOnEk.setValue(text);
+        return this;
+    }
+
+    public GercekKisiYonetimPage tcKimlikNoDoldur(String text) {
+        txtTCKimlikNo.setValue(text);
+        createMernisTCNO();
+        return this;
+    }
+
+    public GercekKisiYonetimPage ara() {
+        btnAra.click();
+        return this;
+    }
+
+    public GercekKisiYonetimPage filtreDurumSec(String value) {
+        cmbFiltreDurum.selectOption(value);
+        return this;
+    }
+
+    public GercekKisiYonetimPage filtreSoyadDoldur(String text){
+        txtFiltreSoyad.setValue(text);
+        return  this;
+    }
+
+    public GercekKisiYonetimPage filtreAdDoldur(String text){
+        txtFiltreAd.setValue(text);
+        return this;
+    }
+
+    public GercekKisiYonetimPage filtreTCKimlikNoDoldur(String text) {
+        txtFiltreTCKimlikNo.setValue(text);
+        return this;
+    }
+
+    public GercekKisiYonetimPage iletisimBilgileriEkle() {
+        btnIletisimBilgileriEkle.click();
+        return this;
+    }
+
+    public GercekKisiYonetimPage iletisimBilgisiAdresDoldur(String adres) {
+        txtIletisimBilgisiAdres.sendKeys(adres);
+        return this;
+    }
+
+    public GercekKisiYonetimPage iletisimBilgisiIlDoldur(String il) {
+        txtIletisimBilgisiIl.selectComboLov(il);
+        return this;
+    }
+
+    public GercekKisiYonetimPage iletisimBilgisiIlceDoldur(String ilce) {
+        txtIletisimBilgisiIlce.sendKeys(ilce);
+        return this;
+    }
+
+    public GercekKisiYonetimPage iletisimBilgisiEpostaDoldur(String eposta) {
+        txtIletisimBilgisiIlce.sendKeys(eposta);
+        return this;
+    }
+
+    public GercekKisiYonetimPage iletisimBilgisiKaydet() {
+        btnIletisimBilgisiKaydet.click();
+        return this;
+    }
 }

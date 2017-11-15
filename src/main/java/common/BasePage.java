@@ -100,6 +100,8 @@ public class BasePage {
         return new OnayAkisYonetimiPage();
     }
 
-
+    public GercekKisiYonetimPage gercekKisiYonetimPage() {
+        return new GercekKisiYonetimPage();
+    }
     //endregion
 }
