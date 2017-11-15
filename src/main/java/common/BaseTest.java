@@ -25,7 +25,7 @@ public class BaseTest {
 
         //region Selenide Driver Configuration
         //        Configuration.baseUrl = "http://94.55.114.18:8889/edys-web/sistemeGiris.xhtml";
-        Configuration.baseUrl = "http://www.belgenet.com.tr:8282/edys-web/sistemeGiris.xhtml";
+        Configuration.baseUrl = "http://94.55.114.18:8889/edys-web/mainInbox.xhtml";
         Configuration.browser = "drivers.Firefox"; //
         //"org.openqa.selenium.Firefox.FirefoxDriver";
         Configuration.reportsFolder = "test-result/reports";
@@ -33,7 +33,7 @@ public class BaseTest {
         Configuration.savePageSource = false;
         Configuration.collectionsTimeout = 20000;
         Configuration.timeout = 20000;
-        Configuration.holdBrowserOpen = false;
+        Configuration.holdBrowserOpen = true;
 //        Configuration.startMaximized = true;
 //        Configuration.headless = true;
 //        Configuration.browserSize = "1024x768";

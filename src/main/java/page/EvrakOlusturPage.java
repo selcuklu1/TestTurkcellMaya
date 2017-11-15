@@ -4,6 +4,7 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import pageComponents.belgenetElements.BelgenetElement;
 
@@ -156,6 +157,7 @@ public class EvrakOlusturPage extends BaseLibrary {
                 , $("//div[@id='yeniGidenEvrakForm:leftTab:leftTab']//span[text()='" + tabName + "']//ancestor::tbody[1]//button"));
     }
 
+    @Step("Konu kodu doldur")
     public EvrakOlusturPage konuKoduDoldur(String konuKodu) {
         //TODO: Daha kısa metod yazılacak.
         String cssFirstPart = "*[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='konuKoduLov:";
@@ -182,6 +184,7 @@ public class EvrakOlusturPage extends BaseLibrary {
         return this;
     }
 
+    @Step("Konu doldur")
     public EvrakOlusturPage konuDoldur(String konu) throws InterruptedException {
         //sendKeys(txtKonu, konu, false); selenium
         txtKonu.sendKeys(konu); //selenide
