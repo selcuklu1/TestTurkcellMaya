@@ -3,14 +3,17 @@ package page;
 import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
 import org.openqa.selenium.By;
+import pageComponents.belgenetElements.BelgenetElement;
 
 import static com.codeborne.selenide.Selenide.$;
+import static pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 public class GelenEvrakKayitPage extends BaseLibrary {
 
     SelenideElement pageTitle = $(By.cssSelector("#baseLayoutCenter .ui-dialog-title"));
 
     // Evrak Bilgileri Sekmesinde bulunanlar
+    SelenideElement btnUstYaziEkle = $(By.xpath("//div[@id='gidenEvrakDefterKaydiForm:ustYaziForm:gedkUploadButton']//span[@class='Üst Yazı Ekle']"));
     SelenideElement txtEvrakBilgileriListKonuKodu = $(By.id("evrakBilgileriForm:evrakBilgileriList:1:konuKoduLov:LovText"));
     SelenideElement txtEvrakBilgileriListKonu = $(By.id("evrakBilgileriForm:evrakBilgileriList:4:konuTextArea"));
     SelenideElement cmbEvrakBilgileriListEvrakTuru = $(By.id("evrakBilgileriForm:evrakBilgileriList:5:evrakTuruCombo"));
@@ -27,9 +30,13 @@ public class GelenEvrakKayitPage extends BaseLibrary {
     SelenideElement txtEvrakBilgileriListAciklama = $(By.id("evrakBilgileriForm:evrakBilgileriList:15:j_idt4318"));
     SelenideElement cmbEvrakBilgileriListOzelKategori = $(By.id("evrakBilgileriForm:evrakBilgileriList:17:j_idt4499"));
     SelenideElement dateTxtEvrakBilgileriListPostalanmaTarihi = $(By.id("evrakBilgileriForm:evrakBilgileriList:18:postalanmaTarihi_input"));
+    BelgenetElement comboKonuKodu =  comboLov (By.id("evrakBilgileriForm:evrakBilgileriList:konuKoduLov:LovText"));
+    BelgenetElement comnoGeldigiKurum = comboLov(By.id("evrakBilgileriForm:evrakBilgileriList:geldigiKurumLov:LovText"));
 
     // Evrak Ekleri sekmesinde bulunanlar
     // Dosya ekle alt sekmesinde bulunanlar
+
+    SelenideElement filterEvrakEkleri = $(By.id("evrakBilgileriForm:evrakEkleriListesiPanel_header"));
     SelenideElement btnEvrakEkTabViewEkle = $(By.id("evrakBilgileriForm:evrakEkTabView:dosyaEkleButton"));
     SelenideElement btnEvrakEkTabViewTemizle = $(By.id("evrakBilgileriForm:evrakEkTabView:dosyaTemizleButton"));
     SelenideElement cmbEvrakEkTabViewGizlilikDerecesi = $(By.xpath("//*[@id='evrakBilgileriForm:evrakEkTabView:guvenlikKodu']"));
@@ -87,9 +94,20 @@ public class GelenEvrakKayitPage extends BaseLibrary {
     SelenideElement txtIlgiIslemleriTabViewKullanici = $(By.id("evrakBilgileriForm:ilgiIslemleriTabView:kisiyeLov_id:LovText"));
     SelenideElement txtIlgiIslemleriTabViewArsivdenIlgiEvrakAraSayi = $(By.id("evrakBilgileriForm:ilgiIslemleriTabView:arsivdenIlgiEvrakAraSayiInputTextId"));
 
+    public GelenEvrakKayitPage evrakBilgileriEkBilgiFiltreAc() throws InterruptedException {
+        filterEvrakEkleri.click();
+
+        return this;
+    }
+
+    public GelenEvrakKayitPage evrakBilgileriUstYaziEkle(String path) throws InterruptedException {
+        btnUstYaziEkle.click();
+        uploadFile(path);
+        return this;
+    }
 
     public GelenEvrakKayitPage evrakBilgileriListKonuKoduDoldur(String konuKodu) throws InterruptedException {
-        txtEvrakBilgileriListKonuKodu.sendKeys(konuKodu);
+        comboKonuKodu.selectComboLov(konuKodu);
         return this;
     }
 
@@ -124,7 +142,7 @@ public class GelenEvrakKayitPage extends BaseLibrary {
     }
 
     public GelenEvrakKayitPage evrakBilgileriListGeldigiKurumDoldur(String geldigiKurum) throws InterruptedException {
-        txtEvrakBilgileriListGeldigiKurum.sendKeys(geldigiKurum);
+        comnoGeldigiKurum.selectComboLov(geldigiKurum);
         return this;
     }
 
