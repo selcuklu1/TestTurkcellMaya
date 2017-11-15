@@ -21,43 +21,43 @@ public class IslemYaptiklarimKlasoreKaldirdiklarimPage extends BaseLibrary {
 
     //public IslemYaptiklarimKlasoreKaldirdiklarimPage(WebDriver driver) {super(driver);}
 
-    public IslemYaptiklarimKlasoreKaldirdiklarimPage filtreSec(String filtre) throws InterruptedException {
+    public IslemYaptiklarimKlasoreKaldirdiklarimPage filtreSec(String filtre) {
         //selectCombobox(filtreSelectbox, filtre);
         cmbFiltre.selectOption(filtre);
         return this;
     }
 
-    public IslemYaptiklarimKlasoreKaldirdiklarimPage sayfadaAraDoldur(String sayfadaAra) throws InterruptedException {
+    public IslemYaptiklarimKlasoreKaldirdiklarimPage sayfadaAraDoldur(String sayfadaAra) {
         //sendKeys(sayfadaAraInput, sayfadaAra, false);
         txtSayfadaAra.sendKeys(sayfadaAra);
         return this;
     }
 
-    public IslemYaptiklarimKlasoreKaldirdiklarimPage baslangicTarihiDoldur(String baslangicTarihi) throws InterruptedException {
+    public IslemYaptiklarimKlasoreKaldirdiklarimPage baslangicTarihiDoldur(String baslangicTarihi) {
         //sendKeys(baslangicTarihiInput, baslangicTarihi, false);
         txtBaslangicTarihi.sendKeys(baslangicTarihi);
         return this;
     }
 
-    public IslemYaptiklarimKlasoreKaldirdiklarimPage bitisTarihiDoldur(String bitisTarihi) throws InterruptedException {
+    public IslemYaptiklarimKlasoreKaldirdiklarimPage bitisTarihiDoldur(String bitisTarihi) {
         //sendKeys(bitisTarihiInput, bitisTarihi, false);
         txtBitisTarihi.sendKeys(bitisTarihi);
         return this;
     }
 
-    public IslemYaptiklarimKlasoreKaldirdiklarimPage raporAl() throws InterruptedException {
+    public IslemYaptiklarimKlasoreKaldirdiklarimPage raporAl() {
         //click(raporAlButton);
         btnRaporAl.click();
         return this;
     }
 
-    public IslemYaptiklarimKlasoreKaldirdiklarimPage evrakGoster() throws InterruptedException {
+    public IslemYaptiklarimKlasoreKaldirdiklarimPage evrakGoster() {
         //click(evrakGosterButton);
         btnEvrakGoster.click();
         return this;
     }
 
-    public IslemYaptiklarimKlasoreKaldirdiklarimPage evrakKopyala() throws InterruptedException {
+    public IslemYaptiklarimKlasoreKaldirdiklarimPage evrakKopyala() {
         //click(evrakKopyalaButton);
         btnEvrakKopyala.click();
         return this;

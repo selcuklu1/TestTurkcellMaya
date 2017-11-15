@@ -21,42 +21,42 @@ public class BeklemeyeAlinanlarPage extends BaseLibrary {
     //Filtreler Acordion
     SelenideElement acordion = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion"));
 
-    public BeklemeyeAlinanlarPage acordion() throws InterruptedException {
+    public BeklemeyeAlinanlarPage acordion() {
         acordion.click();
         return this;
     }
 
-    public BeklemeyeAlinanlarPage solMenu() throws InterruptedException {
+    public BeklemeyeAlinanlarPage solMenu() {
         solmenubeklemeyealinanlar.click();
         return this;
     }
 
-    public BeklemeyeAlinanlarPage filtreleSec(String value) throws InterruptedException {
+    public BeklemeyeAlinanlarPage filtreleSec(String value) {
         cmbFiltrele.selectOption(value);
         return this;
     }
 
-    public BeklemeyeAlinanlarPage sayfadaAraDoldur(String text) throws InterruptedException {
+    public BeklemeyeAlinanlarPage sayfadaAraDoldur(String text) {
         txtSayfadaAra.setValue(text);
         return this;
     }
 
-    public BeklemeyeAlinanlarPage gidecegiYerSeciniz() throws InterruptedException {
+    public BeklemeyeAlinanlarPage gidecegiYerSeciniz() {
         btnGidecegiYerSeciniz.click();
         return this;
     }
 
-    public BeklemeyeAlinanlarPage gidecegiYerTreeDoldur(String text) throws InterruptedException {
+    public BeklemeyeAlinanlarPage gidecegiYerTreeDoldur(String text) {
         btnGidecegiYerTree.setValue(text);
         return this;
     }
 
-    public BeklemeyeAlinanlarPage baslangicTarihDoldur(String text) throws InterruptedException {
+    public BeklemeyeAlinanlarPage baslangicTarihDoldur(String text) {
         dateBaslangicTarih.setValue(text);
         return this;
     }
 
-    public BeklemeyeAlinanlarPage bitisTarihiDoldur(String text) throws InterruptedException {
+    public BeklemeyeAlinanlarPage bitisTarihiDoldur(String text) {
         dateBitisTarihi.setValue(text);
         return this;
     }

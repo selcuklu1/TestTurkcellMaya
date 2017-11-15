@@ -93,32 +93,32 @@ public class GelenEvrakKayitPage extends BaseLibrary {
     SelenideElement txtIlgiIslemleriTabViewArsivdenIlgiEvrakAraSayi = $(By.id("evrakBilgileriForm:ilgiIslemleriTabView:arsivdenIlgiEvrakAraSayiInputTextId"));
 
 
-    public GelenEvrakKayitPage evrakBilgileriListKonuKoduDoldur(String konuKodu) throws InterruptedException {
+    public GelenEvrakKayitPage evrakBilgileriListKonuKoduDoldur(String konuKodu)  {
         txtEvrakBilgileriListKonuKodu.sendKeys(konuKodu);
         return this;
     }
 
-    public GelenEvrakKayitPage evrakBilgileriListKonuDoldur(String konu) throws InterruptedException {
+    public GelenEvrakKayitPage evrakBilgileriListKonuDoldur(String konu)  {
         txtEvrakBilgileriListKonu.sendKeys(konu);
         return this;
     }
 
-    public GelenEvrakKayitPage evrakBilgileriListEvrakTuruSec(String evrakTuru) throws InterruptedException {
+    public GelenEvrakKayitPage evrakBilgileriListEvrakTuruSec(String evrakTuru)  {
         cmbEvrakBilgileriListEvrakTuru.selectOption(evrakTuru);
         return this;
     }
 
-    public GelenEvrakKayitPage evrakBilgileriListEvrakDiliSec(String evrakDili) throws InterruptedException {
+    public GelenEvrakKayitPage evrakBilgileriListEvrakDiliSec(String evrakDili)  {
         cmbEvrakBilgileriListEvrakDili.selectOption(evrakDili);
         return this;
     }
 
-    public GelenEvrakKayitPage evrakBilgileriListEvrakTarihiDoldur(String evrakTarihi) throws InterruptedException {
+    public GelenEvrakKayitPage evrakBilgileriListEvrakTarihiDoldur(String evrakTarihi)  {
         dateTxtEvrakBilgileriListEvrakTarihi.sendKeys(evrakTarihi);
         return this;
     }
 
-    public GelenEvrakKayitPage evrakBilgileriListGizlilikDerecesiSec(String gizlilikDerecesi) throws InterruptedException {
+    public GelenEvrakKayitPage evrakBilgileriListGizlilikDerecesiSec(String gizlilikDerecesi)  {
         cmbEvrakBilgileriListGizlilikDerecesi.selectOptionByValue(gizlilikDerecesi);
         return this;
     }
@@ -139,242 +139,242 @@ public class GelenEvrakKayitPage extends BaseLibrary {
         return this;
     }
 
-    public GelenEvrakKayitPage evrakBilgileriListEvrakSayiSolDoldur(String evrakSayiSol) throws InterruptedException {
+    public GelenEvrakKayitPage evrakBilgileriListEvrakSayiSolDoldur(String evrakSayiSol)   {
         txtEvrakBilgileriListEvrakSayiTextAreaSol.sendKeys(evrakSayiSol);
         return this;
     }
 
-    public GelenEvrakKayitPage evrakBilgileriListEvrakSayiSagDoldur(String evrakSayiSag) throws InterruptedException {
+    public GelenEvrakKayitPage evrakBilgileriListEvrakSayiSagDoldur(String evrakSayiSag)  {
         txtEvrakBilgileriListEvrakSayiTextAreaSag.sendKeys(evrakSayiSag);
         return this;
     }
 
-    public GelenEvrakKayitPage evrakBilgileriListEvrakGelisTipiSec(String evrakGelisTipi) throws InterruptedException {
+    public GelenEvrakKayitPage evrakBilgileriListEvrakGelisTipiSec(String evrakGelisTipi)  {
         cmbEvrakBilgileriListEvrakGelisTipi.selectOption(evrakGelisTipi);
         return this;
     }
 
-    public GelenEvrakKayitPage evrakBilgileriListIvedilikSec(String ivedilik) throws InterruptedException {
+    public GelenEvrakKayitPage evrakBilgileriListIvedilikSec(String ivedilik)  {
         cmbEvrakBilgileriListIvedilik.selectOption(ivedilik);
         return this;
     }
 
-    public GelenEvrakKayitPage evrakBilgileriListMiatDoldur(String miat) throws InterruptedException {
+    public GelenEvrakKayitPage evrakBilgileriListMiatDoldur(String miat)  {
         txtEvrakBilgileriListMiat.sendKeys(miat);
         return this;
     }
 
-    public GelenEvrakKayitPage evrakBilgileriListAciklamaDoldur(String evrakBilgileriAciklama) throws InterruptedException {
+    public GelenEvrakKayitPage evrakBilgileriListAciklamaDoldur(String evrakBilgileriAciklama)  {
         txtEvrakBilgileriListAciklama.sendKeys(evrakBilgileriAciklama);
         return this;
     }
 
-    public GelenEvrakKayitPage evrakBilgileriListOzelKategoriSec(String ozelKategori) throws InterruptedException {
+    public GelenEvrakKayitPage evrakBilgileriListOzelKategoriSec(String ozelKategori)  {
         cmbEvrakBilgileriListOzelKategori.selectOption(ozelKategori);
         return this;
     }
 
-    public GelenEvrakKayitPage evrakBilgileriListPostalanmaTarihiDoldur(String postalanmaTarihi) throws InterruptedException {
+    public GelenEvrakKayitPage evrakBilgileriListPostalanmaTarihiDoldur(String postalanmaTarihi)  {
         dateTxtEvrakBilgileriListPostalanmaTarihi.sendKeys(postalanmaTarihi);
         return this;
     }
 
-    public GelenEvrakKayitPage dagitimBilgileriBirimDoldur(String birim) throws InterruptedException {
+    public GelenEvrakKayitPage dagitimBilgileriBirimDoldur(String birim)  {
         txtDagitimBilgileriBirim.sendKeys(birim);
         return this;
     }
 
-    public GelenEvrakKayitPage dagitimBilgileriKisiDoldur(String kisi) throws InterruptedException {
+    public GelenEvrakKayitPage dagitimBilgileriKisiDoldur(String kisi)  {
         txtDagitimBilgileriKisi.sendKeys(kisi);
         return this;
     }
 
-    public GelenEvrakKayitPage dagitimBilgileriKullaniciListesiDoldur(String kullaniciListesi) throws InterruptedException {
+    public GelenEvrakKayitPage dagitimBilgileriKullaniciListesiDoldur(String kullaniciListesi)  {
         txtDagitimBilgileriKullaniciListesi.sendKeys(kullaniciListesi);
         return this;
     }
 
-    public GelenEvrakKayitPage dagitimBilgileriOnaylayacakKisi() throws InterruptedException {
+    public GelenEvrakKayitPage dagitimBilgileriOnaylayacakKisi()  {
         btnDagitimBilgileriOnaylayacakKisi.click();
         return this;
     }
 
-    public GelenEvrakKayitPage dagitimBilgileriAciklamaDoldur(String aciklama) throws InterruptedException {
+    public GelenEvrakKayitPage dagitimBilgileriAciklamaDoldur(String aciklama)  {
         txtDagitimBilgileriAciklama.sendKeys(aciklama);
         return this;
     }
 
-    public GelenEvrakKayitPage dagitimBilgileriDosyaEkle() throws InterruptedException {
+    public GelenEvrakKayitPage dagitimBilgileriDosyaEkle()  {
         btnDagitimBilgileriDosyaEkle.click();
         return this;
     }
 
-    public GelenEvrakKayitPage dagitimBilgileriIslemSuresiDoldur(String islemSuresi) throws InterruptedException {
+    public GelenEvrakKayitPage dagitimBilgileriIslemSuresiDoldur(String islemSuresi)  {
         txtDagitimBilgileriIslemSuresi.sendKeys(islemSuresi);
         return this;
     }
 
-    public GelenEvrakKayitPage dagitimBilgileriEvragiKapatacakKisi() throws InterruptedException {
+    public GelenEvrakKayitPage dagitimBilgileriEvragiKapatacakKisi()  {
         btnDagitimBilgileriEvragiKapatacakKisi.click();
         return this;
     }
 
-    public GelenEvrakKayitPage evrakEkTabViewEkle() throws InterruptedException {
+    public GelenEvrakKayitPage evrakEkTabViewEkle()  {
         btnEvrakEkTabViewEkle.click();
         return this;
     }
 
-    public GelenEvrakKayitPage evrakEkTabViewTemizle() throws InterruptedException {
+    public GelenEvrakKayitPage evrakEkTabViewTemizle()  {
         btnEvrakEkTabViewTemizle.click();
         return this;
     }
 
-    public GelenEvrakKayitPage evrakEkTabViewGizlilikDerecesiSec(String gizlilikDerecesi) throws InterruptedException {
+    public GelenEvrakKayitPage evrakEkTabViewGizlilikDerecesiSec(String gizlilikDerecesi)  {
         cmbEvrakEkTabViewGizlilikDerecesi.selectOption(gizlilikDerecesi);
         return this;
     }
 
-    public GelenEvrakKayitPage evrakEkTabViewEkMetniDoldur(String evrakEkTabViewEkMetni) throws InterruptedException {
+    public GelenEvrakKayitPage evrakEkTabViewEkMetniDoldur(String evrakEkTabViewEkMetni)  {
         txtEvrakEkTabViewEkMetni.sendKeys(evrakEkTabViewEkMetni);
         return this;
     }
 
-    public GelenEvrakKayitPage evrakEkTabViewDosyaEkle() throws InterruptedException {
+    public GelenEvrakKayitPage evrakEkTabViewDosyaEkle()  {
         btvEvrakEkTabViewDosyaEkle.click();
         return this;
     }
 
-    public GelenEvrakKayitPage dagitimBilgileriEvragiOnayliKapatSec(boolean check) throws InterruptedException {
+    public GelenEvrakKayitPage dagitimBilgileriEvragiOnayliKapatSec(boolean check)  {
         chkDagitimBilgileriEvragiOnayliKapat.setSelected(check);
         return this;
     }
 
-    public GelenEvrakKayitPage evrakEkTabViewAciklamaDoldur(String aciklama) throws InterruptedException {
+    public GelenEvrakKayitPage evrakEkTabViewAciklamaDoldur(String aciklama)  {
         txtEvrakEkTabViewAciklama.sendKeys(aciklama);
         return this;
     }
 
-    public GelenEvrakKayitPage evrakEkTabViewGuvenlikKoduAciklamaSec(String guvenlikKoduAciklama) throws InterruptedException {
+    public GelenEvrakKayitPage evrakEkTabViewGuvenlikKoduAciklamaSec(String guvenlikKoduAciklama)  {
         cmbEvrakEkTabViewGuvenlikKoduAciklama.selectOption(guvenlikKoduAciklama);
         return this;
     }
 
-    public GelenEvrakKayitPage evrakEkTabViewAciklamaEkle() throws InterruptedException {
+    public GelenEvrakKayitPage evrakEkTabViewAciklamaEkle()  {
         btnEvrakEkTabViewAciklamaEkle.click();
         return this;
     }
 
-    public GelenEvrakKayitPage evrakEkTabViewEkIslemleriEvrakTarihBasDoldur(String baslamaTarihi) throws InterruptedException {
+    public GelenEvrakKayitPage evrakEkTabViewEkIslemleriEvrakTarihBasDoldur(String baslamaTarihi)  {
         dateTxtEvrakEkTabViewEkIslemleriEvrakTarihBas.sendKeys(baslamaTarihi);
         return this;
     }
 
-    public GelenEvrakKayitPage evrakEkTabViewEkIslemleriEvrakTarihSonDoldur(String sonTarih) throws InterruptedException {
+    public GelenEvrakKayitPage evrakEkTabViewEkIslemleriEvrakTarihSonDoldur(String sonTarih)  {
         dateTxtEvrakEkTabViewEkIslemleriEvrakTarihSon.sendKeys(sonTarih);
         return this;
     }
 
-    public GelenEvrakKayitPage evrakEkTabViewekIslemleriEvrakAramaAranacakYerSec(String aranacakYer) throws InterruptedException {
+    public GelenEvrakKayitPage evrakEkTabViewekIslemleriEvrakAramaAranacakYerSec(String aranacakYer)  {
         cmbEvrakEkTabViewekIslemleriEvrakAramaAranacakYer.selectOption(aranacakYer);
         return this;
     }
 
-    public GelenEvrakKayitPage evrakEkTabViewevrakAramaDoldur(String arama) throws InterruptedException {
+    public GelenEvrakKayitPage evrakEkTabViewevrakAramaDoldur(String arama)  {
         txtEvrakEkTabViewevrakArama.sendKeys(arama);
         return this;
     }
 
-    public GelenEvrakKayitPage evrakEkTabViewArsivdenEvrakAraEkEkleTarihBasDoldur(String baslamaTarihi) throws InterruptedException {
+    public GelenEvrakKayitPage evrakEkTabViewArsivdenEvrakAraEkEkleTarihBasDoldur(String baslamaTarihi)  {
         dateTxtEvrakEkTabViewArsivdenEvrakAraEkEkleTarihBas.sendKeys(baslamaTarihi);
         return this;
     }
 
-    public GelenEvrakKayitPage evrakEkTabViewArsivdenEvrakAraEkEkleTarihSonDoldur(String sonTarih) throws InterruptedException {
+    public GelenEvrakKayitPage evrakEkTabViewArsivdenEvrakAraEkEkleTarihSonDoldur(String sonTarih)  {
         dateTxtEvrakEkTabViewArsivdenEvrakAraEkEkleTarihSon.sendKeys(sonTarih);
         return this;
     }
 
-    public GelenEvrakKayitPage evrakEkTabViewArsivdenEvrakAraKonuDoldur(String konu) throws InterruptedException {
+    public GelenEvrakKayitPage evrakEkTabViewArsivdenEvrakAraKonuDoldur(String konu)  {
         txtEvrakEkTabViewArsivdenEvrakAraKonu.sendKeys(konu);
         return this;
     }
 
-    public GelenEvrakKayitPage evrakEkTabViewKullaniciDoldur(String kullanici) throws InterruptedException {
+    public GelenEvrakKayitPage evrakEkTabViewKullaniciDoldur(String kullanici)  {
         txtEvrakEkTabViewKullanici.sendKeys(kullanici);
         return this;
     }
 
-    public GelenEvrakKayitPage evrakEkTabViewArsivdenEvrakAraSayiDoldur(String evrakSayi) throws InterruptedException {
+    public GelenEvrakKayitPage evrakEkTabViewArsivdenEvrakAraSayiDoldur(String evrakSayi)  {
         txtEvrakEkTabViewArsivdenEvrakAraSayi.sendKeys(evrakSayi);
         return this;
     }
 
-    public GelenEvrakKayitPage ilgiIslemleriTabViewDosyaAciklamaDoldur(String aciklama) throws InterruptedException {
+    public GelenEvrakKayitPage ilgiIslemleriTabViewDosyaAciklamaDoldur(String aciklama)  {
         txtIlgiIslemleriTabViewDosyaAciklama.sendKeys(aciklama);
         return this;
     }
 
-    public GelenEvrakKayitPage ilgiIslemleriTabViewDosyaEkle() throws InterruptedException {
+    public GelenEvrakKayitPage ilgiIslemleriTabViewDosyaEkle()  {
         btnIlgiIslemleriTabViewDosyaEkle.click();
         return this;
     }
 
-    public GelenEvrakKayitPage ilgiIslemleriTabViewIlgiDosyaTemizle() throws InterruptedException {
+    public GelenEvrakKayitPage ilgiIslemleriTabViewIlgiDosyaTemizle()  {
         btnIlgiIslemleriTabViewIlgiDosyaTemizle.click();
         return this;
     }
 
-    public GelenEvrakKayitPage ilgiIslemleriTabViewAciklamaEkle() throws InterruptedException {
+    public GelenEvrakKayitPage ilgiIslemleriTabViewAciklamaEkle()  {
         btnIlgiIslemleriTabViewAciklamaEkle.click();
         return this;
     }
 
-    public GelenEvrakKayitPage ilgiIslemleriTabViewIlgiIslemleriEvrakTarihBasDoldur(String baslamaTarihi) throws InterruptedException {
+    public GelenEvrakKayitPage ilgiIslemleriTabViewIlgiIslemleriEvrakTarihBasDoldur(String baslamaTarihi)  {
         dateTxtIlgiIslemleriTabViewIlgiIslemleriEvrakTarihBas.sendKeys(baslamaTarihi);
         return this;
     }
 
-    public GelenEvrakKayitPage ilgiIslemleriTabViewIlgiIslemleriEvrakTarihSonDoldur(String sonTarih) throws InterruptedException {
+    public GelenEvrakKayitPage ilgiIslemleriTabViewIlgiIslemleriEvrakTarihSonDoldur(String sonTarih)  {
         datetxtIlgiIslemleriTabViewIlgiIslemleriEvrakTarihSon.sendKeys(sonTarih);
         return this;
     }
 
-    public GelenEvrakKayitPage ilgiIslemleriTabViewIlgiIslemleriEvrakAramaAranacakYerSec(String aranacakYer) throws InterruptedException {
+    public GelenEvrakKayitPage ilgiIslemleriTabViewIlgiIslemleriEvrakAramaAranacakYerSec(String aranacakYer)  {
         cmbIlgiIslemleriTabViewIlgiIslemleriEvrakAramaAranacakYer.selectOption(aranacakYer);
         return this;
     }
 
-    public GelenEvrakKayitPage ilgiIslemleriTabViewEvrakAramaDoldur(String arama) throws InterruptedException {
+    public GelenEvrakKayitPage ilgiIslemleriTabViewEvrakAramaDoldur(String arama)  {
         txtIlgiIslemleriTabViewEvrakArama.sendKeys(arama);
         return this;
     }
 
-    public GelenEvrakKayitPage ilgiIslemleriTabViewArsivdenEvrakAraIlgiEkleTarihBasDoldur(String baslamaTarihi) throws InterruptedException {
+    public GelenEvrakKayitPage ilgiIslemleriTabViewArsivdenEvrakAraIlgiEkleTarihBasDoldur(String baslamaTarihi)  {
         dateTxtIlgiIslemleriTabViewArsivdenEvrakAraIlgiEkleTarihBas.sendKeys(baslamaTarihi);
         return this;
     }
 
-    public GelenEvrakKayitPage ilgiIslemleriTabViewArsivdenEvrakAraIlgiEkleTarihSonDoldur(String sonTarih) throws InterruptedException {
+    public GelenEvrakKayitPage ilgiIslemleriTabViewArsivdenEvrakAraIlgiEkleTarihSonDoldur(String sonTarih)  {
         dateTxtIlgiIslemleriTabViewArsivdenEvrakAraIlgiEkleTarihSon.sendKeys(sonTarih);
         return this;
     }
 
-    public GelenEvrakKayitPage ilgiIslemleriTabViewArsivdenIlgiEvrakAraKonuDoldur(String konu) throws InterruptedException {
+    public GelenEvrakKayitPage ilgiIslemleriTabViewArsivdenIlgiEvrakAraKonuDoldur(String konu)  {
         txtIlgiIslemleriTabViewArsivdenIlgiEvrakAraKonu.sendKeys(konu);
         return this;
     }
 
-    public GelenEvrakKayitPage ilgiIslemleriTabViewKullaniciDoldur(String kullanici) throws InterruptedException {
+    public GelenEvrakKayitPage ilgiIslemleriTabViewKullaniciDoldur(String kullanici)  {
         txtIlgiIslemleriTabViewKullanici.sendKeys(kullanici);
         return this;
     }
 
-    public GelenEvrakKayitPage ilgiIslemleriTabViewArsivdenIlgiEvrakAraSayiDoldur(String evrakSayi) throws InterruptedException {
+    public GelenEvrakKayitPage ilgiIslemleriTabViewArsivdenIlgiEvrakAraSayiDoldur(String evrakSayi)  {
         txtIlgiIslemleriTabViewArsivdenIlgiEvrakAraSayi.sendKeys(evrakSayi);
         return this;
     }
 
-    public GelenEvrakKayitPage ilgiIslemleriTabViewAciklamaDoldur(String aciklama) throws InterruptedException {
+    public GelenEvrakKayitPage ilgiIslemleriTabViewAciklamaDoldur(String aciklama)  {
         txtIlgiIslemleriTabViewAciklama.sendKeys(aciklama);
         return this;
     }

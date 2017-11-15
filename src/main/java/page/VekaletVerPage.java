@@ -6,11 +6,11 @@ import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Selenide.$;
 
-public class VekaletVerPage extends BaseLibrary{
+public class VekaletVerPage extends BaseLibrary {
 
-    SelenideElement btnVekaletVeren =  $(By.id("vekaletVerForm:vekaletLayout:vekaletVerenLov:j_idt134"));
+    SelenideElement btnVekaletVeren = $(By.id("vekaletVerForm:vekaletLayout:vekaletVerenLov:j_idt134"));
     SelenideElement txtVekaletAlan = $(By.id("vekaletVerForm:vekaletLayout:vekaletAlanLov:LovText"));
-    SelenideElement chkTumu=$(By.id("vekaletVerForm:vekaletLayout:j_idt5302_input"));
+    SelenideElement chkTumu = $(By.id("vekaletVerForm:vekaletLayout:j_idt5302_input"));
     SelenideElement txtBaslangicTarihi = $(By.id("vekaletVerForm:vekaletLayout:vekaletBasTarihi_input"));
     SelenideElement txtBitisTarihi = $(By.id("vekaletVerForm:vekaletLayout:vekaletBitTarihi_input"));
     SelenideElement chkEvraktaVelaketeSonEkiGorunsun = $(By.id("vekaletVerForm:vekaletLayout:j_idt5317_input"));
@@ -18,47 +18,47 @@ public class VekaletVerPage extends BaseLibrary{
     SelenideElement txtAciklama = $(By.id("vekaletVerForm:vekaletLayout:aciklamaTextArea"));
     SelenideElement btnUygula = $(By.id("vekaletVerForm:vekaletLayout:onayaSunButton"));
 
-    public VekaletVerPage uygula() throws InterruptedException{
+    public VekaletVerPage uygula() {
         btnUygula.click();
         return this;
     }
 
-    public VekaletVerPage aciklamaDoldur(String text) throws InterruptedException{
+    public VekaletVerPage aciklamaDoldur(String text) {
         txtAciklama.setValue(text);
         return this;
     }
 
-    public VekaletVerPage ozelUnvanKullanSec(boolean secim) throws InterruptedException{
+    public VekaletVerPage ozelUnvanKullanSec(boolean secim) {
         chkOzelUnvanKullan.setSelected(secim);
         return this;
     }
 
-    public VekaletVerPage evraktaVelaketeSonEkiGorunsunSec(boolean secim) throws InterruptedException{
+    public VekaletVerPage evraktaVelaketeSonEkiGorunsunSec(boolean secim) {
         chkEvraktaVelaketeSonEkiGorunsun.setSelected(secim);
         return this;
     }
 
-    public VekaletVerPage bitisTarihiDoldur(String text) throws InterruptedException{
+    public VekaletVerPage bitisTarihiDoldur(String text) {
         txtBitisTarihi.setValue(text);
         return this;
     }
 
-    public VekaletVerPage baslangicTarihDoldur(String text) throws InterruptedException{
+    public VekaletVerPage baslangicTarihDoldur(String text) {
         txtBaslangicTarihi.setValue(text);
         return this;
     }
 
-    public VekaletVerPage tumuSec(boolean secim) throws InterruptedException{
+    public VekaletVerPage tumuSec(boolean secim) {
         chkTumu.setSelected(secim);
         return this;
     }
 
-    public VekaletVerPage vekaletAlanDoldur(String text) throws InterruptedException{
+    public VekaletVerPage vekaletAlanDoldur(String text) {
         txtVekaletAlan.setValue(text);
         return this;
     }
 
-    public VekaletVerPage vekaletVeren() throws InterruptedException{
+    public VekaletVerPage vekaletVeren() {
         btnVekaletVeren.click();
         return this;
     }

@@ -1,3 +1,5 @@
+package YonetimHavuzuIslemleri;
+
 import common.BasePage;
 import common.BaseTest;
 import io.qameta.allure.Epic;

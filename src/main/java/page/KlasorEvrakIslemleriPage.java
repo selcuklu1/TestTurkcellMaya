@@ -18,55 +18,55 @@ public class KlasorEvrakIslemleriPage extends BaseLibrary {
     private SelenideElement btnKlasoreKopyala = $(By.id("klasorEvrakIslemleriListingForm:copyAllSelectedEvrakButton"));
     private SelenideElement btnKlasoreTasi = $(By.id("klasorEvrakIslemleriListingForm:moveAllSelectedEvrakButton"));
 
-    public KlasorEvrakIslemleriPage birimDoldur(String birim) throws InterruptedException {
+    public KlasorEvrakIslemleriPage birimDoldur(String birim) {
         //sendKeys(birimInput, birim, false);
         txtBirim.sendKeys(birim);
         return this;
     }
 
-    public KlasorEvrakIslemleriPage klasorDoldur(String klasor) throws InterruptedException {
+    public KlasorEvrakIslemleriPage klasorDoldur(String klasor) {
         //sendKeys(klasorInput, klasor, false);
         txtKlasor.sendKeys(klasor);
         return this;
     }
 
-    public KlasorEvrakIslemleriPage aramaKriteriDoldur(String aramaKriteri) throws InterruptedException {
+    public KlasorEvrakIslemleriPage aramaKriteriDoldur(String aramaKriteri) {
         //sendKeys(aramaKriteriInput, aramaKriteri, false);
         txtAramaKriteri.sendKeys(aramaKriteri);
         return this;
     }
 
-    public KlasorEvrakIslemleriPage evrakTarihiDoldur(String evrakTarihi) throws InterruptedException {
+    public KlasorEvrakIslemleriPage evrakTarihiDoldur(String evrakTarihi) {
         //sendKeys(evrakTarihiInput, evrakTarihi, false);
         txtEvrakTarihi.sendKeys(evrakTarihi);
         return this;
     }
 
-    public KlasorEvrakIslemleriPage evrakTipiSec(String evrakTipi) throws InterruptedException {
+    public KlasorEvrakIslemleriPage evrakTipiSec(String evrakTipi) {
         //selectCombobox(evrakTipiSelectbox, evrakTipi);
         cmbEvrakTipi.selectOption(evrakTipi);
         return this;
     }
 
-    public KlasorEvrakIslemleriPage altKlasorlerDahilSec(boolean altKlasorler) throws InterruptedException {
+    public KlasorEvrakIslemleriPage altKlasorlerDahilSec(boolean altKlasorler) {
         //setCheckbox(altKlasorlerDahilCheckbox, altKlasorler);
         chkAltKlasorlerDahil.setSelected(altKlasorler);
         return this;
     }
 
-    public KlasorEvrakIslemleriPage ara() throws InterruptedException {
+    public KlasorEvrakIslemleriPage ara() {
         //click(araButton);
         btnAra.click();
         return this;
     }
 
-    public KlasorEvrakIslemleriPage klasoreKopyala() throws InterruptedException {
+    public KlasorEvrakIslemleriPage klasoreKopyala() {
         //click(klasoreKopyalaButton);
         btnKlasoreKopyala.click();
         return this;
     }
 
-    public KlasorEvrakIslemleriPage klasoreTasi() throws InterruptedException {
+    public KlasorEvrakIslemleriPage klasoreTasi() {
         //click(klasoreTasiButton);
         btnKlasoreTasi.click();
         return this;

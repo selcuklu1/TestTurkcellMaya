@@ -85,10 +85,6 @@ public class BaseLibrary {
     }
     //</editor-fold>
 
-
-
-
-
     public static String clearTurkishChars(String str) {
         String ret = str;
         char[] turkishChars = new char[] {0x131, 0x130, 0xFC, 0xDC, 0xF6, 0xD6, 0x15F, 0x15E, 0xE7, 0xC7, 0x11F, 0x11E};
@@ -98,8 +94,6 @@ public class BaseLibrary {
         }
         return ret;
     }
-
-
 
     public void uploadFile(String pathToFile) {
         try {
@@ -246,7 +240,6 @@ public class BaseLibrary {
     }
 
     public String createMernisTCNO() {
-
         Vector<Integer> array = new Vector<Integer>();
         Random randomGenerator = new Random();
         array.add(new Integer(1 + randomGenerator.nextInt(9)));
@@ -260,7 +253,6 @@ public class BaseLibrary {
         for (int i=1;i<8;i+=2) t2 += array.elementAt(i);
 
         int x = ((t1*7)-t2)%10;
-
         array.add(new Integer(x));
 
         x=0;

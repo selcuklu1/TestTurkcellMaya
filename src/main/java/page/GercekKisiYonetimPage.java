@@ -31,15 +31,15 @@ public class GercekKisiYonetimPage extends BaseLibrary {
     SelenideElement btnIletisimBilgileriEkle = $(By.id("gercekKisiYonetimiEditorForm:iletisimBilgileriDataTable:addNewIletisimBilgisiButton"));
     SelenideElement btnEvetPopup = $(By.id("duplicateGercekKisiKayitEvet"));
 
-  //Yeni İletişim Bilgisi
+    //Yeni İletişim Bilgisi
     SelenideElement txtIletisimBilgisiAdres = $(By.id("gercekKisiBilgileriEditorForm:adresInput"));
-   // SelenideElement txtIletisimBilgisiIl= $(By.id("gercekKisiBilgileriEditorForm:lovIl:lovInputPanel"));
+    // SelenideElement txtIletisimBilgisiIl= $(By.id("gercekKisiBilgileriEditorForm:lovIl:lovInputPanel"));
     BelgenetElement txtIletisimBilgisiIl = comboLov(By.id("gercekKisiBilgileriEditorForm:lovIl:LovText"));
     BelgenetElement txtIletisimBilgisiIlce = comboLov(By.id("gercekKisiBilgileriEditorForm:lovIlce:LovText"));
     BelgenetElement txtIletisimBilgisiUlke = comboLov(By.id("gercekKisiBilgileriEditorForm:lovUlke:LovText"));
 
-    SelenideElement txtIletisimBilgisiEPosta= $(By.id("gercekKisiBilgileriEditorForm:ePostaInput"));
-    SelenideElement btnIletisimBilgisiKaydet= $(By.id("gercekKisiBilgileriEditorForm:saveIletisimBilgisiButton"));
+    SelenideElement txtIletisimBilgisiEPosta = $(By.id("gercekKisiBilgileriEditorForm:ePostaInput"));
+    SelenideElement btnIletisimBilgisiKaydet = $(By.id("gercekKisiBilgileriEditorForm:saveIletisimBilgisiButton"));
 
 
     public GercekKisiYonetimPage yeniGercekKisiEkle() {
@@ -49,9 +49,9 @@ public class GercekKisiYonetimPage extends BaseLibrary {
 
     public GercekKisiYonetimPage kaydet() {
         btnKaydet.click();
-
-        if(btnEvetPopup.isDisplayed())
-        {btnEvetPopup.click();  }
+        if (btnEvetPopup.isDisplayed()) {
+            btnEvetPopup.click();
+        }
 
         return this;
     }
@@ -61,7 +61,7 @@ public class GercekKisiYonetimPage extends BaseLibrary {
         return this;
     }
 
-    public GercekKisiYonetimPage kepAdresiKullaniyor(boolean secim){
+    public GercekKisiYonetimPage kepAdresiKullaniyor(boolean secim) {
         chkKepAdresiKullaniyor.setSelected(secim);
         return this;
     }
@@ -71,12 +71,12 @@ public class GercekKisiYonetimPage extends BaseLibrary {
         return this;
     }
 
-    public GercekKisiYonetimPage adDoldur(String text){
+    public GercekKisiYonetimPage adDoldur(String text) {
         txtAd.setValue(text);
         return this;
     }
 
-    public GercekKisiYonetimPage unvanDoldur(String text){
+    public GercekKisiYonetimPage unvanDoldur(String text) {
         txtUnvan.setValue(text);
         return this;
     }
@@ -102,12 +102,12 @@ public class GercekKisiYonetimPage extends BaseLibrary {
         return this;
     }
 
-    public GercekKisiYonetimPage filtreSoyadDoldur(String text){
+    public GercekKisiYonetimPage filtreSoyadDoldur(String text) {
         txtFiltreSoyad.setValue(text);
-        return  this;
+        return this;
     }
 
-    public GercekKisiYonetimPage filtreAdDoldur(String text){
+    public GercekKisiYonetimPage filtreAdDoldur(String text) {
         txtFiltreAd.setValue(text);
         return this;
     }
