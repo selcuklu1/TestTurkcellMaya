@@ -25,11 +25,7 @@ public class BaseTest {
 
         //region Selenide Driver Configuration
         //        Configuration.baseUrl = "http://94.55.114.18:8889/edys-web/sistemeGiris.xhtml";
-<<<<<<< HEAD
         Configuration.baseUrl = "http://94.55.114.18:8889/edys-web/sistemeGiris.xhtml";
-=======
-        Configuration.baseUrl = "http://94.55.114.18:8889/edys-web/mainInbox.xhtml";
->>>>>>> b0cecb3ad00833ba2a6ec39b82cde69e0f829d2b
         Configuration.browser = "drivers.Firefox"; //
         //"org.openqa.selenium.Firefox.FirefoxDriver";
         Configuration.reportsFolder = "test-result/reports";
