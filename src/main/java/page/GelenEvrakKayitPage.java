@@ -3,8 +3,10 @@ package page;
 import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
 import org.openqa.selenium.By;
+import pageComponents.belgenetElements.BelgenetElement;
 
 import static com.codeborne.selenide.Selenide.$;
+import static pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 public class GelenEvrakKayitPage extends BaseLibrary {
 
@@ -17,8 +19,11 @@ public class GelenEvrakKayitPage extends BaseLibrary {
     SelenideElement cmbEvrakBilgileriListEvrakDili = $(By.id("evrakBilgileriForm:evrakBilgileriList:7:evrakDili"));
     SelenideElement dateTxtEvrakBilgileriListEvrakTarihi = $(By.id("evrakBilgileriForm:evrakBilgileriList:8:evrakTarihi_input"));
     SelenideElement cmbEvrakBilgileriListGizlilikDerecesi = $(By.xpath("//*[@id='evrakBilgileriForm:evrakBilgileriList:9:guvenlikKodu']"));
-    SelenideElement cmbEvrakBilgileriListKisiKurum = $(By.id("evrakBilgileriForm:evrakBilgileriList:10:kisiKurum"));
-    SelenideElement txtEvrakBilgileriListGeldigiKurum = $(By.id("evrakBilgileriForm:evrakBilgileriList:10:geldigiKurumLov:LovText"));
+
+    // SelenideElement cmbEvrakBilgileriListKisiKurum = $(By.id("evrakBilgileriForm:evrakBilgileriList:9:kisiKurum"));
+    SelenideElement cmbEvrakBilgileriListKisiKurum = $("[id^='evrakBilgileriForm:evrakBilgileriList'][id$='kisiKurum']");
+    BelgenetElement txtEvrakBilgileriListGeldigiKurum = comboLov(By.id("evrakBilgileriForm:evrakBilgileriList:9:geldigiGercekKisiLov:LovText"));
+
     SelenideElement txtEvrakBilgileriListEvrakSayiTextAreaSol = $(By.id("evrakBilgileriForm:evrakBilgileriList:11:evrakSayiTextAreaSol"));
     SelenideElement txtEvrakBilgileriListEvrakSayiTextAreaSag = $(By.id("evrakBilgileriForm:evrakBilgileriList:11:evrakSayiTextAreaSag"));
     SelenideElement cmbEvrakBilgileriListEvrakGelisTipi = $(By.id("evrakBilgileriForm:evrakBilgileriList:12:evrakGelisTipi"));
@@ -118,13 +123,19 @@ public class GelenEvrakKayitPage extends BaseLibrary {
         return this;
     }
 
-    public GelenEvrakKayitPage evrakBilgileriListKisiKurumSec(String kisiKurum) throws InterruptedException {
-        cmbEvrakBilgileriListKisiKurum.selectOption(kisiKurum);
+    public GelenEvrakKayitPage evrakBilgileriListKisiKurumSec(String kisiKurum) {
+        cmbEvrakBilgileriListKisiKurum.selectOptionByValue(kisiKurum);
         return this;
     }
 
-    public GelenEvrakKayitPage evrakBilgileriListGeldigiKurumDoldur(String geldigiKurum) throws InterruptedException {
-        txtEvrakBilgileriListGeldigiKurum.sendKeys(geldigiKurum);
+    public GelenEvrakKayitPage evrakBilgileriListGeldigiKurumDoldur(String geldigiKurum) {
+
+        txtEvrakBilgileriListGeldigiKurum.selectComboLov(geldigiKurum);
+        //shouldHave(Condition.text(geregi));
+
+        System.out.println("title: " + txtEvrakBilgileriListGeldigiKurum.lastSelectedLovTitleText());
+        System.out.println("detail: " + txtEvrakBilgileriListGeldigiKurum.lastSelectedLovDetailText());
+
         return this;
     }
 

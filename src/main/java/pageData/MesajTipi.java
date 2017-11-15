@@ -10,6 +10,7 @@ public enum MesajTipi {
     UYARI("Uyarı"),
     DIKKAT("Dikkat");
 
+
     private String value;
 
     MesajTipi(String value) {

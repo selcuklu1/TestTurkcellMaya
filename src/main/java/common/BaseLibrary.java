@@ -150,7 +150,7 @@ public class BaseLibrary {
     }
 
     public String createRandomText(int textSize) {
-        char[] chars = "abcdefghijklmnopqrstuvwxyz1234567890".toCharArray();
+        char[] chars = "abcdefghijklmnopqrstuvwxyz".toCharArray();
         StringBuilder sb = new StringBuilder();
         Random random = new Random();
         for (int i = 0; i < textSize; i++) {
@@ -276,5 +276,12 @@ public class BaseLibrary {
 
         return res;
     }
+
+    public String getIlkHarfBuyuk(String text){
+        char ilkHarf = Character . toUpperCase ( text . charAt ( 0 ));
+        text = ilkHarf + text . substring ( 1 );
+    return text;
+    }
+
 
 }

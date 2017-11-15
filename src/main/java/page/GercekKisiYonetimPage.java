@@ -1,5 +1,6 @@
 package page;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
 import org.openqa.selenium.By;
@@ -49,10 +50,8 @@ public class GercekKisiYonetimPage extends BaseLibrary {
     public GercekKisiYonetimPage kaydet() {
         btnKaydet.click();
 
-        if(btnEvetPopup.exists())
-        {
-            btnEvetPopup.click();
-        }
+        if(btnEvetPopup.isDisplayed())
+        {btnEvetPopup.click();  }
 
         return this;
     }

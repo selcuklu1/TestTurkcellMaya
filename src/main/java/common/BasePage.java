@@ -60,8 +60,13 @@ public class BasePage {
 
 
     //region Sayfalr
+
     public IslemMesajlari islemMesaji() {
         return new IslemMesajlari();
+    }
+
+    public BaseLibrary baseLibrary() {
+        return new BaseLibrary();
     }
 
     public MainPage mainPage() {
@@ -103,5 +108,10 @@ public class BasePage {
     public GercekKisiYonetimPage gercekKisiYonetimPage() {
         return new GercekKisiYonetimPage();
     }
+
+    public GelenEvrakKayitPage gelenEvrakKayitPage() {
+        return new GelenEvrakKayitPage();
+    }
+
     //endregion
 }
