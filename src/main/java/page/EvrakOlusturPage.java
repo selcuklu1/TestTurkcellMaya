@@ -6,11 +6,13 @@ import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.testng.Assert;
 import pageComponents.belgenetElements.BelgenetElement;
 
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
-import static pageComponents.belgenetElements.BelgenetFramework.comboLov;
+import static pageComponents.belgenetElements.BelgenetFramework.*;
+
 
 public class EvrakOlusturPage extends BaseLibrary {
 
@@ -42,8 +44,13 @@ public class EvrakOlusturPage extends BaseLibrary {
     SelenideElement cmbBilgiSecimTipi = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:14:j_idt8516"));
     SelenideElement txtBilgi = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:14:bilgiLov:LovText"));
     SelenideElement btnBilgiTree = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:14:bilgiLov:treeButton"));
-    SelenideElement cmbGeregiSecimTipi = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:15:j_idt8525"));
-    SelenideElement txtGeregi = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:15:geregiLov:LovText"));
+
+    SelenideElement cmbGeregiSecimTipi = $(By.xpath("//select[starts-with(@id,'yeniGidenEvrakForm:evrakBilgileriList:16:j_idt')]"));
+
+   // BelgenetElement cmbGeregiSecimTipi = comboBox(By.xpath("//select[starts-with(@id,'yeniGidenEvrakForm:evrakBilgileriList:16:j_idt')]"));
+    //BelgenetElement cmbGeregiSecimTipi = comboBox(By.id("yeniGidenEvrakForm:evrakBilgileriList:16:j_idt3944"));
+    BelgenetElement txtGeregi = comboLov(By.id("yeniGidenEvrakForm:evrakBilgileriList:15:geregiLov:LovText"));
+
     SelenideElement btnGeregiTree = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:15:geregiLov:treeButton"));
     SelenideElement chkDagitimiEkYap = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:16:dagitimEkYapCheckBoxId"));
     SelenideElement txtOnayAkisi = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:17:akisLov:LovText"));
@@ -236,22 +243,29 @@ public class EvrakOlusturPage extends BaseLibrary {
         return this;
     }
 
-    public EvrakOlusturPage bilgiDoldur(String bilgi) throws InterruptedException {
+    public EvrakOlusturPage bilgiDoldur(String bilgi)  {
         txtBilgi.sendKeys(bilgi);
         return this;
     }
 
-    public EvrakOlusturPage geregiSecimTipiSec(String value) throws InterruptedException {
+    public EvrakOlusturPage geregiSecimTipiSec(String value)  {
         cmbGeregiSecimTipi.selectOption(value);
         return this;
     }
 
-    public EvrakOlusturPage geregiDoldur(String geregi) throws InterruptedException {
-        txtGeregi.sendKeys(geregi);
+    public EvrakOlusturPage geregiDoldur(String geregi)  {
+        txtGeregi.selectComboLov(geregi)
+                .shouldHave(Condition.text(geregi));
+
+        System.out.println("title: " + txtGeregi.lastSelectedLovTitleText());
+        System.out.println("detail: " + txtGeregi.lastSelectedLovDetailText());
+
+        Assert.assertEquals(txtGeregi.getComboBoxValues().contains(geregi), true);
+
         return this;
     }
 
-    public EvrakOlusturPage dagitimiEkYapSec(boolean secili) throws InterruptedException {
+    public EvrakOlusturPage dagitimiEkYapSec(boolean secili) {
         chkDagitimiEkYap.setSelected(true);
         return this;
     }

@@ -28,12 +28,15 @@ public class GercekKisiYonetimPage extends BaseLibrary {
     SelenideElement btnKepAdresBilgiler = $(By.id("gercekKisiYonetimiEditorForm:kepBilgileriDataTable:addNewKepAdresiButton"));
     SelenideElement btnKaydet = $(By.id("gercekKisiYonetimiEditorForm:saveGercekKisiButton"));
     SelenideElement btnIletisimBilgileriEkle = $(By.id("gercekKisiYonetimiEditorForm:iletisimBilgileriDataTable:addNewIletisimBilgisiButton"));
+    SelenideElement btnEvetPopup = $(By.id("duplicateGercekKisiKayitEvet"));
 
   //Yeni İletişim Bilgisi
     SelenideElement txtIletisimBilgisiAdres = $(By.id("gercekKisiBilgileriEditorForm:adresInput"));
    // SelenideElement txtIletisimBilgisiIl= $(By.id("gercekKisiBilgileriEditorForm:lovIl:lovInputPanel"));
-    BelgenetElement txtIletisimBilgisiIl = comboBox("gercekKisiBilgileriEditorForm:lovIl:lovInputPanel");
-    SelenideElement txtIletisimBilgisiIlce= $(By.id("gercekKisiBilgileriEditorForm:lovIlce:lovInputPanel"));
+    BelgenetElement txtIletisimBilgisiIl = comboLov(By.id("gercekKisiBilgileriEditorForm:lovIl:LovText"));
+    BelgenetElement txtIletisimBilgisiIlce = comboLov(By.id("gercekKisiBilgileriEditorForm:lovIlce:LovText"));
+    BelgenetElement txtIletisimBilgisiUlke = comboLov(By.id("gercekKisiBilgileriEditorForm:lovUlke:LovText"));
+
     SelenideElement txtIletisimBilgisiEPosta= $(By.id("gercekKisiBilgileriEditorForm:ePostaInput"));
     SelenideElement btnIletisimBilgisiKaydet= $(By.id("gercekKisiBilgileriEditorForm:saveIletisimBilgisiButton"));
 
@@ -45,6 +48,12 @@ public class GercekKisiYonetimPage extends BaseLibrary {
 
     public GercekKisiYonetimPage kaydet() {
         btnKaydet.click();
+
+        if(btnEvetPopup.exists())
+        {
+            btnEvetPopup.click();
+        }
+
         return this;
     }
 
@@ -120,18 +129,22 @@ public class GercekKisiYonetimPage extends BaseLibrary {
     }
 
     public GercekKisiYonetimPage iletisimBilgisiIlDoldur(String il) {
-        //txtIletisimBilgisiIl.selectComboLov(il);
-        //comboText(txtIletisimBilgisiIl);
+        txtIletisimBilgisiIl.selectComboLov(il);
         return this;
     }
 
     public GercekKisiYonetimPage iletisimBilgisiIlceDoldur(String ilce) {
-        txtIletisimBilgisiIlce.sendKeys(ilce);
+        txtIletisimBilgisiIlce.selectComboLov(ilce);
+        return this;
+    }
+
+    public GercekKisiYonetimPage iletisimBilgisiUlkeDoldur(String ulke) {
+        txtIletisimBilgisiUlke.selectComboLov(ulke);
         return this;
     }
 
     public GercekKisiYonetimPage iletisimBilgisiEpostaDoldur(String eposta) {
-        txtIletisimBilgisiIlce.sendKeys(eposta);
+        txtIletisimBilgisiEPosta.setValue(eposta);
         return this;
     }
 

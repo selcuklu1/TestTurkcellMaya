@@ -29,19 +29,25 @@ public class GercekKisiYonetimiTest extends BaseTest{
         page.gercekKisiYonetimPage()
                 .yeniGercekKisiEkle()
                 .tcKimlikNoDoldur(lib.createMernisTCNO())
-                .onEkDoldur("Mühendis")
+                .onEkDoldur("Muh")
+                .unvanDoldur("Mühendis")
                 .adDoldur("Sezai")
                 .soyadDoldur("Çelik")
-                .kepAdresiKullaniyor(true)
+                //.kepAdresiKullaniyor(true)
                 .iletisimBilgileriEkle()
 
                 .iletisimBilgisiAdresDoldur("Cumhuriyet Mahallesi")
-                .iletisimBilgisiIlDoldur("İSTANBUL")
+                .iletisimBilgisiIlDoldur("İstanbul")
                 .iletisimBilgisiIlceDoldur("Şişli")
                 .iletisimBilgisiEpostaDoldur("test@turksat.com.tr")
-                .iletisimBilgisiKaydet();
+                .iletisimBilgisiKaydet()
 
+                .kaydet();
 
+        page.ustMenuAc("Evrak Oluştur");
+        page.evrakOlusturPage()
+                .geregiSecimTipiSec("G")
+                .geregiDoldur("Sezai Çelik");
 
 
 
