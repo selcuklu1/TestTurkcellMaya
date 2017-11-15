@@ -42,14 +42,15 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
 
          */
 
+        /*
         page.ustMenuAc("Evrak Oluştur");
         page.evrakOlusturPage()
-                .onayAkisiEkle("optiim test1")
+                .onayAkisiEkle()
                 .onayAkisiKullaniciKontrol("Optiim OPTİİM", "Paraflama")
                 .onayAkisiKullaniciSec("Optiim TEST1")
                 .onayAkisiKullaniciTipiSec("Optiim TEST1", "İmzalama")
                 .onayAkisiKullan();
-
+*/
 
 
 
@@ -60,11 +61,18 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
     @Test(enabled = true, description = "TC0001")
     public void TC0001() {
 
+
+
+
+    }
+
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "Yönetim Havuzu Arama")
+    public void TC0009() {
         page.ustMenuAc("Yönetim Havuzu Yönetimi");
         page.yonetimHavuzuYonetimiPage()
-                .ara();
-
-
-
+                .ara("OPTİİM BİRİM11","Testdeneme1123","Sadece Aktifler")
+                .yonetimHavuzuGuncelle("Testdeneme1123");
     }
 }
