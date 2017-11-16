@@ -1,3 +1,5 @@
+package GelenGidenEvrakKayit;
+
 import common.BasePage;
 import common.BaseTest;
 import io.qameta.allure.Epic;
@@ -6,7 +8,7 @@ import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-public class GelenGidenEvrakKayit extends BaseTest {
+public class GelenGidenEvrakKayitTest extends BaseTest {
 
     BasePage page;
 
@@ -18,7 +20,7 @@ public class GelenGidenEvrakKayit extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "Üstyazı ek ve ilgi eklenerek gelen evrak kaydı")
-    public void ustyaziEkveIlgiEklenerekGelenEvrakKaydi() throws InterruptedException {
+    public void TC0321 () throws InterruptedException {
 
         page.ustMenuAc("Gelen Evrak Kayıt");
         page.gelenEvrakKayitPage()
@@ -39,7 +41,7 @@ public class GelenGidenEvrakKayit extends BaseTest {
                 .evrakEkTabViewFizikselEkMetniDoldur("test otomasyon")
                 .evrakFizikselEkTabViewAciklamaEkle()
                 .kaydet();
-        page.
+                //popup ta evet tıklanacak
 
     }
 }
