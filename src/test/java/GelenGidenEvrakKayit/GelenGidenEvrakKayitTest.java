@@ -8,6 +8,7 @@ import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import page.BirimEvraklariKaydedilenGelenEvraklar;
+import pageData.MesajTipi;
 import pageData.SolMenuData;
 
 public class GelenGidenEvrakKayitTest extends BaseTest {
@@ -56,8 +57,10 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .evrakFizikselEkTabViewAciklamaEkle()
                 .kaydet()
                 .popUps();
-page.solMenu(SolMenuData.BirimEvraklari.KaydedilenGelenEvraklar);
-page.kaydedilenGelenEvraklar()
+//        page.islemMesaji().beklenenMesajTipi(MesajTipi.BASARILI);
+        page.solMenu(SolMenuData.BirimEvraklari.KaydedilenGelenEvraklar);
+//        TODO  tabloda oluşturulan evrak bulunacak....
+        page.kaydedilenGelenEvraklar()
         .raporSec();
 
     }
