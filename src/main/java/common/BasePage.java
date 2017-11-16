@@ -103,6 +103,7 @@ public class BasePage {
         return new OnayAkisYonetimiPage();
     }
 
+<<<<<<< HEAD
     public GercekKisiYonetimPage gercekKisiYonetimPage() {
         return new GercekKisiYonetimPage();
     }
@@ -110,6 +111,10 @@ public class BasePage {
     public GelenEvrakKayitPage gelenEvrakKayitPage() {
         return new GelenEvrakKayitPage();
     }
+=======
+    public GelenEvrakKayitPage gelenEvrakKayitPage(){return new GelenEvrakKayitPage();}
+
+>>>>>>> GelenGidenEvrakKayıt
 
     //endregion
 }
