@@ -105,7 +105,9 @@ public class GelenEvrakKayitPage extends BaseLibrary {
     SelenideElement txtIlgiIslemleriTabViewArsivdenIlgiEvrakAraSayi = $(By.id("evrakBilgileriForm:ilgiIslemleriTabView:arsivdenIlgiEvrakAraSayiInputTextId"));
 
     SelenideElement btnKaydet =$(By.id("buttonPanelForm:kaydetButton"));
-    SelenideElement popUp = $(By.id("ustYaziveHavaleYeriYokConfirmDialog"));
+    SelenideElement ustYaziveHavaleYeriYokpopUp = $(By.id("ustYaziveHavaleYeriYokConfirmDialog"));
+    SelenideElement ustYaziYokEvet=$(By.id("evetDugmesi"));
+    SelenideElement ustYaziYokpopUp=$(By.id("ustYaziYokConfirmDialog"));
     SelenideElement popUpEvet = $(By.id("evetDugmesiUstYaziHavaleYer"));
     SelenideElement mukerrerPopUpEvet = $(By.id("evetButtonBenzerKaydet"));
     SelenideElement mukerrerPopUp = $(By.id("benzerEvrakKayitConfirmDialog"));
@@ -431,15 +433,30 @@ public class GelenEvrakKayitPage extends BaseLibrary {
     }
     public GelenEvrakKayitPage popUps() {
 //        popUp.shouldHave(Condition.visible);  pop up kontrolu
-        if (popUp.exists()) {
-            popUpEvet.click();
+        String text ;
+
+        if (ustYaziveHavaleYeriYokpopUp.exists()) {
+            text = popUpText(ustYaziveHavaleYeriYokpopUp);
+            if (text=="Evrak üst yazı ve havale yeri seçmediniz. Evrak kaydedildiğinde havale işlemine devam edecektir.İşleme devam etmek istiyor musunuz?"){
+                popUpEvet.click();
+            }
         }
-        if (mukerrerPopUp.exists()){
+        else if(ustYaziYokpopUp.exists()){
+            text = popUpText(ustYaziveHavaleYeriYokpopUp);
+            if (text=="Evrak üst yazı eklenmemiş. İşleme devam etmek istiyor musunuz?"){
+                ustYaziYokEvet.click();
+            }
+        }
+        else if (mukerrerPopUp.exists()){
             mukerrerPopUpEvet.click();
         }
-        if (basariliPopUp.exists()){
+        else if (basariliPopUp.exists()){
             basariliPopUpKapat.click();
         }
         return this;
+    }
+
+    public String popUpText (SelenideElement element){
+        return element.getText();
     }
 }
