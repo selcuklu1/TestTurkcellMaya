@@ -100,6 +100,8 @@ public class BasePage {
         return new OnayAkisYonetimiPage();
     }
 
+    public GelenEvrakKayitPage gelenEvrakKayitPage(){return new GelenEvrakKayitPage();}
+
 
     //endregion
 }
