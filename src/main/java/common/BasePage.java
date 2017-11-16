@@ -110,5 +110,7 @@ public class BasePage {
     public GelenEvrakKayitPage gelenEvrakKayitPage(){return new GelenEvrakKayitPage();}
 
     public BirimEvraklariKaydedilenGelenEvraklar kaydedilenGelenEvraklar() {return new BirimEvraklariKaydedilenGelenEvraklar();}
+
+    public BirimEvraklariTeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage() {return new BirimEvraklariTeslimAlinmayiBekleyenlerPage();}
     //endregion
 }

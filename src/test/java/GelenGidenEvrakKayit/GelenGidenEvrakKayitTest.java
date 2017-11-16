@@ -14,6 +14,17 @@ import pageData.SolMenuData;
 public class GelenGidenEvrakKayitTest extends BaseTest {
 
     BasePage page;
+    String konuKodu = "010.01";
+    String evrakTuru = "R";
+    String evrakDili = "917";
+    String evrakTarihi = "16.11.2017";
+    String gizlilikDerecesi = "N";
+    String kisiKurum = "D";
+    String geldigiKurum = "Esk Kurum 071216 2";
+    String evrakSayiSag = "12365";
+    String evrakGelisTipi = "P";
+    String ivedilik= "N";
+    String ekMetni = "test otomasyon";
 
     @BeforeMethod
     public void loginBeforeTests() {
@@ -26,18 +37,6 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     public void TC0321() throws InterruptedException {
 
         page.ustMenuAc("Gelen Evrak Kayıt");
-        String konuKodu = "010.01";
-        String evrakTuru = "R";
-        String evrakDili = "917";
-        String evrakTarihi = "16.11.2017";
-        String gizlilikDerecesi = "N";
-        String kisiKurum = "D";
-        String geldigiKurum = "Esk Kurum 071216 2";
-        String evrakSayiSag = "12365";
-        String evrakGelisTipi = "P";
-        String ivedilik= "N";
-        String ekMetni = "test otomasyon";
-
         page.gelenEvrakKayitPage()
 //                .evrakBilgileriUstYaziEkle("C:/Users/Emre_Sencan/Pictures/pdf2.pdf")
                 .evrakBilgileriListKonuKoduDoldur(konuKodu)
@@ -62,6 +61,31 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 //        TODO  tabloda oluşturulan evrak bulunacak....
         page.kaydedilenGelenEvraklar()
         .raporSec();
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "Gelen evrak kayıt ekranından havale")
+    public void TC0328 () throws InterruptedException{
+        String birim = "OPTİİM BİRİM11";
+        page.ustMenuAc("Gelen Evrak Kayıt");
+        page.gelenEvrakKayitPage()
+//                .evrakBilgileriUstYaziEkle("C:/Users/Emre_Sencan/Pictures/pdf2.pdf")
+                .evrakBilgileriListKonuKoduDoldur(konuKodu)
+                .evrakBilgileriListEvrakTuruSec(evrakTuru)
+                .evrakBilgileriListEvrakDiliSec(evrakDili)
+                .evrakBilgileriListEvrakTarihiDoldur(evrakTarihi)
+                .evrakBilgileriListGizlilikDerecesiSec(gizlilikDerecesi)
+                .evrakBilgileriListKisiKurumSec(kisiKurum)
+                .evrakBilgileriListGeldigiKurumDoldur(geldigiKurum)
+                .evrakBilgileriListEvrakSayiSagDoldur(evrakSayiSag)
+                .evrakBilgileriListEvrakGelisTipiSec(evrakGelisTipi)
+                .evrakBilgileriListIvedilikSec(ivedilik)
+                .dagitimBilgileriBirimDoldur(birim)
+                .kaydet()
+                .popUps();
+//        page.islemMesaji().beklenenMesajTipi(MesajTipi.BASARILI);
+        page.solMenu(SolMenuData.BirimEvraklari.KaydedilenGelenEvraklar);
+//        TODO  tabloda oluşturulan evrak bulunacak....
 
     }
 }

@@ -73,11 +73,14 @@ public class GelenEvrakKayitPage extends BaseLibrary {
     SelenideElement txtDagitimBilgileriKisi = $(By.id("evrakBilgileriForm:dagitimBilgileriKullaniciLov:LovText"));
     SelenideElement txtDagitimBilgileriKullaniciListesi = $(By.id("evrakBilgileriForm:dagitimBilgileriKisiListesiLov:LovText"));
     SelenideElement btnDagitimBilgileriOnaylayacakKisi = $(By.id("evrakBilgileriForm:onaylayacakKisiLov:treeButton"));
-    SelenideElement txtDagitimBilgileriAciklama = $(By.xpath("//*[@id='evrakBilgileriForm:havaleAciklama']"));
+    SelenideElement txtDagitimBilgileriAciklama = $(By.id("evrakBilgileriForm:havaleAciklama"));
     SelenideElement btnDagitimBilgileriDosyaEkle = $(By.id("evrakBilgileriForm:fileUploadHavaleEk_input"));
     SelenideElement txtDagitimBilgileriIslemSuresi = $(By.id("evrakBilgileriForm:islemSuresiTarih_input"));
     SelenideElement chkDagitimBilgileriEvragiOnayliKapat = $(By.id("evrakBilgileriForm:j_idt5629_input"));
     SelenideElement btnDagitimBilgileriEvragiKapatacakKisi = $(By.id("evrakBilgileriForm:evrakiKapatacakKisiLov:treeButton"));//todo:Evrakı Onaylı Kapat secili olmadan çıkmıyor
+    BelgenetElement cmbHavaleIslemleriBirim =  comboLov(By.id("evrakBilgileriForm:dagitimBilgileriBirimLov:LovText"));
+    BelgenetElement cmbDagitimBilgileriKisi = comboLov(By.id("evrakBilgileriForm:dagitimBilgileriKullaniciLov:LovText"));
+    BelgenetElement cmbDagitimBilgileriKullaniciListesi = comboLov(By.id("evrakBilgileriForm:dagitimBilgileriKisiListesiLov:LovText"));
 
     //İlgi Bilgileri sekmesinde bulunanlar
     //Dosya Ekle alt sekmesinde bulunanlar
@@ -217,7 +220,8 @@ public class GelenEvrakKayitPage extends BaseLibrary {
     }
 
     public GelenEvrakKayitPage dagitimBilgileriBirimDoldur(String birim)  {
-        txtDagitimBilgileriBirim.sendKeys(birim);
+//        txtDagitimBilgileriBirim.sendKeys(birim);
+        cmbHavaleIslemleriBirim.selectComboLov(birim);
         return this;
     }
 
@@ -227,8 +231,10 @@ public class GelenEvrakKayitPage extends BaseLibrary {
     }
 
     public GelenEvrakKayitPage dagitimBilgileriKullaniciListesiDoldur(String kullaniciListesi)  {
-        txtDagitimBilgileriKullaniciListesi.sendKeys(kullaniciListesi);
+//        txtDagitimBilgileriKullaniciListesi.sendKeys(kullaniciListesi);
+        cmbDagitimBilgileriKullaniciListesi.selectComboLov(kullaniciListesi);
         return this;
+
     }
 
     public GelenEvrakKayitPage dagitimBilgileriOnaylayacakKisi()  {
