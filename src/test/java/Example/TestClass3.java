@@ -26,4 +26,12 @@ public class TestClass3 extends BaseTest {
         page.loginPage().login();
         page.ustMenuAc("Evrak Oluştur");
     }
+
+
+    @Test
+    public void ustYaziFileUpload() {
+        page.loginPage().login();
+        page.ustMenuAc("Gelen Evrak Kayıt");
+        page.gelenEvrakKayitPage().ustYaziUploadFile("C:\\TestAutomation\\BelgenetFTA\\testpdf.pdf");
+    }
 }
