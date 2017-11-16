@@ -22,28 +22,40 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "Üstyazı ek ve ilgi eklenerek gelen evrak kaydı")
-    public void TC0321 () throws InterruptedException {
+    public void TC0321() throws InterruptedException {
 
         page.ustMenuAc("Gelen Evrak Kayıt");
+        String konuKodu = "010.01";
+        String evrakTuru = "R";
+        String evrakDili = "917";
+        String evrakTarihi = "16.11.2017";
+        String gizlilikDerecesi = "N";
+        String kisiKurum = "D";
+        String geldigiKurum = "Esk Kurum 071216 2";
+        String evrakSayiSag = "12365";
+        String evrakGelisTipi = "P";
+        String ivedilik= "N";
+        String ekMetni = "test otomasyon";
+
         page.gelenEvrakKayitPage()
-                .evrakBilgileriUstYaziEkle("C:/Users/Emre_Sencan/Pictures/pdf2.pdf")
-                .evrakBilgileriListKonuKoduDoldur("010.01")
-                .evrakBilgileriListEvrakTuruSec("D")
-                .evrakBilgileriListEvrakDiliSec("917")
-                .evrakBilgileriListEvrakTarihiDoldur("16.11.2017")
-                .evrakBilgileriListGizlilikDerecesiSec("N")
-                .evrakBilgileriListKisiKurumSec("D")
-                .evrakBilgileriListGeldigiKurumDoldur("Esk Kurum 071216 2")
-                .evrakBilgileriListEvrakSayiSagDoldur("12365")
-                .evrakBilgileriListEvrakGelisTipiSec("P")
-                .evrakBilgileriListIvedilikSec("N")
+//                .evrakBilgileriUstYaziEkle("C:/Users/Emre_Sencan/Pictures/pdf2.pdf")
+                .evrakBilgileriListKonuKoduDoldur(konuKodu)
+                .evrakBilgileriListEvrakTuruSec(evrakTuru)
+                .evrakBilgileriListEvrakDiliSec(evrakDili)
+                .evrakBilgileriListEvrakTarihiDoldur(evrakTarihi)
+                .evrakBilgileriListGizlilikDerecesiSec(gizlilikDerecesi)
+                .evrakBilgileriListKisiKurumSec(kisiKurum)
+                .evrakBilgileriListGeldigiKurumDoldur(geldigiKurum)
+                .evrakBilgileriListEvrakSayiSagDoldur(evrakSayiSag)
+                .evrakBilgileriListEvrakGelisTipiSec(evrakGelisTipi)
+                .evrakBilgileriListIvedilikSec(ivedilik)
                 //Excel eklenecek
                 .evrakBilgileriEkBilgiFiltreAc()
                 .evrakBilgileriEkBilgiFizikselEkEkle()
-                .evrakEkTabViewFizikselEkMetniDoldur("test otomasyon")
+                .evrakEkTabViewFizikselEkMetniDoldur(ekMetni)
                 .evrakFizikselEkTabViewAciklamaEkle()
-                .kaydet();
-                //popup ta evet tıklanacak
+                .kaydet()
+                .popUps();
 page.solMenu(SolMenuData.BirimEvraklari.KaydedilenGelenEvraklar);
 page.kaydedilenGelenEvraklar()
         .raporSec();

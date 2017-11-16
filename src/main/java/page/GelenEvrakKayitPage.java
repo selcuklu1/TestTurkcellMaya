@@ -1,5 +1,6 @@
 package page;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
 import io.qameta.allure.Step;
@@ -101,6 +102,12 @@ public class GelenEvrakKayitPage extends BaseLibrary {
     SelenideElement txtIlgiIslemleriTabViewArsivdenIlgiEvrakAraSayi = $(By.id("evrakBilgileriForm:ilgiIslemleriTabView:arsivdenIlgiEvrakAraSayiInputTextId"));
 
     SelenideElement btnKaydet =$(By.id("buttonPanelForm:kaydetButton"));
+    SelenideElement popUp = $(By.id("ustYaziveHavaleYeriYokConfirmDialog"));
+    SelenideElement popUpEvet = $(By.id("evetDugmesiUstYaziHavaleYer"));
+    SelenideElement mukerrerPopUpEvet = $(By.id("evetButtonBenzerKaydet"));
+    SelenideElement mukerrerPopUp = $(By.id("benzerEvrakKayitConfirmDialog"));
+    SelenideElement basariliPopUpKapat = $(By.id("evrakKaydetBasariliDialogForm:vazgecButton"));
+    SelenideElement basariliPopUp = $(By.id("evrakKaydetBasariliDialog"));
 
     public GelenEvrakKayitPage evrakBilgileriEkBilgiFizikselEkEkle() throws InterruptedException{
         btnFizikselEkEkle.click();
@@ -113,8 +120,7 @@ public class GelenEvrakKayitPage extends BaseLibrary {
     }
 
     public GelenEvrakKayitPage evrakBilgileriUstYaziEkle(String path) throws InterruptedException {
-        btnUstYaziEkle.click();
-        uploadFile(path);
+        ustYaziUploadFile(path);
         return this;
     }
 
@@ -417,6 +423,17 @@ public class GelenEvrakKayitPage extends BaseLibrary {
         btnKaydet.click();
         return this;
     }
-
-
+    public GelenEvrakKayitPage popUps() {
+//        popUp.shouldHave(Condition.visible);  pop up kontrolu
+        if (popUp.exists()) {
+            popUpEvet.click();
+        }
+        if (mukerrerPopUp.exists()){
+            mukerrerPopUpEvet.click();
+        }
+        if (basariliPopUp.exists()){
+            basariliPopUpKapat.click();
+        }
+        return this;
+    }
 }
