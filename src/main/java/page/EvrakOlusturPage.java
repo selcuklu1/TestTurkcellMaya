@@ -310,8 +310,8 @@ public class EvrakOlusturPage extends BaseLibrary {
     @Step("Hitap alanı kontrolu başarılı")
     public EvrakOlusturPage hitapKismiAlaniKontrol(String sayin, String unvan, String ad, String soyad) {
         String getHitapAlani = editorHitapKismi.shouldHave(Condition.visible).getText();
-        System.out.println(getHitapAlani);
         String girilenHitapAlani = sayin + " " + unvan + " " + toUpperCaseFirst(ad) + " " + soyad.toUpperCase();
+        System.out.println(getHitapAlani);
         System.out.println(girilenHitapAlani);
         Assert.assertEquals(getHitapAlani.contains(girilenHitapAlani), true);
 
