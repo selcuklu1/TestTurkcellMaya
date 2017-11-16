@@ -435,28 +435,18 @@ public class GelenEvrakKayitPage extends BaseLibrary {
 //        popUp.shouldHave(Condition.visible);  pop up kontrolu
         String text ;
 
-        if (ustYaziveHavaleYeriYokpopUp.exists()) {
-            text = popUpText(ustYaziveHavaleYeriYokpopUp);
-            if (text=="Evrak üst yazı ve havale yeri seçmediniz. Evrak kaydedildiğinde havale işlemine devam edecektir.İşleme devam etmek istiyor musunuz?"){
-                popUpEvet.click();
-            }
+        if (ustYaziveHavaleYeriYokpopUp.isDisplayed()) {
+            popUpEvet.click();
         }
-        else if(ustYaziYokpopUp.exists()){
-            text = popUpText(ustYaziveHavaleYeriYokpopUp);
-            if (text=="Evrak üst yazı eklenmemiş. İşleme devam etmek istiyor musunuz?"){
-                ustYaziYokEvet.click();
-            }
+        else if(ustYaziYokpopUp.isDisplayed()){
+            ustYaziYokEvet.click();
         }
-        else if (mukerrerPopUp.exists()){
+        else if (mukerrerPopUp.isDisplayed()){
             mukerrerPopUpEvet.click();
         }
-        else if (basariliPopUp.exists()){
+        else if (basariliPopUp.isDisplayed()){
             basariliPopUpKapat.click();
         }
         return this;
-    }
-
-    public String popUpText (SelenideElement element){
-        return element.getText();
     }
 }
