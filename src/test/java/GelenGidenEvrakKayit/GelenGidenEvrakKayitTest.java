@@ -7,6 +7,8 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import page.BirimEvraklariKaydedilenGelenEvraklar;
+import pageData.SolMenuData;
 
 public class GelenGidenEvrakKayitTest extends BaseTest {
 
@@ -24,7 +26,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
         page.ustMenuAc("Gelen Evrak Kayıt");
         page.gelenEvrakKayitPage()
-                //.evrakBilgileriUstYaziEkle("C:/Users/Emre_Sencan/Pictures/pdf2.pdf") üst yazı ekle butonu tıklanacak
+                .evrakBilgileriUstYaziEkle("C:/Users/Emre_Sencan/Pictures/pdf2.pdf")
                 .evrakBilgileriListKonuKoduDoldur("010.01")
                 .evrakBilgileriListEvrakTuruSec("D")
                 .evrakBilgileriListEvrakDiliSec("917")
@@ -42,6 +44,9 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .evrakFizikselEkTabViewAciklamaEkle()
                 .kaydet();
                 //popup ta evet tıklanacak
+page.solMenu(SolMenuData.BirimEvraklari.KaydedilenGelenEvraklar);
+page.kaydedilenGelenEvraklar()
+        .raporSec();
 
     }
 }

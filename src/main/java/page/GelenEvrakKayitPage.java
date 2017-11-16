@@ -14,7 +14,7 @@ public class GelenEvrakKayitPage extends BaseLibrary {
     SelenideElement pageTitle = $(By.cssSelector("#baseLayoutCenter .ui-dialog-title"));
 
     // Evrak Bilgileri Sekmesinde bulunanlar
-    SelenideElement btnUstYaziEkle = $(By.xpath("//div[@id='gidenEvrakDefterKaydiForm:ustYaziForm:gedkUploadButton']//span[@class='Üst Yazı Ekle']"));
+    SelenideElement btnUstYaziEkle = $(By.id("mainInboxForm:inboxDataTable:j_idt731"));
     SelenideElement txtEvrakBilgileriListKonuKodu = $("[id^='evrakBilgileriForm:evrakBilgileriList'][id$='konuKoduLov:LovText']");
     SelenideElement txtEvrakBilgileriListKonu = $("[id^='evrakBilgileriForm:evrakBilgileriList'][id$='konuTextArea']");
     SelenideElement cmbEvrakBilgileriListEvrakTuru = $("[id$='evrakTuruCombo']");
@@ -29,8 +29,8 @@ public class GelenEvrakKayitPage extends BaseLibrary {
 
     SelenideElement txtEvrakBilgileriListEvrakSayiTextAreaSol = $("[id$='evrakSayiTextAreaSol'");
     SelenideElement txtEvrakBilgileriListEvrakSayiTextAreaSag = $("[id$='evrakSayiTextAreaSag']");
-    SelenideElement cmbEvrakBilgileriListEvrakGelisTipi = $("['evrakGelisTipi']");
-    SelenideElement cmbEvrakBilgileriListIvedilik = $("[ivedilik']");
+    SelenideElement cmbEvrakBilgileriListEvrakGelisTipi = $("[id$='evrakGelisTipi']");
+    SelenideElement cmbEvrakBilgileriListIvedilik = $("[id$='ivedilik']");
     SelenideElement txtEvrakBilgileriListMiat = $(By.id("evrakBilgileriForm:evrakBilgileriList:14:miatCalendar_input"));
     SelenideElement txtEvrakBilgileriListAciklama = $(By.id("evrakBilgileriForm:evrakBilgileriList:15:j_idt4318"));
     SelenideElement cmbEvrakBilgileriListOzelKategori = $(By.id("evrakBilgileriForm:evrakBilgileriList:17:j_idt4499"));
@@ -181,7 +181,7 @@ public class GelenEvrakKayitPage extends BaseLibrary {
     }
 
     public GelenEvrakKayitPage evrakBilgileriListEvrakGelisTipiSec(String evrakGelisTipi)  {
-        cmbEvrakBilgileriListEvrakGelisTipi.selectOption(evrakGelisTipi);
+        cmbEvrakBilgileriListEvrakGelisTipi.selectOptionByValue(evrakGelisTipi);
         return this;
     }
 

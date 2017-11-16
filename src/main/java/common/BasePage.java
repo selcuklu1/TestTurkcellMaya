@@ -109,5 +109,6 @@ public class BasePage {
 
     public GelenEvrakKayitPage gelenEvrakKayitPage(){return new GelenEvrakKayitPage();}
 
+    public BirimEvraklariKaydedilenGelenEvraklar kaydedilenGelenEvraklar() {return new BirimEvraklariKaydedilenGelenEvraklar();}
     //endregion
 }
