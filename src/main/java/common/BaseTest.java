@@ -1,11 +1,9 @@
 package common;
 
 import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.WebDriverRunner;
+import data.TestData;
 import listeners.SettingsListener;
-import org.openqa.selenium.Dimension;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Listeners;
 import pageComponents.belgenetElements.BelgenetFramework;
 
@@ -25,7 +23,7 @@ public class BaseTest {
 
         //region Selenide Driver Configuration
         //        Configuration.baseUrl = "http://94.55.114.18:8889/edys-web/sistemeGiris.xhtml";
-        Configuration.baseUrl = "http://94.55.114.18:8889/edys-web/mainInbox.xhtml";
+        Configuration.baseUrl = TestData.belgenetURL;
         Configuration.browser = "drivers.Firefox"; //
         //"org.openqa.selenium.Firefox.FirefoxDriver";
         Configuration.reportsFolder = "test-result/reports";
