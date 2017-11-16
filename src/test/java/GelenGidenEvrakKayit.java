@@ -32,7 +32,14 @@ public class GelenGidenEvrakKayit extends BaseTest {
                 .evrakBilgileriListGeldigiKurumDoldur("Esk Kurum 071216 2")
                 .evrakBilgileriListEvrakSayiSagDoldur("12365")
                 .evrakBilgileriListEvrakGelisTipiSec("P")
-                .evrakBilgileriListIvedilikSec("N");
+                .evrakBilgileriListIvedilikSec("N")
                 //Excel eklenecek
+                .evrakBilgileriEkBilgiFiltreAc()
+                .evrakBilgileriEkBilgiFizikselEkEkle()
+                .evrakEkTabViewFizikselEkMetniDoldur("test otomasyon")
+                .evrakFizikselEkTabViewAciklamaEkle()
+                .kaydet();
+        page.
+
     }
 }

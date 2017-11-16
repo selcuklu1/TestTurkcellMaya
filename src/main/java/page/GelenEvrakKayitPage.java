@@ -41,17 +41,18 @@ public class GelenEvrakKayitPage extends BaseLibrary {
     // Evrak Ekleri sekmesinde bulunanlar
     // Dosya ekle alt sekmesinde bulunanlar
 
-    SelenideElement filterEvrakEkleri = $(By.id("evrakBilgileriForm:evrakEkleriListesiPanel_header"));
+    SelenideElement btnEvrakEkleri = $(By.id("evrakBilgileriForm:evrakEkleriListesiPanel_toggler"));
     SelenideElement btnEvrakEkTabViewEkle = $(By.id("evrakBilgileriForm:evrakEkTabView:dosyaEkleButton"));
     SelenideElement btnEvrakEkTabViewTemizle = $(By.id("evrakBilgileriForm:evrakEkTabView:dosyaTemizleButton"));
     SelenideElement cmbEvrakEkTabViewGizlilikDerecesi = $(By.xpath("//*[@id='evrakBilgileriForm:evrakEkTabView:guvenlikKodu']"));
-    SelenideElement txtEvrakEkTabViewEkMetni = $(By.xpath("//*[@id='evrakBilgileriForm:evrakEkTabView:dosyaAciklama']"));
+    SelenideElement txtEvrakEkTabViewEkMetni = $(By.id("evrakBilgileriForm:evrakEkTabView:dosyaAciklama"));
     SelenideElement btvEvrakEkTabViewDosyaEkle = $(By.id("evrakBilgileriForm:evrakEkTabView:fileUploadButton_input"));
 
     //Fiziksel Ek Ekle alt sekmesinde bulunanlar
-    SelenideElement txtEvrakEkTabViewAciklama = $(By.xpath("//*[@id='evrakBilgileriForm:evrakEkTabView:aciklamaTextArea']"));
+    SelenideElement btnFizikselEkEkle =$( "a[href='#evrakBilgileriForm:evrakEkTabView:aciklamaEkleTab']");
+    SelenideElement txtEvrakFizikselEkTabViewEkMetni = $(By.id("evrakBilgileriForm:evrakEkTabView:aciklamaTextArea"));
     SelenideElement cmbEvrakEkTabViewGuvenlikKoduAciklama = $(By.id("evrakBilgileriForm:evrakEkTabView:guvenlikKoduAciklama"));
-    SelenideElement btnEvrakEkTabViewAciklamaEkle = $(By.id("evrakBilgileriForm:evrakEkTabView:aciklamaEkleButton"));
+    SelenideElement btnEvrakFizikselEkTabViewAciklamaEkle = $(By.id("evrakBilgileriForm:evrakEkTabView:aciklamaEkleButton"));
 
     //Sistemde Kayitli Evrak Ekle alt sekmesinde bulunanlar
     SelenideElement dateTxtEvrakEkTabViewEkIslemleriEvrakTarihBas = $(By.id("evrakBilgileriForm:evrakEkTabView:ekIslemleriEvrakTarihBasId_input"));
@@ -99,9 +100,15 @@ public class GelenEvrakKayitPage extends BaseLibrary {
     SelenideElement txtIlgiIslemleriTabViewKullanici = $(By.id("evrakBilgileriForm:ilgiIslemleriTabView:kisiyeLov_id:LovText"));
     SelenideElement txtIlgiIslemleriTabViewArsivdenIlgiEvrakAraSayi = $(By.id("evrakBilgileriForm:ilgiIslemleriTabView:arsivdenIlgiEvrakAraSayiInputTextId"));
 
-    public GelenEvrakKayitPage evrakBilgileriEkBilgiFiltreAc() throws InterruptedException {
-        filterEvrakEkleri.click();
+    SelenideElement btnKaydet =$(By.id("buttonPanelForm:kaydetButton"));
 
+    public GelenEvrakKayitPage evrakBilgileriEkBilgiFizikselEkEkle() throws InterruptedException{
+        btnFizikselEkEkle.click();
+        return this;
+    }
+
+    public GelenEvrakKayitPage evrakBilgileriEkBilgiFiltreAc() throws InterruptedException {
+        btnEvrakEkleri.click();
         return this;
     }
 
@@ -258,8 +265,12 @@ public class GelenEvrakKayitPage extends BaseLibrary {
         return this;
     }
 
-    public GelenEvrakKayitPage evrakEkTabViewEkMetniDoldur(String evrakEkTabViewEkMetni)  {
-        txtEvrakEkTabViewEkMetni.sendKeys(evrakEkTabViewEkMetni);
+    public GelenEvrakKayitPage evrakFizikselEkTabViewEkMetniDoldur(String evrakEkTabViewEkMetni)  {
+        txtEvrakFizikselEkTabViewEkMetni.sendKeys(evrakEkTabViewEkMetni);
+        return this;
+    }
+    public GelenEvrakKayitPage evrakEkTabViewFizikselEkMetniDoldur(String evrakEkTabViewEkMetni)  {
+        txtEvrakFizikselEkTabViewEkMetni.sendKeys(evrakEkTabViewEkMetni);
         return this;
     }
 
@@ -273,18 +284,18 @@ public class GelenEvrakKayitPage extends BaseLibrary {
         return this;
     }
 
-    public GelenEvrakKayitPage evrakEkTabViewAciklamaDoldur(String aciklama)  {
-        txtEvrakEkTabViewAciklama.sendKeys(aciklama);
-        return this;
-    }
+//    public GelenEvrakKayitPage evrakEkTabViewAciklamaDoldur(String aciklama)  {
+//        txtEvrakEkTabViewAciklama.sendKeys(aciklama);
+//        return this;
+//    }
 
     public GelenEvrakKayitPage evrakEkTabViewGuvenlikKoduAciklamaSec(String guvenlikKoduAciklama)  {
         cmbEvrakEkTabViewGuvenlikKoduAciklama.selectOption(guvenlikKoduAciklama);
         return this;
     }
 
-    public GelenEvrakKayitPage evrakEkTabViewAciklamaEkle()  {
-        btnEvrakEkTabViewAciklamaEkle.click();
+    public GelenEvrakKayitPage evrakFizikselEkTabViewAciklamaEkle()  {
+        btnEvrakFizikselEkTabViewAciklamaEkle.click();
         return this;
     }
 
@@ -402,4 +413,10 @@ public class GelenEvrakKayitPage extends BaseLibrary {
         txtIlgiIslemleriTabViewAciklama.sendKeys(aciklama);
         return this;
     }
+    public GelenEvrakKayitPage kaydet ()  {
+        btnKaydet.click();
+        return this;
+    }
+
+
 }
