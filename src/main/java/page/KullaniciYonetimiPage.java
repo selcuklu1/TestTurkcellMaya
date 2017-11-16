@@ -29,68 +29,68 @@ public class KullaniciYonetimiPage extends BaseLibrary {
         //waitUntil(visibilityOfElementLocated(pageTitle));
     }
 
-    public KullaniciYonetimiPage gorevAlaniDoldur(String value) throws InterruptedException {
+    public KullaniciYonetimiPage gorevAlaniDoldur(String value) {
         //TODO
         return this;
     }
 
-    public KullaniciYonetimiPage TCKimlikNoDoldur(String value) throws InterruptedException {
+    public KullaniciYonetimiPage TCKimlikNoDoldur(String value) {
         txtTCKimlikNo.sendKeys(value);
         return this;
     }
 
-    public KullaniciYonetimiPage adDoldur(String value) throws InterruptedException {
+    public KullaniciYonetimiPage adDoldur(String value) {
         txtAd.sendKeys(value);
         return this;
     }
 
-    public KullaniciYonetimiPage soyadDoldur(String value) throws InterruptedException {
+    public KullaniciYonetimiPage soyadDoldur(String value) {
         txtSoyad.sendKeys(value);
         return this;
     }
 
-    public KullaniciYonetimiPage kullaniciAdiDoldur(String value) throws InterruptedException {
+    public KullaniciYonetimiPage kullaniciAdiDoldur(String value) {
         txtKullaniciAdi.sendKeys(value);
         return this;
     }
 
-    public KullaniciYonetimiPage emailDoldur(String value) throws InterruptedException {
+    public KullaniciYonetimiPage emailDoldur(String value) {
         txtEmail.sendKeys(value);
         return this;
     }
 
-    public KullaniciYonetimiPage sicilNoDoldur(String value) throws InterruptedException {
+    public KullaniciYonetimiPage sicilNoDoldur(String value) {
         txtSicilNo.sendKeys(value);
         return this;
     }
 
-    public KullaniciYonetimiPage kullaniciTuruSec(String value) throws InterruptedException {
+    public KullaniciYonetimiPage kullaniciTuruSec(String value) {
         cmbKullaniciTuru.selectOptionByValue(value);
         //selectCombobox(cmbKullaniciTuru,value);
         return this;
     }
 
-    public KullaniciYonetimiPage durumSec(String value) throws InterruptedException {
+    public KullaniciYonetimiPage durumSec(String value) {
         cmbDurum.selectOptionByValue(value);
         return this;
     }
 
-    public KullaniciYonetimiPage gorevSuresiDolanlarSec(boolean value) throws InterruptedException {
+    public KullaniciYonetimiPage gorevSuresiDolanlarSec(boolean value) {
         chkGorevSuresiDolanlar.setSelected(value);
         return this;
     }
 
-    public KullaniciYonetimiPage birimiOlmayanlarSec(boolean value) throws InterruptedException {
+    public KullaniciYonetimiPage birimiOlmayanlarSec(boolean value) {
         chkBirimiOlmayanlar.setSelected(value);
         return this;
     }
 
-    public KullaniciYonetimiPage altBirimlerDahilSec(boolean value) throws InterruptedException {
+    public KullaniciYonetimiPage altBirimlerDahilSec(boolean value) {
         chkAltBirimiOlmayanlar.setSelected(value);
         return this;
     }
 
-    public KullaniciYonetimiPage ara() throws InterruptedException {
+    public KullaniciYonetimiPage ara() {
         btnAra.click();
         return this;
     }

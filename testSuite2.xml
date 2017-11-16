@@ -4,7 +4,7 @@
     <test name="BTest3">
         <classes>
             <class name="Example.TestClass3"/>
-            <class name="PaylastiklarimTest"/>
+            <class name="Example.PaylastiklarimTest"/>
         </classes>
     </test>
 </suite>

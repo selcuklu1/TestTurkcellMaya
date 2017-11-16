@@ -17,39 +17,39 @@ public class TuzelKisiYonetimiPage extends BaseLibrary {
     SelenideElement cmbKepHizmetSaglayicisi = $(By.id("tuzelKisiKepAdresEditorForm:kephs"));
     SelenideElement btnPopupKaydet = $(By.id("tuzelKisiKepAdresEditorForm:saveKepAdresiButton"));
 
-    public TuzelKisiYonetimiPage popupKaydet() throws InterruptedException{
+    public TuzelKisiYonetimiPage popupKaydet() {
         btnPopupKaydet.click();
         return this;
     }
 
-    public TuzelKisiYonetimiPage kepHizmetSaglayicisiSec(String value) throws  InterruptedException{
+    public TuzelKisiYonetimiPage kepHizmetSaglayicisiSec(String value) {
         cmbKepHizmetSaglayicisi.selectOption(value);
         return this;
     }
 
-    public TuzelKisiYonetimiPage popupKepAdresiDoldur(String text) throws InterruptedException{
+    public TuzelKisiYonetimiPage popupKepAdresiDoldur(String text) {
         txtPopupKepAdresi.setValue(text);
         return this;
     }
 
-    public TuzelKisiYonetimiPage kepAdresBilgileriEkle() throws InterruptedException{
+    public TuzelKisiYonetimiPage kepAdresBilgileriEkle() {
         btnKepAdresBilgileriEkle.click();
-        return  this;
+        return this;
     }
 
-    public TuzelKisiYonetimiPage kepAdresiKullaniyorSec(boolean secim) throws InterruptedException{
+    public TuzelKisiYonetimiPage kepAdresiKullaniyorSec(boolean secim) {
         chkKepAdresiKullaniyor.setSelected(secim);
         return this;
     }
 
-    public TuzelKisiYonetimiPage duzenleGonder() throws  InterruptedException {
+    public TuzelKisiYonetimiPage duzenleGonder() {
         btnDuzenle.click();
         return this;
     }
 
-    public TuzelKisiYonetimiPage ara() throws  InterruptedException{
+    public TuzelKisiYonetimiPage ara() {
         btnAra.click();
-        return  this;
+        return this;
     }
 
 }

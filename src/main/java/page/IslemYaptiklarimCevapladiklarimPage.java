@@ -15,25 +15,25 @@ public class IslemYaptiklarimCevapladiklarimPage extends BaseLibrary {
     private SelenideElement txtBitisTarihi = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt383_input"));
 
 
-    public IslemYaptiklarimCevapladiklarimPage filtreSec(String filtre) throws InterruptedException {
+    public IslemYaptiklarimCevapladiklarimPage filtreSec(String filtre) {
         //selectCombobox(filtreSelectbox, filtre);
         cmbFiltre.selectOption(filtre);
         return this;
     }
 
-    public IslemYaptiklarimCevapladiklarimPage sayfadaAraDoldur(String sayfadaAra) throws InterruptedException {
+    public IslemYaptiklarimCevapladiklarimPage sayfadaAraDoldur(String sayfadaAra) {
         //sendKeys(sayfadaAraInput, sayfadaAra, false);
         txtSayfadaAra.sendKeys(sayfadaAra);
         return this;
     }
 
-    public IslemYaptiklarimCevapladiklarimPage baslangicTarihiDoldur(String baslangicTarihi) throws InterruptedException {
+    public IslemYaptiklarimCevapladiklarimPage baslangicTarihiDoldur(String baslangicTarihi) {
         //sendKeys(baslangicTarihiInput, baslangicTarihi, false);
         txtBaslangicTarihi.sendKeys(baslangicTarihi);
         return this;
     }
 
-    public IslemYaptiklarimCevapladiklarimPage bitisTarihiDoldur(String bitisTarihi) throws InterruptedException {
+    public IslemYaptiklarimCevapladiklarimPage bitisTarihiDoldur(String bitisTarihi) {
         //sendKeys(bitisTarihiInput, bitisTarihi, false);
         txtBitisTarihi.sendKeys(bitisTarihi);
         return this;

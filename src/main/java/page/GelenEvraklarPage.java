@@ -64,228 +64,228 @@ public class GelenEvraklarPage extends BaseLibrary {
     SelenideElement txtPaylasanAciklama = $(By.id("mainPreviewForm:evrakPaylasAciklama"));
     SelenideElement btnPaylasIcPaylas = $(By.id("mainPreviewForm:paylasButtonId"));
 
-    public GelenEvraklarPage iadeEtIadeEt() throws InterruptedException {
+    public GelenEvraklarPage iadeEtIadeEt() {
         btnIadeEtIadeEt.click();
         return this;
     }
 
-    public GelenEvraklarPage iadeEtDosyaEkle() throws InterruptedException {
+    public GelenEvraklarPage iadeEtDosyaEkle() {
         btnIadeEtDosyaEkle.click();
         return this;
     }
 
-    public GelenEvraklarPage iadeEtNotInputDoldur(String text) throws InterruptedException {
+    public GelenEvraklarPage iadeEtNotInputDoldur(String text) {
         txtIadeEtNot.sendKeys(text);
         return this;
     }
 
-    public GelenEvraklarPage tebligEtTebligEt() throws InterruptedException {
+    public GelenEvraklarPage tebligEtTebligEt() {
         btnTebligEtTebligEt.click();
         return this;
     }
 
-    public GelenEvraklarPage tebligEtNotInputDoldur(String text) throws InterruptedException {
+    public GelenEvraklarPage tebligEtNotInputDoldur(String text) {
         txtTebligEtNot.sendKeys(text);
         return this;
     }
 
-    public GelenEvraklarPage tebligEtKullaniciListesiDoldur(String text) throws InterruptedException {
+    public GelenEvraklarPage tebligEtKullaniciListesiDoldur(String text) {
         txtTebligEtKullaniciListesi.sendKeys(text);
         return this;
     }
 
-    public GelenEvraklarPage tebligEtKisiInputDoldur(String text) throws InterruptedException {
+    public GelenEvraklarPage tebligEtKisiInputDoldur(String text) {
         txtTebligEtKisi.sendKeys(text);
         return this;
     }
 
-    public GelenEvraklarPage havaleYapHavaleOnayinaGonder() throws InterruptedException {
+    public GelenEvraklarPage havaleYapHavaleOnayinaGonder() {
         btnHavaleYapHavaleOnayinaGonder.click();
         return this;
     }
 
-    public GelenEvraklarPage havaleYapGonder() throws InterruptedException {
+    public GelenEvraklarPage havaleYapGonder() {
         btnHavaleYapGonder.click();
         return this;
     }
 
-    public GelenEvraklarPage havaleYapEvrakOnayliKapatChecked(Boolean secim) throws InterruptedException {
+    public GelenEvraklarPage havaleYapEvrakOnayliKapatChecked(Boolean secim) {
         chkHavaleYapEvrakOnayliKapat.setSelected(secim);
         return this;
     }
 
-    public GelenEvraklarPage havaleYapIslemSuresiDoldur(String text) throws InterruptedException {
+    public GelenEvraklarPage havaleYapIslemSuresiDoldur(String text) {
         txtHavaleYapIslemSuresi.sendKeys(text);
         return this;
     }
 
-    public GelenEvraklarPage havaleYapDosyaEkle() throws InterruptedException {
+    public GelenEvraklarPage havaleYapDosyaEkle() {
         btnHavaleYapDosyaEkle.click();
         return this;
     }
 
-    public GelenEvraklarPage havaleYapAciklamaDoldur(String text) throws InterruptedException {
+    public GelenEvraklarPage havaleYapAciklamaDoldur(String text) {
         txtHavaleYapAciklama.sendKeys(text);
         return this;
     }
 
-    public GelenEvraklarPage havaleYapOnaylanacakKisiTreeDoldur(String text) throws InterruptedException {
+    public GelenEvraklarPage havaleYapOnaylanacakKisiTreeDoldur(String text) {
         treeHavaleYapOnaylanacakKisi.sendKeys(text);
         return this;
     }
 
-    public GelenEvraklarPage havaleYapKullaniciListesiTreeDoldur(String text) throws InterruptedException {
+    public GelenEvraklarPage havaleYapKullaniciListesiTreeDoldur(String text) {
         treeHavaleYapKullaniciListesi.sendKeys(text);
         return this;
     }
 
-    public GelenEvraklarPage havaleYapKisiTreeDoldur(String text) throws InterruptedException {
+    public GelenEvraklarPage havaleYapKisiTreeDoldur(String text) {
         treeHavaleYapKisi.sendKeys(text);
         return this;
     }
 
-    public GelenEvraklarPage havaleYapBirimTreeDoldur(String text) throws InterruptedException {
+    public GelenEvraklarPage havaleYapBirimTreeDoldur(String text) {
         treeHavaleYapBirim.sendKeys(text);
         return this;
     }
 
-    public GelenEvraklarPage paylasIcPaylas() throws InterruptedException {
+    public GelenEvraklarPage paylasIcPaylas() {
         btnPaylasIcPaylas.click();
         return this;
     }
 
-    public GelenEvraklarPage paylasanAciklamaDoldur(String text) throws InterruptedException {
+    public GelenEvraklarPage paylasanAciklamaDoldur(String text) {
         txtPaylasanAciklama.sendKeys(text);
         return this;
     }
 
-    public GelenEvraklarPage paylasKisiDoldur(String text) throws InterruptedException {
+    public GelenEvraklarPage paylasKisiDoldur(String text) {
         txtPaylasKisi.sendKeys(text);
         return this;
     }
 
-    public GelenEvraklarPage filtreleSec(String value) throws InterruptedException {
+    public GelenEvraklarPage filtreleSec(String value) {
         cmbFiltrele.selectOption(value);
         return this;
     }
 
-    public GelenEvraklarPage sayfadaAraDoldur(String text) throws InterruptedException {
+    public GelenEvraklarPage sayfadaAraDoldur(String text) {
         txtSayfadaAra.sendKeys(text);
         return this;
     }
 
-    public GelenEvraklarPage gidecegiYerSecinizk() throws InterruptedException {
+    public GelenEvraklarPage gidecegiYerSecinizk() {
         btnGidecegiYerSeciniz.click();
         return this;
     }
 
-    public GelenEvraklarPage gidecegiYerTreeDoldur(String text) throws InterruptedException {
+    public GelenEvraklarPage gidecegiYerTreeDoldur(String text) {
         treeGidecegiYer.sendKeys(text);
         return this;
     }
 
-    public GelenEvraklarPage baslangicTarihDoldur(String text) throws InterruptedException {
+    public GelenEvraklarPage baslangicTarihDoldur(String text) {
         dateTxtBaslangicTarih.sendKeys(text);
         return this;
     }
 
-    public GelenEvraklarPage bitisTarihDoldur(String text) throws InterruptedException {
+    public GelenEvraklarPage bitisTarihDoldur(String text) {
         dateTxtBitisTarihi.sendKeys(text);
         return this;
     }
 
-    public GelenEvraklarPage topluSecim() throws InterruptedException {
+    public GelenEvraklarPage topluSecim() {
         btnTopluSecim.click();
         return this;
     }
 
-    public GelenEvraklarPage topluHavale() throws InterruptedException {
+    public GelenEvraklarPage topluHavale() {
         btnTopluHavale.click();
         return this;
     }
 
-    public GelenEvraklarPage topluKlasorKaldir() throws InterruptedException {
+    public GelenEvraklarPage topluKlasorKaldir() {
         btnTopluKlasorKaldir.click();
         return this;
     }
 
 
-    public GelenEvraklarPage raporAl() throws InterruptedException {
+    public GelenEvraklarPage raporAl() {
         btnRaporAl.click();
         return this;
     }
 
-    public GelenEvraklarPage evrakGoster() throws InterruptedException {
+    public GelenEvraklarPage evrakGoster() {
         btnEvrakGoster.click();
         return this;
     }
 
-    public GelenEvraklarPage havaleYap() throws InterruptedException {
+    public GelenEvraklarPage havaleYap() {
         btnHavaleYap.click();
         return this;
     }
 
-    public GelenEvraklarPage tebligEt() throws InterruptedException {
+    public GelenEvraklarPage tebligEt() {
         btnTebligEt.click();
         return this;
     }
 
-    public GelenEvraklarPage iadeEt() throws InterruptedException {
+    public GelenEvraklarPage iadeEt() {
         btnIadeEt.click();
         return this;
     }
 
-    public GelenEvraklarPage cevapYaz() throws InterruptedException {
+    public GelenEvraklarPage cevapYaz() {
         btnCevapYaz.click();
         return this;
     }
 
-    public GelenEvraklarPage evrakKapat() throws InterruptedException {
+    public GelenEvraklarPage evrakKapat() {
         btnEvrakKapat.click();
         return this;
     }
 
-    public GelenEvraklarPage evrakKapatKisiselKlasorlerSec(boolean secilen) throws InterruptedException {
+    public GelenEvraklarPage evrakKapatKisiselKlasorlerSec(boolean secilen) {
         chkEvrakKapatKisiselKlasorler.setSelected(secilen);
         return this;
     }
 
-    public GelenEvraklarPage evrakKapatEvrakKapat() throws InterruptedException {
+    public GelenEvraklarPage evrakKapatEvrakKapat() {
         btnEvrakKapatEvrakKapat.click();
         return this;
     }
 
-    public GelenEvraklarPage evrakKapatKapatmaOnayinaSun() throws InterruptedException {
+    public GelenEvraklarPage evrakKapatKapatmaOnayinaSun() {
         btnEvrakKapatKapatmaOnayinaSun.click();
         return this;
     }
 
-    public GelenEvraklarPage evrakKapatOnayAkisiDoldur(String text) throws InterruptedException {
+    public GelenEvraklarPage evrakKapatOnayAkisiDoldur(String text) {
         txtEvrakKapatOnayAkisi.sendKeys(text);
         return this;
     }
 
-    public GelenEvraklarPage evrakKapatOnayAkisiDoldur(Boolean secilen) throws InterruptedException {
+    public GelenEvraklarPage evrakKapatOnayAkisiDoldur(Boolean secilen) {
         txtEvrakKapatOnayAkisi.setSelected(secilen);
         return this;
     }
 
-    public GelenEvraklarPage evrakKapatNotDoldur(String text) throws InterruptedException {
+    public GelenEvraklarPage evrakKapatNotDoldur(String text) {
         txtEvrakKapatNot.sendKeys(text);
         return this;
     }
 
-    public GelenEvraklarPage evrakKapatKaldirilacakKlasorlerDoldur(String text) throws InterruptedException {
+    public GelenEvraklarPage evrakKapatKaldirilacakKlasorlerDoldur(String text) {
         txtEvrakKapatKaldirilacakKlasorler.sendKeys(text);
         return this;
     }
 
-    public GelenEvraklarPage evrakKapatKapatmaTipiSec(String value) throws InterruptedException {
+    public GelenEvraklarPage evrakKapatKapatmaTipiSec(String value) {
         cmbEvrakKapatKapatmaTipi.selectOption(value);
         return this;
     }
 
-    public GelenEvraklarPage paylas() throws InterruptedException {
+    public GelenEvraklarPage paylas() {
         btnPaylas.click();
         return this;
     }

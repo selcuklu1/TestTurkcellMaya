@@ -1,3 +1,5 @@
+package YonetimHavuzuIslemleri;
+
 import common.BasePage;
 import common.BaseTest;
 import io.qameta.allure.Epic;
@@ -42,13 +44,21 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
 
          */
 
+        /*
         page.ustMenuAc("Evrak Oluştur");
         page.evrakOlusturPage()
-                .onayAkisiEkle("optiim test1")
+                .onayAkisiEkle()
                 .onayAkisiKullaniciKontrol("Optiim OPTİİM", "Paraflama")
                 .onayAkisiKullaniciSec("Optiim TEST1")
                 .onayAkisiKullaniciTipiSec("Optiim TEST1", "İmzalama")
                 .onayAkisiKullan();
+<<<<<<< HEAD:src/test/java/YonetimHavuzuIslemleriTest.java
+=======
+*/
+
+
+
+>>>>>>> 7cfb106ba52eaee62cf21b80aad145309ff65fd9:src/test/java/YonetimHavuzuIslemleri/YonetimHavuzuIslemleriTest.java
     }
 
 
@@ -56,11 +66,18 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
     @Test(enabled = false, description = "TC0001")
     public void TC0001() {
 
+
+
+
+    }
+
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "Yönetim Havuzu Arama")
+    public void TC0009() {
         page.ustMenuAc("Yönetim Havuzu Yönetimi");
         page.yonetimHavuzuYonetimiPage()
-                .ara();
-
-
-
+                .ara("OPTİİM BİRİM11","Testdeneme1123","Sadece Aktifler")
+                .yonetimHavuzuGuncelle("Testdeneme1123");
     }
 }

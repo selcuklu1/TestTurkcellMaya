@@ -18,37 +18,37 @@ public class BirimEvraklariPostalanacakEvraklarPage extends BaseLibrary {
     SelenideElement dateBaslangicTarihi = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt368_input"));
     SelenideElement dateBitisTarihi = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt373_input"));
 
-    public BirimEvraklariPostalanacakEvraklarPage birimDoldur(String text) throws InterruptedException {
+    public BirimEvraklariPostalanacakEvraklarPage birimDoldur(String text) {
         txtBirim.setValue(text);
         return this;
     }
 
-    public BirimEvraklariPostalanacakEvraklarPage listele() throws InterruptedException {
+    public BirimEvraklariPostalanacakEvraklarPage listele() {
         btnListele.click();
         return this;
     }
 
-    public BirimEvraklariPostalanacakEvraklarPage filtreSec(String value) throws InterruptedException {
+    public BirimEvraklariPostalanacakEvraklarPage filtreSec(String value) {
         cmbFiltre.selectOption(value);
         return this;
     }
 
-    public BirimEvraklariPostalanacakEvraklarPage sayfadaAraDoldur(String text) throws InterruptedException {
+    public BirimEvraklariPostalanacakEvraklarPage sayfadaAraDoldur(String text) {
         txtSayfadaAra.setValue(text);
         return this;
     }
 
-    public BirimEvraklariPostalanacakEvraklarPage geldigiYer() throws InterruptedException {
+    public BirimEvraklariPostalanacakEvraklarPage geldigiYer() {
         btnGeldigiYer.click();
         return this;
     }
 
-    public BirimEvraklariPostalanacakEvraklarPage baslangicTarihiDoldur(String text) throws InterruptedException {
+    public BirimEvraklariPostalanacakEvraklarPage baslangicTarihiDoldur(String text) {
         dateBaslangicTarihi.setValue(text);
         return this;
     }
 
-    public BirimEvraklariPostalanacakEvraklarPage bitisTarihiDoldur(String text) throws InterruptedException {
+    public BirimEvraklariPostalanacakEvraklarPage bitisTarihiDoldur(String text) {
         dateBitisTarihi.setValue(text);
         return this;
     }

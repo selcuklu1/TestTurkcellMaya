@@ -20,7 +20,7 @@ public class OnayAkisYonetimiPage extends BaseLibrary {
     private SelenideElement homePageButton = $(By.id("j_idt325"));
 
 
-    public OnayAkisYonetimiPage varsayilanButonu() throws InterruptedException {
+    public OnayAkisYonetimiPage varsayilanButonu() {
         btnAra.click();
 
         // if (isElementExist(varsayilanYapButton))
@@ -28,7 +28,7 @@ public class OnayAkisYonetimiPage extends BaseLibrary {
         return this;
     }
 
-    public OnayAkisYonetimiPage pasifYapButonu() throws InterruptedException {
+    public OnayAkisYonetimiPage pasifYapButonu() {
         btnAra.click();
 
 //        if (isElementExist(pasifYapButton))
@@ -36,7 +36,7 @@ public class OnayAkisYonetimiPage extends BaseLibrary {
         return this;
     }
 
-    public OnayAkisYonetimiPage evrakOlusturEkrani() throws InterruptedException {
+    public OnayAkisYonetimiPage evrakOlusturEkrani() {
         //   onayAkisAlani = By.id("yeniGidenEvrakForm:evrakBilgileriList:17:akisLov:LovSecilen");
   /*      ustMenu = new UstMenu(driver);
         ustMenu.("Evrak Oluştur");
@@ -46,7 +46,7 @@ public class OnayAkisYonetimiPage extends BaseLibrary {
 
     }
 
-    public OnayAkisYonetimiPage evrakOlusturEkraniPasif() throws InterruptedException {
+    public OnayAkisYonetimiPage evrakOlusturEkraniPasif() {
         // onayAkisAlani = By.id("yeniGidenEvrakForm:evrakBilgileriList:17:akisLov:LovSecilen");
      /*   ustMenu = new UstMenu(driver);
         ustMenu.altMenuButtonExpress("Evrak Oluştur");
@@ -56,7 +56,7 @@ public class OnayAkisYonetimiPage extends BaseLibrary {
 
     }
 
-    public OnayAkisYonetimiPage olurYazisiOlusturEkrani() throws InterruptedException {
+    public OnayAkisYonetimiPage olurYazisiOlusturEkrani() {
       /*  ustMenu = new UstMenu(driver);
         ustMenu.altMenuButtonExpress("Olur/Takrir Yazısı Oluştur");
         onayAkisAlani = By.id("yeniOnayEvrakForm:evrakBilgileriList:13:akisLov:j_idt126");
@@ -67,7 +67,7 @@ public class OnayAkisYonetimiPage extends BaseLibrary {
         return this;
     }
 
-    public OnayAkisYonetimiPage olurYazisiOlusturEkraniPasif() throws InterruptedException {
+    public OnayAkisYonetimiPage olurYazisiOlusturEkraniPasif() {
       /*  ustMenu = new UstMenu(driver);
         ustMenu.altMenuButtonExpress("Olur/Takrir Yazısı Oluştur");
         onayAkisAlani = By.id("yeniOnayEvrakForm:evrakBilgileriList:13:akisLov:j_idt126");
@@ -78,7 +78,7 @@ public class OnayAkisYonetimiPage extends BaseLibrary {
         return this;
     }
 
-    public OnayAkisYonetimiPage kararYazisiOlusturEkrani() throws InterruptedException {
+    public OnayAkisYonetimiPage kararYazisiOlusturEkrani() {
    /*     ustMenu = new UstMenu(driver);
         ustMenu.altMenuButtonExpress("Karar Yazısı Oluştur");
 
@@ -91,7 +91,7 @@ public class OnayAkisYonetimiPage extends BaseLibrary {
     }
 
 
-    public OnayAkisYonetimiPage kararYazisiOlusturEkraniPasif() throws InterruptedException {
+    public OnayAkisYonetimiPage kararYazisiOlusturEkraniPasif() {
    /*     ustMenu = new UstMenu(driver);
         ustMenu.altMenuButtonExpress("Karar Yazısı Oluştur");
 
@@ -104,7 +104,7 @@ public class OnayAkisYonetimiPage extends BaseLibrary {
     }
 
 
-    public OnayAkisYonetimiPage gelenEvrakCevapYaz() throws InterruptedException {
+    public OnayAkisYonetimiPage gelenEvrakCevapYaz() {
      /*   click(homePageButton);
 
         if (isElementExist(gelenEvrakTablo)) {

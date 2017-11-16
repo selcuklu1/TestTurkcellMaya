@@ -20,57 +20,57 @@ public class KurumYonetimiPage extends BaseLibrary {
     SelenideElement btnKaydet = $(By.id("kurumYonetimiEditorForm:saveKurumButton"));
     SelenideElement btnKepAdresBilgileriArti = $(By.id("kurumYonetimiEditorForm:kepBilgileriDataTable:addNewKepAdresiButton"));
 
-    public KurumYonetimiPage kepAdresBilgileriArtiGonder() throws InterruptedException{
+    public KurumYonetimiPage kepAdresBilgileriArtiGonder() {
         btnKepAdresBilgileriArti.click();
         return this;
     }
 
-    public KurumYonetimiPage kaydetGonder() throws InterruptedException{
+    public KurumYonetimiPage kaydetGonder() {
         btnKaydet.click();
         return this;
     }
 
-    public KurumYonetimiPage ozelHitapSec(boolean secim) throws InterruptedException{
+    public KurumYonetimiPage ozelHitapSec(boolean secim) {
         chkOzelHitap.setSelected(secim);
         return this;
     }
 
-    public KurumYonetimiPage kepAdresiKullaniyorSec(boolean secim) throws InterruptedException{
+    public KurumYonetimiPage kepAdresiKullaniyorSec(boolean secim) {
         chkKepAdresiKullaniyor.setSelected(secim);
         return this;
     }
 
-    public KurumYonetimiPage paketKullanimSec(boolean secim) throws  InterruptedException{
+    public KurumYonetimiPage paketKullanimSec(boolean secim) {
         chkPaketKullanim.setSelected(secim);
         return this;
     }
 
-    public KurumYonetimiPage kurumAdiDoldur(String text) throws InterruptedException{
+    public KurumYonetimiPage kurumAdiDoldur(String text) {
         txtKurumAdi.setValue(text);
         return this;
     }
 
-    public KurumYonetimiPage kaysisteYerAlmiyorSec(boolean secim) throws  InterruptedException{
+    public KurumYonetimiPage kaysisteYerAlmiyorSec(boolean secim) {
         chkKaysisteYerAlmiyor.setSelected(secim);
         return this;
     }
 
-    public KurumYonetimiPage idariBirimKimlikKoduDoldur(String text) throws  InterruptedException{
+    public KurumYonetimiPage idariBirimKimlikKoduDoldur(String text) {
         txtIdariBirimKimlikKodu.setValue(text);
         return this;
     }
 
-    public KurumYonetimiPage durumSec(String value) throws InterruptedException{
+    public KurumYonetimiPage durumSec(String value) {
         cmbDurum.selectOption(value);
         return this;
     }
 
-    public KurumYonetimiPage araDoldur(String text) throws InterruptedException{
+    public KurumYonetimiPage araDoldur(String text) {
         btnAra.click();
         return this;
     }
 
-    public KurumYonetimiPage kurumDoldur(String text) throws  InterruptedException{
+    public KurumYonetimiPage kurumDoldur(String text) {
         txtKurum.setValue(text);
         return this;
     }

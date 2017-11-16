@@ -85,10 +85,6 @@ public class BaseLibrary {
     }
     //</editor-fold>
 
-
-
-
-
     public static String clearTurkishChars(String str) {
         String ret = str;
         char[] turkishChars = new char[] {0x131, 0x130, 0xFC, 0xDC, 0xF6, 0xD6, 0x15F, 0x15E, 0xE7, 0xC7, 0x11F, 0x11E};
@@ -99,11 +95,10 @@ public class BaseLibrary {
         return ret;
     }
 
-
-
-    public void uploadFile(String pathToFile) {
+    //Üstyazı dosyasını ekler
+    public void ustYaziUploadFile(String pathToFile) {
         try {
-            $(By.xpath("//input[@class='dz-hidden-input']")).sendKeys(pathToFile);
+            $(By.xpath("//input[@class='ustYaziUploadClass']")).sendKeys(pathToFile);
 //            LogPASS("Dosya Yuklendi.");
         } catch (Exception e) {
 //            logger.error("Error in attaching file.s : " + e);
@@ -129,6 +124,7 @@ public class BaseLibrary {
 //        }
 //    }
 
+    //Random numara üretir.
     public String randomNumber(int length) {
         Random r = new Random();
         List<Integer> digits = new ArrayList<Integer>();
@@ -149,8 +145,9 @@ public class BaseLibrary {
         return number;
     }
 
+    //Random text üretir.
     public String createRandomText(int textSize) {
-        char[] chars = "abcdefghijklmnopqrstuvwxyz1234567890".toCharArray();
+        char[] chars = "abcdefghijklmnopqrstuvwxyz".toCharArray();
         StringBuilder sb = new StringBuilder();
         Random random = new Random();
         for (int i = 0; i < textSize; i++) {
@@ -162,6 +159,7 @@ public class BaseLibrary {
         return output;
     }
 
+    //yyyyMMddHHmmss formatına göre sysdate alır.
     public String getSysDate() {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
         LocalDateTime now = LocalDateTime.now();
@@ -171,6 +169,7 @@ public class BaseLibrary {
         return sysDate;
     }
 
+    //yyyy-MM-dd formatına göre sysdate alır.
     public String getSysDateForKis() {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDateTime now = LocalDateTime.now();
@@ -180,6 +179,7 @@ public class BaseLibrary {
         return sysDate;
     }
 
+    //Günün tarihinden sonraki bir tarihi alır.
     public String getAfterSysDate(int i) throws ParseException {
         String untildate = getSysDateForKis();// can take any date in current
         // format
@@ -214,6 +214,7 @@ public class BaseLibrary {
         return sysMonth;
     }
 
+    //Dosyanın bilgisayara inip inmediğini kontrol eder.
     public boolean isFileDownloaded(String downloadPath, String fileName) {
         boolean flag = false;
         File dir = new File(downloadPath);
@@ -227,6 +228,7 @@ public class BaseLibrary {
         return flag;
     }
 
+    //Bilgisayara indirilen dosyaları siler.
     public void deleteFile(String pathToFile) {
         try {
             File file = new File(pathToFile);
@@ -244,4 +246,53 @@ public class BaseLibrary {
             e.printStackTrace();
         }
     }
+
+    //Random tc yaratır mernis sorgusundan geçecek şekilde.
+    public String createMernisTCNO() {
+        Vector<Integer> array = new Vector<Integer>();
+        Random randomGenerator = new Random();
+        array.add(new Integer(1 + randomGenerator.nextInt(9)));
+
+        for (int i=1;i<9;i++) array.add(randomGenerator.nextInt(10));
+
+        int t1 = 0;
+        for (int i=0;i<9;i+=2) t1 += array.elementAt(i);
+
+        int t2 = 0;
+        for (int i=1;i<8;i+=2) t2 += array.elementAt(i);
+
+        int x = ((t1*7)-t2)%10;
+        array.add(new Integer(x));
+
+        x=0;
+        for(int i=0;i<10;i++) x+= array.elementAt(i);
+
+        x= x % 10;
+        array.add(new Integer(x));
+
+        String res = "";
+        for(int i=0;i<11;i++) res = res + Integer.toString(array.elementAt(i));
+
+        System.out.println("Olusturulan TC Kimlik No:"+res);
+
+        return res;
+    }
+
+    //Textin ilk harfini büyük yapar.
+    public String toUpperCaseFirst(String text){
+        char ilkHarf = Character . toUpperCase ( text . charAt ( 0 ));
+        text = ilkHarf + text . substring ( 1 );
+    return text;
+    }
+
+    //Texti split edip : 'dan sonrasını alır.
+    public String splitString(String str) {
+        String[] parts = str.split(": ");// "004: 034556"
+        String part1 = parts[0]; // 004
+        String part2 = parts[1]; // 034556
+
+        return part2;
+    }
+
+
 }

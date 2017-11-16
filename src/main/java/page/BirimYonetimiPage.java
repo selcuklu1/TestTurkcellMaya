@@ -20,7 +20,7 @@ public class BirimYonetimiPage extends BaseLibrary {
     SelenideElement cmbGorunurlukTipi = $(By.id("birimYonetimiEditorForm:gorunurlukTipiSelect"));
     SelenideElement chkDisBirim = $(By.id("birimYonetimiEditorForm:disBirimCheckbox_input"));
     SelenideElement txtAd = $(By.id("birimYonetimiEditorForm:adInput"));
-    SelenideElement txtKisaAdi =  $(By.id("birimYonetimiEditorForm:kisaAdInput"));
+    SelenideElement txtKisaAdi = $(By.id("birimYonetimiEditorForm:kisaAdInput"));
     SelenideElement chkOzelHitap = $(By.id("birimYonetimiEditorForm:ozelHitapExistSelBoolean_input"));
     SelenideElement txtMesajAdresi = $(By.id("birimYonetimiEditorForm:maggKoduInput"));
     SelenideElement txtKarargahKisaltmasi = $(By.id("birimYonetimiEditorForm:karargahKisaltmasiInput"));
@@ -49,192 +49,192 @@ public class BirimYonetimiPage extends BaseLibrary {
     SelenideElement txtSolUstGenislik = $(By.id("birimYonetimiEditorForm:j_idt11990"));
     SelenideElement txtSagUstLogoGenislik = $(By.id("birimYonetimiEditorForm:j_idt11993"));
 
-    public BirimYonetimiPage sagUstLogoGenislik(String text) throws InterruptedException{
+    public BirimYonetimiPage sagUstLogoGenislik(String text) {
         txtSagUstLogoGenislik.setValue(text);
         return this;
     }
 
-    public BirimYonetimiPage solUstGenislikDoldur(String text) throws InterruptedException{
+    public BirimYonetimiPage solUstGenislikDoldur(String text) {
         txtSolUstGenislik.setValue(text);
         return this;
     }
 
-    public BirimYonetimiPage sagUstLogoBoyDoldur(String text) throws InterruptedException{
+    public BirimYonetimiPage sagUstLogoBoyDoldur(String text) {
         txtSagUstLogoBoy.setValue(text);
         return this;
     }
 
-    public BirimYonetimiPage solUstLogoBoyDoldur(String text) throws InterruptedException{
+    public BirimYonetimiPage solUstLogoBoyDoldur(String text) {
         txtSolUstLogoBoy.setValue(text);
         return this;
     }
 
-    public BirimYonetimiPage altLogoyuDegistir() throws InterruptedException{
+    public BirimYonetimiPage altLogoyuDegistir() {
         btnAltLogoyuDegistir.click();
         return this;
     }
 
-    public BirimYonetimiPage sagUstLogoEkleGonder() throws InterruptedException{
+    public BirimYonetimiPage sagUstLogoEkleGonder() {
         btnSagUstLogoEkle.click();
         return this;
     }
 
-    public BirimYonetimiPage solUstLogoEkle() throws InterruptedException{
+    public BirimYonetimiPage solUstLogoEkle() {
         btnSolUstLogoEkle.click();
         return this;
     }
 
-    public BirimYonetimiPage yetkiDevriVarSec(Boolean secim) throws InterruptedException{
+    public BirimYonetimiPage yetkiDevriVarSec(Boolean secim) {
         chkYetkiDevriVar.setSelected(secim);
         return this;
     }
 
-    public  BirimYonetimiPage kepAdresiKullaniyorSec(boolean secim) throws InterruptedException{
+    public BirimYonetimiPage kepAdresiKullaniyorSec(boolean secim) {
         chkKepAdresiKullaniyor.setSelected(secim);
         return this;
     }
 
-    public  BirimYonetimiPage aciklamaDoldur(String text) throws InterruptedException{
+    public BirimYonetimiPage aciklamaDoldur(String text) {
         txtAciklama.setValue(text);
-        return  this;
+        return this;
     }
 
-    public BirimYonetimiPage olurMetniDoldur(String text) throws InterruptedException {
+    public BirimYonetimiPage olurMetniDoldur(String text) {
         txtOlurMetni.setValue(text);
-        return  this;
+        return this;
     }
 
-    public BirimYonetimiPage genelEvrakSec(boolean secim) throws InterruptedException{
+    public BirimYonetimiPage genelEvrakSec(boolean secim) {
         chkGenelEvrak.setSelected(secim);
         return this;
     }
 
-    public BirimYonetimiPage arsivBirimiSec(String value) throws InterruptedException{
+    public BirimYonetimiPage arsivBirimiSec(String value) {
         chkArsivBirimi.selectOption(value);
         return this;
     }
 
-    public BirimYonetimiPage BelgenetKullaniyorMuSec(String value) throws InterruptedException{
+    public BirimYonetimiPage BelgenetKullaniyorMuSec(String value) {
         cmbBelgenetKullaniyorMu.selectOption(value);
         return this;
     }
 
 
-    public BirimYonetimiPage postaSekliSec(String value) throws InterruptedException{
+    public BirimYonetimiPage postaSekliSec(String value) {
         cmbPostaSekli.selectOption(value);
-        return  this;
+        return this;
     }
 
-    public  BirimYonetimiPage medasPostaBirimiDoldur(String text) throws InterruptedException{
+    public BirimYonetimiPage medasPostaBirimiDoldur(String text) {
         txtMedasPostaBirimi.setValue(text);
         return this;
     }
 
-    public BirimYonetimiPage fizikiArsivBirimiDoldur(String text) throws InterruptedException{
+    public BirimYonetimiPage fizikiArsivBirimiDoldur(String text) {
         treeFizikiArsivBirimi.setValue(text);
         return this;
     }
 
-    public BirimYonetimiPage treeBagliBirimDoldur(String text) throws InterruptedException{
+    public BirimYonetimiPage treeBagliBirimDoldur(String text) {
         treeBagliBirim.setValue(text);
-        return  this;
+        return this;
     }
 
-    public BirimYonetimiPage birimBagTuruSec(String text) throws InterruptedException{
+    public BirimYonetimiPage birimBagTuruSec(String text) {
         cmbBirimBagTuru.selectOption(text);
         return this;
     }
 
-    public BirimYonetimiPage gidenEvraklariNumaratoruDoldur(String text) throws InterruptedException{
+    public BirimYonetimiPage gidenEvraklariNumaratoruDoldur(String text) {
         txtGidenEvrakNumaratoru.setValue(text);
-        return  this;
+        return this;
 
     }
 
-    public  BirimYonetimiPage gelenEvraklariNumaratoruDoldur(String text) throws InterruptedException{
+    public BirimYonetimiPage gelenEvraklariNumaratoruDoldur(String text) {
         txtGelenEvrakNumaratoru.setValue(text);
         return this;
     }
 
 
-    public BirimYonetimiPage birimTipiSec(String value) throws  InterruptedException{
+    public BirimYonetimiPage birimTipiSec(String value) {
         cmbBirimTipi.selectOption(value);
         return this;
     }
 
-    public   BirimYonetimiPage IdariKimlikKoduDoldur(String text) throws InterruptedException{
+    public BirimYonetimiPage IdariKimlikKoduDoldur(String text) {
         txtIdariKimlikKodu.setValue(text);
-        return  this;
+        return this;
     }
 
-    public BirimYonetimiPage antetTipiSec(String value) throws InterruptedException{
+    public BirimYonetimiPage antetTipiSec(String value) {
         cmbAntetTipi.selectOption(value);
         return this;
     }
 
-    public BirimYonetimiPage karargahKisaltmasiDoldur(String text) throws InterruptedException{
+    public BirimYonetimiPage karargahKisaltmasiDoldur(String text) {
         txtKarargahKisaltmasi.setValue(text);
-        return  this;
+        return this;
     }
 
-    public BirimYonetimiPage mesajAdresiDoldur(String text) throws InterruptedException{
+    public BirimYonetimiPage mesajAdresiDoldur(String text) {
         txtMesajAdresi.setValue(text);
         return this;
     }
 
-    public BirimYonetimiPage ozelHitap(Boolean secim) throws InterruptedException{
+    public BirimYonetimiPage ozelHitap(Boolean secim) {
         chkOzelHitap.setSelected(secim);
         return this;
     }
 
-    public BirimYonetimiPage kisaAdiDoldur(String text) throws InterruptedException{
+    public BirimYonetimiPage kisaAdiDoldur(String text) {
         txtKisaAdi.setValue(text);
-        return  this;
+        return this;
     }
 
-    public BirimYonetimiPage adDoldur(String text) throws InterruptedException{
+    public BirimYonetimiPage adDoldur(String text) {
         txtAd.setValue(text);
         return this;
     }
 
-    public BirimYonetimiPage disBirim(Boolean secim) throws  InterruptedException{
+    public BirimYonetimiPage disBirim(Boolean secim) {
         chkDisBirim.setSelected(secim);
         return this;
     }
 
-    public BirimYonetimiPage gorunurlukTipiSec(String value) throws InterruptedException{
+    public BirimYonetimiPage gorunurlukTipiSec(String value) {
         cmbGorunurlukTipi.selectOption(value);
         return this;
     }
 
-    public BirimYonetimiPage btnArti() throws InterruptedException{
+    public BirimYonetimiPage btnArti() {
         btnArti.click();
-        return  this;
+        return this;
     }
 
-    public BirimYonetimiPage  durumSec(String value) throws  InterruptedException{
+    public BirimYonetimiPage durumSec(String value) {
         cmbDurum.selectOption(value);
         return this;
 
     }
 
-    public BirimYonetimiPage birimTuruSec(String value) throws InterruptedException{
+    public BirimYonetimiPage birimTuruSec(String value) {
         cmbBirimTuru.selectOption(value);
-        return  this;
+        return this;
     }
 
-    public BirimYonetimiPage duzenle() throws InterruptedException{
+    public BirimYonetimiPage duzenle() {
         btnDuzenle.click();
         return this;
     }
 
-    public BirimYonetimiPage araGonder() throws InterruptedException{
+    public BirimYonetimiPage araGonder() {
         btnAra.click();
-        return  this;
+        return this;
     }
 
-    public BirimYonetimiPage birimDoldur(String text) throws InterruptedException{
+    public BirimYonetimiPage birimDoldur(String text) {
         txtBirim.setValue(text);
-        return  this;
+        return this;
     }
 }
