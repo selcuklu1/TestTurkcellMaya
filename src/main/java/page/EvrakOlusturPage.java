@@ -54,7 +54,7 @@ public class EvrakOlusturPage extends BaseLibrary {
     SelenideElement cmbPostaTipi = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:16:geregiLov:LovSecilenTable:0:selectOneMenu"));
 
     SelenideElement chkDagitimiEkYap = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:16:dagitimEkYapCheckBoxId"));
-    SelenideElement txtOnayAkisi = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:17:akisLov:LovText"));
+    BelgenetElement txtOnayAkisi = comboLov("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='akisLov:LovText']");
     SelenideElement btnOnayAkisiTemizle = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:17:akisLov:j_idt134"));
     SelenideElement btnOnayAkisiEdit = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:17:akisLov:j_idt135"));
     //SelenideElement btnOnayAkisiEkle = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:17:onayAkisiEkle"));
@@ -266,6 +266,7 @@ public class EvrakOlusturPage extends BaseLibrary {
     }
 
     public EvrakOlusturPage onayAkisiEkle(String kullanici) {
+
         btnOnayAkisiEkle.click();
         txtOnayAkisiKullanicilar.selectComboLov(kullanici);
 

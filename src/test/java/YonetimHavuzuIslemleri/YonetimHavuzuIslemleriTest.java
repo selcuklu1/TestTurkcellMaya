@@ -25,8 +25,6 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
     public void TC0002() {
 
         /*
-
-
         page.ustMenuAc("Yönetim Havuzu Yönetimi");
         page.yonetimHavuzuYonetimiPage()
                 .yonetimHavuzuEkle()
@@ -38,10 +36,6 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
                 .kullaniciSec("Optiim TEST1")
                 .kullaniciKaydet()
                 .yonetimHavuzuKaydet();
-
-
-
-
          */
 
         /*
@@ -60,7 +54,7 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
 
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC0001")
+    @Test(enabled = false, description = "TC0001")
     public void TC0001() {
 
 

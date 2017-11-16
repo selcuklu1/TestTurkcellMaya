@@ -1,17 +1,14 @@
 package common;
 
 import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.WebDriverRunner;
 import listeners.SettingsListener;
-import org.openqa.selenium.Dimension;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Listeners;
 import pageComponents.belgenetElements.BelgenetFramework;
 
 import java.util.Locale;
 
-import static data.TestData.*;
+import static data.TestData.belgenetURL;
 
 @Listeners({SettingsListener.class})
 public class BaseTest {
@@ -26,6 +23,7 @@ public class BaseTest {
         //endregion
 
         //region Selenide Driver Configuration
+        //        Configuration.baseUrl = "http://94.55.114.18:8889/edys-web/sistemeGiris.xhtml";
         Configuration.baseUrl = belgenetURL;
         Configuration.browser = "drivers.Firefox"; //
         //"org.openqa.selenium.Firefox.FirefoxDriver";
