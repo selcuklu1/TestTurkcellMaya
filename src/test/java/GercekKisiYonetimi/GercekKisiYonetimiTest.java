@@ -68,13 +68,57 @@ public class GercekKisiYonetimiTest extends BaseTest{
 
                 .openTab("Bilgileri")
                 .bilgiSecimTipiSec("G");
-                //.bilgiDoldur(adSoyad);
-      //  page.islemMesaji().beklenenMesajTipi(DIKKAT);
+        //.bilgiDoldur(adSoyad);
+        //  page.islemMesaji().beklenenMesajTipi(DIKKAT);
 
         page.ustMenuAc("Gelen Evrak Kayıt");
         page.gelenEvrakKayitPage()
                 .evrakBilgileriListKisiKurumSec("G")
                 .evrakBilgileriListGeldigiKurumDoldur(adSoyad);
+
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TC1144: Gerçek kişi sorgulama")
+    public void TC1144() {
+
+        //TODO: DB'den çekilecek.
+        String tcNO = "91057625780";
+        String ad = "OptiimTest";
+        String soyad = "TestOptiim";
+
+        page.ustMenuAc("Gerçek Kişi Yönetimi");
+        page.gercekKisiYonetimPage()
+                .ara()
+                .filtreSorgulamaPaneliAc()
+                .filtreSoyadDoldur(soyad)
+                .filtreDurumSec("AKTIFLER")
+                .ara()
+                .kayitKontrolu(tcNO, ad, soyad)
+
+                .filtreSorgulamaPaneliAc()
+                .filtreAdDoldur(ad)
+                .filtreDurumSec("AKTIFLER")
+                .ara()
+                .kayitKontrolu(tcNO, ad, soyad)
+
+                .filtreSorgulamaPaneliAc()
+                .filtreTCKimlikNoDoldur("10")
+                .filtreDurumSec("AKTIFLER")
+                .ara()
+                .tcNoKontrolu("10")
+
+                .filtreSorgulamaPaneliAc()
+                .filtreTCKimlikNoDoldur(tcNO)
+                .filtreDurumSec("AKTIFLER")
+                .ara()
+                .kayitKontrolu(tcNO, ad, soyad)
+
+                .filtreSorgulamaPaneliAc()
+                .filtreTCKimlikNoDoldur(tcNO)
+                .filtreDurumSec("PASIFLER")
+                .ara()
+                .kayitBulunamadiKontrolu();
 
     }
 }

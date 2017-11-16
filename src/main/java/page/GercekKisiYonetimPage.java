@@ -2,12 +2,16 @@ package page;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.WebDriverRunner;
 import common.BaseLibrary;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.testng.Assert;
 import pageComponents.belgenetElements.BelgenetElement;
 
 import java.beans.IntrospectionException;
+import java.util.List;
 
 import static com.codeborne.selenide.Selenide.$;
 import static pageComponents.belgenetElements.BelgenetFramework.comboBox;
@@ -20,6 +24,7 @@ public class GercekKisiYonetimPage extends BaseLibrary {
     SelenideElement txtFiltreAd = $(By.id("gercekKisiYonetimiListingForm:filterPanel:gercekKisiAdFilterInput"));
     SelenideElement txtFiltreSoyad = $(By.id("gercekKisiYonetimiListingForm:filterPanel:gercekKisiSoyadFilterInput"));
     SelenideElement cmbFiltreDurum = $(By.id("gercekKisiYonetimiListingForm:filterPanel:durumSelectBox"));
+    SelenideElement filtreSorgulamaPanel = $(By.id("gercekKisiYonetimiListingForm:filterPanel"));
     SelenideElement btnAra = $(By.id("gercekKisiYonetimiListingForm:filterPanel:searchGercekKisiButton"));
     SelenideElement txtTCKimlikNo = $(By.id("gercekKisiYonetimiEditorForm:tcKimlikNoInput"));
     SelenideElement txtOnEk = $(By.id("gercekKisiYonetimiEditorForm:onEkInput"));
@@ -42,6 +47,13 @@ public class GercekKisiYonetimPage extends BaseLibrary {
     SelenideElement txtIletisimBilgisiEPosta = $(By.id("gercekKisiBilgileriEditorForm:ePostaInput"));
     SelenideElement btnIletisimBilgisiKaydet = $(By.id("gercekKisiBilgileriEditorForm:saveIletisimBilgisiButton"));
 
+    //Table
+    SelenideElement tableGercekKisiData = $(By.id("gercekKisiYonetimiListingForm:gercekKisiDataTable_data"));
+    SelenideElement tbleTc = $(By.xpath("//*[@id=\"gercekKisiYonetimiListingForm:gercekKisiDataTable_data\"]/tr/td[1]"));
+    SelenideElement tbleAd = $(By.xpath("//*[@id=\"gercekKisiYonetimiListingForm:gercekKisiDataTable_data\"]/tr/td[2]"));
+    SelenideElement tbleSoyad = $(By.xpath("//*[@id=\"gercekKisiYonetimiListingForm:gercekKisiDataTable_data\"]/tr/td[3]"));
+    SelenideElement tableKayitBulunamadi = $(By.xpath("//*[@id=\"gercekKisiYonetimiListingForm:gercekKisiDataTable_data\"]/tr/td"));
+    SelenideElement tbleData0 = $(By.id("tbody[id^='gercekKisiYonetimiListingForm:gercekKisiDataTable_data'] tr[data-ri$='0']"));
 
     @Step("Yeni gerçek kişi ekle")
     public GercekKisiYonetimPage yeniGercekKisiEkle() {
@@ -106,7 +118,7 @@ public class GercekKisiYonetimPage extends BaseLibrary {
     }
 
     public GercekKisiYonetimPage filtreDurumSec(String value) {
-        cmbFiltreDurum.selectOption(value);
+        cmbFiltreDurum.selectOptionByValue(value);
         return this;
     }
 
@@ -164,5 +176,29 @@ public class GercekKisiYonetimPage extends BaseLibrary {
     public GercekKisiYonetimPage iletisimBilgisiKaydet() {
         btnIletisimBilgisiKaydet.click();
         return this;
+    }
+
+    public GercekKisiYonetimPage filtreSorgulamaPaneliAc() {
+        filtreSorgulamaPanel.click();
+        return this;
+    }
+
+    @Step("Kayit kontrolu başarılı")
+    public GercekKisiYonetimPage kayitKontrolu(String tcNO, String ad, String soyad) {
+        Assert.assertEquals(tbleTc.getText().equals(tcNO), true);
+        Assert.assertEquals(tbleAd.getText().equals(ad), true);
+        Assert.assertEquals(tbleSoyad.getText().equals(soyad), true);
+        return this;
+    }
+
+    @Step("TcNo kontrolu başarılı")
+    public GercekKisiYonetimPage tcNoKontrolu(String tcNO) {
+        Assert.assertEquals(tbleTc.getText().contains(tcNO), true);
+        return this;
+    }
+
+    @Step("Kayıt bulunamadı kontrolu başarılı")
+    public void kayitBulunamadiKontrolu() {
+        Assert.assertEquals(tableKayitBulunamadi.getText().contains("Kayıt Bulunamamıştır"), true);
     }
 }
