@@ -25,8 +25,6 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
     public void TC0002() {
 
         /*
-
-
         page.ustMenuAc("Yönetim Havuzu Yönetimi");
         page.yonetimHavuzuYonetimiPage()
                 .yonetimHavuzuEkle()
@@ -38,10 +36,6 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
                 .kullaniciSec("Optiim TEST1")
                 .kullaniciKaydet()
                 .yonetimHavuzuKaydet();
-
-
-
-
          */
 
         /*
@@ -52,13 +46,10 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
                 .onayAkisiKullaniciSec("Optiim TEST1")
                 .onayAkisiKullaniciTipiSec("Optiim TEST1", "İmzalama")
                 .onayAkisiKullan();
-<<<<<<< HEAD:src/test/java/YonetimHavuzuIslemleriTest.java
-=======
 */
 
 
 
->>>>>>> 7cfb106ba52eaee62cf21b80aad145309ff65fd9:src/test/java/YonetimHavuzuIslemleri/YonetimHavuzuIslemleriTest.java
     }
 
 
