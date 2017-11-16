@@ -15,27 +15,28 @@ public class GelenEvrakKayitPage extends BaseLibrary {
 
     // Evrak Bilgileri Sekmesinde bulunanlar
     SelenideElement btnUstYaziEkle = $(By.xpath("//div[@id='gidenEvrakDefterKaydiForm:ustYaziForm:gedkUploadButton']//span[@class='Üst Yazı Ekle']"));
-    SelenideElement txtEvrakBilgileriListKonuKodu = $(By.id("evrakBilgileriForm:evrakBilgileriList:1:konuKoduLov:LovText"));
-    SelenideElement txtEvrakBilgileriListKonu = $(By.id("evrakBilgileriForm:evrakBilgileriList:4:konuTextArea"));
-    SelenideElement cmbEvrakBilgileriListEvrakTuru = $(By.id("evrakBilgileriForm:evrakBilgileriList:5:evrakTuruCombo"));
-    SelenideElement cmbEvrakBilgileriListEvrakDili = $(By.id("evrakBilgileriForm:evrakBilgileriList:7:evrakDili"));
-    SelenideElement dateTxtEvrakBilgileriListEvrakTarihi = $(By.id("evrakBilgileriForm:evrakBilgileriList:8:evrakTarihi_input"));
-    SelenideElement cmbEvrakBilgileriListGizlilikDerecesi = $(By.xpath("//*[@id='evrakBilgileriForm:evrakBilgileriList:9:guvenlikKodu']"));
+    SelenideElement txtEvrakBilgileriListKonuKodu = $("[id^='evrakBilgileriForm:evrakBilgileriList'][id$='konuKoduLov:LovText']");
+    SelenideElement txtEvrakBilgileriListKonu = $("[id^='evrakBilgileriForm:evrakBilgileriList'][id$='konuTextArea']");
+    SelenideElement cmbEvrakBilgileriListEvrakTuru = $("[id$='evrakTuruCombo']");
+    SelenideElement cmbEvrakBilgileriListEvrakDili = $("[id^='evrakBilgileriForm:evrakBilgileriList'][id$='evrakDili']");
+    SelenideElement dateTxtEvrakBilgileriListEvrakTarihi = $("[id^='evrakBilgileriForm:evrakBilgileriList'][id$='evrakTarihi_input']");
+    SelenideElement cmbEvrakBilgileriListGizlilikDerecesi = $("[id$='guvenlikKodu']");
+
 
     // SelenideElement cmbEvrakBilgileriListKisiKurum = $(By.id("evrakBilgileriForm:evrakBilgileriList:9:kisiKurum"));
-    SelenideElement cmbEvrakBilgileriListKisiKurum = $("[id^='evrakBilgileriForm:evrakBilgileriList'][id$='kisiKurum']");
+    SelenideElement cmbEvrakBilgileriListKisiKurum = $("[id$='kisiKurum']");
     BelgenetElement txtEvrakBilgileriListGeldigiKurum = comboLov(By.id("evrakBilgileriForm:evrakBilgileriList:9:geldigiGercekKisiLov:LovText"));
 
-    SelenideElement txtEvrakBilgileriListEvrakSayiTextAreaSol = $(By.id("evrakBilgileriForm:evrakBilgileriList:11:evrakSayiTextAreaSol"));
-    SelenideElement txtEvrakBilgileriListEvrakSayiTextAreaSag = $(By.id("evrakBilgileriForm:evrakBilgileriList:11:evrakSayiTextAreaSag"));
-    SelenideElement cmbEvrakBilgileriListEvrakGelisTipi = $(By.id("evrakBilgileriForm:evrakBilgileriList:12:evrakGelisTipi"));
-    SelenideElement cmbEvrakBilgileriListIvedilik = $(By.id("evrakBilgileriForm:evrakBilgileriList:13:ivedilik"));
+    SelenideElement txtEvrakBilgileriListEvrakSayiTextAreaSol = $("[id$='evrakSayiTextAreaSol'");
+    SelenideElement txtEvrakBilgileriListEvrakSayiTextAreaSag = $("[id$='evrakSayiTextAreaSag']");
+    SelenideElement cmbEvrakBilgileriListEvrakGelisTipi = $("['evrakGelisTipi']");
+    SelenideElement cmbEvrakBilgileriListIvedilik = $("[ivedilik']");
     SelenideElement txtEvrakBilgileriListMiat = $(By.id("evrakBilgileriForm:evrakBilgileriList:14:miatCalendar_input"));
     SelenideElement txtEvrakBilgileriListAciklama = $(By.id("evrakBilgileriForm:evrakBilgileriList:15:j_idt4318"));
     SelenideElement cmbEvrakBilgileriListOzelKategori = $(By.id("evrakBilgileriForm:evrakBilgileriList:17:j_idt4499"));
     SelenideElement dateTxtEvrakBilgileriListPostalanmaTarihi = $(By.id("evrakBilgileriForm:evrakBilgileriList:18:postalanmaTarihi_input"));
-    BelgenetElement comboKonuKodu =  comboLov (By.id("evrakBilgileriForm:evrakBilgileriList:konuKoduLov:LovText"));
-    BelgenetElement comnoGeldigiKurum = comboLov(By.id("evrakBilgileriForm:evrakBilgileriList:geldigiKurumLov:LovText"));
+    BelgenetElement comboKonuKodu =  comboLov ("[id^='evrakBilgileriForm:evrakBilgileriList'][id$='konuKoduLov:LovText']");
+    BelgenetElement comnoGeldigiKurum = comboLov("[id$='geldigiKurumLov:LovText']");
 
     // Evrak Ekleri sekmesinde bulunanlar
     // Dosya ekle alt sekmesinde bulunanlar
@@ -110,13 +111,8 @@ public class GelenEvrakKayitPage extends BaseLibrary {
         return this;
     }
 
-<<<<<<< HEAD
-    public GelenEvrakKayitPage evrakBilgileriListKonuKoduDoldur(String konuKodu)  {
-        txtEvrakBilgileriListKonuKodu.sendKeys(konuKodu);
-=======
     public GelenEvrakKayitPage evrakBilgileriListKonuKoduDoldur(String konuKodu) throws InterruptedException {
         comboKonuKodu.selectComboLov(konuKodu);
->>>>>>> GelenGidenEvrakKayıt
         return this;
     }
 
@@ -126,12 +122,12 @@ public class GelenEvrakKayitPage extends BaseLibrary {
     }
 
     public GelenEvrakKayitPage evrakBilgileriListEvrakTuruSec(String evrakTuru)  {
-        cmbEvrakBilgileriListEvrakTuru.selectOption(evrakTuru);
+        cmbEvrakBilgileriListEvrakTuru.selectOptionByValue(evrakTuru);
         return this;
     }
 
     public GelenEvrakKayitPage evrakBilgileriListEvrakDiliSec(String evrakDili)  {
-        cmbEvrakBilgileriListEvrakDili.selectOption(evrakDili);
+        cmbEvrakBilgileriListEvrakDili.selectOptionByValue(evrakDili);
         return this;
     }
 
@@ -151,20 +147,19 @@ public class GelenEvrakKayitPage extends BaseLibrary {
         return this;
     }
 
-<<<<<<< HEAD
-    @Step("Kişi kurum doldur")
-    public GelenEvrakKayitPage evrakBilgileriListGeldigiKurumDoldur(String geldigiKurum) {
+//<<<<<<< HEAD
+//    @Step("Kişi kurum doldur")
+//    public GelenEvrakKayitPage evrakBilgileriListGeldigiKurumDoldur(String geldigiKurum) {
 
-        txtEvrakBilgileriListGeldigiKurum.selectComboLov(geldigiKurum);
-        //shouldHave(Condition.text(geregi));
+//        txtEvrakBilgileriListGeldigiKurum.selectComboLov(geldigiKurum);
+//        //shouldHave(Condition.text(geregi));
 
-        System.out.println("title: " + txtEvrakBilgileriListGeldigiKurum.lastSelectedLovTitleText());
-        System.out.println("detail: " + txtEvrakBilgileriListGeldigiKurum.lastSelectedLovDetailText());
+//        System.out.println("title: " + txtEvrakBilgileriListGeldigiKurum.lastSelectedLovTitleText());
+//        System.out.println("detail: " + txtEvrakBilgileriListGeldigiKurum.lastSelectedLovDetailText());
 
-=======
+//=======
     public GelenEvrakKayitPage evrakBilgileriListGeldigiKurumDoldur(String geldigiKurum) throws InterruptedException {
         comnoGeldigiKurum.selectComboLov(geldigiKurum);
->>>>>>> GelenGidenEvrakKayıt
         return this;
     }
 
@@ -184,7 +179,7 @@ public class GelenEvrakKayitPage extends BaseLibrary {
     }
 
     public GelenEvrakKayitPage evrakBilgileriListIvedilikSec(String ivedilik)  {
-        cmbEvrakBilgileriListIvedilik.selectOption(ivedilik);
+        cmbEvrakBilgileriListIvedilik.selectOptionByValue(ivedilik);
         return this;
     }
 

@@ -24,7 +24,7 @@ public class GercekKisiYonetimiTest extends BaseTest{
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TC1516: Gerçek kişi tanımlama ve  kontrolü")
-    public void TC1516() {
+    public void TC1516() throws InterruptedException {
 
         String tcNO = page.baseLibrary().createMernisTCNO();
         String ad = page.baseLibrary().createRandomText(6);

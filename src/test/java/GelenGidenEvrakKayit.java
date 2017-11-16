@@ -24,20 +24,15 @@ public class GelenGidenEvrakKayit extends BaseTest {
         page.gelenEvrakKayitPage()
                 //.evrakBilgileriUstYaziEkle("C:/Users/Emre_Sencan/Pictures/pdf2.pdf") üst yazı ekle butonu tıklanacak
                 .evrakBilgileriListKonuKoduDoldur("010.01")
-                .evrakBilgileriListEvrakTuruSec("R")
+                .evrakBilgileriListEvrakTuruSec("D")
                 .evrakBilgileriListEvrakDiliSec("917")
+                .evrakBilgileriListEvrakTarihiDoldur("16.11.2017")
                 .evrakBilgileriListGizlilikDerecesiSec("N")
                 .evrakBilgileriListKisiKurumSec("D")
                 .evrakBilgileriListGeldigiKurumDoldur("Esk Kurum 071216 2")
-                .evrakBilgileriListEvrakSayiSolDoldur("12365")
+                .evrakBilgileriListEvrakSayiSagDoldur("12365")
                 .evrakBilgileriListEvrakGelisTipiSec("P")
                 .evrakBilgileriListIvedilikSec("N");
                 //Excel eklenecek
-
-
-
-
-
-
     }
 }
