@@ -95,10 +95,10 @@ public class BaseLibrary {
         return ret;
     }
 
-    //Dosya ekler
-    public void uploadFile(String pathToFile) {
+    //Üstyazı dosyasını ekler
+    public void ustYaziUploadFile(String pathToFile) {
         try {
-            $(By.xpath("//input[@class='dz-hidden-input']")).sendKeys(pathToFile);
+            $(By.xpath("//input[@class='ustYaziUploadClass']")).sendKeys(pathToFile);
 //            LogPASS("Dosya Yuklendi.");
         } catch (Exception e) {
 //            logger.error("Error in attaching file.s : " + e);

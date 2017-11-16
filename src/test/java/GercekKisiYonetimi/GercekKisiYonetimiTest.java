@@ -79,7 +79,7 @@ public class GercekKisiYonetimiTest extends BaseTest{
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC1144: Gerçek kişi sorgulama")
+    @Test(enabled = true, description = "TC1516: Gerçek kişi sorgulama")
     public void TC1144() {
 
         //TODO: DB'den çekilecek.
@@ -119,6 +119,8 @@ public class GercekKisiYonetimiTest extends BaseTest{
                 .filtreDurumSec("PASIFLER")
                 .ara()
                 .kayitBulunamadiKontrolu();
+
+
 
     }
 }
