@@ -58,5 +58,10 @@ public class KaydedilenGelenEvrak extends BaseLibrary {
         confirm();
         return this;
     }
+    @Step("Rapor al PDF")
+    public KaydedilenGelenEvrak txtClear() {
+        txtEvrakKayitNo.clear();
+        return this;
+    }
 
 }

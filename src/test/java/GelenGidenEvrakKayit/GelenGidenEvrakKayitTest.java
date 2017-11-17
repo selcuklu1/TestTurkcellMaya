@@ -39,7 +39,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "Üstyazı ek ve ilgi eklenerek gelen evrak kaydı")
+    @Test(enabled = false, description = "Üstyazı ek ve ilgi eklenerek gelen evrak kaydı")
     public void TC0321() throws InterruptedException {
 
         page.ustMenuAc("Gelen Evrak Kayıt");
@@ -101,14 +101,26 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     public void  TC1401 () throws InterruptedException{
 
         page.ustMenuAc("Raporlar","Kaydedilen Gelen Evrak");
+        String evrakNo = "4940";
+        String evrakNo1 = "4941";
+        String geldigiYer = "D";
         page.kaydedilenGelenEvrak()
-                .gelenEvrakNoDoldur("4936")
+                .gelenEvrakNoDoldur(evrakNo)
                 .sorgula()
-                .raporAlExcel();
-//                .gelenEvrakNoDoldur("4905")
-//                .sorgula()
-//                .gelenEvrakNoDoldur("")
-//                .geldigiYerSec("")
-//                .sorgula();
+//                .raporAlExcel()
+                .txtClear()
+                .gelenEvrakNoDoldur(evrakNo1)
+                .sorgula()
+                .geldigiYerSec(geldigiYer)
+                .sorgula();
+//                .raporAlExcel();  pop upta ok butonuna basılacak
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "Gelen evrak kaydederken yeni gerçek ve tüzel kişi tanımlama")
+    public void  TC1136 () throws InterruptedException {
+        page.ustMenuAc("Gelen Evrak Kayıt");
+        page.gelenEvrakKayitPage()
+                .
     }
 }
