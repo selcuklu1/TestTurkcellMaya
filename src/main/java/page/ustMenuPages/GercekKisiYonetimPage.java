@@ -1,9 +1,8 @@
-package page.gelenEvrak;
+package page.ustMenuPages;
 
 import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
 import io.qameta.allure.Step;
-import net.bytebuddy.matcher.CollectionOneToOneMatcher;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import pageComponents.belgenetElements.BelgenetElement;

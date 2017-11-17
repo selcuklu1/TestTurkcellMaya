@@ -6,7 +6,7 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import page.YonetimHavuzuYonetimiPage;
+import page.ustMenuPages.YonetimHavuzuYonetimiPage;
 import pageComponents.BasePage;
 
 

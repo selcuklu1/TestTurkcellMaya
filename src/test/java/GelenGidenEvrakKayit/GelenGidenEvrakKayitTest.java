@@ -1,25 +1,25 @@
 package GelenGidenEvrakKayit;
 
-import com.codeborne.selenide.SelenideElement;
-import common.BasePage;
 import common.BaseTest;
-import io.qameta.allure.Epic;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import page.BirimEvraklariKaydedilenGelenEvraklar;
+import page.solMenuPages.KaydedilenGelenEvrakPage;
+import page.solMenuPages.KaydedilenGelenEvraklarPage;
+import page.solMenuPages.TeslimAlinmayiBekleyenlerPage;
+import page.ustMenuPages.GelenEvrakKayitPage;
+import pageComponents.BasePage;
 import pageData.MesajTipi;
 import pageData.SolMenuData;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
-
 public class GelenGidenEvrakKayitTest extends BaseTest {
-
     BasePage page;
+    GelenEvrakKayitPage gelenEvrakKayitPage;
+    TeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage;
+    KaydedilenGelenEvrakPage kaydedilenGelenEvrakPage;
+    KaydedilenGelenEvraklarPage kaydedilenGelenEvraklarPage;
+
     String konuKodu = "010.01";
     String evrakTuru = "R";
     String evrakDili = "917";
@@ -35,6 +35,10 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     @BeforeMethod
     public void loginBeforeTests() {
         page = new BasePage();
+        gelenEvrakKayitPage = new GelenEvrakKayitPage();
+        teslimAlinmayiBekleyenlerPage = new TeslimAlinmayiBekleyenlerPage();
+        kaydedilenGelenEvrakPage = new KaydedilenGelenEvrakPage();
+        kaydedilenGelenEvraklarPage = new KaydedilenGelenEvraklarPage();
         page.loginPage().login();
     }
 
@@ -42,8 +46,8 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     @Test(enabled = false, description = "Üstyazı ek ve ilgi eklenerek gelen evrak kaydı")
     public void TC0321() throws InterruptedException {
 
-        page.ustMenuAc("Gelen Evrak Kayıt");
-        page.gelenEvrakKayitPage()
+        page.ustMenu("Gelen Evrak Kayıt");
+        gelenEvrakKayitPage
 //                .evrakBilgileriUstYaziEkle("C:/Users/Emre_Sencan/Pictures/pdf2.pdf")
                 .evrakBilgileriListKonuKoduDoldur(konuKodu)
                 .evrakBilgileriListEvrakTuruSec(evrakTuru)
@@ -65,7 +69,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 //        page.islemMesaji().beklenenMesajTipi(MesajTipi.BASARILI);
         page.solMenu(SolMenuData.BirimEvraklari.KaydedilenGelenEvraklar);
 //        TODO  tabloda oluşturulan evrak bulunacak....
-        page.kaydedilenGelenEvraklar()
+        kaydedilenGelenEvraklarPage
         .raporSec();
     }
 
@@ -73,8 +77,8 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     @Test(enabled = false, description = "Gelen evrak kayıt ekranından havale")
     public void TC0328 () throws InterruptedException{
         String birim = "OPTİİM BİRİM11";
-        page.ustMenuAc("Gelen Evrak Kayıt");
-        page.gelenEvrakKayitPage()
+        page.ustMenu("Gelen Evrak Kayıt");
+        gelenEvrakKayitPage
 //                .evrakBilgileriUstYaziEkle("C:/Users/Emre_Sencan/Pictures/pdf2.pdf")
                 .evrakBilgileriListKonuKoduDoldur(konuKodu)
                 .evrakBilgileriListEvrakTuruSec(evrakTuru)
@@ -92,7 +96,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         page.islemMesaji().beklenenMesajTipi(MesajTipi.BASARILI);
         page.solMenu(SolMenuData.BirimEvraklari.KaydedilenGelenEvraklar);
 //        TODO  tabloda oluşturulan evrak bulunacak....
-        page.teslimAlinmayiBekleyenlerPage()
+        teslimAlinmayiBekleyenlerPage
                 .raporSec();
     }
 
@@ -100,11 +104,11 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     @Test(enabled = false, description = "Kaydedilen Gelen Evrak raporu")
     public void  TC1401 () throws InterruptedException{
 
-        page.ustMenuAc("Raporlar","Kaydedilen Gelen Evrak");
+        page.ustMenu("Raporlar","Kaydedilen Gelen Evrak");
         String evrakNo = "4940";
         String evrakNo1 = "4941";
         String geldigiYer = "D";
-        page.kaydedilenGelenEvrak()
+        kaydedilenGelenEvrakPage
                 .gelenEvrakNoDoldur(evrakNo)
                 .sorgula()
 //                .raporAlExcel()
@@ -119,8 +123,8 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "Gelen evrak kaydederken yeni gerçek ve tüzel kişi tanımlama")
     public void  TC1136 () throws InterruptedException {
-        page.ustMenuAc("Gelen Evrak Kayıt");
-        page.gelenEvrakKayitPage()
+        page.ustMenu("Gelen Evrak Kayıt");
+        gelenEvrakKayitPage
                 .evrakBilgileriListKisiKurumSec("G")
                 .evrakBilgileriGeldigiKisiEkle()
                 .IletisimBilgisiTCKNEkle()

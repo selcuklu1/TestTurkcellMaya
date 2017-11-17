@@ -5,21 +5,25 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import page.EvrakOlusturPage;
-import page.gelenEvrak.GelenEvrakKayitPage;
-import page.gelenEvrak.GercekKisiYonetimPage;
+import page.ustMenuPages.EvrakOlusturPage;
+import page.ustMenuPages.GelenEvrakKayitPage;
+import page.ustMenuPages.GercekKisiYonetimPage;
 import pageComponents.BasePage;
 
 public class GercekKisiYonetimiTest extends BaseTest{
 
     BasePage page;
     GercekKisiYonetimPage gercekKisiYonetimPage;
+    EvrakOlusturPage evrakOlusturPage;
+    GelenEvrakKayitPage gelenEvrakKayitPage;
 
     @BeforeMethod
     public void loginBeforeTests() {
         page = new BasePage();
-        page.loginPage().login();
         gercekKisiYonetimPage = new GercekKisiYonetimPage();
+        evrakOlusturPage = new EvrakOlusturPage();
+        gelenEvrakKayitPage = new GelenEvrakKayitPage();
+        page.loginPage().login();
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -57,7 +61,7 @@ public class GercekKisiYonetimiTest extends BaseTest{
                 .kaydet();
 
         page.ustMenu("Evrak Oluştur");
-        new EvrakOlusturPage()
+        evrakOlusturPage
                 .geregiSecimTipiSec("G")
                 .geregiDoldur(adSoyad)
                 .geregiAlaniKontrol(adSoyad, unvan, adres, "P" )
@@ -71,7 +75,7 @@ public class GercekKisiYonetimiTest extends BaseTest{
         //  page.islemMesaji().beklenenMesajTipi(DIKKAT);
 
         page.ustMenu("Gelen Evrak Kayıt");
-        new GelenEvrakKayitPage()
+        gelenEvrakKayitPage
                 .evrakBilgileriListKisiKurumSec("G")
                 .evrakBilgileriListGeldigiKurumDoldur(adSoyad);
 
@@ -134,10 +138,28 @@ public class GercekKisiYonetimiTest extends BaseTest{
 
         String getTbleTC2 = gercekKisiYonetimPage.getTbleTCNO();
 
-        gercekKisiYonetimPage.filtreSorgulamaPaneliAc()
+        gercekKisiYonetimPage
+                .filtreSorgulamaPaneliAc()
                 .filtreDurumSec("PASIFLER")
                 .filtreTCKimlikNoDoldur(getTbleTC)
                 .ara()
                 .tcNoKontrolu(getTbleTC);
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TC1135: Yeni gerçek kişi kayıtta alan kontrolleri")
+    public void TC1135()  {
+        page.ustMenu("Gerçek Kişi Yönetimi");
+        gercekKisiYonetimPage
+                .yeniGercekKisiEkle()
+                .kaydet()
+                .zorunluAdSoyadAlanKontrolu()
+
+                .adDoldur("Sezai")
+                .soyadDoldur("Çelik")
+                .kepAdresiKullaniyor(true)
+                .kaydet();
+        //page.islemMesaji().beklenenMesajTipi(DIKKAT);
+
     }
 }

@@ -1,20 +1,15 @@
-package page;
+package page.solMenuPages;
 
 import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
-import drivers.Firefox;
 import io.qameta.allure.Step;
-import javafx.scene.control.ButtonType;
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.security.Credentials;
 import pageComponents.belgenetElements.BelgenetElement;
 
 import static com.codeborne.selenide.Selenide.*;
 import static pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
-public class KaydedilenGelenEvrak extends BaseLibrary {
+public class KaydedilenGelenEvrakPage extends BaseLibrary {
 
     SelenideElement cmbGeldigiYer = $(By.id("birimeGelenEvrakRaporuForm:evrakAramaGeldigiYer_id"));
     BelgenetElement cmbBirim =  comboLov (By.id("birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuBirimLovId:j_idt126"));
@@ -24,42 +19,42 @@ public class KaydedilenGelenEvrak extends BaseLibrary {
     SelenideElement btnRaporAlPdf = $(By.id("birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable:j_idt22373"));
 
     @Step("Birim alanı doldur")
-    public KaydedilenGelenEvrak birimDoldur(String birim) {
+    public KaydedilenGelenEvrakPage birimDoldur(String birim) {
         cmbBirim.selectComboLov(birim);
         return this;
     }
 
     @Step("Geldiği yer seç")
-    public KaydedilenGelenEvrak geldigiYerSec(String geldigiYer) {
+    public KaydedilenGelenEvrakPage geldigiYerSec(String geldigiYer) {
         cmbGeldigiYer.selectOptionByValue(geldigiYer);
         return this;
     }
 
     @Step("Gelen Evrak no alanını doldur")
-    public KaydedilenGelenEvrak gelenEvrakNoDoldur(String evrakNo) {
+    public KaydedilenGelenEvrakPage gelenEvrakNoDoldur(String evrakNo) {
         txtEvrakKayitNo.sendKeys(evrakNo);
         return this;
     }
 
     @Step("Sorgula butununa bas")
-    public KaydedilenGelenEvrak sorgula() {
+    public KaydedilenGelenEvrakPage sorgula() {
         btnSorgula.click();
         return this;
     }
     @Step("Rapor al Excel")
-    public KaydedilenGelenEvrak raporAlExcel() {
+    public KaydedilenGelenEvrakPage raporAlExcel() {
         btnRaporAlExcel.click();
         confirm();
         return this;
     }
     @Step("Rapor al PDF")
-    public KaydedilenGelenEvrak raporAlPdf() {
+    public KaydedilenGelenEvrakPage raporAlPdf() {
         btnRaporAlPdf.click();
         confirm();
         return this;
     }
     @Step("Rapor al PDF")
-    public KaydedilenGelenEvrak txtClear() {
+    public KaydedilenGelenEvrakPage txtClear() {
         txtEvrakKayitNo.clear();
         return this;
     }

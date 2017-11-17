@@ -1,4 +1,4 @@
-package page.gelenEvrak;
+package page.ustMenuPages;
 
 import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;

@@ -1,4 +1,4 @@
-package page.birimEvralklari;
+package page.solMenuPages;
 
 import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
@@ -7,50 +7,50 @@ import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Selenide.$;
 
-public class TeslimAlinanlarPage extends BaseLibrary {
+public class TeslimAlinmayiBekleyenlerPage extends BaseLibrary {
 
     SelenideElement f = $(By.xpath("//div[@id='mainInboxForm:inboxDataTable:filtersAccordion']//a[text()='Filtreler']/parent::h3"));
     SelenideElement cmbFiltre = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt10493_input"));
     SelenideElement txtSayfadaAra = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt353"));
-    SelenideElement dateTxtTarih = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt353"));
-    SelenideElement cmbTopluSecim  =$(By.id("mainInboxForm:inboxDataTable:j_idt657_button"));
+    SelenideElement dateTxtTarih = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:tarihSecCalendar_input"));
+    SelenideElement cmbTopluSecim  =$(By.id("mainInboxForm:inboxDataTable:j_idt651_button"));
     SelenideElement tblRapor = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
-    SelenideElement btnHavaleYap = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:2:cmdbutton"));
+    SelenideElement btnTeslimAlveHavaleYap = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:3:cmdbutton"));
 
 
     @Step("Filtrele alanını aç")
-    public TeslimAlinanlarPage filtreleAc() {
+    public TeslimAlinmayiBekleyenlerPage filtreleAc() {
         f.click();
         return this;
     }
 
     @Step("Filtere seç")
-    public TeslimAlinanlarPage filtreleSec(String value) {
+    public TeslimAlinmayiBekleyenlerPage filtreleSec(String value) {
         cmbFiltre.selectOption(value);
         return this;
     }
 
     @Step("Sayfada Ara alanı doldur")
-    public TeslimAlinanlarPage sayfadaAraDoldur(String value) {
+    public TeslimAlinmayiBekleyenlerPage sayfadaAraDoldur(String value) {
         txtSayfadaAra.sendKeys(value);
         return this;
     }
 
     @Step("Tarihi doldur")
-    public TeslimAlinanlarPage TarihiDoldur(String tarih) {
+    public TeslimAlinmayiBekleyenlerPage TarihiDoldur(String tarih) {
         dateTxtTarih.sendKeys(tarih);
         return this;
     }
 
     @Step("Tablodan rapor seç")
-    public TeslimAlinanlarPage raporSec() {
+    public TeslimAlinmayiBekleyenlerPage raporSec() {
         tblRapor.click();
         return this;
     }
 
-    @Step("Havale yap butonana bas")
-    public TeslimAlinanlarPage havaleYap() {
-        btnHavaleYap.click();
+    @Step("Telim Al ve Havale Yap butonana bas")
+    public TeslimAlinmayiBekleyenlerPage havaleYap() {
+        btnTeslimAlveHavaleYap.click();
         return this;
     }
 }

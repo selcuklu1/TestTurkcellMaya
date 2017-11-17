@@ -2,8 +2,8 @@ package Example;
 
 import common.BaseTest;
 import org.testng.annotations.Test;
-import page.EvrakOlusturPage;
-import page.gelenEvrak.GelenEvrakKayitPage;
+import page.ustMenuPages.EvrakOlusturPage;
+import page.ustMenuPages.GelenEvrakKayitPage;
 import pageComponents.BasePage;
 
 public class TestClass3 extends BaseTest {

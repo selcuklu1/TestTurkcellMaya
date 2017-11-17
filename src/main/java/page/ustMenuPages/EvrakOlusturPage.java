@@ -1,4 +1,4 @@
-package page;
+package page.ustMenuPages;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;

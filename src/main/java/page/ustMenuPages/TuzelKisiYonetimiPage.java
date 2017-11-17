@@ -1,6 +1,5 @@
-package page;
+package page.ustMenuPages;
 
-import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
 import org.openqa.selenium.By;

@@ -1,4 +1,4 @@
-package page.birimEvralklari;
+package page.solMenuPages;
 
 import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;

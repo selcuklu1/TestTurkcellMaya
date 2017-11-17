@@ -6,10 +6,10 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import page.BirimYonetimiPage;
-import page.EvrakOlusturPage;
-import page.KurumYonetimiPage;
-import page.TuzelKisiYonetimiPage;
+import page.ustMenuPages.BirimYonetimiPage;
+import page.ustMenuPages.EvrakOlusturPage;
+import page.ustMenuPages.KurumYonetimiPage;
+import page.ustMenuPages.TuzelKisiYonetimiPage;
 import pageComponents.BasePage;
 
 @Epic("Belgenet1Epic examples")
@@ -58,7 +58,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
                 .popupKepHizmetSaglayicisi("PTT KEP Servisi")
                 .popupKaydet();
                 //.idariBirimKimlikKodu(text);
-               // String text1=   page.KurumYonetimiPage().idariBirimKimlikKoduCek();
+               // String text1=   page.ustMenuPages.KurumYonetimiPage().idariBirimKimlikKoduCek();
         //  page.islemMesaji().beklenenMesajTipi(MesajTipi.BASARILI);  Obje Değişti
         page.ustMenu("Evrak İşlemleri", "Evrak Oluştur");
         evrakOlusturPage

@@ -1,4 +1,4 @@
-package page.islemYaptiklarim;
+package page.ustMenuPages;
 
 import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;

@@ -6,7 +6,7 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import page.PulYonetimiPage;
+import page.ustMenuPages.PulYonetimiPage;
 import pageComponents.BasePage;
 
 import static pageData.MesajTipi.BASARILI;

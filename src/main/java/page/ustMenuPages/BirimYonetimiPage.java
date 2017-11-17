@@ -1,4 +1,4 @@
-package page;
+package page.ustMenuPages;
 
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
