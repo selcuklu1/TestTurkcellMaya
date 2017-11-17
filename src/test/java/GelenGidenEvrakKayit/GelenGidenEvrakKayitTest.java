@@ -121,6 +121,12 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     public void  TC1136 () throws InterruptedException {
         page.ustMenuAc("Gelen Evrak Kayıt");
         page.gelenEvrakKayitPage()
-                .
+                .evrakBilgileriListKisiKurumSec("G")
+                .evrakBilgileriGeldigiKisiEkle()
+                .IletisimBilgisiTCKNEkle()
+                .IletisimBilgisiTCKNAra()
+                .IletisimBilgisikaydet();
+//        Gerçek kişi yönetimi ekranında yeni kaydı kontrol et
+
     }
 }
