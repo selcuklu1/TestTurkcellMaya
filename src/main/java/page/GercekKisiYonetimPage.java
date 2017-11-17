@@ -54,6 +54,9 @@ public class GercekKisiYonetimPage extends BaseLibrary {
     SelenideElement tbleSoyad = $(By.xpath("//*[@id=\"gercekKisiYonetimiListingForm:gercekKisiDataTable_data\"]/tr/td[3]"));
     SelenideElement tableKayitBulunamadi = $(By.xpath("//*[@id=\"gercekKisiYonetimiListingForm:gercekKisiDataTable_data\"]/tr/td"));
     SelenideElement tbleData0 = $(By.id("tbody[id^='gercekKisiYonetimiListingForm:gercekKisiDataTable_data'] tr[data-ri$='0']"));
+    SelenideElement tblePasif = $(By.id("div[id^='gercekKisiYonetimiListingForm:gercekKisiDataTable'] td[class$='center-aligned passive-cell']"));
+    SelenideElement btnAktif = $(By.id("gercekKisiYonetimiListingForm:gercekKisiDataTable:0:aktifEtGercekKisi"));
+
 
     @Step("Yeni gerçek kişi ekle")
     public GercekKisiYonetimPage yeniGercekKisiEkle() {
@@ -180,6 +183,9 @@ public class GercekKisiYonetimPage extends BaseLibrary {
 
     public GercekKisiYonetimPage filtreSorgulamaPaneliAc() {
         filtreSorgulamaPanel.click();
+        txtFiltreTCKimlikNo.clear();
+        txtFiltreAd.clear();
+        txtFiltreSoyad.clear();
         return this;
     }
 
@@ -198,7 +204,18 @@ public class GercekKisiYonetimPage extends BaseLibrary {
     }
 
     @Step("Kayıt bulunamadı kontrolu başarılı")
-    public void kayitBulunamadiKontrolu() {
+    public GercekKisiYonetimPage kayitBulunamadiKontrolu() {
         Assert.assertEquals(tableKayitBulunamadi.getText().contains("Kayıt Bulunamamıştır"), true);
+        return this;
+    }
+
+    public GercekKisiYonetimPage pasiflerKayitKontrolu() {
+        Assert.assertEquals(btnAktif.isDisplayed(), true);
+        return this;
+    }
+
+    public String getTbleTCNO() {
+        String getTC = tbleTc.getText();
+        return getTC;
     }
 }

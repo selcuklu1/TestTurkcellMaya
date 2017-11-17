@@ -113,6 +113,14 @@ public class BasePage {
 
     public BirimEvraklariTeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage() {return new BirimEvraklariTeslimAlinmayiBekleyenlerPage();}
 
+<<<<<<< HEAD
    public  KaydedilenGelenEvrak kaydedilenGelenEvrak() {return new KaydedilenGelenEvrak();}
+=======
+    public BirimYonetimiPage BirimYonetimiPage() { return  new BirimYonetimiPage();
+    }
+
+    public KurumYonetimiPage KurumYonetimiPage() { return new KurumYonetimiPage();
+    }
+>>>>>>> 886069b92fd31eec97c75e4244ef6d2def62cc58
     //endregion
 }

@@ -23,7 +23,6 @@ public class BaseTest {
         //endregion
 
         //region Selenide Driver Configuration
-        //        Configuration.baseUrl = "http://94.55.114.18:8889/edys-web/sistemeGiris.xhtml";
         Configuration.baseUrl = belgenetURL;
         Configuration.browser = "drivers.Firefox"; //
         //"org.openqa.selenium.Firefox.FirefoxDriver";

@@ -19,8 +19,37 @@ public class KurumYonetimiPage extends BaseLibrary {
     SelenideElement chkOzelHitap = $(By.id("kurumYonetimiEditorForm:ozelHitapExistSelBoolean_input"));
     SelenideElement btnKaydet = $(By.id("kurumYonetimiEditorForm:saveKurumButton"));
     SelenideElement btnKepAdresBilgileriArti = $(By.id("kurumYonetimiEditorForm:kepBilgileriDataTable:addNewKepAdresiButton"));
+    SelenideElement btnGuncelle = $(By.id("kurumYonetimiListingForm:kurumTreeTable:0:updateKurumButton"));
+    SelenideElement txtPopupKepAdresi = $(By.id("kurumKepAdresBilgiEditorForm:kurumKepAdresBilgiInputTextId"));
+    SelenideElement cmbPopupKepHizmetSaglayicisi = $(By.id("kurumKepAdresBilgiEditorForm:kephs"));
+    SelenideElement btnPopupKaydet = $(By.id("kurumKepAdresBilgiEditorForm:saveKepAdresiButton"));
+    String text;
+    public KurumYonetimiPage idariBirimKimlikKoduCek() throws InterruptedException{
+        text = txtIdariBirimKimlikKodu.getValue();
+        System.out.println("Metin değer "+text);
+        return this;
+        //return text;
+    }
 
-    public KurumYonetimiPage kepAdresBilgileriArtiGonder() {
+    public  KurumYonetimiPage popupKaydet() throws InterruptedException{
+        btnPopupKaydet.click();
+        return this;
+    }
+    public KurumYonetimiPage popupKepHizmetSaglayicisi(String value) throws InterruptedException{
+        cmbPopupKepHizmetSaglayicisi.selectOption(value);
+        return this;
+    }
+
+    public KurumYonetimiPage popupKepAdresi(String text) throws InterruptedException{
+        txtPopupKepAdresi.setValue(text);
+        return this;
+    }
+
+    public KurumYonetimiPage guncelle() throws InterruptedException{
+        btnGuncelle.click();
+        return this;
+    }
+    public KurumYonetimiPage kepAdresBilgileriArti() {
         btnKepAdresBilgileriArti.click();
         return this;
     }
@@ -65,7 +94,7 @@ public class KurumYonetimiPage extends BaseLibrary {
         return this;
     }
 
-    public KurumYonetimiPage araDoldur(String text) {
+    public KurumYonetimiPage ara() throws InterruptedException{
         btnAra.click();
         return this;
     }
