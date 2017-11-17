@@ -438,13 +438,13 @@ public class GelenEvrakKayitPage extends BaseLibrary {
         if (ustYaziveHavaleYeriYokpopUp.isDisplayed()) {
             popUpEvet.click();
         }
-        else if(ustYaziYokpopUp.isDisplayed()){
+        if(ustYaziYokpopUp.isDisplayed()){
             ustYaziYokEvet.click();
         }
-        else if (mukerrerPopUp.isDisplayed()){
+        if (mukerrerPopUp.isDisplayed()){
             mukerrerPopUpEvet.click();
         }
-        else if (basariliPopUp.isDisplayed()){
+        if (basariliPopUp.isDisplayed()){
             basariliPopUpKapat.click();
         }
         return this;
