@@ -2,6 +2,7 @@ package page;
 
 import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Selenide.$;
@@ -21,46 +22,47 @@ public class BeklemeyeAlinanlarPage extends BaseLibrary {
     //Filtreler Acordion
     SelenideElement acordion = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion"));
 
-    public BeklemeyeAlinanlarPage acordion() {
+    @Step("Acordion aç")
+    public BeklemeyeAlinanlarPage acordion() throws InterruptedException {
         acordion.click();
         return this;
     }
-
-    public BeklemeyeAlinanlarPage solMenu() {
+    @Step("Sol menu aç")
+    public BeklemeyeAlinanlarPage solMenu() throws InterruptedException {
         solmenubeklemeyealinanlar.click();
         return this;
     }
-
-    public BeklemeyeAlinanlarPage filtreleSec(String value) {
+    @Step("Filtrele seç")
+    public BeklemeyeAlinanlarPage filtreleSec(String value) throws InterruptedException {
         cmbFiltrele.selectOption(value);
         return this;
     }
-
-    public BeklemeyeAlinanlarPage sayfadaAraDoldur(String text) {
+    @Step("Sayfada ara doldur")
+    public BeklemeyeAlinanlarPage sayfadaAraDoldur(String text) throws InterruptedException {
         txtSayfadaAra.setValue(text);
         return this;
     }
-
-    public BeklemeyeAlinanlarPage gidecegiYerSeciniz() {
+    @Step("Gideceği yer seçiniz")
+    public BeklemeyeAlinanlarPage gidecegiYerSeciniz() throws InterruptedException {
         btnGidecegiYerSeciniz.click();
         return this;
     }
-
-    public BeklemeyeAlinanlarPage gidecegiYerTreeDoldur(String text) {
+    @Step("Gideceği yer tree doldur")
+    public BeklemeyeAlinanlarPage gidecegiYerTreeDoldur(String text) throws InterruptedException {
         btnGidecegiYerTree.setValue(text);
         return this;
     }
-
-    public BeklemeyeAlinanlarPage baslangicTarihDoldur(String text) {
+    @Step("Başlangıç tarihi doldur")
+    public BeklemeyeAlinanlarPage baslangicTarihDoldur(String text) throws InterruptedException {
         dateBaslangicTarih.setValue(text);
         return this;
     }
-
-    public BeklemeyeAlinanlarPage bitisTarihiDoldur(String text) {
+    @Step("Bitiş tarihi doldur")
+    public BeklemeyeAlinanlarPage bitisTarihiDoldur(String text) throws InterruptedException {
         dateBitisTarihi.setValue(text);
         return this;
     }
-
+    @Step("Evrak Göster")
     public BeklemeyeAlinanlarPage evrakGoster() {
         btnEvrakGoster.click();
         return this;

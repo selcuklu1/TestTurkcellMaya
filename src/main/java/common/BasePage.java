@@ -112,5 +112,11 @@ public class BasePage {
     public BirimEvraklariKaydedilenGelenEvraklar kaydedilenGelenEvraklar() {return new BirimEvraklariKaydedilenGelenEvraklar();}
 
     public BirimEvraklariTeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage() {return new BirimEvraklariTeslimAlinmayiBekleyenlerPage();}
+
+    public BirimYonetimiPage BirimYonetimiPage() { return  new BirimYonetimiPage();
+    }
+
+    public KurumYonetimiPage KurumYonetimiPage() { return new KurumYonetimiPage();
+    }
     //endregion
 }
