@@ -1,4 +1,4 @@
-package page;
+package page.islemYaptiklarim;
 
 import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
@@ -7,7 +7,7 @@ import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Selenide.$;
 
-public class IslemYaptiklarimParafladiklarim extends BaseLibrary {
+public class Parafladiklarim extends BaseLibrary {
 
     SelenideElement f = $(By.xpath("//div[@id='mainInboxForm:inboxDataTable:filtersAccordion']//a[text()='Filtreler']/parent::h3"));
     SelenideElement cmbFiltre = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt3011_input"));
@@ -27,61 +27,61 @@ public class IslemYaptiklarimParafladiklarim extends BaseLibrary {
     SelenideElement btnPaylas = $(By.id("mainPreviewForm:paylasButtonId"));
 
     @Step("Filtrele alanını aç")
-    public IslemYaptiklarimParafladiklarim filtreleAc (){
+    public Parafladiklarim filtreleAc() {
         f.click();
         return this;
     }
 
     @Step("Filtere seç")
-    public IslemYaptiklarimParafladiklarim filtreleSec (String value){
+    public Parafladiklarim filtreleSec(String value) {
         cmbFiltre.selectOption(value);
         return this;
     }
 
     @Step("Sayfada Ara alanı doldur")
-    public IslemYaptiklarimParafladiklarim sayfadaAraDoldur (String value){
+    public Parafladiklarim sayfadaAraDoldur(String value) {
         txtSayfadaAra.sendKeys(value);
         return this;
     }
 
     @Step("Başlangıç Tarihi doldur")
-    public IslemYaptiklarimParafladiklarim baslangicTarihiDoldur (String tarih){
+    public Parafladiklarim baslangicTarihiDoldur(String tarih) {
         dateTxtBaslangicTarihi.sendKeys(tarih);
         return this;
     }
 
     @Step("Bitiş Tarihi doldur")
-    public IslemYaptiklarimParafladiklarim bitisTarihiDoldur (String tarih){
+    public Parafladiklarim bitisTarihiDoldur(String tarih) {
         dateTxtBitisTarihi.sendKeys(tarih);
         return this;
     }
 
     @Step("Tablodan rapor seç")
-    public IslemYaptiklarimParafladiklarim raporSec (){
+    public Parafladiklarim raporSec() {
         tblRapor.click();
         return this;
     }
 
     @Step("Paylaş ikonuna  bas")
-    public IslemYaptiklarimParafladiklarim havaleYap(){
+    public Parafladiklarim havaleYap() {
         btnIconPaylas.click();
         return this;
     }
 
     @Step("Kişi Seç")
-    public IslemYaptiklarimParafladiklarim kişiSec(String kisi){
+    public Parafladiklarim kişiSec(String kisi) {
         txtKisi.sendKeys(kisi);
         return this;
     }
 
     @Step("Açıklama doldur")
-    public IslemYaptiklarimParafladiklarim aciklamaDoldur(String aciklama){
+    public Parafladiklarim aciklamaDoldur(String aciklama) {
         txtAciklama.sendKeys(aciklama);
         return this;
     }
 
     @Step("Paylaş butonuna bas")
-    public IslemYaptiklarimParafladiklarim paylas (){
+    public Parafladiklarim paylas() {
         btnPaylas.click();
         return this;
     }

@@ -1,4 +1,4 @@
-package page;
+package page.islemYaptiklarim;
 
 import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
@@ -6,7 +6,7 @@ import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Selenide.$;
 
-public class IslemYaptiklarimKlasoreKaldirdiklarimPage extends BaseLibrary {
+public class KlasoreKaldirdiklarimPage extends BaseLibrary {
 
     //Filtreler sekmesi
     private SelenideElement cmbFiltre = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt9553_input"));
@@ -19,45 +19,45 @@ public class IslemYaptiklarimKlasoreKaldirdiklarimPage extends BaseLibrary {
     private SelenideElement btnEvrakKopyala = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:1:cmdbutton"));
 
 
-    //public IslemYaptiklarimKlasoreKaldirdiklarimPage(WebDriver driver) {super(driver);}
+    //public KlasoreKaldirdiklarimPage(WebDriver driver) {super(driver);}
 
-    public IslemYaptiklarimKlasoreKaldirdiklarimPage filtreSec(String filtre) {
+    public KlasoreKaldirdiklarimPage filtreSec(String filtre) {
         //selectCombobox(filtreSelectbox, filtre);
         cmbFiltre.selectOption(filtre);
         return this;
     }
 
-    public IslemYaptiklarimKlasoreKaldirdiklarimPage sayfadaAraDoldur(String sayfadaAra) {
+    public KlasoreKaldirdiklarimPage sayfadaAraDoldur(String sayfadaAra) {
         //sendKeys(sayfadaAraInput, sayfadaAra, false);
         txtSayfadaAra.sendKeys(sayfadaAra);
         return this;
     }
 
-    public IslemYaptiklarimKlasoreKaldirdiklarimPage baslangicTarihiDoldur(String baslangicTarihi) {
+    public KlasoreKaldirdiklarimPage baslangicTarihiDoldur(String baslangicTarihi) {
         //sendKeys(baslangicTarihiInput, baslangicTarihi, false);
         txtBaslangicTarihi.sendKeys(baslangicTarihi);
         return this;
     }
 
-    public IslemYaptiklarimKlasoreKaldirdiklarimPage bitisTarihiDoldur(String bitisTarihi) {
+    public KlasoreKaldirdiklarimPage bitisTarihiDoldur(String bitisTarihi) {
         //sendKeys(bitisTarihiInput, bitisTarihi, false);
         txtBitisTarihi.sendKeys(bitisTarihi);
         return this;
     }
 
-    public IslemYaptiklarimKlasoreKaldirdiklarimPage raporAl() {
+    public KlasoreKaldirdiklarimPage raporAl() {
         //click(raporAlButton);
         btnRaporAl.click();
         return this;
     }
 
-    public IslemYaptiklarimKlasoreKaldirdiklarimPage evrakGoster() {
+    public KlasoreKaldirdiklarimPage evrakGoster() {
         //click(evrakGosterButton);
         btnEvrakGoster.click();
         return this;
     }
 
-    public IslemYaptiklarimKlasoreKaldirdiklarimPage evrakKopyala() {
+    public KlasoreKaldirdiklarimPage evrakKopyala() {
         //click(evrakKopyalaButton);
         btnEvrakKopyala.click();
         return this;

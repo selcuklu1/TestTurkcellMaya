@@ -1,12 +1,5 @@
 package pageData;
 
-import com.codeborne.selenide.SelenideElement;
-import com.codeborne.selenide.WebDriverRunner;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-
-import static com.codeborne.selenide.Selenide.$;
-
 public class SolMenuData {
 
     private static String groupIdPrefix = "leftMenuForm:leftMenu";
@@ -78,7 +71,7 @@ public class SolMenuData {
         KaydedilenGidenEvraklar("Kaydedilen Giden Evraklar"),
         PostalanacakEvraklar("Postalanacak Evraklar "),
         TopluPostaladiklarim("Toplu Postaladıklarım"),
-        Postalananlar("Postalananlar"),
+        Postalananlar("PostalananlarPage"),
         KEPGelenkutusu("KEP Gelen Kutusu"),
         KEPGidenkutusu("KEP Giden Kutusu"),
         MedasileGonderilecekler("Medas ile Gönderilecekler"),

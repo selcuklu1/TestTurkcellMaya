@@ -1,4 +1,4 @@
-package page;
+package page.gelenEvrak;
 
 import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;

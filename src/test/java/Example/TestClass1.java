@@ -1,19 +1,15 @@
 package Example;
 
-import common.BasePage;
 import common.BaseTest;
 import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pageData.MesajTipi;
-import pageData.SolMenuData;
+import pageComponents.BasePage;
 
-import static pageData.MesajTipi.*;
-import static pageData.SolMenuData.*;
+import static pageData.SolMenuData.IslemBekleyenEvraklar;
 
 @Feature("InParallel")
 public class TestClass1 extends BaseTest {

@@ -1,19 +1,25 @@
 package GelenGidenEvrakKayit;
 
-import common.BasePage;
+
 import common.BaseTest;
-import io.qameta.allure.Epic;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import page.BirimEvraklariKaydedilenGelenEvraklar;
-import pageData.MesajTipi;
+import page.LoginPage;
+import page.birimEvralklari.KaydedilenGelenEvraklarPage;
+import page.birimEvralklari.TeslimAlinmayiBekleyenlerPage;
+import page.gelenEvrak.GelenEvrakKayitPage;
+import pageComponents.BasePage;
 import pageData.SolMenuData;
 
 public class GelenGidenEvrakKayitTest extends BaseTest {
 
     BasePage page;
+    LoginPage loginPage;
+    GelenEvrakKayitPage gelenEvrakKayitPage;
+    KaydedilenGelenEvraklarPage kaydedilenGelenEvraklar;
+
     String konuKodu = "010.01";
     String evrakTuru = "R";
     String evrakDili = "917";
@@ -29,15 +35,16 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     @BeforeMethod
     public void loginBeforeTests() {
         page = new BasePage();
-        page.loginPage().login();
+        gelenEvrakKayitPage = new GelenEvrakKayitPage();
+        loginPage.login();
     }
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = false, description = "Üstyazı ek ve ilgi eklenerek gelen evrak kaydı")
     public void TC0321() throws InterruptedException {
 
-        page.ustMenuAc("Gelen Evrak Kayıt");
-        page.gelenEvrakKayitPage()
+        page.ustMenu("Gelen Evrak Kayıt");
+        gelenEvrakKayitPage
 //                .evrakBilgileriUstYaziEkle("C:/Users/Emre_Sencan/Pictures/pdf2.pdf")
                 .evrakBilgileriListKonuKoduDoldur(konuKodu)
                 .evrakBilgileriListEvrakTuruSec(evrakTuru)
@@ -58,17 +65,16 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .popUps();
 //        page.islemMesaji().beklenenMesajTipi(MesajTipi.BASARILI);
         page.solMenu(SolMenuData.BirimEvraklari.KaydedilenGelenEvraklar);
-//        TODO  tabloda oluşturulan evrak bulunacak....
-        page.kaydedilenGelenEvraklar()
-        .raporSec();
+
+        kaydedilenGelenEvraklar.raporSec();
     }
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "Gelen evrak kayıt ekranından havale")
     public void TC0328 () throws InterruptedException{
         String birim = "OPTİİM BİRİM11";
-        page.ustMenuAc("Gelen Evrak Kayıt");
-        page.gelenEvrakKayitPage()
+        page.ustMenu("Gelen Evrak Kayıt");
+        gelenEvrakKayitPage
 //                .evrakBilgileriUstYaziEkle("C:/Users/Emre_Sencan/Pictures/pdf2.pdf")
                 .evrakBilgileriListKonuKoduDoldur(konuKodu)
                 .evrakBilgileriListEvrakTuruSec(evrakTuru)
@@ -85,8 +91,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .popUps();
 //        page.islemMesaji().beklenenMesajTipi(MesajTipi.BASARILI);
         page.solMenu(SolMenuData.BirimEvraklari.KaydedilenGelenEvraklar);
-//        TODO  tabloda oluşturulan evrak bulunacak....
-        page.teslimAlinmayiBekleyenlerPage()
-                .raporSec();
+
+        new TeslimAlinmayiBekleyenlerPage().raporSec();
     }
 }

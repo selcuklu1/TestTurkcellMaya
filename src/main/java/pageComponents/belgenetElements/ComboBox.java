@@ -9,11 +9,9 @@ import org.openqa.selenium.By;
 import java.io.IOException;
 import java.util.List;
 
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
 import static pageComponents.belgenetElements.ComboBoxHelper.*;
 
-public class ComboBox {
+class ComboBox {
 
     class SelectComboBox implements Command<BelgenetElement>{
         @Override
@@ -22,7 +20,7 @@ public class ComboBox {
                 return (BelgenetElement) proxy;
 
             boolean[] jaArr = (boolean[]) args[1];
-            boolean js = (jaArr.length == 1) ? jaArr[0] : true;
+            boolean js = (jaArr.length <= 0) || jaArr[0];
 
             selectComboBox(proxy, args[0].toString(), js);
 
