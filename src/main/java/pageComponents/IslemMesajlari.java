@@ -13,14 +13,18 @@ import static pageData.MesajTipi.*;
 
 public class IslemMesajlari extends BaseLibrary {
 
-    //yeni env
+    //yeni env objeleri
     //div class="lobibox-notify lobibox-notify-success animated-fast fadeInDown notify-mini"
+    //                          lobibox-notify-warning
     //span lobibox-close
     //div class=lobibox-notify-title
     //div class=lobibox-notify-msg
 
-    private SelenideElement islemMesajiTitle = $(".ui-growl-message  > .ui-growl-title");
-    private SelenideElement islemMesaji = $(".ui-growl-message p");
+    private SelenideElement islemMesajiTitle = $(".lobibox-notify-title");
+    private SelenideElement islemMesaji = $(".lobibox-notify-msg");
+//    private SelenideElement islemMesajiTitle = $(".ui-growl-message  > .ui-growl-title");
+//    private SelenideElement islemMesaji = $(".ui-growl-message p");
+
 
     @Step("Beklenen mesaj tipi \"{mesajTipi.BASARILI.value()}\"")
     public void beklenenMesajTipi(MesajTipi mesajTipi) {
