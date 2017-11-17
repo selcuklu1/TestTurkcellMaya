@@ -114,16 +114,14 @@ public class GelenEvrakKayitPage extends BaseLibrary {
     SelenideElement basariliPopUpKapat = $(By.id("evrakKaydetBasariliDialogForm:vazgecButton"));
     SelenideElement basariliPopUp = $(By.id("evrakKaydetBasariliDialog"));
 
-<<<<<<< HEAD
+
     SelenideElement btnGeldigiKisiEkle = $(By.id("evrakBilgileriForm:evrakBilgileriList:9:gercekKisiEkle"));
     SelenideElement txtTCKN = $(By.id("   gercekKisiHizliKayitDialogForm:tcKimlikNoInput"));
     SelenideElement btnTCKNAra = $(By.id("gercekKisiHizliKayitDialogForm:kpsTcKimlikNoSorgulaButtonHizliKayit"));
     SelenideElement btnKaydetIletisimBilgisi = $(By.id("gercekKisiHizliKayitDialogForm:saveGercekKisiHizliKayitButton"));
 
-    public GelenEvrakKayitPage evrakBilgileriEkBilgiFizikselEkEkle() throws InterruptedException{
-=======
+
     public GelenEvrakKayitPage evrakBilgileriEkBilgiFizikselEkEkle() throws InterruptedException {
->>>>>>> 886069b92fd31eec97c75e4244ef6d2def62cc58
         btnFizikselEkEkle.click();
         return this;
     }
@@ -449,7 +447,6 @@ public class GelenEvrakKayitPage extends BaseLibrary {
 //        popUp.shouldHave(Condition.visible);  pop up kontrolu
         String text;
 
-<<<<<<< HEAD
         if (ustYaziveHavaleYeriYokpopUp.isDisplayed()) {
             popUpEvet.click();
         }
@@ -460,26 +457,10 @@ public class GelenEvrakKayitPage extends BaseLibrary {
             mukerrerPopUpEvet.click();
         }
         if (basariliPopUp.isDisplayed()){
-=======
-        if (ustYaziveHavaleYeriYokpopUp.exists()) {
-            text = popUpText(ustYaziveHavaleYeriYokpopUp);
-            if (text == "Evrak üst yazı ve havale yeri seçmediniz. Evrak kaydedildiğinde havale işlemine devam edecektir.İşleme devam etmek istiyor musunuz?") {
-                popUpEvet.click();
-            }
-        } else if (ustYaziYokpopUp.exists()) {
-            text = popUpText(ustYaziveHavaleYeriYokpopUp);
-            if (text == "Evrak üst yazı eklenmemiş. İşleme devam etmek istiyor musunuz?") {
-                ustYaziYokEvet.click();
-            }
-        } else if (mukerrerPopUp.exists()) {
-            mukerrerPopUpEvet.click();
-        } else if (basariliPopUp.exists()) {
->>>>>>> 886069b92fd31eec97c75e4244ef6d2def62cc58
             basariliPopUpKapat.click();
         }
         return this;
     }
-<<<<<<< HEAD
     @Step("Geldiği Kişiyi ekle")
     public GelenEvrakKayitPage evrakBilgileriGeldigiKisiEkle ()  {
         btnGeldigiKisiEkle.click();
@@ -497,13 +478,8 @@ public class GelenEvrakKayitPage extends BaseLibrary {
         return this;
     }
     @Step("Kaydet")
-    public GelenEvrakKayitPage IletisimBilgisikaydet ()  {
+    public GelenEvrakKayitPage IletisimBilgisikaydet () {
         btnKaydetIletisimBilgisi.click();
         return this;
-=======
-
-    public String popUpText(SelenideElement element) {
-        return element.getText();
->>>>>>> 886069b92fd31eec97c75e4244ef6d2def62cc58
     }
 }
