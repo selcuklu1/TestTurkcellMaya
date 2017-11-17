@@ -138,10 +138,29 @@ public class GercekKisiYonetimiTest extends BaseTest{
 
         String getTbleTC2 = page.gercekKisiYonetimPage().getTbleTCNO();
 
-        page.gercekKisiYonetimPage().filtreSorgulamaPaneliAc()
+        page.gercekKisiYonetimPage()
+                .filtreSorgulamaPaneliAc()
                 .filtreDurumSec("PASIFLER")
                 .filtreTCKimlikNoDoldur(getTbleTC)
                 .ara()
                 .tcNoKontrolu(getTbleTC);
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TC1135: Yeni gerçek kişi kayıtta alan kontrolleri")
+    public void TC1135()  {
+
+        page.ustMenuAc("Gerçek Kişi Yönetimi");
+        page.gercekKisiYonetimPage()
+                .yeniGercekKisiEkle()
+                .kaydet()
+                .zorunluAdSoyadAlanKontrolu()
+
+                .adDoldur("Sezai")
+                .soyadDoldur("Çelik")
+                .kepAdresiKullaniyor(true)
+                .kaydet();
+                 //page.islemMesaji().beklenenMesajTipi(DIKKAT);
+
     }
 }

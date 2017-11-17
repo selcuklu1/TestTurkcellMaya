@@ -5,6 +5,7 @@ import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
 import common.BaseLibrary;
 import io.qameta.allure.Step;
+import net.bytebuddy.matcher.CollectionOneToOneMatcher;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
@@ -37,6 +38,10 @@ public class GercekKisiYonetimPage extends BaseLibrary {
     SelenideElement btnIletisimBilgileriEkle = $(By.id("gercekKisiYonetimiEditorForm:iletisimBilgileriDataTable:addNewIletisimBilgisiButton"));
     SelenideElement btnEvetPopup = $(By.id("duplicateGercekKisiKayitEvet"));
 
+    //Kişi ekleme zorunlu alanlar
+    SelenideElement txtAdError = $(By.cssSelector("input[id='gercekKisiYonetimiEditorForm:adInput'][class*='ui-state-error']"));
+    SelenideElement txtSoyadError = $(By.cssSelector("input[id='gercekKisiYonetimiEditorForm:soyadInput'][class*='ui-state-error']"));
+
     //Yeni İletişim Bilgisi
     SelenideElement txtIletisimBilgisiAdres = $(By.id("gercekKisiBilgileriEditorForm:adresInput"));
     // SelenideElement txtIletisimBilgisiIl= $(By.id("gercekKisiBilgileriEditorForm:lovIl:lovInputPanel"));
@@ -65,12 +70,11 @@ public class GercekKisiYonetimPage extends BaseLibrary {
     }
 
     @Step("Kaydet")
-    public GercekKisiYonetimPage kaydet() {
+    public GercekKisiYonetimPage kaydet()  {
         btnKaydet.click();
         if (btnEvetPopup.isDisplayed()) {
             btnEvetPopup.click();
         }
-
         return this;
     }
 
@@ -217,5 +221,11 @@ public class GercekKisiYonetimPage extends BaseLibrary {
     public String getTbleTCNO() {
         String getTC = tbleTc.getText();
         return getTC;
+    }
+
+    public GercekKisiYonetimPage zorunluAdSoyadAlanKontrolu() {
+        Assert.assertEquals(txtAdError.exists(), true);
+        Assert.assertEquals(txtSoyadError.exists(), true);
+        return this;
     }
 }
