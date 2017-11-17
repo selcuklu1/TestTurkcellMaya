@@ -27,6 +27,7 @@ public class GercekKisiYonetimiTest extends BaseTest{
     @Test(enabled = true, description = "TC1516: Gerçek kişi tanımlama ve  kontrolü")
     public void TC1516() throws InterruptedException {
 
+        //TODO: TestData classına alınacak.
         String tcNO = page.baseLibrary().createMernisTCNO();
         String ad = page.baseLibrary().createRandomText(6);
         String soyad = page.baseLibrary().createRandomText(6);
