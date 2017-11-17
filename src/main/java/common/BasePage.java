@@ -113,6 +113,9 @@ public class BasePage {
 
     public BirimEvraklariTeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage() {return new BirimEvraklariTeslimAlinmayiBekleyenlerPage();}
 
+
+   public  KaydedilenGelenEvrak kaydedilenGelenEvrak() {return new KaydedilenGelenEvrak();}
+
     public BirimYonetimiPage BirimYonetimiPage() { return  new BirimYonetimiPage();
     }
 

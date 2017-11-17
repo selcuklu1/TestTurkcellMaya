@@ -1,5 +1,6 @@
 package GelenGidenEvrakKayit;
 
+import com.codeborne.selenide.SelenideElement;
 import common.BasePage;
 import common.BaseTest;
 import io.qameta.allure.Epic;
@@ -10,6 +11,11 @@ import org.testng.annotations.Test;
 import page.BirimEvraklariKaydedilenGelenEvraklar;
 import pageData.MesajTipi;
 import pageData.SolMenuData;
+
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 
 public class GelenGidenEvrakKayitTest extends BaseTest {
 
@@ -64,7 +70,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "Gelen evrak kayıt ekranından havale")
+    @Test(enabled = false, description = "Gelen evrak kayıt ekranından havale")
     public void TC0328 () throws InterruptedException{
         String birim = "OPTİİM BİRİM11";
         page.ustMenuAc("Gelen Evrak Kayıt");
@@ -80,13 +86,47 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .evrakBilgileriListEvrakSayiSagDoldur(evrakSayiSag)
                 .evrakBilgileriListEvrakGelisTipiSec(evrakGelisTipi)
                 .evrakBilgileriListIvedilikSec(ivedilik)
-                .dagitimBilgileriBirimDoldur(birim)
+                .dagitimBilgileriBirimDoldur("OPTİİM")
                 .kaydet()
                 .popUps();
-//        page.islemMesaji().beklenenMesajTipi(MesajTipi.BASARILI);
+        page.islemMesaji().beklenenMesajTipi(MesajTipi.BASARILI);
         page.solMenu(SolMenuData.BirimEvraklari.KaydedilenGelenEvraklar);
 //        TODO  tabloda oluşturulan evrak bulunacak....
         page.teslimAlinmayiBekleyenlerPage()
                 .raporSec();
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = false, description = "Kaydedilen Gelen Evrak raporu")
+    public void  TC1401 () throws InterruptedException{
+
+        page.ustMenuAc("Raporlar","Kaydedilen Gelen Evrak");
+        String evrakNo = "4940";
+        String evrakNo1 = "4941";
+        String geldigiYer = "D";
+        page.kaydedilenGelenEvrak()
+                .gelenEvrakNoDoldur(evrakNo)
+                .sorgula()
+//                .raporAlExcel()
+                .txtClear()
+                .gelenEvrakNoDoldur(evrakNo1)
+                .sorgula()
+                .geldigiYerSec(geldigiYer)
+                .sorgula();
+//                .raporAlExcel();  pop upta ok butonuna basılacak
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "Gelen evrak kaydederken yeni gerçek ve tüzel kişi tanımlama")
+    public void  TC1136 () throws InterruptedException {
+        page.ustMenuAc("Gelen Evrak Kayıt");
+        page.gelenEvrakKayitPage()
+                .evrakBilgileriListKisiKurumSec("G")
+                .evrakBilgileriGeldigiKisiEkle()
+                .IletisimBilgisiTCKNEkle()
+                .IletisimBilgisiTCKNAra()
+                .IletisimBilgisikaydet();
+//        Gerçek kişi yönetimi ekranında yeni kaydı kontrol et
+
     }
 }
