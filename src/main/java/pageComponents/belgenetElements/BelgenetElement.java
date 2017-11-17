@@ -29,7 +29,5 @@ public interface BelgenetElement extends SelenideElement {
     List<String> getComboBoxValues();
 //    BelgenetElement getComboBoxHtmlList();
     //endregion
-
-
 }
 

@@ -7,8 +7,8 @@ import org.openqa.selenium.By;
 
 public class BelgenetFramework {
 
-     static ComboLov comboLov = new ComboLov();
-     static ComboBox comboBox = new ComboBox();
+    private static ComboLov comboLov = new ComboLov();
+    private static ComboBox comboBox = new ComboBox();
 
   public static void setUp() {
       //region ComboLov

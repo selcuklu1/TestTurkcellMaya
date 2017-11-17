@@ -1,21 +1,14 @@
-package page;
+package page.gelenEvrak;
 
-import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
-import com.codeborne.selenide.WebDriverRunner;
 import common.BaseLibrary;
 import io.qameta.allure.Step;
 import net.bytebuddy.matcher.CollectionOneToOneMatcher;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import pageComponents.belgenetElements.BelgenetElement;
 
-import java.beans.IntrospectionException;
-import java.util.List;
-
 import static com.codeborne.selenide.Selenide.$;
-import static pageComponents.belgenetElements.BelgenetFramework.comboBox;
 import static pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 public class GercekKisiYonetimPage extends BaseLibrary {

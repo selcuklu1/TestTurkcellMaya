@@ -1,12 +1,13 @@
 package Example;
 
 import com.codeborne.selenide.Condition;
-import common.BasePage;
 import common.BaseTest;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import pageComponents.BasePage;
+import pageComponents.MainPage;
 import pageComponents.belgenetElements.BelgenetElement;
 
 import static com.codeborne.selenide.Condition.exactText;
@@ -43,7 +44,7 @@ public class BelgenetCustomElementsTest extends BaseTest {
     @Test(groups = {"FrameworkTest"}, enabled = true)
     public void comboBoxTest() {
         page.solMenu(IslemBekleyenEvraklar.GelenEvraklar);
-        page.mainPage().filtrelerAc();
+        new MainPage().filtrelerAc();
 
         By cmbFiltreleLocator = By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt349_label");
 
@@ -92,7 +93,7 @@ public class BelgenetCustomElementsTest extends BaseTest {
     @Test(groups = {"FrameworkTest"}, enabled = true)
     public void comboLovTest() {
         //-----------------------------------
-        page.ustMenuAc("Evrak Oluştur");
+        page.ustMenu("Evrak Oluştur");
         String locator = "[id='yeniGidenEvrakForm:evrakBilgileriList:1:konuKoduLov:LovText']";
         comboLov(locator).selectComboLov("010.10")
                 .shouldHave(Condition.text("010.10"));
@@ -101,7 +102,7 @@ public class BelgenetCustomElementsTest extends BaseTest {
         System.out.println("detail: " + comboLov(locator).lastSelectedLovDetailText());
 
         //-----------------------------------
-        page.ustMenuAc("Birim Yönetimi");
+        page.ustMenu("Birim Yönetimi");
         BelgenetElement cmlBirim = comboLov("[id='birimYonetimiFilterForm:accordionPanel:birimLov:LovText");
 
         cmlBirim.selectComboLov("opt")

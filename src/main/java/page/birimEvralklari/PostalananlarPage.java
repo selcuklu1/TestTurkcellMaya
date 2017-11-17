@@ -1,4 +1,4 @@
-package page;
+package page.birimEvralklari;
 
 import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
@@ -7,7 +7,7 @@ import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Selenide.$;
 
-public class BirimEvraklariPostalananlarPage extends BaseLibrary {
+public class PostalananlarPage extends BaseLibrary {
 
     //Filtreler sekmesi
     SelenideElement cmbFiltre = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt349_input"));
@@ -18,37 +18,39 @@ public class BirimEvraklariPostalananlarPage extends BaseLibrary {
     SelenideElement chkMedasIlePostalananlar = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:medaslaPostalananlarCheckbox_input"));
     SelenideElement chkPostaladiklarim = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:postaladiklarimCheckbox_input"));
     @Step("Filtrele Seç")
-    public BirimEvraklariPostalananlarPage filtreSec(String text) throws InterruptedException {
+    public PostalananlarPage filtreSec(String text) throws InterruptedException {
         cmbFiltre.selectOption(text);
         return this;
     }
     @Step("Sayfada ara doldur")
-    public BirimEvraklariPostalananlarPage sayfadaAraDoldur(String text) throws InterruptedException {
+    public PostalananlarPage sayfadaAraDoldur(String text) throws InterruptedException {
         txtSayfadaAra.setValue(text);
         return this;
     }
     @Step("Başlangıç tarihi doldur")
-    public BirimEvraklariPostalananlarPage baslangicTarihiDoldur(String text) throws InterruptedException {
+    public PostalananlarPage baslangicTarihiDoldur(String text) throws InterruptedException {
         dateBaslangicTarihi.setValue(text);
         return this;
     }
     @Step("Bitiş tarihi doldur")
-    public BirimEvraklariPostalananlarPage bitisTarihiDoldur(String text) throws InterruptedException {
+    public PostalananlarPage bitisTarihiDoldur(String text) throws InterruptedException {
         dateBitisTarihi.setValue(text);
         return this;
     }
-    @Step("Kep ile Postalananlar seç")
-    public BirimEvraklariPostalananlarPage kepIlePostalananlarSec(boolean text) throws InterruptedException {
+
+    @Step("Kep ile PostalananlarPage seç")
+    public PostalananlarPage kepIlePostalananlarSec(boolean text) throws InterruptedException {
         chkKepIlePostalananlar.setSelected(text);
         return this;
     }
-    @Step("Medas ile Postalananlar seç")
-    public BirimEvraklariPostalananlarPage medasIlePostalananlarSec(boolean text) throws InterruptedException {
+
+    @Step("Medas ile PostalananlarPage seç")
+    public PostalananlarPage medasIlePostalananlarSec(boolean text) throws InterruptedException {
         chkMedasIlePostalananlar.setSelected(text);
         return this;
     }
     @Step("Postaladıklarım seç")
-    public BirimEvraklariPostalananlarPage postaladiklarimSec(boolean text) throws InterruptedException {
+    public PostalananlarPage postaladiklarimSec(boolean text) throws InterruptedException {
         chkPostaladiklarim.setSelected(text);
         return this;
     }

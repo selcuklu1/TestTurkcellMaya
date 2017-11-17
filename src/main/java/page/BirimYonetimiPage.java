@@ -4,7 +4,6 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
 import io.qameta.allure.Step;
-import javafx.animation.Interpolatable;
 import org.openqa.selenium.By;
 import pageComponents.belgenetElements.BelgenetElement;
 
@@ -85,7 +84,7 @@ public class BirimYonetimiPage extends BaseLibrary {
         return this;
     }
     @Step("Tablodaki düzenle buttona tıkla")
-    public  BirimYonetimiPage tableDuzenle() throws InterruptedException{
+    public BirimYonetimiPage tableDuzenle() throws InterruptedException {
         btnTableDuzenle.click();
         return this;
     }
@@ -130,12 +129,12 @@ public class BirimYonetimiPage extends BaseLibrary {
         return this;
     }
     @Step("Kep adresi kullaniyor seç")
-    public  BirimYonetimiPage kepAdresiKullaniyorSec(boolean secim) throws InterruptedException{
+    public BirimYonetimiPage kepAdresiKullaniyorSec(boolean secim) throws InterruptedException {
         chkKepAdresiKullaniyor.setSelected(secim);
         return this;
     }
     @Step("Açıklama doldur")
-    public  BirimYonetimiPage aciklamaDoldur(String text) throws InterruptedException{
+    public BirimYonetimiPage aciklamaDoldur(String text) throws InterruptedException {
         txtAciklama.setValue(text);
         return  this;
     }
@@ -166,7 +165,7 @@ public class BirimYonetimiPage extends BaseLibrary {
         return  this;
     }
     @Step("Yetki devri var seç")
-    public  BirimYonetimiPage medasPostaBirimiDoldur(String text) throws InterruptedException{
+    public BirimYonetimiPage medasPostaBirimiDoldur(String text) throws InterruptedException {
         txtMedasPostaBirimi.setValue(text);
         return this;
     }
@@ -191,7 +190,7 @@ public class BirimYonetimiPage extends BaseLibrary {
         return  this;
     }
     @Step("Gelen evraklar numaratoru doldur")
-    public  BirimYonetimiPage gelenEvraklariNumaratoruDoldur(String text) throws InterruptedException{
+    public BirimYonetimiPage gelenEvraklariNumaratoruDoldur(String text) throws InterruptedException {
         txtGelenEvrakNumaratoru.setValue(text);
         return this;
     }
@@ -201,7 +200,7 @@ public class BirimYonetimiPage extends BaseLibrary {
         return this;
     }
     @Step("İdari kimlik doldur")
-    public   BirimYonetimiPage IdariKimlikKoduDoldur(String text) throws InterruptedException{
+    public BirimYonetimiPage IdariKimlikKoduDoldur(String text) throws InterruptedException {
         txtIdariKimlikKodu.setValue(text);
         return  this;
     }
@@ -251,7 +250,7 @@ public class BirimYonetimiPage extends BaseLibrary {
         return  this;
     }
     @Step("Durum seç")
-    public BirimYonetimiPage  durumSec(String value) throws  InterruptedException{
+    public BirimYonetimiPage durumSec(String value) throws InterruptedException {
         cmbDurum.selectOption(value);
         return this;
 

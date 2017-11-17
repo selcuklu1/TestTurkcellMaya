@@ -69,7 +69,7 @@ public class ComboLovHelper extends BaseLibrary {
         lovTreePanelKapat = id + "[id*='lovTreePanelKapat']";
     }
 
-    public static BelgenetElement clearLastSelectedLov(SelenideElement proxy) {
+    static BelgenetElement clearLastSelectedLov(SelenideElement proxy) {
         setLocators(proxy);
 
         ElementsCollection temizleButonlari = $$(lovInputTextleriTemizle).filter(visible);
@@ -102,7 +102,7 @@ public class ComboLovHelper extends BaseLibrary {
 //        return ElementFinder.wrap(BelgenetElement.class, null, By.cssSelector(lovText), 0);
     }
 
-    public static BelgenetElement lastSelectedLovTitle(SelenideElement proxy) {
+    static BelgenetElement lastSelectedLovTitle(SelenideElement proxy) {
         setLocators(proxy);
         String xpath = "";
 
@@ -129,7 +129,7 @@ public class ComboLovHelper extends BaseLibrary {
         }
     }
 
-    public static BelgenetElement lastSelectedLovDetail(SelenideElement proxy) {
+    static BelgenetElement lastSelectedLovDetail(SelenideElement proxy) {
         setLocators(proxy);
 
         String xpath = "";
@@ -157,7 +157,7 @@ public class ComboLovHelper extends BaseLibrary {
         }
     }
 
-    public static String getLastSelectedLovValue(SelenideElement proxy) {
+    static String getLastSelectedLovValue(SelenideElement proxy) {
         setLocators(proxy);
 
         ElementsCollection title = $$(lovSecilenItemTitle).filter(visible);
@@ -165,21 +165,21 @@ public class ComboLovHelper extends BaseLibrary {
                 + "\n" + title.get(title.size() - 1).text();
     }
 
-    public static String lastSelectedLovTitleText(SelenideElement proxy) {
+    static String lastSelectedLovTitleText(SelenideElement proxy) {
         setLocators(proxy);
 
         ElementsCollection title = $$(lovSecilenItemTitle).filter(visible);
         return title.get(title.size() - 1).text().trim();
     }
 
-    public static String lastSelectedLovDetailText(SelenideElement proxy) {
+    static String lastSelectedLovDetailText(SelenideElement proxy) {
         setLocators(proxy);
 
         ElementsCollection title = $$(lovSecilenItemDetail).filter(visible);
         return title.get(title.size() - 1).text().trim();
     }
 
-    public static Boolean isLovSelected(SelenideElement proxy) {
+    static Boolean isLovSelected(SelenideElement proxy) {
         setLocators(proxy);
         return $(lovSecilen).is(visible);
     }
