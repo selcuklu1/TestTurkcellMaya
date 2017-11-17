@@ -7,6 +7,7 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import page.GercekKisiYonetimPage;
 import pageData.MesajTipi;
 import pageData.SolMenuData;
 
@@ -118,9 +119,28 @@ public class GercekKisiYonetimiTest extends BaseTest{
                 .filtreTCKimlikNoDoldur(tcNO)
                 .filtreDurumSec("PASIFLER")
                 .ara()
-                .kayitBulunamadiKontrolu();
+                .kayitBulunamadiKontrolu()
 
+                .filtreSorgulamaPaneliAc()
+                .filtreDurumSec("PASIFLER")
+                .ara()
+                .pasiflerKayitKontrolu();
 
+      String getTbleTC =  page.gercekKisiYonetimPage().getTbleTCNO();
 
+      page.gercekKisiYonetimPage()
+              .filtreSorgulamaPaneliAc()
+              .filtreDurumSec("PASIFLER")
+              .filtreTCKimlikNoDoldur(getTbleTC)
+              .ara()
+              .tcNoKontrolu(getTbleTC);
+
+        String getTbleTC2 = page.gercekKisiYonetimPage().getTbleTCNO();
+
+        page.gercekKisiYonetimPage().filtreSorgulamaPaneliAc()
+                .filtreDurumSec("PASIFLER")
+                .filtreTCKimlikNoDoldur(getTbleTC)
+                .ara()
+                .tcNoKontrolu(getTbleTC);
     }
 }
