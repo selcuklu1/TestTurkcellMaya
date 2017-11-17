@@ -6,17 +6,17 @@ import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import pageComponents.BasePage;
-import pageComponents.MainPage;
-import pageComponents.belgenetElements.BelgenetElement;
+import pages.BasePage;
+import pages.FiltrelerPage;
+import pages.pageComponents.belgenetElements.BelgenetElement;
 
 import static com.codeborne.selenide.Condition.exactText;
 import static com.codeborne.selenide.Condition.text;
-import static pageComponents.belgenetElements.BelgenetFramework.comboBox;
-import static pageComponents.belgenetElements.BelgenetFramework.comboLov;
-import static pageData.SolMenuData.IslemBekleyenEvraklar;
+import static pages.pageComponents.belgenetElements.BelgenetFramework.comboBox;
+import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
+import static pages.pageData.SolMenuData.IslemBekleyenEvraklar;
 
-//import pageComponents.belgenetElements.BelgenetElement;
+//import pages.pageComponents.belgenetElements.BelgenetElement;
 
 
 public class BelgenetCustomElementsTest extends BaseTest {
@@ -44,7 +44,7 @@ public class BelgenetCustomElementsTest extends BaseTest {
     @Test(groups = {"FrameworkTest"}, enabled = true)
     public void comboBoxTest() {
         page.solMenu(IslemBekleyenEvraklar.GelenEvraklar);
-        new MainPage().filtrelerAc();
+        new FiltrelerPage().filtrelerAc();
 
         By cmbFiltreleLocator = By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt349_label");
 
@@ -59,14 +59,14 @@ public class BelgenetCustomElementsTest extends BaseTest {
 
 
 //        BelgenetElement element = comboLov("[id='mainInboxForm:inboxDataTable:filtersAccordion'] h3 a");
-//        page.ustMenuAc("Birim Yönetimi");
+//        pages.ustMenuAc("Birim Yönetimi");
 //        new TestPage().selectCombo();
 //        comboLov(By.id("birimYonetimiFilterForm:accordionPanel:birimLov:LovText")).selectComboLov("OPT")
 //                .shouldHave(text("OPTİİM"));
 //
 //        System.out.println("selected: " + new TestPage().isSelected());
 
-//        page.ustMenuAc("Evrak Oluştur");
+//        pages.ustMenuAc("Evrak Oluştur");
 //
 //        String locator = "[id='yeniGidenEvrakForm:evrakBilgileriList:1:konuKoduLov:LovText']";
 //

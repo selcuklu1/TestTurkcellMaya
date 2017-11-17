@@ -6,11 +6,11 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import page.solMenuPages.PaylastiklarimPage;
-import pageComponents.BasePage;
-import pageData.MesajTipi;
+import pages.BasePage;
+import pages.pageData.MesajTipi;
+import pages.solMenuPages.PaylastiklarimPage;
 
-import static pageData.SolMenuData.IslemYaptiklarim;
+import static pages.pageData.SolMenuData.IslemYaptiklarim;
 
 @Epic("Belgenet1Epic examples")
 public class PaylastiklarimTest extends BaseTest {

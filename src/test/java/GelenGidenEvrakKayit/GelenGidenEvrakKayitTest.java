@@ -5,13 +5,13 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import page.solMenuPages.KaydedilenGelenEvrakPage;
-import page.solMenuPages.KaydedilenGelenEvraklarPage;
-import page.solMenuPages.TeslimAlinmayiBekleyenlerPage;
-import page.ustMenuPages.GelenEvrakKayitPage;
-import pageComponents.BasePage;
-import pageData.MesajTipi;
-import pageData.SolMenuData;
+import pages.BasePage;
+import pages.pageData.MesajTipi;
+import pages.pageData.SolMenuData;
+import pages.solMenuPages.KaydedilenGelenEvrakPage;
+import pages.solMenuPages.KaydedilenGelenEvraklarPage;
+import pages.solMenuPages.TeslimAlinmayiBekleyenlerPage;
+import pages.ustMenuPages.GelenEvrakKayitPage;
 
 public class GelenGidenEvrakKayitTest extends BaseTest {
     BasePage page;
@@ -66,7 +66,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .evrakFizikselEkTabViewAciklamaEkle()
                 .kaydet()
                 .popUps();
-//        page.islemMesaji().beklenenMesajTipi(MesajTipi.BASARILI);
+//        pages.islemMesaji().beklenenMesajTipi(MesajTipi.BASARILI);
         page.solMenu(SolMenuData.BirimEvraklari.KaydedilenGelenEvraklar);
 //        TODO  tabloda oluşturulan evrak bulunacak....
         kaydedilenGelenEvraklarPage

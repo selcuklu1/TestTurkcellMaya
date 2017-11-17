@@ -6,11 +6,11 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import page.ustMenuPages.PulYonetimiPage;
-import pageComponents.BasePage;
+import pages.BasePage;
+import pages.ustMenuPages.PulYonetimiPage;
 
-import static pageData.MesajTipi.BASARILI;
-import static pageData.SolMenuData.Bildirimler;
+import static pages.pageData.MesajTipi.BASARILI;
+import static pages.pageData.SolMenuData.Bildirimler;
 
 @Epic("Belgenet1Epic examples")
 public class TestClass2 extends BaseTest {

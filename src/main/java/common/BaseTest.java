@@ -4,7 +4,7 @@ import com.codeborne.selenide.Configuration;
 import listeners.SettingsListener;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
-import pageComponents.belgenetElements.BelgenetFramework;
+import pages.pageComponents.belgenetElements.BelgenetFramework;
 
 import java.util.Locale;
 

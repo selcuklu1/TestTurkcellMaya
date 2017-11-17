@@ -6,8 +6,8 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import page.ustMenuPages.YonetimHavuzuYonetimiPage;
-import pageComponents.BasePage;
+import pages.BasePage;
+import pages.ustMenuPages.YonetimHavuzuYonetimiPage;
 
 
 @Epic("Belgenet1Epic examples")
@@ -26,8 +26,8 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
     public void TC0002() {
 
         /*
-        page.ustMenuAc("Yönetim Havuzu Yönetimi");
-        page.yonetimHavuzuYonetimiPage()
+        pages.ustMenuAc("Yönetim Havuzu Yönetimi");
+        pages.yonetimHavuzuYonetimiPage()
                 .yonetimHavuzuEkle()
                 .yonetimHavuzuAdiDoldur("Testdeneme1122153")
                 .kullananBirimiEkle()
@@ -40,8 +40,8 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
          */
 
         /*
-        page.ustMenuAc("Evrak Oluştur");
-        page.evrakOlusturPage()
+        pages.ustMenuAc("Evrak Oluştur");
+        pages.evrakOlusturPage()
                 .onayAkisiEkle()
                 .onayAkisiKullaniciKontrol("Optiim OPTİİM", "Paraflama")
                 .onayAkisiKullaniciSec("Optiim TEST1")

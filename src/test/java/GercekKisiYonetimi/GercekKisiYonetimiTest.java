@@ -5,10 +5,10 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import page.ustMenuPages.EvrakOlusturPage;
-import page.ustMenuPages.GelenEvrakKayitPage;
-import page.ustMenuPages.GercekKisiYonetimPage;
-import pageComponents.BasePage;
+import pages.BasePage;
+import pages.ustMenuPages.EvrakOlusturPage;
+import pages.ustMenuPages.GelenEvrakKayitPage;
+import pages.ustMenuPages.GercekKisiYonetimPage;
 
 public class GercekKisiYonetimiTest extends BaseTest{
 
@@ -72,7 +72,7 @@ public class GercekKisiYonetimiTest extends BaseTest{
                 .openTab("Bilgileri")
                 .bilgiSecimTipiSec("G");
         //.bilgiDoldur(adSoyad);
-        //  page.islemMesaji().beklenenMesajTipi(DIKKAT);
+        //  pages.islemMesaji().beklenenMesajTipi(DIKKAT);
 
         page.ustMenu("Gelen Evrak Kayıt");
         gelenEvrakKayitPage
@@ -159,7 +159,7 @@ public class GercekKisiYonetimiTest extends BaseTest{
                 .soyadDoldur("Çelik")
                 .kepAdresiKullaniyor(true)
                 .kaydet();
-        //page.islemMesaji().beklenenMesajTipi(DIKKAT);
+        //pages.islemMesaji().beklenenMesajTipi(DIKKAT);
 
     }
 }

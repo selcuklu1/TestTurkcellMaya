@@ -6,11 +6,11 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import page.ustMenuPages.BirimYonetimiPage;
-import page.ustMenuPages.EvrakOlusturPage;
-import page.ustMenuPages.KurumYonetimiPage;
-import page.ustMenuPages.TuzelKisiYonetimiPage;
-import pageComponents.BasePage;
+import pages.BasePage;
+import pages.ustMenuPages.BirimYonetimiPage;
+import pages.ustMenuPages.EvrakOlusturPage;
+import pages.ustMenuPages.KurumYonetimiPage;
+import pages.ustMenuPages.TuzelKisiYonetimiPage;
 
 @Epic("Belgenet1Epic examples")
 public class KepIlePostalamaIslemleriTest extends BaseTest {
@@ -38,7 +38,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
                 .popupKepAdresiDoldur("turksat.kamu1@testkep.pttkep.gov.tr\n")
                 .kepHizmetSaglayicisiSec("Diğer")
                 .popupKaydet();
-        //  page.islemMesaji().beklenenMesajTipi(MesajTipi.BASARILI);  Obje Değişti
+        //  pages.islemMesaji().beklenenMesajTipi(MesajTipi.BASARILI);  Obje Değişti
         page.ustMenu("Evrak İşlemleri", "Evrak Oluştur");
         evrakOlusturPage
                 .bilgiDoldur("OPTiiM1");
@@ -58,8 +58,8 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
                 .popupKepHizmetSaglayicisi("PTT KEP Servisi")
                 .popupKaydet();
                 //.idariBirimKimlikKodu(text);
-               // String text1=   page.ustMenuPages.KurumYonetimiPage().idariBirimKimlikKoduCek();
-        //  page.islemMesaji().beklenenMesajTipi(MesajTipi.BASARILI);  Obje Değişti
+        // String text1=   pages.ustMenuPages.KurumYonetimiPage().idariBirimKimlikKoduCek();
+        //  pages.islemMesaji().beklenenMesajTipi(MesajTipi.BASARILI);  Obje Değişti
         page.ustMenu("Evrak İşlemleri", "Evrak Oluştur");
         evrakOlusturPage
                 .bilgiDoldur("OPTiiM1");
