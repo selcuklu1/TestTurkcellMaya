@@ -119,12 +119,15 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "Gelen evrak kaydederken yeni gerçek ve tüzel kişi tanımlama")
     public void  TC1136 () throws InterruptedException {
+        String TCKN = "51091330934";
         page.ustMenuAc("Gelen Evrak Kayıt");
         page.gelenEvrakKayitPage()
                 .evrakBilgileriListKisiKurumSec("G")
                 .evrakBilgileriGeldigiKisiEkle()
-                .IletisimBilgisiTCKNEkle()
+                .IletisimBilgisiTCKNEkle(TCKN)
                 .IletisimBilgisiTCKNAra()
+//                .IletisimBilgisiAdDoldur("Test")
+//                .IletisimBilgisiSoyadDoldur("Otomasyon")
                 .IletisimBilgisikaydet();
 //        Gerçek kişi yönetimi ekranında yeni kaydı kontrol et
 

@@ -8,6 +8,7 @@ import org.openqa.selenium.By;
 import pageComponents.belgenetElements.BelgenetElement;
 
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.executeJavaScript;
 import static pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 public class GelenEvrakKayitPage extends BaseLibrary {
@@ -115,10 +116,12 @@ public class GelenEvrakKayitPage extends BaseLibrary {
     SelenideElement basariliPopUp = $(By.id("evrakKaydetBasariliDialog"));
 
 
-    SelenideElement btnGeldigiKisiEkle = $(By.id("evrakBilgileriForm:evrakBilgileriList:9:gercekKisiEkle"));
-    SelenideElement txtTCKN = $(By.id("   gercekKisiHizliKayitDialogForm:tcKimlikNoInput"));
+    SelenideElement btnGeldigiKisiEkle = $("[id^='evrakBilgileriForm:evrakBilgileriList'][id$='gercekKisiEkle']");
+    SelenideElement txtTCKN = $(By.id("gercekKisiHizliKayitDialogForm:tcKimlikNoInput"));
     SelenideElement btnTCKNAra = $(By.id("gercekKisiHizliKayitDialogForm:kpsTcKimlikNoSorgulaButtonHizliKayit"));
     SelenideElement btnKaydetIletisimBilgisi = $(By.id("gercekKisiHizliKayitDialogForm:saveGercekKisiHizliKayitButton"));
+    SelenideElement txtAd = $(By.id("tgercekKisiHizliKayitDialogForm:adInputG"));
+    SelenideElement txtSoyad = $(By.id("gercekKisiHizliKayitDialogForm:soyadInput"));
 
 
     public GelenEvrakKayitPage evrakBilgileriEkBilgiFizikselEkEkle() throws InterruptedException {
@@ -463,18 +466,31 @@ public class GelenEvrakKayitPage extends BaseLibrary {
     }
     @Step("Geldiği Kişiyi ekle")
     public GelenEvrakKayitPage evrakBilgileriGeldigiKisiEkle ()  {
-        btnGeldigiKisiEkle.click();
+        executeJavaScript("arguments[0].click();",
+                btnGeldigiKisiEkle);
         return this;
     }
     @Step("TC kimlik No ekle")
-    public GelenEvrakKayitPage IletisimBilgisiTCKNEkle ()  {
-        String mernisNo=createMernisTCNO();
-        txtTCKN.sendKeys(mernisNo);
+    public GelenEvrakKayitPage IletisimBilgisiTCKNEkle(String TCKN)  {
+//        String mernisNo = createMernisTCNO();
+        txtTCKN.clear();
+        txtTCKN.sendKeys(TCKN);
         return this;
     }
     @Step("TC kimlik No ara")
     public GelenEvrakKayitPage IletisimBilgisiTCKNAra ()  {
-        btnTCKNAra.click();
+        executeJavaScript("arguments[0].click();",
+                btnTCKNAra);
+        return this;
+    }
+    @Step("Ad doldur")
+    public GelenEvrakKayitPage IletisimBilgisiAdDoldur (String ad)  {
+        txtAd.sendKeys(ad);
+        return this;
+    }
+    @Step("Soyad doldur")
+    public GelenEvrakKayitPage IletisimBilgisiSoyadDoldur (String soyad)  {
+        txtSoyad.sendKeys(soyad);
         return this;
     }
     @Step("Kaydet")
