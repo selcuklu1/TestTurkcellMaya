@@ -53,7 +53,7 @@ public class GercekKisiYonetimPage extends BaseLibrary {
     SelenideElement tbleData0 = $(By.id("tbody[id^='gercekKisiYonetimiListingForm:gercekKisiDataTable_data'] tr[data-ri$='0']"));
     SelenideElement tblePasif = $(By.id("div[id^='gercekKisiYonetimiListingForm:gercekKisiDataTable'] td[class$='center-aligned passive-cell']"));
     SelenideElement btnAktif = $(By.id("gercekKisiYonetimiListingForm:gercekKisiDataTable:0:aktifEtGercekKisi"));
-
+    SelenideElement tbleGercekKisiDataTable = $(By.id("gercekKisiYonetimiListingForm:gercekKisiDataTable"));
 
     @Step("Yeni gerçek kişi ekle")
     public GercekKisiYonetimPage yeniGercekKisiEkle() {
@@ -62,7 +62,7 @@ public class GercekKisiYonetimPage extends BaseLibrary {
     }
 
     @Step("Kaydet")
-    public GercekKisiYonetimPage kaydet()  {
+    public GercekKisiYonetimPage kaydet() {
         btnKaydet.click();
         if (btnEvetPopup.isDisplayed()) {
             btnEvetPopup.click();
@@ -186,10 +186,13 @@ public class GercekKisiYonetimPage extends BaseLibrary {
     }
 
     @Step("Kayit kontrolu başarılı")
-    public GercekKisiYonetimPage kayitKontrolu(String tcNO, String ad, String soyad) {
+    public GercekKisiYonetimPage kayitKontrolu(String tcNO, String ad, String soyad) throws InterruptedException {
         Assert.assertEquals(tbleTc.getText().equals(tcNO), true);
         Assert.assertEquals(tbleAd.getText().equals(ad), true);
         Assert.assertEquals(tbleSoyad.getText().equals(soyad), true);
+
+        //  boolean status = findElementOnTableByColumnInputInAllPages(tbleGercekKisiDataTable, 3, soyad).isDisplayed();
+        //Assert.assertEquals(status, true);
         return this;
     }
 

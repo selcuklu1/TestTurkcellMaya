@@ -83,7 +83,7 @@ public class GercekKisiYonetimiTest extends BaseTest{
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TC1516: Gerçek kişi sorgulama")
-    public void TC1144() {
+    public void TC1144() throws InterruptedException {
 
         String tcNO = "91057625780";
         String ad = "OptiimTest";
