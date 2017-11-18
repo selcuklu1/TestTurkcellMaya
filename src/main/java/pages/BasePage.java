@@ -3,6 +3,7 @@ package pages;
 import common.BaseLibrary;
 import pages.pageComponents.IslemMesajlari;
 import pages.pageComponents.SolMenu;
+import pages.pageComponents.UserMenu;
 import pages.pageComponents.UstMenu;
 import pages.pageData.SolMenuData;
 
@@ -10,6 +11,7 @@ public class BasePage {
     private SolMenu solMenu = new SolMenu();
     private UstMenu ustMenu = new UstMenu();
     private IslemMesajlari islemMesajlari = new IslemMesajlari();
+    private UserMenu userMenu = new UserMenu();
 
     //region Ust NavigationMenu
     public void ustMenu(String ustMenuIsmi, String altMenuIsmi) {
@@ -73,8 +75,8 @@ public class BasePage {
         return new BaseLibrary();
     }
 
-    public FiltrelerPage mainPage() {
-        return new FiltrelerPage();
+    public Filtreler mainPage() {
+        return new Filtreler();
     }
 
     public LoginPage loginPage() {

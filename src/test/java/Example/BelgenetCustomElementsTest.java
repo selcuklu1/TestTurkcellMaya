@@ -7,7 +7,7 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import pages.BasePage;
-import pages.FiltrelerPage;
+import pages.pageComponents.Filtreler;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
 import static com.codeborne.selenide.Condition.exactText;
@@ -44,7 +44,7 @@ public class BelgenetCustomElementsTest extends BaseTest {
     @Test(groups = {"FrameworkTest"}, enabled = true)
     public void comboBoxTest() {
         page.solMenu(IslemBekleyenEvraklar.GelenEvraklar);
-        new FiltrelerPage().filtrelerAc();
+        new Filtreler().filtrelerAc();
 
         By cmbFiltreleLocator = By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt349_label");
 

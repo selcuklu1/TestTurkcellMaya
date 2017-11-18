@@ -10,7 +10,7 @@ import pages.ustMenuPages.BirimIcerikSablonlarPage;
 @Feature("Birim İçerik Şablonu")
 public class BirimIcerikSablonuTest extends BaseTest {
 
-    BasePage page;
+    BasePage page = new BasePage();
     BirimIcerikSablonlarPage birimIcerikSablonlarPage;
 
     @BeforeMethod
@@ -20,7 +20,7 @@ public class BirimIcerikSablonuTest extends BaseTest {
     }
 
     @Test(description = "Alan Kontrolleri")
-    public void tc1084() throws Exception {
+    public void tc1084a() throws Exception {
         page.ustMenu("Birim İçerik Şablonları");
 
         birimIcerikSablonlarPage
