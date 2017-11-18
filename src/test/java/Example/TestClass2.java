@@ -1,17 +1,16 @@
 package Example;
 
-import common.BasePage;
 import common.BaseTest;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pageData.MesajTipi;
-import pageData.SolMenuData;
+import pages.BasePage;
+import pages.ustMenuPages.PulYonetimiPage;
 
-import static pageData.MesajTipi.*;
-import static pageData.SolMenuData.*;
+import static pages.pageData.MesajTipi.BASARILI;
+import static pages.pageData.SolMenuData.Bildirimler;
 
 @Epic("Belgenet1Epic examples")
 public class TestClass2 extends BaseTest {
@@ -26,9 +25,9 @@ public class TestClass2 extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TC9999: Yeni Pul Oluştur Testi")
     public void yeniPulYonetimi() {
-        page.ustMenuAc("Pul Yönetimi");
+        page.ustMenu("Pul Yönetimi");
 
-        page.pulYonetimiPage()
+        new PulYonetimiPage()
                 .yeniPulEkle()
                 .postaTipiSec("KEP")
                 .gramajiDoldur("12")
@@ -40,9 +39,9 @@ public class TestClass2 extends BaseTest {
     }
 
     public void TC2yeniPulYonetimi() {
-        page.ustMenuAc("Pul Yönetimi");
+        page.ustMenu("Pul Yönetimi");
 
-        page.pulYonetimiPage()
+        new PulYonetimiPage()
                 .yeniPulEkle()
                 .postaTipiSec("KEP")
                 .gramajiDoldur("12")

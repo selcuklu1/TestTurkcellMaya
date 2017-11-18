@@ -1,8 +1,10 @@
 package Example;
 
-import common.BasePage;
 import common.BaseTest;
 import org.testng.annotations.Test;
+import pages.BasePage;
+import pages.ustMenuPages.EvrakOlusturPage;
+import pages.ustMenuPages.GelenEvrakKayitPage;
 
 public class TestClass3 extends BaseTest {
 
@@ -11,27 +13,27 @@ public class TestClass3 extends BaseTest {
     @Test
     public void testName() {
         page.loginPage().login();
-        page.ustMenuAc("Evrak Oluştur");
-        page.evrakOlusturPage().konuKoduDoldur("010.10");
+        page.ustMenu("Evrak Oluştur");
+        new EvrakOlusturPage().konuKoduDoldur("010.10");
     }
 
     @Test
     public void testName2() {
         page.loginPage().login();
-        page.ustMenuAc("Evrak Oluştur");
+        page.ustMenu("Evrak Oluştur");
     }
 
     @Test
     public void testName3() {
         page.loginPage().login();
-        page.ustMenuAc("Evrak Oluştur");
+        page.ustMenu("Evrak Oluştur");
     }
 
 
     @Test
     public void ustYaziFileUpload() {
         page.loginPage().login();
-        page.ustMenuAc("Gelen Evrak Kayıt");
-        page.gelenEvrakKayitPage().ustYaziUploadFile("C:\\TestAutomation\\BelgenetFTA\\testpdf.pdf");
+        page.ustMenu("Gelen Evrak Kayıt");
+        new GelenEvrakKayitPage().ustYaziUploadFile("C:\\TestAutomation\\BelgenetFTA\\testpdf.pdf");
     }
 }

@@ -50,7 +50,7 @@ public class SettingsListener extends TestNG.ExitCodeListener {
     }
 
     public void registerDriverEvenListener() {
-        //<editor-fold desc="Register DriverEventListener to implement loading page wait">
+        //<editor-fold desc="Register DriverEventListener to implement loading pages wait">
         WebDriverRunner.setWebDriver((new EventFiringWebDriver(WebDriverRunner.getWebDriver()).register(new DriverEventListener())));
         //</editor-fold>
     }

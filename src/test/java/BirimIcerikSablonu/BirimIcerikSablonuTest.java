@@ -1,28 +1,30 @@
 package BirimIcerikSablonu;
 
-import common.BasePage;
 import common.BaseTest;
 import io.qameta.allure.Feature;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import pages.BasePage;
+import pages.ustMenuPages.BirimIcerikSablonlarPage;
 
 @Feature("Birim İçerik Şablonu")
 public class BirimIcerikSablonuTest extends BaseTest {
 
-    BasePage page;
+    BasePage page = new BasePage();
+    BirimIcerikSablonlarPage birimIcerikSablonlarPage;
 
     @BeforeMethod
     public void setUp() {
-        page = new BasePage();
         page.loginPage().login();
+        birimIcerikSablonlarPage = new BirimIcerikSablonlarPage();
     }
 
     @Test(description = "Alan Kontrolleri")
-    public void tc1084() throws Exception {
-        page.ustMenuAc("Birim İçerik Şablonları");
+    public void tc1084a() throws Exception {
+        page.ustMenu("Birim İçerik Şablonları");
 
-     //   page.BirimIcerikSablonlarPage()
-       //         .alanlarinAktifDurumKontrol()
-         //       .detayButonlarinExist();
+        birimIcerikSablonlarPage
+                .alanlarinAktifDurumKontrol()
+                .detayButonlarinExist();
     }
 }

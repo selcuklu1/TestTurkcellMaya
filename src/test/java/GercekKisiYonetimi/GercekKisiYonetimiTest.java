@@ -1,33 +1,34 @@
 package GercekKisiYonetimi;
 
-import common.BaseLibrary;
-import common.BasePage;
 import common.BaseTest;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import page.GercekKisiYonetimPage;
-import pageData.MesajTipi;
-import pageData.SolMenuData;
-
-import static pageData.MesajTipi.*;
+import pages.BasePage;
+import pages.ustMenuPages.EvrakOlusturPage;
+import pages.ustMenuPages.GelenEvrakKayitPage;
+import pages.ustMenuPages.GercekKisiYonetimPage;
 
 public class GercekKisiYonetimiTest extends BaseTest{
 
     BasePage page;
+    GercekKisiYonetimPage gercekKisiYonetimPage;
+    EvrakOlusturPage evrakOlusturPage;
+    GelenEvrakKayitPage gelenEvrakKayitPage;
 
     @BeforeMethod
     public void loginBeforeTests() {
         page = new BasePage();
+        gercekKisiYonetimPage = new GercekKisiYonetimPage();
+        evrakOlusturPage = new EvrakOlusturPage();
+        gelenEvrakKayitPage = new GelenEvrakKayitPage();
         page.loginPage().login();
     }
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TC1516: Gerçek kişi tanımlama ve  kontrolü")
     public void TC1516() throws InterruptedException {
-
-        //TODO: TestData classına alınacak.
         String tcNO = page.baseLibrary().createMernisTCNO();
         String ad = page.baseLibrary().createRandomText(6);
         String soyad = page.baseLibrary().createRandomText(6);
@@ -40,8 +41,8 @@ public class GercekKisiYonetimiTest extends BaseTest{
         String adSoyad = ad+" "+soyad;
         String hitap = "Sayın";
 
-        page.ustMenuAc("Gerçek Kişi Yönetimi");
-        page.gercekKisiYonetimPage()
+        page.ustMenu("Gerçek Kişi Yönetimi");
+        gercekKisiYonetimPage
                 .yeniGercekKisiEkle()
                 .tcKimlikNoDoldur(tcNO)
                 .onEkDoldur(onEk)
@@ -59,8 +60,8 @@ public class GercekKisiYonetimiTest extends BaseTest{
 
                 .kaydet();
 
-        page.ustMenuAc("Evrak Oluştur");
-        page.evrakOlusturPage()
+        page.ustMenu("Evrak Oluştur");
+        evrakOlusturPage
                 .geregiSecimTipiSec("G")
                 .geregiDoldur(adSoyad)
                 .geregiAlaniKontrol(adSoyad, unvan, adres, "P" )
@@ -71,10 +72,10 @@ public class GercekKisiYonetimiTest extends BaseTest{
                 .openTab("Bilgileri")
                 .bilgiSecimTipiSec("G");
         //.bilgiDoldur(adSoyad);
-        //  page.islemMesaji().beklenenMesajTipi(DIKKAT);
+        //  pages.islemMesaji().beklenenMesajTipi(DIKKAT);
 
-        page.ustMenuAc("Gelen Evrak Kayıt");
-        page.gelenEvrakKayitPage()
+        page.ustMenu("Gelen Evrak Kayıt");
+        gelenEvrakKayitPage
                 .evrakBilgileriListKisiKurumSec("G")
                 .evrakBilgileriListGeldigiKurumDoldur(adSoyad);
 
@@ -84,13 +85,12 @@ public class GercekKisiYonetimiTest extends BaseTest{
     @Test(enabled = true, description = "TC1516: Gerçek kişi sorgulama")
     public void TC1144() {
 
-        //TODO: DB'den çekilecek.
         String tcNO = "91057625780";
         String ad = "OptiimTest";
         String soyad = "TestOptiim";
 
-        page.ustMenuAc("Gerçek Kişi Yönetimi");
-        page.gercekKisiYonetimPage()
+        page.ustMenu("Gerçek Kişi Yönetimi");
+        gercekKisiYonetimPage
                 .ara()
                 .filtreSorgulamaPaneliAc()
                 .filtreSoyadDoldur(soyad)
@@ -127,21 +127,39 @@ public class GercekKisiYonetimiTest extends BaseTest{
                 .ara()
                 .pasiflerKayitKontrolu();
 
-      String getTbleTC =  page.gercekKisiYonetimPage().getTbleTCNO();
+        String getTbleTC = gercekKisiYonetimPage.getTbleTCNO();
 
-      page.gercekKisiYonetimPage()
+        gercekKisiYonetimPage
               .filtreSorgulamaPaneliAc()
               .filtreDurumSec("PASIFLER")
               .filtreTCKimlikNoDoldur(getTbleTC)
               .ara()
               .tcNoKontrolu(getTbleTC);
 
-        String getTbleTC2 = page.gercekKisiYonetimPage().getTbleTCNO();
+        String getTbleTC2 = gercekKisiYonetimPage.getTbleTCNO();
 
-        page.gercekKisiYonetimPage().filtreSorgulamaPaneliAc()
+        gercekKisiYonetimPage
+                .filtreSorgulamaPaneliAc()
                 .filtreDurumSec("PASIFLER")
                 .filtreTCKimlikNoDoldur(getTbleTC)
                 .ara()
                 .tcNoKontrolu(getTbleTC);
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TC1135: Yeni gerçek kişi kayıtta alan kontrolleri")
+    public void TC1135()  {
+        page.ustMenu("Gerçek Kişi Yönetimi");
+        gercekKisiYonetimPage
+                .yeniGercekKisiEkle()
+                .kaydet()
+                .zorunluAdSoyadAlanKontrolu()
+
+                .adDoldur("Sezai")
+                .soyadDoldur("Çelik")
+                .kepAdresiKullaniyor(true)
+                .kaydet();
+        //pages.islemMesaji().beklenenMesajTipi(DIKKAT);
+
     }
 }

@@ -1,12 +1,13 @@
 package YonetimHavuzuIslemleri;
 
-import common.BasePage;
 import common.BaseTest;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import pages.BasePage;
+import pages.ustMenuPages.YonetimHavuzuYonetimiPage;
 
 
 @Epic("Belgenet1Epic examples")
@@ -25,8 +26,8 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
     public void TC0002() {
 
         /*
-        page.ustMenuAc("Yönetim Havuzu Yönetimi");
-        page.yonetimHavuzuYonetimiPage()
+        pages.ustMenuAc("Yönetim Havuzu Yönetimi");
+        pages.yonetimHavuzuYonetimiPage()
                 .yonetimHavuzuEkle()
                 .yonetimHavuzuAdiDoldur("Testdeneme1122153")
                 .kullananBirimiEkle()
@@ -39,35 +40,29 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
          */
 
         /*
-        page.ustMenuAc("Evrak Oluştur");
-        page.evrakOlusturPage()
+        pages.ustMenuAc("Evrak Oluştur");
+        pages.evrakOlusturPage()
                 .onayAkisiEkle()
                 .onayAkisiKullaniciKontrol("Optiim OPTİİM", "Paraflama")
                 .onayAkisiKullaniciSec("Optiim TEST1")
                 .onayAkisiKullaniciTipiSec("Optiim TEST1", "İmzalama")
                 .onayAkisiKullan();
 */
-
-
+        
 
     }
-
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = false, description = "TC0001")
     public void TC0001() {
 
-
-
-
     }
-
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "Yönetim Havuzu Arama")
     public void TC0009() {
-        page.ustMenuAc("Yönetim Havuzu Yönetimi");
-        page.yonetimHavuzuYonetimiPage()
+        page.ustMenu("Yönetim Havuzu Yönetimi");
+        new YonetimHavuzuYonetimiPage()
                 .ara("OPTİİM BİRİM11","Testdeneme1123","Sadece Aktifler")
                 .yonetimHavuzuGuncelle("Testdeneme1123");
     }

@@ -1,30 +1,36 @@
 package KepIlePostalamaIslemleri;
 
-import common.BasePage;
 import common.BaseTest;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import pages.BasePage;
+import pages.ustMenuPages.BirimYonetimiPage;
+import pages.ustMenuPages.EvrakOlusturPage;
+import pages.ustMenuPages.KurumYonetimiPage;
+import pages.ustMenuPages.TuzelKisiYonetimiPage;
 
 @Epic("Belgenet1Epic examples")
 public class KepIlePostalamaIslemleriTest extends BaseTest {
 
     BasePage page;
+    EvrakOlusturPage evrakOlusturPage;
 
     @BeforeMethod
     public void loginBeforeTests() {
         page = new BasePage();
         page.loginPage().login();
+        evrakOlusturPage = new EvrakOlusturPage();
     }
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "Tüzel Kişi Yönetimi")
     public void TC1513a() throws InterruptedException {
         page.loginPage().login();
-        page.ustMenuAc("Teşkilat/Kişi Tanımları","Tüzel Kişi Yönetimi");
-        page.TuzelKisiYonetimiPage()
+        page.ustMenu("Teşkilat/Kişi Tanımları", "Tüzel Kişi Yönetimi");
+        new TuzelKisiYonetimiPage()
                 .ara()
                 .duzenleGonder()
                 .kepAdresiKullaniyorSec(true)
@@ -32,9 +38,9 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
                 .popupKepAdresiDoldur("turksat.kamu1@testkep.pttkep.gov.tr\n")
                 .kepHizmetSaglayicisiSec("Diğer")
                 .popupKaydet();
-        //  page.islemMesaji().beklenenMesajTipi(MesajTipi.BASARILI);  Obje Değişti
-        page.ustMenuAc("Evrak İşlemleri","Evrak Oluştur");
-        page.evrakOlusturPage()
+        //  pages.islemMesaji().beklenenMesajTipi(MesajTipi.BASARILI);  Obje Değişti
+        page.ustMenu("Evrak İşlemleri", "Evrak Oluştur");
+        evrakOlusturPage
                 .bilgiDoldur("OPTiiM1");
     }
 
@@ -42,8 +48,8 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
     @Test(enabled = true, description = "Tüzel Kişi Yönetimi")
     public void TC1513b() throws InterruptedException {
         String text="";
-        page.ustMenuAc("Teşkilat/Kişi Tanımları","Kurum Yönetimi");
-        page.KurumYonetimiPage()
+        page.ustMenu("Teşkilat/Kişi Tanımları", "Kurum Yönetimi");
+        new KurumYonetimiPage()
                 .ara()
                 .guncelle()
                 .kepAdresiKullaniyorSec(true)
@@ -52,10 +58,10 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
                 .popupKepHizmetSaglayicisi("PTT KEP Servisi")
                 .popupKaydet();
                 //.idariBirimKimlikKodu(text);
-               // String text1=   page.KurumYonetimiPage().idariBirimKimlikKoduCek();
-        //  page.islemMesaji().beklenenMesajTipi(MesajTipi.BASARILI);  Obje Değişti
-        page.ustMenuAc("Evrak İşlemleri","Evrak Oluştur");
-        page.evrakOlusturPage()
+        // String text1=   pages.ustMenuPages.KurumYonetimiPage().idariBirimKimlikKoduCek();
+        //  pages.islemMesaji().beklenenMesajTipi(MesajTipi.BASARILI);  Obje Değişti
+        page.ustMenu("Evrak İşlemleri", "Evrak Oluştur");
+        evrakOlusturPage
                 .bilgiDoldur("OPTiiM1");
     }
 
@@ -63,8 +69,8 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
     @Test(enabled = true, description = "KEP Adresi Tanımlama işlemleri")
     public void TC1520() throws InterruptedException {
         page.loginPage().login();
-        page.ustMenuAc("Teşkilat/Kişi Tanımları","Birim Yönetimi");
-        page.BirimYonetimiPage()
+        page.ustMenu("Teşkilat/Kişi Tanımları", "Birim Yönetimi");
+        new BirimYonetimiPage()
                 .birimDoldur("Yazılım")
                 .birimTuruSec("İç Birim")
                 .ara()

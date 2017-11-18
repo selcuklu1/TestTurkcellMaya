@@ -4,7 +4,7 @@ import com.codeborne.selenide.Configuration;
 import listeners.SettingsListener;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
-import pageComponents.belgenetElements.BelgenetFramework;
+import pages.pageComponents.belgenetElements.BelgenetFramework;
 
 import java.util.Locale;
 
@@ -14,7 +14,7 @@ import static data.TestData.belgenetURL;
 public class BaseTest {
 
     @BeforeClass
-    public void setUp() {
+    public void driverSetUp() {
         Locale turkishLocal = new Locale("tr", "TR");
         Locale.setDefault(turkishLocal);
 
@@ -31,7 +31,7 @@ public class BaseTest {
         Configuration.savePageSource = false;
         Configuration.collectionsTimeout = 20000;
         Configuration.timeout = 20000;
-        Configuration.holdBrowserOpen = true;
+        Configuration.holdBrowserOpen = false;
 //        Configuration.startMaximized = true;
 //        Configuration.headless = true;
 //        Configuration.browserSize = "1024x768";

@@ -1,16 +1,16 @@
 package Example;
 
-import common.BasePage;
 import common.BaseTest;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pageData.MesajTipi;
-import pageData.SolMenuData;
+import pages.BasePage;
+import pages.pageData.MesajTipi;
+import pages.solMenuPages.PaylastiklarimPage;
 
-import static pageData.SolMenuData.*;
+import static pages.pageData.SolMenuData.IslemYaptiklarim;
 
 @Epic("Belgenet1Epic examples")
 public class PaylastiklarimTest extends BaseTest {
@@ -27,7 +27,7 @@ public class PaylastiklarimTest extends BaseTest {
     @Test(enabled = true, description = "Paylaştıklarım")
     public void paylastiklarimSec() {
         page.solMenu(IslemYaptiklarim.Paylastiklarim);
-        page.paylastiklarimPage()
+        new PaylastiklarimPage()
                 .satirSec(0)
                 .evrakOnizlemeTabSec("Paylaşılanlar")
                 .paylasTabTikla()
