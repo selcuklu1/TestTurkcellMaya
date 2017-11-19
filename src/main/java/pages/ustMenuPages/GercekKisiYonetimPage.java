@@ -12,6 +12,7 @@ import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 public class GercekKisiYonetimPage extends BaseLibrary {
 
+    //Sorgulama ve Filtreleme
     SelenideElement btnGercekKisiEkle = $(By.id("gercekKisiYonetimiListingForm:gercekKisiDataTable:addNewGercekKisiButton"));
     SelenideElement txtFiltreTCKimlikNo = $(By.id("gercekKisiYonetimiListingForm:filterPanel:gercekKisiTcKimlikNoFilterInput"));
     SelenideElement txtFiltreAd = $(By.id("gercekKisiYonetimiListingForm:filterPanel:gercekKisiAdFilterInput"));
@@ -19,16 +20,21 @@ public class GercekKisiYonetimPage extends BaseLibrary {
     SelenideElement cmbFiltreDurum = $(By.id("gercekKisiYonetimiListingForm:filterPanel:durumSelectBox"));
     SelenideElement filtreSorgulamaPanel = $(By.id("gercekKisiYonetimiListingForm:filterPanel"));
     SelenideElement btnAra = $(By.id("gercekKisiYonetimiListingForm:filterPanel:searchGercekKisiButton"));
+
+    //Gerçek Kişi Ekleme
     SelenideElement txtTCKimlikNo = $(By.id("gercekKisiYonetimiEditorForm:tcKimlikNoInput"));
     SelenideElement txtOnEk = $(By.id("gercekKisiYonetimiEditorForm:onEkInput"));
     SelenideElement txtUnvan = $(By.id("gercekKisiYonetimiEditorForm:unvanId"));
     SelenideElement txtAd = $(By.id("gercekKisiYonetimiEditorForm:adInput"));
     SelenideElement txtSoyad = $(By.id("gercekKisiYonetimiEditorForm:soyadInput"));
     SelenideElement chkKepAdresiKullaniyor = $(By.id("gercekKisiYonetimiEditorForm:kepAdresiKullanimCheckbox_input"));
-    SelenideElement btnKepAdresBilgiler = $(By.id("gercekKisiYonetimiEditorForm:kepBilgileriDataTable:addNewKepAdresiButton"));
+    SelenideElement btnKepAdresBilgileriEkle = $(By.id("gercekKisiYonetimiEditorForm:kepBilgileriDataTable:addNewKepAdresiButton"));
     SelenideElement btnKaydet = $(By.id("gercekKisiYonetimiEditorForm:saveGercekKisiButton"));
     SelenideElement btnIletisimBilgileriEkle = $(By.id("gercekKisiYonetimiEditorForm:iletisimBilgileriDataTable:addNewIletisimBilgisiButton"));
     SelenideElement btnEvetPopup = $(By.id("duplicateGercekKisiKayitEvet"));
+
+    //İletişim Bilgileri
+    SelenideElement btnUpdateIletisimBilgisi = $(By.id("gercekKisiYonetimiEditorForm:iletisimBilgileriDataTable:0:updateIletisimBilgisiButton"));
 
     //Kişi ekleme zorunlu alanlar
     SelenideElement txtAdError = $(By.cssSelector("input[id='gercekKisiYonetimiEditorForm:adInput'][class*='ui-state-error']"));
@@ -40,11 +46,16 @@ public class GercekKisiYonetimPage extends BaseLibrary {
     BelgenetElement txtIletisimBilgisiIl = comboLov(By.id("gercekKisiBilgileriEditorForm:lovIl:LovText"));
     BelgenetElement txtIletisimBilgisiIlce = comboLov(By.id("gercekKisiBilgileriEditorForm:lovIlce:LovText"));
     BelgenetElement txtIletisimBilgisiUlke = comboLov(By.id("gercekKisiBilgileriEditorForm:lovUlke:LovText"));
-
     SelenideElement txtIletisimBilgisiEPosta = $(By.id("gercekKisiBilgileriEditorForm:ePostaInput"));
     SelenideElement btnIletisimBilgisiKaydet = $(By.id("gercekKisiBilgileriEditorForm:saveIletisimBilgisiButton"));
+    SelenideElement btnIletisimBilgisiIptal = $(By.id("gercekKisiBilgileriEditorForm:cancelSaveIletisimBilgisiButton"));
 
-    //Table
+    //Kep Adres Bilgileri Yeni kayit
+    SelenideElement btnKepAdresiKaydet = $(By.id("gercekKisiKepAdresUpdateDialogForm:saveKepAdresiButton"));
+    SelenideElement txtKepAdresi = $(By.id("gercekKisiKepAdresUpdateDialogForm:gercekKisiKepAdresUpdateDialogId"));
+    SelenideElement cmbKepHizmetSaglayici = $(By.id("gercekKisiKepAdresUpdateDialogForm:kephs"));
+
+    //Tablo
     SelenideElement tableGercekKisiData = $(By.id("gercekKisiYonetimiListingForm:gercekKisiDataTable_data"));
     SelenideElement tbleTc = $(By.xpath("//*[@id=\"gercekKisiYonetimiListingForm:gercekKisiDataTable_data\"]/tr/td[1]"));
     SelenideElement tbleAd = $(By.xpath("//*[@id=\"gercekKisiYonetimiListingForm:gercekKisiDataTable_data\"]/tr/td[2]"));
@@ -70,8 +81,8 @@ public class GercekKisiYonetimPage extends BaseLibrary {
         return this;
     }
 
-    public GercekKisiYonetimPage kepAdresBilgiler() {
-        btnKepAdresBilgiler.click();
+    public GercekKisiYonetimPage kepAdresBilgileriEkle() {
+        btnKepAdresBilgileriEkle.click();
         return this;
     }
 
@@ -172,10 +183,39 @@ public class GercekKisiYonetimPage extends BaseLibrary {
     }
 
     @Step("İletişim bilgisi kaydet")
+    public GercekKisiYonetimPage iletisimBilgisiGüncelle() {
+        btnUpdateIletisimBilgisi.click();
+        return this;
+    }
+
+    @Step("İletişim bilgisi kaydet")
     public GercekKisiYonetimPage iletisimBilgisiKaydet() {
         btnIletisimBilgisiKaydet.click();
         return this;
     }
+
+    @Step("İletişim bilgisi kaydet")
+    public GercekKisiYonetimPage iletisimBilgisiIptalEt() {
+        btnIletisimBilgisiIptal.click();
+        return this;
+    }
+
+    public GercekKisiYonetimPage kepAdresiKaydet() {
+        btnKepAdresiKaydet.click();
+        return this;
+    }
+
+    public GercekKisiYonetimPage kepAdresiDoldur(String kepAdres) {
+        txtKepAdresi.sendKeys(kepAdres);
+        return this;
+    }
+
+    public GercekKisiYonetimPage kepHizmetSaglayiciSec(String kepHizmetSaglayici) {
+        cmbKepHizmetSaglayici.selectOptionByValue(kepHizmetSaglayici);
+        return this;
+    }
+
+
 
     public GercekKisiYonetimPage filtreSorgulamaPaneliAc() {
         filtreSorgulamaPanel.click();
