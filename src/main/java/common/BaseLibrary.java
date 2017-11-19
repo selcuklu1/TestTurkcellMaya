@@ -292,10 +292,11 @@ public class BaseLibrary {
         return part2;
     }
 
-    protected WebElement findElementOnTableByColumnInputInAllPages(SelenideElement byTable, int columnIndex, String columnInput) throws InterruptedException {
-
+    /* columnInput ile gönderilen değer, columnIndex ile belirtilen sütunda
+       aratılır. columnInput olan satırın elementini döndürür. columnInput araması tüm sayfalarda yapılır.*/
+    protected WebElement findElementOnTableByColumnInputInAllPages(SelenideElement byTable, int columnIndex, String columnInput) {
         SelenideElement next = $(("[class='ui-paginator-next ui-state-default ui-corner-all']"));
-       // SelenideElement nextDisable = $(("[class*='ui-state-disabled']"));
+        // SelenideElement nextDisable = $(("[class*='ui-state-disabled']"));
 
         WebElement element = null;
         while (element == null) {
@@ -312,6 +313,8 @@ public class BaseLibrary {
         return element;
     }
 
+    /*  columnInput ile gönderilen değer, columnIndex ile belirtilen sütunda
+       aratılır. columnInput olan satırın elementini döndürür. */
     protected WebElement findElementOnTableByColumnInput(SelenideElement byTable, int columnIndex, String columnInput) {
         WebElement table = $(byTable).$(By.tagName("tbody"));
         int rowCount = 0;

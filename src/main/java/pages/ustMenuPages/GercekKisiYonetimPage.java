@@ -186,7 +186,7 @@ public class GercekKisiYonetimPage extends BaseLibrary {
     }
 
     @Step("Kayit kontrolu başarılı")
-    public GercekKisiYonetimPage kayitKontrolu(String tcNO, String ad, String soyad) throws InterruptedException {
+    public GercekKisiYonetimPage kayitKontrolu(String tcNO, String ad, String soyad)  {
         Assert.assertEquals(tbleTc.getText().equals(tcNO), true);
         Assert.assertEquals(tbleAd.getText().equals(ad), true);
         Assert.assertEquals(tbleSoyad.getText().equals(soyad), true);
