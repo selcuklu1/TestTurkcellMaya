@@ -9,6 +9,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 
 import java.io.File;
 import java.text.ParseException;
@@ -329,5 +330,26 @@ public class BaseLibrary {
             }
         }
         return null;
+    }
+
+    public void mesajKontrol(String messageTitle, String message) {
+        SelenideElement islemMesajiTitle = $(".lobibox-notify-title");
+        SelenideElement islemMesaji = $(".lobibox-notify-msg");
+
+        String getMessageTitle = islemMesajiTitle.shouldBe(Condition.visible).getText();
+        String getMessage = islemMesaji.shouldBe(Condition.visible).getText();
+
+        System.out.println(getMessageTitle);
+        System.out.println(getMessage);
+
+        Assert.assertEquals(messageTitle, getMessageTitle);
+        Assert.assertEquals(message, getMessage);
+
+        try {
+            new WebDriverWait(WebDriverRunner.getWebDriver(), 10, 100).
+                    until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".lobibox-notify-title")));
+        } catch (Exception e) {
+            System.out.println("Error didn't wait popup message : " + e);
+        }
     }
 }

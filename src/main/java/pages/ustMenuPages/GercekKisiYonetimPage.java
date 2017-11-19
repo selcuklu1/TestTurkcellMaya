@@ -81,11 +81,13 @@ public class GercekKisiYonetimPage extends BaseLibrary {
         return this;
     }
 
+    @Step("Kep adres bilgileri ekle")
     public GercekKisiYonetimPage kepAdresBilgileriEkle() {
         btnKepAdresBilgileriEkle.click();
         return this;
     }
 
+    @Step("Kep adresi kullanıyor seç")
     public GercekKisiYonetimPage kepAdresiKullaniyor(boolean secim) {
         chkKepAdresiKullaniyor.setSelected(secim);
         return this;
@@ -122,26 +124,31 @@ public class GercekKisiYonetimPage extends BaseLibrary {
         return this;
     }
 
+    @Step("Ara")
     public GercekKisiYonetimPage ara() {
         btnAra.click();
         return this;
     }
 
+    @Step("Filtrede durum seç")
     public GercekKisiYonetimPage filtreDurumSec(String value) {
         cmbFiltreDurum.selectOptionByValue(value);
         return this;
     }
 
-    public GercekKisiYonetimPage filtreSoyadDoldur(String text) {
-        txtFiltreSoyad.setValue(text);
+    @Step("Filtrede soyad doldur")
+    public GercekKisiYonetimPage filtreSoyadDoldur(String soyad) {
+        txtFiltreSoyad.setValue(soyad);
         return this;
     }
 
-    public GercekKisiYonetimPage filtreAdDoldur(String text) {
-        txtFiltreAd.setValue(text);
+    @Step("Filtrede ad doldur")
+    public GercekKisiYonetimPage filtreAdDoldur(String ad) {
+        txtFiltreAd.setValue(ad);
         return this;
     }
 
+    @Step("Filtrede TC kimlik no doldur")
     public GercekKisiYonetimPage filtreTCKimlikNoDoldur(String text) {
         txtFiltreTCKimlikNo.setValue(text);
         return this;
@@ -171,6 +178,7 @@ public class GercekKisiYonetimPage extends BaseLibrary {
         return this;
     }
 
+    @Step("Ülke doldur")
     public GercekKisiYonetimPage iletisimBilgisiUlkeDoldur(String ulke) {
         txtIletisimBilgisiUlke.selectComboLov(ulke);
         return this;
@@ -182,7 +190,7 @@ public class GercekKisiYonetimPage extends BaseLibrary {
         return this;
     }
 
-    @Step("İletişim bilgisi kaydet")
+    @Step("İletişim bilgisi güncelle")
     public GercekKisiYonetimPage iletisimBilgisiGüncelle() {
         btnUpdateIletisimBilgisi.click();
         return this;
@@ -194,29 +202,31 @@ public class GercekKisiYonetimPage extends BaseLibrary {
         return this;
     }
 
-    @Step("İletişim bilgisi kaydet")
+    @Step("İletişim bilgisi iptal et")
     public GercekKisiYonetimPage iletisimBilgisiIptalEt() {
         btnIletisimBilgisiIptal.click();
         return this;
     }
 
+    @Step("Kep adresi kaydet")
     public GercekKisiYonetimPage kepAdresiKaydet() {
         btnKepAdresiKaydet.click();
         return this;
     }
 
+    @Step("Kep adresi doldur")
     public GercekKisiYonetimPage kepAdresiDoldur(String kepAdres) {
         txtKepAdresi.sendKeys(kepAdres);
         return this;
     }
 
+    @Step("Kep hizmet sağlayıcı seç")
     public GercekKisiYonetimPage kepHizmetSaglayiciSec(String kepHizmetSaglayici) {
         cmbKepHizmetSaglayici.selectOptionByValue(kepHizmetSaglayici);
         return this;
     }
 
-
-
+    @Step("Filtre sorgulama paneli aç")
     public GercekKisiYonetimPage filtreSorgulamaPaneliAc() {
         filtreSorgulamaPanel.click();
         txtFiltreTCKimlikNo.clear();
@@ -225,39 +235,47 @@ public class GercekKisiYonetimPage extends BaseLibrary {
         return this;
     }
 
-    @Step("Kayit kontrolu başarılı")
+    @Step("Kayit kontrolu")
     public GercekKisiYonetimPage kayitKontrolu(String tcNO, String ad, String soyad)  {
-        Assert.assertEquals(tbleTc.getText().equals(tcNO), true);
-        Assert.assertEquals(tbleAd.getText().equals(ad), true);
-        Assert.assertEquals(tbleSoyad.getText().equals(soyad), true);
+        //Assert.assertEquals(tbleTc.getText().equals(tcNO), true);
+        //Assert.assertEquals(tbleAd.getText().equals(ad), true);
+        //Assert.assertEquals(tbleSoyad.getText().equals(soyad), true);
 
-        //  boolean status = findElementOnTableByColumnInputInAllPages(tbleGercekKisiDataTable, 3, soyad).isDisplayed();
-        //Assert.assertEquals(status, true);
+        boolean statusTCNO = findElementOnTableByColumnInputInAllPages(tbleGercekKisiDataTable, 1, tcNO).isDisplayed();
+        boolean statusAd = findElementOnTableByColumnInputInAllPages(tbleGercekKisiDataTable, 2, ad).isDisplayed();
+        boolean statusSoyad = findElementOnTableByColumnInputInAllPages(tbleGercekKisiDataTable, 3, soyad).isDisplayed();
+
+        Assert.assertEquals(statusTCNO, true);
+        Assert.assertEquals(statusAd, true);
+        Assert.assertEquals(statusSoyad, true);
         return this;
     }
 
-    @Step("TcNo kontrolu başarılı")
+    @Step("TC kimlik no kontrolu")
     public GercekKisiYonetimPage tcNoKontrolu(String tcNO) {
         Assert.assertEquals(tbleTc.getText().contains(tcNO), true);
         return this;
     }
 
-    @Step("Kayıt bulunamadı kontrolu başarılı")
+    @Step("Kayıt bulunamadı kontrolu")
     public GercekKisiYonetimPage kayitBulunamadiKontrolu() {
         Assert.assertEquals(tableKayitBulunamadi.getText().contains("Kayıt Bulunamamıştır"), true);
         return this;
     }
 
+    @Step("Pasifler kayıt kontrolu")
     public GercekKisiYonetimPage pasiflerKayitKontrolu() {
         Assert.assertEquals(btnAktif.isDisplayed(), true);
         return this;
     }
 
+    @Step("TC kimlik no alma")
     public String getTbleTCNO() {
         String getTC = tbleTc.getText();
         return getTC;
     }
 
+    @Step("Zorunlu ad, soyad alan kontrolu")
     public GercekKisiYonetimPage zorunluAdSoyadAlanKontrolu() {
         Assert.assertEquals(txtAdError.exists(), true);
         Assert.assertEquals(txtSoyadError.exists(), true);

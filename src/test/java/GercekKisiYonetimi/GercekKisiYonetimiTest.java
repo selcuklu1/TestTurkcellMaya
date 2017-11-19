@@ -32,6 +32,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TC1516: Gerçek kişi tanımlama ve  kontrolü")
     public void TC1516() {
+
         String tcNO = page.baseLibrary().createMernisTCNO();
         String ad = page.baseLibrary().createRandomText(6);
         String soyad = page.baseLibrary().createRandomText(6);
@@ -143,15 +144,6 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .filtreTCKimlikNoDoldur(getTbleTC)
                 .ara()
                 .tcNoKontrolu(getTbleTC);
-
-        String getTbleTC2 = gercekKisiYonetimPage.getTbleTCNO();
-
-        gercekKisiYonetimPage
-                .filtreSorgulamaPaneliAc()
-                .filtreDurumSec("PASIFLER")
-                .filtreTCKimlikNoDoldur(getTbleTC)
-                .ara()
-                .tcNoKontrolu(getTbleTC);
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -177,8 +169,9 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .adDoldur(ad)
                 .soyadDoldur(soyad)
                 .kepAdresiKullaniyor(kepAdresiKullaniyor)
-                .kaydet();
-        //page.islemMesaji().beklenenMesajTipi(DIKKAT);
+                .kaydet()
+                .mesajKontrol("Dikkat", "Kep adresi boş bırakılamaz! Lütfen bir kep adresi ekleyiniz.");
+        page.islemMesaji().beklenenMesajTipi(DIKKAT);
 
         gercekKisiYonetimPage
                 .iletisimBilgileriEkle()
