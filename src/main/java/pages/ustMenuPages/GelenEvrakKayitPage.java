@@ -500,7 +500,7 @@ public class GelenEvrakKayitPage extends BaseLibrary {
 
     @Step("TC kimlik No ekle")
     public GelenEvrakKayitPage IletisimBilgisiTCKNEkle(String TCKN) {
-//        String mernisNo = createMernisTCNO();
+//        String mernisNo = createMernisTCKN();
         txtTCKN.clear();
         txtTCKN.sendKeys(TCKN);
         return this;

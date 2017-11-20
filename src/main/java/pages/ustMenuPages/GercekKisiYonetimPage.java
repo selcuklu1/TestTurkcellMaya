@@ -5,7 +5,6 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
-import pages.pageComponents.UstMenu;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
 import static com.codeborne.selenide.Selenide.$;
@@ -72,7 +71,6 @@ public class GercekKisiYonetimPage extends MainPage {
         return this;
     }
 
-
     @Step("Yeni gerçek kişi ekle")
     public GercekKisiYonetimPage yeniGercekKisiEkle() {
         btnGercekKisiEkle.click();
@@ -127,7 +125,7 @@ public class GercekKisiYonetimPage extends MainPage {
     @Step("TC doldur")
     public GercekKisiYonetimPage tcKimlikNoDoldur(String text) {
         txtTCKimlikNo.setValue(text);
-        createMernisTCNO();
+        createMernisTCKN();
         return this;
     }
 
