@@ -5,7 +5,6 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pages.EvrakOlusturPage;
 import pages.EvrakOlusturPage.BilgilerTab;
-import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgentCondition;
 
 public class EvrakOlusturTest extends BaseTest {

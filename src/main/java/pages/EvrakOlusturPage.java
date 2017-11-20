@@ -195,11 +195,11 @@ public class EvrakOlusturPage {
 
         }
 
-        public BelgenetElement getCmlKonuKodu() {
+        public BelgenetElement getKonuKodu() {
             return cmlKonuKodu;
         }
 
-        public SelenideElement getTxtKonu() {
+        public SelenideElement getKonu() {
             return txtKonu;
         }
     }
