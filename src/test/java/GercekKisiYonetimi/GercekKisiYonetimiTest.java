@@ -42,6 +42,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
         String bilgiSecimTipi = "G";
         String geregiSecimTipi = "G";
         String evrakBilgileriListKisiKurumTipi = "G";
+        String gercekKisiMesaj = "Seçtiğiniz gerçek kişi gereği / bilgi listesinde ekli olduğu için bu gerçek kişiyi seçemezsiniz.";
 
         gercekKisiYonetimPage
                 .openPage()
@@ -74,12 +75,12 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .openTab("Bilgileri")
                 .bilgiSecimTipiSec(bilgiSecimTipi);
         //.bilgiDoldur(adSoyad);
-        //.islemMesaji().beklenenMesajTipi(DIKKAT);
+                 //.islemMesaji().dikkatOlmali(gercekKisiMesaj);
 
         gelenEvrakKayitPage
                 .openPage()
                 .evrakBilgileriListKisiKurumSec(evrakBilgileriListKisiKurumTipi)
-                .evrakBilgileriListGeldigiKurumDoldur(adSoyad);
+                .evrakBilgileriListGeldigiKisiDoldur(adSoyad);
 
     }
 
