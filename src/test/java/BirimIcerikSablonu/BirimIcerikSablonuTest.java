@@ -2,7 +2,7 @@ package BirimIcerikSablonu;
 
 import common.BaseTest;
 import io.qameta.allure.Feature;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import pages.BasePage;
 import pages.ustMenuPages.BirimIcerikSablonlarPage;
@@ -13,7 +13,7 @@ public class BirimIcerikSablonuTest extends BaseTest {
     BasePage page = new BasePage();
     BirimIcerikSablonlarPage birimIcerikSablonlarPage;
 
-    @BeforeMethod
+    @BeforeClass
     public void setUp() {
         page.loginPage().login();
         birimIcerikSablonlarPage = new BirimIcerikSablonlarPage();

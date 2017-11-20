@@ -18,7 +18,7 @@ public class BirimIcerikSablonlarPage extends BaseLibrary {
 
     SelenideElement txtSablonAdi = $(By.id("birimSablonForm:sablonAdiText_id"));
     BelgenetElement lovKullanilacakBirimler = comboLov(By.id("birimSablonForm:sablonLov_id:LovText"));
-    SelenideElement selEvrakTipi = $(By.id("birimSablonForm:j_idt5751"));
+    SelenideElement selEvrakTipi = $("#birimSablonForm select:first-child");//$(By.id("birimSablonForm:j_idt5751"));
     SelenideElement btnYeniSablonOlustur = $(By.id("birimSablonForm:sablonIslemYeniButton_Id"));
     SelenideElement btnKaydet = $(By.id("birimSablonForm:sablonIslemKaydetButton_id"));
     SelenideElement btnSil = $(By.id("birimSablonForm:sablonIslemSilButton_id"));

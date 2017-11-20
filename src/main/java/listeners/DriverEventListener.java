@@ -2,6 +2,7 @@ package listeners;
 
 import common.BaseLibrary;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.events.WebDriverEventListener;
@@ -64,6 +65,8 @@ public class DriverEventListener extends BaseLibrary implements WebDriverEventLi
     public void beforeFindBy(By by, WebElement element, WebDriver driver) {
 //        System.out.println("Page loading.." + by.toString());
         waitForLoading(driver);
+
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", element);
 //        System.out.println("Page loading completed..");
 //        System.out.println("Looking for element.. " + by.toString());
     }

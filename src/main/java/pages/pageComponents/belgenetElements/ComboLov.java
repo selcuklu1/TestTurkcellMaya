@@ -24,9 +24,9 @@ class ComboLov {
         }
     }
 
-    class SelectLov implements Command<BelgenetElement> {
+    class SelectLov implements Command<SelenideElement> {
         @Override
-        public BelgenetElement execute(SelenideElement proxy, WebElementSource locator, Object[] args) throws IOException {
+        public SelenideElement execute(SelenideElement proxy, WebElementSource locator, Object[] args) throws IOException {
             return selectLov(proxy, args[0].toString());
         }
     }
