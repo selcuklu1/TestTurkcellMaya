@@ -140,7 +140,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "Gelen maillerin evrak olarak sisteme dahil edilmesi")
+    @Test(enabled = false, description = "Gelen maillerin evrak olarak sisteme dahil edilmesi")
     public void TC0394 () throws InterruptedException{
         String birim = "OPTİİM BİRİM11";
         page.ustMenu("Gelen Evrak Kayıt");
@@ -157,7 +157,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .evrakBilgileriListEvrakGelisTipiSec(evrakGelisTipi)
                 .evrakBilgileriListIvedilikSec(ivedilik)
                 .evrakBilgileriEkBilgiFiltreAc()
-                .evrakEkTabViewEkle()
+//                .evrakEkTabViewEkle() excel eklenecek
                 .kaydet()
                 .popUps();
         page.islemMesaji().beklenenMesajTipi(MesajTipi.BASARILI);
