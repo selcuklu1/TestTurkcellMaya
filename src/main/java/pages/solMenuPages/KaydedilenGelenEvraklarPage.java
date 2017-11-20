@@ -3,10 +3,11 @@ package pages.solMenuPages;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import pages.MainPage;
 
 import static com.codeborne.selenide.Selenide.$;
 
-public class KaydedilenGelenEvraklarPage {
+public class KaydedilenGelenEvraklarPage extends MainPage {
     SelenideElement f = $(By.xpath("//div[@id='mainInboxForm:inboxDataTable:filtersAccordion']//a[text()='Filtreler']/parent::h3"));
     SelenideElement cmbTopluSecim  =$(By.id("mainInboxForm:inboxDataTable:j_idt666_button"));
     SelenideElement cmbFiltre = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt349_label"));
@@ -16,6 +17,11 @@ public class KaydedilenGelenEvraklarPage {
     SelenideElement btnIcerikGöster = $(By.id("mainInboxForm:inboxDataTable:0:detayGosterButton"));
     SelenideElement btnTamEkranGöster = $(By.id("mainInboxForm:inboxDataTable:0:tamEkranModuButton"));
     SelenideElement tblRapor = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
+
+    public KaydedilenGelenEvraklarPage openPage() {
+        ustMenu("Kaydedilen Gelen Evraklar");
+        return this;
+    }
 
     @Step("Filtrele alanını aç")
     public KaydedilenGelenEvraklarPage filtreleAc() {
@@ -46,4 +52,5 @@ public class KaydedilenGelenEvraklarPage {
         tblRapor.click();
         return this;
     }
+
 }

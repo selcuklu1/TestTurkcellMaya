@@ -7,7 +7,7 @@ import pages.pageComponents.UserMenu;
 import pages.pageComponents.UstMenu;
 import pages.pageData.SolMenuData;
 
-public class BasePage {
+public class MainPage extends BaseLibrary {
     private SolMenu solMenu = new SolMenu();
     private UstMenu ustMenu = new UstMenu();
     private IslemMesajlari islemMesajlari = new IslemMesajlari();
@@ -59,14 +59,6 @@ public class BasePage {
 
     public IslemMesajlari islemMesaji() {
         return islemMesajlari;
-    }
-
-    public LoginPage loginPage() {
-        return new LoginPage();
-    }
-
-    public BaseLibrary baseLibrary() {
-        return new BaseLibrary();
     }
 
     //region Sayfalar

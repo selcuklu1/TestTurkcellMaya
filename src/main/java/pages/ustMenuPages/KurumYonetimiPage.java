@@ -3,10 +3,11 @@ package pages.ustMenuPages;
 import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
 import org.openqa.selenium.By;
+import pages.MainPage;
 
 import static com.codeborne.selenide.Selenide.$;
 
-public class KurumYonetimiPage extends BaseLibrary {
+public class KurumYonetimiPage extends MainPage {
 
     SelenideElement txtKurum = $(By.id("kurumYonetimiListingForm:filterPanel:kurumFilterLov:LovText"));
     SelenideElement btnAra = $(By.id("kurumYonetimiListingForm:filterPanel:searchEntitiesButton"));
@@ -24,6 +25,13 @@ public class KurumYonetimiPage extends BaseLibrary {
     SelenideElement cmbPopupKepHizmetSaglayicisi = $(By.id("kurumKepAdresBilgiEditorForm:kephs"));
     SelenideElement btnPopupKaydet = $(By.id("kurumKepAdresBilgiEditorForm:saveKepAdresiButton"));
     String text;
+
+    public KurumYonetimiPage openPage() {
+        ustMenu("Kurum Yönetimi");
+        return this;
+    }
+
+
     public KurumYonetimiPage idariBirimKimlikKoduCek() throws InterruptedException{
         text = txtIdariBirimKimlikKodu.getValue();
         System.out.println("Metin değer "+text);
@@ -103,5 +111,6 @@ public class KurumYonetimiPage extends BaseLibrary {
         txtKurum.setValue(text);
         return this;
     }
+
 }
 

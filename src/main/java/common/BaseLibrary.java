@@ -1,15 +1,15 @@
 package common;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Attachment;
-import org.openqa.selenium.By;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 
 import java.io.File;
 import java.text.ParseException;
@@ -20,7 +20,6 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 import static com.codeborne.selenide.Selenide.*;
-import static java.util.Locale.forLanguageTag;
 import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfElementLocated;
 
 public class BaseLibrary {
@@ -87,8 +86,8 @@ public class BaseLibrary {
 
     public static String clearTurkishChars(String str) {
         String ret = str;
-        char[] turkishChars = new char[] {0x131, 0x130, 0xFC, 0xDC, 0xF6, 0xD6, 0x15F, 0x15E, 0xE7, 0xC7, 0x11F, 0x11E};
-        char[] englishChars = new char[] {'i', 'I', 'u', 'U', 'o', 'O', 's', 'S', 'c', 'C', 'g', 'G'};
+        char[] turkishChars = new char[]{0x131, 0x130, 0xFC, 0xDC, 0xF6, 0xD6, 0x15F, 0x15E, 0xE7, 0xC7, 0x11F, 0x11E};
+        char[] englishChars = new char[]{'i', 'I', 'u', 'U', 'o', 'O', 's', 'S', 'c', 'C', 'g', 'G'};
         for (int i = 0; i < turkishChars.length; i++) {
             ret = ret.replaceAll(new String(new char[]{turkishChars[i]}), new String(new char[]{englishChars[i]}));
         }
@@ -253,36 +252,36 @@ public class BaseLibrary {
         Random randomGenerator = new Random();
         array.add(new Integer(1 + randomGenerator.nextInt(9)));
 
-        for (int i=1;i<9;i++) array.add(randomGenerator.nextInt(10));
+        for (int i = 1; i < 9; i++) array.add(randomGenerator.nextInt(10));
 
         int t1 = 0;
-        for (int i=0;i<9;i+=2) t1 += array.elementAt(i);
+        for (int i = 0; i < 9; i += 2) t1 += array.elementAt(i);
 
         int t2 = 0;
-        for (int i=1;i<8;i+=2) t2 += array.elementAt(i);
+        for (int i = 1; i < 8; i += 2) t2 += array.elementAt(i);
 
-        int x = ((t1*7)-t2)%10;
+        int x = ((t1 * 7) - t2) % 10;
         array.add(new Integer(x));
 
-        x=0;
-        for(int i=0;i<10;i++) x+= array.elementAt(i);
+        x = 0;
+        for (int i = 0; i < 10; i++) x += array.elementAt(i);
 
-        x= x % 10;
+        x = x % 10;
         array.add(new Integer(x));
 
         String res = "";
-        for(int i=0;i<11;i++) res = res + Integer.toString(array.elementAt(i));
+        for (int i = 0; i < 11; i++) res = res + Integer.toString(array.elementAt(i));
 
-        System.out.println("Olusturulan TC Kimlik No:"+res);
+        System.out.println("Olusturulan TC Kimlik No:" + res);
 
         return res;
     }
 
     //Textin ilk harfini büyük yapar.
-    public String toUpperCaseFirst(String text){
-        char ilkHarf = Character . toUpperCase ( text . charAt ( 0 ));
-        text = ilkHarf + text . substring ( 1 );
-    return text;
+    public String toUpperCaseFirst(String text) {
+        char ilkHarf = Character.toUpperCase(text.charAt(0));
+        text = ilkHarf + text.substring(1);
+        return text;
     }
 
     //Texti split edip : 'dan sonrasını alır.
@@ -294,5 +293,43 @@ public class BaseLibrary {
         return part2;
     }
 
+    /* columnInput ile gönderilen değer, columnIndex ile belirtilen sütunda
+       aratılır. columnInput olan satırın elementini döndürür. columnInput araması tüm sayfalarda yapılır.*/
+    protected WebElement findElementOnTableByColumnInputInAllPages(SelenideElement byTable, int columnIndex, String columnInput) {
+        SelenideElement next = $(("[class='ui-paginator-next ui-state-default ui-corner-all']"));
+        // SelenideElement nextDisable = $(("[class*='ui-state-disabled']"));
+
+        WebElement element = null;
+        while (element == null) {
+            element = findElementOnTableByColumnInput(byTable, columnIndex, columnInput);
+            if (element == null) {
+                if (next.isDisplayed() == false) {
+                    System.out.println("Element tablodaki hiç bir sayfada bulunamadı.");
+                    return null; // Element hiç bir sayfada bulunamazsa null döner.
+                }
+                next.click();
+            }
+        }
+        System.out.println("Tabloda element bulundu.");
+        return element;
+    }
+
+    /*  columnInput ile gönderilen değer, columnIndex ile belirtilen sütunda
+       aratılır. columnInput olan satırın elementini döndürür. */
+    protected WebElement findElementOnTableByColumnInput(SelenideElement byTable, int columnIndex, String columnInput) {
+        WebElement table = $(byTable).$(By.tagName("tbody"));
+        int rowCount = 0;
+
+        List<WebElement> allRows = table.findElements(By.tagName("tr"));
+        rowCount = allRows.size();
+        WebElement elem = null;
+        for (WebElement row : allRows) {
+            elem = row.findElements(By.tagName("td")).get(columnIndex - 1);
+            if (elem.getText().equals(columnInput)) {
+                return elem;
+            }
+        }
+        return null;
+    }
 
 }

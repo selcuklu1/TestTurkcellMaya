@@ -4,10 +4,11 @@ import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import pages.MainPage;
 
 import static com.codeborne.selenide.Selenide.$;
 
-public class TeslimAlinmayiBekleyenlerPage extends BaseLibrary {
+public class TeslimAlinmayiBekleyenlerPage extends MainPage {
 
     SelenideElement f = $(By.xpath("//div[@id='mainInboxForm:inboxDataTable:filtersAccordion']//a[text()='Filtreler']/parent::h3"));
     SelenideElement cmbFiltre = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt10493_input"));
@@ -17,6 +18,10 @@ public class TeslimAlinmayiBekleyenlerPage extends BaseLibrary {
     SelenideElement tblRapor = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
     SelenideElement btnTeslimAlveHavaleYap = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:3:cmdbutton"));
 
+    public TeslimAlinmayiBekleyenlerPage openPage() {
+        ustMenu("Teslim Alınmayı Bekleyenler");
+        return this;
+    }
 
     @Step("Filtrele alanını aç")
     public TeslimAlinmayiBekleyenlerPage filtreleAc() {
@@ -53,4 +58,5 @@ public class TeslimAlinmayiBekleyenlerPage extends BaseLibrary {
         btnTeslimAlveHavaleYap.click();
         return this;
     }
+
 }

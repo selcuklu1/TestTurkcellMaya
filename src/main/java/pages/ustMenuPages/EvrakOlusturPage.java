@@ -6,6 +6,7 @@ import common.BaseLibrary;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
+import pages.pageComponents.UstMenu;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
 import static com.codeborne.selenide.Selenide.$;
@@ -153,6 +154,11 @@ public class EvrakOlusturPage extends BaseLibrary {
     SelenideElement btnOnayAkisiKullaniciKullan = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:anlikAkisKullanButton"));
     BelgenetElement txtOnayAkisiKullanicilar = comboLov("[id$='akisAdimLov:LovText']");
     SelenideElement listOnayAkisikullanicilar = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:akisAdimLov:lovTree"));
+
+    public EvrakOlusturPage openPage() {
+        new UstMenu().ustMenu("Evrak Oluştur");
+        return this;
+    }
 
     @Step("\"{tabName}\" tab aç")
     public EvrakOlusturPage openTab(String tabName) {
@@ -318,4 +324,6 @@ public class EvrakOlusturPage extends BaseLibrary {
 
         return this;
     }
+
+
 }

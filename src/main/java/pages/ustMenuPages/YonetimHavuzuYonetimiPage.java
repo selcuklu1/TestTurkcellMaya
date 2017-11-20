@@ -6,12 +6,13 @@ import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import pages.MainPage;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 
-public class YonetimHavuzuYonetimiPage extends BaseLibrary {
+public class YonetimHavuzuYonetimiPage extends MainPage {
 
     private String EklenilenHavuzAdi = null;
     private String EklenilenBirimAdi = null;
@@ -44,6 +45,11 @@ public class YonetimHavuzuYonetimiPage extends BaseLibrary {
     SelenideElement btnKullanicilarTreeKapat = $(By.id("kullaniciBirimForm:kullaniciBirimList:lovTreePanelKapat"));
     SelenideElement btnKullanicilarKaydet = $(By.id("kullaniciBirimForm:addKullaniciBirimListButton"));
     SelenideElement tableKullaniciListesi = $("tbody[id='yonetimHavuzuYonetimiEditorForm:yonetimHavuzuKullaniciBirimDataTable_data']");
+
+    public YonetimHavuzuYonetimiPage openPage() {
+        ustMenu("Yönetim Havuzu Yönetimi");
+        return  this;
+    }
 
     public static class Durum{
         public static String TUMU = "TUMU";

@@ -3,10 +3,11 @@ package pages.ustMenuPages;
 import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
 import org.openqa.selenium.By;
+import pages.MainPage;
 
 import static com.codeborne.selenide.Selenide.$;
 
-public class TuzelKisiYonetimiPage extends BaseLibrary {
+public class TuzelKisiYonetimiPage extends MainPage {
 
     SelenideElement btnAra = $(By.id("tuzelKisiYonetimiListingForm:filterPanel:searchTuzelKisiButton"));
     SelenideElement btnDuzenle = $(By.id("tuzelKisiYonetimiListingForm:tuzelKisiDataTable:0:updateTuzelKisiButton"));
@@ -15,6 +16,11 @@ public class TuzelKisiYonetimiPage extends BaseLibrary {
     SelenideElement txtPopupKepAdresi = $(By.id("tuzelKisiKepAdresEditorForm:tuzelKisiKepAdresInputTextId"));
     SelenideElement cmbKepHizmetSaglayicisi = $(By.id("tuzelKisiKepAdresEditorForm:kephs"));
     SelenideElement btnPopupKaydet = $(By.id("tuzelKisiKepAdresEditorForm:saveKepAdresiButton"));
+
+    public TuzelKisiYonetimiPage openPage() {
+        ustMenu("Tüzel Kişi Yönetimi");
+        return this;
+    }
 
     public TuzelKisiYonetimiPage popupKaydet() {
         btnPopupKaydet.click();

@@ -6,16 +6,16 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pages.BasePage;
+import pages.MainPage;
 import pages.ustMenuPages.PulYonetimiPage;
 
-import static pages.pageData.MesajTipi.BASARILI;
+import static pages.pageComponents.IslemMesajlari.MessageTitle.*;
 import static pages.pageData.SolMenuData.Bildirimler;
 
 @Epic("Belgenet1Epic examples")
 public class TestClass2 extends BaseTest {
-
-    BasePage page = new BasePage();
+/*
+    MainPage page = new MainPage();
 
     @BeforeMethod
     public void loginBeforeTests() {
@@ -54,5 +54,5 @@ public class TestClass2 extends BaseTest {
     @Test(description = "Sol Memu açılması")
     public void solMenuTest() {
         page.solMenu(Bildirimler.Mesajlar);
-    }
+    }*/
 }

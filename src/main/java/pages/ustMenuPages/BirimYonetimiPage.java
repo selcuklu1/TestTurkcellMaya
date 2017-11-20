@@ -5,13 +5,15 @@ import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
-public class BirimYonetimiPage extends BaseLibrary {
+public class BirimYonetimiPage extends MainPage {
+
     SelenideElement btnAra = $(By.id("birimYonetimiFilterForm:accordionPanel:searchEntitiesButton"));
     SelenideElement btnDuzenle = $(By.cssSelector("birimYonetimiListingForm:birimTreeTable:0:updateBirimButton"));
     ElementsCollection paylastiklarimList = $$("[id='birimYonetimiListingForm:birimTreeTable'] > button[role='row']");
@@ -58,6 +60,13 @@ public class BirimYonetimiPage extends BaseLibrary {
     SelenideElement cmbPopupHizmetSaglayicisi = $(By.id("kepAdresBilgiEditorForm:kephs"));
     SelenideElement btnPopupKaydet = $(By.id("kepAdresBilgiEditorForm:saveKepAdresiButton"));
     SelenideElement btnKaydet = $(By.id("birimYonetimiEditorForm:saveBirimButton"));
+
+
+    public BirimYonetimiPage openPage() {
+        ustMenu("Birim Yönetimi");
+        return this;
+    }
+
     @Step("Kaydet tıkla")
     public BirimYonetimiPage kaydet() throws InterruptedException{
         btnKaydet.click();
@@ -276,4 +285,5 @@ public class BirimYonetimiPage extends BaseLibrary {
         txtBirim.selectComboLov(text);
         return  this;
     }
+
 }

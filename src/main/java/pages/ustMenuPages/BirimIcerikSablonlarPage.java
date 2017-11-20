@@ -6,6 +6,7 @@ import common.BaseLibrary;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
+import pages.pageComponents.UstMenu;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
 import static com.codeborne.selenide.Condition.disabled;
@@ -40,6 +41,11 @@ public class BirimIcerikSablonlarPage extends BaseLibrary {
         btnKaydet.shouldBe(disabled);
         btnSil.shouldBe(disabled);
         btnEvrakOnizleme.shouldBe(disabled);
+        return this;
+    }
+
+    public BirimIcerikSablonlarPage openPage() {
+        new UstMenu().ustMenu("Birim İçerik Şablonları");
         return this;
     }
 

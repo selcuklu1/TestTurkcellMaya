@@ -5,44 +5,47 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pages.BasePage;
+import pages.LoginPage;
+import pages.MainPage;
 import pages.ustMenuPages.EvrakOlusturPage;
 import pages.ustMenuPages.GelenEvrakKayitPage;
 import pages.ustMenuPages.GercekKisiYonetimPage;
 
-public class GercekKisiYonetimiTest extends BaseTest{
-
-    BasePage page;
+public class GercekKisiYonetimiTest extends BaseTest {
     GercekKisiYonetimPage gercekKisiYonetimPage;
     EvrakOlusturPage evrakOlusturPage;
     GelenEvrakKayitPage gelenEvrakKayitPage;
 
     @BeforeMethod
     public void loginBeforeTests() {
-        page = new BasePage();
         gercekKisiYonetimPage = new GercekKisiYonetimPage();
         evrakOlusturPage = new EvrakOlusturPage();
         gelenEvrakKayitPage = new GelenEvrakKayitPage();
-        page.loginPage().login();
+        login();
     }
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TC1516: Gerçek kişi tanımlama ve  kontrolü")
-    public void TC1516() throws InterruptedException {
-        String tcNO = page.baseLibrary().createMernisTCNO();
-        String ad = page.baseLibrary().createRandomText(6);
-        String soyad = page.baseLibrary().createRandomText(6);
+    public void TC1516() {
+
+        String tcNO = createMernisTCNO();
+        String ad = createRandomText(6);
+        String soyad = createRandomText(6);
         String onEk = "Muh";
         String unvan = "Mühendis";
         String adres = "Kuştepe Mahallesi";
         String il = "İstanbul";
         String ilce = "Şişli";
         String eposta = "test@turksat.com.tr";
-        String adSoyad = ad+" "+soyad;
+        String adSoyad = ad + " " + soyad;
         String hitap = "Sayın";
+        String postaTipi = "P";
+        String bilgiSecimTipi = "G";
+        String geregiSecimTipi = "G";
+        String evrakBilgileriListKisiKurumTipi = "G";
 
-        page.ustMenu("Gerçek Kişi Yönetimi");
         gercekKisiYonetimPage
+                .openPage()
                 .yeniGercekKisiEkle()
                 .tcKimlikNoDoldur(tcNO)
                 .onEkDoldur(onEk)
@@ -60,37 +63,38 @@ public class GercekKisiYonetimiTest extends BaseTest{
 
                 .kaydet();
 
-        page.ustMenu("Evrak Oluştur");
         evrakOlusturPage
-                .geregiSecimTipiSec("G")
+                .openPage()
+                .geregiSecimTipiSec(geregiSecimTipi)
                 .geregiDoldur(adSoyad)
-                .geregiAlaniKontrol(adSoyad, unvan, adres, "P" )
+                .geregiAlaniKontrol(adSoyad, unvan, adres, postaTipi)
 
                 .openTab("Editör")
-                .hitapKismiAlaniKontrol(hitap, onEk, ad, soyad )
+                .hitapKismiAlaniKontrol(hitap, onEk, ad, soyad)
 
                 .openTab("Bilgileri")
-                .bilgiSecimTipiSec("G");
+                .bilgiSecimTipiSec(bilgiSecimTipi);
         //.bilgiDoldur(adSoyad);
-        //  pages.islemMesaji().beklenenMesajTipi(DIKKAT);
+                 //.islemMesaji().beklenenMesajTipi(DIKKAT);
 
-        page.ustMenu("Gelen Evrak Kayıt");
         gelenEvrakKayitPage
-                .evrakBilgileriListKisiKurumSec("G")
+                .openPage()
+                .evrakBilgileriListKisiKurumSec(evrakBilgileriListKisiKurumTipi)
                 .evrakBilgileriListGeldigiKurumDoldur(adSoyad);
 
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC1516: Gerçek kişi sorgulama")
-    public void TC1144() {
+    @Test(enabled = true, description = "TC1144: Gerçek kişi sorgulama")
+    public void TC1144() throws InterruptedException {
 
         String tcNO = "91057625780";
+        String tc10 = "10";
         String ad = "OptiimTest";
         String soyad = "TestOptiim";
 
-        page.ustMenu("Gerçek Kişi Yönetimi");
         gercekKisiYonetimPage
+                .openPage()
                 .ara()
                 .filtreSorgulamaPaneliAc()
                 .filtreSoyadDoldur(soyad)
@@ -105,10 +109,10 @@ public class GercekKisiYonetimiTest extends BaseTest{
                 .kayitKontrolu(tcNO, ad, soyad)
 
                 .filtreSorgulamaPaneliAc()
-                .filtreTCKimlikNoDoldur("10")
+                .filtreTCKimlikNoDoldur(tc10)
                 .filtreDurumSec("AKTIFLER")
                 .ara()
-                .tcNoKontrolu("10")
+                .tcNoKontrolu(tc10)
 
                 .filtreSorgulamaPaneliAc()
                 .filtreTCKimlikNoDoldur(tcNO)
@@ -130,15 +134,6 @@ public class GercekKisiYonetimiTest extends BaseTest{
         String getTbleTC = gercekKisiYonetimPage.getTbleTCNO();
 
         gercekKisiYonetimPage
-              .filtreSorgulamaPaneliAc()
-              .filtreDurumSec("PASIFLER")
-              .filtreTCKimlikNoDoldur(getTbleTC)
-              .ara()
-              .tcNoKontrolu(getTbleTC);
-
-        String getTbleTC2 = gercekKisiYonetimPage.getTbleTCNO();
-
-        gercekKisiYonetimPage
                 .filtreSorgulamaPaneliAc()
                 .filtreDurumSec("PASIFLER")
                 .filtreTCKimlikNoDoldur(getTbleTC)
@@ -148,18 +143,64 @@ public class GercekKisiYonetimiTest extends BaseTest{
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TC1135: Yeni gerçek kişi kayıtta alan kontrolleri")
-    public void TC1135()  {
-        page.ustMenu("Gerçek Kişi Yönetimi");
+    public void TC1135() {
+
+        String tcNO = "91057625780";
+        String ad = "Sezai";
+        String soyad = "Çelik";
+        String duzgunOlmayanPostaFormati = "optimtestturksat.com.tr";
+        String duzgunPostaFormati = "optim@turksat.com.tr";
+        String duzgunOlmayanKepAdresi = "tr6787";
+        String duzgunKepAdresi = "turksat.kamu2@testkep.pttkep.gov.tr";
+        String kepHizmetSaglayici = "P";
+        Boolean kepAdresiKullaniyor = true;
+        String mesajTipi = "Kep adresi boş bırakılamaz! Lütfen bir kep adresi ekleyiniz.";
+
         gercekKisiYonetimPage
+                .openPage()
                 .yeniGercekKisiEkle()
                 .kaydet()
                 .zorunluAdSoyadAlanKontrolu()
 
-                .adDoldur("Sezai")
-                .soyadDoldur("Çelik")
-                .kepAdresiKullaniyor(true)
-                .kaydet();
-        //pages.islemMesaji().beklenenMesajTipi(DIKKAT);
+                .adDoldur(ad)
+                .soyadDoldur(soyad)
+                .kepAdresiKullaniyor(kepAdresiKullaniyor)
+                .kaydet()
+                .islemMesaji().dikkatOlmali(mesajTipi);
 
+        gercekKisiYonetimPage
+                .iletisimBilgileriEkle()
+                .iletisimBilgisiKaydet();
+        //page.islemMesaji().beklenenMesajTipi(DIKKAT);
+
+        gercekKisiYonetimPage
+                .iletisimBilgisiEpostaDoldur(duzgunOlmayanPostaFormati);
+        //page.islemMesaji().beklenenMesajTipi(DIKKAT);
+
+        gercekKisiYonetimPage
+                .iletisimBilgisiEpostaDoldur(duzgunPostaFormati)
+                .iletisimBilgisiKaydet()
+                .iletisimBilgisiGüncelle()
+                .iletisimBilgisiIptalEt()
+
+                .kepAdresBilgileriEkle()
+                .kepAdresiKaydet();
+        //page.islemMesaji().beklenenMesajTipi(DIKKAT);
+
+        gercekKisiYonetimPage
+                .kepAdresiDoldur(duzgunOlmayanKepAdresi)
+                .kepAdresiKaydet();
+        //page.islemMesaji().beklenenMesajTipi(DIKKAT);
+
+        gercekKisiYonetimPage
+                .kepAdresiDoldur(duzgunKepAdresi)
+                .kepHizmetSaglayiciSec(kepHizmetSaglayici)
+                .kepAdresiKaydet()
+
+                .adDoldur(ad)
+                .soyadDoldur(soyad)
+                .kepAdresiKullaniyor(kepAdresiKullaniyor)
+                .kaydet();
+        //page.islemMesaji().beklenenMesajTipi(DIKKAT);
     }
 }
