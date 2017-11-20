@@ -6,6 +6,7 @@ import listeners.SettingsListener;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import pages.LoginPage;
+import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetFramework;
 
 import java.util.Locale;
@@ -42,6 +43,14 @@ public class BaseTest extends BaseLibrary{
 
     public void login(){
         new LoginPage().login();
+    }
+
+    public void login(String username, String password){
+        new LoginPage().login(username, password);
+    }
+
+    public void logout(){
+        new MainPage().logout();
     }
 
 }

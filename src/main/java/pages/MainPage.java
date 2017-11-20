@@ -6,6 +6,7 @@ import pages.pageComponents.SolMenu;
 import pages.pageComponents.UserMenu;
 import pages.pageComponents.UstMenu;
 import pages.pageData.SolMenuData;
+import static com.codeborne.selenide.Selenide.$;
 
 public class MainPage extends BaseLibrary {
     private SolMenu solMenu = new SolMenu();
@@ -119,4 +120,8 @@ public class MainPage extends BaseLibrary {
     public KurumYonetimiPage KurumYonetimiPage() { return new KurumYonetimiPage();
     }*/
     //endregion
+
+    public void logout(){
+        $("button[id='topMenuForm:userMenuButton_button']").click();
+    }
 }
