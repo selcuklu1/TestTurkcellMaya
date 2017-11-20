@@ -1,21 +1,23 @@
 package common;
 
 import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.WebDriverRunner;
+import com.fasterxml.jackson.databind.ser.Serializers;
 import listeners.SettingsListener;
-import org.openqa.selenium.Dimension;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Listeners;
-import pageComponents.belgenetElements.BelgenetFramework;
+import pages.LoginPage;
+import pages.MainPage;
+import pages.pageComponents.belgenetElements.BelgenetFramework;
 
 import java.util.Locale;
 
+import static data.TestData.belgenetURL;
+
 @Listeners({SettingsListener.class})
-public class BaseTest {
+public class BaseTest extends BaseLibrary{
 
     @BeforeClass
-    public void setUp() {
+    public void driverSetUp() {
         Locale turkishLocal = new Locale("tr", "TR");
         Locale.setDefault(turkishLocal);
 
@@ -24,8 +26,7 @@ public class BaseTest {
         //endregion
 
         //region Selenide Driver Configuration
-        //        Configuration.baseUrl = "http://94.55.114.18:8889/edys-web/sistemeGiris.xhtml";
-        Configuration.baseUrl = "http://www.belgenet.com.tr:8282/edys-web/sistemeGiris.xhtml";
+        Configuration.baseUrl = belgenetURL;
         Configuration.browser = "drivers.Firefox"; //
         //"org.openqa.selenium.Firefox.FirefoxDriver";
         Configuration.reportsFolder = "test-result/reports";
@@ -33,11 +34,23 @@ public class BaseTest {
         Configuration.savePageSource = false;
         Configuration.collectionsTimeout = 20000;
         Configuration.timeout = 20000;
-        Configuration.holdBrowserOpen = false;
+        Configuration.holdBrowserOpen = true;
 //        Configuration.startMaximized = true;
 //        Configuration.headless = true;
 //        Configuration.browserSize = "1024x768";
         //endregion
+    }
+
+    public void login(){
+        new LoginPage().login();
+    }
+
+    public void login(String username, String password){
+        new LoginPage().login(username, password);
+    }
+
+    public void logout(){
+        new MainPage().logout();
     }
 
 }

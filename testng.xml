@@ -10,22 +10,22 @@
     <!--</suite-files>-->
     <test name="BTest1">
         <classes>
-            <class name="TestClass1"/>
+            <class name="Example.TestClass1"/>
         </classes>
     </test>
     <test name="BTest2">
         <classes>
-            <class name="TestClass2"/>
+            <class name="Example.TestClass2"/>
         </classes>
     </test>
     <test name="BTest3">
         <classes>
-            <class name="TestClass3"/>
+            <class name="Example.TestClass3"/>
         </classes>
     </test>
     <test name="BTest4">
         <classes>
-            <class name="Paylastiklarim"/>
+            <class name="Example.PaylastiklarimTest"/>
         </classes>
     </test>
 </suite>
