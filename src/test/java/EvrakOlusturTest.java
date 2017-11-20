@@ -3,7 +3,6 @@ import common.BaseTest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import pages.BasePage;
 import pages.EvrakOlusturPage;
 import pages.EvrakOlusturPage.BilgilerTab;
 import pages.pageComponents.belgenetElements.BelgentCondition;
@@ -15,12 +14,12 @@ public class EvrakOlusturTest extends BaseTest {
 
     @BeforeClass
     public void setUp() throws Exception {
-        new BasePage().loginPage().login();
+        login();
         evrakOlusturPage = new EvrakOlusturPage();
         evrakOlusturPage.open();
 
         tabBilgiler = evrakOlusturPage.new BilgilerTab();
-        tabBilgiler.open();
+        tabBilgiler.openPage();
         tabBilgiler.konuKoduSec("ss").getTxtKonu();
 
     }
