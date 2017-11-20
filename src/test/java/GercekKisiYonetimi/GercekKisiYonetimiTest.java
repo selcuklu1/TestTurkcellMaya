@@ -144,16 +144,17 @@ public class GercekKisiYonetimiTest extends BaseTest {
     @Test(enabled = true, description = "TC1135: Yeni gerçek kişi kayıtta alan kontrolleri")
     public void TC1135() {
 
-        String tcNO = "91057625780";
-        String ad = "Sezai";
-        String soyad = "Çelik";
+        String ad = createRandomText(6);
+        String soyad = createRandomText(6);
         String duzgunOlmayanPostaFormati = "optimtestturksat.com.tr";
         String duzgunPostaFormati = "optim@turksat.com.tr";
         String duzgunOlmayanKepAdresi = "tr6787";
         String duzgunKepAdresi = "turksat.kamu2@testkep.pttkep.gov.tr";
         String kepHizmetSaglayici = "P";
-        Boolean kepAdresiKullaniyor = true;
-        String mesajTipi = "Kep adresi boş bırakılamaz! Lütfen bir kep adresi ekleyiniz.";
+        String kepMesaj1 = "Kep adresi boş bırakılamaz! Lütfen bir kep adresi ekleyiniz.";
+        String ePostaMesaj = "Lütfen Türkçe karakter ve boşluk içermeyen, @ işareti ve nokta içeren geçerli bir e-mail giriniz!";
+        String kepMesaj2 = "Girilen kep adresi geçersiz!";
+        String basariMesaji = "İşlem başarılıdır!";
 
         gercekKisiYonetimPage
                 .openPage()
@@ -163,17 +164,19 @@ public class GercekKisiYonetimiTest extends BaseTest {
 
                 .adDoldur(ad)
                 .soyadDoldur(soyad)
-                .kepAdresiKullaniyor(kepAdresiKullaniyor)
+                .kepAdresiKullaniyor(true)
                 .kaydet()
-                .islemMesaji().dikkatOlmali(mesajTipi);
+                .islemMesaji().dikkatOlmali(kepMesaj1);
 
         gercekKisiYonetimPage
                 .iletisimBilgileriEkle()
-                .iletisimBilgisiKaydet();
-        //page.islemMesaji().beklenenMesajTipi(DIKKAT);
+                .iletisimBilgisiKaydet()
+                .islemMesaji().dikkatOlmali(ePostaMesaj);
+
         gercekKisiYonetimPage
-                .iletisimBilgisiEpostaDoldur(duzgunOlmayanPostaFormati);
-        //page.islemMesaji().beklenenMesajTipi(DIKKAT);
+                .iletisimBilgisiEpostaDoldur(duzgunOlmayanPostaFormati)
+                .iletisimBilgisiKaydet()
+                .islemMesaji().dikkatOlmali(ePostaMesaj);
 
         gercekKisiYonetimPage
                 .iletisimBilgisiEpostaDoldur(duzgunPostaFormati)
@@ -182,13 +185,13 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .iletisimBilgisiIptalEt()
 
                 .kepAdresBilgileriEkle()
-                .kepAdresiKaydet();
-        //page.islemMesaji().beklenenMesajTipi(DIKKAT);
+                .kepAdresiKaydet()
+                .islemMesaji().dikkatOlmali(kepMesaj2);
 
         gercekKisiYonetimPage
                 .kepAdresiDoldur(duzgunOlmayanKepAdresi)
-                .kepAdresiKaydet();
-        //page.islemMesaji().beklenenMesajTipi(DIKKAT);
+                .kepAdresiKaydet()
+                .islemMesaji().dikkatOlmali(kepMesaj2);
 
         gercekKisiYonetimPage
                 .kepAdresiDoldur(duzgunKepAdresi)
@@ -197,8 +200,8 @@ public class GercekKisiYonetimiTest extends BaseTest {
 
                 .adDoldur(ad)
                 .soyadDoldur(soyad)
-                .kepAdresiKullaniyor(kepAdresiKullaniyor)
-                .kaydet();
-        //page.islemMesaji().beklenenMesajTipi(DIKKAT);
+                .kepAdresiKullaniyor(true)
+                .kaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
     }
 }
