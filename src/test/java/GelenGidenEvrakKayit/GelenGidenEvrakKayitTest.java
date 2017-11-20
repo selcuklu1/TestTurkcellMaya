@@ -1,5 +1,6 @@
 package GelenGidenEvrakKayit;
 
+import common.BaseLibrary;
 import common.BaseTest;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
@@ -43,7 +44,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = false, description = "Üstyazı ek ve ilgi eklenerek gelen evrak kaydı")
+    @Test(enabled = true, description = "Üstyazı ek ve ilgi eklenerek gelen evrak kaydı")
     public void TC0321() throws InterruptedException {
 
         page.ustMenu("Gelen Evrak Kayıt");
@@ -61,13 +62,17 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .evrakBilgileriListIvedilikSec(ivedilik)
                 //Excel eklenecek
                 .evrakBilgileriEkBilgiFiltreAc()
+                .evrakBilgileriDosyaEkleme("C:\\Users\\Emre_Sencan\\Pictures\\test.xlsx")
+                .evrakBilgileriDosyaEklemeAciklamaDoldur(ekMetni)
+                .evrakEkTabViewEkle()
                 .evrakBilgileriEkBilgiFizikselEkEkle()
                 .evrakEkTabViewFizikselEkMetniDoldur(ekMetni)
                 .evrakFizikselEkTabViewAciklamaEkle()
-                .kaydet()
-                .popUps();
+                .kaydet();
+                String evrakNO = gelenEvrakKayitPage.popUps();
 //        pages.islemMesaji().beklenenMesajTipi(MesajTipi.BASARILI);
         page.solMenu(SolMenuData.BirimEvraklari.KaydedilenGelenEvraklar);
+
 //        TODO  tabloda oluşturulan evrak bulunacak....
         kaydedilenGelenEvraklarPage
         .raporSec();
