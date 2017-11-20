@@ -5,13 +5,12 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pages.LoginPage;
-import pages.MainPage;
 import pages.ustMenuPages.EvrakOlusturPage;
 import pages.ustMenuPages.GelenEvrakKayitPage;
 import pages.ustMenuPages.GercekKisiYonetimPage;
 
 public class GercekKisiYonetimiTest extends BaseTest {
+
     GercekKisiYonetimPage gercekKisiYonetimPage;
     EvrakOlusturPage evrakOlusturPage;
     GelenEvrakKayitPage gelenEvrakKayitPage;
@@ -28,7 +27,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
     @Test(enabled = true, description = "TC1516: Gerçek kişi tanımlama ve  kontrolü")
     public void TC1516() {
 
-        String tcNO = createMernisTCNO();
+        String tcNO = createMernisTCKN();
         String ad = createRandomText(6);
         String soyad = createRandomText(6);
         String onEk = "Muh";
@@ -75,7 +74,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .openTab("Bilgileri")
                 .bilgiSecimTipiSec(bilgiSecimTipi);
         //.bilgiDoldur(adSoyad);
-                 //.islemMesaji().beklenenMesajTipi(DIKKAT);
+        //.islemMesaji().beklenenMesajTipi(DIKKAT);
 
         gelenEvrakKayitPage
                 .openPage()
@@ -99,7 +98,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .filtreSorgulamaPaneliAc()
                 .filtreSoyadDoldur(soyad)
                 .filtreDurumSec("AKTIFLER")
-                .ara()
+                .ara() //araButonuTikla
                 .kayitKontrolu(tcNO, ad, soyad)
 
                 .filtreSorgulamaPaneliAc()
@@ -172,7 +171,6 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .iletisimBilgileriEkle()
                 .iletisimBilgisiKaydet();
         //page.islemMesaji().beklenenMesajTipi(DIKKAT);
-
         gercekKisiYonetimPage
                 .iletisimBilgisiEpostaDoldur(duzgunOlmayanPostaFormati);
         //page.islemMesaji().beklenenMesajTipi(DIKKAT);
