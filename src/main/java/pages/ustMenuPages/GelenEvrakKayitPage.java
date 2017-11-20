@@ -4,6 +4,7 @@ import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import pages.pageComponents.UstMenu;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
 import static com.codeborne.selenide.Selenide.$;
@@ -119,6 +120,10 @@ public class GelenEvrakKayitPage extends BaseLibrary {
     SelenideElement btnTCKNAra = $(By.id("gercekKisiHizliKayitDialogForm:kpsTcKimlikNoSorgulaButtonHizliKayit"));
     SelenideElement btnKaydetIletisimBilgisi = $(By.id("gercekKisiHizliKayitDialogForm:saveGercekKisiHizliKayitButton"));
 
+    public GelenEvrakKayitPage openPage() {
+        new UstMenu().ustMenu("Gelen Evrak Kayıt");
+        return this;
+    }
 
     public GelenEvrakKayitPage evrakBilgileriEkBilgiFizikselEkEkle() throws InterruptedException {
         btnFizikselEkEkle.click();

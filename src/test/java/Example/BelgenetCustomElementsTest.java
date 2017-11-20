@@ -6,7 +6,7 @@ import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import pages.BasePage;
+import pages.MainPage;
 import pages.pageComponents.Filtreler;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
@@ -20,8 +20,8 @@ import static pages.pageData.SolMenuData.IslemBekleyenEvraklar;
 
 
 public class BelgenetCustomElementsTest extends BaseTest {
-
-    BasePage page = new BasePage();
+/*
+    MainPage page = new MainPage();
 
     @BeforeClass
     public void setUpFramework() {
@@ -127,5 +127,5 @@ public class BelgenetCustomElementsTest extends BaseTest {
         //PageObject kullanım.
         new TestPage().selectCombo().isSelected();
 
-    }
+    }*/
 }
