@@ -8,6 +8,9 @@ import pages.pageComponents.UstMenu;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
 import static com.codeborne.selenide.Selenide.$;
+
+import static com.codeborne.selenide.Selenide.executeJavaScript;
+
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 public class GelenEvrakKayitPage extends BaseLibrary {
@@ -15,7 +18,7 @@ public class GelenEvrakKayitPage extends BaseLibrary {
     SelenideElement pageTitle = $(By.cssSelector("#baseLayoutCenter .ui-dialog-title"));
 
     // Evrak Bilgileri Sekmesinde bulunanlar
-    SelenideElement btnUstYaziEkle = $(By.id("mainInboxForm:inboxDataTable:j_idt731"));
+    SelenideElement btnUstYaziEkle = $(By.xpath("//input[@id='evrakBilgileriForm:ustYaziForm:ustYaziUpload_input']"));
     SelenideElement txtEvrakBilgileriListKonuKodu = $("[id^='evrakBilgileriForm:evrakBilgileriList'][id$='konuKoduLov:LovText']");
     SelenideElement txtEvrakBilgileriListKonu = $("[id^='evrakBilgileriForm:evrakBilgileriList'][id$='konuTextArea']");
     SelenideElement cmbEvrakBilgileriListEvrakTuru = $("[id$='evrakTuruCombo']");
@@ -42,7 +45,7 @@ public class GelenEvrakKayitPage extends BaseLibrary {
     // Evrak Ekleri sekmesinde bulunanlar
     // Dosya ekle alt sekmesinde bulunanlar
 
-    SelenideElement btnEvrakEkleri = $(By.id("evrakBilgileriForm:evrakEkleriListesiPanel_toggler"));
+    SelenideElement btnEvrakEkleri = $("a[span*='evrakEkleriListesiPanel_toggler']");
     SelenideElement btnEvrakEkTabViewEkle = $(By.id("evrakBilgileriForm:evrakEkTabView:dosyaEkleButton"));
     SelenideElement btnEvrakEkTabViewTemizle = $(By.id("evrakBilgileriForm:evrakEkTabView:dosyaTemizleButton"));
     SelenideElement cmbEvrakEkTabViewGizlilikDerecesi = $(By.xpath("//*[@id='evrakBilgileriForm:evrakEkTabView:guvenlikKodu']"));
@@ -115,10 +118,12 @@ public class GelenEvrakKayitPage extends BaseLibrary {
     SelenideElement basariliPopUp = $(By.id("evrakKaydetBasariliDialog"));
 
 
-    SelenideElement btnGeldigiKisiEkle = $(By.id("evrakBilgileriForm:evrakBilgileriList:9:gercekKisiEkle"));
-    SelenideElement txtTCKN = $(By.id("   gercekKisiHizliKayitDialogForm:tcKimlikNoInput"));
+    SelenideElement btnGeldigiKisiEkle = $("[id^='evrakBilgileriForm:evrakBilgileriList'][id$='gercekKisiEkle']");
+    SelenideElement txtTCKN = $(By.id("gercekKisiHizliKayitDialogForm:tcKimlikNoInput"));
     SelenideElement btnTCKNAra = $(By.id("gercekKisiHizliKayitDialogForm:kpsTcKimlikNoSorgulaButtonHizliKayit"));
     SelenideElement btnKaydetIletisimBilgisi = $(By.id("gercekKisiHizliKayitDialogForm:saveGercekKisiHizliKayitButton"));
+    SelenideElement txtAd = $(By.id("tgercekKisiHizliKayitDialogForm:adInputG"));
+    SelenideElement txtSoyad = $(By.id("gercekKisiHizliKayitDialogForm:soyadInput"));
 
     public GelenEvrakKayitPage openPage() {
         new UstMenu().ustMenu("Gelen Evrak Kayıt");
@@ -189,10 +194,10 @@ public class GelenEvrakKayitPage extends BaseLibrary {
     }
 
     //Lütfen metodları commentlemeyelim. Başka testler kullanıyor olabilir.
-/*    public GelenEvrakKayitPage evrakBilgileriListGeldigiKurumDoldur(String geldigiKurum) throws InterruptedException {
+    public GelenEvrakKayitPage evrakBilgileriListGeldigiKurumDoldurLovText(String geldigiKurum) throws InterruptedException {
         comnoGeldigiKurum.selectComboLov(geldigiKurum);
         return this;
-    }*/
+    }
 
     public GelenEvrakKayitPage evrakBilgileriListEvrakSayiSolDoldur(String evrakSayiSol) {
         txtEvrakBilgileriListEvrakSayiTextAreaSol.sendKeys(evrakSayiSol);
@@ -467,18 +472,31 @@ public class GelenEvrakKayitPage extends BaseLibrary {
     }
     @Step("Geldiği Kişiyi ekle")
     public GelenEvrakKayitPage evrakBilgileriGeldigiKisiEkle ()  {
-        btnGeldigiKisiEkle.click();
+        executeJavaScript("arguments[0].click();",
+                btnGeldigiKisiEkle);
         return this;
     }
     @Step("TC kimlik No ekle")
-    public GelenEvrakKayitPage IletisimBilgisiTCKNEkle ()  {
-        String mernisNo=createMernisTCNO();
-        txtTCKN.sendKeys(mernisNo);
+    public GelenEvrakKayitPage IletisimBilgisiTCKNEkle(String TCKN)  {
+//        String mernisNo = createMernisTCNO();
+        txtTCKN.clear();
+        txtTCKN.sendKeys(TCKN);
         return this;
     }
     @Step("TC kimlik No ara")
     public GelenEvrakKayitPage IletisimBilgisiTCKNAra ()  {
-        btnTCKNAra.click();
+        executeJavaScript("arguments[0].click();",
+                btnTCKNAra);
+        return this;
+    }
+    @Step("Ad doldur")
+    public GelenEvrakKayitPage IletisimBilgisiAdDoldur (String ad)  {
+        txtAd.sendKeys(ad);
+        return this;
+    }
+    @Step("Soyad doldur")
+    public GelenEvrakKayitPage IletisimBilgisiSoyadDoldur (String soyad)  {
+        txtSoyad.sendKeys(soyad);
         return this;
     }
     @Step("Kaydet")

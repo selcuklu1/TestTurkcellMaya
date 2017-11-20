@@ -48,14 +48,14 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
         gelenEvrakKayitPage
                 .openPage()
-//                .evrakBilgileriUstYaziEkle("C:/Users/Emre_Sencan/Pictures/pdf2.pdf")
+                .evrakBilgileriUstYaziEkle("C:\\Users\\Emre_Sencan\\Pictures\\pdf2.pdf")
                 .evrakBilgileriListKonuKoduDoldur(konuKodu)
                 .evrakBilgileriListEvrakTuruSec(evrakTuru)
                 .evrakBilgileriListEvrakDiliSec(evrakDili)
                 .evrakBilgileriListEvrakTarihiDoldur(evrakTarihi)
                 .evrakBilgileriListGizlilikDerecesiSec(gizlilikDerecesi)
                 .evrakBilgileriListKisiKurumSec(kisiKurum)
-                .evrakBilgileriListGeldigiKurumDoldur(geldigiKurum)
+                .evrakBilgileriListGeldigiKurumDoldurLovText(geldigiKurum)
                 .evrakBilgileriListEvrakSayiSagDoldur(evrakSayiSag)
                 .evrakBilgileriListEvrakGelisTipiSec(evrakGelisTipi)
                 .evrakBilgileriListIvedilikSec(ivedilik)
@@ -83,14 +83,14 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
         gelenEvrakKayitPage
                 .openPage()
-//                .evrakBilgileriUstYaziEkle("C:/Users/Emre_Sencan/Pictures/pdf2.pdf")
+                .evrakBilgileriUstYaziEkle("C:\\Users\\Emre_Sencan\\Pictures\\pdf2.pdf")
                 .evrakBilgileriListKonuKoduDoldur(konuKodu)
                 .evrakBilgileriListEvrakTuruSec(evrakTuru)
                 .evrakBilgileriListEvrakDiliSec(evrakDili)
                 .evrakBilgileriListEvrakTarihiDoldur(evrakTarihi)
                 .evrakBilgileriListGizlilikDerecesiSec(gizlilikDerecesi)
                 .evrakBilgileriListKisiKurumSec(kisiKurum)
-                .evrakBilgileriListGeldigiKurumDoldur(geldigiKurum)
+                .evrakBilgileriListGeldigiKurumDoldurLovText(geldigiKurum)
                 .evrakBilgileriListEvrakSayiSagDoldur(evrakSayiSag)
                 .evrakBilgileriListEvrakGelisTipiSec(evrakGelisTipi)
                 .evrakBilgileriListIvedilikSec(ivedilik)
@@ -127,17 +127,51 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "Gelen evrak kaydederken yeni gerçek ve tüzel kişi tanımlama")
+    @Test(enabled = false, description = "Gelen evrak kaydederken yeni gerçek ve tüzel kişi tanımlama")
     public void  TC1136 () throws InterruptedException {
+
+        String TCKN = "51091330934";
 
         gelenEvrakKayitPage
                 .openPage()
                 .evrakBilgileriListKisiKurumSec("G")
                 .evrakBilgileriGeldigiKisiEkle()
-                .IletisimBilgisiTCKNEkle()
+                .IletisimBilgisiTCKNEkle(TCKN)
                 .IletisimBilgisiTCKNAra()
+//                .IletisimBilgisiAdDoldur("Test")
+//                .IletisimBilgisiSoyadDoldur("Otomasyon")
                 .IletisimBilgisikaydet();
 //        Gerçek kişi yönetimi ekranında yeni kaydı kontrol et
 
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = false, description = "Gelen maillerin evrak olarak sisteme dahil edilmesi")
+    public void TC0394 () throws InterruptedException{
+
+        String birim = "OPTİİM BİRİM11";
+
+        gelenEvrakKayitPage
+                .openPage()
+                .evrakBilgileriUstYaziEkle("C:\\Users\\Emre_Sencan\\Pictures\\mailt.msg")
+                .evrakBilgileriListKonuKoduDoldur(konuKodu)
+                .evrakBilgileriListEvrakTuruSec(evrakTuru)
+                .evrakBilgileriListEvrakDiliSec(evrakDili)
+                .evrakBilgileriListEvrakTarihiDoldur(evrakTarihi)
+                .evrakBilgileriListGizlilikDerecesiSec(gizlilikDerecesi)
+                .evrakBilgileriListKisiKurumSec(kisiKurum)
+                .evrakBilgileriListGeldigiKurumDoldurLovText(geldigiKurum)
+                .evrakBilgileriListEvrakSayiSagDoldur(evrakSayiSag)
+                .evrakBilgileriListEvrakGelisTipiSec(evrakGelisTipi)
+                .evrakBilgileriListIvedilikSec(ivedilik)
+                .evrakBilgileriEkBilgiFiltreAc()
+//                .evrakEkTabViewEkle() excel eklenecek
+                .kaydet()
+                .popUps();
+     //   page.islemMesaji().beklenenMesajTipi(MesajTipi.BASARILI);
+      //  page.solMenu(SolMenuData.BirimEvraklari.KaydedilenGelenEvraklar);
+//        TODO  tabloda oluşturulan evrak bulunacak....
+        teslimAlinmayiBekleyenlerPage
+                .raporSec();
     }
 }
