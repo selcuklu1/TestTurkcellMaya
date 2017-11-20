@@ -6,20 +6,21 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pages.BasePage;
-import pages.pageData.MesajTipi;
+import pages.MainPage;
+import pages.pageComponents.IslemMesajlari;
 import pages.solMenuPages.PaylastiklarimPage;
 
 import static pages.pageData.SolMenuData.IslemYaptiklarim;
 
 @Epic("Belgenet1Epic examples")
 public class PaylastiklarimTest extends BaseTest {
+/*
 
-    BasePage page;
+    MainPage page;
 
     @BeforeMethod
     public void loginBeforeTests() {
-        page = new BasePage();
+        page = new MainPage();
         page.loginPage().login();
     }
 
@@ -37,7 +38,8 @@ public class PaylastiklarimTest extends BaseTest {
                 .aciklamaYaz("optiim test 1 aciklama")
                 .paylas()
                 .paylasimKontrol(new String[]{"Optiim TEST1", "Optiim TEST2", "Optiim TEST3"});
-        page.islemMesaji().beklenenMesajTipi(MesajTipi.BASARILI);
+        page.islemMesaji().beklenenMesajTipi(IslemMesajlari.MessageTitle.BASARILI);
     }
+*/
 
 }

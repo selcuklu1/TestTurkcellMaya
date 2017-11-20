@@ -4,26 +4,27 @@ import common.BaseTest;
 import io.qameta.allure.Feature;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pages.BasePage;
+import pages.LoginPage;
+import pages.MainPage;
 import pages.ustMenuPages.BirimIcerikSablonlarPage;
 
 @Feature("Birim İçerik Şablonu")
 public class BirimIcerikSablonuTest extends BaseTest {
 
-    BasePage page = new BasePage();
+//    LoginPage loginPage;
     BirimIcerikSablonlarPage birimIcerikSablonlarPage;
 
     @BeforeMethod
     public void setUp() {
-        page.loginPage().login();
+        login();
         birimIcerikSablonlarPage = new BirimIcerikSablonlarPage();
     }
 
     @Test(description = "Alan Kontrolleri")
     public void tc1084a() throws Exception {
-        page.ustMenu("Birim İçerik Şablonları");
 
         birimIcerikSablonlarPage
+                .openPage()
                 .alanlarinAktifDurumKontrol()
                 .detayButonlarinExist();
     }

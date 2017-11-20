@@ -2,13 +2,13 @@ package Example;
 
 import common.BaseTest;
 import org.testng.annotations.Test;
-import pages.BasePage;
+import pages.MainPage;
 import pages.ustMenuPages.EvrakOlusturPage;
 import pages.ustMenuPages.GelenEvrakKayitPage;
 
 public class TestClass3 extends BaseTest {
-
-    BasePage page = new BasePage();
+/*
+    MainPage page = new MainPage();
 
     @Test
     public void testName() {
@@ -35,5 +35,5 @@ public class TestClass3 extends BaseTest {
         page.loginPage().login();
         page.ustMenu("Gelen Evrak Kayıt");
         new GelenEvrakKayitPage().ustYaziUploadFile("C:\\TestAutomation\\BelgenetFTA\\testpdf.pdf");
-    }
+    }*/
 }

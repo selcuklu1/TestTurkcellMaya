@@ -18,7 +18,7 @@ public class LoginPage extends BaseLibrary {
 
     private LoginPage open() {
         Selenide.open("");
-//        Selenide.open("http://www.belgenet.com.tr:8282/edys-web/sistemeGiris.xhtml");
+//        Selenide.openPage("http://www.belgenet.com.tr:8282/edys-web/sistemeGiris.xhtml");
 //        username.shouldBe(visible);
         return this;
     }

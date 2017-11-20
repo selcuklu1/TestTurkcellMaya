@@ -1,16 +1,17 @@
 package pages.ustMenuPages;
 
 import com.codeborne.selenide.SelenideElement;
-import common.BaseLibrary;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
+import pages.MainPage;
+import pages.pageComponents.UstMenu;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
 import static com.codeborne.selenide.Selenide.$;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
-public class GercekKisiYonetimPage extends BaseLibrary {
+public class GercekKisiYonetimPage extends MainPage {
 
     //Sorgulama ve Filtreleme
     SelenideElement btnGercekKisiEkle = $(By.id("gercekKisiYonetimiListingForm:gercekKisiDataTable:addNewGercekKisiButton"));
@@ -65,6 +66,12 @@ public class GercekKisiYonetimPage extends BaseLibrary {
     SelenideElement tblePasif = $(By.id("div[id^='gercekKisiYonetimiListingForm:gercekKisiDataTable'] td[class$='center-aligned passive-cell']"));
     SelenideElement btnAktif = $(By.id("gercekKisiYonetimiListingForm:gercekKisiDataTable:0:aktifEtGercekKisi"));
     SelenideElement tbleGercekKisiDataTable = $(By.id("gercekKisiYonetimiListingForm:gercekKisiDataTable"));
+
+    public GercekKisiYonetimPage openPage() {
+        ustMenu("Gerçek Kişi Yönetimi");
+        return this;
+    }
+
 
     @Step("Yeni gerçek kişi ekle")
     public GercekKisiYonetimPage yeniGercekKisiEkle() {
@@ -236,7 +243,7 @@ public class GercekKisiYonetimPage extends BaseLibrary {
     }
 
     @Step("Kayit kontrolu")
-    public GercekKisiYonetimPage kayitKontrolu(String tcNO, String ad, String soyad)  {
+    public GercekKisiYonetimPage kayitKontrolu(String tcNO, String ad, String soyad) {
         //Assert.assertEquals(tbleTc.getText().equals(tcNO), true);
         //Assert.assertEquals(tbleAd.getText().equals(ad), true);
         //Assert.assertEquals(tbleSoyad.getText().equals(soyad), true);

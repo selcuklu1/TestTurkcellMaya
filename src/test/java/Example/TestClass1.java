@@ -7,14 +7,14 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pages.BasePage;
+import pages.MainPage;
 
 import static pages.pageData.SolMenuData.IslemBekleyenEvraklar;
 
 @Feature("InParallel")
 public class TestClass1 extends BaseTest {
-
-    BasePage page = new BasePage();
+/*
+    MainPage page = new MainPage();
 
     @BeforeMethod
     public void loginBeforeTests() {
@@ -28,7 +28,7 @@ public class TestClass1 extends BaseTest {
         page.solMenu(IslemBekleyenEvraklar.GelenEvraklar);
     }
 
-    /*@Test(enabled = true)
+    *//*@Test(enabled = true)
     @Severity(SeverityLevel.BLOCKER)
     @Description("Evrak Oluştur aç")
     public void evrakOlustur() {
@@ -47,7 +47,7 @@ public class TestClass1 extends BaseTest {
                 .gramajiDoldur("1")
                 .yurtDisiSec(true)
                 .kaydet();
-        pages.islemMesaji().beklenenMesajTipi(MesajTipi.UYARI);
+        pages.islemMesaji().beklenenMesajTipi(MessageTitle.UYARI);
     }
 
     @Test

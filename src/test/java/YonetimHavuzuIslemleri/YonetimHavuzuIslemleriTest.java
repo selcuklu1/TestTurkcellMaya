@@ -6,7 +6,7 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pages.BasePage;
+import pages.MainPage;
 import pages.ustMenuPages.YonetimHavuzuYonetimiPage;
 
 
@@ -14,11 +14,12 @@ import pages.ustMenuPages.YonetimHavuzuYonetimiPage;
 
 public class YonetimHavuzuIslemleriTest extends BaseTest {
 
-    BasePage page = new BasePage();
+    YonetimHavuzuYonetimiPage yonetimHavuzuYonetimiPage;
 
     @BeforeMethod
     public void loginBeforeTests() {
-        page.loginPage().login();
+        yonetimHavuzuYonetimiPage = new YonetimHavuzuYonetimiPage();
+        login();
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -61,8 +62,9 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "Yönetim Havuzu Arama")
     public void TC0009() {
-        page.ustMenu("Yönetim Havuzu Yönetimi");
-        new YonetimHavuzuYonetimiPage()
+
+       yonetimHavuzuYonetimiPage
+               .openPage()
                 .ara("OPTİİM BİRİM11","Testdeneme1123","Sadece Aktifler")
                 .yonetimHavuzuGuncelle("Testdeneme1123");
     }

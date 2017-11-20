@@ -7,6 +7,8 @@ import common.BaseLibrary;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+
+import pages.pageComponents.UstMenu;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
 import java.util.regex.Matcher;
@@ -133,6 +135,10 @@ public class GelenEvrakKayitPage extends BaseLibrary {
     SelenideElement txtSoyad = $(By.id("gercekKisiHizliKayitDialogForm:soyadInput"));
     SelenideElement mesaj = $("[#evrakKaydetBasariliDialog .ui-dialog-content]");
 
+    public GelenEvrakKayitPage openPage() {
+        new UstMenu().ustMenu("Gelen Evrak Kayıt");
+        return this;
+    }
 
     public GelenEvrakKayitPage evrakBilgileriEkBilgiFizikselEkEkle() throws InterruptedException {
         btnFizikselEkEkle.click();

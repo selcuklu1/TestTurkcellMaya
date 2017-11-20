@@ -1,41 +1,36 @@
 package GercekKisiYonetimi;
 
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import common.BaseTest;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pages.BasePage;
+import pages.LoginPage;
+import pages.MainPage;
 import pages.ustMenuPages.EvrakOlusturPage;
 import pages.ustMenuPages.GelenEvrakKayitPage;
 import pages.ustMenuPages.GercekKisiYonetimPage;
 
-import static pages.pageData.MesajTipi.DIKKAT;
-
 public class GercekKisiYonetimiTest extends BaseTest {
-
-    BasePage page;
     GercekKisiYonetimPage gercekKisiYonetimPage;
     EvrakOlusturPage evrakOlusturPage;
     GelenEvrakKayitPage gelenEvrakKayitPage;
 
     @BeforeMethod
     public void loginBeforeTests() {
-        page = new BasePage();
         gercekKisiYonetimPage = new GercekKisiYonetimPage();
         evrakOlusturPage = new EvrakOlusturPage();
         gelenEvrakKayitPage = new GelenEvrakKayitPage();
-        page.loginPage().login();
+        login();
     }
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TC1516: Gerçek kişi tanımlama ve  kontrolü")
     public void TC1516() {
 
-        String tcNO = page.baseLibrary().createMernisTCNO();
-        String ad = page.baseLibrary().createRandomText(6);
-        String soyad = page.baseLibrary().createRandomText(6);
+        String tcNO = createMernisTCNO();
+        String ad = createRandomText(6);
+        String soyad = createRandomText(6);
         String onEk = "Muh";
         String unvan = "Mühendis";
         String adres = "Kuştepe Mahallesi";
@@ -49,8 +44,8 @@ public class GercekKisiYonetimiTest extends BaseTest {
         String geregiSecimTipi = "G";
         String evrakBilgileriListKisiKurumTipi = "G";
 
-        page.ustMenu("Gerçek Kişi Yönetimi");
         gercekKisiYonetimPage
+                .openPage()
                 .yeniGercekKisiEkle()
                 .tcKimlikNoDoldur(tcNO)
                 .onEkDoldur(onEk)
@@ -68,8 +63,8 @@ public class GercekKisiYonetimiTest extends BaseTest {
 
                 .kaydet();
 
-        page.ustMenu("Evrak Oluştur");
         evrakOlusturPage
+                .openPage()
                 .geregiSecimTipiSec(geregiSecimTipi)
                 .geregiDoldur(adSoyad)
                 .geregiAlaniKontrol(adSoyad, unvan, adres, postaTipi)
@@ -80,17 +75,17 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .openTab("Bilgileri")
                 .bilgiSecimTipiSec(bilgiSecimTipi);
         //.bilgiDoldur(adSoyad);
-        //  pages.islemMesaji().beklenenMesajTipi(DIKKAT);
+                 //.islemMesaji().beklenenMesajTipi(DIKKAT);
 
-        page.ustMenu("Gelen Evrak Kayıt");
         gelenEvrakKayitPage
+                .openPage()
                 .evrakBilgileriListKisiKurumSec(evrakBilgileriListKisiKurumTipi)
                 .evrakBilgileriListGeldigiKurumDoldur(adSoyad);
 
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC1516: Gerçek kişi sorgulama")
+    @Test(enabled = true, description = "TC1144: Gerçek kişi sorgulama")
     public void TC1144() throws InterruptedException {
 
         String tcNO = "91057625780";
@@ -98,8 +93,8 @@ public class GercekKisiYonetimiTest extends BaseTest {
         String ad = "OptiimTest";
         String soyad = "TestOptiim";
 
-        page.ustMenu("Gerçek Kişi Yönetimi");
         gercekKisiYonetimPage
+                .openPage()
                 .ara()
                 .filtreSorgulamaPaneliAc()
                 .filtreSoyadDoldur(soyad)
@@ -159,9 +154,10 @@ public class GercekKisiYonetimiTest extends BaseTest {
         String duzgunKepAdresi = "turksat.kamu2@testkep.pttkep.gov.tr";
         String kepHizmetSaglayici = "P";
         Boolean kepAdresiKullaniyor = true;
+        String mesajTipi = "Kep adresi boş bırakılamaz! Lütfen bir kep adresi ekleyiniz.";
 
-        page.ustMenu("Gerçek Kişi Yönetimi");
         gercekKisiYonetimPage
+                .openPage()
                 .yeniGercekKisiEkle()
                 .kaydet()
                 .zorunluAdSoyadAlanKontrolu()
@@ -170,8 +166,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .soyadDoldur(soyad)
                 .kepAdresiKullaniyor(kepAdresiKullaniyor)
                 .kaydet()
-                .mesajKontrol("Dikkat", "Kep adresi boş bırakılamaz! Lütfen bir kep adresi ekleyiniz.");
-        page.islemMesaji().beklenenMesajTipi(DIKKAT);
+                .islemMesaji().dikkatOlmali(mesajTipi);
 
         gercekKisiYonetimPage
                 .iletisimBilgileriEkle()
