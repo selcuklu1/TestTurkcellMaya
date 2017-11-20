@@ -1,5 +1,6 @@
 package pages.pageComponents;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
 import io.qameta.allure.Step;
@@ -63,8 +64,6 @@ public class IslemMesajlari extends BaseLibrary {
     public String getMesaj() {
         return islemMesaji.text();
     }
-
-
 }
 
 
