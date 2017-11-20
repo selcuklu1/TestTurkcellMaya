@@ -33,5 +33,15 @@ public class LoginPage extends BaseLibrary {
         return this;
     }
 
+    @Step("\"{0}\" kullanıcısı ile giriş yap")
+    public LoginPage login(String username, String password) {
+        open();
+        txtUsername.sendKeys(username);
+        txtPassword.sendKeys(password);
+        btnLogin.click();
+//        $(By.id("topMenuForm:userMenuButton_button")).shouldBe(visible);
+        return this;
+    }
+
 
 }

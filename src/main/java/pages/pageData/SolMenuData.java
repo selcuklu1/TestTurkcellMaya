@@ -22,7 +22,6 @@ public class SolMenuData {
 
         IslemBekleyenEvraklar(String value) {
             this.value = value;
-            ;
         }
 
         public String getGroupId() {
