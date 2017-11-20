@@ -75,6 +75,7 @@ public class GercekKisiYonetimPage extends MainPage {
         return this;
     }
 
+
     @Step("Yeni gerçek kişi ekle")
     public GercekKisiYonetimPage yeniGercekKisiEkle() {
         btnGercekKisiEkle.click();
@@ -129,7 +130,6 @@ public class GercekKisiYonetimPage extends MainPage {
     @Step("TC doldur")
     public GercekKisiYonetimPage tcKimlikNoDoldur(String text) {
         txtTCKimlikNo.setValue(text);
-        createMernisTCKN();
         return this;
     }
 

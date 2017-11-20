@@ -53,6 +53,23 @@ public class IslemMesajlari extends BaseLibrary {
         }
     }
 
+    public enum MessageBody {
+
+        BASARILI("İşlem Başarılıdır"),
+        UYARI("Uyarı"),
+        DIKKAT("Dikkat");
+
+        private String value;
+
+        MessageBody(String value) {
+            this.value = value;
+        }
+
+        public String value() {
+            return value;
+        }
+    }
+
     @Step("Beklenen mesaj tipi \"{messageTitle.value()}\"")
     public IslemMesajlari beklenenMesajTipi(MessageTitle messageTitle) {
         Assert.assertEquals(getMessageTitle(), messageTitle.value());
@@ -111,6 +128,7 @@ public class IslemMesajlari extends BaseLibrary {
     public void waitDisappear() {
 
         closeMessagePopup.click();
+
 /*        try {
             new WebDriverWait(WebDriverRunner.getWebDriver(), 10, 100).
                     until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".lobibox-notify-title")));
