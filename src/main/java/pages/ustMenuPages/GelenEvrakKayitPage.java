@@ -8,6 +8,7 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import pages.MainPage;
 import pages.pageComponents.UstMenu;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
@@ -20,8 +21,9 @@ import static com.codeborne.selenide.Selenide.executeJavaScript;
 
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
-public class GelenEvrakKayitPage extends BaseLibrary {
+public class GelenEvrakKayitPage extends MainPage {
 
+    //region Elements
     SelenideElement pageTitle = $(By.cssSelector("#baseLayoutCenter .ui-dialog-title"));
 
     // Evrak Bilgileri Sekmesinde bulunanlar
@@ -134,6 +136,8 @@ public class GelenEvrakKayitPage extends BaseLibrary {
     SelenideElement txtAd = $(By.id("tgercekKisiHizliKayitDialogForm:adInputG"));
     SelenideElement txtSoyad = $(By.id("gercekKisiHizliKayitDialogForm:soyadInput"));
     SelenideElement mesaj = $("[#evrakKaydetBasariliDialog .ui-dialog-content]");
+    //endregion
+
 
     public GelenEvrakKayitPage openPage() {
         new UstMenu().ustMenu("Gelen Evrak Kayıt");
@@ -144,6 +148,7 @@ public class GelenEvrakKayitPage extends BaseLibrary {
         btnFizikselEkEkle.click();
         return this;
     }
+
 
     public GelenEvrakKayitPage evrakBilgileriEkBilgiFiltreAc() throws InterruptedException {
         btnEvrakEkleri.click();
@@ -544,4 +549,5 @@ public class GelenEvrakKayitPage extends BaseLibrary {
         txtEvrakEkTabViewEkMetni.sendKeys(aciklama);
         return this;
     }
+
 }

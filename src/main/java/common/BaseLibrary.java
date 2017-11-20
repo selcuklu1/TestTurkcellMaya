@@ -168,9 +168,9 @@ public class BaseLibrary {
         return sysDate;
     }
 
-    //yyyy-MM-dd formatına göre sysdate alır.
+    //dd.MM.yyyy formatına göre sysdate alır.
     public String getSysDateForKis() {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         LocalDateTime now = LocalDateTime.now();
         System.out.println(dtf.format(now)); // 2016/11/16 12:08:43
         String sysDate = dtf.format(now);

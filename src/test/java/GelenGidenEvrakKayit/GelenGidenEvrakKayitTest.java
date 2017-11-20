@@ -31,16 +31,16 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     String geldigiKurum = "Esk Kurum 071216 2";
     String evrakSayiSag = "12365";
     String evrakGelisTipi = "P";
-    String ivedilik= "N";
+    String ivedilik = "N";
     String ekMetni = "test otomasyon";
 
     @BeforeMethod
     public void loginBeforeTests() {
-        mainPage = new MainPage();
         gelenEvrakKayitPage = new GelenEvrakKayitPage();
         teslimAlinmayiBekleyenlerPage = new TeslimAlinmayiBekleyenlerPage();
         kaydedilenGelenEvrakPage = new KaydedilenGelenEvrakPage();
         kaydedilenGelenEvraklarPage = new KaydedilenGelenEvraklarPage();
+        login();
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -60,7 +60,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .evrakBilgileriListEvrakSayiSagDoldur(evrakSayiSag)
                 .evrakBilgileriListEvrakGelisTipiSec(evrakGelisTipi)
                 .evrakBilgileriListIvedilikSec(ivedilik)
-                //Excel eklenecek
+
                 .evrakBilgileriEkBilgiFiltreAc()
                 .evrakBilgileriDosyaEkleme("C:\\Users\\Emre_Sencan\\Pictures\\test.xlsx")
                 .evrakBilgileriDosyaEklemeAciklamaDoldur(ekMetni)
@@ -69,19 +69,23 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .evrakEkTabViewFizikselEkMetniDoldur(ekMetni)
                 .evrakFizikselEkTabViewAciklamaEkle()
                 .kaydet();
-                String evrakNO = gelenEvrakKayitPage.popUps();
-//        pages.islemMesaji().beklenenMesajTipi(MesajTipi.BASARILI);
-     //   page.solMenu(SolMenuData.BirimEvraklari.KaydedilenGelenEvraklar);
 
+        String evrakNO = gelenEvrakKayitPage.popUps();
+        gelenEvrakKayitPage.islemMesaji().isBasarili();
+
+//        pages.islemMesaji().beklenenMesajTipi(MesajTipi.BASARILI);
+//        page.solMenu(SolMenuData.BirimEvraklari.KaydedilenGelenEvraklar);
         kaydedilenGelenEvraklarPage
                 .openPage()
-//        TODO  tabloda oluşturulan evrak bulunacak....
-                .raporSec();
+                .filtreleAc()
+                .tarihDoldur(getSysDateForKis())
+                .tabloKontrolu(evrakNO);
+//                .raporSec();
     }
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = false, description = "Gelen evrak kayıt ekranından havale")
-    public void TC0328 () throws InterruptedException{
+    public void TC0328() throws InterruptedException {
 
         String birim = "OPTİİM BİRİM11";
 
@@ -101,8 +105,8 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .dagitimBilgileriBirimDoldur("OPTİİM")
                 .kaydet()
                 .popUps();
-       // page.islemMesaji().beklenenMesajTipi(IslemMesajlari.MessageTitle.BASARILI);
-       // page.solMenu(SolMenuData.BirimEvraklari.KaydedilenGelenEvraklar);
+        // page.islemMesaji().beklenenMesajTipi(IslemMesajlari.MessageTitle.BASARILI);
+        // page.solMenu(SolMenuData.BirimEvraklari.KaydedilenGelenEvraklar);
 //        TODO  tabloda oluşturulan evrak bulunacak....
         teslimAlinmayiBekleyenlerPage
                 .openPage()
@@ -111,7 +115,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = false, description = "Kaydedilen Gelen Evrak raporu")
-    public void  TC1401 () throws InterruptedException{
+    public void TC1401() throws InterruptedException {
 
 
         String evrakNo = "4940";
@@ -132,7 +136,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = false, description = "Gelen evrak kaydederken yeni gerçek ve tüzel kişi tanımlama")
-    public void  TC1136 () throws InterruptedException {
+    public void TC1136() throws InterruptedException {
 
         String TCKN = "51091330934";
 
@@ -151,7 +155,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = false, description = "Gelen maillerin evrak olarak sisteme dahil edilmesi")
-    public void TC0394 () throws InterruptedException{
+    public void TC0394() throws InterruptedException {
 
         String birim = "OPTİİM BİRİM11";
 
@@ -170,10 +174,10 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .evrakBilgileriListIvedilikSec(ivedilik)
                 .evrakBilgileriEkBilgiFiltreAc()
 //                .evrakEkTabViewEkle() excel eklenecek
-                .kaydet()
-                .popUps();
-     //   page.islemMesaji().beklenenMesajTipi(MesajTipi.BASARILI);
-      //  page.solMenu(SolMenuData.BirimEvraklari.KaydedilenGelenEvraklar);
+                .kaydet();
+        String evrakNo = gelenEvrakKayitPage.popUps();
+        //   page.islemMesaji().beklenenMesajTipi(MesajTipi.BASARILI);
+        //  page.solMenu(SolMenuData.BirimEvraklari.KaydedilenGelenEvraklar);
 //        TODO  tabloda oluşturulan evrak bulunacak....
         teslimAlinmayiBekleyenlerPage
                 .raporSec();
