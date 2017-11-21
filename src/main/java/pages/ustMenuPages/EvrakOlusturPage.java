@@ -156,6 +156,8 @@ public class EvrakOlusturPage extends MainPage {
     BelgenetElement txtOnayAkisiKullanicilar = comboLov("[id$='akisAdimLov:LovText']");
     SelenideElement listOnayAkisikullanicilar = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:akisAdimLov:lovTree"));
 
+    BelgenetElement txtcomboLovBilgi = comboLov(By.id("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='bilgiLov:LovText']"));
+
     public EvrakOlusturPage openPage() {
         new UstMenu().ustMenu("Evrak Oluştur");
         return this;
@@ -240,7 +242,7 @@ public class EvrakOlusturPage extends MainPage {
     }
 
     public EvrakOlusturPage bilgiDoldur(String bilgi) {
-        txtBilgi.selectComboLov(bilgi);
+        txtcomboLovBilgi.selectComboLov(bilgi);
         //shouldHave(Condition.text(geregi));
         return this;
     }

@@ -29,29 +29,42 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
         login();
     }
 
-    @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "Tüzel Kişi Yönetimi")
-    public void TC1513a()  {
 
-        tuzelKisiYonetimiPage
+    /****************************************************
+     * Tarih: 2017-11-21
+     * Proje: Türksat Functional Test Automation
+     * Class: "Kep ile postalama işlemleri" konulu senaryoları içerir
+     * Yazan: Can Şeker
+     ****************************************************/
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "1513b: Kurum Kep Hesabı Tanımlama ve Evrak Oluşturma Ekranından kontrolü")
+    public void TC1513b() throws InterruptedException {
+        String popupKepAdresi ="turksat.kamu1@testkep.pttkep.gov.tr";
+        String popupKepHizmetSaglayicisiSec = "Diğer";
+        String basariMesaji = "İşlem başarılıdır!";
+        String bilgiSecimTipi = "D";
+        kurumYonetimiPage
                 .openPage()
                 .ara()
-                .duzenleGonder()
+                .guncelle()
                 .kepAdresiKullaniyorSec(true)
-                .kepAdresBilgileriEkle()
-                .popupKepAdresiDoldur("turksat.kamu1@testkep.pttkep.gov.tr\n")
-                .kepHizmetSaglayicisiSec("Diğer")
-                .popupKaydet();
-        //  pages.islemMesaji().beklenenMesajTipi(MessageTitle.BASARILI);  Obje Değişti
-
+                .kepAdresBilgileriArti()
+                .popupKepAdresiDoldur(popupKepAdresi)
+                .popupKepHizmetSaglayicisiSec(popupKepHizmetSaglayicisiSec)
+                .popupKaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+        String getIdariBirimKodu = kurumYonetimiPage.idariBirimKimlikKoduCek();
         evrakOlusturPage
                 .openPage()
-                .bilgiDoldur("OPTiiM1");
+                .geregiSecimTipiSec(bilgiSecimTipi)
+                .geregiDoldur(getIdariBirimKodu);
     }
+
+
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "Tüzel Kişi Yönetimi")
-    public void TC1513b() throws InterruptedException {
+    public void TC1513c() throws InterruptedException {
 
         String text = "";
 
@@ -61,8 +74,8 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
                 .guncelle()
                 .kepAdresiKullaniyorSec(true)
                 .kepAdresBilgileriArti()
-                .popupKepAdresi("turksat.kamu1@testkep.pttkep.gov.tr")
-                .popupKepHizmetSaglayicisi("PTT KEP Servisi")
+               // .popupKepAdresi("turksat.kamu1@testkep.pttkep.gov.tr")
+                //.popupKepHizmetSaglayicisi("PTT KEP Servisi")
                 .popupKaydet();
         //.idariBirimKimlikKodu(text);
         // String text1=   pages.ustMenuPages.KurumYonetimiPage().idariBirimKimlikKoduCek();

@@ -2,8 +2,10 @@ package pages.ustMenuPages;
 
 import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import pages.MainPage;
+import pages.pageComponents.belgenetElements.BelgenetElement;
 
 import static com.codeborne.selenide.Selenide.$;
 
@@ -24,6 +26,7 @@ public class KurumYonetimiPage extends MainPage {
     SelenideElement txtPopupKepAdresi = $(By.id("kurumKepAdresBilgiEditorForm:kurumKepAdresBilgiInputTextId"));
     SelenideElement cmbPopupKepHizmetSaglayicisi = $(By.id("kurumKepAdresBilgiEditorForm:kephs"));
     SelenideElement btnPopupKaydet = $(By.id("kurumKepAdresBilgiEditorForm:saveKepAdresiButton"));
+
     String text;
 
     public KurumYonetimiPage openPage() {
@@ -32,23 +35,22 @@ public class KurumYonetimiPage extends MainPage {
     }
 
 
-    public KurumYonetimiPage idariBirimKimlikKoduCek() throws InterruptedException{
-        text = txtIdariBirimKimlikKodu.getValue();
-        System.out.println("Metin değer "+text);
-        return this;
-        //return text;
+    @Step("TC kimlik no alma")
+    public String idariBirimKimlikKoduCek() {
+        String getIdariBirimKodu = txtIdariBirimKimlikKodu.getValue();
+        return getIdariBirimKodu;
     }
 
     public  KurumYonetimiPage popupKaydet() throws InterruptedException{
         btnPopupKaydet.click();
         return this;
     }
-    public KurumYonetimiPage popupKepHizmetSaglayicisi(String value) throws InterruptedException{
+    public KurumYonetimiPage popupKepHizmetSaglayicisiSec(String value) throws InterruptedException{
         cmbPopupKepHizmetSaglayicisi.selectOption(value);
         return this;
     }
 
-    public KurumYonetimiPage popupKepAdresi(String text) throws InterruptedException{
+    public KurumYonetimiPage popupKepAdresiDoldur(String text) throws InterruptedException{
         txtPopupKepAdresi.setValue(text);
         return this;
     }
