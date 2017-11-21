@@ -1,12 +1,15 @@
 package pages.solMenuPages;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.testng.Assert;
 import pages.MainPage;
 
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
 
 public class TeslimAlinmayiBekleyenlerPage extends MainPage {
 
@@ -14,7 +17,7 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     SelenideElement cmbFiltre = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt10493_input"));
     SelenideElement txtSayfadaAra = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt353"));
     SelenideElement dateTxtTarih = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:tarihSecCalendar_input"));
-    SelenideElement cmbTopluSecim  =$(By.id("mainInboxForm:inboxDataTable:j_idt651_button"));
+    SelenideElement cmbTopluSecim = $(By.id("mainInboxForm:inboxDataTable:j_idt651_button"));
     SelenideElement tblRapor = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
     SelenideElement btnTeslimAlveHavaleYap = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:3:cmdbutton"));
 
@@ -42,7 +45,7 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     }
 
     @Step("Tarihi doldur")
-    public TeslimAlinmayiBekleyenlerPage TarihiDoldur(String tarih) {
+    public TeslimAlinmayiBekleyenlerPage tarihiDoldur(String tarih) {
         dateTxtTarih.sendKeys(tarih);
         return this;
     }
@@ -56,6 +59,15 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     @Step("Telim Al ve Havale Yap butonana bas")
     public TeslimAlinmayiBekleyenlerPage havaleYap() {
         btnTeslimAlveHavaleYap.click();
+        return this;
+    }
+    @Step("Tabloda evrak no kontrolü")
+    public TeslimAlinmayiBekleyenlerPage tabloKontrolu(String evrakNo)
+    {
+        int row = $$("tbody[id$='mainInboxForm:inboxDataTable_data'] tr[role=row] div[class=searchText]").filterBy(Condition.text(evrakNo)).size();
+        System.out.println(row);
+        Assert.assertEquals(row,1);
+        //log başarılı
         return this;
     }
 
