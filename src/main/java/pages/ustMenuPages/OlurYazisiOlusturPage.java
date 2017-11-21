@@ -1,16 +1,14 @@
 package pages.ustMenuPages;
 
 import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
-import common.BaseLibrary;
 import io.qameta.allure.Step;
-import org.openqa.selenium.By;
 import pages.MainPage;
 
 import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
 
 public class OlurYazisiOlusturPage extends MainPage {
 
@@ -28,13 +26,13 @@ public class OlurYazisiOlusturPage extends MainPage {
     }
 
     @Step("Onay Akışı Ekle")
-    public OlurYazisiOlusturPage onayAkisiEkle(){
+    public OlurYazisiOlusturPage onayAkisiEkle() {
         btnOnayAkisiEkle.click();
         return this;
     }
 
     @Step("Onay akışında güncel gelen kullanıcıyı kontrol et")
-    public OlurYazisiOlusturPage onayAkisiKullaniciKontrol(String kullaniciAdi, String kullaniciTipi){
+    public OlurYazisiOlusturPage onayAkisiKullaniciKontrol(String kullaniciAdi, String kullaniciTipi) {
         trOnayAkisiEkleKullanicilar
                 .filterBy(exactText(kullaniciAdi))
                 .get(0)
@@ -45,7 +43,7 @@ public class OlurYazisiOlusturPage extends MainPage {
     }
 
     @Step("Onay akışı listesinde listelenen kullanıcıyı kontrol et")
-    public OlurYazisiOlusturPage onayAkisiTreeKullaniciKontrol(String kullaniciAdi, Boolean exist){
+    public OlurYazisiOlusturPage onayAkisiTreeKullaniciKontrol(String kullaniciAdi, Boolean exist) {
         txtOnayAkisiKullanicilarInput.setValue(kullaniciAdi);
         if (exist == true)
             listOnayAkisikullanicilar
@@ -58,14 +56,10 @@ public class OlurYazisiOlusturPage extends MainPage {
                     .get(0)
                     .shouldBe(not(Condition.exist));
 
-        if(btnOnayAkisiPanelKapat.isDisplayed())
+        if (btnOnayAkisiPanelKapat.isDisplayed())
             btnOnayAkisiPanelKapat.click();
         return this;
     }
-
-
-
-
 
 
 }
