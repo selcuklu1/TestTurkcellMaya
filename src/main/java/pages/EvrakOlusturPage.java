@@ -5,7 +5,6 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
-import org.testng.Assert;
 import pages.pageComponents.UstMenu;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
@@ -42,12 +41,13 @@ public class EvrakOlusturPage {
         return this;
     }
 
-    private BilgilerTab goToBilgilerTab() {
-        BilgilerTab bilgilerTab = new BilgilerTab();
-        Assert.assertTrue(bilgilerTab.isOnTabPage(), "Bilgiler tabı açılmadı");
-        return bilgilerTab;
 
+    public BilgilerTab bilgilerTabiAc() {
+        return bilgilerTab.open();
     }
+
+    //region Tabs
+    private BilgilerTab bilgilerTab = new BilgilerTab();
 
     public class BilgilerTab {
 
@@ -209,6 +209,41 @@ public class EvrakOlusturPage {
             return this;
         }
 
+        @Step("Bilgi Secim Tipi alanında \"{0}\" seç")
+        public BilgilerTab bilgiSecimTipiSec(String text) {
+            cmbBilgiSecimTipi.selectOption(text);
+            return this;
+        }
+
+        @Step("Bilgi alanında \"{0}\" seç")
+        public BilgilerTab bilgiSec(String text) {
+            txtBilgi.selectComboLov(text);
+            return this;
+        }
+
+        @Step("Geregi Secim Tipi alanında \"{0}\" seç")
+        public BilgilerTab geregiSecimTipi(String text) {
+            cmbGeregiSecimTipi.selectOption(text);
+            return this;
+        }
+
+        @Step("Geregi alanında \"{0}\" seç")
+        public BilgilerTab geregiSec(String text) {
+            txtGeregi.selectComboLov(text);
+            return this;
+        }
+
+        @Step("Dagitimi Ek Yap alanı \"{0}\" seç")
+        public BilgilerTab dagitimiEkYapSec(boolean setSelected) {
+            chkDagitimiEkYap.setSelected(setSelected);
+            return this;
+        }
+
+        @Step("Onay Akisi alanında \"{0}\" seç")
+        public BilgilerTab cmbOnayAkisi(String text) {
+            cmbOnayAkisi.selectComboLov(text);
+            return this;
+        }
 
         public BilgilerTab open() {
             if (divContainer.is(not(visible)))
@@ -228,9 +263,8 @@ public class EvrakOlusturPage {
         }
 
 
-        // Onay Akışı İşlemleri
-
-        public BilgilerTab onayAkisiEkle(){
+        //region Onay Akışı İşlemleri
+        public BilgilerTab onayAkisiEkle() {
             btnOnayAkisiEkle.click();
             return this;
         }
@@ -249,7 +283,7 @@ public class EvrakOlusturPage {
         }
 
         @Step("Onay akışı kullanıcı adı ve tipi kontrol et")
-        public BilgilerTab onayAkisiKullaniciKontrol(String kullaniciAdi, String kullaniciTipi){
+        public BilgilerTab onayAkisiKullaniciKontrol(String kullaniciAdi, String kullaniciTipi) {
             trOnayAkisiEkleKullanicilar
                     .filterBy(text(kullaniciAdi))
                     .get(0)
@@ -260,7 +294,7 @@ public class EvrakOlusturPage {
         }
 
         @Step("Onay akışı kullanıcı tipi seç")
-        public BilgilerTab onayAkisiKullaniciTipiSec(String kullaniciAdi, String kullaniciTipi){
+        public BilgilerTab onayAkisiKullaniciTipiSec(String kullaniciAdi, String kullaniciTipi) {
             trOnayAkisiEkleKullanicilar
                     .filterBy(text(kullaniciAdi))
                     .get(0)
@@ -271,7 +305,7 @@ public class EvrakOlusturPage {
         }
 
         @Step("Onay akışı kullan butonu tıkla")
-        public BilgilerTab onayAkisiKullan(){
+        public BilgilerTab onayAkisiKullan() {
             //WebDriverRunner.getWebDriver().findElement(By.cssSelector("button[id$='anlikAkisKullanButton']"));
         /*$$("button[id$='anlikAkisKullanButton']").get(0).scrollTo();
         executeJavaScript("arguments[0].click();",$("button[id$='anlikAkisKullanButton']"));
@@ -282,7 +316,7 @@ public class EvrakOlusturPage {
         }
 
         @Step("Onay akışı listesinde listelenen kullanıcıyı kontrol et")
-        public BilgilerTab onayAkisiTreeKullaniciKontrol(String kullaniciAdi, Boolean exist){
+        public BilgilerTab onayAkisiTreeKullaniciKontrol(String kullaniciAdi, Boolean exist) {
 
             txtOnayAkisiKullanicilarInput.setValue(kullaniciAdi);
             if (exist == true)
@@ -296,20 +330,22 @@ public class EvrakOlusturPage {
                         .get(0)
                         .shouldBe(not(Condition.exist));
 
-            if(btnOnayAkisiPanelKapat.isDisplayed())
+            if (btnOnayAkisiPanelKapat.isDisplayed())
                 btnOnayAkisiPanelKapat.click();
 
             return this;
         }
 
         @Step("Kullanılan onay akışı kontrol et")
-        public BilgilerTab onayAkisiKullanilanKullanilanKontrolEt(String kullaniciAdi){
+        public BilgilerTab onayAkisiKullanilanKullanilanKontrolEt(String kullaniciAdi) {
             listOnayAkisiKullanilan
-                    .$(By.xpath(".//span[contains(., '"+kullaniciAdi+"') and @class='lovItemDetail']")).shouldBe(exist);
+                    .$(By.xpath(".//span[contains(., '" + kullaniciAdi + "') and @class='lovItemDetail']")).shouldBe(exist);
             return this;
         }
+        //endregion
 
     }
+    //endregion
 
 
 }
