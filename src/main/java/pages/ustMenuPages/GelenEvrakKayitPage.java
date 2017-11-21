@@ -31,7 +31,7 @@ public class GelenEvrakKayitPage extends MainPage {
     SelenideElement cmbEvrakBilgileriListGizlilikDerecesi = $("[id$='guvenlikKodu']");
 
 
-    SelenideElement cmbEvrakBilgileriListKisiKurum = $(By.id("evrakBilgileriForm:evrakBilgileriList:9:kisiKurum"));
+    SelenideElement cmbEvrakBilgileriListKisiKurum = $("[id$='kisiKurum']");
     //SelenideElement cmbEvrakBilgileriListKisiKurum = $("[id$='kisiKurum']");
     //BelgenetElement txtEvrakBilgileriListGeldigiKisi = comboLov(By.id("evrakBilgileriForm:evrakBilgileriList:9:geldigiGercekKisiLov:LovText"));
     BelgenetElement txtEvrakBilgileriListGeldigiKisi = comboLov("[id$='geldigiGercekKisiLov:LovText']");
@@ -214,7 +214,8 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    public GelenEvrakKayitPage evrakBilgileriListEvrakSayiSagDoldur(String evrakSayiSag) {
+    public GelenEvrakKayitPage evrakBilgileriListEvrakSayiSagDoldur() {
+        String evrakSayiSag = randomNumber(5);
         txtEvrakBilgileriListEvrakSayiTextAreaSag.sendKeys(evrakSayiSag);
         return this;
     }

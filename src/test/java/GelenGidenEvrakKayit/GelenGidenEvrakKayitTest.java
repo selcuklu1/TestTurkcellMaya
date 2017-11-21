@@ -6,6 +6,7 @@ import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.MainPage;
+import pages.solMenuPages.BirimHavaleEdilenlerPage;
 import pages.solMenuPages.KaydedilenGelenEvrakPage;
 import pages.solMenuPages.KaydedilenGelenEvraklarPage;
 import pages.solMenuPages.TeslimAlinmayiBekleyenlerPage;
@@ -17,7 +18,10 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     TeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage;
     KaydedilenGelenEvrakPage kaydedilenGelenEvrakPage;
     KaydedilenGelenEvraklarPage kaydedilenGelenEvraklarPage;
+    BirimHavaleEdilenlerPage birimHavaleEdilenlerPage;
 
+    String evrakNO321;
+    String evrakNO328;
     String konuKodu = "010.01";
     String evrakTuru = "R";
     String evrakDili = "917";
@@ -25,7 +29,6 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     String gizlilikDerecesi = "N";
     String kisiKurum = "D";
     String geldigiKurum = "Esk Kurum 071216 2";
-    String evrakSayiSag = "12365";
     String evrakGelisTipi = "P";
     String ivedilik = "N";
     String ekMetni = "test otomasyon";
@@ -36,11 +39,12 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         teslimAlinmayiBekleyenlerPage = new TeslimAlinmayiBekleyenlerPage();
         kaydedilenGelenEvrakPage = new KaydedilenGelenEvrakPage();
         kaydedilenGelenEvraklarPage = new KaydedilenGelenEvraklarPage();
+        birimHavaleEdilenlerPage = new BirimHavaleEdilenlerPage();
         login();
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = false, description = "Üstyazı ek ve ilgi eklenerek gelen evrak kaydı")
+    @Test(enabled = true, description = "Üstyazı ek ve ilgi eklenerek gelen evrak kaydı")
     public void TC0321() throws InterruptedException {
 
         gelenEvrakKayitPage
@@ -53,7 +57,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .evrakBilgileriListGizlilikDerecesiSec(gizlilikDerecesi)
                 .evrakBilgileriListKisiKurumSec(kisiKurum)
                 .evrakBilgileriListGeldigiKurumDoldurLovText(geldigiKurum)
-                .evrakBilgileriListEvrakSayiSagDoldur(evrakSayiSag)
+                .evrakBilgileriListEvrakSayiSagDoldur()
                 .evrakBilgileriListEvrakGelisTipiSec(evrakGelisTipi)
                 .evrakBilgileriListIvedilikSec(ivedilik)
 
@@ -66,8 +70,9 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .evrakFizikselEkTabViewAciklamaEkle()
                 .kaydet();
 
-        String evrakNO = gelenEvrakKayitPage.popUps();
+        evrakNO321 = gelenEvrakKayitPage.popUps();
         gelenEvrakKayitPage.islemMesaji().isBasarili();
+
 
 //        pages.islemMesaji().beklenenMesajTipi(MesajTipi.BASARILI);
 //        page.solMenu(SolMenuData.BirimEvraklari.KaydedilenGelenEvraklar);
@@ -75,7 +80,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .openPage()
                 .filtreleAc()
                 .tarihDoldur(getSysDateForKis())
-                .tabloKontrolu(evrakNO);
+                .tabloKontrolu(evrakNO321);
 //                .raporSec();
     }
 
@@ -87,7 +92,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
         gelenEvrakKayitPage
                 .openPage()
-                .evrakBilgileriUstYaziEkle("C:\\Users\\Emre_Sencan\\Pictures\\pdf2.pdf")
+                .evrakBilgileriUstYaziEkle("C:\\Users\\Emre_Sencan\\Pictures\\pdf.pdf")
                 .evrakBilgileriListKonuKoduDoldur(konuKodu)
                 .evrakBilgileriListEvrakTuruSec(evrakTuru)
                 .evrakBilgileriListEvrakDiliSec(evrakDili)
@@ -95,19 +100,27 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .evrakBilgileriListGizlilikDerecesiSec(gizlilikDerecesi)
                 .evrakBilgileriListKisiKurumSec(kisiKurum)
                 .evrakBilgileriListGeldigiKurumDoldurLovText(geldigiKurum)
-                .evrakBilgileriListEvrakSayiSagDoldur(evrakSayiSag)
+                .evrakBilgileriListEvrakSayiSagDoldur()
                 .evrakBilgileriListEvrakGelisTipiSec(evrakGelisTipi)
                 .evrakBilgileriListIvedilikSec(ivedilik)
                 .dagitimBilgileriBirimDoldur("OPTİİM")
                 .kaydet();
-        String evrakNO = gelenEvrakKayitPage.popUps();
+        evrakNO328 = gelenEvrakKayitPage.popUps();
         gelenEvrakKayitPage.islemMesaji().isBasarili();
 
+        birimHavaleEdilenlerPage
+                .openPage()
+                .filtreleAc()
+                .baslangiçTarihiDoldur(getSysDateForKis())
+                .bitisTarihiDoldur(getSysDateForKis())
+                .tabloKontrolu(evrakNO328);
+
+        //TeslimAlınanBelgeler sayfasında yetkili bir kullanıcı ile giriş yapılacak.
         teslimAlinmayiBekleyenlerPage
                 .openPage()
                 .filtreleAc()
                 .tarihiDoldur(getSysDateForKis())
-                .tabloKontrolu(evrakNO);
+                .tabloKontrolu(evrakNO328);
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -115,8 +128,8 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     public void TC1401() throws InterruptedException {
 
 
-        String evrakNo = "4940";
-        String evrakNo1 = "4941";
+        String evrakNo = evrakNO321;
+        String evrakNo1 = evrakNO328;
         String geldigiYer = "D";
         kaydedilenGelenEvrakPage
                 .openPage()
@@ -166,7 +179,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .evrakBilgileriListGizlilikDerecesiSec(gizlilikDerecesi)
                 .evrakBilgileriListKisiKurumSec(kisiKurum)
                 .evrakBilgileriListGeldigiKurumDoldurLovText(geldigiKurum)
-                .evrakBilgileriListEvrakSayiSagDoldur(evrakSayiSag)
+                .evrakBilgileriListEvrakSayiSagDoldur()
                 .evrakBilgileriListEvrakGelisTipiSec(evrakGelisTipi)
                 .evrakBilgileriListIvedilikSec(ivedilik)
                 .evrakBilgileriEkBilgiFiltreAc()
