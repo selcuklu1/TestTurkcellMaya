@@ -251,7 +251,8 @@ public class EvrakOlusturPage extends MainPage {
     }
 
     @Step("Gereği doldur")
-    public EvrakOlusturPage geregiDoldur(String geregi) {
+    public EvrakOlusturPage geregiDoldur(String geregi) throws InterruptedException {
+        Thread.sleep(6000);
         txtGeregi.selectComboLov(geregi);
         //shouldHave(Condition.text(geregi));
 

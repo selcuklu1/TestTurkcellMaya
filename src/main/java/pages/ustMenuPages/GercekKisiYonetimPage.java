@@ -1,8 +1,10 @@
 package pages.ustMenuPages;
 
 import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
@@ -66,6 +68,7 @@ public class GercekKisiYonetimPage extends MainPage {
     SelenideElement tblePasif = $(By.id("div[id^='gercekKisiYonetimiListingForm:gercekKisiDataTable'] td[class$='center-aligned passive-cell']"));
     SelenideElement btnAktif = $(By.id("gercekKisiYonetimiListingForm:gercekKisiDataTable:0:aktifEtGercekKisi"));
     SelenideElement tbleGercekKisiDataTable = $(By.id("gercekKisiYonetimiListingForm:gercekKisiDataTable"));
+    SelenideElement btnUpdate = $(By.id("gercekKisiYonetimiListingForm:gercekKisiDataTable:0:updateGercekKisiButton"));
     //</editor-fold>
 
     public GercekKisiYonetimPage openPage() {
@@ -218,6 +221,13 @@ public class GercekKisiYonetimPage extends MainPage {
     @Step("Kep adresi kaydet")
     public GercekKisiYonetimPage kepAdresiKaydet() {
         btnKepAdresiKaydet.click();
+        return this;
+    }
+
+
+    @Step("Gerçek kişi güncelle")
+    public GercekKisiYonetimPage gercekKisiGuncelle() {
+        btnUpdate.click();
         return this;
     }
 

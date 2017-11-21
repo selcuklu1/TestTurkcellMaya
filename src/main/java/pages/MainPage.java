@@ -23,6 +23,7 @@ public class MainPage extends BaseLibrary {
     public void ustMenu(String menuIsmi) {
         ustMenu.ustMenu(menuIsmi);
     }
+
     //endregion
 
     //region Sol NavigationMenu
