@@ -11,7 +11,6 @@ import pages.ustMenuPages.YonetimHavuzuYonetimiPage;
 public class YonetimHavuzuIslemleriTest extends BaseTest {
 
     EvrakOlusturPage evrakOlusturPage;
-    EvrakOlusturPage.BilgilerTab evrakBilgilerTab;
     YonetimHavuzuYonetimiPage yonetimHavuzuYonetimiPage;
     OlurYazisiOlusturPage olurYazisiOlusturPage;
     OlurYazisiOlusturPage.BilgilerTab olurYazisiBilgilerTab;
@@ -21,7 +20,6 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
     @BeforeMethod
     public void loginBeforeTests() {
         evrakOlusturPage = new EvrakOlusturPage();
-        evrakBilgilerTab = new EvrakOlusturPage().new BilgilerTab();
         yonetimHavuzuYonetimiPage = new YonetimHavuzuYonetimiPage();
         olurYazisiOlusturPage = new OlurYazisiOlusturPage();
         olurYazisiBilgilerTab = new OlurYazisiOlusturPage().new BilgilerTab();
@@ -68,8 +66,8 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
                 .ara("Optiim", "Tc02yonetimhavuzu", null, true);
 
 
-        evrakOlusturPage.open();
-        evrakBilgilerTab
+        evrakOlusturPage.open()
+                .bilgilerTabiAc()
                 .open()
                 .onayAkisiEkle()
                 .onayAkisiKullaniciKontrol("Optiim OPTİİM ", "Paraflama")
@@ -84,9 +82,8 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
         login("Ztekin", "123");
 
 
-
-        evrakOlusturPage.open();
-        evrakBilgilerTab
+        evrakOlusturPage.open()
+                .bilgilerTabiAc()
                 .open()
                 .onayAkisiEkle()
                 .onayAkisiKullaniciKontrol("Zübeyde TEKİN ", "Paraflama")
