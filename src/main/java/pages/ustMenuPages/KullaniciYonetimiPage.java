@@ -3,14 +3,18 @@ package pages.ustMenuPages;
 
 import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import pages.pageComponents.belgenetElements.BelgenetElement;
 
 import static com.codeborne.selenide.Selenide.$;
+import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 public class KullaniciYonetimiPage extends BaseLibrary {
 
     SelenideElement pageTitle = $(By.cssSelector("#window1Dialog .ui-dialog-title"));
     SelenideElement gorevCombobox = $(By.id("kullaniciYonetimiListingForm:filterPanel:filterGorevAutocomplete"));
+    BelgenetElement cmlBirim = comboLov(By.id("kullaniciYonetimiListingForm:filterPanel:birimLov:LovText"));
     SelenideElement txtTCKimlikNo = $(By.id("kullaniciYonetimiListingForm:filterPanel:tcKimlikNoFilter"));
     SelenideElement txtAd = $(By.id("kullaniciYonetimiListingForm:filterPanel:adFilterInput"));
     SelenideElement txtSoyad = $(By.id("kullaniciYonetimiListingForm:filterPanel:soyadFilterInput"));
@@ -24,9 +28,10 @@ public class KullaniciYonetimiPage extends BaseLibrary {
     SelenideElement chkBirimiOlmayanlar = $(By.id("kullaniciYonetimiListingForm:filterPanel:birimiOlmayanlarCheckbox"));
     SelenideElement chkAltBirimiOlmayanlar = $(By.id("kullaniciYonetimiListingForm:filterPanel:altBirimlerDahilCheckbox"));
 
-    public KullaniciYonetimiPage() {
-
-        //waitUntil(visibilityOfElementLocated(pageTitle));
+    @Step("Birim alanında \"{0}\" sec")
+    public KullaniciYonetimiPage birimSec(String text) {
+        cmlBirim.selectComboLov(text);
+        return this;
     }
 
     public KullaniciYonetimiPage gorevAlaniDoldur(String value) {
