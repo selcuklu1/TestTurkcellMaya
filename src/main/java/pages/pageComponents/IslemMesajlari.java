@@ -22,14 +22,16 @@ public class IslemMesajlari extends BaseLibrary {
     //span lobibox-close
     //div class=lobibox-notify-title
     //div class=lobibox-notify-msg
+    //div class=lobibox-close
 
     //http://94.55.114.18:8889/edys-web/mainInbox.xhtml
-      private SelenideElement messageTitle = $(".lobibox-notify-title");
-      private SelenideElement messageBody = $(".lobibox-notify-msg");
+    private SelenideElement messageTitle = $(".lobibox-notify-title");
+    private SelenideElement messageBody = $(".lobibox-notify-msg");
+    private SelenideElement closeMessagePopup = $(".lobibox-close");
 
     //http://www.belgenet.com.tr:8282/edys-web/mainInbox.xhtml
-   // private SelenideElement messageTitle = $(".ui-growl-message  > .ui-growl-title");
-   // private SelenideElement messageBody = $(".ui-growl-message p");
+    // private SelenideElement messageTitle = $(".ui-growl-message  > .ui-growl-title");
+    // private SelenideElement messageBody = $(".ui-growl-message p");
 
     public enum MessageTitle {
 
@@ -79,7 +81,7 @@ public class IslemMesajlari extends BaseLibrary {
 
     @Step("Başarılı mesajı gelmeli")
     public void basariliOlmali(String actualMessage) {
-        Assert.assertEquals(getMessageTitle(),BASARILI.value());
+        Assert.assertEquals(getMessageTitle(), BASARILI.value());
         Assert.assertEquals(actualMessage, getMessageBody());
         waitDisappear();
     }
@@ -121,12 +123,15 @@ public class IslemMesajlari extends BaseLibrary {
     }
 
     public void waitDisappear() {
-        try {
+
+        closeMessagePopup.click();
+
+/*        try {
             new WebDriverWait(WebDriverRunner.getWebDriver(), 10, 100).
                     until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".lobibox-notify-title")));
         } catch (Exception e) {
             System.out.println("Error didn't wait popup message : " + e);
-        }
+        }*/
     }
 
 }

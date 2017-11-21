@@ -6,6 +6,9 @@ import com.codeborne.selenide.WebDriverRunner;
 import common.BaseLibrary;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+
+import pages.MainPage;
 import pages.pageComponents.UstMenu;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
@@ -13,10 +16,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static com.codeborne.selenide.Selenide.$;
+
 import static com.codeborne.selenide.Selenide.executeJavaScript;
+
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
-public class GelenEvrakKayitPage extends BaseLibrary {
+public class GelenEvrakKayitPage extends MainPage {
 
     SelenideElement pageTitle = $(By.cssSelector("#baseLayoutCenter .ui-dialog-title"));
 
@@ -30,9 +35,10 @@ public class GelenEvrakKayitPage extends BaseLibrary {
     SelenideElement cmbEvrakBilgileriListGizlilikDerecesi = $("[id$='guvenlikKodu']");
 
 
-    // SelenideElement cmbEvrakBilgileriListKisiKurum = $(By.id("evrakBilgileriForm:evrakBilgileriList:9:kisiKurum"));
-    SelenideElement cmbEvrakBilgileriListKisiKurum = $("[id$='kisiKurum']");
-    BelgenetElement txtEvrakBilgileriListGeldigiKurum = comboLov(By.id("evrakBilgileriForm:evrakBilgileriList:9:geldigiGercekKisiLov:LovText"));
+    SelenideElement cmbEvrakBilgileriListKisiKurum = $(By.id("evrakBilgileriForm:evrakBilgileriList:9:kisiKurum"));
+    //SelenideElement cmbEvrakBilgileriListKisiKurum = $("[id$='kisiKurum']");
+    //BelgenetElement txtEvrakBilgileriListGeldigiKisi = comboLov(By.id("evrakBilgileriForm:evrakBilgileriList:9:geldigiGercekKisiLov:LovText"));
+    BelgenetElement txtEvrakBilgileriListGeldigiKisi = comboLov("[id$='geldigiGercekKisiLov:LovText']");
 
     SelenideElement txtEvrakBilgileriListEvrakSayiTextAreaSol = $("[id$='evrakSayiTextAreaSol'");
     SelenideElement txtEvrakBilgileriListEvrakSayiTextAreaSag = $("[id$='evrakSayiTextAreaSag']");
@@ -103,6 +109,7 @@ public class GelenEvrakKayitPage extends BaseLibrary {
     SelenideElement datetxtIlgiIslemleriTabViewIlgiIslemleriEvrakTarihSon = $(By.id("evrakBilgileriForm:ilgiIslemleriTabView:ilgiIslemleriEvrakTarihSonId_input"));
     SelenideElement cmbIlgiIslemleriTabViewIlgiIslemleriEvrakAramaAranacakYer = $(By.xpath("//*[@id='evrakBilgileriForm:ilgiIslemleriTabView:ilgiIslemleriEvrakAramaAranacakYerId']"));
     SelenideElement txtIlgiIslemleriTabViewEvrakArama = $(By.xpath("//*[@id='evrakBilgileriForm:ilgiIslemleriTabView:evrakAramaText']"));
+
     //Arşivde Kayıtlı Evrak Ekle
     SelenideElement dateTxtIlgiIslemleriTabViewArsivdenEvrakAraIlgiEkleTarihBas = $(By.id("evrakBilgileriForm:ilgiIslemleriTabView:arsivdenEvrakAraIlgiEkleTarihBasId_input"));
     SelenideElement dateTxtIlgiIslemleriTabViewArsivdenEvrakAraIlgiEkleTarihSon = $(By.id("evrakBilgileriForm:ilgiIslemleriTabView:arsivdenEvrakAraIlgiEkleTarihSonId_input"));
@@ -188,18 +195,16 @@ public class GelenEvrakKayitPage extends BaseLibrary {
     }
 
 
-    @Step("Kişi kurum doldur")
-    public GelenEvrakKayitPage evrakBilgileriListGeldigiKurumDoldur(String geldigiKurum) {
+    @Step("Geldiği kişi doldur")
+    public GelenEvrakKayitPage evrakBilgileriListGeldigiKisiDoldur(String geldigiKisi) {
 
-        txtEvrakBilgileriListGeldigiKurum.selectComboLov(geldigiKurum);
-        //shouldHave(Condition.text(geregi));
+        txtEvrakBilgileriListGeldigiKisi.selectComboLov(geldigiKisi);
 
-        System.out.println("title: " + txtEvrakBilgileriListGeldigiKurum.lastSelectedLovTitleText());
-        System.out.println("detail: " + txtEvrakBilgileriListGeldigiKurum.lastSelectedLovDetailText());
+        System.out.println("title: " + txtEvrakBilgileriListGeldigiKisi.lastSelectedLovTitleText());
+        System.out.println("detail: " + txtEvrakBilgileriListGeldigiKisi.lastSelectedLovDetailText());
         return this;
     }
 
-    //Lütfen metodları commentlemeyelim. Başka testler kullanıyor olabilir.
     public GelenEvrakKayitPage evrakBilgileriListGeldigiKurumDoldurLovText(String geldigiKurum) throws InterruptedException {
         comnoGeldigiKurum.selectComboLov(geldigiKurum);
         return this;

@@ -36,7 +36,6 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
     @BeforeMethod
     public void loginBeforeTests() {
-        mainPage = new MainPage();
         gelenEvrakKayitPage = new GelenEvrakKayitPage();
         teslimAlinmayiBekleyenlerPage = new TeslimAlinmayiBekleyenlerPage();
         kaydedilenGelenEvrakPage = new KaydedilenGelenEvrakPage();
