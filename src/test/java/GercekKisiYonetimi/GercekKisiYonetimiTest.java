@@ -75,7 +75,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .openTab("Bilgileri")
                 .bilgiSecimTipiSec(bilgiSecimTipi);
         //.bilgiDoldur(adSoyad);
-                 //.islemMesaji().dikkatOlmali(gercekKisiMesaj);
+        //.islemMesaji().dikkatOlmali(gercekKisiMesaj);
 
         gelenEvrakKayitPage
                 .openPage()

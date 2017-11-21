@@ -1,15 +1,11 @@
 package GelenGidenEvrakKayit;
 
-import common.BaseLibrary;
 import common.BaseTest;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.MainPage;
-import pages.pageComponents.IslemMesajlari;
-import pages.pageComponents.SolMenu;
-import pages.pageData.SolMenuData;
 import pages.solMenuPages.KaydedilenGelenEvrakPage;
 import pages.solMenuPages.KaydedilenGelenEvraklarPage;
 import pages.solMenuPages.TeslimAlinmayiBekleyenlerPage;
