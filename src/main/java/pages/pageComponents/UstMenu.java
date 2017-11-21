@@ -22,10 +22,13 @@ public class UstMenu extends BaseLibrary {
 
     @Step("\"{ustMenuIsmi}\"->\"{altMenuIsmi}\" ust menu aç")
     public void ustMenu(String ustMenuIsmi, String altMenuIsmi) {
-        SelenideElement u = $(By.xpath("//div[@id='layoutTopMenuContainer']//button[.='" + ustMenuIsmi + "']"));
-        u.click();
+        openMenu(ustMenuIsmi, altMenuIsmi);
+    }
 
-        altMenuDialogId = u.getAttribute("id").replace("ustMenuEleman", "altMenuDialog");
+    private void openMenu(String ustMenuIsmi, String altMenuIsmi) {
+        SelenideElement u = $(By.xpath("//div[@id='layoutTopMenuContainer']//button[.='" + ustMenuIsmi + "']"));
+        altMenuDialogId = (u.attr("id")).replace("ustMenuEleman", "altMenuDialog");
+        u.click();
         $(By.id(altMenuDialogId)).$(By.linkText(altMenuIsmi)).click();
     }
 

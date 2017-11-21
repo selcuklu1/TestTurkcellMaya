@@ -6,10 +6,10 @@ import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.MainPage;
-import pages.solMenuPages.KaydedilenGelenEvrakPage;
 import pages.solMenuPages.KaydedilenGelenEvraklarPage;
 import pages.solMenuPages.TeslimAlinmayiBekleyenlerPage;
 import pages.ustMenuPages.GelenEvrakKayitPage;
+import pages.ustMenuPages.KaydedilenGelenEvrakPage;
 
 public class GelenGidenEvrakKayitTest extends BaseTest {
     MainPage mainPage;

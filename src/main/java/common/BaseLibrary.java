@@ -82,6 +82,13 @@ public class BaseLibrary {
     }
     //</editor-fold>
 
+
+    /**
+     * Türkçe harfleri inglizce harflere dönüştürüyor
+     *
+     * @param str
+     * @return
+     */
     public static String clearTurkishChars(String str) {
         String ret = str;
         char[] turkishChars = new char[]{0x131, 0x130, 0xFC, 0xDC, 0xF6, 0xD6, 0x15F, 0x15E, 0xE7, 0xC7, 0x11F, 0x11E};
@@ -90,6 +97,24 @@ public class BaseLibrary {
             ret = ret.replaceAll(new String(new char[]{turkishChars[i]}), new String(new char[]{englishChars[i]}));
         }
         return ret;
+    }
+
+    /**
+     * JavaSctipt ile click yapılır
+     *
+     * @param element
+     */
+    public void clickJs(SelenideElement element) {
+        executeJavaScript("arguments[0].click();", element);
+    }
+
+    /**
+     * JavaSctipt ile click yapılır
+     *
+     * @param element
+     */
+    public void clickJs(WebElement element) {
+        executeJavaScript("arguments[0].click();", element);
     }
 
     //Üstyazı dosyasını ekler

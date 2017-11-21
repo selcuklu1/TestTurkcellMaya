@@ -5,6 +5,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pages.EvrakOlusturPage;
 import pages.EvrakOlusturPage.BilgilerTab;
+import pages.pageComponents.UstMenu;
 import pages.pageComponents.belgenetElements.BelgentCondition;
 
 public class EvrakOlusturTest extends BaseTest {
@@ -15,6 +16,8 @@ public class EvrakOlusturTest extends BaseTest {
     @BeforeClass
     public void setUp() throws Exception {
 
+        login();
+        new UstMenu().ustMenu("Evrak İşlemleri", "Evrak Oluştur");
         evrakOlusturPage = new EvrakOlusturPage();
         evrakOlusturPage.open();
 

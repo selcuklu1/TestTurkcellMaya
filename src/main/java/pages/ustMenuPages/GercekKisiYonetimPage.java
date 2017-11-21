@@ -80,9 +80,10 @@ public class GercekKisiYonetimPage extends MainPage {
         return this;
     }
 
-    @Step("Kaydet")
+    //    @Step("Kaydet")
     public GercekKisiYonetimPage kaydet() {
-        btnKaydet.click();
+        clickJs(btnKaydet);
+//        btnKaydet.click();
         if (btnEvetPopup.isDisplayed()) {
             btnEvetPopup.click();
         }
