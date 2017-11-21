@@ -68,7 +68,6 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
 
         evrakOlusturPage.open()
                 .bilgilerTabiAc()
-                .open()
                 .onayAkisiEkle()
                 .onayAkisiKullaniciKontrol("Optiim OPTİİM ", "Paraflama")
                 .onayAkisiKullaniciEkle("Veysel KIRAN")
@@ -84,7 +83,6 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
 
         evrakOlusturPage.open()
                 .bilgilerTabiAc()
-                .open()
                 .onayAkisiEkle()
                 .onayAkisiKullaniciKontrol("Zübeyde TEKİN ", "Paraflama")
                 .onayAkisiTreeKullaniciKontrol("Veysel KIRAN", false);

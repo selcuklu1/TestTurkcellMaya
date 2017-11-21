@@ -41,7 +41,6 @@ public class EvrakOlusturPage {
         return this;
     }
 
-
     public BilgilerTab bilgilerTabiAc() {
         return bilgilerTab.open();
     }
@@ -106,6 +105,15 @@ public class EvrakOlusturPage {
 
 
         //endregion
+
+        private BilgilerTab open() {
+            if (divContainer.is(not(visible)))
+                tabBilgiler.click();
+
+            divContainer.shouldBe(visible);
+            return this;
+
+        }
 
         public boolean isOnTabPage() {
             return divContainer.is(visible);
@@ -243,15 +251,6 @@ public class EvrakOlusturPage {
         public BilgilerTab cmbOnayAkisi(String text) {
             cmbOnayAkisi.selectComboLov(text);
             return this;
-        }
-
-        public BilgilerTab open() {
-            if (divContainer.is(not(visible)))
-                tabBilgiler.click();
-
-            divContainer.shouldBe(visible);
-            return this;
-
         }
 
         public BelgenetElement getKonuKodu() {
