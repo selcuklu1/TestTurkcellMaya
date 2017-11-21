@@ -1,11 +1,17 @@
 package pages.solMenuPages;
 
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
+import net.bytebuddy.asm.Advice;
 import org.openqa.selenium.By;
+import org.testng.Assert;
 import pages.MainPage;
+import pages.ustMenuPages.GelenEvrakKayitPage;
 
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
 
 public class KaydedilenGelenEvraklarPage extends MainPage {
     SelenideElement f = $(By.xpath("//div[@id='mainInboxForm:inboxDataTable:filtersAccordion']//a[text()='Filtreler']/parent::h3"));
@@ -17,6 +23,8 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
     SelenideElement btnIcerikGöster = $(By.id("mainInboxForm:inboxDataTable:0:detayGosterButton"));
     SelenideElement btnTamEkranGöster = $(By.id("mainInboxForm:inboxDataTable:0:tamEkranModuButton"));
     SelenideElement tblRapor = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
+    SelenideElement tblKaydedilenGelenEvraklar =$(By.id("mainInboxForm:inboxDataTable"));
+    ElementsCollection tblKaydedilenGelenEvraklar2 = $$("tbody[id$='mainInboxForm:inboxDataTable_data'] tr[role=row] div[class=searchText]");
 
     public KaydedilenGelenEvraklarPage openPage() {
         ustMenu("Kaydedilen Gelen Evraklar");
@@ -42,8 +50,9 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
     }
 
     @Step("Başlangıç Tarihi doldur")
-    public KaydedilenGelenEvraklarPage TarihDoldur(String tarih) {
+    public KaydedilenGelenEvraklarPage tarihDoldur(String tarih) {
         dateTxtTarih.sendKeys(tarih);
+        dateTxtTarih.pressEnter();
         return this;
     }
 
@@ -52,5 +61,12 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
         tblRapor.click();
         return this;
     }
-
+    @Step("Tabloda evrak no kontrolu")
+    public KaydedilenGelenEvraklarPage tabloKontrolu(String evrakNo)
+    {
+        int row = tblKaydedilenGelenEvraklar2.filterBy(Condition.text(evrakNo)).size();
+        System.out.println(row);
+        Assert.assertEquals(row,1);
+        return  this;
+    }
 }

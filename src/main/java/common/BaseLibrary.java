@@ -16,6 +16,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static com.codeborne.selenide.Selenide.*;
 import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfElementLocated;
@@ -191,9 +193,9 @@ public class BaseLibrary {
         return sysDate;
     }
 
-    //yyyy-MM-dd formatına göre sysdate alır.
+    //dd.MM.yyyy formatına göre sysdate alır.
     public String getSysDateForKis() {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         LocalDateTime now = LocalDateTime.now();
         System.out.println(dtf.format(now)); // 2016/11/16 12:08:43
         String sysDate = dtf.format(now);
@@ -353,6 +355,17 @@ public class BaseLibrary {
             }
         }
         return null;
+    }
+
+    public String getIntegerInText(By by) {
+        String x = WebDriverRunner.getWebDriver().findElement(by).getText();
+        Pattern y = Pattern.compile("\\d+");
+        Matcher m = y.matcher(x);
+        m.find();
+        String number = m.group();
+        System.out.println(number);
+
+        return number;
     }
 
 }
