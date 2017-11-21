@@ -47,7 +47,7 @@ public class EvrakOlusturPage {
     }
 
     public class BilgilerTab {
-        
+
         //region Elements
         SelenideElement tabBilgiler = $("button .kullaniciBilgileri");
         SelenideElement divContainer = $("#evrakBilgileriContainerDiv");
@@ -179,14 +179,20 @@ public class EvrakOlusturPage {
             return this;
         }
 
-        @Step("İvedik seç")
+        @Step("İvedik alanında \"{0}\" seç")
         public BilgilerTab ivedikSec(String text) {
             cmbIvedik.selectOption(text);
             return this;
         }
 
+        @Step("Miat alanında \"{0}\" seç")
+        public BilgilerTab miatSec(String dateText) {
+            dateMiat.setValue(dateText);
+            return this;
+        }
 
-        public BilgilerTab openPage() {
+
+        public BilgilerTab open() {
             if (divContainer.is(not(visible)))
                 tabBilgiler.click();
 
