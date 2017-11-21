@@ -44,7 +44,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "Üstyazı ek ve ilgi eklenerek gelen evrak kaydı")
+    @Test(enabled = false, description = "Üstyazı ek ve ilgi eklenerek gelen evrak kaydı")
     public void TC0321() throws InterruptedException {
 
         gelenEvrakKayitPage
@@ -84,7 +84,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = false, description = "Gelen evrak kayıt ekranından havale")
+    @Test(enabled = true, description = "Gelen evrak kayıt ekranından havale")
     public void TC0328() throws InterruptedException {
 
         String birim = "OPTİİM BİRİM11";
@@ -103,14 +103,15 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .evrakBilgileriListEvrakGelisTipiSec(evrakGelisTipi)
                 .evrakBilgileriListIvedilikSec(ivedilik)
                 .dagitimBilgileriBirimDoldur("OPTİİM")
-                .kaydet()
-                .popUps();
-        // page.islemMesaji().beklenenMesajTipi(IslemMesajlari.MessageTitle.BASARILI);
-        // page.solMenu(SolMenuData.BirimEvraklari.KaydedilenGelenEvraklar);
-//        TODO  tabloda oluşturulan evrak bulunacak....
+                .kaydet();
+        String evrakNO = gelenEvrakKayitPage.popUps();
+        gelenEvrakKayitPage.islemMesaji().isBasarili();
+
         teslimAlinmayiBekleyenlerPage
                 .openPage()
-                .raporSec();
+                .filtreleAc()
+                .tarihiDoldur(getSysDateForKis())
+                .tabloKontrolu(evrakNO);
     }
 
     @Severity(SeverityLevel.CRITICAL)

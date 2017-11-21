@@ -68,5 +68,4 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
         //log başarılı
         return  this;
     }
-
 }
