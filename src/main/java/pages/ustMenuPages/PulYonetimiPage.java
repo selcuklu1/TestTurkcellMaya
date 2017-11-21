@@ -30,7 +30,7 @@ public class PulYonetimiPage extends MainPage {
     SelenideElement btnSavePul = $(By.id("pulYonetimiEditorForm:savePulButton"));
     SelenideElement btnAra = $(By.id("pulYonetimiListingForm:filterPanel:searchPulButton"));
     SelenideElement tblPulYonetimi = $(By.id("pulYonetimiListingForm:pulDataTable_data"));
-    ElementsCollection tblPulYonetimi2 = $$("tbody[id$='pulYonetimiListingForm:pulDataTable_data'] tr[role=row] div[class=searchText]");
+    ElementsCollection tblPulYonetimi2 = $$("tbody[id$='pulYonetimiListingForm:pulDataTable_data'] tr[role=row]");
 
 
     public PulYonetimiPage openPage() {
@@ -98,11 +98,17 @@ public class PulYonetimiPage extends MainPage {
         return this;
     }
 
-//    @Step("Tabloda evrak no kontrolu")
-//    public PulYonetimiPage tabloKontrolu(String evrakNo)
-//    {
-//
-//        findElementOnTableByColumnInputInAllPages(tblPulYonetimi,0,evrakNo);
-//        return  this;
-//    }
+    @Step("Tabloda evrak no kontrolu")
+    public PulYonetimiPage tabloKontrolu(String evrakNo) {
+        int j;
+        int i = tblPulYonetimi2
+                .filterBy(Condition.text(evrakNo)).size();
+
+        for (j = 0; j < i; j++)
+            tblPulYonetimi2
+                    .filterBy(Condition.text(evrakNo))
+                    .get(j)
+                    .shouldBe(Condition.exist);
+        return this;
+    }
 }
