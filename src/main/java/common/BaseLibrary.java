@@ -16,6 +16,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static com.codeborne.selenide.Selenide.*;
 import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfElementLocated;
@@ -82,6 +84,13 @@ public class BaseLibrary {
     }
     //</editor-fold>
 
+
+    /**
+     * Türkçe harfleri inglizce harflere dönüştürüyor
+     *
+     * @param str
+     * @return
+     */
     public static String clearTurkishChars(String str) {
         String ret = str;
         char[] turkishChars = new char[]{0x131, 0x130, 0xFC, 0xDC, 0xF6, 0xD6, 0x15F, 0x15E, 0xE7, 0xC7, 0x11F, 0x11E};
@@ -90,6 +99,24 @@ public class BaseLibrary {
             ret = ret.replaceAll(new String(new char[]{turkishChars[i]}), new String(new char[]{englishChars[i]}));
         }
         return ret;
+    }
+
+    /**
+     * JavaSctipt ile click yapılır
+     *
+     * @param element
+     */
+    public void clickJs(SelenideElement element) {
+        executeJavaScript("arguments[0].click();", element);
+    }
+
+    /**
+     * JavaSctipt ile click yapılır
+     *
+     * @param element
+     */
+    public void clickJs(WebElement element) {
+        executeJavaScript("arguments[0].click();", element);
     }
 
     //Üstyazı dosyasını ekler
@@ -166,9 +193,9 @@ public class BaseLibrary {
         return sysDate;
     }
 
-    //yyyy-MM-dd formatına göre sysdate alır.
+    //dd.MM.yyyy formatına göre sysdate alır.
     public String getSysDateForKis() {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         LocalDateTime now = LocalDateTime.now();
         System.out.println(dtf.format(now)); // 2016/11/16 12:08:43
         String sysDate = dtf.format(now);
@@ -328,6 +355,17 @@ public class BaseLibrary {
             }
         }
         return null;
+    }
+
+    public String getIntegerInText(By by) {
+        String x = WebDriverRunner.getWebDriver().findElement(by).getText();
+        Pattern y = Pattern.compile("\\d+");
+        Matcher m = y.matcher(x);
+        m.find();
+        String number = m.group();
+        System.out.println(number);
+
+        return number;
     }
 
 }

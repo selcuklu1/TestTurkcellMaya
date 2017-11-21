@@ -11,6 +11,7 @@ import pages.ustMenuPages.YonetimHavuzuYonetimiPage;
 public class YonetimHavuzuIslemleriTest extends BaseTest {
 
     EvrakOlusturPage evrakOlusturPage;
+    EvrakOlusturPage.BilgilerTab bilgilerTab;
     YonetimHavuzuYonetimiPage yonetimHavuzuYonetimiPage;
     OlurYazisiOlusturPage olurYazisiOlusturPage;
 
@@ -18,6 +19,7 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
     @BeforeMethod
     public void loginBeforeTests() {
         evrakOlusturPage = new EvrakOlusturPage();
+        bilgilerTab = new EvrakOlusturPage().new BilgilerTab();
         yonetimHavuzuYonetimiPage = new YonetimHavuzuYonetimiPage();
         olurYazisiOlusturPage = new OlurYazisiOlusturPage();
         login();
@@ -28,23 +30,24 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
 
         yonetimHavuzuYonetimiPage
                 .openPage()
-                .ara("OPTİİM BİRİM", "Test-tec01", "Sadece Aktifler", true)
+                .ara("Optiim Birim", "Test-tec01", "Sadece Aktifler", true)
                 .yonetimHavuzuGuncelle("Test-tec01", false)
                 .yonetimHavuzuKontrol("Test-tec01", new String[]{"Optiim Birim"}, new String[]{"Veysel KIRAN"})
                 .yonetimHavuzuPasifYap("Test-tec01");
 
-        /*
-        evrakOlusturPage
+
+        evrakOlusturPage.open();
+        bilgilerTab
                 .open()
                 .onayAkisiEkle()
-                .onayAkisiKullaniciKontrol("Optiim OPTİİM", "Paraflama")
+                .onayAkisiKullaniciKontrol("Optiim TEST", "Paraflama")
                 .onayAkisiTreeKullaniciKontrol("Veysel KIRAN", false);
-        */
+
 
         olurYazisiOlusturPage
                 .open()
                 .onayAkisiEkle()
-                .onayAkisiKullaniciKontrol("Optiim OPTİİM", "Paraflama")
+                .onayAkisiKullaniciKontrol("Optiim TEST", "Paraflama")
                 .onayAkisiTreeKullaniciKontrol("Veysel KIRAN", false);
     }
 
@@ -60,8 +63,8 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
                 .ara("Optiim", "Tc02yonetimhavuzu", null, true);
 
 
-        /*
-        evrakOlusturPage
+        evrakOlusturPage.open();
+        bilgilerTab
                 .open()
                 .onayAkisiEkle()
                 .onayAkisiKullaniciKontrol("Optiim OPTİİM ", "Paraflama")
@@ -70,19 +73,20 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
                 .onayAkisiKullaniciTipiSec("Veysel KIRAN", "İmzalama")
                 .onayAkisiKullan()
                 .onayAkisiKullanilanKullanilanKontrolEt("Optiim OPTİİM-Paraflama / Veysel KIRAN-İmzalama");
-        */
+
 
         logout();
         login("Ztekin", "123");
 
 
-        /*
-        evrakOlusturPage
+
+        evrakOlusturPage.open();
+        bilgilerTab
                 .open()
                 .onayAkisiEkle()
                 .onayAkisiKullaniciKontrol("Zübeyde TEKİN ", "Paraflama")
                 .onayAkisiTreeKullaniciKontrol("Veysel KIRAN", false);
-        */
+
 
     }
 

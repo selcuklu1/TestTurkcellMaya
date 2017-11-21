@@ -74,16 +74,23 @@ public class DriverEventListener extends BaseLibrary implements WebDriverEventLi
     }
 
     public void afterFindBy(By by, WebElement element, WebDriver driver) {
-
     }
 
     public void beforeClickOn(WebElement element, WebDriver driver) {
+
+//        new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(element));
+//        try {
+//            Thread.sleep(1000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//        new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(element));
 //        System.out.println("Will click on element.. " + element.toString());
     }
 
     public void afterClickOn(WebElement element, WebDriver driver) {
-        System.out.println("Clicked on element.. " + element.toString());
-        waitForLoading(driver);
+//        System.out.println("Clicked on element.. " + element.toString());
+//        waitForLoading(driver);
     }
 
     public void beforeChangeValueOf(WebElement element, WebDriver driver, CharSequence[] keysToSend) {
