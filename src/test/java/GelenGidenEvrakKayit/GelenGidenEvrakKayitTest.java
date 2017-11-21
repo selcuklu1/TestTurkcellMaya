@@ -44,12 +44,19 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "Üstyazı ek ve ilgi eklenerek gelen evrak kaydı")
+    @Test(enabled = true, description = "TC0321: Üstyazı ek ve ilgi eklenerek gelen evrak kaydı")
     public void TC0321() throws InterruptedException {
+
+        String basariMesaji = "İşlem başarılıdır!";
+        String ustYaziPath = "C:\\Users\\Emre_Sencan\\Pictures\\pdf.pdf";
+        String excelPath = "C:\\Users\\Emre_Sencan\\Pictures\\test.xlsx";
+        String ustYaziAdi = "pdf.pdf";
+        String excelAdi = "test.xlsx";
 
         gelenEvrakKayitPage
                 .openPage()
-                .evrakBilgileriUstYaziEkle("C:\\Users\\Emre_Sencan\\Pictures\\pdf2.pdf")
+                .evrakBilgileriUstYaziEkle(ustYaziPath)
+                .evrakBilgileriDosyaEklemeUstYaziAdiKontrol(ustYaziAdi)
                 .evrakBilgileriListKonuKoduDoldur(konuKodu)
                 .evrakBilgileriListEvrakTuruSec(evrakTuru)
                 .evrakBilgileriListEvrakDiliSec(evrakDili)
@@ -60,9 +67,9 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .evrakBilgileriListEvrakSayiSagDoldur()
                 .evrakBilgileriListEvrakGelisTipiSec(evrakGelisTipi)
                 .evrakBilgileriListIvedilikSec(ivedilik)
-
                 .evrakBilgileriEkBilgiFiltreAc()
-                .evrakBilgileriDosyaEkleme("C:\\Users\\Emre_Sencan\\Pictures\\test.xlsx")
+                .evrakBilgileriDosyaEkleme(excelPath)
+                .evrakBilgileriDosyaEklemeDosyaAdiKontrol(excelAdi)
                 .evrakBilgileriDosyaEklemeAciklamaDoldur(ekMetni)
                 .evrakEkTabViewEkle()
                 .evrakBilgileriEkBilgiFizikselEkEkle()
@@ -71,17 +78,15 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .kaydet();
 
         evrakNO321 = gelenEvrakKayitPage.popUps();
-        gelenEvrakKayitPage.islemMesaji().isBasarili();
 
+        gelenEvrakKayitPage
+                .islemMesaji().basariliOlmali(basariMesaji);
 
-//        pages.islemMesaji().beklenenMesajTipi(MesajTipi.BASARILI);
-//        page.solMenu(SolMenuData.BirimEvraklari.KaydedilenGelenEvraklar);
         kaydedilenGelenEvraklarPage
                 .openPage()
                 .filtreleAc()
                 .tarihDoldur(getSysDateForKis())
                 .tabloKontrolu(evrakNO321);
-//                .raporSec();
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -164,7 +169,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = false, description = "Gelen maillerin evrak olarak sisteme dahil edilmesi")
+    @Test(enabled = true, description = "Gelen maillerin evrak olarak sisteme dahil edilmesi")
     public void TC0394() throws InterruptedException {
 
         String birim = "OPTİİM BİRİM11";
@@ -183,7 +188,8 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .evrakBilgileriListEvrakGelisTipiSec(evrakGelisTipi)
                 .evrakBilgileriListIvedilikSec(ivedilik)
                 .evrakBilgileriEkBilgiFiltreAc()
-//                .evrakEkTabViewEkle() excel eklenecek
+                .evrakEkTabViewEkle()
+                .evrakBilgileriDosyaEkleme("C:\\Users\\Emre_Sencan\\Pictures\\test.xlsx")
                 .kaydet();
         String evrakNo = gelenEvrakKayitPage.popUps();
         //   page.islemMesaji().beklenenMesajTipi(MesajTipi.BASARILI);

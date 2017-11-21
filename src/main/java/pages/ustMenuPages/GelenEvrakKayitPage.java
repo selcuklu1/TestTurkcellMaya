@@ -5,6 +5,7 @@ import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.UstMenu;
 import pages.pageComponents.belgenetElements.BelgenetElement;
@@ -125,7 +126,6 @@ public class GelenEvrakKayitPage extends MainPage {
     SelenideElement basariliPopUpKapat = $("[id='evrakKaydetBasariliDialogForm:vazgecButton']");
     SelenideElement basariliPopUp = $("[id='evrakKaydetBasariliDialog']");
 
-
     SelenideElement btnGeldigiKisiEkle = $("[id^='evrakBilgileriForm:evrakBilgileriList'][id$='gercekKisiEkle']");
     SelenideElement txtTCKN = $(By.id("gercekKisiHizliKayitDialogForm:tcKimlikNoInput"));
     SelenideElement btnTCKNAra = $(By.id("gercekKisiHizliKayitDialogForm:kpsTcKimlikNoSorgulaButtonHizliKayit"));
@@ -133,6 +133,12 @@ public class GelenEvrakKayitPage extends MainPage {
     SelenideElement txtAd = $(By.id("tgercekKisiHizliKayitDialogForm:adInputG"));
     SelenideElement txtSoyad = $(By.id("gercekKisiHizliKayitDialogForm:soyadInput"));
     SelenideElement mesaj = $("[#evrakKaydetBasariliDialog .ui-dialog-content]");
+
+    SelenideElement lblDosyaAdi = $(By.id("evrakBilgileriForm:evrakEkTabView:dosyaAdi"));
+    SelenideElement lblEklenenUstYazi = $(By.id("evrakBilgileriForm:eklendiYazisi"));
+
+    //Dosya ekleme path
+    By dosyaPath = By.xpath("//input[@id='evrakBilgileriForm:evrakEkTabView:fileUploadButton_input']");
     //endregion
 
 
@@ -480,13 +486,8 @@ public class GelenEvrakKayitPage extends MainPage {
             mukerrerPopUpEvet.click();
         }
         basariliPopUp.shouldBe(Condition.visible);
-            String x = WebDriverRunner.getWebDriver()
-                    .findElement(By.id("evrakKaydetBasariliDialog")).getText();
-            Pattern y = Pattern.compile("\\d+");
-            Matcher m = y.matcher(x);
-            m.find();
-            String evrakNo= m.group();
-            System.out.println(evrakNo);
+
+            String evrakNo= getIntegerInText(By.id("evrakKaydetBasariliDialog"));
             basariliPopUpKapat.click();
 
         return evrakNo;
@@ -535,7 +536,7 @@ public class GelenEvrakKayitPage extends MainPage {
     @Step("Evrak Ekleri Dosya Ekleme")
     public GelenEvrakKayitPage evrakBilgileriDosyaEkleme(String pathToFile) {
         WebDriverRunner.getWebDriver()
-                .findElement(By.xpath("//input[@id='evrakBilgileriForm:evrakEkTabView:fileUploadButton_input']"))
+                .findElement(dosyaPath)
                 .sendKeys(pathToFile);
         return this;
     }
@@ -543,6 +544,20 @@ public class GelenEvrakKayitPage extends MainPage {
     @Step("EkBilgiler dosya ekleme açıklama alanı doldur")
     public GelenEvrakKayitPage evrakBilgileriDosyaEklemeAciklamaDoldur(String aciklama) {
         txtEvrakEkTabViewEkMetni.sendKeys(aciklama);
+        return this;
+    }
+    @Step("EkBilgiler dosya ekleme excel adi kontrol")
+    public GelenEvrakKayitPage evrakBilgileriDosyaEklemeDosyaAdiKontrol(String excelAdi) {
+        String text = lblDosyaAdi.text();
+        System.out.println(text);
+        Assert.assertEquals(text,excelAdi);
+        return this;
+    }
+    @Step("Ust Yazi adi kontrol")
+    public GelenEvrakKayitPage evrakBilgileriDosyaEklemeUstYaziAdiKontrol(String ustYaziAdi) {
+        String text = lblEklenenUstYazi.text();
+        System.out.println(text);
+        Assert.assertEquals(text.contains(ustYaziAdi),true);
         return this;
     }
 

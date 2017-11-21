@@ -1,6 +1,7 @@
 package pages.solMenuPages;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import net.bytebuddy.asm.Advice;
@@ -23,6 +24,7 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
     SelenideElement btnTamEkranGöster = $(By.id("mainInboxForm:inboxDataTable:0:tamEkranModuButton"));
     SelenideElement tblRapor = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
     SelenideElement tblKaydedilenGelenEvraklar =$(By.id("mainInboxForm:inboxDataTable"));
+    ElementsCollection tblKaydedilenGelenEvraklar2 = $$("tbody[id$='mainInboxForm:inboxDataTable_data'] tr[role=row] div[class=searchText]");
 
     public KaydedilenGelenEvraklarPage openPage() {
         ustMenu("Kaydedilen Gelen Evraklar");
@@ -59,13 +61,12 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
         tblRapor.click();
         return this;
     }
-    @Step("Tabloda evrak no kontrolü")
+    @Step("Tabloda evrak no kontrolu")
     public KaydedilenGelenEvraklarPage tabloKontrolu(String evrakNo)
     {
-        int row = $$("tbody[id$='mainInboxForm:inboxDataTable_data'] tr[role=row] div[class=searchText]").filterBy(Condition.text(evrakNo)).size();
+        int row = tblKaydedilenGelenEvraklar2.filterBy(Condition.text(evrakNo)).size();
         System.out.println(row);
         Assert.assertEquals(row,1);
-        //log başarılı
         return  this;
     }
 }

@@ -16,6 +16,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static com.codeborne.selenide.Selenide.*;
 import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfElementLocated;
@@ -328,6 +330,17 @@ public class BaseLibrary {
             }
         }
         return null;
+    }
+
+    public String getIntegerInText(By by) {
+        String x = WebDriverRunner.getWebDriver().findElement(by).getText();
+        Pattern y = Pattern.compile("\\d+");
+        Matcher m = y.matcher(x);
+        m.find();
+        String number = m.group();
+        System.out.println(number);
+
+        return number;
     }
 
 }
