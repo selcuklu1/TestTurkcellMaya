@@ -1,3 +1,9 @@
+/****************************************************
+ * Tarih: 2017-11-20
+ * Proje: Türksat Functional Test Automation
+ * Class: "Gerçek Kişi Yönetimi " konulu senaryoları içerir
+ * Yazan: Sezai Çelik
+ ****************************************************/
 package GercekKisiYonetimi;
 
 import common.BaseTest;
@@ -17,15 +23,15 @@ public class GercekKisiYonetimiTest extends BaseTest {
 
     @BeforeMethod
     public void loginBeforeTests() {
+        login();
         gercekKisiYonetimPage = new GercekKisiYonetimPage();
         evrakOlusturPage = new EvrakOlusturPage();
         gelenEvrakKayitPage = new GelenEvrakKayitPage();
-        login();
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC1516: Gerçek kişi tanımlama ve  kontrolü")
-    public void TC1516() {
+    @Test(enabled = true, description = "TC1516: Gerçek kişi tanımlama ve kontrolü")
+    public void TC1516() throws InterruptedException {
 
         String tcNO = createMernisTCKN();
         String ad = createRandomText(6);
@@ -157,8 +163,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
         String kepMesaj2 = "Girilen kep adresi geçersiz!";
         String basariMesaji = "İşlem başarılıdır!";
 
-        gercekKisiYonetimPage
-                .openPage()
+        gercekKisiYonetimPage.openPage()
                 .yeniGercekKisiEkle()
                 .kaydet()
                 .zorunluAdSoyadAlanKontrolu()
@@ -198,11 +203,96 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .kepAdresiDoldur(duzgunKepAdresi)
                 .kepHizmetSaglayiciSec(kepHizmetSaglayici)
                 .kepAdresiKaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
 
+        gercekKisiYonetimPage
                 .adDoldur(ad)
                 .soyadDoldur(soyad)
                 .kepAdresiKullaniyor(true)
                 .kaydet()
                 .islemMesaji().basariliOlmali(basariMesaji);
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TC1137: Gerçek Kişi Bilgisi Güncelleme ve kontrolleri")
+    public void TC1137() throws InterruptedException {
+
+        String tcNO = createMernisTCKN();
+        String ad = createRandomText(6);
+        String soyad = createRandomText(6);
+        String onEk = "Muh";
+        String unvan = "Mühendis";
+        String adres = "Kuştepe Mahallesi";
+        String il = "İstanbul";
+        String ilce = "Şişli";
+        String eposta = "test@turksat.com.tr";
+        String basariMesaji = "İşlem başarılıdır!";
+
+        String tcNO2 = createMernisTCKN();
+        String ad2 = createRandomText(6);
+        String soyad2 = createRandomText(6);
+        String onEk2 = "Dr";
+        String unvan2 = "Doktor";
+        String duzgunKepAdresi = "turksat.kamu2@testkep.pttkep.gov.tr";
+        String adSoyad2 = ad2 + " " + soyad2;
+        String postaTipi = "Z"; //Z=KEP
+        String hitap = "Sayın";
+
+        //Data yaratmak için.
+        gercekKisiYonetimPage
+                .openPage()
+                .yeniGercekKisiEkle()
+                .tcKimlikNoDoldur(tcNO)
+                .onEkDoldur(onEk)
+                .unvanDoldur(unvan)
+                .adDoldur(ad)
+                .soyadDoldur(soyad)
+                .iletisimBilgileriEkle()
+
+                .iletisimBilgisiAdresDoldur(adres)
+                .iletisimBilgisiIlDoldur(il)
+                .iletisimBilgisiIlceDoldur(ilce)
+                .iletisimBilgisiEpostaDoldur(eposta)
+                .iletisimBilgisiKaydet()
+
+                .kaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        gercekKisiYonetimPage
+                .filtreAdDoldur(ad)
+                .filtreTCKimlikNoDoldur(tcNO)
+                .ara() //araButonuTikla
+                .kayitKontrolu(tcNO, ad, soyad)
+
+                .gercekKisiGuncelle()
+                .tcKimlikNoDoldur(tcNO2)
+                .onEkDoldur(onEk2)
+                .unvanDoldur(unvan2)
+                .adDoldur(ad2)
+                .soyadDoldur(soyad2)
+
+                .kepAdresiKullaniyor(true)
+                .kepAdresBilgileriEkle()
+                .kepAdresiDoldur(duzgunKepAdresi)
+                .kepAdresiKaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        gercekKisiYonetimPage
+                .kaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        evrakOlusturPage
+                .openPage()
+                .geregiSecimTipiSec("G")
+                .geregiDoldur(adSoyad2)
+                .geregiAlaniKontrol(adSoyad2, unvan2, adres, postaTipi)
+
+                .openTab("Editör")
+                .hitapKismiAlaniKontrol(hitap, onEk2, ad2, soyad2);
+
+        gelenEvrakKayitPage
+                .openPage()
+                .evrakBilgileriListKisiKurumSec("G")
+                .evrakBilgileriListGeldigiKisiDoldur(adSoyad2);
     }
 }

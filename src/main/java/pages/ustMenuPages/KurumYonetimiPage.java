@@ -2,13 +2,17 @@ package pages.ustMenuPages;
 
 import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import pages.MainPage;
+import pages.pageComponents.belgenetElements.BelgenetElement;
 
 import static com.codeborne.selenide.Selenide.$;
+import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 public class KurumYonetimiPage extends MainPage {
 
+    //
     SelenideElement txtKurum = $(By.id("kurumYonetimiListingForm:filterPanel:kurumFilterLov:LovText"));
     SelenideElement btnAra = $(By.id("kurumYonetimiListingForm:filterPanel:searchEntitiesButton"));
     SelenideElement cmbDurum = $(By.id("kurumYonetimiListingForm:filterPanel:durumSelectBox"));
@@ -20,40 +24,40 @@ public class KurumYonetimiPage extends MainPage {
     SelenideElement chkOzelHitap = $(By.id("kurumYonetimiEditorForm:ozelHitapExistSelBoolean_input"));
     SelenideElement btnKaydet = $(By.id("kurumYonetimiEditorForm:saveKurumButton"));
     SelenideElement btnKepAdresBilgileriArti = $(By.id("kurumYonetimiEditorForm:kepBilgileriDataTable:addNewKepAdresiButton"));
-    SelenideElement btnGuncelle = $(By.id("kurumYonetimiListingForm:kurumTreeTable:0:updateKurumButton"));
+    SelenideElement btnGuncelle = $(By.id("kurumYonetimiListingForm:kurumTreeTable:1_0:updateKurumButton"));
     SelenideElement txtPopupKepAdresi = $(By.id("kurumKepAdresBilgiEditorForm:kurumKepAdresBilgiInputTextId"));
     SelenideElement cmbPopupKepHizmetSaglayicisi = $(By.id("kurumKepAdresBilgiEditorForm:kephs"));
     SelenideElement btnPopupKaydet = $(By.id("kurumKepAdresBilgiEditorForm:saveKepAdresiButton"));
-    String text;
+    SelenideElement btnAltMenuAc = $("[id$='kurumYonetimiListingForm:kurumTreeTable_node_1'] span");
+    BelgenetElement txtKurumCombolov = comboLov(By.id("kurumYonetimiListingForm:filterPanel:kurumFilterLov:LovText"));
 
     public KurumYonetimiPage openPage() {
         ustMenu("Kurum Yönetimi");
         return this;
     }
 
-
-    public KurumYonetimiPage idariBirimKimlikKoduCek() throws InterruptedException{
-        text = txtIdariBirimKimlikKodu.getValue();
-        System.out.println("Metin değer "+text);
-        return this;
-        //return text;
+    @Step("TC kimlik no alma")
+    public String idariBirimKimlikKoduCek() {
+        String getIdariBirimKodu = txtIdariBirimKimlikKodu.getValue();
+        return getIdariBirimKodu;
     }
 
     public  KurumYonetimiPage popupKaydet() throws InterruptedException{
         btnPopupKaydet.click();
         return this;
     }
-    public KurumYonetimiPage popupKepHizmetSaglayicisi(String value) throws InterruptedException{
+    public KurumYonetimiPage popupKepHizmetSaglayicisiSec(String value) throws InterruptedException{
         cmbPopupKepHizmetSaglayicisi.selectOption(value);
         return this;
     }
 
-    public KurumYonetimiPage popupKepAdresi(String text) throws InterruptedException{
+    public KurumYonetimiPage popupKepAdresiDoldur(String text) throws InterruptedException{
         txtPopupKepAdresi.setValue(text);
         return this;
     }
 
     public KurumYonetimiPage guncelle() throws InterruptedException{
+        btnAltMenuAc.click();
         btnGuncelle.click();
         return this;
     }
@@ -108,7 +112,7 @@ public class KurumYonetimiPage extends MainPage {
     }
 
     public KurumYonetimiPage kurumDoldur(String text) {
-        txtKurum.setValue(text);
+        txtKurumCombolov.selectComboLov(text);
         return this;
     }
 

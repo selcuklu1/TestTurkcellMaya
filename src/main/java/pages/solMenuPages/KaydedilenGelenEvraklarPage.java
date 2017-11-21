@@ -9,6 +9,7 @@ import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.ustMenuPages.GelenEvrakKayitPage;
+import pages.ustMenuPages.KaydedilenGelenEvrakPage;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;

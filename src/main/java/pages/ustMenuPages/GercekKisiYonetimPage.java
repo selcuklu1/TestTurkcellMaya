@@ -1,8 +1,10 @@
 package pages.ustMenuPages;
 
 import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
@@ -21,6 +23,7 @@ public class GercekKisiYonetimPage extends MainPage {
     SelenideElement cmbFiltreDurum = $(By.id("gercekKisiYonetimiListingForm:filterPanel:durumSelectBox"));
     SelenideElement filtreSorgulamaPanel = $(By.id("gercekKisiYonetimiListingForm:filterPanel"));
     SelenideElement btnAra = $(By.id("gercekKisiYonetimiListingForm:filterPanel:searchGercekKisiButton"));
+    SelenideElement btnGuncelle =$(By.id("gercekKisiYonetimiListingForm:gercekKisiDataTable:0:updateGercekKisiButton"));
 
     //Gerçek Kişi Ekleme
     SelenideElement txtTCKimlikNo = $(By.id("gercekKisiYonetimiEditorForm:tcKimlikNoInput"));
@@ -66,7 +69,9 @@ public class GercekKisiYonetimPage extends MainPage {
     SelenideElement tblePasif = $(By.id("div[id^='gercekKisiYonetimiListingForm:gercekKisiDataTable'] td[class$='center-aligned passive-cell']"));
     SelenideElement btnAktif = $(By.id("gercekKisiYonetimiListingForm:gercekKisiDataTable:0:aktifEtGercekKisi"));
     SelenideElement tbleGercekKisiDataTable = $(By.id("gercekKisiYonetimiListingForm:gercekKisiDataTable"));
+    SelenideElement btnUpdate = $(By.id("gercekKisiYonetimiListingForm:gercekKisiDataTable:0:updateGercekKisiButton"));
     //</editor-fold>
+
 
     public GercekKisiYonetimPage openPage() {
         ustMenu("Gerçek Kişi Yönetimi");
@@ -74,15 +79,22 @@ public class GercekKisiYonetimPage extends MainPage {
     }
 
 
+    @Step("Güncelle Button ekle")
+    public GercekKisiYonetimPage guncelle(){
+        btnGuncelle.click();
+        return this;
+    }
+
     @Step("Yeni gerçek kişi ekle")
     public GercekKisiYonetimPage yeniGercekKisiEkle() {
         btnGercekKisiEkle.click();
         return this;
     }
 
-    @Step("Kaydet")
+    //    @Step("Kaydet")
     public GercekKisiYonetimPage kaydet() {
-        btnKaydet.click();
+        clickJs(btnKaydet);
+//        btnKaydet.click();
         if (btnEvetPopup.isDisplayed()) {
             btnEvetPopup.click();
         }
@@ -218,6 +230,13 @@ public class GercekKisiYonetimPage extends MainPage {
     @Step("Kep adresi kaydet")
     public GercekKisiYonetimPage kepAdresiKaydet() {
         btnKepAdresiKaydet.click();
+        return this;
+    }
+
+
+    @Step("Gerçek kişi güncelle")
+    public GercekKisiYonetimPage gercekKisiGuncelle() {
+        btnUpdate.click();
         return this;
     }
 

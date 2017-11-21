@@ -11,11 +11,23 @@ public class TuzelKisiYonetimiPage extends MainPage {
 
     SelenideElement btnAra = $(By.id("tuzelKisiYonetimiListingForm:filterPanel:searchTuzelKisiButton"));
     SelenideElement btnDuzenle = $(By.id("tuzelKisiYonetimiListingForm:tuzelKisiDataTable:0:updateTuzelKisiButton"));
-    SelenideElement chkKepAdresiKullaniyor = $(By.id("tuzelKisiYonetimiEditorForm:kepAdresiKullanimCheckbox_input"));
+    SelenideElement txtVergiNo = $(By.id("tuzelKisiYonetimiEditorForm:vergiNoInput"));
     SelenideElement btnKepAdresBilgileriEkle = $(By.id("tuzelKisiYonetimiEditorForm:kepBilgileriDataTable:addNewKepAdresiButton"));
     SelenideElement txtPopupKepAdresi = $(By.id("tuzelKisiKepAdresEditorForm:tuzelKisiKepAdresInputTextId"));
-    SelenideElement cmbKepHizmetSaglayicisi = $(By.id("tuzelKisiKepAdresEditorForm:kephs"));
+    SelenideElement cmbPopupKepHizmetSaglayicisi = $(By.id("tuzelKisiKepAdresEditorForm:kephs"));
     SelenideElement btnPopupKaydet = $(By.id("tuzelKisiKepAdresEditorForm:saveKepAdresiButton"));
+    SelenideElement btnGuncelle = $(By.id("tuzelKisiYonetimiListingForm:tuzelKisiDataTable:0:updateTuzelKisiButton"));
+    SelenideElement chkKepAdresiKullaniyor = $(By.id("tuzelKisiYonetimiEditorForm:kepAdresiKullanimCheckbox_input"));
+
+    public String vergiNoCek(){
+        String vergiNo = txtVergiNo.getValue();
+        return vergiNo;
+    }
+
+    public TuzelKisiYonetimiPage guncelle(){
+        btnGuncelle.click();
+        return this;
+    }
 
     public TuzelKisiYonetimiPage openPage() {
         ustMenu("Tüzel Kişi Yönetimi");
@@ -28,7 +40,7 @@ public class TuzelKisiYonetimiPage extends MainPage {
     }
 
     public TuzelKisiYonetimiPage kepHizmetSaglayicisiSec(String value) {
-        cmbKepHizmetSaglayicisi.selectOption(value);
+        cmbPopupKepHizmetSaglayicisi.selectOption(value);
         return this;
     }
 

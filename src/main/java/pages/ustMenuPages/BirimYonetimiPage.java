@@ -55,12 +55,10 @@ public class BirimYonetimiPage extends MainPage {
     SelenideElement btnTableDuzenle = $(By.id("birimYonetimiListingForm:birimTreeTable:0:updateBirimButton"));
     SelenideElement btnKepAdresBilgileriArti = $(By.id("birimYonetimiEditorForm:kepBilgileriDataTable:addNewKepAdresiButton"));
 
-
     SelenideElement txtPopupKepAdresi= $(By.id("kepAdresBilgiEditorForm:kepAdresiInputTextId"));
     SelenideElement cmbPopupHizmetSaglayicisi = $(By.id("kepAdresBilgiEditorForm:kephs"));
     SelenideElement btnPopupKaydet = $(By.id("kepAdresBilgiEditorForm:saveKepAdresiButton"));
     SelenideElement btnKaydet = $(By.id("birimYonetimiEditorForm:saveBirimButton"));
-
 
     public BirimYonetimiPage openPage() {
         ustMenu("Birim Yönetimi");
@@ -285,5 +283,4 @@ public class BirimYonetimiPage extends MainPage {
         txtBirim.selectComboLov(text);
         return  this;
     }
-
 }

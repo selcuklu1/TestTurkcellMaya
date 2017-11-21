@@ -1,12 +1,10 @@
-package pages.solMenuPages;
+package pages.ustMenuPages;
 
 import com.codeborne.selenide.SelenideElement;
-import common.BaseLibrary;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
-import sun.applet.Main;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.confirm;
