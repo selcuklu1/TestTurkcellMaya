@@ -69,7 +69,6 @@ public class DriverEventListener extends BaseLibrary implements WebDriverEventLi
         try {
             ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", element);
         } catch (Exception e) {
-            e.printStackTrace();
         }
 //        System.out.println("Page loading completed..");
 //        System.out.println("Looking for element.. " + by.toString());
