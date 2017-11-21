@@ -14,12 +14,12 @@ public class EvrakOlusturTest extends BaseTest {
 
     @BeforeClass
     public void setUp() throws Exception {
-        login();
+
         evrakOlusturPage = new EvrakOlusturPage();
         evrakOlusturPage.open();
 
         tabBilgiler = evrakOlusturPage.new BilgilerTab();
-        tabBilgiler.openPage();
+        tabBilgiler.open();
         tabBilgiler.konuKoduSec("ss").getTxtKonu();
 
     }

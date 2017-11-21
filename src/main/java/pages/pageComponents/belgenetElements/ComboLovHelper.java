@@ -197,7 +197,8 @@ public class ComboLovHelper extends BaseLibrary {
 
         $(lovText).setValue(value);
 
-        $$(lovTreeListSelectableItems).shouldHave(sizeGreaterThan(0)).get(0).click();
+        //$$(lovTreeListSelectableItems).shouldHave(sizeGreaterThan(0)).get(0).click();
+        $$(lovTreeListSelectableItemsTitle).shouldHave(sizeGreaterThan(0)).filterBy(exactText(value)).get(0).click();
 
 //        title = selectList.get(0).find(lovItemTitle).text();
 //        detail = selectList.get(0).find(lovItemDetail).text();

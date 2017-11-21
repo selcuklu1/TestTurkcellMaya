@@ -135,58 +135,7 @@ public class EvrakOlusturPage {
             return this;
         }
 
-        @Step("Evrak Dili alanında \"{0}\" seç")
-        public BilgilerTab evrakDiliSec(String text) {
-            cmbEvrakDili.selectOption(text);
-//            if (cmbEvrakTuru.getSelectedOption().equals(text))
-//                throw new RuntimeException("Alan seçilemedi");
-            return this;
-        }
-
-        @Step("Gizlilik Derecesi alanında \"{0}\" seç")
-        public BilgilerTab gizlilikDerecesiSec(String text) {
-            cmbGizlilikDerecesi.selectOption(text);
-            return this;
-        }
-
-        @Step("Kanun Kapsam Tipi normal seç")
-        public BilgilerTab kanunKapsamTipiNormalSec() {
-            rdbKanunKapsamTipiNormal.click();
-            return this;
-        }
-
-        @Step("Kanun Kapsam Tipi Bilgi Edinme Kanunu seç")
-        public BilgilerTab kanunKapsamTipiBilgiEdinmeKanunuSec() {
-            rdbKanunKapsamTipiBilgiEdinmeKanunu.click();
-            return this;
-        }
-
-        @Step("Kanun Kapsam Tipi Kisisel Verilerin Korunmasi Kanunu seç")
-        public BilgilerTab kanunKapsamTipiKisiselVerilerinKorunmasiKanunuSec() {
-            rdbKanunKapsamTipiKisiselVerilerinKorunmasiKanunu.click();
-            return this;
-        }
-
-        @Step("Evrak Sayi Ek Metni alanında \"{0}\" seç")
-        public BilgilerTab evrakSayiEkMetniSec(String text) {
-            txtEvrakSayiEkMetni.setValue(text);
-            return this;
-        }
-
-        @Step("Açıklama gir")
-        public BilgilerTab aciklamaSec(String text) {
-            txtAciklama.setValue(text);
-            return this;
-        }
-
-        @Step("İvedik seç")
-        public BilgilerTab ivedikSec(String text) {
-            cmbIvedik.selectOption(text);
-            return this;
-        }
-
-
-        public BilgilerTab openPage() {
+        public BilgilerTab open() {
             if (divContainer.is(not(visible)))
                 tabBilgiler.click();
 
