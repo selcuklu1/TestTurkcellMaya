@@ -2,6 +2,7 @@ package common;
 
 import com.codeborne.selenide.Configuration;
 import listeners.SettingsListener;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import pages.LoginPage;
@@ -11,6 +12,7 @@ import pages.pageComponents.belgenetElements.BelgenetFramework;
 import java.util.Locale;
 
 import static data.TestData.belgenetURL;
+
 
 @Listeners({SettingsListener.class})
 public class BaseTest extends BaseLibrary{
@@ -28,6 +30,9 @@ public class BaseTest extends BaseLibrary{
         Configuration.baseUrl = belgenetURL;
         Configuration.browser = "drivers.Firefox";
         //org.openqa.selenium.chrome.FirefoxDriver;
+        Configuration.browser = "marionette";
+//        Configuration.browser = "drivers.Firefox"; //
+        //"org.openqa.selenium.Firefox.FirefoxDriver";
         Configuration.reportsFolder = "test-result/reports";
         Configuration.screenshots = false;
         Configuration.savePageSource = false;
@@ -36,8 +41,11 @@ public class BaseTest extends BaseLibrary{
         Configuration.holdBrowserOpen = true;
 //        Configuration.startMaximized = true;
 //        Configuration.headless = true;
-//        Configuration.browserSize = "1024x768";
+//        Configuration.browserSize = "1024x600";
         //endregion
+
+
+        System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, "/dev/null");
     }
 
     public void login(){

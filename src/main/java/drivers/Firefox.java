@@ -3,9 +3,12 @@ package drivers;
 import com.codeborne.selenide.WebDriverProvider;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxDriverLogLevel;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.remote.DesiredCapabilities;
+
+import java.util.logging.Level;
 
 public class Firefox implements WebDriverProvider {
     @Override
@@ -19,7 +22,10 @@ public class Firefox implements WebDriverProvider {
         FirefoxOptions options = new FirefoxOptions()
                 .setProfile(profile)
                 .setAcceptInsecureCerts(true)
-                .addPreference("security.insecure_field_warning.contextual.enabled", false);
+                .addPreference("security.insecure_field_warning.contextual.enabled", false)
+                .setLogLevel(FirefoxDriverLogLevel.fromLevel(Level.OFF));
+//        System.setProperty(FirefoxDriver.SystemProperty.DRIVER_USE_MARIONETTE,"false");
+//        System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE,"/dev/null");
 
         return new FirefoxDriver(options);
     }

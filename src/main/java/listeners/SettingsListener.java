@@ -35,7 +35,6 @@ public class SettingsListener extends TestNG.ExitCodeListener {
     public void onTestFailure(ITestResult result) {
         super.onTestFailure(result);
         takeScreenshotOnFail();
-        System.out.println(" ------- Test Failed -------");
     }
 
     @Override
@@ -53,5 +52,6 @@ public class SettingsListener extends TestNG.ExitCodeListener {
         //<editor-fold desc="Register DriverEventListener to implement loading pages wait">
         WebDriverRunner.setWebDriver((new EventFiringWebDriver(WebDriverRunner.getWebDriver()).register(new DriverEventListener())));
         //</editor-fold>
+
     }
 }

@@ -77,7 +77,7 @@ public class YonetimHavuzuYonetimiPage extends MainPage {
 
             txtFiltreBirim.setValue(birimAdi);
             treeFiltreBirimler
-                    .filterBy(exactText(birimAdi))
+                    .filterBy(text(birimAdi))
                     .get(0)
                     .click();
              */
@@ -93,7 +93,7 @@ public class YonetimHavuzuYonetimiPage extends MainPage {
 
         if (checkIfExists == true && yonetimHavuzuAdi != null) {
             trYonetimHavuzuListesi
-                    .filterBy(exactText(yonetimHavuzuAdi))
+                    .filterBy(text(yonetimHavuzuAdi))
                     .get(0)
                     .shouldBe(exist);
         }
@@ -181,7 +181,7 @@ public class YonetimHavuzuYonetimiPage extends MainPage {
         if (yonetimHavuzuBirimler != null) {
             for (int i = 0; i < yonetimHavuzuBirimler.length; i++) {
                 trKullananBirimListesi
-                        .filterBy(exactText(yonetimHavuzuBirimler[i]))
+                        .filterBy(text(yonetimHavuzuBirimler[i]))
                         .get(0)
                         .shouldBe(exist);
             }
@@ -190,7 +190,7 @@ public class YonetimHavuzuYonetimiPage extends MainPage {
         if (yonetimHavuzuKullanicilar != null) {
             for (int i = 0; i < yonetimHavuzuKullanicilar.length; i++) {
                 trKullaniciListesi
-                        .filterBy(exactText(yonetimHavuzuKullanicilar[i]))
+                        .filterBy(text(yonetimHavuzuKullanicilar[i]))
                         .get(0)
                         .shouldBe(exist);
             }
@@ -210,7 +210,7 @@ public class YonetimHavuzuYonetimiPage extends MainPage {
 
         btnKullananBirimKaydet.click();
         trKullananBirimListesi
-                .filterBy(exactText(EklenilenBirimAdi))
+                .filterBy(text(EklenilenBirimAdi))
                 .get(0)
                 .shouldBe(exist);
         return this;
@@ -223,13 +223,13 @@ public class YonetimHavuzuYonetimiPage extends MainPage {
         btnKullaniciTanimla.click();
         txtKullaniciAdi.setValue(kullaniciAdi);
         treeKullanicilar
-                .filterBy(exactText(kullaniciAdi))
+                .filterBy(text(kullaniciAdi))
                 .get(0)
                 .click();
 
         btnKullanicilarKaydet.click();
         trKullaniciListesi
-                .filterBy(exactText(kullaniciAdi))
+                .filterBy(text(kullaniciAdi))
                 .get(0)
                 .shouldBe(exist);
 
@@ -239,13 +239,13 @@ public class YonetimHavuzuYonetimiPage extends MainPage {
     @Step("Yönetim Havuzunda Tanımlı Kullanıcı sil")
     public YonetimHavuzuYonetimiPage kullaniciSil(String kullaniciAdi) {
         trKullaniciListesi
-                .filterBy(exactText(kullaniciAdi))
+                .filterBy(text(kullaniciAdi))
                 .get(0)
                 .$("button[id*='deleteYonetimHavuzuKullaniciBirimButton']")
                 .click();
 
         trKullaniciListesi
-                .filterBy(exactText(kullaniciAdi))
+                .filterBy(text(kullaniciAdi))
                 .shouldHave(CollectionCondition.sizeLessThan(1));
         // yonetimHavuzuYonetimiEditorForm:yonetimHavuzuKullaniciBirimDataTable:0:deleteYonetimHavuzuKullaniciBirimButton
         return this;

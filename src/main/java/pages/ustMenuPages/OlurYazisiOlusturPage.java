@@ -16,7 +16,7 @@ public class OlurYazisiOlusturPage extends MainPage {
     SelenideElement btnOnayAkisiEkle = $("#yeniOnayEvrakForm button[id*='onayAkisiEkle']");
     ElementsCollection trOnayAkisiEkleKullanicilar = $$("tbody[id*='akisAdimLov:LovSecilenTable_data'] tr[role='row']");
     ElementsCollection listOnayAkisikullanicilar = $$("div[id*='akisAdimLov:lovTree'] ul li");
-    SelenideElement txtOnayAkisiKullanicilarInput = $("input[id^='yeniOnayEvrakForm:evrakBilgileriList:'][id$=':akisLov:LovText']");
+    SelenideElement txtOnayAkisiKullanicilarInput = $("input[id^='yeniOnayEvrakForm:evrakBilgileriList:'][id$=':akisAdimLov:LovText']");
     SelenideElement btnOnayAkisiPanelKapat = $("button[id^='yeniOnayEvrakForm:evrakBilgileriList:'][id$=':akisLov:lovTreePanelKapat']");
 
     @Step("Olur yazısı oluştur sayfasını aç")
@@ -34,7 +34,7 @@ public class OlurYazisiOlusturPage extends MainPage {
     @Step("Onay akışında güncel gelen kullanıcıyı kontrol et")
     public OlurYazisiOlusturPage onayAkisiKullaniciKontrol(String kullaniciAdi, String kullaniciTipi) {
         trOnayAkisiEkleKullanicilar
-                .filterBy(exactText(kullaniciAdi))
+                .filterBy(text(kullaniciAdi))
                 .get(0)
                 .shouldBe(exist)
                 .$("select[id*='selectOneMenu']")
@@ -47,12 +47,12 @@ public class OlurYazisiOlusturPage extends MainPage {
         txtOnayAkisiKullanicilarInput.setValue(kullaniciAdi);
         if (exist == true)
             listOnayAkisikullanicilar
-                    .filterBy(exactText(kullaniciAdi))
+                    .filterBy(text(kullaniciAdi))
                     .get(0)
                     .shouldBe(Condition.exist);
         else
             listOnayAkisikullanicilar
-                    .filterBy(exactText(kullaniciAdi))
+                    .filterBy(text(kullaniciAdi))
                     .get(0)
                     .shouldBe(not(Condition.exist));
 

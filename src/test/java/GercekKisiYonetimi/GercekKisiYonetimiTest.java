@@ -23,14 +23,14 @@ public class GercekKisiYonetimiTest extends BaseTest {
 
     @BeforeMethod
     public void loginBeforeTests() {
+        login();
         gercekKisiYonetimPage = new GercekKisiYonetimPage();
         evrakOlusturPage = new EvrakOlusturPage();
         gelenEvrakKayitPage = new GelenEvrakKayitPage();
-        login();
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC1516: Gerçek kişi tanımlama ve  kontrolü")
+    @Test(enabled = true, description = "TC1516: Gerçek kişi tanımlama ve kontrolü")
     public void TC1516() throws InterruptedException {
 
         String tcNO = createMernisTCKN();
@@ -163,8 +163,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
         String kepMesaj2 = "Girilen kep adresi geçersiz!";
         String basariMesaji = "İşlem başarılıdır!";
 
-        gercekKisiYonetimPage
-                .openPage()
+        gercekKisiYonetimPage.openPage()
                 .yeniGercekKisiEkle()
                 .kaydet()
                 .zorunluAdSoyadAlanKontrolu()

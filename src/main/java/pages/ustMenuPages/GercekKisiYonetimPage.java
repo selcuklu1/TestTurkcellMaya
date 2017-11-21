@@ -23,6 +23,7 @@ public class GercekKisiYonetimPage extends MainPage {
     SelenideElement cmbFiltreDurum = $(By.id("gercekKisiYonetimiListingForm:filterPanel:durumSelectBox"));
     SelenideElement filtreSorgulamaPanel = $(By.id("gercekKisiYonetimiListingForm:filterPanel"));
     SelenideElement btnAra = $(By.id("gercekKisiYonetimiListingForm:filterPanel:searchGercekKisiButton"));
+    SelenideElement btnGuncelle =$(By.id("gercekKisiYonetimiListingForm:gercekKisiDataTable:0:updateGercekKisiButton"));
 
     //Gerçek Kişi Ekleme
     SelenideElement txtTCKimlikNo = $(By.id("gercekKisiYonetimiEditorForm:tcKimlikNoInput"));
@@ -71,11 +72,18 @@ public class GercekKisiYonetimPage extends MainPage {
     SelenideElement btnUpdate = $(By.id("gercekKisiYonetimiListingForm:gercekKisiDataTable:0:updateGercekKisiButton"));
     //</editor-fold>
 
+
     public GercekKisiYonetimPage openPage() {
         ustMenu("Gerçek Kişi Yönetimi");
         return this;
     }
 
+
+    @Step("Güncelle Button ekle")
+    public GercekKisiYonetimPage guncelle(){
+        btnGuncelle.click();
+        return this;
+    }
 
     @Step("Yeni gerçek kişi ekle")
     public GercekKisiYonetimPage yeniGercekKisiEkle() {
@@ -83,9 +91,10 @@ public class GercekKisiYonetimPage extends MainPage {
         return this;
     }
 
-    @Step("Kaydet")
+    //    @Step("Kaydet")
     public GercekKisiYonetimPage kaydet() {
-        btnKaydet.click();
+        clickJs(btnKaydet);
+//        btnKaydet.click();
         if (btnEvetPopup.isDisplayed()) {
             btnEvetPopup.click();
         }

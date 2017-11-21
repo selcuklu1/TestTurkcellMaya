@@ -1,5 +1,7 @@
 package pages;
 
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
@@ -7,8 +9,9 @@ import org.testng.Assert;
 import pages.pageComponents.UstMenu;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
-import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 import static pages.pageComponents.belgenetElements.BelgentCondition.not;
 import static pages.pageComponents.belgenetElements.BelgentCondition.required;
@@ -87,6 +90,21 @@ public class EvrakOlusturPage {
 
         SelenideElement chkDagitimiEkYap = $("input[id$='dagitimEkYapCheckBoxId_input']");
         BelgenetElement cmbOnayAkisi = comboLov("input[id$='akisLov:LovText']");
+
+
+        // Onay Akışı Elementleri
+        SelenideElement btnOnayAkisiEkle = $("button[id*='onayAkisiEkle']");
+        ElementsCollection trOnayAkisiEkleKullanicilar = $$("tbody[id*='akisAdimLov:LovSecilenTable_data'] tr[role='row']");
+        SelenideElement btnOnayAkisiKullaniciKullan = $("button[id^='yeniGidenEvrakForm:evrakBilgileriList:'][id$='anlikAkisKullanButton']");
+        BelgenetElement txtOnayAkisiKullanicilar = comboLov("[id$='akisAdimLov:LovText']");
+        ElementsCollection listOnayAkisikullanicilar = $$("div[id*='akisAdimLov:lovTree'] ul li");
+
+        SelenideElement txtOnayAkisiKullanicilarInput = $("input[id^='yeniGidenEvrakForm:evrakBilgileriList:'][id$=':akisAdimLov:LovText']");
+        SelenideElement listOnayAkisiKullanilan = $("div[id*='akisLov:lovContainer'] div[class*='lovSelection processEt'] tbody");
+        SelenideElement btnOnayAkisiPanelKapat = $("button[id^='yeniGidenEvrakForm:evrakBilgileriList:'][id$=':akisAdimLov:lovTreePanelKapat']");
+
+
+
         //endregion
 
         public boolean isOnTabPage() {
@@ -207,6 +225,88 @@ public class EvrakOlusturPage {
 
         public SelenideElement getKonu() {
             return txtKonu;
+        }
+
+
+        // Onay Akışı İşlemleri
+
+        public BilgilerTab onayAkisiEkle(){
+            btnOnayAkisiEkle.click();
+            return this;
+        }
+
+        @Step("Onay akışı adı doldur")
+        public BilgilerTab onayAkisiDoldur(boolean onayAkisi) throws InterruptedException {
+            //TODO: Fonksiyonu yazılacak.
+            return this;
+        }
+
+        @Step("Onay akışı kullanıcı ekle")
+        public BilgilerTab onayAkisiKullaniciEkle(String kullaniciAdi) {
+            btnOnayAkisiEkle.click();
+            txtOnayAkisiKullanicilar.selectComboLov(kullaniciAdi);
+            return this;
+        }
+
+        @Step("Onay akışı kullanıcı adı ve tipi kontrol et")
+        public BilgilerTab onayAkisiKullaniciKontrol(String kullaniciAdi, String kullaniciTipi){
+            trOnayAkisiEkleKullanicilar
+                    .filterBy(text(kullaniciAdi))
+                    .get(0)
+                    .shouldBe(exist)
+                    .$("select[id*='selectOneMenu']")
+                    .shouldHave(value(kullaniciTipi));
+            return this;
+        }
+
+        @Step("Onay akışı kullanıcı tipi seç")
+        public BilgilerTab onayAkisiKullaniciTipiSec(String kullaniciAdi, String kullaniciTipi){
+            trOnayAkisiEkleKullanicilar
+                    .filterBy(text(kullaniciAdi))
+                    .get(0)
+                    .shouldBe(exist)
+                    .$("select[id*='selectOneMenu']")
+                    .selectOptionContainingText(kullaniciTipi);
+            return this;
+        }
+
+        @Step("Onay akışı kullan butonu tıkla")
+        public BilgilerTab onayAkisiKullan(){
+            //WebDriverRunner.getWebDriver().findElement(By.cssSelector("button[id$='anlikAkisKullanButton']"));
+        /*$$("button[id$='anlikAkisKullanButton']").get(0).scrollTo();
+        executeJavaScript("arguments[0].click();",$("button[id$='anlikAkisKullanButton']"));
+        scrollIntoView();*/
+            //executeJavaScript("arguments[0].scrollIntoView();",btnOnayAkisiKullaniciKullan);
+            btnOnayAkisiKullaniciKullan.click();
+            return this;
+        }
+
+        @Step("Onay akışı listesinde listelenen kullanıcıyı kontrol et")
+        public BilgilerTab onayAkisiTreeKullaniciKontrol(String kullaniciAdi, Boolean exist){
+
+            txtOnayAkisiKullanicilarInput.setValue(kullaniciAdi);
+            if (exist == true)
+                listOnayAkisikullanicilar
+                        .filterBy(text(kullaniciAdi))
+                        .get(0)
+                        .shouldBe(Condition.exist);
+            else
+                listOnayAkisikullanicilar
+                        .filterBy(text(kullaniciAdi))
+                        .get(0)
+                        .shouldBe(not(Condition.exist));
+
+            if(btnOnayAkisiPanelKapat.isDisplayed())
+                btnOnayAkisiPanelKapat.click();
+
+            return this;
+        }
+
+        @Step("Kullanılan onay akışı kontrol et")
+        public BilgilerTab onayAkisiKullanilanKullanilanKontrolEt(String kullaniciAdi){
+            listOnayAkisiKullanilan
+                    .$(By.xpath(".//span[contains(., '"+kullaniciAdi+"') and @class='lovItemDetail']")).shouldBe(exist);
+            return this;
         }
 
     }
