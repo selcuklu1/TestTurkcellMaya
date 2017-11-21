@@ -1,11 +1,12 @@
 package pages.ustMenuPages;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
-import pages.pageComponents.UstMenu;
+import pages.pageComponents.IslemMesajlari;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
 import static com.codeborne.selenide.Selenide.$;
@@ -13,6 +14,7 @@ import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 public class GercekKisiYonetimPage extends MainPage {
 
+    //<editor-fold desc="Elements">
     //Sorgulama ve Filtreleme
     SelenideElement btnGercekKisiEkle = $(By.id("gercekKisiYonetimiListingForm:gercekKisiDataTable:addNewGercekKisiButton"));
     SelenideElement txtFiltreTCKimlikNo = $(By.id("gercekKisiYonetimiListingForm:filterPanel:gercekKisiTcKimlikNoFilterInput"));
@@ -66,6 +68,7 @@ public class GercekKisiYonetimPage extends MainPage {
     SelenideElement tblePasif = $(By.id("div[id^='gercekKisiYonetimiListingForm:gercekKisiDataTable'] td[class$='center-aligned passive-cell']"));
     SelenideElement btnAktif = $(By.id("gercekKisiYonetimiListingForm:gercekKisiDataTable:0:aktifEtGercekKisi"));
     SelenideElement tbleGercekKisiDataTable = $(By.id("gercekKisiYonetimiListingForm:gercekKisiDataTable"));
+    //</editor-fold>
 
     public GercekKisiYonetimPage openPage() {
         ustMenu("Gerçek Kişi Yönetimi");
@@ -127,7 +130,6 @@ public class GercekKisiYonetimPage extends MainPage {
     @Step("TC doldur")
     public GercekKisiYonetimPage tcKimlikNoDoldur(String text) {
         txtTCKimlikNo.setValue(text);
-        createMernisTCNO();
         return this;
     }
 

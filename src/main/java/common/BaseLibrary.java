@@ -247,7 +247,7 @@ public class BaseLibrary {
     }
 
     //Random tc yaratır mernis sorgusundan geçecek şekilde.
-    public String createMernisTCNO() {
+    public String createMernisTCKN() {
         Vector<Integer> array = new Vector<Integer>();
         Random randomGenerator = new Random();
         array.add(new Integer(1 + randomGenerator.nextInt(9)));

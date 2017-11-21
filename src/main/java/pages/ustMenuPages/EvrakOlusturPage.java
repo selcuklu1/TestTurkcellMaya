@@ -6,6 +6,7 @@ import common.BaseLibrary;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
+import pages.MainPage;
 import pages.pageComponents.UstMenu;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
@@ -14,7 +15,7 @@ import static com.codeborne.selenide.Selenide.executeJavaScript;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 
-public class EvrakOlusturPage extends BaseLibrary {
+public class EvrakOlusturPage extends MainPage {
 
     // dolar işareti $=findElement anlamına gelir, $$=findElements
 

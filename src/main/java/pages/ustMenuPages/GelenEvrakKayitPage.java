@@ -36,9 +36,10 @@ public class GelenEvrakKayitPage extends MainPage {
     SelenideElement cmbEvrakBilgileriListGizlilikDerecesi = $("[id$='guvenlikKodu']");
 
 
-    // SelenideElement cmbEvrakBilgileriListKisiKurum = $(By.id("evrakBilgileriForm:evrakBilgileriList:9:kisiKurum"));
-    SelenideElement cmbEvrakBilgileriListKisiKurum = $("[id$='kisiKurum']");
-    BelgenetElement txtEvrakBilgileriListGeldigiKurum = comboLov(By.id("evrakBilgileriForm:evrakBilgileriList:9:geldigiGercekKisiLov:LovText"));
+    SelenideElement cmbEvrakBilgileriListKisiKurum = $(By.id("evrakBilgileriForm:evrakBilgileriList:9:kisiKurum"));
+    //SelenideElement cmbEvrakBilgileriListKisiKurum = $("[id$='kisiKurum']");
+    //BelgenetElement txtEvrakBilgileriListGeldigiKisi = comboLov(By.id("evrakBilgileriForm:evrakBilgileriList:9:geldigiGercekKisiLov:LovText"));
+    BelgenetElement txtEvrakBilgileriListGeldigiKisi = comboLov("[id$='geldigiGercekKisiLov:LovText']");
 
     SelenideElement txtEvrakBilgileriListEvrakSayiTextAreaSol = $("[id$='evrakSayiTextAreaSol'");
     SelenideElement txtEvrakBilgileriListEvrakSayiTextAreaSag = $("[id$='evrakSayiTextAreaSag']");
@@ -109,6 +110,7 @@ public class GelenEvrakKayitPage extends MainPage {
     SelenideElement datetxtIlgiIslemleriTabViewIlgiIslemleriEvrakTarihSon = $(By.id("evrakBilgileriForm:ilgiIslemleriTabView:ilgiIslemleriEvrakTarihSonId_input"));
     SelenideElement cmbIlgiIslemleriTabViewIlgiIslemleriEvrakAramaAranacakYer = $(By.xpath("//*[@id='evrakBilgileriForm:ilgiIslemleriTabView:ilgiIslemleriEvrakAramaAranacakYerId']"));
     SelenideElement txtIlgiIslemleriTabViewEvrakArama = $(By.xpath("//*[@id='evrakBilgileriForm:ilgiIslemleriTabView:evrakAramaText']"));
+
     //Arşivde Kayıtlı Evrak Ekle
     SelenideElement dateTxtIlgiIslemleriTabViewArsivdenEvrakAraIlgiEkleTarihBas = $(By.id("evrakBilgileriForm:ilgiIslemleriTabView:arsivdenEvrakAraIlgiEkleTarihBasId_input"));
     SelenideElement dateTxtIlgiIslemleriTabViewArsivdenEvrakAraIlgiEkleTarihSon = $(By.id("evrakBilgileriForm:ilgiIslemleriTabView:arsivdenEvrakAraIlgiEkleTarihSonId_input"));
@@ -197,18 +199,16 @@ public class GelenEvrakKayitPage extends MainPage {
     }
 
 
-    @Step("Kişi kurum doldur")
-    public GelenEvrakKayitPage evrakBilgileriListGeldigiKurumDoldur(String geldigiKurum) {
+    @Step("Geldiği kişi doldur")
+    public GelenEvrakKayitPage evrakBilgileriListGeldigiKisiDoldur(String geldigiKisi) {
 
-        txtEvrakBilgileriListGeldigiKurum.selectComboLov(geldigiKurum);
-        //shouldHave(Condition.text(geregi));
+        txtEvrakBilgileriListGeldigiKisi.selectComboLov(geldigiKisi);
 
-        System.out.println("title: " + txtEvrakBilgileriListGeldigiKurum.lastSelectedLovTitleText());
-        System.out.println("detail: " + txtEvrakBilgileriListGeldigiKurum.lastSelectedLovDetailText());
+        System.out.println("title: " + txtEvrakBilgileriListGeldigiKisi.lastSelectedLovTitleText());
+        System.out.println("detail: " + txtEvrakBilgileriListGeldigiKisi.lastSelectedLovDetailText());
         return this;
     }
 
-    //Lütfen metodları commentlemeyelim. Başka testler kullanıyor olabilir.
     public GelenEvrakKayitPage evrakBilgileriListGeldigiKurumDoldurLovText(String geldigiKurum) throws InterruptedException {
         comnoGeldigiKurum.selectComboLov(geldigiKurum);
         return this;
