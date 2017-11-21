@@ -31,7 +31,6 @@ public class KurumYonetimiPage extends MainPage {
         return this;
     }
 
-
     public KurumYonetimiPage idariBirimKimlikKoduCek() throws InterruptedException{
         text = txtIdariBirimKimlikKodu.getValue();
         System.out.println("Metin değer "+text);
@@ -109,6 +108,15 @@ public class KurumYonetimiPage extends MainPage {
 
     public KurumYonetimiPage kurumDoldur(String text) {
         txtKurum.setValue(text);
+        return this;
+    }
+
+
+
+    // Hüseyin Tümer fonksiyonları
+
+    public KurumYonetimiPage kurumGuncelle(String kurumAdi){
+
         return this;
     }
 

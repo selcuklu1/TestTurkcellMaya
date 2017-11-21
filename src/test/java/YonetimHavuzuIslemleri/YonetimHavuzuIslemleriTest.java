@@ -11,23 +11,27 @@ import pages.ustMenuPages.YonetimHavuzuYonetimiPage;
 public class YonetimHavuzuIslemleriTest extends BaseTest {
 
     EvrakOlusturPage evrakOlusturPage;
-    EvrakOlusturPage.BilgilerTab bilgilerTab;
+    EvrakOlusturPage.BilgilerTab evrakBilgilerTab;
     YonetimHavuzuYonetimiPage yonetimHavuzuYonetimiPage;
     OlurYazisiOlusturPage olurYazisiOlusturPage;
+    OlurYazisiOlusturPage.BilgilerTab olurYazisiBilgilerTab;
+
 
 
     @BeforeMethod
     public void loginBeforeTests() {
         evrakOlusturPage = new EvrakOlusturPage();
-        bilgilerTab = new EvrakOlusturPage().new BilgilerTab();
+        evrakBilgilerTab = new EvrakOlusturPage().new BilgilerTab();
         yonetimHavuzuYonetimiPage = new YonetimHavuzuYonetimiPage();
         olurYazisiOlusturPage = new OlurYazisiOlusturPage();
+        olurYazisiBilgilerTab = new OlurYazisiOlusturPage().new BilgilerTab();
         login();
     }
 
     @Test(enabled = true, description = "TC0001")
     public void TC0001() {
 
+        /*
         yonetimHavuzuYonetimiPage
                 .openPage()
                 .ara("Optiim Birim", "Test-tec01", "Sadece Aktifler", true)
@@ -37,14 +41,15 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
 
 
         evrakOlusturPage.open();
-        bilgilerTab
+        evrakBilgilerTab
                 .open()
                 .onayAkisiEkle()
                 .onayAkisiKullaniciKontrol("Optiim TEST", "Paraflama")
                 .onayAkisiTreeKullaniciKontrol("Veysel KIRAN", false);
+        */
 
-
-        olurYazisiOlusturPage
+        olurYazisiOlusturPage.open();
+        olurYazisiBilgilerTab
                 .open()
                 .onayAkisiEkle()
                 .onayAkisiKullaniciKontrol("Optiim TEST", "Paraflama")
@@ -64,7 +69,7 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
 
 
         evrakOlusturPage.open();
-        bilgilerTab
+        evrakBilgilerTab
                 .open()
                 .onayAkisiEkle()
                 .onayAkisiKullaniciKontrol("Optiim OPTİİM ", "Paraflama")
@@ -81,7 +86,7 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
 
 
         evrakOlusturPage.open();
-        bilgilerTab
+        evrakBilgilerTab
                 .open()
                 .onayAkisiEkle()
                 .onayAkisiKullaniciKontrol("Zübeyde TEKİN ", "Paraflama")
