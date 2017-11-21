@@ -1,7 +1,6 @@
 package common;
 
 import com.codeborne.selenide.Configuration;
-import com.fasterxml.jackson.databind.ser.Serializers;
 import listeners.SettingsListener;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
@@ -45,11 +44,11 @@ public class BaseTest extends BaseLibrary{
         new LoginPage().login();
     }
 
-    public void login(String username, String password){
+    public void login(String username, String password) {
         new LoginPage().login(username, password);
     }
 
-    public void logout(){
+    public void logout() {
         new MainPage().logout();
     }
 

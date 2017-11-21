@@ -20,7 +20,7 @@ public class EvrakOlusturTest extends BaseTest {
 
         tabBilgiler = evrakOlusturPage.new BilgilerTab();
         tabBilgiler.open();
-        tabBilgiler.konuKoduSec("ss").getTxtKonu();
+        tabBilgiler.konuKoduSec("ss");
 
     }
 
@@ -41,8 +41,8 @@ public class EvrakOlusturTest extends BaseTest {
     @DataProvider
     public Object[][] zorunluAlanlar1() {
         return new Object[][]{
-                {"Konu Kodu", tabBilgiler.getCmlKonuKodu()}
-                , {"Konu", tabBilgiler.getTxtKonu()}
+//                {"Konu Kodu", tabBilgiler.getCmlKonuKodu()}
+//                , {"Konu", tabBilgiler.getTxtKonu()}
         };
     }
 }
