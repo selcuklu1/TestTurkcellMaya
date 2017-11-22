@@ -293,9 +293,10 @@ public class ComboLovHelper extends BaseLibrary {
 
         if ($$(lovTreeListSelectableItemsTitle).size() == 0)
             selectable = false;
-        else {
+        else if ($$(lovTreeListSelectableItemsTitle).size() == 1)
+            selectable = true;
+        else
             selectable = $$(lovTreeListSelectableItemsTitle).filterBy(exactText(value)).size() > 0;
-        }
 
         try {
             Allure.addAttachment("Seçilebilir mi?", "");
