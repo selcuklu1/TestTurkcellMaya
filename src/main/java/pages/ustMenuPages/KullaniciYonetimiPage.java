@@ -5,6 +5,7 @@ import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import pages.pageComponents.UstMenu;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
 import static com.codeborne.selenide.Selenide.$;
@@ -27,6 +28,17 @@ public class KullaniciYonetimiPage extends BaseLibrary {
     SelenideElement chkGorevSuresiDolanlar = $(By.id("kullaniciYonetimiListingForm:filterPanel:gorevSuresiDolanlarCheckbox"));
     SelenideElement chkBirimiOlmayanlar = $(By.id("kullaniciYonetimiListingForm:filterPanel:birimiOlmayanlarCheckbox"));
     SelenideElement chkAltBirimiOlmayanlar = $(By.id("kullaniciYonetimiListingForm:filterPanel:altBirimlerDahilCheckbox"));
+    SelenideElement tblKolonBirim = $(By.xpath("//*[@id='kullaniciYonetimiListingForm:kullaniciDataTable:j_idt10843']/div"));
+    SelenideElement btnKullaniciListesiGuncelle = $("[id^='kullaniciYonetimiListingForm:kullaniciDataTable'][id$='updateKullaniciButton']");
+    SelenideElement tblGorevliOlduguBirimler = $(By.id("kullaniciYonetimiEditorForm:kullaniciBirimDataTable"));
+    SelenideElement btnGorevliOlduguBirimlerGuncelle = $("[id^='kullaniciYonetimiEditorForm:kullaniciBirimDataTable][id$='updateKullaniciBirimButton']");
+    SelenideElement cmbKullaniciBirimAtamaGizlilikDerecesi = $(By.id("kullaniciBirimEditorForm:kullaniciGuvenlikKoduSelect"));
+    SelenideElement btnKullaniciBirimAtamaKaydet = $(By.id("kullaniciBirimEditorForm:saveKullaniciBirimButton"));
+
+    public KullaniciYonetimiPage openPage() {
+        new UstMenu().ustMenu("Kullanıcı Yönetimi");
+        return this;
+    }
 
     @Step("Birim alanında \"{0}\" sec")
     public KullaniciYonetimiPage birimSec(String text) {
@@ -97,6 +109,37 @@ public class KullaniciYonetimiPage extends BaseLibrary {
 
     public KullaniciYonetimiPage ara() {
         btnAra.click();
+        return this;
+    }
+
+    @Step("Birim Kontrol")
+    public KullaniciYonetimiPage tabloBirimKontrol() {
+        tblKolonBirim.exists();
+        return this;
+    }
+    @Step("Güncelle butonu")
+    public KullaniciYonetimiPage kullaniciListesiGuncelleButonuTikla() {
+        btnKullaniciListesiGuncelle.exists();
+        return this;
+    }
+    @Step("Gorevli oldugu birimler")
+    public KullaniciYonetimiPage gorevliOlduguBirimlerKontol() {
+        tblGorevliOlduguBirimler.exists();
+        return this;
+    }
+    @Step("Görevli olduğu birim guncelle")
+    public KullaniciYonetimiPage gorevliOlduguBirimGuncelle () {
+        btnGorevliOlduguBirimlerGuncelle.click();
+        return this;
+    }
+    @Step("Gizlilik derecesi seç")
+    public KullaniciYonetimiPage kullaniciBirimAtamaGizlilikDerecesiSec (String gizlilikDerecesi) {
+        cmbKullaniciBirimAtamaGizlilikDerecesi.selectOptionByValue(gizlilikDerecesi);
+        return this;
+    }
+    @Step("Kullanıcı Birim Atama Kaydet")
+    public KullaniciYonetimiPage kullaniciBirimAtamaKaydetTikla (String gizlilikDerecesi) {
+        btnKullaniciBirimAtamaKaydet.click();
         return this;
     }
 
