@@ -221,7 +221,7 @@ public class GelenEvrakKayitPage extends MainPage {
     }
 
     public GelenEvrakKayitPage evrakBilgileriListEvrakSayiSagDoldur() {
-        String evrakSayiSag = randomNumber(5);
+        String evrakSayiSag = createRandomNumber(5);
         txtEvrakBilgileriListEvrakSayiTextAreaSag.sendKeys(evrakSayiSag);
         return this;
     }

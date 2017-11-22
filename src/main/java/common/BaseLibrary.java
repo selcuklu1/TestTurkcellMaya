@@ -149,7 +149,7 @@ public class BaseLibrary {
 //    }
 
     //Random numara üretir.
-    public String randomNumber(int length) {
+    public String createRandomNumber(int length) {
         Random r = new Random();
         List<Integer> digits = new ArrayList<Integer>();
         String number = "";
