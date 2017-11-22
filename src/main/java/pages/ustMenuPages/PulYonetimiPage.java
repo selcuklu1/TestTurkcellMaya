@@ -1,17 +1,11 @@
 package pages.ustMenuPages;
 
-import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
-import common.BaseLibrary;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
-import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.UstMenu;
-import pages.solMenuPages.KaydedilenGelenEvraklarPage;
-
-import java.util.List;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
@@ -40,7 +34,8 @@ public class PulYonetimiPage extends MainPage {
 
     @Step("Yeni Pul ekle")
     public PulYonetimiPage yeniPulEkle() {
-        btnAddNewPul.click();
+//        btnAddNewPul.click();
+        clickJs(btnAddNewPul);
         return this;
     }
 

@@ -20,6 +20,7 @@ public class BelgenetFramework {
         Commands.getInstance().add("lastSelectedLovTitleText", comboLov.new LastSelectedLovTitleText());
         Commands.getInstance().add("lastSelectedLovDetailText", comboLov.new LastSelectedLovDetailText());
         Commands.getInstance().add("isLovSelected", comboLov.new IsLovSelected());
+        Commands.getInstance().add("isLovValueSelectable", comboLov.new IsLovValueSelectable());
         //endregion
         // region ComboBox
         Commands.getInstance().add("selectComboBox", comboBox.new SelectComboBox());

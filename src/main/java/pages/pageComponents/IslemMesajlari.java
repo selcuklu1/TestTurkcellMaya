@@ -1,5 +1,6 @@
 package pages.pageComponents;
 
+import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
 import io.qameta.allure.Step;
@@ -112,12 +113,12 @@ public class IslemMesajlari extends BaseLibrary {
     }
 
     public String getMessageTitle() {
-        messageTitle.waitUntil(visible, 10000);
+        messageTitle.waitUntil(visible, Configuration.timeout, 100);
         return messageTitle.text();
     }
 
     public String getMessageBody() {
-        messageBody.waitUntil(visible, 10000);
+        messageBody.waitUntil(visible, Configuration.timeout, 100);
         return messageBody.text();
     }
 

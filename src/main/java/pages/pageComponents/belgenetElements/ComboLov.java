@@ -73,4 +73,12 @@ class ComboLov {
             return isLovSelected(proxy);
         }
     }
+
+    class IsLovValueSelectable implements Command<Boolean> {
+
+        @Override
+        public Boolean execute(SelenideElement proxy, WebElementSource locator, Object[] args) throws IOException {
+            return isLovValueSelectable(proxy, args[0].toString());
+        }
+    }
 }

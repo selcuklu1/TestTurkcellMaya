@@ -15,8 +15,6 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
     OlurYazisiOlusturPage olurYazisiOlusturPage;
     OlurYazisiOlusturPage.BilgilerTab olurYazisiBilgilerTab;
 
-
-
     @BeforeMethod
     public void loginBeforeTests() {
         evrakOlusturPage = new EvrakOlusturPage();
