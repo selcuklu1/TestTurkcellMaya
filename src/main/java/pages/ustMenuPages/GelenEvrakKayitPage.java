@@ -36,6 +36,7 @@ public class GelenEvrakKayitPage extends MainPage {
     //SelenideElement cmbEvrakBilgileriListKisiKurum = $("[id$='kisiKurum']");
     //BelgenetElement txtEvrakBilgileriListGeldigiKisi = comboLov(By.id("evrakBilgileriForm:evrakBilgileriList:9:geldigiGercekKisiLov:LovText"));
     BelgenetElement txtEvrakBilgileriListGeldigiKisi = comboLov("[id$='geldigiGercekKisiLov:LovText']");
+    By cmbGeldiğiKisiBy = By.cssSelector("[id$='geldigiGercekKisiLov:LovText']");
 
     SelenideElement txtEvrakBilgileriListEvrakSayiTextAreaSol = $("[id$='evrakSayiTextAreaSol'");
     SelenideElement txtEvrakBilgileriListEvrakSayiTextAreaSag = $("[id$='evrakSayiTextAreaSag']");
@@ -207,6 +208,15 @@ public class GelenEvrakKayitPage extends MainPage {
 
         System.out.println("title: " + txtEvrakBilgileriListGeldigiKisi.lastSelectedLovTitleText());
         System.out.println("detail: " + txtEvrakBilgileriListGeldigiKisi.lastSelectedLovDetailText());
+        return this;
+    }
+
+    @Step("Geldiği kişi alanında görüntülenmediği kontrolu")
+    public GelenEvrakKayitPage geldigiKisiGoruntulenmemeKontrolu(String geldigiKisi) {
+
+        boolean selectable = comboLov(cmbGeldiğiKisiBy).isLovValueSelectable(geldigiKisi);
+        Assert.assertEquals(selectable, false, "MyCombolov alanında " + geldigiKisi + ": Gerçek kişinin görüntülenmediği görülür");
+        System.out.println("MyCombolov alanında " + geldigiKisi + ": Gerçek kişinin görüntülenmediği görülür.");
         return this;
     }
 
@@ -487,8 +497,8 @@ public class GelenEvrakKayitPage extends MainPage {
         }
         basariliPopUp.shouldBe(Condition.visible);
 
-            String evrakNo= getIntegerInText(By.id("evrakKaydetBasariliDialog"));
-            basariliPopUpKapat.click();
+        String evrakNo = getIntegerInText(By.id("evrakKaydetBasariliDialog"));
+        basariliPopUpKapat.click();
 
         return evrakNo;
     }
@@ -546,18 +556,20 @@ public class GelenEvrakKayitPage extends MainPage {
         txtEvrakEkTabViewEkMetni.sendKeys(aciklama);
         return this;
     }
+
     @Step("EkBilgiler dosya ekleme excel adi kontrol")
     public GelenEvrakKayitPage evrakBilgileriDosyaEklemeDosyaAdiKontrol(String excelAdi) {
         String text = lblDosyaAdi.text();
         System.out.println(text);
-        Assert.assertEquals(text,excelAdi);
+        Assert.assertEquals(text, excelAdi);
         return this;
     }
+
     @Step("Ust Yazi adi kontrol")
     public GelenEvrakKayitPage evrakBilgileriDosyaEklemeUstYaziAdiKontrol(String ustYaziAdi) {
         String text = lblEklenenUstYazi.text();
         System.out.println(text);
-        Assert.assertEquals(text.contains(ustYaziAdi),true);
+        Assert.assertEquals(text.contains(ustYaziAdi), true);
         return this;
     }
 

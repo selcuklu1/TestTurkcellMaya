@@ -57,6 +57,8 @@ public class EvrakOlusturPage extends MainPage {
     BelgenetElement txtGeregi = comboLov(By.id("yeniGidenEvrakForm:evrakBilgileriList:16:geregiLov:LovText"));
     SelenideElement btnGeregiTree = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:15:geregiLov:treeButton"));
     SelenideElement cmbPostaTipi = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:16:geregiLov:LovSecilenTable:0:selectOneMenu"));
+    By cmbGeregiBy = By.cssSelector("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='geregiLov:LovText']");
+
 
     SelenideElement chkDagitimiEkYap = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:16:dagitimEkYapCheckBoxId"));
     BelgenetElement txtOnayAkisi = comboLov("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='akisLov:LovText']");
@@ -66,10 +68,11 @@ public class EvrakOlusturPage extends MainPage {
 
     // Gereği - Dağıtım Hitap Düzenleme
     SelenideElement btnGeregiLovSecilemUpdate = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:16:geregiLov:LovSecilenTable:0:j_idt123"));
+    SelenideElement btnBilgiLovSecilemUpdate = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:15:bilgiLov:LovSecilenTable:0:j_idt123"));
+
     SelenideElement chkAdresHitaptaGorunsun = $(By.id("yeniGidenEvrakForm:j_idt5383"));
     SelenideElement chkAdresDagitimdaGorunsun = $(By.id("yeniGidenEvrakForm:j_idt5387"));
     SelenideElement btnDagitimHitapDuzenlemeKaydet = $(By.id("yeniGidenEvrakForm:j_idt5389"));
-
 
     //Editör tabı
     SelenideElement yeniGidenEvrakForm = $(By.id("cke_yeniGidenEvrakForm:ckeditorInstance_window1"));
@@ -169,6 +172,8 @@ public class EvrakOlusturPage extends MainPage {
     SelenideElement listOnayAkisikullanicilar = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:akisAdimLov:lovTree"));
 
     BelgenetElement txtcomboLovBilgi = comboLov(By.id("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='bilgiLov:LovText']"));
+    By cmbBilgiBy = By.cssSelector("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='bilgiLov:LovText']");
+
 
     public EvrakOlusturPage openPage() {
         new UstMenu().ustMenu("Evrak Oluştur");
@@ -259,6 +264,14 @@ public class EvrakOlusturPage extends MainPage {
         return this;
     }
 
+    @Step("Kişinin Bilgi alanında görüntülenmediği kontrolu")
+    public EvrakOlusturPage bilgiAlanindaGoruntulenmemeKontrolu(String bilgi) {
+        boolean selectable = comboLov(cmbBilgiBy).isLovValueSelectable(bilgi);
+        Assert.assertEquals(selectable, false, "MyCombolov alanında " + bilgi + ": Gerçek kişinin görüntülenmediği görülür");
+        System.out.println("MyCombolov alanında " + bilgi + ": Gerçek kişinin görüntülenmediği görülür.");
+        return this;
+    }
+
     @Step("Gereği seçim tipi seç")
     public EvrakOlusturPage geregiSecimTipiSec(String value) {
         cmbGeregiSecimTipi.selectOptionByValue(value);
@@ -274,6 +287,14 @@ public class EvrakOlusturPage extends MainPage {
         // System.out.println("title: " + txtGeregi.lastSelectedLovTitleText());
         // System.out.println("detail: " + txtGeregi.lastSelectedLovDetailText());
 
+        return this;
+    }
+
+    @Step("Kişinin Geregi alanında görüntülenmediği kontrolu")
+    public EvrakOlusturPage geregiAlanindaGoruntulenmemeKontrolu(String geregi) {
+        boolean selectable = comboLov(cmbGeregiBy).isLovValueSelectable(geregi);
+        Assert.assertEquals(selectable, false, "MyCombolov alanında " + geregi + ": Gerçek kişinin görüntülenmediği görülür");
+        System.out.println("MyCombolov alanında " + geregi + ": Gerçek kişinin görüntülenmediği görülür.");
         return this;
     }
 
@@ -300,6 +321,13 @@ public class EvrakOlusturPage extends MainPage {
         btnGeregiLovSecilemUpdate.click();
         return this;
     }
+
+    @Step("Bilgi alanı güncelle")
+    public EvrakOlusturPage bilgiAlaniGuncelle() {
+        btnBilgiLovSecilemUpdate.click();
+        return this;
+    }
+
 
     public EvrakOlusturPage adresHitaptaGorunsunSec(boolean secim) {
         chkAdresHitaptaGorunsun.setSelected(secim);
@@ -373,6 +401,12 @@ public class EvrakOlusturPage extends MainPage {
         System.out.println("Girilen Hitap Alanı: " + girilenHitapAlaniAdres);
         System.out.println("Gelen Hitap Alanı:   " + getHitapAlani);
         Assert.assertEquals(getHitapAlani.contains(girilenHitapAlaniAdres), true);
+        return this;
+    }
+
+    @Step("PDF Önizleme")
+    public EvrakOlusturPage pdfOnIzleme() {
+        btnPDFOnizleme.click();
         return this;
     }
 }

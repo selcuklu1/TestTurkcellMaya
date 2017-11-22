@@ -31,6 +31,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
         gercekKisiYonetimPage = new GercekKisiYonetimPage();
         evrakOlusturPage = new EvrakOlusturPage();
         gelenEvrakKayitPage = new GelenEvrakKayitPage();
+        gidenEvrakKayitPage = new GidenEvrakKayitPage();
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -304,9 +305,10 @@ public class GercekKisiYonetimiTest extends BaseTest {
     @Test(enabled = true, description = "TC1119: Gerçek Kişi iletişim bilgilerinin değiştirilmesi")
     public void TC1119() throws InterruptedException {
 
-        String tcNO = "91057625780";
+        String TCKN1 = "91057625780";
         String ad = "OptiimTest";
         String soyad = "TestOptiim";
+        String TCKN2 = "69848836158";
         String adSoyad = ad + " " + soyad;
         String unvan = "Mühendis";
         String telNo = "539" + createRandomNumber(7);
@@ -325,7 +327,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .filtreAdDoldur(ad)
                 .filtreSoyadDoldur(soyad)
                 .ara()
-                .kayitKontrolu(tcNO, ad, soyad)
+                .kayitKontrolu(TCKN1, ad, soyad)
 
                 .gercekKisiGuncelle()
                 .unvanDoldur(unvan)
@@ -351,7 +353,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
         evrakOlusturPage
                 .openPage()
                 .geregiSecimTipiSec("G")
-                .geregiDoldur(adSoyad)
+                .geregiDoldur(TCKN1)
                 .geregiAlaniKontrol(adSoyad, unvan, adres, postaTipi)
 
                 .geregiAlaniGuncelle()
@@ -362,13 +364,16 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .hitapAlaniAdresKontrol(adres, ilce, il)
 
                 .openTab("Bilgileri")
-                .geregiAlaniGuncelle()
+                .bilgiSecimTipiSec("G")
+                .geregiDoldur(TCKN2)
+
+                .bilgiAlaniGuncelle()
                 .adresDagitimdaGorunsunSec(true)
                 .dagitimHitapDuzenlemeKaydet()
 
-                .openTab("Editör");
-        //TODO: Şuan için çıkmıyor pdfte
-        //.pdfOnizlemeAdresKontrol(adres, ilce, il);
+                .openTab("Editör")
+                .pdfOnIzleme();
+               // .pdfKontrol();
 
 
     }
@@ -386,7 +391,9 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .openPage()
                 .filtreAdDoldur(ad)
                 .filtreSoyadDoldur(soyad)
+                .filtreDurumSec("TUMU")
                 .ara()
+                .aktifYap()
                 .kayitKontrolu(tcNO, ad, soyad)
 
                 .gercekKisiPasifYap()
@@ -395,21 +402,21 @@ public class GercekKisiYonetimiTest extends BaseTest {
 
                 .filtreSorgulamaPaneliAc()
                 .filtreAdDoldur(ad)
-                .filtreAdDoldur(soyad)
+                .filtreSoyadDoldur(soyad)
                 .filtreDurumSec("AKTIFLER")
                 .ara()
                 .kayitBulunamadiKontrolu()
 
                 .filtreSorgulamaPaneliAc()
                 .filtreAdDoldur(ad)
-                .filtreAdDoldur(soyad)
+                .filtreSoyadDoldur(soyad)
                 .filtreDurumSec("PASIFLER")
                 .ara()
                 .pasiflerKayitKontrolu(tcNO, ad, soyad)
 
                 .filtreSorgulamaPaneliAc()
                 .filtreAdDoldur(ad)
-                .filtreAdDoldur(soyad)
+                .filtreSoyadDoldur(soyad)
                 .filtreDurumSec("TUMU")
                 .ara()
                 .pasiflerKayitKontrolu(tcNO, ad, soyad);
@@ -417,21 +424,23 @@ public class GercekKisiYonetimiTest extends BaseTest {
         gelenEvrakKayitPage
                 .openPage()
                 .evrakBilgileriListKisiKurumSec("G")
-                .evrakBilgileriListGeldigiKisiDoldur(adSoyad);
+                .geldigiKisiGoruntulenmemeKontrolu(adSoyad);
 
         gidenEvrakKayitPage
                 .openPage()
                 .geregiSecimTipiSec("G")
-                .geregiDoldur(adSoyad)
+                .geregiAlanindaGoruntulenmemeKontrolu(adSoyad)
+
                 .bilgiSecimTipiSec("G")
-                .bilgiDoldur(adSoyad);
+                .bilgiAlanindaGoruntulenmemeKontrolu(adSoyad);
 
         evrakOlusturPage
                 .openPage()
                 .geregiSecimTipiSec("G")
-                .geregiDoldur(adSoyad)
+                .geregiAlanindaGoruntulenmemeKontrolu(adSoyad)
+
                 .bilgiSecimTipiSec("G")
-                .bilgiDoldur(adSoyad);
+                .bilgiAlanindaGoruntulenmemeKontrolu(adSoyad);
 
     }
 }

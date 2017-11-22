@@ -1,6 +1,7 @@
 package pages.ustMenuPages;
 
 import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
@@ -8,6 +9,7 @@ import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.WebDriverRunner.*;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 public class GercekKisiYonetimPage extends MainPage {
@@ -380,6 +382,16 @@ public class GercekKisiYonetimPage extends MainPage {
         Assert.assertEquals(statusTCNO, true);
         Assert.assertEquals(statusAd, true);
         Assert.assertEquals(statusSoyad, true);
+        return this;
+    }
+
+    public GercekKisiYonetimPage aktifYap() {
+
+        if (btnGercekKisiAktifYap.isDisplayed()) {
+            btnGercekKisiAktifYap.click();
+            btnIslemOnayiEvet.click();
+        }
+
         return this;
     }
 }
