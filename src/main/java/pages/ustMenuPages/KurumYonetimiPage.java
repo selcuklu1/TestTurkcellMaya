@@ -1,7 +1,6 @@
 package pages.ustMenuPages;
 
 import com.codeborne.selenide.SelenideElement;
-import common.BaseLibrary;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import pages.MainPage;
@@ -36,18 +35,17 @@ public class KurumYonetimiPage extends MainPage {
         return this;
     }
 
-<<<<<<< HEAD
-    public KurumYonetimiPage idariBirimKimlikKoduCek() throws InterruptedException{
+    /*public KurumYonetimiPage idariBirimKimlikKoduCek() throws InterruptedException {
         text = txtIdariBirimKimlikKodu.getValue();
-        System.out.println("Metin değer "+text);
+        System.out.println("Metin değer " + text);
         return this;
         //return text;
-=======
+    }*/
+
     @Step("TC kimlik no alma")
     public String idariBirimKimlikKoduCek() {
         String getIdariBirimKodu = txtIdariBirimKimlikKodu.getValue();
         return getIdariBirimKodu;
->>>>>>> f0d651ae9ac5d6fb2a4c79472e3accf703912198
     }
 
     public  KurumYonetimiPage popupKaydet() throws InterruptedException{

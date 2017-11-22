@@ -24,7 +24,17 @@ public class EvrakOlusturTest extends BaseTest {
 
     }
 
-    @Test(dataProvider = "zorunluAlanlar")
+    @Test
+    public void testName() throws Exception {
+        login();
+//        group.$(By.partialLinkText(menuText)).click();
+//
+//        System.out.println("Text: " + $("button[id='topMenuForm:userMenuButton_button']").text());
+//        System.out.println("InnerText: " + $("button[id='topMenuForm:userMenuButton_button']").innerText());
+//        takeScreenshot();
+    }
+
+    @Test(enabled = false, dataProvider = "zorunluAlanlar")
     public void test1(String fieldName, Object field) {
 //        if (field instanceof BelgenetElement) {
 //            BelgenetElement dog = (BelgenetElement) field;

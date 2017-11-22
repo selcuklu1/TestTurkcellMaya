@@ -7,6 +7,13 @@ import java.util.List;
 public interface BelgenetElement extends SelenideElement {
 
     //region ComboLov
+
+    /**
+     * Seçili ise temizler ve seçer. Mutlti select ise daha önce seçilmiş ise fail verir.
+     *
+     * @param value
+     * @return
+     */
     BelgenetElement selectComboLov(String value);
 
     BelgenetElement clearLastSelectedLov();
@@ -22,6 +29,8 @@ public interface BelgenetElement extends SelenideElement {
     String lastSelectedLovDetailText();
 
     Boolean isLovSelected();
+
+    Boolean isLovValueSelectable(String value);
     //endregion
 
     //region ComboBox

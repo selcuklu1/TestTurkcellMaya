@@ -62,7 +62,7 @@ public class DriverEventListener extends BaseLibrary implements WebDriverEventLi
     }
 
     public void beforeFindBy(By by, WebElement element, WebDriver driver) {
-//        System.out.println("Page loading.." + by.toString());
+        System.out.println("Page loading.." + by.toString());
         waitForLoading(driver);
 
 //        try {
