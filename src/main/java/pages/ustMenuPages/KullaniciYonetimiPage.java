@@ -119,7 +119,8 @@ public class KullaniciYonetimiPage extends BaseLibrary {
     }
     @Step("Güncelle butonu")
     public KullaniciYonetimiPage kullaniciListesiGuncelleButonuTikla() {
-        btnKullaniciListesiGuncelle.exists();
+        clickJs(btnKullaniciListesiGuncelle);
+//        btnKullaniciListesiGuncelle.exists();
         return this;
     }
     @Step("Gorevli oldugu birimler")
@@ -129,7 +130,8 @@ public class KullaniciYonetimiPage extends BaseLibrary {
     }
     @Step("Görevli olduğu birim guncelle")
     public KullaniciYonetimiPage gorevliOlduguBirimGuncelle () {
-        btnGorevliOlduguBirimlerGuncelle.click();
+        clickJs(btnGorevliOlduguBirimlerGuncelle);
+//        btnGorevliOlduguBirimlerGuncelle.click();
         return this;
     }
     @Step("Gizlilik derecesi seç")

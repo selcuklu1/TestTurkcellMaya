@@ -7,8 +7,7 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Selenide.$;
-import static data.TestData.password;
-import static data.TestData.username;
+import static data.TestData.*;
 
 public class LoginPage extends BaseLibrary {
 
@@ -26,8 +25,8 @@ public class LoginPage extends BaseLibrary {
     @Step("Giriş yap")
     public LoginPage login() {
         open();
-        txtUsername.sendKeys(username);
-        txtPassword.sendKeys(password);
+        txtUsername.sendKeys(username3);
+        txtPassword.sendKeys(password3);
         btnLogin.click();
 //        $(By.id("topMenuForm:userMenuButton_button")).shouldBe(visible);
         return this;

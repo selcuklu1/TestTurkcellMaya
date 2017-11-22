@@ -31,6 +31,7 @@ public class GizlilikKleransiPage extends BaseTest {
     public void TC1471() throws InterruptedException {
 
         kullaniciYonetimiPage
+                .openPage()
                 .kullaniciAdiDoldur("Gsahin")
                 .ara()
                 .tabloBirimKontrol()
