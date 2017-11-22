@@ -136,6 +136,7 @@ public class GelenEvrakKayitPage extends MainPage {
 
     SelenideElement lblDosyaAdi = $(By.id("evrakBilgileriForm:evrakEkTabView:dosyaAdi"));
     SelenideElement lblEklenenUstYazi = $(By.id("evrakBilgileriForm:eklendiYazisi"));
+    SelenideElement btnBirim = $(By.id("evrakBilgileriForm:j_idt4283"));
 
     //Dosya ekleme path
     By dosyaPath = By.xpath("//input[@id='evrakBilgileriForm:evrakEkTabView:fileUploadButton_input']");
@@ -561,4 +562,9 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
+    @Step("Birim butonu")
+    public GelenEvrakKayitPage havaleIslemleriBirim(){
+        btnBirim.click();
+        return this;
+    }
 }

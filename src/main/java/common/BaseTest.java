@@ -30,7 +30,7 @@ public class BaseTest extends BaseLibrary{
         Configuration.baseUrl = belgenetURL;
         //org.openqa.selenium.chrome.FirefoxDriver;
         Configuration.browser = "marionette";
-//        Configuration.browser = "drivers.Firefox"; //
+        Configuration.browser = "drivers.Firefox";
         //"org.openqa.selenium.Firefox.FirefoxDriver";
         Configuration.reportsFolder = "test-result/reports";
         Configuration.screenshots = false;

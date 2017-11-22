@@ -90,10 +90,10 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "Gelen evrak kayıt ekranından havale")
+    @Test(enabled = true, description = "TC0328 : Gelen evrak kayıt ekranından havale")
     public void TC0328() throws InterruptedException {
 
-        String birim = "OPTİİM BİRİM11";
+        String birim = "OPTİİM";
 
         gelenEvrakKayitPage
                 .openPage()
@@ -108,7 +108,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .evrakBilgileriListEvrakSayiSagDoldur()
                 .evrakBilgileriListEvrakGelisTipiSec(evrakGelisTipi)
                 .evrakBilgileriListIvedilikSec(ivedilik)
-                .dagitimBilgileriBirimDoldur("OPTİİM")
+                .dagitimBilgileriBirimDoldur(birim)
                 .kaydet();
         evrakNO328 = gelenEvrakKayitPage.popUps();
         gelenEvrakKayitPage.islemMesaji().isBasarili();
@@ -129,7 +129,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = false, description = "Kaydedilen Gelen Evrak raporu")
+    @Test(enabled = true, description = "TC1401 : Kaydedilen Gelen Evrak raporu")
     public void TC1401() throws InterruptedException {
 
 
@@ -138,11 +138,12 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         String geldigiYer = "D";
         kaydedilenGelenEvrakPage
                 .openPage()
-                .gelenEvrakNoDoldur(evrakNo)
+                .gelenEvrakNoDoldur("4985")
                 .sorgula()
+                .tabloKontrolu("4985")
 //                .raporAlExcel()
                 .txtClear()
-                .gelenEvrakNoDoldur(evrakNo1)
+                .gelenEvrakNoDoldur("4985")
                 .sorgula()
                 .geldigiYerSec(geldigiYer)
                 .sorgula();
