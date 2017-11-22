@@ -4,30 +4,37 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pages.EvrakOlusturPage;
-import pages.EvrakOlusturPage.BilgilerTab;
-import pages.pageComponents.UstMenu;
 import pages.pageComponents.belgenetElements.BelgentCondition;
 
 public class EvrakOlusturTest extends BaseTest {
 
     EvrakOlusturPage evrakOlusturPage;
-    BilgilerTab tabBilgiler;
 
     @BeforeClass
     public void setUp() throws Exception {
 
-        login();
-        new UstMenu().ustMenu("Evrak İşlemleri", "Evrak Oluştur");
-        evrakOlusturPage = new EvrakOlusturPage();
-        evrakOlusturPage.open();
-
-        tabBilgiler = evrakOlusturPage.new BilgilerTab();
-        tabBilgiler.open();
-        tabBilgiler.konuKoduSec("ss");
+//        login();
+//        new UstMenu().ustMenu("Evrak İşlemleri", "Evrak Oluştur");
+//        evrakOlusturPage = new EvrakOlusturPage();
+//        evrakOlusturPage.open();
+//
+//        tabBilgiler = evrakOlusturPage.new BilgilerTab();
+//        tabBilgiler.open();
+//        tabBilgiler.konuKoduSec("ss");
 
     }
 
-    @Test(dataProvider = "zorunluAlanlar")
+    @Test
+    public void testName() throws Exception {
+        login();
+//        group.$(By.partialLinkText(menuText)).click();
+//
+//        System.out.println("Text: " + $("button[id='topMenuForm:userMenuButton_button']").text());
+//        System.out.println("InnerText: " + $("button[id='topMenuForm:userMenuButton_button']").innerText());
+//        takeScreenshot();
+    }
+
+    @Test(enabled = false, dataProvider = "zorunluAlanlar")
     public void test1(String fieldName, Object field) {
 //        if (field instanceof BelgenetElement) {
 //            BelgenetElement dog = (BelgenetElement) field;

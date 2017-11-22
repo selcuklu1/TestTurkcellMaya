@@ -9,6 +9,9 @@ import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
+import java.awt.*;
+import java.awt.event.KeyEvent;
+
 import static com.codeborne.selenide.Selenide.$;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
@@ -23,7 +26,7 @@ public class GercekKisiYonetimPage extends MainPage {
     SelenideElement cmbFiltreDurum = $(By.id("gercekKisiYonetimiListingForm:filterPanel:durumSelectBox"));
     SelenideElement filtreSorgulamaPanel = $(By.id("gercekKisiYonetimiListingForm:filterPanel"));
     SelenideElement btnAra = $(By.id("gercekKisiYonetimiListingForm:filterPanel:searchGercekKisiButton"));
-    SelenideElement btnGuncelle =$(By.id("gercekKisiYonetimiListingForm:gercekKisiDataTable:0:updateGercekKisiButton"));
+    SelenideElement btnGuncelle = $(By.id("gercekKisiYonetimiListingForm:gercekKisiDataTable:0:updateGercekKisiButton"));
 
     //Gerçek Kişi Ekleme
     SelenideElement txtTCKimlikNo = $(By.id("gercekKisiYonetimiEditorForm:tcKimlikNoInput"));
@@ -80,7 +83,7 @@ public class GercekKisiYonetimPage extends MainPage {
 
 
     @Step("Güncelle Button ekle")
-    public GercekKisiYonetimPage guncelle(){
+    public GercekKisiYonetimPage guncelle() {
         btnGuncelle.click();
         return this;
     }
@@ -94,12 +97,21 @@ public class GercekKisiYonetimPage extends MainPage {
     //    @Step("Kaydet")
     public GercekKisiYonetimPage kaydet() {
         clickJs(btnKaydet);
-//        btnKaydet.click();
+        //  btnKaydet.click();
         if (btnEvetPopup.isDisplayed()) {
             btnEvetPopup.click();
         }
         return this;
     }
+
+    //Double click ile tıklanıyor.
+    @Step("Kaydet")
+    public GercekKisiYonetimPage kaydet2() {
+        btnKaydet.click();
+        btnKaydet.click();
+        return this;
+    }
+
 
     @Step("Kep adres bilgileri ekle")
     public GercekKisiYonetimPage kepAdresBilgileriEkle() {

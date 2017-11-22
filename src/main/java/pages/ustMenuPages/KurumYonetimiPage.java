@@ -30,6 +30,7 @@ public class KurumYonetimiPage extends MainPage {
         ustMenu("Kurum Yönetimi");
         return this;
     }
+<<<<<<< HEAD
 
 
     public KurumYonetimiPage idariBirimKimlikKoduCek() throws InterruptedException{
@@ -37,6 +38,12 @@ public class KurumYonetimiPage extends MainPage {
         System.out.println("Metin değer "+text);
         return this;
         //return text;
+=======
+    @Step("TC kimlik no alma")
+    public String idariBirimKimlikKoduCek() {
+        String getIdariBirimKodu = txtIdariBirimKimlikKodu.getValue();
+        return getIdariBirimKodu;
+>>>>>>> fe78941825d7bfc70142fd315ab0edd14abee708
     }
 
     public  KurumYonetimiPage popupKaydet() throws InterruptedException{

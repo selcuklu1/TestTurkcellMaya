@@ -193,7 +193,6 @@ public class ComboLovHelper extends BaseLibrary {
             $(lovInputTextleriTemizle).shouldBe(visible).click();
 
         $(lovText).shouldBe(visible);
-        $(lovText).scrollTo();
 
         $(lovText).setValue(value);
 
@@ -253,7 +252,6 @@ public class ComboLovHelper extends BaseLibrary {
             Allure.addAttachment("Seçilen değerleri:", $$(lovSecilenItemTitle).get(selectedDetails.size()).text()
                     + "\n" + $$(lovSecilenItemDetail).get(selectedDetails.size()).text());
         } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
@@ -277,6 +275,30 @@ public class ComboLovHelper extends BaseLibrary {
             return (BelgenetElement) proxy;
         else
             return ElementFinder.wrap(BelgenetElement.class, null, By.cssSelector(lovSecilen), 0);
+    }
+
+    public static boolean isLovValueSelectable(SelenideElement proxy, String value) {
+
+        setLocators(proxy);
+
+        executeJavaScript("arguments[0].scrollIntoView();", proxy);
+
+        $(lovText).shouldBe(visible);
+
+        $(lovText).setValue(value);
+
+        ElementsCollection items = $$(lovTreeListSelectableItemsTitle);
+        boolean selectable = (items.filterBy(exactText(value)).size() > 0) || items.size() > 0;
+
+        try {
+            Allure.addAttachment("Seçilebilir mi?", "");
+        } catch (Exception e) {
+        }
+
+        if ($(lovTreePanelKapat).is(visible))
+            $(lovTreePanelKapat).click();
+
+        return selectable;
     }
     //endregion
 
