@@ -15,6 +15,8 @@ import pages.ustMenuPages.EvrakOlusturPage;
 import pages.ustMenuPages.GelenEvrakKayitPage;
 import pages.ustMenuPages.GercekKisiYonetimPage;
 
+import java.awt.*;
+
 public class GercekKisiYonetimiTest extends BaseTest {
 
     GercekKisiYonetimPage gercekKisiYonetimPage;
@@ -149,7 +151,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TC1135: Yeni gerçek kişi kayıtta alan kontrolleri")
-    public void TC1135() {
+    public void TC1135() throws AWTException {
 
         String ad = createRandomText(6);
         String soyad = createRandomText(6);
@@ -202,14 +204,14 @@ public class GercekKisiYonetimiTest extends BaseTest {
         gercekKisiYonetimPage
                 .kepAdresiDoldur(duzgunKepAdresi)
                 .kepHizmetSaglayiciSec(kepHizmetSaglayici)
-                .kepAdresiKaydet()
-                .islemMesaji().basariliOlmali(basariMesaji);
+                .kepAdresiKaydet();
+//                .islemMesaji().basariliOlmali(basariMesaji);
 
         gercekKisiYonetimPage
                 .adDoldur(ad)
                 .soyadDoldur(soyad)
                 .kepAdresiKullaniyor(true)
-                .kaydet()
+                .kaydet2()
                 .islemMesaji().basariliOlmali(basariMesaji);
     }
 
@@ -295,4 +297,5 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .evrakBilgileriListKisiKurumSec("G")
                 .evrakBilgileriListGeldigiKisiDoldur(adSoyad2);
     }
+
 }
