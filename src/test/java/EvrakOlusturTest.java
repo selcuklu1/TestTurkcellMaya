@@ -27,7 +27,7 @@ public class EvrakOlusturTest extends BaseTest {
     @Test
     public void testName() throws Exception {
         login();
-//        group.$(By.partialLinkText(menuText)).click();
+        //        group.$(By.partialLinkText(menuText)).click();
 //
 //        System.out.println("Text: " + $("button[id='topMenuForm:userMenuButton_button']").text());
 //        System.out.println("InnerText: " + $("button[id='topMenuForm:userMenuButton_button']").innerText());
