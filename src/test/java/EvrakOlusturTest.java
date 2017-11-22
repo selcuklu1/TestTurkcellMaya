@@ -14,20 +14,14 @@ public class EvrakOlusturTest extends BaseTest {
     public void setUp() throws Exception {
 
 //        login();
-//        new UstMenu().ustMenu("Evrak İşlemleri", "Evrak Oluştur");
 //        evrakOlusturPage = new EvrakOlusturPage();
-//        evrakOlusturPage.open();
-//
-//        tabBilgiler = evrakOlusturPage.new BilgilerTab();
-//        tabBilgiler.open();
-//        tabBilgiler.konuKoduSec("ss");
-
+//        evrakOlusturPage.open().bilgilerTabiAc();
     }
 
     @Test
     public void testName() throws Exception {
-        login();
-//        group.$(By.partialLinkText(menuText)).click();
+//        login();
+        //        group.$(By.partialLinkText(menuText)).click();
 //
 //        System.out.println("Text: " + $("button[id='topMenuForm:userMenuButton_button']").text());
 //        System.out.println("InnerText: " + $("button[id='topMenuForm:userMenuButton_button']").innerText());

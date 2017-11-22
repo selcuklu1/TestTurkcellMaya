@@ -281,14 +281,22 @@ public class ComboLovHelper extends BaseLibrary {
 
         setLocators(proxy);
 
+        boolean selectable = false;
+
         executeJavaScript("arguments[0].scrollIntoView();", proxy);
 
         $(lovText).shouldBe(visible);
 
         $(lovText).setValue(value);
 
-        ElementsCollection items = $$(lovTreeListSelectableItemsTitle);
-        boolean selectable = (items.filterBy(exactText(value)).size() > 0) || items.size() > 0;
+        $(lovTree).shouldBe(visible);
+
+        if ($$(lovTreeListSelectableItemsTitle).size() == 0)
+            selectable = false;
+        else if ($$(lovTreeListSelectableItemsTitle).size() == 1)
+            selectable = true;
+        else
+            selectable = $$(lovTreeListSelectableItemsTitle).filterBy(exactText(value)).size() > 0;
 
         try {
             Allure.addAttachment("Seçilebilir mi?", "");
