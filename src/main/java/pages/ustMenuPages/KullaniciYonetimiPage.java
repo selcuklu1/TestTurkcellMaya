@@ -40,7 +40,7 @@ public class KullaniciYonetimiPage extends BaseLibrary {
         return this;
     }
 
-    @Step("Birim alanında \"{0}\" sec")
+    @Step("Birim alanında sec")
     public KullaniciYonetimiPage birimSec(String text) {
         cmlBirim.selectComboLov(text);
         return this;

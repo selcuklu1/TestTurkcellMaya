@@ -26,17 +26,25 @@ public class BaseTest extends BaseLibrary{
         BelgenetFramework.setUp();
         //endregion
 
+        System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, "/dev/null");
+
         //region Selenide Driver Configuration
         Configuration.baseUrl = belgenetURL;
         //org.openqa.selenium.chrome.FirefoxDriver;
+
         Configuration.browser = "marionette";
         Configuration.browser = "drivers.Firefox";
+
+//        Configuration.remote = "http://0.0.0.0:32768/wd/hub";
+//        Configuration.browser = "chrome";
+//        Configuration.browser = "marionette";
+//        Configuration.browser = "firefox";
         //"org.openqa.selenium.Firefox.FirefoxDriver";
         Configuration.reportsFolder = "test-result/reports";
         Configuration.screenshots = false;
         Configuration.savePageSource = false;
-        Configuration.collectionsTimeout = 20000;
-        Configuration.timeout = 20000;
+        Configuration.collectionsTimeout = 10000;
+        Configuration.timeout = 10000;
         Configuration.holdBrowserOpen = true;
 //        Configuration.startMaximized = true;
 //        Configuration.headless = true;
@@ -44,7 +52,6 @@ public class BaseTest extends BaseLibrary{
         //endregion
 
 
-        System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, "/dev/null");
     }
 
     public void login(){
