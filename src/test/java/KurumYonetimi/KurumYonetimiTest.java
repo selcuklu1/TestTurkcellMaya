@@ -20,9 +20,6 @@ public class KurumYonetimiTest extends BaseTest {
     @Test(enabled = true, description = "TC01957_A : Yazışma Kuralı Ekle")
     public void TC01957_A() {
 
-        kurumYonetimiPage
-                .openPage()
-                .guncelle()
 
     }
 
