@@ -35,7 +35,6 @@ public class KurumYonetimiPage extends MainPage {
         ustMenu("Kurum Yönetimi");
         return this;
     }
-
     @Step("TC kimlik no alma")
     public String idariBirimKimlikKoduCek() {
         String getIdariBirimKodu = txtIdariBirimKimlikKodu.getValue();
@@ -113,6 +112,15 @@ public class KurumYonetimiPage extends MainPage {
 
     public KurumYonetimiPage kurumDoldur(String text) {
         txtKurumCombolov.selectComboLov(text);
+        return this;
+    }
+
+
+
+    // Hüseyin Tümer fonksiyonları
+
+    public KurumYonetimiPage kurumGuncelle(String kurumAdi){
+
         return this;
     }
 

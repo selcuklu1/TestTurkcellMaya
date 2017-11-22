@@ -28,7 +28,6 @@ public class BaseTest extends BaseLibrary{
 
         //region Selenide Driver Configuration
         Configuration.baseUrl = belgenetURL;
-        Configuration.browser = "drivers.Firefox";
         //org.openqa.selenium.chrome.FirefoxDriver;
         Configuration.browser = "marionette";
 //        Configuration.browser = "drivers.Firefox"; //
