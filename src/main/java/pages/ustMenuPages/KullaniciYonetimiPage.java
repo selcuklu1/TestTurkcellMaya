@@ -1,6 +1,8 @@
 package pages.ustMenuPages;
 
 
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
 import io.qameta.allure.Step;
@@ -37,20 +39,20 @@ public class KullaniciYonetimiPage extends MainPage {
     SelenideElement btnKullaniciBirimAtamaKaydet = $(By.id("kullaniciBirimEditorForm:saveKullaniciBirimButton"));
 
 
-
     // Kullanıcı Listesi
     SelenideElement btnKullaniciListesiGuncelle = $(By.id("kullaniciYonetimiListingForm:kullaniciDataTable:0:updateKullaniciButton"));
 
     // Görevli Olduğu Birimler
-    SelenideElement btnGorevliOlduguBirimlerGuncelle =$(By.id("kullaniciYonetimiEditorForm:kullaniciBirimDataTable:0:updateKullaniciBirimButton"));
+    SelenideElement btnGorevliOlduguBirimlerGuncelle = $(By.id("kullaniciYonetimiEditorForm:kullaniciBirimDataTable:0:updateKullaniciBirimButton"));
 
     //Görevli Olduğu Birimler alanı güncelle popup
     SelenideElement cmbPopupKullaniciBirimAtamaBagTipi = $(By.id("kullaniciBirimEditorForm:kullaniciBagTipiSelect"));
     SelenideElement btnPopupKullaniciBirimAtamaKaydet = $(By.id("kullaniciBirimEditorForm:saveKullaniciBirimButton"));
+    SelenideElement popUpKullaniciBirimAtama = $(By.id("j_idt4444"));
 
     //Kullanıcı Güncelleme
     SelenideElement btnKullaniciGuncellemeKaydet = $(By.id("kullaniciYonetimiEditorForm:saveKullaniciButton"));
-
+    SelenideElement txtUnvan = $(By.id("kullaniciYonetimiEditorForm:unvanAutoComplete_input"));
 
 
     @Step("Birim alanında \"{0}\" sec")
@@ -60,8 +62,7 @@ public class KullaniciYonetimiPage extends MainPage {
         return this;
     }
 
-    public KullaniciYonetimiPage openPage()
-    {
+    public KullaniciYonetimiPage openPage() {
         new UstMenu().ustMenu("Kullanıcı Yönetim");
         return this;
     }
@@ -71,18 +72,18 @@ public class KullaniciYonetimiPage extends MainPage {
         return this;
     }
 
-    public KullaniciYonetimiPage popupKullaniciBirimAtamaBagTipiSec(String value){
+    public KullaniciYonetimiPage popupKullaniciBirimAtamaBagTipiSec(String value) {
         cmbPopupKullaniciBirimAtamaBagTipi.selectOption(value);
         return this;
     }
 
-    public KullaniciYonetimiPage gorevliOlduguBirimlerGuncelle(){
+    public KullaniciYonetimiPage gorevliOlduguBirimlerGuncelle() {
         btnGorevliOlduguBirimlerGuncelle.click();
         return this;
     }
 
 
-    public KullaniciYonetimiPage kullaniciListesiGuncelle(){
+    public KullaniciYonetimiPage kullaniciListesiGuncelle() {
         btnKullaniciListesiGuncelle.click();
         return this;
     }
@@ -158,31 +159,65 @@ public class KullaniciYonetimiPage extends MainPage {
         tblKolonBirim.exists();
         return this;
     }
+
     @Step("Güncelle butonu")
     public KullaniciYonetimiPage kullaniciListesiGuncelleButonuTikla() {
-        clickJs(btnKullaniciListesiGuncelle);
+//        clickJs(btnKullaniciListesiGuncelle);
 //        btnKullaniciListesiGuncelle.exists();
+        btnKullaniciListesiGuncelle2.click();
         return this;
     }
+
     @Step("Gorevli oldugu birimler")
     public KullaniciYonetimiPage gorevliOlduguBirimlerKontol() {
         tblGorevliOlduguBirimler.exists();
         return this;
     }
-    @Step("Görevli olduğu birim guncelle")
-    public KullaniciYonetimiPage gorevliOlduguBirimGuncelle () {
-        clickJs(btnGorevliOlduguBirimlerGuncelle);
-//        btnGorevliOlduguBirimlerGuncelle.click();
-        return this;
-    }
+
+//    @Step("Görevli olduğu birim guncelle")
+//    public KullaniciYonetimiPage gorevliOlduguBirimGuncelle2 () {
+//        clickJs(btnGorevliOlduguBirimlerGuncelle);
+//        btnGorevliOlduguBirimlerGuncelle2.click();
+//        return this;
+//    }
     @Step("Gizlilik derecesi seç")
-    public KullaniciYonetimiPage kullaniciBirimAtamaGizlilikDerecesiSec (String gizlilikDerecesi) {
+    public KullaniciYonetimiPage kullaniciBirimAtamaGizlilikDerecesiSec(String gizlilikDerecesi) {
         cmbKullaniciBirimAtamaGizlilikDerecesi.selectOptionByValue(gizlilikDerecesi);
         return this;
     }
+
     @Step("Kullanıcı Birim Atama Kaydet")
-    public KullaniciYonetimiPage kullaniciBirimAtamaKaydetTikla (String gizlilikDerecesi) {
-        btnKullaniciBirimAtamaKaydet.click();
+    public KullaniciYonetimiPage kullaniciBirimAtamaKaydetTikla() {
+        if(popUpKullaniciBirimAtama.isDisplayed()) {
+            btnKullaniciBirimAtamaKaydet.click();
+        }
+        return this;
+    }
+
+    @Step("Görevli olduğu birim guncelleme")
+    public KullaniciYonetimiPage gorevliOlduguBirimGuncelle() {
+
+        String title = cmlBirim.lastSelectedLovTitleText();
+        $$("[id='kullaniciYonetimiEditorForm:kullaniciBirimDataTable_data'] tr[role=row]")
+                .filterBy(Condition.text(title)).shouldHaveSize(1)
+                .first()
+                .$("[id$='updateKullaniciBirimButton']").click();
+        return this;
+    }
+
+    @Step("Kullanıcı guncelleme kaydet")
+    public KullaniciYonetimiPage kullaniciGuncellemeKaydet() {
+        if(txtUnvan.is(Condition.empty)) {
+            txtUnvan.sendKeys("BT İş Analist / Yazılımcı");
+            txtUnvan.pressEnter();
+        }
+
+        btnKullaniciGuncellemeKaydet.click();
+        return this;
+    }
+    @Step("Kullanici Birim Atama Gizlilik Derecesi Kontrolu")
+    public KullaniciYonetimiPage kullaniciBirimAtamaGizlilikDerecesiKontrolu(){
+        cmbKullaniciBirimAtamaGizlilikDerecesi.shouldBe(Condition.text("Tasnif Dışı"));
         return this;
     }
 

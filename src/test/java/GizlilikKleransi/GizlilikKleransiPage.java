@@ -30,6 +30,8 @@ public class GizlilikKleransiPage extends BaseTest {
     @Test(enabled = true, description = "TC1471: Kullanıcı gizlilik derecesi değiştirme\n")
     public void TC1471() throws InterruptedException {
 
+        String basariMesaji = "İşlem başarılıdır!";
+
         kullaniciYonetimiPage
                 .openPage()
                 .kullaniciAdiDoldur("Gsahin")
@@ -38,7 +40,15 @@ public class GizlilikKleransiPage extends BaseTest {
                 .kullaniciListesiGuncelleButonuTikla()
                 .gorevliOlduguBirimlerKontol()
                 .gorevliOlduguBirimGuncelle()
-                .kullaniciBirimAtamaGizlilikDerecesiSec("T");
-//                .kullaniciBirimAtamaKaydetTikla();
+                .kullaniciBirimAtamaGizlilikDerecesiSec("T")
+                .kullaniciBirimAtamaKaydetTikla()
+                .kullaniciGuncellemeKaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        kullaniciYonetimiPage
+                .kullaniciListesiGuncelleButonuTikla()
+                .gorevliOlduguBirimlerKontol()
+                .gorevliOlduguBirimGuncelle()
+                .kullaniciBirimAtamaGizlilikDerecesiKontrolu();
     }
 }

@@ -15,7 +15,7 @@ import static data.TestData.belgenetURL;
 
 
 @Listeners({SettingsListener.class})
-public class BaseTest extends BaseLibrary{
+public class BaseTest extends BaseLibrary {
 
     @BeforeClass
     public void driverSetUp() {
@@ -26,50 +26,31 @@ public class BaseTest extends BaseLibrary{
         BelgenetFramework.setUp();
         //endregion
 
-        System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, "/dev/null");
-
         //region Selenide Driver Configuration
         Configuration.baseUrl = belgenetURL;
-//        Configuration.browser = "drivers.Firefox";
         //org.openqa.selenium.chrome.FirefoxDriver;
-
-
-
         Configuration.browser = "marionette";
         Configuration.browser = "drivers.Firefox";
-
-//        Configuration.remote = "http://0.0.0.0:32768/wd/hub";
-//        Configuration.browser = "chrome";
-//        Configuration.browser = "marionette";
-//        Configuration.browser = "firefox";
-
-        //Configuration.remote = "http://0.0.0.0:32768/wd/hub";
-        //Configuration.browser = "chrome";
-//        Configuration.browser = "marionette";
-        //Configuration.browser = "firefox";
-
-
-//        Configuration.remote = "http://0.0.0.0:32768/wd/hub";
-//        Configuration.browser = "chrome";
-        Configuration.browser = "marionette";
-//        Configuration.browser = "firefox";
-
+//        Configuration.browser = "drivers.Chrome";
         //"org.openqa.selenium.Firefox.FirefoxDriver";
         Configuration.reportsFolder = "test-result/reports";
         Configuration.screenshots = false;
         Configuration.savePageSource = false;
-        Configuration.collectionsTimeout = 10000;
+        Configuration.collectionsTimeout = 20000;
         Configuration.timeout = 20000;
         Configuration.holdBrowserOpen = true;
 //        Configuration.startMaximized = true;
 //        Configuration.headless = true;
-        Configuration.browserSize = "1024x600";
+//        Configuration.browserSize = "1024x600";
         //endregion
+
+
+        System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, "/dev/null");
 
 
     }
 
-    public void login(){
+    public void login() {
         new LoginPage().login();
     }
 
