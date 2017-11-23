@@ -15,7 +15,7 @@ import static data.TestData.belgenetURL;
 
 
 @Listeners({SettingsListener.class})
-public class BaseTest extends BaseLibrary {
+public class BaseTest extends BaseLibrary{
 
     @BeforeClass
     public void driverSetUp() {
@@ -34,6 +34,7 @@ public class BaseTest extends BaseLibrary {
         //org.openqa.selenium.chrome.FirefoxDriver;
 
 
+
         Configuration.browser = "marionette";
         Configuration.browser = "drivers.Firefox";
 
@@ -47,6 +48,12 @@ public class BaseTest extends BaseLibrary {
 //        Configuration.browser = "marionette";
         //Configuration.browser = "firefox";
 
+
+//        Configuration.remote = "http://0.0.0.0:32768/wd/hub";
+//        Configuration.browser = "chrome";
+        Configuration.browser = "marionette";
+//        Configuration.browser = "firefox";
+
         //"org.openqa.selenium.Firefox.FirefoxDriver";
         Configuration.reportsFolder = "test-result/reports";
         Configuration.screenshots = false;
@@ -54,15 +61,15 @@ public class BaseTest extends BaseLibrary {
         Configuration.collectionsTimeout = 10000;
         Configuration.timeout = 20000;
         Configuration.holdBrowserOpen = true;
-        //Configuration.startMaximized = true;
-        //Configuration.headless = true;
-        //Configuration.browserSize = "1024x600";
+//        Configuration.startMaximized = true;
+//        Configuration.headless = true;
+        Configuration.browserSize = "1024x600";
         //endregion
 
 
     }
 
-    public void login() {
+    public void login(){
         new LoginPage().login();
     }
 

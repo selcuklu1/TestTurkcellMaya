@@ -5,13 +5,14 @@ import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import pages.MainPage;
 import pages.pageComponents.UstMenu;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
 import static com.codeborne.selenide.Selenide.$;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
-public class KullaniciYonetimiPage extends BaseLibrary {
+public class KullaniciYonetimiPage extends MainPage {
 
     SelenideElement pageTitle = $(By.cssSelector("#window1Dialog .ui-dialog-title"));
     SelenideElement gorevCombobox = $(By.id("kullaniciYonetimiListingForm:filterPanel:filterGorevAutocomplete"));
@@ -29,20 +30,60 @@ public class KullaniciYonetimiPage extends BaseLibrary {
     SelenideElement chkBirimiOlmayanlar = $(By.id("kullaniciYonetimiListingForm:filterPanel:birimiOlmayanlarCheckbox"));
     SelenideElement chkAltBirimiOlmayanlar = $(By.id("kullaniciYonetimiListingForm:filterPanel:altBirimlerDahilCheckbox"));
     SelenideElement tblKolonBirim = $(By.xpath("//*[@id='kullaniciYonetimiListingForm:kullaniciDataTable:j_idt10843']/div"));
-    SelenideElement btnKullaniciListesiGuncelle = $("[id^='kullaniciYonetimiListingForm:kullaniciDataTable'][id$='updateKullaniciButton']");
+    SelenideElement btnKullaniciListesiGuncelle2 = $("[id^='kullaniciYonetimiListingForm:kullaniciDataTable'][id$='updateKullaniciButton']");
     SelenideElement tblGorevliOlduguBirimler = $(By.id("kullaniciYonetimiEditorForm:kullaniciBirimDataTable"));
-    SelenideElement btnGorevliOlduguBirimlerGuncelle = $("[id^='kullaniciYonetimiEditorForm:kullaniciBirimDataTable][id$='updateKullaniciBirimButton']");
+    SelenideElement btnGorevliOlduguBirimlerGuncelle2 = $("[id^='kullaniciYonetimiEditorForm:kullaniciBirimDataTable][id$='updateKullaniciBirimButton']");
     SelenideElement cmbKullaniciBirimAtamaGizlilikDerecesi = $(By.id("kullaniciBirimEditorForm:kullaniciGuvenlikKoduSelect"));
     SelenideElement btnKullaniciBirimAtamaKaydet = $(By.id("kullaniciBirimEditorForm:saveKullaniciBirimButton"));
 
-    public KullaniciYonetimiPage openPage() {
-        new UstMenu().ustMenu("Kullanıcı Yönetimi");
+
+
+    // Kullanıcı Listesi
+    SelenideElement btnKullaniciListesiGuncelle = $(By.id("kullaniciYonetimiListingForm:kullaniciDataTable:0:updateKullaniciButton"));
+
+    // Görevli Olduğu Birimler
+    SelenideElement btnGorevliOlduguBirimlerGuncelle =$(By.id("kullaniciYonetimiEditorForm:kullaniciBirimDataTable:0:updateKullaniciBirimButton"));
+
+    //Görevli Olduğu Birimler alanı güncelle popup
+    SelenideElement cmbPopupKullaniciBirimAtamaBagTipi = $(By.id("kullaniciBirimEditorForm:kullaniciBagTipiSelect"));
+    SelenideElement btnPopupKullaniciBirimAtamaKaydet = $(By.id("kullaniciBirimEditorForm:saveKullaniciBirimButton"));
+
+    //Kullanıcı Güncelleme
+    SelenideElement btnKullaniciGuncellemeKaydet = $(By.id("kullaniciYonetimiEditorForm:saveKullaniciButton"));
+
+
+
+    @Step("Birim alanında \"{0}\" sec")
+
+    public KullaniciYonetimiPage birimSec(String text) {
+        cmlBirim.selectComboLov(text);
         return this;
     }
 
-    @Step("Birim alanında sec")
-    public KullaniciYonetimiPage birimSec(String text) {
-        cmlBirim.selectComboLov(text);
+    public KullaniciYonetimiPage openPage()
+    {
+        new UstMenu().ustMenu("Kullanıcı Yönetim");
+        return this;
+    }
+
+    public KullaniciYonetimiPage popupKullaniciBirimAtamaKaydet() {
+        btnPopupKullaniciBirimAtamaKaydet.click();
+        return this;
+    }
+
+    public KullaniciYonetimiPage popupKullaniciBirimAtamaBagTipiSec(String value){
+        cmbPopupKullaniciBirimAtamaBagTipi.selectOption(value);
+        return this;
+    }
+
+    public KullaniciYonetimiPage gorevliOlduguBirimlerGuncelle(){
+        btnGorevliOlduguBirimlerGuncelle.click();
+        return this;
+    }
+
+
+    public KullaniciYonetimiPage kullaniciListesiGuncelle(){
+        btnKullaniciListesiGuncelle.click();
         return this;
     }
 

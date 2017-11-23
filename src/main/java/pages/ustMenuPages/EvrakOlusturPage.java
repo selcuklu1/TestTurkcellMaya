@@ -174,6 +174,12 @@ public class EvrakOlusturPage extends MainPage {
     BelgenetElement txtcomboLovBilgi = comboLov(By.id("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='bilgiLov:LovText']"));
     By cmbBilgiBy = By.cssSelector("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='bilgiLov:LovText']");
 
+    SelenideElement btnOtomatikOnayAkisi = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:otomatikOnayAkisiEkle"));
+
+    public EvrakOlusturPage otomatikOnayAkisi(){
+        btnOtomatikOnayAkisi.click();
+        return  this;
+    }
 
     public EvrakOlusturPage openPage() {
         new UstMenu().ustMenu("Evrak Oluştur");
