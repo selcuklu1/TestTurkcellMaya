@@ -74,7 +74,11 @@ public class DriverEventListener extends BaseLibrary implements WebDriverEventLi
          * executeScript("arguments[0].scrollIntoView();", element) bazı yerlerde beklenmedik
          * sonuçları verdiği için sendKeys kullanıldı. Test edilecek..!
          */
-        element.sendKeys(Keys.SHIFT); //element.sendKeys("\n");
+
+        try {
+            element.sendKeys(Keys.SHIFT); //element.sendKeys("\n");
+        } catch (Exception e) {
+        }
     }
 
     public void afterClickOn(WebElement element, WebDriver driver) {

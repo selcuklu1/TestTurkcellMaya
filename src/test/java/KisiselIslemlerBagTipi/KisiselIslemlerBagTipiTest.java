@@ -64,10 +64,7 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
                 .tabHavaleYap();
 
 
-
-
-
-      //  String getIdariBirimKodu = kurumYonetimiPage.idariBirimKimlikKoduCek();
+        //  String getIdariBirimKodu = kurumYonetimiPage.idariBirimKimlikKoduCek();
 
     }
 

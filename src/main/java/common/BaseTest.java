@@ -33,8 +33,8 @@ public class BaseTest extends BaseLibrary{
 //        Configuration.browser = "drivers.Firefox";
         //org.openqa.selenium.chrome.FirefoxDriver;
 //        Configuration.remote = "http://0.0.0.0:32768/wd/hub";
-//        Configuration.browser = "chrome";
-        Configuration.browser = "marionette";
+        Configuration.browser = "chrome";
+//        Configuration.browser = "marionette";
 //        Configuration.browser = "firefox";
         //"org.openqa.selenium.Firefox.FirefoxDriver";
         Configuration.reportsFolder = "test-result/reports";
@@ -45,7 +45,7 @@ public class BaseTest extends BaseLibrary{
         Configuration.holdBrowserOpen = true;
 //        Configuration.startMaximized = true;
 //        Configuration.headless = true;
-        Configuration.browserSize = "1024x600";
+//        Configuration.browserSize = "1024x600";
         //endregion
 
 

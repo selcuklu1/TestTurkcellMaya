@@ -373,7 +373,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
 
                 .openTab("Editör")
                 .pdfOnIzleme();
-               // .pdfKontrol();
+        // .pdfKontrol();
 
 
     }
