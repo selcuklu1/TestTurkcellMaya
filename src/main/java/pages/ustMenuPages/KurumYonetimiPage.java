@@ -1,5 +1,7 @@
 package pages.ustMenuPages;
 
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
 import io.qameta.allure.Step;
@@ -8,11 +10,11 @@ import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 public class KurumYonetimiPage extends MainPage {
 
-    //
     SelenideElement txtKurum = $(By.id("kurumYonetimiListingForm:filterPanel:kurumFilterLov:LovText"));
     SelenideElement btnAra = $(By.id("kurumYonetimiListingForm:filterPanel:searchEntitiesButton"));
     SelenideElement cmbDurum = $(By.id("kurumYonetimiListingForm:filterPanel:durumSelectBox"));
@@ -30,6 +32,41 @@ public class KurumYonetimiPage extends MainPage {
     SelenideElement btnPopupKaydet = $(By.id("kurumKepAdresBilgiEditorForm:saveKepAdresiButton"));
     SelenideElement btnAltMenuAc = $("[id$='kurumYonetimiListingForm:kurumTreeTable_node_1'] span");
     BelgenetElement txtKurumCombolov = comboLov(By.id("kurumYonetimiListingForm:filterPanel:kurumFilterLov:LovText"));
+
+
+
+    // Hüseyin
+
+    ElementsCollection tableKurumListesi = $$("div[id='kurumYonetimiListingForm:kurumTreeTable'] tbody > tr[role='row']");
+    SelenideElement btnKurumGuncelle = $("button[id^='kurumYonetimiListingForm:kurumTreeTable:'][id$=':updateKurumButton']");
+    By btnGuncelleSelector = By.cssSelector("button[id^='kurumYonetimiListingForm:kurumTreeTable:'][id$=':updateKurumButton']");
+    SelenideElement divSecilenUstKurum = $(By.id("kurumYonetimiEditorForm:ustKurumLov:LovSecilen"));
+    SelenideElement btnSecilenKurumListedenCikar = $("div[id='kurumYonetimiEditorForm:ustKurumLov:LovSecilen'] button[id*='kurumYonetimiEditorForm:ustKurumLov']");
+    BelgenetElement txtUstKurum = comboLov(By.id("kurumYonetimiEditorForm:ustKurumLov:LovText"));
+    SelenideElement btnIletisimGuncelle = $("button[id^='kurumYonetimiEditorForm:iletisimBilgileriDataTable:'][id$=':updateIletisimBilgisiButton']");
+
+    // İletişim bilgileri elementleri
+
+    SelenideElement txtMobilTelNo = $(By.id("kurumBilgileriEditorForm:mobilInput"));
+    SelenideElement txtTelefonNo = $(By.id("kurumBilgileriEditorForm:telefonInput"));
+    SelenideElement txtIsTelefonNo = $(By.id("kurumBilgileriEditorForm:telefonIsInput"));
+    SelenideElement txtFaxNumarasi1 = $(By.id("kurumBilgileriEditorForm:fax1Input"));
+    SelenideElement txtFaxNumarasi2 = $(By.id("kurumBilgileriEditorForm:fax2Input"));
+    SelenideElement txtAdres = $(By.id("kurumBilgileriEditorForm:adresInput"));
+    BelgenetElement txtUlke = comboLov(By.id("kurumBilgileriEditorForm:lovUlke:LovText"));
+    BelgenetElement txtIl = comboLov(By.id("kurumBilgileriEditorForm:lovIl:LovText"));
+    SelenideElement txtIlce = $(By.id("kurumBilgileriEditorForm:lovIlce:LovText"));
+    SelenideElement txtEPosta = $(By.id("kurumBilgileriEditorForm:ePostaInput"));
+    SelenideElement txtWebAdresi = $(By.id("kurumBilgileriEditorForm:webAdresiInput"));
+    SelenideElement btnIletisimBilgisiKaydet = $(By.id("kurumBilgileriEditorForm:saveIletisimBilgisiButton"));
+
+
+    // Kep Adresi elementleri
+    ElementsCollection tableKepAdresleri = $$("tbody[id='kurumYonetimiEditorForm:kepBilgileriDataTable_data'] tr[role='row']");
+    By btnKepAdresiGuncelleSelector = By.cssSelector("button[id^='kurumYonetimiEditorForm:kepBilgileriDataTable:'][id$=':updateKepAdresiButton']");
+    SelenideElement txtKepAdresi = $(By.id("kurumKepAdresBilgiEditorForm:kurumKepAdresBilgiInputTextId"));
+    SelenideElement cmbKepHizmetSaglayici = $(By.id("kurumKepAdresBilgiEditorForm:kephs"));
+    SelenideElement btnKepAdresiBilgileriKaydet = $(By.id("kurumKepAdresBilgiEditorForm:saveKepAdresiButton"));
 
     public KurumYonetimiPage openPage() {
         ustMenu("Kurum Yönetimi");
@@ -105,7 +142,7 @@ public class KurumYonetimiPage extends MainPage {
         return this;
     }
 
-    public KurumYonetimiPage ara() throws InterruptedException{
+    public KurumYonetimiPage ara(){
         btnAra.click();
         return this;
     }
@@ -117,9 +154,162 @@ public class KurumYonetimiPage extends MainPage {
 
 
 
-    // Hüseyin Tümer fonksiyonları
+    // Hüseyin Methods
 
     public KurumYonetimiPage kurumGuncelle(String kurumAdi){
+        tableKurumListesi
+                .filterBy(Condition.text(kurumAdi))
+                .get(0)
+                .$(btnGuncelleSelector)
+                .click();
+        return this;
+    }
+
+    public KurumYonetimiPage ustKurumSec(String ustKurum){
+        if(divSecilenUstKurum.exists())
+            btnSecilenKurumListedenCikar.exists();
+        txtUstKurum.selectComboLov(ustKurum);
+        return this;
+    }
+
+
+
+    public KurumYonetimiPage iletisimGuncelle(){
+        btnIletisimGuncelle.click();
+        return this;
+    }
+
+    public KurumYonetimiPage mobilTelNoDoldur(String mobilTelNo){
+        txtMobilTelNo.setValue(mobilTelNo);
+        return this;
+    }
+
+    public KurumYonetimiPage telefonNoDoldur(String telefonNo){
+        txtTelefonNo.setValue(telefonNo);
+        return this;
+    }
+
+    public KurumYonetimiPage isTelefonNoDoldur(String isTelefonNo){
+        txtIsTelefonNo.setValue(isTelefonNo);
+        return this;
+    }
+
+    public KurumYonetimiPage faxNumarasi1Doldur(String faxNumarasi1){
+        txtFaxNumarasi1.setValue(faxNumarasi1);
+        return this;
+    }
+
+    public KurumYonetimiPage faxNumarasi2Doldur(String faxNumarasi2){
+        txtFaxNumarasi2.setValue(faxNumarasi2);
+        return this;
+    }
+
+    public KurumYonetimiPage adresDoldur(String adres){
+        txtAdres.setValue(adres);
+        return this;
+    }
+
+    public KurumYonetimiPage ulkeDoldur(String ulke){
+        txtUlke.selectComboLov(ulke);
+        return this;
+    }
+
+    public KurumYonetimiPage ilDoldur(String il){
+        txtIl.selectComboLov(il);
+        return this;
+    }
+
+    public KurumYonetimiPage ilceDoldur(String ilce){
+        txtIlce.setValue(ilce);
+        return this;
+    }
+
+    public KurumYonetimiPage ePostaDoldur(String eposta){
+        txtEPosta.setValue(eposta);
+        return this;
+    }
+
+    public KurumYonetimiPage webAdresiDoldur(String webAdresi){
+        txtWebAdresi.setValue(webAdresi);
+        return this;
+    }
+
+    @Step("iletişim bilgisi kaydet butonuna tıklandı")
+    public KurumYonetimiPage iletisimBilgisiKaydet(){
+        btnIletisimBilgisiKaydet.click();
+        return this;
+    }
+
+    @Step("kep adresi güncelle butonuna tıklandı")
+    public KurumYonetimiPage kepAdresiGuncelle(String kepAdresi, Integer kepIndex) {
+
+        if(kepIndex == null){
+            tableKepAdresleri
+                    .filterBy(Condition.text(kepAdresi))
+                    .get(0)
+                    .$(btnKepAdresiGuncelleSelector)
+                    .click();
+        } else {
+            tableKepAdresleri
+                    .filterBy(Condition.text(kepAdresi))
+                    .get(kepIndex)
+                    .$(btnKepAdresiGuncelleSelector)
+                    .click();
+        }
+
+        return this;
+    }
+
+    @Step("kep adresi dolduruldu")
+    public KurumYonetimiPage kepAdresiDoldur(String kepAdresi) {
+        txtKepAdresi.setValue(kepAdresi);
+        return this;
+    }
+
+    @Step("kep hizmet sağlayıcısı seçildi")
+    public KurumYonetimiPage kepHizmetSaglayiciSec(String kepHizmetSaglayici) {
+        cmbKepHizmetSaglayici.selectOption(kepHizmetSaglayici);
+        return this;
+    }
+
+    @Step("kep adresi bilgileri kaydet butonuna tıklandı")
+    public KurumYonetimiPage kepAdresiBilgileriKaydet() {
+        btnKepAdresiBilgileriKaydet.click();
+        return this;
+    }
+
+    @Step("Description")
+    public KurumYonetimiPage kepAdresiKontrol(String kepAdresi, Integer kepIndex, Boolean shouldBeExist) {
+
+        if(shouldBeExist){
+
+            if(kepIndex == null)
+            {
+                tableKepAdresleri
+                        .filterBy(Condition.text(kepAdresi))
+                        .get(0)
+                        .shouldBe(Condition.exist);
+            } else {
+                tableKepAdresleri
+                        .filterBy(Condition.text(kepAdresi))
+                        .get(kepIndex)
+                        .shouldBe(Condition.exist);
+            }
+
+        } else {
+            if(kepIndex == null)
+            {
+                tableKepAdresleri
+                        .filterBy(Condition.text(kepAdresi))
+                        .get(0)
+                        .shouldNotBe(Condition.exist);
+            } else {
+                tableKepAdresleri
+                        .filterBy(Condition.text(kepAdresi))
+                        .get(kepIndex)
+                        .shouldNotBe(Condition.exist);
+            }
+        }
 
         return this;
     }

@@ -196,11 +196,32 @@ public class ComboLovHelper extends BaseLibrary {
 
         $(lovText).setValue(value);
 
+        ElementsCollection items = $$(lovTreeListSelectableItemsTitle);
         $$(lovTreeListSelectableItemsTitle).shouldHave(sizeGreaterThan(0));
-        if ($$(lovTreeListSelectableItemsTitle).filterBy(exactText(value)).size() == 1)
-            $$(lovTreeListSelectableItemsTitle).filterBy(exactText(value)).get(0).click();
+        $$(lovTreeListSelectableItemsTitle).get(0).shouldBe(visible);
+
+        if ($$(lovTreeListSelectableItemsTitle).filterBy(textCaseSensitive(value)).size() > 0)
+            $$(lovTreeListSelectableItemsTitle).filterBy(textCaseSensitive(value))
+                    .get($$(lovTreeListSelectableItemsTitle).filterBy(textCaseSensitive(value)).size() - 1).click();
+        else if ($$(lovTreeListSelectableItemsTitle).filterBy(text(value)).size() > 0)
+            $$(lovTreeListSelectableItemsTitle).filterBy(text(value))
+                    .get($$(lovTreeListSelectableItemsTitle).filterBy(text(value)).size() - 1).click();
+        else if ($$(lovTreeListSelectableItemsDetail).filterBy(text(value)).size() > 0)
+            $$(lovTreeListSelectableItemsDetail).filterBy(text(value))
+                    .get($$(lovTreeListSelectableItemsDetail).filterBy(text(value)).size() - 1).click();
         else
             $$(lovTreeListSelectableItemsTitle).get(0).click();
+
+       /* int count = $$(lovTreeListSelectableItemsTitle).filterBy(text(value)).size();
+        if (count == 1)
+            $$(lovTreeListSelectableItemsTitle).filterBy(text(value)).get(0).click();
+        else if (count > 1)
+            if ($$(lovTreeListSelectableItemsTitle).filterBy(textCaseSensitive(value)).size() > 1)
+                $$(lovTreeListSelectableItemsTitle).filterBy(textCaseSensitive(value)).get(0).click();
+            else
+                $$(lovTreeListSelectableItemsTitle).filterBy(text(value)).get(0).click();
+        else
+            $$(lovTreeListSelectableItemsTitle).get(0).click();*/
 
 //        title = selectList.get(0).find(lovItemTitle).text();
 //        detail = selectList.get(0).find(lovItemDetail).text();

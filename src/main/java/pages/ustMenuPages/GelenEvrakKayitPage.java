@@ -10,9 +10,6 @@ import pages.MainPage;
 import pages.pageComponents.UstMenu;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.executeJavaScript;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
@@ -137,6 +134,7 @@ public class GelenEvrakKayitPage extends MainPage {
 
     SelenideElement lblDosyaAdi = $(By.id("evrakBilgileriForm:evrakEkTabView:dosyaAdi"));
     SelenideElement lblEklenenUstYazi = $(By.id("evrakBilgileriForm:eklendiYazisi"));
+    SelenideElement btnBirim = $(By.id("evrakBilgileriForm:j_idt4283"));
 
     //Dosya ekleme path
     By dosyaPath = By.xpath("//input[@id='evrakBilgileriForm:evrakEkTabView:fileUploadButton_input']");
@@ -573,4 +571,9 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
+    @Step("Birim butonu")
+    public GelenEvrakKayitPage havaleIslemleriBirim(){
+        btnBirim.click();
+        return this;
+    }
 }

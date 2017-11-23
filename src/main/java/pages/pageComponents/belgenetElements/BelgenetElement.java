@@ -10,9 +10,9 @@ public interface BelgenetElement extends SelenideElement {
 
     /**
      * Seçili ise temizler ve seçer. Mutlti select ise daha önce seçilmiş ise fail verir.
-     *
      * @param value
      * @return
+     * @link pages.pageComponents.belgenetElements.ComboLovHelper.selectLov
      */
     BelgenetElement selectComboLov(String value);
 

@@ -23,13 +23,12 @@ public class VekaletVerPage extends BaseLibrary {
     SelenideElement btnUygula = $(By.id("vekaletVerForm:vekaletLayout:onayaSunButton"));
     SelenideElement btnVekalelVerenTemizle = $(By.id("vekaletVerForm:vekaletLayout:vekaletVerenLov:j_idt134"));
 
-    public VekaletVerPage openPage()
-    {
+    public VekaletVerPage openPage() {
         new UstMenu().ustMenu("Vekalet Ver");
         return this;
     }
 
-    public  VekaletVerPage vekaletVerenFarkliDoldur(String text){
+    public VekaletVerPage vekaletVerenFarkliDoldur(String text) {
         btnVekalelVerenTemizle.click();
         txtVekaletVeren.selectComboLov(text);
         return this;

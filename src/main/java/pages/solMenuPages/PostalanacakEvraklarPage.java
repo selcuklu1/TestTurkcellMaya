@@ -1,14 +1,10 @@
 package pages.solMenuPages;
 
 import com.codeborne.selenide.SelenideElement;
-import common.BaseLibrary;
 import io.qameta.allure.Step;
-import javafx.geometry.Pos;
 import org.openqa.selenium.By;
 import pages.MainPage;
-import pages.pageComponents.SolMenu;
 import pages.pageData.SolMenuData;
-import pages.ustMenuPages.KurumYonetimiPage;
 
 import static com.codeborne.selenide.Selenide.$;
 
@@ -32,12 +28,12 @@ public class PostalanacakEvraklarPage extends MainPage {
         return this;
     }
 
-    public PostalanacakEvraklarPage evrakPostala(){
+    public PostalanacakEvraklarPage evrakPostala() {
         btnEvrakPostala.click();
         return this;
     }
 
-    public PostalanacakEvraklarPage evrakSec(){
+    public PostalanacakEvraklarPage evrakSec() {
         tblEvrakSec.click();
         return this;
     }

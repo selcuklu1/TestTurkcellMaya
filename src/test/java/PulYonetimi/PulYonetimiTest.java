@@ -51,8 +51,8 @@ public class PulYonetimiTest extends BaseTest {
         pulYonetimiPage
                 .postaTipiSec("U")
                 .gonderimTipiSec("YURT_ICI")
-                .ara();
-//                .tabloKontrolu("Ankara İçi APS");
+                .ara()
+                .tabloKontrolu("Ankara İçi APS");
     }
 
 

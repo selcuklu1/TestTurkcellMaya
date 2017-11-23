@@ -1,7 +1,6 @@
 package pages.ustMenuPages;
 
 import com.codeborne.selenide.SelenideElement;
-import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
@@ -9,8 +8,8 @@ import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
 import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.WebDriverRunner.*;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
+
 /****************************************************
  * Tarih: 2017-11-20
  * Proje: Türksat Functional Test Automation

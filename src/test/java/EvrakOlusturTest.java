@@ -37,8 +37,13 @@ public class EvrakOlusturTest extends BaseTest {
     public void testName() throws Exception {
         login();
 
+        new EvrakOlusturPage().open().bilgilerTabiAc().konuKoduSec("010.01");
+
+
 //        new UstMenu().ustMenu("Evrak İşlemleri", "Evrak Oluştur");
         new PulYonetimiPage().openPage();
+
+
 //        $(By.id("pulYonetimiListingForm:pulDataTable:addNewPulButton")).click();
         SelenideElement element = $(By.id("pulYonetimiListingForm:pulDataTable:addNewPulButton"));
 //        element.sendKeys("\n");
