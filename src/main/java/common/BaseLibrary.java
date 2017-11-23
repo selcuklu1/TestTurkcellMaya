@@ -369,7 +369,8 @@ public class BaseLibrary {
         return number;
     }
 
-    public void asd() {
+    public String getWinHandleBefore() throws InterruptedException {
+        Thread.sleep(6000);
         // Store the current window handle
         String winHandleBefore = WebDriverRunner.getWebDriver().getWindowHandle();
         // Perform the click operation that opens new window
@@ -378,9 +379,14 @@ public class BaseLibrary {
             WebDriverRunner.getWebDriver().switchTo().window(winHandle);
         }
 
+        return winHandleBefore;
+    }
+
+    public void switchToDefaultWindow() throws InterruptedException {
         WebDriverRunner.getWebDriver().close();
         // driver.switchTo().defaultContent();
-        WebDriverRunner.getWebDriver().switchTo().window(winHandleBefore);
+        WebDriverRunner.getWebDriver().switchTo().window(getWinHandleBefore());
+        Thread.sleep(3000);
     }
 
 }
