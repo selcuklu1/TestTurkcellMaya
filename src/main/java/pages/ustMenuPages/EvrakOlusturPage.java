@@ -2,13 +2,8 @@ package pages.ustMenuPages;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
-import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.interactions.HasInputDevices;
-import org.openqa.selenium.interactions.Keyboard;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.UstMenu;
@@ -176,9 +171,9 @@ public class EvrakOlusturPage extends MainPage {
 
     SelenideElement btnOtomatikOnayAkisi = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:otomatikOnayAkisiEkle"));
 
-    public EvrakOlusturPage otomatikOnayAkisi(){
+    public EvrakOlusturPage otomatikOnayAkisi() {
         btnOtomatikOnayAkisi.click();
-        return  this;
+        return this;
     }
 
     public EvrakOlusturPage openPage() {

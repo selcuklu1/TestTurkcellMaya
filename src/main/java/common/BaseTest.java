@@ -19,9 +19,10 @@ public class BaseTest extends BaseLibrary {
 
     @BeforeClass
     public void driverSetUp() {
+
         Locale turkishLocal = new Locale("tr", "TR");
         Locale.setDefault(turkishLocal);
-
+        
         //region SetUp BelgenetFramework for BelgenetElements usage
         BelgenetFramework.setUp();
         //endregion
@@ -39,6 +40,7 @@ public class BaseTest extends BaseLibrary {
         Configuration.collectionsTimeout = 20000;
         Configuration.timeout = 20000;
         Configuration.holdBrowserOpen = true;
+
 //        Configuration.startMaximized = true;
 //        Configuration.headless = true;
 //        Configuration.browserSize = "1024x600";
@@ -47,6 +49,10 @@ public class BaseTest extends BaseLibrary {
 
         System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, "/dev/null");
 
+        Configuration.startMaximized = true;
+        // Configuration.headless = true;
+        //Configuration.browserSize = "1024x600";
+        //endregion
 
     }
 
