@@ -197,8 +197,11 @@ public class ComboLovHelper extends BaseLibrary {
         $(lovText).setValue(value);
 
         $$(lovTreeListSelectableItemsTitle).shouldHave(sizeGreaterThan(0));
-        if ($$(lovTreeListSelectableItemsTitle).filterBy(exactText(value)).size() == 1)
-            $$(lovTreeListSelectableItemsTitle).filterBy(exactText(value)).get(0).click();
+        if ($$(lovTreeListSelectableItemsTitle).filterBy(text(value)).size() == 1)
+            if ($$(lovTreeListSelectableItemsTitle).filterBy(textCaseSensitive(value)).size() == 1)
+                $$(lovTreeListSelectableItemsTitle).filterBy(textCaseSensitive(value)).get(0).click();
+            else
+                $$(lovTreeListSelectableItemsTitle).filterBy(text(value)).get(0).click();
         else
             $$(lovTreeListSelectableItemsTitle).get(0).click();
 

@@ -1,10 +1,8 @@
 package pages.ustMenuPages;
 
 import com.codeborne.selenide.SelenideElement;
-import common.BaseLibrary;
 import org.openqa.selenium.By;
 import pages.MainPage;
-import pages.pageComponents.UstMenu;
 import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Selenide.$;
@@ -68,14 +66,12 @@ public class GelenEvraklarPage extends MainPage {
     SelenideElement txtPaylasanAciklama = $(By.id("mainPreviewForm:evrakPaylasAciklama"));
     SelenideElement btnPaylasIcPaylas = $(By.id("mainPreviewForm:paylasButtonId"));
 
-    public GelenEvraklarPage openPage()
-    {
+    public GelenEvraklarPage openPage() {
         solMenu(SolMenuData.IslemBekleyenEvraklar.GelenEvraklar);
         return this;
     }
 
-    public GelenEvraklarPage tabHavaleYap()
-    {
+    public GelenEvraklarPage tabHavaleYap() {
         btnTabHavaleYap.click();
         return this;
     }

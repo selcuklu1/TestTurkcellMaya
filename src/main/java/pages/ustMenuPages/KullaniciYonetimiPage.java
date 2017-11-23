@@ -2,7 +2,6 @@ package pages.ustMenuPages;
 
 
 import com.codeborne.selenide.SelenideElement;
-import common.BaseLibrary;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import pages.MainPage;
@@ -34,7 +33,7 @@ public class KullaniciYonetimiPage extends MainPage {
     SelenideElement btnKullaniciListesiGuncelle = $(By.id("kullaniciYonetimiListingForm:kullaniciDataTable:0:updateKullaniciButton"));
 
     // Görevli Olduğu Birimler
-    SelenideElement btnGorevliOlduguBirimlerGuncelle =$(By.id("kullaniciYonetimiEditorForm:kullaniciBirimDataTable:0:updateKullaniciBirimButton"));
+    SelenideElement btnGorevliOlduguBirimlerGuncelle = $(By.id("kullaniciYonetimiEditorForm:kullaniciBirimDataTable:0:updateKullaniciBirimButton"));
 
     //Görevli Olduğu Birimler alanı güncelle popup
     SelenideElement cmbPopupKullaniciBirimAtamaBagTipi = $(By.id("kullaniciBirimEditorForm:kullaniciBagTipiSelect"));
@@ -50,8 +49,7 @@ public class KullaniciYonetimiPage extends MainPage {
         return this;
     }
 
-    public KullaniciYonetimiPage openPage()
-    {
+    public KullaniciYonetimiPage openPage() {
         new UstMenu().ustMenu("Kullanıcı Yönetim");
         return this;
     }
@@ -61,18 +59,18 @@ public class KullaniciYonetimiPage extends MainPage {
         return this;
     }
 
-    public KullaniciYonetimiPage popupKullaniciBirimAtamaBagTipiSec(String value){
+    public KullaniciYonetimiPage popupKullaniciBirimAtamaBagTipiSec(String value) {
         cmbPopupKullaniciBirimAtamaBagTipi.selectOption(value);
         return this;
     }
 
-    public KullaniciYonetimiPage gorevliOlduguBirimlerGuncelle(){
+    public KullaniciYonetimiPage gorevliOlduguBirimlerGuncelle() {
         btnGorevliOlduguBirimlerGuncelle.click();
         return this;
     }
 
 
-    public KullaniciYonetimiPage kullaniciListesiGuncelle(){
+    public KullaniciYonetimiPage kullaniciListesiGuncelle() {
         btnKullaniciListesiGuncelle.click();
         return this;
     }

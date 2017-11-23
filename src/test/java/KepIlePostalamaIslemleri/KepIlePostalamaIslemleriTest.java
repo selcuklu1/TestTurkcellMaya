@@ -10,10 +10,8 @@ import common.BaseTest;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
-import org.openqa.selenium.By;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pages.MainPage;
 import pages.solMenuPages.KepIlePostalanacaklarPage;
 import pages.ustMenuPages.*;
 
