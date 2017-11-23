@@ -16,15 +16,16 @@ public class KurumYonetimiTest extends BaseTest {
         login();
     }
 
-    @Test(enabled = true, description = "TC01957_A : Yazışma Kuralı Ekle")
+    @Test(enabled = true, description = "TC01459 : Kurum bilgisi güncellemee")
     public void TC01957_A() {
+        kurumYonetimiPage
+                .openPage()
+                .ara()
+                .kurumGuncelle("Yargı")
+                .idariBirimKimlikKoduDoldur("95123123")
+                .ustKurumSec("Adalet Bakanlığı")
+                .kurumAdiDoldur("Yeni Kurum Adi")
 
-<<<<<<< HEAD
-=======
-//        kurumYonetimiPage
-//                .openPage()
-//                .guncelle();
->>>>>>> fe78941825d7bfc70142fd315ab0edd14abee708
 
     }
 
