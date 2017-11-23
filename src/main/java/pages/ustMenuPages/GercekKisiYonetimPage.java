@@ -9,7 +9,12 @@ import pages.pageComponents.belgenetElements.BelgenetElement;
 
 import static com.codeborne.selenide.Selenide.$;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
-
+/****************************************************
+ * Tarih: 2017-11-20
+ * Proje: Türksat Functional Test Automation
+ * Class: "Gerçek Kişi Yönetimi " konulu metotları içerir
+ * Yazan: Sezai Çelik
+ ****************************************************/
 public class GercekKisiYonetimPage extends MainPage {
 
     //<editor-fold desc="Elements">
@@ -389,7 +394,6 @@ public class GercekKisiYonetimPage extends MainPage {
             btnGercekKisiAktifYap.click();
             btnIslemOnayiEvet.click();
         }
-
         return this;
     }
 }

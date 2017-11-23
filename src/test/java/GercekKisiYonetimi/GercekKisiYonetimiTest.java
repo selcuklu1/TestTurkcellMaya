@@ -1,9 +1,3 @@
-/****************************************************
- * Tarih: 2017-11-20
- * Proje: Türksat Functional Test Automation
- * Class: "Gerçek Kişi Yönetimi " konulu senaryoları içerir
- * Yazan: Sezai Çelik
- ****************************************************/
 package GercekKisiYonetimi;
 
 import common.BaseTest;
@@ -18,6 +12,12 @@ import pages.ustMenuPages.GidenEvrakKayitPage;
 
 import java.awt.*;
 
+/****************************************************
+ * Tarih: 2017-11-20
+ * Proje: Türksat Functional Test Automation
+ * Class: "Gerçek Kişi Yönetimi " konulu senaryoları içerir
+ * Yazan: Sezai Çelik
+ ****************************************************/
 public class GercekKisiYonetimiTest extends BaseTest {
 
     GercekKisiYonetimPage gercekKisiYonetimPage;

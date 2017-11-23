@@ -9,10 +9,14 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.ustMenuPages.EvrakOlusturPage;
 
+import java.util.logging.Logger;
+
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 
 public class TestClass3 extends BaseTest {
+
+    private static final Logger log = Logger.getLogger(TestClass3.class.getName());
 
     @BeforeMethod
     public void loginBeforeTests() {
@@ -95,6 +99,8 @@ public class TestClass3 extends BaseTest {
         WebDriverRunner.getWebDriver().close();
         // driver.switchTo().defaultContent();
         WebDriverRunner.getWebDriver().switchTo().window(winHandleBefore);
+
+        log.info("New window");
     }
 
 }
