@@ -21,9 +21,9 @@ import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 public class GidenEvrakKayitPage extends MainPage {
 
     //region Elements
-    SelenideElement cmbGeregiSecimTipi = $(By.id("gidenEvrakDefterKaydiForm:evrakBilgileriList:11:j_idt26439"));
+    SelenideElement cmbGeregiSecimTipi = $(By.xpath("//select[starts-with(@id,'gidenEvrakDefterKaydiForm:evrakBilgileriList:11:j_idt')]"));
     BelgenetElement cmbGeregi = comboLov("[id^='gidenEvrakDefterKaydiForm:evrakBilgileriList'][id$='geregiLov:LovText']");
-    SelenideElement cmbBilgiSecimTipi = $(By.id("gidenEvrakDefterKaydiForm:evrakBilgileriList:12:j_idt16507"));
+    SelenideElement cmbBilgiSecimTipi = $(By.xpath("//select[starts-with(@id,'gidenEvrakDefterKaydiForm:evrakBilgileriList:12:j_idt')]"));
     BelgenetElement cmbBilgi = comboLov("[id^='gidenEvrakDefterKaydiForm:evrakBilgileriList'][id$='bilgiLov:LovText']");
     By cmbGeregiBy = By.cssSelector("[id^='gidenEvrakDefterKaydiForm:evrakBilgileriList'][id$='geregiLov:LovText']");
     By cmbBilgiBy = By.cssSelector("[id^='gidenEvrakDefterKaydiForm:evrakBilgileriList'][id$='bilgiLov:LovText']");

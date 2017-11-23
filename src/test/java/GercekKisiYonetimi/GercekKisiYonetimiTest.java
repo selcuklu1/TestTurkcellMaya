@@ -322,6 +322,11 @@ public class GercekKisiYonetimiTest extends BaseTest {
         String webAdres = "http://www.belgenet.com.tr/";
         String basariMesaji = "İşlem başarılıdır!";
 
+        String birinciKullaniciGeregiAdresi = adres + ilce + "/" + il;
+
+        //TCKN2 = "69848836158" kullanıcının adresi
+        String ikinciKullaniciBilgiAdresi = "Gültepe Mahallesi KAĞITHANE / İSTANBUL";
+
         gercekKisiYonetimPage
                 .openPage()
                 .filtreAdDoldur(ad)
@@ -365,16 +370,19 @@ public class GercekKisiYonetimiTest extends BaseTest {
 
                 .openTab("Bilgileri")
                 .bilgiSecimTipiSec("G")
-                .geregiDoldur(TCKN2)
+                .bilgiDoldur(TCKN2)
 
                 .bilgiAlaniGuncelle()
                 .adresDagitimdaGorunsunSec(true)
                 .dagitimHitapDuzenlemeKaydet()
 
                 .openTab("Editör")
-                .pdfOnIzleme();
-        // .pdfKontrol();
+                .getWinHandleBefore();
 
+        evrakOlusturPage
+                .pdfOnIzleme()
+                .geregiBilgiAlaniAdresPdfKontrol(birinciKullaniciGeregiAdresi, ikinciKullaniciBilgiAdresi)
+                .switchToDefaultWindow();
 
     }
 

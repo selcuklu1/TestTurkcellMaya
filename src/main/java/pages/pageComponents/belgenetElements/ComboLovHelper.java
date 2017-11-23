@@ -201,11 +201,14 @@ public class ComboLovHelper extends BaseLibrary {
         $$(lovTreeListSelectableItemsTitle).get(0).shouldBe(visible);
 
         if ($$(lovTreeListSelectableItemsTitle).filterBy(textCaseSensitive(value)).size() > 0)
-            $$(lovTreeListSelectableItemsTitle).filterBy(textCaseSensitive(value)).get(0).click();
+            $$(lovTreeListSelectableItemsTitle).filterBy(textCaseSensitive(value))
+                    .get($$(lovTreeListSelectableItemsTitle).filterBy(textCaseSensitive(value)).size() - 1).click();
         else if ($$(lovTreeListSelectableItemsTitle).filterBy(text(value)).size() > 0)
-            $$(lovTreeListSelectableItemsTitle).filterBy(textCaseSensitive(value)).get(0).click();
+            $$(lovTreeListSelectableItemsTitle).filterBy(text(value))
+                    .get($$(lovTreeListSelectableItemsTitle).filterBy(text(value)).size() - 1).click();
         else if ($$(lovTreeListSelectableItemsDetail).filterBy(text(value)).size() > 0)
-            $$(lovTreeListSelectableItemsDetail).filterBy(text(value)).get(0).click();
+            $$(lovTreeListSelectableItemsDetail).filterBy(text(value))
+                    .get($$(lovTreeListSelectableItemsDetail).filterBy(text(value)).size() - 1).click();
         else
             $$(lovTreeListSelectableItemsTitle).get(0).click();
 
