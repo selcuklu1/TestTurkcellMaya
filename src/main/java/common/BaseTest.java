@@ -34,12 +34,8 @@ public class BaseTest extends BaseLibrary{
         //org.openqa.selenium.chrome.FirefoxDriver;
 //        Configuration.remote = "http://0.0.0.0:32768/wd/hub";
 //        Configuration.browser = "chrome";
-        Configuration.browser = "marionette";
-<<<<<<< HEAD
-        Configuration.browser = "drivers.Firefox";
-=======
-//        Configuration.browser = "firefox";
->>>>>>> 54bbb84b9412aac5d09b5be0dbdac72ee0bd04e3
+        //Configuration.browser = "marionette";
+        Configuration.browser = "chrome";
         //"org.openqa.selenium.Firefox.FirefoxDriver";
         Configuration.reportsFolder = "test-result/reports";
         Configuration.screenshots = false;
