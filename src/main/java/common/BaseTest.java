@@ -48,8 +48,6 @@ public class BaseTest extends BaseLibrary{
         //Configuration.browserSize = "1024x600";
         //endregion
 
-
-
     }
 
     public void login(){
