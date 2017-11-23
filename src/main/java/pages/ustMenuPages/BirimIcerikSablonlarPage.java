@@ -25,6 +25,7 @@ public class BirimIcerikSablonlarPage extends BaseLibrary {
     SelenideElement btnSil = $(By.id("birimSablonForm:sablonIslemSilButton_id"));
     SelenideElement btnEvrakOnizleme = $(By.id("birimSablonForm:sablonOnizlemeButton_id"));
 
+
     SelenideElement tblBirimSablonlari = $("[id^='birimSablonForm'][id$='sablonDataTable']");
     //Detay butonları row sayısına eşit olmalı
     ElementsCollection rowsBirimSablonlari = $$("[id$='sablonDataTable'] tbody tr[role='row']");

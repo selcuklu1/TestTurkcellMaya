@@ -20,11 +20,12 @@ public class KurumYonetimiTest extends BaseTest {
     public void TC01957_A() {
         kurumYonetimiPage
                 .openPage()
+                .sorgulaKurumDoldur("huseyindeneme")
                 .ara()
-                .kurumGuncelle("Yargı")
+                .kurumGuncelle("huseyindeneme")
                 .idariBirimKimlikKoduDoldur("95123123")
                 .ustKurumSec("Adalet Bakanlığı")
-                .kurumAdiDoldur("Yeni Kurum Adi")
+                .kurumAdiDoldur("huseyindeneme234")
                 .iletisimGuncelle()
                 .mobilTelNoDoldur("5444444444")
                 .telefonNoDoldur("2129999999")
@@ -32,8 +33,8 @@ public class KurumYonetimiTest extends BaseTest {
                 .faxNumarasi1Doldur("2129999997")
                 .faxNumarasi2Doldur("2129999996")
                 .adresDoldur("yoooooooookk iii")
-                .ulkeDoldur("TÜRKİYE")
-                .ilDoldur("İSTANBUL")
+                //.ulkeDoldur("TÜRKİYE")
+                //.ilDoldur("İSTANBUL")
                 .ilceDoldur("xxxxasdasd")
                 .ePostaDoldur("deneme@denememail.com")
                 .webAdresiDoldur("www.denemecik.com")
@@ -47,8 +48,15 @@ public class KurumYonetimiTest extends BaseTest {
                 .kepAdresiBilgileriKaydet()
                 .islemMesaji().basariliOlmali("İşlem başarılıdır!");
         kurumYonetimiPage
-                .kepAdresiKontrol("deneme@kepadresim.com", 0, true);
-
+                .kepAdresiKontrol("deneme@kepadresim.com", 0, true)
+                .kurumKaydet()
+                .islemMesaji().basariliOlmali("İşlem başarılıdır!");
+        kurumYonetimiPage
+                .kurumHiyerarsisiniGuncelle();
+                //.islemMesaji().basariliOlmali("İşlem başarılıdır!");
+        kurumYonetimiPage
+                .sorgulaKurumDoldur("huseyindeneme234")
+                .kurumKontrolEt("huseyindeneme234", true);
 
 
     }

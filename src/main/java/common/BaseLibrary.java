@@ -382,4 +382,18 @@ public class BaseLibrary {
         WebDriverRunner.getWebDriver().switchTo().window(winHandleBefore);
     }
 
+
+    public String cssSE(String element, String attribute, String startsWith, String endsWith) {
+
+        if (element != "" || element == null) {
+
+            return "["+attribute+"^='']["+attribute+"$='']";
+
+        } else {
+
+            return element+"["+attribute+"^='']["+attribute+"$='']";
+
+        }
+
+    }
 }
