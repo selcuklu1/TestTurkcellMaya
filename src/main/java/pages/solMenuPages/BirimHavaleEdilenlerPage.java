@@ -31,6 +31,7 @@ public class BirimHavaleEdilenlerPage extends MainPage {
     SelenideElement tblRapor = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
     SelenideElement tblKaydedilenGelenEvraklar =$(By.id("mainInboxForm:inboxDataTable_data"));
 
+    @Step("Birim Havale Edilenler sayfası aç")
     public BirimHavaleEdilenlerPage openPage() {
         solMenu(SolMenuData.BirimEvraklari.BirimHavaleEdilenler);
         return this;

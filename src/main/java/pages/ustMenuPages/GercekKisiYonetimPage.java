@@ -4,15 +4,12 @@ import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
-import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
-import java.awt.*;
-import java.awt.event.KeyEvent;
-
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.WebDriverRunner.*;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 public class GercekKisiYonetimPage extends MainPage {
@@ -26,7 +23,12 @@ public class GercekKisiYonetimPage extends MainPage {
     SelenideElement cmbFiltreDurum = $(By.id("gercekKisiYonetimiListingForm:filterPanel:durumSelectBox"));
     SelenideElement filtreSorgulamaPanel = $(By.id("gercekKisiYonetimiListingForm:filterPanel"));
     SelenideElement btnAra = $(By.id("gercekKisiYonetimiListingForm:filterPanel:searchGercekKisiButton"));
-    SelenideElement btnGuncelle = $(By.id("gercekKisiYonetimiListingForm:gercekKisiDataTable:0:updateGercekKisiButton"));
+    SelenideElement btnGercekKisiGuncelle = $("[id^='gercekKisiYonetimiListingForm:gercekKisiDataTable'][id$='updateGercekKisiButton']");
+    SelenideElement btnGercekKisiPasiYap = $("[id^='gercekKisiYonetimiListingForm:gercekKisiDataTable'][id$='pasifEtGercekKisi']");
+    SelenideElement btnGercekKisiAktifYap = $("[id^='gercekKisiYonetimiListingForm:gercekKisiDataTable'][id$='aktifEtGercekKisi']");
+
+    SelenideElement btnIslemOnayiEvet = $(By.id("baseConfirmationDialog:confirmButton"));
+    SelenideElement btnIslemOnayiHayir = $(By.id("baseConfirmationDialog:baseConfirmationDialogCancelButton"));
 
     //Gerçek Kişi Ekleme
     SelenideElement txtTCKimlikNo = $(By.id("gercekKisiYonetimiEditorForm:tcKimlikNoInput"));
@@ -41,7 +43,7 @@ public class GercekKisiYonetimPage extends MainPage {
     SelenideElement btnEvetPopup = $(By.id("duplicateGercekKisiKayitEvet"));
 
     //İletişim Bilgileri
-    SelenideElement btnUpdateIletisimBilgisi = $(By.id("gercekKisiYonetimiEditorForm:iletisimBilgileriDataTable:0:updateIletisimBilgisiButton"));
+    SelenideElement btnUpdateIletisimBilgisi = $(By.cssSelector("[id^='gercekKisiYonetimiEditorForm:iletisimBilgileriDataTable'][id$='updateIletisimBilgisiButton']"));
 
     //Kişi ekleme zorunlu alanlar
     SelenideElement txtAdError = $(By.cssSelector("input[id='gercekKisiYonetimiEditorForm:adInput'][class*='ui-state-error']"));
@@ -49,13 +51,19 @@ public class GercekKisiYonetimPage extends MainPage {
 
     //Yeni İletişim Bilgisi
     SelenideElement txtIletisimBilgisiAdres = $(By.id("gercekKisiBilgileriEditorForm:adresInput"));
-    // SelenideElement txtIletisimBilgisiIl= $(By.id("gercekKisiBilgileriEditorForm:lovIl:lovInputPanel"));
     BelgenetElement txtIletisimBilgisiIl = comboLov(By.id("gercekKisiBilgileriEditorForm:lovIl:LovText"));
     BelgenetElement txtIletisimBilgisiIlce = comboLov(By.id("gercekKisiBilgileriEditorForm:lovIlce:LovText"));
     BelgenetElement txtIletisimBilgisiUlke = comboLov(By.id("gercekKisiBilgileriEditorForm:lovUlke:LovText"));
     SelenideElement txtIletisimBilgisiEPosta = $(By.id("gercekKisiBilgileriEditorForm:ePostaInput"));
     SelenideElement btnIletisimBilgisiKaydet = $(By.id("gercekKisiBilgileriEditorForm:saveIletisimBilgisiButton"));
     SelenideElement btnIletisimBilgisiIptal = $(By.id("gercekKisiBilgileriEditorForm:cancelSaveIletisimBilgisiButton"));
+    SelenideElement txtIletisimBilgisiMobilTelNo = $(By.id("gercekKisiBilgileriEditorForm:mobilInput"));
+    SelenideElement txtIletisimBilgisiTelefonNo = $(By.id("gercekKisiBilgileriEditorForm:telefonInput"));
+    SelenideElement txtIletisimBilgisiIsTelefonNo = $(By.id("gercekKisiBilgileriEditorForm:telefonIsInput"));
+    SelenideElement txtIletisimBilgisiFaxs1 = $(By.id("gercekKisiBilgileriEditorForm:fax1Input"));
+    SelenideElement txtIletisimBilgisiFaxs2 = $(By.id("gercekKisiBilgileriEditorForm:fax2Input"));
+    SelenideElement txtIletisimBilgisiWebAdres = $(By.id("gercekKisiBilgileriEditorForm:webAdresiInput"));
+
 
     //Kep Adres Bilgileri Yeni kayit
     SelenideElement btnKepAdresiKaydet = $(By.id("gercekKisiKepAdresUpdateDialogForm:saveKepAdresiButton"));
@@ -63,16 +71,14 @@ public class GercekKisiYonetimPage extends MainPage {
     SelenideElement cmbKepHizmetSaglayici = $(By.id("gercekKisiKepAdresUpdateDialogForm:kephs"));
 
     //Tablo
-    SelenideElement tableGercekKisiData = $(By.id("gercekKisiYonetimiListingForm:gercekKisiDataTable_data"));
-    SelenideElement tbleTc = $(By.xpath("//*[@id=\"gercekKisiYonetimiListingForm:gercekKisiDataTable_data\"]/tr/td[1]"));
-    SelenideElement tbleAd = $(By.xpath("//*[@id=\"gercekKisiYonetimiListingForm:gercekKisiDataTable_data\"]/tr/td[2]"));
-    SelenideElement tbleSoyad = $(By.xpath("//*[@id=\"gercekKisiYonetimiListingForm:gercekKisiDataTable_data\"]/tr/td[3]"));
-    SelenideElement tableKayitBulunamadi = $(By.xpath("//*[@id=\"gercekKisiYonetimiListingForm:gercekKisiDataTable_data\"]/tr/td"));
-    SelenideElement tbleData0 = $(By.id("tbody[id^='gercekKisiYonetimiListingForm:gercekKisiDataTable_data'] tr[data-ri$='0']"));
-    SelenideElement tblePasif = $(By.id("div[id^='gercekKisiYonetimiListingForm:gercekKisiDataTable'] td[class$='center-aligned passive-cell']"));
-    SelenideElement btnAktif = $(By.id("gercekKisiYonetimiListingForm:gercekKisiDataTable:0:aktifEtGercekKisi"));
-    SelenideElement tbleGercekKisiDataTable = $(By.id("gercekKisiYonetimiListingForm:gercekKisiDataTable"));
-    SelenideElement btnUpdate = $(By.id("gercekKisiYonetimiListingForm:gercekKisiDataTable:0:updateGercekKisiButton"));
+    SelenideElement tblGercekKisiDataTable = $(By.id("gercekKisiYonetimiListingForm:gercekKisiDataTable"));
+    SelenideElement tblTc = $(By.xpath("//*[@id=\"gercekKisiYonetimiListingForm:gercekKisiDataTable_data\"]/tr/td[1]"));
+    SelenideElement tblAd = $(By.xpath("//*[@id=\"gercekKisiYonetimiListingForm:gercekKisiDataTable_data\"]/tr/td[2]"));
+    SelenideElement tblSoyad = $(By.xpath("//*[@id=\"gercekKisiYonetimiListingForm:gercekKisiDataTable_data\"]/tr/td[3]"));
+    SelenideElement tblKayitBulunamadi = $(By.xpath("//*[@id=\"gercekKisiYonetimiListingForm:gercekKisiDataTable_data\"]/tr/td"));
+    SelenideElement tblData0 = $(By.id("tbody[id^='gercekKisiYonetimiListingForm:gercekKisiDataTable_data'] tr[data-ri$='0']"));
+    SelenideElement tblPasif = $(By.id("div[id^='gercekKisiYonetimiListingForm:gercekKisiDataTable'] td[class$='center-aligned passive-cell']"));
+
     //</editor-fold>
 
 
@@ -82,11 +88,18 @@ public class GercekKisiYonetimPage extends MainPage {
     }
 
 
-    @Step("Güncelle Button ekle")
-    public GercekKisiYonetimPage guncelle() {
-        btnGuncelle.click();
+    @Step("Gerçek Kişi Güncelle")
+    public GercekKisiYonetimPage gercekKisiGuncelle() {
+        btnGercekKisiGuncelle.click();
         return this;
     }
+
+    @Step("Gerçek Kişi Pasif Yap")
+    public GercekKisiYonetimPage gercekKisiPasifYap() {
+        btnGercekKisiPasiYap.click();
+        return this;
+    }
+
 
     @Step("Yeni gerçek kişi ekle")
     public GercekKisiYonetimPage yeniGercekKisiEkle() {
@@ -112,6 +125,17 @@ public class GercekKisiYonetimPage extends MainPage {
         return this;
     }
 
+
+    @Step("Popup: İşlem Onayı")
+    public GercekKisiYonetimPage islemOnayi(String secim) {
+
+        if (secim == "Evet") {
+            btnIslemOnayiEvet.click();
+        } else {
+            btnIslemOnayiHayir.click();
+        }
+        return this;
+    }
 
     @Step("Kep adres bilgileri ekle")
     public GercekKisiYonetimPage kepAdresBilgileriEkle() {
@@ -191,9 +215,39 @@ public class GercekKisiYonetimPage extends MainPage {
         return this;
     }
 
+    @Step("Mobil Tel. No doldur")
+    public GercekKisiYonetimPage iletisimBilgisiMobilTelNoDoldur(String mobilTelNo) {
+        txtIletisimBilgisiMobilTelNo.setValue(mobilTelNo);
+        return this;
+    }
+
+    @Step("Telefon No doldur")
+    public GercekKisiYonetimPage iletisimBilgisiTelefonNoDoldur(String telNo) {
+        txtIletisimBilgisiTelefonNo.setValue(telNo);
+        return this;
+    }
+
+    @Step("İş Telefon No doldur")
+    public GercekKisiYonetimPage iletisimBilgisiIsTelefonNoDoldur(String isTelNo) {
+        txtIletisimBilgisiIsTelefonNo.setValue(isTelNo);
+        return this;
+    }
+
+    @Step("Faks1 No doldur")
+    public GercekKisiYonetimPage iletisimBilgisiFaxs1Doldur(String faxs1) {
+        txtIletisimBilgisiFaxs1.setValue(faxs1);
+        return this;
+    }
+
+    @Step("Faks2 No doldur")
+    public GercekKisiYonetimPage iletisimBilgisiFaxs2Doldur(String faxs2) {
+        txtIletisimBilgisiFaxs2.setValue(faxs2);
+        return this;
+    }
+
     @Step("Adres doldur")
     public GercekKisiYonetimPage iletisimBilgisiAdresDoldur(String adres) {
-        txtIletisimBilgisiAdres.sendKeys(adres);
+        txtIletisimBilgisiAdres.setValue(adres);
         return this;
     }
 
@@ -221,6 +275,12 @@ public class GercekKisiYonetimPage extends MainPage {
         return this;
     }
 
+    @Step("Web Adresi doldur")
+    public GercekKisiYonetimPage iletisimBilgisiWebAdresiDoldur(String webAdres) {
+        txtIletisimBilgisiWebAdres.setValue(webAdres);
+        return this;
+    }
+
     @Step("İletişim bilgisi güncelle")
     public GercekKisiYonetimPage iletisimBilgisiGüncelle() {
         btnUpdateIletisimBilgisi.click();
@@ -245,13 +305,6 @@ public class GercekKisiYonetimPage extends MainPage {
         return this;
     }
 
-
-    @Step("Gerçek kişi güncelle")
-    public GercekKisiYonetimPage gercekKisiGuncelle() {
-        btnUpdate.click();
-        return this;
-    }
-
     @Step("Kep adresi doldur")
     public GercekKisiYonetimPage kepAdresiDoldur(String kepAdres) {
         txtKepAdresi.sendKeys(kepAdres);
@@ -273,15 +326,15 @@ public class GercekKisiYonetimPage extends MainPage {
         return this;
     }
 
-    @Step("Kayit kontrolu")
+    @Step("Aktif Kayit kontrolu")
     public GercekKisiYonetimPage kayitKontrolu(String tcNO, String ad, String soyad) {
-        //Assert.assertEquals(tbleTc.getText().equals(tcNO), true);
+        //Assert.assertEquals(tblTc.getText().equals(tcNO), true);
         //Assert.assertEquals(tbleAd.getText().equals(ad), true);
         //Assert.assertEquals(tbleSoyad.getText().equals(soyad), true);
 
-        boolean statusTCNO = findElementOnTableByColumnInputInAllPages(tbleGercekKisiDataTable, 1, tcNO).isDisplayed();
-        boolean statusAd = findElementOnTableByColumnInputInAllPages(tbleGercekKisiDataTable, 2, ad).isDisplayed();
-        boolean statusSoyad = findElementOnTableByColumnInputInAllPages(tbleGercekKisiDataTable, 3, soyad).isDisplayed();
+        boolean statusTCNO = findElementOnTableByColumnInputInAllPages(tblGercekKisiDataTable, 1, tcNO).isDisplayed();
+        boolean statusAd = findElementOnTableByColumnInputInAllPages(tblGercekKisiDataTable, 2, ad).isDisplayed();
+        boolean statusSoyad = findElementOnTableByColumnInputInAllPages(tblGercekKisiDataTable, 3, soyad).isDisplayed();
 
         Assert.assertEquals(statusTCNO, true);
         Assert.assertEquals(statusAd, true);
@@ -291,25 +344,25 @@ public class GercekKisiYonetimPage extends MainPage {
 
     @Step("TC kimlik no kontrolu")
     public GercekKisiYonetimPage tcNoKontrolu(String tcNO) {
-        Assert.assertEquals(tbleTc.getText().contains(tcNO), true);
+        Assert.assertEquals(tblTc.getText().contains(tcNO), true);
         return this;
     }
 
     @Step("Kayıt bulunamadı kontrolu")
     public GercekKisiYonetimPage kayitBulunamadiKontrolu() {
-        Assert.assertEquals(tableKayitBulunamadi.getText().contains("Kayıt Bulunamamıştır"), true);
+        Assert.assertEquals(tblKayitBulunamadi.getText().contains("Kayıt Bulunamamıştır"), true);
         return this;
     }
 
     @Step("Pasifler kayıt kontrolu")
     public GercekKisiYonetimPage pasiflerKayitKontrolu() {
-        Assert.assertEquals(btnAktif.isDisplayed(), true);
+        Assert.assertEquals(btnGercekKisiAktifYap.isDisplayed(), true);
         return this;
     }
 
     @Step("TC kimlik no alma")
     public String getTbleTCNO() {
-        String getTC = tbleTc.getText();
+        String getTC = tblTc.getText();
         return getTC;
     }
 
@@ -317,6 +370,28 @@ public class GercekKisiYonetimPage extends MainPage {
     public GercekKisiYonetimPage zorunluAdSoyadAlanKontrolu() {
         Assert.assertEquals(txtAdError.exists(), true);
         Assert.assertEquals(txtSoyadError.exists(), true);
+        return this;
+    }
+
+    @Step("Pasif kayit kontrolu")
+    public GercekKisiYonetimPage pasiflerKayitKontrolu(String tcNO, String ad, String soyad) {
+        boolean statusTCNO = findElementOnTableByColumnInputInAllPages(tblGercekKisiDataTable, 1, tcNO).isDisplayed();
+        boolean statusAd = findElementOnTableByColumnInputInAllPages(tblGercekKisiDataTable, 2, ad).isDisplayed();
+        boolean statusSoyad = findElementOnTableByColumnInputInAllPages(tblGercekKisiDataTable, 3, soyad).isDisplayed();
+
+        Assert.assertEquals(statusTCNO, true);
+        Assert.assertEquals(statusAd, true);
+        Assert.assertEquals(statusSoyad, true);
+        return this;
+    }
+
+    public GercekKisiYonetimPage aktifYap() {
+
+        if (btnGercekKisiAktifYap.isDisplayed()) {
+            btnGercekKisiAktifYap.click();
+            btnIslemOnayiEvet.click();
+        }
+
         return this;
     }
 }
