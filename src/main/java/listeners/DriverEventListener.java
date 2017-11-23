@@ -2,16 +2,12 @@ package listeners;
 
 import common.BaseLibrary;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.events.WebDriverEventListener;
 
 public class DriverEventListener extends BaseLibrary implements WebDriverEventListener {
-
-//    private RemoteWebDriver actualDriver;
-//    public DriverEventListener(WebDriver driver){
-//        this.actualDriver = (RemoteWebDriver) driver;
-//    }
 
     public void beforeAlertAccept(WebDriver driver) {
 
@@ -62,30 +58,23 @@ public class DriverEventListener extends BaseLibrary implements WebDriverEventLi
     }
 
     public void beforeFindBy(By by, WebElement element, WebDriver driver) {
-        System.out.println("Page loading.." + by.toString());
         waitForLoading(driver);
-
-//        try {
-//            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", element);
-//        } catch (Exception e) {
-//        }
-//        System.out.println("Page loading completed..");
-//        System.out.println("Looking for element.. " + by.toString());
+        System.out.println("Looking for element: " + by.toString());
     }
 
     public void afterFindBy(By by, WebElement element, WebDriver driver) {
     }
 
     public void beforeClickOn(WebElement element, WebDriver driver) {
-
-//        new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(element));
-//        try {
-//            Thread.sleep(1000);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//        new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(element));
 //        System.out.println("Will click on element.. " + element.toString());
+
+        /**
+         * Focus on element: Belgenete özel
+         * Visible fakat ekranda görünmeyen olan buronlar için.
+         * executeScript("arguments[0].scrollIntoView();", element) bazı yerlerde beklenmedik
+         * sonuçları verdiği için sendKeys kullanıldı. Test edilecek..!
+         */
+        element.sendKeys(Keys.SHIFT); //element.sendKeys("\n");
     }
 
     public void afterClickOn(WebElement element, WebDriver driver) {
