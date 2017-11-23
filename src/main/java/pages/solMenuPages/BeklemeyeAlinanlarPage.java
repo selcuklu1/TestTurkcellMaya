@@ -4,10 +4,12 @@ import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import pages.MainPage;
+import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Selenide.$;
 
-public class BeklemeyeAlinanlarPage extends BaseLibrary {
+public class BeklemeyeAlinanlarPage extends MainPage {
 
     //TODO: Listede datalar gelmiyor.
     SelenideElement cmbFiltrele = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt9553_input"));
@@ -21,6 +23,12 @@ public class BeklemeyeAlinanlarPage extends BaseLibrary {
     SelenideElement solmenubeklemeyealinanlar = $(By.id("leftMenuForm:edysMenuItem_-566551367"));
     //Filtreler Acordion
     SelenideElement acordion = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion"));
+
+    @Step("Beklemeye Alınanlar sayfası aç")
+    public BeklemeyeAlinanlarPage openPage() {
+        solMenu(SolMenuData.IslemBekleyenEvraklar.BeklemeyeAlinanlar);
+        return this;
+    }
 
     @Step("Acordion aç")
     public BeklemeyeAlinanlarPage acordion() throws InterruptedException {

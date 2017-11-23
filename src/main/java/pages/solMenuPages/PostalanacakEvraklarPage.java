@@ -3,11 +3,16 @@ package pages.solMenuPages;
 import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
 import io.qameta.allure.Step;
+import javafx.geometry.Pos;
 import org.openqa.selenium.By;
+import pages.MainPage;
+import pages.pageComponents.SolMenu;
+import pages.pageData.SolMenuData;
+import pages.ustMenuPages.KurumYonetimiPage;
 
 import static com.codeborne.selenide.Selenide.$;
 
-public class PostalanacakEvraklarPage extends BaseLibrary {
+public class PostalanacakEvraklarPage extends MainPage {
 
     SelenideElement txtBirim = $(By.id("mainInboxForm:birimInboxFilterLov:LovText"));
     SelenideElement btnListele = $(By.id("mainInboxForm:birimEvraklariListeleButton"));
@@ -18,6 +23,24 @@ public class PostalanacakEvraklarPage extends BaseLibrary {
     SelenideElement btnGeldigiYer = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:geldigiYerFilterOpenDialogButton"));
     SelenideElement dateBaslangicTarihi = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt368_input"));
     SelenideElement dateBitisTarihi = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt373_input"));
+
+    SelenideElement tblEvrakSec = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
+    SelenideElement btnEvrakPostala = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:4:cmdbutton"));
+
+    public PostalanacakEvraklarPage openPage() {
+        solMenu(SolMenuData.BirimEvraklari.PostalanacakEvraklar);
+        return this;
+    }
+
+    public PostalanacakEvraklarPage evrakPostala(){
+        btnEvrakPostala.click();
+        return this;
+    }
+
+    public PostalanacakEvraklarPage evrakSec(){
+        tblEvrakSec.click();
+        return this;
+    }
 
     @Step("Birim Doldur")
     public PostalanacakEvraklarPage birimDoldur(String text) throws InterruptedException {
