@@ -149,7 +149,7 @@ public class BaseLibrary {
 //    }
 
     //Random numara üretir.
-    public String randomNumber(int length) {
+    public String createRandomNumber(int length) {
         Random r = new Random();
         List<Integer> digits = new ArrayList<Integer>();
         String number = "";
@@ -366,6 +366,20 @@ public class BaseLibrary {
         System.out.println(number);
 
         return number;
+    }
+
+    public void asd() {
+        // Store the current window handle
+        String winHandleBefore = WebDriverRunner.getWebDriver().getWindowHandle();
+        // Perform the click operation that opens new window
+        // Switch to new window opened
+        for (String winHandle : WebDriverRunner.getWebDriver().getWindowHandles()) {
+            WebDriverRunner.getWebDriver().switchTo().window(winHandle);
+        }
+
+        WebDriverRunner.getWebDriver().close();
+        // driver.switchTo().defaultContent();
+        WebDriverRunner.getWebDriver().switchTo().window(winHandleBefore);
     }
 
 }
