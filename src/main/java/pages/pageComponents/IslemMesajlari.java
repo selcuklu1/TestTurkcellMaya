@@ -80,6 +80,7 @@ public class IslemMesajlari extends BaseLibrary {
     public void basariliOlmali(String actualMessage) {
         Assert.assertEquals(getMessageTitle(), BASARILI.value());
         Assert.assertEquals(actualMessage, getMessageBody());
+        System.out.println("Gelen Başarı Mesajı: " + getMessageBody());
         waitDisappear();
     }
 
@@ -87,6 +88,7 @@ public class IslemMesajlari extends BaseLibrary {
     public void uyariOlmali(String actualMessage) {
         Assert.assertEquals(getMessageTitle(), UYARI.value());
         Assert.assertEquals(actualMessage, getMessageBody());
+        System.out.println("Gelen Uyarı Mesajı: " + getMessageBody());
         waitDisappear();
     }
 
@@ -94,6 +96,7 @@ public class IslemMesajlari extends BaseLibrary {
     public void dikkatOlmali(String actualMessage) {
         Assert.assertEquals(getMessageTitle(), DIKKAT.value());
         Assert.assertEquals(actualMessage, getMessageBody());
+        System.out.println("Gelen Dikkat Mesajı: " + getMessageBody());
         waitDisappear();
     }
 

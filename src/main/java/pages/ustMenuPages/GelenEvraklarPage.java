@@ -3,10 +3,13 @@ package pages.ustMenuPages;
 import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
 import org.openqa.selenium.By;
+import pages.MainPage;
+import pages.pageComponents.UstMenu;
+import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Selenide.$;
 
-public class GelenEvraklarPage extends BaseLibrary {
+public class GelenEvraklarPage extends MainPage {
 
     SelenideElement cmbFiltrele = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt349_input"));
     SelenideElement txtSayfadaAra = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt353"));
@@ -19,6 +22,7 @@ public class GelenEvraklarPage extends BaseLibrary {
     SelenideElement btnTopluKlasorKaldir = $(By.id("mainInboxForm:inboxDataTable:j_idt665"));
     SelenideElement btnRaporAl = $(By.id("mainInboxForm:inboxDataTable:j_idt682"));
     SelenideElement btnEvrakGoster = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:0:cmdbutton"));
+    SelenideElement btnTabHavaleYap = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:4:cmdbutton"));
 
     //Havale Yap Alt Yapı
     SelenideElement btnHavaleYap = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:1:cmdbutton"));
@@ -63,6 +67,18 @@ public class GelenEvraklarPage extends BaseLibrary {
     SelenideElement txtPaylasKisi = $(By.id("mainPreviewForm:evrakPaylasKisiLov:LovText"));
     SelenideElement txtPaylasanAciklama = $(By.id("mainPreviewForm:evrakPaylasAciklama"));
     SelenideElement btnPaylasIcPaylas = $(By.id("mainPreviewForm:paylasButtonId"));
+
+    public GelenEvraklarPage openPage()
+    {
+        solMenu(SolMenuData.IslemBekleyenEvraklar.GelenEvraklar);
+        return this;
+    }
+
+    public GelenEvraklarPage tabHavaleYap()
+    {
+        btnTabHavaleYap.click();
+        return this;
+    }
 
     public GelenEvraklarPage iadeEtIadeEt() {
         btnIadeEtIadeEt.click();

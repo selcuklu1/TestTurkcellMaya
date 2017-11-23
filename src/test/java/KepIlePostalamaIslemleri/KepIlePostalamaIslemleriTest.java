@@ -81,7 +81,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
         gercekKisiYonetimPage
                 .openPage()
                 .ara()
-                .guncelle()
+                .gercekKisiGuncelle()
                 .kepAdresiKullaniyor(true)
                 .kepAdresBilgileriEkle()
                 .kepAdresiDoldur(popupKepAdresi)

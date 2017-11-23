@@ -14,6 +14,7 @@ import org.testng.annotations.Test;
 import pages.ustMenuPages.EvrakOlusturPage;
 import pages.ustMenuPages.GelenEvrakKayitPage;
 import pages.ustMenuPages.GercekKisiYonetimPage;
+import pages.ustMenuPages.GidenEvrakKayitPage;
 
 import java.awt.*;
 
@@ -22,6 +23,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
     GercekKisiYonetimPage gercekKisiYonetimPage;
     EvrakOlusturPage evrakOlusturPage;
     GelenEvrakKayitPage gelenEvrakKayitPage;
+    GidenEvrakKayitPage gidenEvrakKayitPage;
 
     @BeforeMethod
     public void loginBeforeTests() {
@@ -29,6 +31,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
         gercekKisiYonetimPage = new GercekKisiYonetimPage();
         evrakOlusturPage = new EvrakOlusturPage();
         gelenEvrakKayitPage = new GelenEvrakKayitPage();
+        gidenEvrakKayitPage = new GidenEvrakKayitPage();
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -78,7 +81,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .geregiAlaniKontrol(adSoyad, unvan, adres, postaTipi)
 
                 .openTab("Editör")
-                .hitapKismiAlaniKontrol(hitap, onEk, ad, soyad)
+                .hitapAlaniUnvanAdSoyadKontrol(hitap, onEk, ad, soyad)
 
                 .openTab("Bilgileri")
                 .bilgiSecimTipiSec(bilgiSecimTipi);
@@ -290,7 +293,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .geregiAlaniKontrol(adSoyad2, unvan2, adres, postaTipi)
 
                 .openTab("Editör")
-                .hitapKismiAlaniKontrol(hitap, onEk2, ad2, soyad2);
+                .hitapAlaniUnvanAdSoyadKontrol(hitap, onEk2, ad2, soyad2);
 
         gelenEvrakKayitPage
                 .openPage()
@@ -298,4 +301,146 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .evrakBilgileriListGeldigiKisiDoldur(adSoyad2);
     }
 
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TC1119: Gerçek Kişi iletişim bilgilerinin değiştirilmesi")
+    public void TC1119() throws InterruptedException {
+
+        String TCKN1 = "91057625780";
+        String ad = "OptiimTest";
+        String soyad = "TestOptiim";
+        String TCKN2 = "69848836158";
+        String adSoyad = ad + " " + soyad;
+        String unvan = "Mühendis";
+        String telNo = "539" + createRandomNumber(7);
+        String isTelNo = "539" + createRandomNumber(7);
+        String faxNo = "212" + createRandomNumber(7);
+        String adres = createRandomText(7) + " " + "Mahallesi";
+        String il = "İstanbul";
+        String ilce = "Şişli";
+        String postaTipi = "P";
+        String ePosta = createRandomText(5) + "@turksat.com.tr";
+        String webAdres = "http://www.belgenet.com.tr/";
+        String basariMesaji = "İşlem başarılıdır!";
+
+        gercekKisiYonetimPage
+                .openPage()
+                .filtreAdDoldur(ad)
+                .filtreSoyadDoldur(soyad)
+                .ara()
+                .kayitKontrolu(TCKN1, ad, soyad)
+
+                .gercekKisiGuncelle()
+                .unvanDoldur(unvan)
+                .iletisimBilgisiGüncelle()
+
+                .iletisimBilgisiMobilTelNoDoldur(telNo)
+                .iletisimBilgisiTelefonNoDoldur(telNo)
+                .iletisimBilgisiIsTelefonNoDoldur(isTelNo)
+                .iletisimBilgisiFaxs1Doldur(faxNo)
+                .iletisimBilgisiFaxs2Doldur(faxNo)
+
+                .iletisimBilgisiAdresDoldur(adres)
+                .iletisimBilgisiIlDoldur(il)
+                .iletisimBilgisiIlceDoldur(ilce)
+                .iletisimBilgisiEpostaDoldur(ePosta)
+                .iletisimBilgisiWebAdresiDoldur(webAdres)
+                .iletisimBilgisiKaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        gercekKisiYonetimPage
+                .kaydet();
+
+        evrakOlusturPage
+                .openPage()
+                .geregiSecimTipiSec("G")
+                .geregiDoldur(TCKN1)
+                .geregiAlaniKontrol(adSoyad, unvan, adres, postaTipi)
+
+                .geregiAlaniGuncelle()
+                .adresHitaptaGorunsunSec(true)
+                .dagitimHitapDuzenlemeKaydet()
+
+                .openTab("Editör")
+                .hitapAlaniAdresKontrol(adres, ilce, il)
+
+                .openTab("Bilgileri")
+                .bilgiSecimTipiSec("G")
+                .geregiDoldur(TCKN2)
+
+                .bilgiAlaniGuncelle()
+                .adresDagitimdaGorunsunSec(true)
+                .dagitimHitapDuzenlemeKaydet()
+
+                .openTab("Editör")
+                .pdfOnIzleme();
+               // .pdfKontrol();
+
+
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "1132: Gerçek kişinin pasif yapılması ve ekranlardan kontrolü")
+    public void TC1132() throws InterruptedException {
+
+        String tcNO = "21861197500";
+        String ad = "Bulut";
+        String soyad = "Toprak";
+        String adSoyad = ad + " " + soyad;
+
+        gercekKisiYonetimPage
+                .openPage()
+                .filtreAdDoldur(ad)
+                .filtreSoyadDoldur(soyad)
+                .filtreDurumSec("TUMU")
+                .ara()
+                .aktifYap()
+                .kayitKontrolu(tcNO, ad, soyad)
+
+                .gercekKisiPasifYap()
+                .islemOnayi("Evet")
+                .pasiflerKayitKontrolu()
+
+                .filtreSorgulamaPaneliAc()
+                .filtreAdDoldur(ad)
+                .filtreSoyadDoldur(soyad)
+                .filtreDurumSec("AKTIFLER")
+                .ara()
+                .kayitBulunamadiKontrolu()
+
+                .filtreSorgulamaPaneliAc()
+                .filtreAdDoldur(ad)
+                .filtreSoyadDoldur(soyad)
+                .filtreDurumSec("PASIFLER")
+                .ara()
+                .pasiflerKayitKontrolu(tcNO, ad, soyad)
+
+                .filtreSorgulamaPaneliAc()
+                .filtreAdDoldur(ad)
+                .filtreSoyadDoldur(soyad)
+                .filtreDurumSec("TUMU")
+                .ara()
+                .pasiflerKayitKontrolu(tcNO, ad, soyad);
+
+        gelenEvrakKayitPage
+                .openPage()
+                .evrakBilgileriListKisiKurumSec("G")
+                .geldigiKisiGoruntulenmemeKontrolu(adSoyad);
+
+        gidenEvrakKayitPage
+                .openPage()
+                .geregiSecimTipiSec("G")
+                .geregiAlanindaGoruntulenmemeKontrolu(adSoyad)
+
+                .bilgiSecimTipiSec("G")
+                .bilgiAlanindaGoruntulenmemeKontrolu(adSoyad);
+
+        evrakOlusturPage
+                .openPage()
+                .geregiSecimTipiSec("G")
+                .geregiAlanindaGoruntulenmemeKontrolu(adSoyad)
+
+                .bilgiSecimTipiSec("G")
+                .bilgiAlanindaGoruntulenmemeKontrolu(adSoyad);
+
+    }
 }
