@@ -8,8 +8,8 @@ package EvrakPostalama;
  ****************************************************/
 
 import common.BaseTest;
-import io.qameta.allure.severity.SeverityPlugin;
-import io.qameta.allure.severity.SeverityLevel;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.MainPage;
