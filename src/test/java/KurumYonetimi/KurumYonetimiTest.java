@@ -18,45 +18,71 @@ public class KurumYonetimiTest extends BaseTest {
 
     @Test(enabled = true, description = "TC01459 : Kurum bilgisi güncellemee")
     public void TC01957_A() {
+
+        String guncellenecekKurumAdi = "huseyindeneme";
+        String yeniKurumAdi = "huseyindeneme111";
+        String idariBirimKimlikKodu = "12345";
+        String ustKurum = "Adalet Bakanlığı";
+
+        // İletişim bilgileri güncelleme
+        String mobilTelNo = "5444444444";
+        String telefonNo = "5444444445";
+        String isTelefonNo = "5444444446";
+        String faxNumarasi1 = "5444444447";
+        String faxNumarasi2 = "5444444448";
+        String adres = "yeni adersim";
+        String ulke = "TÜRKİYE";
+        String il = "İSTANBUL";
+        String ilce = "Avcılar";
+        String ePosta = "xxx@xxx.com";
+        String webAdresi = "example.com";
+        String basariMesaji = "İşlem başarılıdır!";
+
+        // Kep adresi güncelleme
+        String guncellenecekKepAdresi = "deneme@kepadresim.com";
+        String yeniKepadresi = "deneme234@kepadresim.com";
+        String kepHizmetSaglayicisi = "KEPKUR";
+
+
         kurumYonetimiPage
                 .openPage()
-                .sorgulaKurumDoldur("huseyindeneme")
+                .sorgulaKurumDoldur(guncellenecekKurumAdi)
                 .ara()
-                .kurumGuncelle("huseyindeneme")
-                .idariBirimKimlikKoduDoldur("95123123")
-                .ustKurumSec("Adalet Bakanlığı")
-                .kurumAdiDoldur("huseyindeneme234")
+                .kurumGuncelle(guncellenecekKurumAdi)
+                .idariBirimKimlikKoduDoldur(idariBirimKimlikKodu)
+                .ustKurumSec(ustKurum)
+                .kurumAdiDoldur(yeniKurumAdi)
                 .iletisimGuncelle()
-                .mobilTelNoDoldur("5444444444")
-                .telefonNoDoldur("2129999999")
-                .isTelefonNoDoldur("2129999998")
-                .faxNumarasi1Doldur("2129999997")
-                .faxNumarasi2Doldur("2129999996")
-                .adresDoldur("yoooooooookk iii")
-                //.ulkeDoldur("TÜRKİYE")
-                //.ilDoldur("İSTANBUL")
-                .ilceDoldur("xxxxasdasd")
-                .ePostaDoldur("deneme@denememail.com")
-                .webAdresiDoldur("www.denemecik.com")
+                .mobilTelNoDoldur(mobilTelNo)
+                .telefonNoDoldur(telefonNo)
+                .isTelefonNoDoldur(isTelefonNo)
+                .faxNumarasi1Doldur(faxNumarasi1)
+                .faxNumarasi2Doldur(faxNumarasi2)
+                .adresDoldur(adres)
+                //.ulkeDoldur(ulke)
+                //.ilDoldur(il)
+                .ilceDoldur(ilce)
+                .ePostaDoldur(ePosta)
+                .webAdresiDoldur(webAdresi)
                 .iletisimBilgisiKaydet()
-                .islemMesaji().basariliOlmali("İşlem başarılıdır!");
+                .islemMesaji().basariliOlmali(basariMesaji);
         kurumYonetimiPage
-                .kepAdresiGuncelle("turksat.kamu1@testkep.pttkep.gov.tr", null)
-                //.kepAdresiGuncelle("turksat.kamu1@testkep.pttkep.gov.tr", null)
-                .kepAdresiDoldur("deneme@kepadresim.com")
-                .kepHizmetSaglayiciSec("KEPKUR")
+                .kepAdresiGuncelle(guncellenecekKepAdresi, null)
+                .kepAdresiDoldur(yeniKepadresi)
+                .kepHizmetSaglayiciSec(kepHizmetSaglayicisi)
                 .kepAdresiBilgileriKaydet()
-                .islemMesaji().basariliOlmali("İşlem başarılıdır!");
+                .islemMesaji().basariliOlmali(basariMesaji);
         kurumYonetimiPage
-                .kepAdresiKontrol("deneme@kepadresim.com", 0, true)
+                .kepAdresiKontrol(yeniKepadresi, 0, true)
                 .kurumKaydet()
-                .islemMesaji().basariliOlmali("İşlem başarılıdır!");
+                .islemMesaji().basariliOlmali(basariMesaji);
         kurumYonetimiPage
                 .kurumHiyerarsisiniGuncelle();
                 //.islemMesaji().basariliOlmali("İşlem başarılıdır!");
         kurumYonetimiPage
-                .sorgulaKurumDoldur("huseyindeneme234")
-                .kurumKontrolEt("huseyindeneme234", true);
+                .sorgulaKurumDoldur(yeniKurumAdi)
+                .ara()
+                .kurumKontrolEt(yeniKurumAdi, true);
 
 
     }

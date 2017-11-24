@@ -323,7 +323,7 @@ public class KurumYonetimiPage extends MainPage {
     @Step("Kurum hiyerarşisini güncelle butonuna tıklandı")
     public KurumYonetimiPage kurumHiyerarsisiniGuncelle() {
         btnKurumHiyerarşisiniGuncelle.click();
-        $("bekleyinizStatusDialog").waitUntil(Condition.not(Condition.visible), 20000);
+        $("bekleyinizStatusDialog").waitUntil(Condition.not(Condition.visible), 60000);
         return this;
     }
 
