@@ -36,12 +36,12 @@ public class GizlilikKleransiPage extends BaseTest {
     public void loginBeforeTests() {
         kullaniciYonetimiPage = new KullaniciYonetimiPage();
         gelenEvrakKayitPage = new GelenEvrakKayitPage();
-        login();
+        login("yakyol","123");
     }
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TC1471: Kullanıcı gizlilik derecesi değiştirme")
-    public void TC1471() throws InterruptedException {
+        public void TC1471() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
         String unvan = "BT İş Analist / Yazılımcı";

@@ -24,7 +24,7 @@ public class PulYonetimiTest extends BaseTest {
     public void loginBeforeTests() {
         pulYonetimiPage = new PulYonetimiPage();
         postaListesiPage = new PostaListesiPage();
-        login();
+        login("yakyol","123");
     }
 
     @Severity(SeverityLevel.CRITICAL)

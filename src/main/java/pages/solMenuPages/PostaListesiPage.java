@@ -28,7 +28,7 @@ public class PostaListesiPage extends MainPage {
     SelenideElement tblIlkRow = $(By.xpath("//tbody[@id='mainInboxForm:inboxDataTable_data']/tr[@data-ri='0']"));
     BelgenetElement cmbGidisSekli = comboBox(By.id("mainPreviewForm:postaListesiPostaTipi_label"));
     BelgenetElement cmbGonderildigiYer = comboBox(By.id("mainPreviewForm:postaListesiYurticiYurtdisi_label"));
-    SelenideElement txtGramaj = $(By.id("mainPreviewForm:j_idt2574"));
+    SelenideElement txtGramaj = $(By.xpath("//*[@id='mainPreviewForm:eastLayout']//label[normalize-space(text())='Gramaj :']/../..//input"));//$(By.id("mainPreviewForm:j_idt2574"));
     SelenideElement btnHesapla = $(By.id("mainPreviewForm:j_idt2578"));
     SelenideElement txtIndirimOrani = $(By.id("mainPreviewForm:j_idt2582"));
     SelenideElement btnPostaDetayiPostola = $(By.id("mainPreviewForm:postalaButton"));
