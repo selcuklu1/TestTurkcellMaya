@@ -67,7 +67,7 @@ public class KullaniciYonetimiPage extends MainPage {
 
     @Step("Birim alanında \"{0}\" sec")
     public KullaniciYonetimiPage birimSec(String text) {
-        cmlBirim.selectComboLov(text);
+        cmlBirim.selectLov(text);
         return this;
     }
 

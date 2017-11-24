@@ -1,20 +1,6 @@
 package Example;
 
-import com.codeborne.selenide.Condition;
 import common.BaseTest;
-import org.openqa.selenium.By;
-import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
-import pages.MainPage;
-import pages.pageComponents.Filtreler;
-import pages.pageComponents.belgenetElements.BelgenetElement;
-
-import static com.codeborne.selenide.Condition.exactText;
-import static com.codeborne.selenide.Condition.text;
-import static pages.pageComponents.belgenetElements.BelgenetFramework.comboBox;
-import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
-import static pages.pageData.SolMenuData.IslemBekleyenEvraklar;
 
 //import pages.pageComponents.belgenetElements.BelgenetElement;
 
@@ -32,7 +18,7 @@ public class BelgenetCustomElementsTest extends BaseTest {
         BelgenetElement combo = comboLov(By.id("birimYonetimiFilterForm:accordionPanel:birimLov:LovText"));
 
         public TestPage selectCombo(){
-            combo.selectComboLov("opt");
+            combo.selectLov("opt");
             return this;
         }
 
@@ -61,7 +47,7 @@ public class BelgenetCustomElementsTest extends BaseTest {
 //        BelgenetElement element = comboLov("[id='mainInboxForm:inboxDataTable:filtersAccordion'] h3 a");
 //        pages.ustMenuAc("Birim Yönetimi");
 //        new TestPage().selectCombo();
-//        comboLov(By.id("birimYonetimiFilterForm:accordionPanel:birimLov:LovText")).selectComboLov("OPT")
+//        comboLov(By.id("birimYonetimiFilterForm:accordionPanel:birimLov:LovText")).selectLov("OPT")
 //                .shouldHave(text("OPTİİM"));
 //
 //        System.out.println("selected: " + new TestPage().isSelected());
@@ -71,19 +57,19 @@ public class BelgenetCustomElementsTest extends BaseTest {
 //        String locator = "[id='yeniGidenEvrakForm:evrakBilgileriList:1:konuKoduLov:LovText']";
 //
 //
-//        BelgenetElement c = comboLov(locator).selectComboLov("010.10");
+//        BelgenetElement c = comboLov(locator).selectLov("010.10");
 //        System.out.println("lastSelectedLovTitleText: " + c.lastSelectedLovTitleText());
 //        c.lastSelectedLovDetail().shouldHave(text("Mevzuat İşleri"));
 //        System.out.println("shouldHave: " + 1);
-//        BelgenetElement e = comboLov(locator).selectComboLov("010.10");
+//        BelgenetElement e = comboLov(locator).selectLov("010.10");
 //        System.out.println("visible: " + e.is(visible));
 //        System.out.println("id: " + e.attr("id"));
 
-//        System.out.println("id: " + comboLov(locator).selectComboLov("010.10").attr("id"));
-//        BelgenetElement elem = comboLov(locator).selectComboLov("010.10");
+//        System.out.println("id: " + comboLov(locator).selectLov("010.10").attr("id"));
+//        BelgenetElement elem = comboLov(locator).selectLov("010.10");
 //        System.out.println("id: " + elem.attr("id"));
 //        elem.shouldHave(Condition.text("010.10"));
-//        comboLov(locator).selectComboLov("010.10");
+//        comboLov(locator).selectLov("010.10");
 //                shouldHave(Condition.text("010.10"));
 
 //        System.out.println("title: " + comboLov(locator).lastSelectedLovTitleText());
@@ -95,7 +81,7 @@ public class BelgenetCustomElementsTest extends BaseTest {
         //-----------------------------------
         page.ustMenu("Evrak Oluştur");
         String locator = "[id='yeniGidenEvrakForm:evrakBilgileriList:1:konuKoduLov:LovText']";
-        comboLov(locator).selectComboLov("010.10")
+        comboLov(locator).selectLov("010.10")
                 .shouldHave(Condition.text("010.10"));
 
         System.out.println("title: " + comboLov(locator).lastSelectedLovTitleText());
@@ -105,7 +91,7 @@ public class BelgenetCustomElementsTest extends BaseTest {
         page.ustMenu("Birim Yönetimi");
         BelgenetElement cmlBirim = comboLov("[id='birimYonetimiFilterForm:accordionPanel:birimLov:LovText");
 
-        cmlBirim.selectComboLov("opt")
+        cmlBirim.selectLov("opt")
                 .shouldHave(text("optiim"));
         System.out.println("1. Birim seçili mi?: " + cmlBirim.isLovSelected());
         cmlBirim.clearLastSelectedLov();
@@ -113,13 +99,13 @@ public class BelgenetCustomElementsTest extends BaseTest {
 
         System.out.println("\n================\n");
 
-        cmlBirim.selectComboLov("opt");
+        cmlBirim.selectLov("opt");
         System.out.println("2. Birim seçili mi?: " + cmlBirim.isLovSelected());
         cmlBirim.lastSelectedLovTitle().shouldHave(text("OPT"));
         if (cmlBirim.lastSelectedLovTitleText().equalsIgnoreCase("OPTİİM BİRİM"))
-            cmlBirim.selectComboLov("");
+            cmlBirim.selectLov("");
 
-        cmlBirim.selectComboLov("opt");
+        cmlBirim.selectLov("opt");
         cmlBirim.lastSelectedLovTitle().shouldHave(exactText("OPTİİM BİRİM"));
         System.out.println("2. Birim seçili mi?: " + cmlBirim.isLovSelected());
         //-----------------------------------

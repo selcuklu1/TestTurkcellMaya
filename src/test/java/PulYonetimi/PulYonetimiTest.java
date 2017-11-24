@@ -94,6 +94,9 @@ public class PulYonetimiTest extends BaseTest {
                 .alanKontrolu()
                 .gidisSekliSec(gidisSekli)
                 .gramajDoldur(gramaj)
+//                .alanKontrolu()
+//                .gidisSekliSec("Ankara İçi APS")
+                .gramajDoldur("1")
                 .tutarHesapla()
 //        ekranda gelen bilgilerin kontrolü
                 .indirimOraniDoldur(indirimOrani)

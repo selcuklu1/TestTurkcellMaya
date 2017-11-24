@@ -64,7 +64,7 @@ public class BaseLibrary {
         Wait().until(new ExpectedCondition<Boolean>() {
             @Override
             public Boolean apply(WebDriver driver) {
-                return (Boolean) executeJavaScript("return document.readyState").equals("complete");
+                return executeJavaScript("return document.readyState").equals("complete");
             }
         });
     }
@@ -86,6 +86,15 @@ public class BaseLibrary {
     }
     //</editor-fold>
 
+    /**
+     * Alan setValue, sendKeys doğru çalışmıyor ise bu metodu kullanılır.
+     *
+     * @param element
+     * @param value
+     */
+    public void setValueJS(SelenideElement element, String value) {
+        executeJavaScript("arguments[0].value = arguments[1]", element, value);
+    }
 
     /**
      * Türkçe harfleri inglizce harflere dönüştürüyor

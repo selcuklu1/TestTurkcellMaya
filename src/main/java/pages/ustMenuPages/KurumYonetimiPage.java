@@ -3,7 +3,6 @@ package pages.ustMenuPages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
-import common.BaseLibrary;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import pages.MainPage;
@@ -148,7 +147,7 @@ public class KurumYonetimiPage extends MainPage {
     }
 
     public KurumYonetimiPage kurumDoldur(String text) {
-        txtKurumCombolov.selectComboLov(text);
+        txtKurumCombolov.selectLov(text);
         return this;
     }
 
@@ -168,7 +167,7 @@ public class KurumYonetimiPage extends MainPage {
     public KurumYonetimiPage ustKurumSec(String ustKurum){
         if(divSecilenUstKurum.exists())
             btnSecilenKurumListedenCikar.exists();
-        txtUstKurum.selectComboLov(ustKurum);
+        txtUstKurum.selectLov(ustKurum);
         return this;
     }
 
@@ -210,12 +209,12 @@ public class KurumYonetimiPage extends MainPage {
     }
 
     public KurumYonetimiPage ulkeDoldur(String ulke){
-        txtUlke.selectComboLov(ulke);
+        txtUlke.selectLov(ulke);
         return this;
     }
 
     public KurumYonetimiPage ilDoldur(String il){
-        txtIl.selectComboLov(il);
+        txtIl.selectLov(il);
         return this;
     }
 
