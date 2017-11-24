@@ -51,12 +51,12 @@ public class VekaletVerPage extends BaseLibrary {
 
     public  VekaletVerPage vekaletVerenFarkliDoldur(String text){
         btnVekalelVerenTemizle.click();
-        txtVekaletVerenCombolov.selectComboLov(text);
+        txtVekaletVerenCombolov.selectLov(text);
         return this;
     }
 
     public VekaletVerPage vekaletVerenDoldur(String text) {
-        txtVekaletVerenCombolov.selectComboLov(text);
+        txtVekaletVerenCombolov.selectLov(text);
         return this;
     }
 

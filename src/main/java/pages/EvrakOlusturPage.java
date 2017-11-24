@@ -121,7 +121,7 @@ public class EvrakOlusturPage {
 
         @Step("Konu Kodu alanında \"{0}\" seç")
         public BilgilerTab konuKoduSec(String value) {
-            cmlKonuKodu.selectComboLov(value);
+            cmlKonuKodu.selectLov(value);
             return this;
         }
 
@@ -144,7 +144,7 @@ public class EvrakOlusturPage {
 
         @Step("Kaldiralacak Klasörler alanında \"{0}\" seç")
         public BilgilerTab kaldiralacakKlasorlerSec(String value) {
-            cmbKaldiralacakKlasorler.selectComboLov(value);
+            cmbKaldiralacakKlasorler.selectLov(value);
             return this;
         }
 
@@ -225,7 +225,7 @@ public class EvrakOlusturPage {
 
         @Step("Bilgi alanında \"{0}\" seç")
         public BilgilerTab bilgiSec(String text) {
-            txtBilgi.selectComboLov(text);
+            txtBilgi.selectLov(text);
             return this;
         }
 
@@ -237,7 +237,7 @@ public class EvrakOlusturPage {
 
         @Step("Geregi alanında \"{0}\" seç")
         public BilgilerTab geregiSec(String text) {
-            txtGeregi.selectComboLov(text);
+            txtGeregi.selectLov(text);
             return this;
         }
 
@@ -249,7 +249,7 @@ public class EvrakOlusturPage {
 
         @Step("Onay Akisi alanında \"{0}\" seç")
         public BilgilerTab cmbOnayAkisi(String text) {
-            cmbOnayAkisi.selectComboLov(text);
+            cmbOnayAkisi.selectLov(text);
             return this;
         }
 
@@ -277,7 +277,7 @@ public class EvrakOlusturPage {
         @Step("Onay akışı kullanıcı ekle")
         public BilgilerTab onayAkisiKullaniciEkle(String kullaniciAdi) {
             btnOnayAkisiEkle.click();
-            txtOnayAkisiKullanicilar.selectComboLov(kullaniciAdi);
+            txtOnayAkisiKullanicilar.selectLov(kullaniciAdi);
             return this;
         }
 

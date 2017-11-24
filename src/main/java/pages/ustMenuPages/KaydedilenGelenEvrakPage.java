@@ -1,19 +1,11 @@
 package pages.ustMenuPages;
 
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
-import com.sun.java.swing.plaf.windows.WindowsDesktopManager;
-import com.sun.java.swing.plaf.windows.WindowsPopupMenuUI;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
-import pages.solMenuPages.KaydedilenGelenEvraklarPage;
-
-import java.util.List;
 
 import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
@@ -35,7 +27,7 @@ public class KaydedilenGelenEvrakPage extends MainPage {
 
     @Step("Birim alanı doldur")
     public KaydedilenGelenEvrakPage birimDoldur(String birim) {
-        cmbBirim.selectComboLov(birim);
+        cmbBirim.selectLov(birim);
         return this;
     }
 
