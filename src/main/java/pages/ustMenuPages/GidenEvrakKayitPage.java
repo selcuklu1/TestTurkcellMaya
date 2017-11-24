@@ -27,6 +27,7 @@ public class GidenEvrakKayitPage extends MainPage {
     BelgenetElement cmbBilgi = comboLov("[id^='gidenEvrakDefterKaydiForm:evrakBilgileriList'][id$='bilgiLov:LovText']");
     By cmbGeregiBy = By.cssSelector("[id^='gidenEvrakDefterKaydiForm:evrakBilgileriList'][id$='geregiLov:LovText']");
     By cmbBilgiBy = By.cssSelector("[id^='gidenEvrakDefterKaydiForm:evrakBilgileriList'][id$='bilgiLov:LovText']");
+    SelenideElement btnGeregiDelete = $("button[id^='gidenEvrakDefterKaydiForm:evrakBilgileriList:11:geregiLov:LovSecilenTable'] span[class$='delete-icon']");
 
     //endregion
 
@@ -52,13 +53,26 @@ public class GidenEvrakKayitPage extends MainPage {
     }
 
     @Step("Kişinin Geregi alanında görüntülenmediği kontrolu")
-    public GidenEvrakKayitPage geregiAlanindaGoruntulenmemeKontrolu(String geregi) {
-        boolean selectable = comboLov(cmbGeregiBy).isLovValueSelectable(geregi);
-        Assert.assertEquals(selectable, false, "MyCombolov alanında " + geregi + ": Gerçek kişinin görüntülenmediği görülür");
-        System.out.println("MyCombolov alanında " + geregi + ": Gerçek kişinin görüntülenmediği görülür.");
+    public GidenEvrakKayitPage geregiAlanindaGoruntulenmemeKontrolu(String ad, String soyad) {
+
+        String adSoyad = ad + " " + soyad;
+        boolean selectable = comboLov(cmbGeregiBy).isLovValueSelectable(adSoyad);
+        Assert.assertEquals(selectable, false, "MyCombolov alanında " + adSoyad + ": Gerçek kişinin görüntülenmediği görülür");
+        System.out.println("MyCombolov alanında " + adSoyad + ": Gerçek kişinin görüntülenmediği görülür.");
         return this;
     }
 
+    @Step("Kişinin Geregi alanında görüntülenme kontrolu")
+    public GidenEvrakKayitPage geregiAlanindaGoruntulenmeKontrolu(String ad, String soyad) {
+
+        String adSoyad = ad + " " + soyad;
+        cmbGeregi.selectLov(adSoyad);
+        System.out.println("Gelen title:     " + cmbGeregi.lastSelectedLovTitleText());
+        System.out.println("Beklenen title:  " + adSoyad);
+        Assert.assertEquals(cmbGeregi.lastSelectedLovTitleText().contains(adSoyad), true);
+
+        return this;
+    }
 
     @Step("Bilgi seçim tipi seç")
     public GidenEvrakKayitPage bilgiSecimTipiSec(String bilgi) {
@@ -68,17 +82,39 @@ public class GidenEvrakKayitPage extends MainPage {
 
     @Step("Bilgi doldur")
     public GidenEvrakKayitPage bilgiDoldur(String geregiAdSoyad) {
+
         cmbBilgi.selectLov(geregiAdSoyad);
         System.out.println("title: " + cmbBilgi.lastSelectedLovTitleText());
         System.out.println("detail: " + cmbBilgi.lastSelectedLovDetailText());
+
         return this;
     }
 
     @Step("Kişinin Bilgi alanında görüntülenmediği kontrolu")
-    public GidenEvrakKayitPage bilgiAlanindaGoruntulenmemeKontrolu(String bilgi) {
-        boolean selectable = comboLov(cmbBilgiBy).isLovValueSelectable(bilgi);
-        Assert.assertEquals(selectable, false, "MyCombolov alanında " + bilgi + ": Gerçek kişinin görüntülenmediği görülür");
-        System.out.println("MyCombolov alanında " + bilgi + ": Gerçek kişinin görüntülenmediği görülür.");
+    public GidenEvrakKayitPage bilgiAlanindaGoruntulenmemeKontrolu(String ad, String soyad) {
+
+        String adSoyad = ad + " " + soyad;
+        boolean selectable = comboLov(cmbBilgiBy).isLovValueSelectable(adSoyad);
+        Assert.assertEquals(selectable, false, "MyCombolov alanında " + adSoyad + ": Gerçek kişinin görüntülenmediği görülür");
+        System.out.println("MyCombolov alanında " + adSoyad + ": Gerçek kişinin görüntülenmediği görülür.");
+
+        return this;
+    }
+
+    @Step("Kişinin Bilgi alanında görüntülenme kontrolu")
+    public GidenEvrakKayitPage bilgiAlanindaGoruntulenmeKontrolu(String ad, String soyad) {
+
+        String adSoyad = ad + " " + soyad.toUpperCase();
+        cmbBilgi.selectLov(adSoyad);
+        System.out.println("Gelen title:     " + cmbBilgi.lastSelectedLovTitleText());
+        System.out.println("Beklenen title:  " + adSoyad);
+        Assert.assertEquals(cmbBilgi.lastSelectedLovTitleText().contains(adSoyad), true);
+
+        return this;
+    }
+
+    public GidenEvrakKayitPage secilenGeregiSil() {
+        btnGeregiDelete.click();
         return this;
     }
 

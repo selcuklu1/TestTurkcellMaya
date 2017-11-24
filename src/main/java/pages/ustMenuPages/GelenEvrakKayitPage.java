@@ -31,8 +31,8 @@ public class GelenEvrakKayitPage extends MainPage {
 
     SelenideElement cmbEvrakBilgileriListKisiKurum = $("[id$='kisiKurum']");
     //SelenideElement cmbEvrakBilgileriListKisiKurum = $("[id$='kisiKurum']");
-    //BelgenetElement txtEvrakBilgileriListGeldigiKisi = comboLov(By.id("evrakBilgileriForm:evrakBilgileriList:9:geldigiGercekKisiLov:LovText"));
-    BelgenetElement txtEvrakBilgileriListGeldigiKisi = comboLov("[id$='geldigiGercekKisiLov:LovText']");
+    //BelgenetElement cmbEvrakBilgileriListGeldigiKisi = comboLov(By.id("evrakBilgileriForm:evrakBilgileriList:9:geldigiGercekKisiLov:LovText"));
+    BelgenetElement cmbEvrakBilgileriListGeldigiKisi = comboLov("[id$='geldigiGercekKisiLov:LovText']");
     By cmbGeldiğiKisiBy = By.cssSelector("[id$='geldigiGercekKisiLov:LovText']");
 
     public SelenideElement txtEvrakBilgileriListEvrakSayiTextAreaSol = $("[id$='evrakSayiTextAreaSol']");
@@ -202,19 +202,35 @@ public class GelenEvrakKayitPage extends MainPage {
     @Step("Geldiği kişi doldur")
     public GelenEvrakKayitPage evrakBilgileriListGeldigiKisiDoldur(String geldigiKisi) {
 
-        txtEvrakBilgileriListGeldigiKisi.selectLov(geldigiKisi);
+        cmbEvrakBilgileriListGeldigiKisi.selectLov(geldigiKisi);
 
-        System.out.println("title: " + txtEvrakBilgileriListGeldigiKisi.lastSelectedLovTitleText());
-        System.out.println("detail: " + txtEvrakBilgileriListGeldigiKisi.lastSelectedLovDetailText());
+        System.out.println("title: " + cmbEvrakBilgileriListGeldigiKisi.lastSelectedLovTitleText());
+        System.out.println("detail: " + cmbEvrakBilgileriListGeldigiKisi.lastSelectedLovDetailText());
+
         return this;
     }
 
     @Step("Geldiği kişi alanında görüntülenmediği kontrolu")
-    public GelenEvrakKayitPage geldigiKisiGoruntulenmemeKontrolu(String geldigiKisi) {
+    public GelenEvrakKayitPage geldigiKisiGoruntulenmemeKontrolu(String ad, String soyad) {
 
-        boolean selectable = comboLov(cmbGeldiğiKisiBy).isLovValueSelectable(geldigiKisi);
-        Assert.assertEquals(selectable, false, "MyCombolov alanında " + geldigiKisi + ": Gerçek kişinin görüntülenmediği görülür");
-        System.out.println("MyCombolov alanında " + geldigiKisi + ": Gerçek kişinin görüntülenmediği görülür.");
+        String adSoyad = ad + " " + soyad;
+        boolean selectable = comboLov(cmbGeldiğiKisiBy).isLovValueSelectable(adSoyad);
+        Assert.assertEquals(selectable, false, "MyCombolov alanında " + adSoyad + ": Gerçek kişinin görüntülenmediği görülür");
+        System.out.println("MyCombolov alanında " + adSoyad + ": Gerçek kişinin görüntülenmediği görülür.");
+
+        return this;
+    }
+
+    @Step("Geldiği kişi alanında görüntülenme kontrolu")
+    public GelenEvrakKayitPage gercekKisiGoruntulenmeKontrolu(String tckn, String ad, String soyad) {
+
+        String adSoyad = ad + " " + soyad;
+        cmbEvrakBilgileriListGeldigiKisi.selectLov(tckn);
+        System.out.println("Gelen title:     " + cmbEvrakBilgileriListGeldigiKisi.lastSelectedLovTitleText());
+        System.out.println("Beklenen title:  " + adSoyad);
+
+        Assert.assertEquals(cmbEvrakBilgileriListGeldigiKisi.lastSelectedLovTitleText().contains(adSoyad), true);
+
         return this;
     }
 
