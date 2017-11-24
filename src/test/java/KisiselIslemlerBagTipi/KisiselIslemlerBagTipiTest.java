@@ -10,6 +10,7 @@ import common.BaseTest;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
+
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.ustMenuPages.EvrakOlusturPage;
@@ -65,17 +66,12 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
                 .openPage()
                 .vekaletVerenDoldur(ekranAdi)
                 .vekaletVerenFarkliDoldur(farkliKullanici)
-                .uygula();
+                .onayVerecekDoldur(ekranAdi);
         gelenEvraklarPage
                 .openPage()
-                .tabHavaleYap();
-
-
-
-
-
-        //  String getIdariBirimKodu = kurumYonetimiPage.idariBirimKimlikKoduCek();
-
+                .evrakSec()
+                .tabHavaleYap()
+                .havaleYapOnaylanacakKisiTreeDoldur(ekranAdi);
     }
 
 
@@ -99,26 +95,21 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
         kullaniciYonetimiPage
                 .kullaniciGuncellemeKaydet()
                 .islemMesaji().basariliOlmali(basariMesaji);
-
         evrakOlusturPage
                 .openPage()
                 .otomatikOnayAkisi()
                 .otomatikOnayAkisiGelmedigiGorme(ekranAdi,false);
         vekaletVerPage
                 .openPage()
-                .vekaletVerenAlanınaGoruntulenmemeKontrolu(ekranAdi)
-                .vekaletAlanAlanınaGoruntulenmemeKontrolu(farkliKullanici)
-                .uygula();
+                .vekaletVerenAlanınaGoruntulenmemeKontrolu(ekranAdi, false)
+                .vekaletVerenDoldur(farkliKullanici)
+                .vekaletAlanAlanınaGoruntulenmemeKontrolu(ekranAdi, false)
+                .onayVerecekDoldur(farkliKullanici);
         gelenEvraklarPage
                 .openPage()
-                .tabHavaleYap();
-
-
-
-
-
-        //  String getIdariBirimKodu = kurumYonetimiPage.idariBirimKimlikKoduCek();
-
+                .evrakSec()
+                .tabHavaleYap()
+                .havaleYapOnaylanacakKisiTreeDoldur(ekranAdi);
     }
 
 
