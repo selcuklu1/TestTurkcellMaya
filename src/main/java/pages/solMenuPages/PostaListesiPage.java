@@ -90,9 +90,8 @@ public class PostaListesiPage extends MainPage {
     }
 
     @Step("Gramaj doldur")
-    public PostaListesiPage gramajDoldur(String gramaj) {
-        txtGramaj.clear();
-        txtGramaj.sendKeys(gramaj);
+    public PostaListesiPage gramajDoldur(String gramaj) throws InterruptedException {
+        txtGramaj.setValue(gramaj);
         return this;
     }
 
@@ -104,8 +103,7 @@ public class PostaListesiPage extends MainPage {
 
     @Step("Indirim oranı doldur")
     public PostaListesiPage indirimOraniDoldur(String indirimOrani) {
-        txtIndirimOrani.clear();
-        txtIndirimOrani.sendKeys(indirimOrani);
+        txtIndirimOrani.setValue(indirimOrani);
         return this;
     }
 
