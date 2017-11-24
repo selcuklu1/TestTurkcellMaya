@@ -378,10 +378,10 @@ public class GercekKisiYonetimiTest extends BaseTest {
 
         evrakOlusturPage
                 .adresDagitimdaGorunsunSec(true)
-                .dagitimHitapDuzenlemeKaydet()
+                .dagitimHitapDuzenlemeKaydet();
 
                 //.openTab("Editör")
-                .getWinHandleBefore();
+                //getWinHandleBefore();
 
         evrakOlusturPage
                 .pdfOnIzleme()

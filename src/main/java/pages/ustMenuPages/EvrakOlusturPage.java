@@ -3,17 +3,21 @@ package pages.ustMenuPages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.interactions.HasInputDevices;
+import org.openqa.selenium.interactions.Keyboard;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.UstMenu;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
+import java.security.Key;
+
 import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
-import static com.codeborne.selenide.Selenide.executeJavaScript;
+import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 
@@ -25,6 +29,7 @@ public class EvrakOlusturPage extends MainPage {
     SelenideElement btnKaydet = $("button[id^='yeniGidenEvrakForm:rightTab:uiRepeat'] span[class$='kaydet']");
     SelenideElement btnKaydetOnayaSun = $("button[id^='yeniGidenEvrakForm:rightTab:uiRepeat'] span[class$='kaydetHavaleEt']");
     SelenideElement btnPaylas = $("button[id^='yeniGidenEvrakForm:rightTab:uiRepeat'] span[class$='evrakPaylas']");
+    SelenideElement btnImzala = $("button[id^='yeniGidenEvrakForm:rightTab:uiRepeat'] span[class$='imzala']");
 
 
     //Bilgileri tabı
@@ -33,6 +38,7 @@ public class EvrakOlusturPage extends MainPage {
     BelgenetElement txtKonuKodu = comboLov(By.id("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='konuKoduLov:LovText']"));
     SelenideElement btnKonuKoduTree = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:1:konuKoduLov:treeButton"));
     SelenideElement txtKonu = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:3:konuTextArea"));
+    SelenideElement divBilgileri = $(By.id("evrakBilgileriContainerDiv"));
 
     SelenideElement txtKaldiralacakKlasorler = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:4:eklenecekKlasorlerLov:LovText"));
     SelenideElement btnKaldiralacakKlasorlerTree = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:4:eklenecekKlasorlerLov:treeButton"));
@@ -46,6 +52,8 @@ public class EvrakOlusturPage extends MainPage {
     SelenideElement txtAciklama = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:11:j_idt8443"));
     SelenideElement cmbIvedik = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:12:ivedilik"));
     SelenideElement dateMiat = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:13:miatCalendar_input"));
+    SelenideElement txtEvrakSayiEkMetni = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:11:evrakSayiEkMetniInputText"));
+    SelenideElement cbmAkisAdim = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:akisAdimLov:LovSecilenTable:0:selectOneMenu"));
 
     SelenideElement btnBilgiTree = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:14:bilgiLov:treeButton"));
     SelenideElement cmbBilgiSecimTipi = $(By.xpath("//select[starts-with(@id,'yeniGidenEvrakForm:evrakBilgileriList:15:j_idt')]"));
@@ -74,6 +82,7 @@ public class EvrakOlusturPage extends MainPage {
     SelenideElement btnDagitimHitapDuzenlemeKaydet = $(By.xpath("//*[@id='yeniGidenEvrakForm:pnlHitapDuzenle']//span[normalize-space(text())='Kaydet']/parent::button"));
 
     //Editör tabı
+    SelenideElement divEditor = $(By.id("yeniGidenEvrakForm:allPanels"));
     SelenideElement yeniGidenEvrakForm = $(By.id("cke_yeniGidenEvrakForm:ckeditorInstance_window1"));
     SelenideElement editorHitapKismi = $(By.cssSelector("#yeniGidenEvrakForm\\:hitapInplace > span:nth-child(4)"));
     SelenideElement tblEditorlovSecilenTable = $(By.id("yeniGidenEvrakForm:geregiKurumLov:LovSecilenTable"));
@@ -440,6 +449,160 @@ public class EvrakOlusturPage extends MainPage {
         Assert.assertEquals(bilgiAdresAlaniPDF.shouldHaveSize(1), true);
         Assert.assertEquals(bilgiAdresAlaniPDF.get(0).getText(), ikinciKullaniciBilgiAdresi);
 
+        return this;
+    }
+
+    @Step("Editör İçerik Doldur")
+    public EvrakOlusturPage editorIcerikDoldur(String icerik) throws InterruptedException {
+        Thread.sleep(5000);
+        divEditor.click();
+        divEditor.sendKeys(icerik);
+        return this;
+    }
+
+    @Step("\"{0}\" ekran açılması beklenen statü: {1}")
+    public EvrakOlusturPage kisayolEkranKontrol(String ekranAdi, boolean acilmali) {
+        boolean t = $$("[id^='window'][id$='Button_ID'] .ui-button-text")
+                .filterBy(Condition.text(ekranAdi)).size() > 0;
+        Assert.assertEquals(t, acilmali, "Ekran açılmamamlı");
+        return this;
+    }
+
+    public EvrakOlusturPage PDFOnizleme() {
+        btnPDFOnizleme.click();
+        return this;
+    }
+
+    public EvrakOlusturPage PDFOnizlemeEkraninaGec() {
+        switchTo().window("htmlToPdfServlet");
+        return this;
+    }
+
+    public EvrakOlusturPage PDFOnizlemeKisayolGonder(String kisayol) throws InterruptedException {
+
+        SelenideElement tc = $(By.xpath("//div[@id='viewer']/div[@class='page']//div[.='T.C.']"));
+        String str = tc.getText();
+        tc.click();
+
+        tc.sendKeys(Keys.SHIFT+"o");
+
+        return this;
+    }
+
+
+    public EvrakOlusturPage kisayolSayfaAcma(String kisayol) throws InterruptedException {
+        divBilgileri.click();
+        Thread.sleep(2000);
+        switchTo().activeElement().sendKeys(kisayol);
+        return this;
+    }
+
+    @Step("Evrak Sayı Ek Metni Doldur")
+    public EvrakOlusturPage evrakSayiEkMetniDoldur(String evrakSayiEkMetni) {
+        txtEvrakSayiEkMetni.sendKeys(evrakSayiEkMetni);
+        return this;
+    }
+
+    @Step("Onay Akışı Ekle")
+    public EvrakOlusturPage onayAkisiEkle() {
+        btnOnayAkisiEkle.click();
+        return this;
+    }
+
+    @Step("Akış Adımı Seç")
+    public EvrakOlusturPage akisAdimSec(String akisAdim) {
+        cbmAkisAdim.selectOption(akisAdim);
+        return this;
+    }
+
+    @Step("İmzala")
+    public EvrakOlusturPage imzala() {
+        btnImzala.click();
+        return this;
+    }
+
+        /*public EvrakOlusturPage imzalaButonuKontrol() {
+        String getBtnImzalaClassName = btnImzala.shouldBe(Condition.visible).getClass().toString();
+        System.out.println("shouldBe getClass:"+getBtnImzalaClassName);
+
+        String getBtnImzalaClassName2 = btnImzala.shouldBe(Condition.visible).getTagName();
+        System.out.println("shouldBe getTagName:"+getBtnImzalaClassName2);
+
+        String getBtnImzalaClassName3 = btnImzala.shouldBe(Condition.visible).getValue();
+        System.out.println("shouldBe getValue:"+getBtnImzalaClassName3);
+
+        String getBtnImzalaClassName4 = btnImzala.shouldHave(Condition.visible).getClass().toString();
+        System.out.println("shouldHave .getClass:"+getBtnImzalaClassName4);
+
+        String getBtnImzalaClassName5 = btnImzala.shouldHave(Condition.visible).getTagName();
+        System.out.println("shouldHave getTagName:"+getBtnImzalaClassName5);
+
+        String getBtnImzalaClassName6 = btnImzala.shouldHave(Condition.visible).getValue();
+        System.out.println("shouldHave  getVaule:"+getBtnImzalaClassName6);
+
+        //String getHitapAlani = editorHitapKismi.shouldHave(Condition.visible).getText();
+        //String girilenHitapAlani = sayin + " " + unvan + " " + toUpperCaseFirst(ad) + " " + soyad.toUpperCase();
+        //System.out.println(getHitapAlani);
+        //System.out.println(girilenHitapAlani);
+        //Assert.assertEquals(getHitapAlani.contains(girilenHitapAlani), true);
+
+        return this;
+    }*/
+
+    public EvrakOlusturPage popupSImzalaIslemleri() throws InterruptedException {
+
+        //switchTo().window("");
+        Thread.sleep(5000);
+        SelenideElement sImza = $(By.id("imzalaForm:imzalamaYontemiRadio:1"));
+        sImza.selectRadio("I");
+        Thread.sleep(2000);
+        SelenideElement imzala = $(By.xpath("//*[@id='imzalaForm:sayisalImzaConfirmDialogOpener']"));
+        imzala.click();
+        Thread.sleep(2000);
+        SelenideElement sayisalImzaOnay = $(By.id("imzalaForm:sayisalImzaConfirmForm:sayisalImzaEvetButton"));
+        sayisalImzaOnay.click();
+        return this;
+    }
+
+    @Step("Ekleri Tab - Dosya Ekle")
+    public EvrakOlusturPage ekleriDosyaEkle(String pathToFile) {
+        try {
+            btnEkleriDosyaFileUpload.sendKeys(pathToFile);
+//            LogPASS("Dosya Yuklendi.");
+        } catch (Exception e) {
+//            logger.error("Error in attaching file.s : " + e);
+//            LogFAIL("Error in attaching file.s : " + e);
+            System.out.println("Error in attaching file.s  : " + e);
+            throw new RuntimeException(e);
+        }
+        return this;
+    }
+
+    @Step("Ekleri Tab - Açıklama")
+    public EvrakOlusturPage ekleriDosyaAciklamaDoldur(String aciklama) throws InterruptedException {
+        txtEkleriDosyaAciklama.sendKeys(aciklama);
+        return this;
+    }
+
+    @Step("Ekleri Tab - Ekle")
+    public EvrakOlusturPage ekleriEkle() {
+        btnEkleriDosyaEkle.click();
+        return this;
+    }
+
+    public EvrakOlusturPage popupImzalaVeEvrakKapatma() throws InterruptedException {
+
+        //switchTo().window("");
+        Thread.sleep(5000);
+        SelenideElement imzaPopupKapat = $(By.xpath("//*[@id='evrakImzalaDialog']/div[1]/a/span"));
+        imzaPopupKapat.click();
+
+        Thread.sleep(2000);
+        SelenideElement evrakKapat = $(By.xpath("//*[@id='window1Dialog']/div[1]/a[1]/span"));
+        evrakKapat.click();
+        /*Thread.sleep(2000);
+        SelenideElement sayisalImzaOnay = $(By.id("imzalaForm:sayisalImzaConfirmForm:sayisalImzaEvetButton"));
+        sayisalImzaOnay.click();*/
         return this;
     }
 }
