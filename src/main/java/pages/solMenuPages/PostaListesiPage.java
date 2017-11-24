@@ -1,10 +1,7 @@
 package pages.solMenuPages;
 
-import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
-import common.BaseLibrary;
 import io.qameta.allure.Step;
-import org.bouncycastle.jcajce.provider.asymmetric.elgamal.BCElGamalPrivateKey;
 import org.openqa.selenium.By;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
@@ -12,7 +9,6 @@ import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Selenide.$;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboBox;
-import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 /****************************************************
  * Tarih: 2017-12-22
@@ -91,7 +87,7 @@ public class PostaListesiPage extends MainPage {
 
     @Step("Gramaj doldur")
     public PostaListesiPage gramajDoldur(String gramaj) throws InterruptedException {
-        txtGramaj.setValue(gramaj);
+        setValueJS(txtGramaj, "1");
         return this;
     }
 

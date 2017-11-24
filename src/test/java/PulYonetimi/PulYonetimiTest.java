@@ -81,8 +81,8 @@ public class PulYonetimiTest extends BaseTest {
                 .postaListesiDoldur("optiim")
                 .tablodanIlkRowSec()
                 .postaListesiPostala()
-                .alanKontrolu()
-                .gidisSekliSec("Ankara İçi APS")
+//                .alanKontrolu()
+//                .gidisSekliSec("Ankara İçi APS")
                 .gramajDoldur("1")
                 .tutarHesapla()
 //        ekranda gelen bilgilerin kontrolü
