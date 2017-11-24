@@ -40,7 +40,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         kaydedilenGelenEvrakPage = new KaydedilenGelenEvrakPage();
         kaydedilenGelenEvraklarPage = new KaydedilenGelenEvraklarPage();
         birimHavaleEdilenlerPage = new BirimHavaleEdilenlerPage();
-        login();
+        login("optiim","Avis1111");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -141,7 +141,8 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .gelenEvrakNoDoldur("4985")
                 .sorgula()
                 .tabloKontrolu("4985")
-//                .raporAlExcel()
+                .raporAlExcel()
+
                 .txtClear()
                 .gelenEvrakNoDoldur("4985")
                 .sorgula()
