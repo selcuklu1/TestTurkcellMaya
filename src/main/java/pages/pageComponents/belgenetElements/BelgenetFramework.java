@@ -12,7 +12,7 @@ public class BelgenetFramework {
 
     public static void setUp() {
         //region ComboLov
-        Commands.getInstance().add("selectComboLov", comboLov.new SelectLov());
+        Commands.getInstance().add("selectLov", comboLov.new SelectLov());
         Commands.getInstance().add("clearLastSelectedLov", comboLov.new ClearLastSelectedLov());
         Commands.getInstance().add("clearAllSelectedLov", comboLov.new ClearAllSelectedLov());
         Commands.getInstance().add("lastSelectedLovTitle", comboLov.new LastSelectedLovTitle());

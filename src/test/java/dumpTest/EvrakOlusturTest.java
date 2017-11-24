@@ -1,3 +1,5 @@
+package dumpTest;
+
 import com.codeborne.selenide.SelenideElement;
 import common.BaseTest;
 import org.openqa.selenium.By;

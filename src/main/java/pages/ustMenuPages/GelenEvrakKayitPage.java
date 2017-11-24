@@ -35,7 +35,7 @@ public class GelenEvrakKayitPage extends MainPage {
     BelgenetElement txtEvrakBilgileriListGeldigiKisi = comboLov("[id$='geldigiGercekKisiLov:LovText']");
     By cmbGeldiğiKisiBy = By.cssSelector("[id$='geldigiGercekKisiLov:LovText']");
 
-    public SelenideElement txtEvrakBilgileriListEvrakSayiTextAreaSol = $("[id$='evrakSayiTextAreaSol'");
+    public SelenideElement txtEvrakBilgileriListEvrakSayiTextAreaSol = $("[id$='evrakSayiTextAreaSol']");
     SelenideElement txtEvrakBilgileriListEvrakSayiTextAreaSag = $("[id$='evrakSayiTextAreaSag']");
     SelenideElement cmbEvrakBilgileriListEvrakGelisTipi = $("[id$='evrakGelisTipi']");
     SelenideElement cmbEvrakBilgileriListIvedilik = $("[id$='ivedilik']");
@@ -163,7 +163,7 @@ public class GelenEvrakKayitPage extends MainPage {
     }
 
     public GelenEvrakKayitPage evrakBilgileriListKonuKoduDoldur(String konuKodu) throws InterruptedException {
-        comboKonuKodu.selectComboLov(konuKodu);
+        comboKonuKodu.selectLov(konuKodu);
         return this;
     }
 
@@ -194,7 +194,7 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("Kişi kurum seç")
     public GelenEvrakKayitPage evrakBilgileriListKisiKurumSec(String kisiKurum) {
-        cmbEvrakBilgileriListKisiKurum.selectOptionByValue(kisiKurum);
+        cmbEvrakBilgileriListKisiKurum.selectOptionContainingText(kisiKurum);
         return this;
     }
 
@@ -202,7 +202,7 @@ public class GelenEvrakKayitPage extends MainPage {
     @Step("Geldiği kişi doldur")
     public GelenEvrakKayitPage evrakBilgileriListGeldigiKisiDoldur(String geldigiKisi) {
 
-        txtEvrakBilgileriListGeldigiKisi.selectComboLov(geldigiKisi);
+        txtEvrakBilgileriListGeldigiKisi.selectLov(geldigiKisi);
 
         System.out.println("title: " + txtEvrakBilgileriListGeldigiKisi.lastSelectedLovTitleText());
         System.out.println("detail: " + txtEvrakBilgileriListGeldigiKisi.lastSelectedLovDetailText());
@@ -219,7 +219,7 @@ public class GelenEvrakKayitPage extends MainPage {
     }
 
     public GelenEvrakKayitPage evrakBilgileriListGeldigiKurumDoldurLovText(String geldigiKurum) throws InterruptedException {
-        comnoGeldigiKurum.selectComboLov(geldigiKurum);
+        comnoGeldigiKurum.selectLov(geldigiKurum);
         return this;
     }
 
@@ -266,7 +266,7 @@ public class GelenEvrakKayitPage extends MainPage {
 
     public GelenEvrakKayitPage dagitimBilgileriBirimDoldur(String birim) {
 //        txtDagitimBilgileriBirim.sendKeys(birim);
-        cmbHavaleIslemleriBirim.selectComboLov(birim);
+        cmbHavaleIslemleriBirim.selectLov(birim);
         return this;
     }
 
@@ -277,7 +277,7 @@ public class GelenEvrakKayitPage extends MainPage {
 
     public GelenEvrakKayitPage dagitimBilgileriKullaniciListesiDoldur(String kullaniciListesi) {
 //        txtDagitimBilgileriKullaniciListesi.sendKeys(kullaniciListesi);
-        cmbDagitimBilgileriKullaniciListesi.selectComboLov(kullaniciListesi);
+        cmbDagitimBilgileriKullaniciListesi.selectLov(kullaniciListesi);
         return this;
 
     }

@@ -3,6 +3,7 @@ package KurumYonetimi;
 import common.BaseTest;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import pages.EvrakOlusturPage;
 import pages.ustMenuPages.GelenEvrakKayitPage;
 import pages.ustMenuPages.KurumYonetimiPage;
 
@@ -11,11 +12,13 @@ public class KurumYonetimiTest extends BaseTest {
 
    KurumYonetimiPage kurumYonetimiPage;
    GelenEvrakKayitPage gelenEvrakKayitPage;
+   EvrakOlusturPage evrakOlusturPage;
 
     @BeforeMethod
     public void loginBeforeTests() {
         kurumYonetimiPage = new KurumYonetimiPage();
         gelenEvrakKayitPage = new GelenEvrakKayitPage();
+        evrakOlusturPage = new EvrakOlusturPage();
         login();
     }
 
@@ -45,6 +48,9 @@ public class KurumYonetimiTest extends BaseTest {
         String guncellenecekKepAdresi = "deneme@kepadresim.com";
         String yeniKepadresi = "deneme234@kepadresim.com";
         String kepHizmetSaglayicisi = "KEPKUR";
+
+
+        /*
 
 
         kurumYonetimiPage
@@ -87,13 +93,30 @@ public class KurumYonetimiTest extends BaseTest {
                 .ara()
                 .kurumKontrolEt(yeniKurumAdi, true);
 
+
+         */
+
+        /*
         gelenEvrakKayitPage
                 .openPage()
                 .evrakBilgileriListKisiKurumSec("Kurum")
-                .evrakBilgileriListGeldigiKurumDoldurLovText(yeniKurumAdi);
+                .evrakBilgileriListGeldigiKurumDoldurLovText(yeniKurumAdi)
+                .alanDegeriKontrolEt(gelenEvrakKayitPage.txtEvrakBilgileriListEvrakSayiTextAreaSol, idariBirimKimlikKodu + "   -", true, true);
+        */
 
-        gelenEvrakKayitPage
-                .alanDegeriKontrolEt(gelenEvrakKayitPage.txtEvrakBilgileriListEvrakSayiTextAreaSol, idariBirimKimlikKodu, true);
+        evrakOlusturPage
+                .open()
+                .bilgilerTabiAc()
+                .geregiSecimTipi("Kurum")
+                .geregiTreeKontrolEt(yeniKurumAdi, true)
+                .bilgiSecimTipiSec("Kurum")
+                .bilgiSec(yeniKurumAdi);
+
+        evrakOlusturPage
+                .editorTabAc()
+                .hitapKontrol(yeniKurumAdi);
+
+
 
 
 

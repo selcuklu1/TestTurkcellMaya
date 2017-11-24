@@ -3,26 +3,17 @@ package pages.ustMenuPages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
-import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.interactions.HasInputDevices;
-import org.openqa.selenium.interactions.Keyboard;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.UstMenu;
 import pages.pageComponents.belgenetElements.BelgenetElement;
-import java.security.Key;
 
-import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
-import static com.codeborne.selenide.Selenide.executeJavaScript;
+import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 
@@ -231,7 +222,7 @@ public class EvrakOlusturPage extends MainPage {
 
     @Step("Konu kodu doldur")
     public EvrakOlusturPage konuKoduDoldur(String konuKodu) {
-        txtKonuKodu.selectComboLov(konuKodu);
+        txtKonuKodu.selectLov(konuKodu);
         //shouldHave(Condition.text(konuKodu));
 
         System.out.println("title: " + txtKonuKodu.lastSelectedLovTitleText());
@@ -294,7 +285,7 @@ public class EvrakOlusturPage extends MainPage {
     }
 
     public EvrakOlusturPage bilgiDoldur(String bilgi) {
-        txtcomboLovBilgi.selectComboLov(bilgi);
+        txtcomboLovBilgi.selectLov(bilgi);
         //shouldHave(Condition.text(geregi));
         return this;
     }
@@ -316,7 +307,7 @@ public class EvrakOlusturPage extends MainPage {
     @Step("Gereği doldur")
     public EvrakOlusturPage geregiDoldur(String geregi) throws InterruptedException {
         Thread.sleep(6000);
-        txtGeregi.selectComboLov(geregi);
+        txtGeregi.selectLov(geregi);
         //shouldHave(Condition.text(geregi));
 
         // System.out.println("title: " + txtGeregi.lastSelectedLovTitleText());
@@ -346,7 +337,7 @@ public class EvrakOlusturPage extends MainPage {
     public EvrakOlusturPage onayAkisiEkle(String kullanici) {
 
         btnOnayAkisiEkle.click();
-        txtOnayAkisiKullanicilar.selectComboLov(kullanici);
+        txtOnayAkisiKullanicilar.selectLov(kullanici);
 
         return this;
     }
@@ -452,24 +443,22 @@ public class EvrakOlusturPage extends MainPage {
     @Step("Gereği alanında adres gelmedigi, Bilgi alanında dagitim yerinin adresi ile geldigi gorulur")
     public EvrakOlusturPage geregiBilgiAlaniAdresPdfKontrol(String birinciKullaniciGeregiAdresi, String ikinciKullaniciBilgiAdresi) throws InterruptedException {
 
-        Thread.sleep(10000);
-
         //gereği: div[@id='viewer']/div[@class='page']//div[.='xrpisak Mahallesi ŞİŞLİ / İSTANBUL']
         //blgil : div[@id='viewer']/div[@class='page']//div[.='Gültepe Mahallesi KAĞITHANE / İSTANBUL']
 
-        ElementsCollection geregiAdresAlaniPDF = $$(By.xpath("//div[@id='viewer']/div[@class='page']//div[.='" + birinciKullaniciGeregiAdresi + "']"));
-        ElementsCollection bilgiAdresAlaniPDF = $$(By.xpath("//div[@id='viewer']/div[@class='page']//div[.='" + ikinciKullaniciBilgiAdresi + "']"));
+        SelenideElement geregiAdresAlaniPDF = $(By.xpath("//div[@id='viewer']/div[@class='page']//div[.='" + birinciKullaniciGeregiAdresi + "']"));
+        SelenideElement bilgiAdresAlaniPDF = $(By.xpath("//div[@id='viewer']/div[@class='page']//div[.='" + ikinciKullaniciBilgiAdresi + "']"));
 
         //div[@id='viewer']/div[@class='page']//div[.='Gültepe Mahallesi KAĞITHANE / İSTANBUL']
 
         System.out.println(birinciKullaniciGeregiAdresi);
         System.out.println("Beklenen ikinci kullanici adresi: " + ikinciKullaniciBilgiAdresi);
-        System.out.println("Gelen ikinci kullanici adresi: " + bilgiAdresAlaniPDF.get(0).getText());
+        System.out.println("Gelen ikinci kullanici adresi: " + bilgiAdresAlaniPDF.getText());
 
-        Assert.assertEquals(geregiAdresAlaniPDF.shouldHaveSize(0), true);
-        Assert.assertEquals(bilgiAdresAlaniPDF.shouldHaveSize(1), true);
-        Assert.assertEquals(bilgiAdresAlaniPDF.get(0).getText(), ikinciKullaniciBilgiAdresi);
-
+        Assert.assertEquals(geregiAdresAlaniPDF.isDisplayed(), false);
+        Assert.assertEquals(bilgiAdresAlaniPDF.isDisplayed(), true);
+        Assert.assertEquals(bilgiAdresAlaniPDF.getText(), ikinciKullaniciBilgiAdresi);
+        takeScreenshot();
         return this;
     }
 

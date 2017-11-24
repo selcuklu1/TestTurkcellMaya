@@ -257,19 +257,19 @@ public class GercekKisiYonetimPage extends MainPage {
 
     @Step("İl doldur")
     public GercekKisiYonetimPage iletisimBilgisiIlDoldur(String il) {
-        txtIletisimBilgisiIl.selectComboLov(il);
+        txtIletisimBilgisiIl.selectLov(il);
         return this;
     }
 
     @Step("İlçe doldur")
     public GercekKisiYonetimPage iletisimBilgisiIlceDoldur(String ilce) {
-        txtIletisimBilgisiIlce.selectComboLov(ilce);
+        txtIletisimBilgisiIlce.selectLov(ilce);
         return this;
     }
 
     @Step("Ülke doldur")
     public GercekKisiYonetimPage iletisimBilgisiUlkeDoldur(String ulke) {
-        txtIletisimBilgisiUlke.selectComboLov(ulke);
+        txtIletisimBilgisiUlke.selectLov(ulke);
         return this;
     }
 

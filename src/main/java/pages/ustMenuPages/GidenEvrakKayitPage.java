@@ -44,7 +44,7 @@ public class GidenEvrakKayitPage extends MainPage {
     @Step("Gereği doldur")
     public GidenEvrakKayitPage geregiDoldur(String geregiAdSoyad) {
 
-        cmbGeregi.selectComboLov(geregiAdSoyad);
+        cmbGeregi.selectLov(geregiAdSoyad);
 
         System.out.println("title: " + cmbGeregi.lastSelectedLovTitleText());
         System.out.println("detail: " + cmbGeregi.lastSelectedLovDetailText());
@@ -68,7 +68,7 @@ public class GidenEvrakKayitPage extends MainPage {
 
     @Step("Bilgi doldur")
     public GidenEvrakKayitPage bilgiDoldur(String geregiAdSoyad) {
-        cmbBilgi.selectComboLov(geregiAdSoyad);
+        cmbBilgi.selectLov(geregiAdSoyad);
         System.out.println("title: " + cmbBilgi.lastSelectedLovTitleText());
         System.out.println("detail: " + cmbBilgi.lastSelectedLovDetailText());
         return this;

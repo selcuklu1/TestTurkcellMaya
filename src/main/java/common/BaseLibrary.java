@@ -27,7 +27,8 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfEl
 
 public class BaseLibrary {
 
-    String winHandleBefore = null;
+    protected static String winHandleBefore=null;
+
     //<editor-fold desc="Allure screenshooter">
     @Attachment(value = "Page screenshot", type = "image/png")
     public byte[] takeScreenshot() {
@@ -379,7 +380,7 @@ public class BaseLibrary {
     }
 
     public void switchToNewWindow() throws InterruptedException {
-        Thread.sleep(5000);
+        Thread.sleep(6000);
         // Perform the click operation that opens new window
         // Switch to new window opened
         for (String winHandle : WebDriverRunner.getWebDriver().getWindowHandles()) {
@@ -388,6 +389,7 @@ public class BaseLibrary {
     }
 
     public void switchToDefaultWindow() throws InterruptedException {
+        Thread.sleep(3000);
         WebDriverRunner.getWebDriver().close();
         // driver.switchTo().defaultContent();
         WebDriverRunner.getWebDriver().switchTo().window(winHandleBefore);
@@ -409,11 +411,22 @@ public class BaseLibrary {
     }
 
     @Step("[\"{0}\"] alanının değeri [\"{0}\"] olmalı.")
-    public void alanDegeriKontrolEt(SelenideElement element, String value, boolean shouldHaveValue){
-        if(shouldHaveValue == true)
-            element.shouldHave(Condition.exactValue(value));
+    public void alanDegeriKontrolEt(SelenideElement element, String value, boolean shouldHaveValue, boolean exactText){
+        if(shouldHaveValue == true){
+            if (exactText == true)
+                element.shouldHave(Condition.exactValue(value));
+            else
+                element.shouldHave(Condition.value(value));
+
+        }
         else
-            element.shouldNotHave(Condition.exactValue(value));
+        {
+            if (exactText == true)
+                element.shouldNotHave(Condition.exactValue(value));
+            else
+                element.shouldNotHave(Condition.value(value));
+
+        }
     }
 
 }
