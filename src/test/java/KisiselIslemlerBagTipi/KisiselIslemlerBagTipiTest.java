@@ -20,7 +20,12 @@ import pages.ustMenuPages.VekaletVerPage;
 
 import static data.TestData.password2;
 import static data.TestData.username2;
-
+/****************************************************
+ * Tarih: 2017-12-22
+ * Proje: Türksat Functional Test Automation
+ * Class: "Kişisel İşlemler Bağ Tipi" konulu senaryoları içerir
+ * Yazan: Can Şeker
+ ****************************************************/
 @Epic("Kişisel İşlemler Bağ Tipi")
 public class KisiselIslemlerBagTipiTest extends BaseTest {
 

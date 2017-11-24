@@ -266,7 +266,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
         gercekKisiYonetimPage
                 .filtreAdDoldur(ad)
                 .filtreTCKimlikNoDoldur(tcNO)
-                .ara() //araButonuTikla
+                .ara()
                 .kayitKontrolu(tcNO, ad, soyad)
 
                 .gercekKisiGuncelle()
@@ -378,13 +378,14 @@ public class GercekKisiYonetimiTest extends BaseTest {
 
         evrakOlusturPage
                 .adresDagitimdaGorunsunSec(true)
-                .dagitimHitapDuzenlemeKaydet();
-
-                //.openTab("Editör")
-                //getWinHandleBefore();
+                .dagitimHitapDuzenlemeKaydet()
+                .windowHandleBefore();
 
         evrakOlusturPage
                 .pdfOnIzleme()
+                .switchToNewWindow();
+
+        evrakOlusturPage
                 .geregiBilgiAlaniAdresPdfKontrol(birinciKullaniciGeregiAdresi, getIkinciKullaniciAdres)
                 .switchToDefaultWindow();
 
@@ -397,7 +398,6 @@ public class GercekKisiYonetimiTest extends BaseTest {
         String tcNO = "21861197500";
         String ad = "Bulut";
         String soyad = "Toprak";
-        String adSoyad = ad + " " + soyad;
 
         gercekKisiYonetimPage
                 .openPage()
@@ -405,7 +405,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .filtreSoyadDoldur(soyad)
                 .filtreDurumSec("TUMU")
                 .ara()
-                .aktifYap()
+                .gercekKisiPasifIseAktifYap()
                 .kayitKontrolu(tcNO, ad, soyad)
 
                 .gercekKisiPasifYap()
@@ -436,23 +436,85 @@ public class GercekKisiYonetimiTest extends BaseTest {
         gelenEvrakKayitPage
                 .openPage()
                 .evrakBilgileriListKisiKurumSec("G")
-                .geldigiKisiGoruntulenmemeKontrolu(adSoyad);
+                .geldigiKisiGoruntulenmemeKontrolu(ad, soyad);
 
         gidenEvrakKayitPage
                 .openPage()
                 .geregiSecimTipiSec("G")
-                .geregiAlanindaGoruntulenmemeKontrolu(adSoyad)
+                .geregiAlanindaGoruntulenmemeKontrolu(ad, soyad)
 
                 .bilgiSecimTipiSec("G")
-                .bilgiAlanindaGoruntulenmemeKontrolu(adSoyad);
+                .bilgiAlanindaGoruntulenmemeKontrolu(ad, soyad);
 
         evrakOlusturPage
                 .openPage()
                 .geregiSecimTipiSec("G")
-                .geregiAlanindaGoruntulenmemeKontrolu(adSoyad)
+                .geregiAlanindaGoruntulenmemeKontrolu(ad, soyad)
 
                 .bilgiSecimTipiSec("G")
-                .bilgiAlanindaGoruntulenmemeKontrolu(adSoyad);
+                .bilgiAlanindaGoruntulenmemeKontrolu(ad, soyad);
+    }
 
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "1458: Pasif yapılan gerçek kişinin aktif yapılması ve ekranlardan kontrolü")
+    public void TC1458() {
+
+        String TCKN = "21861197500";
+        String ad = "Bulut";
+        String soyad = "Toprak";
+
+        gercekKisiYonetimPage
+                .openPage()
+                .filtreTCKimlikNoDoldur(TCKN)
+                .filtreDurumSec("TUMU")
+                .ara()
+                .gercekKisiAktifIsePasifYap()
+
+                .filtreSorgulamaPaneliAc()
+                .filtreTCKimlikNoDoldur(TCKN)
+                .filtreDurumSec("PASIFLER")
+                .ara()
+                .pasiflerKayitKontrolu(TCKN, ad, soyad)
+                .gercekKisiAktifYap()
+                .islemOnayi("Evet")
+
+                .filtreSorgulamaPaneliAc()
+                .filtreTCKimlikNoDoldur(TCKN)
+                .filtreDurumSec("AKTIFLER")
+                .ara()
+                .kayitKontrolu(TCKN, ad, soyad)
+
+                .filtreSorgulamaPaneliAc()
+                .filtreTCKimlikNoDoldur(TCKN)
+                .filtreDurumSec("PASIFLER")
+                .ara()
+                .kayitBulunamadiKontrolu()
+
+                .filtreSorgulamaPaneliAc()
+                .filtreTCKimlikNoDoldur(TCKN)
+                .filtreDurumSec("TUMU")
+                .ara()
+                .kayitKontrolu(TCKN, ad, soyad);
+
+        gelenEvrakKayitPage
+                .openPage()
+                .evrakBilgileriListKisiKurumSec("G")
+                .gercekKisiGoruntulenmeKontrolu(TCKN, ad, soyad);
+
+        gidenEvrakKayitPage
+                .openPage()
+                .geregiSecimTipiSec("G")
+                .geregiAlanindaGoruntulenmeKontrolu(ad, soyad)
+                .secilenGeregiSil()
+                .bilgiSecimTipiSec("G")
+                .bilgiAlanindaGoruntulenmeKontrolu(ad, soyad);
+
+        evrakOlusturPage
+                .openPage()
+                .geregiSecimTipiSec("G")
+                .geregiAlanindaGoruntulenmeKontrolu(ad, soyad)
+                .secilenGeregiSil()
+                .bilgiSecimTipiSec("G")
+                .bilgiAlanindaGoruntulenmeKontrolu(ad, soyad);
     }
 }

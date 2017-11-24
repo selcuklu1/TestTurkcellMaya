@@ -48,17 +48,17 @@ public class VekaletVerPage extends BaseLibrary {
 
     public  VekaletVerPage vekaletVerenFarkliDoldur(String text){
         btnVekalelVerenTemizle.click();
-        txtVekaletVerenCombolov.selectComboLov(text);
+        txtVekaletVerenCombolov.selectLov(text);
         return this;
     }
     BelgenetElement e = comboLov(By.id("vekaletVerForm:vekaletLayout:vekaletOnaylayacakKisiLov:LovText"));
     public VekaletVerPage onayVerecekDoldur(String kullanici){
-        e.selectComboLov(kullanici);
+        e.selectLov(kullanici);
         return this;
     }
 
     public VekaletVerPage vekaletVerenDoldur(String text) {
-        txtVekaletVerenCombolov.selectComboLov(text);
+        txtVekaletVerenCombolov.selectLov(text);
         return this;
     }
 

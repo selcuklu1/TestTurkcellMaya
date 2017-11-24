@@ -153,7 +153,7 @@ public class GelenEvraklarPage extends MainPage {
     }
 
     public GelenEvraklarPage havaleYapOnaylanacakKisiTreeDoldur(String text) {
-        treeHavaleYapOnaylanacakKisi.selectComboLov(text);
+        treeHavaleYapOnaylanacakKisi.selectLov(text);
         System.out.println("Başarı Bu selectlı geçmiştir");
         return this;
     }

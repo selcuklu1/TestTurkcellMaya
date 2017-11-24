@@ -2,7 +2,6 @@ package pages.ustMenuPages;
 
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
-import common.BaseLibrary;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import pages.MainPage;
@@ -280,7 +279,7 @@ public class BirimYonetimiPage extends MainPage {
 
     @Step("Birim Doldur")
     public BirimYonetimiPage birimDoldur(String text) throws InterruptedException{
-        txtBirim.selectComboLov(text);
+        txtBirim.selectLov(text);
         return  this;
     }
 }

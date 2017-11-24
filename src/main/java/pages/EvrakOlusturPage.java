@@ -21,7 +21,6 @@ import static pages.pageComponents.belgenetElements.BelgentCondition.required;
 public class EvrakOlusturPage {
 
     //region Elements
-    SelenideElement tabEditor = $("button .editor");
     SelenideElement tabEkleri = $("button .kullaniciEkleri");
     SelenideElement tabIlgileri = $("button .kullaniciIlgileri");
     SelenideElement tabIliskiliEvraklar = $("button .kullaniciIliskileri");
@@ -121,7 +120,7 @@ public class EvrakOlusturPage {
 
         @Step("Konu Kodu alanında \"{0}\" seç")
         public BilgilerTab konuKoduSec(String value) {
-            cmlKonuKodu.selectComboLov(value);
+            cmlKonuKodu.selectLov(value);
             return this;
         }
 
@@ -144,7 +143,7 @@ public class EvrakOlusturPage {
 
         @Step("Kaldiralacak Klasörler alanında \"{0}\" seç")
         public BilgilerTab kaldiralacakKlasorlerSec(String value) {
-            cmbKaldiralacakKlasorler.selectComboLov(value);
+            cmbKaldiralacakKlasorler.selectLov(value);
             return this;
         }
 
@@ -223,21 +222,33 @@ public class EvrakOlusturPage {
             return this;
         }
 
+        @Step("Bilgi seçim tipi tree alanında \"{0}\" geliyor mu? kontrol et")
+        public BilgilerTab bilgiSecimTipiTreeKontrolEt(String kurumAdi, Boolean shouldBeSelectable) {
+            org.testng.Assert.assertEquals(txtBilgi.isLovValueSelectable(kurumAdi), shouldBeSelectable);
+            return this;
+        }
+
         @Step("Bilgi alanında \"{0}\" seç")
         public BilgilerTab bilgiSec(String text) {
-            txtBilgi.selectComboLov(text);
+            txtBilgi.selectLov(text);
             return this;
         }
 
         @Step("Geregi Secim Tipi alanında \"{0}\" seç")
         public BilgilerTab geregiSecimTipi(String text) {
-            cmbGeregiSecimTipi.selectOption(text);
+            cmbGeregiSecimTipi.selectOptionContainingText(text);
             return this;
         }
 
         @Step("Geregi alanında \"{0}\" seç")
         public BilgilerTab geregiSec(String text) {
-            txtGeregi.selectComboLov(text);
+            txtGeregi.selectLov(text);
+            return this;
+        }
+
+        @Step("Gereği tree alanında \"{0}\" geliyor mu? kontrol et")
+        public BilgilerTab geregiTreeKontrolEt(String kurumAdi, Boolean shouldBeSelectable) {
+            org.testng.Assert.assertEquals(txtGeregi.isLovValueSelectable(kurumAdi), shouldBeSelectable);
             return this;
         }
 
@@ -249,7 +260,7 @@ public class EvrakOlusturPage {
 
         @Step("Onay Akisi alanında \"{0}\" seç")
         public BilgilerTab cmbOnayAkisi(String text) {
-            cmbOnayAkisi.selectComboLov(text);
+            cmbOnayAkisi.selectLov(text);
             return this;
         }
 
@@ -277,7 +288,7 @@ public class EvrakOlusturPage {
         @Step("Onay akışı kullanıcı ekle")
         public BilgilerTab onayAkisiKullaniciEkle(String kullaniciAdi) {
             btnOnayAkisiEkle.click();
-            txtOnayAkisiKullanicilar.selectComboLov(kullaniciAdi);
+            txtOnayAkisiKullanicilar.selectLov(kullaniciAdi);
             return this;
         }
 
@@ -342,6 +353,29 @@ public class EvrakOlusturPage {
             return this;
         }
         //endregion
+
+    }
+
+    private EditorTab editorTab = new EditorTab();
+    public EditorTab editorTabAc(){ return editorTab.open(); }
+
+    public class EditorTab {
+        SelenideElement tabEditor = $("button .editor");
+
+        SelenideElement divHitap = $("div[id='yeniGidenEvrakForm:hitapInplace'] > span");
+
+        private EditorTab open() {
+            tabEditor.click();
+            return this;
+
+        }
+
+        @Step("Hitap alanı \"{0}\" olarak gelmeli")
+        public EditorTab hitapKontrol(String hitap) {
+            divHitap.shouldHave(text(hitap));
+            return this;
+        }
+
 
     }
     //endregion

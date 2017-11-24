@@ -72,7 +72,7 @@ public class YonetimHavuzuYonetimiPage extends MainPage {
     public YonetimHavuzuYonetimiPage ara(String birimAdi, String yonetimHavuzuAdi, String durum, boolean checkIfExists) {
         if (birimAdi != null) {
 
-            comboLov(By.id("yonetimHavuzuYonetimiListingForm:filterPanel:birimLov:LovText")).selectComboLov(birimAdi);
+            comboLov(By.id("yonetimHavuzuYonetimiListingForm:filterPanel:birimLov:LovText")).selectLov(birimAdi);
             /*
 
             txtFiltreBirim.setValue(birimAdi);

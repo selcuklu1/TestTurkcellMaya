@@ -1,28 +1,24 @@
 package pages.ustMenuPages;
 
 import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
-import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.interactions.HasInputDevices;
-import org.openqa.selenium.interactions.Keyboard;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.UstMenu;
 import pages.pageComponents.belgenetElements.BelgenetElement;
-import java.security.Key;
 
-import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static com.codeborne.selenide.Selenide.executeJavaScript;
+import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
+import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 
@@ -65,7 +61,7 @@ public class EvrakOlusturPage extends MainPage {
     BelgenetElement txtBilgi = comboLov(By.id("yeniGidenEvrakForm:evrakBilgileriList:15:bilgiLov:LovText"));
 
     SelenideElement cmbGeregiSecimTipi = $(By.xpath("//select[starts-with(@id,'yeniGidenEvrakForm:evrakBilgileriList:16:j_idt')]"));
-    BelgenetElement txtGeregi = comboLov(By.id("yeniGidenEvrakForm:evrakBilgileriList:16:geregiLov:LovText"));
+    BelgenetElement cmbGeregi = comboLov(By.id("yeniGidenEvrakForm:evrakBilgileriList:16:geregiLov:LovText"));
     SelenideElement btnGeregiTree = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:15:geregiLov:treeButton"));
     SelenideElement cmbPostaTipi = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:16:geregiLov:LovSecilenTable:0:selectOneMenu"));
     By cmbGeregiBy = By.cssSelector("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='geregiLov:LovText']");
@@ -184,7 +180,7 @@ public class EvrakOlusturPage extends MainPage {
     BelgenetElement txtOnayAkisiKullanicilar = comboLov("[id$='akisAdimLov:LovText']");
     SelenideElement listOnayAkisikullanicilar = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:akisAdimLov:lovTree"));
 
-    BelgenetElement txtcomboLovBilgi = comboLov(By.cssSelector("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='bilgiLov:LovText']"));
+    BelgenetElement cmbBilgi = comboLov(By.cssSelector("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='bilgiLov:LovText']"));
     By cmbBilgiBy = By.cssSelector("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='bilgiLov:LovText']");
 
     SelenideElement btnOtomatikOnayAkisi = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:otomatikOnayAkisiEkle"));
@@ -231,7 +227,7 @@ public class EvrakOlusturPage extends MainPage {
 
     @Step("Konu kodu doldur")
     public EvrakOlusturPage konuKoduDoldur(String konuKodu) {
-        txtKonuKodu.selectComboLov(konuKodu);
+        txtKonuKodu.selectLov(konuKodu);
         //shouldHave(Condition.text(konuKodu));
 
         System.out.println("title: " + txtKonuKodu.lastSelectedLovTitleText());
@@ -294,16 +290,30 @@ public class EvrakOlusturPage extends MainPage {
     }
 
     public EvrakOlusturPage bilgiDoldur(String bilgi) {
-        txtcomboLovBilgi.selectComboLov(bilgi);
+        cmbBilgi.selectLov(bilgi);
         //shouldHave(Condition.text(geregi));
         return this;
     }
 
     @Step("Kişinin Bilgi alanında görüntülenmediği kontrolu")
-    public EvrakOlusturPage bilgiAlanindaGoruntulenmemeKontrolu(String bilgi) {
-        boolean selectable = comboLov(cmbBilgiBy).isLovValueSelectable(bilgi);
-        Assert.assertEquals(selectable, false, "MyCombolov alanında " + bilgi + ": Gerçek kişinin görüntülenmediği görülür");
-        System.out.println("MyCombolov alanında " + bilgi + ": Gerçek kişinin görüntülenmediği görülür.");
+    public EvrakOlusturPage bilgiAlanindaGoruntulenmemeKontrolu(String ad, String soyad) {
+
+        String adSoyad = ad + " " + soyad;
+        boolean selectable = comboLov(cmbBilgiBy).isLovValueSelectable(adSoyad);
+        Assert.assertEquals(selectable, false, "MyCombolov alanında " + adSoyad + ": Gerçek kişinin görüntülenmediği görülür");
+        System.out.println("MyCombolov alanında " + adSoyad + ": Gerçek kişinin görüntülenmediği görülür.");
+        return this;
+    }
+
+    @Step("Kişinin Bilgi alanında görüntülenme kontrolu")
+    public EvrakOlusturPage bilgiAlanindaGoruntulenmeKontrolu(String ad, String soyad) {
+
+        String adSoyad = ad + " " + soyad.toUpperCase();
+        cmbBilgi.selectLov(adSoyad);
+        System.out.println("Gelen title:     " + cmbBilgi.lastSelectedLovTitleText());
+        System.out.println("Beklenen title:  " + adSoyad);
+        Assert.assertEquals(cmbBilgi.lastSelectedLovTitleText().contains(adSoyad), true);
+
         return this;
     }
 
@@ -315,21 +325,41 @@ public class EvrakOlusturPage extends MainPage {
 
     @Step("Gereği doldur")
     public EvrakOlusturPage geregiDoldur(String geregi) throws InterruptedException {
-        Thread.sleep(6000);
-        txtGeregi.selectComboLov(geregi);
+
+        cmbGeregi.selectLov(geregi);
         //shouldHave(Condition.text(geregi));
 
-        // System.out.println("title: " + txtGeregi.lastSelectedLovTitleText());
-        // System.out.println("detail: " + txtGeregi.lastSelectedLovDetailText());
+        // System.out.println("title: " + cmbGeregi.lastSelectedLovTitleText());
+        // System.out.println("detail: " + cmbGeregi.lastSelectedLovDetailText());
 
         return this;
     }
 
     @Step("Kişinin Geregi alanında görüntülenmediği kontrolu")
-    public EvrakOlusturPage geregiAlanindaGoruntulenmemeKontrolu(String geregi) {
-        boolean selectable = comboLov(cmbGeregiBy).isLovValueSelectable(geregi);
-        Assert.assertEquals(selectable, false, "MyCombolov alanında " + geregi + ": Gerçek kişinin görüntülenmediği görülür");
-        System.out.println("MyCombolov alanında " + geregi + ": Gerçek kişinin görüntülenmediği görülür.");
+    public EvrakOlusturPage geregiAlanindaGoruntulenmemeKontrolu(String ad, String soyad) {
+
+        String adSoyad = ad + " " + soyad;
+        boolean selectable = comboLov(cmbGeregiBy).isLovValueSelectable(adSoyad);
+        Assert.assertEquals(selectable, false, "MyCombolov alanında " + adSoyad + ": Gerçek kişinin görüntülenmediği görülür");
+        System.out.println("MyCombolov alanında " + adSoyad + ": Gerçek kişinin görüntülenmediği görülür.");
+
+        return this;
+    }
+
+    @Step("Kişinin Geregi alanında görüntülenme kontrolu")
+    public EvrakOlusturPage geregiAlanindaGoruntulenmeKontrolu(String ad, String soyad) {
+
+        String adSoyad = ad + " " + soyad;
+        cmbGeregi.selectLov(adSoyad);
+        System.out.println("Gelen title:     " + cmbGeregi.lastSelectedLovTitleText());
+        System.out.println("Beklenen title:  " + adSoyad);
+        Assert.assertEquals(cmbGeregi.lastSelectedLovTitleText().contains(adSoyad), true);
+
+        return this;
+    }
+
+    public EvrakOlusturPage secilenGeregiSil() {
+        cmbGeregi.clearLastSelectedLov();
         return this;
     }
 
@@ -346,7 +376,7 @@ public class EvrakOlusturPage extends MainPage {
     public EvrakOlusturPage onayAkisiEkle(String kullanici) {
 
         btnOnayAkisiEkle.click();
-        txtOnayAkisiKullanicilar.selectComboLov(kullanici);
+        txtOnayAkisiKullanicilar.selectLov(kullanici);
 
         return this;
     }
@@ -407,15 +437,15 @@ public class EvrakOlusturPage extends MainPage {
 
     @Step("Gereği alanı kontrolu başarılı")
     public EvrakOlusturPage geregiAlaniKontrol(String adSoyad, String unvan, String adres, String posta) {
-        System.out.println("Gelen title:     " + txtGeregi.lastSelectedLovTitleText());
+        System.out.println("Gelen title:     " + cmbGeregi.lastSelectedLovTitleText());
         System.out.println("Beklenen title:  " + adSoyad);
-        System.out.println("Gelen detail:    " + txtGeregi.lastSelectedLovDetailText());
+        System.out.println("Gelen detail:    " + cmbGeregi.lastSelectedLovDetailText());
         System.out.println("Beklenen detail: " + unvan + " | " + adres);
         System.out.println("Gelen posta:     " + cmbPostaTipi.getSelectedValue());
         System.out.println("Beklenen posta:  " + posta);
 
-        Assert.assertEquals(txtGeregi.lastSelectedLovTitleText().contains(adSoyad), true);
-        Assert.assertEquals(txtGeregi.lastSelectedLovDetailText().contains(unvan + " | " + adres), true);
+        Assert.assertEquals(cmbGeregi.lastSelectedLovTitleText().contains(adSoyad), true);
+        Assert.assertEquals(cmbGeregi.lastSelectedLovDetailText().contains(unvan + " | " + adres), true);
         Assert.assertEquals(cmbPostaTipi.getSelectedValue().contains(posta), true);
 
         return this;
@@ -452,24 +482,22 @@ public class EvrakOlusturPage extends MainPage {
     @Step("Gereği alanında adres gelmedigi, Bilgi alanında dagitim yerinin adresi ile geldigi gorulur")
     public EvrakOlusturPage geregiBilgiAlaniAdresPdfKontrol(String birinciKullaniciGeregiAdresi, String ikinciKullaniciBilgiAdresi) throws InterruptedException {
 
-        Thread.sleep(10000);
-
         //gereği: div[@id='viewer']/div[@class='page']//div[.='xrpisak Mahallesi ŞİŞLİ / İSTANBUL']
         //blgil : div[@id='viewer']/div[@class='page']//div[.='Gültepe Mahallesi KAĞITHANE / İSTANBUL']
 
-        ElementsCollection geregiAdresAlaniPDF = $$(By.xpath("//div[@id='viewer']/div[@class='page']//div[.='" + birinciKullaniciGeregiAdresi + "']"));
-        ElementsCollection bilgiAdresAlaniPDF = $$(By.xpath("//div[@id='viewer']/div[@class='page']//div[.='" + ikinciKullaniciBilgiAdresi + "']"));
+        SelenideElement geregiAdresAlaniPDF = $(By.xpath("//div[@id='viewer']/div[@class='page']//div[.='" + birinciKullaniciGeregiAdresi + "']"));
+        SelenideElement bilgiAdresAlaniPDF = $(By.xpath("//div[@id='viewer']/div[@class='page']//div[.='" + ikinciKullaniciBilgiAdresi + "']"));
 
         //div[@id='viewer']/div[@class='page']//div[.='Gültepe Mahallesi KAĞITHANE / İSTANBUL']
 
         System.out.println(birinciKullaniciGeregiAdresi);
         System.out.println("Beklenen ikinci kullanici adresi: " + ikinciKullaniciBilgiAdresi);
-        System.out.println("Gelen ikinci kullanici adresi: " + bilgiAdresAlaniPDF.get(0).getText());
+        System.out.println("Gelen ikinci kullanici adresi: " + bilgiAdresAlaniPDF.getText());
 
-        Assert.assertEquals(geregiAdresAlaniPDF.shouldHaveSize(0), true);
-        Assert.assertEquals(bilgiAdresAlaniPDF.shouldHaveSize(1), true);
-        Assert.assertEquals(bilgiAdresAlaniPDF.get(0).getText(), ikinciKullaniciBilgiAdresi);
-
+        Assert.assertEquals(geregiAdresAlaniPDF.isDisplayed(), false);
+        Assert.assertEquals(bilgiAdresAlaniPDF.isDisplayed(), true);
+        Assert.assertEquals(bilgiAdresAlaniPDF.getText(), ikinciKullaniciBilgiAdresi);
+        takeScreenshot();
         return this;
     }
 

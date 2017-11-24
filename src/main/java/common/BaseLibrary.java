@@ -1,9 +1,12 @@
 package common;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Attachment;
+import io.qameta.allure.Step;
+import org.omg.CORBA.PUBLIC_MEMBER;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -24,7 +27,8 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfEl
 
 public class BaseLibrary {
 
-    String winHandleBefore = null;
+    protected static String winHandleBefore=null;
+
     //<editor-fold desc="Allure screenshooter">
     @Attachment(value = "Page screenshot", type = "image/png")
     public byte[] takeScreenshot() {
@@ -63,7 +67,7 @@ public class BaseLibrary {
         Wait().until(new ExpectedCondition<Boolean>() {
             @Override
             public Boolean apply(WebDriver driver) {
-                return (Boolean) executeJavaScript("return document.readyState").equals("complete");
+                return executeJavaScript("return document.readyState").equals("complete");
             }
         });
     }
@@ -85,6 +89,15 @@ public class BaseLibrary {
     }
     //</editor-fold>
 
+    /**
+     * Alan setValue, sendKeys doğru çalışmıyor ise bu metodu kullanılır.
+     *
+     * @param element
+     * @param value
+     */
+    public void setValueJS(SelenideElement element, String value) {
+        executeJavaScript("arguments[0].value = arguments[1]", element, value);
+    }
 
     /**
      * Türkçe harfleri inglizce harflere dönüştürüyor
@@ -376,7 +389,7 @@ public class BaseLibrary {
     }
 
     public void switchToNewWindow() throws InterruptedException {
-        Thread.sleep(5000);
+        Thread.sleep(6000);
         // Perform the click operation that opens new window
         // Switch to new window opened
         for (String winHandle : WebDriverRunner.getWebDriver().getWindowHandles()) {
@@ -385,8 +398,44 @@ public class BaseLibrary {
     }
 
     public void switchToDefaultWindow() throws InterruptedException {
+        Thread.sleep(3000);
         WebDriverRunner.getWebDriver().close();
         // driver.switchTo().defaultContent();
         WebDriverRunner.getWebDriver().switchTo().window(winHandleBefore);
     }
+
+
+    public String cssSE(String element, String attribute, String startsWith, String endsWith) {
+
+        if (element != "" || element == null) {
+
+            return "["+attribute+"^='']["+attribute+"$='']";
+
+        } else {
+
+            return element+"["+attribute+"^='']["+attribute+"$='']";
+
+        }
+
+    }
+
+    @Step("[\"{0}\"] alanının değeri [\"{0}\"] olmalı.")
+    public void alanDegeriKontrolEt(SelenideElement element, String value, boolean shouldHaveValue, boolean exactText){
+        if(shouldHaveValue == true){
+            if (exactText == true)
+                element.shouldHave(Condition.exactValue(value));
+            else
+                element.shouldHave(Condition.value(value));
+
+        }
+        else
+        {
+            if (exactText == true)
+                element.shouldNotHave(Condition.exactValue(value));
+            else
+                element.shouldNotHave(Condition.value(value));
+
+        }
+    }
+
 }
