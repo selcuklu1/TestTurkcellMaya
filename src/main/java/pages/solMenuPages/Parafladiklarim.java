@@ -4,10 +4,12 @@ import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import pages.MainPage;
+import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Selenide.$;
 
-public class Parafladiklarim extends BaseLibrary {
+public class Parafladiklarim extends MainPage {
 
     SelenideElement f = $(By.xpath("//div[@id='mainInboxForm:inboxDataTable:filtersAccordion']//a[text()='Filtreler']/parent::h3"));
     SelenideElement cmbFiltre = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt3011_input"));
@@ -25,6 +27,12 @@ public class Parafladiklarim extends BaseLibrary {
     SelenideElement txtKisi =$(By.id("mainPreviewForm:evrakPaylasKisiLov:LovText"));
     SelenideElement txtAciklama = $(By.id("mainPreviewForm:evrakPaylasAciklama"));
     SelenideElement btnPaylas = $(By.id("mainPreviewForm:paylasButtonId"));
+
+    @Step("Parafladıklarım sayfası aç")
+    public Parafladiklarim openPage() {
+        solMenu(SolMenuData.IslemYaptiklarim.Parafladiklarim);
+        return this;
+    }
 
     @Step("Filtrele alanını aç")
     public Parafladiklarim filtreleAc() {
