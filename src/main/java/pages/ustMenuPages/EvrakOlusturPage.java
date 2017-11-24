@@ -19,7 +19,6 @@ import static com.codeborne.selenide.Selenide.executeJavaScript;
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.*;
-
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 
@@ -298,6 +297,7 @@ public class EvrakOlusturPage extends MainPage {
 
     @Step("Kişinin Bilgi alanında görüntülenmediği kontrolu")
     public EvrakOlusturPage bilgiAlanindaGoruntulenmemeKontrolu(String ad, String soyad) {
+
         String adSoyad = ad + " " + soyad;
         boolean selectable = comboLov(cmbBilgiBy).isLovValueSelectable(adSoyad);
         Assert.assertEquals(selectable, false, "MyCombolov alanında " + adSoyad + ": Gerçek kişinin görüntülenmediği görülür");
@@ -307,6 +307,7 @@ public class EvrakOlusturPage extends MainPage {
 
     @Step("Kişinin Bilgi alanında görüntülenme kontrolu")
     public EvrakOlusturPage bilgiAlanindaGoruntulenmeKontrolu(String ad, String soyad) {
+
         String adSoyad = ad + " " + soyad.toUpperCase();
         cmbBilgi.selectLov(adSoyad);
         System.out.println("Gelen title:     " + cmbBilgi.lastSelectedLovTitleText());
@@ -324,8 +325,8 @@ public class EvrakOlusturPage extends MainPage {
 
     @Step("Gereği doldur")
     public EvrakOlusturPage geregiDoldur(String geregi) throws InterruptedException {
-        cmbGeregi.selectLov(geregi);
 
+        cmbGeregi.selectLov(geregi);
         //shouldHave(Condition.text(geregi));
 
         // System.out.println("title: " + cmbGeregi.lastSelectedLovTitleText());
@@ -336,15 +337,18 @@ public class EvrakOlusturPage extends MainPage {
 
     @Step("Kişinin Geregi alanında görüntülenmediği kontrolu")
     public EvrakOlusturPage geregiAlanindaGoruntulenmemeKontrolu(String ad, String soyad) {
+
         String adSoyad = ad + " " + soyad;
         boolean selectable = comboLov(cmbGeregiBy).isLovValueSelectable(adSoyad);
         Assert.assertEquals(selectable, false, "MyCombolov alanında " + adSoyad + ": Gerçek kişinin görüntülenmediği görülür");
         System.out.println("MyCombolov alanında " + adSoyad + ": Gerçek kişinin görüntülenmediği görülür.");
+
         return this;
     }
 
     @Step("Kişinin Geregi alanında görüntülenme kontrolu")
     public EvrakOlusturPage geregiAlanindaGoruntulenmeKontrolu(String ad, String soyad) {
+
         String adSoyad = ad + " " + soyad;
         cmbGeregi.selectLov(adSoyad);
         System.out.println("Gelen title:     " + cmbGeregi.lastSelectedLovTitleText());

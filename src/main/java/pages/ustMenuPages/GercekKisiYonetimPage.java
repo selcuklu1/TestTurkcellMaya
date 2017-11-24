@@ -316,6 +316,7 @@ public class GercekKisiYonetimPage extends MainPage {
 
     @Step("Filtre sorgulama paneli aç")
     public GercekKisiYonetimPage filtreSorgulamaPaneliAc() {
+
         filtreSorgulamaPanel.click();
         txtFiltreTCKimlikNo.clear();
         txtFiltreAd.clear();
@@ -325,6 +326,7 @@ public class GercekKisiYonetimPage extends MainPage {
 
     @Step("Aktif Kayit kontrolu")
     public GercekKisiYonetimPage kayitKontrolu(String tcNO, String ad, String soyad) {
+
         //Assert.assertEquals(tblTc.getText().equals(tcNO), true);
         //Assert.assertEquals(tbleAd.getText().equals(ad), true);
         //Assert.assertEquals(tbleSoyad.getText().equals(soyad), true);
@@ -336,6 +338,7 @@ public class GercekKisiYonetimPage extends MainPage {
         Assert.assertEquals(statusTCNO, true);
         Assert.assertEquals(statusAd, true);
         Assert.assertEquals(statusSoyad, true);
+
         return this;
     }
 
@@ -365,13 +368,16 @@ public class GercekKisiYonetimPage extends MainPage {
 
     @Step("Zorunlu ad, soyad alan kontrolu")
     public GercekKisiYonetimPage zorunluAdSoyadAlanKontrolu() {
+
         Assert.assertEquals(txtAdError.exists(), true);
         Assert.assertEquals(txtSoyadError.exists(), true);
+
         return this;
     }
 
     @Step("Pasif kayit kontrolu")
     public GercekKisiYonetimPage pasiflerKayitKontrolu(String tcNO, String ad, String soyad) {
+
         boolean statusTCNO = findElementOnTableByColumnInputInAllPages(tblGercekKisiDataTable, 1, tcNO).isDisplayed();
         boolean statusAd = findElementOnTableByColumnInputInAllPages(tblGercekKisiDataTable, 2, ad).isDisplayed();
         boolean statusSoyad = findElementOnTableByColumnInputInAllPages(tblGercekKisiDataTable, 3, soyad).isDisplayed();
@@ -379,6 +385,7 @@ public class GercekKisiYonetimPage extends MainPage {
         Assert.assertEquals(statusTCNO, true);
         Assert.assertEquals(statusAd, true);
         Assert.assertEquals(statusSoyad, true);
+
         return this;
     }
 
@@ -410,6 +417,7 @@ public class GercekKisiYonetimPage extends MainPage {
 
     @Step("Gerçek Kişi Pasif Yap")
     public GercekKisiYonetimPage gercekKisiPasifYap() {
+
         btnGercekKisiPasiYap.click();
         return this;
     }

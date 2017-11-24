@@ -266,7 +266,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
         gercekKisiYonetimPage
                 .filtreAdDoldur(ad)
                 .filtreTCKimlikNoDoldur(tcNO)
-                .ara() //araButonuTikla
+                .ara()
                 .kayitKontrolu(tcNO, ad, soyad)
 
                 .gercekKisiGuncelle()

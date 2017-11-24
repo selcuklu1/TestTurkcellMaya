@@ -54,6 +54,7 @@ public class GidenEvrakKayitPage extends MainPage {
 
     @Step("Kişinin Geregi alanında görüntülenmediği kontrolu")
     public GidenEvrakKayitPage geregiAlanindaGoruntulenmemeKontrolu(String ad, String soyad) {
+
         String adSoyad = ad + " " + soyad;
         boolean selectable = comboLov(cmbGeregiBy).isLovValueSelectable(adSoyad);
         Assert.assertEquals(selectable, false, "MyCombolov alanında " + adSoyad + ": Gerçek kişinin görüntülenmediği görülür");
@@ -63,6 +64,7 @@ public class GidenEvrakKayitPage extends MainPage {
 
     @Step("Kişinin Geregi alanında görüntülenme kontrolu")
     public GidenEvrakKayitPage geregiAlanindaGoruntulenmeKontrolu(String ad, String soyad) {
+
         String adSoyad = ad + " " + soyad;
         cmbGeregi.selectLov(adSoyad);
         System.out.println("Gelen title:     " + cmbGeregi.lastSelectedLovTitleText());
@@ -80,6 +82,7 @@ public class GidenEvrakKayitPage extends MainPage {
 
     @Step("Bilgi doldur")
     public GidenEvrakKayitPage bilgiDoldur(String geregiAdSoyad) {
+
         cmbBilgi.selectLov(geregiAdSoyad);
         System.out.println("title: " + cmbBilgi.lastSelectedLovTitleText());
         System.out.println("detail: " + cmbBilgi.lastSelectedLovDetailText());
@@ -89,6 +92,7 @@ public class GidenEvrakKayitPage extends MainPage {
 
     @Step("Kişinin Bilgi alanında görüntülenmediği kontrolu")
     public GidenEvrakKayitPage bilgiAlanindaGoruntulenmemeKontrolu(String ad, String soyad) {
+
         String adSoyad = ad + " " + soyad;
         boolean selectable = comboLov(cmbBilgiBy).isLovValueSelectable(adSoyad);
         Assert.assertEquals(selectable, false, "MyCombolov alanında " + adSoyad + ": Gerçek kişinin görüntülenmediği görülür");
@@ -99,6 +103,7 @@ public class GidenEvrakKayitPage extends MainPage {
 
     @Step("Kişinin Bilgi alanında görüntülenme kontrolu")
     public GidenEvrakKayitPage bilgiAlanindaGoruntulenmeKontrolu(String ad, String soyad) {
+
         String adSoyad = ad + " " + soyad.toUpperCase();
         cmbBilgi.selectLov(adSoyad);
         System.out.println("Gelen title:     " + cmbBilgi.lastSelectedLovTitleText());
