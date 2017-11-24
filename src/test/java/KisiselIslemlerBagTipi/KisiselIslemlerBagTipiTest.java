@@ -40,6 +40,8 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
     @Test(enabled = true, description = "2141: Bağ tipi amir yardımcısı olması kontrolleri")
     public void TC2141() throws InterruptedException {
         String basariMesaji = "İşlem başarılıdır!";
+        String bagTipi = "Y";
+        String farkliKullanici = "Optiim";
 
         login(username2, password2);
 
@@ -47,21 +49,72 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
                 .openPage()
                 .ara()
                 .kullaniciListesiGuncelle()
-                //.gorevliOlduguBirimlerGuncelle()
-                .popupKullaniciBirimAtamaBagTipiSec("str")
-                .popupKullaniciBirimAtamaKaydet()
+                .gorevliOlduguBirimlerGuncelle()
+                .popupKullaniciBirimAtamaBagTipiSec(bagTipi)
+                .popupKullaniciBirimAtamaKaydet();
+        String ekranAdi = kullaniciYonetimiPage.ekranAdiCek();
+        kullaniciYonetimiPage
+                .kullaniciGuncellemeKaydet()
                 .islemMesaji().basariliOlmali(basariMesaji);
+
         evrakOlusturPage
                 .openPage()
-                .otomatikOnayAkisi();
+                .otomatikOnayAkisi()
+                .otomatikOnayAkisiGeldigiGorme(ekranAdi);
         vekaletVerPage
                 .openPage()
-                .vekaletAlanDoldur("deneme")
-                .vekaletVerenFarkliDoldur("sda")
+                .vekaletVerenDoldur(ekranAdi)
+                .vekaletVerenFarkliDoldur(farkliKullanici)
                 .uygula();
         gelenEvraklarPage
                 .openPage()
                 .tabHavaleYap();
+
+
+
+
+
+        //  String getIdariBirimKodu = kurumYonetimiPage.idariBirimKimlikKoduCek();
+
+    }
+
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "2168: Bağ tipi personel kontrolleri")
+    public void TC2168() throws InterruptedException {
+        String basariMesaji = "İşlem başarılıdır!";
+        String bagTipi = "P";
+        String farkliKullanici = "Optiim";
+
+        login(username2, password2);
+
+        kullaniciYonetimiPage
+                .openPage()
+                .ara()
+                .kullaniciListesiGuncelle()
+                .gorevliOlduguBirimlerGuncelle()
+                .popupKullaniciBirimAtamaBagTipiSec(bagTipi)
+                .popupKullaniciBirimAtamaKaydet();
+        String ekranAdi = kullaniciYonetimiPage.ekranAdiCek();
+        kullaniciYonetimiPage
+                .kullaniciGuncellemeKaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        evrakOlusturPage
+                .openPage()
+                .otomatikOnayAkisi()
+                .otomatikOnayAkisiGelmedigiGorme(ekranAdi,false);
+        vekaletVerPage
+                .openPage()
+                .vekaletVerenAlanınaGoruntulenmemeKontrolu(ekranAdi)
+                .vekaletAlanAlanınaGoruntulenmemeKontrolu(farkliKullanici)
+                .uygula();
+        gelenEvraklarPage
+                .openPage()
+                .tabHavaleYap();
+
+
+
 
 
         //  String getIdariBirimKodu = kurumYonetimiPage.idariBirimKimlikKoduCek();

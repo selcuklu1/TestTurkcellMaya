@@ -22,17 +22,17 @@ public class PostalanacakEvraklarPage extends MainPage {
 
     SelenideElement tblEvrakSec = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
     SelenideElement btnEvrakPostala = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:4:cmdbutton"));
-
+    @Step("Postalanacak Evraklar sayfası aç")
     public PostalanacakEvraklarPage openPage() {
         solMenu(SolMenuData.BirimEvraklari.PostalanacakEvraklar);
         return this;
     }
-
+    @Step("Evrak Postala")
     public PostalanacakEvraklarPage evrakPostala() {
         btnEvrakPostala.click();
         return this;
     }
-
+    @Step("Evrak Seçilir")
     public PostalanacakEvraklarPage evrakSec() {
         tblEvrakSec.click();
         return this;

@@ -25,8 +25,8 @@ public class LoginPage extends BaseLibrary {
     @Step("Giriş yap")
     public LoginPage login() {
         open();
-        txtUsername.sendKeys(username3);
-        txtPassword.sendKeys(password3);
+        txtUsername.sendKeys(username);
+        txtPassword.sendKeys(password);
         btnLogin.click();
 //        $(By.id("topMenuForm:userMenuButton_button")).shouldBe(visible);
         return this;

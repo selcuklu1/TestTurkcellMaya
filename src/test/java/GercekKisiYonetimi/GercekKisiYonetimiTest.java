@@ -366,22 +366,26 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .dagitimHitapDuzenlemeKaydet()
 
                 .openTab("Editör")
+                .openTab("Editör")
                 .hitapAlaniAdresKontrol(adres, ilce, il)
 
                 .openTab("Bilgileri")
                 .bilgiSecimTipiSec("G")
                 .bilgiDoldur(TCKN2)
+                .bilgiAlaniGuncelle();
 
-                .bilgiAlaniGuncelle()
+        String getIkinciKullaniciAdres = evrakOlusturPage.getDagitimHitapAdres();
+
+        evrakOlusturPage
                 .adresDagitimdaGorunsunSec(true)
-                .dagitimHitapDuzenlemeKaydet()
+                .dagitimHitapDuzenlemeKaydet();
 
-                .openTab("Editör")
-                .getWinHandleBefore();
+                //.openTab("Editör")
+                //getWinHandleBefore();
 
         evrakOlusturPage
                 .pdfOnIzleme()
-                .geregiBilgiAlaniAdresPdfKontrol(birinciKullaniciGeregiAdresi, ikinciKullaniciBilgiAdresi)
+                .geregiBilgiAlaniAdresPdfKontrol(birinciKullaniciGeregiAdresi, getIkinciKullaniciAdres)
                 .switchToDefaultWindow();
 
     }

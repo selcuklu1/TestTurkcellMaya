@@ -3,21 +3,24 @@ package KurumYonetimi;
 import common.BaseTest;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import pages.ustMenuPages.GelenEvrakKayitPage;
 import pages.ustMenuPages.KurumYonetimiPage;
 
 
 public class KurumYonetimiTest extends BaseTest {
 
    KurumYonetimiPage kurumYonetimiPage;
+   GelenEvrakKayitPage gelenEvrakKayitPage;
 
     @BeforeMethod
     public void loginBeforeTests() {
         kurumYonetimiPage = new KurumYonetimiPage();
+        gelenEvrakKayitPage = new GelenEvrakKayitPage();
         login();
     }
 
     @Test(enabled = true, description = "TC01459 : Kurum bilgisi güncellemee")
-    public void TC01957_A() {
+    public void TC01957_A() throws InterruptedException {
 
         String guncellenecekKurumAdi = "huseyindeneme";
         String yeniKurumAdi = "huseyindeneme111";
@@ -83,6 +86,18 @@ public class KurumYonetimiTest extends BaseTest {
                 .sorgulaKurumDoldur(yeniKurumAdi)
                 .ara()
                 .kurumKontrolEt(yeniKurumAdi, true);
+
+        gelenEvrakKayitPage
+                .openPage()
+                .evrakBilgileriListKisiKurumSec("Kurum")
+                .evrakBilgileriListGeldigiKurumDoldurLovText(yeniKurumAdi);
+
+        gelenEvrakKayitPage
+                .alanDegeriKontrolEt(gelenEvrakKayitPage.txtEvrakBilgileriListEvrakSayiTextAreaSol, idariBirimKimlikKodu, true);
+
+
+
+
 
 
     }

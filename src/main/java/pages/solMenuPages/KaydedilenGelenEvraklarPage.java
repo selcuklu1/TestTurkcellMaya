@@ -7,6 +7,7 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
+import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
@@ -24,8 +25,9 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
     SelenideElement tblKaydedilenGelenEvraklar =$(By.id("mainInboxForm:inboxDataTable"));
     ElementsCollection tblKaydedilenGelenEvraklar2 = $$("tbody[id$='mainInboxForm:inboxDataTable_data'] tr[role=row] div[class=searchText]");
 
+    @Step("Kaydedilen gelen evraklar sayfası aç")
     public KaydedilenGelenEvraklarPage openPage() {
-        ustMenu("Kaydedilen Gelen Evraklar");
+        solMenu(SolMenuData.BirimEvraklari.KaydedilenGelenEvraklar);
         return this;
     }
 

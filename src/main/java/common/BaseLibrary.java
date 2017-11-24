@@ -1,9 +1,12 @@
 package common;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Attachment;
+import io.qameta.allure.Step;
+import org.omg.CORBA.PUBLIC_MEMBER;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -24,6 +27,7 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfEl
 
 public class BaseLibrary {
 
+    String winHandleBefore = null;
     //<editor-fold desc="Allure screenshooter">
     @Attachment(value = "Page screenshot", type = "image/png")
     public byte[] takeScreenshot() {
@@ -368,24 +372,25 @@ public class BaseLibrary {
         return number;
     }
 
-    public String getWinHandleBefore() throws InterruptedException {
-        Thread.sleep(6000);
+    public String windowHandleBefore() throws InterruptedException {
         // Store the current window handle
-        String winHandleBefore = WebDriverRunner.getWebDriver().getWindowHandle();
+        winHandleBefore = WebDriverRunner.getWebDriver().getWindowHandle();
+        return winHandleBefore;
+    }
+
+    public void switchToNewWindow() throws InterruptedException {
+        Thread.sleep(5000);
         // Perform the click operation that opens new window
         // Switch to new window opened
         for (String winHandle : WebDriverRunner.getWebDriver().getWindowHandles()) {
             WebDriverRunner.getWebDriver().switchTo().window(winHandle);
         }
-
-        return winHandleBefore;
     }
 
     public void switchToDefaultWindow() throws InterruptedException {
         WebDriverRunner.getWebDriver().close();
         // driver.switchTo().defaultContent();
-        WebDriverRunner.getWebDriver().switchTo().window(getWinHandleBefore());
-        Thread.sleep(3000);
+        WebDriverRunner.getWebDriver().switchTo().window(winHandleBefore);
     }
 
 
@@ -402,4 +407,13 @@ public class BaseLibrary {
         }
 
     }
+
+    @Step("[\"{0}\"] alanının değeri [\"{0}\"] olmalı.")
+    public void alanDegeriKontrolEt(SelenideElement element, String value, boolean shouldHaveValue){
+        if(shouldHaveValue == true)
+            element.shouldHave(Condition.exactValue(value));
+        else
+            element.shouldNotHave(Condition.exactValue(value));
+    }
+
 }
