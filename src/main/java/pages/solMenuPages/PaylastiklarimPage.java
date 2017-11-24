@@ -8,6 +8,8 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
+import pages.MainPage;
+import pages.pageData.SolMenuData;
 
 import java.util.List;
 
@@ -15,7 +17,7 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 
 
-public class PaylastiklarimPage extends BaseLibrary {
+public class PaylastiklarimPage extends MainPage {
 
     // dolar işareti $=findElement anlamına gelir, $$=findElements
 
@@ -37,12 +39,18 @@ public class PaylastiklarimPage extends BaseLibrary {
     SelenideElement btnPaylas = $(By.id("mainPreviewForm:paylasButtonId"));
     SelenideElement btnTreeKapat = $(By.id("mainPreviewForm:evrakPaylasKisiLov:lovTreePanelKapat"));
 
+    @Step("Paylaştıklarım sayfası aç")
+    public PaylastiklarimPage openPage() {
+        solMenu(SolMenuData.IslemYaptiklarim.Paylastiklarim);
+        return this;
+    }
+
     @Step("Satır seç")
     public PaylastiklarimPage satirSec(int _satirIndex) {
         paylastiklarimList.get(_satirIndex).click();
         return this;
     }
-
+    @Step("Evrak Önizleme Seç")
     public PaylastiklarimPage evrakOnizlemeTabSec(String _tabAdi) {
         List<WebElement> tabs = $("ul[role='tablist']").findElements(By.partialLinkText(_tabAdi));
         if (tabs.size() > 0) {
@@ -51,12 +59,12 @@ public class PaylastiklarimPage extends BaseLibrary {
         }
         return this;
     }
-
+    @Step("Paylaş tab")
     public PaylastiklarimPage paylasTabTikla() {
         btnPaylasTab.click();
         return this;
     }
-
+    @Step("Kişiler seçilir")
     public PaylastiklarimPage kisilerSec(String _kisiAdi, int[] _Sira) {
         txtKisi.setValue(_kisiAdi);
 
@@ -68,24 +76,24 @@ public class PaylastiklarimPage extends BaseLibrary {
         //lblIlkisi.click();
         return this;
     }
-
+    @Step("Kişi seçilir")
     public PaylastiklarimPage kisiSec(String _kisiAdi) {
         txtKisi.setValue(_kisiAdi);
         $(By.id("mainPreviewForm:evrakPaylasKisiLov:lovTree:0")).click();
         return this;
     }
 
-
+    @Step("Açıklama yazılır.")
     public PaylastiklarimPage aciklamaYaz(String _aciklama) {
         txtAciklama.sendKeys(_aciklama);
         return this;
     }
-
+    @Step("Paylaş")
     public PaylastiklarimPage paylas() {
         btnPaylas.click();
         return this;
     }
-
+    @Step("Paylaşım Kontrolu")
     public PaylastiklarimPage paylasimKontrol(String[] _paylasilanKisiler) {
         String checkXpath = "";
         for (int i = 0; i < _paylasilanKisiler.length; i++) {
@@ -95,17 +103,17 @@ public class PaylastiklarimPage extends BaseLibrary {
         $(By.xpath(".//*[@class='searchText' and contains(., '" + checkXpath + "')]")).shouldBe(Condition.exist);
         return this;
     }
-
+    @Step("Paylaşım seç")
     public PaylastiklarimPage paylasimSec(String _paylasilanlar) {
         $(By.xpath(".//div[@class='searchText' and contains(., '" + _paylasilanlar + "') and position() = 1]")).click();
         return this;
     }
-
+    @Step("Açıklama Seç")
     public PaylastiklarimPage aciklamaKontrol(String _aciklama) {
         $(By.xpath("//div[@class='ui-dt-c' and contains(., '" + _aciklama + "')]")).shouldBe(Condition.exist);
         return this;
     }
-
+    @Step("Paylaşılanlar kontrol")
     public PaylastiklarimPage paylasilanlarKontrol(String[] _paylasilanlar) {
         // /html/body/div[11]/div[4]/div/form/div/div[2]/div/div/div[5]/div/table/tbody/tr[1]/td[1]/div
         ElementsCollection rows = $$(By.xpath("//*[@id='mainPreviewForm:j_idt11557:j_idt12058_data']/tr"));

@@ -9,8 +9,11 @@ import pages.MainPage;
 import pages.pageComponents.UstMenu;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
+import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
 import static com.codeborne.selenide.Selenide.executeJavaScript;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
@@ -174,6 +177,22 @@ public class EvrakOlusturPage extends MainPage {
 
     public EvrakOlusturPage otomatikOnayAkisi() {
         btnOtomatikOnayAkisi.click();
+        return this;
+    }
+    @Step("Otomatik onay akışı kontrol")
+    public EvrakOlusturPage otomatikOnayAkisiGeldigiGorme(String ekranAdi) {
+        $$(" [id='yeniGidenEvrakForm:hiyerarsikAkisOlusturForm:otomatikAkisKullaniciBirimListId'] tbody tr")
+                .filterBy(text(ekranAdi)).shouldHave(sizeGreaterThan(0)).get(0).click();
+        System.out.println("Başarılı geçti " + ekranAdi);
+        return this;
+    }
+
+    @Step("\"{0}\" text var olma kontorlu, beklenen: {1}")
+    public EvrakOlusturPage otomatikOnayAkisiGelmedigiGorme(String ekranAdi, boolean vardir) {
+        boolean t = $$(" [id='yeniGidenEvrakForm:hiyerarsikAkisOlusturForm:otomatikAkisKullaniciBirimListId'] tbody tr")
+                .filterBy(text(ekranAdi)).size() > 0;
+        Assert.assertEquals(t, vardir, "kdkdkdkd");
+        System.out.println("Başarılı geçti:"+ekranAdi);
         return this;
     }
 
