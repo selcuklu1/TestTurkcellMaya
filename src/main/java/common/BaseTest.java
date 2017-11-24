@@ -43,7 +43,7 @@ public class BaseTest extends BaseLibrary{
         Configuration.savePageSource = false;
         Configuration.collectionsTimeout = 10000;
         Configuration.timeout = 20000;
-        Configuration.holdBrowserOpen = true;
+        Configuration.holdBrowserOpen = false;
         Configuration.startMaximized = true;
         // Configuration.headless = true;
         //Configuration.browserSize = "1024x600";

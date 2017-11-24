@@ -378,13 +378,14 @@ public class GercekKisiYonetimiTest extends BaseTest {
 
         evrakOlusturPage
                 .adresDagitimdaGorunsunSec(true)
-                .dagitimHitapDuzenlemeKaydet();
-
-                //.openTab("Editör")
-                //getWinHandleBefore();
+                .dagitimHitapDuzenlemeKaydet()
+                .windowHandleBefore();
 
         evrakOlusturPage
                 .pdfOnIzleme()
+                .switchToNewWindow();
+
+        evrakOlusturPage
                 .geregiBilgiAlaniAdresPdfKontrol(birinciKullaniciGeregiAdresi, getIkinciKullaniciAdres)
                 .switchToDefaultWindow();
 
