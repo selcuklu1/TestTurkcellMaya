@@ -98,13 +98,6 @@ public class GercekKisiYonetimPage extends MainPage {
         return this;
     }
 
-    @Step("Gerçek Kişi Pasif Yap")
-    public GercekKisiYonetimPage gercekKisiPasifYap() {
-        btnGercekKisiPasiYap.click();
-        return this;
-    }
-
-
     @Step("Yeni gerçek kişi ekle")
     public GercekKisiYonetimPage yeniGercekKisiEkle() {
         btnGercekKisiEkle.click();
@@ -389,7 +382,14 @@ public class GercekKisiYonetimPage extends MainPage {
         return this;
     }
 
-    public GercekKisiYonetimPage aktifYap() {
+    @Step("Gerçek Kişi Aktif Yap")
+    public GercekKisiYonetimPage gercekKisiAktifYap() {
+        btnGercekKisiAktifYap.click();
+        return this;
+    }
+
+    @Step("Gerçek Kişi Aktif Yap")
+    public GercekKisiYonetimPage gercekKisiPasifIseAktifYap() {
 
         if (btnGercekKisiAktifYap.isDisplayed()) {
             btnGercekKisiAktifYap.click();
@@ -397,4 +397,22 @@ public class GercekKisiYonetimPage extends MainPage {
         }
         return this;
     }
+
+    @Step("Gerçek Kişi Pasif Yap")
+    public GercekKisiYonetimPage gercekKisiAktifIsePasifYap() {
+
+        if (btnGercekKisiPasiYap.isDisplayed()) {
+            btnGercekKisiPasiYap.click();
+            btnIslemOnayiEvet.click();
+        }
+        return this;
+    }
+
+    @Step("Gerçek Kişi Pasif Yap")
+    public GercekKisiYonetimPage gercekKisiPasifYap() {
+        btnGercekKisiPasiYap.click();
+        return this;
+    }
+
+
 }
