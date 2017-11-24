@@ -42,21 +42,27 @@ public class KullaniciYonetimiPage extends MainPage {
     SelenideElement btnKullaniciListesiGuncelle = $("[id$='kullaniciYonetimiListingForm:kullaniciDataTable_data'] tr [id$='kullaniciYonetimiListingForm:kullaniciDataTable:0:updateKullaniciButton']");
 
     // Görevli Olduğu Birimler
-    SelenideElement btnGorevliOlduguBirimlerGuncelle =$(By.id("kullaniciYonetimiEditorForm:kullaniciBirimDataTable:0:updateKullaniciBirimButton"));
+
+//    SelenideElement btnGorevliOlduguBirimlerGuncelle = $("[id$='updateKullaniciBirimButton']");
+
+    SelenideElement btnGorevliOlduguBirimlerGuncelle = $(By.id("kullaniciYonetimiEditorForm:kullaniciBirimDataTable:0:updateKullaniciBirimButton"));
+
 
     //Görevli Olduğu Birimler alanı güncelle popup
     SelenideElement cmbPopupKullaniciBirimAtamaBagTipi = $(By.id("kullaniciBirimEditorForm:kullaniciBagTipiSelect"));
     SelenideElement btnPopupBirimAtamaKaydet = $("[id='kullaniciBirimEditorForm:saveKullaniciBirimButton']");
-    SelenideElement popUpKullaniciBirimAtama = $(By.id("j_idt4444"));
+    SelenideElement popUpKullaniciBirimAtama = $(By.id("j_idt5626"));//j_idt4444
 
     //Kullanıcı Güncelleme
     SelenideElement btnKullaniciGuncelleKaydet = $(By.id("kullaniciYonetimiEditorForm:saveKullaniciButton"));
     SelenideElement txtUnvan = $(By.id("kullaniciYonetimiEditorForm:unvanAutoComplete_input"));
     SelenideElement txtEkranAdi = $(By.id("kullaniciYonetimiEditorForm:ekranAdiInput"));
 
+    ElementsCollection tblKullaniciBirim = $$("[id='kullaniciYonetimiEditorForm:kullaniciBirimDataTable_data'] tr[role=row]");
+
 
     //
-    SelenideElement kaydet =$(By.id("kullaniciYonetimiEditorForm:saveKullaniciButton"));
+    SelenideElement kaydet = $(By.id("kullaniciYonetimiEditorForm:saveKullaniciButton"));
 
     @Step("Birim alanında \"{0}\" sec")
     public KullaniciYonetimiPage birimSec(String text) {
@@ -64,17 +70,17 @@ public class KullaniciYonetimiPage extends MainPage {
         return this;
     }
 
-    public String ekranAdiCek(){
+    public String ekranAdiCek() {
         String ekranAdi = txtEkranAdi.getValue();
         return ekranAdi;
     }
 
-    public KullaniciYonetimiPage kaydet(){
+    public KullaniciYonetimiPage kaydet() {
         kaydet.click();
         return this;
     }
 
-    public  KullaniciYonetimiPage popupKullaniciBirimAtamaKaydet() {
+    public KullaniciYonetimiPage popupKullaniciBirimAtamaKaydet() {
         btnPopupBirimAtamaKaydet.click();
         return this;
     }
@@ -187,7 +193,7 @@ public class KullaniciYonetimiPage extends MainPage {
         return this;
     }
 
-//    @Step("Görevli olduğu birim guncelle")
+    //    @Step("Görevli olduğu birim guncelle")
 //    public KullaniciYonetimiPage gorevliOlduguBirimGuncelle2 () {
 //        clickJs(btnGorevliOlduguBirimlerGuncelle);
 //        btnGorevliOlduguBirimlerGuncelle2.click();
@@ -195,15 +201,14 @@ public class KullaniciYonetimiPage extends MainPage {
 //    }
     @Step("Gizlilik derecesi seç")
     public KullaniciYonetimiPage kullaniciBirimAtamaGizlilikDerecesiSec(String gizlilikDerecesi) {
-        cmbKullaniciBirimAtamaGizlilikDerecesi.selectOptionByValue(gizlilikDerecesi);
+        if (cmbKullaniciBirimAtamaGizlilikDerecesi.isDisplayed())
+            cmbKullaniciBirimAtamaGizlilikDerecesi.selectOptionByValue(gizlilikDerecesi);
         return this;
     }
 
     @Step("Kullanıcı Birim Atama Kaydet")
     public KullaniciYonetimiPage kullaniciBirimAtamaKaydetTikla() {
-        if(popUpKullaniciBirimAtama.isDisplayed()) {
-            btnKullaniciBirimAtamaKaydet.click();
-        }
+        btnKullaniciBirimAtamaKaydet.click();
         return this;
     }
 
@@ -211,7 +216,7 @@ public class KullaniciYonetimiPage extends MainPage {
     public KullaniciYonetimiPage gorevliOlduguBirimGuncelle() {
 
         String title = cmlBirim.lastSelectedLovTitleText();
-        $$("[id='kullaniciYonetimiEditorForm:kullaniciBirimDataTable_data'] tr[role=row]")
+        tblKullaniciBirim
                 .filterBy(Condition.text(title)).shouldHaveSize(1)
                 .first()
                 .$("[id$='updateKullaniciBirimButton']").click();
@@ -220,18 +225,22 @@ public class KullaniciYonetimiPage extends MainPage {
 
     @Step("Kullanıcı guncelleme kaydet")
     public KullaniciYonetimiPage kullaniciGuncellemeKaydet() {
-        if(txtUnvan.is(Condition.empty)) {
-            txtUnvan.sendKeys("BT İş Analist / Yazılımcı");
-            txtUnvan.pressEnter();
-        }
-
         btnKullaniciGuncelleKaydet.click();
         return this;
     }
+
     @Step("Kullanici Birim Atama Gizlilik Derecesi Kontrolu")
-    public KullaniciYonetimiPage kullaniciBirimAtamaGizlilikDerecesiKontrolu(){
+    public KullaniciYonetimiPage kullaniciBirimAtamaGizlilikDerecesiKontrolu() {
         cmbKullaniciBirimAtamaGizlilikDerecesi.shouldBe(Condition.text("Tasnif Dışı"));
         return this;
     }
 
+    @Step("")
+    public KullaniciYonetimiPage kullaniciGuncellemeUnvanGuncelle(String unvan) {
+        if (txtUnvan.is(Condition.empty)) {
+            txtUnvan.sendKeys(unvan);
+            txtUnvan.pressEnter();
+        }
+        return this;
+    }
 }
