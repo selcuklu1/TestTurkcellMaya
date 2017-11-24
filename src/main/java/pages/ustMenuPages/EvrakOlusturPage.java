@@ -452,24 +452,22 @@ public class EvrakOlusturPage extends MainPage {
     @Step("Gereği alanında adres gelmedigi, Bilgi alanında dagitim yerinin adresi ile geldigi gorulur")
     public EvrakOlusturPage geregiBilgiAlaniAdresPdfKontrol(String birinciKullaniciGeregiAdresi, String ikinciKullaniciBilgiAdresi) throws InterruptedException {
 
-        Thread.sleep(10000);
-
         //gereği: div[@id='viewer']/div[@class='page']//div[.='xrpisak Mahallesi ŞİŞLİ / İSTANBUL']
         //blgil : div[@id='viewer']/div[@class='page']//div[.='Gültepe Mahallesi KAĞITHANE / İSTANBUL']
 
-        ElementsCollection geregiAdresAlaniPDF = $$(By.xpath("//div[@id='viewer']/div[@class='page']//div[.='" + birinciKullaniciGeregiAdresi + "']"));
-        ElementsCollection bilgiAdresAlaniPDF = $$(By.xpath("//div[@id='viewer']/div[@class='page']//div[.='" + ikinciKullaniciBilgiAdresi + "']"));
+        SelenideElement geregiAdresAlaniPDF = $(By.xpath("//div[@id='viewer']/div[@class='page']//div[.='" + birinciKullaniciGeregiAdresi + "']"));
+        SelenideElement bilgiAdresAlaniPDF = $(By.xpath("//div[@id='viewer']/div[@class='page']//div[.='" + ikinciKullaniciBilgiAdresi + "']"));
 
         //div[@id='viewer']/div[@class='page']//div[.='Gültepe Mahallesi KAĞITHANE / İSTANBUL']
 
         System.out.println(birinciKullaniciGeregiAdresi);
         System.out.println("Beklenen ikinci kullanici adresi: " + ikinciKullaniciBilgiAdresi);
-        System.out.println("Gelen ikinci kullanici adresi: " + bilgiAdresAlaniPDF.get(0).getText());
+        System.out.println("Gelen ikinci kullanici adresi: " + bilgiAdresAlaniPDF.getText());
 
-        Assert.assertEquals(geregiAdresAlaniPDF.shouldHaveSize(0), true);
-        Assert.assertEquals(bilgiAdresAlaniPDF.shouldHaveSize(1), true);
-        Assert.assertEquals(bilgiAdresAlaniPDF.get(0).getText(), ikinciKullaniciBilgiAdresi);
-
+        Assert.assertEquals(geregiAdresAlaniPDF.isDisplayed(), false);
+        Assert.assertEquals(bilgiAdresAlaniPDF.isDisplayed(), true);
+        Assert.assertEquals(bilgiAdresAlaniPDF.getText(), ikinciKullaniciBilgiAdresi);
+        takeScreenshot();
         return this;
     }
 

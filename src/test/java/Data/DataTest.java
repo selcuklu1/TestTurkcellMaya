@@ -81,7 +81,7 @@ public class DataTest extends BaseTest {
         String evrakDerecesi="Hizmete Özel";
         String evrakSayiEkMetni="A1";
         String ivedilik="Günlü";
-        String miat="23.11.2017";
+        String miat="24.11.2017";
         String geregiSecimBirim= "Birim";
         String geregiBirim="AFYON VALİLİĞİ";
         String akisAdim="İmzalama";

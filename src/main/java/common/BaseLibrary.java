@@ -24,7 +24,8 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfEl
 
 public class BaseLibrary {
 
-    String winHandleBefore = null;
+    protected static String winHandleBefore=null;
+
     //<editor-fold desc="Allure screenshooter">
     @Attachment(value = "Page screenshot", type = "image/png")
     public byte[] takeScreenshot() {
@@ -376,7 +377,7 @@ public class BaseLibrary {
     }
 
     public void switchToNewWindow() throws InterruptedException {
-        Thread.sleep(5000);
+        Thread.sleep(6000);
         // Perform the click operation that opens new window
         // Switch to new window opened
         for (String winHandle : WebDriverRunner.getWebDriver().getWindowHandles()) {
@@ -385,6 +386,7 @@ public class BaseLibrary {
     }
 
     public void switchToDefaultWindow() throws InterruptedException {
+        Thread.sleep(3000);
         WebDriverRunner.getWebDriver().close();
         // driver.switchTo().defaultContent();
         WebDriverRunner.getWebDriver().switchTo().window(winHandleBefore);
