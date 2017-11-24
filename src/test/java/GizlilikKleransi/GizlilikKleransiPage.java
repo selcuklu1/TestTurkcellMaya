@@ -44,6 +44,8 @@ public class GizlilikKleransiPage extends BaseTest {
     public void TC1471() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
+        String unvan = "BT İş Analist / Yazılımcı";
+        String gizlilikDerecesi = "T";
 
         kullaniciYonetimiPage
                 .openPage()
@@ -53,8 +55,9 @@ public class GizlilikKleransiPage extends BaseTest {
                 .kullaniciListesiGuncelleButonuTikla()
                 .gorevliOlduguBirimlerKontol()
                 .gorevliOlduguBirimGuncelle()
-                .kullaniciBirimAtamaGizlilikDerecesiSec("T")
+                .kullaniciBirimAtamaGizlilikDerecesiSec(gizlilikDerecesi)
                 .kullaniciBirimAtamaKaydetTikla()
+                .kullaniciGuncellemeUnvanGuncelle(unvan)
                 .kullaniciGuncellemeKaydet()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
@@ -71,6 +74,8 @@ public class GizlilikKleransiPage extends BaseTest {
 
         String basariMesaji = "İşlem başarılıdır!";
 
+        String kisi = "Gökçe Şahin";
+        String aciklama = "test otomasyon";
         gelenEvrakKayitPage
                 .openPage()
                 .evrakBilgileriListKonuKoduDoldur(konuKodu)
@@ -83,9 +88,11 @@ public class GizlilikKleransiPage extends BaseTest {
                 .evrakBilgileriListEvrakSayiSagDoldur()
                 .evrakBilgileriListEvrakGelisTipiSec(evrakGelisTipi)
                 .evrakBilgileriListIvedilikSec(ivedilik)
-                .dagitimBilgileriKisiDoldur("Gökçe Şahin")
-                .dagitimBilgileriAciklamaDoldur("test")
+                .dagitimBilgileriKisiDoldur(kisi)
+                .dagitimBilgileriAciklamaDoldur(aciklama)
                 .kaydet();
+
+        //hata mesajı gelmesi gerekiyor. hata mesajı alınmıyor mail bekleniyor.
         String evrakNO = gelenEvrakKayitPage.popUps();
         System.console().printf(evrakNO);
         gelenEvrakKayitPage.islemMesaji().isBasarili();

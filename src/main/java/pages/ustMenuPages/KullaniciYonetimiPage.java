@@ -43,7 +43,7 @@ public class KullaniciYonetimiPage extends MainPage {
     SelenideElement btnKullaniciListesiGuncelle = $(By.id("kullaniciYonetimiListingForm:kullaniciDataTable:0:updateKullaniciButton"));
 
     // Görevli Olduğu Birimler
-    SelenideElement btnGorevliOlduguBirimlerGuncelle = $(By.id("kullaniciYonetimiEditorForm:kullaniciBirimDataTable:0:updateKullaniciBirimButton"));
+    SelenideElement btnGorevliOlduguBirimlerGuncelle = $("[id$='updateKullaniciBirimButton']");
 
     //Görevli Olduğu Birimler alanı güncelle popup
     SelenideElement cmbPopupKullaniciBirimAtamaBagTipi = $(By.id("kullaniciBirimEditorForm:kullaniciBagTipiSelect"));
@@ -53,6 +53,8 @@ public class KullaniciYonetimiPage extends MainPage {
     //Kullanıcı Güncelleme
     SelenideElement btnKullaniciGuncellemeKaydet = $(By.id("kullaniciYonetimiEditorForm:saveKullaniciButton"));
     SelenideElement txtUnvan = $(By.id("kullaniciYonetimiEditorForm:unvanAutoComplete_input"));
+
+    ElementsCollection tblKullaniciBirim = $$("[id='kullaniciYonetimiEditorForm:kullaniciBirimDataTable_data'] tr[role=row]");
 
 
     @Step("Birim alanında \"{0}\" sec")
@@ -198,7 +200,7 @@ public class KullaniciYonetimiPage extends MainPage {
     public KullaniciYonetimiPage gorevliOlduguBirimGuncelle() {
 
         String title = cmlBirim.lastSelectedLovTitleText();
-        $$("[id='kullaniciYonetimiEditorForm:kullaniciBirimDataTable_data'] tr[role=row]")
+        tblKullaniciBirim
                 .filterBy(Condition.text(title)).shouldHaveSize(1)
                 .first()
                 .$("[id$='updateKullaniciBirimButton']").click();
@@ -207,11 +209,6 @@ public class KullaniciYonetimiPage extends MainPage {
 
     @Step("Kullanıcı guncelleme kaydet")
     public KullaniciYonetimiPage kullaniciGuncellemeKaydet() {
-        if(txtUnvan.is(Condition.empty)) {
-            txtUnvan.sendKeys("BT İş Analist / Yazılımcı");
-            txtUnvan.pressEnter();
-        }
-
         btnKullaniciGuncellemeKaydet.click();
         return this;
     }
@@ -221,4 +218,12 @@ public class KullaniciYonetimiPage extends MainPage {
         return this;
     }
 
+    @Step("")
+    public KullaniciYonetimiPage kullaniciGuncellemeUnvanGuncelle(String unvan){
+        if(txtUnvan.is(Condition.empty)) {
+            txtUnvan.sendKeys(unvan);
+            txtUnvan.pressEnter();
+        }
+        return this;
+    }
 }

@@ -95,14 +95,14 @@ public class PulYonetimiPage extends MainPage {
     }
 
     @Step("Tabloda evrak no kontrolu")
-    public PulYonetimiPage tabloKontrolu(String evrakNo) {
+    public PulYonetimiPage tabloKontrolu(String gonderimSekli) {
         int j;
         int i = tblPulYonetimi2
-                .filterBy(Condition.text(evrakNo)).size();
+                .filterBy(Condition.text(gonderimSekli)).size();
 
         for (j = 0; j < i; j++)
             tblPulYonetimi2
-                    .filterBy(Condition.text(evrakNo))
+                    .filterBy(Condition.text(gonderimSekli))
                     .get(j)
                     .shouldBe(Condition.exist);
         return this;
