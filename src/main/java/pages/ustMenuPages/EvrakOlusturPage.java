@@ -16,6 +16,10 @@ import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static com.codeborne.selenide.Selenide.executeJavaScript;
+import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
+import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Selenide.*;
+
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 
@@ -224,7 +228,7 @@ public class EvrakOlusturPage extends MainPage {
 
     @Step("Konu kodu doldur")
     public EvrakOlusturPage konuKoduDoldur(String konuKodu) {
-        txtKonuKodu.selectComboLov(konuKodu);
+        txtKonuKodu.selectLov(konuKodu);
         //shouldHave(Condition.text(konuKodu));
 
         System.out.println("title: " + txtKonuKodu.lastSelectedLovTitleText());
@@ -287,7 +291,7 @@ public class EvrakOlusturPage extends MainPage {
     }
 
     public EvrakOlusturPage bilgiDoldur(String bilgi) {
-        cmbBilgi.selectComboLov(bilgi);
+        cmbBilgi.selectLov(bilgi);
         //shouldHave(Condition.text(geregi));
         return this;
     }
@@ -304,7 +308,7 @@ public class EvrakOlusturPage extends MainPage {
     @Step("Kişinin Bilgi alanında görüntülenme kontrolu")
     public EvrakOlusturPage bilgiAlanindaGoruntulenmeKontrolu(String ad, String soyad) {
         String adSoyad = ad + " " + soyad.toUpperCase();
-        cmbBilgi.selectComboLov(adSoyad);
+        cmbBilgi.selectLov(adSoyad);
         System.out.println("Gelen title:     " + cmbBilgi.lastSelectedLovTitleText());
         System.out.println("Beklenen title:  " + adSoyad);
         Assert.assertEquals(cmbBilgi.lastSelectedLovTitleText().contains(adSoyad), true);
@@ -320,8 +324,8 @@ public class EvrakOlusturPage extends MainPage {
 
     @Step("Gereği doldur")
     public EvrakOlusturPage geregiDoldur(String geregi) throws InterruptedException {
-        Thread.sleep(6000);
-        cmbGeregi.selectComboLov(geregi);
+        cmbGeregi.selectLov(geregi);
+
         //shouldHave(Condition.text(geregi));
 
         // System.out.println("title: " + cmbGeregi.lastSelectedLovTitleText());
@@ -342,7 +346,7 @@ public class EvrakOlusturPage extends MainPage {
     @Step("Kişinin Geregi alanında görüntülenme kontrolu")
     public EvrakOlusturPage geregiAlanindaGoruntulenmeKontrolu(String ad, String soyad) {
         String adSoyad = ad + " " + soyad;
-        cmbGeregi.selectComboLov(adSoyad);
+        cmbGeregi.selectLov(adSoyad);
         System.out.println("Gelen title:     " + cmbGeregi.lastSelectedLovTitleText());
         System.out.println("Beklenen title:  " + adSoyad);
         Assert.assertEquals(cmbGeregi.lastSelectedLovTitleText().contains(adSoyad), true);
@@ -368,7 +372,7 @@ public class EvrakOlusturPage extends MainPage {
     public EvrakOlusturPage onayAkisiEkle(String kullanici) {
 
         btnOnayAkisiEkle.click();
-        txtOnayAkisiKullanicilar.selectComboLov(kullanici);
+        txtOnayAkisiKullanicilar.selectLov(kullanici);
 
         return this;
     }

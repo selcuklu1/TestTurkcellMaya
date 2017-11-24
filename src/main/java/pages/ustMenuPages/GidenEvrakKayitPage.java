@@ -45,7 +45,7 @@ public class GidenEvrakKayitPage extends MainPage {
     @Step("Gereği doldur")
     public GidenEvrakKayitPage geregiDoldur(String geregiAdSoyad) {
 
-        cmbGeregi.selectComboLov(geregiAdSoyad);
+        cmbGeregi.selectLov(geregiAdSoyad);
 
         System.out.println("title: " + cmbGeregi.lastSelectedLovTitleText());
         System.out.println("detail: " + cmbGeregi.lastSelectedLovDetailText());
@@ -64,7 +64,7 @@ public class GidenEvrakKayitPage extends MainPage {
     @Step("Kişinin Geregi alanında görüntülenme kontrolu")
     public GidenEvrakKayitPage geregiAlanindaGoruntulenmeKontrolu(String ad, String soyad) {
         String adSoyad = ad + " " + soyad;
-        cmbGeregi.selectComboLov(adSoyad);
+        cmbGeregi.selectLov(adSoyad);
         System.out.println("Gelen title:     " + cmbGeregi.lastSelectedLovTitleText());
         System.out.println("Beklenen title:  " + adSoyad);
         Assert.assertEquals(cmbGeregi.lastSelectedLovTitleText().contains(adSoyad), true);
@@ -80,8 +80,7 @@ public class GidenEvrakKayitPage extends MainPage {
 
     @Step("Bilgi doldur")
     public GidenEvrakKayitPage bilgiDoldur(String geregiAdSoyad) {
-
-        cmbBilgi.selectComboLov(geregiAdSoyad);
+        cmbBilgi.selectLov(geregiAdSoyad);
         System.out.println("title: " + cmbBilgi.lastSelectedLovTitleText());
         System.out.println("detail: " + cmbBilgi.lastSelectedLovDetailText());
 
@@ -101,7 +100,7 @@ public class GidenEvrakKayitPage extends MainPage {
     @Step("Kişinin Bilgi alanında görüntülenme kontrolu")
     public GidenEvrakKayitPage bilgiAlanindaGoruntulenmeKontrolu(String ad, String soyad) {
         String adSoyad = ad + " " + soyad.toUpperCase();
-        cmbBilgi.selectComboLov(adSoyad);
+        cmbBilgi.selectLov(adSoyad);
         System.out.println("Gelen title:     " + cmbBilgi.lastSelectedLovTitleText());
         System.out.println("Beklenen title:  " + adSoyad);
         Assert.assertEquals(cmbBilgi.lastSelectedLovTitleText().contains(adSoyad), true);

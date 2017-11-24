@@ -14,7 +14,7 @@ public interface BelgenetElement extends SelenideElement {
      * @return
      * @link pages.pageComponents.belgenetElements.ComboLovHelper.selectLov
      */
-    BelgenetElement selectComboLov(String value);
+    BelgenetElement selectLov(String value);
 
     BelgenetElement clearLastSelectedLov();
 
