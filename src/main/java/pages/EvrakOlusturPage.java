@@ -7,6 +7,7 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import pages.pageComponents.UstMenu;
 import pages.pageComponents.belgenetElements.BelgenetElement;
+import sun.jvm.hotspot.utilities.Assert;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
@@ -21,7 +22,6 @@ import static pages.pageComponents.belgenetElements.BelgentCondition.required;
 public class EvrakOlusturPage {
 
     //region Elements
-    SelenideElement tabEditor = $("button .editor");
     SelenideElement tabEkleri = $("button .kullaniciEkleri");
     SelenideElement tabIlgileri = $("button .kullaniciIlgileri");
     SelenideElement tabIliskiliEvraklar = $("button .kullaniciIliskileri");
@@ -223,6 +223,12 @@ public class EvrakOlusturPage {
             return this;
         }
 
+        @Step("Bilgi seçim tipi tree alanında \"{0}\" geliyor mu? kontrol et")
+        public BilgilerTab bilgiSecimTipiTreeKontrolEt(String kurumAdi, Boolean shouldBeSelectable) {
+            org.testng.Assert.assertEquals(txtBilgi.isLovValueSelectable(kurumAdi), shouldBeSelectable);
+            return this;
+        }
+
         @Step("Bilgi alanında \"{0}\" seç")
         public BilgilerTab bilgiSec(String text) {
             txtBilgi.selectLov(text);
@@ -231,13 +237,19 @@ public class EvrakOlusturPage {
 
         @Step("Geregi Secim Tipi alanında \"{0}\" seç")
         public BilgilerTab geregiSecimTipi(String text) {
-            cmbGeregiSecimTipi.selectOption(text);
+            cmbGeregiSecimTipi.selectOptionContainingText(text);
             return this;
         }
 
         @Step("Geregi alanında \"{0}\" seç")
         public BilgilerTab geregiSec(String text) {
             txtGeregi.selectLov(text);
+            return this;
+        }
+
+        @Step("Gereği tree alanında \"{0}\" geliyor mu? kontrol et")
+        public BilgilerTab geregiTreeKontrolEt(String kurumAdi, Boolean shouldBeSelectable) {
+            org.testng.Assert.assertEquals(txtGeregi.isLovValueSelectable(kurumAdi), shouldBeSelectable);
             return this;
         }
 
@@ -342,6 +354,29 @@ public class EvrakOlusturPage {
             return this;
         }
         //endregion
+
+    }
+
+    private EditorTab editorTab = new EditorTab();
+    public EditorTab editorTabAc(){ return editorTab.open(); }
+
+    public class EditorTab {
+        SelenideElement tabEditor = $("button .editor");
+
+        SelenideElement divHitap = $("div[id='yeniGidenEvrakForm:hitapInplace'] > span");
+
+        private EditorTab open() {
+            tabEditor.click();
+            return this;
+
+        }
+
+        @Step("Hitap alanı \"{0}\" olarak gelmeli")
+        public EditorTab hitapKontrol(String hitap) {
+            divHitap.shouldHave(text(hitap));
+            return this;
+        }
+
 
     }
     //endregion

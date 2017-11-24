@@ -35,7 +35,7 @@ public class GelenEvrakKayitPage extends MainPage {
     BelgenetElement cmbEvrakBilgileriListGeldigiKisi = comboLov("[id$='geldigiGercekKisiLov:LovText']");
     By cmbGeldiğiKisiBy = By.cssSelector("[id$='geldigiGercekKisiLov:LovText']");
 
-    SelenideElement txtEvrakBilgileriListEvrakSayiTextAreaSol = $("[id$='evrakSayiTextAreaSol'");
+    public SelenideElement txtEvrakBilgileriListEvrakSayiTextAreaSol = $("[id$='evrakSayiTextAreaSol']");
     SelenideElement txtEvrakBilgileriListEvrakSayiTextAreaSag = $("[id$='evrakSayiTextAreaSag']");
     SelenideElement cmbEvrakBilgileriListEvrakGelisTipi = $("[id$='evrakGelisTipi']");
     SelenideElement cmbEvrakBilgileriListIvedilik = $("[id$='ivedilik']");
@@ -194,7 +194,7 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("Kişi kurum seç")
     public GelenEvrakKayitPage evrakBilgileriListKisiKurumSec(String kisiKurum) {
-        cmbEvrakBilgileriListKisiKurum.selectOptionByValue(kisiKurum);
+        cmbEvrakBilgileriListKisiKurum.selectOptionContainingText(kisiKurum);
         return this;
     }
 

@@ -43,7 +43,7 @@ public class KurumYonetimiPage extends MainPage {
     SelenideElement btnSecilenKurumListedenCikar = $("div[id='kurumYonetimiEditorForm:ustKurumLov:LovSecilen'] button[id*='kurumYonetimiEditorForm:ustKurumLov']");
     BelgenetElement txtUstKurum = comboLov(By.id("kurumYonetimiEditorForm:ustKurumLov:LovText"));
     SelenideElement btnIletisimGuncelle = $("button[id^='kurumYonetimiEditorForm:iletisimBilgileriDataTable:'][id$=':updateIletisimBilgisiButton']");
-
+    SelenideElement btnKurumKaydet = $(By.id("kurumYonetimiEditorForm:saveKurumButton"));
     // İletişim bilgileri elementleri
 
     SelenideElement txtMobilTelNo = $(By.id("kurumBilgileriEditorForm:mobilInput"));
@@ -66,6 +66,9 @@ public class KurumYonetimiPage extends MainPage {
     SelenideElement txtKepAdresi = $(By.id("kurumKepAdresBilgiEditorForm:kurumKepAdresBilgiInputTextId"));
     SelenideElement cmbKepHizmetSaglayici = $(By.id("kurumKepAdresBilgiEditorForm:kephs"));
     SelenideElement btnKepAdresiBilgileriKaydet = $(By.id("kurumKepAdresBilgiEditorForm:saveKepAdresiButton"));
+    SelenideElement btnKurumHiyerarşisiniGuncelle = $("button[id^='kurumYonetimiListingForm:kurumTreeTable:'][id$=':applyChangesButton']");
+
+    SelenideElement filtrePanel = $(By.id("kurumYonetimiListingForm:filterPanel"));
 
     public KurumYonetimiPage openPage() {
         ustMenu("Kurum Yönetimi");
@@ -143,6 +146,14 @@ public class KurumYonetimiPage extends MainPage {
 
     public KurumYonetimiPage ara(){
         btnAra.click();
+        return this;
+    }
+
+
+    public KurumYonetimiPage sorgulaKurumDoldur(String kurumAdi) {
+        if (!txtKurumCombolov.isDisplayed())
+            filtrePanel.click();
+        txtKurumCombolov.selectLov(kurumAdi);
         return this;
     }
 
@@ -308,6 +319,37 @@ public class KurumYonetimiPage extends MainPage {
                         .get(kepIndex)
                         .shouldNotBe(Condition.exist);
             }
+        }
+
+        return this;
+    }
+
+    @Step("Kurum hiyerarşisini güncelle butonuna tıklandı")
+    public KurumYonetimiPage kurumHiyerarsisiniGuncelle() {
+        btnKurumHiyerarşisiniGuncelle.click();
+        $("bekleyinizStatusDialog").waitUntil(Condition.not(Condition.visible), 60000);
+        return this;
+    }
+
+    @Step("Kurum panelinde kaydet butonuna tıklandı.")
+    public KurumYonetimiPage kurumKaydet() {
+        btnKurumKaydet.click();
+        return this;
+    }
+
+    @Step("kurum kontrol et")
+    public KurumYonetimiPage kurumKontrolEt(String kurumAdi, Boolean shouldBeExist) {
+
+        if(shouldBeExist == true){
+            tableKurumListesi
+                    .filterBy(Condition.text(kurumAdi))
+                    .get(0)
+                    .shouldBe(Condition.exist);
+        } else {
+            tableKurumListesi
+                    .filterBy(Condition.text(kurumAdi))
+                    .get(0)
+                    .shouldNotBe(Condition.exist);
         }
 
         return this;
