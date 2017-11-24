@@ -2,11 +2,14 @@ package pages.solMenuPages;
 
 import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import pages.MainPage;
+import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Selenide.$;
 
-public class TaslakEvraklarPage extends BaseLibrary {
+public class TaslakEvraklarPage extends MainPage {
 
     SelenideElement txtSayfadaAra = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt353"));
     SelenideElement dateTarih = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:tarihSecCalendar_input"));
@@ -35,11 +38,17 @@ public class TaslakEvraklarPage extends BaseLibrary {
     SelenideElement btnEvrakNotlariModalKaydet = $(By.id("evrakKisiselNotDialogFormId:evrakKisiselNotKaydet"));
     SelenideElement btnEvrakNotlariModalIptal = $(By.id("evrakKisiselNotDialogFormId:evrakKisiselNotIptal"));
 
+    @Step("Taslak Evraklar sayfası aç")
+    public TaslakEvraklarPage openPage(){
+        solMenu(SolMenuData.IslemBekleyenEvraklar.TaslakEvraklar);
+        return this;
+    }
+    @Step("Evrak notları popup iptal")
     public TaslakEvraklarPage evrakNotlariModalIptalGonder() {
         btnEvrakNotlariModalIptal.click();
         return this;
     }
-
+    @Step("Evrak notları popup kaydet")
     public TaslakEvraklarPage evrakNotlariModalKaydetGonder() {
         btnEvrakNotlariModalKaydet.click();
         return this;
