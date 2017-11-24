@@ -1,6 +1,7 @@
 package pages.ustMenuPages;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
@@ -11,6 +12,7 @@ import pages.pageComponents.belgenetElements.BelgenetElement;
 
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
 import static com.codeborne.selenide.Selenide.executeJavaScript;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
@@ -68,6 +70,7 @@ public class EvrakOlusturPage extends MainPage {
 
     SelenideElement chkAdresHitaptaGorunsun = $(By.xpath("//label[normalize-space(text())='Adres Hitapta Görünsün']/../..//input"));
     SelenideElement chkAdresDagitimdaGorunsun = $(By.xpath("//label[normalize-space(text())='Adres Dağıtımda Görünsün']/../..//input"));
+    SelenideElement txtDagitimHitapAdres = $(By.xpath("//div[@id='yeniGidenEvrakForm:pnlHitapDuzenle']/table[4]//div/textarea[@role='textbox']"));
     SelenideElement btnDagitimHitapDuzenlemeKaydet = $(By.xpath("//*[@id='yeniGidenEvrakForm:pnlHitapDuzenle']//span[normalize-space(text())='Kaydet']/parent::button"));
 
     //Editör tabı
@@ -346,6 +349,10 @@ public class EvrakOlusturPage extends MainPage {
         return this;
     }
 
+    public String getDagitimHitapAdres() {
+
+        return txtDagitimHitapAdres.getText();
+    }
 
     public EvrakOlusturPage onayAkisiKullaniciKontrol(String _kullaniciAdi, String _kullaniciTipi) {
         tableOnayAkisiEkleKullanicilar.$(By.xpath("./tr[contains(., '" + _kullaniciAdi + "')]//select/option[@selected='selected' and contains(., '" + _kullaniciTipi + "')]")).shouldBe(Condition.exist);
@@ -415,18 +422,23 @@ public class EvrakOlusturPage extends MainPage {
     @Step("Gereği alanında adres gelmedigi, Bilgi alanında dagitim yerinin adresi ile geldigi gorulur")
     public EvrakOlusturPage geregiBilgiAlaniAdresPdfKontrol(String birinciKullaniciGeregiAdresi, String ikinciKullaniciBilgiAdresi) throws InterruptedException {
 
+        Thread.sleep(10000);
+
         //gereği: div[@id='viewer']/div[@class='page']//div[.='xrpisak Mahallesi ŞİŞLİ / İSTANBUL']
         //blgil : div[@id='viewer']/div[@class='page']//div[.='Gültepe Mahallesi KAĞITHANE / İSTANBUL']
 
+        ElementsCollection geregiAdresAlaniPDF = $$(By.xpath("//div[@id='viewer']/div[@class='page']//div[.='" + birinciKullaniciGeregiAdresi + "']"));
+        ElementsCollection bilgiAdresAlaniPDF = $$(By.xpath("//div[@id='viewer']/div[@class='page']//div[.='" + ikinciKullaniciBilgiAdresi + "']"));
+
+        //div[@id='viewer']/div[@class='page']//div[.='Gültepe Mahallesi KAĞITHANE / İSTANBUL']
+
         System.out.println(birinciKullaniciGeregiAdresi);
-        System.out.println(ikinciKullaniciBilgiAdresi);
+        System.out.println("Beklenen ikinci kullanici adresi: " + ikinciKullaniciBilgiAdresi);
+        System.out.println("Gelen ikinci kullanici adresi: " + bilgiAdresAlaniPDF.get(0).getText());
 
-        SelenideElement geregiAdresAlaniPDF = $(By.xpath("div[@id='viewer']/div[@class='page']//div[.='" + birinciKullaniciGeregiAdresi + "']"));
-        SelenideElement bilgiAdresAlaniPDF = $(By.xpath("div[@id='viewer']/div[@class='page']//div[.='" + ikinciKullaniciBilgiAdresi + "']"));
-
-        Assert.assertEquals(geregiAdresAlaniPDF.isDisplayed(), false);
-        Assert.assertEquals(bilgiAdresAlaniPDF.isDisplayed(), true);
-        Assert.assertEquals(bilgiAdresAlaniPDF.getText(), ikinciKullaniciBilgiAdresi);
+        Assert.assertEquals(geregiAdresAlaniPDF.shouldHaveSize(0), true);
+        Assert.assertEquals(bilgiAdresAlaniPDF.shouldHaveSize(1), true);
+        Assert.assertEquals(bilgiAdresAlaniPDF.get(0).getText(), ikinciKullaniciBilgiAdresi);
 
         return this;
     }
