@@ -10,6 +10,7 @@ import io.qameta.allure.Allure;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
+import pages.pageComponents.belgenetElements.BelgenetElement;
 
 import java.util.List;
 
@@ -18,6 +19,8 @@ import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 
 public class ComboLovHelper extends BaseLibrary {
+
+    static SelenideElement element;
 
     private static String id;
 
@@ -40,11 +43,14 @@ public class ComboLovHelper extends BaseLibrary {
 
     private static String lovTreePanelKapat;
 
-    private static void setLocators(SelenideElement proxy) {
-        if (proxy.attr("id").contains("LovText"))
-            id = "[id*='" + proxy.attr("id").split("LovText")[0] + "']";
-        else if (proxy.attr("id").contains("LovSecilen"))
-            id = "[id*='" + proxy.attr("id").split("LovSecilen")[0] + "']";
+    public static void setLocators(SelenideElement proxy) {
+
+        element = proxy;
+
+        if (element.attr("id").contains("LovText"))
+            id = "[id*='" + element.attr("id").split("LovText")[0] + "']";
+        else if (element.attr("id").contains("LovSecilen"))
+            id = "[id*='" + element.attr("id").split("LovSecilen")[0] + "']";
         else
             throw new RuntimeException("comboLov id alınamadı.");
 
@@ -69,9 +75,7 @@ public class ComboLovHelper extends BaseLibrary {
         lovTreePanelKapat = id + "[id*='lovTreePanelKapat']";
     }
 
-    static BelgenetElement clearLastSelectedLov(SelenideElement proxy) {
-        setLocators(proxy);
-
+    static BelgenetElement clearLastSelectedLov() {
         ElementsCollection temizleButonlari = $$(lovInputTextleriTemizle).filter(visible);
         int count = temizleButonlari.size();
         if (count > 0)
@@ -79,12 +83,11 @@ public class ComboLovHelper extends BaseLibrary {
 
         $$(lovInputTextleriTemizle).filter(visible).shouldHaveSize(count - 1);
 
-        return (BelgenetElement) proxy;
+        return (BelgenetElement) element;
 //        return ElementFinder.wrap(BelgenetElement.class, null, By.cssSelector(lovText), 0);
     }
 
-    public static BelgenetElement clearAllSelectedLov(SelenideElement proxy) {
-        setLocators(proxy);
+    public static BelgenetElement clearAllSelectedLov() {
         int count = $$(lovInputTextleriTemizle).size();
 
         for (int i = count - 1; i >= 0; i--)
@@ -98,12 +101,11 @@ public class ComboLovHelper extends BaseLibrary {
 
         Configuration.timeout = t;
 
-        return (BelgenetElement) proxy;
+        return (BelgenetElement) element;
 //        return ElementFinder.wrap(BelgenetElement.class, null, By.cssSelector(lovText), 0);
     }
 
-    static BelgenetElement lastSelectedLovTitle(SelenideElement proxy) {
-        setLocators(proxy);
+    static BelgenetElement lastSelectedLovTitle() {
         String xpath = "";
 
         int count = $$(lovSecilenItemTitle).size();
@@ -129,9 +131,7 @@ public class ComboLovHelper extends BaseLibrary {
         }
     }
 
-    static BelgenetElement lastSelectedLovDetail(SelenideElement proxy) {
-        setLocators(proxy);
-
+    static BelgenetElement lastSelectedLovDetail() {
         String xpath = "";
 
         int count = $$(lovSecilenItemDetail).size();
@@ -157,35 +157,95 @@ public class ComboLovHelper extends BaseLibrary {
         }
     }
 
-    static String getLastSelectedLovValue(SelenideElement proxy) {
-        setLocators(proxy);
-
+    static String getLastSelectedLovValue() {
         ElementsCollection title = $$(lovSecilenItemTitle).filter(visible);
         return title.get(title.size() - 1).text()
                 + "\n" + title.get(title.size() - 1).text();
     }
 
-    static String lastSelectedLovTitleText(SelenideElement proxy) {
-        setLocators(proxy);
-
+    static String lastSelectedLovTitleText() {
         ElementsCollection title = $$(lovSecilenItemTitle).filter(visible);
         return title.get(title.size() - 1).text().trim();
     }
 
-    static String lastSelectedLovDetailText(SelenideElement proxy) {
-        setLocators(proxy);
-
+    static String lastSelectedLovDetailText() {
         ElementsCollection title = $$(lovSecilenItemDetail).filter(visible);
         return title.get(title.size() - 1).text().trim();
     }
 
-    static Boolean isLovSelected(SelenideElement proxy) {
-        setLocators(proxy);
+    static Boolean isLovSelected() {
         return $(lovSecilen).is(visible);
     }
 
-
     //region selectLov metodları
+    public static BelgenetElement selectLov(String value) {
+
+        executeJavaScript("arguments[0].scrollIntoView();", element);
+//        element.sendKeys(Keys.SHIFT);
+
+        WebElement element = WebDriverRunner.getWebDriver().findElement(By.cssSelector(lovText));
+
+        boolean isMultiType = element.getAttribute("class").contains("lovMultipleType");
+
+        if (isMultiType)
+            selectMultiType(value);
+        else
+            selectSingleType(value);
+
+        if (isMultiType)
+            return (BelgenetElement) element;
+        else
+            return ElementFinder.wrap(BelgenetElement.class, null, By.cssSelector(lovSecilen), 0);
+    }
+
+    public static boolean isLovValueSelectable(String value) {
+
+        boolean selectable = false;
+
+        executeJavaScript("arguments[0].scrollIntoView();", element);
+
+        $(lovText).shouldBe(visible);
+
+        if (!$(lovText).isEnabled())
+            $(treeButton).click();
+        else
+            $(lovText).setValue(value);
+
+        ElementsCollection items = $$(lovTree).last().$$(lovTreeListSelectableItemsTitle)
+                .shouldHave(sizeGreaterThan(0));
+        items.get(0).shouldBe(visible);
+
+        selectable = items.size() != 0 && (items.size() == 1 || items.filterBy(exactText(value)).size() > 0);
+
+        try {
+            Allure.addAttachment("Seçilebilir mi?", "");
+        } catch (Exception ignored) { }
+
+        closeLovTreePanel();
+
+        return selectable;
+    }
+
+    private static void openListItems(String value){
+        if (!$(lovText).isEnabled())
+            $(treeButton).click();
+        else
+            $(lovText).setValue(value);
+    }
+
+    private static void selectSingle(String value){
+        if (!WebDriverRunner.getWebDriver().findElement(By.cssSelector(lovText)).isDisplayed())
+            $(lovInputTextleriTemizle).shouldBe(visible).click();
+
+        openListItems(value);
+
+        ElementsCollection titleItems = $$(lovTree).last().$$(lovTreeListSelectableItemsTitle).shouldHave(sizeGreaterThan(0));
+        ElementsCollection detailItems = $$(lovTree).last().$$(lovTreeListSelectableItemsDetail);
+        titleItems.get(0).shouldBe(visible);
+//        titleItems.details.filterBy(exactText()).
+
+    }
+
     private static void selectSingleType(String value) {
 //        String title, detail;
 
@@ -199,21 +259,21 @@ public class ComboLovHelper extends BaseLibrary {
         else
             $(lovText).setValue(value);
 
-        ElementsCollection items = $$(lovTreeListSelectableItemsTitle);
-        $$(lovTreeListSelectableItemsTitle).shouldHave(sizeGreaterThan(0));
-        $$(lovTreeListSelectableItemsTitle).get(0).shouldBe(visible);
+        ElementsCollection items = $$(lovTree).last().$$(lovTreeListSelectableItemsTitle)
+                .shouldHave(sizeGreaterThan(0));
+        items.get(0).shouldBe(visible);
 
-        if ($$(lovTreeListSelectableItemsTitle).filterBy(textCaseSensitive(value)).size() > 0)
-            $$(lovTreeListSelectableItemsTitle).filterBy(textCaseSensitive(value))
-                    .get($$(lovTreeListSelectableItemsTitle).filterBy(textCaseSensitive(value)).size() - 1).click();
-        else if ($$(lovTreeListSelectableItemsTitle).filterBy(text(value)).size() > 0)
-            $$(lovTreeListSelectableItemsTitle).filterBy(text(value))
-                    .get($$(lovTreeListSelectableItemsTitle).filterBy(text(value)).size() - 1).click();
-        else if ($$(lovTreeListSelectableItemsDetail).filterBy(text(value)).size() > 0)
-            $$(lovTreeListSelectableItemsDetail).filterBy(text(value))
-                    .get($$(lovTreeListSelectableItemsDetail).filterBy(text(value)).size() - 1).click();
+        if (items.filterBy(textCaseSensitive(value)).size() > 0)
+            items.filterBy(textCaseSensitive(value))
+                    .last().click();
+        else if (items.filterBy(text(value)).size() > 0)
+            items.filterBy(text(value))
+                    .last().click();
+        else if (items.filterBy(text(value)).size() > 0)
+            items.filterBy(text(value))
+                    .last().click();
         else
-            $$(lovTreeListSelectableItemsTitle).get(0).click();
+            items.get(0).click();
 
         $(lovSecilenItemTitle).shouldBe(visible);
 
@@ -233,9 +293,17 @@ public class ComboLovHelper extends BaseLibrary {
 
         $(lovText).setValue(value);
 
-        List<SelenideElement> selectList = $$(lovTreeListSelectableItemsDetail);
+        ElementsCollection selectList = $$(lovTree).last().$$(lovTreeListSelectableItemsDetail);
 
+//        HashSet<SelenideElement> hash = new HashSet<SelenideElement>();
+//        for (int i = 0; i < selectList.size(); i++) {
+//            if (!hash.contains(selectList.get(i)))
+//                hash.add(selectList.get(i));
+//        }
+        //Aynı objeler birden fazla kez DOM içinde oluyor ve en son item a tıklaması lazım
+//        SelenideElement firstElement = selectList.last();
         for (SelenideElement item : selectList) {
+
             item.shouldBe(visible);
             if (!selectedDetails.contains(item.text())) {
                 isSelected = true;
@@ -247,11 +315,9 @@ public class ComboLovHelper extends BaseLibrary {
         if (!isSelected)
             throw new RuntimeException("\"" + value + "\" değeri seçilemedi. Alan: " + lovText);
 
-        if ($(lovTreePanelKapat).is(visible))
-            $(lovTreePanelKapat).click();
+        closeLovTreePanel();
 
         Assert.assertEquals(selectedDetails.size() + 1, $$(lovSecilenItemTitle).size(), "Bir seçenek eklenmesi bekleniyor");
-
 
         try {
             Allure.addAttachment("Seçilen değerleri:", $$(lovSecilenItemTitle).get(selectedDetails.size()).text()
@@ -260,60 +326,41 @@ public class ComboLovHelper extends BaseLibrary {
         }
     }
 
-    public static BelgenetElement selectLov(SelenideElement proxy, String value) {
-
-        setLocators(proxy);
-
-        executeJavaScript("arguments[0].scrollIntoView();", proxy);
-//        proxy.sendKeys(Keys.SHIFT);
-
-        WebElement element = WebDriverRunner.getWebDriver()
-                .findElement(By.cssSelector(lovText));
-
-        boolean isMultiType = element.getAttribute("class").contains("lovMultipleType");
-
-        if (isMultiType)
-            selectMultiType(value);
-        else
-            selectSingleType(value);
-
-        if (isMultiType)
-            return (BelgenetElement) proxy;
-        else
-            return ElementFinder.wrap(BelgenetElement.class, null, By.cssSelector(lovSecilen), 0);
-    }
-
-    public static boolean isLovValueSelectable(SelenideElement proxy, String value) {
-
-        setLocators(proxy);
-
-        boolean selectable = false;
-
-        executeJavaScript("arguments[0].scrollIntoView();", proxy);
-
-        $(lovText).shouldBe(visible);
-
-        $(lovText).setValue(value);
-
-        $(lovTree).shouldBe(visible);
-
-        if ($$(lovTreeListSelectableItemsTitle).size() == 0)
-            selectable = false;
-        else if ($$(lovTreeListSelectableItemsTitle).size() == 1)
-            selectable = true;
-        else
-            selectable = $$(lovTreeListSelectableItemsTitle).filterBy(exactText(value)).size() > 0;
-
-        try {
-            Allure.addAttachment("Seçilebilir mi?", "");
-        } catch (Exception e) {
-        }
-
-        if ($(lovTreePanelKapat).is(visible))
-            $(lovTreePanelKapat).click();
-
-        return selectable;
+    private static void closeLovTreePanel() {
+        if ($$(lovTreePanelKapat).last().is(visible))
+            $$(lovTreePanelKapat).last().click();
     }
     //endregion
+
+
+
+    public BelgenetElement openTree(){
+        $(treeButton).click();
+        return (BelgenetElement) $$(lovTree).last().$(lovTree);
+    }
+
+    public BelgenetElement clearLov(){
+        if (!WebDriverRunner.getWebDriver().findElement(By.cssSelector(lovText)).isDisplayed())
+            $(lovInputTextleriTemizle).shouldBe(visible).click();
+        return (BelgenetElement) $(lovText);
+    }
+
+    public BelgenetElement type(String text){
+        $(lovText).setValue(text);
+        return (BelgenetElement) $(lovTree);
+    }
+
+    public boolean isEmpty(){
+        return $$(lovTreeList).get(0).is(have(text("Sonuç bulunamamıştır")));
+    }
+
+    public ElementsCollection titleItems(){
+        return  $$(lovTree).last().$$(lovTreeListSelectableItemsTitle);
+    }
+
+    public ElementsCollection detailItems(){
+        return  $$(lovTree).last().$$(lovTreeListSelectableItemsDetail);
+    }
+
 
 }
