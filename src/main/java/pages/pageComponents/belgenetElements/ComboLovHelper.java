@@ -51,6 +51,8 @@ public class ComboLovHelper extends BaseLibrary {
             id = "[id*='" + element.attr("id").split("LovText")[0] + "']";
         else if (element.attr("id").contains("LovSecilen"))
             id = "[id*='" + element.attr("id").split("LovSecilen")[0] + "']";
+        else if (element.attr("id").contains("lovTree"))
+            id = "[id*='" + element.attr("id").split("lovTree")[0] + "']";
         else
             throw new RuntimeException("comboLov id alınamadı.");
 
@@ -333,32 +335,34 @@ public class ComboLovHelper extends BaseLibrary {
     //endregion
 
 
-
-    public BelgenetElement openTree(){
+    public static BelgenetElement openTree(){
         $(treeButton).click();
         return (BelgenetElement) $$(lovTree).last().$(lovTree);
     }
 
-    public BelgenetElement clearLov(){
+    private static BelgenetElement clearLov(){
         if (!WebDriverRunner.getWebDriver().findElement(By.cssSelector(lovText)).isDisplayed())
             $(lovInputTextleriTemizle).shouldBe(visible).click();
         return (BelgenetElement) $(lovText);
     }
 
-    public BelgenetElement type(String text){
+    public static BelgenetElement type(String text){
         $(lovText).setValue(text);
-        return (BelgenetElement) $(lovTree);
+        return ElementFinder.wrap(BelgenetElement.class, null, By.cssSelector(lovTree), 0);
     }
 
-    public boolean isEmpty(){
+    public static boolean isEmpty(){
         return $$(lovTreeList).get(0).is(have(text("Sonuç bulunamamıştır")));
     }
 
-    public ElementsCollection titleItems(){
+    public static ElementsCollection titleItems(){
+        $$(lovTreeList).get(0).shouldBe(visible);
+//        ElementsCollection titles = $$(lovTree).last().$$(lovTreeListSelectableItemsTitle);
         return  $$(lovTree).last().$$(lovTreeListSelectableItemsTitle);
     }
 
-    public ElementsCollection detailItems(){
+    public static ElementsCollection detailItems(){
+        $$(lovTreeList).get(0).shouldBe(visible);
         return  $$(lovTree).last().$$(lovTreeListSelectableItemsDetail);
     }
 

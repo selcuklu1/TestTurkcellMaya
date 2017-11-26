@@ -1,5 +1,6 @@
 package pages.pageComponents.belgenetElements;
 
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.commands.Commands;
 import com.codeborne.selenide.impl.ElementFinder;
 import org.openqa.selenium.By;
@@ -21,6 +22,14 @@ public class BelgenetFramework {
         Commands.getInstance().add("lastSelectedLovDetailText", comboLov.new LastSelectedLovDetailText());
         Commands.getInstance().add("isLovSelected", comboLov.new IsLovSelected());
         Commands.getInstance().add("isLovValueSelectable", comboLov.new IsLovValueSelectable());
+
+        Commands.getInstance().add("openTree", comboLov.new OpenTree());
+//        Commands.getInstance().add("clearLov", comboLov.new ClearLov());
+        Commands.getInstance().add("type", comboLov.new Type());
+        Commands.getInstance().add("isEmpty", comboLov.new IsEmpty());
+        Commands.getInstance().add("titleItems", comboLov.new TitleItems());
+        Commands.getInstance().add("detailItems", comboLov.new DetailItems());
+
         //endregion
         // region ComboBox
         Commands.getInstance().add("selectComboBox", comboBox.new SelectComboBox());
