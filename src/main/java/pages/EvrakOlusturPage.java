@@ -101,8 +101,6 @@ public class EvrakOlusturPage {
         SelenideElement listOnayAkisiKullanilan = $("div[id*='akisLov:lovContainer'] div[class*='lovSelection processEt'] tbody");
         SelenideElement btnOnayAkisiPanelKapat = $("button[id^='yeniGidenEvrakForm:evrakBilgileriList:'][id$=':akisAdimLov:lovTreePanelKapat']");
 
-
-
         //endregion
 
         private BilgilerTab open() {
