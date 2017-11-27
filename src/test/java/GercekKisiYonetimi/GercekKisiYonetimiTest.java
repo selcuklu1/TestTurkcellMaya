@@ -76,14 +76,17 @@ public class GercekKisiYonetimiTest extends BaseTest {
 
         evrakOlusturPage
                 .openPage()
+                .bilgilerTabiAc()
                 .geregiSecimTipiSec(geregiSecimTipi)
                 .geregiDoldur(adSoyad)
-                .geregiAlaniKontrol(adSoyad, unvan, adres, postaTipi)
+                .geregiAlaniKontrol(adSoyad, unvan, adres, postaTipi);
 
-                .openTab("Editör")
-                .hitapAlaniUnvanAdSoyadKontrol(hitap, onEk, ad, soyad)
+        evrakOlusturPage
+                .editorTabAc()
+                .hitapAlaniUnvanAdSoyadKontrol(hitap, onEk, ad, soyad);
 
-                .openTab("Bilgileri")
+        evrakOlusturPage
+                .bilgilerTabiAc()
                 .bilgiSecimTipiSec(bilgiSecimTipi);
         //.bilgiDoldur(adSoyad);
         //.islemMesaji().dikkatOlmali(gercekKisiMesaj);
@@ -288,11 +291,13 @@ public class GercekKisiYonetimiTest extends BaseTest {
 
         evrakOlusturPage
                 .openPage()
+                .bilgilerTabiAc()
                 .geregiSecimTipiSec("G")
                 .geregiDoldur(adSoyad2)
-                .geregiAlaniKontrol(adSoyad2, unvan2, adres, postaTipi)
+                .geregiAlaniKontrol(adSoyad2, unvan2, adres, postaTipi);
 
-                .openTab("Editör")
+        evrakOlusturPage
+                .editorTabAc()
                 .hitapAlaniUnvanAdSoyadKontrol(hitap, onEk2, ad2, soyad2);
 
         gelenEvrakKayitPage
@@ -357,26 +362,30 @@ public class GercekKisiYonetimiTest extends BaseTest {
 
         evrakOlusturPage
                 .openPage()
+                .bilgilerTabiAc()
                 .geregiSecimTipiSec("G")
                 .geregiDoldur(TCKN1)
                 .geregiAlaniKontrol(adSoyad, unvan, adres, postaTipi)
 
                 .geregiAlaniGuncelle()
                 .adresHitaptaGorunsunSec(true)
-                .dagitimHitapDuzenlemeKaydet()
+                .dagitimHitapDuzenlemeKaydet();
 
-                .openTab("Editör")
-                .openTab("Editör")
-                .hitapAlaniAdresKontrol(adres, ilce, il)
+        evrakOlusturPage
+                .editorTabAc()
+                //.openTab("Editör")
+                .hitapAlaniAdresKontrol(adres, ilce, il);
 
-                .openTab("Bilgileri")
+        evrakOlusturPage
+                .bilgilerTabiAc()
                 .bilgiSecimTipiSec("G")
                 .bilgiDoldur(TCKN2)
                 .bilgiAlaniGuncelle();
 
-        String getIkinciKullaniciAdres = evrakOlusturPage.getDagitimHitapAdres();
+        String getIkinciKullaniciAdres = evrakOlusturPage.bilgilerTabiAc().getDagitimHitapAdres();
 
         evrakOlusturPage
+                .bilgilerTabiAc()
                 .adresDagitimdaGorunsunSec(true)
                 .dagitimHitapDuzenlemeKaydet()
                 .windowHandleBefore();
@@ -386,6 +395,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .switchToNewWindow();
 
         evrakOlusturPage
+                .pdfKontrol
                 .geregiBilgiAlaniAdresPdfKontrol(birinciKullaniciGeregiAdresi, getIkinciKullaniciAdres)
                 .switchToDefaultWindow();
 
@@ -448,6 +458,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
 
         evrakOlusturPage
                 .openPage()
+                .bilgilerTabiAc()
                 .geregiSecimTipiSec("G")
                 .geregiAlanindaGoruntulenmemeKontrolu(ad, soyad)
 
@@ -511,6 +522,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
 
         evrakOlusturPage
                 .openPage()
+                .bilgilerTabiAc()
                 .geregiSecimTipiSec("G")
                 .geregiAlanindaGoruntulenmeKontrolu(ad, soyad)
                 .secilenGeregiSil()
