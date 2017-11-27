@@ -261,21 +261,17 @@ public class ComboLovHelper extends BaseLibrary {
         else
             $(lovText).setValue(value);
 
-        ElementsCollection items = $$(lovTree).last().$$(lovTreeListSelectableItemsTitle)
-                .shouldHave(sizeGreaterThan(0));
-        items.get(0).shouldBe(visible);
+        SelenideElement tree = $$(lovTree).last();
+        tree.shouldBe(visible);
+        tree.$$(lovTreeListSelectableItemsTitle).shouldHave(sizeGreaterThan(0));
+        tree.$$(lovTreeListSelectableItemsTitle).get(0).shouldBe(visible);
 
-        if (items.filterBy(textCaseSensitive(value)).size() > 0)
-            items.filterBy(textCaseSensitive(value))
-                    .last().click();
-        else if (items.filterBy(text(value)).size() > 0)
-            items.filterBy(text(value))
-                    .last().click();
-        else if (items.filterBy(text(value)).size() > 0)
-            items.filterBy(text(value))
-                    .last().click();
+        if (tree.$$(lovTreeListSelectableItemsTitle).filterBy(textCaseSensitive(value)).size() > 0)
+            tree.$$(lovTreeListSelectableItemsTitle).filterBy(textCaseSensitive(value)).first().click();
+        else if (tree.$$(lovTreeListSelectableItemsTitle).filterBy(text(value)).size() > 0)
+            tree.$$(lovTreeListSelectableItemsTitle).filterBy(text(value)).first().click();
         else
-            items.get(0).click();
+            tree.$$(lovTreeListSelectableItemsTitle).get(0).click();
 
         $(lovSecilenItemTitle).shouldBe(visible);
 
