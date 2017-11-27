@@ -58,20 +58,25 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
                 .gorevliOlduguBirimlerGuncelle()
                 .popupKullaniciBirimAtamaBagTipiSec(bagTipi)
                 .popupKullaniciBirimAtamaKaydet();
+
         String ekranAdi = kullaniciYonetimiPage.ekranAdiCek();
+
         kullaniciYonetimiPage
                 .kullaniciGuncellemeKaydet()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
         evrakOlusturPage
                 .openPage()
+                .bilgilerTabiAc()
                 .otomatikOnayAkisi()
                 .otomatikOnayAkisiGeldigiGorme(ekranAdi);
+
         vekaletVerPage
                 .openPage()
                 .vekaletVerenDoldur(ekranAdi)
                 .vekaletVerenFarkliDoldur(farkliKullanici)
                 .onayVerecekDoldur(ekranAdi);
+
         gelenEvraklarPage
                 .openPage()
                 .evrakSec()
@@ -97,19 +102,24 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
                 .popupKullaniciBirimAtamaBagTipiSec(bagTipi)
                 .popupKullaniciBirimAtamaKaydet();
         String ekranAdi = kullaniciYonetimiPage.ekranAdiCek();
+
         kullaniciYonetimiPage
                 .kullaniciGuncellemeKaydet()
                 .islemMesaji().basariliOlmali(basariMesaji);
+
         evrakOlusturPage
                 .openPage()
+                .bilgilerTabiAc()
                 .otomatikOnayAkisi()
                 .otomatikOnayAkisiGelmedigiGorme(ekranAdi,false);
+
         vekaletVerPage
                 .openPage()
                 .vekaletVerenAlanınaGoruntulenmemeKontrolu(ekranAdi, false)
                 .vekaletVerenDoldur(farkliKullanici)
                 .vekaletAlanAlanınaGoruntulenmemeKontrolu(ekranAdi, false)
                 .onayVerecekDoldur(farkliKullanici);
+
         gelenEvraklarPage
                 .openPage()
                 .evrakSec()

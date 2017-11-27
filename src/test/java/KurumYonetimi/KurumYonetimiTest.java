@@ -3,7 +3,7 @@ package KurumYonetimi;
 import common.BaseTest;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pages.EvrakOlusturPage;
+import pages.ustMenuPages.EvrakOlusturPage;
 import pages.ustMenuPages.GelenEvrakKayitPage;
 import pages.ustMenuPages.GidenEvrakKayitPage;
 import pages.ustMenuPages.KurumYonetimiPage;
@@ -108,7 +108,7 @@ public class KurumYonetimiTest extends BaseTest {
         */
 
         evrakOlusturPage
-                .open()
+                .openPage()
                 .bilgilerTabiAc()
                 .geregiSecimTipi("Kurum")
                 .geregiTreeKontrolEt(yeniKurumAdi, true)
