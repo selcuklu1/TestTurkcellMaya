@@ -569,6 +569,14 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+
+        @Step("Onay akışı kullanıcıları silme")
+        public BilgilerTab onayAkisiKullanicilariTemizle() {
+            btnOnayAkisiEkle.click();
+            txtOnayAkisiKullanicilar.clearAllSelectedLov();
+                      return this;
+        }
+
         @Step("Onay akışı kullanıcı tipi seç")
         public BilgilerTab onayAkisiKullaniciTipiSec(String kullaniciAdi, String kullaniciTipi) {
             trOnayAkisiEkleKullanicilar
