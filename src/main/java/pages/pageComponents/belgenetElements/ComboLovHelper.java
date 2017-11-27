@@ -195,7 +195,7 @@ public class ComboLovHelper extends BaseLibrary {
             selectSingleType(value);
 
         if (isMultiType)
-            return (BelgenetElement) element;
+            return ElementFinder.wrap(BelgenetElement.class, null, By.cssSelector(lovSecilen), 0);
         else
             return ElementFinder.wrap(BelgenetElement.class, null, By.cssSelector(lovSecilen), 0);
     }
@@ -213,10 +213,12 @@ public class ComboLovHelper extends BaseLibrary {
         else
             $(lovText).setValue(value);
 
-        ElementsCollection items = $$(lovTree).last().$$(lovTreeListSelectableItemsTitle)
-                .shouldHave(sizeGreaterThan(0));
-        items.get(0).shouldBe(visible);
+        SelenideElement tree = $$(lovTree).last();
+        tree.shouldBe(visible);
+        tree.$$(lovTreeListSelectableItemsTitle).shouldHave(sizeGreaterThan(0));
+        tree.$$(lovTreeListSelectableItemsTitle).get(0).shouldBe(visible);
 
+        ElementsCollection items = tree.$$(lovTreeListSelectableItemsTitle);
         selectable = items.size() != 0 && (items.size() == 1 || items.filterBy(exactText(value)).size() > 0);
 
         try {
@@ -291,15 +293,9 @@ public class ComboLovHelper extends BaseLibrary {
 
         $(lovText).setValue(value);
 
+        $$(lovTree).last().shouldBe(visible);
         ElementsCollection selectList = $$(lovTree).last().$$(lovTreeListSelectableItemsDetail);
 
-//        HashSet<SelenideElement> hash = new HashSet<SelenideElement>();
-//        for (int i = 0; i < selectList.size(); i++) {
-//            if (!hash.contains(selectList.get(i)))
-//                hash.add(selectList.get(i));
-//        }
-        //Aynı objeler birden fazla kez DOM içinde oluyor ve en son item a tıklaması lazım
-//        SelenideElement firstElement = selectList.last();
         for (SelenideElement item : selectList) {
 
             item.shouldBe(visible);
