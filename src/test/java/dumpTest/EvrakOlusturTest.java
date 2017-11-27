@@ -41,7 +41,14 @@ public class EvrakOlusturTest extends BaseTest {
     public void testName() throws Exception {
         login();
 
-//        new EvrakOlusturPage().open().bilgilerTabiAc().konuKoduSec("010.01");
+        new EvrakOlusturPage().openPage().bilgilerTabiAc();
+        $(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:onayAkisiEkle")).click();
+        comboLov(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:akisAdimLov:LovText"))
+                .type("Optiim TEST").titleItems().filterBy(text("Optiim TEST3")).get(0).click();
+//                .selectLov("Optiim TEST3");
+
+        new EvrakOlusturPage().openPage().bilgilerTabiAc()
+                .konuKoduSec("010.01");
         new EvrakOlusturPage().openPage().bilgilerTabiAc();
 
 //        boolean b = comboLov("input[id$='konuKoduLov:LovText']").type("111111111").isEmpty();
