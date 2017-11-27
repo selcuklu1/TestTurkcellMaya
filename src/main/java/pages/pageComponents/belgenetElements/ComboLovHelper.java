@@ -195,7 +195,7 @@ public class ComboLovHelper extends BaseLibrary {
             selectSingleType(value);
 
         if (isMultiType)
-            return ElementFinder.wrap(BelgenetElement.class, null, By.cssSelector(lovSecilen), 0);
+            return ElementFinder.wrap(BelgenetElement.class, null, By.cssSelector(lovText), 0);
         else
             return ElementFinder.wrap(BelgenetElement.class, null, By.cssSelector(lovSecilen), 0);
     }
@@ -386,17 +386,22 @@ public class ComboLovHelper extends BaseLibrary {
         return $$(lovTreeList).get(0).is(have(text("Sonuç bulunamamıştır")));
     }
 
+
     public static ElementsCollection titleItems(){
+
+        String locator = "li  span[class*='ui-tree-selectable-node'] " + lovItemTitle;
         $$(lovTreeList).get(0).shouldBe(visible);
-        SelenideElement list = $$(lovTree).last();
-        ElementsCollection col = list.$$(lovTreeListSelectableItemsTitle);
-//        ElementsCollection titles = $$(lovTree).last().$$(lovTreeListSelectableItemsTitle);
-        return  col;
+        return $$(lovTree).last().$$(locator);
+//        $$(lovTreeList).get(0).shouldBe(visible);
+//        return  $$(lovTree).last().$$(lovTreeListSelectableItemsTitle);
     }
 
     public static ElementsCollection detailItems(){
+        String locator = "li  span[class*='ui-tree-selectable-node'] " + lovItemDetail;
         $$(lovTreeList).get(0).shouldBe(visible);
-        return  $$(lovTree).last().$$(lovTreeListSelectableItemsDetail);
+        return $$(lovTree).last().$$(locator);
+//        $$(lovTreeList).get(0).shouldBe(visible);
+//        return  $$(lovTree).last().$$(lovTreeListSelectableItemsDetail);
     }
 
 

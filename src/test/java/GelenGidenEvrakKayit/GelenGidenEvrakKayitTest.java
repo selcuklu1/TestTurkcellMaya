@@ -93,7 +93,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     @Test(enabled = true, description = "TC0328 : Gelen evrak kayıt ekranından havale")
     public void TC0328() throws InterruptedException {
 
-        String birim = "OPTİİM";
+        String birim = "OPTİİM BİRİM";
 
         gelenEvrakKayitPage
                 .openPage()
