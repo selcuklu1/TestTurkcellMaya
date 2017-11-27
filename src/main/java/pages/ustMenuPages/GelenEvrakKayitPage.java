@@ -1,6 +1,7 @@
 package pages.ustMenuPages;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Step;
@@ -211,7 +212,7 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("Kişi kurum seç")
     public GelenEvrakKayitPage evrakBilgileriListKisiKurumSec(String kisiKurum) {
-        cmbEvrakBilgileriListKisiKurum.selectOptionContainingText(kisiKurum);
+        cmbEvrakBilgileriListKisiKurum.selectOptionByValue(kisiKurum);
         return this;
     }
 
@@ -300,7 +301,8 @@ public class GelenEvrakKayitPage extends MainPage {
 
     public GelenEvrakKayitPage dagitimBilgileriBirimDoldur(String birim) {
 //        txtDagitimBilgileriBirim.sendKeys(birim);
-        cmbHavaleIslemleriBirim.selectLov(birim);
+        ElementsCollection col = cmbHavaleIslemleriBirim.type(birim).titleItems();
+                col.filterBy(Condition.exactText(birim)).first().click();
         return this;
     }
 
@@ -663,9 +665,9 @@ public class GelenEvrakKayitPage extends MainPage {
     }
     @Step("Guncelleme Kontrolleri")
     public GelenEvrakKayitPage guncellenenAlanKontrolleri(String evrakTarihi,String evrakTuru,String gizlilikDerecesi){
-        String txtEvrakTarihi = dateTxtEvrakBilgileriListEvrakTarihi.text();
-        String txtEvrakTuru = cmbEvrakBilgileriListEvrakTuru.text();
-        String txtGizlilikDerecesi = cmbEvrakBilgileriListGizlilikDerecesi.text();
+        String txtEvrakTarihi = dateTxtEvrakBilgileriListEvrakTarihi.getValue();
+        String txtEvrakTuru = cmbEvrakBilgileriListEvrakTuru.getSelectedValue();
+        String txtGizlilikDerecesi = cmbEvrakBilgileriListGizlilikDerecesi.getSelectedValue();
 
         Assert.assertEquals(txtEvrakTarihi,evrakTarihi);
         Assert.assertEquals(txtEvrakTuru,evrakTuru);

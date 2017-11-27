@@ -4,6 +4,7 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
+import com.sun.javafx.scene.layout.region.Margins;
 import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
 import org.omg.CORBA.PUBLIC_MEMBER;
@@ -13,6 +14,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
+import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -257,9 +259,21 @@ public class BaseLibrary {
         boolean flag = false;
         File dir = new File(downloadPath);
         File[] dir_contents = dir.listFiles();
+        Pattern y = Pattern.compile("[^0-9]");
+        String s = null;
+        int[] raporNumber = new int[0];
 
         for (int i = 0; i < dir_contents.length; i++) {
-            if (dir_contents[i].getName().equals(fileName))
+            String file = dir_contents[i].getName().toString();
+            s="";
+            Matcher m = y.matcher(file);
+            while (m.find()) {
+                 s =s+ m.group();
+                // s now contains "BAR"
+            }
+            raporNumber[i]= Integer.parseInt(s);
+            System.out.println(s);
+            if (s.equals(fileName))
                 return flag = true;
         }
 

@@ -12,6 +12,8 @@ import pages.solMenuPages.TeslimAlinmayiBekleyenlerPage;
 import pages.ustMenuPages.GelenEvrakKayitPage;
 import pages.ustMenuPages.KaydedilenGelenEvrakPage;
 
+import java.io.IOException;
+
 public class GelenGidenEvrakKayitTest extends BaseTest {
     MainPage mainPage;
     GelenEvrakKayitPage gelenEvrakKayitPage;
@@ -41,6 +43,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         kaydedilenGelenEvraklarPage = new KaydedilenGelenEvraklarPage();
         birimHavaleEdilenlerPage = new BirimHavaleEdilenlerPage();
         login("optiim", "Avis1111");
+//        login("ztekin", "123");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -122,7 +125,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .evrakBilgileriListEvrakDiliSec(evrakDili)
                 .evrakBilgileriListEvrakTarihiDoldur(evrakTarihi)
                 .evrakBilgileriListGizlilikDerecesiSec(gizlilikDerecesi)
-//                .evrakBilgileriListKisiKurumSec(kisiKurum)
+                .evrakBilgileriListKisiKurumSec(kisiKurum)
                 .evrakBilgileriListGeldigiKurumDoldurLovText(geldigiKurum)
                 .evrakBilgileriListEvrakSayiSagDoldur()
                 .evrakBilgileriListEvrakGelisTipiSec(evrakGelisTipi)
@@ -140,10 +143,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .tabloEvrakNoileIcerikSec(evrakNo);
 
         gelenEvrakKayitPage
-                .guncellenenAlanKontrolleri(evrakTarihi,evrakTuru2,gizlilikDerecesi);
-
-
-
+                .guncellenenAlanKontrolleri(evrakTarihi,evrakTuru,gizlilikDerecesi);
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -187,7 +187,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TC1401 : Kaydedilen Gelen Evrak raporu")
-    public void TC1401() throws InterruptedException {
+    public void TC1401() throws InterruptedException, IOException {
 
 
         String evrakNo = evrakNO321;
