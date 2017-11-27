@@ -5,6 +5,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.EvrakOlusturPage;
 import pages.ustMenuPages.GelenEvrakKayitPage;
+import pages.ustMenuPages.GidenEvrakKayitPage;
 import pages.ustMenuPages.KurumYonetimiPage;
 
 
@@ -13,12 +14,14 @@ public class KurumYonetimiTest extends BaseTest {
    KurumYonetimiPage kurumYonetimiPage;
    GelenEvrakKayitPage gelenEvrakKayitPage;
    EvrakOlusturPage evrakOlusturPage;
+   GidenEvrakKayitPage gidenEvrakKayitPage;
 
     @BeforeMethod
     public void loginBeforeTests() {
         kurumYonetimiPage = new KurumYonetimiPage();
         gelenEvrakKayitPage = new GelenEvrakKayitPage();
         evrakOlusturPage = new EvrakOlusturPage();
+        gidenEvrakKayitPage = new GidenEvrakKayitPage();
         login();
     }
 
@@ -115,6 +118,11 @@ public class KurumYonetimiTest extends BaseTest {
         evrakOlusturPage
                 .editorTabAc()
                 .hitapKontrol(yeniKurumAdi);
+
+        gidenEvrakKayitPage
+                .openPage();
+
+
 
 
 
