@@ -97,7 +97,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
         gelenEvrakKayitPage
                 .openPage()
-                .evrakBilgileriUstYaziEkle("C:\\Users\\Emre_Sencan\\Pictures\\pdf.pdf")
+//                .evrakBilgileriUstYaziEkle("C:\\Users\\Emre_Sencan\\Pictures\\pdf.pdf")
                 .evrakBilgileriListKonuKoduDoldur(konuKodu)
                 .evrakBilgileriListEvrakTuruSec(evrakTuru)
                 .evrakBilgileriListEvrakDiliSec(evrakDili)
