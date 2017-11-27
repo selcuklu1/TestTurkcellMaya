@@ -3,6 +3,7 @@ package YonetimHavuzuIslemleri;
 import common.BaseTest;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import pages.ustMenuPages.EvrakOlusturPage;
 import pages.ustMenuPages.OlurYazisiOlusturPage;
 import pages.ustMenuPages.YonetimHavuzuYonetimiPage;
 

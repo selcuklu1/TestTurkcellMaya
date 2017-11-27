@@ -17,6 +17,7 @@ import pages.ustMenuPages.*;
 
 import static data.TestData.password2;
 import static data.TestData.username2;
+
 /****************************************************
  * Tarih: 2017-12-22
  * Proje: Türksat Functional Test Automation
@@ -24,18 +25,18 @@ import static data.TestData.username2;
  * Yazan: Can Şeker
  ****************************************************/
 @Epic("Kişisel İşlemler Bağ Tipi")
-public class KisiselIslemlerBagTipiTest extends BaseTest{
+public class KisiselIslemlerBagTipiTest extends BaseTest {
 
     KullaniciYonetimiPage kullaniciYonetimiPage;
     EvrakOlusturPage evrakOlusturPage;
     VekaletVerPage vekaletVerPage;
     GelenEvraklarPage gelenEvraklarPage;
-    pages.EvrakOlusturPage evrakOlusturPageTab;
+    EvrakOlusturPage evrakOlusturPageTab;
     OnayAkisYonetimiPage onayAkisYonetimiPage;
 
     @BeforeMethod
     public void loginBeforeTests() {
-        evrakOlusturPageTab = new pages.EvrakOlusturPage();
+        evrakOlusturPageTab = new EvrakOlusturPage();
         kullaniciYonetimiPage = new KullaniciYonetimiPage();
         evrakOlusturPage = new EvrakOlusturPage();
         vekaletVerPage = new VekaletVerPage();
@@ -94,7 +95,7 @@ public class KisiselIslemlerBagTipiTest extends BaseTest{
         String farkliKullanici = "Optiim";
         String onayAkisiKullanicilarTuru = "İmzalama";
         String gnMdV = "Gn.Md. V.";
-                login(username2, password2);
+        login(username2, password2);
 
         kullaniciYonetimiPage
                 .openPage()
@@ -110,15 +111,15 @@ public class KisiselIslemlerBagTipiTest extends BaseTest{
 
         evrakOlusturPage
                 .openPage()
+                .bilgilerTabiAc()
                 .otomatikOnayAkisi()
                 .otomatikOnayAkisiGeldigiGorme(ekranAdi)
                 .onayAkisiEkle()
                 .kullanicilarDoldur(ekranAdi)
                 .onayAkisiKullanicilarImzacıSec(onayAkisiKullanicilarTuru)
-                .onayAkisiKullan();
-        evrakOlusturPageTab
-                .editorTabAc()
+                .onayAkisiKullan()
                 .imzacılarGnMdVKontrol(gnMdV);
+
         onayAkisYonetimiPage
                 .onayAkisiYeni()
                 .onayAkisiIslemlerKullanicilarDoldur(ekranAdi)
@@ -126,14 +127,14 @@ public class KisiselIslemlerBagTipiTest extends BaseTest{
                 .onayAkisiIslemleriKaydet();
         //  vekaletVerPage
         //        .openPage()
-          //      .vekaletVerenDoldur(ekranAdi)
-            //    .vekaletVerenFarkliDoldur(farkliKullanici)
-              //  .onayVerecekDoldur(ekranAdi);
+        //      .vekaletVerenDoldur(ekranAdi)
+        //    .vekaletVerenFarkliDoldur(farkliKullanici)
+        //  .onayVerecekDoldur(ekranAdi);
         //gelenEvraklarPage
-          //      .openPage()
-            //    .evrakSec()
-              //  .tabHavaleYap()
-                //.havaleYapOnaylanacakKisiTreeDoldur(ekranAdi);
+        //      .openPage()
+        //    .evrakSec()
+        //  .tabHavaleYap()
+        //.havaleYapOnaylanacakKisiTreeDoldur(ekranAdi);
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -162,7 +163,7 @@ public class KisiselIslemlerBagTipiTest extends BaseTest{
                 .openPage()
                 .bilgilerTabiAc()
                 .otomatikOnayAkisi()
-                .otomatikOnayAkisiGelmedigiGorme(ekranAdi,false);
+                .otomatikOnayAkisiGelmedigiGorme(ekranAdi, false);
 
         vekaletVerPage
                 .openPage()

@@ -6,6 +6,7 @@ import io.qameta.allure.SeverityLevel;
 import org.openqa.selenium.Keys;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import pages.ustMenuPages.EvrakOlusturPage;
 
 /****************************************************
  * Tarih: 2017-12-22
