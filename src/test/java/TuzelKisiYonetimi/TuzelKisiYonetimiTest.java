@@ -30,12 +30,10 @@ public class TuzelKisiYonetimiTest extends BaseTest {
         String vergiNo = createRandomNumber(7);
         String ad = "Sezai Çelik Holding";
         String kisaAd = "SCH";
-        String onEk = "Muh";
-        String unvan = "Mühendis";
-        String adres = "İstiklal Caddesi";
+        String adres = "Mecidiyeköy Mahallesi";
         String ulke = "TÜRKİYE";
         String il = "İst";
-        String ilce = "Bey";
+        String ilce = "Şiş";
         String eposta = "scholding@turksat.com.tr";
         String webAdres = "www.scholding.com";
         String telNo = "5391111111";
