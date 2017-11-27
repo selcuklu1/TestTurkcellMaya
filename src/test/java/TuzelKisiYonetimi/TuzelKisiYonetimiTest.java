@@ -73,7 +73,7 @@ public class TuzelKisiYonetimiTest extends BaseTest {
         tuzelKisiYonetimiPage
                 .filtreVergiNoDoldur(vergiNo)
                 .ara()
-                .kayitKontrolu(vergiNo, ad, kisaAd);
+                .aktifKisiKayitKontrolu(vergiNo, ad, kisaAd);
 
         evrakOlusturPage
                 .openPage()
@@ -113,64 +113,83 @@ public class TuzelKisiYonetimiTest extends BaseTest {
         String kisaAd = "trkstopttm";
 
         tuzelKisiYonetimiPage
+                //Step num: 2
                 .openPage()
                 .filtreDurumSec("AKTIFLER")
                 .ara()
                 .aktiflerTumListeKayitKontrolu()
 
+                //Step num: 3
                 .filtreSorgulamaPaneliAc()
                 .filtreDurumSec("PASIFLER")
                 .ara()
                 .pasiflerTumListeKayitKontrolu()
 
+                //Step num: 4
+                //Data pasif ise, aktif yapılır.
                 .filtreSorgulamaPaneliAc()
                 .filtreAdDoldur(ad)
-                .filtreVergiNoDoldur(vergiNo)
                 .filtreDurumSec("TUMU")
                 .ara()
                 .tuzelKisiPasifIseAktifYap()
                 .filtreSorgulamaPaneliAc()
                 .filtreDurumSec("AKTIFLER")
                 .ara()
-                .kayitKontrolu(vergiNo, ad, kisaAd)
+                .aktifKisiKayitKontrolu(vergiNo, ad, kisaAd)
 
+                //Step num: 6
                 .filtreSorgulamaPaneliAc()
                 .filtreAdDoldur(ad)
-                .filtreVergiNoDoldur(vergiNo)
-                .filtreDurumSec("TUMU")
-                .ara()
-                .tuzelKisiAktifIsePasifYap()
-                .filtreSorgulamaPaneliAc()
                 .filtreDurumSec("PASIFLER")
                 .ara()
-                .kayitKontrolu(vergiNo, ad, kisaAd)
-
-                .filtreSorgulamaPaneliAc()
-                .filtreAdDoldur(ad)
-                .filtreVergiNoDoldur(vergiNo)
-                .filtreDurumSec("TUMU")
-                .ara()
-                .tuzelKisiPasifIseAktifYap()
-                .filtreSorgulamaPaneliAc()
-                .filtreDurumSec("PASIFLER")
-                .ara()
-                .kayitKontrolu(vergiNo, ad, kisaAd)
                 .kayitBulunamadiKontrolu()
 
+                //Step num: 8
+                .filtreSorgulamaPaneliAc()
+                .filtreVergiNoDoldur(vergiNo)
+                .filtreDurumSec("AKTIFLER")
+                .ara()
+                .aktifKisiKayitKontrolu(vergiNo, ad, kisaAd)
+
+                //Step num: 10
+                .filtreSorgulamaPaneliAc()
+                .filtreVergiNoDoldur(vergiNo)
+                .filtreDurumSec("PASIFLER")
+                .ara()
+                .kayitBulunamadiKontrolu()
+
+                //Step num: 5
+                //Data aktif ise, pasif yapılır.
                 .filtreSorgulamaPaneliAc()
                 .filtreAdDoldur(ad)
-                .filtreVergiNoDoldur(vergiNo)
                 .filtreDurumSec("TUMU")
                 .ara()
                 .tuzelKisiAktifIsePasifYap()
                 .filtreSorgulamaPaneliAc()
+                .filtreAdDoldur(ad)
+                .filtreDurumSec("PASIFLER")
+                .ara()
+                .pasifKisiKayitKontrolu(vergiNo, ad, kisaAd)
+
+                //Step num: 7
+                .filtreSorgulamaPaneliAc()
+                .filtreAdDoldur(ad)
                 .filtreDurumSec("AKTIFLER")
                 .ara()
-                .kayitKontrolu(vergiNo, ad, kisaAd)
+                .kayitBulunamadiKontrolu()
+
+                //Step num: 9
+                .filtreSorgulamaPaneliAc()
+                .filtreVergiNoDoldur(vergiNo)
+                .filtreDurumSec("PASIFLER")
+                .ara()
+                .pasifKisiKayitKontrolu(vergiNo, ad, kisaAd)
+
+                //Step num: 11
+                .filtreSorgulamaPaneliAc()
+                .filtreVergiNoDoldur(vergiNo)
+                .filtreDurumSec("AKTIFLER")
+                .ara()
                 .kayitBulunamadiKontrolu();
-
-        //TODO: DEVAM EDECEK
-
-
     }
 }

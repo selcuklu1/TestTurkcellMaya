@@ -114,13 +114,13 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .filtreSoyadDoldur(soyad)
                 .filtreDurumSec("AKTIFLER")
                 .ara() //araButonuTikla
-                .kayitKontrolu(tcNO, ad, soyad)
+                .aktifKisiKayitKontrolu(tcNO, ad, soyad)
 
                 .filtreSorgulamaPaneliAc()
                 .filtreAdDoldur(ad)
                 .filtreDurumSec("AKTIFLER")
                 .ara()
-                .kayitKontrolu(tcNO, ad, soyad)
+                .aktifKisiKayitKontrolu(tcNO, ad, soyad)
 
                 .filtreSorgulamaPaneliAc()
                 .filtreTCKimlikNoDoldur(tc10)
@@ -132,7 +132,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .filtreTCKimlikNoDoldur(tcNO)
                 .filtreDurumSec("AKTIFLER")
                 .ara()
-                .kayitKontrolu(tcNO, ad, soyad)
+                .aktifKisiKayitKontrolu(tcNO, ad, soyad)
 
                 .filtreSorgulamaPaneliAc()
                 .filtreTCKimlikNoDoldur(tcNO)
@@ -270,7 +270,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .filtreAdDoldur(ad)
                 .filtreTCKimlikNoDoldur(tcNO)
                 .ara()
-                .kayitKontrolu(tcNO, ad, soyad)
+                .aktifKisiKayitKontrolu(tcNO, ad, soyad)
 
                 .gercekKisiGuncelle()
                 .tcKimlikNoDoldur(tcNO2)
@@ -337,7 +337,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .filtreAdDoldur(ad)
                 .filtreSoyadDoldur(soyad)
                 .ara()
-                .kayitKontrolu(TCKN1, ad, soyad)
+                .aktifKisiKayitKontrolu(TCKN1, ad, soyad)
 
                 .gercekKisiGuncelle()
                 .unvanDoldur(unvan)
@@ -416,7 +416,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .filtreDurumSec("TUMU")
                 .ara()
                 .gercekKisiPasifIseAktifYap()
-                .kayitKontrolu(tcNO, ad, soyad)
+                .aktifKisiKayitKontrolu(tcNO, ad, soyad)
 
                 .gercekKisiPasifYap()
                 .islemOnayi("Evet")
@@ -434,14 +434,14 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .filtreSoyadDoldur(soyad)
                 .filtreDurumSec("PASIFLER")
                 .ara()
-                .pasiflerKayitKontrolu(tcNO, ad, soyad)
+                .pasifKisiKayitKontrolu(tcNO, ad, soyad)
 
                 .filtreSorgulamaPaneliAc()
                 .filtreAdDoldur(ad)
                 .filtreSoyadDoldur(soyad)
                 .filtreDurumSec("TUMU")
                 .ara()
-                .pasiflerKayitKontrolu(tcNO, ad, soyad);
+                .pasifKisiKayitKontrolu(tcNO, ad, soyad);
 
         gelenEvrakKayitPage
                 .openPage()
@@ -485,7 +485,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .filtreTCKimlikNoDoldur(TCKN)
                 .filtreDurumSec("PASIFLER")
                 .ara()
-                .pasiflerKayitKontrolu(TCKN, ad, soyad)
+                .pasifKisiKayitKontrolu(TCKN, ad, soyad)
                 .gercekKisiAktifYap()
                 .islemOnayi("Evet")
 
@@ -493,7 +493,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .filtreTCKimlikNoDoldur(TCKN)
                 .filtreDurumSec("AKTIFLER")
                 .ara()
-                .kayitKontrolu(TCKN, ad, soyad)
+                .aktifKisiKayitKontrolu(TCKN, ad, soyad)
 
                 .filtreSorgulamaPaneliAc()
                 .filtreTCKimlikNoDoldur(TCKN)
@@ -505,7 +505,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .filtreTCKimlikNoDoldur(TCKN)
                 .filtreDurumSec("TUMU")
                 .ara()
-                .kayitKontrolu(TCKN, ad, soyad);
+                .aktifKisiKayitKontrolu(TCKN, ad, soyad);
 
         gelenEvrakKayitPage
                 .openPage()

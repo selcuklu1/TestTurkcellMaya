@@ -243,7 +243,7 @@ public class TuzelKisiYonetimiPage extends MainPage {
     }
 
     @Step("Tüzel kişi kayıt kontrolu")
-    public TuzelKisiYonetimiPage kayitKontrolu(String vergiNo, String ad, String kisaAd) {
+    public TuzelKisiYonetimiPage aktifKisiKayitKontrolu(String vergiNo, String ad, String kisaAd) {
 
 
         boolean statusVergiNo = findElementOnTableByColumnInputInAllPages(tblTuzelKisiDataTable, 1, vergiNo).isDisplayed();
@@ -257,6 +257,19 @@ public class TuzelKisiYonetimiPage extends MainPage {
         return this;
     }
 
+    @Step("Pasif kayit kontrolu")
+    public TuzelKisiYonetimiPage pasifKisiKayitKontrolu(String vergiNo, String ad, String kisaAd) {
+
+        boolean statusTCNO = findElementOnTableByColumnInputInAllPages(tblTuzelKisiDataTable, 1, vergiNo).isDisplayed();
+        boolean statusAd = findElementOnTableByColumnInputInAllPages(tblTuzelKisiDataTable, 2, ad).isDisplayed();
+        boolean statusSoyad = findElementOnTableByColumnInputInAllPages(tblTuzelKisiDataTable, 3, kisaAd).isDisplayed();
+
+        Assert.assertEquals(statusTCNO, true);
+        Assert.assertEquals(statusAd, true);
+        Assert.assertEquals(statusSoyad, true);
+
+        return this;
+    }
     @Step("Aktif Tüzel kişi kayıt kontrolu")
     public TuzelKisiYonetimiPage aktiflerTumListeKayitKontrolu() {
 

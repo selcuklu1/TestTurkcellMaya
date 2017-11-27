@@ -325,7 +325,7 @@ public class GercekKisiYonetimPage extends MainPage {
     }
 
     @Step("Aktif Kayit kontrolu")
-    public GercekKisiYonetimPage kayitKontrolu(String tcNO, String ad, String soyad) {
+    public GercekKisiYonetimPage aktifKisiKayitKontrolu(String tcNO, String ad, String soyad) {
 
         //Assert.assertEquals(tblTc.getText().equals(tcNO), true);
         //Assert.assertEquals(tbleAd.getText().equals(ad), true);
@@ -376,7 +376,7 @@ public class GercekKisiYonetimPage extends MainPage {
     }
 
     @Step("Pasif kayit kontrolu")
-    public GercekKisiYonetimPage pasiflerKayitKontrolu(String tcNO, String ad, String soyad) {
+    public GercekKisiYonetimPage pasifKisiKayitKontrolu(String tcNO, String ad, String soyad) {
 
         boolean statusTCNO = findElementOnTableByColumnInputInAllPages(tblGercekKisiDataTable, 1, tcNO).isDisplayed();
         boolean statusAd = findElementOnTableByColumnInputInAllPages(tblGercekKisiDataTable, 2, ad).isDisplayed();
