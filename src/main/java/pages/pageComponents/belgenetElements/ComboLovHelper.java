@@ -195,7 +195,7 @@ public class ComboLovHelper extends BaseLibrary {
             selectSingleType(value);
 
         if (isMultiType)
-            return ElementFinder.wrap(BelgenetElement.class, null, By.cssSelector(lovSecilen), 0);
+            return ElementFinder.wrap(BelgenetElement.class, null, By.cssSelector(lovText), 0);
         else
             return ElementFinder.wrap(BelgenetElement.class, null, By.cssSelector(lovSecilen), 0);
     }
