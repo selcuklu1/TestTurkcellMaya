@@ -94,7 +94,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
         gelenEvrakKayitPage
                 .openPage()
                 .evrakBilgileriListKisiKurumSec(evrakBilgileriListKisiKurumTipi)
-                .evrakBilgileriListGeldigiKisiDoldur(adSoyad);
+                .geldigiGercekKisiDoldur(adSoyad);
 
     }
 
@@ -303,7 +303,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
         gelenEvrakKayitPage
                 .openPage()
                 .evrakBilgileriListKisiKurumSec("G")
-                .evrakBilgileriListGeldigiKisiDoldur(adSoyad2);
+                .geldigiGercekKisiDoldur(adSoyad2);
     }
 
     @Severity(SeverityLevel.CRITICAL)

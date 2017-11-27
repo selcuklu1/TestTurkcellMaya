@@ -318,7 +318,7 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Bilgi Secim Tipi alanında \"{0}\" seç")
         public BilgilerTab bilgiSecimTipiSec(String text) {
-            cmbBilgiSecimTipi.selectOption(text);
+            cmbBilgiSecimTipi.selectOptionByValue(text);
             return this;
         }
 
@@ -770,8 +770,6 @@ public class EvrakOlusturPage extends MainPage {
             sayisalImzaOnay.click();
             return this;
         }
-
-
 
     }
 
