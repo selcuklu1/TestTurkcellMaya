@@ -21,11 +21,12 @@ public class GelenEvrakKayitPage extends MainPage {
 
     // Evrak Bilgileri Sekmesinde bulunanlar
     SelenideElement btnUstYaziEkle = $(By.xpath("//input[@id='evrakBilgileriForm:ustYaziForm:ustYaziUpload_input']"));
-    SelenideElement txtEvrakBilgileriListKonuKodu = $("[id^='evrakBilgileriForm:evrakBilgileriList'][id$='konuKoduLov:LovText']");
-    SelenideElement txtEvrakBilgileriListKonu = $("[id^='evrakBilgileriForm:evrakBilgileriList'][id$='konuTextArea']");
+    SelenideElement txtEvrakBilgileriListKonuKodu = $("[id$='konuKoduLov:LovText']");
+    SelenideElement txtEvrakBilgileriListKonu = $("[[id$='konuTextArea']");
     SelenideElement cmbEvrakBilgileriListEvrakTuru = $("[id$='evrakTuruCombo']");
-    SelenideElement cmbEvrakBilgileriListEvrakDili = $("[id^='evrakBilgileriForm:evrakBilgileriList'][id$='evrakDili']");
-    SelenideElement dateTxtEvrakBilgileriListEvrakTarihi = $("[id^='evrakBilgileriForm:evrakBilgileriList'][id$='evrakTarihi_input']");
+    SelenideElement cmbEvrakBilgileriListEvrakDili = $("[id$='evrakDili']");
+
+    SelenideElement dateTxtEvrakBilgileriListEvrakTarihi = $("[id$='evrakTarihi_input']");
     SelenideElement cmbEvrakBilgileriListGizlilikDerecesi = $("[id$='guvenlikKodu']");
 
 
@@ -43,7 +44,7 @@ public class GelenEvrakKayitPage extends MainPage {
     SelenideElement txtEvrakBilgileriListAciklama = $(By.id("evrakBilgileriForm:evrakBilgileriList:15:j_idt4318"));
     SelenideElement cmbEvrakBilgileriListOzelKategori = $(By.id("evrakBilgileriForm:evrakBilgileriList:17:j_idt4499"));
     SelenideElement dateTxtEvrakBilgileriListPostalanmaTarihi = $(By.id("evrakBilgileriForm:evrakBilgileriList:18:postalanmaTarihi_input"));
-    BelgenetElement comboKonuKodu = comboLov("[id^='evrakBilgileriForm:evrakBilgileriList'][id$='konuKoduLov:LovText']");
+    BelgenetElement comboKonuKodu = comboLov("[id$='konuKoduLov:LovText']");
     BelgenetElement comnoGeldigiKurum = comboLov("[id$='geldigiKurumLov:LovText']");
 
     // Evrak Ekleri sekmesinde bulunanlar
@@ -138,6 +139,16 @@ public class GelenEvrakKayitPage extends MainPage {
 
     //Dosya ekleme path
     By dosyaPath = By.xpath("//input[@id='evrakBilgileriForm:evrakEkTabView:fileUploadButton_input']");
+
+//    Evrak Detayı sayfası objeleri
+
+    SelenideElement btnevrakDetayiEvrakEkleri = $(By.id("inboxItemInfoForm:dialogTabMenuLeft:uiRepeat:1:cmdbutton"));
+    SelenideElement btnEvrakDetayiFizikselEkEkle = $("a[href='#inboxItemInfoForm:evrakEkTabView:aciklamaEkleTab']");
+    SelenideElement txtEvrakDetayiAciklama = $(By.id("inboxItemInfoForm:evrakEkTabView:aciklamaTextArea"));
+    SelenideElement btnEvrakDetayiEkle = $(By.id("inboxItemInfoForm:evrakEkTabView:aciklamaEkleButton"));
+    SelenideElement btnEvrakDetayiKaydet = $(By.id("inboxItemInfoForm:dialogTabMenuRight:uiRepeat:3:cmdbutton"));
+
+
     //endregion
 
 
@@ -588,8 +599,37 @@ public class GelenEvrakKayitPage extends MainPage {
     }
 
     @Step("Birim butonu")
-    public GelenEvrakKayitPage havaleIslemleriBirim(){
+    public GelenEvrakKayitPage havaleIslemleriBirim() {
         btnBirim.click();
+        return this;
+    }
+
+    @Step("Evrak Detayi Ekleri tabı tıkla")
+    public GelenEvrakKayitPage evrakDetayiEkleriTab() {
+        btnevrakDetayiEvrakEkleri.click();
+        return this;
+    }
+    @Step("Evrak Detayi Fizilsel Ek Ekle tabı tıkla")
+    public GelenEvrakKayitPage evrakDetayiFizikselEkEkleTab(){
+        btnEvrakDetayiFizikselEkEkle.click();
+        return this;
+    }
+    @Step("Evrak Detayi Aciklama doldur")
+    public GelenEvrakKayitPage evrakDetayiAciklamaDoldur(String aciklama){
+        txtEvrakDetayiAciklama.sendKeys(aciklama);
+        SelenideElement btnEvrakDetayiEkle = $(By.id("inboxItemInfoForm:evrakEkTabView:aciklamaEkleButton"));
+        SelenideElement btnEvrakDetayiKaydet = $(By.id("inboxItemInfoForm:dialogTabMenuRight:uiRepeat:3:cmdbutton"));
+        return this;
+    }
+    @Step("Evrak Detayi Ekle tıkla")
+    public GelenEvrakKayitPage evrakDetayiEkle(){
+       btnEvrakDetayiEkle.click();
+        SelenideElement btnEvrakDetayiKaydet = $(By.id("inboxItemInfoForm:dialogTabMenuRight:uiRepeat:3:cmdbutton"));
+        return this;
+    }
+    @Step("Evrak Detayi Kaydet tıkla")
+    public GelenEvrakKayitPage evrakDetayiKaydet(){
+        btnEvrakDetayiKaydet.click();
         return this;
     }
 }

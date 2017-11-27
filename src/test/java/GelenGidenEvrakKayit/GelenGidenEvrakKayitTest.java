@@ -40,7 +40,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         kaydedilenGelenEvrakPage = new KaydedilenGelenEvrakPage();
         kaydedilenGelenEvraklarPage = new KaydedilenGelenEvraklarPage();
         birimHavaleEdilenlerPage = new BirimHavaleEdilenlerPage();
-        login("optiim","Avis1111");
+        login("optiim", "Avis1111");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -57,6 +57,9 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .openPage()
                 .evrakBilgileriUstYaziEkle(ustYaziPath)
                 .evrakBilgileriDosyaEklemeUstYaziAdiKontrol(ustYaziAdi)
+                .islemMesaji().isBasarili();
+
+        gelenEvrakKayitPage
                 .evrakBilgileriListKonuKoduDoldur(konuKodu)
                 .evrakBilgileriListEvrakTuruSec(evrakTuru)
                 .evrakBilgileriListEvrakDiliSec(evrakDili)
@@ -87,6 +90,45 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .filtreleAc()
                 .tarihDoldur(getSysDateForKis())
                 .tabloKontrolu(evrakNO321);
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "")
+    public void TC2163() throws InterruptedException {
+
+        String evrakTuru = "D";
+        String ustYaziPath = "C:\\Users\\Emre_Sencan\\Pictures\\Otomasyon.pdf";
+        String ustYaziAdi = "Otomasyon.pdf";
+        String basariMesaji = "İşlem başarılıdır!";
+
+        kaydedilenGelenEvraklarPage
+                .openPage()
+                .tabloIlkRaporIcerik();
+
+        String aciklama = "Test Otomasyon";
+        gelenEvrakKayitPage
+                .evrakBilgileriUstYaziEkle(ustYaziPath)
+                .evrakBilgileriDosyaEklemeUstYaziAdiKontrol(ustYaziAdi)
+                .evrakBilgileriListKonuKoduDoldur(konuKodu)
+                .evrakBilgileriListEvrakTuruSec(evrakTuru)
+                .evrakBilgileriListEvrakDiliSec(evrakDili)
+                .evrakBilgileriListEvrakTarihiDoldur(evrakTarihi)
+                .evrakBilgileriListGizlilikDerecesiSec(gizlilikDerecesi)
+                .evrakBilgileriListKisiKurumSec(kisiKurum)
+                .evrakBilgileriListGeldigiKurumDoldurLovText(geldigiKurum)
+                .evrakBilgileriListEvrakSayiSagDoldur()
+                .evrakBilgileriListEvrakGelisTipiSec(evrakGelisTipi)
+                .evrakBilgileriListIvedilikSec(ivedilik)
+                .evrakDetayiEkleriTab()
+                .evrakDetayiFizikselEkEkleTab()
+                .evrakDetayiAciklamaDoldur(aciklama)
+                .evrakDetayiEkle()
+                .evrakDetayiKaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        
+
+
     }
 
     @Severity(SeverityLevel.CRITICAL)
