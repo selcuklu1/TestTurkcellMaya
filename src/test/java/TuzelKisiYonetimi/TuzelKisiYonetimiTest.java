@@ -33,9 +33,9 @@ public class TuzelKisiYonetimiTest extends BaseTest {
     @Test(enabled = true, description = "TC1124: Yeni tüzel kişi kayıt ve ekranlardan kontrolleri")
     public void TC1124() throws InterruptedException {
 
-        String vergiNo = createRandomNumber(7);
-        String ad = createRandomText(7) + " holding";
-        String kisaAd = createRandomNumber(7);
+        String vergiNo = createRandomNumber(10);
+        String kisaAd = createRandomText(7);
+        String ad = kisaAd + " holding";
         String adres = "Mecidiyeköy Mahallesi";
         String ulke = "TÜRKİYE";
         String il = "İst";
@@ -71,32 +71,105 @@ public class TuzelKisiYonetimiTest extends BaseTest {
                 .islemMesaji().basariliOlmali(basariMesaji);
 
         tuzelKisiYonetimiPage
-                .filtreSorgulamaPaneliAc()
-                .vergiNoDoldur(vergiNo)
+                .filtreVergiNoDoldur(vergiNo)
                 .ara()
                 .kayitKontrolu(vergiNo, ad, kisaAd);
 
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
-                    .geregiSecimTipiSec("T")
-                    .geregiDoldur(ad)
-                    .geregiDoldur(kisaAd)
-                    .geregiDoldur(vergiNo);
+                .geregiSecimTipiSec("T")
+                .geregiDoldur(ad)
+                .secilenGeregiSil()
+                .geregiDoldur(kisaAd)
+                .secilenGeregiSil()
+                .geregiDoldur(vergiNo);
 
         gelenEvrakKayitPage
                 .openPage()
                 .evrakBilgileriListKisiKurumSec("T")
-                .evrakBilgileriListGeldigiKisiDoldur(ad)
-                .evrakBilgileriListGeldigiKisiDoldur(kisaAd)
-                .evrakBilgileriListGeldigiKisiDoldur(vergiNo);
+                .geldigiTuzelKisiDoldur(ad)
+                .secilenGeregiTuzelKisiSil()
+                .geldigiTuzelKisiDoldur(kisaAd)
+                .secilenGeregiTuzelKisiSil()
+                .geldigiTuzelKisiDoldur(vergiNo);
 
         gidenEvrakKayitPage
                 .openPage()
                 .geregiSecimTipiSec("T")
                 .geregiDoldur(ad)
+                .secilenGeregiSil()
                 .geregiDoldur(kisaAd)
+                .secilenGeregiSil()
                 .geregiDoldur(vergiNo);
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TC1124: Tüzel kişi sorgulama")
+    public void TC1133() throws InterruptedException {
+
+        String vergiNo = "8524567913";
+        String ad = "Türksat Optiim";
+        String kisaAd = "trkstopttm";
+
+        tuzelKisiYonetimiPage
+                .openPage()
+                .filtreDurumSec("AKTIFLER")
+                .ara()
+                .aktiflerTumListeKayitKontrolu()
+
+                .filtreSorgulamaPaneliAc()
+                .filtreDurumSec("PASIFLER")
+                .ara()
+                .pasiflerTumListeKayitKontrolu()
+
+                .filtreSorgulamaPaneliAc()
+                .filtreAdDoldur(ad)
+                .filtreVergiNoDoldur(vergiNo)
+                .filtreDurumSec("TUMU")
+                .ara()
+                .tuzelKisiPasifIseAktifYap()
+                .filtreSorgulamaPaneliAc()
+                .filtreDurumSec("AKTIFLER")
+                .ara()
+                .kayitKontrolu(vergiNo, ad, kisaAd)
+
+                .filtreSorgulamaPaneliAc()
+                .filtreAdDoldur(ad)
+                .filtreVergiNoDoldur(vergiNo)
+                .filtreDurumSec("TUMU")
+                .ara()
+                .tuzelKisiAktifIsePasifYap()
+                .filtreSorgulamaPaneliAc()
+                .filtreDurumSec("PASIFLER")
+                .ara()
+                .kayitKontrolu(vergiNo, ad, kisaAd)
+
+                .filtreSorgulamaPaneliAc()
+                .filtreAdDoldur(ad)
+                .filtreVergiNoDoldur(vergiNo)
+                .filtreDurumSec("TUMU")
+                .ara()
+                .tuzelKisiPasifIseAktifYap()
+                .filtreSorgulamaPaneliAc()
+                .filtreDurumSec("PASIFLER")
+                .ara()
+                .kayitKontrolu(vergiNo, ad, kisaAd)
+                .kayitBulunamadiKontrolu()
+
+                .filtreSorgulamaPaneliAc()
+                .filtreAdDoldur(ad)
+                .filtreVergiNoDoldur(vergiNo)
+                .filtreDurumSec("TUMU")
+                .ara()
+                .tuzelKisiAktifIsePasifYap()
+                .filtreSorgulamaPaneliAc()
+                .filtreDurumSec("AKTIFLER")
+                .ara()
+                .kayitKontrolu(vergiNo, ad, kisaAd)
+                .kayitBulunamadiKontrolu();
+
+        //TODO: DEVAM EDECEK
 
 
     }
