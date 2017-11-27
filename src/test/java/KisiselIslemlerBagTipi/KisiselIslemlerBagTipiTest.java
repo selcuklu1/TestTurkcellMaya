@@ -160,7 +160,7 @@ public class KisiselIslemlerBagTipiTest extends BaseTest{
                 .vekaletVerenAlanınaGoruntulenmemeKontrolu(ekranAdi, false)
                 .vekaletVerenDoldur(farkliKullanici)
                 .vekaletAlanAlanınaGoruntulenmemeKontrolu(ekranAdi, false)
-                .onayVerecekDoldur(farkliKullanici);
+                .onayVerecekDoldur("Zübeyde TEKİN");
         gelenEvraklarPage
                 .openPage()
                 .evrakSec()

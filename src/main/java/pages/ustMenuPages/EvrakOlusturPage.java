@@ -177,7 +177,7 @@ public class EvrakOlusturPage extends MainPage {
     SelenideElement tableOnayAkisiEkleKullanicilar = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:akisAdimLov:LovSecilenTable_data"));
 
     SelenideElement btnOnayAkisiKullaniciKullan = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:anlikAkisKullanButton"));
-    BelgenetElement txtOnayAkisiKullanicilar = comboLov("[id$='akisAdimLov:LovText']");
+    BelgenetElement txtOnayAkisiKullanicilar = comboLov("[id='yeniGidenEvrakForm:evrakBilgileriList:18:akisAdimLov:LovText']");
     SelenideElement listOnayAkisikullanicilar = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:akisAdimLov:lovTree"));
     SelenideElement cmbOnayAkisiIkıncıKullanci = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:akisAdimLov:LovSecilenTable:1:selectOneMenu"));
 

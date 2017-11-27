@@ -76,6 +76,7 @@ public class GelenEvrakKayitPage extends MainPage {
     SelenideElement txtEvrakEkTabViewArsivdenEvrakAraSayi = $(By.id("evrakBilgileriForm:evrakEkTabView:arsivdenEvrakAraSayiInputTextId"));
 
     // Havale işlemleri sekmesinde bulunanlar
+    SelenideElement chkOtomatikHavale =$(By.id("evrakBilgileriForm:j_idt11601_input"));
     SelenideElement txtDagitimBilgileriBirim = $(By.id("evrakBilgileriForm:dagitimBilgileriBirimLov:LovText"));
     SelenideElement txtDagitimBilgileriKisi = $(By.id("evrakBilgileriForm:dagitimBilgileriKullaniciLov:LovText"));
     SelenideElement txtDagitimBilgileriKullaniciListesi = $(By.id("evrakBilgileriForm:dagitimBilgileriKisiListesiLov:LovText"));
@@ -140,6 +141,11 @@ public class GelenEvrakKayitPage extends MainPage {
     By dosyaPath = By.xpath("//input[@id='evrakBilgileriForm:evrakEkTabView:fileUploadButton_input']");
     //endregion
 
+
+    public GelenEvrakKayitPage otomatikHavaleSec(boolean secim){
+        chkOtomatikHavale.setSelected(secim);
+        return this;
+    }
 
     public GelenEvrakKayitPage openPage() {
         new UstMenu().ustMenu("Gelen Evrak Kayıt");

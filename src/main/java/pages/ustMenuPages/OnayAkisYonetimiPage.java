@@ -30,8 +30,8 @@ public class OnayAkisYonetimiPage extends MainPage {
     private SelenideElement txtOnayAkisiAd =$(By.id("onayAkisiYonetimiEditorForm:onayAkisiYonetimiAkisAdiInput"));
     private SelenideElement txtOnayAkisiKullanicilar = $(By.id("onayAkisiYonetimiEditorForm:onayAkisiYonetimiKullaniciBirimLov:LovText"));
     private ElementsCollection cmbImzacıSon = $$("[id$='onayAkisiYonetimiEditorForm:onayAkisiYonetimiKullaniciBirimDataTable'] table tr select");
-    BelgenetElement txtOnayAkisiIslemleriKullanicilar = comboLov("[id='onayAkisiYonetimiEditorForm:onayAkisiYonetimiKullaniciBirimLov:LovText']");
-    SelenideElement btnOnayAkisiIslemleriKaydet = $(By.id("onayAkisiYonetimiEditorForm:onayAkisiYonetimiEditorKaydetId"));
+    private BelgenetElement txtOnayAkisiIslemleriKullanicilar = comboLov("[id='onayAkisiYonetimiEditorForm:onayAkisiYonetimiKullaniciBirimLov:LovText']");
+    private SelenideElement btnOnayAkisiIslemleriKaydet = $(By.id("onayAkisiYonetimiEditorForm:onayAkisiYonetimiEditorKaydetId"));
 
     public OnayAkisYonetimiPage onayAkisiIslemleriKaydet(){
         btnOnayAkisiIslemleriKaydet.click();
@@ -39,7 +39,8 @@ public class OnayAkisYonetimiPage extends MainPage {
     }
 
     public OnayAkisYonetimiPage onayAkisiIslemlerKullanicilarDoldur(String kullanici){
-        txtOnayAkisiIslemleriKullanicilar.selectLov(kullanici);
+        txtOnayAkisiIslemleriKullanicilar.type(kullanici).titleItems().first().click();
+                //selectLov(kullanici);
         return this;
     }
 
