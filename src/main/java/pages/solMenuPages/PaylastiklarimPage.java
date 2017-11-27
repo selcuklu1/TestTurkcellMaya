@@ -9,12 +9,14 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import pages.MainPage;
+import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
 
 import java.util.List;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
+import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 
 public class PaylastiklarimPage extends MainPage {
@@ -41,7 +43,9 @@ public class PaylastiklarimPage extends MainPage {
 
     // Evrak Notları elementleri
     SelenideElement btnEvratNotEkle = $("button[id$=':paylasimNotuEkleId']");
+    BelgenetElement txtPaylasKisi = comboLov(By.id("mainPreviewForm:evrakPaylasKisiLov:LovText"));
 
+    SelenideElement txtPaylasAciklama = $(By.id("mainPreviewForm:evrakPaylasAciklama"));
     //ElementsCollection tablePaylasilanlar = $$("div[id='mainPreviewForm:evrakOnizlemeTab'] div[aria-hidden='false'] tbody > tr[role='row']");
 
 
@@ -168,6 +172,25 @@ public class PaylastiklarimPage extends MainPage {
     @Step("paylaş butonuna tıklandı. ")
     public PaylastiklarimPage paylas() {
         btnPaylas.click();
+        return this;
+    }
+
+
+    @Step("Paylaşılacak kişi seç: \"{0}\" ")
+    public PaylastiklarimPage paylasKisiSec(String kisiAdi) {
+        txtPaylasKisi.selectLov(kisiAdi);
+        return this;
+    }
+
+    @Step("Paylaşma tabında açıklama girildi : \"{0}\"")
+    public PaylastiklarimPage paylasimAciklamaYaz(String aciklama) {
+        txtPaylasAciklama.setValue(aciklama);
+        return this;
+    }
+
+    @Step("paylaşılan kişileri temizle ")
+    public PaylastiklarimPage paylasilanKisileriTemizle() {
+        txtPaylasKisi.clearAllSelectedLov();
         return this;
     }
 

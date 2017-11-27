@@ -94,6 +94,7 @@ public class PaylastiklarimTest extends BaseTest {
     @Test(enabled = true, description = "1877 : Evrakı paylaşmada alan kontrolleri")
     public void TC_01876() {
 
+
         paylastiklarimPage
                 .openPage()
                 .evrakSec("Optiim TEST")
@@ -101,6 +102,24 @@ public class PaylastiklarimTest extends BaseTest {
                 .paylas()
                 .islemMesaji().dikkatOlmali("Evrakın paylaşılacağı Kullanıcıyı seçiniz!");
 
+
+        paylastiklarimPage
+                .paylasKisiSec("Optiim TEST")
+                .paylas()
+                .islemMesaji().dikkatOlmali("Açıklama girilmesi zorunludur!");
+
+        paylastiklarimPage
+                .paylasilanKisileriTemizle()
+                .paylasimAciklamaYaz("yeni açkılmala")
+                .paylas()
+                .islemMesaji().dikkatOlmali("Evrakın paylaşılacağı Kullanıcıyı seçiniz!");
+
+        paylastiklarimPage
+                .paylasKisiSec("Optiim TEST")
+                .paylasilanKisileriTemizle()
+                .paylasimAciklamaYaz("yeni açkılmala")
+                .paylas()
+                .islemMesaji().dikkatOlmali("Evrakın paylaşılacağı Kullanıcıyı seçiniz!");
 
 
 
