@@ -1,6 +1,7 @@
 package pages.ustMenuPages;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Step;
@@ -194,7 +195,7 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("Kişi kurum seç")
     public GelenEvrakKayitPage evrakBilgileriListKisiKurumSec(String kisiKurum) {
-        cmbEvrakBilgileriListKisiKurum.selectOptionContainingText(kisiKurum);
+        cmbEvrakBilgileriListKisiKurum.selectOptionByValue(kisiKurum);
         return this;
     }
 
@@ -282,7 +283,8 @@ public class GelenEvrakKayitPage extends MainPage {
 
     public GelenEvrakKayitPage dagitimBilgileriBirimDoldur(String birim) {
 //        txtDagitimBilgileriBirim.sendKeys(birim);
-        cmbHavaleIslemleriBirim.selectLov(birim);
+        cmbHavaleIslemleriBirim.type(birim).titleItems()
+            .filterBy(Condition.exactText(birim)).get(0).click();
         return this;
     }
 
