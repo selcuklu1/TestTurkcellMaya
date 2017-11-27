@@ -109,6 +109,9 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .openPage()
                 .tabloIlkRaporIcerik();
 
+        String evrakNo= gelenEvrakKayitPage
+                .evrakDetayiEvrakNoTextAl();
+
         gelenEvrakKayitPage
                 .evrakDetariAlanGuncellenebilirlikKontrolü()
                 .evrakBilgileriUstYaziEkle(ustYaziPath)
@@ -129,9 +132,8 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .evrakDetayiAciklamaDoldur(aciklama)
                 .evrakDetayiEkle()
                 .evrakDetayiKaydet()
+                .evrakDetayiKaydetPopUpClose()
                 .islemMesaji().basariliOlmali(basariMesaji);
-        String evrakNo= gelenEvrakKayitPage
-                .evrakDetayiEvrakNoTextAl();
 
         kaydedilenGelenEvraklarPage
                 .openPage()

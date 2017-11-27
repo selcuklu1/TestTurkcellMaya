@@ -63,6 +63,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
 
         evrakOlusturPage
                 .openPage()
+                .bilgilerTabiAc()
                 .geregiSecimTipiSec(bilgiSecimTipi)
                 .geregiDoldur(getIdariBirimKodu);
     }
@@ -91,6 +92,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
 
         evrakOlusturPage
                 .openPage()
+                .bilgilerTabiAc()
                 .geregiSecimTipiSec(bilgiSecimTipi)
                 .geregiDoldur(getIdariBirimKodu);
     }
@@ -121,6 +123,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
 
         evrakOlusturPage
                 .openPage()
+                .bilgilerTabiAc()
                 .geregiSecimTipiSec(bilgiSecimTipi)
                 .geregiDoldur(vergiNo);
     }

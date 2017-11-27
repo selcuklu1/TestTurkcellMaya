@@ -1,7 +1,9 @@
 package pages.ustMenuPages;
 
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
@@ -15,6 +17,11 @@ public class TuzelKisiYonetimiPage extends MainPage {
     SelenideElement btnAra = $(By.id("tuzelKisiYonetimiListingForm:filterPanel:searchTuzelKisiButton"));
     SelenideElement btnDuzenle = $(By.id("tuzelKisiYonetimiListingForm:tuzelKisiDataTable:0:updateTuzelKisiButton"));
     SelenideElement btnTuzelKisiEkle = $(By.id("tuzelKisiYonetimiListingForm:tuzelKisiDataTable:addNewTuzelKisiButton"));
+    SelenideElement filtreSorgulamaPanel = $(By.id("tuzelKisiYonetimiListingForm:filterPanel"));
+    SelenideElement txtFiltreSGKNo = $(By.id("tuzelKisiYonetimiListingForm:filterPanel:tuzelKisiVergiKimlikNoFilterInput"));
+    SelenideElement txtFiltreAd = $(By.id("tuzelKisiYonetimiListingForm:filterPanel:tuzelKisiAdFilterInput"));
+    SelenideElement txtFiltreDurum = $(By.id("tuzelKisiYonetimiListingForm:filterPanel:durumSelectBox"));
+
 
     //Tüzel kişi ekleme alanı
     SelenideElement cmbTuzelKisiTipi = $(By.id("tuzelKisiYonetimiEditorForm:tuzelKisiTipi"));
@@ -49,6 +56,9 @@ public class TuzelKisiYonetimiPage extends MainPage {
     SelenideElement cmbPopupKepHizmetSaglayicisi = $(By.id("tuzelKisiKepAdresEditorForm:kephs"));
     SelenideElement btnPopupKaydet = $(By.id("tuzelKisiKepAdresEditorForm:saveKepAdresiButton"));
     SelenideElement btnGuncelle = $(By.id("tuzelKisiYonetimiListingForm:tuzelKisiDataTable:0:updateTuzelKisiButton"));
+
+    //Tablo
+    SelenideElement tblTuzelKisiDataTable = $(By.id("tuzelKisiYonetimiListingForm:tuzelKisiDataTable"));
     //</editor-fold>
 
     public TuzelKisiYonetimiPage openPage() {
@@ -197,6 +207,30 @@ public class TuzelKisiYonetimiPage extends MainPage {
         if (btnPopupEvet.isDisplayed()) {
             btnPopupEvet.click();
         }
+        return this;
+    }
+
+    @Step("Filtre sorgulama paneli aç")
+    public TuzelKisiYonetimiPage filtreSorgulamaPaneliAc() {
+
+        filtreSorgulamaPanel.click();
+        txtFiltreSGKNo.clear();
+        txtFiltreAd.clear();
+        return this;
+    }
+
+    @Step("Tüzel kişi kayıt kontrolu")
+    public TuzelKisiYonetimiPage kayitKontrolu(String vergiNo, String ad, String kisaAd) {
+
+
+        boolean statusVergiNo = findElementOnTableByColumnInputInAllPages(tblTuzelKisiDataTable, 1, vergiNo).isDisplayed();
+        boolean statusAd = findElementOnTableByColumnInputInAllPages(tblTuzelKisiDataTable, 2, ad).isDisplayed();
+        boolean statusKisaAd = findElementOnTableByColumnInputInAllPages(tblTuzelKisiDataTable, 3, kisaAd).isDisplayed();
+
+        Assert.assertEquals(statusVergiNo, true);
+        Assert.assertEquals(statusAd, true);
+        Assert.assertEquals(statusKisaAd, true);
+
         return this;
     }
 
