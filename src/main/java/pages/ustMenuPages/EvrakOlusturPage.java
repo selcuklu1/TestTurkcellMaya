@@ -179,21 +179,38 @@ public class EvrakOlusturPage extends MainPage {
     SelenideElement btnOnayAkisiKullaniciKullan = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:anlikAkisKullanButton"));
     BelgenetElement txtOnayAkisiKullanicilar = comboLov("[id$='akisAdimLov:LovText']");
     SelenideElement listOnayAkisikullanicilar = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:akisAdimLov:lovTree"));
+    SelenideElement cmbOnayAkisiIkıncıKullanci = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:akisAdimLov:LovSecilenTable:1:selectOneMenu"));
 
     BelgenetElement cmbBilgi = comboLov(By.cssSelector("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='bilgiLov:LovText']"));
     By cmbBilgiBy = By.cssSelector("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='bilgiLov:LovText']");
 
     SelenideElement btnOtomatikOnayAkisi = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:otomatikOnayAkisiEkle"));
 
+    //Otomatik Onay akışı İşlemleri Popup
+    SelenideElement getBtnOtomatikOnayAkisiKapat = $("[id='yeniGidenEvrakForm:hiyerarsikAkisOlusturDialog'] [class='ui-icon ui-icon-closethick']");
+
+
+    public EvrakOlusturPage onayAkisiKullanicilarImzacıSec(String value){
+        cmbOnayAkisiIkıncıKullanci.selectOptionByValue(value);
+        return this;
+    }
+
+    public EvrakOlusturPage kullanicilarDoldur(String kullanici){
+        txtOnayAkisiKullanicilar.selectLov(kullanici);
+        return this;
+    }
+
     public EvrakOlusturPage otomatikOnayAkisi() {
         btnOtomatikOnayAkisi.click();
         return this;
     }
+
     @Step("Otomatik onay akışı kontrol")
     public EvrakOlusturPage otomatikOnayAkisiGeldigiGorme(String ekranAdi) {
         $$(" [id='yeniGidenEvrakForm:hiyerarsikAkisOlusturForm:otomatikAkisKullaniciBirimListId'] tbody tr")
                 .filterBy(text(ekranAdi)).shouldHave(sizeGreaterThan(0)).get(0).click();
         System.out.println("Başarılı geçti " + ekranAdi);
+        getBtnOtomatikOnayAkisiKapat.click();
         return this;
     }
 

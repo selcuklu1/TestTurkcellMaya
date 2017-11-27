@@ -13,10 +13,7 @@ import io.qameta.allure.SeverityLevel;
 
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pages.ustMenuPages.EvrakOlusturPage;
-import pages.ustMenuPages.GelenEvraklarPage;
-import pages.ustMenuPages.KullaniciYonetimiPage;
-import pages.ustMenuPages.VekaletVerPage;
+import pages.ustMenuPages.*;
 
 import static data.TestData.password2;
 import static data.TestData.username2;
@@ -27,19 +24,23 @@ import static data.TestData.username2;
  * Yazan: Can Şeker
  ****************************************************/
 @Epic("Kişisel İşlemler Bağ Tipi")
-public class KisiselIslemlerBagTipiTest extends BaseTest {
+public class KisiselIslemlerBagTipiTest extends BaseTest{
 
     KullaniciYonetimiPage kullaniciYonetimiPage;
     EvrakOlusturPage evrakOlusturPage;
     VekaletVerPage vekaletVerPage;
     GelenEvraklarPage gelenEvraklarPage;
+    pages.EvrakOlusturPage evrakOlusturPageTab;
+    OnayAkisYonetimiPage onayAkisYonetimiPage;
 
     @BeforeMethod
     public void loginBeforeTests() {
+        evrakOlusturPageTab = new pages.EvrakOlusturPage();
         kullaniciYonetimiPage = new KullaniciYonetimiPage();
         evrakOlusturPage = new EvrakOlusturPage();
         vekaletVerPage = new VekaletVerPage();
         gelenEvraklarPage = new GelenEvraklarPage();
+        onayAkisYonetimiPage = new OnayAkisYonetimiPage();
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -79,6 +80,56 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
                 .havaleYapOnaylanacakKisiTreeDoldur(ekranAdi);
     }
 
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "2142: Bağ tipi vekaleten amir yardımcısı kontrolleri")
+    public void TC2142() throws InterruptedException {
+        String basariMesaji = "İşlem başarılıdır!";
+        String bagTipi = "Y";
+        String farkliKullanici = "Optiim";
+        String onayAkisiKullanicilarTuru = "İmzalama";
+        String gnMdV = "Gn.Md. V.";
+                login(username2, password2);
+
+        kullaniciYonetimiPage
+                .openPage()
+                .ara()
+                .kullaniciListesiGuncelle()
+                .gorevliOlduguBirimlerGuncelle()
+                .popupKullaniciBirimAtamaBagTipiSec(bagTipi)
+                .popupKullaniciBirimAtamaKaydet();
+        String ekranAdi = kullaniciYonetimiPage.ekranAdiCek();
+        kullaniciYonetimiPage
+                .kullaniciGuncellemeKaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        evrakOlusturPage
+                .openPage()
+                .otomatikOnayAkisi()
+                .otomatikOnayAkisiGeldigiGorme(ekranAdi)
+                .onayAkisiEkle()
+                .kullanicilarDoldur(ekranAdi)
+                .onayAkisiKullanicilarImzacıSec(onayAkisiKullanicilarTuru)
+                .onayAkisiKullan();
+        evrakOlusturPageTab
+                .editorTabAc()
+                .imzacılarGnMdVKontrol(gnMdV);
+        onayAkisYonetimiPage
+                .onayAkisiYeni()
+                .onayAkisiIslemlerKullanicilarDoldur(ekranAdi)
+                .imzacıSonSec(onayAkisiKullanicilarTuru)
+                .onayAkisiIslemleriKaydet();
+        //  vekaletVerPage
+        //        .openPage()
+          //      .vekaletVerenDoldur(ekranAdi)
+            //    .vekaletVerenFarkliDoldur(farkliKullanici)
+              //  .onayVerecekDoldur(ekranAdi);
+        //gelenEvraklarPage
+          //      .openPage()
+            //    .evrakSec()
+              //  .tabHavaleYap()
+                //.havaleYapOnaylanacakKisiTreeDoldur(ekranAdi);
+    }
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "2168: Bağ tipi personel kontrolleri")

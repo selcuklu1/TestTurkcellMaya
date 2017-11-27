@@ -364,10 +364,17 @@ public class EvrakOlusturPage {
 
         SelenideElement divHitap = $("div[id='yeniGidenEvrakForm:hitapInplace'] > span");
 
+        SelenideElement divImzacılarGnMdV = $("[id='yeniGidenEvrakForm:parafciPanell'] [class='ui-inplace ui-hidden-container']");
         private EditorTab open() {
             tabEditor.click();
             return this;
 
+        }
+
+        @Step("İmzacı alanı \"{0}\" olarak gelmeli")
+        public EditorTab imzacılarGnMdVKontrol(String kullanici) {
+            divImzacılarGnMdV.shouldHave(text(kullanici));
+            return this;
         }
 
         @Step("Hitap alanı \"{0}\" olarak gelmeli")
