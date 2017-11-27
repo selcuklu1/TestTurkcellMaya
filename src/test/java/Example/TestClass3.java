@@ -57,8 +57,7 @@ public class TestClass3 extends BaseTest {
 
         EvrakOlusturPage evrakOlusturPage = new EvrakOlusturPage();
         evrakOlusturPage
-                .openPage()
-                .openTab("Editör");
+                .editorTabAc();
 
         SelenideElement editor = $(By.id("yeniGidenEvrakForm:allPanels"));
         Thread.sleep(5000);
@@ -77,8 +76,7 @@ public class TestClass3 extends BaseTest {
 
         EvrakOlusturPage evrakOlusturPage = new EvrakOlusturPage();
         evrakOlusturPage
-                .openPage()
-                .openTab("Editör");
+                .editorTabAc();
 
         //  Thread.sleep(5000);
 

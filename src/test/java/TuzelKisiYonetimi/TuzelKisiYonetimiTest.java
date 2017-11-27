@@ -78,10 +78,11 @@ public class TuzelKisiYonetimiTest extends BaseTest {
 
         evrakOlusturPage
                 .openPage()
-                .geregiSecimTipiSec("T")
-                .geregiDoldur(ad)
-                .geregiDoldur(kisaAd)
-                .geregiDoldur(vergiNo);
+                .bilgilerTabiAc()
+                    .geregiSecimTipiSec("T")
+                    .geregiDoldur(ad)
+                    .geregiDoldur(kisaAd)
+                    .geregiDoldur(vergiNo);
 
         gelenEvrakKayitPage
                 .openPage()
