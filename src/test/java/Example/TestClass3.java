@@ -7,7 +7,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pages.ustMenuPages.EvrakOlusturPage;
 
 import java.util.logging.Logger;
 
@@ -57,8 +56,7 @@ public class TestClass3 extends BaseTest {
 
         EvrakOlusturPage evrakOlusturPage = new EvrakOlusturPage();
         evrakOlusturPage
-                .openPage()
-                .openTab("Editör");
+                .editorTabAc();
 
         SelenideElement editor = $(By.id("yeniGidenEvrakForm:allPanels"));
         Thread.sleep(5000);
@@ -77,8 +75,7 @@ public class TestClass3 extends BaseTest {
 
         EvrakOlusturPage evrakOlusturPage = new EvrakOlusturPage();
         evrakOlusturPage
-                .openPage()
-                .openTab("Editör");
+                .editorTabAc();
 
         //  Thread.sleep(5000);
 

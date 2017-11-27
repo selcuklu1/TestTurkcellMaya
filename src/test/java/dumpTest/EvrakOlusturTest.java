@@ -6,7 +6,6 @@ import org.openqa.selenium.By;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import pages.EvrakOlusturPage;
 import pages.pageComponents.belgenetElements.BelgentCondition;
 import pages.ustMenuPages.PulYonetimiPage;
 
@@ -41,8 +40,9 @@ public class EvrakOlusturTest extends BaseTest {
     public void testName() throws Exception {
         login();
 
-        new EvrakOlusturPage().open().bilgilerTabiAc().konuKoduSec("010.01");
-        new EvrakOlusturPage().open().bilgilerTabiAc();
+//        new EvrakOlusturPage().open().bilgilerTabiAc().konuKoduSec("010.01");
+        new EvrakOlusturPage().openPage().bilgilerTabiAc();
+
 //        boolean b = comboLov("input[id$='konuKoduLov:LovText']").type("111111111").isEmpty();
         int i = comboLov("input[id$='konuKoduLov:LovText']").type("010.01")
                 .titleItems().filterBy(text("Kanunlar")).size();

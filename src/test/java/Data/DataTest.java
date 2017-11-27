@@ -5,7 +5,6 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pages.ustMenuPages.EvrakOlusturPage;
 
 /****************************************************
  * Tarih: 2017-12-22
@@ -13,12 +12,6 @@ import pages.ustMenuPages.EvrakOlusturPage;
  * Class: "Data" konulu senaryoları içerir
  * Yazan: Samed Solak
  ****************************************************/
-import common.BaseTest;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
-import pages.ustMenuPages.EvrakOlusturPage;
 
 public class DataTest extends BaseTest {
 
@@ -51,6 +44,7 @@ public class DataTest extends BaseTest {
 
         evrakOlustur
                 .openPage()
+                .bilgilerTabiAc()
                 .konuDoldur(konu)
                 .konuKoduDoldur(konuKodu)
                 .kaldirilacakKlasorler(kaldirilacakKlasorler)
@@ -63,9 +57,12 @@ public class DataTest extends BaseTest {
                 .geregiDoldur(geregiKullanici)
                 .onayAkisiEkle()
                 .akisAdimSec(akisAdim)
-                .onayAkisiKullan()
+                .onayAkisiKullan();
                 //.imzalaButonuKontrol()
-                .openTab(editorTab)
+
+        evrakOlustur
+                .openPage()
+                .editorTabAc()
                 .editorIcerikDoldur(editorIcerik)
                 .imzala()
                 .popupSImzalaIslemleri() // Metodlara bölünecek.
@@ -94,6 +91,7 @@ public class DataTest extends BaseTest {
 
         evrakOlustur
                 .openPage()
+                .bilgilerTabiAc()
                 .konuKoduDoldur(konuKodu)
                 .evrakTuruSec(evrakTuru)
                 .evrakDerecesiSec(evrakDerecesi)
@@ -106,10 +104,14 @@ public class DataTest extends BaseTest {
                 .akisAdimSec(akisAdim)
                 .onayAkisiKullan()
                 //.imzalaButonuKontrol()
-                .kaldirilacakKlasorler(kaldirilacakKlasorler)
-                .openTab(editorTab)
-                .editorIcerikDoldur(editorIcerik)
-                .openTab(ekleriTab)
+                .kaldirilacakKlasorler(kaldirilacakKlasorler);
+
+        evrakOlustur
+                .editorTabAc()
+                .editorIcerikDoldur(editorIcerik);
+
+        evrakOlustur
+                .ekleriTabAc()
                 .ekleriDosyaEkle(filePath)
                 .ekleriDosyaAciklamaDoldur(ekleriDosyaAciklama)
                 .ekleriEkle()

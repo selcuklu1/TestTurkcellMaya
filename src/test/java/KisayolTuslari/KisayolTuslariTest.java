@@ -1,25 +1,11 @@
 package KisayolTuslari;
 
-import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.WebDriverRunner;
 import common.BaseTest;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.openqa.selenium.Keys;
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pages.ustMenuPages.EvrakOlusturPage;
-import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.WebDriverRunner;
-import common.BaseTest;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
-import org.openqa.selenium.Keys;
-import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
-import pages.ustMenuPages.EvrakOlusturPage;
 
 /****************************************************
  * Tarih: 2017-12-22
@@ -43,14 +29,16 @@ public class KisayolTuslariTest extends BaseTest {
 
         evrakOlustur
                 .openPage()
-                .openTab(editorTab)
-                .editorIcerikDoldur(kisayol)
+                .editorTabAc()
+                .editorIcerikDoldur(kisayol);
+
+        evrakOlustur
                 .kisayolEkranKontrol(sayfaAdi, false);
 
         windowHandleBefore();
 
         evrakOlustur
-                .PDFOnizleme();
+                .pdfOnIzleme();
 
         Thread.sleep(6000);
         switchToNewWindow();
@@ -62,8 +50,10 @@ public class KisayolTuslariTest extends BaseTest {
 
         evrakOlustur
                 .kisayolEkranKontrol(sayfaAdi, false)
-                .openTab(bilgileriTab)
-                .konuDoldur(kisayol)
+                .bilgilerTabiAc()
+                .konuDoldur(kisayol);
+
+        evrakOlustur
                 .kisayolEkranKontrol(sayfaAdi, false)
                 .kisayolSayfaAcma(kisayol)
                 .kisayolEkranKontrol(sayfaAdi, true);

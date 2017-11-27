@@ -52,7 +52,7 @@ public class EvrakHavaleKurallariTest extends BaseTest{
                 .islemMesaji().basariliOlmali(basariMesaji);
         gelenEvrakKayitPage
                 .openPage()
-                .otomatikHavaleSec();
+                .otomatikHavaleSec(false);
         }
 
 }

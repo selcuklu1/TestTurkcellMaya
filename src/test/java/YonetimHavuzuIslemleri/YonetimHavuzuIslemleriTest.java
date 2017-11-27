@@ -3,7 +3,6 @@ package YonetimHavuzuIslemleri;
 import common.BaseTest;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pages.EvrakOlusturPage;
 import pages.ustMenuPages.OlurYazisiOlusturPage;
 import pages.ustMenuPages.YonetimHavuzuYonetimiPage;
 
@@ -64,7 +63,8 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
                 .ara("Optiim", "Tc02yonetimhavuzu", null, true);
 
 
-        evrakOlusturPage.open()
+        evrakOlusturPage
+                .openPage()
                 .bilgilerTabiAc()
                 .onayAkisiEkle()
                 .onayAkisiKullaniciKontrol("Optiim OPTİİM ", "Paraflama")
@@ -79,7 +79,8 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
         login("Ztekin", "123");
 
 
-        evrakOlusturPage.open()
+        evrakOlusturPage
+                .openPage()
                 .bilgilerTabiAc()
                 .onayAkisiEkle()
                 .onayAkisiKullaniciKontrol("Zübeyde TEKİN ", "Paraflama")

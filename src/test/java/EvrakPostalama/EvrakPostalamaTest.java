@@ -13,7 +13,6 @@ import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.MainPage;
-import pages.ustMenuPages.EvrakOlusturPage;
 
 public class EvrakPostalamaTest extends BaseTest {
 
@@ -26,12 +25,25 @@ EvrakOlusturPage evrakOlusturPage;
     evrakOlusturPage = new EvrakOlusturPage();
     login();
 
+
     }
 
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TC0308: Evrak Postalama")
     public void TC0308() throws InterruptedException {
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .konuKoduSec("Entegrasyon İşlemleri")
+                .kaldirilacakKlasorler("ESK05")
+                .evrakTuruSec("Resmi Yazışma")
+                .onayAkisiKullanicilariTemizle()
+                .onayAkisiEkle();
+
+
+
+
 
 
     }
