@@ -28,18 +28,15 @@ public class VekaletVerPage extends BaseLibrary {
     By txtVekaletAlan = By.cssSelector("[id^='vekaletVerForm:vekaletLayout:vekaletAlanLov:LovText']");
 
     @Step("Kişinin Bilgi alanında görüntülenmediği kontrolu")
-    public VekaletVerPage vekaletVerenAlanınaGoruntulenmemeKontrolu(String bilgi) {
-        boolean selectable = comboLov(txtVekaletVeren).isLovValueSelectable(bilgi);
-        Assert.assertEquals(selectable, false, "MyCombolov alanında " + bilgi + ": Gerçek kişinin görüntülenmediği görülür");
-        System.out.println("MyCombolov alanında " + bilgi + ": Gerçek kişinin görüntülenmediği görülür.");
+    public VekaletVerPage vekaletVerenAlanınaGoruntulenmemeKontrolu(String bilgi, Boolean secilebilmeli) {
+        Assert.assertEquals(secilebilmeli, comboLov(txtVekaletVeren).isLovValueSelectable(bilgi));
         return this;
     }
 
     @Step("Kişinin Bilgi alanında görüntülenmediği kontrolu")
-    public VekaletVerPage vekaletAlanAlanınaGoruntulenmemeKontrolu(String bilgi) {
-        boolean selectable = comboLov(txtVekaletAlan).isLovValueSelectable(bilgi);
-        Assert.assertEquals(selectable, false, "MyCombolov alanında " + bilgi + ": Gerçek kişinin görüntülenmediği görülür");
-        System.out.println("MyCombolov alanında " + bilgi + ": Gerçek kişinin görüntülenmediği görülür.");
+    public VekaletVerPage vekaletAlanAlanınaGoruntulenmemeKontrolu(String bilgi, Boolean secilebilmeli) {
+        Assert.assertEquals(secilebilmeli, comboLov(txtVekaletAlan).isLovValueSelectable(bilgi));
+        System.out.println("yapıldı başarılı");
         return this;
     }
 
@@ -52,6 +49,11 @@ public class VekaletVerPage extends BaseLibrary {
     public  VekaletVerPage vekaletVerenFarkliDoldur(String text){
         btnVekalelVerenTemizle.click();
         txtVekaletVerenCombolov.selectLov(text);
+        return this;
+    }
+    BelgenetElement e = comboLov(By.id("vekaletVerForm:vekaletLayout:vekaletOnaylayacakKisiLov:LovText"));
+    public VekaletVerPage onayVerecekDoldur(String kullanici){
+        e.selectLov(kullanici);
         return this;
     }
 

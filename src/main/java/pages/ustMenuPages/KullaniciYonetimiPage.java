@@ -65,6 +65,8 @@ public class KullaniciYonetimiPage extends MainPage {
     //
     SelenideElement kaydet = $(By.id("kullaniciYonetimiEditorForm:saveKullaniciButton"));
 
+
+
     @Step("Birim alanında \"{0}\" sec")
     public KullaniciYonetimiPage birimSec(String text) {
         cmlBirim.selectLov(text);
@@ -88,22 +90,22 @@ public class KullaniciYonetimiPage extends MainPage {
 
 
     public KullaniciYonetimiPage openPage() {
-        new UstMenu().ustMenu("Kullanıcı Yönetim");
+        ustMenu("Kullanıcı Yönetim");
         return this;
     }
 
     public KullaniciYonetimiPage popupKullaniciBirimAtamaBagTipiSec(String value) {
-        cmbPopupKullaniciBirimAtamaBagTipi.selectOption(value);
+        cmbPopupKullaniciBirimAtamaBagTipi.selectOptionByValue(value);
         return this;
     }
 
-    public KullaniciYonetimiPage gorevliOlduguBirimlerGuncelle() {
+    public KullaniciYonetimiPage gorevliOlduguBirimlerGuncelle(){
         btnGorevliOlduguBirimlerGuncelle.click();
         return this;
     }
 
 
-    public KullaniciYonetimiPage kullaniciListesiGuncelle() {
+    public KullaniciYonetimiPage kullaniciListesiGuncelle(){
         btnKullaniciListesiGuncelle.click();
         return this;
     }

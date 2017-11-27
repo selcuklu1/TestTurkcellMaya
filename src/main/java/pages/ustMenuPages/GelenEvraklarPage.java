@@ -2,10 +2,13 @@ package pages.ustMenuPages;
 
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
+import org.testng.Assert;
 import pages.MainPage;
+import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Selenide.$;
+import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 public class GelenEvraklarPage extends MainPage {
 
@@ -27,7 +30,7 @@ public class GelenEvraklarPage extends MainPage {
     SelenideElement treeHavaleYapBirim = $(By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovTexts"));
     SelenideElement treeHavaleYapKisi = $(By.id("mainPreviewForm:dagitimBilgileriKullaniciLov:LovText"));
     SelenideElement treeHavaleYapKullaniciListesi = $(By.id("mainPreviewForm:dagitimBilgileriKisiListesiLov:LovText"));
-    SelenideElement treeHavaleYapOnaylanacakKisi = $(By.id("mainPreviewForm:onaylayacakKisiLov:LovText"));
+    BelgenetElement treeHavaleYapOnaylanacakKisi = comboLov("[id^='mainPreviewForm:onaylayacakKisiLov:LovText']");
     SelenideElement txtHavaleYapAciklama = $(By.id("mainPreviewForm:havaleAciklama"));
     SelenideElement btnHavaleYapDosyaEkle = $(By.id("mainPreviewForm:fileUploadHavaleEk_input"));
     SelenideElement txtHavaleYapIslemSuresi = $(By.id("mainPreviewForm:islemSuresiTarih_input"));
@@ -65,6 +68,14 @@ public class GelenEvraklarPage extends MainPage {
     SelenideElement txtPaylasKisi = $(By.id("mainPreviewForm:evrakPaylasKisiLov:LovText"));
     SelenideElement txtPaylasanAciklama = $(By.id("mainPreviewForm:evrakPaylasAciklama"));
     SelenideElement btnPaylasIcPaylas = $(By.id("mainPreviewForm:paylasButtonId"));
+
+    SelenideElement evrakSec = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
+
+    public GelenEvraklarPage evrakSec()
+    {
+        evrakSec.click();
+        return this;
+    }
 
     public GelenEvraklarPage openPage() {
         solMenu(SolMenuData.IslemBekleyenEvraklar.GelenEvraklar);
@@ -142,7 +153,8 @@ public class GelenEvraklarPage extends MainPage {
     }
 
     public GelenEvraklarPage havaleYapOnaylanacakKisiTreeDoldur(String text) {
-        treeHavaleYapOnaylanacakKisi.sendKeys(text);
+        treeHavaleYapOnaylanacakKisi.selectLov(text);
+        System.out.println("Başarı Bu selectlı geçmiştir");
         return this;
     }
 
