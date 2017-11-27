@@ -116,6 +116,7 @@ public class KurumYonetimiTest extends BaseTest {
                 .bilgiSec(yeniKurumAdi);
 
         evrakOlusturPage
+                .open()
                 .editorTabAc()
                 .hitapKontrol(yeniKurumAdi);
 
