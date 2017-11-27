@@ -3,51 +3,131 @@ package KurumYonetimi;
 import common.BaseTest;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import pages.EvrakOlusturPage;
+import pages.ustMenuPages.GelenEvrakKayitPage;
+import pages.ustMenuPages.GidenEvrakKayitPage;
 import pages.ustMenuPages.KurumYonetimiPage;
 
 
 public class KurumYonetimiTest extends BaseTest {
 
    KurumYonetimiPage kurumYonetimiPage;
+   GelenEvrakKayitPage gelenEvrakKayitPage;
+   EvrakOlusturPage evrakOlusturPage;
+   GidenEvrakKayitPage gidenEvrakKayitPage;
 
     @BeforeMethod
     public void loginBeforeTests() {
         kurumYonetimiPage = new KurumYonetimiPage();
+        gelenEvrakKayitPage = new GelenEvrakKayitPage();
+        evrakOlusturPage = new EvrakOlusturPage();
+        gidenEvrakKayitPage = new GidenEvrakKayitPage();
         login();
     }
 
     @Test(enabled = true, description = "TC01459 : Kurum bilgisi güncellemee")
-    public void TC01957_A() {
+    public void TC01957_A() throws InterruptedException {
+
+        String guncellenecekKurumAdi = "huseyindeneme";
+        String yeniKurumAdi = "huseyindeneme111";
+        String idariBirimKimlikKodu = "12345";
+        String ustKurum = "Adalet Bakanlığı";
+
+        // İletişim bilgileri güncelleme
+        String mobilTelNo = "5444444444";
+        String telefonNo = "5444444445";
+        String isTelefonNo = "5444444446";
+        String faxNumarasi1 = "5444444447";
+        String faxNumarasi2 = "5444444448";
+        String adres = "yeni adersim";
+        String ulke = "TÜRKİYE";
+        String il = "İSTANBUL";
+        String ilce = "Avcılar";
+        String ePosta = "xxx@xxx.com";
+        String webAdresi = "example.com";
+        String basariMesaji = "İşlem başarılıdır!";
+
+        // Kep adresi güncelleme
+        String guncellenecekKepAdresi = "deneme@kepadresim.com";
+        String yeniKepadresi = "deneme234@kepadresim.com";
+        String kepHizmetSaglayicisi = "KEPKUR";
+
+
+        /*
+
+
         kurumYonetimiPage
                 .openPage()
+                .sorgulaKurumDoldur(guncellenecekKurumAdi)
                 .ara()
-                .kurumGuncelle("Yargı")
-                .idariBirimKimlikKoduDoldur("95123123")
-                .ustKurumSec("Adalet Bakanlığı")
-                .kurumAdiDoldur("Yeni Kurum Adi")
+                .kurumGuncelle(guncellenecekKurumAdi)
+                .idariBirimKimlikKoduDoldur(idariBirimKimlikKodu)
+                .ustKurumSec(ustKurum)
+                .kurumAdiDoldur(yeniKurumAdi)
                 .iletisimGuncelle()
-                .mobilTelNoDoldur("5444444444")
-                .telefonNoDoldur("2129999999")
-                .isTelefonNoDoldur("2129999998")
-                .faxNumarasi1Doldur("2129999997")
-                .faxNumarasi2Doldur("2129999996")
-                .adresDoldur("yoooooooookk iii")
-                .ulkeDoldur("TÜRKİYE")
-                .ilDoldur("İSTANBUL")
-                .ilceDoldur("xxxxasdasd")
-                .ePostaDoldur("deneme@denememail.com")
-                .webAdresiDoldur("www.denemecik.com")
+                .mobilTelNoDoldur(mobilTelNo)
+                .telefonNoDoldur(telefonNo)
+                .isTelefonNoDoldur(isTelefonNo)
+                .faxNumarasi1Doldur(faxNumarasi1)
+                .faxNumarasi2Doldur(faxNumarasi2)
+                .adresDoldur(adres)
+                //.ulkeDoldur(ulke)
+                //.ilDoldur(il)
+                .ilceDoldur(ilce)
+                .ePostaDoldur(ePosta)
+                .webAdresiDoldur(webAdresi)
                 .iletisimBilgisiKaydet()
-                .islemMesaji().basariliOlmali("İşlem başarılıdır!");
+                .islemMesaji().basariliOlmali(basariMesaji);
         kurumYonetimiPage
-                .kepAdresiGuncelle("turksat.kamu1@testkep.pttkep.gov.tr", null)
-                //.kepAdresiGuncelle("turksat.kamu1@testkep.pttkep.gov.tr", null)
-                .kepAdresiDoldur("deneme@kepadresim.com")
-                .kepHizmetSaglayiciSec("KEPKUR")
+                .kepAdresiGuncelle(guncellenecekKepAdresi, null)
+                .kepAdresiDoldur(yeniKepadresi)
+                .kepHizmetSaglayiciSec(kepHizmetSaglayicisi)
                 .kepAdresiBilgileriKaydet()
-                .islemMesaji().basariliOlmali("İşlem başarılıdır!");
+                .islemMesaji().basariliOlmali(basariMesaji);
         kurumYonetimiPage
-                .kepAdresiKontrol("deneme@kepadresim.com", 0, true);
+                .kepAdresiKontrol(yeniKepadresi, 0, true)
+                .kurumKaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+        kurumYonetimiPage
+                .kurumHiyerarsisiniGuncelle();
+                //.islemMesaji().basariliOlmali("İşlem başarılıdır!");
+        kurumYonetimiPage
+                .sorgulaKurumDoldur(yeniKurumAdi)
+                .ara()
+                .kurumKontrolEt(yeniKurumAdi, true);
+
+
+         */
+
+        /*
+        gelenEvrakKayitPage
+                .openPage()
+                .evrakBilgileriListKisiKurumSec("Kurum")
+                .evrakBilgileriListGeldigiKurumDoldurLovText(yeniKurumAdi)
+                .alanDegeriKontrolEt(gelenEvrakKayitPage.txtEvrakBilgileriListEvrakSayiTextAreaSol, idariBirimKimlikKodu + "   -", true, true);
+        */
+
+        evrakOlusturPage
+                .open()
+                .bilgilerTabiAc()
+                .geregiSecimTipi("Kurum")
+                .geregiTreeKontrolEt(yeniKurumAdi, true)
+                .bilgiSecimTipiSec("Kurum")
+                .bilgiSec(yeniKurumAdi);
+
+        evrakOlusturPage
+                .editorTabAc()
+                .hitapKontrol(yeniKurumAdi);
+
+        gidenEvrakKayitPage
+                .openPage();
+
+
+
+
+
+
+
 
 
 

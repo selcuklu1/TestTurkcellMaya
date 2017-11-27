@@ -1,5 +1,6 @@
 package pages.pageComponents.belgenetElements;
 
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 
 import java.util.List;
@@ -31,6 +32,44 @@ public interface BelgenetElement extends SelenideElement {
     Boolean isLovSelected();
 
     Boolean isLovValueSelectable(String value);
+
+    /**
+     * Click treeButton on comboLov
+     * @return
+     */
+    BelgenetElement openTree();
+
+    /**
+     *
+     * @return
+     */
+//    BelgenetElement clearLov();
+
+    /**
+     * Type text to comboLov input
+     * @param text
+     * @return
+     */
+    BelgenetElement type(String text);
+
+    /**
+     * "Sonuç bulunamamıştır" kontrolü, type ya da openTree sonrası kullanılır
+     * @return
+     */
+    Boolean isEmpty();
+
+    /**
+     * selectable title list
+     * @return
+     */
+    ElementsCollection titleItems();
+
+    /**
+     * selectable detail list
+     * @return
+     */
+    ElementsCollection detailItems();
+
     //endregion
 
     //region ComboBox

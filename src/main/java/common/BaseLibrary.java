@@ -1,9 +1,12 @@
 package common;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Attachment;
+import io.qameta.allure.Step;
+import org.omg.CORBA.PUBLIC_MEMBER;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -400,4 +403,39 @@ public class BaseLibrary {
         // driver.switchTo().defaultContent();
         WebDriverRunner.getWebDriver().switchTo().window(winHandleBefore);
     }
+
+
+    public String cssSE(String element, String attribute, String startsWith, String endsWith) {
+
+        if (element != "" || element == null) {
+
+            return "["+attribute+"^='']["+attribute+"$='']";
+
+        } else {
+
+            return element+"["+attribute+"^='']["+attribute+"$='']";
+
+        }
+
+    }
+
+    @Step("[\"{0}\"] alanının değeri [\"{0}\"] olmalı.")
+    public void alanDegeriKontrolEt(SelenideElement element, String value, boolean shouldHaveValue, boolean exactText){
+        if(shouldHaveValue == true){
+            if (exactText == true)
+                element.shouldHave(Condition.exactValue(value));
+            else
+                element.shouldHave(Condition.value(value));
+
+        }
+        else
+        {
+            if (exactText == true)
+                element.shouldNotHave(Condition.exactValue(value));
+            else
+                element.shouldNotHave(Condition.value(value));
+
+        }
+    }
+
 }

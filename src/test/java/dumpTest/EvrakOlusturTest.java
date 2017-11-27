@@ -10,8 +10,10 @@ import pages.EvrakOlusturPage;
 import pages.pageComponents.belgenetElements.BelgentCondition;
 import pages.ustMenuPages.PulYonetimiPage;
 
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.executeJavaScript;
+import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 public class EvrakOlusturTest extends BaseTest {
 
@@ -39,7 +41,12 @@ public class EvrakOlusturTest extends BaseTest {
     public void testName() throws Exception {
         login();
 
-        new EvrakOlusturPage().open().bilgilerTabiAc().konuKoduSec("010.01");
+//        new EvrakOlusturPage().open().bilgilerTabiAc().konuKoduSec("010.01");
+        new EvrakOlusturPage().open().bilgilerTabiAc();
+//        boolean b = comboLov("input[id$='konuKoduLov:LovText']").type("111111111").isEmpty();
+        int i = comboLov("input[id$='konuKoduLov:LovText']").type("010.01")
+                .titleItems().filterBy(text("Kanunlar")).size();
+
 
 
 //        new UstMenu().ustMenu("Evrak İşlemleri", "Evrak Oluştur");
