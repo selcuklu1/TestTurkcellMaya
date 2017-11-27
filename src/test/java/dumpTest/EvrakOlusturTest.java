@@ -43,6 +43,7 @@ public class EvrakOlusturTest extends BaseTest {
 
 //        new EvrakOlusturPage().open().bilgilerTabiAc().konuKoduSec("010.01");
         new EvrakOlusturPage().openPage().bilgilerTabiAc();
+
 //        boolean b = comboLov("input[id$='konuKoduLov:LovText']").type("111111111").isEmpty();
         int i = comboLov("input[id$='konuKoduLov:LovText']").type("010.01")
                 .titleItems().filterBy(text("Kanunlar")).size();
