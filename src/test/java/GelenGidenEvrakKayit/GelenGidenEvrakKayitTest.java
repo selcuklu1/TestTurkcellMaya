@@ -53,6 +53,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         String ustYaziAdi = "pdf.pdf";
         String excelAdi = "test.xlsx";
 
+
         gelenEvrakKayitPage
                 .openPage()
                 .evrakBilgileriUstYaziEkle(ustYaziPath)
@@ -93,28 +94,32 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "")
+    @Test(enabled = true, description = "TC2163 : Kaydedilen gelen evrakın güncellenmesi")
     public void TC2163() throws InterruptedException {
 
         String evrakTuru = "D";
         String ustYaziPath = "C:\\Users\\Emre_Sencan\\Pictures\\Otomasyon.pdf";
         String ustYaziAdi = "Otomasyon.pdf";
         String basariMesaji = "İşlem başarılıdır!";
+        String aciklama = "Test Otomasyon";
+        String evrakTarihi = getSysDateForKis();
+        String evrakTuru2 = "Dilekçe";
 
         kaydedilenGelenEvraklarPage
                 .openPage()
                 .tabloIlkRaporIcerik();
 
-        String aciklama = "Test Otomasyon";
         gelenEvrakKayitPage
+                .evrakDetariAlanGuncellenebilirlikKontrolü()
                 .evrakBilgileriUstYaziEkle(ustYaziPath)
-                .evrakBilgileriDosyaEklemeUstYaziAdiKontrol(ustYaziAdi)
+                .evrakDetayiPdfDegisiklikpopUpClose()
+//                .evrakBilgileriDosyaEklemeUstYaziAdiKontrol(ustYaziAdi)
                 .evrakBilgileriListKonuKoduDoldur(konuKodu)
                 .evrakBilgileriListEvrakTuruSec(evrakTuru)
                 .evrakBilgileriListEvrakDiliSec(evrakDili)
                 .evrakBilgileriListEvrakTarihiDoldur(evrakTarihi)
                 .evrakBilgileriListGizlilikDerecesiSec(gizlilikDerecesi)
-                .evrakBilgileriListKisiKurumSec(kisiKurum)
+//                .evrakBilgileriListKisiKurumSec(kisiKurum)
                 .evrakBilgileriListGeldigiKurumDoldurLovText(geldigiKurum)
                 .evrakBilgileriListEvrakSayiSagDoldur()
                 .evrakBilgileriListEvrakGelisTipiSec(evrakGelisTipi)
@@ -125,8 +130,16 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .evrakDetayiEkle()
                 .evrakDetayiKaydet()
                 .islemMesaji().basariliOlmali(basariMesaji);
+        String evrakNo= gelenEvrakKayitPage
+                .evrakDetayiEvrakNoTextAl();
 
-        
+        kaydedilenGelenEvraklarPage
+                .openPage()
+                .tabloEvrakNoileIcerikSec(evrakNo);
+
+        gelenEvrakKayitPage
+                .guncellenenAlanKontrolleri(evrakTarihi,evrakTuru2,gizlilikDerecesi);
+
 
 
     }

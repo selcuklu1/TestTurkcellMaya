@@ -3,6 +3,7 @@ package pages.solMenuPages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import com.fasterxml.jackson.databind.jsontype.impl.AsExistingPropertyTypeSerializer;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
@@ -24,7 +25,7 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
     SelenideElement btnIcerikGöster = $(By.id("mainInboxForm:inboxDataTable:0:detayGosterButton"));
     SelenideElement btnTamEkranGöster = $(By.id("mainInboxForm:inboxDataTable:0:tamEkranModuButton"));
     SelenideElement tblRapor = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
-    SelenideElement tblKaydedilenGelenEvraklar = $(By.id("mainInboxForm:inboxDataTable"));
+    ElementsCollection  tblKaydedilenGelenEvraklar = $$(By.id("mainInboxForm:inboxDataTable_data"));
     SelenideElement tblIlkRapor = $(By.id("mainInboxForm:inboxDataTable:0:detayGosterButton"));
     ElementsCollection tblKaydedilenGelenEvraklar2 = $$("tbody[id$='mainInboxForm:inboxDataTable_data'] tr[role=row] div[class=searchText]");
 
@@ -98,21 +99,12 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
         return this;
     }
 
-    @Step("Alanların güncellenebilirlik kontrolü")
-    public KaydedilenGelenEvraklarPage alanGuncellenebilirlikKontrolü() {
-        txtEvrakBilgileriListKonuKodu.shouldBe(Condition.enabled);
-        txtEvrakBilgileriListKonu.shouldBe(Condition.enabled);
-        cmbEvrakBilgileriListEvrakTuru.shouldBe(Condition.enabled);
-        cmbEvrakBilgileriListEvrakDili.shouldBe(Condition.enabled);
-        dateTxtEvrakBilgileriListEvrakTarihi.shouldBe(Condition.enabled);
-        cmbEvrakBilgileriListGizlilikDerecesi.shouldBe(Condition.enabled);
-        cmbEvrakBilgileriListKisiKurum.shouldBe(Condition.enabled);
-        txtEvrakBilgileriListEvrakSayiTextAreaSag.shouldBe(Condition.enabled);
-        cmbEvrakBilgileriListGeldigiKisi.shouldBe(Condition.enabled);
-        cmbEvrakBilgileriListEvrakGelisTipi.shouldBe(Condition.enabled);
-        cmbEvrakBilgileriListIvedilik.shouldBe(Condition.enabled);
-        txtEvrakBilgileriListMiat.shouldBe(Condition.enabled);
-        txtEvrakBilgileriListAciklama.shouldBe(Condition.enabled);
+    @Step("Tabloda evrak noya göre İçerik tıklama")
+    public KaydedilenGelenEvraklarPage tabloEvrakNoileIcerikSec(String evrakNo) {
+        tblKaydedilenGelenEvraklar
+                .filterBy(Condition.text(evrakNo)).shouldHaveSize(1)
+                .first()
+                .$("[id$='detayGosterButton']").click();
         return this;
     }
 }

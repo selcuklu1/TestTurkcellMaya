@@ -9,6 +9,7 @@ import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.UstMenu;
 import pages.pageComponents.belgenetElements.BelgenetElement;
+import pages.solMenuPages.KaydedilenGelenEvraklarPage;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.executeJavaScript;
@@ -147,6 +148,10 @@ public class GelenEvrakKayitPage extends MainPage {
     SelenideElement txtEvrakDetayiAciklama = $(By.id("inboxItemInfoForm:evrakEkTabView:aciklamaTextArea"));
     SelenideElement btnEvrakDetayiEkle = $(By.id("inboxItemInfoForm:evrakEkTabView:aciklamaEkleButton"));
     SelenideElement btnEvrakDetayiKaydet = $(By.id("inboxItemInfoForm:dialogTabMenuRight:uiRepeat:3:cmdbutton"));
+    SelenideElement txtEvrakDetayiEvrakNo = $(By.id("inboxItemInfoForm:evrakBilgileriList:0:j_idt4632"));
+    SelenideElement popUpPdfDegisiklik = $(By.xpath("//div[@id='inboxItemInfoForm:ustyaziDegistirisilMiDialog']"));
+    SelenideElement btnEvrakDetayiPdfDegisiklikKabul = $(By.id("inboxItemInfoForm:ustyaziDegistirButton"));
+    SelenideElement btnEvrakDetayiKaydetUyarisi = $(By.id("kaydetConfirmForm:kaydetEvetButton"));
 
 
     //endregion
@@ -194,6 +199,7 @@ public class GelenEvrakKayitPage extends MainPage {
     }
 
     public GelenEvrakKayitPage evrakBilgileriListEvrakTarihiDoldur(String evrakTarihi) {
+        dateTxtEvrakBilgileriListEvrakTarihi.clear();
         dateTxtEvrakBilgileriListEvrakTarihi.sendKeys(evrakTarihi);
         return this;
     }
@@ -257,6 +263,7 @@ public class GelenEvrakKayitPage extends MainPage {
 
     public GelenEvrakKayitPage evrakBilgileriListEvrakSayiSagDoldur() {
         String evrakSayiSag = createRandomNumber(5);
+        txtEvrakBilgileriListEvrakSayiTextAreaSag.clear();
         txtEvrakBilgileriListEvrakSayiTextAreaSag.sendKeys(evrakSayiSag);
         return this;
     }
@@ -604,6 +611,24 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
+    @Step("Alanların güncellenebilirlik kontrolü")
+    public GelenEvrakKayitPage evrakDetariAlanGuncellenebilirlikKontrolü() {
+        txtEvrakBilgileriListKonuKodu.shouldBe(Condition.enabled);
+//        txtEvrakBilgileriListKonu.shouldBe(Condition.enabled);
+        cmbEvrakBilgileriListEvrakTuru.shouldBe(Condition.enabled);
+        cmbEvrakBilgileriListEvrakDili.shouldBe(Condition.enabled);
+        dateTxtEvrakBilgileriListEvrakTarihi.shouldBe(Condition.enabled);
+        cmbEvrakBilgileriListGizlilikDerecesi.shouldBe(Condition.enabled);
+        cmbEvrakBilgileriListKisiKurum.shouldBe(Condition.enabled);
+        txtEvrakBilgileriListEvrakSayiTextAreaSag.shouldBe(Condition.enabled);
+//        cmbEvrakBilgileriListGeldigiKisi.shouldBe(Condition.enabled);
+        cmbEvrakBilgileriListEvrakGelisTipi.shouldBe(Condition.enabled);
+        cmbEvrakBilgileriListIvedilik.shouldBe(Condition.enabled);
+//        txtEvrakBilgileriListMiat.shouldBe(Condition.enabled);
+//        txtEvrakBilgileriListAciklama.shouldBe(Condition.enabled);
+        return this;
+    }
+
     @Step("Evrak Detayi Ekleri tabı tıkla")
     public GelenEvrakKayitPage evrakDetayiEkleriTab() {
         btnevrakDetayiEvrakEkleri.click();
@@ -630,6 +655,34 @@ public class GelenEvrakKayitPage extends MainPage {
     @Step("Evrak Detayi Kaydet tıkla")
     public GelenEvrakKayitPage evrakDetayiKaydet(){
         btnEvrakDetayiKaydet.click();
+        return this;
+    }
+    @Step("Evrak Detayi EvrakNo text al")
+    public String evrakDetayiEvrakNoTextAl(){
+        return  txtEvrakDetayiEvrakNo.text();
+    }
+    @Step("Guncelleme Kontrolleri")
+    public GelenEvrakKayitPage guncellenenAlanKontrolleri(String evrakTarihi,String evrakTuru,String gizlilikDerecesi){
+        String txtEvrakTarihi = dateTxtEvrakBilgileriListEvrakTarihi.text();
+        String txtEvrakTuru = cmbEvrakBilgileriListEvrakTuru.text();
+        String txtGizlilikDerecesi = cmbEvrakBilgileriListGizlilikDerecesi.text();
+
+        Assert.assertEquals(txtEvrakTarihi,evrakTarihi);
+        Assert.assertEquals(txtEvrakTuru,evrakTuru);
+        Assert.assertEquals(txtGizlilikDerecesi,gizlilikDerecesi);
+
+        return this;
+    }
+    @Step("PopUp close")
+    public GelenEvrakKayitPage evrakDetayiPdfDegisiklikpopUpClose(){
+        popUpPdfDegisiklik.shouldBe(Condition.visible);
+        btnEvrakDetayiPdfDegisiklikKabul.click();
+        return this;
+    }
+    @Step("Evrak Detayi Kaydet PopUp Close")
+    public GelenEvrakKayitPage evrakDetayiKaydetPopUpClose(){
+        btnEvrakDetayiKaydetUyarisi.shouldBe(Condition.visible);
+        btnEvrakDetayiKaydetUyarisi.click();
         return this;
     }
 }
