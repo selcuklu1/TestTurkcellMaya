@@ -16,26 +16,32 @@ import pages.ustMenuPages.*;
 public class TuzelKisiYonetimiTest extends BaseTest {
 
     TuzelKisiYonetimiPage tuzelKisiYonetimiPage;
+    EvrakOlusturPage evrakOlusturPage;
+    GelenEvrakKayitPage gelenEvrakKayitPage;
+    GidenEvrakKayitPage gidenEvrakKayitPage;
 
     @BeforeMethod
     public void loginBeforeTests() {
         login();
         tuzelKisiYonetimiPage = new TuzelKisiYonetimiPage();
+        evrakOlusturPage = new EvrakOlusturPage();
+        gelenEvrakKayitPage = new GelenEvrakKayitPage();
+        gidenEvrakKayitPage = new GidenEvrakKayitPage();
     }
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TC1124: Yeni tüzel kişi kayıt ve ekranlardan kontrolleri")
-    public void TC1124() {
+    public void TC1124() throws InterruptedException {
 
         String vergiNo = createRandomNumber(7);
-        String ad = "Sezai Çelik Holding";
-        String kisaAd = "SCH";
+        String ad = createRandomText(7) + " holding";
+        String kisaAd = createRandomNumber(7);
         String adres = "Mecidiyeköy Mahallesi";
         String ulke = "TÜRKİYE";
         String il = "İst";
         String ilce = "Şiş";
-        String eposta = "scholding@turksat.com.tr";
-        String webAdres = "www.scholding.com";
+        String eposta = kisaAd + "holding@turksat.com.tr";
+        String webAdres = "www." + kisaAd + "holding.com";
         String telNo = "5391111111";
         String faksNo = "2121111111";
         String basariMesaji = "İşlem başarılıdır!";
@@ -63,6 +69,34 @@ public class TuzelKisiYonetimiTest extends BaseTest {
 
                 .tuzelKisiKaydet()
                 .islemMesaji().basariliOlmali(basariMesaji);
+
+        tuzelKisiYonetimiPage
+                .filtreSorgulamaPaneliAc()
+                .vergiNoDoldur(vergiNo)
+                .ara()
+                .kayitKontrolu(vergiNo, ad, kisaAd);
+
+        evrakOlusturPage
+                .openPage()
+                .geregiSecimTipiSec("T")
+                .geregiDoldur(ad)
+                .geregiDoldur(kisaAd)
+                .geregiDoldur(vergiNo);
+
+        gelenEvrakKayitPage
+                .openPage()
+                .evrakBilgileriListKisiKurumSec("T")
+                .evrakBilgileriListGeldigiKisiDoldur(ad)
+                .evrakBilgileriListGeldigiKisiDoldur(kisaAd)
+                .evrakBilgileriListGeldigiKisiDoldur(vergiNo);
+
+        gidenEvrakKayitPage
+                .openPage()
+                .geregiSecimTipiSec("T")
+                .geregiDoldur(ad)
+                .geregiDoldur(kisaAd)
+                .geregiDoldur(vergiNo);
+
 
     }
 }
