@@ -50,10 +50,10 @@ public class BaseLibrary {
                     (ExpectedCondition<Boolean>) driver -> {
                         try {
                             boolean readyState = (Boolean) executeJavaScript("return document.readyState").equals("complete");
-                            System.out.println("Internal ready state:" + readyState);
+//                            System.out.println("Internal ready state:" + readyState);
                             return readyState;
                         } catch (Exception e) {
-                            System.out.println("Internal ready state error:" + e.getMessage());
+//                            System.out.println("Internal ready state error:" + e.getMessage());
                             return true;
                         }
                     });
@@ -61,10 +61,10 @@ public class BaseLibrary {
                     (ExpectedCondition<Boolean>) driver -> {
                         try {
                             boolean jQueryActive = (Boolean) executeJavaScript("return jQuery.active == 0");
-                            System.out.println("Internal jQuery active:" + jQueryActive);
+//                            System.out.println("Internal jQuery active:" + jQueryActive);
                             return jQueryActive;
                         } catch (Exception e) {
-                            System.out.println("Internal jQuery active error:" + e.getMessage());
+//                            System.out.println("Internal jQuery active error:" + e.getMessage());
                             return true;
                         }
                     }
@@ -93,7 +93,7 @@ public class BaseLibrary {
                     }
             ));*/
         } catch (Exception e) {
-            System.out.println("WaitForJS error: " + e.getMessage());
+//            System.out.println("WaitForJS error: " + e.getMessage());
         }
 
         /*try {
@@ -134,7 +134,7 @@ public class BaseLibrary {
                     until(invisibilityOfElementLocated(By.className("loading")));
 //            System.out.println("Loading: Ok");
         } catch (Exception e) {
-            System.out.println("Loading window error: " + e.getMessage());
+//            System.out.println("Loading window error: " + e.getMessage());
         }
 //        driver.manage().timeouts().implicitlyWait(Configuration.timeout, TimeUnit.MILLISECONDS);
     }

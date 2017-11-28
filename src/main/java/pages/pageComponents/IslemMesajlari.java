@@ -1,26 +1,13 @@
 package pages.pageComponents;
 
-import com.codeborne.selenide.*;
+import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
 import io.qameta.allure.Step;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
-import java.util.concurrent.TimeUnit;
-
-import static com.codeborne.selenide.Condition.and;
-import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
-import static com.codeborne.selenide.Selenide.Wait;
-import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfElementLocated;
-import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfAllElementsLocatedBy;
-import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated;
 import static pages.pageComponents.IslemMesajlari.MessageTitle.*;
 
 public class IslemMesajlari extends BaseLibrary {
@@ -77,13 +64,13 @@ public class IslemMesajlari extends BaseLibrary {
         }
     }
 
-    @Step("Beklenen mesaj tipi \"{messageTitle.value()}\"")
+    @Step("Beklenen mesaj tipi \"{0}\"")
     public IslemMesajlari beklenenMesajTipi(MessageTitle messageTitle) {
         Assert.assertEquals(getMessageTitle(), messageTitle.value());
         return this;
     }
 
-    @Step("Beklenen mesaj \"{messageBody.value()}\"")
+    @Step("Beklenen mesaj \"{0}\"")
     public IslemMesajlari beklenenMesaj(String message) {
         Assert.assertEquals(getMessageBody(), message);
         return this;
@@ -93,7 +80,7 @@ public class IslemMesajlari extends BaseLibrary {
     public void basariliOlmali(String actualMessage) {
         Assert.assertEquals(getMessageTitle(), BASARILI.value());
         Assert.assertEquals(actualMessage, getMessageBody());
-        System.out.println("Gelen Başarı Mesajı: " + getMessageBody());
+//        System.out.println("Gelen Başarı Mesajı: " + getMessageBody());
         waitDisappear();
     }
 
@@ -101,7 +88,7 @@ public class IslemMesajlari extends BaseLibrary {
     public void uyariOlmali(String actualMessage) {
         Assert.assertEquals(getMessageTitle(), UYARI.value());
         Assert.assertEquals(actualMessage, getMessageBody());
-        System.out.println("Gelen Uyarı Mesajı: " + getMessageBody());
+//        System.out.println("Gelen Uyarı Mesajı: " + getMessageBody());
         waitDisappear();
     }
 
@@ -109,7 +96,7 @@ public class IslemMesajlari extends BaseLibrary {
     public void dikkatOlmali(String actualMessage) {
         Assert.assertEquals(getMessageTitle(), DIKKAT.value());
         Assert.assertEquals(actualMessage, getMessageBody());
-        System.out.println("Gelen Dikkat Mesajı: " + getMessageBody());
+//        System.out.println("Gelen Dikkat Mesajı: " + getMessageBody());
         waitDisappear();
     }
 
