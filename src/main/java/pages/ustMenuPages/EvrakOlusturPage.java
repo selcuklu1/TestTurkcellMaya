@@ -454,7 +454,7 @@ public class EvrakOlusturPage extends MainPage {
         }
 
         @Step("Gereği doldur")
-        public BilgilerTab geregiDoldur(String geregi) throws InterruptedException {
+        public BilgilerTab geregiDoldur(String geregi)  {
             cmbGeregi.selectLov(geregi);
             return this;
         }
@@ -654,7 +654,7 @@ public class EvrakOlusturPage extends MainPage {
         }*/
 
         @Step("Gereği alanı kontrolu başarılı")
-        public BilgilerTab geregiAlaniKontrol(String adSoyad, String unvan, String adres, String posta) {
+        public BilgilerTab gercekKisiGeregiAlaniKontrol(String adSoyad, String unvan, String adres, String posta) {
             System.out.println("Gelen title:     " + cmbGeregi.lastSelectedLovTitleText());
             System.out.println("Beklenen title:  " + adSoyad);
             System.out.println("Gelen detail:    " + cmbGeregi.lastSelectedLovDetailText());
