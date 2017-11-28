@@ -28,7 +28,7 @@ public class TuzelKisiYonetimiPage extends MainPage {
 
     //Tüzel kişi ekleme alanı
     SelenideElement cmbTuzelKisiTipi = $(By.id("tuzelKisiYonetimiEditorForm:tuzelKisiTipi"));
-    SelenideElement chkKepAdresiKullaniyor = $(By.id("tuzelKisiYonetimiEditorForm:kepAdresiKullanimCheckbox_input"));
+    SelenideElement chkKepAdresiKullaniyor = $(By.id("tuzelKisiYonetimiEditorForm:kepAdresiKullanimCheckbox"));
     SelenideElement txtVergiNo = $(By.id("tuzelKisiYonetimiEditorForm:vergiNoInput"));
     SelenideElement txtTuzelKisiAd = $(By.id("tuzelKisiYonetimiEditorForm:adInput"));
     SelenideElement txtTuzelKisiKisaAd = $(By.id("tuzelKisiYonetimiEditorForm:kisaAdInput"));
@@ -55,9 +55,10 @@ public class TuzelKisiYonetimiPage extends MainPage {
     SelenideElement btnUlkeDelete = $("    button[id^='tuzelKisiBilgileriEditorForm:lovUlke:j_idt'] span[class$='delete-icon']");
 
     SelenideElement btnKepAdresBilgileriEkle = $(By.id("tuzelKisiYonetimiEditorForm:kepBilgileriDataTable:addNewKepAdresiButton"));
-    SelenideElement txtPopupKepAdresi = $(By.id("tuzelKisiKepAdresEditorForm:tuzelKisiKepAdresInputTextId"));
+    SelenideElement txtKepAdresi = $(By.id("tuzelKisiKepAdresEditorForm:tuzelKisiKepAdresInputTextId"));
     SelenideElement cmbPopupKepHizmetSaglayicisi = $(By.id("tuzelKisiKepAdresEditorForm:kephs"));
-    SelenideElement btnPopupKaydet = $(By.id("tuzelKisiKepAdresEditorForm:saveKepAdresiButton"));
+    SelenideElement btnKepAdresKaydet = $(By.id("tuzelKisiKepAdresEditorForm:saveKepAdresiButton"));
+    SelenideElement btnKepAdresIptalEt = $(By.id("tuzelKisiKepAdresEditorForm:cancelSaveIletisimBilgisiButton"));
     SelenideElement btnGuncelle = $(By.id("tuzelKisiYonetimiListingForm:tuzelKisiDataTable:0:updateTuzelKisiButton"));
 
     //Tablo
@@ -104,8 +105,13 @@ public class TuzelKisiYonetimiPage extends MainPage {
         return this;
     }
 
-    public TuzelKisiYonetimiPage popupKaydet() {
-        btnPopupKaydet.click();
+    public TuzelKisiYonetimiPage kepAdresiKaydet() {
+        btnKepAdresKaydet.click();
+        return this;
+    }
+
+    public TuzelKisiYonetimiPage kepAdresiIptalet() {
+        btnKepAdresIptalEt.click();
         return this;
     }
 
@@ -114,8 +120,8 @@ public class TuzelKisiYonetimiPage extends MainPage {
         return this;
     }
 
-    public TuzelKisiYonetimiPage popupKepAdresiDoldur(String text) {
-        txtPopupKepAdresi.setValue(text);
+    public TuzelKisiYonetimiPage kepAdresiDoldur(String text) {
+        txtKepAdresi.setValue(text);
         return this;
     }
 
@@ -243,7 +249,7 @@ public class TuzelKisiYonetimiPage extends MainPage {
     }
 
     @Step("Tüzel kişi kayıt kontrolu")
-    public TuzelKisiYonetimiPage kayitKontrolu(String vergiNo, String ad, String kisaAd) {
+    public TuzelKisiYonetimiPage aktifKisiKayitKontrolu(String vergiNo, String ad, String kisaAd) {
 
 
         boolean statusVergiNo = findElementOnTableByColumnInputInAllPages(tblTuzelKisiDataTable, 1, vergiNo).isDisplayed();
@@ -253,6 +259,20 @@ public class TuzelKisiYonetimiPage extends MainPage {
         Assert.assertEquals(statusVergiNo, true);
         Assert.assertEquals(statusAd, true);
         Assert.assertEquals(statusKisaAd, true);
+
+        return this;
+    }
+
+    @Step("Pasif kayit kontrolu")
+    public TuzelKisiYonetimiPage pasifKisiKayitKontrolu(String vergiNo, String ad, String kisaAd) {
+
+        boolean statusTCNO = findElementOnTableByColumnInputInAllPages(tblTuzelKisiDataTable, 1, vergiNo).isDisplayed();
+        boolean statusAd = findElementOnTableByColumnInputInAllPages(tblTuzelKisiDataTable, 2, ad).isDisplayed();
+        boolean statusSoyad = findElementOnTableByColumnInputInAllPages(tblTuzelKisiDataTable, 3, kisaAd).isDisplayed();
+
+        Assert.assertEquals(statusTCNO, true);
+        Assert.assertEquals(statusAd, true);
+        Assert.assertEquals(statusSoyad, true);
 
         return this;
     }
