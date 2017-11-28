@@ -59,13 +59,13 @@ public class TuzelKisiYonetimiPage extends MainPage {
     SelenideElement cmbPopupKepHizmetSaglayicisi = $(By.id("tuzelKisiKepAdresEditorForm:kephs"));
     SelenideElement btnKepAdresKaydet = $(By.id("tuzelKisiKepAdresEditorForm:saveKepAdresiButton"));
     SelenideElement btnKepAdresIptalEt = $(By.id("tuzelKisiKepAdresEditorForm:cancelSaveIletisimBilgisiButton"));
-    SelenideElement btnGuncelle = $(By.id("tuzelKisiYonetimiListingForm:tuzelKisiDataTable:0:updateTuzelKisiButton"));
 
     //Tablo
     SelenideElement tblTuzelKisiDataTable = $(By.id("tuzelKisiYonetimiListingForm:tuzelKisiDataTable"));
     SelenideElement btnTuzelKisiAktifYap = $(By.cssSelector("[id^='tuzelKisiYonetimiListingForm:tuzelKisiDataTable'][id$='aktifEtTuzelKisi']"));
     SelenideElement btnTuzelKisiPasifYap = $(By.cssSelector("[id^='tuzelKisiYonetimiListingForm:tuzelKisiDataTable'][id$='pasifEtTuzelKisi']"));
     SelenideElement tblKayitBulunamadi = $(By.xpath("//*[@id=\"tuzelKisiYonetimiListingForm:tuzelKisiDataTable_data\"]/tr/td"));
+    SelenideElement btnTuzelisiGuncelle = $("[id^='tuzelKisiYonetimiListingForm:tuzelKisiDataTable'][id$='updateTuzelKisiButton']");
 
     //</editor-fold>
 
@@ -89,8 +89,8 @@ public class TuzelKisiYonetimiPage extends MainPage {
         return vergiNo;
     }
 
-    public TuzelKisiYonetimiPage guncelle() {
-        btnGuncelle.click();
+    public TuzelKisiYonetimiPage tuzelKisiGuncelle() {
+        btnTuzelisiGuncelle.click();
         return this;
     }
 
