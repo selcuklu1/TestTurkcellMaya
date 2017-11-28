@@ -201,16 +201,27 @@ public class ComboLovHelper extends BaseLibrary {
 
     public static boolean isLovValueSelectable(String value) {
 
+/*        WebElement weblovText = WebDriverRunner.getWebDriver().findElement(By.cssSelector(lovText));
+//        executeJavaScript("arguments[0].scrollIntoView();", weblovText);
+//
+//        if (weblovText.isDisplayed())
+//            $(lovText).setValue(value);
+//        else
+//            $(treeButton).click();*/
+
         boolean selectable = false;
 
         executeJavaScript("arguments[0].scrollIntoView();", element);
 
-        $(lovText).shouldBe(visible);
+        if ($(lovText).is(not(visible)))
+            $(lovInputTextleriTemizle).shouldBe(visible).click();
 
         if (!$(lovText).isEnabled())
             $(treeButton).click();
         else
             $(lovText).setValue(value);
+
+        $(lovText).shouldBe(visible);
 
         SelenideElement tree = $$(lovTree).last();
         tree.shouldBe(visible);
