@@ -70,6 +70,8 @@ public interface BelgenetElement extends SelenideElement {
      */
     ElementsCollection detailItems();
 
+    BelgenetElement lastSelectedLov();
+
     //endregion
 
     //region ComboBox
