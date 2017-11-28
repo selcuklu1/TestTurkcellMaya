@@ -87,7 +87,7 @@ public class TuzelKisiYonetimiTest extends BaseTest {
 
         gelenEvrakKayitPage
                 .openPage()
-                .evrakBilgileriListKisiKurumSec("T")
+                .kisiKurumSec("T")
                 .geldigiTuzelKisiDoldur(ad)
                 .secilenGeregiTuzelKisiSil()
                 .geldigiTuzelKisiDoldur(kisaAd)
@@ -266,6 +266,55 @@ public class TuzelKisiYonetimiTest extends BaseTest {
 
         tuzelKisiYonetimiPage
                 .kepAdresiIptalet();
+
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TC1126: Tüzel Kişi Bilgisi Güncelleme ve kontrolleri")
+    public void TC1126() throws InterruptedException {
+
+        String vergiNo = createRandomNumber(10);
+        String kisaAd = createRandomText(7);
+        String ad = kisaAd + " İş Çözümleri";
+        String vergiNo2 = createRandomNumber(10);
+        String kisaAd2 = createRandomText(7);
+        String ad2 = kisaAd2 + " İş Çözümleri";
+        String kepAdresi = "turksat.kamu@testkep.pttkep.gov.tr";
+        String basariMesaji = "İşlem başarılıdır!";
+
+        tuzelKisiYonetimiPage
+
+                //Data yaratmak için
+                .openPage()
+                .yeniTuzelKisiEkle()
+                .tuzelKisiTipiSec("22782")
+                .vergiNoDoldur(vergiNo)
+                .adDoldur(ad)
+                .kisaAdDoldur(kisaAd)
+                .tuzelKisiKaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        tuzelKisiYonetimiPage
+                .filtreVergiNoDoldur(vergiNo)
+                .ara()
+                .aktifKisiKayitKontrolu(vergiNo, ad, kisaAd)
+                .tuzelKisiGuncelle()
+
+                .vergiNoDoldur(vergiNo)
+                .adDoldur(ad)
+                .kisaAdDoldur(kisaAd)
+                .kepAdresiKullaniyorSec(true)
+                .kepAdresBilgileriEkle()
+                .kepAdresiDoldur(kepAdresi)
+                .kepAdresiKaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .geregiSecimTipiSec("T")
+                .geregiDoldur(ad2);
+              //  .geregiAlaniKontrol(ad2, unvan2, adres, postaTipi);
 
     }
 }

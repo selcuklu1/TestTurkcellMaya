@@ -154,7 +154,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
         tuzelKisiYonetimiPage
                 .openPage()
                 .ara()
-                .guncelle()
+                .tuzelKisiGuncelle()
                 .kepAdresiKullaniyorSec(true)
                 .kepAdresBilgileriEkle()
                 .kepAdresiDoldur(popupKepAdresi)

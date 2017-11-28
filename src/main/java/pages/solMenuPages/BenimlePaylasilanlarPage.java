@@ -23,8 +23,9 @@ public class BenimlePaylasilanlarPage extends MainPage {
     // Evrak Notları elementleri
     SelenideElement btnEvratNotEkle = $("button[id$=':paylasimNotuEkleId']");
     SelenideElement divFiltrelePanel = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion"));
-
-
+    SelenideElement txtEvrakNotu = $(By.id("evrakKisiselNotDialogFormId:evrakKisiselNotAciklamaid"));
+    SelenideElement btnEvrakNotuPanelIptal = $(By.id("evrakKisiselNotDialogFormId:evrakKisiselNotIptal"));
+    SelenideElement btnEvrakNotuKaydet = $(By.id("evrakKisiselNotDialogFormId:paylasimNotKaydet"));
 
     @Step("Benimle Paylaşılanlar sayfasını aç")
     public BenimlePaylasilanlarPage openPage() {
@@ -51,6 +52,19 @@ public class BenimlePaylasilanlarPage extends MainPage {
     public BenimlePaylasilanlarPage evrakSec(String paylasan) {
         tableBenimlePaylasilanlar
                 .filterBy(Condition.text("Paylaşan: " + paylasan))
+                .get(0)
+                .click();
+        return this;
+    }
+
+
+    @Step("Benimle paylaşılanlar tablosundan evrak seçildi")
+    public BenimlePaylasilanlarPage evrakSec(String paylasan, String paylasilmaTarihi, String konu, String evrakNo) {
+        tableBenimlePaylasilanlar
+                .filterBy(Condition.text("Paylaşan: " + paylasan))
+                .filterBy(Condition.text("Paylaşılma Tarihi: " + paylasilmaTarihi))
+                .filterBy(Condition.text("Konu: " + konu))
+                .filterBy(Condition.text("Evrak No: " + evrakNo))
                 .get(0)
                 .click();
         return this;
@@ -90,6 +104,25 @@ public class BenimlePaylasilanlarPage extends MainPage {
                     .shouldNotBe(Condition.exist);
         }
 
+        return this;
+    }
+
+    @Step("Evraka not ekle butonuna tiklandi.")
+    public BenimlePaylasilanlarPage evrakNotuEkle() {
+        btnEvratNotEkle.click();
+        return this;
+    }
+
+    @Step("evrak notu eklendi: \"{0}\" ")
+    public BenimlePaylasilanlarPage evrakNotuGirVeKaydet(String evrakNotu) {
+        txtEvrakNotu.setValue(evrakNotu);
+        btnEvrakNotuKaydet.click();
+        return this;
+    }
+
+    @Step("Evrak notu ekleme panelinde iptal butonuna tıklandı.")
+    public BenimlePaylasilanlarPage evrakNotuPanelIptalButonuTikla() {
+        btnEvrakNotuPanelIptal.click();
         return this;
     }
 
