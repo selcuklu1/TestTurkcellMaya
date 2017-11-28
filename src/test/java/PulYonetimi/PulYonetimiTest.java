@@ -7,6 +7,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.MainPage;
 import pages.solMenuPages.PostaListesiPage;
+import pages.solMenuPages.PostalanacakEvraklarPage;
 import pages.ustMenuPages.PulYonetimiPage;
 
 /****************************************************
@@ -19,12 +20,14 @@ public class PulYonetimiTest extends BaseTest {
     MainPage mainPage;
     PulYonetimiPage pulYonetimiPage;
     PostaListesiPage postaListesiPage;
+    PostalanacakEvraklarPage postalanacakEvraklarPage;
 
     @BeforeMethod
     public void loginBeforeTests() {
         pulYonetimiPage = new PulYonetimiPage();
         postaListesiPage = new PostaListesiPage();
-        login("yakyol","123");
+        postalanacakEvraklarPage = new PostalanacakEvraklarPage();
+        login("yakyol", "123");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -73,29 +76,59 @@ public class PulYonetimiTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "Pul yönetimi ekranındaki tanımın posta listesinde kontrolü")
-    public void TC2215() throws InterruptedException{
+    public void TC2215() throws InterruptedException {
 
+        String postaListesi = "optiim";
+        String gidisSekli = "Ankara İçi APS";
+        String gramaj = "1";
+        String indirimOrani = "20";
+        String gramaj1 = "3";
+        String gramaj2 = "5";
+        String tutar = "120";
         postaListesiPage
                 .openPage()
                 .filtreleAc()
-                .postaListesiDoldur("optiim")
+                .postaListesiDoldur(postaListesi)
                 .tablodanIlkRowSec()
                 .postaListesiPostala()
+                .alanKontrolu()
+                .gidisSekliSec(gidisSekli)
+                .gramajDoldur(gramaj)
 //                .alanKontrolu()
 //                .gidisSekliSec("Ankara İçi APS")
                 .gramajDoldur("1")
                 .tutarHesapla()
 //        ekranda gelen bilgilerin kontrolü
-        .indirimOraniDoldur("20")
-                .gramajDoldur("3")
+                .indirimOraniDoldur(indirimOrani)
+                .gramajDoldur(gramaj1)
                 .tutarHesapla()
-                .gramajDoldur("5")
+                .gramajDoldur(gramaj2)
                 .tutarHesapla()
-                .tutarDoldur("120");
+                .tutarDoldur(tutar);
 //                .postaDetayiPostala();
 //        alan kontrolleri için mail atıldı.
 
+    }
 
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TC2214 : Pul yönetimi ekranındaki tanımın postalanacaklar listesinde kontrolü")
+    public void TC2214() throws InterruptedException {
+
+        postalanacakEvraklarPage
+                .openPage()
+                .postaDetayi()
+                .gonderilenYerDetay()
+                .gidisSekli("Ankara İçi APS")
+                .gramajDoldur("1")
+                .tamam()
+                .gramajDoldur("3")
+                .hesapla()
+                .gramajDoldur("5")
+                .hesapla()
+                .tutarDoldur("120");
+//        Postala butonu mevcut değil
     }
 
 }
+
+

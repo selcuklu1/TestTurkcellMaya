@@ -12,6 +12,8 @@ import pages.solMenuPages.TeslimAlinmayiBekleyenlerPage;
 import pages.ustMenuPages.GelenEvrakKayitPage;
 import pages.ustMenuPages.KaydedilenGelenEvrakPage;
 
+import java.io.IOException;
+
 public class GelenGidenEvrakKayitTest extends BaseTest {
     MainPage mainPage;
     GelenEvrakKayitPage gelenEvrakKayitPage;
@@ -40,7 +42,8 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         kaydedilenGelenEvrakPage = new KaydedilenGelenEvrakPage();
         kaydedilenGelenEvraklarPage = new KaydedilenGelenEvraklarPage();
         birimHavaleEdilenlerPage = new BirimHavaleEdilenlerPage();
-        login("optiim","Avis1111");
+        login("optiim", "Avis1111");
+//        login("ztekin", "123");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -53,28 +56,32 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         String ustYaziAdi = "pdf.pdf";
         String excelAdi = "test.xlsx";
 
+
         gelenEvrakKayitPage
                 .openPage()
                 .evrakBilgileriUstYaziEkle(ustYaziPath)
-                .evrakBilgileriDosyaEklemeUstYaziAdiKontrol(ustYaziAdi)
-                .evrakBilgileriListKonuKoduDoldur(konuKodu)
-                .evrakBilgileriListEvrakTuruSec(evrakTuru)
-                .evrakBilgileriListEvrakDiliSec(evrakDili)
-                .evrakBilgileriListEvrakTarihiDoldur(evrakTarihi)
-                .evrakBilgileriListGizlilikDerecesiSec(gizlilikDerecesi)
-                .evrakBilgileriListKisiKurumSec(kisiKurum)
-                .evrakBilgileriListGeldigiKurumDoldurLovText(geldigiKurum)
-                .evrakBilgileriListEvrakSayiSagDoldur()
-                .evrakBilgileriListEvrakGelisTipiSec(evrakGelisTipi)
-                .evrakBilgileriListIvedilikSec(ivedilik)
-                .evrakBilgileriEkBilgiFiltreAc()
-                .evrakBilgileriDosyaEkleme(excelPath)
-                .evrakBilgileriDosyaEklemeDosyaAdiKontrol(excelAdi)
-                .evrakBilgileriDosyaEklemeAciklamaDoldur(ekMetni)
+                .UstYaziAdiKontrol(ustYaziAdi)
+                .islemMesaji().isBasarili();
+
+        gelenEvrakKayitPage
+                .konuKoduDoldur(konuKodu)
+                .evrakTuruSec(evrakTuru)
+                .evrakDiliSec(evrakDili)
+                .evrakTarihiDoldur(evrakTarihi)
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .kisiKurumSec(kisiKurum)
+                .geldigiKurumDoldurLovText(geldigiKurum)
+                .evrakSayiSagDoldur()
+                .evrakGelisTipiSec(evrakGelisTipi)
+                .ivedilikSec(ivedilik)
+                .ekBilgiFiltreAc()
+                .evrakEkleriDosyaEkleme(excelPath)
+                .evrakEkleriDosyaEkleDosyaAdiKontrol(excelAdi)
+                .evrakEkleriDosyaEkleEkMetinDoldur(ekMetni)
                 .evrakEkTabViewEkle()
-                .evrakBilgileriEkBilgiFizikselEkEkle()
-                .evrakEkTabViewFizikselEkMetniDoldur(ekMetni)
-                .evrakFizikselEkTabViewAciklamaEkle()
+                .ekBilgiFizikselEkEkle()
+                .evrakEkTabFizikselEkMetniDoldur(ekMetni)
+                .fizikselEkTabViewAciklamaEkle()
                 .kaydet();
 
         evrakNO321 = gelenEvrakKayitPage.popUps();
@@ -90,6 +97,56 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TC2163 : Kaydedilen gelen evrakın güncellenmesi")
+    public void TC2163() throws InterruptedException {
+
+        String evrakTuru = "D";
+        String ustYaziPath = "C:\\Users\\Emre_Sencan\\Pictures\\Otomasyon.pdf";
+        String ustYaziAdi = "Otomasyon.pdf";
+        String basariMesaji = "İşlem başarılıdır!";
+        String aciklama = "Test Otomasyon";
+        String evrakTarihi = getSysDateForKis();
+        String evrakTuru2 = "Dilekçe";
+
+        kaydedilenGelenEvraklarPage
+                .openPage()
+                .tabloIlkRaporIcerik();
+
+        String evrakNo= gelenEvrakKayitPage
+                .evrakDetayiEvrakNoTextAl();
+
+        gelenEvrakKayitPage
+                .evrakDetaylariAlanGuncellenebilirlikKontrolü()
+                .evrakBilgileriUstYaziEkle(ustYaziPath)
+                .evrakDetayiPdfDegisiklikpopUpClose()
+//                .UstYaziAdiKontrol(ustYaziAdi)
+                .konuKoduDoldur(konuKodu)
+                .evrakTuruSec(evrakTuru)
+                .evrakDiliSec(evrakDili)
+                .evrakTarihiDoldur(evrakTarihi)
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .kisiKurumSec(kisiKurum)
+                .geldigiKurumDoldurLovText(geldigiKurum)
+                .evrakSayiSagDoldur()
+                .evrakGelisTipiSec(evrakGelisTipi)
+                .ivedilikSec(ivedilik)
+                .evrakDetayiEkleriTab()
+                .evrakDetayiFizikselEkEkleTab()
+                .evrakDetayiAciklamaDoldur(aciklama)
+                .evrakDetayiEkle()
+                .evrakDetayiKaydet()
+                .evrakDetayiKaydetPopUpClose()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        kaydedilenGelenEvraklarPage
+                .openPage()
+                .tabloEvrakNoileIcerikSec(evrakNo);
+
+        gelenEvrakKayitPage
+                .guncellenenAlanKontrolleri(evrakTarihi,evrakTuru,gizlilikDerecesi);
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TC0328 : Gelen evrak kayıt ekranından havale")
     public void TC0328() throws InterruptedException {
 
@@ -98,16 +155,16 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         gelenEvrakKayitPage
                 .openPage()
 //                .evrakBilgileriUstYaziEkle("C:\\Users\\Emre_Sencan\\Pictures\\pdf.pdf")
-                .evrakBilgileriListKonuKoduDoldur(konuKodu)
-                .evrakBilgileriListEvrakTuruSec(evrakTuru)
-                .evrakBilgileriListEvrakDiliSec(evrakDili)
-                .evrakBilgileriListEvrakTarihiDoldur(evrakTarihi)
-                .evrakBilgileriListGizlilikDerecesiSec(gizlilikDerecesi)
-                .evrakBilgileriListKisiKurumSec(kisiKurum)
-                .evrakBilgileriListGeldigiKurumDoldurLovText(geldigiKurum)
-                .evrakBilgileriListEvrakSayiSagDoldur()
-                .evrakBilgileriListEvrakGelisTipiSec(evrakGelisTipi)
-                .evrakBilgileriListIvedilikSec(ivedilik)
+                .konuKoduDoldur(konuKodu)
+                .evrakTuruSec(evrakTuru)
+                .evrakDiliSec(evrakDili)
+                .evrakTarihiDoldur(evrakTarihi)
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .kisiKurumSec(kisiKurum)
+                .geldigiKurumDoldurLovText(geldigiKurum)
+                .evrakSayiSagDoldur()
+                .evrakGelisTipiSec(evrakGelisTipi)
+                .ivedilikSec(ivedilik)
                 .dagitimBilgileriBirimDoldur(birim)
                 .kaydet();
         evrakNO328 = gelenEvrakKayitPage.popUps();
@@ -130,14 +187,16 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TC1401 : Kaydedilen Gelen Evrak raporu")
-    public void TC1401() throws InterruptedException {
+    public void TC1401() throws InterruptedException, IOException {
 
 
         String evrakNo = evrakNO321;
         String evrakNo1 = evrakNO328;
         String geldigiYer = "D";
         kaydedilenGelenEvrakPage
+                .raporAlExcel()
                 .openPage()
+
                 .gelenEvrakNoDoldur("4985")
                 .sorgula()
                 .tabloKontrolu("4985")
@@ -159,13 +218,13 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
         gelenEvrakKayitPage
                 .openPage()
-                .evrakBilgileriListKisiKurumSec("G")
-                .evrakBilgileriGeldigiKisiEkle()
-                .IletisimBilgisiTCKNEkle(TCKN)
-                .IletisimBilgisiTCKNAra()
-//                .IletisimBilgisiAdDoldur("Test")
-//                .IletisimBilgisiSoyadDoldur("Otomasyon")
-                .IletisimBilgisikaydet();
+                .kisiKurumSec("G")
+                .geldigiKisiEkle()
+                .iletisimBilgisiTCKNEkle()
+                .iletisimBilgisiTCKNAra()
+                .iletisimBilgisiAdDoldur("Test")
+                .iletisimBilgisiSoyadDoldur("Otomasyon")
+                .iletisimBilgisikaydet();
 //        Gerçek kişi yönetimi ekranında yeni kaydı kontrol et
 
     }
@@ -179,19 +238,19 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         gelenEvrakKayitPage
                 .openPage()
                 .evrakBilgileriUstYaziEkle("C:\\Users\\Emre_Sencan\\Pictures\\mailt.msg")
-                .evrakBilgileriListKonuKoduDoldur(konuKodu)
-                .evrakBilgileriListEvrakTuruSec(evrakTuru)
-                .evrakBilgileriListEvrakDiliSec(evrakDili)
-                .evrakBilgileriListEvrakTarihiDoldur(evrakTarihi)
-                .evrakBilgileriListGizlilikDerecesiSec(gizlilikDerecesi)
-                .evrakBilgileriListKisiKurumSec(kisiKurum)
-                .evrakBilgileriListGeldigiKurumDoldurLovText(geldigiKurum)
-                .evrakBilgileriListEvrakSayiSagDoldur()
-                .evrakBilgileriListEvrakGelisTipiSec(evrakGelisTipi)
-                .evrakBilgileriListIvedilikSec(ivedilik)
-                .evrakBilgileriEkBilgiFiltreAc()
+                .konuKoduDoldur(konuKodu)
+                .evrakTuruSec(evrakTuru)
+                .evrakDiliSec(evrakDili)
+                .evrakTarihiDoldur(evrakTarihi)
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .kisiKurumSec(kisiKurum)
+                .geldigiKurumDoldurLovText(geldigiKurum)
+                .evrakSayiSagDoldur()
+                .evrakGelisTipiSec(evrakGelisTipi)
+                .ivedilikSec(ivedilik)
+                .ekBilgiFiltreAc()
                 .evrakEkTabViewEkle()
-                .evrakBilgileriDosyaEkleme("C:\\Users\\Emre_Sencan\\Pictures\\test.xlsx")
+                .evrakEkleriDosyaEkleme("C:\\Users\\Emre_Sencan\\Pictures\\test.xlsx")
                 .kaydet();
         String evrakNo = gelenEvrakKayitPage.popUps();
         //   page.islemMesaji().beklenenMesajTipi(MesajTipi.BASARILI);

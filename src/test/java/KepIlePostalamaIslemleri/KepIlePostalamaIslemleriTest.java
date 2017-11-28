@@ -114,9 +114,9 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
                 .guncelle()
                 .kepAdresiKullaniyorSec(true)
                 .kepAdresBilgileriEkle()
-                .popupKepAdresiDoldur(popupKepAdresi)
+                .kepAdresiDoldur(popupKepAdresi)
                 .kepHizmetSaglayicisiSec(popupKepHizmetSaglayicisiSec)
-                .popupKaydet()
+                .kepAdresiKaydet()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
         String vergiNo = tuzelKisiYonetimiPage.vergiNoCek();
