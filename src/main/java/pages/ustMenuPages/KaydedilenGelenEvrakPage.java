@@ -27,8 +27,8 @@ public class KaydedilenGelenEvrakPage extends MainPage {
     BelgenetElement cmbBirim = comboLov(By.id("birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuBirimLovId:j_idt126"));
     SelenideElement txtEvrakKayitNo = $(By.id("birimeGelenEvrakRaporuForm:evrakNoId"));
     SelenideElement btnSorgula = $(By.id("birimeGelenEvrakRaporuForm:sorgulaButton"));
-    SelenideElement btnRaporAlExcel = $(By.id("birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable:j_idt19593"));
-    SelenideElement btnRaporAlPdf = $(By.id("birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable:j_idt22373"));
+    SelenideElement btnRaporAlExcel = $(By.id("birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable:j_idt15891"));
+    SelenideElement btnRaporAlPdf = $(By.id("birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable:j_idt15889"));
     SelenideElement tblKaydedilenGelenEvrak = $(By.id("birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable_data"));
     SelenideElement tbldene = $(By.xpath("//tbody[@id='birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable_data']/tr/td[2]/div"));
 
@@ -64,8 +64,8 @@ public class KaydedilenGelenEvrakPage extends MainPage {
     @Step("Rapor al Excel")
     public KaydedilenGelenEvrakPage raporAlExcel() throws IOException {
 
-//        deleteFile("C:\\Users\\Emre_Sencan\\Downloads\\");
-//        isFileDownloaded2("C:\\Users\\Emre_Sencan\\Downloads\\","Rapor_.xls");
+        deleteFile("C:\\Users\\Emre_Sencan\\Downloads\\");
+        searchDownloadedFileWithName("C:\\Users\\Emre_Sencan\\Downloads\\","Rapor_.xls");
         btnRaporAlExcel.click();
         return this;
     }
@@ -94,7 +94,7 @@ public class KaydedilenGelenEvrakPage extends MainPage {
     }
 
     //Dosyanın bilgisayara inip inmediğini kontrol eder.
-    public boolean isFileDownloaded2(String downloadPath, String fileName) {
+    public boolean searchDownloadedFileWithName(String downloadPath, String fileName) {
         boolean flag = false;
         File dir = new File(downloadPath);
         File[] dir_contents = dir.listFiles();
@@ -121,9 +121,10 @@ public class KaydedilenGelenEvrakPage extends MainPage {
     }
 
     @Step("Rapor al PDF")
-    public KaydedilenGelenEvrakPage raporAlPdf() {
+    public KaydedilenGelenEvrakPage raporAlPdf() throws IOException {
+        deleteFile("C:\\Users\\Emre_Sencan\\Downloads\\");
+        searchDownloadedFileWithName("C:\\Users\\Emre_Sencan\\Downloads\\","Rapor_.pdf");
         btnRaporAlPdf.click();
-        confirm();
         return this;
     }
 

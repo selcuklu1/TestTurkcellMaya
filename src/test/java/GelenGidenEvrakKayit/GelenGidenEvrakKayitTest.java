@@ -42,7 +42,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         kaydedilenGelenEvrakPage = new KaydedilenGelenEvrakPage();
         kaydedilenGelenEvraklarPage = new KaydedilenGelenEvraklarPage();
         birimHavaleEdilenlerPage = new BirimHavaleEdilenlerPage();
-//        login("optiim", "Avis1111");
+        login("optiim", "Avis1111");
 //        login("ztekin", "123");
     }
 
@@ -112,7 +112,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .openPage()
                 .tabloIlkRaporIcerik();
 
-        String evrakNo= gelenEvrakKayitPage
+        String evrakNo = gelenEvrakKayitPage
                 .evrakDetayiEvrakNoTextAl();
 
         gelenEvrakKayitPage
@@ -143,7 +143,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .tabloEvrakNoileIcerikSec(evrakNo);
 
         gelenEvrakKayitPage
-                .guncellenenAlanKontrolleri(evrakTarihi,evrakTuru,gizlilikDerecesi);
+                .guncellenenAlanKontrolleri(evrakTarihi, evrakTuru, gizlilikDerecesi);
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -189,24 +189,28 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     @Test(enabled = true, description = "TC1401 : Kaydedilen Gelen Evrak raporu")
     public void TC1401() throws InterruptedException, IOException {
 
-
+        String basariMesaji = "İşlem başarılıdır!";
         String evrakNo = evrakNO321;
         String evrakNo1 = evrakNO328;
         String geldigiYer = "D";
 
         kaydedilenGelenEvrakPage
                 .openPage()
-                .gelenEvrakNoDoldur("4985")
+                .gelenEvrakNoDoldur("4998")
                 .sorgula()
-                .tabloKontrolu("4985")
-                .raporAlExcel()
-
+                .tabloKontrolu("4998")
+                .raporAlExcel();
+//                .islemMesaji().basariliOlmali(basariMesaji);
+        Thread.sleep(3000);
+        kaydedilenGelenEvrakPage
                 .txtClear()
-                .gelenEvrakNoDoldur("4985")
+                .gelenEvrakNoDoldur("4999")
                 .sorgula()
                 .geldigiYerSec(geldigiYer)
-                .sorgula();
-//                .raporAlExcel();  pop upta ok butonuna basılacak
+                .sorgula()
+                .tabloKontrolu("4999")
+                .raporAlPdf();
+//                .islemMesaji().basariliOlmali(basariMesaji);
     }
 
     @Severity(SeverityLevel.CRITICAL)
