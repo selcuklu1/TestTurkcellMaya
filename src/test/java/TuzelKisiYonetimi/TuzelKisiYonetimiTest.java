@@ -268,4 +268,10 @@ public class TuzelKisiYonetimiTest extends BaseTest {
                 .kepAdresiIptalet();
 
     }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TC1126: Tüzel Kişi Bilgisi Güncelleme ve kontrolleri")
+    public void TC1126() {
+
+    }
 }
