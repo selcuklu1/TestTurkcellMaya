@@ -34,10 +34,14 @@ public class BaseTest extends BaseLibrary {
  //       Configuration.browser = "marionette";
  //       Configuration.browser = "chrome";
         //Configuration.browser = "marionette";
+<<<<<<< HEAD
+        //Configuration.browser = "chrome";
+=======
      //   Configuration.browser = "chrome";
+>>>>>>> b8bcd2bf578d5da7e45cfd02605b7550f193e5f2
         //Configuration.browser = "marionette";
 
-//        Configuration.browser = "drivers.Firefox"; //
+        Configuration.browser = "drivers.Firefox";
         //"org.openqa.selenium.Firefox.FirefoxDriver";
         Configuration.reportsFolder = "test-result/reports";
         Configuration.screenshots = false;
