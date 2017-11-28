@@ -20,13 +20,12 @@ public class BirimIcerikSablonuTest extends BaseTest {
 
     @BeforeMethod
     public void setUp() {
-        birimIcerikSablonlarPage = new BirimIcerikSablonlarPage();
         login();
+        birimIcerikSablonlarPage = new BirimIcerikSablonlarPage();
     }
 
     @Test(description = "Alan Kontrolleri")
-    public void tc1084a() throws Exception {
-
+    public void tc1084a() {
         birimIcerikSablonlarPage
                 .openPage()
                 .alanlarinAktifDurumKontrol()
