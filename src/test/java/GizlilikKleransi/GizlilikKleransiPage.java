@@ -8,7 +8,6 @@ import org.testng.annotations.Test;
 import pages.MainPage;
 import pages.ustMenuPages.GelenEvrakKayitPage;
 import pages.ustMenuPages.KullaniciYonetimiPage;
-import pages.ustMenuPages.PulYonetimiPage;
 
 /****************************************************
  * Tarih: 2017-12-22
@@ -78,16 +77,16 @@ public class GizlilikKleransiPage extends BaseTest {
         String aciklama = "test otomasyon";
         gelenEvrakKayitPage
                 .openPage()
-                .evrakBilgileriListKonuKoduDoldur(konuKodu)
-                .evrakBilgileriListEvrakTuruSec(evrakTuru)
-                .evrakBilgileriListEvrakDiliSec(evrakDili)
-                .evrakBilgileriListEvrakTarihiDoldur(evrakTarihi)
-                .evrakBilgileriListGizlilikDerecesiSec(gizlilikDerecesi)
-                .evrakBilgileriListKisiKurumSec(kisiKurum)
-                .evrakBilgileriListGeldigiKurumDoldurLovText(geldigiKurum)
-                .evrakBilgileriListEvrakSayiSagDoldur()
-                .evrakBilgileriListEvrakGelisTipiSec(evrakGelisTipi)
-                .evrakBilgileriListIvedilikSec(ivedilik)
+                .konuKoduDoldur(konuKodu)
+                .evrakTuruSec(evrakTuru)
+                .evrakDiliSec(evrakDili)
+                .evrakTarihiDoldur(evrakTarihi)
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .kisiKurumSec(kisiKurum)
+                .geldigiKurumDoldurLovText(geldigiKurum)
+                .evrakSayiSagDoldur()
+                .evrakGelisTipiSec(evrakGelisTipi)
+                .ivedilikSec(ivedilik)
                 .dagitimBilgileriKisiDoldur(kisi)
                 .dagitimBilgileriAciklamaDoldur(aciklama)
                 .kaydet();

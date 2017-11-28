@@ -73,7 +73,7 @@ public class PaylastiklarimPage extends MainPage {
 
     // yeniler
 
-    @Step("\"{paylasilanKullanici}\" evrakını seç ")
+    @Step("\"{0}\" evrakını seç ")
     public PaylastiklarimPage evrakSec(String paylasilanKullanici) {
         tablePaylastiklarim
                 .filterBy(Condition.text("Paylaşılanlar: " + paylasilanKullanici))
@@ -98,7 +98,7 @@ public class PaylastiklarimPage extends MainPage {
         return this;
     }
 
-    @Step("\"{tabAdi}\" tabını seç")
+    @Step("\"{0}\" tabını seç")
     public PaylastiklarimPage evrakOnizlemeTabSec(String tabAdi) {
 
         tabEvrakOnizleme
@@ -119,7 +119,7 @@ public class PaylastiklarimPage extends MainPage {
     }
 
     // Evrak notları fonksiyonları
-    @Step("Evrak ekleme butonu aktif olmalı mı? : {aktifOlmali} ")
+    @Step("Evrak ekleme butonu aktif olmalı mı? : \"{0}\" ")
     public PaylastiklarimPage evrakNotEklemeButonuAktifOlmali(boolean aktifOlmali) {
         if(aktifOlmali == true)
             btnEvratNotEkle.shouldHave(Condition.attribute("aria-disabled", "false"));
@@ -129,7 +129,7 @@ public class PaylastiklarimPage extends MainPage {
     }
 
 
-    @Step("Paylaşımdan geri al tabına tıklandı.")
+    @Step("Paylaşımdan geri al tabına tıklandı. ")
     public PaylastiklarimPage paylasimdanGeriAlTabSec() {
         btnPaylasimdanGeriAl.click();
         return this;
@@ -176,13 +176,13 @@ public class PaylastiklarimPage extends MainPage {
     }
 
 
-    @Step("Paylaşılacak kişi seç: \"{kisiAdi}\" ")
+    @Step("Paylaşılacak kişi seç: \"{0}\" ")
     public PaylastiklarimPage paylasKisiSec(String kisiAdi) {
         txtPaylasKisi.selectLov(kisiAdi);
         return this;
     }
 
-    @Step("Paylaşma tabında açıklama girildi : \"{aciklama}\"")
+    @Step("Paylaşma tabında açıklama girildi : \"{0}\"")
     public PaylastiklarimPage paylasimAciklamaYaz(String aciklama) {
         txtPaylasAciklama.setValue(aciklama);
         return this;

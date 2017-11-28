@@ -33,9 +33,9 @@ public class TuzelKisiYonetimiTest extends BaseTest {
     @Test(enabled = true, description = "TC1124: Yeni tüzel kişi kayıt ve ekranlardan kontrolleri")
     public void TC1124() throws InterruptedException {
 
-        String vergiNo = createRandomNumber(7);
-        String ad = createRandomText(7) + " holding";
-        String kisaAd = createRandomNumber(7);
+        String vergiNo = createRandomNumber(10);
+        String kisaAd = createRandomText(7);
+        String ad = kisaAd + " holding";
         String adres = "Mecidiyeköy Mahallesi";
         String ulke = "TÜRKİYE";
         String il = "İst";
@@ -71,33 +71,250 @@ public class TuzelKisiYonetimiTest extends BaseTest {
                 .islemMesaji().basariliOlmali(basariMesaji);
 
         tuzelKisiYonetimiPage
-                .filtreSorgulamaPaneliAc()
-                .vergiNoDoldur(vergiNo)
+                .filtreVergiNoDoldur(vergiNo)
                 .ara()
-                .kayitKontrolu(vergiNo, ad, kisaAd);
+                .aktifKisiKayitKontrolu(vergiNo, ad, kisaAd);
 
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
-                    .geregiSecimTipiSec("T")
-                    .geregiDoldur(ad)
-                    .geregiDoldur(kisaAd)
-                    .geregiDoldur(vergiNo);
+                .geregiSecimTipiSec("T")
+                .geregiDoldur(ad)
+                .secilenGeregiSil()
+                .geregiDoldur(kisaAd)
+                .secilenGeregiSil()
+                .geregiDoldur(vergiNo);
 
         gelenEvrakKayitPage
                 .openPage()
-                .evrakBilgileriListKisiKurumSec("T")
-                .evrakBilgileriListGeldigiKisiDoldur(ad)
-                .evrakBilgileriListGeldigiKisiDoldur(kisaAd)
-                .evrakBilgileriListGeldigiKisiDoldur(vergiNo);
+                .kisiKurumSec("T")
+                .geldigiTuzelKisiDoldur(ad)
+                .secilenGeregiTuzelKisiSil()
+                .geldigiTuzelKisiDoldur(kisaAd)
+                .secilenGeregiTuzelKisiSil()
+                .geldigiTuzelKisiDoldur(vergiNo);
 
         gidenEvrakKayitPage
                 .openPage()
                 .geregiSecimTipiSec("T")
                 .geregiDoldur(ad)
+                .secilenGeregiSil()
                 .geregiDoldur(kisaAd)
+                .secilenGeregiSil()
                 .geregiDoldur(vergiNo);
+    }
 
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TC1133: Tüzel kişi sorgulama")
+    public void TC1133() throws InterruptedException {
+
+        String vergiNo = "8524567913";
+        String ad = "Türksat Optiim";
+        String kisaAd = "trkstopttm";
+
+        tuzelKisiYonetimiPage
+                //Step num: 2
+                .openPage()
+                .filtreDurumSec("AKTIFLER")
+                .ara()
+                .aktiflerTumListeKayitKontrolu()
+
+                //Step num: 3
+                .filtreSorgulamaPaneliAc()
+                .filtreDurumSec("PASIFLER")
+                .ara()
+                .pasiflerTumListeKayitKontrolu()
+
+                //Step num: 4
+                //Data pasif ise, aktif yapılır.
+                .filtreSorgulamaPaneliAc()
+                .filtreAdDoldur(ad)
+                .filtreDurumSec("TUMU")
+                .ara()
+                .tuzelKisiPasifIseAktifYap()
+                .filtreSorgulamaPaneliAc()
+                .filtreDurumSec("AKTIFLER")
+                .ara()
+                .aktifKisiKayitKontrolu(vergiNo, ad, kisaAd)
+
+                //Step num: 6
+                .filtreSorgulamaPaneliAc()
+                .filtreAdDoldur(ad)
+                .filtreDurumSec("PASIFLER")
+                .ara()
+                .kayitBulunamadiKontrolu()
+
+                //Step num: 8
+                .filtreSorgulamaPaneliAc()
+                .filtreVergiNoDoldur(vergiNo)
+                .filtreDurumSec("AKTIFLER")
+                .ara()
+                .aktifKisiKayitKontrolu(vergiNo, ad, kisaAd)
+
+                //Step num: 10
+                .filtreSorgulamaPaneliAc()
+                .filtreVergiNoDoldur(vergiNo)
+                .filtreDurumSec("PASIFLER")
+                .ara()
+                .kayitBulunamadiKontrolu()
+
+                //Step num: 5
+                //Data aktif ise, pasif yapılır.
+                .filtreSorgulamaPaneliAc()
+                .filtreAdDoldur(ad)
+                .filtreDurumSec("TUMU")
+                .ara()
+                .tuzelKisiAktifIsePasifYap()
+                .filtreSorgulamaPaneliAc()
+                .filtreAdDoldur(ad)
+                .filtreDurumSec("PASIFLER")
+                .ara()
+                .pasifKisiKayitKontrolu(vergiNo, ad, kisaAd)
+
+                //Step num: 7
+                .filtreSorgulamaPaneliAc()
+                .filtreAdDoldur(ad)
+                .filtreDurumSec("AKTIFLER")
+                .ara()
+                .kayitBulunamadiKontrolu()
+
+                //Step num: 9
+                .filtreSorgulamaPaneliAc()
+                .filtreVergiNoDoldur(vergiNo)
+                .filtreDurumSec("PASIFLER")
+                .ara()
+                .pasifKisiKayitKontrolu(vergiNo, ad, kisaAd)
+
+                //Step num: 11
+                .filtreSorgulamaPaneliAc()
+                .filtreVergiNoDoldur(vergiNo)
+                .filtreDurumSec("AKTIFLER")
+                .ara()
+                .kayitBulunamadiKontrolu();
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TC1460: Yeni tüzel kişi kayıtta alan kontrolleri")
+    public void TC1460() {
+
+        String vergiNo = createRandomNumber(10);
+        String kisaAd = createRandomText(7);
+        String ad = kisaAd + " holding";
+        String adres = "Gültepe Mahallesi";
+        String ulke = "TÜRKİYE";
+        String il = "İstanbul";
+        String ilce = "Kağıthane";
+        String eposta = kisaAd + "holding@turksat.com.tr";
+        String yanlisFormattaEPosta = "testholdingturksat.com.tr";
+        String gecersizKepAdresi = "45454";
+
+        String zorunluAlanUyariMesaji = "Zorunlu alanları doldurunuz";
+        String kepDikkatMesaji ="Kep adresi boş bırakılamaz! Lütfen bir kep adresi ekleyiniz.";
+        String gecersizKepAdresiDikkatMesaji = "Girilen kep adresi geçersiz!";
+        String epostaDikkatMesaji = "Lütfen Türkçe karakter ve boşluk içermeyen, @ işareti ve nokta içeren geçerli bir e-mail giriniz!";
+
+        tuzelKisiYonetimiPage
+                .openPage()
+                .yeniTuzelKisiEkle()
+                .adDoldur(ad)
+                .kisaAdDoldur(kisaAd)
+                .tuzelKisiKaydet()
+                .islemMesaji().uyariOlmali(zorunluAlanUyariMesaji);
+
+        tuzelKisiYonetimiPage
+                .yeniTuzelKisiEkle()
+                .tuzelKisiTipiSec("12729")
+                .vergiNoDoldur(vergiNo)
+                .tuzelKisiKaydet()
+                .islemMesaji().uyariOlmali(zorunluAlanUyariMesaji);
+
+        tuzelKisiYonetimiPage
+                .yeniTuzelKisiEkle()
+                .tuzelKisiTipiSec("12729")
+                .adDoldur(ad)
+                .kepAdresiKullaniyorSec(true)
+                .tuzelKisiKaydet()
+                .islemMesaji().dikkatOlmali(kepDikkatMesaji);
+
+        tuzelKisiYonetimiPage
+                .yeniIletisimEkle()
+                .iletisimBilgisiKaydet()
+                .islemMesaji().uyariOlmali(zorunluAlanUyariMesaji);
+
+        tuzelKisiYonetimiPage
+                .adresDoldur(adres)
+                .ulkeSec(ulke)
+                .ilSec(il)
+                .ilceSec(ilce)
+                .ePostaDoldur(yanlisFormattaEPosta)
+                .iletisimBilgisiKaydet()
+                .islemMesaji().dikkatOlmali(epostaDikkatMesaji);
+
+        tuzelKisiYonetimiPage
+                .ePostaDoldur(eposta)
+                .iletisimBilgisiKaydet();
+
+        tuzelKisiYonetimiPage
+                .kepAdresBilgileriEkle()
+                .kepAdresiKaydet()
+                .islemMesaji().uyariOlmali(zorunluAlanUyariMesaji);
+
+        tuzelKisiYonetimiPage
+                .kepAdresiDoldur(gecersizKepAdresi)
+                .kepAdresiKaydet()
+                .islemMesaji().dikkatOlmali(gecersizKepAdresiDikkatMesaji);
+
+        tuzelKisiYonetimiPage
+                .kepAdresiIptalet();
+
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TC1126: Tüzel Kişi Bilgisi Güncelleme ve kontrolleri")
+    public void TC1126() throws InterruptedException {
+
+        String vergiNo = createRandomNumber(10);
+        String kisaAd = createRandomText(7);
+        String ad = kisaAd + " İş Çözümleri";
+        String vergiNo2 = createRandomNumber(10);
+        String kisaAd2 = createRandomText(7);
+        String ad2 = kisaAd2 + " İş Çözümleri";
+        String kepAdresi = "turksat.kamu@testkep.pttkep.gov.tr";
+        String basariMesaji = "İşlem başarılıdır!";
+
+        tuzelKisiYonetimiPage
+
+                //Data yaratmak için
+                .openPage()
+                .yeniTuzelKisiEkle()
+                .tuzelKisiTipiSec("22782")
+                .vergiNoDoldur(vergiNo)
+                .adDoldur(ad)
+                .kisaAdDoldur(kisaAd)
+                .tuzelKisiKaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        tuzelKisiYonetimiPage
+                .filtreVergiNoDoldur(vergiNo)
+                .ara()
+                .aktifKisiKayitKontrolu(vergiNo, ad, kisaAd)
+                .tuzelKisiGuncelle()
+
+                .vergiNoDoldur(vergiNo)
+                .adDoldur(ad)
+                .kisaAdDoldur(kisaAd)
+                .kepAdresiKullaniyorSec(true)
+                .kepAdresBilgileriEkle()
+                .kepAdresiDoldur(kepAdresi)
+                .kepAdresiKaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .geregiSecimTipiSec("T")
+                .geregiDoldur(ad2);
+              //  .geregiAlaniKontrol(ad2, unvan2, adres, postaTipi);
 
     }
 }

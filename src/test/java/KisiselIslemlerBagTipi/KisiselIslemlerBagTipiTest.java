@@ -13,13 +13,11 @@ import io.qameta.allure.SeverityLevel;
 
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pages.ustMenuPages.EvrakOlusturPage;
-import pages.ustMenuPages.GelenEvraklarPage;
-import pages.ustMenuPages.KullaniciYonetimiPage;
-import pages.ustMenuPages.VekaletVerPage;
+import pages.ustMenuPages.*;
 
 import static data.TestData.password2;
 import static data.TestData.username2;
+
 /****************************************************
  * Tarih: 2017-12-22
  * Proje: Türksat Functional Test Automation
@@ -33,13 +31,17 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
     EvrakOlusturPage evrakOlusturPage;
     VekaletVerPage vekaletVerPage;
     GelenEvraklarPage gelenEvraklarPage;
+    EvrakOlusturPage evrakOlusturPageTab;
+    OnayAkisYonetimiPage onayAkisYonetimiPage;
 
     @BeforeMethod
     public void loginBeforeTests() {
+        evrakOlusturPageTab = new EvrakOlusturPage();
         kullaniciYonetimiPage = new KullaniciYonetimiPage();
         evrakOlusturPage = new EvrakOlusturPage();
         vekaletVerPage = new VekaletVerPage();
         gelenEvraklarPage = new GelenEvraklarPage();
+        onayAkisYonetimiPage = new OnayAkisYonetimiPage();
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -86,6 +88,56 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
 
 
     @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "2142: Bağ tipi vekaleten amir yardımcısı kontrolleri")
+    public void TC2142() throws InterruptedException {
+        String basariMesaji = "İşlem başarılıdır!";
+        String bagTipi = "Y";
+        String farkliKullanici = "Optiim";
+        String onayAkisiKullanicilarTuru = "İmzalama";
+        String gnMdV = "Gn.Md. V.";
+        login(username2, password2);
+
+        kullaniciYonetimiPage
+                .openPage()
+                .ara()
+                .kullaniciListesiGuncelle()
+                .gorevliOlduguBirimlerGuncelle()
+                .popupKullaniciBirimAtamaBagTipiSec(bagTipi)
+                .popupKullaniciBirimAtamaKaydet();
+        String ekranAdi = kullaniciYonetimiPage.ekranAdiCek();
+        kullaniciYonetimiPage
+                .kullaniciGuncellemeKaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .otomatikOnayAkisi()
+                .otomatikOnayAkisiGeldigiGorme(ekranAdi)
+                .onayAkisiEkle()
+                .kullanicilarDoldur(ekranAdi)
+                .onayAkisiKullanicilarImzacıSec(onayAkisiKullanicilarTuru)
+                .onayAkisiKullan()
+                .imzacılarGnMdVKontrol(gnMdV);
+
+        onayAkisYonetimiPage
+                .onayAkisiYeni()
+                .onayAkisiIslemlerKullanicilarDoldur(ekranAdi)
+                .imzacıSonSec(onayAkisiKullanicilarTuru)
+                .onayAkisiIslemleriKaydet();
+        //  vekaletVerPage
+        //        .openPage()
+        //      .vekaletVerenDoldur(ekranAdi)
+        //    .vekaletVerenFarkliDoldur(farkliKullanici)
+        //  .onayVerecekDoldur(ekranAdi);
+        //gelenEvraklarPage
+        //      .openPage()
+        //    .evrakSec()
+        //  .tabHavaleYap()
+        //.havaleYapOnaylanacakKisiTreeDoldur(ekranAdi);
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "2168: Bağ tipi personel kontrolleri")
     public void TC2168() throws InterruptedException {
         String basariMesaji = "İşlem başarılıdır!";
@@ -111,14 +163,14 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
                 .openPage()
                 .bilgilerTabiAc()
                 .otomatikOnayAkisi()
-                .otomatikOnayAkisiGelmedigiGorme(ekranAdi,false);
+                .otomatikOnayAkisiGelmedigiGorme(ekranAdi, false);
 
         vekaletVerPage
                 .openPage()
                 .vekaletVerenAlanınaGoruntulenmemeKontrolu(ekranAdi, false)
                 .vekaletVerenDoldur(farkliKullanici)
                 .vekaletAlanAlanınaGoruntulenmemeKontrolu(ekranAdi, false)
-                .onayVerecekDoldur(farkliKullanici);
+                .onayVerecekDoldur("Zübeyde TEKİN");
 
         gelenEvraklarPage
                 .openPage()

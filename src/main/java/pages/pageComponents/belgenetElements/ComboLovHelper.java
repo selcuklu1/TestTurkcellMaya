@@ -214,11 +214,10 @@ public class ComboLovHelper extends BaseLibrary {
 
         SelenideElement tree = $$(lovTree).last();
         tree.shouldBe(visible);
-        tree.$$(lovTreeListSelectableItemsTitle).shouldHave(sizeGreaterThan(0));
-        tree.$$(lovTreeListSelectableItemsTitle).get(0).shouldBe(visible);
+        tree.$$(lovTreeList).shouldHave(sizeGreaterThan(0));
+        tree.$$(lovTreeList).get(0).shouldBe(visible);
 
-        ElementsCollection items = tree.$$(lovTreeListSelectableItemsTitle);
-        selectable = items.size() != 0 && (items.size() == 1 || items.filterBy(exactText(value)).size() > 0);
+        selectable = !$$(lovTreeList).get(0).is(have(text("Sonuç bulunamamıştır")));
 
         try {
             Allure.addAttachment("Seçilebilir mi?", "");

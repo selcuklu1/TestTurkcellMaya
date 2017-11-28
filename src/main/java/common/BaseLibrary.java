@@ -4,6 +4,7 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
+import com.sun.javafx.scene.layout.region.Margins;
 import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
 import org.omg.CORBA.PUBLIC_MEMBER;
@@ -13,6 +14,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
+import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -494,4 +496,21 @@ public class BaseLibrary {
         }
     }
 
+    public boolean findElementOnTableAllPages(SelenideElement element) {
+        SelenideElement next = $(("[class='ui-paginator-next ui-state-default ui-corner-all']"));
+
+        boolean status = false;
+        while (status == false) {
+            status = element.isDisplayed();
+            if (status == false) {
+                if (next.isDisplayed() == false) {
+                    System.out.println("Element hiç bir sayfada bulunamadı.");
+                    return status;
+                }
+                next.click();
+            }
+        }
+        System.out.println("Element bulundu.");
+        return status;
+    }
 }
