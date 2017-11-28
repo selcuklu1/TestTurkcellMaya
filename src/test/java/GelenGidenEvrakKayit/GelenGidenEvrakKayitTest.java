@@ -12,6 +12,8 @@ import pages.solMenuPages.TeslimAlinmayiBekleyenlerPage;
 import pages.ustMenuPages.GelenEvrakKayitPage;
 import pages.ustMenuPages.KaydedilenGelenEvrakPage;
 
+import java.io.IOException;
+
 public class GelenGidenEvrakKayitTest extends BaseTest {
     MainPage mainPage;
     GelenEvrakKayitPage gelenEvrakKayitPage;
@@ -40,7 +42,8 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         kaydedilenGelenEvrakPage = new KaydedilenGelenEvrakPage();
         kaydedilenGelenEvraklarPage = new KaydedilenGelenEvraklarPage();
         birimHavaleEdilenlerPage = new BirimHavaleEdilenlerPage();
-        login("optiim","Avis1111");
+        login("optiim", "Avis1111");
+//        login("ztekin", "123");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -53,10 +56,14 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         String ustYaziAdi = "pdf.pdf";
         String excelAdi = "test.xlsx";
 
+
         gelenEvrakKayitPage
                 .openPage()
                 .evrakBilgileriUstYaziEkle(ustYaziPath)
                 .evrakBilgileriDosyaEklemeUstYaziAdiKontrol(ustYaziAdi)
+                .islemMesaji().isBasarili();
+
+        gelenEvrakKayitPage
                 .evrakBilgileriListKonuKoduDoldur(konuKodu)
                 .evrakBilgileriListEvrakTuruSec(evrakTuru)
                 .evrakBilgileriListEvrakDiliSec(evrakDili)
@@ -87,6 +94,56 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .filtreleAc()
                 .tarihDoldur(getSysDateForKis())
                 .tabloKontrolu(evrakNO321);
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TC2163 : Kaydedilen gelen evrakın güncellenmesi")
+    public void TC2163() throws InterruptedException {
+
+        String evrakTuru = "D";
+        String ustYaziPath = "C:\\Users\\Emre_Sencan\\Pictures\\Otomasyon.pdf";
+        String ustYaziAdi = "Otomasyon.pdf";
+        String basariMesaji = "İşlem başarılıdır!";
+        String aciklama = "Test Otomasyon";
+        String evrakTarihi = getSysDateForKis();
+        String evrakTuru2 = "Dilekçe";
+
+        kaydedilenGelenEvraklarPage
+                .openPage()
+                .tabloIlkRaporIcerik();
+
+        String evrakNo= gelenEvrakKayitPage
+                .evrakDetayiEvrakNoTextAl();
+
+        gelenEvrakKayitPage
+                .evrakDetariAlanGuncellenebilirlikKontrolü()
+                .evrakBilgileriUstYaziEkle(ustYaziPath)
+                .evrakDetayiPdfDegisiklikpopUpClose()
+//                .evrakBilgileriDosyaEklemeUstYaziAdiKontrol(ustYaziAdi)
+                .evrakBilgileriListKonuKoduDoldur(konuKodu)
+                .evrakBilgileriListEvrakTuruSec(evrakTuru)
+                .evrakBilgileriListEvrakDiliSec(evrakDili)
+                .evrakBilgileriListEvrakTarihiDoldur(evrakTarihi)
+                .evrakBilgileriListGizlilikDerecesiSec(gizlilikDerecesi)
+                .evrakBilgileriListKisiKurumSec(kisiKurum)
+                .evrakBilgileriListGeldigiKurumDoldurLovText(geldigiKurum)
+                .evrakBilgileriListEvrakSayiSagDoldur()
+                .evrakBilgileriListEvrakGelisTipiSec(evrakGelisTipi)
+                .evrakBilgileriListIvedilikSec(ivedilik)
+                .evrakDetayiEkleriTab()
+                .evrakDetayiFizikselEkEkleTab()
+                .evrakDetayiAciklamaDoldur(aciklama)
+                .evrakDetayiEkle()
+                .evrakDetayiKaydet()
+                .evrakDetayiKaydetPopUpClose()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        kaydedilenGelenEvraklarPage
+                .openPage()
+                .tabloEvrakNoileIcerikSec(evrakNo);
+
+        gelenEvrakKayitPage
+                .guncellenenAlanKontrolleri(evrakTarihi,evrakTuru,gizlilikDerecesi);
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -130,14 +187,16 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TC1401 : Kaydedilen Gelen Evrak raporu")
-    public void TC1401() throws InterruptedException {
+    public void TC1401() throws InterruptedException, IOException {
 
 
         String evrakNo = evrakNO321;
         String evrakNo1 = evrakNO328;
         String geldigiYer = "D";
         kaydedilenGelenEvrakPage
+                .raporAlExcel()
                 .openPage()
+
                 .gelenEvrakNoDoldur("4985")
                 .sorgula()
                 .tabloKontrolu("4985")

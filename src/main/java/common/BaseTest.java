@@ -30,6 +30,28 @@ public class BaseTest extends BaseLibrary {
         Configuration.baseUrl = belgenetURL;
         //    Configuration.browser = "drivers.Firefox";
 //        Configuration.remote = "http://0.0.0.0:32768/wd/hub";
+
+//        Configuration.browser = "chrome";
+ //       Configuration.browser = "marionette";
+ //       Configuration.browser = "chrome";
+
+
+        Configuration.browser = "marionette";
+        Configuration.browser = "drivers.Firefox"; //
+//        Configuration.browser = "drivers.Firefox"; //
+
+
+        //Configuration.browser = "marionette";
+
+        //Configuration.browser = "chrome";
+
+     //   Configuration.browser = "chrome";
+        //Configuration.browser = "marionette";
+
+        Configuration.browser = "drivers.Firefox";
+
+        //"org.openqa.selenium.Firefox.FirefoxDriver";
+
         Configuration.browser = "chrome";
         Configuration.startMaximized = true;
         //       Configuration.browser = "marionette";
@@ -37,6 +59,7 @@ public class BaseTest extends BaseLibrary {
         //Configuration.browser = "marionette";
         //Configuration.browser = "chrome";
         //   Configuration.browser = "chrome";
+
         Configuration.reportsFolder = "test-result/reports";
         Configuration.screenshots = false;
         Configuration.savePageSource = false;
