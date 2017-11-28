@@ -31,7 +31,7 @@ public class BaseTest extends BaseLibrary {
        Configuration.browser = "drivers.Firefox";
 //        Configuration.remote = "http://0.0.0.0:32768/wd/hub";
 //        Configuration.browser = "chrome";
- //       Configuration.browser = "marionette";
+        Configuration.browser = "marionette";
  //       Configuration.browser = "chrome";
         //Configuration.browser = "marionette";
      //   Configuration.browser = "chrome";

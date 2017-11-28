@@ -12,6 +12,7 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import pages.MainPage;
 import pages.solMenuPages.KepIlePostalanacaklarPage;
 import pages.ustMenuPages.*;
 
@@ -26,6 +27,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
     BirimYonetimiPage birimYonetimiPage;
     GercekKisiYonetimPage gercekKisiYonetimPage;
     KepIlePostalanacaklarPage kepIlePostalanacaklarPage;
+    MainPage mainPage;
 
     @BeforeMethod
     public void loginBeforeTests() {
@@ -35,6 +37,47 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
         birimYonetimiPage = new BirimYonetimiPage();
         gercekKisiYonetimPage = new GercekKisiYonetimPage();
         kepIlePostalanacaklarPage = new KepIlePostalanacaklarPage();
+        mainPage = new MainPage();
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "1610: KEP Hesap Menüsü - Tanımlanan KEP hesapları ile login işlemleri")
+    public void TC1610() throws InterruptedException {
+
+        String basariMesaji = "İşlem başarılıdır!";
+        String hataMesaji = "Bağlantı kurulamadı, girilen parola veya şifre yanlış !";
+        String parola = "71396428";
+        String sifre = "71396428a";
+        String hataliParola = "123";
+        String hataliSifre = "1";
+
+        login(username3, password3);
+        mainPage
+                .kepBaglantisi()
+                .kepAdresBaglantisiBaglan1()
+                .kullaniciAdiTcKimlikNoKontol()
+                .parolaDoldur(parola)
+                .sifreDoldur(sifre)
+                .kepBaglantisiBaglan()
+                .islemMesaji().beklenenMesaj(hataMesaji);
+                logout();
+        login(username2, password2);
+
+        mainPage
+        .kepBaglantisi()
+                .kepAdresBaglantisiBaglan1()
+                //.kullaniciAdiTcKimlikNoKontol()
+                .parolaDoldur(parola)
+                .sifreDoldur(sifre)
+                .kepBaglantisiBaglan()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        mainPage
+                .kepAdresBaglantisiBaglan2()
+                .parolaDoldur(hataliParola)
+                .sifreDoldur(hataliSifre)
+                .kepBaglantisiBaglan()
+                .islemMesaji().beklenenMesaj(hataMesaji);
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -140,7 +183,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
         String popupKepHizmetSaglayicisiSec = "PTT KEP Servisi";
         String basariMesaji = "İşlem başarılıdır!";
 
-        login(username2, password2);
+        login(username3, password3);
 
         birimYonetimiPage
                 .openPage()
@@ -153,7 +196,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
                 .popupHizmetSaglayicisiSec(popupKepHizmetSaglayicisiSec)
                 .popupKaydet()
                 .kepAdresBilgileriArti()
-                .popupKepAdresiDoldur(popupKepAdresi3)
+                .popupKepAdresiDoldur(popupKepAdresi2)
                 .popupHizmetSaglayicisiSec(popupKepHizmetSaglayicisiSec)
                 .popupKaydet()
                 .kaydet()
