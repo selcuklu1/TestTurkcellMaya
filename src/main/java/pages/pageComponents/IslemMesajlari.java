@@ -1,13 +1,26 @@
 package pages.pageComponents;
 
-import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.*;
 import common.BaseLibrary;
 import io.qameta.allure.Step;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
+import java.util.concurrent.TimeUnit;
+
+import static com.codeborne.selenide.Condition.and;
+import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
+import static com.codeborne.selenide.Selenide.Wait;
+import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfElementLocated;
+import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfAllElementsLocatedBy;
+import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated;
 import static pages.pageComponents.IslemMesajlari.MessageTitle.*;
 
 public class IslemMesajlari extends BaseLibrary {
@@ -113,8 +126,7 @@ public class IslemMesajlari extends BaseLibrary {
     }
 
     public String getMessageTitle() {
-        messageTitle.waitUntil(visible, Configuration.timeout, 100);
-        return messageTitle.text();
+        return messageTitle.should(visible).text();
     }
 
     public String getMessageBody() {
@@ -125,13 +137,6 @@ public class IslemMesajlari extends BaseLibrary {
     public void waitDisappear() {
 
         closeMessagePopup.click();
-
-/*        try {
-            new WebDriverWait(WebDriverRunner.getWebDriver(), 10, 100).
-                    until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".lobibox-notify-title")));
-        } catch (Exception e) {
-            System.out.println("Error didn't wait popup message : " + e);
-        }*/
     }
 
 }

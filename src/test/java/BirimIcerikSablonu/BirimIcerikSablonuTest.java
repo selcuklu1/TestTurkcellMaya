@@ -6,6 +6,12 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.ustMenuPages.BirimIcerikSablonlarPage;
 
+
+/**
+ * Yazan: Ilyas Bayraktar
+ * Tarih:
+ * Açıklama:
+ */
 @Feature("Birim İçerik Şablonu")
 public class BirimIcerikSablonuTest extends BaseTest {
 

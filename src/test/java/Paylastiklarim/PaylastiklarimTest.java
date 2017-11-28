@@ -127,8 +127,4 @@ public class PaylastiklarimTest extends BaseTest {
     }
 
 
-
-
-
-
 }

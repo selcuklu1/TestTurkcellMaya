@@ -95,13 +95,12 @@ public class ComboLovHelper extends BaseLibrary {
         for (int i = count - 1; i >= 0; i--)
             $$(lovInputTextleriTemizle).get(i).click();
 
-        long t = Configuration.timeout;
-        Configuration.timeout = 0;
+//        long t = Configuration.timeout;
+//        Configuration.timeout = 0;
         //! singleType lov için temizle butonu DOM da kaldığı için visible kontrolü kıllanıldı
         for (SelenideElement item : $$(lovInputTextleriTemizle))
             item.shouldBe(not(visible));
-
-        Configuration.timeout = t;
+//        Configuration.timeout = t;
 
         return (BelgenetElement) element;
 //        return ElementFinder.wrap(BelgenetElement.class, null, By.cssSelector(lovText), 0);
@@ -286,11 +285,11 @@ public class ComboLovHelper extends BaseLibrary {
         boolean isSelected = false;
         SelenideElement willBeSelected = null;
 
-        defaultTimeout = Configuration.timeout;
-        Configuration.timeout = 0;
+//        defaultTimeout = Configuration.timeout;
+//        Configuration.timeout = 0;
         List<String> selectedTitles = $$(lovSecilenItemTitle).texts();
         List<String> selectedDetails = $$(lovSecilenItemDetail).texts();
-        Configuration.timeout = defaultTimeout;
+//        Configuration.timeout = defaultTimeout;
 
         $(lovText).setValue(value);
 
