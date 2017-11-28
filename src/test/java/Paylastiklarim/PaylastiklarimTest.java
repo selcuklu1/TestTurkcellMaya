@@ -1,6 +1,5 @@
 package Paylastiklarim;
 
-import com.codeborne.selenide.Selenide;
 import common.BaseTest;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -103,40 +102,6 @@ public class PaylastiklarimTest extends BaseTest {
                 .paylas()
                 .islemMesaji().dikkatOlmali("Evrakın paylaşılacağı Kullanıcıyı seçiniz!");
 
-        paylastiklarimPage
-                .paylasKisiSec("Optiim TEST")
-                .paylas()
-                .islemMesaji().dikkatOlmali("Açıklama girilmesi zorunludur!");
-
-        paylastiklarimPage
-                .paylasKisiSec("Optiim TEST")
-                .paylas()
-                .islemMesaji().dikkatOlmali("Açıklama girilmesi zorunludur!");
-
-        paylastiklarimPage
-                .paylasilanKisileriTemizle()
-                .paylasimAciklamaYaz("yeni açkılmala")
-                .paylas();
-
-        paylastiklarimPage
-                .paylasimAciklamaYaz("yeni açkılmalaasdsdasdasdsada");
-                //.islemMesaji().dikkatOlmali("Evrakın paylaşılacağı Kullanıcıyı seçiniz!");
-
-
-        /*
-
-        paylastiklarimPage
-                .paylasKisiSec("Optiim TEST")
-                .paylasimAciklamaYaz("yeni açkılmala")
-                .paylas()
-                .islemMesaji().basariliOlmali("İşlem başarılıdır!");
-
-        paylastiklarimPage
-                .openPage()
-                .evrakSec("Optiim TEST")
-                .paylasTabTikla()
-                .paylas()
-                .islemMesaji().dikkatOlmali("Evrakın paylaşılacağı Kullanıcıyı seçiniz!");
 
         paylastiklarimPage
                 .paylasKisiSec("Optiim TEST")
@@ -152,25 +117,14 @@ public class PaylastiklarimTest extends BaseTest {
         paylastiklarimPage
                 .paylasKisiSec("Optiim TEST")
                 .paylasilanKisileriTemizle()
-                .paylas()
-                .islemMesaji().dikkatOlmali("Açıklama girilmesi zorunludur!");
-
-
-        paylastiklarimPage
-                .openPage()
-                .paylasKisiSec("Optiim TEST")
                 .paylasimAciklamaYaz("yeni açkılmala")
                 .paylas()
-                .islemMesaji().basariliOlmali("İşlem başarılıdır!");
+                .islemMesaji().dikkatOlmali("Evrakın paylaşılacağı Kullanıcıyı seçiniz!");
 
 
-        */
+
 
     }
-
-
-
-
 
 
 }

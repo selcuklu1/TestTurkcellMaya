@@ -1,5 +1,7 @@
 package dumpTest;
 
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;
 import common.BaseTest;
 import org.openqa.selenium.By;
@@ -42,6 +44,8 @@ public class EvrakOlusturTest extends BaseTest {
         login();
 
         new EvrakOlusturPage().openPage().bilgilerTabiAc();
+        comboLov("input[id$='konuKoduLov:LovText']").isLovValueSelectable("3233232323233");
+
         $(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:onayAkisiEkle")).click();
         comboLov(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:akisAdimLov:LovText"))
                 .type("Optiim TEST").titleItems().filterBy(text("Optiim TEST3")).get(0).click();

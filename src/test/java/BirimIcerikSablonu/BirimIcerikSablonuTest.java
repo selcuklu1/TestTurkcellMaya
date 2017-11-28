@@ -6,6 +6,12 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.ustMenuPages.BirimIcerikSablonlarPage;
 
+
+/**
+ * Yazan: Ilyas Bayraktar
+ * Tarih:
+ * Açıklama:
+ */
 @Feature("Birim İçerik Şablonu")
 public class BirimIcerikSablonuTest extends BaseTest {
 
@@ -14,13 +20,12 @@ public class BirimIcerikSablonuTest extends BaseTest {
 
     @BeforeMethod
     public void setUp() {
-        birimIcerikSablonlarPage = new BirimIcerikSablonlarPage();
         login();
+        birimIcerikSablonlarPage = new BirimIcerikSablonlarPage();
     }
 
     @Test(description = "Alan Kontrolleri")
-    public void tc1084a() throws Exception {
-
+    public void tc1084a() {
         birimIcerikSablonlarPage
                 .openPage()
                 .alanlarinAktifDurumKontrol()

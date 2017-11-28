@@ -27,51 +27,22 @@ public class BaseTest extends BaseLibrary {
         //endregion
 
         //region Selenide Driver Configuration
-        Configuration.baseUrl = belgenetURL;
-        //    Configuration.browser = "drivers.Firefox";
-//        Configuration.remote = "http://0.0.0.0:32768/wd/hub";
-
-//        Configuration.browser = "chrome";
- //       Configuration.browser = "marionette";
- //       Configuration.browser = "chrome";
-
-
-        Configuration.browser = "marionette";
-        Configuration.browser = "drivers.Firefox"; //
-//        Configuration.browser = "drivers.Firefox"; //
-
-
-        //Configuration.browser = "marionette";
-
-        //Configuration.browser = "chrome";
-
-     //   Configuration.browser = "chrome";
-        //Configuration.browser = "marionette";
-
-        Configuration.browser = "drivers.Firefox";
-
-        //"org.openqa.selenium.Firefox.FirefoxDriver";
-
         Configuration.browser = "chrome";
         Configuration.startMaximized = true;
-        //       Configuration.browser = "marionette";
-        //       Configuration.browser = "chrome";
+        Configuration.baseUrl = belgenetURL;
+        //Configuration.browser = "drivers.Firefox";
         //Configuration.browser = "marionette";
-        //Configuration.browser = "chrome";
-        //   Configuration.browser = "chrome";
-
+        //Configuration.remote = "http://0.0.0.0:32768/wd/hub";
         Configuration.reportsFolder = "test-result/reports";
         Configuration.screenshots = false;
         Configuration.savePageSource = false;
-        Configuration.collectionsTimeout = 20000;
+        Configuration.collectionsTimeout = 30000;
         Configuration.timeout = 30000;
         Configuration.holdBrowserOpen = true;
-
 //        Configuration.headless = true;
 //        Configuration.browserSize = "1024x600";
         //endregion
-
-
+        
         System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, "/dev/null");
     }
 

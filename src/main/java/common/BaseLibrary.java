@@ -45,22 +45,77 @@ public class BaseLibrary {
      * @param
      */
     public void waitForJS() {
-        Wait().until(ExpectedConditions.and(
-                (ExpectedCondition<Boolean>) driver -> {
-                    try {
-                        return (Boolean) executeJavaScript("return document.readyState").equals("complete");
-                    } catch (Exception e) {
-                        return true;
+        try {
+            Wait().until(
+                    (ExpectedCondition<Boolean>) driver -> {
+                        try {
+                            boolean readyState = (Boolean) executeJavaScript("return document.readyState").equals("complete");
+//                            System.out.println("Internal ready state:" + readyState);
+                            return readyState;
+                        } catch (Exception e) {
+//                            System.out.println("Internal ready state error:" + e.getMessage());
+                            return true;
+                        }
+                    });
+            Wait().until(
+                    (ExpectedCondition<Boolean>) driver -> {
+                        try {
+                            boolean jQueryActive = (Boolean) executeJavaScript("return jQuery.active == 0");
+//                            System.out.println("Internal jQuery active:" + jQueryActive);
+                            return jQueryActive;
+                        } catch (Exception e) {
+//                            System.out.println("Internal jQuery active error:" + e.getMessage());
+                            return true;
+                        }
                     }
-                },
-                (ExpectedCondition<Boolean>) driver -> {
-                    try {
-                        return (Boolean) executeJavaScript("return jQuery.active == 0");
-                    } catch (Exception e) {
-                        return true;
+            );
+
+            /*Wait().until(ExpectedConditions.and(
+                    (ExpectedCondition<Boolean>) driver -> {
+                        try {
+                            boolean readyState = (Boolean) executeJavaScript("return document.readyState").equals("complete");
+                            System.out.println("Internal ready state:" + readyState);
+                            return readyState;
+                        } catch (Exception e) {
+                            System.out.println("Internal ready state error:" + e.getMessage());
+                            return true;
+                        }
+                    },
+                    (ExpectedCondition<Boolean>) driver -> {
+                        try {
+                            boolean jQueryActive = (Boolean) executeJavaScript("return jQuery.active == 0");
+                            System.out.println("Internal jQuery active:" + jQueryActive);
+                            return jQueryActive;
+                        } catch (Exception e) {
+                            System.out.println("Internal jQuery active error:" + e.getMessage());
+                            return true;
+                        }
                     }
-                }
-        ));
+            ));*/
+        } catch (Exception e) {
+//            System.out.println("WaitForJS error: " + e.getMessage());
+        }
+
+        /*try {
+            Wait().until(ExpectedConditions.and(
+                    (ExpectedCondition<Boolean>) driver -> {
+                        try {
+                            return (Boolean) executeJavaScript("return document.readyState").equals("complete");
+                        } catch (Exception e) {
+                            return true;
+                        }
+                    },
+                    (ExpectedCondition<Boolean>) driver -> {
+                        try {
+                            return (Boolean) executeJavaScript("return jQuery.active == 0");
+                        } catch (Exception e) {
+                            return true;
+                        }
+                    }
+            ));
+        } catch (Exception e) {
+            System.out.println("WaitForJS error: " + e.getMessage());
+        }*/
     }
 
     public void waitForJSreadyState() {
@@ -73,14 +128,15 @@ public class BaseLibrary {
     }
 
     public void waitForLoadingToDisappear(WebDriver driver) {
-        driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
+//        driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
         try {
             new WebDriverWait(driver, Configuration.timeout / 1000, 200).
                     until(invisibilityOfElementLocated(By.className("loading")));
 //            System.out.println("Loading: Ok");
         } catch (Exception e) {
+//            System.out.println("Loading window error: " + e.getMessage());
         }
-        driver.manage().timeouts().implicitlyWait(Configuration.timeout, TimeUnit.MILLISECONDS);
+//        driver.manage().timeouts().implicitlyWait(Configuration.timeout, TimeUnit.MILLISECONDS);
     }
 
     public void waitForLoading(WebDriver driver) {

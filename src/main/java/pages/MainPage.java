@@ -1,6 +1,8 @@
 package pages;
 
+import com.codeborne.selenide.Condition;
 import common.BaseLibrary;
+import org.openqa.selenium.By;
 import pages.pageComponents.IslemMesajlari;
 import pages.pageComponents.SolMenu;
 import pages.pageComponents.UserMenu;
@@ -122,6 +124,47 @@ public class MainPage extends BaseLibrary {
     public KurumYonetimiPage KurumYonetimiPage() { return new KurumYonetimiPage();
     }*/
     //endregion
+
+
+    public MainPage kepBaglantisi(){
+    $(By.id("topMenuForm:userMenuButton_button")).click();
+    $(By.id("topMenuForm:kepLoginButton")).click();
+        return this;
+    }
+
+    public MainPage kepAdresBaglantisiBaglan1(){
+        $("[id='kepForm:kayitliKepDataTable:0:j_idt235']").click();
+        return this;
+    }
+
+    public MainPage kepAdresBaglantisiBaglan2(){
+        $("[id='kepForm:kayitliKepDataTable:1:j_idt235']").click();
+        return this;
+    }
+
+    public MainPage kullaniciAdiTcKimlikNoKontol(){
+        $(By.id("kepLogin2FormId:kullaniciAdi")).shouldBe(Condition.disabled);
+        $(By.id("kepLogin2FormId:kullaniciAdi")).shouldBe(Condition.empty);
+
+        $(By.id("kepLogin2FormId:tcKimlikNo")).shouldBe(Condition.disabled);
+        $(By.id("kepLogin2FormId:tcKimlikNo")).shouldBe(Condition.empty);
+        return this;
+    }
+
+    public MainPage parolaDoldur(String parola){
+        $(By.id("kepLogin2FormId:parola")).setValue(parola);
+        return this;
+    }
+
+    public MainPage sifreDoldur(String sifre){
+        $(By.id("kepLogin2FormId:sifre")).setValue(sifre);
+        return this;
+    }
+
+    public MainPage kepBaglantisiBaglan(){
+        $(By.id("kepLogin2FormId:j_idt255")).click();
+        return this;
+    }
 
     public void logout() {
         $("button[id='topMenuForm:userMenuButton_button']").click();
