@@ -178,6 +178,8 @@ public class EvrakOlusturPage extends MainPage {
         By cmbBilgiBy = By.cssSelector("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='bilgiLov:LovText']");
 
         SelenideElement btnOtomatikOnayAkisi = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:otomatikOnayAkisiEkle"));
+        SelenideElement cmbOnayAkisiIkıncıKullanci = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:akisAdimLov:LovSecilenTable:1:selectOneMenu"));
+        SelenideElement divImzacılarGnMdV = $("[id='yeniGidenEvrakForm:parafciPanell'] [class='ui-inplace ui-hidden-container']");
 
 
         //endregion
@@ -192,6 +194,28 @@ public class EvrakOlusturPage extends MainPage {
 
         public boolean isOnTabPage() {
             return divContainer.is(visible);
+        }
+
+        public BilgilerTab kullanicilarDoldur(String kullanici){
+            txtOnayAkisiKullanicilar.selectLov(kullanici);
+            return this;
+        }
+
+        public BilgilerTab onayAkisiKullanicilarImzacıSec(String value){
+            cmbOnayAkisiIkıncıKullanci.selectOptionByValue(value);
+            return this;
+        }
+
+        @Step("İmzacı alanı \"{0}\" olarak gelmeli")
+        public BilgilerTab imzacılarGnMdVKontrol(String kullanici) {
+            divImzacılarGnMdV.shouldHave(text(kullanici));
+            return this;
+        }
+
+        @Step("Konu Kodu alanında \"{0}\" seç")
+        public BilgilerTab otomatikOnayAkisi() {
+            btnOtomatikOnayAkisi.click();
+            return this;
         }
 
         @Step("Konu Kodu alanında \"{0}\" seç")
@@ -294,7 +318,7 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Bilgi Secim Tipi alanında \"{0}\" seç")
         public BilgilerTab bilgiSecimTipiSec(String text) {
-            cmbBilgiSecimTipi.selectOption(text);
+            cmbBilgiSecimTipi.selectOptionByValue(text);
             return this;
         }
 
@@ -459,11 +483,6 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        public BilgilerTab otomatikOnayAkisi() {
-            btnOtomatikOnayAkisi.click();
-            return this;
-        }
-
         @Step("Otomatik onay akışı kontrol")
         public BilgilerTab otomatikOnayAkisiGeldigiGorme(String ekranAdi) {
             $$(" [id='yeniGidenEvrakForm:hiyerarsikAkisOlusturForm:otomatikAkisKullaniciBirimListId'] tbody tr")
@@ -566,6 +585,14 @@ public class EvrakOlusturPage extends MainPage {
                     .shouldBe(exist)
                     .$("select[id*='selectOneMenu']")
                     .shouldHave(value(kullaniciTipi));
+            return this;
+        }
+
+
+        @Step("Onay akışı kullanıcıları silme")
+        public BilgilerTab onayAkisiKullanicilariTemizle() {
+            btnOnayAkisiEkle.click();
+            txtOnayAkisiKullanicilar.clearAllSelectedLov();
             return this;
         }
 
@@ -743,8 +770,6 @@ public class EvrakOlusturPage extends MainPage {
             sayisalImzaOnay.click();
             return this;
         }
-
-
 
     }
 

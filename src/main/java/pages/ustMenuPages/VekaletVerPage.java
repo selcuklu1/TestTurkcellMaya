@@ -36,7 +36,7 @@ public class VekaletVerPage extends BaseLibrary {
     @Step("Kişinin Bilgi alanında görüntülenmediği kontrolu")
     public VekaletVerPage vekaletAlanAlanınaGoruntulenmemeKontrolu(String bilgi, Boolean secilebilmeli) {
         Assert.assertEquals(secilebilmeli, comboLov(txtVekaletAlan).isLovValueSelectable(bilgi));
-        System.out.println("yapıldı başarılı");
+        System.out.println("Vekalet alan alanı başarılı");
         return this;
     }
 
