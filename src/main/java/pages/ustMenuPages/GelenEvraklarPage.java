@@ -1,5 +1,7 @@
 package pages.ustMenuPages;
 
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
 import org.testng.Assert;
@@ -8,9 +10,12 @@ import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 public class GelenEvraklarPage extends MainPage {
+
+    ElementsCollection tableEvraklar = $$("tbody[id='mainInboxForm:inboxDataTable_data'] > tr");
 
     SelenideElement cmbFiltrele = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt349_input"));
     SelenideElement txtSayfadaAra = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt353"));
@@ -64,8 +69,9 @@ public class GelenEvraklarPage extends MainPage {
     SelenideElement chkEvrakKapatKisiselKlasorler = $(By.id("mainPreviewForm:kisiselKlasorlerimiGetirCheckboxId_input"));
 
     //Paylaş Button altı div
-    SelenideElement btnPaylas = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:6:cmdbutton"));
+    SelenideElement btnPaylas = $(By.xpath("//button/span[contains(@class, 'evrakPaylas')]"));
     SelenideElement txtPaylasKisi = $(By.id("mainPreviewForm:evrakPaylasKisiLov:LovText"));
+    BelgenetElement txtPaylasilanKisi = comboLov(By.id("mainPreviewForm:evrakPaylasKisiLov:LovText"));
     SelenideElement txtPaylasanAciklama = $(By.id("mainPreviewForm:evrakPaylasAciklama"));
     SelenideElement btnPaylasIcPaylas = $(By.id("mainPreviewForm:paylasButtonId"));
 
@@ -74,6 +80,19 @@ public class GelenEvraklarPage extends MainPage {
     public GelenEvraklarPage evrakSec()
     {
         evrakSec.click();
+        return this;
+    }
+
+    public GelenEvraklarPage evrakSec(String konu, String geldigiYer, String kayitTarihiSayi, String evrakTarihi, String no)
+    {
+        tableEvraklar
+                .filterBy(Condition.text("Konu: " + konu))
+                .filterBy(Condition.text("Geldiği Yer: " + geldigiYer))
+                .filterBy(Condition.text("Kayıt Tarihi / Sayı: " + kayitTarihiSayi))
+                .filterBy(Condition.text("Evrak Tarihi: " + evrakTarihi))
+                .filterBy(Condition.text("No: " + no))
+                .get(0)
+                .click();
         return this;
     }
 
@@ -185,6 +204,11 @@ public class GelenEvraklarPage extends MainPage {
 
     public GelenEvraklarPage paylasKisiDoldur(String text) {
         txtPaylasKisi.sendKeys(text);
+        return this;
+    }
+
+    public GelenEvraklarPage paylasKisiSec(String kisi) {
+        txtPaylasilanKisi.selectLov(kisi);
         return this;
     }
 
