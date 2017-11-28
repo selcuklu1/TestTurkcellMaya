@@ -42,7 +42,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         kaydedilenGelenEvrakPage = new KaydedilenGelenEvrakPage();
         kaydedilenGelenEvraklarPage = new KaydedilenGelenEvraklarPage();
         birimHavaleEdilenlerPage = new BirimHavaleEdilenlerPage();
-        login("optiim", "Avis1111");
+//        login("optiim", "Avis1111");
 //        login("ztekin", "123");
     }
 
@@ -193,10 +193,9 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         String evrakNo = evrakNO321;
         String evrakNo1 = evrakNO328;
         String geldigiYer = "D";
-        kaydedilenGelenEvrakPage
-                .raporAlExcel()
-                .openPage()
 
+        kaydedilenGelenEvrakPage
+                .openPage()
                 .gelenEvrakNoDoldur("4985")
                 .sorgula()
                 .tabloKontrolu("4985")
@@ -257,6 +256,9 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         //  page.solMenu(SolMenuData.BirimEvraklari.KaydedilenGelenEvraklar);
 //        TODO  tabloda oluşturulan evrak bulunacak....
         teslimAlinmayiBekleyenlerPage
-                .raporSec();
+                .openPage()
+                .filtreleAc()
+                .tarihiDoldur(getSysDateForKis())
+                .tabloKontrolu(evrakNo);
     }
 }

@@ -4,17 +4,15 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
-import com.sun.javafx.scene.layout.region.Margins;
 import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
-import org.omg.CORBA.PUBLIC_MEMBER;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
-import java.lang.reflect.Array;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -269,7 +267,7 @@ public class BaseLibrary {
     }
 
     //Bilgisayara indirilen dosyaları siler.
-    public void deleteFile(String pathToFile) {
+    public boolean deleteFile(String pathToFile) throws IOException {
         try {
             File file = new File(pathToFile);
 
@@ -285,6 +283,7 @@ public class BaseLibrary {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return false;
     }
 
     //Random tc yaratır mernis sorgusundan geçecek şekilde.
