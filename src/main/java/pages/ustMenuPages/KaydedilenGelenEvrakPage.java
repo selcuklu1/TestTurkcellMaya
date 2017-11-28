@@ -63,57 +63,7 @@ public class KaydedilenGelenEvrakPage extends MainPage {
 
     @Step("Rapor al Excel")
     public KaydedilenGelenEvrakPage raporAlExcel() throws IOException {
-        boolean flag = false;
-
-        File dir = new File("C:\\Users\\Emre_Sencan\\Downloads\\");
-//        File[] dir_contents = dir.listFiles();
-//        Pattern y = Pattern.compile("[~0-9]");
-
-
-        File[] dir_contents = dir.listFiles(new FileFilter() {
-            @Override
-            public boolean accept(File pathname) {
-                String name =pathname.getName().toLowerCase();
-                return name.startsWith("Rapor_")&&pathname.isFile();
-            }
-        });
-        String s = null;
-        String[] raporNumberFirst = new String[10];
-        int max = 0;
-
-
-//        Files.list(Paths.get("C:\\Users\\Emre_Sencan\\Downloads\\"))
-//                .filter(Files::isRegularFile)
-//                .forEach(System.out::println);
-
-
-//        for(File fileOrn : dir.listFiles())
-//        {
-//            System.out.println(fileOrn.getName());
-//        }
-//
-        for (int i = 0; i < dir_contents.length; i++) {
-            String file = dir_contents[i].getName().toString();
-//            s = "";
-//            Matcher m = y.matcher(file);
-//            while (m.find()) {
-//                s = s + m.group();
-//            }
-//            raporNumberFirst[i] = s;
-//            System.out.println(raporNumberFirst[i]);
-        }
-
-//        for (int j = 0; j < raporNumberFirst.length; j++) {
-//            if (Integer.parseInt(raporNumberFirst[j]) > Integer.parseInt(raporNumberFirst[j + 1]))
-//                max = Integer.parseInt(raporNumberFirst[j]);
-//            else
-//                max = Integer.parseInt(raporNumberFirst[j + 1]);
-//        }
-//        System.out.println(max);
         btnRaporAlExcel.click();
-
-
-//        boolean flag = isFileDownloaded("C:\\Users\\Emre_Sencan\\Downloads\\","Rapor_.xls");
         return this;
     }
 

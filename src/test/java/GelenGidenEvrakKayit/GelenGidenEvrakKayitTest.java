@@ -194,7 +194,9 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         String evrakNo1 = evrakNO328;
         String geldigiYer = "D";
         kaydedilenGelenEvrakPage
+                .raporAlExcel()
                 .openPage()
+
                 .gelenEvrakNoDoldur("4985")
                 .sorgula()
                 .tabloKontrolu("4985")

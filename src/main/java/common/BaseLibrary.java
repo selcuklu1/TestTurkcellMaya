@@ -259,21 +259,9 @@ public class BaseLibrary {
         boolean flag = false;
         File dir = new File(downloadPath);
         File[] dir_contents = dir.listFiles();
-        Pattern y = Pattern.compile("[^0-9]");
-        String s = null;
-        int[] raporNumber = new int[0];
 
         for (int i = 0; i < dir_contents.length; i++) {
-            String file = dir_contents[i].getName().toString();
-            s="";
-            Matcher m = y.matcher(file);
-            while (m.find()) {
-                 s =s+ m.group();
-                // s now contains "BAR"
-            }
-            raporNumber[i]= Integer.parseInt(s);
-            System.out.println(s);
-            if (s.equals(fileName))
+            if (dir_contents[i].getName().equals(fileName))
                 return flag = true;
         }
 
