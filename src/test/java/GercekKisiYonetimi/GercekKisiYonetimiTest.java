@@ -93,7 +93,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
 
         gelenEvrakKayitPage
                 .openPage()
-                .evrakBilgileriListKisiKurumSec(evrakBilgileriListKisiKurumTipi)
+                .kisiKurumSec(evrakBilgileriListKisiKurumTipi)
                 .geldigiGercekKisiDoldur(adSoyad);
 
     }
@@ -302,7 +302,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
 
         gelenEvrakKayitPage
                 .openPage()
-                .evrakBilgileriListKisiKurumSec("G")
+                .kisiKurumSec("G")
                 .geldigiGercekKisiDoldur(adSoyad2);
     }
 
@@ -445,7 +445,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
 
         gelenEvrakKayitPage
                 .openPage()
-                .evrakBilgileriListKisiKurumSec("G")
+                .kisiKurumSec("G")
                 .geldigiKisiGoruntulenmemeKontrolu(ad, soyad);
 
         gidenEvrakKayitPage
@@ -509,7 +509,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
 
         gelenEvrakKayitPage
                 .openPage()
-                .evrakBilgileriListKisiKurumSec("G")
+                .kisiKurumSec("G")
                 .gercekKisiGoruntulenmeKontrolu(TCKN, ad, soyad);
 
         gidenEvrakKayitPage

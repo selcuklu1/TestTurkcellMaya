@@ -170,13 +170,13 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    public GelenEvrakKayitPage evrakBilgileriEkBilgiFizikselEkEkle() throws InterruptedException {
+    public GelenEvrakKayitPage ekBilgiFizikselEkEkle() throws InterruptedException {
         btnFizikselEkEkle.click();
         return this;
     }
 
 
-    public GelenEvrakKayitPage evrakBilgileriEkBilgiFiltreAc() throws InterruptedException {
+    public GelenEvrakKayitPage ekBilgiFiltreAc() throws InterruptedException {
         btnEvrakEkleri.click();
         return this;
     }
@@ -186,7 +186,7 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    public GelenEvrakKayitPage evrakBilgileriListKonuKoduDoldur(String konuKodu) throws InterruptedException {
+    public GelenEvrakKayitPage konuKoduDoldur(String konuKodu) throws InterruptedException {
         comboKonuKodu.selectLov(konuKodu);
         return this;
     }
@@ -196,29 +196,29 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    public GelenEvrakKayitPage evrakBilgileriListEvrakTuruSec(String evrakTuru) {
+    public GelenEvrakKayitPage evrakTuruSec(String evrakTuru) {
         cmbEvrakBilgileriListEvrakTuru.selectOptionByValue(evrakTuru);
         return this;
     }
 
-    public GelenEvrakKayitPage evrakBilgileriListEvrakDiliSec(String evrakDili) {
+    public GelenEvrakKayitPage evrakDiliSec(String evrakDili) {
         cmbEvrakBilgileriListEvrakDili.selectOptionByValue(evrakDili);
         return this;
     }
 
-    public GelenEvrakKayitPage evrakBilgileriListEvrakTarihiDoldur(String evrakTarihi) {
+    public GelenEvrakKayitPage evrakTarihiDoldur(String evrakTarihi) {
         dateTxtEvrakBilgileriListEvrakTarihi.clear();
         dateTxtEvrakBilgileriListEvrakTarihi.sendKeys(evrakTarihi);
         return this;
     }
 
-    public GelenEvrakKayitPage evrakBilgileriListGizlilikDerecesiSec(String gizlilikDerecesi) {
+    public GelenEvrakKayitPage gizlilikDerecesiSec(String gizlilikDerecesi) {
         cmbEvrakBilgileriListGizlilikDerecesi.selectOptionByValue(gizlilikDerecesi);
         return this;
     }
 
     @Step("Kişi kurum seç")
-    public GelenEvrakKayitPage evrakBilgileriListKisiKurumSec(String kisiKurum) {
+    public GelenEvrakKayitPage kisiKurumSec(String kisiKurum) {
         cmbEvrakBilgileriListKisiKurum.selectOptionByValue(kisiKurum);
         return this;
     }
@@ -280,49 +280,49 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    public GelenEvrakKayitPage evrakBilgileriListGeldigiKurumDoldurLovText(String geldigiKurum) throws InterruptedException {
+    public GelenEvrakKayitPage geldigiKurumDoldurLovText(String geldigiKurum) throws InterruptedException {
         comnoGeldigiKurum.selectLov(geldigiKurum);
         return this;
     }
 
-    public GelenEvrakKayitPage evrakBilgileriListEvrakSayiSolDoldur(String evrakSayiSol) {
+    public GelenEvrakKayitPage evrakSayiSolDoldur(String evrakSayiSol) {
         txtEvrakBilgileriListEvrakSayiTextAreaSol.sendKeys(evrakSayiSol);
         return this;
     }
 
-    public GelenEvrakKayitPage evrakBilgileriListEvrakSayiSagDoldur() {
+    public GelenEvrakKayitPage evrakSayiSagDoldur() {
         String evrakSayiSag = createRandomNumber(5);
         txtEvrakBilgileriListEvrakSayiTextAreaSag.clear();
         txtEvrakBilgileriListEvrakSayiTextAreaSag.sendKeys(evrakSayiSag);
         return this;
     }
 
-    public GelenEvrakKayitPage evrakBilgileriListEvrakGelisTipiSec(String evrakGelisTipi) {
+    public GelenEvrakKayitPage evrakGelisTipiSec(String evrakGelisTipi) {
         cmbEvrakBilgileriListEvrakGelisTipi.selectOptionByValue(evrakGelisTipi);
         return this;
     }
 
-    public GelenEvrakKayitPage evrakBilgileriListIvedilikSec(String ivedilik) {
+    public GelenEvrakKayitPage ivedilikSec(String ivedilik) {
         cmbEvrakBilgileriListIvedilik.selectOptionByValue(ivedilik);
         return this;
     }
 
-    public GelenEvrakKayitPage evrakBilgileriListMiatDoldur(String miat) {
+    public GelenEvrakKayitPage miatDoldur(String miat) {
         txtEvrakBilgileriListMiat.sendKeys(miat);
         return this;
     }
 
-    public GelenEvrakKayitPage evrakBilgileriListAciklamaDoldur(String evrakBilgileriAciklama) {
+    public GelenEvrakKayitPage evrakBilgileriAciklamaDoldur(String evrakBilgileriAciklama) {
         txtEvrakBilgileriListAciklama.sendKeys(evrakBilgileriAciklama);
         return this;
     }
 
-    public GelenEvrakKayitPage evrakBilgileriListOzelKategoriSec(String ozelKategori) {
+    public GelenEvrakKayitPage ozelKategoriSec(String ozelKategori) {
         cmbEvrakBilgileriListOzelKategori.selectOption(ozelKategori);
         return this;
     }
 
-    public GelenEvrakKayitPage evrakBilgileriListPostalanmaTarihiDoldur(String postalanmaTarihi) {
+    public GelenEvrakKayitPage postalanmaTarihiDoldur(String postalanmaTarihi) {
         dateTxtEvrakBilgileriListPostalanmaTarihi.sendKeys(postalanmaTarihi);
         return this;
     }
@@ -383,22 +383,22 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    public GelenEvrakKayitPage evrakEkTabViewGizlilikDerecesiSec(String gizlilikDerecesi) {
+    public GelenEvrakKayitPage evrakEkTabGizlilikDerecesiSec(String gizlilikDerecesi) {
         cmbEvrakEkTabViewGizlilikDerecesi.selectOption(gizlilikDerecesi);
         return this;
     }
 
-    public GelenEvrakKayitPage evrakFizikselEkTabViewEkMetniDoldur(String evrakEkTabViewEkMetni) {
+    public GelenEvrakKayitPage fizikselEkTabEkMetniDoldur(String evrakEkTabViewEkMetni) {
         txtEvrakFizikselEkTabViewEkMetni.sendKeys(evrakEkTabViewEkMetni);
         return this;
     }
 
-    public GelenEvrakKayitPage evrakEkTabViewFizikselEkMetniDoldur(String evrakEkTabViewEkMetni) {
+    public GelenEvrakKayitPage evrakEkTabFizikselEkMetniDoldur(String evrakEkTabViewEkMetni) {
         txtEvrakFizikselEkTabViewEkMetni.sendKeys(evrakEkTabViewEkMetni);
         return this;
     }
 
-    public GelenEvrakKayitPage evrakEkTabViewDosyaEkle() {
+    public GelenEvrakKayitPage evrakEkTabDosyaEkle() {
         btvEvrakEkTabViewDosyaEkle.click();
         return this;
     }
@@ -413,127 +413,127 @@ public class GelenEvrakKayitPage extends MainPage {
 //        return this;
 //    }
 
-    public GelenEvrakKayitPage evrakEkTabViewGuvenlikKoduAciklamaSec(String guvenlikKoduAciklama) {
+    public GelenEvrakKayitPage evrakEkTabGuvenlikKoduAciklamaSec(String guvenlikKoduAciklama) {
         cmbEvrakEkTabViewGuvenlikKoduAciklama.selectOption(guvenlikKoduAciklama);
         return this;
     }
 
-    public GelenEvrakKayitPage evrakFizikselEkTabViewAciklamaEkle() {
+    public GelenEvrakKayitPage fizikselEkTabViewAciklamaEkle() {
         btnEvrakFizikselEkTabViewAciklamaEkle.click();
         return this;
     }
 
-    public GelenEvrakKayitPage evrakEkTabViewEkIslemleriEvrakTarihBasDoldur(String baslamaTarihi) {
+    public GelenEvrakKayitPage evrakEkTabEkIslemleriEvrakTarihBasDoldur(String baslamaTarihi) {
         dateTxtEvrakEkTabViewEkIslemleriEvrakTarihBas.sendKeys(baslamaTarihi);
         return this;
     }
 
-    public GelenEvrakKayitPage evrakEkTabViewEkIslemleriEvrakTarihSonDoldur(String sonTarih) {
+    public GelenEvrakKayitPage evrakEkTabEkIslemleriEvrakTarihSonDoldur(String sonTarih) {
         dateTxtEvrakEkTabViewEkIslemleriEvrakTarihSon.sendKeys(sonTarih);
         return this;
     }
 
-    public GelenEvrakKayitPage evrakEkTabViewekIslemleriEvrakAramaAranacakYerSec(String aranacakYer) {
+    public GelenEvrakKayitPage evrakEkTabIslemleriEvrakAramaAranacakYerSec(String aranacakYer) {
         cmbEvrakEkTabViewekIslemleriEvrakAramaAranacakYer.selectOption(aranacakYer);
         return this;
     }
 
-    public GelenEvrakKayitPage evrakEkTabViewevrakAramaDoldur(String arama) {
+    public GelenEvrakKayitPage evrakEkTabEvrakAramaDoldur(String arama) {
         txtEvrakEkTabViewevrakArama.sendKeys(arama);
         return this;
     }
 
-    public GelenEvrakKayitPage evrakEkTabViewArsivdenEvrakAraEkEkleTarihBasDoldur(String baslamaTarihi) {
+    public GelenEvrakKayitPage evrakEkTabArsivdenEvrakAraEkEkleTarihBasDoldur(String baslamaTarihi) {
         dateTxtEvrakEkTabViewArsivdenEvrakAraEkEkleTarihBas.sendKeys(baslamaTarihi);
         return this;
     }
 
-    public GelenEvrakKayitPage evrakEkTabViewArsivdenEvrakAraEkEkleTarihSonDoldur(String sonTarih) {
+    public GelenEvrakKayitPage evrakEkTabArsivdenEvrakAraEkEkleTarihSonDoldur(String sonTarih) {
         dateTxtEvrakEkTabViewArsivdenEvrakAraEkEkleTarihSon.sendKeys(sonTarih);
         return this;
     }
 
-    public GelenEvrakKayitPage evrakEkTabViewArsivdenEvrakAraKonuDoldur(String konu) {
+    public GelenEvrakKayitPage evrakEkTabArsivdenEvrakAraKonuDoldur(String konu) {
         txtEvrakEkTabViewArsivdenEvrakAraKonu.sendKeys(konu);
         return this;
     }
 
-    public GelenEvrakKayitPage evrakEkTabViewKullaniciDoldur(String kullanici) {
+    public GelenEvrakKayitPage evrakEkTabKullaniciDoldur(String kullanici) {
         txtEvrakEkTabViewKullanici.sendKeys(kullanici);
         return this;
     }
 
-    public GelenEvrakKayitPage evrakEkTabViewArsivdenEvrakAraSayiDoldur(String evrakSayi) {
+    public GelenEvrakKayitPage evrakEkTabArsivdenEvrakAraSayiDoldur(String evrakSayi) {
         txtEvrakEkTabViewArsivdenEvrakAraSayi.sendKeys(evrakSayi);
         return this;
     }
 
-    public GelenEvrakKayitPage ilgiIslemleriTabViewDosyaAciklamaDoldur(String aciklama) {
+    public GelenEvrakKayitPage ilgiIslemleriTabDosyaAciklamaDoldur(String aciklama) {
         txtIlgiIslemleriTabViewDosyaAciklama.sendKeys(aciklama);
         return this;
     }
 
-    public GelenEvrakKayitPage ilgiIslemleriTabViewDosyaEkle() {
+    public GelenEvrakKayitPage ilgiIslemleriTabDosyaEkle() {
         btnIlgiIslemleriTabViewDosyaEkle.click();
         return this;
     }
 
-    public GelenEvrakKayitPage ilgiIslemleriTabViewIlgiDosyaTemizle() {
+    public GelenEvrakKayitPage ilgiIslemleriTabIlgiDosyaTemizle() {
         btnIlgiIslemleriTabViewIlgiDosyaTemizle.click();
         return this;
     }
 
-    public GelenEvrakKayitPage ilgiIslemleriTabViewAciklamaEkle() {
+    public GelenEvrakKayitPage ilgiIslemleriTabAciklamaEkle() {
         btnIlgiIslemleriTabViewAciklamaEkle.click();
         return this;
     }
 
-    public GelenEvrakKayitPage ilgiIslemleriTabViewIlgiIslemleriEvrakTarihBasDoldur(String baslamaTarihi) {
+    public GelenEvrakKayitPage ilgiIslemleriTabIlgiIslemleriEvrakTarihBasDoldur(String baslamaTarihi) {
         dateTxtIlgiIslemleriTabViewIlgiIslemleriEvrakTarihBas.sendKeys(baslamaTarihi);
         return this;
     }
 
-    public GelenEvrakKayitPage ilgiIslemleriTabViewIlgiIslemleriEvrakTarihSonDoldur(String sonTarih) {
+    public GelenEvrakKayitPage ilgiIslemleriTabIlgiIslemleriEvrakTarihSonDoldur(String sonTarih) {
         datetxtIlgiIslemleriTabViewIlgiIslemleriEvrakTarihSon.sendKeys(sonTarih);
         return this;
     }
 
-    public GelenEvrakKayitPage ilgiIslemleriTabViewIlgiIslemleriEvrakAramaAranacakYerSec(String aranacakYer) {
+    public GelenEvrakKayitPage ilgiIslemleriTabIlgiIslemleriEvrakAramaAranacakYerSec(String aranacakYer) {
         cmbIlgiIslemleriTabViewIlgiIslemleriEvrakAramaAranacakYer.selectOption(aranacakYer);
         return this;
     }
 
-    public GelenEvrakKayitPage ilgiIslemleriTabViewEvrakAramaDoldur(String arama) {
+    public GelenEvrakKayitPage ilgiIslemleriTabEvrakAramaDoldur(String arama) {
         txtIlgiIslemleriTabViewEvrakArama.sendKeys(arama);
         return this;
     }
 
-    public GelenEvrakKayitPage ilgiIslemleriTabViewArsivdenEvrakAraIlgiEkleTarihBasDoldur(String baslamaTarihi) {
+    public GelenEvrakKayitPage ilgiIslemleriTabArsivdenEvrakAraIlgiEkleTarihBasDoldur(String baslamaTarihi) {
         dateTxtIlgiIslemleriTabViewArsivdenEvrakAraIlgiEkleTarihBas.sendKeys(baslamaTarihi);
         return this;
     }
 
-    public GelenEvrakKayitPage ilgiIslemleriTabViewArsivdenEvrakAraIlgiEkleTarihSonDoldur(String sonTarih) {
+    public GelenEvrakKayitPage ilgiIslemleriTabArsivdenEvrakAraIlgiEkleTarihSonDoldur(String sonTarih) {
         dateTxtIlgiIslemleriTabViewArsivdenEvrakAraIlgiEkleTarihSon.sendKeys(sonTarih);
         return this;
     }
 
-    public GelenEvrakKayitPage ilgiIslemleriTabViewArsivdenIlgiEvrakAraKonuDoldur(String konu) {
+    public GelenEvrakKayitPage ilgiIslemleriTabArsivdenIlgiEvrakAraKonuDoldur(String konu) {
         txtIlgiIslemleriTabViewArsivdenIlgiEvrakAraKonu.sendKeys(konu);
         return this;
     }
 
-    public GelenEvrakKayitPage ilgiIslemleriTabViewKullaniciDoldur(String kullanici) {
+    public GelenEvrakKayitPage ilgiIslemleriTabKullaniciDoldur(String kullanici) {
         txtIlgiIslemleriTabViewKullanici.sendKeys(kullanici);
         return this;
     }
 
-    public GelenEvrakKayitPage ilgiIslemleriTabViewArsivdenIlgiEvrakAraSayiDoldur(String evrakSayi) {
+    public GelenEvrakKayitPage ilgiIslemleriTabArsivdenIlgiEvrakAraSayiDoldur(String evrakSayi) {
         txtIlgiIslemleriTabViewArsivdenIlgiEvrakAraSayi.sendKeys(evrakSayi);
         return this;
     }
 
-    public GelenEvrakKayitPage ilgiIslemleriTabViewAciklamaDoldur(String aciklama) {
+    public GelenEvrakKayitPage ilgiIslemleriTabAciklamaDoldur(String aciklama) {
         txtIlgiIslemleriTabViewAciklama.sendKeys(aciklama);
         return this;
     }
@@ -568,61 +568,61 @@ public class GelenEvrakKayitPage extends MainPage {
     }
 
     @Step("Geldiği Kişiyi ekle")
-    public GelenEvrakKayitPage evrakBilgileriGeldigiKisiEkle() {
+    public GelenEvrakKayitPage geldigiKisiEkle() {
         executeJavaScript("arguments[0].click();",
                 btnGeldigiKisiEkle);
         return this;
     }
 
     @Step("TC kimlik No ekle")
-    public GelenEvrakKayitPage IletisimBilgisiTCKNEkle(String TCKN) {
-//        String mernisNo = createMernisTCNO();
+    public GelenEvrakKayitPage iletisimBilgisiTCKNEkle() {
+        String mernisNo = createMernisTCKN();
         txtTCKN.clear();
-        txtTCKN.sendKeys(TCKN);
+        txtTCKN.sendKeys(mernisNo);
         return this;
     }
 
     @Step("TC kimlik No ara")
-    public GelenEvrakKayitPage IletisimBilgisiTCKNAra() {
+    public GelenEvrakKayitPage iletisimBilgisiTCKNAra() {
         executeJavaScript("arguments[0].click();",
                 btnTCKNAra);
         return this;
     }
 
     @Step("Ad doldur")
-    public GelenEvrakKayitPage IletisimBilgisiAdDoldur(String ad) {
-        txtAd.sendKeys(ad);
+    public GelenEvrakKayitPage iletisimBilgisiAdDoldur(String ad) {
+        txtAd.setValue(ad);
         return this;
     }
 
     @Step("Soyad doldur")
-    public GelenEvrakKayitPage IletisimBilgisiSoyadDoldur(String soyad) {
+    public GelenEvrakKayitPage iletisimBilgisiSoyadDoldur(String soyad) {
         txtSoyad.sendKeys(soyad);
         return this;
     }
 
     @Step("Kaydet")
-    public GelenEvrakKayitPage IletisimBilgisikaydet() {
+    public GelenEvrakKayitPage iletisimBilgisikaydet() {
         btnKaydetIletisimBilgisi.click();
         return this;
     }
 
     @Step("Evrak Ekleri Dosya Ekleme")
-    public GelenEvrakKayitPage evrakBilgileriDosyaEkleme(String pathToFile) {
+    public GelenEvrakKayitPage evrakEkleriDosyaEkleme(String pathToFile) {
         WebDriverRunner.getWebDriver()
                 .findElement(dosyaPath)
                 .sendKeys(pathToFile);
         return this;
     }
 
-    @Step("EkBilgiler dosya ekleme açıklama alanı doldur")
-    public GelenEvrakKayitPage evrakBilgileriDosyaEklemeAciklamaDoldur(String aciklama) {
+    @Step("Ek Bilgiler dosya ekleme açıklama alanı doldur")
+    public GelenEvrakKayitPage evrakEkleriDosyaEkleEkMetinDoldur(String aciklama) {
         txtEvrakEkTabViewEkMetni.sendKeys(aciklama);
         return this;
     }
 
     @Step("EkBilgiler dosya ekleme excel adi kontrol")
-    public GelenEvrakKayitPage evrakBilgileriDosyaEklemeDosyaAdiKontrol(String excelAdi) {
+    public GelenEvrakKayitPage evrakEkleriDosyaEkleDosyaAdiKontrol(String excelAdi) {
         String text = lblDosyaAdi.text();
         System.out.println(text);
         Assert.assertEquals(text, excelAdi);
@@ -630,7 +630,7 @@ public class GelenEvrakKayitPage extends MainPage {
     }
 
     @Step("Ust Yazi adi kontrol")
-    public GelenEvrakKayitPage evrakBilgileriDosyaEklemeUstYaziAdiKontrol(String ustYaziAdi) {
+    public GelenEvrakKayitPage UstYaziAdiKontrol(String ustYaziAdi) {
         String text = lblEklenenUstYazi.text();
         System.out.println(text);
         Assert.assertEquals(text.contains(ustYaziAdi), true);
@@ -644,7 +644,7 @@ public class GelenEvrakKayitPage extends MainPage {
     }
 
     @Step("Alanların güncellenebilirlik kontrolü")
-    public GelenEvrakKayitPage evrakDetariAlanGuncellenebilirlikKontrolü() {
+    public GelenEvrakKayitPage evrakDetaylariAlanGuncellenebilirlikKontrolü() {
         txtEvrakBilgileriListKonuKodu.shouldBe(Condition.enabled);
 //        txtEvrakBilgileriListKonu.shouldBe(Condition.enabled);
         cmbEvrakBilgileriListEvrakTuru.shouldBe(Condition.enabled);

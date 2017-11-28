@@ -102,8 +102,8 @@ public class KurumYonetimiTest extends BaseTest {
         /*
         gelenEvrakKayitPage
                 .openPage()
-                .evrakBilgileriListKisiKurumSec("Kurum")
-                .evrakBilgileriListGeldigiKurumDoldurLovText(yeniKurumAdi)
+                .kisiKurumSec("Kurum")
+                .geldigiKurumDoldurLovText(yeniKurumAdi)
                 .alanDegeriKontrolEt(gelenEvrakKayitPage.txtEvrakBilgileriListEvrakSayiTextAreaSol, idariBirimKimlikKodu + "   -", true, true);
         */
 

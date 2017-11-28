@@ -87,7 +87,7 @@ public class TuzelKisiYonetimiTest extends BaseTest {
 
         gelenEvrakKayitPage
                 .openPage()
-                .evrakBilgileriListKisiKurumSec("T")
+                .kisiKurumSec("T")
                 .geldigiTuzelKisiDoldur(ad)
                 .secilenGeregiTuzelKisiSil()
                 .geldigiTuzelKisiDoldur(kisaAd)

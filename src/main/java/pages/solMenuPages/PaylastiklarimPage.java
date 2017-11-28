@@ -42,6 +42,7 @@ public class PaylastiklarimPage extends MainPage {
 
 
     // Evrak Notları elementleri
+    ElementsCollection tableEvrakNotlari = $$("div[id='mainPreviewForm:evrakOnizlemeTab'] div[aria-hidden='false'] tbody > tr[role='row']");
     SelenideElement btnEvratNotEkle = $("button[id$=':paylasimNotuEkleId']");
     BelgenetElement txtPaylasKisi = comboLov(By.id("mainPreviewForm:evrakPaylasKisiLov:LovText"));
 
@@ -93,6 +94,18 @@ public class PaylastiklarimPage extends MainPage {
 
         tablePaylastiklarim
                 .filterBy(Condition.text("Paylaşılanlar: " + _paylasilanKullanicilar))
+                .get(0)
+                .click();
+        return this;
+    }
+
+    @Step("Evrak seçildi")
+    public PaylastiklarimPage evrakSec(String paylasilanlar, String paylasilmaTarihi, String konu, String evrakNo) {
+        tablePaylastiklarim
+                .filterBy(Condition.text("Paylaşılanlar: " + paylasilanlar))
+                .filterBy(Condition.text("Paylaşılma Tarihi: " + paylasilmaTarihi))
+                .filterBy(Condition.text("Konu: " + konu))
+                .filterBy(Condition.text("Evrak No: " + evrakNo))
                 .get(0)
                 .click();
         return this;
@@ -191,6 +204,25 @@ public class PaylastiklarimPage extends MainPage {
     @Step("paylaşılan kişileri temizle ")
     public PaylastiklarimPage paylasilanKisileriTemizle() {
         txtPaylasKisi.clearAllSelectedLov();
+        return this;
+    }
+
+    @Step("\"{0}\" evrakı tabloda yer almalı mı?: \"{1}\"")
+    public PaylastiklarimPage evrakNotuKontrolEt(String ekleyen, String aciklama, Boolean shouldBeExists) {
+
+        if(shouldBeExists == true) {
+            tablePaylastiklarim
+                    .filterBy(Condition.text(ekleyen))
+                    .filterBy(Condition.text(aciklama))
+                    .get(0)
+                    .shouldBe(Condition.exist);
+        } else {
+            tablePaylastiklarim
+                    .filterBy(Condition.text(ekleyen))
+                    .filterBy(Condition.text(aciklama))
+                    .get(0)
+                    .shouldNotBe(Condition.exist);
+        }
         return this;
     }
 
