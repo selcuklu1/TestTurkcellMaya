@@ -105,7 +105,7 @@ public class TuzelKisiYonetimiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC1124: Tüzel kişi sorgulama")
+    @Test(enabled = true, description = "TC1133: Tüzel kişi sorgulama")
     public void TC1133() throws InterruptedException {
 
         String vergiNo = "8524567913";
@@ -191,5 +191,81 @@ public class TuzelKisiYonetimiTest extends BaseTest {
                 .filtreDurumSec("AKTIFLER")
                 .ara()
                 .kayitBulunamadiKontrolu();
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TC1460: Yeni tüzel kişi kayıtta alan kontrolleri")
+    public void TC1460() {
+
+        String vergiNo = createRandomNumber(10);
+        String kisaAd = createRandomText(7);
+        String ad = kisaAd + " holding";
+        String adres = "Gültepe Mahallesi";
+        String ulke = "TÜRKİYE";
+        String il = "İstanbul";
+        String ilce = "Kağıthane";
+        String eposta = kisaAd + "holding@turksat.com.tr";
+        String yanlisFormattaEPosta = "testholdingturksat.com.tr";
+        String gecersizKepAdresi = "45454";
+
+        String zorunluAlanUyariMesaji = "Zorunlu alanları doldurunuz";
+        String kepDikkatMesaji ="Kep adresi boş bırakılamaz! Lütfen bir kep adresi ekleyiniz.";
+        String gecersizKepAdresiDikkatMesaji = "Girilen kep adresi geçersiz!";
+        String epostaDikkatMesaji = "Lütfen Türkçe karakter ve boşluk içermeyen, @ işareti ve nokta içeren geçerli bir e-mail giriniz!";
+
+        tuzelKisiYonetimiPage
+                .openPage()
+                .yeniTuzelKisiEkle()
+                .adDoldur(ad)
+                .kisaAdDoldur(kisaAd)
+                .tuzelKisiKaydet()
+                .islemMesaji().uyariOlmali(zorunluAlanUyariMesaji);
+
+        tuzelKisiYonetimiPage
+                .yeniTuzelKisiEkle()
+                .tuzelKisiTipiSec("12729")
+                .vergiNoDoldur(vergiNo)
+                .tuzelKisiKaydet()
+                .islemMesaji().uyariOlmali(zorunluAlanUyariMesaji);
+
+        tuzelKisiYonetimiPage
+                .yeniTuzelKisiEkle()
+                .tuzelKisiTipiSec("12729")
+                .adDoldur(ad)
+                .kepAdresiKullaniyorSec(true)
+                .tuzelKisiKaydet()
+                .islemMesaji().dikkatOlmali(kepDikkatMesaji);
+
+        tuzelKisiYonetimiPage
+                .yeniIletisimEkle()
+                .iletisimBilgisiKaydet()
+                .islemMesaji().uyariOlmali(zorunluAlanUyariMesaji);
+
+        tuzelKisiYonetimiPage
+                .adresDoldur(adres)
+                .ulkeSec(ulke)
+                .ilSec(il)
+                .ilceSec(ilce)
+                .ePostaDoldur(yanlisFormattaEPosta)
+                .iletisimBilgisiKaydet()
+                .islemMesaji().dikkatOlmali(epostaDikkatMesaji);
+
+        tuzelKisiYonetimiPage
+                .ePostaDoldur(eposta)
+                .iletisimBilgisiKaydet();
+
+        tuzelKisiYonetimiPage
+                .kepAdresBilgileriEkle()
+                .kepAdresiKaydet()
+                .islemMesaji().uyariOlmali(zorunluAlanUyariMesaji);
+
+        tuzelKisiYonetimiPage
+                .kepAdresiDoldur(gecersizKepAdresi)
+                .kepAdresiKaydet()
+                .islemMesaji().dikkatOlmali(gecersizKepAdresiDikkatMesaji);
+
+        tuzelKisiYonetimiPage
+                .kepAdresiIptalet();
+
     }
 }
