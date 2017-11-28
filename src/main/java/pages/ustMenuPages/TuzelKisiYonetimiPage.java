@@ -8,6 +8,7 @@ import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 public class TuzelKisiYonetimiPage extends MainPage {
@@ -18,9 +19,11 @@ public class TuzelKisiYonetimiPage extends MainPage {
     SelenideElement btnDuzenle = $(By.id("tuzelKisiYonetimiListingForm:tuzelKisiDataTable:0:updateTuzelKisiButton"));
     SelenideElement btnTuzelKisiEkle = $(By.id("tuzelKisiYonetimiListingForm:tuzelKisiDataTable:addNewTuzelKisiButton"));
     SelenideElement filtreSorgulamaPanel = $(By.id("tuzelKisiYonetimiListingForm:filterPanel"));
-    SelenideElement txtFiltreSGKNo = $(By.id("tuzelKisiYonetimiListingForm:filterPanel:tuzelKisiVergiKimlikNoFilterInput"));
+    SelenideElement txtFiltreVergiSGKNo = $(By.id("tuzelKisiYonetimiListingForm:filterPanel:tuzelKisiVergiKimlikNoFilterInput"));
     SelenideElement txtFiltreAd = $(By.id("tuzelKisiYonetimiListingForm:filterPanel:tuzelKisiAdFilterInput"));
     SelenideElement txtFiltreDurum = $(By.id("tuzelKisiYonetimiListingForm:filterPanel:durumSelectBox"));
+    SelenideElement btnIslemOnayiHayir = $(By.id("baseConfirmationDialog:baseConfirmationDialogCancelButton"));
+    SelenideElement btnIslemOnayiEvet = $(By.id("baseConfirmationDialog:confirmButton"));
 
 
     //Tüzel kişi ekleme alanı
@@ -59,10 +62,24 @@ public class TuzelKisiYonetimiPage extends MainPage {
 
     //Tablo
     SelenideElement tblTuzelKisiDataTable = $(By.id("tuzelKisiYonetimiListingForm:tuzelKisiDataTable"));
+    SelenideElement btnTuzelKisiAktifYap = $(By.cssSelector("[id^='tuzelKisiYonetimiListingForm:tuzelKisiDataTable'][id$='aktifEtTuzelKisi']"));
+    SelenideElement btnTuzelKisiPasifYap = $(By.cssSelector("[id^='tuzelKisiYonetimiListingForm:tuzelKisiDataTable'][id$='pasifEtTuzelKisi']"));
+    SelenideElement tblKayitBulunamadi = $(By.xpath("//*[@id=\"tuzelKisiYonetimiListingForm:tuzelKisiDataTable_data\"]/tr/td"));
+
     //</editor-fold>
 
     public TuzelKisiYonetimiPage openPage() {
         ustMenu("Tüzel Kişi Yönetimi");
+        return this;
+    }
+
+    public TuzelKisiYonetimiPage filtreVergiNoDoldur(String vergiNo) {
+        txtFiltreVergiSGKNo.setValue(vergiNo);
+        return this;
+    }
+
+    public TuzelKisiYonetimiPage filtreAdDoldur(String ad) {
+        txtFiltreAd.setValue(ad);
         return this;
     }
 
@@ -73,6 +90,12 @@ public class TuzelKisiYonetimiPage extends MainPage {
 
     public TuzelKisiYonetimiPage guncelle() {
         btnGuncelle.click();
+        return this;
+    }
+
+    @Step("Filtrede durum seç")
+    public TuzelKisiYonetimiPage filtreDurumSec(String secim) {
+        txtFiltreDurum.selectOptionByValue(secim);
         return this;
     }
 
@@ -214,13 +237,13 @@ public class TuzelKisiYonetimiPage extends MainPage {
     public TuzelKisiYonetimiPage filtreSorgulamaPaneliAc() {
 
         filtreSorgulamaPanel.click();
-        txtFiltreSGKNo.clear();
+        txtFiltreVergiSGKNo.clear();
         txtFiltreAd.clear();
         return this;
     }
 
     @Step("Tüzel kişi kayıt kontrolu")
-    public TuzelKisiYonetimiPage kayitKontrolu(String vergiNo, String ad, String kisaAd) {
+    public TuzelKisiYonetimiPage aktifKisiKayitKontrolu(String vergiNo, String ad, String kisaAd) {
 
 
         boolean statusVergiNo = findElementOnTableByColumnInputInAllPages(tblTuzelKisiDataTable, 1, vergiNo).isDisplayed();
@@ -234,4 +257,82 @@ public class TuzelKisiYonetimiPage extends MainPage {
         return this;
     }
 
+    @Step("Pasif kayit kontrolu")
+    public TuzelKisiYonetimiPage pasifKisiKayitKontrolu(String vergiNo, String ad, String kisaAd) {
+
+        boolean statusTCNO = findElementOnTableByColumnInputInAllPages(tblTuzelKisiDataTable, 1, vergiNo).isDisplayed();
+        boolean statusAd = findElementOnTableByColumnInputInAllPages(tblTuzelKisiDataTable, 2, ad).isDisplayed();
+        boolean statusSoyad = findElementOnTableByColumnInputInAllPages(tblTuzelKisiDataTable, 3, kisaAd).isDisplayed();
+
+        Assert.assertEquals(statusTCNO, true);
+        Assert.assertEquals(statusAd, true);
+        Assert.assertEquals(statusSoyad, true);
+
+        return this;
+    }
+    @Step("Aktif Tüzel kişi kayıt kontrolu")
+    public TuzelKisiYonetimiPage aktiflerTumListeKayitKontrolu() {
+
+        boolean status = findElementOnTableAllPages(btnTuzelKisiAktifYap);
+        Assert.assertEquals(status, false);
+        return this;
+    }
+
+    @Step("Pasif Tüzel kişi kayıt kontrolu")
+    public TuzelKisiYonetimiPage pasiflerTumListeKayitKontrolu() {
+
+        boolean status = findElementOnTableAllPages(btnTuzelKisiPasifYap);
+        Assert.assertEquals(status, false);
+        return this;
+    }
+
+    @Step("Tüzel Kişi Aktif Yap")
+    public TuzelKisiYonetimiPage tuzelKisiAktifYap() {
+        btnTuzelKisiAktifYap.click();
+        return this;
+    }
+
+    @Step("Tüzel Kişi Pasif Yap")
+    public TuzelKisiYonetimiPage tuzelKisiPasifYap() {
+        btnTuzelKisiPasifYap.click();
+        return this;
+    }
+
+    @Step("Popup: İşlem Onayı")
+    public TuzelKisiYonetimiPage islemOnayi(String secim) {
+
+        if (secim == "Evet") {
+            btnIslemOnayiEvet.click();
+        } else {
+            btnIslemOnayiHayir.click();
+        }
+        return this;
+    }
+
+    @Step("Tüzel Kişi Aktif Yap")
+    public TuzelKisiYonetimiPage tuzelKisiPasifIseAktifYap() {
+
+        if (btnTuzelKisiAktifYap.isDisplayed()) {
+            btnTuzelKisiAktifYap.click();
+            btnIslemOnayiEvet.click();
+        }
+        return this;
+    }
+
+    @Step("Tüzel Kişi Aktif Yap")
+    public TuzelKisiYonetimiPage tuzelKisiAktifIsePasifYap() {
+
+        if (btnTuzelKisiPasifYap.isDisplayed()) {
+            btnTuzelKisiPasifYap.click();
+            btnIslemOnayiEvet.click();
+        }
+        return this;
+    }
+
+    @Step("Kayıt bulunamadı kontrolu")
+    public TuzelKisiYonetimiPage kayitBulunamadiKontrolu() {
+        Assert.assertEquals(tblKayitBulunamadi.getText().contains("Kayıt Bulunamamıştır"), true);
+        return this;
+    }
 }
+

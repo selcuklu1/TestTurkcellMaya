@@ -33,7 +33,8 @@ public class GelenEvrakKayitPage extends MainPage {
     SelenideElement cmbEvrakBilgileriListKisiKurum = $("[id$='kisiKurum']");
     //SelenideElement cmbEvrakBilgileriListKisiKurum = $("[id$='kisiKurum']");
     //BelgenetElement cmbEvrakBilgileriListGeldigiKisi = comboLov(By.id("evrakBilgileriForm:evrakBilgileriList:9:geldigiGercekKisiLov:LovText"));
-    BelgenetElement cmbEvrakBilgileriListGeldigiKisi = comboLov("[id$='geldigiGercekKisiLov:LovText']");
+    BelgenetElement cmbGeldigiGercekKisi = comboLov("[id$='geldigiGercekKisiLov:LovText']");
+    BelgenetElement cmbGeldigiTuzelKisi = comboLov("[id$='geldigiTuzelKisiLov:LovText']");
     By cmbGeldiğiKisiBy = By.cssSelector("[id$='geldigiGercekKisiLov:LovText']");
 
     public SelenideElement txtEvrakBilgileriListEvrakSayiTextAreaSol = $("[id$='evrakSayiTextAreaSol']");
@@ -77,6 +78,7 @@ public class GelenEvrakKayitPage extends MainPage {
     SelenideElement txtEvrakEkTabViewArsivdenEvrakAraSayi = $(By.id("evrakBilgileriForm:evrakEkTabView:arsivdenEvrakAraSayiInputTextId"));
 
     // Havale işlemleri sekmesinde bulunanlar
+    SelenideElement chkOtomatikHavale =$(By.id("evrakBilgileriForm:j_idt11601_input"));
     SelenideElement txtDagitimBilgileriBirim = $(By.id("evrakBilgileriForm:dagitimBilgileriBirimLov:LovText"));
     SelenideElement txtDagitimBilgileriKisi = $(By.id("evrakBilgileriForm:dagitimBilgileriKullaniciLov:LovText"));
     SelenideElement txtDagitimBilgileriKullaniciListesi = $(By.id("evrakBilgileriForm:dagitimBilgileriKisiListesiLov:LovText"));
@@ -142,6 +144,11 @@ public class GelenEvrakKayitPage extends MainPage {
     //endregion
 
 
+    public GelenEvrakKayitPage otomatikHavaleSec(boolean secim){
+        chkOtomatikHavale.setSelected(secim);
+        return this;
+    }
+
     public GelenEvrakKayitPage openPage() {
         new UstMenu().ustMenu("Gelen Evrak Kayıt");
         return this;
@@ -200,13 +207,34 @@ public class GelenEvrakKayitPage extends MainPage {
     }
 
 
-    @Step("Geldiği kişi doldur")
-    public GelenEvrakKayitPage evrakBilgileriListGeldigiKisiDoldur(String geldigiKisi) {
+    @Step("Geldiği Gerçek kişi doldur")
+    public GelenEvrakKayitPage geldigiGercekKisiDoldur(String geldigiKisi) {
 
-        cmbEvrakBilgileriListGeldigiKisi.selectLov(geldigiKisi);
+        cmbGeldigiGercekKisi.selectLov(geldigiKisi);
 
-        System.out.println("title: " + cmbEvrakBilgileriListGeldigiKisi.lastSelectedLovTitleText());
-        System.out.println("detail: " + cmbEvrakBilgileriListGeldigiKisi.lastSelectedLovDetailText());
+        System.out.println("title: " + cmbGeldigiGercekKisi.lastSelectedLovTitleText());
+        System.out.println("detail: " + cmbGeldigiGercekKisi.lastSelectedLovDetailText());
+
+        return this;
+    }
+
+    public GelenEvrakKayitPage secilenGeregiGercekKisiSil() {
+        cmbGeldigiGercekKisi.clearLastSelectedLov();
+        return this;
+    }
+
+    public GelenEvrakKayitPage secilenGeregiTuzelKisiSil() {
+        cmbGeldigiTuzelKisi.clearLastSelectedLov();
+        return this;
+    }
+
+    @Step("Geldiği Tüzel kişi doldur")
+    public GelenEvrakKayitPage geldigiTuzelKisiDoldur(String geldigiTuzelKisi) {
+
+        cmbGeldigiTuzelKisi.selectLov(geldigiTuzelKisi);
+
+        System.out.println("title: " + cmbGeldigiTuzelKisi.lastSelectedLovTitleText());
+        System.out.println("detail: " + cmbGeldigiTuzelKisi.lastSelectedLovDetailText());
 
         return this;
     }
@@ -226,11 +254,11 @@ public class GelenEvrakKayitPage extends MainPage {
     public GelenEvrakKayitPage gercekKisiGoruntulenmeKontrolu(String tckn, String ad, String soyad) {
 
         String adSoyad = ad + " " + soyad;
-        cmbEvrakBilgileriListGeldigiKisi.selectLov(tckn);
-        System.out.println("Gelen title:     " + cmbEvrakBilgileriListGeldigiKisi.lastSelectedLovTitleText());
+        cmbGeldigiGercekKisi.selectLov(tckn);
+        System.out.println("Gelen title:     " + cmbGeldigiGercekKisi.lastSelectedLovTitleText());
         System.out.println("Beklenen title:  " + adSoyad);
 
-        Assert.assertEquals(cmbEvrakBilgileriListGeldigiKisi.lastSelectedLovTitleText().contains(adSoyad), true);
+        Assert.assertEquals(cmbGeldigiGercekKisi.lastSelectedLovTitleText().contains(adSoyad), true);
 
         return this;
     }

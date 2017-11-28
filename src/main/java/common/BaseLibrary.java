@@ -438,4 +438,21 @@ public class BaseLibrary {
         }
     }
 
+    public boolean findElementOnTableAllPages(SelenideElement element) {
+        SelenideElement next = $(("[class='ui-paginator-next ui-state-default ui-corner-all']"));
+
+        boolean status = false;
+        while (status == false) {
+            status = element.isDisplayed();
+            if (status == false) {
+                if (next.isDisplayed() == false) {
+                    System.out.println("Element hiç bir sayfada bulunamadı.");
+                    return status;
+                }
+                next.click();
+            }
+        }
+        System.out.println("Element bulundu.");
+        return status;
+    }
 }
