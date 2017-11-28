@@ -55,4 +55,59 @@ public class EvrakHavaleKurallariTest extends BaseTest{
                 .otomatikHavaleSec(false);
         }
 
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "2069: Evrak Havale Kuralları Sorgulama ve Filtreleme")
+    public void TC2069() throws InterruptedException {
+        String basariMesaji = "İşlem başarılıdır!";
+        String durumSadecePasifler = "Sadece Pasifler";
+        String durumSadeceAktifler = "Sadece Aktifler";
+        String geldigiYerKullanici = "Kullanıcı";
+        String geldigiYerBirim = "Birim";
+        String geldigiYerGercekKisi = "Gerçek Kişi";
+        String geldigiYerTuzelKisi = "Tüzel Kişi";
+        String geldigiYerKurum = "Kurum";
+        String kuralAdi = "";
+
+        login(username2, password2);
+
+        evrakHavaleKurallariYonetimiPage
+                .openPage()
+                .ara()
+                .durumSec(durumSadecePasifler)
+                .ara()
+                .durumSec(durumSadeceAktifler)
+                .ara()
+                .geldigiYerTipiSec(geldigiYerKullanici)
+                .ara()
+                //
+                // TODO gelecek sistem yavaş
+                //
+                .geldigiYerTipiSec(geldigiYerBirim)
+                .ara()
+                //
+                // TODO gelecek sistem yavaş
+                //
+                .geldigiYerTipiSec(geldigiYerGercekKisi)
+                .ara()
+                //
+                // TODO gelecek sistem yavaş
+                //
+                .geldigiYerTipiSec(geldigiYerTuzelKisi)
+                .ara()
+                //
+                // TODO gelecek sistem yavaş
+                //
+                .geldigiYerTipiSec(geldigiYerKurum)
+                .ara()
+                //
+                // TODO gelecek sistem yavaş
+                //
+                .birimDoldur("birim")
+                .ara()
+                .altBirimDahilSec(true)
+                .kuralAdiDoldur("birim")
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+    }
+
 }

@@ -81,7 +81,13 @@ public class BirimYonetimiPage extends MainPage {
     }
     @Step("Popup kep adresi doldur")
     public BirimYonetimiPage popupKepAdresiDoldur(String text) throws InterruptedException{
-        txtPopupKepAdresi.setValue(text);
+
+        createRandomNumber(5);
+        String s1= "can";
+        String s2 = createRandomNumber(5);
+        String s3 = "Deneme";
+        String Sonuc = s1 + s2 + s3;
+        txtPopupKepAdresi.setValue(Sonuc);
         return this;
     }
     @Step("Kep adresi bilgileri artı tıkla")

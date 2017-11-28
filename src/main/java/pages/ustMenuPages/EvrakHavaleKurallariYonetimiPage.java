@@ -5,8 +5,10 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import pages.MainPage;
 import pages.pageComponents.UstMenu;
+import pages.pageComponents.belgenetElements.BelgenetElement;
 
 import static com.codeborne.selenide.Selenide.$;
+import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 /****************************************************
  * Tarih: 2017-12-27
@@ -19,7 +21,41 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage{
     SelenideElement btnAra = $(By.id("havaleKuralYonetimiListingForm:filterPanel:searchEntitiesButton"));
     SelenideElement btnSil = $(By.id("havaleKuralYonetimiListingForm:havaleKuralDataTable:0:deleteHavaleKuralButton"));
     SelenideElement btnIslemOnayiEvet = $(By.id("baseConfirmationDialog:confirmButton"));
+    BelgenetElement txtBirim = comboLov("havaleKuralYonetimiListingForm:filterPanel:birimLov:LovText");
+    SelenideElement txtKuralAdi = $(By.id("havaleKuralYonetimiListingForm:filterPanel:adFilterInput"));
+    SelenideElement cmbDurum = $(By.id("havaleKuralYonetimiListingForm:filterPanel:durumSelectBox"));
+    SelenideElement cmbGeldigiYerTipi = $(By.id("havaleKuralYonetimiListingForm:filterPanel:geldigiYerTipiSelect"));
+    SelenideElement chkAltBirimDahil = $(By.id("havaleKuralYonetimiListingForm:filterPanel:altBirimlerDahilCheckbox_input"));
 
+    @Step("Alt birim dahil seçilir")
+    public EvrakHavaleKurallariYonetimiPage altBirimDahilSec(boolean secim){
+        chkAltBirimDahil.setSelected(secim);
+        return this;
+    }
+
+    @Step("Geldiği yer tipi seçiniz")
+    public EvrakHavaleKurallariYonetimiPage geldigiYerTipiSec(String value){
+        cmbGeldigiYerTipi.selectOption(value);
+        return this;
+    }
+
+    @Step("Durum Seçiniz")
+    public EvrakHavaleKurallariYonetimiPage durumSec(String value){
+        cmbDurum.selectOption(value);
+        return this;
+    }
+
+    @Step("Kural adı doldur")
+    public EvrakHavaleKurallariYonetimiPage kuralAdiDoldur(String kuralAdi){
+        txtKuralAdi.setValue(kuralAdi);
+        return this;
+    }
+
+    @Step("Birim alanı doldurulur")
+    public EvrakHavaleKurallariYonetimiPage birimDoldur(String birim){
+        txtBirim.selectLov(birim);
+        return this;
+    }
 
     @Step("Sil")
     public EvrakHavaleKurallariYonetimiPage sil(){
