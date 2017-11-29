@@ -133,8 +133,10 @@ public class GelenEvrakKayitPage extends MainPage {
     SelenideElement txtTCKN = $(By.id("gercekKisiHizliKayitDialogForm:tcKimlikNoInput"));
     SelenideElement btnTCKNAra = $(By.id("gercekKisiHizliKayitDialogForm:kpsTcKimlikNoSorgulaButtonHizliKayit"));
     SelenideElement btnKaydetIletisimBilgisi = $(By.id("gercekKisiHizliKayitDialogForm:saveGercekKisiHizliKayitButton"));
-    SelenideElement txtAd = $(By.id("tgercekKisiHizliKayitDialogForm:adInputG"));
-    SelenideElement txtSoyad = $(By.id("gercekKisiHizliKayitDialogForm:soyadInput"));
+//    SelenideElement txtAd = $(By.id("tgercekKisiHizliKayitDialogForm:adInputG"));
+    SelenideElement txtAd = $(By.xpath("//table[@id='gercekKisiHizliKayitDialogForm:j_idt4251']/tbody/tr[4]/td[1]/input"));
+
+    SelenideElement txtSoyad = $(By.xpath("//table[@id='gercekKisiHizliKayitDialogForm:j_idt4251']/tbody/tr[4]/td[2]/input"));
     SelenideElement mesaj = $("[#evrakKaydetBasariliDialog .ui-dialog-content]");
 
     SelenideElement lblDosyaAdi = $(By.id("evrakBilgileriForm:evrakEkTabView:dosyaAdi"));
@@ -575,8 +577,7 @@ public class GelenEvrakKayitPage extends MainPage {
     }
 
     @Step("TC kimlik No ekle")
-    public GelenEvrakKayitPage iletisimBilgisiTCKNEkle() {
-        String mernisNo = createMernisTCKN();
+    public GelenEvrakKayitPage iletisimBilgisiTCKNEkle(String mernisNo) {
         txtTCKN.clear();
         txtTCKN.sendKeys(mernisNo);
         return this;
@@ -597,7 +598,7 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("Soyad doldur")
     public GelenEvrakKayitPage iletisimBilgisiSoyadDoldur(String soyad) {
-        txtSoyad.sendKeys(soyad);
+        txtSoyad.setValue(soyad);
         return this;
     }
 

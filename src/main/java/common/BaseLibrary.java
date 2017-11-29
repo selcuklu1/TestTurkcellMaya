@@ -4,10 +4,8 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
-import com.sun.javafx.scene.layout.region.Margins;
 import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
-import org.omg.CORBA.PUBLIC_MEMBER;
 import org.openqa.selenium.*;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -15,7 +13,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
-import java.lang.reflect.Array;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -26,11 +24,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static com.codeborne.selenide.Selenide.*;
+import static org.apache.commons.io.FileUtils.deleteDirectory;
 import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfElementLocated;
 
 public class BaseLibrary {
 
-    protected static String winHandleBefore=null;
+    protected static String winHandleBefore = null;
 
     //<editor-fold desc="Allure screenshooter">
     @Attachment(value = "Page screenshot", type = "image/png")
@@ -326,7 +325,7 @@ public class BaseLibrary {
     }
 
     //Bilgisayara indirilen dosyaları siler.
-    public void deleteFile(String pathToFile) {
+    public boolean deleteFile(String pathToFile) throws IOException {
         try {
             File file = new File(pathToFile);
 
@@ -342,6 +341,7 @@ public class BaseLibrary {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return false;
     }
 
     //Random tc yaratır mernis sorgusundan geçecek şekilde.
@@ -468,33 +468,26 @@ public class BaseLibrary {
     public String cssSE(String element, String attribute, String startsWith, String endsWith) {
 
         if (element != "" || element == null) {
-
-            return "["+attribute+"^='']["+attribute+"$='']";
-
+            return "[" + attribute + "^=''][" + attribute + "$='']";
         } else {
-
-            return element+"["+attribute+"^='']["+attribute+"$='']";
-
+            return element + "[" + attribute + "^=''][" + attribute + "$='']";
         }
 
     }
 
     @Step("[\"{0}\"] alanının değeri [\"{0}\"] olmalı.")
-    public void alanDegeriKontrolEt(SelenideElement element, String value, boolean shouldHaveValue, boolean exactText){
-        if(shouldHaveValue == true){
+    public void alanDegeriKontrolEt(SelenideElement element, String value, boolean shouldHaveValue, boolean exactText) {
+        if (shouldHaveValue == true) {
             if (exactText == true)
                 element.shouldHave(Condition.exactValue(value));
             else
                 element.shouldHave(Condition.value(value));
 
-        }
-        else
-        {
+        } else {
             if (exactText == true)
                 element.shouldNotHave(Condition.exactValue(value));
             else
                 element.shouldNotHave(Condition.value(value));
-
         }
     }
 
@@ -514,6 +507,31 @@ public class BaseLibrary {
         }
         System.out.println("Element bulundu.");
         return status;
+    }
+
+    //Klasordeki dosyaları ismine göre siler...
+    public boolean deleteFile(String path, String fileName) throws IOException {
+        boolean flag = false;
+        File directory = new File(path);
+        if (directory.exists()) {
+            File[] files = directory.listFiles();
+            if (null != files) {
+                for (int i = 0; i < files.length; i++) {
+                    if (files[i].isDirectory()) {
+                        deleteDirectory(files[i]);
+                        flag = true;
+                    } else {
+                        if (files[i].getName().toString().contains(fileName)) {
+                            files[i].delete();
+                            flag = true;
+                        } else
+                            System.out.println("Klasörde istenilen isimde dosya bulunamadı.");
+                    }
+                }
+            } else
+                System.out.println("Klasör boş.");
+        }
+        return flag;
     }
 
 }
