@@ -29,7 +29,6 @@ public class BaseTest extends BaseLibrary {
         //region Selenide Driver Configuration
         Configuration.baseUrl = belgenetURL;
         Configuration.browser = "chrome";
-        Configuration.startMaximized = true;
         //Configuration.browser = "drivers.Firefox";
         //Configuration.browser = "marionette";
         //Configuration.remote = "http://0.0.0.0:32768/wd/hub";
@@ -40,6 +39,7 @@ public class BaseTest extends BaseLibrary {
         Configuration.timeout = 30000;
         Configuration.holdBrowserOpen = true;
 //        Configuration.headless = true;
+        Configuration.startMaximized = true;
 //        Configuration.browserSize = "1024x600";
         //endregion
 
