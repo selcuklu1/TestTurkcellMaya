@@ -26,6 +26,13 @@ public class VekaletVerPage extends BaseLibrary {
     SelenideElement btnVekalelVerenTemizle = $(By.id("vekaletVerForm:vekaletLayout:vekaletVerenLov:j_idt134"));
     By txtVekaletVeren = By.cssSelector("[id^='vekaletVerForm:vekaletLayout:vekaletVerenLov:LovText']");
     By txtVekaletAlan = By.cssSelector("[id^='vekaletVerForm:vekaletLayout:vekaletAlanLov:LovText']");
+    BelgenetElement txtOnaylayacakKisi = comboLov(By.id("vekaletVerForm:vekaletLayout:vekaletOnaylayacakKisiLov:LovText"));
+
+    @Step("Vekalet Ver sayfası aç")
+    public VekaletVerPage openPage() {
+        new UstMenu().ustMenu("Vekalet Ver");
+        return this;
+    }
 
     @Step("Kişinin Bilgi alanında görüntülenmediği kontrolu")
     public VekaletVerPage vekaletVerenAlanınaGoruntulenmemeKontrolu(String bilgi, Boolean secilebilmeli) {
@@ -39,25 +46,20 @@ public class VekaletVerPage extends BaseLibrary {
         System.out.println("Vekalet alan alanı başarılı");
         return this;
     }
-    @Step("Vekalet Ver sayfası aç")
-    public VekaletVerPage openPage()
-    {
-        new UstMenu().ustMenu("Vekalet Ver");
-        return this;
-    }
+
     @Step("Vekalet veren alanını farklı doldur")
-    public  VekaletVerPage vekaletVerenFarkliDoldur(String text){
+    public VekaletVerPage vekaletVerenFarkliDoldur(String text) {
         btnVekalelVerenTemizle.click();
         txtVekaletVerenCombolov.selectLov(text);
         return this;
     }
 
-    BelgenetElement e = comboLov(By.id("vekaletVerForm:vekaletLayout:vekaletOnaylayacakKisiLov:LovText"));
     @Step("Onay verecek doldur")
-    public VekaletVerPage onayVerecekDoldur(String kullanici){
-        e.selectLov(kullanici);
+    public VekaletVerPage onayVerecekDoldur(String kullanici) {
+        txtOnaylayacakKisi.selectLov(kullanici);
         return this;
     }
+
     @Step("Vekalet veren alanını doldur")
     public VekaletVerPage vekaletVerenDoldur(String text) {
         txtVekaletVerenCombolov.selectLov(text);
@@ -69,8 +71,8 @@ public class VekaletVerPage extends BaseLibrary {
         return this;
     }
 
-    public VekaletVerPage aciklamaDoldur(String text) {
-        txtAciklama.setValue(text);
+    public VekaletVerPage aciklamaDoldur(String aciklama) {
+        txtAciklama.setValue(aciklama);
         return this;
     }
 

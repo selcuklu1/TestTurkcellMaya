@@ -77,15 +77,20 @@ public class GelenEvraklarPage extends MainPage {
     SelenideElement btnPaylasIcPaylas = $(By.id("mainPreviewForm:paylasButtonId"));
 
     SelenideElement evrakSec = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
+
+
+    public GelenEvraklarPage openPage() {
+        solMenu(SolMenuData.IslemBekleyenEvraklar.GelenEvraklar);
+        return this;
+    }
+
     @Step("Evrak seç")
-    public GelenEvraklarPage evrakSec()
-    {
+    public GelenEvraklarPage evrakSec() {
         evrakSec.click();
         return this;
     }
 
-    public GelenEvraklarPage evrakSec(String konu, String geldigiYer, String kayitTarihiSayi, String evrakTarihi, String no)
-    {
+    public GelenEvraklarPage evrakSec(String konu, String geldigiYer, String kayitTarihiSayi, String evrakTarihi, String no) {
         tableEvraklar
                 .filterBy(Condition.text("Konu: " + konu))
                 .filterBy(Condition.text("Geldiği Yer: " + geldigiYer))
@@ -96,12 +101,8 @@ public class GelenEvraklarPage extends MainPage {
                 .click();
         return this;
     }
-    @Step("Gelen evraklar sayfası aç")
-    public GelenEvraklarPage openPage() {
-        solMenu(SolMenuData.IslemBekleyenEvraklar.GelenEvraklar);
-        return this;
-    }
-    @Step("Havale yap tıkla")
+
+    @Step("Havale yap")
     public GelenEvraklarPage tabHavaleYap() {
         btnTabHavaleYap.click();
         return this;
@@ -171,6 +172,7 @@ public class GelenEvraklarPage extends MainPage {
         txtHavaleYapAciklama.sendKeys(text);
         return this;
     }
+
     @Step("Havale onaylanacak kisi doldur")
     public GelenEvraklarPage havaleYapOnaylanacakKisiTreeDoldur(String text) {
         treeHavaleYapOnaylanacakKisi.selectLov(text);
@@ -257,7 +259,6 @@ public class GelenEvraklarPage extends MainPage {
         btnTopluKlasorKaldir.click();
         return this;
     }
-
 
     public GelenEvraklarPage raporAl() {
         btnRaporAl.click();

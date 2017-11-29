@@ -31,7 +31,7 @@ public class TuzelKisiYonetimiTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TC1124: Yeni tüzel kişi kayıt ve ekranlardan kontrolleri")
-    public void TC1124() throws InterruptedException {
+    public void TC1124() {
 
         String vergiNo = createRandomNumber(10);
         String kisaAd = createRandomText(7);
@@ -73,7 +73,7 @@ public class TuzelKisiYonetimiTest extends BaseTest {
         tuzelKisiYonetimiPage
                 .filtreVergiNoDoldur(vergiNo)
                 .ara()
-                .aktifKisiKayitKontrolu(vergiNo, ad, kisaAd);
+                .aktifTuzelKisiKayitKontrolu(vergiNo, ad, kisaAd);
 
         evrakOlusturPage
                 .openPage()
@@ -135,7 +135,7 @@ public class TuzelKisiYonetimiTest extends BaseTest {
                 .filtreSorgulamaPaneliAc()
                 .filtreDurumSec("AKTIFLER")
                 .ara()
-                .aktifKisiKayitKontrolu(vergiNo, ad, kisaAd)
+                .aktifTuzelKisiKayitKontrolu(vergiNo, ad, kisaAd)
 
                 //Step num: 6
                 .filtreSorgulamaPaneliAc()
@@ -149,7 +149,7 @@ public class TuzelKisiYonetimiTest extends BaseTest {
                 .filtreVergiNoDoldur(vergiNo)
                 .filtreDurumSec("AKTIFLER")
                 .ara()
-                .aktifKisiKayitKontrolu(vergiNo, ad, kisaAd)
+                .aktifTuzelKisiKayitKontrolu(vergiNo, ad, kisaAd)
 
                 //Step num: 10
                 .filtreSorgulamaPaneliAc()
@@ -169,7 +169,7 @@ public class TuzelKisiYonetimiTest extends BaseTest {
                 .filtreAdDoldur(ad)
                 .filtreDurumSec("PASIFLER")
                 .ara()
-                .pasifKisiKayitKontrolu(vergiNo, ad, kisaAd)
+                .pasifTuzelKisiKayitKontrolu(vergiNo, ad, kisaAd)
 
                 //Step num: 7
                 .filtreSorgulamaPaneliAc()
@@ -183,7 +183,7 @@ public class TuzelKisiYonetimiTest extends BaseTest {
                 .filtreVergiNoDoldur(vergiNo)
                 .filtreDurumSec("PASIFLER")
                 .ara()
-                .pasifKisiKayitKontrolu(vergiNo, ad, kisaAd)
+                .pasifTuzelKisiKayitKontrolu(vergiNo, ad, kisaAd)
 
                 //Step num: 11
                 .filtreSorgulamaPaneliAc()
@@ -279,8 +279,9 @@ public class TuzelKisiYonetimiTest extends BaseTest {
         String vergiNo2 = createRandomNumber(10);
         String kisaAd2 = createRandomText(7);
         String ad2 = kisaAd2 + " İş Çözümleri";
-        String kepAdresi = "turksat.kamu@testkep.pttkep.gov.tr";
+        String kepAdresi = kisaAd + "@testkep.pttkep.gov.tr";
         String basariMesaji = "İşlem başarılıdır!";
+        String postaTipi = "Z";
 
         tuzelKisiYonetimiPage
 
@@ -297,7 +298,7 @@ public class TuzelKisiYonetimiTest extends BaseTest {
         tuzelKisiYonetimiPage
                 .filtreVergiNoDoldur(vergiNo)
                 .ara()
-                .aktifKisiKayitKontrolu(vergiNo, ad, kisaAd)
+                .aktifTuzelKisiKayitKontrolu(vergiNo, ad, kisaAd)
                 .tuzelKisiGuncelle()
 
                 .vergiNoDoldur(vergiNo2)
@@ -318,8 +319,7 @@ public class TuzelKisiYonetimiTest extends BaseTest {
                 .bilgilerTabiAc()
                 .geregiSecimTipiSec("T")
                 .geregiDoldur(ad2)
-                //  .tuzelKisiGeregiAlaniKontrol(ad2, adres, postaTipi);
-                //TODO: EKLENECEK
+                .tuzelKisiGeregiAlaniKontrol(vergiNo2, postaTipi)
 
                 .secilenGeregiSil()
                 .geregiDoldur(vergiNo2)

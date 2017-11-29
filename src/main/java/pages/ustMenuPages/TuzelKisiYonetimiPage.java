@@ -11,6 +11,13 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
+/****************************************************
+ * Tarih: 2017-11-23
+ * Proje: Türksat Functional Test Automation
+ * Class: "Tüzel Kişi Yönetimi" konulu metotları içerir
+ * Yazan: Sezai Çelik
+ ****************************************************/
+
 public class TuzelKisiYonetimiPage extends MainPage {
 
     //<editor-fold desc="Elements">
@@ -68,17 +75,20 @@ public class TuzelKisiYonetimiPage extends MainPage {
     SelenideElement btnTuzelisiGuncelle = $("[id^='tuzelKisiYonetimiListingForm:tuzelKisiDataTable'][id$='updateTuzelKisiButton']");
 
     //</editor-fold>
-    @Step("Tüzel kisi yönetimi sayfası aç")
+
+    @Step("Tüzel Kişi Yönetimi sayfasını aç")
     public TuzelKisiYonetimiPage openPage() {
         ustMenu("Tüzel Kişi Yönetimi");
         return this;
     }
 
+    @Step("Filtrede Vergi No doldur")
     public TuzelKisiYonetimiPage filtreVergiNoDoldur(String vergiNo) {
         txtFiltreVergiSGKNo.setValue(vergiNo);
         return this;
     }
 
+    @Step("Filtrede Ad doldur")
     public TuzelKisiYonetimiPage filtreAdDoldur(String ad) {
         txtFiltreAd.setValue(ad);
         return this;
@@ -89,7 +99,7 @@ public class TuzelKisiYonetimiPage extends MainPage {
         return vergiNo;
     }
 
-    @Step("Tüzel kisi guncelle")
+    @Step("Tüzel kişi güncelle")
     public TuzelKisiYonetimiPage tuzelKisiGuncelle() {
         btnTuzelisiGuncelle.click();
         return this;
@@ -101,137 +111,164 @@ public class TuzelKisiYonetimiPage extends MainPage {
         return this;
     }
 
+    @Step("Yeni tüzel kişi ekle")
     public TuzelKisiYonetimiPage yeniTuzelKisiEkle() {
         btnTuzelKisiEkle.click();
         return this;
     }
+
     @Step("Kep adresi kaydet")
     public TuzelKisiYonetimiPage kepAdresiKaydet() {
         btnKepAdresKaydet.click();
         return this;
     }
 
+    @Step("Kep adresi iptal et")
     public TuzelKisiYonetimiPage kepAdresiIptalet() {
         btnKepAdresIptalEt.click();
         return this;
     }
+
     @Step("Kep hizmet sağlayıcısı seç")
     public TuzelKisiYonetimiPage kepHizmetSaglayicisiSec(String value) {
         cmbPopupKepHizmetSaglayicisi.selectOption(value);
         return this;
     }
+
     @Step("Kep adresi doldur")
     public TuzelKisiYonetimiPage kepAdresiDoldur(String text) {
         txtKepAdresi.setValue(text);
         return this;
     }
+
     @Step("Kep adres bilgileri ekle")
     public TuzelKisiYonetimiPage kepAdresBilgileriEkle() {
         btnKepAdresBilgileriEkle.click();
         return this;
     }
-    @Step("Kep adresi kullaniyor seç")
+
+  @Step("Kep adresi kullanılıyor seç")
     public TuzelKisiYonetimiPage kepAdresiKullaniyorSec(boolean secim) {
         chkKepAdresiKullaniyor.setSelected(secim);
         return this;
     }
 
-    public TuzelKisiYonetimiPage duzenleGonder() {
+    @Step("Düzenle")
+    public TuzelKisiYonetimiPage duzenle() {
         btnDuzenle.click();
         return this;
     }
+
     @Step("Ara")
     public TuzelKisiYonetimiPage ara() {
         btnAra.click();
         return this;
     }
 
+    @Step("Tüzel kişi tipi seç")
     public TuzelKisiYonetimiPage tuzelKisiTipiSec(String secim) {
         cmbTuzelKisiTipi.selectOptionByValue(secim);
         return this;
     }
 
+    @Step("Vergi No doldur")
     public TuzelKisiYonetimiPage vergiNoDoldur(String vergiNo) {
         txtVergiNo.setValue(vergiNo);
         return this;
     }
 
+    @Step("Ad doldur")
     public TuzelKisiYonetimiPage adDoldur(String ad) {
         txtTuzelKisiAd.setValue(ad);
         return this;
     }
 
+    @Step("Kısa Ad doldur")
     public TuzelKisiYonetimiPage kisaAdDoldur(String kisaAd) {
         txtTuzelKisiKisaAd.setValue(kisaAd);
         return this;
     }
 
+    @Step("Yeni iletişim ekle")
     public TuzelKisiYonetimiPage yeniIletisimEkle() {
         btnYeniIletisimEkle.click();
         return this;
     }
 
+    @Step("Mobil tel no doldur")
     public TuzelKisiYonetimiPage mobilTelNoDoldur(String mobilTelNo) {
         txtIletisimBilgisiMobilTelNo.setValue(mobilTelNo);
         return this;
     }
 
+    @Step("Tel no doldur")
     public TuzelKisiYonetimiPage telNoDoldur(String telNo) {
         txtIletisimBilgisiTelefonNo.setValue(telNo);
         return this;
     }
 
+    @Step("Faks1 doldur")
     public TuzelKisiYonetimiPage faks1NoDoldur(String faks1) {
         txtIletisimBilgisiFaxs1.setValue(faks1);
         return this;
     }
 
+    @Step("Faks2 doldur")
     public TuzelKisiYonetimiPage faks2NoDoldur(String faks2) {
         txtIletisimBilgisiFaxs2.setValue(faks2);
         return this;
     }
 
+    @Step("Adres doldur")
     public TuzelKisiYonetimiPage adresDoldur(String adres) {
         txtIletisimBilgisiAdres.setValue(adres);
         return this;
     }
 
+    @Step("Ükle seç")
     public TuzelKisiYonetimiPage ulkeSec(String ulke) {
         btnUlkeDelete.click();
         txtIletisimBilgisiUlke.selectLov(ulke);
         return this;
     }
 
+    @Step("İl seç")
     public TuzelKisiYonetimiPage ilSec(String il) {
         txtIletisimBilgisiIl.selectLov(il);
         return this;
     }
 
+    @Step("İlçe seç")
     public TuzelKisiYonetimiPage ilceSec(String ilce) {
         txtIletisimBilgisiIlce.selectLov(ilce);
         return this;
     }
 
+    @Step("Eposta doldur")
     public TuzelKisiYonetimiPage ePostaDoldur(String ePosta) {
         txtIletisimBilgisiEPosta.setValue(ePosta);
         return this;
     }
 
+    @Step("Web adres doldur")
     public TuzelKisiYonetimiPage webAdresDoldur(String webAdres) {
         txtIletisimBilgisiWebAdres.setValue(webAdres);
         return this;
     }
 
+    @Step("İletişim bilgisi kaydet")
     public TuzelKisiYonetimiPage iletisimBilgisiKaydet() {
         btnIletisimBilgisiKaydet.click();
         return this;
     }
 
+    @Step("İletişim bilgisi iptal et")
     public TuzelKisiYonetimiPage iletisimBilgisiIptalEt() {
         btnIletisimBilgisiIptal.click();
         return this;
     }
 
+    @Step("Tüzel kişi kaydet")
     public TuzelKisiYonetimiPage tuzelKisiKaydet() {
         btnTuzelKisiKaydet.click();
         if (btnPopupEvet.isDisplayed()) {
@@ -249,9 +286,8 @@ public class TuzelKisiYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Tüzel kişi kayıt kontrolu")
-    public TuzelKisiYonetimiPage aktifKisiKayitKontrolu(String vergiNo, String ad, String kisaAd) {
-
+    @Step("Aktif tüzel kişi kayıt kontrolu")
+    public TuzelKisiYonetimiPage aktifTuzelKisiKayitKontrolu(String vergiNo, String ad, String kisaAd) {
 
         boolean statusVergiNo = findElementOnTableByColumnInputInAllPages(tblTuzelKisiDataTable, 1, vergiNo).isDisplayed();
         boolean statusAd = findElementOnTableByColumnInputInAllPages(tblTuzelKisiDataTable, 2, ad).isDisplayed();
@@ -264,8 +300,8 @@ public class TuzelKisiYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Pasif kayit kontrolu")
-    public TuzelKisiYonetimiPage pasifKisiKayitKontrolu(String vergiNo, String ad, String kisaAd) {
+    @Step("Pasif tüzel kişi kayit kontrolu")
+    public TuzelKisiYonetimiPage pasifTuzelKisiKayitKontrolu(String vergiNo, String ad, String kisaAd) {
 
         boolean statusTCNO = findElementOnTableByColumnInputInAllPages(tblTuzelKisiDataTable, 1, vergiNo).isDisplayed();
         boolean statusAd = findElementOnTableByColumnInputInAllPages(tblTuzelKisiDataTable, 2, ad).isDisplayed();
@@ -278,7 +314,7 @@ public class TuzelKisiYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Aktif Tüzel kişi kayıt kontrolu")
+    @Step("Aktif Tüzel kişi tüm liste kayıt kontrolu")
     public TuzelKisiYonetimiPage aktiflerTumListeKayitKontrolu() {
 
         boolean status = findElementOnTableAllPages(btnTuzelKisiAktifYap);
@@ -286,7 +322,7 @@ public class TuzelKisiYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Pasif Tüzel kişi kayıt kontrolu")
+    @Step("Pasif Tüzel kişi tüm liste kayıt kontrolu")
     public TuzelKisiYonetimiPage pasiflerTumListeKayitKontrolu() {
 
         boolean status = findElementOnTableAllPages(btnTuzelKisiPasifYap);
@@ -327,7 +363,7 @@ public class TuzelKisiYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Tüzel Kişi Aktif Yap")
+    @Step("Tüzel Kişi Pasif Yap")
     public TuzelKisiYonetimiPage tuzelKisiAktifIsePasifYap() {
 
         if (btnTuzelKisiPasifYap.isDisplayed()) {

@@ -23,15 +23,15 @@ public class BaseTest extends BaseLibrary {
         Locale turkishLocal = new Locale("tr", "TR");
         Locale.setDefault(turkishLocal);
 
+
         //region SetUp BelgenetFramework for BelgenetElements usage
         BelgenetFramework.setUp();
         //endregion
-
         //region Selenide Driver Configuration
         Configuration.baseUrl = belgenetURL;
-        //Configuration.browser = "chrome";
-        Configuration.browser = "drivers.Firefox";
-        Configuration.browser = "marionette";
+        Configuration.browser = "chrome";
+        //Configuration.browser = "drivers.Firefox";
+        //Configuration.browser = "marionette";
         //Configuration.remote = "http://0.0.0.0:32768/wd/hub";
         Configuration.reportsFolder = "test-result/reports";
         Configuration.screenshots = false;

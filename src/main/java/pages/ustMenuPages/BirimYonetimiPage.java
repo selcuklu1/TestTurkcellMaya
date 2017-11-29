@@ -22,7 +22,7 @@ public class BirimYonetimiPage extends MainPage {
     SelenideElement cmbGorunurlukTipi = $(By.id("birimYonetimiEditorForm:gorunurlukTipiSelect"));
     SelenideElement chkDisBirim = $(By.id("birimYonetimiEditorForm:disBirimCheckbox_input"));
     SelenideElement txtAd = $(By.id("birimYonetimiEditorForm:adInput"));
-    SelenideElement txtKisaAdi =  $(By.id("birimYonetimiEditorForm:kisaAdInput"));
+    SelenideElement txtKisaAdi = $(By.id("birimYonetimiEditorForm:kisaAdInput"));
     SelenideElement chkOzelHitap = $(By.id("birimYonetimiEditorForm:ozelHitapExistSelBoolean_input"));
     SelenideElement txtMesajAdresi = $(By.id("birimYonetimiEditorForm:maggKoduInput"));
     SelenideElement txtKarargahKisaltmasi = $(By.id("birimYonetimiEditorForm:karargahKisaltmasiInput"));
@@ -52,234 +52,274 @@ public class BirimYonetimiPage extends MainPage {
     SelenideElement txtSagUstLogoGenislik = $(By.id("birimYonetimiEditorForm:j_idt11993"));
     BelgenetElement txtBirim = comboLov("[id$='birimLov:LovText']");
     SelenideElement btnTableDuzenle = $(By.id("birimYonetimiListingForm:birimTreeTable:0:updateBirimButton"));
-    SelenideElement btnKepAdresBilgileriArti = $(By.id("birimYonetimiEditorForm:kepBilgileriDataTable:addNewKepAdresiButton"));
+    SelenideElement btnYeniKepAdresBilgileriEkle = $(By.id("birimYonetimiEditorForm:kepBilgileriDataTable:addNewKepAdresiButton"));
 
-    SelenideElement txtPopupKepAdresi= $(By.id("kepAdresBilgiEditorForm:kepAdresiInputTextId"));
+    SelenideElement txtPopupKepAdresi = $(By.id("kepAdresBilgiEditorForm:kepAdresiInputTextId"));
     SelenideElement cmbPopupHizmetSaglayicisi = $(By.id("kepAdresBilgiEditorForm:kephs"));
     SelenideElement btnPopupKaydet = $(By.id("kepAdresBilgiEditorForm:saveKepAdresiButton"));
     SelenideElement btnKaydet = $(By.id("birimYonetimiEditorForm:saveBirimButton"));
+
     @Step("Birim Yönetimi sayfası aç")
     public BirimYonetimiPage openPage() {
         ustMenu("Birim Yönetimi");
         return this;
     }
 
-    @Step("Kaydet tıkla")
-    public BirimYonetimiPage kaydet() throws InterruptedException{
+    @Step("Kaydet")
+    public BirimYonetimiPage kaydet() {
         btnKaydet.click();
         return this;
     }
-    @Step("Popup kaydet tıkla")
-    public BirimYonetimiPage popupKaydet() throws InterruptedException{
+
+    @Step("Popup kaydet")
+    public BirimYonetimiPage popupKaydet() {
         btnPopupKaydet.click();
         return this;
     }
+
     @Step("Popup hizmet sağlayıcısı seç")
-    public BirimYonetimiPage popupHizmetSaglayicisiSec(String value) throws InterruptedException{
+    public BirimYonetimiPage popupHizmetSaglayicisiSec(String value) {
         cmbPopupHizmetSaglayicisi.selectOption(value);
         return this;
     }
+
     @Step("Popup kep adresi doldur")
-    public BirimYonetimiPage popupKepAdresiDoldur(String kepAdresi) throws InterruptedException{
+    public BirimYonetimiPage popupKepAdresiDoldur(String kepAdresi) {
         txtPopupKepAdresi.setValue(kepAdresi);
         return this;
     }
-    @Step("Kep adresi bilgileri artı tıkla")
-    public BirimYonetimiPage kepAdresBilgileriArti()throws InterruptedException{
-        btnKepAdresBilgileriArti.click();
+
+    @Step("Kep adresi bilgileri ekle")
+    public BirimYonetimiPage yeniKepAdresBilgileriEkle() {
+        btnYeniKepAdresBilgileriEkle.click();
         return this;
     }
-    @Step("Tablodaki düzenle buttona tıkla")
-    public BirimYonetimiPage tableDuzenle() throws InterruptedException {
+
+    @Step("Güncelle")
+    public BirimYonetimiPage tableDuzenle() {
         btnTableDuzenle.click();
         return this;
     }
-    @Step("Sağ ust Logo genişlik doldur")
-    public BirimYonetimiPage sagUstLogoGenislik(String text) throws InterruptedException{
-        txtSagUstLogoGenislik.setValue(text);
+
+    @Step("Sağ üst logo genişlik doldur")
+    public BirimYonetimiPage sagUstLogoGenislik(String genislik) {
+        txtSagUstLogoGenislik.setValue(genislik);
         return this;
     }
-    @Step("Sol ust genişlik doldur")
-    public BirimYonetimiPage solUstGenislikDoldur(String text) throws InterruptedException{
-        txtSolUstGenislik.setValue(text);
+
+    @Step("Sol üst genişlik doldur")
+    public BirimYonetimiPage solUstGenislikDoldur(String genislik) {
+        txtSolUstGenislik.setValue(genislik);
         return this;
     }
-    @Step("Sağ ust Logo boy doldur")
-    public BirimYonetimiPage sagUstLogoBoyDoldur(String text) throws InterruptedException{
-        txtSagUstLogoBoy.setValue(text);
+
+    @Step("Sağ üst logo boy doldur")
+    public BirimYonetimiPage sagUstLogoBoyDoldur(String boy) {
+        txtSagUstLogoBoy.setValue(boy);
         return this;
     }
-    @Step("Sol ust logo boy doldur")
-    public BirimYonetimiPage solUstLogoBoyDoldur(String text) throws InterruptedException{
-        txtSolUstLogoBoy.setValue(text);
+
+    @Step("Sol üst logo boy doldur")
+    public BirimYonetimiPage solUstLogoBoyDoldur(String boy) {
+        txtSolUstLogoBoy.setValue(boy);
         return this;
     }
-    @Step("Alt logoyu değiştir tıkla")
-    public BirimYonetimiPage altLogoyuDegistir() throws InterruptedException{
+
+    @Step("Alt logoyu değiştir")
+    public BirimYonetimiPage altLogoDegistir() {
         btnAltLogoyuDegistir.click();
         return this;
     }
+
     @Step("Sağ ust logo ekle tıkla")
-    public BirimYonetimiPage sagUstLogoEkleGonder() throws InterruptedException{
+    public BirimYonetimiPage sagUstLogoEkleGonder() {
         btnSagUstLogoEkle.click();
         return this;
     }
+
     @Step("Sol ust Logo ekle tıkla")
-    public BirimYonetimiPage solUstLogoEkle() throws InterruptedException{
+    public BirimYonetimiPage solUstLogoEkle() {
         btnSolUstLogoEkle.click();
         return this;
     }
+
     @Step("Yetki devri var seç")
-    public BirimYonetimiPage yetkiDevriVarSec(Boolean secim) throws InterruptedException{
+    public BirimYonetimiPage yetkiDevriVarSec(Boolean secim) {
         chkYetkiDevriVar.setSelected(secim);
         return this;
     }
+
     @Step("Kep adresi kullaniyor seç")
-    public BirimYonetimiPage kepAdresiKullaniyorSec(boolean secim) throws InterruptedException {
+    public BirimYonetimiPage kepAdresiKullaniyorSec(boolean secim) {
         chkKepAdresiKullaniyor.setSelected(secim);
         return this;
     }
+
     @Step("Açıklama doldur")
-    public BirimYonetimiPage aciklamaDoldur(String text) throws InterruptedException {
+    public BirimYonetimiPage aciklamaDoldur(String text) {
         txtAciklama.setValue(text);
-        return  this;
+        return this;
     }
+
     @Step("Olur metni doldur")
-    public BirimYonetimiPage olurMetniDoldur(String text) throws InterruptedException {
+    public BirimYonetimiPage olurMetniDoldur(String text) {
         txtOlurMetni.setValue(text);
-        return  this;
+        return this;
     }
+
     @Step("Genel evrak seç")
-    public BirimYonetimiPage genelEvrakSec(boolean secim) throws InterruptedException{
+    public BirimYonetimiPage genelEvrakSec(boolean secim) {
         chkGenelEvrak.setSelected(secim);
         return this;
     }
+
     @Step("Arşiv birimi seç")
-    public BirimYonetimiPage arsivBirimiSec(String value) throws InterruptedException{
+    public BirimYonetimiPage arsivBirimiSec(String value) {
         chkArsivBirimi.selectOption(value);
         return this;
     }
+
     @Step("Belgenet kullanılıtor mu seç")
-    public BirimYonetimiPage BelgenetKullaniyorMuSec(String value) throws InterruptedException{
+    public BirimYonetimiPage BelgenetKullaniyorMuSec(String value) {
         cmbBelgenetKullaniyorMu.selectOption(value);
         return this;
     }
 
     @Step("Posta şekli seç")
-    public BirimYonetimiPage postaSekliSec(String value) throws InterruptedException{
+    public BirimYonetimiPage postaSekliSec(String value) {
         cmbPostaSekli.selectOption(value);
-        return  this;
+        return this;
     }
+
     @Step("Yetki devri var seç")
-    public BirimYonetimiPage medasPostaBirimiDoldur(String text) throws InterruptedException {
+    public BirimYonetimiPage medasPostaBirimiDoldur(String text) {
         txtMedasPostaBirimi.setValue(text);
         return this;
     }
+
     @Step("Fiziki arşiv birimi doldur")
-    public BirimYonetimiPage fizikiArsivBirimiDoldur(String text) throws InterruptedException{
+    public BirimYonetimiPage fizikiArsivBirimiDoldur(String text) {
         treeFizikiArsivBirimi.setValue(text);
         return this;
     }
+
     @Step("Tree bağlı birimi doldur")
-    public BirimYonetimiPage treeBagliBirimDoldur(String text) throws InterruptedException{
+    public BirimYonetimiPage treeBagliBirimDoldur(String text) {
         treeBagliBirim.setValue(text);
-        return  this;
+        return this;
     }
+
     @Step("Birim bağ türü seç")
-    public BirimYonetimiPage birimBagTuruSec(String text) throws InterruptedException{
+    public BirimYonetimiPage birimBagTuruSec(String text) {
         cmbBirimBagTuru.selectOption(text);
         return this;
     }
+
     @Step("Giden evrakları numaratoru doldur")
-    public BirimYonetimiPage gidenEvraklariNumaratoruDoldur(String text) throws InterruptedException{
+    public BirimYonetimiPage gidenEvraklariNumaratoruDoldur(String text) {
         txtGidenEvrakNumaratoru.setValue(text);
-        return  this;
+        return this;
     }
+
     @Step("Gelen evraklar numaratoru doldur")
-    public BirimYonetimiPage gelenEvraklariNumaratoruDoldur(String text) throws InterruptedException {
+    public BirimYonetimiPage gelenEvraklariNumaratoruDoldur(String text) {
         txtGelenEvrakNumaratoru.setValue(text);
         return this;
     }
+
     @Step("Birimi tipi seç")
-    public BirimYonetimiPage birimTipiSec(String value) throws  InterruptedException{
+    public BirimYonetimiPage birimTipiSec(String value) throws InterruptedException {
         cmbBirimTipi.selectOption(value);
         return this;
     }
+
     @Step("İdari kimlik doldur")
-    public BirimYonetimiPage IdariKimlikKoduDoldur(String text) throws InterruptedException {
+    public BirimYonetimiPage idariKimlikKoduDoldur(String text) {
         txtIdariKimlikKodu.setValue(text);
-        return  this;
+        return this;
     }
+
     @Step("Antet tipi seç")
-    public BirimYonetimiPage antetTipiSec(String value) throws InterruptedException{
+    public BirimYonetimiPage antetTipiSec(String value) {
         cmbAntetTipi.selectOption(value);
         return this;
     }
+
     @Step("Karargah kısaltması doldur")
-    public BirimYonetimiPage karargahKisaltmasiDoldur(String text) throws InterruptedException{
+    public BirimYonetimiPage karargahKisaltmasiDoldur(String text) {
         txtKarargahKisaltmasi.setValue(text);
-        return  this;
+        return this;
     }
+
     @Step("Mesaj adresi doldur")
-    public BirimYonetimiPage mesajAdresiDoldur(String text) throws InterruptedException{
+    public BirimYonetimiPage mesajAdresiDoldur(String text) {
         txtMesajAdresi.setValue(text);
         return this;
     }
+
     @Step("Özel hitap seç")
-    public BirimYonetimiPage ozelHitap(Boolean secim) throws InterruptedException{
+    public BirimYonetimiPage ozelHitap(Boolean secim) {
         chkOzelHitap.setSelected(secim);
         return this;
     }
+
     @Step("Kısa adı doldur")
-    public BirimYonetimiPage kisaAdiDoldur(String text) throws InterruptedException{
-        txtKisaAdi.setValue(text);
-        return  this;
-    }
-    @Step("Ad doldur")
-    public BirimYonetimiPage adDoldur(String text) throws InterruptedException{
-        txtAd.setValue(text);
+    public BirimYonetimiPage kisaAdiDoldur(String kisaAd) {
+        txtKisaAdi.setValue(kisaAd);
         return this;
     }
+
+    @Step("Ad doldur")
+    public BirimYonetimiPage adDoldur(String ad) {
+        txtAd.setValue(ad);
+        return this;
+    }
+
     @Step("Dış birim seç")
-    public BirimYonetimiPage disBirim(Boolean secim) throws  InterruptedException{
+    public BirimYonetimiPage disBirimSec(Boolean secim) {
         chkDisBirim.setSelected(secim);
         return this;
     }
-    @Step("Görünürlük tipi seç")
-    public BirimYonetimiPage gorunurlukTipiSec(String value) throws InterruptedException{
-        cmbGorunurlukTipi.selectOption(value);
-        return this;
-    }
-    @Step("Yeni buttona tıkla")
-    public BirimYonetimiPage btnArti() throws InterruptedException{
-        btnArti.click();
-        return  this;
-    }
-    @Step("Durum seç")
-    public BirimYonetimiPage durumSec(String value) throws InterruptedException {
-        cmbDurum.selectOption(value);
-        return this;
 
+    @Step("Görünürlük tipi seç")
+    public BirimYonetimiPage gorunurlukTipiSec(String secim) {
+        cmbGorunurlukTipi.selectOption(secim);
+        return this;
     }
-    @Step("Birim türü seçildi")
-    public BirimYonetimiPage birimTuruSec(String value) throws InterruptedException{
-        cmbBirimTuru.selectOption(value);
-        return  this;
+
+    @Step("Ekle")
+    public BirimYonetimiPage ekle() {
+        btnArti.click();
+        return this;
     }
-    @Step("Düzenle tıkla")
-    public BirimYonetimiPage duzenle() throws InterruptedException{
+
+    @Step("Durum seç")
+    public BirimYonetimiPage durumSec(String secim) {
+        cmbDurum.selectOption(secim);
+        return this;
+    }
+
+    @Step("Birim türü seç")
+    public BirimYonetimiPage birimTuruSec(String secim) {
+        cmbBirimTuru.selectOption(secim);
+        return this;
+    }
+
+    @Step("Düzenle")
+    public BirimYonetimiPage duzenle() {
         btnDuzenle.click();
         return this;
     }
-    @Step("Ara tıkla")
-    public BirimYonetimiPage ara() throws InterruptedException{
+
+    @Step("Ara")
+    public BirimYonetimiPage ara() {
         btnAra.click();
-        return  this;
+        return this;
     }
 
-    @Step("Birim Doldur")
-    public BirimYonetimiPage birimDoldur(String text) throws InterruptedException{
-        txtBirim.selectLov(text);
-        return  this;
+    @Step("Birim doldur")
+    public BirimYonetimiPage birimDoldur(String birim) {
+        txtBirim.selectLov(birim);
+        return this;
     }
 }
