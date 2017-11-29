@@ -916,6 +916,7 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement btnIlgileriMetinEkle = $(By.id("yeniGidenEvrakForm:ilgiIslemleriTabView:aciklamaEkleButton"));
 
         //İlgileri tabı - Sistemde kayıtlı evrak ekle
+        SelenideElement tabIliskiliSistemdeKayitliEvrakEkle =  $(By.xpath("a//[@href='#yeniGidenEvrakForm:ilgiIslemleriTabView:sistemdeKayitliEvragiEkleTab']"));
         SelenideElement dateIlgileriSistemdeEvrakTarihiBaslangic = $(By.id("yeniGidenEvrakForm:ilgiIslemleriTabView:ilgiIslemleriEvrakTarihBasId_input"));
         SelenideElement dateIlgileriSistemdeEvrakTarihiSon = $(By.id("yeniGidenEvrakForm:ilgiIslemleriTabView:ilgiIslemleriEvrakTarihSonId_input"));
         SelenideElement cmbIlgileriSistemdeEvrakAranacakyer = $(By.id("yeniGidenEvrakForm:ilgiIslemleriTabView:ilgiIslemleriEvrakAramaAranacakYerId"));
@@ -944,6 +945,49 @@ public class EvrakOlusturPage extends MainPage {
             return this;
 
         }
+
+        @Step("IlgileriTab Sisteme Kayitli Evrak Ekle")
+        public  IlgileriTab sistemeKayitliEvrakEkleTab () {
+            tabIliskiliSistemdeKayitliEvrakEkle.click();
+
+            return this;
+        }
+
+
+        @Step("IlgileriTab Sisteme Kayitli Evrak EkleTab Tarih Başlagıç")
+        public  IlgileriTab sistemeKayitliEvrakBaslangictarihi (String dateText) {
+            dateIlgileriSistemdeEvrakTarihiBaslangic.setValue(dateText);
+            return this;
+        }
+
+
+        @Step("IlgileriTab Sisteme Kayitli Evrak EkleTab Tarih Son")
+        public  IlgileriTab sistemeKayitliEvrakBaslangictarihi (String dateText) {
+            dateIlgileriSistemdeEvrakTarihiSon.setValue(dateText);
+            return this;
+
+        }
+
+        @Step("IlgileriTab Sisteme Kayitli Evrak EkleTab Evrak Aranacak yer secimi")
+        public IlgileriTab sistemeKayitliEvrakAramaYeriSec (String evrakYeri) {
+            cmbIlgileriSistemdeEvrakAranacakyer.selectOption(evrakYeri);
+            return this;
+        }
+
+        @Step("IlgileriTab Sisteme Kayitli Evrak EkleTab Evrak Arama Metni")
+        public  IlgileriTab sistemeKayitliEvrakAra (String evrakAdi) {
+            txtIlgileriSistemdeEvrakArama.setValue(evrakAdi);
+            return this;
+
+        }
+
+        @Step("IlgileriTab Sisteme Kayitli Evrak EkleTab Dokuman Ara")
+        public  IlgileriTab sistemeKayitliDokumanArama () {
+            btnIlgileriSistemdeDokumanAra.click();
+            return this;
+        }
+
+
     }
 
     public IliskiliEvraklarTab iliskiliEvraklarTabAc() {
@@ -976,6 +1020,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
 
         }
+
     }
 
     public EvrakNotlariTab evrakNotlariTabAc() {
