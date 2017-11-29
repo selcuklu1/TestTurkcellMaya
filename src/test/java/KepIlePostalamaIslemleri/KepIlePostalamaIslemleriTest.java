@@ -66,7 +66,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
         mainPage
         .kepBaglantisi()
                 .kepAdresBaglantisiBaglan1()
-                //.kullaniciAdiTcKimlikNoKontol()
+                .kullaniciAdiTcKimlikNoKontol()
                 .parolaDoldur(parola)
                 .sifreDoldur(sifre)
                 .kepBaglantisiBaglan()
@@ -179,11 +179,10 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
         String birimTuru ="İç Birim";
         String popupKepAdresi1 ="turksat.kamu1@testkep.pttkep.gov.tr";
         String popupKepAdresi2 ="turksat.kamu2@testkep.pttkep.gov.tr";
-        String popupKepAdresi3 ="turksat.kamu3@testkep.pttkep.gov.tr";
         String popupKepHizmetSaglayicisiSec = "PTT KEP Servisi";
         String basariMesaji = "İşlem başarılıdır!";
 
-        login(username3, password3);
+        login(username2, password2);
 
         birimYonetimiPage
                 .openPage()
@@ -192,11 +191,11 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
                 .ara()
                 .tableDuzenle()
                 .kepAdresBilgileriArti()
-                .popupKepAdresiDoldur(popupKepAdresi1)
+                .popupKepAdresiDoldur()
                 .popupHizmetSaglayicisiSec(popupKepHizmetSaglayicisiSec)
                 .popupKaydet()
                 .kepAdresBilgileriArti()
-                .popupKepAdresiDoldur(popupKepAdresi2)
+                .popupKepAdresiDoldur()
                 .popupHizmetSaglayicisiSec(popupKepHizmetSaglayicisiSec)
                 .popupKaydet()
                 .kaydet()

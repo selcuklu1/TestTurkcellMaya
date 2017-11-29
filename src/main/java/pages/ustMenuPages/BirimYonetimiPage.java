@@ -80,12 +80,10 @@ public class BirimYonetimiPage extends MainPage {
         return this;
     }
     @Step("Popup kep adresi doldur")
-    public BirimYonetimiPage popupKepAdresiDoldur(String text) throws InterruptedException{
-
-        createRandomNumber(5);
-        String s1= "can";
-        String s2 = createRandomNumber(5);
-        String s3 = "Deneme";
+    public BirimYonetimiPage popupKepAdresiDoldur() throws InterruptedException{
+        String s1= "turksat.kamu";
+        String s2 = createRandomNumber(7);
+        String s3 = "@testkep.pttkep.gov.tr";
         String Sonuc = s1 + s2 + s3;
         txtPopupKepAdresi.setValue(Sonuc);
         return this;
