@@ -160,7 +160,7 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement cmbPostaTipi = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:16:geregiLov:LovSecilenTable:0:selectOneMenu"));
         By cmbGeregiBy = By.cssSelector("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='geregiLov:LovText']");
 
-        BelgenetElement txtOnayAkisi = comboLov("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='akisLov:LovText']");
+       // BelgenetElement txtOnayAkisi = comboLov("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='akisLov:LovText']");
         SelenideElement btnOnayAkisiTemizle = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:17:akisLov:j_idt134"));
         SelenideElement btnOnayAkisiEdit = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:17:akisLov:j_idt135"));
         //SelenideElement btnOnayAkisiEkle = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:17:onayAkisiEkle"));
@@ -448,7 +448,7 @@ public class EvrakOlusturPage extends MainPage {
         }
 
         @Step("Gereği doldur")
-        public BilgilerTab geregiDoldur(String geregi) throws InterruptedException {
+        public BilgilerTab geregiDoldur(String geregi)  {
             cmbGeregi.selectLov(geregi);
             return this;
         }
@@ -565,10 +565,14 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        BelgenetElement txtOnayAkisi = comboLov(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:akisLov:LovText"));
+
         @Step("")
         public BilgilerTab onayAkisiTemizle(String deger){
         $(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:akisLov:j_idt134")).click();
-        comboLov("yeniGidenEvrakForm:evrakBilgileriList:18:akisLov:LovText").selectLov(deger);
+       // comboLov("yeniGidenEvrakForm:evrakBilgileriList:18:akisLov:LovText").selectLov(deger);
+            txtOnayAkisi.type(deger).titleItems().first().click();
+
             return this;
         }
 
@@ -662,7 +666,7 @@ public class EvrakOlusturPage extends MainPage {
         }*/
 
         @Step("Gereği alanı kontrolu başarılı")
-        public BilgilerTab geregiAlaniKontrol(String adSoyad, String unvan, String adres, String posta) {
+        public BilgilerTab gercekKisiGeregiAlaniKontrol(String adSoyad, String unvan, String adres, String posta) {
             System.out.println("Gelen title:     " + cmbGeregi.lastSelectedLovTitleText());
             System.out.println("Beklenen title:  " + adSoyad);
             System.out.println("Gelen detail:    " + cmbGeregi.lastSelectedLovDetailText());

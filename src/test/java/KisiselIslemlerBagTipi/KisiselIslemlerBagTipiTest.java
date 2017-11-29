@@ -93,6 +93,7 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
         String farkliKullanici = "Optiim";
         String onayAkisiKullanicilarTuru = "İmzalama";
         String gnMdV = "Gn.Md. V.";
+        String genelMudur = "Genel Müdür V.";
         String kullanicilarTuru = "İmzalama";
 
         login(username2, password2);
@@ -132,15 +133,14 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
         onayAkisYonetimiPage
                 .onayAkisiIslemleriKaydet()
                 .islemMesaji().basariliOlmali(basariMesaji);
-System.out.println(ad);
+
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
-                .onayAkisiTemizle("optiim")
-                .onayAkisDoldur(ad);
+                .onayAkisiTemizle(ad);
         evrakOlusturPage
                 .editorTabAc()
-                .imzacılarGnMdVKontrol(gnMdV);
+                .imzacılarGnMdVKontrol(genelMudur);
 
           vekaletVerPage
             .openPage()

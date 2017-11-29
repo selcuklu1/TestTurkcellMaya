@@ -79,7 +79,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .bilgilerTabiAc()
                 .geregiSecimTipiSec(geregiSecimTipi)
                 .geregiDoldur(adSoyad)
-                .geregiAlaniKontrol(adSoyad, unvan, adres, postaTipi);
+                .gercekKisiGeregiAlaniKontrol(adSoyad, unvan, adres, postaTipi);
 
         evrakOlusturPage
                 .editorTabAc()
@@ -294,7 +294,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .bilgilerTabiAc()
                 .geregiSecimTipiSec("G")
                 .geregiDoldur(adSoyad2)
-                .geregiAlaniKontrol(adSoyad2, unvan2, adres, postaTipi);
+                .gercekKisiGeregiAlaniKontrol(adSoyad2, unvan2, adres, postaTipi);
 
         evrakOlusturPage
                 .editorTabAc()
@@ -365,7 +365,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .bilgilerTabiAc()
                 .geregiSecimTipiSec("G")
                 .geregiDoldur(TCKN1)
-                .geregiAlaniKontrol(adSoyad, unvan, adres, postaTipi)
+                .gercekKisiGeregiAlaniKontrol(adSoyad, unvan, adres, postaTipi)
 
                 .geregiAlaniGuncelle()
                 .adresHitaptaGorunsunSec(true)

@@ -62,7 +62,7 @@ public class OnayAkisYonetimiPage extends MainPage {
     }
 
     public String adCek(){
-       String ad = txtAd.getText();
+       String ad = txtAd.getValue();
         return ad;
     }
 

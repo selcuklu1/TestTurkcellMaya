@@ -1,16 +1,11 @@
 package pages.pageComponents.belgenetElements;
 
-import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.SelenideElement;
-import com.codeborne.selenide.WebDriverRunner;
+import com.codeborne.selenide.*;
 import com.codeborne.selenide.impl.ElementFinder;
 import common.BaseLibrary;
 import io.qameta.allure.Allure;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.testng.Assert;
-import pages.pageComponents.belgenetElements.BelgenetElement;
 
 import java.util.List;
 
@@ -25,6 +20,8 @@ public class ComboLovHelper extends BaseLibrary {
     private static String id;
 
     private static String lovText;
+
+    private static boolean multiType;
 
     private static String treeButton;
     private static String lovTree;
@@ -56,6 +53,8 @@ public class ComboLovHelper extends BaseLibrary {
         else
             throw new RuntimeException("comboLov id alınamadı.");
 
+        multiType = element.getAttribute("class").contains("lovMultipleType");
+
         lovText = id + "[id$='LovText']";
 
         treeButton = id + "[id*='treeButton']";
@@ -68,8 +67,11 @@ public class ComboLovHelper extends BaseLibrary {
         lovTreeListSelectableItems = lovTreeList + " span[class*='ui-tree-selectable-node']";
         lovTreeListSelectableItemsTitle = lovTreeListSelectableItems + lovItemTitle;
         lovTreeListSelectableItemsDetail = lovTreeListSelectableItems + lovItemDetail;
+//*[@id='yeniGidenEvrakForm:evrakBilgileriList:16:geregiLov:LovSecilenTable:0:j_idt112']/ancestor::tr[@role='row']
 
-        lovSecilen = id + "[id*='LovSecilen']";
+        lovSecilen = id + (multiType ? "[id$='LovSecilenTable_data']" : "[id$='LovSecilen']");
+//        lovSecilen = id + "[id*='LovSecilen']";
+//        LovSecilenTable_data = id + "[id$='LovSecilenTable_data']";
         lovSecilenItemTitle = lovSecilen + lovItemTitle;
         lovSecilenItemDetail = lovSecilen + lovItemDetail;
         lovInputTextleriTemizle = lovSecilen + " button[onclick*='lovInputTextleriTemizle']";
@@ -95,16 +97,32 @@ public class ComboLovHelper extends BaseLibrary {
         for (int i = count - 1; i >= 0; i--)
             $$(lovInputTextleriTemizle).get(i).click();
 
-        long t = Configuration.timeout;
-        Configuration.timeout = 0;
+//        long t = Configuration.timeout;
+//        Configuration.timeout = 0;
         //! singleType lov için temizle butonu DOM da kaldığı için visible kontrolü kıllanıldı
         for (SelenideElement item : $$(lovInputTextleriTemizle))
             item.shouldBe(not(visible));
-
-        Configuration.timeout = t;
+//        Configuration.timeout = t;
 
         return (BelgenetElement) element;
 //        return ElementFinder.wrap(BelgenetElement.class, null, By.cssSelector(lovText), 0);
+    }
+
+    static BelgenetElement lastSelectedLov() {
+
+        SelenideElement e;
+        if (multiType)
+            e = $(lovSecilen + " > tr[role='row']:last-child");
+        else
+            e = $(lovSecilen);
+
+        String locator = e.getWrappedElement().toString();
+        locator = locator.split("css selector:")[1].trim();
+        locator = locator.substring(0, locator.length()-1);
+
+//        locator = multiType ? locator + ":nth-child("+ $$(l).size() +")" : lovSecilen;
+//        return locator;
+        return ElementFinder.wrap(BelgenetElement.class, null, By.cssSelector(locator), 0);
     }
 
     static BelgenetElement lastSelectedLovTitle() {
@@ -160,19 +178,15 @@ public class ComboLovHelper extends BaseLibrary {
     }
 
     static String getLastSelectedLovValue() {
-        ElementsCollection title = $$(lovSecilenItemTitle).filter(visible);
-        return title.get(title.size() - 1).text()
-                + "\n" + title.get(title.size() - 1).text();
+        return lastSelectedLovTitleText() + "\n" + lastSelectedLovDetailText();
     }
 
     static String lastSelectedLovTitleText() {
-        ElementsCollection title = $$(lovSecilenItemTitle).filter(visible);
-        return title.get(title.size() - 1).text().trim();
+        return $$(lovSecilenItemTitle).last().shouldBe(visible).text();
     }
 
     static String lastSelectedLovDetailText() {
-        ElementsCollection title = $$(lovSecilenItemDetail).filter(visible);
-        return title.get(title.size() - 1).text().trim();
+        return $$(lovSecilenItemDetail).last().shouldBe(visible).text();
     }
 
     static Boolean isLovSelected() {
@@ -185,16 +199,16 @@ public class ComboLovHelper extends BaseLibrary {
         executeJavaScript("arguments[0].scrollIntoView();", element);
 //        element.sendKeys(Keys.SHIFT);
 
-        WebElement element = WebDriverRunner.getWebDriver().findElement(By.cssSelector(lovText));
+//        WebElement element = WebDriverRunner.getWebDriver().findElement(By.cssSelector(lovText));
 
-        boolean isMultiType = element.getAttribute("class").contains("lovMultipleType");
+//        boolean multiType = element.getAttribute("class").contains("lovMultipleType");
 
-        if (isMultiType)
+        if (multiType)
             selectMultiType(value);
         else
             selectSingleType(value);
 
-        if (isMultiType)
+        if (multiType)
             return ElementFinder.wrap(BelgenetElement.class, null, By.cssSelector(lovText), 0);
         else
             return ElementFinder.wrap(BelgenetElement.class, null, By.cssSelector(lovSecilen), 0);
@@ -202,16 +216,27 @@ public class ComboLovHelper extends BaseLibrary {
 
     public static boolean isLovValueSelectable(String value) {
 
+/*        WebElement weblovText = WebDriverRunner.getWebDriver().findElement(By.cssSelector(lovText));
+//        executeJavaScript("arguments[0].scrollIntoView();", weblovText);
+//
+//        if (weblovText.isDisplayed())
+//            $(lovText).setValue(value);
+//        else
+//            $(treeButton).click();*/
+
         boolean selectable = false;
 
         executeJavaScript("arguments[0].scrollIntoView();", element);
 
-        $(lovText).shouldBe(visible);
+        if ($(lovText).is(not(visible)))
+            $(lovInputTextleriTemizle).shouldBe(visible).click();
 
         if (!$(lovText).isEnabled())
             $(treeButton).click();
         else
             $(lovText).setValue(value);
+
+        $(lovText).shouldBe(visible);
 
         SelenideElement tree = $$(lovTree).last();
         tree.shouldBe(visible);
@@ -285,11 +310,11 @@ public class ComboLovHelper extends BaseLibrary {
         boolean isSelected = false;
         SelenideElement willBeSelected = null;
 
-        defaultTimeout = Configuration.timeout;
-        Configuration.timeout = 0;
+//        defaultTimeout = Configuration.timeout;
+//        Configuration.timeout = 0;
         List<String> selectedTitles = $$(lovSecilenItemTitle).texts();
         List<String> selectedDetails = $$(lovSecilenItemDetail).texts();
-        Configuration.timeout = defaultTimeout;
+//        Configuration.timeout = defaultTimeout;
 
         $(lovText).setValue(value);
 

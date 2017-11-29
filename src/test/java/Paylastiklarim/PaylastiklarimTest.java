@@ -1,17 +1,14 @@
 package Paylastiklarim;
 
-import com.codeborne.selenide.Selenide;
 import common.BaseTest;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.solMenuPages.BenimlePaylasilanlarPage;
 import pages.solMenuPages.PaylastiklarimPage;
-import pages.ustMenuPages.GelenEvraklarPage;
 
 
 public class PaylastiklarimTest extends BaseTest {
 
-    GelenEvraklarPage gelenEvraklarPage;
     PaylastiklarimPage paylastiklarimPage;
     BenimlePaylasilanlarPage benimlePaylasilanlarPage;
 
@@ -19,7 +16,6 @@ public class PaylastiklarimTest extends BaseTest {
     public void loginBeforeTests() {
         paylastiklarimPage = new PaylastiklarimPage();
         benimlePaylasilanlarPage = new BenimlePaylasilanlarPage();
-        gelenEvraklarPage = new GelenEvraklarPage();
         login("mbozdemir", "123");
     }
 
@@ -106,40 +102,6 @@ public class PaylastiklarimTest extends BaseTest {
                 .paylas()
                 .islemMesaji().dikkatOlmali("Evrakın paylaşılacağı Kullanıcıyı seçiniz!");
 
-        paylastiklarimPage
-                .paylasKisiSec("Optiim TEST")
-                .paylas()
-                .islemMesaji().dikkatOlmali("Açıklama girilmesi zorunludur!");
-
-        paylastiklarimPage
-                .paylasKisiSec("Optiim TEST")
-                .paylas()
-                .islemMesaji().dikkatOlmali("Açıklama girilmesi zorunludur!");
-
-        paylastiklarimPage
-                .paylasilanKisileriTemizle()
-                .paylasimAciklamaYaz("yeni açkılmala")
-                .paylas();
-
-        paylastiklarimPage
-                .paylasimAciklamaYaz("yeni açkılmalaasdsdasdasdsada");
-                //.islemMesaji().dikkatOlmali("Evrakın paylaşılacağı Kullanıcıyı seçiniz!");
-
-
-        /*
-
-        paylastiklarimPage
-                .paylasKisiSec("Optiim TEST")
-                .paylasimAciklamaYaz("yeni açkılmala")
-                .paylas()
-                .islemMesaji().basariliOlmali("İşlem başarılıdır!");
-
-        paylastiklarimPage
-                .openPage()
-                .evrakSec("Optiim TEST")
-                .paylasTabTikla()
-                .paylas()
-                .islemMesaji().dikkatOlmali("Evrakın paylaşılacağı Kullanıcıyı seçiniz!");
 
         paylastiklarimPage
                 .paylasKisiSec("Optiim TEST")
@@ -155,87 +117,14 @@ public class PaylastiklarimTest extends BaseTest {
         paylastiklarimPage
                 .paylasKisiSec("Optiim TEST")
                 .paylasilanKisileriTemizle()
-                .paylas()
-                .islemMesaji().dikkatOlmali("Açıklama girilmesi zorunludur!");
-
-
-        paylastiklarimPage
-                .openPage()
-                .paylasKisiSec("Optiim TEST")
                 .paylasimAciklamaYaz("yeni açkılmala")
                 .paylas()
-                .islemMesaji().basariliOlmali("İşlem başarılıdır!");
-
-
-        */
-
-    }
-
-
-    @Test(enabled = true, description = "1904 : Evrak paylaşmada not kontrolü")
-    public void TC_01904() {
-
-
-
-        String evrakKonu = "Gelen evrak";
-        String evrakGeldigiYer = "Başbakanlık / Başbakan Başmüşavirleri";
-        String evrakKayitTarihiSayi = "23.11.2017 / 4986";
-        String evrakTarihi = "23.11.2017";
-        String paylasilmaTarihi = "23.11.2017";
-        String No = "2343";
-        String evrakNo = "4986";
-        String paylasan = "Mehmet BOZDEMİR";
-        String paylasilan = "Optiim TEST";
-        String paylasimAciklamasi = "Optiim TEST ile evrak paylaşıldı.";
-        String evrakNotuAciklamasi = "tc 1904 evrak notu";
-
-        /*
-        gelenEvraklarPage
-                .openPage()
-                .evrakSec(evrakKonu, evrakGeldigiYer, evrakKayitTarihiSayi, evrakTarihi, No)
-                .paylas()
-                .paylasKisiSec(paylasilan)
-                .paylasanAciklamaDoldur(paylasimAciklamasi)
-                .paylasIcPaylas()
-                .islemMesaji().basariliOlmali("İşlem başarılıdır!");
-        */
-
-        logout();
-        login("optiim", "Avis1111");
-
-
-        benimlePaylasilanlarPage
-                .openPage()
-                .evrakSec(paylasan, paylasilmaTarihi, evrakKonu, evrakNo)
-                .evrakOnizlemeTabSec("Evrak Notları")
-                .evrakNotuEkle()
-                .evrakNotuGirVeKaydet(evrakNotuAciklamasi);
-
-
-        logout();
-        login("mbozdemir", "123");
-
-        paylastiklarimPage
-                .openPage()
-                .evrakSec("","","","")
-                .evrakOnizlemeTabSec("Evrak Notları")
-                .evrakNotuKontrolEt(paylasilan, evrakNotuAciklamasi, true);
-
-
-
-
-
-        /*
-        paylastiklarimPage
-                .openPage()
-                .evrakSec("Optiim TEST","27.11.2017 18:00:05","test","9070");
-        */
+                .islemMesaji().dikkatOlmali("Evrakın paylaşılacağı Kullanıcıyı seçiniz!");
 
 
 
 
     }
-
 
 
 }
