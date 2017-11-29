@@ -38,7 +38,7 @@ public class GidenEvrakKayitPage extends MainPage {
 
     @Step("Gereği seçim tipi seç")
     public GidenEvrakKayitPage geregiSecimTipiSec(String geregi) {
-        cmbGeregiSecimTipi.selectOptionByValue(geregi);
+        cmbGeregiSecimTipi.selectOption(geregi);
         return this;
     }
 
@@ -59,6 +59,13 @@ public class GidenEvrakKayitPage extends MainPage {
         boolean selectable = comboLov(cmbGeregiBy).isLovValueSelectable(adSoyad);
         Assert.assertEquals(selectable, false, "MyCombolov alanında " + adSoyad + ": Gerçek kişinin görüntülenmediği görülür");
         System.out.println("MyCombolov alanında " + adSoyad + ": Gerçek kişinin görüntülenmediği görülür.");
+        return this;
+    }
+
+    @Step("Kurumun Geregi alanında görüntülenmediği kontrolu")
+    public GidenEvrakKayitPage geregiAlanindaDegerKontrolu(String aranacakDeger, Boolean shouldBeExist) {
+
+        Assert.assertEquals(comboLov(cmbGeregiBy).isLovValueSelectable(aranacakDeger), shouldBeExist);
         return this;
     }
 
@@ -117,5 +124,7 @@ public class GidenEvrakKayitPage extends MainPage {
         btnGeregiDelete.click();
         return this;
     }
+
+
 
 }

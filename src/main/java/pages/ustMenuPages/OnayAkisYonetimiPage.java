@@ -32,23 +32,40 @@ public class OnayAkisYonetimiPage extends MainPage {
     private ElementsCollection cmbImzacıSon = $$("[id$='onayAkisiYonetimiEditorForm:onayAkisiYonetimiKullaniciBirimDataTable'] table tr select");
     private BelgenetElement txtOnayAkisiIslemleriKullanicilar = comboLov("[id='onayAkisiYonetimiEditorForm:onayAkisiYonetimiKullaniciBirimLov:LovText']");
     private SelenideElement btnOnayAkisiIslemleriKaydet = $(By.id("onayAkisiYonetimiEditorForm:onayAkisiYonetimiEditorKaydetId"));
-
+    private SelenideElement txtAd = $(By.id("onayAkisiYonetimiEditorForm:onayAkisiYonetimiAkisAdiInput"));
+    @Step("Onay akışı sayfası aç")
+    public OnayAkisYonetimiPage openPage(){
+        ustMenu("Onay Akışı Yönetimi");
+        return this;
+    }
+    @Step("Onay Akışı işlemler kaydet")
     public OnayAkisYonetimiPage onayAkisiIslemleriKaydet(){
         btnOnayAkisiIslemleriKaydet.click();
         return this;
     }
-
+    @Step("Onay akışı işlemleri kullanıcılar alanı doldur")
     public OnayAkisYonetimiPage onayAkisiIslemlerKullanicilarDoldur(String kullanici){
         txtOnayAkisiIslemleriKullanicilar.type(kullanici).titleItems().first().click();
                 //selectLov(kullanici);
         return this;
     }
-
+    @Step("İmzacı seç")
     public  OnayAkisYonetimiPage imzacıSonSec(String value) {
-        cmbImzacıSon.last().selectOptionByValue();
+        cmbImzacıSon.last().selectOption(value);
         return this;
     }
-
+    @Step("Onay Akışı işlemleri ad doldur")
+    public OnayAkisYonetimiPage onayAkisiIslemleriAdDoldur(){
+        String random = createRandomNumber(7);
+        txtAd.setValue(random);
+        return this;
+    }
+    @Step("Ad alanı alınır")
+    public String adCek(){
+       String ad = txtAd.getValue();
+        return ad;
+    }
+    @Step("Onay akışı yeni")
     public OnayAkisYonetimiPage onayAkisiYeni(){
         btnOnayAkisiYeni.click();
         return this;

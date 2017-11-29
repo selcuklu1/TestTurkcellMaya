@@ -91,7 +91,7 @@ public class PaylastiklarimTest extends BaseTest {
 
     }
 
-    @Test(enabled = true, description = "1877 : Evrakı paylaşmada alan kontrolleri")
+    @Test(enabled = true, description = "1876 : Evrakı paylaşmada alan kontrolleri")
     public void TC_01876() {
 
 
@@ -105,6 +105,7 @@ public class PaylastiklarimTest extends BaseTest {
 
         paylastiklarimPage
                 .paylasKisiSec("Optiim TEST")
+                .paylasimAciklamaYaz("")
                 .paylas()
                 .islemMesaji().dikkatOlmali("Açıklama girilmesi zorunludur!");
 

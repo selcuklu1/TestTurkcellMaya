@@ -31,12 +31,10 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
     EvrakOlusturPage evrakOlusturPage;
     VekaletVerPage vekaletVerPage;
     GelenEvraklarPage gelenEvraklarPage;
-    EvrakOlusturPage evrakOlusturPageTab;
     OnayAkisYonetimiPage onayAkisYonetimiPage;
 
     @BeforeMethod
     public void loginBeforeTests() {
-        evrakOlusturPageTab = new EvrakOlusturPage();
         kullaniciYonetimiPage = new KullaniciYonetimiPage();
         evrakOlusturPage = new EvrakOlusturPage();
         vekaletVerPage = new VekaletVerPage();
@@ -46,7 +44,8 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "2141: Bağ tipi amir yardımcısı olması kontrolleri")
-    public void TC2141() throws InterruptedException {
+    public void TC2141() {
+
         String basariMesaji = "İşlem başarılıdır!";
         String bagTipi = "Y";
         String farkliKullanici = "Optiim";
@@ -89,12 +88,16 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "2142: Bağ tipi vekaleten amir yardımcısı kontrolleri")
-    public void TC2142() throws InterruptedException {
+    public void TC2142() {
+
         String basariMesaji = "İşlem başarılıdır!";
         String bagTipi = "Y";
         String farkliKullanici = "Optiim";
         String onayAkisiKullanicilarTuru = "İmzalama";
         String gnMdV = "Gn.Md. V.";
+        String genelMudur = "Genel Müdür V.";
+        String kullanicilarTuru = "İmzalama";
+
         login(username2, password2);
 
         kullaniciYonetimiPage
@@ -104,7 +107,9 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
                 .gorevliOlduguBirimlerGuncelle()
                 .popupKullaniciBirimAtamaBagTipiSec(bagTipi)
                 .popupKullaniciBirimAtamaKaydet();
+
         String ekranAdi = kullaniciYonetimiPage.ekranAdiCek();
+
         kullaniciYonetimiPage
                 .kullaniciGuncellemeKaydet()
                 .islemMesaji().basariliOlmali(basariMesaji);
@@ -116,34 +121,56 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
                 .otomatikOnayAkisiGeldigiGorme(ekranAdi)
                 .onayAkisiEkle()
                 .kullanicilarDoldur(ekranAdi)
-                .onayAkisiKullanicilarImzacıSec(onayAkisiKullanicilarTuru)
-                .onayAkisiKullan()
+                .kullanicilarImzaciSec(kullanicilarTuru)
+                .onayAkisiKullan();
+
+        evrakOlusturPage
+                .editorTabAc()
                 .imzacılarGnMdVKontrol(gnMdV);
 
         onayAkisYonetimiPage
+                .openPage()
                 .onayAkisiYeni()
                 .onayAkisiIslemlerKullanicilarDoldur(ekranAdi)
                 .imzacıSonSec(onayAkisiKullanicilarTuru)
-                .onayAkisiIslemleriKaydet();
-        //  vekaletVerPage
-        //        .openPage()
-        //      .vekaletVerenDoldur(ekranAdi)
-        //    .vekaletVerenFarkliDoldur(farkliKullanici)
-        //  .onayVerecekDoldur(ekranAdi);
-        //gelenEvraklarPage
-        //      .openPage()
-        //    .evrakSec()
-        //  .tabHavaleYap()
-        //.havaleYapOnaylanacakKisiTreeDoldur(ekranAdi);
+                .onayAkisiIslemleriAdDoldur();
+
+        String ad = onayAkisYonetimiPage.adCek();
+
+        onayAkisYonetimiPage
+                .onayAkisiIslemleriKaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .onayAkisiTemizle(ad);
+
+        evrakOlusturPage
+                .editorTabAc()
+                .imzacılarGnMdVKontrol(genelMudur);
+
+        vekaletVerPage
+                .openPage()
+                .vekaletVerenDoldur(ekranAdi)
+                .vekaletVerenFarkliDoldur(farkliKullanici)
+                .onayVerecekDoldur(ekranAdi);
+
+        gelenEvraklarPage
+                .openPage()
+                .evrakSec()
+                .tabHavaleYap()
+                .havaleYapOnaylanacakKisiTreeDoldur(ekranAdi);
     }
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "2168: Bağ tipi personel kontrolleri")
-    public void TC2168() throws InterruptedException {
+    public void TC2168() {
+
         String basariMesaji = "İşlem başarılıdır!";
         String bagTipi = "P";
         String farkliKullanici = "Optiim";
-
+        String onayVerecek = "Zübeyde TEKİN";
         login(username2, password2);
 
         kullaniciYonetimiPage
@@ -153,6 +180,7 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
                 .gorevliOlduguBirimlerGuncelle()
                 .popupKullaniciBirimAtamaBagTipiSec(bagTipi)
                 .popupKullaniciBirimAtamaKaydet();
+
         String ekranAdi = kullaniciYonetimiPage.ekranAdiCek();
 
         kullaniciYonetimiPage
@@ -170,7 +198,7 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
                 .vekaletVerenAlanınaGoruntulenmemeKontrolu(ekranAdi, false)
                 .vekaletVerenDoldur(farkliKullanici)
                 .vekaletAlanAlanınaGoruntulenmemeKontrolu(ekranAdi, false)
-                .onayVerecekDoldur("Zübeyde TEKİN");
+                .onayVerecekDoldur(onayVerecek);
 
         gelenEvraklarPage
                 .openPage()
@@ -178,6 +206,5 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
                 .tabHavaleYap()
                 .havaleYapOnaylanacakKisiTreeDoldur(ekranAdi);
     }
-
 
 }
