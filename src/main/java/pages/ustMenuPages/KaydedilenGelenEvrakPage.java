@@ -1,24 +1,24 @@
 package pages.ustMenuPages;
 
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementNotSelectableException;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.interactions.HasInputDevices;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
 import java.io.File;
-import java.io.FileFilter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 import static com.codeborne.selenide.Selenide.*;
+import static org.apache.commons.io.FileUtils.deleteDirectory;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 public class KaydedilenGelenEvrakPage extends MainPage {
@@ -27,8 +27,8 @@ public class KaydedilenGelenEvrakPage extends MainPage {
     BelgenetElement cmbBirim = comboLov(By.id("birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuBirimLovId:j_idt126"));
     SelenideElement txtEvrakKayitNo = $(By.id("birimeGelenEvrakRaporuForm:evrakNoId"));
     SelenideElement btnSorgula = $(By.id("birimeGelenEvrakRaporuForm:sorgulaButton"));
-    SelenideElement btnRaporAlExcel = $(By.id("birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable:j_idt19593"));
-    SelenideElement btnRaporAlPdf = $(By.id("birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable:j_idt22373"));
+    SelenideElement btnRaporAlExcel = $(By.id("birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable:j_idt15891"));
+    SelenideElement btnRaporAlPdf = $(By.id("birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable:j_idt15889"));
     SelenideElement tblKaydedilenGelenEvrak = $(By.id("birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable_data"));
     SelenideElement tbldene = $(By.xpath("//tbody[@id='birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable_data']/tr/td[2]/div"));
 
@@ -63,14 +63,48 @@ public class KaydedilenGelenEvrakPage extends MainPage {
 
     @Step("Rapor al Excel")
     public KaydedilenGelenEvrakPage raporAlExcel() throws IOException {
+
+        deleteFile("C:\\Users\\Emre_Sencan\\Downloads\\","Rapor_");
+        searchDownloadedFileWithName("C:\\Users\\Emre_Sencan\\Downloads\\","Rapor_.xls");
         btnRaporAlExcel.click();
         return this;
     }
 
+
+    //Dosyanın bilgisayara inip inmediğini kontrol eder.
+    public boolean searchDownloadedFileWithName(String downloadPath, String fileName) {
+        boolean flag = false;
+        File dir = new File(downloadPath);
+        File[] dir_contents = dir.listFiles();
+        Pattern y = Pattern.compile("[^0-9]");
+        String s = null;
+
+        for (int i = 0; i < dir_contents.length; i++) {
+            String file = dir_contents[i].getName().toString();
+            s="";
+            Matcher m = y.matcher(file);
+            while (m.find()) {
+                s =s+ m.group();
+            }
+            System.out.println(s);
+            assert s.equals(fileName) : "Klasör "+ dir_contents[i].getName().toString() + "indirilmiştir.";
+            assert s.equalsIgnoreCase(fileName) : "İstenilen dosya indirilmemiştir.";
+
+//            if (s.equals(fileName)){
+//                System.out.println("Klasör "+ dir_contents[i].getName().toString() + " indirilmiştir.");
+//                flag = true;
+//            }
+//            else
+//                System.out.println("İstenilen dosya indirilmemiştir.");
+        }
+        return flag;
+    }
+
     @Step("Rapor al PDF")
-    public KaydedilenGelenEvrakPage raporAlPdf() {
+    public KaydedilenGelenEvrakPage raporAlPdf() throws IOException {
+        deleteFile("C:\\Users\\Emre_Sencan\\Downloads\\","Rapor_");
+        searchDownloadedFileWithName("C:\\Users\\Emre_Sencan\\Downloads\\","Rapor_.pdf");
         btnRaporAlPdf.click();
-        confirm();
         return this;
     }
 

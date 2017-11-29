@@ -1,6 +1,7 @@
 package common;
 
 import com.codeborne.selenide.Configuration;
+import io.qameta.allure.Step;
 import listeners.SettingsListener;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.BeforeClass;
@@ -22,12 +23,13 @@ public class BaseTest extends BaseLibrary {
         Locale turkishLocal = new Locale("tr", "TR");
         Locale.setDefault(turkishLocal);
 
+
         //region SetUp BelgenetFramework for BelgenetElements usage
         BelgenetFramework.setUp();
         //endregion
-
         //region Selenide Driver Configuration
         Configuration.baseUrl = belgenetURL;
+<<<<<<< HEAD
         //    Configuration.browser = "drivers.Firefox";
 //        Configuration.remote = "http://0.0.0.0:32768/wd/hub";
 
@@ -43,7 +45,11 @@ public class BaseTest extends BaseLibrary {
         Configuration.browser = "chrome";
         Configuration.startMaximized = true;
         Configuration.baseUrl = belgenetURL;
+=======
+        Configuration.browser = "chrome";
+>>>>>>> 696164ea61040b3d522eef61a3e19c55cbbd1cb4
         //Configuration.browser = "drivers.Firefox";
+        //Configuration.browser = "marionette";
         //Configuration.remote = "http://0.0.0.0:32768/wd/hub";
         Configuration.reportsFolder = "test-result/reports";
         Configuration.screenshots = false;
@@ -52,9 +58,10 @@ public class BaseTest extends BaseLibrary {
         Configuration.timeout = 30000;
         Configuration.holdBrowserOpen = true;
 //        Configuration.headless = true;
+        Configuration.startMaximized = true;
 //        Configuration.browserSize = "1024x600";
         //endregion
-        
+
         System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, "/dev/null");
     }
 
@@ -66,7 +73,7 @@ public class BaseTest extends BaseLibrary {
     public void login(String username, String password) {
         new LoginPage().login(username, password);
     }
-
+    @Step("Çıkış yap")
     public void logout() {
         new MainPage().logout();
     }

@@ -2,6 +2,7 @@ package pages;
 
 import com.codeborne.selenide.Condition;
 import common.BaseLibrary;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import pages.pageComponents.IslemMesajlari;
 import pages.pageComponents.SolMenu;
@@ -125,13 +126,13 @@ public class MainPage extends BaseLibrary {
     }*/
     //endregion
 
-
+    @Step("Kep bağlantısı alanı aç")
     public MainPage kepBaglantisi(){
     $(By.id("topMenuForm:userMenuButton_button")).click();
     $(By.id("topMenuForm:kepLoginButton")).click();
         return this;
     }
-
+    @Step("Bağlan")
     public MainPage kepAdresBaglantisiBaglan1(){
         $("[id='kepForm:kayitliKepDataTable:0:j_idt235']").click();
         return this;
@@ -141,26 +142,23 @@ public class MainPage extends BaseLibrary {
         $("[id='kepForm:kayitliKepDataTable:1:j_idt235']").click();
         return this;
     }
-
+    @Step("Kullanıcı adı ve Tc Kimlik no kontrol et")
     public MainPage kullaniciAdiTcKimlikNoKontol(){
         $(By.id("kepLogin2FormId:kullaniciAdi")).shouldBe(Condition.disabled);
-        $(By.id("kepLogin2FormId:kullaniciAdi")).shouldBe(Condition.empty);
-
         $(By.id("kepLogin2FormId:tcKimlikNo")).shouldBe(Condition.disabled);
-        $(By.id("kepLogin2FormId:tcKimlikNo")).shouldBe(Condition.empty);
         return this;
     }
-
+    @Step("Parola doldur")
     public MainPage parolaDoldur(String parola){
         $(By.id("kepLogin2FormId:parola")).setValue(parola);
         return this;
     }
-
+    @Step("Şifre Doldur")
     public MainPage sifreDoldur(String sifre){
         $(By.id("kepLogin2FormId:sifre")).setValue(sifre);
         return this;
     }
-
+    @Step("Bağlan")
     public MainPage kepBaglantisiBaglan(){
         $(By.id("kepLogin2FormId:j_idt255")).click();
         return this;

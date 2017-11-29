@@ -18,7 +18,7 @@ import pages.ustMenuPages.*;
 
 import static data.TestData.*;
 
-@Epic("Belgenet1Epic examples")
+@Epic("Kep ile Postalama İşlemleri")
 public class KepIlePostalamaIslemleriTest extends BaseTest {
 
     EvrakOlusturPage evrakOlusturPage;
@@ -52,6 +52,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
         String hataliSifre = "1";
 
         login(username3, password3);
+
         mainPage
                 .kepBaglantisi()
                 .kepAdresBaglantisiBaglan1()
@@ -60,13 +61,14 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
                 .sifreDoldur(sifre)
                 .kepBaglantisiBaglan()
                 .islemMesaji().beklenenMesaj(hataMesaji);
-                logout();
+        logout();
+
         login(username2, password2);
 
         mainPage
-        .kepBaglantisi()
+                .kepBaglantisi()
                 .kepAdresBaglantisiBaglan1()
-                //.kullaniciAdiTcKimlikNoKontol()
+                .kullaniciAdiTcKimlikNoKontol()
                 .parolaDoldur(parola)
                 .sifreDoldur(sifre)
                 .kepBaglantisiBaglan()
@@ -84,7 +86,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
     @Test(enabled = true, description = "1513b: Kurum Kep Hesabı Tanımlama ve Evrak Oluşturma Ekranından kontrolü")
     public void TC1513b() throws InterruptedException {
 
-        String popupKepAdresi ="turksat.kamu1@testkep.pttkep.gov.tr";
+        String popupKepAdresi = "turksat.kamu1@testkep.pttkep.gov.tr";
         String popupKepHizmetSaglayicisiSec = "Diğer";
         String basariMesaji = "İşlem başarılıdır!";
         String bilgiSecimTipi = "D";
@@ -115,10 +117,12 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
     @Test(enabled = true, description = "1513c: Gerçek Kişi Kep Hesabı Tanımlama ve Evrak Oluşturma Ekranından Kontrolü")
     public void TC1513c() throws InterruptedException {
 
-        String popupKepAdresi ="turksat.kamu1@testkep.pttkep.gov.tr";
+        String popupKepAdresi = "turksat.kamu1@testkep.pttkep.gov.tr";
         String popupKepHizmetSaglayicisiSec = "P";
         String basariMesaji = "İşlem başarılıdır!";
         String bilgiSecimTipi = "G";
+
+        login(username2, password2);
 
         gercekKisiYonetimPage
                 .openPage()
@@ -144,7 +148,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
     @Test(enabled = true, description = "1513d: Tüzel Kişi Kep Hesabı Tanımlama ve Evrak Oluşturma Ekranından Kontrolü")
     public void TC1513d() throws InterruptedException {
 
-        String popupKepAdresi ="turksat.kamu1@testkep.pttkep.gov.tr";
+        String popupKepAdresi = "turksat.kamu1@testkep.pttkep.gov.tr";
         String popupKepHizmetSaglayicisiSec = "PTT KEP Servisi";
         String basariMesaji = "İşlem başarılıdır!";
         String bilgiSecimTipi = "T";
@@ -175,15 +179,15 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
     @Test(enabled = true, description = "KEP Adresi Tanımlama işlemleri")
     public void TC1520() throws InterruptedException {
 
-        String birim ="Yazılım";
-        String birimTuru ="İç Birim";
-        String popupKepAdresi1 ="turksat.kamu1@testkep.pttkep.gov.tr";
-        String popupKepAdresi2 ="turksat.kamu2@testkep.pttkep.gov.tr";
-        String popupKepAdresi3 ="turksat.kamu3@testkep.pttkep.gov.tr";
+        String birim = "Yazılım";
+        String birimTuru = "İç Birim";
+        String popupKepAdresi1 = "turksat.kamu1@testkep.pttkep.gov.tr";
+        String popupKepAdresi2 = "turksat.kamu2@testkep.pttkep.gov.tr";
         String popupKepHizmetSaglayicisiSec = "PTT KEP Servisi";
         String basariMesaji = "İşlem başarılıdır!";
+        String kepAdresi = "turksat.kamu" + createRandomNumber(7) +"@testkep.pttkep.gov.tr";
 
-        login(username3, password3);
+        login(username2, password2);
 
         birimYonetimiPage
                 .openPage()
@@ -191,12 +195,12 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
                 .birimTuruSec(birimTuru)
                 .ara()
                 .tableDuzenle()
-                .kepAdresBilgileriArti()
-                .popupKepAdresiDoldur(popupKepAdresi1)
+                .yeniKepAdresBilgileriEkle()
+                .popupKepAdresiDoldur(kepAdresi)
                 .popupHizmetSaglayicisiSec(popupKepHizmetSaglayicisiSec)
                 .popupKaydet()
-                .kepAdresBilgileriArti()
-                .popupKepAdresiDoldur(popupKepAdresi2)
+                .yeniKepAdresBilgileriEkle()
+                .popupKepAdresiDoldur(kepAdresi)
                 .popupHizmetSaglayicisiSec(popupKepHizmetSaglayicisiSec)
                 .popupKaydet()
                 .kaydet()

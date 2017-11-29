@@ -3,6 +3,7 @@ package pages.ustMenuPages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
@@ -77,14 +78,19 @@ public class GelenEvraklarPage extends MainPage {
 
     SelenideElement evrakSec = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
 
-    public GelenEvraklarPage evrakSec()
-    {
+
+    public GelenEvraklarPage openPage() {
+        solMenu(SolMenuData.IslemBekleyenEvraklar.GelenEvraklar);
+        return this;
+    }
+
+    @Step("Evrak seç")
+    public GelenEvraklarPage evrakSec() {
         evrakSec.click();
         return this;
     }
 
-    public GelenEvraklarPage evrakSec(String konu, String geldigiYer, String kayitTarihiSayi, String evrakTarihi, String no)
-    {
+    public GelenEvraklarPage evrakSec(String konu, String geldigiYer, String kayitTarihiSayi, String evrakTarihi, String no) {
         tableEvraklar
                 .filterBy(Condition.text("Konu: " + konu))
                 .filterBy(Condition.text("Geldiği Yer: " + geldigiYer))
@@ -96,11 +102,7 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
-    public GelenEvraklarPage openPage() {
-        solMenu(SolMenuData.IslemBekleyenEvraklar.GelenEvraklar);
-        return this;
-    }
-
+    @Step("Havale yap")
     public GelenEvraklarPage tabHavaleYap() {
         btnTabHavaleYap.click();
         return this;
@@ -171,6 +173,7 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Havale onaylanacak kisi doldur")
     public GelenEvraklarPage havaleYapOnaylanacakKisiTreeDoldur(String text) {
         treeHavaleYapOnaylanacakKisi.selectLov(text);
         System.out.println("Başarı Bu selectlı geçmiştir");
@@ -256,7 +259,6 @@ public class GelenEvraklarPage extends MainPage {
         btnTopluKlasorKaldir.click();
         return this;
     }
-
 
     public GelenEvraklarPage raporAl() {
         btnRaporAl.click();
