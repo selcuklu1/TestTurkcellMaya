@@ -1,10 +1,17 @@
 package BirimIcerikSablonu;
 
+import com.codeborne.selenide.CollectionCondition;
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ElementsCollection;
 import common.BaseTest;
+import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
+import org.openqa.selenium.By;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.ustMenuPages.BirimIcerikSablonlarPage;
+
+import static com.codeborne.selenide.Selenide.$;
 
 
 /**
@@ -20,16 +27,21 @@ public class BirimIcerikSablonuTest extends BaseTest {
 
     @BeforeMethod
     public void setUp() {
-        birimIcerikSablonlarPage = new BirimIcerikSablonlarPage();
         login();
+        birimIcerikSablonlarPage = new BirimIcerikSablonlarPage();
     }
 
-    @Test(description = "Alan Kontrolleri")
-    public void tc1084a() throws Exception {
-
+    @Test(description = "Alan aktif durumu kontrolleri")
+    public void tc1084a() {
         birimIcerikSablonlarPage
                 .openPage()
                 .alanlarinAktifDurumKontrol()
                 .detayButonlarinExist();
+    }
+
+    @Test
+    @Description("Yeni şablon oluşturma testi")
+    public void tc1084b() {
+
     }
 }
