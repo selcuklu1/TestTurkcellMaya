@@ -514,7 +514,7 @@ public class BaseLibrary {
         return status;
     }
 
-    //Klasordeki dosyaları ismine göre siler...
+    //Bilgisayarda uzantısını verdiğiniz klasordeki dosyalardan gönderdiğiniz ismi içinde içeriyorsa o dosyayı siler.
     public boolean deleteFile(String path,String fileName) throws IOException {
         boolean flag = false;
         File directory = new File(path);
