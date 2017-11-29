@@ -480,6 +480,7 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Otomatik onay akışı kontrol")
         public BilgilerTab otomatikOnayAkisiGeldigiGorme(String ekranAdi) {
+
             $$(" [id='yeniGidenEvrakForm:hiyerarsikAkisOlusturForm:otomatikAkisKullaniciBirimListId'] tbody tr")
                     .filterBy(text(ekranAdi)).shouldHave(sizeGreaterThan(0)).get(0).click();
             $("[id='yeniGidenEvrakForm:hiyerarsikAkisOlusturDialog'] [class='ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all']").click();
