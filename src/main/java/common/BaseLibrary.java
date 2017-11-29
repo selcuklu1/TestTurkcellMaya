@@ -9,6 +9,7 @@ import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
 import org.omg.CORBA.PUBLIC_MEMBER;
 import org.openqa.selenium.*;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -440,21 +441,22 @@ public class BaseLibrary {
         return number;
     }
 
+    // Store the current window handle
     public String windowHandleBefore() throws InterruptedException {
-        // Store the current window handle
         winHandleBefore = WebDriverRunner.getWebDriver().getWindowHandle();
         return winHandleBefore;
     }
 
+    // Perform the click operation that opens new window
+    // Switch to new window opened
     public void switchToNewWindow() throws InterruptedException {
         Thread.sleep(6000);
-        // Perform the click operation that opens new window
-        // Switch to new window opened
         for (String winHandle : WebDriverRunner.getWebDriver().getWindowHandles()) {
             WebDriverRunner.getWebDriver().switchTo().window(winHandle);
         }
     }
 
+    // Switch to default window
     public void switchToDefaultWindow() throws InterruptedException {
         Thread.sleep(3000);
         WebDriverRunner.getWebDriver().close();
@@ -513,4 +515,5 @@ public class BaseLibrary {
         System.out.println("Element bulundu.");
         return status;
     }
+
 }
