@@ -10,6 +10,7 @@ import pages.solMenuPages.BirimHavaleEdilenlerPage;
 import pages.solMenuPages.KaydedilenGelenEvraklarPage;
 import pages.solMenuPages.TeslimAlinmayiBekleyenlerPage;
 import pages.ustMenuPages.GelenEvrakKayitPage;
+import pages.ustMenuPages.GercekKisiYonetimPage;
 import pages.ustMenuPages.KaydedilenGelenEvrakPage;
 
 import java.io.IOException;
@@ -21,6 +22,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     KaydedilenGelenEvrakPage kaydedilenGelenEvrakPage;
     KaydedilenGelenEvraklarPage kaydedilenGelenEvraklarPage;
     BirimHavaleEdilenlerPage birimHavaleEdilenlerPage;
+    GercekKisiYonetimPage gercekKisiYonetimPage;
 
     String evrakNO321;
     String evrakNO328;
@@ -42,6 +44,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         kaydedilenGelenEvrakPage = new KaydedilenGelenEvrakPage();
         kaydedilenGelenEvraklarPage = new KaydedilenGelenEvraklarPage();
         birimHavaleEdilenlerPage = new BirimHavaleEdilenlerPage();
+        gercekKisiYonetimPage = new GercekKisiYonetimPage();
         login("optiim", "Avis1111");
 //        login("ztekin", "123");
     }
@@ -214,22 +217,31 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = false, description = "Gelen evrak kaydederken yeni gerçek ve tüzel kişi tanımlama")
+    @Test(enabled = true, description = "Gelen evrak kaydederken yeni gerçek ve tüzel kişi tanımlama")
     public void TC1136() throws InterruptedException {
 
         String TCKN = "51091330934";
+        String ad = "Test";
+        String soyad = "Otomasyon";
+        String kisiKurum = "G";
+
+        String mernisNo = createMernisTCKN();
 
         gelenEvrakKayitPage
                 .openPage()
-                .kisiKurumSec("G")
+                .kisiKurumSec(kisiKurum)
                 .geldigiKisiEkle()
-                .iletisimBilgisiTCKNEkle()
+                .iletisimBilgisiTCKNEkle(mernisNo)
                 .iletisimBilgisiTCKNAra()
-                .iletisimBilgisiAdDoldur("Test")
-                .iletisimBilgisiSoyadDoldur("Otomasyon")
+                .iletisimBilgisiAdDoldur(ad)
+                .iletisimBilgisiSoyadDoldur(soyad)
                 .iletisimBilgisikaydet();
-//        Gerçek kişi yönetimi ekranında yeni kaydı kontrol et
 
+        gercekKisiYonetimPage
+                .openPage()
+                .filtreTCKimlikNoDoldur(mernisNo)
+                .ara()
+                .tabloTCKNKontrol(mernisNo);
     }
 
     @Severity(SeverityLevel.CRITICAL)

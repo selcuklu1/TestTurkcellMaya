@@ -421,6 +421,13 @@ public class GercekKisiYonetimPage extends MainPage {
         btnGercekKisiPasiYap.click();
         return this;
     }
+    
+    @Step("Tabloda listelenen TCKN kontrolü")
+    public GercekKisiYonetimPage tabloTCKNKontrol(String tcNO){
+        boolean statusTCNO = findElementOnTableByColumnInputInAllPages(tblGercekKisiDataTable, 1, tcNO).isDisplayed();
+        Assert.assertEquals(statusTCNO, true);
+        return this;
+    }
 
 
 }
