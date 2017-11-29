@@ -136,4 +136,11 @@ class ComboLov {
             return detailItems();
         }
     }
+    class LastSelectedLov implements Command<BelgenetElement> {
+        @Override
+        public BelgenetElement execute(SelenideElement proxy, WebElementSource locator, Object[] args) throws IOException {
+            setLocators(proxy);
+            return lastSelectedLov();
+        }
+    }
 }

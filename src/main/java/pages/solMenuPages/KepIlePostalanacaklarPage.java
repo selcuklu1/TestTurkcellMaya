@@ -19,7 +19,7 @@ public class KepIlePostalanacaklarPage extends MainPage{
     @Step("Gönderici kontorol")
     public KepIlePostalanacaklarPage gondericiKontrol(String gonderici){
 
-        String gonderen =   cmbGonderici.getText();
+        String gonderen =  cmbGonderici.getText();
         Assert.assertEquals(gonderici,gonderen);
         System.out.println("Metin değer: " +gonderen+ " Metin değer: "+ gonderici);
         return this;

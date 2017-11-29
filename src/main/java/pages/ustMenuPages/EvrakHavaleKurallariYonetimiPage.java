@@ -1,6 +1,8 @@
 package pages.ustMenuPages;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.conditions.Text;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import pages.MainPage;
@@ -26,6 +28,12 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage{
     SelenideElement cmbDurum = $(By.id("havaleKuralYonetimiListingForm:filterPanel:durumSelectBox"));
     SelenideElement cmbGeldigiYerTipi = $(By.id("havaleKuralYonetimiListingForm:filterPanel:geldigiYerTipiSelect"));
     SelenideElement chkAltBirimDahil = $(By.id("havaleKuralYonetimiListingForm:filterPanel:altBirimlerDahilCheckbox_input"));
+
+    @Step("Tablo değer kontrolu")
+    public EvrakHavaleKurallariYonetimiPage tabloKontrol(String deger){
+        $("[id='havaleKuralYonetimiListingForm:havaleKuralDataTable_data']").shouldHave(Condition.text(deger));
+        return this;
+    }
 
     @Step("Alt birim dahil seçilir")
     public EvrakHavaleKurallariYonetimiPage altBirimDahilSec(boolean secim){

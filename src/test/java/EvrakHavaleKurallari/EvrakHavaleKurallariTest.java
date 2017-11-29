@@ -62,6 +62,7 @@ public class EvrakHavaleKurallariTest extends BaseTest{
         String durumSadecePasifler = "Sadece Pasifler";
         String durumSadeceAktifler = "Sadece Aktifler";
         String geldigiYerKullanici = "Kullanıcı";
+        String kullaniciKural = "BarisTest";
         String geldigiYerBirim = "Birim";
         String geldigiYerGercekKisi = "Gerçek Kişi";
         String geldigiYerTuzelKisi = "Tüzel Kişi";
@@ -79,7 +80,8 @@ public class EvrakHavaleKurallariTest extends BaseTest{
                 .ara()
                 .geldigiYerTipiSec(geldigiYerKullanici)
                 .ara()
-                //
+                .kuralAdiDoldur(kullaniciKural)
+                .ara()
                 // TODO gelecek sistem yavaş
                 //
                 .geldigiYerTipiSec(geldigiYerBirim)
