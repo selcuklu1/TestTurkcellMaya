@@ -97,7 +97,8 @@ public class EvrakOlusturPage extends MainPage {
     public BilgilerTab bilgilerTabiAc() {
         return bilgilerTab.open();
     }
-    public class BilgilerTab extends MainPage{
+
+    public class BilgilerTab extends MainPage {
 
         //region Elements
 
@@ -196,12 +197,12 @@ public class EvrakOlusturPage extends MainPage {
             return divContainer.is(visible);
         }
 
-        public BilgilerTab kullanicilarDoldur(String kullanici){
+        public BilgilerTab kullanicilarDoldur(String kullanici) {
             txtOnayAkisiKullanicilar.selectLov(kullanici);
             return this;
         }
 
-        public BilgilerTab onayAkisiKullanicilarImzacıSec(String value){
+        public BilgilerTab onayAkisiKullanicilarImzacıSec(String value) {
             cmbOnayAkisiIkıncıKullanci.selectOptionByValue(value);
             return this;
         }
@@ -454,7 +455,7 @@ public class EvrakOlusturPage extends MainPage {
         }
 
         @Step("Gereği doldur")
-        public BilgilerTab geregiDoldur(String geregi)  {
+        public BilgilerTab geregiDoldur(String geregi) {
             cmbGeregi.selectLov(geregi);
             return this;
         }
@@ -653,7 +654,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }*/
 
-        @Step("Gereği alanı kontrolu başarılı")
+        @Step("gerçek Kişi gereği alanı kontrolu başarılı")
         public BilgilerTab gercekKisiGeregiAlaniKontrol(String adSoyad, String unvan, String adres, String posta) {
             System.out.println("Gelen title:     " + cmbGeregi.lastSelectedLovTitleText());
             System.out.println("Beklenen title:  " + adSoyad);
@@ -669,12 +670,26 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Tüzel Kişi gereği alanı kontrolu başarılı")
+        public BilgilerTab tuzelKisiGeregiAlaniKontrol(String vergiNo2, String postaTipi) {
+
+            System.out.println("Gelen detail:    " + cmbGeregi.lastSelectedLovDetailText());
+            System.out.println("Beklenen detail: " + "Vergi No: " + vergiNo2);
+            System.out.println("Gelen posta:     " + cmbPostaTipi.getSelectedValue());
+            System.out.println("Beklenen posta:  " + postaTipi);
+
+            Assert.assertEquals(cmbGeregi.lastSelectedLovDetailText().contains("Vergi No: " + vergiNo2), true);
+            Assert.assertEquals(cmbPostaTipi.getSelectedValue().contains(postaTipi), true);
+
+            return this;
+        }
 
 
         public BilgilerTab kaldirilacakKlasorler(String klasor) {
             //TODO: Fonksiyon yazılacak.
             return this;
         }
+
         //endregion
 
     }
@@ -682,6 +697,7 @@ public class EvrakOlusturPage extends MainPage {
     public EditorTab editorTabAc() {
         return editorTab.open();
     }
+
     public class EditorTab extends MainPage {
 
         SelenideElement divHitap = $("div[id='yeniGidenEvrakForm:hitapInplace'] > span");
@@ -776,6 +792,7 @@ public class EvrakOlusturPage extends MainPage {
     public EkleriTab ekleriTabAc() {
         return ekleriTab.open();
     }
+
     public class EkleriTab extends MainPage {
 
         //Ekleri tabı - Dosya Ekle
@@ -865,7 +882,8 @@ public class EvrakOlusturPage extends MainPage {
     public IlgileriTab ilgileriTabAc() {
         return ilgileriTab.open();
     }
-    public class IlgileriTab extends MainPage{
+
+    public class IlgileriTab extends MainPage {
 
         //İlgileri tabı - Dosya Ekle
         SelenideElement txtIlgileriDosyaIlgiMetni = $(By.id("yeniGidenEvrakForm:ilgiIslemleriTabView:dosyaAciklama"));
@@ -910,6 +928,7 @@ public class EvrakOlusturPage extends MainPage {
     public IliskiliEvraklarTab iliskiliEvraklarTabAc() {
         return iliskiliEvraklarTab.open();
     }
+
     public class IliskiliEvraklarTab extends MainPage {
 
         //İlişkili Evraklar tabı - Dosya Ekle
@@ -941,7 +960,8 @@ public class EvrakOlusturPage extends MainPage {
     public EvrakNotlariTab evrakNotlariTabAc() {
         return evrakNotlariTab.open();
     }
-    public class EvrakNotlariTab extends MainPage{
+
+    public class EvrakNotlariTab extends MainPage {
 
         //Evrak Notları
         SelenideElement btnKisiselNotEkle = $(By.id("yeniGidenEvrakForm:kisiselNotEkleDataTableId:kisiselNotEkleId"));
@@ -961,7 +981,7 @@ public class EvrakOlusturPage extends MainPage {
         }
     }
 
-    public class PDFKontrol extends MainPage{
+    public class PDFKontrol extends MainPage {
 
         @Step("Gereği alanında adres gelmedigi, Bilgi alanında dagitim yerinin adresi ile geldigi gorulur")
         public PDFKontrol geregiBilgiAlaniAdresPdfKontrol(String birinciKullaniciGeregiAdresi, String ikinciKullaniciBilgiAdresi) throws InterruptedException {

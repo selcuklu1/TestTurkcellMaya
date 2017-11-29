@@ -42,7 +42,7 @@ public class BaseTest extends BaseLibrary {
 //        Configuration.headless = true;
 //        Configuration.browserSize = "1024x600";
         //endregion
-        
+
         System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, "/dev/null");
     }
 
