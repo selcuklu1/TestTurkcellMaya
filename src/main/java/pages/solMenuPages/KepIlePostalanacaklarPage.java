@@ -29,11 +29,13 @@ public class KepIlePostalanacaklarPage extends MainPage{
         btnEvrakPostala.click();
         return this;
     }
+
     @Step("Gönderici çek")
     public String gondericiCek(){
         String secilen = cmbGonderici.getSelectedText();
         return secilen;
     }
+
     @Step("İlk evrak tıkla")
     public KepIlePostalanacaklarPage ilkEvrakTikla(){
         tblIlkEvrak.click();

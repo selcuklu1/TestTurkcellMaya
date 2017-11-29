@@ -3,6 +3,7 @@ package pages.ustMenuPages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
@@ -76,7 +77,7 @@ public class GelenEvraklarPage extends MainPage {
     SelenideElement btnPaylasIcPaylas = $(By.id("mainPreviewForm:paylasButtonId"));
 
     SelenideElement evrakSec = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
-
+    @Step("Evrak seç")
     public GelenEvraklarPage evrakSec()
     {
         evrakSec.click();
@@ -95,12 +96,12 @@ public class GelenEvraklarPage extends MainPage {
                 .click();
         return this;
     }
-
+    @Step("Gelen evraklar sayfası aç")
     public GelenEvraklarPage openPage() {
         solMenu(SolMenuData.IslemBekleyenEvraklar.GelenEvraklar);
         return this;
     }
-
+    @Step("Havale yap tıkla")
     public GelenEvraklarPage tabHavaleYap() {
         btnTabHavaleYap.click();
         return this;
@@ -170,7 +171,7 @@ public class GelenEvraklarPage extends MainPage {
         txtHavaleYapAciklama.sendKeys(text);
         return this;
     }
-
+    @Step("Havale onaylanacak kisi doldur")
     public GelenEvraklarPage havaleYapOnaylanacakKisiTreeDoldur(String text) {
         treeHavaleYapOnaylanacakKisi.selectLov(text);
         System.out.println("Başarı Bu selectlı geçmiştir");

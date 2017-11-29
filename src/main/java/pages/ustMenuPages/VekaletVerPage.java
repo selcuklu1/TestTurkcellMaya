@@ -39,24 +39,26 @@ public class VekaletVerPage extends BaseLibrary {
         System.out.println("Vekalet alan alanı başarılı");
         return this;
     }
-
+    @Step("Vekalet Ver sayfası aç")
     public VekaletVerPage openPage()
     {
         new UstMenu().ustMenu("Vekalet Ver");
         return this;
     }
-
+    @Step("Vekalet veren alanını farklı doldur")
     public  VekaletVerPage vekaletVerenFarkliDoldur(String text){
         btnVekalelVerenTemizle.click();
         txtVekaletVerenCombolov.selectLov(text);
         return this;
     }
+
     BelgenetElement e = comboLov(By.id("vekaletVerForm:vekaletLayout:vekaletOnaylayacakKisiLov:LovText"));
+    @Step("Onay verecek doldur")
     public VekaletVerPage onayVerecekDoldur(String kullanici){
         e.selectLov(kullanici);
         return this;
     }
-
+    @Step("Vekalet veren alanını doldur")
     public VekaletVerPage vekaletVerenDoldur(String text) {
         txtVekaletVerenCombolov.selectLov(text);
         return this;

@@ -69,7 +69,7 @@ public class KurumYonetimiPage extends MainPage {
     SelenideElement btnKurumHiyerarşisiniGuncelle = $("button[id^='kurumYonetimiListingForm:kurumTreeTable:'][id$=':applyChangesButton']");
 
     SelenideElement filtrePanel = $(By.id("kurumYonetimiListingForm:filterPanel"));
-
+    @Step("Kurum Yönetimi sayfası aç")
     public KurumYonetimiPage openPage() {
         ustMenu("Kurum Yönetimi");
         return this;
@@ -79,26 +79,28 @@ public class KurumYonetimiPage extends MainPage {
         String getIdariBirimKodu = txtIdariBirimKimlikKodu.getValue();
         return getIdariBirimKodu;
     }
-
+    @Step("Kaydet")
     public  KurumYonetimiPage popupKaydet() throws InterruptedException{
         btnPopupKaydet.click();
         return this;
     }
+    @Step("Kep hizmet sağlayıcısı seç")
     public KurumYonetimiPage popupKepHizmetSaglayicisiSec(String value) throws InterruptedException{
         cmbPopupKepHizmetSaglayicisi.selectOption(value);
         return this;
     }
-
+    @Step("Kep adresi doldur")
     public KurumYonetimiPage popupKepAdresiDoldur(String text) throws InterruptedException{
         txtPopupKepAdresi.setValue(text);
         return this;
     }
-
+    @Step("Güncelle ")
     public KurumYonetimiPage guncelle() throws InterruptedException{
         btnAltMenuAc.click();
         btnGuncelle.click();
         return this;
     }
+    @Step("Kep Adres Bilgileri ekle")
     public KurumYonetimiPage kepAdresBilgileriArti() {
         btnKepAdresBilgileriArti.click();
         return this;
@@ -113,7 +115,7 @@ public class KurumYonetimiPage extends MainPage {
         chkOzelHitap.setSelected(secim);
         return this;
     }
-
+    @Step("Kep adresi kullanıyor seç")
     public KurumYonetimiPage kepAdresiKullaniyorSec(boolean secim) {
         chkKepAdresiKullaniyor.setSelected(secim);
         return this;
@@ -143,7 +145,7 @@ public class KurumYonetimiPage extends MainPage {
         cmbDurum.selectOption(value);
         return this;
     }
-
+    @Step("Ara")
     public KurumYonetimiPage ara(){
         btnAra.click();
         return this;

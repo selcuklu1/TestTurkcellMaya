@@ -54,7 +54,7 @@ public class EvrakOlusturPage extends MainPage {
     SelenideElement divBilgileri = $(By.id("evrakBilgileriContainerDiv"));
 
     //endregion
-
+    @Step("Evrak Oluştur sayfası aç")
     public EvrakOlusturPage openPage() {
         new UstMenu().ustMenu("Evrak Oluştur");
         $("#yeniGidenEvrakForm").shouldBe(visible);
@@ -94,6 +94,7 @@ public class EvrakOlusturPage extends MainPage {
     }
 
     //region Tabs
+    @Step("Bilgiler tab aç")
     public BilgilerTab bilgilerTabiAc() {
         return bilgilerTab.open();
     }
@@ -200,7 +201,7 @@ public class EvrakOlusturPage extends MainPage {
             cmbKullanicilarImza.selectOption(value);
             return this;
         }
-        
+        @Step("Kullanıcılar alanı doldur")
         public BilgilerTab kullanicilarDoldur(String kullanici){
             txtOnayAkisiKullanicilar.selectLov(kullanici);
             return this;
@@ -486,7 +487,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("\"{0}\" text var olma kontorlu, beklenen: {1}")
+        @Step("\"{ekranAdi}\" text var olma kontorlu, beklenen: {vardir}")
         public BilgilerTab otomatikOnayAkisiGelmedigiGorme(String ekranAdi, boolean vardir) {
             boolean t = $$(" [id='yeniGidenEvrakForm:hiyerarsikAkisOlusturForm:otomatikAkisKullaniciBirimListId'] tbody tr")
                     .filterBy(text(ekranAdi)).size() > 0;
@@ -567,7 +568,7 @@ public class EvrakOlusturPage extends MainPage {
 
         BelgenetElement txtOnayAkisi = comboLov(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:akisLov:LovText"));
 
-        @Step("")
+        @Step("Onay akışı doldur")
         public BilgilerTab onayAkisiTemizle(String deger){
         $(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:akisLov:j_idt134")).click();
        // comboLov("yeniGidenEvrakForm:evrakBilgileriList:18:akisLov:LovText").selectLov(deger);

@@ -85,7 +85,7 @@ public class GercekKisiYonetimPage extends MainPage {
 
     //</editor-fold>
 
-
+    @Step("Gerçek Kişi yonetimi sayfası açılır")
     public GercekKisiYonetimPage openPage() {
         ustMenu("Gerçek Kişi Yönetimi");
         return this;

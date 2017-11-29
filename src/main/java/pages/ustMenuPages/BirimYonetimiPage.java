@@ -58,7 +58,7 @@ public class BirimYonetimiPage extends MainPage {
     SelenideElement cmbPopupHizmetSaglayicisi = $(By.id("kepAdresBilgiEditorForm:kephs"));
     SelenideElement btnPopupKaydet = $(By.id("kepAdresBilgiEditorForm:saveKepAdresiButton"));
     SelenideElement btnKaydet = $(By.id("birimYonetimiEditorForm:saveBirimButton"));
-
+    @Step("Birim Yönetimi sayfası aç")
     public BirimYonetimiPage openPage() {
         ustMenu("Birim Yönetimi");
         return this;
@@ -80,12 +80,8 @@ public class BirimYonetimiPage extends MainPage {
         return this;
     }
     @Step("Popup kep adresi doldur")
-    public BirimYonetimiPage popupKepAdresiDoldur() throws InterruptedException{
-        String s1= "turksat.kamu";
-        String s2 = createRandomNumber(7);
-        String s3 = "@testkep.pttkep.gov.tr";
-        String Sonuc = s1 + s2 + s3;
-        txtPopupKepAdresi.setValue(Sonuc);
+    public BirimYonetimiPage popupKepAdresiDoldur(String kepAdresi) throws InterruptedException{
+        txtPopupKepAdresi.setValue(kepAdresi);
         return this;
     }
     @Step("Kep adresi bilgileri artı tıkla")

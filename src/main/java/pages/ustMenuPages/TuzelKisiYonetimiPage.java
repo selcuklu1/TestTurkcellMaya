@@ -68,7 +68,7 @@ public class TuzelKisiYonetimiPage extends MainPage {
     SelenideElement btnTuzelisiGuncelle = $("[id^='tuzelKisiYonetimiListingForm:tuzelKisiDataTable'][id$='updateTuzelKisiButton']");
 
     //</editor-fold>
-
+    @Step("Tüzel kisi yönetimi sayfası aç")
     public TuzelKisiYonetimiPage openPage() {
         ustMenu("Tüzel Kişi Yönetimi");
         return this;
@@ -89,6 +89,7 @@ public class TuzelKisiYonetimiPage extends MainPage {
         return vergiNo;
     }
 
+    @Step("Tüzel kisi guncelle")
     public TuzelKisiYonetimiPage tuzelKisiGuncelle() {
         btnTuzelisiGuncelle.click();
         return this;
@@ -104,7 +105,7 @@ public class TuzelKisiYonetimiPage extends MainPage {
         btnTuzelKisiEkle.click();
         return this;
     }
-
+    @Step("Kep adresi kaydet")
     public TuzelKisiYonetimiPage kepAdresiKaydet() {
         btnKepAdresKaydet.click();
         return this;
@@ -114,22 +115,22 @@ public class TuzelKisiYonetimiPage extends MainPage {
         btnKepAdresIptalEt.click();
         return this;
     }
-
+    @Step("Kep hizmet sağlayıcısı seç")
     public TuzelKisiYonetimiPage kepHizmetSaglayicisiSec(String value) {
         cmbPopupKepHizmetSaglayicisi.selectOption(value);
         return this;
     }
-
+    @Step("Kep adresi doldur")
     public TuzelKisiYonetimiPage kepAdresiDoldur(String text) {
         txtKepAdresi.setValue(text);
         return this;
     }
-
+    @Step("Kep adres bilgileri ekle")
     public TuzelKisiYonetimiPage kepAdresBilgileriEkle() {
         btnKepAdresBilgileriEkle.click();
         return this;
     }
-
+    @Step("Kep adresi kullaniyor seç")
     public TuzelKisiYonetimiPage kepAdresiKullaniyorSec(boolean secim) {
         chkKepAdresiKullaniyor.setSelected(secim);
         return this;
@@ -139,7 +140,7 @@ public class TuzelKisiYonetimiPage extends MainPage {
         btnDuzenle.click();
         return this;
     }
-
+    @Step("Ara")
     public TuzelKisiYonetimiPage ara() {
         btnAra.click();
         return this;
