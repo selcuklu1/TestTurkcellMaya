@@ -279,8 +279,9 @@ public class TuzelKisiYonetimiTest extends BaseTest {
         String vergiNo2 = createRandomNumber(10);
         String kisaAd2 = createRandomText(7);
         String ad2 = kisaAd2 + " İş Çözümleri";
-        String kepAdresi = "turksat.kamu@testkep.pttkep.gov.tr";
+        String kepAdresi = kisaAd + "@testkep.pttkep.gov.tr";
         String basariMesaji = "İşlem başarılıdır!";
+        String postaTipi = "Z";
 
         tuzelKisiYonetimiPage
 
@@ -318,8 +319,7 @@ public class TuzelKisiYonetimiTest extends BaseTest {
                 .bilgilerTabiAc()
                 .geregiSecimTipiSec("T")
                 .geregiDoldur(ad2)
-                //  .tuzelKisiGeregiAlaniKontrol(ad2, adres, postaTipi);
-                //TODO: EKLENECEK
+                .tuzelKisiGeregiAlaniKontrol(vergiNo2, postaTipi)
 
                 .secilenGeregiSil()
                 .geregiDoldur(vergiNo2)

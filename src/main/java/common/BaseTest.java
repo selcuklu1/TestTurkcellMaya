@@ -44,6 +44,7 @@ public class BaseTest extends BaseLibrary {
         Configuration.startMaximized = true;
         Configuration.baseUrl = belgenetURL;
         //Configuration.browser = "drivers.Firefox";
+        //Configuration.browser = "marionette";
         //Configuration.remote = "http://0.0.0.0:32768/wd/hub";
         Configuration.reportsFolder = "test-result/reports";
         Configuration.screenshots = false;
@@ -52,9 +53,10 @@ public class BaseTest extends BaseLibrary {
         Configuration.timeout = 30000;
         Configuration.holdBrowserOpen = true;
 //        Configuration.headless = true;
+        Configuration.startMaximized = true;
 //        Configuration.browserSize = "1024x600";
         //endregion
-        
+
         System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, "/dev/null");
     }
 
