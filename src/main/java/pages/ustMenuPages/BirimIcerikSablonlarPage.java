@@ -8,6 +8,7 @@ import common.BaseLibrary;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 import pages.pageComponents.UstMenu;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
@@ -58,6 +59,8 @@ public class BirimIcerikSablonlarPage extends BaseLibrary {
         btnSil.shouldBe(disabled);
         btnEvrakOnizleme.shouldBe(disabled);
         return this;
+
+
     }
 
 
@@ -71,6 +74,18 @@ public class BirimIcerikSablonlarPage extends BaseLibrary {
         $(By.id("birimSablonForm:sablonLov_id:LovSecilenTable:0:selectOneMenu")).getSelectedOption()
                 .shouldBe(Condition.text("ALT BİRİMLER GÖRSÜN"));
         $(By.id("birimSablonForm:sablonLov_id:LovSecilenTable:0:selectOneMenu")).selectOption("ALT BİRİMLER GÖRMESİN");
+
+
+    }
+
+
+    public void yeniSablonOlustur(){
+        btnYeniSablonOlustur.click();
+        lovKullanilacakBirimler.type("optiim birim").titleItems()
+                .filterBy(Condition.exactText("optiim birim")).first().click();
+        lovKullanilacakBirimler.lastSelectedLov().$(By.tagName("select")).selectOption("ALT BİRİMLER GÖRSÜN");
+
+        ElementsCollection col = $(By.id("cke_birimSablonForm:birimIcerikCkEditor")).$$(".cke_toolbox a span[class*='label']");
 
 
     }

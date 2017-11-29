@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite thread-count="5" name="Test Suite" parallel="true" verbose="1">
+<suite thread-count="5" name="Test Suite" parallel="false" verbose="1">
+
+    <test name="TestName1">
+        <classes>
+            <class name="PulYonetimi.PulYonetimiTest"/>
+        </classes>
+    </test>
     <!--<listeners>-->
     <!--<listener class-name="listeners.TestListener"></listener>-->
     <!--</listeners>-->
@@ -8,7 +14,7 @@
     <!--<suite-file path="testSuite1.xml"></suite-file>-->
     <!--<suite-file path="testSuite2.xml"></suite-file>-->
     <!--</suite-files>-->
-    <test name="BTest1">
+   <!-- <test name="BTest1">
         <classes>
             <class name="Example.TestClass1"/>
         </classes>
@@ -27,5 +33,5 @@
         <classes>
             <class name="Example.PaylastiklarimTest"/>
         </classes>
-    </test>
+    </test>-->
 </suite>

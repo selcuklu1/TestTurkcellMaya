@@ -40,8 +40,8 @@ public class BirimIcerikSablonuTest extends BaseTest {
     }
 
     @Test
-    @Description("Yeni şablon oluşturma testi")
-    public void tc1084b() {
+    @Description("Yeni şablon oluşturma (Alt birimler görsün)")
+    public void tc1082() {
 
     }
 }
