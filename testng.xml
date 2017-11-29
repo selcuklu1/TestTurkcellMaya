@@ -4,7 +4,7 @@
 
     <test name="TestName1">
         <classes>
-            <class name="PulYonetimi.PulYonetimiTest"/>
+            <class name="dumpTest.EvrakOlusturTest"/>
         </classes>
     </test>
     <!--<listeners>-->

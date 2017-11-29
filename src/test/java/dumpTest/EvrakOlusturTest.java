@@ -6,6 +6,8 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import common.BaseTest;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -25,6 +27,8 @@ public class EvrakOlusturTest extends BaseTest {
 
     @BeforeClass
     public void setUp() throws Exception {
+//        WebDriver driver = new FirefoxDriver();
+//        driver.get("https://www.google.com/");
 
 //        login();
 //        evrakOlusturPage = new EvrakOlusturPage();
@@ -50,7 +54,7 @@ public class EvrakOlusturTest extends BaseTest {
         BelgenetElement el = comboLov(By.id("yeniGidenEvrakForm:evrakBilgileriList:16:geregiLov:LovText"))
                 .selectLov("optiim").lastSelectedLov();
 
-        ElementsCollection col = el.titleItems();
+        /*ElementsCollection col = el.titleItems();
         int q = col.size();
 
         String a1 =  comboLov("input[id$='konuKoduLov:LovText']").lastSelectedLov().text();
@@ -111,7 +115,7 @@ public class EvrakOlusturTest extends BaseTest {
 ////
 ////        System.out.println("Text: " + $("button[id='topMenuForm:userMenuButton_button']").text());
 ////        System.out.println("InnerText: " + $("button[id='topMenuForm:userMenuButton_button']").innerText());
-////        takeScreenshot();
+////        takeScreenshot();*/
     }
 
     @Test(enabled = false, dataProvider = "zorunluAlanlar")

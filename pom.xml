@@ -65,13 +65,13 @@
                     <argLine>
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
                     </argLine>
-                    <!--<systemProperties>-->
-                    <!--<property>-->
-                    <!--<name>allure.results.directory</name>-->
-                    <!--&lt;!&ndash;<value>${project.build.directory}/allure-xml-test-report</value>&ndash;&gt;-->
-                    <!--<value>test-result/allure-xml</value>-->
-                    <!--</property>-->
-                    <!--</systemProperties>-->
+                    <!--<systemProperties>
+                    <property>
+                    <name>allure.results.directory</name>
+                    <value>${project.build.directory}/allure-results</value>
+                    &lt;!&ndash;<value>test-result/allure-xml</value>&ndash;&gt;
+                    </property>
+                    </systemProperties>-->
                 </configuration>
                 <dependencies>
                     <dependency>
@@ -81,14 +81,6 @@
                     </dependency>
                 </dependencies>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
-            </plugin>
             <!--<plugin>-->
             <!--<groupId>io.qameta.allure</groupId>-->
             <!--<artifactId>allure-maven</artifactId>-->
@@ -96,6 +88,16 @@
             <!--</plugin>-->
         </plugins>
     </build>
+    <!--<reporting>-->
+        <!--<excludeDefaults>true</excludeDefaults>-->
+        <!--<plugins>-->
+            <!--<plugin>-->
+                <!--<groupId>io.qameta.allure</groupId>-->
+                <!--<artifactId>allure-maven</artifactId>-->
+                <!--<version>2.9</version>-->
+            <!--</plugin>-->
+        <!--</plugins>-->
+    <!--</reporting>-->
 </project>
 
 
