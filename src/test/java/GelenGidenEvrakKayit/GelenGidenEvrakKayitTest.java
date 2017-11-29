@@ -10,6 +10,7 @@ import pages.solMenuPages.BirimHavaleEdilenlerPage;
 import pages.solMenuPages.KaydedilenGelenEvraklarPage;
 import pages.solMenuPages.TeslimAlinmayiBekleyenlerPage;
 import pages.ustMenuPages.GelenEvrakKayitPage;
+import pages.ustMenuPages.GercekKisiYonetimPage;
 import pages.ustMenuPages.KaydedilenGelenEvrakPage;
 
 import java.io.IOException;
@@ -21,6 +22,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     KaydedilenGelenEvrakPage kaydedilenGelenEvrakPage;
     KaydedilenGelenEvraklarPage kaydedilenGelenEvraklarPage;
     BirimHavaleEdilenlerPage birimHavaleEdilenlerPage;
+    GercekKisiYonetimPage gercekKisiYonetimPage;
 
     String evrakNO321;
     String evrakNO328;
@@ -42,6 +44,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         kaydedilenGelenEvrakPage = new KaydedilenGelenEvrakPage();
         kaydedilenGelenEvraklarPage = new KaydedilenGelenEvraklarPage();
         birimHavaleEdilenlerPage = new BirimHavaleEdilenlerPage();
+        gercekKisiYonetimPage = new GercekKisiYonetimPage();
         login("optiim", "Avis1111");
 //        login("ztekin", "123");
     }
@@ -51,8 +54,8 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     public void TC0321() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
-        String ustYaziPath = "C:\\Users\\Emre_Sencan\\Pictures\\pdf.pdf";
-        String excelPath = "C:\\Users\\Emre_Sencan\\Pictures\\test.xlsx";
+        String ustYaziPath = "C:\\TestAutomation2\\BelgenetFTA\\documents\\pdf.pdf";
+        String excelPath = "C:\\TestAutomation2\\BelgenetFTA\\documents\\test.xlsx";
         String ustYaziAdi = "pdf.pdf";
         String excelAdi = "test.xlsx";
 
@@ -101,7 +104,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     public void TC2163() throws InterruptedException {
 
         String evrakTuru = "D";
-        String ustYaziPath = "C:\\Users\\Emre_Sencan\\Pictures\\Otomasyon.pdf";
+        String ustYaziPath = "C:\\TestAutomation2\\BelgenetFTA\\documents\\Otomasyon.pdf";
         String ustYaziAdi = "Otomasyon.pdf";
         String basariMesaji = "İşlem başarılıdır!";
         String aciklama = "Test Otomasyon";
@@ -112,7 +115,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .openPage()
                 .tabloIlkRaporIcerik();
 
-        String evrakNo= gelenEvrakKayitPage
+        String evrakNo = gelenEvrakKayitPage
                 .evrakDetayiEvrakNoTextAl();
 
         gelenEvrakKayitPage
@@ -143,7 +146,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .tabloEvrakNoileIcerikSec(evrakNo);
 
         gelenEvrakKayitPage
-                .guncellenenAlanKontrolleri(evrakTarihi,evrakTuru,gizlilikDerecesi);
+                .guncellenenAlanKontrolleri(evrakTarihi, evrakTuru, gizlilikDerecesi);
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -189,44 +192,56 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     @Test(enabled = true, description = "TC1401 : Kaydedilen Gelen Evrak raporu")
     public void TC1401() throws InterruptedException, IOException {
 
-
+        String basariMesaji = "İşlem başarılıdır!";
         String evrakNo = evrakNO321;
         String evrakNo1 = evrakNO328;
         String geldigiYer = "D";
+
         kaydedilenGelenEvrakPage
-                .raporAlExcel()
                 .openPage()
-
-                .gelenEvrakNoDoldur("4985")
+                .gelenEvrakNoDoldur("4998")
                 .sorgula()
-                .tabloKontrolu("4985")
-                .raporAlExcel()
-
+                .tabloKontrolu("4998")
+                .raporAlExcel();
+//                .islemMesaji().basariliOlmali(basariMesaji);
+        Thread.sleep(3000);
+        kaydedilenGelenEvrakPage
                 .txtClear()
-                .gelenEvrakNoDoldur("4985")
+                .gelenEvrakNoDoldur("4999")
                 .sorgula()
                 .geldigiYerSec(geldigiYer)
-                .sorgula();
-//                .raporAlExcel();  pop upta ok butonuna basılacak
+                .sorgula()
+                .tabloKontrolu("4999")
+                .raporAlPdf();
+//                .islemMesaji().basariliOlmali(basariMesaji);
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = false, description = "Gelen evrak kaydederken yeni gerçek ve tüzel kişi tanımlama")
+    @Test(enabled = true, description = "Gelen evrak kaydederken yeni gerçek ve tüzel kişi tanımlama")
     public void TC1136() throws InterruptedException {
 
         String TCKN = "51091330934";
+        String ad = "Test";
+        String soyad = "Otomasyon";
+        String kisiKurum = "G";
+
+        String mernisNo = createMernisTCKN();
 
         gelenEvrakKayitPage
                 .openPage()
-                .kisiKurumSec("G")
+                .kisiKurumSec(kisiKurum)
                 .geldigiKisiEkle()
-                .iletisimBilgisiTCKNEkle()
+                .iletisimBilgisiTCKNEkle(mernisNo)
                 .iletisimBilgisiTCKNAra()
-                .iletisimBilgisiAdDoldur("Test")
-                .iletisimBilgisiSoyadDoldur("Otomasyon")
+                .iletisimBilgisiAdDoldur(ad)
+                .iletisimBilgisiSoyadDoldur(soyad)
                 .iletisimBilgisikaydet();
-//        Gerçek kişi yönetimi ekranında yeni kaydı kontrol et
 
+        gercekKisiYonetimPage
+                .openPage()
+                .filtreTCKimlikNoDoldur(mernisNo)
+                .ara()
+                .tabloTCKNKontrol(mernisNo);
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -235,9 +250,11 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
         String birim = "OPTİİM BİRİM11";
 
+        String pathToFilePdf = "C:\\TestAutomation2\\BelgenetFTA\\documents\\mailt.msg";
+        String pathToFileExcel = "C:\\TestAutomation2\\BelgenetFTA\\documents\\test.xlsx";
         gelenEvrakKayitPage
                 .openPage()
-                .evrakBilgileriUstYaziEkle("C:\\Users\\Emre_Sencan\\Pictures\\mailt.msg")
+                .evrakBilgileriUstYaziEkle(pathToFilePdf)
                 .konuKoduDoldur(konuKodu)
                 .evrakTuruSec(evrakTuru)
                 .evrakDiliSec(evrakDili)
@@ -250,13 +267,16 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .ivedilikSec(ivedilik)
                 .ekBilgiFiltreAc()
                 .evrakEkTabViewEkle()
-                .evrakEkleriDosyaEkleme("C:\\Users\\Emre_Sencan\\Pictures\\test.xlsx")
+                .evrakEkleriDosyaEkleme(pathToFileExcel)
                 .kaydet();
         String evrakNo = gelenEvrakKayitPage.popUps();
         //   page.islemMesaji().beklenenMesajTipi(MesajTipi.BASARILI);
         //  page.solMenu(SolMenuData.BirimEvraklari.KaydedilenGelenEvraklar);
 //        TODO  tabloda oluşturulan evrak bulunacak....
         teslimAlinmayiBekleyenlerPage
-                .raporSec();
+                .openPage()
+                .filtreleAc()
+                .tarihiDoldur(getSysDateForKis())
+                .tabloKontrolu(evrakNo);
     }
 }
