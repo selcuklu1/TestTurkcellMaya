@@ -40,7 +40,7 @@ public class BaseTest extends BaseLibrary {
 
         //"org.openqa.selenium.Firefox.FirefoxDriver";
 
-      //  Configuration.browser = "chrome";
+        Configuration.browser = "chrome";
         Configuration.startMaximized = true;
         Configuration.baseUrl = belgenetURL;
         //Configuration.browser = "drivers.Firefox";

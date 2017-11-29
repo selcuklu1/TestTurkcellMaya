@@ -64,34 +64,12 @@ public class KaydedilenGelenEvrakPage extends MainPage {
     @Step("Rapor al Excel")
     public KaydedilenGelenEvrakPage raporAlExcel() throws IOException {
 
-        deleteFile("C:\\Users\\Emre_Sencan\\Downloads\\");
+        deleteFile("C:\\Users\\Emre_Sencan\\Downloads\\","Rapor_");
         searchDownloadedFileWithName("C:\\Users\\Emre_Sencan\\Downloads\\","Rapor_.xls");
         btnRaporAlExcel.click();
         return this;
     }
-//Klasordeki dosyaları siler
-    public boolean deleteFile(String path) throws IOException {
-        boolean flag = false;
-        File directory = new File(path);
-        if(directory.exists()){
-            File[] files = directory.listFiles();
-            if(null!=files){
-                for(int i=0; i<files.length; i++) {
-                    if(files[i].isDirectory()) {
-                        deleteDirectory(files[i]);
-                        flag=true;
-                    }
-                    else {
-                        files[i].delete();
-                        flag=true;
-                    }
-                }
-            }
-            else
-                System.out.println("Klasör boş.");
-        }
-        return flag;
-    }
+
 
     //Dosyanın bilgisayara inip inmediğini kontrol eder.
     public boolean searchDownloadedFileWithName(String downloadPath, String fileName) {
@@ -109,20 +87,22 @@ public class KaydedilenGelenEvrakPage extends MainPage {
                 s =s+ m.group();
             }
             System.out.println(s);
-//            if(s == fileName)
-            if (s.equals(fileName)){
-                System.out.println("Klasör" + dir_contents[i].getName().toString() + "indirilmiştir.");
-                flag = true;
-            }
-            else
-                System.out.println("İstenilen dosya indirilmemiştir.");
+            assert s.equals(fileName) : "Klasör "+ dir_contents[i].getName().toString() + "indirilmiştir.";
+            assert s.equalsIgnoreCase(fileName) : "İstenilen dosya indirilmemiştir.";
+
+//            if (s.equals(fileName)){
+//                System.out.println("Klasör "+ dir_contents[i].getName().toString() + " indirilmiştir.");
+//                flag = true;
+//            }
+//            else
+//                System.out.println("İstenilen dosya indirilmemiştir.");
         }
         return flag;
     }
 
     @Step("Rapor al PDF")
     public KaydedilenGelenEvrakPage raporAlPdf() throws IOException {
-        deleteFile("C:\\Users\\Emre_Sencan\\Downloads\\");
+        deleteFile("C:\\Users\\Emre_Sencan\\Downloads\\","Rapor_");
         searchDownloadedFileWithName("C:\\Users\\Emre_Sencan\\Downloads\\","Rapor_.pdf");
         btnRaporAlPdf.click();
         return this;

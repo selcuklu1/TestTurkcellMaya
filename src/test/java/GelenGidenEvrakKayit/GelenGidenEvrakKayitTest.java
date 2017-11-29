@@ -54,8 +54,8 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     public void TC0321() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
-        String ustYaziPath = "C:\\Users\\Emre_Sencan\\Pictures\\pdf.pdf";
-        String excelPath = "C:\\Users\\Emre_Sencan\\Pictures\\test.xlsx";
+        String ustYaziPath = "C:\\TestAutomation2\\BelgenetFTA\\documents\\pdf.pdf";
+        String excelPath = "C:\\TestAutomation2\\BelgenetFTA\\documents\\test.xlsx";
         String ustYaziAdi = "pdf.pdf";
         String excelAdi = "test.xlsx";
 
@@ -104,7 +104,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     public void TC2163() throws InterruptedException {
 
         String evrakTuru = "D";
-        String ustYaziPath = "C:\\Users\\Emre_Sencan\\Pictures\\Otomasyon.pdf";
+        String ustYaziPath = "C:\\TestAutomation2\\BelgenetFTA\\documents\\Otomasyon.pdf";
         String ustYaziAdi = "Otomasyon.pdf";
         String basariMesaji = "İşlem başarılıdır!";
         String aciklama = "Test Otomasyon";
@@ -250,9 +250,11 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
         String birim = "OPTİİM BİRİM11";
 
+        String pathToFilePdf = "C:\\TestAutomation2\\BelgenetFTA\\documents\\mailt.msg";
+        String pathToFileExcel = "C:\\TestAutomation2\\BelgenetFTA\\documents\\test.xlsx";
         gelenEvrakKayitPage
                 .openPage()
-                .evrakBilgileriUstYaziEkle("C:\\Users\\Emre_Sencan\\Pictures\\mailt.msg")
+                .evrakBilgileriUstYaziEkle(pathToFilePdf)
                 .konuKoduDoldur(konuKodu)
                 .evrakTuruSec(evrakTuru)
                 .evrakDiliSec(evrakDili)
@@ -265,7 +267,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .ivedilikSec(ivedilik)
                 .ekBilgiFiltreAc()
                 .evrakEkTabViewEkle()
-                .evrakEkleriDosyaEkleme("C:\\Users\\Emre_Sencan\\Pictures\\test.xlsx")
+                .evrakEkleriDosyaEkleme(pathToFileExcel)
                 .kaydet();
         String evrakNo = gelenEvrakKayitPage.popUps();
         //   page.islemMesaji().beklenenMesajTipi(MesajTipi.BASARILI);

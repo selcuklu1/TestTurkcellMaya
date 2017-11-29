@@ -23,6 +23,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static com.codeborne.selenide.Selenide.*;
+import static org.apache.commons.io.FileUtils.deleteDirectory;
 import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfElementLocated;
 
 public class BaseLibrary {
@@ -511,5 +512,33 @@ public class BaseLibrary {
         }
         System.out.println("Element bulundu.");
         return status;
+    }
+
+    //Klasordeki dosyaları ismine göre siler...
+    public boolean deleteFile(String path,String fileName) throws IOException {
+        boolean flag = false;
+        File directory = new File(path);
+        if(directory.exists()){
+            File[] files = directory.listFiles();
+            if(null!=files){
+                for(int i=0; i<files.length; i++) {
+                    if(files[i].isDirectory()) {
+                        deleteDirectory(files[i]);
+                        flag=true;
+                    }
+                    else {
+                        if (files[i].getName().toString().contains(fileName)) {
+                            files[i].delete();
+                            flag = true;
+                        }
+                        else
+                            System.out.println("Klasörde istenilen isimde dosya bulunamadı.");
+                    }
+                }
+            }
+            else
+                System.out.println("Klasör boş.");
+        }
+        return flag;
     }
 }
