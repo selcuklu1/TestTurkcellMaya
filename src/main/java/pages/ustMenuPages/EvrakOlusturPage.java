@@ -161,7 +161,7 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement cmbPostaTipi = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:16:geregiLov:LovSecilenTable:0:selectOneMenu"));
         By cmbGeregiBy = By.cssSelector("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='geregiLov:LovText']");
 
-       // BelgenetElement txtOnayAkisi = comboLov("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='akisLov:LovText']");
+        // BelgenetElement txtOnayAkisi = comboLov("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='akisLov:LovText']");
         SelenideElement btnOnayAkisiTemizle = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:17:akisLov:j_idt134"));
         SelenideElement btnOnayAkisiEdit = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:17:akisLov:j_idt135"));
         //SelenideElement btnOnayAkisiEkle = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:17:onayAkisiEkle"));
@@ -197,12 +197,12 @@ public class EvrakOlusturPage extends MainPage {
         }
 
         @Step("Kullanıcılar alanında imzacı seç")
-        public BilgilerTab kullanicilarImzaciSec(String value){
+        public BilgilerTab kullanicilarImzaciSec(String value) {
             cmbKullanicilarImza.selectOption(value);
             return this;
         }
-        
-        public BilgilerTab kullanicilarDoldur(String kullanici){
+
+        public BilgilerTab kullanicilarDoldur(String kullanici) {
             txtOnayAkisiKullanicilar.selectLov(kullanici);
             return this;
         }
@@ -571,16 +571,16 @@ public class EvrakOlusturPage extends MainPage {
         BelgenetElement txtOnayAkisi = comboLov(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:akisLov:LovText"));
 
         @Step("")
-        public BilgilerTab onayAkisiTemizle(String deger){
-        $(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:akisLov:j_idt134")).click();
-       // comboLov("yeniGidenEvrakForm:evrakBilgileriList:18:akisLov:LovText").selectLov(deger);
+        public BilgilerTab onayAkisiTemizle(String deger) {
+            $(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:akisLov:j_idt134")).click();
+            // comboLov("yeniGidenEvrakForm:evrakBilgileriList:18:akisLov:LovText").selectLov(deger);
             txtOnayAkisi.type(deger).titleItems().first().click();
 
             return this;
         }
 
         @Step("Onay akışı doldur")
-        public BilgilerTab onayAkisDoldur(String onay){
+        public BilgilerTab onayAkisDoldur(String onay) {
             txtOnayAkisi.selectLov(onay);
             return this;
         }
@@ -635,7 +635,6 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Onay akışı listesinde listelenen kullanıcıyı kontrol et")
         public BilgilerTab onayAkisiTreeKullaniciKontrol(String kullaniciAdi, Boolean exist) {
-
 
 
             txtOnayAkisiKullanicilarInput.setValue(kullaniciAdi);
@@ -918,7 +917,7 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement btnIlgileriMetinEkle = $(By.id("yeniGidenEvrakForm:ilgiIslemleriTabView:aciklamaEkleButton"));
 
         //İlgileri tabı - Sistemde kayıtlı evrak ekle
-        SelenideElement tabIliskiliSistemdeKayitliEvrakEkle =  $(By.xpath("a//[@href='#yeniGidenEvrakForm:ilgiIslemleriTabView:sistemdeKayitliEvragiEkleTab']"));
+        SelenideElement tabIliskiliSistemdeKayitliEvrakEkle = $(By.xpath("a//[@href='#yeniGidenEvrakForm:ilgiIslemleriTabView:sistemdeKayitliEvragiEkleTab']"));
         SelenideElement dateIlgileriSistemdeEvrakTarihiBaslangic = $(By.id("yeniGidenEvrakForm:ilgiIslemleriTabView:ilgiIslemleriEvrakTarihBasId_input"));
         SelenideElement dateIlgileriSistemdeEvrakTarihiSon = $(By.id("yeniGidenEvrakForm:ilgiIslemleriTabView:ilgiIslemleriEvrakTarihSonId_input"));
         SelenideElement cmbIlgileriSistemdeEvrakAranacakyer = $(By.id("yeniGidenEvrakForm:ilgiIslemleriTabView:ilgiIslemleriEvrakAramaAranacakYerId"));
@@ -949,7 +948,7 @@ public class EvrakOlusturPage extends MainPage {
         }
 
         @Step("IlgileriTab Sisteme Kayitli Evrak Ekle")
-        public  IlgileriTab sistemeKayitliEvrakEkleTab () {
+        public IlgileriTab sistemeKayitliEvrakEkleTab() {
             tabIliskiliSistemdeKayitliEvrakEkle.click();
 
             return this;
@@ -957,34 +956,35 @@ public class EvrakOlusturPage extends MainPage {
 
 
         @Step("IlgileriTab Sisteme Kayitli Evrak EkleTab Tarih Başlagıç")
-        public  IlgileriTab sistemeKayitliEvrakBaslangictarihi (String dateText) {
+        public IlgileriTab sistemeKayitliEvrakBaslangictarihi(String dateText) {
             dateIlgileriSistemdeEvrakTarihiBaslangic.setValue(dateText);
             return this;
         }
 
+        /*
+                @Step("IlgileriTab Sisteme Kayitli Evrak EkleTab Tarih Son")
+                public  IlgileriTab sistemeKayitliEvrakBaslangictarihi (String dateText) {
+                    dateIlgileriSistemdeEvrakTarihiSon.setValue(dateText);
+                    return this;
 
-        @Step("IlgileriTab Sisteme Kayitli Evrak EkleTab Tarih Son")
-        public  IlgileriTab sistemeKayitliEvrakBaslangictarihi (String dateText) {
-            dateIlgileriSistemdeEvrakTarihiSon.setValue(dateText);
-            return this;
+                }
 
-        }
-
+         */
         @Step("IlgileriTab Sisteme Kayitli Evrak EkleTab Evrak Aranacak yer secimi")
-        public IlgileriTab sistemeKayitliEvrakAramaYeriSec (String evrakYeri) {
+        public IlgileriTab sistemeKayitliEvrakAramaYeriSec(String evrakYeri) {
             cmbIlgileriSistemdeEvrakAranacakyer.selectOption(evrakYeri);
             return this;
         }
 
         @Step("IlgileriTab Sisteme Kayitli Evrak EkleTab Evrak Arama Metni")
-        public  IlgileriTab sistemeKayitliEvrakAra (String evrakAdi) {
+        public IlgileriTab sistemeKayitliEvrakAra(String evrakAdi) {
             txtIlgileriSistemdeEvrakArama.setValue(evrakAdi);
             return this;
 
         }
 
         @Step("IlgileriTab Sisteme Kayitli Evrak EkleTab Dokuman Ara")
-        public  IlgileriTab sistemeKayitliDokumanArama () {
+        public IlgileriTab sistemeKayitliDokumanArama() {
             btnIlgileriSistemdeDokumanAra.click();
             return this;
         }
