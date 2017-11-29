@@ -489,6 +489,7 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("\"{0}\" text var olma kontorlu, beklenen: {1}")
         public BilgilerTab otomatikOnayAkisiGelmedigiGorme(String ekranAdi, boolean vardir) {
+
             boolean t = $$(" [id='yeniGidenEvrakForm:hiyerarsikAkisOlusturForm:otomatikAkisKullaniciBirimListId'] tbody tr")
                     .filterBy(text(ekranAdi)).size() > 0;
             Assert.assertEquals(t, vardir, "kdkdkdkd");

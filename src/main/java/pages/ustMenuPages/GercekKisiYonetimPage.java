@@ -86,6 +86,7 @@ public class GercekKisiYonetimPage extends MainPage {
     //</editor-fold>
 
 
+    @Step("Gerçek Kişi Yönetimi sayfasını aç")
     public GercekKisiYonetimPage openPage() {
         ustMenu("Gerçek Kişi Yönetimi");
         return this;
@@ -104,7 +105,7 @@ public class GercekKisiYonetimPage extends MainPage {
         return this;
     }
 
-    //    @Step("Kaydet")
+    @Step("Kaydet")
     public GercekKisiYonetimPage kaydet() {
         clickJs(btnKaydet);
         //  btnKaydet.click();
@@ -326,10 +327,6 @@ public class GercekKisiYonetimPage extends MainPage {
 
     @Step("Aktif Kayit kontrolu")
     public GercekKisiYonetimPage aktifKisiKayitKontrolu(String tcNO, String ad, String soyad) {
-
-        //Assert.assertEquals(tblTc.getText().equals(tcNO), true);
-        //Assert.assertEquals(tbleAd.getText().equals(ad), true);
-        //Assert.assertEquals(tbleSoyad.getText().equals(soyad), true);
 
         boolean statusTCNO = findElementOnTableByColumnInputInAllPages(tblGercekKisiDataTable, 1, tcNO).isDisplayed();
         boolean statusAd = findElementOnTableByColumnInputInAllPages(tblGercekKisiDataTable, 2, ad).isDisplayed();
