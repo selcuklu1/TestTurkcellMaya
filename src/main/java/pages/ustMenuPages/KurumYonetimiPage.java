@@ -41,11 +41,6 @@ public class KurumYonetimiPage extends MainPage {
     BelgenetElement txtUstKurum = comboLov(By.id("kurumYonetimiEditorForm:ustKurumLov:LovText"));
     SelenideElement btnIletisimGuncelle = $("button[id^='kurumYonetimiEditorForm:iletisimBilgileriDataTable:'][id$=':updateIletisimBilgisiButton']");
     SelenideElement btnKurumKaydet = $(By.id("kurumYonetimiEditorForm:saveKurumButton"));
-<<<<<<< HEAD
-
-    // İletişim bilgileri elementleri
-=======
->>>>>>> 696164ea61040b3d522eef61a3e19c55cbbd1cb4
 
     // İletişim bilgileri elementleri
     SelenideElement txtMobilTelNo = $(By.id("kurumBilgileriEditorForm:mobilInput"));
@@ -108,14 +103,10 @@ public class KurumYonetimiPage extends MainPage {
         return this;
     }
 
-<<<<<<< HEAD
-    public KurumYonetimiPage kaydetGonder() {
-        btnKurumKaydet.click();
-=======
+
     @Step("Kaydet")
     public KurumYonetimiPage kaydet() {
-        btnKaydet.click();
->>>>>>> 696164ea61040b3d522eef61a3e19c55cbbd1cb4
+        btnKurumKaydet.click();
         return this;
     }
 

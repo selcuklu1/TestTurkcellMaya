@@ -722,7 +722,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-<<<<<<< HEAD
+
         //ElementsCollection divGeregiSecilenler = $$("tbody[id^='yeniGidenEvrakForm:evrakBilgileriList:'][id$=':geregiLov:LovSecilenTable_data'] > tr[role='row']");
         public BilgilerTab geregiSecilenKontrol(String baslik, String detay, String postaTipi){
 
@@ -733,8 +733,7 @@ public class EvrakOlusturPage extends MainPage {
 
             return this;
         }
-=======
->>>>>>> 696164ea61040b3d522eef61a3e19c55cbbd1cb4
+
         //endregion
 
     }
