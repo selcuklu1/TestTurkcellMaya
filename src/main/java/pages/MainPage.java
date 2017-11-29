@@ -144,10 +144,7 @@ public class MainPage extends BaseLibrary {
 
     public MainPage kullaniciAdiTcKimlikNoKontol(){
         $(By.id("kepLogin2FormId:kullaniciAdi")).shouldBe(Condition.disabled);
-        $(By.id("kepLogin2FormId:kullaniciAdi")).shouldBe(Condition.empty);
-
         $(By.id("kepLogin2FormId:tcKimlikNo")).shouldBe(Condition.disabled);
-        $(By.id("kepLogin2FormId:tcKimlikNo")).shouldBe(Condition.empty);
         return this;
     }
 

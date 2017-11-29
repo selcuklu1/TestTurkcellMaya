@@ -22,6 +22,7 @@ public class BelgenetFramework {
         Commands.getInstance().add("lastSelectedLovDetailText", comboLov.new LastSelectedLovDetailText());
         Commands.getInstance().add("isLovSelected", comboLov.new IsLovSelected());
         Commands.getInstance().add("isLovValueSelectable", comboLov.new IsLovValueSelectable());
+        Commands.getInstance().add("lastSelectedLov", comboLov.new LastSelectedLov());
 
         Commands.getInstance().add("openTree", comboLov.new OpenTree());
 //        Commands.getInstance().add("clearLov", comboLov.new ClearLov());

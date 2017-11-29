@@ -44,7 +44,17 @@ public class EvrakOlusturTest extends BaseTest {
         login();
 
         new EvrakOlusturPage().openPage().bilgilerTabiAc();
-        comboLov("input[id$='konuKoduLov:LovText']").isLovValueSelectable("3233232323233");
+
+        String a1 =  comboLov("input[id$='konuKoduLov:LovText']").lastSelectedLov().text();
+        String a = comboLov(By.id("yeniGidenEvrakForm:evrakBilgileriList:16:geregiLov:LovText"))
+                .selectLov("optiim").lastSelectedLov().text();
+        String b = comboLov(By.id("yeniGidenEvrakForm:evrakBilgileriList:16:geregiLov:LovText")).selectLov("optiim")
+                .lastSelectedLov().text();
+//String c = comboLov(By.id("yeniGidenEvrakForm:evrakBilgileriList:16:geregiLov:LovText")).selectLov("optiim")
+//        .
+
+        System.out.println("!!!!!!-" + comboLov("input[id$='konuKoduLov:LovText']").lastSelectedLov());
+//                .selectLov("010.01").lastSelectedLovTitle();
 
         $(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:onayAkisiEkle")).click();
         comboLov(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:akisAdimLov:LovText"))
