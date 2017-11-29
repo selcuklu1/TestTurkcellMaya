@@ -32,7 +32,7 @@ public class BaseTest extends BaseLibrary {
 //        Configuration.remote = "http://0.0.0.0:32768/wd/hub";
 
 //        Configuration.browser = "chrome";
-          Configuration.browser = "marionette";
+          //Configuration.browser = "marionette";
 
         //Configuration.browser = "marionette";
 
@@ -40,7 +40,7 @@ public class BaseTest extends BaseLibrary {
 
         //"org.openqa.selenium.Firefox.FirefoxDriver";
 
-      //  Configuration.browser = "chrome";
+        Configuration.browser = "chrome";
         Configuration.startMaximized = true;
         Configuration.baseUrl = belgenetURL;
         //Configuration.browser = "drivers.Firefox";

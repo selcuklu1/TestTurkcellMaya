@@ -29,9 +29,10 @@ public class KurumYonetimiTest extends BaseTest {
     public void TC01957_A() throws InterruptedException {
 
         String guncellenecekKurumAdi = "huseyindeneme";
-        String yeniKurumAdi = "huseyindeneme111";
-        String idariBirimKimlikKodu = "12345";
+        String yeniKurumAdi = "huseyindeneme111234";
+        String idariBirimKimlikKodu = "123456";
         String ustKurum = "Adalet Bakanlığı";
+        String kontrolEdilecekGeregiDetay = "Türkiye Devlet Teşkilatı | Yürütme | Maliye Bakanlığı | Muhasebat Genel Müdürlüğü | Adalet Bakanlığı Merkez Saymanlık Müdürlüğü | huseyindeneme111";
 
         // İletişim bilgileri güncelleme
         String mobilTelNo = "5444444444";
@@ -48,13 +49,9 @@ public class KurumYonetimiTest extends BaseTest {
         String basariMesaji = "İşlem başarılıdır!";
 
         // Kep adresi güncelleme
-        String guncellenecekKepAdresi = "deneme@kepadresim.com";
-        String yeniKepadresi = "deneme234@kepadresim.com";
+        String guncellenecekKepAdresi = "aabbccddd@kepadresim.com";
+        String yeniKepadresi = "hihihaha@kepadresim.com";
         String kepHizmetSaglayicisi = "KEPKUR";
-
-
-        /*
-
 
         kurumYonetimiPage
                 .openPage()
@@ -97,31 +94,54 @@ public class KurumYonetimiTest extends BaseTest {
                 .kurumKontrolEt(yeniKurumAdi, true);
 
 
-         */
 
-        /*
         gelenEvrakKayitPage
                 .openPage()
-                .kisiKurumSec("Kurum")
+                .kisiKurumSec("D")
                 .geldigiKurumDoldurLovText(yeniKurumAdi)
-                .alanDegeriKontrolEt(gelenEvrakKayitPage.txtEvrakBilgileriListEvrakSayiTextAreaSol, idariBirimKimlikKodu + "   -", true, true);
-        */
+                .alanDegeriKontrolEt(gelenEvrakKayitPage.txtEvrakBilgileriListEvrakSayiTextAreaSol, idariBirimKimlikKodu, true, true);
 
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
                 .geregiSecimTipi("Kurum")
                 .geregiTreeKontrolEt(yeniKurumAdi, true)
-                .bilgiSecimTipiSec("Kurum")
+                .bilgiSecimTipiSec("D")
                 .bilgiSec(yeniKurumAdi);
 
         evrakOlusturPage
-                .openPage()
                 .editorTabAc()
                 .hitapKontrol(yeniKurumAdi);
 
+        evrakOlusturPage
+                .evrakOlusturPageKapat();
+
         gidenEvrakKayitPage
-                .openPage();
+                .openPage()
+                .geregiSecimTipiSec("Kurum")
+                .geregiAlanindaDegerKontrolu(yeniKurumAdi, true);
+
+        kurumYonetimiPage
+                .openPage()
+                .sorgulaKurumDoldur(yeniKurumAdi)
+                .ara()
+                .kurumGuncelle(yeniKurumAdi)
+                .kepAdresiKullaniyorSec(false)
+                .kurumKaydet()
+                .islemMesaji().basariliOlmali("İşlem başarılıdır!");
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .geregiSecimTipi("Kurum")
+                .geregiSec(yeniKurumAdi)
+                .geregiSecilenKontrol(yeniKurumAdi, kontrolEdilecekGeregiDetay, "Adi Posta");
+
+
+
+
+
+
 
 
 

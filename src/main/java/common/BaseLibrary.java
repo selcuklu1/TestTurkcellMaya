@@ -12,6 +12,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 
 import java.io.File;
 import java.lang.reflect.Array;
@@ -483,7 +484,10 @@ public class BaseLibrary {
             if (exactText == true)
                 element.shouldHave(Condition.exactValue(value));
             else
-                element.shouldHave(Condition.value(value));
+            {
+                String _value = element.getValue();
+                Assert.assertEquals(_value.contains(value), true);
+            }
 
         }
         else
@@ -491,7 +495,10 @@ public class BaseLibrary {
             if (exactText == true)
                 element.shouldNotHave(Condition.exactValue(value));
             else
-                element.shouldNotHave(Condition.value(value));
+            {
+                String _value = element.getValue();
+                Assert.assertEquals(_value.contains(value), false);
+            }
 
         }
     }
