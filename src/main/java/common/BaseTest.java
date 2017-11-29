@@ -22,27 +22,14 @@ public class BaseTest extends BaseLibrary {
         Locale turkishLocal = new Locale("tr", "TR");
         Locale.setDefault(turkishLocal);
 
+
         //region SetUp BelgenetFramework for BelgenetElements usage
         BelgenetFramework.setUp();
         //endregion
 
         //region Selenide Driver Configuration
         Configuration.baseUrl = belgenetURL;
-        //    Configuration.browser = "drivers.Firefox";
-//        Configuration.remote = "http://0.0.0.0:32768/wd/hub";
-
-//        Configuration.browser = "chrome";
-          Configuration.browser = "marionette";
-
-        //Configuration.browser = "marionette";
-
-        //Configuration.browser = "drivers.Firefox";
-
-        //"org.openqa.selenium.Firefox.FirefoxDriver";
-
         Configuration.browser = "chrome";
-        Configuration.startMaximized = true;
-        Configuration.baseUrl = belgenetURL;
         //Configuration.browser = "drivers.Firefox";
         //Configuration.browser = "marionette";
         //Configuration.remote = "http://0.0.0.0:32768/wd/hub";
@@ -56,6 +43,8 @@ public class BaseTest extends BaseLibrary {
         Configuration.startMaximized = true;
 //        Configuration.browserSize = "1024x600";
         //endregion
+
+
 
         System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, "/dev/null");
     }
