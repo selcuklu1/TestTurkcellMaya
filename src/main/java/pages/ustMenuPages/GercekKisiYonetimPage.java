@@ -85,13 +85,11 @@ public class GercekKisiYonetimPage extends MainPage {
 
     //</editor-fold>
 
-
     @Step("Gerçek Kişi Yönetimi sayfasını aç")
     public GercekKisiYonetimPage openPage() {
         ustMenu("Gerçek Kişi Yönetimi");
         return this;
     }
-
 
     @Step("Gerçek Kişi Güncelle")
     public GercekKisiYonetimPage gercekKisiGuncelle() {

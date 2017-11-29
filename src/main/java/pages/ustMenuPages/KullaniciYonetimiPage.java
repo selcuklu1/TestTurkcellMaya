@@ -73,6 +73,7 @@ public class KullaniciYonetimiPage extends MainPage {
         return this;
     }
 
+    @Step("Ekran adı çekilir")
     public String ekranAdiCek() {
         String ekranAdi = txtEkranAdi.getValue();
         return ekranAdi;
@@ -83,28 +84,31 @@ public class KullaniciYonetimiPage extends MainPage {
         return this;
     }
 
+    @Step("Kullanıcı birim atama kaydet")
     public KullaniciYonetimiPage popupKullaniciBirimAtamaKaydet() {
         btnPopupBirimAtamaKaydet.click();
         return this;
     }
 
-
+    @Step("Kullanıcı Yönetim sayfası aç")
     public KullaniciYonetimiPage openPage() {
         ustMenu("Kullanıcı Yönetim");
         return this;
     }
 
+    @Step("Kullanıcı Birim atama bağ tipi seç")
     public KullaniciYonetimiPage popupKullaniciBirimAtamaBagTipiSec(String value) {
         cmbPopupKullaniciBirimAtamaBagTipi.selectOptionByValue(value);
         return this;
     }
 
+    @Step("Görevli olduğu birimler güncelle")
     public KullaniciYonetimiPage gorevliOlduguBirimlerGuncelle(){
         btnGorevliOlduguBirimlerGuncelle.click();
         return this;
     }
 
-
+    @Step("Seçilen kullanıcı güncelle tıkla")
     public KullaniciYonetimiPage kullaniciListesiGuncelle(){
         btnKullaniciListesiGuncelle.click();
         return this;
@@ -170,7 +174,7 @@ public class KullaniciYonetimiPage extends MainPage {
         chkAltBirimiOlmayanlar.setSelected(value);
         return this;
     }
-
+    @Step("Ara")
     public KullaniciYonetimiPage ara() {
         btnAra.click();
         return this;

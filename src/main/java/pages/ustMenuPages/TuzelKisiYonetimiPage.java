@@ -129,13 +129,13 @@ public class TuzelKisiYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Kep hizmet sağlayici seç")
+    @Step("Kep hizmet sağlayıcısı seç")
     public TuzelKisiYonetimiPage kepHizmetSaglayicisiSec(String value) {
         cmbPopupKepHizmetSaglayicisi.selectOption(value);
         return this;
     }
 
-    @Step("Kep Adresi doldur")
+    @Step("Kep adresi doldur")
     public TuzelKisiYonetimiPage kepAdresiDoldur(String text) {
         txtKepAdresi.setValue(text);
         return this;
@@ -147,7 +147,7 @@ public class TuzelKisiYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Kep adresi kullanılıyor seç")
+  @Step("Kep adresi kullanılıyor seç")
     public TuzelKisiYonetimiPage kepAdresiKullaniyorSec(boolean secim) {
         chkKepAdresiKullaniyor.setSelected(secim);
         return this;
