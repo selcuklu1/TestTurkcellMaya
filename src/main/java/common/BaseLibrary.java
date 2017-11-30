@@ -542,6 +542,7 @@ public class BaseLibrary {
                     } else {
                         if (files[i].getName().toString().contains(fileName)) {
                             files[i].delete();
+                            System.out.println("dosya silindi");
                             flag = true;
                         } else
                             System.out.println("Klasörde istenilen isimde dosya bulunamadı.");

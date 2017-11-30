@@ -126,6 +126,8 @@ public class GelenEvrakKayitPage extends MainPage {
     SelenideElement popUpEvet = $("[id='evetDugmesiUstYaziHavaleYer']");
     SelenideElement mukerrerPopUpEvet = $("[id='evetButtonBenzerKaydet']");
     SelenideElement mukerrerPopUp = $("[id='benzerEvrakKayitConfirmDialog']");
+    SelenideElement btnUstYaziDegistirmeHayır = $(By.id("evrakBilgileriForm:ustyaziDegistirmeButton"));
+    SelenideElement popUpUstYaziDegistirilme = $(By.id("evrakBilgileriForm:ustyaziDegistirisilMiDialog"));
     SelenideElement basariliPopUpKapat = $("[id='evrakKaydetBasariliDialogForm:vazgecButton']");
     SelenideElement basariliPopUp = $("[id='evrakKaydetBasariliDialog']");
 
@@ -729,6 +731,13 @@ public class GelenEvrakKayitPage extends MainPage {
         else
             $(By.id("kapatKaydetHayirButton")).click();
 
+        return this;
+    }
+
+    @Step("")
+    public GelenEvrakKayitPage ustYaziDegistirilmisPopUpKontrol(){
+        if(popUpUstYaziDegistirilme.isDisplayed())
+            btnUstYaziDegistirmeHayır.click();
         return this;
     }
 }
