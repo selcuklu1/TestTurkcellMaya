@@ -3,6 +3,7 @@ package pages.ustMenuPages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -13,9 +14,7 @@ import pages.pageComponents.belgenetElements.BelgenetElement;
 
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
-import static com.codeborne.selenide.Selenide.switchTo;
+import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 import static pages.pageComponents.belgenetElements.BelgentCondition.not;
 import static pages.pageComponents.belgenetElements.BelgentCondition.required;
@@ -54,6 +53,7 @@ public class EvrakOlusturPage extends MainPage {
     SelenideElement divBilgileri = $(By.id("evrakBilgileriContainerDiv"));
 
     //endregion
+
     @Step("Evrak Oluştur sayfası aç")
     public EvrakOlusturPage openPage() {
         new UstMenu().ustMenu("Evrak Oluştur");
@@ -198,6 +198,10 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement btnOtomatikOnayAkisi = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:otomatikOnayAkisiEkle"));
 
         SelenideElement cmbKullanicilarImza = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:akisAdimLov:LovSecilenTable:1:selectOneMenu"));
+        SelenideElement lovTreeKapat = $(By.cssSelector("[id^='yeniGidenEvrakForm:evrakBilgileriList:'][id$='bilgiLov:lovTreePanelKapat']"));
+        SelenideElement lovTreeSec = $(By.xpath("//*[@id=\"yeniGidenEvrakForm:evrakBilgileriList:15:bilgiLov:lovTree:0_0\"]/div/span/span[2]/span[1]"));
+
+
 
         //endregion
 
@@ -435,6 +439,22 @@ public class EvrakOlusturPage extends MainPage {
         public BilgilerTab bilgiDoldur(String bilgi) {
             cmbBilgi.selectLov(bilgi);
             //shouldHave(Condition.text(geregi));
+            return this;
+        }
+
+        public BilgilerTab manuelBilgiDoldur(String bilgi) throws InterruptedException {
+
+            cmbBilgi.sendKeys(bilgi);
+            Thread.sleep(5000);
+
+            lovTreeSec.click();
+
+          //  lovTreeSec.click();
+            return this;
+        }
+
+        public BilgilerTab lovTreeKapat() {
+            lovTreeKapat.click();
             return this;
         }
 
@@ -732,6 +752,7 @@ public class EvrakOlusturPage extends MainPage {
 
             return this;
         }
+
 
         //endregion
 
