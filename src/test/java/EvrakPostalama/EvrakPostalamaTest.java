@@ -37,23 +37,36 @@ EvrakOlusturPage evrakOlusturPage;
                 .openPage()
                 .bilgilerTabiAc()
                 .konuKoduSec("Entegrasyon İşlemleri")
-                .kaldirilacakKlasorler("ESK05")
+                .kaldirilacakKlasorlerTxt("Diğer")
                 .evrakTuruSec("Resmi Yazışma")
                 .onayAkisiKullanicilariTemizle()
-                .onayAkisiEkle();
+                .onayAkisiEkle()
+                .onayAkisiKullaniciTipiSec("Mehmet BOZDEMİR", "İmzalama")
+                .onayAkisiKullan();
 
 
-                evrakOlusturPage
-                .openPage()
+        evrakOlusturPage
                 .ilgileriTabAc()
                 .sistemeKayitliEvrakEkleTab()
                 .sistemeKayitliEvrakAra("yazı")
                 .sistemeKayitliDokumanArama()
-                        .tablodaBulunanEvrakiEkle();
+                .tablodaBulunanEvrakiEkle();
 
 
                 evrakOlusturPage
                 .islemMesaji().basariliOlmali("İşlem başarılıdır!");
+
+                evrakOlusturPage
+                        .editorTabAc()
+                        .editorIcerikDoldur("Optiim")
+                        .editorEvrakGeregiSec("TAŞRA TEŞKİLATI")
+                        .imzala()
+                        .popupSImzalaIslemleri()
+                        .popupImzalaVeEvrakKapatma();
+
+
+
+
 
 
 

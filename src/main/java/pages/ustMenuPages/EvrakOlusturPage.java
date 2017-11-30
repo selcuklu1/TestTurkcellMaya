@@ -718,8 +718,9 @@ public class EvrakOlusturPage extends MainPage {
         }
 
 
-        public BilgilerTab kaldirilacakKlasorler(String klasor) {
+        public BilgilerTab kaldirilacakKlasorlerTxt(String klasor) {
             //TODO: Fonksiyon yazılacak.
+            cmbKaldiralacakKlasorler.selectLov(klasor);
             return this;
         }
 
@@ -755,6 +756,7 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement yeniGidenEvrakForm = $(By.id("cke_yeniGidenEvrakForm:ckeditorInstance_window1"));
         SelenideElement editorHitapKismi = $(By.cssSelector("#yeniGidenEvrakForm\\:hitapInplace > span:nth-child(4)"));
         SelenideElement tblEditorlovSecilenTable = $(By.id("yeniGidenEvrakForm:geregiKurumLov:LovSecilenTable"));
+        BelgenetElement tblEditolovGeregiTable = comboLov("input[id='yeniGidenEvrakForm:geregiKurumLov:LovText']");
         SelenideElement btnImzala = $("button[id^='yeniGidenEvrakForm:rightTab:uiRepeat'] span[class$='imzala']");
         SelenideElement divImzacılarGnMdV = $("[id='yeniGidenEvrakForm:parafciPanell'] [class='ui-inplace ui-hidden-container']");
 
@@ -799,6 +801,14 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Editör Evrak Gereği Doldur")
+        public EditorTab editorEvrakGeregiSec (String Text) {
+
+            tblEditolovGeregiTable.selectLov(Text);
+
+            return this;
+
+        }
         @Step("Editör İçerik Doldur")
         public EditorTab editorIcerikDoldur(String icerik) throws InterruptedException {
             Thread.sleep(5000);
