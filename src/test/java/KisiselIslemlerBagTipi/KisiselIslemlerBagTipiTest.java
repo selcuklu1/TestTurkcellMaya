@@ -13,6 +13,7 @@ import io.qameta.allure.SeverityLevel;
 
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
 import pages.ustMenuPages.*;
 
 import static data.TestData.password2;
