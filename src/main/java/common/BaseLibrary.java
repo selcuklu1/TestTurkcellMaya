@@ -378,8 +378,21 @@ public class BaseLibrary {
 
     //Textin ilk harfini büyük yapar.
     public String toUpperCaseFirst(String text) {
-        char ilkHarf = Character.toUpperCase(text.charAt(0));
-        text = ilkHarf + text.substring(1);
+    //    char ilkHarf = Character.toUpperCase(text.charAt(0));
+      //  text = ilkHarf + text.substring(1);
+
+        // str Stringinin içindeki kelimelerin ilk harfleri büyük diğerleri küçük yapılır.
+        char c = Character.toUpperCase(text.charAt(0));
+        //ilk harfini buyuttuk
+        text = c + text.substring(1);
+        //buyutulen ilk harften sonra kelimenin diger harflerini ekledik.
+        String bosluk = " ";
+        for (int i = 1; i < text.length(); i++) {
+            if (text.charAt(i) == ' ') {
+                c = Character.toUpperCase(text.charAt(i + 1));
+                text = text.substring(0, i) + bosluk + c + text.substring(i + 2);
+            }
+        }
         return text;
     }
 
@@ -481,18 +494,20 @@ public class BaseLibrary {
         if (shouldHaveValue == true) {
             if (exactText == true)
                 element.shouldHave(Condition.exactValue(value));
-            else
-            {
+            else {
                 String _value = element.getValue();
                 Assert.assertEquals(_value.contains(value), true);
             }
-
         } else {
             if (exactText == true)
                 element.shouldNotHave(Condition.exactValue(value));
+<<<<<<< HEAD
             else
 
             {
+=======
+            else {
+>>>>>>> 978364c0d6a202db360d56c8a2999abaf142682b
                 String _value = element.getValue();
                 Assert.assertEquals(_value.contains(value), false);
             }
