@@ -21,9 +21,9 @@ public class KurumYonetimiPage extends MainPage {
     SelenideElement chkKaysisteYerAlmiyor = $(By.id("kurumYonetimiEditorForm:kaysisteVarMiCheckbox_input"));
     SelenideElement txtKurumAdi = $(By.id("kurumYonetimiEditorForm:kurumAdiInput"));
     SelenideElement chkPaketKullanim = $(By.id("kurumYonetimiEditorForm:paketKullanimCheckbox_input"));
-    SelenideElement chkKepAdresiKullaniyor = $(By.id("kurumYonetimiEditorForm:kepAdresiKullanimCheckbox_input"));
+    SelenideElement chkKepAdresiKullaniyor = $(By.id("kurumYonetimiEditorForm:kepAdresiKullanimCheckbox"));
     SelenideElement chkOzelHitap = $(By.id("kurumYonetimiEditorForm:ozelHitapExistSelBoolean_input"));
-    SelenideElement btnKaydet = $(By.id("kurumYonetimiEditorForm:saveKurumButton"));
+    //SelenideElement btnKaydet = $(By.id("kurumYonetimiEditorForm:saveKurumButton"));
     SelenideElement btnKepAdresBilgileriArti = $(By.id("kurumYonetimiEditorForm:kepBilgileriDataTable:addNewKepAdresiButton"));
     SelenideElement btnGuncelle = $(By.id("kurumYonetimiListingForm:kurumTreeTable:1_0:updateKurumButton"));
     SelenideElement txtPopupKepAdresi = $(By.id("kurumKepAdresBilgiEditorForm:kurumKepAdresBilgiInputTextId"));
@@ -103,9 +103,10 @@ public class KurumYonetimiPage extends MainPage {
         return this;
     }
 
+
     @Step("Kaydet")
     public KurumYonetimiPage kaydet() {
-        btnKaydet.click();
+        btnKurumKaydet.click();
         return this;
     }
 
@@ -115,7 +116,20 @@ public class KurumYonetimiPage extends MainPage {
     }
     @Step("Kep adresi kullanıyor seç")
     public KurumYonetimiPage kepAdresiKullaniyorSec(boolean secim) {
-        chkKepAdresiKullaniyor.setSelected(secim);
+
+        Boolean isSelected = false;
+        if (chkKepAdresiKullaniyor.$(By.xpath("//div[contains(@class, 'ui-state-active')]")).exists())
+            isSelected = true;
+
+        if(secim == true){
+            if(isSelected == false)
+                chkKepAdresiKullaniyor.click();
+        } else {
+            if(isSelected == true)
+                chkKepAdresiKullaniyor.click();
+        }
+
+
         return this;
     }
 
@@ -329,7 +343,8 @@ public class KurumYonetimiPage extends MainPage {
 
     @Step("Kurum panelinde kaydet butonuna tıklandı.")
     public KurumYonetimiPage kurumKaydet() {
-        btnKurumKaydet.click();
+        //btnKurumKaydet.doubleClick();
+        clickJs(btnKurumKaydet);
         return this;
     }
 

@@ -93,6 +93,21 @@ public class EvrakOlusturPage extends MainPage {
         return this;
     }
 
+    SelenideElement btnEvrakOlusturKapat = $(By.xpath("//div[@id='window3Dialog']//a/span[@class='ui-icon ui-icon-closethick']"));
+    SelenideElement btbEvrakOlusturKapatEvet = $(By.id("kapatKaydetEvetButton"));
+
+    public EvrakOlusturPage evrakOlusturPageKapat() {
+
+
+        //btnEvrakOlusturKapat.click();
+
+        $(By.xpath("//div[@id='mainTaskBar']//span[text()='[Evrak Oluştur]']"))
+                .contextClick();
+        btbEvrakOlusturKapatEvet.click();
+
+        return this;
+    }
+
     //region Tabs
     @Step("Bilgiler tab aç")
     public BilgilerTab bilgilerTabiAc() {
@@ -159,7 +174,8 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement cbmAkisAdim = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:akisAdimLov:LovSecilenTable:0:selectOneMenu"));
 
         BelgenetElement cmbGeregi = comboLov(By.id("yeniGidenEvrakForm:evrakBilgileriList:16:geregiLov:LovText"));
-        SelenideElement cmbPostaTipi = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:16:geregiLov:LovSecilenTable:0:selectOneMenu"));
+        // select[id^='yeniGidenEvrakForm:evrakBilgileriList:16:geregiLov:LovSecilenTable:'][id$=':selectOneMenu']
+        SelenideElement cmbPostaTipi = $("select[id^='yeniGidenEvrakForm:evrakBilgileriList:16:geregiLov:LovSecilenTable:'][id$=':selectOneMenu']");
         By cmbGeregiBy = By.cssSelector("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='geregiLov:LovText']");
 
         // BelgenetElement txtOnayAkisi = comboLov("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='akisLov:LovText']");
@@ -561,9 +577,7 @@ public class EvrakOlusturPage extends MainPage {
             return txtKonu;
         }
 
-
         //region Onay Akışı İşlemleri
-
         @Step("Onay akışı adı doldur")
         public BilgilerTab onayAkisiDoldur(boolean onayAkisi) throws InterruptedException {
             //TODO: Fonksiyonu yazılacak.
@@ -704,6 +718,18 @@ public class EvrakOlusturPage extends MainPage {
 
         public BilgilerTab kaldirilacakKlasorler(String klasor) {
             //TODO: Fonksiyon yazılacak.
+            return this;
+        }
+
+
+        //ElementsCollection divGeregiSecilenler = $$("tbody[id^='yeniGidenEvrakForm:evrakBilgileriList:'][id$=':geregiLov:LovSecilenTable_data'] > tr[role='row']");
+        public BilgilerTab geregiSecilenKontrol(String baslik, String detay, String postaTipi) {
+
+            Assert.assertEquals(cmbGeregi.lastSelectedLovTitleText().contains(baslik), true);
+            Assert.assertEquals(cmbGeregi.lastSelectedLovDetailText().contains(detay), true);
+            Assert.assertEquals(cmbPostaTipi.getSelectedText().contains(postaTipi), true);
+
+
             return this;
         }
 
@@ -942,20 +968,16 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement txtIlisikIslemleriTabViewArsivdeEvrakAraSayi = $(By.id("yeniGidenEvrakForm:ilgiIslemleriTabView:arsivdenIlgiEvrakAraSayiInputTextId"));
         SelenideElement btnIlisikIslemleriTabViewArsivdenEvrakDokumanAra = $(By.id("yeniGidenEvrakForm:ilisikIslemleriTabView:arsivdenIlisikEvrakAraButtonId"));
 
-
         private IlgileriTab open() {
             tabIlgileri.click();
             return this;
-
         }
 
         @Step("IlgileriTab Sisteme Kayitli Evrak Ekle")
         public IlgileriTab sistemeKayitliEvrakEkleTab() {
             tabIliskiliSistemdeKayitliEvrakEkle.click();
-
             return this;
         }
-
 
         @Step("IlgileriTab Sisteme Kayitli Evrak EkleTab Tarih Başlagıç")
         public IlgileriTab sistemeKayitliEvrakBaslangictarihi(String dateText) {
@@ -967,7 +989,6 @@ public class EvrakOlusturPage extends MainPage {
         public IlgileriTab sistemeKayitliEvrakBitistarihi(String dateText) {
             dateIlgileriSistemdeEvrakTarihiBitis.setValue(dateText);
             return this;
-
         }
 
         @Step("IlgileriTab Sisteme Kayitli Evrak EkleTab Evrak Aranacak yer secimi")
@@ -980,7 +1001,6 @@ public class EvrakOlusturPage extends MainPage {
         public IlgileriTab sistemeKayitliEvrakAra(String evrakAdi) {
             txtIlgileriSistemdeEvrakArama.setValue(evrakAdi);
             return this;
-
         }
 
         @Step("IlgileriTab Sisteme Kayitli Evrak EkleTab Dokuman Ara")
@@ -988,7 +1008,6 @@ public class EvrakOlusturPage extends MainPage {
             btnIlgileriSistemdeDokumanAra.click();
             return this;
         }
-
     }
 
     public IliskiliEvraklarTab iliskiliEvraklarTabAc() {
