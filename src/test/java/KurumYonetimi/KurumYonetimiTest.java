@@ -13,10 +13,10 @@ import java.util.Random;
 
 public class KurumYonetimiTest extends BaseTest {
 
-   KurumYonetimiPage kurumYonetimiPage;
-   GelenEvrakKayitPage gelenEvrakKayitPage;
-   EvrakOlusturPage evrakOlusturPage;
-   GidenEvrakKayitPage gidenEvrakKayitPage;
+    KurumYonetimiPage kurumYonetimiPage;
+    GelenEvrakKayitPage gelenEvrakKayitPage;
+    EvrakOlusturPage evrakOlusturPage;
+    GidenEvrakKayitPage gidenEvrakKayitPage;
 
     @BeforeMethod
     public void loginBeforeTests() {
@@ -100,7 +100,6 @@ public class KurumYonetimiTest extends BaseTest {
                 .ara()
                 .kurumKontrolEt(yeniKurumAdi, true)
                 .panelKapat();
-
 
 
         gelenEvrakKayitPage
@@ -187,8 +186,6 @@ public class KurumYonetimiTest extends BaseTest {
                 .openPage()
                 .yeniKurumEkle();
 
-
-
         kurumYonetimiPage
                 .ozelHitapSec(true)
                 .hitapDoldur(hitap)
@@ -229,15 +226,6 @@ public class KurumYonetimiTest extends BaseTest {
                 .geregiSecimTipiSec("D")
                 .geregiSec(yeniKurumAdi)
                 .geregiSecilenKontrol(yeniKurumAdi, kontrolEdilecekGeregiDetay, "Adi Posta");
-
-
-
     }
-
-
-
-
-
-
 
 }

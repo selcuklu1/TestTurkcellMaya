@@ -16,7 +16,7 @@ public class LoginPage extends BaseLibrary {
     private SelenideElement btnLogin = $(By.id("eForm:egirisYapButton"));
 
     private LoginPage open() {
-        Selenide.open("http://94.55.114.18:8889/edys-web/mainInbox.xhtml");
+        Selenide.open("");
 //        Selenide.openPage("http://www.belgenet.com.tr:8282/edys-web/sistemeGiris.xhtml");
 //        username.shouldBe(visible);
         return this;

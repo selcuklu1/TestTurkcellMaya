@@ -24,7 +24,7 @@ EvrakOlusturPage evrakOlusturPage;
     public  void loginBeforeTest() {
 
     evrakOlusturPage = new EvrakOlusturPage();
-    login();
+    login("Mbozdemir" , "123");
 
 
     }
@@ -33,20 +33,43 @@ EvrakOlusturPage evrakOlusturPage;
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TC0308: Evrak Postalama")
     public void TC0308() throws InterruptedException {
-       /* evrakOlusturPage
+        evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
                 .konuKoduSec("Entegrasyon İşlemleri")
-                .kaldirilacakKlasorler("ESK05")
+                .kaldirilacakKlasorler("Diğer")
                 .evrakTuruSec("Resmi Yazışma")
                 .onayAkisiKullanicilariTemizle()
-                .onayAkisiEkle();
-*/
+                .onayAkisiEkle()
+                .onayAkisiKullaniciTipiSec("Mehmet BOZDEMİR", "İmzalama")
+                .onayAkisiKullan();
+
 
         evrakOlusturPage
-                .openPage()
                 .ilgileriTabAc()
-                .sistemeKayitliEvrakEkleTab();
+                .sistemeKayitliEvrakEkleTab()
+                .sistemeKayitliEvrakAra("yazı")
+                .sistemeKayitliDokumanArama()
+                .tablodaBulunanEvrakiEkle();
+
+
+                evrakOlusturPage
+                .islemMesaji().basariliOlmali("İşlem başarılıdır!");
+
+                evrakOlusturPage
+                        .editorTabAc()
+                        .editorIcerikDoldur("Optiim")
+                        .editorEvrakGeregiSec("TAŞRA TEŞKİLATI")
+                        .imzala()
+                        .popupSImzalaIslemleri();
+                
+                mainPage.islemMesaji().basariliOlmali("İşlem başarılıdır!");
+
+
+
+
+
+
 
 
 
