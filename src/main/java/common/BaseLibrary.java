@@ -491,15 +491,11 @@ public class BaseLibrary {
             if (exactText == true)
                 element.shouldNotHave(Condition.exactValue(value));
             else
-<<<<<<< HEAD
+
             {
                 String _value = element.getValue();
                 Assert.assertEquals(_value.contains(value), false);
             }
-
-=======
-                element.shouldNotHave(Condition.value(value));
->>>>>>> 696164ea61040b3d522eef61a3e19c55cbbd1cb4
         }
     }
 

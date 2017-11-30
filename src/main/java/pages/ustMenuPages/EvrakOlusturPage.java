@@ -78,7 +78,7 @@ public class EvrakOlusturPage extends MainPage {
         return this;
     }
 
-    @Step("\"{0}\" ekran açılması beklenen statü: {1}")
+    @Step("{0} ekran açılması beklenen statü: {1}")
     public EvrakOlusturPage kisayolEkranKontrol(String ekranAdi, boolean acilmali) {
         boolean t = $$("[id^='window'][id$='Button_ID'] .ui-button-text")
                 .filterBy(Condition.text(ekranAdi)).size() > 0;
@@ -204,7 +204,7 @@ public class EvrakOlusturPage extends MainPage {
             if (divContainer.is(not(visible)))
                 tabBilgiler.click();
 
-            divContainer.shouldBe(visible);
+            //divContainer.shouldBe(visible);
             return this;
         }
 
@@ -224,13 +224,13 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Konu Kodu alanında \"{0}\" seç")
+        @Step("Konu Kodu alanında {0} seç")
         public BilgilerTab otomatikOnayAkisi() {
             btnOtomatikOnayAkisi.click();
             return this;
         }
 
-        @Step("Konu Kodu alanında \"{0}\" seç")
+        @Step("Konu Kodu alanında {0} seç")
         public BilgilerTab konuKoduSec(String value) {
             cmlKonuKodu.selectLov(value);
             return this;
@@ -241,38 +241,38 @@ public class EvrakOlusturPage extends MainPage {
             return cmlKonuKodu.is(required);
         }
 
-        @Step("Konu alanında \"{0}\" seç")
+        @Step("Konu alanında {0} seç")
         public BilgilerTab konuSec(String value) {
             txtKonu.setValue(value);
             return this;
         }
 
-        @Step("Konu alanı \"{0}\" ile doldur")
+        @Step("Konu alanı {0} ile doldur")
         public BilgilerTab zorunluKodu() {
             txtKonu.is(required);
             return this;
         }
 
-        @Step("Kaldiralacak Klasörler alanında \"{0}\" seç")
+        @Step("Kaldiralacak Klasörler alanında {0} seç")
         public BilgilerTab kaldiralacakKlasorlerSec(String value) {
             cmbKaldiralacakKlasorler.selectLov(value);
             return this;
         }
 
-        @Step("Evrak Türü alanında \"{0}\" seç")
+        @Step("Evrak Türü alanında {0} seç")
         public BilgilerTab evrakTuruSec(String text) {
 //            if (!cmbEvrakTuru.getSelectedOption().equals(text))
             cmbEvrakTuru.selectOption(text);
             return this;
         }
 
-        @Step("Kayıt Tarih alanında \"{0}\" seç")
+        @Step("Kayıt Tarih alanında {0} seç")
         public BilgilerTab dateKayitTarihiSec(String dateText) {
             dateKayitTarihi.setValue(dateText);
             return this;
         }
 
-        @Step("Evrak Dili alanında \"{0}\" seç")
+        @Step("Evrak Dili alanında {0} seç")
         public BilgilerTab evrakDiliSec(String text) {
             cmbEvrakDili.selectOption(text);
 //            if (cmbEvrakTuru.getSelectedOption().equals(text))
@@ -280,7 +280,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Gizlilik Derecesi alanında \"{0}\" seç")
+        @Step("Gizlilik Derecesi alanında {0} seç")
         public BilgilerTab gizlilikDerecesiSec(String text) {
             cmbGizlilikDerecesi.selectOption(text);
             return this;
@@ -304,7 +304,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Evrak Sayi Ek Metni alanında \"{0}\" seç")
+        @Step("Evrak Sayi Ek Metni alanında {0} seç")
         public BilgilerTab evrakSayiEkMetniSec(String text) {
             txtEvrakSayiEkMetni.setValue(text);
             return this;
@@ -316,61 +316,61 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("İvedik alanında \"{0}\" seç")
+        @Step("İvedik alanında {0} seç")
         public BilgilerTab ivedikSec(String text) {
             cmbIvedik.selectOption(text);
             return this;
         }
 
-        @Step("Miat alanında \"{0}\" seç")
+        @Step("Miat alanında {0} seç")
         public BilgilerTab miatSec(String dateText) {
             dateMiat.setValue(dateText);
             return this;
         }
 
-        @Step("Bilgi Secim Tipi alanında \"{0}\" seç")
+        @Step("Bilgi Secim Tipi alanında {0} seç")
         public BilgilerTab bilgiSecimTipiSec(String text) {
             cmbBilgiSecimTipi.selectOptionByValue(text);
             return this;
         }
 
-        @Step("Bilgi seçim tipi tree alanında \"{0}\" geliyor mu? kontrol et")
+        @Step("Bilgi seçim tipi tree alanında {0} geliyor mu? kontrol et")
         public BilgilerTab bilgiSecimTipiTreeKontrolEt(String kurumAdi, Boolean shouldBeSelectable) {
             org.testng.Assert.assertEquals(txtBilgi.isLovValueSelectable(kurumAdi), shouldBeSelectable);
             return this;
         }
 
-        @Step("Bilgi alanında \"{0}\" seç")
+        @Step("Bilgi alanında {0} seç")
         public BilgilerTab bilgiSec(String text) {
             txtBilgi.selectLov(text);
             return this;
         }
 
-        @Step("Geregi Secim Tipi alanında \"{0}\" seç")
+        @Step("Geregi Secim Tipi alanında {0} seç")
         public BilgilerTab geregiSecimTipi(String text) {
-            cmbGeregiSecimTipi.selectOptionContainingText(text);
+            cmbGeregiSecimTipi.selectOptionByValue(text);
             return this;
         }
 
-        @Step("Geregi alanında \"{0}\" seç")
+        @Step("Geregi alanında {0} seç")
         public BilgilerTab geregiSec(String text) {
             txtGeregi.selectLov(text);
             return this;
         }
 
-        @Step("Gereği tree alanında \"{0}\" geliyor mu? kontrol et")
+        @Step("Gereği tree alanında {0} geliyor mu? kontrol et")
         public BilgilerTab geregiTreeKontrolEt(String kurumAdi, Boolean shouldBeSelectable) {
             org.testng.Assert.assertEquals(txtGeregi.isLovValueSelectable(kurumAdi), shouldBeSelectable);
             return this;
         }
 
-        @Step("Dagitimi Ek Yap alanı \"{0}\" seç")
+        @Step("Dagitimi Ek Yap alanı {0} seç")
         public BilgilerTab dagitimiEkYapSec(boolean setSelected) {
             chkDagitimiEkYap.setSelected(setSelected);
             return this;
         }
 
-        @Step("Onay Akisi alanında \"{0}\" seç")
+        @Step("Onay Akisi alanında {0} seç")
         public BilgilerTab cmbOnayAkisi(String text) {
             cmbOnayAkisi.selectLov(text);
             return this;
@@ -758,7 +758,7 @@ public class EvrakOlusturPage extends MainPage {
 
         }
 
-        @Step("Hitap alanı \"{0}\" olarak gelmeli")
+        @Step("Hitap alanı {0} olarak gelmeli")
         public EditorTab hitapKontrol(String hitap) {
             divHitap.shouldHave(text(hitap));
             return this;
