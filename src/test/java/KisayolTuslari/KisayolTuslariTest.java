@@ -6,11 +6,16 @@ import io.qameta.allure.SeverityLevel;
 import org.openqa.selenium.Keys;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+<<<<<<< HEAD
 import pages.MainPage;
 import pages.ustMenuPages.EvrakOlusturPage;
 
 import javax.activation.MailcapCommandMap;
 
+=======
+import pages.ustMenuPages.EvrakOlusturPage;
+
+>>>>>>> 978364c0d6a202db360d56c8a2999abaf142682b
 /****************************************************
  * Tarih: 2017-12-22
  * Proje: Türksat Functional Test Automation
@@ -20,15 +25,20 @@ import javax.activation.MailcapCommandMap;
 
 public class KisayolTuslariTest extends BaseTest {
 
+<<<<<<< HEAD
     EvrakOlusturPage evrakOlusturPage;
     MainPage mainPage;
 
     String editorTab = "Editör";
     String bilgileriTab = "Bilgileri";
+=======
+    EvrakOlusturPage evrakOlustur;
+>>>>>>> 978364c0d6a202db360d56c8a2999abaf142682b
 
     @BeforeMethod
     public void loginBeforeTests() {
         login();
+<<<<<<< HEAD
         evrakOlusturPage = new EvrakOlusturPage();
         mainPage = new MainPage();
     }
@@ -108,11 +118,60 @@ public class KisayolTuslariTest extends BaseTest {
 
         String sayfaAdi = "Karar Yazısı Oluştur";
         String kisayol = Keys.LEFT_SHIFT + "k";
+=======
+        evrakOlustur = new EvrakOlusturPage();
+    }
+
+
+    public void kisayolKontrol(String editorTab, String bilgileriTab, String kisayol, String sayfaAdi) throws InterruptedException {
+
+        evrakOlustur
+                .openPage()
+                .editorTabAc()
+                .editorIcerikDoldur(kisayol);
+
+        evrakOlustur
+                .kisayolEkranKontrol(sayfaAdi, false);
+
+        windowHandleBefore();
+
+        evrakOlustur
+                .pdfOnIzleme();
+
+        Thread.sleep(6000);
+        switchToNewWindow();
+
+        evrakOlustur
+                .PDFOnizlemeKisayolGonder(kisayol);
+
+        switchToDefaultWindow();
+
+        evrakOlustur
+                .kisayolEkranKontrol(sayfaAdi, false)
+                .bilgilerTabiAc()
+                .konuDoldur(kisayol);
+
+        evrakOlustur
+                .kisayolEkranKontrol(sayfaAdi, false)
+                .kisayolSayfaAcma(kisayol)
+                .kisayolEkranKontrol(sayfaAdi, true);
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TC1952: Kısayol tuşları kullanarak Olur Oluştur ekranını açma")
+    public void TC1952a() throws InterruptedException {
+
+        String editorTab = "Editör";
+        String bilgileriTab = "Bilgileri";
+        String sayfaAdi = "Olur Yazısı Oluştur";
+        String kisayol = Keys.LEFT_SHIFT + "o";
+>>>>>>> 978364c0d6a202db360d56c8a2999abaf142682b
 
         kisayolKontrol(editorTab, bilgileriTab, kisayol, sayfaAdi);
     }
 
     @Severity(SeverityLevel.CRITICAL)
+<<<<<<< HEAD
     @Test(enabled = true, description = "TC1955: Kısayol Tuşlarının Tooltipleri")
     public void TC1955() throws InterruptedException {
 
@@ -179,5 +238,12 @@ public class KisayolTuslariTest extends BaseTest {
         evrakOlusturPage
                 .kisayolEkranKontrol(sayfaAdi, true);
     }
+=======
+    @Test(enabled = false, description = "TC1952: Kısayol tuşları kullanarak Kullanıcı Yönetimi ekranını açma")
+    public void TC1952b() throws InterruptedException {
+
+    }
+
+>>>>>>> 978364c0d6a202db360d56c8a2999abaf142682b
 
 }
