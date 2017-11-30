@@ -11,10 +11,10 @@ import pages.ustMenuPages.KurumYonetimiPage;
 
 public class KurumYonetimiTest extends BaseTest {
 
-   KurumYonetimiPage kurumYonetimiPage;
-   GelenEvrakKayitPage gelenEvrakKayitPage;
-   EvrakOlusturPage evrakOlusturPage;
-   GidenEvrakKayitPage gidenEvrakKayitPage;
+    KurumYonetimiPage kurumYonetimiPage;
+    GelenEvrakKayitPage gelenEvrakKayitPage;
+    EvrakOlusturPage evrakOlusturPage;
+    GidenEvrakKayitPage gidenEvrakKayitPage;
 
     @BeforeMethod
     public void loginBeforeTests() {
@@ -96,7 +96,6 @@ public class KurumYonetimiTest extends BaseTest {
                 .panelKapat();
 
 
-
         gelenEvrakKayitPage
                 .openPage()
                 .kisiKurumSec("D")
@@ -108,7 +107,7 @@ public class KurumYonetimiTest extends BaseTest {
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
-                .geregiSecimTipi("D")
+                .geregiSecimTipiSec("D")
                 .geregiTreeKontrolEt(yeniKurumAdi, true)
                 .bilgiSecimTipiSec("D")
                 .bilgiSec(yeniKurumAdi);
@@ -139,29 +138,9 @@ public class KurumYonetimiTest extends BaseTest {
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
-                .geregiSecimTipi("D")
+                .geregiSecimTipiSec("D")
                 .geregiSec(yeniKurumAdi)
                 .geregiSecilenKontrol(yeniKurumAdi, kontrolEdilecekGeregiDetay, "Adi Posta");
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
-
-
-
-
-
 }

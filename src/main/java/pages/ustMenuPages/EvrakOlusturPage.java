@@ -51,6 +51,9 @@ public class EvrakOlusturPage extends MainPage {
     SelenideElement btnKaydetOnayaSun = $("button[id^='yeniGidenEvrakForm:rightTab:uiRepeat'] span[class$='kaydetHavaleEt']");
     SelenideElement btnPaylas = $("button[id^='yeniGidenEvrakForm:rightTab:uiRepeat'] span[class$='evrakPaylas']");
 
+    SelenideElement btnEvrakOlusturKapat = $(By.xpath("//div[@id='window3Dialog']//a/span[@class='ui-icon ui-icon-closethick']"));
+    SelenideElement btbEvrakOlusturKapatEvet = $(By.id("kapatKaydetEvetButton"));
+
     SelenideElement divBilgileri = $(By.id("evrakBilgileriContainerDiv"));
 
     //endregion
@@ -87,9 +90,6 @@ public class EvrakOlusturPage extends MainPage {
         Assert.assertEquals(t, acilmali, "Ekran açılmamalı");
         return this;
     }
-
-    SelenideElement btnEvrakOlusturKapat = $(By.xpath("//div[@id='window3Dialog']//a/span[@class='ui-icon ui-icon-closethick']"));
-    SelenideElement btbEvrakOlusturKapatEvet = $(By.id("kapatKaydetEvetButton"));
 
     public EvrakOlusturPage evrakOlusturPageKapat() {
         //btnEvrakOlusturKapat.click();
@@ -135,12 +135,14 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement cmbIvedik = $("select[id$='ivedilik']");
         SelenideElement dateMiat = $("input[id$='miatCalendar_input']");
 
-        SelenideElement cmbBilgiSecimTipi = $(By.xpath("//label[normalize-space(text())='Bilgi Seçim Tipi']/ancestor::tr[@class='ui-datagrid-row']//select"));
+        SelenideElement cmbBilgiSecimTipi = $(By.xpath("//select[starts-with(@id,'yeniGidenEvrakForm:evrakBilgileriList:15:j_idt')]"));
+        //SelenideElement cmbBilgiSecimTipi = $(By.xpath("//label[normalize-space(text())='Bilgi Seçim Tipi']/ancestor::tr[@class='ui-datagrid-row']//select"));
+
         BelgenetElement txtBilgi = comboLov("input[id$='bilgiLov:LovText']");
         SelenideElement btnBilgiTree = $("button[id$='bilgiLov:treeButton']");
 
-        //SelenideElement cmbGeregiSecimTipi = $(By.xpath("//label[normalize-space(text())='Gereği Seçim Tipi']/ancestor::tr[@class='ui-datagrid-row']//select"));
-        SelenideElement cmbGeregiSecimTipi = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:16:j_idt1858"));
+        SelenideElement cmbGeregiSecimTipi = $(By.xpath("//label[normalize-space(text())='Gereği Seçim Tipi']/ancestor::tr[@class='ui-datagrid-row']//select"));
+        //SelenideElement cmbGeregiSecimTipi = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:16:j_idt1858"));
         BelgenetElement txtGeregi = comboLov("input[id$='geregiLov:LovText']");
         SelenideElement btnGeregiTree = $("button[id$='geregiLov:treeButton']");
 
@@ -188,6 +190,9 @@ public class EvrakOlusturPage extends MainPage {
 
         BelgenetElement cmbBilgi = comboLov(By.cssSelector("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='bilgiLov:LovText']"));
         By cmbBilgiBy = By.cssSelector("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='bilgiLov:LovText']");
+
+        SelenideElement lovTreeKapat = $(By.cssSelector("[id^='yeniGidenEvrakForm:evrakBilgileriList:'][id$='bilgiLov:lovTreePanelKapat']"));
+        SelenideElement lovTreeSec = $(By.xpath("//*[@id=\"yeniGidenEvrakForm:evrakBilgileriList:15:bilgiLov:lovTree:0_0\"]/div/span/span[2]/span[1]"));
 
         SelenideElement btnOtomatikOnayAkisi = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:otomatikOnayAkisiEkle"));
 
@@ -331,19 +336,13 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Bilgi seçim tipi tree alanında {0} geliyor mu? kontrol et")
         public BilgilerTab bilgiSecimTipiTreeKontrolEt(String kurumAdi, Boolean shouldBeSelectable) {
-            org.testng.Assert.assertEquals(txtBilgi.isLovValueSelectable(kurumAdi), shouldBeSelectable);
+            Assert.assertEquals(txtBilgi.isLovValueSelectable(kurumAdi), shouldBeSelectable);
             return this;
         }
 
         @Step("Bilgi alanında {0} seç")
         public BilgilerTab bilgiSec(String text) {
             txtBilgi.selectLov(text);
-            return this;
-        }
-
-        @Step("Geregi Secim Tipi alanında {0} seç")
-        public BilgilerTab geregiSecimTipi(String text) {
-            cmbGeregiSecimTipi.selectOptionByValue(text);
             return this;
         }
 
@@ -355,7 +354,7 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Gereği tree alanında {0} geliyor mu? kontrol et")
         public BilgilerTab geregiTreeKontrolEt(String kurumAdi, Boolean shouldBeSelectable) {
-            org.testng.Assert.assertEquals(txtGeregi.isLovValueSelectable(kurumAdi), shouldBeSelectable);
+            Assert.assertEquals(txtGeregi.isLovValueSelectable(kurumAdi), shouldBeSelectable);
             return this;
         }
 
@@ -432,6 +431,18 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        public BilgilerTab manuelBilgiDoldur(String bilgi) throws InterruptedException {
+            cmbBilgi.sendKeys(bilgi);
+            Thread.sleep(5000);
+            lovTreeSec.click();
+            return this;
+        }
+
+        public BilgilerTab lovTreeKapat() {
+            lovTreeKapat.click();
+            return this;
+        }
+
         public BilgilerTab kisayolSayfaAcma(String kisayol) throws InterruptedException {
             divBilgileri.click();
             Thread.sleep(2000);
@@ -463,8 +474,7 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Gereği seçim tipi seç")
         public BilgilerTab geregiSecimTipiSec(String value) {
-            //cmbGeregiSecimTipi.selectOptionByValue(value);
-            cmbGeregiSecimTipi.selectOption(value);
+            cmbGeregiSecimTipi.selectOptionByValue(value);
             return this;
         }
 
