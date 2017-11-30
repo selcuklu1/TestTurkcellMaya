@@ -501,7 +501,13 @@ public class BaseLibrary {
         } else {
             if (exactText == true)
                 element.shouldNotHave(Condition.exactValue(value));
+<<<<<<< HEAD
+            else
+
+            {
+=======
             else {
+>>>>>>> 978364c0d6a202db360d56c8a2999abaf142682b
                 String _value = element.getValue();
                 Assert.assertEquals(_value.contains(value), false);
             }
