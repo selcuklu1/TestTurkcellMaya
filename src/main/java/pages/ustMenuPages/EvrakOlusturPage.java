@@ -11,6 +11,8 @@ import pages.MainPage;
 import pages.pageComponents.UstMenu;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
+import java.security.Key;
+
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
@@ -472,8 +474,9 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Gereği seçim tipi seç")
+        @Step("Geregi Secim Tipi alanında {0} seç")
         public BilgilerTab geregiSecimTipiSec(String value) {
+            cmbGeregiSecimTipi.sendKeys(Keys.SHIFT);
             cmbGeregiSecimTipi.selectOptionByValue(value);
             return this;
         }

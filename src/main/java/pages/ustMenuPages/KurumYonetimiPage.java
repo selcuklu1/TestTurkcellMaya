@@ -112,7 +112,19 @@ public class KurumYonetimiPage extends MainPage {
 
     @Step("Özel hitap seç")
     public KurumYonetimiPage ozelHitapSec(boolean secim) {
-        chkOzelHitap.setSelected(secim);
+
+        Boolean isSelected = false;
+        if (chkOzelHitap.$(By.xpath("./div[contains(@class, 'ui-state-active')]")).exists())
+            isSelected = true;
+
+        if(secim == true){
+            if(isSelected == false)
+                chkOzelHitap.click();
+        } else {
+            if(isSelected == true)
+                chkOzelHitap.click();
+        }
+
         return this;
     }
     @Step("Kep adresi kullanıyor seç")
@@ -400,5 +412,33 @@ public class KurumYonetimiPage extends MainPage {
         return this;
     }
 
+    SelenideElement btnKurumEkle = $(By.id("kurumYonetimiListingForm:kurumTreeTable:addNewKurumButton"));
+
+    @Step("Yeni kurum ekle ")
+    public KurumYonetimiPage yeniKurumEkle(){
+        btnKurumEkle.click();
+        return this;
+    }
+
+    SelenideElement txtHitap = $(By.xpath("//form[@id='kurumYonetimiEditorForm']//label[contains(.,'Hitap')]/../textarea"));
+
+    @Step("Hitap alanı dolduruldu")
+    public KurumYonetimiPage hitapDoldur(String hitap) {
+        txtHitap.setValue(hitap);
+        return this;
+    }
+
+    SelenideElement btnIletisimBilgisiEkle = $(By.id("kurumYonetimiEditorForm:iletisimBilgileriDataTable:addNewIletisimBilgisiButton"));
+
+    @Step("Yeni iletişim bilgisi ekle")
+    public KurumYonetimiPage yeniIletisimBilgisiEkle() {
+        btnIletisimBilgisiEkle.click();
+        return this;
+    }
+
+    @Step("Üst kurum değeri dön")
+    public String ustKurumGetir(){
+        return divSecilenUstKurum.$("span[class='lovItemDetail']").innerText();
+    }
 }
 
