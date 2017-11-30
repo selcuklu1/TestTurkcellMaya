@@ -3,7 +3,6 @@ package pages.ustMenuPages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
-import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -14,7 +13,9 @@ import pages.pageComponents.belgenetElements.BelgenetElement;
 
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
+import static com.codeborne.selenide.Selenide.switchTo;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 import static pages.pageComponents.belgenetElements.BelgentCondition.not;
 import static pages.pageComponents.belgenetElements.BelgentCondition.required;
@@ -53,7 +54,6 @@ public class EvrakOlusturPage extends MainPage {
     SelenideElement divBilgileri = $(By.id("evrakBilgileriContainerDiv"));
 
     //endregion
-
     @Step("Evrak Oluştur sayfası aç")
     public EvrakOlusturPage openPage() {
         new UstMenu().ustMenu("Evrak Oluştur");
@@ -67,6 +67,8 @@ public class EvrakOlusturPage extends MainPage {
         return this;
     }
 
+
+    @Step("\"{0}\" ekran açılması beklenen statü: {1}")
     public EvrakOlusturPage PDFOnizlemeKisayolGonder(String kisayol) throws InterruptedException {
 
         SelenideElement tc = $(By.xpath("//div[@id='viewer']/div[@class='page']//div[.='T.C.']"));
@@ -82,14 +84,7 @@ public class EvrakOlusturPage extends MainPage {
     public EvrakOlusturPage kisayolEkranKontrol(String ekranAdi, boolean acilmali) {
         boolean t = $$("[id^='window'][id$='Button_ID'] .ui-button-text")
                 .filterBy(Condition.text(ekranAdi)).size() > 0;
-        Assert.assertEquals(t, acilmali, "Ekran açılmamamlı");
-        return this;
-    }
-
-    public EvrakOlusturPage kisayolSayfaAcma(String kisayol) throws InterruptedException {
-        divBilgileri.click();
-        Thread.sleep(2000);
-        switchTo().activeElement().sendKeys(kisayol);
+        Assert.assertEquals(t, acilmali, "Ekran açılmamalı");
         return this;
     }
 
@@ -97,8 +92,6 @@ public class EvrakOlusturPage extends MainPage {
     SelenideElement btbEvrakOlusturKapatEvet = $(By.id("kapatKaydetEvetButton"));
 
     public EvrakOlusturPage evrakOlusturPageKapat() {
-
-
         //btnEvrakOlusturKapat.click();
 
         $(By.xpath("//div[@id='mainTaskBar']//span[text()='[Evrak Oluştur]']"))
@@ -146,7 +139,8 @@ public class EvrakOlusturPage extends MainPage {
         BelgenetElement txtBilgi = comboLov("input[id$='bilgiLov:LovText']");
         SelenideElement btnBilgiTree = $("button[id$='bilgiLov:treeButton']");
 
-        SelenideElement cmbGeregiSecimTipi = $(By.xpath("//label[normalize-space(text())='Gereği Seçim Tipi']/ancestor::tr[@class='ui-datagrid-row']//select"));
+        //SelenideElement cmbGeregiSecimTipi = $(By.xpath("//label[normalize-space(text())='Gereği Seçim Tipi']/ancestor::tr[@class='ui-datagrid-row']//select"));
+        SelenideElement cmbGeregiSecimTipi = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:16:j_idt1858"));
         BelgenetElement txtGeregi = comboLov("input[id$='geregiLov:LovText']");
         SelenideElement btnGeregiTree = $("button[id$='geregiLov:treeButton']");
 
@@ -198,10 +192,6 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement btnOtomatikOnayAkisi = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:otomatikOnayAkisiEkle"));
 
         SelenideElement cmbKullanicilarImza = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:akisAdimLov:LovSecilenTable:1:selectOneMenu"));
-        SelenideElement lovTreeKapat = $(By.cssSelector("[id^='yeniGidenEvrakForm:evrakBilgileriList:'][id$='bilgiLov:lovTreePanelKapat']"));
-        SelenideElement lovTreeSec = $(By.xpath("//*[@id=\"yeniGidenEvrakForm:evrakBilgileriList:15:bilgiLov:lovTree:0_0\"]/div/span/span[2]/span[1]"));
-
-
 
         //endregion
 
@@ -442,19 +432,10 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        public BilgilerTab manuelBilgiDoldur(String bilgi) throws InterruptedException {
-
-            cmbBilgi.sendKeys(bilgi);
-            Thread.sleep(5000);
-
-            lovTreeSec.click();
-
-          //  lovTreeSec.click();
-            return this;
-        }
-
-        public BilgilerTab lovTreeKapat() {
-            lovTreeKapat.click();
+        public BilgilerTab kisayolSayfaAcma(String kisayol) throws InterruptedException {
+            divBilgileri.click();
+            Thread.sleep(2000);
+            switchTo().activeElement().sendKeys(kisayol);
             return this;
         }
 
@@ -482,7 +463,8 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Gereği seçim tipi seç")
         public BilgilerTab geregiSecimTipiSec(String value) {
-            cmbGeregiSecimTipi.selectOptionByValue(value);
+            //cmbGeregiSecimTipi.selectOptionByValue(value);
+            cmbGeregiSecimTipi.selectOption(value);
             return this;
         }
 
@@ -753,6 +735,10 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        public BilgilerTab geregiSonKayitSil(){
+            cmbGeregi.clearLastSelectedLov();
+            return this;
+        }
 
         //endregion
 
@@ -858,6 +844,12 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        public EditorTab editorHitapKontrol(String beklenenEditorHitap){
+            String editorHitap = $(By.xpath("//*[@id='yeniGidenEvrakForm:hitapInplace']/span")).getText();
+            Assert.assertEquals(editorHitap.contains(beklenenEditorHitap),true);
+            return this;
+        }
+
     }
 
     public EkleriTab ekleriTabAc() {
@@ -903,15 +895,7 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Ekleri Tab - Dosya Ekle")
         public EkleriTab ekleriDosyaEkle(String pathToFile) {
-            try {
-                btnEkleriDosyaFileUpload.sendKeys(pathToFile);
-//            LogPASS("Dosya Yuklendi.");
-            } catch (Exception e) {
-//            logger.error("Error in attaching file.s : " + e);
-//            LogFAIL("Error in attaching file.s : " + e);
-                System.out.println("Error in attaching file.s  : " + e);
-                throw new RuntimeException(e);
-            }
+            uploadFile(btnEkleriDosyaFileUpload, pathToFile);
             return this;
         }
 
@@ -935,7 +919,6 @@ public class EvrakOlusturPage extends MainPage {
 
         public EkleriTab popupImzalaVeEvrakKapatma() throws InterruptedException {
 
-            //switchTo().window("");
             Thread.sleep(5000);
             SelenideElement imzaPopupKapat = $(By.xpath("//*[@id='evrakImzalaDialog']/div[1]/a/span"));
             imzaPopupKapat.click();
@@ -1112,7 +1095,22 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        public PDFKontrol PDFOnizlemeKisayolGonder(String kisayol) throws InterruptedException {
 
+            SelenideElement tc = $(By.xpath("//div[@id='viewer']/div[@class='page']//div[.='T.C.']"));
+            String str = tc.getText();
+            tc.click();
+
+            tc.sendKeys(Keys.SHIFT + "o");
+
+            return this;
+        }
+
+        public PDFKontrol PDFHitapKontrol(String beklenenPDFHitap){
+            String PDFHitap=$(By.xpath("//*[@id='viewer']/div/div[2]/div[5]")).getText();
+            Assert.assertEquals(PDFHitap.contains(beklenenPDFHitap),true);
+            return this;
+        }
     }
     //endregion
 

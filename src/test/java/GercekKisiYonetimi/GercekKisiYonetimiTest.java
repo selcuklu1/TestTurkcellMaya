@@ -54,9 +54,8 @@ public class GercekKisiYonetimiTest extends BaseTest {
         String geregiSecimTipi = "G";
         String evrakBilgileriListKisiKurumTipi = "G";
         String gercekKisiMesaj = "Seçtiğiniz gerçek kişi gereği / bilgi listesinde ekli olduğu için bu gerçek kişiyi seçemezsiniz.";
-        String basariMesaji = "İşlem başarılıdır!";
 
-/*        gercekKisiYonetimPage
+        gercekKisiYonetimPage
                 .openPage()
                 .yeniGercekKisiEkle()
                 .tcKimlikNoDoldur(tcNO)
@@ -73,25 +72,24 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .iletisimBilgisiEpostaDoldur(eposta)
                 .iletisimBilgisiKaydet()
 
-                .kaydet()
-                .islemMesaji().basariliOlmali(basariMesaji);*/
+                .kaydet();
 
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
                 .geregiSecimTipiSec(geregiSecimTipi)
-                .geregiDoldur("raxxqk whxilf")
-                .gercekKisiGeregiAlaniKontrol("raxxqk whxilf", unvan, adres, postaTipi);
+                .geregiDoldur(adSoyad)
+                .gercekKisiGeregiAlaniKontrol(adSoyad, unvan, adres, postaTipi);
 
-/*        evrakOlusturPage
+        evrakOlusturPage
                 .editorTabAc()
-                .hitapAlaniUnvanAdSoyadKontrol(hitap, onEk, ad, soyad);*/
+                .hitapAlaniUnvanAdSoyadKontrol(hitap, onEk, ad, soyad);
 
         evrakOlusturPage
                 .bilgilerTabiAc()
-                .bilgiSecimTipiSec(bilgiSecimTipi)
-                .manuelBilgiDoldur("raxxqk whxilf")
-                .islemMesaji().dikkatOlmali(gercekKisiMesaj);
+                .bilgiSecimTipiSec(bilgiSecimTipi);
+        //.bilgiDoldur(adSoyad);
+        //.islemMesaji().dikkatOlmali(gercekKisiMesaj);
 
         gelenEvrakKayitPage
                 .openPage()
@@ -375,6 +373,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
 
         evrakOlusturPage
                 .editorTabAc()
+                //.openTab("Editör")
                 .hitapAlaniAdresKontrol(adres, ilce, il);
 
         evrakOlusturPage

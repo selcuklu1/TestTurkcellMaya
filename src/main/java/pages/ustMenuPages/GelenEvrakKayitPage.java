@@ -147,6 +147,7 @@ public class GelenEvrakKayitPage extends MainPage {
 
     //Dosya ekleme path
     By dosyaPath = By.xpath("//input[@id='evrakBilgileriForm:evrakEkTabView:fileUploadButton_input']");
+    SelenideElement ustYazi = $(By.xpath("//input[@class='ustYaziUploadClass']"));
 
 //    Evrak Detayı sayfası objeleri
 
@@ -186,7 +187,8 @@ public class GelenEvrakKayitPage extends MainPage {
     }
 
     public GelenEvrakKayitPage evrakBilgileriUstYaziEkle(String path) throws InterruptedException {
-        ustYaziUploadFile(path);
+        uploadFile(ustYazi, path);
+        //ustYaziUploadFile(path);
         return this;
     }
 

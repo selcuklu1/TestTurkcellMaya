@@ -39,7 +39,6 @@ public class DataTest extends BaseTest {
         String geregiSecimKullanici= "Kullanıcı";
         String geregiKullanici="Ahmet SAVAŞ";
         String akisAdim="İmzalama";
-        String editorTab="Editör";
         String editorIcerik="Bu bir deneme mesajıdır. Lütfen dikkate almayınız.";
         String basariMesaji = "İşlem başarılıdır!";
 
@@ -53,13 +52,13 @@ public class DataTest extends BaseTest {
                 .geregiSecimTipiSec(geregiSecimKurum)
                 .geregiDoldur(geregiKurum)
                 .geregiSecimTipiSec(geregiSecimBirim)
-                .geregiDoldur(geregiBirim)  //Güncel Birim doldurulmalı.
+                .geregiDoldur(geregiBirim)
                 .geregiSecimTipiSec(geregiSecimKullanici)
                 .geregiDoldur(geregiKullanici)
                 .onayAkisiEkle()
                 .akisAdimSec(akisAdim)
                 .onayAkisiKullan();
-                //.imzalaButonuKontrol()
+        //.imzalaButonuKontrol()
 
         evrakOlustur
                 .openPage()
@@ -84,9 +83,7 @@ public class DataTest extends BaseTest {
         String geregiBirim="AFYON VALİLİĞİ";
         String akisAdim="İmzalama";
         String kaldirilacakKlasorler="KURUL KARARLARI";
-        String editorTab="Editör";
         String editorIcerik="Bu bir deneme mesajıdır. Lütfen dikkate almayınız.";
-        String ekleriTab="Ekleri";
         String ekleriDosyaAciklama = "Açıklama";
         String filePath = "C:\\Users\\TheKing\\Desktop\\s1.txt";
 
