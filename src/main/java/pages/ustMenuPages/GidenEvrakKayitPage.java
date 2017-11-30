@@ -21,6 +21,8 @@ import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 public class GidenEvrakKayitPage extends MainPage {
 
     //region Elements
+
+    // gidenEvrakDefterKaydiForm:evrakBilgileriList:11:j_idt14590
     SelenideElement cmbGeregiSecimTipi = $(By.xpath("//select[starts-with(@id,'gidenEvrakDefterKaydiForm:evrakBilgileriList:11:j_idt')]"));
     BelgenetElement cmbGeregi = comboLov("[id^='gidenEvrakDefterKaydiForm:evrakBilgileriList'][id$='geregiLov:LovText']");
     SelenideElement cmbBilgiSecimTipi = $(By.xpath("//select[starts-with(@id,'gidenEvrakDefterKaydiForm:evrakBilgileriList:12:j_idt')]"));
@@ -38,7 +40,7 @@ public class GidenEvrakKayitPage extends MainPage {
 
     @Step("Gereği seçim tipi seç")
     public GidenEvrakKayitPage geregiSecimTipiSec(String geregi) {
-        cmbGeregiSecimTipi.selectOption(geregi);
+        cmbGeregiSecimTipi.selectOptionByValue(geregi);
         return this;
     }
 
@@ -122,6 +124,19 @@ public class GidenEvrakKayitPage extends MainPage {
 
     public GidenEvrakKayitPage secilenGeregiSil() {
         btnGeregiDelete.click();
+        return this;
+    }
+
+    @Step("Panel kapat")
+    public GidenEvrakKayitPage panelKapat(Boolean kaydet){
+        $(By.xpath("//div[@id='mainTaskBar']//span[text()='[Giden Evrak Kayıt]']"))
+                .contextClick();
+
+        if(kaydet)
+            $(By.id("kapatKaydetEvetButton")).click();
+        else
+            $(By.id("kapatKaydetHayirButton")).click();
+
         return this;
     }
 
