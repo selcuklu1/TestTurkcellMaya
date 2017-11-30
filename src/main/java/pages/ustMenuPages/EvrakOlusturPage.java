@@ -11,6 +11,8 @@ import pages.MainPage;
 import pages.pageComponents.UstMenu;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
+import java.security.Key;
+
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
@@ -139,8 +141,8 @@ public class EvrakOlusturPage extends MainPage {
         BelgenetElement txtBilgi = comboLov("input[id$='bilgiLov:LovText']");
         SelenideElement btnBilgiTree = $("button[id$='bilgiLov:treeButton']");
 
-        //SelenideElement cmbGeregiSecimTipi = $(By.xpath("//label[normalize-space(text())='Gereği Seçim Tipi']/ancestor::tr[@class='ui-datagrid-row']//select"));
-        SelenideElement cmbGeregiSecimTipi = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:16:j_idt1858"));
+        SelenideElement cmbGeregiSecimTipi = $(By.xpath("//label[normalize-space(text())='Gereği Seçim Tipi']/ancestor::tr[@class='ui-datagrid-row']//select"));
+        //SelenideElement cmbGeregiSecimTipi = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:16:j_idt1858"));
         BelgenetElement txtGeregi = comboLov("input[id$='geregiLov:LovText']");
         SelenideElement btnGeregiTree = $("button[id$='geregiLov:treeButton']");
 
@@ -341,12 +343,6 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Geregi Secim Tipi alanında {0} seç")
-        public BilgilerTab geregiSecimTipi(String text) {
-            cmbGeregiSecimTipi.selectOptionByValue(text);
-            return this;
-        }
-
         @Step("Geregi alanında {0} seç")
         public BilgilerTab geregiSec(String text) {
             txtGeregi.selectLov(text);
@@ -461,10 +457,11 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Gereği seçim tipi seç")
+        @Step("Geregi Secim Tipi alanında {0} seç")
         public BilgilerTab geregiSecimTipiSec(String value) {
             //cmbGeregiSecimTipi.selectOptionByValue(value);
-            cmbGeregiSecimTipi.selectOption(value);
+            cmbGeregiSecimTipi.sendKeys(Keys.SHIFT);
+            cmbGeregiSecimTipi.selectOptionByValue(value);
             return this;
         }
 
