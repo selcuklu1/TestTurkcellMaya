@@ -378,21 +378,8 @@ public class BaseLibrary {
 
     //Textin ilk harfini büyük yapar.
     public String toUpperCaseFirst(String text) {
-    //    char ilkHarf = Character.toUpperCase(text.charAt(0));
-      //  text = ilkHarf + text.substring(1);
-
-        // str Stringinin içindeki kelimelerin ilk harfleri büyük diğerleri küçük yapılır.
-        char c = Character.toUpperCase(text.charAt(0));
-        //ilk harfini buyuttuk
-        text = c + text.substring(1);
-        //buyutulen ilk harften sonra kelimenin diger harflerini ekledik.
-        String bosluk = " ";
-        for (int i = 1; i < text.length(); i++) {
-            if (text.charAt(i) == ' ') {
-                c = Character.toUpperCase(text.charAt(i + 1));
-                text = text.substring(0, i) + bosluk + c + text.substring(i + 2);
-            }
-        }
+        char ilkHarf = Character.toUpperCase(text.charAt(0));
+        text = ilkHarf + text.substring(1);
         return text;
     }
 

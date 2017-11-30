@@ -31,11 +31,7 @@ public class BaseTest extends BaseLibrary {
         Configuration.browser = "chrome";
         Configuration.startMaximized = true;
         Configuration.baseUrl = belgenetURL;
-<<<<<<< HEAD
        // Configuration.browser = "drivers.Firefox";
-=======
-        //Configuration.browser = "drivers.Firefox";
->>>>>>> 978364c0d6a202db360d56c8a2999abaf142682b
         //Configuration.browser = "marionette";
         //Configuration.remote = "http://0.0.0.0:32768/wd/hub";
         Configuration.reportsFolder = "test-result/reports";

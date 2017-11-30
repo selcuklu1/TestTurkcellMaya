@@ -58,7 +58,6 @@ public class DataTest extends BaseTest {
                 .onayAkisiEkle()
                 .akisAdimSec(akisAdim)
                 .onayAkisiKullan();
-
         //.imzalaButonuKontrol()
 
         evrakOlustur
@@ -118,6 +117,4 @@ public class DataTest extends BaseTest {
                 .popupImzalaVeEvrakKapatma();
 
     }
-
 }
-
