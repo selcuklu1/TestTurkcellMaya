@@ -63,7 +63,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         gelenEvrakKayitPage
                 .openPage()
                 .evrakBilgileriUstYaziEkle(ustYaziPath)
-                .UstYaziAdiKontrol(ustYaziAdi)
+                .ustYaziPdfAdiKontrol(ustYaziAdi)
                 .islemMesaji().isBasarili();
 
         gelenEvrakKayitPage
@@ -79,6 +79,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .ivedilikSec(ivedilik)
                 .ekBilgiFiltreAc()
                 .evrakEkleriDosyaEkleme(excelPath)
+                .ustYaziDegistirilmisPopUpKontrol()
                 .evrakEkleriDosyaEkleDosyaAdiKontrol(excelAdi)
                 .evrakEkleriDosyaEkleEkMetinDoldur(ekMetni)
                 .evrakEkTabViewEkle()
@@ -122,7 +123,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .evrakDetaylariAlanGuncellenebilirlikKontrolü()
                 .evrakBilgileriUstYaziEkle(ustYaziPath)
                 .evrakDetayiPdfDegisiklikpopUpClose()
-//                .UstYaziAdiKontrol(ustYaziAdi)
+                .ustYaziPdfAdiKontrol(ustYaziAdi)
                 .konuKoduDoldur(konuKodu)
                 .evrakTuruSec(evrakTuru)
                 .evrakDiliSec(evrakDili)
@@ -250,11 +251,13 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
         String birim = "OPTİİM BİRİM11";
 
-        String pathToFilePdf = "C:\\TestAutomation2\\BelgenetFTA\\documents\\mailt.msg";
+        String pathToFilePdf = "C:\\TestAutomation2\\BelgenetFTA\\documents\\TestOtomasyon.msg";
         String pathToFileExcel = "C:\\TestAutomation2\\BelgenetFTA\\documents\\test.xlsx";
+        String ustYaziAdi = "TestOtomasyon.msg";
         gelenEvrakKayitPage
                 .openPage()
                 .evrakBilgileriUstYaziEkle(pathToFilePdf)
+                .ustYaziMailAdiKontrol(ustYaziAdi)
                 .konuKoduDoldur(konuKodu)
                 .evrakTuruSec(evrakTuru)
                 .evrakDiliSec(evrakDili)
@@ -266,17 +269,23 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .evrakGelisTipiSec(evrakGelisTipi)
                 .ivedilikSec(ivedilik)
                 .ekBilgiFiltreAc()
-                .evrakEkTabViewEkle()
                 .evrakEkleriDosyaEkleme(pathToFileExcel)
+                .evrakEkleriDosyaEkleEkMetinDoldur(ekMetni)
+                .evrakEkleriDosyaEkle()
+//                .dosyaEkleTabTabloKontrolu(1,"Ek-1") Webservise  baglanılamadı hatası alnıyor.
+                .ekBilgiFizikselEkEkle()
+                .evrakEkTabFizikselEkMetniDoldur(ekMetni)
+                .fizikselEkTabViewAciklamaEkle()
+                .dosyaEkleTabTabloKontrolu("Ek-1")
                 .kaydet();
         String evrakNo = gelenEvrakKayitPage.popUps();
         //   page.islemMesaji().beklenenMesajTipi(MesajTipi.BASARILI);
         //  page.solMenu(SolMenuData.BirimEvraklari.KaydedilenGelenEvraklar);
 //        TODO  tabloda oluşturulan evrak bulunacak....
-        teslimAlinmayiBekleyenlerPage
+       kaydedilenGelenEvraklarPage
                 .openPage()
                 .filtreleAc()
-                .tarihiDoldur(getSysDateForKis())
+                .tarihDoldur(getSysDateForKis())
                 .tabloKontrolu(evrakNo);
     }
 }
