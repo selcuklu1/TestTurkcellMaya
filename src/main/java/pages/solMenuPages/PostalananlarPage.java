@@ -4,10 +4,12 @@ import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import pages.MainPage;
+import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Selenide.$;
 
-public class PostalananlarPage extends BaseLibrary {
+public class PostalananlarPage extends MainPage {
 
     //Filtreler sekmesi
     SelenideElement cmbFiltre = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt349_input"));
@@ -17,6 +19,12 @@ public class PostalananlarPage extends BaseLibrary {
     SelenideElement chkKepIlePostalananlar = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:keplePostalananlarCheckbox_input"));
     SelenideElement chkMedasIlePostalananlar = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:medaslaPostalananlarCheckbox_input"));
     SelenideElement chkPostaladiklarim = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:postaladiklarimCheckbox_input"));
+    @Step("Postalananlar sayfası aç")
+    public PostalananlarPage openPage(){
+        solMenu(SolMenuData.BirimEvraklari.Postalananlar);
+        return this;
+    }
+
     @Step("Filtrele Seç")
     public PostalananlarPage filtreSec(String text) throws InterruptedException {
         cmbFiltre.selectOption(text);

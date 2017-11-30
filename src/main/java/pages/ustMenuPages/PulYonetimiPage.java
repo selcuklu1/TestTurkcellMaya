@@ -3,15 +3,10 @@ package pages.ustMenuPages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
-import common.BaseLibrary;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
-import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.UstMenu;
-import pages.solMenuPages.KaydedilenGelenEvraklarPage;
-
-import java.util.List;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
@@ -30,7 +25,7 @@ public class PulYonetimiPage extends MainPage {
     SelenideElement btnSavePul = $(By.id("pulYonetimiEditorForm:savePulButton"));
     SelenideElement btnAra = $(By.id("pulYonetimiListingForm:filterPanel:searchPulButton"));
     SelenideElement tblPulYonetimi = $(By.id("pulYonetimiListingForm:pulDataTable_data"));
-    ElementsCollection tblPulYonetimi2 = $$("tbody[id$='pulYonetimiListingForm:pulDataTable_data'] tr[role=row] div[class=searchText]");
+    ElementsCollection tblPulYonetimi2 = $$("tbody[id$='pulYonetimiListingForm:pulDataTable_data'] tr[role=row]");
 
 
     public PulYonetimiPage openPage() {
@@ -40,7 +35,8 @@ public class PulYonetimiPage extends MainPage {
 
     @Step("Yeni Pul ekle")
     public PulYonetimiPage yeniPulEkle() {
-        btnAddNewPul.click();
+//        btnAddNewPul.click();
+        clickJs(btnAddNewPul);
         return this;
     }
 
@@ -98,11 +94,17 @@ public class PulYonetimiPage extends MainPage {
         return this;
     }
 
-//    @Step("Tabloda evrak no kontrolu")
-//    public PulYonetimiPage tabloKontrolu(String evrakNo)
-//    {
-//
-//        findElementOnTableByColumnInputInAllPages(tblPulYonetimi,0,evrakNo);
-//        return  this;
-//    }
+    @Step("Tabloda evrak no kontrolu")
+    public PulYonetimiPage tabloKontrolu(String gonderimSekli) {
+        int j;
+        int i = tblPulYonetimi2
+                .filterBy(Condition.text(gonderimSekli)).size();
+
+        for (j = 0; j < i; j++)
+            tblPulYonetimi2
+                    .filterBy(Condition.text(gonderimSekli))
+                    .get(j)
+                    .shouldBe(Condition.exist);
+        return this;
+    }
 }

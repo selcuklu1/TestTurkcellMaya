@@ -1,16 +1,20 @@
 package pages.ustMenuPages;
 
 
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
-import common.BaseLibrary;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import pages.MainPage;
+import pages.pageComponents.UstMenu;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
-public class KullaniciYonetimiPage extends BaseLibrary {
+public class KullaniciYonetimiPage extends MainPage {
 
     SelenideElement pageTitle = $(By.cssSelector("#window1Dialog .ui-dialog-title"));
     SelenideElement gorevCombobox = $(By.id("kullaniciYonetimiListingForm:filterPanel:filterGorevAutocomplete"));
@@ -27,10 +31,86 @@ public class KullaniciYonetimiPage extends BaseLibrary {
     SelenideElement chkGorevSuresiDolanlar = $(By.id("kullaniciYonetimiListingForm:filterPanel:gorevSuresiDolanlarCheckbox"));
     SelenideElement chkBirimiOlmayanlar = $(By.id("kullaniciYonetimiListingForm:filterPanel:birimiOlmayanlarCheckbox"));
     SelenideElement chkAltBirimiOlmayanlar = $(By.id("kullaniciYonetimiListingForm:filterPanel:altBirimlerDahilCheckbox"));
+    SelenideElement tblKolonBirim = $(By.xpath("//*[@id='kullaniciYonetimiListingForm:kullaniciDataTable:j_idt10843']/div"));
+    SelenideElement btnKullaniciListesiGuncelle2 = $("[id^='kullaniciYonetimiListingForm:kullaniciDataTable'][id$='updateKullaniciButton']");
+    SelenideElement tblGorevliOlduguBirimler = $(By.id("kullaniciYonetimiEditorForm:kullaniciBirimDataTable"));
+    SelenideElement btnGorevliOlduguBirimlerGuncelle2 = $("[id^='kullaniciYonetimiEditorForm:kullaniciBirimDataTable][id$='updateKullaniciBirimButton']");
+    SelenideElement cmbKullaniciBirimAtamaGizlilikDerecesi = $(By.id("kullaniciBirimEditorForm:kullaniciGuvenlikKoduSelect"));
+    SelenideElement btnKullaniciBirimAtamaKaydet = $(By.id("kullaniciBirimEditorForm:saveKullaniciBirimButton"));
+
+
+    // Kullanıcı Listesi
+    SelenideElement btnKullaniciListesiGuncelle = $("[id$='kullaniciYonetimiListingForm:kullaniciDataTable_data'] tr [id$='kullaniciYonetimiListingForm:kullaniciDataTable:0:updateKullaniciButton']");
+
+    // Görevli Olduğu Birimler
+
+//    SelenideElement btnGorevliOlduguBirimlerGuncelle = $("[id$='updateKullaniciBirimButton']");
+
+    SelenideElement btnGorevliOlduguBirimlerGuncelle = $(By.id("kullaniciYonetimiEditorForm:kullaniciBirimDataTable:0:updateKullaniciBirimButton"));
+
+
+    //Görevli Olduğu Birimler alanı güncelle popup
+    SelenideElement cmbPopupKullaniciBirimAtamaBagTipi = $(By.id("kullaniciBirimEditorForm:kullaniciBagTipiSelect"));
+    SelenideElement btnPopupBirimAtamaKaydet = $("[id='kullaniciBirimEditorForm:saveKullaniciBirimButton']");
+    SelenideElement popUpKullaniciBirimAtama = $(By.id("j_idt5626"));//j_idt4444
+
+    //Kullanıcı Güncelleme
+    SelenideElement btnKullaniciGuncelleKaydet = $(By.id("kullaniciYonetimiEditorForm:saveKullaniciButton"));
+    SelenideElement txtUnvan = $(By.id("kullaniciYonetimiEditorForm:unvanAutoComplete_input"));
+    SelenideElement txtEkranAdi = $(By.id("kullaniciYonetimiEditorForm:ekranAdiInput"));
+
+    ElementsCollection tblKullaniciBirim = $$("[id='kullaniciYonetimiEditorForm:kullaniciBirimDataTable_data'] tr[role=row]");
+
+
+    //
+    SelenideElement kaydet = $(By.id("kullaniciYonetimiEditorForm:saveKullaniciButton"));
+
+
 
     @Step("Birim alanında \"{0}\" sec")
     public KullaniciYonetimiPage birimSec(String text) {
-        cmlBirim.selectComboLov(text);
+        cmlBirim.selectLov(text);
+        return this;
+    }
+
+    @Step("Ekran adı çekilir")
+    public String ekranAdiCek() {
+        String ekranAdi = txtEkranAdi.getValue();
+        return ekranAdi;
+    }
+
+    public KullaniciYonetimiPage kaydet() {
+        kaydet.click();
+        return this;
+    }
+
+    @Step("Kullanıcı birim atama kaydet")
+    public KullaniciYonetimiPage popupKullaniciBirimAtamaKaydet() {
+        btnPopupBirimAtamaKaydet.click();
+        return this;
+    }
+
+    @Step("Kullanıcı Yönetim sayfası aç")
+    public KullaniciYonetimiPage openPage() {
+        ustMenu("Kullanıcı Yönetim");
+        return this;
+    }
+
+    @Step("Kullanıcı Birim atama bağ tipi seç")
+    public KullaniciYonetimiPage popupKullaniciBirimAtamaBagTipiSec(String value) {
+        cmbPopupKullaniciBirimAtamaBagTipi.selectOptionByValue(value);
+        return this;
+    }
+
+    @Step("Görevli olduğu birimler güncelle")
+    public KullaniciYonetimiPage gorevliOlduguBirimlerGuncelle(){
+        btnGorevliOlduguBirimlerGuncelle.click();
+        return this;
+    }
+
+    @Step("Seçilen kullanıcı güncelle tıkla")
+    public KullaniciYonetimiPage kullaniciListesiGuncelle(){
+        btnKullaniciListesiGuncelle.click();
         return this;
     }
 
@@ -94,10 +174,80 @@ public class KullaniciYonetimiPage extends BaseLibrary {
         chkAltBirimiOlmayanlar.setSelected(value);
         return this;
     }
-
+    @Step("Ara")
     public KullaniciYonetimiPage ara() {
         btnAra.click();
         return this;
     }
 
+    @Step("Birim Kontrol")
+    public KullaniciYonetimiPage tabloBirimKontrol() {
+        tblKolonBirim.exists();
+        return this;
+    }
+
+    @Step("Güncelle butonu")
+    public KullaniciYonetimiPage kullaniciListesiGuncelleButonuTikla() {
+//        clickJs(btnKullaniciListesiGuncelle);
+//        btnKullaniciListesiGuncelle.exists();
+        btnKullaniciListesiGuncelle2.click();
+        return this;
+    }
+
+    @Step("Gorevli oldugu birimler")
+    public KullaniciYonetimiPage gorevliOlduguBirimlerKontol() {
+        tblGorevliOlduguBirimler.exists();
+        return this;
+    }
+
+    //    @Step("Görevli olduğu birim guncelle")
+//    public KullaniciYonetimiPage gorevliOlduguBirimGuncelle2 () {
+//        clickJs(btnGorevliOlduguBirimlerGuncelle);
+//        btnGorevliOlduguBirimlerGuncelle2.click();
+//        return this;
+//    }
+    @Step("Gizlilik derecesi seç")
+    public KullaniciYonetimiPage kullaniciBirimAtamaGizlilikDerecesiSec(String gizlilikDerecesi) {
+        if (cmbKullaniciBirimAtamaGizlilikDerecesi.isDisplayed())
+            cmbKullaniciBirimAtamaGizlilikDerecesi.selectOptionByValue(gizlilikDerecesi);
+        return this;
+    }
+
+    @Step("Kullanıcı Birim Atama Kaydet")
+    public KullaniciYonetimiPage kullaniciBirimAtamaKaydetTikla() {
+        btnKullaniciBirimAtamaKaydet.click();
+        return this;
+    }
+
+    @Step("Görevli olduğu birim guncelleme")
+    public KullaniciYonetimiPage gorevliOlduguBirimGuncelle() {
+
+        String title = cmlBirim.lastSelectedLovTitleText();
+        tblKullaniciBirim
+                .filterBy(Condition.text(title)).shouldHaveSize(1)
+                .first()
+                .$("[id$='updateKullaniciBirimButton']").click();
+        return this;
+    }
+
+    @Step("Kullanıcı guncelleme kaydet")
+    public KullaniciYonetimiPage kullaniciGuncellemeKaydet() {
+        btnKullaniciGuncelleKaydet.click();
+        return this;
+    }
+
+    @Step("Kullanici Birim Atama Gizlilik Derecesi Kontrolu")
+    public KullaniciYonetimiPage kullaniciBirimAtamaGizlilikDerecesiKontrolu() {
+        cmbKullaniciBirimAtamaGizlilikDerecesi.shouldBe(Condition.text("Tasnif Dışı"));
+        return this;
+    }
+
+    @Step("")
+    public KullaniciYonetimiPage kullaniciGuncellemeUnvanGuncelle(String unvan) {
+        if (txtUnvan.is(Condition.empty)) {
+            txtUnvan.sendKeys(unvan);
+            txtUnvan.pressEnter();
+        }
+        return this;
+    }
 }

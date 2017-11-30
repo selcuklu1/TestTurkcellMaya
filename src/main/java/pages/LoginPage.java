@@ -7,8 +7,7 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Selenide.$;
-import static data.TestData.password;
-import static data.TestData.username;
+import static data.TestData.*;
 
 public class LoginPage extends BaseLibrary {
 
@@ -17,7 +16,7 @@ public class LoginPage extends BaseLibrary {
     private SelenideElement btnLogin = $(By.id("eForm:egirisYapButton"));
 
     private LoginPage open() {
-        Selenide.open("");
+        Selenide.open("http://94.55.114.18:8889/edys-web/mainInbox.xhtml");
 //        Selenide.openPage("http://www.belgenet.com.tr:8282/edys-web/sistemeGiris.xhtml");
 //        username.shouldBe(visible);
         return this;

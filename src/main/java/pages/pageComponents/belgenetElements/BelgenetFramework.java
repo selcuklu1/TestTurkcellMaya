@@ -1,5 +1,6 @@
 package pages.pageComponents.belgenetElements;
 
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.commands.Commands;
 import com.codeborne.selenide.impl.ElementFinder;
 import org.openqa.selenium.By;
@@ -12,7 +13,7 @@ public class BelgenetFramework {
 
     public static void setUp() {
         //region ComboLov
-        Commands.getInstance().add("selectComboLov", comboLov.new SelectLov());
+        Commands.getInstance().add("selectLov", comboLov.new SelectLov());
         Commands.getInstance().add("clearLastSelectedLov", comboLov.new ClearLastSelectedLov());
         Commands.getInstance().add("clearAllSelectedLov", comboLov.new ClearAllSelectedLov());
         Commands.getInstance().add("lastSelectedLovTitle", comboLov.new LastSelectedLovTitle());
@@ -20,6 +21,16 @@ public class BelgenetFramework {
         Commands.getInstance().add("lastSelectedLovTitleText", comboLov.new LastSelectedLovTitleText());
         Commands.getInstance().add("lastSelectedLovDetailText", comboLov.new LastSelectedLovDetailText());
         Commands.getInstance().add("isLovSelected", comboLov.new IsLovSelected());
+        Commands.getInstance().add("isLovValueSelectable", comboLov.new IsLovValueSelectable());
+        Commands.getInstance().add("lastSelectedLov", comboLov.new LastSelectedLov());
+
+        Commands.getInstance().add("openTree", comboLov.new OpenTree());
+//        Commands.getInstance().add("clearLov", comboLov.new ClearLov());
+        Commands.getInstance().add("type", comboLov.new Type());
+        Commands.getInstance().add("isEmpty", comboLov.new IsEmpty());
+        Commands.getInstance().add("titleItems", comboLov.new TitleItems());
+        Commands.getInstance().add("detailItems", comboLov.new DetailItems());
+
         //endregion
         // region ComboBox
         Commands.getInstance().add("selectComboBox", comboBox.new SelectComboBox());

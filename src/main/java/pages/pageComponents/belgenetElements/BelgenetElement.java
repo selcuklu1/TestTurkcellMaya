@@ -1,5 +1,6 @@
 package pages.pageComponents.belgenetElements;
 
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 
 import java.util.List;
@@ -7,7 +8,14 @@ import java.util.List;
 public interface BelgenetElement extends SelenideElement {
 
     //region ComboLov
-    BelgenetElement selectComboLov(String value);
+
+    /**
+     * Seçili ise temizler ve seçer. Mutlti select ise daha önce seçilmiş ise fail verir.
+     * @param value
+     * @return
+     * @see pages.pageComponents.belgenetElements.ComboLovHelper
+     */
+    BelgenetElement selectLov(String value);
 
     BelgenetElement clearLastSelectedLov();
 
@@ -22,6 +30,48 @@ public interface BelgenetElement extends SelenideElement {
     String lastSelectedLovDetailText();
 
     Boolean isLovSelected();
+
+    Boolean isLovValueSelectable(String value);
+
+    /**
+     * Click treeButton on comboLov
+     * @return
+     */
+    BelgenetElement openTree();
+
+    /**
+     *
+     * @return
+     */
+//    BelgenetElement clearLov();
+
+    /**
+     * Type text to comboLov input
+     * @param text
+     * @return
+     */
+    BelgenetElement type(String text);
+
+    /**
+     * "Sonuç bulunamamıştır" kontrolü, type ya da openTree sonrası kullanılır
+     * @return
+     */
+    Boolean isEmpty();
+
+    /**
+     * selectable title list
+     * @return
+     */
+    ElementsCollection titleItems();
+
+    /**
+     * selectable detail list
+     * @return
+     */
+    ElementsCollection detailItems();
+
+    BelgenetElement lastSelectedLov();
+
     //endregion
 
     //region ComboBox

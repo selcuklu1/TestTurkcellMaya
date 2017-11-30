@@ -1,13 +1,15 @@
-package pages.ustMenuPages;
+package pages.solMenuPages;
 
 import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import pages.MainPage;
+import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Selenide.$;
 
-public class HavaleEttiklerimPage extends BaseLibrary {
+public class HavaleEttiklerimPage extends MainPage {
 
     //SelenideElement pageTitle = $(By.cssSelector("#window1Dialog .ui-dialog-title"));
     SelenideElement f = $(By.xpath("//div[@id='mainInboxForm:inboxDataTable:filtersAccordion']//a[text()='Filtreler']/parent::h3"));
@@ -22,6 +24,11 @@ public class HavaleEttiklerimPage extends BaseLibrary {
     SelenideElement tblRapor = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
     SelenideElement btnHavaleYap = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:2:cmdbutton"));
 
+    @Step("Havale Ettiklerim sayfası aç")
+    public HavaleEttiklerimPage openPage() {
+        solMenu(SolMenuData.IslemYaptiklarim.HavaleEttiklerim);
+        return this;
+    }
 
     @Step("Filtrele alanını aç")
     public HavaleEttiklerimPage filtreleAc() {

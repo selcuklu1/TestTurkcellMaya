@@ -1,6 +1,10 @@
 package pages;
 
+import com.codeborne.selenide.Condition;
 import common.BaseLibrary;
+import io.qameta.allure.Step;
+import org.openqa.selenium.By;
+import org.testng.Assert;
 import pages.pageComponents.IslemMesajlari;
 import pages.pageComponents.SolMenu;
 import pages.pageComponents.UserMenu;
@@ -123,7 +127,125 @@ public class MainPage extends BaseLibrary {
     }*/
     //endregion
 
+    @Step("Kep bağlantısı alanı aç")
+    public MainPage kepBaglantisi(){
+    $(By.id("topMenuForm:userMenuButton_button")).click();
+    $(By.id("topMenuForm:kepLoginButton")).click();
+        return this;
+    }
+    @Step("Bağlan")
+    public MainPage kepAdresBaglantisiBaglan1(){
+        $("[id='kepForm:kayitliKepDataTable:0:j_idt235']").click();
+        return this;
+    }
+
+    public MainPage kepAdresBaglantisiBaglan2(){
+        $("[id='kepForm:kayitliKepDataTable:1:j_idt235']").click();
+        return this;
+    }
+    @Step("Kullanıcı adı ve Tc Kimlik no kontrol et")
+    public MainPage kullaniciAdiTcKimlikNoKontol(){
+        $(By.id("kepLogin2FormId:kullaniciAdi")).shouldBe(Condition.disabled);
+        $(By.id("kepLogin2FormId:tcKimlikNo")).shouldBe(Condition.disabled);
+        return this;
+    }
+    @Step("Parola doldur")
+    public MainPage parolaDoldur(String parola){
+        $(By.id("kepLogin2FormId:parola")).setValue(parola);
+        return this;
+    }
+    @Step("Şifre Doldur")
+    public MainPage sifreDoldur(String sifre){
+        $(By.id("kepLogin2FormId:sifre")).setValue(sifre);
+        return this;
+    }
+    @Step("Bağlan")
+    public MainPage kepBaglantisiBaglan(){
+        $(By.id("kepLogin2FormId:j_idt255")).click();
+        return this;
+    }
+
     public void logout() {
         $("button[id='topMenuForm:userMenuButton_button']").click();
+    }
+
+    public MainPage ustMenuEvrakIslemleriAc() {
+        $(By.id("topMenuForm2:ust:0:ustMenuEleman")).click();
+        return this;
+    }
+
+    public MainPage ustMenuKullaniciIslemleri() throws InterruptedException{
+        //Thread.sleep(2000);
+        $(By.id("topMenuForm2:ust:3:ustMenuEleman")).click();
+        return this;
+    }
+
+    public MainPage ustMenuRaporlar() throws InterruptedException{
+        //Thread.sleep(2000);
+        $(By.id("topMenuForm2:ust:6:ustMenuEleman")).click();
+        return this;
+    }
+
+    public MainPage altMenuTooltipKontrol(String altMenuAd) {
+
+        String tooltip="";
+        switch (altMenuAd){
+            case "Evrak Oluştur":
+                $(By.id("topMenuForm2:ust:0:ust:0:ust:0:ust")).hover();
+                tooltip = $(By.id("tiptip_content")).innerText();
+                System.out.println(tooltip);
+                Assert.assertEquals(tooltip, "(Shift + E)");
+                break;
+            case "Giden Evrak Kayıt":
+                $(By.id("topMenuForm2:ust:0:ust:0:ust:2:ust")).hover();
+                tooltip = $(By.id("tiptip_content")).innerText();
+                System.out.println(tooltip);
+                Assert.assertEquals(tooltip,"(Shift + I)");
+                break;
+            case "Gelen Evrak Kayıt":
+                $(By.id("topMenuForm2:ust:0:ust:0:ust:3:ust")).hover();
+                tooltip = $(By.id("tiptip_content")).innerText();
+                System.out.println(tooltip);
+                Assert.assertEquals(tooltip,"(Shift + G)");
+                break;
+            case "Evrak Arama":
+                $(By.id("topMenuForm2:ust:0:ust:1:ust:1:ust")).hover();
+                tooltip = $(By.id("tiptip_content")).innerText();
+                System.out.println(tooltip);
+                Assert.assertEquals(tooltip,"(Shift + A)");
+                break;
+            case "Karar Yazısı Oluştur":
+                $(By.id("topMenuForm2:ust:0:ust:0:ust:4:ust")).hover();
+                tooltip = $(By.id("tiptip_content")).innerText();
+                System.out.println(tooltip);
+                Assert.assertEquals(tooltip,"(Shift + K)");
+                break;
+            case "Kullanıcı Yönetimi":
+                $(By.id("topMenuForm2:ust:3:ust:0:ust:1:ust")).hover();
+                tooltip = $(By.id("tiptip_content")).innerText();
+                System.out.println(tooltip);
+                Assert.assertEquals(tooltip,"(Shift + U)");
+                break;
+            case "Gelen Evrak Raporu":
+                $(By.id("topMenuForm2:ust:6:ust:0:ust:9:ust")).hover();
+                tooltip = $(By.id("tiptip_content")).innerText();
+                System.out.println(tooltip);
+                Assert.assertEquals(tooltip,"(Shift + N)");
+                break;
+            case "Personel ve Açık Evrak İstatistiği":
+                $(By.id("topMenuForm2:ust:6:ust:0:ust:10:ust")).hover();
+                tooltip = $(By.id("tiptip_content")).innerText();
+                System.out.println(tooltip);
+                Assert.assertEquals(tooltip,"(Shift + P)");
+                break;
+            case "Olur Yazısı Oluştur":
+                $(By.id("topMenuForm2:ust:0:ust:0:ust:1:ust")).hover();
+                tooltip = $(By.id("tiptip_content")).innerText();
+                System.out.println(tooltip);
+                Assert.assertEquals(tooltip,"(Shift + O)");
+                break;
+        }
+
+        return this;
     }
 }

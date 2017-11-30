@@ -1,28 +1,39 @@
 package common;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
+import com.codeborne.selenide.impl.SelenideFieldDecorator;
 import io.qameta.allure.Attachment;
+import io.qameta.allure.Step;
 import org.openqa.selenium.*;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static com.codeborne.selenide.Selenide.*;
+import static org.apache.commons.io.FileUtils.deleteDirectory;
 import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfElementLocated;
 
 public class BaseLibrary {
+
+    private static final Logger log = Logger.getLogger(BaseLibrary.class.getName());
+    protected static String winHandleBefore = null;
 
     //<editor-fold desc="Allure screenshooter">
     @Attachment(value = "Page screenshot", type = "image/png")
@@ -40,42 +51,98 @@ public class BaseLibrary {
      * @param
      */
     public void waitForJS() {
-        Wait().until(ExpectedConditions.and(
-                (ExpectedCondition<Boolean>) driver -> {
-                    try {
-                        return (Boolean) executeJavaScript("return document.readyState").equals("complete");
-                    } catch (Exception e) {
-                        return true;
+        try {
+            Wait().until(
+                    (ExpectedCondition<Boolean>) driver -> {
+                        try {
+                            boolean readyState = (Boolean) executeJavaScript("return document.readyState").equals("complete");
+//                            System.out.println("Internal ready state:" + readyState);
+                            return readyState;
+                        } catch (Exception e) {
+//                            System.out.println("Internal ready state error:" + e.getMessage());
+                            return true;
+                        }
+                    });
+            Wait().until(
+                    (ExpectedCondition<Boolean>) driver -> {
+                        try {
+                            boolean jQueryActive = (Boolean) executeJavaScript("return jQuery.active == 0");
+//                            System.out.println("Internal jQuery active:" + jQueryActive);
+                            return jQueryActive;
+                        } catch (Exception e) {
+//                            System.out.println("Internal jQuery active error:" + e.getMessage());
+                            return true;
+                        }
                     }
-                },
-                (ExpectedCondition<Boolean>) driver -> {
-                    try {
-                        return (Boolean) executeJavaScript("return jQuery.active == 0");
-                    } catch (Exception e) {
-                        return true;
+            );
+
+            /*Wait().until(ExpectedConditions.and(
+                    (ExpectedCondition<Boolean>) driver -> {
+                        try {
+                            boolean readyState = (Boolean) executeJavaScript("return document.readyState").equals("complete");
+                            System.out.println("Internal ready state:" + readyState);
+                            return readyState;
+                        } catch (Exception e) {
+                            System.out.println("Internal ready state error:" + e.getMessage());
+                            return true;
+                        }
+                    },
+                    (ExpectedCondition<Boolean>) driver -> {
+                        try {
+                            boolean jQueryActive = (Boolean) executeJavaScript("return jQuery.active == 0");
+                            System.out.println("Internal jQuery active:" + jQueryActive);
+                            return jQueryActive;
+                        } catch (Exception e) {
+                            System.out.println("Internal jQuery active error:" + e.getMessage());
+                            return true;
+                        }
                     }
-                }
-        ));
+            ));*/
+        } catch (Exception e) {
+//            System.out.println("WaitForJS error: " + e.getMessage());
+        }
+
+        /*try {
+            Wait().until(ExpectedConditions.and(
+                    (ExpectedCondition<Boolean>) driver -> {
+                        try {
+                            return (Boolean) executeJavaScript("return document.readyState").equals("complete");
+                        } catch (Exception e) {
+                            return true;
+                        }
+                    },
+                    (ExpectedCondition<Boolean>) driver -> {
+                        try {
+                            return (Boolean) executeJavaScript("return jQuery.active == 0");
+                        } catch (Exception e) {
+                            return true;
+                        }
+                    }
+            ));
+        } catch (Exception e) {
+            System.out.println("WaitForJS error: " + e.getMessage());
+        }*/
     }
 
     public void waitForJSreadyState() {
         Wait().until(new ExpectedCondition<Boolean>() {
             @Override
             public Boolean apply(WebDriver driver) {
-                return (Boolean) executeJavaScript("return document.readyState").equals("complete");
+                return executeJavaScript("return document.readyState").equals("complete");
             }
         });
     }
 
     public void waitForLoadingToDisappear(WebDriver driver) {
-        driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
+//        driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
         try {
             new WebDriverWait(driver, Configuration.timeout / 1000, 200).
                     until(invisibilityOfElementLocated(By.className("loading")));
 //            System.out.println("Loading: Ok");
         } catch (Exception e) {
+//            System.out.println("Loading window error: " + e.getMessage());
         }
-        driver.manage().timeouts().implicitlyWait(Configuration.timeout, TimeUnit.MILLISECONDS);
+//        driver.manage().timeouts().implicitlyWait(Configuration.timeout, TimeUnit.MILLISECONDS);
     }
 
     public void waitForLoading(WebDriver driver) {
@@ -84,6 +151,15 @@ public class BaseLibrary {
     }
     //</editor-fold>
 
+    /**
+     * Alan setValue, sendKeys doğru çalışmıyor ise bu metodu kullanılır.
+     *
+     * @param element
+     * @param value
+     */
+    public void setValueJS(SelenideElement element, String value) {
+        executeJavaScript("arguments[0].value = arguments[1]", element, value);
+    }
 
     /**
      * Türkçe harfleri inglizce harflere dönüştürüyor
@@ -119,16 +195,13 @@ public class BaseLibrary {
         executeJavaScript("arguments[0].click();", element);
     }
 
-    //Üstyazı dosyasını ekler
-    public void ustYaziUploadFile(String pathToFile) {
+    //Dosya ekler
+    public void uploadFile(SelenideElement element, String pathToFile) {
         try {
-            $(By.xpath("//input[@class='ustYaziUploadClass']")).sendKeys(pathToFile);
-//            LogPASS("Dosya Yuklendi.");
+            element.sendKeys(pathToFile);
+            log.info("Dosya yüklendi.");
         } catch (Exception e) {
-//            logger.error("Error in attaching file.s : " + e);
-//            LogFAIL("Error in attaching file.s : " + e);
-            System.out.println("Error in attaching file.s  : " + e);
-
+            log.info("Error in attaching file.s : " + e);
             throw new RuntimeException(e);
         }
     }
@@ -149,7 +222,7 @@ public class BaseLibrary {
 //    }
 
     //Random numara üretir.
-    public String randomNumber(int length) {
+    public String createRandomNumber(int length) {
         Random r = new Random();
         List<Integer> digits = new ArrayList<Integer>();
         String number = "";
@@ -253,7 +326,7 @@ public class BaseLibrary {
     }
 
     //Bilgisayara indirilen dosyaları siler.
-    public void deleteFile(String pathToFile) {
+    public boolean deleteFile(String pathToFile) throws IOException {
         try {
             File file = new File(pathToFile);
 
@@ -269,6 +342,7 @@ public class BaseLibrary {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return false;
     }
 
     //Random tc yaratır mernis sorgusundan geçecek şekilde.
@@ -366,6 +440,102 @@ public class BaseLibrary {
         System.out.println(number);
 
         return number;
+    }
+
+    // Store the current window handle
+    public String windowHandleBefore() throws InterruptedException {
+        winHandleBefore = WebDriverRunner.getWebDriver().getWindowHandle();
+        return winHandleBefore;
+    }
+
+    // Perform the click operation that opens new window
+    // Switch to new window opened
+    public void switchToNewWindow() throws InterruptedException {
+        Thread.sleep(6000);
+        for (String winHandle : WebDriverRunner.getWebDriver().getWindowHandles()) {
+            WebDriverRunner.getWebDriver().switchTo().window(winHandle);
+        }
+    }
+
+    // Switch to default window
+    public void switchToDefaultWindow() throws InterruptedException {
+        Thread.sleep(3000);
+        WebDriverRunner.getWebDriver().close();
+        // driver.switchTo().defaultContent();
+        WebDriverRunner.getWebDriver().switchTo().window(winHandleBefore);
+    }
+
+
+    public String cssSE(String element, String attribute, String startsWith, String endsWith) {
+
+        if (element != "" || element == null) {
+            return "[" + attribute + "^=''][" + attribute + "$='']";
+        } else {
+            return element + "[" + attribute + "^=''][" + attribute + "$='']";
+        }
+
+    }
+
+    @Step("[\"{0}\"] alanının değeri [\"{0}\"] olmalı.")
+    public void alanDegeriKontrolEt(SelenideElement element, String value, boolean shouldHaveValue, boolean exactText) {
+        if (shouldHaveValue == true) {
+            if (exactText == true)
+                element.shouldHave(Condition.exactValue(value));
+            else {
+                String _value = element.getValue();
+                Assert.assertEquals(_value.contains(value), true);
+            }
+        } else {
+            if (exactText == true)
+                element.shouldNotHave(Condition.exactValue(value));
+            else {
+                String _value = element.getValue();
+                Assert.assertEquals(_value.contains(value), false);
+            }
+        }
+    }
+
+    public boolean findElementOnTableAllPages(SelenideElement element) {
+        SelenideElement next = $(("[class='ui-paginator-next ui-state-default ui-corner-all']"));
+
+        boolean status = false;
+        while (status == false) {
+            status = element.isDisplayed();
+            if (status == false) {
+                if (next.isDisplayed() == false) {
+                    System.out.println("Element hiç bir sayfada bulunamadı.");
+                    return status;
+                }
+                next.click();
+            }
+        }
+        System.out.println("Element bulundu.");
+        return status;
+    }
+
+    //Klasordeki dosyaları ismine göre siler...
+    public boolean deleteFile(String path, String fileName) throws IOException {
+        boolean flag = false;
+        File directory = new File(path);
+        if (directory.exists()) {
+            File[] files = directory.listFiles();
+            if (null != files) {
+                for (int i = 0; i < files.length; i++) {
+                    if (files[i].isDirectory()) {
+                        deleteDirectory(files[i]);
+                        flag = true;
+                    } else {
+                        if (files[i].getName().toString().contains(fileName)) {
+                            files[i].delete();
+                            flag = true;
+                        } else
+                            System.out.println("Klasörde istenilen isimde dosya bulunamadı.");
+                    }
+                }
+            } else
+                System.out.println("Klasör boş.");
+        }
+        return flag;
     }
 
 }

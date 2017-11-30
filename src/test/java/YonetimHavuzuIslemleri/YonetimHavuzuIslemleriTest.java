@@ -3,7 +3,7 @@ package YonetimHavuzuIslemleri;
 import common.BaseTest;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pages.EvrakOlusturPage;
+import pages.ustMenuPages.EvrakOlusturPage;
 import pages.ustMenuPages.OlurYazisiOlusturPage;
 import pages.ustMenuPages.YonetimHavuzuYonetimiPage;
 
@@ -15,8 +15,6 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
     OlurYazisiOlusturPage olurYazisiOlusturPage;
     OlurYazisiOlusturPage.BilgilerTab olurYazisiBilgilerTab;
 
-
-
     @BeforeMethod
     public void loginBeforeTests() {
         evrakOlusturPage = new EvrakOlusturPage();
@@ -26,133 +24,122 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
         login();
     }
 
-    @Test(enabled = true, description = "TC0001")
+    @Test(enabled = true, description = "TC0001 : Yönetim havuzunu pasife alma")
     public void TC0001() {
 
-        /*
-        yonetimHavuzuYonetimiPage
-                .openPage()
-                .ara("Optiim Birim", "Test-tec01", "Sadece Aktifler", true)
-                .yonetimHavuzuGuncelle("Test-tec01", false)
-                .yonetimHavuzuKontrol("Test-tec01", new String[]{"Optiim Birim"}, new String[]{"Veysel KIRAN"})
-                .yonetimHavuzuPasifYap("Test-tec01");
+        String pasifeAlinacakHavuzAdi = "Test-tec012";
 
-
-        evrakOlusturPage.open();
-        evrakBilgilerTab
-                .open()
-                .onayAkisiEkle()
-                .onayAkisiKullaniciKontrol("Optiim TEST", "Paraflama")
-                .onayAkisiTreeKullaniciKontrol("Veysel KIRAN", false);
-        */
-
-        olurYazisiOlusturPage.open();
-        olurYazisiBilgilerTab
-                .open()
-                .onayAkisiEkle()
-                .onayAkisiKullaniciKontrol("Optiim TEST", "Paraflama")
-                .onayAkisiTreeKullaniciKontrol("Veysel KIRAN", false);
-    }
-
-    @Test(enabled = true, description = "Paylaştıklarım")
-    public void TC0002() {
+        String[] kontrolEdilecekBirimler = new String[]{"Optiim Birim"};
+        String[] kontrolEdilecekKullanicilar = new String[]{"Veysel KIRAN"};
+        String filtrelenecekBirimAdi = "Optiim Birim";
 
         yonetimHavuzuYonetimiPage
                 .openPage()
-                .yonetimHavuzuEkle("Tc02yonetimhavuzu")
-                .kullananBirimEkle("Optiim")
-                .kullaniciEkle("Veysel KIRAN")
-                .yonetimHavuzuKaydet()
-                .ara("Optiim", "Tc02yonetimhavuzu", null, true);
+                .ara(null, pasifeAlinacakHavuzAdi, "Sadece Aktifler", true)
+                .yonetimHavuzuGuncelle(pasifeAlinacakHavuzAdi, false)
+                .yonetimHavuzuKontrol(pasifeAlinacakHavuzAdi, kontrolEdilecekBirimler, kontrolEdilecekKullanicilar)
+                .yonetimHavuzuPasifYap(pasifeAlinacakHavuzAdi);
 
-
-        evrakOlusturPage.open()
+        evrakOlusturPage
+                .openPage()
                 .bilgilerTabiAc()
                 .onayAkisiEkle()
-                .onayAkisiKullaniciKontrol("Optiim OPTİİM ", "Paraflama")
-                .onayAkisiKullaniciEkle("Veysel KIRAN")
-                .onayAkisiTreeKullaniciKontrol("Veysel KIRAN", true)
-                .onayAkisiKullaniciTipiSec("Veysel KIRAN", "İmzalama")
+                .onayAkisiKullaniciKontrol("Optiim TEST", "Paraflama")
+                .onayAkisiTreeKullaniciKontrol("Veysel KIRAN", false);
+
+
+    }
+
+    @Test(enabled = true, description = "TC0002 : Yeni yönetim havuzu kayıt")
+    public void TC0002() {
+
+        String eklenecekYonetimHavuzuAdi = "Tc02yonetimhavuzu";
+        String eklenecekBirim = "Optiim Birim";
+        String eklenecekKullanici = "Veysel KIRAN";
+
+
+        yonetimHavuzuYonetimiPage
+                .openPage()
+                .yonetimHavuzuEkle(eklenecekYonetimHavuzuAdi)
+                .kullananBirimEkle(eklenecekBirim)
+                .kullaniciEkle(eklenecekKullanici)
+                .yonetimHavuzuKaydet()
+                .ara(eklenecekBirim, eklenecekYonetimHavuzuAdi, null, true);
+
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .onayAkisiEkle()
+                .onayAkisiKullaniciKontrol("Optiim TEST [Ağ (Network) Uzman Yardımcısı]", "Paraflama")
+                .onayAkisiKullaniciEkle(eklenecekKullanici)
+                .onayAkisiKullaniciTipiSec(eklenecekKullanici, "İmzalama")
                 .onayAkisiKullan()
-                .onayAkisiKullanilanKullanilanKontrolEt("Optiim OPTİİM-Paraflama / Veysel KIRAN-İmzalama");
+                .onayAkisiKullanilanKullanilanKontrolEt("Optiim TEST-Paraflama / Veysel KIRAN-İmzalama");
 
 
         logout();
         login("Ztekin", "123");
 
 
-        evrakOlusturPage.open()
+        evrakOlusturPage
+                .openPage()
                 .bilgilerTabiAc()
                 .onayAkisiEkle()
                 .onayAkisiKullaniciKontrol("Zübeyde TEKİN ", "Paraflama")
-                .onayAkisiTreeKullaniciKontrol("Veysel KIRAN", false);
+                .onayAkisiTreeKullaniciKontrol(eklenecekKullanici, false);
 
 
     }
 
-    @Test(enabled = true, description = "Yönetim Havuzu Arama")
+    @Test(enabled = true, description = "TC0003 : yönetim havuzunu güncelleme")
     public void TC0009() {
+
+        String yonetimHavuzuAdi = "Test-tec01";
+        String[] kontrolEdilecekBirimler = new String[]{"Optiim Birim"};
+        String[] kontrolEdilecekKullanicilar = new String[]{ "Veysel KIRAN"};
+        String eklenecekAltBirim = "Optiim Alt Birim1";
+        String silinecekKullanici = "Veysel KIRAN";
+        String eklenecekKullanici = "Yasin TELLİ";
+        String yeniYonetimHavuzuAdi = "Test-tec012";
+
+        String guncelKullanici = "Optiim TEST [Ağ (Network) Uzman Yardımcısı]";
+
+        /*
         yonetimHavuzuYonetimiPage
                 .openPage()
-                .ara(null, "Test-tec01", null, true)
-                .yonetimHavuzuGuncelle("Test-tec01", false)
-                .yonetimHavuzuKontrol("Test-tec01",
-                        new String[]{"OPTİİM BİRİM"},
-                        new String[]{"Yasin TELLİ", "Veysel KIRAN"})
-                .kullananBirimEkle("Optiim AltBirim")
-                .kullaniciSil("Veysel KIRAN")
-                .kullaniciEkle("Yasin TELLİ")
-                .yonetimHavuzuAdiDoldur("Test-tec012")
+                .ara(null, yonetimHavuzuAdi, null, true)
+                .yonetimHavuzuGuncelle(yonetimHavuzuAdi, false)
+                .yonetimHavuzuKontrol(yonetimHavuzuAdi, kontrolEdilecekBirimler, kontrolEdilecekKullanicilar)
+                .kullananBirimEkle(eklenecekAltBirim)
+                .kullaniciSil(silinecekKullanici)
+                .kullaniciEkle(eklenecekKullanici)
+                .yonetimHavuzuAdiDoldur(yeniYonetimHavuzuAdi)
                 .yonetimHavuzuKaydet()
-                .ara(null, "Test-tec012", null, true);
-
-        /*
+                .ara(null, yeniYonetimHavuzuAdi, null, true);
 
 
-        yonetimHavuzuYonetimiPage
-                .ara(null, "Guncellenen Havuzum2", null, true)
-                .yonetimHavuzuGuncelle("Guncellenen Havuzum2", false)
-                .yonetimHavuzuKontrol("Guncellenen Havuzum2",
-                        new String[]{"OPTİİM BİRİM"} ,
-                        new String[]{"Optiim TEST1", "Optiim TEST2", "Veysel KIRAN"})
-                .kullananBirimEkle("OPTİİM BİRİM")
-                .kullaniciSil("Veysel KIRAN")
-                .kullaniciEkle("Yasin TELLİ")
-                .yonetimHavuzuAdiDoldur("Guncellenen Havuzum23")
-                .yonetimHavuzuKaydet()
-                .ara(null, "Guncellenen Havuzum23", null, true);
-         */
-
-        /*
-
-
-        yonetimHavuzuYonetimiPage
-                .ara(null, "Guncellenen Havuzum2", null, true)
-                .yonetimHavuzuGuncelle("Guncellenen Havuzum2", false)
-                .yonetimHavuzuKontrol("Guncellenen Havuzum2",
-                        new String[]{"OPTİİM BİRİM"} ,
-                        new String[]{"Optiim TEST1", "Optiim TEST2", "Veysel KIRAN"})
-                .kullananBirimEkle("OPTİİM BİRİM")
-                .kullaniciSil("Yasin TELLİ")
-                .kullaniciEkle("Veysel KIRAN")
-                .yonetimHavuzuAdiDoldur("Guncellenen Havuzum2")
-                .yonetimHavuzuKaydet()
-                .ara(null, "Guncellenen Havuzum2", null, true);
-         */
-
-
-        /*
         evrakOlusturPage
-                .open()
+                .openPage()
+                .bilgilerTabiAc()
                 .onayAkisiEkle()
-                .onayAkisiKullaniciKontrol("Optiim OPTİİM ", "Paraflama")
-                .onayAkisiTreeKullaniciKontrol("Veysel KIRAN", false)
-                .onayAkisiTreeKullaniciKontrol("Yasin TELLİ", true)
-                .onayAkisiKullaniciEkle("Yasin TELLİ")
-                .onayAkisiKullaniciTipiSec("Yasin TELLİ", "İmzalama")
+                .onayAkisiKullaniciKontrol(guncelKullanici, "Paraflama")
+                .onayAkisiTreeKullaniciKontrol(silinecekKullanici, false)
+                .onayAkisiTreeKullaniciKontrol(eklenecekKullanici, true)
+                .onayAkisiKullaniciEkle(eklenecekKullanici)
+                .onayAkisiKullaniciTipiSec(eklenecekKullanici, "İmzalama")
                 .onayAkisiKullan();
 
-        */
+         */
+
+        logout();
+        login("optiimtest1", "123");
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .onayAkisiEkle()
+                .onayAkisiKullaniciKontrol(guncelKullanici, "Paraflama");
 
 
     }

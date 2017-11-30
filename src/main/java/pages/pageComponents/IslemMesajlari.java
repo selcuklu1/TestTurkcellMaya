@@ -1,5 +1,6 @@
 package pages.pageComponents;
 
+import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
 import io.qameta.allure.Step;
@@ -63,13 +64,13 @@ public class IslemMesajlari extends BaseLibrary {
         }
     }
 
-    @Step("Beklenen mesaj tipi \"{messageTitle.value()}\"")
+    @Step("Beklenen mesaj tipi \"{0}\"")
     public IslemMesajlari beklenenMesajTipi(MessageTitle messageTitle) {
         Assert.assertEquals(getMessageTitle(), messageTitle.value());
         return this;
     }
 
-    @Step("Beklenen mesaj \"{messageBody.value()}\"")
+    @Step("Beklenen mesaj \"{0}\"")
     public IslemMesajlari beklenenMesaj(String message) {
         Assert.assertEquals(getMessageBody(), message);
         return this;
@@ -79,6 +80,7 @@ public class IslemMesajlari extends BaseLibrary {
     public void basariliOlmali(String actualMessage) {
         Assert.assertEquals(getMessageTitle(), BASARILI.value());
         Assert.assertEquals(actualMessage, getMessageBody());
+//        System.out.println("Gelen Başarı Mesajı: " + getMessageBody());
         waitDisappear();
     }
 
@@ -86,6 +88,7 @@ public class IslemMesajlari extends BaseLibrary {
     public void uyariOlmali(String actualMessage) {
         Assert.assertEquals(getMessageTitle(), UYARI.value());
         Assert.assertEquals(actualMessage, getMessageBody());
+//        System.out.println("Gelen Uyarı Mesajı: " + getMessageBody());
         waitDisappear();
     }
 
@@ -93,6 +96,7 @@ public class IslemMesajlari extends BaseLibrary {
     public void dikkatOlmali(String actualMessage) {
         Assert.assertEquals(getMessageTitle(), DIKKAT.value());
         Assert.assertEquals(actualMessage, getMessageBody());
+//        System.out.println("Gelen Dikkat Mesajı: " + getMessageBody());
         waitDisappear();
     }
 
@@ -109,25 +113,17 @@ public class IslemMesajlari extends BaseLibrary {
     }
 
     public String getMessageTitle() {
-        messageTitle.waitUntil(visible, 10000);
-        return messageTitle.text();
+        return messageTitle.should(visible).text();
     }
 
     public String getMessageBody() {
-        messageBody.waitUntil(visible, 10000);
+        messageBody.waitUntil(visible, Configuration.timeout, 100);
         return messageBody.text();
     }
 
     public void waitDisappear() {
 
         closeMessagePopup.click();
-
-/*        try {
-            new WebDriverWait(WebDriverRunner.getWebDriver(), 10, 100).
-                    until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".lobibox-notify-title")));
-        } catch (Exception e) {
-            System.out.println("Error didn't wait popup message : " + e);
-        }*/
     }
 
 }

@@ -1,13 +1,20 @@
 package pages.ustMenuPages;
 
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
-import common.BaseLibrary;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.testng.Assert;
+import pages.MainPage;
+import pages.pageComponents.belgenetElements.BelgenetElement;
 
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
+import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 @SuppressWarnings("unused")
-public class OnayAkisYonetimiPage extends BaseLibrary {
+public class OnayAkisYonetimiPage extends MainPage {
 //    private UstMenu ustMenu;
 
     private SelenideElement btnVarsayilanYap = $(By.id("onayAkisiYonetimiListingForm:rolDataTable:0:default"));
@@ -18,7 +25,51 @@ public class OnayAkisYonetimiPage extends BaseLibrary {
     private SelenideElement btnAra = $(By
             .id("onayAkisiYonetimiListingForm:filterPanel:searchEntitiesButtonOnayAkisiYonetimiListing"));
     private SelenideElement homePageButton = $(By.id("j_idt325"));
+    private SelenideElement btnOnayAkisiYeni = $(By.id("onayAkisiYonetimiListingForm:rolDataTable:addNewRolButton"));
 
+    private SelenideElement txtOnayAkisiAd =$(By.id("onayAkisiYonetimiEditorForm:onayAkisiYonetimiAkisAdiInput"));
+    private SelenideElement txtOnayAkisiKullanicilar = $(By.id("onayAkisiYonetimiEditorForm:onayAkisiYonetimiKullaniciBirimLov:LovText"));
+    private ElementsCollection cmbImzacıSon = $$("[id$='onayAkisiYonetimiEditorForm:onayAkisiYonetimiKullaniciBirimDataTable'] table tr select");
+    private BelgenetElement txtOnayAkisiIslemleriKullanicilar = comboLov("[id='onayAkisiYonetimiEditorForm:onayAkisiYonetimiKullaniciBirimLov:LovText']");
+    private SelenideElement btnOnayAkisiIslemleriKaydet = $(By.id("onayAkisiYonetimiEditorForm:onayAkisiYonetimiEditorKaydetId"));
+    private SelenideElement txtAd = $(By.id("onayAkisiYonetimiEditorForm:onayAkisiYonetimiAkisAdiInput"));
+    @Step("Onay akışı sayfası aç")
+    public OnayAkisYonetimiPage openPage(){
+        ustMenu("Onay Akışı Yönetimi");
+        return this;
+    }
+    @Step("Onay Akışı işlemler kaydet")
+    public OnayAkisYonetimiPage onayAkisiIslemleriKaydet(){
+        btnOnayAkisiIslemleriKaydet.click();
+        return this;
+    }
+    @Step("Onay akışı işlemleri kullanıcılar alanı doldur")
+    public OnayAkisYonetimiPage onayAkisiIslemlerKullanicilarDoldur(String kullanici){
+        txtOnayAkisiIslemleriKullanicilar.type(kullanici).titleItems().first().click();
+                //selectLov(kullanici);
+        return this;
+    }
+    @Step("İmzacı seç")
+    public  OnayAkisYonetimiPage imzacıSonSec(String value) {
+        cmbImzacıSon.last().selectOption(value);
+        return this;
+    }
+    @Step("Onay Akışı işlemleri ad doldur")
+    public OnayAkisYonetimiPage onayAkisiIslemleriAdDoldur(){
+        String random = createRandomNumber(7);
+        txtAd.setValue(random);
+        return this;
+    }
+    @Step("Ad alanı alınır")
+    public String adCek(){
+       String ad = txtAd.getValue();
+        return ad;
+    }
+    @Step("Onay akışı yeni")
+    public OnayAkisYonetimiPage onayAkisiYeni(){
+        btnOnayAkisiYeni.click();
+        return this;
+    }
 
     public OnayAkisYonetimiPage varsayilanButonu() {
         btnAra.click();
