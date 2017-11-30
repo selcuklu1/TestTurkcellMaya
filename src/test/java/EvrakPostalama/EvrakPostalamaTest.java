@@ -37,7 +37,7 @@ EvrakOlusturPage evrakOlusturPage;
                 .openPage()
                 .bilgilerTabiAc()
                 .konuKoduSec("Entegrasyon İşlemleri")
-                .kaldirilacakKlasorlerTxt("Diğer")
+                .kaldirilacakKlasorler("Diğer")
                 .evrakTuruSec("Resmi Yazışma")
                 .onayAkisiKullanicilariTemizle()
                 .onayAkisiEkle()
@@ -61,8 +61,9 @@ EvrakOlusturPage evrakOlusturPage;
                         .editorIcerikDoldur("Optiim")
                         .editorEvrakGeregiSec("TAŞRA TEŞKİLATI")
                         .imzala()
-                        .popupSImzalaIslemleri()
-                        .popupImzalaVeEvrakKapatma();
+                        .popupSImzalaIslemleri();
+                
+                mainPage.islemMesaji().basariliOlmali("İşlem başarılıdır!");
 
 
 

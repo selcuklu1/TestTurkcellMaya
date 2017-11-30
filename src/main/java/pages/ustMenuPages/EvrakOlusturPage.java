@@ -728,7 +728,7 @@ public class EvrakOlusturPage extends MainPage {
         }
 
 
-        public BilgilerTab kaldirilacakKlasorlerTxt(String klasor) {
+        public BilgilerTab kaldirilacakKlasorler(String klasor) {
             //TODO: Fonksiyon yazılacak.
             cmbKaldiralacakKlasorler.selectLov(klasor);
             return this;
