@@ -110,6 +110,7 @@ public class KurumYonetimiPage extends MainPage {
         return this;
     }
 
+    @Step("Özel hitap seç")
     public KurumYonetimiPage ozelHitapSec(boolean secim) {
         chkOzelHitap.setSelected(secim);
         return this;
@@ -118,7 +119,7 @@ public class KurumYonetimiPage extends MainPage {
     public KurumYonetimiPage kepAdresiKullaniyorSec(boolean secim) {
 
         Boolean isSelected = false;
-        if (chkKepAdresiKullaniyor.$(By.xpath("//div[contains(@class, 'ui-state-active')]")).exists())
+        if (chkKepAdresiKullaniyor.$(By.xpath("./div[contains(@class, 'ui-state-active')]")).exists())
             isSelected = true;
 
         if(secim == true){
@@ -133,26 +134,31 @@ public class KurumYonetimiPage extends MainPage {
         return this;
     }
 
+    @Step("Paket kullanım seç")
     public KurumYonetimiPage paketKullanimSec(boolean secim) {
         chkPaketKullanim.setSelected(secim);
         return this;
     }
 
+    @Step("Kurum adı doldur")
     public KurumYonetimiPage kurumAdiDoldur(String text) {
         txtKurumAdi.setValue(text);
         return this;
     }
 
+    @Step("Kaysiste Yer Almıyor Seç")
     public KurumYonetimiPage kaysisteYerAlmiyorSec(boolean secim) {
         chkKaysisteYerAlmiyor.setSelected(secim);
         return this;
     }
 
+    @Step("İdari Birim Kimlik Kodu doldur")
     public KurumYonetimiPage idariBirimKimlikKoduDoldur(String text) {
         txtIdariBirimKimlikKodu.setValue(text);
         return this;
     }
 
+    @Step("Durum seç")
     public KurumYonetimiPage durumSec(String value) {
         cmbDurum.selectOption(value);
         return this;
@@ -163,7 +169,7 @@ public class KurumYonetimiPage extends MainPage {
         return this;
     }
 
-
+    @Step("Sorgulama panelinde kurum doldur.")
     public KurumYonetimiPage sorgulaKurumDoldur(String kurumAdi) {
         if (!txtKurumCombolov.isDisplayed())
             filtrePanel.click();
@@ -171,6 +177,7 @@ public class KurumYonetimiPage extends MainPage {
         return this;
     }
 
+    @Step("Sorgulama panelinde kurum doldur.")
     public KurumYonetimiPage kurumDoldur(String text) {
         txtKurumCombolov.selectLov(text);
         return this;
@@ -178,6 +185,7 @@ public class KurumYonetimiPage extends MainPage {
 
 
     // Hüseyin Methods
+    @Step("{0} kurumunu güncelle")
     public KurumYonetimiPage kurumGuncelle(String kurumAdi){
         tableKurumListesi
                 .filterBy(Condition.text(kurumAdi))
@@ -187,6 +195,7 @@ public class KurumYonetimiPage extends MainPage {
         return this;
     }
 
+    @Step("{0} kurumunu seç")
     public KurumYonetimiPage ustKurumSec(String ustKurum){
         if(divSecilenUstKurum.exists())
             btnSecilenKurumListedenCikar.exists();
@@ -194,61 +203,73 @@ public class KurumYonetimiPage extends MainPage {
         return this;
     }
 
+    @Step("İletişim bilgisi güncelle")
     public KurumYonetimiPage iletisimGuncelle(){
         btnIletisimGuncelle.click();
         return this;
     }
 
+    @Step("Mobil telefon no doldur")
     public KurumYonetimiPage mobilTelNoDoldur(String mobilTelNo){
         txtMobilTelNo.setValue(mobilTelNo);
         return this;
     }
 
+    @Step("Telefon No doldur")
     public KurumYonetimiPage telefonNoDoldur(String telefonNo){
         txtTelefonNo.setValue(telefonNo);
         return this;
     }
 
+    @Step("İş Telefon No doldur")
     public KurumYonetimiPage isTelefonNoDoldur(String isTelefonNo){
         txtIsTelefonNo.setValue(isTelefonNo);
         return this;
     }
 
+    @Step("Fax Numarası 1 doldur")
     public KurumYonetimiPage faxNumarasi1Doldur(String faxNumarasi1){
         txtFaxNumarasi1.setValue(faxNumarasi1);
         return this;
     }
 
+    @Step("Fax Numarası 2 doldur")
     public KurumYonetimiPage faxNumarasi2Doldur(String faxNumarasi2){
         txtFaxNumarasi2.setValue(faxNumarasi2);
         return this;
     }
 
+    @Step("Adres doldur")
     public KurumYonetimiPage adresDoldur(String adres){
         txtAdres.setValue(adres);
         return this;
     }
 
+    @Step("Ülke doldur")
     public KurumYonetimiPage ulkeDoldur(String ulke){
         txtUlke.selectLov(ulke);
         return this;
     }
 
+    @Step("İl doldur")
     public KurumYonetimiPage ilDoldur(String il){
         txtIl.selectLov(il);
         return this;
     }
 
+    @Step("İlçe doldur")
     public KurumYonetimiPage ilceDoldur(String ilce){
         txtIlce.setValue(ilce);
         return this;
     }
 
+    @Step("E Posta doldur")
     public KurumYonetimiPage ePostaDoldur(String eposta){
         txtEPosta.setValue(eposta);
         return this;
     }
 
+    @Step("Web Adresi doldur")
     public KurumYonetimiPage webAdresiDoldur(String webAdresi){
         txtWebAdresi.setValue(webAdresi);
         return this;
@@ -362,6 +383,19 @@ public class KurumYonetimiPage extends MainPage {
                     .get(0)
                     .shouldNotBe(Condition.exist);
         }
+
+        return this;
+    }
+
+    @Step("Panel kapat")
+    public KurumYonetimiPage panelKapat(){
+
+
+        //btnEvrakOlusturKapat.click();
+
+        $(By.xpath("//div[@id='mainTaskBar']//span[text()='[Kurum Yönetimi]']"))
+                .contextClick();
+        $(By.id("kapatButton")).click();
 
         return this;
     }

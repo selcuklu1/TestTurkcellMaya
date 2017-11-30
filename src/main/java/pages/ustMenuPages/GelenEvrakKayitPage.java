@@ -718,4 +718,17 @@ public class GelenEvrakKayitPage extends MainPage {
         btnEvrakDetayiKaydetUyarisi.click();
         return this;
     }
+
+    @Step("Panel kapat")
+    public GelenEvrakKayitPage panelKapat(Boolean kaydet){
+        $(By.xpath("//div[@id='mainTaskBar']//span[text()='[Gelen Evrak Kayıt]']"))
+                .contextClick();
+
+        if(kaydet)
+            $(By.id("kapatKaydetEvetButton")).click();
+        else
+            $(By.id("kapatKaydetHayirButton")).click();
+
+        return this;
+    }
 }
