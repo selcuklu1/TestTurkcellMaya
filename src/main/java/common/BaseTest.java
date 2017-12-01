@@ -28,35 +28,6 @@ public class BaseTest extends BaseLibrary{
         //endregion
 
         //region Selenide Driver Configuration
-//        Configuration.baseUrl = belgenetURL;
-        //    Configuration.browser = "drivers.Firefox";
-//        Configuration.remote = "http://0.0.0.0:32768/wd/hub";
-
-//        Configuration.browser = "chrome";
-          //Configuration.browser = "marionette";
-
-        //Configuration.browser = "marionette";
-
-        //Configuration.browser = "drivers.Firefox";
-
-        //"org.openqa.selenium.Firefox.FirefoxDriver";
-
-//        System.setProperty("webdriver.gecko.driver", "/Users/ilyas/Documents/WebDrivers/geckodriver");
-        Configuration.browser = "chrome";
-        Configuration.startMaximized = true;
-        Configuration.baseUrl = belgenetURL;
-//        Configuration.browser = "drivers.Firefox";
-//        Configuration.browser = "marionette";
-//        Configuration.remote = "http://0.0.0.0:32769/wd/hub";
-//        Configuration.reportsFolder = "test-result/reports";
-        Configuration.screenshots = false;
-        Configuration.savePageSource = false;
-        Configuration.collectionsTimeout = 20000;
-        Configuration.timeout = 20000;
-//        Configuration.holdBrowserOpen = true;
-//        Configuration.headless = true;
-
-        //region Selenide Driver Configuration
         Configuration.baseUrl = belgenetURL;
         //Configuration.browser = "drivers.Firefox";
         //Configuration.browser = "chrome";
@@ -65,8 +36,8 @@ public class BaseTest extends BaseLibrary{
         Configuration.reportsFolder = "test-result/reports";
         Configuration.screenshots = false;
         Configuration.savePageSource = false;
-        Configuration.collectionsTimeout = 10000;
-        Configuration.timeout = 10000;
+        Configuration.collectionsTimeout = 30000;
+        Configuration.timeout = 30000;
         Configuration.holdBrowserOpen = true;
         Configuration.headless = false;
         Configuration.startMaximized = true;
@@ -74,6 +45,7 @@ public class BaseTest extends BaseLibrary{
         //endregion
 
         System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, "/dev/null");
+
     }
 
 
