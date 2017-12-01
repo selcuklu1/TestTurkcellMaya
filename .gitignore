@@ -43,5 +43,4 @@ test-output
 # JIRA plugin
 atlassian-ide-plugin.xml
 
-
-src/main/java/common/BaseLibrary.java
+src/main/java/common/BaseTest.java
