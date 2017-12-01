@@ -70,6 +70,8 @@ public class KurumYonetimiPage extends MainPage {
 
     SelenideElement filtrePanel = $(By.id("kurumYonetimiListingForm:filterPanel"));
 
+    SelenideElement btnSecileniKaldir = $("button[id^='kurumYonetimiListingForm:filterPanel:kurumFilterLov:'] span[class='ui-button-icon-left ui-icon delete-icon']");
+
     @Step("Kurum Yönetimi sayfası aç")
     public KurumYonetimiPage openPage() {
         ustMenu("Kurum Yönetimi");
@@ -183,6 +185,8 @@ public class KurumYonetimiPage extends MainPage {
     }
     @Step("Ara")
     public KurumYonetimiPage ara(){
+        if(btnSecileniKaldir.isDisplayed())
+            btnSecileniKaldir.click();
         btnAra.click();
         return this;
     }
