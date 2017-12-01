@@ -177,6 +177,23 @@ public class ComboLovHelper extends BaseLibrary {
         }
     }
 
+    static ElementsCollection allSelectedLov() {
+        ElementsCollection e;
+        if (multiType)
+            e = $$(lovSecilen + " > tr[role='row']");
+        else
+            e = $$(lovSecilen);
+        return e;
+    }
+
+    static ElementsCollection selectedTitles(){
+        return $$(lovSecilenItemTitle);
+    }
+
+    static ElementsCollection selectedDetails(){
+        return $$(lovSecilenItemDetail);
+    }
+
     static String getLastSelectedLovValue() {
         return lastSelectedLovTitleText() + "\n" + lastSelectedLovDetailText();
     }
@@ -310,20 +327,14 @@ public class ComboLovHelper extends BaseLibrary {
         boolean isSelected = false;
         SelenideElement willBeSelected = null;
 
-//        defaultTimeout = Configuration.timeout;
-//        Configuration.timeout = 0;
         List<String> selectedTitles = $$(lovSecilenItemTitle).texts();
         List<String> selectedDetails = $$(lovSecilenItemDetail).texts();
-//        Configuration.timeout = defaultTimeout;
 
         $(lovText).setValue(value);
 
         $$(lovTree).last().shouldBe(visible);
         ElementsCollection selectTitleList = $$(lovTree).last().$$(lovTreeListSelectableItemsTitle);
         ElementsCollection selectDetailList = $$(lovTree).last().$$(lovTreeListSelectableItemsDetail);
-
-//        if (selectTitleList.filterBy(exactTextCaseSensitive(value)).size() > 0)
-//            selectTitleList = selectTitleList.filterBy(exactTextCaseSensitive(value));
 
         for (int i = 0; i < selectTitleList.size(); i++) {
             SelenideElement title = selectTitleList.get(i).shouldBe(visible);
@@ -333,42 +344,8 @@ public class ComboLovHelper extends BaseLibrary {
                 title.click();
                 break;
             }
-//            for (int j = 0; j < selectedTitles.size(); j++) {
-//                if (!selectedTitles.get(j).equalsIgnoreCase(title.text()) ||
-//                        !selectedDetails.get(j).equalsIgnoreCase(detail.text()))
-//                {
-////&& (title.text().equals(value) || detail.text().contains(value)))
-//                    isSelected = true;
-//                    title.click();
-//                    break;
-//                }
-//            }
-
             if (isSelected) break;
-
-            /*if (!selectedTitles.contains(title.text()) || !selectedDetails.contains(detail.text())){
-                isSelected = true;
-                title.click();
-                break;
-            }*/
-//            if (!selectedDetails.contains(item.text())) {
-//                isSelected = true;
-//                item.click();
-//                break;
-//            }
-
         }
-
-        /*for (SelenideElement item : selectTitleList) {
-            item.shouldBe(visible);
-
-            if (!selectedDetails.contains(item.text())) {
-                isSelected = true;
-                item.click();
-                break;
-            }
-
-        }*/
         if (!isSelected)
             throw new RuntimeException("\"" + value + "\" değeri seçilemedi. Alan: " + lovText);
 
@@ -379,11 +356,10 @@ public class ComboLovHelper extends BaseLibrary {
         try {
             Allure.addAttachment("Seçilen değerleri:", $$(lovSecilenItemTitle).get(selectedDetails.size()).text()
                     + "\n" + $$(lovSecilenItemDetail).get(selectedDetails.size()).text());
-        } catch (Exception e) {
-        }
+        } catch (Exception ignored) { }
     }
 
-    private static void closeLovTreePanel() {
+    public static void closeLovTreePanel() {
         if ($$(lovTreePanelKapat).last().is(visible))
             $$(lovTreePanelKapat).last().click();
     }
@@ -410,7 +386,6 @@ public class ComboLovHelper extends BaseLibrary {
         return $$(lovTreeList).get(0).is(have(text("Sonuç bulunamamıştır")));
     }
 
-
     public static ElementsCollection titleItems(){
 
         String locator = "li  span[class*='ui-tree-selectable-node'] " + lovItemTitle;
@@ -427,6 +402,7 @@ public class ComboLovHelper extends BaseLibrary {
 //        $$(lovTreeList).get(0).shouldBe(visible);
 //        return  $$(lovTree).last().$$(lovTreeListSelectableItemsDetail);
     }
+
 
 
 }
