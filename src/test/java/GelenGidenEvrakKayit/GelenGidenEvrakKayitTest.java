@@ -13,7 +13,6 @@ import pages.solMenuPages.TeslimAlinmayiBekleyenlerPage;
 import pages.ustMenuPages.GelenEvrakKayitPage;
 import pages.ustMenuPages.GercekKisiYonetimPage;
 import pages.ustMenuPages.KaydedilenGelenEvrakPage;
-
 import java.io.IOException;
 
 public class GelenGidenEvrakKayitTest extends BaseTest {
@@ -204,7 +203,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         String evrakNo1 = evrakNO328;
         String geldigiYer = "D";
 // Testin öncesinde TC0321 ve TC0328 caselerinin çalışması gerekli..
-        
+
         kaydedilenGelenEvrakPage
                 .openPage()
                 .gelenEvrakNoDoldur(evrakNO321)
