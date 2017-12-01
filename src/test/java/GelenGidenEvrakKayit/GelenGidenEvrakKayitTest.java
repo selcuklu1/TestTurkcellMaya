@@ -83,9 +83,11 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .evrakEkleriDosyaEkleDosyaAdiKontrol(excelAdi)
                 .evrakEkleriDosyaEkleEkMetinDoldur(ekMetni)
                 .evrakEkTabViewEkle()
+                .dosyaEkleTabTabloKontrolu("Ek-1")
                 .ekBilgiFizikselEkEkle()
                 .evrakEkTabFizikselEkMetniDoldur(ekMetni)
                 .fizikselEkTabViewAciklamaEkle()
+                .dosyaEkleTabTabloKontrolu("Ek-2")
                 .kaydet();
 
         evrakNO321 = gelenEvrakKayitPage.popUps();
@@ -114,7 +116,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
         kaydedilenGelenEvraklarPage
                 .openPage()
-                .tabloIlkRaporIcerik();
+                .tabloRaporIcerik("5012");
 
         String evrakNo = gelenEvrakKayitPage
                 .evrakDetayiEvrakNoTextAl();
@@ -272,11 +274,11 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .evrakEkleriDosyaEkleme(pathToFileExcel)
                 .evrakEkleriDosyaEkleEkMetinDoldur(ekMetni)
                 .evrakEkleriDosyaEkle()
-//                .dosyaEkleTabTabloKontrolu(1,"Ek-1") Webservise  baglanılamadı hatası alnıyor.
+                .dosyaEkleTabTabloKontrolu("Ek-1") //Webservise  baglanılamadı hatası alnıyor.
                 .ekBilgiFizikselEkEkle()
                 .evrakEkTabFizikselEkMetniDoldur(ekMetni)
                 .fizikselEkTabViewAciklamaEkle()
-                .dosyaEkleTabTabloKontrolu("Ek-1")
+                .dosyaEkleTabTabloKontrolu("Ek-2")
                 .kaydet();
         String evrakNo = gelenEvrakKayitPage.popUps();
         //   page.islemMesaji().beklenenMesajTipi(MesajTipi.BASARILI);

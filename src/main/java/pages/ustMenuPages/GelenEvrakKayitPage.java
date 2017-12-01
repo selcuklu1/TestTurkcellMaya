@@ -58,8 +58,7 @@ public class GelenEvrakKayitPage extends MainPage {
     SelenideElement cmbEvrakEkTabViewGizlilikDerecesi = $(By.xpath("//*[@id='evrakBilgileriForm:evrakEkTabView:guvenlikKodu']"));
     SelenideElement txtEvrakEkTabViewEkMetni = $(By.id("evrakBilgileriForm:evrakEkTabView:dosyaAciklama"));
     SelenideElement btvEvrakEkTabViewDosyaEkle = $(By.id("evrakBilgileriForm:evrakEkTabView:fileUploadButton_input"));
-    ElementsCollection tblDosyaEkle =  $$(By.id("evrakBilgileriForm:ekListesiDataTable"));
-
+    ElementsCollection tblDosyaEkle =  $$("div[id='evrakBilgileriForm:ekListesiDataTable'] tr[role=row]");
 
     //Fiziksel Ek Ekle alt sekmesinde bulunanlar
     SelenideElement btnFizikselEkEkle = $("a[href='#evrakBilgileriForm:evrakEkTabView:aciklamaEkleTab']");
@@ -562,6 +561,8 @@ public class GelenEvrakKayitPage extends MainPage {
             popUpEvet.click();
         }
         if (popUphavaleYeriSecmediniz.isDisplayed()) {
+            String mesaj2 = "Havale yeri seçmediniz. Evrak kaydedildiğinde Kaydedilen Gelen Evraklar kutusuna düşecektir. İşleme devam etmek istiyor musunuz?";
+            popUphavaleYeriSecmediniz.getText().equals(mesaj2);
             btnHavaleYeriSecmedinizEvet.click();
         }
         if (ustYaziYokpopUp.isDisplayed()) {
@@ -571,6 +572,8 @@ public class GelenEvrakKayitPage extends MainPage {
             mukerrerPopUpEvet.click();
         }
         basariliPopUp.shouldBe(Condition.visible);
+        String mesaj4 = "Evrak başarıyla kaydedilmiştir.";
+        basariliPopUp.getText().contains(mesaj4);
 
         String evrakNo = getIntegerInText(By.id("evrakKaydetBasariliDialog"));
         basariliPopUpKapat.click();
@@ -753,7 +756,7 @@ public class GelenEvrakKayitPage extends MainPage {
     @Step("")
     public GelenEvrakKayitPage ustYaziDegistirilmisPopUpKontrol(){
         if(popUpUstYaziDegistirilme.isDisplayed())
-            btnUstYaziDegistirmeHayır.click();
+            clickJs(btnUstYaziDegistirmeHayır);
         return this;
     }
     @Step("")
