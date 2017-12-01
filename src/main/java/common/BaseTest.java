@@ -37,7 +37,7 @@ public class BaseTest extends BaseLibrary{
         
         
         // Configuration.browser = "marionette";
-        Configuration.remote = "http://0.0.0.0:32768/wd/hub";
+        Configuration.remote = "http://0.0.0.0:4444/wd/hub";
         
         
         Configuration.reportsFolder = "test-result/reports";
