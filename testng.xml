@@ -23,9 +23,9 @@
             <class name="YonetimHavuzuIslemleri.YonetimHavuzuIslemleriTest"/>
         </classes>
     </test>
-    <test name="BirimIcerikSablonu">
+    <test name="EvrakPostalama">
         <classes>
-            <class name="BirimIcerikSablonu.BirimIcerikSablonuTest"/>
+            <class name="EvrakPostalama.EvrakPostalamaTest"/>
         </classes>
     </test>
 </suite>
