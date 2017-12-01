@@ -87,8 +87,8 @@ public class GercekKisiYonetimiTest extends BaseTest {
 
         evrakOlusturPage
                 .bilgilerTabiAc()
-                .bilgiSecimTipiSec(bilgiSecimTipi);
-        //.bilgiDoldur(adSoyad);
+                .bilgiSecimTipiSec(bilgiSecimTipi)
+                .manuelBilgiDoldur(adSoyad);
         //.islemMesaji().dikkatOlmali(gercekKisiMesaj);
 
         gelenEvrakKayitPage
