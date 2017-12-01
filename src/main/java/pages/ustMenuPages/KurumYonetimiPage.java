@@ -7,6 +7,7 @@ import com.codeborne.selenide.SelenideElement;
 import com.sun.xml.internal.ws.api.ha.StickyFeature;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
@@ -180,13 +181,14 @@ public class KurumYonetimiPage extends MainPage {
     public KurumYonetimiPage durumSec(String value) {
         if(!cmbDurum.isDisplayed())
             filtrePanel.click();
+
+        filtrePanel.sendKeys(Keys.SHIFT);
+        cmbDurum.sendKeys(Keys.SHIFT);
         cmbDurum.selectOption(value);
         return this;
     }
     @Step("Ara")
     public KurumYonetimiPage ara(){
-        if(btnSecileniKaldir.isDisplayed())
-            btnSecileniKaldir.click();
         btnAra.click();
         return this;
     }
@@ -271,6 +273,10 @@ public class KurumYonetimiPage extends MainPage {
     public KurumYonetimiPage sorgulaKurumDoldur(String kurumAdi) {
         if (!txtKurumCombolov.isDisplayed())
             filtrePanel.click();
+
+        if(btnSecileniKaldir.isDisplayed())
+            btnSecileniKaldir.click();
+
         txtKurumCombolov.selectLov(kurumAdi);
         return this;
     }
@@ -548,6 +554,34 @@ public class KurumYonetimiPage extends MainPage {
         $("//span[contains(@class, 'delete-icon')]").click();
         return this;
     }
+
+    By selectorBtnChangeStatu = By.cssSelector("button[id$='changeKurumStatusButton']");
+    SelenideElement btnPasifYapEvet = $(By.id("baseConfirmationDialog:confirmButton"));
+    @Step("{0} kurumu pasif edildi.")
+    public KurumYonetimiPage kurumPasifYap(String kurumAdi){
+
+        tableKurumListesi
+                .filterBy(Condition.text(kurumAdi))
+                .get(0)
+                .$(selectorBtnChangeStatu)
+                .click();
+
+        btnPasifYapEvet.click();
+        return this;
+    }
+    @Step("{0} kurumu pasif edildi.")
+    public KurumYonetimiPage kurumAktifYap(String kurumAdi){
+
+        tablePasifKurumlar
+                .filterBy(Condition.text(kurumAdi))
+                .get(0)
+                .$(selectorBtnChangeStatu)
+                .click();
+
+        btnPasifYapEvet.click();
+        return this;
+    }
+
 
 }
 

@@ -10,10 +10,13 @@ package pages.ustMenuPages;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.UstMenu;
 import pages.pageComponents.belgenetElements.BelgenetElement;
+
+import java.security.Key;
 
 import static com.codeborne.selenide.Selenide.$;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
@@ -40,6 +43,7 @@ public class GidenEvrakKayitPage extends MainPage {
 
     @Step("Gereği seçim tipi seç")
     public GidenEvrakKayitPage geregiSecimTipiSec(String geregi) {
+        cmbGeregiSecimTipi.sendKeys(Keys.SHIFT);
         cmbGeregiSecimTipi.selectOptionByValue(geregi);
         return this;
     }
@@ -54,6 +58,18 @@ public class GidenEvrakKayitPage extends MainPage {
         return this;
     }
 
+    @Step("Gereği doldur")
+    public GidenEvrakKayitPage geregiDoldur(String geregiAdSoyad, Boolean clearAfter) {
+
+        cmbGeregi.selectLov(geregiAdSoyad);
+
+        System.out.println("title: " + cmbGeregi.lastSelectedLovTitleText());
+        System.out.println("detail: " + cmbGeregi.lastSelectedLovDetailText());
+
+        cmbGeregi.clearAllSelectedLov();
+        return this;
+    }
+
     @Step("Kişinin Geregi alanında görüntülenmediği kontrolu")
     public GidenEvrakKayitPage geregiAlanindaGoruntulenmemeKontrolu(String ad, String soyad) {
 
@@ -64,7 +80,7 @@ public class GidenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("Kurumun Geregi alanında görüntülenmediği kontrolu")
+    @Step("Kurumun Geregi alanında görüntüleme kontrolu")
     public GidenEvrakKayitPage geregiAlanindaDegerKontrolu(String aranacakDeger, Boolean shouldBeExist) {
 
         Assert.assertEquals(comboLov(cmbGeregiBy).isLovValueSelectable(aranacakDeger), shouldBeExist);
@@ -85,6 +101,7 @@ public class GidenEvrakKayitPage extends MainPage {
 
     @Step("Bilgi seçim tipi seç")
     public GidenEvrakKayitPage bilgiSecimTipiSec(String bilgi) {
+        cmbBilgiSecimTipi.sendKeys(Keys.SHIFT);
         cmbBilgiSecimTipi.selectOptionByValue(bilgi);
         return this;
     }
@@ -95,6 +112,18 @@ public class GidenEvrakKayitPage extends MainPage {
         cmbBilgi.selectLov(geregiAdSoyad);
         System.out.println("title: " + cmbBilgi.lastSelectedLovTitleText());
         System.out.println("detail: " + cmbBilgi.lastSelectedLovDetailText());
+
+        return this;
+    }
+
+    @Step("Bilgi doldur")
+    public GidenEvrakKayitPage bilgiDoldur(String geregiAdSoyad, Boolean clearAfter) {
+
+        cmbBilgi.selectLov(geregiAdSoyad);
+        System.out.println("title: " + cmbBilgi.lastSelectedLovTitleText());
+        System.out.println("detail: " + cmbBilgi.lastSelectedLovDetailText());
+
+        cmbBilgi.clearAllSelectedLov();
 
         return this;
     }
@@ -121,6 +150,17 @@ public class GidenEvrakKayitPage extends MainPage {
 
         return this;
     }
+
+
+
+    @Step("Kurumun Geregi alanında görüntüleme kontrolu")
+    public GidenEvrakKayitPage bilgiAlanindaDegerKontrolu(String aranacakDeger, Boolean shouldBeExist) {
+
+        Assert.assertEquals(cmbBilgi.isLovValueSelectable(aranacakDeger), shouldBeExist);
+        return this;
+    }
+
+
 
     public GidenEvrakKayitPage secilenGeregiSil() {
         btnGeregiDelete.click();

@@ -5,6 +5,7 @@ import com.codeborne.selenide.impl.ElementFinder;
 import common.BaseLibrary;
 import io.qameta.allure.Allure;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.testng.Assert;
 
 import java.util.List;
@@ -196,8 +197,13 @@ public class ComboLovHelper extends BaseLibrary {
     //region selectLov metodları
     public static BelgenetElement selectLov(String value) {
 
-        executeJavaScript("arguments[0].scrollIntoView();", element);
-//        element.sendKeys(Keys.SHIFT);
+        //executeJavaScript("arguments[0].scrollIntoView();", element);
+        try {
+            if(element.isDisplayed())
+                element.sendKeys(Keys.SHIFT);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 //        WebElement element = WebDriverRunner.getWebDriver().findElement(By.cssSelector(lovText));
 
