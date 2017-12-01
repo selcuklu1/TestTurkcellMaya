@@ -79,7 +79,7 @@ public class BirimIcerikSablonlarPage extends BaseLibrary {
 
     public void yeniSablonOlustur(){
         btnYeniSablonOlustur.click();
-
+/*
         //==============
         String e1 = $x("//*[contains(@class,'cke') and contains(@class,'label') and normalize-space(text())='Yazı Türü']").attr("id");
         $("a[aria-labelledby="+ e1 +"]").click();
@@ -113,7 +113,7 @@ public class BirimIcerikSablonlarPage extends BaseLibrary {
 //        getType(e);
  e.click();
         String a = e.innerText();
-        //*[@class='cke_toolbox']//a/span[normalize-space(text())='Kes']/..
+        //*[@class='cke_toolbox']//a/span[normalize-space(text())='Kes']/..*/
     }
 
     public SelenideElement getToolboxElement(String name) {

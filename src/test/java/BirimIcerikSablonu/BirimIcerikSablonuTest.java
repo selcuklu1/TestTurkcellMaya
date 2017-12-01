@@ -9,6 +9,7 @@ import io.qameta.allure.Feature;
 import org.openqa.selenium.By;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import pages.pageComponents.TextEditor;
 import pages.ustMenuPages.BirimIcerikSablonlarPage;
 
 import static com.codeborne.selenide.Selenide.$;
@@ -45,5 +46,8 @@ public class BirimIcerikSablonuTest extends BaseTest {
         birimIcerikSablonlarPage.openPage()
                 .yeniSablonOlustur();
 
+        new TextEditor()
+                .toolbarCombo("Biçim").selectValue("Başlık 1")
+                .toolbarButton("Kalın").activate();
     }
 }
