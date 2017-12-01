@@ -16,17 +16,17 @@ import static data.TestData.belgenetURL;
 
 
 @Listeners({SettingsListener.class})
-public class BaseTest extends BaseLibrary {
+public class BaseTest extends BaseLibrary{
 
     @BeforeClass
     public void driverSetUp() {
         Locale turkishLocal = new Locale("tr", "TR");
         Locale.setDefault(turkishLocal);
 
-
         //region SetUp BelgenetFramework for BelgenetElements usage
         BelgenetFramework.setUp();
         //endregion
+
         //region Selenide Driver Configuration
 //        Configuration.baseUrl = belgenetURL;
         //    Configuration.browser = "drivers.Firefox";
@@ -55,8 +55,22 @@ public class BaseTest extends BaseLibrary {
         Configuration.timeout = 20000;
 //        Configuration.holdBrowserOpen = true;
 //        Configuration.headless = true;
+
+        //region Selenide Driver Configuration
+        Configuration.baseUrl = belgenetURL;
+        //Configuration.browser = "drivers.Firefox";
+        //Configuration.browser = "chrome";
+        Configuration.browser = "marionette";
+        //Configuration.remote = "http://0.0.0.0:32768/wd/hub";
+        Configuration.reportsFolder = "test-result/reports";
+        Configuration.screenshots = false;
+        Configuration.savePageSource = false;
+        Configuration.collectionsTimeout = 10000;
+        Configuration.timeout = 10000;
+        Configuration.holdBrowserOpen = true;
+        Configuration.headless = false;
         Configuration.startMaximized = true;
-//        Configuration.browserSize = "1024x600";
+        //Configuration.browserSize = "1024x600";
         //endregion
 
         System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, "/dev/null");

@@ -72,11 +72,11 @@ public class YonetimHavuzuYonetimiPage extends MainPage {
     // Arama işlemleri
     @Step("Yönetim Havuzu arama")
     public YonetimHavuzuYonetimiPage ara(String birimAdi, String yonetimHavuzuAdi, String durum, boolean checkIfExists) {
-        if (birimAdi != null) {
-            if(txtFiltreBirim.isDisplayed() == false)
-                divFiltrePanel.click();
+        if(!btnFiltreAra.isDisplayed())
+            divFiltrePanel.click();
 
-            comboLov(By.id("yonetimHavuzuYonetimiListingForm:filterPanel:birimLov:LovText")).selectLov(birimAdi);
+        if (birimAdi != null) {
+            txtFiltreBirim.selectLov(birimAdi);
         }
 
         if (yonetimHavuzuAdi != null)

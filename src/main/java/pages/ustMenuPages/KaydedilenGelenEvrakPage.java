@@ -3,12 +3,14 @@ package pages.ustMenuPages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementNotSelectableException;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.interactions.HasInputDevices;
 import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
@@ -27,8 +29,8 @@ public class KaydedilenGelenEvrakPage extends MainPage {
     BelgenetElement cmbBirim = comboLov(By.id("birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuBirimLovId:j_idt126"));
     SelenideElement txtEvrakKayitNo = $(By.id("birimeGelenEvrakRaporuForm:evrakNoId"));
     SelenideElement btnSorgula = $(By.id("birimeGelenEvrakRaporuForm:sorgulaButton"));
-    SelenideElement btnRaporAlExcel = $(By.id("birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable:j_idt15891"));
-    SelenideElement btnRaporAlPdf = $(By.id("birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable:j_idt15889"));
+    SelenideElement btnRaporAlExcel = $(By.id("birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable:j_idt1805"));
+    SelenideElement btnRaporAlPdf = $(By.id("birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable:j_idt1803"));
     SelenideElement tblKaydedilenGelenEvrak = $(By.id("birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable_data"));
     SelenideElement tbldene = $(By.xpath("//tbody[@id='birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable_data']/tr/td[2]/div"));
 
@@ -65,8 +67,8 @@ public class KaydedilenGelenEvrakPage extends MainPage {
     public KaydedilenGelenEvrakPage raporAlExcel() throws IOException {
 
         deleteFile("C:\\Users\\Emre_Sencan\\Downloads\\","Rapor_");
-        searchDownloadedFileWithName("C:\\Users\\Emre_Sencan\\Downloads\\","Rapor_.xls");
         btnRaporAlExcel.click();
+        searchDownloadedFileWithName("C:\\Users\\Emre_Sencan\\Downloads\\","Rapor_.xls");
         return this;
     }
 
@@ -78,24 +80,28 @@ public class KaydedilenGelenEvrakPage extends MainPage {
         File[] dir_contents = dir.listFiles();
         Pattern y = Pattern.compile("[^0-9]");
         String s = null;
+        SoftAssert sa = new SoftAssert();
 
-        for (int i = 0; i < dir_contents.length; i++) {
+        for (int i = 0; i <= dir_contents.length; i++) {
             String file = dir_contents[i].getName().toString();
             s="";
             Matcher m = y.matcher(file);
             while (m.find()) {
                 s =s+ m.group();
             }
-            System.out.println(s);
-            assert s.equals(fileName) : "Klasör "+ dir_contents[i].getName().toString() + "indirilmiştir.";
-            assert s.equalsIgnoreCase(fileName) : "İstenilen dosya indirilmemiştir.";
+//            sa.assertEquals(s,fileName,"Klasör "+ dir_contents[i].getName().toString() +"indirilmiştir.");
+//            sa.assertNotEquals(s,fileName,"İstenilen dosya indirilmemiştir.");
+//            assert s.equals(fileName) : "Klasör "+ dir_contents[i].getName().toString() + "indirilmiştir.";
+//            assert s.equalsIgnoreCase(fileName) : "İstenilen dosya indirilmemiştir.";
 
-//            if (s.equals(fileName)){
-//                System.out.println("Klasör "+ dir_contents[i].getName().toString() + " indirilmiştir.");
-//                flag = true;
-//            }
-//            else
-//                System.out.println("İstenilen dosya indirilmemiştir.");
+            if (s.equals(fileName)){
+                System.out.println("Klasör "+ dir_contents[i].getName().toString() +" indirilmiştir.");
+                Allure.addAttachment(dir_contents[i].getName().toString(),"raporu indirilmiştir");
+                flag = true;
+                break;
+            }
+            else
+                System.out.println("İstenilen dosya indirilmemiştir.");
         }
         return flag;
     }

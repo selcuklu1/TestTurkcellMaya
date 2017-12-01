@@ -31,6 +31,14 @@
             <version>3.7.1</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-server -->
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-server</artifactId>
+            <version>3.6.0</version>
+        </dependency>
+
+
         <dependency>
             <groupId>com.galenframework</groupId>
             <artifactId>galen-java-support</artifactId>
@@ -77,6 +85,17 @@
                             <!--<name>allure.results.directory</name>-->
                             <!--<value>/Users/Shared/Jenkins/Home/workspace/test/allure-results</value>-->
                         <!--</property>-->
+                    <!--<property>-->
+                    <!--<name>allure.results.directory</name>-->
+                    <!--<value>${project.build.directory}/allure-results</value>-->
+                    <!--&lt;!&ndash;<value>test-result/allure-xml</value>&ndash;&gt;-->
+                    <!--</property>-->
+                    <!--</systemProperties>-->
+                    <!--<systemProperties>-->
+                    <!--<property>-->
+                    <!--<name>allure.results.directory</name>-->
+                    <!--<value>/Users/Shared/Jenkins/Home/workspace/test/allure-results</value>-->
+                    <!--</property>-->
                     <!--</systemProperties>-->
                 </configuration>
                 <dependencies>
@@ -110,9 +129,4 @@
         <!--</plugins>-->
     <!--</reporting>-->
 </project>
-
-
-
-
-
 

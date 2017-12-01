@@ -145,6 +145,7 @@ public class GelenEvrakKayitPage extends MainPage {
 
     //Dosya ekleme path
     By dosyaPath = By.xpath("//input[@id='evrakBilgileriForm:evrakEkTabView:fileUploadButton_input']");
+    SelenideElement ustYazi = $(By.xpath("//input[@class='ustYaziUploadClass']"));
 
 //    Evrak Detayı sayfası objeleri
 
@@ -184,7 +185,8 @@ public class GelenEvrakKayitPage extends MainPage {
     }
 
     public GelenEvrakKayitPage evrakBilgileriUstYaziEkle(String path) throws InterruptedException {
-        ustYaziUploadFile(path);
+        uploadFile(ustYazi, path);
+        //ustYaziUploadFile(path);
         return this;
     }
 
@@ -716,6 +718,19 @@ public class GelenEvrakKayitPage extends MainPage {
     public GelenEvrakKayitPage evrakDetayiKaydetPopUpClose(){
         btnEvrakDetayiKaydetUyarisi.shouldBe(Condition.visible);
         btnEvrakDetayiKaydetUyarisi.click();
+        return this;
+    }
+
+    @Step("Panel kapat")
+    public GelenEvrakKayitPage panelKapat(Boolean kaydet){
+        $(By.xpath("//div[@id='mainTaskBar']//span[text()='[Gelen Evrak Kayıt]']"))
+                .contextClick();
+
+        if(kaydet)
+            $(By.id("kapatKaydetEvetButton")).click();
+        else
+            $(By.id("kapatKaydetHayirButton")).click();
+
         return this;
     }
 }

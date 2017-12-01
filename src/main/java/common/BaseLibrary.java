@@ -4,6 +4,7 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
+import com.codeborne.selenide.impl.SelenideFieldDecorator;
 import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
 import org.openqa.selenium.*;
@@ -21,6 +22,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -30,6 +32,7 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfEl
 
 public class BaseLibrary {
 
+    private static final Logger log = Logger.getLogger(BaseLibrary.class.getName());
     protected static String winHandleBefore = null;
 
     //<editor-fold desc="Allure screenshooter">
@@ -192,16 +195,13 @@ public class BaseLibrary {
         executeJavaScript("arguments[0].click();", element);
     }
 
-    //Üstyazı dosyasını ekler
-    public void ustYaziUploadFile(String pathToFile) {
+    //Dosya ekler
+    public void uploadFile(SelenideElement element, String pathToFile) {
         try {
-            $(By.xpath("//input[@class='ustYaziUploadClass']")).sendKeys(pathToFile);
-//            LogPASS("Dosya Yuklendi.");
+            element.sendKeys(pathToFile);
+            log.info("Dosya yüklendi.");
         } catch (Exception e) {
-//            logger.error("Error in attaching file.s : " + e);
-//            LogFAIL("Error in attaching file.s : " + e);
-            System.out.println("Error in attaching file.s  : " + e);
-
+            log.info("Error in attaching file.s : " + e);
             throw new RuntimeException(e);
         }
     }
@@ -488,8 +488,8 @@ public class BaseLibrary {
         } else {
             if (exactText == true)
                 element.shouldNotHave(Condition.exactValue(value));
-            else
-            {
+
+            else {
                 String _value = element.getValue();
                 Assert.assertEquals(_value.contains(value), false);
             }
@@ -514,8 +514,9 @@ public class BaseLibrary {
         return status;
     }
 
-    //Klasordeki dosyaları ismine göre siler...
+    //Bilgisayarda uzantısını verdiğiniz klasordeki dosyalardan gönderdiğiniz ismi içinde içeriyorsa o dosyayı siler.
     public boolean deleteFile(String path, String fileName) throws IOException {
+
         boolean flag = false;
         File directory = new File(path);
         if (directory.exists()) {

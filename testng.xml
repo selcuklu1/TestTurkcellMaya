@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<<<<<<< HEAD
 <suite thread-count="5" name="Test Suite" parallel="false" verbose="1">
 
     <test name="TestName1">
@@ -7,6 +8,9 @@
             <class name="dumpTest.EvrakOlusturTest"/>
         </classes>
     </test>
+=======
+<suite thread-count="1" name="Test Suite" parallel="true" verbose="1">
+>>>>>>> 05bdcde4616e7b93b51e81c71e5ffeed06397c57
     <!--<listeners>-->
     <!--<listener class-name="listeners.TestListener"></listener>-->
     <!--</listeners>-->
@@ -14,24 +18,28 @@
     <!--<suite-file path="testSuite1.xml"></suite-file>-->
     <!--<suite-file path="testSuite2.xml"></suite-file>-->
     <!--</suite-files>-->
+<<<<<<< HEAD
    <!-- <test name="BTest1">
+=======
+    <test name="GercekKisiYonetimiTest">
+>>>>>>> 05bdcde4616e7b93b51e81c71e5ffeed06397c57
         <classes>
-            <class name="Example.TestClass1"/>
+            <class name="GercekKisiYonetimi.GercekKisiYonetimiTest"/>
         </classes>
     </test>
-    <test name="BTest2">
+    <test name="TuzelKisiYonetimiTest">
         <classes>
-            <class name="Example.TestClass2"/>
+            <class name="TuzelKisiYonetimi.TuzelKisiYonetimiTest"/>
         </classes>
     </test>
-    <test name="BTest3">
+    <test name="YonetimHavuzuIslemleriTest">
         <classes>
-            <class name="Example.TestClass3"/>
+            <class name="YonetimHavuzuIslemleri.YonetimHavuzuIslemleriTest"/>
         </classes>
     </test>
-    <test name="BTest4">
+    <test name="EvrakPostalama">
         <classes>
-            <class name="Example.PaylastiklarimTest"/>
+            <class name="EvrakPostalama.EvrakPostalamaTest"/>
         </classes>
     </test>-->
 </suite>
