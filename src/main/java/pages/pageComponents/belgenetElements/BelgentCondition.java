@@ -14,4 +14,12 @@ public abstract class BelgentCondition extends Condition {
             return element.getAttribute("class").contains("required");
         }
     };
+
+    public static final Condition isPressedToolbox = new Condition("required") {
+        @Override
+        public boolean apply(WebElement element) {
+            return element.getAttribute("aria-pressed") != null && element.getAttribute("aria-pressed").contains("true");
+        }
+    };
+
 }

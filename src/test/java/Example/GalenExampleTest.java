@@ -1,3 +1,4 @@
+/*
 package Example;//import com.galenframework.api.Galen;
 //import com.galenframework.api.GalenPageDump;
 //import com.galenframework.reports.GalenTestInfo;
@@ -7,6 +8,7 @@ package Example;//import com.galenframework.api.Galen;
 import common.BaseTest;
 
 public class GalenExampleTest extends BaseTest {
+*/
 
 //    @BeforeMethod
 //    public void beforeMethod(Method method) {
@@ -76,4 +78,4 @@ public class GalenExampleTest extends BaseTest {
 //            Assert.fail("Layout test failed");
 //        }
 //    }
-}
+//}

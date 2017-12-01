@@ -2,12 +2,17 @@ package dumpTest;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import common.BaseTest;
+import io.qameta.allure.Allure;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageComponents.belgenetElements.BelgentCondition;
 import pages.ustMenuPages.EvrakOlusturPage;
 import pages.ustMenuPages.PulYonetimiPage;
@@ -23,7 +28,8 @@ public class EvrakOlusturTest extends BaseTest {
 
     @BeforeClass
     public void setUp() throws Exception {
-
+//        WebDriver driver = new FirefoxDriver();
+//        driver.get("https://www.google.com/");
 //        login();
 //        evrakOlusturPage = new EvrakOlusturPage();
 //        evrakOlusturPage.open().bilgilerTabiAc();
@@ -44,6 +50,12 @@ public class EvrakOlusturTest extends BaseTest {
         login();
 
         new EvrakOlusturPage().openPage().bilgilerTabiAc();
+
+        BelgenetElement el = comboLov(By.id("yeniGidenEvrakForm:evrakBilgileriList:16:geregiLov:LovText"))
+                .selectLov("optiim").lastSelectedLov();
+
+        /*ElementsCollection col = el.titleItems();
+        int q = col.size();
 
         String a1 =  comboLov("input[id$='konuKoduLov:LovText']").lastSelectedLov().text();
         String a = comboLov(By.id("yeniGidenEvrakForm:evrakBilgileriList:16:geregiLov:LovText"))
@@ -103,7 +115,7 @@ public class EvrakOlusturTest extends BaseTest {
 ////
 ////        System.out.println("Text: " + $("button[id='topMenuForm:userMenuButton_button']").text());
 ////        System.out.println("InnerText: " + $("button[id='topMenuForm:userMenuButton_button']").innerText());
-////        takeScreenshot();
+////        takeScreenshot();*/
     }
 
     @Test(enabled = false, dataProvider = "zorunluAlanlar")
