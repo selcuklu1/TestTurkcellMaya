@@ -319,7 +319,7 @@ public class TuzelKisiYonetimiTest extends BaseTest {
                 .bilgilerTabiAc()
                 .geregiSecimTipiSec("T")
                 .geregiDoldur(ad2)
-                .tuzelKisiGeregiAlaniKontrol(vergiNo2, postaTipi)
+                .tuzelKisiGeregiAlaniVergiNoPostaTipiKontrol(vergiNo2, postaTipi)
 
                 .secilenGeregiSil()
                 .geregiDoldur(vergiNo2)
@@ -334,5 +334,88 @@ public class TuzelKisiYonetimiTest extends BaseTest {
                 .geldigiTuzelKisiDoldur(vergiNo2)
                 .secilenGeregiTuzelKisiSil()
                 .geldigiTuzelKisiDoldur(kisaAd2);
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TC2241: Tüzel kişinin iletişim bilgisinin değiştirilmesi")
+    public void TC2241() throws InterruptedException {
+
+        String vergiNo = "85212364597";
+        String ad = "SÇ Üniversitesi";
+        String kisaAd = "scunv";
+
+        String mobilTelNo = "539" + createRandomNumber(7);
+        String telNo = "212" + createRandomNumber(11);
+        String isTelNo = "212" + createRandomNumber(11);
+        String faxNo = "212" + createRandomNumber(7);
+        String adres = createRandomText(7) + " " + "Mahallesi";
+        String il = "İstanbul";
+        String ilce = "Kadıköy";
+        String ulke = "TÜRKİYE";
+        String ePosta = createRandomText(5) + "@turksat.com.tr";
+        String webAdres = "http://www.scunv.com.tr/";
+        String basariMesaji = "İşlem başarılıdır!";
+        String birinciKullaniciGeregiAdresi = adres + ilce + "/" + il;
+        String vergiNo2 = "1122007720";
+
+        tuzelKisiYonetimiPage
+                .openPage()
+                .filtreVergiNoDoldur(vergiNo)
+                .filtreAdDoldur(ad)
+                .ara()
+                .aktifTuzelKisiKayitKontrolu(vergiNo, ad, kisaAd)
+                .tuzelKisiGuncelle()
+                .iletisimBilgileriGuncelle()
+
+                .mobilTelNoDoldur(mobilTelNo)
+                .telNoDoldur(telNo)
+                .faks1NoDoldur(faxNo)
+                .faks2NoDoldur(faxNo)
+                .adresDoldur(adres)
+                .ulkeSec(ulke)
+                .ilSec(il)
+                .ilceSec(ilce)
+                .ePostaDoldur(ePosta)
+                .webAdresDoldur(webAdres)
+                .iletisimBilgisiKaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .geregiSecimTipiSec("T")
+                .geregiDoldur(ad)
+                .tuzelKisiGeregiAlaniVergiNoAdAdresKontrol(vergiNo, ad, adres)
+
+                .geregiAlaniGuncelle()
+                .adresHitaptaGorunsunSec(true)
+                .dagitimHitapDuzenlemeKaydet();
+
+        evrakOlusturPage
+                .editorTabAc()
+                .hitapAlaniAdresKontrol(adres, ilce, il);
+
+        evrakOlusturPage
+                .bilgilerTabiAc()
+                .bilgiSecimTipiSec("T")
+                .bilgiDoldur(vergiNo2)
+                .bilgiAlaniGuncelle();
+
+        String getIkinciKullaniciAdres = evrakOlusturPage.bilgilerTabiAc().getDagitimHitapAdres();
+
+        evrakOlusturPage
+                .bilgilerTabiAc()
+                .adresDagitimdaGorunsunSec(true)
+                .dagitimHitapDuzenlemeKaydet()
+                .windowHandleBefore();
+
+        evrakOlusturPage
+                .pdfOnIzleme()
+                .switchToNewWindow();
+
+        evrakOlusturPage
+                .pdfKontrol
+                .geregiBilgiAlaniAdresPdfKontrol(birinciKullaniciGeregiAdresi, getIkinciKullaniciAdres)
+                .switchToDefaultWindow();
     }
 }

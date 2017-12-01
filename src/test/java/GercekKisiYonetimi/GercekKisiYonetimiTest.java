@@ -54,6 +54,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
         String geregiSecimTipi = "G";
         String evrakBilgileriListKisiKurumTipi = "G";
         String gercekKisiMesaj = "Seçtiğiniz gerçek kişi gereği / bilgi listesinde ekli olduğu için bu gerçek kişiyi seçemezsiniz.";
+        String basariMesaji = "İşlem başarılıdır!";
 
         gercekKisiYonetimPage
                 .openPage()
@@ -63,7 +64,6 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .unvanDoldur(unvan)
                 .adDoldur(ad)
                 .soyadDoldur(soyad)
-                //.kepAdresiKullaniyor(true)
                 .iletisimBilgileriEkle()
 
                 .iletisimBilgisiAdresDoldur(adres)
@@ -72,7 +72,8 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .iletisimBilgisiEpostaDoldur(eposta)
                 .iletisimBilgisiKaydet()
 
-                .kaydet();
+                .kaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
 
         evrakOlusturPage
                 .openPage()
@@ -88,8 +89,8 @@ public class GercekKisiYonetimiTest extends BaseTest {
         evrakOlusturPage
                 .bilgilerTabiAc()
                 .bilgiSecimTipiSec(bilgiSecimTipi)
-                .manuelBilgiDoldur(adSoyad);
-        //.islemMesaji().dikkatOlmali(gercekKisiMesaj);
+                .manuelBilgiDoldur(adSoyad)
+               .islemMesaji().dikkatOlmali(gercekKisiMesaj);
 
         gelenEvrakKayitPage
                 .openPage()
@@ -373,7 +374,6 @@ public class GercekKisiYonetimiTest extends BaseTest {
 
         evrakOlusturPage
                 .editorTabAc()
-                //.openTab("Editör")
                 .hitapAlaniAdresKontrol(adres, ilce, il);
 
         evrakOlusturPage

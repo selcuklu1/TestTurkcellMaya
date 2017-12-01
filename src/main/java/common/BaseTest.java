@@ -16,7 +16,7 @@ import static data.TestData.belgenetURL;
 
 
 @Listeners({SettingsListener.class})
-public class BaseTest extends BaseLibrary {
+public class BaseTest extends BaseLibrary{
 
     @BeforeClass
     public void driverSetUp() {
@@ -31,9 +31,12 @@ public class BaseTest extends BaseLibrary {
         Configuration.baseUrl = belgenetURL;
         //Configuration.browser = "drivers.Firefox";
         //Configuration.browser = "chrome";
+
         //Configuration.browser = "drivers.Firefox";
        Configuration.browser = "chrome";
 //        Configuration.browser = "marionette";
+
+        Configuration.browser = "marionette";
         //Configuration.remote = "http://0.0.0.0:32768/wd/hub";
         Configuration.reportsFolder = "test-result/reports";
         Configuration.screenshots = false;
