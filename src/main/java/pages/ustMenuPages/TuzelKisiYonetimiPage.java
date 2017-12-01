@@ -66,6 +66,7 @@ public class TuzelKisiYonetimiPage extends MainPage {
     SelenideElement cmbPopupKepHizmetSaglayicisi = $(By.id("tuzelKisiKepAdresEditorForm:kephs"));
     SelenideElement btnKepAdresKaydet = $(By.id("tuzelKisiKepAdresEditorForm:saveKepAdresiButton"));
     SelenideElement btnKepAdresIptalEt = $(By.id("tuzelKisiKepAdresEditorForm:cancelSaveIletisimBilgisiButton"));
+    SelenideElement btnIletisimBilgileriGuncelle = $(By.cssSelector("[id^='tuzelKisiYonetimiEditorForm:iletisimBilgileriDataTable'][id$='updateIletisimBilgisiButton']"));
 
     //Tablo
     SelenideElement tblTuzelKisiDataTable = $(By.id("tuzelKisiYonetimiListingForm:tuzelKisiDataTable"));
@@ -128,6 +129,13 @@ public class TuzelKisiYonetimiPage extends MainPage {
         btnKepAdresIptalEt.click();
         return this;
     }
+
+    @Step("İletişim Bilgileri güncelle")
+    public TuzelKisiYonetimiPage iletisimBilgileriGuncelle() {
+        btnIletisimBilgileriGuncelle.click();
+        return this;
+    }
+
 
     @Step("Kep hizmet sağlayıcısı seç")
     public TuzelKisiYonetimiPage kepHizmetSaglayicisiSec(String value) {
