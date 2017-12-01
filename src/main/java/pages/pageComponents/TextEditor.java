@@ -1,11 +1,9 @@
 package pages.pageComponents;
 
-import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.ElementsContainer;
 import com.codeborne.selenide.SelenideElement;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
+import pages.pageComponents.belgenetElements.BelgentCondition;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
@@ -17,9 +15,11 @@ import static com.codeborne.selenide.Selenide.switchTo;
  * Tarih: 1.12.2017
  * Açıklama:
  */
-public class TextEditorToolbox extends ElementsContainer {
+public class TextEditor extends ElementsContainer {
 
-    private SelenideElement getToolboxElement(String name) {
+    private SelenideElement toolbarElement;
+
+    private SelenideElement setToolbarElement(String name) {
 
         //<editor-fold desc="Description">
         //        String elementType = element.attr("class").contains("cke_combo_button") ? "combo" : "button" ;
@@ -32,19 +32,37 @@ public class TextEditorToolbox extends ElementsContainer {
 //        return elementInFrame("a[aria-labelledby="+ labelId +"]");
         //</editor-fold>
 
-        return $("a[href*='\'"+ name +"\'']");
+        this.toolbarElement = $("a[href*=\"'"+ name +"'\"]");
+        return this.toolbarElement;
     }
 
-    public TextEditorToolbox clickButton(String name) {
-        getToolboxElement(name).click();
-
-        switchTo().defaultContent();
+    //<editor-fold desc="Public Toolbar metodları">
+    public TextEditor toolbarButton(String name) {
+        setToolbarElement(name);
+//        switchTo().defaultContent();
         return this;
     }
 
-    public TextEditorToolbox selectCombo(String name, String value) {
-        getToolboxElement(name).click();
-        $(".cke_panel_block a[title='" + value + "']").click();
+    public TextEditor activate(){
+        if (toolbarElement != null && toolbarElement.is(not(BelgentCondition.isPressedToolbox)))
+            toolbarElement.click();
+        return this;
+    }
+
+    public TextEditor deactivate(){
+        if (toolbarElement != null && toolbarElement.is(BelgentCondition.isPressedToolbox))
+            toolbarElement.click();
+        return this;
+    }
+
+    public TextEditor toolbarCombo(String name) {
+        setToolbarElement(name);
+        return this;
+    }
+
+    public TextEditor selectValue(String value) {
+        toolbarElement.click();
+        elementInFrame(".cke_panel_block a[title='" + value + "']").click();
 
         //<editor-fold desc="Detailed selectors. Not in use">
         /*
@@ -60,6 +78,7 @@ public class TextEditorToolbox extends ElementsContainer {
         switchTo().defaultContent();
         return this;
     }
+    //</editor-fold>
 
     private SelenideElement getEditor(){
         //birden fazla editor içiren varsa visible olanı al
@@ -69,6 +88,7 @@ public class TextEditorToolbox extends ElementsContainer {
         return $("body[class*='cke_contents_ltr']");
     }
 
+    //
     private SelenideElement elementInFrame(String locator){
         switchTo().defaultContent();
         if ($(locator).exists())

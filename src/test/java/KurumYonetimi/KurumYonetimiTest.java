@@ -31,7 +31,8 @@ public class KurumYonetimiTest extends BaseTest {
     public void TC01459() throws InterruptedException {
 
         String guncellenecekKurumAdi = "huseyindeneme";
-        String yeniKurumAdi = "huseyindeneme" + (new Random().nextInt((9000 - 1000) + 1) + 1000);;
+        String yeniKurumAdi = "huseyindeneme" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
+        ;
         String idariBirimKimlikKodu = (new Random().nextInt((900000 - 100000) + 1) + 100000) + "";
         String ustKurum = "Adalet Bakanlığı";
         String kontrolEdilecekGeregiDetay = "";
@@ -237,6 +238,10 @@ public class KurumYonetimiTest extends BaseTest {
         String pasifKurumadi = "Maliye Bakanlığı";
         String pasifIdariBirimKimlikKodu = "24316011";
 
+        String pasifYapilacakKurum = "Yenikurum3633";
+        String pasifYapilacakKurumUstKurum = "Maliye Bakanlığı";
+
+
         kurumYonetimiPage
                 .openPage()
                 .durumSec("Sadece Aktifler")
@@ -248,7 +253,6 @@ public class KurumYonetimiTest extends BaseTest {
                 .ara()
                 .kurumTableKontrol(null, "Sadece Pasifler", true)
 
-                .yeniKurumEkle()
 
                 .durumSec("Tümü")
                 .ara()
@@ -259,12 +263,12 @@ public class KurumYonetimiTest extends BaseTest {
                 .ara()
                 .kurumTableKontrol(null, "Sadece Aktifler", true)
 
-                .sorgulaIdariKimlikKoduSec(aktifIdariBirimKimlikKodu)
+
+                .sorgulaKurumDoldur(aktifIdariBirimKimlikKodu)
                 .durumSec("Sadece Aktifler")
                 .ara()
                 .kurumTableKontrol(null, "Sadece Aktifler", true)
 
-                .yeniKurumEkle()
 
                 .sorgulaKurumDoldur(pasifKurumadi)
                 .durumSec("Sadece Pasifler")
@@ -272,19 +276,122 @@ public class KurumYonetimiTest extends BaseTest {
                 .kurumTableKontrol(null, "Sadece Pasifler", true)
 
 
-                .sorgulaIdariKimlikKoduSec(pasifIdariBirimKimlikKodu)
+                .sorgulaKurumDoldur(pasifIdariBirimKimlikKodu)
                 .durumSec("Sadece Pasifler")
                 .ara()
-                .kurumTableKontrol(null, "Sadece Pasifler", true);
+                .kurumTableKontrol(null, "Sadece Pasifler", true)
+                .panelKapat();
+
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .bilgiSecimTipiSec("D")
+                .bilgiSec(aktifIdariBirimKimlikKodu, true)
+                .bilgiSec(aktifKurumAdi, true)
+                .geregiSecimTipiSec("D")
+                .geregiSec(aktifIdariBirimKimlikKodu,true)
+                .geregiSec(aktifKurumAdi, true);
+        evrakOlusturPage
+                .evrakOlusturPageKapat();
+
+
+        gelenEvrakKayitPage
+                .openPage()
+                .kisiKurumSec("D")
+                .geldigiKurumDoldurLovText(aktifIdariBirimKimlikKodu)
+                .geldigiKurumDoldurLovText(aktifKurumAdi)
+                .panelKapat(false);
+
+        gidenEvrakKayitPage
+                .openPage()
+                .geregiSecimTipiSec("D")
+                .geregiDoldur(aktifIdariBirimKimlikKodu, true)
+                .geregiDoldur(aktifKurumAdi, true)
+                .bilgiSecimTipiSec("D")
+                .bilgiDoldur(aktifIdariBirimKimlikKodu, true)
+                .bilgiDoldur(aktifKurumAdi, true)
+                .panelKapat(false);
 
 
 
+        kurumYonetimiPage
+                .openPage()
+                .sorgulaKurumDoldur(pasifYapilacakKurum)
+                .ara()
+                .kurumPasifYap(pasifYapilacakKurum)
+                .sorgulaKurumDoldur(pasifYapilacakKurumUstKurum)
+                .durumSec("Sadece Pasifler")
+                .ara()
+                .kurumTableKontrol(pasifYapilacakKurum, "Sadece Pasifler", false)
+                .panelKapat();
 
 
 
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .geregiSecimTipiSec("D")
+                .geregiTreeKontrolEt(pasifYapilacakKurum, false);
+
+        evrakOlusturPage
+                .evrakOlusturPageKapat();
+
+        gidenEvrakKayitPage
+                .openPage()
+                .geregiSecimTipiSec("D")
+                .geregiAlanindaDegerKontrolu(pasifYapilacakKurum, false)
+                .bilgiSecimTipiSec("D")
+                .bilgiAlanindaDegerKontrolu(pasifYapilacakKurum, false)
+                .panelKapat(false);
+
+        gelenEvrakKayitPage
+                .openPage()
+                .kisiKurumSec("D")
+                .geldigiKurumDegerGoruntulemeKontrolu(pasifYapilacakKurum, false)
+                .panelKapat(false);
+
+
+        kurumYonetimiPage
+                .openPage()
+                .sorgulaKurumDoldur(pasifYapilacakKurumUstKurum)
+                .durumSec("Sadece Pasifler")
+                .ara()
+                .kurumAktifYap(pasifYapilacakKurum);
+        kurumYonetimiPage.yeniKurumEkle();
+        kurumYonetimiPage
+                .sorgulaKurumDoldur(pasifYapilacakKurum)
+                .durumSec("Sadece Aktifler")
+                .ara()
+                .kurumTableKontrol(pasifYapilacakKurum, "Sadece Aktifler", false)
+                .panelKapat();
 
 
 
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .geregiSecimTipiSec("D")
+                .geregiTreeKontrolEt(pasifYapilacakKurum, true)
+                .bilgiSecimTipiSec("D")
+                .bilgiSecimTipiTreeKontrolEt(pasifYapilacakKurum, true);
+
+        evrakOlusturPage
+                .evrakOlusturPageKapat();
+
+        gidenEvrakKayitPage
+                .openPage()
+                .geregiSecimTipiSec("D")
+                .geregiAlanindaDegerKontrolu(pasifYapilacakKurum, true)
+                .bilgiSecimTipiSec("D")
+                .bilgiAlanindaDegerKontrolu(pasifYapilacakKurum, true)
+                .panelKapat(false);
+
+        gelenEvrakKayitPage
+                .openPage()
+                .kisiKurumSec("D")
+                .geldigiKurumDegerGoruntulemeKontrolu(pasifYapilacakKurum, true)
+                .panelKapat(false);
 
     }
 

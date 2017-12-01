@@ -10,13 +10,17 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageComponents.belgenetElements.BelgentCondition;
+import pages.pageData.SolMenuData;
 import pages.ustMenuPages.EvrakOlusturPage;
 import pages.ustMenuPages.PulYonetimiPage;
 
+import static com.codeborne.selenide.Condition.exactText;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.executeJavaScript;
@@ -26,13 +30,14 @@ public class EvrakOlusturTest extends BaseTest {
 
     EvrakOlusturPage evrakOlusturPage;
 
-    @BeforeClass
+    @BeforeMethod
     public void setUp() throws Exception {
 //        WebDriver driver = new FirefoxDriver();
 //        driver.get("https://www.google.com/");
 //        login();
 //        evrakOlusturPage = new EvrakOlusturPage();
 //        evrakOlusturPage.open().bilgilerTabiAc();
+        login();
     }
 
     public void clickOnInvisibleElement(SelenideElement element) {
@@ -46,15 +51,18 @@ public class EvrakOlusturTest extends BaseTest {
     }
 
     @Test
-    public void testName() throws Exception {
-        login();
+    public void solMenuTest() throws Exception {
+        new MainPage().solMenu(SolMenuData.KurulIslemleri.KararIzleme);
+    }
 
+    @Test
+    public void testName() throws Exception {
         new EvrakOlusturPage().openPage().bilgilerTabiAc();
 
         BelgenetElement el = comboLov(By.id("yeniGidenEvrakForm:evrakBilgileriList:16:geregiLov:LovText"))
                 .selectLov("optiim").lastSelectedLov();
 
-        /*ElementsCollection col = el.titleItems();
+        ElementsCollection col = el.titleItems();
         int q = col.size();
 
         String a1 =  comboLov("input[id$='konuKoduLov:LovText']").lastSelectedLov().text();
@@ -130,6 +138,7 @@ public class EvrakOlusturTest extends BaseTest {
 
 //        System.out.println("!!!!!!!!-" + field.toString());
         dog.shouldBe(BelgentCondition.required);
+
     }
 
     @DataProvider
