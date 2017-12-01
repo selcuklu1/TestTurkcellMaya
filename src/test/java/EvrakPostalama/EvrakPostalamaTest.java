@@ -13,17 +13,20 @@ import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.MainPage;
+import pages.solMenuPages.PostalanacakEvraklarPage;
 import pages.ustMenuPages.EvrakOlusturPage;
 
 public class EvrakPostalamaTest extends BaseTest {
 
 MainPage mainPage;
 EvrakOlusturPage evrakOlusturPage;
-
+PostalanacakEvraklarPage postalanacakEvraklarPage;
     @BeforeMethod
     public  void loginBeforeTest() {
 
     evrakOlusturPage = new EvrakOlusturPage();
+    postalanacakEvraklarPage = new PostalanacakEvraklarPage();
+    mainPage = new MainPage();
     login("Mbozdemir" , "123");
 
 
@@ -36,24 +39,52 @@ EvrakOlusturPage evrakOlusturPage;
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
-                .konuKoduSec("Entegrasyon İşlemleri")
-                .kaldirilacakKlasorler("ESK05")
+                .konuKoduSec("YAZILIM GEL")
+                .kaldirilacakKlasorler("Diğer")
                 .evrakTuruSec("Resmi Yazışma")
                 .onayAkisiKullanicilariTemizle()
-                .onayAkisiEkle();
+                .onayAkisiEkle()
+                .onayAkisiKullaniciTipiSec("Mehmet BOZDEMİR", "İmzalama")
+                .onayAkisiKullan();
 
 
-                evrakOlusturPage
-                .openPage()
+        evrakOlusturPage
                 .ilgileriTabAc()
                 .sistemeKayitliEvrakEkleTab()
                 .sistemeKayitliEvrakAra("yazı")
                 .sistemeKayitliDokumanArama()
-                        .tablodaBulunanEvrakiEkle();
+                .tablodaBulunanEvrakiEkle();
 
 
                 evrakOlusturPage
                 .islemMesaji().basariliOlmali("İşlem başarılıdır!");
+
+                evrakOlusturPage
+                        .editorTabAc()
+                        .editorIcerikDoldur("Optiim")
+                        .editorEvrakGeregiSec("YAZILIM GELİ")
+                        .imzala()
+                        .popupSImzalaIslemleri();
+
+
+                postalanacakEvraklarPage
+                        .openPage()
+                        .evrakSec()
+                        .evrakPostala()
+                        .gidisSekli("E-Posta")
+                        .PostalacanakEposta("test@test.com")
+                        .PostalamaAciklama("Test")
+                        .postalanacakEvrakYaz()
+                        .PopupPostalanacakEvrakYazdir()
+                        .PopupPostaYazdirmaKapat()
+                        .postalanacakEvrakOrjYaz()
+                        .gramajDoldur("1")
+                        .hesapla()
+                        .evrakPostala();
+
+
+
+
 
 
 

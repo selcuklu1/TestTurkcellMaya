@@ -1,8 +1,10 @@
 package pages.ustMenuPages;
 
+import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import com.sun.xml.internal.ws.api.ha.StickyFeature;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import pages.MainPage;
@@ -31,6 +33,7 @@ public class KurumYonetimiPage extends MainPage {
     SelenideElement btnPopupKaydet = $(By.id("kurumKepAdresBilgiEditorForm:saveKepAdresiButton"));
     SelenideElement btnAltMenuAc = $("[id$='kurumYonetimiListingForm:kurumTreeTable_node_1'] span");
     BelgenetElement txtKurumCombolov = comboLov(By.id("kurumYonetimiListingForm:filterPanel:kurumFilterLov:LovText"));
+    SelenideElement txtFiltreIdariBirimKimlikKodu = $(By.id("kurumYonetimiListingForm:filterPanel:kurumFilterLov:LovText"));
 
     // Hüseyin
     ElementsCollection tableKurumListesi = $$("div[id='kurumYonetimiListingForm:kurumTreeTable'] tbody > tr[role='row']");
@@ -41,6 +44,7 @@ public class KurumYonetimiPage extends MainPage {
     BelgenetElement txtUstKurum = comboLov(By.id("kurumYonetimiEditorForm:ustKurumLov:LovText"));
     SelenideElement btnIletisimGuncelle = $("button[id^='kurumYonetimiEditorForm:iletisimBilgileriDataTable:'][id$=':updateIletisimBilgisiButton']");
     SelenideElement btnKurumKaydet = $(By.id("kurumYonetimiEditorForm:saveKurumButton"));
+    ElementsCollection tablePasifKurumlar = $$("tbody[id='kurumYonetimiListingForm:pasifKurumlarDataTable_data'] > tr[role='row']");
 
     // İletişim bilgileri elementleri
     SelenideElement txtMobilTelNo = $(By.id("kurumBilgileriEditorForm:mobilInput"));
@@ -65,6 +69,8 @@ public class KurumYonetimiPage extends MainPage {
     SelenideElement btnKurumHiyerarşisiniGuncelle = $("button[id^='kurumYonetimiListingForm:kurumTreeTable:'][id$=':applyChangesButton']");
 
     SelenideElement filtrePanel = $(By.id("kurumYonetimiListingForm:filterPanel"));
+
+    SelenideElement btnSecileniKaldir = $("button[id^='kurumYonetimiListingForm:filterPanel:kurumFilterLov:'] span[class='ui-button-icon-left ui-icon delete-icon']");
 
     @Step("Kurum Yönetimi sayfası aç")
     public KurumYonetimiPage openPage() {
@@ -112,7 +118,19 @@ public class KurumYonetimiPage extends MainPage {
 
     @Step("Özel hitap seç")
     public KurumYonetimiPage ozelHitapSec(boolean secim) {
-        chkOzelHitap.setSelected(secim);
+
+        Boolean isSelected = false;
+        if (chkOzelHitap.$(By.xpath("./div[contains(@class, 'ui-state-active')]")).exists())
+            isSelected = true;
+
+        if(secim == true){
+            if(isSelected == false)
+                chkOzelHitap.click();
+        } else {
+            if(isSelected == true)
+                chkOzelHitap.click();
+        }
+
         return this;
     }
     @Step("Kep adresi kullanıyor seç")
@@ -160,12 +178,92 @@ public class KurumYonetimiPage extends MainPage {
 
     @Step("Durum seç")
     public KurumYonetimiPage durumSec(String value) {
+        if(!cmbDurum.isDisplayed())
+            filtrePanel.click();
         cmbDurum.selectOption(value);
         return this;
     }
     @Step("Ara")
     public KurumYonetimiPage ara(){
+        if(btnSecileniKaldir.isDisplayed())
+            btnSecileniKaldir.click();
         btnAra.click();
+        return this;
+    }
+
+    @Step("Kurumlar table kontrol et")
+    public KurumYonetimiPage kurumTableKontrol(String kurumAdi, String durum, Boolean checkAll) {
+
+        ElementsCollection currentTable = null;
+        String durumClass = "";
+        int durumColumnIndex = 0;
+
+        if(durum == "Sadece Aktifler"){
+            durumClass = "true";
+            currentTable = tableKurumListesi;
+            durumColumnIndex = 4;
+        }
+        else if(durum == "Sadece Pasifler"){
+            durumClass = "false";
+            currentTable = tablePasifKurumlar;
+            durumColumnIndex = 2;
+        }
+        else if(durum == "Tümü") {
+            durumClass = "all";
+            currentTable = tableKurumListesi;
+            durumColumnIndex = 4;
+        }
+
+        if(kurumAdi != null && kurumAdi != ""){
+            currentTable
+                    .filterBy(Condition.text(kurumAdi))
+                    .get(0)
+                    .shouldBe(Condition.exist);
+            checkAll = false;
+        }
+
+        if(durum != null || durum != "")
+        {
+
+            if(checkAll){
+
+                if(durumClass == "all")
+                {
+                    currentTable.shouldHave(CollectionCondition.sizeGreaterThan(0));
+                }
+
+                else{
+
+                    for(int i = 0; i < currentTable.size(); i++){
+                        currentTable
+                                .get(i)
+                                .$("td:nth-child("+durumColumnIndex+") span")
+                                .shouldHave(Condition.attribute("class", durumClass));
+                    }
+
+                }
+
+
+            }
+            else{
+
+                if(durumClass == "all")
+                {
+                    currentTable.shouldHave(CollectionCondition.sizeGreaterThan(0));
+                } else {
+
+                    currentTable
+                            .get(0)
+                            .$("td:nth-child("+durumColumnIndex+") span")
+                            .shouldHave(Condition.attribute("class", durumClass));
+
+                }
+
+
+
+            }
+
+        }
         return this;
     }
 
@@ -174,6 +272,22 @@ public class KurumYonetimiPage extends MainPage {
         if (!txtKurumCombolov.isDisplayed())
             filtrePanel.click();
         txtKurumCombolov.selectLov(kurumAdi);
+        return this;
+    }
+
+    ElementsCollection treeIdariBirimKimlikKodu = $$("div[id='kurumYonetimiListingForm:filterPanel:kurumFilterLov:lovTree'] > ul > li");
+    @Step("Sorgulama panelinde kurum alanına idari birim kimlik kodu doldur.")
+    public KurumYonetimiPage sorgulaIdariKimlikKoduSec(String idariBirimKimlikKodu) {
+        if (!txtFiltreIdariBirimKimlikKodu.isDisplayed())
+            filtrePanel.click();
+
+        txtFiltreIdariBirimKimlikKodu.setValue(idariBirimKimlikKodu);
+
+        treeIdariBirimKimlikKodu.shouldHave(CollectionCondition.sizeGreaterThan(0));
+
+        treeIdariBirimKimlikKodu.get(0).click();
+
+
         return this;
     }
 
@@ -397,6 +511,41 @@ public class KurumYonetimiPage extends MainPage {
                 .contextClick();
         $(By.id("kapatButton")).click();
 
+        return this;
+    }
+
+    SelenideElement btnKurumEkle = $("button[id$=':addNewKurumButton']");
+
+    @Step("Yeni kurum ekle ")
+    public KurumYonetimiPage yeniKurumEkle(){
+        btnKurumEkle.click();
+        return this;
+    }
+
+    SelenideElement txtHitap = $(By.xpath("//form[@id='kurumYonetimiEditorForm']//label[contains(.,'Hitap')]/../textarea"));
+
+    @Step("Hitap alanı dolduruldu")
+    public KurumYonetimiPage hitapDoldur(String hitap) {
+        txtHitap.setValue(hitap);
+        return this;
+    }
+
+    SelenideElement btnIletisimBilgisiEkle = $(By.id("kurumYonetimiEditorForm:iletisimBilgileriDataTable:addNewIletisimBilgisiButton"));
+
+    @Step("Yeni iletişim bilgisi ekle")
+    public KurumYonetimiPage yeniIletisimBilgisiEkle() {
+        btnIletisimBilgisiEkle.click();
+        return this;
+    }
+
+    @Step("Üst kurum değeri dön")
+    public String ustKurumGetir(){
+        return divSecilenUstKurum.$("span[class='lovItemDetail']").innerText();
+    }
+
+    @Step("kurum boşalt ")
+    public KurumYonetimiPage kurumTemizle() {
+        $("//span[contains(@class, 'delete-icon')]").click();
         return this;
     }
 
