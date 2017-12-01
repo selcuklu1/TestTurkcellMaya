@@ -13,18 +13,21 @@ import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.MainPage;
+import pages.solMenuPages.PostalanacakEvraklarPage;
 import pages.ustMenuPages.EvrakOlusturPage;
 
 public class EvrakPostalamaTest extends BaseTest {
 
 MainPage mainPage;
 EvrakOlusturPage evrakOlusturPage;
-
+PostalanacakEvraklarPage postalanacakEvraklarPage;
     @BeforeMethod
     public  void loginBeforeTest() {
 
     evrakOlusturPage = new EvrakOlusturPage();
-    login();
+    postalanacakEvraklarPage = new PostalanacakEvraklarPage();
+    mainPage = new MainPage();
+    login("Mbozdemir" , "123");
 
 
     }
@@ -33,20 +36,57 @@ EvrakOlusturPage evrakOlusturPage;
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TC0308: Evrak Postalama")
     public void TC0308() throws InterruptedException {
-       /* evrakOlusturPage
-                .openPage()
-                .bilgilerTabiAc()
-                .konuKoduSec("Entegrasyon İşlemleri")
-                .kaldirilacakKlasorler("ESK05")
-                .evrakTuruSec("Resmi Yazışma")
-                .onayAkisiKullanicilariTemizle()
-                .onayAkisiEkle();
-*/
-
         evrakOlusturPage
                 .openPage()
+                .bilgilerTabiAc()
+                .konuKoduSec("YAZILIM GEL")
+                .kaldirilacakKlasorler("Diğer")
+                .evrakTuruSec("Resmi Yazışma")
+                .onayAkisiKullanicilariTemizle()
+                .onayAkisiEkle()
+                .onayAkisiKullaniciTipiSec("Mehmet BOZDEMİR", "İmzalama")
+                .onayAkisiKullan();
+
+
+        evrakOlusturPage
                 .ilgileriTabAc()
-                .sistemeKayitliEvrakEkleTab();
+                .sistemeKayitliEvrakEkleTab()
+                .sistemeKayitliEvrakAra("yazı")
+                .sistemeKayitliDokumanArama()
+                .tablodaBulunanEvrakiEkle();
+
+
+                evrakOlusturPage
+                .islemMesaji().basariliOlmali("İşlem başarılıdır!");
+
+                evrakOlusturPage
+                        .editorTabAc()
+                        .editorIcerikDoldur("Optiim")
+                        .editorEvrakGeregiSec("YAZILIM GELİ")
+                        .imzala()
+                        .popupSImzalaIslemleri();
+
+
+                postalanacakEvraklarPage
+                        .openPage()
+                        .evrakSec()
+                        .evrakPostala()
+                        .gidisSekli("E-Posta")
+                        .PostalacanakEposta("test@test.com")
+                        .PostalamaAciklama("Test")
+                        .postalanacakEvrakYaz()
+                        .PopupPostalanacakEvrakYazdir()
+                        .PopupPostaYazdirmaKapat()
+                        .postalanacakEvrakOrjYaz()
+                        .gramajDoldur("1")
+                        .hesapla()
+                        .evrakPostala();
+
+
+
+
+
+
 
 
 

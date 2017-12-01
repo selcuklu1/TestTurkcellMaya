@@ -7,6 +7,8 @@ import pages.ustMenuPages.EvrakOlusturPage;
 import pages.ustMenuPages.OlurYazisiOlusturPage;
 import pages.ustMenuPages.YonetimHavuzuYonetimiPage;
 
+import java.util.Random;
+
 
 public class YonetimHavuzuIslemleriTest extends BaseTest {
 
@@ -97,15 +99,17 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
 
         String yonetimHavuzuAdi = "Test-tec01";
         String[] kontrolEdilecekBirimler = new String[]{"Optiim Birim"};
-        String[] kontrolEdilecekKullanicilar = new String[]{ "Veysel KIRAN"};
+        String[] kontrolEdilecekKullanicilar = new String[]{ "Veysel KIRAN" };
         String eklenecekAltBirim = "Optiim Alt Birim1";
         String silinecekKullanici = "Veysel KIRAN";
         String eklenecekKullanici = "Yasin TELLİ";
-        String yeniYonetimHavuzuAdi = "Test-tec012";
+        String yeniYonetimHavuzuAdi = "Test-tec01" + + (new Random().nextInt((9000 - 1000) + 1) + 1000);
 
-        String guncelKullanici = "Optiim TEST [Ağ (Network) Uzman Yardımcısı]";
+        String guncelKullanici = "Optiim TEST1 [Ağ (Network) Uzman Yardımcısı]";
 
-        /*
+        // Optiim TEST [Ağ (Network) Uzman Yardımcısı]
+        String basariMesaji = "İşlem başarılıdır!";
+
         yonetimHavuzuYonetimiPage
                 .openPage()
                 .ara(null, yonetimHavuzuAdi, null, true)
@@ -116,30 +120,31 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
                 .kullaniciEkle(eklenecekKullanici)
                 .yonetimHavuzuAdiDoldur(yeniYonetimHavuzuAdi)
                 .yonetimHavuzuKaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+        yonetimHavuzuYonetimiPage
                 .ara(null, yeniYonetimHavuzuAdi, null, true);
-
 
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
                 .onayAkisiEkle()
-                .onayAkisiKullaniciKontrol(guncelKullanici, "Paraflama")
+                //.onayAkisiKullaniciKontrol(guncelKullanici, "Paraflama")
                 .onayAkisiTreeKullaniciKontrol(silinecekKullanici, false)
                 .onayAkisiTreeKullaniciKontrol(eklenecekKullanici, true)
                 .onayAkisiKullaniciEkle(eklenecekKullanici)
                 .onayAkisiKullaniciTipiSec(eklenecekKullanici, "İmzalama")
                 .onayAkisiKullan();
 
-         */
-
         logout();
-        login("optiimtest1", "123");
+        login("test1", "123");
 
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
                 .onayAkisiEkle()
-                .onayAkisiKullaniciKontrol(guncelKullanici, "Paraflama");
+                .onayAkisiKullaniciKontrol(guncelKullanici, "Paraflama")
+                .onayAkisiTreeKullaniciKontrol(eklenecekKullanici, true);
+
 
 
     }

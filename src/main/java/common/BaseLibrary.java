@@ -4,6 +4,7 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
+import com.codeborne.selenide.impl.SelenideFieldDecorator;
 import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
 import org.openqa.selenium.*;
@@ -21,6 +22,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -30,6 +32,7 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfEl
 
 public class BaseLibrary {
 
+    private static final Logger log = Logger.getLogger(BaseLibrary.class.getName());
     protected static String winHandleBefore = null;
 
     //<editor-fold desc="Allure screenshooter">
@@ -192,16 +195,13 @@ public class BaseLibrary {
         executeJavaScript("arguments[0].click();", element);
     }
 
-    //Üstyazı dosyasını ekler
-    public void ustYaziUploadFile(String pathToFile) {
+    //Dosya ekler
+    public void uploadFile(SelenideElement element, String pathToFile) {
         try {
-            $(By.xpath("//input[@class='ustYaziUploadClass']")).sendKeys(pathToFile);
-//            LogPASS("Dosya Yuklendi.");
+            element.sendKeys(pathToFile);
+            log.info("Dosya yüklendi.");
         } catch (Exception e) {
-//            logger.error("Error in attaching file.s : " + e);
-//            LogFAIL("Error in attaching file.s : " + e);
-            System.out.println("Error in attaching file.s  : " + e);
-
+            log.info("Error in attaching file.s : " + e);
             throw new RuntimeException(e);
         }
     }
@@ -378,21 +378,8 @@ public class BaseLibrary {
 
     //Textin ilk harfini büyük yapar.
     public String toUpperCaseFirst(String text) {
-    //    char ilkHarf = Character.toUpperCase(text.charAt(0));
-      //  text = ilkHarf + text.substring(1);
-
-        // str Stringinin içindeki kelimelerin ilk harfleri büyük diğerleri küçük yapılır.
-        char c = Character.toUpperCase(text.charAt(0));
-        //ilk harfini buyuttuk
-        text = c + text.substring(1);
-        //buyutulen ilk harften sonra kelimenin diger harflerini ekledik.
-        String bosluk = " ";
-        for (int i = 1; i < text.length(); i++) {
-            if (text.charAt(i) == ' ') {
-                c = Character.toUpperCase(text.charAt(i + 1));
-                text = text.substring(0, i) + bosluk + c + text.substring(i + 2);
-            }
-        }
+        char ilkHarf = Character.toUpperCase(text.charAt(0));
+        text = ilkHarf + text.substring(1);
         return text;
     }
 
