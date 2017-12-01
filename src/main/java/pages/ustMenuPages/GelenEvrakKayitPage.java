@@ -58,7 +58,8 @@ public class GelenEvrakKayitPage extends MainPage {
     SelenideElement cmbEvrakEkTabViewGizlilikDerecesi = $(By.xpath("//*[@id='evrakBilgileriForm:evrakEkTabView:guvenlikKodu']"));
     SelenideElement txtEvrakEkTabViewEkMetni = $(By.id("evrakBilgileriForm:evrakEkTabView:dosyaAciklama"));
     SelenideElement btvEvrakEkTabViewDosyaEkle = $(By.id("evrakBilgileriForm:evrakEkTabView:fileUploadButton_input"));
-    ElementsCollection tblDosyaEkle =  $$("div[id='evrakBilgileriForm:ekListesiDataTable'] tr[role=row]");
+//    ElementsCollection tblDosyaEkle = $$("div[id$='evrakBilgileriForm:ekListesiDataTable'] tr[role=row]");
+    ElementsCollection tblDosyaEkle = $$("div[id$='ekListesiDataTable'] tr[role=row]");
 
     //Fiziksel Ek Ekle alt sekmesinde bulunanlar
     SelenideElement btnFizikselEkEkle = $("a[href='#evrakBilgileriForm:evrakEkTabView:aciklamaEkleTab']");
@@ -80,7 +81,7 @@ public class GelenEvrakKayitPage extends MainPage {
     SelenideElement txtEvrakEkTabViewArsivdenEvrakAraSayi = $(By.id("evrakBilgileriForm:evrakEkTabView:arsivdenEvrakAraSayiInputTextId"));
 
     // Havale işlemleri sekmesinde bulunanlar
-    SelenideElement chkOtomatikHavale =$(By.id("evrakBilgileriForm:j_idt11601_input"));
+    SelenideElement chkOtomatikHavale = $(By.id("evrakBilgileriForm:j_idt11601_input"));
     SelenideElement txtDagitimBilgileriBirim = $(By.id("evrakBilgileriForm:dagitimBilgileriBirimLov:LovText"));
     SelenideElement txtDagitimBilgileriKisi = $(By.id("evrakBilgileriForm:dagitimBilgileriKullaniciLov:LovText"));
     SelenideElement txtDagitimBilgileriKullaniciListesi = $(By.id("evrakBilgileriForm:dagitimBilgileriKisiListesiLov:LovText"));
@@ -135,7 +136,7 @@ public class GelenEvrakKayitPage extends MainPage {
     SelenideElement txtTCKN = $(By.id("gercekKisiHizliKayitDialogForm:tcKimlikNoInput"));
     SelenideElement btnTCKNAra = $(By.id("gercekKisiHizliKayitDialogForm:kpsTcKimlikNoSorgulaButtonHizliKayit"));
     SelenideElement btnKaydetIletisimBilgisi = $(By.id("gercekKisiHizliKayitDialogForm:saveGercekKisiHizliKayitButton"));
-//    SelenideElement txtAd = $(By.id("tgercekKisiHizliKayitDialogForm:adInputG"));
+    //    SelenideElement txtAd = $(By.id("tgercekKisiHizliKayitDialogForm:adInputG"));
     SelenideElement txtAd = $(By.xpath("//table[@id='gercekKisiHizliKayitDialogForm:j_idt4251']/tbody/tr[4]/td[1]/input"));
 
     SelenideElement txtSoyad = $(By.xpath("//table[@id='gercekKisiHizliKayitDialogForm:j_idt4251']/tbody/tr[4]/td[2]/input"));
@@ -168,7 +169,7 @@ public class GelenEvrakKayitPage extends MainPage {
     //endregion
 
 
-    public GelenEvrakKayitPage otomatikHavaleSec(boolean secim){
+    public GelenEvrakKayitPage otomatikHavaleSec(boolean secim) {
         chkOtomatikHavale.setSelected(secim);
         return this;
     }
@@ -622,7 +623,7 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("Evrak Ekleri Dosya Ekleme")
     public GelenEvrakKayitPage evrakEkleriDosyaEkleme(String pathToFile) {
-        uploadFile(dosyaPath,pathToFile);
+        uploadFile(dosyaPath, pathToFile);
 //        WebDriverRunner.getWebDriver()
 //                .findElement(dosyaPath)
 //                .sendKeys(pathToFile);
@@ -650,6 +651,7 @@ public class GelenEvrakKayitPage extends MainPage {
         Assert.assertEquals(text.contains(ustYaziAdi), true);
         return this;
     }
+
     @Step("Mail Ust Yazi adi kontrol")
     public GelenEvrakKayitPage ustYaziMailAdiKontrol(String ustYaziAdi) {
         String text = lblEklenenMailUstYazi.text();
@@ -688,64 +690,74 @@ public class GelenEvrakKayitPage extends MainPage {
         btnevrakDetayiEvrakEkleri.click();
         return this;
     }
+
     @Step("Evrak Detayi Fizilsel Ek Ekle tabı tıkla")
-    public GelenEvrakKayitPage evrakDetayiFizikselEkEkleTab(){
+    public GelenEvrakKayitPage evrakDetayiFizikselEkEkleTab() {
         btnEvrakDetayiFizikselEkEkle.click();
         return this;
     }
+
     @Step("Evrak Detayi Aciklama doldur")
-    public GelenEvrakKayitPage evrakDetayiAciklamaDoldur(String aciklama){
+    public GelenEvrakKayitPage evrakDetayiAciklamaDoldur(String aciklama) {
         txtEvrakDetayiAciklama.sendKeys(aciklama);
         SelenideElement btnEvrakDetayiEkle = $(By.id("inboxItemInfoForm:evrakEkTabView:aciklamaEkleButton"));
         SelenideElement btnEvrakDetayiKaydet = $(By.id("inboxItemInfoForm:dialogTabMenuRight:uiRepeat:3:cmdbutton"));
         return this;
     }
+
     @Step("Evrak Detayi Ekle tıkla")
-    public GelenEvrakKayitPage evrakDetayiEkle(){
-       btnEvrakDetayiEkle.click();
+    public GelenEvrakKayitPage evrakDetayiEkle() {
+        btnEvrakDetayiEkle.click();
         SelenideElement btnEvrakDetayiKaydet = $(By.id("inboxItemInfoForm:dialogTabMenuRight:uiRepeat:3:cmdbutton"));
         return this;
     }
+
     @Step("Evrak Detayi Kaydet tıkla")
-    public GelenEvrakKayitPage evrakDetayiKaydet(){
+    public GelenEvrakKayitPage evrakDetayiKaydet() {
         btnEvrakDetayiKaydet.click();
         return this;
     }
+
     @Step("Evrak Detayi EvrakNo text al")
-    public String evrakDetayiEvrakNoTextAl(){
-        return  txtEvrakDetayiEvrakNo.text();
+    public String evrakDetayiEvrakNoTextAl() {
+        return txtEvrakDetayiEvrakNo.text();
     }
+
     @Step("Guncelleme Kontrolleri")
-    public GelenEvrakKayitPage guncellenenAlanKontrolleri(String evrakTarihi,String evrakTuru,String gizlilikDerecesi){
+    public GelenEvrakKayitPage guncellenenAlanKontrolleri(String evrakTarihi, String evrakTuru, String gizlilikDerecesi) {
         String txtEvrakTarihi = dateTxtEvrakBilgileriListEvrakTarihi.getValue();
         String txtEvrakTuru = cmbEvrakBilgileriListEvrakTuru.getSelectedValue();
         String txtGizlilikDerecesi = cmbEvrakBilgileriListGizlilikDerecesi.getSelectedValue();
 
-        Assert.assertEquals(txtEvrakTarihi,evrakTarihi);
-        Assert.assertEquals(txtEvrakTuru,evrakTuru);
-        Assert.assertEquals(txtGizlilikDerecesi,gizlilikDerecesi);
+        Assert.assertEquals(txtEvrakTarihi, evrakTarihi);
+        Assert.assertEquals(txtEvrakTuru, evrakTuru);
+        Assert.assertEquals(txtGizlilikDerecesi, gizlilikDerecesi);
 
         return this;
     }
+
     @Step("PopUp close")
-    public GelenEvrakKayitPage evrakDetayiPdfDegisiklikpopUpClose(){
-        popUpPdfDegisiklik.shouldBe(Condition.visible);
-        btnEvrakDetayiPdfDegisiklikKabul.click();
+    public GelenEvrakKayitPage evrakDetayiPdfDegisiklikpopUpClose() {
+//        popUpPdfDegisiklik.shouldBe(Condition.visible);
+        if (popUpPdfDegisiklik.isDisplayed()) {
+            btnEvrakDetayiPdfDegisiklikKabul.click();
+        }
         return this;
     }
+
     @Step("Evrak Detayi Kaydet PopUp Close")
-    public GelenEvrakKayitPage evrakDetayiKaydetPopUpClose(){
+    public GelenEvrakKayitPage evrakDetayiKaydetPopUpClose() {
         btnEvrakDetayiKaydetUyarisi.shouldBe(Condition.visible);
         btnEvrakDetayiKaydetUyarisi.click();
         return this;
     }
 
     @Step("Panel kapat")
-    public GelenEvrakKayitPage panelKapat(Boolean kaydet){
+    public GelenEvrakKayitPage panelKapat(Boolean kaydet) {
         $(By.xpath("//div[@id='mainTaskBar']//span[text()='[Gelen Evrak Kayıt]']"))
                 .contextClick();
 
-        if(kaydet)
+        if (kaydet)
             $(By.id("kapatKaydetEvetButton")).click();
         else
             $(By.id("kapatKaydetHayirButton")).click();
@@ -754,21 +766,23 @@ public class GelenEvrakKayitPage extends MainPage {
     }
 
     @Step("")
-    public GelenEvrakKayitPage ustYaziDegistirilmisPopUpKontrol(){
-        if(popUpUstYaziDegistirilme.isDisplayed())
+    public GelenEvrakKayitPage ustYaziDegistirilmisPopUpKontrol() {
+        if (popUpUstYaziDegistirilme.isDisplayed())
             clickJs(btnUstYaziDegistirmeHayır);
         return this;
     }
+
     @Step("")
-    public GelenEvrakKayitPage dosyaEkleTabTabloKontrolu(String dosyaAdi){
+    public GelenEvrakKayitPage dosyaEkleTabTabloKontrolu(String dosyaAdi) {
 //        boolean status = findElementOnTableByColumnInputInAllPages(tblDosyaEkle,columIndex,dosyaAdi).isDisplayed();
         tblDosyaEkle
                 .filterBy(Condition.text(dosyaAdi)).shouldHaveSize(1);
 //        Assert.assertEquals(status, true);
         return this;
     }
+
     @Step("Evrak Ekleri ekle butonana tıkla")
-    public GelenEvrakKayitPage evrakEkleriDosyaEkle(){
+    public GelenEvrakKayitPage evrakEkleriDosyaEkle() {
         btnEvrakEkTabViewEkle.click();
         return this;
     }

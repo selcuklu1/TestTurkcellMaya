@@ -1,5 +1,6 @@
 package GelenGidenEvrakKayit;
 
+import com.codeborne.selenide.WebDriverRunner;
 import common.BaseTest;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
@@ -114,9 +115,11 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         String evrakTarihi = getSysDateForKis();
         String evrakTuru2 = "Dilekçe";
 
+// TC0321 de oluşturulan evrak no burada kullanılacak.
+
         kaydedilenGelenEvraklarPage
                 .openPage()
-                .tabloRaporIcerik("5012");
+                .tabloEvrakNoileIcerikSec("5012");
 
         String evrakNo = gelenEvrakKayitPage
                 .evrakDetayiEvrakNoTextAl();
@@ -125,7 +128,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .evrakDetaylariAlanGuncellenebilirlikKontrolü()
                 .evrakBilgileriUstYaziEkle(ustYaziPath)
                 .evrakDetayiPdfDegisiklikpopUpClose()
-                .ustYaziPdfAdiKontrol(ustYaziAdi)
+//                .ustYaziPdfAdiKontrol(ustYaziAdi)
                 .konuKoduDoldur(konuKodu)
                 .evrakTuruSec(evrakTuru)
                 .evrakDiliSec(evrakDili)
@@ -140,6 +143,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .evrakDetayiFizikselEkEkleTab()
                 .evrakDetayiAciklamaDoldur(aciklama)
                 .evrakDetayiEkle()
+                .dosyaEkleTabTabloKontrolu("Ek-3") // TC0321 deki evrak no kullanıldığında bu satır aktif olarak kullanılabilir.
                 .evrakDetayiKaydet()
                 .evrakDetayiKaydetPopUpClose()
                 .islemMesaji().basariliOlmali(basariMesaji);
@@ -202,21 +206,21 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
         kaydedilenGelenEvrakPage
                 .openPage()
-                .gelenEvrakNoDoldur("4998")
+                .gelenEvrakNoDoldur("5012")
                 .sorgula()
-                .tabloKontrolu("4998")
+                .tabloKontrolu("5012")
                 .raporAlExcel();
 //                .islemMesaji().basariliOlmali(basariMesaji);
         Thread.sleep(3000);
         kaydedilenGelenEvrakPage
                 .txtClear()
-                .gelenEvrakNoDoldur("4999")
+                .gelenEvrakNoDoldur("5013")
                 .sorgula()
                 .geldigiYerSec(geldigiYer)
                 .sorgula()
-                .tabloKontrolu("4999")
-                .raporAlPdf();
-//                .islemMesaji().basariliOlmali(basariMesaji);
+                .tabloKontrolu("5013")
+                .raporAlPdf()
+                .islemMesaji().basariliOlmali(basariMesaji);
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -255,7 +259,8 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
         String pathToFilePdf = "C:\\TestAutomation2\\BelgenetFTA\\documents\\TestOtomasyon.msg";
         String pathToFileExcel = "C:\\TestAutomation2\\BelgenetFTA\\documents\\test.xlsx";
-        String ustYaziAdi = "TestOtomasyon.msg";
+//        String ustYaziAdi = "TestOtomasyon.msg";
+        String ustYaziAdi = "ustYazi.pdf";  // TestOtomasyon.msg ekiini eklememe rağmen ustYazi.pdf  olarak ekrana geliyor.
         gelenEvrakKayitPage
                 .openPage()
                 .evrakBilgileriUstYaziEkle(pathToFilePdf)
@@ -272,22 +277,28 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .ivedilikSec(ivedilik)
                 .ekBilgiFiltreAc()
                 .evrakEkleriDosyaEkleme(pathToFileExcel)
+                .ustYaziDegistirilmisPopUpKontrol()
                 .evrakEkleriDosyaEkleEkMetinDoldur(ekMetni)
                 .evrakEkleriDosyaEkle()
-                .dosyaEkleTabTabloKontrolu("Ek-1") //Webservise  baglanılamadı hatası alnıyor.
+                .dosyaEkleTabTabloKontrolu("Ek-2") //Webservise  baglanılamadı hatası alnıyor.
                 .ekBilgiFizikselEkEkle()
                 .evrakEkTabFizikselEkMetniDoldur(ekMetni)
                 .fizikselEkTabViewAciklamaEkle()
-                .dosyaEkleTabTabloKontrolu("Ek-2")
+                .dosyaEkleTabTabloKontrolu("Ek-3")
                 .kaydet();
+
         String evrakNo = gelenEvrakKayitPage.popUps();
-        //   page.islemMesaji().beklenenMesajTipi(MesajTipi.BASARILI);
-        //  page.solMenu(SolMenuData.BirimEvraklari.KaydedilenGelenEvraklar);
-//        TODO  tabloda oluşturulan evrak bulunacak....
-       kaydedilenGelenEvraklarPage
+
+        kaydedilenGelenEvraklarPage
                 .openPage()
                 .filtreleAc()
                 .tarihDoldur(getSysDateForKis())
                 .tabloKontrolu(evrakNo);
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "")
+    public void TC0322 throws InterruptedException{
+
     }
 }

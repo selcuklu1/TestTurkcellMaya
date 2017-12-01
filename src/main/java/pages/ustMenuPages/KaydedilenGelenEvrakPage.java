@@ -104,7 +104,7 @@ public class KaydedilenGelenEvrakPage extends MainPage {
                 break;
             }
             else
-                System.out.println("İstenilen dosya indirilmemiştir.");
+                Allure.addAttachment("Rapor Sonucu", "İstenilen dosya indirilememiştir.");
         }
         return flag;
     }
