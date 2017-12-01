@@ -10,7 +10,7 @@ import pages.ustMenuPages.*;
 /****************************************************
  * Tarih: 2017-11-24
  * Proje: Türksat Functional Test Automation
- * Class: "Tüzel Kişi Yönetimi" konulu senaryoları içerir
+ * Class: "Tüzel Kişi Yönetimi" konulu metotları içerir
  * Yazan: Sezai Çelik 
  ****************************************************/
 public class TuzelKisiYonetimiTest extends BaseTest {
@@ -19,6 +19,7 @@ public class TuzelKisiYonetimiTest extends BaseTest {
     EvrakOlusturPage evrakOlusturPage;
     GelenEvrakKayitPage gelenEvrakKayitPage;
     GidenEvrakKayitPage gidenEvrakKayitPage;
+    SikKullanilanlarPage sikKullanilanlarPage;
 
     @BeforeMethod
     public void loginBeforeTests() {
@@ -27,6 +28,7 @@ public class TuzelKisiYonetimiTest extends BaseTest {
         evrakOlusturPage = new EvrakOlusturPage();
         gelenEvrakKayitPage = new GelenEvrakKayitPage();
         gidenEvrakKayitPage = new GidenEvrakKayitPage();
+        sikKullanilanlarPage = new SikKullanilanlarPage();
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -417,5 +419,31 @@ public class TuzelKisiYonetimiTest extends BaseTest {
                 .pdfKontrol
                 .geregiBilgiAlaniAdresPdfKontrol(birinciKullaniciGeregiAdresi, getIkinciKullaniciAdres)
                 .switchToDefaultWindow();
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TC1132: Tüzel kişinin pasif yapılması ve kontrolü")
+    public void TC1132() {
+
+        String vergiNo = "8524567913";
+        String ad = "Türksat Optiim";
+        String kisaAd = "trkstopttm";
+        String tip = "Tüzel Kişi";
+        String basariMesaji = "İşlem başarılıdır!";
+
+        sikKullanilanlarPage
+                .openPage()
+                .datigimlarTipSec(tip)
+                .dagitimlarDoldur(ad)
+                .dagitimlarKaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        tuzelKisiYonetimiPage
+                .openPage()
+                .filtreAdDoldur(ad)
+                .ara()
+                .aktifTuzelKisiKayitKontrolu(vergiNo, ad, kisaAd)
+                .tuzelKisiPasifYap()
+                .islemOnayi("Evet");
     }
 }
