@@ -50,6 +50,7 @@ public class BaseTest extends BaseLibrary{
         //endregion
 
         System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, "/dev/null");
+
     }
 
 
