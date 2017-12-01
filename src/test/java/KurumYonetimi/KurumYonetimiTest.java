@@ -228,4 +228,64 @@ public class KurumYonetimiTest extends BaseTest {
                 .geregiSecilenKontrol(yeniKurumAdi, kontrolEdilecekGeregiDetay, "Adi Posta");
     }
 
+    @Test(enabled = true, description = "TC01108 : Kurum Sorgulama")
+    public void TC01108() throws InterruptedException {
+
+        String aktifKurumAdi = "Yenikurum2409";
+        String aktifIdariBirimKimlikKodu = "1758";
+
+        String pasifKurumadi = "Maliye Bakanlığı";
+        String pasifIdariBirimKimlikKodu = "24316011";
+
+        kurumYonetimiPage
+                .openPage()
+                .durumSec("Sadece Aktifler")
+                .ara()
+                .kurumTableKontrol(null, "Sadece Aktifler", true)
+
+                .durumSec("Sadece Pasifler")
+                .sorgulaKurumDoldur(pasifKurumadi)
+                .ara()
+                .kurumTableKontrol(null, "Sadece Pasifler", true)
+
+                .yeniKurumEkle()
+
+                .durumSec("Tümü")
+                .ara()
+                .kurumTableKontrol(null, "Tümü", true)
+
+                .sorgulaKurumDoldur(aktifKurumAdi)
+                .durumSec("Sadece Aktifler")
+                .ara()
+                .kurumTableKontrol(null, "Sadece Aktifler", true)
+
+                .sorgulaIdariKimlikKoduSec(aktifIdariBirimKimlikKodu)
+                .durumSec("Sadece Aktifler")
+                .ara()
+                .kurumTableKontrol(null, "Sadece Aktifler", true)
+
+                .yeniKurumEkle()
+
+                .sorgulaKurumDoldur(pasifKurumadi)
+                .durumSec("Sadece Pasifler")
+                .ara()
+                .kurumTableKontrol(null, "Sadece Pasifler", true)
+
+
+                .sorgulaIdariKimlikKoduSec(pasifIdariBirimKimlikKodu)
+                .durumSec("Sadece Pasifler")
+                .ara()
+                .kurumTableKontrol(null, "Sadece Pasifler", true);
+
+
+
+
+
+
+
+
+
+
+    }
+
 }
