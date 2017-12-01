@@ -144,7 +144,6 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement btnBilgiTree = $("button[id$='bilgiLov:treeButton']");
 
         SelenideElement cmbGeregiSecimTipi = $(By.xpath("//label[normalize-space(text())='Gereği Seçim Tipi']/ancestor::tr[@class='ui-datagrid-row']//select"));
-        //SelenideElement cmbGeregiSecimTipi = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:16:j_idt1858"));
         BelgenetElement txtGeregi = comboLov("input[id$='geregiLov:LovText']");
         SelenideElement btnGeregiTree = $("button[id$='geregiLov:treeButton']");
 
@@ -194,7 +193,7 @@ public class EvrakOlusturPage extends MainPage {
         By cmbBilgiBy = By.cssSelector("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='bilgiLov:LovText']");
 
         SelenideElement lovTreeKapat = $(By.cssSelector("[id^='yeniGidenEvrakForm:evrakBilgileriList:'][id$='bilgiLov:lovTreePanelKapat']"));
-        SelenideElement lovTreeSec = $(By.xpath("//*[@id=\"yeniGidenEvrakForm:evrakBilgileriList:15:bilgiLov:lovTree:0_0\"]/div/span/span[2]/span[1]"));
+        SelenideElement lovTreeSec = $(By.xpath("//*[@id=\"yeniGidenEvrakForm:evrakBilgileriList:15:bilgiLov:lovTree:0_0\"]/div/span/span[2]"));
 
         SelenideElement btnOtomatikOnayAkisi = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:otomatikOnayAkisiEkle"));
 
@@ -433,10 +432,12 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        //Manuel bilgi alanı doldurulur ve ilk sırada çıkan tıklanır.
+        @Step("Bilgi alanı doldur")
         public BilgilerTab manuelBilgiDoldur(String bilgi) throws InterruptedException {
-            cmbBilgi.sendKeys(bilgi);
-            Thread.sleep(5000);
-            lovTreeSec.click();
+            cmbBilgi.setValue(bilgi).pressEnter();
+            Thread.sleep(2000);
+            clickJs(lovTreeSec);
             return this;
         }
 
@@ -716,8 +717,8 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Tüzel Kişi gereği alanı kontrolu başarılı")
-        public BilgilerTab tuzelKisiGeregiAlaniKontrol(String vergiNo2, String postaTipi) {
+        @Step("Tüzel Kişi gereği alanı kontrolu")
+        public BilgilerTab tuzelKisiGeregiAlaniVergiNoPostaTipiKontrol(String vergiNo2, String postaTipi) {
 
             System.out.println("Gelen detail:    " + cmbGeregi.lastSelectedLovDetailText());
             System.out.println("Beklenen detail: " + "Vergi No: " + vergiNo2);
@@ -727,6 +728,22 @@ public class EvrakOlusturPage extends MainPage {
             Assert.assertEquals(cmbGeregi.lastSelectedLovDetailText().contains("Vergi No: " + vergiNo2), true);
             Assert.assertEquals(cmbPostaTipi.getSelectedValue().contains(postaTipi), true);
 
+            return this;
+        }
+
+        @Step("Tüzel Kişi gereği alanı kontrolu")
+        public BilgilerTab tuzelKisiGeregiAlaniVergiNoAdAdresKontrol(String vergiNo, String ad, String adres) {
+            String gelenTitle =  cmbGeregi.lastSelectedLovTitleText();
+            String gelenDetail =  cmbGeregi.lastSelectedLovDetailText();
+            String beklenenDetail = adres + " / " + "Vergi No: " + vergiNo;
+
+            System.out.println("Gelen title:    " + gelenTitle);
+            System.out.println("Beklenen title: " + ad);
+            System.out.println("Gelen detail:    " +gelenDetail);
+            System.out.println("Beklenen detail: " + beklenenDetail);
+
+            Assert.assertEquals(gelenTitle.contains(ad), true);
+            Assert.assertEquals(gelenDetail.contains(beklenenDetail), true);
             return this;
         }
 
@@ -749,7 +766,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        public BilgilerTab geregiSonKayitSil(){
+        public BilgilerTab geregiSonKayitSil() {
             cmbGeregi.clearLastSelectedLov();
             return this;
         }
@@ -867,9 +884,9 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        public EditorTab editorHitapKontrol(String beklenenEditorHitap){
+        public EditorTab editorHitapKontrol(String beklenenEditorHitap) {
             String editorHitap = $(By.xpath("//*[@id='yeniGidenEvrakForm:hitapInplace']/span")).getText();
-            Assert.assertEquals(editorHitap.contains(beklenenEditorHitap),true);
+            Assert.assertEquals(editorHitap.contains(beklenenEditorHitap), true);
             return this;
         }
 
@@ -1039,7 +1056,7 @@ public class EvrakOlusturPage extends MainPage {
         }
 
         @Step("IlgileriTab Tabloda Bulunan Evraki Ekle")
-        public IlgileriTab tablodaBulunanEvrakiEkle () {
+        public IlgileriTab tablodaBulunanEvrakiEkle() {
             btnTablodaBulunanIlkEvrakiEkle.click();
             return this;
 
@@ -1138,9 +1155,9 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        public PDFKontrol PDFHitapKontrol(String beklenenPDFHitap){
-            String PDFHitap=$(By.xpath("//*[@id='viewer']/div/div[2]/div[5]")).getText();
-            Assert.assertEquals(PDFHitap.contains(beklenenPDFHitap),true);
+        public PDFKontrol PDFHitapKontrol(String beklenenPDFHitap) {
+            String PDFHitap = $(By.xpath("//*[@id='viewer']/div/div[2]/div[5]")).getText();
+            Assert.assertEquals(PDFHitap.contains(beklenenPDFHitap), true);
             return this;
         }
     }
