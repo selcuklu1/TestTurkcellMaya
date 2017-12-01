@@ -347,14 +347,31 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Bilgi alanında temizle ve {0} seç")
+        public BilgilerTab bilgiSec(String text, Boolean clearAll) {
+            txtBilgi.sendKeys(Keys.SHIFT);
+            txtBilgi.selectLov(text);
+            txtBilgi.clearAllSelectedLov();
+            return this;
+        }
+
         @Step("Geregi alanında {0} seç")
         public BilgilerTab geregiSec(String text) {
             txtGeregi.selectLov(text);
             return this;
         }
 
+        @Step("Geregi alanında {0} seç")
+        public BilgilerTab geregiSec(String text, Boolean clearAfterSelecion) {
+            cmbGeregi.sendKeys(Keys.SHIFT);
+            txtGeregi.selectLov(text);
+            txtGeregi.clearLastSelectedLov();
+            return this;
+        }
+
         @Step("Gereği tree alanında {0} geliyor mu? kontrol et")
         public BilgilerTab geregiTreeKontrolEt(String kurumAdi, Boolean shouldBeSelectable) {
+            txtGeregi.sendKeys(Keys.SHIFT);
             Assert.assertEquals(txtGeregi.isLovValueSelectable(kurumAdi), shouldBeSelectable);
             return this;
         }
@@ -477,7 +494,6 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Geregi Secim Tipi alanında {0} seç")
         public BilgilerTab geregiSecimTipiSec(String value) {
-            cmbGeregiSecimTipi.sendKeys(Keys.SHIFT);
             cmbGeregiSecimTipi.selectOptionByValue(value);
             return this;
         }

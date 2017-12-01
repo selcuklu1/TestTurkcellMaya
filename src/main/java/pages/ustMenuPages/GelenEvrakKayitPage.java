@@ -48,7 +48,7 @@ public class GelenEvrakKayitPage extends MainPage {
     SelenideElement cmbEvrakBilgileriListOzelKategori = $(By.id("evrakBilgileriForm:evrakBilgileriList:17:j_idt4499"));
     SelenideElement dateTxtEvrakBilgileriListPostalanmaTarihi = $(By.id("evrakBilgileriForm:evrakBilgileriList:18:postalanmaTarihi_input"));
     BelgenetElement comboKonuKodu = comboLov("[id$='konuKoduLov:LovText']");
-    BelgenetElement comnoGeldigiKurum = comboLov("[id$='geldigiKurumLov:LovText']");
+    BelgenetElement comboGeldigiKurum = comboLov("[id$='geldigiKurumLov:LovText']");
 
     // Evrak Ekleri sekmesinde bulunanlar
     // Dosya ekle alt sekmesinde bulunanlar
@@ -271,6 +271,13 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
+
+    @Step("Geldiği kişi alanında görüntülenmediği kontrolu")
+    public GelenEvrakKayitPage geldigiKurumDegerGoruntulemeKontrolu(String kurumAdi, Boolean shoudlBeExist) {
+        Assert.assertEquals(comboGeldigiKurum.isLovValueSelectable(kurumAdi), shoudlBeExist);
+        return this;
+    }
+
     @Step("Geldiği kişi alanında görüntülenme kontrolu")
     public GelenEvrakKayitPage gercekKisiGoruntulenmeKontrolu(String tckn, String ad, String soyad) {
 
@@ -284,8 +291,11 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    public GelenEvrakKayitPage geldigiKurumDoldurLovText(String geldigiKurum) throws InterruptedException {
-        comnoGeldigiKurum.selectLov(geldigiKurum);
+    SelenideElement btnSecilenGeldigiKurumKaldir = $("div[id$='geldigiKurumLov:LovSecilen'] button");
+    public GelenEvrakKayitPage geldigiKurumDoldurLovText(String geldigiKurum) {
+        if(btnSecilenGeldigiKurumKaldir.isDisplayed())
+            btnSecilenGeldigiKurumKaldir.click();
+        comboGeldigiKurum.selectLov(geldigiKurum);
         return this;
     }
 
