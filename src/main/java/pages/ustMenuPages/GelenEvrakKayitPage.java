@@ -260,13 +260,12 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("Geldiği kişi alanında görüntülenmediği kontrolu")
-    public GelenEvrakKayitPage geldigiKisiGoruntulenmemeKontrolu(String ad, String soyad) {
+    @Step("Kişinin geldiği alanında görüntülenmediği kontrolu")
+    public GelenEvrakKayitPage geldigiKisiGoruntulenmemeKontrolu(String adSoyad) {
 
-        String adSoyad = ad + " " + soyad;
         boolean selectable = comboLov(cmbGeldiğiKisiBy).isLovValueSelectable(adSoyad);
-        Assert.assertEquals(selectable, false, "MyCombolov alanında " + adSoyad + ": Gerçek kişinin görüntülenmediği görülür");
-        System.out.println("MyCombolov alanında " + adSoyad + ": Gerçek kişinin görüntülenmediği görülür.");
+        Assert.assertEquals(selectable, false, "MyCombolov alanında " + adSoyad + ": Kişinin görüntülenmediği görülür");
+        System.out.println("MyCombolov alanında " + adSoyad + ": Kişinin görüntülenmediği görülür.");
 
         return this;
     }

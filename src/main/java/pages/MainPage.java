@@ -165,6 +165,7 @@ public class MainPage extends BaseLibrary {
         return this;
     }
 
+    @Step("Çıkış yap")
     public void logout() {
         $("button[id='topMenuForm:userMenuButton_button']").click();
     }

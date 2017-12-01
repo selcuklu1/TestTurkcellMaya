@@ -55,12 +55,11 @@ public class GidenEvrakKayitPage extends MainPage {
     }
 
     @Step("Kişinin Geregi alanında görüntülenmediği kontrolu")
-    public GidenEvrakKayitPage geregiAlanindaGoruntulenmemeKontrolu(String ad, String soyad) {
+    public GidenEvrakKayitPage geregiAlanindaGoruntulenmemeKontrolu(String kisi) {
 
-        String adSoyad = ad + " " + soyad;
-        boolean selectable = comboLov(cmbGeregiBy).isLovValueSelectable(adSoyad);
-        Assert.assertEquals(selectable, false, "MyCombolov alanında " + adSoyad + ": Gerçek kişinin görüntülenmediği görülür");
-        System.out.println("MyCombolov alanında " + adSoyad + ": Gerçek kişinin görüntülenmediği görülür.");
+        boolean selectable = comboLov(cmbGeregiBy).isLovValueSelectable(kisi);
+        Assert.assertEquals(selectable, false, "MyCombolov alanında " + kisi + ": Kişinin görüntülenmediği görülür");
+        System.out.println("MyCombolov alanında " + kisi + ": Kişinin görüntülenmediği görülür.");
         return this;
     }
 
@@ -100,12 +99,11 @@ public class GidenEvrakKayitPage extends MainPage {
     }
 
     @Step("Kişinin Bilgi alanında görüntülenmediği kontrolu")
-    public GidenEvrakKayitPage bilgiAlanindaGoruntulenmemeKontrolu(String ad, String soyad) {
+    public GidenEvrakKayitPage bilgiAlanindaGoruntulenmemeKontrolu(String kisi) {
 
-        String adSoyad = ad + " " + soyad;
-        boolean selectable = comboLov(cmbBilgiBy).isLovValueSelectable(adSoyad);
-        Assert.assertEquals(selectable, false, "MyCombolov alanında " + adSoyad + ": Gerçek kişinin görüntülenmediği görülür");
-        System.out.println("MyCombolov alanında " + adSoyad + ": Gerçek kişinin görüntülenmediği görülür.");
+        boolean selectable = comboLov(cmbBilgiBy).isLovValueSelectable(kisi);
+        Assert.assertEquals(selectable, false, "MyCombolov alanında " + kisi + ": Kişinin görüntülenmediği görülür");
+        System.out.println("MyCombolov alanında " + kisi + ": Kişinin görüntülenmediği görülür.");
 
         return this;
     }

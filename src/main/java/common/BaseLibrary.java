@@ -540,4 +540,12 @@ public class BaseLibrary {
         return flag;
     }
 
+    // İşlem penceresi kapatma onay - popup
+    public void islemPenceresiKapatmaOnayi() {
+        SelenideElement bntKapatPopup = $(By.id("kapatButton"));
+        if (bntKapatPopup.isDisplayed()) {
+            bntKapatPopup.click();
+        }
+    }
+
 }

@@ -90,7 +90,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .bilgilerTabiAc()
                 .bilgiSecimTipiSec(bilgiSecimTipi)
                 .manuelBilgiDoldur(adSoyad)
-               .islemMesaji().dikkatOlmali(gercekKisiMesaj);
+                .islemMesaji().dikkatOlmali(gercekKisiMesaj);
 
         gelenEvrakKayitPage
                 .openPage()
@@ -408,6 +408,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
         String tcNO = "21861197500";
         String ad = "Bulut";
         String soyad = "Toprak";
+        String adSoyad = ad + " " + soyad;
 
         gercekKisiYonetimPage
                 .openPage()
@@ -446,24 +447,24 @@ public class GercekKisiYonetimiTest extends BaseTest {
         gelenEvrakKayitPage
                 .openPage()
                 .kisiKurumSec("G")
-                .geldigiKisiGoruntulenmemeKontrolu(ad, soyad);
+                .geldigiKisiGoruntulenmemeKontrolu(adSoyad);
 
         gidenEvrakKayitPage
                 .openPage()
                 .geregiSecimTipiSec("G")
-                .geregiAlanindaGoruntulenmemeKontrolu(ad, soyad)
+                .geregiAlanindaGoruntulenmemeKontrolu(adSoyad)
 
                 .bilgiSecimTipiSec("G")
-                .bilgiAlanindaGoruntulenmemeKontrolu(ad, soyad);
+                .bilgiAlanindaGoruntulenmemeKontrolu(adSoyad);
 
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
                 .geregiSecimTipiSec("G")
-                .geregiAlanindaGoruntulenmemeKontrolu(ad, soyad)
+                .geregiAlanindaGoruntulenmemeKontrolu(adSoyad)
 
                 .bilgiSecimTipiSec("G")
-                .bilgiAlanindaGoruntulenmemeKontrolu(ad, soyad);
+                .bilgiAlanindaGoruntulenmemeKontrolu(adSoyad);
     }
 
     @Severity(SeverityLevel.CRITICAL)

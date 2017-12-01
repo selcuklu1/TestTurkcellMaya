@@ -453,10 +453,9 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Kişinin Bilgi alanında görüntülenmediği kontrolu")
-        public BilgilerTab bilgiAlanindaGoruntulenmemeKontrolu(String ad, String soyad) {
+        @Step("Bilgileri tabında kişinin bilgi alanında görüntülenmediği kontrolu")
+        public BilgilerTab bilgiAlanindaGoruntulenmemeKontrolu(String adSoyad) {
 
-            String adSoyad = ad + " " + soyad;
             boolean selectable = comboLov(cmbBilgiBy).isLovValueSelectable(adSoyad);
             Assert.assertEquals(selectable, false, "MyCombolov alanında " + adSoyad + ": Gerçek kişinin görüntülenmediği görülür");
             System.out.println("MyCombolov alanında " + adSoyad + ": Gerçek kişinin görüntülenmediği görülür.");
@@ -488,14 +487,12 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Bilgileri tabında kişinin geregi alanında görüntülenmediği kontrolu")
+        public BilgilerTab geregiAlanindaGoruntulenmemeKontrolu(String adSoyad) {
 
-        @Step("Kişinin Geregi alanında görüntülenmediği kontrolu")
-        public BilgilerTab geregiAlanindaGoruntulenmemeKontrolu(String ad, String soyad) {
-
-            String adSoyad = ad + " " + soyad;
             boolean selectable = comboLov(cmbGeregiBy).isLovValueSelectable(adSoyad);
-            Assert.assertEquals(selectable, false, "MyCombolov alanında " + adSoyad + ": Gerçek kişinin görüntülenmediği görülür");
-            System.out.println("MyCombolov alanında " + adSoyad + ": Gerçek kişinin görüntülenmediği görülür.");
+            Assert.assertEquals(selectable, false, "MyCombolov alanında " + adSoyad + ": Kişinin görüntülenmediği görülür");
+            System.out.println("MyCombolov alanında " + adSoyad + ": Kişinin görüntülenmediği görülür.");
 
             return this;
         }
@@ -789,6 +786,8 @@ public class EvrakOlusturPage extends MainPage {
         BelgenetElement tblEditolovGeregiTable = comboLov("input[id='yeniGidenEvrakForm:geregiKurumLov:LovText']");
         SelenideElement btnImzala = $("button[id^='yeniGidenEvrakForm:rightTab:uiRepeat'] span[class$='imzala']");
         SelenideElement divImzacılarGnMdV = $("[id='yeniGidenEvrakForm:parafciPanell'] [class='ui-inplace ui-hidden-container']");
+        By cmbGeregiBy = By.id("yeniGidenEvrakForm:geregiKurumLov:LovText");
+        By cmbBilgiBy = By.id("yeniGidenEvrakForm:bilgiKurumLov:LovText");
 
         private EditorTab open() {
             tabEditor.click();
@@ -890,6 +889,21 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Editör ekranında kişinin geregi alanında görüntülenmediği kontrolu")
+        public EditorTab geregiAlanindaGoruntulenmemeKontrolu(String ad) {
+            boolean selectable = comboLov(cmbGeregiBy).isLovValueSelectable(ad);
+            Assert.assertEquals(selectable, false, "MyCombolov alanında " + ad + ": Kişinin görüntülenmediği görülür");
+            System.out.println("MyCombolov alanında " + ad + ": Kişinin görüntülenmediği görülür.");
+            return this;
+        }
+
+        @Step("Editör ekranında kişinin bilgi alanında görüntülenmediği kontrolu")
+        public EditorTab bilgiAlanindaGoruntulenmemeKontrolu(String ad) {
+            boolean selectable = comboLov(cmbBilgiBy).isLovValueSelectable(ad);
+            Assert.assertEquals(selectable, false, "MyCombolov alanında " + ad + ": Gerçek kişinin görüntülenmediği görülür");
+            System.out.println("MyCombolov alanında " + ad + ": Gerçek kişinin görüntülenmediği görülür.");
+            return this;
+        }
     }
 
     public EkleriTab ekleriTabAc() {

@@ -433,6 +433,7 @@ public class TuzelKisiYonetimiTest extends BaseTest {
 
         sikKullanilanlarPage
                 .openPage()
+                .dagitimdaVarIseKaldir(ad) //Seçili geldiği durumlarda seçili kişiyi kaldırır.
                 .datigimlarTipSec(tip)
                 .dagitimlarDoldur(ad)
                 .dagitimlarKaydet()
@@ -443,7 +444,57 @@ public class TuzelKisiYonetimiTest extends BaseTest {
                 .filtreAdDoldur(ad)
                 .ara()
                 .aktifTuzelKisiKayitKontrolu(vergiNo, ad, kisaAd)
+                .tuzelKisiPasifIseAktifYap()
                 .tuzelKisiPasifYap()
-                .islemOnayi("Evet");
+                .islemOnayi("Evet")
+
+                .filtreSorgulamaPaneliAc()
+                .filtreAdDoldur(ad)
+                .filtreDurumSec("PASIFLER")
+                .ara()
+                .pasifTuzelKisiKayitKontrolu(vergiNo, ad, kisaAd)
+
+                .filtreSorgulamaPaneliAc()
+                .filtreAdDoldur(ad)
+                .filtreDurumSec("AKTIFLER")
+                .ara()
+                .kayitBulunamadiKontrolu()
+
+                .filtreSorgulamaPaneliAc()
+                .filtreAdDoldur(ad)
+                .filtreDurumSec("TUMU")
+                .ara()
+                .pasifTuzelKisiKayitKontrolu(vergiNo, ad, kisaAd);
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .geregiSecimTipiSec("T")
+                .geregiAlanindaGoruntulenmemeKontrolu(ad)
+                .bilgiSecimTipiSec("T")
+                .bilgiAlanindaGoruntulenmemeKontrolu(ad);
+
+        evrakOlusturPage
+                .editorTabAc()
+                .geregiAlanindaGoruntulenmemeKontrolu(ad)
+                .bilgiAlanindaGoruntulenmemeKontrolu(ad);
+
+        gelenEvrakKayitPage
+                .openPage()
+                .kisiKurumSec("T")
+                .geldigiKisiGoruntulenmemeKontrolu(ad)
+                .geldigiKisiGoruntulenmemeKontrolu(vergiNo);
+
+        gidenEvrakKayitPage
+                .openPage()
+                .geregiSecimTipiSec("T")
+                .geregiAlanindaGoruntulenmemeKontrolu(ad)
+
+                .bilgiSecimTipiSec("T")
+                .bilgiAlanindaGoruntulenmemeKontrolu(ad);
+
+        sikKullanilanlarPage
+                .openPage()
+                .dagitimlarListesindeKisininGoruntulenmemeKontrolu(ad);
     }
 }
