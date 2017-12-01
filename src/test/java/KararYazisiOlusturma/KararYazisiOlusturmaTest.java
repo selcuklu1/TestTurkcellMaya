@@ -24,7 +24,7 @@ public class KararYazisiOlusturmaTest extends BaseTest{
 
         @BeforeMethod
         public void loginBeforeTests() {
-        kararYazisiOlusturPage = new KararYazisiOlusturPage();
+            kararYazisiOlusturPage = new KararYazisiOlusturPage();
         }
 
         @Severity(SeverityLevel.CRITICAL)
@@ -32,7 +32,8 @@ public class KararYazisiOlusturmaTest extends BaseTest{
         public void TC1610() throws InterruptedException {
 
             String basariMesaji = "İşlem başarılıdır!";
-            String hataMesaji = "Bağlantı kurulamadı, girilen parola veya şifre yanlış !";
+            String uyariMesajYaziIcerik = "Yazı içeriği boş olamaz!";
+            String uyariMesajZorunlu = "Zorunlu alanları doldurunuz";
             String parola = "71396428";
             String sifre = "71396428a";
             String hataliParola = "123";
@@ -42,15 +43,56 @@ public class KararYazisiOlusturmaTest extends BaseTest{
 
             kararYazisiOlusturPage
                     .openPage()
+                    .bilgilerTabiAc()
                     .konuKoduDoldur("K/Frekans Yıllık Kullanım Ücreti")
                     .onayAkisiEkle()
                     .kullan()
-                    .kaldirilacakKlasorlerDoldur("")
-                    .toplantiNoDoldur("")
-                    .toplantiTarihDoldur("")
-                    .kararNoDoldur("")
-                    .islemMesaji().uyariOlmali(hataMesaji);
+                    .kaldirilacakKlasorlerDoldur("Diğer")
+                    .toplantiNoDoldur("123123")
+                    .toplantiTarihDoldur("30.11.2017")
+                    .kararNoDoldur("1231231231231231231")
+                    .kaydetveOnaySun()
+                    .aciklamaDoldur("Deneme amaçlıdır")
+                    .gonder(true)
+                    .islemMesaji().beklenenMesaj(uyariMesajYaziIcerik);
 
+            kararYazisiOlusturPage
+                    .editorTabAc()
+                    .editorIcerikDoldur("Deneme can");
+            kararYazisiOlusturPage
+                    .bilgilerTabiAc()
+                    .kararNoDoldur("")
+                    .kaydetveOnaySun()
+                    .islemMesaji().beklenenMesaj(uyariMesajZorunlu);
+//1
+            kararYazisiOlusturPage
+                    .bilgilerTabiAc()
+                    .kararNoDoldur("1231231231231231231")
+                    .konuKoduTemizle()
+                    .kaydetveOnaySun()
+                    .islemMesaji().beklenenMesaj(uyariMesajZorunlu);
+//2
+            kararYazisiOlusturPage
+                    .bilgilerTabiAc()
+                    .konuKoduDoldur("K/Frekans Yıllık Kullanım Ücreti")
+                    .konuDoldur("")
+                    .kaydetveOnaySun()
+                    .islemMesaji().beklenenMesaj(uyariMesajZorunlu);
+//3
+            kararYazisiOlusturPage
+                    .bilgilerTabiAc()
+                    .kaldirilacakKlasorTemizle()
+                    .konuKoduDoldur("K/Frekans Yıllık Kullanım Ücreti")
+                    .kaydetveOnaySun()
+                    .islemMesaji().beklenenMesaj(uyariMesajZorunlu);
+//4
+
+            kararYazisiOlusturPage
+                    .bilgilerTabiAc()
+                    .kaldirilacakKlasorlerDoldur("Diğer")
+                    .toplantiNoDoldur("")
+                    .kaydetveOnaySun()
+                    .islemMesaji().beklenenMesaj(uyariMesajZorunlu);
 
 
 
