@@ -119,7 +119,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
         kaydedilenGelenEvraklarPage
                 .openPage()
-                .tabloEvrakNoileIcerikSec("5012");
+                .tabloEvrakNoileIcerikSec(evrakNO321);
 
         String evrakNo = gelenEvrakKayitPage
                 .evrakDetayiEvrakNoTextAl();
@@ -203,22 +203,23 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         String evrakNo = evrakNO321;
         String evrakNo1 = evrakNO328;
         String geldigiYer = "D";
-
+// Testin öncesinde TC0321 ve TC0328 caselerinin çalışması gerekli..
+        
         kaydedilenGelenEvrakPage
                 .openPage()
-                .gelenEvrakNoDoldur("5012")
+                .gelenEvrakNoDoldur(evrakNO321)
                 .sorgula()
-                .tabloKontrolu("5012")
+                .tabloKontrolu(evrakNO321)
                 .raporAlExcel();
 //                .islemMesaji().basariliOlmali(basariMesaji);
         Thread.sleep(3000);
         kaydedilenGelenEvrakPage
                 .txtClear()
-                .gelenEvrakNoDoldur("5013")
+                .gelenEvrakNoDoldur(evrakNO328)
                 .sorgula()
                 .geldigiYerSec(geldigiYer)
                 .sorgula()
-                .tabloKontrolu("5013")
+                .tabloKontrolu(evrakNO328)
                 .raporAlPdf()
                 .islemMesaji().basariliOlmali(basariMesaji);
     }
