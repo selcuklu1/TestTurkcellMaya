@@ -447,7 +447,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
         gelenEvrakKayitPage
                 .openPage()
                 .kisiKurumSec("G")
-                .geldigiKisiGoruntulenmemeKontrolu(adSoyad);
+                .geldigiGercekKisiGoruntulenmemeKontrolu(adSoyad);
 
         gidenEvrakKayitPage
                 .openPage()

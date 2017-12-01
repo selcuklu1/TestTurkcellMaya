@@ -28,7 +28,7 @@ public class SikKullanilanlarPage extends MainPage {
     BelgenetElement txtDagitimlarDagitimlar = comboLov(By.id("sikKullanilanForm:sikKullanilanDagitimLov_id:LovText"));
     SelenideElement btnDagitimlarKaydet = $(By.id("sikKullanilanForm:sikKullanilanDagitimButton"));
     SelenideElement btnDagitimlarKaldir = $(By.id("sikKullanilanForm:sikKullanilanDagitimKaldirButton"));
-    SelenideElement btnEkranKapat  = $(By.cssSelector("[id='window1Dialog'] span[class='ui-icon ui-icon-closethick']"));
+    SelenideElement btnEkranKapat  = $(By.cssSelector("[id='window2Dialog'] span[class='ui-icon ui-icon-closethick']"));
 
     //</editor-fold>
 

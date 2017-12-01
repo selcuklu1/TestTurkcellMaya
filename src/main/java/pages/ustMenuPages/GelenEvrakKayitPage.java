@@ -10,7 +10,6 @@ import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.UstMenu;
 import pages.pageComponents.belgenetElements.BelgenetElement;
-import pages.solMenuPages.KaydedilenGelenEvraklarPage;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.executeJavaScript;
@@ -37,7 +36,9 @@ public class GelenEvrakKayitPage extends MainPage {
     //BelgenetElement cmbEvrakBilgileriListGeldigiKisi = comboLov(By.id("evrakBilgileriForm:evrakBilgileriList:9:geldigiGercekKisiLov:LovText"));
     BelgenetElement cmbGeldigiGercekKisi = comboLov("[id$='geldigiGercekKisiLov:LovText']");
     BelgenetElement cmbGeldigiTuzelKisi = comboLov("[id$='geldigiTuzelKisiLov:LovText']");
-    By cmbGeldiğiKisiBy = By.cssSelector("[id$='geldigiGercekKisiLov:LovText']");
+    By cmbGeldiğiGercekKisiBy = By.cssSelector("[id$='geldigiGercekKisiLov:LovText']");
+    By cmbGeldiğiTuzelKisiBy = By.cssSelector("[id$='geldigiTuzelKisiLov:LovText']");
+
 
     public SelenideElement txtEvrakBilgileriListEvrakSayiTextAreaSol = $("[id$='evrakSayiTextAreaSol']");
     SelenideElement txtEvrakBilgileriListEvrakSayiTextAreaSag = $("[id$='evrakSayiTextAreaSag']");
@@ -260,12 +261,22 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("Kişinin geldiği alanında görüntülenmediği kontrolu")
-    public GelenEvrakKayitPage geldigiKisiGoruntulenmemeKontrolu(String adSoyad) {
+    @Step("Gerçek kişinin geldiği alanında görüntülenmeme kontrolu")
+    public GelenEvrakKayitPage geldigiGercekKisiGoruntulenmemeKontrolu(String kisi) {
 
-        boolean selectable = comboLov(cmbGeldiğiKisiBy).isLovValueSelectable(adSoyad);
-        Assert.assertEquals(selectable, false, "MyCombolov alanında " + adSoyad + ": Kişinin görüntülenmediği görülür");
-        System.out.println("MyCombolov alanında " + adSoyad + ": Kişinin görüntülenmediği görülür.");
+        boolean selectable = comboLov(cmbGeldiğiGercekKisiBy).isLovValueSelectable(kisi);
+        Assert.assertEquals(selectable, false, "MyCombolov alanında " + kisi + ": Kişinin görüntülenmediği görülür");
+        System.out.println("MyCombolov alanında " + kisi + ": Kişinin görüntülenmediği görülür.");
+
+        return this;
+    }
+
+    @Step("Tüzel kişinin geldiği alanında görüntülenmeme kontrolu")
+    public GelenEvrakKayitPage geldigiTuzelKisiGoruntulenmemeKontrolu(String kisi) {
+
+        boolean selectable = comboLov(cmbGeldiğiTuzelKisiBy).isLovValueSelectable(kisi);
+        Assert.assertEquals(selectable, false, "MyCombolov alanında " + kisi + ": Kişinin görüntülenmediği görülür");
+        System.out.println("MyCombolov alanında " + kisi + ": Kişinin görüntülenmediği görülür.");
 
         return this;
     }
@@ -742,4 +753,6 @@ public class GelenEvrakKayitPage extends MainPage {
 
         return this;
     }
+
+
 }
