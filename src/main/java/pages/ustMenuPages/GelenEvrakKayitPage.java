@@ -347,8 +347,6 @@ public class GelenEvrakKayitPage extends MainPage {
 
     public GelenEvrakKayitPage dagitimBilgileriBirimDoldur(String birim) {
 //        txtDagitimBilgileriBirim.sendKeys(birim);
-        ElementsCollection col = cmbHavaleIslemleriBirim.type(birim).titleItems();
-        col.filterBy(Condition.exactText(birim)).first().click();
         cmbHavaleIslemleriBirim.type(birim).titleItems()
                 .filterBy(Condition.exactText(birim)).get(0).click();
         return this;
