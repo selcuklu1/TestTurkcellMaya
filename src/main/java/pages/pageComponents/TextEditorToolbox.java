@@ -32,6 +32,7 @@ public class TextEditorToolbox extends ElementsContainer {
 //        return elementInFrame("a[aria-labelledby="+ labelId +"]");
         //</editor-fold>
 
+
         return $("a[href*='\'"+ name +"\'']");
     }
 

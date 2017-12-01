@@ -15,7 +15,7 @@ public abstract class BelgentCondition extends Condition {
         }
     };
 
-    public static final Condition isPressedToolbox = new Condition("required") {
+    public static final Condition isPressedToolbox = new Condition("isPressedToolbox") {
         @Override
         public boolean apply(WebElement element) {
             return element.getAttribute("aria-pressed") != null && element.getAttribute("aria-pressed").contains("true");

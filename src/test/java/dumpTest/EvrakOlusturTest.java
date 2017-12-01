@@ -17,6 +17,7 @@ import pages.pageComponents.belgenetElements.BelgentCondition;
 import pages.ustMenuPages.EvrakOlusturPage;
 import pages.ustMenuPages.PulYonetimiPage;
 
+import static com.codeborne.selenide.Condition.exactText;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.executeJavaScript;
@@ -54,7 +55,7 @@ public class EvrakOlusturTest extends BaseTest {
         BelgenetElement el = comboLov(By.id("yeniGidenEvrakForm:evrakBilgileriList:16:geregiLov:LovText"))
                 .selectLov("optiim").lastSelectedLov();
 
-        /*ElementsCollection col = el.titleItems();
+        ElementsCollection col = el.titleItems();
         int q = col.size();
 
         String a1 =  comboLov("input[id$='konuKoduLov:LovText']").lastSelectedLov().text();
@@ -130,6 +131,7 @@ public class EvrakOlusturTest extends BaseTest {
 
 //        System.out.println("!!!!!!!!-" + field.toString());
         dog.shouldBe(BelgentCondition.required);
+
     }
 
     @DataProvider
