@@ -506,4 +506,5 @@ public class TuzelKisiYonetimiTest extends BaseTest {
                 .openPage()
                 .dagitimlarListesindeKisininGoruntulenmemeKontrolu(ad);
     }
+
 }

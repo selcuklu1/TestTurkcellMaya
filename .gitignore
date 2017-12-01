@@ -44,4 +44,4 @@ test-output
 atlassian-ide-plugin.xml
 
 
-/BaseTest.java
+src/main/java/common/BaseLibrary.java
