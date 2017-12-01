@@ -297,8 +297,65 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "")
-    public void TC0322 throws InterruptedException{
+    @Test(enabled = true, description = "Gelen evrak kayıtta alan kontrolleri")
+    public void TC0322() throws InterruptedException{
+
+        String kisiKurum = "G";
+        String kisiKurum1 = "D";
+        String geldigiKurum = "Cumhurbaşkanlığı";
+        String solAlan = "24301012-";
+        String evrakTuru = "Dilekçe";
+        String ivedilik = "G";
+        String evrakGelisTipi = "P";
+        String message = "Zorunlu alanları doldurunuz";
+        String message2 = "Dosya büyüklüğü uygun değildir."
+        gelenEvrakKayitPage
+                .openPage()
+                .kisiKurumSec(kisiKurum)
+                .evrakTuruKontrol(evrakTuru)
+                .kisiKurumSec(kisiKurum1)
+                .geldigiKurumDoldurLovText(geldigiKurum)
+                .evrakSayisiSolAlanKontrolu(solAlan)
+                .ivedilikSec(ivedilik)
+                .konuKoduDoldur(konuKodu)
+                .evrakTarihiDoldur(evrakTarihi)
+                .evrakSayiSagDoldur()
+                .evrakGelisTipiSec(evrakGelisTipi)
+                .kaydet()
+                .islemMesaji().beklenenMesaj(message);
+
+        gelenEvrakKayitPage
+                .miatDoldur(getSysDateForKis())
+                .konuKoduSil()
+                .kaydet()
+                .islemMesaji().beklenenMesaj(message);
+
+        gelenEvrakKayitPage
+                .konuKoduDoldur(konuKodu)
+                .evrakTarihiSil()
+                .kaydet()
+                .islemMesaji().beklenenMesaj(message);
+
+        gelenEvrakKayitPage
+                .evrakTarihiDoldur(evrakTarihi)
+                .evrakSayiSagSil()
+                .kaydet()
+                .islemMesaji().beklenenMesaj(message);
+
+        String evrakTuru1 = "A";
+        String path = "C:\\Users\\Emre_Sencan\\Pictures\\tsunami_posteroct08.pdf";
+        gelenEvrakKayitPage
+                .evrakTuruSec(evrakTuru1)
+                .kaydet()
+                .evrakBilgileriUstYaziEkle(path)
+                .islemMesaji().beklenenMesaj(message2);
+
+        
+
+
+
+
+
 
     }
 }

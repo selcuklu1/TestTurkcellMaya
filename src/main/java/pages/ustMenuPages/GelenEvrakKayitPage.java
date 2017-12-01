@@ -42,7 +42,7 @@ public class GelenEvrakKayitPage extends MainPage {
     SelenideElement txtEvrakBilgileriListEvrakSayiTextAreaSag = $("[id$='evrakSayiTextAreaSag']");
     SelenideElement cmbEvrakBilgileriListEvrakGelisTipi = $("[id$='evrakGelisTipi']");
     SelenideElement cmbEvrakBilgileriListIvedilik = $("[id$='ivedilik']");
-    SelenideElement txtEvrakBilgileriListMiat = $(By.id("evrakBilgileriForm:evrakBilgileriList:14:miatCalendar_input"));
+    SelenideElement txtEvrakBilgileriListMiat = $("[id$=miatCalendar_input]");
     SelenideElement txtEvrakBilgileriListAciklama = $(By.id("evrakBilgileriForm:evrakBilgileriList:15:j_idt4318"));
     SelenideElement cmbEvrakBilgileriListOzelKategori = $(By.id("evrakBilgileriForm:evrakBilgileriList:17:j_idt4499"));
     SelenideElement dateTxtEvrakBilgileriListPostalanmaTarihi = $(By.id("evrakBilgileriForm:evrakBilgileriList:18:postalanmaTarihi_input"));
@@ -58,7 +58,7 @@ public class GelenEvrakKayitPage extends MainPage {
     SelenideElement cmbEvrakEkTabViewGizlilikDerecesi = $(By.xpath("//*[@id='evrakBilgileriForm:evrakEkTabView:guvenlikKodu']"));
     SelenideElement txtEvrakEkTabViewEkMetni = $(By.id("evrakBilgileriForm:evrakEkTabView:dosyaAciklama"));
     SelenideElement btvEvrakEkTabViewDosyaEkle = $(By.id("evrakBilgileriForm:evrakEkTabView:fileUploadButton_input"));
-//    ElementsCollection tblDosyaEkle = $$("div[id$='evrakBilgileriForm:ekListesiDataTable'] tr[role=row]");
+    //    ElementsCollection tblDosyaEkle = $$("div[id$='evrakBilgileriForm:ekListesiDataTable'] tr[role=row]");
     ElementsCollection tblDosyaEkle = $$("div[id$='ekListesiDataTable'] tr[role=row]");
 
     //Fiziksel Ek Ekle alt sekmesinde bulunanlar
@@ -121,6 +121,7 @@ public class GelenEvrakKayitPage extends MainPage {
     SelenideElement btnKaydet = $("[id='buttonPanelForm:kaydetButton']");
     SelenideElement popUphavaleYeriSecmediniz = $("[id='havaleYeriSecmedinizConfirmDialog'");
     SelenideElement btnHavaleYeriSecmedinizEvet = $("[id='evetButtonBos']");
+    SelenideElement btnHavaleYeriSecmedinizHayır = $("id=hayirDugmesiUstYaziHavaleYer");
     SelenideElement ustYaziveHavaleYeriYokpopUp = $("[id='ustYaziveHavaleYeriYokConfirmDialog']");
     SelenideElement ustYaziYokEvet = $("[id='evetDugmesi']");
     SelenideElement ustYaziYokpopUp = $("[id='ustYaziYokConfirmDialog']");
@@ -165,6 +166,12 @@ public class GelenEvrakKayitPage extends MainPage {
     SelenideElement btnEvrakDetayiPdfDegisiklikKabul = $(By.id("inboxItemInfoForm:ustyaziDegistirButton"));
     SelenideElement btnEvrakDetayiKaydetUyarisi = $(By.id("kaydetConfirmForm:kaydetEvetButton"));
 
+    SelenideElement btnTaramaHavuzundanEkle = $(By.id("evrakBilgileriForm:uploadFromTarananEvrakHavuzuGelenEvrak"));
+    SelenideElement btnTarayicidanEkle = $(By.id("evrakBilgileriForm:dogrudanTaramaBaslat"));
+    SelenideElement btnTaramaArayuzundenEkle = $(By.id("evrakBilgileriForm:taramaArayuzundenEkle"));
+    SelenideElement btnTaramaServisindenEkle = $(By.id("evrakBilgileriForm:taramaServisEkle"));
+    SelenideElement lblUstyaziGoster = $(By.id("evrakBilgileriForm:ustYaziGosterButton"));
+    SelenideElement lblUstyaziGizle = $(By.id("evrakBilgileriForm:ustYaziGizleButton"));
 
     //endregion
 
@@ -319,7 +326,7 @@ public class GelenEvrakKayitPage extends MainPage {
     }
 
     public GelenEvrakKayitPage miatDoldur(String miat) {
-        txtEvrakBilgileriListMiat.sendKeys(miat);
+        txtEvrakBilgileriListMiat.setValue(miat);
         return this;
     }
 
@@ -784,6 +791,55 @@ public class GelenEvrakKayitPage extends MainPage {
     @Step("Evrak Ekleri ekle butonana tıkla")
     public GelenEvrakKayitPage evrakEkleriDosyaEkle() {
         btnEvrakEkTabViewEkle.click();
+        return this;
+    }
+
+    @Step("Ekrandaki alan kontrolleri")
+    public GelenEvrakKayitPage alanKontrolleri() {
+
+        btnUstYaziEkle.shouldBe(Condition.exist);
+        lblUstyaziGoster.shouldBe(Condition.exist);
+        lblUstyaziGizle.shouldBe(Condition.exist);
+        btnTaramaHavuzundanEkle.shouldBe(Condition.exist);
+        btnTarayicidanEkle.shouldBe(Condition.exist);
+        btnTaramaArayuzundenEkle.shouldBe(Condition.exist);
+        btnTaramaServisindenEkle.shouldBe(Condition.exist);
+
+        return this;
+    }
+    @Step("Evrak turu alan kontrolü")
+    public GelenEvrakKayitPage evrakTuruKontrol(String evrakTuru) {
+        Assert.assertEquals(cmbEvrakBilgileriListEvrakTuru.getText(),evrakTuru);
+        return this;
+    }
+    @Step("Evrak Sayısı sol alan kontrolü")
+    public GelenEvrakKayitPage evrakSayisiSolAlanKontrolu(String solAlan){
+        Assert.assertEquals(txtEvrakBilgileriListEvrakSayiTextAreaSol.getValue(),solAlan);
+        return this;
+    }
+    @Step("Konu kodu sil")
+    public GelenEvrakKayitPage konuKoduSil() throws InterruptedException {
+        comboKonuKodu.clearLastSelectedLov().clear();
+        return this;
+    }
+    @Step("Evrak Tarihi sil")
+    public GelenEvrakKayitPage evrakTarihiSil() {
+        dateTxtEvrakBilgileriListEvrakTarihi.clear();
+        return this;
+    }
+    @Step("Evrak Sayısı Sağ alan sil")
+    public GelenEvrakKayitPage evrakSayiSagSil() {
+        txtEvrakBilgileriListEvrakSayiTextAreaSag.clear();
+        return this;
+    }
+
+    @Step("")
+    public GelenEvrakKayitPage popUpKontrol(){
+        if (popUphavaleYeriSecmediniz.isDisplayed()) {
+            String mesaj2 = "Havale yeri seçmediniz. Evrak kaydedildiğinde Kaydedilen Gelen Evraklar kutusuna düşecektir. İşleme devam etmek istiyor musunuz?";
+            popUphavaleYeriSecmediniz.getText().equals(mesaj2);
+            btnHavaleYeriSecmedinizHayır.click();
+        }
         return this;
     }
 }
