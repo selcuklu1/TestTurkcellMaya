@@ -4,7 +4,6 @@ import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
-import com.sun.xml.internal.ws.api.ha.StickyFeature;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import pages.MainPage;
