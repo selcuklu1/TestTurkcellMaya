@@ -31,6 +31,14 @@
             <version>3.7.1</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-server -->
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-server</artifactId>
+            <version>3.7.1</version>
+        </dependency>
+
+
         <dependency>
             <groupId>com.galenframework</groupId>
             <artifactId>galen-java-support</artifactId>
