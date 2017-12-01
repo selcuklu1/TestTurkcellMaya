@@ -26,14 +26,19 @@ public class PostalanacakEvraklarPage extends MainPage {
     SelenideElement btnEvrakPostala = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:4:cmdbutton"));
     SelenideElement tblSec =$(By.xpath("//tbody[@id='mainInboxForm:inboxDataTable_data']/tr[@data-ri='3']"));
     SelenideElement btnPostaDetayi3 = $(By.id("mainInboxForm:inboxDataTable:3:postaDagitimGosterButton"));
-    SelenideElement btnGonderilenYerDetay = $(By.id("mainPreviewForm:dataTableId:0:j_idt15025"));
-    BelgenetElement cmbGidisSekli = comboBox(By.id("mainPreviewForm:dagitimPlaniDetay:0:j_idt15150_label"));
-    SelenideElement txtGramaj = $(By.id("mainPreviewForm:dagitimPlaniDetay:0:j_idt15178"));
+    SelenideElement btnGonderilenYerDetay = $(By.id("mainPreviewForm:dataTableId:0:j_idt20289"));
+    BelgenetElement cmbGidisSekli = comboBox(By.id("mainPreviewForm:dataTableId:0:j_idt20289_label"));
+    SelenideElement txtGramaj = $(By.id("mainPreviewForm:dataTableId:0:postaGramaj"));
     SelenideElement btnTamam = $(By.id("mainPreviewForm:tutarDialogButtonId"));
-    SelenideElement txtTutar = $(By.id("mainPreviewForm:dagitimPlaniDetay:0:dpPostaTutarId"));
+    SelenideElement txtTutar = $(By.id("mainPreviewForm:dataTableId:0:dpPostaTutarId"));
     SelenideElement btnKaydet = $(By.id("mainPreviewForm:dagitimPlaniDetayKaydetViewDialog"));
-    SelenideElement btnHesapla = $(By.id("mainPreviewForm:dagitimPlaniDetay:0:j_idt15180"));
-
+    SelenideElement btnHesapla = $(By.id("mainPreviewForm:dataTableId:0:idt20327"));
+    SelenideElement epostaTxt = $(By.id("mainPreviewForm:dataTableId:0:j_idt20314"));
+    SelenideElement epostaAciklama = $(By.id("mainPreviewForm:dataTableId:0:j_idt20318"));
+    SelenideElement PostalanacakEvrakYazdir = $(By.id("mainPreviewForm:dataTableId:0:j_idt20356"));
+    SelenideElement PostalanacakEvrakOrijinalYazdir = $(By.id("mainPreviewForm:dataTableId:0:j_idt20357"));
+    SelenideElement btnPopupYazdir = $(By.id("postaDetayYazdirForm:dtPostaEvrakUstVeri:0:evrakDetayiViewDialogYazdir"));
+    SelenideElement btnPopupKapat = $(By.xpath("//*/span[@class='ui-icon ui-icon-closethick']"));
 
 
 
@@ -126,6 +131,43 @@ public class PostalanacakEvraklarPage extends MainPage {
     @Step("Tutar doldur")
     public PostalanacakEvraklarPage tutarDoldur(String tutar){
         txtTutar.sendKeys(tutar);
+        return this;
+    }
+
+    @Step("Postalanacak Evrak Yazdır")
+    public PostalanacakEvraklarPage postalanacakEvrakYaz () {
+
+        PostalanacakEvrakYazdir.click();
+        return this;
+
+    }
+    public PostalanacakEvraklarPage postalanacakEvrakOrjYaz () {
+
+        PostalanacakEvrakOrijinalYazdir.click();
+        return this;
+    }
+
+    public PostalanacakEvraklarPage PostalacanakEposta (String eposta) {
+
+        epostaTxt.setValue(eposta);
+        return this;
+    }
+
+    public PostalanacakEvraklarPage PostalamaAciklama (String text) {
+
+        epostaAciklama.setValue(text);
+        return this;
+    }
+
+    public PostalanacakEvraklarPage PopupPostaYazdirmaKapat () {
+
+        btnPopupKapat.click();
+        return this;
+    }
+
+    public PostalanacakEvraklarPage PopupPostalanacakEvrakYazdir () {
+
+        btnPopupYazdir.click();
         return this;
     }
 }
