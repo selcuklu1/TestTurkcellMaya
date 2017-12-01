@@ -308,7 +308,12 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         String ivedilik = "G";
         String evrakGelisTipi = "P";
         String message = "Zorunlu alanları doldurunuz";
-        String message2 = "Dosya büyüklüğü uygun değildir."
+        String message2 = "Dosya büyüklüğü uygun değildir.";
+        String evrakTuru1 = "A";
+        String path = "C:\\Users\\Emre_Sencan\\Pictures\\tsunami_posteroct08.pdf";
+        String ustYaziPath = "C:\\TestAutomation2\\BelgenetFTA\\documents\\pdf.pdf";
+        String birim = "OPTİİM BİRİM";
+
         gelenEvrakKayitPage
                 .openPage()
                 .kisiKurumSec(kisiKurum)
@@ -342,20 +347,19 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .kaydet()
                 .islemMesaji().beklenenMesaj(message);
 
-        String evrakTuru1 = "A";
-        String path = "C:\\Users\\Emre_Sencan\\Pictures\\tsunami_posteroct08.pdf";
         gelenEvrakKayitPage
-                .evrakTuruSec(evrakTuru1)
+                .evrakTuruSec(evrakTuru1);
+//        250 mb pdf yuklerken timeouta düşüyor....
+//                .kaydet()
+//                .evrakBilgileriUstYaziEkle(path)
+//                .islemMesaji().beklenenMesaj(message2);
+
+        gelenEvrakKayitPage
+                .evrakBilgileriUstYaziEkle(ustYaziPath)
                 .kaydet()
-                .evrakBilgileriUstYaziEkle(path)
-                .islemMesaji().beklenenMesaj(message2);
-
-        
-
-
-
-
-
-
+                .popUpKontrol()
+                .dagitimBilgileriBirimDoldur(birim)
+                .kaydet()
+                .popUps();
     }
 }

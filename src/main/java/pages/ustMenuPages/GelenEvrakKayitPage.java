@@ -119,9 +119,9 @@ public class GelenEvrakKayitPage extends MainPage {
     SelenideElement txtIlgiIslemleriTabViewArsivdenIlgiEvrakAraSayi = $(By.id("evrakBilgileriForm:ilgiIslemleriTabView:arsivdenIlgiEvrakAraSayiInputTextId"));
 
     SelenideElement btnKaydet = $("[id='buttonPanelForm:kaydetButton']");
-    SelenideElement popUphavaleYeriSecmediniz = $("[id='havaleYeriSecmedinizConfirmDialog'");
+    SelenideElement popUphavaleYeriSecmediniz = $(By.id("havaleYeriSecmedinizConfirmDialog"));
     SelenideElement btnHavaleYeriSecmedinizEvet = $("[id='evetButtonBos']");
-    SelenideElement btnHavaleYeriSecmedinizHayır = $("id=hayirDugmesiUstYaziHavaleYer");
+    SelenideElement btnHavaleYeriSecmedinizHayır = $(By.id("hayirButtonBos"));
     SelenideElement ustYaziveHavaleYeriYokpopUp = $("[id='ustYaziveHavaleYeriYokConfirmDialog']");
     SelenideElement ustYaziYokEvet = $("[id='evetDugmesi']");
     SelenideElement ustYaziYokpopUp = $("[id='ustYaziYokConfirmDialog']");
@@ -833,13 +833,23 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("")
+    @Step("Popup kontrol")
     public GelenEvrakKayitPage popUpKontrol(){
-        if (popUphavaleYeriSecmediniz.isDisplayed()) {
+        if (popUphavaleYeriSecmediniz.exists()) {
             String mesaj2 = "Havale yeri seçmediniz. Evrak kaydedildiğinde Kaydedilen Gelen Evraklar kutusuna düşecektir. İşleme devam etmek istiyor musunuz?";
             popUphavaleYeriSecmediniz.getText().equals(mesaj2);
-            btnHavaleYeriSecmedinizHayır.click();
+            clickJs(btnHavaleYeriSecmedinizHayır);
         }
+        return this;
+    }
+    @Step("Ust yazi gizle")
+    public GelenEvrakKayitPage ustYaziGizle(){
+        lblUstyaziGizle.click();
+        return this;
+    }
+    @Step("Ust yazi gözter")
+    public GelenEvrakKayitPage ustYaziGoster(){
+        lblUstyaziGoster.click();
         return this;
     }
 }
