@@ -5,6 +5,7 @@ import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import common.BaseTest;
+import io.qameta.allure.Allure;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -29,7 +30,6 @@ public class EvrakOlusturTest extends BaseTest {
     public void setUp() throws Exception {
 //        WebDriver driver = new FirefoxDriver();
 //        driver.get("https://www.google.com/");
-
 //        login();
 //        evrakOlusturPage = new EvrakOlusturPage();
 //        evrakOlusturPage.open().bilgilerTabiAc();

@@ -42,6 +42,8 @@ public class BirimIcerikSablonuTest extends BaseTest {
     @Test
     @Description("Yeni şablon oluşturma (Alt birimler görsün)")
     public void tc1082() {
+        birimIcerikSablonlarPage.openPage()
+                .yeniSablonOlustur();
 
     }
 }

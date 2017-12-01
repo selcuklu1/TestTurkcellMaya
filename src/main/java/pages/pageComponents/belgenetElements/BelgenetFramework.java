@@ -1,9 +1,15 @@
 package pages.pageComponents.belgenetElements;
 
 import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.commands.Commands;
 import com.codeborne.selenide.impl.ElementFinder;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
+import static com.codeborne.selenide.Selenide.switchTo;
 //import pages.pageComponents.belgenetElements.ComboLov.*;
 
 public class BelgenetFramework {
@@ -23,6 +29,11 @@ public class BelgenetFramework {
         Commands.getInstance().add("isLovSelected", comboLov.new IsLovSelected());
         Commands.getInstance().add("isLovValueSelectable", comboLov.new IsLovValueSelectable());
         Commands.getInstance().add("lastSelectedLov", comboLov.new LastSelectedLov());
+        Commands.getInstance().add("closeLovTreePanel", comboLov.new CloseLovTreePanel());
+
+        Commands.getInstance().add("allSelectedLov", comboLov.new AllSelectedLov());
+        Commands.getInstance().add("selectedTitles", comboLov.new SelectedTitles());
+        Commands.getInstance().add("selectedDetails", comboLov.new SelectedDetails());
 
         Commands.getInstance().add("openTree", comboLov.new OpenTree());
 //        Commands.getInstance().add("clearLov", comboLov.new ClearLov());
@@ -61,4 +72,36 @@ public class BelgenetFramework {
     public static BelgenetElement comboBox(By locator) {
         return ElementFinder.wrap(BelgenetElement.class, null, locator, 0);
     }
+
+    public static SelenideElement $inAnyFrame(By locator) {
+        switchToFrameOfElement(locator);
+        return ElementFinder.wrap(BelgenetElement.class, null, locator, 0);
+    }
+
+    public static SelenideElement $inAnyFrame(String selector) {
+        switchToFrameOfElement(By.cssSelector(selector));
+        return ElementFinder.wrap(BelgenetElement.class, null, By.cssSelector(selector), 0);
+    }
+
+    /**
+     * First search in main iframe, then first level child iframes.
+     * Stay in founded iframe, to return to main iframe use switchTo().defaultContent().
+     * @param locator
+     */
+    private static SelenideElement switchToFrameOfElement(By locator){
+        switchTo().defaultContent();
+        if ($(locator).exists())
+            return $(locator);
+
+        ElementsCollection iframes = $$(By.tagName("iframe"));
+        for (SelenideElement iframe:iframes) {
+            switchTo().frame(iframe);
+            if ($(locator).exists())
+                break;
+        }
+
+        return $(locator);
+    }
+
+
 }
