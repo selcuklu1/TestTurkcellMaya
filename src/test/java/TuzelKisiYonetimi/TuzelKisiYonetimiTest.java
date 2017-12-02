@@ -431,6 +431,15 @@ public class TuzelKisiYonetimiTest extends BaseTest {
         String tip = "Tüzel Kişi";
         String basariMesaji = "İşlem başarılıdır!";
 
+        //Tüzel kişi datası pasif ise aktif yap. Bu adım testte yok ama data bozulmuşsa düzeltilir.
+        //TODO: DB'den data alınıp, update sql ile aktif yapılabilir.
+        tuzelKisiYonetimiPage
+                .openPage()
+                .filtreDurumSec("TUMU")
+                .filtreAdDoldur(ad)
+                .ara()
+                .tuzelKisiPasifIseAktifYap();
+
         sikKullanilanlarPage
                 .openPage()
                 .dagitimdaVarIseKaldir(ad) //Seçili geldiği durumlarda seçili kişiyi kaldırır.
@@ -441,10 +450,10 @@ public class TuzelKisiYonetimiTest extends BaseTest {
 
         tuzelKisiYonetimiPage
                 .openPage()
+                .filtreSorgulamaPaneliAc()
                 .filtreAdDoldur(ad)
                 .ara()
                 .aktifTuzelKisiKayitKontrolu(vergiNo, ad, kisaAd)
-                .tuzelKisiPasifIseAktifYap()
                 .tuzelKisiPasifYap()
                 .islemOnayi("Evet")
 
@@ -482,8 +491,8 @@ public class TuzelKisiYonetimiTest extends BaseTest {
         gelenEvrakKayitPage
                 .openPage()
                 .kisiKurumSec("T")
-                .geldigiKisiGoruntulenmemeKontrolu(ad)
-                .geldigiKisiGoruntulenmemeKontrolu(vergiNo);
+                .geldigiTuzelKisiGoruntulenmemeKontrolu(ad)
+                .geldigiTuzelKisiGoruntulenmemeKontrolu(vergiNo);
 
         gidenEvrakKayitPage
                 .openPage()
@@ -497,4 +506,5 @@ public class TuzelKisiYonetimiTest extends BaseTest {
                 .openPage()
                 .dagitimlarListesindeKisininGoruntulenmemeKontrolu(ad);
     }
+
 }
