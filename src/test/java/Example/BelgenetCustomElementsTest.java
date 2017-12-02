@@ -17,7 +17,7 @@ public class BelgenetCustomElementsTest extends BaseTest {
     public class TestPage{
         BelgenetElement combo = comboLov(By.id("birimYonetimiFilterForm:accordionPanel:birimLov:LovText"));
 
-        public TestPage selectCombo(){
+        public TestPage toolbarCombo(){
             combo.selectLov("opt");
             return this;
         }
@@ -46,7 +46,7 @@ public class BelgenetCustomElementsTest extends BaseTest {
 
 //        BelgenetElement element = comboLov("[id='mainInboxForm:inboxDataTable:filtersAccordion'] h3 a");
 //        pages.ustMenuAc("Birim Yönetimi");
-//        new TestPage().selectCombo();
+//        new TestPage().toolbarCombo();
 //        comboLov(By.id("birimYonetimiFilterForm:accordionPanel:birimLov:LovText")).selectLov("OPT")
 //                .shouldHave(text("OPTİİM"));
 //
@@ -111,7 +111,7 @@ public class BelgenetCustomElementsTest extends BaseTest {
         //-----------------------------------
 
         //PageObject kullanım.
-        new TestPage().selectCombo().isSelected();
+        new TestPage().toolbarCombo().isSelected();
 
     }*/
 }
