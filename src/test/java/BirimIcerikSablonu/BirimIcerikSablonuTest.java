@@ -45,8 +45,8 @@ public class BirimIcerikSablonuTest extends BaseTest {
 
         TextEditor editor = new TextEditor();
         editor
-                .toolbarCombo("Biçim", "Başlık 1")
-                .toolbarButton("Kalın").activate();
+                .toolbarCombo("Biçim", "Başlık 1");
+             //   .toolbarButton("Kalın").activate();
 
         editor.editor().type("dsddsdsdsdsd");
 

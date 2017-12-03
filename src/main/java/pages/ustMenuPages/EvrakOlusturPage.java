@@ -795,7 +795,8 @@ public class EvrakOlusturPage extends MainPage {
     public class EditorTab extends MainPage {
 
         SelenideElement divHitap = $("div[id='yeniGidenEvrakForm:hitapInplace'] > span");
-        SelenideElement divEditor = $(By.id("yeniGidenEvrakForm:allPanels"));
+       // SelenideElement divEditor = $(By.id("yeniGidenEvrakForm:allPanels"));
+        SelenideElement divEditor = $("span[id='yeniGidenEvrakForm:D1Editor']");
         SelenideElement yeniGidenEvrakForm = $(By.id("cke_yeniGidenEvrakForm:ckeditorInstance_window1"));
         SelenideElement editorHitapKismi = $(By.cssSelector("#yeniGidenEvrakForm\\:hitapInplace > span:nth-child(4)"));
         SelenideElement tblEditorlovSecilenTable = $(By.id("yeniGidenEvrakForm:geregiKurumLov:LovSecilenTable"));
@@ -857,8 +858,8 @@ public class EvrakOlusturPage extends MainPage {
         @Step("Editör İçerik Doldur")
         public EditorTab editorIcerikDoldur(String icerik) throws InterruptedException {
             Thread.sleep(5000);
-            divEditor.click();
-            divEditor.sendKeys(icerik);
+            divEditor.find(By.tagName("iframe")).click();
+            divEditor.find(By.tagName("iframe")).getWrappedElement().sendKeys(icerik);
             return this;
         }
 
