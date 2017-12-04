@@ -94,7 +94,7 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
     }
 
     @Step("Tabloda ilk evrak içerik tıklama")
-    public KaydedilenGelenEvraklarPage tabloIlkRaporIcerik() {
+    public KaydedilenGelenEvraklarPage tabloRaporIcerik(String evrakNo) {
         tblIlkRapor.click();
         return this;
     }

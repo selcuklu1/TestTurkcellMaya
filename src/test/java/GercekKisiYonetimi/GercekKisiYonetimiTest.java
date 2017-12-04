@@ -474,6 +474,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
         String TCKN = "21861197500";
         String ad = "Bulut";
         String soyad = "Toprak";
+        String adSoyad = ad + " " + soyad;
 
         gercekKisiYonetimPage
                 .openPage()
@@ -511,23 +512,23 @@ public class GercekKisiYonetimiTest extends BaseTest {
         gelenEvrakKayitPage
                 .openPage()
                 .kisiKurumSec("G")
-                .gercekKisiGoruntulenmeKontrolu(TCKN, ad, soyad);
+                .gercekKisiGoruntulenmeKontrolu(TCKN, adSoyad);
 
         gidenEvrakKayitPage
                 .openPage()
                 .geregiSecimTipiSec("G")
-                .geregiAlanindaGoruntulenmeKontrolu(ad, soyad)
+                .geregiAlanindaGoruntulenmeKontrolu(adSoyad)
                 .secilenGeregiSil()
                 .bilgiSecimTipiSec("G")
-                .bilgiAlanindaGoruntulenmeKontrolu(ad, soyad);
+                .bilgiAlanindaGoruntulenmeKontrolu(adSoyad);
 
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
                 .geregiSecimTipiSec("G")
-                .geregiAlanindaGoruntulenmeKontrolu(ad, soyad)
+                .geregiAlanindaGoruntulenmeKontrolu(adSoyad)
                 .secilenGeregiSil()
                 .bilgiSecimTipiSec("G")
-                .bilgiAlanindaGoruntulenmeKontrolu(ad, soyad);
+                .bilgiAlanindaGoruntulenmeKontrolu(adSoyad);
     }
 }
