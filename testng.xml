@@ -1,18 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<<<<<<< HEAD
-<<<<<<< HEAD
-<suite thread-count="5" name="Test Suite" parallel="false" verbose="1">
-
-    <test name="TestName1">
-        <classes>
-            <class name="dumpTest.EvrakOlusturTest"/>
-        </classes>
-    </test>
-
-=======
-=======
->>>>>>> e5637766e4556ba553a141218642f58cea6745ad
 <suite thread-count="1" name="Test Suite" parallel="true" verbose="1">
     <!--<listeners>-->
     <!--<listener class-name="listeners.TestListener"></listener>-->
