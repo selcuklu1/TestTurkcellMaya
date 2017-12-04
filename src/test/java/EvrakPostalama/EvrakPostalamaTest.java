@@ -36,7 +36,7 @@ PostalanacakEvraklarPage postalanacakEvraklarPage;
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TC0308: Evrak Postalama")
     public void TC0308() throws InterruptedException {
-      evrakOlusturPage
+ /*     evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
                 .konuKoduSec("YAZILIM GEL")
@@ -66,7 +66,7 @@ PostalanacakEvraklarPage postalanacakEvraklarPage;
                        .editorEvrakGeregiSec("YAZILIM GELİ")
                       .imzala()
                        .popupSImzalaIslemleri();
-
+*/
 
                 postalanacakEvraklarPage
                         .openPage()
@@ -79,7 +79,7 @@ PostalanacakEvraklarPage postalanacakEvraklarPage;
                         .PopupPostalanacakEvrakYazdir()
                         .PopupPostaYazdirmaKapat()
                         .postalanacakEvrakOrjYaz()
-                        .gramajDoldur("1")
+                        .gramajDoldur("111111")
                         .hesapla()
                         .evrakPostala();
 
