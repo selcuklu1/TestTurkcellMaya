@@ -1,5 +1,6 @@
 package GelenGidenEvrakKayit;
 
+import com.codeborne.selenide.WebDriverRunner;
 import common.BaseTest;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
@@ -12,7 +13,6 @@ import pages.solMenuPages.TeslimAlinmayiBekleyenlerPage;
 import pages.ustMenuPages.GelenEvrakKayitPage;
 import pages.ustMenuPages.GercekKisiYonetimPage;
 import pages.ustMenuPages.KaydedilenGelenEvrakPage;
-
 import java.io.IOException;
 
 public class GelenGidenEvrakKayitTest extends BaseTest {
@@ -63,7 +63,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         gelenEvrakKayitPage
                 .openPage()
                 .evrakBilgileriUstYaziEkle(ustYaziPath)
-                .UstYaziAdiKontrol(ustYaziAdi)
+                .ustYaziPdfAdiKontrol(ustYaziAdi)
                 .islemMesaji().isBasarili();
 
         gelenEvrakKayitPage
@@ -79,12 +79,15 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .ivedilikSec(ivedilik)
                 .ekBilgiFiltreAc()
                 .evrakEkleriDosyaEkleme(excelPath)
+                .ustYaziDegistirilmisPopUpKontrol()
                 .evrakEkleriDosyaEkleDosyaAdiKontrol(excelAdi)
                 .evrakEkleriDosyaEkleEkMetinDoldur(ekMetni)
                 .evrakEkTabViewEkle()
+                .dosyaEkleTabTabloKontrolu("Ek-1")
                 .ekBilgiFizikselEkEkle()
                 .evrakEkTabFizikselEkMetniDoldur(ekMetni)
                 .fizikselEkTabViewAciklamaEkle()
+                .dosyaEkleTabTabloKontrolu("Ek-2")
                 .kaydet();
 
         evrakNO321 = gelenEvrakKayitPage.popUps();
@@ -111,9 +114,11 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         String evrakTarihi = getSysDateForKis();
         String evrakTuru2 = "Dilekçe";
 
+// TC0321 de oluşturulan evrak no burada kullanılacak.
+
         kaydedilenGelenEvraklarPage
                 .openPage()
-                .tabloIlkRaporIcerik();
+                .tabloEvrakNoileIcerikSec(evrakNO321);
 
         String evrakNo = gelenEvrakKayitPage
                 .evrakDetayiEvrakNoTextAl();
@@ -122,7 +127,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .evrakDetaylariAlanGuncellenebilirlikKontrolü()
                 .evrakBilgileriUstYaziEkle(ustYaziPath)
                 .evrakDetayiPdfDegisiklikpopUpClose()
-//                .UstYaziAdiKontrol(ustYaziAdi)
+//                .ustYaziPdfAdiKontrol(ustYaziAdi)
                 .konuKoduDoldur(konuKodu)
                 .evrakTuruSec(evrakTuru)
                 .evrakDiliSec(evrakDili)
@@ -137,6 +142,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .evrakDetayiFizikselEkEkleTab()
                 .evrakDetayiAciklamaDoldur(aciklama)
                 .evrakDetayiEkle()
+                .dosyaEkleTabTabloKontrolu("Ek-3") // TC0321 deki evrak no kullanıldığında bu satır aktif olarak kullanılabilir.
                 .evrakDetayiKaydet()
                 .evrakDetayiKaydetPopUpClose()
                 .islemMesaji().basariliOlmali(basariMesaji);
@@ -196,24 +202,25 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         String evrakNo = evrakNO321;
         String evrakNo1 = evrakNO328;
         String geldigiYer = "D";
+// Testin öncesinde TC0321 ve TC0328 caselerinin çalışması gerekli..
 
         kaydedilenGelenEvrakPage
                 .openPage()
-                .gelenEvrakNoDoldur("4998")
+                .gelenEvrakNoDoldur(evrakNO321)
                 .sorgula()
-                .tabloKontrolu("4998")
+                .tabloKontrolu(evrakNO321)
                 .raporAlExcel();
 //                .islemMesaji().basariliOlmali(basariMesaji);
         Thread.sleep(3000);
         kaydedilenGelenEvrakPage
                 .txtClear()
-                .gelenEvrakNoDoldur("4999")
+                .gelenEvrakNoDoldur(evrakNO328)
                 .sorgula()
                 .geldigiYerSec(geldigiYer)
                 .sorgula()
-                .tabloKontrolu("4999")
-                .raporAlPdf();
-//                .islemMesaji().basariliOlmali(basariMesaji);
+                .tabloKontrolu(evrakNO328)
+                .raporAlPdf()
+                .islemMesaji().basariliOlmali(basariMesaji);
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -250,11 +257,14 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
         String birim = "OPTİİM BİRİM11";
 
-        String pathToFilePdf = "C:\\TestAutomation2\\BelgenetFTA\\documents\\mailt.msg";
+        String pathToFilePdf = "C:\\TestAutomation2\\BelgenetFTA\\documents\\TestOtomasyon.msg";
         String pathToFileExcel = "C:\\TestAutomation2\\BelgenetFTA\\documents\\test.xlsx";
+//        String ustYaziAdi = "TestOtomasyon.msg";
+        String ustYaziAdi = "ustYazi.pdf";  // TestOtomasyon.msg ekiini eklememe rağmen ustYazi.pdf  olarak ekrana geliyor.
         gelenEvrakKayitPage
                 .openPage()
                 .evrakBilgileriUstYaziEkle(pathToFilePdf)
+                .ustYaziMailAdiKontrol(ustYaziAdi)
                 .konuKoduDoldur(konuKodu)
                 .evrakTuruSec(evrakTuru)
                 .evrakDiliSec(evrakDili)
@@ -266,17 +276,90 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .evrakGelisTipiSec(evrakGelisTipi)
                 .ivedilikSec(ivedilik)
                 .ekBilgiFiltreAc()
-                .evrakEkTabViewEkle()
                 .evrakEkleriDosyaEkleme(pathToFileExcel)
+                .ustYaziDegistirilmisPopUpKontrol()
+                .evrakEkleriDosyaEkleEkMetinDoldur(ekMetni)
+                .evrakEkleriDosyaEkle()
+                .dosyaEkleTabTabloKontrolu("Ek-2") //Webservise  baglanılamadı hatası alnıyor.
+                .ekBilgiFizikselEkEkle()
+                .evrakEkTabFizikselEkMetniDoldur(ekMetni)
+                .fizikselEkTabViewAciklamaEkle()
+                .dosyaEkleTabTabloKontrolu("Ek-3")
                 .kaydet();
+
         String evrakNo = gelenEvrakKayitPage.popUps();
-        //   page.islemMesaji().beklenenMesajTipi(MesajTipi.BASARILI);
-        //  page.solMenu(SolMenuData.BirimEvraklari.KaydedilenGelenEvraklar);
-//        TODO  tabloda oluşturulan evrak bulunacak....
-        teslimAlinmayiBekleyenlerPage
+
+        kaydedilenGelenEvraklarPage
                 .openPage()
                 .filtreleAc()
-                .tarihiDoldur(getSysDateForKis())
+                .tarihDoldur(getSysDateForKis())
                 .tabloKontrolu(evrakNo);
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "Gelen evrak kayıtta alan kontrolleri")
+    public void TC0322() throws InterruptedException{
+
+        String kisiKurum = "G";
+        String kisiKurum1 = "D";
+        String geldigiKurum = "Cumhurbaşkanlığı";
+        String solAlan = "24301012-";
+        String evrakTuru = "Dilekçe";
+        String ivedilik = "G";
+        String evrakGelisTipi = "P";
+        String message = "Zorunlu alanları doldurunuz";
+        String message2 = "Dosya büyüklüğü uygun değildir.";
+        String evrakTuru1 = "A";
+        String path = "C:\\Users\\Emre_Sencan\\Pictures\\tsunami_posteroct08.pdf";
+        String ustYaziPath = "C:\\TestAutomation2\\BelgenetFTA\\documents\\pdf.pdf";
+        String birim = "OPTİİM BİRİM";
+
+        gelenEvrakKayitPage
+                .openPage()
+                .kisiKurumSec(kisiKurum)
+                .evrakTuruKontrol(evrakTuru)
+                .kisiKurumSec(kisiKurum1)
+                .geldigiKurumDoldurLovText(geldigiKurum)
+                .evrakSayisiSolAlanKontrolu(solAlan)
+                .ivedilikSec(ivedilik)
+                .konuKoduDoldur(konuKodu)
+                .evrakTarihiDoldur(evrakTarihi)
+                .evrakSayiSagDoldur()
+                .evrakGelisTipiSec(evrakGelisTipi)
+                .kaydet()
+                .islemMesaji().beklenenMesaj(message);
+
+        gelenEvrakKayitPage
+                .miatDoldur(getSysDateForKis())
+                .konuKoduSil()
+                .kaydet()
+                .islemMesaji().beklenenMesaj(message);
+
+        gelenEvrakKayitPage
+                .konuKoduDoldur(konuKodu)
+                .evrakTarihiSil()
+                .kaydet()
+                .islemMesaji().beklenenMesaj(message);
+
+        gelenEvrakKayitPage
+                .evrakTarihiDoldur(evrakTarihi)
+                .evrakSayiSagSil()
+                .kaydet()
+                .islemMesaji().beklenenMesaj(message);
+
+        gelenEvrakKayitPage
+                .evrakTuruSec(evrakTuru1);
+//        250 mb pdf yuklerken timeouta düşüyor....
+//                .kaydet()
+//                .evrakBilgileriUstYaziEkle(path)
+//                .islemMesaji().beklenenMesaj(message2);
+
+        gelenEvrakKayitPage
+                .evrakBilgileriUstYaziEkle(ustYaziPath)
+                .kaydet()
+                .popUpKontrol()
+                .dagitimBilgileriBirimDoldur(birim)
+                .kaydet()
+                .popUps();
     }
 }

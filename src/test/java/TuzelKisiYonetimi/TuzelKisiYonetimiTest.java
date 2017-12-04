@@ -507,4 +507,79 @@ public class TuzelKisiYonetimiTest extends BaseTest {
                 .dagitimlarListesindeKisininGoruntulenmemeKontrolu(ad);
     }
 
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TC1132: Pasif yapılan tüzel kişinin aktif yapılması ve kontrolü")
+    public void TC1458() {
+
+        String vergiNo = "8524567913";
+        String ad = "Türksat Optiim";
+        String kisaAd = "trkstopttm";
+        String tip = "Tüzel Kişi";
+        String basariMesaji = "İşlem başarılıdır!";
+
+        //Tüzel kişi datası aktif ise pasif yap. Bu adım testte yok ama data bozulmuşsa düzeltilir.
+        //TODO: DB'den data alınıp, update sql ile aktif yapılabilir.
+        tuzelKisiYonetimiPage
+                .openPage()
+                .filtreDurumSec("TUMU")
+                .filtreAdDoldur(ad)
+                .ara()
+                .tuzelKisiAktifIsePasifYap()
+
+                .filtreSorgulamaPaneliAc()
+                .filtreAdDoldur(ad)
+                .filtreDurumSec("PASIFLER")
+                .ara()
+                .pasifTuzelKisiKayitKontrolu(vergiNo, ad, kisaAd)
+
+                .tuzelKisiAktifYap()
+                .islemOnayi("Evet")
+
+                .filtreSorgulamaPaneliAc()
+                .filtreAdDoldur(ad)
+                .filtreDurumSec("AKTIFLER")
+                .ara()
+                .aktifTuzelKisiKayitKontrolu(vergiNo, ad, kisaAd)
+
+                .filtreSorgulamaPaneliAc()
+                .filtreAdDoldur(ad)
+                .filtreDurumSec("PASIFLER")
+                .ara()
+                .kayitBulunamadiKontrolu()
+
+                .filtreSorgulamaPaneliAc()
+                .filtreAdDoldur(ad)
+                .filtreDurumSec("TUMU")
+                .ara()
+                .aktifTuzelKisiKayitKontrolu(vergiNo, ad, kisaAd);
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .geregiSecimTipiSec("T")
+                .geregiAlanindaGoruntulenmeKontrolu(ad)
+                .secilenGeregiSil()
+                .bilgiSecimTipiSec("T")
+                .bilgiAlanindaGoruntulenmeKontrolu(ad);
+
+        evrakOlusturPage
+                .editorTabAc()
+                .geregiDoldur(ad)
+                .bilgiDoldur(ad);
+
+        gelenEvrakKayitPage
+                .openPage()
+                .kisiKurumSec("T")
+                .geldigiTuzelKisiGoruntulenmeKontrolu(ad)
+                .geldigiTuzelKisiGoruntulenmeKontrolu(vergiNo);
+
+        gidenEvrakKayitPage
+                .openPage()
+                .geregiSecimTipiSec("T")
+                .geregiAlanindaGoruntulenmeKontrolu(ad)
+
+                .bilgiSecimTipiSec("T")
+                .bilgiAlanindaGoruntulenmeKontrolu(ad);
+    }
+
 }
