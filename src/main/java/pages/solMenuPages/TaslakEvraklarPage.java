@@ -1,13 +1,18 @@
 package pages.solMenuPages;
 
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import pages.MainPage;
+import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
+import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 public class TaslakEvraklarPage extends MainPage {
 
@@ -28,7 +33,7 @@ public class TaslakEvraklarPage extends MainPage {
 
     //Paylaş Button alt div
     SelenideElement btnPaylas = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:4:cmdbutton"));
-    SelenideElement txtPaylasKisi = $(By.id("mainPreviewForm:evrakPaylasKisiLov:LovText"));
+    BelgenetElement txtPaylasKisi = comboLov(By.id("mainPreviewForm:evrakPaylasKisiLov:LovText"));
     SelenideElement txtPaylasanAciklama = $(By.id("mainPreviewForm:evrakPaylasAciklama"));
     SelenideElement btnPaylasPaylas = $(By.id("mainPreviewForm:paylasButtonId"));
 
@@ -37,6 +42,10 @@ public class TaslakEvraklarPage extends MainPage {
     SelenideElement cmbEvrakNotlariModalNotTipi = $(By.id("evrakKisiselNotDialogFormId:evrakNotTipi_input"));
     SelenideElement btnEvrakNotlariModalKaydet = $(By.id("evrakKisiselNotDialogFormId:evrakKisiselNotKaydet"));
     SelenideElement btnEvrakNotlariModalIptal = $(By.id("evrakKisiselNotDialogFormId:evrakKisiselNotIptal"));
+
+    ElementsCollection tableEvraklar = $$("tbody[id='mainInboxForm:inboxDataTable_data'] tr[role='row']");
+    ElementsCollection tabEvrakOnizleme = $$("div[id='mainPreviewForm:evrakOnizlemeTab'] ul[role='tablist'] li");
+    SelenideElement btnPaylasTab = $(By.xpath("//span[contains(@class, 'evrakPaylas')]/.."));
 
     @Step("Taslak Evraklar sayfası aç")
     public TaslakEvraklarPage openPage(){
@@ -129,13 +138,30 @@ public class TaslakEvraklarPage extends MainPage {
         return this;
     }
 
-    public TaslakEvraklarPage paylasKisiDoldur(String text) {
-        txtPaylasKisi.setValue(text);
+    public TaslakEvraklarPage paylasKisiDoldur(String kisi) {
+        txtPaylasKisi.selectLov(kisi);
         return this;
     }
 
     public TaslakEvraklarPage paylasGonder() {
         btnPaylas.click();
+        return this;
+    }
+
+
+    @Step("Evrak seç.")
+    public TaslakEvraklarPage evrakSec(String konu, String tarihSaat){
+        tableEvraklar
+                .filterBy(Condition.text(konu))
+                .filterBy(Condition.text(tarihSaat))
+                .get(0)
+                .click();
+        return this;
+    }
+
+    @Step("Paylaş tab tıkla")
+    public TaslakEvraklarPage paylasTabTikla(){
+        btnPaylasTab.click();
         return this;
     }
 }

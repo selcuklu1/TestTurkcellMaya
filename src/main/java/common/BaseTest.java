@@ -29,7 +29,7 @@ public class BaseTest extends BaseLibrary{
 
         //region Selenide Driver Configuration
         Configuration.baseUrl = belgenetURL;
-        //Configuration.browser = "drivers.Firefox";
+        Configuration.browser = "drivers.Firefox";
         //Configuration.browser = "chrome";
         
         // Arif: Selenium Hub aktif edildi
@@ -37,7 +37,7 @@ public class BaseTest extends BaseLibrary{
         
         
         // Configuration.browser = "marionette";
-        Configuration.remote = "http://0.0.0.0:32768/wd/hub";
+        //Configuration.remote = "http://0.0.0.0:32768/wd/hub";
         
         
         Configuration.reportsFolder = "test-result/reports";

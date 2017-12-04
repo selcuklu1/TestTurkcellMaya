@@ -73,10 +73,22 @@ public class PaylastiklarimPage extends MainPage {
 
     // yeniler
 
-    @Step("\"{0}\" evrakını seç ")
+    @Step("Evrak seç ")
     public PaylastiklarimPage evrakSec(String paylasilanKullanici) {
         tablePaylastiklarim
                 .filterBy(Condition.text("Paylaşılanlar: " + paylasilanKullanici))
+                .get(0)
+                .click();
+        return this;
+    }
+
+    @Step("Evrak seç ")
+    public PaylastiklarimPage evrakSec(String konu, String evrakNo, String paylasilanKullanici, String paylasilmaTarihi) {
+        tablePaylastiklarim
+                .filterBy(Condition.text("Evrak No: " + evrakNo))
+                .filterBy(Condition.text("Konu: " + konu))
+                .filterBy(Condition.text("Paylaşılanlar: " + paylasilanKullanici))
+                .filterBy(Condition.text("Paylaşılma Tarihi: " + paylasilmaTarihi))
                 .get(0)
                 .click();
         return this;
@@ -191,6 +203,18 @@ public class PaylastiklarimPage extends MainPage {
     @Step("paylaşılan kişileri temizle ")
     public PaylastiklarimPage paylasilanKisileriTemizle() {
         txtPaylasKisi.clearAllSelectedLov();
+        return this;
+    }
+
+    ElementsCollection tableEvrakNotlari = $$(By.xpath("//th[contains(., 'Evrak Notları')]/../../../tbody/tr"));
+    @Step("Açıklama kontrol")
+    public PaylastiklarimPage evrakNotuKontrol(String ekleyen, String tarih, String aciklama){
+        tableEvrakNotlari
+                .filterBy(Condition.text(ekleyen))
+                .filterBy(Condition.text(tarih))
+                .filterBy(Condition.text(aciklama))
+                .get(0)
+                .shouldBe(Condition.exist);
         return this;
     }
 
