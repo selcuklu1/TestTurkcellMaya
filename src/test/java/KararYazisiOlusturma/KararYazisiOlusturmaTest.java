@@ -12,6 +12,7 @@ import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.MainPage;
+import pages.solMenuPages.KararIzlemePage;
 import pages.solMenuPages.KepIlePostalanacaklarPage;
 import pages.ustMenuPages.*;
 
@@ -21,81 +22,146 @@ import static data.TestData.*;
 public class KararYazisiOlusturmaTest extends BaseTest{
 
         KararYazisiOlusturPage kararYazisiOlusturPage;
+        KararIzlemePage kararIzlemePage;
 
         @BeforeMethod
         public void loginBeforeTests() {
             kararYazisiOlusturPage = new KararYazisiOlusturPage();
+            kararIzlemePage = new KararIzlemePage();
         }
 
         @Severity(SeverityLevel.CRITICAL)
         @Test(enabled = true, description = "1610: KEP Hesap Menüsü - Tanımlanan KEP hesapları ile login işlemleri")
         public void TC1610() throws InterruptedException {
 
-            String basariMesaji = "İşlem başarılıdır!";
             String uyariMesajYaziIcerik = "Yazı içeriği boş olamaz!";
             String uyariMesajZorunlu = "Zorunlu alanları doldurunuz";
-            String parola = "71396428";
-            String sifre = "71396428a";
-            String hataliParola = "123";
-            String hataliSifre = "1";
+            String konuKodu = "K/Frekans Yıllık Kullanım Ücreti";
+            String kaldirilicakKlasorler = "Diğer";
+            String toplantiNo = "123123";
+            String toplantiTarih = "30.11.2017";
+            String kararNo = "1231231231231231231";
+            String aciklama = "Deneme amaçlıdır";
+            String editorIcerik = "Deneme Can";
+            String kullanici = "Optiim";
+            String onayAkisi = "ZUZU_ONAY_AKİSİ_1";
+            String imzalama = "İmzalama";
 
-            login(username3, password3);
+            login(username2, password2);
 
             kararYazisiOlusturPage
                     .openPage()
                     .bilgilerTabiAc()
-                    .konuKoduDoldur("K/Frekans Yıllık Kullanım Ücreti")
+                    .konuKoduDoldur(konuKodu)
                     .onayAkisiEkle()
                     .kullan()
-                    .kaldirilacakKlasorlerDoldur("Diğer")
-                    .toplantiNoDoldur("123123")
-                    .toplantiTarihDoldur("30.11.2017")
-                    .kararNoDoldur("1231231231231231231")
+                    .kaldirilacakKlasorlerDoldur(kaldirilicakKlasorler)
+                    .toplantiNoDoldur(toplantiNo)
+                    .toplantiTarihDoldur(toplantiTarih)
+                    .kararNoDoldur(kararNo)
                     .kaydetveOnaySun()
-                    .aciklamaDoldur("Deneme amaçlıdır")
+                    .aciklamaDoldur(aciklama)
                     .gonder(true)
                     .islemMesaji().beklenenMesaj(uyariMesajYaziIcerik);
 
             kararYazisiOlusturPage
                     .editorTabAc()
-                    .editorIcerikDoldur("Deneme can");
+                    .editorIcerikDoldur(editorIcerik);
             kararYazisiOlusturPage
                     .bilgilerTabiAc()
                     .kararNoDoldur("")
                     .kaydetveOnaySun()
                     .islemMesaji().beklenenMesaj(uyariMesajZorunlu);
-//1
-            kararYazisiOlusturPage
-                    .bilgilerTabiAc()
-                    .kararNoDoldur("1231231231231231231")
-                    .konuKoduTemizle()
-                    .kaydetveOnaySun()
-                    .islemMesaji().beklenenMesaj(uyariMesajZorunlu);
-//2
-            kararYazisiOlusturPage
-                    .bilgilerTabiAc()
-                    .konuKoduDoldur("K/Frekans Yıllık Kullanım Ücreti")
-                    .konuDoldur("")
-                    .kaydetveOnaySun()
-                    .islemMesaji().beklenenMesaj(uyariMesajZorunlu);
-//3
-            kararYazisiOlusturPage
-                    .bilgilerTabiAc()
-                    .kaldirilacakKlasorTemizle()
-                    .konuKoduDoldur("K/Frekans Yıllık Kullanım Ücreti")
-                    .kaydetveOnaySun()
-                    .islemMesaji().beklenenMesaj(uyariMesajZorunlu);
-//4
 
             kararYazisiOlusturPage
                     .bilgilerTabiAc()
-                    .kaldirilacakKlasorlerDoldur("Diğer")
+                    .kararNoDoldur(kararNo)
+                    .konuKoduTemizle()
+                    .kaydetveOnaySun()
+                    .islemMesaji().beklenenMesaj(uyariMesajZorunlu);
+
+            kararYazisiOlusturPage
+                    .bilgilerTabiAc()
+                    .konuKoduDoldur(konuKodu)
+                    .konuDoldur("")
+                    .kaydetveOnaySun()
+                    .islemMesaji().beklenenMesaj(uyariMesajZorunlu);
+
+            kararYazisiOlusturPage
+                    .bilgilerTabiAc()
+                    .kaldirilacakKlasorTemizle()
+                    .konuKoduDoldur(konuKodu)
+                    .kaydetveOnaySun()
+                    .islemMesaji().beklenenMesaj(uyariMesajZorunlu);
+
+            kararYazisiOlusturPage
+                    .bilgilerTabiAc()
+                    .kaldirilacakKlasorlerDoldur(kaldirilicakKlasorler)
                     .toplantiNoDoldur("")
                     .kaydetveOnaySun()
                     .islemMesaji().beklenenMesaj(uyariMesajZorunlu);
 
+            kararYazisiOlusturPage
+                    .bilgilerTabiAc()
+                    .toplantiNoDoldur(toplantiNo)
+                    .onayAkisiTemizle()
+                    .kaydetveOnaySun()
+                    .islemMesaji().beklenenMesaj(uyariMesajZorunlu);
+
+            kararYazisiOlusturPage
+                    .bilgilerTabiAc()
+                    .onayAkisiEkle()
+                    .kullanicilarDoldur(kullanici)
+                    .onayAkisiDoldur(onayAkisi)
+                    .imzalamaKontrol(imzalama);
+
 
 
         }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "2232: Karar izleme ekranının toplu onaya sunma")
+    public void TC2232() throws InterruptedException {
+
+        String basariMesaji = "İşlem başarılıdır!";
+        String konuKodu = "010.10";
+        String kaldirilicakKlasorler = "Diğer";
+        String toplantiNo = "123123";
+        String toplantiTarih = "30.11.2017";
+        String kararNo = "1231231231231231231";
+        String aciklama = "Deneme amaçlıdır";
+        String editorIcerik = "Deneme Can";
+        String kullanici = "Zübeyde TEKİN";
+        String onayAkisi = "ZUZU_ONAY_AKİSİ_1";
+        String ivedilik = "İvedi";
+
+        login(username2, password2);
+
+        kararYazisiOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .konuKoduDoldur(konuKodu)
+                .ivedilikSec(ivedilik)
+                .onayAkisiEkle()
+                .kullanicilarDoldur(kullanici)
+                .kullan()
+                .kaldirilacakKlasorlerDoldur(kaldirilicakKlasorler)
+                .toplantiNoDoldur(toplantiNo)
+                .toplantiTarihDoldur(toplantiTarih)
+                .kararNoDoldur(kararNo);
+
+        kararYazisiOlusturPage
+                .editorTabAc()
+                .editorIcerikDoldur(editorIcerik)
+                .kaydet(true)
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        kararIzlemePage
+                .openPage()
+                .evrakSec("231");
+
+
+
+    }
 }
 

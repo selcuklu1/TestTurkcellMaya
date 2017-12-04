@@ -17,7 +17,7 @@
         <dependency>
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-testng</artifactId>
-            <version>RELEASE</version>
+            <version>2.0-BETA19</version>
         </dependency>
         <dependency>
             <groupId>com.codeborne</groupId>
@@ -25,10 +25,11 @@
             <version>4.8</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-server -->
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-server</artifactId>
-            <version>3.7.1</version>
+            <version>3.6.0</version>
         </dependency>
 
         <dependency>
@@ -39,19 +40,16 @@
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
-            <version>RELEASE</version>
+            <version>6.11</version>
         </dependency>
-
-
     </dependencies>
-
-
 
     <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.7.0</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
@@ -71,8 +69,25 @@
                     <!--<systemProperties>-->
                     <!--<property>-->
                     <!--<name>allure.results.directory</name>-->
-                    <!--&lt;!&ndash;<value>${project.build.directory}/allure-xml-test-report</value>&ndash;&gt;-->
-                    <!--<value>test-result/allure-xml</value>-->
+                    <!--<value>${project.build.directory}/allure-results</value>-->
+                    <!--&lt;!&ndash;<value>test-result/allure-xml</value>&ndash;&gt;-->
+                    <!--</property>-->
+                    <!--</systemProperties>-->
+                    <!--<systemProperties>-->
+                    <!--<property>-->
+                    <!--<name>allure.results.directory</name>-->
+                    <!--<value>/Users/Shared/Jenkins/Home/workspace/test/allure-results</value>-->
+                    <!--</property>-->
+                    <!--<property>-->
+                    <!--<name>allure.results.directory</name>-->
+                    <!--<value>${project.build.directory}/allure-results</value>-->
+                    <!--&lt;!&ndash;<value>test-result/allure-xml</value>&ndash;&gt;-->
+                    <!--</property>-->
+                    <!--</systemProperties>-->
+                    <!--<systemProperties>-->
+                    <!--<property>-->
+                    <!--<name>allure.results.directory</name>-->
+                    <!--<value>/Users/Shared/Jenkins/Home/workspace/test/allure-results</value>-->
                     <!--</property>-->
                     <!--</systemProperties>-->
                 </configuration>
@@ -84,6 +99,11 @@
                     </dependency>
                 </dependencies>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>2.9</version>
+            </plugin>
             <!--<plugin>-->
             <!--<groupId>io.qameta.allure</groupId>-->
             <!--<artifactId>allure-maven</artifactId>-->
@@ -91,10 +111,14 @@
             <!--</plugin>-->
         </plugins>
     </build>
+    <!--<reporting>-->
+    <!--<excludeDefaults>true</excludeDefaults>-->
+    <!--<plugins>-->
+    <!--<plugin>-->
+    <!--<groupId>io.qameta.allure</groupId>-->
+    <!--<artifactId>allure-maven</artifactId>-->
+    <!--<version>2.9</version>-->
+    <!--</plugin>-->
+    <!--</plugins>-->
+    <!--</reporting>-->
 </project>
-
-
-
-
-
-

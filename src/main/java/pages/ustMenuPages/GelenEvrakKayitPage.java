@@ -228,6 +228,7 @@ public class GelenEvrakKayitPage extends MainPage {
     }
 
 
+
     @Step("Geldiği Gerçek kişi doldur")
     public GelenEvrakKayitPage geldigiGercekKisiDoldur(String geldigiKisi) {
 

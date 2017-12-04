@@ -35,7 +35,7 @@ public class KararYazisiOlusturPage extends MainPage {
     SelenideElement tabEvrakDogrulama = $("button .evrakDogrulamaAktarimIslemleri");
 
     SelenideElement btnPDFOnizleme = $("button[id^='yeniGidenEvrakForm:rightTab:uiRepeat'] span[class$='pdfOnIzleme']");
-    SelenideElement btnKaydet = $("button[id^='yeniGidenEvrakForm:rightTab:uiRepeat'] span[class$='kaydet']");
+    SelenideElement btnKaydet = $("button[id^='yeniKararEvrakForm:kararEvrakRightTab:uiRepeat'] span[class$='kaydet']");
     SelenideElement btnKaydetOnayaSun = $("button[id^='yeniKararEvrakForm:kararEvrakRightTab:uiRepeat'] span[class$='kaydetHavaleEt']");
     SelenideElement btnPaylas = $("button[id^='yeniGidenEvrakForm:rightTab:uiRepeat'] span[class$='evrakPaylas']");
 
@@ -75,6 +75,8 @@ public class KararYazisiOlusturPage extends MainPage {
         SelenideElement btnHayir = $(By.id("kaydetHayirButton"));
         SelenideElement btnKonuKoduTemizle = $(By.id("yeniKararEvrakForm:evrakBilgileriList:0:konuKoduLov:j_idt134"));
         SelenideElement btnKaldirilicakKlasorTemizle = $(By.id("yeniKararEvrakForm:evrakBilgileriList:7:eklenecekKlasorlerLov:LovSecilenTable:0:j_idt122"));
+        SelenideElement btnOnayakisiTemizle = $(By.id("yeniKararEvrakForm:evrakBilgileriList:6:akisLov:j_idt134"));
+        BelgenetElement txtKullanicilar = comboLov(By.id("yeniKararEvrakForm:evrakBilgileriList:6:akisAdimLov:LovText"));
 
         SelenideElement divContainer = $("#evrakBilgileriContainerDiv");
 
@@ -111,7 +113,11 @@ public class KararYazisiOlusturPage extends MainPage {
             btnKaydetOnayaSun.click();
             return this;
         }
-
+        @Step("Onay akışı temizle")
+        public BilgilerTab onayAkisiTemizle(){
+            btnOnayakisiTemizle.click();
+            return this;
+        }
         @Step("Açıklama doldur")
         public BilgilerTab aciklamaDoldur(String aciklama){
             txtAciklama.setValue(aciklama);
@@ -154,6 +160,13 @@ public class KararYazisiOlusturPage extends MainPage {
             return this;
         }
 
+
+        @Step("Onay akışı kontrol")
+        public BilgilerTab imzalamaKontrol(String imzalama){
+            Assert.assertEquals(txtOnayAkisi.lastSelectedLovDetailText().contains(imzalama), true);
+            return this;
+        }
+
         @Step("Miat Doldur")
         public BilgilerTab miatDoldur(String miat){
             dateMiat.setValue(miat);
@@ -192,6 +205,12 @@ public class KararYazisiOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Kullanıcılar doldur")
+        public BilgilerTab kullanicilarDoldur(String kullanici){
+            txtKullanicilar.selectLov(kullanici);
+            return this;
+        }
+
     }
 
     public EditorTab editorTabAc() {
@@ -203,12 +222,28 @@ public class KararYazisiOlusturPage extends MainPage {
         SelenideElement divEditor1 = $(By.id("cke_1_contents"));
         SelenideElement divEditorInput = $("cke_1_contents");
         SelenideElement divHitap = $("div[id='yeniGidenEvrakForm:hitapInplace'] > span");
+        SelenideElement btnEvet = $(By.id("kaydetConfirmForm:kaydetEvetButton"));
+        SelenideElement btnHayir = $(By.id("kaydetConfirmForm:kaydetHayirButton"));
 
         private EditorTab open() {
             tabEditor.click();
             return this;
 
         }
+
+        @Step("Kaydet")
+        public EditorTab kaydet(boolean secim){
+            btnKaydet.click();
+            if (secim == true){
+                btnEvet.click();
+            }
+            else{
+                btnHayir.click();
+            }
+            return this;
+        }
+
+
 
         @Step("Editör İçerik Doldur")
         public EditorTab editorIcerikDoldur(String icerik){
