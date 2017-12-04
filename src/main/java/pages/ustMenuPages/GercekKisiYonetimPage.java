@@ -122,7 +122,7 @@ public class GercekKisiYonetimPage extends MainPage {
     }
 
 
-    @Step("Popup: İşlem Onayı")
+/*    @Step("Popup: İşlem Onayı")
     public GercekKisiYonetimPage islemOnayi(String secim) {
 
         if (secim == "Evet") {
@@ -131,7 +131,7 @@ public class GercekKisiYonetimPage extends MainPage {
             btnIslemOnayiHayir.click();
         }
         return this;
-    }
+    }*/
 
     @Step("Kep adres bilgileri ekle")
     public GercekKisiYonetimPage kepAdresBilgileriEkle() {
@@ -423,6 +423,5 @@ public class GercekKisiYonetimPage extends MainPage {
         Assert.assertEquals(statusTCNO, true);
         return this;
     }
-
 
 }

@@ -199,6 +199,9 @@ public class EvrakOlusturPage extends MainPage {
 
         SelenideElement cmbKullanicilarImza = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:akisAdimLov:LovSecilenTable:1:selectOneMenu"));
 
+        SelenideElement btnOnayAkisGuncelle = $(By.cssSelector("[id^='yeniGidenEvrakForm:evrakBilgileriList:18:akisLov:j_idt'] [class$='update-icon']"));
+
+
         //endregion
 
         private BilgilerTab open() {
@@ -605,11 +608,6 @@ public class EvrakOlusturPage extends MainPage {
         }
 
         //region Onay Akışı İşlemleri
-        @Step("Onay akışı adı doldur")
-        public BilgilerTab onayAkisiDoldur(boolean onayAkisi) throws InterruptedException {
-            //TODO: Fonksiyonu yazılacak.
-            return this;
-        }
 
         BelgenetElement txtOnayAkisi = comboLov(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:akisLov:LovText"));
 
@@ -625,6 +623,12 @@ public class EvrakOlusturPage extends MainPage {
         @Step("Onay akışı doldur")
         public BilgilerTab onayAkisDoldur(String onay) {
             txtOnayAkisi.selectLov(onay);
+            return this;
+        }
+
+        @Step("Onay akışı güncelle")
+        public BilgilerTab onayAkisiGuncelle() {
+            btnOnayAkisGuncelle.click();
             return this;
         }
 
@@ -744,13 +748,13 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Tüzel Kişi gereği alanı kontrolu")
         public BilgilerTab tuzelKisiGeregiAlaniVergiNoAdAdresKontrol(String vergiNo, String ad, String adres) {
-            String gelenTitle =  cmbGeregi.lastSelectedLovTitleText();
-            String gelenDetail =  cmbGeregi.lastSelectedLovDetailText();
+            String gelenTitle = cmbGeregi.lastSelectedLovTitleText();
+            String gelenDetail = cmbGeregi.lastSelectedLovDetailText();
             String beklenenDetail = adres + " / " + "Vergi No: " + vergiNo;
 
             System.out.println("Gelen title:    " + gelenTitle);
             System.out.println("Beklenen title: " + ad);
-            System.out.println("Gelen detail:    " +gelenDetail);
+            System.out.println("Gelen detail:    " + gelenDetail);
             System.out.println("Beklenen detail: " + beklenenDetail);
 
             Assert.assertEquals(gelenTitle.contains(ad), true);
@@ -793,7 +797,7 @@ public class EvrakOlusturPage extends MainPage {
     public class EditorTab extends MainPage {
 
         SelenideElement divHitap = $("div[id='yeniGidenEvrakForm:hitapInplace'] > span");
-       // SelenideElement divEditor = $(By.id("yeniGidenEvrakForm:allPanels"));
+        // SelenideElement divEditor = $(By.id("yeniGidenEvrakForm:allPanels"));
         SelenideElement divEditor = $("span[id='yeniGidenEvrakForm:D1Editor']");
         SelenideElement yeniGidenEvrakForm = $(By.id("cke_yeniGidenEvrakForm:ckeditorInstance_window1"));
         SelenideElement editorHitapKismi = $(By.cssSelector("#yeniGidenEvrakForm\\:hitapInplace > span:nth-child(4)"));
@@ -848,13 +852,14 @@ public class EvrakOlusturPage extends MainPage {
         }
 
         @Step("Editör Evrak Gereği Doldur")
-        public EditorTab editorEvrakGeregiSec (String Text) {
+        public EditorTab editorEvrakGeregiSec(String Text) {
 
             tblEditolovGeregiTable.selectLov(Text);
 
             return this;
 
         }
+
         @Step("Editör İçerik Doldur")
         public EditorTab editorIcerikDoldur(String icerik) throws InterruptedException {
             Thread.sleep(5000);
