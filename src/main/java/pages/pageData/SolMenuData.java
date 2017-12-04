@@ -18,18 +18,18 @@ public class SolMenuData {
 
         private String groupId = groupIdPrefix + "IslemBekleyenEvraklar";
         private String groupText = "İşlem Bekleyen Evraklar";
-        private String value;
+        private String menuText;
 
-        IslemBekleyenEvraklar(String value) {
-            this.value = value;
+        IslemBekleyenEvraklar(String menuText) {
+            this.menuText = menuText;
         }
 
         public String getGroupId() {
             return groupId;
         }
 
-        public String getValue() {
-            return value;
+        public String getMenuText() {
+            return menuText;
         }
     }
 
@@ -50,18 +50,18 @@ public class SolMenuData {
 
         private String groupId = groupIdPrefix + "IslemYaptiklarim";
         private String groupText = "İşlem Yaptıklarım";
-        private String value;
+        private String menuText;
 
-        IslemYaptiklarim(String value) {
-            this.value = value;
+        IslemYaptiklarim(String menuText) {
+            this.menuText = menuText;
         }
 
         public String getGroupId() {
             return groupId;
         }
 
-        public String getValue() {
-            return value;
+        public String getMenuText() {
+            return menuText;
         }
     }
 
@@ -89,18 +89,18 @@ public class SolMenuData {
 
         private String groupId = groupIdPrefix + "BirimEvraklari";
         private String groupText = "Birim Evrakları";
-        private String value;
+        private String menuText;
 
-        BirimEvraklari(String value) {
-            this.value = value;
+        BirimEvraklari(String menuText) {
+            this.menuText = menuText;
         }
 
         public String getGroupId() {
             return groupId;
         }
 
-        public String getValue() {
-            return value;
+        public String getMenuText() {
+            return menuText;
         }
     }
 
@@ -116,18 +116,18 @@ public class SolMenuData {
 
         private String groupId = groupIdPrefix + "KapatmaIslemleri";
         private String groupText = "Kapatma İşlemleri";
-        private String value;
+        private String menuText;
 
-        KapatmaIslemleri(String value) {
-            this.value = value;
+        KapatmaIslemleri(String menuText) {
+            this.menuText = menuText;
         }
 
         public String getGroupId() {
             return groupId;
         }
 
-        public String getValue() {
-            return value;
+        public String getMenuText() {
+            return menuText;
         }
     }
 
@@ -137,18 +137,18 @@ public class SolMenuData {
 
         public String groupId = groupIdPrefix + "Bildirimler";
         private String groupText = "ildirimler ";
-        private String value;
+        private String menuText;
 
-        Bildirimler(String value) {
-            this.value = value;
+        Bildirimler(String menuText) {
+            this.menuText = menuText;
         }
 
         public String getGroupId() {
             return groupId;
         }
 
-        public String getValue() {
-            return value;
+        public String getMenuText() {
+            return menuText;
         }
     }
 
