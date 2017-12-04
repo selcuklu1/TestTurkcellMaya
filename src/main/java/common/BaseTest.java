@@ -48,6 +48,7 @@ public class BaseTest extends BaseLibrary {
 
         System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, "/dev/null");
 
+
     }
 
 
