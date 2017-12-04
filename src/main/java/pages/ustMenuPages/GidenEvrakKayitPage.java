@@ -87,9 +87,8 @@ public class GidenEvrakKayitPage extends MainPage {
     }
 
     @Step("Kişinin Geregi alanında görüntülenme kontrolu")
-    public GidenEvrakKayitPage geregiAlanindaGoruntulenmeKontrolu(String ad, String soyad) {
+    public GidenEvrakKayitPage geregiAlanindaGoruntulenmeKontrolu(String adSoyad) {
 
-        String adSoyad = ad + " " + soyad;
         cmbGeregi.selectLov(adSoyad);
         System.out.println("Gelen title:     " + cmbGeregi.lastSelectedLovTitleText());
         System.out.println("Beklenen title:  " + adSoyad);
@@ -138,9 +137,8 @@ public class GidenEvrakKayitPage extends MainPage {
     }
 
     @Step("Kişinin Bilgi alanında görüntülenme kontrolu")
-    public GidenEvrakKayitPage bilgiAlanindaGoruntulenmeKontrolu(String ad, String soyad) {
+    public GidenEvrakKayitPage bilgiAlanindaGoruntulenmeKontrolu(String adSoyad) {
 
-        String adSoyad = ad + " " + soyad.toUpperCase();
         cmbBilgi.selectLov(adSoyad);
         System.out.println("Gelen title:     " + cmbBilgi.lastSelectedLovTitleText());
         System.out.println("Beklenen title:  " + adSoyad);

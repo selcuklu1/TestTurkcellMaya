@@ -281,7 +281,16 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
+    @Step("Tüzel kişinin geldiği alanında görüntülenme kontrolu")
+    public GelenEvrakKayitPage geldigiTuzelKisiGoruntulenmeKontrolu(String kisi) {
 
+        cmbGeldigiTuzelKisi.selectLov(kisi);
+        System.out.println("Gelen title:     " + cmbGeldigiTuzelKisi.lastSelectedLovTitleText());
+        System.out.println("Beklenen title:  " + kisi);
+        Assert.assertEquals(cmbGeldigiTuzelKisi.lastSelectedLovTitleText().contains(kisi), true);
+
+        return this;
+    }
     @Step("Geldiği kişi alanında görüntülenmediği kontrolu")
     public GelenEvrakKayitPage geldigiKurumDegerGoruntulemeKontrolu(String kurumAdi, Boolean shoudlBeExist) {
         Assert.assertEquals(comboGeldigiKurum.isLovValueSelectable(kurumAdi), shoudlBeExist);
@@ -289,9 +298,8 @@ public class GelenEvrakKayitPage extends MainPage {
     }
 
     @Step("Geldiği kişi alanında görüntülenme kontrolu")
-    public GelenEvrakKayitPage gercekKisiGoruntulenmeKontrolu(String tckn, String ad, String soyad) {
+    public GelenEvrakKayitPage gercekKisiGoruntulenmeKontrolu(String tckn, String adSoyad) {
 
-        String adSoyad = ad + " " + soyad;
         cmbGeldigiGercekKisi.selectLov(tckn);
         System.out.println("Gelen title:     " + cmbGeldigiGercekKisi.lastSelectedLovTitleText());
         System.out.println("Beklenen title:  " + adSoyad);

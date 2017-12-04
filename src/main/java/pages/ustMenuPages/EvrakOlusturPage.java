@@ -480,9 +480,8 @@ public class EvrakOlusturPage extends MainPage {
         }
 
         @Step("Kişinin Bilgi alanında görüntülenme kontrolu")
-        public BilgilerTab bilgiAlanindaGoruntulenmeKontrolu(String ad, String soyad) {
+        public BilgilerTab bilgiAlanindaGoruntulenmeKontrolu(String adSoyad) {
 
-            String adSoyad = ad + " " + soyad.toUpperCase();
             cmbBilgi.selectLov(adSoyad);
             System.out.println("Gelen title:     " + cmbBilgi.lastSelectedLovTitleText());
             System.out.println("Beklenen title:  " + adSoyad);
@@ -514,9 +513,8 @@ public class EvrakOlusturPage extends MainPage {
         }
 
         @Step("Kişinin Geregi alanında görüntülenme kontrolu")
-        public BilgilerTab geregiAlanindaGoruntulenmeKontrolu(String ad, String soyad) {
+        public BilgilerTab geregiAlanindaGoruntulenmeKontrolu(String adSoyad) {
 
-            String adSoyad = ad + " " + soyad;
             cmbGeregi.selectLov(adSoyad);
             System.out.println("Gelen title:     " + cmbGeregi.lastSelectedLovTitleText());
             System.out.println("Beklenen title:  " + adSoyad);
@@ -805,6 +803,8 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement divImzacılarGnMdV = $("[id='yeniGidenEvrakForm:parafciPanell'] [class='ui-inplace ui-hidden-container']");
         By cmbGeregiBy = By.id("yeniGidenEvrakForm:geregiKurumLov:LovText");
         By cmbBilgiBy = By.id("yeniGidenEvrakForm:bilgiKurumLov:LovText");
+        BelgenetElement cmbGeregi = comboLov(By.id("yeniGidenEvrakForm:geregiKurumLov:LovText"));
+        BelgenetElement cmbBilgi = comboLov(By.id("yeniGidenEvrakForm:bilgiKurumLov:LovText"));
 
         private EditorTab open() {
             tabEditor.click();
@@ -919,6 +919,18 @@ public class EvrakOlusturPage extends MainPage {
             boolean selectable = comboLov(cmbBilgiBy).isLovValueSelectable(ad);
             Assert.assertEquals(selectable, false, "MyCombolov alanında " + ad + ": Gerçek kişinin görüntülenmediği görülür");
             System.out.println("MyCombolov alanında " + ad + ": Gerçek kişinin görüntülenmediği görülür.");
+            return this;
+        }
+
+        @Step("Gereği alani doldur")
+        public EditorTab geregiDoldur(String geregi) {
+            cmbGeregi.selectLov(geregi);
+            return this;
+        }
+
+        @Step("Bilgi alani doldur")
+        public EditorTab bilgiDoldur(String bilgi) {
+            cmbBilgi.selectLov(bilgi);
             return this;
         }
     }
