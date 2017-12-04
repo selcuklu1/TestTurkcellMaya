@@ -126,6 +126,18 @@ public class BenimlePaylasilanlarPage extends MainPage {
         return this;
     }
 
+    ElementsCollection tableEvrakNotlari = $$(By.xpath("//th[contains(., 'Evrak Notları')]/../../../tbody/tr"));
+    @Step("Açıklama kontrol")
+    public BenimlePaylasilanlarPage evrakNotuKontrol(String ekleyen, String tarih, String aciklama){
+        tableEvrakNotlari
+                .filterBy(Condition.text(ekleyen))
+                .filterBy(Condition.text(tarih))
+                .filterBy(Condition.text(aciklama))
+                .get(0)
+                .shouldBe(Condition.exist);
+        return this;
+    }
+
 
 
 
