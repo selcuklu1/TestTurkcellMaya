@@ -3,11 +3,13 @@ package pages.ustMenuPages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementNotSelectableException;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.HasInputDevices;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
@@ -64,10 +66,11 @@ public class KaydedilenGelenEvrakPage extends MainPage {
     }
 
     @Step("Rapor al Excel")
-    public KaydedilenGelenEvrakPage raporAlExcel() throws IOException {
+    public KaydedilenGelenEvrakPage raporAlExcel() throws IOException, InterruptedException {
 
         deleteFile("C:\\Users\\Emre_Sencan\\Downloads\\","Rapor_");
         btnRaporAlExcel.click();
+        Thread.sleep(4000);
         searchDownloadedFileWithName("C:\\Users\\Emre_Sencan\\Downloads\\","Rapor_.xls");
         return this;
     }
@@ -82,7 +85,7 @@ public class KaydedilenGelenEvrakPage extends MainPage {
         String s = null;
         SoftAssert sa = new SoftAssert();
 
-        for (int i = 0; i <= dir_contents.length; i++) {
+        for (int i = 0; i < dir_contents.length; i++) {
             String file = dir_contents[i].getName().toString();
             s="";
             Matcher m = y.matcher(file);
@@ -94,23 +97,24 @@ public class KaydedilenGelenEvrakPage extends MainPage {
 //            assert s.equals(fileName) : "Klasör "+ dir_contents[i].getName().toString() + "indirilmiştir.";
 //            assert s.equalsIgnoreCase(fileName) : "İstenilen dosya indirilmemiştir.";
 
-            if (s.equals(fileName)){
-                System.out.println("Klasör "+ dir_contents[i].getName().toString() +" indirilmiştir.");
+            if (s.contains(fileName)){
+                System.out.println("dosya indirilmiştir.");
                 Allure.addAttachment(dir_contents[i].getName().toString(),"raporu indirilmiştir");
                 flag = true;
                 break;
             }
             else
-                System.out.println("İstenilen dosya indirilmemiştir.");
+                Allure.addAttachment("Rapor Sonucu", "İstenilen dosya indirilememiştir.");
         }
         return flag;
     }
 
     @Step("Rapor al PDF")
-    public KaydedilenGelenEvrakPage raporAlPdf() throws IOException {
+    public KaydedilenGelenEvrakPage raporAlPdf() throws IOException, InterruptedException {
         deleteFile("C:\\Users\\Emre_Sencan\\Downloads\\","Rapor_");
-        searchDownloadedFileWithName("C:\\Users\\Emre_Sencan\\Downloads\\","Rapor_.pdf");
         btnRaporAlPdf.click();
+        Thread.sleep(4000);
+        searchDownloadedFileWithName("C:\\Users\\Emre_Sencan\\Downloads\\","Rapor_.pdf");
         return this;
     }
 
