@@ -25,7 +25,10 @@
             <version>4.8</version>
         </dependency>
 
+<<<<<<< HEAD
         <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-server -->
+=======
+>>>>>>> e5637766e4556ba553a141218642f58cea6745ad
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-server</artifactId>
@@ -67,6 +70,17 @@
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
                     </argLine>
                     <!--<systemProperties>-->
+                        <!--<property>-->
+                        <!--<name>allure.results.directory</name>-->
+                        <!--<value>${project.build.directory}/allure-results</value>-->
+                            <!--&lt;!&ndash;<value>test-result/allure-xml</value>&ndash;&gt;-->
+                        <!--</property>-->
+                    <!--</systemProperties>-->
+                    <!--<systemProperties>-->
+                        <!--<property>-->
+                            <!--<name>allure.results.directory</name>-->
+                            <!--<value>/Users/Shared/Jenkins/Home/workspace/test/allure-results</value>-->
+                        <!--</property>-->
                     <!--<property>-->
                     <!--<name>allure.results.directory</name>-->
                     <!--<value>${project.build.directory}/allure-results</value>-->
@@ -112,13 +126,17 @@
         </plugins>
     </build>
     <!--<reporting>-->
-    <!--<excludeDefaults>true</excludeDefaults>-->
-    <!--<plugins>-->
-    <!--<plugin>-->
-    <!--<groupId>io.qameta.allure</groupId>-->
-    <!--<artifactId>allure-maven</artifactId>-->
-    <!--<version>2.9</version>-->
-    <!--</plugin>-->
-    <!--</plugins>-->
+        <!--<excludeDefaults>true</excludeDefaults>-->
+        <!--<plugins>-->
+            <!--<plugin>-->
+                <!--<groupId>io.qameta.allure</groupId>-->
+                <!--<artifactId>allure-maven</artifactId>-->
+                <!--<version>2.9</version>-->
+            <!--</plugin>-->
+        <!--</plugins>-->
     <!--</reporting>-->
 </project>
+<<<<<<< HEAD
+=======
+
+>>>>>>> e5637766e4556ba553a141218642f58cea6745ad

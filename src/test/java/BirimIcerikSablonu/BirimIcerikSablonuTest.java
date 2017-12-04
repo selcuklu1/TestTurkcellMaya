@@ -1,17 +1,15 @@
 package BirimIcerikSablonu;
 
-import com.codeborne.selenide.CollectionCondition;
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.ElementsCollection;
 import common.BaseTest;
 import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
-import org.openqa.selenium.By;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import pages.pageComponents.TextEditor;
 import pages.ustMenuPages.BirimIcerikSablonlarPage;
 
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.page;
 
 
 /**
@@ -40,8 +38,18 @@ public class BirimIcerikSablonuTest extends BaseTest {
     }
 
     @Test
-    @Description("Yeni şablon oluşturma testi")
-    public void tc1084b() {
+    @Description("Yeni şablon oluşturma (Alt birimler görsün)")
+    public void tc1082() {
+        birimIcerikSablonlarPage.openPage()
+                .yeniSablonOlustur();
+
+        TextEditor editor = new TextEditor();
+        editor
+                .toolbarCombo("Biçim", "Başlık 1");
+             //   .toolbarButton("Kalın").activate();
+
+        editor.editor().type("dsddsdsdsdsd");
 
     }
+
 }

@@ -143,4 +143,35 @@ class ComboLov {
             return lastSelectedLov();
         }
     }
+    class CloseLovTreePanel implements Command<BelgenetElement> {
+        @Override
+        public BelgenetElement execute(SelenideElement proxy, WebElementSource locator, Object[] args) throws IOException {
+            setLocators(proxy);
+            closeLovTreePanel();
+            return (BelgenetElement) proxy;
+        }
+    }
+
+    class AllSelectedLov implements Command<ElementsCollection> {
+        @Override
+        public ElementsCollection execute(SelenideElement proxy, WebElementSource locator, Object[] args) throws IOException {
+            setLocators(proxy);
+            return allSelectedLov();
+        }
+    }
+    class SelectedTitles implements Command<ElementsCollection> {
+        @Override
+        public ElementsCollection execute(SelenideElement proxy, WebElementSource locator, Object[] args) throws IOException {
+            setLocators(proxy);
+            return selectedTitles();
+        }
+    }
+    class SelectedDetails implements Command<ElementsCollection> {
+        @Override
+        public ElementsCollection execute(SelenideElement proxy, WebElementSource locator, Object[] args) throws IOException {
+            setLocators(proxy);
+            return selectedDetails();
+        }
+    }
+
 }

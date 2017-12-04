@@ -36,7 +36,7 @@ PostalanacakEvraklarPage postalanacakEvraklarPage;
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TC0308: Evrak Postalama")
     public void TC0308() throws InterruptedException {
-        evrakOlusturPage
+      evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
                 .konuKoduSec("YAZILIM GEL")
@@ -48,7 +48,7 @@ PostalanacakEvraklarPage postalanacakEvraklarPage;
                 .onayAkisiKullan();
 
 
-        evrakOlusturPage
+       evrakOlusturPage
                 .ilgileriTabAc()
                 .sistemeKayitliEvrakEkleTab()
                 .sistemeKayitliEvrakAra("yazı")
@@ -59,12 +59,13 @@ PostalanacakEvraklarPage postalanacakEvraklarPage;
                 evrakOlusturPage
                 .islemMesaji().basariliOlmali("İşlem başarılıdır!");
 
+
                 evrakOlusturPage
                         .editorTabAc()
-                        .editorIcerikDoldur("Optiim")
-                        .editorEvrakGeregiSec("YAZILIM GELİ")
-                        .imzala()
-                        .popupSImzalaIslemleri();
+                       .editorIcerikDoldur("TC308")
+                       .editorEvrakGeregiSec("YAZILIM GELİ")
+                      .imzala()
+                       .popupSImzalaIslemleri();
 
 
                 postalanacakEvraklarPage

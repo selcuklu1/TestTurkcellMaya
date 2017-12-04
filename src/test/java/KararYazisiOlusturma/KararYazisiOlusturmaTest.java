@@ -12,6 +12,7 @@ import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.MainPage;
+import pages.solMenuPages.ImzaBekleyenlerPage;
 import pages.solMenuPages.KararIzlemePage;
 import pages.solMenuPages.KepIlePostalanacaklarPage;
 import pages.ustMenuPages.*;
@@ -23,11 +24,13 @@ public class KararYazisiOlusturmaTest extends BaseTest{
 
         KararYazisiOlusturPage kararYazisiOlusturPage;
         KararIzlemePage kararIzlemePage;
+        ImzaBekleyenlerPage imzaBekleyenlerPage;
 
         @BeforeMethod
         public void loginBeforeTests() {
             kararYazisiOlusturPage = new KararYazisiOlusturPage();
             kararIzlemePage = new KararIzlemePage();
+            imzaBekleyenlerPage = new ImzaBekleyenlerPage();
         }
 
         @Severity(SeverityLevel.CRITICAL)
@@ -120,16 +123,71 @@ public class KararYazisiOlusturmaTest extends BaseTest{
         }
 
     @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "1714: Karar yazsının iadesi")
+    public void TC1714() throws InterruptedException {
+
+        String basariMesaji = "İşlem başarılıdır!";
+        String konuKodu = "Usul ve Esaslar";
+        String kaldirilicakKlasorler = "Diğer";
+        String toplantiNo = createRandomNumber(9);
+        String toplantiTarih =getSysDateForKis();
+        String kararNo = createRandomNumber(12);
+        String editorIcerik = "Deneme Can";
+        String kullanici = "Yasemin Çakıl AKYOL";
+        String onayAkisi = "ZUZU_ONAY_AKİSİ_1";
+        String ivedilik = "İvedi";
+
+        login(username2, password2);
+
+        kararYazisiOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .konuKoduDoldur(konuKodu)
+                .ivedilikSec(ivedilik)
+                .onayAkisiEkle()
+                .kullanicilarDoldur(kullanici)
+                .kullan()
+                .kaldirilacakKlasorlerDoldur(kaldirilicakKlasorler)
+                .toplantiNoDoldur(toplantiNo)
+                .toplantiTarihDoldur(toplantiTarih)
+                .kararNoDoldur(kararNo);
+
+        kararYazisiOlusturPage
+                .editorTabAc()
+                .editorIcerikDoldur(editorIcerik)
+                .kaydet(true)
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+       // logout();
+        login(username2, password2);
+
+        imzaBekleyenlerPage
+                .openPage()
+                .evrakSec(kararNo,konuKodu);
+
+/*
+        kararIzlemePage
+                .openPage()
+                .evrakSec(kararNo,konuKodu,toplantiTarih)
+                .topluOnayaSun(true);
+
+        imzaBekleyenlerPage
+                .openPage()
+                .dogruKonuVeNoKontrol(kararNo,konuKodu);
+*/
+
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "2232: Karar izleme ekranının toplu onaya sunma")
     public void TC2232() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
-        String konuKodu = "010.10";
+        String konuKodu = "Usul ve Esaslar";
         String kaldirilicakKlasorler = "Diğer";
-        String toplantiNo = "123123";
-        String toplantiTarih = "30.11.2017";
-        String kararNo = "1231231231231231231";
-        String aciklama = "Deneme amaçlıdır";
+        String toplantiNo = createRandomNumber(9);
+        String toplantiTarih =getSysDateForKis();
+        String kararNo = createRandomNumber(15);
         String editorIcerik = "Deneme Can";
         String kullanici = "Zübeyde TEKİN";
         String onayAkisi = "ZUZU_ONAY_AKİSİ_1";
@@ -158,8 +216,12 @@ public class KararYazisiOlusturmaTest extends BaseTest{
 
         kararIzlemePage
                 .openPage()
-                .evrakSec("231");
+                .evrakSec(kararNo,konuKodu,toplantiTarih)
+                .topluOnayaSun(true);
 
+        imzaBekleyenlerPage
+                .openPage()
+                .dogruKonuVeNoKontrol(kararNo,konuKodu);
 
 
     }

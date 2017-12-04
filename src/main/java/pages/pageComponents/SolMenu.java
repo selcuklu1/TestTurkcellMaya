@@ -14,44 +14,44 @@ import static pages.pageData.SolMenuData.*;
 public class SolMenu extends BaseLibrary {
 
     //region Class init
-    @Step("\"{menu.groupText}\" -> \"{menu.value}\" sol menu aç")
+    @Step("\"{menu.groupText}\" -> \"{menu.menuText}\" sol menu aç")
     public void solMenu(IslemBekleyenEvraklar menu, boolean useJS) {
-        openMenu(menu.getGroupId(), menu.getValue(), useJS);
+        openMenu(menu.getGroupId(), menu.getMenuText(), useJS);
     }
 
-    @Step("\"{menu.groupText}\" -> \"{menu.value}\" sol menu aç")
+    @Step("\"{menu.groupText}\" -> \"{menu.menuText}\" sol menu aç")
     public void solMenu(BirimEvraklari menu, boolean useJS) {
-        openMenu(menu.getGroupId(), menu.getValue(), useJS);
+        openMenu(menu.getGroupId(), menu.getMenuText(), useJS);
     }
 
-    @Step("\"{menu.groupText}\" -> \"{menu.value}\" sol menu aç")
+    @Step("\"{menu.groupText}\" -> \"{menu.menuText}\" sol menu aç")
     public void solMenu(KapatmaIslemleri menu, boolean useJS) {
-        openMenu(menu.getGroupId(), menu.getValue(), useJS);
+        openMenu(menu.getGroupId(), menu.getMenuText(), useJS);
     }
 
-    @Step("\"{menu.groupText}\" -> \"{menu.value}\" sol menu aç")
+    @Step("\"{menu.groupText}\" -> \"{menu.menuText}\" sol menu aç")
     public void solMenu(Bildirimler menu, boolean useJS) {
-        openMenu(menu.getGroupId(), menu.getValue(), useJS);
+        openMenu(menu.getGroupId(), menu.getMenuText(), useJS);
     }
 
-    @Step("\"{menu.groupText}\" -> \"{menu.value}\" sol menu aç")
+    @Step("\"{menu.groupText}\" -> \"{menu.menuText}\" sol menu aç")
     public void solMenu(ArsivIslemleri menu, boolean useJS) {
         openMenu(menu.getGroupId(), menu.getMenuText(), useJS);
     }
 
-    @Step("\"{menu.groupText}\" -> \"{menu.value}\" sol menu aç")
+    @Step("\"{menu.groupText}\" -> \"{menu.menuText}\" sol menu aç")
     public void solMenu(YoneticiIslemleri menu, boolean useJS) {
         openMenu(menu.getGroupId(), menu.getMenuText(), useJS);
     }
 
-    @Step("\"{menu.groupText}\" -> \"{menu.value}\" sol menu aç")
+    @Step("\"{menu.groupText}\" -> \"{menu.menuText}\" sol menu aç")
     public void solMenu(KurulIslemleri menu, boolean useJS) {
         openMenu(menu.getGroupId(), menu.getMenuText(), useJS);
     }
 
-    @Step("\"{menu.groupText}\" -> \"{menu.value}\" sol menu aç")
+    @Step("\"{menu.groupText}\" -> \"{menu.menuText}\" sol menu aç")
     public void solMenu(IslemYaptiklarim menu, boolean useJS) {
-        openMenu(menu.getGroupId(), menu.getValue(), useJS);
+        openMenu(menu.getGroupId(), menu.getMenuText(), useJS);
     }
     //endregion
 

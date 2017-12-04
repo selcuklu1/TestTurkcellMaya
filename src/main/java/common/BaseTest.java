@@ -16,10 +16,11 @@ import static data.TestData.belgenetURL;
 
 
 @Listeners({SettingsListener.class})
-public class BaseTest extends BaseLibrary{
+public class BaseTest extends BaseLibrary {
 
     @BeforeClass
     public void driverSetUp() {
+
         Locale turkishLocal = new Locale("tr", "TR");
         Locale.setDefault(turkishLocal);
 
@@ -29,15 +30,11 @@ public class BaseTest extends BaseLibrary{
 
         //region Selenide Driver Configuration
         Configuration.baseUrl = belgenetURL;
-        Configuration.browser = "drivers.Firefox";
-        Configuration.browser = "chrome";
-        //Configuration.browser = "drivers.Firefox";
-       //Configuration.browser = "chrome";
-        //Configuration.browser = "marionette";
-        //Configuration.browser = "drivers.Firefox";
         //Configuration.browser = "chrome";
+        //Configuration.browser = "drivers.Firefox";
         Configuration.browser = "marionette";
-        //Configuration.remote = "http://0.0.0.0:32768/wd/hub";
+
+        //Configuration.remote = "http://10.101.20.153:4444/wd/hub";
         Configuration.reportsFolder = "test-result/reports";
         Configuration.screenshots = false;
         Configuration.savePageSource = false;
@@ -50,6 +47,7 @@ public class BaseTest extends BaseLibrary{
         //endregion
 
         System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, "/dev/null");
+
     }
 
 
@@ -61,7 +59,6 @@ public class BaseTest extends BaseLibrary{
         new LoginPage().login(username, password);
     }
 
-    @Step("Çıkış yap")
     public void logout() {
         new MainPage().logout();
     }
