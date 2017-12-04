@@ -46,7 +46,7 @@ public class BaseTest extends BaseLibrary {
 //        Configuration.browser = "chrome";
 //        Configuration.browser = "marionette";
 
-        Configuration.browser = "marionette";
+//        Configuration.browser = "marionette";
 
 
         //Configuration.remote = "http://10.101.20.153:4444/wd/hub";

@@ -1,6 +1,5 @@
 package GelenGidenEvrakKayit;
 
-import com.codeborne.selenide.WebDriverRunner;
 import common.BaseTest;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
@@ -9,10 +8,13 @@ import org.testng.annotations.Test;
 import pages.MainPage;
 import pages.solMenuPages.BirimHavaleEdilenlerPage;
 import pages.solMenuPages.KaydedilenGelenEvraklarPage;
+import pages.solMenuPages.KaydedilenGidenEvraklarPage;
 import pages.solMenuPages.TeslimAlinmayiBekleyenlerPage;
 import pages.ustMenuPages.GelenEvrakKayitPage;
 import pages.ustMenuPages.GercekKisiYonetimPage;
+import pages.ustMenuPages.GidenEvrakKayitPage;
 import pages.ustMenuPages.KaydedilenGelenEvrakPage;
+
 import java.io.IOException;
 
 public class GelenGidenEvrakKayitTest extends BaseTest {
@@ -23,6 +25,8 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     KaydedilenGelenEvraklarPage kaydedilenGelenEvraklarPage;
     BirimHavaleEdilenlerPage birimHavaleEdilenlerPage;
     GercekKisiYonetimPage gercekKisiYonetimPage;
+    GidenEvrakKayitPage gidenEvrakKayitPage;
+    KaydedilenGidenEvraklarPage kaydedilenGidenEvraklarPage;
 
     String evrakNO321;
     String evrakNO328;
@@ -45,7 +49,9 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         kaydedilenGelenEvraklarPage = new KaydedilenGelenEvraklarPage();
         birimHavaleEdilenlerPage = new BirimHavaleEdilenlerPage();
         gercekKisiYonetimPage = new GercekKisiYonetimPage();
-        login("optiim", "Avis1111");
+        gidenEvrakKayitPage = new GidenEvrakKayitPage();
+        kaydedilenGidenEvraklarPage = new KaydedilenGidenEvraklarPage();
+        login("optiim", "123");
 //        login("ztekin", "123");
     }
 
@@ -118,7 +124,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
         kaydedilenGelenEvraklarPage
                 .openPage()
-                .tabloEvrakNoileIcerikSec(evrakNO321);
+                .tabloEvrakNoileIcerikSec("5025"); // sırayla çalışma yapıldığında evrakNO321 parametre olarak eklenecek
 
         String evrakNo = gelenEvrakKayitPage
                 .evrakDetayiEvrakNoTextAl();
@@ -206,21 +212,21 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
         kaydedilenGelenEvrakPage
                 .openPage()
-                .gelenEvrakNoDoldur(evrakNO321)
+                .gelenEvrakNoDoldur("5025")
                 .sorgula()
-                .tabloKontrolu(evrakNO321)
+                .tabloKontrolu("5025")
                 .raporAlExcel();
 //                .islemMesaji().basariliOlmali(basariMesaji);
-        Thread.sleep(3000);
+
         kaydedilenGelenEvrakPage
                 .txtClear()
-                .gelenEvrakNoDoldur(evrakNO328)
+                .gelenEvrakNoDoldur("5026")
                 .sorgula()
                 .geldigiYerSec(geldigiYer)
                 .sorgula()
-                .tabloKontrolu(evrakNO328)
-                .raporAlPdf()
-                .islemMesaji().basariliOlmali(basariMesaji);
+                .tabloKontrolu("5026")
+                .raporAlPdf();
+//                .islemMesaji().basariliOlmali(basariMesaji);
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -298,7 +304,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "Gelen evrak kayıtta alan kontrolleri")
-    public void TC0322() throws InterruptedException{
+    public void TC0322() throws InterruptedException {
 
         String kisiKurum = "G";
         String kisiKurum1 = "D";
@@ -361,5 +367,57 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .dagitimBilgileriBirimDoldur(birim)
                 .kaydet()
                 .popUps();
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "Giden evrak kaydı")
+    public void TC1340() throws InterruptedException {
+
+        String basariMesaji = "İşlem başarılıdır!";
+        String ustYaziPath = "C:\\TestAutomation2\\BelgenetFTA\\documents\\pdf.pdf";
+        String excelPath = "C:\\TestAutomation2\\BelgenetFTA\\documents\\test.xlsx";
+        String ustYaziAdi = "pdf.pdf";
+        String excelAdi = "test.xlsx";
+        String miatTarihi = "17.12.2017";
+
+        gidenEvrakKayitPage
+                .openPage()
+                .evrakBilgileriUstYaziEkle(ustYaziPath)
+                .ustYaziPdfAdiKontrol(ustYaziAdi)
+                .islemMesaji().isBasarili();
+
+        gidenEvrakKayitPage
+                .evrakTuruSec(evrakTuru)
+                .ivedilikSec(ivedilik)
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .konuKoduDoldur(konuKodu)
+                .evrakDiliSec(evrakDili)
+                .miatDoldur(miatTarihi)
+                .geregiDoldur("AFYON VALİLİĞİ")
+                .kaldiralacakKlasorDoldur("ESK05")
+                .bilgiDoldur("TAŞRA TEŞKİLATI")
+                .evrakTarihiDoldur("16.02.2017")
+
+                .ekBilgiFiltreAc()
+                .ekBilgiFizikselEkEkle()
+                .evrakEkTabFizikselEkMetniDoldur(ekMetni)
+                .fizikselEkTabViewAciklamaEkle()
+
+                .ilgiEkleriFiltreAc()
+                .ilgiEkleriMetinTabAc()
+                .ilgiEkleriMetinEkMetniDoldur(ekMetni)
+                .ilgiEkleriMetinEkle()
+
+                .kaydet()
+                .popUpkaydetEvet();
+        String evrakNo1340 = gidenEvrakKayitPage.popUpBasariliKapat();
+        gidenEvrakKayitPage
+                .islemMesaji().isBasarili();
+
+        kaydedilenGidenEvraklarPage
+                .openPage()
+                .filtreleAc()
+                .tarihDoldur(getSysDateForKis())
+                .tabloKontrolu(evrakNo1340);
     }
 }
