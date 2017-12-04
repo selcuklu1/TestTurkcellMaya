@@ -10,7 +10,7 @@ import pages.ustMenuPages.*;
 /****************************************************
  * Tarih: 2017-11-24
  * Proje: Türksat Functional Test Automation
- * Class: "Tüzel Kişi Yönetimi" konulu senaryoları içerir
+ * Class: "Tüzel Kişi Yönetimi" konulu metotları içerir
  * Yazan: Sezai Çelik 
  ****************************************************/
 public class TuzelKisiYonetimiTest extends BaseTest {
@@ -19,6 +19,7 @@ public class TuzelKisiYonetimiTest extends BaseTest {
     EvrakOlusturPage evrakOlusturPage;
     GelenEvrakKayitPage gelenEvrakKayitPage;
     GidenEvrakKayitPage gidenEvrakKayitPage;
+    SikKullanilanlarPage sikKullanilanlarPage;
 
     @BeforeMethod
     public void loginBeforeTests() {
@@ -27,6 +28,7 @@ public class TuzelKisiYonetimiTest extends BaseTest {
         evrakOlusturPage = new EvrakOlusturPage();
         gelenEvrakKayitPage = new GelenEvrakKayitPage();
         gidenEvrakKayitPage = new GidenEvrakKayitPage();
+        sikKullanilanlarPage = new SikKullanilanlarPage();
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -418,4 +420,91 @@ public class TuzelKisiYonetimiTest extends BaseTest {
                 .geregiBilgiAlaniAdresPdfKontrol(birinciKullaniciGeregiAdresi, getIkinciKullaniciAdres)
                 .switchToDefaultWindow();
     }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TC1132: Tüzel kişinin pasif yapılması ve kontrolü")
+    public void TC1132() {
+
+        String vergiNo = "8524567913";
+        String ad = "Türksat Optiim";
+        String kisaAd = "trkstopttm";
+        String tip = "Tüzel Kişi";
+        String basariMesaji = "İşlem başarılıdır!";
+
+        //Tüzel kişi datası pasif ise aktif yap. Bu adım testte yok ama data bozulmuşsa düzeltilir.
+        //TODO: DB'den data alınıp, update sql ile aktif yapılabilir.
+        tuzelKisiYonetimiPage
+                .openPage()
+                .filtreDurumSec("TUMU")
+                .filtreAdDoldur(ad)
+                .ara()
+                .tuzelKisiPasifIseAktifYap();
+
+        sikKullanilanlarPage
+                .openPage()
+                .dagitimdaVarIseKaldir(ad) //Seçili geldiği durumlarda seçili kişiyi kaldırır.
+                .datigimlarTipSec(tip)
+                .dagitimlarDoldur(ad)
+                .dagitimlarKaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        tuzelKisiYonetimiPage
+                .openPage()
+                .filtreSorgulamaPaneliAc()
+                .filtreAdDoldur(ad)
+                .ara()
+                .aktifTuzelKisiKayitKontrolu(vergiNo, ad, kisaAd)
+                .tuzelKisiPasifYap()
+                .islemOnayi("Evet")
+
+                .filtreSorgulamaPaneliAc()
+                .filtreAdDoldur(ad)
+                .filtreDurumSec("PASIFLER")
+                .ara()
+                .pasifTuzelKisiKayitKontrolu(vergiNo, ad, kisaAd)
+
+                .filtreSorgulamaPaneliAc()
+                .filtreAdDoldur(ad)
+                .filtreDurumSec("AKTIFLER")
+                .ara()
+                .kayitBulunamadiKontrolu()
+
+                .filtreSorgulamaPaneliAc()
+                .filtreAdDoldur(ad)
+                .filtreDurumSec("TUMU")
+                .ara()
+                .pasifTuzelKisiKayitKontrolu(vergiNo, ad, kisaAd);
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .geregiSecimTipiSec("T")
+                .geregiAlanindaGoruntulenmemeKontrolu(ad)
+                .bilgiSecimTipiSec("T")
+                .bilgiAlanindaGoruntulenmemeKontrolu(ad);
+
+        evrakOlusturPage
+                .editorTabAc()
+                .geregiAlanindaGoruntulenmemeKontrolu(ad)
+                .bilgiAlanindaGoruntulenmemeKontrolu(ad);
+
+        gelenEvrakKayitPage
+                .openPage()
+                .kisiKurumSec("T")
+                .geldigiTuzelKisiGoruntulenmemeKontrolu(ad)
+                .geldigiTuzelKisiGoruntulenmemeKontrolu(vergiNo);
+
+        gidenEvrakKayitPage
+                .openPage()
+                .geregiSecimTipiSec("T")
+                .geregiAlanindaGoruntulenmemeKontrolu(ad)
+
+                .bilgiSecimTipiSec("T")
+                .bilgiAlanindaGoruntulenmemeKontrolu(ad);
+
+        sikKullanilanlarPage
+                .openPage()
+                .dagitimlarListesindeKisininGoruntulenmemeKontrolu(ad);
+    }
+
 }

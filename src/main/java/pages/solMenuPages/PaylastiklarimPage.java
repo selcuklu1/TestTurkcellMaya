@@ -46,7 +46,7 @@ public class PaylastiklarimPage extends MainPage {
     BelgenetElement txtPaylasKisi = comboLov(By.id("mainPreviewForm:evrakPaylasKisiLov:LovText"));
 
     SelenideElement txtPaylasAciklama = $(By.id("mainPreviewForm:evrakPaylasAciklama"));
-    //ElementsCollection tablePaylasilanlar = $$("div[id='mainPreviewForm:evrakOnizlemeTab'] div[aria-hidden='false'] tbody > tr[role='row']");
+    ElementsCollection tablePaylasilanlar = $$("div[id='mainPreviewForm:evrakOnizlemeTab'] div[aria-hidden='false'] tbody > tr[role='row']");
 
 
     @Step("Paylaştıklarım sayfası aç")
@@ -216,6 +216,32 @@ public class PaylastiklarimPage extends MainPage {
                 .get(0)
                 .shouldBe(Condition.exist);
         return this;
+    }
+
+    @Step("Açıklama kontrol")
+    public PaylastiklarimPage paylasilanKontrol(String kullanici, String birim, String paylasimDurumu, String geriAlinmaTarihi){
+        tablePaylasilanlar
+                .filterBy(Condition.text(kullanici))
+                .filterBy(Condition.text(birim))
+                .filterBy(Condition.text(paylasimDurumu))
+                .filterBy(Condition.text(geriAlinmaTarihi))
+                .get(0)
+                .shouldBe(Condition.exist);
+        return this;
+    }
+
+    @Step("Açıklama kontrol")
+    public String paylasilmaTarihiGetir(String konu, String evrakNo, String paylasilanKullanici){
+
+        String pTarihi = tablePaylastiklarim
+                .filterBy(Condition.text("Evrak No: " + evrakNo))
+                .filterBy(Condition.text("Konu: " + konu))
+                .filterBy(Condition.text("Paylaşılanlar: " + paylasilanKullanici))
+                .get(0)
+                .$(By.xpath(".//td[contains(., 'Paylaşılma Tarihi:')]"))
+                .innerText();
+
+        return pTarihi.substring(pTarihi.indexOf("Paylaşılma Tarihi:") + 19, pTarihi.indexOf("Paylaşılma Tarihi:") + 38);
     }
 
 

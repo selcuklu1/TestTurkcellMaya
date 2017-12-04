@@ -8,6 +8,8 @@ import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.close;
+import static com.codeborne.selenide.Selenide.switchTo;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboBox;
 
 public class PostalanacakEvraklarPage extends MainPage {
@@ -27,20 +29,19 @@ public class PostalanacakEvraklarPage extends MainPage {
     SelenideElement tblSec =$(By.xpath("//tbody[@id='mainInboxForm:inboxDataTable_data']/tr[@data-ri='3']"));
     SelenideElement btnPostaDetayi3 = $(By.id("mainInboxForm:inboxDataTable:3:postaDagitimGosterButton"));
     SelenideElement btnGonderilenYerDetay = $(By.id("mainPreviewForm:dataTableId:0:j_idt20289"));
-    BelgenetElement cmbGidisSekli = comboBox(By.id("mainPreviewForm:dataTableId:0:j_idt20289_label"));
+    BelgenetElement cmbGidisSekli = comboBox(By.id("mainPreviewForm:dataTableId:0:j_idt19199_label"));
     SelenideElement txtGramaj = $(By.id("mainPreviewForm:dataTableId:0:postaGramaj"));
     SelenideElement btnTamam = $(By.id("mainPreviewForm:tutarDialogButtonId"));
     SelenideElement txtTutar = $(By.id("mainPreviewForm:dataTableId:0:dpPostaTutarId"));
     SelenideElement btnKaydet = $(By.id("mainPreviewForm:dagitimPlaniDetayKaydetViewDialog"));
-    SelenideElement btnHesapla = $(By.id("mainPreviewForm:dataTableId:0:idt20327"));
-    SelenideElement epostaTxt = $(By.id("mainPreviewForm:dataTableId:0:j_idt20314"));
-    SelenideElement epostaAciklama = $(By.id("mainPreviewForm:dataTableId:0:j_idt20318"));
-    SelenideElement PostalanacakEvrakYazdir = $(By.id("mainPreviewForm:dataTableId:0:j_idt20356"));
-    SelenideElement PostalanacakEvrakOrijinalYazdir = $(By.id("mainPreviewForm:dataTableId:0:j_idt20357"));
+    SelenideElement btnHesapla = $(By.id("mainPreviewForm:dataTableId:0:j_idt19237"));
+    SelenideElement epostaTxt = $(By.id("mainPreviewForm:dataTableId:0:j_idt19224"));
+    SelenideElement epostaAciklama = $(By.id("mainPreviewForm:dataTableId:0:j_idt19228"));
+    SelenideElement PostalanacakEvrakYazdir = $(By.id("mainPreviewForm:dataTableId:0:j_idt19266"));
+    SelenideElement PostalanacakEvrakOrijinalYazdir = $(By.id("mainPreviewForm:dataTableId:0:j_idt19267"));
     SelenideElement btnPopupYazdir = $(By.id("postaDetayYazdirForm:dtPostaEvrakUstVeri:0:evrakDetayiViewDialogYazdir"));
-    SelenideElement btnPopupKapat = $(By.xpath("//*/span[@class='ui-icon ui-icon-closethick']"));
-
-
+    SelenideElement btnPopupOrjYazdir = $(By.id("postaDetayYazdirForm:dtPostaEvrakUstVeri:0:evrakDetayiViewDialogOrjYazdir"));
+    SelenideElement btnPopupHesaplaTamam = $(By.id("mainPreviewForm:tutarDialogButtonId"));
 
     @Step("Postalanacak Evraklar sayfası aç")
     public PostalanacakEvraklarPage openPage() {
@@ -119,8 +120,10 @@ public class PostalanacakEvraklarPage extends MainPage {
         return this;
     }
     @Step("Hesapla tıkla")
-    public PostalanacakEvraklarPage hesapla(){
+    public PostalanacakEvraklarPage hesapla () throws InterruptedException {
         btnHesapla.click();
+        Thread.sleep(1000);
+        btnPopupHesaplaTamam.click();
         return this;
     }
     @Step("Tamam tıkla")
@@ -141,9 +144,13 @@ public class PostalanacakEvraklarPage extends MainPage {
         return this;
 
     }
-    public PostalanacakEvraklarPage postalanacakEvrakOrjYaz () {
+    public PostalanacakEvraklarPage postalanacakEvrakOrjYaz () throws InterruptedException {
 
         PostalanacakEvrakOrijinalYazdir.click();
+        Thread.sleep(1000);
+        btnPopupOrjYazdir.click();
+        SelenideElement popupOrj = $(By.id("postaDetayYazdirForm:dlgPostaDetayYazdir"));
+        popupOrj.findElement(By.className("ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all")).click();
         return this;
     }
 
@@ -159,15 +166,20 @@ public class PostalanacakEvraklarPage extends MainPage {
         return this;
     }
 
-    public PostalanacakEvraklarPage PopupPostaYazdirmaKapat () {
+    public PostalanacakEvraklarPage PopupPostaYazdirmaKapat () throws InterruptedException {
+        Thread.sleep(2000);
 
-        btnPopupKapat.click();
+        SelenideElement popupEvrakYazdir = $(By.id("postaDetayYazdirForm:dlgPostaDetayYazdir"));
+
+        popupEvrakYazdir.getWrappedElement().isDisplayed();
+
         return this;
     }
 
-    public PostalanacakEvraklarPage PopupPostalanacakEvrakYazdir () {
-
+    public PostalanacakEvraklarPage PopupPostalanacakEvrakYazdir() throws InterruptedException  {
+        Thread.sleep(5000);
         btnPopupYazdir.click();
+        Thread.sleep(2000);
         return this;
     }
 }

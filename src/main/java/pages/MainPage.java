@@ -143,28 +143,33 @@ public class MainPage extends BaseLibrary {
         $("[id='kepForm:kayitliKepDataTable:1:j_idt235']").click();
         return this;
     }
+
     @Step("Kullanıcı adı ve Tc Kimlik no kontrol et")
     public MainPage kullaniciAdiTcKimlikNoKontol(){
         $(By.id("kepLogin2FormId:kullaniciAdi")).shouldBe(Condition.disabled);
         $(By.id("kepLogin2FormId:tcKimlikNo")).shouldBe(Condition.disabled);
         return this;
     }
+
     @Step("Parola doldur")
     public MainPage parolaDoldur(String parola){
         $(By.id("kepLogin2FormId:parola")).setValue(parola);
         return this;
     }
+
     @Step("Şifre Doldur")
     public MainPage sifreDoldur(String sifre){
         $(By.id("kepLogin2FormId:sifre")).setValue(sifre);
         return this;
     }
+
     @Step("Bağlan")
     public MainPage kepBaglantisiBaglan(){
         $(By.id("kepLogin2FormId:j_idt255")).click();
         return this;
     }
 
+    @Step("Çıkış yap")
     public void logout() {
         $("button[id='topMenuForm:userMenuButton_button']").click();
     }

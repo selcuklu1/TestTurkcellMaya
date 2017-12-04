@@ -7,6 +7,9 @@ import com.codeborne.selenide.impl.ElementFinder;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 
+import java.util.Optional;
+
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static com.codeborne.selenide.Selenide.switchTo;
@@ -33,7 +36,7 @@ public class BelgenetFramework {
 
         Commands.getInstance().add("allSelectedLov", comboLov.new AllSelectedLov());
         Commands.getInstance().add("selectedTitles", comboLov.new SelectedTitles());
-        Commands.getInstance().add("selectedDetails", comboLov.new SelectedDetails());
+        Commands.getInstance().add("closeLovTreePanel", comboLov.new SelectedDetails());
 
         Commands.getInstance().add("openTree", comboLov.new OpenTree());
 //        Commands.getInstance().add("clearLov", comboLov.new ClearLov());
@@ -73,34 +76,53 @@ public class BelgenetFramework {
         return ElementFinder.wrap(BelgenetElement.class, null, locator, 0);
     }
 
-    public static SelenideElement $inAnyFrame(By locator) {
-        switchToFrameOfElement(locator);
+
+    /**
+     * First search in main iframe, then first level child iframes(optiona iframe locator).
+     * Stay in founded iframe, to return to main iframe use switchTo().defaultContent().
+     *
+     * @param locator
+     * @param iframeLocator
+     * @return
+     */
+    public static SelenideElement $inFrame(By locator, By... iframeLocator) {
+
+        switchToFrameOfElement(locator, iframeLocator);
+
         return ElementFinder.wrap(BelgenetElement.class, null, locator, 0);
     }
 
-    public static SelenideElement $inAnyFrame(String selector) {
-        switchToFrameOfElement(By.cssSelector(selector));
-        return ElementFinder.wrap(BelgenetElement.class, null, By.cssSelector(selector), 0);
+    /**
+     * First search in main iframe, then first level child iframes(optiona iframe locator).
+     * Stay in founded iframe, to return to main iframe use switchTo().defaultContent().
+     *
+     * @param cssSelector
+     * @param iframeLocator
+     * @return
+     */
+    public static SelenideElement $inFrame(String cssSelector, By... iframeLocator) {
+
+        switchToFrameOfElement(By.cssSelector(cssSelector), iframeLocator);
+
+        return ElementFinder.wrap(BelgenetElement.class, null, By.cssSelector(cssSelector), 0);
     }
 
-    /**
-     * First search in main iframe, then first level child iframes.
-     * Stay in founded iframe, to return to main iframe use switchTo().defaultContent().
-     * @param locator
-     */
-    private static SelenideElement switchToFrameOfElement(By locator){
+    private static SelenideElement switchToFrameOfElement(By elementLocator, By... iframeLocator){
         switchTo().defaultContent();
-        if ($(locator).exists())
-            return $(locator);
+        if ($(elementLocator).exists())
+            return $(elementLocator);
 
-        ElementsCollection iframes = $$(By.tagName("iframe"));
-        for (SelenideElement iframe:iframes) {
+        By f = iframeLocator.length > 0 ? iframeLocator[0] : By.tagName("iframe");
+        ElementsCollection iframes = $$(f).filterBy(visible);
+
+        for (SelenideElement iframe : iframes) {
             switchTo().frame(iframe);
-            if ($(locator).exists())
+            if ($(elementLocator).exists())// && $(locator).is(visible))
                 break;
+            switchTo().defaultContent();
         }
 
-        return $(locator);
+        return $(elementLocator);
     }
 
 

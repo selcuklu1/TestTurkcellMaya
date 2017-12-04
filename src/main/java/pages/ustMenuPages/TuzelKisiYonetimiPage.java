@@ -1,6 +1,7 @@
 package pages.ustMenuPages;
 
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
@@ -367,6 +368,7 @@ public class TuzelKisiYonetimiPage extends MainPage {
         if (btnTuzelKisiAktifYap.isDisplayed()) {
             btnTuzelKisiAktifYap.click();
             btnIslemOnayiEvet.click();
+           Allure.addAttachment("Tüzel kişi pasif olduğu için aktif yapıldı.", "");
         }
         return this;
     }

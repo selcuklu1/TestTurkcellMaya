@@ -32,6 +32,8 @@ public class TaslakEvraklarPage extends MainPage {
     SelenideElement btnEvrakKopyala = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:3:cmdbutton"));
 
     //Paylaş Button alt div
+
+    // mainPreviewForm:paylasButtonId
     SelenideElement btnPaylas = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:4:cmdbutton"));
     BelgenetElement txtPaylasKisi = comboLov(By.id("mainPreviewForm:evrakPaylasKisiLov:LovText"));
     SelenideElement txtPaylasanAciklama = $(By.id("mainPreviewForm:evrakPaylasAciklama"));
@@ -150,9 +152,10 @@ public class TaslakEvraklarPage extends MainPage {
 
 
     @Step("Evrak seç.")
-    public TaslakEvraklarPage evrakSec(String konu, String tarihSaat){
+    public TaslakEvraklarPage evrakSec(String konu, String gidecegiYer, String tarihSaat){
         tableEvraklar
-                .filterBy(Condition.text(konu))
+                .filterBy(Condition.text("Konu: " + konu))
+                .filterBy(Condition.text("Gideceği Yer: " + gidecegiYer))
                 .filterBy(Condition.text(tarihSaat))
                 .get(0)
                 .click();
