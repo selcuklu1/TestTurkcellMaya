@@ -28,6 +28,7 @@ public class EvrakPaylasmaTest extends BaseTest {
 
         String paylasan = "Mehmet BOZDEMİR";
         String paylasilan = "Optiim TEST";
+        String basariMesaji = "İşlem başarılıdır!";
 
 
         paylastiklarimPage
@@ -35,7 +36,7 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .evrakSec("Optiim TEST")
                 .paylasTabTikla()
                 .paylasimiDurdur()
-                .islemMesaji().basariliOlmali("İşlem başarılıdır!");
+                .islemMesaji().basariliOlmali(basariMesaji);
 
         paylastiklarimPage
                 .openPage()
@@ -53,6 +54,46 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .evrakSec(paylasan)
                 .evrakOnizlemeTabSec("Evrak Notları")
                 .evrakNotEklemeButonuAktifOlmali(false);
+
+
+    }
+
+    @Test(enabled = true, description = "1882 : Paylaştıklarım listesinden evrak paylaşma")
+    public void TC_01882() {
+
+        String evrakKonu = "";
+        String evrakNo = "0";
+        String paylasilanKullanici = "Optiim TEST";
+        String paylasilmaTarihi = "04.12.2017 11:00:23";
+        String paylasanKisi = "Mehmet BOZDEMİR";
+        String paylasanKisiNotAciklamasi = "TC: 1882 Case açıklaması";
+
+        String[] paylasilacakKullanicilar = new String[]{
+                "Optiim TEST1",
+                "Optiim TEST2",
+                "Optiim TEST3"
+        };
+
+        String basariMesaji = "İşlem başarılıdır!";
+
+        paylastiklarimPage
+                .openPage()
+                .evrakSec(evrakKonu, evrakNo, paylasilanKullanici, paylasilmaTarihi)
+                .evrakOnizlemeTabSec("Paylaşılanlar")
+                .paylasTabTikla()
+                .paylasKisiSec(paylasilacakKullanicilar)
+                .paylasimAciklamaYaz(paylasanKisiNotAciklamasi)
+                .paylas()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        logout();
+
+        paylastiklarimPage
+                .openPage()
+                .evrakSec(evrakKonu, evrakNo, paylasilanKullanici, paylasilmaTarihi)
+                .evrakOnizlemeTabSec("Evrak Notları")
+                .evrakNotuKontrol(paylasanKisi, "",paylasanKisiNotAciklamasi);
+
 
 
     }

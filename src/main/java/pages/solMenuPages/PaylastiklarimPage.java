@@ -188,9 +188,16 @@ public class PaylastiklarimPage extends MainPage {
     }
 
 
-    @Step("Paylaşılacak kişi seç: \"{0}\" ")
+    @Step("Paylaşılacak kişi seç: {0} ")
     public PaylastiklarimPage paylasKisiSec(String kisiAdi) {
         txtPaylasKisi.selectLov(kisiAdi);
+        return this;
+    }
+
+    @Step("Paylaşılacak kişi seç: {0} ")
+    public PaylastiklarimPage paylasKisiSec(String[] kisiler) {
+        for (int i = 0; i < kisiler.length; i++)
+            txtPaylasKisi.selectLov(kisiler[i]);
         return this;
     }
 
@@ -208,9 +215,10 @@ public class PaylastiklarimPage extends MainPage {
 
     ElementsCollection tableEvrakNotlari = $$(By.xpath("//th[contains(., 'Evrak Notları')]/../../../tbody/tr"));
     @Step("Açıklama kontrol")
-    public PaylastiklarimPage evrakNotuKontrol(String ekleyen, String tarih, String aciklama){
+    public PaylastiklarimPage evrakNotuKontrol(String ekleyen, String durum, String tarih, String aciklama){
         tableEvrakNotlari
                 .filterBy(Condition.text(ekleyen))
+                .filterBy(Condition.text(durum))
                 .filterBy(Condition.text(tarih))
                 .filterBy(Condition.text(aciklama))
                 .get(0)
