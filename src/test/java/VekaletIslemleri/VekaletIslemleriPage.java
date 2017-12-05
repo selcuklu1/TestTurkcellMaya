@@ -31,6 +31,8 @@ public class VekaletIslemleriPage extends BaseTest{
     @Test(enabled = true, description = "Onaya göndererek Vekalet Verme")
     public void TC0025() throws InterruptedException{
 
+        String basariMesaji = "İşlem başarılıdır!";
+
         gelenEvraklarPage
                 .openPage();
         String evrakNo = gelenEvraklarPage.tablodanEvrakNoAl(1);
@@ -43,10 +45,11 @@ public class VekaletIslemleriPage extends BaseTest{
                 .evrakAramaTabloKontrolveSecim(evrakNo)
                 .vekaletVerenDoldur("Optiim Test")
                 .devredilecekEvraklarKontrolu()
-                .vekaletAlanDoldur("Optiim Test")
+                .vekaletAlanDoldur("Optiim Test1")
 //                .onayVerecekDoldur("Zübeyde TEKİN")
                 .aciklamaDoldur("Test Otomasyon")
                 .devredilecekEvrakSec(evrakNo)
-                .uygula();
+                .uygula()
+                .islemMesaji().beklenenMesaj(basariMesaji);
     }
 }
