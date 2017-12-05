@@ -87,7 +87,9 @@ public class OnayAkisiTest extends BaseTest {
                 .onayAkisiAlanindaGoruntulenmemeKontrolu(kullanici);
 
         kararYazisiOlusturPage
-                .openPage();
+                .openPage()
+                .bilgilerTabiAc()
+                .onayAkisiAlanindaGoruntulenmemeKontrolu(kullanici);
 
 
     }
