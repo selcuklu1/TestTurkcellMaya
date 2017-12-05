@@ -14,6 +14,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.MainPage;
 import pages.pageData.SolMenuData;
+import pages.solMenuPages.ImzaladiklarimPage;
 import pages.solMenuPages.PostalanacakEvraklarPage;
 import pages.solMenuPages.PostalananlarPage;
 import pages.ustMenuPages.EvrakOlusturPage;
@@ -24,7 +25,7 @@ MainPage mainPage;
 EvrakOlusturPage evrakOlusturPage;
 PostalanacakEvraklarPage postalanacakEvraklarPage;
 PostalananlarPage postalananlarPage;
-
+ImzaladiklarimPage imzaladiklarimPage;
 
     @BeforeMethod
     public  void loginBeforeTest() {
@@ -33,6 +34,8 @@ PostalananlarPage postalananlarPage;
     postalanacakEvraklarPage = new PostalanacakEvraklarPage();
     mainPage = new MainPage();
     postalananlarPage = new PostalananlarPage();
+    imzaladiklarimPage = new ImzaladiklarimPage();
+
     login("Mbozdemir" , "123");
 
 
@@ -42,7 +45,7 @@ PostalananlarPage postalananlarPage;
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TC0308: Evrak Postalama")
     public void TC0308() throws InterruptedException {
- /*     evrakOlusturPage
+    evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
                 .konuKoduSec("YAZILIM GEL")
@@ -53,14 +56,12 @@ PostalananlarPage postalananlarPage;
                 .onayAkisiKullaniciTipiSec("Mehmet BOZDEMİR", "İmzalama")
                 .onayAkisiKullan();
 
-
        evrakOlusturPage
                 .ilgileriTabAc()
                 .sistemeKayitliEvrakEkleTab()
                 .sistemeKayitliEvrakAra("yazı")
                 .sistemeKayitliDokumanArama()
                 .tablodaBulunanEvrakiEkle();
-
 
                 evrakOlusturPage
                 .islemMesaji().basariliOlmali("İşlem başarılıdır!");
@@ -72,7 +73,6 @@ PostalananlarPage postalananlarPage;
                        .editorEvrakGeregiSec("YAZILIM GELİ")
                       .imzala()
                        .popupSImzalaIslemleri();
-*/
 
                 postalanacakEvraklarPage
                         .openPage()
@@ -88,12 +88,6 @@ PostalananlarPage postalananlarPage;
                         .gramajDoldur("111111")
                         .hesapla()
                         .evrakPostala();
-
-
-
-
-
-
 
 
 
@@ -123,11 +117,13 @@ PostalananlarPage postalananlarPage;
                 .popupSImzalaIslemleri();
 
         postalananlarPage
-                .openPage()
+                .openPage();
 
 
-
-
+       imzaladiklarimPage
+               .openPage()
+               .evrakSec()
+               .evrakGecmisi();
 
 
     }
