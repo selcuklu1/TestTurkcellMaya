@@ -5,7 +5,6 @@ import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 
-import static com.codeborne.selenide.Condition.not;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$$x;
 import static com.codeborne.selenide.Selenide.switchTo;
@@ -19,7 +18,7 @@ import static pages.pageComponents.belgenetElements.BelgentCondition.isToolboxBu
  */
 public class TextEditor extends ElementsContainer {
 
-    private SelenideElement editor;
+    /*private SelenideElement editor;
 
     private void setEditor() {
         By frame = By.cssSelector("div[id^='cke'][id$='contents'] iframe");
@@ -31,14 +30,21 @@ public class TextEditor extends ElementsContainer {
     public TextEditor editor() {
         setEditor();
         return this;
+    }*/
+
+    public SelenideElement editor() {
+        By frame = By.cssSelector("div[id^='cke'][id$='contents'] iframe");
+
+//      $inFrame("body[class*='cke_contents_ltr']");
+        return $inFrame("body[class*='cke_contents_ltr']", frame);
     }
 
     @Step("Editore tekst yaz")
-    public TextEditor type(String text) {
-        this.editor.sendKeys(text);
+    public TextEditor type(CharSequence... keysToSend) {
+        editor().sendKeys(keysToSend);
+        switchTo().defaultContent();
         return this;
     }
-
 
     @Step("\"{name}\" toolbar butonun etkin durumu \"{value}\" yap")
     public TextEditor toolbarButton(String name, boolean value) {
@@ -64,4 +70,5 @@ public class TextEditor extends ElementsContainer {
         switchTo().defaultContent();
         return this;
     }
+
 }

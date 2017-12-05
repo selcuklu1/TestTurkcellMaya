@@ -3,9 +3,12 @@ package pages.solMenuPages;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
+
+import java.util.List;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.close;
@@ -149,8 +152,9 @@ public class PostalanacakEvraklarPage extends MainPage {
         PostalanacakEvrakOrijinalYazdir.click();
         Thread.sleep(1000);
         btnPopupOrjYazdir.click();
-        SelenideElement popupOrj = $(By.id("postaDetayYazdirForm:dlgPostaDetayYazdir"));
-        popupOrj.findElement(By.className("ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all")).click();
+        SelenideElement popDetYaz = $(By.cssSelector("#postaDetayYazdirForm"));
+        String hkn = popDetYaz.getWrappedElement().getText();
+        System.out.println(hkn);
         return this;
     }
 

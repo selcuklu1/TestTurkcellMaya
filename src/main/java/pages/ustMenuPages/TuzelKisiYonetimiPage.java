@@ -351,17 +351,6 @@ public class TuzelKisiYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Popup: İşlem Onayı")
-    public TuzelKisiYonetimiPage islemOnayi(String secim) {
-
-        if (secim == "Evet") {
-            btnIslemOnayiEvet.click();
-        } else {
-            btnIslemOnayiHayir.click();
-        }
-        return this;
-    }
-
     @Step("Tüzel Kişi Aktif Yap")
     public TuzelKisiYonetimiPage tuzelKisiPasifIseAktifYap() {
 

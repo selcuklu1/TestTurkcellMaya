@@ -32,22 +32,7 @@ public class BaseTest extends BaseLibrary {
         Configuration.baseUrl = belgenetURL;
         //Configuration.browser = "chrome";
         //Configuration.browser = "drivers.Firefox";
-
-
-        //Configuration.browser = "chrome";
-
-        //Configuration.browser = "drivers.Firefox";
-       Configuration.browser = "chrome";
-//        Configuration.browser = "marionette";
-
-//        Configuration.browser = "marionette";
-        //Configuration.remote = "http://0.0.0.0:32768/wd/hub";
-
-//        Configuration.browser = "chrome";
-//        Configuration.browser = "marionette";
-
         Configuration.browser = "marionette";
-
 
         //Configuration.remote = "http://10.101.20.153:4444/wd/hub";
         Configuration.reportsFolder = "test-result/reports";
@@ -62,6 +47,7 @@ public class BaseTest extends BaseLibrary {
         //endregion
 
         System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, "/dev/null");
+
 
     }
 
