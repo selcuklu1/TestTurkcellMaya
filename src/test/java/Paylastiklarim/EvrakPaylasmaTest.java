@@ -130,13 +130,6 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .islemMesaji().basariliOlmali("İşlem başarılıdır!");
 
 
-
-
-
-
-
-
-
     }
 
     @Test(enabled = true, description = "1876 : Taslak Evrakı kullanıcı ile paylaşma (Tümü aksiyonu ile)")
@@ -167,7 +160,7 @@ public class EvrakPaylasmaTest extends BaseTest {
 
         paylastiklarimPage
                 .openPage()
-                .evrakSec(secilecekEvrakKonu, evrakNo, paylasilacakKisi,"")
+                .evrakSec(secilecekEvrakKonu, evrakNo, paylasilacakKisi, "")
                 .evrakOnizlemeTabSec("Evrak Notları")
                 .evrakNotuKontrol(evrakNotuEkleyen, evrakNotuTarih, paylasanAciklamasi)
                 .evrakOnizlemeTabSec("Paylaşılanlar")
@@ -204,12 +197,6 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .evrakSec(paylasan, paylasilmaTarihi, secilecekEvrakKonu, evrakNo)
                 .evrakOnizlemeTabSec("Evrak Notları")
                 .evrakNotuKontrol(evrakNotuEkleyen, evrakNotuTarih, yeniEvrakNotu);
-
-
-
-
-
-
 
 
     }
