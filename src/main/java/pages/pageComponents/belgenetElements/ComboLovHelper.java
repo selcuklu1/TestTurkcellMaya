@@ -336,7 +336,10 @@ public class ComboLovHelper extends BaseLibrary {
         List<String> selectedTitles = $$(lovSecilenItemTitle).texts();
         List<String> selectedDetails = $$(lovSecilenItemDetail).texts();
 
-        $(lovText).setValue(value);
+        if (!$(lovText).isEnabled())
+            $(treeButton).click();
+        else
+            $(lovText).setValue(value);
 
         $$(lovTree).last().shouldBe(visible);
         ElementsCollection selectTitleList = $$(lovTree).last().$$(lovTreeListSelectableItemsTitle);

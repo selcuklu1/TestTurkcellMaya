@@ -443,6 +443,16 @@ public class BaseLibrary {
         return number;
     }
 
+    public String getIntegerInText(String text) {
+        Pattern y = Pattern.compile("\\d+");
+        Matcher m = y.matcher(text);
+        m.find();
+        String number = m.group();
+        System.out.println(number);
+
+        return number;
+    }
+
     // Store the current window handle
     public String windowHandleBefore() throws InterruptedException {
         winHandleBefore = WebDriverRunner.getWebDriver().getWindowHandle();

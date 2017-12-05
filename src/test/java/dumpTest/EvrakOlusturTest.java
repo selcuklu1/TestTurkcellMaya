@@ -60,7 +60,7 @@ public class EvrakOlusturTest extends BaseTest {
         new EvrakOlusturPage().openPage().bilgilerTabiAc();
 
         BelgenetElement el = comboLov(By.id("yeniGidenEvrakForm:evrakBilgileriList:16:geregiLov:LovText"))
-                .selectLov("optiim").lastSelectedLov();
+                .selectLov("optiim");
 
         ElementsCollection col = el.titleItems();
         int q = col.size();

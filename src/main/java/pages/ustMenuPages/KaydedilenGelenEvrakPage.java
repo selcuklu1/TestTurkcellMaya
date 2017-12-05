@@ -97,7 +97,7 @@ public class KaydedilenGelenEvrakPage extends MainPage {
 //            assert s.equals(fileName) : "Klasör "+ dir_contents[i].getName().toString() + "indirilmiştir.";
 //            assert s.equalsIgnoreCase(fileName) : "İstenilen dosya indirilmemiştir.";
 
-            if (s.contains(fileName)){
+            if (s.contains(fileName)) {
                 System.out.println("dosya indirilmiştir.");
                 Allure.addAttachment(dir_contents[i].getName().toString(),"raporu indirilmiştir");
                 flag = true;
@@ -114,7 +114,7 @@ public class KaydedilenGelenEvrakPage extends MainPage {
         deleteFile("C:\\Users\\Emre_Sencan\\Downloads\\","Rapor_");
         btnRaporAlPdf.click();
         Thread.sleep(4000);
-        searchDownloadedFileWithName("C:\\Users\\Emre_Sencan\\Downloads\\","Rapor_.pdf");
+        searchDownloadedFileWithName("C:\\Users\\Emre_Sencan\\Downloads\\", "Rapor_.pdf");
         return this;
     }
 

@@ -11,8 +11,6 @@ import pages.MainPage;
 import pages.pageComponents.UstMenu;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
-import java.security.Key;
-
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
@@ -148,7 +146,6 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement btnGeregiTree = $("button[id$='geregiLov:treeButton']");
 
         SelenideElement chkDagitimiEkYap = $("input[id$='dagitimEkYapCheckBoxId_input']");
-        BelgenetElement cmbOnayAkisi = comboLov("input[id$='akisLov:LovText']");
 
         // Onay Akışı Elementleri
         SelenideElement btnOnayAkisiEkle = $("button[id*='onayAkisiEkle']");
@@ -160,6 +157,10 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement txtOnayAkisiKullanicilarInput = $("input[id^='yeniGidenEvrakForm:evrakBilgileriList:'][id$=':akisAdimLov:LovText']");
         SelenideElement listOnayAkisiKullanilan = $("div[id*='akisLov:lovContainer'] div[class*='lovSelection processEt'] tbody");
         SelenideElement btnOnayAkisiPanelKapat = $("button[id^='yeniGidenEvrakForm:evrakBilgileriList:'][id$=':akisAdimLov:lovTreePanelKapat']");
+        SelenideElement cmbKullanicilarImza = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:akisAdimLov:LovSecilenTable:1:selectOneMenu"));
+        SelenideElement btnOnayAkisGuncelle = $(By.cssSelector("[id^='yeniGidenEvrakForm:evrakBilgileriList:18:akisLov:j_idt'] [class$='update-icon']"));
+        BelgenetElement cmbOnayAkisi = comboLov(By.cssSelector("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='akisLov:LovText']"));
+        By cmbOnayAkisiBy = By.cssSelector("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='akisLov:LovText']");
 
         //Bilgileri tabı
         BelgenetElement txtKonuKodu = comboLov("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='konuKoduLov:LovText']");
@@ -170,12 +171,14 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement rdbKisiselVerilerinKorunmasiKanunu = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:10:kanunKapsamTipiRadio:2"));
         SelenideElement cbmAkisAdim = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:akisAdimLov:LovSecilenTable:0:selectOneMenu"));
 
+
         BelgenetElement cmbGeregi = comboLov(By.id("yeniGidenEvrakForm:evrakBilgileriList:16:geregiLov:LovText"));
+        BelgenetElement cmbGeregiPostaTipi = comboLov(By.id("yeniGidenEvrakForm:evrakBilgileriList:16:geregiLov:LovSecilenTable:0:selectOneMenu"));
         // select[id^='yeniGidenEvrakForm:evrakBilgileriList:16:geregiLov:LovSecilenTable:'][id$=':selectOneMenu']
         SelenideElement cmbPostaTipi = $("select[id^='yeniGidenEvrakForm:evrakBilgileriList:16:geregiLov:LovSecilenTable:'][id$=':selectOneMenu']");
         By cmbGeregiBy = By.cssSelector("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='geregiLov:LovText']");
 
-        // BelgenetElement txtOnayAkisi = comboLov("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='akisLov:LovText']");
+        // BelgenetElement cmbOnayAkisi = comboLov("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='akisLov:LovText']");
         SelenideElement btnOnayAkisiTemizle = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:17:akisLov:j_idt134"));
         SelenideElement btnOnayAkisiEdit = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:17:akisLov:j_idt135"));
         //SelenideElement btnOnayAkisiEkle = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:17:onayAkisiEkle"));
@@ -194,13 +197,7 @@ public class EvrakOlusturPage extends MainPage {
 
         SelenideElement lovTreeKapat = $(By.cssSelector("[id^='yeniGidenEvrakForm:evrakBilgileriList:'][id$='bilgiLov:lovTreePanelKapat']"));
         SelenideElement lovTreeSec = $(By.xpath("//*[@id=\"yeniGidenEvrakForm:evrakBilgileriList:15:bilgiLov:lovTree:0_0\"]/div/span/span[2]"));
-
         SelenideElement btnOtomatikOnayAkisi = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:otomatikOnayAkisiEkle"));
-
-        SelenideElement cmbKullanicilarImza = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:akisAdimLov:LovSecilenTable:1:selectOneMenu"));
-
-        SelenideElement btnOnayAkisGuncelle = $(By.cssSelector("[id^='yeniGidenEvrakForm:evrakBilgileriList:18:akisLov:j_idt'] [class$='update-icon']"));
-
 
         //endregion
 
@@ -505,7 +502,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Bilgileri tabında kişinin geregi alanında görüntülenmediği kontrolu")
+        @Step("Bilgileri tabında kişinin geregi alanında görüntülenmeme kontrolu")
         public BilgilerTab geregiAlanindaGoruntulenmemeKontrolu(String adSoyad) {
 
             boolean selectable = comboLov(cmbGeregiBy).isLovValueSelectable(adSoyad);
@@ -609,20 +606,37 @@ public class EvrakOlusturPage extends MainPage {
 
         //region Onay Akışı İşlemleri
 
-        BelgenetElement txtOnayAkisi = comboLov(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:akisLov:LovText"));
-
         @Step("Onay akışı doldur")
         public BilgilerTab onayAkisiTemizle(String deger) {
             $(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:akisLov:j_idt134")).click();
             // comboLov("yeniGidenEvrakForm:evrakBilgileriList:18:akisLov:LovText").selectLov(deger);
-            txtOnayAkisi.type(deger).titleItems().first().click();
+            cmbOnayAkisi.type(deger).titleItems().first().click();
 
             return this;
         }
 
         @Step("Onay akışı doldur")
         public BilgilerTab onayAkisDoldur(String onay) {
-            txtOnayAkisi.selectLov(onay);
+            cmbOnayAkisi.selectLov(onay);
+            return this;
+        }
+
+        public BilgilerTab secilenOnayAkisiSil() {
+
+            if (cmbOnayAkisi.isLovSelected()) {
+                cmbOnayAkisi.clearLastSelectedLov();
+            }
+
+            return this;
+        }
+
+        @Step("Bilgileri tabında Onay Akışı alanında görüntülenmeme kontrolu")
+        public BilgilerTab onayAkisiAlanindaGoruntulenmemeKontrolu(String onayAkisi) {
+
+            boolean selectable = comboLov(cmbOnayAkisiBy).isLovValueSelectable(onayAkisi);
+            Assert.assertEquals(selectable, false, "MyCombolov alanında " + onayAkisi + ": Onay Akışın görüntülenmediği görülür");
+            System.out.println("MyCombolov alanında " + onayAkisi + ": Onay Akışın görüntülenmediği görülür.");
+
             return this;
         }
 
@@ -762,7 +776,12 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Kurum için seçilen geregi posta tipi")
+        public BilgilerTab geregiKurumPostaTipi(String posta) {
+            cmbGeregiPostaTipi.selectLov(posta);
+            return this;
 
+        }
         public BilgilerTab kaldirilacakKlasorler(String klasor) {
             //TODO: Fonksiyon yazılacak.
             cmbKaldiralacakKlasorler.selectLov(klasor);

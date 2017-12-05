@@ -116,6 +116,7 @@ public class BelgenetFramework {
         ElementsCollection iframes = $$(f).filterBy(visible);
 
         for (SelenideElement iframe : iframes) {
+            iframe.shouldBe(visible);
             switchTo().frame(iframe);
             if ($(elementLocator).exists())// && $(locator).is(visible))
                 break;
