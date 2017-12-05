@@ -42,6 +42,7 @@ public class KararYazisiOlusturmaTest extends BaseTest{
 
             kararYazisiOlusturPage
                     .openPage()
+                    .bilgilerTabiAc()
                     .konuKoduDoldur("K/Frekans Yıllık Kullanım Ücreti")
                     .onayAkisiEkle()
                     .kullan()
