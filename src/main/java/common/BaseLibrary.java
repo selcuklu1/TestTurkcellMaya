@@ -13,6 +13,7 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import pages.ustMenuPages.TuzelKisiYonetimiPage;
 
 import java.io.File;
 import java.io.IOException;
@@ -549,4 +550,20 @@ public class BaseLibrary {
         }
     }
 
+    @Step("Popup İşlem Onayı:  \"{secim}\"")
+    public void islemOnayi(String secim) {
+
+        SelenideElement btnIslemOnayiEvet = $(By.id("baseConfirmationDialog:confirmButton"));
+        SelenideElement btnIslemOnayiHayir = $(By.id("baseConfirmationDialog:baseConfirmationDialogCancelButton"));
+
+        switch (secim) {
+            case "Evet":
+                btnIslemOnayiEvet.click();
+                break;
+            case "Hayır":
+                btnIslemOnayiHayir.click();
+                break;
+        }
+
+    }
 }

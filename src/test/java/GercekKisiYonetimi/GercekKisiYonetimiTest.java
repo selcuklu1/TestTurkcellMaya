@@ -420,7 +420,9 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .aktifKisiKayitKontrolu(tcNO, ad, soyad)
 
                 .gercekKisiPasifYap()
-                .islemOnayi("Evet")
+                .islemOnayi("Evet");
+
+        gercekKisiYonetimPage
                 .pasiflerKayitKontrolu()
 
                 .filtreSorgulamaPaneliAc()
@@ -489,8 +491,9 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .ara()
                 .pasifKisiKayitKontrolu(TCKN, ad, soyad)
                 .gercekKisiAktifYap()
-                .islemOnayi("Evet")
+                .islemOnayi("Evet");
 
+        gercekKisiYonetimPage
                 .filtreSorgulamaPaneliAc()
                 .filtreTCKimlikNoDoldur(TCKN)
                 .filtreDurumSec("AKTIFLER")
