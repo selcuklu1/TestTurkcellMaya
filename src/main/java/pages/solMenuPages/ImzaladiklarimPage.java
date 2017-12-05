@@ -9,7 +9,7 @@ import pages.pageData.SolMenuData;
 import static com.codeborne.selenide.Selenide.$;
 
 
-public class ImzaladiklarimPage extends MainPage{
+public class ImzaladiklarimPage extends MainPage {
 
     SelenideElement tblImzaladiklarim = $(By.id("mainInboxForm:inboxDataTable_data"));
     SelenideElement tabEvrakGecmisi = $(By.xpath("//*[text()[contains(.,'Evrak Geçmişi')]]"));
@@ -17,21 +17,21 @@ public class ImzaladiklarimPage extends MainPage{
     SelenideElement tabEvrakOnizleme = $(By.id("mainPreviewForm:evrakOnizlemeTab"));
 
     @Step("Imzaladiklarim Sayfasini aç")
-    public ImzaladiklarimPage openPage () {
+    public ImzaladiklarimPage openPage() {
         solMenu(SolMenuData.IslemYaptiklarim.Imzaladiklarim);
 
         return this;
     }
 
     @Step("ImzaladiklarimIlkPostaSec")
-    public ImzaladiklarimPage evrakSec () {
+    public ImzaladiklarimPage evrakSec() {
         btnIlkEvrak.click();
 
         return this;
     }
 
     @Step("Evrak Geçmişi tab")
-    public ImzaladiklarimPage evrakGecmisi (){
+    public ImzaladiklarimPage evrakGecmisi() {
 
         tabEvrakGecmisi.click();
         return this;

@@ -140,9 +140,9 @@ public class GelenEvrakKayitPage extends MainPage {
     SelenideElement btnTCKNAra = $(By.id("gercekKisiHizliKayitDialogForm:kpsTcKimlikNoSorgulaButtonHizliKayit"));
     SelenideElement btnKaydetIletisimBilgisi = $(By.id("gercekKisiHizliKayitDialogForm:saveGercekKisiHizliKayitButton"));
     //    SelenideElement txtAd = $(By.id("tgercekKisiHizliKayitDialogForm:adInputG"));
-    SelenideElement txtAd = $(By.xpath("//table[@id='gercekKisiHizliKayitDialogForm:j_idt4251']/tbody/tr[4]/td[1]/input"));
+    SelenideElement txtAd = $(By.id("gercekKisiHizliKayitDialogForm:adInputG"));
 
-    SelenideElement txtSoyad = $(By.xpath("//table[@id='gercekKisiHizliKayitDialogForm:j_idt4251']/tbody/tr[4]/td[2]/input"));
+    SelenideElement txtSoyad = $(By.id("gercekKisiHizliKayitDialogForm:soyadInput"));
     SelenideElement mesaj = $("[#evrakKaydetBasariliDialog .ui-dialog-content]");
 
     SelenideElement lblDosyaAdi = $(By.id("evrakBilgileriForm:evrakEkTabView:dosyaAdi"));

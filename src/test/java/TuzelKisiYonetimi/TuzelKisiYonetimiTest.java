@@ -197,7 +197,7 @@ public class TuzelKisiYonetimiTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TC1460: Yeni tüzel kişi kayıtta alan kontrolleri")
-    public void     TC1460() {
+    public void TC1460() {
 
         String vergiNo = createRandomNumber(10);
         String kisaAd = createRandomText(7);
