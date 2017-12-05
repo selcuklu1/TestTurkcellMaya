@@ -3,6 +3,7 @@ package pages.ustMenuPages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
@@ -17,16 +18,16 @@ import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 public class OlurYazisiOlusturPage extends MainPage {
 
-    SelenideElement tabBilgiler = $("button .kullaniciBilgileri");
-
     //region Tabs local variables
-    private OlurYazisiOlusturPage.BilgilerTab bilgilerTab = new OlurYazisiOlusturPage.BilgilerTab();
-
+    private BilgilerTab bilgilerTab = new BilgilerTab();
     //endregion
+
+    SelenideElement tabBilgiler = $("button[id^='yeniOnayEvrakForm:onayEvrakLeftTab:uiRepeat'] span[class$='kullaniciBilgileri']");
+
 
     @Step("Olur yazısı oluştur sayfasını aç")
     public OlurYazisiOlusturPage openPage() {
-        new UstMenu().ustMenu("Olur Yazısı Oluştur");
+        ustMenu("Olur Yazısı Oluştur");
         return this;
     }
 
@@ -48,11 +49,12 @@ public class OlurYazisiOlusturPage extends MainPage {
         SelenideElement btnOnayAkisiPanelKapat = $("button[id^='yeniOnayEvrakForm:evrakBilgileriList:'][id$=':akisLov:lovTreePanelKapat']");
         BelgenetElement cmbOnayAkisi = comboLov(By.cssSelector("[id^='yeniOnayEvrakForm:evrakBilgileriList'][id$='akisLov:LovText']"));
         By cmbOnayAkisiBy = By.cssSelector("[id^='yeniOnayEvrakForm:evrakBilgileriList'][id$='akisLov:LovText']");
+        SelenideElement cmbSelectOneMenu = $(By.id("yeniOnayEvrakForm:evrakBilgileriList:14:akisAdimLov:LovSecilenTable:0:selectOneMenu"));
 
 
         //endregion
 
-        private OlurYazisiOlusturPage.BilgilerTab open() {
+        private BilgilerTab open() {
             if (divContainer.is(not(visible)))
                 tabBilgiler.click();
 
@@ -67,6 +69,19 @@ public class OlurYazisiOlusturPage extends MainPage {
         @Step("Onay Akışı Ekle")
         public BilgilerTab onayAkisiEkle() {
             btnOnayAkisiEkle.click();
+            return this;
+        }
+
+        @Step("Parafçı, Kontrolcü, Koordineci ve İmzacı combo kontrolu")
+        public BilgilerTab onayAkisiKullaniciComboKontrol() {
+            onayAkisiEkle();
+
+            if (cmbSelectOneMenu.isDisplayed()) {
+                Assert.assertTrue(true);
+            } else {
+                Allure.addAttachment("Parafçı, Kontrolcü, Koordineci ve İmzacı combo gelmedi.", "");
+                Assert.assertTrue(false);
+            }
             return this;
         }
 
@@ -100,6 +115,12 @@ public class OlurYazisiOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Onay akışı doldurma ve görüntüleme kontrolu")
+        public BilgilerTab onayAkisDoldur(String kullanici) {
+            cmbOnayAkisi.selectLov(kullanici);
+            return this;
+        }
+
         @Step("Bilgileri tabında Onay Akışı alanında görüntülenmeme kontrolu")
         public BilgilerTab onayAkisiAlanindaGoruntulenmemeKontrolu(String onayAkisi) {
 
@@ -112,12 +133,6 @@ public class OlurYazisiOlusturPage extends MainPage {
 
 
     }
-
-
-
-
-
-
 
 
 }

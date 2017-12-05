@@ -66,10 +66,11 @@ public class OnayAkisiTest extends BaseTest {
                 .adaGorePasifYap(kullanici)
                 .islemOnayi("Evet");
 
-        onayAkisYonetimiPage
-                .islemMesaji().basariliOlmali(basariMesaji);
+        //onayAkisYonetimiPage
+              //  .islemMesaji().basariliOlmali(basariMesaji);
 
         onayAkisYonetimiPage
+                .filtreAc()
                 .filtredeAdDoldur(kullanici)
                 .filtreDurumSec("PASIFLER")
                 .ara()
@@ -91,6 +92,36 @@ public class OnayAkisiTest extends BaseTest {
                 .bilgilerTabiAc()
                 .onayAkisiAlanindaGoruntulenmemeKontrolu(kullanici);
 
+        onayAkisYonetimiPage
+                .openPage()
+                .filtreAc()
+                .filtredeAdDoldur(kullanici)
+                .filtreDurumSec("PASIFLER")
+                .ara()
+                .adaGoreAktifYap(kullanici)
+                .islemOnayi("Evet");
+
+        //onayAkisYonetimiPage
+        //  .islemMesaji().basariliOlmali(basariMesaji);
+
+        onayAkisYonetimiPage
+                .filtreAc()
+                .filtredeAdDoldur(kullanici)
+                .filtreDurumSec("AKTIFLER")
+                .ara()
+                .kayitGoruntulenmeKontrolu(kullanici);
+
+        olurYazisiOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .onayAkisDoldur(kullanici)
+                .onayAkisiKullaniciComboKontrol();
+
+        kararYazisiOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .onayAkisiDoldur(kullanici)
+                .onayAkisiKullaniciComboKontrol();
 
     }
 }

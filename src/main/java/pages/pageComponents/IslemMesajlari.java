@@ -81,7 +81,7 @@ public class IslemMesajlari extends BaseLibrary {
         Assert.assertEquals(getMessageTitle(), BASARILI.value());
         if (actualMessage.length > 0)
             Assert.assertEquals(actualMessage, getMessageBody());
-//        System.out.println("Gelen Başarı Mesajı: " + getMessageBody());
+        System.out.println("Gelen Başarı Mesajı: " + getMessageBody());
         waitDisappear();
     }
 
