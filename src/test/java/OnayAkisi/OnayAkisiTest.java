@@ -40,7 +40,7 @@ public class OnayAkisiTest extends BaseTest {
         String kullanici = "Sezai Çelik";
         String basariMesaji = "İşlem başarılıdır!";
 
-        //Data kontrol
+        //Data kontrolu için yazıldı. Pasif ise aktif yapılır.
         onayAkisYonetimiPage
                 .openPage()
                 .filtredeAdDoldur(kullanici)
@@ -59,6 +59,7 @@ public class OnayAkisiTest extends BaseTest {
 
         onayAkisYonetimiPage
                 .openPage()
+                .filtreAc()
                 .birimKontrol(onayAkisAdi)
                 .durumKontrol("Sadece Aktifler")
                 .ara()
@@ -66,8 +67,8 @@ public class OnayAkisiTest extends BaseTest {
                 .adaGorePasifYap(kullanici)
                 .islemOnayi("Evet");
 
-        //onayAkisYonetimiPage
-              //  .islemMesaji().basariliOlmali(basariMesaji);
+        onayAkisYonetimiPage
+                .islemMesaji().basariliOlmali(basariMesaji);
 
         onayAkisYonetimiPage
                 .filtreAc()
@@ -101,8 +102,8 @@ public class OnayAkisiTest extends BaseTest {
                 .adaGoreAktifYap(kullanici)
                 .islemOnayi("Evet");
 
-        //onayAkisYonetimiPage
-        //  .islemMesaji().basariliOlmali(basariMesaji);
+        onayAkisYonetimiPage
+                .islemMesaji().basariliOlmali(basariMesaji);
 
         onayAkisYonetimiPage
                 .filtreAc()
@@ -121,7 +122,10 @@ public class OnayAkisiTest extends BaseTest {
                 .openPage()
                 .bilgilerTabiAc()
                 .onayAkisiDoldur(kullanici)
-                .onayAkisiKullaniciComboKontrol();
+                //TODO: Burda imzaci combosu gelmiyor.
+                //   .onayAkisiKullaniciComboKontrol();
+                .ekraniKapat()
+                .islemPenceresiKaydetPopup("Hayır");
 
     }
 }

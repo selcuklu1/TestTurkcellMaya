@@ -56,6 +56,7 @@ public class KararYazisiOlusturPage extends MainPage {
         BelgenetElement cmbOnayAkisi = comboLov(By.cssSelector("[id^='yeniKararEvrakForm:evrakBilgileriList'][id$='akisLov:LovText']"));
         By cmbOnayAkisiBy = By.cssSelector("[id^='yeniKararEvrakForm:evrakBilgileriList'][id$='akisLov:LovText']");
         SelenideElement cmbSelectOneMenu = $(By.id("yeniKararEvrakForm:evrakBilgileriList:14:akisAdimLov:LovSecilenTable:0:selectOneMenu"));
+        SelenideElement btnEkranKapat = $(By.cssSelector("[id='window4Dialog'] span[class='ui-icon ui-icon-closethick']"));
 
         //endregion
 
@@ -144,6 +145,11 @@ public class KararYazisiOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Ekrani kapat")
+        public BilgilerTab ekraniKapat() {
+            btnEkranKapat.click();
+            return this;
+        }
 
         @Step("Parafçı, Kontrolcü, Koordineci ve İmzacı combo kontrolu")
         public BilgilerTab onayAkisiKullaniciComboKontrol() {
@@ -154,6 +160,7 @@ public class KararYazisiOlusturPage extends MainPage {
                 Assert.assertTrue(true);
             } else {
                 Allure.addAttachment("Parafçı, Kontrolcü, Koordineci ve İmzacı combo gelmedi.", "");
+                log.info("Parafçı, Kontrolcü, Koordineci ve İmzacı combo gelmedi.");
                 Assert.assertTrue(false);
             }
             return this;
