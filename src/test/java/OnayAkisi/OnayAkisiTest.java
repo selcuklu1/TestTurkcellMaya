@@ -90,8 +90,5 @@ public class OnayAkisiTest extends BaseTest {
                 .openPage();
 
 
-
-
-
     }
 }

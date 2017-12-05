@@ -24,8 +24,8 @@ public class EvrakPostalamaTest extends BaseTest {
 MainPage mainPage;
 EvrakOlusturPage evrakOlusturPage;
 PostalanacakEvraklarPage postalanacakEvraklarPage;
-PostalananlarPage postalananlarPage;
-ImzaladiklarimPage imzaladiklarimPage;
+    PostalananlarPage postalananlarPage;
+    ImzaladiklarimPage imzaladiklarimPage;
 
     @BeforeMethod
     public  void loginBeforeTest() {
@@ -33,8 +33,8 @@ ImzaladiklarimPage imzaladiklarimPage;
     evrakOlusturPage = new EvrakOlusturPage();
     postalanacakEvraklarPage = new PostalanacakEvraklarPage();
     mainPage = new MainPage();
-    postalananlarPage = new PostalananlarPage();
-    imzaladiklarimPage = new ImzaladiklarimPage();
+        postalananlarPage = new PostalananlarPage();
+        imzaladiklarimPage = new ImzaladiklarimPage();
 
     login("Mbozdemir" , "123");
 
@@ -45,7 +45,7 @@ ImzaladiklarimPage imzaladiklarimPage;
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TC0308: Evrak Postalama")
     public void TC0308() throws InterruptedException {
-    evrakOlusturPage
+        evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
                 .konuKoduSec("YAZILIM GEL")
@@ -56,42 +56,42 @@ ImzaladiklarimPage imzaladiklarimPage;
                 .onayAkisiKullaniciTipiSec("Mehmet BOZDEMİR", "İmzalama")
                 .onayAkisiKullan();
 
-       evrakOlusturPage
+        evrakOlusturPage
                 .ilgileriTabAc()
                 .sistemeKayitliEvrakEkleTab()
                 .sistemeKayitliEvrakAra("yazı")
                 .sistemeKayitliDokumanArama()
                 .tablodaBulunanEvrakiEkle();
 
-                evrakOlusturPage
+        evrakOlusturPage
                 .islemMesaji().basariliOlmali("İşlem başarılıdır!");
 
 
-                evrakOlusturPage
-                        .editorTabAc()
-                       .editorIcerikDoldur("TC308")
-                       .editorEvrakGeregiSec("YAZILIM GELİ")
-                      .imzala()
-                       .popupSImzalaIslemleri();
+        evrakOlusturPage
+                .editorTabAc()
+                .editorIcerikDoldur("TC308")
+                .editorEvrakGeregiSec("YAZILIM GELİ")
+                .imzala()
+                .popupSImzalaIslemleri();
 
-                postalanacakEvraklarPage
-                        .openPage()
-                        .evrakSec()
-                        .evrakPostala()
-                        .gidisSekli("E-Posta")
-                        .PostalacanakEposta("test@test.com")
-                        .PostalamaAciklama("Test")
-                        .postalanacakEvrakYaz()
-                        .PopupPostalanacakEvrakYazdir()
-                        .PopupPostaYazdirmaKapat()
-                        .postalanacakEvrakOrjYaz()
-                        .gramajDoldur("111111")
-                        .hesapla()
-                        .evrakPostala();
-
+        postalanacakEvraklarPage
+                .openPage()
+                .evrakSec()
+                .evrakPostala()
+                .gidisSekli("E-Posta")
+                .PostalacanakEposta("test@test.com")
+                .PostalamaAciklama("Test")
+                .postalanacakEvrakYaz()
+                .PopupPostalanacakEvrakYazdir()
+                .PopupPostaYazdirmaKapat()
+                .postalanacakEvrakOrjYaz()
+                .gramajDoldur("111111")
+                .hesapla()
+                .evrakPostala();
 
 
     }
+
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TC2076: Evrak Postalama işlemleri")
     public void TC2076() throws InterruptedException {
@@ -120,10 +120,10 @@ ImzaladiklarimPage imzaladiklarimPage;
                 .openPage();
 
 
-       imzaladiklarimPage
-               .openPage()
-               .evrakSec()
-               .evrakGecmisi();
+        imzaladiklarimPage
+                .openPage()
+                .evrakSec()
+                .evrakGecmisi();
 
 
     }

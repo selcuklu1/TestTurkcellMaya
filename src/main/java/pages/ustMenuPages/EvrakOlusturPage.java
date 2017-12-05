@@ -777,7 +777,7 @@ public class EvrakOlusturPage extends MainPage {
         }
 
         @Step("Kurum için seçilen geregi posta tipi")
-        public BilgilerTab geregiKurumPostaTipi (String posta) {
+        public BilgilerTab geregiKurumPostaTipi(String posta) {
             cmbGeregiPostaTipi.selectLov(posta);
             return this;
 
@@ -787,7 +787,6 @@ public class EvrakOlusturPage extends MainPage {
             cmbKaldiralacakKlasorler.selectLov(klasor);
             return this;
         }
-
 
 
         //ElementsCollection divGeregiSecilenler = $$("tbody[id^='yeniGidenEvrakForm:evrakBilgileriList:'][id$=':geregiLov:LovSecilenTable_data'] > tr[role='row']");

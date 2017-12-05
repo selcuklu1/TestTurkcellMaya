@@ -51,12 +51,12 @@ public class BirimIcerikSablonuTest extends BaseTest {
     }
 
     @Test
-    @Description("Yeni şablon oluştur (Alt birimler görsün)")
+    @Description("Yeni şablon oluştur (Alt birimler görmesin)")
     public void tc1082() {
         String sablonAdi = "SABLON_" + getSysDate();
 
         birimIcerikSablonlarPage
-                .yeniSablonOlustur(sablonAdi, "optiim birim", true)
+                .yeniSablonOlustur(sablonAdi, "optiim birim", false)
                 .islemMesaji().basariliOlmali();
         birimIcerikSablonlarPage
                 .birimSablonlardaAra(sablonAdi);
