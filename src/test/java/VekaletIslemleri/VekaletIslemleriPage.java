@@ -46,7 +46,7 @@ public class VekaletIslemleriPage extends BaseTest{
                 .vekaletVerenDoldur("Optiim Test")
                 .devredilecekEvraklarKontrolu()
                 .vekaletAlanDoldur("Optiim Test1")
-//                .onayVerecekDoldur("Zübeyde TEKİN")
+                .onayVerecekDoldur("Zübeyde TEKİN")
                 .aciklamaDoldur("Test Otomasyon")
                 .devredilecekEvrakSec(evrakNo)
                 .uygula()
