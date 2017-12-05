@@ -28,7 +28,7 @@ public class VekaletVerPage extends MainPage {
     SelenideElement txtAciklama = $(By.id("vekaletVerForm:vekaletLayout:aciklamaTextArea"));
     SelenideElement btnUygula = $(By.id("vekaletVerForm:vekaletLayout:onayaSunButton"));
     SelenideElement btnEvrakEkle = $("[id$='onayEvrakiDialogButton']");
-    ElementsCollection tblDevredilecekEvrakklar = $$("div[id='vekaletVerForm:vekaletLayout:devredileceklerTabView:vekaletDataTable_data']tr[role='row'][data-rk]");
+    ElementsCollection tblDevredilecekEvrakklar = $$("tbody[id='vekaletVerForm:vekaletLayout:devredileceklerTabView:vekaletDataTable_data'] tr[role='row'][data-rk]");
 
     SelenideElement btnVekalelVerenTemizle = $(By.id("vekaletVerForm:vekaletLayout:vekaletVerenLov:j_idt134"));
     By txtVekaletVeren = By.cssSelector("[id^='vekaletVerForm:vekaletLayout:vekaletVerenLov:LovText']");
@@ -40,7 +40,7 @@ public class VekaletVerPage extends MainPage {
 
     SelenideElement txtEvrakArama = $("[id$='evrakAramaText']");
     SelenideElement btnDokumanAra = $(By.id("vekaletOnayEvrakDialogForm:dokumanAraButton"));
-    ElementsCollection tblEvrakListesi = $$("tbody[id='vekaletOnayEvrakDialogForm:sistemdeKayitliEvrakListesiDataTableId_data']tr[role=row]");
+    ElementsCollection tblEvrakListesi = $$("tbody[id='vekaletOnayEvrakDialogForm:sistemdeKayitliEvrakListesiDataTableId_data'] tr[role=row]");
     @Step("Vekalet Ver sayfası aç")
     public VekaletVerPage openPage() {
         new UstMenu().ustMenu("Vekalet Ver");
@@ -136,22 +136,25 @@ public class VekaletVerPage extends MainPage {
         tblEvrakListesi
                 .filterBy(Condition.text(evrakNo)).shouldHaveSize(1)
                 .first()
-                .$("[id$='ekleButton']");
+                .$("[id^='vekaletOnayEvrakDialogForm:sistemdeKayitliEvrakListesiDataTableId'][id$='ekleButton']").click();
         return this;
     }
     @Step("Devredilecek Evraklar kontrolü")
     public VekaletVerPage devredilecekEvraklarKontrolu(){
-        int size= tblDevredilecekEvrakklar
-                .size();
-        Assert.assertEquals(size,1);
+        int size= tblDevredilecekEvrakklar.size();
+        Assert.assertNotEquals(size,0);
         return this;
     }
     @Step("Devredilecek Evrak seç")
     public VekaletVerPage devredilecekEvrakSec(String evrakNo){
         tblDevredilecekEvrakklar
-                .filterBy(Condition.text(evrakNo)).shouldHaveSize(1)
-                .first()
+                .filterBy(Condition.text(evrakNo)).first()
                 .$("[class='ui-chkbox ui-widget']").click();
+        return this;
+    }
+    @Step("Dokuman ara")
+    public VekaletVerPage dokumanAra(){
+        btnDokumanAra.click();
         return this;
     }
 }

@@ -39,11 +39,12 @@ public class VekaletIslemleriPage extends BaseTest{
                 .openPage()
                 .evrakEkle()
                 .evrakAramaDoldur(evrakNo)
+                .dokumanAra()
                 .evrakAramaTabloKontrolveSecim(evrakNo)
                 .vekaletVerenDoldur("Optiim Test")
                 .devredilecekEvraklarKontrolu()
                 .vekaletAlanDoldur("Optiim Test")
-                .onayVerecekDoldur("Zübeyde TEKİN")
+//                .onayVerecekDoldur("Zübeyde TEKİN")
                 .aciklamaDoldur("Test Otomasyon")
                 .devredilecekEvrakSec(evrakNo)
                 .uygula();
