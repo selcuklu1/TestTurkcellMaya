@@ -127,8 +127,9 @@ public class BenimlePaylasilanlarPage extends MainPage {
     }
 
     ElementsCollection tableEvrakNotlari = $$(By.xpath("//th[contains(., 'Evrak Notları')]/../../../tbody/tr"));
+
     @Step("Açıklama kontrol")
-    public BenimlePaylasilanlarPage evrakNotuKontrol(String ekleyen, String tarih, String aciklama){
+    public BenimlePaylasilanlarPage evrakNotuKontrol(String ekleyen, String tarih, String aciklama) {
         tableEvrakNotlari
                 .filterBy(Condition.text(ekleyen))
                 .filterBy(Condition.text(tarih))

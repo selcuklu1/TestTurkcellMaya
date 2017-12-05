@@ -37,8 +37,8 @@ public class BaseTest extends BaseLibrary {
         Configuration.reportsFolder = "test-result/reports";
         Configuration.screenshots = false;
         Configuration.savePageSource = false;
-        Configuration.collectionsTimeout = 30000;
-        Configuration.timeout = 30000;
+        Configuration.collectionsTimeout = 20000;
+        Configuration.timeout = 20000;
         Configuration.holdBrowserOpen = true;
         Configuration.headless = false;
         Configuration.startMaximized = true;
@@ -46,7 +46,6 @@ public class BaseTest extends BaseLibrary {
         //endregion
 
         System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, "/dev/null");
-
 
     }
 

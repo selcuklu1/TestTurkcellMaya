@@ -834,26 +834,31 @@ public class GelenEvrakKayitPage extends MainPage {
 
         return this;
     }
+
     @Step("Evrak turu alan kontrolü")
     public GelenEvrakKayitPage evrakTuruKontrol(String evrakTuru) {
-        Assert.assertEquals(cmbEvrakBilgileriListEvrakTuru.getText(),evrakTuru);
+        Assert.assertEquals(cmbEvrakBilgileriListEvrakTuru.getText(), evrakTuru);
         return this;
     }
+
     @Step("Evrak Sayısı sol alan kontrolü")
-    public GelenEvrakKayitPage evrakSayisiSolAlanKontrolu(String solAlan){
-        Assert.assertEquals(txtEvrakBilgileriListEvrakSayiTextAreaSol.getValue(),solAlan);
+    public GelenEvrakKayitPage evrakSayisiSolAlanKontrolu(String solAlan) {
+        Assert.assertEquals(txtEvrakBilgileriListEvrakSayiTextAreaSol.getValue(), solAlan);
         return this;
     }
+
     @Step("Konu kodu sil")
     public GelenEvrakKayitPage konuKoduSil() throws InterruptedException {
         comboKonuKodu.clearLastSelectedLov().clear();
         return this;
     }
+
     @Step("Evrak Tarihi sil")
     public GelenEvrakKayitPage evrakTarihiSil() {
         dateTxtEvrakBilgileriListEvrakTarihi.clear();
         return this;
     }
+
     @Step("Evrak Sayısı Sağ alan sil")
     public GelenEvrakKayitPage evrakSayiSagSil() {
         txtEvrakBilgileriListEvrakSayiTextAreaSag.clear();
@@ -861,7 +866,7 @@ public class GelenEvrakKayitPage extends MainPage {
     }
 
     @Step("Popup kontrol")
-    public GelenEvrakKayitPage popUpKontrol(){
+    public GelenEvrakKayitPage popUpKontrol() {
         if (popUphavaleYeriSecmediniz.exists()) {
             String mesaj2 = "Havale yeri seçmediniz. Evrak kaydedildiğinde Kaydedilen Gelen Evraklar kutusuna düşecektir. İşleme devam etmek istiyor musunuz?";
             popUphavaleYeriSecmediniz.getText().equals(mesaj2);
@@ -869,13 +874,15 @@ public class GelenEvrakKayitPage extends MainPage {
         }
         return this;
     }
+
     @Step("Ust yazi gizle")
-    public GelenEvrakKayitPage ustYaziGizle(){
+    public GelenEvrakKayitPage ustYaziGizle() {
         lblUstyaziGizle.click();
         return this;
     }
+
     @Step("Ust yazi gözter")
-    public GelenEvrakKayitPage ustYaziGoster(){
+    public GelenEvrakKayitPage ustYaziGoster() {
         lblUstyaziGoster.click();
         return this;
     }

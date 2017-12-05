@@ -152,7 +152,7 @@ public class TaslakEvraklarPage extends MainPage {
 
 
     @Step("Evrak seç.")
-    public TaslakEvraklarPage evrakSec(String konu, String gidecegiYer, String tarihSaat){
+    public TaslakEvraklarPage evrakSec(String konu, String gidecegiYer, String tarihSaat) {
         tableEvraklar
                 .filterBy(Condition.text("Konu: " + konu))
                 .filterBy(Condition.text("Gideceği Yer: " + gidecegiYer))
@@ -163,7 +163,7 @@ public class TaslakEvraklarPage extends MainPage {
     }
 
     @Step("Paylaş tab tıkla")
-    public TaslakEvraklarPage paylasTabTikla(){
+    public TaslakEvraklarPage paylasTabTikla() {
         btnPaylasTab.click();
         return this;
     }

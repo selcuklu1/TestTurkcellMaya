@@ -1,17 +1,15 @@
 package BirimIcerikSablonu;
 
+import com.codeborne.selenide.SelenideElement;
 import common.BaseTest;
 import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
-import pages.pageComponents.TextEditor;
 import pages.ustMenuPages.BirimIcerikSablonlarPage;
 
 import static com.codeborne.selenide.Condition.disabled;
-import static com.codeborne.selenide.Condition.enabled;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.page;
 
@@ -53,16 +51,15 @@ public class BirimIcerikSablonuTest extends BaseTest {
     }
 
     @Test
-    @Description("Yeni şablon oluşturma (Alt birimler görsün)")
+    @Description("Yeni şablon oluştur (Alt birimler görsün)")
     public void tc1082() {
-        birimIcerikSablonlarPage
-                .yeniSablonOlustur();
+        String sablonAdi = "SABLON_" + getSysDate();
 
-//        birimIcerikSablonlarPage.getEditor()
-//                .toolbarCombo("Biçim", "Başlık 1")
-//                .toolbarButton("Kalın", true);
-//
-//        birimIcerikSablonlarPage.getEditor().type("dsddsdsdsdsd");
+        birimIcerikSablonlarPage
+                .yeniSablonOlustur(sablonAdi, "optiim birim", true)
+                .islemMesaji().basariliOlmali();
+        birimIcerikSablonlarPage
+                .birimSablonlardaAra(sablonAdi);
     }
 
 }

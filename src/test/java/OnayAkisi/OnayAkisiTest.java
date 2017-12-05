@@ -6,6 +6,8 @@ import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.ustMenuPages.EvrakOlusturPage;
+import pages.ustMenuPages.KararYazisiOlusturPage;
+import pages.ustMenuPages.OlurYazisiOlusturPage;
 import pages.ustMenuPages.OnayAkisYonetimiPage;
 
 /****************************************************
@@ -18,12 +20,16 @@ public class OnayAkisiTest extends BaseTest {
 
     EvrakOlusturPage evrakOlusturPage;
     OnayAkisYonetimiPage onayAkisYonetimiPage;
+    OlurYazisiOlusturPage olurYazisiOlusturPage;
+    KararYazisiOlusturPage kararYazisiOlusturPage;
 
     @BeforeMethod
     public void loginBeforeTests() {
         login();
         evrakOlusturPage = new EvrakOlusturPage();
         onayAkisYonetimiPage = new OnayAkisYonetimiPage();
+        olurYazisiOlusturPage = new OlurYazisiOlusturPage();
+        kararYazisiOlusturPage = new KararYazisiOlusturPage();
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -31,12 +37,24 @@ public class OnayAkisiTest extends BaseTest {
     public void TC2112() {
 
         String onayAkisAdi = "Optiim";
+        String kullanici = "Sezai Çelik";
         String basariMesaji = "İşlem başarılıdır!";
+
+        //Data kontrol
+        onayAkisYonetimiPage
+                .openPage()
+                .filtredeAdDoldur(kullanici)
+                .filtreDurumSec("TUMU")
+                .ara()
+                .onayAkisiPasifIseAktifYap(kullanici);
+
+        onayAkisYonetimiPage
+                .ekraniKapat();
 
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
-                .onayAkisDoldur(onayAkisAdi)
+                .onayAkisDoldur(kullanici)
                 .onayAkisiGuncelle();
 
         onayAkisYonetimiPage
@@ -45,14 +63,33 @@ public class OnayAkisiTest extends BaseTest {
                 .durumKontrol("Sadece Aktifler")
                 .ara()
                 .aktiflerTumListeKayitKontrolu()
-                .adaGorePasifYap(onayAkisAdi)
+                .adaGorePasifYap(kullanici)
                 .islemOnayi("Evet");
 
         onayAkisYonetimiPage
                 .islemMesaji().basariliOlmali(basariMesaji);
 
         onayAkisYonetimiPage
-                .kayitGelmemeKontrolu(onayAkisAdi);
+                .filtredeAdDoldur(kullanici)
+                .filtreDurumSec("PASIFLER")
+                .ara()
+                .kayitGoruntulenmeKontrolu(kullanici);
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .secilenOnayAkisiSil()
+                .onayAkisiAlanindaGoruntulenmemeKontrolu(kullanici);
+
+        olurYazisiOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .onayAkisiAlanindaGoruntulenmemeKontrolu(kullanici);
+
+        kararYazisiOlusturPage
+                .openPage();
+
+
 
 
 

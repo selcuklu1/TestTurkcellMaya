@@ -123,7 +123,7 @@ public class PostalanacakEvraklarPage extends MainPage {
         return this;
     }
     @Step("Hesapla tıkla")
-    public PostalanacakEvraklarPage hesapla () throws InterruptedException {
+    public PostalanacakEvraklarPage hesapla() throws InterruptedException {
         btnHesapla.click();
         Thread.sleep(1000);
         btnPopupHesaplaTamam.click();
@@ -147,7 +147,8 @@ public class PostalanacakEvraklarPage extends MainPage {
         return this;
 
     }
-    public PostalanacakEvraklarPage postalanacakEvrakOrjYaz () throws InterruptedException {
+
+    public PostalanacakEvraklarPage postalanacakEvrakOrjYaz() throws InterruptedException {
 
         PostalanacakEvrakOrijinalYazdir.click();
         Thread.sleep(1000);
@@ -170,7 +171,7 @@ public class PostalanacakEvraklarPage extends MainPage {
         return this;
     }
 
-    public PostalanacakEvraklarPage PopupPostaYazdirmaKapat () throws InterruptedException {
+    public PostalanacakEvraklarPage PopupPostaYazdirmaKapat() throws InterruptedException {
         Thread.sleep(2000);
 
         SelenideElement popupEvrakYazdir = $(By.id("postaDetayYazdirForm:dlgPostaDetayYazdir"));
@@ -180,7 +181,7 @@ public class PostalanacakEvraklarPage extends MainPage {
         return this;
     }
 
-    public PostalanacakEvraklarPage PopupPostalanacakEvrakYazdir() throws InterruptedException  {
+    public PostalanacakEvraklarPage PopupPostalanacakEvrakYazdir() throws InterruptedException {
         Thread.sleep(5000);
         btnPopupYazdir.click();
         Thread.sleep(2000);
