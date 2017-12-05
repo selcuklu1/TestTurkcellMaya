@@ -15,7 +15,7 @@ import pages.ustMenuPages.VekaletVerPage;
  * Class: "Evrak kontroller" konulu senaryoları içerir
  * Yazan: Emre Sencan
  ****************************************************/
-public class VekaletIslemleriPage extends BaseTest{
+public class VekaletIslemleriPage extends BaseTest {
     MainPage mainPage;
     VekaletVerPage vekaletver;
     GelenEvraklarPage gelenEvraklarPage;
@@ -29,7 +29,7 @@ public class VekaletIslemleriPage extends BaseTest{
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "Onaya göndererek Vekalet Verme")
-    public void TC0025() throws InterruptedException{
+    public void TC0025() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
 
@@ -46,7 +46,7 @@ public class VekaletIslemleriPage extends BaseTest{
                 .vekaletVerenDoldur("Optiim Test")
                 .devredilecekEvraklarKontrolu()
                 .vekaletAlanDoldur("Optiim Test1")
-//                .onayVerecekDoldur("Zübeyde TEKİN")
+                .onayVerecekDoldur("Zübeyde TEKİN")
                 .aciklamaDoldur("Test Otomasyon")
                 .devredilecekEvrakSec(evrakNo)
                 .uygula()

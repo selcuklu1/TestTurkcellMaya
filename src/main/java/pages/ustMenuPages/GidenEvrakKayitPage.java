@@ -328,6 +328,7 @@ public class GidenEvrakKayitPage extends MainPage {
             popUpKaydetEvet.click();
         return this;
     }
+
     @Step("Başarılı Pop up kontrol")
     public String popUpBasariliKapat() throws InterruptedException {
         popUpEvrakDefterBasarili.shouldBe(Condition.visible);

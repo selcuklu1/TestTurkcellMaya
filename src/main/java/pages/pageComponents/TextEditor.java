@@ -1,10 +1,13 @@
 package pages.pageComponents;
 
+import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.ElementsContainer;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 
+import static com.codeborne.selenide.Condition.not;
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$$x;
 import static com.codeborne.selenide.Selenide.switchTo;

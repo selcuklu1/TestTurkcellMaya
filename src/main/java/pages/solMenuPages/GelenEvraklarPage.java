@@ -341,10 +341,10 @@ public class GelenEvraklarPage extends MainPage {
 
     @Step("")
     public String tablodanEvrakNoAl(int adet) {
-        String text="";
-        SelenideElement tblEvraklar = $("table[id='mainInboxForm:inboxDataTable:"+0+":evrakTable'] tr:nth-child(3)");
-        for (int i =0; i<adet; i++){
-            text = $("table[id='mainInboxForm:inboxDataTable:"+i+":evrakTable'] tr:nth-child(3)").getText();
+        String text = "";
+        SelenideElement tblEvraklar = $("table[id='mainInboxForm:inboxDataTable:" + 0 + ":evrakTable'] tr:nth-child(3)");
+        for (int i = 0; i < adet; i++) {
+            text = $("table[id='mainInboxForm:inboxDataTable:" + i + ":evrakTable'] tr:nth-child(3)").getText();
         }
 //        String text = tblEvraklar.getText();
         System.out.println(text);
