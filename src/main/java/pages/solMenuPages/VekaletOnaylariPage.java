@@ -28,4 +28,5 @@ public class VekaletOnaylariPage extends MainPage {
     SelenideElement dateTxtBitisTarihi = $("form[id='mainPreviewForm'] tbody tr:nth-child(6) td:nth-child(3)");
     SelenideElement txtEkleyeceginizNotlar = $("form[id='mainPreviewForm'] tbody tr:nth-child(8) td:nth-child(3)");
 
+
 }

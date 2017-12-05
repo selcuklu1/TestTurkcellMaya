@@ -51,5 +51,12 @@ public class VekaletIslemleriPage extends BaseTest{
                 .devredilecekEvrakSec(evrakNo)
                 .uygula()
                 .islemMesaji().beklenenMesaj(basariMesaji);
+
+        vekaletver
+                .openPage()
+                .veklatListeiTabAc()
+                .baslangicTarihDoldur(getSysDateForKis())
+                .bitisTarihiDoldur(getSysDateForKis())
+                .sorgula();
     }
 }

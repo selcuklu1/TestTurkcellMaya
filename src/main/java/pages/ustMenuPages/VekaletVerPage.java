@@ -29,16 +29,22 @@ public class VekaletVerPage extends MainPage {
     SelenideElement btnUygula = $(By.id("vekaletVerForm:vekaletLayout:onayaSunButton"));
     SelenideElement btnEvrakEkle = $("[id$='onayEvrakiDialogButton']");
     ElementsCollection tblDevredilecekEvrakklar = $$("tbody[id='vekaletVerForm:vekaletLayout:devredileceklerTabView:vekaletDataTable_data'] tr[role='row'][data-rk]");
+    SelenideElement tabVekaletListesi = $("a[href='#evrakBilgileriForm:evrakEkTabView:aciklamaEkleTab']");
+
 
     SelenideElement btnVekalelVerenTemizle = $(By.id("vekaletVerForm:vekaletLayout:vekaletVerenLov:j_idt134"));
     By txtVekaletVeren = By.cssSelector("[id^='vekaletVerForm:vekaletLayout:vekaletVerenLov:LovText']");
     By txtVekaletAlan = By.cssSelector("[id^='vekaletVerForm:vekaletLayout:vekaletAlanLov:LovText']");
     BelgenetElement txtOnaylayacakKisi = comboLov(By.id("vekaletVerForm:vekaletLayout:vekaletOnaylayacakKisiLov:LovText"));
+
     // Evrak Arama
 
     SelenideElement txtEvrakArama = $("[id$='evrakAramaText']");
     SelenideElement btnDokumanAra = $(By.id("vekaletOnayEvrakDialogForm:dokumanAraButton"));
     ElementsCollection tblEvrakListesi = $$("tbody[id='vekaletOnayEvrakDialogForm:sistemdeKayitliEvrakListesiDataTableId_data'] tr[role=row]");
+
+    SelenideElement btnSorgula = $(By.id("vekaletVerForm:vekaletLayout:vekaletSorgula_Id"));
+
     @Step("Vekalet Ver sayfası aç")
     public VekaletVerPage openPage() {
         new UstMenu().ustMenu("Vekalet Ver");
@@ -124,35 +130,50 @@ public class VekaletVerPage extends MainPage {
         clickJs(btnEvrakEkle);
         return this;
     }
+
     @Step("Evrak arama doldur")
-    public VekaletVerPage evrakAramaDoldur(String evrakNo){
+    public VekaletVerPage evrakAramaDoldur(String evrakNo) {
         txtEvrakArama.sendKeys(evrakNo);
         return this;
     }
+
     @Step("Tablo Kontrolü ve seçim")
-    public VekaletVerPage evrakAramaTabloKontrolveSecim(String evrakNo){
+    public VekaletVerPage evrakAramaTabloKontrolveSecim(String evrakNo) {
         tblEvrakListesi
                 .filterBy(Condition.text(evrakNo)).shouldHaveSize(1)
                 .first()
                 .$("[id^='vekaletOnayEvrakDialogForm:sistemdeKayitliEvrakListesiDataTableId'][id$='ekleButton']").click();
         return this;
     }
+
     @Step("Devredilecek Evraklar kontrolü")
-    public VekaletVerPage devredilecekEvraklarKontrolu(){
-        int size= tblDevredilecekEvrakklar.size();
-        Assert.assertNotEquals(size,0);
+    public VekaletVerPage devredilecekEvraklarKontrolu() {
+        int size = tblDevredilecekEvrakklar.size();
+        Assert.assertNotEquals(size, 0);
         return this;
     }
+
     @Step("Devredilecek Evrak seç")
-    public VekaletVerPage devredilecekEvrakSec(String evrakNo){
+    public VekaletVerPage devredilecekEvrakSec(String evrakNo) {
         tblDevredilecekEvrakklar
                 .filterBy(Condition.text(evrakNo)).first()
                 .$("[class='ui-chkbox ui-widget']").click();
         return this;
     }
+
     @Step("Dokuman ara")
-    public VekaletVerPage dokumanAra(){
+    public VekaletVerPage dokumanAra() {
         btnDokumanAra.click();
+        return this;
+    }
+    @Step("Vekalet Listesi aç")
+    public VekaletVerPage veklatListeiTabAc(){
+        tabVekaletListesi.click();
+        return this;
+    }
+    @Step("Sorgula butonu")
+    public VekaletVerPage sorgula(){
+        btnSorgula.click();
         return this;
     }
 }
