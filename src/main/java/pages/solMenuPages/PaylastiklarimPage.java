@@ -89,7 +89,7 @@ public class PaylastiklarimPage extends MainPage {
                 .filterBy(Condition.text("Konu: " + konu))
                 .filterBy(Condition.text("Paylaşılanlar: " + paylasilanKullanici))
                 .filterBy(Condition.text("Paylaşılma Tarihi: " + paylasilmaTarihi))
-                .get(0)
+                .first()
                 .click();
         return this;
     }
@@ -215,10 +215,9 @@ public class PaylastiklarimPage extends MainPage {
 
     ElementsCollection tableEvrakNotlari = $$(By.xpath("//th[contains(., 'Evrak Notları')]/../../../tbody/tr"));
     @Step("Açıklama kontrol")
-    public PaylastiklarimPage evrakNotuKontrol(String ekleyen, String durum, String tarih, String aciklama){
+    public PaylastiklarimPage evrakNotuKontrol(String ekleyen, String tarih, String aciklama){
         tableEvrakNotlari
                 .filterBy(Condition.text(ekleyen))
-                .filterBy(Condition.text(durum))
                 .filterBy(Condition.text(tarih))
                 .filterBy(Condition.text(aciklama))
                 .get(0)
@@ -251,6 +250,8 @@ public class PaylastiklarimPage extends MainPage {
 
         return pTarihi.substring(pTarihi.indexOf("Paylaşılma Tarihi:") + 19, pTarihi.indexOf("Paylaşılma Tarihi:") + 38);
     }
+
+
 
 
 
