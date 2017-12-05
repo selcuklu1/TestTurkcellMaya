@@ -298,7 +298,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "Gelen evrak kayıtta alan kontrolleri")
-    public void TC0322() throws InterruptedException{
+    public void TC0322() throws InterruptedException {
 
         String kisiKurum = "G";
         String kisiKurum1 = "D";

@@ -77,25 +77,28 @@ public class IslemMesajlari extends BaseLibrary {
     }
 
     @Step("Başarılı mesajı gelmeli")
-    public void basariliOlmali(String actualMessage) {
+    public void basariliOlmali(String... actualMessage) {
         Assert.assertEquals(getMessageTitle(), BASARILI.value());
-        Assert.assertEquals(actualMessage, getMessageBody());
+        if (actualMessage.length > 0)
+            Assert.assertEquals(actualMessage, getMessageBody());
 //        System.out.println("Gelen Başarı Mesajı: " + getMessageBody());
         waitDisappear();
     }
 
     @Step("Uyarı mesajı gelmeli")
-    public void uyariOlmali(String actualMessage) {
+    public void uyariOlmali(String... actualMessage) {
         Assert.assertEquals(getMessageTitle(), UYARI.value());
-        Assert.assertEquals(actualMessage, getMessageBody());
+        if (actualMessage.length > 0)
+            Assert.assertEquals(actualMessage, getMessageBody());
 //        System.out.println("Gelen Uyarı Mesajı: " + getMessageBody());
         waitDisappear();
     }
 
     @Step("Dikkat mesajı gelmeli")
-    public void dikkatOlmali(String actualMessage) {
+    public void dikkatOlmali(String... actualMessage) {
         Assert.assertEquals(getMessageTitle(), DIKKAT.value());
-        Assert.assertEquals(actualMessage, getMessageBody());
+        if (actualMessage.length > 0)
+            Assert.assertEquals(actualMessage, getMessageBody());
 //        System.out.println("Gelen Dikkat Mesajı: " + getMessageBody());
         waitDisappear();
     }

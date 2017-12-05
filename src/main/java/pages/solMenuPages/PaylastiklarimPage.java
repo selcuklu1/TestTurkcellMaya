@@ -207,8 +207,9 @@ public class PaylastiklarimPage extends MainPage {
     }
 
     ElementsCollection tableEvrakNotlari = $$(By.xpath("//th[contains(., 'Evrak Notları')]/../../../tbody/tr"));
+
     @Step("Açıklama kontrol")
-    public PaylastiklarimPage evrakNotuKontrol(String ekleyen, String tarih, String aciklama){
+    public PaylastiklarimPage evrakNotuKontrol(String ekleyen, String tarih, String aciklama) {
         tableEvrakNotlari
                 .filterBy(Condition.text(ekleyen))
                 .filterBy(Condition.text(tarih))
@@ -219,7 +220,7 @@ public class PaylastiklarimPage extends MainPage {
     }
 
     @Step("Açıklama kontrol")
-    public PaylastiklarimPage paylasilanKontrol(String kullanici, String birim, String paylasimDurumu, String geriAlinmaTarihi){
+    public PaylastiklarimPage paylasilanKontrol(String kullanici, String birim, String paylasimDurumu, String geriAlinmaTarihi) {
         tablePaylasilanlar
                 .filterBy(Condition.text(kullanici))
                 .filterBy(Condition.text(birim))
@@ -231,7 +232,7 @@ public class PaylastiklarimPage extends MainPage {
     }
 
     @Step("Açıklama kontrol")
-    public String paylasilmaTarihiGetir(String konu, String evrakNo, String paylasilanKullanici){
+    public String paylasilmaTarihiGetir(String konu, String evrakNo, String paylasilanKullanici) {
 
         String pTarihi = tablePaylastiklarim
                 .filterBy(Condition.text("Evrak No: " + evrakNo))
