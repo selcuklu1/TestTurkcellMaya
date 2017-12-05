@@ -34,8 +34,6 @@ public class VekaletVerPage extends MainPage {
     By txtVekaletVeren = By.cssSelector("[id^='vekaletVerForm:vekaletLayout:vekaletVerenLov:LovText']");
     By txtVekaletAlan = By.cssSelector("[id^='vekaletVerForm:vekaletLayout:vekaletAlanLov:LovText']");
     BelgenetElement txtOnaylayacakKisi = comboLov(By.id("vekaletVerForm:vekaletLayout:vekaletOnaylayacakKisiLov:LovText"));
-
-
     // Evrak Arama
 
     SelenideElement txtEvrakArama = $("[id$='evrakAramaText']");
