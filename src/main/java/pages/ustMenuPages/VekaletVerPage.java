@@ -37,6 +37,9 @@ public class VekaletVerPage extends MainPage {
     By txtVekaletAlan = By.cssSelector("[id^='vekaletVerForm:vekaletLayout:vekaletAlanLov:LovText']");
     BelgenetElement txtOnaylayacakKisi = comboLov(By.id("vekaletVerForm:vekaletLayout:vekaletOnaylayacakKisiLov:LovText"));
 
+
+    SelenideElement popUpAktifVekaletUyarı = $(By.id("aktifVekaletinizVarUyariMesajiDialog"));
+    SelenideElement btnTamam = $(By.id("aktifVekaletinizVarUyariMesajiDialogEvetBtn"));
     // Evrak Arama
 
     SelenideElement txtEvrakArama = $("[id$='evrakAramaText']");
@@ -48,7 +51,6 @@ public class VekaletVerPage extends MainPage {
     ElementsCollection tblVekaletListesi = $$("[id='vekaletVerForm:vekaletLayout:bulunanVekaletlerPanel'] tbody tr[role=row]");
     SelenideElement dateTxtVekaletListesiBaslangicTarihi = $(By.id("vekaletVerForm:vekaletLayout:vekaletListeBasTarih_input"));
     SelenideElement dateTxtVekaletListesiBitisTarihi = $(By.id("vekaletVerForm:vekaletLayout:vekaletListeBitTarih_input"));
-
 
     @Step("Vekalet Ver sayfası aç")
     public VekaletVerPage openPage() {
@@ -173,7 +175,7 @@ public class VekaletVerPage extends MainPage {
     }
 
     @Step("Vekalet Listesi aç")
-    public VekaletVerPage veklatListeiTabAc() {
+    public VekaletVerPage veklatListesiTabAc() {
         tabVekaletListesi.click();
         return this;
     }
@@ -190,14 +192,29 @@ public class VekaletVerPage extends MainPage {
         Assert.assertNotEquals(size, 0);
         return this;
     }
+
     @Step("Vekalet Listesi bitiş tarihi doldur")
     public VekaletVerPage vekaletListesiBitisTarihiDoldur(String text) {
         dateTxtVekaletListesiBitisTarihi.setValue(text);
         return this;
     }
+
     @Step("Vekalet Listesi bitiş tarihi doldur")
     public VekaletVerPage vekaletListesiBaslangicTarihiDoldur(String text) {
         dateTxtVekaletListesiBaslangicTarihi.setValue(text);
+        return this;
+    }
+
+    @Step("Vekalet Listesi Tablo Kontrol")
+    public VekaletVerPage vekaletListesiTabloAlanKontrolleri(String onayMakami, String onayDurumu) {
+        tblVekaletListesi.filterBy(Condition.matchesText(onayMakami));
+        tblVekaletListesi.filterBy(Condition.text(onayDurumu));
+        return this;
+    }
+    @Step("Vekalet var uyarı popup")
+    public VekaletVerPage vekaletVarUyarıPopUp(){
+        popUpAktifVekaletUyarı.isDisplayed();
+        btnTamam.click();
         return this;
     }
 }
