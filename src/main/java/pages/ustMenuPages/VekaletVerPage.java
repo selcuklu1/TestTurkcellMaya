@@ -29,7 +29,7 @@ public class VekaletVerPage extends MainPage {
     SelenideElement btnUygula = $(By.id("vekaletVerForm:vekaletLayout:onayaSunButton"));
     SelenideElement btnEvrakEkle = $("[id$='onayEvrakiDialogButton']");
     ElementsCollection tblDevredilecekEvrakklar = $$("tbody[id='vekaletVerForm:vekaletLayout:devredileceklerTabView:vekaletDataTable_data'] tr[role='row'][data-rk]");
-    SelenideElement tabVekaletListesi = $("a[href='#evrakBilgileriForm:evrakEkTabView:aciklamaEkleTab']");
+    SelenideElement tabVekaletListesi = $("a[href='#vekaletVerForm:vekaletLayout:vekaletSorgulaField']");
 
 
     SelenideElement btnVekalelVerenTemizle = $(By.id("vekaletVerForm:vekaletLayout:vekaletVerenLov:j_idt134"));
@@ -43,7 +43,12 @@ public class VekaletVerPage extends MainPage {
     SelenideElement btnDokumanAra = $(By.id("vekaletOnayEvrakDialogForm:dokumanAraButton"));
     ElementsCollection tblEvrakListesi = $$("tbody[id='vekaletOnayEvrakDialogForm:sistemdeKayitliEvrakListesiDataTableId_data'] tr[role=row]");
 
+    //Vekalet Listesi Tabı
     SelenideElement btnSorgula = $(By.id("vekaletVerForm:vekaletLayout:vekaletSorgula_Id"));
+    ElementsCollection tblVekaletListesi = $$("[id='vekaletVerForm:vekaletLayout:bulunanVekaletlerPanel'] tbody tr[role=row]");
+    SelenideElement dateTxtVekaletListesiBaslangicTarihi = $(By.id("vekaletVerForm:vekaletLayout:vekaletListeBasTarih_input"));
+    SelenideElement dateTxtVekaletListesiBitisTarihi = $(By.id("vekaletVerForm:vekaletLayout:vekaletListeBitTarih_input"));
+
 
     @Step("Vekalet Ver sayfası aç")
     public VekaletVerPage openPage() {
@@ -166,14 +171,33 @@ public class VekaletVerPage extends MainPage {
         btnDokumanAra.click();
         return this;
     }
+
     @Step("Vekalet Listesi aç")
-    public VekaletVerPage veklatListeiTabAc(){
+    public VekaletVerPage veklatListeiTabAc() {
         tabVekaletListesi.click();
         return this;
     }
+
     @Step("Sorgula butonu")
-    public VekaletVerPage sorgula(){
+    public VekaletVerPage sorgula() {
         btnSorgula.click();
+        return this;
+    }
+
+    @Step("Vekalet Listesi Tablo Kontrol")
+    public VekaletVerPage vekaletListesiTabloKontrol() {
+        int size = tblVekaletListesi.size();
+        Assert.assertNotEquals(size, 0);
+        return this;
+    }
+    @Step("Vekalet Listesi bitiş tarihi doldur")
+    public VekaletVerPage vekaletListesiBitisTarihiDoldur(String text) {
+        dateTxtVekaletListesiBitisTarihi.setValue(text);
+        return this;
+    }
+    @Step("Vekalet Listesi başlangıç tarihi doldur")
+    public VekaletVerPage vekaletListesiBaslangicTarihDoldur(String text) {
+        dateTxtVekaletListesiBaslangicTarihi.setValue(text);
         return this;
     }
 }

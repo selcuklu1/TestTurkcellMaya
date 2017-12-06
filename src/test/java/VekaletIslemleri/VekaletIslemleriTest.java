@@ -15,7 +15,7 @@ import pages.ustMenuPages.VekaletVerPage;
  * Class: "Evrak kontroller" konulu senaryoları içerir
  * Yazan: Emre Sencan
  ****************************************************/
-public class VekaletIslemleriPage extends BaseTest {
+public class VekaletIslemleriTest extends BaseTest {
     MainPage mainPage;
     VekaletVerPage vekaletver;
     GelenEvraklarPage gelenEvraklarPage;
@@ -55,8 +55,9 @@ public class VekaletIslemleriPage extends BaseTest {
         vekaletver
                 .openPage()
                 .veklatListeiTabAc()
-                .baslangicTarihDoldur(getSysDateForKis())
-                .bitisTarihiDoldur(getSysDateForKis())
-                .sorgula();
+                .vekaletListesiBaslangicTarihDoldur(getSysDateForKis())
+                .vekaletListesiBitisTarihiDoldur(getSysDateForKis())
+                .sorgula()
+                .vekaletListesiTabloKontrol();
     }
 }
