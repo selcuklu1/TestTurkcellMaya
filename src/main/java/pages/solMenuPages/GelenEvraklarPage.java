@@ -340,16 +340,20 @@ public class GelenEvraklarPage extends MainPage {
     }
 
     @Step("")
-    public String tablodanEvrakNoAl(int adet) {
+    public String[] tablodanEvrakNoAl(int adet) {
         String text = "";
         SelenideElement tblEvraklar = $("table[id='mainInboxForm:inboxDataTable:" + 0 + ":evrakTable'] tr:nth-child(3)");
+        String[] evrakNo = new String[adet];
         for (int i = 0; i < adet; i++) {
+
             text = $("table[id='mainInboxForm:inboxDataTable:" + i + ":evrakTable'] tr:nth-child(3)").getText();
+            text = text.split("/")[2];
+            String number = getIntegerInText(text);
+            evrakNo[i] = number;
         }
 //        String text = tblEvraklar.getText();
         System.out.println(text);
-        String arr1[] = text.split("/");
-        String evrakNo = getIntegerInText(arr1[2]);
+
         return evrakNo;
     }
 
