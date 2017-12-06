@@ -555,35 +555,43 @@ public class BaseLibrary {
     // İşlem penceresi kapatma onay - popup
     @Step("Popup : İşlem penceresi kapatma onayi: \"{secim}\" ")
     public void islemPenceresiKapatmaOnayiPopup(String secim) {
+
         SelenideElement btnKapat = $(By.id("kapatButton"));
         SelenideElement btnIptal = $(By.id("kapatButton"));
         SelenideElement islemPenceresiKapatmaPopup = $(By.id("closeWindowConfirm"));
 
         if (islemPenceresiKapatmaPopup.isDisplayed()) {
-            if (secim.equals("Kapat")) {
-                btnKapat.click();
-            } else if (secim.equals("İptal")) {
-                btnIptal.click();
+            switch (secim) {
+                case "Kapat":
+                    btnKapat.click();
+                    break;
+                case "İptal":
+                    btnIptal.click();
+                    break;
             }
         }
+
     }
 
     // İşlem penceresi kapatma onay - popup
     @Step("Popup : İşlem penceresi kaydet: \"{secim}\" ")
     public void islemPenceresiKaydetPopup(String secim) {
+
         SelenideElement islemKaydetPopup = $(By.id("saveOnCloseWindowConfirm"));
         SelenideElement btnEvet = $(By.id("kapatKaydetEvetButton"));
         SelenideElement btnHayir = $(By.id("kapatKaydetHayirButton"));
         SelenideElement btnIptal = $(By.id("kapatKaydetIptalButton"));
 
-        if (islemKaydetPopup.isDisplayed()) {
-            if (secim.equals("Evet")) {
+        switch (secim) {
+            case "Evet":
                 btnEvet.click();
-            } else if (secim.equals("Hayır")) {
+                break;
+            case "Hayır":
                 btnHayir.click();
-            }
-        } else if (secim.equals("İptal")) {
-            btnIptal.click();
+                break;
+            case "İptal":
+                btnIptal.click();
+                break;
         }
     }
 
@@ -602,6 +610,5 @@ public class BaseLibrary {
                 btnIslemOnayiHayir.click();
                 break;
         }
-
     }
 }
