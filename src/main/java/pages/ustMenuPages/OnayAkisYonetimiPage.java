@@ -1,5 +1,6 @@
 package pages.ustMenuPages;
 
+import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
@@ -11,6 +12,7 @@ import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
 import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
@@ -20,7 +22,8 @@ public class OnayAkisYonetimiPage extends MainPage {
 //    private UstMenu ustMenu;
 
     //Filtre
-    BelgenetElement txtFiltreBirim = comboLov(By.id("onayAkisiYonetimiListingForm:filterPanel:birimLov:LovText"));
+    BelgenetElement
+            txtFiltreBirim = comboLov(By.id("onayAkisiYonetimiListingForm:filterPanel:birimLov:LovText"));
     SelenideElement cmbFiltreDurum = $(By.id("onayAkisiYonetimiListingForm:filterPanel:durumSelectBoxOnayAkisiYonetimiListing"));
     SelenideElement txtFiltreAd = $(By.id("onayAkisiYonetimiListingForm:filterPanel:adFilterInputOnayAkisiYonetimiListing"));
     SelenideElement filtreAcmaKapatma = $(By.id("onayAkisiYonetimiListingForm:filterPanel"));
@@ -140,7 +143,9 @@ public class OnayAkisYonetimiPage extends MainPage {
 
     @Step("Kullanıcı birimin seçili geldiği kontrolu")
     public OnayAkisYonetimiPage birimKontrol(String birim) {
-        Assert.assertEquals(txtFiltreBirim.selectedTitles().filterBy(Condition.text(birim)).size(), 1);
+       // Assert.assertEquals(txtFiltreBirim.selectedTitles().filterBy(Condition.text(birim)).size(), 1);
+        txtFiltreBirim.lastSelectedLovTitle().shouldHave(text(birim));
+
         return this;
     }
 
@@ -185,6 +190,28 @@ public class OnayAkisYonetimiPage extends MainPage {
 
         } else {
             System.out.println("Onay akışı aktif zaten");
+        }
+
+        return this;
+    }
+
+    @Step("Onay akışı Aktif ise Pasif Yap")
+    public OnayAkisYonetimiPage onayAkisiAktifIsePasifYap(String onayAkisi) {
+
+        if (tblOnayAkisListesi
+                .filterBy(text(onayAkisi)).shouldHaveSize(1)
+                .first()
+                .$(By.cssSelector("[id$='changeOnayAkisiStatusButton'] [class$='to-passive-status-icon']")).isDisplayed()) {
+            tblOnayAkisListesi
+                    .filterBy(text(onayAkisi)).shouldHaveSize(1)
+                    .first()
+                    .$(By.cssSelector("[id$='changeOnayAkisiStatusButton'] [class$='to-passive-status-icon']")).click();
+
+            islemOnayi("Evet");
+            Allure.addAttachment("Onay akışı aktif olduğu için pasif yapıldı.", "");
+
+        } else {
+            System.out.println("Onay akışı pasif zaten");
         }
 
         return this;
