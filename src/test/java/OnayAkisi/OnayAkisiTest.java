@@ -40,7 +40,7 @@ public class OnayAkisiTest extends BaseTest {
         String kullanici = "Sezai Çelik";
         String basariMesaji = "İşlem başarılıdır!";
 
-        //Data kontrol
+        //Data kontrolu için yazıldı. Pasif ise aktif yapılır.
         onayAkisYonetimiPage
                 .openPage()
                 .filtredeAdDoldur(kullanici)
@@ -59,6 +59,7 @@ public class OnayAkisiTest extends BaseTest {
 
         onayAkisYonetimiPage
                 .openPage()
+                .filtreAc()
                 .birimKontrol(onayAkisAdi)
                 .durumKontrol("Sadece Aktifler")
                 .ara()
@@ -70,6 +71,7 @@ public class OnayAkisiTest extends BaseTest {
                 .islemMesaji().basariliOlmali(basariMesaji);
 
         onayAkisYonetimiPage
+                .filtreAc()
                 .filtredeAdDoldur(kullanici)
                 .filtreDurumSec("PASIFLER")
                 .ara()
@@ -91,6 +93,39 @@ public class OnayAkisiTest extends BaseTest {
                 .bilgilerTabiAc()
                 .onayAkisiAlanindaGoruntulenmemeKontrolu(kullanici);
 
+        onayAkisYonetimiPage
+                .openPage()
+                .filtreAc()
+                .filtredeAdDoldur(kullanici)
+                .filtreDurumSec("PASIFLER")
+                .ara()
+                .adaGoreAktifYap(kullanici)
+                .islemOnayi("Evet");
+
+        onayAkisYonetimiPage
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        onayAkisYonetimiPage
+                .filtreAc()
+                .filtredeAdDoldur(kullanici)
+                .filtreDurumSec("AKTIFLER")
+                .ara()
+                .kayitGoruntulenmeKontrolu(kullanici);
+
+        olurYazisiOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .onayAkisDoldur(kullanici)
+                .onayAkisiKullaniciComboKontrol();
+
+        kararYazisiOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .onayAkisiDoldur(kullanici)
+                //TODO: Burda imzaci combosu gelmiyor.
+                //   .onayAkisiKullaniciComboKontrol();
+                .ekraniKapat()
+                .islemPenceresiKaydetPopup("Hayır");
 
     }
 }

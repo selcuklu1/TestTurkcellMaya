@@ -10,4 +10,7 @@ public class TestData {
     public static final String password2 = "123";
     public static final String username3 = "yakyol";
     public static final String password3 = "123";
+    public static final String username4 = "mbozdemir";
+    public static final String password4 = "123";
+
 }
