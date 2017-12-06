@@ -25,8 +25,11 @@ public class VekaletIslemleriTest extends BaseTest {
     VekaletOnaylariPage vekaletOnaylariPage;
 
     String aciklama = "";
-    String vekaletVeren = "Yasemin";
-    String vekaletAlan = "Optiim TEST";
+    String redNedeni = "";
+    String vekaletVeren = "Optiim TEST";
+    String vekaletAlan = "Optiim TEST1";
+    String evrakNo1 = "";
+    String evrakNo2 = "";
 
     @BeforeMethod
     public void loginBeforeTests() {
@@ -39,17 +42,21 @@ public class VekaletIslemleriTest extends BaseTest {
     @Test(enabled = true, description = "Onaya göndererek Vekalet Verme")
     public void TC0025a() throws InterruptedException {
 
-        login(username3, password);
+        login(username, password);
 
         String basariMesaji = "İşlem başarılıdır!";
         String[] evrakNo = new String[2];
         aciklama = "onay " + getSysDate() + " evrak";
+        redNedeni = "red "+ getSysDate() + " nedeni";
+
         gelenEvraklarPage
                 .openPage();
 
         evrakNo = gelenEvraklarPage.tablodanEvrakNoAl(2);
-        String evrakNo1 = evrakNo[0];
-        String evrakNo2 = evrakNo[1];
+
+        evrakNo1 = evrakNo[0];
+        evrakNo2 = evrakNo[1];
+
         vekaletVerPage
                 .openPage();
         for (int i = 0; i < evrakNo.length; i++) {
@@ -85,16 +92,33 @@ public class VekaletIslemleriTest extends BaseTest {
 
         login(username2, password2);
 
-        String aciklama = "onay 20171206142209 evrak";
+        String aciklama = "onay 20171206220943 evrak";
 
+        String not = "red 20171206220943 nedeni";
         vekaletOnaylariPage
                 .openPage()
                 .filtreleAc()
                 .tarihiDoldur(getSysDateForKis())
                 .tablodanOnaylanacakKayıtSec(aciklama)
                 .alanKontrolleri(vekaletVeren, vekaletAlan, getSysDateForKis())
-                .ekleyeceginizNotlarDoldur("Not")
+                .ekleyeceginizNotlarDoldur(not)
                 .reddet();
+
+        vekaletVerPage
+                .openPage()
+                .veklatListesiTabAc()
+                .vekaletListesiBaslangicTarihiDoldur(getSysDateForKis())
+                .vekaletListesiBitisTarihiDoldur(getSysDateForKis())
+                .durumSec("2")
+                .sorgula()
+                .vekaletListesiTabloKontrol(not);
+        logout();
+
+        login(username,password);
+
+        gelenEvraklarPage
+                .openPage()
+                .tabloEvrakNoKontrol("5033");
     }
 
     @Severity(SeverityLevel.CRITICAL)

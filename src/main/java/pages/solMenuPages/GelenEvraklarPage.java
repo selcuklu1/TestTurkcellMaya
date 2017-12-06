@@ -5,6 +5,7 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
@@ -339,7 +340,7 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
-    @Step("")
+    @Step("Tablodan istenilen sayıda evrak no al")
     public String[] tablodanEvrakNoAl(int adet) {
         String text = "";
         SelenideElement tblEvraklar = $("table[id='mainInboxForm:inboxDataTable:" + 0 + ":evrakTable'] tr:nth-child(3)");
@@ -355,6 +356,15 @@ public class GelenEvraklarPage extends MainPage {
         System.out.println(text);
 
         return evrakNo;
+    }
+
+    @Step("Tabloda evrak no kontrolü")
+    public GelenEvraklarPage tabloEvrakNoKontrol(String evrakNo) {
+        int size = tableEvraklar
+                .filterBy(Condition.text(evrakNo)).size();
+        Assert.assertEquals(size,1);
+
+        return this;
     }
 
 }
