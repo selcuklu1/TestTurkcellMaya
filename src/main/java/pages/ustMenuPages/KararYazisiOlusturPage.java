@@ -31,7 +31,7 @@ public class KararYazisiOlusturPage extends MainPage {
 
 
     //region Elements
-    SelenideElement tabBilgiler = $("button .kullaniciBilgileri");
+    SelenideElement tabBilgiler = $("button[id^='yeniKararEvrakForm:kararEvrakLeftTab:uiRepeat'] span[class$='kullaniciBilgileri']");
     SelenideElement tabEditor = $("button .editor");
     SelenideElement tabEkleri = $("button .kullaniciEkleri");
     SelenideElement tabIlgileri = $("button .kullaniciIlgileri");
@@ -48,12 +48,9 @@ public class KararYazisiOlusturPage extends MainPage {
 
     //endregion
 
-    //region Elements
-   // SelenideElement tabBilgiler = $("button[id^='yeniKararEvrakForm:kararEvrakLeftTab:uiRepeat'] span[class$='kullaniciBilgileri']");
-    //endregion
 
     @Step("Karar yazısı oluştur sayfası aç")
-    public KararYazisiOlusturPage openPage(){
+    public KararYazisiOlusturPage openPage() {
         ustMenu("Karar Yazısı Oluştur");
         return this;
     }
@@ -92,7 +89,8 @@ public class KararYazisiOlusturPage extends MainPage {
         By cmbOnayAkisiBy = By.cssSelector("[id^='yeniKararEvrakForm:evrakBilgileriList'][id$='akisLov:LovText']");
         SelenideElement cmbSelectOneMenu = $(By.id("yeniKararEvrakForm:evrakBilgileriList:14:akisAdimLov:LovSecilenTable:0:selectOneMenu"));
         SelenideElement btnEkranKapat = $(By.cssSelector("[id='window4Dialog'] span[class='ui-icon ui-icon-closethick']"));
-
+        SelenideElement btnKaydetveOnaySun = $(By.id("yeniKararEvrakForm:kararEvrakRightTab:uiRepeat:2:cmdbutton"));
+        BelgenetElement cmbOnayAkisi = comboLov(By.cssSelector("[id^='yeniKararEvrakForm:evrakBilgileriList'][id$='akisLov:LovText']"));
         //endregion
 
         private BilgilerTab open() {
@@ -108,132 +106,135 @@ public class KararYazisiOlusturPage extends MainPage {
         }
 
 
-
         @Step("Gönder")
-        public BilgilerTab gonder(boolean secim){
+        public BilgilerTab gonder(boolean secim) {
             btnGonder.click();
-            if (secim == true){
+            if (secim == true) {
                 btnEvet.click();
-            }
-            else{
+            } else {
                 btnHayir.click();
             }
             return this;
         }
 
         @Step("Kaydet ve onay sun")
-        public BilgilerTab kaydetveOnaySun(){
+        public BilgilerTab kaydetveOnaySun() {
             btnKaydetOnayaSun.click();
             return this;
         }
+
         @Step("Onay akışı temizle")
-        public BilgilerTab onayAkisiTemizle(){
+        public BilgilerTab onayAkisiTemizle() {
             btnOnayakisiTemizle.click();
             return this;
         }
+
         @Step("Açıklama doldur")
-        public BilgilerTab aciklamaDoldur(String aciklama){
+        public BilgilerTab aciklamaDoldur(String aciklama) {
             txtAciklama.setValue(aciklama);
             return this;
         }
 
         @Step("Kullan")
-        public BilgilerTab kullan(){
+        public BilgilerTab kullan() {
             btnKullanicilarKullan.click();
             return this;
         }
 
         @Step("Karar no doldur")
-        public BilgilerTab kararNoDoldur(String kararNo){
+        public BilgilerTab kararNoDoldur(String kararNo) {
             txtKararNo.setValue(kararNo);
             return this;
         }
 
         @Step("Toplantı tarih seç")
-        public BilgilerTab toplantiTarihDoldur(String tarih){
+        public BilgilerTab toplantiTarihDoldur(String tarih) {
             dateToplantiTarihi.setValue(tarih);
             return this;
         }
 
         @Step("Toplanti no doldur")
-        public BilgilerTab toplantiNoDoldur(String toplantiNo){
+        public BilgilerTab toplantiNoDoldur(String toplantiNo) {
             txtToplantiNo.setValue(toplantiNo);
             return this;
         }
 
         @Step("Kaldirilacak klasörler doldur")
-        public BilgilerTab kaldirilacakKlasorlerDoldur(String kaldirilacakKlasorler){
+        public BilgilerTab kaldirilacakKlasorlerDoldur(String kaldirilacakKlasorler) {
             txtKaldirilacakKlasorler.selectLov(kaldirilacakKlasorler);
-            return this;
-        }
-
-        @Step("Onay akışı doldur")
-        public BilgilerTab onayAkisiDoldur(String onayAkisi){
-            txtOnayAkisi.selectLov(onayAkisi);
             return this;
         }
 
 
         @Step("Onay akışı kontrol")
-        public BilgilerTab imzalamaKontrol(String imzalama){
+        public BilgilerTab imzalamaKontrol(String imzalama) {
             Assert.assertEquals(txtOnayAkisi.lastSelectedLovDetailText().contains(imzalama), true);
             return this;
         }
 
         @Step("Miat Doldur")
-        public BilgilerTab miatDoldur(String miat){
+        public BilgilerTab miatDoldur(String miat) {
             dateMiat.sendKeys(miat);
             return this;
         }
 
+        @Step("Onay akışı doldurma ve kontrolu")
+        public BilgilerTab onayAkisiDoldur(String onayAkisi) {
+            cmbOnayAkisi.selectLov(onayAkisi);
+            return this;
+        }
+
         @Step("İvedilik seç")
-        public BilgilerTab ivedilikSec(String secilen){
+        public BilgilerTab ivedilikSec(String secilen) {
             cmbIvedilik.selectOption(secilen);
             return this;
         }
+
         @Step("Konu kodu doldur")
-        public BilgilerTab konuKoduDoldur(String konuKodu){
+        public BilgilerTab konuKoduDoldur(String konuKodu) {
             txtKonuKodu.selectLov(konuKodu);
             return this;
         }
+
         @Step("Konu kodu doldur")
-        public BilgilerTab konuKoduTemizle(){
+        public BilgilerTab konuKoduTemizle() {
             btnKonuKoduTemizle.click();
             return this;
         }
+
         @Step("Kaldırılıcak klasör temizle")
-        public BilgilerTab kaldirilacakKlasorTemizle(){
+        public BilgilerTab kaldirilacakKlasorTemizle() {
             btnKaldirilicakKlasorTemizle.click();
             return this;
         }
+
         @Step("Konu doldur")
-        public BilgilerTab konuDoldur(String konuKodu){
+        public BilgilerTab konuDoldur(String konuKodu) {
             txtKonu.setValue(konuKodu);
             return this;
         }
 
         @Step("Onay akışı ekle")
-        public BilgilerTab onayAkisiEkle(){
+        public BilgilerTab onayAkisiEkle() {
             clickJs(btnOnayAkisiEkle);
             //btnOnayAkisiEkle.click();
             return this;
         }
 
         @Step("Kullanıcılar doldur")
-        public BilgilerTab kullanicilarDoldur(String kullanici, String birim){
+        public BilgilerTab kullanicilarDoldur(String kullanici, String birim) {
             txtKullanicilar.type(kullanici).titleItems().filterBy(text(birim)).first().click();
             txtKullanicilar.closeLovTreePanel();
             return this;
         }
 
         @Step("Kaydet")
-        public BilgilerTab kaydet(boolean secim){
+        public BilgilerTab kaydet(boolean secim) {
             clickJs(btnKaydet);
             //btnKaydet.click();
-            if (secim == true){
-               clickJs(btnKaydetEvet);
-            }
-            else{
+            if (secim == true) {
+                clickJs(btnKaydetEvet);
+            } else {
                 clickJs(btnKaydetHayir);
             }
             return this;
@@ -272,6 +273,7 @@ public class KararYazisiOlusturPage extends MainPage {
 
     }
 
+
     public EditorTab editorTabAc() {
         return editorTab.open();
     }
@@ -291,24 +293,22 @@ public class KararYazisiOlusturPage extends MainPage {
         }
 
         @Step("Kaydet")
-        public EditorTab kaydet(boolean secim){
+        public EditorTab kaydet(boolean secim) {
             btnKaydet.click();
-            if (secim == true){
+            if (secim == true) {
                 btnEvet.click();
-            }
-            else{
+            } else {
                 btnHayir.click();
             }
             return this;
         }
 
 
-
         @Step("Editör İçerik Doldur")
-        public EditorTab editorIcerikDoldur(String icerik){
+        public EditorTab editorIcerikDoldur(String icerik) {
             divEditor1.click();
             divEditor1.sendKeys(icerik);
-          //  divEditor.sendKeys(icerik);
+            //  divEditor.sendKeys(icerik);
             return this;
         }
 
@@ -321,7 +321,7 @@ public class KararYazisiOlusturPage extends MainPage {
 
     public class EkleriTab extends MainPage {
 
-       private EkleriTab open() {
+        private EkleriTab open() {
             tabEkleri.click();
             return this;
 
@@ -397,145 +397,7 @@ public class KararYazisiOlusturPage extends MainPage {
     }
     //endregion
 
-    }
-
-/*
-    public class BilgilerTab extends MainPage {
-
-        SelenideElement divContainer = $("#evrakBilgileriContainerDiv");
-
-        //Bilgiler tab
-        SelenideElement btnKaydetveOnaySun = $(By.id("yeniKararEvrakForm:kararEvrakRightTab:uiRepeat:2:cmdbutton"));
-        BelgenetElement txtKonuKodu = comboLov(By.id("yeniKararEvrakForm:evrakBilgileriList:0:konuKoduLov:LovText"));
-        SelenideElement txtKonu = $(By.id("yeniKararEvrakForm:evrakBilgileriList:2:konuTextArea"));
-        SelenideElement cmbIvedilik = $(By.id("yeniKararEvrakForm:evrakBilgileriList:4:ivedilik"));
-        SelenideElement dateMiat = $(By.id("yeniKararEvrakForm:evrakBilgileriList:5:miatCalendar_input"));
-        BelgenetElement txtKaldirilacakKlasorler = comboLov(By.id("yeniKararEvrakForm:evrakBilgileriList:7:eklenecekKlasorlerLov:LovText"));
-        SelenideElement txtToplantiNo = $(By.id("yeniKararEvrakForm:evrakBilgileriList:8:toplantiNo"));
-        SelenideElement dateToplantiTarihi = $(By.id("yeniKararEvrakForm:evrakBilgileriList:9:toplantiTarih_input"));
-        SelenideElement txtKararNo = $(By.id("yeniKararEvrakForm:evrakBilgileriList:10:kararNo"));
-        SelenideElement btnOnayAkisiEkle = $(By.id("yeniKararEvrakForm:evrakBilgileriList:6:onayAkisiEkle"));
-        SelenideElement btnKullanicilarKullan = $(By.id("yeniKararEvrakForm:evrakBilgileriList:6:anlikAkisKullanButton"));
-        BelgenetElement cmbOnayAkisi = comboLov(By.cssSelector("[id^='yeniKararEvrakForm:evrakBilgileriList'][id$='akisLov:LovText']"));
-
-        //endregion
-
-        private BilgilerTab open() {
-         //   if (divContainer.is(not(visible)))
-                //tabBilgiler.click();
-
-            //divContainer.shouldBe(visible);
-            return this;
-        }
-
-        public boolean isOnTabPage() {
-            return divContainer.is(visible);
-        }
-
-
-        @Step("Kaydet ve onay sun")
-        public BilgilerTab kaydetveOnaySun() {
-            btnKaydetveOnaySun.click();
-            return this;
-        }
-
-        @Step("Kullan")
-        public BilgilerTab kullan() {
-            btnKullanicilarKullan.click();
-            return this;
-        }
-
-        @Step("Karar no doldur")
-        public BilgilerTab kararNoDoldur(String kararNo) {
-            txtKararNo.setValue(kararNo);
-            return this;
-        }
-
-        @Step("Toplantı tarih seç")
-        public BilgilerTab toplantiTarihDoldur(String tarih) {
-            dateToplantiTarihi.setValue(tarih);
-            return this;
-        }
-
-        @Step("Toplanti no doldur")
-        public BilgilerTab toplantiNoDoldur(String toplantiNo) {
-            txtToplantiNo.setValue(toplantiNo);
-            return this;
-        }
-
-        @Step("Kaldirilacak klasörler doldur")
-        public BilgilerTab kaldirilacakKlasorlerDoldur(String kaldirilacakKlasorler) {
-            txtKaldirilacakKlasorler.selectLov(kaldirilacakKlasorler);
-            return this;
-        }
-
-        @Step("Onay akışı doldurma ve kontrolu")
-        public BilgilerTab onayAkisiDoldur(String onayAkisi) {
-            cmbOnayAkisi.selectLov(onayAkisi);
-            return this;
-        }
-
-        @Step("Miat Doldur")
-        public BilgilerTab miatDoldur(String miat) {
-            dateMiat.setValue(miat);
-            return this;
-        }
-
-        @Step("İvedilik seç")
-        public BilgilerTab ivedilikSec(String secilen) {
-            cmbIvedilik.selectOption(secilen);
-            return this;
-        }
-
-        @Step("Konu kodu doldur")
-        public BilgilerTab konuKoduDoldur(String konuKodu) {
-            txtKonuKodu.selectLov(konuKodu);
-            return this;
-        }
-
-        @Step("Konu doldur")
-        public BilgilerTab konuDoldur(String konuKodu) {
-            txtKonu.setValue(konuKodu);
-            return this;
-        }
-
-        @Step("Onay akışı ekle")
-        public BilgilerTab onayAkisiEkle() {
-            btnOnayAkisiEkle.click();
-            return this;
-        }
-
-        @Step("Ekrani kapat")
-        public BilgilerTab ekraniKapat() {
-            btnEkranKapat.click();
-            return this;
-        }
-
-        @Step("Parafçı, Kontrolcü, Koordineci ve İmzacı combo kontrolu")
-        public BilgilerTab onayAkisiKullaniciComboKontrol() {
-
-            onayAkisiEkle();
-
-            if (cmbSelectOneMenu.isDisplayed()) {
-                Assert.assertTrue(true);
-            } else {
-                Allure.addAttachment("Parafçı, Kontrolcü, Koordineci ve İmzacı combo gelmedi.", "");
-                log.info("Parafçı, Kontrolcü, Koordineci ve İmzacı combo gelmedi.");
-                Assert.assertTrue(false);
-            }
-            return this;
-        }
-
-        @Step("Bilgileri tabında Onay Akışı alanında görüntülenmeme kontrolu")
-        public BilgilerTab onayAkisiAlanindaGoruntulenmemeKontrolu(String onayAkisi) {
-
-            boolean selectable = comboLov(cmbOnayAkisiBy).isLovValueSelectable(onayAkisi);
-            Assert.assertEquals(selectable, false, "MyCombolov alanında " + onayAkisi + ": Onay Akışın görüntülenmediği görülür");
-            System.out.println("MyCombolov alanında " + onayAkisi + ": Onay Akışın görüntülenmediği görülür.");
-
-            return this;
-        }
-
-    }
 }
-*/
+
+
+
