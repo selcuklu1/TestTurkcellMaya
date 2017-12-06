@@ -1,6 +1,5 @@
 package Paylastiklarim;
 
-import com.sun.xml.internal.ws.api.ha.StickyFeature;
 import common.BaseTest;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
