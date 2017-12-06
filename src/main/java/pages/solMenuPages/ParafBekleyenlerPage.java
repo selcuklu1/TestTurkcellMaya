@@ -68,7 +68,6 @@ public class ParafBekleyenlerPage extends MainPage {
     }
 
 
-
     //     // Yasin ÖZGÜL / Yasin TELLİ / Veysel KIRAN
 
     // yeniler
@@ -117,7 +116,8 @@ public class ParafBekleyenlerPage extends MainPage {
         tabEvrakOnizleme
                 .filterBy(Condition.text(tabAdi))
                 .get(0)
-                .click();;
+                .click();
+        ;
 
         return this;
     }
@@ -134,7 +134,7 @@ public class ParafBekleyenlerPage extends MainPage {
     // Evrak notları fonksiyonları
     @Step("Evrak ekleme butonu aktif olmalı mı? : \"{0}\" ")
     public ParafBekleyenlerPage evrakNotEklemeButonuAktifOlmali(boolean aktifOlmali) {
-        if(aktifOlmali == true)
+        if (aktifOlmali == true)
             btnEvratNotEkle.shouldHave(Condition.attribute("aria-disabled", "false"));
         else
             btnEvratNotEkle.shouldHave(Condition.attribute("aria-disabled", "true"));
@@ -151,7 +151,7 @@ public class ParafBekleyenlerPage extends MainPage {
     @Step("\"{0}\" kullanıcısını paylaşımdan geri al")
     public ParafBekleyenlerPage paylasimdanGeriAl(String[] paylasilanlar) {
 
-        for(int i = 0; i < paylasilanlar.length; i ++){
+        for (int i = 0; i < paylasilanlar.length; i++) {
 
             SelenideElement currentRow = tablePaylasimdanGeriAl
                     .filterBy(Condition.text(paylasilanlar[i]))
@@ -215,9 +215,10 @@ public class ParafBekleyenlerPage extends MainPage {
     }
 
     ElementsCollection tableEvrakNotlari = $$(By.xpath("//th[contains(., 'Evrak Notları')]/../../../tbody/tr"));
+
     @Step("Açıklama kontrol")
-    public ParafBekleyenlerPage evrakNotuKontrol(String ekleyen, String tarih, String aciklama, Boolean shouldBeExist){
-        if(shouldBeExist == true){
+    public ParafBekleyenlerPage evrakNotuKontrol(String ekleyen, String tarih, String aciklama, Boolean shouldBeExist) {
+        if (shouldBeExist == true) {
             tableEvrakNotlari
                     .filterBy(Condition.text(ekleyen))
                     .filterBy(Condition.text(tarih))
@@ -238,7 +239,7 @@ public class ParafBekleyenlerPage extends MainPage {
     }
 
     @Step("Açıklama kontrol")
-    public ParafBekleyenlerPage paylasilanKontrol(String kullanici, String birim, String paylasimDurumu, String geriAlinmaTarihi){
+    public ParafBekleyenlerPage paylasilanKontrol(String kullanici, String birim, String paylasimDurumu, String geriAlinmaTarihi) {
         tablePaylasilanlar
                 .filterBy(Condition.text(kullanici))
                 .filterBy(Condition.text(birim))
@@ -250,7 +251,7 @@ public class ParafBekleyenlerPage extends MainPage {
     }
 
     @Step("Açıklama kontrol")
-    public String paylasilmaTarihiGetir(String konu, String evrakNo, String paylasilanKullanici){
+    public String paylasilmaTarihiGetir(String konu, String evrakNo, String paylasilanKullanici) {
 
         String pTarihi = tablePaylastiklarim
                 .filterBy(Condition.text("Evrak No: " + evrakNo))

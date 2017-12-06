@@ -206,5 +206,4 @@ public class OnayAkisYonetimiPage extends MainPage {
         return this;
     }
 
-
 }

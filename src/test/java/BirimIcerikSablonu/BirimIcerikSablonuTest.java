@@ -53,7 +53,6 @@ public class BirimIcerikSablonuTest extends BaseTest {
         sa.assertTrue(birimIcerikSablonlarPage.getBtnEvrakOnizleme().is(disabled)
                 , "Evrak Önizleme disabled olmalı");
 
-
         //Güncelleme testinde tıklanacağı için gerek kalmıyor.
 //        sa.assertEquals(birimIcerikSablonlarPage.getRowsBirimSablonlari().size(),
 //                birimIcerikSablonlarPage.getBtnDetayInEachRow().size(),

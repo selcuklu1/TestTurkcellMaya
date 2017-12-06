@@ -248,12 +248,15 @@ public class KararYazisiOlusturmaTest extends BaseTest{
     public void TC2238() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
-
-        login(username2, password2);
+        String birim = "Yazılım Geliştirme Direktörlüğ";
+        String kapanisTarih = getAfterSysYear();
+        login(username4, password4);
 
         klasorYonetimiPage
                 .openPage()
-                .yeni();
+                .yeni()
+                .birimDoldur(birim)
+                .klasorKapanisTarihiDoldur(kapanisTarih);
         
     }
 }

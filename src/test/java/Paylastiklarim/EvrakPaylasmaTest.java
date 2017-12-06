@@ -61,9 +61,6 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .evrakNotEklemeButonuAktifOlmali(false);
 
 
-
-
-
     }
 
     @Test(enabled = true, description = "1882 : Paylaştıklarım listesinden evrak paylaşma")
@@ -100,7 +97,7 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .openPage()
                 .evrakSec(evrakKonu, evrakNo, paylasilanKullanici, paylasilmaTarihi)
                 .evrakOnizlemeTabSec("Evrak Notları")
-                .evrakNotuKontrol(paylasanKisi,"" , paylasanKisiNotAciklamasi);
+                .evrakNotuKontrol(paylasanKisi, "", paylasanKisiNotAciklamasi);
 
     }
 
@@ -176,13 +173,6 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .islemMesaji().basariliOlmali("İşlem başarılıdır!");
 
 
-
-
-
-
-
-
-
     }
 
     @Test(enabled = true, description = "1876 : Taslak Evrakı kullanıcı ile paylaşma (Tümü aksiyonu ile)")
@@ -203,7 +193,7 @@ public class EvrakPaylasmaTest extends BaseTest {
 
         taslakEvraklarPage
                 .openPage()
-                .evrakSec(evrakKonu,evrakGidecegiYer,evrakTarihSaat)
+                .evrakSec(evrakKonu, evrakGidecegiYer, evrakTarihSaat)
                 .paylasTabTikla()
                 .paylasBirimTikla()
                 .paylasKisiDoldur("Optiim TEST1")
@@ -314,9 +304,6 @@ public class EvrakPaylasmaTest extends BaseTest {
         */
 
 
-
-
-
     }
 
     @Test(enabled = true, description = "1904 : Evrak paylaşmada not kontrolü")
@@ -336,7 +323,7 @@ public class EvrakPaylasmaTest extends BaseTest {
 
         parafBekleyenlerPage
                 .openPage()
-                .evrakSec(evrakKonu,evrakGidecegiYer,evrakGonderen,evrakTarih)
+                .evrakSec(evrakKonu, evrakGidecegiYer, evrakGonderen, evrakTarih)
                 .paylasTabTikla()
                 .paylasKisiSec("Optiim TEST")
                 .paylasimAciklamaYaz("Deneme bir açıklama girdim.")
@@ -350,7 +337,7 @@ public class EvrakPaylasmaTest extends BaseTest {
 
         benimlePaylasilanlarPage
                 .openPage()
-                .evrakSec(evrakiPaylasan,"",evrakKonu,evrakNo)
+                .evrakSec(evrakiPaylasan, "", evrakKonu, evrakNo)
                 .evrakOnizlemeTabSec("Evrak Notları")
                 .evrakNotuEkle()
                 .evrakNotuGirVeKaydet(eklenenNot);
@@ -367,13 +354,9 @@ public class EvrakPaylasmaTest extends BaseTest {
 
         parafBekleyenlerPage
                 .openPage()
-                .evrakSec(evrakKonu,evrakGidecegiYer,evrakGonderen,evrakTarih)
+                .evrakSec(evrakKonu, evrakGidecegiYer, evrakGonderen, evrakTarih)
                 .evrakOnizlemeTabSec("Evrak Notları")
                 .evrakNotuKontrol(notEkleyen, "", eklenenNot, false);
-
-
-
-
 
 
     }
@@ -395,7 +378,7 @@ public class EvrakPaylasmaTest extends BaseTest {
 
         taslakEvraklarPage
                 .openPage()
-                .evrakSec(evrakKonu,evrakGidecegiYer,evrakTarihSaat)
+                .evrakSec(evrakKonu, evrakGidecegiYer, evrakTarihSaat)
                 .paylasTabTikla()
                 .paylasBirimTikla()
                 .paylasKisiDoldur("Optiim TEST1")
@@ -436,9 +419,6 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .evrakSec(evrakiPaylasan, "", evrakKonu, "")
                 .evrakOnizlemeTabSec("Evrak Notları")
                 .evrakNotuKontrol(yeniPaylasan, "2017", yeniEvrakPaylasimNotu);
-
-
-
 
 
     }
@@ -460,7 +440,7 @@ public class EvrakPaylasmaTest extends BaseTest {
 
         taslakEvraklarPage
                 .openPage()
-                .evrakSec(evrakKonu,evrakGidecegiYer,evrakTarihSaat)
+                .evrakSec(evrakKonu, evrakGidecegiYer, evrakTarihSaat)
                 .paylasTabTikla()
                 .paylasBirimTikla()
                 .paylasKisiDoldur("Optiim TEST1")
@@ -501,9 +481,6 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .evrakSec(evrakiPaylasan, "", evrakKonu, "")
                 .evrakOnizlemeTabSec("Evrak Notları")
                 .evrakNotuKontrol(yeniPaylasan, "2017", yeniEvrakPaylasimNotu);
-
-
-
 
 
     }
@@ -526,7 +503,7 @@ public class EvrakPaylasmaTest extends BaseTest {
 
         taslakEvraklarPage
                 .openPage()
-                .evrakSec(evrakKonu,evrakGidecegiYer,evrakTarihSaat)
+                .evrakSec(evrakKonu, evrakGidecegiYer, evrakTarihSaat)
                 .paylasTabTikla()
                 .paylasBirimTikla()
                 .paylasKisiDoldur("Optiim TEST1")
@@ -567,9 +544,6 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .evrakSec(evrakiPaylasan, "", evrakKonu, "")
                 .evrakOnizlemeTabSec("Evrak Notları")
                 .evrakNotuKontrol(yeniPaylasan, "2017", yeniEvrakPaylasimNotu);
-
-
-
 
 
     }
@@ -591,7 +565,7 @@ public class EvrakPaylasmaTest extends BaseTest {
 
         taslakEvraklarPage
                 .openPage()
-                .evrakSec(evrakKonu,evrakGidecegiYer,evrakTarihSaat)
+                .evrakSec(evrakKonu, evrakGidecegiYer, evrakTarihSaat)
                 .paylasTabTikla()
                 .paylasBirimTikla()
                 .paylasKisiDoldur("Optiim TEST1")
@@ -632,9 +606,6 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .evrakSec(evrakiPaylasan, "", evrakKonu, "")
                 .evrakOnizlemeTabSec("Evrak Notları")
                 .evrakNotuKontrol(yeniPaylasan, "2017", yeniEvrakPaylasimNotu);
-
-
-
 
 
     }
@@ -660,7 +631,7 @@ public class EvrakPaylasmaTest extends BaseTest {
 
         taslakEvraklarPage
                 .openPage()
-                .evrakSec(evrakKonu,evrakGidecegiYer,evrakTarihSaat)
+                .evrakSec(evrakKonu, evrakGidecegiYer, evrakTarihSaat)
                 .paylasTabTikla()
                 .paylasBirimTikla()
                 .paylasKisiDoldur("Optiim TEST1")
@@ -701,9 +672,6 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .evrakSec(evrakiPaylasan, "", evrakKonu, "")
                 .evrakOnizlemeTabSec("Evrak Notları")
                 .evrakNotuKontrol(yeniPaylasan, "2017", yeniEvrakPaylasimNotu);
-
-
-
 
 
     }
