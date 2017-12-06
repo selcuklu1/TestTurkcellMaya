@@ -17,6 +17,7 @@ import pages.ustMenuPages.TuzelKisiYonetimiPage;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -275,6 +276,19 @@ public class BaseLibrary {
         String sysDate = dtf.format(now);
 
         return sysDate;
+    }
+
+
+    //Bugün tarihinden sonraki bir yıl sonrayı alır.
+    public String getAfterSysYear(){
+        String untildate = getSysDateForKis();// can take any date in current
+        // format
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.YEAR, 1);
+        String sysAfterYear = dateFormat.format(cal.getTime());
+        return sysAfterYear;
+
     }
 
     //Günün tarihinden sonraki bir tarihi alır.
