@@ -33,7 +33,7 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfEl
 
 public class BaseLibrary {
 
-    private static final Logger log = Logger.getLogger(BaseLibrary.class.getName());
+    protected static final Logger log = Logger.getLogger(BaseLibrary.class.getName());
     protected static String winHandleBefore = null;
 
     //<editor-fold desc="Allure screenshooter">
@@ -553,12 +553,40 @@ public class BaseLibrary {
     }
 
     // İşlem penceresi kapatma onay - popup
-    public void islemPenceresiKapatmaOnayi() {
-        SelenideElement bntKapatPopup = $(By.id("kapatButton"));
-        if (bntKapatPopup.isDisplayed()) {
-            bntKapatPopup.click();
+    @Step("Popup : İşlem penceresi kapatma onayi: \"{secim}\" ")
+    public void islemPenceresiKapatmaOnayiPopup(String secim) {
+        SelenideElement btnKapat = $(By.id("kapatButton"));
+        SelenideElement btnIptal = $(By.id("kapatButton"));
+        SelenideElement islemPenceresiKapatmaPopup = $(By.id("closeWindowConfirm"));
+
+        if (islemPenceresiKapatmaPopup.isDisplayed()) {
+            if (secim.equals("Kapat")) {
+                btnKapat.click();
+            } else if (secim.equals("İptal")) {
+                btnIptal.click();
+            }
         }
     }
+
+    // İşlem penceresi kapatma onay - popup
+    @Step("Popup : İşlem penceresi kaydet: \"{secim}\" ")
+    public void islemPenceresiKaydetPopup(String secim) {
+        SelenideElement islemKaydetPopup = $(By.id("saveOnCloseWindowConfirm"));
+        SelenideElement btnEvet = $(By.id("kapatKaydetEvetButton"));
+        SelenideElement btnHayir = $(By.id("kapatKaydetHayirButton"));
+        SelenideElement btnIptal = $(By.id("kapatKaydetIptalButton"));
+
+        if (islemKaydetPopup.isDisplayed()) {
+            if (secim.equals("Evet")) {
+                btnEvet.click();
+            } else if (secim.equals("Hayır")) {
+                btnHayir.click();
+            }
+        } else if (secim.equals("İptal")) {
+            btnIptal.click();
+        }
+    }
+
 
     @Step("Popup İşlem Onayı:  \"{secim}\"")
     public void islemOnayi(String secim) {

@@ -193,7 +193,7 @@ public class OnayAkisYonetimiPage extends MainPage {
 
     public OnayAkisYonetimiPage ekraniKapat() {
         btnEkranKapat.click();
-        islemPenceresiKapatmaOnayi();
+        islemPenceresiKapatmaOnayiPopup("Kapat");
         return this;
     }
 
