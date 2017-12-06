@@ -17,6 +17,7 @@ import pages.ustMenuPages.TuzelKisiYonetimiPage;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -275,6 +276,19 @@ public class BaseLibrary {
         String sysDate = dtf.format(now);
 
         return sysDate;
+    }
+
+
+    //Bugün tarihinden sonraki bir yıl sonrayı alır.
+    public String getAfterSysYear(){
+        String untildate = getSysDateForKis();// can take any date in current
+        // format
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.YEAR, 1);
+        String sysAfterYear = dateFormat.format(cal.getTime());
+        return sysAfterYear;
+
     }
 
     //Günün tarihinden sonraki bir tarihi alır.
@@ -555,35 +569,43 @@ public class BaseLibrary {
     // İşlem penceresi kapatma onay - popup
     @Step("Popup : İşlem penceresi kapatma onayi: \"{secim}\" ")
     public void islemPenceresiKapatmaOnayiPopup(String secim) {
+
         SelenideElement btnKapat = $(By.id("kapatButton"));
         SelenideElement btnIptal = $(By.id("kapatButton"));
         SelenideElement islemPenceresiKapatmaPopup = $(By.id("closeWindowConfirm"));
 
         if (islemPenceresiKapatmaPopup.isDisplayed()) {
-            if (secim.equals("Kapat")) {
-                btnKapat.click();
-            } else if (secim.equals("İptal")) {
-                btnIptal.click();
+            switch (secim) {
+                case "Kapat":
+                    btnKapat.click();
+                    break;
+                case "İptal":
+                    btnIptal.click();
+                    break;
             }
         }
+
     }
 
     // İşlem penceresi kapatma onay - popup
     @Step("Popup : İşlem penceresi kaydet: \"{secim}\" ")
     public void islemPenceresiKaydetPopup(String secim) {
+
         SelenideElement islemKaydetPopup = $(By.id("saveOnCloseWindowConfirm"));
         SelenideElement btnEvet = $(By.id("kapatKaydetEvetButton"));
         SelenideElement btnHayir = $(By.id("kapatKaydetHayirButton"));
         SelenideElement btnIptal = $(By.id("kapatKaydetIptalButton"));
 
-        if (islemKaydetPopup.isDisplayed()) {
-            if (secim.equals("Evet")) {
+        switch (secim) {
+            case "Evet":
                 btnEvet.click();
-            } else if (secim.equals("Hayır")) {
+                break;
+            case "Hayır":
                 btnHayir.click();
-            }
-        } else if (secim.equals("İptal")) {
-            btnIptal.click();
+                break;
+            case "İptal":
+                btnIptal.click();
+                break;
         }
     }
 
@@ -602,6 +624,5 @@ public class BaseLibrary {
                 btnIslemOnayiHayir.click();
                 break;
         }
-
     }
 }

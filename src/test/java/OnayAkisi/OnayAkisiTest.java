@@ -126,6 +126,40 @@ public class OnayAkisiTest extends BaseTest {
                 //   .onayAkisiKullaniciComboKontrol();
                 .ekraniKapat()
                 .islemPenceresiKaydetPopup("Hayır");
+    }
 
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TC2113: Onay Akıışı Yönetimi - Güncelleme")
+        public void TC2113() {
+
+        String onayAkisAdi = "Optiim";
+        String eskiKullanici = "Bulut Toprak";
+        String yeniKullanici = "Bulut Toprak" +" "+ createRandomNumber(5);
+        String basariMesaji = "İşlem başarılıdır!";
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .onayAkisDoldur(eskiKullanici)
+                .onayAkisiGuncelle();
+
+        onayAkisYonetimiPage
+                .openPage()
+                .filtreAc()
+                .birimKontrol(onayAkisAdi)
+                .durumKontrol("Sadece Aktifler")
+                .ara()
+                .kayitGoruntulenmeKontrolu(eskiKullanici)
+                .guncelle()
+                .onayAkisiIslemleriAdDoldur(yeniKullanici)
+                .onayAkisiIslemleriKaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        olurYazisiOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .onayAkisiAlanindaGoruntulenmemeKontrolu(eskiKullanici)
+                .onayAkisDoldur(yeniKullanici)
+                .onayAkisiKullaniciComboKontrol();
     }
 }

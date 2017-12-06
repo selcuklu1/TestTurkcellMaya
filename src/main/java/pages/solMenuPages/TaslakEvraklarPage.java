@@ -171,7 +171,7 @@ public class TaslakEvraklarPage extends MainPage {
     }
 
     @Step("Birim butonuna tıkla")
-    public TaslakEvraklarPage paylasBirimTikla(){
+    public TaslakEvraklarPage paylasBirimTikla() {
         btnPaylasBirim.click();
         return this;
     }
