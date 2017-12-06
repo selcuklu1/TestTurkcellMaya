@@ -7,7 +7,10 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.MainPage;
 import pages.solMenuPages.GelenEvraklarPage;
+import pages.solMenuPages.VekaletOnaylariPage;
 import pages.ustMenuPages.VekaletVerPage;
+
+import static data.TestData.*;
 
 /****************************************************
  * Tarih: 2017-12-22
@@ -17,47 +20,71 @@ import pages.ustMenuPages.VekaletVerPage;
  ****************************************************/
 public class VekaletIslemleriTest extends BaseTest {
     MainPage mainPage;
-    VekaletVerPage vekaletver;
+    VekaletVerPage vekaletVerPage;
     GelenEvraklarPage gelenEvraklarPage;
+    VekaletOnaylariPage vekaletOnaylariPage;
+
+    String aciklama = "";
+    String vekaletVeren = "Optiim TEST";
+    String vekaletAlan = "Optiim TEST1";
 
     @BeforeMethod
     public void loginBeforeTests() {
-        vekaletver = new VekaletVerPage();
+        vekaletVerPage = new VekaletVerPage();
         gelenEvraklarPage = new GelenEvraklarPage();
-        login("optiim", "123");
+        vekaletOnaylariPage = new VekaletOnaylariPage();
     }
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "Onaya göndererek Vekalet Verme")
-    public void TC0025() throws InterruptedException {
+    public void TC0025a() throws InterruptedException {
+
+        login(username, password);
 
         String basariMesaji = "İşlem başarılıdır!";
-
+        aciklama = "onay "+getSysDate()+" evrak";
         gelenEvraklarPage
                 .openPage();
         String evrakNo = gelenEvraklarPage.tablodanEvrakNoAl(1);
 
-        vekaletver
+        vekaletVerPage
                 .openPage()
                 .evrakEkle()
                 .evrakAramaDoldur(evrakNo)
                 .dokumanAra()
                 .evrakAramaTabloKontrolveSecim(evrakNo)
-                .vekaletVerenDoldur("Optiim Test")
+                .vekaletVerenDoldur(vekaletVeren)
                 .devredilecekEvraklarKontrolu()
-                .vekaletAlanDoldur("Optiim Test1")
+                .vekaletAlanDoldur(vekaletAlan)
                 .onayVerecekDoldur("Zübeyde TEKİN")
-                .aciklamaDoldur("Test Otomasyon")
+                .aciklamaDoldur(aciklama)
                 .devredilecekEvrakSec(evrakNo)
                 .uygula()
                 .islemMesaji().beklenenMesaj(basariMesaji);
 
-        vekaletver
+        vekaletVerPage
                 .openPage()
                 .veklatListeiTabAc()
-                .vekaletListesiBaslangicTarihDoldur(getSysDateForKis())
+                .vekaletListesiBaslangicTarihiDoldur(getSysDateForKis())
                 .vekaletListesiBitisTarihiDoldur(getSysDateForKis())
                 .sorgula()
                 .vekaletListesiTabloKontrol();
+        logout();
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "Onaya göndererek Vekalet Verme işleminde onayın Red edilmesi")
+    public void TC0025b() throws InterruptedException {
+
+        login(username2,password2);
+        String aciklama = "onay 20171206142209 evrak";
+        vekaletOnaylariPage
+                .openPage()
+                .filtreleAc()
+                .tarihiDoldur(getSysDateForKis())
+                .tablodanOnaylanacakKayıtSec(aciklama)
+                .alanKontrolleri(vekaletVeren,vekaletAlan,getSysDateForKis())
+                .ekleyeceginizNotlarDoldur("Not")
+                .reddet();
     }
 }

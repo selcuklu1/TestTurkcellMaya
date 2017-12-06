@@ -195,8 +195,8 @@ public class VekaletVerPage extends MainPage {
         dateTxtVekaletListesiBitisTarihi.setValue(text);
         return this;
     }
-    @Step("Vekalet Listesi başlangıç tarihi doldur")
-    public VekaletVerPage vekaletListesiBaslangicTarihDoldur(String text) {
+    @Step("Vekalet Listesi bitiş tarihi doldur")
+    public VekaletVerPage vekaletListesiBaslangicTarihiDoldur(String text) {
         dateTxtVekaletListesiBaslangicTarihi.setValue(text);
         return this;
     }
