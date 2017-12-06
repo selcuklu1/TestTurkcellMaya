@@ -455,8 +455,9 @@ public class TuzelKisiYonetimiTest extends BaseTest {
                 .ara()
                 .aktifTuzelKisiKayitKontrolu(vergiNo, ad, kisaAd)
                 .tuzelKisiPasifYap()
-                .islemOnayi("Evet")
+                .islemOnayi("Evet");
 
+        tuzelKisiYonetimiPage
                 .filtreSorgulamaPaneliAc()
                 .filtreAdDoldur(ad)
                 .filtreDurumSec("PASIFLER")
@@ -533,8 +534,9 @@ public class TuzelKisiYonetimiTest extends BaseTest {
                 .pasifTuzelKisiKayitKontrolu(vergiNo, ad, kisaAd)
 
                 .tuzelKisiAktifYap()
-                .islemOnayi("Evet")
+                .islemOnayi("Evet");
 
+        tuzelKisiYonetimiPage
                 .filtreSorgulamaPaneliAc()
                 .filtreAdDoldur(ad)
                 .filtreDurumSec("AKTIFLER")

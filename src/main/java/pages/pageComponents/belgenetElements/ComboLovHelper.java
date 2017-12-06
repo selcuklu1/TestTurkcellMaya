@@ -217,9 +217,8 @@ public class ComboLovHelper extends BaseLibrary {
         //executeJavaScript("arguments[0].scrollIntoView();", element);
         try {
             if(element.isDisplayed())
-                element.sendKeys(Keys.SHIFT);
-        } catch (Exception e) {
-            e.printStackTrace();
+                element.getWrappedElement().sendKeys(Keys.SHIFT);
+        } catch (Exception ignored) {
         }
 
 //        WebElement element = WebDriverRunner.getWebDriver().findElement(By.cssSelector(lovText));
@@ -336,7 +335,10 @@ public class ComboLovHelper extends BaseLibrary {
         List<String> selectedTitles = $$(lovSecilenItemTitle).texts();
         List<String> selectedDetails = $$(lovSecilenItemDetail).texts();
 
-        $(lovText).setValue(value);
+        if (!$(lovText).isEnabled())
+            $(treeButton).click();
+        else
+            $(lovText).setValue(value);
 
         $$(lovTree).last().shouldBe(visible);
         ElementsCollection selectTitleList = $$(lovTree).last().$$(lovTreeListSelectableItemsTitle);
@@ -374,7 +376,8 @@ public class ComboLovHelper extends BaseLibrary {
 
     public static BelgenetElement openTree(){
         $(treeButton).click();
-        return (BelgenetElement) $$(lovTree).last().$(lovTree);
+//        return (BelgenetElement) $$(lovTree).filterBy(visible).last();
+        return ElementFinder.wrap(BelgenetElement.class, null, By.cssSelector(lovTree), 0);
     }
 
     private static BelgenetElement clearLov(){

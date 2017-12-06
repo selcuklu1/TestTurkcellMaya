@@ -3,9 +3,12 @@ package pages.solMenuPages;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
+
+import java.util.List;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.close;
@@ -120,7 +123,7 @@ public class PostalanacakEvraklarPage extends MainPage {
         return this;
     }
     @Step("Hesapla tıkla")
-    public PostalanacakEvraklarPage hesapla () throws InterruptedException {
+    public PostalanacakEvraklarPage hesapla() throws InterruptedException {
         btnHesapla.click();
         Thread.sleep(1000);
         btnPopupHesaplaTamam.click();
@@ -144,13 +147,15 @@ public class PostalanacakEvraklarPage extends MainPage {
         return this;
 
     }
-    public PostalanacakEvraklarPage postalanacakEvrakOrjYaz () throws InterruptedException {
+
+    public PostalanacakEvraklarPage postalanacakEvrakOrjYaz() throws InterruptedException {
 
         PostalanacakEvrakOrijinalYazdir.click();
         Thread.sleep(1000);
         btnPopupOrjYazdir.click();
-        SelenideElement popupOrj = $(By.id("postaDetayYazdirForm:dlgPostaDetayYazdir"));
-        popupOrj.findElement(By.className("ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all")).click();
+        SelenideElement popDetYaz = $(By.cssSelector("#postaDetayYazdirForm"));
+        String hkn = popDetYaz.getWrappedElement().getText();
+        System.out.println(hkn);
         return this;
     }
 
@@ -166,7 +171,7 @@ public class PostalanacakEvraklarPage extends MainPage {
         return this;
     }
 
-    public PostalanacakEvraklarPage PopupPostaYazdirmaKapat () throws InterruptedException {
+    public PostalanacakEvraklarPage PopupPostaYazdirmaKapat() throws InterruptedException {
         Thread.sleep(2000);
 
         SelenideElement popupEvrakYazdir = $(By.id("postaDetayYazdirForm:dlgPostaDetayYazdir"));
@@ -176,7 +181,7 @@ public class PostalanacakEvraklarPage extends MainPage {
         return this;
     }
 
-    public PostalanacakEvraklarPage PopupPostalanacakEvrakYazdir() throws InterruptedException  {
+    public PostalanacakEvraklarPage PopupPostalanacakEvrakYazdir() throws InterruptedException {
         Thread.sleep(5000);
         btnPopupYazdir.click();
         Thread.sleep(2000);

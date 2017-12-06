@@ -1,11 +1,10 @@
-package pages.ustMenuPages;
+package pages.solMenuPages;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
-import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
@@ -17,7 +16,7 @@ import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 public class GelenEvraklarPage extends MainPage {
 
     ElementsCollection tableEvraklar = $$("tbody[id='mainInboxForm:inboxDataTable_data'] > tr");
-
+    SelenideElement tblEvraklar = $("table[id='mainInboxForm:inboxDataTable:0:evrakTable'] tr:nth-child(3)");
     SelenideElement cmbFiltrele = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt349_input"));
     SelenideElement txtSayfadaAra = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt353"));
     SelenideElement btnGidecegiYerSeciniz = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:geldigiYerFilterOpenDialogButton"));
@@ -338,6 +337,20 @@ public class GelenEvraklarPage extends MainPage {
     public GelenEvraklarPage paylas() {
         btnPaylas.click();
         return this;
+    }
+
+    @Step("")
+    public String tablodanEvrakNoAl(int adet) {
+        String text = "";
+        SelenideElement tblEvraklar = $("table[id='mainInboxForm:inboxDataTable:" + 0 + ":evrakTable'] tr:nth-child(3)");
+        for (int i = 0; i < adet; i++) {
+            text = $("table[id='mainInboxForm:inboxDataTable:" + i + ":evrakTable'] tr:nth-child(3)").getText();
+        }
+//        String text = tblEvraklar.getText();
+        System.out.println(text);
+        String arr1[] = text.split("/");
+        String evrakNo = getIntegerInText(arr1[2]);
+        return evrakNo;
     }
 
 }

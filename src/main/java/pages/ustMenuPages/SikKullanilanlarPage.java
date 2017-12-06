@@ -80,7 +80,7 @@ public class SikKullanilanlarPage extends MainPage {
 
     public SikKullanilanlarPage ekraniKapat() {
         btnEkranKapat.click();
-        islemPenceresiKapatmaOnayi();
+        islemPenceresiKapatmaOnayiPopup("Kapat");
         return this;
     }
 

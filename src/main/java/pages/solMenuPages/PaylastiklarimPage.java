@@ -89,7 +89,7 @@ public class PaylastiklarimPage extends MainPage {
                 .filterBy(Condition.text("Konu: " + konu))
                 .filterBy(Condition.text("Paylaşılanlar: " + paylasilanKullanici))
                 .filterBy(Condition.text("Paylaşılma Tarihi: " + paylasilmaTarihi))
-                .get(0)
+                .first()
                 .click();
         return this;
     }
@@ -188,9 +188,16 @@ public class PaylastiklarimPage extends MainPage {
     }
 
 
-    @Step("Paylaşılacak kişi seç: \"{0}\" ")
+    @Step("Paylaşılacak kişi seç: {0} ")
     public PaylastiklarimPage paylasKisiSec(String kisiAdi) {
         txtPaylasKisi.selectLov(kisiAdi);
+        return this;
+    }
+
+    @Step("Paylaşılacak kişi seç: {0} ")
+    public PaylastiklarimPage paylasKisiSec(String[] kisiler) {
+        for (int i = 0; i < kisiler.length; i++)
+            txtPaylasKisi.selectLov(kisiler[i]);
         return this;
     }
 
@@ -207,8 +214,9 @@ public class PaylastiklarimPage extends MainPage {
     }
 
     ElementsCollection tableEvrakNotlari = $$(By.xpath("//th[contains(., 'Evrak Notları')]/../../../tbody/tr"));
+
     @Step("Açıklama kontrol")
-    public PaylastiklarimPage evrakNotuKontrol(String ekleyen, String tarih, String aciklama){
+    public PaylastiklarimPage evrakNotuKontrol(String ekleyen, String tarih, String aciklama) {
         tableEvrakNotlari
                 .filterBy(Condition.text(ekleyen))
                 .filterBy(Condition.text(tarih))
@@ -219,7 +227,7 @@ public class PaylastiklarimPage extends MainPage {
     }
 
     @Step("Açıklama kontrol")
-    public PaylastiklarimPage paylasilanKontrol(String kullanici, String birim, String paylasimDurumu, String geriAlinmaTarihi){
+    public PaylastiklarimPage paylasilanKontrol(String kullanici, String birim, String paylasimDurumu, String geriAlinmaTarihi) {
         tablePaylasilanlar
                 .filterBy(Condition.text(kullanici))
                 .filterBy(Condition.text(birim))
@@ -231,7 +239,7 @@ public class PaylastiklarimPage extends MainPage {
     }
 
     @Step("Açıklama kontrol")
-    public String paylasilmaTarihiGetir(String konu, String evrakNo, String paylasilanKullanici){
+    public String paylasilmaTarihiGetir(String konu, String evrakNo, String paylasilanKullanici) {
 
         String pTarihi = tablePaylastiklarim
                 .filterBy(Condition.text("Evrak No: " + evrakNo))
@@ -243,6 +251,8 @@ public class PaylastiklarimPage extends MainPage {
 
         return pTarihi.substring(pTarihi.indexOf("Paylaşılma Tarihi:") + 19, pTarihi.indexOf("Paylaşılma Tarihi:") + 38);
     }
+
+
 
 
 

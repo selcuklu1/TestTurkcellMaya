@@ -49,6 +49,8 @@ public class TaslakEvraklarPage extends MainPage {
     ElementsCollection tabEvrakOnizleme = $$("div[id='mainPreviewForm:evrakOnizlemeTab'] ul[role='tablist'] li");
     SelenideElement btnPaylasTab = $(By.xpath("//span[contains(@class, 'evrakPaylas')]/.."));
 
+    SelenideElement btnPaylasBirim = $("div[id='mainPreviewForm:paylasTumuBoolean']");
+
     @Step("Taslak Evraklar sayfası aç")
     public TaslakEvraklarPage openPage(){
         solMenu(SolMenuData.IslemBekleyenEvraklar.TaslakEvraklar);
@@ -152,7 +154,7 @@ public class TaslakEvraklarPage extends MainPage {
 
 
     @Step("Evrak seç.")
-    public TaslakEvraklarPage evrakSec(String konu, String gidecegiYer, String tarihSaat){
+    public TaslakEvraklarPage evrakSec(String konu, String gidecegiYer, String tarihSaat) {
         tableEvraklar
                 .filterBy(Condition.text("Konu: " + konu))
                 .filterBy(Condition.text("Gideceği Yer: " + gidecegiYer))
@@ -163,8 +165,14 @@ public class TaslakEvraklarPage extends MainPage {
     }
 
     @Step("Paylaş tab tıkla")
-    public TaslakEvraklarPage paylasTabTikla(){
+    public TaslakEvraklarPage paylasTabTikla() {
         btnPaylasTab.click();
+        return this;
+    }
+
+    @Step("Birim butonuna tıkla")
+    public TaslakEvraklarPage paylasBirimTikla(){
+        btnPaylasBirim.click();
         return this;
     }
 }

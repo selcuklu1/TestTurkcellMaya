@@ -1,6 +1,5 @@
 package pages.pageComponents;
 
-import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
 import io.qameta.allure.Step;
@@ -77,26 +76,26 @@ public class IslemMesajlari extends BaseLibrary {
     }
 
     @Step("Başarılı mesajı gelmeli")
-    public void basariliOlmali(String actualMessage) {
+    public void basariliOlmali(String... expectedMessage) {
         Assert.assertEquals(getMessageTitle(), BASARILI.value());
-        Assert.assertEquals(actualMessage, getMessageBody());
-//        System.out.println("Gelen Başarı Mesajı: " + getMessageBody());
+        if (expectedMessage.length > 0)
+            Assert.assertEquals(getMessageBody(), expectedMessage[0]);
         waitDisappear();
     }
 
     @Step("Uyarı mesajı gelmeli")
-    public void uyariOlmali(String actualMessage) {
+    public void uyariOlmali(String... expectedMessage) {
         Assert.assertEquals(getMessageTitle(), UYARI.value());
-        Assert.assertEquals(actualMessage, getMessageBody());
-//        System.out.println("Gelen Uyarı Mesajı: " + getMessageBody());
+        if (expectedMessage.length > 0)
+            Assert.assertEquals(getMessageBody(), expectedMessage[0]);
         waitDisappear();
     }
 
     @Step("Dikkat mesajı gelmeli")
-    public void dikkatOlmali(String actualMessage) {
+    public void dikkatOlmali(String... expectedMessage) {
         Assert.assertEquals(getMessageTitle(), DIKKAT.value());
-        Assert.assertEquals(actualMessage, getMessageBody());
-//        System.out.println("Gelen Dikkat Mesajı: " + getMessageBody());
+        if (expectedMessage.length > 0)
+            Assert.assertEquals(getMessageBody(), expectedMessage[0]);
         waitDisappear();
     }
 
@@ -117,8 +116,7 @@ public class IslemMesajlari extends BaseLibrary {
     }
 
     public String getMessageBody() {
-        messageBody.waitUntil(visible, Configuration.timeout, 100);
-        return messageBody.text();
+        return messageBody.shouldBe(visible).getText();
     }
 
     public void waitDisappear() {
