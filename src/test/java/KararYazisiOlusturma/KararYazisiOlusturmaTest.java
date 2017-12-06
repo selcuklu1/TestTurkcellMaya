@@ -25,12 +25,14 @@ public class KararYazisiOlusturmaTest extends BaseTest{
         KararYazisiOlusturPage kararYazisiOlusturPage;
         KararIzlemePage kararIzlemePage;
         ImzaBekleyenlerPage imzaBekleyenlerPage;
+        KlasorYonetimiPage klasorYonetimiPage;
 
         @BeforeMethod
         public void loginBeforeTests() {
             kararYazisiOlusturPage = new KararYazisiOlusturPage();
             kararIzlemePage = new KararIzlemePage();
             imzaBekleyenlerPage = new ImzaBekleyenlerPage();
+            klasorYonetimiPage = new KlasorYonetimiPage();
         }
 
         @Severity(SeverityLevel.CRITICAL)
@@ -114,7 +116,7 @@ public class KararYazisiOlusturmaTest extends BaseTest{
             kararYazisiOlusturPage
                     .bilgilerTabiAc()
                     .onayAkisiEkle()
-                    .kullanicilarDoldur(kullanici)
+                    .kullanicilarDoldur(kullanici,"")
                     .onayAkisiDoldur(onayAkisi)
                     .imzalamaKontrol(imzalama);
 
@@ -131,12 +133,15 @@ public class KararYazisiOlusturmaTest extends BaseTest{
         String kaldirilicakKlasorler = "Diğer";
         String toplantiNo = createRandomNumber(9);
         String toplantiTarih =getSysDateForKis();
+        String miat =getSysDateForKis();
         String kararNo = createRandomNumber(12);
         String editorIcerik = "Deneme Can";
         String kullanici = "Yasemin Çakıl AKYOL";
         String onayAkisi = "ZUZU_ONAY_AKİSİ_1";
         String ivedilik = "İvedi";
-
+        String filePath = "C:\\TestAutomation\\BelgenetFTA\\documents\\Otomasyon.pdf";
+        String not = createRandomText(12);
+        String birim = "Altyapı ve Sistem Yönetim Uzmanı";
         login(username2, password2);
 
         kararYazisiOlusturPage
@@ -145,7 +150,7 @@ public class KararYazisiOlusturmaTest extends BaseTest{
                 .konuKoduDoldur(konuKodu)
                 .ivedilikSec(ivedilik)
                 .onayAkisiEkle()
-                .kullanicilarDoldur(kullanici)
+                .kullanicilarDoldur(kullanici, birim)
                 .kullan()
                 .kaldirilacakKlasorlerDoldur(kaldirilicakKlasorler)
                 .toplantiNoDoldur(toplantiNo)
@@ -158,23 +163,36 @@ public class KararYazisiOlusturmaTest extends BaseTest{
                 .kaydet(true)
                 .islemMesaji().basariliOlmali(basariMesaji);
 
-       // logout();
+
+        // Yapılmadığı zaman çalışmamakta
+       kararYazisiOlusturPage
+                .bilgilerTabiAc()
+                .miatDoldur(miat)
+                .kaydet(true)
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+
+        login(username3, password3);
+
+        imzaBekleyenlerPage
+                .openPage()
+                .evrakSec(kararNo,konuKodu)
+                .iadeEt()
+                .iadeEtDosyaEkle(filePath)
+                .notDoldur(not)
+                .iadeEtIadeEt()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
         login(username2, password2);
 
         imzaBekleyenlerPage
                 .openPage()
-                .evrakSec(kararNo,konuKodu);
+                .evrakOlmadigiGorme(kararNo,konuKodu,true);
 
-/*
         kararIzlemePage
                 .openPage()
-                .evrakSec(kararNo,konuKodu,toplantiTarih)
-                .topluOnayaSun(true);
-
-        imzaBekleyenlerPage
-                .openPage()
-                .dogruKonuVeNoKontrol(kararNo,konuKodu);
-*/
+              .ilkEvrakSec(kararNo,konuKodu)
+              .iadeBilgisiGorme(not);
 
     }
 
@@ -201,7 +219,7 @@ public class KararYazisiOlusturmaTest extends BaseTest{
                 .konuKoduDoldur(konuKodu)
                 .ivedilikSec(ivedilik)
                 .onayAkisiEkle()
-                .kullanicilarDoldur(kullanici)
+                .kullanicilarDoldur(kullanici,"")
                 .kullan()
                 .kaldirilacakKlasorlerDoldur(kaldirilicakKlasorler)
                 .toplantiNoDoldur(toplantiNo)
@@ -224,6 +242,19 @@ public class KararYazisiOlusturmaTest extends BaseTest{
                 .dogruKonuVeNoKontrol(kararNo,konuKodu);
 
 
+    }
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "2238: Gündem klasörü oluşturma")
+    public void TC2238() throws InterruptedException {
+
+        String basariMesaji = "İşlem başarılıdır!";
+
+        login(username2, password2);
+
+        klasorYonetimiPage
+                .openPage()
+                .yeni();
+        
     }
 }
 

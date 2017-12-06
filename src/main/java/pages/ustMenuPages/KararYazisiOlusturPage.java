@@ -35,7 +35,7 @@ public class KararYazisiOlusturPage extends MainPage {
     SelenideElement tabEvrakDogrulama = $("button .evrakDogrulamaAktarimIslemleri");
 
     SelenideElement btnPDFOnizleme = $("button[id^='yeniGidenEvrakForm:rightTab:uiRepeat'] span[class$='pdfOnIzleme']");
-    SelenideElement btnKaydet = $("button[id^='yeniKararEvrakForm:kararEvrakRightTab:uiRepeat'] span[class$='kaydet']");
+    SelenideElement btnKaydet = $(By.id("yeniKararEvrakForm:kararEvrakRightTab:uiRepeat:1:cmdbutton"));
     SelenideElement btnKaydetOnayaSun = $("button[id^='yeniKararEvrakForm:kararEvrakRightTab:uiRepeat'] span[class$='kaydetHavaleEt']");
     SelenideElement btnPaylas = $("button[id^='yeniGidenEvrakForm:rightTab:uiRepeat'] span[class$='evrakPaylas']");
 
@@ -77,7 +77,8 @@ public class KararYazisiOlusturPage extends MainPage {
         SelenideElement btnKaldirilicakKlasorTemizle = $(By.id("yeniKararEvrakForm:evrakBilgileriList:7:eklenecekKlasorlerLov:LovSecilenTable:0:j_idt122"));
         SelenideElement btnOnayakisiTemizle = $(By.id("yeniKararEvrakForm:evrakBilgileriList:6:akisLov:j_idt134"));
         BelgenetElement txtKullanicilar = comboLov(By.id("yeniKararEvrakForm:evrakBilgileriList:6:akisAdimLov:LovText"));
-
+        SelenideElement btnKaydetEvet = $(By.id("kaydetConfirmForm:kaydetEvetButton"));
+        SelenideElement btnKaydetHayir = $(By.id("kaydetConfirmForm:kaydetHayirButton"));
         SelenideElement divContainer = $("#evrakBilgileriContainerDiv");
 
         //endregion
@@ -169,7 +170,7 @@ public class KararYazisiOlusturPage extends MainPage {
 
         @Step("Miat Doldur")
         public BilgilerTab miatDoldur(String miat){
-            dateMiat.setValue(miat);
+            dateMiat.sendKeys(miat);
             return this;
         }
 
@@ -201,13 +202,28 @@ public class KararYazisiOlusturPage extends MainPage {
 
         @Step("Onay akışı ekle")
         public BilgilerTab onayAkisiEkle(){
-            btnOnayAkisiEkle.click();
+            clickJs(btnOnayAkisiEkle);
+            //btnOnayAkisiEkle.click();
             return this;
         }
 
         @Step("Kullanıcılar doldur")
-        public BilgilerTab kullanicilarDoldur(String kullanici){
-            txtKullanicilar.selectLov(kullanici);
+        public BilgilerTab kullanicilarDoldur(String kullanici, String birim){
+            txtKullanicilar.type(kullanici).titleItems().filterBy(text(birim)).first().click();
+            txtKullanicilar.closeLovTreePanel();
+            return this;
+        }
+
+        @Step("Kaydet")
+        public BilgilerTab kaydet(boolean secim){
+            clickJs(btnKaydet);
+            //btnKaydet.click();
+            if (secim == true){
+               clickJs(btnKaydetEvet);
+            }
+            else{
+                clickJs(btnKaydetHayir);
+            }
             return this;
         }
 
