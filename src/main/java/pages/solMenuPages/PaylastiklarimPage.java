@@ -253,12 +253,4 @@ public class PaylastiklarimPage extends MainPage {
     }
 
 
-
-
-
-
-
-
-
-
 }
