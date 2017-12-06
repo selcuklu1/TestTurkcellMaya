@@ -99,6 +99,7 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
         String gnMdV = "Gn.Md. V.";
         String genelMudur = "Genel Müdür V.";
         String kullanicilarTuru = "İmzalama";
+        String randomAd = createRandomNumber(7);
 
         login(username2, password2);
 
@@ -135,7 +136,7 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
                 .onayAkisiYeni()
                 .onayAkisiIslemlerKullanicilarDoldur(ekranAdi)
                 .imzacıSonSec(onayAkisiKullanicilarTuru)
-                .onayAkisiIslemleriAdDoldur();
+                .onayAkisiIslemleriAdDoldur(randomAd);
 
         String ad = onayAkisYonetimiPage.adCek();
 
