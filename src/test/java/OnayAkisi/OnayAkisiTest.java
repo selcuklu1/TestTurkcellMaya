@@ -67,7 +67,7 @@ public class OnayAkisiTest extends BaseTest {
                 .islemOnayi("Evet");
 
         //onayAkisYonetimiPage
-              //  .islemMesaji().basariliOlmali(basariMesaji);
+        //  .islemMesaji().basariliOlmali(basariMesaji);
 
         onayAkisYonetimiPage
                 .filtreAc()

@@ -25,7 +25,7 @@ public class KararYazisiOlusturPage extends MainPage {
     //endregion
 
     @Step("Karar yazısı oluştur sayfası aç")
-    public KararYazisiOlusturPage openPage(){
+    public KararYazisiOlusturPage openPage() {
         ustMenu("Karar Yazısı Oluştur");
         return this;
     }
