@@ -7,9 +7,11 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
+import pages.pageComponents.belgenetElements.BelgenetElement;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
+import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 public class TeslimAlinmayiBekleyenlerPage extends MainPage {
 
@@ -20,9 +22,30 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     SelenideElement cmbTopluSecim = $(By.id("mainInboxForm:inboxDataTable:j_idt651_button"));
     SelenideElement tblRapor = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
     SelenideElement btnTeslimAlveHavaleYap = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:3:cmdbutton"));
+    SelenideElement tblIlkEvrak = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
+    SelenideElement btnTeslimAlVeKapat = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:6:cmdbutton"));
+    BelgenetElement txtKaldirilacakKlasorler = comboLov(By.id("mainPreviewForm:klasorLov_id:LovText"));
 
     public TeslimAlinmayiBekleyenlerPage openPage() {
         ustMenu("Teslim Alınmayı Bekleyenler");
+        return this;
+    }
+
+    @Step("Kladırılıcak klasörler doldur")
+    public TeslimAlinmayiBekleyenlerPage kaldirilacakKlasorlerDoldur(String kaldirilicakKlasor){
+        txtKaldirilacakKlasorler.selectLov(kaldirilicakKlasor);
+        return this;
+    }
+
+    @Step("Teslim al ve kapat")
+    public TeslimAlinmayiBekleyenlerPage teslimAlVeKapat(){
+        btnTeslimAlVeKapat.click();
+        return this;
+    }
+
+    @Step("Evrak seçilir")
+    public TeslimAlinmayiBekleyenlerPage evrakSec(){
+        tblIlkEvrak.click();
         return this;
     }
 

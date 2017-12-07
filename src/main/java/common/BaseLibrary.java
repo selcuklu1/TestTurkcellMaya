@@ -278,6 +278,15 @@ public class BaseLibrary {
         return sysDate;
     }
 
+    //dd.MM.yyyy formatına göre / koyarak sysdate alır.
+    public String getSysDateForKis2() {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDateTime now = LocalDateTime.now();
+        System.out.println(dtf.format(now)); // 2016/11/16 12:08:43
+        String sysDate = dtf.format(now);
+
+        return sysDate;
+    }
 
     //Bugün tarihinden sonraki bir yıl sonrayı alır.
     public String getAfterSysYear(){
