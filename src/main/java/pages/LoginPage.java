@@ -9,7 +9,7 @@ import org.openqa.selenium.By;
 import static com.codeborne.selenide.Selenide.$;
 import static data.TestData.*;
 
-public class LoginPage extends BaseLibrary {
+public class LoginPage extends MainPage {
 
     private SelenideElement txtUsername = $(By.id("eForm:txtEKullaniciAdi"));
     private SelenideElement txtPassword = $(By.id("eForm:loginESifre"));
@@ -41,6 +41,7 @@ public class LoginPage extends BaseLibrary {
 //        $(By.id("topMenuForm:userMenuButton_button")).shouldBe(visible);
         return this;
     }
+
 
 
 }

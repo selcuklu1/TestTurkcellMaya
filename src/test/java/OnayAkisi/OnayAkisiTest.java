@@ -34,7 +34,7 @@ public class OnayAkisiTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TC2112: Onay Akışı Yönetimi - Aktif/Pasif Yapma ve Varsayılan Yapma")
-    public void TC2112() {
+    public void TC2112PasifYapma() {
 
         String onayAkisAdi = "Optiim";
         String kullanici = "Sezai Çelik";
@@ -54,12 +54,13 @@ public class OnayAkisiTest extends BaseTest {
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
-                .onayAkisDoldur(kullanici)
-                .onayAkisiGuncelle();
+                .onayAkisiDoldur(kullanici)
+                .onayAkisiKontrol("Paraflama")
+                .onayAkisiKontrol("İmzalama");
 
         onayAkisYonetimiPage
                 .openPage()
-                .filtreAc()
+//                .filtreAc()
                 .birimKontrol(onayAkisAdi)
                 .durumKontrol("Sadece Aktifler")
                 .ara()
@@ -92,9 +93,24 @@ public class OnayAkisiTest extends BaseTest {
                 .openPage()
                 .bilgilerTabiAc()
                 .onayAkisiAlanindaGoruntulenmemeKontrolu(kullanici);
+    }
 
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TC2112: Onay Akışı Yönetimi - Aktif/Pasif Yapma ve Varsayılan Yapma")
+    public void TC2112AktifYapma() {
+
+        String onayAkisAdi = "Optiim";
+        String kullanici = "Sezai Çelik";
+        String basariMesaji = "İşlem başarılıdır!";
+
+        //Data kontrolu için yazıldı. Pasif ise aktif yapılır.
         onayAkisYonetimiPage
                 .openPage()
+                .filtredeAdDoldur(kullanici)
+                .filtreDurumSec("TUMU")
+                .ara()
+                .onayAkisiAktifIsePasifYap(kullanici)
+
                 .filtreAc()
                 .filtredeAdDoldur(kullanici)
                 .filtreDurumSec("PASIFLER")
@@ -116,16 +132,54 @@ public class OnayAkisiTest extends BaseTest {
                 .openPage()
                 .bilgilerTabiAc()
                 .onayAkisDoldur(kullanici)
-                .onayAkisiKullaniciComboKontrol();
+                .onayAkisiKontrol("Paraflama")
+                .onayAkisiKontrol("İmzalama");
 
         kararYazisiOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
                 .onayAkisiDoldur(kullanici)
-                //TODO: Burda imzaci combosu gelmiyor.
-                //   .onayAkisiKullaniciComboKontrol();
+                .onayAkisiKontrol("Paraflama")
+                .onayAkisiKontrol("İmzalama")
                 .ekraniKapat()
                 .islemPenceresiKaydetPopup("Hayır");
+    }
 
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TC2113: Onay Akıışı Yönetimi - Güncelleme")
+        public void TC2113() {
+
+        String onayAkisAdi = "Optiim";
+        String eskiKullanici = "Bulut Toprak";
+        String yeniKullanici = "Bulut Toprak"+ createRandomNumber(5);
+        String basariMesaji = "İşlem başarılıdır!";
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .onayAkisiDoldur(eskiKullanici)
+                .onayAkisiKontrol("Paraflama")
+                .onayAkisiKontrol("İmzalama");
+
+        onayAkisYonetimiPage
+                .openPage()
+                .filtreAc()
+                .birimKontrol(onayAkisAdi)
+                .durumKontrol("Sadece Aktifler")
+                .filtredeAdDoldur(eskiKullanici)
+                .ara()
+                //.kayitGoruntulenmeKontrolu(eskiKullanici)
+                .guncelle()
+                .onayAkisiIslemleriAdDoldur(yeniKullanici)
+                .onayAkisiIslemleriKaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        olurYazisiOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .onayAkisiAlanindaGoruntulenmemeKontrolu(eskiKullanici)
+                .onayAkisDoldur(yeniKullanici)
+                .onayAkisiKontrol("Paraflama")
+                .onayAkisiKontrol("İmzalama");
     }
 }

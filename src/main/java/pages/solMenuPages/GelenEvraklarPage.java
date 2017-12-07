@@ -5,6 +5,7 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
@@ -16,6 +17,7 @@ import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 public class GelenEvraklarPage extends MainPage {
 
     ElementsCollection tableEvraklar = $$("tbody[id='mainInboxForm:inboxDataTable_data'] > tr");
+    ElementsCollection tableEvraklar2 = $$("tbody[id'vekaletVerForm:vekaletLayout:devredileceklerTabView:vekaletDataTable_data']>tr");
     SelenideElement tblEvraklar = $("table[id='mainInboxForm:inboxDataTable:0:evrakTable'] tr:nth-child(3)");
     SelenideElement cmbFiltrele = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt349_input"));
     SelenideElement txtSayfadaAra = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt353"));
@@ -347,18 +349,38 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
-    @Step("")
-    public String tablodanEvrakNoAl(int adet) {
+    @Step("Tablodan istenilen sayıda evrak no al")
+    public String[] tablodanEvrakNoAl(int adet) {
         String text = "";
         SelenideElement tblEvraklar = $("table[id='mainInboxForm:inboxDataTable:" + 0 + ":evrakTable'] tr:nth-child(3)");
+        String[] evrakNo = new String[adet];
         for (int i = 0; i < adet; i++) {
+
             text = $("table[id='mainInboxForm:inboxDataTable:" + i + ":evrakTable'] tr:nth-child(3)").getText();
+            text = text.split("/")[2];
+            String number = getIntegerInText(text);
+            evrakNo[i] = number;
         }
 //        String text = tblEvraklar.getText();
         System.out.println(text);
-        String arr1[] = text.split("/");
-        String evrakNo = getIntegerInText(arr1[2]);
+
         return evrakNo;
     }
 
+    @Step("Tabloda evrak no kontrolü")
+    public GelenEvraklarPage tabloEvrakNoKontrol(String evrakNo) {
+        int size = tableEvraklar
+                .filterBy(Condition.text(evrakNo)).size();
+        Assert.assertEquals(size,1);
+
+        return this;
+    }
+    @Step("Tabloda olmayan evrak no kontrolü")
+    public GelenEvraklarPage tabloOlmayanEvrakNoKontrol(String evrakNo) {
+        int size = tableEvraklar
+                .filterBy(Condition.text(evrakNo)).size();
+        Assert.assertEquals(size,0);
+
+        return this;
+    }
 }

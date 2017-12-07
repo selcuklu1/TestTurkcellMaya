@@ -27,7 +27,7 @@ public class PaylastiklarimTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "Paylaştıklarım")
     public void paylastiklarimSec() {
-        page.solMenu(IslemYaptiklarim.Paylastiklarim);
+        page.solMenu(IslemYaptiklarim.EvrakPaylasma);
         new PaylastiklarimPage()
                 .satirSec(0)
                 .evrakOnizlemeTabSec("Paylaşılanlar")

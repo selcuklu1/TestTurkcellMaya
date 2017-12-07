@@ -6,6 +6,7 @@ import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.UstMenu;
@@ -13,6 +14,7 @@ import pages.pageComponents.belgenetElements.BelgenetElement;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
+import static pages.pageComponents.belgenetElements.BelgenetFramework.comboBox;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 public class VekaletVerPage extends MainPage {
@@ -29,16 +31,33 @@ public class VekaletVerPage extends MainPage {
     SelenideElement btnUygula = $(By.id("vekaletVerForm:vekaletLayout:onayaSunButton"));
     SelenideElement btnEvrakEkle = $("[id$='onayEvrakiDialogButton']");
     ElementsCollection tblDevredilecekEvrakklar = $$("tbody[id='vekaletVerForm:vekaletLayout:devredileceklerTabView:vekaletDataTable_data'] tr[role='row'][data-rk]");
+    SelenideElement tabVekaletListesi = $("a[href='#vekaletVerForm:vekaletLayout:vekaletSorgulaField']");
+
 
     SelenideElement btnVekalelVerenTemizle = $(By.id("vekaletVerForm:vekaletLayout:vekaletVerenLov:j_idt134"));
     By txtVekaletVeren = By.cssSelector("[id^='vekaletVerForm:vekaletLayout:vekaletVerenLov:LovText']");
     By txtVekaletAlan = By.cssSelector("[id^='vekaletVerForm:vekaletLayout:vekaletAlanLov:LovText']");
     BelgenetElement txtOnaylayacakKisi = comboLov(By.id("vekaletVerForm:vekaletLayout:vekaletOnaylayacakKisiLov:LovText"));
+
+
+    SelenideElement popUpAktifVekaletUyarı = $(By.id("aktifVekaletinizVarUyariMesajiDialog"));
+    SelenideElement btnTamam = $(By.id("aktifVekaletinizVarUyariMesajiDialogEvetBtn"));
     // Evrak Arama
 
     SelenideElement txtEvrakArama = $("[id$='evrakAramaText']");
     SelenideElement btnDokumanAra = $(By.id("vekaletOnayEvrakDialogForm:dokumanAraButton"));
-    ElementsCollection tblEvrakListesi = $$("tbody[id='vekaletOnayEvrakDialogForm:sistemdeKayitliEvrakListesiDataTableId_data'] tr[role=row]");
+    ElementsCollection tblEvrakListesi = $$("tbody[id='vekaletOnayEvrakDialogForm:sistemdeKayitliEvrakListesiDataTableId_data']");
+
+    //Vekalet Listesi Tabı
+    SelenideElement btnSorgula = $(By.id("vekaletVerForm:vekaletLayout:vekaletSorgula_Id"));
+    ElementsCollection tblVekaletListesi = $$("[id='vekaletVerForm:vekaletLayout:bulunanVekaletlerPanel'] tbody tr[role=row]");
+    SelenideElement tblVekaletListesi2 = $(By.xpath("//div[@id='vekaletVerForm:vekaletLayout:bulunanVekaletlerPanel']//div[starts-with(@id,'vekaletVerForm:vekaletLayout:j_idt')]"));
+
+    SelenideElement dateTxtVekaletListesiBaslangicTarihi = $(By.id("vekaletVerForm:vekaletLayout:vekaletListeBasTarih_input"));
+    SelenideElement dateTxtVekaletListesiBitisTarihi = $(By.id("vekaletVerForm:vekaletLayout:vekaletListeBitTarih_input"));
+//    BelgenetElement cmbDurum = comboBox (By.xpath("//table[@id='vekaletVerForm:vekaletLayout:vekaletSorgulaPanelGrid']//select"));
+
+    SelenideElement cmbDurum = $(By.xpath("//table[@id='vekaletVerForm:vekaletLayout:vekaletSorgulaPanelGrid']//select"));
     @Step("Vekalet Ver sayfası aç")
     public VekaletVerPage openPage() {
         new UstMenu().ustMenu("Vekalet Ver");
@@ -158,6 +177,62 @@ public class VekaletVerPage extends MainPage {
     @Step("Dokuman ara")
     public VekaletVerPage dokumanAra() {
         btnDokumanAra.click();
+        return this;
+    }
+
+    @Step("Vekalet Listesi aç")
+    public VekaletVerPage veklatListesiTabAc() {
+        tabVekaletListesi.click();
+        return this;
+    }
+
+    @Step("Sorgula butonu")
+    public VekaletVerPage sorgula() {
+        btnSorgula.click();
+        return this;
+    }
+
+    @Step("Vekalet Listesi Tablo Kontrol")
+    public VekaletVerPage vekaletListesiTabloKontrol(int column,String retNedeni) {
+        boolean status = findElementOnTableByColumnInputInAllPages(tblVekaletListesi2, column, retNedeni).isDisplayed();
+        Assert.assertEquals(status, true);
+        return this;
+    }
+    @Step("Vekalet Listesi Tablo Kontrol")
+    public VekaletVerPage vekaletListesiTabloKontrol() {
+        int size = tblVekaletListesi.size();
+        Assert.assertNotEquals(size, 0);
+        return this;
+    }
+    @Step("Vekalet Listesi bitiş tarihi doldur")
+    public VekaletVerPage vekaletListesiBitisTarihiDoldur(String text) {
+        dateTxtVekaletListesiBitisTarihi.setValue(text);
+        return this;
+    }
+
+    @Step("Vekalet Listesi bitiş tarihi doldur")
+    public VekaletVerPage vekaletListesiBaslangicTarihiDoldur(String text) {
+        dateTxtVekaletListesiBaslangicTarihi.setValue(text);
+        return this;
+    }
+
+    @Step("Vekalet Listesi Tablo Kontrol")
+    public VekaletVerPage vekaletListesiTabloAlanKontrolleri(String onayMakami, String onayDurumu) {
+        tblVekaletListesi.filterBy(Condition.matchesText(onayMakami));
+        tblVekaletListesi.filterBy(Condition.text(onayDurumu));
+        return this;
+    }
+
+    @Step("Vekalet var uyarı popup")
+    public VekaletVerPage vekaletVarUyarıPopUp() {
+        popUpAktifVekaletUyarı.exists();
+        btnTamam.click();
+        return this;
+    }
+
+    @Step("Durum Seç")
+    public VekaletVerPage durumSec(String value) {
+        cmbDurum.selectOptionByValue(value);
         return this;
     }
 }

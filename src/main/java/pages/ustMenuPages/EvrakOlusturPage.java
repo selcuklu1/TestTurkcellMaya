@@ -616,7 +616,7 @@ public class EvrakOlusturPage extends MainPage {
         }
 
         @Step("Onay akışı doldur")
-        public BilgilerTab onayAkisDoldur(String onay) {
+        public BilgilerTab onayAkisiDoldur(String onay) {
             cmbOnayAkisi.selectLov(onay);
             return this;
         }
@@ -802,6 +802,13 @@ public class EvrakOlusturPage extends MainPage {
 
         public BilgilerTab geregiSonKayitSil() {
             cmbGeregi.clearLastSelectedLov();
+            return this;
+        }
+
+        @Step("Seçilen onay akışı kontrolu: \"{secim}\" ")
+        public BilgilerTab onayAkisiKontrol(String secim) {
+            System.out.println("Gelen detail:     " + cmbOnayAkisi.lastSelectedLovDetailText());
+            Assert.assertEquals(cmbOnayAkisi.lastSelectedLovDetailText().contains(secim), true);
             return this;
         }
 
