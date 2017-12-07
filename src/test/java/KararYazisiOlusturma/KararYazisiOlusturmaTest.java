@@ -9,12 +9,21 @@ import common.BaseTest;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.poi.xwpf.usermodel.XWPFTable;
+import org.apache.poi.xwpf.usermodel.XWPFTableCell;
+import org.apache.poi.xwpf.usermodel.XWPFTableRow;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.MainPage;
 import pages.solMenuPages.*;
 import pages.ustMenuPages.*;
 
+import java.io.*;
+import java.util.List;
+
+import static com.codeborne.selenide.Selenide.Wait;
+import static com.codeborne.selenide.Selenide.sleep;
 import static data.TestData.*;
 
 @Epic("Kep ile Postalama İşlemleri")
@@ -298,7 +307,7 @@ public class KararYazisiOlusturmaTest extends BaseTest{
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true,dependsOnMethods={"TC2238"}, description = "1715: Gelen evrak listesinden Gündem klasörüne evrak kapatma")
+    @Test(enabled = true, description = "1715: Gelen evrak listesinden Gündem klasörüne evrak kapatma")
     public void TC1715() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
@@ -312,17 +321,25 @@ public class KararYazisiOlusturmaTest extends BaseTest{
         String konuKodu = "Usul ve Esaslar";
         String kaldirilicakKlasor = "Gündem";
 
-        login(username2, password2);
+        login(username3, password3);
 
-        gelenEvraklarPage
+   /*     gelenEvraklarPage
                 .openPage()
                 .evrakSec()
                 .evrakKapat()
                 .evrakKapatKaldirilacakKlasorlerDoldur(kaldirilicakKlasor)
                 .evrakKapatKonuKodu(konuKodu)
                 .evrakKapatEvrakKapat();
+*/
         gundemIzlemePage
-                .openPage();
+                .openPage()
+                .kapatilanKlasorSec("gündem")
+                .aralikliGundemOlustur();
+        String dosyaAdi =gundemIzlemePage.indirilenDosyaAd();
+
+        sleep(5000);
+        gundemIzlemePage
+                .wordDosyaKontrolEt(dosyaAdi);
 
 
     }
