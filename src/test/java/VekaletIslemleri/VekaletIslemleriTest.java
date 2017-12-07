@@ -47,7 +47,7 @@ public class VekaletIslemleriTest extends BaseTest {
         String basariMesaji = "İşlem başarılıdır!";
         String[] evrakNo = new String[2];
         aciklama = "onay " + getSysDate() + " evrak";
-        redNedeni = "red "+ getSysDate() + " nedeni";
+        redNedeni = "red " + getSysDate() + " nedeni";
 
         gelenEvraklarPage
                 .openPage();
@@ -87,21 +87,21 @@ public class VekaletIslemleriTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "Onaya göndererek Vekalet Verme işleminde onayın Red edilmesi")
+    @Test(enabled = false, dependsOnMethods = {"TC0025a"}, description = "Onaya göndererek Vekalet Verme işleminde onayın Red edilmesi")
     public void TC0025b() throws InterruptedException {
 
         login(username2, password2);
 
-        String aciklama = "onay 20171206220943 evrak";
-
-        String not = "red 20171206220943 nedeni";
+//        String aciklama = "onay 20171206220943 evrak";
+//
+//        String not = "red 20171206220943 nedeni";
         vekaletOnaylariPage
                 .openPage()
                 .filtreleAc()
                 .tarihiDoldur(getSysDateForKis())
                 .tablodanOnaylanacakKayıtSec(aciklama)
                 .alanKontrolleri(vekaletVeren, vekaletAlan, getSysDateForKis())
-                .ekleyeceginizNotlarDoldur(not)
+                .ekleyeceginizNotlarDoldur(redNedeni)
                 .reddet();
 
         vekaletVerPage
@@ -111,23 +111,23 @@ public class VekaletIslemleriTest extends BaseTest {
                 .vekaletListesiBitisTarihiDoldur(getSysDateForKis())
                 .durumSec("2")
                 .sorgula()
-                .vekaletListesiTabloKontrol(not);
+                .vekaletListesiTabloKontrol(11, redNedeni);
         logout();
 
-        login(username,password);
+        login(username, password);
 
         gelenEvraklarPage
                 .openPage()
-                .tabloEvrakNoKontrol("5033");
+                .tabloEvrakNoKontrol(evrakNo1);
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "Onaya göndererek Vekalet Verme işleminde onayın kabul edilmesi")
+    @Test(enabled = true,dependsOnMethods = {"TC0025a"}, description = "Onaya göndererek Vekalet Verme işleminde onayın kabul edilmesi")
     public void TC2208() throws InterruptedException {
-
+//        TC0025a();
         login(username2, password2);
 
-        String aciklama = "onay 20171206142921 evrak";
+//        String aciklama = "onay 20171206142921 evrak";
         vekaletOnaylariPage
                 .openPage()
                 .filtreleAc()
@@ -135,8 +135,8 @@ public class VekaletIslemleriTest extends BaseTest {
                 .tablodanOnaylanacakKayıtSec(aciklama)
                 .onayEvrakiKontrol()
                 .detay()
-                .evrakKontol("4989")
-                .ekleyeceginizNotlarDoldur("Not")
+                .evrakKontol(evrakNo1)
+                .ekleyeceginizNotlarDoldur(aciklama)
                 .onay();
 
         vekaletVerPage
@@ -145,29 +145,31 @@ public class VekaletIslemleriTest extends BaseTest {
                 .vekaletListesiBaslangicTarihiDoldur(getSysDateForKis())
                 .vekaletListesiBitisTarihiDoldur(getSysDateForKis())
                 .sorgula()
-                .vekaletListesiTabloKontrol();
+                .vekaletListesiTabloKontrol(8, "Onaylandı");
 
         logout();
 
         login(username, password);
 
         vekaletVerPage
-                .openPage()
                 .vekaletVarUyarıPopUp();
-        //tabloda vekalet verılen evragın lıstelenmedıgı kontrol edilecek...
 
-//                .veklatListesiTabAc()
-//                .vekaletListesiBaslangicTarihiDoldur(getSysDateForKis())
-//                .vekaletListesiBitisTarihiDoldur(getSysDateForKis())
-//                .sorgula()
-//                .vekaletListesiTabloKontrol();
 
-        login(username2, password2);
+        gelenEvraklarPage
+                .openPage()
+                .tabloOlmayanEvrakNoKontrol(evrakNo1);
+
+        logout();
+
+        login("test1", "123");
+
         vekaletVerPage
                 .vekaletVarUyarıPopUp();
 
         gelenEvraklarPage
-                .openPage();
-        //tabloda vekalet verılen evragın lıstelenmedıgı kontrol edilecek...
+                .openPage()
+                .tabloOlmayanEvrakNoKontrol(evrakNo1);
+
+
     }
 }

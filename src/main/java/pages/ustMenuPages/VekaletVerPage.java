@@ -193,8 +193,8 @@ public class VekaletVerPage extends MainPage {
     }
 
     @Step("Vekalet Listesi Tablo Kontrol")
-    public VekaletVerPage vekaletListesiTabloKontrol(String retNedeni) {
-        boolean status = findElementOnTableByColumnInputInAllPages(tblVekaletListesi2, 11, retNedeni).isDisplayed();
+    public VekaletVerPage vekaletListesiTabloKontrol(int column,String retNedeni) {
+        boolean status = findElementOnTableByColumnInputInAllPages(tblVekaletListesi2, column, retNedeni).isDisplayed();
         Assert.assertEquals(status, true);
         return this;
     }
@@ -225,7 +225,7 @@ public class VekaletVerPage extends MainPage {
 
     @Step("Vekalet var uyarı popup")
     public VekaletVerPage vekaletVarUyarıPopUp() {
-        popUpAktifVekaletUyarı.isDisplayed();
+        popUpAktifVekaletUyarı.exists();
         btnTamam.click();
         return this;
     }

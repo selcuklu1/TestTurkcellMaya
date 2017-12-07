@@ -17,6 +17,7 @@ import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 public class GelenEvraklarPage extends MainPage {
 
     ElementsCollection tableEvraklar = $$("tbody[id='mainInboxForm:inboxDataTable_data'] > tr");
+    ElementsCollection tableEvraklar2 = $$("tbody[id'vekaletVerForm:vekaletLayout:devredileceklerTabView:vekaletDataTable_data']>tr");
     SelenideElement tblEvraklar = $("table[id='mainInboxForm:inboxDataTable:0:evrakTable'] tr:nth-child(3)");
     SelenideElement cmbFiltrele = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt349_input"));
     SelenideElement txtSayfadaAra = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt353"));
@@ -366,5 +367,12 @@ public class GelenEvraklarPage extends MainPage {
 
         return this;
     }
+    @Step("Tabloda olmayan evrak no kontrolü")
+    public GelenEvraklarPage tabloOlmayanEvrakNoKontrol(String evrakNo) {
+        int size = tableEvraklar
+                .filterBy(Condition.text(evrakNo)).size();
+        Assert.assertEquals(size,0);
 
+        return this;
+    }
 }
