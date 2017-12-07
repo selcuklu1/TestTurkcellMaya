@@ -1,9 +1,9 @@
 package pages.ustMenuPages;
 
-import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.commands.GetSelectedText;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
@@ -11,10 +11,12 @@ import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
+import static com.codeborne.selenide.Condition.exactText;
+import static com.codeborne.selenide.Condition.selected;
 import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
+import static com.codeborne.selenide.Selenide.$x;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 @SuppressWarnings("unused")
@@ -37,7 +39,7 @@ public class OnayAkisYonetimiPage extends MainPage {
     private SelenideElement homePageButton = $(By.id("j_idt325"));
     private SelenideElement btnOnayAkisiYeni = $(By.id("onayAkisiYonetimiListingForm:rolDataTable:addNewRolButton"));
     private SelenideElement txtOnayAkisiKullanicilar = $(By.id("onayAkisiYonetimiEditorForm:onayAkisiYonetimiKullaniciBirimLov:LovText"));
-    private ElementsCollection cmbImzacıSon = $$("[id$='onayAkisiYonetimiEditorForm:onayAkisiYonetimiKullaniciBirimDataTable'] table tr select");
+    private ElementsCollection cmbKullaniciBirimDataTable = $$("[id$='onayAkisiYonetimiEditorForm:onayAkisiYonetimiKullaniciBirimDataTable'] table tr select");
     private BelgenetElement txtOnayAkisiIslemleriKullanicilar = comboLov("[id='onayAkisiYonetimiEditorForm:onayAkisiYonetimiKullaniciBirimLov:LovText']");
     private SelenideElement btnOnayAkisiIslemleriKaydet = $(By.id("onayAkisiYonetimiEditorForm:onayAkisiYonetimiEditorKaydetId"));
     private SelenideElement txtOnayAkisiIslemleriAd = $(By.id("onayAkisiYonetimiEditorForm:onayAkisiYonetimiAkisAdiInput"));
@@ -50,6 +52,12 @@ public class OnayAkisYonetimiPage extends MainPage {
     SelenideElement btnPasifYap = $(By.xpath("[id$='changeOnayAkisiStatusButton'] [class$='to-passive-status-icon']"));
     SelenideElement btnAktifYap = $(By.xpath("[id$='changeOnayAkisiStatusButton'] [class$='to-active-status-icon']"));
     SelenideElement btnGuncelle = $(By.id("onayAkisiYonetimiListingForm:rolDataTable:0:updateRolButton"));
+
+    SelenideElement btnSilOnayAkisiItem2 = $(By.id("onayAkisiYonetimiEditorForm:onayAkisiYonetimiKullaniciBirimDataTable:1:removeOnayAkisiItem"));
+    SelenideElement cmbOnayAkisiYonetimIslemTipi = $(By.id("onayAkisiYonetimiEditorForm:onayAkisiYonetimiKullaniciBirimDataTable:1:onayAkisiYonetimiIslemTipi"));
+    SelenideElement btnKontrolUp = $(By.id("onayAkisiYonetimiEditorForm:onayAkisiYonetimiKullaniciBirimDataTable:1:j_idt1768"));
+    SelenideElement onayAkisListesiKontrolRow = $x("//tbody[@id='onayAkisiYonetimiEditorForm:onayAkisiYonetimiKullaniciBirimDataTable_data']/tr//select/option[@selected and @value='KONTROL']//ancestor::tr[1]");
+
 
     @Step("Onay akışı sayfası aç")
     public OnayAkisYonetimiPage openPage() {
@@ -89,7 +97,30 @@ public class OnayAkisYonetimiPage extends MainPage {
 
     @Step("İmzacı seç")
     public OnayAkisYonetimiPage imzacıSonSec(String value) {
-        cmbImzacıSon.last().selectOption(value);
+        cmbKullaniciBirimDataTable.last().selectOption(value);
+        return this;
+    }
+
+    public OnayAkisYonetimiPage kontrolcuYoksaEkle(String kullanici) {
+
+        if (onayAkisListesiKontrolRow.isDisplayed() == false) {
+            onayAkisiIslemlerKullanicilarDoldur(kullanici);
+            imzacıSonSec("Kontrol");
+
+            onayAkisListesiKontrolRow
+                    .$("[class$='ui-icon-arrowthick-1-n']").click();
+
+            onayAkisListesiKontrolRow
+                    .$("[class$='ui-icon-arrowthick-1-n']").click();
+        }
+        return this;
+    }
+
+
+    public OnayAkisYonetimiPage kontrolcuSil() {
+
+        onayAkisListesiKontrolRow
+                .$("[id$='removeOnayAkisiItem']").click();
         return this;
     }
 
@@ -143,7 +174,7 @@ public class OnayAkisYonetimiPage extends MainPage {
 
     @Step("Kullanıcı birimin seçili geldiği kontrolu")
     public OnayAkisYonetimiPage birimKontrol(String birim) {
-       // Assert.assertEquals(txtFiltreBirim.selectedTitles().filterBy(Condition.text(birim)).size(), 1);
+        // Assert.assertEquals(txtFiltreBirim.selectedTitles().filterBy(Condition.text(birim)).size(), 1);
         txtFiltreBirim.lastSelectedLovTitle().shouldHave(text(birim));
 
         return this;
@@ -230,6 +261,13 @@ public class OnayAkisYonetimiPage extends MainPage {
 
     public OnayAkisYonetimiPage guncelle() {
         btnGuncelle.click();
+        return this;
+    }
+
+    public OnayAkisYonetimiPage silOnayAkisiItem2() {
+        if (btnSilOnayAkisiItem2.isDisplayed()) {
+            btnSilOnayAkisiItem2.click();
+        }
         return this;
     }
 
