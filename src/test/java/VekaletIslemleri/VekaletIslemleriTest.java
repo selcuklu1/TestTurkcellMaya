@@ -8,6 +8,7 @@ import org.testng.annotations.Test;
 import pages.MainPage;
 import pages.solMenuPages.GelenEvraklarPage;
 import pages.solMenuPages.VekaletOnaylariPage;
+import pages.ustMenuPages.EvrakOlusturPage;
 import pages.ustMenuPages.VekaletVerPage;
 
 import static data.TestData.*;
@@ -23,6 +24,7 @@ public class VekaletIslemleriTest extends BaseTest {
     VekaletVerPage vekaletVerPage;
     GelenEvraklarPage gelenEvraklarPage;
     VekaletOnaylariPage vekaletOnaylariPage;
+    EvrakOlusturPage evrakOlusturPage;
 
     String aciklama = "";
     String redNedeni = "";
@@ -36,6 +38,7 @@ public class VekaletIslemleriTest extends BaseTest {
         vekaletVerPage = new VekaletVerPage();
         gelenEvraklarPage = new GelenEvraklarPage();
         vekaletOnaylariPage = new VekaletOnaylariPage();
+        evrakOlusturPage = new EvrakOlusturPage();
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -122,9 +125,9 @@ public class VekaletIslemleriTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true,dependsOnMethods = {"TC0025a"}, description = "Onaya göndererek Vekalet Verme işleminde onayın kabul edilmesi")
+    @Test(enabled = true, description = "Onaya göndererek Vekalet Verme işleminde onayın kabul edilmesi")
     public void TC2208() throws InterruptedException {
-//        TC0025a();
+        TC0025a();
         login(username2, password2);
 
 //        String aciklama = "onay 20171206142921 evrak";
@@ -169,7 +172,33 @@ public class VekaletIslemleriTest extends BaseTest {
         gelenEvraklarPage
                 .openPage()
                 .tabloOlmayanEvrakNoKontrol(evrakNo1);
-
-
     }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "Vekaleti alan kullanıcının onay akışında seçilmesi(vekaleten)")
+    public void TC0015() throws InterruptedException {
+
+        login(username3, password3);
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .konuKoduSec("010.01")
+                .kaldiralacakKlasorlerSec("Diğer")
+                .evrakTuruSec("Resmi Yazışma")
+                .evrakDiliSec("Türkçe")
+                .gizlilikDerecesiSec("Normal")
+                .ivedikSec("Normal")
+                .geregiSec("Birim")
+                .onayAkisiEkle()
+                .kullaniciTabloKontrol()
+                .kullanicilarImzaciSec("Paraflama")
+                .kullanicilarDoldur("Optiim TEST")
+                .kullanicilarDoldur("Optiim TEST1")
+                .kullniciIsmineGoreImzaParafSec("Optiim TEST1","İmzalama")
+                .vekeletAlanVerenTabloKontrolu()
+                .vekeletAlanVerenTabloKapat()
+                .kullan();
+    }
+
 }
