@@ -32,6 +32,11 @@ public class BirimIcerikSablonlarPage extends MainPage {
     private SelenideElement btnBirimSablonlariNext = $("[id^='birimSablonForm'][id$='sablonDataTable'] thead span[class~='ui-paginator-next']");
     //Detay butonları row sayısına eşit olmalı
     private By rowsBirimSablonlari = By.cssSelector("[id$='sablonDataTable'] tbody tr[role='row']");
+
+    public ElementsCollection getRowsBirimSablonlariSablonAdi() {
+        return $$(rowsBirimSablonlariSablonAdi);
+    }
+
     private By rowsBirimSablonlariSablonAdi = By.cssSelector("[id$='sablonDataTable'] tbody tr[role='row'] td:nth-child(2)");
     private ElementsCollection btnDetayInEachRow = $$("[id$='sablonListesiDetayButton_id']");
 
@@ -86,10 +91,9 @@ public class BirimIcerikSablonlarPage extends MainPage {
         return this;
     }
 
-    public BirimIcerikSablonlarPage yeniSablonOlustur(String sablonAdi, String birim, boolean altBirimlerGorsun) {
+    public BirimIcerikSablonlarPage yeniSablonOlustur(String sablonAdi, String birim, boolean altBirimlerGorsun, String text) {
 
         String altBirimler = altBirimlerGorsun ? "ALT BİRİMLER GÖRSÜN" : "ALT BİRİMLER GÖRMESİN";
-        String text = "My test text";
 
         btnYeniSablonOlustur.click();
 
@@ -112,20 +116,21 @@ public class BirimIcerikSablonlarPage extends MainPage {
 
         switchTo().window(1);
 
-        SelenideElement textLayer = $(".textLayer");
-
         String baslik = "T.C."
                 + "\nGENEL MÜDÜRLÜK MAKAMI"
                 + "\nBİLİŞİM HİZMETLERİ GENEL MÜDÜR YARDIMCISI"
                 + "\nYAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ"
 //                + "\nOptiim Birim"
                 ;
-        textLayer.shouldHave(textCaseSensitive(baslik));
+        try {
+            $(".textLayer").shouldHave(textCaseSensitive(baslik));
+            $(".textLayer").shouldHave(textCaseSensitive(text));
+            $(".textLayer").shouldHave(textCaseSensitive("(@BIRIM)"));
+        } catch (Exception e) {
+        } finally {
+            switchTo().window(1).close();
+        }
 
-        textLayer.shouldHave(textCaseSensitive(text));
-        textLayer.shouldHave(textCaseSensitive("(@BIRIM)"));
-
-        switchTo().window(1).close();
         switchTo().window(0);
 
         btnKaydet.click();
@@ -147,6 +152,24 @@ public class BirimIcerikSablonlarPage extends MainPage {
         }
     }
 
+    public int sablonExistCountInTable(String sablonAdi) {
+        int count = 0;
+        while (true) {
+            if ($$(rowsBirimSablonlariSablonAdi).filterBy(and("Filter by visible and text"
+                    , visible
+                    , exactText(sablonAdi))).size() == 1) {
+                count++;
+            }
+
+            if (btnBirimSablonlariNext.has(cssClass("ui-state-disabled")))
+                break;
+
+            btnBirimSablonlariNext.click();
+        }
+
+        return count;
+    }
+
 
     private boolean birimSablonlardaAra(String sablonAdi) {
         return findInTable(sablonAdi) != null;
@@ -158,6 +181,24 @@ public class BirimIcerikSablonlarPage extends MainPage {
                 row.shouldBe(visible);
                 if (row.text().trim().equals(sablonAdi))
                     return row.parent();
+            }
+            if (!btnBirimSablonlariNext.has(cssClass("ui-state-disabled")))
+                btnBirimSablonlariNext.click();
+            else
+                return null;
+        }
+    }
+
+    public SelenideElement sablonuSil(String sablonAdi) {
+        while (true) {
+            for (SelenideElement row : $$(rowsBirimSablonlari)) {
+                row.shouldBe(visible);
+                if (!row.text().trim().equals(sablonAdi)) {
+                    row.$("button").click();
+                    btnSil.click();
+                    $("#j_idt4613").click();
+                }
+//                    return row.parent();
             }
             if (!btnBirimSablonlariNext.has(cssClass("ui-state-disabled")))
                 btnBirimSablonlariNext.click();
