@@ -3,6 +3,7 @@ package pages.ustMenuPages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.commands.GetSelectedText;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
@@ -10,9 +11,12 @@ import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
+import static com.codeborne.selenide.Condition.exactText;
+import static com.codeborne.selenide.Condition.selected;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
+import static com.codeborne.selenide.Selenide.$x;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 @SuppressWarnings("unused")
@@ -20,7 +24,8 @@ public class OnayAkisYonetimiPage extends MainPage {
 //    private UstMenu ustMenu;
 
     //Filtre
-    BelgenetElement txtFiltreBirim = comboLov(By.id("onayAkisiYonetimiListingForm:filterPanel:birimLov:LovText"));
+    BelgenetElement
+            txtFiltreBirim = comboLov(By.id("onayAkisiYonetimiListingForm:filterPanel:birimLov:LovText"));
     SelenideElement cmbFiltreDurum = $(By.id("onayAkisiYonetimiListingForm:filterPanel:durumSelectBoxOnayAkisiYonetimiListing"));
     SelenideElement txtFiltreAd = $(By.id("onayAkisiYonetimiListingForm:filterPanel:adFilterInputOnayAkisiYonetimiListing"));
     SelenideElement filtreAcmaKapatma = $(By.id("onayAkisiYonetimiListingForm:filterPanel"));
@@ -33,20 +38,26 @@ public class OnayAkisYonetimiPage extends MainPage {
     private SelenideElement btnAra = $(By.id("onayAkisiYonetimiListingForm:filterPanel:searchEntitiesButtonOnayAkisiYonetimiListing"));
     private SelenideElement homePageButton = $(By.id("j_idt325"));
     private SelenideElement btnOnayAkisiYeni = $(By.id("onayAkisiYonetimiListingForm:rolDataTable:addNewRolButton"));
-    private SelenideElement txtOnayAkisiAd = $(By.id("onayAkisiYonetimiEditorForm:onayAkisiYonetimiAkisAdiInput"));
     private SelenideElement txtOnayAkisiKullanicilar = $(By.id("onayAkisiYonetimiEditorForm:onayAkisiYonetimiKullaniciBirimLov:LovText"));
-    private ElementsCollection cmbImzacıSon = $$("[id$='onayAkisiYonetimiEditorForm:onayAkisiYonetimiKullaniciBirimDataTable'] table tr select");
+    private ElementsCollection cmbKullaniciBirimDataTable = $$("[id$='onayAkisiYonetimiEditorForm:onayAkisiYonetimiKullaniciBirimDataTable'] table tr select");
     private BelgenetElement txtOnayAkisiIslemleriKullanicilar = comboLov("[id='onayAkisiYonetimiEditorForm:onayAkisiYonetimiKullaniciBirimLov:LovText']");
     private SelenideElement btnOnayAkisiIslemleriKaydet = $(By.id("onayAkisiYonetimiEditorForm:onayAkisiYonetimiEditorKaydetId"));
-    private SelenideElement txtAd = $(By.id("onayAkisiYonetimiEditorForm:onayAkisiYonetimiAkisAdiInput"));
+    private SelenideElement txtOnayAkisiIslemleriAd = $(By.id("onayAkisiYonetimiEditorForm:onayAkisiYonetimiAkisAdiInput"));
     SelenideElement btnEkranKapat = $(By.cssSelector("[id='window1Dialog'] span[class='ui-icon ui-icon-closethick']"));
 
     SelenideElement durumAktif = $(By.cssSelector("[id^='onayAkisiYonetimiListingForm:rolDataTable'] [class='true']"));
     SelenideElement durumPasif = $(By.cssSelector("[id^='onayAkisiYonetimiListingForm:rolDataTable'] [class='false']"));
     ElementsCollection tblOnayAkisListesi = $$("[id='onayAkisiYonetimiListingForm:rolDataTable_data'] tr[role=row]");
     SelenideElement tblOnayAkisListesiSelenide = $(By.id("onayAkisiYonetimiListingForm:rolDataTable"));
-    SelenideElement btnPasifYap = $(By.xpath("[id$='changeOnayAkisiStatusButton'] [class$='to-passive-status-icon']"));
-    SelenideElement btnAktifYap = $(By.xpath("[id$='changeOnayAkisiStatusButton'] [class$='to-active-status-icon']"));
+    SelenideElement btnPasifYap = $(By.cssSelector("[id$='changeOnayAkisiStatusButton'] [class$='to-passive-status-icon']"));
+    SelenideElement btnAktifYap = $(By.cssSelector("[id$='changeOnayAkisiStatusButton'] [class$='to-active-status-icon']"));
+    SelenideElement btnGuncelle = $(By.id("onayAkisiYonetimiListingForm:rolDataTable:0:updateRolButton"));
+
+    SelenideElement btnSilOnayAkisiItem2 = $(By.id("onayAkisiYonetimiEditorForm:onayAkisiYonetimiKullaniciBirimDataTable:1:removeOnayAkisiItem"));
+    SelenideElement cmbOnayAkisiYonetimIslemTipi = $(By.id("onayAkisiYonetimiEditorForm:onayAkisiYonetimiKullaniciBirimDataTable:1:onayAkisiYonetimiIslemTipi"));
+    SelenideElement btnKontrolUp = $(By.id("onayAkisiYonetimiEditorForm:onayAkisiYonetimiKullaniciBirimDataTable:1:j_idt1768"));
+    SelenideElement onayAkisListesiKontrolRow = $x("//tbody[@id='onayAkisiYonetimiEditorForm:onayAkisiYonetimiKullaniciBirimDataTable_data']/tr//select/option[@selected and @value='KONTROL']//ancestor::tr[1]");
+
 
     @Step("Onay akışı sayfası aç")
     public OnayAkisYonetimiPage openPage() {
@@ -86,20 +97,42 @@ public class OnayAkisYonetimiPage extends MainPage {
 
     @Step("İmzacı seç")
     public OnayAkisYonetimiPage imzacıSonSec(String value) {
-        cmbImzacıSon.last().selectOption(value);
+        cmbKullaniciBirimDataTable.last().selectOption(value);
+        return this;
+    }
+
+    public OnayAkisYonetimiPage kontrolcuYoksaEkle(String kullanici) {
+
+        if (onayAkisListesiKontrolRow.isDisplayed() == false) {
+            onayAkisiIslemlerKullanicilarDoldur(kullanici);
+            imzacıSonSec("Kontrol");
+
+            onayAkisListesiKontrolRow
+                    .$("[class$='ui-icon-arrowthick-1-n']").click();
+
+            onayAkisListesiKontrolRow
+                    .$("[class$='ui-icon-arrowthick-1-n']").click();
+        }
+        return this;
+    }
+
+
+    public OnayAkisYonetimiPage kontrolcuSil() {
+
+        onayAkisListesiKontrolRow
+                .$("[id$='removeOnayAkisiItem']").click();
         return this;
     }
 
     @Step("Onay Akışı işlemleri ad doldur")
-    public OnayAkisYonetimiPage onayAkisiIslemleriAdDoldur() {
-        String random = createRandomNumber(7);
-        txtAd.setValue(random);
+    public OnayAkisYonetimiPage onayAkisiIslemleriAdDoldur(String ad) {
+        txtOnayAkisiIslemleriAd.setValue(ad);
         return this;
     }
 
     @Step("Ad alanı alınır")
     public String adCek() {
-        String ad = txtAd.getValue();
+        String ad = txtOnayAkisiIslemleriAd.getValue();
         return ad;
     }
 
@@ -109,11 +142,18 @@ public class OnayAkisYonetimiPage extends MainPage {
         return this;
     }
 
-    public OnayAkisYonetimiPage varsayilanButonu() {
-        btnAra.click();
-
-        // if (isElementExist(varsayilanYapButton))
+    public OnayAkisYonetimiPage varsayilanYap() {
         btnVarsayilanYap.click();
+        return this;
+    }
+
+    public OnayAkisYonetimiPage pasifYap() {
+        btnPasifYap.click();
+        return this;
+    }
+
+    public OnayAkisYonetimiPage aktifYap() {
+        btnAktifYap.click();
         return this;
     }
 
@@ -141,7 +181,9 @@ public class OnayAkisYonetimiPage extends MainPage {
 
     @Step("Kullanıcı birimin seçili geldiği kontrolu")
     public OnayAkisYonetimiPage birimKontrol(String birim) {
-        Assert.assertEquals(txtFiltreBirim.selectedTitles().filterBy(Condition.text(birim)).size(), 1);
+        // Assert.assertEquals(txtFiltreBirim.selectedTitles().filterBy(Condition.text(birim)).size(), 1);
+        txtFiltreBirim.lastSelectedLovTitle().shouldHave(text(birim));
+
         return this;
     }
 
@@ -191,6 +233,28 @@ public class OnayAkisYonetimiPage extends MainPage {
         return this;
     }
 
+    @Step("Onay akışı Aktif ise Pasif Yap")
+    public OnayAkisYonetimiPage onayAkisiAktifIsePasifYap(String onayAkisi) {
+
+        if (tblOnayAkisListesi
+                .filterBy(text(onayAkisi)).shouldHaveSize(1)
+                .first()
+                .$(By.cssSelector("[id$='changeOnayAkisiStatusButton'] [class$='to-passive-status-icon']")).isDisplayed()) {
+            tblOnayAkisListesi
+                    .filterBy(text(onayAkisi)).shouldHaveSize(1)
+                    .first()
+                    .$(By.cssSelector("[id$='changeOnayAkisiStatusButton'] [class$='to-passive-status-icon']")).click();
+
+            islemOnayi("Evet");
+            Allure.addAttachment("Onay akışı aktif olduğu için pasif yapıldı.", "");
+
+        } else {
+            System.out.println("Onay akışı pasif zaten");
+        }
+
+        return this;
+    }
+
     public OnayAkisYonetimiPage ekraniKapat() {
         btnEkranKapat.click();
         islemPenceresiKapatmaOnayiPopup("Kapat");
@@ -202,89 +266,16 @@ public class OnayAkisYonetimiPage extends MainPage {
         return this;
     }
 
-    public OnayAkisYonetimiPage evrakOlusturEkrani() {
-        //   onayAkisAlani = By.id("yeniGidenEvrakForm:evrakBilgileriList:17:akisLov:LovSecilen");
-  /*      ustMenu = new UstMenu(driver);
-        ustMenu.("Evrak Oluştur");
-        if (driver.findElement(onayAkisAlani).getText() != "")
-            System.out.println("ok");*/
-        return this;
-
-    }
-
-    public OnayAkisYonetimiPage evrakOlusturEkraniPasif() {
-        // onayAkisAlani = By.id("yeniGidenEvrakForm:evrakBilgileriList:17:akisLov:LovSecilen");
-     /*   ustMenu = new UstMenu(driver);
-        ustMenu.altMenuButtonExpress("Evrak Oluştur");
-        if (driver.findElement(onayAkisAlani).getText() == "")
-            System.out.println("ok");*/
-        return this;
-
-    }
-
-    public OnayAkisYonetimiPage olurYazisiOlusturEkrani() {
-      /*  ustMenu = new UstMenu(driver);
-        ustMenu.altMenuButtonExpress("Olur/Takrir Yazısı Oluştur");
-        onayAkisAlani = By.id("yeniOnayEvrakForm:evrakBilgileriList:13:akisLov:j_idt126");
-
-        if (driver.findElement(onayAkisAlani).getText() != "")
-            System.out.println("ok");
-*/
+    public OnayAkisYonetimiPage guncelle() {
+        btnGuncelle.click();
         return this;
     }
 
-    public OnayAkisYonetimiPage olurYazisiOlusturEkraniPasif() {
-      /*  ustMenu = new UstMenu(driver);
-        ustMenu.altMenuButtonExpress("Olur/Takrir Yazısı Oluştur");
-        onayAkisAlani = By.id("yeniOnayEvrakForm:evrakBilgileriList:13:akisLov:j_idt126");
-
-        if (driver.findElement(onayAkisAlani).getText() == "")
-            System.out.println("ok");
-*/
+    public OnayAkisYonetimiPage silOnayAkisiItem2() {
+        if (btnSilOnayAkisiItem2.isDisplayed()) {
+            btnSilOnayAkisiItem2.click();
+        }
         return this;
     }
-
-    public OnayAkisYonetimiPage kararYazisiOlusturEkrani() {
-   /*     ustMenu = new UstMenu(driver);
-        ustMenu.altMenuButtonExpress("Karar Yazısı Oluştur");
-
-        onayAkisAlani = By.id("yeniKararEvrakForm:evrakBilgileriList:6:akisLov:j_idt126");
-
-        if (driver.findElement(onayAkisAlani).getText() != "")
-            System.out.println("ok");*/
-
-        return this;
-    }
-
-
-    public OnayAkisYonetimiPage kararYazisiOlusturEkraniPasif() {
-   /*     ustMenu = new UstMenu(driver);
-        ustMenu.altMenuButtonExpress("Karar Yazısı Oluştur");
-
-        onayAkisAlani = By.id("yeniKararEvrakForm:evrakBilgileriList:6:akisLov:j_idt126");
-
-        if (driver.findElement(onayAkisAlani).getText() == "")
-            System.out.println("ok");
-*/
-        return this;
-    }
-
-
-    public OnayAkisYonetimiPage gelenEvrakCevapYaz() {
-     /*   click(homePageButton);
-
-        if (isElementExist(gelenEvrakTablo)) {
-            click(gelenEvrakTablo);
-            click(cevapYazButton);
-            onayAkisAlani = By.id("windowCevapEvrakForm:evrakBilgileriList:14:akisLov:j_idt126");
-            if (driver.findElement(onayAkisAlani).getText() != "")
-                System.out.println("ok");
-                   }
-*/
-
-
-        return this;
-    }
-
 
 }

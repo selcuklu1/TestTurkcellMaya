@@ -88,7 +88,7 @@ public class KararYazisiOlusturPage extends MainPage {
         SelenideElement divContainer = $("#evrakBilgileriContainerDiv");
         By cmbOnayAkisiBy = By.cssSelector("[id^='yeniKararEvrakForm:evrakBilgileriList'][id$='akisLov:LovText']");
         SelenideElement cmbSelectOneMenu = $(By.id("yeniKararEvrakForm:evrakBilgileriList:14:akisAdimLov:LovSecilenTable:0:selectOneMenu"));
-        SelenideElement btnEkranKapat = $(By.cssSelector("[id='window4Dialog'] span[class='ui-icon ui-icon-closethick']"));
+        SelenideElement btnEkranKapat = $(By.cssSelector("[id='window3Dialog'] span[class='ui-icon ui-icon-closethick']"));
         SelenideElement btnKaydetveOnaySun = $(By.id("yeniKararEvrakForm:kararEvrakRightTab:uiRepeat:2:cmdbutton"));
         BelgenetElement cmbOnayAkisi = comboLov(By.cssSelector("[id^='yeniKararEvrakForm:evrakBilgileriList'][id$='akisLov:LovText']"));
         //endregion
@@ -178,9 +178,23 @@ public class KararYazisiOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Onay akışı doldurma ve kontrolu")
+        @Step("Onay akışı doldurma ve görüntüleme kontrolu")
         public BilgilerTab onayAkisiDoldur(String onayAkisi) {
             cmbOnayAkisi.selectLov(onayAkisi);
+            return this;
+        }
+
+        @Step("Seçilen onay akışı detail kontrolu: \"{secim}\" ")
+        public BilgilerTab onayAkisiDetailKontrol(String secim) {
+            System.out.println("Gelen detail:     " + cmbOnayAkisi.lastSelectedLovDetailText());
+            Assert.assertEquals(cmbOnayAkisi.lastSelectedLovDetailText().contains(secim), true);
+            return this;
+        }
+
+        @Step("Seçilen onay akışı title kontrolu: \"{secim}\" ")
+        public BilgilerTab onayAkisiTitleKontrol(String secim) {
+            System.out.println("Gelen detail:     " + cmbOnayAkisi.lastSelectedLovTitleText());
+            Assert.assertEquals(cmbOnayAkisi.lastSelectedLovTitleText().contains(secim), true);
             return this;
         }
 

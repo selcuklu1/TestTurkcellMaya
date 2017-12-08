@@ -14,7 +14,8 @@ public class SolMenuData {
         YanParafBekleyenler("Yan Paraf Bekleyenler"),
         TakibimdekiEvraklar("Takibimdeki Evraklar"),
         TaslakEvraklar("Taslak Evraklar"),
-        Onaylar("Onaylar");
+        Onaylar("Onaylar"),
+        VekaletOnaylari("Vekalet Onayları");
 
         private String groupId = groupIdPrefix + "IslemBekleyenEvraklar";
         private String groupText = "İşlem Bekleyen Evraklar";

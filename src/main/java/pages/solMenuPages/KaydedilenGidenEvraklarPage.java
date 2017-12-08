@@ -31,6 +31,7 @@ public class KaydedilenGidenEvraklarPage extends MainPage {
     SelenideElement btnTamEkranGöster = $("[id$='tamEkranModuButton']");
     ElementsCollection tblRapor = $$("tbody[id='mainInboxForm:inboxDataTable_data'] tr[role='row'][data-rk]");
 
+
     @Step("Kaydedilen giden evraklar sayfası aç")
     public KaydedilenGidenEvraklarPage openPage() {
         solMenu(SolMenuData.BirimEvraklari.KaydedilenGidenEvraklar);

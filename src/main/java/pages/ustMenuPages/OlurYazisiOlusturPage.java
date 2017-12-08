@@ -72,18 +72,6 @@ public class OlurYazisiOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Parafçı, Kontrolcü, Koordineci ve İmzacı combo kontrolu")
-        public BilgilerTab onayAkisiKullaniciComboKontrol() {
-            onayAkisiEkle();
-
-            if (cmbSelectOneMenu.isDisplayed()) {
-                Assert.assertTrue(true);
-            } else {
-                Allure.addAttachment("Parafçı, Kontrolcü, Koordineci ve İmzacı combo gelmedi.", "");
-                Assert.assertTrue(false);
-            }
-            return this;
-        }
 
         @Step("Onay akışında güncel gelen kullanıcıyı kontrol et")
         public BilgilerTab onayAkisiKullaniciKontrol(String kullaniciAdi, String kullaniciTipi) {
@@ -121,11 +109,24 @@ public class OlurYazisiOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Seçilen onay akışı detail kontrolu: \"{secim}\" ")
+        public BilgilerTab onayAkisiDetailKontrol(String secim) {
+            System.out.println("Gelen detail:     " + cmbOnayAkisi.lastSelectedLovDetailText());
+            Assert.assertEquals(cmbOnayAkisi.lastSelectedLovDetailText().contains(secim), true);
+            return this;
+        }
+
+        @Step("Seçilen onay akışı title kontrolu: \"{secim}\" ")
+        public BilgilerTab onayAkisiTitleKontrol(String secim) {
+            System.out.println("Gelen detail:     " + cmbOnayAkisi.lastSelectedLovTitleText());
+            Assert.assertEquals(cmbOnayAkisi.lastSelectedLovTitleText().contains(secim), true);
+            return this;
+        }
+
         @Step("Bilgileri tabında Onay Akışı alanında görüntülenmeme kontrolu")
         public BilgilerTab onayAkisiAlanindaGoruntulenmemeKontrolu(String onayAkisi) {
 
-            boolean selectable = comboLov(cmbOnayAkisiBy).isLovValueSelectable(onayAkisi);
-            Assert.assertEquals(selectable, false, "MyCombolov alanında " + onayAkisi + ": Onay Akışın görüntülenmediği görülür");
+            comboLov(cmbOnayAkisiBy).type(onayAkisi).titleItems().filterBy(exactText(onayAkisi)).shouldHaveSize(0);
             System.out.println("MyCombolov alanında " + onayAkisi + ": Onay Akışın görüntülenmediği görülür.");
 
             return this;

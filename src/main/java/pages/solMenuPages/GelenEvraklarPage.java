@@ -5,6 +5,7 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
@@ -16,6 +17,7 @@ import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 public class GelenEvraklarPage extends MainPage {
 
     ElementsCollection tableEvraklar = $$("tbody[id='mainInboxForm:inboxDataTable_data'] > tr");
+    ElementsCollection tableEvraklar2 = $$("tbody[id'vekaletVerForm:vekaletLayout:devredileceklerTabView:vekaletDataTable_data']>tr");
     SelenideElement tblEvraklar = $("table[id='mainInboxForm:inboxDataTable:0:evrakTable'] tr:nth-child(3)");
     SelenideElement cmbFiltrele = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt349_input"));
     SelenideElement txtSayfadaAra = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt353"));
@@ -44,9 +46,9 @@ public class GelenEvraklarPage extends MainPage {
     SelenideElement btnHavaleYapHavaleOnayinaGonder = $(By.id("mainPreviewForm:j_idt30599"));
 
     // Tebiğ Et Buttonu altı div
-    SelenideElement btnTebligEt = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:2:cmdbutton"));
-    SelenideElement txtTebligEtKisi = $(By.id("mainPreviewForm:kullaniciLov_id:LovText"));
-    SelenideElement txtTebligEtKullaniciListesi = $(By.id("mainPreviewForm:kullaniciGrubuLov_id:LovText"));
+    SelenideElement btnTebligEt = $(By.xpath("//span[contains(@class, 'tebligEt')]/.."));
+    BelgenetElement txtTebligEtKisi = comboLov(By.id("mainPreviewForm:kullaniciLov_id:LovText"));
+    BelgenetElement txtTebligEtKullaniciListesi = comboLov(By.id("mainPreviewForm:kullaniciGrubuLov_id:LovText"));
     SelenideElement txtTebligEtNot = $(By.id("mainPreviewForm:tebligNotu_id"));
     SelenideElement btnTebligEtTebligEt = $(By.id("mainPreviewForm:tebligEtButton_id"));
 
@@ -56,17 +58,19 @@ public class GelenEvraklarPage extends MainPage {
     SelenideElement btnIadeEtDosyaEkle = $(By.id("mainPreviewForm:fileUploadIadeEk_input"));
     SelenideElement btnIadeEtIadeEt = $(By.id("mainPreviewForm:iadeEtButton_id"));
     // Cevap Yaz Buttonu
-    SelenideElement btnCevapYaz = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:4:cmdbutton"));
+    SelenideElement btnCevapYaz = $("button[id^='mainPreviewForm:onizlemeRightTab:uiRepeat'] span[class$='cevapYaz']");
 
     //Evrak Kapat Buttonu div
-    SelenideElement btnEvrakKapat = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:5:cmdbutton"));
+    SelenideElement btnEvrakKapat = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:8:cmdbutton"));
+    BelgenetElement txtEvrakKapatKonuKodu = comboLov(By.id("mainPreviewForm:konuKoduLov:LovText"));
     SelenideElement cmbEvrakKapatKapatmaTipi = $(By.id("mainPreviewForm:kapatmaTipiOneMenu_id"));
-    SelenideElement txtEvrakKapatKaldirilacakKlasorler = $(By.id("mainPreviewForm:klasorLov_id:LovText"));
+    BelgenetElement txtEvrakKapatKaldirilacakKlasorler = comboLov(By.id("mainPreviewForm:klasorLov_id:LovText"));
     SelenideElement txtEvrakKapatNot = $(By.id("mainPreviewForm:notTextArea_id"));
     SelenideElement txtEvrakKapatOnayAkisi = $(By.id("mainPreviewForm:akisLov_id:LovText"));
     SelenideElement btnEvrakKapatKapatmaOnayinaSun = $(By.id("mainPreviewForm:kapatmaOnayinaSunButtonDirektId"));
-    SelenideElement btnEvrakKapatEvrakKapat = $(By.id("mainPreviewForm:j_idt30764"));
+    SelenideElement btnEvrakKapatEvrakKapat = $(By.id("mainPreviewForm:j_idt15587"));
     SelenideElement chkEvrakKapatKisiselKlasorler = $(By.id("mainPreviewForm:kisiselKlasorlerimiGetirCheckboxId_input"));
+
 
     //Paylaş Button altı div
     SelenideElement btnPaylas = $(By.xpath("//button/span[contains(@class, 'evrakPaylas')]"));
@@ -77,6 +81,7 @@ public class GelenEvraklarPage extends MainPage {
 
     SelenideElement evrakSec = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
 
+    BelgenetElement cmbOnayAkisi = comboLov(By.cssSelector("[id^='windowCevapEvrakForm:evrakBilgileriList'][id$='akisLov:LovText']"));
 
     public GelenEvraklarPage openPage() {
         solMenu(SolMenuData.IslemBekleyenEvraklar.GelenEvraklar);
@@ -132,13 +137,13 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
-    public GelenEvraklarPage tebligEtKullaniciListesiDoldur(String text) {
-        txtTebligEtKullaniciListesi.sendKeys(text);
+    public GelenEvraklarPage tebligEtKullaniciListesiDoldur(String kullaniciListesi) {
+        txtTebligEtKullaniciListesi.selectLov(kullaniciListesi);
         return this;
     }
 
-    public GelenEvraklarPage tebligEtKisiInputDoldur(String text) {
-        txtTebligEtKisi.sendKeys(text);
+    public GelenEvraklarPage tebligEtKisiInputDoldur(String kisi) {
+        txtTebligEtKisi.selectLov(kisi);
         return this;
     }
 
@@ -325,7 +330,13 @@ public class GelenEvraklarPage extends MainPage {
     }
 
     public GelenEvraklarPage evrakKapatKaldirilacakKlasorlerDoldur(String text) {
-        txtEvrakKapatKaldirilacakKlasorler.sendKeys(text);
+        txtEvrakKapatKaldirilacakKlasorler.selectLov(text);
+        return this;
+    }
+
+    @Step("Evrak Kapat konu kodu doldur")
+    public GelenEvraklarPage evrakKapatKonuKodu(String konuKodu){
+        txtEvrakKapatKonuKodu.selectLov(konuKodu);
         return this;
     }
 
@@ -339,18 +350,54 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
-    @Step("")
-    public String tablodanEvrakNoAl(int adet) {
+    @Step("Tablodan istenilen sayıda evrak no al")
+    public String[] tablodanEvrakNoAl(int adet) {
         String text = "";
         SelenideElement tblEvraklar = $("table[id='mainInboxForm:inboxDataTable:" + 0 + ":evrakTable'] tr:nth-child(3)");
+        String[] evrakNo = new String[adet];
         for (int i = 0; i < adet; i++) {
+
             text = $("table[id='mainInboxForm:inboxDataTable:" + i + ":evrakTable'] tr:nth-child(3)").getText();
+            text = text.split("/")[2];
+            String number = getIntegerInText(text);
+            evrakNo[i] = number;
         }
 //        String text = tblEvraklar.getText();
         System.out.println(text);
-        String arr1[] = text.split("/");
-        String evrakNo = getIntegerInText(arr1[2]);
+
         return evrakNo;
     }
 
+    @Step("Tabloda evrak no kontrolü")
+    public GelenEvraklarPage tabloEvrakNoKontrol(String evrakNo) {
+        int size = tableEvraklar
+                .filterBy(Condition.text(evrakNo)).size();
+        Assert.assertEquals(size,1);
+
+        return this;
+    }
+    @Step("Tabloda olmayan evrak no kontrolü")
+    public GelenEvraklarPage tabloOlmayanEvrakNoKontrol(String evrakNo) {
+        int size = tableEvraklar
+                .filterBy(Condition.text(evrakNo)).size();
+        Assert.assertEquals(size,0);
+
+        return this;
+    }
+
+    //Cevap yaz sayfası
+    @Step("Seçilen onay akışı detail kontrolu: \"{secim}\" ")
+    public GelenEvraklarPage onayAkisiDetailKontrol(String secim) {
+        System.out.println("Gelen detail:     " + cmbOnayAkisi.lastSelectedLovDetailText());
+        Assert.assertEquals(cmbOnayAkisi.lastSelectedLovDetailText().contains(secim), true);
+        return this;
+    }
+
+    //Cevap yaz sayfası
+    @Step("Seçilen onay akışı title kontrolu: \"{secim}\" ")
+    public GelenEvraklarPage onayAkisiTitleKontrol(String secim) {
+        System.out.println("Gelen detail:     " + cmbOnayAkisi.lastSelectedLovTitleText());
+        Assert.assertEquals(cmbOnayAkisi.lastSelectedLovTitleText().contains(secim), true);
+        return this;
+    }
 }
