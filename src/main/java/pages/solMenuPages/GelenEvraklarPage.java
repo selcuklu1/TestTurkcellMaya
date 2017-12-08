@@ -61,14 +61,16 @@ public class GelenEvraklarPage extends MainPage {
     SelenideElement btnCevapYaz = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:4:cmdbutton"));
 
     //Evrak Kapat Buttonu div
-    SelenideElement btnEvrakKapat = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:5:cmdbutton"));
+    SelenideElement btnEvrakKapat = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:8:cmdbutton"));
+    BelgenetElement txtEvrakKapatKonuKodu = comboLov(By.id("mainPreviewForm:konuKoduLov:LovText"));
     SelenideElement cmbEvrakKapatKapatmaTipi = $(By.id("mainPreviewForm:kapatmaTipiOneMenu_id"));
-    SelenideElement txtEvrakKapatKaldirilacakKlasorler = $(By.id("mainPreviewForm:klasorLov_id:LovText"));
+    BelgenetElement txtEvrakKapatKaldirilacakKlasorler = comboLov(By.id("mainPreviewForm:klasorLov_id:LovText"));
     SelenideElement txtEvrakKapatNot = $(By.id("mainPreviewForm:notTextArea_id"));
     SelenideElement txtEvrakKapatOnayAkisi = $(By.id("mainPreviewForm:akisLov_id:LovText"));
     SelenideElement btnEvrakKapatKapatmaOnayinaSun = $(By.id("mainPreviewForm:kapatmaOnayinaSunButtonDirektId"));
-    SelenideElement btnEvrakKapatEvrakKapat = $(By.id("mainPreviewForm:j_idt30764"));
+    SelenideElement btnEvrakKapatEvrakKapat = $(By.id("mainPreviewForm:j_idt15587"));
     SelenideElement chkEvrakKapatKisiselKlasorler = $(By.id("mainPreviewForm:kisiselKlasorlerimiGetirCheckboxId_input"));
+
 
     //Paylaş Button altı div
     SelenideElement btnPaylas = $(By.xpath("//button/span[contains(@class, 'evrakPaylas')]"));
@@ -327,7 +329,13 @@ public class GelenEvraklarPage extends MainPage {
     }
 
     public GelenEvraklarPage evrakKapatKaldirilacakKlasorlerDoldur(String text) {
-        txtEvrakKapatKaldirilacakKlasorler.sendKeys(text);
+        txtEvrakKapatKaldirilacakKlasorler.selectLov(text);
+        return this;
+    }
+
+    @Step("Evrak Kapat konu kodu doldur")
+    public GelenEvraklarPage evrakKapatKonuKodu(String konuKodu){
+        txtEvrakKapatKonuKodu.selectLov(konuKodu);
         return this;
     }
 

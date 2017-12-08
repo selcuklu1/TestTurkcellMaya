@@ -9,14 +9,21 @@ import common.BaseTest;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.poi.xwpf.usermodel.XWPFTable;
+import org.apache.poi.xwpf.usermodel.XWPFTableCell;
+import org.apache.poi.xwpf.usermodel.XWPFTableRow;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.MainPage;
-import pages.solMenuPages.ImzaBekleyenlerPage;
-import pages.solMenuPages.KararIzlemePage;
-import pages.solMenuPages.KepIlePostalanacaklarPage;
+import pages.solMenuPages.*;
 import pages.ustMenuPages.*;
 
+import java.io.*;
+import java.util.List;
+
+import static com.codeborne.selenide.Selenide.Wait;
+import static com.codeborne.selenide.Selenide.sleep;
 import static data.TestData.*;
 
 @Epic("Kep ile Postalama İşlemleri")
@@ -26,6 +33,10 @@ public class KararYazisiOlusturmaTest extends BaseTest{
         KararIzlemePage kararIzlemePage;
         ImzaBekleyenlerPage imzaBekleyenlerPage;
         KlasorYonetimiPage klasorYonetimiPage;
+        TeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage;
+        GelenEvraklarPage gelenEvraklarPage;
+        KurulIslemleriPage kurulIslemleriPage;
+        GundemIzlemePage gundemIzlemePage;
 
         @BeforeMethod
         public void loginBeforeTests() {
@@ -33,6 +44,10 @@ public class KararYazisiOlusturmaTest extends BaseTest{
             kararIzlemePage = new KararIzlemePage();
             imzaBekleyenlerPage = new ImzaBekleyenlerPage();
             klasorYonetimiPage = new KlasorYonetimiPage();
+            teslimAlinmayiBekleyenlerPage = new TeslimAlinmayiBekleyenlerPage();
+            gelenEvraklarPage = new GelenEvraklarPage();
+            kurulIslemleriPage = new KurulIslemleriPage();
+            gundemIzlemePage = new GundemIzlemePage();
         }
 
         @Severity(SeverityLevel.CRITICAL)
@@ -243,6 +258,8 @@ public class KararYazisiOlusturmaTest extends BaseTest{
 
 
     }
+    String klasorAdi = createRandomText(12);
+    String klasorKodu = createRandomNumber(10);
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "2238: Gündem klasörü oluşturma")
     public void TC2238() throws InterruptedException {
@@ -250,14 +267,80 @@ public class KararYazisiOlusturmaTest extends BaseTest{
         String basariMesaji = "İşlem başarılıdır!";
         String birim = "Yazılım Geliştirme Direktörlüğ";
         String kapanisTarih = getAfterSysYear();
-        login(username4, password4);
+        String acilisTarih = getSysDateForKis2();
+        String klasorTuru = "Gündem Klasörü";
+        String ad = "Zübeyde";
+
+        login(username2, password2);
 
         klasorYonetimiPage
                 .openPage()
                 .yeni()
                 .birimDoldur(birim)
-                .klasorKapanisTarihiDoldur(kapanisTarih);
-        
+                .klasorTuruSec(klasorTuru)
+                .klasorAdiDoldur(klasorAdi)
+                .klasorKoduDoldur(klasorKodu)
+                .klasorAcilisTarihDoldur(acilisTarih)
+                .klasorKapanisTarihiDoldur(kapanisTarih)
+                .kullaniciYetkiListesiYetkiEkle()
+                .ktxtKullaniciYetkiEklemeAdDoldur(ad)
+                .kullaniciYetkiEklemeAra()
+                .yetkiTanimlanabilicekSec(ad)
+                .yetkiTanimlanabilicekSecKaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        klasorYonetimiPage
+                .klasorEklemeKaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        teslimAlinmayiBekleyenlerPage
+                .openPage()
+                .evrakSec()
+                .teslimAlVeKapat()
+                .kaldirilacakKlasorlerDoldur(klasorAdi);
+
+        gelenEvraklarPage
+                .openPage()
+                .evrakSec()
+                .evrakKapat()
+                .evrakKapatKaldirilacakKlasorlerDoldur(klasorAdi);
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "1715: Gelen evrak listesinden Gündem klasörüne evrak kapatma")
+    public void TC1715() throws InterruptedException {
+
+        String basariMesaji = "İşlem başarılıdır!";
+        String birim = "Yazılım Geliştirme Direktörlüğ";
+        String kapanisTarih = getAfterSysYear();
+        String acilisTarih = getSysDateForKis2();
+        String klasorTuru = "Gündem Klasörü";
+        String klasorAdi = createRandomText(12);
+        String klasorKodu = createRandomNumber(10);
+        String ad = "Zübeyde";
+        String konuKodu = "Usul ve Esaslar";
+        String kaldirilicakKlasor = "Gündem";
+
+        login(username3, password3);
+
+   /*     gelenEvraklarPage
+                .openPage()
+                .evrakSec()
+                .evrakKapat()
+                .evrakKapatKaldirilacakKlasorlerDoldur(kaldirilicakKlasor)
+                .evrakKapatKonuKodu(konuKodu)
+                .evrakKapatEvrakKapat();
+*/
+        gundemIzlemePage
+                .openPage()
+                .kapatilanKlasorSec("gündem")
+                .aralikliGundemOlustur();
+        String dosyaAdi =gundemIzlemePage.indirilenDosyaAd();
+
+        gundemIzlemePage
+                .wordDosyaKontrolEt(dosyaAdi);
+
+
     }
 }
 

@@ -38,8 +38,6 @@ public class ImzaBekleyenlerPage extends MainPage {
     }
 
     public ImzaBekleyenlerPage evrakSec(String toplantiNo, String konu){
-       /* tableKararIzlemeEvraklar
-                .filterBy(Condition.text(toplantiNo)).filterBy(Condition.text(konu)).get(0).click(); */
         tableKararIzlemeEvraklar.
                 filterBy(Condition.text(toplantiNo))
                 .filterBy(Condition.text(konu))
