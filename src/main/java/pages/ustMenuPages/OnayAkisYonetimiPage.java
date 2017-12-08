@@ -49,8 +49,8 @@ public class OnayAkisYonetimiPage extends MainPage {
     SelenideElement durumPasif = $(By.cssSelector("[id^='onayAkisiYonetimiListingForm:rolDataTable'] [class='false']"));
     ElementsCollection tblOnayAkisListesi = $$("[id='onayAkisiYonetimiListingForm:rolDataTable_data'] tr[role=row]");
     SelenideElement tblOnayAkisListesiSelenide = $(By.id("onayAkisiYonetimiListingForm:rolDataTable"));
-    SelenideElement btnPasifYap = $(By.xpath("[id$='changeOnayAkisiStatusButton'] [class$='to-passive-status-icon']"));
-    SelenideElement btnAktifYap = $(By.xpath("[id$='changeOnayAkisiStatusButton'] [class$='to-active-status-icon']"));
+    SelenideElement btnPasifYap = $(By.cssSelector("[id$='changeOnayAkisiStatusButton'] [class$='to-passive-status-icon']"));
+    SelenideElement btnAktifYap = $(By.cssSelector("[id$='changeOnayAkisiStatusButton'] [class$='to-active-status-icon']"));
     SelenideElement btnGuncelle = $(By.id("onayAkisiYonetimiListingForm:rolDataTable:0:updateRolButton"));
 
     SelenideElement btnSilOnayAkisiItem2 = $(By.id("onayAkisiYonetimiEditorForm:onayAkisiYonetimiKullaniciBirimDataTable:1:removeOnayAkisiItem"));
@@ -142,11 +142,18 @@ public class OnayAkisYonetimiPage extends MainPage {
         return this;
     }
 
-    public OnayAkisYonetimiPage varsayilanButonu() {
-        btnAra.click();
-
-        // if (isElementExist(varsayilanYapButton))
+    public OnayAkisYonetimiPage varsayilanYap() {
         btnVarsayilanYap.click();
+        return this;
+    }
+
+    public OnayAkisYonetimiPage pasifYap() {
+        btnPasifYap.click();
+        return this;
+    }
+
+    public OnayAkisYonetimiPage aktifYap() {
+        btnAktifYap.click();
         return this;
     }
 

@@ -289,7 +289,7 @@ public class BaseLibrary {
     }
 
     //Bugün tarihinden sonraki bir yıl sonrayı alır.
-    public String getAfterSysYear(){
+    public String getAfterSysYear() {
         String untildate = getSysDateForKis();// can take any date in current
         // format
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -622,16 +622,18 @@ public class BaseLibrary {
     @Step("Popup İşlem Onayı:  \"{secim}\"")
     public void islemOnayi(String secim) {
 
+        SelenideElement islemOnayiPopup = $(By.id("baseConfirmationDialog:dialog"));
         SelenideElement btnIslemOnayiEvet = $(By.id("baseConfirmationDialog:confirmButton"));
         SelenideElement btnIslemOnayiHayir = $(By.id("baseConfirmationDialog:baseConfirmationDialogCancelButton"));
-
-        switch (secim) {
-            case "Evet":
-                btnIslemOnayiEvet.click();
-                break;
-            case "Hayır":
-                btnIslemOnayiHayir.click();
-                break;
+        if (islemOnayiPopup.isDisplayed()) {
+            switch (secim) {
+                case "Evet":
+                    btnIslemOnayiEvet.click();
+                    break;
+                case "Hayır":
+                    btnIslemOnayiHayir.click();
+                    break;
+            }
         }
     }
 }
