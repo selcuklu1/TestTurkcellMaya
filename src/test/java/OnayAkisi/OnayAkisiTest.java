@@ -147,11 +147,12 @@ public class OnayAkisiTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TC2113: Onay Akıışı Yönetimi - Güncelleme")
-        public void TC2113() {
+        public void TC2113a() {
 
         String onayAkisAdi = "Optiim";
         String eskiKullanici = "Bulut Toprak";
         String yeniKullanici = "Bulut Toprak"+ createRandomNumber(5);
+        String ikinciKullanici = "Zübeyde Tekin";
         String basariMesaji = "İşlem başarılıdır!";
 
         evrakOlusturPage
@@ -180,6 +181,61 @@ public class OnayAkisiTest extends BaseTest {
                 .onayAkisiAlanindaGoruntulenmemeKontrolu(eskiKullanici)
                 .onayAkisDoldur(yeniKullanici)
                 .onayAkisiKontrol("Paraflama")
+                .onayAkisiKontrol("İmzalama");
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TC2113: Onay Akıışı Yönetimi - Güncelleme")
+    public void TC2113b() {
+
+        String ad = "Alex de Souza";
+        String kullanici = "Zübeyde Tekin";
+        String basariMesaji = "İşlem başarılıdır!";
+
+        onayAkisYonetimiPage
+                .openPage()
+                .filtreAc()
+                .filtredeAdDoldur(ad)
+                .ara()
+                .guncelle()
+                .silOnayAkisiItem2()
+                .onayAkisiIslemlerKullanicilarDoldur(kullanici)
+                .imzacıSonSec("İmzalama")
+                .onayAkisiIslemleriKaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        kararYazisiOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .onayAkisiDoldur(ad)
+                .onayAkisiKontrol("İmzalama");
+
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TC2113: Onay Akıışı Yönetimi - Güncelleme")
+    public void TC2113c() {
+
+        String ad = "Daniel Guiza";
+        String kullanici = "Mehmet BOZDEMİR";
+        String basariMesaji = "İşlem başarılıdır!";
+
+        onayAkisYonetimiPage
+                .openPage()
+                .filtreAc()
+                .filtredeAdDoldur(ad)
+                .ara()
+                .guncelle()
+                .kontrolcuYoksaEkle(kullanici)
+                .kontrolcuSil()
+                .onayAkisiIslemleriKaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .onayAkisiDoldur(ad)
+                .onayAkisiKontrol("İmzalama")
                 .onayAkisiKontrol("İmzalama");
     }
 }
