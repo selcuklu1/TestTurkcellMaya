@@ -46,9 +46,9 @@ public class GelenEvraklarPage extends MainPage {
     SelenideElement btnHavaleYapHavaleOnayinaGonder = $(By.id("mainPreviewForm:j_idt30599"));
 
     // Tebiğ Et Buttonu altı div
-    SelenideElement btnTebligEt = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:2:cmdbutton"));
-    SelenideElement txtTebligEtKisi = $(By.id("mainPreviewForm:kullaniciLov_id:LovText"));
-    SelenideElement txtTebligEtKullaniciListesi = $(By.id("mainPreviewForm:kullaniciGrubuLov_id:LovText"));
+    SelenideElement btnTebligEt = $(By.xpath("//span[contains(@class, 'tebligEt')]/.."));
+    BelgenetElement txtTebligEtKisi = comboLov(By.id("mainPreviewForm:kullaniciLov_id:LovText"));
+    BelgenetElement txtTebligEtKullaniciListesi = comboLov(By.id("mainPreviewForm:kullaniciGrubuLov_id:LovText"));
     SelenideElement txtTebligEtNot = $(By.id("mainPreviewForm:tebligNotu_id"));
     SelenideElement btnTebligEtTebligEt = $(By.id("mainPreviewForm:tebligEtButton_id"));
 
@@ -137,13 +137,13 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
-    public GelenEvraklarPage tebligEtKullaniciListesiDoldur(String text) {
-        txtTebligEtKullaniciListesi.sendKeys(text);
+    public GelenEvraklarPage tebligEtKullaniciListesiDoldur(String kullaniciListesi) {
+        txtTebligEtKullaniciListesi.selectLov(kullaniciListesi);
         return this;
     }
 
-    public GelenEvraklarPage tebligEtKisiInputDoldur(String text) {
-        txtTebligEtKisi.sendKeys(text);
+    public GelenEvraklarPage tebligEtKisiInputDoldur(String kisi) {
+        txtTebligEtKisi.selectLov(kisi);
         return this;
     }
 
