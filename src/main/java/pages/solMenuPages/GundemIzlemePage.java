@@ -52,6 +52,11 @@ public class GundemIzlemePage extends MainPage {
 
 
     public String indirilenDosyaAd(){
+        int i =0;
+        while (i<100){
+            sleep(i);
+            i++;
+        }
 
         //İndirilen file name çeker
         File root = new File("C://users//"+System.getProperty("user.name")+"//Downloads//");

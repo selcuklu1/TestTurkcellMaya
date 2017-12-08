@@ -337,7 +337,6 @@ public class KararYazisiOlusturmaTest extends BaseTest{
                 .aralikliGundemOlustur();
         String dosyaAdi =gundemIzlemePage.indirilenDosyaAd();
 
-        sleep(5000);
         gundemIzlemePage
                 .wordDosyaKontrolEt(dosyaAdi);
 
