@@ -15,6 +15,11 @@ import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 public class EvrakDetayiPage extends MainPage {
 
     SelenideElement pageTitle = $(By.xpath("//span[. = 'Evrak Detayı' and @class = 'ui-dialog-title']"));
+    SelenideElement btnTebellugEt = $("button .tebellugEt");
+
+    SelenideElement btnPanelEvet = $(By.id("mainInboxForm:tebellugEtEvetButton"));
+    SelenideElement btnPanelHayir = $(By.id("mainInboxForm:tebellugEtHayirButton"));
+
 
     @Step("Sayfa açıldı mı kontrolü")
     public EvrakDetayiPage sayfaAcilmali(){
@@ -63,6 +68,53 @@ public class EvrakDetayiPage extends MainPage {
             return this;
         }
 
+        @Step("Teblig geçmişinde tebellüğ olanları kontrol et")
+        public TebligGecmisiTab tebligGecmisiKontrol(String tebligEdenveTarih, String[] kullanicilar, String[] tebellugTarih){
+
+            SelenideElement currentRow = tableTebligGecmisi
+                    .filterBy(Condition.text(tebligEdenveTarih))
+                    .last();
+
+            if(currentRow.$(By.xpath(".//span[. = '"+tebligEdenveTarih+"']/..//span[contains(@class, 'ui-icon-plusthick')]")).isDisplayed())
+            {
+                currentRow.$(By.xpath(".//span[. = '"+tebligEdenveTarih+"']/..//span[contains(@class, 'ui-icon-plusthick')]")).click();
+            }
+
+            ElementsCollection tableTebligEdilen = $$(By.xpath("//span[. = '"+tebligEdenveTarih+"']/../..//tbody/tr[@role='row']"));
+
+            for(int i = 0; i < kullanicilar.length; i++){
+
+                tableTebligEdilen
+                        .filterBy(Condition.text(kullanicilar[i]))
+                        .filterBy(Condition.text(tebellugTarih[i]))
+                        .first()
+                        .shouldBe(Condition.visible);
+            }
+
+
+
+
+            return this;
+        }
+
+    }
+
+
+    @Step("Tebellüğ Et butonuna tıkla.")
+    public EvrakDetayiPage tebellugEt(boolean onay){
+        btnTebellugEt.click();
+
+
+        //btnTebellugEtEvet.waitUntil(Condition.visible, 5000);
+
+
+        if(onay == true)
+            btnPanelEvet.click();
+        else
+            btnPanelEvet.click();
+
+
+        return this;
     }
 
 

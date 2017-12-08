@@ -133,6 +133,7 @@ public class KurumYonetimiPage extends MainPage {
 
         return this;
     }
+
     @Step("Kep adresi kullanıyor seç")
     public KurumYonetimiPage kepAdresiKullaniyorSec(boolean secim) {
 
