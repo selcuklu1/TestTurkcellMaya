@@ -193,12 +193,22 @@ public class VekaletIslemleriTest extends BaseTest {
                 .onayAkisiEkle()
                 .kullaniciTabloKontrol()
                 .kullanicilarImzaciSec("Paraflama")
-                .kullanicilarDoldur("Optiim TEST")
-                .kullanicilarDoldur("Optiim TEST1")
-                .kullniciIsmineGoreImzaParafSec("Optiim TEST1","İmzalama")
+                .kullanicilarDoldur2("Optiim TEST")
                 .vekeletAlanVerenTabloKontrolu()
                 .vekeletAlanVerenTabloKapat()
-                .kullan();
+                .kullanicilarDoldur2("Optiim TEST1")
+                .kullniciIsmineGoreImzaParafSec("Optiim TEST1","İmzalama")
+                .kullan()
+                .onaAkisiTextKontol()
+                .onayAkisiKullanilanKullanilanKontrolEt("Yasemin");
+
+        evrakOlusturPage
+                .editorTabAc()
+                .editorIcerikDoldur("Test Otomasyon")
+                .parafla()
+                .sImzasec()
+                .evrakImzalama()
+                .imzala();
     }
 
 }

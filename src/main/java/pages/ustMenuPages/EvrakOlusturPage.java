@@ -175,7 +175,8 @@ public class EvrakOlusturPage extends MainPage {
         ElementsCollection tblKullanıcılar2 = $$("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='akisAdimLov:LovSecilenTable_data'] >tr");
         SelenideElement tblVekalet = $(By.id("yeniGidenEvrakForm:kullaniciBirimSecimiDialogId"));
         SelenideElement btnVekaletTablosuKapat = $(By.xpath("//div[@id='yeniGidenEvrakForm:kullaniciBirimSecimiDialogId']//span[@class='ui-icon ui-icon-closethick']"));
-SelenideElement btnKullan = $("[id^='yeniGidenEvrakForm:evrakBilgileriList][id$='anlikAkisKullanButton']");
+        SelenideElement btnKullan = $("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='anlikAkisKullanButton']");
+        SelenideElement txtOnayAkisi = $("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='akisLov:LovSecilen']");
 
         BelgenetElement cmbGeregi = comboLov(By.id("yeniGidenEvrakForm:evrakBilgileriList:16:geregiLov:LovText"));
         BelgenetElement cmbGeregiPostaTipi = comboLov(By.id("yeniGidenEvrakForm:evrakBilgileriList:16:geregiLov:LovSecilenTable:0:selectOneMenu"));
@@ -226,8 +227,15 @@ SelenideElement btnKullan = $("[id^='yeniGidenEvrakForm:evrakBilgileriList][id$=
 
         @Step("Kullanıcılar alanı doldur")
         public BilgilerTab kullanicilarDoldur(String kullanici) {
+            txtOnayAkisiKullanicilar.selectLov(kullanici);
+            return this;
+        }
+
+        @Step("Kullanıcılar alanı doldur")
+        public BilgilerTab kullanicilarDoldur2(String kullanici) {
             txtOnayAkisiKullanicilar.type(kullanici).titleItems()
-                    .filterBy(Condition.exactText(kullanici)).first().click();
+                    .filterBy(Condition.exactText(kullanici + " [Ağ (Network) Uzman Yardımcısı]")).first().click();
+            txtOnayAkisiKullanicilar.closeLovTreePanel();
             return this;
         }
 
@@ -328,15 +336,17 @@ SelenideElement btnKullan = $("[id^='yeniGidenEvrakForm:evrakBilgileriList][id$=
         }
 
         @Step("Vekalet alan Ve Veren tablo kontrolü")
-        public BilgilerTab vekeletAlanVerenTabloKontrolu(){
-            Assert.assertEquals(tblVekalet.isDisplayed(),true);
+        public BilgilerTab vekeletAlanVerenTabloKontrolu() {
+            Assert.assertEquals(tblVekalet.isDisplayed(), true);
             return this;
         }
+
         @Step("Vekalet alan Ve Veren tablo kontrolü")
-        public BilgilerTab vekeletAlanVerenTabloKapat(){
+        public BilgilerTab vekeletAlanVerenTabloKapat() {
             btnVekaletTablosuKapat.click();
             return this;
         }
+
         @Step("Kanun Kapsam Tipi Kisisel Verilerin Korunmasi Kanunu seç")
         public BilgilerTab kanunKapsamTipiKisiselVerilerinKorunmasiKanunuSec() {
             rdbKanunKapsamTipiKisiselVerilerinKorunmasiKanunu.click();
@@ -720,9 +730,17 @@ SelenideElement btnKullan = $("[id^='yeniGidenEvrakForm:evrakBilgileriList][id$=
                     .selectOptionContainingText(kullaniciTipi);
             return this;
         }
+
         @Step("Kullan butonu")
-        public BilgilerTab kullan(){
-            btnKullan.click();
+        public BilgilerTab kullan() {
+            clickJs(btnKullan);
+            return this;
+        }
+
+        @Step("Onay Akişi alanı kontrolü")
+        public BilgilerTab onaAkisiTextKontol() {
+            String x = txtOnayAkisi.getText();
+            Assert.assertNotEquals(x, "");
             return this;
         }
 
@@ -879,6 +897,9 @@ SelenideElement btnKullan = $("[id^='yeniGidenEvrakForm:evrakBilgileriList][id$=
         By cmbBilgiBy = By.id("yeniGidenEvrakForm:bilgiKurumLov:LovText");
         BelgenetElement cmbGeregi = comboLov(By.id("yeniGidenEvrakForm:geregiKurumLov:LovText"));
         BelgenetElement cmbBilgi = comboLov(By.id("yeniGidenEvrakForm:bilgiKurumLov:LovText"));
+        SelenideElement btnParafla = $(By.id("yeniGidenEvrakForm:rightTab:uiRepeat:2:cmdbutton"));
+        SelenideElement radibtnSimza = $("[id='imzalaForm:imzalaRadio'] span[class='ui-radiobutton-icon']");
+        SelenideElement btnEvrakImzala = $(By.xpath("//buton[starts-with(@id,'imzalaForm:jsfImzaForm:j_idt')]"));
 
         private EditorTab open() {
             tabEditor.click();
@@ -1006,6 +1027,25 @@ SelenideElement btnKullan = $("[id^='yeniGidenEvrakForm:evrakBilgileriList][id$=
         @Step("Bilgi alani doldur")
         public EditorTab bilgiDoldur(String bilgi) {
             cmbBilgi.selectLov(bilgi);
+            return this;
+        }
+
+        @Step("Parafla butonu tıkla")
+        public EditorTab parafla() {
+            btnParafla.click();
+            return this;
+        }
+
+        @Step("")
+        public EditorTab sImzasec() {
+            radibtnSimza.selectRadio("I");
+            radibtnSimza.click();
+            return this;
+        }
+
+        @Step("Evrak Imzala ekranı imzala")
+        public EditorTab evrakImzalama() {
+            btnEvrakImzala.click();
             return this;
         }
     }
