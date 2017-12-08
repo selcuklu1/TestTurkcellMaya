@@ -205,10 +205,42 @@ public class VekaletIslemleriTest extends BaseTest {
         evrakOlusturPage
                 .editorTabAc()
                 .editorIcerikDoldur("Test Otomasyon")
-                .parafla()
-                .sImzasec()
-                .evrakImzalama()
-                .imzala();
+                .parafla();
+                //11 12e 13.  adımlar yazılacak
+//                .sImzasec()
+//                .evrakImzalama()
+//                .imzala();
+    }
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "vekaleti veren kullanıcının onay akışında seçilmesi (kendisi)")
+    public void TC0012() throws InterruptedException {
+
+        login(username3, password3);
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .konuKoduSec("010.01")
+                .kaldiralacakKlasorlerSec("Diğer")
+                .evrakTuruSec("Resmi Yazışma")
+                .evrakDiliSec("Türkçe")
+                .gizlilikDerecesiSec("Normal")
+                .ivedikSec("Normal")
+                .geregiSec("Birim")
+                .onayAkisiEkle()
+                .kullaniciTabloKontrol()
+                .kullanicilarDoldur("Yasemin")
+                .kullanicilarImzaciSec("Paraflama")
+                .kullanicilarDoldur2("Optiim TEST")
+                .vekeletAlanVerenTabloKontrolu()
+                .vekeletAlanVerenTabloKapat()
+                .kullanicilarDoldur2("Optiim TEST1")
+                .kullniciIsmineGoreImzaParafSec("Optiim TEST1","İmzalama")
+                .kullan()
+                .onaAkisiTextKontol()
+                .onayAkisiKullanilanKullanilanKontrolEt("Yasemin");
+
+
     }
 
 }
