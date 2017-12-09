@@ -46,9 +46,9 @@ public class GelenEvraklarPage extends MainPage {
     SelenideElement btnHavaleYapHavaleOnayinaGonder = $(By.id("mainPreviewForm:j_idt30599"));
 
     // Tebiğ Et Buttonu altı div
-    SelenideElement btnTebligEt = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:2:cmdbutton"));
-    SelenideElement txtTebligEtKisi = $(By.id("mainPreviewForm:kullaniciLov_id:LovText"));
-    SelenideElement txtTebligEtKullaniciListesi = $(By.id("mainPreviewForm:kullaniciGrubuLov_id:LovText"));
+    SelenideElement btnTebligEt = $(By.xpath("//span[contains(@class, 'tebligEt')]/.."));
+    BelgenetElement txtTebligEtKisi = comboLov(By.id("mainPreviewForm:kullaniciLov_id:LovText"));
+    BelgenetElement txtTebligEtKullaniciListesi = comboLov(By.id("mainPreviewForm:kullaniciGrubuLov_id:LovText"));
     SelenideElement txtTebligEtNot = $(By.id("mainPreviewForm:tebligNotu_id"));
     SelenideElement btnTebligEtTebligEt = $(By.id("mainPreviewForm:tebligEtButton_id"));
 
@@ -58,7 +58,7 @@ public class GelenEvraklarPage extends MainPage {
     SelenideElement btnIadeEtDosyaEkle = $(By.id("mainPreviewForm:fileUploadIadeEk_input"));
     SelenideElement btnIadeEtIadeEt = $(By.id("mainPreviewForm:iadeEtButton_id"));
     // Cevap Yaz Buttonu
-    SelenideElement btnCevapYaz = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:4:cmdbutton"));
+    SelenideElement btnCevapYaz = $("button[id^='mainPreviewForm:onizlemeRightTab:uiRepeat'] span[class$='cevapYaz']");
 
     //Evrak Kapat Buttonu div
     SelenideElement btnEvrakKapat = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:8:cmdbutton"));
@@ -81,6 +81,7 @@ public class GelenEvraklarPage extends MainPage {
 
     SelenideElement evrakSec = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
 
+    BelgenetElement cmbOnayAkisi = comboLov(By.cssSelector("[id^='windowCevapEvrakForm:evrakBilgileriList'][id$='akisLov:LovText']"));
 
     public GelenEvraklarPage openPage() {
         solMenu(SolMenuData.IslemBekleyenEvraklar.GelenEvraklar);
@@ -136,13 +137,13 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
-    public GelenEvraklarPage tebligEtKullaniciListesiDoldur(String text) {
-        txtTebligEtKullaniciListesi.sendKeys(text);
+    public GelenEvraklarPage tebligEtKullaniciListesiDoldur(String kullaniciListesi) {
+        txtTebligEtKullaniciListesi.selectLov(kullaniciListesi);
         return this;
     }
 
-    public GelenEvraklarPage tebligEtKisiInputDoldur(String text) {
-        txtTebligEtKisi.sendKeys(text);
+    public GelenEvraklarPage tebligEtKisiInputDoldur(String kisi) {
+        txtTebligEtKisi.selectLov(kisi);
         return this;
     }
 
@@ -381,6 +382,22 @@ public class GelenEvraklarPage extends MainPage {
                 .filterBy(Condition.text(evrakNo)).size();
         Assert.assertEquals(size,0);
 
+        return this;
+    }
+
+    //Cevap yaz sayfası
+    @Step("Seçilen onay akışı detail kontrolu: \"{secim}\" ")
+    public GelenEvraklarPage onayAkisiDetailKontrol(String secim) {
+        System.out.println("Gelen detail:     " + cmbOnayAkisi.lastSelectedLovDetailText());
+        Assert.assertEquals(cmbOnayAkisi.lastSelectedLovDetailText().contains(secim), true);
+        return this;
+    }
+
+    //Cevap yaz sayfası
+    @Step("Seçilen onay akışı title kontrolu: \"{secim}\" ")
+    public GelenEvraklarPage onayAkisiTitleKontrol(String secim) {
+        System.out.println("Gelen detail:     " + cmbOnayAkisi.lastSelectedLovTitleText());
+        Assert.assertEquals(cmbOnayAkisi.lastSelectedLovTitleText().contains(secim), true);
         return this;
     }
 }

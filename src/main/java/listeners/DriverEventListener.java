@@ -7,7 +7,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.events.WebDriverEventListener;
 
+import java.sql.Timestamp;
+
 public class DriverEventListener extends BaseLibrary implements WebDriverEventListener {
+
+    private static boolean log = false;
 
     public void beforeAlertAccept(WebDriver driver) {
 
@@ -57,12 +61,21 @@ public class DriverEventListener extends BaseLibrary implements WebDriverEventLi
 
     }
 
+
     public void beforeFindBy(By by, WebElement element, WebDriver driver) {
         waitForLoading(driver);
-   //     System.out.println("Looking for element: " + by.toString());
+
+        if (log) {
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            System.out.println(timestamp + " Looking for element: " + by.toString());
+        }
     }
 
     public void afterFindBy(By by, WebElement element, WebDriver driver) {
+        if (log) {
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            System.out.println(timestamp + " Found element: " + by.toString());
+        }
     }
 
     public void beforeClickOn(WebElement element, WebDriver driver) {
@@ -74,7 +87,10 @@ public class DriverEventListener extends BaseLibrary implements WebDriverEventLi
          * executeScript("arguments[0].scrollIntoView();", element) bazı yerlerde beklenmedik
          * sonuçları verdiği için sendKeys kullanıldı. Test edilecek..!
          */
-
+        if (log) {
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            System.out.println(timestamp + " Before click: " + element.toString());
+        }
         try {
             element.sendKeys(Keys.SHIFT); //element.sendKeys("\n");
         } catch (Exception e) {
@@ -84,6 +100,10 @@ public class DriverEventListener extends BaseLibrary implements WebDriverEventLi
     public void afterClickOn(WebElement element, WebDriver driver) {
 //        System.out.println("Clicked on element.. " + element.toString());
 //        waitForLoading(driver);
+        if (log) {
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            System.out.println(timestamp + " After click: " + element.toString());
+        }
     }
 
     public void beforeChangeValueOf(WebElement element, WebDriver driver, CharSequence[] keysToSend) {

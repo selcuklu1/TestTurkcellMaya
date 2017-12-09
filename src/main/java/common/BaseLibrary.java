@@ -54,56 +54,18 @@ public class BaseLibrary {
      */
     public void waitForJS() {
         try {
-            Wait().until(
-                    (ExpectedCondition<Boolean>) driver -> {
-                        try {
-                            boolean readyState = (Boolean) executeJavaScript("return document.readyState").equals("complete");
-//                            System.out.println("Internal ready state:" + readyState);
-                            return readyState;
-                        } catch (Exception e) {
-//                            System.out.println("Internal ready state error:" + e.getMessage());
-                            return true;
-                        }
+            new WebDriverWait(WebDriverRunner.getWebDriver(), Configuration.timeout / 1000, 50).
+                    until((ExpectedCondition<Boolean>) driver -> {
+                        String readyState = (String) executeJavaScript("return document.readyState");
+//                        System.out.println("Internal ready state:" + readyState);
+//                        return readyState.equals("complete") || readyState.equals("interactive");
+                        return !readyState.equals("loading");
+
                     });
-            Wait().until(
-                    (ExpectedCondition<Boolean>) driver -> {
-                        try {
-                            boolean jQueryActive = (Boolean) executeJavaScript("return jQuery.active == 0");
-//                            System.out.println("Internal jQuery active:" + jQueryActive);
-                            return jQueryActive;
-                        } catch (Exception e) {
-//                            System.out.println("Internal jQuery active error:" + e.getMessage());
-                            return true;
-                        }
-                    }
-            );
-
-            /*Wait().until(ExpectedConditions.and(
-                    (ExpectedCondition<Boolean>) driver -> {
-                        try {
-                            boolean readyState = (Boolean) executeJavaScript("return document.readyState").equals("complete");
-                            System.out.println("Internal ready state:" + readyState);
-                            return readyState;
-                        } catch (Exception e) {
-                            System.out.println("Internal ready state error:" + e.getMessage());
-                            return true;
-                        }
-                    },
-                    (ExpectedCondition<Boolean>) driver -> {
-                        try {
-                            boolean jQueryActive = (Boolean) executeJavaScript("return jQuery.active == 0");
-                            System.out.println("Internal jQuery active:" + jQueryActive);
-                            return jQueryActive;
-                        } catch (Exception e) {
-                            System.out.println("Internal jQuery active error:" + e.getMessage());
-                            return true;
-                        }
-                    }
-            ));*/
+//            System.out.println("Loading: Ok");
         } catch (Exception e) {
-//            System.out.println("WaitForJS error: " + e.getMessage());
+//            System.out.println("Loading window error: " + e.getMessage());
         }
-
         /*try {
             Wait().until(ExpectedConditions.and(
                     (ExpectedCondition<Boolean>) driver -> {
@@ -138,7 +100,7 @@ public class BaseLibrary {
     public void waitForLoadingToDisappear(WebDriver driver) {
 //        driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
         try {
-            new WebDriverWait(driver, Configuration.timeout / 1000, 200).
+            new WebDriverWait(driver, Configuration.timeout / 1000, 50).
                     until(invisibilityOfElementLocated(By.className("loading")));
 //            System.out.println("Loading: Ok");
         } catch (Exception e) {
@@ -148,7 +110,7 @@ public class BaseLibrary {
     }
 
     public void waitForLoading(WebDriver driver) {
-        waitForJS();
+//        waitForJS();
         waitForLoadingToDisappear(driver);
     }
     //</editor-fold>
@@ -289,7 +251,7 @@ public class BaseLibrary {
     }
 
     //Bugün tarihinden sonraki bir yıl sonrayı alır.
-    public String getAfterSysYear(){
+    public String getAfterSysYear() {
         String untildate = getSysDateForKis();// can take any date in current
         // format
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -622,16 +584,18 @@ public class BaseLibrary {
     @Step("Popup İşlem Onayı:  \"{secim}\"")
     public void islemOnayi(String secim) {
 
+        SelenideElement islemOnayiPopup = $(By.id("baseConfirmationDialog:dialog"));
         SelenideElement btnIslemOnayiEvet = $(By.id("baseConfirmationDialog:confirmButton"));
         SelenideElement btnIslemOnayiHayir = $(By.id("baseConfirmationDialog:baseConfirmationDialogCancelButton"));
-
-        switch (secim) {
-            case "Evet":
-                btnIslemOnayiEvet.click();
-                break;
-            case "Hayır":
-                btnIslemOnayiHayir.click();
-                break;
+        if (islemOnayiPopup.isDisplayed()) {
+            switch (secim) {
+                case "Evet":
+                    btnIslemOnayiEvet.click();
+                    break;
+                case "Hayır":
+                    btnIslemOnayiHayir.click();
+                    break;
+            }
         }
     }
 }

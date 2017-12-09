@@ -46,6 +46,23 @@ public class TebligEttiklerimPage extends MainPage {
         return this;
     }
 
+    // document-detail
+
+    @Step("İçerik göster butonuna tıkla.")
+    public TebligEttiklerimPage icreikGoster(String konu, String gidecegiYer, String evrakTarihi, String no) {
+
+        tableTebligEttiklerim
+                .filterBy(Condition.text("Konu: " + konu))
+                .filterBy(Condition.text("Gideceği Yer: " + gidecegiYer))
+                .filterBy(Condition.text("Evrak Tarihi: " + evrakTarihi))
+                .filterBy(Condition.text("No: " + no))
+                .first()
+                .find(By.xpath(".//span[contains(@class, 'document-detail')]"))
+                .click();
+
+        return this;
+    }
+
     @Step("Tebliğ Hatırlat butonuna tıkla.")
     public TebligEttiklerimPage tebligHatirlatTabTikla() {
         btnTebligHatirlatTab.click();
