@@ -1,7 +1,6 @@
 package common;
 
 import com.codeborne.selenide.Configuration;
-import io.qameta.allure.Step;
 import listeners.SettingsListener;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.BeforeClass;
@@ -31,15 +30,15 @@ public class BaseTest extends BaseLibrary {
         Configuration.baseUrl = belgenetURL;
         //Configuration.browser = "chrome";
         //Configuration.browser = "drivers.Firefox";
-         Configuration.browser = "marionette";
+        Configuration.browser = "marionette";
 
         Configuration.remote = "http://10.101.20.153:4444/wd/hub";
         Configuration.reportsFolder = "test-result/reports";
         Configuration.screenshots = false;
         Configuration.savePageSource = false;
-        Configuration.collectionsTimeout = 20000;
-        Configuration.timeout = 20000;
-        Configuration.holdBrowserOpen = true;
+        Configuration.collectionsTimeout = 30000;
+        Configuration.timeout = 30000;
+        Configuration.holdBrowserOpen = false;
         Configuration.headless = false;
         Configuration.startMaximized = true;
         //Configuration.browserSize = "1024x600";

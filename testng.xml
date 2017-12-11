@@ -10,12 +10,7 @@
     <!--</suite-files>-->
     <test name="GercekKisiYonetimiTest">
         <classes>
-            <class name="GercekKisiYonetimi.GercekKisiYonetimiTest"/>
-        </classes>
-    </test>
-    <test name="TuzelKisiYonetimiTest">
-        <classes>
-            <class name="TuzelKisiYonetimi.TuzelKisiYonetimiTest"/>
+            <class name="GercekKisiYonetimi2.GercekKisiYonetimiTest2"/>
         </classes>
     </test>
 </suite>
