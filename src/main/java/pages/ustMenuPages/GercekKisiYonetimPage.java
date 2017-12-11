@@ -40,7 +40,7 @@ public class GercekKisiYonetimPage extends MainPage {
     SelenideElement txtUnvan = $(By.id("gercekKisiYonetimiEditorForm:unvanId"));
     SelenideElement txtAd = $(By.id("gercekKisiYonetimiEditorForm:adInput"));
     SelenideElement txtSoyad = $(By.id("gercekKisiYonetimiEditorForm:soyadInput"));
-    SelenideElement chkKepAdresiKullaniyor = $(By.id("gercekKisiYonetimiEditorForm:kepAdresiKullanimCheckbox_input"));
+    SelenideElement chkKepAdresiKullaniyor = $(By.id("gercekKisiYonetimiEditorForm:kepAdresiKullanimCheckbox"));
     SelenideElement btnKepAdresBilgileriEkle = $(By.id("gercekKisiYonetimiEditorForm:kepBilgileriDataTable:addNewKepAdresiButton"));
     SelenideElement btnKaydet = $(By.id("gercekKisiYonetimiEditorForm:saveGercekKisiButton"));
     SelenideElement btnIletisimBilgileriEkle = $(By.id("gercekKisiYonetimiEditorForm:iletisimBilgileriDataTable:addNewIletisimBilgisiButton"));
