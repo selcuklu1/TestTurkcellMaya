@@ -3,7 +3,9 @@ package pages.pageComponents.belgenetElements;
 import com.codeborne.selenide.Command;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.impl.ElementFinder;
 import com.codeborne.selenide.impl.WebElementSource;
+import org.openqa.selenium.By;
 
 import java.io.IOException;
 
@@ -31,7 +33,8 @@ class ComboLov {
         @Override
         public SelenideElement execute(SelenideElement proxy, WebElementSource locator, Object[] args) throws IOException {
             setLocators(proxy);
-            return selectLov(args[0].toString());
+            By by = selectLov(args[0].toString());
+            return ElementFinder.wrap(BelgenetElement.class, null, by, 0);
         }
     }
 
@@ -140,7 +143,8 @@ class ComboLov {
         @Override
         public BelgenetElement execute(SelenideElement proxy, WebElementSource locator, Object[] args) throws IOException {
             setLocators(proxy);
-            return lastSelectedLov();
+            By by = lastSelectedLov();
+            return ElementFinder.wrap(BelgenetElement.class, null, by, 0);
         }
     }
     class CloseLovTreePanel implements Command<BelgenetElement> {

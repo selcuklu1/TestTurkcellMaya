@@ -1,18 +1,14 @@
 package pages.pageComponents;
 
-import com.codeborne.selenide.CollectionCondition;
-import com.codeborne.selenide.ElementsContainer;
-import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.*;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 
-import static com.codeborne.selenide.Condition.not;
-import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.CollectionCondition.*;
 import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.$$x;
-import static com.codeborne.selenide.Selenide.switchTo;
+import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.$inFrame;
-import static pages.pageComponents.belgenetElements.BelgentCondition.isToolboxButtonOn;
+import static pages.pageComponents.belgenetElements.BelgentCondition.toolboxButtonOn;
 
 /**
  * Yazan: Ilyas Bayraktar
@@ -35,27 +31,50 @@ public class TextEditor extends ElementsContainer {
         return this;
     }*/
 
-    public SelenideElement editor() {
-        By frame = By.cssSelector("div[id^='cke'][id$='contents'] iframe");
+    private SelenideElement editor() {
+//        By frame = By.cssSelector("div[id^='cke'][id$='contents'] iframe");
+        By frame = By.className("cke_wysiwyg_frame");
 
 //      $inFrame("body[class*='cke_contents_ltr']");
-        return $inFrame("body[class*='cke_contents_ltr']", frame);
+//        return $inFrame("body[class~='cke_contents_ltr']", frame);
+//        return $inFrame(By.tagName("body"), frame);
+//        return $inFrame(".cke_editable", frame);
+        return $inFrame(".cke_editable", frame);
+//        return $inFrame(".cke_contents_ltr", frame);
+    }
+
+    public String getText() {
+        String text = editor().text();
+        switchTo().defaultContent();
+        return text;
+    }
+
+    public String getInnerText() {
+        String text = editor().innerText();
+        switchTo().defaultContent();
+        return text;
     }
 
     @Step("Editore tekst yaz")
     public TextEditor type(CharSequence... keysToSend) {
         editor().sendKeys(keysToSend);
+////        WebDriverRunner.getWebDriver().findElement(By.cssSelector("body[class='cke_editable']")).sendKeys(keysToSend);
+//        WebDriverRunner.getWebDriver().findElement(By.tagName("body")).sendKeys(keysToSend);
         switchTo().defaultContent();
+//        WebDriverRunner.getWebDriver().switchTo().parentFrame();
         return this;
     }
 
     @Step("\"{name}\" toolbar butonun etkin durumu \"{value}\" yap")
     public TextEditor toolbarButton(String name, boolean value) {
-        SelenideElement button = $$x("//a/span[contains(@class,'cke_button_label') and normalize-space(text())='" + name + "']/..")
-                .filterBy(visible).shouldHaveSize(1).first();
+        SelenideElement button =
+                $$x("//a/span[contains(@class,'cke_button_label') and normalize-space(text())='" + name + "']/..")
+                        .filterBy(visible).first();
+        System.out.println($$x("//a/span[contains(@class,'cke_button_label') and normalize-space(text())='" + name + "']/..").size());
 
-        if (button.is(isToolboxButtonOn) == value)
+        if (button.is(toolboxButtonOn) != value) {
             button.click();
+        }
 
         return this;
     }
@@ -67,11 +86,21 @@ public class TextEditor extends ElementsContainer {
 
         combo.click();
 
-        By iframeLocator = By.className("cke_panel_frame");
-        $inFrame(By.cssSelector(".cke_panel_block a[title='" + value + "']"), iframeLocator).click();
+        By iframeLocator = By.cssSelector("iframe[class='cke_panel_frame']");
+        $(iframeLocator).shouldBe(visible);
+        switchTo().frame(WebDriverRunner.getWebDriver().findElement(iframeLocator));
+//        $inFrame(By.cssSelector(".cke_panel_block a[title='" + value + "']"), iframeLocator);//.click();
 
-        switchTo().defaultContent();
+        $(By.cssSelector(".cke_panel_block a[title='" + value + "']")).click();
+
+//        switchTo().defaultContent();
+        WebDriverRunner.getWebDriver().switchTo().parentFrame();
         return this;
     }
 
+    @Step("")
+    public TextEditor sablonlar() {
+
+        return this;
+    }
 }

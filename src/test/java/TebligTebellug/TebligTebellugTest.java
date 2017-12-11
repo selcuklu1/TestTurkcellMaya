@@ -5,7 +5,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.EvrakDetayiPage;
 import pages.solMenuPages.*;
-import sun.tools.tree.ShiftRightExpression;
 
 
 public class TebligTebellugTest extends BaseTest {

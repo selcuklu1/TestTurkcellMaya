@@ -1,19 +1,21 @@
 package pages.pageComponents.belgenetElements;
 
+import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.WebDriverRunner;
 import com.codeborne.selenide.commands.Commands;
 import com.codeborne.selenide.impl.ElementFinder;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
-import java.util.Optional;
+import java.sql.Timestamp;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
-import static com.codeborne.selenide.Selenide.switchTo;
-//import pages.pageComponents.belgenetElements.ComboLov.*;
+import static com.codeborne.selenide.Selenide.*;
 
 public class BelgenetFramework {
 
@@ -107,24 +109,24 @@ public class BelgenetFramework {
         return ElementFinder.wrap(BelgenetElement.class, null, By.cssSelector(cssSelector), 0);
     }
 
-    private static SelenideElement switchToFrameOfElement(By elementLocator, By... iframeLocator){
-        switchTo().defaultContent();
+    private static void switchToFrameOfElement(By elementLocator, By... iframeLocator) {
+
+       /* switchTo().defaultContent();
         if ($(elementLocator).exists())
-            return $(elementLocator);
+            return;// $(elementLocator);*/
 
         By f = iframeLocator.length > 0 ? iframeLocator[0] : By.tagName("iframe");
         ElementsCollection iframes = $$(f).filterBy(visible);
 
         for (SelenideElement iframe : iframes) {
-            iframe.shouldBe(visible);
+//            iframe.shouldBe(visible);
             switchTo().frame(iframe);
             if ($(elementLocator).exists())// && $(locator).is(visible))
-                break;
+                return;
+
             switchTo().defaultContent();
         }
 
-        return $(elementLocator);
+//        return;// $(elementLocator);
     }
-
-
 }

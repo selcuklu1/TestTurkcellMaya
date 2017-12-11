@@ -49,7 +49,6 @@ public class SolMenuData {
         TebellugEttiklerim("Tebellüğ Ettiklerim"),
         Hazirladiklarim("Hazırladıklarım");
 
-
         private String groupId = groupIdPrefix + "IslemYaptiklarim";
         private String groupText = "İşlem Yaptıklarım";
         private String menuText;

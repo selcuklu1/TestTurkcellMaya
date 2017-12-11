@@ -109,7 +109,7 @@ public class ComboLovHelper extends BaseLibrary {
 //        return ElementFinder.wrap(BelgenetElement.class, null, By.cssSelector(lovText), 0);
     }
 
-    static BelgenetElement lastSelectedLov() {
+    static By lastSelectedLov() {
 
         SelenideElement e;
         if (multiType)
@@ -123,7 +123,7 @@ public class ComboLovHelper extends BaseLibrary {
 
 //        locator = multiType ? locator + ":nth-child("+ $$(l).size() +")" : lovSecilen;
 //        return locator;
-        return ElementFinder.wrap(BelgenetElement.class, null, By.cssSelector(locator), 0);
+        return By.cssSelector(locator);
     }
 
     static BelgenetElement lastSelectedLovTitle() {
@@ -212,7 +212,7 @@ public class ComboLovHelper extends BaseLibrary {
     }
 
     //region selectLov metodları
-    public static BelgenetElement selectLov(String value) {
+    public static By selectLov(String value) {
 
         //executeJavaScript("arguments[0].scrollIntoView();", element);
         try {
@@ -230,10 +230,17 @@ public class ComboLovHelper extends BaseLibrary {
         else
             selectSingleType(value);
 
-        if (multiType)
+
+//        return By.cssSelector(lovText);
+
+       /* if (multiType)
             return ElementFinder.wrap(BelgenetElement.class, null, By.cssSelector(lovText), 0);
         else
-            return ElementFinder.wrap(BelgenetElement.class, null, By.cssSelector(lovSecilen), 0);
+            return ElementFinder.wrap(BelgenetElement.class, null, By.cssSelector(lovSecilen), 0);*/
+        if (multiType)
+            return By.cssSelector(lovText);
+        else
+            return By.cssSelector(lovSecilen);
     }
 
     public static boolean isLovValueSelectable(String value) {
@@ -359,11 +366,14 @@ public class ComboLovHelper extends BaseLibrary {
 
         closeLovTreePanel();
 
-        Assert.assertEquals(selectedTitles.size() + 1, $$(lovSecilenItemTitle).size(), "Bir seçenek eklenmesi bekleniyor");
+        Assert.assertTrue(isSelected, "Bir değer seçilemedi");
+//        Assert.assertEquals($$(lovSecilenItemTitle).size(),selectedTitles.size() + 1, "Bir seçenek eklenmesi bekleniyor");
 
         try {
-            Allure.addAttachment("Seçilen değerleri:", $$(lovSecilenItemTitle).get(selectedDetails.size()).text()
-                    + "\n" + $$(lovSecilenItemDetail).get(selectedDetails.size()).text());
+            if ($$(lovSecilen).size() > 0)
+                Allure.addAttachment("Seçilen değerleri:", $$(lovSecilen).last().text());
+//                Allure.addAttachment("Seçilen değerleri:", $$(lovSecilenItemTitle).get(selectedDetails.size()).text()
+//                    + "\n" + $$(lovSecilenItemDetail).get(selectedDetails.size()).text());
         } catch (Exception ignored) { }
     }
 
@@ -383,7 +393,7 @@ public class ComboLovHelper extends BaseLibrary {
     private static BelgenetElement clearLov(){
         if (!WebDriverRunner.getWebDriver().findElement(By.cssSelector(lovText)).isDisplayed())
             $(lovInputTextleriTemizle).shouldBe(visible).click();
-        return (BelgenetElement) $(lovText);
+        return ElementFinder.wrap(BelgenetElement.class, null, By.cssSelector(lovText), 0);
     }
 
     public static BelgenetElement type(String text){
