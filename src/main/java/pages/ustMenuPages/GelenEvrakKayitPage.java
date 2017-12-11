@@ -10,6 +10,7 @@ import pages.MainPage;
 import pages.pageComponents.UstMenu;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
+import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static com.codeborne.selenide.Selenide.executeJavaScript;
@@ -146,7 +147,7 @@ public class GelenEvrakKayitPage extends MainPage {
     SelenideElement mesaj = $("[#evrakKaydetBasariliDialog .ui-dialog-content]");
 
     SelenideElement lblDosyaAdi = $(By.id("evrakBilgileriForm:evrakEkTabView:dosyaAdi"));
-    SelenideElement lblEklenenPdfUstYazi = $(By.id("evrakBilgileriForm:eklendiYazisi"));
+    SelenideElement lblEklenenPdfUstYazi = $("[id='evrakBilgileriForm:eklendiYazisi'] label");
     SelenideElement lblEklenenMailUstYazi = $(By.xpath("//table[@id='evrakBilgileriForm:ustYaziAdim']/tbody/tr/td[3]/label"));
 
     SelenideElement btnBirim = $(By.id("evrakBilgileriForm:j_idt4283"));
@@ -379,6 +380,7 @@ public class GelenEvrakKayitPage extends MainPage {
 //        txtDagitimBilgileriBirim.sendKeys(birim);
         cmbHavaleIslemleriBirim.type(birim).titleItems()
                 .filterBy(Condition.exactText(birim)).get(0).click();
+        cmbHavaleIslemleriBirim.closeLovTreePanel();
         return this;
     }
 
@@ -657,8 +659,9 @@ public class GelenEvrakKayitPage extends MainPage {
     }
 
     @Step("Evrak Ekleri Dosya Ekleme")
-    public GelenEvrakKayitPage evrakEkleriDosyaEkleme(String pathToFile) {
+    public GelenEvrakKayitPage evrakEkleriDosyaEkleme(String pathToFile) throws InterruptedException {
         uploadFile(dosyaPath, pathToFile);
+        Thread.sleep(4000);
 //        WebDriverRunner.getWebDriver()
 //                .findElement(dosyaPath)
 //                .sendKeys(pathToFile);
@@ -673,14 +676,15 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("EkBilgiler dosya ekleme excel adi kontrol")
     public GelenEvrakKayitPage evrakEkleriDosyaEkleDosyaAdiKontrol(String excelAdi) {
-        String text = lblDosyaAdi.text();
-        System.out.println(text);
-        Assert.assertEquals(text, excelAdi);
+        $(byText(excelAdi)).shouldBe(Condition.visible);
+//        String text = lblDosyaAdi.text();
+//        System.out.println(text);
+//        Assert.assertEquals(text, excelAdi);
         return this;
     }
 
     @Step("PDF Ust Yazi adi kontrol")
-    public GelenEvrakKayitPage ustYaziPdfAdiKontrol(String ustYaziAdi) {
+    public GelenEvrakKayitPage ustYaziPdfAdiKontrol(String ustYaziAdi) throws InterruptedException {
         String text = lblEklenenPdfUstYazi.text();
         System.out.println(text);
         Assert.assertEquals(text.contains(ustYaziAdi), true);
@@ -802,7 +806,7 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("")
     public GelenEvrakKayitPage ustYaziDegistirilmisPopUpKontrol() {
-        if (popUpUstYaziDegistirilme.isDisplayed())
+        if (popUpUstYaziDegistirilme.exists())
             clickJs(btnUstYaziDegistirmeHayır);
         return this;
     }
@@ -838,7 +842,8 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("Evrak turu alan kontrolü")
     public GelenEvrakKayitPage evrakTuruKontrol(String evrakTuru) {
-        Assert.assertEquals(cmbEvrakBilgileriListEvrakTuru.getText(), evrakTuru);
+        cmbEvrakBilgileriListEvrakTuru.shouldHave(Condition.text(evrakTuru));
+//        Assert.assertEquals(cmbEvrakBilgileriListEvrakTuru.getText(), evrakTuru);
         return this;
     }
 
@@ -850,7 +855,7 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("Konu kodu sil")
     public GelenEvrakKayitPage konuKoduSil() throws InterruptedException {
-        comboKonuKodu.clearLastSelectedLov().clear();
+        comboKonuKodu.clearLastSelectedLov();
         return this;
     }
 
