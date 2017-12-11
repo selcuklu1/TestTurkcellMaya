@@ -483,7 +483,6 @@ public class EvrakPaylasmaTest extends BaseTest {
 
     }
 
-
     @Test(enabled = true, description = "TC2192 : İçeriğinde form olan evrakı paylaşma")
     public void TC2192() {
 
@@ -607,7 +606,6 @@ public class EvrakPaylasmaTest extends BaseTest {
 
 
     }
-
 
     @Test(enabled = true, description = "TC2197 : Devredilen evrakı paylaşma")
     public void TC2197() {

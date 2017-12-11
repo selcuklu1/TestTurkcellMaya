@@ -151,7 +151,6 @@ public class KurumYonetimiTest extends BaseTest {
 
     }
 
-
     @Test(enabled = true, description = "TC01109 : Kurum tanımlama ve kontrolü")
     public void TC01109() throws InterruptedException {
 
