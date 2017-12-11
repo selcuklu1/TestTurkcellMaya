@@ -18,15 +18,5 @@
             <class name="TuzelKisiYonetimi.TuzelKisiYonetimiTest"/>
         </classes>
     </test>
-    <test name="YonetimHavuzuIslemleriTest">
-        <classes>
-            <class name="YonetimHavuzuIslemleri.YonetimHavuzuIslemleriTest"/>
-        </classes>
-    </test>
-    <test name="EvrakPostalama">
-        <classes>
-            <class name="EvrakPostalama.EvrakPostalamaTest"/>
-        </classes>
-    </test>
 </suite>
 
