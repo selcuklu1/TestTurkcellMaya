@@ -1,4 +1,4 @@
-package OnayAkisi;
+package tests.OnayAkisi;
 
 import common.BaseTest;
 import io.qameta.allure.Severity;
