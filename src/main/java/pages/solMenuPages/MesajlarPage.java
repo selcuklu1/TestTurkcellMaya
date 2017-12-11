@@ -19,13 +19,13 @@ public class MesajlarPage extends MainPage {
     SelenideElement lblMesaj = $(By.xpath("//label[contains(text(),'Mesaj') and @class='columnLabelFixWidth']/../../td[3]"));
 
     @Step("Mesajlar sayfasını aç")
-    public MesajlarPage openPage(){
+    public MesajlarPage openPage() {
         solMenu(SolMenuData.Bildirimler.Mesajlar);
         return this;
     }
 
     @Step("Mesaj Seç")
-    public MesajlarPage mesajSec(String kimden, String konu, String mesaj){
+    public MesajlarPage mesajSec(String kimden, String konu, String mesaj) {
 
         tableMesajlar
                 .filterBy(Condition.text(kimden))
@@ -36,9 +36,9 @@ public class MesajlarPage extends MainPage {
 
         return this;
     }
-    
+
     @Step("Mesaj kontrol")
-    public MesajlarPage mesajKontrol(String konu, String tarih, String mesajAciklama){
+    public MesajlarPage mesajKontrol(String konu, String tarih, String mesajAciklama) {
 
         lblKonu.shouldHave(Condition.text(konu));
         lblTarih.shouldHave(Condition.text(tarih));

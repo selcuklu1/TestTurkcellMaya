@@ -1,8 +1,10 @@
 package pages.pageComponents;
 
 import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.WebDriverRunner;
 import common.BaseLibrary;
 import io.qameta.allure.Step;
+import org.openqa.selenium.By;
 import org.testng.Assert;
 
 import static com.codeborne.selenide.Condition.*;
@@ -128,8 +130,13 @@ public class IslemMesajlari extends BaseLibrary {
     }
 
     public void waitDisappear() {
-        if (closeMessagePopup.exists())
-            closeMessagePopup.click();
+        try {
+            WebDriverRunner.getWebDriver().findElement(By.className("lobibox-close")).click();
+        } catch (Exception ignored) {
+        }
+
+//        if (closeMessagePopup.exists())
+//            closeMessagePopup.click();
     }
 
 }

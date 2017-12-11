@@ -16,7 +16,7 @@ public class TebellugEttiklerimPage extends MainPage {
 
 
     @Step("Tebellüğ Ettiklerim sayfasını aç")
-    public TebellugEttiklerimPage openPage(){
+    public TebellugEttiklerimPage openPage() {
         solMenu(SolMenuData.IslemYaptiklarim.TebellugEttiklerim);
         return this;
     }

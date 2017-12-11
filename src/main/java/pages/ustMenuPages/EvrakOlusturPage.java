@@ -5,7 +5,7 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Step;
-import org.apache.xalan.templates.ElemElement;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.testng.Assert;
@@ -55,7 +55,7 @@ public class EvrakOlusturPage extends MainPage {
     SelenideElement btbEvrakOlusturKapatEvet = $(By.id("kapatKaydetEvetButton"));
     SelenideElement divBilgileri = $(By.id("evrakBilgileriContainerDiv"));
     SelenideElement labelIlkIslemTipi = $(By.xpath("//form[@id='yeniGidenEvrakForm']/table[1]//label[@class='columnLabelFixWidth']"));
-    SelenideElement labelIkinciIslemTipi= $(By.xpath("//form[@id='yeniGidenEvrakForm']/table[2]//label[@class='columnLabelFixWidth']"));
+    SelenideElement labelIkinciIslemTipi = $(By.xpath("//form[@id='yeniGidenEvrakForm']/table[2]//label[@class='columnLabelFixWidth']"));
     SelenideElement labelIlkKullanici = $(By.xpath("//form[@id='yeniGidenEvrakForm']/table[1]//label[@class='columnLabelFix']"));
     SelenideElement labelIkinciKullanici = $(By.xpath("//form[@id='yeniGidenEvrakForm']/table[2]//label[@class='columnLabelFix']"));
 
@@ -66,7 +66,6 @@ public class EvrakOlusturPage extends MainPage {
         $("#yeniGidenEvrakForm").shouldBe(visible);
         return this;
     }
-
 
 
     @Step("PDF Önizleme")
@@ -114,8 +113,8 @@ public class EvrakOlusturPage extends MainPage {
 
     public EvrakOlusturPage kullaniciIslemVeSiraKontrolu(String kullanici1, String islemTipi1, String kullanici2, String islemTipi2) {
 
-        Assert.assertEquals(labelIlkIslemTipi.getText(), "1. "+ islemTipi1);
-        Assert.assertEquals(labelIkinciIslemTipi.getText(), "2. "+ islemTipi2);
+        Assert.assertEquals(labelIlkIslemTipi.getText(), "1. " + islemTipi1);
+        Assert.assertEquals(labelIkinciIslemTipi.getText(), "2. " + islemTipi2);
         Assert.assertEquals(labelIlkKullanici.getText(), kullanici1);
         Assert.assertEquals(labelIkinciKullanici.getText(), kullanici2);
 
@@ -561,7 +560,7 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Geregi Secim Tipi alanında {value} seç")
         public BilgilerTab geregiSecimTipiSec(String value) {
-            cmbGeregiSecimTipi.selectOption(value);
+            cmbGeregiSecimTipi.selectOptionByValue(value);
             return this;
         }
 

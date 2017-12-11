@@ -117,10 +117,10 @@ public class TebliglerPage extends MainPage {
     SelenideElement btnTebellugHayir = $(By.id("mainInboxForm:tebellugEtHayirButton"));
 
     @Step("Tebelliğ Et butonuna tıkla.")
-    public TebliglerPage tebellugEt(boolean onay){
+    public TebliglerPage tebellugEt(boolean onay) {
         btnTebellugEt.click();
 
-        if(onay == true)
+        if (onay == true)
             btnTebellugEvet.click();
         else
             btnTebellugHayir.click();
@@ -129,10 +129,9 @@ public class TebliglerPage extends MainPage {
     }
 
 
-
     @Step("Evrak kontrol")
     public TebliglerPage evrakKontrol(String konu, String birim, String tebligEden, String evrakTipi, String aciklama, boolean shouldBeExist) {
-        if(shouldBeExist == true){
+        if (shouldBeExist == true) {
             tableTebligler
                     .filterBy(Condition.text("Konu: " + konu))
                     .filterBy(Condition.text("Birim: " + birim))

@@ -69,8 +69,8 @@ public class TextEditor extends ElementsContainer {
     public TextEditor toolbarButton(String name, boolean value) {
         SelenideElement button =
                 $$x("//a/span[contains(@class,'cke_button_label') and normalize-space(text())='" + name + "']/..")
-                        .filterBy(visible).first();
-        System.out.println($$x("//a/span[contains(@class,'cke_button_label') and normalize-space(text())='" + name + "']/..").size());
+                        .shouldHave(sizeGreaterThan(0)).filterBy(visible).first();
+//        System.out.println($$x("//a/span[contains(@class,'cke_button_label') and normalize-space(text())='" + name + "']/..").size());
 
         if (button.is(toolboxButtonOn) != value) {
             button.click();

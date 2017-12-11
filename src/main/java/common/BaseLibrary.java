@@ -97,16 +97,31 @@ public class BaseLibrary {
         });
     }
 
-    public void waitForLoadingToDisappear(WebDriver driver) {
+    public void waitForLoadingToDisappearO(WebDriver driver) {
 //        driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
         try {
-            new WebDriverWait(driver, Configuration.timeout / 1000, 50).
+            new WebDriverWait(driver, Configuration.timeout / 1000, 500).
                     until(invisibilityOfElementLocated(By.className("loading")));
 //            System.out.println("Loading: Ok");
         } catch (Exception e) {
 //            System.out.println("Loading window error: " + e.getMessage());
         }
 //        driver.manage().timeouts().implicitlyWait(Configuration.timeout, TimeUnit.MILLISECONDS);
+    }
+
+    public void waitForLoadingToDisappear(WebDriver driver) {
+        try {
+
+            //div[starts-with(@id,"bekleyiniz") and contains(@style, "display")]
+            //div[id*='bekleyiniz'][style*='visibility: visible']
+            new WebDriverWait(driver, Configuration.timeout / 1000, 50).
+                    until(invisibilityOfElementLocated(By.cssSelector("div[id*='bekleyiniz'][style*='visibility: visible']")));
+//            new WebDriverWait(driver, Configuration.timeout / 1000, 50).
+//                    until(ExpectedConditions.invisibilityOfAllElements(driver.findElements(By.className("loading"))));
+            System.out.println("Loading: Ok");
+        } catch (Exception e) {
+//            System.out.println("Loading window error: " + e.getMessage());
+        }
     }
 
     public void waitForLoading(WebDriver driver) {

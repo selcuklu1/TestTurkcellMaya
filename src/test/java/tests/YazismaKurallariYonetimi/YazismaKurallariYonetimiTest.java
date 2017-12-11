@@ -1,4 +1,4 @@
-package YazismaKurallariYonetimi;
+package tests.YazismaKurallariYonetimi;
 
 import common.BaseTest;
 import org.testng.annotations.BeforeMethod;

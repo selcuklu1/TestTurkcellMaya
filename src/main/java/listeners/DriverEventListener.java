@@ -11,7 +11,7 @@ import java.sql.Timestamp;
 
 public class DriverEventListener extends BaseLibrary implements WebDriverEventListener {
 
-    private static boolean log = false;
+    private static boolean log = true;
 
     public void beforeAlertAccept(WebDriver driver) {
 
@@ -63,7 +63,17 @@ public class DriverEventListener extends BaseLibrary implements WebDriverEventLi
 
 
     public void beforeFindBy(By by, WebElement element, WebDriver driver) {
-        waitForLoading(driver);
+
+        boolean loading = true;
+        if (by != null)
+            if (by.equals(By.cssSelector("div[id*='bekleyiniz'][style*='visibility: visible']")))
+                loading = false;
+//        if (by.equals(By.className("loading")))
+//                loading = false;
+
+
+        if (loading)
+            waitForLoading(driver);
 
         if (log) {
             Timestamp timestamp = new Timestamp(System.currentTimeMillis());
@@ -87,14 +97,18 @@ public class DriverEventListener extends BaseLibrary implements WebDriverEventLi
          * executeScript("arguments[0].scrollIntoView();", element) bazı yerlerde beklenmedik
          * sonuçları verdiği için sendKeys kullanıldı. Test edilecek..!
          */
+
         if (log) {
             Timestamp timestamp = new Timestamp(System.currentTimeMillis());
             System.out.println(timestamp + " Before click: " + element.toString());
         }
-        try {
-            element.sendKeys(Keys.SHIFT); //element.sendKeys("\n");
-        } catch (Exception e) {
-        }
+
+//        try {
+//            element.sendKeys("\n");
+//        } catch (Exception ignored) { }
+        /*try {
+            element.sendKeys(Keys.SHIFT);
+        } catch (Exception ignored) { }*/
     }
 
     public void afterClickOn(WebElement element, WebDriver driver) {

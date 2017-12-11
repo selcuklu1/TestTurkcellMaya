@@ -17,6 +17,9 @@ public class UstMenu extends BaseLibrary {
 //        $(By.cssSelector("[id^='topMenuForm'][id$='altMenuDialog']")).waitUntil(Condition.exist, Configuration.timeout);
 
         $("#topMenuForm2").shouldBe(visible);
+
+        System.out.println($x("//div[starts-with(@id,'topMenuForm') and contains(@id,'altMenuDialog')]" +
+                "//span[starts-with(text(),'" + menuIsmi + "')]/parent::a").innerText());
         executeJavaScript("arguments[0].click();",
                 $x("//div[starts-with(@id,'topMenuForm') and contains(@id,'altMenuDialog')]" +
                         "//span[starts-with(text(),'" + menuIsmi + "')]/parent::a"));

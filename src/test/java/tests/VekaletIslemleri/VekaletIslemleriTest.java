@@ -1,4 +1,4 @@
-package VekaletIslemleri;
+package tests.VekaletIslemleri;
 
 import common.BaseTest;
 import io.qameta.allure.Severity;
@@ -197,7 +197,7 @@ public class VekaletIslemleriTest extends BaseTest {
                 .vekeletAlanVerenTabloKontrolu()
                 .vekeletAlanVerenTabloKapat()
                 .kullanicilarDoldur2("Optiim TEST1")
-                .kullniciIsmineGoreImzaParafSec("Optiim TEST1","İmzalama")
+                .kullniciIsmineGoreImzaParafSec("Optiim TEST1", "İmzalama")
                 .kullan()
                 .onaAkisiTextKontol()
                 .onayAkisiKullanilanKullanilanKontrolEt("Yasemin");
@@ -206,11 +206,12 @@ public class VekaletIslemleriTest extends BaseTest {
                 .editorTabAc()
                 .editorIcerikDoldur("Test Otomasyon")
                 .parafla();
-                //11 12e 13.  adımlar yazılacak
+        //11 12e 13.  adımlar yazılacak
 //                .sImzasec()
 //                .evrakImzalama()
 //                .imzala();
     }
+
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "vekaleti veren kullanıcının onay akışında seçilmesi (kendisi)")
     public void TC0012() throws InterruptedException {
@@ -235,7 +236,7 @@ public class VekaletIslemleriTest extends BaseTest {
                 .vekeletAlanVerenTabloKontrolu()
                 .vekeletAlanVerenTabloKapat()
                 .kullanicilarDoldur2("Optiim TEST1")
-                .kullniciIsmineGoreImzaParafSec("Optiim TEST1","İmzalama")
+                .kullniciIsmineGoreImzaParafSec("Optiim TEST1", "İmzalama")
                 .kullan()
                 .onaAkisiTextKontol()
                 .onayAkisiKullanilanKullanilanKontrolEt("Yasemin");

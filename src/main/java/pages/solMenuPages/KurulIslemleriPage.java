@@ -15,13 +15,13 @@ public class KurulIslemleriPage extends MainPage {
     BelgenetElement txtKlasor = comboLov(By.id("mainInboxForm:inboxDataTable:filtersAccordion:gundemKlasorLov:LovText"));
 
     @Step("Kurul işlemleri sayfası aç")
-    public KurulIslemleriPage openPage(){
+    public KurulIslemleriPage openPage() {
         solMenu(SolMenuData.KurulIslemleri.GundemIzleme);
         return this;
     }
-    
+
     @Step("Klasör doldur")
-    public KurulIslemleriPage klasorDoldur(String klasor){
+    public KurulIslemleriPage klasorDoldur(String klasor) {
         txtKlasor.selectLov(klasor);
         return this;
     }

@@ -378,8 +378,9 @@ public class ComboLovHelper extends BaseLibrary {
     }
 
     public static void closeLovTreePanel() {
-        if ($$(lovTreePanelKapat).last().is(visible))
+        if ($$(lovTreePanelKapat).last().is(visible)) {
             $$(lovTreePanelKapat).last().click();
+        }
     }
     //endregion
 
