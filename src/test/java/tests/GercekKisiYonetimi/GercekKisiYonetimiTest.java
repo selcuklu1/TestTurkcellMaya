@@ -523,15 +523,18 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .geregiAlanindaGoruntulenmeKontrolu(adSoyad)
                 .secilenGeregiSil()
                 .bilgiSecimTipiSec("G")
-                .bilgiAlanindaGoruntulenmeKontrolu(adSoyad);
+                .bilgiAlanindaGoruntulenmeKontrolu(ad, soyad);
 
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
                 .geregiSecimTipiSec("G")
+
+                //ilyas burası
+
                 .geregiAlanindaGoruntulenmeKontrolu(adSoyad)
                 .secilenGeregiSil()
                 .bilgiSecimTipiSec("G")
-                .bilgiAlanindaGoruntulenmeKontrolu(adSoyad);
+                .bilgiAlanindaGoruntulenmeKontrolu(ad, soyad);
     }
 }
