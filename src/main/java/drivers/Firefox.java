@@ -18,6 +18,10 @@ public class Firefox implements WebDriverProvider {
 //        FirefoxProfile profile = profilesIni.getProfile("default");
         //</editor-fold>
 
+//        System.setProperty("webdriver.gecko.driver","/Users/ilyas/Documents/WebDrivers/geckodriver-v0.19.0");
+//        System.setProperty("webdriver.gecko.driver","/Users/ilyas/Documents/WebDrivers/geckodriver-v0.18.0");
+
+
         FirefoxProfile profile = new FirefoxProfile();
         FirefoxOptions options = new FirefoxOptions()
                 .setProfile(profile)

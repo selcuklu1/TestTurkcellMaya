@@ -1,4 +1,4 @@
-package YonetimHavuzuIslemleri;
+package tests.YonetimHavuzuIslemleri;
 
 import common.BaseTest;
 import org.testng.annotations.BeforeMethod;

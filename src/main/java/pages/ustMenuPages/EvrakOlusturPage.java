@@ -3,11 +3,14 @@ package pages.ustMenuPages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Step;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.testng.Assert;
 import pages.MainPage;
+import pages.pageComponents.TextEditor;
 import pages.pageComponents.UstMenu;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
@@ -52,7 +55,7 @@ public class EvrakOlusturPage extends MainPage {
     SelenideElement btbEvrakOlusturKapatEvet = $(By.id("kapatKaydetEvetButton"));
     SelenideElement divBilgileri = $(By.id("evrakBilgileriContainerDiv"));
     SelenideElement labelIlkIslemTipi = $(By.xpath("//form[@id='yeniGidenEvrakForm']/table[1]//label[@class='columnLabelFixWidth']"));
-    SelenideElement labelIkinciIslemTipi= $(By.xpath("//form[@id='yeniGidenEvrakForm']/table[2]//label[@class='columnLabelFixWidth']"));
+    SelenideElement labelIkinciIslemTipi = $(By.xpath("//form[@id='yeniGidenEvrakForm']/table[2]//label[@class='columnLabelFixWidth']"));
     SelenideElement labelIlkKullanici = $(By.xpath("//form[@id='yeniGidenEvrakForm']/table[1]//label[@class='columnLabelFix']"));
     SelenideElement labelIkinciKullanici = $(By.xpath("//form[@id='yeniGidenEvrakForm']/table[2]//label[@class='columnLabelFix']"));
 
@@ -63,7 +66,6 @@ public class EvrakOlusturPage extends MainPage {
         $("#yeniGidenEvrakForm").shouldBe(visible);
         return this;
     }
-
 
 
     @Step("PDF Önizleme")
@@ -111,8 +113,8 @@ public class EvrakOlusturPage extends MainPage {
 
     public EvrakOlusturPage kullaniciIslemVeSiraKontrolu(String kullanici1, String islemTipi1, String kullanici2, String islemTipi2) {
 
-        Assert.assertEquals(labelIlkIslemTipi.getText(), "1. "+ islemTipi1);
-        Assert.assertEquals(labelIkinciIslemTipi.getText(), "2. "+ islemTipi2);
+        Assert.assertEquals(labelIlkIslemTipi.getText(), "1. " + islemTipi1);
+        Assert.assertEquals(labelIkinciIslemTipi.getText(), "2. " + islemTipi2);
         Assert.assertEquals(labelIlkKullanici.getText(), kullanici1);
         Assert.assertEquals(labelIkinciKullanici.getText(), kullanici2);
 
@@ -160,7 +162,7 @@ public class EvrakOlusturPage extends MainPage {
         BelgenetElement txtBilgi = comboLov("input[id$='bilgiLov:LovText']");
         SelenideElement btnBilgiTree = $("button[id$='bilgiLov:treeButton']");
 
-        SelenideElement cmbGeregiSecimTipi = $(By.xpath("//label[normalize-space(text())='Gereği Seçim Tipi']/ancestor::tr[@class='ui-datagrid-row']//select"));
+        SelenideElement cmbGeregiSecimTipi = $x("//label[normalize-space(text())='Gereği Seçim Tipi']/ancestor::tr[@class='ui-datagrid-row']//select");
         BelgenetElement txtGeregi = comboLov("input[id$='geregiLov:LovText']");
         SelenideElement btnGeregiTree = $("button[id$='geregiLov:treeButton']");
 
@@ -448,7 +450,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Onay Akisi alanında {0} seç")
+        @Step("Onay Akisi alanında {text} seç")
         public BilgilerTab cmbOnayAkisi(String text) {
             cmbOnayAkisi.selectLov(text);
             return this;
@@ -556,7 +558,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Geregi Secim Tipi alanında {0} seç")
+        @Step("Geregi Secim Tipi alanında {value} seç")
         public BilgilerTab geregiSecimTipiSec(String value) {
             cmbGeregiSecimTipi.selectOptionByValue(value);
             return this;
@@ -964,6 +966,16 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement radibtnSimza = $("[id='imzalaForm:imzalaRadio'] span[class='ui-radiobutton-icon']");
         SelenideElement btnEvrakImzala = $(By.xpath("//buton[starts-with(@id,'imzalaForm:jsfImzaForm:j_idt')]"));
 
+
+        public TextEditor getEditor() {
+            return editor;
+        }
+
+        private TextEditor editor = new TextEditor();
+
+
+
+
         private EditorTab open() {
             tabEditor.click();
             return this;
@@ -1047,13 +1059,16 @@ public class EvrakOlusturPage extends MainPage {
         public EditorTab popupSImzalaIslemleri() throws InterruptedException {
 
             //switchTo().window("");
-            Thread.sleep(5000);
-            SelenideElement sImza = $(By.id("imzalaForm:imzalamaYontemiRadio:1"));
-            sImza.selectRadio("I");
-            Thread.sleep(2000);
+//            Thread.sleep(5000);
+//            SelenideElement sImza = $(By.id("imzalaForm:imzalamaYontemiRadio:1"));
+//            sImza.selectRadio("I");
+
+            $("#evrakImzalaDialog").shouldBe(visible);
+            executeJavaScript("arguments[0].click()", WebDriverRunner.getWebDriver().findElement(By.id("imzalaForm:imzalamaYontemiRadio:1")));
+//            Thread.sleep(2000);
             SelenideElement imzala = $(By.xpath("//*[@id='imzalaForm:sayisalImzaConfirmDialogOpener']"));
             imzala.click();
-            Thread.sleep(2000);
+//            Thread.sleep(2000);
             SelenideElement sayisalImzaOnay = $(By.id("imzalaForm:sayisalImzaConfirmForm:sayisalImzaEvetButton"));
             sayisalImzaOnay.click();
             return this;

@@ -1,4 +1,4 @@
-package TebligTebellug;
+package tests.TebligTebellug;
 
 import common.BaseTest;
 import org.testng.annotations.BeforeMethod;
@@ -161,8 +161,6 @@ public class TebligTebellugTest extends BaseTest {
         String basariMesaj = "İşlem başarılıdır!";
 
 
-
-
         gelenEvraklarPage
                 .openPage()
                 .evrakSec(konu, geldigiYer, kayitTarihiSayi, evrakTarihi, evrakNo)
@@ -209,12 +207,6 @@ public class TebligTebellugTest extends BaseTest {
         evrakDetayiPage
                 .tebligGecmisiTabAc()
                 .tebligGecmisiKontrol("Yasemin Çakıl AKYOL - (08.12.2017)", tebligGecmisiKontrolEdilecekKullanicilar, tebligGecmisiKontrolEdilecekTarihler);
-
-
-
-
-
-
 
 
     }
@@ -290,24 +282,24 @@ public class TebligTebellugTest extends BaseTest {
 
 
         tebliglerPage
-                .evrakSec("Veri Toplama", birim, tebligEdenKullanici, evrakTipi,"test7")
+                .evrakSec("Veri Toplama", birim, tebligEdenKullanici, evrakTipi, "test7")
                 .tebellugEt(true)
                 .islemMesaji().basariliOlmali(basariMesaj);
 
         tebliglerPage
-                .evrakSec("Cihaz Takip İşlemleri", birim, tebligEdenKullanici, evrakTipi,"test7")
+                .evrakSec("Cihaz Takip İşlemleri", birim, tebligEdenKullanici, evrakTipi, "test7")
                 .tebellugEt(true)
                 .islemMesaji().basariliOlmali(basariMesaj);
 
         tebliglerPage
-                .evrakSec("Şikayet ve Talepler", birim, tebligEdenKullanici, evrakTipi,"test7")
+                .evrakSec("Şikayet ve Talepler", birim, tebligEdenKullanici, evrakTipi, "test7")
                 .tebellugEt(true)
                 .islemMesaji().basariliOlmali(basariMesaj);
 
         tebliglerPage
-                .evrakTikSec("Veri Toplama", birim, tebligEdenKullanici, evrakTipi,"test7", true)
-                .evrakTikSec("Cihaz Takip İşlemleri", birim, tebligEdenKullanici, evrakTipi,"test7", true)
-                .evrakTikSec("Şikayet ve Talepler", birim, tebligEdenKullanici, evrakTipi,"test7", true)
+                .evrakTikSec("Veri Toplama", birim, tebligEdenKullanici, evrakTipi, "test7", true)
+                .evrakTikSec("Cihaz Takip İşlemleri", birim, tebligEdenKullanici, evrakTipi, "test7", true)
+                .evrakTikSec("Şikayet ve Talepler", birim, tebligEdenKullanici, evrakTipi, "test7", true)
                 .tebligSil()
                 .islemMesaji().basariliOlmali(basariMesaj);
 
@@ -317,8 +309,6 @@ public class TebligTebellugTest extends BaseTest {
                 .evrakSec("Veri Toplama", "", "", "")
                 .evrakSec("Cihaz Takip İşlemleri", "", "", "")
                 .evrakSec("Şikayet ve Talepler", "", "", "");
-
-
 
 
     }

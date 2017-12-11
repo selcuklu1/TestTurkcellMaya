@@ -4,7 +4,6 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
-import org.apache.xalan.templates.ElemApplyImport;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
@@ -91,23 +90,27 @@ public class VekaletOnaylariPage extends MainPage {
         btnReddet.click();
         return this;
     }
+
     @Step("Onay evrakı alan kontrolü")
     public VekaletOnaylariPage onayEvrakiKontrol() {
         txtOnayEvraki.shouldBe(Condition.not(Condition.empty));
         return this;
     }
+
     @Step("Detay butonu tıkla")
-    public VekaletOnaylariPage detay(){
+    public VekaletOnaylariPage detay() {
         btnDetay.click();
         return this;
     }
+
     @Step("Evrak detay kontrolü")
-    public VekaletOnaylariPage evrakKontol(String evrakNo){
+    public VekaletOnaylariPage evrakKontol(String evrakNo) {
         tblEvrakNoPanel.text().equals(evrakNo);
         btnEkranKapat.click();
         islemPenceresiKapatmaOnayiPopup("Kapat");
         return this;
     }
+
     @Step("Onay onay")
     public VekaletOnaylariPage onay() {
         btnOnay.click();

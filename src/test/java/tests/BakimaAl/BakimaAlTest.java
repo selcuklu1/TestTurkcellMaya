@@ -1,4 +1,4 @@
-package BakimaAl;
+package tests.BakimaAl;
 
 import common.BaseTest;
 import org.testng.annotations.BeforeMethod;
@@ -30,8 +30,12 @@ public class BakimaAlTest extends BaseTest {
         String pasifKullanici = "test4";
 
 
-        for(int i = 0; i < 500; i++){ bilgilendirmeMetni500Karakter += "x"; }
-        for(int i = 0; i < 600; i++){ bilgilendirmeMetni600Karakter += "x"; }
+        for (int i = 0; i < 500; i++) {
+            bilgilendirmeMetni500Karakter += "x";
+        }
+        for (int i = 0; i < 600; i++) {
+            bilgilendirmeMetni600Karakter += "x";
+        }
 
 
         bakimaAlPage
@@ -81,16 +85,7 @@ public class BakimaAlTest extends BaseTest {
         login("ztekin", "123");
 
 
-
-
-
-
-
-
-        
     }
-
-
 
 
 }

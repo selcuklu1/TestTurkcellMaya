@@ -1,4 +1,4 @@
-package KararYazisiOlusturma;
+package tests.KararYazisiOlusturma;
 /****************************************************
  * Tarih: 2017-11-21
  * Proje: Türksat Functional Test Automation
@@ -9,21 +9,11 @@ import common.BaseTest;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
-import org.apache.poi.xwpf.usermodel.XWPFDocument;
-import org.apache.poi.xwpf.usermodel.XWPFTable;
-import org.apache.poi.xwpf.usermodel.XWPFTableCell;
-import org.apache.poi.xwpf.usermodel.XWPFTableRow;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pages.MainPage;
 import pages.solMenuPages.*;
 import pages.ustMenuPages.*;
 
-import java.io.*;
-import java.util.List;
-
-import static com.codeborne.selenide.Selenide.Wait;
-import static com.codeborne.selenide.Selenide.sleep;
 import static data.TestData.*;
 
 @Epic("Kep ile Postalama İşlemleri")
@@ -33,10 +23,10 @@ public class KararYazisiOlusturmaTest extends BaseTest{
         KararIzlemePage kararIzlemePage;
         ImzaBekleyenlerPage imzaBekleyenlerPage;
         KlasorYonetimiPage klasorYonetimiPage;
-        TeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage;
-        GelenEvraklarPage gelenEvraklarPage;
-        KurulIslemleriPage kurulIslemleriPage;
-        GundemIzlemePage gundemIzlemePage;
+    TeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage;
+    GelenEvraklarPage gelenEvraklarPage;
+    KurulIslemleriPage kurulIslemleriPage;
+    GundemIzlemePage gundemIzlemePage;
 
         @BeforeMethod
         public void loginBeforeTests() {
@@ -258,6 +248,7 @@ public class KararYazisiOlusturmaTest extends BaseTest{
 
 
     }
+
     String klasorAdi = createRandomText(12);
     String klasorKodu = createRandomNumber(10);
     @Severity(SeverityLevel.CRITICAL)
@@ -335,7 +326,7 @@ public class KararYazisiOlusturmaTest extends BaseTest{
                 .openPage()
                 .kapatilanKlasorSec("gündem")
                 .aralikliGundemOlustur();
-        String dosyaAdi =gundemIzlemePage.indirilenDosyaAd();
+        String dosyaAdi = gundemIzlemePage.indirilenDosyaAd();
 
         gundemIzlemePage
                 .wordDosyaKontrolEt(dosyaAdi);

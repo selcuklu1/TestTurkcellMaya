@@ -1,4 +1,4 @@
-package VekaletIslemleri;
+package tests.VekaletIslemleri;
 
 import common.BaseTest;
 import io.qameta.allure.Severity;
@@ -7,6 +7,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.MainPage;
 import pages.solMenuPages.GelenEvraklarPage;
+import pages.solMenuPages.ImzaBekleyenlerPage;
 import pages.solMenuPages.VekaletOnaylariPage;
 import pages.ustMenuPages.EvrakOlusturPage;
 import pages.ustMenuPages.VekaletVerPage;
@@ -25,6 +26,7 @@ public class VekaletIslemleriTest extends BaseTest {
     GelenEvraklarPage gelenEvraklarPage;
     VekaletOnaylariPage vekaletOnaylariPage;
     EvrakOlusturPage evrakOlusturPage;
+    ImzaBekleyenlerPage imzaBekleyenlerPage;
 
     String aciklama = "";
     String redNedeni = "";
@@ -39,6 +41,7 @@ public class VekaletIslemleriTest extends BaseTest {
         gelenEvraklarPage = new GelenEvraklarPage();
         vekaletOnaylariPage = new VekaletOnaylariPage();
         evrakOlusturPage = new EvrakOlusturPage();
+        imzaBekleyenlerPage = new ImzaBekleyenlerPage();
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -189,7 +192,7 @@ public class VekaletIslemleriTest extends BaseTest {
                 .evrakDiliSec("Türkçe")
                 .gizlilikDerecesiSec("Normal")
                 .ivedikSec("Normal")
-                .geregiSec("Birim")
+                .geregiSec("Optiim Birim")
                 .onayAkisiEkle()
                 .kullaniciTabloKontrol()
                 .kullanicilarImzaciSec("Paraflama")
@@ -197,20 +200,21 @@ public class VekaletIslemleriTest extends BaseTest {
                 .vekeletAlanVerenTabloKontrolu()
                 .vekeletAlanVerenTabloKapat()
                 .kullanicilarDoldur2("Optiim TEST1")
-                .kullniciIsmineGoreImzaParafSec("Optiim TEST1","İmzalama")
+                .kullniciIsmineGoreImzaParafSec("Optiim TEST1", "İmzalama")
                 .kullan()
                 .onaAkisiTextKontol()
                 .onayAkisiKullanilanKullanilanKontrolEt("Yasemin");
 
         evrakOlusturPage
                 .editorTabAc()
-                .editorIcerikDoldur("Test Otomasyon")
+                .editorIcerikDoldur("Test Otomasyon son55")
                 .parafla();
-                //11 12e 13.  adımlar yazılacak
+        //11 12e 13.  adımlar yazılacak
 //                .sImzasec()
 //                .evrakImzalama()
 //                .imzala();
     }
+
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "vekaleti veren kullanıcının onay akışında seçilmesi (kendisi)")
     public void TC0012() throws InterruptedException {
@@ -229,16 +233,24 @@ public class VekaletIslemleriTest extends BaseTest {
                 .geregiSec("Birim")
                 .onayAkisiEkle()
                 .kullaniciTabloKontrol()
-                .kullanicilarDoldur("Yasemin")
                 .kullanicilarImzaciSec("Paraflama")
                 .kullanicilarDoldur2("Optiim TEST")
                 .vekeletAlanVerenTabloKontrolu()
                 .vekeletAlanVerenTabloKapat()
                 .kullanicilarDoldur2("Optiim TEST1")
-                .kullniciIsmineGoreImzaParafSec("Optiim TEST1","İmzalama")
+                .kullniciIsmineGoreImzaParafSec("Optiim TEST1", "İmzalama")
                 .kullan()
-                .onaAkisiTextKontol()
-                .onayAkisiKullanilanKullanilanKontrolEt("Yasemin");
+                .onaAkisiTextKontol();
+
+        evrakOlusturPage
+                .editorTabAc()
+                .editorIcerikDoldur("Test Otomasyon")
+                .parafla();
+
+        logout();
+        login(username,username);
+        imzaBekleyenlerPage
+                .openPage();
 
 
     }

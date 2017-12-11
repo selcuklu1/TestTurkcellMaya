@@ -193,17 +193,19 @@ public class VekaletVerPage extends MainPage {
     }
 
     @Step("Vekalet Listesi Tablo Kontrol")
-    public VekaletVerPage vekaletListesiTabloKontrol(int column,String retNedeni) {
+    public VekaletVerPage vekaletListesiTabloKontrol(int column, String retNedeni) {
         boolean status = findElementOnTableByColumnInputInAllPages(tblVekaletListesi2, column, retNedeni).isDisplayed();
         Assert.assertEquals(status, true);
         return this;
     }
+
     @Step("Vekalet Listesi Tablo Kontrol")
     public VekaletVerPage vekaletListesiTabloKontrol() {
         int size = tblVekaletListesi.size();
         Assert.assertNotEquals(size, 0);
         return this;
     }
+
     @Step("Vekalet Listesi bitiş tarihi doldur")
     public VekaletVerPage vekaletListesiBitisTarihiDoldur(String text) {
         dateTxtVekaletListesiBitisTarihi.setValue(text);

@@ -22,13 +22,15 @@ public class EvrakDetayiPage extends MainPage {
 
 
     @Step("Sayfa açıldı mı kontrolü")
-    public EvrakDetayiPage sayfaAcilmali(){
+    public EvrakDetayiPage sayfaAcilmali() {
         pageTitle.shouldBe(Condition.visible);
         return this;
     }
 
     @Step("Tebliğ geçmişi tab aç")
-    public TebligGecmisiTab tebligGecmisiTabAc() { return new TebligGecmisiTab().open(); }
+    public TebligGecmisiTab tebligGecmisiTabAc() {
+        return new TebligGecmisiTab().open();
+    }
 
     public class TebligGecmisiTab extends MainPage {
 
@@ -41,20 +43,19 @@ public class EvrakDetayiPage extends MainPage {
         }
 
         @Step("Teblig geçmişi kontrol et")
-        public TebligGecmisiTab tebligGecmisiKontrol(String tebligEdenveTarih, String[] kullanicilar){
+        public TebligGecmisiTab tebligGecmisiKontrol(String tebligEdenveTarih, String[] kullanicilar) {
 
             SelenideElement currentRow = tableTebligGecmisi
                     .filterBy(Condition.text(tebligEdenveTarih))
                     .last();
 
-            if(currentRow.$(By.xpath(".//span[. = '"+tebligEdenveTarih+"']/..//span[contains(@class, 'ui-icon-plusthick')]")).isDisplayed())
-            {
-                currentRow.$(By.xpath(".//span[. = '"+tebligEdenveTarih+"']/..//span[contains(@class, 'ui-icon-plusthick')]")).click();
+            if (currentRow.$(By.xpath(".//span[. = '" + tebligEdenveTarih + "']/..//span[contains(@class, 'ui-icon-plusthick')]")).isDisplayed()) {
+                currentRow.$(By.xpath(".//span[. = '" + tebligEdenveTarih + "']/..//span[contains(@class, 'ui-icon-plusthick')]")).click();
             }
 
-            ElementsCollection tableTebligEdilen = $$(By.xpath("//span[. = '"+tebligEdenveTarih+"']/../..//tbody/tr[@role='row']"));
+            ElementsCollection tableTebligEdilen = $$(By.xpath("//span[. = '" + tebligEdenveTarih + "']/../..//tbody/tr[@role='row']"));
 
-            for(int i = 0; i < kullanicilar.length; i++){
+            for (int i = 0; i < kullanicilar.length; i++) {
 
                 tableTebligEdilen
                         .filterBy(Condition.text(kullanicilar[i]))
@@ -63,26 +64,23 @@ public class EvrakDetayiPage extends MainPage {
             }
 
 
-
-
             return this;
         }
 
         @Step("Teblig geçmişinde tebellüğ olanları kontrol et")
-        public TebligGecmisiTab tebligGecmisiKontrol(String tebligEdenveTarih, String[] kullanicilar, String[] tebellugTarih){
+        public TebligGecmisiTab tebligGecmisiKontrol(String tebligEdenveTarih, String[] kullanicilar, String[] tebellugTarih) {
 
             SelenideElement currentRow = tableTebligGecmisi
                     .filterBy(Condition.text(tebligEdenveTarih))
                     .last();
 
-            if(currentRow.$(By.xpath(".//span[. = '"+tebligEdenveTarih+"']/..//span[contains(@class, 'ui-icon-plusthick')]")).isDisplayed())
-            {
-                currentRow.$(By.xpath(".//span[. = '"+tebligEdenveTarih+"']/..//span[contains(@class, 'ui-icon-plusthick')]")).click();
+            if (currentRow.$(By.xpath(".//span[. = '" + tebligEdenveTarih + "']/..//span[contains(@class, 'ui-icon-plusthick')]")).isDisplayed()) {
+                currentRow.$(By.xpath(".//span[. = '" + tebligEdenveTarih + "']/..//span[contains(@class, 'ui-icon-plusthick')]")).click();
             }
 
-            ElementsCollection tableTebligEdilen = $$(By.xpath("//span[. = '"+tebligEdenveTarih+"']/../..//tbody/tr[@role='row']"));
+            ElementsCollection tableTebligEdilen = $$(By.xpath("//span[. = '" + tebligEdenveTarih + "']/../..//tbody/tr[@role='row']"));
 
-            for(int i = 0; i < kullanicilar.length; i++){
+            for (int i = 0; i < kullanicilar.length; i++) {
 
                 tableTebligEdilen
                         .filterBy(Condition.text(kullanicilar[i]))
@@ -92,8 +90,6 @@ public class EvrakDetayiPage extends MainPage {
             }
 
 
-
-
             return this;
         }
 
@@ -101,14 +97,14 @@ public class EvrakDetayiPage extends MainPage {
 
 
     @Step("Tebellüğ Et butonuna tıkla.")
-    public EvrakDetayiPage tebellugEt(boolean onay){
+    public EvrakDetayiPage tebellugEt(boolean onay) {
         btnTebellugEt.click();
 
 
         //btnTebellugEtEvet.waitUntil(Condition.visible, 5000);
 
 
-        if(onay == true)
+        if (onay == true)
             btnPanelEvet.click();
         else
             btnPanelEvet.click();

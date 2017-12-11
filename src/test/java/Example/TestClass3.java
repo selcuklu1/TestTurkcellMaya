@@ -2,11 +2,9 @@ package Example;
 
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
-import common.BaseLibrary;
 import common.BaseTest;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.ustMenuPages.EvrakOlusturPage;

@@ -1,11 +1,11 @@
 package pages.pageComponents;
 
-import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.*;
 import common.BaseLibrary;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 
 public class UstMenu extends BaseLibrary {
@@ -13,10 +13,21 @@ public class UstMenu extends BaseLibrary {
 
     @Step("\"{menuIsmi}\" ust menu aç")
     public void ustMenu(String menuIsmi) {
+
+//        $(By.cssSelector("[id^='topMenuForm'][id$='altMenuDialog']")).waitUntil(Condition.exist, Configuration.timeout);
+
+        $("#topMenuForm2").shouldBe(visible);
+
+        System.out.println($x("//div[starts-with(@id,'topMenuForm') and contains(@id,'altMenuDialog')]" +
+                "//span[starts-with(text(),'" + menuIsmi + "')]/parent::a").innerText());
         executeJavaScript("arguments[0].click();",
+                $x("//div[starts-with(@id,'topMenuForm') and contains(@id,'altMenuDialog')]" +
+                        "//span[starts-with(text(),'" + menuIsmi + "')]/parent::a"));
+
+        /*executeJavaScript("arguments[0].click();",
                 $(By.cssSelector("[id^='topMenuForm'][id$='altMenuDialog']"))
                         .find(By.xpath("//span[starts-with(text(),'" + menuIsmi + "')]/parent::a"))
-        );
+        );*/
 //      .find(By.xpath("//span[text()='" + menuIsmi + "']/parent::a")));
     }
 

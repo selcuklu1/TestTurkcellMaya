@@ -34,74 +34,74 @@ public class KlasorYonetimiPage extends MainPage {
     }
 
     @Step("Kaydet")
-    public KlasorYonetimiPage klasorEklemeKaydet(){
+    public KlasorYonetimiPage klasorEklemeKaydet() {
         btnKlasorEklemeKaydet.click();
         return this;
     }
 
     @Step("Yetki tanımlanabilicek kaydet ")
-    public KlasorYonetimiPage yetkiTanimlanabilicekSecKaydet(){
+    public KlasorYonetimiPage yetkiTanimlanabilicekSecKaydet() {
         btnKullaniciYetkiEklemeKaydet.click();
         return this;
     }
-    
+
     @Step("Yetki tanımlanabilicek seç")
-    public KlasorYonetimiPage yetkiTanimlanabilicekSec(String ad){
+    public KlasorYonetimiPage yetkiTanimlanabilicekSec(String ad) {
         tableKararIzlemeEvraklar.filterBy(Condition.text(ad)).first()
                 .$("[class='ui-chkbox-box ui-widget ui-corner-all ui-state-default']").click();
         return this;
     }
-    
+
     @Step("Kullanici Yetki Ekleme Ara")
-    public KlasorYonetimiPage kullaniciYetkiEklemeAra(){
+    public KlasorYonetimiPage kullaniciYetkiEklemeAra() {
         btnKullaniciYetkiEklemeAra.click();
         return this;
     }
 
     @Step("Kullanıcı yetki ekleme ad doldur")
-    public KlasorYonetimiPage ktxtKullaniciYetkiEklemeAdDoldur(String ad){
+    public KlasorYonetimiPage ktxtKullaniciYetkiEklemeAdDoldur(String ad) {
         txtKullaniciYetkiEklemeAd.setValue(ad);
         return this;
     }
 
     @Step("Kullanıcı yetki listesi yetki ekle")
-    public KlasorYonetimiPage kullaniciYetkiListesiYetkiEkle(){
+    public KlasorYonetimiPage kullaniciYetkiListesiYetkiEkle() {
         btnKullaniciYetkiListesiYeni.click();
         return this;
     }
 
     @Step("")
-    public KlasorYonetimiPage stepmethod(){
+    public KlasorYonetimiPage stepmethod() {
 
         return this;
     }
-    
+
     @Step("Klasör kapanış tarihi doldur")
-    public KlasorYonetimiPage klasorKapanisTarihiDoldur(String tarih){
+    public KlasorYonetimiPage klasorKapanisTarihiDoldur(String tarih) {
         dateKlasorKapanisTarihi.setValue(tarih);
         return this;
     }
 
     @Step("Klasör açılış tarihi doldur")
-    public KlasorYonetimiPage klasorAcilisTarihDoldur(String tarih){
+    public KlasorYonetimiPage klasorAcilisTarihDoldur(String tarih) {
         dateKlasorAcilisTarihi.setValue(tarih);
         return this;
     }
 
     @Step("Klasör kodu doldur")
-    public KlasorYonetimiPage klasorKoduDoldur(String klasorKodu){
+    public KlasorYonetimiPage klasorKoduDoldur(String klasorKodu) {
         txtKlasorKodu.setValue(klasorKodu);
         return this;
     }
 
     @Step("Klaör adı doldur")
-    public KlasorYonetimiPage klasorAdiDoldur(String klasorAdi){
+    public KlasorYonetimiPage klasorAdiDoldur(String klasorAdi) {
         txtKlasorAdi.setValue(klasorAdi);
         return this;
     }
 
     @Step("Klasör türü seç")
-    public KlasorYonetimiPage klasorTuruSec(String value){
+    public KlasorYonetimiPage klasorTuruSec(String value) {
         cmbKlasorTuru.selectOption(value);
         return this;
     }
@@ -111,9 +111,9 @@ public class KlasorYonetimiPage extends MainPage {
         btnYeni.click();
         return this;
     }
-    
+
     @Step("Birim alanını doldur")
-    public KlasorYonetimiPage birimDoldur(String birim){
+    public KlasorYonetimiPage birimDoldur(String birim) {
         txtBirim.selectLov(birim);
         return this;
     }

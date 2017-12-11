@@ -1,4 +1,4 @@
-package TuzelKisiYonetimi;
+package tests.TuzelKisiYonetimi;
 
 import common.BaseTest;
 import io.qameta.allure.Severity;
@@ -128,7 +128,7 @@ public class TuzelKisiYonetimiTest extends BaseTest {
                 .pasiflerTumListeKayitKontrolu()
 
                 //Step num: 4
-                //Data pasif ise, aktif yapılır.
+                //tests.Data pasif ise, aktif yapılır.
                 .filtreSorgulamaPaneliAc()
                 .filtreAdDoldur(ad)
                 .filtreDurumSec("TUMU")
@@ -161,7 +161,7 @@ public class TuzelKisiYonetimiTest extends BaseTest {
                 .kayitBulunamadiKontrolu()
 
                 //Step num: 5
-                //Data aktif ise, pasif yapılır.
+                //tests.Data aktif ise, pasif yapılır.
                 .filtreSorgulamaPaneliAc()
                 .filtreAdDoldur(ad)
                 .filtreDurumSec("TUMU")
@@ -287,7 +287,7 @@ public class TuzelKisiYonetimiTest extends BaseTest {
 
         tuzelKisiYonetimiPage
 
-                //Data yaratmak için
+                //tests.Data yaratmak için
                 .openPage()
                 .yeniTuzelKisiEkle()
                 .tuzelKisiTipiSec("22782")

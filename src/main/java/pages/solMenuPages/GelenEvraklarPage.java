@@ -335,7 +335,7 @@ public class GelenEvraklarPage extends MainPage {
     }
 
     @Step("Evrak Kapat konu kodu doldur")
-    public GelenEvraklarPage evrakKapatKonuKodu(String konuKodu){
+    public GelenEvraklarPage evrakKapatKonuKodu(String konuKodu) {
         txtEvrakKapatKonuKodu.selectLov(konuKodu);
         return this;
     }
@@ -372,15 +372,16 @@ public class GelenEvraklarPage extends MainPage {
     public GelenEvraklarPage tabloEvrakNoKontrol(String evrakNo) {
         int size = tableEvraklar
                 .filterBy(Condition.text(evrakNo)).size();
-        Assert.assertEquals(size,1);
+        Assert.assertEquals(size, 1);
 
         return this;
     }
+
     @Step("Tabloda olmayan evrak no kontrolü")
     public GelenEvraklarPage tabloOlmayanEvrakNoKontrol(String evrakNo) {
         int size = tableEvraklar
                 .filterBy(Condition.text(evrakNo)).size();
-        Assert.assertEquals(size,0);
+        Assert.assertEquals(size, 0);
 
         return this;
     }
