@@ -23,10 +23,11 @@ public class KararYazisiOlusturmaTest extends BaseTest{
         KararIzlemePage kararIzlemePage;
         ImzaBekleyenlerPage imzaBekleyenlerPage;
         KlasorYonetimiPage klasorYonetimiPage;
-    TeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage;
-    GelenEvraklarPage gelenEvraklarPage;
-    KurulIslemleriPage kurulIslemleriPage;
-    GundemIzlemePage gundemIzlemePage;
+        TeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage;
+        GelenEvraklarPage gelenEvraklarPage;
+        KurulIslemleriPage kurulIslemleriPage;
+        GundemIzlemePage gundemIzlemePage;
+        ErisimYonetimiPage erisimYonetimiPage;
 
         @BeforeMethod
         public void loginBeforeTests() {
@@ -38,19 +39,20 @@ public class KararYazisiOlusturmaTest extends BaseTest{
             gelenEvraklarPage = new GelenEvraklarPage();
             kurulIslemleriPage = new KurulIslemleriPage();
             gundemIzlemePage = new GundemIzlemePage();
+            erisimYonetimiPage = new ErisimYonetimiPage();
         }
 
         @Severity(SeverityLevel.CRITICAL)
-        @Test(enabled = true, description = "1610: KEP Hesap Menüsü - Tanımlanan KEP hesapları ile login işlemleri")
-        public void TC1610() throws InterruptedException {
+        @Test(enabled = true, description = "1610: Karar yazısında zorunlu alan kontrolleri")
+        public void TC1488() throws InterruptedException {
 
             String uyariMesajYaziIcerik = "Yazı içeriği boş olamaz!";
             String uyariMesajZorunlu = "Zorunlu alanları doldurunuz";
             String konuKodu = "K/Frekans Yıllık Kullanım Ücreti";
             String kaldirilicakKlasorler = "Diğer";
-            String toplantiNo = "123123";
-            String toplantiTarih = "30.11.2017";
-            String kararNo = "1231231231231231231";
+            String toplantiNo = createRandomNumber(6);
+            String toplantiTarih = getSysDateForKis();
+            String kararNo = createRandomNumber(13);
             String aciklama = "Deneme amaçlıdır";
             String editorIcerik = "Deneme Can";
             String kullanici = "Optiim";
@@ -124,15 +126,81 @@ public class KararYazisiOlusturmaTest extends BaseTest{
                     .kullanicilarDoldur(kullanici,"")
                     .onayAkisiDoldur(onayAkisi)
                     .imzalamaKontrol(imzalama);
-
-
-
         }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "1714: Karar yazsının iadesi")
-    public void TC1714() throws InterruptedException {
+    @Test(enabled = true, description = "2240: Teslim alınmayı bekleyenler listesinden Gündem klasörüne evrak kapatma")
+    public void TC2240() throws InterruptedException {
 
+        String basariMesaji = "İşlem başarılıdır!";
+        String kaldirilicakKlasor = "Gündem";
+        String konuKodu = "Usul ve Esaslar";
+        login(username3, password3);
+
+        teslimAlinmayiBekleyenlerPage
+                .openPage()
+                .evrakSec()
+                .teslimAlVeKapat()
+                .kaldirilacakKlasorlerDoldur(kaldirilicakKlasor)
+                .konuKoduDoldur(konuKodu)
+                .teslimAlveKapatTeslimAlVeKapat();
+
+        gundemIzlemePage
+                .openPage()
+                .kapatilanKlasorSec(kaldirilicakKlasor)
+                .siralamayiDegistir()
+                .gundemSirasiniKaydet(true)
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        gundemIzlemePage
+                .aralikliGundemOlustur()
+                .islemMesaji().basariliOlmali(basariMesaji);
+        String dosyaAdi =gundemIzlemePage.indirilenDosyaAd();
+
+        gundemIzlemePage
+                .wordDosyaKontrolEt(dosyaAdi)
+                .yayimla();
+
+        erisimYonetimiPage
+                .openPage()
+                .kullaniciErisimTab()
+                .kullanıcıErisimAra();
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "2239: Gündem yayınlama")
+    public void TC2239() throws InterruptedException {
+
+        String basariMesaji = "İşlem başarılıdır!";
+        String kaldirilicakKlasor = "Gündem";
+
+        login(username3, password3);
+
+        gundemIzlemePage
+                .openPage()
+                .kapatilanKlasorSec(kaldirilicakKlasor)
+                .siralamayiDegistir()
+                .gundemSirasiniKaydet(true)
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        gundemIzlemePage
+                .aralikliGundemOlustur()
+                .islemMesaji().basariliOlmali(basariMesaji);
+        String dosyaAdi =gundemIzlemePage.indirilenDosyaAd();
+
+        gundemIzlemePage
+                .wordDosyaKontrolEt(dosyaAdi)
+                .yayimla();
+
+        erisimYonetimiPage
+                .openPage()
+                .kullaniciErisimTab()
+                .kullanıcıErisimAra();
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "1497: Karar Yazısı oluşturulması")
+    public void TC1497() throws InterruptedException {
         String basariMesaji = "İşlem başarılıdır!";
         String konuKodu = "Usul ve Esaslar";
         String kaldirilicakKlasorler = "Diğer";
@@ -147,7 +215,7 @@ public class KararYazisiOlusturmaTest extends BaseTest{
         String filePath = "C:\\TestAutomation\\BelgenetFTA\\documents\\Otomasyon.pdf";
         String not = createRandomText(12);
         String birim = "Altyapı ve Sistem Yönetim Uzmanı";
-        login(username2, password2);
+        login(username4, password4);
 
         kararYazisiOlusturPage
                 .openPage()
@@ -155,7 +223,6 @@ public class KararYazisiOlusturmaTest extends BaseTest{
                 .konuKoduDoldur(konuKodu)
                 .ivedilikSec(ivedilik)
                 .onayAkisiEkle()
-                .kullanicilarDoldur(kullanici, birim)
                 .kullan()
                 .kaldirilacakKlasorlerDoldur(kaldirilicakKlasorler)
                 .toplantiNoDoldur(toplantiNo)
@@ -163,42 +230,24 @@ public class KararYazisiOlusturmaTest extends BaseTest{
                 .kararNoDoldur(kararNo);
 
         kararYazisiOlusturPage
-                .editorTabAc()
-                .editorIcerikDoldur(editorIcerik)
-                .kaydet(true)
-                .islemMesaji().basariliOlmali(basariMesaji);
+                .ekleriTabAc()
+                .dosyaEkleTabDosyaEkle(filePath)
+                .dosyaEkleEkMetniDoldur(not)
+                .dosyaEkleKaydet();
 
+        kararYazisiOlusturPage
+                .ilgileriTabAc()
+                .metinEkleTab()
+                .ilgiMetniDoldur(not)
+                .metinEkleEkle();
 
-        // Yapılmadığı zaman çalışmamakta
-       kararYazisiOlusturPage
-                .bilgilerTabiAc()
-                .miatDoldur(miat)
-                .kaydet(true)
-                .islemMesaji().basariliOlmali(basariMesaji);
-
-
-        login(username3, password3);
-
-        imzaBekleyenlerPage
-                .openPage()
-                .evrakSec(kararNo,konuKodu)
-                .iadeEt()
-                .iadeEtDosyaEkle(filePath)
-                .notDoldur(not)
-                .iadeEtIadeEt()
-                .islemMesaji().basariliOlmali(basariMesaji);
-
-        login(username2, password2);
-
-        imzaBekleyenlerPage
-                .openPage()
-                .evrakOlmadigiGorme(kararNo,konuKodu,true);
-
-        kararIzlemePage
-                .openPage()
-              .ilkEvrakSec(kararNo,konuKodu)
-              .iadeBilgisiGorme(not);
-
+        kararYazisiOlusturPage
+                .iliskiliEvraklarTabAc()
+                .sistemdeKayitliEvrakEkleTabAc()
+                .sistemdeKayitliEvrakEkleEvrakAramaDoldur("1")
+                .sistemdeKayitliEvrakEkleEvrakDokumanAra()
+                .sistemdeKayitliEvrakEkleArti();
+//TODO devam gelecek
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -246,6 +295,79 @@ public class KararYazisiOlusturmaTest extends BaseTest{
                 .openPage()
                 .dogruKonuVeNoKontrol(kararNo,konuKodu);
 
+
+    }
+
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "1714: Karar yazsının iadesi")
+    public void TC1714() throws InterruptedException {
+
+        String basariMesaji = "İşlem başarılıdır!";
+        String konuKodu = "Usul ve Esaslar";
+        String kaldirilicakKlasorler = "Diğer";
+        String toplantiNo = createRandomNumber(9);
+        String toplantiTarih =getSysDateForKis();
+        String miat =getSysDateForKis();
+        String kararNo = createRandomNumber(12);
+        String editorIcerik = "Deneme Can";
+        String kullanici = "Yasemin Çakıl AKYOL";
+        String onayAkisi = "ZUZU_ONAY_AKİSİ_1";
+        String ivedilik = "İvedi";
+        String filePath = "C:\\TestAutomation\\BelgenetFTA\\documents\\Otomasyon.pdf";
+        String not = createRandomText(12);
+        String birim = "Altyapı ve Sistem Yönetim Uzmanı";
+        login(username2, password2);
+
+        kararYazisiOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .konuKoduDoldur(konuKodu)
+                .ivedilikSec(ivedilik)
+                .onayAkisiEkle()
+                .kullanicilarDoldur(kullanici, birim)
+                .kullan()
+                .kaldirilacakKlasorlerDoldur(kaldirilicakKlasorler)
+                .toplantiNoDoldur(toplantiNo)
+                .toplantiTarihDoldur(toplantiTarih)
+                .kararNoDoldur(kararNo);
+
+        kararYazisiOlusturPage
+                .editorTabAc()
+                .editorIcerikDoldur(editorIcerik)
+                .kaydet(true)
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+
+        // Yapılmadığı zaman çalışmamakta
+        kararYazisiOlusturPage
+                .bilgilerTabiAc()
+                .miatDoldur(miat)
+                .kaydet(true)
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+
+        login(username3, password3);
+
+        imzaBekleyenlerPage
+                .openPage()
+                .evrakSec(kararNo,konuKodu)
+                .iadeEt()
+                .iadeEtDosyaEkle(filePath)
+                .notDoldur(not)
+                .iadeEtIadeEt()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        login(username2, password2);
+
+        imzaBekleyenlerPage
+                .openPage()
+                .evrakOlmadigiGorme(kararNo,konuKodu,true);
+
+        kararIzlemePage
+                .openPage()
+                .ilkEvrakSec(kararNo,konuKodu)
+                .iadeBilgisiGorme(not);
 
     }
 
@@ -302,36 +424,42 @@ public class KararYazisiOlusturmaTest extends BaseTest{
     public void TC1715() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
-        String birim = "Yazılım Geliştirme Direktörlüğ";
-        String kapanisTarih = getAfterSysYear();
-        String acilisTarih = getSysDateForKis2();
-        String klasorTuru = "Gündem Klasörü";
-        String klasorAdi = createRandomText(12);
-        String klasorKodu = createRandomNumber(10);
-        String ad = "Zübeyde";
         String konuKodu = "Usul ve Esaslar";
         String kaldirilicakKlasor = "Gündem";
 
         login(username3, password3);
 
-   /*     gelenEvraklarPage
+        gelenEvraklarPage
                 .openPage()
                 .evrakSec()
                 .evrakKapat()
                 .evrakKapatKaldirilacakKlasorlerDoldur(kaldirilicakKlasor)
                 .evrakKapatKonuKodu(konuKodu)
                 .evrakKapatEvrakKapat();
-*/
+
         gundemIzlemePage
                 .openPage()
                 .kapatilanKlasorSec("gündem")
-                .aralikliGundemOlustur();
-        String dosyaAdi = gundemIzlemePage.indirilenDosyaAd();
+                .siralamayiDegistir()
+                .gundemSirasiniKaydet(true)
+                .islemMesaji().basariliOlmali(basariMesaji);
 
         gundemIzlemePage
-                .wordDosyaKontrolEt(dosyaAdi);
+                .aralikliGundemOlustur()
+                .islemMesaji().basariliOlmali(basariMesaji);
+        String dosyaAdi =gundemIzlemePage.indirilenDosyaAd();
 
+        gundemIzlemePage
+                .wordDosyaKontrolEt(dosyaAdi)
+                .yayimla();
+
+        erisimYonetimiPage
+                .openPage()
+                .kullaniciErisimTab()
+                .kullanıcıErisimAra();
 
     }
+
+
 }
 
