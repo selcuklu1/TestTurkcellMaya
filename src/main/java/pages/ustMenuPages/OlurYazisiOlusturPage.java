@@ -109,10 +109,17 @@ public class OlurYazisiOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Seçilen onay akışı kontrolu: \"{secim}\" ")
-        public BilgilerTab onayAkisiKontrol(String secim) {
+        @Step("Seçilen onay akışı detail kontrolu: \"{secim}\" ")
+        public BilgilerTab onayAkisiDetailKontrol(String secim) {
             System.out.println("Gelen detail:     " + cmbOnayAkisi.lastSelectedLovDetailText());
             Assert.assertEquals(cmbOnayAkisi.lastSelectedLovDetailText().contains(secim), true);
+            return this;
+        }
+
+        @Step("Seçilen onay akışı title kontrolu: \"{secim}\" ")
+        public BilgilerTab onayAkisiTitleKontrol(String secim) {
+            System.out.println("Gelen detail:     " + cmbOnayAkisi.lastSelectedLovTitleText());
+            Assert.assertEquals(cmbOnayAkisi.lastSelectedLovTitleText().contains(secim), true);
             return this;
         }
 

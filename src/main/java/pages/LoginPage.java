@@ -1,8 +1,9 @@
 package pages;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
-import common.BaseLibrary;
+import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 
@@ -27,12 +28,12 @@ public class LoginPage extends MainPage {
         open();
         txtUsername.sendKeys(username);
         txtPassword.sendKeys(password);
-        btnLogin.click();
+        btnLogin.shouldBe(Condition.visible).click();
 //        $(By.id("topMenuForm:userMenuButton_button")).shouldBe(visible);
         return this;
     }
 
-    @Step("\"{0}\" kullanıcısı ile giriş yap")
+    @Step("\"{username}\" kullanıcısı ile giriş yap")
     public LoginPage login(String username, String password) {
         open();
         txtUsername.sendKeys(username);
@@ -41,7 +42,6 @@ public class LoginPage extends MainPage {
 //        $(By.id("topMenuForm:userMenuButton_button")).shouldBe(visible);
         return this;
     }
-
 
 
 }

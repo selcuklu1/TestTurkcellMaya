@@ -34,7 +34,7 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     }
 
     @Step("Kladırılıcak klasörler doldur")
-    public TeslimAlinmayiBekleyenlerPage kaldirilacakKlasorlerDoldur(String kaldirilicakKlasor){
+    public TeslimAlinmayiBekleyenlerPage kaldirilacakKlasorlerDoldur(String kaldirilicakKlasor) {
         txtKaldirilacakKlasorler.selectLov(kaldirilicakKlasor);
         return this;
     }
@@ -52,13 +52,13 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     }
 
     @Step("Teslim al ve kapat")
-    public TeslimAlinmayiBekleyenlerPage teslimAlVeKapat(){
+    public TeslimAlinmayiBekleyenlerPage teslimAlVeKapat() {
         btnTeslimAlVeKapat.click();
         return this;
     }
 
     @Step("Evrak seçilir")
-    public TeslimAlinmayiBekleyenlerPage evrakSec(){
+    public TeslimAlinmayiBekleyenlerPage evrakSec() {
         tblIlkEvrak.click();
         return this;
     }

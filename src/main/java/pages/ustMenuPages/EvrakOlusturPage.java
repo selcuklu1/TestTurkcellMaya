@@ -3,19 +3,20 @@ package pages.ustMenuPages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Step;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.testng.Assert;
 import pages.MainPage;
+import pages.pageComponents.TextEditor;
 import pages.pageComponents.UstMenu;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
-import static com.codeborne.selenide.Selenide.switchTo;
+import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 import static pages.pageComponents.belgenetElements.BelgentCondition.not;
 import static pages.pageComponents.belgenetElements.BelgentCondition.required;
@@ -50,11 +51,13 @@ public class EvrakOlusturPage extends MainPage {
     SelenideElement btnKaydet = $("button[id^='yeniGidenEvrakForm:rightTab:uiRepeat'] span[class$='kaydet']");
     SelenideElement btnKaydetOnayaSun = $("button[id^='yeniGidenEvrakForm:rightTab:uiRepeat'] span[class$='kaydetHavaleEt']");
     SelenideElement btnPaylas = $("button[id^='yeniGidenEvrakForm:rightTab:uiRepeat'] span[class$='evrakPaylas']");
-
     SelenideElement btnEvrakOlusturKapat = $(By.xpath("//div[@id='window3Dialog']//a/span[@class='ui-icon ui-icon-closethick']"));
     SelenideElement btbEvrakOlusturKapatEvet = $(By.id("kapatKaydetEvetButton"));
-
     SelenideElement divBilgileri = $(By.id("evrakBilgileriContainerDiv"));
+    SelenideElement labelIlkIslemTipi = $(By.xpath("//form[@id='yeniGidenEvrakForm']/table[1]//label[@class='columnLabelFixWidth']"));
+    SelenideElement labelIkinciIslemTipi = $(By.xpath("//form[@id='yeniGidenEvrakForm']/table[2]//label[@class='columnLabelFixWidth']"));
+    SelenideElement labelIlkKullanici = $(By.xpath("//form[@id='yeniGidenEvrakForm']/table[1]//label[@class='columnLabelFix']"));
+    SelenideElement labelIkinciKullanici = $(By.xpath("//form[@id='yeniGidenEvrakForm']/table[2]//label[@class='columnLabelFix']"));
 
     //endregion
     @Step("Evrak Oluştur sayfası aç")
@@ -64,9 +67,16 @@ public class EvrakOlusturPage extends MainPage {
         return this;
     }
 
+
     @Step("PDF Önizleme")
     public EvrakOlusturPage pdfOnIzleme() {
         btnPDFOnizleme.click();
+        return this;
+    }
+
+    @Step("PDF Önizleme")
+    public EvrakOlusturPage kaydetOnayaSun() {
+        btnKaydetOnayaSun.click();
         return this;
     }
 
@@ -101,6 +111,16 @@ public class EvrakOlusturPage extends MainPage {
         return this;
     }
 
+    public EvrakOlusturPage kullaniciIslemVeSiraKontrolu(String kullanici1, String islemTipi1, String kullanici2, String islemTipi2) {
+
+        Assert.assertEquals(labelIlkIslemTipi.getText(), "1. " + islemTipi1);
+        Assert.assertEquals(labelIkinciIslemTipi.getText(), "2. " + islemTipi2);
+        Assert.assertEquals(labelIlkKullanici.getText(), kullanici1);
+        Assert.assertEquals(labelIkinciKullanici.getText(), kullanici2);
+
+        return this;
+    }
+
     //region Tabs
     @Step("Bilgiler tab aç")
     public BilgilerTab bilgilerTabiAc() {
@@ -124,6 +144,7 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement dateKayitTarihi = $("input[id$='kayitTarih_input']");
         SelenideElement cmbEvrakDili = $("select[id$=evrakDili]");
         SelenideElement cmbGizlilikDerecesi = $("select[id$=guvenlikKodu]");
+        SelenideElement btnIletisimbilgileriOnayAkisiEkle = $("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='onayAkisiEkle']");
 
         //Kanun Kapsam Tipi
         SelenideElement rdbKanunKapsamTipiNormal = $("//input[contains(@id,'kanunKapsamTipiRadio') and (../label[contains(@for,'kanunKapsamTipiRadio') and normalize-space(text())='Normal'])]");
@@ -141,7 +162,8 @@ public class EvrakOlusturPage extends MainPage {
         BelgenetElement txtBilgi = comboLov("input[id$='bilgiLov:LovText']");
         SelenideElement btnBilgiTree = $("button[id$='bilgiLov:treeButton']");
 
-        SelenideElement cmbGeregiSecimTipi = $(By.xpath("//label[normalize-space(text())='Gereği Seçim Tipi']/ancestor::tr[@class='ui-datagrid-row']//select"));
+        SelenideElement cmbGeregiSecimTipi = $(By.xpath("//select[starts-with(@id,'yeniGidenEvrakForm:evrakBilgileriList:16:j_idt')]"));
+        //Bu çalışmıyor. SelenideElement cmbGeregiSecimTipi = $x("//label[normalize-space(text())='Gereği Seçim Tipi']/ancestor::tr[@class='ui-datagrid-row']//select");
         BelgenetElement txtGeregi = comboLov("input[id$='geregiLov:LovText']");
         SelenideElement btnGeregiTree = $("button[id$='geregiLov:treeButton']");
 
@@ -157,7 +179,7 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement txtOnayAkisiKullanicilarInput = $("input[id^='yeniGidenEvrakForm:evrakBilgileriList:'][id$=':akisAdimLov:LovText']");
         SelenideElement listOnayAkisiKullanilan = $("div[id*='akisLov:lovContainer'] div[class*='lovSelection processEt'] tbody");
         SelenideElement btnOnayAkisiPanelKapat = $("button[id^='yeniGidenEvrakForm:evrakBilgileriList:'][id$=':akisAdimLov:lovTreePanelKapat']");
-        SelenideElement cmbKullanicilarImza = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:akisAdimLov:LovSecilenTable:1:selectOneMenu"));
+        SelenideElement cmbKullanicilarImza = $("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='1:selectOneMenu']");
         SelenideElement btnOnayAkisGuncelle = $(By.cssSelector("[id^='yeniGidenEvrakForm:evrakBilgileriList:18:akisLov:j_idt'] [class$='update-icon']"));
         BelgenetElement cmbOnayAkisi = comboLov(By.cssSelector("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='akisLov:LovText']"));
         By cmbOnayAkisiBy = By.cssSelector("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='akisLov:LovText']");
@@ -170,9 +192,14 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement rdbBilgiEdinmeKanunu = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:10:kanunKapsamTipiRadio:1"));
         SelenideElement rdbKisiselVerilerinKorunmasiKanunu = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:10:kanunKapsamTipiRadio:2"));
         SelenideElement cbmAkisAdim = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:akisAdimLov:LovSecilenTable:0:selectOneMenu"));
+        SelenideElement tblKullanıcılar = $("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='akisAdimLov:LovSecilenTable_data']");
+        ElementsCollection tblKullanıcılar2 = $$("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='akisAdimLov:LovSecilenTable_data'] >tr");
+        SelenideElement tblVekalet = $(By.id("yeniGidenEvrakForm:kullaniciBirimSecimiDialogId"));
+        SelenideElement btnVekaletTablosuKapat = $(By.xpath("//div[@id='yeniGidenEvrakForm:kullaniciBirimSecimiDialogId']//span[@class='ui-icon ui-icon-closethick']"));
+        SelenideElement btnKullan = $("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='anlikAkisKullanButton']");
+        SelenideElement txtOnayAkisi = $("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='akisLov:LovSecilen']");
 
-
-        BelgenetElement cmbGeregi = comboLov(By.id("yeniGidenEvrakForm:evrakBilgileriList:16:geregiLov:LovText"));
+        BelgenetElement cmbGeregi = comboLov("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='geregiLov:LovText']");
         BelgenetElement cmbGeregiPostaTipi = comboLov(By.id("yeniGidenEvrakForm:evrakBilgileriList:16:geregiLov:LovSecilenTable:0:selectOneMenu"));
         // select[id^='yeniGidenEvrakForm:evrakBilgileriList:16:geregiLov:LovSecilenTable:'][id$=':selectOneMenu']
         SelenideElement cmbPostaTipi = $("select[id^='yeniGidenEvrakForm:evrakBilgileriList:16:geregiLov:LovSecilenTable:'][id$=':selectOneMenu']");
@@ -189,7 +216,7 @@ public class EvrakOlusturPage extends MainPage {
 
         SelenideElement chkAdresHitaptaGorunsun = $(By.xpath("//label[normalize-space(text())='Adres Hitapta Görünsün']/../..//div//div"));
         SelenideElement chkAdresDagitimdaGorunsun = $(By.xpath("//label[normalize-space(text())='Adres Dağıtımda Görünsün']/../..//div//div"));
-        SelenideElement txtDagitimHitapAdres = $(By.xpath("//div[@id='yeniGidenEvrakForm:pnlHitapDuzenle']/table[5]//div/textarea[@role='textbox']"));
+        SelenideElement txtDagitimHitapAdres = $(By.xpath("//div[@id='yeniGidenEvrakForm:pnlHitapDuzenle']//div/textarea[@role='textbox']"));
         SelenideElement btnDagitimHitapDuzenlemeKaydet = $(By.xpath("//*[@id='yeniGidenEvrakForm:pnlHitapDuzenle']//span[normalize-space(text())='Kaydet']/parent::button"));
 
         BelgenetElement cmbBilgi = comboLov(By.cssSelector("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='bilgiLov:LovText']"));
@@ -225,6 +252,14 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Kullanıcılar alanı doldur")
+        public BilgilerTab kullanicilarDoldur2(String kullanici) {
+            txtOnayAkisiKullanicilar.type(kullanici).titleItems()
+                    .filterBy(Condition.exactText(kullanici + " [Ağ (Network) Uzman Yardımcısı]")).first().click();
+            txtOnayAkisiKullanicilar.closeLovTreePanel();
+            return this;
+        }
+
         @Step("Konu Kodu alanında {0} seç")
         public BilgilerTab otomatikOnayAkisi() {
             btnOtomatikOnayAkisi.click();
@@ -234,6 +269,21 @@ public class EvrakOlusturPage extends MainPage {
         @Step("Konu Kodu alanında {0} seç")
         public BilgilerTab konuKoduSec(String value) {
             cmlKonuKodu.selectLov(value);
+            return this;
+        }
+
+        @Step("Kullanıcı kontrolü")
+        public BilgilerTab kullaniciTabloKontrol() {
+            tblKullanıcılar.isDisplayed();
+            return this;
+        }
+
+        @Step("")
+        public BilgilerTab kullniciIsmineGoreImzaParafSec(String kullanici, String value) {
+            tblKullanıcılar2.filterBy(Condition.text(kullanici)).first()
+                    .$("select")
+                    .selectOption(value);
+
             return this;
         }
 
@@ -281,6 +331,13 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Onay Akışı ekle")
+        public BilgilerTab OnayAkisiEkle() {
+            btnIletisimbilgileriOnayAkisiEkle.click();
+            return this;
+        }
+
+
         @Step("Gizlilik Derecesi alanında {0} seç")
         public BilgilerTab gizlilikDerecesiSec(String text) {
             cmbGizlilikDerecesi.selectOption(text);
@@ -296,6 +353,18 @@ public class EvrakOlusturPage extends MainPage {
         @Step("Kanun Kapsam Tipi Bilgi Edinme Kanunu seç")
         public BilgilerTab kanunKapsamTipiBilgiEdinmeKanunuSec() {
             rdbKanunKapsamTipiBilgiEdinmeKanunu.click();
+            return this;
+        }
+
+        @Step("Vekalet alan Ve Veren tablo kontrolü")
+        public BilgilerTab vekeletAlanVerenTabloKontrolu() {
+            Assert.assertEquals(tblVekalet.isDisplayed(), true);
+            return this;
+        }
+
+        @Step("Vekalet alan Ve Veren tablo kontrolü")
+        public BilgilerTab vekeletAlanVerenTabloKapat() {
+            btnVekaletTablosuKapat.click();
             return this;
         }
 
@@ -382,7 +451,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Onay Akisi alanında {0} seç")
+        @Step("Onay Akisi alanında {text} seç")
         public BilgilerTab cmbOnayAkisi(String text) {
             cmbOnayAkisi.selectLov(text);
             return this;
@@ -480,8 +549,9 @@ public class EvrakOlusturPage extends MainPage {
         }
 
         @Step("Kişinin Bilgi alanında görüntülenme kontrolu")
-        public BilgilerTab bilgiAlanindaGoruntulenmeKontrolu(String adSoyad) {
+        public BilgilerTab bilgiAlanindaGoruntulenmeKontrolu(String ad, String soyad) {
 
+            String adSoyad = ad + " " +soyad.toUpperCase();
             cmbBilgi.selectLov(adSoyad);
             System.out.println("Gelen title:     " + cmbBilgi.lastSelectedLovTitleText());
             System.out.println("Beklenen title:  " + adSoyad);
@@ -490,7 +560,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Geregi Secim Tipi alanında {0} seç")
+        @Step("Geregi Secim Tipi alanında {value} seç")
         public BilgilerTab geregiSecimTipiSec(String value) {
             cmbGeregiSecimTipi.selectOptionByValue(value);
             return this;
@@ -615,7 +685,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Onay akışı doldur")
+        @Step("Onay akışı doldurma ve görüntüleme kontrolu")
         public BilgilerTab onayAkisiDoldur(String onay) {
             cmbOnayAkisi.selectLov(onay);
             return this;
@@ -653,6 +723,24 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        public BilgilerTab onayAkisiKullaniciSil(String yeniKullanici) {
+            trOnayAkisiEkleKullanicilar
+                    .filterBy(text(yeniKullanici))
+                    .get(0)
+                    .shouldBe(exist)
+                    .$("[class$='delete-icon']").click();
+            return this;
+        }
+
+        public BilgilerTab kullaniciyaKullaniciTipiSec(String kullanici, String secim) {
+            trOnayAkisiEkleKullanicilar
+                    .filterBy(text(kullanici))
+                    .get(0)
+                    .shouldBe(exist)
+                    .$("select[id*='selectOneMenu']").selectOptionByValue(secim);
+            return this;
+        }
+
         @Step("Onay akışı kullanıcı adı ve tipi kontrol et")
         public BilgilerTab onayAkisiKullaniciKontrol(String kullaniciAdi, String kullaniciTipi) {
             trOnayAkisiEkleKullanicilar
@@ -680,6 +768,19 @@ public class EvrakOlusturPage extends MainPage {
                     .shouldBe(exist)
                     .$("select[id*='selectOneMenu']")
                     .selectOptionContainingText(kullaniciTipi);
+            return this;
+        }
+
+        @Step("Kullan butonu")
+        public BilgilerTab kullan() {
+            clickJs(btnKullan);
+            return this;
+        }
+
+        @Step("Onay Akişi alanı kontrolü")
+        public BilgilerTab onaAkisiTextKontol() {
+            String x = txtOnayAkisi.getText();
+            Assert.assertNotEquals(x, "");
             return this;
         }
 
@@ -782,6 +883,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
 
         }
+
         public BilgilerTab kaldirilacakKlasorler(String klasor) {
             //TODO: Fonksiyon yazılacak.
             cmbKaldiralacakKlasorler.selectLov(klasor);
@@ -805,12 +907,39 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Seçilen onay akışı kontrolu: \"{secim}\" ")
-        public BilgilerTab onayAkisiKontrol(String secim) {
+        @Step("Seçilen onay akışı detail kontrolu: \"{secim}\" ")
+        public BilgilerTab onayAkisiDetailKontrol(String secim) {
             System.out.println("Gelen detail:     " + cmbOnayAkisi.lastSelectedLovDetailText());
             Assert.assertEquals(cmbOnayAkisi.lastSelectedLovDetailText().contains(secim), true);
             return this;
         }
+
+        @Step("Seçilen onay akışı title kontrolu: \"{secim}\" ")
+        public BilgilerTab onayAkisiTitleKontrol(String secim) {
+            System.out.println("Gelen title:     " + cmbOnayAkisi.lastSelectedLovTitleText());
+            Assert.assertEquals(cmbOnayAkisi.lastSelectedLovTitleText().contains(secim), true);
+            return this;
+        }
+
+        public BilgilerTab kullaniciYerleriDegistir(String kullanici1, String kullanici2) {
+
+            trOnayAkisiEkleKullanicilar
+                    .filterBy(text(kullanici1))
+                    .get(0)
+                    .shouldBe(exist)
+                    .$("[class$='ui-icon-arrowthick-1-s']").click();
+
+            trOnayAkisiEkleKullanicilar
+                    .filterBy(text(kullanici2))
+                    .get(0)
+                    .shouldBe(exist)
+                    .$("[class$='ui-icon-arrowthick-1-s']").click();
+
+            return this;
+        }
+
+
+
 
         //endregion
 
@@ -835,6 +964,19 @@ public class EvrakOlusturPage extends MainPage {
         By cmbBilgiBy = By.id("yeniGidenEvrakForm:bilgiKurumLov:LovText");
         BelgenetElement cmbGeregi = comboLov(By.id("yeniGidenEvrakForm:geregiKurumLov:LovText"));
         BelgenetElement cmbBilgi = comboLov(By.id("yeniGidenEvrakForm:bilgiKurumLov:LovText"));
+        SelenideElement btnParafla = $(By.id("yeniGidenEvrakForm:rightTab:uiRepeat:2:cmdbutton"));
+        SelenideElement radibtnSimza = $("[id='imzalaForm:imzalaRadio'] span[class='ui-radiobutton-icon']");
+        SelenideElement btnEvrakImzala = $(By.xpath("//buton[starts-with(@id,'imzalaForm:jsfImzaForm:j_idt')]"));
+
+
+        public TextEditor getEditor() {
+            return editor;
+        }
+
+        private TextEditor editor = new TextEditor();
+
+
+
 
         private EditorTab open() {
             tabEditor.click();
@@ -919,13 +1061,16 @@ public class EvrakOlusturPage extends MainPage {
         public EditorTab popupSImzalaIslemleri() throws InterruptedException {
 
             //switchTo().window("");
-            Thread.sleep(5000);
-            SelenideElement sImza = $(By.id("imzalaForm:imzalamaYontemiRadio:1"));
-            sImza.selectRadio("I");
-            Thread.sleep(2000);
+//            Thread.sleep(5000);
+//            SelenideElement sImza = $(By.id("imzalaForm:imzalamaYontemiRadio:1"));
+//            sImza.selectRadio("I");
+
+            $("#evrakImzalaDialog").shouldBe(visible);
+            executeJavaScript("arguments[0].click()", WebDriverRunner.getWebDriver().findElement(By.id("imzalaForm:imzalamaYontemiRadio:1")));
+//            Thread.sleep(2000);
             SelenideElement imzala = $(By.xpath("//*[@id='imzalaForm:sayisalImzaConfirmDialogOpener']"));
             imzala.click();
-            Thread.sleep(2000);
+//            Thread.sleep(2000);
             SelenideElement sayisalImzaOnay = $(By.id("imzalaForm:sayisalImzaConfirmForm:sayisalImzaEvetButton"));
             sayisalImzaOnay.click();
             return this;
@@ -962,6 +1107,25 @@ public class EvrakOlusturPage extends MainPage {
         @Step("Bilgi alani doldur")
         public EditorTab bilgiDoldur(String bilgi) {
             cmbBilgi.selectLov(bilgi);
+            return this;
+        }
+
+        @Step("Parafla butonu tıkla")
+        public EditorTab parafla() {
+            btnParafla.click();
+            return this;
+        }
+
+        @Step("")
+        public EditorTab sImzasec() {
+            radibtnSimza.selectRadio("I");
+            radibtnSimza.click();
+            return this;
+        }
+
+        @Step("Evrak Imzala ekranı imzala")
+        public EditorTab evrakImzalama() {
+            btnEvrakImzala.click();
             return this;
         }
     }

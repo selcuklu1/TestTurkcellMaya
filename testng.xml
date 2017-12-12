@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite thread-count="1" name="Test Suite" parallel="true" verbose="1">
+<!--<suite thread-count="1" name="Test Suite" parallel="none" verbose="1">-->
+<suite thread-count="10" name="Test Suite" parallel="classes" verbose="1">
     <!--<listeners>-->
     <!--<listener class-name="listeners.TestListener"></listener>-->
     <!--</listeners>-->
@@ -8,25 +9,33 @@
     <!--<suite-file path="testSuite1.xml"></suite-file>-->
     <!--<suite-file path="testSuite2.xml"></suite-file>-->
     <!--</suite-files>-->
-    <test name="GercekKisiYonetimiTest">
+    <!--<test name="GercekKisiYonetimiTest">
         <classes>
-            <class name="GercekKisiYonetimi.GercekKisiYonetimiTest"/>
+            <class name="tests.GercekKisiYonetimi.GercekKisiYonetimiTest"/>
         </classes>
     </test>
     <test name="TuzelKisiYonetimiTest">
         <classes>
-            <class name="TuzelKisiYonetimi.TuzelKisiYonetimiTest"/>
+            <class name="tests.TuzelKisiYonetimi.TuzelKisiYonetimiTest"/>
         </classes>
     </test>
     <test name="YonetimHavuzuIslemleriTest">
         <classes>
-            <class name="YonetimHavuzuIslemleri.YonetimHavuzuIslemleriTest"/>
+            <class name="tests.YonetimHavuzuIslemleri.YonetimHavuzuIslemleriTest"/>
         </classes>
     </test>
-    <test name="EvrakPostalama">
+    <test name="tests.EvrakPostalama">
         <classes>
-            <class name="EvrakPostalama.EvrakPostalamaTest"/>
+            <class name="tests.EvrakPostalama.EvrakPostalamaTest"/>
         </classes>
+    </test>-->
+    <test name="All">
+        <packages>
+            <package name="tests.*"/>
+            <!--<package name="tests.BirimIcerikSablonu"/>-->
+            <!--<package name="tests.GercekKisiYonetimi"/>-->
+            <!--<package name="tests.TuzelKisiYonetimi"/>-->
+            <!--<package name="tests.EvrakPostalama"/>-->
+        </packages>
     </test>
 </suite>
-

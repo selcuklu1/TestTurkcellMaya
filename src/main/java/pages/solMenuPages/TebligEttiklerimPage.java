@@ -27,7 +27,7 @@ public class TebligEttiklerimPage extends MainPage {
 
 
     @Step("Tebliğler sayfasını aç")
-    public TebligEttiklerimPage openPage(){
+    public TebligEttiklerimPage openPage() {
         solMenu(SolMenuData.IslemYaptiklarim.TebligEttiklerim);
         return this;
     }
@@ -46,6 +46,23 @@ public class TebligEttiklerimPage extends MainPage {
         return this;
     }
 
+    // document-detail
+
+    @Step("İçerik göster butonuna tıkla.")
+    public TebligEttiklerimPage icreikGoster(String konu, String gidecegiYer, String evrakTarihi, String no) {
+
+        tableTebligEttiklerim
+                .filterBy(Condition.text("Konu: " + konu))
+                .filterBy(Condition.text("Gideceği Yer: " + gidecegiYer))
+                .filterBy(Condition.text("Evrak Tarihi: " + evrakTarihi))
+                .filterBy(Condition.text("No: " + no))
+                .first()
+                .find(By.xpath(".//span[contains(@class, 'document-detail')]"))
+                .click();
+
+        return this;
+    }
+
     @Step("Tebliğ Hatırlat butonuna tıkla.")
     public TebligEttiklerimPage tebligHatirlatTabTikla() {
         btnTebligHatirlatTab.click();
@@ -59,11 +76,11 @@ public class TebligEttiklerimPage extends MainPage {
         if (chkOkunmamisTebligleriHatirlat.$(By.xpath("./div[contains(@class, 'ui-state-active')]")).exists())
             isSelected = true;
 
-        if(secim == true){
-            if(isSelected == false)
+        if (secim == true) {
+            if (isSelected == false)
                 chkOkunmamisTebligleriHatirlat.click();
         } else {
-            if(isSelected == true)
+            if (isSelected == true)
                 chkOkunmamisTebligleriHatirlat.click();
         }
 
@@ -77,11 +94,11 @@ public class TebligEttiklerimPage extends MainPage {
         if (chkOkunmusTebellugEdilmemisTebligleriHatirlat.$(By.xpath("./div[contains(@class, 'ui-state-active')]")).exists())
             isSelected = true;
 
-        if(secim == true){
-            if(isSelected == false)
+        if (secim == true) {
+            if (isSelected == false)
                 chkOkunmusTebellugEdilmemisTebligleriHatirlat.click();
         } else {
-            if(isSelected == true)
+            if (isSelected == true)
                 chkOkunmusTebellugEdilmemisTebligleriHatirlat.click();
         }
 
@@ -90,13 +107,13 @@ public class TebligEttiklerimPage extends MainPage {
 
 
     @Step("Tebliğ Hatırlat Notu gir.")
-    public TebligEttiklerimPage tebligHatirlatNotuGir(String not){
+    public TebligEttiklerimPage tebligHatirlatNotuGir(String not) {
         txtTebligHatirlatNot.setValue(not);
         return this;
     }
 
     @Step("Tebliğ Hatırlat butonuna tıkla.")
-    public TebligEttiklerimPage tebligHatirlat(){
+    public TebligEttiklerimPage tebligHatirlat() {
         btnTebligHatirlat.click();
         return this;
     }
