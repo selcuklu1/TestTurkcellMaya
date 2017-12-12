@@ -1,6 +1,7 @@
 package common;
 
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.Selenide;
 import listeners.SettingsListener;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -11,8 +12,6 @@ import pages.pageComponents.belgenetElements.BelgenetFramework;
 
 import java.util.Locale;
 
-import static com.codeborne.selenide.Selenide.clearBrowserCookies;
-import static com.codeborne.selenide.Selenide.clearBrowserLocalStorage;
 import static data.TestData.belgenetURL;
 
 
@@ -22,7 +21,7 @@ public class BaseTest extends BaseLibrary {
     @BeforeClass
     public void driverSetUp() {
 
-//        killProcess();
+        killProcess();
 
         Locale turkishLocal = new Locale("tr", "TR");
         Locale.setDefault(turkishLocal);
@@ -32,19 +31,20 @@ public class BaseTest extends BaseLibrary {
         //endregion
 
         //region Selenide Driver Configuration
-//        Configuration.remote = "http://0.0.0.0:32769/wd/hub";
         Configuration.baseUrl = belgenetURL;
         Configuration.browser = "chrome";
-//        Configuration.browser = "drivers.Firefox";
-//        Configuration.browser = "marionette";
+        //Configuration.browser = "drivers.Firefox";
+        //Configuration.browser = "marionette";
+
+        //Configuration.remote = "http://10.101.20.153:4444/wd/hub";
         Configuration.reportsFolder = "test-result/reports";
         Configuration.screenshots = false;
         Configuration.savePageSource = false;
-        Configuration.collectionsTimeout = 30000;
-        Configuration.timeout = 30000;
-//        Configuration.holdBrowserOpen = true;
-//        Configuration.headless = false;
-//        Configuration.startMaximized = true;
+        Configuration.collectionsTimeout = 40000;
+        Configuration.timeout = 40000;
+        Configuration.holdBrowserOpen = true;
+        Configuration.headless = false;
+        Configuration.startMaximized = true;
         Configuration.pollingInterval = 100;
         Configuration.collectionsPollingInterval = 100;
 //        Configuration.closeBrowserTimeoutMs = 34000;
@@ -57,12 +57,9 @@ public class BaseTest extends BaseLibrary {
     }
 
     @AfterMethod
-    public void tearDown() {
-        try {
-            clearBrowserLocalStorage();
-            clearBrowserCookies();
-        } catch (Exception ignored) {
-        }
+    public void tearDown() throws Exception {
+        Selenide.clearBrowserLocalStorage();
+        Selenide.clearBrowserCookies();
     }
 
     public void login() {
