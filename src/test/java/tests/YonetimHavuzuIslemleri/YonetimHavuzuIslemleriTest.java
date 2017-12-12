@@ -29,11 +29,10 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
     @Test(enabled = true, description = "TC0001 : Yönetim havuzunu pasife alma")
     public void TC0001() {
 
-        String pasifeAlinacakHavuzAdi = "Test-tec012";
+        String pasifeAlinacakHavuzAdi = "Test-tec013045";
 
         String[] kontrolEdilecekBirimler = new String[]{"Optiim Birim"};
-        String[] kontrolEdilecekKullanicilar = new String[]{"Veysel KIRAN"};
-        String filtrelenecekBirimAdi = "Optiim Birim";
+        String[] kontrolEdilecekKullanicilar = new String[]{"Yasin TELLİ"};
 
         yonetimHavuzuYonetimiPage
                 .openPage()
@@ -55,9 +54,11 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
     @Test(enabled = true, description = "TC0002 : Yeni yönetim havuzu kayıt")
     public void TC0002() {
 
-        String eklenecekYonetimHavuzuAdi = "Tc02yonetimhavuzu";
-        String eklenecekBirim = "Optiim Birim";
-        String eklenecekKullanici = "Veysel KIRAN";
+        String eklenecekYonetimHavuzuAdi = "havuz" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
+        String eklenecekBirim = "Optiim Alt Birim";
+        String eklenecekKullanici = "Yasin TELLİ";
+
+
 
 
         yonetimHavuzuYonetimiPage
@@ -77,7 +78,7 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
                 .onayAkisiKullaniciEkle(eklenecekKullanici)
                 .onayAkisiKullaniciTipiSec(eklenecekKullanici, "İmzalama")
                 .onayAkisiKullan()
-                .onayAkisiKullanilanKullanilanKontrolEt("Optiim TEST-Paraflama / Veysel KIRAN-İmzalama");
+                .onayAkisiKullanilanKullanilanKontrolEt("Optiim TEST-Paraflama / "+eklenecekKullanici+"-İmzalama");
 
 
         logout();
@@ -97,18 +98,19 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
     @Test(enabled = true, description = "TC0003 : yönetim havuzunu güncelleme")
     public void TC0009() {
 
-        String yonetimHavuzuAdi = "Test-tec01";
+        String yonetimHavuzuAdi = "Test-tec013045";
         String[] kontrolEdilecekBirimler = new String[]{"Optiim Birim"};
-        String[] kontrolEdilecekKullanicilar = new String[]{ "Veysel KIRAN" };
+        String[] kontrolEdilecekKullanicilar = new String[]{ "Yasin TELLİ" };
         String eklenecekAltBirim = "Optiim Alt Birim1";
-        String silinecekKullanici = "Veysel KIRAN";
+        String silinecekKullanici = "Yasin TELLİ";
         String eklenecekKullanici = "Yasin TELLİ";
-        String yeniYonetimHavuzuAdi = "Test-tec01" + + (new Random().nextInt((9000 - 1000) + 1) + 1000);
+        String yeniYonetimHavuzuAdi = "Test-tec01" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
 
-        String guncelKullanici = "Optiim TEST1 [Ağ (Network) Uzman Yardımcısı]";
+        String guncelKullanici = "Optiim TEST [Ağ (Network) Uzman Yardımcısı]";
+        String guncelKullanici2 = "Optiim TEST1 [Ağ (Network) Uzman Yardımcısı]";
 
-        // Optiim TEST [Ağ (Network) Uzman Yardımcısı]
         String basariMesaji = "İşlem başarılıdır!";
+
 
         yonetimHavuzuYonetimiPage
                 .openPage()
@@ -128,12 +130,14 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
                 .openPage()
                 .bilgilerTabiAc()
                 .onayAkisiEkle()
-                //.onayAkisiKullaniciKontrol(guncelKullanici, "Paraflama")
+                .onayAkisiKullaniciKontrol(guncelKullanici, "Paraflama")
                 .onayAkisiTreeKullaniciKontrol(silinecekKullanici, false)
                 .onayAkisiTreeKullaniciKontrol(eklenecekKullanici, true)
                 .onayAkisiKullaniciEkle(eklenecekKullanici)
                 .onayAkisiKullaniciTipiSec(eklenecekKullanici, "İmzalama")
                 .onayAkisiKullan();
+
+
 
         logout();
         login("test1", "123");
@@ -142,7 +146,7 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
                 .openPage()
                 .bilgilerTabiAc()
                 .onayAkisiEkle()
-                .onayAkisiKullaniciKontrol(guncelKullanici, "Paraflama")
+                .onayAkisiKullaniciKontrol(guncelKullanici2, "Paraflama")
                 .onayAkisiTreeKullaniciKontrol(eklenecekKullanici, true);
 
 

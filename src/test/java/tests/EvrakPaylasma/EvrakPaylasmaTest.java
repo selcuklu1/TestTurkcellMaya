@@ -36,7 +36,7 @@ public class EvrakPaylasmaTest extends BaseTest {
 
         paylastiklarimPage
                 .openPage()
-                .evrakSec("Optiim TEST")
+                .evrakSec("", "","Optiim TEST1 / Optiim TEST2","11.12.2017 13:07:26 ")
                 .paylasTabTikla()
                 .paylasimiDurdur()
                 .islemMesaji().basariliOlmali(basariMesaji);
@@ -49,7 +49,7 @@ public class EvrakPaylasmaTest extends BaseTest {
 
 
         logout();
-        login("optiim", "Avis1111");
+        login("optiim", "123");
 
         benimlePaylasilanlarPage
                 .openPage()
@@ -483,7 +483,6 @@ public class EvrakPaylasmaTest extends BaseTest {
 
     }
 
-
     @Test(enabled = true, description = "TC2192 : İçeriğinde form olan evrakı paylaşma")
     public void TC2192() {
 
@@ -607,7 +606,6 @@ public class EvrakPaylasmaTest extends BaseTest {
 
 
     }
-
 
     @Test(enabled = true, description = "TC2197 : Devredilen evrakı paylaşma")
     public void TC2197() {

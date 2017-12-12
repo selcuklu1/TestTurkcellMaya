@@ -66,7 +66,7 @@ public class BakimaAlTest extends BaseTest {
     }
 
 
-    @Test(enabled = true, description = "2109 : Bakım Moduna Alma ve alan kontrolleri")
+    @Test(enabled = true, description = "2109 : Bakım Modundan Çıkar")
     public void TC02109() {
 
         String bilgilendirmeMetni = "Bu bir deneme bilgilendirme metnidir.";

@@ -42,7 +42,7 @@ public class GidenEvrakKayitPage extends MainPage {
     SelenideElement cmbEvrakBilgileriListGizlilikDerecesi = $("[id$='guvenlikKodu']");
     SelenideElement cmbEvrakBilgileriListKisiKurum = $("[id$='kisiKurum']");
     SelenideElement ustYazi = $(By.xpath("//input[@class='ustYaziUploadClass']"));
-    SelenideElement lblEklenenPdfUstYazi = $("[id$=eklendiYazisi]");
+    SelenideElement lblEklenenPdfUstYazi = $("[id$='eklendiYazisi'] label");
     SelenideElement cmbEvrakBilgileriListIvedilik = $("[id$='ivedilik']");
     SelenideElement dateTxtMiat = $("[id$='miatCalendar_input']");
 
@@ -73,7 +73,7 @@ public class GidenEvrakKayitPage extends MainPage {
     @Step("Gereği seçim tipi seç")
     public GidenEvrakKayitPage geregiSecimTipiSec(String geregi) {
         cmbGeregiSecimTipi.sendKeys(Keys.SHIFT);
-        cmbGeregiSecimTipi.selectOptionByValue(geregi);
+        cmbGeregiSecimTipi.selectOption(geregi);
         return this;
     }
 
@@ -129,7 +129,7 @@ public class GidenEvrakKayitPage extends MainPage {
     @Step("Bilgi seçim tipi seç")
     public GidenEvrakKayitPage bilgiSecimTipiSec(String bilgi) {
         cmbBilgiSecimTipi.sendKeys(Keys.SHIFT);
-        cmbBilgiSecimTipi.selectOptionByValue(bilgi);
+        cmbBilgiSecimTipi.selectOption(bilgi);
         return this;
     }
 
