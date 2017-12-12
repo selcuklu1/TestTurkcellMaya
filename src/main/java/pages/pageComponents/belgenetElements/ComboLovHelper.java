@@ -87,7 +87,7 @@ public class ComboLovHelper extends BaseLibrary {
         b.click();
         if (b.is(visible))
             $$(lovInputTextleriTemizle).last().click();
-        
+
         $$(lovInputTextleriTemizle).filter(visible).shouldHaveSize(count - 1);
 
         return (BelgenetElement) element;
@@ -202,7 +202,9 @@ public class ComboLovHelper extends BaseLibrary {
     }
 
     static String lastSelectedLovTitleText() {
-        return $$(lovSecilenItemTitle).last().shouldBe(visible).text();
+        $$(lovSecilenItemTitle).shouldHave(sizeGreaterThan(0));
+        $$(lovSecilenItemTitle).last().shouldBe(visible);
+        return $$(lovSecilenItemTitle).last().text();
     }
 
     static String lastSelectedLovDetailText() {
@@ -388,7 +390,8 @@ public class ComboLovHelper extends BaseLibrary {
 
 
     public static BelgenetElement openTree(){
-        $(treeButton).click();
+        $(treeButton).shouldBe(visible).click();
+//        $(lovTree).shouldBe(visible);
 //        return (BelgenetElement) $$(lovTree).filterBy(visible).last();
         return ElementFinder.wrap(BelgenetElement.class, null, By.cssSelector(lovTree), 0);
     }

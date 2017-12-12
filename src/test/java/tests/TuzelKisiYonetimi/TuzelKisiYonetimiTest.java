@@ -587,7 +587,7 @@ public class TuzelKisiYonetimiTest extends BaseTest {
         //TODO: burada defect var. Düzeltilince açılacak tekrar
         //Gelen title:     TÜRKSAT OPTİİME
         //Beklenen title:  Türksat OPTİİM
-             //   .bilgiAlanindaGoruntulenmeKontrolu(ad, soyad);
+        //   .bilgiAlanindaGoruntulenmeKontrolu(ad, soyad);
     }
 
 }

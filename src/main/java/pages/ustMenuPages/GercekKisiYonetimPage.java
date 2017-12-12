@@ -389,7 +389,7 @@ public class GercekKisiYonetimPage extends MainPage {
 
     @Step("Gerçek Kişi Aktif Yap")
     public GercekKisiYonetimPage gercekKisiAktifYap() {
-        btnGercekKisiAktifYap.click();
+        btnGercekKisiAktifYap.shouldBe(visible).click();
         return this;
     }
 

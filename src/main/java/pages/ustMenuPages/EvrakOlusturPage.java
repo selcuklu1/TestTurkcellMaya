@@ -551,7 +551,7 @@ public class EvrakOlusturPage extends MainPage {
         @Step("Kişinin Bilgi alanında görüntülenme kontrolu")
         public BilgilerTab bilgiAlanindaGoruntulenmeKontrolu(String ad, String soyad) {
 
-            String adSoyad = ad + " " +soyad.toUpperCase();
+            String adSoyad = ad + " " + soyad.toUpperCase();
             cmbBilgi.selectLov(adSoyad);
             System.out.println("Gelen title:     " + cmbBilgi.lastSelectedLovTitleText());
             System.out.println("Beklenen title:  " + adSoyad);

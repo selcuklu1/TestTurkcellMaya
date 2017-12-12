@@ -32,9 +32,9 @@ public class BaseTest extends BaseLibrary {
 
         //region Selenide Driver Configuration
         Configuration.baseUrl = belgenetURL;
-        Configuration.browser = "chrome";
+//        Configuration.browser = "chrome";
 //        Configuration.browser = "drivers.Firefox";
-//        Configuration.browser = "marionette";
+        Configuration.browser = "marionette";
 
         //Configuration.remote = "http://10.101.20.153:4444/wd/hub";
         Configuration.reportsFolder = "test-result/reports";
@@ -60,7 +60,6 @@ public class BaseTest extends BaseLibrary {
     public void tearDown() throws Exception {
         Selenide.clearBrowserLocalStorage();
         Selenide.clearBrowserCookies();
-
     }
 
     public void login() {
