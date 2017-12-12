@@ -8,6 +8,7 @@ import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
+import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
@@ -29,7 +30,8 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     SelenideElement btnTeslimAlVeKapatTeslimAlVeKapat = $("[id='mainPreviewForm:evrakKapatFieldsetId'] button[id^='mainPreviewForm:j_']");
 
     public TeslimAlinmayiBekleyenlerPage openPage() {
-        ustMenu("Teslim Alınmayı Bekleyenler");
+        solMenu(SolMenuData.BirimEvraklari.TeslimAlinmayiBekleyenler);
+//        ustMenu("Teslim Alınmayı Bekleyenler");
         return this;
     }
 
@@ -40,13 +42,13 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     }
 
     @Step("Konu kodu doldur")
-    public TeslimAlinmayiBekleyenlerPage konuKoduDoldur(String konuKodu){
+    public TeslimAlinmayiBekleyenlerPage konuKoduDoldur(String konuKodu) {
         txtKonuKodu.selectLov(konuKodu);
         return this;
     }
 
     @Step("Teslim al ve kapat")
-    public TeslimAlinmayiBekleyenlerPage teslimAlveKapatTeslimAlVeKapat(){
+    public TeslimAlinmayiBekleyenlerPage teslimAlveKapatTeslimAlVeKapat() {
         btnTeslimAlVeKapatTeslimAlVeKapat.click();
         return this;
     }

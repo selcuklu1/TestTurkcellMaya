@@ -156,7 +156,7 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement cmbIvedik = $("select[id$='ivedilik']");
         SelenideElement dateMiat = $("input[id$='miatCalendar_input']");
 
-        SelenideElement cmbBilgiSecimTipi = $(By.xpath("//select[starts-with(@id,'yeniGidenEvrakForm:evrakBilgileriList:15:j_idt')]"));
+        SelenideElement cmbBilgiSecimTipi = $x("//label[normalize-space(text())='Bilgi Seçim Tipi']/ancestor::tr[@class='ui-datagrid-row']//select");
         //SelenideElement cmbBilgiSecimTipi = $(By.xpath("//label[normalize-space(text())='Bilgi Seçim Tipi']/ancestor::tr[@class='ui-datagrid-row']//select"));
 
         BelgenetElement txtBilgi = comboLov("input[id$='bilgiLov:LovText']");
@@ -400,7 +400,7 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Bilgi Secim Tipi alanında {0} seç")
         public BilgilerTab bilgiSecimTipiSec(String text) {
-            cmbBilgiSecimTipi.selectOptionByValue(text);
+            cmbBilgiSecimTipi.selectOption(text);
             return this;
         }
 
@@ -709,8 +709,7 @@ public class EvrakOlusturPage extends MainPage {
         @Step("Bilgileri tabında Onay Akışı alanında görüntülenmeme kontrolu")
         public BilgilerTab onayAkisiAlanindaGoruntulenmemeKontrolu(String onayAkisi) {
 
-            boolean selectable = comboLov(cmbOnayAkisiBy).isLovValueSelectable(onayAkisi);
-            Assert.assertEquals(selectable, false, "MyCombolov alanında " + onayAkisi + ": Onay Akışın görüntülenmediği görülür");
+            comboLov(cmbOnayAkisiBy).type(onayAkisi).titleItems().filterBy(exactText(onayAkisi)).shouldHaveSize(0);
             System.out.println("MyCombolov alanında " + onayAkisi + ": Onay Akışın görüntülenmediği görülür.");
 
             return this;
@@ -749,6 +748,7 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Onay akışı kullanıcı adı ve tipi kontrol et")
         public BilgilerTab onayAkisiKullaniciKontrol(String kullaniciAdi, String kullaniciTipi) {
+            btnKullan.sendKeys(Keys.SHIFT);
             trOnayAkisiEkleKullanicilar
                     .filterBy(text(kullaniciAdi))
                     .get(0)
@@ -945,8 +945,6 @@ public class EvrakOlusturPage extends MainPage {
         }
 
 
-
-
         //endregion
 
     }
@@ -980,8 +978,6 @@ public class EvrakOlusturPage extends MainPage {
         }
 
         private TextEditor editor = new TextEditor();
-
-
 
 
         private EditorTab open() {

@@ -28,7 +28,7 @@ public class KurumYonetimiTest extends BaseTest {
     }
 
     @Test(enabled = true, description = "TC01459 : Kurum bilgisi güncelleme")
-    public void TC01459() throws InterruptedException {
+    public void TC01459() {
 
         String guncellenecekKurumAdi = "huseyindeneme";
         String yeniKurumAdi = "huseyindeneme" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
@@ -105,7 +105,7 @@ public class KurumYonetimiTest extends BaseTest {
 
         gelenEvrakKayitPage
                 .openPage()
-                .kisiKurumSec("D")
+                .kisiKurumSec("Kurum")
                 .geldigiKurumDoldurLovText(yeniKurumAdi)
                 .alanDegeriKontrolEt(gelenEvrakKayitPage.txtEvrakBilgileriListEvrakSayiTextAreaSol, idariBirimKimlikKodu, true, false);
 
@@ -114,9 +114,9 @@ public class KurumYonetimiTest extends BaseTest {
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
-                .geregiSecimTipiSec("D")
+                .geregiSecimTipiSec("Kurum")
                 .geregiTreeKontrolEt(yeniKurumAdi, true)
-                .bilgiSecimTipiSec("D")
+                .bilgiSecimTipiSec("Kurum")
                 .bilgiSec(yeniKurumAdi);
 
         evrakOlusturPage
@@ -128,7 +128,7 @@ public class KurumYonetimiTest extends BaseTest {
 
         gidenEvrakKayitPage
                 .openPage()
-                .geregiSecimTipiSec("D")
+                .geregiSecimTipiSec("Kurum")
                 .geregiAlanindaDegerKontrolu(yeniKurumAdi, true)
                 .panelKapat(false);
 
@@ -145,20 +145,19 @@ public class KurumYonetimiTest extends BaseTest {
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
-                .geregiSecimTipiSec("D")
+                .geregiSecimTipiSec("Kurum")
                 .geregiSec(yeniKurumAdi)
                 .geregiSecilenKontrol(yeniKurumAdi, kontrolEdilecekGeregiDetay, "Adi Posta");
 
     }
 
-
     @Test(enabled = true, description = "TC01109 : Kurum tanımlama ve kontrolü")
-    public void TC01109() throws InterruptedException {
+    public void TC01109() {
 
         String yeniKurumAdi = "Yenikurum" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
         String idariBirimKimlikKodu = (new Random().nextInt((900000 - 100000) + 1) + 100000) + "";
         String ustKurum = "Maliye Bakanlığı";
-        String kisaAdi = "ynkrm01";
+        String kisaAdi = "ynkrm" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
         String hitap = "yeniHitap";
 
         String kontrolEdilecekGeregiDetay = "";
@@ -214,7 +213,7 @@ public class KurumYonetimiTest extends BaseTest {
 
         gelenEvrakKayitPage
                 .openPage()
-                .kisiKurumSec("D")
+                .kisiKurumSec("Kurum")
                 .geldigiKurumDoldurLovText(yeniKurumAdi)
                 .alanDegeriKontrolEt(gelenEvrakKayitPage.txtEvrakBilgileriListEvrakSayiTextAreaSol, idariBirimKimlikKodu, true, false);
 
@@ -224,21 +223,21 @@ public class KurumYonetimiTest extends BaseTest {
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
-                .geregiSecimTipiSec("D")
+                .geregiSecimTipiSec("Kurum")
                 .geregiSec(yeniKurumAdi)
                 .geregiSecilenKontrol(yeniKurumAdi, kontrolEdilecekGeregiDetay, "Adi Posta");
     }
 
     @Test(enabled = true, description = "TC01108 : Kurum Sorgulama")
-    public void TC01108() throws InterruptedException {
+    public void TC01108() {
 
-        String aktifKurumAdi = "Yenikurum2409";
-        String aktifIdariBirimKimlikKodu = "1758";
+        String aktifKurumAdi = "Yenikurum2854";
+        String aktifIdariBirimKimlikKodu = "889700";
 
         String pasifKurumadi = "Maliye Bakanlığı";
         String pasifIdariBirimKimlikKodu = "24316011";
 
-        String pasifYapilacakKurum = "Yenikurum3633";
+        String pasifYapilacakKurum = "Yenikurum3413";
         String pasifYapilacakKurumUstKurum = "Maliye Bakanlığı";
 
 
@@ -286,10 +285,10 @@ public class KurumYonetimiTest extends BaseTest {
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
-                .bilgiSecimTipiSec("D")
+                .bilgiSecimTipiSec("Kurum")
                 .bilgiSec(aktifIdariBirimKimlikKodu, true)
                 .bilgiSec(aktifKurumAdi, true)
-                .geregiSecimTipiSec("D")
+                .geregiSecimTipiSec("Kurum")
                 .geregiSec(aktifIdariBirimKimlikKodu, true)
                 .geregiSec(aktifKurumAdi, true);
         evrakOlusturPage
@@ -298,17 +297,17 @@ public class KurumYonetimiTest extends BaseTest {
 
         gelenEvrakKayitPage
                 .openPage()
-                .kisiKurumSec("D")
+                .kisiKurumSec("Kurum")
                 .geldigiKurumDoldurLovText(aktifIdariBirimKimlikKodu)
                 .geldigiKurumDoldurLovText(aktifKurumAdi)
                 .panelKapat(false);
 
         gidenEvrakKayitPage
                 .openPage()
-                .geregiSecimTipiSec("D")
+                .geregiSecimTipiSec("Kurum")
                 .geregiDoldur(aktifIdariBirimKimlikKodu, true)
                 .geregiDoldur(aktifKurumAdi, true)
-                .bilgiSecimTipiSec("D")
+                .bilgiSecimTipiSec("Kurum")
                 .bilgiDoldur(aktifIdariBirimKimlikKodu, true)
                 .bilgiDoldur(aktifKurumAdi, true)
                 .panelKapat(false);
@@ -329,7 +328,7 @@ public class KurumYonetimiTest extends BaseTest {
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
-                .geregiSecimTipiSec("D")
+                .geregiSecimTipiSec("Kurum")
                 .geregiTreeKontrolEt(pasifYapilacakKurum, false);
 
         evrakOlusturPage
@@ -337,15 +336,15 @@ public class KurumYonetimiTest extends BaseTest {
 
         gidenEvrakKayitPage
                 .openPage()
-                .geregiSecimTipiSec("D")
+                .geregiSecimTipiSec("Kurum")
                 .geregiAlanindaDegerKontrolu(pasifYapilacakKurum, false)
-                .bilgiSecimTipiSec("D")
+                .bilgiSecimTipiSec("Kurum")
                 .bilgiAlanindaDegerKontrolu(pasifYapilacakKurum, false)
                 .panelKapat(false);
 
         gelenEvrakKayitPage
                 .openPage()
-                .kisiKurumSec("D")
+                .kisiKurumSec("Kurum")
                 .geldigiKurumDegerGoruntulemeKontrolu(pasifYapilacakKurum, false)
                 .panelKapat(false);
 
@@ -368,9 +367,9 @@ public class KurumYonetimiTest extends BaseTest {
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
-                .geregiSecimTipiSec("D")
+                .geregiSecimTipiSec("Kurum")
                 .geregiTreeKontrolEt(pasifYapilacakKurum, true)
-                .bilgiSecimTipiSec("D")
+                .bilgiSecimTipiSec("Kurum")
                 .bilgiSecimTipiTreeKontrolEt(pasifYapilacakKurum, true);
 
         evrakOlusturPage
@@ -378,15 +377,15 @@ public class KurumYonetimiTest extends BaseTest {
 
         gidenEvrakKayitPage
                 .openPage()
-                .geregiSecimTipiSec("D")
+                .geregiSecimTipiSec("Kurum")
                 .geregiAlanindaDegerKontrolu(pasifYapilacakKurum, true)
-                .bilgiSecimTipiSec("D")
+                .bilgiSecimTipiSec("Kurum")
                 .bilgiAlanindaDegerKontrolu(pasifYapilacakKurum, true)
                 .panelKapat(false);
 
         gelenEvrakKayitPage
                 .openPage()
-                .kisiKurumSec("D")
+                .kisiKurumSec("Kurum")
                 .geldigiKurumDegerGoruntulemeKontrolu(pasifYapilacakKurum, true)
                 .panelKapat(false);
 

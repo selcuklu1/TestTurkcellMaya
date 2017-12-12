@@ -75,7 +75,7 @@ public class PulYonetimiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "Pul yönetimi ekranındaki tanımın posta listesinde kontrolü")
+    @Test(enabled = false, description = "Pul yönetimi ekranındaki tanımın posta listesinde kontrolü")
     public void TC2215() throws InterruptedException {
 
         String postaListesi = "optiim";
@@ -111,7 +111,7 @@ public class PulYonetimiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC2214 : Pul yönetimi ekranındaki tanımın postalanacaklar listesinde kontrolü")
+    @Test(enabled = false, description = "TC2214 : Pul yönetimi ekranındaki tanımın postalanacaklar listesinde kontrolü")
     public void TC2214() throws InterruptedException {
 
         postalanacakEvraklarPage

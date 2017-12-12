@@ -30,8 +30,8 @@ public class VekaletIslemleriTest extends BaseTest {
 
     String aciklama = "";
     String redNedeni = "";
-    String vekaletVeren = "Optiim TEST";
-    String vekaletAlan = "Optiim TEST1";
+    String vekaletVeren = "Optiim TEST1";
+    String vekaletAlan = "Optiim TEST2";
     String evrakNo1 = "";
     String evrakNo2 = "";
 
@@ -48,7 +48,7 @@ public class VekaletIslemleriTest extends BaseTest {
     @Test(enabled = true, description = "Onaya göndererek Vekalet Verme")
     public void TC0025a() throws InterruptedException {
 
-        login(username, password);
+        login("test1", "123");
 
         String basariMesaji = "İşlem başarılıdır!";
         String[] evrakNo = new String[2];
@@ -93,7 +93,7 @@ public class VekaletIslemleriTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = false, dependsOnMethods = {"TC0025a"}, description = "Onaya göndererek Vekalet Verme işleminde onayın Red edilmesi")
+    @Test(enabled = true, dependsOnMethods = {"TC0025a"}, description = "Onaya göndererek Vekalet Verme işleminde onayın Red edilmesi")
     public void TC0025b() throws InterruptedException {
 
         login(username2, password2);
@@ -120,7 +120,7 @@ public class VekaletIslemleriTest extends BaseTest {
                 .vekaletListesiTabloKontrol(11, redNedeni);
         logout();
 
-        login(username, password);
+        login("test1", "123");
 
         gelenEvraklarPage
                 .openPage()
@@ -128,7 +128,7 @@ public class VekaletIslemleriTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "Onaya göndererek Vekalet Verme işleminde onayın kabul edilmesi")
+    @Test(enabled = true, dependsOnMethods = {"TC0025b"}, description = "Onaya göndererek Vekalet Verme işleminde onayın kabul edilmesi")
     public void TC2208() throws InterruptedException {
         TC0025a();
         login(username2, password2);
@@ -155,7 +155,7 @@ public class VekaletIslemleriTest extends BaseTest {
 
         logout();
 
-        login(username, password);
+        login("test1", "123");
 
         vekaletVerPage
                 .vekaletVarUyarıPopUp();
@@ -167,7 +167,7 @@ public class VekaletIslemleriTest extends BaseTest {
 
         logout();
 
-        login("test1", "123");
+        login("optiimTest2", "123");
 
         vekaletVerPage
                 .vekaletVarUyarıPopUp();
@@ -178,7 +178,7 @@ public class VekaletIslemleriTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "Vekaleti alan kullanıcının onay akışında seçilmesi(vekaleten)")
+    @Test(enabled = false, description = "Vekaleti alan kullanıcının onay akışında seçilmesi(vekaleten)")
     public void TC0015() throws InterruptedException {
 
         login(username3, password3);
@@ -216,7 +216,7 @@ public class VekaletIslemleriTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "vekaleti veren kullanıcının onay akışında seçilmesi (kendisi)")
+    @Test(enabled = false, description = "vekaleti veren kullanıcının onay akışında seçilmesi (kendisi)")
     public void TC0012() throws InterruptedException {
 
         login(username3, password3);
