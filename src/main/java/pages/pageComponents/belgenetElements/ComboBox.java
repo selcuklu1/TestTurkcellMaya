@@ -10,8 +10,6 @@ import org.openqa.selenium.By;
 import java.io.IOException;
 import java.util.List;
 
-import static pages.pageComponents.belgenetElements.ComboBoxHelper.*;
-
 class ComboBox {
 
     class SelectComboBox implements Command<BelgenetElement> {
@@ -23,7 +21,7 @@ class ComboBox {
             boolean[] jaArr = (boolean[]) args[1];
             boolean js = (jaArr.length <= 0) || jaArr[0];
 
-            selectComboBox(proxy, args[0].toString(), js);
+            new ComboBoxHelper().selectComboBox(proxy, args[0].toString(), js);
 
             return (BelgenetElement) proxy;
         }
@@ -32,7 +30,9 @@ class ComboBox {
     class GetComboBoxList implements Command<BelgenetElement> {
         @Override
         public BelgenetElement execute(SelenideElement proxy, WebElementSource locator, Object[] args) throws IOException {
-            By ulLocator = getComboBoxHtmlList(proxy);
+
+
+            By ulLocator = new ComboBoxHelper().getComboBoxHtmlList(proxy);
             return (BelgenetElement) ElementFinder.wrap(BelgenetElement.class, null, ulLocator, 0);
         }
     }
@@ -40,7 +40,7 @@ class ComboBox {
     class GetComboBoxValues implements Command<ElementsCollection> {
         @Override
         public ElementsCollection execute(SelenideElement proxy, WebElementSource locator, Object[] args) throws IOException {
-            return getComboBoxValues(proxy);
+            return new ComboBoxHelper().getComboBoxValues(proxy);
         }
     }
 }

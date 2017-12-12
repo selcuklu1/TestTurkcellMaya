@@ -276,7 +276,7 @@ public class KurumYonetimiPage extends MainPage {
     public KurumYonetimiPage sorgulaKurumDoldur(String kurumAdi) {
 
 
-        while(!txtKurumCombolov.isDisplayed()){
+        while (!txtKurumCombolov.isDisplayed()) {
             filtrePanel.click();
             txtKurumCombolov.clearAllSelectedLov();
             txtKurumCombolov.selectLov(kurumAdi);

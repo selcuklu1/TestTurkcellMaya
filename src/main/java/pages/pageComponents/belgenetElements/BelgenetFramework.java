@@ -19,39 +19,39 @@ import static com.codeborne.selenide.Selenide.*;
 
 public class BelgenetFramework {
 
-    private static ComboLov comboLov = new ComboLov();
-    private static ComboBox comboBox = new ComboBox();
+//    private static ComboLov comboLov = new ComboLov();
+//    private static ComboBox comboBox = new ComboBox();
 
     public static void setUp() {
         //region ComboLov
-        Commands.getInstance().add("selectLov", comboLov.new SelectLov());
-        Commands.getInstance().add("clearLastSelectedLov", comboLov.new ClearLastSelectedLov());
-        Commands.getInstance().add("clearAllSelectedLov", comboLov.new ClearAllSelectedLov());
-        Commands.getInstance().add("lastSelectedLovTitle", comboLov.new LastSelectedLovTitle());
-        Commands.getInstance().add("lastSelectedLovDetail", comboLov.new LastSelectedLovDetail());
-        Commands.getInstance().add("lastSelectedLovTitleText", comboLov.new LastSelectedLovTitleText());
-        Commands.getInstance().add("lastSelectedLovDetailText", comboLov.new LastSelectedLovDetailText());
-        Commands.getInstance().add("isLovSelected", comboLov.new IsLovSelected());
-        Commands.getInstance().add("isLovValueSelectable", comboLov.new IsLovValueSelectable());
-        Commands.getInstance().add("lastSelectedLov", comboLov.new LastSelectedLov());
-        Commands.getInstance().add("closeLovTreePanel", comboLov.new CloseLovTreePanel());
+        Commands.getInstance().add("selectLov", new ComboLov().new SelectLov());
+        Commands.getInstance().add("clearLastSelectedLov", new ComboLov().new ClearLastSelectedLov());
+        Commands.getInstance().add("clearAllSelectedLov", new ComboLov().new ClearAllSelectedLov());
+        Commands.getInstance().add("lastSelectedLovTitle", new ComboLov().new LastSelectedLovTitle());
+        Commands.getInstance().add("lastSelectedLovDetail", new ComboLov().new LastSelectedLovDetail());
+        Commands.getInstance().add("lastSelectedLovTitleText", new ComboLov().new LastSelectedLovTitleText());
+        Commands.getInstance().add("lastSelectedLovDetailText", new ComboLov().new LastSelectedLovDetailText());
+        Commands.getInstance().add("isLovSelected", new ComboLov().new IsLovSelected());
+        Commands.getInstance().add("isLovValueSelectable", new ComboLov().new IsLovValueSelectable());
+        Commands.getInstance().add("lastSelectedLov", new ComboLov().new LastSelectedLov());
+        Commands.getInstance().add("closeLovTreePanel", new ComboLov().new CloseLovTreePanel());
 
-        Commands.getInstance().add("allSelectedLov", comboLov.new AllSelectedLov());
-        Commands.getInstance().add("selectedTitles", comboLov.new SelectedTitles());
-        Commands.getInstance().add("selectDetails", comboLov.new SelectedDetails());
+        Commands.getInstance().add("allSelectedLov", new ComboLov().new AllSelectedLov());
+        Commands.getInstance().add("selectedTitles", new ComboLov().new SelectedTitles());
+        Commands.getInstance().add("selectDetails", new ComboLov().new SelectedDetails());
 
-        Commands.getInstance().add("openTree", comboLov.new OpenTree());
+        Commands.getInstance().add("openTree", new ComboLov().new OpenTree());
 //        Commands.getInstance().add("clearLov", comboLov.new ClearLov());
-        Commands.getInstance().add("type", comboLov.new Type());
-        Commands.getInstance().add("isEmpty", comboLov.new IsEmpty());
-        Commands.getInstance().add("titleItems", comboLov.new TitleItems());
-        Commands.getInstance().add("detailItems", comboLov.new DetailItems());
+        Commands.getInstance().add("type", new ComboLov().new Type());
+        Commands.getInstance().add("isEmpty", new ComboLov().new IsEmpty());
+        Commands.getInstance().add("titleItems", new ComboLov().new TitleItems());
+        Commands.getInstance().add("detailItems", new ComboLov().new DetailItems());
 
         //endregion
         // region ComboBox
-        Commands.getInstance().add("selectComboBox", comboBox.new SelectComboBox());
-        Commands.getInstance().add("getComboBoxValues", comboBox.new GetComboBoxValues());
-        Commands.getInstance().add("getComboBoxHtmlList", comboBox.new GetComboBoxList());
+        Commands.getInstance().add("selectComboBox", new ComboBox().new SelectComboBox());
+        Commands.getInstance().add("getComboBoxValues", new ComboBox().new GetComboBoxValues());
+        Commands.getInstance().add("getComboBoxHtmlList", new ComboBox().new GetComboBoxList());
         //endregion
 
     }

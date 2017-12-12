@@ -8,24 +8,25 @@ import pages.pageComponents.UstMenu;
 
 import static com.codeborne.selenide.Selenide.$;
 
-public class ErisimYonetimiPage extends MainPage{
+public class ErisimYonetimiPage extends MainPage {
 
     SelenideElement btnKullaniciErisimTab = $("a[href='#erisimYonetimiTabView:kullanicidanErisimTab']");
     SelenideElement getBtnKullaniciErisimAra = $(By.id("erisimYonetimiTabView:kullanicidanErisimYonetimiListingForm:searchKullaniciButton"));
+
     @Step("Erişim Yonetimi sayfası aç")
-    public ErisimYonetimiPage openPage(){
+    public ErisimYonetimiPage openPage() {
         ustMenu("Erişim Yönetimi");
         return this;
     }
 
     @Step("Kullanıcı erişimi tab")
-    public ErisimYonetimiPage kullaniciErisimTab(){
+    public ErisimYonetimiPage kullaniciErisimTab() {
         btnKullaniciErisimTab.click();
         return this;
     }
 
     @Step("Kullanıcı erişim ara")
-    public ErisimYonetimiPage kullanıcıErisimAra(){
+    public ErisimYonetimiPage kullanıcıErisimAra() {
         getBtnKullaniciErisimAra.click();
         return this;
     }

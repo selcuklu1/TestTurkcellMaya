@@ -126,7 +126,7 @@ public class BaseLibrary {
 
 
     public void waitForLoading(WebDriver driver) {
-//        waitForJS();
+        waitForJS();
         waitForLoadingToDisappear(driver);
     }
     //</editor-fold>
