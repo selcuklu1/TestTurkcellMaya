@@ -1,6 +1,5 @@
 package pages.ustMenuPages;
 
-import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
@@ -22,8 +21,8 @@ import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 public class SikKullanilanlarPage extends MainPage {
 
     //<editor-fold desc="Elements">
-    SelenideElement cmbDagitimlarTip = $(By.id("sikKullanilanForm:j_idt2746_input"));
-    By cmbDagitimlarTipBy = By.id("sikKullanilanForm:j_idt2746_label");
+    SelenideElement cmbDagitimlarTip = $(By.xpath("//form[@id='sikKullanilanForm']//label[normalize-space(text())='Tip']/ancestor::tr/td[4]/div/label"));
+    By cmbDagitimlarTipBy = By.xpath("//form[@id='sikKullanilanForm']//label[normalize-space(text())='Tip']/ancestor::tr/td[4]/div/label");
     By txtDagitimlarDagitimlarBy = By.id("sikKullanilanForm:sikKullanilanDagitimLov_id:LovText");
     BelgenetElement txtDagitimlarDagitimlar = comboLov(By.id("sikKullanilanForm:sikKullanilanDagitimLov_id:LovText"));
     SelenideElement btnDagitimlarKaydet = $(By.id("sikKullanilanForm:sikKullanilanDagitimButton"));

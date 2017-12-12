@@ -2,7 +2,6 @@ package listeners;
 
 import common.BaseLibrary;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.events.WebDriverEventListener;
@@ -11,7 +10,7 @@ import java.sql.Timestamp;
 
 public class DriverEventListener extends BaseLibrary implements WebDriverEventListener {
 
-    private static boolean log = true;
+    private static boolean log = false;
 
     public void beforeAlertAccept(WebDriver driver) {
 

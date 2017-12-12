@@ -1,26 +1,20 @@
 package common;
 
 import com.codeborne.selenide.*;
-import com.codeborne.selenide.impl.SelenideFieldDecorator;
 import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
 import org.openqa.selenium.*;
-import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import pages.ustMenuPages.TuzelKisiYonetimiPage;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -113,8 +107,8 @@ public class BaseLibrary {
             //div[id*='bekleyiniz'][style*='visibility: visible']
             new WebDriverWait(driver, Configuration.timeout / 1000, 50).
                     until(invisibilityOfElementLocated(By.cssSelector("div[id*='bekleyiniz'][style*='visibility: visible']")));
-//            new WebDriverWait(driver, Configuration.timeout / 1000, 50).
-//                    until(ExpectedConditions.invisibilityOfAllElements(driver.findElements(By.className("loading"))));
+      //      new WebDriverWait(driver, Configuration.timeout / 1000, 50).
+        //            until(ExpectedConditions.invisibilityOfAllElements(driver.findElements(By.className("loading"))));
             System.out.println("Loading: Ok");
         } catch (Exception e) {
 //            System.out.println("Loading window error: " + e.getMessage());
@@ -136,6 +130,27 @@ public class BaseLibrary {
     public void setValueJS(SelenideElement element, String value) {
         executeJavaScript("arguments[0].value = arguments[1]", element, value);
     }
+
+    public static void killProcess() {
+
+        Runtime rt = Runtime.getRuntime();
+        try {
+            rt.exec("taskkill /f /im " + "chrome.exe");
+            rt.exec("taskkill /f /im " + "chromedriver.exe");
+            rt.exec("taskkill /f /im " + "conhost.exe");
+            rt.exec("taskkill /f /im " + "firefox.exe");
+            rt.exec("taskkill /f /im " + "geckodriver.exe");
+            rt.exec("taskkill /f /im " + "iexplore.exe");
+            rt.exec("taskkill /f /im " + "iedriver.server");
+            rt.exec("taskkill /f /im " + "iedriver.server64");
+            //rt.exec("taskkill /f /im " + "WerFault");
+            //rt.exec("taskkill /f /im " + "AcroRd32");
+            //rt.exec("taskkill /f /im " + "Excel");
+        } catch (IOException e) {
+            System.out.println("Processler Kill Edilememdi!!!");
+        }
+    }
+
 
     /**
      * Türkçe harfleri inglizce harflere dönüştürüyor

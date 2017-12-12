@@ -523,7 +523,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .geregiAlanindaGoruntulenmeKontrolu(adSoyad)
                 .secilenGeregiSil()
                 .bilgiSecimTipiSec("G")
-                .bilgiAlanindaGoruntulenmeKontrolu(adSoyad);
+                .bilgiAlanindaGoruntulenmeKontrolu(ad, soyad);
 
         evrakOlusturPage
                 .openPage()
@@ -532,6 +532,6 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .geregiAlanindaGoruntulenmeKontrolu(adSoyad)
                 .secilenGeregiSil()
                 .bilgiSecimTipiSec("G")
-                .bilgiAlanindaGoruntulenmeKontrolu(adSoyad);
+                .bilgiAlanindaGoruntulenmeKontrolu(ad, soyad);
     }
 }
