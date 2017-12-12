@@ -564,6 +564,12 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Geregi Secim Tipi alanında {value} seç")
+        public BilgilerTab geregiSecimTipiSecByText(String value) {
+            cmbGeregiSecimTipi.selectOption(value);
+            return this;
+        }
+
         @Step("Gereği doldur")
         public BilgilerTab geregiDoldur(String geregi) {
             cmbGeregi.selectLov(geregi);
@@ -1027,8 +1033,12 @@ public class EvrakOlusturPage extends MainPage {
         }
 
         @Step("Editör İçerik Doldur")
-        public EditorTab editorIcerikDoldur(String icerik) throws InterruptedException {
-            Thread.sleep(5000);
+        public EditorTab editorIcerikDoldur(String icerik) {
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             divEditor.find(By.tagName("iframe")).click();
             divEditor.find(By.tagName("iframe")).getWrappedElement().sendKeys(icerik);
             return this;
@@ -1040,14 +1050,22 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        public EditorTab popupImzalaVeEvrakKapatma() throws InterruptedException {
+        public EditorTab popupImzalaVeEvrakKapatma() {
 
             //switchTo().window("");
-            Thread.sleep(5000);
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             SelenideElement imzaPopupKapat = $(By.xpath("//*[@id='evrakImzalaDialog']/div[1]/a/span"));
             imzaPopupKapat.click();
 
-            Thread.sleep(2000);
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             SelenideElement evrakKapat = $(By.xpath("//*[@id='window1Dialog']/div[1]/a[1]/span"));
             evrakKapat.click();
         /*Thread.sleep(2000);
@@ -1056,7 +1074,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        public EditorTab popupSImzalaIslemleri() throws InterruptedException {
+        public EditorTab popupSImzalaIslemleri() {
 
             //switchTo().window("");
 //            Thread.sleep(5000);

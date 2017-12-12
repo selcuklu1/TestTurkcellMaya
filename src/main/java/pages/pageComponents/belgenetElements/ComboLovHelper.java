@@ -6,6 +6,7 @@ import common.BaseLibrary;
 import io.qameta.allure.Allure;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
 import java.util.List;
@@ -81,11 +82,12 @@ public class ComboLovHelper extends BaseLibrary {
     }
 
     static BelgenetElement clearLastSelectedLov() {
-        ElementsCollection temizleButonlari = $$(lovInputTextleriTemizle).filter(visible);
-        int count = temizleButonlari.size();
-        if (count > 0)
-            temizleButonlari.get(count - 1).click();
-
+        SelenideElement b = $$(lovInputTextleriTemizle).last().shouldBe(visible);
+        int count = $$(lovInputTextleriTemizle).size();
+        b.click();
+        if (b.is(visible))
+            $$(lovInputTextleriTemizle).last().click();
+        
         $$(lovInputTextleriTemizle).filter(visible).shouldHaveSize(count - 1);
 
         return (BelgenetElement) element;

@@ -838,7 +838,8 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("Evrak turu alan kontrolü")
     public GelenEvrakKayitPage evrakTuruKontrol(String evrakTuru) {
-        Assert.assertEquals(cmbEvrakBilgileriListEvrakTuru.getText(), evrakTuru);
+        cmbEvrakBilgileriListEvrakTuru.shouldHave(Condition.text(evrakTuru));
+//        Assert.assertEquals(cmbEvrakBilgileriListEvrakTuru.getText(), evrakTuru);
         return this;
     }
 
@@ -850,7 +851,7 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("Konu kodu sil")
     public GelenEvrakKayitPage konuKoduSil() throws InterruptedException {
-        comboKonuKodu.clearLastSelectedLov().clear();
+        comboKonuKodu.clearLastSelectedLov();
         return this;
     }
 
