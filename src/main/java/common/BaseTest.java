@@ -1,7 +1,6 @@
 package common;
 
 import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.Selenide;
 import listeners.SettingsListener;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -20,6 +19,9 @@ public class BaseTest extends BaseLibrary {
 
     @BeforeClass
     public void driverSetUp() {
+
+        killProcess();
+
         Locale turkishLocal = new Locale("tr", "TR");
         Locale.setDefault(turkishLocal);
 
@@ -55,8 +57,9 @@ public class BaseTest extends BaseLibrary {
 
     @AfterMethod
     public void tearDown() throws Exception {
-        Selenide.clearBrowserLocalStorage();
-        Selenide.clearBrowserCookies();
+       // Selenide.clearBrowserLocalStorage();
+       // Selenide.clearBrowserCookies();
+
     }
 
     public void login() {

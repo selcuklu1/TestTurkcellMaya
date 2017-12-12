@@ -33,7 +33,7 @@ public class OnayAkisiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC2112: Onay Akışı Yönetimi - Aktif/Pasif Yapma ve Varsayılan Yapma")
+    @Test(enabled = true, description = "TC2112PasifYapma: Onay Akışı Yönetimi - Aktif/Pasif Yapma ve Varsayılan Yapma")
     public void TC2112PasifYapma() {
 
         String onayAkisAdi = "Optiim";
@@ -96,7 +96,7 @@ public class OnayAkisiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC2112: Onay Akışı Yönetimi - Aktif/Pasif Yapma ve Varsayılan Yapma")
+    @Test(enabled = true, description = "TC2112AktifYapma: Onay Akışı Yönetimi - Aktif/Pasif Yapma ve Varsayılan Yapma")
     public void TC2112AktifYapma() {
 
         String onayAkisAdi = "Optiim";

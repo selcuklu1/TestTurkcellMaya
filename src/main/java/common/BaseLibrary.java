@@ -110,8 +110,8 @@ public class BaseLibrary {
             //div[id*='bekleyiniz'][style*='visibility: visible']
             new WebDriverWait(driver, Configuration.timeout / 1000, 50).
                     until(invisibilityOfElementLocated(By.cssSelector("div[id*='bekleyiniz'][style*='visibility: visible']")));
-//            new WebDriverWait(driver, Configuration.timeout / 1000, 50).
-//                    until(ExpectedConditions.invisibilityOfAllElements(driver.findElements(By.className("loading"))));
+      //      new WebDriverWait(driver, Configuration.timeout / 1000, 50).
+        //            until(ExpectedConditions.invisibilityOfAllElements(driver.findElements(By.className("loading"))));
             System.out.println("Loading: Ok");
         } catch (Exception e) {
 //            System.out.println("Loading window error: " + e.getMessage());
@@ -133,6 +133,27 @@ public class BaseLibrary {
     public void setValueJS(SelenideElement element, String value) {
         executeJavaScript("arguments[0].value = arguments[1]", element, value);
     }
+
+    public static void killProcess() {
+
+        Runtime rt = Runtime.getRuntime();
+        try {
+            rt.exec("taskkill /f /im " + "chrome.exe");
+            rt.exec("taskkill /f /im " + "chromedriver.exe");
+            rt.exec("taskkill /f /im " + "conhost.exe");
+            rt.exec("taskkill /f /im " + "firefox.exe");
+            rt.exec("taskkill /f /im " + "geckodriver.exe");
+            rt.exec("taskkill /f /im " + "iexplore.exe");
+            rt.exec("taskkill /f /im " + "iedriver.server");
+            rt.exec("taskkill /f /im " + "iedriver.server64");
+            //rt.exec("taskkill /f /im " + "WerFault");
+            //rt.exec("taskkill /f /im " + "AcroRd32");
+            //rt.exec("taskkill /f /im " + "Excel");
+        } catch (IOException e) {
+            System.out.println("Processler Kill Edilememdi!!!");
+        }
+    }
+
 
     /**
      * Türkçe harfleri inglizce harflere dönüştürüyor
