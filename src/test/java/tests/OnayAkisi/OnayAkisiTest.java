@@ -383,4 +383,30 @@ public class OnayAkisiTest extends BaseTest {
                 .cevapYaz()
                 .onayAkisiTitleKontrol(kullanici);
     }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TC1901a: Son imza seviyesi kısıtlı ise hiyerarşik onay akışı kullanma (yazışma kuralları yönetimi)")
+    public void TC1901a() {
+
+        String ad = "Vekaletli Kullanici";
+        String kullanici1 = "Optiim TEST6";
+        String kullanici2 = "Zübeyde TEKİN";
+        String kaldirilacakKlasorler = "ESK05";
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .onayAkisiDoldur(ad)
+                .onayAkisiGuncelle()
+                .onayAkisiKullaniciKontrol(kullanici1, "PARAFLAMA")
+                .onayAkisiKullaniciKontrol(kullanici2, "IMZALAMA")
+                .kullniciIsmineGoreImzaParafSec(kullanici2, "İmzalama")
+                .onayAkisiKullan()
+                .kaldiralacakKlasorlerSec(kaldirilacakKlasorler);
+
+        evrakOlusturPage
+                .kaydetOnayaSun()
+                .kullaniciIslemVeSiraKontrolu(kullanici1, "Paraflama", kullanici2, "İmzalama");
+
+    }
 }

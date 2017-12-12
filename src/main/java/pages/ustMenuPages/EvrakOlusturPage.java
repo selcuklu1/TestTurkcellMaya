@@ -837,7 +837,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }*/
 
-        @Step("gerçek Kişi gereği alanı kontrolu başarılı")
+        @Step("Gerçek Kişi gereği alanı kontrolu başarılı")
         public BilgilerTab gercekKisiGeregiAlaniKontrol(String adSoyad, String unvan, String adres, String posta) {
             System.out.println("Gelen title:     " + cmbGeregi.lastSelectedLovTitleText());
             System.out.println("Beklenen title:  " + adSoyad);
