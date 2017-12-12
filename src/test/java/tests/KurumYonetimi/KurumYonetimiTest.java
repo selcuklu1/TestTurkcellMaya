@@ -288,13 +288,8 @@ public class KurumYonetimiTest extends BaseTest {
                 .bilgiSecimTipiSec("Kurum")
                 .bilgiSec(aktifIdariBirimKimlikKodu, true)
                 .bilgiSec(aktifKurumAdi, true)
-<<<<<<< HEAD:src/test/java/KurumYonetimi/KurumYonetimiTest.java
                 .geregiSecimTipiSec("Kurum")
                 .geregiSec(aktifIdariBirimKimlikKodu,true)
-=======
-                .geregiSecimTipiSec("D")
-                .geregiSec(aktifIdariBirimKimlikKodu, true)
->>>>>>> 4c96f5e0f7a6feec310e458d2624a87e993100bf:src/test/java/tests/KurumYonetimi/KurumYonetimiTest.java
                 .geregiSec(aktifKurumAdi, true);
         evrakOlusturPage
                 .evrakOlusturPageKapat();
