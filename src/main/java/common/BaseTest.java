@@ -5,7 +5,6 @@ import com.codeborne.selenide.Selenide;
 import listeners.SettingsListener;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import pages.LoginPage;
 import pages.MainPage;
@@ -21,6 +20,9 @@ public class BaseTest extends BaseLibrary {
 
     @BeforeClass
     public void driverSetUp() {
+
+        killProcess();
+
         Locale turkishLocal = new Locale("tr", "TR");
         Locale.setDefault(turkishLocal);
 
@@ -39,10 +41,10 @@ public class BaseTest extends BaseLibrary {
         Configuration.reportsFolder = "test-result/reports";
         Configuration.screenshots = false;
         Configuration.savePageSource = false;
-        Configuration.collectionsTimeout = 40000;
-        Configuration.timeout = 40000;
-//        Configuration.holdBrowserOpen = true;
-//        Configuration.headless = false;
+        Configuration.collectionsTimeout = 20000;
+        Configuration.timeout = 20000;
+        Configuration.holdBrowserOpen = true;
+        Configuration.headless = false;
         Configuration.startMaximized = true;
         Configuration.pollingInterval = 100;
         Configuration.collectionsPollingInterval = 100;

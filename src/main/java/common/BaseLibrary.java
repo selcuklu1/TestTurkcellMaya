@@ -1,13 +1,11 @@
 package common;
 
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.SelenideElement;
-import com.codeborne.selenide.WebDriverRunner;
+import com.codeborne.selenide.*;
 import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
@@ -22,6 +20,7 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 import static org.apache.commons.io.FileUtils.deleteDirectory;
 import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfElementLocated;
@@ -91,10 +90,10 @@ public class BaseLibrary {
         });
     }
 
-    public void waitForLoadingToDisappearO(WebDriver driver) {
+    public void waitForLoadingToDisappear(WebDriver driver) {
 //        driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
         try {
-            new WebDriverWait(driver, Configuration.timeout / 1000, 500).
+            new WebDriverWait(driver, Configuration.timeout / 1000, 50).
                     until(invisibilityOfElementLocated(By.className("loading")));
 //            System.out.println("Loading: Ok");
         } catch (Exception e) {
@@ -103,20 +102,21 @@ public class BaseLibrary {
 //        driver.manage().timeouts().implicitlyWait(Configuration.timeout, TimeUnit.MILLISECONDS);
     }
 
-    public void waitForLoadingToDisappear(WebDriver driver) {
+    public void waitForLoadingToDisappear1(WebDriver driver) {
         try {
 
             //div[starts-with(@id,"bekleyiniz") and contains(@style, "display")]
             //div[id*='bekleyiniz'][style*='visibility: visible']
             new WebDriverWait(driver, Configuration.timeout / 1000, 50).
                     until(invisibilityOfElementLocated(By.cssSelector("div[id*='bekleyiniz'][style*='visibility: visible']")));
-//            new WebDriverWait(driver, Configuration.timeout / 1000, 50).
-//                    until(ExpectedConditions.invisibilityOfAllElements(driver.findElements(By.className("loading"))));
-            //System.out.println("Loading: Ok");
+//                  new WebDriverWait(driver, Configuration.timeout / 1000, 50).
+//                        until(ExpectedConditions.invisibilityOfAllElements(driver.findElements(By.className("loading"))));
+//            System.out.println("Loading: Ok");
         } catch (Exception e) {
 //            System.out.println("Loading window error: " + e.getMessage());
         }
     }
+
 
     public void waitForLoading(WebDriver driver) {
 //        waitForJS();
@@ -133,6 +133,27 @@ public class BaseLibrary {
     public void setValueJS(SelenideElement element, String value) {
         executeJavaScript("arguments[0].value = arguments[1]", element, value);
     }
+
+    public static void killProcess() {
+
+        Runtime rt = Runtime.getRuntime();
+        try {
+            rt.exec("taskkill /f /im " + "chrome.exe");
+            rt.exec("taskkill /f /im " + "chromedriver.exe");
+            rt.exec("taskkill /f /im " + "conhost.exe");
+            rt.exec("taskkill /f /im " + "firefox.exe");
+            rt.exec("taskkill /f /im " + "geckodriver.exe");
+            rt.exec("taskkill /f /im " + "iexplore.exe");
+            rt.exec("taskkill /f /im " + "iedriver.server");
+            rt.exec("taskkill /f /im " + "iedriver.server64");
+            //rt.exec("taskkill /f /im " + "WerFault");
+            //rt.exec("taskkill /f /im " + "AcroRd32");
+            //rt.exec("taskkill /f /im " + "Excel");
+        } catch (IOException e) {
+            System.out.println("Processler Kill Edilememdi!!!");
+        }
+    }
+
 
     /**
      * Türkçe harfleri inglizce harflere dönüştürüyor
@@ -393,7 +414,7 @@ public class BaseLibrary {
         SelenideElement next = $(("[class='ui-paginator-next ui-state-default ui-corner-all']"));
         // SelenideElement nextDisable = $(("[class*='ui-state-disabled']"));
 
-        WebElement element = null;
+        SelenideElement element = null;
         while (element == null) {
             element = findElementOnTableByColumnInput(byTable, columnIndex, columnInput);
             if (element == null) {
@@ -410,7 +431,7 @@ public class BaseLibrary {
 
     /*  columnInput ile gönderilen değer, columnIndex ile belirtilen sütunda
        aratılır. columnInput olan satırın elementini döndürür. */
-    protected WebElement findElementOnTableByColumnInput(SelenideElement byTable, int columnIndex, String columnInput) {
+    protected WebElement findElementOnTableByColumnInputO(SelenideElement byTable, int columnIndex, String columnInput) {
         WebElement table = $(byTable).$(By.tagName("tbody"));
         int rowCount = 0;
 
@@ -420,6 +441,24 @@ public class BaseLibrary {
         for (WebElement row : allRows) {
             elem = row.findElements(By.tagName("td")).get(columnIndex - 1);
             if (elem.getText().equals(columnInput)) {
+                return elem;
+            }
+        }
+        return null;
+    }
+
+    protected SelenideElement findElementOnTableByColumnInput(SelenideElement byTable, int columnIndex, String columnInput) {
+        int rowCount = 0;
+
+        ElementsCollection allRows = $(byTable).$(By.tagName("tbody")).$$(By.tagName("tr"));
+        rowCount = allRows.size();
+        if (rowCount == 0)
+            return null;
+
+        SelenideElement elem = null;
+        for (SelenideElement row : allRows) {
+            elem = row.$$(By.tagName("td")).get(columnIndex - 1).shouldBe(visible);
+            if (elem.text().equals(columnInput)) {
                 return elem;
             }
         }
@@ -485,14 +524,14 @@ public class BaseLibrary {
     public void alanDegeriKontrolEt(SelenideElement element, String value, boolean shouldHaveValue, boolean exactText) {
         if (shouldHaveValue == true) {
             if (exactText == true)
-                element.shouldHave(Condition.exactValue(value));
+                element.shouldHave(exactValue(value));
             else {
                 String _value = element.getValue();
                 Assert.assertEquals(_value.contains(value), true);
             }
         } else {
             if (exactText == true)
-                element.shouldNotHave(Condition.exactValue(value));
+                element.shouldNotHave(exactValue(value));
 
             else {
                 String _value = element.getValue();
@@ -593,18 +632,17 @@ public class BaseLibrary {
     @Step("Popup İşlem Onayı:  \"{secim}\"")
     public void islemOnayi(String secim) {
 
-        SelenideElement islemOnayiPopup = $(By.id("baseConfirmationDialog:dialog"));
         SelenideElement btnIslemOnayiEvet = $(By.id("baseConfirmationDialog:confirmButton"));
         SelenideElement btnIslemOnayiHayir = $(By.id("baseConfirmationDialog:baseConfirmationDialogCancelButton"));
-        if (islemOnayiPopup.isDisplayed()) {
-            switch (secim) {
-                case "Evet":
-                    btnIslemOnayiEvet.click();
-                    break;
-                case "Hayır":
-                    btnIslemOnayiHayir.click();
-                    break;
-            }
+
+        switch (secim) {
+            case "Evet":
+                btnIslemOnayiEvet.click();
+                break;
+            case "Hayır":
+                btnIslemOnayiHayir.click();
+                break;
         }
     }
+
 }

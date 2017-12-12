@@ -64,13 +64,10 @@ public class DriverEventListener extends BaseLibrary implements WebDriverEventLi
     public void beforeFindBy(By by, WebElement element, WebDriver driver) {
 
         boolean loading = true;
-        if (by != null)
-            if (by.equals(By.cssSelector("div[id*='bekleyiniz'][style*='visibility: visible']")))
+        if (by != null) {
+            if (by.equals(By.cssSelector("div[id*='bekleyiniz'][style*='visibility: visible']")) || by.equals(By.className("loading")))
                 loading = false;
-//        if (by.equals(By.className("loading")))
-//                loading = false;
-
-
+        }
         if (loading)
             waitForLoading(driver);
 

@@ -244,7 +244,6 @@ public class GelenEvrakKayitPage extends MainPage {
     }
 
 
-
     @Step("Geldiği Gerçek kişi doldur")
     public GelenEvrakKayitPage geldigiGercekKisiDoldur(String geldigiKisi) {
 
@@ -301,12 +300,20 @@ public class GelenEvrakKayitPage extends MainPage {
     public GelenEvrakKayitPage geldigiTuzelKisiGoruntulenmeKontrolu(String kisi) {
 
         cmbGeldigiTuzelKisi.selectLov(kisi);
-        System.out.println("Gelen title:     " + cmbGeldigiTuzelKisi.lastSelectedLovTitleText());
-        System.out.println("Beklenen title:  " + kisi);
-        Assert.assertEquals(cmbGeldigiTuzelKisi.lastSelectedLovTitleText().contains(kisi), true);
+
+        if (cmbGeldigiTuzelKisi.lastSelectedLovTitleText().contains(kisi)) {
+            System.out.println("Gelen title:     " + cmbGeldigiTuzelKisi.lastSelectedLovTitleText());
+            System.out.println("Beklenen title:  " + kisi);
+            Assert.assertEquals(cmbGeldigiTuzelKisi.lastSelectedLovTitleText().contains(kisi), true);
+        } else if (cmbGeldigiTuzelKisi.lastSelectedLovDetailText().contains(kisi)) {
+            System.out.println("Gelen title:     " + cmbGeldigiTuzelKisi.lastSelectedLovDetailText());
+            System.out.println("Beklenen title:  " + kisi);
+            Assert.assertEquals(cmbGeldigiTuzelKisi.lastSelectedLovDetailText().contains(kisi), true);
+        }
 
         return this;
     }
+
     @Step("Geldiği kişi alanında görüntülenmediği kontrolu")
     public GelenEvrakKayitPage geldigiKurumDegerGoruntulemeKontrolu(String kurumAdi, Boolean shoudlBeExist) {
         Assert.assertEquals(comboGeldigiKurum.isLovValueSelectable(kurumAdi), shoudlBeExist);
@@ -326,8 +333,9 @@ public class GelenEvrakKayitPage extends MainPage {
     }
 
     SelenideElement btnSecilenGeldigiKurumKaldir = $("div[id$='geldigiKurumLov:LovSecilen'] button");
+
     public GelenEvrakKayitPage geldigiKurumDoldurLovText(String geldigiKurum) {
-        if(btnSecilenGeldigiKurumKaldir.isDisplayed())
+        if (btnSecilenGeldigiKurumKaldir.isDisplayed())
             btnSecilenGeldigiKurumKaldir.click();
         comboGeldigiKurum.selectLov(geldigiKurum);
         return this;
@@ -838,7 +846,8 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("Evrak turu alan kontrolü")
     public GelenEvrakKayitPage evrakTuruKontrol(String evrakTuru) {
-        Assert.assertEquals(cmbEvrakBilgileriListEvrakTuru.getText(), evrakTuru);
+        cmbEvrakBilgileriListEvrakTuru.shouldHave(Condition.text(evrakTuru));
+//        Assert.assertEquals(cmbEvrakBilgileriListEvrakTuru.getText(), evrakTuru);
         return this;
     }
 
@@ -850,7 +859,7 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("Konu kodu sil")
     public GelenEvrakKayitPage konuKoduSil() throws InterruptedException {
-        comboKonuKodu.clearLastSelectedLov().clear();
+        comboKonuKodu.clearLastSelectedLov();
         return this;
     }
 

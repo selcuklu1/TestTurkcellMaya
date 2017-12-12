@@ -1,6 +1,7 @@
 package pages.pageComponents.belgenetElements;
 
 import com.codeborne.selenide.Command;
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.impl.ElementFinder;
 import com.codeborne.selenide.impl.WebElementSource;
@@ -36,9 +37,9 @@ class ComboBox {
         }
     }
 
-    class GetComboBoxValues implements Command<List<String>> {
+    class GetComboBoxValues implements Command<ElementsCollection> {
         @Override
-        public List<String> execute(SelenideElement proxy, WebElementSource locator, Object[] args) throws IOException {
+        public ElementsCollection execute(SelenideElement proxy, WebElementSource locator, Object[] args) throws IOException {
             return getComboBoxValues(proxy);
         }
     }

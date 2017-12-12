@@ -6,6 +6,7 @@ import common.BaseLibrary;
 import io.qameta.allure.Allure;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
 import java.util.List;
@@ -81,10 +82,11 @@ public class ComboLovHelper extends BaseLibrary {
     }
 
     static BelgenetElement clearLastSelectedLov() {
-        ElementsCollection temizleButonlari = $$(lovInputTextleriTemizle).filter(visible);
-        int count = temizleButonlari.size();
-        if (count > 0)
-            temizleButonlari.get(count - 1).click();
+        SelenideElement b = $$(lovInputTextleriTemizle).last().shouldBe(visible);
+        int count = $$(lovInputTextleriTemizle).size();
+        b.click();
+        if (b.is(visible))
+            $$(lovInputTextleriTemizle).last().click();
 
         $$(lovInputTextleriTemizle).filter(visible).shouldHaveSize(count - 1);
 
@@ -200,7 +202,9 @@ public class ComboLovHelper extends BaseLibrary {
     }
 
     static String lastSelectedLovTitleText() {
-        return $$(lovSecilenItemTitle).last().shouldBe(visible).text();
+        $$(lovSecilenItemTitle).shouldHave(sizeGreaterThan(0));
+        $$(lovSecilenItemTitle).last().shouldBe(visible);
+        return $$(lovSecilenItemTitle).last().text();
     }
 
     static String lastSelectedLovDetailText() {
@@ -386,7 +390,8 @@ public class ComboLovHelper extends BaseLibrary {
 
 
     public static BelgenetElement openTree(){
-        $(treeButton).click();
+        $(treeButton).shouldBe(visible).click();
+//        $(lovTree).shouldBe(visible);
 //        return (BelgenetElement) $$(lovTree).filterBy(visible).last();
         return ElementFinder.wrap(BelgenetElement.class, null, By.cssSelector(lovTree), 0);
     }
