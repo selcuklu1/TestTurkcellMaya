@@ -104,7 +104,7 @@ public class KullaniciYonetimiPage extends MainPage {
 
     @Step("Görevli olduğu birimler güncelle")
     public KullaniciYonetimiPage gorevliOlduguBirimlerGuncelle(){
-        btnGorevliOlduguBirimlerGuncelle.click();
+        clickJs(btnGorevliOlduguBirimlerGuncelle);
         return this;
     }
 

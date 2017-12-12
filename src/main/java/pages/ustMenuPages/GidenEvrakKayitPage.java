@@ -42,7 +42,7 @@ public class GidenEvrakKayitPage extends MainPage {
     SelenideElement cmbEvrakBilgileriListGizlilikDerecesi = $("[id$='guvenlikKodu']");
     SelenideElement cmbEvrakBilgileriListKisiKurum = $("[id$='kisiKurum']");
     SelenideElement ustYazi = $(By.xpath("//input[@class='ustYaziUploadClass']"));
-    SelenideElement lblEklenenPdfUstYazi = $("[id$=eklendiYazisi]");
+    SelenideElement lblEklenenPdfUstYazi = $("[id$='eklendiYazisi'] label");
     SelenideElement cmbEvrakBilgileriListIvedilik = $("[id$='ivedilik']");
     SelenideElement dateTxtMiat = $("[id$='miatCalendar_input']");
 

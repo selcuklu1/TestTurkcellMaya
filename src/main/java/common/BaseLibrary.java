@@ -109,8 +109,15 @@ public class BaseLibrary {
             //div[id*='bekleyiniz'][style*='visibility: visible']
             new WebDriverWait(driver, Configuration.timeout / 1000, 50).
                     until(invisibilityOfElementLocated(By.cssSelector("div[id*='bekleyiniz'][style*='visibility: visible']")));
-//                  new WebDriverWait(driver, Configuration.timeout / 1000, 50).
+
+//            new WebDriverWait(driver, Configuration.timeout / 1000, 50).
+//                    until(ExpectedConditions.invisibilityOfAllElements(driver.findElements(By.className("loading"))));
+            //      new WebDriverWait(driver, Configuration.timeout / 1000, 50).
+            //            until(ExpectedConditions.invisibilityOfAllElements(driver.findElements(By.className("loading"))));
+            //
+            //                 new WebDriverWait(driver, Configuration.timeout / 1000, 50).
 //                        until(ExpectedConditions.invisibilityOfAllElements(driver.findElements(By.className("loading"))));
+
 //            System.out.println("Loading: Ok");
         } catch (Exception e) {
 //            System.out.println("Loading window error: " + e.getMessage());
