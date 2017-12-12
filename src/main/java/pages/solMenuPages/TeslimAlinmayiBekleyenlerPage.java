@@ -25,6 +25,8 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     SelenideElement tblIlkEvrak = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
     SelenideElement btnTeslimAlVeKapat = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:6:cmdbutton"));
     BelgenetElement txtKaldirilacakKlasorler = comboLov(By.id("mainPreviewForm:klasorLov_id:LovText"));
+    BelgenetElement txtKonuKodu = comboLov(By.id("mainPreviewForm:konuKoduLov:LovText"));
+    SelenideElement btnTeslimAlVeKapatTeslimAlVeKapat = $("[id='mainPreviewForm:evrakKapatFieldsetId'] button[id^='mainPreviewForm:j_']");
 
     public TeslimAlinmayiBekleyenlerPage openPage() {
         ustMenu("Teslim Alınmayı Bekleyenler");
@@ -34,6 +36,18 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     @Step("Kladırılıcak klasörler doldur")
     public TeslimAlinmayiBekleyenlerPage kaldirilacakKlasorlerDoldur(String kaldirilicakKlasor){
         txtKaldirilacakKlasorler.selectLov(kaldirilicakKlasor);
+        return this;
+    }
+
+    @Step("Konu kodu doldur")
+    public TeslimAlinmayiBekleyenlerPage konuKoduDoldur(String konuKodu){
+        txtKonuKodu.selectLov(konuKodu);
+        return this;
+    }
+
+    @Step("Teslim al ve kapat")
+    public TeslimAlinmayiBekleyenlerPage teslimAlveKapatTeslimAlVeKapat(){
+        btnTeslimAlVeKapatTeslimAlVeKapat.click();
         return this;
     }
 

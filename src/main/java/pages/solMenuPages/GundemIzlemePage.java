@@ -10,6 +10,7 @@ import org.apache.poi.xwpf.usermodel.XWPFTableCell;
 import org.apache.poi.xwpf.usermodel.XWPFTableRow;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.Wait;
+import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
@@ -30,6 +31,11 @@ public class GundemIzlemePage extends MainPage {
     SelenideElement btnFiltrele = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:gundemFiltrele"));
     SelenideElement btnAralikiGundemOlustur = $(By.id("mainInboxForm:inboxDataTable:j_idt697"));
     ElementsCollection tblGundemEvraklar = $$("[id='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
+    SelenideElement btnGundemSirasiniKaydet =$(By.id("mainInboxForm:inboxDataTable:j_idt700"));
+    SelenideElement btnGundemSirasiniKaydetUyariEvet = $(By.id("mainInboxForm:gundemSiraDegistirEvetButton"));
+    SelenideElement btnGundemSirasiniKaydetUyariHayir = $(By.id("mainInboxForm:gundemSiraDegistirHayirButton"));
+    SelenideElement btnYayimla = $(By.id("mainInboxForm:inboxDataTable:j_idt699"));
+    SelenideElement btnYayimlaEvet = $(By.id("mainInboxForm:tekrarYayimlaEvetButton"));
 
     @Step("Kurul işlemleri sayfası aç")
     public GundemIzlemePage openPage(){
@@ -44,14 +50,40 @@ public class GundemIzlemePage extends MainPage {
         return this;
     }
 
-    @Step("Aralikli gündem oluştur")
-    public GundemIzlemePage aralikliGundemOlustur(){
-        btnAralikiGundemOlustur.click();
+    @Step("Sıralamayı değiştir")
+    public GundemIzlemePage siralamayiDegistir(){
+        System.out.println(tblGundemEvraklar.size());
+        if (tblGundemEvraklar.size() > 1) {
+            String deger1 = $("[id='mainInboxForm:inboxDataTable:1:evrakTable'] input[id^='mainInboxForm:inboxDataTable:1']").getValue();
+            String deger2=$("[id='mainInboxForm:inboxDataTable:0:evrakTable'] input[id^='mainInboxForm:inboxDataTable:0']").getValue();
+            $("[id='mainInboxForm:inboxDataTable:0:evrakTable'] input[id^='mainInboxForm:inboxDataTable:0']").setValue(deger1);
+            $("[id='mainInboxForm:inboxDataTable:1:evrakTable'] input[id^='mainInboxForm:inboxDataTable:1']").setValue(deger2);
+        }
+      return this;
+    }
+
+    @Step("Gündem sırasını kaydet")
+    public GundemIzlemePage gundemSirasiniKaydet(boolean secim){
+        btnGundemSirasiniKaydet.click();
+        clickJs(btnGundemSirasiniKaydetUyariEvet);
         return this;
     }
 
+    @Step("Aralikli gündem oluştur")
+    public GundemIzlemePage aralikliGundemOlustur(){
+        clickJs(btnAralikiGundemOlustur);
+        return this;
+    }
+
+    @Step("Yayımla")
+    public GundemIzlemePage yayimla(){
+        btnYayimla.click();
+        clickJs(btnYayimlaEvet);
+        return this;
+    }
 
     public String indirilenDosyaAd(){
+        //Dosya inmesini beklemekte
         int i =0;
         while (i<100){
             sleep(i);
@@ -84,8 +116,7 @@ public class GundemIzlemePage extends MainPage {
         txtKlasor.selectLov(klasor);
         return this;
     }
-
-
+    
     @Step("Sıralama kontrol edilir")
     public GundemIzlemePage wordDosyaKontrolEt(String dosyaAdi){
 

@@ -19,6 +19,7 @@ import pages.ustMenuPages.*;
 
 import static data.TestData.password2;
 import static data.TestData.username2;
+import static data.TestData.username3;
 
 /****************************************************
  * Tarih: 2017-12-22
@@ -52,7 +53,7 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
         String bagTipi = "Y";
         String farkliKullanici = "Optiim";
 
-        login(username2, password2);
+        login(username3, password2);
 
         kullaniciYonetimiPage
                 .openPage()
@@ -101,7 +102,7 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
         String kullanicilarTuru = "İmzalama";
         String randomAd = createRandomNumber(7);
 
-        login(username2, password2);
+        login(username3, password2);
 
         kullaniciYonetimiPage
                 .openPage()
@@ -174,7 +175,7 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
         String bagTipi = "P";
         String farkliKullanici = "Optiim";
         String onayVerecek = "Zübeyde TEKİN";
-        login(username2, password2);
+        login(username3, password2);
 
         kullaniciYonetimiPage
                 .openPage()
