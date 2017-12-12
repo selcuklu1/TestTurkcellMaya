@@ -22,6 +22,7 @@ import static com.codeborne.selenide.Selenide.$$;
 public class KaydedilenGidenEvraklarPage extends MainPage {
 
     SelenideElement f = $(By.xpath("//div[@id='mainInboxForm:inboxDataTable:filtersAccordion']//a[text()='Filtreler']/parent::h3"));
+    SelenideElement ekran = $("div[id='mainInboxForm:inboxDataTable'] label");
     SelenideElement cmbTopluSecim = $(By.id("mainInboxForm:inboxDataTable:j_idt672_button"));
     SelenideElement cmbFiltre = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt2855_label"));
     SelenideElement txtSayfadaAra = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt353"));
@@ -29,7 +30,7 @@ public class KaydedilenGidenEvraklarPage extends MainPage {
     SelenideElement chkKaydettiklerim = $("[id$='kaydettiklerimCheckbox']");
     SelenideElement btnIcerikGöster = $("[id$='detayGosterButton']");
     SelenideElement btnTamEkranGöster = $("[id$='tamEkranModuButton']");
-    ElementsCollection tblRapor = $$("tbody[id='mainInboxForm:inboxDataTable_data'] tr[role='row'][data-rk]");
+    ElementsCollection tblRapor = $$("tbody[id='mainInboxForm:inboxDataTable_data'] tr[role='row'] tbody");
 
 
     @Step("Kaydedilen giden evraklar sayfası aç")
@@ -40,7 +41,8 @@ public class KaydedilenGidenEvraklarPage extends MainPage {
 
     @Step("Filtrele alanını aç")
     public KaydedilenGidenEvraklarPage filtreleAc() {
-        f.click();
+        if (ekran.isDisplayed())
+            f.click();
         return this;
     }
 

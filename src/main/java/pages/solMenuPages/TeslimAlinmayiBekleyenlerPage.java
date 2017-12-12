@@ -8,6 +8,7 @@ import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
+import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
@@ -27,7 +28,8 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     BelgenetElement txtKaldirilacakKlasorler = comboLov(By.id("mainPreviewForm:klasorLov_id:LovText"));
 
     public TeslimAlinmayiBekleyenlerPage openPage() {
-        ustMenu("Teslim Alınmayı Bekleyenler");
+        solMenu(SolMenuData.BirimEvraklari.TeslimAlinmayiBekleyenler);
+//        ustMenu("Teslim Alınmayı Bekleyenler");
         return this;
     }
 

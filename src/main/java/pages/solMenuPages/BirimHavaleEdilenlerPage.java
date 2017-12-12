@@ -76,7 +76,7 @@ public class BirimHavaleEdilenlerPage extends MainPage {
     @Step("Tabloda evrak no kontrolü")
     public BirimHavaleEdilenlerPage tabloKontrolu(String evrakNo)
     {
-        int row = $$("tbody[id$='mainInboxForm:inboxDataTable_data'] tr[role=row] div[class=searchText]").filterBy(Condition.text(evrakNo)).size();
+        int row = $$("tbody[id$='mainInboxForm:inboxDataTable_data'] tr[role=row] tbody").filterBy(Condition.text(evrakNo)).size();
         System.out.println(row);
         Assert.assertEquals(row,1);
         //log başarılı

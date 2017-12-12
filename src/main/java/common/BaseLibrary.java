@@ -8,6 +8,7 @@ import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
@@ -112,7 +113,7 @@ public class BaseLibrary {
                     until(invisibilityOfElementLocated(By.cssSelector("div[id*='bekleyiniz'][style*='visibility: visible']")));
 //            new WebDriverWait(driver, Configuration.timeout / 1000, 50).
 //                    until(ExpectedConditions.invisibilityOfAllElements(driver.findElements(By.className("loading"))));
-            //System.out.println("Loading: Ok");
+//            System.out.println("Loading: Ok");
         } catch (Exception e) {
 //            System.out.println("Loading window error: " + e.getMessage());
         }

@@ -1,5 +1,6 @@
 package pages.ustMenuPages;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
@@ -7,6 +8,7 @@ import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
+import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
@@ -419,8 +421,9 @@ public class GercekKisiYonetimPage extends MainPage {
     
     @Step("Tabloda listelenen TCKN kontrolü")
     public GercekKisiYonetimPage tabloTCKNKontrol(String tcNO){
-        boolean statusTCNO = findElementOnTableByColumnInputInAllPages(tblGercekKisiDataTable, 1, tcNO).isDisplayed();
-        Assert.assertEquals(statusTCNO, true);
+        $(byText(tcNO)).shouldBe(Condition.visible);
+//        boolean statusTCNO = findElementOnTableByColumnInputInAllPages(tblGercekKisiDataTable, 1, tcNO).isDisplayed();
+//        Assert.assertEquals(statusTCNO, true);
         return this;
     }
 

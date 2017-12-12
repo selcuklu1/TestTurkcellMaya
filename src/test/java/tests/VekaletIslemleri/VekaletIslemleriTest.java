@@ -30,8 +30,8 @@ public class VekaletIslemleriTest extends BaseTest {
 
     String aciklama = "";
     String redNedeni = "";
-    String vekaletVeren = "Optiim TEST";
-    String vekaletAlan = "Optiim TEST1";
+    String vekaletVeren = "Optiim TEST1";
+    String vekaletAlan = "Optiim TEST2";
     String evrakNo1 = "";
     String evrakNo2 = "";
 
@@ -48,7 +48,7 @@ public class VekaletIslemleriTest extends BaseTest {
     @Test(enabled = true, description = "Onaya göndererek Vekalet Verme")
     public void TC0025a() throws InterruptedException {
 
-        login(username, password);
+        login("test1", "123");
 
         String basariMesaji = "İşlem başarılıdır!";
         String[] evrakNo = new String[2];
