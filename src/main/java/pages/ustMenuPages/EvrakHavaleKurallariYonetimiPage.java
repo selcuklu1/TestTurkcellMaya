@@ -23,7 +23,7 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage{
     SelenideElement btnAra = $(By.id("havaleKuralYonetimiListingForm:filterPanel:searchEntitiesButton"));
     SelenideElement btnSil = $(By.id("havaleKuralYonetimiListingForm:havaleKuralDataTable:0:deleteHavaleKuralButton"));
     SelenideElement btnIslemOnayiEvet = $(By.id("baseConfirmationDialog:confirmButton"));
-    BelgenetElement txtBirim = comboLov("havaleKuralYonetimiListingForm:filterPanel:birimLov:LovText");
+    BelgenetElement txtBirim = comboLov(By.id("havaleKuralYonetimiListingForm:filterPanel:birimLov:LovText"));
     SelenideElement txtKuralAdi = $(By.id("havaleKuralYonetimiListingForm:filterPanel:adFilterInput"));
     SelenideElement cmbDurum = $(By.id("havaleKuralYonetimiListingForm:filterPanel:durumSelectBox"));
     SelenideElement cmbGeldigiYerTipi = $(By.id("havaleKuralYonetimiListingForm:filterPanel:geldigiYerTipiSelect"));

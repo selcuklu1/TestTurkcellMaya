@@ -165,9 +165,11 @@ public class GidenEvrakKayitPage extends MainPage {
         return this;
     }
 
+    //Ad, soyad diye ayrı girilmesi gerekir. Çünkü soyad büyük harfle geliyor.
     @Step("Kişinin Bilgi alanında görüntülenme kontrolu")
-    public GidenEvrakKayitPage bilgiAlanindaGoruntulenmeKontrolu(String adSoyad) {
+    public GidenEvrakKayitPage bilgiAlanindaGoruntulenmeKontrolu(String ad, String soyad) {
 
+        String adSoyad = ad + " " + soyad.toUpperCase();
         cmbBilgi.selectLov(adSoyad);
         System.out.println("Gelen title:     " + cmbBilgi.lastSelectedLovTitleText());
         System.out.println("Beklenen title:  " + adSoyad);

@@ -1,5 +1,6 @@
 package pages.ustMenuPages;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
@@ -7,6 +8,8 @@ import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
+import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
@@ -40,7 +43,7 @@ public class GercekKisiYonetimPage extends MainPage {
     SelenideElement txtUnvan = $(By.id("gercekKisiYonetimiEditorForm:unvanId"));
     SelenideElement txtAd = $(By.id("gercekKisiYonetimiEditorForm:adInput"));
     SelenideElement txtSoyad = $(By.id("gercekKisiYonetimiEditorForm:soyadInput"));
-    SelenideElement chkKepAdresiKullaniyor = $(By.id("gercekKisiYonetimiEditorForm:kepAdresiKullanimCheckbox_input"));
+    SelenideElement chkKepAdresiKullaniyor = $(By.id("gercekKisiYonetimiEditorForm:kepAdresiKullanimCheckbox"));
     SelenideElement btnKepAdresBilgileriEkle = $(By.id("gercekKisiYonetimiEditorForm:kepBilgileriDataTable:addNewKepAdresiButton"));
     SelenideElement btnKaydet = $(By.id("gercekKisiYonetimiEditorForm:saveGercekKisiButton"));
     SelenideElement btnIletisimBilgileriEkle = $(By.id("gercekKisiYonetimiEditorForm:iletisimBilgileriDataTable:addNewIletisimBilgisiButton"));
@@ -386,7 +389,7 @@ public class GercekKisiYonetimPage extends MainPage {
 
     @Step("Gerçek Kişi Aktif Yap")
     public GercekKisiYonetimPage gercekKisiAktifYap() {
-        btnGercekKisiAktifYap.click();
+        btnGercekKisiAktifYap.shouldBe(visible).click();
         return this;
     }
 
@@ -419,6 +422,7 @@ public class GercekKisiYonetimPage extends MainPage {
     
     @Step("Tabloda listelenen TCKN kontrolü")
     public GercekKisiYonetimPage tabloTCKNKontrol(String tcNO){
+        $(byText(tcNO)).shouldBe(visible);
         boolean statusTCNO = findElementOnTableByColumnInputInAllPages(tblGercekKisiDataTable, 1, tcNO).isDisplayed();
         Assert.assertEquals(statusTCNO, true);
         return this;

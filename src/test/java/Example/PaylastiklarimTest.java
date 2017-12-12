@@ -2,15 +2,6 @@ package Example;
 
 import common.BaseTest;
 import io.qameta.allure.Epic;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
-import pages.MainPage;
-import pages.pageComponents.IslemMesajlari;
-import pages.solMenuPages.PaylastiklarimPage;
-
-import static pages.pageData.SolMenuData.IslemYaptiklarim;
 
 @Epic("Belgenet1Epic examples")
 public class PaylastiklarimTest extends BaseTest {
@@ -27,7 +18,7 @@ public class PaylastiklarimTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "Paylaştıklarım")
     public void paylastiklarimSec() {
-        page.solMenu(IslemYaptiklarim.EvrakPaylasma);
+        page.solMenu(IslemYaptiklarim.tests.EvrakPaylasma);
         new PaylastiklarimPage()
                 .satirSec(0)
                 .evrakOnizlemeTabSec("Paylaşılanlar")

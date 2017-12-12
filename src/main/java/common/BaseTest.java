@@ -1,9 +1,9 @@
 package common;
 
 import com.codeborne.selenide.Configuration;
-import io.qameta.allure.Step;
+import com.codeborne.selenide.Selenide;
 import listeners.SettingsListener;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import pages.LoginPage;
@@ -20,6 +20,9 @@ public class BaseTest extends BaseLibrary {
 
     @BeforeClass
     public void driverSetUp() {
+
+        killProcess();
+
         Locale turkishLocal = new Locale("tr", "TR");
         Locale.setDefault(turkishLocal);
 
@@ -29,28 +32,39 @@ public class BaseTest extends BaseLibrary {
 
         //region Selenide Driver Configuration
         Configuration.baseUrl = belgenetURL;
+<<<<<<< HEAD
         Configuration.browser = "drivers.Firefox";
+=======
+//        Configuration.browser = "chrome";
+>>>>>>> 4c96f5e0f7a6feec310e458d2624a87e993100bf
 //        Configuration.browser = "drivers.Firefox";
-//        Configuration.browser = "marionette";
+        Configuration.browser = "marionette";
 
         //Configuration.remote = "http://10.101.20.153:4444/wd/hub";
         Configuration.reportsFolder = "test-result/reports";
         Configuration.screenshots = false;
         Configuration.savePageSource = false;
-        Configuration.collectionsTimeout = 30000;
-        Configuration.timeout = 30000;
+        Configuration.collectionsTimeout = 20000;
+        Configuration.timeout = 20000;
         Configuration.holdBrowserOpen = true;
         Configuration.headless = false;
         Configuration.startMaximized = true;
         Configuration.pollingInterval = 100;
         Configuration.collectionsPollingInterval = 100;
+//        Configuration.closeBrowserTimeoutMs = 34000;
+//        Configuration.openBrowserTimeoutMs = 34000;
         //Configuration.browserSize = "1024x600";
         //endregion
 
-        System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, "/dev/null");
+//        System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, "/dev/null");
 
     }
 
+    @AfterMethod
+    public void tearDown() throws Exception {
+        Selenide.clearBrowserLocalStorage();
+        Selenide.clearBrowserCookies();
+    }
 
     public void login() {
         new LoginPage().login();
