@@ -294,7 +294,7 @@ public class KararYazisiOlusturPage extends MainPage {
 
     public class EditorTab extends MainPage {
         //SelenideElement divEditor = $("editorAntetBaslik");
-        SelenideElement divEditor1 = $(By.id("cke_82"));
+        SelenideElement divEditor1 = $(By.id("cke_1_contents"));
         SelenideElement divEditorInput = $("[id='cke_1_contents']");
         SelenideElement divHitap = $("div[id='yeniGidenEvrakForm:hitapInplace'] > span");
         SelenideElement btnEvet = $(By.id("kaydetConfirmForm:kaydetEvetButton"));

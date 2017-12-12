@@ -105,7 +105,7 @@ public class KurumYonetimiPage extends MainPage {
     }
     @Step("Kep Adres Bilgileri ekle")
     public KurumYonetimiPage kepAdresBilgileriArti() {
-        btnKepAdresBilgileriArti.click();
+        clickJs(btnKepAdresBilgileriArti);
         return this;
     }
 
