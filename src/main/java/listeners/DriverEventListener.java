@@ -70,7 +70,6 @@ public class DriverEventListener extends BaseLibrary implements WebDriverEventLi
 //        if (by.equals(By.className("loading")))
 //                loading = false;
 
-
         if (loading)
             waitForLoading(driver);
 

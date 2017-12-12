@@ -84,7 +84,7 @@ public interface BelgenetElement extends SelenideElement {
     //region ComboBox
     BelgenetElement selectComboBox(String text, boolean... js);
 
-    List<String> getComboBoxValues();
+    ElementsCollection getComboBoxValues();
     //BelgenetElement getComboBoxHtmlList();
     //endregion
 }

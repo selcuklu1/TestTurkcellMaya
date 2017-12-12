@@ -1,9 +1,6 @@
 package common;
 
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.SelenideElement;
-import com.codeborne.selenide.WebDriverRunner;
+import com.codeborne.selenide.*;
 import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
 import org.openqa.selenium.*;
@@ -431,7 +428,7 @@ public class BaseLibrary {
 
     /*  columnInput ile gönderilen değer, columnIndex ile belirtilen sütunda
        aratılır. columnInput olan satırın elementini döndürür. */
-    protected WebElement findElementOnTableByColumnInput(SelenideElement byTable, int columnIndex, String columnInput) {
+    protected WebElement findElementOnTableByColumnInputO(SelenideElement byTable, int columnIndex, String columnInput) {
         WebElement table = $(byTable).$(By.tagName("tbody"));
         int rowCount = 0;
 
@@ -441,6 +438,21 @@ public class BaseLibrary {
         for (WebElement row : allRows) {
             elem = row.findElements(By.tagName("td")).get(columnIndex - 1);
             if (elem.getText().equals(columnInput)) {
+                return elem;
+            }
+        }
+        return null;
+    }
+
+    protected WebElement findElementOnTableByColumnInput(SelenideElement byTable, int columnIndex, String columnInput) {
+        int rowCount = 0;
+
+        ElementsCollection allRows = $(byTable).$(By.tagName("tbody")).$$(By.tagName("tr"));
+        rowCount = allRows.size();
+        SelenideElement elem = null;
+        for (SelenideElement row : allRows) {
+            elem = row.$$(By.tagName("td")).get(columnIndex - 1);
+            if (elem.text().equals(columnInput)) {
                 return elem;
             }
         }
