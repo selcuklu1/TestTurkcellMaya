@@ -5,6 +5,7 @@ import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
@@ -89,10 +90,10 @@ public class BaseLibrary {
         });
     }
 
-    public void waitForLoadingToDisappearO(WebDriver driver) {
+    public void waitForLoadingToDisappear(WebDriver driver) {
 //        driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
         try {
-            new WebDriverWait(driver, Configuration.timeout / 1000, 500).
+            new WebDriverWait(driver, Configuration.timeout / 1000, 50).
                     until(invisibilityOfElementLocated(By.className("loading")));
 //            System.out.println("Loading: Ok");
         } catch (Exception e) {
@@ -101,15 +102,15 @@ public class BaseLibrary {
 //        driver.manage().timeouts().implicitlyWait(Configuration.timeout, TimeUnit.MILLISECONDS);
     }
 
-    public void waitForLoadingToDisappear(WebDriver driver) {
+    public void waitForLoadingToDisappear1(WebDriver driver) {
         try {
 
             //div[starts-with(@id,"bekleyiniz") and contains(@style, "display")]
             //div[id*='bekleyiniz'][style*='visibility: visible']
             new WebDriverWait(driver, Configuration.timeout / 1000, 50).
                     until(invisibilityOfElementLocated(By.cssSelector("div[id*='bekleyiniz'][style*='visibility: visible']")));
-            //      new WebDriverWait(driver, Configuration.timeout / 1000, 50).
-            //            until(ExpectedConditions.invisibilityOfAllElements(driver.findElements(By.className("loading"))));
+//                  new WebDriverWait(driver, Configuration.timeout / 1000, 50).
+//                        until(ExpectedConditions.invisibilityOfAllElements(driver.findElements(By.className("loading"))));
 //            System.out.println("Loading: Ok");
         } catch (Exception e) {
 //            System.out.println("Loading window error: " + e.getMessage());
