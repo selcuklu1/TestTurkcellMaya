@@ -416,7 +416,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
         kaydedilenGidenEvraklarPage
                 .openPage()
-                .filtreleAc()
+//                .filtreleAc()
                 .tarihDoldur(getSysDateForKis())
                 .tabloKontrolu(evrakNo1340);
     }
