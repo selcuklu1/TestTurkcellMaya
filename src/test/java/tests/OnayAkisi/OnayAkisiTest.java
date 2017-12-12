@@ -146,7 +146,7 @@ public class OnayAkisiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC2113: Onay Akıışı Yönetimi - Güncelleme")
+    @Test(enabled = true, description = "TC2113a: Onay Akıışı Yönetimi - Güncelleme")
     public void TC2113a() {
 
         String onayAkisAdi = "Optiim";
@@ -154,6 +154,17 @@ public class OnayAkisiTest extends BaseTest {
         String yeniKullanici = "Bulut Toprak" + createRandomNumber(5);
         String ikinciKullanici = "Zübeyde Tekin";
         String basariMesaji = "İşlem başarılıdır!";
+
+        //Test steplerinde yok ama data için eklendi. Kullanıcı eski haline güncellemek için.
+        onayAkisYonetimiPage
+                .openPage()
+                .filtreAc()
+                .filtredeAdDoldur(eskiKullanici)
+                .ara()
+                .guncelle()
+                .onayAkisiIslemleriAdDoldur(eskiKullanici)
+                .onayAkisiIslemleriKaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
 
         evrakOlusturPage
                 .openPage()
@@ -185,7 +196,7 @@ public class OnayAkisiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC2113: Onay Akıışı Yönetimi - Güncelleme")
+    @Test(enabled = true, description = "TC2113b: Onay Akıışı Yönetimi - Güncelleme")
     public void TC2113b() {
 
         String ad = "Alex de Souza";
@@ -212,7 +223,7 @@ public class OnayAkisiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC2113: Onay Akıışı Yönetimi - Güncelleme")
+    @Test(enabled = true, description = "TC2113c: Onay Akıışı Yönetimi - Güncelleme")
     public void TC2113c() {
 
         String ad = "Daniel Guiza";
@@ -269,8 +280,6 @@ public class OnayAkisiTest extends BaseTest {
         evrakOlusturPage
                 .kaydetOnayaSun()
                 .kullaniciIslemVeSiraKontrolu(kullanici1, "Paraflama", kullanici2, "İmzalama");
-
-        //TODO: 8.step eklenecek.
     }
 
     @Severity(SeverityLevel.CRITICAL)

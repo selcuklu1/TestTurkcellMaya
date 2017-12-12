@@ -109,13 +109,21 @@ public class BaseLibrary {
             //div[id*='bekleyiniz'][style*='visibility: visible']
             new WebDriverWait(driver, Configuration.timeout / 1000, 50).
                     until(invisibilityOfElementLocated(By.cssSelector("div[id*='bekleyiniz'][style*='visibility: visible']")));
-//                  new WebDriverWait(driver, Configuration.timeout / 1000, 50).
+
+//            new WebDriverWait(driver, Configuration.timeout / 1000, 50).
+//                    until(ExpectedConditions.invisibilityOfAllElements(driver.findElements(By.className("loading"))));
+            //      new WebDriverWait(driver, Configuration.timeout / 1000, 50).
+            //            until(ExpectedConditions.invisibilityOfAllElements(driver.findElements(By.className("loading"))));
+            //
+            //                 new WebDriverWait(driver, Configuration.timeout / 1000, 50).
 //                        until(ExpectedConditions.invisibilityOfAllElements(driver.findElements(By.className("loading"))));
+
 //            System.out.println("Loading: Ok");
         } catch (Exception e) {
 //            System.out.println("Loading window error: " + e.getMessage());
         }
     }
+
 
     public void waitForLoading(WebDriver driver) {
 //        waitForJS();
@@ -631,20 +639,17 @@ public class BaseLibrary {
     @Step("Popup İşlem Onayı:  \"{secim}\"")
     public void islemOnayi(String secim) {
 
-        SelenideElement islemOnayiPopup = $(By.id("baseConfirmationDialog:dialog"));
         SelenideElement btnIslemOnayiEvet = $(By.id("baseConfirmationDialog:confirmButton"));
         SelenideElement btnIslemOnayiHayir = $(By.id("baseConfirmationDialog:baseConfirmationDialogCancelButton"));
-        if (islemOnayiPopup.isDisplayed()) {
-            switch (secim) {
-                case "Evet":
-                    btnIslemOnayiEvet.click();
-                    break;
-                case "Hayır":
-                    btnIslemOnayiHayir.click();
-                    break;
-            }
+
+        switch (secim) {
+            case "Evet":
+                btnIslemOnayiEvet.click();
+                break;
+            case "Hayır":
+                btnIslemOnayiHayir.click();
+                break;
         }
     }
-
 
 }

@@ -8,6 +8,7 @@ import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
+
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
@@ -422,9 +423,9 @@ public class GercekKisiYonetimPage extends MainPage {
     
     @Step("Tabloda listelenen TCKN kontrolü")
     public GercekKisiYonetimPage tabloTCKNKontrol(String tcNO){
-        $(byText(tcNO)).shouldBe(visible);
-        boolean statusTCNO = findElementOnTableByColumnInputInAllPages(tblGercekKisiDataTable, 1, tcNO).isDisplayed();
-        Assert.assertEquals(statusTCNO, true);
+        $(byText(tcNO)).shouldBe(Condition.visible);
+//        boolean statusTCNO = findElementOnTableByColumnInputInAllPages(tblGercekKisiDataTable, 1, tcNO).isDisplayed();
+//        Assert.assertEquals(statusTCNO, true);
         return this;
     }
 
