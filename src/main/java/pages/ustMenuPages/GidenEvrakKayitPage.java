@@ -73,7 +73,7 @@ public class GidenEvrakKayitPage extends MainPage {
     @Step("Gereği seçim tipi seç")
     public GidenEvrakKayitPage geregiSecimTipiSec(String geregi) {
         cmbGeregiSecimTipi.sendKeys(Keys.SHIFT);
-        cmbGeregiSecimTipi.selectOptionByValue(geregi);
+        cmbGeregiSecimTipi.selectOption(geregi);
         return this;
     }
 
@@ -129,7 +129,7 @@ public class GidenEvrakKayitPage extends MainPage {
     @Step("Bilgi seçim tipi seç")
     public GidenEvrakKayitPage bilgiSecimTipiSec(String bilgi) {
         cmbBilgiSecimTipi.sendKeys(Keys.SHIFT);
-        cmbBilgiSecimTipi.selectOptionByValue(bilgi);
+        cmbBilgiSecimTipi.selectOption(bilgi);
         return this;
     }
 

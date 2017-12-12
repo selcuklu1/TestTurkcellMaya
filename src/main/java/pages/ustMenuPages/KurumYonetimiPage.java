@@ -10,6 +10,8 @@ import org.openqa.selenium.Keys;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
+import java.security.Key;
+
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
@@ -24,7 +26,7 @@ public class KurumYonetimiPage extends MainPage {
     SelenideElement txtKurumAdi = $(By.id("kurumYonetimiEditorForm:kurumAdiInput"));
     SelenideElement chkPaketKullanim = $(By.id("kurumYonetimiEditorForm:paketKullanimCheckbox_input"));
     SelenideElement chkKepAdresiKullaniyor = $(By.id("kurumYonetimiEditorForm:kepAdresiKullanimCheckbox"));
-    SelenideElement chkOzelHitap = $(By.id("kurumYonetimiEditorForm:ozelHitapExistSelBoolean_input"));
+    SelenideElement chkOzelHitap = $(By.id("kurumYonetimiEditorForm:ozelHitapExistSelBoolean"));
     //SelenideElement btnKaydet = $(By.id("kurumYonetimiEditorForm:saveKurumButton"));
     SelenideElement btnKepAdresBilgileriArti = $(By.id("kurumYonetimiEditorForm:kepBilgileriDataTable:addNewKepAdresiButton"));
     SelenideElement btnGuncelle = $(By.id("kurumYonetimiListingForm:kurumTreeTable:1_0:updateKurumButton"));
@@ -33,6 +35,7 @@ public class KurumYonetimiPage extends MainPage {
     SelenideElement btnPopupKaydet = $(By.id("kurumKepAdresBilgiEditorForm:saveKepAdresiButton"));
     SelenideElement btnAltMenuAc = $("[id$='kurumYonetimiListingForm:kurumTreeTable_node_1'] span");
     BelgenetElement txtKurumCombolov = comboLov(By.id("kurumYonetimiListingForm:filterPanel:kurumFilterLov:LovText"));
+    SelenideElement divFiltreKurum = $(By.id("kurumYonetimiListingForm:filterPanel:kurumFilterLov:lovInputPanel"));
     SelenideElement txtFiltreIdariBirimKimlikKodu = $(By.id("kurumYonetimiListingForm:filterPanel:kurumFilterLov:LovText"));
 
     // Hüseyin
@@ -55,13 +58,14 @@ public class KurumYonetimiPage extends MainPage {
     SelenideElement txtAdres = $(By.id("kurumBilgileriEditorForm:adresInput"));
     BelgenetElement txtUlke = comboLov(By.id("kurumBilgileriEditorForm:lovUlke:LovText"));
     BelgenetElement txtIl = comboLov(By.id("kurumBilgileriEditorForm:lovIl:LovText"));
-    SelenideElement txtIlce = $(By.id("kurumBilgileriEditorForm:lovIlce:LovText"));
+    BelgenetElement txtIlce = comboLov(By.id("kurumBilgileriEditorForm:lovIlce:LovText"));
     SelenideElement txtEPosta = $(By.id("kurumBilgileriEditorForm:ePostaInput"));
     SelenideElement txtWebAdresi = $(By.id("kurumBilgileriEditorForm:webAdresiInput"));
     SelenideElement btnIletisimBilgisiKaydet = $(By.id("kurumBilgileriEditorForm:saveIletisimBilgisiButton"));
 
     // Kep Adresi elementleri
     ElementsCollection tableKepAdresleri = $$("tbody[id='kurumYonetimiEditorForm:kepBilgileriDataTable_data'] tr[role='row']");
+    // kurumYonetimiEditorForm:kepBilgileriDataTable:0:updateKepAdresiButton
     By btnKepAdresiGuncelleSelector = By.cssSelector("button[id^='kurumYonetimiEditorForm:kepBilgileriDataTable:'][id$=':updateKepAdresiButton']");
     SelenideElement txtKepAdresi = $(By.id("kurumKepAdresBilgiEditorForm:kurumKepAdresBilgiInputTextId"));
     SelenideElement cmbKepHizmetSaglayici = $(By.id("kurumKepAdresBilgiEditorForm:kephs"));
@@ -179,11 +183,10 @@ public class KurumYonetimiPage extends MainPage {
 
     @Step("Durum seç")
     public KurumYonetimiPage durumSec(String value) {
-        if(!cmbDurum.isDisplayed())
+
+        while (!cmbDurum.isDisplayed())
             filtrePanel.click();
 
-        filtrePanel.sendKeys(Keys.SHIFT);
-        cmbDurum.sendKeys(Keys.SHIFT);
         cmbDurum.selectOption(value);
         return this;
     }
@@ -271,20 +274,24 @@ public class KurumYonetimiPage extends MainPage {
 
     @Step("Sorgulama panelinde kurum doldur.")
     public KurumYonetimiPage sorgulaKurumDoldur(String kurumAdi) {
-        if (!txtKurumCombolov.isDisplayed())
+
+
+        while(!txtKurumCombolov.isDisplayed()){
             filtrePanel.click();
+            txtKurumCombolov.clearAllSelectedLov();
+            txtKurumCombolov.selectLov(kurumAdi);
+            break;
+        }
 
-        if(btnSecileniKaldir.isDisplayed())
-            btnSecileniKaldir.click();
 
-        txtKurumCombolov.selectLov(kurumAdi);
+
         return this;
     }
 
     ElementsCollection treeIdariBirimKimlikKodu = $$("div[id='kurumYonetimiListingForm:filterPanel:kurumFilterLov:lovTree'] > ul > li");
     @Step("Sorgulama panelinde kurum alanına idari birim kimlik kodu doldur.")
     public KurumYonetimiPage sorgulaIdariKimlikKoduSec(String idariBirimKimlikKodu) {
-        if (!txtFiltreIdariBirimKimlikKodu.isDisplayed())
+        while (!txtFiltreIdariBirimKimlikKodu.isDisplayed())
             filtrePanel.click();
 
         txtFiltreIdariBirimKimlikKodu.setValue(idariBirimKimlikKodu);
@@ -379,7 +386,7 @@ public class KurumYonetimiPage extends MainPage {
 
     @Step("İlçe doldur")
     public KurumYonetimiPage ilceDoldur(String ilce){
-        txtIlce.setValue(ilce);
+        txtIlce.selectLov(ilce);
         return this;
     }
 
@@ -409,8 +416,20 @@ public class KurumYonetimiPage extends MainPage {
                     .filterBy(Condition.text(kepAdresi))
                     .get(0)
                     .$(btnKepAdresiGuncelleSelector)
+                    .sendKeys(Keys.SHIFT);
+
+            tableKepAdresleri
+                    .filterBy(Condition.text(kepAdresi))
+                    .get(0)
+                    .$(btnKepAdresiGuncelleSelector)
                     .click();
         } else {
+            tableKepAdresleri
+                    .filterBy(Condition.text(kepAdresi))
+                    .get(kepIndex)
+                    .$(btnKepAdresiGuncelleSelector)
+                    .sendKeys(Keys.SHIFT);
+
             tableKepAdresleri
                     .filterBy(Condition.text(kepAdresi))
                     .get(kepIndex)
@@ -478,7 +497,7 @@ public class KurumYonetimiPage extends MainPage {
     @Step("Kurum hiyerarşisini güncelle butonuna tıklandı")
     public KurumYonetimiPage kurumHiyerarsisiniGuncelle() {
         btnKurumHiyerarşisiniGuncelle.click();
-        $("bekleyinizStatusDialog").waitUntil(Condition.not(Condition.visible), 60000);
+        $(By.id("bekleyinizStatusDialog")).waitUntil(Condition.not(Condition.visible), 1200000);
         return this;
     }
 
