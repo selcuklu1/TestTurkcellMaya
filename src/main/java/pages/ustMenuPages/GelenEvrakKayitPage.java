@@ -239,7 +239,7 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("Kişi kurum seç")
     public GelenEvrakKayitPage kisiKurumSec(String kisiKurum) {
-        cmbEvrakBilgileriListKisiKurum.selectOptionByValue(kisiKurum);
+        cmbEvrakBilgileriListKisiKurum.selectOption(kisiKurum);
         return this;
     }
 

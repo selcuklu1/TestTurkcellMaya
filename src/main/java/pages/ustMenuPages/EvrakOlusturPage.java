@@ -157,7 +157,7 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement cmbIvedik = $("select[id$='ivedilik']");
         SelenideElement dateMiat = $("input[id$='miatCalendar_input']");
 
-        SelenideElement cmbBilgiSecimTipi = $(By.xpath("//select[starts-with(@id,'yeniGidenEvrakForm:evrakBilgileriList:15:j_idt')]"));
+        SelenideElement cmbBilgiSecimTipi = $x("//label[normalize-space(text())='Bilgi Seçim Tipi']/ancestor::tr[@class='ui-datagrid-row']//select");
         //SelenideElement cmbBilgiSecimTipi = $(By.xpath("//label[normalize-space(text())='Bilgi Seçim Tipi']/ancestor::tr[@class='ui-datagrid-row']//select"));
 
         BelgenetElement txtBilgi = comboLov("input[id$='bilgiLov:LovText']");
@@ -400,7 +400,7 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Bilgi Secim Tipi alanında {0} seç")
         public BilgilerTab bilgiSecimTipiSec(String text) {
-            cmbBilgiSecimTipi.selectOptionByValue(text);
+            cmbBilgiSecimTipi.selectOption(text);
             return this;
         }
 
@@ -742,6 +742,7 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Onay akışı kullanıcı adı ve tipi kontrol et")
         public BilgilerTab onayAkisiKullaniciKontrol(String kullaniciAdi, String kullaniciTipi) {
+            btnKullan.sendKeys(Keys.SHIFT);
             trOnayAkisiEkleKullanicilar
                     .filterBy(text(kullaniciAdi))
                     .get(0)
