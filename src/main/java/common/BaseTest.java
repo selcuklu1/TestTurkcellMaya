@@ -1,7 +1,6 @@
 package common;
 
 import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.Selenide;
 import listeners.SettingsListener;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -21,7 +20,7 @@ public class BaseTest extends BaseLibrary {
     @BeforeClass
     public void driverSetUp() {
 
-        killProcess();
+        //killProcess();
 
         Locale turkishLocal = new Locale("tr", "TR");
         Locale.setDefault(turkishLocal);
@@ -32,16 +31,16 @@ public class BaseTest extends BaseLibrary {
 
         //region Selenide Driver Configuration
         Configuration.baseUrl = belgenetURL;
-//        Configuration.browser = "chrome";
+        Configuration.browser = "chrome";
 //        Configuration.browser = "drivers.Firefox";
-        Configuration.browser = "marionette";
+//        Configuration.browser = "marionette";
 
         //Configuration.remote = "http://10.101.20.153:4444/wd/hub";
         Configuration.reportsFolder = "test-result/reports";
         Configuration.screenshots = false;
         Configuration.savePageSource = false;
-        Configuration.collectionsTimeout = 20000;
-        Configuration.timeout = 20000;
+        Configuration.collectionsTimeout = 40000;
+        Configuration.timeout = 40000;
         Configuration.holdBrowserOpen = true;
         Configuration.headless = false;
         Configuration.startMaximized = true;
@@ -56,10 +55,10 @@ public class BaseTest extends BaseLibrary {
 
     }
 
-    @AfterMethod
+        @AfterMethod
     public void tearDown() throws Exception {
-        Selenide.clearBrowserLocalStorage();
-        Selenide.clearBrowserCookies();
+        //Selenide.clearBrowserLocalStorage();
+        //Selenide.clearBrowserCookies();
     }
 
     public void login() {

@@ -709,8 +709,7 @@ public class EvrakOlusturPage extends MainPage {
         @Step("Bilgileri tabında Onay Akışı alanında görüntülenmeme kontrolu")
         public BilgilerTab onayAkisiAlanindaGoruntulenmemeKontrolu(String onayAkisi) {
 
-            boolean selectable = comboLov(cmbOnayAkisiBy).isLovValueSelectable(onayAkisi);
-            Assert.assertEquals(selectable, false, "MyCombolov alanında " + onayAkisi + ": Onay Akışın görüntülenmediği görülür");
+            comboLov(cmbOnayAkisiBy).type(onayAkisi).titleItems().filterBy(exactText(onayAkisi)).shouldHaveSize(0);
             System.out.println("MyCombolov alanında " + onayAkisi + ": Onay Akışın görüntülenmediği görülür.");
 
             return this;
@@ -945,8 +944,6 @@ public class EvrakOlusturPage extends MainPage {
         }
 
 
-
-
         //endregion
 
     }
@@ -980,8 +977,6 @@ public class EvrakOlusturPage extends MainPage {
         }
 
         private TextEditor editor = new TextEditor();
-
-
 
 
         private EditorTab open() {
