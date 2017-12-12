@@ -529,9 +529,6 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .openPage()
                 .bilgilerTabiAc()
                 .geregiSecimTipiSec("G")
-
-                //ilyas burası
-
                 .geregiAlanindaGoruntulenmeKontrolu(adSoyad)
                 .secilenGeregiSil()
                 .bilgiSecimTipiSec("G")

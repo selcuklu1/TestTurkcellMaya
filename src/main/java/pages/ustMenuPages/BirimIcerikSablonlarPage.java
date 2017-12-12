@@ -1,10 +1,12 @@
 package pages.ustMenuPages;
 
+import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.NotFoundException;
 import pages.MainPage;
 import pages.pageComponents.TextEditor;
 import pages.pageComponents.UstMenu;
@@ -12,6 +14,7 @@ import pages.pageComponents.belgenetElements.BelgenetElement;
 
 import java.util.List;
 
+import static com.codeborne.selenide.CollectionCondition.*;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
@@ -139,6 +142,7 @@ public class BirimIcerikSablonlarPage extends MainPage {
 
     public boolean sablonExistInTable(String sablonAdi) {
         while (true) {
+            $$(rowsBirimSablonlari).first().shouldBe(visible);
             if ($$(rowsBirimSablonlariSablonAdi).filterBy(and("Filter by visible and text"
                     , visible
                     , exactText(sablonAdi))).size() == 1) {
@@ -170,6 +174,23 @@ public class BirimIcerikSablonlarPage extends MainPage {
         return count;
     }
 
+    public SelenideElement findSablonRowInTable(String sablonAdi) {
+        while (true) {
+            $$(rowsBirimSablonlari).first().shouldBe(visible);
+            ElementsCollection rows = $$(rowsBirimSablonlari).filterBy(and("Filter by visible and text"
+                    , visible
+                    , text(sablonAdi)));
+            if (rows.size() == 1) {
+                return rows.first();
+            }
+
+            if (btnBirimSablonlariNext.has(cssClass("ui-state-disabled")))
+                throw new NotFoundException(sablonAdi + " şablon bulunamadı");
+
+            btnBirimSablonlariNext.click();
+        }
+    }
+
 
     private boolean birimSablonlardaAra(String sablonAdi) {
         return findInTable(sablonAdi) != null;
@@ -190,21 +211,27 @@ public class BirimIcerikSablonlarPage extends MainPage {
     }
 
     public SelenideElement sablonuSil(String sablonAdi) {
+
         while (true) {
-            for (SelenideElement row : $$(rowsBirimSablonlari)) {
-                row.shouldBe(visible);
-                if (!row.text().trim().equals(sablonAdi)) {
-                    row.$("button").click();
-                    btnSil.click();
-                    $("#j_idt4613").click();
-                }
-//                    return row.parent();
-            }
-            if (!btnBirimSablonlariNext.has(cssClass("ui-state-disabled")))
-                btnBirimSablonlariNext.click();
-            else
-                return null;
+            $$(rowsBirimSablonlari).get(2).$("[id$='sablonListesiDetayButton_id']").click();
+            btnSil.click();
+            $("#j_idt4716").click();
         }
+//        while (true) {
+//            for (SelenideElement row : $$(rowsBirimSablonlari)) {
+//                row.shouldBe(visible);
+//                if (!row.text().trim().equals(sablonAdi)) {
+//                    row.$("button").click();
+//                    btnSil.click();
+//                    $("#j_idt4716").click();
+//                }
+////                    return row.parent();
+//            }
+//            if (!btnBirimSablonlariNext.has(cssClass("ui-state-disabled")))
+//                btnBirimSablonlariNext.click();
+//            else
+//                return null;
+//        }
     }
 
 

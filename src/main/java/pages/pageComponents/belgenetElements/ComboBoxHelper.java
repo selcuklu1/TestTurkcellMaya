@@ -1,6 +1,7 @@
 package pages.pageComponents.belgenetElements;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
 import common.BaseLibrary;
@@ -10,6 +11,7 @@ import org.openqa.selenium.WebElement;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 
 class ComboBoxHelper extends BaseLibrary {
@@ -37,7 +39,7 @@ class ComboBoxHelper extends BaseLibrary {
     private static void clickLikeUser(String text) {
         $(btnTrigger).click();
         $$(liLocator)
-                .filterBy(Condition.exactText(text))
+                .filterBy(exactText(text))
                 .get(0).doubleClick();
     }
 
@@ -47,16 +49,17 @@ class ComboBoxHelper extends BaseLibrary {
         return ulLocator;
     }
 
-    static List<String> getComboBoxValues(SelenideElement proxy) {
+    static ElementsCollection getComboBoxValues(SelenideElement proxy) {
         setLocators(proxy);
+        if ($x(panelXpath).is(not(visible)))
+            $(btnTrigger).click();
+//        List<String> values = new ArrayList<String>();
+//        List<WebElement> list = WebDriverRunner.getWebDriver().findElements(liLocator);
+//        for (WebElement e : list) {
+//            values.add(e.getAttribute("innerText").trim());
+//        }
 
-        List<String> values = new ArrayList<String>();
-        List<WebElement> list = WebDriverRunner.getWebDriver().findElements(liLocator);
-        for (WebElement e : list) {
-            values.add(e.getAttribute("innerText").trim());
-        }
-
-        return values;
+        return $$(liLocator);
     }
 
     private static String panelXpath;
