@@ -95,7 +95,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
         kurumYonetimiPage
                 .openPage()
                 .ara()
-                .guncelle()
+                .guncelle(  )
                 .kepAdresiKullaniyorSec(true)
                 .kepAdresBilgileriArti()
                 .popupKepAdresiDoldur(popupKepAdresi)
