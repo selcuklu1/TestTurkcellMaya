@@ -90,10 +90,10 @@ public class BaseLibrary {
         });
     }
 
-    public void waitForLoadingToDisappearO(WebDriver driver) {
+    public void waitForLoadingToDisappear(WebDriver driver) {
 //        driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
         try {
-            new WebDriverWait(driver, Configuration.timeout / 1000, 500).
+            new WebDriverWait(driver, Configuration.timeout / 1000, 50).
                     until(invisibilityOfElementLocated(By.className("loading")));
 //            System.out.println("Loading: Ok");
         } catch (Exception e) {
@@ -102,22 +102,28 @@ public class BaseLibrary {
 //        driver.manage().timeouts().implicitlyWait(Configuration.timeout, TimeUnit.MILLISECONDS);
     }
 
-    public void waitForLoadingToDisappear(WebDriver driver) {
+    public void waitForLoadingToDisappear1(WebDriver driver) {
         try {
 
             //div[starts-with(@id,"bekleyiniz") and contains(@style, "display")]
             //div[id*='bekleyiniz'][style*='visibility: visible']
             new WebDriverWait(driver, Configuration.timeout / 1000, 50).
                     until(invisibilityOfElementLocated(By.cssSelector("div[id*='bekleyiniz'][style*='visibility: visible']")));
+
 //            new WebDriverWait(driver, Configuration.timeout / 1000, 50).
 //                    until(ExpectedConditions.invisibilityOfAllElements(driver.findElements(By.className("loading"))));
             //      new WebDriverWait(driver, Configuration.timeout / 1000, 50).
             //            until(ExpectedConditions.invisibilityOfAllElements(driver.findElements(By.className("loading"))));
+            //
+            //                 new WebDriverWait(driver, Configuration.timeout / 1000, 50).
+//                        until(ExpectedConditions.invisibilityOfAllElements(driver.findElements(By.className("loading"))));
+
 //            System.out.println("Loading: Ok");
         } catch (Exception e) {
 //            System.out.println("Loading window error: " + e.getMessage());
         }
     }
+
 
     public void waitForLoading(WebDriver driver) {
 //        waitForJS();
@@ -633,20 +639,17 @@ public class BaseLibrary {
     @Step("Popup İşlem Onayı:  \"{secim}\"")
     public void islemOnayi(String secim) {
 
-        SelenideElement islemOnayiPopup = $(By.id("baseConfirmationDialog:dialog"));
         SelenideElement btnIslemOnayiEvet = $(By.id("baseConfirmationDialog:confirmButton"));
         SelenideElement btnIslemOnayiHayir = $(By.id("baseConfirmationDialog:baseConfirmationDialogCancelButton"));
-        if (islemOnayiPopup.isDisplayed()) {
-            switch (secim) {
-                case "Evet":
-                    btnIslemOnayiEvet.click();
-                    break;
-                case "Hayır":
-                    btnIslemOnayiHayir.click();
-                    break;
-            }
+
+        switch (secim) {
+            case "Evet":
+                btnIslemOnayiEvet.click();
+                break;
+            case "Hayır":
+                btnIslemOnayiHayir.click();
+                break;
         }
     }
-
 
 }

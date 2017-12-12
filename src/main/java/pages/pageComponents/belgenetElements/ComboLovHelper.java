@@ -390,7 +390,8 @@ public class ComboLovHelper extends BaseLibrary {
 
 
     public static BelgenetElement openTree(){
-        $(treeButton).click();
+        $(treeButton).shouldBe(visible).click();
+//        $(lovTree).shouldBe(visible);
 //        return (BelgenetElement) $$(lovTree).filterBy(visible).last();
         return ElementFinder.wrap(BelgenetElement.class, null, By.cssSelector(lovTree), 0);
     }
