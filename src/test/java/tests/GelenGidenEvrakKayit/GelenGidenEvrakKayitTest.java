@@ -109,7 +109,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, dependsOnMethods = {"TC0321"}, description = "TC2163 : Kaydedilen gelen evrakın güncellenmesi")
+    @Test(enabled = true,dependsOnMethods = {"TC0321"},description = "TC2163 : Kaydedilen gelen evrakın güncellenmesi")
     public void TC2163() throws InterruptedException {
 
         String evrakTuru = "D";
