@@ -109,7 +109,7 @@ public class KurumYonetimiPage extends MainPage {
     }
     @Step("Kep Adres Bilgileri ekle")
     public KurumYonetimiPage kepAdresBilgileriArti() {
-        btnKepAdresBilgileriArti.click();
+        clickJs(btnKepAdresBilgileriArti);
         return this;
     }
 
@@ -276,7 +276,7 @@ public class KurumYonetimiPage extends MainPage {
     public KurumYonetimiPage sorgulaKurumDoldur(String kurumAdi) {
 
 
-        while(!txtKurumCombolov.isDisplayed()){
+        while (!txtKurumCombolov.isDisplayed()) {
             filtrePanel.click();
             txtKurumCombolov.clearAllSelectedLov();
             txtKurumCombolov.selectLov(kurumAdi);

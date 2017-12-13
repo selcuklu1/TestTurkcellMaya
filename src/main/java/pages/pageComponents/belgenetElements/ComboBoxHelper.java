@@ -16,7 +16,7 @@ import static com.codeborne.selenide.Selenide.*;
 
 class ComboBoxHelper extends BaseLibrary {
 
-    static void selectComboBox(SelenideElement proxy, String text, boolean js) {
+    void selectComboBox(SelenideElement proxy, String text, boolean js) {
         setLocators(proxy);
 
 //        if (proxy.text().equalsIgnoreCase(text))
@@ -28,7 +28,7 @@ class ComboBoxHelper extends BaseLibrary {
             clickLikeUser(text);
     }
 
-    private static void jsClick(String text) {
+    private void jsClick(String text) {
         WebElement li = WebDriverRunner.getWebDriver()
                 .findElement(
                         By.xpath(panelXpath + " //li[text()[contains(normalize-space(),'" + text + "')]]"));
@@ -36,20 +36,20 @@ class ComboBoxHelper extends BaseLibrary {
         executeJavaScript("arguments[0].click()", li);
     }
 
-    private static void clickLikeUser(String text) {
+    private void clickLikeUser(String text) {
         $(btnTrigger).click();
         $$(liLocator)
                 .filterBy(exactText(text))
                 .get(0).doubleClick();
     }
 
-    static By getComboBoxHtmlList(SelenideElement proxy) {
+    By getComboBoxHtmlList(SelenideElement proxy) {
         setLocators(proxy);
         $(btnTrigger).click();
         return ulLocator;
     }
 
-    static ElementsCollection getComboBoxValues(SelenideElement proxy) {
+    ElementsCollection getComboBoxValues(SelenideElement proxy) {
         setLocators(proxy);
         if ($x(panelXpath).is(not(visible)))
             $(btnTrigger).click();
@@ -62,12 +62,12 @@ class ComboBoxHelper extends BaseLibrary {
         return $$(liLocator);
     }
 
-    private static String panelXpath;
-    private static By btnTrigger;
-    private static By liLocator;
-    private static By ulLocator;
+    private String panelXpath;
+    private By btnTrigger;
+    private By liLocator;
+    private By ulLocator;
 
-    private static void setLocators(SelenideElement proxy) {
+    private void setLocators(SelenideElement proxy) {
         //region Get id without _label. This id is parent Div element id
         String id = proxy.attr("id");
         id = id.substring(0, id.lastIndexOf("_label"));

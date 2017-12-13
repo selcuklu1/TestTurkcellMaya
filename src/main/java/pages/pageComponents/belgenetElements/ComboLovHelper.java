@@ -1,12 +1,13 @@
 package pages.pageComponents.belgenetElements;
 
-import com.codeborne.selenide.*;
+import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.WebDriverRunner;
 import com.codeborne.selenide.impl.ElementFinder;
 import common.BaseLibrary;
 import io.qameta.allure.Allure;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
 import java.util.List;
@@ -17,32 +18,32 @@ import static com.codeborne.selenide.Selenide.*;
 
 public class ComboLovHelper extends BaseLibrary {
 
-    static SelenideElement element;
+    SelenideElement element;
 
-    private static String id;
+    private String id;
 
-    private static String lovText;
+    private String lovText;
 
-    private static boolean multiType;
+    private boolean multiType;
 
-    private static String treeButton;
-    private static String lovTree;
-    private static String lovTreeList;
-    private static String lovTreeListSelectableItems;
-    private static String lovTreeListSelectableItemsTitle;
-    private static String lovTreeListSelectableItemsDetail;
+    private String treeButton;
+    private String lovTree;
+    private String lovTreeList;
+    private String lovTreeListSelectableItems;
+    private String lovTreeListSelectableItemsTitle;
+    private String lovTreeListSelectableItemsDetail;
 
-    private static String lovItemTitle;
-    private static String lovItemDetail;
+    private String lovItemTitle;
+    private String lovItemDetail;
 
-    private static String lovSecilen;
-    private static String lovSecilenItemTitle;
-    private static String lovSecilenItemDetail;
-    private static String lovInputTextleriTemizle;
+    private String lovSecilen;
+    private String lovSecilenItemTitle;
+    private String lovSecilenItemDetail;
+    private String lovInputTextleriTemizle;
 
-    private static String lovTreePanelKapat;
+    private String lovTreePanelKapat;
 
-    public static void setLocators(SelenideElement proxy) {
+    public void setLocators(SelenideElement proxy) {
 
         element = proxy;
 
@@ -81,7 +82,7 @@ public class ComboLovHelper extends BaseLibrary {
         lovTreePanelKapat = id + "[id*='lovTreePanelKapat']";
     }
 
-    static BelgenetElement clearLastSelectedLov() {
+    BelgenetElement clearLastSelectedLov() {
         SelenideElement b = $$(lovInputTextleriTemizle).last().shouldBe(visible);
         int count = $$(lovInputTextleriTemizle).size();
         b.click();
@@ -94,7 +95,7 @@ public class ComboLovHelper extends BaseLibrary {
 //        return ElementFinder.wrap(BelgenetElement.class, null, By.cssSelector(lovText), 0);
     }
 
-    public static BelgenetElement clearAllSelectedLov() {
+    public BelgenetElement clearAllSelectedLov() {
         int count = $$(lovInputTextleriTemizle).size();
 
         for (int i = count - 1; i >= 0; i--)
@@ -111,7 +112,7 @@ public class ComboLovHelper extends BaseLibrary {
 //        return ElementFinder.wrap(BelgenetElement.class, null, By.cssSelector(lovText), 0);
     }
 
-    static By lastSelectedLov() {
+    By lastSelectedLov() {
 
         SelenideElement e;
         if (multiType)
@@ -121,14 +122,14 @@ public class ComboLovHelper extends BaseLibrary {
 
         String locator = e.getWrappedElement().toString();
         locator = locator.split("css selector:")[1].trim();
-        locator = locator.substring(0, locator.length()-1);
+        locator = locator.substring(0, locator.length() - 1);
 
 //        locator = multiType ? locator + ":nth-child("+ $$(l).size() +")" : lovSecilen;
 //        return locator;
         return By.cssSelector(locator);
     }
 
-    static BelgenetElement lastSelectedLovTitle() {
+    BelgenetElement lastSelectedLovTitle() {
         String xpath = "";
 
         int count = $$(lovSecilenItemTitle).size();
@@ -154,7 +155,7 @@ public class ComboLovHelper extends BaseLibrary {
         }
     }
 
-    static BelgenetElement lastSelectedLovDetail() {
+    BelgenetElement lastSelectedLovDetail() {
         String xpath = "";
 
         int count = $$(lovSecilenItemDetail).size();
@@ -180,7 +181,7 @@ public class ComboLovHelper extends BaseLibrary {
         }
     }
 
-    static ElementsCollection allSelectedLov() {
+    ElementsCollection allSelectedLov() {
         ElementsCollection e;
         if (multiType)
             e = $$(lovSecilen + " > tr[role='row']");
@@ -189,38 +190,38 @@ public class ComboLovHelper extends BaseLibrary {
         return e;
     }
 
-    static ElementsCollection selectedTitles(){
+    ElementsCollection selectedTitles() {
         return $$(lovSecilenItemTitle);
     }
 
-    static ElementsCollection selectedDetails(){
+    ElementsCollection selectedDetails() {
         return $$(lovSecilenItemDetail);
     }
 
-    static String getLastSelectedLovValue() {
+    String getLastSelectedLovValue() {
         return lastSelectedLovTitleText() + "\n" + lastSelectedLovDetailText();
     }
 
-    static String lastSelectedLovTitleText() {
+    String lastSelectedLovTitleText() {
         $$(lovSecilenItemTitle).shouldHave(sizeGreaterThan(0));
         $$(lovSecilenItemTitle).last().shouldBe(visible);
         return $$(lovSecilenItemTitle).last().text();
     }
 
-    static String lastSelectedLovDetailText() {
+    String lastSelectedLovDetailText() {
         return $$(lovSecilenItemDetail).last().shouldBe(visible).text();
     }
 
-    static Boolean isLovSelected() {
+    Boolean isLovSelected() {
         return $(lovSecilen).is(visible);
     }
 
     //region selectLov metodları
-    public static By selectLov(String value) {
+    public By selectLov(String value) {
 
         //executeJavaScript("arguments[0].scrollIntoView();", element);
         try {
-            if(element.isDisplayed())
+            if (element.isDisplayed())
                 element.getWrappedElement().sendKeys(Keys.SHIFT);
         } catch (Exception ignored) {
         }
@@ -247,7 +248,7 @@ public class ComboLovHelper extends BaseLibrary {
             return By.cssSelector(lovSecilen);
     }
 
-    public static boolean isLovValueSelectable(String value) {
+    public boolean isLovValueSelectable(String value) {
 
 /*        WebElement weblovText = WebDriverRunner.getWebDriver().findElement(By.cssSelector(lovText));
 //        executeJavaScript("arguments[0].scrollIntoView();", weblovText);
@@ -280,21 +281,22 @@ public class ComboLovHelper extends BaseLibrary {
 
         try {
             Allure.addAttachment("Seçilebilir mi?", "");
-        } catch (Exception ignored) { }
+        } catch (Exception ignored) {
+        }
 
         closeLovTreePanel();
 
         return selectable;
     }
 
-    private static void openListItems(String value){
+    private void openListItems(String value) {
         if (!$(lovText).isEnabled())
             $(treeButton).click();
         else
             $(lovText).setValue(value);
     }
 
-    private static void selectSingle(String value){
+    private void selectSingle(String value) {
         if (!WebDriverRunner.getWebDriver().findElement(By.cssSelector(lovText)).isDisplayed())
             $(lovInputTextleriTemizle).shouldBe(visible).click();
 
@@ -307,7 +309,7 @@ public class ComboLovHelper extends BaseLibrary {
 
     }
 
-    private static void selectSingleType(String value) {
+    private void selectSingleType(String value) {
 //        String title, detail;
 
         if (!WebDriverRunner.getWebDriver().findElement(By.cssSelector(lovText)).isDisplayed())
@@ -338,7 +340,7 @@ public class ComboLovHelper extends BaseLibrary {
                 + "\n" + $(lovSecilenItemDetail).text());
     }
 
-    private static void selectMultiType(String value) {
+    private void selectMultiType(String value) {
         long defaultTimeout;
         boolean isSelected = false;
         SelenideElement willBeSelected = null;
@@ -358,7 +360,7 @@ public class ComboLovHelper extends BaseLibrary {
         for (int i = 0; i < selectTitleList.size(); i++) {
             SelenideElement title = selectTitleList.get(i).shouldBe(visible);
             SelenideElement detail = selectDetailList.get(i).shouldBe(visible);
-             if (!selectedTitles.contains(title.text()) || !selectedDetails.contains(detail.text())){
+            if (!selectedTitles.contains(title.text()) || !selectedDetails.contains(detail.text())) {
                 isSelected = true;
                 title.click();
                 break;
@@ -378,10 +380,11 @@ public class ComboLovHelper extends BaseLibrary {
                 Allure.addAttachment("Seçilen değerleri:", $$(lovSecilen).last().text());
 //                Allure.addAttachment("Seçilen değerleri:", $$(lovSecilenItemTitle).get(selectedDetails.size()).text()
 //                    + "\n" + $$(lovSecilenItemDetail).get(selectedDetails.size()).text());
-        } catch (Exception ignored) { }
+        } catch (Exception ignored) {
+        }
     }
 
-    public static void closeLovTreePanel() {
+    public void closeLovTreePanel() {
         if ($$(lovTreePanelKapat).last().is(visible)) {
             $$(lovTreePanelKapat).last().click();
         }
@@ -389,29 +392,29 @@ public class ComboLovHelper extends BaseLibrary {
     //endregion
 
 
-    public static BelgenetElement openTree(){
+    public BelgenetElement openTree() {
         $(treeButton).shouldBe(visible).click();
 //        $(lovTree).shouldBe(visible);
 //        return (BelgenetElement) $$(lovTree).filterBy(visible).last();
         return ElementFinder.wrap(BelgenetElement.class, null, By.cssSelector(lovTree), 0);
     }
 
-    private static BelgenetElement clearLov(){
+    private BelgenetElement clearLov() {
         if (!WebDriverRunner.getWebDriver().findElement(By.cssSelector(lovText)).isDisplayed())
             $(lovInputTextleriTemizle).shouldBe(visible).click();
         return ElementFinder.wrap(BelgenetElement.class, null, By.cssSelector(lovText), 0);
     }
 
-    public static BelgenetElement type(String text){
+    public BelgenetElement type(String text) {
         $(lovText).setValue(text);
         return ElementFinder.wrap(BelgenetElement.class, null, By.cssSelector(lovTree), 0);
     }
 
-    public static boolean isEmpty(){
+    public boolean isEmpty() {
         return $$(lovTreeList).get(0).is(have(text("Sonuç bulunamamıştır")));
     }
 
-    public static ElementsCollection titleItems(){
+    public ElementsCollection titleItems() {
 
         String locator = "li  span[class*='ui-tree-selectable-node'] " + lovItemTitle;
         $$(lovTreeList).get(0).shouldBe(visible);
@@ -420,14 +423,13 @@ public class ComboLovHelper extends BaseLibrary {
 //        return  $$(lovTree).last().$$(lovTreeListSelectableItemsTitle);
     }
 
-    public static ElementsCollection detailItems(){
+    public ElementsCollection detailItems() {
         String locator = "li  span[class*='ui-tree-selectable-node'] " + lovItemDetail;
         $$(lovTreeList).get(0).shouldBe(visible);
         return $$(lovTree).last().$$(locator);
 //        $$(lovTreeList).get(0).shouldBe(visible);
 //        return  $$(lovTree).last().$$(lovTreeListSelectableItemsDetail);
     }
-
 
 
 }
