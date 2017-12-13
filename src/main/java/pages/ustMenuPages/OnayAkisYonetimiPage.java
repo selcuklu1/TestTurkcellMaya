@@ -57,6 +57,8 @@ public class OnayAkisYonetimiPage extends MainPage {
 
     ElementsCollection trOnayAkisiEkleKullanicilar = $$("tbody[id*='onayAkisiYonetimiEditorForm:onayAkisiYonetimiKullaniciBirimDataTable_data'] tr[role='row']");
     SelenideElement chkKoordineli = $(By.id("onayAkisiYonetimiEditorForm:onayAkisiYonetimiKoordineliBooleanCheckbox"));
+    SelenideElement chkVekalet = $(By.id("    onayAkisiYonetimiEditorForm:onayAkisiYonetimiKullaniciBirimDataTable:1:onayAkisiYonetimiVekilBooleanCheckbox"));
+
 
     @Step("Onay akışı sayfası aç")
     public OnayAkisYonetimiPage openPage() {
@@ -166,8 +168,15 @@ public class OnayAkisYonetimiPage extends MainPage {
         return this;
     }
 
+    @Step("Koordine checkboxını seç")
     public OnayAkisYonetimiPage koordineliSec(boolean secim) {
         chkKoordineli.setSelected(secim);
+        return this;
+    }
+
+    @Step("Vekalet checkboxını seç")
+    public OnayAkisYonetimiPage vekaletSec(boolean secim) {
+        chkVekalet.setSelected(secim);
         return this;
     }
 

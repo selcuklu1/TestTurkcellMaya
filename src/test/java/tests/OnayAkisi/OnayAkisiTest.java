@@ -524,14 +524,14 @@ public class OnayAkisiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC1895: Vekaleti olan kullanıcıyı onay akışına ekleme")
-    public void TC1895() {
+    @Test(enabled = true, description = "TC1895a: Vekaleti olan kullanıcıyı onay akışına ekleme")
+    public void TC1895a() {
 
         //Sistemde vekaleti olan bir kullanıcı olmalı
         //Optiim TEST7, Optiim TEST6 ya
         //TODO: Vekalet tarihi db den sql query ile çekilmelidir.
         String onayAkisi = "Sezai Çelik" + getSysDate();
-        String kullanici = "Optiim TEST";
+        String deaultKullanici = "Optiim TEST";
         String vekaletVeren = "Optiim TEST6";
         String vekaletAlan = "Optiim TEST7";
         String vekaletTarihi = "Vekalet: 13.12.2017/04.12.2018";
@@ -540,6 +540,7 @@ public class OnayAkisiTest extends BaseTest {
         onayAkisYonetimiPage
                 .openPage()
                 .yeniOnayAkisiEkle()
+                .onayAkisiKullaniciKontrol(deaultKullanici, "PARAFLAMA")
                 .onayAkisiIslemleriAdDoldur(onayAkisi)
                 .onayAkisiIslemlerVekaletliKullaniciDoldur(vekaletAlan)
                 .kullaniciyaKullaniciTipiSec(vekaletAlan, "IMZALAMA")
@@ -561,7 +562,7 @@ public class OnayAkisiTest extends BaseTest {
                 .bilgilerTabiAc()
                 .onayAkisiDoldur(onayAkisi)
                 .onayAkisiGuncelle()
-                .onayAkisiKullaniciKontrol(kullanici, "PARAFLAMA")
+                .onayAkisiKullaniciKontrol(deaultKullanici, "PARAFLAMA")
                 .onayAkisiKullaniciKontrol(vekaletAlan, "IMZALAMA");
 
         olurYazisiOlusturPage
@@ -569,7 +570,7 @@ public class OnayAkisiTest extends BaseTest {
                 .bilgilerTabiAc()
                 .onayAkisDoldur(onayAkisi)
                 .onayAkisiGuncelle()
-                .onayAkisiKullaniciKontrol(kullanici, "PARAFLAMA")
+                .onayAkisiKullaniciKontrol(deaultKullanici, "PARAFLAMA")
                 .onayAkisiKullaniciKontrol(vekaletAlan, "IMZALAMA");
 
         kararYazisiOlusturPage
@@ -577,7 +578,67 @@ public class OnayAkisiTest extends BaseTest {
                 .bilgilerTabiAc()
                 .onayAkisiDoldur(onayAkisi)
                 .onayAkisiGuncelle()
-                .onayAkisiKullaniciKontrol(kullanici)
+                .onayAkisiKullaniciKontrol(deaultKullanici)
+                .onayAkisiKullaniciKontrol(vekaletAlan);
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TC1895b: Vekaleti olan kullanıcının vekilini onay akışına ekleme")
+    public void TC1895b() {
+
+        //Sistemde vekaleti olan bir kullanıcı olmalı
+        //Optiim TEST7, Optiim TEST6 ya
+        //TODO: Vekalet tarihi db den sql query ile çekilmelidir.
+        String onayAkisi = "Sezai Çelik" + getSysDate();
+        String deaultKullanici = "Optiim TEST";
+        String vekaletVeren = "Optiim TEST6";
+        String vekaletAlan = "Optiim TEST7";
+        String vekaletTarihi = "Vekalet: 13.12.2017/04.12.2018";
+        String basariMesaji = "İşlem başarılıdır!";
+
+        onayAkisYonetimiPage
+                .openPage()
+                .yeniOnayAkisiEkle()
+                .onayAkisiKullaniciKontrol(deaultKullanici, "PARAFLAMA")
+                .onayAkisiIslemleriAdDoldur(onayAkisi)
+                .onayAkisiIslemlerKullaniciDoldur(vekaletVeren)
+                .kullaniciyaKullaniciTipiSec(vekaletAlan, "IMZALAMA")
+                .onayAkisiKullaniciKontrol(vekaletAlan, "IMZALAMA")
+                .onayAkisiKullaniciKontrol(vekaletVeren, "IMZALAMA")
+                .onayAkisiKullaniciKontrol(vekaletTarihi, "IMZALAMA")
+                //.vekaletSec(true) //seçili geliyor
+                .onayAkisiIslemleriKaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        onayAkisYonetimiPage
+                .filtreAc()
+                .filtredeAdDoldur(onayAkisi)
+                .filtreDurumSec("AKTIFLER")
+                .ara()
+                .kayitGoruntulenmeKontrolu(onayAkisi);
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .onayAkisiDoldur(onayAkisi)
+                .onayAkisiGuncelle()
+                .onayAkisiKullaniciKontrol(deaultKullanici, "PARAFLAMA")
+                .onayAkisiKullaniciKontrol(vekaletAlan, "IMZALAMA");
+
+        olurYazisiOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .onayAkisDoldur(onayAkisi)
+                .onayAkisiGuncelle()
+                .onayAkisiKullaniciKontrol(deaultKullanici, "PARAFLAMA")
+                .onayAkisiKullaniciKontrol(vekaletAlan, "IMZALAMA");
+
+        kararYazisiOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .onayAkisiDoldur(onayAkisi)
+                .onayAkisiGuncelle()
+                .onayAkisiKullaniciKontrol(deaultKullanici)
                 .onayAkisiKullaniciKontrol(vekaletAlan);
     }
 }
