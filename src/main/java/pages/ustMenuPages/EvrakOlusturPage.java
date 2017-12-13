@@ -59,6 +59,7 @@ public class EvrakOlusturPage extends MainPage {
     SelenideElement labelIlkKullanici = $(By.xpath("//form[@id='yeniGidenEvrakForm']/table[1]//label[@class='columnLabelFix']"));
     SelenideElement labelIkinciKullanici = $(By.xpath("//form[@id='yeniGidenEvrakForm']/table[2]//label[@class='columnLabelFix']"));
 
+    ElementsCollection tblVekaletVerenAlan =$$("[id='yeniGidenEvrakForm:kullaniciBirimSecenekleri_data'] tr[role='row']");
     //endregion
     @Step("Evrak Oluştur sayfası aç")
     public EvrakOlusturPage openPage() {
@@ -362,6 +363,13 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Vekalet alan Ve Veren tablo vekalet alan seç")
+        public BilgilerTab vekeletAlanVerenTabloVekaletAlanSec(String vekaletAlan) {
+            tblVekaletVerenAlan
+                    .filterBy(Condition.text(vekaletAlan)).first()
+                    .$("[id='yeniGidenEvrakForm:kullaniciBirimSecenekleri:1:secinizButton']").click();
+            return this;
+        }
         @Step("Vekalet alan Ve Veren tablo kontrolü")
         public BilgilerTab vekeletAlanVerenTabloKapat() {
             btnVekaletTablosuKapat.click();
@@ -427,6 +435,7 @@ public class EvrakOlusturPage extends MainPage {
         @Step("Geregi alanında {0} seç")
         public BilgilerTab geregiSec(String text) {
             txtGeregi.selectLov(text);
+            txtGeregi.closeLovTreePanel();
             return this;
         }
 
@@ -1130,7 +1139,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("")
+        @Step("Simza seç")
         public EditorTab sImzasec() {
             radibtnSimza.selectRadio("I");
             radibtnSimza.click();

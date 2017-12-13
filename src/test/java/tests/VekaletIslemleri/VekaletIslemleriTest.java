@@ -93,7 +93,7 @@ public class VekaletIslemleriTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, dependsOnMethods = {"TC0025a"}, description = "Onaya göndererek Vekalet Verme işleminde onayın Red edilmesi")
+    @Test(enabled = true, description = "Onaya göndererek Vekalet Verme işleminde onayın Red edilmesi")
     public void TC0025b() throws InterruptedException {
 
         login(username2, password2);
@@ -178,7 +178,7 @@ public class VekaletIslemleriTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = false, description = "Vekaleti alan kullanıcının onay akışında seçilmesi(vekaleten)")
+    @Test(enabled = true, description = "Vekaleti alan kullanıcının onay akışında seçilmesi(vekaleten)")
     public void TC0015() throws InterruptedException {
 
         login(username3, password3);
@@ -198,8 +198,9 @@ public class VekaletIslemleriTest extends BaseTest {
                 .kullanicilarImzaciSec("Paraflama")
                 .kullanicilarDoldur2("Optiim TEST1")
                 .vekeletAlanVerenTabloKontrolu()
-                .vekeletAlanVerenTabloKapat()
-                .kullanicilarDoldur2("Optiim TEST2")
+                .vekeletAlanVerenTabloVekaletAlanSec(vekaletAlan)
+//                .vekeletAlanVerenTabloKapat()
+//                .kullanicilarDoldur2("Optiim TEST2")
                 .kullniciIsmineGoreImzaParafSec("Optiim TEST1", "İmzalama")
                 .kullan()
                 .onaAkisiTextKontol()
