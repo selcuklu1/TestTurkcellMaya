@@ -289,7 +289,7 @@ public class KurumYonetimiTest extends BaseTest {
                 .bilgiSec(aktifIdariBirimKimlikKodu, true)
                 .bilgiSec(aktifKurumAdi, true)
                 .geregiSecimTipiSec("Kurum")
-                .geregiSec(aktifIdariBirimKimlikKodu,true)
+                .geregiSec(aktifIdariBirimKimlikKodu, true)
                 .geregiSec(aktifKurumAdi, true);
         evrakOlusturPage
                 .evrakOlusturPageKapat();

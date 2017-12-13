@@ -3,12 +3,10 @@ package pages.ustMenuPages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
-import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
-import pages.pageComponents.UstMenu;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
 import static com.codeborne.selenide.Condition.*;
@@ -105,6 +103,7 @@ public class OlurYazisiOlusturPage extends MainPage {
 
         @Step("Onay akışı doldurma ve görüntüleme kontrolu")
         public BilgilerTab onayAkisDoldur(String kullanici) {
+            cmbOnayAkisi.shouldBe(visible);
             cmbOnayAkisi.selectLov(kullanici);
             return this;
         }

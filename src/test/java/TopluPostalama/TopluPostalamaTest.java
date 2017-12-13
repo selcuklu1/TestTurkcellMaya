@@ -26,7 +26,7 @@ public class TopluPostalamaTest extends BaseTest {
         topluPostalanacakEvraklarPage
                 .openPage()
                 .gidecegiYerListesiAlfabetikSiraKontrolu();
-                //.gidecegiYerSec("Başbakan Başmüşavirleri", true);
+        //.gidecegiYerSec("Başbakan Başmüşavirleri", true);
 
 
     }

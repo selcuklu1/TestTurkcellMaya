@@ -16,19 +16,21 @@ public class SettingsListener extends TestNG.ExitCodeListener {
     public void onTestStart(ITestResult result) {
         super.onTestStart(result);
         registerDriverEvenListener();
-        if (Configuration.browserSize != null) {
-            try {
-                String[] size = Configuration.browserSize.split("x");
-                int width = Integer.parseInt(size[0]);
-                int height = Integer.parseInt(size[1]);
-                Dimension browserSize = new Dimension(width, height);
-                WebDriverRunner.getWebDriver().manage().window().setSize(browserSize);
-            } catch (NumberFormatException e) {
+        try {
+            if (Configuration.browserSize != null) {
+                try {
+                    String[] size = Configuration.browserSize.split("x");
+                    int width = Integer.parseInt(size[0]);
+                    int height = Integer.parseInt(size[1]);
+                    Dimension browserSize = new Dimension(width, height);
+                    WebDriverRunner.getWebDriver().manage().window().setSize(browserSize);
+                } catch (NumberFormatException e) {
+                    WebDriverRunner.getWebDriver().manage().window().maximize();
+                }
+            } else
                 WebDriverRunner.getWebDriver().manage().window().maximize();
-            }
+        } catch (Exception e) {
         }
-        else
-            WebDriverRunner.getWebDriver().manage().window().maximize();
     }
 
     @Override
