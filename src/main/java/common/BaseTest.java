@@ -58,8 +58,8 @@ public class BaseTest extends BaseLibrary {
 
     @AfterMethod
     public void tearDown() throws Exception {
-        Selenide.clearBrowserLocalStorage();
-        Selenide.clearBrowserCookies();
+//        Selenide.clearBrowserLocalStorage();
+//        Selenide.clearBrowserCookies();
     }
 
     public void login() {

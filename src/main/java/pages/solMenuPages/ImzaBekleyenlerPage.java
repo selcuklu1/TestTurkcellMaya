@@ -22,6 +22,9 @@ public class ImzaBekleyenlerPage extends MainPage {
     SelenideElement btnDosyaEkle = $(By.xpath("//input[@id='mainPreviewForm:fileUploadIadeEk_input']"));
     SelenideElement txtNot = $(By.id("mainPreviewForm:notTextArea_id"));
     SelenideElement btnIadeEtIadeEt = $(By.id("mainPreviewForm:iadeEtButton_id"));
+    SelenideElement btnIcerik = $("[id^='mainInboxForm:inboxDataTable'][id$='detayGosterButton']");
+    SelenideElement pdfIcerikKontrol = $(By.xpath("/html//div[@id='inboxItemInfoForm:imzacilarPanel']/center/table/tbody/tr/td[3]/center/table/tbody/tr[6]/td/button[@role='button']/span[@class='ui-button-text']"));
+    ElementsCollection solMenuBirim = $$("[id='birimlerimMenusuContainer'] li");
 
     @Step("İmza bekleyenler sayfası aç")
     public ImzaBekleyenlerPage openPage(){
@@ -49,16 +52,30 @@ public class ImzaBekleyenlerPage extends MainPage {
 
     @Step("Evrak olmadığı görünür")
     public ImzaBekleyenlerPage evrakOlmadigiGorme(String toplantiNo, String konu,boolean vardir){
-        tableKararIzlemeEvraklar.filterBy(Condition.text(toplantiNo)).get(0).shouldBe(not(Condition.exist));
+        tableKararIzlemeEvraklar.filterBy(Condition.text(toplantiNo)).get(0).shouldBe(not(Condition.exist));;
+        return this;
+    }
+    @Step("Evrak olmadığı görünür")
+    public ImzaBekleyenlerPage evrakOlmadigiGorme(String evrakNo){
+        tableKararIzlemeEvraklar.filterBy(Condition.text(evrakNo)).shouldHaveSize(0);
         return this;
     }
 
+    @Step("Evrak  kontrolü")
+    public ImzaBekleyenlerPage evrakNoKontrolu(String evrakNo){
+        tableKararIzlemeEvraklar.filterBy(Condition.text(evrakNo)).shouldHaveSize(1);
+        return this;
+    }
     @Step("İade et")
     public ImzaBekleyenlerPage iadeEt(){
         btnIadeEt.click();
         return this;
     }
-
+    @Step("İçerik")
+    public ImzaBekleyenlerPage icerik(){
+        btnIcerik.click();
+        return this;
+    }
     @Step("Dosya ekle")
     public ImzaBekleyenlerPage iadeEtDosyaEkle(String pathToFile) {
         uploadFile(btnDosyaEkle, pathToFile);
@@ -74,6 +91,17 @@ public class ImzaBekleyenlerPage extends MainPage {
     @Step("İade et")
     public ImzaBekleyenlerPage iadeEtIadeEt(){
         btnIadeEtIadeEt.click();
+        return this;
+    }
+    @Step("icerik Kontrol")
+    public ImzaBekleyenlerPage icerikKontrol(String deger){
+        String text = pdfIcerikKontrol.getText();
+        text.contains(deger);
+        return this;
+    }
+    @Step("İade et")
+    public ImzaBekleyenlerPage birimSec(String birim){
+        solMenuBirim.filterBy(text(birim)).first().click();
         return this;
     }
 

@@ -1,6 +1,7 @@
 package pages;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
@@ -253,4 +254,5 @@ public class MainPage extends BaseLibrary {
 
         return this;
     }
+
 }

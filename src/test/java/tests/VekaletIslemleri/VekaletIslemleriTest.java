@@ -6,8 +6,11 @@ import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.MainPage;
+import pages.pageComponents.SolMenu;
+import pages.pageData.SolMenuData;
 import pages.solMenuPages.GelenEvraklarPage;
 import pages.solMenuPages.ImzaBekleyenlerPage;
+import pages.solMenuPages.Parafladiklarim;
 import pages.solMenuPages.VekaletOnaylariPage;
 import pages.ustMenuPages.EvrakOlusturPage;
 import pages.ustMenuPages.VekaletVerPage;
@@ -27,6 +30,7 @@ public class VekaletIslemleriTest extends BaseTest {
     VekaletOnaylariPage vekaletOnaylariPage;
     EvrakOlusturPage evrakOlusturPage;
     ImzaBekleyenlerPage imzaBekleyenlerPage;
+    Parafladiklarim parafladiklarim;
 
     String aciklama = "";
     String redNedeni = "";
@@ -34,6 +38,7 @@ public class VekaletIslemleriTest extends BaseTest {
     String vekaletAlan = "Optiim TEST2";
     String evrakNo1 = "";
     String evrakNo2 = "";
+    String basariMesaji = "İşlem başarılıdır!";
 
     @BeforeMethod
     public void loginBeforeTests() {
@@ -42,6 +47,7 @@ public class VekaletIslemleriTest extends BaseTest {
         vekaletOnaylariPage = new VekaletOnaylariPage();
         evrakOlusturPage = new EvrakOlusturPage();
         imzaBekleyenlerPage = new ImzaBekleyenlerPage();
+        parafladiklarim = new Parafladiklarim();
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -157,6 +163,7 @@ public class VekaletIslemleriTest extends BaseTest {
 
         login("test1", "123");
 
+
         vekaletVerPage
                 .vekaletVarUyarıPopUp();
 
@@ -195,13 +202,13 @@ public class VekaletIslemleriTest extends BaseTest {
                 .geregiSec("Optiim Birim")
                 .onayAkisiEkle()
                 .kullaniciTabloKontrol()
-                .kullanicilarImzaciSec("Paraflama")
+                .kullanicilarImzaciSec("PARAFLAMA")
                 .kullanicilarDoldur2("Optiim TEST1")
                 .vekeletAlanVerenTabloKontrolu()
                 .vekeletAlanVerenTabloVekaletAlanSec(vekaletAlan)
 //                .vekeletAlanVerenTabloKapat()
 //                .kullanicilarDoldur2("Optiim TEST2")
-                .kullniciIsmineGoreImzaParafSec("Optiim TEST1", "İmzalama")
+                .kullniciIsmineGoreImzaParafSec("Optiim TEST2", "IMZALAMA")
                 .kullan()
                 .onaAkisiTextKontol()
                 .onayAkisiKullanilanKullanilanKontrolEt("Yasemin");
@@ -209,11 +216,44 @@ public class VekaletIslemleriTest extends BaseTest {
         evrakOlusturPage
                 .editorTabAc()
                 .editorIcerikDoldur("Test Otomasyon son55")
-                .parafla();
-        //11 12e 13.  adımlar yazılacak
-//                .sImzasec()
-//                .evrakImzalama()
-//                .imzala();
+                .parafla()
+                .sImzasec()
+                .sImzaImzala()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+
+        parafladiklarim
+                .openPage()
+                .filtreleAc()
+                .baslangicTarihiDoldur(getSysDateForKis())
+                .bitisTarihiDoldur(getSysDateForKis())
+                .raporSec()
+                .icerikIlkKayıt();
+
+        String evrakNo= parafladiklarim.evrakDetayiEvrakNoAl();
+
+        logout();
+        login("test1","123");
+
+        vekaletVerPage
+                .vekaletVarUyarıPopUp();
+
+        imzaBekleyenlerPage
+                .openPage()
+                .evrakOlmadigiGorme(evrakNo);
+
+        logout();
+
+        login("optiimtest2","123");
+        vekaletVerPage
+                .vekaletVarUyarıPopUp();
+
+        imzaBekleyenlerPage
+                .birimSec(getSysDateForKis())
+                .openPage()
+                .evrakNoKontrolu("9213")
+                .icerik()
+                .icerikKontrol("V.");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -250,8 +290,21 @@ public class VekaletIslemleriTest extends BaseTest {
 
         logout();
         login(username,username);
+
+        vekaletVerPage
+                .vekaletVarUyarıPopUp();
         imzaBekleyenlerPage
                 .openPage();
+        //tabloda olmadıgı gorulecek
+
+        logout();
+
+        login("optiimtest2","123");
+        vekaletVerPage
+                .vekaletVarUyarıPopUp();
+
+        //Birim değiştirelecek
+        //imzabekkleyenlerde evragın lıstelendıgı gorulecek
 
 
     }
