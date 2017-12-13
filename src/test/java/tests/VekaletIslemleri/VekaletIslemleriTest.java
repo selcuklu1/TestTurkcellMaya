@@ -11,6 +11,7 @@ import pages.solMenuPages.ImzaBekleyenlerPage;
 import pages.solMenuPages.Parafladiklarim;
 import pages.solMenuPages.VekaletOnaylariPage;
 import pages.ustMenuPages.EvrakOlusturPage;
+import pages.ustMenuPages.GelenEvrakKayitPage;
 import pages.ustMenuPages.VekaletVerPage;
 
 import static data.TestData.*;
@@ -29,6 +30,7 @@ public class VekaletIslemleriTest extends BaseTest {
     EvrakOlusturPage evrakOlusturPage;
     ImzaBekleyenlerPage imzaBekleyenlerPage;
     Parafladiklarim parafladiklarim;
+    GelenEvrakKayitPage gelenEvrakKayitPage;
 
     String aciklama = "";
     String redNedeni = "";
@@ -37,6 +39,15 @@ public class VekaletIslemleriTest extends BaseTest {
     String evrakNo1 = "";
     String evrakNo2 = "";
     String basariMesaji = "İşlem başarılıdır!";
+    String tur = "IMZALAMA";
+    String icerik = "Test Otomasyon " + getSysDate();
+    String konuKodu = "010.01";
+    String kaldiralacakKlasor = "Diğer";
+    String evrakTuru = "Resmi Yazışma";
+    String evrakDili = "Türkçe";
+    String gizlilikDerecesi = "Normal";
+    String ivedilik = "Normal";
+    String geregi = "Optiim Birim";
 
     @BeforeMethod
     public void loginBeforeTests() {
@@ -46,6 +57,8 @@ public class VekaletIslemleriTest extends BaseTest {
         evrakOlusturPage = new EvrakOlusturPage();
         imzaBekleyenlerPage = new ImzaBekleyenlerPage();
         parafladiklarim = new Parafladiklarim();
+        mainPage = new MainPage();
+        gelenEvrakKayitPage = new GelenEvrakKayitPage();
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -162,7 +175,7 @@ public class VekaletIslemleriTest extends BaseTest {
         login("test1", "123");
 
 
-        vekaletVerPage
+        mainPage
                 .vekaletVarUyarıPopUp();
 
 
@@ -174,7 +187,7 @@ public class VekaletIslemleriTest extends BaseTest {
 
         login("optiimTest2", "123");
 
-        vekaletVerPage
+        mainPage
                 .vekaletVarUyarıPopUp();
 
         gelenEvraklarPage
@@ -188,17 +201,17 @@ public class VekaletIslemleriTest extends BaseTest {
 
         login(username3, password3);
 
-        String tur = "IMZALAMA";
+
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
-                .konuKoduSec("010.01")
-                .kaldiralacakKlasorlerSec("Diğer")
-                .evrakTuruSec("Resmi Yazışma")
-                .evrakDiliSec("Türkçe")
-                .gizlilikDerecesiSec("Normal")
-                .ivedikSec("Normal")
-                .geregiSec("Optiim Birim")
+                .konuKoduSec(konuKodu)
+                .kaldiralacakKlasorlerSec(kaldiralacakKlasor)
+                .evrakTuruSec(evrakTuru)
+                .evrakDiliSec(evrakDili)
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .ivedikSec(ivedilik)
+                .geregiSec(geregi)
                 .onayAkisiEkle()
                 .kullaniciTabloKontrol()
                 .kullanicilarImzaciSec("PARAFLAMA")
@@ -214,12 +227,11 @@ public class VekaletIslemleriTest extends BaseTest {
 
         evrakOlusturPage
                 .editorTabAc()
-                .editorIcerikDoldur("Test Otomasyon son55")
+                .editorIcerikDoldur(icerik)
                 .parafla()
                 .sImzasec()
                 .sImzaImzala()
                 .islemMesaji().basariliOlmali(basariMesaji);
-
 
         parafladiklarim
                 .openPage()
@@ -234,7 +246,7 @@ public class VekaletIslemleriTest extends BaseTest {
         logout();
         login("test1","123");
 
-        vekaletVerPage
+        mainPage
                 .vekaletVarUyarıPopUp();
 
         imzaBekleyenlerPage
@@ -244,7 +256,8 @@ public class VekaletIslemleriTest extends BaseTest {
         logout();
 
         login("optiimtest2","123");
-        vekaletVerPage
+
+        mainPage
                 .vekaletVarUyarıPopUp();
 
         imzaBekleyenlerPage
@@ -262,16 +275,17 @@ public class VekaletIslemleriTest extends BaseTest {
         login(username3, password3);
 
         String tur = "IMZALAMA";
+        String icerik = "Test Otomasyon " + getSysDate();
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
-                .konuKoduSec("010.01")
-                .kaldiralacakKlasorlerSec("Diğer")
-                .evrakTuruSec("Resmi Yazışma")
-                .evrakDiliSec("Türkçe")
-                .gizlilikDerecesiSec("Normal")
-                .ivedikSec("Normal")
-                .geregiSec("Optiim Birim")
+                .konuKoduSec(konuKodu)
+                .kaldiralacakKlasorlerSec(kaldiralacakKlasor)
+                .evrakTuruSec(evrakTuru)
+                .evrakDiliSec(evrakDili)
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .ivedikSec(ivedilik)
+                .geregiSec(geregi)
                 .onayAkisiEkle()
                 .kullaniciTabloKontrol()
                 .kullanicilarImzaciSec("PARAFLAMA")
@@ -285,7 +299,7 @@ public class VekaletIslemleriTest extends BaseTest {
 
         evrakOlusturPage
                 .editorTabAc()
-                .editorIcerikDoldur("Test Otomasyon "+getSysDateForKis())
+                .editorIcerikDoldur(icerik)
                 .parafla()
                 .sImzasec()
                 .sImzaImzala()
@@ -305,7 +319,7 @@ public class VekaletIslemleriTest extends BaseTest {
 
         login("optiimtest2","123");
 
-        vekaletVerPage
+        mainPage
                 .vekaletVarUyarıPopUp();
 
         imzaBekleyenlerPage
@@ -316,7 +330,7 @@ public class VekaletIslemleriTest extends BaseTest {
 
         login("test1","123");
 
-        vekaletVerPage
+        mainPage
                 .vekaletVarUyarıPopUp();
 
         imzaBekleyenlerPage
@@ -327,4 +341,78 @@ public class VekaletIslemleriTest extends BaseTest {
 
     }
 
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "Vekalet veren kullanıcıya evrak havalesi ve kontrolü")
+    public void TC0014() throws InterruptedException{
+
+        String kisiKurum = "D";
+        String geldigiKurum = "Esk Kurum 071216 2";
+        String evrakGelisTipi = "P";
+        String ivedilik = "N";
+        String ekMetni = "test otomasyon";
+        String gelenEvrakNo = "";
+        String evrakTuru = "R";
+        String evrakDili = "917";
+        String gizlilikDerecesi = "N";
+
+        login(username,password);
+
+        gelenEvrakKayitPage
+                .openPage()
+                .konuKoduDoldur(konuKodu)
+                .evrakTuruSec(evrakTuru)
+                .evrakDiliSec(evrakDili)
+                .evrakTarihiDoldur(getSysDateForKis())
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .kisiKurumSec(kisiKurum)
+                .geldigiKurumDoldurLovText(geldigiKurum)
+                .evrakSayiSagDoldur()
+                .evrakGelisTipiSec(evrakGelisTipi)
+                .ivedilikSec(ivedilik)
+                .dagitimBilgileriKisiSec(vekaletVeren)
+                .vekeletAlanVerenTabloVekaletAlanveyaVerenSec(vekaletVeren)
+                .kaydet();
+
+        gelenEvrakNo = gelenEvrakKayitPage.popUps();
+        logout();
+
+        login("test1","123");
+
+        mainPage
+                .vekaletVarUyarıPopUp();
+
+        gelenEvraklarPage
+                .openPage()
+                .tabloEvrakNoKontrol(gelenEvrakNo);
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "Vekalet veren kullanıcının bulunduğu kullanıcı listesine evrak havalesi ve kontrolü")
+    public void TC2212() throws InterruptedException{
+
+        login(username3,password3);
+
+        String[] evrakNo = new String[2];
+        gelenEvraklarPage
+                .openPage();
+
+        evrakNo = gelenEvraklarPage.tablodanEvrakNoAl(1);
+
+        gelenEvraklarPage
+                .evrakSec()
+                .havaleYap()
+                .havaleYapKisiTreeSec(vekaletVeren)
+                .vekeletAlanVerenTabloVekaletAlanveyaVerenSec(vekaletVeren)
+                .havaleYapGonder()
+                .islemMesaji().basariliOlmali(basariMesaji);
+        logout();
+        login("test1","123");
+
+        mainPage
+                .vekaletVarUyarıPopUp();
+
+        gelenEvraklarPage
+                .tabloEvrakNoKontrol(evrakNo[0].toString());
+
+    }
 }

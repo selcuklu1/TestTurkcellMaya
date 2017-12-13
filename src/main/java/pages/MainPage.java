@@ -195,7 +195,7 @@ public class MainPage extends BaseLibrary {
     public MainPage altMenuTooltipKontrol(String altMenuAd) {
 
         String tooltip="";
-        switch (altMenuAd){
+        switch (altMenuAd) {
             case "Evrak Oluştur":
                 $(By.id("topMenuForm2:ust:0:ust:0:ust:0:ust")).hover();
                 tooltip = $(By.id("tiptip_content")).innerText();
@@ -206,52 +206,59 @@ public class MainPage extends BaseLibrary {
                 $(By.id("topMenuForm2:ust:0:ust:0:ust:2:ust")).hover();
                 tooltip = $(By.id("tiptip_content")).innerText();
                 System.out.println(tooltip);
-                Assert.assertEquals(tooltip,"(Shift + I)");
+                Assert.assertEquals(tooltip, "(Shift + I)");
                 break;
             case "Gelen Evrak Kayıt":
                 $(By.id("topMenuForm2:ust:0:ust:0:ust:3:ust")).hover();
                 tooltip = $(By.id("tiptip_content")).innerText();
                 System.out.println(tooltip);
-                Assert.assertEquals(tooltip,"(Shift + G)");
+                Assert.assertEquals(tooltip, "(Shift + G)");
                 break;
             case "Evrak Arama":
                 $(By.id("topMenuForm2:ust:0:ust:1:ust:1:ust")).hover();
                 tooltip = $(By.id("tiptip_content")).innerText();
                 System.out.println(tooltip);
-                Assert.assertEquals(tooltip,"(Shift + A)");
+                Assert.assertEquals(tooltip, "(Shift + A)");
                 break;
             case "Karar Yazısı Oluştur":
                 $(By.id("topMenuForm2:ust:0:ust:0:ust:4:ust")).hover();
                 tooltip = $(By.id("tiptip_content")).innerText();
                 System.out.println(tooltip);
-                Assert.assertEquals(tooltip,"(Shift + K)");
+                Assert.assertEquals(tooltip, "(Shift + K)");
                 break;
             case "Kullanıcı Yönetimi":
                 $(By.id("topMenuForm2:ust:3:ust:0:ust:1:ust")).hover();
                 tooltip = $(By.id("tiptip_content")).innerText();
                 System.out.println(tooltip);
-                Assert.assertEquals(tooltip,"(Shift + U)");
+                Assert.assertEquals(tooltip, "(Shift + U)");
                 break;
             case "Gelen Evrak Raporu":
                 $(By.id("topMenuForm2:ust:6:ust:0:ust:9:ust")).hover();
                 tooltip = $(By.id("tiptip_content")).innerText();
                 System.out.println(tooltip);
-                Assert.assertEquals(tooltip,"(Shift + N)");
+                Assert.assertEquals(tooltip, "(Shift + N)");
                 break;
             case "Personel ve Açık Evrak İstatistiği":
                 $(By.id("topMenuForm2:ust:6:ust:0:ust:10:ust")).hover();
                 tooltip = $(By.id("tiptip_content")).innerText();
                 System.out.println(tooltip);
-                Assert.assertEquals(tooltip,"(Shift + P)");
+                Assert.assertEquals(tooltip, "(Shift + P)");
                 break;
             case "Olur Yazısı Oluştur":
                 $(By.id("topMenuForm2:ust:0:ust:0:ust:1:ust")).hover();
                 tooltip = $(By.id("tiptip_content")).innerText();
                 System.out.println(tooltip);
-                Assert.assertEquals(tooltip,"(Shift + O)");
+                Assert.assertEquals(tooltip, "(Shift + O)");
                 break;
         }
-
+        return this;
+    }
+    @Step("Vekalet var uyarı popup")
+    public MainPage vekaletVarUyarıPopUp() {
+        SelenideElement popUpAktifVekaletUyarı = $(By.id("aktifVekaletinizVarUyariMesajiDialog"));
+        SelenideElement btnTamam = $(By.id("aktifVekaletinizVarUyariMesajiDialogEvetBtn"));
+        popUpAktifVekaletUyarı.exists();
+        btnTamam.click();
         return this;
     }
 
