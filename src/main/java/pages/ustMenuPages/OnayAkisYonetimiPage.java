@@ -3,7 +3,6 @@ package pages.ustMenuPages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
-import com.codeborne.selenide.commands.GetSelectedText;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
@@ -11,12 +10,10 @@ import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
-import static com.codeborne.selenide.Condition.exactText;
-import static com.codeborne.selenide.Condition.selected;
+import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
-import static com.codeborne.selenide.Selenide.$x;
+import static com.codeborne.selenide.Condition.value;
+import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 @SuppressWarnings("unused")
@@ -58,6 +55,8 @@ public class OnayAkisYonetimiPage extends MainPage {
     SelenideElement btnKontrolUp = $(By.id("onayAkisiYonetimiEditorForm:onayAkisiYonetimiKullaniciBirimDataTable:1:j_idt1768"));
     SelenideElement onayAkisListesiKontrolRow = $x("//tbody[@id='onayAkisiYonetimiEditorForm:onayAkisiYonetimiKullaniciBirimDataTable_data']/tr//select/option[@selected and @value='KONTROL']//ancestor::tr[1]");
 
+    ElementsCollection trOnayAkisiEkleKullanicilar = $$("tbody[id*='onayAkisiYonetimiEditorForm:onayAkisiYonetimiKullaniciBirimDataTable_data'] tr[role='row']");
+    SelenideElement chkKoordineli = $(By.id("onayAkisiYonetimiEditorForm:onayAkisiYonetimiKoordineliBooleanCheckbox"));
 
     @Step("Onay akışı sayfası aç")
     public OnayAkisYonetimiPage openPage() {
@@ -154,6 +153,11 @@ public class OnayAkisYonetimiPage extends MainPage {
 
     public OnayAkisYonetimiPage aktifYap() {
         btnAktifYap.click();
+        return this;
+    }
+
+    public OnayAkisYonetimiPage koordineliSec(boolean secim) {
+        chkKoordineli.setSelected(secim);
         return this;
     }
 
@@ -275,6 +279,86 @@ public class OnayAkisYonetimiPage extends MainPage {
         if (btnSilOnayAkisiItem2.isDisplayed()) {
             btnSilOnayAkisiItem2.click();
         }
+        return this;
+    }
+
+
+    public OnayAkisYonetimiPage onayAkisiIslemleriKullaniciSil(String kullanici) {
+
+        trOnayAkisiEkleKullanicilar
+                .filterBy(text(kullanici))
+                .get(0)
+                .shouldBe(exist)
+                .$("[class$='delete-icon']").click();
+        return this;
+    }
+
+    @Step("Kullanici varsa sil")
+    public OnayAkisYonetimiPage kullaniciVarsaSil(String kullanici) {
+
+        if (trOnayAkisiEkleKullanicilar
+                .filterBy(text(kullanici))
+                .get(0).isDisplayed()) {
+            trOnayAkisiEkleKullanicilar
+                    .filterBy(text(kullanici))
+                    .get(0)
+                    .shouldBe(exist)
+                    .$("[class$='delete-icon']").click();
+        }
+
+        return this;
+    }
+
+    public OnayAkisYonetimiPage kullaniciYerleriDegistir(String kullanici1, String kullanici2) {
+
+        trOnayAkisiEkleKullanicilar
+                .filterBy(text(kullanici1))
+                .get(0)
+                .shouldBe(exist)
+                .$("[class$='ui-icon-arrowthick-1-s']").click();
+
+        trOnayAkisiEkleKullanicilar
+                .filterBy(text(kullanici2))
+                .get(0)
+                .shouldBe(exist)
+                .$("[class$='ui-icon-arrowthick-1-s']").click();
+
+        return this;
+    }
+
+    public OnayAkisYonetimiPage onayAkisiKullaniciEnAlttaGetirme(String kullanici) {
+
+        trOnayAkisiEkleKullanicilar
+                .filterBy(text(kullanici))
+                .get(0)
+                .shouldBe(exist)
+                .$("[class$='ui-icon-arrowthick-1-s']").click();
+
+        return this;
+    }
+
+    public OnayAkisYonetimiPage kullaniciyaKullaniciTipiSec(String kullanici, String secim) {
+
+        trOnayAkisiEkleKullanicilar
+                .filterBy(text(kullanici))
+                .get(0)
+                .shouldBe(exist)
+                .$("select[id*='onayAkisiYonetimiIslemTipi']")
+                .selectOptionByValue(secim);
+
+        return this;
+    }
+
+    @Step("Onay akışı kullanıcı adı ve tipi kontrol et")
+    public OnayAkisYonetimiPage onayAkisiKullaniciKontrol(String kullaniciAdi, String kullaniciTipi) {
+
+        trOnayAkisiEkleKullanicilar
+                .filterBy(text(kullaniciAdi))
+                .get(0)
+                .shouldBe(exist)
+                .$("select[id*='onayAkisiYonetimiIslemTipi']")
+                .shouldHave(value(kullaniciTipi));
+
         return this;
     }
 

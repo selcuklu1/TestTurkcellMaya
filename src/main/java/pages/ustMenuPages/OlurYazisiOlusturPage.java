@@ -48,6 +48,7 @@ public class OlurYazisiOlusturPage extends MainPage {
         BelgenetElement cmbOnayAkisi = comboLov(By.cssSelector("[id^='yeniOnayEvrakForm:evrakBilgileriList'][id$='akisLov:LovText']"));
         By cmbOnayAkisiBy = By.cssSelector("[id^='yeniOnayEvrakForm:evrakBilgileriList'][id$='akisLov:LovText']");
         SelenideElement cmbSelectOneMenu = $(By.id("yeniOnayEvrakForm:evrakBilgileriList:14:akisAdimLov:LovSecilenTable:0:selectOneMenu"));
+        SelenideElement btnOnayAkisGuncelle = $(By.cssSelector("[id^='yeniOnayEvrakForm:evrakBilgileriList:14:akisLov:j_idt'] [class$='update-icon']"));
 
 
         //endregion
@@ -128,6 +129,12 @@ public class OlurYazisiOlusturPage extends MainPage {
             comboLov(cmbOnayAkisiBy).type(onayAkisi).titleItems().filterBy(exactText(onayAkisi)).shouldHaveSize(0);
             System.out.println("MyCombolov alanında " + onayAkisi + ": Onay Akışın görüntülenmediği görülür.");
 
+            return this;
+        }
+
+        @Step("Onay akışı güncelle")
+        public BilgilerTab onayAkisiGuncelle() {
+            btnOnayAkisGuncelle.click();
             return this;
         }
 

@@ -388,25 +388,131 @@ public class OnayAkisiTest extends BaseTest {
     @Test(enabled = true, description = "TC1901a: Son imza seviyesi kısıtlı ise hiyerarşik onay akışı kullanma (yazışma kuralları yönetimi)")
     public void TC1901a() {
 
-        String ad = "Vekaletli Kullanici";
-        String kullanici1 = "Optiim TEST6";
+        //Optiim TEST7, Optiim TEST6 ya
+        String onayAkisi = "Vekaletli Kullanici";
+        String vekaletAlan = "Optiim TEST7";
         String kullanici2 = "Zübeyde TEKİN";
+        String vekaletVeren = "Optiim TEST6";
         String kaldirilacakKlasorler = "ESK05";
 
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
-                .onayAkisiDoldur(ad)
+                .onayAkisiDoldur(onayAkisi)
                 .onayAkisiGuncelle()
-                .onayAkisiKullaniciKontrol(kullanici1, "PARAFLAMA")
+                .onayAkisiKullaniciKontrol(vekaletAlan, "PARAFLAMA")
                 .onayAkisiKullaniciKontrol(kullanici2, "IMZALAMA")
+                .onayAkisiVekaletKontrol(vekaletVeren)
                 .kullniciIsmineGoreImzaParafSec(kullanici2, "İmzalama")
                 .onayAkisiKullan()
                 .kaldiralacakKlasorlerSec(kaldirilacakKlasorler);
 
         evrakOlusturPage
                 .kaydetOnayaSun()
-                .kullaniciIslemVeSiraKontrolu(kullanici1, "Paraflama", kullanici2, "İmzalama");
+                .kullaniciIslemVeSiraKontrolu(vekaletAlan, "Paraflama", kullanici2, "İmzalama");
 
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TC1901b: Hiyararşik onay akışı kullanma- Vekaletli")
+    public void TC1901b() {
+
+        //Optiim TEST7, Optiim TEST6 ya
+        String onayAkisi = "Vekaletli Kullanici";
+        String vekaletAlan = "Optiim TEST7";
+        String kullanici2 = "Zübeyde TEKİN";
+        String vekaletVeren = "Optiim TEST6";
+        String kaldirilacakKlasorler = "ESK05";
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .onayAkisiDoldur(onayAkisi)
+                .onayAkisiGuncelle()
+                .onayAkisiKullaniciKontrol(vekaletAlan, "PARAFLAMA")
+                .onayAkisiKullaniciKontrol(kullanici2, "IMZALAMA")
+                .onayAkisiVekaletKontrol(vekaletVeren)
+                .kullniciIsmineGoreImzaParafSec(kullanici2, "İmzalama")
+                .onayAkisiKullan()
+                .kaldiralacakKlasorlerSec(kaldirilacakKlasorler);
+
+        evrakOlusturPage
+                .kaydetOnayaSun()
+                .kullaniciIslemVeSiraKontrolu(vekaletAlan, "Paraflama", kullanici2, "İmzalama");
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TC1896: Onay akışı güncelleme")
+    public void TC1896() {
+
+        String onayAkisi = "Sezaiii Çelikkk";
+        String kullanici = "Zübeyde TEKİN";
+        String eklenenKullanici2 = "MEHMET EMİN YÜCEANT";
+        String eklenenKullanici1 = "Mehmet BOZDEMİR";
+        String ayniBirimliKullanici = "Optiim TEST";
+        String basariMesaji = "İşlem başarılıdır!";
+
+        //tests.Data kontrolu için yazıldı. Pasif ise aktif yapılır.
+        onayAkisYonetimiPage
+                .openPage()
+                .filtredeAdDoldur(onayAkisi)
+                .filtreDurumSec("TUMU")
+                .ara()
+                .onayAkisiPasifIseAktifYap(onayAkisi)
+
+                .guncelle()
+
+                //Test için datalar silinir
+                .kullaniciVarsaSil(eklenenKullanici2)
+                .kullaniciVarsaSil(eklenenKullanici1)
+                .kullaniciVarsaSil(ayniBirimliKullanici)
+
+                .onayAkisiIslemlerKullanicilarDoldur(eklenenKullanici1)
+                .kullaniciYerleriDegistir(kullanici, eklenenKullanici1)
+                .onayAkisiIslemleriKullaniciSil(eklenenKullanici1)
+
+                .onayAkisiIslemlerKullanicilarDoldur(eklenenKullanici1)
+                .kullaniciyaKullaniciTipiSec(eklenenKullanici1, "KONTROL")
+
+                .onayAkisiIslemlerKullanicilarDoldur(eklenenKullanici2)
+                .kullaniciyaKullaniciTipiSec(eklenenKullanici2, "IMZALAMA")
+
+                .koordineliSec(true)
+                .onayAkisiIslemlerKullanicilarDoldur(ayniBirimliKullanici)
+                .onayAkisiKullaniciKontrol(ayniBirimliKullanici, "KOORDINE")
+
+                .onayAkisiKullaniciEnAlttaGetirme(eklenenKullanici2)
+
+                .onayAkisiIslemleriKaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        //TODO: Bundan sonrası defect var.
+/*
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .onayAkisiDoldur(onayAkisi)
+                .onayAkisiGuncelle()
+                .onayAkisiKullaniciKontrol(eklenenKullanici1, "KONTROL")
+                .onayAkisiKullaniciKontrol(eklenenKullanici2, "IMZALAMA")
+                .onayAkisiKullaniciKontrol(ayniBirimliKullanici, "KOORDINE");
+
+        olurYazisiOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .onayAkisDoldur(onayAkisi)
+                .onayAkisiGuncelle()
+                .onayAkisiKullaniciKontrol(eklenenKullanici1, "KONTROL")
+                .onayAkisiKullaniciKontrol(eklenenKullanici2, "IMZALAMA")
+                .onayAkisiKullaniciKontrol(ayniBirimliKullanici, "KOORDINE");
+
+        kararYazisiOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .onayAkisiDoldur(onayAkisi)
+                .onayAkisiGuncelle()
+                .onayAkisiKullaniciKontrol(eklenenKullanici1, "KONTROL")
+                .onayAkisiKullaniciKontrol(eklenenKullanici2, "IMZALAMA")
+                .onayAkisiKullaniciKontrol(ayniBirimliKullanici, "KOORDINE");*/
     }
 }
