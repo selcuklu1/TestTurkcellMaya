@@ -767,6 +767,18 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Onay akışı vekalet kontrol")
+        public BilgilerTab onayAkisiVekaletKontrol(String vekaletliKullanici) {
+
+            btnKullan.sendKeys(Keys.SHIFT);
+            trOnayAkisiEkleKullanicilar
+                    .filterBy(text(vekaletliKullanici))
+                    .get(0)
+                    .shouldBe(exist)
+                    .shouldBe(text("Vekalet:"));
+
+            return this;
+        }
 
         @Step("Onay akışı kullanıcıları silme")
         public BilgilerTab onayAkisiKullanicilariTemizle() {
@@ -952,6 +964,7 @@ public class EvrakOlusturPage extends MainPage {
 
             return this;
         }
+
 
 
         //endregion

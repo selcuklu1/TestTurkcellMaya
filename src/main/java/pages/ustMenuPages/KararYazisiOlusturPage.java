@@ -1,5 +1,6 @@
 package pages.ustMenuPages;
 
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
@@ -10,6 +11,7 @@ import pages.pageComponents.belgenetElements.BelgenetElement;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 public class KararYazisiOlusturPage extends MainPage {
@@ -86,6 +88,9 @@ public class KararYazisiOlusturPage extends MainPage {
         SelenideElement btnEkranKapat = $(By.cssSelector("[id='window3Dialog'] span[class='ui-icon ui-icon-closethick']"));
         SelenideElement btnKaydetveOnaySun = $(By.id("yeniKararEvrakForm:kararEvrakRightTab:uiRepeat:2:cmdbutton"));
         BelgenetElement cmbOnayAkisi = comboLov(By.cssSelector("[id^='yeniKararEvrakForm:evrakBilgileriList'][id$='akisLov:LovText']"));
+        SelenideElement btnOnayAkisGuncelle = $(By.cssSelector("[id^='yeniKararEvrakForm:evrakBilgileriList:6:akisLov:j_idt'] [class$='update-icon']"));
+        ElementsCollection trOnayAkisiEkleKullanicilar = $$("tbody[id*='akisAdimLov:LovSecilenTable_data'] tr[role='row']");
+
         //endregion
 
         private BilgilerTab open() {
@@ -280,6 +285,21 @@ public class KararYazisiOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Onay akışı güncelle")
+        public BilgilerTab onayAkisiGuncelle() {
+            btnOnayAkisGuncelle.click();
+            return this;
+        }
+
+        @Step("Onay akışında güncel gelen kullanıcıyı kontrol et")
+        public BilgilerTab onayAkisiKullaniciKontrol(String kullaniciAdi) {
+            trOnayAkisiEkleKullanicilar
+                    .filterBy(text(kullaniciAdi))
+                    .get(0)
+                    .shouldBe(exist);
+            return this;
+        }
+
     }
 
 
@@ -411,7 +431,6 @@ public class KararYazisiOlusturPage extends MainPage {
         }
 
 
-
     }
 
     public IliskiliEvraklarTab iliskiliEvraklarTabAc() {
@@ -478,7 +497,6 @@ public class KararYazisiOlusturPage extends MainPage {
 
             return this;
         }
-
 
     }
     //endregion
