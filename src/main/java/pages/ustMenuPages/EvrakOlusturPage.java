@@ -758,6 +758,19 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Onay akışı kullanıcı adı ve koordine tipi kontrol et")
+        public BilgilerTab onayAkisiKullaniciKoordineKontrol(String kullaniciAdi, String kullaniciTipi) {
+
+            trOnayAkisiEkleKullanicilar
+                    .filterBy(text(kullaniciAdi))
+                    .get(0)
+                    .shouldBe(exist)
+                    .$(("[id^='yeniGidenEvrakForm:evrakBilgileriList'] [class='lovItemDetail']"))
+                    .text().contains(kullaniciTipi);
+
+            return this;
+        }
+
         @Step("Onay akışı vekalet kontrol")
         public BilgilerTab onayAkisiVekaletKontrol(String vekaletliKullanici) {
 
@@ -955,7 +968,6 @@ public class EvrakOlusturPage extends MainPage {
 
             return this;
         }
-
 
 
         //endregion

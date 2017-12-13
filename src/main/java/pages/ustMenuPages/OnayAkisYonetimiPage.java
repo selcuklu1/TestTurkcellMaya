@@ -99,7 +99,7 @@ public class OnayAkisYonetimiPage extends MainPage {
 
     //Detaile göre doldurur.
     @Step("Onay akışı işlemleri kullanıcılar alanı doldur")
-    public OnayAkisYonetimiPage onayAkisiIslemlerVekaletliKullaniciDoldur(String kullanici) {
+    public OnayAkisYonetimiPage onayAkisiIslemlerIstenilenDetaildeKullaniciDoldur(String kullanici) {
         txtOnayAkisiIslemleriKullanicilar.type(kullanici).detailItems().filterBy(text("Vekalet")).first().click();
         //selectLov(kullanici);
         return this;

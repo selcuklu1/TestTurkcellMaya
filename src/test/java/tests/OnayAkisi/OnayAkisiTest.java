@@ -447,9 +447,9 @@ public class OnayAkisiTest extends BaseTest {
 
         String onayAkisi = "Sezaiii Çelikkk";
         String kullanici = "Zübeyde TEKİN";
+        String eklenenKullanici1 = "Optiim TEST3";
         String eklenenKullanici2 = "MEHMET EMİN YÜCEANT";
-        String eklenenKullanici1 = "Mehmet BOZDEMİR";
-        String ayniBirimliKullanici = "Optiim TEST";
+        String ayniBirimliKullanici = "OPTİİM TEST4";
         String basariMesaji = "İşlem başarılıdır!";
 
         //tests.Data kontrolu için yazıldı. Pasif ise aktif yapılır.
@@ -462,7 +462,7 @@ public class OnayAkisiTest extends BaseTest {
 
                 .guncelle()
 
-                //Test için datalar silinir
+                //Test için datalar silinir, teste hazır hale getirilir.
                 .kullaniciVarsaSil(eklenenKullanici2)
                 .kullaniciVarsaSil(eklenenKullanici1)
                 .kullaniciVarsaSil(ayniBirimliKullanici)
@@ -494,7 +494,6 @@ public class OnayAkisiTest extends BaseTest {
                 .kayitGoruntulenmeKontrolu(onayAkisi);
 
         //TODO: Bundan sonrası defect var.
-/*
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
@@ -502,7 +501,7 @@ public class OnayAkisiTest extends BaseTest {
                 .onayAkisiGuncelle()
                 .onayAkisiKullaniciKontrol(eklenenKullanici1, "KONTROL")
                 .onayAkisiKullaniciKontrol(eklenenKullanici2, "IMZALAMA")
-                .onayAkisiKullaniciKontrol(ayniBirimliKullanici, "KOORDINE");
+                .onayAkisiKullaniciKoordineKontrol(ayniBirimliKullanici, "Koordine");
 
         olurYazisiOlusturPage
                 .openPage()
@@ -518,9 +517,9 @@ public class OnayAkisiTest extends BaseTest {
                 .bilgilerTabiAc()
                 .onayAkisiDoldur(onayAkisi)
                 .onayAkisiGuncelle()
-                .onayAkisiKullaniciKontrol(eklenenKullanici1, "KONTROL")
-                .onayAkisiKullaniciKontrol(eklenenKullanici2, "IMZALAMA")
-                .onayAkisiKullaniciKontrol(ayniBirimliKullanici, "KOORDINE");*/
+                .onayAkisiKullaniciKontrol(eklenenKullanici1)
+                .onayAkisiKullaniciKontrol(eklenenKullanici2)
+                .onayAkisiKullaniciKontrol(ayniBirimliKullanici);
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -542,7 +541,7 @@ public class OnayAkisiTest extends BaseTest {
                 .yeniOnayAkisiEkle()
                 .onayAkisiKullaniciKontrol(deaultKullanici, "PARAFLAMA")
                 .onayAkisiIslemleriAdDoldur(onayAkisi)
-                .onayAkisiIslemlerVekaletliKullaniciDoldur(vekaletAlan)
+                .onayAkisiIslemlerIstenilenDetaildeKullaniciDoldur(vekaletAlan)
                 .kullaniciyaKullaniciTipiSec(vekaletAlan, "IMZALAMA")
                 .onayAkisiKullaniciKontrol(vekaletAlan, "IMZALAMA")
                 .onayAkisiKullaniciKontrol(vekaletVeren, "IMZALAMA")
