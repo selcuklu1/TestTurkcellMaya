@@ -210,7 +210,7 @@ public class OnayAkisiTest extends BaseTest {
                 .ara()
                 .guncelle()
                 .silOnayAkisiItem2()
-                .onayAkisiIslemlerKullanicilarDoldur(kullanici)
+                .onayAkisiIslemlerKullaniciDoldur(kullanici)
                 .imzacıSonSec("İmzalama")
                 .onayAkisiIslemleriKaydet()
                 .islemMesaji().basariliOlmali(basariMesaji);
@@ -467,24 +467,31 @@ public class OnayAkisiTest extends BaseTest {
                 .kullaniciVarsaSil(eklenenKullanici1)
                 .kullaniciVarsaSil(ayniBirimliKullanici)
 
-                .onayAkisiIslemlerKullanicilarDoldur(eklenenKullanici1)
+                .onayAkisiIslemlerKullaniciDoldur(eklenenKullanici1)
                 .kullaniciYerleriDegistir(kullanici, eklenenKullanici1)
                 .onayAkisiIslemleriKullaniciSil(eklenenKullanici1)
 
-                .onayAkisiIslemlerKullanicilarDoldur(eklenenKullanici1)
+                .onayAkisiIslemlerKullaniciDoldur(eklenenKullanici1)
                 .kullaniciyaKullaniciTipiSec(eklenenKullanici1, "KONTROL")
 
-                .onayAkisiIslemlerKullanicilarDoldur(eklenenKullanici2)
+                .onayAkisiIslemlerKullaniciDoldur(eklenenKullanici2)
                 .kullaniciyaKullaniciTipiSec(eklenenKullanici2, "IMZALAMA")
 
                 .koordineliSec(true)
-                .onayAkisiIslemlerKullanicilarDoldur(ayniBirimliKullanici)
+                .onayAkisiIslemlerKullaniciDoldur(ayniBirimliKullanici)
                 .onayAkisiKullaniciKontrol(ayniBirimliKullanici, "KOORDINE")
 
                 .onayAkisiKullaniciEnAlttaGetirme(eklenenKullanici2)
 
                 .onayAkisiIslemleriKaydet()
                 .islemMesaji().basariliOlmali(basariMesaji);
+
+        onayAkisYonetimiPage
+                .filtreAc()
+                .filtredeAdDoldur(onayAkisi)
+                .filtreDurumSec("AKTIFLER")
+                .ara()
+                .kayitGoruntulenmeKontrolu(onayAkisi);
 
         //TODO: Bundan sonrası defect var.
 /*
@@ -514,5 +521,63 @@ public class OnayAkisiTest extends BaseTest {
                 .onayAkisiKullaniciKontrol(eklenenKullanici1, "KONTROL")
                 .onayAkisiKullaniciKontrol(eklenenKullanici2, "IMZALAMA")
                 .onayAkisiKullaniciKontrol(ayniBirimliKullanici, "KOORDINE");*/
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TC1895: Vekaleti olan kullanıcıyı onay akışına ekleme")
+    public void TC1895() {
+
+        //Sistemde vekaleti olan bir kullanıcı olmalı
+        //Optiim TEST7, Optiim TEST6 ya
+        //TODO: Vekalet tarihi db den sql query ile çekilmelidir.
+        String onayAkisi = "Sezai Çelik" + getSysDate();
+        String kullanici = "Optiim TEST";
+        String vekaletVeren = "Optiim TEST6";
+        String vekaletAlan = "Optiim TEST7";
+        String vekaletTarihi = "Vekalet: 13.12.2017/04.12.2018";
+        String basariMesaji = "İşlem başarılıdır!";
+
+        onayAkisYonetimiPage
+                .openPage()
+                .yeniOnayAkisiEkle()
+                .onayAkisiIslemleriAdDoldur(onayAkisi)
+                .onayAkisiIslemlerVekaletliKullaniciDoldur(vekaletAlan)
+                .kullaniciyaKullaniciTipiSec(vekaletAlan, "IMZALAMA")
+                .onayAkisiKullaniciKontrol(vekaletAlan, "IMZALAMA")
+                .onayAkisiKullaniciKontrol(vekaletVeren, "IMZALAMA")
+                .onayAkisiKullaniciKontrol(vekaletTarihi, "IMZALAMA")
+                .onayAkisiIslemleriKaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        onayAkisYonetimiPage
+                .filtreAc()
+                .filtredeAdDoldur(onayAkisi)
+                .filtreDurumSec("AKTIFLER")
+                .ara()
+                .kayitGoruntulenmeKontrolu(onayAkisi);
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .onayAkisiDoldur(onayAkisi)
+                .onayAkisiGuncelle()
+                .onayAkisiKullaniciKontrol(kullanici, "PARAFLAMA")
+                .onayAkisiKullaniciKontrol(vekaletAlan, "IMZALAMA");
+
+        olurYazisiOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .onayAkisDoldur(onayAkisi)
+                .onayAkisiGuncelle()
+                .onayAkisiKullaniciKontrol(kullanici, "PARAFLAMA")
+                .onayAkisiKullaniciKontrol(vekaletAlan, "IMZALAMA");
+
+        kararYazisiOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .onayAkisiDoldur(onayAkisi)
+                .onayAkisiGuncelle()
+                .onayAkisiKullaniciKontrol(kullanici)
+                .onayAkisiKullaniciKontrol(vekaletAlan);
     }
 }

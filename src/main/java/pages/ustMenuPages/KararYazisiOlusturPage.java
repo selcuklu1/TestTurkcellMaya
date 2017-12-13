@@ -292,13 +292,11 @@ public class KararYazisiOlusturPage extends MainPage {
         }
 
         @Step("Onay akışında güncel gelen kullanıcıyı kontrol et")
-        public BilgilerTab onayAkisiKullaniciKontrol(String kullaniciAdi, String kullaniciTipi) {
+        public BilgilerTab onayAkisiKullaniciKontrol(String kullaniciAdi) {
             trOnayAkisiEkleKullanicilar
                     .filterBy(text(kullaniciAdi))
                     .get(0)
-                    .shouldBe(exist)
-                    .$("select[id*='selectOneMenu']")
-                    .shouldHave(value(kullaniciTipi));
+                    .shouldBe(exist);
             return this;
         }
 
@@ -431,7 +429,6 @@ public class KararYazisiOlusturPage extends MainPage {
             btnMetinEkleEkle.click();
             return this;
         }
-
 
 
     }

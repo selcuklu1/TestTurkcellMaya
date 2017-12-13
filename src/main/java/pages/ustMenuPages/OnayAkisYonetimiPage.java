@@ -87,12 +87,22 @@ public class OnayAkisYonetimiPage extends MainPage {
         return this;
     }
 
+    //Title göre doldurur.
     @Step("Onay akışı işlemleri kullanıcılar alanı doldur")
-    public OnayAkisYonetimiPage onayAkisiIslemlerKullanicilarDoldur(String kullanici) {
+    public OnayAkisYonetimiPage onayAkisiIslemlerKullaniciDoldur(String kullanici) {
         txtOnayAkisiIslemleriKullanicilar.type(kullanici).titleItems().first().click();
         //selectLov(kullanici);
         return this;
     }
+
+    //Detaile göre doldurur.
+    @Step("Onay akışı işlemleri kullanıcılar alanı doldur")
+    public OnayAkisYonetimiPage onayAkisiIslemlerVekaletliKullaniciDoldur(String kullanici) {
+        txtOnayAkisiIslemleriKullanicilar.type(kullanici).detailItems().filterBy(text("Vekalet")).first().click();
+        //selectLov(kullanici);
+        return this;
+    }
+
 
     @Step("İmzacı seç")
     public OnayAkisYonetimiPage imzacıSonSec(String value) {
@@ -103,7 +113,7 @@ public class OnayAkisYonetimiPage extends MainPage {
     public OnayAkisYonetimiPage kontrolcuYoksaEkle(String kullanici) {
 
         if (onayAkisListesiKontrolRow.isDisplayed() == false) {
-            onayAkisiIslemlerKullanicilarDoldur(kullanici);
+            onayAkisiIslemlerKullaniciDoldur(kullanici);
             imzacıSonSec("Kontrol");
 
             onayAkisListesiKontrolRow
@@ -136,7 +146,7 @@ public class OnayAkisYonetimiPage extends MainPage {
     }
 
     @Step("Onay akışı yeni")
-    public OnayAkisYonetimiPage onayAkisiYeni() {
+    public OnayAkisYonetimiPage yeniOnayAkisiEkle() {
         btnOnayAkisiYeni.click();
         return this;
     }
@@ -205,7 +215,7 @@ public class OnayAkisYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Kayıt görüntülenmeme kontrolu")
+    @Step("Kayıt görüntülenme kontrolu")
     public OnayAkisYonetimiPage kayitGoruntulenmeKontrolu(String ad) {
 
         boolean statusAd = findElementOnTableByColumnInputInAllPages(tblOnayAkisListesiSelenide, 1, ad).isDisplayed();
