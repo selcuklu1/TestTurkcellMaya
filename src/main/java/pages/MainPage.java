@@ -1,6 +1,7 @@
 package pages;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
 import io.qameta.allure.Step;
@@ -12,7 +13,9 @@ import pages.pageComponents.UserMenu;
 import pages.pageComponents.UstMenu;
 import pages.pageData.SolMenuData;
 
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
 
 public class MainPage extends BaseLibrary {
     private SolMenu solMenu = new SolMenu();
@@ -259,6 +262,13 @@ public class MainPage extends BaseLibrary {
         SelenideElement btnTamam = $(By.id("aktifVekaletinizVarUyariMesajiDialogEvetBtn"));
         popUpAktifVekaletUyarı.exists();
         btnTamam.click();
+        return this;
+    }
+
+    @Step("İade et")
+    public MainPage birimSec(String birim){
+        ElementsCollection solMenuBirim = $$("[id='birimlerimMenusuContainer'] li");
+        solMenuBirim.filterBy(text(birim)).first().click();
         return this;
     }
 

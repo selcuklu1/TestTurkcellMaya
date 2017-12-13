@@ -709,10 +709,11 @@ public class GelenEvrakKayitPage extends MainPage {
     }
 
     @Step("Mail Ust Yazi adi kontrol")
-    public GelenEvrakKayitPage ustYaziMailAdiKontrol(String ustYaziAdi) {
-        String text = lblEklenenMailUstYazi.text();
-        System.out.println(text);
-        Assert.assertEquals(text.contains(ustYaziAdi), true);
+    public GelenEvrakKayitPage ustYaziMailAdiKontrol(String ustYaziAdi) throws InterruptedException {
+//        String text = lblEklenenMailUstYazi.text();
+        lblEklenenMailUstYazi.shouldBe(Condition.text(ustYaziAdi));
+//        System.out.println(text);
+//        Assert.assertEquals(text.contains(ustYaziAdi), true);
         return this;
     }
 

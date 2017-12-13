@@ -258,10 +258,10 @@ public class VekaletIslemleriTest extends BaseTest {
         login("optiimtest2","123");
 
         mainPage
-                .vekaletVarUyarıPopUp();
+                .vekaletVarUyarıPopUp()
+                .birimSec(getSysDateForKis());
 
         imzaBekleyenlerPage
-                .birimSec(getSysDateForKis())
                 .openPage()
                 .evrakNoKontrolu(evrakNo)
                 .icerik()
@@ -414,5 +414,46 @@ public class VekaletIslemleriTest extends BaseTest {
         gelenEvraklarPage
                 .tabloEvrakNoKontrol(evrakNo[0].toString());
 
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "Vekalet alan kullanıcıya evrak havalesi ve kontrolü")
+    public void TC0011() throws InterruptedException{
+
+        login(username3,password3);
+
+        String[] evrakNo = new String[2];
+        gelenEvraklarPage
+                .openPage();
+
+        evrakNo = gelenEvraklarPage.tablodanEvrakNoAl(1);
+
+        gelenEvraklarPage
+                .evrakSec()
+                .havaleYap()
+                .havaleYapKisiTreeSec(vekaletVeren)
+                .vekeletAlanVerenTabloVekaletAlanveyaVerenSec(vekaletAlan)
+                .havaleYapGonder()
+                .islemMesaji().basariliOlmali(basariMesaji);
+        logout();
+        login("test1","123");
+
+        mainPage
+                .vekaletVarUyarıPopUp();
+
+        gelenEvraklarPage
+                .tabloOlmayanEvrakNoKontrol(evrakNo[0].toString());
+
+
+        logout();
+        login("optiimtest2","123");
+
+        mainPage
+                .vekaletVarUyarıPopUp()
+                .birimSec(getSysDateForKis());
+
+
+        gelenEvraklarPage
+                .tabloEvrakNoKontrol(evrakNo[0].toString());
     }
 }
