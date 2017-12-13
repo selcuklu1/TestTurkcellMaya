@@ -32,11 +32,7 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
         solMenu(SolMenuData.BirimEvraklari.TopluPostalanacakEvraklar);
         return this;
     }
-
-<<<<<<< HEAD
-=======
-
->>>>>>> 56accfa394ebf93fa1cbce3eaac30bd98db2467f
+    
     @Step("Gideceği yer alanından {0} seç")
     public TopluPostalanacakEvraklarPage gidecegiYerSec(String gidecegiYer, boolean secim) {
 
