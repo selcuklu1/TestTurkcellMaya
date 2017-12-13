@@ -289,7 +289,7 @@ public class KararYazisiOlusturPage extends MainPage {
 
     public class EditorTab extends MainPage {
         //SelenideElement divEditor = $("editorAntetBaslik");
-        SelenideElement divEditor1 = $(By.id("cke_82"));
+        SelenideElement divEditor1 = $(By.id("cke_1_contents"));
         SelenideElement divEditorInput = $("[id='cke_1_contents']");
         SelenideElement divHitap = $("div[id='yeniGidenEvrakForm:hitapInplace'] > span");
         SelenideElement btnEvet = $(By.id("kaydetConfirmForm:kaydetEvetButton"));
@@ -341,22 +341,22 @@ public class KararYazisiOlusturPage extends MainPage {
             return this;
 
         }
-        
+
         @Step("Ek metni doldur")
-        public EkleriTab dosyaEkleEkMetniDoldur(String ekMetni){
+        public EkleriTab dosyaEkleEkMetniDoldur(String ekMetni) {
             txtDosyaEkleEkMetni.setValue(ekMetni);
             return this;
         }
-        
+
         @Step("Kaydet")
-        public EkleriTab dosyaEkleKaydet(){
+        public EkleriTab dosyaEkleKaydet() {
             btnDosyaEkleKaydet.click();
             return this;
         }
-        
+
         @Step("Dosya ekle")
-        public EkleriTab dosyaEkleTabDosyaEkle(String pathFile){
-        uploadFile(btnDosyaEkleTabDosyaEkle,pathFile);
+        public EkleriTab dosyaEkleTabDosyaEkle(String pathFile) {
+            uploadFile(btnDosyaEkleTabDosyaEkle, pathFile);
             return this;
         }
 
@@ -393,19 +393,19 @@ public class KararYazisiOlusturPage extends MainPage {
         }
 
         @Step("Metin ekle tab")
-        public IlgileriTab metinEkleTab(){
+        public IlgileriTab metinEkleTab() {
             metinEkleTab.click();
             return this;
         }
 
         @Step("İlgi metni doldur ")
-        public IlgileriTab ilgiMetniDoldur(String ilgiMetni){
+        public IlgileriTab ilgiMetniDoldur(String ilgiMetni) {
             metinEkleTabEkMetni.setValue(ilgiMetni);
             return this;
         }
 
         @Step("Ekle")
-        public IlgileriTab metinEkleEkle(){
+        public IlgileriTab metinEkleEkle() {
             btnMetinEkleEkle.click();
             return this;
         }
@@ -425,6 +425,7 @@ public class KararYazisiOlusturPage extends MainPage {
         SelenideElement txtSistemdeKayitliEvrakEkleEvrakArama = $(By.id("yeniKararEvrakForm:ilisikIslemleriTabView:evrakAramaText"));
         SelenideElement btnSistemdeKayitliEvrakEkleDokumanAra = $(By.id("yeniKararEvrakForm:ilisikIslemleriTabView:dokumanAraButton"));
         SelenideElement btnSistemdeKayitliEvrakEkleArti = $(By.id("[id^='yeniKararEvrakForm:ilisikIslemleriTabView:sistemdeKayitliEvrakListesiDataTable:0:']"));
+
         private IliskiliEvraklarTab open() {
             tabIliskiliEvraklar.click();
             return this;
@@ -432,25 +433,25 @@ public class KararYazisiOlusturPage extends MainPage {
         }
 
         @Step("Sistemde kayıtlı evrak ekle tab aç")
-        public IliskiliEvraklarTab sistemdeKayitliEvrakEkleTabAc(){
+        public IliskiliEvraklarTab sistemdeKayitliEvrakEkleTabAc() {
             sistemdeKayitliEvrakEkleTab.click();
             return this;
         }
-        
+
         @Step("Sistemde kayıtlı evrak ekle artı")
-        public IliskiliEvraklarTab sistemdeKayitliEvrakEkleArti(){
+        public IliskiliEvraklarTab sistemdeKayitliEvrakEkleArti() {
             btnSistemdeKayitliEvrakEkleArti.click();
             return this;
         }
 
         @Step("Sistemde kayıtlı evrak ekle tab aç")
-        public IliskiliEvraklarTab sistemdeKayitliEvrakEkleEvrakAramaDoldur(String evrakArama){
+        public IliskiliEvraklarTab sistemdeKayitliEvrakEkleEvrakAramaDoldur(String evrakArama) {
             txtSistemdeKayitliEvrakEkleEvrakArama.setValue(evrakArama);
             return this;
         }
 
         @Step("Sistemde kayıtlı evrak ekle tab aç")
-        public IliskiliEvraklarTab sistemdeKayitliEvrakEkleEvrakDokumanAra(){
+        public IliskiliEvraklarTab sistemdeKayitliEvrakEkleEvrakDokumanAra() {
             btnSistemdeKayitliEvrakEkleDokumanAra.click();
             return this;
         }

@@ -36,7 +36,7 @@ public class EvrakPaylasmaTest extends BaseTest {
 
         paylastiklarimPage
                 .openPage()
-                .evrakSec("", "","Optiim TEST1 / Optiim TEST2","11.12.2017 13:07:26 ")
+                .evrakSec("", "", "Optiim TEST1 / Optiim TEST2", "11.12.2017 13:07:26 ")
                 .paylasTabTikla()
                 .paylasimiDurdur()
                 .islemMesaji().basariliOlmali(basariMesaji);

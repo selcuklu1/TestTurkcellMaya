@@ -31,7 +31,7 @@ public class GundemIzlemePage extends MainPage {
     SelenideElement btnFiltrele = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:gundemFiltrele"));
     SelenideElement btnAralikiGundemOlustur = $(By.id("mainInboxForm:inboxDataTable:j_idt697"));
     ElementsCollection tblGundemEvraklar = $$("[id='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
-    SelenideElement btnGundemSirasiniKaydet =$(By.id("mainInboxForm:inboxDataTable:j_idt700"));
+    SelenideElement btnGundemSirasiniKaydet = $(By.id("mainInboxForm:inboxDataTable:j_idt700"));
     SelenideElement btnGundemSirasiniKaydetUyariEvet = $(By.id("mainInboxForm:gundemSiraDegistirEvetButton"));
     SelenideElement btnGundemSirasiniKaydetUyariHayir = $(By.id("mainInboxForm:gundemSiraDegistirHayirButton"));
     SelenideElement btnYayimla = $(By.id("mainInboxForm:inboxDataTable:j_idt699"));
@@ -51,19 +51,19 @@ public class GundemIzlemePage extends MainPage {
     }
 
     @Step("Sıralamayı değiştir")
-    public GundemIzlemePage siralamayiDegistir(){
+    public GundemIzlemePage siralamayiDegistir() {
         System.out.println(tblGundemEvraklar.size());
         if (tblGundemEvraklar.size() > 1) {
             String deger1 = $("[id='mainInboxForm:inboxDataTable:1:evrakTable'] input[id^='mainInboxForm:inboxDataTable:1']").getValue();
-            String deger2=$("[id='mainInboxForm:inboxDataTable:0:evrakTable'] input[id^='mainInboxForm:inboxDataTable:0']").getValue();
+            String deger2 = $("[id='mainInboxForm:inboxDataTable:0:evrakTable'] input[id^='mainInboxForm:inboxDataTable:0']").getValue();
             $("[id='mainInboxForm:inboxDataTable:0:evrakTable'] input[id^='mainInboxForm:inboxDataTable:0']").setValue(deger1);
             $("[id='mainInboxForm:inboxDataTable:1:evrakTable'] input[id^='mainInboxForm:inboxDataTable:1']").setValue(deger2);
         }
-      return this;
+        return this;
     }
 
     @Step("Gündem sırasını kaydet")
-    public GundemIzlemePage gundemSirasiniKaydet(boolean secim){
+    public GundemIzlemePage gundemSirasiniKaydet(boolean secim) {
         btnGundemSirasiniKaydet.click();
         clickJs(btnGundemSirasiniKaydetUyariEvet);
         return this;
@@ -76,7 +76,7 @@ public class GundemIzlemePage extends MainPage {
     }
 
     @Step("Yayımla")
-    public GundemIzlemePage yayimla(){
+    public GundemIzlemePage yayimla() {
         btnYayimla.click();
         clickJs(btnYayimlaEvet);
         return this;
@@ -113,7 +113,7 @@ public class GundemIzlemePage extends MainPage {
         txtKlasor.selectLov(klasor);
         return this;
     }
-    
+
     @Step("Sıralama kontrol edilir")
     public GundemIzlemePage wordDosyaKontrolEt(String dosyaAdi) {
 

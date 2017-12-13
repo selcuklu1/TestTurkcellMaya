@@ -78,7 +78,7 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
                 .onayAkisiKullaniciEkle(eklenecekKullanici)
                 .onayAkisiKullaniciTipiSec(eklenecekKullanici, "İmzalama")
                 .onayAkisiKullan()
-                .onayAkisiKullanilanKullanilanKontrolEt("Optiim TEST-Paraflama / "+eklenecekKullanici+"-İmzalama");
+                .onayAkisiKullanilanKullanilanKontrolEt("Optiim TEST-Paraflama / " + eklenecekKullanici + "-İmzalama");
 
 
         logout();
@@ -100,7 +100,7 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
 
         String yonetimHavuzuAdi = "Test-tec013045";
         String[] kontrolEdilecekBirimler = new String[]{"Optiim Birim"};
-        String[] kontrolEdilecekKullanicilar = new String[]{ "Yasin TELLİ" };
+        String[] kontrolEdilecekKullanicilar = new String[]{"Yasin TELLİ"};
         String eklenecekAltBirim = "Optiim Alt Birim1";
         String silinecekKullanici = "Yasin TELLİ";
         String eklenecekKullanici = "Yasin TELLİ";
@@ -136,7 +136,6 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
                 .onayAkisiKullaniciEkle(eklenecekKullanici)
                 .onayAkisiKullaniciTipiSec(eklenecekKullanici, "İmzalama")
                 .onayAkisiKullan();
-
 
 
         logout();

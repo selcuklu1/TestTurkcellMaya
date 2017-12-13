@@ -23,11 +23,11 @@ public class KararYazisiOlusturmaTest extends BaseTest{
         KararIzlemePage kararIzlemePage;
         ImzaBekleyenlerPage imzaBekleyenlerPage;
         KlasorYonetimiPage klasorYonetimiPage;
-        TeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage;
-        GelenEvraklarPage gelenEvraklarPage;
-        KurulIslemleriPage kurulIslemleriPage;
-        GundemIzlemePage gundemIzlemePage;
-        ErisimYonetimiPage erisimYonetimiPage;
+    TeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage;
+    GelenEvraklarPage gelenEvraklarPage;
+    KurulIslemleriPage kurulIslemleriPage;
+    GundemIzlemePage gundemIzlemePage;
+    ErisimYonetimiPage erisimYonetimiPage;
 
         @BeforeMethod
         public void loginBeforeTests() {
@@ -155,7 +155,7 @@ public class KararYazisiOlusturmaTest extends BaseTest{
         gundemIzlemePage
                 .aralikliGundemOlustur()
                 .islemMesaji().basariliOlmali(basariMesaji);
-        String dosyaAdi =gundemIzlemePage.indirilenDosyaAd();
+        String dosyaAdi = gundemIzlemePage.indirilenDosyaAd();
 
         gundemIzlemePage
                 .wordDosyaKontrolEt(dosyaAdi)
@@ -186,7 +186,7 @@ public class KararYazisiOlusturmaTest extends BaseTest{
         gundemIzlemePage
                 .aralikliGundemOlustur()
                 .islemMesaji().basariliOlmali(basariMesaji);
-        String dosyaAdi =gundemIzlemePage.indirilenDosyaAd();
+        String dosyaAdi = gundemIzlemePage.indirilenDosyaAd();
 
         gundemIzlemePage
                 .wordDosyaKontrolEt(dosyaAdi)
@@ -307,8 +307,8 @@ public class KararYazisiOlusturmaTest extends BaseTest{
         String konuKodu = "Usul ve Esaslar";
         String kaldirilicakKlasorler = "Diğer";
         String toplantiNo = createRandomNumber(9);
-        String toplantiTarih =getSysDateForKis();
-        String miat =getSysDateForKis();
+        String toplantiTarih = getSysDateForKis();
+        String miat = getSysDateForKis();
         String kararNo = createRandomNumber(12);
         String editorIcerik = "Deneme Can";
         String kullanici = "Yasemin Çakıl AKYOL";
@@ -351,7 +351,7 @@ public class KararYazisiOlusturmaTest extends BaseTest{
 
         imzaBekleyenlerPage
                 .openPage()
-                .evrakSec(kararNo,konuKodu)
+                .evrakSec(kararNo, konuKodu)
                 .iadeEt()
                 .iadeEtDosyaEkle(filePath)
                 .notDoldur(not)
@@ -362,11 +362,11 @@ public class KararYazisiOlusturmaTest extends BaseTest{
 
         imzaBekleyenlerPage
                 .openPage()
-                .evrakOlmadigiGorme(kararNo,konuKodu,true);
+                .evrakOlmadigiGorme(kararNo, konuKodu, true);
 
         kararIzlemePage
                 .openPage()
-                .ilkEvrakSec(kararNo,konuKodu)
+                .ilkEvrakSec(kararNo, konuKodu)
                 .iadeBilgisiGorme(not);
 
     }
@@ -447,7 +447,7 @@ public class KararYazisiOlusturmaTest extends BaseTest{
         gundemIzlemePage
                 .aralikliGundemOlustur()
                 .islemMesaji().basariliOlmali(basariMesaji);
-        String dosyaAdi =gundemIzlemePage.indirilenDosyaAd();
+        String dosyaAdi = gundemIzlemePage.indirilenDosyaAd();
 
         gundemIzlemePage
                 .wordDosyaKontrolEt(dosyaAdi)

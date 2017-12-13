@@ -42,13 +42,13 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     }
 
     @Step("Konu kodu doldur")
-    public TeslimAlinmayiBekleyenlerPage konuKoduDoldur(String konuKodu){
+    public TeslimAlinmayiBekleyenlerPage konuKoduDoldur(String konuKodu) {
         txtKonuKodu.selectLov(konuKodu);
         return this;
     }
 
     @Step("Teslim al ve kapat")
-    public TeslimAlinmayiBekleyenlerPage teslimAlveKapatTeslimAlVeKapat(){
+    public TeslimAlinmayiBekleyenlerPage teslimAlveKapatTeslimAlVeKapat() {
         btnTeslimAlVeKapatTeslimAlVeKapat.click();
         return this;
     }

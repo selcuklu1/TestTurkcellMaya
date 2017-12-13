@@ -19,15 +19,14 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
     ElementsCollection tableGidecegiYer = $$("tbody[id='mainInboxForm:inboxDataTable:filtersAccordion:topluPostalanacakEvraklarGidecegiYerDataTable_data'] > tr[role='row']");
 
     @Step("Toplu postalanacak evraklar sayfasını aç")
-    public TopluPostalanacakEvraklarPage openPage(){
+    public TopluPostalanacakEvraklarPage openPage() {
         solMenu(SolMenuData.BirimEvraklari.TopluPostalanacakEvraklar);
         return this;
     }
 
 
-
     @Step("Gideceği yer alanından {0} seç")
-    public TopluPostalanacakEvraklarPage gidecegiYerSec(String gidecegiYer, boolean secim){
+    public TopluPostalanacakEvraklarPage gidecegiYerSec(String gidecegiYer, boolean secim) {
 
         Boolean isSelected = false;
 
@@ -40,11 +39,11 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
         if (chkBox.$(By.xpath("./div[contains(@class, 'ui-state-active')]")).exists())
             isSelected = true;
 
-        if(secim == true){
-            if(isSelected == false)
+        if (secim == true) {
+            if (isSelected == false)
                 chkBox.click();
         } else {
-            if(isSelected == true)
+            if (isSelected == true)
                 chkBox.click();
         }
 
@@ -77,11 +76,11 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
     }
 
     @Step("Gideceği yer listesinde alfabetik kontrol")
-    public TopluPostalanacakEvraklarPage gidecegiYerListesiAlfabetikSiraKontrolu(){
+    public TopluPostalanacakEvraklarPage gidecegiYerListesiAlfabetikSiraKontrolu() {
 
         String[] gidecegiYerList = new String[tableGidecegiYer.size()];
 
-        for(int i = 0; i < gidecegiYerList.length; i++){
+        for (int i = 0; i < gidecegiYerList.length; i++) {
             gidecegiYerList[i] = tableGidecegiYer.get(i).$(By.xpath("./td[2]")).innerText();
         }
 

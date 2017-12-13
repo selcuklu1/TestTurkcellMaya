@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <!--<suite thread-count="1" name="Test Suite" parallel="none" verbose="1">-->
-<suite thread-count="10" name="Test Suite" parallel="classes" verbose="1">
+<suite thread-count="5" name="Test Suite" parallel="classes" verbose="1">
+    <!--thread-count="10"-->
     <!--<listeners>-->
     <!--<listener class-name="listeners.TestListener"></listener>-->
     <!--</listeners>-->
