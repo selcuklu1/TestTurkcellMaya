@@ -364,10 +364,10 @@ public class EvrakOlusturPage extends MainPage {
         }
 
         @Step("Vekalet alan Ve Veren tablo vekalet alan seç")
-        public BilgilerTab vekeletAlanVerenTabloVekaletAlanSec(String vekaletAlan) {
+        public BilgilerTab vekeletAlanVerenTabloVekaletAlanveyaVerenSec(String isim) {
             tblVekaletVerenAlan
-                    .filterBy(Condition.text(vekaletAlan)).first()
-                    .$("[id='yeniGidenEvrakForm:kullaniciBirimSecenekleri:1:secinizButton']").click();
+                    .filterBy(Condition.text(isim)).first()
+                    .$("[id^='yeniGidenEvrakForm:kullaniciBirimSecenekleri'][id$='secinizButton']").click();
             return this;
         }
         @Step("Vekalet alan Ve Veren tablo kontrolü")

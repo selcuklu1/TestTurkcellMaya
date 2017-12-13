@@ -6,8 +6,6 @@ import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.MainPage;
-import pages.pageComponents.SolMenu;
-import pages.pageData.SolMenuData;
 import pages.solMenuPages.GelenEvraklarPage;
 import pages.solMenuPages.ImzaBekleyenlerPage;
 import pages.solMenuPages.Parafladiklarim;
@@ -190,6 +188,7 @@ public class VekaletIslemleriTest extends BaseTest {
 
         login(username3, password3);
 
+        String tur = "IMZALAMA";
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
@@ -203,12 +202,12 @@ public class VekaletIslemleriTest extends BaseTest {
                 .onayAkisiEkle()
                 .kullaniciTabloKontrol()
                 .kullanicilarImzaciSec("PARAFLAMA")
-                .kullanicilarDoldur2("Optiim TEST1")
+                .kullanicilarDoldur2(vekaletVeren)
                 .vekeletAlanVerenTabloKontrolu()
-                .vekeletAlanVerenTabloVekaletAlanSec(vekaletAlan)
+                .vekeletAlanVerenTabloVekaletAlanveyaVerenSec(vekaletAlan)
 //                .vekeletAlanVerenTabloKapat()
 //                .kullanicilarDoldur2("Optiim TEST2")
-                .kullniciIsmineGoreImzaParafSec("Optiim TEST2", "IMZALAMA")
+                .kullniciIsmineGoreImzaParafSec(vekaletAlan, tur)
                 .kullan()
                 .onaAkisiTextKontol()
                 .onayAkisiKullanilanKullanilanKontrolEt("Yasemin");
@@ -251,17 +250,18 @@ public class VekaletIslemleriTest extends BaseTest {
         imzaBekleyenlerPage
                 .birimSec(getSysDateForKis())
                 .openPage()
-                .evrakNoKontrolu("9213")
+                .evrakNoKontrolu(evrakNo)
                 .icerik()
                 .icerikKontrol("V.");
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = false, description = "vekaleti veren kullanıcının onay akışında seçilmesi (kendisi)")
+    @Test(enabled = true, description = "vekaleti veren kullanıcının onay akışında seçilmesi (kendisi)")
     public void TC0012() throws InterruptedException {
 
         login(username3, password3);
 
+        String tur = "IMZALAMA";
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
@@ -271,41 +271,59 @@ public class VekaletIslemleriTest extends BaseTest {
                 .evrakDiliSec("Türkçe")
                 .gizlilikDerecesiSec("Normal")
                 .ivedikSec("Normal")
-                .geregiSec("Birim")
+                .geregiSec("Optiim Birim")
                 .onayAkisiEkle()
                 .kullaniciTabloKontrol()
-                .kullanicilarImzaciSec("Paraflama")
-                .kullanicilarDoldur2("Optiim TEST")
+                .kullanicilarImzaciSec("PARAFLAMA")
+                .kullanicilarDoldur2(vekaletVeren)
                 .vekeletAlanVerenTabloKontrolu()
-                .vekeletAlanVerenTabloKapat()
-                .kullanicilarDoldur2("Optiim TEST1")
-                .kullniciIsmineGoreImzaParafSec("Optiim TEST1", "İmzalama")
+                .vekeletAlanVerenTabloVekaletAlanveyaVerenSec(vekaletVeren)
+                .kullniciIsmineGoreImzaParafSec(vekaletVeren, tur)
                 .kullan()
-                .onaAkisiTextKontol();
+                .onaAkisiTextKontol()
+                .onayAkisiKullanilanKullanilanKontrolEt("Yasemin");
 
         evrakOlusturPage
                 .editorTabAc()
-                .editorIcerikDoldur("Test Otomasyon")
-                .parafla();
+                .editorIcerikDoldur("Test Otomasyon "+getSysDateForKis())
+                .parafla()
+                .sImzasec()
+                .sImzaImzala()
+                .islemMesaji().basariliOlmali(basariMesaji);
 
-        logout();
-        login(username,username);
+        parafladiklarim
+                .openPage()
+                .filtreleAc()
+                .baslangicTarihiDoldur(getSysDateForKis())
+                .bitisTarihiDoldur(getSysDateForKis())
+                .raporSec()
+                .icerikIlkKayıt();
 
-        vekaletVerPage
-                .vekaletVarUyarıPopUp();
-        imzaBekleyenlerPage
-                .openPage();
-        //tabloda olmadıgı gorulecek
+        String evrakNo= parafladiklarim.evrakDetayiEvrakNoAl();
 
         logout();
 
         login("optiimtest2","123");
+
         vekaletVerPage
                 .vekaletVarUyarıPopUp();
 
-        //Birim değiştirelecek
-        //imzabekkleyenlerde evragın lıstelendıgı gorulecek
+        imzaBekleyenlerPage
+                .openPage()
+                .evrakOlmadigiGorme(evrakNo);
 
+        logout();
+
+        login("test1","123");
+
+        vekaletVerPage
+                .vekaletVarUyarıPopUp();
+
+        imzaBekleyenlerPage
+                .openPage()
+                .evrakNoKontrolu(evrakNo)
+                .icerik()
+                .icerikKontrol("V.");
 
     }
 
