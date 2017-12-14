@@ -63,7 +63,7 @@ public class BaseTest extends BaseLibrary {
 
 //        Selenide.clearBrowserLocalStorage();
 //        Selenide.clearBrowserCookies();
-        
+
     }
 
     public void login() {
