@@ -6,8 +6,13 @@ import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.MainPage;
+import pages.solMenuPages.HavaleEttiklerimPage;
 import pages.ustMenuPages.GelenEvrakKayitPage;
 import pages.ustMenuPages.KullaniciYonetimiPage;
+
+import static data.TestData.password2;
+import static data.TestData.username2;
+import static data.TestData.username3;
 
 /****************************************************
  * Tarih: 2017-12-22
@@ -20,21 +25,14 @@ public class GizlilikKleransiTest extends BaseTest {
     MainPage mainPage;
     KullaniciYonetimiPage kullaniciYonetimiPage;
     GelenEvrakKayitPage gelenEvrakKayitPage;
+    HavaleEttiklerimPage havaleEttiklerimPage;
 
-    String konuKodu = "010.01";
-    String evrakTuru = "R";
-    String evrakDili = "917";
-    String evrakTarihi = "16.11.2017";
-    String gizlilikDerecesi = "N";
-    String kisiKurum = "D";
-    String geldigiKurum = "Esk Kurum 071216 2";
-    String evrakGelisTipi = "P";
-    String ivedilik = "N";
 
     @BeforeMethod
     public void loginBeforeTests() {
         kullaniciYonetimiPage = new KullaniciYonetimiPage();
         gelenEvrakKayitPage = new GelenEvrakKayitPage();
+        havaleEttiklerimPage = new HavaleEttiklerimPage();
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -71,12 +69,22 @@ public class GizlilikKleransiTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TC1474 : Havale ettiklerim listesinden havalede gizlilik derecesi kontrolü")
     public void TC1474() throws InterruptedException {
-
-        //login(username1,password1);
-
-        String basariMesaji = "İşlem başarılıdır!";
+        String uyariMesaj1 = "Havale etmek istediğiniz kullanıcı kleransı yetersizdir!!";
+        String uyariMesaj2 = "Havale etmek istediğiniz kullanıcı grubundaki Mehmet Emin YÜCEANT, Mehmet Gökhan BAYSAN, Mehmet Koray BALCIOĞLU ın kleransı yetersizdir, kleransı yeterli olmayan kullanıcılara havale edilmeyecektir !!";
         String kisi = "Gökçe Şahin";
-        String aciklama = "test otomasyon";
+        String kullaniciListesi = "Optiim";
+        String konuKodu = "K/Frekans Yıllık Kullanım Ücreti";
+        String evrakTuru = "R";
+        String evrakDili = "917";
+        String evrakTarihi = getSysDateForKis();
+        String gizlilikDerecesi = "G";
+        String kisiKurum = "D";
+        String geldigiKurum = "BÜYÜK HARFLERLE KURUM";
+        String evrakGelisTipi = "P";
+        String ivedilik = "N";
+
+        login(username2, password2);
+
         gelenEvrakKayitPage
                 .openPage()
                 .konuKoduDoldur(konuKodu)
@@ -89,13 +97,38 @@ public class GizlilikKleransiTest extends BaseTest {
                 .evrakSayiSagDoldur()
                 .evrakGelisTipiSec(evrakGelisTipi)
                 .ivedilikSec(ivedilik)
-                .dagitimBilgileriKisiDoldur(kisi)
-                .dagitimBilgileriAciklamaDoldur(aciklama)
-                .kaydet();
+                .havaleIslemleriKisiDoldur(kisi)
+               .islemMesaji().beklenenMesaj(uyariMesaj1);
 
-        //hata mesajı gelmesi gerekiyor. hata mesajı alınmıyor mail bekleniyor.
-        String evrakNO = gelenEvrakKayitPage.popUps();
-        System.console().printf(evrakNO);
-        gelenEvrakKayitPage.islemMesaji().isBasarili();
+        gelenEvrakKayitPage
+                .havaleIslemleriKullaniciListesiDoldur(kullaniciListesi)
+                .islemMesaji().beklenenMesaj(uyariMesaj2);
     }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TC1475 : Havale ettiklerim listesinden havalede gizlilik derecesi kontrolü")
+    public void TC1475() throws InterruptedException {
+        String uyariMesaj1 = "Havale etmek istediğiniz kullanıcı kleransı yetersizdir!!";
+        String uyariMesaj2 = "Havale etmek istediğiniz kullanıcı grubundaki Mehmet Emin YÜCEANT, Mehmet Gökhan BAYSAN, Mehmet Koray BALCIOĞLU ın kleransı yetersizdir, kleransı yeterli olmayan kullanıcılara havale edilmeyecektir !!";
+        String kisi = "Gökçe Şahin";
+        String kullaniciListesi = "Optiim";
+        String konuKodu = "K/Frekans Yıllık Kullanım Ücreti";
+        String geldigiYer = "Zübeyde Tekin";
+        String evrakTarihi = "14.12.2017";
+        String no = "12013";
+        login(username2, password2);
+
+        havaleEttiklerimPage
+                .openPage()
+                .gizlilikRaporSec(konuKodu,geldigiYer,evrakTarihi,no)
+                .havaleYap()
+                .havaleYapKisiDoldur(kisi)
+                .islemMesaji().beklenenMesaj(uyariMesaj1);
+
+        havaleEttiklerimPage
+                .havaleYapKullaniciListesiDoldur(kullaniciListesi)
+                .islemMesaji().beklenenMesaj(uyariMesaj2);
+    }
+
+
 }
