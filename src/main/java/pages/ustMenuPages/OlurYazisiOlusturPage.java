@@ -38,6 +38,7 @@ public class OlurYazisiOlusturPage extends MainPage {
     }
 
     public class BilgilerTab extends MainPage {
+
         SelenideElement divContainer = $("#evrakBilgileriContainerDiv");
 
         // Onay Akışı Elementleri
@@ -49,6 +50,10 @@ public class OlurYazisiOlusturPage extends MainPage {
         BelgenetElement cmbOnayAkisi = comboLov(By.cssSelector("[id^='yeniOnayEvrakForm:evrakBilgileriList'][id$='akisLov:LovText']"));
         By cmbOnayAkisiBy = By.cssSelector("[id^='yeniOnayEvrakForm:evrakBilgileriList'][id$='akisLov:LovText']");
         SelenideElement cmbSelectOneMenu = $(By.id("yeniOnayEvrakForm:evrakBilgileriList:14:akisAdimLov:LovSecilenTable:0:selectOneMenu"));
+        SelenideElement btnOnayAkisGuncelle = $(By.cssSelector("[id^='yeniOnayEvrakForm:evrakBilgileriList:14:akisLov:j_idt'] [class$='update-icon']"));
+
+
+        //endregion
 
         private BilgilerTab open() {
             if (divContainer.is(not(visible)))
@@ -77,6 +82,19 @@ public class OlurYazisiOlusturPage extends MainPage {
                     .shouldBe(exist)
                     .$("select[id*='selectOneMenu']")
                     .shouldHave(value(kullaniciTipi));
+            return this;
+        }
+
+        @Step("Onay akışı kullanıcı adı ve koordine tipi kontrol et")
+        public BilgilerTab onayAkisiKullaniciKoordineKontrol(String kullaniciAdi, String kullaniciTipi) {
+
+            trOnayAkisiEkleKullanicilar
+                    .filterBy(text(kullaniciAdi))
+                    .get(0)
+                    .shouldBe(exist)
+                    .$(("[id^='yeniOnayEvrakForm:evrakBilgileriList'] [class='lovItemDetail']"))
+                    .text().contains(kullaniciTipi);
+
             return this;
         }
 
@@ -129,8 +147,14 @@ public class OlurYazisiOlusturPage extends MainPage {
             return this;
         }
 
-    }
+        @Step("Onay akışı güncelle")
+        public BilgilerTab onayAkisiGuncelle() {
+            btnOnayAkisGuncelle.click();
+            return this;
+        }
 
+
+    }
     public EditorTab editorTabAc() {
         return editorTab.open();
     }
@@ -148,6 +172,5 @@ public class OlurYazisiOlusturPage extends MainPage {
 
         }
     }
-
 
 }

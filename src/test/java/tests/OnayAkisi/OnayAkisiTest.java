@@ -6,7 +6,10 @@ import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.solMenuPages.GelenEvraklarPage;
-import pages.ustMenuPages.*;
+import pages.ustMenuPages.EvrakOlusturPage;
+import pages.ustMenuPages.KararYazisiOlusturPage;
+import pages.ustMenuPages.OlurYazisiOlusturPage;
+import pages.ustMenuPages.OnayAkisYonetimiPage;
 
 /****************************************************
  * Tarih: 2017-12-04
@@ -447,9 +450,9 @@ public class OnayAkisiTest extends BaseTest {
 
         String onayAkisi = "Sezaiii Çelikkk";
         String kullanici = "Zübeyde TEKİN";
+        String eklenenKullanici1 = "Optiim TEST3";
         String eklenenKullanici2 = "MEHMET EMİN YÜCEANT";
-        String eklenenKullanici1 = "Mehmet BOZDEMİR";
-        String ayniBirimliKullanici = "Optiim TEST";
+        String ayniBirimliKullanici = "OPTİİM TEST4";
         String basariMesaji = "İşlem başarılıdır!";
 
         //tests.Data kontrolu için yazıldı. Pasif ise aktif yapılır.
@@ -459,12 +462,11 @@ public class OnayAkisiTest extends BaseTest {
                 .filtreDurumSec("TUMU")
                 .ara()
                 .onayAkisiPasifIseAktifYap(onayAkisi)
-
                 .guncelle()
 
-                //Test için datalar silinir
-                .kullaniciVarsaSil(eklenenKullanici2)
+                //Test için datalar silinir, teste hazır hale getirilir.
                 .kullaniciVarsaSil(eklenenKullanici1)
+                .kullaniciVarsaSil(eklenenKullanici2)
                 .kullaniciVarsaSil(ayniBirimliKullanici)
 
                 .onayAkisiIslemlerKullaniciDoldur(eklenenKullanici1)
@@ -493,8 +495,6 @@ public class OnayAkisiTest extends BaseTest {
                 .ara()
                 .kayitGoruntulenmeKontrolu(onayAkisi);
 
-        //TODO: Bundan sonrası defect var.
-/*
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
@@ -502,7 +502,7 @@ public class OnayAkisiTest extends BaseTest {
                 .onayAkisiGuncelle()
                 .onayAkisiKullaniciKontrol(eklenenKullanici1, "KONTROL")
                 .onayAkisiKullaniciKontrol(eklenenKullanici2, "IMZALAMA")
-                .onayAkisiKullaniciKontrol(ayniBirimliKullanici, "KOORDINE");
+                .onayAkisiKullaniciKoordineKontrol(ayniBirimliKullanici, "Koordine");
 
         olurYazisiOlusturPage
                 .openPage()
@@ -511,16 +511,16 @@ public class OnayAkisiTest extends BaseTest {
                 .onayAkisiGuncelle()
                 .onayAkisiKullaniciKontrol(eklenenKullanici1, "KONTROL")
                 .onayAkisiKullaniciKontrol(eklenenKullanici2, "IMZALAMA")
-                .onayAkisiKullaniciKontrol(ayniBirimliKullanici, "KOORDINE");
+                .onayAkisiKullaniciKoordineKontrol(ayniBirimliKullanici, "Koordine");
 
         kararYazisiOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
                 .onayAkisiDoldur(onayAkisi)
                 .onayAkisiGuncelle()
-                .onayAkisiKullaniciKontrol(eklenenKullanici1, "KONTROL")
-                .onayAkisiKullaniciKontrol(eklenenKullanici2, "IMZALAMA")
-                .onayAkisiKullaniciKontrol(ayniBirimliKullanici, "KOORDINE");*/
+                .onayAkisiKullaniciKontrol(eklenenKullanici1)
+                .onayAkisiKullaniciKontrol(eklenenKullanici2)
+                .onayAkisiKullaniciKontrol(ayniBirimliKullanici);
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -542,7 +542,7 @@ public class OnayAkisiTest extends BaseTest {
                 .yeniOnayAkisiEkle()
                 .onayAkisiKullaniciKontrol(deaultKullanici, "PARAFLAMA")
                 .onayAkisiIslemleriAdDoldur(onayAkisi)
-                .onayAkisiIslemlerVekaletliKullaniciDoldur(vekaletAlan)
+                .onayAkisiIslemlerIstenilenDetaildeKullaniciDoldur(vekaletAlan)
                 .kullaniciyaKullaniciTipiSec(vekaletAlan, "IMZALAMA")
                 .onayAkisiKullaniciKontrol(vekaletAlan, "IMZALAMA")
                 .onayAkisiKullaniciKontrol(vekaletVeren, "IMZALAMA")

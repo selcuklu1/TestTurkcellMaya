@@ -10,9 +10,7 @@ import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
-import static com.codeborne.selenide.Condition.exist;
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.value;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
@@ -99,7 +97,7 @@ public class OnayAkisYonetimiPage extends MainPage {
 
     //Detaile göre doldurur.
     @Step("Onay akışı işlemleri kullanıcılar alanı doldur")
-    public OnayAkisYonetimiPage onayAkisiIslemlerVekaletliKullaniciDoldur(String kullanici) {
+    public OnayAkisYonetimiPage onayAkisiIslemlerIstenilenDetaildeKullaniciDoldur(String kullanici) {
         txtOnayAkisiIslemleriKullanicilar.type(kullanici).detailItems().filterBy(text("Vekalet")).first().click();
         //selectLov(kullanici);
         return this;
@@ -316,11 +314,10 @@ public class OnayAkisYonetimiPage extends MainPage {
     public OnayAkisYonetimiPage kullaniciVarsaSil(String kullanici) {
 
         if (trOnayAkisiEkleKullanicilar
-                .filterBy(text(kullanici))
-                .get(0).isDisplayed()) {
+                .filterBy(text(kullanici)).size() == 1) {
             trOnayAkisiEkleKullanicilar
                     .filterBy(text(kullanici))
-                    .get(0)
+                    .first()
                     .shouldBe(exist)
                     .$("[class$='delete-icon']").click();
         }
