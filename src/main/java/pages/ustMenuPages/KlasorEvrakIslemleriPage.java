@@ -1,22 +1,33 @@
 package pages.ustMenuPages;
 
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import pages.MainPage;
+import pages.pageComponents.belgenetElements.BelgenetElement;
+import pages.solMenuPages.ImzaladiklarimPage;
 
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
+import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
-public class KlasorEvrakIslemleriPage extends BaseLibrary {
+public class    KlasorEvrakIslemleriPage extends MainPage {
 
-    private SelenideElement txtBirim = $(By.id("klasorEvrakIslemleriListingForm:filterPanel:birimLov:LovText"));
-    private SelenideElement txtKlasor = $(By.id("klasorEvrakIslemleriListingForm:filterPanel:klasorLov:LovText"));
-    private SelenideElement txtAramaKriteri = $(By.id("klasorEvrakIslemleriListingForm:filterPanel:evrakKonusuInput"));
-    private SelenideElement txtEvrakTarihi = $(By.id("klasorEvrakIslemleriListingForm:filterPanel:evrakTarihiCalendar_input"));
-    private SelenideElement cmbEvrakTipi = $(By.id("klasorEvrakIslemleriListingForm:filterPanel:evrakTipiSelect"));
-    private SelenideElement chkAltKlasorlerDahil = $(By.id("klasorEvrakIslemleriListingForm:filterPanel:altBirimlerDahilCheckbox_input"));
-    private SelenideElement btnAra = $(By.id("klasorEvrakIslemleriListingForm:filterPanel:searchEvrakButton"));
-    private SelenideElement btnKlasoreKopyala = $(By.id("klasorEvrakIslemleriListingForm:copyAllSelectedEvrakButton"));
-    private SelenideElement btnKlasoreTasi = $(By.id("klasorEvrakIslemleriListingForm:moveAllSelectedEvrakButton"));
+     SelenideElement txtBirim = $(By.id("klasorEvrakIslemleriListingForm:filterPanel:birimLov:LovText"));
+     BelgenetElement txtKlasor = comboLov(By.id("klasorEvrakIslemleriListingForm:filterPanel:klasorLov:LovText"));
+     SelenideElement txtAramaKriteri = $(By.id("klasorEvrakIslemleriListingForm:filterPanel:evrakKonusuInput"));
+     SelenideElement txtEvrakTarihi = $(By.id("klasorEvrakIslemleriListingForm:filterPanel:evrakTarihiCalendar_input"));
+     SelenideElement cmbEvrakTipi = $(By.id("klasorEvrakIslemleriListingForm:filterPanel:evrakTipiSelect"));
+     SelenideElement chkAltKlasorlerDahil = $(By.id("klasorEvrakIslemleriListingForm:filterPanel:altBirimlerDahilCheckbox_input"));
+     SelenideElement btnAra = $(By.id("klasorEvrakIslemleriListingForm:filterPanel:searchEvrakButton"));
+     SelenideElement btnKlasoreKopyala = $(By.id("klasorEvrakIslemleriListingForm:copyAllSelectedEvrakButton"));
+     SelenideElement btnKlasoreTasi = $(By.id("klasorEvrakIslemleriListingForm:moveAllSelectedEvrakButton"));
+    ElementsCollection tableKararIzlemeEvraklar = $$("[id='mainInboxForm:inboxDataTable_data'] tr[role='row']");// span[class='ui-chkbox-icon']");
+
+
 
     public KlasorEvrakIslemleriPage birimDoldur(String birim) {
         //sendKeys(birimInput, birim, false);
@@ -24,9 +35,22 @@ public class KlasorEvrakIslemleriPage extends BaseLibrary {
         return this;
     }
 
+    @Step("Klasor evrak işlemleri sayfası aç")
+    public KlasorEvrakIslemleriPage openPage(){
+        ustMenu("Klasör Evrak İşlemleri");
+        return this;
+    }
+
+    @Step("Evrak geldiği görülür")
+    public KlasorEvrakIslemleriPage evrakGeldigiGorme(String toplantiNo, String konu){
+        tableKararIzlemeEvraklar.filterBy(Condition.text(toplantiNo))
+                .filterBy(Condition.text(konu)).filterBy(Condition.text(konu))
+                .filterBy(Condition.visible);
+        return this;
+    }
+
     public KlasorEvrakIslemleriPage klasorDoldur(String klasor) {
-        //sendKeys(klasorInput, klasor, false);
-        txtKlasor.sendKeys(klasor);
+        txtKlasor.selectLov(klasor);
         return this;
     }
 

@@ -17,6 +17,7 @@ import pages.ustMenuPages.*;
 
 import static data.TestData.password2;
 import static data.TestData.username2;
+import static data.TestData.username4;
 
 /****************************************************
  * Tarih: 2017-12-27
@@ -38,12 +39,12 @@ public class EvrakHavaleKurallariTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "2069: Evrak Havale Kuralları - Kural Silme")
-    public void TC2141() throws InterruptedException {
+    public void TC2069A() throws InterruptedException {
         String basariMesaji = "İşlem başarılıdır!";
         String bagTipi = "Y";
         String farkliKullanici = "Optiim";
 
-        login(username2, password2);
+        login(username4, password2);
 
         evrakHavaleKurallariYonetimiPage
                 .openPage()
@@ -53,41 +54,39 @@ public class EvrakHavaleKurallariTest extends BaseTest {
                 .islemMesaji().basariliOlmali(basariMesaji);
         gelenEvrakKayitPage
                 .openPage()
-                .otomatikHavaleSec(false);
+                .otomatikHavaleSec(true);
     }
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "2069: Evrak Havale Kuralları Sorgulama ve Filtreleme")
-    public void TC2069() throws InterruptedException {
+    public void TC2069B() throws InterruptedException {
         String basariMesaji = "İşlem başarılıdır!";
-        String durumSadecePasifler = "Sadece Pasifler";
-        String durumSadeceAktifler = "Sadece Aktifler";
-        String geldigiYerKullanici = "Kullanıcı";
+        String durumSadecePasifler = "PASIFLER";
+        String durumSadeceAktifler = "AKTIFLER";
+        String geldigiYerKullanici = "K";
         String kullaniciKural = "BarisTest";
         String geldigiYerBirim = "Birim";
         String geldigiYerGercekKisi = "Gerçek Kişi";
         String geldigiYerTuzelKisi = "Tüzel Kişi";
         String geldigiYerKurum = "Kurum";
         String kuralAdi = "";
+        String kullanici = "Zübeyde Tekin";
 
         login(username2, password2);
 
         evrakHavaleKurallariYonetimiPage
                 .openPage()
+                .durumSec(durumSadeceAktifler)
                 .ara()
                 .durumSec(durumSadecePasifler)
                 .ara()
-                .durumSec(durumSadeceAktifler)
-                .ara()
                 .geldigiYerTipiSec(geldigiYerKullanici)
                 .ara()
-                .kuralAdiDoldur(kullaniciKural)
+                .kullaniciDoldur(kullanici)
                 .ara()
-                // TODO gelecek sistem yavaş
-                //
                 .geldigiYerTipiSec(geldigiYerBirim)
-                .ara()
-                //
+                .ara();
+                /*//
                 // TODO gelecek sistem yavaş
                 //
                 .geldigiYerTipiSec(geldigiYerGercekKisi)
@@ -109,8 +108,11 @@ public class EvrakHavaleKurallariTest extends BaseTest {
                 .ara()
                 .altBirimDahilSec(true)
                 .kuralAdiDoldur("birim")
-                .islemMesaji().basariliOlmali(basariMesaji);
+                .islemMesaji().basariliOlmali(basariMesaji);*/
 
     }
+
+
+
 
 }

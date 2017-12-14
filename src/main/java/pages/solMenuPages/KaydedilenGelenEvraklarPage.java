@@ -27,7 +27,7 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
     SelenideElement tblRapor = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
     ElementsCollection  tblKaydedilenGelenEvraklar = $$(By.id("mainInboxForm:inboxDataTable_data"));
     SelenideElement tblIlkRapor = $(By.id("mainInboxForm:inboxDataTable:0:detayGosterButton"));
-    ElementsCollection tblKaydedilenGelenEvraklar2 = $$("tbody[id$='mainInboxForm:inboxDataTable_data'] tr[role=row] div[class=searchText]");
+    ElementsCollection tblKaydedilenGelenEvraklar2 = $$("tbody[id$='mainInboxForm:inboxDataTable_data'] tr[role=row] div[class='searchText']");
 
 
 //    Evrak Detayları Sayfası
@@ -87,9 +87,9 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
 
     @Step("Tabloda evrak no kontrolu")
     public KaydedilenGelenEvraklarPage tabloKontrolu(String evrakNo) {
-        int row = tblKaydedilenGelenEvraklar2.filterBy(Condition.text(evrakNo)).size();
-        System.out.println(row);
-        Assert.assertEquals(row, 1);
+        tblKaydedilenGelenEvraklar2.filterBy(Condition.text(evrakNo)).shouldHaveSize(1);
+//        System.out.println(row);
+//        Assert.assertEquals(row, 1);
         return this;
     }
 

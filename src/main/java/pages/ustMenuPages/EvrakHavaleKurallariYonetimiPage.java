@@ -10,6 +10,7 @@ import pages.pageComponents.UstMenu;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.sleep;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 /****************************************************
@@ -20,7 +21,7 @@ import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
  ****************************************************/
 public class EvrakHavaleKurallariYonetimiPage extends MainPage{
 
-    SelenideElement btnAra = $(By.id("havaleKuralYonetimiListingForm:filterPanel:searchEntitiesButton"));
+    SelenideElement btnAra = $("[id='havaleKuralYonetimiListingForm:filterPanel:searchEntitiesButton]'");
     SelenideElement btnSil = $(By.id("havaleKuralYonetimiListingForm:havaleKuralDataTable:0:deleteHavaleKuralButton"));
     SelenideElement btnIslemOnayiEvet = $(By.id("baseConfirmationDialog:confirmButton"));
     BelgenetElement txtBirim = comboLov(By.id("havaleKuralYonetimiListingForm:filterPanel:birimLov:LovText"));
@@ -28,7 +29,7 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage{
     SelenideElement cmbDurum = $(By.id("havaleKuralYonetimiListingForm:filterPanel:durumSelectBox"));
     SelenideElement cmbGeldigiYerTipi = $(By.id("havaleKuralYonetimiListingForm:filterPanel:geldigiYerTipiSelect"));
     SelenideElement chkAltBirimDahil = $(By.id("havaleKuralYonetimiListingForm:filterPanel:altBirimlerDahilCheckbox_input"));
-
+    BelgenetElement txtKullanici = comboLov(By.id("havaleKuralYonetimiListingForm:filterPanel:geldigiYerKullaniciLov:LovText"));
     @Step("Tablo değer kontrolu")
     public EvrakHavaleKurallariYonetimiPage tabloKontrol(String deger){
         $("[id='havaleKuralYonetimiListingForm:havaleKuralDataTable_data']").shouldHave(Condition.text(deger));
@@ -43,13 +44,13 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage{
 
     @Step("Geldiği yer tipi seçiniz")
     public EvrakHavaleKurallariYonetimiPage geldigiYerTipiSec(String value){
-        cmbGeldigiYerTipi.selectOption(value);
+        cmbGeldigiYerTipi.selectOptionByValue(value);
         return this;
     }
 
     @Step("Durum Seçiniz")
     public EvrakHavaleKurallariYonetimiPage durumSec(String value){
-        cmbDurum.selectOption(value);
+        cmbDurum.selectOptionByValue(value);
         return this;
     }
 
@@ -79,7 +80,17 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage{
 
     @Step("Ara")
     public EvrakHavaleKurallariYonetimiPage ara(){
-        btnAra.click();
+        clickJs(btnAra);
+        int i=0;
+        while (i < 100){
+            sleep(i);
+        }
+        return this;
+    }
+    
+    @Step("Kullanıcı doldur")
+    public EvrakHavaleKurallariYonetimiPage kullaniciDoldur(String kullanici){
+        txtKullanici.selectLov(kullanici);
         return this;
     }
     
