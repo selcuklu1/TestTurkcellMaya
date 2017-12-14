@@ -20,9 +20,6 @@ public class BaseTest extends BaseLibrary {
     @BeforeClass
     public void driverSetUp() {
 
-
-//        killProcess();
-
        // killProcess();
 
         Locale turkishLocal = new Locale("tr", "TR");
@@ -42,8 +39,8 @@ public class BaseTest extends BaseLibrary {
         Configuration.reportsFolder = "test-result/reports";
         Configuration.screenshots = false;
         Configuration.savePageSource = false;
-        Configuration.collectionsTimeout = 40000;
-        Configuration.timeout = 40000;
+        Configuration.collectionsTimeout = 10000;
+        Configuration.timeout = 10000;
         Configuration.holdBrowserOpen = true;
         Configuration.headless = false;
         Configuration.startMaximized = true;

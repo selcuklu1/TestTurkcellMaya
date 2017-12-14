@@ -6,7 +6,10 @@ import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.solMenuPages.GelenEvraklarPage;
-import pages.ustMenuPages.*;
+import pages.ustMenuPages.EvrakOlusturPage;
+import pages.ustMenuPages.KararYazisiOlusturPage;
+import pages.ustMenuPages.OlurYazisiOlusturPage;
+import pages.ustMenuPages.OnayAkisYonetimiPage;
 
 /****************************************************
  * Tarih: 2017-12-04
@@ -713,3 +716,5 @@ public class OnayAkisiTest extends BaseTest {
                 .islemMesaji().basariliOlmali(basariMesaji);
     }
 }
+
+
