@@ -13,9 +13,9 @@ import pages.ustMenuPages.KullaniciYonetimiPage;
  * Tarih: 2017-12-22
  * Proje: Türksat Functional Test Automation
  * Class: "Evrak kontroller" konulu senaryoları içerir
- * Yazan: Emre Sencan
+ * Yazan: Emre Sencan - Can Şeker
  ****************************************************/
-public class GizlilikKleransiPage extends BaseTest {
+public class GizlilikKleransiTest extends BaseTest {
 
     MainPage mainPage;
     KullaniciYonetimiPage kullaniciYonetimiPage;
@@ -35,7 +35,6 @@ public class GizlilikKleransiPage extends BaseTest {
     public void loginBeforeTests() {
         kullaniciYonetimiPage = new KullaniciYonetimiPage();
         gelenEvrakKayitPage = new GelenEvrakKayitPage();
-        login("yakyol", "123");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -45,6 +44,8 @@ public class GizlilikKleransiPage extends BaseTest {
         String basariMesaji = "İşlem başarılıdır!";
         String unvan = "BT İş Analist / Yazılımcı";
         String gizlilikDerecesi = "T";
+
+        login("yakyol", "123");
 
         kullaniciYonetimiPage
                 .openPage()
@@ -71,8 +72,9 @@ public class GizlilikKleransiPage extends BaseTest {
     @Test(enabled = true, description = "TC1474 : Havale ettiklerim listesinden havalede gizlilik derecesi kontrolü")
     public void TC1474() throws InterruptedException {
 
-        String basariMesaji = "İşlem başarılıdır!";
+        //login(username1,password1);
 
+        String basariMesaji = "İşlem başarılıdır!";
         String kisi = "Gökçe Şahin";
         String aciklama = "test otomasyon";
         gelenEvrakKayitPage

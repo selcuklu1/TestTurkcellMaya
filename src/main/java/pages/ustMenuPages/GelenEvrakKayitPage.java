@@ -86,6 +86,7 @@ public class GelenEvrakKayitPage extends MainPage {
     // Havale işlemleri sekmesinde bulunanlar
     SelenideElement chkOtomatikHavale = $(By.id("evrakBilgileriForm:j_idt11601_input"));
     SelenideElement txtDagitimBilgileriBirim = $(By.id("evrakBilgileriForm:dagitimBilgileriBirimLov:LovText"));
+    BelgenetElement txtDagitimBilgileriKisiComboLov = comboLov(By.id("evrakBilgileriForm:dagitimBilgileriKullaniciLov:LovText"));
     SelenideElement txtDagitimBilgileriKisi = $(By.id("evrakBilgileriForm:dagitimBilgileriKullaniciLov:LovText"));
     SelenideElement txtDagitimBilgileriKullaniciListesi = $(By.id("evrakBilgileriForm:dagitimBilgileriKisiListesiLov:LovText"));
     SelenideElement btnDagitimBilgileriOnaylayacakKisi = $(By.id("evrakBilgileriForm:onaylayacakKisiLov:treeButton"));
@@ -97,6 +98,8 @@ public class GelenEvrakKayitPage extends MainPage {
     BelgenetElement cmbHavaleIslemleriBirim = comboLov(By.id("evrakBilgileriForm:dagitimBilgileriBirimLov:LovText"));
     BelgenetElement cmbDagitimBilgileriKisi = comboLov(By.id("evrakBilgileriForm:dagitimBilgileriKullaniciLov:LovText"));
     BelgenetElement cmbDagitimBilgileriKullaniciListesi = comboLov(By.id("evrakBilgileriForm:dagitimBilgileriKisiListesiLov:LovText"));
+    ElementsCollection tblVekaletVerenAlan =$$("[id='evrakBilgileriForm:kullaniciBirimSecenekleriHavaleIcin_data'] tr[role='row']");
+
 
     //İlgi Bilgileri sekmesinde bulunanlar
     //Dosya Ekle alt sekmesinde bulunanlar
@@ -396,6 +399,10 @@ public class GelenEvrakKayitPage extends MainPage {
         txtDagitimBilgileriKisi.sendKeys(kisi);
         return this;
     }
+    public GelenEvrakKayitPage dagitimBilgileriKisiSec(String kisi) {
+        txtDagitimBilgileriKisiComboLov.selectLov(kisi);
+        return this;
+    }
 
     public GelenEvrakKayitPage dagitimBilgileriKullaniciListesiDoldur(String kullaniciListesi) {
 //        txtDagitimBilgileriKullaniciListesi.sendKeys(kullaniciListesi);
@@ -599,9 +606,11 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    public String popUps() {
+    public String popUps() throws InterruptedException {
 //        popUp.shouldHave(Condition.visible);  pop up kontrolu
         String text;
+
+        Thread.sleep(2000);
 
         if (ustYaziveHavaleYeriYokpopUp.isDisplayed()) {
             popUpEvet.click();
@@ -700,10 +709,11 @@ public class GelenEvrakKayitPage extends MainPage {
     }
 
     @Step("Mail Ust Yazi adi kontrol")
-    public GelenEvrakKayitPage ustYaziMailAdiKontrol(String ustYaziAdi) {
-        String text = lblEklenenMailUstYazi.text();
-        System.out.println(text);
-        Assert.assertEquals(text.contains(ustYaziAdi), true);
+    public GelenEvrakKayitPage ustYaziMailAdiKontrol(String ustYaziAdi) throws InterruptedException {
+//        String text = lblEklenenMailUstYazi.text();
+        lblEklenenMailUstYazi.shouldBe(Condition.text(ustYaziAdi));
+//        System.out.println(text);
+//        Assert.assertEquals(text.contains(ustYaziAdi), true);
         return this;
     }
 
@@ -898,6 +908,13 @@ public class GelenEvrakKayitPage extends MainPage {
     @Step("Ust yazi gözter")
     public GelenEvrakKayitPage ustYaziGoster() {
         lblUstyaziGoster.click();
+        return this;
+    }
+    @Step("Vekalet alan Ve Veren tablo vekalet alan seç")
+    public GelenEvrakKayitPage vekeletAlanVerenTabloVekaletAlanveyaVerenSec(String isim) {
+        tblVekaletVerenAlan
+                .filterBy(Condition.text(isim)).first()
+                .$("[id='evrakBilgileriForm:kullaniciBirimSecenekleriHavaleIcin_data'] td:nth-child(4) button").click();
         return this;
     }
 }

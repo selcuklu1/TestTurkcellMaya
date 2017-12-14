@@ -27,11 +27,14 @@ public class KlasorYonetimiPage extends MainPage {
     SelenideElement btnKullaniciYetkiEklemeKaydet = $(By.id("klasorYonetimiKullaniciYetkilendirmeForm:saveKlasorYetkiButton"));
     ElementsCollection tableKararIzlemeEvraklar = $$("[id='klasorYonetimiKullaniciYetkilendirmeForm:kullaniciDataTable_data'] > tr[role='row']");// span[class='ui-chkbox-icon']");
     SelenideElement btnKlasorEklemeKaydet = $(By.id("klasorYonetimiEditorForm:saveKlasorButton"));
+
     @Step("Klasör Yönetimi sayfası aç")
     public KlasorYonetimiPage openPage(){
         ustMenu("Klasör Yönetimi");
         return this;
     }
+
+
 
     @Step("Kaydet")
     public KlasorYonetimiPage klasorEklemeKaydet() {

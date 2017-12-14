@@ -23,11 +23,13 @@ public class KararYazisiOlusturmaTest extends BaseTest{
         KararIzlemePage kararIzlemePage;
         ImzaBekleyenlerPage imzaBekleyenlerPage;
         KlasorYonetimiPage klasorYonetimiPage;
-    TeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage;
-    GelenEvraklarPage gelenEvraklarPage;
-    KurulIslemleriPage kurulIslemleriPage;
-    GundemIzlemePage gundemIzlemePage;
-    ErisimYonetimiPage erisimYonetimiPage;
+        TeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage;
+        GelenEvraklarPage gelenEvraklarPage;
+        KurulIslemleriPage kurulIslemleriPage;
+        GundemIzlemePage gundemIzlemePage;
+        ErisimYonetimiPage erisimYonetimiPage;
+        ImzaladiklarimPage imzaladiklarimPage;
+        KlasorEvrakIslemleriPage klasorEvrakIslemleriPage;
 
         @BeforeMethod
         public void loginBeforeTests() {
@@ -40,6 +42,8 @@ public class KararYazisiOlusturmaTest extends BaseTest{
             kurulIslemleriPage = new KurulIslemleriPage();
             gundemIzlemePage = new GundemIzlemePage();
             erisimYonetimiPage = new ErisimYonetimiPage();
+            imzaladiklarimPage = new ImzaladiklarimPage();
+            klasorEvrakIslemleriPage = new KlasorEvrakIslemleriPage();
         }
 
         @Severity(SeverityLevel.CRITICAL)
@@ -83,7 +87,8 @@ public class KararYazisiOlusturmaTest extends BaseTest{
                     .bilgilerTabiAc()
                     .kararNoDoldur("")
                     .kaydetveOnaySun()
-                    .islemMesaji().beklenenMesaj(uyariMesajZorunlu);
+                    .islemMesaji().beklenenMesaj(uyariMesajZorunlu)
+                    .beklenenMesaj(uyariMesajZorunlu);
 
             kararYazisiOlusturPage
                     .bilgilerTabiAc()
@@ -202,7 +207,7 @@ public class KararYazisiOlusturmaTest extends BaseTest{
     @Test(enabled = true, description = "1497: Karar Yazısı oluşturulması")
     public void TC1497() throws InterruptedException {
         String basariMesaji = "İşlem başarılıdır!";
-        String konuKodu = "Usul ve Esaslar";
+        String konuKodu = "K/Frekans Yıllık Kullanım Ücreti";
         String kaldirilicakKlasorler = "Diğer";
         String toplantiNo = createRandomNumber(9);
         String toplantiTarih =getSysDateForKis();
@@ -215,7 +220,7 @@ public class KararYazisiOlusturmaTest extends BaseTest{
         String filePath = "C:\\TestAutomation\\BelgenetFTA\\documents\\Otomasyon.pdf";
         String not = createRandomText(12);
         String birim = "Altyapı ve Sistem Yönetim Uzmanı";
-        login(username4, password4);
+        login(username2, password2);
 
         kararYazisiOlusturPage
                 .openPage()
@@ -244,10 +249,49 @@ public class KararYazisiOlusturmaTest extends BaseTest{
         kararYazisiOlusturPage
                 .iliskiliEvraklarTabAc()
                 .sistemdeKayitliEvrakEkleTabAc()
-                .sistemdeKayitliEvrakEkleEvrakAramaDoldur("1")
+                .sistemdeKayitliEvrakEkleEvrakAramaDoldur("2")
                 .sistemdeKayitliEvrakEkleEvrakDokumanAra()
-                .sistemdeKayitliEvrakEkleArti();
-//TODO devam gelecek
+                .sistemdeKayitliEvrakEkleArti()
+                .tercumeEkleTabAc()
+                .tercumeEkleDosyaEkle(filePath)
+                .tercumeEkleIliskiMetniDoldur(not)
+                .tercumeEkleEkle();
+
+        kararYazisiOlusturPage
+                .editorTabAc()
+                .editorIcerikDoldur(not)
+                .kaydetveOnaySun()
+                .kaydetVeOnaySunAciklamaDoldur(not)
+                .gonder(true);
+
+        kararIzlemePage
+                .openPage()
+                .evrakGeldigiGorme(toplantiNo,konuKodu,toplantiTarih);
+
+        imzaBekleyenlerPage
+                .openPage()
+                .evrakSec(kararNo,konuKodu)
+                .imzala()
+                .sImzaSec()
+                .sImzaİmzala(true)
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        imzaladiklarimPage
+                .openPage()
+                .evrakGeldigiGorme(toplantiNo,konuKodu,toplantiTarih);
+
+        kararIzlemePage
+                .openPage()
+                .filtreler()
+                .evrakDurumuSec("Y")
+                .filtrele()
+                .evrakGeldigiGorme(toplantiNo,konuKodu,toplantiTarih);
+
+        klasorEvrakIslemleriPage
+                .openPage()
+                .klasorDoldur(kaldirilicakKlasorler)
+                .ara()
+                .evrakGeldigiGorme(toplantiNo,konuKodu);
     }
 
     @Severity(SeverityLevel.CRITICAL)

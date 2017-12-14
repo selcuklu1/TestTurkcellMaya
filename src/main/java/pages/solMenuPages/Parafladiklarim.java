@@ -14,8 +14,8 @@ public class Parafladiklarim extends MainPage {
     SelenideElement f = $(By.xpath("//div[@id='mainInboxForm:inboxDataTable:filtersAccordion']//a[text()='Filtreler']/parent::h3"));
     SelenideElement cmbFiltre = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt3011_input"));
     SelenideElement txtSayfadaAra = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt353"));
-    SelenideElement dateTxtBaslangicTarihi = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt378_input"));
-    SelenideElement dateTxtBitisTarihi = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt383_input"));
+    SelenideElement dateTxtBaslangicTarihi = $("[id='mainInboxForm:inboxDataTable:filtersAccordion:filtersGrid'] tr:nth-child(2) td:nth-child(4) tr input");
+    SelenideElement dateTxtBitisTarihi = $("[id='mainInboxForm:inboxDataTable:filtersAccordion:filtersGrid'] tr:nth-child(3) td:nth-child(2) tr input");
     SelenideElement cmbTopluSecim = $(By.id("mainInboxForm:inboxDataTable:j_idt657_button"));
     SelenideElement btnGidecegiYerTree = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:gidecegiYerFilterOpenDialogButton"));
     SelenideElement btnKurumDisindanGelenBelge = $(By.id(""));
@@ -27,6 +27,8 @@ public class Parafladiklarim extends MainPage {
     SelenideElement txtKisi =$(By.id("mainPreviewForm:evrakPaylasKisiLov:LovText"));
     SelenideElement txtAciklama = $(By.id("mainPreviewForm:evrakPaylasAciklama"));
     SelenideElement btnPaylas = $(By.id("mainPreviewForm:paylasButtonId"));
+    SelenideElement btnIcerik = $(By.id("mainInboxForm:inboxDataTable:0:detayGosterButton"));
+    SelenideElement txtEvrakDetayiEvrakNo = $("[id^='inboxItemInfoForm:evrakBilgileriList'][id$='evrakNoPanelGrid'] td:nth-child(3) div");
 
     @Step("Parafladıklarım sayfası aç")
     public Parafladiklarim openPage() {
@@ -92,5 +94,15 @@ public class Parafladiklarim extends MainPage {
     public Parafladiklarim paylas() {
         btnPaylas.click();
         return this;
+    }
+    @Step("İçerik ilk kayıt")
+    public Parafladiklarim icerikIlkKayıt() {
+        btnIcerik.click();
+        return this;
+    }
+    @Step("Evrak No al")
+    public String evrakDetayiEvrakNoAl() {
+        String evrakNo = txtEvrakDetayiEvrakNo.text();
+        return evrakNo;
     }
 }
