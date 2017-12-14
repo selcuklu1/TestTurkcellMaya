@@ -1004,7 +1004,8 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement btnParafla = $(By.id("yeniGidenEvrakForm:rightTab:uiRepeat:2:cmdbutton"));
         SelenideElement radibtnSimza = $("[id='imzalaForm:imzaPanelGrid'] div[id='imzalaForm:imzalaRadio']  div:nth-child(2)");
         SelenideElement btnEvrakImzala = $(By.xpath("//buton[starts-with(@id,'imzalaForm:jsfImzaForm:j_idt')]"));
-        SelenideElement btnSimzaImzala = $(By.id("imzalaForm:imzalaButton"));
+        SelenideElement btnSimzaImzala = $(By.id("imzalaForm:sayisalImzaConfirmDialogOpener"));
+        SelenideElement btnSayısalImzeEvet = $(By.id("imzalaForm:sayisalImzaConfirmForm:sayisalImzaEvetButton"));
 
         public TextEditor getEditor() {
             return editor;
@@ -1181,6 +1182,12 @@ public class EvrakOlusturPage extends MainPage {
             btnEvrakImzala.click();
             return this;
         }
+        @Step("Sayısal Imza Evet")
+        public EditorTab sayisalImzaEvetPopup() {
+            btnSayısalImzeEvet.click();
+            return this;
+        }
+
     }
 
     public EkleriTab ekleriTabAc() {

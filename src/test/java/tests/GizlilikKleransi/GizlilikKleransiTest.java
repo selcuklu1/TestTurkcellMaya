@@ -7,6 +7,8 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.MainPage;
 import pages.solMenuPages.HavaleEttiklerimPage;
+import pages.solMenuPages.ImzaladiklarimPage;
+import pages.ustMenuPages.EvrakOlusturPage;
 import pages.ustMenuPages.GelenEvrakKayitPage;
 import pages.ustMenuPages.KullaniciYonetimiPage;
 
@@ -26,6 +28,8 @@ public class GizlilikKleransiTest extends BaseTest {
     KullaniciYonetimiPage kullaniciYonetimiPage;
     GelenEvrakKayitPage gelenEvrakKayitPage;
     HavaleEttiklerimPage havaleEttiklerimPage;
+    EvrakOlusturPage evrakOlusturPage;
+    ImzaladiklarimPage imzaladiklarimPage;
 
 
     @BeforeMethod
@@ -33,6 +37,8 @@ public class GizlilikKleransiTest extends BaseTest {
         kullaniciYonetimiPage = new KullaniciYonetimiPage();
         gelenEvrakKayitPage = new GelenEvrakKayitPage();
         havaleEttiklerimPage = new HavaleEttiklerimPage();
+        evrakOlusturPage = new EvrakOlusturPage();
+        imzaladiklarimPage = new ImzaladiklarimPage();
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -130,5 +136,52 @@ public class GizlilikKleransiTest extends BaseTest {
                 .islemMesaji().beklenenMesaj(uyariMesaj2);
     }
 
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "Yüksek kleranslı evrak oluşturma")
+    public void TC1938() throws InterruptedException{
+
+        String basariMesaji = "İşlem başarılıdır!";
+        String tur = "IMZALAMA";
+        String icerik = "TC1938()" + getSysDate();
+        String konuKodu = "010.01";
+        String kaldiralacakKlasor = "Diğer";
+        String evrakTuru = "Resmi Yazışma";
+        String evrakDili = "Türkçe";
+        String gizlilikDerecesi = "Normal";
+        String ivedilik = "Normal";
+        String geregi = "Optiim Birim";
+        String aciklama = "Test Otomasyon " + getSysDate();
+
+login("gsahin","123");
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .konuKoduSec(konuKodu)
+                .kaldiralacakKlasorlerSec(kaldiralacakKlasor)
+                .evrakTuruSec(evrakTuru)
+                .evrakDiliSec(evrakDili)
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .aciklamaDoldur(aciklama)
+                .ivedikSec(ivedilik)
+                .geregiSec(geregi)
+                .onayAkisiEkle()
+                .kullaniciTabloKontrol()
+                .kullanicilarImzaciSec(tur)
+                .kullan();
+
+        evrakOlusturPage
+                .editorTabAc()
+                .editorIcerikDoldur(icerik)
+                .parafla()
+                .sImzasec()
+                .sImzaImzala()
+                .sayisalImzaEvetPopup()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        imzaladiklarimPage
+                .openPage()
+                .evrakIcerikKontrolu(icerik);
+    }
 
 }

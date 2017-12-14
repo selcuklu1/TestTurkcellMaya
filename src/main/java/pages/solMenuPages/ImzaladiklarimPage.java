@@ -5,6 +5,7 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.testng.Assert;
 import pages.MainPage;
 import pages.pageData.SolMenuData;
 
@@ -19,6 +20,7 @@ public class ImzaladiklarimPage extends MainPage {
     SelenideElement btnIlkEvrak = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
     SelenideElement tabEvrakOnizleme = $(By.id("mainPreviewForm:evrakOnizlemeTab"));
     ElementsCollection tableKararIzlemeEvraklar = $$("[id='mainInboxForm:inboxDataTable_data'] tr[role='row']");// span[class='ui-chkbox-icon']");
+    ElementsCollection tblImzalananEvraklar = $$("[id='mainInboxForm:inboxDataTable_data'] tr[role='row'] table");
 
     @Step("Imzaladiklarim Sayfasini aç")
     public ImzaladiklarimPage openPage() {
@@ -28,7 +30,7 @@ public class ImzaladiklarimPage extends MainPage {
     }
 
     @Step("Evrak geldiği görülür")
-    public ImzaladiklarimPage evrakGeldigiGorme(String toplantiNo, String konu, String toplantiTarih){
+    public ImzaladiklarimPage evrakGeldigiGorme(String toplantiNo, String konu, String toplantiTarih) {
         tableKararIzlemeEvraklar.filterBy(Condition.text(toplantiNo))
                 .filterBy(Condition.text(konu)).filterBy(Condition.text(konu))
                 .filterBy(Condition.text(toplantiTarih)).filterBy(Condition.visible);
@@ -48,5 +50,25 @@ public class ImzaladiklarimPage extends MainPage {
         tabEvrakGecmisi.click();
         return this;
 
+    }
+
+    @Step("")
+    public ImzaladiklarimPage evrakIcerikKontrolu(String icerik) {
+        int size = tblImzalananEvraklar.size();
+        boolean flag = false;
+
+        for (int i = 0; i < size; i++) {
+            $(By.id("mainInboxForm:inboxDataTable:" + i + ":detayGosterButton")).click();
+            String icerikTxt = $("[id='inboxItemInfoForm:evrakBilgileriList_content'] tr:nth-child(13) tr textarea").text();
+            if (icerik.equals(icerikTxt)) {
+                flag = true;
+                break;
+            }
+            $(By.xpath("//div[@id='windowItemInfoDialog']//span[@class='ui-icon ui-icon-closethick']")).click();
+            islemPenceresiKapatmaOnayiPopup("Kapat");
+
+        }
+        Assert.assertEquals(flag,true,"Evrak listelenmiştir");
+        return this;
     }
 }
