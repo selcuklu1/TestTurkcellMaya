@@ -210,7 +210,7 @@ public class OnayAkisiTest extends BaseTest {
                 .ara()
                 .guncelle()
                 .silOnayAkisiItem2()
-                .onayAkisiIslemlerKullanicilarDoldur(kullanici)
+                .onayAkisiIslemlerKullaniciDoldur(kullanici)
                 .imzacıSonSec("İmzalama")
                 .onayAkisiIslemleriKaydet()
                 .islemMesaji().basariliOlmali(basariMesaji);
@@ -382,5 +382,263 @@ public class OnayAkisiTest extends BaseTest {
                 .evrakSec()
                 .cevapYaz()
                 .onayAkisiTitleKontrol(kullanici);
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TC1901a: Son imza seviyesi kısıtlı ise hiyerarşik onay akışı kullanma (yazışma kuralları yönetimi)")
+    public void TC1901a() {
+
+        //Optiim TEST7, Optiim TEST6 ya
+        String onayAkisi = "Vekaletli Kullanici";
+        String vekaletAlan = "Optiim TEST7";
+        String kullanici2 = "Zübeyde TEKİN";
+        String vekaletVeren = "Optiim TEST6";
+        String kaldirilacakKlasorler = "ESK05";
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .onayAkisiDoldur(onayAkisi)
+                .onayAkisiGuncelle()
+                .onayAkisiKullaniciKontrol(vekaletAlan, "PARAFLAMA")
+                .onayAkisiKullaniciKontrol(kullanici2, "IMZALAMA")
+                .onayAkisiVekaletKontrol(vekaletVeren)
+                .kullniciIsmineGoreImzaParafSec(kullanici2, "İmzalama")
+                .onayAkisiKullan()
+                .kaldiralacakKlasorlerSec(kaldirilacakKlasorler);
+
+        evrakOlusturPage
+                .kaydetOnayaSun()
+                .kullaniciIslemVeSiraKontrolu(vekaletAlan, "Paraflama", kullanici2, "İmzalama");
+
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TC1901b: Hiyararşik onay akışı kullanma- Vekaletli")
+    public void TC1901b() {
+
+        //Optiim TEST7, Optiim TEST6 ya
+        String onayAkisi = "Vekaletli Kullanici";
+        String vekaletAlan = "Optiim TEST7";
+        String kullanici2 = "Zübeyde TEKİN";
+        String vekaletVeren = "Optiim TEST6";
+        String kaldirilacakKlasorler = "ESK05";
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .onayAkisiDoldur(onayAkisi)
+                .onayAkisiGuncelle()
+                .onayAkisiKullaniciKontrol(vekaletAlan, "PARAFLAMA")
+                .onayAkisiKullaniciKontrol(kullanici2, "IMZALAMA")
+                .onayAkisiVekaletKontrol(vekaletVeren)
+                .kullniciIsmineGoreImzaParafSec(kullanici2, "İmzalama")
+                .onayAkisiKullan()
+                .kaldiralacakKlasorlerSec(kaldirilacakKlasorler);
+
+        evrakOlusturPage
+                .kaydetOnayaSun()
+                .kullaniciIslemVeSiraKontrolu(vekaletAlan, "Paraflama", kullanici2, "İmzalama");
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TC1896: Onay akışı güncelleme")
+    public void TC1896() {
+
+        String onayAkisi = "Sezaiii Çelikkk";
+        String kullanici = "Zübeyde TEKİN";
+        String eklenenKullanici2 = "MEHMET EMİN YÜCEANT";
+        String eklenenKullanici1 = "Mehmet BOZDEMİR";
+        String ayniBirimliKullanici = "Optiim TEST";
+        String basariMesaji = "İşlem başarılıdır!";
+
+        //tests.Data kontrolu için yazıldı. Pasif ise aktif yapılır.
+        onayAkisYonetimiPage
+                .openPage()
+                .filtredeAdDoldur(onayAkisi)
+                .filtreDurumSec("TUMU")
+                .ara()
+                .onayAkisiPasifIseAktifYap(onayAkisi)
+
+                .guncelle()
+
+                //Test için datalar silinir
+                .kullaniciVarsaSil(eklenenKullanici2)
+                .kullaniciVarsaSil(eklenenKullanici1)
+                .kullaniciVarsaSil(ayniBirimliKullanici)
+
+                .onayAkisiIslemlerKullaniciDoldur(eklenenKullanici1)
+                .kullaniciYerleriDegistir(kullanici, eklenenKullanici1)
+                .onayAkisiIslemleriKullaniciSil(eklenenKullanici1)
+
+                .onayAkisiIslemlerKullaniciDoldur(eklenenKullanici1)
+                .kullaniciyaKullaniciTipiSec(eklenenKullanici1, "KONTROL")
+
+                .onayAkisiIslemlerKullaniciDoldur(eklenenKullanici2)
+                .kullaniciyaKullaniciTipiSec(eklenenKullanici2, "IMZALAMA")
+
+                .koordineliSec(true)
+                .onayAkisiIslemlerKullaniciDoldur(ayniBirimliKullanici)
+                .onayAkisiKullaniciKontrol(ayniBirimliKullanici, "KOORDINE")
+
+                .onayAkisiKullaniciEnAlttaGetirme(eklenenKullanici2)
+
+                .onayAkisiIslemleriKaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        onayAkisYonetimiPage
+                .filtreAc()
+                .filtredeAdDoldur(onayAkisi)
+                .filtreDurumSec("AKTIFLER")
+                .ara()
+                .kayitGoruntulenmeKontrolu(onayAkisi);
+
+        //TODO: Bundan sonrası defect var.
+/*
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .onayAkisiDoldur(onayAkisi)
+                .onayAkisiGuncelle()
+                .onayAkisiKullaniciKontrol(eklenenKullanici1, "KONTROL")
+                .onayAkisiKullaniciKontrol(eklenenKullanici2, "IMZALAMA")
+                .onayAkisiKullaniciKontrol(ayniBirimliKullanici, "KOORDINE");
+
+        olurYazisiOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .onayAkisDoldur(onayAkisi)
+                .onayAkisiGuncelle()
+                .onayAkisiKullaniciKontrol(eklenenKullanici1, "KONTROL")
+                .onayAkisiKullaniciKontrol(eklenenKullanici2, "IMZALAMA")
+                .onayAkisiKullaniciKontrol(ayniBirimliKullanici, "KOORDINE");
+
+        kararYazisiOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .onayAkisiDoldur(onayAkisi)
+                .onayAkisiGuncelle()
+                .onayAkisiKullaniciKontrol(eklenenKullanici1, "KONTROL")
+                .onayAkisiKullaniciKontrol(eklenenKullanici2, "IMZALAMA")
+                .onayAkisiKullaniciKontrol(ayniBirimliKullanici, "KOORDINE");*/
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TC1895a: Vekaleti olan kullanıcıyı onay akışına ekleme")
+    public void TC1895a() {
+
+        //Sistemde vekaleti olan bir kullanıcı olmalı
+        //Optiim TEST7, Optiim TEST6 ya
+        //TODO: Vekalet tarihi db den sql query ile çekilmelidir.
+        String onayAkisi = "Sezai Çelik" + getSysDate();
+        String deaultKullanici = "Optiim TEST";
+        String vekaletVeren = "Optiim TEST6";
+        String vekaletAlan = "Optiim TEST7";
+        String vekaletTarihi = "Vekalet: 13.12.2017/04.12.2018";
+        String basariMesaji = "İşlem başarılıdır!";
+
+        onayAkisYonetimiPage
+                .openPage()
+                .yeniOnayAkisiEkle()
+                .onayAkisiKullaniciKontrol(deaultKullanici, "PARAFLAMA")
+                .onayAkisiIslemleriAdDoldur(onayAkisi)
+                .onayAkisiIslemlerVekaletliKullaniciDoldur(vekaletAlan)
+                .kullaniciyaKullaniciTipiSec(vekaletAlan, "IMZALAMA")
+                .onayAkisiKullaniciKontrol(vekaletAlan, "IMZALAMA")
+                .onayAkisiKullaniciKontrol(vekaletVeren, "IMZALAMA")
+                .onayAkisiKullaniciKontrol(vekaletTarihi, "IMZALAMA")
+                .onayAkisiIslemleriKaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        onayAkisYonetimiPage
+                .filtreAc()
+                .filtredeAdDoldur(onayAkisi)
+                .filtreDurumSec("AKTIFLER")
+                .ara()
+                .kayitGoruntulenmeKontrolu(onayAkisi);
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .onayAkisiDoldur(onayAkisi)
+                .onayAkisiGuncelle()
+                .onayAkisiKullaniciKontrol(deaultKullanici, "PARAFLAMA")
+                .onayAkisiKullaniciKontrol(vekaletAlan, "IMZALAMA");
+
+        olurYazisiOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .onayAkisDoldur(onayAkisi)
+                .onayAkisiGuncelle()
+                .onayAkisiKullaniciKontrol(deaultKullanici, "PARAFLAMA")
+                .onayAkisiKullaniciKontrol(vekaletAlan, "IMZALAMA");
+
+        kararYazisiOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .onayAkisiDoldur(onayAkisi)
+                .onayAkisiGuncelle()
+                .onayAkisiKullaniciKontrol(deaultKullanici)
+                .onayAkisiKullaniciKontrol(vekaletAlan);
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TC1895b: Vekaleti olan kullanıcının vekilini onay akışına ekleme")
+    public void TC1895b() {
+
+        //Sistemde vekaleti olan bir kullanıcı olmalı
+        //Optiim TEST7, Optiim TEST6 ya
+        //TODO: Vekalet tarihi db den sql query ile çekilmelidir.
+        String onayAkisi = "Sezai Çelik" + getSysDate();
+        String deaultKullanici = "Optiim TEST";
+        String vekaletVeren = "Optiim TEST6";
+        String vekaletAlan = "Optiim TEST7";
+        String vekaletTarihi = "Vekalet: 13.12.2017/04.12.2018";
+        String basariMesaji = "İşlem başarılıdır!";
+
+        onayAkisYonetimiPage
+                .openPage()
+                .yeniOnayAkisiEkle()
+                .onayAkisiKullaniciKontrol(deaultKullanici, "PARAFLAMA")
+                .onayAkisiIslemleriAdDoldur(onayAkisi)
+                .onayAkisiIslemlerKullaniciDoldur(vekaletVeren)
+                .kullaniciyaKullaniciTipiSec(vekaletAlan, "IMZALAMA")
+                .onayAkisiKullaniciKontrol(vekaletAlan, "IMZALAMA")
+                .onayAkisiKullaniciKontrol(vekaletVeren, "IMZALAMA")
+                .onayAkisiKullaniciKontrol(vekaletTarihi, "IMZALAMA")
+                //.vekaletSec(true) //seçili geliyor
+                .onayAkisiIslemleriKaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        onayAkisYonetimiPage
+                .filtreAc()
+                .filtredeAdDoldur(onayAkisi)
+                .filtreDurumSec("AKTIFLER")
+                .ara()
+                .kayitGoruntulenmeKontrolu(onayAkisi);
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .onayAkisiDoldur(onayAkisi)
+                .onayAkisiGuncelle()
+                .onayAkisiKullaniciKontrol(deaultKullanici, "PARAFLAMA")
+                .onayAkisiKullaniciKontrol(vekaletAlan, "IMZALAMA");
+
+        olurYazisiOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .onayAkisDoldur(onayAkisi)
+                .onayAkisiGuncelle()
+                .onayAkisiKullaniciKontrol(deaultKullanici, "PARAFLAMA")
+                .onayAkisiKullaniciKontrol(vekaletAlan, "IMZALAMA");
+
+        kararYazisiOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .onayAkisiDoldur(onayAkisi)
+                .onayAkisiGuncelle()
+                .onayAkisiKullaniciKontrol(deaultKullanici)
+                .onayAkisiKullaniciKontrol(vekaletAlan);
     }
 }

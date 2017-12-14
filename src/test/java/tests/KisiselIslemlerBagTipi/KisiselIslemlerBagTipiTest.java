@@ -134,8 +134,8 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
 
         onayAkisYonetimiPage
                 .openPage()
-                .onayAkisiYeni()
-                .onayAkisiIslemlerKullanicilarDoldur(ekranAdi)
+                .yeniOnayAkisiEkle()
+                .onayAkisiIslemlerKullaniciDoldur(ekranAdi)
                 .imzacıSonSec(onayAkisiKullanicilarTuru)
                 .onayAkisiIslemleriAdDoldur(randomAd);
 
