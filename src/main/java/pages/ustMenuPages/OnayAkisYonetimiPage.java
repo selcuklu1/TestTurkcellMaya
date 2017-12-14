@@ -10,9 +10,7 @@ import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
-import static com.codeborne.selenide.Condition.exist;
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.value;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
@@ -21,8 +19,7 @@ public class OnayAkisYonetimiPage extends MainPage {
 //    private UstMenu ustMenu;
 
     //Filtre
-    BelgenetElement
-            txtFiltreBirim = comboLov(By.id("onayAkisiYonetimiListingForm:filterPanel:birimLov:LovText"));
+    BelgenetElement txtFiltreBirim = comboLov(By.id("onayAkisiYonetimiListingForm:filterPanel:birimLov:LovText"));
     SelenideElement cmbFiltreDurum = $(By.id("onayAkisiYonetimiListingForm:filterPanel:durumSelectBoxOnayAkisiYonetimiListing"));
     SelenideElement txtFiltreAd = $(By.id("onayAkisiYonetimiListingForm:filterPanel:adFilterInputOnayAkisiYonetimiListing"));
     SelenideElement filtreAcmaKapatma = $(By.id("onayAkisiYonetimiListingForm:filterPanel"));
@@ -58,6 +55,11 @@ public class OnayAkisYonetimiPage extends MainPage {
     ElementsCollection trOnayAkisiEkleKullanicilar = $$("tbody[id*='onayAkisiYonetimiEditorForm:onayAkisiYonetimiKullaniciBirimDataTable_data'] tr[role='row']");
     SelenideElement chkKoordineli = $(By.id("onayAkisiYonetimiEditorForm:onayAkisiYonetimiKoordineliBooleanCheckbox"));
     SelenideElement chkVekalet = $(By.id("    onayAkisiYonetimiEditorForm:onayAkisiYonetimiKullaniciBirimDataTable:1:onayAkisiYonetimiVekilBooleanCheckbox"));
+    By txtKullanicilar = By.id("onayAkisiYonetimiEditorForm:onayAkisiYonetimiKullaniciBirimLov:LovText");
+
+    //Değişecek burası
+    SelenideElement chkBirim = $(By.id("onayAkisiYonetimiEditorForm:j_idt7563"));
+    SelenideElement txtKullanicilarSelenide = $(By.id("onayAkisiYonetimiEditorForm:onayAkisiYonetimiKullaniciBirimLov:LovText"));
 
 
     @Step("Onay akışı sayfası aç")
@@ -105,6 +107,13 @@ public class OnayAkisYonetimiPage extends MainPage {
         return this;
     }
 
+    @Step("Onay akışı işlemleri kullanıcılar alanında yazılan kullanıcıyı sil")
+    public OnayAkisYonetimiPage onayAkisiIslemlerKullaniciAlaniniSil() {
+        txtKullanicilarSelenide.click();
+        txtKullanicilarSelenide.clear();
+        return this;
+    }
+
 
     @Step("İmzacı seç")
     public OnayAkisYonetimiPage imzacıSonSec(String value) {
@@ -135,9 +144,15 @@ public class OnayAkisYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Onay Akışı işlemleri ad doldur")
+    @Step("Onay Akışı işlemlerinde ad doldur")
     public OnayAkisYonetimiPage onayAkisiIslemleriAdDoldur(String ad) {
         txtOnayAkisiIslemleriAd.setValue(ad);
+        return this;
+    }
+
+    @Step("Onay Akışı işlemlerinde ad sil")
+    public OnayAkisYonetimiPage onayAkisiIslemleriAdSil() {
+        txtOnayAkisiIslemleriAd.clear();
         return this;
     }
 
@@ -380,4 +395,19 @@ public class OnayAkisYonetimiPage extends MainPage {
         return this;
     }
 
+    @Step("Onay Akışı İşlemlerinde birim dışı kullanıcı görüntülenmeme kontrolu")
+    public OnayAkisYonetimiPage kullanicilarAlanindaGoruntulenmemeKontrolu(String kullanici) {
+
+        comboLov(txtKullanicilar).type(kullanici).titleItems().filterBy(exactText(kullanici)).shouldHaveSize(0);
+        System.out.println("Kullanıcılar alanında " + kullanici + ": Birim dışı kullanıcının görüntülenmediği görülür.");
+
+        return this;
+    }
+
+    @Step("Birim seç")
+    public OnayAkisYonetimiPage birimSec() {
+        chkBirim.shouldBe(visible);
+        chkBirim.click();
+        return this;
+    }
 }

@@ -638,4 +638,78 @@ public class OnayAkisiTest extends BaseTest {
                 .onayAkisiKullaniciKontrol(deaultKullanici)
                 .onayAkisiKullaniciKontrol(vekaletAlan);
     }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TC1892: Onay akışı güncellemede alan kontrolleri")
+    public void TC1892() throws InterruptedException {
+
+        String onayAkisi = "SezaiÇelik" + getSysDate();
+        String onayAkisi2 = "SezaiÇelik" + getSysDate();
+        String defaultGelenKullanici = "Optiim TEST";
+        String birimDisiKullanici = "MEHMET BAYER";
+        String olanBirOnayAkisi = "Sezai Çelik2";
+        String baskaKullanicininKaydettigiOnayAkisi = "BarisTest 1";
+        String dikkatMesaji = "Kullanıcı boş değer olamaz.";
+        String dikkatMesaji2 = "Onay akışındaki kullanıcıların yapacağı işlemi seçiniz.";
+        String dikkatMesaji3 = "Eklemek istediğiniz onay akışında imzacı bulunmuyor. Lütfen onay akışında en az bir imzacı seçiniz.";
+        String dikkatMesaji4 = "Zorunlu alanları doldurunuz";
+        String dikkatMesaji5 = "Aynı isimde onay akışı bulunmaktadır. Aynı isimli birden fazla onay akışı kaydedemezsiniz.";
+        String basariMesaji = "İşlem başarılıdır!";
+
+        //Tüm dataları bozmamak için, kendi onay akışı yaratıp işlemleri onun üzerinden yapıyor.
+        onayAkisYonetimiPage
+                .openPage()
+                .yeniOnayAkisiEkle()
+                .onayAkisiIslemleriAdDoldur(onayAkisi)
+                .kullaniciyaKullaniciTipiSec(defaultGelenKullanici, "IMZALAMA")
+                .onayAkisiIslemleriKaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        onayAkisYonetimiPage
+                .filtreAc()
+                .filtredeAdDoldur(onayAkisi)
+                .ara()
+                .guncelle()
+
+                .onayAkisiIslemleriKullaniciSil(defaultGelenKullanici)
+                .onayAkisiIslemleriKaydet()
+                .islemMesaji().dikkatOlmali(dikkatMesaji);
+
+        onayAkisYonetimiPage
+                .kullanicilarAlanindaGoruntulenmemeKontrolu(birimDisiKullanici)
+                .onayAkisiIslemlerKullaniciAlaniniSil()
+                .birimSec()
+                .onayAkisiIslemlerKullaniciDoldur(birimDisiKullanici)
+                .onayAkisiIslemleriKaydet()
+                .islemMesaji().dikkatOlmali(dikkatMesaji2);
+
+        onayAkisYonetimiPage
+                .onayAkisiIslemlerKullaniciDoldur(defaultGelenKullanici)
+                .kullaniciyaKullaniciTipiSec(defaultGelenKullanici, "PARAFLAMA")
+                .onayAkisiIslemleriKullaniciSil(birimDisiKullanici)
+                .onayAkisiIslemleriKaydet()
+                .islemMesaji().dikkatOlmali(dikkatMesaji3);
+
+        onayAkisYonetimiPage
+                .kullaniciyaKullaniciTipiSec(defaultGelenKullanici, "KONTROL")
+                .onayAkisiIslemleriKaydet()
+                .islemMesaji().dikkatOlmali(dikkatMesaji3);
+
+        onayAkisYonetimiPage
+                .kullaniciyaKullaniciTipiSec(defaultGelenKullanici, "IMZALAMA")
+                .onayAkisiIslemleriAdSil()
+                .onayAkisiIslemleriKaydet()
+                .islemMesaji().uyariOlmali(dikkatMesaji4);
+
+        onayAkisYonetimiPage
+                .onayAkisiIslemleriAdDoldur(olanBirOnayAkisi)
+                .onayAkisiIslemleriKaydet()
+                .islemMesaji().dikkatOlmali(dikkatMesaji5);
+
+        //TODO: düzeltilecek
+        onayAkisYonetimiPage
+                .onayAkisiIslemleriAdDoldur(baskaKullanicininKaydettigiOnayAkisi)
+                .onayAkisiIslemleriKaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+    }
 }
