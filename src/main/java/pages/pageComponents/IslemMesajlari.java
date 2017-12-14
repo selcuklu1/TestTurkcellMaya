@@ -7,9 +7,9 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 
-import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.Condition.exactText;
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
 import static pages.pageComponents.IslemMesajlari.MessageTitle.*;
 
 public class IslemMesajlari extends BaseLibrary {
@@ -122,11 +122,17 @@ public class IslemMesajlari extends BaseLibrary {
     }
 
     public String getMessageTitle() {
-        return $(".lobibox-notify-title").text();
+        setDoNotWaitLoading(true);
+        String text = $(".lobibox-notify-title").text();
+        setDoNotWaitLoading(false);
+        return text;
     }
 
     public String getMessageBody() {
-        return $(".lobibox-notify-msg").text();
+        setDoNotWaitLoading(true);
+        String text = $(".lobibox-notify-msg").text();
+        setDoNotWaitLoading(false);
+        return text;
     }
 
     public void waitDisappear() {

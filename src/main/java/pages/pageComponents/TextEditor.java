@@ -1,10 +1,12 @@
 package pages.pageComponents;
 
-import com.codeborne.selenide.*;
+import com.codeborne.selenide.ElementsContainer;
+import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 
-import static com.codeborne.selenide.CollectionCondition.*;
+import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.$inFrame;
@@ -72,7 +74,9 @@ public class TextEditor extends ElementsContainer {
                         .shouldHave(sizeGreaterThan(0)).filterBy(visible).first();
 //        System.out.println($$x("//a/span[contains(@class,'cke_button_label') and normalize-space(text())='" + name + "']/..").size());
 
+        button.shouldBe(visible);
         if (button.is(toolboxButtonOn) != value) {
+//            System.out.println("Clicked");
             button.click();
         }
 
