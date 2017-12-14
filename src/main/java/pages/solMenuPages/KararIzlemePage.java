@@ -11,6 +11,7 @@ import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
 import pages.ustMenuPages.KararYazisiOlusturPage;
+import pages.ustMenuPages.KlasorYonetimiPage;
 import pages.ustMenuPages.YazismaKurallariYonetimiPage;
 
 import static com.codeborne.selenide.Condition.cssClass;
@@ -27,6 +28,9 @@ public class KararIzlemePage extends MainPage {
     SelenideElement getBtnTopluOnayaSunHayir = $(By.id("kararIzlemeTopluOnayaGonderConfirmForm:kararIzlemeTopluOnayHayirButton"));
     ElementsCollection tblIlkEvrak = $$(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
     ElementsCollection divEvrakNotlari = $$(By.id("evrakOnizlemeNotlarDialogId"));
+    SelenideElement cmbEvrakDurumu = $("select[id^='mainInboxForm:inboxDataTable:filtersAccordion:j_idt']");
+    SelenideElement btnFiltrele = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:kararIzlemeFiltreButton"));
+    SelenideElement filtrelerAcordion = $("[id^='mainInboxForm:inboxDataTable:filtersAccordion'] [class='ui-accordion-header ui-helper-reset ui-state-default ui-corner-all']");
 
     @Step("Karar izleme sayfası aç")
     public KararIzlemePage openPage(){
@@ -34,6 +38,22 @@ public class KararIzlemePage extends MainPage {
         return this;
     }
 
+    public KararIzlemePage filtreler(){
+        filtrelerAcordion.click();
+        return this;
+    }
+
+    @Step("Filtrele")
+    public KararIzlemePage filtrele(){
+        btnFiltrele.click();
+        return this;
+    }
+
+    @Step("Evrak durumu seç")
+    public KararIzlemePage evrakDurumuSec(String value){
+        cmbEvrakDurumu.selectOptionByValue(value);
+        return this;
+    }
 
     @Step("İlk evrak seç")
     public KararIzlemePage ilkEvrakSec(String toplantiNo, String konu){
@@ -50,11 +70,20 @@ public class KararIzlemePage extends MainPage {
         return this;
     }
 
+    @Step("Evrak seç")
     public KararIzlemePage evrakSec(String toplantiNo, String konu, String toplantiTarih){
                tableKararIzlemeEvraklar.filterBy(Condition.text(toplantiNo))
                        .filterBy(Condition.text(konu)).filterBy(Condition.text(konu))
                        .filterBy(Condition.text(toplantiTarih)).first()
                        .$("[class='ui-chkbox-box ui-widget ui-corner-all ui-state-default']").click();
+        return this;
+    }
+    
+    @Step("Evrak geldiği görme")
+    public KararIzlemePage evrakGeldigiGorme(String toplantiNo, String konu, String toplantiTarih){
+        tableKararIzlemeEvraklar.filterBy(Condition.text(toplantiNo))
+                .filterBy(Condition.text(konu)).filterBy(Condition.text(konu))
+                .filterBy(Condition.text(toplantiTarih)).filterBy(Condition.visible);
         return this;
     }
     

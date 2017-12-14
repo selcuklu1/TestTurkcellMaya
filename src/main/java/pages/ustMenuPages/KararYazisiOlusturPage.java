@@ -1,5 +1,6 @@
 package pages.ustMenuPages;
 
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
@@ -10,6 +11,7 @@ import pages.pageComponents.belgenetElements.BelgenetElement;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 public class KararYazisiOlusturPage extends MainPage {
@@ -38,9 +40,11 @@ public class KararYazisiOlusturPage extends MainPage {
     SelenideElement btnKaydet = $(By.id("yeniKararEvrakForm:kararEvrakRightTab:uiRepeat:1:cmdbutton"));
     SelenideElement btnKaydetOnayaSun = $("button[id^='yeniKararEvrakForm:kararEvrakRightTab:uiRepeat'] span[class$='kaydetHavaleEt']");
     SelenideElement btnPaylas = $("button[id^='yeniGidenEvrakForm:rightTab:uiRepeat'] span[class$='evrakPaylas']");
-
+    SelenideElement txtAciklama = $(By.id("yeniKararEvrakForm:onayIslemiAciklama"));
     SelenideElement divBilgileri = $(By.id("evrakBilgileriContainerDiv"));
-
+    SelenideElement btnGonder = $(By.id("yeniKararEvrakForm:gonderButton"));
+    SelenideElement btnEvet = $(By.id("kaydetEvetButton"));
+    SelenideElement btnHayir = $(By.id("kaydetHayirButton"));
     //endregion
 
 
@@ -86,6 +90,9 @@ public class KararYazisiOlusturPage extends MainPage {
         SelenideElement btnEkranKapat = $(By.cssSelector("[id='window3Dialog'] span[class='ui-icon ui-icon-closethick']"));
         SelenideElement btnKaydetveOnaySun = $(By.id("yeniKararEvrakForm:kararEvrakRightTab:uiRepeat:2:cmdbutton"));
         BelgenetElement cmbOnayAkisi = comboLov(By.cssSelector("[id^='yeniKararEvrakForm:evrakBilgileriList'][id$='akisLov:LovText']"));
+        SelenideElement btnOnayAkisGuncelle = $(By.cssSelector("[id^='yeniKararEvrakForm:evrakBilgileriList:6:akisLov:j_idt'] [class$='update-icon']"));
+        ElementsCollection trOnayAkisiEkleKullanicilar = $$("tbody[id*='akisAdimLov:LovSecilenTable_data'] tr[role='row']");
+
         //endregion
 
         private BilgilerTab open() {
@@ -280,6 +287,21 @@ public class KararYazisiOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Onay akışı güncelle")
+        public BilgilerTab onayAkisiGuncelle() {
+            btnOnayAkisGuncelle.click();
+            return this;
+        }
+
+        @Step("Onay akışında güncel gelen kullanıcıyı kontrol et")
+        public BilgilerTab onayAkisiKullaniciKontrol(String kullaniciAdi) {
+            trOnayAkisiEkleKullanicilar
+                    .filterBy(text(kullaniciAdi))
+                    .get(0)
+                    .shouldBe(exist);
+            return this;
+        }
+
     }
 
 
@@ -289,16 +311,39 @@ public class KararYazisiOlusturPage extends MainPage {
 
     public class EditorTab extends MainPage {
         //SelenideElement divEditor = $("editorAntetBaslik");
-        SelenideElement divEditor1 = $(By.id("cke_82"));
+        SelenideElement divEditor1 = $(By.id("cke_1_contents"));
         SelenideElement divEditorInput = $("[id='cke_1_contents']");
         SelenideElement divHitap = $("div[id='yeniGidenEvrakForm:hitapInplace'] > span");
-        SelenideElement btnEvet = $(By.id("kaydetConfirmForm:kaydetEvetButton"));
-        SelenideElement btnHayir = $(By.id("kaydetConfirmForm:kaydetHayirButton"));
+        SelenideElement btnKaydetEvet = $(By.id("kaydetEvetButton"));
+        SelenideElement btnKaydetHayir = $(By.id("kaydetHayirButton"));
 
         private EditorTab open() {
             tabEditor.click();
             return this;
 
+        }
+
+        @Step("Kaydet ve onay sun")
+        public EditorTab kaydetveOnaySun() {
+            btnKaydetOnayaSun.click();
+            return this;
+        }
+        
+        @Step("Açıklama doldur")
+        public EditorTab kaydetVeOnaySunAciklamaDoldur(String aciklama){
+            txtAciklama.setValue(aciklama);
+            return this;
+        }
+
+        @Step("Gönder")
+        public EditorTab gonder(boolean secim){
+            btnGonder.click();
+            if (secim == true) {
+                btnKaydetEvet.click();
+            } else {
+                btnKaydetHayir.click();
+            }
+            return this;
         }
 
         @Step("Kaydet")
@@ -316,8 +361,8 @@ public class KararYazisiOlusturPage extends MainPage {
         @Step("Editör İçerik Doldur")
         public EditorTab editorIcerikDoldur(String icerik) {
             divEditor1.click();
-            divEditor1.setValue(icerik);
-            divEditorInput.sendKeys(icerik);
+            divEditor1.sendKeys(icerik);
+           // divEditorInput.sendKeys(icerik);
             return this;
 
 
@@ -411,7 +456,6 @@ public class KararYazisiOlusturPage extends MainPage {
         }
 
 
-
     }
 
     public IliskiliEvraklarTab iliskiliEvraklarTabAc() {
@@ -424,7 +468,13 @@ public class KararYazisiOlusturPage extends MainPage {
         SelenideElement sistemdeKayitliEvrakEkleTab = $("a[href='#yeniKararEvrakForm:ilisikIslemleriTabView:sistemdeKayitliEvragiEkleTab']");
         SelenideElement txtSistemdeKayitliEvrakEkleEvrakArama = $(By.id("yeniKararEvrakForm:ilisikIslemleriTabView:evrakAramaText"));
         SelenideElement btnSistemdeKayitliEvrakEkleDokumanAra = $(By.id("yeniKararEvrakForm:ilisikIslemleriTabView:dokumanAraButton"));
-        SelenideElement btnSistemdeKayitliEvrakEkleArti = $(By.id("[id^='yeniKararEvrakForm:ilisikIslemleriTabView:sistemdeKayitliEvrakListesiDataTable:0:']"));
+        ElementsCollection btnSistemdeKayitliEvrakEkleArti = $$("[id^='yeniKararEvrakForm:ilisikIslemleriTabView:sistemdeKayitliEvrakListesiDataTable:0:']");
+
+        //Tercüme ekle tabı
+        SelenideElement btnTercumeEkleTab = $("a[href='#yeniKararEvrakForm:ilisikIslemleriTabView:tercumeEvragiEkleTab']");
+        SelenideElement btnTercumeEkleDosyaEkle = $(By.id("yeniKararEvrakForm:ilisikIslemleriTabView:fileUploadButtonB_input"));
+        SelenideElement txtTercumeEkleIliskiMetni = $(By.id("yeniKararEvrakForm:ilisikIslemleriTabView:tercumeAciklama"));
+        SelenideElement btnTercumeEkleEkle = $(By.id("yeniKararEvrakForm:ilisikIslemleriTabView:tercumeEkleButton"));
 
         private IliskiliEvraklarTab open() {
             tabIliskiliEvraklar.click();
@@ -437,10 +487,34 @@ public class KararYazisiOlusturPage extends MainPage {
             sistemdeKayitliEvrakEkleTab.click();
             return this;
         }
+        
+        @Step("Tercüme ekle tab aç")
+        public IliskiliEvraklarTab tercumeEkleTabAc(){
+            btnTercumeEkleTab.click();
+            return this;
+        }
+
+        @Step("Dosya ekle")
+        public IliskiliEvraklarTab tercumeEkleDosyaEkle(String pathFile){
+            uploadFile(btnTercumeEkleDosyaEkle, pathFile);
+            return this;
+        }
+
+        @Step("Ekle")
+        public IliskiliEvraklarTab tercumeEkleEkle(){
+            btnTercumeEkleEkle.click();
+            return this;
+        }
+
+        @Step("İlişki metni doldur")
+        public IliskiliEvraklarTab tercumeEkleIliskiMetniDoldur(String iliskiMetni){
+            txtTercumeEkleIliskiMetni.setValue(iliskiMetni);
+            return this;
+        }
 
         @Step("Sistemde kayıtlı evrak ekle artı")
         public IliskiliEvraklarTab sistemdeKayitliEvrakEkleArti() {
-            btnSistemdeKayitliEvrakEkleArti.click();
+            btnSistemdeKayitliEvrakEkleArti.get(0).click();
             return this;
         }
 
@@ -478,7 +552,6 @@ public class KararYazisiOlusturPage extends MainPage {
 
             return this;
         }
-
 
     }
     //endregion

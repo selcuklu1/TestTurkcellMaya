@@ -33,8 +33,9 @@ public class GelenEvraklarPage extends MainPage {
     SelenideElement btnTabHavaleYap = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:4:cmdbutton"));
 
     //Havale Yap Alt Yapı
-    SelenideElement btnHavaleYap = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:1:cmdbutton"));
+    SelenideElement btnHavaleYap = $("[id='mainPreviewForm:onizlemeRightTab:onizlemeRightTab'] td:nth-child(5) button");
     SelenideElement treeHavaleYapBirim = $(By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovTexts"));
+    BelgenetElement txtComboLovKisi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKullaniciLov:LovText"));
     SelenideElement treeHavaleYapKisi = $(By.id("mainPreviewForm:dagitimBilgileriKullaniciLov:LovText"));
     SelenideElement treeHavaleYapKullaniciListesi = $(By.id("mainPreviewForm:dagitimBilgileriKisiListesiLov:LovText"));
     BelgenetElement treeHavaleYapOnaylanacakKisi = comboLov("[id^='mainPreviewForm:onaylayacakKisiLov:LovText']");
@@ -42,8 +43,9 @@ public class GelenEvraklarPage extends MainPage {
     SelenideElement btnHavaleYapDosyaEkle = $(By.id("mainPreviewForm:fileUploadHavaleEk_input"));
     SelenideElement txtHavaleYapIslemSuresi = $(By.id("mainPreviewForm:islemSuresiTarih_input"));
     SelenideElement chkHavaleYapEvrakOnayliKapat = $(By.id("mainPreviewForm:j_idt30591_input"));
-    SelenideElement btnHavaleYapGonder = $(By.id("mainPreviewForm:j_idt30598"));
+    SelenideElement btnHavaleYapGonder = $("[id^='mainPreviewForm:j_idt'] [class$='havaleGonderButonClass']");
     SelenideElement btnHavaleYapHavaleOnayinaGonder = $(By.id("mainPreviewForm:j_idt30599"));
+    ElementsCollection tblVekaletVerenAlan =$$("[id='mainPreviewForm:kullaniciBirimSecenekleriHavaleIcin_data'] tr[role='row']");
 
     // Tebiğ Et Buttonu altı div
     SelenideElement btnTebligEt = $(By.xpath("//span[contains(@class, 'tebligEt')]/.."));
@@ -191,6 +193,11 @@ public class GelenEvraklarPage extends MainPage {
 
     public GelenEvraklarPage havaleYapKisiTreeDoldur(String text) {
         treeHavaleYapKisi.sendKeys(text);
+        return this;
+    }
+
+    public GelenEvraklarPage havaleYapKisiTreeSec(String kisi) {
+        txtComboLovKisi.selectLov(kisi);
         return this;
     }
 
@@ -399,6 +406,14 @@ public class GelenEvraklarPage extends MainPage {
     public GelenEvraklarPage onayAkisiTitleKontrol(String secim) {
         System.out.println("Gelen detail:     " + cmbOnayAkisi.lastSelectedLovTitleText());
         Assert.assertEquals(cmbOnayAkisi.lastSelectedLovTitleText().contains(secim), true);
+        return this;
+    }
+
+    @Step("Vekalet alan Ve Veren tablo vekalet alan seç")
+    public GelenEvraklarPage vekeletAlanVerenTabloVekaletAlanveyaVerenSec(String isim) {
+        tblVekaletVerenAlan
+                .filterBy(Condition.text(isim)).first()
+                .$("[id='mainPreviewForm:kullaniciBirimSecenekleriHavaleIcin_data'] td:nth-child(4) button").click();
         return this;
     }
 }
