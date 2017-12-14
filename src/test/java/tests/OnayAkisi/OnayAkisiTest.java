@@ -459,12 +459,11 @@ public class OnayAkisiTest extends BaseTest {
                 .filtreDurumSec("TUMU")
                 .ara()
                 .onayAkisiPasifIseAktifYap(onayAkisi)
-
                 .guncelle()
 
                 //Test için datalar silinir, teste hazır hale getirilir.
-                .kullaniciVarsaSil(eklenenKullanici2)
                 .kullaniciVarsaSil(eklenenKullanici1)
+                .kullaniciVarsaSil(eklenenKullanici2)
                 .kullaniciVarsaSil(ayniBirimliKullanici)
 
                 .onayAkisiIslemlerKullaniciDoldur(eklenenKullanici1)
@@ -493,7 +492,6 @@ public class OnayAkisiTest extends BaseTest {
                 .ara()
                 .kayitGoruntulenmeKontrolu(onayAkisi);
 
-        //TODO: Bundan sonrası defect var.
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
@@ -510,7 +508,7 @@ public class OnayAkisiTest extends BaseTest {
                 .onayAkisiGuncelle()
                 .onayAkisiKullaniciKontrol(eklenenKullanici1, "KONTROL")
                 .onayAkisiKullaniciKontrol(eklenenKullanici2, "IMZALAMA")
-                .onayAkisiKullaniciKontrol(ayniBirimliKullanici, "KOORDINE");
+                .onayAkisiKullaniciKoordineKontrol(ayniBirimliKullanici, "Koordine");
 
         kararYazisiOlusturPage
                 .openPage()

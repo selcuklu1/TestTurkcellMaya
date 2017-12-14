@@ -83,6 +83,19 @@ public class OlurYazisiOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Onay akışı kullanıcı adı ve koordine tipi kontrol et")
+        public BilgilerTab onayAkisiKullaniciKoordineKontrol(String kullaniciAdi, String kullaniciTipi) {
+
+            trOnayAkisiEkleKullanicilar
+                    .filterBy(text(kullaniciAdi))
+                    .get(0)
+                    .shouldBe(exist)
+                    .$(("[id^='yeniOnayEvrakForm:evrakBilgileriList'] [class='lovItemDetail']"))
+                    .text().contains(kullaniciTipi);
+
+            return this;
+        }
+
         @Step("Onay akışı listesinde listelenen kullanıcıyı kontrol et")
         public BilgilerTab onayAkisiTreeKullaniciKontrol(String kullaniciAdi, Boolean exist) {
             txtOnayAkisiKullanicilarInput.setValue(kullaniciAdi);

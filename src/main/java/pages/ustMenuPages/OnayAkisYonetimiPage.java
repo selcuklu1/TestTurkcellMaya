@@ -316,11 +316,10 @@ public class OnayAkisYonetimiPage extends MainPage {
     public OnayAkisYonetimiPage kullaniciVarsaSil(String kullanici) {
 
         if (trOnayAkisiEkleKullanicilar
-                .filterBy(text(kullanici))
-                .get(0).isDisplayed()) {
+                .filterBy(text(kullanici)).size() == 1) {
             trOnayAkisiEkleKullanicilar
                     .filterBy(text(kullanici))
-                    .get(0)
+                    .first()
                     .shouldBe(exist)
                     .$("[class$='delete-icon']").click();
         }
