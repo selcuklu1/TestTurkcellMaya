@@ -5,7 +5,6 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Step;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.testng.Assert;
@@ -709,8 +708,7 @@ public class EvrakOlusturPage extends MainPage {
         @Step("Bilgileri tabında Onay Akışı alanında görüntülenmeme kontrolu")
         public BilgilerTab onayAkisiAlanindaGoruntulenmemeKontrolu(String onayAkisi) {
 
-            boolean selectable = comboLov(cmbOnayAkisiBy).isLovValueSelectable(onayAkisi);
-            Assert.assertEquals(selectable, false, "MyCombolov alanında " + onayAkisi + ": Onay Akışın görüntülenmediği görülür");
+            comboLov(cmbOnayAkisiBy).type(onayAkisi).titleItems().filterBy(exactText(onayAkisi)).shouldHaveSize(0);
             System.out.println("MyCombolov alanında " + onayAkisi + ": Onay Akışın görüntülenmediği görülür.");
 
             return this;
@@ -946,8 +944,6 @@ public class EvrakOlusturPage extends MainPage {
         }
 
 
-
-
         //endregion
 
     }
@@ -981,8 +977,6 @@ public class EvrakOlusturPage extends MainPage {
         }
 
         private TextEditor editor = new TextEditor();
-
-
 
 
         private EditorTab open() {

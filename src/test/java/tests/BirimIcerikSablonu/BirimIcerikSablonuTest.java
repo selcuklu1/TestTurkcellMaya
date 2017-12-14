@@ -1,17 +1,11 @@
 package tests.BirimIcerikSablonu;
 
-import com.codeborne.selenide.CollectionCondition;
-import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import common.BaseTest;
-import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import pages.pageComponents.TextEditor;
@@ -21,7 +15,6 @@ import pages.ustMenuPages.EvrakOlusturPage;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
-import static pages.pageComponents.belgenetElements.BelgenetFramework.$inFrame;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboBox;
 
 
@@ -34,6 +27,7 @@ import static pages.pageComponents.belgenetElements.BelgenetFramework.comboBox;
 public class BirimIcerikSablonuTest extends BaseTest {
 
     String sablonAdi;
+    String sablonAdi_1082;
     String sablonAdi_1079;
     String editorText;
     String editorText_1079;
@@ -114,6 +108,7 @@ public class BirimIcerikSablonuTest extends BaseTest {
         birimIcerikSablonlarPage = new BirimIcerikSablonlarPage().openPage();
 
         birimIcerikSablonlarPage.getBtnYeniSablonOlustur().click();
+        birimIcerikSablonlarPage.getLovKullanilacakBirimler().shouldBe(enabled);
         birimIcerikSablonlarPage.getLovKullanilacakBirimler().openTree().titleItems().first().click();
         birimIcerikSablonlarPage.getLovKullanilacakBirimler().closeLovTreePanel();
         birimIcerikSablonlarPage.getEditor().type("text in editor");
@@ -153,13 +148,14 @@ public class BirimIcerikSablonuTest extends BaseTest {
         login();
         birimIcerikSablonlarPage = new BirimIcerikSablonlarPage().openPage();
 
-        String sablonAdi = "SABLON_" + getSysDate();
+//        String sablonAdi = "SABLON_" + getSysDate();
+        sablonAdi_1082 = "SABLON_" + getSysDate();
 //        String altBirimler = "ALT BİRİMLER GÖRMESİN";
         String altBirimler = "ALT BİRİMLER GÖRSÜN";
 
         birimIcerikSablonlarPage.getBtnYeniSablonOlustur().click();
 
-        birimIcerikSablonlarPage.getTxtSablonAdi().setValue(sablonAdi);
+        birimIcerikSablonlarPage.getTxtSablonAdi().setValue(sablonAdi_1082);
 
         String birim = "optiim birim";
         birimIcerikSablonlarPage.getLovKullanilacakBirimler().type(birim).titleItems()
@@ -179,12 +175,12 @@ public class BirimIcerikSablonuTest extends BaseTest {
 
         birimIcerikSablonlarPage.islemMesaji().basariliOlmali();
 
-        Assert.assertTrue(birimIcerikSablonlarPage.sablonExistInTable(sablonAdi)
+        Assert.assertTrue(birimIcerikSablonlarPage.sablonExistInTable(sablonAdi_1082)
                 , "Birim şablonları tablosunda bulunmalı");
-        this.sablonAdi = sablonAdi;
+//        this.sablonAdi = sablonAdi;
     }
 
-    @Test(description = "Yeni şablon (Alt birimler görsün) Evrak Oluşturda kullanılması", dependsOnMethods = {"tc1082"}, enabled = true
+    @Test(description = "Yeni şablon (Alt birimler görsün) Evrak Oluşturmada kullan", dependsOnMethods = {"tc1082"}, enabled = true
             , priority = 7)
     public void tc1082_kontrol() {
         login("optiimtest4", "123");
@@ -193,10 +189,10 @@ public class BirimIcerikSablonuTest extends BaseTest {
         editor.toolbarButton("Öntanımlı İçerik Şablonu Kullan", true);
 
         $(By.id("yeniGidenEvrakForm:icerikSablonDialogD1")).shouldBe(visible);
-        BelgenetElement cmbSablon = comboBox("#yeniGidenEvrakForm\\:icerikSablonDialogD1 label[id$='_label']");
-        cmbSablon.getComboBoxValues().filterBy(text(sablonAdi)).shouldHaveSize(1);
-        cmbSablon.selectComboBox(sablonAdi);
-
+        BelgenetElement cmbSablon = comboBox("[id='yeniGidenEvrakForm:icerikSablonDialogD1'] label[id$='_label']");
+        cmbSablon.shouldBe(visible);
+        cmbSablon.getComboBoxValues().filterBy(text(sablonAdi_1082)).shouldHaveSize(1);
+        cmbSablon.selectComboBox(sablonAdi_1082);
 
         switchTo().frame($("[id='yeniGidenEvrakForm:onizlemeField'] iframe"));
         String actualText = $("body").text();
@@ -308,17 +304,14 @@ public class BirimIcerikSablonuTest extends BaseTest {
 
     @Test(description = "Şablon güncelleme", dependsOnMethods = {"tc1085"}, priority = 11)
     public void tc1079() {
-//        if (this.sablonAdi.isEmpty())
-//            tc1082();
-//
-//        if (this.sablonAdi.isEmpty())
-//            throw new RuntimeException("Oluşturulmuş şablon bulunamadı");
-
-//        sablonAdi = "SABLON_20171208115826";
         login();
         birimIcerikSablonlarPage = new BirimIcerikSablonlarPage().openPage();
         SelenideElement sablonRow = birimIcerikSablonlarPage.findSablonRowInTable(sablonAdi);
 
+        try {
+            sablonRow.$("[id$='sablonListesiDetayButton_id']").sendKeys("\n");
+        } catch (Exception e) {
+        }
         sablonRow.$("[id$='sablonListesiDetayButton_id']").click();
 
         sablonAdi_1079 = sablonAdi + "_UPDATED";
@@ -359,7 +352,7 @@ public class BirimIcerikSablonuTest extends BaseTest {
         String actualText = $("body").text();
         switchTo().defaultContent();
 
-        Assert.assertEquals(editorText_1079, actualText);
+        Assert.assertEquals(editorText_1079.trim(), actualText.trim());
 
         $x("//div[@id='yeniGidenEvrakForm:icerikSablonDialogD1']//button/span[text()='Uygula']/..").click();
 

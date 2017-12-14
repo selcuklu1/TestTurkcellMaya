@@ -3,12 +3,11 @@ package pages.ustMenuPages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
-import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
-import pages.pageComponents.UstMenu;
+import pages.pageComponents.TextEditor;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
 import static com.codeborne.selenide.Condition.*;
@@ -20,10 +19,11 @@ public class OlurYazisiOlusturPage extends MainPage {
 
     //region Tabs local variables
     private BilgilerTab bilgilerTab = new BilgilerTab();
+    private EditorTab editorTab = new EditorTab();
     //endregion
 
     SelenideElement tabBilgiler = $("button[id^='yeniOnayEvrakForm:onayEvrakLeftTab:uiRepeat'] span[class$='kullaniciBilgileri']");
-
+    SelenideElement tabEditor = $("button .editor");
 
     @Step("Olur yazısı oluştur sayfasını aç")
     public OlurYazisiOlusturPage openPage() {
@@ -38,7 +38,6 @@ public class OlurYazisiOlusturPage extends MainPage {
     }
 
     public class BilgilerTab extends MainPage {
-
         SelenideElement divContainer = $("#evrakBilgileriContainerDiv");
 
         // Onay Akışı Elementleri
@@ -50,9 +49,6 @@ public class OlurYazisiOlusturPage extends MainPage {
         BelgenetElement cmbOnayAkisi = comboLov(By.cssSelector("[id^='yeniOnayEvrakForm:evrakBilgileriList'][id$='akisLov:LovText']"));
         By cmbOnayAkisiBy = By.cssSelector("[id^='yeniOnayEvrakForm:evrakBilgileriList'][id$='akisLov:LovText']");
         SelenideElement cmbSelectOneMenu = $(By.id("yeniOnayEvrakForm:evrakBilgileriList:14:akisAdimLov:LovSecilenTable:0:selectOneMenu"));
-
-
-        //endregion
 
         private BilgilerTab open() {
             if (divContainer.is(not(visible)))
@@ -105,6 +101,7 @@ public class OlurYazisiOlusturPage extends MainPage {
 
         @Step("Onay akışı doldurma ve görüntüleme kontrolu")
         public BilgilerTab onayAkisDoldur(String kullanici) {
+            cmbOnayAkisi.shouldBe(visible);
             cmbOnayAkisi.selectLov(kullanici);
             return this;
         }
@@ -132,7 +129,24 @@ public class OlurYazisiOlusturPage extends MainPage {
             return this;
         }
 
+    }
 
+    public EditorTab editorTabAc() {
+        return editorTab.open();
+    }
+
+    public class EditorTab extends MainPage {
+        public TextEditor getEditor() {
+            return editor;
+        }
+
+        private TextEditor editor = new TextEditor();
+
+        private EditorTab open() {
+            tabEditor.click();
+            return this;
+
+        }
     }
 
 
