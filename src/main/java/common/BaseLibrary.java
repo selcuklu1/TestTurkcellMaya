@@ -1,11 +1,13 @@
 package common;
 
-import com.codeborne.selenide.*;
+import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
@@ -20,12 +22,16 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.Condition.exactValue;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
 import static org.apache.commons.io.FileUtils.deleteDirectory;
 import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfElementLocated;
 
 public class BaseLibrary {
+
+    private int doWaitLoading = 0;
+    private boolean doNotWaitLoading = false;
 
     protected static final Logger log = Logger.getLogger(BaseLibrary.class.getName());
     protected static String winHandleBefore = null;
@@ -93,7 +99,7 @@ public class BaseLibrary {
     public void waitForLoadingToDisappear(WebDriver driver) {
 //        driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
         try {
-            new WebDriverWait(driver, Configuration.timeout / 1000, 50).
+            new WebDriverWait(driver, 20, 50).
                     until(invisibilityOfElementLocated(By.className("loading")));
 //            System.out.println("Loading: Ok");
         } catch (Exception e) {
@@ -124,8 +130,13 @@ public class BaseLibrary {
         }
     }
 
+    public void setDoNotWaitLoading(boolean doNotWaitLoading) {
+        this.doNotWaitLoading = doNotWaitLoading;
+    }
 
     public void waitForLoading(WebDriver driver) {
+        if (doNotWaitLoading)
+            return;
 //        waitForJS();
         waitForLoadingToDisappear(driver);
     }
@@ -489,7 +500,6 @@ public class BaseLibrary {
         m.find();
         String number = m.group();
         System.out.println(number);
-
         return number;
     }
 
