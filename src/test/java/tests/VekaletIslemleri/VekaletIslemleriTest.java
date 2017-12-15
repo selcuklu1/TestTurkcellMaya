@@ -390,7 +390,7 @@ public class VekaletIslemleriTest extends BaseTest {
     @Test(enabled = true, description = "Vekalet veren kullanıcının bulunduğu kullanıcı listesine evrak havalesi ve kontrolü")
     public void TC2212() throws InterruptedException{
 
-        login(username3,password3);
+        login(username,password);
 
         String[] evrakNo = new String[2];
         gelenEvraklarPage
@@ -402,7 +402,7 @@ public class VekaletIslemleriTest extends BaseTest {
                 .evrakSec()
                 .havaleYap()
                 .havaleYapKisiTreeSec(vekaletVeren)
-                .vekeletAlanVerenTabloVekaletAlanveyaVerenSec(vekaletVeren)
+                .evrakOnIzlemeUyarıPopUpKontol()
                 .havaleYapGonder()
                 .islemMesaji().basariliOlmali(basariMesaji);
         logout();
