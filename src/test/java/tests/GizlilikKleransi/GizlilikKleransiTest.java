@@ -8,10 +8,7 @@ import org.testng.annotations.Test;
 import pages.MainPage;
 import pages.solMenuPages.HavaleEttiklerimPage;
 import pages.solMenuPages.ImzaladiklarimPage;
-import pages.ustMenuPages.EvrakOlusturPage;
-import pages.ustMenuPages.GelenEvrakKayitPage;
-import pages.ustMenuPages.GenelEvrakRaporuPage;
-import pages.ustMenuPages.KullaniciYonetimiPage;
+import pages.ustMenuPages.*;
 
 import static data.TestData.*;
 
@@ -30,8 +27,10 @@ public class GizlilikKleransiTest extends BaseTest {
     EvrakOlusturPage evrakOlusturPage;
     ImzaladiklarimPage imzaladiklarimPage;
     GenelEvrakRaporuPage genelEvrakRaporuPage;
+    EvrakAramaPage evrakAramaPage;
 
-    String evrakNo="";
+    String evrakNo = "";
+    String basariMesaji = "İşlem başarılıdır!";
 
 
     @BeforeMethod
@@ -42,6 +41,7 @@ public class GizlilikKleransiTest extends BaseTest {
         evrakOlusturPage = new EvrakOlusturPage();
         imzaladiklarimPage = new ImzaladiklarimPage();
         genelEvrakRaporuPage = new GenelEvrakRaporuPage();
+        evrakAramaPage = new EvrakAramaPage();
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -107,7 +107,7 @@ public class GizlilikKleransiTest extends BaseTest {
                 .evrakGelisTipiSec(evrakGelisTipi)
                 .ivedilikSec(ivedilik)
                 .havaleIslemleriKisiDoldur(kisi)
-               .islemMesaji().beklenenMesaj(uyariMesaj1);
+                .islemMesaji().beklenenMesaj(uyariMesaj1);
 
         gelenEvrakKayitPage
                 .havaleIslemleriKullaniciListesiDoldur(kullaniciListesi)
@@ -129,7 +129,7 @@ public class GizlilikKleransiTest extends BaseTest {
 
         havaleEttiklerimPage
                 .openPage()
-                .gizlilikRaporSec(konuKodu,geldigiYer,evrakTarihi,no)
+                .gizlilikRaporSec(konuKodu, geldigiYer, evrakTarihi, no)
                 .havaleYap()
                 .havaleYapKisiDoldur(kisi)
                 .islemMesaji().beklenenMesaj(uyariMesaj1);
@@ -141,20 +141,20 @@ public class GizlilikKleransiTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "Yüksek kleranslı evrak oluşturma")
-    public void TC1938() throws InterruptedException{
+    public void TC1938() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
         String tur = "IMZALAMA";
         String icerik = "TC1938() " + getSysDate();
         String konuKodu = "010.01";
-        String kaldiralacakKlasor = "Diğer";
+        String kaldiralacakKlasor = "TestBaris";
         String evrakTuru = "Resmi Yazışma";
         String evrakDili = "Türkçe";
-        String gizlilikDerecesi = "Normal";
-        String ivedilik = "Gizli";
+        String gizlilikDerecesi = "Tasnif Dışı";
+        String ivedilik = "Normal";
         String geregi = "Optiim Birim";
 
-login("gsahin","123");
+        login("gsahin", "123");
 
         evrakOlusturPage
                 .openPage()
@@ -188,10 +188,10 @@ login("gsahin","123");
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true,dependsOnMethods = {"TC1938"}, description = "Genel evrak raporunda gizlilik klerans kontrolü (evrakta izi olan kullanıcı ile)\n")
-    public void TC2226() throws InterruptedException{
+    @Test(enabled = true, dependsOnMethods = {"TC1938"}, description = "Genel evrak raporunda gizlilik klerans kontrolü (evrakta izi olan kullanıcı ile)")
+    public void TC2226() throws InterruptedException {
 
-        login(username,password);
+        login(username, password);
 
         genelEvrakRaporuPage
                 .openPage()
@@ -200,7 +200,44 @@ login("gsahin","123");
                 .tabloEvrakNoKontrol(evrakNo)
                 .tablodaDetayTikla(evrakNo)
                 .detayEkranınıAcildigiKontrolu();
+    }
 
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "Evrak aramada gizlilik kleransı kontrolü (evrakta izi olan kullanıcı ile)\n")
+    public void TC2140() throws InterruptedException {
 
+        login("gsahin", "123");
+
+        evrakAramaPage
+                .openPage()
+                .gidenEvrakSec()
+                .evrakinAranacagiYerSec("İşlem Yaptıklarımda Ara")
+                .aramaKriteriSec("Evrakın Kayıt Sayısı")
+                .aramaKriteriDoldur("9261")
+                .ara()
+                .tabloEvrakNoKontrol("9261")
+                .tablodaDetayTikla("9261")
+                .detayEkranınıAcildigiKontrolu()
+                .detayEkranınıKapat()
+
+                .detaylıAramaTab()
+                .detayTabAranacagiYerSec("İşlem Yaptıklarımda Ara")
+                .detayTabAramaKriteriDoldur("9261")
+                .detayTabAra()
+                .detayTabTablodaKontrolu(evrakNo, "Giden Evrak")
+                .detayTabTablodaDetayTikla(evrakNo, "Giden Evrak")
+                .detayEkranınıAcildigiKontrolu()
+                .detayEkranınıKapat();
+
+        evrakOlusturPage
+                .openPage()
+                .ekleriTabAc()
+                .sistemdeKayitliEvrakEkleTabAc()
+                .evrakinAranacagiYerSec("İşlem Yaptıklarımda Ara")
+                .evrakAramaDoldur("9261")
+                .dokumanAra()
+                .tabloEvrakNoKontrol("9261")
+                .tablodaDetayTikla("9261")
+                .evrakAramaKapat();
     }
 }
