@@ -1,13 +1,18 @@
 package pages.solMenuPages;
 
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import pages.MainPage;
+import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
+import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 public class HavaleEttiklerimPage extends MainPage {
 
@@ -22,11 +27,26 @@ public class HavaleEttiklerimPage extends MainPage {
     SelenideElement btnIcerikGöster = $(By.id("mainInboxForm:inboxDataTable:0:detayGosterButton"));
     SelenideElement btnTamEkranGöster = $(By.id("mainInboxForm:inboxDataTable:0:tamEkranModuButton"));
     SelenideElement tblRapor = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
-    SelenideElement btnHavaleYap = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:2:cmdbutton"));
-
+    SelenideElement btnHavaleYap = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:6:cmdbutton"));
+    BelgenetElement txtHavaleYapKisi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKullaniciLov:LovText"));
+    BelgenetElement txtHavaleYapKullaniciListesi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKisiListesiLov:LovText"));
+    ElementsCollection tblEvraklar = $$("[id^='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
     @Step("Havale Ettiklerim sayfası aç")
     public HavaleEttiklerimPage openPage() {
         solMenu(SolMenuData.IslemYaptiklarim.HavaleEttiklerim);
+        return this;
+    }
+
+    @Step("Kisi doldur")
+    public HavaleEttiklerimPage havaleYapKisiDoldur(String kisi){
+        txtHavaleYapKisi.selectLov(kisi);
+        return this;
+    }
+
+    @Step("Kullanıcı listesi doldur")
+    public HavaleEttiklerimPage havaleYapKullaniciListesiDoldur(String kullaniciListesi){
+        txtHavaleYapKullaniciListesi.selectLov(kullaniciListesi);
+        txtHavaleYapKullaniciListesi.selectLov(kullaniciListesi);
         return this;
     }
 
@@ -63,6 +83,12 @@ public class HavaleEttiklerimPage extends MainPage {
     @Step("Tablodan rapor seç")
     public HavaleEttiklerimPage raporSec() {
         tblRapor.click();
+        return this;
+    }
+
+    @Step("Tablodan rapor seç")
+    public HavaleEttiklerimPage gizlilikRaporSec(String konu, String yer, String tarih, String no) {
+        tblEvraklar.filterBy(Condition.text(konu)).filterBy(Condition.text(yer)).filterBy(Condition.text(tarih)).filterBy(Condition.text(no)).get(0).click();
         return this;
     }
 
