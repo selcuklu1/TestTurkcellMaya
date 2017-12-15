@@ -207,25 +207,30 @@ public class GizlilikKleransiTest extends BaseTest {
     public void TC2140() throws InterruptedException {
 
         login("gsahin", "123");
+//9261
 
+        String aranacagiYer = "İşlem Yaptıklarımda Ara";
+        String aramaKriteri = "Evrakın Kayıt Sayısı";
+        String evrakTipi = "Giden Evrak";
+        
         evrakAramaPage
                 .openPage()
                 .gidenEvrakSec()
-                .evrakinAranacagiYerSec("İşlem Yaptıklarımda Ara")
-                .aramaKriteriSec("Evrakın Kayıt Sayısı")
-                .aramaKriteriDoldur("9261")
+                .evrakinAranacagiYerSec(aranacagiYer)
+                .aramaKriteriSec(aramaKriteri)
+                .aramaKriteriDoldur(evrakNo)
                 .ara()
-                .tabloEvrakNoKontrol("9261")
-                .tablodaDetayTikla("9261")
+                .tabloEvrakNoKontrol(evrakNo)
+                .tablodaDetayTikla(evrakNo)
                 .detayEkranınıAcildigiKontrolu()
                 .detayEkranınıKapat()
 
                 .detaylıAramaTab()
-                .detayTabAranacagiYerSec("İşlem Yaptıklarımda Ara")
-                .detayTabAramaKriteriDoldur("9261")
+                .detayTabAranacagiYerSec(aranacagiYer)
+                .detayTabAramaKriteriDoldur(evrakNo)
                 .detayTabAra()
-                .detayTabTablodaKontrolu(evrakNo, "Giden Evrak")
-                .detayTabTablodaDetayTikla(evrakNo, "Giden Evrak")
+                .detayTabTablodaKontrolu(evrakNo, evrakTipi)
+                .detayTabTablodaDetayTikla(evrakNo, evrakTipi)
                 .detayEkranınıAcildigiKontrolu()
                 .detayEkranınıKapat();
 
@@ -233,11 +238,11 @@ public class GizlilikKleransiTest extends BaseTest {
                 .openPage()
                 .ekleriTabAc()
                 .sistemdeKayitliEvrakEkleTabAc()
-                .evrakinAranacagiYerSec("İşlem Yaptıklarımda Ara")
-                .evrakAramaDoldur("9261")
+                .evrakinAranacagiYerSec(aranacagiYer)
+                .evrakAramaDoldur(evrakNo)
                 .dokumanAra()
-                .tabloEvrakNoKontrol("9261")
-                .tablodaDetayTikla("9261")
+                .tabloEvrakNoKontrol(evrakNo)
+                .tablodaDetayTikla(evrakNo)
                 .evrakAramaKapat();
     }
 }
