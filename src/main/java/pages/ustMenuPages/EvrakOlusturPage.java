@@ -5,7 +5,6 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Step;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.testng.Assert;
@@ -48,7 +47,7 @@ public class EvrakOlusturPage extends MainPage {
     SelenideElement tabEvrakDogrulama = $("button .evrakDogrulamaAktarimIslemleri");
 
     SelenideElement btnPDFOnizleme = $("button[id^='yeniGidenEvrakForm:rightTab:uiRepeat'] span[class$='pdfOnIzleme']");
-    SelenideElement btnKaydet = $("button[id^='yeniGidenEvrakForm:rightTab:uiRepeat'] span[class$='kaydet']");
+    SelenideElement btnKaydet = $("button[id^='yeniGidenEvrakForm:rightTab:uiRepeat'] span[class*='kaydet']");
     SelenideElement btnKaydetOnayaSun = $("button[id^='yeniGidenEvrakForm:rightTab:uiRepeat'] span[class$='kaydetHavaleEt']");
     SelenideElement btnPaylas = $("button[id^='yeniGidenEvrakForm:rightTab:uiRepeat'] span[class$='evrakPaylas']");
     SelenideElement btnEvrakOlusturKapat = $(By.xpath("//div[@id='window3Dialog']//a/span[@class='ui-icon ui-icon-closethick']"));
@@ -81,6 +80,11 @@ public class EvrakOlusturPage extends MainPage {
         return this;
     }
 
+    @Step("Kaydet")
+    public EvrakOlusturPage kaydet() {
+        btnKaydet.click();
+        return this;
+    }
 
     @Step("\"{0}\" ekran açılması beklenen statü: {1}")
     public EvrakOlusturPage PDFOnizlemeKisayolGonder(String kisayol) throws InterruptedException {
@@ -122,6 +126,7 @@ public class EvrakOlusturPage extends MainPage {
         return this;
     }
 
+
     //region Tabs
     @Step("Bilgiler tab aç")
     public BilgilerTab bilgilerTabiAc() {
@@ -148,7 +153,7 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement btnIletisimbilgileriOnayAkisiEkle = $("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='onayAkisiEkle']");
 
         //Kanun Kapsam Tipi
-        SelenideElement rdbKanunKapsamTipiNormal = $("//input[contains(@id,'kanunKapsamTipiRadio') and (../label[contains(@for,'kanunKapsamTipiRadio') and normalize-space(text())='Normal'])]");
+        SelenideElement rdbKanunKapsamTipiNormal = $x("//input[contains(@id,'kanunKapsamTipiRadio') and (../label[contains(@for,'kanunKapsamTipiRadio') and normalize-space(text())='Normal'])]");
         SelenideElement rdbKanunKapsamTipiBilgiEdinmeKanunu = $("//input[contains(@id,'kanunKapsamTipiRadio') and (../label[contains(@for,'kanunKapsamTipiRadio') and normalize-space(text())='Bilgi Edinme Kanunu'])]");
         SelenideElement rdbKanunKapsamTipiKisiselVerilerinKorunmasiKanunu = $("//input[contains(@id,'kanunKapsamTipiRadio') and (../label[contains(@for,'kanunKapsamTipiRadio') and normalize-space(text())='Kişisel Verilerin Korunması Kanunu'])]");
         SelenideElement txtEvrakSayiEkMetni = $("input[id$='evrakSayiEkMetniInputText']");
@@ -311,7 +316,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Evrak Türü alanında {0} seç")
+        @Step("Evrak Türü alanında {text} seç")
         public BilgilerTab evrakTuruSec(String text) {
 //            if (!cmbEvrakTuru.getSelectedOption().equals(text))
             cmbEvrakTuru.selectOption(text);
@@ -737,9 +742,9 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        public BilgilerTab onayAkisiKullaniciSil(String yeniKullanici) {
+        public BilgilerTab onayAkisiKullaniciSil(String kullanici) {
             trOnayAkisiEkleKullanicilar
-                    .filterBy(text(yeniKullanici))
+                    .filterBy(text(kullanici))
                     .get(0)
                     .shouldBe(exist)
                     .$("[class$='delete-icon']").click();
@@ -764,6 +769,19 @@ public class EvrakOlusturPage extends MainPage {
                     .shouldBe(exist)
                     .$("select[id*='selectOneMenu']")
                     .shouldHave(value(kullaniciTipi));
+            return this;
+        }
+
+        @Step("Onay akışı kullanıcı adı ve koordine tipi kontrol et")
+        public BilgilerTab onayAkisiKullaniciKoordineKontrol(String kullaniciAdi, String kullaniciTipi) {
+
+            trOnayAkisiEkleKullanicilar
+                    .filterBy(text(kullaniciAdi))
+                    .get(0)
+                    .shouldBe(exist)
+                    .$(("[id^='yeniGidenEvrakForm:evrakBilgileriList'] [class='lovItemDetail']"))
+                    .text().contains(kullaniciTipi);
+
             return this;
         }
 
@@ -798,7 +816,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Kullan butonu")
+        @Step("Kullan")
         public BilgilerTab kullan() {
             clickJs(btnKullan);
             return this;
@@ -964,7 +982,6 @@ public class EvrakOlusturPage extends MainPage {
 
             return this;
         }
-
 
 
         //endregion

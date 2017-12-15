@@ -1,10 +1,12 @@
 package pages.pageComponents;
 
-import com.codeborne.selenide.*;
+import com.codeborne.selenide.ElementsContainer;
+import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 
-import static com.codeborne.selenide.CollectionCondition.*;
+import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.$inFrame;
@@ -38,8 +40,9 @@ public class TextEditor extends ElementsContainer {
 //      $inFrame("body[class*='cke_contents_ltr']");
 //        return $inFrame("body[class~='cke_contents_ltr']", frame);
 //        return $inFrame(By.tagName("body"), frame);
-//        return $inFrame(".cke_editable", frame);
-        return $inFrame(".cke_editable", frame);
+        SelenideElement editor = $inFrame(".cke_editable", frame).shouldBe(visible);
+        return editor;
+//        return $inFrame("body[class='cke_editable cke_editable_themed cke_contents_ltr']", frame);
 //        return $inFrame(".cke_contents_ltr", frame);
     }
 
@@ -57,7 +60,9 @@ public class TextEditor extends ElementsContainer {
 
     @Step("Editore tekst yaz")
     public TextEditor type(CharSequence... keysToSend) {
-        editor().sendKeys(keysToSend);
+        SelenideElement editor = editor();
+        editor.shouldBe(visible);
+        editor.sendKeys(keysToSend);
 ////        WebDriverRunner.getWebDriver().findElement(By.cssSelector("body[class='cke_editable']")).sendKeys(keysToSend);
 //        WebDriverRunner.getWebDriver().findElement(By.tagName("body")).sendKeys(keysToSend);
         switchTo().defaultContent();
@@ -72,7 +77,9 @@ public class TextEditor extends ElementsContainer {
                         .shouldHave(sizeGreaterThan(0)).filterBy(visible).first();
 //        System.out.println($$x("//a/span[contains(@class,'cke_button_label') and normalize-space(text())='" + name + "']/..").size());
 
+        button.shouldBe(visible);
         if (button.is(toolboxButtonOn) != value) {
+//            System.out.println("Clicked");
             button.click();
         }
 

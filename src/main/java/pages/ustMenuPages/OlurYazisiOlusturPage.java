@@ -7,6 +7,7 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
+import pages.pageComponents.TextEditor;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
 import static com.codeborne.selenide.Condition.*;
@@ -18,10 +19,11 @@ public class OlurYazisiOlusturPage extends MainPage {
 
     //region Tabs local variables
     private BilgilerTab bilgilerTab = new BilgilerTab();
+    private EditorTab editorTab = new EditorTab();
     //endregion
 
     SelenideElement tabBilgiler = $("button[id^='yeniOnayEvrakForm:onayEvrakLeftTab:uiRepeat'] span[class$='kullaniciBilgileri']");
-
+    SelenideElement tabEditor = $("button .editor");
 
     @Step("Olur yazısı oluştur sayfasını aç")
     public OlurYazisiOlusturPage openPage() {
@@ -46,10 +48,11 @@ public class OlurYazisiOlusturPage extends MainPage {
         SelenideElement txtOnayAkisiKullanicilarInput = $("input[id^='yeniOnayEvrakForm:evrakBilgileriList:'][id$=':akisAdimLov:LovText']");
         SelenideElement btnOnayAkisiPanelKapat = $("button[id^='yeniOnayEvrakForm:evrakBilgileriList:'][id$=':akisLov:lovTreePanelKapat']");
         BelgenetElement cmbOnayAkisi = comboLov(By.cssSelector("[id^='yeniOnayEvrakForm:evrakBilgileriList'][id$='akisLov:LovText']"));
+        BelgenetElement cmbKullanici = comboLov(By.cssSelector("[id^='yeniOnayEvrakForm:evrakBilgileriList'][id$='akisAdimLov:LovText']"));
         By cmbOnayAkisiBy = By.cssSelector("[id^='yeniOnayEvrakForm:evrakBilgileriList'][id$='akisLov:LovText']");
         SelenideElement cmbSelectOneMenu = $(By.id("yeniOnayEvrakForm:evrakBilgileriList:14:akisAdimLov:LovSecilenTable:0:selectOneMenu"));
         SelenideElement btnOnayAkisGuncelle = $(By.cssSelector("[id^='yeniOnayEvrakForm:evrakBilgileriList:14:akisLov:j_idt'] [class$='update-icon']"));
-
+        SelenideElement btnKullan = $("[id^='yeniOnayEvrakForm:evrakBilgileriList'][id$='anlikAkisKullanButton']");
 
         //endregion
 
@@ -83,6 +86,19 @@ public class OlurYazisiOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Onay akışı kullanıcı adı ve koordine tipi kontrol et")
+        public BilgilerTab onayAkisiKullaniciKoordineKontrol(String kullaniciAdi, String kullaniciTipi) {
+
+            trOnayAkisiEkleKullanicilar
+                    .filterBy(text(kullaniciAdi))
+                    .get(0)
+                    .shouldBe(exist)
+                    .$(("[id^='yeniOnayEvrakForm:evrakBilgileriList'] [class='lovItemDetail']"))
+                    .text().contains(kullaniciTipi);
+
+            return this;
+        }
+
         @Step("Onay akışı listesinde listelenen kullanıcıyı kontrol et")
         public BilgilerTab onayAkisiTreeKullaniciKontrol(String kullaniciAdi, Boolean exist) {
             txtOnayAkisiKullanicilarInput.setValue(kullaniciAdi);
@@ -108,6 +124,14 @@ public class OlurYazisiOlusturPage extends MainPage {
             cmbOnayAkisi.selectLov(kullanici);
             return this;
         }
+
+        @Step("Onay akışı kullanıcı doldurma ve görüntüleme kontrolu")
+        public BilgilerTab onayAkisiKullaniciDoldur(String kullanici) {
+            cmbKullanici.shouldBe(visible);
+            cmbKullanici.selectLov(kullanici);
+            return this;
+        }
+
 
         @Step("Seçilen onay akışı detail kontrolu: \"{secim}\" ")
         public BilgilerTab onayAkisiDetailKontrol(String secim) {
@@ -138,8 +162,42 @@ public class OlurYazisiOlusturPage extends MainPage {
             return this;
         }
 
+        public BilgilerTab kullaniciyaKullaniciTipiSec(String kullanici, String secimTipi) {
+
+            trOnayAkisiEkleKullanicilar
+                    .filterBy(text(kullanici))
+                    .get(0)
+                    .shouldBe(exist)
+                    .$("select[id*='selectOneMenu']")
+                    .selectOptionByValue(secimTipi);
+
+            return this;
+        }
+
+        @Step("Kullan")
+        public BilgilerTab kullan() {
+            clickJs(btnKullan);
+            return this;
+        }
+
 
     }
+    public EditorTab editorTabAc() {
+        return editorTab.open();
+    }
 
+    public class EditorTab extends MainPage {
+        public TextEditor getEditor() {
+            return editor;
+        }
+
+        private TextEditor editor = new TextEditor();
+
+        private EditorTab open() {
+            tabEditor.click();
+            return this;
+
+        }
+    }
 
 }

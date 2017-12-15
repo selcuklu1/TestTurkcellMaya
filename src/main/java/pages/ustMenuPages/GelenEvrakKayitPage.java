@@ -11,9 +11,7 @@ import pages.pageComponents.UstMenu;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
 import static com.codeborne.selenide.Selectors.byText;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
-import static com.codeborne.selenide.Selenide.executeJavaScript;
+import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 public class GelenEvrakKayitPage extends MainPage {
@@ -179,6 +177,10 @@ public class GelenEvrakKayitPage extends MainPage {
     SelenideElement lblUstyaziGoster = $(By.id("evrakBilgileriForm:ustYaziGosterButton"));
     SelenideElement lblUstyaziGizle = $(By.id("evrakBilgileriForm:ustYaziGizleButton"));
 
+
+    // Havale İşlemleri
+    BelgenetElement txtHavaleIslemleriKisi = comboLov(By.id("evrakBilgileriForm:dagitimBilgileriKullaniciLov:LovText"));
+    BelgenetElement txtHavaleIslemleriKullaniciListesi = comboLov(By.id("evrakBilgileriForm:dagitimBilgileriKisiListesiLov:LovText"));
     //endregion
 
 
@@ -192,11 +194,23 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
+    @Step("Kişi alanını doldur")
+    public GelenEvrakKayitPage havaleIslemleriKisiDoldur(String kisi){
+        txtHavaleIslemleriKisi.selectLov(kisi);
+        return this;
+    }
+
+    @Step("")
+    public GelenEvrakKayitPage havaleIslemleriKullaniciListesiDoldur(String kisi){
+        txtHavaleIslemleriKullaniciListesi.selectLov(kisi);
+        txtHavaleIslemleriKullaniciListesi.selectLov(kisi);
+        return this;
+    }
+    
     public GelenEvrakKayitPage ekBilgiFizikselEkEkle() throws InterruptedException {
         clickJs(btnFizikselEkEkle);
         return this;
     }
-
 
     public GelenEvrakKayitPage ekBilgiFiltreAc() throws InterruptedException {
 //        btnEvrakEkleri.click();

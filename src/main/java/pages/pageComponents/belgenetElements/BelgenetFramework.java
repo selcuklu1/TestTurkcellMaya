@@ -1,18 +1,10 @@
 package pages.pageComponents.belgenetElements;
 
-import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
-import com.codeborne.selenide.WebDriverRunner;
 import com.codeborne.selenide.commands.Commands;
 import com.codeborne.selenide.impl.ElementFinder;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-
-import java.sql.Timestamp;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
@@ -116,10 +108,10 @@ public class BelgenetFramework {
             return;// $(elementLocator);*/
 
         By f = iframeLocator.length > 0 ? iframeLocator[0] : By.tagName("iframe");
-        ElementsCollection iframes = $$(f).filterBy(visible);
+        $(f).shouldBe(visible);
+        ElementsCollection iframes = $$(f);
 
         for (SelenideElement iframe : iframes) {
-//            iframe.shouldBe(visible);
             switchTo().frame(iframe);
             if ($(elementLocator).exists())// && $(locator).is(visible))
                 return;

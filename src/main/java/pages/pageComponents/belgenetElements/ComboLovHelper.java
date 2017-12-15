@@ -96,16 +96,31 @@ public class ComboLovHelper extends BaseLibrary {
     }
 
     public BelgenetElement clearAllSelectedLov() {
+        SelenideElement b = $$(lovInputTextleriTemizle).last().shouldBe(visible);
         int count = $$(lovInputTextleriTemizle).size();
 
-        for (int i = count - 1; i >= 0; i--)
-            $$(lovInputTextleriTemizle).get(i).click();
+        while ($$(lovInputTextleriTemizle).size() > 0) {
+            SelenideElement e = $$(lovInputTextleriTemizle).first();
+            e.pressEnter();
+            if (e.exists())
+                e.click();
+            e.shouldBe(not(exist));
+        }
+
+//        for (int i = count - 1; i > -1; i--) {
+//            SelenideElement e = $$(lovInputTextleriTemizle).get(i);
+//            e.pressEnter();
+//            if (e.exists())
+//                e.click();
+//
+//            e.shouldBe(not(exist));
+//        }
 
 //        long t = Configuration.timeout;
 //        Configuration.timeout = 0;
         //! singleType lov için temizle butonu DOM da kaldığı için visible kontrolü kıllanıldı
-        for (SelenideElement item : $$(lovInputTextleriTemizle))
-            item.shouldBe(not(visible));
+//        for (SelenideElement item : $$(lovInputTextleriTemizle))
+//            item.shouldBe(not(visible));
 //        Configuration.timeout = t;
 
         return (BelgenetElement) element;
