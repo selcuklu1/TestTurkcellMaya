@@ -10,11 +10,10 @@ import pages.solMenuPages.HavaleEttiklerimPage;
 import pages.solMenuPages.ImzaladiklarimPage;
 import pages.ustMenuPages.EvrakOlusturPage;
 import pages.ustMenuPages.GelenEvrakKayitPage;
+import pages.ustMenuPages.GenelEvrakRaporuPage;
 import pages.ustMenuPages.KullaniciYonetimiPage;
 
-import static data.TestData.password2;
-import static data.TestData.username2;
-import static data.TestData.username3;
+import static data.TestData.*;
 
 /****************************************************
  * Tarih: 2017-12-22
@@ -30,6 +29,9 @@ public class GizlilikKleransiTest extends BaseTest {
     HavaleEttiklerimPage havaleEttiklerimPage;
     EvrakOlusturPage evrakOlusturPage;
     ImzaladiklarimPage imzaladiklarimPage;
+    GenelEvrakRaporuPage genelEvrakRaporuPage;
+
+    String evrakNo="";
 
 
     @BeforeMethod
@@ -39,6 +41,7 @@ public class GizlilikKleransiTest extends BaseTest {
         havaleEttiklerimPage = new HavaleEttiklerimPage();
         evrakOlusturPage = new EvrakOlusturPage();
         imzaladiklarimPage = new ImzaladiklarimPage();
+        genelEvrakRaporuPage = new GenelEvrakRaporuPage();
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -142,15 +145,14 @@ public class GizlilikKleransiTest extends BaseTest {
 
         String basariMesaji = "İşlem başarılıdır!";
         String tur = "IMZALAMA";
-        String icerik = "TC1938()" + getSysDate();
+        String icerik = "TC1938() " + getSysDate();
         String konuKodu = "010.01";
         String kaldiralacakKlasor = "Diğer";
         String evrakTuru = "Resmi Yazışma";
         String evrakDili = "Türkçe";
         String gizlilikDerecesi = "Normal";
-        String ivedilik = "Normal";
+        String ivedilik = "Gizli";
         String geregi = "Optiim Birim";
-        String aciklama = "Test Otomasyon " + getSysDate();
 
 login("gsahin","123");
 
@@ -162,7 +164,7 @@ login("gsahin","123");
                 .evrakTuruSec(evrakTuru)
                 .evrakDiliSec(evrakDili)
                 .gizlilikDerecesiSec(gizlilikDerecesi)
-                .aciklamaDoldur(aciklama)
+                .aciklamaDoldur(icerik)
                 .ivedikSec(ivedilik)
                 .geregiSec(geregi)
                 .onayAkisiEkle()
@@ -180,8 +182,23 @@ login("gsahin","123");
                 .islemMesaji().basariliOlmali(basariMesaji);
 
         imzaladiklarimPage
-                .openPage()
-                .evrakIcerikKontrolu(icerik);
+                .openPage();
+
+        evrakNo = imzaladiklarimPage.evrakIcerikKontroluveEvrakNoAl(icerik);
     }
 
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true,dependsOnMethods = {"TC1938()"},description = "Genel evrak raporunda gizlilik klerans kontrolü (evrakta izi olan kullanıcı ile)\n")
+    public void TC2226() throws InterruptedException{
+
+        login(username,password);
+
+        genelEvrakRaporuPage
+                .openPage()
+                .evrakNoDoldur(evrakNo)
+                .sorgula()
+                .tabloEvrakNoKontrol(evrakNo)
+                .tablodaDetayTikla(evrakNo)
+                .detayEkranınıAcildigiKontrolu();
+    }
 }

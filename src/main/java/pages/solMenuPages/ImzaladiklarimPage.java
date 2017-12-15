@@ -21,6 +21,7 @@ public class ImzaladiklarimPage extends MainPage {
     SelenideElement tabEvrakOnizleme = $(By.id("mainPreviewForm:evrakOnizlemeTab"));
     ElementsCollection tableKararIzlemeEvraklar = $$("[id='mainInboxForm:inboxDataTable_data'] tr[role='row']");// span[class='ui-chkbox-icon']");
     ElementsCollection tblImzalananEvraklar = $$("[id='mainInboxForm:inboxDataTable_data'] tr[role='row'] table");
+SelenideElement txtEvrakDetayiEvrakNo = $("[id^='inboxItemInfoForm:evrakBilgileriList'][id$='evrakNoPanelGrid'] td:nth-child(3) div");
 
     @Step("Imzaladiklarim Sayfasini aç")
     public ImzaladiklarimPage openPage() {
@@ -53,12 +54,14 @@ public class ImzaladiklarimPage extends MainPage {
     }
 
     @Step("")
-    public ImzaladiklarimPage evrakIcerikKontrolu(String icerik) {
+    public String evrakIcerikKontroluveEvrakNoAl(String icerik) {
         int size = tblImzalananEvraklar.size();
+        String evrakNo = "";
         boolean flag = false;
 
         for (int i = 0; i < size; i++) {
             $(By.id("mainInboxForm:inboxDataTable:" + i + ":detayGosterButton")).click();
+            evrakNo= evrakDetayiEvrakNoAl();
             String icerikTxt = $("[id='inboxItemInfoForm:evrakBilgileriList_content'] tr:nth-child(13) tr textarea").text();
             if (icerik.equals(icerikTxt)) {
                 flag = true;
@@ -69,6 +72,12 @@ public class ImzaladiklarimPage extends MainPage {
 
         }
         Assert.assertEquals(flag,true,"Evrak listelenmiştir");
-        return this;
+        return evrakNo;
+    }
+
+    @Step("Evrak No al")
+    public String evrakDetayiEvrakNoAl() {
+        String evrakNo = txtEvrakDetayiEvrakNo.text();
+        return evrakNo;
     }
 }

@@ -63,7 +63,7 @@ public class EvrakOlusturPage extends MainPage {
     @Step("Evrak Oluştur sayfası aç")
     public EvrakOlusturPage openPage() {
         new UstMenu().ustMenu("Evrak Oluştur");
-        $("#yeniGidenEvrakForm").shouldBe(visible);
+            $("#yeniGidenEvrakForm").shouldBe(visible);
         return this;
     }
 
