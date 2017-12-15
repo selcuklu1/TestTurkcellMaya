@@ -140,7 +140,7 @@ public class PostaListesiPage extends MainPage {
     public PostaListesiPage evrakSec(String kayitTarihiSayi, String gidecegiYer, String konu, String hazirlayanBirim, String postTipi) {
 
         tableEvraklar
-                .filterBy(Condition.text("Kayıt Tarihi / Sayı: " + kayitTarihiSayi))
+                .filterBy(Condition.text(kayitTarihiSayi))
                 .filterBy(Condition.text("Gideceği Yer: " + gidecegiYer))
                 .filterBy(Condition.text("Konu: " + konu))
                 .filterBy(Condition.text("Hazırlayan Birim: " + hazirlayanBirim))
@@ -157,7 +157,7 @@ public class PostaListesiPage extends MainPage {
         if (shouldBeExist == true) {
 
             tableEvraklar
-                    .filterBy(Condition.text("Kayıt Tarihi / Sayı: " + kayitTarihiSayi))
+                    .filterBy(Condition.text(kayitTarihiSayi))
                     .filterBy(Condition.text("Gideceği Yer: " + gidecegiYer))
                     .filterBy(Condition.text("Konu: " + konu))
                     .filterBy(Condition.text("Hazırlayan Birim: " + hazirlayanBirim))
@@ -169,7 +169,7 @@ public class PostaListesiPage extends MainPage {
         } else {
 
             tableEvraklar
-                    .filterBy(Condition.text("Kayıt Tarihi / Sayı: " + kayitTarihiSayi))
+                    .filterBy(Condition.text(kayitTarihiSayi))
                     .filterBy(Condition.text("Gideceği Yer: " + gidecegiYer))
                     .filterBy(Condition.text("Konu: " + konu))
                     .filterBy(Condition.text("Hazırlayan Birim: " + hazirlayanBirim))
@@ -193,6 +193,24 @@ public class PostaListesiPage extends MainPage {
                 .first()
                 .shouldBe(Condition.exist)
                 .shouldBe(Condition.visible);
+
+        return this;
+    }
+
+    @Step("Posta listesinden çıkart.")
+    public PostaListesiPage postaListesindenCikart(String kayitTarihiSayi, String gidecegiYer, String konu, String hazirlayanBirim, String postTipi){
+        //
+
+        tableEvraklar
+                .filterBy(Condition.text(kayitTarihiSayi))
+                .filterBy(Condition.text("Gideceği Yer: " + gidecegiYer))
+                .filterBy(Condition.text("Konu: " + konu))
+                .filterBy(Condition.text("Hazırlayan Birim: " + hazirlayanBirim))
+                .filterBy(Condition.text("Posta Tipi: " + postTipi))
+                .first()
+                .$("button[id$='postaListesindenCikarButton']")
+                .click();
+
 
         return this;
     }

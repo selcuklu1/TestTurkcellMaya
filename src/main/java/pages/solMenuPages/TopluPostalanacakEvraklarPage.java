@@ -7,12 +7,14 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.testng.Assert;
 import pages.MainPage;
+import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
 
 
 import java.util.Arrays;
 
 import static com.codeborne.selenide.Selenide.*;
+import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 public class TopluPostalanacakEvraklarPage extends MainPage {
 
@@ -27,6 +29,22 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
     ElementsCollection listPostaListesi = $$("div[id='mainPreviewForm:tpbeSelectOneMenuId_panel'] > ul > li");
     SelenideElement btnListeyeEkle = $x("//span[text() = 'Listeye Ekle']/..");
     ElementsCollection tableEvraklar = $$("tbody[id='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
+    SelenideElement btnEvrakGoster = $x("//span[text() = 'Evrak Göster']/../../..//button");
+    SelenideElement txtListeAdi = $(By.id("mainPreviewForm:tpbeListeAdiInputTextId"));
+    SelenideElement btnListeOlustur = $(By.id("mainPreviewForm:listeOlusturButtonId"));
+    SelenideElement lblSecilenTuzelKisi = $("div[id='mainPreviewForm:tpbeGonderildigiTuzelKisiLovId:LovSecilen'] div[id^='mainPreviewForm:tpbeGonderildigiTuzelKisiLovId']");
+    SelenideElement lblSecilenGercekKisi = $("div[id='mainPreviewForm:tpbeGonderildigiGercekKisiLovId:LovSecilen'] div[id^='mainPreviewForm:tpbeGonderildigiGercekKisiLovId:']");
+    SelenideElement lblSecilenKurum = $("div[id='mainPreviewForm:tpbeGonderildigiKurumLovId:LovSecilen'] div[id^='mainPreviewForm:tpbeGonderildigiKurumLovId']");
+
+    SelenideElement btnSeciliTuzelKisiKaldir = $("div[id='mainPreviewForm:tpbeGonderildigiTuzelKisiLovId:LovSecilen'] button[id^='mainPreviewForm:tpbeGonderildigiTuzelKisiLovId']");
+    SelenideElement btnSeciliGercekKisiKaldir = $("div[id='mainPreviewForm:tpbeGonderildigiGercekKisiLovId:LovSecilen'] button[id^='mainPreviewForm:tpbeGonderildigiGercekKisiLovId']");
+    SelenideElement btnSeciliKurumKaldir = $("div[id='mainPreviewForm:tpbeGonderildigiKurumLovId:LovSecilen'] button[id^='mainPreviewForm:tpbeGonderildigiKurumLovId']");
+
+
+    BelgenetElement txtGonderildigiTuzelKisi = comboLov(By.id("mainPreviewForm:tpbeGonderildigiTuzelKisiLovId:LovText"));
+    BelgenetElement txtGonderildigiGercekKisi = comboLov(By.id("mainPreviewForm:tpbeGonderildigiGercekKisiLovId:LovText"));
+    BelgenetElement txtKurum = comboLov(By.id("mainPreviewForm:tpbeGonderildigiKurumLovId:LovText"));
+
 
 
     @Step("Toplu postalanacak evraklar sayfasını aç")
@@ -85,6 +103,52 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
 
 
         }
+
+        return this;
+    }
+
+    @Step("Gideceği yerler alanından tümünü işaretle/işaretini kaldır")
+    public TopluPostalanacakEvraklarPage gidecegiYerTumunuIsaretle(boolean isaretle) {
+
+        if(isaretle == true) {
+
+            for (int i = 0; i < tableGidecegiYer.size(); i++) {
+                Boolean isSelected = false;
+
+                SelenideElement currentRow = tableGidecegiYer.get(i);
+
+                SelenideElement chkBox = currentRow.$("div[class='ui-chkbox ui-widget']");
+
+                if (chkBox.$(By.xpath("./div[contains(@class, 'ui-state-active')]")).exists())
+                    isSelected = true;
+
+                if (isSelected == false)
+                    chkBox.click();
+
+            }
+
+
+        } else {
+
+
+            for (int i = 0; i < tableGidecegiYer.size(); i++) {
+                Boolean isSelected = false;
+
+                SelenideElement currentRow = tableGidecegiYer.get(i);
+
+                SelenideElement chkBox = currentRow.$("div[class='ui-chkbox ui-widget']");
+
+                if (chkBox.$(By.xpath("./div[contains(@class, 'ui-state-active')]")).exists())
+                    isSelected = true;
+
+                if (isSelected == true)
+                    chkBox.click();
+
+            }
+
+        }
+
+
 
         return this;
     }
@@ -188,10 +252,15 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
     @Step("Posta listesinden {postaListesi} sec")
     public TopluPostalanacakEvraklarPage postaListesiSec(String postaListesi) {
         btnPostaListesiDropDown.click();
-        listPostaListesi
+
+        SelenideElement currentItem = listPostaListesi
                 .filterBy(Condition.text(postaListesi))
-                .first()
-                .click();
+                .first();
+
+        Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", currentItem);
+
+        currentItem.click();
+
         return this;
     }
 
@@ -207,12 +276,14 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
         Boolean isSelected = false;
 
         SelenideElement currentRow = tableEvraklar
-                .filterBy(Condition.text("Kayıt Tarihi / Sayı: " + kayitTarihiSayi))
+                .filterBy(Condition.text(kayitTarihiSayi))
                 .filterBy(Condition.text("Gideceği Yer: " + gidecegiYer))
                 .filterBy(Condition.text("Konu: " + konu))
                 .filterBy(Condition.text("Hazırlayan Birim: " + hazirlayanBirim))
                 .filterBy(Condition.text("Posta Tipi: " + postTipi))
                 .first();
+
+        Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", currentRow);
 
         SelenideElement currentRowCheckBox = currentRow.$(By.xpath(".//div[contains(@class, 'ui-chkbox ui-widget')]"));
 
@@ -234,25 +305,30 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
     @Step("Evrak seç.")
     public TopluPostalanacakEvraklarPage evrakSec(String kayitTarihiSayi, String gidecegiYer, String konu, String hazirlayanBirim, String postTipi) {
 
-        tableEvraklar
-                .filterBy(Condition.text("Kayıt Tarihi / Sayı: " + kayitTarihiSayi))
+
+        SelenideElement currentRow = tableEvraklar
+                .filterBy(Condition.text(kayitTarihiSayi))
                 .filterBy(Condition.text("Gideceği Yer: " + gidecegiYer))
                 .filterBy(Condition.text("Konu: " + konu))
                 .filterBy(Condition.text("Hazırlayan Birim: " + hazirlayanBirim))
                 .filterBy(Condition.text("Posta Tipi: " + postTipi))
-                .first()
-                .click();
+                .first();
+
+        Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", currentRow);
+
+        currentRow.click();
+
 
         return this;
     }
 
     @Step("Evrak seç.")
-    public TopluPostalanacakEvraklarPage evraKkontrol(String kayitTarihiSayi, String gidecegiYer, String konu, String hazirlayanBirim, String postTipi, boolean shouldBeExist) {
+    public TopluPostalanacakEvraklarPage evrakKontrol(String kayitTarihiSayi, String gidecegiYer, String konu, String hazirlayanBirim, String postTipi, boolean shouldBeExist) {
 
         if (shouldBeExist == true) {
 
             tableEvraklar
-                    .filterBy(Condition.text("Kayıt Tarihi / Sayı: " + kayitTarihiSayi))
+                    .filterBy(Condition.text(kayitTarihiSayi))
                     .filterBy(Condition.text("Gideceği Yer: " + gidecegiYer))
                     .filterBy(Condition.text("Konu: " + konu))
                     .filterBy(Condition.text("Hazırlayan Birim: " + hazirlayanBirim))
@@ -264,7 +340,7 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
         } else {
 
             tableEvraklar
-                    .filterBy(Condition.text("Kayıt Tarihi / Sayı: " + kayitTarihiSayi))
+                    .filterBy(Condition.text(kayitTarihiSayi))
                     .filterBy(Condition.text("Gideceği Yer: " + gidecegiYer))
                     .filterBy(Condition.text("Konu: " + konu))
                     .filterBy(Condition.text("Hazırlayan Birim: " + hazirlayanBirim))
@@ -310,6 +386,81 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Evrak göster butonuna tıkla")
+    public TopluPostalanacakEvraklarPage evrakGoster(){
+        btnEvrakGoster.click();
+        return this;
+    }
+
+    @Step("Yeni liste oluştur ekranında liste adı gir: {listeAdi}")
+    public TopluPostalanacakEvraklarPage listeAdiDoldur(String listeAdi){
+        txtListeAdi.setValue(listeAdi);
+        return this;
+    }
+
+    @Step("Liste oluştur butnonuna tıkla")
+    public TopluPostalanacakEvraklarPage listeOlustur(){
+        btnListeOlustur.click();
+        return this;
+    }
+
+    @Step("Seçilen tüzel kişi: {tuzelKisi} olmalı")
+    public TopluPostalanacakEvraklarPage tuzelKisiKontrolet(String tuzelKisi){
+        Assert.assertEquals(tuzelKisi, lblSecilenTuzelKisi.innerText());
+        return this;
+    }
+
+    @Step("Seçili tüzel kişiyi kaldır")
+    public TopluPostalanacakEvraklarPage seciliTuzelKisiKaldir(){
+        btnSeciliTuzelKisiKaldir.click();
+        return this;
+    }
+
+    @Step("Seçili kurumu kaldır")
+    public TopluPostalanacakEvraklarPage seciliKurumKaldir(){
+        btnSeciliKurumKaldir.click();
+        return this;
+    }
+
+    @Step("Gönderildiği tüzel kişi seç: {tuzelKisi}")
+    public TopluPostalanacakEvraklarPage gonderildigiTuzelKisiSec(String tuzelKisi){
+        txtGonderildigiTuzelKisi.selectLov(tuzelKisi);
+        return this;
+    }
+
+    @Step("Gönderildiği kurum seç: {kurum}")
+    public TopluPostalanacakEvraklarPage gonderildigiKurumSec(String kurum){
+        txtKurum.selectLov(kurum);
+        return this;
+    }
+
+    @Step("Seçilen gerçek kişi: {gercekKisi} olmalı")
+    public TopluPostalanacakEvraklarPage gerceklKisiKontrolet(String gercekKisi){
+        if(lblSecilenGercekKisi.innerText().contains(gercekKisi))
+            Assert.assertEquals(true, true);
+        else
+            Assert.assertEquals(false, true);
+
+        return this;
+    }
+
+    @Step("Seçili gerçek kişiyi kaldır")
+    public TopluPostalanacakEvraklarPage seciliGercekKisiKaldir(){
+        btnSeciliGercekKisiKaldir.click();
+        return this;
+    }
+
+    @Step("Gönderildiği gerçek kişi seç: {gercekKkisi}")
+    public TopluPostalanacakEvraklarPage gonderildigiGercekKisiSec(String gercekKisi){
+        txtGonderildigiGercekKisi.selectLov(gercekKisi);
+        return this;
+    }
+
+    @Step("Seçilen kurum: {kurum} olmalı")
+    public TopluPostalanacakEvraklarPage kurumKontrolet(String kurum){
+        Assert.assertEquals(kurum, lblSecilenKurum.innerText());
+        return this;
+    }
 
 }
 
