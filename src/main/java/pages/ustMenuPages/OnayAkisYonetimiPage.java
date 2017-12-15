@@ -58,7 +58,7 @@ public class OnayAkisYonetimiPage extends MainPage {
     By txtKullanicilar = By.id("onayAkisiYonetimiEditorForm:onayAkisiYonetimiKullaniciBirimLov:LovText");
 
     //Değişecek burası
-    SelenideElement chkBirim = $(By.id("onayAkisiYonetimiEditorForm:j_idt7563"));
+    SelenideElement btnBirim = $(By.xpath("//div[@id='onayAkisiYonetimiEditorForm:onayAkisiYonetimiAkisOlusturPanel_content']/table[@role='grid']/tbody/tr[3]//div[@type='button']"));
     SelenideElement txtKullanicilarSelenide = $(By.id("onayAkisiYonetimiEditorForm:onayAkisiYonetimiKullaniciBirimLov:LovText"));
 
 
@@ -405,9 +405,9 @@ public class OnayAkisYonetimiPage extends MainPage {
     }
 
     @Step("Birim seç")
-    public OnayAkisYonetimiPage birimSec() {
-        chkBirim.shouldBe(visible);
-        chkBirim.click();
+    public OnayAkisYonetimiPage birimTikla() {
+        btnBirim.shouldBe(visible);
+        btnBirim.click();
         return this;
     }
 }

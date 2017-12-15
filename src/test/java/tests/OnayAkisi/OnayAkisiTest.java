@@ -643,15 +643,15 @@ public class OnayAkisiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC1892: Onay akışı güncellemede alan kontrolleri")
-    public void TC1892() throws InterruptedException {
+    @Test(enabled = true, description = "TC1892a: Onay akışı güncellemede alan kontrolleri")
+    public void TC1892a() {
 
-        String onayAkisi = "SezaiÇelik" + getSysDate();
-        String onayAkisi2 = "SezaiÇelik" + getSysDate();
+        String onayAkisi = "OptiimTest" + getSysDate();
+        String baskaKullanicininKaydettigiOnayAkisi = "SezaiÇelik" + getSysDate();
         String defaultGelenKullanici = "Optiim TEST";
+        String defaultGelenKullanici2 = "Sezai ÇELİK";
         String birimDisiKullanici = "MEHMET BAYER";
         String olanBirOnayAkisi = "Sezai Çelik2";
-        String baskaKullanicininKaydettigiOnayAkisi = "BarisTest 1";
         String dikkatMesaji = "Kullanıcı boş değer olamaz.";
         String dikkatMesaji2 = "Onay akışındaki kullanıcıların yapacağı işlemi seçiniz.";
         String dikkatMesaji3 = "Eklemek istediğiniz onay akışında imzacı bulunmuyor. Lütfen onay akışında en az bir imzacı seçiniz.";
@@ -681,7 +681,7 @@ public class OnayAkisiTest extends BaseTest {
         onayAkisYonetimiPage
                 .kullanicilarAlanindaGoruntulenmemeKontrolu(birimDisiKullanici)
                 .onayAkisiIslemlerKullaniciAlaniniSil()
-                .birimSec()
+                .birimTikla()
                 .onayAkisiIslemlerKullaniciDoldur(birimDisiKullanici)
                 .onayAkisiIslemleriKaydet()
                 .islemMesaji().dikkatOlmali(dikkatMesaji2);
@@ -709,11 +709,119 @@ public class OnayAkisiTest extends BaseTest {
                 .onayAkisiIslemleriKaydet()
                 .islemMesaji().dikkatOlmali(dikkatMesaji5);
 
-        //TODO: düzeltilecek
+        //TODO: Farklı kullanıcı ile gidip ekrandan yaratmak yerine sql query ile db den data çekilmelidir.
+        //Başka kullanıcı ile girilip onay akışı yaratılır.
+        login("sezaicelik", "123");
+
         onayAkisYonetimiPage
+                .openPage()
+                .yeniOnayAkisiEkle()
+                .onayAkisiIslemleriAdDoldur(baskaKullanicininKaydettigiOnayAkisi)
+                .kullaniciyaKullaniciTipiSec(defaultGelenKullanici2, "IMZALAMA")
+                .onayAkisiIslemleriKaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        login("optiim", "123");
+
+        onayAkisYonetimiPage
+                .openPage()
+                .filtredeAdDoldur(onayAkisi)
+                .ara()
+                .guncelle()
                 .onayAkisiIslemleriAdDoldur(baskaKullanicininKaydettigiOnayAkisi)
                 .onayAkisiIslemleriKaydet()
                 .islemMesaji().basariliOlmali(basariMesaji);
+
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TC1892b: Onay akışı kaydetmede alan kontrolleri")
+    public void TC1892b() {
+
+        String onayAkisi = "OptiimTest" + getSysDate();
+        String baskaKullanicininKaydettigiOnayAkisi = "SezaiÇelik" + getSysDate();
+        String defaultGelenKullanici = "Optiim TEST";
+        String defaultGelenKullanici2 = "Sezai ÇELİK";
+        String kullanici1 = "Zübeyde TEKİN";
+        String birimDisiKullanici = "MEHMET BAYER";
+        String olanBirOnayAkisi = "Sezai Çelik2";
+        String dikkatMesaji3 = "Eklemek istediğiniz onay akışında imzacı bulunmuyor. Lütfen onay akışında en az bir imzacı seçiniz.";
+        String dikkatMesaji4 = "Zorunlu alanları doldurunuz";
+        String dikkatMesaji5 = "Aynı isimde onay akışı bulunmaktadır. Aynı isimli birden fazla onay akışı kaydedemezsiniz.";
+        String dikkatMesaji6 = "Son kullanıcı imzacı olmalıdır!";
+        String basariMesaji = "İşlem başarılıdır!";
+
+        //Tüm dataları bozmamak için, kendi onay akışı yaratıp işlemleri onun üzerinden yapıyor.
+        onayAkisYonetimiPage
+                .openPage()
+                .yeniOnayAkisiEkle()
+                .onayAkisiIslemleriAdDoldur(onayAkisi)
+                .onayAkisiKullaniciKontrol(defaultGelenKullanici, "PARAFLAMA")
+                .kullaniciyaKullaniciTipiSec(defaultGelenKullanici, "IMZALAMA")
+                .onayAkisiIslemleriKaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        onayAkisYonetimiPage
+                .filtreAc()
+                .filtredeAdDoldur(onayAkisi)
+                .ara()
+                .guncelle()
+
+                .kullaniciyaKullaniciTipiSec(defaultGelenKullanici, "PARAFLAMA")
+                .kullanicilarAlanindaGoruntulenmemeKontrolu(birimDisiKullanici)
+                .onayAkisiIslemlerKullaniciAlaniniSil()
+                .birimTikla()
+                .onayAkisiIslemlerKullaniciDoldur(birimDisiKullanici)
+                .onayAkisiIslemleriKullaniciSil(birimDisiKullanici)
+                .onayAkisiIslemleriKaydet()
+                .islemMesaji().dikkatOlmali(dikkatMesaji3);
+
+        onayAkisYonetimiPage
+                .kullaniciyaKullaniciTipiSec(defaultGelenKullanici, "KONTROL")
+                .onayAkisiIslemleriKaydet()
+                .islemMesaji().dikkatOlmali(dikkatMesaji3);
+
+        onayAkisYonetimiPage
+                .onayAkisiIslemlerKullaniciDoldur(kullanici1)
+                .kullaniciyaKullaniciTipiSec(kullanici1, "IMZALAMA")
+                .onayAkisiKullaniciEnAlttaGetirme(defaultGelenKullanici)
+                .onayAkisiIslemleriKaydet()
+                .islemMesaji().dikkatOlmali(dikkatMesaji6);
+
+        onayAkisYonetimiPage
+                .onayAkisiIslemleriAdSil() //data yaratığımızda isim dolu oluyor o yüzden silinmeli.
+                .kullaniciyaKullaniciTipiSec(defaultGelenKullanici, "IMZALAMA")
+                .onayAkisiIslemleriKaydet()
+                .islemMesaji().uyariOlmali(dikkatMesaji4);
+
+        onayAkisYonetimiPage
+                .onayAkisiIslemleriAdDoldur(olanBirOnayAkisi)
+                .onayAkisiIslemleriKaydet()
+                .islemMesaji().dikkatOlmali(dikkatMesaji5);
+
+        //TODO: Farklı kullanıcı ile gidip ekrandan yaratmak yerine sql query ile db den data çekilmelidir.
+        //Başka kullanıcı ile girilip onay akışı yaratılır.
+        login("sezaicelik", "123");
+
+        onayAkisYonetimiPage
+                .openPage()
+                .yeniOnayAkisiEkle()
+                .onayAkisiIslemleriAdDoldur(baskaKullanicininKaydettigiOnayAkisi)
+                .kullaniciyaKullaniciTipiSec(defaultGelenKullanici2, "IMZALAMA")
+                .onayAkisiIslemleriKaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        login("optiim", "123");
+
+        onayAkisYonetimiPage
+                .openPage()
+                .filtredeAdDoldur(onayAkisi)
+                .ara()
+                .guncelle()
+                .onayAkisiIslemleriAdDoldur(baskaKullanicininKaydettigiOnayAkisi)
+                .onayAkisiIslemleriKaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
     }
 }
 
