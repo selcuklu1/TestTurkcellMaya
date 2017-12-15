@@ -8,6 +8,7 @@ import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.TextEditor;
+import pages.pageComponents.UstMenu;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
 import static com.codeborne.selenide.Condition.*;
@@ -22,12 +23,13 @@ public class OlurYazisiOlusturPage extends MainPage {
     private EditorTab editorTab = new EditorTab();
     //endregion
 
-    SelenideElement tabBilgiler = $("button[id^='yeniOnayEvrakForm:onayEvrakLeftTab:uiRepeat'] span[class$='kullaniciBilgileri']");
+    SelenideElement tabBilgiler = $("button[id^='yeniOnayEvrakForm'] span[class$='kullaniciBilgileri']");
+    //SelenideElement tabBilgiler = $("button .kullaniciBilgileri");
     SelenideElement tabEditor = $("button .editor");
 
-    @Step("Olur yazısı oluştur sayfasını aç")
+    @Step("Olur Yazısı Oluştur sayfasını aç")
     public OlurYazisiOlusturPage openPage() {
-        ustMenu("Olur Yazısı Oluştur");
+        new UstMenu().ustMenu("Olur Yazısı Oluştur");
         return this;
     }
 
@@ -39,7 +41,7 @@ public class OlurYazisiOlusturPage extends MainPage {
 
     public class BilgilerTab extends MainPage {
 
-        SelenideElement divContainer = $("#evrakBilgileriContainerDiv");
+        SelenideElement divContainer = $("[id='yeniOnayEvrakForm' ] [id='evrakBilgileriContainerDiv']");
 
         // Onay Akışı Elementleri
         SelenideElement btnOnayAkisiEkle = $("#yeniOnayEvrakForm button[id*='onayAkisiEkle']");
@@ -151,6 +153,7 @@ public class OlurYazisiOlusturPage extends MainPage {
         public BilgilerTab onayAkisiAlanindaGoruntulenmemeKontrolu(String onayAkisi) {
 
             comboLov(cmbOnayAkisiBy).type(onayAkisi).titleItems().filterBy(exactText(onayAkisi)).shouldHaveSize(0);
+            comboLov(cmbOnayAkisiBy).closeLovTreePanel();
             System.out.println("MyCombolov alanında " + onayAkisi + ": Onay Akışın görüntülenmediği görülür.");
 
             return this;

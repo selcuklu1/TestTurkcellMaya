@@ -7,6 +7,7 @@ import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
 import org.openqa.selenium.*;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -659,6 +660,21 @@ public class BaseLibrary {
             case "Hayır":
                 btnIslemOnayiHayir.click();
                 break;
+        }
+    }
+
+    //Test edilmeli.
+    public static void setDocPath(WebDriver driver) {
+        // Get Browser name and version.
+        Capabilities caps = ((RemoteWebDriver) driver).getCapabilities();
+        // String browserName = caps.getBrowserName();
+        // String browserVersion = caps.getVersion();
+        Platform operationSystem = caps.getPlatform();
+        System.out.println("Operation System: " + operationSystem.name());
+        if (operationSystem.is(Platform.WINDOWS)) {
+            String docPath = "C:\\TestAutomation\\TurksatPOC\\";
+        } else {
+            String docPath = "/selenium/";
         }
     }
 

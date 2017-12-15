@@ -60,6 +60,7 @@ public class EvrakOlusturPage extends MainPage {
 
     ElementsCollection tblVekaletVerenAlan =$$("[id='yeniGidenEvrakForm:kullaniciBirimSecenekleri_data'] tr[role='row']");
     //endregion
+
     @Step("Evrak Oluştur sayfası aç")
     public EvrakOlusturPage openPage() {
         new UstMenu().ustMenu("Evrak Oluştur");
@@ -280,6 +281,7 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("")
         public BilgilerTab kullniciIsmineGoreImzaParafSec(String kullanici, String value) {
+
             tblKullanıcılar2.filterBy(Condition.text(kullanici)).first()
                     .$("select")
                     .selectOptionByValue(value);
@@ -718,6 +720,7 @@ public class EvrakOlusturPage extends MainPage {
         public BilgilerTab onayAkisiAlanindaGoruntulenmemeKontrolu(String onayAkisi) {
 
             comboLov(cmbOnayAkisiBy).type(onayAkisi).titleItems().filterBy(exactText(onayAkisi)).shouldHaveSize(0);
+            comboLov(cmbOnayAkisiBy).closeLovTreePanel();
             System.out.println("MyCombolov alanında " + onayAkisi + ": Onay Akışın görüntülenmediği görülür.");
 
             return this;

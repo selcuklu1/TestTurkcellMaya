@@ -40,7 +40,7 @@ public class OnayAkisiTest extends BaseTest {
     public void TC2112PasifYapma() {
 
         String onayAkisAdi = "Optiim";
-        String kullanici = "Sezai Çelik";
+        String kullanici = "TC2112 OnayAkisi";
         String basariMesaji = "İşlem başarılıdır!";
 
         //tests.Data kontrolu için yazıldı. Pasif ise aktif yapılır.
@@ -103,7 +103,7 @@ public class OnayAkisiTest extends BaseTest {
     public void TC2112AktifYapma() {
 
         String onayAkisAdi = "Optiim";
-        String kullanici = "Sezai Çelik";
+        String kullanici = "TC2112 OnayAkisi";
         String basariMesaji = "İşlem başarılıdır!";
 
         //tests.Data kontrolu için yazıldı. Pasif ise aktif yapılır.
@@ -289,7 +289,7 @@ public class OnayAkisiTest extends BaseTest {
     @Test(enabled = true, description = "TC1897a: Varsayılan onay akışının pasif edilmesi")
     public void TC1897a() {
 
-        String kullanici = "Sezai Çelik";
+        String kullanici = "TC1897 OnayAkisi";
         String basariMesaji = "İşlem başarılıdır!";
 
         //tests.Data kontrolu için yazıldı. Pasif ise aktif yapılır.
@@ -352,7 +352,7 @@ public class OnayAkisiTest extends BaseTest {
     @Test(enabled = true, description = "TC1897b: Onay akışı varsayılan yapma")
     public void TC1897b() {
 
-        String kullanici = "Sezai Çelik";
+        String kullanici = "TC1897 OnayAkisi";
         String basariMesaji = "İşlem başarılıdır!";
 
         //tests.Data kontrolu için yazıldı. Pasif ise aktif yapılır.
@@ -406,7 +406,7 @@ public class OnayAkisiTest extends BaseTest {
                 .onayAkisiKullaniciKontrol(vekaletAlan, "PARAFLAMA")
                 .onayAkisiKullaniciKontrol(kullanici2, "IMZALAMA")
                 .onayAkisiVekaletKontrol(vekaletVeren)
-                .kullniciIsmineGoreImzaParafSec(kullanici2, "İmzalama")
+                .kullaniciyaKullaniciTipiSec(kullanici2, "IMZALAMA")
                 .onayAkisiKullan()
                 .kaldiralacakKlasorlerSec(kaldirilacakKlasorler);
 
@@ -869,7 +869,6 @@ public class OnayAkisiTest extends BaseTest {
                 .onayAkisiKullaniciKontrol(kullanici2, "KONTROL")
                 .onayAkisiKullaniciKoordineKontrol(kullanici4, "Koordine")
                 .onayAkisiKullaniciKontrol(kullanici3, "IMZALAMA");
-
 
         olurYazisiOlusturPage
                 .openPage()

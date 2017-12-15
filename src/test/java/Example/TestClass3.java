@@ -20,7 +20,7 @@ public class TestClass3 extends BaseTest {
 
     @BeforeMethod
     public void loginBeforeTests() {
-        login();
+      //  login();
     }
 /*
     MainPage page = new MainPage();
@@ -99,6 +99,11 @@ public class TestClass3 extends BaseTest {
         WebDriverRunner.getWebDriver().switchTo().window(winHandleBefore);
 
         log.info("New window");
+    }
+
+    @Test()
+    public void setPathTest() {
+        setDocPath(WebDriverRunner.getWebDriver());
     }
 
 }
