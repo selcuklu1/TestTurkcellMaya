@@ -58,7 +58,7 @@ public class GenelEvrakRaporuPage extends MainPage {
         return this;
     }
 
-    @Step("")
+    @Step("Detay ekran kontrolü")
     public GenelEvrakRaporuPage detayEkranınıAcildigiKontrolu() {
         $("[id='windowReadOnlyEvrakDialog'] span").shouldBe(Condition.text("Evrak Detayı"));
         return this;

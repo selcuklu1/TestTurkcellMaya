@@ -188,7 +188,7 @@ login("gsahin","123");
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true,dependsOnMethods = {"TC1938()"},description = "Genel evrak raporunda gizlilik klerans kontrolü (evrakta izi olan kullanıcı ile)\n")
+    @Test(enabled = true,dependsOnMethods = {"TC1938"}, description = "Genel evrak raporunda gizlilik klerans kontrolü (evrakta izi olan kullanıcı ile)\n")
     public void TC2226() throws InterruptedException{
 
         login(username,password);
@@ -200,5 +200,7 @@ login("gsahin","123");
                 .tabloEvrakNoKontrol(evrakNo)
                 .tablodaDetayTikla(evrakNo)
                 .detayEkranınıAcildigiKontrolu();
+
+
     }
 }
