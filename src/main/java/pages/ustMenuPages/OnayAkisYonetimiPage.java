@@ -370,14 +370,14 @@ public class OnayAkisYonetimiPage extends MainPage {
         return this;
     }
 
-    public OnayAkisYonetimiPage kullaniciyaKullaniciTipiSec(String kullanici, String secim) {
+    public OnayAkisYonetimiPage kullaniciyaKullaniciTipiSec(String kullanici, String secimTipi) {
 
         trOnayAkisiEkleKullanicilar
                 .filterBy(text(kullanici))
                 .get(0)
                 .shouldBe(exist)
                 .$("select[id*='onayAkisiYonetimiIslemTipi']")
-                .selectOptionByValue(secim);
+                .selectOptionByValue(secimTipi);
 
         return this;
     }

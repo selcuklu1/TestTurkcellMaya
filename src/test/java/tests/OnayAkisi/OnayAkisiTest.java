@@ -709,7 +709,7 @@ public class OnayAkisiTest extends BaseTest {
                 .onayAkisiIslemleriKaydet()
                 .islemMesaji().dikkatOlmali(dikkatMesaji5);
 
-        //TODO: Farklı kullanıcı ile gidip ekrandan yaratmak yerine sql query ile db den data çekilmelidir.
+        //TODO: Farklı kullanıcı ile girilip ekrandan yaratmak yerine sql query ile db den data çekilmelidir.
         //Başka kullanıcı ile girilip onay akışı yaratılır.
         login("sezaicelik", "123");
 
@@ -799,7 +799,7 @@ public class OnayAkisiTest extends BaseTest {
                 .onayAkisiIslemleriKaydet()
                 .islemMesaji().dikkatOlmali(dikkatMesaji5);
 
-        //TODO: Farklı kullanıcı ile gidip ekrandan yaratmak yerine sql query ile db den data çekilmelidir.
+        //TODO: Farklı kullanıcı ile girilip ekrandan yaratmak yerine sql query ile db den data çekilmelidir.
         //Başka kullanıcı ile girilip onay akışı yaratılır.
         login("sezaicelik", "123");
 
@@ -823,6 +823,76 @@ public class OnayAkisiTest extends BaseTest {
                 .islemMesaji().basariliOlmali(basariMesaji);
 
     }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TC2110: Onay Akışı Yönetimi - Yeni Onay Akışı Oluşturma ve evrak üzerinde kontrolü")
+    public void TC2110() {
+
+        String onayAkisi = "ÇelikSezai" + getSysDate();
+        String defaultGelenKullanici = "Optiim TEST";
+        String kullanici2 = "Sezai ÇELİK";
+        String kullanici3 = "MEHMET EMİN YÜCEANT";
+        String kullanici4 = "Zübeyde TEKİN";
+        String kullanici5 = "MEHMET BAYER"; //birim dışı kullanıcı
+        String dikkatMesaji1 = "Onay akışındaki kullanıcıların yapacağı işlemi seçiniz.";
+        String basariMesaji = "İşlem başarılıdır!";
+
+        onayAkisYonetimiPage
+                .openPage()
+                .yeniOnayAkisiEkle()
+                .onayAkisiIslemleriAdDoldur(onayAkisi)
+                .onayAkisiIslemlerKullaniciDoldur(kullanici2)
+                .kullaniciyaKullaniciTipiSec(kullanici2, "KONTROL")
+                .onayAkisiIslemlerKullaniciDoldur(kullanici3)
+                .koordineliSec(true)
+                .onayAkisiIslemlerKullaniciDoldur(kullanici4)
+                .onayAkisiKullaniciKontrol(kullanici4, "KOORDINE")
+                .koordineliSec(true)
+                .birimTikla()
+                .onayAkisiIslemleriAdDoldur(onayAkisi) //Birim tıklandıktan sonra burası siliniyor. O yüzden tekrar eklendi.
+                .onayAkisiIslemlerKullaniciDoldur(kullanici5)
+                .kullaniciyaKullaniciTipiSec(kullanici5, "IMZALAMA")
+                .onayAkisiIslemleriKaydet()
+                .islemMesaji().dikkatOlmali(dikkatMesaji1);
+
+        onayAkisYonetimiPage
+                .kullaniciyaKullaniciTipiSec(kullanici3, "IMZALAMA")
+                .onayAkisiIslemleriKaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .onayAkisiDoldur(onayAkisi)
+                .onayAkisiGuncelle()
+                .onayAkisiKullaniciKontrol(defaultGelenKullanici, "PARAFLAMA")
+                .onayAkisiKullaniciKontrol(kullanici2, "KONTROL")
+                .onayAkisiKullaniciKoordineKontrol(kullanici4, "Koordine")
+                .onayAkisiKullaniciKontrol(kullanici3, "IMZALAMA");
+
+
+        olurYazisiOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .onayAkisDoldur(onayAkisi)
+                .onayAkisiGuncelle()
+                .onayAkisiKullaniciKontrol(defaultGelenKullanici, "PARAFLAMA")
+                .onayAkisiKullaniciKontrol(kullanici2, "KONTROL")
+                .onayAkisiKullaniciKoordineKontrol(kullanici4, "Koordine")
+                .onayAkisiKullaniciKontrol(kullanici3, "IMZALAMA");
+
+        kararYazisiOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .onayAkisiDoldur(onayAkisi)
+                .onayAkisiGuncelle()
+                .onayAkisiKullaniciKontrol(defaultGelenKullanici)
+                .onayAkisiKullaniciKontrol(kullanici2)
+                .onayAkisiKullaniciKontrol(kullanici4)
+                .onayAkisiKullaniciKontrol(kullanici3);
+        
+    }
+
 }
 
 
