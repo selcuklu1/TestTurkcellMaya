@@ -48,10 +48,11 @@ public class OlurYazisiOlusturPage extends MainPage {
         SelenideElement txtOnayAkisiKullanicilarInput = $("input[id^='yeniOnayEvrakForm:evrakBilgileriList:'][id$=':akisAdimLov:LovText']");
         SelenideElement btnOnayAkisiPanelKapat = $("button[id^='yeniOnayEvrakForm:evrakBilgileriList:'][id$=':akisLov:lovTreePanelKapat']");
         BelgenetElement cmbOnayAkisi = comboLov(By.cssSelector("[id^='yeniOnayEvrakForm:evrakBilgileriList'][id$='akisLov:LovText']"));
+        BelgenetElement cmbKullanici = comboLov(By.cssSelector("[id^='yeniOnayEvrakForm:evrakBilgileriList'][id$='akisAdimLov:LovText']"));
         By cmbOnayAkisiBy = By.cssSelector("[id^='yeniOnayEvrakForm:evrakBilgileriList'][id$='akisLov:LovText']");
         SelenideElement cmbSelectOneMenu = $(By.id("yeniOnayEvrakForm:evrakBilgileriList:14:akisAdimLov:LovSecilenTable:0:selectOneMenu"));
         SelenideElement btnOnayAkisGuncelle = $(By.cssSelector("[id^='yeniOnayEvrakForm:evrakBilgileriList:14:akisLov:j_idt'] [class$='update-icon']"));
-
+        SelenideElement btnKullan = $("[id^='yeniOnayEvrakForm:evrakBilgileriList'][id$='anlikAkisKullanButton']");
 
         //endregion
 
@@ -124,6 +125,14 @@ public class OlurYazisiOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Onay akışı kullanıcı doldurma ve görüntüleme kontrolu")
+        public BilgilerTab onayAkisiKullaniciDoldur(String kullanici) {
+            cmbKullanici.shouldBe(visible);
+            cmbKullanici.selectLov(kullanici);
+            return this;
+        }
+
+
         @Step("Seçilen onay akışı detail kontrolu: \"{secim}\" ")
         public BilgilerTab onayAkisiDetailKontrol(String secim) {
             System.out.println("Gelen detail:     " + cmbOnayAkisi.lastSelectedLovDetailText());
@@ -150,6 +159,24 @@ public class OlurYazisiOlusturPage extends MainPage {
         @Step("Onay akışı güncelle")
         public BilgilerTab onayAkisiGuncelle() {
             btnOnayAkisGuncelle.click();
+            return this;
+        }
+
+        public BilgilerTab kullaniciyaKullaniciTipiSec(String kullanici, String secimTipi) {
+
+            trOnayAkisiEkleKullanicilar
+                    .filterBy(text(kullanici))
+                    .get(0)
+                    .shouldBe(exist)
+                    .$("select[id*='selectOneMenu']")
+                    .selectOptionByValue(secimTipi);
+
+            return this;
+        }
+
+        @Step("Kullan")
+        public BilgilerTab kullan() {
+            clickJs(btnKullan);
             return this;
         }
 

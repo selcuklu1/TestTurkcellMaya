@@ -1,5 +1,8 @@
 package pages.solMenuPages;
 
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
@@ -8,6 +11,7 @@ import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboBox;
 
 /****************************************************
@@ -38,6 +42,12 @@ public class PostaListesiPage extends MainPage {
     SelenideElement lblTutar = $(By.xpath("//label[contains(text(), 'Tutar : ')]"));
     SelenideElement txtTutar = $(By.id("mainPreviewForm:j_idt2585"));
 
+    // Hüseyin
+
+    SelenideElement divFiltrePanelBaslik = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion"));
+    ElementsCollection tableEvraklar = $$("tbody[id='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
+
+
 
     @Step("Posta Listesi Sayfasını aç")
     public PostaListesiPage openPage() {
@@ -52,11 +62,9 @@ public class PostaListesiPage extends MainPage {
     }
 
     @Step("Posta Listesi doldur")
-    public PostaListesiPage postaListesiDoldur(String postaListesi) throws InterruptedException {
-        txtPostaListesi.sendKeys(postaListesi);
-        Thread.sleep(2000);
-//        $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:postaListesiAdi_panel"))
-//                .waitUntil(Condition.visible,1);
+    public PostaListesiPage postaListesiDoldur(String postaListesi) {
+        txtPostaListesi.setValue(postaListesi);
+        Selenide.sleep(2000);
         txtPostaListesi.pressEnter();
         return this;
     }
@@ -127,5 +135,86 @@ public class PostaListesiPage extends MainPage {
         txtTutar.sendKeys(tutar);
         return this;
     }
+
+    @Step("Evrak seç.")
+    public PostaListesiPage evrakSec(String kayitTarihiSayi, String gidecegiYer, String konu, String hazirlayanBirim, String postTipi) {
+
+        tableEvraklar
+                .filterBy(Condition.text(kayitTarihiSayi))
+                .filterBy(Condition.text("Gideceği Yer: " + gidecegiYer))
+                .filterBy(Condition.text("Konu: " + konu))
+                .filterBy(Condition.text("Hazırlayan Birim: " + hazirlayanBirim))
+                .filterBy(Condition.text("Posta Tipi: " + postTipi))
+                .first()
+                .click();
+
+        return this;
+    }
+
+    @Step("Evrak kontrolü")
+    public PostaListesiPage evrakKontrol(String kayitTarihiSayi, String gidecegiYer, String konu, String hazirlayanBirim, String postTipi, boolean shouldBeExist) {
+
+        if (shouldBeExist == true) {
+
+            tableEvraklar
+                    .filterBy(Condition.text(kayitTarihiSayi))
+                    .filterBy(Condition.text("Gideceği Yer: " + gidecegiYer))
+                    .filterBy(Condition.text("Konu: " + konu))
+                    .filterBy(Condition.text("Hazırlayan Birim: " + hazirlayanBirim))
+                    .filterBy(Condition.text("Posta Tipi: " + postTipi))
+                    .first()
+                    .shouldBe(Condition.exist)
+                    .shouldBe(Condition.visible);
+
+        } else {
+
+            tableEvraklar
+                    .filterBy(Condition.text(kayitTarihiSayi))
+                    .filterBy(Condition.text("Gideceği Yer: " + gidecegiYer))
+                    .filterBy(Condition.text("Konu: " + konu))
+                    .filterBy(Condition.text("Hazırlayan Birim: " + hazirlayanBirim))
+                    .filterBy(Condition.text("Posta Tipi: " + postTipi))
+                    .first()
+                    .shouldNotBe(Condition.exist)
+                    .shouldNotBe(Condition.visible);
+
+        }
+        return this;
+    }
+
+    ElementsCollection tableEvrakListesi = $$("tbody[id='mainPreviewForm:dataTableId_data'] > tr[role='row']");
+
+    @Step("{0}")
+    public PostaListesiPage evrakListesiKontrol(String gonderilenYer, String evrakSayisiEvrakKonusu){
+
+        tableEvrakListesi
+                .filterBy(Condition.text(gonderilenYer))
+                .filterBy(Condition.text(evrakSayisiEvrakKonusu))
+                .first()
+                .shouldBe(Condition.exist)
+                .shouldBe(Condition.visible);
+
+        return this;
+    }
+
+    @Step("Posta listesinden çıkart.")
+    public PostaListesiPage postaListesindenCikart(String kayitTarihiSayi, String gidecegiYer, String konu, String hazirlayanBirim, String postTipi){
+        //
+
+        tableEvraklar
+                .filterBy(Condition.text(kayitTarihiSayi))
+                .filterBy(Condition.text("Gideceği Yer: " + gidecegiYer))
+                .filterBy(Condition.text("Konu: " + konu))
+                .filterBy(Condition.text("Hazırlayan Birim: " + hazirlayanBirim))
+                .filterBy(Condition.text("Posta Tipi: " + postTipi))
+                .first()
+                .$("button[id$='postaListesindenCikarButton']")
+                .click();
+
+
+        return this;
+    }
+
+
 }
 
