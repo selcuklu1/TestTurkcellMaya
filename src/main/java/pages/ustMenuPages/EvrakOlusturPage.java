@@ -736,9 +736,9 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        public BilgilerTab onayAkisiKullaniciSil(String yeniKullanici) {
+        public BilgilerTab onayAkisiKullaniciSil(String kullanici) {
             trOnayAkisiEkleKullanicilar
-                    .filterBy(text(yeniKullanici))
+                    .filterBy(text(kullanici))
                     .get(0)
                     .shouldBe(exist)
                     .$("[class$='delete-icon']").click();
@@ -810,7 +810,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Kullan butonu")
+        @Step("Kullan")
         public BilgilerTab kullan() {
             clickJs(btnKullan);
             return this;

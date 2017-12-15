@@ -890,9 +890,63 @@ public class OnayAkisiTest extends BaseTest {
                 .onayAkisiKullaniciKontrol(kullanici2)
                 .onayAkisiKullaniciKontrol(kullanici4)
                 .onayAkisiKullaniciKontrol(kullanici3);
-        
+
     }
 
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TC2111: Onay Akışı Yönetimi - Kayıtlı Onay Akışınu kullanım sırasında anlık değiştirme")
+    public void TC2111() {
+
+        String onayAkisi = "TC2111 Onay Akisi"; //parafçı, kontrolcu, koordinecisi ve imzacısı olmalı.
+        String kullanici1 = "Optiim TEST"; //parafçı
+        String kullanici2 = "Zübeyde TEKİN"; //koordineci
+        String kullanici3 = "Sezai ÇELİK"; //kontrolcu
+        String kullanici4 = "MEHMET EMİN YÜCEANT"; //imzacı
+        String eklenecekYeniKullanici = "Mehmet BOZDEMİR";
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .onayAkisiDoldur(onayAkisi)
+                .onayAkisiDetailKontrol("Paraflama")
+                .onayAkisiDetailKontrol("Koordine")
+                .onayAkisiDetailKontrol("Kontrol")
+                .onayAkisiDetailKontrol("İmzalama")
+                .onayAkisiGuncelle()
+                .onayAkisiKullaniciSil(kullanici3)
+                .kullan()
+                .onayAkisiDetailKontrol("Paraflama")
+                .onayAkisiDetailKontrol("Koordine")
+                .onayAkisiDetailKontrol("İmzalama");
+
+        olurYazisiOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .onayAkisDoldur(onayAkisi)
+                .onayAkisiDetailKontrol("Paraflama")
+                .onayAkisiDetailKontrol("Koordine")
+                .onayAkisiDetailKontrol("Kontrol")
+                .onayAkisiDetailKontrol("İmzalama")
+                .onayAkisiGuncelle()
+                .onayAkisiKullaniciDoldur(eklenecekYeniKullanici)
+                .kullaniciyaKullaniciTipiSec(eklenecekYeniKullanici, "IMZALAMA")
+                .kullan()
+                .onayAkisiDetailKontrol("Paraflama")
+                .onayAkisiDetailKontrol("Koordine")
+                .onayAkisiDetailKontrol("Kontrol")
+                .onayAkisiDetailKontrol("İmzalama")
+                .onayAkisiDetailKontrol("İmzalama");
+
+        kararYazisiOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .onayAkisiDoldur(onayAkisi)
+                .onayAkisiGuncelle()
+                .onayAkisiKullaniciKontrol(kullanici1)
+                .onayAkisiKullaniciKontrol(kullanici2)
+                .onayAkisiKullaniciKontrol(kullanici3)
+                .onayAkisiKullaniciKontrol(kullanici4);
+    }
 }
 
 
