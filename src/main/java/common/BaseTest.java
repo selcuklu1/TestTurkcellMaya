@@ -19,10 +19,6 @@ public class BaseTest extends BaseLibrary {
 
     @BeforeClass
     public void driverSetUp() {
-
-
-//        killProcess();
-
        // killProcess();
 
         Locale turkishLocal = new Locale("tr", "TR");
