@@ -203,7 +203,7 @@ public class GizlilikKleransiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "Evrak aramada gizlilik kleransı kontrolü (evrakta izi olan kullanıcı ile)\n")
+    @Test(enabled = true, dependsOnMethods = {"TC1938"}, description = "Evrak aramada gizlilik kleransı kontrolü (evrakta izi olan kullanıcı ile)\n")
     public void TC2140() throws InterruptedException {
 
         login("gsahin", "123");
@@ -212,7 +212,7 @@ public class GizlilikKleransiTest extends BaseTest {
         String aranacagiYer = "İşlem Yaptıklarımda Ara";
         String aramaKriteri = "Evrakın Kayıt Sayısı";
         String evrakTipi = "Giden Evrak";
-        
+
         evrakAramaPage
                 .openPage()
                 .gidenEvrakSec()
@@ -243,6 +243,9 @@ public class GizlilikKleransiTest extends BaseTest {
                 .dokumanAra()
                 .tabloEvrakNoKontrol(evrakNo)
                 .tablodaDetayTikla(evrakNo)
-                .evrakAramaKapat();
+                .evrakAramaKapat()
+                .tablodaIlgiEkleTıkla(evrakNo)
+                .tablodaIlgiEkleKontrolu();
+
     }
 }

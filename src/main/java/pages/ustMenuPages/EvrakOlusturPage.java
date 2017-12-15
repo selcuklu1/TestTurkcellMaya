@@ -1223,6 +1223,8 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement btnSistemdeDokumanAra = $(By.id("yeniGidenEvrakForm:evrakEkTabView:dokumanAraButton"));
         SelenideElement txtEvrakArama = $(By.id("yeniGidenEvrakForm:evrakEkTabView:evrakAramaText"));
         ElementsCollection tblSistemdeKayitliEvrakListe = $$("[id='yeniGidenEvrakForm:evrakEkTabView:sistemdeKayitliEvrakListesiDataTable_data'] tr[role='row']");
+        ElementsCollection tblEkListesi = $$("[id='yeniGidenEvrakForm:ekListesiDataTable_data'] tr[role='row']");
+        SelenideElement btnIlgiEkle = $("[id^='yeniGidenEvrakForm:evrakEkTabView:sistemdeKayitliEvrakListesiDataTable'][id$='ekEkleButton1']");
 
         //Ekleri tabı - Arşivde Kayıtlı Evrak Ekle
         SelenideElement dateArsivdeEvrakAraTarihiBaslangic = $(By.id("yeniGidenEvrakForm:evrakEkTabView:arsivdenEvrakAraEkEkleTarihBasId_input"));
@@ -1306,17 +1308,32 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Tablodao detay butonuna tıkla")
+        @Step("Tabloda detay butonuna tıkla")
         public EkleriTab tablodaDetayTikla(String evrakNo) {
             tblSistemdeKayitliEvrakListe
                     .filterBy(Condition.text(evrakNo)).first()
                     .$("[id^='yeniGidenEvrakForm:evrakEkTabView:sistemdeKayitliEvrakListesiDataTable'][id$='detayGosterButton']").click();
             return this;
         }
+
+        @Step("Tabloda detay butonuna tıkla")
+        public EkleriTab tablodaIlgiEkleTıkla(String evrakNo) {
+            tblSistemdeKayitliEvrakListe
+                    .filterBy(Condition.text(evrakNo)).first()
+                    .$("[id^='yeniGidenEvrakForm:evrakEkTabView:sistemdeKayitliEvrakListesiDataTable'][id$='ekEkleButton1']").click();
+            return this;
+        }
         @Step("Evrak Arama ekranı kapat")
         public EkleriTab evrakAramaKapat() {
             $(By.xpath("//div[@id='windowReadOnlyEvrakDialog']//span[@class='ui-icon ui-icon-closethick']")).click();
             islemPenceresiKapatmaOnayiPopup("Kapat");
+            return this;
+        }
+
+        @Step("Ilgi ekle tablo kontrolü")
+        public EkleriTab tablodaIlgiEkleKontrolu() {
+            tblEkListesi
+                    .shouldHaveSize(1);
             return this;
         }
 
