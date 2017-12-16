@@ -46,6 +46,9 @@ public class GelenEvraklarPage extends MainPage {
     SelenideElement btnHavaleYapGonder = $("[id^='mainPreviewForm:j_idt'] [class$='havaleGonderButonClass']");
     SelenideElement btnHavaleYapHavaleOnayinaGonder = $(By.id("mainPreviewForm:j_idt30599"));
     ElementsCollection tblVekaletVerenAlan =$$("[id='mainPreviewForm:kullaniciBirimSecenekleriHavaleIcin_data'] tr[role='row']");
+    ElementsCollection tblEvrak = $$("[id^='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
+    BelgenetElement txtHavaleYapKisi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKullaniciLov:LovText"));
+    BelgenetElement txtHavaleYapKullaniciListesi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKisiListesiLov:LovText"));
 
     // Tebiğ Et Buttonu altı div
     SelenideElement btnTebligEt = $(By.xpath("//span[contains(@class, 'tebligEt')]/.."));
@@ -84,9 +87,49 @@ public class GelenEvraklarPage extends MainPage {
     SelenideElement evrakSec = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
 
     BelgenetElement cmbOnayAkisi = comboLov(By.cssSelector("[id^='windowCevapEvrakForm:evrakBilgileriList'][id$='akisLov:LovText']"));
+    BelgenetElement txtTakipListesiKullanicilar = comboLov(By.id("evrakTakibimeEkleDialogForm:takipListLov:LovText"));
+    SelenideElement btnTakipListesiKapat =$("[id^='evrakTakibimeEkleDialogForm:takipDialog'] span[class='ui-icon ui-icon-closethick']");
 
     public GelenEvraklarPage openPage() {
         solMenu(SolMenuData.IslemBekleyenEvraklar.GelenEvraklar);
+        return this;
+    }
+
+    @Step("Tablodan rapor seç")
+    public GelenEvraklarPage gizlilikRaporSecTakibeEkle(String konu, String yer, String tarih, String no) {
+        tblEvrak.filterBy(Condition.text(konu)).filterBy(Condition.text(yer))
+                .filterBy(Condition.text(tarih))
+                .filterBy(Condition.text(no)).get(0)
+                .$$("button[id^='mainInboxForm:inboxDataTable:']").get(0).click();
+        return this;
+    }
+
+    @Step("Kullancılar doldur")
+    public GelenEvraklarPage takipListesiKullanicilarDoldur(String kullanicilar){
+        txtTakipListesiKullanicilar.selectLov(kullanicilar);
+        return this;
+    }
+    public GelenEvraklarPage takipListeKapat(){
+        btnTakipListesiKapat.click();
+        return this;
+    }
+
+    @Step("Tablodan rapor seç")
+    public GelenEvraklarPage gizlilikRaporSec(String konu, String yer, String tarih, String no) {
+        tblEvrak.filterBy(Condition.text(konu)).filterBy(Condition.text(yer)).filterBy(Condition.text(tarih)).filterBy(Condition.text(no)).get(0).click();
+        return this;
+    }
+
+    @Step("Kisi doldur")
+    public GelenEvraklarPage havaleYapKisiDoldur(String kisi){
+        txtHavaleYapKisi.selectLov(kisi);
+        return this;
+    }
+
+    @Step("Kullanıcı listesi doldur")
+    public GelenEvraklarPage havaleYapKullaniciListesiDoldur(String kullaniciListesi){
+        txtHavaleYapKullaniciListesi.selectLov(kullaniciListesi);
+        txtHavaleYapKullaniciListesi.selectLov(kullaniciListesi);
         return this;
     }
 

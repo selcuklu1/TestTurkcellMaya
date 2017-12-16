@@ -48,10 +48,18 @@ public class PaylastiklarimPage extends MainPage {
     SelenideElement txtPaylasAciklama = $(By.id("mainPreviewForm:evrakPaylasAciklama"));
     ElementsCollection tablePaylasilanlar = $$("div[id='mainPreviewForm:evrakOnizlemeTab'] div[aria-hidden='false'] tbody > tr[role='row']");
 
+    ElementsCollection tblEvrak = $$("[id^='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
+    SelenideElement btnPaylasPaylas = $(By.id("mainPreviewForm:paylasButtonId"));
 
     @Step("Paylaştıklarım sayfası aç")
     public PaylastiklarimPage openPage() {
         solMenu(SolMenuData.IslemYaptiklarim.Paylastiklarim);
+        return this;
+    }
+
+    @Step("Tablodan rapor seç")
+    public PaylastiklarimPage gizlilikRaporSec(String konu, String yer, String tarih, String no) {
+        tblEvrak.filterBy(Condition.text(konu)).filterBy(Condition.text(yer)).filterBy(Condition.text(tarih)).filterBy(Condition.text(no)).get(0).click();
         return this;
     }
 
@@ -204,6 +212,12 @@ public class PaylastiklarimPage extends MainPage {
     @Step("Paylaşma tabında açıklama girildi : \"{0}\"")
     public PaylastiklarimPage paylasimAciklamaYaz(String aciklama) {
         txtPaylasAciklama.setValue(aciklama);
+        return this;
+    }
+
+    @Step("Paylaş")
+    public PaylastiklarimPage paylasPaylas(){
+        btnPaylasPaylas.click();
         return this;
     }
 
