@@ -10,6 +10,8 @@ import pages.solMenuPages.HavaleEttiklerimPage;
 import pages.solMenuPages.ImzaladiklarimPage;
 import pages.ustMenuPages.*;
 
+import javax.swing.plaf.TableHeaderUI;
+
 import static data.TestData.*;
 
 /****************************************************
@@ -140,8 +142,8 @@ public class GizlilikKleransiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "Genel evrak raporunda gizlilik kleransı kontrolü (evrakta izi olmayan kullanıcı ile)")
-    public void TC2238() throws InterruptedException{
+    @Test(enabled = true, dependsOnMethods = {"TC1938"}, description = "Genel evrak raporunda gizlilik kleransı kontrolü (evrakta izi olmayan kullanıcı ile)")
+    public void TC2138() throws InterruptedException{
 //9267
         login(username4, password4);
 
@@ -152,6 +154,55 @@ public class GizlilikKleransiTest extends BaseTest {
                 .tabloEvrakNoKontrol(evrakNo)
                 .tablodaDetayTikla(evrakNo)
                 .detayEkranınıAcildigiKontrolu();
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "Evrak aramada gizlilik kleransı kontrolü (evrakta izi olmayan kullanıcı ile)")
+    public void TC2139() throws InterruptedException{
+
+        login(username3, password3);
+//9267
+String evrakNo="9267";
+        String aranacagiYer = "Birim Evrakları Ara";
+        String aranacagiYer2 = "İşlem Yaptıklarımda Ara";
+        String aramaKriteri = "Evrak Sayı";
+        String aramaKriteri2 = "Evrakın Kayıt Sayısı";
+        String evrakTipi = "Giden Evrak";
+        String mesaj = "Gizlilik kleransınız evrakın gizlilik derecesini görüntülemek için yeterli değildir.";
+
+        evrakAramaPage
+                .openPage()
+                .gidenEvrakSec()
+                .aramaKriteriSec(aramaKriteri)
+                .aramaKriteriDoldur(evrakNo)
+                .ara()
+                .tabloEvrakNoKontrol(evrakNo)
+                .tablodaDetayTikla(evrakNo)
+                .islemMesaji().beklenenMesaj(mesaj);
+
+        evrakAramaPage
+                .evrakinAranacagiYerSec(aranacagiYer)
+                .aramaKriteriSec(aramaKriteri2)
+                .aramaKriteriDoldur(evrakNo)
+                .ara()
+                .tabloEvrakNoKontrol(evrakNo)
+                .tablodaDetayTikla(evrakNo)
+                .islemMesaji().beklenenMesaj(mesaj);
+
+        evrakOlusturPage
+                .openPage()
+                .ekleriTabAc()
+                .sistemdeKayitliEvrakEkleTabAc()
+                .evrakinAranacagiYerSec(aranacagiYer)
+                .evrakAramaDoldur(evrakNo)
+                .dokumanAra()
+                .tabloEvrakNoKontrol(evrakNo)
+                .tablodaDetayTikla(evrakNo)
+                .islemMesaji().basariliOlmali(basariMesaji);
+        Thread.sleep(2000);
+        evrakOlusturPage
+                .islemMesaji().beklenenMesaj(mesaj);
+
     }
 
     @Severity(SeverityLevel.CRITICAL)

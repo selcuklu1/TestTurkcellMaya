@@ -7,9 +7,11 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import pages.MainPage;
 import pages.pageComponents.UstMenu;
+import pages.pageComponents.belgenetElements.BelgenetElement;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
+import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 /****************************************************
  * Tarih: 2017-12-22
@@ -22,7 +24,7 @@ public class EvrakAramaPage extends MainPage {
     //Evrak Arama Tab
     SelenideElement radiobtnGidenEvrak = $(By.xpath("//table[@id='menuYonetimiTabView:hizliEvrakAramaForm:evrakTipiRadioId']//td[3]//div[2]"));
     SelenideElement cmbEvrakınAranacagiYer = $(By.id("menuYonetimiTabView:hizliEvrakAramaForm:evrakAramaAranacakYer_id"));
-    SelenideElement cmbAramaKriteri = $(By.id("menuYonetimiTabView:hizliEvrakAramaForm:gidenEvrakSelectOneMenuId_input"));
+    BelgenetElement cmbAramaKriteri = comboLov(By.id("menuYonetimiTabView:hizliEvrakAramaForm:gidenEvrakSelectOneMenuId_label"));
     SelenideElement txtAramaKriteri = $("[id='menuYonetimiTabView:hizliEvrakAramaForm:aramaKriterInputAlani'] input");
     SelenideElement btnAra = $(By.id("menuYonetimiTabView:hizliEvrakAramaForm:hizliEvrakAraButton"));
     ElementsCollection tblListe = $$("[id='menuYonetimiTabView:hizliEvrakAramaForm:evrakAramaDataTableSolr_data'] tr[role='row']");
@@ -53,14 +55,24 @@ public class EvrakAramaPage extends MainPage {
     }
 
     @Step("Arama Kriteri seç")
-    public EvrakAramaPage aramaKriteriSec(String aramaKriteri) {
-        cmbAramaKriteri.selectOption(aramaKriteri);
+    public EvrakAramaPage aramaKriteriSec(String aramaKriteriTxt) {
+        cmbAramaKriteri.selectComboBox(aramaKriteriTxt);
+        return this;
+    }
+    @Step("Arama Kriteri seç")
+    public EvrakAramaPage aramaKriteriSecwithValue(String aramaKriteriValue) {
+        cmbAramaKriteri.selectOptionByValue(aramaKriteriValue);
         return this;
     }
 
     @Step("Arama Kriteri doldur")
     public EvrakAramaPage aramaKriteriDoldur(String value) {
         txtAramaKriteri.sendKeys(value);
+        return this;
+    }
+    @Step("Arama Sayısı Kriteri Kontrol")
+    public EvrakAramaPage aramaSayisiKriteriKontrol() {
+        $(By.id("menuYonetimiTabView:hizliEvrakAramaForm:aramaCesitSelectOneMenuId_input")).shouldBe(Condition.visible);
         return this;
     }
 
