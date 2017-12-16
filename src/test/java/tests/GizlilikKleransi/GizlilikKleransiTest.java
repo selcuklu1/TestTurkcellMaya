@@ -150,7 +150,7 @@ public class GizlilikKleransiTest extends BaseTest {
         String kaldiralacakKlasor = "TestBaris";
         String evrakTuru = "Resmi Yazışma";
         String evrakDili = "Türkçe";
-        String gizlilikDerecesi = "Tasnif Dışı";
+        String gizlilikDerecesi = "Gizli";
         String ivedilik = "Normal";
         String geregi = "Optiim Birim";
 
@@ -247,5 +247,56 @@ public class GizlilikKleransiTest extends BaseTest {
                 .tablodaIlgiEkleTıkla(evrakNo)
                 .tablodaIlgiEkleKontrolu();
 
+    }
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "Onay akışında gizlilik derecesi kontrolü\n")
+    public void TC1473() throws InterruptedException{
+
+        String basariMesaji = "İşlem başarılıdır!";
+        String tur = "PARAFLAMA";
+        String tur2 = "IMZALAMA";
+        String icerik = "TC1938() " + getSysDate();
+        String konuKodu = "010.01";
+        String kaldiralacakKlasor = "ESK05";
+        String evrakTuru = "Resmi Yazışma";
+        String evrakDili = "Türkçe";
+        String gizlilikDerecesi = "Hizmete Özel";
+        String ivedilik = "Normal";
+        String geregi = "Optiim Birim";
+
+        login(username,password);
+
+        String kullaniciTasnifDisi = "OPTİİM TEST3";
+        String kullaniciOzel = "Optiim Test2";
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .konuKoduSec(konuKodu)
+                .kaldiralacakKlasorlerSec(kaldiralacakKlasor)
+                .evrakTuruSec(evrakTuru)
+                .evrakDiliSec(evrakDili)
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .aciklamaDoldur(icerik)
+                .ivedikSec(ivedilik)
+                .geregiSec(geregi)
+                .onayAkisiEkle()
+                .kullaniciTabloKontrol()
+
+                .kullanicilarDoldur2(kullaniciOzel)
+                .kullaniciTabloKontrol()
+                .kullniciIsmineGoreImzaParafSec(kullaniciOzel, tur)
+
+                .kullanicilarDoldur2(kullaniciTasnifDisi)
+                .kullaniciTabloKontrol()
+                .kullniciIsmineGoreImzaParafSec(kullaniciTasnifDisi, tur2)
+                .kullan();
+
+        String mesaj = " kullanıcısının gizlilik kleransı evrakı görüntülemek için yeterli değildir.";
+        evrakOlusturPage
+                .editorTabAc()
+                .editorIcerikDoldur(icerik)
+                .parafla()
+                .islemMesaji().beklenenMesaj(kullaniciTasnifDisi+mesaj);
     }
 }
