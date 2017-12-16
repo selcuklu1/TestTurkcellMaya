@@ -31,13 +31,14 @@ public class GelenEvraklarPage extends MainPage {
     SelenideElement btnRaporAl = $(By.id("mainInboxForm:inboxDataTable:j_idt682"));
     SelenideElement btnEvrakGoster = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:0:cmdbutton"));
     SelenideElement btnTabHavaleYap = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:4:cmdbutton"));
-
+    SelenideElement popUpUyari = $(By.xpath("//body[@class='ui-layout-container']/div[104]//p"));
+    SelenideElement popUpUyariEvet = $(By.xpath("//body[@class='ui-layout-container']/div[104]//center/button[1]/span[@class='ui-button-text']"));
     //Havale Yap Alt Yapı
     SelenideElement btnHavaleYap = $("[id='mainPreviewForm:onizlemeRightTab:onizlemeRightTab'] td:nth-child(5) button");
     SelenideElement treeHavaleYapBirim = $(By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovTexts"));
     BelgenetElement txtComboLovKisi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKullaniciLov:LovText"));
     SelenideElement treeHavaleYapKisi = $(By.id("mainPreviewForm:dagitimBilgileriKullaniciLov:LovText"));
-    SelenideElement treeHavaleYapKullaniciListesi = $(By.id("mainPreviewForm:dagitimBilgileriKisiListesiLov:LovText"));
+    BelgenetElement treeHavaleYapKullaniciListesi = comboLov (By.id("mainPreviewForm:dagitimBilgileriKisiListesiLov:LovText"));
     BelgenetElement treeHavaleYapOnaylanacakKisi = comboLov("[id^='mainPreviewForm:onaylayacakKisiLov:LovText']");
     SelenideElement txtHavaleYapAciklama = $(By.id("mainPreviewForm:havaleAciklama"));
     SelenideElement btnHavaleYapDosyaEkle = $(By.id("mainPreviewForm:fileUploadHavaleEk_input"));
@@ -230,7 +231,7 @@ public class GelenEvraklarPage extends MainPage {
     }
 
     public GelenEvraklarPage havaleYapKullaniciListesiTreeDoldur(String text) {
-        treeHavaleYapKullaniciListesi.sendKeys(text);
+        treeHavaleYapKullaniciListesi.selectLov(text);
         return this;
     }
 
@@ -457,6 +458,12 @@ public class GelenEvraklarPage extends MainPage {
         tblVekaletVerenAlan
                 .filterBy(Condition.text(isim)).first()
                 .$("[id='mainPreviewForm:kullaniciBirimSecenekleriHavaleIcin_data'] td:nth-child(4) button").click();
+        return this;
+    }
+    @Step("Vekalet var uyarısı ")
+    public GelenEvraklarPage evrakOnIzlemeUyarıPopUpKontol() {
+       if(popUpUyari.isDisplayed())
+           popUpUyariEvet.click();
         return this;
     }
 }

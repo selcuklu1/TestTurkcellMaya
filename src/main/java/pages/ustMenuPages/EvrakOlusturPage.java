@@ -47,7 +47,7 @@ public class EvrakOlusturPage extends MainPage {
     SelenideElement tabEvrakDogrulama = $("button .evrakDogrulamaAktarimIslemleri");
 
     SelenideElement btnPDFOnizleme = $("button[id^='yeniGidenEvrakForm:rightTab:uiRepeat'] span[class$='pdfOnIzleme']");
-    SelenideElement btnKaydet = $("button[id^='yeniGidenEvrakForm:rightTab:uiRepeat'] span[class$='kaydet']");
+    SelenideElement btnKaydet = $("button[id^='yeniGidenEvrakForm:rightTab:uiRepeat'] span[class*='kaydet']");
     SelenideElement btnKaydetOnayaSun = $("button[id^='yeniGidenEvrakForm:rightTab:uiRepeat'] span[class$='kaydetHavaleEt']");
     SelenideElement btnPaylas = $("button[id^='yeniGidenEvrakForm:rightTab:uiRepeat'] span[class$='evrakPaylas']");
     SelenideElement btnEvrakOlusturKapat = $(By.xpath("//div[@id='window3Dialog']//a/span[@class='ui-icon ui-icon-closethick']"));
@@ -63,7 +63,7 @@ public class EvrakOlusturPage extends MainPage {
     @Step("Evrak Oluştur sayfası aç")
     public EvrakOlusturPage openPage() {
         new UstMenu().ustMenu("Evrak Oluştur");
-        $("#yeniGidenEvrakForm").shouldBe(visible);
+            $("#yeniGidenEvrakForm").shouldBe(visible);
         return this;
     }
 
@@ -80,6 +80,11 @@ public class EvrakOlusturPage extends MainPage {
         return this;
     }
 
+    @Step("Kaydet")
+    public EvrakOlusturPage kaydet() {
+        btnKaydet.click();
+        return this;
+    }
 
     @Step("\"{0}\" ekran açılması beklenen statü: {1}")
     public EvrakOlusturPage PDFOnizlemeKisayolGonder(String kisayol) throws InterruptedException {
@@ -121,6 +126,7 @@ public class EvrakOlusturPage extends MainPage {
         return this;
     }
 
+
     //region Tabs
     @Step("Bilgiler tab aç")
     public BilgilerTab bilgilerTabiAc() {
@@ -147,7 +153,7 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement btnIletisimbilgileriOnayAkisiEkle = $("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='onayAkisiEkle']");
 
         //Kanun Kapsam Tipi
-        SelenideElement rdbKanunKapsamTipiNormal = $("//input[contains(@id,'kanunKapsamTipiRadio') and (../label[contains(@for,'kanunKapsamTipiRadio') and normalize-space(text())='Normal'])]");
+        SelenideElement rdbKanunKapsamTipiNormal = $x("//input[contains(@id,'kanunKapsamTipiRadio') and (../label[contains(@for,'kanunKapsamTipiRadio') and normalize-space(text())='Normal'])]");
         SelenideElement rdbKanunKapsamTipiBilgiEdinmeKanunu = $("//input[contains(@id,'kanunKapsamTipiRadio') and (../label[contains(@for,'kanunKapsamTipiRadio') and normalize-space(text())='Bilgi Edinme Kanunu'])]");
         SelenideElement rdbKanunKapsamTipiKisiselVerilerinKorunmasiKanunu = $("//input[contains(@id,'kanunKapsamTipiRadio') and (../label[contains(@for,'kanunKapsamTipiRadio') and normalize-space(text())='Kişisel Verilerin Korunması Kanunu'])]");
         SelenideElement txtEvrakSayiEkMetni = $("input[id$='evrakSayiEkMetniInputText']");
@@ -310,7 +316,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Evrak Türü alanında {0} seç")
+        @Step("Evrak Türü alanında {text} seç")
         public BilgilerTab evrakTuruSec(String text) {
 //            if (!cmbEvrakTuru.getSelectedOption().equals(text))
             cmbEvrakTuru.selectOption(text);
@@ -736,9 +742,9 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        public BilgilerTab onayAkisiKullaniciSil(String yeniKullanici) {
+        public BilgilerTab onayAkisiKullaniciSil(String kullanici) {
             trOnayAkisiEkleKullanicilar
-                    .filterBy(text(yeniKullanici))
+                    .filterBy(text(kullanici))
                     .get(0)
                     .shouldBe(exist)
                     .$("[class$='delete-icon']").click();
@@ -810,7 +816,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Kullan butonu")
+        @Step("Kullan")
         public BilgilerTab kullan() {
             clickJs(btnKullan);
             return this;
@@ -1004,7 +1010,8 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement btnParafla = $(By.id("yeniGidenEvrakForm:rightTab:uiRepeat:2:cmdbutton"));
         SelenideElement radibtnSimza = $("[id='imzalaForm:imzaPanelGrid'] div[id='imzalaForm:imzalaRadio']  div:nth-child(2)");
         SelenideElement btnEvrakImzala = $(By.xpath("//buton[starts-with(@id,'imzalaForm:jsfImzaForm:j_idt')]"));
-        SelenideElement btnSimzaImzala = $(By.id("imzalaForm:imzalaButton"));
+        SelenideElement btnSimzaImzala = $(By.id("imzalaForm:sayisalImzaConfirmDialogOpener"));
+        SelenideElement btnSayısalImzeEvet = $(By.id("imzalaForm:sayisalImzaConfirmForm:sayisalImzaEvetButton"));
 
         public TextEditor getEditor() {
             return editor;
@@ -1181,6 +1188,12 @@ public class EvrakOlusturPage extends MainPage {
             btnEvrakImzala.click();
             return this;
         }
+        @Step("Sayısal Imza Evet")
+        public EditorTab sayisalImzaEvetPopup() {
+            btnSayısalImzeEvet.click();
+            return this;
+        }
+
     }
 
     public EkleriTab ekleriTabAc() {

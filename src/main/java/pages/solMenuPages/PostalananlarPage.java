@@ -1,5 +1,7 @@
 package pages.solMenuPages;
 
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
 import io.qameta.allure.Step;
@@ -8,6 +10,8 @@ import pages.MainPage;
 import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
+import static com.codeborne.selenide.Selenide.$x;
 
 public class PostalananlarPage extends MainPage {
 
@@ -19,6 +23,11 @@ public class PostalananlarPage extends MainPage {
     SelenideElement chkKepIlePostalananlar = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:keplePostalananlarCheckbox_input"));
     SelenideElement chkMedasIlePostalananlar = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:medaslaPostalananlarCheckbox_input"));
     SelenideElement chkPostaladiklarim = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:postaladiklarimCheckbox_input"));
+
+    //Hüseyin
+    ElementsCollection tablePostalananlar = $$("tbody[id='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
+    SelenideElement btnPostaDetayi = $x("//span[text() = 'Posta Detayı']/../../..//button");
+
     @Step("Postalananlar sayfası aç")
     public PostalananlarPage openPage(){
         solMenu(SolMenuData.BirimEvraklari.Postalananlar);
@@ -62,5 +71,27 @@ public class PostalananlarPage extends MainPage {
         chkPostaladiklarim.setSelected(text);
         return this;
     }
+
+    @Step("Evrak seç.")
+    public PostalananlarPage evrakSec(String konu, String gidecegiYer, String evrakTarihi, String no) {
+
+        tablePostalananlar
+                .filterBy(Condition.text("Konu: " + konu))
+                .filterBy(Condition.text("Gideceği Yer: " + gidecegiYer))
+                .filterBy(Condition.text("Evrak Tarihi: " + evrakTarihi))
+                .filterBy(Condition.text(no))
+                .first()
+                .click();
+
+        return this;
+    }
+
+    @Step("Posta Detayı na tıkla")
+    public PostalananlarPage postaDetayiTikla(){
+        btnPostaDetayi.click();
+        return this;
+    }
+
+
 
 }

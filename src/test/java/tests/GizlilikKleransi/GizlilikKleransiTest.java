@@ -7,11 +7,15 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.MainPage;
 import pages.solMenuPages.*;
+import pages.solMenuPages.HavaleEttiklerimPage;
+import pages.solMenuPages.ImzaladiklarimPage;
+import pages.ustMenuPages.EvrakOlusturPage;
 import pages.ustMenuPages.GelenEvrakKayitPage;
+import pages.ustMenuPages.GenelEvrakRaporuPage;
 import pages.ustMenuPages.KullaniciYonetimiPage;
 
 import static data.TestData.password2;
-
+import static data.TestData.*;
 /****************************************************
  * Tarih: 2017-12-22
  * Proje: Türksat Functional Test Automation
@@ -32,6 +36,12 @@ public class GizlilikKleransiTest extends BaseTest {
     TeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage;
     IadeEttiklerimPage iadeEttiklerimPage;
     CevapladiklarimPage cevapladiklarimPage;
+    EvrakOlusturPage evrakOlusturPage;
+    ImzaladiklarimPage imzaladiklarimPage;
+    GenelEvrakRaporuPage genelEvrakRaporuPage;
+
+    String evrakNo="";
+
 
     @BeforeMethod
     public void loginBeforeTests() {
@@ -46,6 +56,9 @@ public class GizlilikKleransiTest extends BaseTest {
         teslimAlinmayiBekleyenlerPage = new TeslimAlinmayiBekleyenlerPage();
         iadeEttiklerimPage = new IadeEttiklerimPage();
         cevapladiklarimPage = new CevapladiklarimPage();
+        evrakOlusturPage = new EvrakOlusturPage();
+        imzaladiklarimPage = new ImzaladiklarimPage();
+        genelEvrakRaporuPage = new GenelEvrakRaporuPage();
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -356,5 +369,67 @@ public class GizlilikKleransiTest extends BaseTest {
 
     }
 
+    @Test(enabled = true, description = "Yüksek kleranslı evrak oluşturma")
+    public void TC1938() throws InterruptedException{
 
+        String basariMesaji = "İşlem başarılıdır!";
+        String tur = "IMZALAMA";
+        String icerik = "TC1938() " + getSysDate();
+        String konuKodu = "010.01";
+        String kaldiralacakKlasor = "Diğer";
+        String evrakTuru = "Resmi Yazışma";
+        String evrakDili = "Türkçe";
+        String gizlilikDerecesi = "Normal";
+        String ivedilik = "Gizli";
+        String geregi = "Optiim Birim";
+
+login("gsahin","123");
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .konuKoduSec(konuKodu)
+                .kaldiralacakKlasorlerSec(kaldiralacakKlasor)
+                .evrakTuruSec(evrakTuru)
+                .evrakDiliSec(evrakDili)
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .aciklamaDoldur(icerik)
+                .ivedikSec(ivedilik)
+                .geregiSec(geregi)
+                .onayAkisiEkle()
+                .kullaniciTabloKontrol()
+                .kullanicilarImzaciSec(tur)
+                .kullan();
+
+        evrakOlusturPage
+                .editorTabAc()
+                .editorIcerikDoldur(icerik)
+                .parafla()
+                .sImzasec()
+                .sImzaImzala()
+                .sayisalImzaEvetPopup()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        imzaladiklarimPage
+                .openPage();
+
+        evrakNo = imzaladiklarimPage.evrakIcerikKontroluveEvrakNoAl(icerik);
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true,dependsOnMethods = {"TC1938"}, description = "Genel evrak raporunda gizlilik klerans kontrolü (evrakta izi olan kullanıcı ile)\n")
+    public void TC2226() throws InterruptedException{
+
+        login(username,password);
+
+        genelEvrakRaporuPage
+                .openPage()
+                .evrakNoDoldur(evrakNo)
+                .sorgula()
+                .tabloEvrakNoKontrol(evrakNo)
+                .tablodaDetayTikla(evrakNo)
+                .detayEkranınıAcildigiKontrolu();
+
+
+    }
 }
