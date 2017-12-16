@@ -140,6 +140,21 @@ public class GizlilikKleransiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "Genel evrak raporunda gizlilik kleransı kontrolü (evrakta izi olmayan kullanıcı ile)")
+    public void TC2238() throws InterruptedException{
+//9267
+        login(username4, password4);
+
+        genelEvrakRaporuPage
+                .openPage()
+                .evrakNoDoldur(evrakNo)
+                .sorgula()
+                .tabloEvrakNoKontrol(evrakNo)
+                .tablodaDetayTikla(evrakNo)
+                .detayEkranınıAcildigiKontrolu();
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "Yüksek kleranslı evrak oluşturma")
     public void TC1938() throws InterruptedException {
 
@@ -191,7 +206,7 @@ public class GizlilikKleransiTest extends BaseTest {
     @Test(enabled = true, dependsOnMethods = {"TC1938"}, description = "Genel evrak raporunda gizlilik klerans kontrolü (evrakta izi olan kullanıcı ile)")
     public void TC2226() throws InterruptedException {
 
-        login(username, password);
+        login("gsahin", "123");
 
         genelEvrakRaporuPage
                 .openPage()
