@@ -31,8 +31,8 @@ public class GelenEvraklarPage extends MainPage {
     SelenideElement btnRaporAl = $(By.id("mainInboxForm:inboxDataTable:j_idt682"));
     SelenideElement btnEvrakGoster = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:0:cmdbutton"));
     SelenideElement btnTabHavaleYap = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:4:cmdbutton"));
-    SelenideElement popUpUyari = $(By.xpath("//body[@class='ui-layout-container']/div[104]//p"));
-    SelenideElement popUpUyariEvet = $(By.xpath("//body[@class='ui-layout-container']/div[104]//center/button[1]/span[@class='ui-button-text']"));
+
+
     //Havale Yap Alt Yapı
     SelenideElement btnHavaleYap = $("[id='mainPreviewForm:onizlemeRightTab:onizlemeRightTab'] td:nth-child(5) button");
     SelenideElement treeHavaleYapBirim = $(By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovTexts"));
@@ -47,6 +47,9 @@ public class GelenEvraklarPage extends MainPage {
     SelenideElement btnHavaleYapGonder = $("[id^='mainPreviewForm:j_idt'] [class$='havaleGonderButonClass']");
     SelenideElement btnHavaleYapHavaleOnayinaGonder = $(By.id("mainPreviewForm:j_idt30599"));
     ElementsCollection tblVekaletVerenAlan =$$("[id='mainPreviewForm:kullaniciBirimSecenekleriHavaleIcin_data'] tr[role='row']");
+    BelgenetElement txtKullaniciListesi = comboLov (By.id("mainPreviewForm:dagitimBilgileriKisiListesiLov:LovText"));
+    SelenideElement popUpUyari = $(By.xpath("//body[@class='ui-layout-container']/div[104]//p"));
+    SelenideElement popUpUyariEvet = $(By.xpath("//body[@class='ui-layout-container']/div[104]//center/button[1]/span[@class='ui-button-text']"));
 
     // Tebiğ Et Buttonu altı div
     SelenideElement btnTebligEt = $(By.xpath("//span[contains(@class, 'tebligEt')]/.."));
@@ -418,9 +421,22 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
     @Step("Vekalet var uyarısı ")
-    public GelenEvraklarPage evrakOnIzlemeUyarıPopUpKontol() {
-       if(popUpUyari.isDisplayed())
+    public GelenEvraklarPage evrakOnIzlemeUyarıPopUpKontol(String mesaj) {
+       if(popUpUyari.text().equals(mesaj));
            popUpUyariEvet.click();
+        return this;
+    }
+    @Step("Kullacici listesi seç")
+    public GelenEvraklarPage kullanciListesiSec(String kullanici){
+        txtKullaniciListesi.selectLov(kullanici);
+        return this;
+    }
+    @Step("Kullanıcılar alanı doldur")
+    public GelenEvraklarPage kullanciListesiSecWithTitle(String kullanici) {
+        txtKullaniciListesi.titleItems().texts();
+        txtKullaniciListesi.type(kullanici).titleItems()
+                .filterBy(Condition.exactText(kullanici + " optiim")).first().click();
+        txtKullaniciListesi.closeLovTreePanel();
         return this;
     }
 }

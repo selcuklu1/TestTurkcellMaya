@@ -47,14 +47,14 @@ public class GizlilikKleransiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC1471: Kullanıcı gizlilik derecesi değiştirme")
+    @Test(enabled = true, priority = 1, description = "TC1471: Kullanıcı gizlilik derecesi değiştirme")
     public void TC1471() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
         String unvan = "BT İş Analist / Yazılımcı";
-        String gizlilikDerecesi = "T";
+        String gizlilikDerecesi = "Tasnif Dışı";
 
-        login("yakyol", "123");
+        login("gsahin", "123");
 
         kullaniciYonetimiPage
                 .openPage()
@@ -157,7 +157,7 @@ public class GizlilikKleransiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "Evrak aramada gizlilik kleransı kontrolü (evrakta izi olmayan kullanıcı ile)")
+    @Test(enabled = true, dependsOnMethods = {"TC1938"}, description = "Evrak aramada gizlilik kleransı kontrolü (evrakta izi olmayan kullanıcı ile)")
     public void TC2139() throws InterruptedException{
 
         login(username3, password3);
@@ -206,7 +206,7 @@ String evrakNo="9267";
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "Yüksek kleranslı evrak oluşturma")
+    @Test(enabled = true, dependsOnMethods = {"TC1471"}, description = "Yüksek kleranslı evrak oluşturma")
     public void TC1938() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
@@ -222,6 +222,21 @@ String evrakNo="9267";
 
         login("gsahin", "123");
 
+        kullaniciYonetimiPage
+                .openPage()
+                .kullaniciAdiDoldur("Gsahin")
+                .ara()
+                .tabloBirimKontrol()
+                .kullaniciListesiGuncelleButonuTikla()
+                .gorevliOlduguBirimlerKontol()
+                .gorevliOlduguBirimGuncelle()
+                .kullaniciBirimAtamaGizlilikDerecesiSec(gizlilikDerecesi)
+                .kullaniciBirimAtamaKaydetTikla()
+                .kullaniciGuncellemeKaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        logout();
+        login("gsahin", "123");
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()

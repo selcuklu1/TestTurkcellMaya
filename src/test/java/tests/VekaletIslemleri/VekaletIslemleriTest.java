@@ -110,7 +110,7 @@ public class VekaletIslemleriTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "Onaya göndererek Vekalet Verme işleminde onayın Red edilmesi")
+    @Test(enabled = true, dependsOnMethods = {"TC0025a"}, description = "Onaya göndererek Vekalet Verme işleminde onayın Red edilmesi")
     public void TC0025b() throws InterruptedException {
 
         login(username2, password2);
@@ -145,7 +145,7 @@ public class VekaletIslemleriTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, dependsOnMethods = {"TC0025b"}, description = "Onaya göndererek Vekalet Verme işleminde onayın kabul edilmesi")
+    @Test(enabled = true, priority = 3, description = "Onaya göndererek Vekalet Verme işleminde onayın kabul edilmesi")
     public void TC2208() throws InterruptedException {
         TC0025a();
         login(username2, password2);
@@ -196,11 +196,10 @@ public class VekaletIslemleriTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "Vekaleti alan kullanıcının onay akışında seçilmesi(vekaleten)")
+    @Test(enabled = true,  description = "Vekaleti alan kullanıcının onay akışında seçilmesi(vekaleten)")
     public void TC0015() throws InterruptedException {
 
         login(username3, password3);
-
 
         evrakOlusturPage
                 .openPage()
@@ -219,7 +218,7 @@ public class VekaletIslemleriTest extends BaseTest {
                 .vekeletAlanVerenTabloKontrolu()
                 .vekeletAlanVerenTabloVekaletAlanveyaVerenSec(vekaletAlan)
 //                .vekeletAlanVerenTabloKapat()
-//                .kullanicilarDoldur2("Optiim TEST2")
+//                .kullanicilarDoldur2("Optiim TEST2"," [Ağ (Network) Uzman Yardımcısı]")
                 .kullniciIsmineGoreImzaParafSec(vekaletAlan, tur)
                 .kullan()
                 .onaAkisiTextKontol()
@@ -230,7 +229,7 @@ public class VekaletIslemleriTest extends BaseTest {
                 .editorIcerikDoldur(icerik)
                 .parafla()
                 .sImzasec()
-                .sImzaImzala()
+                .sImzaImzala2()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
         parafladiklarim
@@ -260,6 +259,7 @@ public class VekaletIslemleriTest extends BaseTest {
         mainPage
                 .vekaletVarUyarıPopUp()
                 .birimSec(getSysDateForKis());
+        Thread.sleep(3000);
 
         imzaBekleyenlerPage
                 .openPage()
@@ -269,7 +269,7 @@ public class VekaletIslemleriTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "vekaleti veren kullanıcının onay akışında seçilmesi (kendisi)")
+    @Test(enabled = true, dependsOnMethods = {"TC2208"}, description = "vekaleti veren kullanıcının onay akışında seçilmesi (kendisi)")
     public void TC0012() throws InterruptedException {
 
         login(username3, password3);
@@ -302,7 +302,7 @@ public class VekaletIslemleriTest extends BaseTest {
                 .editorIcerikDoldur(icerik)
                 .parafla()
                 .sImzasec()
-                .sImzaImzala()
+                .sImzaImzala2()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
         parafladiklarim
@@ -342,7 +342,7 @@ public class VekaletIslemleriTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "Vekalet veren kullanıcıya evrak havalesi ve kontrolü")
+    @Test(enabled = true, dependsOnMethods = {"TC2208","TC0012"},  description = "Vekalet veren kullanıcıya evrak havalesi ve kontrolü")
     public void TC0014() throws InterruptedException{
 
         String kisiKurum = "D";
@@ -355,7 +355,7 @@ public class VekaletIslemleriTest extends BaseTest {
         String evrakDili = "917";
         String gizlilikDerecesi = "N";
 
-        login(username,password);
+        login(username2,password2);
 
         gelenEvrakKayitPage
                 .openPage()
@@ -387,10 +387,10 @@ public class VekaletIslemleriTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "Vekalet veren kullanıcının bulunduğu kullanıcı listesine evrak havalesi ve kontrolü")
+    @Test(enabled = true, dependsOnMethods = {"TC0014"}, description = "Vekalet veren kullanıcının bulunduğu kullanıcı listesine evrak havalesi ve kontrolü")
     public void TC2212() throws InterruptedException{
 
-        login(username,password);
+        login(username2,password2);
 
         String[] evrakNo = new String[2];
         gelenEvraklarPage
@@ -398,11 +398,12 @@ public class VekaletIslemleriTest extends BaseTest {
 
         evrakNo = gelenEvraklarPage.tablodanEvrakNoAl(1);
 
+        String mesaj = "Seçmiş olduğunuz kullanıcı grubunda vekalet vermiş kişiler bulunmaktadır. Kullanıcı grubunu kullanırsanız havale asıl kişilere(vekalet veren) gidecektir. Yine de işleme devam etmek istiyor musunuz?";
         gelenEvraklarPage
                 .evrakSec()
                 .havaleYap()
-                .havaleYapKisiTreeSec(vekaletVeren)
-                .evrakOnIzlemeUyarıPopUpKontol()
+                .kullanciListesiSec("OPTİİM")  //ikinci gelen seçilmeli
+                .evrakOnIzlemeUyarıPopUpKontol(mesaj)
                 .havaleYapGonder()
                 .islemMesaji().basariliOlmali(basariMesaji);
         logout();
@@ -417,7 +418,7 @@ public class VekaletIslemleriTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "Vekalet alan kullanıcıya evrak havalesi ve kontrolü")
+    @Test(enabled = true, dependsOnMethods = {"TC0015"}, description = "Vekalet alan kullanıcıya evrak havalesi ve kontrolü")
     public void TC0011() throws InterruptedException{
 
         login(username3,password3);

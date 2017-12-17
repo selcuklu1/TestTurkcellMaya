@@ -1013,6 +1013,7 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement btnSimzaImzala = $(By.id("imzalaForm:sayisalImzaConfirmDialogOpener"));
         SelenideElement btnSayısalImzeEvet = $(By.id("imzalaForm:sayisalImzaConfirmForm:sayisalImzaEvetButton"));
 
+        SelenideElement btnSImzaImzala2 = $(By.id("imzalaForm:imzalaButton"));
         public TextEditor getEditor() {
             return editor;
         }
@@ -1092,7 +1093,11 @@ public class EvrakOlusturPage extends MainPage {
             clickJs(btnSimzaImzala);
             return this;
         }
-
+        @Step("İmzala")
+        public EditorTab sImzaImzala2() {
+            btnSImzaImzala2.click();
+            return this;
+        }
         public EditorTab popupImzalaVeEvrakKapatma() {
 
             //switchTo().window("");

@@ -624,7 +624,7 @@ public class GelenEvrakKayitPage extends MainPage {
 //        popUp.shouldHave(Condition.visible);  pop up kontrolu
         String text;
 
-        Thread.sleep(2000);
+        Thread.sleep(4000);
 
         if (ustYaziveHavaleYeriYokpopUp.isDisplayed()) {
             popUpEvet.click();
