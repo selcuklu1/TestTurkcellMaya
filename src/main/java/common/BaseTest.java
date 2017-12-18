@@ -32,7 +32,7 @@ public class BaseTest extends BaseLibrary {
         //Configuration.browser = "drivers.Firefox";
         Configuration.browser = "marionette";
 
-        Configuration.remote = "http:localhost:4444/wd/hub";
+        Configuration.remote = "http://localhost:4444/wd/hub";
         Configuration.reportsFolder = "test-result/reports";
         Configuration.screenshots = false;
         Configuration.savePageSource = false;
