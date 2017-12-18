@@ -28,9 +28,9 @@ public class BaseTest extends BaseLibrary {
 
         //region Selenide Driver Configuration
         Configuration.baseUrl = "http://94.55.114.18:8889/edys-web/sistemeGiris.xhtml";
-        Configuration.browser = "chrome";
+        //Configuration.browser = "chrome";
         //Configuration.browser = "drivers.Firefox";
-        //Configuration.browser = "marionette";
+        Configuration.browser = "marionette";
 
         Configuration.remote = "http://localhost:4444/wd/hub";
         Configuration.reportsFolder = "test-result/reports";
