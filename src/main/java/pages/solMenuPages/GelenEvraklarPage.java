@@ -476,9 +476,8 @@ public class GelenEvraklarPage extends MainPage {
     }
     @Step("Kullanıcılar alanı doldur")
     public GelenEvraklarPage kullanciListesiSecWithTitle(String kullanici) {
-        txtKullaniciListesi.titleItems().texts();
-        txtKullaniciListesi.type(kullanici).titleItems()
-                .filterBy(Condition.exactText(kullanici + " optiim")).first().click();
+        txtKullaniciListesi.type(kullanici).detailItems()
+                .filterBy(Condition.exactText("optiim")).first().click();
         txtKullaniciListesi.closeLovTreePanel();
         return this;
     }

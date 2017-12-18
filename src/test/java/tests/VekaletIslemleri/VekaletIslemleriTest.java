@@ -62,7 +62,7 @@ public class VekaletIslemleriTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "Onaya göndererek Vekalet Verme")
+    @Test(enabled = true, priority = 1, description = "Onaya göndererek Vekalet Verme")
     public void TC0025a() throws InterruptedException {
 
         login("test1", "123");
@@ -145,7 +145,7 @@ public class VekaletIslemleriTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, priority = 3, description = "Onaya göndererek Vekalet Verme işleminde onayın kabul edilmesi")
+    @Test(enabled = true, priority = 3, dependsOnMethods = {"TC0025b"}, description = "Onaya göndererek Vekalet Verme işleminde onayın kabul edilmesi")
     public void TC2208() throws InterruptedException {
         TC0025a();
         login(username2, password2);
@@ -196,7 +196,7 @@ public class VekaletIslemleriTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true,  description = "Vekaleti alan kullanıcının onay akışında seçilmesi(vekaleten)")
+    @Test(enabled = true, dependsOnMethods = {"TC2208"}, description = "Vekaleti alan kullanıcının onay akışında seçilmesi(vekaleten)")
     public void TC0015() throws InterruptedException {
 
         login(username3, password3);
@@ -387,7 +387,7 @@ public class VekaletIslemleriTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, dependsOnMethods = {"TC0014"}, description = "Vekalet veren kullanıcının bulunduğu kullanıcı listesine evrak havalesi ve kontrolü")
+    @Test(enabled = true, dependsOnMethods = {"TC0015"}, description = "Vekalet veren kullanıcının bulunduğu kullanıcı listesine evrak havalesi ve kontrolü")
     public void TC2212() throws InterruptedException{
 
         login(username2,password2);
@@ -402,7 +402,7 @@ public class VekaletIslemleriTest extends BaseTest {
         gelenEvraklarPage
                 .evrakSec()
                 .havaleYap()
-                .kullanciListesiSec("OPTİİM")  //ikinci gelen seçilmeli
+                .kullanciListesiSecWithTitle("OPTİİM")  //ikinci gelen seçilmeli
                 .evrakOnIzlemeUyarıPopUpKontol(mesaj)
                 .havaleYapGonder()
                 .islemMesaji().basariliOlmali(basariMesaji);

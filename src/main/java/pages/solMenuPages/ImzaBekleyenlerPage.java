@@ -138,5 +138,11 @@ public class ImzaBekleyenlerPage extends MainPage {
         solMenuBirim.filterBy(text(birim)).first().click();
         return this;
     }
+    @Step("Evrak no'ya göre İçerik tıklama")
+    public ImzaBekleyenlerPage evrakNumarisnaGoreIcerikTiklama(String evrakNo){
+        tableKararIzlemeEvraklar.filterBy(Condition.text(evrakNo)).first()
+                .$("[id^='mainInboxForm:inboxDataTable'][id$='detayGosterButton']").click();
+        return this;
+    }
 
 }
