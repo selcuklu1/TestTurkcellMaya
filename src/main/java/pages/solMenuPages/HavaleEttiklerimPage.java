@@ -3,7 +3,6 @@ package pages.solMenuPages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
-import common.BaseLibrary;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import pages.MainPage;
@@ -38,13 +37,13 @@ public class HavaleEttiklerimPage extends MainPage {
     }
 
     @Step("Kisi doldur")
-    public HavaleEttiklerimPage havaleYapKisiDoldur(String kisi){
+    public HavaleEttiklerimPage havaleYapKisiDoldur(String kisi) {
         txtHavaleYapKisi.selectLov(kisi);
         return this;
     }
 
     @Step("Kullanıcı listesi doldur")
-    public HavaleEttiklerimPage havaleYapKullaniciListesiDoldur(String kullaniciListesi){
+    public HavaleEttiklerimPage havaleYapKullaniciListesiDoldur(String kullaniciListesi) {
         txtHavaleYapKullaniciListesi.selectLov(kullaniciListesi);
         txtHavaleYapKullaniciListesi.selectLov(kullaniciListesi);
         return this;

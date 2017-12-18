@@ -505,7 +505,7 @@ public class EvrakOlusturPage extends MainPage {
         @Step("Konu doldur")
         public BilgilerTab konuDoldur(String konu) {
             //sendKeys(txtKonu, konu, false); selenium
-            txtKonu.sendKeys(konu); //selenide
+            txtKonu.setValue(konu); //selenide
             return this;
         }
 
