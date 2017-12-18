@@ -50,8 +50,8 @@ public class GercekKisiYonetimiTest extends BaseTest {
         String adSoyad = ad + " " + soyad;
         String hitap = "Sayın";
         String postaTipi = "P";
-        String bilgiSecimTipi = "G";
-        String geregiSecimTipi = "G";
+        String bilgiSecimTipi = "Gerçek Kişi";
+        String geregiSecimTipi = "Gerçek Kişi";
         String evrakBilgileriListKisiKurumTipi = "G";
         String gercekKisiMesaj = "Seçtiğiniz gerçek kişi gereği / bilgi listesinde ekli olduğu için bu gerçek kişiyi seçemezsiniz.";
         String basariMesaji = "İşlem başarılıdır!";
@@ -78,7 +78,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
-                .geregiSecimTipiSec(geregiSecimTipi)
+                .geregiSecimTipiSecByText(geregiSecimTipi)
                 .geregiDoldur(adSoyad)
                 .gercekKisiGeregiAlaniKontrol(adSoyad, unvan, adres, postaTipi);
 
@@ -88,7 +88,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
 
         evrakOlusturPage
                 .bilgilerTabiAc()
-                .bilgiSecimTipiSec(bilgiSecimTipi)
+                .bilgiSecimTipiSecByText(bilgiSecimTipi)
                 .manuelBilgiDoldur(adSoyad)
                 .islemMesaji().dikkatOlmali(gercekKisiMesaj);
 
@@ -293,7 +293,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
-                .geregiSecimTipiSec("G")
+                .geregiSecimTipiSecByText("Gerçek Kişi")
                 .geregiDoldur(adSoyad2)
                 .gercekKisiGeregiAlaniKontrol(adSoyad2, unvan2, adres, postaTipi);
 
@@ -303,7 +303,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
 
         gelenEvrakKayitPage
                 .openPage()
-                .kisiKurumSec("G")
+                .kisiKurumSecByText("Gerçek Kişi")
                 .geldigiGercekKisiDoldur(adSoyad2);
     }
 
@@ -311,10 +311,10 @@ public class GercekKisiYonetimiTest extends BaseTest {
     @Test(enabled = true, description = "TC1119: Gerçek Kişi iletişim bilgilerinin değiştirilmesi")
     public void TC1119() throws InterruptedException {
 
-        String TCKN1 = "91057625780";
-        String ad = "OptiimTest";
-        String soyad = "TestOptiim";
-        String TCKN2 = "69848836158";
+        String TCKN1 = "54548785445";
+        String ad = "TC1119";
+        String soyad = "GerçekKişi";
+        String TCKN2 = "69848836158"; //TCKN2 = "69848836158" kullanıcının adresi
         String adSoyad = ad + " " + soyad;
         String unvan = "Mühendis";
         String telNo = "539" + createRandomNumber(7);
@@ -335,6 +335,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
 
         gercekKisiYonetimPage
                 .openPage()
+                .filtreTCKimlikNoDoldur(TCKN1)
                 .filtreAdDoldur(ad)
                 .filtreSoyadDoldur(soyad)
                 .ara()
@@ -364,7 +365,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
-                .geregiSecimTipiSec("G")
+                .geregiSecimTipiSecByText("Gerçek Kişi")
                 .geregiDoldur(TCKN1)
                 .gercekKisiGeregiAlaniKontrol(adSoyad, unvan, adres, postaTipi)
 
@@ -378,7 +379,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
 
         evrakOlusturPage
                 .bilgilerTabiAc()
-                .bilgiSecimTipiSec("G")
+                .bilgiSecimTipiSecByText("Gerçek Kişi")
                 .bilgiDoldur(TCKN2)
                 .bilgiAlaniGuncelle();
 
@@ -405,9 +406,9 @@ public class GercekKisiYonetimiTest extends BaseTest {
     @Test(enabled = true, description = "1132: Gerçek kişinin pasif yapılması ve ekranlardan kontrolü")
     public void TC1132() throws InterruptedException {
 
-        String tcNO = "21861197500";
-        String ad = "Bulut";
-        String soyad = "Toprak";
+        String tcNO = "43534543543";
+        String ad = "TC1132";
+        String soyad = "GerçekKişi";
         String adSoyad = ad + " " + soyad;
 
         gercekKisiYonetimPage
@@ -448,24 +449,24 @@ public class GercekKisiYonetimiTest extends BaseTest {
 
         gelenEvrakKayitPage
                 .openPage()
-                .kisiKurumSec("G")
+                .kisiKurumSecByText("Gerçek Kişi")
                 .geldigiGercekKisiGoruntulenmemeKontrolu(adSoyad);
 
         gidenEvrakKayitPage
                 .openPage()
-                .geregiSecimTipiSec("G")
+                .geregiSecimTipiSecByText("Gerçek Kişi")
                 .geregiAlanindaGoruntulenmemeKontrolu(adSoyad)
 
-                .bilgiSecimTipiSec("G")
+                .bilgiSecimTipiSecByText("Gerçek Kişi")
                 .bilgiAlanindaGoruntulenmemeKontrolu(adSoyad);
 
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
-                .geregiSecimTipiSec("G")
+                .geregiSecimTipiSecByText("Gerçek Kişi")
                 .geregiAlanindaGoruntulenmemeKontrolu(adSoyad)
 
-                .bilgiSecimTipiSec("G")
+                .bilgiSecimTipiSecByText("Gerçek Kişi")
                 .bilgiAlanindaGoruntulenmemeKontrolu(adSoyad);
     }
 
@@ -474,8 +475,8 @@ public class GercekKisiYonetimiTest extends BaseTest {
     public void TC1458() {
 
         String TCKN = "21861197500";
-        String ad = "Bulut";
-        String soyad = "Toprak";
+        String ad = "Tc1458";
+        String soyad = "GerçekKişi";
         String adSoyad = ad + " " + soyad;
 
         gercekKisiYonetimPage
@@ -514,24 +515,24 @@ public class GercekKisiYonetimiTest extends BaseTest {
 
         gelenEvrakKayitPage
                 .openPage()
-                .kisiKurumSec("G")
+                .kisiKurumSecByText("Gerçek Kişi")
                 .gercekKisiGoruntulenmeKontrolu(TCKN, adSoyad);
 
         gidenEvrakKayitPage
                 .openPage()
-                .geregiSecimTipiSec("G")
+                .geregiSecimTipiSecByText("Gerçek Kişi")
                 .geregiAlanindaGoruntulenmeKontrolu(adSoyad)
                 .secilenGeregiSil()
-                .bilgiSecimTipiSec("G")
+                .bilgiSecimTipiSecByText("Gerçek Kişi")
                 .bilgiAlanindaGoruntulenmeKontrolu(ad, soyad);
 
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
-                .geregiSecimTipiSec("G")
+                .geregiSecimTipiSecByText("Gerçek Kişi")
                 .geregiAlanindaGoruntulenmeKontrolu(adSoyad)
                 .secilenGeregiSil()
-                .bilgiSecimTipiSec("G")
+                .bilgiSecimTipiSecByText("Gerçek Kişi")
                 .bilgiAlanindaGoruntulenmeKontrolu(ad, soyad);
     }
 }

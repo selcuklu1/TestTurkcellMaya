@@ -77,6 +77,12 @@ public class GidenEvrakKayitPage extends MainPage {
         return this;
     }
 
+    @Step("Gereği seçim tipi alanında {value} seç")
+    public GidenEvrakKayitPage geregiSecimTipiSecByText(String kisiKurum) {
+        cmbGeregiSecimTipi.selectOption(kisiKurum);
+        return this;
+    }
+
     @Step("Gereği doldur")
     public GidenEvrakKayitPage geregiDoldur(String geregiAdSoyad) {
 
@@ -126,9 +132,15 @@ public class GidenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("Bilgi seçim tipi seç")
+    @Step("Bilgi seçim tipi alanında {value} seç")
     public GidenEvrakKayitPage bilgiSecimTipiSec(String bilgi) {
         cmbBilgiSecimTipi.sendKeys(Keys.SHIFT);
+        cmbBilgiSecimTipi.selectOption(bilgi);
+        return this;
+    }
+
+    @Step("Bilgi seçim tipi alanında {value} seç")
+    public GidenEvrakKayitPage bilgiSecimTipiSecByText(String bilgi) {
         cmbBilgiSecimTipi.selectOption(bilgi);
         return this;
     }
