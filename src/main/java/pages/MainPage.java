@@ -7,10 +7,7 @@ import common.BaseLibrary;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
-import pages.pageComponents.IslemMesajlari;
-import pages.pageComponents.SolMenu;
-import pages.pageComponents.UserMenu;
-import pages.pageComponents.UstMenu;
+import pages.pageComponents.*;
 import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Condition.text;
@@ -22,6 +19,12 @@ public class MainPage extends BaseLibrary {
     private UstMenu ustMenu = new UstMenu();
     private IslemMesajlari islemMesajlari = new IslemMesajlari();
     private UserMenu userMenu = new UserMenu();
+    private Filtreler filter = new Filtreler();
+
+    public Filtreler filter() {
+        return filter;
+    }
+
 
     //region Ust NavigationMenu
     public void ustMenu(String ustMenuIsmi, String altMenuIsmi) {

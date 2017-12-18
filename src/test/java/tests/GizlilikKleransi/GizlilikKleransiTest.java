@@ -7,13 +7,8 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.MainPage;
 import pages.solMenuPages.*;
-import pages.solMenuPages.HavaleEttiklerimPage;
-import pages.solMenuPages.ImzaladiklarimPage;
 import pages.ustMenuPages.*;
 
-import javax.swing.plaf.TableHeaderUI;
-
-import static data.TestData.password2;
 import static data.TestData.*;
 /****************************************************
  * Tarih: 2017-12-22
@@ -148,11 +143,8 @@ public class GizlilikKleransiTest extends BaseTest {
 
         havaleEttiklerimPage
                 .openPage()
-
                 .gizlilikRaporSec(konuKodu, geldigiYer, evrakTarihi)
-
-                .gizlilikRaporSec(konuKodu,geldigiYer,evrakTarihi)
-
+                .gizlilikRaporSec(konuKodu, geldigiYer, evrakTarihi)
                 .havaleYap()
                 .havaleYapKisiDoldur(kisi)
                 .islemMesaji().beklenenMesaj(uyariMesaj1);
@@ -164,7 +156,7 @@ public class GizlilikKleransiTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, dependsOnMethods = {"TC1938"}, description = "Genel evrak raporunda gizlilik kleransı kontrolü (evrakta izi olmayan kullanıcı ile)")
-    public void TC2138() throws InterruptedException{
+    public void TC2138() throws InterruptedException {
 //9267
         login(username4, password4);
 
@@ -179,11 +171,11 @@ public class GizlilikKleransiTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, dependsOnMethods = {"TC1938"}, description = "Evrak aramada gizlilik kleransı kontrolü (evrakta izi olmayan kullanıcı ile)")
-    public void TC2139() throws InterruptedException{
+    public void TC2139() throws InterruptedException {
 
         login(username3, password3);
 //9267
-String evrakNo="9267";
+        String evrakNo = "9267";
         String aranacagiYer = "Birim Evrakları Ara";
         String aranacagiYer2 = "İşlem Yaptıklarımda Ara";
         String aramaKriteri = "Evrak Sayı";
@@ -228,7 +220,7 @@ String evrakNo="9267";
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TC2223: Teslim aldıklarım listesinden havalede gizlilik klerans kontrolü")
-    public void TC2223() throws InterruptedException{
+    public void TC2223() throws InterruptedException {
         String uyariMesaj1 = "Havale etmek istediğiniz kullanıcı kleransı yetersizdir!!";
         String uyariMesaj2 = "Havale etmek istediğiniz kullanıcı grubundaki Mehmet Emin YÜCEANT, Mehmet Gökhan BAYSAN, Mehmet Koray BALCIOĞLU ın kleransı yetersizdir, kleransı yeterli olmayan kullanıcılara havale edilmeyecektir !!";
         String kisi = "Can Şeker";
@@ -242,7 +234,7 @@ String evrakNo="9267";
 
         teslimAlinmayiBekleyenlerPage
                 .openPage()
-                .gizlilikRaporSec(konuKodu,geldigiYer,evrakTarihi,no)
+                .gizlilikRaporSec(konuKodu, geldigiYer, evrakTarihi, no)
                 .havaleYap()
                 .havaleYapKisiDoldur(kisi)
                 .islemMesaji().beklenenMesaj(uyariMesaj1);
@@ -268,7 +260,7 @@ String evrakNo="9267";
 
         teslimAlinanlarPage
                 .openPage()
-                .gizlilikRaporSec(konuKodu,geldigiYer,evrakTarihi,no)
+                .gizlilikRaporSec(konuKodu, geldigiYer, evrakTarihi, no)
                 .havaleYap()
                 .havaleYapKisiDoldur(kisi)
                 .islemMesaji().beklenenMesaj(uyariMesaj1);
@@ -277,7 +269,6 @@ String evrakNo="9267";
                 .havaleYapKullaniciListesiDoldur(kullaniciListesi)
                 .islemMesaji().beklenenMesaj(uyariMesaj2);
     }
-
 
 
     @Severity(SeverityLevel.CRITICAL)
@@ -296,7 +287,7 @@ String evrakNo="9267";
 
         gelenEvraklarPage
                 .openPage()
-                .gizlilikRaporSec(konuKodu,geldigiYer,evrakTarihi,no)
+                .gizlilikRaporSec(konuKodu, geldigiYer, evrakTarihi, no)
                 .havaleYap()
                 .havaleYapKisiDoldur(kisi)
                 .islemMesaji().beklenenMesaj(uyariMesaj1);
@@ -318,14 +309,14 @@ String evrakNo="9267";
         String gidecegiyer = "Gizlilik Klerans(B)";
         String evrakTarihi = "15.12.2017";
         String no = "5107";
-        String no2= "0";
+        String no2 = "0";
         String aciklama = "Deneme amaçlıdır";
 
         login("gklerans", password2);
 
         gelenEvraklarPage
                 .openPage()
-                .gizlilikRaporSec(konuKodu,geldigiYer,evrakTarihi,no)
+                .gizlilikRaporSec(konuKodu, geldigiYer, evrakTarihi, no)
                 .paylas()
                 .paylasKisiSec(kisi)
                 .paylasanAciklamaDoldur(aciklama)
@@ -334,7 +325,7 @@ String evrakNo="9267";
 
         parafBekleyenlerPage
                 .openPage()
-                .gizlilikRaporSec(konuKodu,gidecegiyer,evrakTarihi,no2)
+                .gizlilikRaporSec(konuKodu, gidecegiyer, evrakTarihi, no2)
                 .paylas()
                 .paylasKisiSec(kisi)
                 .paylasimAciklamaYaz(aciklama)
@@ -355,14 +346,14 @@ String evrakNo="9267";
         String gidecegiyer = "Gizlilik Klerans(B)";
         String evrakTarihi = "15.12.2017";
         String no = "9250";
-        String no2= "0";
+        String no2 = "0";
         String aciklama = "Deneme amaçlıdır";
 
         login("gklerans", password2);
 
         parafladiklarimPage
                 .openPage()
-                .gizlilikRaporSec(konuKodu,gidecegiyer,evrakTarihi,no)
+                .gizlilikRaporSec(konuKodu, gidecegiyer, evrakTarihi, no)
                 .paylas()
                 .paylasKisiDoldur(kisi)
                 .paylasAciklamaDoldur(aciklama)
@@ -371,7 +362,7 @@ String evrakNo="9267";
 
         paylastiklarimPage
                 .openPage()
-                .gizlilikRaporSec(konuKodu,geldigiYer,evrakTarihi,no)
+                .gizlilikRaporSec(konuKodu, geldigiYer, evrakTarihi, no)
                 .paylasTabTikla()
                 .paylasKisiSec(kisi)
                 .paylasimAciklamaYaz(aciklama)
@@ -394,7 +385,7 @@ String evrakNo="9267";
 
         iadeEttiklerimPage
                 .openPage()
-                .gizlilikRaporSec(konuKodu,geldigiYer,gidecegiyer,evrakTarihi,no)
+                .gizlilikRaporSec(konuKodu, geldigiYer, gidecegiyer, evrakTarihi, no)
                 .kullanicilarDoldur(kisi)
                 .islemMesaji().beklenenMesaj(uyariMesaj1);
 
@@ -403,7 +394,7 @@ String evrakNo="9267";
 
         cevapladiklarimPage
                 .openPage()
-                .gizlilikRaporSec(konuKodu,geldigiYer,evrakTarihi,no)
+                .gizlilikRaporSec(konuKodu, geldigiYer, evrakTarihi, no)
                 .kullanicilarDoldur(kisi)
                 .islemMesaji().beklenenMesaj(uyariMesaj1);
 
@@ -425,7 +416,7 @@ String evrakNo="9267";
 
         gelenEvraklarPage
                 .openPage()
-                .gizlilikRaporSecTakibeEkle(konuKodu,geldigiYer,evrakTarihi,no)
+                .gizlilikRaporSecTakibeEkle(konuKodu, geldigiYer, evrakTarihi, no)
                 .takipListesiKullanicilarDoldur(kisi)
                 .islemMesaji().beklenenMesaj(uyariMesaj1);
 
@@ -434,7 +425,7 @@ String evrakNo="9267";
 
         parafBekleyenlerPage
                 .openPage()
-                .gizlilikRaporSecTakipListesi(konuKodu2,geldigiYer2,evrakTarihi,no2)
+                .gizlilikRaporSecTakipListesi(konuKodu2, geldigiYer2, evrakTarihi, no2)
                 .takipListesiKullanicilarDoldur(kisi)
                 .islemMesaji().beklenenMesaj(uyariMesaj1);
 
@@ -442,9 +433,9 @@ String evrakNo="9267";
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, dependsOnMethods = {"TC1471"}, description = "Yüksek kleranslı evrak oluşturma")
-    public void TC1938() throws InterruptedException{
+    public void TC1938() throws InterruptedException {
 
-        
+
         String basariMesaji = "İşlem başarılıdır!";
         String tur = "IMZALAMA";
         String icerik = "TC1938() " + getSysDate();
@@ -565,9 +556,10 @@ String evrakNo="9267";
                 .tablodaIlgiEkleKontrolu();
 
     }
+
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "Onay akışında gizlilik derecesi kontrolü\n")
-    public void TC1473() throws InterruptedException{
+    public void TC1473() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
         String tur = "PARAFLAMA";
@@ -581,7 +573,7 @@ String evrakNo="9267";
         String ivedilik = "Normal";
         String geregi = "Optiim Birim";
 
-        login(username,password);
+        login(username, password);
 
         String kullaniciTasnifDisi = "OPTİİM TEST3";
         String kullaniciOzel = "Optiim Test2";
@@ -614,6 +606,6 @@ String evrakNo="9267";
                 .editorTabAc()
                 .editorIcerikDoldur(icerik)
                 .parafla()
-                .islemMesaji().beklenenMesaj(kullaniciTasnifDisi+mesaj);
+                .islemMesaji().beklenenMesaj(kullaniciTasnifDisi + mesaj);
     }
 }
