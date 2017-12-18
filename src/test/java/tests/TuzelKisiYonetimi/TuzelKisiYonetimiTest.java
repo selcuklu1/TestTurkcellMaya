@@ -495,7 +495,7 @@ public class TuzelKisiYonetimiTest extends BaseTest {
 
         gelenEvrakKayitPage
                 .openPage()
-                .kisiKurumSecByText("Tüzel Kişi")
+                .kisiKurumSec("Tüzel Kişi")
                 .geldigiTuzelKisiGoruntulenmemeKontrolu(ad)
                 .geldigiTuzelKisiGoruntulenmemeKontrolu(vergiNo);
 
