@@ -87,8 +87,8 @@ public class HavaleEttiklerimPage extends MainPage {
     }
 
     @Step("Tablodan rapor seç")
-    public HavaleEttiklerimPage gizlilikRaporSec(String konu, String yer, String tarih, String no) {
-        tblEvraklar.filterBy(Condition.text(konu)).filterBy(Condition.text(yer)).filterBy(Condition.text(tarih)).filterBy(Condition.text(no)).get(0).click();
+    public HavaleEttiklerimPage gizlilikRaporSec(String konu, String yer, String tarih) {
+        tblEvraklar.filterBy(Condition.text(konu)).filterBy(Condition.text(yer)).filterBy(Condition.text(tarih)).get(0).click();
         return this;
     }
 

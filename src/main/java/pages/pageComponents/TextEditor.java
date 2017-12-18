@@ -40,8 +40,9 @@ public class TextEditor extends ElementsContainer {
 //      $inFrame("body[class*='cke_contents_ltr']");
 //        return $inFrame("body[class~='cke_contents_ltr']", frame);
 //        return $inFrame(By.tagName("body"), frame);
-//        return $inFrame(".cke_editable", frame);
-        return $inFrame(".cke_editable", frame);
+        SelenideElement editor = $inFrame(".cke_editable", frame).shouldBe(visible);
+        return editor;
+//        return $inFrame("body[class='cke_editable cke_editable_themed cke_contents_ltr']", frame);
 //        return $inFrame(".cke_contents_ltr", frame);
     }
 
@@ -59,7 +60,9 @@ public class TextEditor extends ElementsContainer {
 
     @Step("Editore tekst yaz")
     public TextEditor type(CharSequence... keysToSend) {
-        editor().sendKeys(keysToSend);
+        SelenideElement editor = editor();
+        editor.shouldBe(visible);
+        editor.sendKeys(keysToSend);
 ////        WebDriverRunner.getWebDriver().findElement(By.cssSelector("body[class='cke_editable']")).sendKeys(keysToSend);
 //        WebDriverRunner.getWebDriver().findElement(By.tagName("body")).sendKeys(keysToSend);
         switchTo().defaultContent();

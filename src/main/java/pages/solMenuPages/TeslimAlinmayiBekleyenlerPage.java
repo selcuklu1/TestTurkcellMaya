@@ -1,6 +1,7 @@
 package pages.solMenuPages;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
 import io.qameta.allure.Step;
@@ -22,16 +23,25 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     SelenideElement dateTxtTarih = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:tarihSecCalendar_input"));
     SelenideElement cmbTopluSecim = $(By.id("mainInboxForm:inboxDataTable:j_idt651_button"));
     SelenideElement tblRapor = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
-    SelenideElement btnTeslimAlveHavaleYap = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:3:cmdbutton"));
+    SelenideElement btnTeslimAlveHavaleYap = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:6:cmdbutton"));
     SelenideElement tblIlkEvrak = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
     SelenideElement btnTeslimAlVeKapat = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:6:cmdbutton"));
     BelgenetElement txtKaldirilacakKlasorler = comboLov(By.id("mainPreviewForm:klasorLov_id:LovText"));
     BelgenetElement txtKonuKodu = comboLov(By.id("mainPreviewForm:konuKoduLov:LovText"));
     SelenideElement btnTeslimAlVeKapatTeslimAlVeKapat = $("[id='mainPreviewForm:evrakKapatFieldsetId'] button[id^='mainPreviewForm:j_']");
+    ElementsCollection tblEvraklar = $$("[id^='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
+    BelgenetElement txtHavaleYapKisi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKullaniciLov:LovText"));
+    BelgenetElement txtHavaleYapKullaniciListesi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKisiListesiLov:LovText"));
 
     public TeslimAlinmayiBekleyenlerPage openPage() {
         solMenu(SolMenuData.BirimEvraklari.TeslimAlinmayiBekleyenler);
 //        ustMenu("Teslim Alınmayı Bekleyenler");
+        return this;
+    }
+
+    @Step("Tablodan rapor seç")
+    public TeslimAlinmayiBekleyenlerPage gizlilikRaporSec(String konu, String yer, String tarih, String no) {
+        tblEvraklar.filterBy(Condition.text(konu)).filterBy(Condition.text(yer)).filterBy(Condition.text(tarih)).get(0).click();
         return this;
     }
 
@@ -100,6 +110,20 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         btnTeslimAlveHavaleYap.click();
         return this;
     }
+
+    @Step("Kisi doldur")
+    public TeslimAlinmayiBekleyenlerPage havaleYapKisiDoldur(String kisi){
+        txtHavaleYapKisi.selectLov(kisi);
+        return this;
+    }
+
+    @Step("Kullanıcı listesi doldur")
+    public TeslimAlinmayiBekleyenlerPage havaleYapKullaniciListesiDoldur(String kullaniciListesi){
+        txtHavaleYapKullaniciListesi.selectLov(kullaniciListesi);
+        txtHavaleYapKullaniciListesi.selectLov(kullaniciListesi);
+        return this;
+    }
+
     @Step("Tabloda evrak no kontrolü")
     public TeslimAlinmayiBekleyenlerPage tabloKontrolu(String evrakNo)
     {

@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 import pages.MainPage;
 import pages.solMenuPages.GelenEvraklarPage;
 import pages.solMenuPages.ImzaBekleyenlerPage;
-import pages.solMenuPages.Parafladiklarim;
+import pages.solMenuPages.ParafladiklarimPage;
 import pages.solMenuPages.VekaletOnaylariPage;
 import pages.ustMenuPages.EvrakOlusturPage;
 import pages.ustMenuPages.GelenEvrakKayitPage;
@@ -29,7 +29,7 @@ public class VekaletIslemleriTest extends BaseTest {
     VekaletOnaylariPage vekaletOnaylariPage;
     EvrakOlusturPage evrakOlusturPage;
     ImzaBekleyenlerPage imzaBekleyenlerPage;
-    Parafladiklarim parafladiklarim;
+    ParafladiklarimPage parafladiklarimPage;
     GelenEvrakKayitPage gelenEvrakKayitPage;
 
     String aciklama = "";
@@ -56,7 +56,7 @@ public class VekaletIslemleriTest extends BaseTest {
         vekaletOnaylariPage = new VekaletOnaylariPage();
         evrakOlusturPage = new EvrakOlusturPage();
         imzaBekleyenlerPage = new ImzaBekleyenlerPage();
-        parafladiklarim = new Parafladiklarim();
+        parafladiklarimPage = new ParafladiklarimPage();
         mainPage = new MainPage();
         gelenEvrakKayitPage = new GelenEvrakKayitPage();
     }
@@ -233,7 +233,7 @@ public class VekaletIslemleriTest extends BaseTest {
                 .sImzaImzala()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
-        parafladiklarim
+        parafladiklarimPage
                 .openPage()
                 .filtreleAc()
                 .baslangicTarihiDoldur(getSysDateForKis())
@@ -241,7 +241,7 @@ public class VekaletIslemleriTest extends BaseTest {
                 .raporSec()
                 .icerikIlkKayıt();
 
-        String evrakNo= parafladiklarim.evrakDetayiEvrakNoAl();
+        String evrakNo= parafladiklarimPage.evrakDetayiEvrakNoAl();
 
         logout();
         login("test1","123");
@@ -305,7 +305,7 @@ public class VekaletIslemleriTest extends BaseTest {
                 .sImzaImzala()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
-        parafladiklarim
+        parafladiklarimPage
                 .openPage()
                 .filtreleAc()
                 .baslangicTarihiDoldur(getSysDateForKis())
@@ -313,7 +313,7 @@ public class VekaletIslemleriTest extends BaseTest {
                 .raporSec()
                 .icerikIlkKayıt();
 
-        String evrakNo= parafladiklarim.evrakDetayiEvrakNoAl();
+        String evrakNo= parafladiklarimPage.evrakDetayiEvrakNoAl();
 
         logout();
 
@@ -390,7 +390,7 @@ public class VekaletIslemleriTest extends BaseTest {
     @Test(enabled = true, description = "Vekalet veren kullanıcının bulunduğu kullanıcı listesine evrak havalesi ve kontrolü")
     public void TC2212() throws InterruptedException{
 
-        login(username3,password3);
+        login(username,password);
 
         String[] evrakNo = new String[2];
         gelenEvraklarPage
@@ -402,7 +402,7 @@ public class VekaletIslemleriTest extends BaseTest {
                 .evrakSec()
                 .havaleYap()
                 .havaleYapKisiTreeSec(vekaletVeren)
-                .vekeletAlanVerenTabloVekaletAlanveyaVerenSec(vekaletVeren)
+                .evrakOnIzlemeUyarıPopUpKontol()
                 .havaleYapGonder()
                 .islemMesaji().basariliOlmali(basariMesaji);
         logout();

@@ -31,13 +31,14 @@ public class GelenEvraklarPage extends MainPage {
     SelenideElement btnRaporAl = $(By.id("mainInboxForm:inboxDataTable:j_idt682"));
     SelenideElement btnEvrakGoster = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:0:cmdbutton"));
     SelenideElement btnTabHavaleYap = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:4:cmdbutton"));
-
+    SelenideElement popUpUyari = $(By.xpath("//body[@class='ui-layout-container']/div[104]//p"));
+    SelenideElement popUpUyariEvet = $(By.xpath("//body[@class='ui-layout-container']/div[104]//center/button[1]/span[@class='ui-button-text']"));
     //Havale Yap Alt Yapı
     SelenideElement btnHavaleYap = $("[id='mainPreviewForm:onizlemeRightTab:onizlemeRightTab'] td:nth-child(5) button");
     SelenideElement treeHavaleYapBirim = $(By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovTexts"));
     BelgenetElement txtComboLovKisi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKullaniciLov:LovText"));
     SelenideElement treeHavaleYapKisi = $(By.id("mainPreviewForm:dagitimBilgileriKullaniciLov:LovText"));
-    SelenideElement treeHavaleYapKullaniciListesi = $(By.id("mainPreviewForm:dagitimBilgileriKisiListesiLov:LovText"));
+    BelgenetElement treeHavaleYapKullaniciListesi = comboLov (By.id("mainPreviewForm:dagitimBilgileriKisiListesiLov:LovText"));
     BelgenetElement treeHavaleYapOnaylanacakKisi = comboLov("[id^='mainPreviewForm:onaylayacakKisiLov:LovText']");
     SelenideElement txtHavaleYapAciklama = $(By.id("mainPreviewForm:havaleAciklama"));
     SelenideElement btnHavaleYapDosyaEkle = $(By.id("mainPreviewForm:fileUploadHavaleEk_input"));
@@ -46,6 +47,9 @@ public class GelenEvraklarPage extends MainPage {
     SelenideElement btnHavaleYapGonder = $("[id^='mainPreviewForm:j_idt'] [class$='havaleGonderButonClass']");
     SelenideElement btnHavaleYapHavaleOnayinaGonder = $(By.id("mainPreviewForm:j_idt30599"));
     ElementsCollection tblVekaletVerenAlan =$$("[id='mainPreviewForm:kullaniciBirimSecenekleriHavaleIcin_data'] tr[role='row']");
+    ElementsCollection tblEvrak = $$("[id^='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
+    BelgenetElement txtHavaleYapKisi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKullaniciLov:LovText"));
+    BelgenetElement txtHavaleYapKullaniciListesi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKisiListesiLov:LovText"));
 
     // Tebiğ Et Buttonu altı div
     SelenideElement btnTebligEt = $(By.xpath("//span[contains(@class, 'tebligEt')]/.."));
@@ -84,9 +88,49 @@ public class GelenEvraklarPage extends MainPage {
     SelenideElement evrakSec = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
 
     BelgenetElement cmbOnayAkisi = comboLov(By.cssSelector("[id^='windowCevapEvrakForm:evrakBilgileriList'][id$='akisLov:LovText']"));
+    BelgenetElement txtTakipListesiKullanicilar = comboLov(By.id("evrakTakibimeEkleDialogForm:takipListLov:LovText"));
+    SelenideElement btnTakipListesiKapat =$("[id^='evrakTakibimeEkleDialogForm:takipDialog'] span[class='ui-icon ui-icon-closethick']");
 
     public GelenEvraklarPage openPage() {
         solMenu(SolMenuData.IslemBekleyenEvraklar.GelenEvraklar);
+        return this;
+    }
+
+    @Step("Tablodan rapor seç")
+    public GelenEvraklarPage gizlilikRaporSecTakibeEkle(String konu, String yer, String tarih, String no) {
+        tblEvrak.filterBy(Condition.text(konu)).filterBy(Condition.text(yer))
+                .filterBy(Condition.text(tarih))
+                .filterBy(Condition.text(no)).get(0)
+                .$$("button[id^='mainInboxForm:inboxDataTable:']").get(0).click();
+        return this;
+    }
+
+    @Step("Kullancılar doldur")
+    public GelenEvraklarPage takipListesiKullanicilarDoldur(String kullanicilar){
+        txtTakipListesiKullanicilar.selectLov(kullanicilar);
+        return this;
+    }
+    public GelenEvraklarPage takipListeKapat(){
+        btnTakipListesiKapat.click();
+        return this;
+    }
+
+    @Step("Tablodan rapor seç")
+    public GelenEvraklarPage gizlilikRaporSec(String konu, String yer, String tarih, String no) {
+        tblEvrak.filterBy(Condition.text(konu)).filterBy(Condition.text(yer)).filterBy(Condition.text(tarih)).filterBy(Condition.text(no)).get(0).click();
+        return this;
+    }
+
+    @Step("Kisi doldur")
+    public GelenEvraklarPage havaleYapKisiDoldur(String kisi){
+        txtHavaleYapKisi.selectLov(kisi);
+        return this;
+    }
+
+    @Step("Kullanıcı listesi doldur")
+    public GelenEvraklarPage havaleYapKullaniciListesiDoldur(String kullaniciListesi){
+        txtHavaleYapKullaniciListesi.selectLov(kullaniciListesi);
+        txtHavaleYapKullaniciListesi.selectLov(kullaniciListesi);
         return this;
     }
 
@@ -187,7 +231,7 @@ public class GelenEvraklarPage extends MainPage {
     }
 
     public GelenEvraklarPage havaleYapKullaniciListesiTreeDoldur(String text) {
-        treeHavaleYapKullaniciListesi.sendKeys(text);
+        treeHavaleYapKullaniciListesi.selectLov(text);
         return this;
     }
 
@@ -414,6 +458,12 @@ public class GelenEvraklarPage extends MainPage {
         tblVekaletVerenAlan
                 .filterBy(Condition.text(isim)).first()
                 .$("[id='mainPreviewForm:kullaniciBirimSecenekleriHavaleIcin_data'] td:nth-child(4) button").click();
+        return this;
+    }
+    @Step("Vekalet var uyarısı ")
+    public GelenEvraklarPage evrakOnIzlemeUyarıPopUpKontol() {
+       if(popUpUyari.isDisplayed())
+           popUpUyariEvet.click();
         return this;
     }
 }

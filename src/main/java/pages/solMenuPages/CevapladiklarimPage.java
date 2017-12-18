@@ -1,13 +1,18 @@
 package pages.solMenuPages;
 
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import pages.MainPage;
+import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
+import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 public class CevapladiklarimPage extends MainPage {
 
@@ -16,10 +21,34 @@ public class CevapladiklarimPage extends MainPage {
     private SelenideElement txtSayfadaAra = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt353"));
     private SelenideElement txtBaslangicTarihi = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt378_input"));
     private SelenideElement txtBitisTarihi = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt383_input"));
+    ElementsCollection tblEvrak = $$("[id^='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
+    BelgenetElement txtKullanicilar = comboLov(By.id("evrakTakibimeEkleDialogForm:takipListLov:LovText"));
+    SelenideElement btnTakipListesiKapat =$("[id^='evrakTakibimeEkleDialogForm:takipDialog'] span[class='ui-icon ui-icon-closethick']");
 
     @Step("Birim Havale Edilenler sayfası aç")
     public CevapladiklarimPage openPage() {
         solMenu(SolMenuData.IslemYaptiklarim.Cevapladiklarim);
+        return this;
+    }
+
+
+    @Step("Kullancılar doldur")
+    public CevapladiklarimPage kullanicilarDoldur(String kullanicilar){
+        txtKullanicilar.selectLov(kullanicilar);
+        return this;
+    }
+
+    @Step("Tablodan rapor seç")
+    public CevapladiklarimPage gizlilikRaporSec(String konu, String yer, String tarih, String no) {
+        tblEvrak.filterBy(Condition.text(konu)).filterBy(Condition.text(yer))
+                .filterBy(Condition.text(tarih))
+                .filterBy(Condition.text(no)).get(0)
+                .$$("button[id^='mainInboxForm:inboxDataTable:']").get(0).click();
+        return this;
+    }
+
+    public CevapladiklarimPage takipListeKapat(){
+        btnTakipListesiKapat.click();
         return this;
     }
 
