@@ -252,13 +252,24 @@ public class OnayAkisYonetimiPage extends MainPage {
     @Step("Onay akışı Pasif ise Aktif Yap")
     public OnayAkisYonetimiPage onayAkisiPasifIseAktifYap(String onayAkisi) {
 
-/*        if (tblOnayAkisListesi
-                .filterBy(exactText(onayAkisi)).shouldHaveSize(1)
+
+        SelenideElement element = $x("//*[@id='onayAkisiYonetimiListingForm:rolDataTable_data']//tr[@role='row']" +
+                "//*[normalize-space(text())='" + onayAkisi + "']/ancestor::tr[@data-ri and @role='row']");
+
+        SelenideElement active = element.find("[id$='changeOnayAkisiStatusButton'] [class~='to-active-status-icon']");
+        if (active.is(visible)) {
+            active.click();
+            islemOnayi("Evet");
+            Allure.addAttachment("Onay akışı pasif olduğu için aktif yapıldı.", "");
+        } else
+            System.out.println("Onay akışı aktif zaten");
+
+        /*if (tblOnayAkisListesi
+                .filterBy(text(onayAkisi)).shouldHaveSize(1)
                 .first()
                 .$(By.cssSelector("[id$='changeOnayAkisiStatusButton'] [class$='to-active-status-icon']")).isDisplayed()) {
-
             tblOnayAkisListesi
-                    .filterBy(exactText(onayAkisi)).shouldHaveSize(1)
+                    .filterBy(text(onayAkisi)).shouldHaveSize(1)
                     .first()
                     .$(By.cssSelector("[id$='changeOnayAkisiStatusButton'] [class$='to-active-status-icon']")).click();
 
@@ -267,19 +278,8 @@ public class OnayAkisYonetimiPage extends MainPage {
 
         } else {
             System.out.println("Onay akışı aktif zaten");
-        }*/
-
-        SelenideElement element = $x("//*[@id='onayAkisiYonetimiListingForm:rolDataTable_data']//tr[@role='row']" +
-                "//*[normalize-space(text())='"+ onayAkisi +"']/ancestor::tr[@data-ri and @role='row']");
-        SelenideElement active = element.shouldBe(visible).find("[id$='changeOnayAkisiStatusButton'] [class~='to-active-status-icon']");
-
-        if (active.is(exist)) {
-            active.click();
-            islemOnayi("Evet");
-            Allure.addAttachment("Onay akışı pasif olduğu için aktif yapıldı.", "");
-        } else
-            System.out.println("Onay akışı aktif zaten");
-
+        }
+*/
         return this;
     }
 

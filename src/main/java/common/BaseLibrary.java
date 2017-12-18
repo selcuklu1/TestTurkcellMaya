@@ -175,6 +175,42 @@ public class BaseLibrary {
 
 
     /**
+     * get date from text in format 31.12.2017
+     *
+     * @param text
+     * @return
+     */
+    public String getDateFromText(String text) {
+        String result = "";
+        String regex = "[0-3]?[0-9].[0-3]?[0-9].(?:[0-9]{2})?[0-9]{2}";
+
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(text);
+        if (matcher.find())
+            result = matcher.group();
+
+        return result;
+    }
+
+    /**
+     * get time from text in format 18:59:01
+     *
+     * @param text
+     * @return
+     */
+    public String getTimeFromText(String text) {
+        String result = "";
+        String regex = "([01]?[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]";
+
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(text);
+        if (matcher.find())
+            result = matcher.group();
+
+        return result;
+    }
+
+    /**
      * Türkçe harfleri inglizce harflere dönüştürüyor
      *
      * @param str
