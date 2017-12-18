@@ -391,7 +391,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .bilgilerTabiAc()
                 .adresDagitimdaGorunsunSec(true)
                 .dagitimHitapDuzenlemeKaydet();
-                //.windowHandleBefore();
+        //.windowHandleBefore();
 
         evrakOlusturPage
                 .pdfOnIzleme();
@@ -405,9 +405,6 @@ public class GercekKisiYonetimiTest extends BaseTest {
         closeNewWindow();
         switchTo().window(0);
         //switchTo().defaultContent();
-
-        gercekKisiYonetimPage
-                .openPage();
 
     }
 
