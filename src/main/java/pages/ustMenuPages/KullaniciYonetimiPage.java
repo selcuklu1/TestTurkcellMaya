@@ -209,7 +209,7 @@ public class KullaniciYonetimiPage extends MainPage {
     @Step("Gizlilik derecesi seç")
     public KullaniciYonetimiPage kullaniciBirimAtamaGizlilikDerecesiSec(String gizlilikDerecesi) {
         if (cmbKullaniciBirimAtamaGizlilikDerecesi.isDisplayed())
-            cmbKullaniciBirimAtamaGizlilikDerecesi.selectOptionByValue(gizlilikDerecesi);
+            cmbKullaniciBirimAtamaGizlilikDerecesi.selectOption(gizlilikDerecesi);
         return this;
     }
 
