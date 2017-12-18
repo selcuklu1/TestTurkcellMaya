@@ -78,6 +78,7 @@ public class TextEditor extends MainPage {
                 .shouldHaveSize(1)
                 .first()
                 .shouldBe(visible);
+
         if (button.is(toolboxButtonOn) != value) {
             System.out.println("Clicked");
 //            clickJs(button);
@@ -89,7 +90,7 @@ public class TextEditor extends MainPage {
 
     @Step("\"{name}\" toolbar alanda \"{value}\" seç")
     public TextEditor toolbarCombo(String name, String value) {
-        SelenideElement combo = $$x("//span[span[contains(@class,'cke_button_label') and normalize-space(text())='" + name + "']]/a")
+        SelenideElement combo = $$x("//span[span[contains(@class,'cke_combo_label') and normalize-space(text())='" + name + "']]/a")
                 .shouldHave(sizeGreaterThan(0))
                 .filterBy(visible)
                 .shouldHaveSize(1)
