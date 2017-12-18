@@ -997,6 +997,7 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement divHitap = $("div[id='yeniGidenEvrakForm:hitapInplace'] > span");
         // SelenideElement divEditor = $(By.id("yeniGidenEvrakForm:allPanels"));
         SelenideElement divEditor = $("span[id='yeniGidenEvrakForm:D1Editor']");
+        SelenideElement divEditorInstance = $(By.id("cke_1_contents"));
         SelenideElement yeniGidenEvrakForm = $(By.id("cke_yeniGidenEvrakForm:ckeditorInstance_window1"));
         SelenideElement editorHitapKismi = $(By.cssSelector("#yeniGidenEvrakForm\\:hitapInplace > span:nth-child(4)"));
         SelenideElement tblEditorlovSecilenTable = $(By.id("yeniGidenEvrakForm:geregiKurumLov:LovSecilenTable"));
@@ -1077,8 +1078,13 @@ public class EvrakOlusturPage extends MainPage {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            divEditor.find(By.tagName("iframe")).click();
-            divEditor.find(By.tagName("iframe")).getWrappedElement().sendKeys(icerik);
+
+            divEditorInstance.findElement(By.tagName("iframe")).click();
+            divEditorInstance.findElement(By.tagName("iframe")).sendKeys(icerik);
+
+
+            //divEditor.find(By.tagName("iframe")).click();
+            //divEditor.find(By.tagName("iframe")).getWrappedElement().sendKeys(icerik);
             return this;
         }
 
