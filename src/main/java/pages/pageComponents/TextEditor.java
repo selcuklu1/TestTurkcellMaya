@@ -1,10 +1,10 @@
 package pages.pageComponents;
 
-import com.codeborne.selenide.ElementsContainer;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import pages.MainPage;
 
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Condition.visible;
@@ -17,7 +17,7 @@ import static pages.pageComponents.belgenetElements.BelgentCondition.toolboxButt
  * Tarih: 1.12.2017
  * Açıklama:
  */
-public class TextEditor extends ElementsContainer {
+public class TextEditor extends MainPage {
 
     /*private SelenideElement editor;
 
@@ -72,14 +72,15 @@ public class TextEditor extends ElementsContainer {
 
     @Step("\"{name}\" toolbar butonun etkin durumu \"{value}\" yap")
     public TextEditor toolbarButton(String name, boolean value) {
-        SelenideElement button =
-                $$x("//a/span[contains(@class,'cke_button_label') and normalize-space(text())='" + name + "']/..")
-                        .shouldHave(sizeGreaterThan(0)).filterBy(visible).first();
-//        System.out.println($$x("//a/span[contains(@class,'cke_button_label') and normalize-space(text())='" + name + "']/..").size());
-
-        button.shouldBe(visible);
+        SelenideElement button = $$x("//a[span[contains(@class,'cke_button_label') and normalize-space(text())='" + name + "']]")
+                .shouldHave(sizeGreaterThan(0))
+                .filterBy(visible)
+                .shouldHaveSize(1)
+                .first()
+                .shouldBe(visible);
         if (button.is(toolboxButtonOn) != value) {
-//            System.out.println("Clicked");
+            System.out.println("Clicked");
+//            clickJs(button);
             button.click();
         }
 
@@ -88,8 +89,12 @@ public class TextEditor extends ElementsContainer {
 
     @Step("\"{name}\" toolbar alanda \"{value}\" seç")
     public TextEditor toolbarCombo(String name, String value) {
-        SelenideElement combo = $$x("//span[contains(@class,'cke_combo_label') and normalize-space(text())='" + name + "']/../a")
-                .filterBy(visible).shouldHaveSize(1).first();
+        SelenideElement combo = $$x("//span[span[contains(@class,'cke_button_label') and normalize-space(text())='" + name + "']]/a")
+                .shouldHave(sizeGreaterThan(0))
+                .filterBy(visible)
+                .shouldHaveSize(1)
+                .first()
+                .shouldBe(visible);
 
         combo.click();
 
