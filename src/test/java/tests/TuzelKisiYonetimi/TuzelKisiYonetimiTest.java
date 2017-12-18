@@ -38,6 +38,7 @@ public class TuzelKisiYonetimiTest extends BaseTest {
         String vergiNo = createRandomNumber(10);
         String kisaAd = createRandomText(7);
         String ad = kisaAd + " holding";
+        String tuzelKisiTipi = "deneme tüzel kişi tipi";
         String adres = "Mecidiyeköy Mahallesi";
         String ulke = "TÜRKİYE";
         String il = "İst";
@@ -51,7 +52,7 @@ public class TuzelKisiYonetimiTest extends BaseTest {
         tuzelKisiYonetimiPage
                 .openPage()
                 .yeniTuzelKisiEkle()
-                .tuzelKisiTipiSec("12729")
+                .tuzelKisiTipiSec(tuzelKisiTipi)
                 .vergiNoDoldur(vergiNo)
                 .adDoldur(ad)
                 .kisaAdDoldur(kisaAd)
@@ -80,7 +81,7 @@ public class TuzelKisiYonetimiTest extends BaseTest {
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
-                .geregiSecimTipiSec("T")
+                .geregiSecimTipiSecByText("Tüzel Kişi")
                 .geregiDoldur(ad)
                 .secilenGeregiSil()
                 .geregiDoldur(kisaAd)
@@ -89,7 +90,7 @@ public class TuzelKisiYonetimiTest extends BaseTest {
 
         gelenEvrakKayitPage
                 .openPage()
-                .kisiKurumSec("T")
+                .kisiKurumSecByText("Tüzel Kişi")
                 .geldigiTuzelKisiDoldur(ad)
                 .secilenGeregiTuzelKisiSil()
                 .geldigiTuzelKisiDoldur(kisaAd)
@@ -98,7 +99,7 @@ public class TuzelKisiYonetimiTest extends BaseTest {
 
         gidenEvrakKayitPage
                 .openPage()
-                .geregiSecimTipiSec("T")
+                .geregiSecimTipiSecByText("Tüzel Kişi")
                 .geregiDoldur(ad)
                 .secilenGeregiSil()
                 .geregiDoldur(kisaAd)
@@ -110,9 +111,9 @@ public class TuzelKisiYonetimiTest extends BaseTest {
     @Test(enabled = true, description = "TC1133: Tüzel kişi sorgulama")
     public void TC1133() {
 
-        String vergiNo = "8524567913";
-        String ad = "Türksat Optiim";
-        String kisaAd = "trkstopttm";
+        String vergiNo = "1257452322";
+        String ad = "Tc1133 TüzelKişi";
+        String kisaAd = "tc1133";
 
         tuzelKisiYonetimiPage
                 //Step num: 2
@@ -135,6 +136,7 @@ public class TuzelKisiYonetimiTest extends BaseTest {
                 .ara()
                 .tuzelKisiPasifIseAktifYap()
                 .filtreSorgulamaPaneliAc()
+                .filtreAdDoldur(ad)
                 .filtreDurumSec("AKTIFLER")
                 .ara()
                 .aktifTuzelKisiKayitKontrolu(vergiNo, ad, kisaAd)
@@ -202,6 +204,7 @@ public class TuzelKisiYonetimiTest extends BaseTest {
         String vergiNo = createRandomNumber(10);
         String kisaAd = createRandomText(7);
         String ad = kisaAd + " holding";
+        String tuzelKisiTipi = "deneme tüzel kişi tipi";
         String adres = "Gültepe Mahallesi";
         String ulke = "TÜRKİYE";
         String il = "İstanbul";
@@ -225,14 +228,14 @@ public class TuzelKisiYonetimiTest extends BaseTest {
 
         tuzelKisiYonetimiPage
                 .yeniTuzelKisiEkle()
-                .tuzelKisiTipiSec("12729")
+                .tuzelKisiTipiSec(tuzelKisiTipi)
                 .vergiNoDoldur(vergiNo)
                 .tuzelKisiKaydet()
                 .islemMesaji().uyariOlmali(zorunluAlanUyariMesaji);
 
         tuzelKisiYonetimiPage
                 .yeniTuzelKisiEkle()
-                .tuzelKisiTipiSec("12729")
+                .tuzelKisiTipiSec(tuzelKisiTipi)
                 .adDoldur(ad)
                 .kepAdresiKullaniyorSec(true)
                 .tuzelKisiKaydet()
@@ -281,6 +284,7 @@ public class TuzelKisiYonetimiTest extends BaseTest {
         String vergiNo2 = createRandomNumber(10);
         String kisaAd2 = createRandomText(7);
         String ad2 = kisaAd2 + " İş Çözümleri";
+        String tuzelKisiTipi = "LİMİTED ŞİRKETİ";
         String kepAdresi = kisaAd + "@testkep.pttkep.gov.tr";
         String basariMesaji = "İşlem başarılıdır!";
         String postaTipi = "Z";
@@ -290,7 +294,7 @@ public class TuzelKisiYonetimiTest extends BaseTest {
                 //tests.Data yaratmak için
                 .openPage()
                 .yeniTuzelKisiEkle()
-                .tuzelKisiTipiSec("22782")
+                .tuzelKisiTipiSec(tuzelKisiTipi)
                 .vergiNoDoldur(vergiNo)
                 .adDoldur(ad)
                 .kisaAdDoldur(kisaAd)
@@ -319,7 +323,7 @@ public class TuzelKisiYonetimiTest extends BaseTest {
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
-                .geregiSecimTipiSec("T")
+                .geregiSecimTipiSecByText("Tüzel Kişi")
                 .geregiDoldur(ad2)
                 .tuzelKisiGeregiAlaniVergiNoPostaTipiKontrol(vergiNo2, postaTipi)
 
@@ -330,7 +334,7 @@ public class TuzelKisiYonetimiTest extends BaseTest {
 
         gelenEvrakKayitPage
                 .openPage()
-                .kisiKurumSec("T")
+                .kisiKurumSecByText("Tüzel Kişi")
                 .geldigiTuzelKisiDoldur(ad2)
                 .secilenGeregiTuzelKisiSil()
                 .geldigiTuzelKisiDoldur(vergiNo2)
@@ -343,8 +347,8 @@ public class TuzelKisiYonetimiTest extends BaseTest {
     public void TC2241() throws InterruptedException {
 
         String vergiNo = "85212364597";
-        String ad = "SÇ Üniversitesi";
-        String kisaAd = "scunv";
+        String ad = "Tc2241 Üniversitesi";
+        String kisaAd = "tc2241unv";
 
         String mobilTelNo = "539" + createRandomNumber(7);
         String telNo = "212" + createRandomNumber(11);
@@ -385,7 +389,7 @@ public class TuzelKisiYonetimiTest extends BaseTest {
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
-                .geregiSecimTipiSec("T")
+                .geregiSecimTipiSecByText("Tüzel Kişi")
                 .geregiDoldur(ad)
                 .tuzelKisiGeregiAlaniVergiNoAdAdresKontrol(vergiNo, ad, adres)
 
@@ -399,7 +403,7 @@ public class TuzelKisiYonetimiTest extends BaseTest {
 
         evrakOlusturPage
                 .bilgilerTabiAc()
-                .bilgiSecimTipiSec("T")
+                .bilgiSecimTipiSecByText("Tüzel Kişi")
                 .bilgiDoldur(vergiNo2)
                 .bilgiAlaniGuncelle();
 
@@ -425,9 +429,9 @@ public class TuzelKisiYonetimiTest extends BaseTest {
     @Test(enabled = true, description = "TC1132: Tüzel kişinin pasif yapılması ve kontrolü")
     public void TC1132() {
 
-        String vergiNo = "8524567913";
-        String ad = "Türksat Optiim";
-        String kisaAd = "trkstopttm";
+        String vergiNo = "34378564433";
+        String ad = "Tc1132 TüzelKişi";
+        String kisaAd = "tc1132tk";
         String tip = "Tüzel Kişi";
         String basariMesaji = "İşlem başarılıdır!";
 
@@ -479,9 +483,9 @@ public class TuzelKisiYonetimiTest extends BaseTest {
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
-                .geregiSecimTipiSec("T")
+                .geregiSecimTipiSecByText("Tüzel Kişi")
                 .geregiAlanindaGoruntulenmemeKontrolu(ad)
-                .bilgiSecimTipiSec("T")
+                .bilgiSecimTipiSecByText("Tüzel Kişi")
                 .bilgiAlanindaGoruntulenmemeKontrolu(ad);
 
         evrakOlusturPage
@@ -491,16 +495,16 @@ public class TuzelKisiYonetimiTest extends BaseTest {
 
         gelenEvrakKayitPage
                 .openPage()
-                .kisiKurumSec("T")
+                .kisiKurumSec("Tüzel Kişi")
                 .geldigiTuzelKisiGoruntulenmemeKontrolu(ad)
                 .geldigiTuzelKisiGoruntulenmemeKontrolu(vergiNo);
 
         gidenEvrakKayitPage
                 .openPage()
-                .geregiSecimTipiSec("T")
+                .geregiSecimTipiSecByText("Tüzel Kişi")
                 .geregiAlanindaGoruntulenmemeKontrolu(ad)
 
-                .bilgiSecimTipiSec("T")
+                .bilgiSecimTipiSecByText("Tüzel Kişi")
                 .bilgiAlanindaGoruntulenmemeKontrolu(ad);
 
         sikKullanilanlarPage
@@ -512,11 +516,11 @@ public class TuzelKisiYonetimiTest extends BaseTest {
     @Test(enabled = true, description = "TC1132: Pasif yapılan tüzel kişinin aktif yapılması ve kontrolü")
     public void TC1458() {
 
-        String vergiNo = "8524567913";
-        String ad = "Türksat";
-        String soyad = "Optiim";
-        String tamAd = "Türksat Optiim";
-        String kisaAd = "trkstopttm";
+        String vergiNo = "55665732323";
+        String ad = "TC1458";
+        String soyad = "TüzelKişi";
+        String tamAd = "TC1458 TüzelKişi";
+        String kisaAd = "tc1458tk";
         String tip = "Tüzel Kişi";
         String basariMesaji = "İşlem başarılıdır!";
 
@@ -560,10 +564,10 @@ public class TuzelKisiYonetimiTest extends BaseTest {
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
-                .geregiSecimTipiSec("T")
+                .geregiSecimTipiSecByText("Tüzel Kişi")
                 .geregiAlanindaGoruntulenmeKontrolu(tamAd)
                 .secilenGeregiSil()
-                .bilgiSecimTipiSec("T");
+                .bilgiSecimTipiSecByText("Tüzel Kişi");
         //TODO: burada defect var. Düzeltilince açılacak tekrar
 //                .bilgiAlanindaGoruntulenmeKontrolu(ad, soyad);
 
@@ -574,16 +578,16 @@ public class TuzelKisiYonetimiTest extends BaseTest {
 
         gelenEvrakKayitPage
                 .openPage()
-                .kisiKurumSec("T")
+                .kisiKurumSecByText("Tüzel Kişi")
                 .geldigiTuzelKisiGoruntulenmeKontrolu(tamAd)
                 .geldigiTuzelKisiGoruntulenmeKontrolu(vergiNo);
 
         gidenEvrakKayitPage
                 .openPage()
-                .geregiSecimTipiSec("T")
+                .geregiSecimTipiSecByText("Tüzel Kişi")
                 .geregiAlanindaGoruntulenmeKontrolu(tamAd)
                 .secilenGeregiSil()
-                .bilgiSecimTipiSec("T");
+                .bilgiSecimTipiSecByText("Tüzel Kişi");
         //TODO: burada defect var. Düzeltilince açılacak tekrar
         //Gelen title:     TÜRKSAT OPTİİME
         //Beklenen title:  Türksat OPTİİM

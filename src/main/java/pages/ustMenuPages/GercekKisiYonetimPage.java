@@ -92,6 +92,8 @@ public class GercekKisiYonetimPage extends MainPage {
     @Step("Gerçek Kişi Yönetimi sayfasını aç")
     public GercekKisiYonetimPage openPage() {
         ustMenu("Gerçek Kişi Yönetimi");
+        $("#gercekKisiYonetimiListingForm").shouldBe(visible);
+
         return this;
     }
 
@@ -320,7 +322,7 @@ public class GercekKisiYonetimPage extends MainPage {
     @Step("Filtre sorgulama paneli aç")
     public GercekKisiYonetimPage filtreSorgulamaPaneliAc() {
 
-        filtreSorgulamaPanel.click();
+        filtreSorgulamaPanel.shouldBe(visible).click();
         txtFiltreTCKimlikNo.clear();
         txtFiltreAd.clear();
         txtFiltreSoyad.clear();
