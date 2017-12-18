@@ -20,8 +20,9 @@ public class BaseTest extends BaseLibrary {
 
     @BeforeClass
     public void driverSetUp() {
-        killProcess();
 
+        //killProcess();
+        
         Locale turkishLocal = new Locale("tr", "TR");
         Locale.setDefault(turkishLocal);
 
@@ -58,9 +59,8 @@ public class BaseTest extends BaseLibrary {
     @AfterMethod
     public void tearDown() throws Exception {
 
-        Selenide.clearBrowserLocalStorage();
-        Selenide.clearBrowserCookies();
-
+       //Selenide.clearBrowserLocalStorage();
+       //Selenide.clearBrowserCookies();
     }
 
     public void login() {

@@ -200,7 +200,7 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("")
+    @Step("Kullanıcı listesi doldur")
     public GelenEvrakKayitPage havaleIslemleriKullaniciListesiDoldur(String kisi){
         txtHavaleIslemleriKullaniciListesi.selectLov(kisi);
         txtHavaleIslemleriKullaniciListesi.selectLov(kisi);

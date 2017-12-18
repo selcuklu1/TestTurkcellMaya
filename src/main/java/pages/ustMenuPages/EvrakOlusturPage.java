@@ -60,6 +60,7 @@ public class EvrakOlusturPage extends MainPage {
 
     ElementsCollection tblVekaletVerenAlan =$$("[id='yeniGidenEvrakForm:kullaniciBirimSecenekleri_data'] tr[role='row']");
     //endregion
+
     @Step("Evrak Oluştur sayfası aç")
     public EvrakOlusturPage openPage() {
         new UstMenu().ustMenu("Evrak Oluştur");
@@ -286,6 +287,7 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("")
         public BilgilerTab kullniciIsmineGoreImzaParafSec(String kullanici, String value) {
+
             tblKullanıcılar2.filterBy(Condition.text(kullanici)).first()
                     .$("select")
                     .selectOptionByValue(value);
@@ -724,6 +726,7 @@ public class EvrakOlusturPage extends MainPage {
         public BilgilerTab onayAkisiAlanindaGoruntulenmemeKontrolu(String onayAkisi) {
 
             comboLov(cmbOnayAkisiBy).type(onayAkisi).titleItems().filterBy(exactText(onayAkisi)).shouldHaveSize(0);
+            comboLov(cmbOnayAkisiBy).closeLovTreePanel();
             System.out.println("MyCombolov alanında " + onayAkisi + ": Onay Akışın görüntülenmediği görülür.");
 
             return this;
@@ -997,6 +1000,7 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement divHitap = $("div[id='yeniGidenEvrakForm:hitapInplace'] > span");
         // SelenideElement divEditor = $(By.id("yeniGidenEvrakForm:allPanels"));
         SelenideElement divEditor = $("span[id='yeniGidenEvrakForm:D1Editor']");
+        SelenideElement divEditorInstance = $(By.id("cke_1_contents"));
         SelenideElement yeniGidenEvrakForm = $(By.id("cke_yeniGidenEvrakForm:ckeditorInstance_window1"));
         SelenideElement editorHitapKismi = $(By.cssSelector("#yeniGidenEvrakForm\\:hitapInplace > span:nth-child(4)"));
         SelenideElement tblEditorlovSecilenTable = $(By.id("yeniGidenEvrakForm:geregiKurumLov:LovSecilenTable"));
@@ -1078,11 +1082,12 @@ public class EvrakOlusturPage extends MainPage {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            divEditor.find(By.tagName("iframe")).click();
-            divEditor.find(By.tagName("iframe")).getWrappedElement().sendKeys(icerik);
 
             TextEditor editor = new TextEditor();
             editor.type(icerik);
+
+            //divEditor.find(By.tagName("iframe")).click();
+            //divEditor.find(By.tagName("iframe")).getWrappedElement().sendKeys(icerik);
             return this;
         }
 

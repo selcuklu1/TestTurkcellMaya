@@ -1,15 +1,19 @@
 package pages.solMenuPages;
 
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
-import common.BaseLibrary;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import pages.MainPage;
+import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
+import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
-public class Parafladiklarim extends MainPage {
+public class ParafladiklarimPage extends MainPage {
 
     SelenideElement f = $(By.xpath("//div[@id='mainInboxForm:inboxDataTable:filtersAccordion']//a[text()='Filtreler']/parent::h3"));
     SelenideElement cmbFiltre = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt3011_input"));
@@ -23,80 +27,110 @@ public class Parafladiklarim extends MainPage {
     SelenideElement btnTamEkranGöster = $(By.id(""));
     SelenideElement tblRapor = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
     SelenideElement btnHavaleYap = $(By.id(""));
-    SelenideElement btnIconPaylas = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:2:cmdbutton"));
+    SelenideElement btnIconPaylas = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:6:cmdbutton"));
     SelenideElement txtKisi =$(By.id("mainPreviewForm:evrakPaylasKisiLov:LovText"));
     SelenideElement txtAciklama = $(By.id("mainPreviewForm:evrakPaylasAciklama"));
-    SelenideElement btnPaylas = $(By.id("mainPreviewForm:paylasButtonId"));
+    SelenideElement btnPaylas = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:5:cmdbutton"));
     SelenideElement btnIcerik = $(By.id("mainInboxForm:inboxDataTable:0:detayGosterButton"));
     SelenideElement txtEvrakDetayiEvrakNo = $("[id^='inboxItemInfoForm:evrakBilgileriList'][id$='evrakNoPanelGrid'] td:nth-child(3) div");
+    ElementsCollection tblEvrak = $$("[id^='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
+    SelenideElement btnPaylasPaylas = $(By.id("mainPreviewForm:paylasButtonId"));
+    BelgenetElement txtPaylasKisi = comboLov(By.id("mainPreviewForm:evrakPaylasKisiLov:LovText"));
+    SelenideElement txtPaylasAciklama = $(By.id("mainPreviewForm:evrakPaylasAciklama"));
 
     @Step("Parafladıklarım sayfası aç")
-    public Parafladiklarim openPage() {
+    public ParafladiklarimPage openPage() {
         solMenu(SolMenuData.IslemYaptiklarim.Parafladiklarim);
         return this;
     }
 
+    @Step("Açıklama doldur")
+    public ParafladiklarimPage paylasAciklamaDoldur(String aciklama){
+        txtPaylasAciklama.setValue(aciklama);
+        return this;
+    }
+
+    @Step("Kişi doldur")
+    public ParafladiklarimPage paylasKisiDoldur(String kisi){
+        txtPaylasKisi.selectLov(kisi);
+        return this;
+    }
+
+    @Step("Paylaş")
+    public ParafladiklarimPage paylasPaylas(){
+        btnPaylasPaylas.click();
+        return this;
+    }
+
+    @Step("Tablodan rapor seç")
+    public ParafladiklarimPage gizlilikRaporSec(String konu, String yer, String tarih, String no) {
+        tblEvrak.filterBy(Condition.text(konu)).filterBy(Condition.text(yer))
+                .filterBy(Condition.text(tarih))
+                .filterBy(Condition.text(no)).get(0).click();
+        return this;
+    }
+
     @Step("Filtrele alanını aç")
-    public Parafladiklarim filtreleAc() {
+    public ParafladiklarimPage filtreleAc() {
         f.click();
         return this;
     }
 
     @Step("Filtere seç")
-    public Parafladiklarim filtreleSec(String value) {
+    public ParafladiklarimPage filtreleSec(String value) {
         cmbFiltre.selectOption(value);
         return this;
     }
 
     @Step("Sayfada Ara alanı doldur")
-    public Parafladiklarim sayfadaAraDoldur(String value) {
+    public ParafladiklarimPage sayfadaAraDoldur(String value) {
         txtSayfadaAra.sendKeys(value);
         return this;
     }
 
     @Step("Başlangıç Tarihi doldur")
-    public Parafladiklarim baslangicTarihiDoldur(String tarih) {
+    public ParafladiklarimPage baslangicTarihiDoldur(String tarih) {
         dateTxtBaslangicTarihi.sendKeys(tarih);
         return this;
     }
 
     @Step("Bitiş Tarihi doldur")
-    public Parafladiklarim bitisTarihiDoldur(String tarih) {
+    public ParafladiklarimPage bitisTarihiDoldur(String tarih) {
         dateTxtBitisTarihi.sendKeys(tarih);
         return this;
     }
 
     @Step("Tablodan rapor seç")
-    public Parafladiklarim raporSec() {
+    public ParafladiklarimPage raporSec() {
         tblRapor.click();
         return this;
     }
 
     @Step("Paylaş ikonuna  bas")
-    public Parafladiklarim havaleYap() {
+    public ParafladiklarimPage havaleYap() {
         btnIconPaylas.click();
         return this;
     }
 
     @Step("Kişi Seç")
-    public Parafladiklarim kişiSec(String kisi) {
+    public ParafladiklarimPage kişiSec(String kisi) {
         txtKisi.sendKeys(kisi);
         return this;
     }
 
     @Step("Açıklama doldur")
-    public Parafladiklarim aciklamaDoldur(String aciklama) {
+    public ParafladiklarimPage aciklamaDoldur(String aciklama) {
         txtAciklama.sendKeys(aciklama);
         return this;
     }
 
     @Step("Paylaş butonuna bas")
-    public Parafladiklarim paylas() {
+    public ParafladiklarimPage paylas() {
         btnPaylas.click();
         return this;
     }
     @Step("İçerik ilk kayıt")
-    public Parafladiklarim icerikIlkKayıt() {
+    public ParafladiklarimPage icerikIlkKayıt() {
         btnIcerik.click();
         return this;
     }
