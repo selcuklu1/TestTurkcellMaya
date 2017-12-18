@@ -563,6 +563,10 @@ public class BaseLibrary {
         WebDriverRunner.getWebDriver().switchTo().window(winHandleBefore);
     }
 
+    public void  closeNewWindow() {
+        WebDriverRunner.getWebDriver().close();
+    }
+
 
     public String cssSE(String element, String attribute, String startsWith, String endsWith) {
 

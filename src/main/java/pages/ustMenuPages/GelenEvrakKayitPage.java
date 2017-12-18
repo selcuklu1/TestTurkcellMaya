@@ -255,13 +255,13 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("Kişi kurum tipi alanında {value} seç")
+    @Step("Kişi kurum tipi alanında {kisiKurum} seç")
     public GelenEvrakKayitPage kisiKurumSec(String kisiKurum) {
         cmbEvrakBilgileriListKisiKurum.selectOptionByValue(kisiKurum);
         return this;
     }
 
-    @Step("Kişi kurum tipi alanında {value} seç")
+    @Step("Kişi kurum tipi alanında {kisiKurum} seç")
     public GelenEvrakKayitPage kisiKurumSecByText(String kisiKurum) {
         cmbEvrakBilgileriListKisiKurum.selectOption(kisiKurum);
         return this;
