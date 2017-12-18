@@ -1080,6 +1080,9 @@ public class EvrakOlusturPage extends MainPage {
             }
             divEditor.find(By.tagName("iframe")).click();
             divEditor.find(By.tagName("iframe")).getWrappedElement().sendKeys(icerik);
+
+            TextEditor editor = new TextEditor();
+            editor.type(icerik);
             return this;
         }
 
