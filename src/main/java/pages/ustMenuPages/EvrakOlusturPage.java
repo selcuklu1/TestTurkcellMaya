@@ -531,7 +531,7 @@ public class EvrakOlusturPage extends MainPage {
         }
 
         public BilgilerTab miatDoldur(String date) {
-            dateMiat.sendKeys(date);
+            setValueJS(dateMiat,date);
             return this;
         }
 
