@@ -1,6 +1,7 @@
 package tests.KurumYonetimi;
 
 import common.BaseTest;
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.ustMenuPages.EvrakOlusturPage;
@@ -24,11 +25,11 @@ public class KurumYonetimiTest extends BaseTest {
         gelenEvrakKayitPage = new GelenEvrakKayitPage();
         evrakOlusturPage = new EvrakOlusturPage();
         gidenEvrakKayitPage = new GidenEvrakKayitPage();
-        login();
     }
 
     @Test(enabled = true, description = "TC01459 : Kurum bilgisi güncelleme")
     public void TC01459() {
+
 
         String guncellenecekKurumAdi = "huseyindeneme";
         String yeniKurumAdi = "huseyindeneme" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
@@ -56,6 +57,7 @@ public class KurumYonetimiTest extends BaseTest {
         String yeniKepadresi = "hihihaha2223@kepadresim.com";
         String kepHizmetSaglayicisi = "KEPKUR";
 
+        login("mbozdemir", "123");
 
         kurumYonetimiPage
                 .openPage()

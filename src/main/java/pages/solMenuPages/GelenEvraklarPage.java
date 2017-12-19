@@ -149,6 +149,8 @@ public class GelenEvraklarPage extends MainPage {
                 .filterBy(Condition.text("No: " + no))
                 .get(0)
                 .click();
+
+        $(By.id("mainPreviewForm:eastLayout")).waitUntil(Condition.visible, 5000);
         return this;
     }
 

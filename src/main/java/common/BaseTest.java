@@ -43,8 +43,8 @@ public class BaseTest extends BaseLibrary {
         Configuration.holdBrowserOpen = true;
         Configuration.headless = false;
         Configuration.startMaximized = true;
-        Configuration.pollingInterval = 100;
-        Configuration.collectionsPollingInterval = 100;
+        Configuration.pollingInterval = 1000;
+        Configuration.collectionsPollingInterval = 1000;
 //        Configuration.closeBrowserTimeoutMs = 34000;
 //        Configuration.openBrowserTimeoutMs = 34000;
         //Configuration.browserSize = "1024x600";

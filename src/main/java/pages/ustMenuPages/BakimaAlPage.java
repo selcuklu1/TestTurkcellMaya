@@ -1,9 +1,6 @@
 package pages.ustMenuPages;
 
-import com.codeborne.selenide.CollectionCondition;
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.*;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -57,11 +54,24 @@ public class BakimaAlPage extends MainPage {
         return this;
     }
 
+    @Step("{0}")
+    public BakimaAlPage bilgilendirmeMetniTikla(){
+        spanBilgilendirmeMetni.click();
+        return this;
+    }
+
     @Step("Bilgilendirme metnine \"{bilgilendirmeMetni}\" değerini gir.")
     public BakimaAlPage bilgilendirmeMetniGir(String bilgilendirmeMetni) {
-        if (spanBilgilendirmeMetni.isDisplayed())
+
+        btnBakimaAl.waitUntil(Condition.visible, 5000);
+
+        if(spanBilgilendirmeMetni.isDisplayed())
             spanBilgilendirmeMetni.click();
-        txtBilgilendirmeMetni.shouldBe(Condition.visible).setValue(bilgilendirmeMetni);
+
+        txtBilgilendirmeMetni
+                .shouldBe(Condition.visible)
+                .setValue(bilgilendirmeMetni);
+
         return this;
     }
 
@@ -113,7 +123,8 @@ public class BakimaAlPage extends MainPage {
 
     @Step("Kullanıcıları temizle.")
     public BakimaAlPage kullanicilarTemizle() {
-        txtKullanicilar.clearAllSelectedLov();
+        if(txtKullanicilar.isDisplayed())
+            txtKullanicilar.clearAllSelectedLov();
         return this;
     }
 
