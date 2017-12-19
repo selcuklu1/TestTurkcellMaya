@@ -30,6 +30,7 @@ public class OlurYazisiOlusturPage extends MainPage {
     @Step("Olur Yazısı Oluştur sayfasını aç")
     public OlurYazisiOlusturPage openPage() {
         new UstMenu().ustMenu("Olur Yazısı Oluştur");
+        $("#yeniOnayEvrakForm").shouldBe(visible);
         return this;
     }
 
@@ -75,7 +76,6 @@ public class OlurYazisiOlusturPage extends MainPage {
             btnOnayAkisiEkle.click();
             return this;
         }
-
 
         @Step("Onay akışında güncel gelen kullanıcıyı kontrol et")
         public BilgilerTab onayAkisiKullaniciKontrol(String kullaniciAdi, String kullaniciTipi) {

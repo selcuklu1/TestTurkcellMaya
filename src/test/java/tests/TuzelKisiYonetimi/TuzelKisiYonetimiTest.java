@@ -514,7 +514,7 @@ public class TuzelKisiYonetimiTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TC1132: Pasif yapılan tüzel kişinin aktif yapılması ve kontrolü")
-    public void TC1458() {
+    public void TC1458() throws InterruptedException {
 
         String vergiNo = "55665732323";
         String ad = "TC1458";
@@ -567,14 +567,15 @@ public class TuzelKisiYonetimiTest extends BaseTest {
                 .geregiSecimTipiSecByText("Tüzel Kişi")
                 .geregiAlanindaGoruntulenmeKontrolu(tamAd)
                 .secilenGeregiSil()
-                .bilgiSecimTipiSecByText("Tüzel Kişi");
-        //TODO: burada defect var. Düzeltilince açılacak tekrar
-//                .bilgiAlanindaGoruntulenmeKontrolu(ad, soyad);
+                .bilgiSecimTipiSecByText("Tüzel Kişi")
+                .bilgiAlanindaGoruntulenmeKontrolu(ad, soyad);
 
         evrakOlusturPage
                 .editorTabAc()
-                .geregiDoldur(tamAd)
-                .bilgiDoldur(tamAd);
+                .bilgiDoldur(tamAd)
+                .secilenBilgiSil()
+                .geregVeBilgiAlanindanSil()
+                .geregiDoldur(tamAd);
 
         gelenEvrakKayitPage
                 .openPage()
@@ -587,11 +588,8 @@ public class TuzelKisiYonetimiTest extends BaseTest {
                 .geregiSecimTipiSecByText("Tüzel Kişi")
                 .geregiAlanindaGoruntulenmeKontrolu(tamAd)
                 .secilenGeregiSil()
-                .bilgiSecimTipiSecByText("Tüzel Kişi");
-        //TODO: burada defect var. Düzeltilince açılacak tekrar
-        //Gelen title:     TÜRKSAT OPTİİME
-        //Beklenen title:  Türksat OPTİİM
-        //   .bilgiAlanindaGoruntulenmeKontrolu(ad, soyad);
+                .bilgiSecimTipiSecByText("Tüzel Kişi")
+                .bilgiAlanindaGoruntulenmeKontrolu(ad, soyad);
     }
 
 }
