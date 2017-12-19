@@ -2,10 +2,13 @@ package common;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.testng.BrowserPerTest;
+import com.galenframework.support.GalenJavaTestBase;
 import io.qameta.allure.Step;
 import listeners.SettingsListener;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import pages.LoginPage;
 import pages.MainPage;
@@ -16,10 +19,10 @@ import java.util.Locale;
 import static data.TestData.belgenetURL;
 
 
-@Listeners({SettingsListener.class})
+@Listeners({SettingsListener.class, BrowserPerTest.class})
 public class BaseTest extends BaseLibrary {
 
-    @BeforeClass
+    @BeforeMethod(alwaysRun = true)
     public void driverSetUp() {
         // killProcess();
 
@@ -32,9 +35,9 @@ public class BaseTest extends BaseLibrary {
 
         //region Selenide Driver Configuration
         Configuration.baseUrl = belgenetURL;
-        Configuration.browser = "chrome";
+       // Configuration.browser = "chrome";
         //Configuration.browser = "drivers.Firefox";
-//        Configuration.browser = "marionette";
+        Configuration.browser = "marionette";
 
         //Configuration.remote = "http://10.101.20.153:4444/wd/hub";
         Configuration.reportsFolder = "test-result/reports";
@@ -59,8 +62,11 @@ public class BaseTest extends BaseLibrary {
     @AfterMethod
     public void tearDown() throws Exception {
 
-       Selenide.clearBrowserLocalStorage();
-       Selenide.clearBrowserCookies();
+        try {
+           // Selenide.clearBrowserLocalStorage();
+           // Selenide.clearBrowserCookies();
+        } catch (Exception e) {
+        }
 
     }
 

@@ -2,6 +2,7 @@ package pages;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
@@ -10,6 +11,7 @@ import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
+import static com.codeborne.selenide.Selenide.$x;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 public class EvrakDetayiPage extends MainPage {
@@ -45,9 +47,12 @@ public class EvrakDetayiPage extends MainPage {
         @Step("Teblig geçmişi kontrol et")
         public TebligGecmisiTab tebligGecmisiKontrol(String tebligEdenveTarih, String[] kullanicilar) {
 
+            $x("//span[contains(text(), 'Mehmet BOZDEMİR - (18.12.2017)')]").waitUntil(Condition.visible, 5000);
+
             SelenideElement currentRow = tableTebligGecmisi
                     .filterBy(Condition.text(tebligEdenveTarih))
-                    .last();
+                    .last()
+                    .waitUntil(Condition.visible, 5000);
 
             if (currentRow.$(By.xpath(".//span[. = '" + tebligEdenveTarih + "']/..//span[contains(@class, 'ui-icon-plusthick')]")).isDisplayed()) {
                 currentRow.$(By.xpath(".//span[. = '" + tebligEdenveTarih + "']/..//span[contains(@class, 'ui-icon-plusthick')]")).click();
@@ -70,6 +75,7 @@ public class EvrakDetayiPage extends MainPage {
         @Step("Teblig geçmişinde tebellüğ olanları kontrol et")
         public TebligGecmisiTab tebligGecmisiKontrol(String tebligEdenveTarih, String[] kullanicilar, String[] tebellugTarih) {
 
+            Selenide.sleep(5000);
             SelenideElement currentRow = tableTebligGecmisi
                     .filterBy(Condition.text(tebligEdenveTarih))
                     .last();
@@ -98,11 +104,9 @@ public class EvrakDetayiPage extends MainPage {
 
     @Step("Tebellüğ Et butonuna tıkla.")
     public EvrakDetayiPage tebellugEt(boolean onay) {
+        Selenide.sleep(5000);
+        btnTebellugEt.waitUntil(Condition.visible, 5000);
         btnTebellugEt.click();
-
-
-        //btnTebellugEtEvet.waitUntil(Condition.visible, 5000);
-
 
         if (onay == true)
             btnPanelEvet.click();

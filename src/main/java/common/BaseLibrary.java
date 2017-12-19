@@ -139,7 +139,7 @@ public class BaseLibrary {
     public void waitForLoading(WebDriver driver) {
         if (doNotWaitLoading)
             return;
-//        waitForJS();
+        waitForJS();
         waitForLoadingToDisappear(driver);
     }
     //</editor-fold>

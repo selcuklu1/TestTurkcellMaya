@@ -186,7 +186,7 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement txtOnayAkisiKullanicilarInput = $("input[id^='yeniGidenEvrakForm:evrakBilgileriList:'][id$=':akisAdimLov:LovText']");
         SelenideElement listOnayAkisiKullanilan = $("div[id*='akisLov:lovContainer'] div[class*='lovSelection processEt'] tbody");
         SelenideElement btnOnayAkisiPanelKapat = $("button[id^='yeniGidenEvrakForm:evrakBilgileriList:'][id$=':akisAdimLov:lovTreePanelKapat']");
-        SelenideElement cmbKullanicilarImza = $("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='selectOneMenu']");
+        SelenideElement cmbKullanicilarImza = $("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='akisAdimLov:LovSecilenTable:1:selectOneMenu']");
         SelenideElement btnOnayAkisGuncelle = $(By.cssSelector("[id^='yeniGidenEvrakForm:evrakBilgileriList:18:akisLov:j_idt'] [class$='update-icon']"));
         BelgenetElement cmbOnayAkisi = comboLov(By.cssSelector("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='akisLov:LovText']"));
         By cmbOnayAkisiBy = By.cssSelector("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='akisLov:LovText']");
@@ -585,7 +585,7 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Geregi Secim Tipi alanında {value} seç")
         public BilgilerTab geregiSecimTipiSec(String value) {
-            cmbGeregiSecimTipi.selectOptionByValue(value);
+            cmbGeregiSecimTipi.selectOption(value);
             return this;
         }
 
@@ -1048,7 +1048,7 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("İmzacı alanı \"{kullanici}\" olarak gelmeli")
         public EditorTab imzacılarGnMdVKontrol(String kullanici) {
-            divImzacılarGnMdV.shouldHave(text(kullanici));
+            divImzacılarGnMdV.shouldBe(Condition.text(kullanici));
             System.out.println("İmzalama başarılı geçmiştir");
             return this;
         }

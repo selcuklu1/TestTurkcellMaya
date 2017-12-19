@@ -3,6 +3,7 @@ package tests.EvrakNot;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import common.BaseTest;
+import data.User;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;

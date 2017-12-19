@@ -220,6 +220,7 @@ public class KararYazisiOlusturmaTest extends BaseTest{
         String filePath = "C:\\TestAutomation\\BelgenetFTA\\documents\\Otomasyon.pdf";
         String not = createRandomText(12);
         String birim = "Altyapı ve Sistem Yönetim Uzmanı";
+
         login(username2, password2);
 
         kararYazisiOlusturPage
