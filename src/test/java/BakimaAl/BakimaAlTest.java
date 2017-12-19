@@ -1,4 +1,4 @@
-package tests.BakimaAl;
+package BakimaAl;
 
 import common.BaseTest;
 import org.testng.annotations.BeforeMethod;

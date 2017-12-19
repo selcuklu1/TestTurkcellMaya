@@ -222,7 +222,7 @@ public class EvrakNotTest extends BaseTest {
         }
     }
 
-    @Test(description = "")//, dependsOnMethods = {"2155"})
+    @Test(description = "", enabled = false)//, dependsOnMethods = {"2155"})
     public void tc2160() throws Exception {
         EvrakNot evrakNot = new EvrakNot();
         UstYazi ustYazi = new UstYazi();
