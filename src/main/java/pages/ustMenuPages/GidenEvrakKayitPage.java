@@ -199,6 +199,7 @@ public class GidenEvrakKayitPage extends MainPage {
     }
 
     public GidenEvrakKayitPage secilenGeregiSil() {
+        btnGeregiDelete.shouldBe(Condition.visible);
         btnGeregiDelete.click();
         return this;
     }

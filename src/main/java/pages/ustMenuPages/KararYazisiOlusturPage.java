@@ -53,6 +53,7 @@ public class KararYazisiOlusturPage extends MainPage {
     @Step("Karar yazısı oluştur sayfası aç")
     public KararYazisiOlusturPage openPage() {
         ustMenu("Karar Yazısı Oluştur");
+        $("#yeniKararEvrakForm").shouldBe(visible);
         return this;
     }
 
