@@ -1,5 +1,6 @@
 package tests.GelenGidenEvrakKayit;
 
+import com.codeborne.selenide.Condition;
 import common.BaseTest;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
@@ -187,21 +188,18 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
         birimHavaleEdilenlerPage
                 .openPage()
-                .filtreleAc()
-                .baslangiçTarihiDoldur(getSysDateForKis())
-                .bitisTarihiDoldur(getSysDateForKis())
-                .tabloKontrolu(evrakNO328);
+                .filter().findRowsWith(Condition.text(evrakNO328))
+                .shouldHaveSize(1);
 
         //TeslimAlınanBelgeler sayfasında yetkili bir kullanıcı ile giriş yapılacak.
         teslimAlinmayiBekleyenlerPage
                 .openPage()
-                .filtreleAc()
-                .tarihiDoldur(getSysDateForKis())
-                .tabloKontrolu(evrakNO328);
+                .filter().findRowsWith(Condition.text(evrakNO328))
+                .shouldHaveSize(1);
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, dependsOnMethods = {"TC0321", "TC0328"}, description = "TC1401 : Kaydedilen Gelen Evrak raporu")
+    @Test(enabled = true, dependsOnMethods = {"TC0328"}, description = "TC1401 : Kaydedilen Gelen Evrak raporu")
     public void TC1401() throws InterruptedException, IOException {
 
         String basariMesaji = "İşlem başarılıdır!";

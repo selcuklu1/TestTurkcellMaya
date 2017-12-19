@@ -14,6 +14,7 @@ import pages.ustMenuPages.EvrakOlusturPage;
 import pages.ustMenuPages.GelenEvrakKayitPage;
 import pages.ustMenuPages.VekaletVerPage;
 
+import static com.codeborne.selenide.Selenide.$;
 import static data.TestData.*;
 
 /****************************************************
@@ -62,7 +63,7 @@ public class VekaletIslemleriTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, priority = 1, description = "Onaya göndererek Vekalet Verme")
+    @Test(enabled = true, priority = 0, description = "Onaya göndererek Vekalet Verme")
     public void TC0025a() throws InterruptedException {
 
         login("test1", "123");
@@ -71,6 +72,18 @@ public class VekaletIslemleriTest extends BaseTest {
         String[] evrakNo = new String[2];
         aciklama = "onay " + getSysDate() + " evrak";
         redNedeni = "red " + getSysDate() + " nedeni";
+
+        if ($("[id='aktifVekaletinizVarUyariMesajiDialog']").isDisplayed()) {
+            mainPage
+                    .vekaletVarUyarıPopUp();
+        }
+
+        vekaletVerPage
+                .openPage()
+                .veklatListesiTabAc()
+                .sorgula()
+                .vekaletListesiVekaletIptal(vekaletVeren)
+                .yeniVekaletTabAc();
 
         gelenEvraklarPage
                 .openPage();
@@ -105,7 +118,8 @@ public class VekaletIslemleriTest extends BaseTest {
                 .vekaletListesiBaslangicTarihiDoldur(getSysDateForKis())
                 .vekaletListesiBitisTarihiDoldur(getSysDateForKis())
                 .sorgula()
-                .vekaletListesiTabloKontrol();
+                .vekaletListesiTabloKontrol()
+                .islemMesaji().beklenenMesaj(basariMesaji);
         logout();
     }
 
@@ -145,7 +159,7 @@ public class VekaletIslemleriTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, priority = 3, dependsOnMethods = {"TC0025b"}, description = "Onaya göndererek Vekalet Verme işleminde onayın kabul edilmesi")
+    @Test(enabled = true, priority = 3,  description = "Onaya göndererek Vekalet Verme işleminde onayın kabul edilmesi")
     public void TC2208() throws InterruptedException {
         TC0025a();
         login(username2, password2);
@@ -418,7 +432,7 @@ public class VekaletIslemleriTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "Vekalet alan kullanıcıya evrak havalesi ve kontrolü")
+    @Test(enabled = true, dependsOnMethods = {"TC0012"}, description = "Vekalet alan kullanıcıya evrak havalesi ve kontrolü")
     public void TC0011() throws InterruptedException {
 
         String evrakGelisTipi = "P";
@@ -430,7 +444,7 @@ public class VekaletIslemleriTest extends BaseTest {
                 .openPage();
         int size = gelenEvraklarPage.tabloEvrakAdetKontrol();
 
-        if(size == 0) {
+        if (size == 0) {
             gelenEvrakKayitPage
                     .openPage()
 //                .evrakBilgileriUstYaziEkle("C:\\Users\\Emre_Sencan\\Pictures\\pdf.pdf")

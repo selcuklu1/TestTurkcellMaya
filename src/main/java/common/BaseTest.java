@@ -1,6 +1,7 @@
 package common;
 
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.Selenide;
 import io.qameta.allure.Step;
 import listeners.SettingsListener;
 import org.testng.annotations.AfterMethod;
@@ -32,9 +33,9 @@ public class BaseTest extends BaseLibrary {
 
         //region Selenide Driver Configuration
         Configuration.baseUrl = belgenetURL;
-        //Configuration.browser = "chrome";
+        Configuration.browser = "chrome";
         //Configuration.browser = "drivers.Firefox";
-        Configuration.browser = "marionette";
+//        Configuration.browser = "marionette";
 
         //Configuration.remote = "http://10.101.20.153:4444/wd/hub";
         Configuration.reportsFolder = "test-result/reports";
