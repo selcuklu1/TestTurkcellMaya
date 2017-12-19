@@ -21,18 +21,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-server</artifactId>
-            <version>3.6.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-java</artifactId>
-            <version>3.6.0</version>
-        </dependency>
-
-        <dependency>
             <groupId>com.galenframework</groupId>
             <artifactId>galen-java-support</artifactId>
             <version>2.3.5</version>

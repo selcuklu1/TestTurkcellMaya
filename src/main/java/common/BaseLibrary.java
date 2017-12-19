@@ -27,6 +27,7 @@ import static com.codeborne.selenide.Condition.exactValue;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
 import static org.apache.commons.io.FileUtils.deleteDirectory;
+import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfAllElements;
 import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfElementLocated;
 
 public class BaseLibrary {
@@ -101,7 +102,7 @@ public class BaseLibrary {
 //        driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
         try {
             new WebDriverWait(driver, 20, 50).
-                    until(invisibilityOfElementLocated(By.className("loading")));
+                    until(invisibilityOfAllElements(driver.findElements(By.className("loading"))));
 //            System.out.println("Loading: Ok");
         } catch (Exception e) {
 //            System.out.println("Loading window error: " + e.getMessage());
@@ -563,7 +564,7 @@ public class BaseLibrary {
         WebDriverRunner.getWebDriver().switchTo().window(winHandleBefore);
     }
 
-    public void  closeNewWindow() {
+    public void closeNewWindow() {
         WebDriverRunner.getWebDriver().close();
     }
 

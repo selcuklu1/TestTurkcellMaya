@@ -290,7 +290,7 @@ public class TuzelKisiYonetimiPage extends MainPage {
     @Step("Filtre sorgulama paneli aç")
     public TuzelKisiYonetimiPage filtreSorgulamaPaneliAc() {
 
-       // filtreSorgulamaPanel.shouldBe(visible);
+        filtreSorgulamaPanel.shouldBe(visible);
         filtreSorgulamaPanel.click();
         txtFiltreVergiSGKNo.clear();
         txtFiltreAd.clear();
@@ -349,12 +349,14 @@ public class TuzelKisiYonetimiPage extends MainPage {
 
     @Step("Tüzel Kişi Aktif Yap")
     public TuzelKisiYonetimiPage tuzelKisiAktifYap() {
+        btnTuzelKisiAktifYap.shouldBe(visible);
         btnTuzelKisiAktifYap.click();
         return this;
     }
 
     @Step("Tüzel Kişi Pasif Yap")
     public TuzelKisiYonetimiPage tuzelKisiPasifYap() {
+        btnTuzelKisiPasifYap.shouldBe(visible);
         btnTuzelKisiPasifYap.click();
         return this;
     }
