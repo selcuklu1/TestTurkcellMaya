@@ -1,5 +1,6 @@
 package pages.pageComponents;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Step;
@@ -7,7 +8,7 @@ import org.openqa.selenium.By;
 import pages.MainPage;
 
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
-import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.$inFrame;
 import static pages.pageComponents.belgenetElements.BelgentCondition.toolboxButtonOn;
@@ -77,12 +78,18 @@ public class TextEditor extends MainPage {
                 .filterBy(visible)
                 .shouldHaveSize(1)
                 .first()
-                .shouldBe(visible);
+                .shouldBe(visible)
+                .shouldBe(enabled);
+//        System.out.println(button.is(exist));
+//        System.out.println(button.is(visible));
+//        System.out.println(button.is(disabled));
+//        System.out.println(button.is(enabled));
 
         if (button.is(toolboxButtonOn) != value) {
+
+            clickJs(button);
+//            button.click();
             System.out.println("Clicked");
-//            clickJs(button);
-            button.click();
         }
 
         return this;
@@ -95,19 +102,26 @@ public class TextEditor extends MainPage {
                 .filterBy(visible)
                 .shouldHaveSize(1)
                 .first()
-                .shouldBe(visible);
+                .shouldBe(visible)
+                .shouldBe(enabled);
 
+//        clickJs(combo);
         combo.click();
 
         By iframeLocator = By.cssSelector("iframe[class='cke_panel_frame']");
+        $inFrame(".cke_panel_block a[title='" + value + "']", iframeLocator)
+                .shouldBe(visible)
+                .click();
+
+/*        By iframeLocator = By.cssSelector("iframe[class='cke_panel_frame']");
         $(iframeLocator).shouldBe(visible);
         switchTo().frame(WebDriverRunner.getWebDriver().findElement(iframeLocator));
 //        $inFrame(By.cssSelector(".cke_panel_block a[title='" + value + "']"), iframeLocator);//.click();
 
-        $(By.cssSelector(".cke_panel_block a[title='" + value + "']")).click();
+        $(By.cssSelector(".cke_panel_block a[title='" + value + "']")).click();*/
 
-//        switchTo().defaultContent();
-        WebDriverRunner.getWebDriver().switchTo().parentFrame();
+        switchTo().defaultContent();
+//        WebDriverRunner.getWebDriver().switchTo().parentFrame();
         return this;
     }
 
