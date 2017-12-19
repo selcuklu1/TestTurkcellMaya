@@ -195,15 +195,16 @@ public class GelenEvrakKayitPage extends MainPage {
     }
 
     @Step("Kişi alanını doldur")
-    public GelenEvrakKayitPage havaleIslemleriKisiDoldur(String kisi){
+    public GelenEvrakKayitPage havaleIslemleriKisiDoldur(String kisi) {
         txtHavaleIslemleriKisi.selectLov(kisi);
         return this;
     }
 
-    @Step("Kullanıcı listesi doldur")
-    public GelenEvrakKayitPage havaleIslemleriKullaniciListesiDoldur(String kisi){
+    @Step("")
+    public GelenEvrakKayitPage havaleIslemleriKullaniciListesiDoldur(String kisi) {
         txtHavaleIslemleriKullaniciListesi.selectLov(kisi);
         txtHavaleIslemleriKullaniciListesi.selectLov(kisi);
+
         return this;
     }
     
@@ -255,9 +256,15 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("Kişi kurum seç")
+    @Step("Kişi kurum tipi alanında {kisiKurum} seç")
     public GelenEvrakKayitPage kisiKurumSec(String kisiKurum) {
-        cmbEvrakBilgileriListKisiKurum.selectOptionByValue(kisiKurum);
+        cmbEvrakBilgileriListKisiKurum.selectOption(kisiKurum);
+        return this;
+    }
+
+    @Step("Kişi kurum tipi alanında {kisiKurum} seç")
+    public GelenEvrakKayitPage kisiKurumSecByText(String kisiKurum) {
+        cmbEvrakBilgileriListKisiKurum.selectOption(kisiKurum);
         return this;
     }
 
@@ -624,7 +631,7 @@ public class GelenEvrakKayitPage extends MainPage {
 //        popUp.shouldHave(Condition.visible);  pop up kontrolu
         String text;
 
-        Thread.sleep(4000);
+        Thread.sleep(2000);
 
         if (ustYaziveHavaleYeriYokpopUp.isDisplayed()) {
             popUpEvet.click();

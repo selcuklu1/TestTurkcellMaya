@@ -1,13 +1,14 @@
 package pages.pageComponents;
 
-import com.codeborne.selenide.ElementsContainer;
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import pages.MainPage;
 
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
-import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.$inFrame;
 import static pages.pageComponents.belgenetElements.BelgentCondition.toolboxButtonOn;
@@ -17,7 +18,7 @@ import static pages.pageComponents.belgenetElements.BelgentCondition.toolboxButt
  * Tarih: 1.12.2017
  * Açıklama:
  */
-public class TextEditor extends ElementsContainer {
+public class TextEditor extends MainPage {
 
     /*private SelenideElement editor;
 
@@ -72,15 +73,23 @@ public class TextEditor extends ElementsContainer {
 
     @Step("\"{name}\" toolbar butonun etkin durumu \"{value}\" yap")
     public TextEditor toolbarButton(String name, boolean value) {
-        SelenideElement button =
-                $$x("//a/span[contains(@class,'cke_button_label') and normalize-space(text())='" + name + "']/..")
-                        .shouldHave(sizeGreaterThan(0)).filterBy(visible).first();
-//        System.out.println($$x("//a/span[contains(@class,'cke_button_label') and normalize-space(text())='" + name + "']/..").size());
+        SelenideElement button = $$x("//a[span[contains(@class,'cke_button_label') and normalize-space(text())='" + name + "']]")
+                .shouldHave(sizeGreaterThan(0))
+                .filterBy(visible)
+                .shouldHaveSize(1)
+                .first()
+                .shouldBe(visible)
+                .shouldBe(enabled);
+//        System.out.println(button.is(exist));
+//        System.out.println(button.is(visible));
+//        System.out.println(button.is(disabled));
+//        System.out.println(button.is(enabled));
 
-        button.shouldBe(visible);
         if (button.is(toolboxButtonOn) != value) {
-//            System.out.println("Clicked");
-            button.click();
+
+            clickJs(button);
+//            button.click();
+            System.out.println("Clicked");
         }
 
         return this;
@@ -88,20 +97,31 @@ public class TextEditor extends ElementsContainer {
 
     @Step("\"{name}\" toolbar alanda \"{value}\" seç")
     public TextEditor toolbarCombo(String name, String value) {
-        SelenideElement combo = $$x("//span[contains(@class,'cke_combo_label') and normalize-space(text())='" + name + "']/../a")
-                .filterBy(visible).shouldHaveSize(1).first();
+        SelenideElement combo = $$x("//span[span[contains(@class,'cke_combo_label') and normalize-space(text())='" + name + "']]/a")
+                .shouldHave(sizeGreaterThan(0))
+                .filterBy(visible)
+                .shouldHaveSize(1)
+                .first()
+                .shouldBe(visible)
+                .shouldBe(enabled);
 
+//        clickJs(combo);
         combo.click();
 
         By iframeLocator = By.cssSelector("iframe[class='cke_panel_frame']");
+        $inFrame(".cke_panel_block a[title='" + value + "']", iframeLocator)
+                .shouldBe(visible)
+                .click();
+
+/*        By iframeLocator = By.cssSelector("iframe[class='cke_panel_frame']");
         $(iframeLocator).shouldBe(visible);
         switchTo().frame(WebDriverRunner.getWebDriver().findElement(iframeLocator));
 //        $inFrame(By.cssSelector(".cke_panel_block a[title='" + value + "']"), iframeLocator);//.click();
 
-        $(By.cssSelector(".cke_panel_block a[title='" + value + "']")).click();
+        $(By.cssSelector(".cke_panel_block a[title='" + value + "']")).click();*/
 
-//        switchTo().defaultContent();
-        WebDriverRunner.getWebDriver().switchTo().parentFrame();
+        switchTo().defaultContent();
+//        WebDriverRunner.getWebDriver().switchTo().parentFrame();
         return this;
     }
 

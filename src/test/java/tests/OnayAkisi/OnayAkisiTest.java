@@ -435,7 +435,7 @@ public class OnayAkisiTest extends BaseTest {
                 .onayAkisiKullaniciKontrol(vekaletAlan, "PARAFLAMA")
                 .onayAkisiKullaniciKontrol(kullanici2, "IMZALAMA")
                 .onayAkisiVekaletKontrol(vekaletVeren)
-                .kullniciIsmineGoreImzaParafSec(kullanici2, "İmzalama")
+                .kullaniciyaKullaniciTipiSec(kullanici2, "IMZALAMA")
                 .onayAkisiKullan()
                 .kaldiralacakKlasorlerSec(kaldirilacakKlasorler);
 
@@ -849,9 +849,9 @@ public class OnayAkisiTest extends BaseTest {
                 .onayAkisiKullaniciKontrol(kullanici4, "KOORDINE")
                 .koordineliSec(true)
                 .birimTikla()
-                .onayAkisiIslemleriAdDoldur(onayAkisi) //Birim tıklandıktan sonra burası siliniyor. O yüzden tekrar eklendi.
                 .onayAkisiIslemlerKullaniciDoldur(kullanici5)
                 .kullaniciyaKullaniciTipiSec(kullanici5, "IMZALAMA")
+                .onayAkisiIslemleriAdDoldur(onayAkisi) //Birim tıklandıktan sonra burası siliniyor. O yüzden tekrar eklendi.
                 .onayAkisiIslemleriKaydet()
                 .islemMesaji().dikkatOlmali(dikkatMesaji1);
 

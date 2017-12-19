@@ -4,6 +4,7 @@ import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
 import common.BaseLibrary;
 import io.qameta.allure.Step;
+import javafx.scene.text.Text;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 
@@ -91,7 +92,7 @@ public class IslemMesajlari extends BaseLibrary {
     @Step("Uyarı mesajı gelmeli")
     public void uyariOlmali(String... expectedMessage) {
 //        Assert.assertEquals(getMessageTitle(), UYARI.value());
-        messageTitle.shouldHave(exactText(UYARI.value()));
+        messageTitle.shouldHave(text((UYARI.value())));
         if (expectedMessage.length > 0)
             messageBody.shouldHave(text(expectedMessage[0]));
 //            Assert.assertEquals(getMessageBody(), expectedMessage[0]);

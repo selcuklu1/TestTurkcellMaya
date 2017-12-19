@@ -24,17 +24,16 @@ public class TebligTebellugTest extends BaseTest {
         evrakDetayiPage = new EvrakDetayiPage();
         tebliglerPage = new TebliglerPage();
         tebellugEttiklerimPage = new TebellugEttiklerimPage();
-        login("optiimtest7", "123");
     }
 
     @Test(enabled = true, description = "845 : Gelen Evrakın kullanıcı listesine detay ekrandan tebliğ edilmesi.")
     public void TC00845() {
 
-        String konu = "Şikayet ve Talepler";
+        String konu = "Brifingler ve Bilgi Notları";
         String geldigiYer = "Yürütme / Adalet Bakanlığı";
-        String kayitTarihiSayi = "07.12.2017 / 5036";
-        String evrakTarihi = "07.12.2017";
-        String evrakNo = "5123";
+        String kayitTarihiSayi = "18.12.2017 / 5128";
+        String evrakTarihi = "18.12.2017";
+        String evrakNo = "123161";
 
         String tebligEdilecekKullanicilistesi = "YAZILIM GELİŞTİRME";
 
@@ -45,8 +44,10 @@ public class TebligTebellugTest extends BaseTest {
         };
 
         String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞ";
-        String tebligEden = "Yasemin Çakıl AKYOL";
+        String tebligEden = "Mehmet BOZDEMİR";
         String evrakTipi = "Gelen Evrak";
+
+        login("mbozdemir", "123");
 
         gelenEvraklarPage
                 .openPage()
@@ -56,13 +57,15 @@ public class TebligTebellugTest extends BaseTest {
                 .tebligEtNotInputDoldur(tebligNot)
                 .tebligEtTebligEt();
 
+
+
         tebligEttiklerimPage
                 .openPage()
                 .icreikGoster(konu, "", evrakTarihi, evrakNo);
 
         evrakDetayiPage
                 .tebligGecmisiTabAc()
-                .tebligGecmisiKontrol("Yasemin Çakıl AKYOL - (07.12.2017)", tebligGecmisiKontrolEdilecekKullanicilar);
+                .tebligGecmisiKontrol("Mehmet BOZDEMİR - (18.12.2017)", tebligGecmisiKontrolEdilecekKullanicilar);
 
         logout();
 
@@ -83,11 +86,11 @@ public class TebligTebellugTest extends BaseTest {
     @Test(enabled = true, description = "845 : Gelen Evrakın Önizleme ekranından kullanıcıya tebliğ edilmesi")
     public void TC00845A() {
 
-        String konu = "Aday Müşteri İşlemleri";
-        String geldigiYer = "Yürütme / Aile ve Sosyal Politikalar Bakanlığı";
-        String kayitTarihiSayi = "07.12.2017 / 5037";
-        String evrakTarihi = "07.12.2017";
-        String evrakNo = "8876";
+        String konu = "TC845";
+        String geldigiYer = "Yargı / hepsi küçük harflerle kurum ";
+        String kayitTarihiSayi = "18.12.2017 / 5129";
+        String evrakTarihi = "18.12.2017";
+        String evrakNo = "123";
 
         String tebligEdilecekKisi = "Optiim TEST1";
 
@@ -98,8 +101,11 @@ public class TebligTebellugTest extends BaseTest {
         };
 
         String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞ";
-        String tebligEden = "Yasemin Çakıl AKYOL";
+        String tebligEden = "Mehmet BOZDEMİR";
         String evrakTipi = "Gelen Evrak";
+
+        login("mbozdemir", "123");
+
 
         gelenEvraklarPage
                 .openPage()
@@ -115,7 +121,7 @@ public class TebligTebellugTest extends BaseTest {
 
         evrakDetayiPage
                 .tebligGecmisiTabAc()
-                .tebligGecmisiKontrol("Yasemin Çakıl AKYOL - (07.12.2017)", tebligGecmisiKontrolEdilecekKullanicilar);
+                .tebligGecmisiKontrol("Mehmet BOZDEMİR - (18.12.2017)", tebligGecmisiKontrolEdilecekKullanicilar);
 
         logout();
 
@@ -123,7 +129,7 @@ public class TebligTebellugTest extends BaseTest {
 
         tebliglerPage
                 .openPage()
-                .tebliglerMenuKirmiziKontrolu()
+                //.tebliglerMenuKirmiziKontrolu()
                 .evrakSec(konu, birim, tebligEden, evrakTipi, tebligNot)
                 .icerikGoster(konu, birim, tebligEden, evrakTipi, tebligNot);
 
@@ -136,11 +142,11 @@ public class TebligTebellugTest extends BaseTest {
     @Test(enabled = true, description = "67 : Tebliğe gelen evrakın tebellüğ edilmesi ve tebliğ eden kullanıcıdan kontrolü")
     public void TC00067() {
 
-        String konu = "Aday Müşteri İşlemleri";
-        String geldigiYer = "Yürütme / Aile ve Sosyal Politikalar Bakanlığı ";
-        String kayitTarihiSayi = "07.12.2017 / 5037";
-        String evrakTarihi = "07.12.2017";
-        String evrakNo = "8876";
+        String konu = "TC845";
+        String geldigiYer = "Yargı / hepsi küçük harflerle kurum ";
+        String kayitTarihiSayi = "18.12.2017 / 5129";
+        String evrakTarihi = "18.12.2017";
+        String evrakNo = "123";
 
         String tebligEdilecekKisi = "Optiim TEST6";
 
@@ -151,15 +157,16 @@ public class TebligTebellugTest extends BaseTest {
         };
 
         String[] tebligGecmisiKontrolEdilecekTarihler = new String[]{
-                "08.12.2017"
+                "18.12.2017"
         };
 
         String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞ";
-        String tebligEden = "Yasemin Çakıl AKYOL";
+        String tebligEden = "Mehmet BOZDEMİR";
         String evrakTipi = "Gelen Evrak";
 
         String basariMesaj = "İşlem başarılıdır!";
 
+        login("mbozdemir", "123");
 
         gelenEvraklarPage
                 .openPage()
@@ -175,10 +182,12 @@ public class TebligTebellugTest extends BaseTest {
 
         evrakDetayiPage
                 .tebligGecmisiTabAc()
-                .tebligGecmisiKontrol("Yasemin Çakıl AKYOL - (08.12.2017)", tebligGecmisiKontrolEdilecekKullanicilar);
+                .tebligGecmisiKontrol("Mehmet BOZDEMİR - (18.12.2017)", tebligGecmisiKontrolEdilecekKullanicilar);
 
 
         logout();
+
+
 
         login("optiimtest6", "123");
 
@@ -197,8 +206,7 @@ public class TebligTebellugTest extends BaseTest {
                 .icreikGoster(konu, "", evrakTarihi, evrakNo);
 
         logout();
-
-        login("yakyol", "123");
+        login("mbozdemir", "123");
 
         tebligEttiklerimPage
                 .openPage()
@@ -206,21 +214,24 @@ public class TebligTebellugTest extends BaseTest {
 
         evrakDetayiPage
                 .tebligGecmisiTabAc()
-                .tebligGecmisiKontrol("Yasemin Çakıl AKYOL - (08.12.2017)", tebligGecmisiKontrolEdilecekKullanicilar, tebligGecmisiKontrolEdilecekTarihler);
+                .tebligGecmisiKontrol("Mehmet BOZDEMİR - (18.12.2017)", tebligGecmisiKontrolEdilecekKullanicilar, tebligGecmisiKontrolEdilecekTarihler);
 
 
     }
 
     @Test(enabled = true, description = "936 : Tebliğ hatırlatma ve Mesaj kontrolü")
     public void TC00936() {
+        String konu = "TC845";
+        String evrakTarihi = "18.12.2017";
 
-        String konu = "USUL VE ESASLAR";
-        String evrakTarihi = "15.11.2017";
-        String no = "1";
+        String no = "123";
         String tebligHatirlatNotu = "tebliğhatırlatma";
-        String tebligEdenKullanici = "Yasemin Çakıl AKYOL";
+        String tebligEdenKullanici = "Mehmet BOZDEMİR";
         String basariMesaj = "İşlem başarılıdır!";
         String mesajKonu = "Tebliğ Hatırlatma";
+
+
+        login("mbozdemir", "123");
 
         tebligEttiklerimPage
                 .openPage()
@@ -234,12 +245,13 @@ public class TebligTebellugTest extends BaseTest {
 
         logout();
 
+
         login("optiimtest2", "123");
 
         mesajlarPage
                 .openPage()
                 .mesajSec(tebligEdenKullanici, mesajKonu, konu)
-                .mesajKontrol(mesajKonu, "2017", tebligHatirlatNotu);
+                .mesajKontrol(mesajKonu, "18.12.2017", tebligHatirlatNotu);
 
     }
 
