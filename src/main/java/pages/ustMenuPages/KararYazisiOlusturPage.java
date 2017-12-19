@@ -284,6 +284,10 @@ public class KararYazisiOlusturPage extends MainPage {
         @Step("Bilgileri tabında Onay Akışı alanında görüntülenmeme kontrolu")
         public BilgilerTab onayAkisiAlanindaGoruntulenmemeKontrolu(String onayAkisi) {
 
+            if (cmbOnayAkisi.isLovSelected() == true) {
+                cmbOnayAkisi.clearLastSelectedLov();
+            }
+
             comboLov(cmbOnayAkisiBy).type(onayAkisi).titleItems().filterBy(exactText(onayAkisi)).shouldHaveSize(0);
             comboLov(cmbOnayAkisiBy).closeLovTreePanel();
             System.out.println("MyCombolov alanında " + onayAkisi + ": Onay Akışın görüntülenmediği görülür.");
@@ -293,7 +297,8 @@ public class KararYazisiOlusturPage extends MainPage {
 
         @Step("Onay akışı güncelle")
         public BilgilerTab onayAkisiGuncelle() {
-            btnOnayAkisGuncelle.click();
+            btnOnayAkisGuncelle.shouldBe(visible);
+            clickJs(btnOnayAkisGuncelle);
             return this;
         }
 

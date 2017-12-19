@@ -70,7 +70,8 @@ public class OnayAkisYonetimiPage extends MainPage {
 
     @Step("Onay Akışı işlemler kaydet")
     public OnayAkisYonetimiPage onayAkisiIslemleriKaydet() {
-        btnOnayAkisiIslemleriKaydet.click();
+        btnOnayAkisiIslemleriKaydet.shouldBe(visible);
+        clickJs(btnOnayAkisiIslemleriKaydet);
         return this;
     }
 

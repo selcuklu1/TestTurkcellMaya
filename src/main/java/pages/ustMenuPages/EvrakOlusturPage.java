@@ -741,7 +741,9 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Onay akışı güncelle")
         public BilgilerTab onayAkisiGuncelle() {
-            btnOnayAkisGuncelle.shouldBe(visible).click();
+            btnOnayAkisGuncelle.shouldBe(visible);
+            //btnOnayAkisGuncelle.pressEnter();
+            clickJs(btnOnayAkisGuncelle);
             return this;
         }
 
