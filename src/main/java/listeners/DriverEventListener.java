@@ -100,7 +100,7 @@ public class DriverEventListener extends BaseLibrary implements WebDriverEventLi
          */
 
         new WebDriverWait(driver, timeout).until(ExpectedConditions.elementToBeClickable(element));
-
+        // System.out.println("Element location: " + element.getLocation().x + "-" + element.getLocation().y);
         if (log) {
             Timestamp timestamp = new Timestamp(System.currentTimeMillis());
             System.out.println(timestamp + " Before click: " + element.toString());
