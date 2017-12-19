@@ -200,7 +200,7 @@ public class GidenEvrakKayitPage extends MainPage {
 
     public GidenEvrakKayitPage secilenGeregiSil() {
         btnGeregiDelete.shouldBe(Condition.visible);
-        btnGeregiDelete.click();
+        clickJs(btnGeregiDelete);
         return this;
     }
 
