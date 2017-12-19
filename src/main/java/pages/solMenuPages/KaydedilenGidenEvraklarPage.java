@@ -30,7 +30,7 @@ public class KaydedilenGidenEvraklarPage extends MainPage {
     SelenideElement chkKaydettiklerim = $("[id$='kaydettiklerimCheckbox']");
     SelenideElement btnIcerikGöster = $("[id$='detayGosterButton']");
     SelenideElement btnTamEkranGöster = $("[id$='tamEkranModuButton']");
-    ElementsCollection tblRapor = $$("tbody[id='mainInboxForm:inboxDataTable_data'] tr[role='row'] tbody");
+    ElementsCollection tblRapor = $$("tbody[id='mainInboxForm:inboxDataTable_data'] tr[role='row'] tbody tr:nth-child(4)");
 
 
     @Step("Kaydedilen giden evraklar sayfası aç")

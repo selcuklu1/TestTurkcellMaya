@@ -258,7 +258,7 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("Kişi kurum tipi alanında {kisiKurum} seç")
     public GelenEvrakKayitPage kisiKurumSec(String kisiKurum) {
-        cmbEvrakBilgileriListKisiKurum.selectOption(kisiKurum);
+        cmbEvrakBilgileriListKisiKurum.selectOptionByValue(kisiKurum);
         return this;
     }
 
@@ -843,10 +843,10 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("")
+    @Step("Üst yazı değiştirilsim mi?")
     public GelenEvrakKayitPage ustYaziDegistirilmisPopUpKontrol() {
-        if (popUpUstYaziDegistirilme.exists())
-            clickJs(btnUstYaziDegistirmeHayır);
+       popUpUstYaziDegistirilme.shouldBe(Condition.visible);
+        clickJs(btnUstYaziDegistirmeHayır);
         return this;
     }
 
