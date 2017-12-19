@@ -240,10 +240,10 @@ public class VekaletIslemleriTest extends BaseTest {
                 .raporSec()
                 .icerikIlkKayıt();
 
-        String evrakNo= parafladiklarimPage.evrakDetayiEvrakNoAl();
+        String evrakNo = parafladiklarimPage.evrakDetayiEvrakNoAl();
 
         logout();
-        login("test1","123");
+        login("test1", "123");
 
         mainPage
                 .vekaletVarUyarıPopUp();
@@ -254,7 +254,7 @@ public class VekaletIslemleriTest extends BaseTest {
 
         logout();
 
-        login("optiimtest2","123");
+        login("optiimtest2", "123");
 
         mainPage
                 .vekaletVarUyarıPopUp()
@@ -313,11 +313,11 @@ public class VekaletIslemleriTest extends BaseTest {
                 .raporSec()
                 .icerikIlkKayıt();
 
-        String evrakNo= parafladiklarimPage.evrakDetayiEvrakNoAl();
+        String evrakNo = parafladiklarimPage.evrakDetayiEvrakNoAl();
 
         logout();
 
-        login("optiimtest2","123");
+        login("optiimtest2", "123");
 
         mainPage
                 .vekaletVarUyarıPopUp();
@@ -328,7 +328,7 @@ public class VekaletIslemleriTest extends BaseTest {
 
         logout();
 
-        login("test1","123");
+        login("test1", "123");
 
         mainPage
                 .vekaletVarUyarıPopUp();
@@ -342,8 +342,8 @@ public class VekaletIslemleriTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, dependsOnMethods = {"TC2208","TC0012"},  description = "Vekalet veren kullanıcıya evrak havalesi ve kontrolü")
-    public void TC0014() throws InterruptedException{
+    @Test(enabled = true, dependsOnMethods = {"TC2208", "TC0012"}, description = "Vekalet veren kullanıcıya evrak havalesi ve kontrolü")
+    public void TC0014() throws InterruptedException {
 
         String kisiKurum = "D";
         String geldigiKurum = "Esk Kurum 071216 2";
@@ -355,7 +355,7 @@ public class VekaletIslemleriTest extends BaseTest {
         String evrakDili = "917";
         String gizlilikDerecesi = "N";
 
-        login(username2,password2);
+        login(username2, password2);
 
         gelenEvrakKayitPage
                 .openPage()
@@ -376,7 +376,7 @@ public class VekaletIslemleriTest extends BaseTest {
         gelenEvrakNo = gelenEvrakKayitPage.popUps();
         logout();
 
-        login("test1","123");
+        login("test1", "123");
 
         mainPage
                 .vekaletVarUyarıPopUp();
@@ -388,9 +388,9 @@ public class VekaletIslemleriTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, dependsOnMethods = {"TC0015"}, description = "Vekalet veren kullanıcının bulunduğu kullanıcı listesine evrak havalesi ve kontrolü")
-    public void TC2212() throws InterruptedException{
+    public void TC2212() throws InterruptedException {
 
-        login(username2,password2);
+        login(username2, password2);
 
         String[] evrakNo = new String[2];
         gelenEvraklarPage
@@ -407,7 +407,7 @@ public class VekaletIslemleriTest extends BaseTest {
                 .havaleYapGonder()
                 .islemMesaji().basariliOlmali(basariMesaji);
         logout();
-        login("test1","123");
+        login("test1", "123");
 
         mainPage
                 .vekaletVarUyarıPopUp();
@@ -418,10 +418,36 @@ public class VekaletIslemleriTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, dependsOnMethods = {"TC0015"}, description = "Vekalet alan kullanıcıya evrak havalesi ve kontrolü")
-    public void TC0011() throws InterruptedException{
+    @Test(enabled = true, description = "Vekalet alan kullanıcıya evrak havalesi ve kontrolü")
+    public void TC0011() throws InterruptedException {
 
-        login(username3,password3);
+        String evrakGelisTipi = "P";
+        String geldigiKurum = "Esk Kurum 071216 2";
+
+        login(username3, password3);
+
+        gelenEvraklarPage
+                .openPage();
+        int size = gelenEvraklarPage.tabloEvrakAdetKontrol();
+
+        if(size == 0) {
+            gelenEvrakKayitPage
+                    .openPage()
+//                .evrakBilgileriUstYaziEkle("C:\\Users\\Emre_Sencan\\Pictures\\pdf.pdf")
+                    .konuKoduDoldur(konuKodu)
+                    .evrakTuruSec(evrakTuru)
+                    .evrakDiliSec(evrakDili)
+                    .evrakTarihiDoldur(getSysDateForKis())
+                    .gizlilikDerecesiSec(gizlilikDerecesi)
+                    .kisiKurumSec("YASEMİN")
+                    .geldigiKurumDoldurLovText(geldigiKurum)
+                    .evrakSayiSagDoldur()
+                    .evrakGelisTipiSec(evrakGelisTipi)
+                    .ivedilikSec(ivedilik)
+                    .kaydet();
+            String evrakNO11 = gelenEvrakKayitPage.popUps();
+            gelenEvrakKayitPage.islemMesaji().isBasarili();
+        }
 
         String[] evrakNo = new String[2];
         gelenEvraklarPage
@@ -437,7 +463,7 @@ public class VekaletIslemleriTest extends BaseTest {
                 .havaleYapGonder()
                 .islemMesaji().basariliOlmali(basariMesaji);
         logout();
-        login("test1","123");
+        login("test1", "123");
 
         mainPage
                 .vekaletVarUyarıPopUp();
@@ -447,7 +473,7 @@ public class VekaletIslemleriTest extends BaseTest {
 
 
         logout();
-        login("optiimtest2","123");
+        login("optiimtest2", "123");
 
         mainPage
                 .vekaletVarUyarıPopUp()

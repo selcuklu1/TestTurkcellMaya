@@ -436,7 +436,7 @@ public class GizlilikKleransiTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, dependsOnMethods = {"TC1471"}, description = "Yüksek kleranslı evrak oluşturma")
     public void TC1938() throws InterruptedException {
-        
+
         String basariMesaji = "İşlem başarılıdır!";
         String tur = "IMZALAMA";
         String icerik = "TC1938() " + getSysDate();
