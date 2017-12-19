@@ -101,7 +101,7 @@ public class BaseLibrary {
     public void waitForLoadingToDisappear(WebDriver driver) {
 //        driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
         try {
-            new WebDriverWait(driver, 20, 500).
+            new WebDriverWait(driver, 20, 250).
                     until(invisibilityOfAllElements(driver.findElements(By.className("loading"))));
 //            System.out.println("Loading: Ok");
         } catch (Exception e) {

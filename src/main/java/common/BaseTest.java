@@ -21,7 +21,8 @@ public class BaseTest extends BaseLibrary {
 
     @BeforeClass(alwaysRun = true)
     public void driverSetUp() {
-        // killProcess();
+
+        //killProcess();
 
         Locale turkishLocal = new Locale("tr", "TR");
         Locale.setDefault(turkishLocal);
@@ -33,7 +34,7 @@ public class BaseTest extends BaseLibrary {
         //region Selenide Driver Configuration
         Configuration.baseUrl = belgenetURL;
         //Configuration.browser = "chrome";
-        //Configuration.browser = "drivers.Firefox";
+       // Configuration.browser = "drivers.Firefox";
         Configuration.browser = "marionette";
 
         //Configuration.remote = "http://10.101.20.153:4444/wd/hub";
