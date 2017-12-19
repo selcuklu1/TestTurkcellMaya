@@ -54,10 +54,10 @@ public class ImzaBekleyenlerPage extends MainPage {
     public ImzaBekleyenlerPage sImzaİmzala(boolean secim){
         btnSImzaImzala.click();
         if (secim==true){
-            btnSImzaImzalaEvet.click();
+            btnSImzaImzalaEvet.pressEnter();
         }
         else {
-            btnSImzaImzalaHayir.click();
+            btnSImzaImzalaHayir.pressEnter();
         }
         return this;
     }

@@ -181,6 +181,7 @@ public class GelenEvrakKayitPage extends MainPage {
     // Havale İşlemleri
     BelgenetElement txtHavaleIslemleriKisi = comboLov(By.id("evrakBilgileriForm:dagitimBilgileriKullaniciLov:LovText"));
     BelgenetElement txtHavaleIslemleriKullaniciListesi = comboLov(By.id("evrakBilgileriForm:dagitimBilgileriKisiListesiLov:LovText"));
+    BelgenetElement txtHavaleIslemleriBirim = comboLov(By.id("evrakBilgileriForm:dagitimBilgileriBirimLov:LovText"));
     //endregion
 
 
@@ -227,6 +228,12 @@ public class GelenEvrakKayitPage extends MainPage {
 
     public GelenEvrakKayitPage konuKoduDoldur(String konuKodu) throws InterruptedException {
         comboKonuKodu.selectLov(konuKodu);
+        return this;
+    }
+
+    @Step("Konu doldur")
+    public GelenEvrakKayitPage konuDoldur(String konu){
+    $(By.id("evrakBilgileriForm:evrakBilgileriList:3:konuTextArea")).setValue(konu);
         return this;
     }
 
@@ -627,6 +634,21 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
+    public GelenEvrakKayitPage yeniKayitButton(){
+        $("[id='evrakKaydetBasariliDialogForm:yeniKayitButton']").pressEnter();
+        return this;
+    }
+    
+    public GelenEvrakKayitPage evetDugmesi(){
+        $("[id='evetDugmesi']").pressEnter();
+        return this;
+    }
+
+    public GelenEvrakKayitPage benzerKayit(){
+        $(By.id("evetButtonBenzerKaydet")).pressEnter();
+        return this;
+    }
+
     public String popUps() throws InterruptedException {
 //        popUp.shouldHave(Condition.visible);  pop up kontrolu
         String text;
@@ -742,6 +764,12 @@ public class GelenEvrakKayitPage extends MainPage {
     @Step("Birim butonu")
     public GelenEvrakKayitPage havaleIslemleriBirim() {
         btnBirim.click();
+        return this;
+    }
+
+    @Step("Birim doldur")
+    public GelenEvrakKayitPage havaleIslemleriBirimDoldur(String birim) {
+        txtHavaleIslemleriBirim.selectLov(birim);
         return this;
     }
 

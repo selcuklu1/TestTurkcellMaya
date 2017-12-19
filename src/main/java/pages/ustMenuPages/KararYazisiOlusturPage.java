@@ -45,8 +45,8 @@ public class KararYazisiOlusturPage extends MainPage {
     SelenideElement txtAciklama = $(By.id("yeniKararEvrakForm:onayIslemiAciklama"));
     SelenideElement divBilgileri = $(By.id("evrakBilgileriContainerDiv"));
     SelenideElement btnGonder = $(By.id("yeniKararEvrakForm:gonderButton"));
-    SelenideElement btnEvet = $(By.id("kaydetEvetButton"));
-    SelenideElement btnHayir = $(By.id("kaydetHayirButton"));
+    SelenideElement btnEvet = $(By.id("kaydetConfirmForm:kaydetEvetButton"));
+    SelenideElement btnHayir = $(By.id("kaydetConfirmForm:kaydetHayirButton"));
     //endregion
 
 
@@ -359,9 +359,9 @@ public class KararYazisiOlusturPage extends MainPage {
         public EditorTab kaydet(boolean secim) {
             btnKaydet.click();
             if (secim == true) {
-                clickJs(btnEvet);
+                btnEvet.pressEnter();
             } else {
-               clickJs(btnHayir);
+               btnHayir.pressEnter();
             }
             return this;
         }
