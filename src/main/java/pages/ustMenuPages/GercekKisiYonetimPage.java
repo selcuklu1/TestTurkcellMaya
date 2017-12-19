@@ -92,6 +92,8 @@ public class GercekKisiYonetimPage extends MainPage {
     @Step("Gerçek Kişi Yönetimi sayfasını aç")
     public GercekKisiYonetimPage openPage() {
         ustMenu("Gerçek Kişi Yönetimi");
+        $("#gercekKisiYonetimiListingForm").shouldBe(visible);
+
         return this;
     }
 
@@ -307,6 +309,7 @@ public class GercekKisiYonetimPage extends MainPage {
 
     @Step("Kep adresi doldur")
     public GercekKisiYonetimPage kepAdresiDoldur(String kepAdres) {
+        txtKepAdresi.clear();
         txtKepAdresi.sendKeys(kepAdres);
         return this;
     }
@@ -320,7 +323,7 @@ public class GercekKisiYonetimPage extends MainPage {
     @Step("Filtre sorgulama paneli aç")
     public GercekKisiYonetimPage filtreSorgulamaPaneliAc() {
 
-        filtreSorgulamaPanel.click();
+        filtreSorgulamaPanel.shouldBe(visible).click();
         txtFiltreTCKimlikNo.clear();
         txtFiltreAd.clear();
         txtFiltreSoyad.clear();
@@ -330,6 +333,7 @@ public class GercekKisiYonetimPage extends MainPage {
     @Step("Aktif Kayit kontrolu")
     public GercekKisiYonetimPage aktifKisiKayitKontrolu(String tcNO, String ad, String soyad) {
 
+        tblGercekKisiDataTable.shouldBe(visible);
         boolean statusTCNO = findElementOnTableByColumnInputInAllPages(tblGercekKisiDataTable, 1, tcNO).isDisplayed();
         boolean statusAd = findElementOnTableByColumnInputInAllPages(tblGercekKisiDataTable, 2, ad).isDisplayed();
         boolean statusSoyad = findElementOnTableByColumnInputInAllPages(tblGercekKisiDataTable, 3, soyad).isDisplayed();
@@ -377,6 +381,8 @@ public class GercekKisiYonetimPage extends MainPage {
     @Step("Pasif kayit kontrolu")
     public GercekKisiYonetimPage pasifKisiKayitKontrolu(String tcNO, String ad, String soyad) {
 
+        btnGercekKisiGuncelle.shouldBe(visible); //tablo biraz geç geliyor
+
         boolean statusTCNO = findElementOnTableByColumnInputInAllPages(tblGercekKisiDataTable, 1, tcNO).isDisplayed();
         boolean statusAd = findElementOnTableByColumnInputInAllPages(tblGercekKisiDataTable, 2, ad).isDisplayed();
         boolean statusSoyad = findElementOnTableByColumnInputInAllPages(tblGercekKisiDataTable, 3, soyad).isDisplayed();
@@ -397,6 +403,8 @@ public class GercekKisiYonetimPage extends MainPage {
     @Step("Gerçek Kişi Aktif Yap")
     public GercekKisiYonetimPage gercekKisiPasifIseAktifYap() {
 
+        btnGercekKisiGuncelle.shouldBe(exist); //tablo biraz geç geliyor
+
         if (btnGercekKisiAktifYap.isDisplayed()) {
             btnGercekKisiAktifYap.click();
             btnIslemOnayiEvet.click();
@@ -406,6 +414,8 @@ public class GercekKisiYonetimPage extends MainPage {
 
     @Step("Gerçek Kişi Pasif Yap")
     public GercekKisiYonetimPage gercekKisiAktifIsePasifYap() {
+
+        btnGercekKisiGuncelle.shouldBe(exist); //tablo biraz geç geliyor
 
         if (btnGercekKisiPasiYap.isDisplayed()) {
             btnGercekKisiPasiYap.click();

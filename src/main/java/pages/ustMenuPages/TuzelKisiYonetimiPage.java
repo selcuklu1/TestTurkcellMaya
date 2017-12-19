@@ -8,8 +8,8 @@ import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 /****************************************************
@@ -26,7 +26,7 @@ public class TuzelKisiYonetimiPage extends MainPage {
     SelenideElement btnAra = $(By.id("tuzelKisiYonetimiListingForm:filterPanel:searchTuzelKisiButton"));
     SelenideElement btnDuzenle = $(By.id("tuzelKisiYonetimiListingForm:tuzelKisiDataTable:0:updateTuzelKisiButton"));
     SelenideElement btnTuzelKisiEkle = $(By.id("tuzelKisiYonetimiListingForm:tuzelKisiDataTable:addNewTuzelKisiButton"));
-    SelenideElement filtreSorgulamaPanel = $(By.id("tuzelKisiYonetimiListingForm:filterPanel"));
+    SelenideElement filtreSorgulamaPanel = $(By.cssSelector("[id='tuzelKisiYonetimiListingForm'] [id='tuzelKisiYonetimiListingForm:filterPanel']"));
     SelenideElement txtFiltreVergiSGKNo = $(By.id("tuzelKisiYonetimiListingForm:filterPanel:tuzelKisiVergiKimlikNoFilterInput"));
     SelenideElement txtFiltreAd = $(By.id("tuzelKisiYonetimiListingForm:filterPanel:tuzelKisiAdFilterInput"));
     SelenideElement txtFiltreDurum = $(By.id("tuzelKisiYonetimiListingForm:filterPanel:durumSelectBox"));
@@ -81,6 +81,7 @@ public class TuzelKisiYonetimiPage extends MainPage {
     @Step("Tüzel Kişi Yönetimi sayfasını aç")
     public TuzelKisiYonetimiPage openPage() {
         ustMenu("Tüzel Kişi Yönetimi");
+        $("#tuzelKisiYonetimiListingForm").shouldBe(visible);
         return this;
     }
 
@@ -156,7 +157,7 @@ public class TuzelKisiYonetimiPage extends MainPage {
         return this;
     }
 
-  @Step("Kep adresi kullanılıyor seç")
+    @Step("Kep adresi kullanılıyor seç")
     public TuzelKisiYonetimiPage kepAdresiKullaniyorSec(boolean secim) {
         chkKepAdresiKullaniyor.setSelected(secim);
         return this;
@@ -176,7 +177,7 @@ public class TuzelKisiYonetimiPage extends MainPage {
 
     @Step("Tüzel kişi tipi seç")
     public TuzelKisiYonetimiPage tuzelKisiTipiSec(String secim) {
-        cmbTuzelKisiTipi.selectOptionByValue(secim);
+        cmbTuzelKisiTipi.selectOption(secim);
         return this;
     }
 
@@ -289,6 +290,7 @@ public class TuzelKisiYonetimiPage extends MainPage {
     @Step("Filtre sorgulama paneli aç")
     public TuzelKisiYonetimiPage filtreSorgulamaPaneliAc() {
 
+       // filtreSorgulamaPanel.shouldBe(visible);
         filtreSorgulamaPanel.click();
         txtFiltreVergiSGKNo.clear();
         txtFiltreAd.clear();
@@ -297,6 +299,8 @@ public class TuzelKisiYonetimiPage extends MainPage {
 
     @Step("Aktif tüzel kişi kayıt kontrolu")
     public TuzelKisiYonetimiPage aktifTuzelKisiKayitKontrolu(String vergiNo, String ad, String kisaAd) {
+
+        btnTuzelisiGuncelle.shouldBe(visible);
 
         boolean statusVergiNo = findElementOnTableByColumnInputInAllPages(tblTuzelKisiDataTable, 1, vergiNo).isDisplayed();
         boolean statusAd = findElementOnTableByColumnInputInAllPages(tblTuzelKisiDataTable, 2, ad).isDisplayed();
@@ -312,6 +316,7 @@ public class TuzelKisiYonetimiPage extends MainPage {
     @Step("Pasif tüzel kişi kayit kontrolu")
     public TuzelKisiYonetimiPage pasifTuzelKisiKayitKontrolu(String vergiNo, String ad, String kisaAd) {
 
+        tblTuzelKisiDataTable.shouldBe(visible);
         boolean statusTCNO = findElementOnTableByColumnInputInAllPages(tblTuzelKisiDataTable, 1, vergiNo).isDisplayed();
         boolean statusAd = findElementOnTableByColumnInputInAllPages(tblTuzelKisiDataTable, 2, ad).isDisplayed();
         boolean statusSoyad = findElementOnTableByColumnInputInAllPages(tblTuzelKisiDataTable, 3, kisaAd).isDisplayed();
@@ -326,6 +331,8 @@ public class TuzelKisiYonetimiPage extends MainPage {
     @Step("Aktif Tüzel kişi tüm liste kayıt kontrolu")
     public TuzelKisiYonetimiPage aktiflerTumListeKayitKontrolu() {
 
+        btnTuzelKisiPasifYap.shouldBe(visible);
+
         boolean status = findElementOnTableAllPages(btnTuzelKisiAktifYap);
         Assert.assertEquals(status, false);
         return this;
@@ -334,6 +341,7 @@ public class TuzelKisiYonetimiPage extends MainPage {
     @Step("Pasif Tüzel kişi tüm liste kayıt kontrolu")
     public TuzelKisiYonetimiPage pasiflerTumListeKayitKontrolu() {
 
+        btnTuzelKisiAktifYap.shouldBe(visible);
         boolean status = findElementOnTableAllPages(btnTuzelKisiPasifYap);
         Assert.assertEquals(status, false);
         return this;
@@ -357,7 +365,7 @@ public class TuzelKisiYonetimiPage extends MainPage {
         if (btnTuzelKisiAktifYap.isDisplayed()) {
             btnTuzelKisiAktifYap.click();
             btnIslemOnayiEvet.click();
-           Allure.addAttachment("Tüzel kişi pasif olduğu için aktif yapıldı.", "");
+            Allure.addAttachment("Tüzel kişi pasif olduğu için aktif yapıldı.", "");
         }
         return this;
     }

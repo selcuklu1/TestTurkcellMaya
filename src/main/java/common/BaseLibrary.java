@@ -7,6 +7,7 @@ import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
 import org.openqa.selenium.*;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -172,6 +173,42 @@ public class BaseLibrary {
         }
     }
 
+
+    /**
+     * get date from text in format 31.12.2017
+     *
+     * @param text
+     * @return
+     */
+    public String getDateFromText(String text) {
+        String result = "";
+        String regex = "[0-3]?[0-9].[0-3]?[0-9].(?:[0-9]{2})?[0-9]{2}";
+
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(text);
+        if (matcher.find())
+            result = matcher.group();
+
+        return result;
+    }
+
+    /**
+     * get time from text in format 18:59:01
+     *
+     * @param text
+     * @return
+     */
+    public String getTimeFromText(String text) {
+        String result = "";
+        String regex = "([01]?[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]";
+
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(text);
+        if (matcher.find())
+            result = matcher.group();
+
+        return result;
+    }
 
     /**
      * Türkçe harfleri inglizce harflere dönüştürüyor
@@ -526,6 +563,10 @@ public class BaseLibrary {
         WebDriverRunner.getWebDriver().switchTo().window(winHandleBefore);
     }
 
+    public void  closeNewWindow() {
+        WebDriverRunner.getWebDriver().close();
+    }
+
 
     public String cssSE(String element, String attribute, String startsWith, String endsWith) {
 
@@ -659,6 +700,21 @@ public class BaseLibrary {
             case "Hayır":
                 btnIslemOnayiHayir.click();
                 break;
+        }
+    }
+
+    //Test edilmeli.
+    public static void setDocPath(WebDriver driver) {
+        // Get Browser name and version.
+        Capabilities caps = ((RemoteWebDriver) driver).getCapabilities();
+        // String browserName = caps.getBrowserName();
+        // String browserVersion = caps.getVersion();
+        Platform operationSystem = caps.getPlatform();
+        System.out.println("Operation System: " + operationSystem.name());
+        if (operationSystem.is(Platform.WINDOWS)) {
+            String docPath = "C:\\TestAutomation\\TurksatPOC\\";
+        } else {
+            String docPath = "/selenium/";
         }
     }
 

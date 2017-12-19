@@ -29,7 +29,8 @@ public class KararYazisiOlusturPage extends MainPage {
 
 
     //region Elements
-    SelenideElement tabBilgiler = $("button[id^='yeniKararEvrakForm:kararEvrakLeftTab:uiRepeat'] span[class$='kullaniciBilgileri']");
+    SelenideElement tabBilgiler = $("button[id^='yeniKararEvrakForm'] span[class$='kullaniciBilgileri']");
+    //SelenideElement tabBilgiler = $("button .kullaniciBilgileri");
     SelenideElement tabEditor = $("button .editor");
     SelenideElement tabEkleri = $("button .kullaniciEkleri");
     SelenideElement tabIlgileri = $("button .kullaniciIlgileri");
@@ -63,6 +64,8 @@ public class KararYazisiOlusturPage extends MainPage {
 
     public class BilgilerTab extends MainPage {
 
+        SelenideElement divContainer = $("[id='yeniKararEvrakForm' ] [id='evrakBilgileriContainerDiv']");
+
         //region Elements
         BelgenetElement txtKonuKodu = comboLov(By.id("yeniKararEvrakForm:evrakBilgileriList:0:konuKoduLov:LovText"));
         SelenideElement txtKonu = $(By.id("yeniKararEvrakForm:evrakBilgileriList:2:konuTextArea"));
@@ -85,7 +88,6 @@ public class KararYazisiOlusturPage extends MainPage {
         BelgenetElement txtKullanicilar = comboLov(By.id("yeniKararEvrakForm:evrakBilgileriList:6:akisAdimLov:LovText"));
         SelenideElement btnKaydetEvet = $(By.id("kaydetConfirmForm:kaydetEvetButton"));
         SelenideElement btnKaydetHayir = $(By.id("kaydetConfirmForm:kaydetHayirButton"));
-        SelenideElement divContainer = $("#evrakBilgileriContainerDiv");
         By cmbOnayAkisiBy = By.cssSelector("[id^='yeniKararEvrakForm:evrakBilgileriList'][id$='akisLov:LovText']");
         SelenideElement cmbSelectOneMenu = $(By.id("yeniKararEvrakForm:evrakBilgileriList:14:akisAdimLov:LovSecilenTable:0:selectOneMenu"));
         SelenideElement btnEkranKapat = $(By.cssSelector("[id='window3Dialog'] span[class='ui-icon ui-icon-closethick']"));
@@ -183,7 +185,6 @@ public class KararYazisiOlusturPage extends MainPage {
 
         @Step("Onay akışı doldurma ve görüntüleme kontrolu")
         public BilgilerTab onayAkisiDoldur(String onayAkisi) {
-            cmbOnayAkisi.shouldBe(visible);
             cmbOnayAkisi.selectLov(onayAkisi);
             return this;
         }
@@ -283,6 +284,7 @@ public class KararYazisiOlusturPage extends MainPage {
         public BilgilerTab onayAkisiAlanindaGoruntulenmemeKontrolu(String onayAkisi) {
 
             comboLov(cmbOnayAkisiBy).type(onayAkisi).titleItems().filterBy(exactText(onayAkisi)).shouldHaveSize(0);
+            comboLov(cmbOnayAkisiBy).closeLovTreePanel();
             System.out.println("MyCombolov alanında " + onayAkisi + ": Onay Akışın görüntülenmediği görülür.");
 
             return this;

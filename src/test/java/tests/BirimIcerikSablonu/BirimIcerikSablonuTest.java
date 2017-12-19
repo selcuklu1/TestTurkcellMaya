@@ -216,7 +216,7 @@ public class BirimIcerikSablonuTest extends BaseTest {
         String altBirimler = "ALT BİRİMLER GÖRMESİN";
 //        String altBirimler = "ALT BİRİMLER GÖRSÜN";
 
-        birimIcerikSablonlarPage.getBtnYeniSablonOlustur().click();
+        birimIcerikSablonlarPage.getBtnYeniSablonOlustur().shouldBe(visible).click();
 
         birimIcerikSablonlarPage.getTxtSablonAdi().setValue(sablonAdi);
 
@@ -251,11 +251,9 @@ public class BirimIcerikSablonuTest extends BaseTest {
         TextEditor editor = evrakOlusturPage.editorTabAc().getEditor();
         editor.toolbarButton("Öntanımlı İçerik Şablonu Kullan", true);
 
-        $(By.id("yeniGidenEvrakForm:icerikSablonDialogD1")).shouldBe(visible);
         BelgenetElement cmbSablon = comboBox("#yeniGidenEvrakForm\\:icerikSablonDialogD1 label[id$='_label']");
         cmbSablon.getComboBoxValues().filterBy(text(sablonAdi)).shouldHaveSize(1);
         cmbSablon.selectComboBox(sablonAdi);
-
 
         switchTo().frame($("[id='yeniGidenEvrakForm:onizlemeField'] iframe"));
         String actualText = $("body").text();
@@ -295,8 +293,7 @@ public class BirimIcerikSablonuTest extends BaseTest {
         EvrakOlusturPage evrakOlusturPage = new EvrakOlusturPage().openPage();
         TextEditor editor = evrakOlusturPage.editorTabAc().getEditor();
         editor.toolbarButton("Öntanımlı İçerik Şablonu Kullan", true);
-
-        $(By.id("yeniGidenEvrakForm:icerikSablonDialogD1")).shouldBe(visible);
+//        $(By.id("yeniGidenEvrakForm:icerikSablonDialogD1")).shouldBe(visible);
         BelgenetElement cmbSablon = comboBox("#yeniGidenEvrakForm\\:icerikSablonDialogD1 label[id$='_label']");
         cmbSablon.getComboBoxValues().filterBy(exactText(sablonAdi)).shouldHaveSize(0);
 
@@ -341,8 +338,11 @@ public class BirimIcerikSablonuTest extends BaseTest {
         EvrakOlusturPage evrakOlusturPage = new EvrakOlusturPage().openPage();
         TextEditor editor = evrakOlusturPage.editorTabAc().getEditor();
         editor.toolbarButton("Öntanımlı İçerik Şablonu Kullan", true);
-
+        if ($(By.id("yeniGidenEvrakForm:icerikSablonDialogD1")).is(not(visible)))
+            editor.toolbarButton("Öntanımlı İçerik Şablonu Kullan", true);
         $(By.id("yeniGidenEvrakForm:icerikSablonDialogD1")).shouldBe(visible);
+
+
         BelgenetElement cmbSablon = comboBox("#yeniGidenEvrakForm\\:icerikSablonDialogD1 label[id$='_label']");
 
         cmbSablon.getComboBoxValues().filterBy(text(sablonAdi_1079)).shouldHaveSize(1);
