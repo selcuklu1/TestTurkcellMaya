@@ -54,10 +54,10 @@ public class ImzaBekleyenlerPage extends MainPage {
     public ImzaBekleyenlerPage sImzaİmzala(boolean secim){
         btnSImzaImzala.click();
         if (secim==true){
-            btnSImzaImzalaEvet.click();
+            btnSImzaImzalaEvet.pressEnter();
         }
         else {
-            btnSImzaImzalaHayir.click();
+            btnSImzaImzalaHayir.pressEnter();
         }
         return this;
     }
@@ -136,6 +136,12 @@ public class ImzaBekleyenlerPage extends MainPage {
     @Step("İade et")
     public ImzaBekleyenlerPage birimSec(String birim){
         solMenuBirim.filterBy(text(birim)).first().click();
+        return this;
+    }
+    @Step("Evrak no'ya göre İçerik tıklama")
+    public ImzaBekleyenlerPage evrakNumarisnaGoreIcerikTiklama(String evrakNo){
+        tableKararIzlemeEvraklar.filterBy(Condition.text(evrakNo)).first()
+                .$("[id^='mainInboxForm:inboxDataTable'][id$='detayGosterButton']").click();
         return this;
     }
 

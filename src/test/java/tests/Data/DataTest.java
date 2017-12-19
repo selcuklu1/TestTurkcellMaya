@@ -34,7 +34,7 @@ public class DataTest extends BaseTest {
         String evrakDerecesi = "Gizli";
         String geregiSecimKurum = "Kurum";
         String geregiKurum = "Adalet Bakanlığı Döner Sermaye İşletmesi";
-        String geregiSecimBirim = "Birim";   //Güncel Birim olmalı.
+        String geregiSecimBirim = "Birim";
         String geregiBirim = "AFYON VALİLİĞİ";
         String geregiSecimKullanici = "Kullanıcı";
         String geregiKullanici = "Ahmet SAVAŞ";
@@ -58,10 +58,8 @@ public class DataTest extends BaseTest {
                 .onayAkisiEkle()
                 .akisAdimSec(akisAdim)
                 .onayAkisiKullan();
-        //.imzalaButonuKontrol()
 
         evrakOlustur
-                .openPage()
                 .editorTabAc()
                 .editorIcerikDoldur(editorIcerik)
                 .imzala()
@@ -78,7 +76,7 @@ public class DataTest extends BaseTest {
         String evrakDerecesi = "Hizmete Özel";
         String evrakSayiEkMetni = "A1";
         String ivedilik = "Günlü";
-        String miat = "24.11.2017";
+        String miat = getSysDateForKis();
         String geregiSecimBirim = "Birim";
         String geregiBirim = "AFYON VALİLİĞİ";
         String akisAdim = "İmzalama";
@@ -95,13 +93,12 @@ public class DataTest extends BaseTest {
                 .evrakDerecesiSec(evrakDerecesi)
                 .evrakSayiEkMetniDoldur(evrakSayiEkMetni)
                 .ivediSec(ivedilik)
-                .miatDoldur(miat)   //Alanı seçiyor imleç yanıp sönüyor ama veri göndermiyor.
+                .miatDoldur(miat)
                 .geregiSecimTipiSec(geregiSecimBirim)
                 .geregiDoldur(geregiBirim)
                 .onayAkisiEkle()
                 .akisAdimSec(akisAdim)
                 .onayAkisiKullan()
-                //.imzalaButonuKontrol()
                 .kaldirilacakKlasorler(kaldirilacakKlasorler);
 
         evrakOlustur

@@ -29,9 +29,8 @@ public class GundemIzlemePage extends MainPage {
 
     BelgenetElement txtKlasor = comboLov(By.id("mainInboxForm:inboxDataTable:filtersAccordion:gundemKlasorLov:LovText"));
     SelenideElement btnFiltrele = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:gundemFiltrele"));
-    SelenideElement btnAralikiGundemOlustur = $(By.id("mainInboxForm:inboxDataTable:j_idt697"));
+    ElementsCollection islemButonlar = $$("[id='mainInboxForm:inboxDataTable:inboxIslemlerToolbar'] tbody button[id^='mainInboxForm:inboxDataTable:']");
     ElementsCollection tblGundemEvraklar = $$("[id='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
-    SelenideElement btnGundemSirasiniKaydet = $(By.id("mainInboxForm:inboxDataTable:j_idt700"));
     SelenideElement btnGundemSirasiniKaydetUyariEvet = $(By.id("mainInboxForm:gundemSiraDegistirEvetButton"));
     SelenideElement btnGundemSirasiniKaydetUyariHayir = $(By.id("mainInboxForm:gundemSiraDegistirHayirButton"));
     SelenideElement btnYayimla = $(By.id("mainInboxForm:inboxDataTable:j_idt699"));
@@ -64,20 +63,20 @@ public class GundemIzlemePage extends MainPage {
 
     @Step("Gündem sırasını kaydet")
     public GundemIzlemePage gundemSirasiniKaydet(boolean secim) {
-        btnGundemSirasiniKaydet.click();
+        islemButonlar.get(3).click();
         clickJs(btnGundemSirasiniKaydetUyariEvet);
         return this;
     }
 
     @Step("Aralikli gündem oluştur")
     public GundemIzlemePage aralikliGundemOlustur() {
-        btnAralikiGundemOlustur.click();
+        islemButonlar.get(0).click();
         return this;
     }
 
     @Step("Yayımla")
     public GundemIzlemePage yayimla() {
-        btnYayimla.click();
+        islemButonlar.get(2).click();
         clickJs(btnYayimlaEvet);
         return this;
     }

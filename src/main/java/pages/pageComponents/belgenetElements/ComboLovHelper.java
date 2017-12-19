@@ -354,7 +354,7 @@ public class ComboLovHelper extends BaseLibrary {
 
         ElementsCollection filteredCollection = collection.filterBy(text(value));
         if (filteredCollection.size() > 0)
-            filteredCollection.get(0).shouldBe(visible).click();
+            filteredCollection.get(0).click();
         else
             collection.get(0).click();
 

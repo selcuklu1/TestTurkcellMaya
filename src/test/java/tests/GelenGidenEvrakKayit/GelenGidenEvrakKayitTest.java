@@ -1,5 +1,6 @@
 package tests.GelenGidenEvrakKayit;
 
+import com.codeborne.selenide.Condition;
 import common.BaseTest;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
@@ -109,7 +110,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true,dependsOnMethods = {"TC0321"},description = "TC2163 : Kaydedilen gelen evrakın güncellenmesi")
+    @Test(enabled = true,description = "TC2163 : Kaydedilen gelen evrakın güncellenmesi")
     public void TC2163() throws InterruptedException {
 
         String evrakTuru = "D";
@@ -124,7 +125,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
         kaydedilenGelenEvraklarPage
                 .openPage()
-                .tabloEvrakNoileIcerikSec(evrakNO321); // sırayla çalışma yapıldığında evrakNO321 parametre olarak eklenecek
+                .tabloEvrakNoileIcerikSec("5140"); // sırayla çalışma yapıldığında evrakNO321 parametre olarak eklenecek
 
         String evrakNo = gelenEvrakKayitPage
                 .evrakDetayiEvrakNoTextAl();
@@ -187,21 +188,18 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
         birimHavaleEdilenlerPage
                 .openPage()
-                .filtreleAc()
-                .baslangiçTarihiDoldur(getSysDateForKis())
-                .bitisTarihiDoldur(getSysDateForKis())
-                .tabloKontrolu(evrakNO328);
+                .filter().findRowsWith(Condition.text(evrakNO328))
+                .shouldHaveSize(1);
 
         //TeslimAlınanBelgeler sayfasında yetkili bir kullanıcı ile giriş yapılacak.
         teslimAlinmayiBekleyenlerPage
                 .openPage()
-                .filtreleAc()
-                .tarihiDoldur(getSysDateForKis())
-                .tabloKontrolu(evrakNO328);
+                .filter().findRowsWith(Condition.text(evrakNO328))
+                .shouldHaveSize(1);
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, dependsOnMethods = {"TC0321", "TC0328"}, description = "TC1401 : Kaydedilen Gelen Evrak raporu")
+    @Test(enabled = true, dependsOnMethods = {"TC0328"}, description = "TC1401 : Kaydedilen Gelen Evrak raporu")
     public void TC1401() throws InterruptedException, IOException {
 
         String basariMesaji = "İşlem başarılıdır!";
@@ -258,7 +256,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "Gelen maillerin evrak olarak sisteme dahil edilmesi")
+    @Test(enabled = true,dependsOnMethods = {"TC0328"}, description = "Gelen maillerin evrak olarak sisteme dahil edilmesi")
     public void TC0394() throws InterruptedException {
 
         String birim = "OPTİİM BİRİM11";
@@ -378,7 +376,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         String excelPath = "C:\\TestAutomation2\\BelgenetFTA\\documents\\test.xlsx";
         String ustYaziAdi = "pdf.pdf";
         String excelAdi = "test.xlsx";
-        String miatTarihi = "17.12.2017";
+        String miatTarihi = getSysDateForKis();
 
         gidenEvrakKayitPage
                 .openPage()
@@ -414,10 +412,12 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         gidenEvrakKayitPage
                 .islemMesaji().isBasarili();
 
+        Thread.sleep(2000);
+
         kaydedilenGidenEvraklarPage
                 .openPage()
 //                .filtreleAc()
-                .tarihDoldur(getSysDateForKis())
+//                .tarihDoldur(getSysDateForKis())
                 .tabloKontrolu(evrakNo1340);
     }
 }

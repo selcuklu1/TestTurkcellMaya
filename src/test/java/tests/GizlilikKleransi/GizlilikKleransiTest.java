@@ -36,6 +36,7 @@ public class GizlilikKleransiTest extends BaseTest {
     ImzaladiklarimPage imzaladiklarimPage;
     GenelEvrakRaporuPage genelEvrakRaporuPage;
     EvrakAramaPage evrakAramaPage;
+    ImzaBekleyenlerPage imzaBekleyenlerPage;
 
     String evrakNo = "";
     String basariMesaji = "İşlem başarılıdır!";
@@ -58,6 +59,7 @@ public class GizlilikKleransiTest extends BaseTest {
         imzaladiklarimPage = new ImzaladiklarimPage();
         genelEvrakRaporuPage = new GenelEvrakRaporuPage();
         evrakAramaPage = new EvrakAramaPage();
+        imzaBekleyenlerPage= new ImzaBekleyenlerPage();
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -436,7 +438,6 @@ public class GizlilikKleransiTest extends BaseTest {
     @Test(enabled = true, dependsOnMethods = {"TC1471"}, description = "Yüksek kleranslı evrak oluşturma")
     public void TC1938() throws InterruptedException {
 
-
         String basariMesaji = "İşlem başarılıdır!";
         String tur = "IMZALAMA";
         String icerik = "TC1938() " + getSysDate();
@@ -608,5 +609,71 @@ public class GizlilikKleransiTest extends BaseTest {
                 .editorIcerikDoldur(icerik)
                 .parafla()
                 .islemMesaji().beklenenMesaj(kullaniciTasnifDisi + mesaj);
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = false, description = "Akışta gizlilik kleransı değiştirilen evrakın dağıtım yeri kontrolü\n")
+    public void TC2191() throws InterruptedException{
+//8.tepten Devam edilecek
+
+
+        String basariMesaji = "İşlem başarılıdır!";
+        String tur = "PARAFLAMA";
+        String tur2 = "IMZALAMA";
+        String icerik = "TC2191 " + getSysDate();
+        String konuKodu = "010.01";
+        String kaldiralacakKlasor = "ESK05";
+        String evrakTuru = "Resmi Yazışma";
+        String evrakDili = "Türkçe";
+        String gizlilikDerecesi = "Normal";
+        String ivedilik = "Normal";
+        String geregi = "Optiim Birim";
+
+        login(username,password);
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .konuKoduSec(konuKodu)
+                .kaldiralacakKlasorlerSec(kaldiralacakKlasor)
+                .evrakTuruSec(evrakTuru)
+                .evrakDiliSec(evrakDili)
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .aciklamaDoldur(icerik)
+                .ivedikSec(ivedilik)
+                .geregiSec(geregi)
+                .onayAkisiEkle()
+                .kullaniciTabloKontrol()
+                .kullanicilarDoldur("username20n")
+                .kullaniciTabloKontrol()
+                .kullniciIsmineGoreImzaParafSec("username20n", tur2)
+                .kullan();
+
+        evrakOlusturPage
+                .editorTabAc()
+                .editorIcerikDoldur(icerik)
+                .parafla()
+                .sImzasec()
+                .sImzaImzala2()
+                .islemMesaji().beklenenMesaj(basariMesaji);
+
+        parafladiklarimPage
+                .openPage();
+        evrakNo = parafladiklarimPage.evrakDetayiEvrakNoAl();
+
+        logout();
+        login("username20n","123");
+
+        imzaBekleyenlerPage
+                .openPage()
+                .evrakNumarisnaGoreIcerikTiklama(evrakNo)
+                .icerik();
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .gizlilikDerecesiSec("Özel");
+
+
+
     }
 }
