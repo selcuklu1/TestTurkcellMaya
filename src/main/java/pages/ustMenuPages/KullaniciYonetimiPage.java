@@ -98,7 +98,7 @@ public class KullaniciYonetimiPage extends MainPage {
 
     @Step("Kullanıcı Birim atama bağ tipi seç")
     public KullaniciYonetimiPage popupKullaniciBirimAtamaBagTipiSec(String value) {
-        cmbPopupKullaniciBirimAtamaBagTipi.selectOptionByValue(value);
+        cmbPopupKullaniciBirimAtamaBagTipi.selectOption(value);
         return this;
     }
 
@@ -209,7 +209,7 @@ public class KullaniciYonetimiPage extends MainPage {
     @Step("Gizlilik derecesi seç")
     public KullaniciYonetimiPage kullaniciBirimAtamaGizlilikDerecesiSec(String gizlilikDerecesi) {
         if (cmbKullaniciBirimAtamaGizlilikDerecesi.isDisplayed())
-            cmbKullaniciBirimAtamaGizlilikDerecesi.selectOptionByValue(gizlilikDerecesi);
+            cmbKullaniciBirimAtamaGizlilikDerecesi.selectOption(gizlilikDerecesi);
         return this;
     }
 
