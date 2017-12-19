@@ -19,10 +19,11 @@ import java.util.Locale;
 import static data.TestData.belgenetURL;
 
 
-@Listeners({SettingsListener.class, BrowserPerTest.class})
+//BrowserPerTest.class
+@Listeners({SettingsListener.class})
 public class BaseTest extends BaseLibrary {
 
-    @BeforeMethod(alwaysRun = true)
+    @BeforeClass(alwaysRun = true)
     public void driverSetUp() {
         // killProcess();
 
@@ -43,9 +44,9 @@ public class BaseTest extends BaseLibrary {
         Configuration.reportsFolder = "test-result/reports";
         Configuration.screenshots = false;
         Configuration.savePageSource = false;
-        Configuration.collectionsTimeout = 20000;
-        Configuration.timeout = 20000;
-//        Configuration.holdBrowserOpen = true;
+        Configuration.collectionsTimeout = 10000;
+        Configuration.timeout = 10000;
+        Configuration.holdBrowserOpen = true;
         Configuration.headless = false;
         Configuration.startMaximized = true;
         Configuration.pollingInterval = 100;
@@ -62,12 +63,12 @@ public class BaseTest extends BaseLibrary {
     @AfterMethod
     public void tearDown() throws Exception {
 
-        try {
+        /*try {
             Selenide.clearBrowserLocalStorage();
             Selenide.clearBrowserCookies();
         } catch (Exception e) {
         }
-
+*/
     }
 
     public class User {
