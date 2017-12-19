@@ -1,4 +1,4 @@
-package tests.BakimaAl;
+package BakimaAl;
 
 import common.BaseTest;
 import org.testng.annotations.BeforeMethod;
@@ -27,7 +27,7 @@ public class BakimaAlTest extends BaseTest {
         String girilecekBilgilendirmeMetni = "Bu bir deneme bilgilendirme metnidir.";
         String iptalEdilecekBilgilendirmeMetni = "İptal edilecek bilgilendirme metni.";
 
-        String pasifKullanici = "test4";
+        String pasifKullanici = "pasifkullanici";
 
 
         for (int i = 0; i < 500; i++) {
@@ -50,7 +50,7 @@ public class BakimaAlTest extends BaseTest {
                 .bilgilendirmeMetniGir(iptalEdilecekBilgilendirmeMetni)
                 .bilgilendirmeMetniIptal()
                 .bilgilendirmeMetniKontrol(girilecekBilgilendirmeMetni)
-                .kullanicilarTemizle()
+                //.kullanicilarTemizle()
                 .kullaniciKontrol(pasifKullanici, false)
                 .kullaniciEkle("Optiim TEST")
                 .kullaniciEkle("Mehmet BOZDEMİR")

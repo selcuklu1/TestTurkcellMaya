@@ -3,6 +3,7 @@ package tests.EvrakNot;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import common.BaseTest;
+import data.User;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
@@ -221,7 +222,7 @@ public class EvrakNotTest extends BaseTest {
         }
     }
 
-    @Test(description = "")//, dependsOnMethods = {"2155"})
+    @Test(description = "", enabled = false)//, dependsOnMethods = {"2155"})
     public void tc2160() throws Exception {
         EvrakNot evrakNot = new EvrakNot();
         UstYazi ustYazi = new UstYazi();

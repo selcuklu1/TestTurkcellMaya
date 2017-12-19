@@ -1,9 +1,6 @@
 package pages.ustMenuPages;
 
-import com.codeborne.selenide.CollectionCondition;
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.*;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -18,7 +15,7 @@ import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 public class KurumYonetimiPage extends MainPage {
 
-    SelenideElement txtKurum = $(By.id("kurumYonetimiListingForm:filterPanel:kurumFilterLov:LovText"));
+    //SelenideElement txtKurum = $(By.id("kurumYonetimiListingForm:filterPanel:kurumFilterLov:LovText"));
     SelenideElement btnAra = $(By.id("kurumYonetimiListingForm:filterPanel:searchEntitiesButton"));
     SelenideElement cmbDurum = $(By.id("kurumYonetimiListingForm:filterPanel:durumSelectBox"));
     SelenideElement txtIdariBirimKimlikKodu = $(By.id("kurumYonetimiEditorForm:kurumEKodInput"));
@@ -34,7 +31,7 @@ public class KurumYonetimiPage extends MainPage {
     SelenideElement cmbPopupKepHizmetSaglayicisi = $(By.id("kurumKepAdresBilgiEditorForm:kephs"));
     SelenideElement btnPopupKaydet = $(By.id("kurumKepAdresBilgiEditorForm:saveKepAdresiButton"));
     SelenideElement btnAltMenuAc = $("[id$='kurumYonetimiListingForm:kurumTreeTable_node_1'] span");
-    BelgenetElement txtKurumCombolov = comboLov(By.id("kurumYonetimiListingForm:filterPanel:kurumFilterLov:LovText"));
+    BelgenetElement txtKurum = comboLov(By.id("kurumYonetimiListingForm:filterPanel:kurumFilterLov:LovText"));
     SelenideElement divFiltreKurum = $(By.id("kurumYonetimiListingForm:filterPanel:kurumFilterLov:lovInputPanel"));
     SelenideElement txtFiltreIdariBirimKimlikKodu = $(By.id("kurumYonetimiListingForm:filterPanel:kurumFilterLov:LovText"));
 
@@ -274,17 +271,10 @@ public class KurumYonetimiPage extends MainPage {
 
     @Step("Sorgulama panelinde kurum doldur.")
     public KurumYonetimiPage sorgulaKurumDoldur(String kurumAdi) {
-
-
-        while (!txtKurumCombolov.isDisplayed()) {
+        if(!btnAra.isDisplayed())
             filtrePanel.click();
-            txtKurumCombolov.clearAllSelectedLov();
-            txtKurumCombolov.selectLov(kurumAdi);
-            break;
-        }
-
-
-
+        btnAra.waitUntil(Condition.visible, 5000);
+        txtKurum.selectLov(kurumAdi);
         return this;
     }
 
@@ -306,7 +296,7 @@ public class KurumYonetimiPage extends MainPage {
 
     @Step("Sorgulama panelinde kurum doldur.")
     public KurumYonetimiPage kurumDoldur(String text) {
-        txtKurumCombolov.selectLov(text);
+        txtKurum.selectLov(text);
         return this;
     }
 

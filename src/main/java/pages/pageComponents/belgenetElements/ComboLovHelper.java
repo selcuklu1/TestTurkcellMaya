@@ -339,7 +339,25 @@ public class ComboLovHelper extends BaseLibrary {
 
         SelenideElement tree = $$(lovTree).last();
         tree.shouldBe(visible);
-        tree.$$(lovTreeListSelectableItemsTitle).shouldHave(sizeGreaterThan(0));
+        ElementsCollection collection = tree.$$(lovTreeListSelectableItemsTitle).shouldHave(sizeGreaterThan(0));
+        collection.last().shouldBe(visible);
+
+        /*ElementsCollection filteredCollection = collection.filterBy(textCaseSensitive(value));
+        if (filteredCollection.size() > 0) {
+            filteredCollection.get(0).shouldBe(visible).click();
+            $(lovSecilenItemTitle).shouldBe(visible);
+            Allure.addAttachment("Seçilen değerleri:", $(lovSecilenItemTitle).text()
+                    + "\n" + $(lovSecilenItemDetail).text());
+            return;
+        }*/
+
+        ElementsCollection filteredCollection = collection.filterBy(text(value));
+        if (filteredCollection.size() > 0)
+            filteredCollection.get(0).shouldBe(visible).click();
+        else
+            collection.get(0).click();
+
+        /*tree.$$(lovTreeListSelectableItemsTitle).shouldHave(sizeGreaterThan(0));
         tree.$$(lovTreeListSelectableItemsTitle).get(0).shouldBe(visible);
 
         if (tree.$$(lovTreeListSelectableItemsTitle).filterBy(textCaseSensitive(value)).size() > 0)
@@ -347,7 +365,7 @@ public class ComboLovHelper extends BaseLibrary {
         else if (tree.$$(lovTreeListSelectableItemsTitle).filterBy(text(value)).size() > 0)
             tree.$$(lovTreeListSelectableItemsTitle).filterBy(text(value)).first().click();
         else
-            tree.$$(lovTreeListSelectableItemsTitle).get(0).click();
+            tree.$$(lovTreeListSelectableItemsTitle).get(0).click();*/
 
         $(lovSecilenItemTitle).shouldBe(visible);
 
