@@ -204,6 +204,7 @@ public class GelenEvrakKayitPage extends MainPage {
     public GelenEvrakKayitPage havaleIslemleriKullaniciListesiDoldur(String kisi){
         txtHavaleIslemleriKullaniciListesi.selectLov(kisi);
         txtHavaleIslemleriKullaniciListesi.selectLov(kisi);
+
         return this;
     }
     

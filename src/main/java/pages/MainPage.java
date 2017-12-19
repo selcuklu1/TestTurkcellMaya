@@ -139,7 +139,7 @@ public class MainPage extends BaseLibrary {
     }
     @Step("Bağlan")
     public MainPage kepAdresBaglantisiBaglan1(){
-        $("[id='kepForm:kayitliKepDataTable:0:j_idt235']").click();
+        $("[id^='kepForm:kayitliKepDataTable:0:j_idt235']").click();
         return this;
     }
 

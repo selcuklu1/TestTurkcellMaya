@@ -124,7 +124,7 @@ public class GizlilikKleransiTest extends BaseTest {
                 .evrakGelisTipiSec(evrakGelisTipi)
                 .ivedilikSec(ivedilik)
                 .havaleIslemleriKisiDoldur(kisi)
-               .islemMesaji().beklenenMesaj(uyariMesaj1);
+               .islemMesaji().uyariOlmali(uyariMesaj1);
 
         gelenEvrakKayitPage
                 .havaleIslemleriKullaniciListesiDoldur(kullaniciListesi)

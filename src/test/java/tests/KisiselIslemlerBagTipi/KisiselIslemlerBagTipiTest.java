@@ -50,10 +50,12 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
     public void TC2141() {
 
         String basariMesaji = "İşlem başarılıdır!";
-        String bagTipi = "Y";
+        String bagTipi = "Amir Yardımcısı";
         String farkliKullanici = "Optiim";
 
-        login(username3, password2);
+        // Gelen evraklar alanında veri bulunmalı
+
+        login("kbagtipi", password2);
 
         kullaniciYonetimiPage
                 .openPage()
@@ -94,13 +96,15 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
     public void TC2142() {
 
         String basariMesaji = "İşlem başarılıdır!";
-        String bagTipi = "Y";
+        String bagTipi = "Amir Yardımcısı";
         String farkliKullanici = "Optiim";
         String onayAkisiKullanicilarTuru = "İmzalama";
         String gnMdV = "Gn.Md. V.";
         String genelMudur = "Genel Müdür V.";
-        String kullanicilarTuru = "İmzalama";
+        String kullanicilarTuru = "IMZALAMA";
         String randomAd = createRandomNumber(7);
+
+        //Gelen evraklar alanında veri bulunmalı
 
         login(username2, password2);
 
@@ -172,10 +176,13 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
     public void TC2168() {
 
         String basariMesaji = "İşlem başarılıdır!";
-        String bagTipi = "P";
+        String bagTipi = "Personel";
         String farkliKullanici = "Optiim";
         String onayVerecek = "Zübeyde TEKİN";
-        login(username3, password2);
+
+        //Gelen evraklar alanında veri bulunmalı
+
+        login("kbagtipi", password2);
 
         kullaniciYonetimiPage
                 .openPage()
