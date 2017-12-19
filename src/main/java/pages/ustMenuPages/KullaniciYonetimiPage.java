@@ -98,7 +98,7 @@ public class KullaniciYonetimiPage extends MainPage {
 
     @Step("Kullanıcı Birim atama bağ tipi seç")
     public KullaniciYonetimiPage popupKullaniciBirimAtamaBagTipiSec(String value) {
-        cmbPopupKullaniciBirimAtamaBagTipi.selectOptionByValue(value);
+        cmbPopupKullaniciBirimAtamaBagTipi.selectOption(value);
         return this;
     }
 

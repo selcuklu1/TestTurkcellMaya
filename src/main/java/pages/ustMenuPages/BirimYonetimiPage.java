@@ -92,7 +92,6 @@ public class BirimYonetimiPage extends MainPage {
     @Step("Kep adresi bilgileri ekle")
     public BirimYonetimiPage yeniKepAdresBilgileriEkle() {
         btnYeniKepAdresBilgileriEkle.pressEnter();
-//        btnYeniKepAdresBilgileriEkle.click();
         return this;
     }
 

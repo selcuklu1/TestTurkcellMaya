@@ -309,6 +309,7 @@ public class GercekKisiYonetimPage extends MainPage {
 
     @Step("Kep adresi doldur")
     public GercekKisiYonetimPage kepAdresiDoldur(String kepAdres) {
+        txtKepAdresi.clear();
         txtKepAdresi.sendKeys(kepAdres);
         return this;
     }

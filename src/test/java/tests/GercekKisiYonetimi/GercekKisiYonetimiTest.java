@@ -12,6 +12,8 @@ import pages.ustMenuPages.GidenEvrakKayitPage;
 
 import java.awt.*;
 
+import static com.codeborne.selenide.Selenide.switchTo;
+
 /****************************************************
  * Tarih: 2017-11-20
  * Proje: Türksat Functional Test Automation
@@ -388,17 +390,21 @@ public class GercekKisiYonetimiTest extends BaseTest {
         evrakOlusturPage
                 .bilgilerTabiAc()
                 .adresDagitimdaGorunsunSec(true)
-                .dagitimHitapDuzenlemeKaydet()
-                .windowHandleBefore();
+                .dagitimHitapDuzenlemeKaydet();
+        //.windowHandleBefore();
 
         evrakOlusturPage
-                .pdfOnIzleme()
-                .switchToNewWindow();
+                .pdfOnIzleme();
+        switchTo().window(1);
+        //  .switchToNewWindow();
 
         evrakOlusturPage
                 .pdfKontrol
-                .geregiBilgiAlaniAdresPdfKontrol(birinciKullaniciGeregiAdresi, getIkinciKullaniciAdres)
-                .switchToDefaultWindow();
+                .geregiBilgiAlaniAdresPdfKontrol(birinciKullaniciGeregiAdresi, getIkinciKullaniciAdres);
+        //.switchToDefaultWindow();
+        closeNewWindow();
+        switchTo().window(0);
+        //switchTo().defaultContent();
 
     }
 
