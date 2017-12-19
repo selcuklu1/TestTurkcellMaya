@@ -7,6 +7,7 @@ package tests.EvrakPostalama;
  * Class: "Evrak Postalama" konulu senaryoları içerir
  ****************************************************/
 
+import com.codeborne.selenide.Condition;
 import common.BaseTest;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
@@ -41,13 +42,17 @@ public class EvrakPostalamaTest extends BaseTest {
     }
 
 
+    String konu;
+
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TC0308: Evrak Postalama")
     public void TC0308() throws InterruptedException {
+        konu = "TC0308_" + getSysDate();
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
                 .konuKoduSec("YAZILIM GEL")
+                .konuDoldur(konu)
                 .kaldirilacakKlasorler("Diğer")
                 .evrakTuruSec("Resmi Yazışma")
                 .onayAkisiKullanicilariTemizle()
@@ -75,14 +80,15 @@ public class EvrakPostalamaTest extends BaseTest {
 
         postalanacakEvraklarPage
                 .openPage()
-                .evrakSec()
-                .evrakPostala()
+                .filter().findRowsWith(Condition.text(konu)).shouldHaveSize(1).first().click();
+
+        postalanacakEvraklarPage.evrakPostala()
                 .gidisSekli("E-Posta")
-                .PostalacanakEposta("test@test.com")
-                .PostalamaAciklama("Test")
+                .postalacanakEposta("test@test.com")
+                .postalamaAciklama("Test")
                 .postalanacakEvrakYaz()
-                .PopupPostalanacakEvrakYazdir()
-                .PopupPostaYazdirmaKapat()
+                .popupPostalanacakEvrakYazdir()
+                .popupPostaYazdirmaKapat()
                 .postalanacakEvrakOrjYaz()
                 .gramajDoldur("111111")
                 .hesapla()
