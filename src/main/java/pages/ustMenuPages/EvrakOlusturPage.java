@@ -584,7 +584,7 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Geregi Secim Tipi alanında {value} seç")
         public BilgilerTab geregiSecimTipiSec(String value) {
-            cmbGeregiSecimTipi.selectOptionByValue(value);
+            cmbGeregiSecimTipi.selectOption(value);
             return this;
         }
 
@@ -845,7 +845,8 @@ public class EvrakOlusturPage extends MainPage {
         executeJavaScript("arguments[0].click();",$("button[id$='anlikAkisKullanButton']"));
         scrollIntoView();*/
             //executeJavaScript("arguments[0].scrollIntoView();",btnOnayAkisiKullaniciKullan);
-            btnOnayAkisiKullaniciKullan.click();
+
+           btnOnayAkisiKullaniciKullan.pressEnter();
             return this;
         }
 
@@ -1045,7 +1046,7 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("İmzacı alanı \"{kullanici}\" olarak gelmeli")
         public EditorTab imzacılarGnMdVKontrol(String kullanici) {
-            divImzacılarGnMdV.shouldBe(Condition.text(kullanici));
+            Assert.assertEquals(kullanici,divImzacılarGnMdV.getText());
             System.out.println("İmzalama başarılı geçmiştir");
             return this;
         }

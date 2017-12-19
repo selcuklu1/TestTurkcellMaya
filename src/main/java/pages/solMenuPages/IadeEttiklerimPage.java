@@ -32,11 +32,12 @@ public class IadeEttiklerimPage extends MainPage{
 
     @Step("Tablodan rapor seç")
     public IadeEttiklerimPage gizlilikRaporSec(String konu, String yer,String gidecegiYer, String tarih, String no) {
-        tblEvrak.filterBy(Condition.text(konu)).filterBy(Condition.text(yer))
+        SelenideElement evrak = filter().findRowsWith(Condition.text(konu))
+                .filterBy(Condition.text(yer))
                 .filterBy(Condition.text(tarih))
                 .filterBy(Condition.text(no))
-                .filterBy(Condition.text(gidecegiYer)).get(0)
-                .$$("button[id^='mainInboxForm:inboxDataTable:']").get(0).click();
+                .shouldHaveSize(1).first();
+        evrak.$$("button[id^='mainInboxForm:inboxDataTable:']").get(0).click();
         return this;
     }
 
