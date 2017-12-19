@@ -1,5 +1,7 @@
 package tests.GizlilikKleransi;
 
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.SelenideElement;
 import common.BaseTest;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
@@ -135,7 +137,7 @@ public class GizlilikKleransiTest extends BaseTest {
     public void TC1475A() throws InterruptedException {
         String uyariMesaj1 = "Havale etmek istediğiniz kullanıcı kleransı yetersizdir!!";
         String uyariMesaj2 = "Havale etmek istediğiniz kullanıcı grubundaki Mehmet Emin YÜCEANT, Mehmet Gökhan BAYSAN, Mehmet Koray BALCIOĞLU ın kleransı yetersizdir, kleransı yeterli olmayan kullanıcılara havale edilmeyecektir !!";
-        String kisi = "Gökçe Şahin";
+        String kisi = "Can Şeker";
         String kullaniciListesi = "Optiim";
         String konuKodu = "Diğer TC1475";
         String geldigiYer = "Gizlilik Kler";
@@ -145,7 +147,6 @@ public class GizlilikKleransiTest extends BaseTest {
 
         havaleEttiklerimPage
                 .openPage()
-                .gizlilikRaporSec(konuKodu, geldigiYer, evrakTarihi)
                 .gizlilikRaporSec(konuKodu, geldigiYer, evrakTarihi)
                 .havaleYap()
                 .havaleYapKisiDoldur(kisi)
@@ -249,6 +250,7 @@ public class GizlilikKleransiTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TC272: Teslim almayı bekleyenler listesinden havale ederken gizlilik kontrolü")
     public void TC272() throws InterruptedException {
+
         String uyariMesaj1 = "Havale etmek istediğiniz kullanıcı kleransı yetersizdir!!";
         String uyariMesaj2 = "Havale etmek istediğiniz kullanıcı grubundaki Mehmet Emin YÜCEANT, Mehmet Gökhan BAYSAN, Mehmet Koray BALCIOĞLU ın kleransı yetersizdir, kleransı yeterli olmayan kullanıcılara havale edilmeyecektir !!";
         String kisi = "Can Şeker";
@@ -369,7 +371,6 @@ public class GizlilikKleransiTest extends BaseTest {
                 .paylasKisiSec(kisi)
                 .paylasimAciklamaYaz(aciklama)
                 .paylasPaylas();
-
     }
 
     @Severity(SeverityLevel.CRITICAL)

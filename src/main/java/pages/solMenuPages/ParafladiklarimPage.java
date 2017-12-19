@@ -64,9 +64,12 @@ public class ParafladiklarimPage extends MainPage {
 
     @Step("Tablodan rapor seç")
     public ParafladiklarimPage gizlilikRaporSec(String konu, String yer, String tarih, String no) {
-        tblEvrak.filterBy(Condition.text(konu)).filterBy(Condition.text(yer))
+        SelenideElement evrak = filter().findRowsWith(Condition.text(konu))
+                .filterBy(Condition.text(yer))
                 .filterBy(Condition.text(tarih))
-                .filterBy(Condition.text(no)).get(0).click();
+                .filterBy(Condition.text(no))
+                .shouldHaveSize(1).first();
+        evrak.click();
         return this;
     }
 

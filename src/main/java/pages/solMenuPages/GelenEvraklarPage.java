@@ -77,7 +77,7 @@ public class GelenEvraklarPage extends MainPage {
     SelenideElement txtEvrakKapatNot = $(By.id("mainPreviewForm:notTextArea_id"));
     SelenideElement txtEvrakKapatOnayAkisi = $(By.id("mainPreviewForm:akisLov_id:LovText"));
     SelenideElement btnEvrakKapatKapatmaOnayinaSun = $(By.id("mainPreviewForm:kapatmaOnayinaSunButtonDirektId"));
-    SelenideElement btnEvrakKapatEvrakKapat = $(By.id("mainPreviewForm:j_idt17934"));
+    ElementsCollection btnEvrakKapatEvrakKapat = $$("[id='mainPreviewForm:evrakOnizlemeTab'] [class='form-buttons kapatButtonDirekt'] button");
     SelenideElement chkEvrakKapatKisiselKlasorler = $(By.id("mainPreviewForm:kisiselKlasorlerimiGetirCheckboxId_input"));
 
 
@@ -88,7 +88,7 @@ public class GelenEvraklarPage extends MainPage {
     SelenideElement txtPaylasanAciklama = $(By.id("mainPreviewForm:evrakPaylasAciklama"));
     SelenideElement btnPaylasIcPaylas = $(By.id("mainPreviewForm:paylasButtonId"));
 
-    SelenideElement evrakSec = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
+    SelenideElement tblIlkEvrak = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
 
     BelgenetElement cmbOnayAkisi = comboLov(By.cssSelector("[id^='windowCevapEvrakForm:evrakBilgileriList'][id$='akisLov:LovText']"));
     BelgenetElement txtTakipListesiKullanicilar = comboLov(By.id("evrakTakibimeEkleDialogForm:takipListLov:LovText"));
@@ -101,10 +101,12 @@ public class GelenEvraklarPage extends MainPage {
 
     @Step("Tablodan rapor seç")
     public GelenEvraklarPage gizlilikRaporSecTakibeEkle(String konu, String yer, String tarih, String no) {
-        tblEvrak.filterBy(Condition.text(konu)).filterBy(Condition.text(yer))
+        SelenideElement evrak = filter().findRowsWith(Condition.text(konu))
+                .filterBy(Condition.text(yer))
                 .filterBy(Condition.text(tarih))
-                .filterBy(Condition.text(no)).get(0)
-                .$$("button[id^='mainInboxForm:inboxDataTable:']").get(0).click();
+                .filterBy(Condition.text(no))
+                .shouldHaveSize(1).first();
+        evrak.$$("button[id^='mainInboxForm:inboxDataTable:']").get(0).click();
         return this;
     }
 
@@ -120,7 +122,12 @@ public class GelenEvraklarPage extends MainPage {
 
     @Step("Tablodan rapor seç")
     public GelenEvraklarPage gizlilikRaporSec(String konu, String yer, String tarih, String no) {
-        tblEvrak.filterBy(Condition.text(konu)).filterBy(Condition.text(yer)).filterBy(Condition.text(tarih)).filterBy(Condition.text(no)).get(0).click();
+        SelenideElement evrak = filter().findRowsWith(Condition.text(konu))
+                .filterBy(Condition.text(yer))
+                .filterBy(Condition.text(tarih))
+                .filterBy(Condition.text(no))
+                .shouldHaveSize(1).first();
+        evrak.click();
         return this;
     }
 
@@ -139,7 +146,7 @@ public class GelenEvraklarPage extends MainPage {
 
     @Step("Evrak seç")
     public GelenEvraklarPage evrakSec() {
-        evrakSec.click();
+        tblIlkEvrak.click();
         return this;
     }
 
@@ -361,7 +368,7 @@ public class GelenEvraklarPage extends MainPage {
     }
 
     public GelenEvraklarPage evrakKapatEvrakKapat() {
-        btnEvrakKapatEvrakKapat.click();
+        btnEvrakKapatEvrakKapat.get(1).pressEnter();
         return this;
     }
 

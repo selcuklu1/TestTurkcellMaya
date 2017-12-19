@@ -88,7 +88,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
         String popupKepAdresi = "turksat.kamu1@testkep.pttkep.gov.tr";
         String popupKepHizmetSaglayicisiSec = "Diğer";
         String basariMesaji = "İşlem başarılıdır!";
-        String bilgiSecimTipi = "D";
+        String bilgiSecimTipi = "Kurum";
 
         login(username2, password2);
 
@@ -119,7 +119,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
         String popupKepAdresi = "turksat.kamu1@testkep.pttkep.gov.tr";
         String popupKepHizmetSaglayicisiSec = "P";
         String basariMesaji = "İşlem başarılıdır!";
-        String bilgiSecimTipi = "G";
+        String bilgiSecimTipi = "Gerçek Kişi";
 
         login(username2, password2);
 
@@ -150,7 +150,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
         String popupKepAdresi = "turksat.kamu1@testkep.pttkep.gov.tr";
         String popupKepHizmetSaglayicisiSec = "PTT KEP Servisi";
         String basariMesaji = "İşlem başarılıdır!";
-        String bilgiSecimTipi = "T";
+        String bilgiSecimTipi = "Tüzel Kişi";
 
         login(username, password);
 
@@ -184,8 +184,9 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
         String popupKepAdresi2 = "turksat.kamu2@testkep.pttkep.gov.tr";
         String popupKepHizmetSaglayicisiSec = "PTT KEP Servisi";
         String basariMesaji = "İşlem başarılıdır!";
-        String kepAdresi1 = "turksat.kamu" + createRandomNumber(7) + "@testkep.pttkep.gov.tr";
-        String kepAdresi2 = "turksat.kamu" + createRandomNumber(7) + "@testkep.pttkep.gov.tr";
+        String kepAdresi1 = "turksat.kamu" + createRandomNumber(10) + "@testkep.pttkep.gov.tr";
+        String kepAdresi2 = "turksat.kamu" + createRandomNumber(10) + "@testkep.pttkep.gov.tr";
+
         login(username2, password2);
 
         birimYonetimiPage

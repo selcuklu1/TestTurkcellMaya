@@ -87,7 +87,8 @@ public class ComboLovHelper extends BaseLibrary {
         int count = $$(lovInputTextleriTemizle).size();
         b.click();
         if (b.is(visible))
-            $$(lovInputTextleriTemizle).last().click();
+           // $$(lovInputTextleriTemizle).last().click();   Firefox browserda aşağı inmeme sorunundan dolayı commentlendi.
+        clickJs($$(lovInputTextleriTemizle).last());
 
         $$(lovInputTextleriTemizle).filter(visible).shouldHaveSize(count - 1);
 

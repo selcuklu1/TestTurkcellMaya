@@ -110,7 +110,7 @@ public class KullaniciYonetimiPage extends MainPage {
 
     @Step("Seçilen kullanıcı güncelle tıkla")
     public KullaniciYonetimiPage kullaniciListesiGuncelle(){
-        btnKullaniciListesiGuncelle.click();
+        clickJs(btnKullaniciListesiGuncelle);
         return this;
     }
 

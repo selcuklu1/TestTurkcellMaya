@@ -531,7 +531,7 @@ public class EvrakOlusturPage extends MainPage {
         }
 
         public BilgilerTab miatDoldur(String date) {
-            dateMiat.sendKeys(date);
+            setValueJS(dateMiat,date);
             return this;
         }
 
@@ -742,7 +742,9 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Onay akışı güncelle")
         public BilgilerTab onayAkisiGuncelle() {
-            btnOnayAkisGuncelle.shouldBe(visible).click();
+            btnOnayAkisGuncelle.shouldBe(visible);
+            //btnOnayAkisGuncelle.pressEnter();
+            clickJs(btnOnayAkisGuncelle);
             return this;
         }
 
@@ -847,7 +849,8 @@ public class EvrakOlusturPage extends MainPage {
         executeJavaScript("arguments[0].click();",$("button[id$='anlikAkisKullanButton']"));
         scrollIntoView();*/
             //executeJavaScript("arguments[0].scrollIntoView();",btnOnayAkisiKullaniciKullan);
-            btnOnayAkisiKullaniciKullan.click();
+
+           btnOnayAkisiKullaniciKullan.pressEnter();
             return this;
         }
 
@@ -1049,7 +1052,7 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("İmzacı alanı \"{kullanici}\" olarak gelmeli")
         public EditorTab imzacılarGnMdVKontrol(String kullanici) {
-            divImzacılarGnMdV.shouldBe(Condition.text(kullanici));
+            Assert.assertEquals(kullanici,divImzacılarGnMdV.getText());
             System.out.println("İmzalama başarılı geçmiştir");
             return this;
         }
