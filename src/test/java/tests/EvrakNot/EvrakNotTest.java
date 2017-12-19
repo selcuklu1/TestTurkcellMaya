@@ -34,7 +34,7 @@ import static pages.pageComponents.belgenetElements.BelgenetFramework.comboBox;
  * Açıklama:
  */
 public class EvrakNotTest extends BaseTest {
-
+/*
     User user1 = new User("user1", "123", "User1 TEST");
     User user2 = new User("user2", "123", "User2 TEST");
     String konu;
@@ -246,7 +246,7 @@ public class EvrakNotTest extends BaseTest {
 
         notlariKontrolEt();
     }
-
+*/
 
     /**
      * Editör tab
@@ -604,7 +604,7 @@ public class EvrakNotTest extends BaseTest {
 
 
     }
-
+/*
     @Step("Evrak Oluştur")
     private void evrakOlusturVeKaydet(EvrakOlusturPage page, String konu) {
         page.bilgilerTabiAc()
@@ -634,5 +634,5 @@ public class EvrakNotTest extends BaseTest {
         $x("//form[@id='yeniGidenEvrakForm']/ancestor::div[starts-with(@id,'window') and contains(@id,'Dialog')]/div[contains(@class,'ui-dialog-titlebar')]/a[contains(@class,'ui-dialog-titlebar-close')]").click();
         $("#kapatKaydetEvetButton").click();
         page.islemMesaji().basariliOlmali();
-    }
+    }*/
 }

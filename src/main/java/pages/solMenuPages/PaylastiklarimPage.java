@@ -23,7 +23,7 @@ public class PaylastiklarimPage extends MainPage {
 
 
     ElementsCollection tablePaylastiklarim = $$("[id='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
-    SelenideElement btnPaylasTab = $(By.xpath("//span[contains(@class, 'evrakPaylas')]/.."));
+    SelenideElement btnPaylasTab = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:4:cmdbutton"));
     SelenideElement txtKisi = $(By.id("mainPreviewForm:evrakPaylasKisiLov:LovText"));
     SelenideElement txtAciklama = $(By.id("mainPreviewForm:evrakPaylasAciklama"));
     SelenideElement btnPaylas = $(By.id("mainPreviewForm:paylasButtonId"));
@@ -59,7 +59,12 @@ public class PaylastiklarimPage extends MainPage {
 
     @Step("Tablodan rapor seç")
     public PaylastiklarimPage gizlilikRaporSec(String konu, String yer, String tarih, String no) {
-        tblEvrak.filterBy(Condition.text(konu)).filterBy(Condition.text(yer)).filterBy(Condition.text(tarih)).filterBy(Condition.text(no)).get(0).click();
+        SelenideElement evrak = filter().findRowsWith(Condition.text(konu))
+                .filterBy(Condition.text(yer))
+                .filterBy(Condition.text(tarih))
+                .filterBy(Condition.text(no))
+                .shouldHaveSize(1).first();
+        evrak.click();
         return this;
     }
 
@@ -71,7 +76,7 @@ public class PaylastiklarimPage extends MainPage {
 
     @Step("Paylaş tabına tıkla")
     public PaylastiklarimPage paylasTabTikla() {
-        btnPaylasTab.click();
+        clickJs(btnPaylasTab);
         return this;
     }
 

@@ -141,7 +141,7 @@ public class GercekKisiYonetimPage extends MainPage {
 
     @Step("Kep adres bilgileri ekle")
     public GercekKisiYonetimPage kepAdresBilgileriEkle() {
-        btnKepAdresBilgileriEkle.click();
+        clickJs(btnKepAdresBilgileriEkle);
         return this;
     }
 

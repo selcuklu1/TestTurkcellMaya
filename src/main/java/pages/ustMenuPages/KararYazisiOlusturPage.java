@@ -359,9 +359,9 @@ public class KararYazisiOlusturPage extends MainPage {
         public EditorTab kaydet(boolean secim) {
             btnKaydet.click();
             if (secim == true) {
-                btnEvet.click();
+                clickJs(btnEvet);
             } else {
-                btnHayir.click();
+               clickJs(btnHayir);
             }
             return this;
         }

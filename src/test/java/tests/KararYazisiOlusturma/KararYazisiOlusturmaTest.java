@@ -472,7 +472,7 @@ public class KararYazisiOlusturmaTest extends BaseTest{
         String konuKodu = "Usul ve Esaslar";
         String kaldirilicakKlasor = "Gündem";
 
-        login(username3, password3);
+        login(username2, password2);
 
         gelenEvraklarPage
                 .openPage()
