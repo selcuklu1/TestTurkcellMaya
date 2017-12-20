@@ -42,12 +42,11 @@ public class YazismaKurallariYonetimiTest extends BaseTest {
     public void TC01957_B() {
 
         String basariMesaj = "İşlem başarılıdır!";
-        String birimAdi = "Diğer Birimler";
+        String birimAdi = "Belde Belediyesi";
 
         yazismaKurallariYonetimiPage
                 .open()
                 .yazismaKuraliSil(birimAdi)
-                .yazismakurallariKontrolEt(birimAdi, false, false, false, false)
                 .islemMesaji().basariliOlmali(basariMesaj);
 
     }
@@ -57,7 +56,7 @@ public class YazismaKurallariYonetimiTest extends BaseTest {
 
         String basariMesaj = "İşlem başarılıdır!";
         String guncellenecekBirimadi = "Diğer Birimler";
-        String yeniBirimAdi = "Belde Belediye";
+        String yeniBirimAdi = "Belde Belediyesi";
         Boolean sinirsizYazilabilir = true;
         Boolean vekaletSeviyesi = true;
         Boolean sonImzaSeviyesi = false;
