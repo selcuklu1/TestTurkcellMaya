@@ -704,18 +704,24 @@ public class BaseLibrary {
     }
 
     //Test edilmeli.
-    public static void setDocPath(WebDriver driver) {
-        // Get Browser name and version.
-        Capabilities caps = ((RemoteWebDriver) driver).getCapabilities();
-        // String browserName = caps.getBrowserName();
-        // String browserVersion = caps.getVersion();
-        Platform operationSystem = caps.getPlatform();
-        System.out.println("Operation System: " + operationSystem.name());
-        if (operationSystem.is(Platform.WINDOWS)) {
-            String docPath = "C:\\TestAutomation\\TurksatPOC\\";
-        } else {
-            String docPath = "/selenium/";
-        }
-    }
+    public static String setDocPath() {
 
+        String docPath = null;
+
+        if (WebDriverRunner.getWebDriver() instanceof RemoteWebDriver) {
+        }
+
+            // Get Browser name and version.
+            Capabilities caps = ((RemoteWebDriver) WebDriverRunner.getWebDriver()).getCapabilities();
+            // String browserName = caps.getBrowserName();
+            // String browserVersion = caps.getVersion();
+            Platform operationSystem = caps.getPlatform();
+            System.out.println("Operation System: " + operationSystem.name());
+            if (operationSystem.is(Platform.WINDOWS)) {
+                return docPath = "C:\\TestAutomation\\TurksatPOC\\";
+            } else {
+                return docPath = "/selenium/";
+            }
+
+    }
 }
