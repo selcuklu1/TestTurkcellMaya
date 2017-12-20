@@ -1,9 +1,10 @@
-package TopluPostalama;
+package tests.TopluPostalama;
 
 import common.BaseTest;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.solMenuPages.*;
+import pages.ustMenuPages.PttRaporuPage;
 
 import java.util.Random;
 
@@ -13,12 +14,14 @@ public class TopluPostalamaTest extends BaseTest {
     TopluPostalanacakEvraklarPage topluPostalanacakEvraklarPage;
     PostaListesiPage postaListesiPage;
     PostalananlarPage postalananlarPage;
+    PttRaporuPage pttRaporuPage;
 
     @BeforeMethod
     public void loginBeforeTests() {
         postalananlarPage = new PostalananlarPage();
         topluPostalanacakEvraklarPage = new TopluPostalanacakEvraklarPage();
         postaListesiPage = new PostaListesiPage();
+        pttRaporuPage = new PttRaporuPage();
     }
 
     @Test(enabled = true, description = "1804 : Toplu Postalanacak Evrakların Sorgulanması (UC_POSTAYÖNETİMİ_001)")
@@ -532,6 +535,115 @@ public class TopluPostalamaTest extends BaseTest {
                 .evrakSec(evrakKayitTarihiSayi, evrakGidecegiYer, evrakKonu, evrakHazirlayanBirim, evrakPostaTipi)
                 .evrakSec(evrak1KayitTarihiSayi, evrak1GidecegiYer, evrak1Konu, evrak1HazirlayanBirim, evrak1PostaTipi)
                 .postaListesiPostala();
+
+    }
+
+    @Test(enabled = true, description = "1815A : Toplu postalama PTT raporunda alan kontrolleri-daha önceden rapor alındı ise (UC_POSTAYÖNETİMİ_004)")
+    public void TC01815A() {
+
+        String postaTarihi = "13.12.2017";
+        String postaTipi = "Adi Posta";
+        String gittigiYer = "Enerjı ve Madencılık Daire Başkanlığı";
+        String evrakSayi = "9174";
+
+        login("mbozdemir", "123");
+        pttRaporuPage
+                .openPage()
+                .aramaDetaylariPanelAc()
+                .postaTarihiDoldur(postaTarihi)
+                .postaTipiSec(postaTipi)
+                .sorgula()
+                .tabloKontrolEt(gittigiYer, evrakSayi, postaTipi, true);
+
+
+    }
+
+    @Test(enabled = true, description = "1815B : Toplu postalama PTT raporunda alan kontrolleri-daha önceden rapor alındı ise (UC_POSTAYÖNETİMİ_004)")
+    public void TC01815B() {
+
+        String uyariMesaji = "Zorunlu alanları doldurunuz";
+
+        String postaTarihi = "13.12.2017";
+        String postaTipi = "Adi Posta";
+        String gittigiYer = "Enerjı ve Madencılık Daire Başkanlığı";
+        String evrakSayi = "9174";
+
+        login("mbozdemir", "123");
+
+        pttRaporuPage
+                .openPage()
+                .dagiticiDoldur("")
+                .aramaDetaylariPanelAc()
+                .postaTarihiDoldur(postaTarihi)
+                .sorgula()
+                .islemMesaji().uyariOlmali(uyariMesaji);
+
+        pttRaporuPage
+                .dagiticiDoldur("a")
+                .duzenleyenDoldur("")
+                .postaTarihiDoldur(postaTarihi)
+                .sorgula()
+                .islemMesaji().uyariOlmali(uyariMesaji);
+
+        pttRaporuPage
+                .duzenleyenDoldur("a")
+                .avansSorumlusuDoldur("")
+                .postaTarihiDoldur(postaTarihi)
+                .sorgula()
+                .islemMesaji().uyariOlmali(uyariMesaji);
+
+        pttRaporuPage
+                .avansSorumlusuDoldur("a")
+                .kontrolEdenDoldur("")
+                .postaTarihiDoldur(postaTarihi)
+                .sorgula()
+                .islemMesaji().uyariOlmali(uyariMesaji);
+
+        pttRaporuPage
+                .kontrolEdenDoldur("a")
+                .pttMerkezDoldur("")
+                .postaTarihiDoldur(postaTarihi)
+                .sorgula()
+                .islemMesaji().uyariOlmali(uyariMesaji);
+
+    }
+
+    // EXCELL KONTROLÜ YAPILACAK
+    @Test(enabled = true, description = "1676 : Toplu Postalama PTT Evrak Raporu (UC_POSTAYÖNETİMİ_005)")
+    public void TC01676() {
+
+        /*
+
+        String postaTarihi = "13.12.2017";
+        String postaTipi = "Adi Posta";
+        String gittigiYer = "Enerjı ve Madencılık Daire Başkanlığı";
+        String evrakSayi = "9174";
+
+        login("mbozdemir", "123");
+
+        pttRaporuPage
+                .openPage()
+                .aramaDetaylariPanelAc()
+                .postaTarihiDoldur(postaTarihi)
+                .postaTipiSec(postaTipi)
+                .sorgula();
+
+        String ulke = pttRaporuPage.tablodanDegerAl("Ülke");
+        String il = pttRaporuPage.tablodanDegerAl("Şehir");
+        postaTipi = pttRaporuPage.tablodanDegerAl("Gidiş Şekli");
+
+        pttRaporuPage
+                .ulkeDoldur(ulke)
+                .ilDoldur(il)
+                .postaTipiSec(postaTipi)
+                .sorgula()
+                .tabloKontrolEt(gittigiYer, evrakSayi, postaTarihi, true);
+
+        */
+
+        pttRaporuPage
+                .excellKontrolEt();
+
 
     }
 

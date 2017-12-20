@@ -1,3 +1,4 @@
+/*
 package tests.EvrakNot;
 
 import com.codeborne.selenide.ElementsCollection;
@@ -28,11 +29,13 @@ import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboBox;
 
+*/
 /**
  * Yazan: Ilyas Bayraktar
  * Tarih: 13.12.2017
  * Açıklama:
- */
+ *//*
+
 public class EvrakNotTest extends BaseTest {
 /*
     User user1 = new User("user1", "123", "User1 TEST");
@@ -248,9 +251,11 @@ public class EvrakNotTest extends BaseTest {
     }
 */
 
-    /**
+
+/**
      * Editör tab
-     */
+     *//*
+
     class EvrakNot {
         TextEditor editor = new TextEditor();
 
@@ -400,9 +405,11 @@ public class EvrakNotTest extends BaseTest {
 
     }
 
-    /**
+    */
+/**
      * Bilgiler Tab Üst yazıyı görüntüle
-     */
+     *//*
+
     class UstYazi {
 
         SelenideElement notEkle = $("button[id$='kisiselNotEkleDataTableId:kisiselNotEkleId']");
@@ -541,9 +548,11 @@ public class EvrakNotTest extends BaseTest {
         }
     }
 
-    /**
+    */
+/**
      * Evrak Önizleme
-     */
+     *//*
+
     class EvrakOnizleme {
 
         class Notlari {
@@ -634,5 +643,6 @@ public class EvrakNotTest extends BaseTest {
         $x("//form[@id='yeniGidenEvrakForm']/ancestor::div[starts-with(@id,'window') and contains(@id,'Dialog')]/div[contains(@class,'ui-dialog-titlebar')]/a[contains(@class,'ui-dialog-titlebar-close')]").click();
         $("#kapatKaydetEvetButton").click();
         page.islemMesaji().basariliOlmali();
-    }*/
+    }
 }
+*/
