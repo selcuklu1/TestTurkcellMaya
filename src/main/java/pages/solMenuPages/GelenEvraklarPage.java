@@ -17,7 +17,7 @@ import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 public class GelenEvraklarPage extends MainPage {
 
     ElementsCollection tableEvraklar = $$("tbody[id='mainInboxForm:inboxDataTable_data'] > tr");
-    ElementsCollection tableEvraklar2 = $$("tbody[id'vekaletVerForm:vekaletLayout:devredileceklerTabView:vekaletDataTable_data']>tr");
+    ElementsCollection tableEvraklar2 = $$("tbody[id='mainInboxForm:inboxDataTable_data'] tr[role='row']");
     SelenideElement tblEvraklar = $("table[id='mainInboxForm:inboxDataTable:0:evrakTable'] tr:nth-child(3)");
     SelenideElement cmbFiltrele = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt349_input"));
     SelenideElement txtSayfadaAra = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt353"));
@@ -440,6 +440,13 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Tabloda evrak no kontrolü")
+    public int tabloEvrakAdetKontrol() {
+        int size = tableEvraklar2
+                .size();
+        return size;
+    }
+
     @Step("Tabloda olmayan evrak no kontrolü")
     public GelenEvraklarPage tabloOlmayanEvrakNoKontrol(String evrakNo) {
         int size = tableEvraklar
@@ -485,9 +492,8 @@ public class GelenEvraklarPage extends MainPage {
     }
     @Step("Kullanıcılar alanı doldur")
     public GelenEvraklarPage kullanciListesiSecWithTitle(String kullanici) {
-        txtKullaniciListesi.titleItems().texts();
-        txtKullaniciListesi.type(kullanici).titleItems()
-                .filterBy(Condition.exactText(kullanici + " optiim")).first().click();
+        txtKullaniciListesi.type(kullanici).detailItems()
+                .filterBy(Condition.exactText("optiim")).first().click();
         txtKullaniciListesi.closeLovTreePanel();
         return this;
     }

@@ -183,7 +183,7 @@ public class KurumYonetimiTest extends BaseTest {
         String yeniKepadresi = "hihihaha2223@kepadresim.com";
         String kepHizmetSaglayicisi = "KEPKUR";
 
-
+        login("mbozdemir", "123");
         kurumYonetimiPage
                 .openPage()
                 .yeniKurumEkle();
@@ -233,15 +233,17 @@ public class KurumYonetimiTest extends BaseTest {
     @Test(enabled = true, description = "TC01108 : Kurum Sorgulama")
     public void TC01108() {
 
-        String aktifKurumAdi = "Yenikurum2854";
+        String aktifKurumAdi = "Yenikurum3207";
         String aktifIdariBirimKimlikKodu = "889700";
 
         String pasifKurumadi = "Maliye Bakanlığı";
         String pasifIdariBirimKimlikKodu = "24316011";
 
-        String pasifYapilacakKurum = "Yenikurum3413";
+        String pasifYapilacakKurum = "Yenikurum2038";
         String pasifYapilacakKurumUstKurum = "Maliye Bakanlığı";
 
+
+        login("mbozdemir", "123");
 
         kurumYonetimiPage
                 .openPage()
@@ -249,27 +251,28 @@ public class KurumYonetimiTest extends BaseTest {
                 .ara()
                 .kurumTableKontrol(null, "Sadece Aktifler", true)
 
+                .filtrePanelAc()
                 .durumSec("Sadece Pasifler")
                 .sorgulaKurumDoldur(pasifKurumadi)
                 .ara()
                 .kurumTableKontrol(null, "Sadece Pasifler", true)
 
-
+                .filtrePanelAc()
                 .durumSec("Tümü")
                 .ara()
                 .kurumTableKontrol(null, "Tümü", true)
 
+                .filtrePanelAc()
                 .sorgulaKurumDoldur(aktifKurumAdi)
                 .durumSec("Sadece Aktifler")
                 .ara()
                 .kurumTableKontrol(null, "Sadece Aktifler", true)
 
-
+                .filtrePanelAc()
                 .sorgulaKurumDoldur(aktifIdariBirimKimlikKodu)
                 .durumSec("Sadece Aktifler")
                 .ara()
                 .kurumTableKontrol(null, "Sadece Aktifler", true)
-
 
                 .sorgulaKurumDoldur(pasifKurumadi)
                 .durumSec("Sadece Pasifler")
