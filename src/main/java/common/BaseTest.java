@@ -2,14 +2,6 @@ package common;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
-
-import io.qameta.allure.Step;
-import listeners.SettingsListener;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeSuite;
-import org.testng.annotations.Listeners;
-
 import data.User;
 import io.qameta.allure.Step;
 import listeners.SettingsListener;
@@ -27,12 +19,9 @@ import static data.TestData.belgenetURL;
 @Listeners({SettingsListener.class})
 public class BaseTest extends BaseLibrary {
 
-
-    @BeforeSuite
+    @BeforeSuite(alwaysRun = true)
     public void beforeSuite() {
-
-//        killProcess();
-
+        //killProcess();
     }
 
     @BeforeClass(alwaysRun = true)
@@ -49,19 +38,14 @@ public class BaseTest extends BaseLibrary {
         //region Selenide Driver Configuration
         Configuration.baseUrl = belgenetURL;
         Configuration.browser = "chrome";
-        // Configuration.browser = "drivers.Firefox";
-        //Configuration.browser = "marionette";
+        //Configuration.browser = "drivers.Firefox";
+//        Configuration.browser = "marionette";
 
         Configuration.remote = "http://192.168.1.3:6585/wd/hub";
         //Configuration.remote = "http://10.101.20.153:4444/wd/hub";
         Configuration.reportsFolder = "test-result/reports";
         Configuration.screenshots = false;
         Configuration.savePageSource = false;
-
-        Configuration.collectionsTimeout = 30000;
-        Configuration.timeout = 30000;
-        Configuration.holdBrowserOpen = true;
-
         Configuration.collectionsTimeout = 20000;
         Configuration.timeout = 20000;
         Configuration.holdBrowserOpen = false;
@@ -87,95 +71,36 @@ public class BaseTest extends BaseLibrary {
 
     @AfterMethod
     public void tearDown() throws Exception {
-
-       try {
-//            Selenide.clearBrowserLocalStorage();
-//            Selenide.clearBrowserCookies();
-
+        try {
+            Selenide.clearBrowserLocalStorage();
+            Selenide.clearBrowserCookies();
         } catch (Exception e) {
         }
     }
 
-
-    public class User {
-
-        private String username;
-        private String password;
-        private String name;
-        private String birimAdi;
-        private String gorev;
-
-        public User(String username, String password, String name, String birimAdi, String gorev) {
-            this.username = username;
-            this.password = password;
-            this.name = name;
-            this.birimAdi = birimAdi;
-            this.gorev = gorev;
-        }
-
-        public User(String username, String password, String name, String birimAdi) {
-            this.username = username;
-            this.password = password;
-            this.name = name;
-            this.birimAdi = birimAdi;
-        }
-
-        public User(String username, String password, String name) {
-            this.username = username;
-            this.password = password;
-            this.name = name;
-        }
-
-        public User(String username, String password) {
-            this.username = username;
-            this.password = password;
-        }
-
-        public String getUsername() {
-            return username;
-        }
-
-        public String getPassword() {
-            return password;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public String getBirimAdi() {
-            return birimAdi;
-        }
-
-        public String getGorev() {
-            return gorev;
-        }
-
-        @AfterSuite(alwaysRun = true)
-        public void afterSuite() {
-            // killProcess();
-
-        }
-
-        @Step("Login")
-        public void login(User user) {
-            new LoginPage().login(user.getUsername(), user.getPassword());
-        }
-
-        @Step("Login")
-        public void login() {
-            new LoginPage().login();
-        }
-
-        @Step("Login")
-        public void login(String username, String password) {
-            new LoginPage().login(username, password);
-        }
-
-        @Step("Logout")
-        public void logout() {
-            new MainPage().logout();
-        }
-
+    @AfterSuite(alwaysRun = true)
+    public void afterSuite() {
+        // killProcess();
     }
+
+    @Step("Login")
+    public void login(User user) {
+        new LoginPage().login(user.getUsername(), user.getPassword());
+    }
+
+    @Step("Login")
+    public void login() {
+        new LoginPage().login();
+    }
+
+    @Step("Login")
+    public void login(String username, String password) {
+        new LoginPage().login(username, password);
+    }
+
+    @Step("Logout")
+    public void logout() {
+        new MainPage().logout();
+    }
+
 }
