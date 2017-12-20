@@ -199,7 +199,7 @@ public class TuzelKisiYonetimiTest extends BaseTest {
                 .kayitBulunamadiKontrolu();
     }
 
-    @Severity(SeverityLevel.CRITICAL)
+  /*  @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TC1460: Yeni tüzel kişi kayıtta alan kontrolleri")
     public void TC1460() {
 
@@ -593,5 +593,5 @@ public class TuzelKisiYonetimiTest extends BaseTest {
                 .bilgiSecimTipiSecByText("Tüzel Kişi")
                 .bilgiAlanindaGoruntulenmeKontrolu(ad, soyad);
     }
-
+*/
 }

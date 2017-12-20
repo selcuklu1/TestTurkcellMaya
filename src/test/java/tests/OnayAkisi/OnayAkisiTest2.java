@@ -99,7 +99,7 @@ public class OnayAkisiTest2 extends BaseTest {
                 .onayAkisiAlanindaGoruntulenmemeKontrolu(kullanici);
     }
 
-    @Severity(SeverityLevel.CRITICAL)
+/*    @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TC2112AktifYapma: Onay Akışı Yönetimi - Aktif/Pasif Yapma ve Varsayılan Yapma")
     public void TC2112AktifYapma() {
 
@@ -147,5 +147,5 @@ public class OnayAkisiTest2 extends BaseTest {
                 .onayAkisiDetailKontrol("İmzalama")
                 .ekraniKapat()
                 .islemPenceresiKaydetPopup("Hayır");
-    }
+    }*/
 }

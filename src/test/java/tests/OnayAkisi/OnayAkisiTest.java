@@ -132,7 +132,7 @@ public class OnayAkisiTest extends BaseTest {
                 .bilgilerTabiAc()
                 .onayAkisiDoldur(kullanici);
     }
-
+/*
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TC1897b: Onay akışı varsayılan yapma")
     public void TC1897b() {
@@ -730,7 +730,7 @@ public class OnayAkisiTest extends BaseTest {
                 .onayAkisiKullaniciKontrol(kullanici2)
                 .onayAkisiKullaniciKontrol(kullanici3)
                 .onayAkisiKullaniciKontrol(kullanici4);
-    }
+    }*/
 }
 
 

@@ -1,6 +1,7 @@
 package common;
 
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.Selenide;
 import data.User;
 import io.qameta.allure.Step;
 import listeners.SettingsListener;
@@ -18,14 +19,13 @@ import static data.TestData.belgenetURL;
 @Listeners({SettingsListener.class})
 public class BaseTest extends BaseLibrary {
 
-    @BeforeSuite
+    @BeforeSuite(alwaysRun = true)
     public void beforeSuite() {
         //killProcess();
     }
 
     @BeforeClass(alwaysRun = true)
     public void driverSetUp() {
-        // killProcess();
 
         Locale turkishLocal = new Locale("tr", "TR");
         Locale.setDefault(turkishLocal);
@@ -45,9 +45,9 @@ public class BaseTest extends BaseLibrary {
         Configuration.reportsFolder = "test-result/reports";
         Configuration.screenshots = false;
         Configuration.savePageSource = false;
-        Configuration.collectionsTimeout = 10000;
-        Configuration.timeout = 10000;
-        Configuration.holdBrowserOpen = true;
+        Configuration.collectionsTimeout = 20000;
+        Configuration.timeout = 20000;
+        Configuration.holdBrowserOpen = false;
         Configuration.headless = false;
         Configuration.startMaximized = true;
         Configuration.pollingInterval = 100;
@@ -63,18 +63,24 @@ public class BaseTest extends BaseLibrary {
 
     }
 
+    @AfterClass(alwaysRun = true)
+    public void afterClass() {
+
+        //WebDriverRunner.getWebDriver().close();
+        //WebDriverRunner.getWebDriver().quit();
+        }
+
     @AfterMethod
     public void tearDown() throws Exception {
 
-        /*try {
-            Selenide.clearBrowserLocalStorage();
-            Selenide.clearBrowserCookies();
+        try {
+          Selenide.clearBrowserLocalStorage();
+          Selenide.clearBrowserCookies();
         } catch (Exception e) {
         }
-*/
     }
 
-    @AfterSuite
+    @AfterSuite(alwaysRun = true)
     public void afterSuite() {
        // killProcess();
     }

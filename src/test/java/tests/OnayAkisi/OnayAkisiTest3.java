@@ -86,7 +86,7 @@ public class OnayAkisiTest3 extends BaseTest {
                 .onayAkisiDetailKontrol("İmzalama");
     }
 
-    @Severity(SeverityLevel.CRITICAL)
+/*    @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TC2113b: Onay Akıışı Yönetimi - Güncelleme")
     public void TC2113b() {
 
@@ -138,5 +138,5 @@ public class OnayAkisiTest3 extends BaseTest {
                 .onayAkisiDoldur(ad)
                 .onayAkisiDetailKontrol("İmzalama")
                 .onayAkisiDetailKontrol("İmzalama");
-    }
+    }*/
 }
