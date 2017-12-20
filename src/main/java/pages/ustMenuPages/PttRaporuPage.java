@@ -13,10 +13,6 @@ import org.openqa.selenium.Keys;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.Iterator;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
@@ -168,6 +164,7 @@ public class PttRaporuPage extends MainPage {
 
    @Step("Excell kontrol et")
    public PttRaporuPage excellKontrolEt(){
+        /*
        String excelFilePath = "/Users/huseyintumer/Downloads/Rapor_1513693363904.xls";
        try (Workbook workbook = WorkbookFactory.create(new File(excelFilePath))) {
            Sheet firstSheet = workbook.getSheetAt(0);
@@ -201,7 +198,31 @@ public class PttRaporuPage extends MainPage {
            e.printStackTrace();
        } catch (InvalidFormatException e) {
            e.printStackTrace();
+       }*/
+       return this;
+
+   }
+
+
+   @Step("Excel test")
+   public PttRaporuPage excell() {
+
+
+        /*
+       Fillo fillo=new Fillo();
+       Connection connection=fillo.getConnection("/Users/huseyintumer/Downloads/Rapor_1513693363904.xls");
+       String strQuery="Select * from Rapor";
+       Recordset recordset=connection.executeQuery(strQuery);
+
+       while(recordset.next()){
+           System.out.println(recordset.getField(1));
        }
+
+       recordset.close();
+       connection.close();
+        */
+
+
        return this;
    }
 

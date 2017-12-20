@@ -7,6 +7,10 @@ import pages.solMenuPages.BenimlePaylasilanlarPage;
 import pages.solMenuPages.ParafBekleyenlerPage;
 import pages.solMenuPages.PaylastiklarimPage;
 import pages.solMenuPages.TaslakEvraklarPage;
+import pages.ustMenuPages.EvrakOlusturPage;
+import pages.ustMenuPages.KullaniciEvrakDevretPage;
+
+import java.util.Random;
 
 
 public class EvrakPaylasmaTest extends BaseTest {
@@ -15,7 +19,8 @@ public class EvrakPaylasmaTest extends BaseTest {
     BenimlePaylasilanlarPage benimlePaylasilanlarPage;
     TaslakEvraklarPage taslakEvraklarPage;
     ParafBekleyenlerPage parafBekleyenlerPage;
-
+    EvrakOlusturPage evrakOlusturPage;
+    KullaniciEvrakDevretPage kullaniciEvrakDevretPage;
 
     @BeforeMethod
     public void loginBeforeTests() {
@@ -24,19 +29,45 @@ public class EvrakPaylasmaTest extends BaseTest {
         benimlePaylasilanlarPage = new BenimlePaylasilanlarPage();
         taslakEvraklarPage = new TaslakEvraklarPage();
         parafBekleyenlerPage = new ParafBekleyenlerPage();
+        evrakOlusturPage = new EvrakOlusturPage();
+        kullaniciEvrakDevretPage = new KullaniciEvrakDevretPage();
     }
 
     @Test(enabled = true, description = "TC1881 : Evrak paylaşımını durdurma")
     public void TC1881() {
 
+        String evrakKonuKodu = "Entegrasyon İşlemleri";
+        String kaldirilacakKlasorler = "Diğer";
+        String kullaniciAdi = "Mehmet BOZDEMİR [Antalya İl Müdürü]";
+        String paylasilacakUser = "Huser TUMER";
+
         String paylasan = "Mehmet BOZDEMİR";
-        String paylasilan = "Optiim TEST";
+        String paylasilan = paylasilacakUser;
         String basariMesaji = "İşlem başarılıdır!";
 
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .konuKoduDoldur(evrakKonuKodu)
+                .kaldiralacakKlasorlerSec(kaldirilacakKlasorler)
+                .onayAkisiEkle()
+                .onayAkisiKullaniciTipiSec(kullaniciAdi, "İmzalama");
+        evrakOlusturPage
+                .kaydet(true)
+                .evrakOlusturPageKapat();
+
+        taslakEvraklarPage
+                .openPage()
+                .evrakSec(evrakKonuKodu, "", "")
+                .paylasTabTikla()
+                .paylasKisiDoldur(paylasilacakUser)
+                .paylasanAciklamaDoldur("TC1881 case i için evrak oluşturuldu ve paylaşıldı.")
+                .paylasPaylasGonder()
+                .islemMesaji().basariliOlmali();
 
         paylastiklarimPage
                 .openPage()
-                .evrakSec("", "", "Optiim TEST1 / Optiim TEST2", "11.12.2017 13:07:26 ")
+                .evrakSec(evrakKonuKodu, "", paylasilan, "")
                 .paylasTabTikla()
                 .paylasimiDurdur()
                 .islemMesaji().basariliOlmali(basariMesaji);
@@ -49,7 +80,7 @@ public class EvrakPaylasmaTest extends BaseTest {
 
 
         logout();
-        login("optiim", "123");
+        login("huser", "123");
 
         benimlePaylasilanlarPage
                 .openPage()
@@ -60,17 +91,43 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .evrakNotEklemeButonuAktifOlmali(false);
 
 
+
+
     }
 
     @Test(enabled = true, description = "TC1882 : Paylaştıklarım listesinden evrak paylaşma")
     public void TC1882() {
 
-        String evrakKonu = "";
-        String evrakNo = "0";
-        String paylasilanKullanici = "Optiim TEST1 / Optiim TEST2";
-        String paylasilmaTarihi = "19.12.2017 00:02:16";
+        String paylasilanKullanici = "Huser TUMER";
         String paylasanKisi = "Mehmet BOZDEMİR";
-        String paylasanKisiNotAciklamasi = "Cevap evrakını paylaşma NOT 1";
+        String paylasanKisiNotAciklamasi = "TC1882 : Paylaştıklarım listesinden evrak paylaşma";
+
+        String evrakKonuKodu = "Entegrasyon İşlemleri";
+        String kaldirilacakKlasorler = "Diğer";
+        String kullaniciAdi = "Mehmet BOZDEMİR [Antalya İl Müdürü]";
+
+        String basariMesaji = "İşlem başarılıdır!";
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .konuKoduDoldur(evrakKonuKodu)
+                .kaldiralacakKlasorlerSec(kaldirilacakKlasorler)
+                .onayAkisiEkle()
+                .onayAkisiKullaniciTipiSec(kullaniciAdi, "İmzalama");
+        evrakOlusturPage
+                .kaydet(true)
+                .evrakOlusturPageKapat();
+
+        taslakEvraklarPage
+                .openPage()
+                .evrakSec(evrakKonuKodu, "", "")
+                .paylasTabTikla()
+                .paylasKisiDoldur(paylasilanKullanici)
+                .paylasanAciklamaDoldur("TC1882 case i için evrak oluşturuldu ve paylaşıldı.")
+                .paylasPaylasGonder()
+                .islemMesaji().basariliOlmali();
+
 
         String[] paylasilacakKullanicilar = new String[]{
                 "Optiim TEST1",
@@ -78,11 +135,9 @@ public class EvrakPaylasmaTest extends BaseTest {
                 "Optiim TEST3"
         };
 
-        String basariMesaji = "İşlem başarılıdır!";
-
         paylastiklarimPage
                 .openPage()
-                .evrakSec(evrakKonu, evrakNo, paylasilanKullanici, paylasilmaTarihi)
+                .evrakSec(evrakKonuKodu, "", paylasilanKullanici, "")
                 .evrakOnizlemeTabSec("Paylaşılanlar")
                 .paylasTabTikla()
                 .paylasKisiSec(paylasilacakKullanicilar)
@@ -92,9 +147,11 @@ public class EvrakPaylasmaTest extends BaseTest {
 
         logout();
 
+        paylasilanKullanici = "Optiim TEST1 / Optiim TEST2 / Optiim TEST3";
+
         paylastiklarimPage
                 .openPage()
-                .evrakSec(evrakKonu, evrakNo, paylasilanKullanici, paylasilmaTarihi)
+                .evrakSec(evrakKonuKodu, "", paylasilanKullanici, "")
                 .evrakOnizlemeTabSec("Evrak Notları")
                 .evrakNotuKontrol(paylasanKisi, "", paylasanKisiNotAciklamasi);
 
@@ -103,15 +160,43 @@ public class EvrakPaylasmaTest extends BaseTest {
     @Test(enabled = true, description = "TC1877 : Paylaşılan evrakın geri alınması")
     public void TC1877() {
 
+        String evrakKonuKodu = "Entegrasyon İşlemleri";
+        String kaldirilacakKlasorler = "Diğer";
+        String kullaniciAdi = "Mehmet BOZDEMİR [Antalya İl Müdürü]";
+
         String paylasan = "Mehmet BOZDEMİR";
         String[] paylasilanlar = new String[]{"Zübeyde TEKİN", "Optiim TEST", "Esin Gül KARABACAKOĞLU"};
         String[] paylasimdanGeriAlanicaklar = new String[]{"Zübeyde TEKİN", "Esin Gül KARABACAKOĞLU"};
-        String[] paylasimdanGeriAlinmayacaklar = new String[]{"Optiim TEST"};
 
+        String paylasilmaTarihi = "";
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .konuKoduDoldur(evrakKonuKodu)
+                .kaldiralacakKlasorlerSec(kaldirilacakKlasorler)
+                .onayAkisiEkle()
+                .onayAkisiKullaniciTipiSec(kullaniciAdi, "İmzalama");
+        evrakOlusturPage
+                .kaydet(true)
+                .evrakOlusturPageKapat();
+
+        taslakEvraklarPage
+                .openPage()
+                .evrakSec(evrakKonuKodu, "", "")
+                .paylasTabTikla()
+                .paylasKisiDoldur(paylasilanlar)
+                .paylasanAciklamaDoldur("TC1877 case i için evrak oluşturuldu ve paylaşıldı.")
+                .paylasPaylasGonder()
+                .islemMesaji().basariliOlmali();
 
         paylastiklarimPage
-                .openPage()
-                .evrakSec(paylasilanlar)
+                .openPage();
+
+        paylasilmaTarihi = paylastiklarimPage.evrakPaylasimTarihiGetir(paylasilanlar, evrakKonuKodu, "","");
+
+        paylastiklarimPage
+                .evrakSec(paylasilanlar, evrakKonuKodu, "","")
                 .paylasimdanGeriAlTabSec()
                 .paylasimdanGeriAl(paylasimdanGeriAlanicaklar);
 
@@ -121,32 +206,59 @@ public class EvrakPaylasmaTest extends BaseTest {
 
         benimlePaylasilanlarPage
                 .openPage()
-                .paylasilanlarKontrol(paylasan, false);
+                .paylasilanlarKontrol(paylasan, evrakKonuKodu, paylasilmaTarihi,false);
 
 
         logout();
-        login("optiim", "Avis1111");
+        login("optiim", "123");
 
         benimlePaylasilanlarPage
                 .openPage()
-                .paylasilanlarKontrol(paylasan, true);
+                .paylasilanlarKontrol(paylasan, evrakKonuKodu,paylasilmaTarihi,true);
 
     }
 
     @Test(enabled = true, description = "TC1876 : Evrakı paylaşmada alan kontrolleri")
     public void TC1876() {
 
+        String evrakKonuKodu = "Entegrasyon İşlemleri";
+        String kaldirilacakKlasorler = "Diğer";
+        String kullaniciAdi = "Mehmet BOZDEMİR [Antalya İl Müdürü]";
+        String paylasilacakUser = "Huser TUMER";
+
+        String paylasan = "Mehmet BOZDEMİR";
+        String basariMesaji = "İşlem başarılıdır!";
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .konuKoduDoldur(evrakKonuKodu)
+                .kaldiralacakKlasorlerSec(kaldirilacakKlasorler)
+                .onayAkisiEkle()
+                .onayAkisiKullaniciTipiSec(kullaniciAdi, "İmzalama");
+        evrakOlusturPage
+                .kaydet(true)
+                .evrakOlusturPageKapat();
+
+        taslakEvraklarPage
+                .openPage()
+                .evrakSec(evrakKonuKodu, "", "")
+                .paylasTabTikla()
+                .paylasKisiDoldur(paylasilacakUser)
+                .paylasanAciklamaDoldur("TC1876 case i için evrak oluşturuldu ve paylaşıldı.")
+                .paylasPaylasGonder()
+                .islemMesaji().basariliOlmali();
 
         paylastiklarimPage
                 .openPage()
-                .evrakSec("Optiim TEST")
+                .evrakSec(evrakKonuKodu,"", paylasilacakUser,"")
                 .paylasTabTikla()
                 .paylas()
                 .islemMesaji().dikkatOlmali("Evrakın paylaşılacağı Kullanıcıyı seçiniz!");
 
 
         paylastiklarimPage
-                .paylasKisiSec("Optiim TEST")
+                .paylasKisiSec(paylasilacakUser)
                 .paylasimAciklamaYaz("")
                 .paylas()
                 .islemMesaji().dikkatOlmali("Açıklama girilmesi zorunludur!");
@@ -158,14 +270,14 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .islemMesaji().dikkatOlmali("Evrakın paylaşılacağı Kullanıcıyı seçiniz!");
 
         paylastiklarimPage
-                .paylasKisiSec("Optiim TEST")
+                .paylasKisiSec(paylasilacakUser)
                 .paylasilanKisileriTemizle()
                 .paylasimAciklamaYaz("yeni açkılmala")
                 .paylas()
                 .islemMesaji().dikkatOlmali("Evrakın paylaşılacağı Kullanıcıyı seçiniz!");
 
         paylastiklarimPage
-                .paylasKisiSec("Optiim TEST")
+                .paylasKisiSec(paylasilacakUser)
                 .paylasimAciklamaYaz("yeni açkılmala")
                 .paylas()
                 .islemMesaji().basariliOlmali("İşlem başarılıdır!");
@@ -176,14 +288,31 @@ public class EvrakPaylasmaTest extends BaseTest {
     @Test(enabled = true, description = "TC1876A : Taslak Evrakı kullanıcı ile paylaşma (Tümü aksiyonu ile)")
     public void TC1876A() {
 
+        String evrakKonuKodu = "Entegrasyon İşlemleri";
+        String kaldirilacakKlasorler = "Diğer";
+        String kullaniciAdi = "Mehmet BOZDEMİR [Antalya İl Müdürü]";
+        String paylasilacakUser = "Huser TUMER";
 
-        String evrakKonu = "Personel İşleri (Genel)";
-        String evrakGidecegiYer = "Optiim TEST1(B) / Optiim TEST2(G)";
-        String evrakTarihSaat = "05.12.2017 15:45";
+        String paylasan = "Mehmet BOZDEMİR";
+        String paylasilan = paylasilacakUser;
+        String basariMesaji = "İşlem başarılıdır!";
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .konuKoduDoldur(evrakKonuKodu)
+                .kaldiralacakKlasorlerSec(kaldirilacakKlasorler)
+                .onayAkisiEkle()
+                .onayAkisiKullaniciTipiSec(kullaniciAdi, "İmzalama");
+        evrakOlusturPage
+                .kaydet(true)
+                .evrakOlusturPageKapat();
+
+        //String evrakGidecegiYer = "Optiim TEST1(B) / Optiim TEST2(G)";
+        //String evrakTarihSaat = "05.12.2017 15:45";
 
         String evrakAciklamasi = "İçeriğinde form olan evrakı paylaşma";
         String evrakiPaylasan = "Mehmet BOZDEMİR";
-        String basariMesaji = "İşlem başarılıdır!";
 
         String yeniEvrakPaylasimNotu = "İçeriğinde form olan evrakı paylaşma yenii açıklama notu";
         String yeniPaylasan = "Optiim TEST1";
@@ -191,7 +320,7 @@ public class EvrakPaylasmaTest extends BaseTest {
 
         taslakEvraklarPage
                 .openPage()
-                .evrakSec(evrakKonu, evrakGidecegiYer, evrakTarihSaat)
+                .evrakSec(evrakKonuKodu, "", "")
                 .paylasTabTikla()
                 .paylasBirimTikla()
                 .paylasKisiDoldur("Optiim TEST1")
@@ -204,7 +333,7 @@ public class EvrakPaylasmaTest extends BaseTest {
 
         paylastiklarimPage
                 .openPage()
-                .evrakSec(evrakKonu, "", paylasilanlar, "")
+                .evrakSec(evrakKonuKodu, "", paylasilanlar, "")
                 .evrakOnizlemeTabSec("Evrak Notları")
                 .evrakNotuKontrol(evrakiPaylasan, "", evrakAciklamasi)
                 .evrakOnizlemeTabSec("Paylaşılanlar")
@@ -217,7 +346,7 @@ public class EvrakPaylasmaTest extends BaseTest {
 
         benimlePaylasilanlarPage
                 .openPage()
-                .evrakSec(evrakiPaylasan, "", evrakKonu, "")
+                .evrakSec(evrakiPaylasan, "", evrakKonuKodu, "")
                 .evrakOnizlemeTabSec("Evrak Notları")
                 .evrakNotuKontrol(evrakiPaylasan, "2017", evrakAciklamasi)
                 .evrakNotuEkle()
@@ -229,77 +358,9 @@ public class EvrakPaylasmaTest extends BaseTest {
 
         benimlePaylasilanlarPage
                 .openPage()
-                .evrakSec(evrakiPaylasan, "", evrakKonu, "")
+                .evrakSec(evrakiPaylasan, "", evrakKonuKodu, "")
                 .evrakOnizlemeTabSec("Evrak Notları")
                 .evrakNotuKontrol(yeniPaylasan, "2017", yeniEvrakPaylasimNotu);
-
-        /*
-
-        String secilecekEvrakKonu = "";
-        String gidecegiYer = "";
-        String secilecekEvrakTarihSaat = "21.11.2017 12:01";
-        String paylasilacakKisi = "Optiim TEST";
-        String paylasanAciklamasi = "Paylaşım açıklaması 03";
-        String evrakNo = "0";
-
-        String evrakNotuEkleyen = "Mehmet BOZDEMİR";
-        String paylasan = "Mehmet BOZDEMİR";
-        String evrakNotuTarih = "";
-
-        String paylasilmaTarihi = "";
-
-
-        taslakEvraklarPage
-                .openPage()
-                .evrakSec(secilecekEvrakKonu, gidecegiYer, secilecekEvrakTarihSaat)
-                .paylasTabTikla()
-                .paylasKisiDoldur(paylasilacakKisi)
-                .paylasanAciklamaDoldur(paylasanAciklamasi)
-                .paylasPaylasGonder()
-                .islemMesaji().basariliOlmali("İşlem başarılıdır!");
-
-        paylastiklarimPage
-                .openPage()
-                .evrakSec(secilecekEvrakKonu, evrakNo, paylasilacakKisi,"")
-                .evrakOnizlemeTabSec("Evrak Notları")
-                .evrakNotuKontrol(evrakNotuEkleyen, evrakNotuTarih, paylasanAciklamasi)
-                .evrakOnizlemeTabSec("Paylaşılanlar")
-                .paylasilanKontrol("Optiim TEST", "Optiim Birim", "Paylaşımda", "");
-
-        paylasilmaTarihi = paylastiklarimPage.paylasilmaTarihiGetir(secilecekEvrakKonu, evrakNo, paylasilacakKisi);
-
-        logout();
-
-        login("optiim", "Avis1111");
-
-        String yeniEvrakNotu = "benimle paylaşılan not";
-
-
-        benimlePaylasilanlarPage
-                .openPage()
-                .evrakSec(paylasan, paylasilmaTarihi, secilecekEvrakKonu, evrakNo)
-                .evrakOnizlemeTabSec("Evrak Notları")
-                .evrakNotuKontrol(evrakNotuEkleyen, evrakNotuTarih, paylasanAciklamasi)
-                .evrakNotuEkle()
-                .evrakNotuGirVeKaydet(yeniEvrakNotu);
-
-
-        logout();
-
-        login("optiim", "Avis1111");
-
-        evrakNotuEkleyen = "Optiim TEST [Ağ (Network) Uzman Yardımcısı]";
-        evrakNotuTarih = "2017";
-
-
-        benimlePaylasilanlarPage
-                .openPage()
-                .evrakSec(paylasan, paylasilmaTarihi, secilecekEvrakKonu, evrakNo)
-                .evrakOnizlemeTabSec("Evrak Notları")
-                .evrakNotuKontrol(evrakNotuEkleyen, evrakNotuTarih, yeniEvrakNotu);
-
-
-        */
 
 
     }
@@ -424,10 +485,6 @@ public class EvrakPaylasmaTest extends BaseTest {
     @Test(enabled = true, description = "TC2194 : İçeriğinde kişisel şablon olan evrakı paylaşma")
     public void TC2194() {
 
-        String evrakKonu = "Faaliyet Raporları";
-        String evrakGidecegiYer = "Optiim TEST(B) / Optiim TEST1(G) / Optiim TEST1(G)";
-        String evrakTarihSaat = "05.12.2017 12:53";
-
         String evrakAciklamasi = "evrak açıklaması için kontrol";
         String evrakiPaylasan = "Mehmet BOZDEMİR";
         String basariMesaji = "İşlem başarılıdır!";
@@ -435,10 +492,38 @@ public class EvrakPaylasmaTest extends BaseTest {
         String yeniEvrakPaylasimNotu = "Optiiim paylaştıııı";
         String yeniPaylasan = "Optiim TEST1";
 
+        String evrakKonuKodu = "Entegrasyon İşlemleri";
+        String kaldirilacakKlasorler = "Diğer";
+        String kullaniciAdi = "Mehmet BOZDEMİR [Antalya İl Müdürü]";
+
+        String evrakSablonAdi = "YeniŞablon" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .konuKoduDoldur(evrakKonuKodu)
+                .kaldiralacakKlasorlerSec(kaldirilacakKlasorler)
+                .onayAkisiEkle()
+                .onayAkisiKullaniciTipiSec(kullaniciAdi, "İmzalama");
+
+        evrakOlusturPage
+                .kaydet(true);
+
+        evrakOlusturPage
+                .sablonIslemleriTabAc()
+                .sablonTuruSec("Kişi")
+                .sablonAdiDoldur(evrakSablonAdi)
+                .evrakiYeniSablonOlarakKaydet()
+                .kisiselSablonuEvrakaUygula(evrakSablonAdi);
+
+
+        evrakOlusturPage
+                .kaydet(true)
+                .evrakOlusturPageKapat();
 
         taslakEvraklarPage
                 .openPage()
-                .evrakSec(evrakKonu, evrakGidecegiYer, evrakTarihSaat)
+                .evrakSec(evrakKonuKodu, "", "")
                 .paylasTabTikla()
                 .paylasBirimTikla()
                 .paylasKisiDoldur("Optiim TEST1")
@@ -451,7 +536,7 @@ public class EvrakPaylasmaTest extends BaseTest {
 
         paylastiklarimPage
                 .openPage()
-                .evrakSec(evrakKonu, "", paylasilanlar, "")
+                .evrakSec(evrakKonuKodu, "", paylasilanlar, "")
                 .evrakOnizlemeTabSec("Evrak Notları")
                 .evrakNotuKontrol(evrakiPaylasan, "", evrakAciklamasi)
                 .evrakOnizlemeTabSec("Paylaşılanlar")
@@ -464,7 +549,7 @@ public class EvrakPaylasmaTest extends BaseTest {
 
         benimlePaylasilanlarPage
                 .openPage()
-                .evrakSec(evrakiPaylasan, "", evrakKonu, "")
+                .evrakSec(evrakiPaylasan, "", evrakKonuKodu, "")
                 .evrakOnizlemeTabSec("Evrak Notları")
                 .evrakNotuKontrol(evrakiPaylasan, "2017", evrakAciklamasi)
                 .evrakNotuEkle()
@@ -476,7 +561,7 @@ public class EvrakPaylasmaTest extends BaseTest {
 
         benimlePaylasilanlarPage
                 .openPage()
-                .evrakSec(evrakiPaylasan, "", evrakKonu, "")
+                .evrakSec(evrakiPaylasan, "", evrakKonuKodu, "")
                 .evrakOnizlemeTabSec("Evrak Notları")
                 .evrakNotuKontrol(yeniPaylasan, "2017", yeniEvrakPaylasimNotu);
 
@@ -486,9 +571,6 @@ public class EvrakPaylasmaTest extends BaseTest {
     @Test(enabled = true, description = "TC2192 : İçeriğinde form olan evrakı paylaşma")
     public void TC2192() {
 
-        String evrakKonu = "Personel İşleri (Genel)";
-        String evrakGidecegiYer = "Optiim TEST1(B) / Optiim TEST2(G)";
-        String evrakTarihSaat = "05.12.2017 15:45";
 
         String evrakAciklamasi = "İçeriğinde form olan evrakı paylaşma";
         String evrakiPaylasan = "Mehmet BOZDEMİR";
@@ -497,10 +579,29 @@ public class EvrakPaylasmaTest extends BaseTest {
         String yeniEvrakPaylasimNotu = "İçeriğinde form olan evrakı paylaşma yenii açıklama notu";
         String yeniPaylasan = "Optiim TEST1";
 
+        String evrakKonuKodu = "Entegrasyon İşlemleri";
+        String kaldirilacakKlasorler = "Diğer";
+        String kullaniciAdi = "Mehmet BOZDEMİR [Antalya İl Müdürü]";
+
+        String formSablonAdi = "Optiim form şablonu";
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .evrakTuruSec("Form")
+                .formSablonuSec(formSablonAdi)
+                .konuKoduDoldur(evrakKonuKodu)
+                .kaldiralacakKlasorlerSec(kaldirilacakKlasorler)
+                .onayAkisiEkle()
+                .onayAkisiKullaniciTipiSec(kullaniciAdi, "İmzalama");
+
+        evrakOlusturPage
+                .kaydet(true)
+                .evrakOlusturPageKapat();
 
         taslakEvraklarPage
                 .openPage()
-                .evrakSec(evrakKonu, evrakGidecegiYer, evrakTarihSaat)
+                .evrakSec(evrakKonuKodu, "", "")
                 .paylasTabTikla()
                 .paylasBirimTikla()
                 .paylasKisiDoldur("Optiim TEST1")
@@ -513,7 +614,7 @@ public class EvrakPaylasmaTest extends BaseTest {
 
         paylastiklarimPage
                 .openPage()
-                .evrakSec(evrakKonu, "", paylasilanlar, "")
+                .evrakSec(evrakKonuKodu, "", paylasilanlar, "")
                 .evrakOnizlemeTabSec("Evrak Notları")
                 .evrakNotuKontrol(evrakiPaylasan, "", evrakAciklamasi)
                 .evrakOnizlemeTabSec("Paylaşılanlar")
@@ -526,7 +627,7 @@ public class EvrakPaylasmaTest extends BaseTest {
 
         benimlePaylasilanlarPage
                 .openPage()
-                .evrakSec(evrakiPaylasan, "", evrakKonu, "")
+                .evrakSec(evrakiPaylasan, "", evrakKonuKodu, "")
                 .evrakOnizlemeTabSec("Evrak Notları")
                 .evrakNotuKontrol(evrakiPaylasan, "2017", evrakAciklamasi)
                 .evrakNotuEkle()
@@ -538,7 +639,7 @@ public class EvrakPaylasmaTest extends BaseTest {
 
         benimlePaylasilanlarPage
                 .openPage()
-                .evrakSec(evrakiPaylasan, "", evrakKonu, "")
+                .evrakSec(evrakiPaylasan, "", evrakKonuKodu, "")
                 .evrakOnizlemeTabSec("Evrak Notları")
                 .evrakNotuKontrol(yeniPaylasan, "2017", yeniEvrakPaylasimNotu);
 
@@ -548,21 +649,48 @@ public class EvrakPaylasmaTest extends BaseTest {
     @Test(enabled = true, description = "TC2193 : İçeriğinde birim içerik şablonu olan evrakı paylaşma")
     public void TC2193() {
 
-        String evrakKonu = "Faaliyet Raporları";
-        String evrakGidecegiYer = "Optiim TEST1(G) / Optiim TEST1(G) / Optiim TEST(B)";
-        String evrakTarihSaat = "05.12.2017 16:04";
-
-        String evrakAciklamasi = "İçeriğinde birim içerik şablonu olan evrakı paylaşma NOT 1";
+        String evrakAciklamasi = "evrak açıklaması için kontrol";
         String evrakiPaylasan = "Mehmet BOZDEMİR";
         String basariMesaji = "İşlem başarılıdır!";
 
-        String yeniEvrakPaylasimNotu = "İçeriğinde birim içerik şablonu olan evrakı paylaşma NOT 2";
+        String yeniEvrakPaylasimNotu = "Optiiim paylaştıııı";
         String yeniPaylasan = "Optiim TEST1";
 
+        String evrakKonuKodu = "Entegrasyon İşlemleri";
+        String kaldirilacakKlasorler = "Diğer";
+        String kullaniciAdi = "Mehmet BOZDEMİR [Antalya İl Müdürü]";
+
+        String evrakSablonAdi = "YeniŞablon" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
+
+        String kullanacakBirim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞ";
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .konuKoduDoldur(evrakKonuKodu)
+                .kaldiralacakKlasorlerSec(kaldirilacakKlasorler)
+                .onayAkisiEkle()
+                .onayAkisiKullaniciTipiSec(kullaniciAdi, "İmzalama");
+
+        evrakOlusturPage
+                .kaydet(true);
+
+        evrakOlusturPage
+                .sablonIslemleriTabAc()
+                .sablonTuruSec("Birim")
+                .sablonAdiDoldur(evrakSablonAdi)
+                .kullanacakBirimSec(kullanacakBirim)
+                .evrakiYeniSablonOlarakKaydet()
+                .birimSablonuEvrakaUygula(evrakSablonAdi);
+
+
+        evrakOlusturPage
+                .kaydet(true)
+                .evrakOlusturPageKapat();
 
         taslakEvraklarPage
                 .openPage()
-                .evrakSec(evrakKonu, evrakGidecegiYer, evrakTarihSaat)
+                .evrakSec(evrakKonuKodu, "", "")
                 .paylasTabTikla()
                 .paylasBirimTikla()
                 .paylasKisiDoldur("Optiim TEST1")
@@ -575,7 +703,7 @@ public class EvrakPaylasmaTest extends BaseTest {
 
         paylastiklarimPage
                 .openPage()
-                .evrakSec(evrakKonu, "", paylasilanlar, "")
+                .evrakSec(evrakKonuKodu, "", paylasilanlar, "")
                 .evrakOnizlemeTabSec("Evrak Notları")
                 .evrakNotuKontrol(evrakiPaylasan, "", evrakAciklamasi)
                 .evrakOnizlemeTabSec("Paylaşılanlar")
@@ -588,7 +716,7 @@ public class EvrakPaylasmaTest extends BaseTest {
 
         benimlePaylasilanlarPage
                 .openPage()
-                .evrakSec(evrakiPaylasan, "", evrakKonu, "")
+                .evrakSec(evrakiPaylasan, "", evrakKonuKodu, "")
                 .evrakOnizlemeTabSec("Evrak Notları")
                 .evrakNotuKontrol(evrakiPaylasan, "2017", evrakAciklamasi)
                 .evrakNotuEkle()
@@ -600,25 +728,52 @@ public class EvrakPaylasmaTest extends BaseTest {
 
         benimlePaylasilanlarPage
                 .openPage()
-                .evrakSec(evrakiPaylasan, "", evrakKonu, "")
+                .evrakSec(evrakiPaylasan, "", evrakKonuKodu, "")
                 .evrakOnizlemeTabSec("Evrak Notları")
                 .evrakNotuKontrol(yeniPaylasan, "2017", yeniEvrakPaylasimNotu);
 
 
+
     }
 
+
+    // DÜZENLENECEK!!
     @Test(enabled = true, description = "TC2197 : Devredilen evrakı paylaşma")
     public void TC2197() {
 
-        logout();
-        login("yakyol", "123");
+        String evrakKonuKodu = "Entegrasyon İşlemleri";
+        String kaldirilacakKlasorler = "Diğer";
+        String kullaniciAdi = "Mehmet BOZDEMİR [Antalya İl Müdürü]";
 
-        String evrakKonu = "Faaliyet Raporları";
-        String evrakGidecegiYer = "Optiim TEST1(G) / Optiim TEST1(G) / Optiim TEST(B)";
-        String evrakTarihSaat = "05.12.2017 16:55";
+        /*
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .konuKoduDoldur(evrakKonuKodu)
+                .kaldiralacakKlasorlerSec(kaldirilacakKlasorler)
+                .onayAkisiEkle()
+                .onayAkisiKullaniciTipiSec(kullaniciAdi, "İmzalama");
+        evrakOlusturPage
+                .kaydet(true)
+                .evrakOlusturPageKapat();
+        */
+
+        kullaniciEvrakDevretPage
+                .openPage()
+                .devredecekKisiSec("Mehmet BOZDEMİR")
+                .listele()
+                .panelAc("Taslak Evraklar")
+                .taslakEvrakSec(evrakKonuKodu, "")
+                .devret()
+                .devralacakKisiSec("huser TUMER")
+                .aciklamaDoldur("evrak huser e devredildi.")
+                .devretTamam();
+
+        logout();
+        login("huser", "123");
 
         String evrakAciklamasi = "Devredilen evrakı paylaşma NOT 1";
-        String evrakiPaylasan = "Yasemin Çakıl AKYOL";
+        String evrakiPaylasan = "Huser TUMER";
         String basariMesaji = "İşlem başarılıdır!";
 
         String yeniEvrakPaylasimNotu = "Devredilen evrakı paylaşma NOT 2";
@@ -627,7 +782,7 @@ public class EvrakPaylasmaTest extends BaseTest {
 
         taslakEvraklarPage
                 .openPage()
-                .evrakSec(evrakKonu, evrakGidecegiYer, evrakTarihSaat)
+                .evrakSec(evrakKonuKodu, "", "")
                 .paylasTabTikla()
                 .paylasBirimTikla()
                 .paylasKisiDoldur("Optiim TEST1")
@@ -640,7 +795,7 @@ public class EvrakPaylasmaTest extends BaseTest {
 
         paylastiklarimPage
                 .openPage()
-                .evrakSec(evrakKonu, "", paylasilanlar, "")
+                .evrakSec(evrakKonuKodu, "", paylasilanlar, "")
                 .evrakOnizlemeTabSec("Evrak Notları")
                 .evrakNotuKontrol(evrakiPaylasan, "", evrakAciklamasi)
                 .evrakOnizlemeTabSec("Paylaşılanlar")
@@ -653,7 +808,7 @@ public class EvrakPaylasmaTest extends BaseTest {
 
         benimlePaylasilanlarPage
                 .openPage()
-                .evrakSec(evrakiPaylasan, "", evrakKonu, "")
+                .evrakSec(evrakiPaylasan, "", evrakKonuKodu, "")
                 .evrakOnizlemeTabSec("Evrak Notları")
                 .evrakNotuKontrol(evrakiPaylasan, "2017", evrakAciklamasi)
                 .evrakNotuEkle()
@@ -665,7 +820,7 @@ public class EvrakPaylasmaTest extends BaseTest {
 
         benimlePaylasilanlarPage
                 .openPage()
-                .evrakSec(evrakiPaylasan, "", evrakKonu, "")
+                .evrakSec(evrakiPaylasan, "", evrakKonuKodu, "")
                 .evrakOnizlemeTabSec("Evrak Notları")
                 .evrakNotuKontrol(yeniPaylasan, "2017", yeniEvrakPaylasimNotu);
 
