@@ -616,7 +616,7 @@ public class EvrakNotTest extends BaseTest {
                 .gizlilikDerecesiSec("Normal")
                 .kanunKapsamTipiNormalSec()
                 .ivedikSec("Normal")
-                .bilgiSecimTipiSec("Kurum")
+                .bilgiSecimTipiSecByText("Kurum")
                 .bilgiSec("Başbakanlık")
                 .geregiSecimTipiSecByText("Birim")
                 .geregiSec("AnaBirim1")

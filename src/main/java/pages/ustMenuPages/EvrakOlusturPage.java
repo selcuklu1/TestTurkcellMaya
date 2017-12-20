@@ -506,7 +506,8 @@ public class EvrakOlusturPage extends MainPage {
         @Step("Konu doldur")
         public BilgilerTab konuDoldur(String konu) {
             //sendKeys(txtKonu, konu, false); selenium
-            txtKonu.setValue(konu); //selenide
+            txtKonu.clear();
+            txtKonu.sendKeys(konu); //selenide
             return this;
         }
 
@@ -934,7 +935,8 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Kurum için seçilen geregi posta tipi")
         public BilgilerTab geregiKurumPostaTipi(String posta) {
-            cmbGeregiPostaTipi.selectLov(posta);
+            txtGeregi.lastSelectedLov().$("select").selectOption(posta);
+//            cmbGeregiPostaTipi.selectLov(posta);
             return this;
 
         }
@@ -1149,12 +1151,15 @@ public class EvrakOlusturPage extends MainPage {
 //            SelenideElement sImza = $(By.id("imzalaForm:imzalamaYontemiRadio:1"));
 //            sImza.selectRadio("I");
 
-            $("#evrakImzalaDialog").shouldBe(visible);
+           /* $("#evrakImzalaDialog").shouldBe(visible);
             executeJavaScript("arguments[0].click()", WebDriverRunner.getWebDriver().findElement(By.id("imzalaForm:imzalamaYontemiRadio:1")));
 //            Thread.sleep(2000);
             SelenideElement imzala = $(By.xpath("//*[@id='imzalaForm:sayisalImzaConfirmDialogOpener']"));
             imzala.click();
-//            Thread.sleep(2000);
+//            Thread.sleep(2000);*/
+
+            $("div[id='imzalaForm:imzalaRadio']").shouldBe(visible).click();
+            $("#imzalaForm\\:sayisalImzaConfirmDialogOpener").click();
             SelenideElement sayisalImzaOnay = $(By.id("imzalaForm:sayisalImzaConfirmForm:sayisalImzaEvetButton"));
             sayisalImzaOnay.click();
             return this;
