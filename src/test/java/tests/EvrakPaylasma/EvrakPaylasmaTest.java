@@ -67,10 +67,10 @@ public class EvrakPaylasmaTest extends BaseTest {
 
         String evrakKonu = "";
         String evrakNo = "0";
-        String paylasilanKullanici = "Optiim TEST";
-        String paylasilmaTarihi = "04.12.2017 11:00:23";
+        String paylasilanKullanici = "Optiim TEST1 / Optiim TEST2";
+        String paylasilmaTarihi = "19.12.2017 00:02:16";
         String paylasanKisi = "Mehmet BOZDEMİR";
-        String paylasanKisiNotAciklamasi = "TC: 1882 Case açıklaması";
+        String paylasanKisiNotAciklamasi = "Cevap evrakını paylaşma NOT 1";
 
         String[] paylasilacakKullanicilar = new String[]{
                 "Optiim TEST1",

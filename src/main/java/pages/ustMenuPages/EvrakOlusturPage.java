@@ -416,7 +416,7 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Bilgi Secim Tipi alanında {0} seç")
         public BilgilerTab bilgiSecimTipiSec(String text) {
-            cmbBilgiSecimTipi.selectOptionByValue(text);
+            cmbBilgiSecimTipi.selectOption(text);
             return this;
         }
 
