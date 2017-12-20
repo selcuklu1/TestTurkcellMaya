@@ -42,8 +42,7 @@ public class BaseTest extends BaseLibrary {
         // Configuration.browser = "drivers.Firefox";
         //Configuration.browser = "marionette";
 
-
-        //Configuration.remote = "http://192.168.1.3:6570/wd/hub";
+        //Configuration.remote = "http://192.168.1.3:6585/wd/hub";
         //Configuration.remote = "http://10.101.20.153:4444/wd/hub";
         Configuration.reportsFolder = "test-result/reports";
         Configuration.screenshots = false;
@@ -61,6 +60,8 @@ public class BaseTest extends BaseLibrary {
         //endregion
 
 //        System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, "/dev/null");
+
+        setDocPath();
 
     }
 
