@@ -223,12 +223,12 @@ public class GidenEvrakKayitPage extends MainPage {
     }
 
     public GidenEvrakKayitPage evrakTuruSec(String evrakTuru) {
-        cmbEvrakBilgileriListEvrakTuru.selectOptionByValue(evrakTuru);
+        cmbEvrakBilgileriListEvrakTuru.selectOption(evrakTuru);
         return this;
     }
 
     public GidenEvrakKayitPage evrakDiliSec(String evrakDili) {
-        cmbEvrakBilgileriListEvrakDili.selectOptionByValue(evrakDili);
+        cmbEvrakBilgileriListEvrakDili.selectOption(evrakDili);
         return this;
     }
 
@@ -266,7 +266,7 @@ public class GidenEvrakKayitPage extends MainPage {
 
     @Step("İvedilik Seç")
     public GidenEvrakKayitPage ivedilikSec(String ivedilik) {
-        cmbEvrakBilgileriListIvedilik.selectOptionByValue(ivedilik);
+        cmbEvrakBilgileriListIvedilik.selectOption(ivedilik);
         return this;
     }
 

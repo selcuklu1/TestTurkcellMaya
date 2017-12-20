@@ -24,7 +24,7 @@ public class BaseTest extends BaseLibrary {
     @BeforeSuite
     public void beforeSuite() {
 
-        killProcess();
+//        killProcess();
     }
 
     @BeforeClass(alwaysRun = true)
@@ -67,8 +67,8 @@ public class BaseTest extends BaseLibrary {
     public void tearDown() throws Exception {
 
        try {
-            Selenide.clearBrowserLocalStorage();
-            Selenide.clearBrowserCookies();
+//            Selenide.clearBrowserLocalStorage();
+//            Selenide.clearBrowserCookies();
         } catch (Exception e) {
         }
     }

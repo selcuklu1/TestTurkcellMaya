@@ -271,7 +271,8 @@ public class MainPage extends BaseLibrary {
     @Step("Birim Seç")
     public MainPage birimSec(String birim){
         ElementsCollection solMenuBirim = $$("[id='birimlerimMenusuContainer'] li");
-        solMenuBirim.filterBy(text(birim)).first().click();
+        solMenuBirim.filterBy(text(birim)).first()
+                .$("[id^='leftMenuForm:edysMenuItem_']").click();
         return this;
     }
 

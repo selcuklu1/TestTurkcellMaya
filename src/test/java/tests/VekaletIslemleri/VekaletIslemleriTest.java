@@ -1,5 +1,6 @@
 package tests.VekaletIslemleri;
 
+import com.codeborne.selenide.Selenide;
 import common.BaseTest;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
@@ -357,18 +358,18 @@ public class VekaletIslemleriTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, dependsOnMethods = {"TC2208"}, description = "TC0014 : Vekalet veren kullanıcıya evrak havalesi ve kontrolü")
+    @Test(enabled = true,dependsOnMethods = {"TC2208"},  description = "TC0014 : Vekalet veren kullanıcıya evrak havalesi ve kontrolü")
     public void TC0014() throws InterruptedException {
 
         String kisiKurum = "D";
         String geldigiKurum = "Esk Kurum 071216 2";
-        String evrakGelisTipi = "P";
-        String ivedilik = "N";
+        String evrakGelisTipi = "Posta";
+        String ivedilik = "Normal";
         String ekMetni = "test otomasyon";
         String gelenEvrakNo = "";
-        String evrakTuru = "R";
-        String evrakDili = "917";
-        String gizlilikDerecesi = "N";
+        String evrakTuru = "Resmi Yazışma";
+        String evrakDili = "Türkçe";
+        String gizlilikDerecesi = "Normal";
 
         login(username2, password2);
 
@@ -436,7 +437,7 @@ public class VekaletIslemleriTest extends BaseTest {
     @Test(enabled = true, dependsOnMethods = {"TC0012"}, description = "TC0011 : Vekalet alan kullanıcıya evrak havalesi ve kontrolü")
     public void TC0011() throws InterruptedException {
 
-        String evrakGelisTipi = "P";
+        String evrakGelisTipi = "Posta";
         String geldigiKurum = "Esk Kurum 071216 2";
 
         login(username3, password3);
@@ -454,11 +455,12 @@ public class VekaletIslemleriTest extends BaseTest {
                     .evrakDiliSec(evrakDili)
                     .evrakTarihiDoldur(getSysDateForKis())
                     .gizlilikDerecesiSec(gizlilikDerecesi)
-                    .kisiKurumSec("YASEMİN")
-                    .geldigiKurumDoldurLovText(geldigiKurum)
+                    .kisiKurumSec("Kurum")
+                    .geldigiKurumDoldurLovText2(geldigiKurum)
                     .evrakSayiSagDoldur()
                     .evrakGelisTipiSec(evrakGelisTipi)
                     .ivedilikSec(ivedilik)
+                    .dagitimBilgileriKisiSec("YASEMİN")
                     .kaydet();
             String evrakNO11 = gelenEvrakKayitPage.popUps();
             gelenEvrakKayitPage.islemMesaji().isBasarili();
@@ -493,7 +495,6 @@ public class VekaletIslemleriTest extends BaseTest {
         mainPage
                 .vekaletVarUyarıPopUp()
                 .birimSec(getSysDateForKis());
-
 
         gelenEvraklarPage
                 .tabloEvrakNoKontrol(evrakNo[0].toString());

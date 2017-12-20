@@ -32,14 +32,14 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     String evrakNO321;
     String evrakNO328;
     String konuKodu = "010.01";
-    String evrakTuru = "R";
-    String evrakDili = "917";
+    String evrakTuru = "Resmi Yazışma";
+    String evrakDili = "Türkçe";
     String evrakTarihi = "16.11.2017";
-    String gizlilikDerecesi = "N";
-    String kisiKurum = "D";
+    String gizlilikDerecesi = "Normal";
+    String kisiKurum = "Kurum";
     String geldigiKurum = "Esk Kurum 071216 2";
-    String evrakGelisTipi = "P";
-    String ivedilik = "N";
+    String evrakGelisTipi = "Posta";
+    String ivedilik = "Normal";
     String ekMetni = "test otomasyon";
 
 
@@ -112,10 +112,10 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true,description = "TC2163 : Kaydedilen gelen evrakın güncellenmesi")
+    @Test(enabled = true, dependsOnMethods = {"TC0321"}, description = "TC2163 : Kaydedilen gelen evrakın güncellenmesi")
     public void TC2163() throws InterruptedException {
 
-        String evrakTuru = "D";
+        String evrakTuru = "Dilekçe";
         String ustYaziPath = "C:\\TestAutomation2\\BelgenetFTA\\documents\\Otomasyon.pdf";
         String ustYaziAdi = "Otomasyon.pdf";
         String basariMesaji = "İşlem başarılıdır!";
@@ -128,7 +128,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
         kaydedilenGelenEvraklarPage
                 .openPage()
-                .tabloEvrakNoileIcerikSec("5204"); // sırayla çalışma yapıldığında evrakNO321 parametre olarak eklenecek
+                .tabloEvrakNoileIcerikSec(evrakNO321); // sırayla çalışma yapıldığında evrakNO321 parametre olarak eklenecek
 
 //        String evrakNo = gelenEvrakKayitPage
 //                .evrakDetayiEvrakNoTextAl();
@@ -206,7 +206,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC1401 : Kaydedilen Gelen Evrak raporu")
+    @Test(enabled = true, priority = 7, description = "TC1401 : Kaydedilen Gelen Evrak raporu")
     public void TC1401() throws InterruptedException, IOException {
 
 //        String evrakNO321 = "5187";
@@ -244,7 +244,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         String TCKN = "51091330934";
         String ad = "Test";
         String soyad = "Otomasyon";
-        String kisiKurum = "G";
+        String kisiKurum = "Gerçek Kişi";
 
         String mernisNo = createMernisTCKN();
 
@@ -316,13 +316,13 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     @Test(enabled = false, description = "TC0322 : Gelen evrak kayıtta alan kontrolleri")
     public void TC0322() throws InterruptedException {
 
-        String kisiKurum = "G";
-        String kisiKurum1 = "D";
+        String kisiKurum = "Gerçek Kişi";
+        String kisiKurum1 = "Kurum";
         String geldigiKurum = "Cumhurbaşkanlığı";
         String solAlan = "24301012-";
         String evrakTuru = "Dilekçe";
-        String ivedilik = "G";
-        String evrakGelisTipi = "P";
+        String ivedilik = "Günlü";
+        String evrakGelisTipi = "Posta";
         String message = "Zorunlu alanları doldurunuz";
         String message2 = "Dosya büyüklüğü uygun değildir.";
         String evrakTuru1 = "A";
