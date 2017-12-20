@@ -104,13 +104,17 @@ public class Filtreler extends BaseLibrary {
      * @return
      */
     public ElementsCollection findRowsWith(Condition condition) {
-
         while (true) {
-            SelenideElement table = $("#mainInboxForm\\:inboxDataTable_data").shouldBe(visible);
+            SelenideElement table = $("#mainInboxForm\\:inboxDataTable_data");
+//            table.shouldHave(visible);
             //SelenideElement row = table.$x("//*[contains(text(),'" + text + "')]/ancestor::tr[@data-ri and @role='row']");
             SelenideElement nextPage = $("#mainInboxForm\\:inboxDataTable span[class~='ui-paginator-next']");
-            ElementsCollection rows = table.$$("tr[data-ri][role='row']").shouldHave(sizeGreaterThan(0));
+            ElementsCollection rows = table.$$("tr[data-ri][role='row']");//.shouldHave(sizeGreaterThan(0));
+            if (rows.size() == 0)
+                return rows;
+            nextPage.shouldHave(visible);
             rows.last().shouldBe(visible);
+            System.out.println(condition.toString());
 
             ElementsCollection filtered = rows.filterBy(condition);
 

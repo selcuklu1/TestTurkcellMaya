@@ -27,14 +27,13 @@ import static com.codeborne.selenide.Condition.exactValue;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
 import static org.apache.commons.io.FileUtils.deleteDirectory;
-import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfAllElements;
 import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfElementLocated;
 
 public class BaseLibrary {
 
     private int doWaitLoading = 0;
     private boolean doNotWaitLoading = false;
-
+    public static String docPath = null;
     protected static final Logger log = Logger.getLogger(BaseLibrary.class.getName());
     protected static String winHandleBefore = null;
 
@@ -101,8 +100,8 @@ public class BaseLibrary {
     public void waitForLoadingToDisappear(WebDriver driver) {
 //        driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
         try {
-            new WebDriverWait(driver, 20, 250).
-                    until(invisibilityOfAllElements(driver.findElements(By.className("loading"))));
+            new WebDriverWait(driver, 20, 50).
+                    until(invisibilityOfElementLocated(By.className("loading")));
 //            System.out.println("Loading: Ok");
         } catch (Exception e) {
 //            System.out.println("Loading window error: " + e.getMessage());
@@ -704,19 +703,40 @@ public class BaseLibrary {
         }
     }
 
-    //Test edilmeli.
-    public static void setDocPath(WebDriver driver) {
+    public static String getOS() {
+
         // Get Browser name and version.
-        Capabilities caps = ((RemoteWebDriver) driver).getCapabilities();
+        Capabilities caps = ((RemoteWebDriver) WebDriverRunner.getWebDriver()).getCapabilities();
         // String browserName = caps.getBrowserName();
         // String browserVersion = caps.getVersion();
         Platform operationSystem = caps.getPlatform();
         System.out.println("Operation System: " + operationSystem.name());
+
+        return operationSystem.name();
+    }
+
+    public static String setDocPath() {
+
+        // Get Browser name and version.
+        Capabilities caps = ((RemoteWebDriver) WebDriverRunner.getWebDriver()).getCapabilities();
+        // String browserName = caps.getBrowserName();
+        // String browserVersion = caps.getVersion();
+        Platform operationSystem = caps.getPlatform();
+        System.out.println("Operation System: " + operationSystem.name());
+
         if (operationSystem.is(Platform.WINDOWS)) {
-            String docPath = "C:\\TestAutomation\\TurksatPOC\\";
-        } else {
-            String docPath = "/selenium/";
+            docPath = "C:\\TestAutomation\\BelgenetFTA\\documents\\";
+        } else if (operationSystem.is(Platform.XP)) {
+            docPath = "C:\\TestAutomation\\BelgenetFTA\\documents\\";
+        } else if (operationSystem.is(Platform.LINUX)) {
+            //TODO: Linux pathi verilecek
+            docPath = "/selenium/";
+        } else if (operationSystem.is(Platform.MAC)) {
+            //TODO: Mac pathi verilecek
+            docPath = "/selenium/";
         }
+        System.out.println("File path: " + docPath);
+        return docPath;
     }
 
 }

@@ -82,7 +82,7 @@ public class TeslimAlinanlarPage extends MainPage {
 
     @Step("Kullanıcı listesi doldur")
     public TeslimAlinanlarPage havaleYapKullaniciListesiDoldur(String kullaniciListesi){
-        txtHavaleYapKullaniciListesi.selectLov(kullaniciListesi);
+        //txtHavaleYapKullaniciListesi.selectLov(kullaniciListesi);
         txtHavaleYapKullaniciListesi.selectLov(kullaniciListesi);
         return this;
     }

@@ -105,7 +105,7 @@ public class TestClass3 extends BaseTest {
 
     @Test()
     public void setPathTest() {
-        setDocPath(WebDriverRunner.getWebDriver());
+        setDocPath();
     }
 
 }

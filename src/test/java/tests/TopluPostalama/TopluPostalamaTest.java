@@ -1,4 +1,4 @@
-package TopluPostalama;
+package tests.TopluPostalama;
 
 import common.BaseTest;
 import org.testng.annotations.BeforeMethod;

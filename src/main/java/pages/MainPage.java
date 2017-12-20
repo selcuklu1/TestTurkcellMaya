@@ -268,7 +268,7 @@ public class MainPage extends BaseLibrary {
         return this;
     }
 
-    @Step("İade et")
+    @Step("Birim Seç")
     public MainPage birimSec(String birim){
         ElementsCollection solMenuBirim = $$("[id='birimlerimMenusuContainer'] li");
         solMenuBirim.filterBy(text(birim)).first().click();
