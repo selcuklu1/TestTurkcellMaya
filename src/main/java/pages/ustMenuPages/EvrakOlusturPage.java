@@ -1178,7 +1178,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        public EditorTab popupSImzalaIslemleri() {
+        public EditorTab popupSImzalaIslemleri() throws InterruptedException {
 
             //switchTo().window("");
 //            Thread.sleep(5000);
@@ -1195,6 +1195,8 @@ public class EvrakOlusturPage extends MainPage {
             $("div[id='imzalaForm:imzalaRadio']").shouldBe(visible).click();
             $("#imzalaForm\\:sayisalImzaConfirmDialogOpener").click();
             SelenideElement sayisalImzaOnay = $(By.id("imzalaForm:sayisalImzaConfirmForm:sayisalImzaEvetButton"));
+
+            Thread.sleep(1500);
             sayisalImzaOnay.click();
             return this;
         }
