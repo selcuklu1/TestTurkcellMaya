@@ -143,7 +143,7 @@ public class KararYazisiOlusturPage extends MainPage {
 
         @Step("Kullan")
         public BilgilerTab kullan() {
-            btnKullanicilarKullan.click();
+            btnKullanicilarKullan.pressEnter();
             return this;
         }
 

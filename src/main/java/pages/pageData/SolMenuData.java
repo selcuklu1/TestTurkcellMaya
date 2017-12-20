@@ -74,7 +74,7 @@ public class SolMenuData {
         KaydedilenGidenEvraklar("Kaydedilen Giden Evraklar"),
         PostalanacakEvraklar("Postalanacak Evraklar "),
         TopluPostaladiklarim("Toplu Postaladıklarım"),
-        Postalananlar("PostalananlarPage"),
+        Postalananlar("Postalananlar"),
         KEPGelenkutusu("KEP Gelen Kutusu"),
         KEPGidenkutusu("KEP Giden Kutusu"),
         MedasileGonderilecekler("Medas ile Gönderilecekler"),

@@ -186,6 +186,7 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement txtOnayAkisiKullanicilarInput = $("input[id^='yeniGidenEvrakForm:evrakBilgileriList:'][id$=':akisAdimLov:LovText']");
         SelenideElement listOnayAkisiKullanilan = $("div[id*='akisLov:lovContainer'] div[class*='lovSelection processEt'] tbody");
         SelenideElement btnOnayAkisiPanelKapat = $("button[id^='yeniGidenEvrakForm:evrakBilgileriList:'][id$=':akisAdimLov:lovTreePanelKapat']");
+        ElementsCollection cmbKullanicilarImzaSec2 = $$("[id^='yeniGidenEvrakForm:evrakBilgileriList:18:akisAdimLov:LovSecilenTable'][id$='selectOneMenu']");
         SelenideElement cmbKullanicilarImza = $("[id^='yeniGidenEvrakForm:evrakBilgileriList:18:akisAdimLov:LovSecilenTable'][id$='selectOneMenu']");
         SelenideElement btnOnayAkisGuncelle = $(By.cssSelector("[id^='yeniGidenEvrakForm:evrakBilgileriList:18:akisLov:j_idt'] [class$='update-icon']"));
         BelgenetElement cmbOnayAkisi = comboLov(By.cssSelector("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='akisLov:LovText']"));
@@ -250,6 +251,12 @@ public class EvrakOlusturPage extends MainPage {
         @Step("Kullanıcılar alanında imzacı seç")
         public BilgilerTab kullanicilarImzaciSec(String value) {
             cmbKullanicilarImza.selectOptionByValue(value);
+            return this;
+        }
+
+        @Step("Kullanıcılar alanında imzacı seç")
+        public BilgilerTab kullanicilarImzaciSec2(String value) {
+            cmbKullanicilarImzaSec2.get(1).selectOption(value);
             return this;
         }
 
@@ -506,7 +513,8 @@ public class EvrakOlusturPage extends MainPage {
         @Step("Konu doldur")
         public BilgilerTab konuDoldur(String konu) {
             //sendKeys(txtKonu, konu, false); selenium
-            txtKonu.setValue(konu); //selenide
+            txtKonu.clear();
+            txtKonu.sendKeys(konu); //selenide
             return this;
         }
 
@@ -938,7 +946,8 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Kurum için seçilen geregi posta tipi")
         public BilgilerTab geregiKurumPostaTipi(String posta) {
-            cmbGeregiPostaTipi.selectLov(posta);
+            txtGeregi.lastSelectedLov().$("select").selectOption(posta);
+//            cmbGeregiPostaTipi.selectLov(posta);
             return this;
 
         }
@@ -1153,12 +1162,15 @@ public class EvrakOlusturPage extends MainPage {
 //            SelenideElement sImza = $(By.id("imzalaForm:imzalamaYontemiRadio:1"));
 //            sImza.selectRadio("I");
 
-            $("#evrakImzalaDialog").shouldBe(visible);
+           /* $("#evrakImzalaDialog").shouldBe(visible);
             executeJavaScript("arguments[0].click()", WebDriverRunner.getWebDriver().findElement(By.id("imzalaForm:imzalamaYontemiRadio:1")));
 //            Thread.sleep(2000);
             SelenideElement imzala = $(By.xpath("//*[@id='imzalaForm:sayisalImzaConfirmDialogOpener']"));
             imzala.click();
-//            Thread.sleep(2000);
+//            Thread.sleep(2000);*/
+
+            $("div[id='imzalaForm:imzalaRadio']").shouldBe(visible).click();
+            $("#imzalaForm\\:sayisalImzaConfirmDialogOpener").click();
             SelenideElement sayisalImzaOnay = $(By.id("imzalaForm:sayisalImzaConfirmForm:sayisalImzaEvetButton"));
             sayisalImzaOnay.click();
             return this;

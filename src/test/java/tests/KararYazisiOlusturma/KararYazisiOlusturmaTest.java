@@ -450,7 +450,6 @@ public class KararYazisiOlusturmaTest extends BaseTest{
 
         login(username2, password2);
 
-        /*
         klasorYonetimiPage
                 .openPage()
                 .yeni()
@@ -477,7 +476,7 @@ public class KararYazisiOlusturmaTest extends BaseTest{
                 .evrakSec()
                 .teslimAlVeKapat()
                 .kaldirilacakKlasorlerDoldur(klasorAdi);
-        */
+
         gelenEvraklarPage
                 .openPage()
                 .evrakSec()

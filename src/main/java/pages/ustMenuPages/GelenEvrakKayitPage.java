@@ -201,9 +201,9 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("")
+    @Step("Kullanıcı Listesi doldur")
     public GelenEvrakKayitPage havaleIslemleriKullaniciListesiDoldur(String kisi) {
-        txtHavaleIslemleriKullaniciListesi.selectLov(kisi);
+        //txtHavaleIslemleriKullaniciListesi.selectLov(kisi);
         txtHavaleIslemleriKullaniciListesi.selectLov(kisi);
 
         return this;
@@ -243,12 +243,12 @@ public class GelenEvrakKayitPage extends MainPage {
     }
 
     public GelenEvrakKayitPage evrakTuruSec(String evrakTuru) {
-        cmbEvrakBilgileriListEvrakTuru.selectOptionByValue(evrakTuru);
+        cmbEvrakBilgileriListEvrakTuru.selectOption(evrakTuru);
         return this;
     }
 
     public GelenEvrakKayitPage evrakDiliSec(String evrakDili) {
-        cmbEvrakBilgileriListEvrakDili.selectOptionByValue(evrakDili);
+        cmbEvrakBilgileriListEvrakDili.selectOption(evrakDili);
         return this;
     }
 
@@ -392,12 +392,12 @@ public class GelenEvrakKayitPage extends MainPage {
     }
 
     public GelenEvrakKayitPage evrakGelisTipiSec(String evrakGelisTipi) {
-        cmbEvrakBilgileriListEvrakGelisTipi.selectOptionByValue(evrakGelisTipi);
+        cmbEvrakBilgileriListEvrakGelisTipi.selectOption(evrakGelisTipi);
         return this;
     }
 
     public GelenEvrakKayitPage ivedilikSec(String ivedilik) {
-        cmbEvrakBilgileriListIvedilik.selectOptionByValue(ivedilik);
+        cmbEvrakBilgileriListIvedilik.selectOption(ivedilik);
         return this;
     }
 

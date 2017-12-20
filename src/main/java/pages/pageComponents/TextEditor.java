@@ -1,6 +1,7 @@
 package pages.pageComponents;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Step;
@@ -41,7 +42,7 @@ public class TextEditor extends MainPage {
 //      $inFrame("body[class*='cke_contents_ltr']");
 //        return $inFrame("body[class~='cke_contents_ltr']", frame);
 //        return $inFrame(By.tagName("body"), frame);
-        SelenideElement editor = $inFrame(".cke_editable", frame).shouldBe(visible);
+        SelenideElement editor = $inFrame(".cke_editable", frame);
         return editor;
 //        return $inFrame("body[class='cke_editable cke_editable_themed cke_contents_ltr']", frame);
 //        return $inFrame(".cke_contents_ltr", frame);
@@ -61,6 +62,7 @@ public class TextEditor extends MainPage {
 
     @Step("Editore tekst yaz")
     public TextEditor type(CharSequence... keysToSend) {
+        Selenide.sleep(1000);
         SelenideElement editor = editor();
         editor.shouldBe(visible);
         editor.sendKeys(keysToSend);
@@ -73,6 +75,7 @@ public class TextEditor extends MainPage {
 
     @Step("\"{name}\" toolbar butonun etkin durumu \"{value}\" yap")
     public TextEditor toolbarButton(String name, boolean value) {
+        Selenide.sleep(1000);
         SelenideElement button = $$x("//a[span[contains(@class,'cke_button_label') and normalize-space(text())='" + name + "']]")
                 .shouldHave(sizeGreaterThan(0))
                 .filterBy(visible)
@@ -86,10 +89,10 @@ public class TextEditor extends MainPage {
 //        System.out.println(button.is(enabled));
 
         if (button.is(toolboxButtonOn) != value) {
-
-            clickJs(button);
-//            button.click();
-            System.out.println("Clicked");
+            Selenide.sleep(1000);
+//            clickJs(button);
+            button.click();
+//            System.out.println("Clicked");
         }
 
         return this;
@@ -97,6 +100,7 @@ public class TextEditor extends MainPage {
 
     @Step("\"{name}\" toolbar alanda \"{value}\" seç")
     public TextEditor toolbarCombo(String name, String value) {
+        Selenide.sleep(1000);
         SelenideElement combo = $$x("//span[span[contains(@class,'cke_combo_label') and normalize-space(text())='" + name + "']]/a")
                 .shouldHave(sizeGreaterThan(0))
                 .filterBy(visible)
