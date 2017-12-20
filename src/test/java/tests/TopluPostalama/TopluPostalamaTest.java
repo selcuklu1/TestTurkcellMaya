@@ -641,8 +641,14 @@ public class TopluPostalamaTest extends BaseTest {
 
         */
 
+
+        /*
         pttRaporuPage
-                .excellKontrolEt();
+                .excell();
+                //.excellKontrolEt();
+        */
+
+
 
 
     }
