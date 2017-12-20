@@ -703,6 +703,18 @@ public class BaseLibrary {
         }
     }
 
+    public static String getOS() {
+
+        // Get Browser name and version.
+        Capabilities caps = ((RemoteWebDriver) WebDriverRunner.getWebDriver()).getCapabilities();
+        // String browserName = caps.getBrowserName();
+        // String browserVersion = caps.getVersion();
+        Platform operationSystem = caps.getPlatform();
+        System.out.println("Operation System: " + operationSystem.name());
+
+        return operationSystem.name();
+    }
+
     public static String setDocPath() {
 
         // Get Browser name and version.

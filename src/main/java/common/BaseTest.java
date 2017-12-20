@@ -4,9 +4,7 @@ import com.codeborne.selenide.Configuration;
 import data.User;
 import io.qameta.allure.Step;
 import listeners.SettingsListener;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Listeners;
+import org.testng.annotations.*;
 import pages.LoginPage;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetFramework;
@@ -19,6 +17,11 @@ import static data.TestData.belgenetURL;
 //BrowserPerTest.class
 @Listeners({SettingsListener.class})
 public class BaseTest extends BaseLibrary {
+
+    @BeforeSuite
+    public void beforeSuite() {
+        //killProcess();
+    }
 
     @BeforeClass(alwaysRun = true)
     public void driverSetUp() {
@@ -69,6 +72,11 @@ public class BaseTest extends BaseLibrary {
         } catch (Exception e) {
         }
 */
+    }
+
+    @AfterSuite
+    public void afterSuite() {
+       // killProcess();
     }
 
     @Step("Login")
