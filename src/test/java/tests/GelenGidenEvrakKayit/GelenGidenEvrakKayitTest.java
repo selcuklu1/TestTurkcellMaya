@@ -212,7 +212,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .openPage()
                 .gelenEvrakNoDoldur(evrakNO321)
                 .sorgula()
-                .tabloKontrolu(evrakNO328)
+                .tabloKontrolu(evrakNO321)
                 .raporAlExcel();
 //                .islemMesaji().basariliOlmali(basariMesaji);
 
@@ -228,7 +228,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "Gelen evrak kaydederken yeni gerçek ve tüzel kişi tanımlama")
+    @Test(enabled = true, description = "TC1136 : Gelen evrak kaydederken yeni gerçek ve tüzel kişi tanımlama")
     public void TC1136() throws InterruptedException {
 
         String TCKN = "51091330934";
@@ -256,7 +256,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true,dependsOnMethods = {"TC0328"}, description = "Gelen maillerin evrak olarak sisteme dahil edilmesi")
+    @Test(enabled = true,dependsOnMethods = {"TC0328"}, description = "TC0394 : Gelen maillerin evrak olarak sisteme dahil edilmesi")
     public void TC0394() throws InterruptedException {
 
         String birim = "OPTİİM BİRİM11";
@@ -301,7 +301,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = false, description = "Gelen evrak kayıtta alan kontrolleri")
+    @Test(enabled = false, description = "TC0322 : Gelen evrak kayıtta alan kontrolleri")
     public void TC0322() throws InterruptedException {
 
         String kisiKurum = "G";
@@ -368,7 +368,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "Giden evrak kaydı")
+    @Test(enabled = true, description = "TC1340 : Giden evrak kaydı")
     public void TC1340() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";

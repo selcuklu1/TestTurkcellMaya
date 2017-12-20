@@ -46,6 +46,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
         String onEk = "Muh";
         String unvan = "Mühendis";
         String adres = "Kuştepe Mahallesi";
+        String ulke = "TÜRKİYE";
         String il = "İstanbul";
         String ilce = "Şişli";
         String eposta = "test@turksat.com.tr";
@@ -69,6 +70,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .iletisimBilgileriEkle()
 
                 .iletisimBilgisiAdresDoldur(adres)
+                .iletisimBilgisiUlkeDoldur(ulke)
                 .iletisimBilgisiIlDoldur(il)
                 .iletisimBilgisiIlceDoldur(ilce)
                 .iletisimBilgisiEpostaDoldur(eposta)
@@ -234,6 +236,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
         String onEk = "Muh";
         String unvan = "Mühendis";
         String adres = "Kuştepe Mahallesi";
+        String ulke = "TÜRKİYE";
         String il = "İstanbul";
         String ilce = "Şişli";
         String eposta = "test@turksat.com.tr";
@@ -261,6 +264,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .iletisimBilgileriEkle()
 
                 .iletisimBilgisiAdresDoldur(adres)
+                .iletisimBilgisiUlkeDoldur(ulke)
                 .iletisimBilgisiIlDoldur(il)
                 .iletisimBilgisiIlceDoldur(ilce)
                 .iletisimBilgisiEpostaDoldur(eposta)
@@ -323,6 +327,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
         String isTelNo = "539" + createRandomNumber(7);
         String faxNo = "212" + createRandomNumber(7);
         String adres = createRandomText(7) + " " + "Mahallesi";
+        String ulke = "TÜRKİYE";
         String il = "İstanbul";
         String ilce = "Şişli";
         String postaTipi = "P";
@@ -354,6 +359,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .iletisimBilgisiFaxs2Doldur(faxNo)
 
                 .iletisimBilgisiAdresDoldur(adres)
+                .iletisimBilgisiUlkeDoldur(ulke)
                 .iletisimBilgisiIlDoldur(il)
                 .iletisimBilgisiIlceDoldur(ilce)
                 .iletisimBilgisiEpostaDoldur(ePosta)

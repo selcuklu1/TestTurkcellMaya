@@ -159,10 +159,10 @@ public class GizlilikKleransiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, dependsOnMethods = {"TC1938"}, description = "Genel evrak raporunda gizlilik kleransı kontrolü (evrakta izi olmayan kullanıcı ile)")
+    @Test(enabled = true, dependsOnMethods = {"TC1938"}, description = "TC2138 : Genel evrak raporunda gizlilik kleransı kontrolü (evrakta izi olmayan kullanıcı ile)")
     public void TC2138() throws InterruptedException {
 //9267
-        login(username4, password4);
+        login("username20g", "123");
 
         genelEvrakRaporuPage
                 .openPage()
@@ -174,7 +174,7 @@ public class GizlilikKleransiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, dependsOnMethods = {"TC1938"}, description = "Evrak aramada gizlilik kleransı kontrolü (evrakta izi olmayan kullanıcı ile)")
+    @Test(enabled = true, dependsOnMethods = {"TC1938"}, description = "TC2139 : Evrak aramada gizlilik kleransı kontrolü (evrakta izi olmayan kullanıcı ile)")
     public void TC2139() throws InterruptedException {
 
         login(username3, password3);
@@ -214,9 +214,9 @@ public class GizlilikKleransiTest extends BaseTest {
                 .evrakAramaDoldur(evrakNo)
                 .dokumanAra()
                 .tabloEvrakNoKontrol(evrakNo)
-                .tablodaDetayTikla(evrakNo)
-                .islemMesaji().basariliOlmali(basariMesaji);
-        Thread.sleep(2000);
+                .tablodaDetayTikla(evrakNo);
+//                .islemMesaji().beklenenMesaj(basariMesaji);
+        Thread.sleep(4000);
         evrakOlusturPage
                 .islemMesaji().beklenenMesaj(mesaj);
 
@@ -436,7 +436,7 @@ public class GizlilikKleransiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, dependsOnMethods = {"TC1471"}, description = "Yüksek kleranslı evrak oluşturma")
+    @Test(enabled = true, dependsOnMethods = {"TC1471"}, description = "TC1938: Yüksek kleranslı evrak oluşturma")
     public void TC1938() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
@@ -499,7 +499,7 @@ public class GizlilikKleransiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, dependsOnMethods = {"TC1938"}, description = "Genel evrak raporunda gizlilik klerans kontrolü (evrakta izi olan kullanıcı ile)")
+    @Test(enabled = true, dependsOnMethods = {"TC1938"}, description = "TC2226: Genel evrak raporunda gizlilik klerans kontrolü (evrakta izi olan kullanıcı ile)")
     public void TC2226() throws InterruptedException {
 
         login("gsahin", "123");
@@ -514,7 +514,7 @@ public class GizlilikKleransiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, dependsOnMethods = {"TC1938"}, description = "Evrak aramada gizlilik kleransı kontrolü (evrakta izi olan kullanıcı ile)\n")
+    @Test(enabled = true, dependsOnMethods = {"TC1938"}, description = "TC2140 : Evrak aramada gizlilik kleransı kontrolü (evrakta izi olan kullanıcı ile)\n")
     public void TC2140() throws InterruptedException {
 
         login("gsahin", "123");
@@ -561,7 +561,7 @@ public class GizlilikKleransiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "Onay akışında gizlilik derecesi kontrolü\n")
+    @Test(enabled = true, description = "TC1473 : Onay akışında gizlilik derecesi kontrolü\n")
     public void TC1473() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
@@ -613,7 +613,7 @@ public class GizlilikKleransiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = false, description = "Akışta gizlilik kleransı değiştirilen evrakın dağıtım yeri kontrolü\n")
+    @Test(enabled = false, description = "TC2191 : Akışta gizlilik kleransı değiştirilen evrakın dağıtım yeri kontrolü\n")
     public void TC2191() throws InterruptedException{
 //8.tepten Devam edilecek
 

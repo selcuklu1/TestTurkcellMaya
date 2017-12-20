@@ -237,8 +237,11 @@ public class TuzelKisiYonetimiPage extends MainPage {
 
     @Step("Ükle seç")
     public TuzelKisiYonetimiPage ulkeSec(String ulke) {
-        btnUlkeDelete.click();
-        txtIletisimBilgisiUlke.selectLov(ulke);
+
+        if (btnUlkeDelete.isDisplayed() == false) {
+            txtIletisimBilgisiUlke.selectLov(ulke);
+        }
+        
         return this;
     }
 
