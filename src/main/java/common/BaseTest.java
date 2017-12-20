@@ -1,11 +1,11 @@
 package common;
 
 import com.codeborne.selenide.Configuration;
+import data.User;
 import io.qameta.allure.Step;
 import listeners.SettingsListener;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Listeners;
 import pages.LoginPage;
 import pages.MainPage;
@@ -20,14 +20,9 @@ import static data.TestData.belgenetURL;
 @Listeners({SettingsListener.class})
 public class BaseTest extends BaseLibrary {
 
-    @BeforeSuite
-    public void beforeSuite() {
-
-        //killProcess();
-    }
-
     @BeforeClass(alwaysRun = true)
     public void driverSetUp() {
+        // killProcess();
 
         Locale turkishLocal = new Locale("tr", "TR");
         Locale.setDefault(turkishLocal);
@@ -39,16 +34,16 @@ public class BaseTest extends BaseLibrary {
         //region Selenide Driver Configuration
         Configuration.baseUrl = belgenetURL;
         Configuration.browser = "chrome";
-        // Configuration.browser = "drivers.Firefox";
-        //Configuration.browser = "marionette";
-
+        //Configuration.browser = "drivers.Firefox";
+//        Configuration.browser = "marionette";
+        
         //Configuration.remote = "http://192.168.1.3:6585/wd/hub";
         //Configuration.remote = "http://10.101.20.153:4444/wd/hub";
         Configuration.reportsFolder = "test-result/reports";
         Configuration.screenshots = false;
         Configuration.savePageSource = false;
-        Configuration.collectionsTimeout = 30000;
-        Configuration.timeout = 30000;
+        Configuration.collectionsTimeout = 10000;
+        Configuration.timeout = 10000;
         Configuration.holdBrowserOpen = true;
         Configuration.headless = false;
         Configuration.startMaximized = true;
@@ -68,66 +63,12 @@ public class BaseTest extends BaseLibrary {
     @AfterMethod
     public void tearDown() throws Exception {
 
-/*        try {
+        /*try {
             Selenide.clearBrowserLocalStorage();
             Selenide.clearBrowserCookies();
         } catch (Exception e) {
-        }*/
-    }
-
-    public class User {
-
-        private String username;
-        private String password;
-        private String name;
-        private String birimAdi;
-        private String gorev;
-
-        public User(String username, String password, String name, String birimAdi, String gorev) {
-            this.username = username;
-            this.password = password;
-            this.name = name;
-            this.birimAdi = birimAdi;
-            this.gorev = gorev;
         }
-
-        public User(String username, String password, String name, String birimAdi) {
-            this.username = username;
-            this.password = password;
-            this.name = name;
-            this.birimAdi = birimAdi;
-        }
-
-        public User(String username, String password, String name) {
-            this.username = username;
-            this.password = password;
-            this.name = name;
-        }
-
-        public User(String username, String password) {
-            this.username = username;
-            this.password = password;
-        }
-
-        public String getUsername() {
-            return username;
-        }
-
-        public String getPassword() {
-            return password;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public String getBirimAdi() {
-            return birimAdi;
-        }
-
-        public String getGorev() {
-            return gorev;
-        }
+*/
     }
 
     @Step("Login")

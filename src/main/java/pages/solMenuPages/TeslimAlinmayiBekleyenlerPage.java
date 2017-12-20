@@ -125,7 +125,7 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
 
     @Step("Kullanıcı listesi doldur")
     public TeslimAlinmayiBekleyenlerPage havaleYapKullaniciListesiDoldur(String kullaniciListesi){
-        txtHavaleYapKullaniciListesi.selectLov(kullaniciListesi);
+        //txtHavaleYapKullaniciListesi.selectLov(kullaniciListesi);
         txtHavaleYapKullaniciListesi.selectLov(kullaniciListesi);
         return this;
     }

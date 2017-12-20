@@ -93,6 +93,7 @@ public class GizlilikKleransiTest extends BaseTest {
                 .kullaniciBirimAtamaGizlilikDerecesiKontrolu();
     }
 
+    //TODO Can Şeker yazmıştır.
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TC1474 : Havale ettiklerim listesinden havalede gizlilik derecesi kontrolü")
     public void TC1474() throws InterruptedException {
@@ -101,14 +102,14 @@ public class GizlilikKleransiTest extends BaseTest {
         String kisi = "Can Şeker";
         String kullaniciListesi = "Optiim";
         String konuKodu = "K/Frekans Yıllık Kullanım Ücreti";
-        String evrakTuru = "R";
-        String evrakDili = "917";
+        String evrakTuru = "Resmi Yazışma";
+        String evrakDili = "Türkçe";
         String evrakTarihi = getSysDateForKis();
         String gizlilikDerecesi = "G";
-        String kisiKurum = "D";
+        String kisiKurum = "Kurum";
         String geldigiKurum = "BÜYÜK HARFLERLE KURUM";
-        String evrakGelisTipi = "P";
-        String ivedilik = "N";
+        String evrakGelisTipi = "Posta";
+        String ivedilik = "İvedi";
 
         login("gklerans", password2);
 

@@ -3,7 +3,7 @@
 <!--<suite thread-count="1" name="Test Suite" parallel="none" verbose="1">-->
 <suite thread-count="3" name="Test Suite" parallel="classes" verbose="1">
 
-    <test name="SezaiTests">
+    <test name="GercekKisiYonetimiTest">
 
         <packages>
             <package name="tests.GercekKisiYonetimi"/>

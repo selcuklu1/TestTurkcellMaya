@@ -32,7 +32,7 @@
     </test>-->
     <test name="All">
         <packages>
-            <package name="tests.*"/>
+            <package name="tests.EvrakPostalama"/>
             <!--<package name="tests.BirimIcerikSablonu"/>-->
             <!--<package name="tests.GercekKisiYonetimi"/>-->
             <!--<package name="tests.TuzelKisiYonetimi"/>-->
