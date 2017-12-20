@@ -35,24 +35,15 @@ public class BaseTest extends BaseLibrary {
         //region Selenide Driver Configuration
         Configuration.baseUrl = belgenetURL;
         Configuration.browser = "chrome";
-<<<<<<< HEAD
-        //Configuration.browser = "drivers.Firefox";
-=======
         // Configuration.browser = "drivers.Firefox";
->>>>>>> c76853e001aacb07d3f6ca2dd38ffe5f28bdfa4e
         //Configuration.browser = "marionette";
 
         //Configuration.remote = "http://10.101.20.153:4444/wd/hub";
         Configuration.reportsFolder = "test-result/reports";
         Configuration.screenshots = false;
         Configuration.savePageSource = false;
-<<<<<<< HEAD
-        Configuration.collectionsTimeout = 20000;
-        Configuration.timeout = 20000;
-=======
         Configuration.collectionsTimeout = 30000;
         Configuration.timeout = 30000;
->>>>>>> c76853e001aacb07d3f6ca2dd38ffe5f28bdfa4e
         Configuration.holdBrowserOpen = true;
         Configuration.headless = false;
         Configuration.startMaximized = true;

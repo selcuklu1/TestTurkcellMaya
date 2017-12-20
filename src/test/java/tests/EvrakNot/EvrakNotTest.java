@@ -251,7 +251,7 @@ public class EvrakNotTest extends BaseTest {
     }
 */
 
-    */
+
 /**
      * Editör tab
      *//*
@@ -643,6 +643,6 @@ public class EvrakNotTest extends BaseTest {
         $x("//form[@id='yeniGidenEvrakForm']/ancestor::div[starts-with(@id,'window') and contains(@id,'Dialog')]/div[contains(@class,'ui-dialog-titlebar')]/a[contains(@class,'ui-dialog-titlebar-close')]").click();
         $("#kapatKaydetEvetButton").click();
         page.islemMesaji().basariliOlmali();
-    }*/
+    }
 }
 */
