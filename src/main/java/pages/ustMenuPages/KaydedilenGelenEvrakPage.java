@@ -23,8 +23,8 @@ public class KaydedilenGelenEvrakPage extends MainPage {
     BelgenetElement cmbBirim = comboLov(By.id("birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuBirimLovId:j_idt126"));
     SelenideElement txtEvrakKayitNo = $(By.id("birimeGelenEvrakRaporuForm:evrakNoId"));
     SelenideElement btnSorgula = $(By.id("birimeGelenEvrakRaporuForm:sorgulaButton"));
-    SelenideElement btnRaporAlExcel = $(By.id("birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable:j_idt1805"));
-    SelenideElement btnRaporAlPdf = $(By.id("birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable:j_idt1803"));
+    SelenideElement btnRaporAlExcel = $("[id='birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable'] button:nth-child(4)");
+    SelenideElement btnRaporAlPdf = $("[id='birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable'] button:nth-child(2)");
     SelenideElement tblKaydedilenGelenEvrak = $(By.id("birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable_data"));
     SelenideElement tbldene = $(By.xpath("//tbody[@id='birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable_data']/tr/td[2]/div"));
 
