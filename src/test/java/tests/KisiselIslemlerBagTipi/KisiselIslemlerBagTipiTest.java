@@ -101,7 +101,7 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
         String onayAkisiKullanicilarTuru = "İmzalama";
         String gnMdV = "Gn.Md. V.";
         String genelMudur = "Genel Müdür V.";
-        String kullanicilarTuru = "IMZALAMA";
+        String kullanicilarTuru = "İmzalama";
         String randomAd = createRandomNumber(7);
 
         //Gelen evraklar alanında veri bulunmalı
@@ -129,7 +129,7 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
                 .otomatikOnayAkisiGeldigiGorme(ekranAdi)
                 .onayAkisiEkle()
                 .kullanicilarDoldur(ekranAdi)
-                .kullanicilarImzaciSec(kullanicilarTuru)
+                .kullanicilarImzaciSec2(kullanicilarTuru)
                 .onayAkisiKullan();
 
         evrakOlusturPage
