@@ -1,11 +1,11 @@
 package common;
 
 import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.Selenide;
 import io.qameta.allure.Step;
 import listeners.SettingsListener;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Listeners;
 import pages.LoginPage;
 import pages.MainPage;
@@ -20,10 +20,14 @@ import static data.TestData.belgenetURL;
 @Listeners({SettingsListener.class})
 public class BaseTest extends BaseLibrary {
 
+    @BeforeSuite
+    public void beforeSuite() {
+
+        //killProcess();
+    }
+
     @BeforeClass(alwaysRun = true)
     public void driverSetUp() {
-
-        killProcess();
 
         Locale turkishLocal = new Locale("tr", "TR");
         Locale.setDefault(turkishLocal);
@@ -61,12 +65,11 @@ public class BaseTest extends BaseLibrary {
     @AfterMethod
     public void tearDown() throws Exception {
 
-
-        try {
+/*        try {
             Selenide.clearBrowserLocalStorage();
             Selenide.clearBrowserCookies();
         } catch (Exception e) {
-        }
+        }*/
     }
 
     public class User {
