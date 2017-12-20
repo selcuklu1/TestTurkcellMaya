@@ -2,12 +2,18 @@ package common;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
+
 import io.qameta.allure.Step;
 import listeners.SettingsListener;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Listeners;
+
+import data.User;
+import io.qameta.allure.Step;
+import listeners.SettingsListener;
+import org.testng.annotations.*;
 import pages.LoginPage;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetFramework;
@@ -21,10 +27,12 @@ import static data.TestData.belgenetURL;
 @Listeners({SettingsListener.class})
 public class BaseTest extends BaseLibrary {
 
+
     @BeforeSuite
     public void beforeSuite() {
 
 //        killProcess();
+
     }
 
     @BeforeClass(alwaysRun = true)
@@ -43,13 +51,19 @@ public class BaseTest extends BaseLibrary {
         // Configuration.browser = "drivers.Firefox";
         //Configuration.browser = "marionette";
 
+        Configuration.remote = "http://192.168.1.3:6585/wd/hub";
         //Configuration.remote = "http://10.101.20.153:4444/wd/hub";
         Configuration.reportsFolder = "test-result/reports";
         Configuration.screenshots = false;
         Configuration.savePageSource = false;
+
         Configuration.collectionsTimeout = 30000;
         Configuration.timeout = 30000;
         Configuration.holdBrowserOpen = true;
+
+        Configuration.collectionsTimeout = 20000;
+        Configuration.timeout = 20000;
+        Configuration.holdBrowserOpen = false;
         Configuration.headless = false;
         Configuration.startMaximized = true;
         Configuration.pollingInterval = 100;
@@ -61,6 +75,13 @@ public class BaseTest extends BaseLibrary {
 
 //        System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, "/dev/null");
 
+        setDocPath();
+
+    }
+
+    @AfterClass(alwaysRun = true)
+    public void afterClass() {
+        Selenide.close();
     }
 
     @AfterMethod
@@ -69,9 +90,11 @@ public class BaseTest extends BaseLibrary {
        try {
 //            Selenide.clearBrowserLocalStorage();
 //            Selenide.clearBrowserCookies();
+
         } catch (Exception e) {
         }
     }
+
 
     public class User {
 
@@ -126,26 +149,32 @@ public class BaseTest extends BaseLibrary {
         public String getGorev() {
             return gorev;
         }
-    }
 
-    @Step("Login")
-    public void login(User user) {
-        new LoginPage().login(user.getUsername(), user.getPassword());
-    }
+        @AfterSuite(alwaysRun = true)
+        public void afterSuite() {
+            // killProcess();
 
-    @Step("Login")
-    public void login() {
-        new LoginPage().login();
-    }
+        }
 
-    @Step("Login")
-    public void login(String username, String password) {
-        new LoginPage().login(username, password);
-    }
+        @Step("Login")
+        public void login(User user) {
+            new LoginPage().login(user.getUsername(), user.getPassword());
+        }
 
-    @Step("Logout")
-    public void logout() {
-        new MainPage().logout();
-    }
+        @Step("Login")
+        public void login() {
+            new LoginPage().login();
+        }
 
+        @Step("Login")
+        public void login(String username, String password) {
+            new LoginPage().login(username, password);
+        }
+
+        @Step("Logout")
+        public void logout() {
+            new MainPage().logout();
+        }
+
+    }
 }

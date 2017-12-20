@@ -10,8 +10,6 @@ import pages.ustMenuPages.GelenEvrakKayitPage;
 import pages.ustMenuPages.GercekKisiYonetimPage;
 import pages.ustMenuPages.GidenEvrakKayitPage;
 
-import java.awt.*;
-
 import static com.codeborne.selenide.Selenide.switchTo;
 
 /****************************************************
@@ -114,11 +112,11 @@ public class GercekKisiYonetimiTest extends BaseTest {
 
         gercekKisiYonetimPage
                 .openPage()
-                .ara()
-                .filtreSorgulamaPaneliAc()
+                //.ara()
+                //.filtreSorgulamaPaneliAc()
                 .filtreSoyadDoldur(soyad)
                 .filtreDurumSec("AKTIFLER")
-                .ara() //araButonuTikla
+                .ara()
                 .aktifKisiKayitKontrolu(tcNO, ad, soyad)
 
                 .filtreSorgulamaPaneliAc()
@@ -162,7 +160,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TC1135: Yeni gerçek kişi kayıtta alan kontrolleri")
-    public void TC1135() throws AWTException {
+    public void TC1135() {
 
         String ad = createRandomText(6);
         String soyad = createRandomText(6);

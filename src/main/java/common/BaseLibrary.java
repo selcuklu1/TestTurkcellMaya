@@ -33,7 +33,7 @@ public class BaseLibrary {
 
     private int doWaitLoading = 0;
     private boolean doNotWaitLoading = false;
-
+    public static String docPath = null;
     protected static final Logger log = Logger.getLogger(BaseLibrary.class.getName());
     protected static String winHandleBefore = null;
 
@@ -703,25 +703,40 @@ public class BaseLibrary {
         }
     }
 
-    //Test edilmeli.
+    public static String getOS() {
+
+        // Get Browser name and version.
+        Capabilities caps = ((RemoteWebDriver) WebDriverRunner.getWebDriver()).getCapabilities();
+        // String browserName = caps.getBrowserName();
+        // String browserVersion = caps.getVersion();
+        Platform operationSystem = caps.getPlatform();
+        System.out.println("Operation System: " + operationSystem.name());
+
+        return operationSystem.name();
+    }
+
     public static String setDocPath() {
 
-        String docPath = null;
+        // Get Browser name and version.
+        Capabilities caps = ((RemoteWebDriver) WebDriverRunner.getWebDriver()).getCapabilities();
+        // String browserName = caps.getBrowserName();
+        // String browserVersion = caps.getVersion();
+        Platform operationSystem = caps.getPlatform();
+        System.out.println("Operation System: " + operationSystem.name());
 
-        if (WebDriverRunner.getWebDriver() instanceof RemoteWebDriver) {
+        if (operationSystem.is(Platform.WINDOWS)) {
+            docPath = "C:\\TestAutomation\\BelgenetFTA\\documents\\";
+        } else if (operationSystem.is(Platform.XP)) {
+            docPath = "C:\\TestAutomation\\BelgenetFTA\\documents\\";
+        } else if (operationSystem.is(Platform.LINUX)) {
+            //TODO: Linux pathi verilecek
+            docPath = "/selenium/";
+        } else if (operationSystem.is(Platform.MAC)) {
+            //TODO: Mac pathi verilecek
+            docPath = "/selenium/";
         }
-
-            // Get Browser name and version.
-            Capabilities caps = ((RemoteWebDriver) WebDriverRunner.getWebDriver()).getCapabilities();
-            // String browserName = caps.getBrowserName();
-            // String browserVersion = caps.getVersion();
-            Platform operationSystem = caps.getPlatform();
-            System.out.println("Operation System: " + operationSystem.name());
-            if (operationSystem.is(Platform.WINDOWS)) {
-                return docPath = "C:\\TestAutomation\\TurksatPOC\\";
-            } else {
-                return docPath = "/selenium/";
-            }
-
+        System.out.println("File path: " + docPath);
+        return docPath;
     }
+
 }
