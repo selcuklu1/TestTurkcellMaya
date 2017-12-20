@@ -4,6 +4,7 @@ package tests.EvrakNot;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import common.BaseTest;
+import data.User;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
@@ -36,7 +37,7 @@ import static pages.pageComponents.belgenetElements.BelgenetFramework.comboBox;
  *//*
 
 public class EvrakNotTest extends BaseTest {
-
+/*
     User user1 = new User("user1", "123", "User1 TEST");
     User user2 = new User("user2", "123", "User2 TEST");
     String konu;
@@ -224,7 +225,7 @@ public class EvrakNotTest extends BaseTest {
         }
     }
 
-    @Test(description = "")//, dependsOnMethods = {"2155"})
+    @Test(description = "", enabled = false)//, dependsOnMethods = {"2155"})
     public void tc2160() throws Exception {
         EvrakNot evrakNot = new EvrakNot();
         UstYazi ustYazi = new UstYazi();
@@ -248,7 +249,7 @@ public class EvrakNotTest extends BaseTest {
 
         notlariKontrolEt();
     }
-
+*/
 
     */
 /**
@@ -612,7 +613,7 @@ public class EvrakNotTest extends BaseTest {
 
 
     }
-
+/*
     @Step("Evrak Oluştur")
     private void evrakOlusturVeKaydet(EvrakOlusturPage page, String konu) {
         page.bilgilerTabiAc()
@@ -642,6 +643,6 @@ public class EvrakNotTest extends BaseTest {
         $x("//form[@id='yeniGidenEvrakForm']/ancestor::div[starts-with(@id,'window') and contains(@id,'Dialog')]/div[contains(@class,'ui-dialog-titlebar')]/a[contains(@class,'ui-dialog-titlebar-close')]").click();
         $("#kapatKaydetEvetButton").click();
         page.islemMesaji().basariliOlmali();
-    }
+    }*/
 }
 */

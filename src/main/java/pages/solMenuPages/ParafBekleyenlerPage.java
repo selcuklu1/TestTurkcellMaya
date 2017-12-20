@@ -65,11 +65,12 @@ public class ParafBekleyenlerPage extends MainPage {
     }
 
     @Step("Tablodan rapor seç")
-    public ParafBekleyenlerPage gizlilikRaporSecTakipListesi(String konu, String yer, String tarih, String no) {
-        tblEvrak.filterBy(Condition.text(konu)).filterBy(Condition.text(yer))
-                .filterBy(Condition.text(tarih))
-                .filterBy(Condition.text(no)).get(0)
-                .$$("button[id^='mainInboxForm:inboxDataTable:']").get(0).click();
+    public ParafBekleyenlerPage gizlilikRaporSecTakipListesi(String konu, String yer, String tarih, String no) {SelenideElement evrak = filter().findRowsWith(Condition.text(konu))
+            .filterBy(Condition.text(yer))
+            .filterBy(Condition.text(tarih))
+            .filterBy(Condition.text(no))
+            .shouldHaveSize(1).first();
+        evrak.$$("button[id^='mainInboxForm:inboxDataTable:']").get(0).click();
         return this;
     }
 
@@ -80,7 +81,12 @@ public class ParafBekleyenlerPage extends MainPage {
 
     @Step("Tablodan rapor seç")
     public ParafBekleyenlerPage gizlilikRaporSec(String konu, String yer, String tarih, String no) {
-        tblEvrak.filterBy(Condition.text(konu)).filterBy(Condition.text(yer)).filterBy(Condition.text(tarih)).filterBy(Condition.text(no)).get(0).click();
+        SelenideElement evrak = filter().findRowsWith(Condition.text(konu))
+                .filterBy(Condition.text(yer))
+                .filterBy(Condition.text(tarih))
+                .filterBy(Condition.text(no))
+                .shouldHaveSize(1).first();
+        evrak.click();
         return this;
     }
 

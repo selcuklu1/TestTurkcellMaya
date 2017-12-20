@@ -45,14 +45,15 @@ public class KararYazisiOlusturPage extends MainPage {
     SelenideElement txtAciklama = $(By.id("yeniKararEvrakForm:onayIslemiAciklama"));
     SelenideElement divBilgileri = $(By.id("evrakBilgileriContainerDiv"));
     SelenideElement btnGonder = $(By.id("yeniKararEvrakForm:gonderButton"));
-    SelenideElement btnEvet = $(By.id("kaydetEvetButton"));
-    SelenideElement btnHayir = $(By.id("kaydetHayirButton"));
+    SelenideElement btnEvet = $(By.id("kaydetConfirmForm:kaydetEvetButton"));
+    SelenideElement btnHayir = $(By.id("kaydetConfirmForm:kaydetHayirButton"));
     //endregion
 
 
     @Step("Karar yazısı oluştur sayfası aç")
     public KararYazisiOlusturPage openPage() {
         ustMenu("Karar Yazısı Oluştur");
+        $("#yeniKararEvrakForm").shouldBe(visible);
         return this;
     }
 
@@ -283,6 +284,10 @@ public class KararYazisiOlusturPage extends MainPage {
         @Step("Bilgileri tabında Onay Akışı alanında görüntülenmeme kontrolu")
         public BilgilerTab onayAkisiAlanindaGoruntulenmemeKontrolu(String onayAkisi) {
 
+            if (cmbOnayAkisi.isLovSelected() == true) {
+                cmbOnayAkisi.clearLastSelectedLov();
+            }
+
             comboLov(cmbOnayAkisiBy).type(onayAkisi).titleItems().filterBy(exactText(onayAkisi)).shouldHaveSize(0);
             comboLov(cmbOnayAkisiBy).closeLovTreePanel();
             System.out.println("MyCombolov alanında " + onayAkisi + ": Onay Akışın görüntülenmediği görülür.");
@@ -292,7 +297,8 @@ public class KararYazisiOlusturPage extends MainPage {
 
         @Step("Onay akışı güncelle")
         public BilgilerTab onayAkisiGuncelle() {
-            btnOnayAkisGuncelle.click();
+            btnOnayAkisGuncelle.shouldBe(visible);
+            clickJs(btnOnayAkisGuncelle);
             return this;
         }
 
@@ -353,9 +359,9 @@ public class KararYazisiOlusturPage extends MainPage {
         public EditorTab kaydet(boolean secim) {
             btnKaydet.click();
             if (secim == true) {
-                btnEvet.click();
+                btnEvet.pressEnter();
             } else {
-                btnHayir.click();
+               btnHayir.pressEnter();
             }
             return this;
         }

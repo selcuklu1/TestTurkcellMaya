@@ -1,12 +1,17 @@
 package listeners;
 
+
 import common.BaseLibrary;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.events.WebDriverEventListener;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.sql.Timestamp;
+
+import static com.codeborne.selenide.Configuration.timeout;
 
 public class DriverEventListener extends BaseLibrary implements WebDriverEventListener {
 
@@ -94,6 +99,8 @@ public class DriverEventListener extends BaseLibrary implements WebDriverEventLi
          * sonuçları verdiği için sendKeys kullanıldı. Test edilecek..!
          */
 
+        new WebDriverWait(driver, timeout).until(ExpectedConditions.elementToBeClickable(element));
+        // System.out.println("Element location: " + element.getLocation().x + "-" + element.getLocation().y);
         if (log) {
             Timestamp timestamp = new Timestamp(System.currentTimeMillis());
             System.out.println(timestamp + " Before click: " + element.toString());

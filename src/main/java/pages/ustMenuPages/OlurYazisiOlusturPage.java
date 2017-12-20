@@ -30,6 +30,7 @@ public class OlurYazisiOlusturPage extends MainPage {
     @Step("Olur Yazısı Oluştur sayfasını aç")
     public OlurYazisiOlusturPage openPage() {
         new UstMenu().ustMenu("Olur Yazısı Oluştur");
+        $("#yeniOnayEvrakForm").shouldBe(visible);
         return this;
     }
 
@@ -76,7 +77,6 @@ public class OlurYazisiOlusturPage extends MainPage {
             return this;
         }
 
-
         @Step("Onay akışında güncel gelen kullanıcıyı kontrol et")
         public BilgilerTab onayAkisiKullaniciKontrol(String kullaniciAdi, String kullaniciTipi) {
             trOnayAkisiEkleKullanicilar
@@ -122,7 +122,6 @@ public class OlurYazisiOlusturPage extends MainPage {
 
         @Step("Onay akışı doldurma ve görüntüleme kontrolu")
         public BilgilerTab onayAkisDoldur(String kullanici) {
-            cmbOnayAkisi.shouldBe(visible);
             cmbOnayAkisi.selectLov(kullanici);
             return this;
         }
@@ -152,6 +151,10 @@ public class OlurYazisiOlusturPage extends MainPage {
         @Step("Bilgileri tabında Onay Akışı alanında görüntülenmeme kontrolu")
         public BilgilerTab onayAkisiAlanindaGoruntulenmemeKontrolu(String onayAkisi) {
 
+            if (cmbOnayAkisi.isLovSelected() == true) {
+                cmbOnayAkisi.clearLastSelectedLov();
+            }
+
             comboLov(cmbOnayAkisiBy).type(onayAkisi).titleItems().filterBy(exactText(onayAkisi)).shouldHaveSize(0);
             comboLov(cmbOnayAkisiBy).closeLovTreePanel();
             System.out.println("MyCombolov alanında " + onayAkisi + ": Onay Akışın görüntülenmediği görülür.");
@@ -161,7 +164,8 @@ public class OlurYazisiOlusturPage extends MainPage {
 
         @Step("Onay akışı güncelle")
         public BilgilerTab onayAkisiGuncelle() {
-            btnOnayAkisGuncelle.click();
+            btnOnayAkisGuncelle.shouldBe(visible);
+            clickJs(btnOnayAkisGuncelle);
             return this;
         }
 
@@ -185,6 +189,7 @@ public class OlurYazisiOlusturPage extends MainPage {
 
 
     }
+
     public EditorTab editorTabAc() {
         return editorTab.open();
     }
