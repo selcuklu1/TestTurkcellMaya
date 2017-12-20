@@ -1,6 +1,7 @@
 package common;
 
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.Selenide;
 import data.User;
 import io.qameta.allure.Step;
 import listeners.SettingsListener;
@@ -18,7 +19,7 @@ import static data.TestData.belgenetURL;
 @Listeners({SettingsListener.class})
 public class BaseTest extends BaseLibrary {
 
-    @BeforeSuite
+    @BeforeSuite(alwaysRun = true)
     public void beforeSuite() {
         //killProcess();
     }
@@ -39,14 +40,15 @@ public class BaseTest extends BaseLibrary {
         Configuration.browser = "chrome";
         //Configuration.browser = "drivers.Firefox";
 //        Configuration.browser = "marionette";
-        //Configuration.remote = "http://192.168.1.3:6585/wd/hub";
+
+        Configuration.remote = "http://192.168.1.3:6585/wd/hub";
         //Configuration.remote = "http://10.101.20.153:4444/wd/hub";
         Configuration.reportsFolder = "test-result/reports";
         Configuration.screenshots = false;
         Configuration.savePageSource = false;
-        Configuration.collectionsTimeout = 10000;
-        Configuration.timeout = 10000;
-        Configuration.holdBrowserOpen = true;
+        Configuration.collectionsTimeout = 20000;
+        Configuration.timeout = 20000;
+        Configuration.holdBrowserOpen = false;
         Configuration.headless = false;
         Configuration.startMaximized = true;
         Configuration.pollingInterval = 100;
@@ -62,19 +64,23 @@ public class BaseTest extends BaseLibrary {
 
     }
 
+    @AfterClass(alwaysRun = true)
+    public void afterClass() {
+        Selenide.close();
+    }
+
     @AfterMethod
     public void tearDown() throws Exception {
-        /*try {
+        try {
             Selenide.clearBrowserLocalStorage();
             Selenide.clearBrowserCookies();
         } catch (Exception e) {
         }
-*/
     }
 
-    @AfterSuite
+    @AfterSuite(alwaysRun = true)
     public void afterSuite() {
-       // killProcess();
+        // killProcess();
     }
 
     @Step("Login")

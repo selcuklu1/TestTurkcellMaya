@@ -593,5 +593,4 @@ public class TuzelKisiYonetimiTest extends BaseTest {
                 .bilgiSecimTipiSecByText("Tüzel Kişi")
                 .bilgiAlanindaGoruntulenmeKontrolu(ad, soyad);
     }
-
 }
