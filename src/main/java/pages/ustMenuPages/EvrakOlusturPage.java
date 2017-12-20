@@ -186,7 +186,8 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement txtOnayAkisiKullanicilarInput = $("input[id^='yeniGidenEvrakForm:evrakBilgileriList:'][id$=':akisAdimLov:LovText']");
         SelenideElement listOnayAkisiKullanilan = $("div[id*='akisLov:lovContainer'] div[class*='lovSelection processEt'] tbody");
         SelenideElement btnOnayAkisiPanelKapat = $("button[id^='yeniGidenEvrakForm:evrakBilgileriList:'][id$=':akisAdimLov:lovTreePanelKapat']");
-        SelenideElement cmbKullanicilarImza = $("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='akisAdimLov:LovSecilenTable:1:selectOneMenu']");
+        ElementsCollection cmbKullanicilarImzaSec2 = $$("[id^='yeniGidenEvrakForm:evrakBilgileriList:18:akisAdimLov:LovSecilenTable'][id$='selectOneMenu']");
+        SelenideElement cmbKullanicilarImza = $("[id^='yeniGidenEvrakForm:evrakBilgileriList:18:akisAdimLov:LovSecilenTable'][id$='selectOneMenu']");
         SelenideElement btnOnayAkisGuncelle = $(By.cssSelector("[id^='yeniGidenEvrakForm:evrakBilgileriList:18:akisLov:j_idt'] [class$='update-icon']"));
         BelgenetElement cmbOnayAkisi = comboLov(By.cssSelector("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='akisLov:LovText']"));
         By cmbOnayAkisiBy = By.cssSelector("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='akisLov:LovText']");
@@ -250,6 +251,12 @@ public class EvrakOlusturPage extends MainPage {
         @Step("Kullanıcılar alanında imzacı seç")
         public BilgilerTab kullanicilarImzaciSec(String value) {
             cmbKullanicilarImza.selectOptionByValue(value);
+            return this;
+        }
+
+        @Step("Kullanıcılar alanında imzacı seç")
+        public BilgilerTab kullanicilarImzaciSec2(String value) {
+            cmbKullanicilarImzaSec2.get(1).selectOption(value);
             return this;
         }
 
@@ -416,7 +423,7 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Bilgi Secim Tipi alanında {0} seç")
         public BilgilerTab bilgiSecimTipiSec(String text) {
-            cmbBilgiSecimTipi.selectOptionByValue(text);
+            cmbBilgiSecimTipi.selectOption(text);
             return this;
         }
 
@@ -532,7 +539,7 @@ public class EvrakOlusturPage extends MainPage {
         }
 
         public BilgilerTab miatDoldur(String date) {
-            dateMiat.sendKeys(date);
+            setValueJS(dateMiat,date);
             return this;
         }
 
@@ -658,7 +665,8 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Onay Akışı Ekle")
         public BilgilerTab onayAkisiEkle() {
-            btnOnayAkisiEkle.click();
+//            clickJs(btnOnayAkisiEkle);
+            btnOnayAkisiEkle.pressEnter();
             return this;
         }
 
@@ -742,7 +750,9 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Onay akışı güncelle")
         public BilgilerTab onayAkisiGuncelle() {
-            btnOnayAkisGuncelle.shouldBe(visible).click();
+            btnOnayAkisGuncelle.shouldBe(visible);
+            //btnOnayAkisGuncelle.pressEnter();
+            clickJs(btnOnayAkisGuncelle);
             return this;
         }
 
@@ -847,7 +857,8 @@ public class EvrakOlusturPage extends MainPage {
         executeJavaScript("arguments[0].click();",$("button[id$='anlikAkisKullanButton']"));
         scrollIntoView();*/
             //executeJavaScript("arguments[0].scrollIntoView();",btnOnayAkisiKullaniciKullan);
-            btnOnayAkisiKullaniciKullan.click();
+
+           btnOnayAkisiKullaniciKullan.pressEnter();
             return this;
         }
 
@@ -1050,7 +1061,7 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("İmzacı alanı \"{kullanici}\" olarak gelmeli")
         public EditorTab imzacılarGnMdVKontrol(String kullanici) {
-            divImzacılarGnMdV.shouldBe(Condition.text(kullanici));
+            Assert.assertEquals(kullanici,divImzacılarGnMdV.getText());
             System.out.println("İmzalama başarılı geçmiştir");
             return this;
         }

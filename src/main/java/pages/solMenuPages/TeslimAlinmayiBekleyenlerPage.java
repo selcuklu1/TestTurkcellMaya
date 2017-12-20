@@ -13,6 +13,7 @@ import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
+import static com.codeborne.selenide.Selenide.sleep;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 public class TeslimAlinmayiBekleyenlerPage extends MainPage {
@@ -25,7 +26,7 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     SelenideElement tblRapor = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
     SelenideElement btnTeslimAlveHavaleYap = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:6:cmdbutton"));
     SelenideElement tblIlkEvrak = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
-    SelenideElement btnTeslimAlVeKapat = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:6:cmdbutton"));
+    SelenideElement btnTeslimAlVeKapat = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:7:cmdbutton"));
     BelgenetElement txtKaldirilacakKlasorler = comboLov(By.id("mainPreviewForm:klasorLov_id:LovText"));
     BelgenetElement txtKonuKodu = comboLov(By.id("mainPreviewForm:konuKoduLov:LovText"));
     SelenideElement btnTeslimAlVeKapatTeslimAlVeKapat = $("[id='mainPreviewForm:evrakKapatFieldsetId'] button[id^='mainPreviewForm:j_']");
@@ -41,7 +42,12 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
 
     @Step("Tablodan rapor seç")
     public TeslimAlinmayiBekleyenlerPage gizlilikRaporSec(String konu, String yer, String tarih, String no) {
-        tblEvraklar.filterBy(Condition.text(konu)).filterBy(Condition.text(yer)).filterBy(Condition.text(tarih)).get(0).click();
+        SelenideElement evrak = filter().findRowsWith(Condition.text(konu))
+                .filterBy(Condition.text(yer))
+                .filterBy(Condition.text(tarih))
+                .filterBy(Condition.text(no))
+                .shouldHaveSize(1).first();
+        evrak.click();
         return this;
     }
 
@@ -119,7 +125,7 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
 
     @Step("Kullanıcı listesi doldur")
     public TeslimAlinmayiBekleyenlerPage havaleYapKullaniciListesiDoldur(String kullaniciListesi){
-        txtHavaleYapKullaniciListesi.selectLov(kullaniciListesi);
+        //txtHavaleYapKullaniciListesi.selectLov(kullaniciListesi);
         txtHavaleYapKullaniciListesi.selectLov(kullaniciListesi);
         return this;
     }

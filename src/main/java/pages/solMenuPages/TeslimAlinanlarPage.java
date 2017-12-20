@@ -35,7 +35,12 @@ public class TeslimAlinanlarPage extends MainPage {
 
     @Step("Tablodan rapor seç")
     public TeslimAlinanlarPage gizlilikRaporSec(String konu, String yer, String tarih, String no) {
-        tblEvraklar.filterBy(Condition.text(konu)).filterBy(Condition.text(yer)).filterBy(Condition.text(tarih)).filterBy(Condition.text(no)).get(0).click();
+        SelenideElement evrak = filter().findRowsWith(Condition.text(konu))
+                .filterBy(Condition.text(yer))
+                .filterBy(Condition.text(tarih))
+                .filterBy(Condition.text(no))
+                .shouldHaveSize(1).first();
+        evrak.click();
         return this;
     }
 
@@ -77,7 +82,7 @@ public class TeslimAlinanlarPage extends MainPage {
 
     @Step("Kullanıcı listesi doldur")
     public TeslimAlinanlarPage havaleYapKullaniciListesiDoldur(String kullaniciListesi){
-        txtHavaleYapKullaniciListesi.selectLov(kullaniciListesi);
+        //txtHavaleYapKullaniciListesi.selectLov(kullaniciListesi);
         txtHavaleYapKullaniciListesi.selectLov(kullaniciListesi);
         return this;
     }

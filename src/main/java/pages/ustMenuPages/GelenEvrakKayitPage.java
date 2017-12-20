@@ -181,6 +181,7 @@ public class GelenEvrakKayitPage extends MainPage {
     // Havale İşlemleri
     BelgenetElement txtHavaleIslemleriKisi = comboLov(By.id("evrakBilgileriForm:dagitimBilgileriKullaniciLov:LovText"));
     BelgenetElement txtHavaleIslemleriKullaniciListesi = comboLov(By.id("evrakBilgileriForm:dagitimBilgileriKisiListesiLov:LovText"));
+    BelgenetElement txtHavaleIslemleriBirim = comboLov(By.id("evrakBilgileriForm:dagitimBilgileriBirimLov:LovText"));
     //endregion
 
 
@@ -200,9 +201,9 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("")
+    @Step("Kullanıcı Listesi doldur")
     public GelenEvrakKayitPage havaleIslemleriKullaniciListesiDoldur(String kisi) {
-        txtHavaleIslemleriKullaniciListesi.selectLov(kisi);
+        //txtHavaleIslemleriKullaniciListesi.selectLov(kisi);
         txtHavaleIslemleriKullaniciListesi.selectLov(kisi);
 
         return this;
@@ -230,18 +231,24 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
+    @Step("Konu doldur")
+    public GelenEvrakKayitPage konuDoldur(String konu){
+    $(By.id("evrakBilgileriForm:evrakBilgileriList:3:konuTextArea")).setValue(konu);
+        return this;
+    }
+
     public GelenEvrakKayitPage evrakBilgileriListKonuDoldur(String konu) {
         txtEvrakBilgileriListKonu.sendKeys(konu);
         return this;
     }
 
     public GelenEvrakKayitPage evrakTuruSec(String evrakTuru) {
-        cmbEvrakBilgileriListEvrakTuru.selectOptionByValue(evrakTuru);
+        cmbEvrakBilgileriListEvrakTuru.selectOption(evrakTuru);
         return this;
     }
 
     public GelenEvrakKayitPage evrakDiliSec(String evrakDili) {
-        cmbEvrakBilgileriListEvrakDili.selectOptionByValue(evrakDili);
+        cmbEvrakBilgileriListEvrakDili.selectOption(evrakDili);
         return this;
     }
 
@@ -258,7 +265,7 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("Kişi kurum tipi alanında {kisiKurum} seç")
     public GelenEvrakKayitPage kisiKurumSec(String kisiKurum) {
-        cmbEvrakBilgileriListKisiKurum.selectOption(kisiKurum);
+        cmbEvrakBilgileriListKisiKurum.selectOptionByValue(kisiKurum);
         return this;
     }
 
@@ -379,12 +386,12 @@ public class GelenEvrakKayitPage extends MainPage {
     }
 
     public GelenEvrakKayitPage evrakGelisTipiSec(String evrakGelisTipi) {
-        cmbEvrakBilgileriListEvrakGelisTipi.selectOptionByValue(evrakGelisTipi);
+        cmbEvrakBilgileriListEvrakGelisTipi.selectOption(evrakGelisTipi);
         return this;
     }
 
     public GelenEvrakKayitPage ivedilikSec(String ivedilik) {
-        cmbEvrakBilgileriListIvedilik.selectOptionByValue(ivedilik);
+        cmbEvrakBilgileriListIvedilik.selectOption(ivedilik);
         return this;
     }
 
@@ -627,6 +634,21 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
+    public GelenEvrakKayitPage yeniKayitButton(){
+        $("[id='evrakKaydetBasariliDialogForm:yeniKayitButton']").pressEnter();
+        return this;
+    }
+    
+    public GelenEvrakKayitPage evetDugmesi(){
+        $("[id='evetDugmesi']").pressEnter();
+        return this;
+    }
+
+    public GelenEvrakKayitPage benzerKayit(){
+        $(By.id("evetButtonBenzerKaydet")).pressEnter();
+        return this;
+    }
+
     public String popUps() throws InterruptedException {
 //        popUp.shouldHave(Condition.visible);  pop up kontrolu
         String text;
@@ -745,6 +767,12 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
+    @Step("Birim doldur")
+    public GelenEvrakKayitPage havaleIslemleriBirimDoldur(String birim) {
+        txtHavaleIslemleriBirim.selectLov(birim);
+        return this;
+    }
+
     @Step("Alanların güncellenebilirlik kontrolü")
     public GelenEvrakKayitPage evrakDetaylariAlanGuncellenebilirlikKontrolü() {
         txtEvrakBilgileriListKonuKodu.shouldBe(Condition.enabled);
@@ -843,10 +871,10 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("")
+    @Step("Üst yazı değiştirilsim mi?")
     public GelenEvrakKayitPage ustYaziDegistirilmisPopUpKontrol() {
-        if (popUpUstYaziDegistirilme.exists())
-            clickJs(btnUstYaziDegistirmeHayır);
+       popUpUstYaziDegistirilme.shouldBe(Condition.visible);
+        clickJs(btnUstYaziDegistirmeHayır);
         return this;
     }
 

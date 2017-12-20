@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.open;
 
 public class TestClass3 extends BaseTest {
 
@@ -20,6 +21,7 @@ public class TestClass3 extends BaseTest {
 
     @BeforeMethod
     public void loginBeforeTests() {
+        open("https://www.google.com.tr/");
       //  login();
     }
 /*
@@ -103,7 +105,7 @@ public class TestClass3 extends BaseTest {
 
     @Test()
     public void setPathTest() {
-        setDocPath(WebDriverRunner.getWebDriver());
+        setDocPath();
     }
 
 }

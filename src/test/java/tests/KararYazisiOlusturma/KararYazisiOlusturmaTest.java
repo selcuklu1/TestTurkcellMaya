@@ -30,7 +30,7 @@ public class KararYazisiOlusturmaTest extends BaseTest{
         ErisimYonetimiPage erisimYonetimiPage;
         ImzaladiklarimPage imzaladiklarimPage;
         KlasorEvrakIslemleriPage klasorEvrakIslemleriPage;
-
+        GelenEvrakKayitPage gelenEvrakKayitPage;
         @BeforeMethod
         public void loginBeforeTests() {
             kararYazisiOlusturPage = new KararYazisiOlusturPage();
@@ -44,10 +44,11 @@ public class KararYazisiOlusturmaTest extends BaseTest{
             erisimYonetimiPage = new ErisimYonetimiPage();
             imzaladiklarimPage = new ImzaladiklarimPage();
             klasorEvrakIslemleriPage = new KlasorEvrakIslemleriPage();
+            gelenEvrakKayitPage = new GelenEvrakKayitPage();
         }
 
         @Severity(SeverityLevel.CRITICAL)
-        @Test(enabled = true, description = "1610: Karar yazısında zorunlu alan kontrolleri")
+        @Test(enabled = true, description = "1488: Karar yazısında zorunlu alan kontrolleri")
         public void TC1488() throws InterruptedException {
 
             String uyariMesajYaziIcerik = "Yazı içeriği boş olamaz!";
@@ -140,7 +141,27 @@ public class KararYazisiOlusturmaTest extends BaseTest{
         String basariMesaji = "İşlem başarılıdır!";
         String kaldirilicakKlasor = "Gündem";
         String konuKodu = "Usul ve Esaslar";
+        String konuKoduRandom = createRandomText(12);
+        String evrakTarihi = getSysDateForKis();
+        String kurum = "BÜYÜK HARFLERLE KURUM";
+        String kullaniciAdi = "Yazılım Geliştirme Direktörlüğ";
+
         login(username3, password3);
+
+        //TODO Bu alanda Pre Condition alanı olan teslim alınmayı bekleyenler alanına data oluşturmakta
+        gelenEvrakKayitPage
+                .openPage()
+                .konuKoduDoldur(konuKodu)
+                .konuDoldur(konuKoduRandom)
+                .evrakTarihiDoldur(evrakTarihi)
+                .geldigiKurumDoldurLovText(kurum)
+                .evrakSayiSagDoldur()
+                .havaleIslemleriBirimDoldur(kullaniciAdi)
+                .kaydet()
+                .evetDugmesi()
+                .yeniKayitButton();
+        //TODO
+
 
         teslimAlinmayiBekleyenlerPage
                 .openPage()
@@ -339,8 +360,6 @@ public class KararYazisiOlusturmaTest extends BaseTest{
         imzaBekleyenlerPage
                 .openPage()
                 .dogruKonuVeNoKontrol(kararNo,konuKodu);
-
-
     }
 
 
@@ -451,6 +470,7 @@ public class KararYazisiOlusturmaTest extends BaseTest{
                 .klasorEklemeKaydet()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
+
         teslimAlinmayiBekleyenlerPage
                 .openPage()
                 .evrakSec()
@@ -471,8 +491,23 @@ public class KararYazisiOlusturmaTest extends BaseTest{
         String basariMesaji = "İşlem başarılıdır!";
         String konuKodu = "Usul ve Esaslar";
         String kaldirilicakKlasor = "Gündem";
+        String konuKoduRandom = createRandomText(12);
+        String evrakTarihi = getSysDateForKis();
+        String kurum = "BÜYÜK HARFLERLE KURUM";
+        String kullaniciAdi = "Zübeyde Tekin";
+        login(username2, password2);
 
-        login(username3, password3);
+        gelenEvrakKayitPage
+                .openPage()
+                .konuKoduDoldur(konuKodu)
+                .evrakTarihiDoldur(evrakTarihi)
+                .geldigiKurumDoldurLovText(kurum)
+                .evrakSayiSagDoldur()
+                .havaleIslemleriKisiDoldur(kullaniciAdi)
+                .kaydet()
+                .evetDugmesi()
+                .yeniKayitButton();
+
 
         gelenEvraklarPage
                 .openPage()

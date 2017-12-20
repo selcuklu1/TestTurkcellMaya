@@ -1,4 +1,4 @@
-package KisayolTuslari;
+package tests.KisayolTuslari;
 
 import common.BaseTest;
 import io.qameta.allure.Severity;

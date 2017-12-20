@@ -69,7 +69,7 @@ public class KurumYonetimiPage extends MainPage {
     SelenideElement btnKepAdresiBilgileriKaydet = $(By.id("kurumKepAdresBilgiEditorForm:saveKepAdresiButton"));
     SelenideElement btnKurumHiyerarşisiniGuncelle = $("button[id^='kurumYonetimiListingForm:kurumTreeTable:'][id$=':applyChangesButton']");
 
-    SelenideElement filtrePanel = $(By.id("kurumYonetimiListingForm:filterPanel"));
+    SelenideElement filtrePanel = $("div[id='kurumYonetimiListingForm:filterPanel'] > h3");
 
     SelenideElement btnSecileniKaldir = $("button[id^='kurumYonetimiListingForm:filterPanel:kurumFilterLov:'] span[class='ui-button-icon-left ui-icon delete-icon']");
 
@@ -180,10 +180,6 @@ public class KurumYonetimiPage extends MainPage {
 
     @Step("Durum seç")
     public KurumYonetimiPage durumSec(String value) {
-
-        while (!cmbDurum.isDisplayed())
-            filtrePanel.click();
-
         cmbDurum.selectOption(value);
         return this;
     }
@@ -271,18 +267,23 @@ public class KurumYonetimiPage extends MainPage {
 
     @Step("Sorgulama panelinde kurum doldur.")
     public KurumYonetimiPage sorgulaKurumDoldur(String kurumAdi) {
-        if(!btnAra.isDisplayed())
-            filtrePanel.click();
-        btnAra.waitUntil(Condition.visible, 5000);
         txtKurum.selectLov(kurumAdi);
+        return this;
+    }
+
+    @Step("Filtrele panelini aç")
+    public KurumYonetimiPage filtrePanelAc(){
+        $("div[id='kurumYonetimiListingForm:filterPanel'] > h3").waitUntil(Condition.visible, 10000);
+        String isExpanded = $("div[id='kurumYonetimiListingForm:filterPanel'] > h3").getAttribute("aria-expanded");
+        if(isExpanded == "false") {
+            $("div[id='kurumYonetimiListingForm:filterPanel'] > h3").click();
+        }
         return this;
     }
 
     ElementsCollection treeIdariBirimKimlikKodu = $$("div[id='kurumYonetimiListingForm:filterPanel:kurumFilterLov:lovTree'] > ul > li");
     @Step("Sorgulama panelinde kurum alanına idari birim kimlik kodu doldur.")
     public KurumYonetimiPage sorgulaIdariKimlikKoduSec(String idariBirimKimlikKodu) {
-        while (!txtFiltreIdariBirimKimlikKodu.isDisplayed())
-            filtrePanel.click();
 
         txtFiltreIdariBirimKimlikKodu.setValue(idariBirimKimlikKodu);
 

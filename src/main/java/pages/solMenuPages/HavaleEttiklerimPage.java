@@ -44,7 +44,7 @@ public class HavaleEttiklerimPage extends MainPage {
 
     @Step("Kullanıcı listesi doldur")
     public HavaleEttiklerimPage havaleYapKullaniciListesiDoldur(String kullaniciListesi) {
-        txtHavaleYapKullaniciListesi.selectLov(kullaniciListesi);
+        //txtHavaleYapKullaniciListesi.selectLov(kullaniciListesi);
         txtHavaleYapKullaniciListesi.selectLov(kullaniciListesi);
         return this;
     }
@@ -87,7 +87,11 @@ public class HavaleEttiklerimPage extends MainPage {
 
     @Step("Tablodan rapor seç")
     public HavaleEttiklerimPage gizlilikRaporSec(String konu, String yer, String tarih) {
-        tblEvraklar.filterBy(Condition.text(konu)).filterBy(Condition.text(yer)).filterBy(Condition.text(tarih)).get(0).click();
+        SelenideElement evrak = filter().findRowsWith(Condition.text(konu))
+                .filterBy(Condition.text(yer))
+                .filterBy(Condition.text(tarih))
+                .shouldHaveSize(1).first();
+        evrak.click();
         return this;
     }
 

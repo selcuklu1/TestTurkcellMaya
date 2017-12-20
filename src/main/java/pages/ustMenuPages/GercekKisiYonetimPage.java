@@ -71,6 +71,7 @@ public class GercekKisiYonetimPage extends MainPage {
     SelenideElement txtIletisimBilgisiFaxs1 = $(By.id("gercekKisiBilgileriEditorForm:fax1Input"));
     SelenideElement txtIletisimBilgisiFaxs2 = $(By.id("gercekKisiBilgileriEditorForm:fax2Input"));
     SelenideElement txtIletisimBilgisiWebAdres = $(By.id("gercekKisiBilgileriEditorForm:webAdresiInput"));
+    SelenideElement btnUlkeDelete = $("    button[id^='gercekKisiBilgileriEditorForm:lovUlke:j_idt'] span[class$='delete-icon']");
 
 
     //Kep Adres Bilgileri Yeni kayit
@@ -141,7 +142,7 @@ public class GercekKisiYonetimPage extends MainPage {
 
     @Step("Kep adres bilgileri ekle")
     public GercekKisiYonetimPage kepAdresBilgileriEkle() {
-        btnKepAdresBilgileriEkle.click();
+        clickJs(btnKepAdresBilgileriEkle);
         return this;
     }
 
@@ -267,7 +268,11 @@ public class GercekKisiYonetimPage extends MainPage {
 
     @Step("Ülke doldur")
     public GercekKisiYonetimPage iletisimBilgisiUlkeDoldur(String ulke) {
-        txtIletisimBilgisiUlke.selectLov(ulke);
+
+        if (btnUlkeDelete.isDisplayed() == false) {
+            txtIletisimBilgisiUlke.selectLov(ulke);
+        }
+
         return this;
     }
 
@@ -430,9 +435,9 @@ public class GercekKisiYonetimPage extends MainPage {
         btnGercekKisiPasiYap.click();
         return this;
     }
-    
+
     @Step("Tabloda listelenen TCKN kontrolü")
-    public GercekKisiYonetimPage tabloTCKNKontrol(String tcNO){
+    public GercekKisiYonetimPage tabloTCKNKontrol(String tcNO) {
         $(byText(tcNO)).shouldBe(Condition.visible);
 //        boolean statusTCNO = findElementOnTableByColumnInputInAllPages(tblGercekKisiDataTable, 1, tcNO).isDisplayed();
 //        Assert.assertEquals(statusTCNO, true);

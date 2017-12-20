@@ -1,3 +1,4 @@
+/*
 package tests.EvrakNot;
 
 import com.codeborne.selenide.ElementsCollection;
@@ -28,13 +29,15 @@ import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboBox;
 
+*/
 /**
  * Yazan: Ilyas Bayraktar
  * Tarih: 13.12.2017
  * Açıklama:
- */
-public class EvrakNotTest extends BaseTest {
+ *//*
 
+public class EvrakNotTest extends BaseTest {
+/*
     User user1 = new User("user1", "123", "User1 TEST");
     User user2 = new User("user2", "123", "User2 TEST");
     String konu;
@@ -246,11 +249,13 @@ public class EvrakNotTest extends BaseTest {
 
         notlariKontrolEt();
     }
+*/
 
 
-    /**
+/**
      * Editör tab
-     */
+     *//*
+
     class EvrakNot {
         TextEditor editor = new TextEditor();
 
@@ -400,9 +405,11 @@ public class EvrakNotTest extends BaseTest {
 
     }
 
-    /**
+    */
+/**
      * Bilgiler Tab Üst yazıyı görüntüle
-     */
+     *//*
+
     class UstYazi {
 
         SelenideElement notEkle = $("button[id$='kisiselNotEkleDataTableId:kisiselNotEkleId']");
@@ -541,9 +548,11 @@ public class EvrakNotTest extends BaseTest {
         }
     }
 
-    /**
+    */
+/**
      * Evrak Önizleme
-     */
+     *//*
+
     class EvrakOnizleme {
 
         class Notlari {
@@ -604,7 +613,7 @@ public class EvrakNotTest extends BaseTest {
 
 
     }
-
+/*
     @Step("Evrak Oluştur")
     private void evrakOlusturVeKaydet(EvrakOlusturPage page, String konu) {
         page.bilgilerTabiAc()
@@ -636,3 +645,4 @@ public class EvrakNotTest extends BaseTest {
         page.islemMesaji().basariliOlmali();
     }
 }
+*/
