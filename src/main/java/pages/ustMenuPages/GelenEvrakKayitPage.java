@@ -233,7 +233,7 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("Konu doldur")
     public GelenEvrakKayitPage konuDoldur(String konu){
-    $(By.id("evrakBilgileriForm:evrakBilgileriList:3:konuTextArea")).setValue(konu);
+    $("[id$='konuTextArea']").setValue(konu);
         return this;
     }
 
@@ -369,6 +369,12 @@ public class GelenEvrakKayitPage extends MainPage {
     public GelenEvrakKayitPage geldigiKurumDoldurLovText(String geldigiKurum) {
         if (btnSecilenGeldigiKurumKaldir.isDisplayed())
             btnSecilenGeldigiKurumKaldir.click();
+        comboGeldigiKurum.selectLov(geldigiKurum);
+        return this;
+    }
+
+    public GelenEvrakKayitPage geldigiKurumDoldurLovText2(String geldigiKurum) {
+        comboGeldigiKurum.clearLastSelectedLov();
         comboGeldigiKurum.selectLov(geldigiKurum);
         return this;
     }

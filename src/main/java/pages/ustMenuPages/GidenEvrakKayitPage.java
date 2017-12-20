@@ -355,5 +355,11 @@ public class GidenEvrakKayitPage extends MainPage {
         return evrakNo;
     }
 
+    @Step("Konu doldur")
+    public GidenEvrakKayitPage konuDoldur(String konu){
+        $("[id$='konuTextArea']").setValue(konu);
+        return this;
+    }
+
 
 }

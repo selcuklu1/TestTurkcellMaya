@@ -61,7 +61,7 @@ public class KaydedilenGelenEvrakPage extends MainPage {
 
     @Step("Sorgula butununa bas")
     public KaydedilenGelenEvrakPage sorgula() {
-        btnSorgula.click();
+        btnSorgula.pressEnter();
         return this;
     }
 

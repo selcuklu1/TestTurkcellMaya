@@ -1,6 +1,7 @@
 package common;
 
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.Selenide;
 import io.qameta.allure.Step;
 import listeners.SettingsListener;
 import org.testng.annotations.AfterMethod;
@@ -23,7 +24,7 @@ public class BaseTest extends BaseLibrary {
     @BeforeSuite
     public void beforeSuite() {
 
-        //killProcess();
+        killProcess();
     }
 
     @BeforeClass(alwaysRun = true)
@@ -65,11 +66,11 @@ public class BaseTest extends BaseLibrary {
     @AfterMethod
     public void tearDown() throws Exception {
 
-/*        try {
+       try {
             Selenide.clearBrowserLocalStorage();
             Selenide.clearBrowserCookies();
         } catch (Exception e) {
-        }*/
+        }
     }
 
     public class User {
