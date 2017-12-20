@@ -10,6 +10,8 @@ import pages.ustMenuPages.GelenEvrakKayitPage;
 import pages.ustMenuPages.GercekKisiYonetimPage;
 import pages.ustMenuPages.GidenEvrakKayitPage;
 
+import static com.codeborne.selenide.Selenide.switchTo;
+
 /****************************************************
  * Tarih: 2017-11-20
  * Proje: Türksat Functional Test Automation
@@ -156,9 +158,9 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .tcNoKontrolu(getTbleTC);
     }
 
-   /* @Severity(SeverityLevel.CRITICAL)
+    @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TC1135: Yeni gerçek kişi kayıtta alan kontrolleri")
-    public void TC1135() throws AWTException {
+    public void TC1135() {
 
         String ad = createRandomText(6);
         String soyad = createRandomText(6);
@@ -542,5 +544,5 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .secilenGeregiSil()
                 .bilgiSecimTipiSecByText("Gerçek Kişi")
                 .bilgiAlanindaGoruntulenmeKontrolu(ad, soyad);
-    }*/
+    }
 }
