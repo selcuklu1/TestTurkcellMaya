@@ -38,7 +38,7 @@ public class PaylastiklarimPage extends MainPage {
     // Paylaş Tab elementleri
 
     SelenideElement btnPaylasimiDurdur = $(By.xpath("//span[contains(@class, 'evrakPaylasimDurdur')]/.."));
-    SelenideElement btnPaylasimiDurdurEvet = $(By.id("mainInboxForm:paylasmaDurdurEvetButton"));
+
 
 
     // Evrak Notları elementleri
@@ -108,7 +108,7 @@ public class PaylastiklarimPage extends MainPage {
     }
 
     @Step("Evrak seçildi")
-    public PaylastiklarimPage evrakSec(String[] paylasilanKullanicilar) {
+    public PaylastiklarimPage evrakSec(String[] paylasilanKullanicilar, String konu, String evrakNo, String paylasilmaTarihi) {
         String _paylasilanKullanicilar = "";
 
         for (int i = 0; i < paylasilanKullanicilar.length; i++)
@@ -118,9 +118,35 @@ public class PaylastiklarimPage extends MainPage {
 
         tablePaylastiklarim
                 .filterBy(Condition.text("Paylaşılanlar: " + _paylasilanKullanicilar))
-                .get(0)
+                .filterBy(Condition.text("Evrak No: " + evrakNo))
+                .filterBy(Condition.text("Konu: " + konu))
+                .filterBy(Condition.text("Paylaşılma Tarihi: " + paylasilmaTarihi))
+                .first()
                 .click();
         return this;
+    }
+
+    @Step("Evrak seçildi")
+    public String evrakPaylasimTarihiGetir(String[] paylasilanKullanicilar, String konu, String evrakNo, String paylasilmaTarihi) {
+        String _paylasilanKullanicilar = "";
+
+        for (int i = 0; i < paylasilanKullanicilar.length; i++)
+            _paylasilanKullanicilar += paylasilanKullanicilar[i] + " / ";
+
+        _paylasilanKullanicilar = _paylasilanKullanicilar.substring(0, _paylasilanKullanicilar.length() - 3);
+
+        String pTarihi = tablePaylastiklarim
+                .filterBy(Condition.text("Paylaşılanlar: " + _paylasilanKullanicilar))
+                .filterBy(Condition.text("Evrak No: " + evrakNo))
+                .filterBy(Condition.text("Konu: " + konu))
+                .filterBy(Condition.text("Paylaşılma Tarihi: " + paylasilmaTarihi))
+                .first()
+                .$(By.xpath(".//td[contains(., 'Paylaşılma Tarihi:')]"))
+                .innerText();
+
+
+        return pTarihi.substring(pTarihi.indexOf("Paylaşılma Tarihi:") + 19, pTarihi.indexOf("Paylaşılma Tarihi:") + 38);
+
     }
 
     @Step("\"{0}\" tabını seç")
@@ -139,7 +165,7 @@ public class PaylastiklarimPage extends MainPage {
     @Step("Paylaşımı durdur")
     public PaylastiklarimPage paylasimiDurdur() {
         btnPaylasimiDurdur.click();
-        btnPaylasimiDurdurEvet.click();
+        $$("div[id='mainInboxForm:paylasmaDurdurulsunMuDialog'] button[id='mainInboxForm:paylasmaDurdurEvetButton']").last().click();
         return this;
     }
 
@@ -170,7 +196,7 @@ public class PaylastiklarimPage extends MainPage {
                     .get(0);
 
             $(By.xpath("//legend[text() = 'Paylaşımdan Geri Al']"))
-                    .waitUntil(Condition.visible, 5);
+                    .waitUntil(Condition.visible, 5000);
 
             currentRow
                     .$("button")

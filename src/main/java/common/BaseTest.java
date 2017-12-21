@@ -2,15 +2,14 @@ package common;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.WebDriverRunner;
 import data.User;
 import io.qameta.allure.Step;
 import listeners.SettingsListener;
-import org.openqa.selenium.firefox.FirefoxProfile;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Listeners;
+import org.testng.annotations.*;
 import pages.LoginPage;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetFramework;
@@ -25,10 +24,9 @@ import static data.TestData.belgenetURL;
 @Listeners({SettingsListener.class})
 public class BaseTest extends BaseLibrary {
 
-    @BeforeSuite
+    @BeforeSuite(alwaysRun = true)
     public void beforeSuite() {
-
-        //killProcess();
+        killProcess();
     }
 
     @BeforeClass(alwaysRun = true)
@@ -44,42 +42,56 @@ public class BaseTest extends BaseLibrary {
 //        System.setProperty("webdriver.gecko.driver","/Users/ilyas/Documents/WebDrivers/geckodriver");
         //region Selenide Driver Configuration
         Configuration.baseUrl = belgenetURL;
-//        Configuration.browser = "chrome";
-//         Configuration.browser = "drivers.Firefox";
-//        Configuration.browser = "marionette";
-//        Configuration.browser = "gecko";
 
-        //Configuration.remote = "http://192.168.1.3:6570/wd/hub";
+        Configuration.browser = "chrome";
+        //Configuration.browser = "drivers.Firefox";
+        //Configuration.browser = "marionette";
+
+        //Configuration.remote = "http://192.168.1.3:6585/wd/hub";
         //Configuration.remote = "http://10.101.20.153:4444/wd/hub";
-        Configuration.remote = "http://localhost:4444/wd/hub";
+//        Configuration.remote = "http://localhost:4444/wd/hub";
         Configuration.reportsFolder = "test-result/reports";
         Configuration.screenshots = false;
         Configuration.savePageSource = false;
-        Configuration.collectionsTimeout =40000;
+
+        Configuration.collectionsTimeout=40000;
         Configuration.timeout = 40000;
 //        Configuration.clickViaJs = true;
 //        Configuration.holdBrowserOpen = true;
 //        Configuration.headless = false;
+
         Configuration.startMaximized = true;
         Configuration.pollingInterval = 100;
         Configuration.collectionsPollingInterval = 100;
-//        Configuration.closeBrowserTimeoutMs = 34000;
-//        Configuration.openBrowserTimeoutMs = 34000;
+        //Configuration.closeBrowserTimeoutMs = 34000;
+        //Configuration.openBrowserTimeoutMs = 34000;
         //Configuration.browserSize = "1024x600";
         //endregion
 
-//        System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, "/dev/null");
+        // System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, "/dev/null");
 
+        setDocPath();
+
+    }
+
+    @AfterClass(alwaysRun = true)
+    public void afterClass() {
+        Selenide.close();
     }
 
     @AfterMethod
     public void tearDown() throws Exception {
-//        Selenide.close();
+        Selenide.close();
 //        try {
 //            Selenide.clearBrowserLocalStorage();
 //            Selenide.clearBrowserCookies();
 //        } catch (Exception e) {
 //        }
+    }
+
+    @AfterSuite(alwaysRun = true)
+    public void afterSuite() {
+        // killProcess();
     }
 
     @Step("Login")

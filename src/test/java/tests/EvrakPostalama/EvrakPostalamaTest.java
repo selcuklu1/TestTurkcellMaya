@@ -8,6 +8,7 @@ package tests.EvrakPostalama;
  ****************************************************/
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
 import common.BaseTest;
 import data.User;
 import io.qameta.allure.Severity;
@@ -75,6 +76,10 @@ public class EvrakPostalamaTest extends BaseTest {
                 .imzala()
                 .popupSImzalaIslemleri();
 
+
+
+        Thread.sleep(4000);
+
         postalanacakEvraklarPage
                 .openPage()
                 .filter().findRowsWith(Condition.text(konu)).shouldHaveSize(1).first().click();
@@ -92,6 +97,7 @@ public class EvrakPostalamaTest extends BaseTest {
                 .evrakPostala();
 
 
+        Selenide.close();
     }
 
     @Severity(SeverityLevel.CRITICAL)

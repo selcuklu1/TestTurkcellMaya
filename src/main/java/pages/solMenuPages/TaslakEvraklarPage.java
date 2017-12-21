@@ -146,6 +146,13 @@ public class TaslakEvraklarPage extends MainPage {
         return this;
     }
 
+    public TaslakEvraklarPage paylasKisiDoldur(String[] kisiler) {
+        for(int i = 0; i < kisiler.length; i++){
+            txtPaylasKisi.selectLov(kisiler[i]);
+        }
+        return this;
+    }
+
     public TaslakEvraklarPage paylasGonder() {
         btnPaylas.click();
         return this;

@@ -89,18 +89,22 @@ public class BenimlePaylasilanlarPage extends MainPage {
         return this;
     }
 
-    @Step("Paylaşan: \"{0}\" listede olmalımı?: \"{1}\"")
-    public BenimlePaylasilanlarPage paylasilanlarKontrol(String paylasan, Boolean shouldBeExist) {
+    @Step("Paylaşan: \"{paylasan}\" listede olmalımı?: \"{shouldBeExist}\"")
+    public BenimlePaylasilanlarPage paylasilanlarKontrol(String paylasan, String konu, String paylasilmaTarihi, Boolean shouldBeExist) {
 
         if(shouldBeExist == true){
             tableBenimlePaylasilanlar
                     .filterBy(Condition.text("Paylaşan: " + paylasan))
-                    .get(0)
+                    .filterBy(Condition.text("Konu: " + konu))
+                    .filterBy(Condition.text("Paylaşılma Tarihi: " + paylasilmaTarihi))
+                    .first()
                     .shouldBe(Condition.exist);
         } else {
             tableBenimlePaylasilanlar
                     .filterBy(Condition.text("Paylaşan: " + paylasan))
-                    .get(0)
+                    .filterBy(Condition.text("Konu: " + konu))
+                    .filterBy(Condition.text("Paylaşılma Tarihi: " + paylasilmaTarihi))
+                    .first()
                     .shouldNotBe(Condition.exist);
         }
 

@@ -249,7 +249,7 @@ public class BirimIcerikSablonuTest extends BaseTest {
 
     @Test(description = "Yeni şablon (Alt birimler görmesin) biriminde görünmeli", dependsOnMethods = {"tc1085"}, enabled = true
             , priority = 9)
-    public void tc1085_kontrol_birim() {
+    public void tc1085_kontrol_birim() throws InterruptedException {
         login("optiim", "123");
         EvrakOlusturPage evrakOlusturPage = new EvrakOlusturPage().openPage();
         TextEditor editor = evrakOlusturPage.editorTabAc().getEditor();

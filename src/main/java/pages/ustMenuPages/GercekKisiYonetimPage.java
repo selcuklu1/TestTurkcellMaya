@@ -29,7 +29,7 @@ public class GercekKisiYonetimPage extends MainPage {
     SelenideElement txtFiltreAd = $(By.id("gercekKisiYonetimiListingForm:filterPanel:gercekKisiAdFilterInput"));
     SelenideElement txtFiltreSoyad = $(By.id("gercekKisiYonetimiListingForm:filterPanel:gercekKisiSoyadFilterInput"));
     SelenideElement cmbFiltreDurum = $(By.id("gercekKisiYonetimiListingForm:filterPanel:durumSelectBox"));
-    SelenideElement filtreSorgulamaPanel = $(By.id("gercekKisiYonetimiListingForm:filterPanel"));
+    SelenideElement filtreSorgulamaPanel = $("[id='gercekKisiYonetimiListingForm'] [id='gercekKisiYonetimiListingForm:filterPanel']");
     SelenideElement btnAra = $(By.id("gercekKisiYonetimiListingForm:filterPanel:searchGercekKisiButton"));
     SelenideElement btnGercekKisiGuncelle = $("[id^='gercekKisiYonetimiListingForm:gercekKisiDataTable'][id$='updateGercekKisiButton']");
     SelenideElement btnGercekKisiPasiYap = $("[id^='gercekKisiYonetimiListingForm:gercekKisiDataTable'][id$='pasifEtGercekKisi']");
@@ -81,6 +81,8 @@ public class GercekKisiYonetimPage extends MainPage {
 
     //Tablo
     SelenideElement tblGercekKisiDataTable = $(By.id("gercekKisiYonetimiListingForm:gercekKisiDataTable"));
+    SelenideElement tblGercekKisiDataTableData = $(By.id("gercekKisiYonetimiListingForm:gercekKisiDataTable_data"));
+
     SelenideElement tblTc = $(By.xpath("//*[@id=\"gercekKisiYonetimiListingForm:gercekKisiDataTable_data\"]/tr/td[1]"));
     SelenideElement tblAd = $(By.xpath("//*[@id=\"gercekKisiYonetimiListingForm:gercekKisiDataTable_data\"]/tr/td[2]"));
     SelenideElement tblSoyad = $(By.xpath("//*[@id=\"gercekKisiYonetimiListingForm:gercekKisiDataTable_data\"]/tr/td[3]"));
@@ -338,7 +340,7 @@ public class GercekKisiYonetimPage extends MainPage {
     @Step("Aktif Kayit kontrolu")
     public GercekKisiYonetimPage aktifKisiKayitKontrolu(String tcNO, String ad, String soyad) {
 
-        tblGercekKisiDataTable.shouldBe(visible);
+        tblGercekKisiDataTableData.shouldBe(visible);
         boolean statusTCNO = findElementOnTableByColumnInputInAllPages(tblGercekKisiDataTable, 1, tcNO).isDisplayed();
         boolean statusAd = findElementOnTableByColumnInputInAllPages(tblGercekKisiDataTable, 2, ad).isDisplayed();
         boolean statusSoyad = findElementOnTableByColumnInputInAllPages(tblGercekKisiDataTable, 3, soyad).isDisplayed();

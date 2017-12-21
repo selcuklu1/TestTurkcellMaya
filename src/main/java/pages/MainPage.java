@@ -1,8 +1,6 @@
 package pages;
 
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.*;
 import common.BaseLibrary;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
@@ -10,9 +8,11 @@ import org.testng.Assert;
 import pages.pageComponents.*;
 import pages.pageData.SolMenuData;
 
+import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
+import static com.codeborne.selenide.Selenide.executeJavaScript;
 
 public class MainPage extends BaseLibrary {
     private SolMenu solMenu = new SolMenu();
@@ -270,9 +270,16 @@ public class MainPage extends BaseLibrary {
     }
 
     @Step("Birim Seç")
-    public MainPage birimSec(String birim){
-        ElementsCollection solMenuBirim = $$("[id='birimlerimMenusuContainer'] li");
-        solMenuBirim.filterBy(text(birim)).first().click();
+    public MainPage birimSec(String menuText){
+//        ElementsCollection solMenuBirim = $$("[id='birimlerimMenusuContainer'] li");
+//        SelenideElement element = solMenuBirim.filterBy(text(menuText)).first()
+//                .$("[id^='leftMenuForm:edysMenuItem_']");
+//        clickJs(element);
+
+        SelenideElement element = $("[id='birimlerimMenusuContainer']");
+        SelenideElement menuLink =element.find(By.xpath("//span[starts-with(text(),'" + menuText + "')]")).waitUntil(exist, Configuration.timeout);
+        executeJavaScript("arguments[0].click();", menuLink);
+        waitForLoading(WebDriverRunner.getWebDriver());
         return this;
     }
 
