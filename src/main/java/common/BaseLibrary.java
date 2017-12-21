@@ -1,14 +1,12 @@
 package common;
 
-import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.SelenideElement;
-import com.codeborne.selenide.WebDriverRunner;
+import com.codeborne.selenide.*;
 import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
 import org.openqa.selenium.*;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
@@ -24,9 +22,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static com.codeborne.selenide.Condition.exactValue;
+import static com.codeborne.selenide.Condition.not;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
 import static org.apache.commons.io.FileUtils.deleteDirectory;
+import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfAllElements;
 import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfElementLocated;
 
 public class BaseLibrary {
@@ -99,9 +99,22 @@ public class BaseLibrary {
 
     public void waitForLoadingToDisappear(WebDriver driver) {
 //        driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
+
         try {
-            new WebDriverWait(driver, 20, 50).
-                    until(invisibilityOfElementLocated(By.className("loading")));
+
+            /*List<WebElement> loading = driver.findElements(By.className("loading"));
+            System.out.println("Count:" + loading.size());
+            int i = 0;
+            for (WebElement e:loading) {
+                System.out.println(i + ": innerHtml-" + executeJavaScript("return arguments[0].outerHTML", e));
+                System.out.println(i + ": isDisplayed-" + e.isDisplayed() + "   isEnabled-" + e.isEnabled());
+            }*/
+
+//            System.out.println("Count:" + driver.findElements(By.className("loading")).size());
+            System.out.println("Count:" + driver.findElements(By.cssSelector("div[style*='display: block;'] .loading")).size());
+            new WebDriverWait(driver, 10, 50).
+                    until(ExpectedConditions.invisibilityOfAllElements(driver.findElements(
+                            By.className("loading"))));
 //            System.out.println("Loading: Ok");
         } catch (Exception e) {
 //            System.out.println("Loading window error: " + e.getMessage());

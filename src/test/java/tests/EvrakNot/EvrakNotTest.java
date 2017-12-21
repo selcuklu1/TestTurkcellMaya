@@ -1,6 +1,6 @@
-/*
 package tests.EvrakNot;
 
+import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import common.BaseTest;
@@ -29,15 +29,12 @@ import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboBox;
 
-*/
 /**
  * Yazan: Ilyas Bayraktar
  * Tarih: 13.12.2017
  * Açıklama:
- *//*
-
+ */
 public class EvrakNotTest extends BaseTest {
-/*
     User user1 = new User("user1", "123", "User1 TEST");
     User user2 = new User("user2", "123", "User2 TEST");
     String konu;
@@ -249,13 +246,11 @@ public class EvrakNotTest extends BaseTest {
 
         notlariKontrolEt();
     }
-*/
 
 
-/**
+    /**
      * Editör tab
-     *//*
-
+     */
     class EvrakNot {
         TextEditor editor = new TextEditor();
 
@@ -267,7 +262,18 @@ public class EvrakNotTest extends BaseTest {
         @Step("Not Ekle butona basılır, not ekleme ekranı gelmeli")
         public EvrakNot notEkle() {
             editor.toolbarButton("Not Ekle", true);
-            $("div[id*='notEkleDialog']").shouldBe(visible);
+            for (int i = 0; i < Configuration.timeout/1000; i++) {
+                sleep(1000);
+                if ($("div[id*='notEkleDialog']").is((visible)))
+                    break;
+                else
+                    editor.toolbarButton("Not Ekle", true);
+            }
+            $("div[id*='notEkleDialog']").waitUntil(visible,1000);
+            /*$("div[id*='notEkleDialog']").waitUntil(visible, Configuration.timeout);
+            if ($("div[id*='notEkleDialog']").is(not(visible)))
+                editor.toolbarButton("Not Ekle", true);
+            $("div[id*='notEkleDialog']").shouldBe(visible);*/
             return this;
         }
 
@@ -405,11 +411,10 @@ public class EvrakNotTest extends BaseTest {
 
     }
 
-    */
-/**
-     * Bilgiler Tab Üst yazıyı görüntüle
-     *//*
 
+    /**
+     * Bilgiler Tab Üst yazıyı görüntüle
+     */
     class UstYazi {
 
         SelenideElement notEkle = $("button[id$='kisiselNotEkleDataTableId:kisiselNotEkleId']");
@@ -512,6 +517,7 @@ public class EvrakNotTest extends BaseTest {
         public UstYazi aciklamaKarakterSayisiKontrolu(int maxCount) {
             SelenideElement counter = $("span[id='evrakKisiselNotDialogFormId:aciklamaCounter']");
 
+            counter.should(visible);
             int leftCount = getNumber(counter.text());
 
             SoftAssert sa = new SoftAssert();
@@ -548,11 +554,10 @@ public class EvrakNotTest extends BaseTest {
         }
     }
 
-    */
-/**
-     * Evrak Önizleme
-     *//*
 
+    /**
+     * Evrak Önizleme
+     */
     class EvrakOnizleme {
 
         class Notlari {
@@ -613,7 +618,7 @@ public class EvrakNotTest extends BaseTest {
 
 
     }
-/*
+
     @Step("Evrak Oluştur")
     private void evrakOlusturVeKaydet(EvrakOlusturPage page, String konu) {
         page.bilgilerTabiAc()
@@ -645,4 +650,3 @@ public class EvrakNotTest extends BaseTest {
         page.islemMesaji().basariliOlmali();
     }
 }
-*/

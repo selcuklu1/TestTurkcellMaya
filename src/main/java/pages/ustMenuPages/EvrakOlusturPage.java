@@ -1169,10 +1169,10 @@ public class EvrakOlusturPage extends MainPage {
             imzala.click();
 //            Thread.sleep(2000);*/
 
+//           .$("input")
             $("div[id='imzalaForm:imzalaRadio']").shouldBe(visible).click();
             $("#imzalaForm\\:sayisalImzaConfirmDialogOpener").click();
-            SelenideElement sayisalImzaOnay = $(By.id("imzalaForm:sayisalImzaConfirmForm:sayisalImzaEvetButton"));
-            sayisalImzaOnay.click();
+            $(By.id("imzalaForm:sayisalImzaConfirmForm:sayisalImzaEvetButton")).click();
             return this;
         }
 
@@ -1493,7 +1493,8 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("IlgileriTab Tabloda Bulunan Evraki Ekle")
         public IlgileriTab tablodaBulunanEvrakiEkle() {
-            btnTablodaBulunanIlkEvrakiEkle.click();
+            btnTablodaBulunanIlkEvrakiEkle.pressEnter();
+//            btnTablodaBulunanIlkEvrakiEkle.click();
             return this;
 
         }

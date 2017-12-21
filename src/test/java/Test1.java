@@ -18,6 +18,7 @@ public class Test1 {
     public void testName() throws Exception {
 
         System.setProperty("webdriver.gecko.driver", "");
+
         String Node = "http://10.10.:4444/wd/hub";
         DesiredCapabilities cap = DesiredCapabilities.firefox();
 
