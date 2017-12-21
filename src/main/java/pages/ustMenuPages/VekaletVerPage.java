@@ -203,9 +203,8 @@ public class VekaletVerPage extends MainPage {
 
     @Step("Vekalet Listesi Tablo Kontrol")
     public VekaletVerPage vekaletListesiTabloKontrol() {
-        int size = tblVekaletListesi.size();
-        Assert.assertNotEquals(size, 0);
-        return this;
+       tblVekaletListesi.shouldHave(CollectionCondition.sizeGreaterThan(0));
+       return this;
     }
 
     @Step("Vekalet Listesi Tablo Kontrol")

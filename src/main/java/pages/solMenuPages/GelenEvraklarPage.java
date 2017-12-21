@@ -497,7 +497,6 @@ public class GelenEvraklarPage extends MainPage {
     public GelenEvraklarPage kullanciListesiSecWithTitle(String kullanici) {
         txtKullaniciListesi.type(kullanici).detailItems()
                 .filterBy(Condition.exactText("optiim")).first().click();
-        txtKullaniciListesi.closeLovTreePanel();
         return this;
     }
 }

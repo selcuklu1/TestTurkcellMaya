@@ -240,7 +240,7 @@ public class GidenEvrakKayitPage extends MainPage {
     }
 
     public GidenEvrakKayitPage gizlilikDerecesiSec(String gizlilikDerecesi) {
-        cmbEvrakBilgileriListGizlilikDerecesi.selectOptionByValue(gizlilikDerecesi);
+        cmbEvrakBilgileriListGizlilikDerecesi.selectOption(gizlilikDerecesi);
         return this;
     }
 

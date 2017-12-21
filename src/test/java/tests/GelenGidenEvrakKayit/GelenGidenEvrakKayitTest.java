@@ -34,7 +34,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     String konuKodu = "010.01";
     String evrakTuru = "Resmi Yazışma";
     String evrakDili = "Türkçe";
-    String evrakTarihi = "16.11.2017";
+    String evrakTarihi = getSysDateForKis();
     String gizlilikDerecesi = "Normal";
     String kisiKurum = "Kurum";
     String geldigiKurum = "Esk Kurum 071216 2";

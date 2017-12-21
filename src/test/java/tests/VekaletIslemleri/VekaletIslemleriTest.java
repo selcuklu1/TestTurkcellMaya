@@ -1,5 +1,6 @@
 package tests.VekaletIslemleri;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
 import common.BaseTest;
 import io.qameta.allure.Severity;
@@ -160,7 +161,7 @@ public class VekaletIslemleriTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, priority = 3,  description = "TC2208 : Onaya göndererek Vekalet Verme işleminde onayın kabul edilmesi")
+    @Test(enabled = true, priority = 3, description = "TC2208 : Onaya göndererek Vekalet Verme işleminde onayın kabul edilmesi")
     public void TC2208() throws InterruptedException {
         TC0025a();
         login(username2, password2);
@@ -211,7 +212,7 @@ public class VekaletIslemleriTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, dependsOnMethods = {"TC2208"}, description = "TC0015 : Vekaleti alan kullanıcının onay akışında seçilmesi(vekaleten)")
+    @Test(enabled = true,dependsOnMethods = {"TC2208"}, description = "TC0015 : Vekaleti alan kullanıcının onay akışında seçilmesi(vekaleten)")
     public void TC0015() throws InterruptedException {
 
         login(username3, password3);
@@ -273,7 +274,7 @@ public class VekaletIslemleriTest extends BaseTest {
 
         mainPage
                 .vekaletVarUyarıPopUp()
-                .birimSec(getSysDateForKis());
+                .birimSec("Vekalet");
         Thread.sleep(2000);
 
 
@@ -358,10 +359,10 @@ public class VekaletIslemleriTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true,dependsOnMethods = {"TC2208"},  description = "TC0014 : Vekalet veren kullanıcıya evrak havalesi ve kontrolü")
+    @Test(enabled = true, dependsOnMethods = {"TC2208"}, description = "TC0014 : Vekalet veren kullanıcıya evrak havalesi ve kontrolü")
     public void TC0014() throws InterruptedException {
 
-        String kisiKurum = "D";
+        String kisiKurum = "Kurum";
         String geldigiKurum = "Esk Kurum 071216 2";
         String evrakGelisTipi = "Posta";
         String ivedilik = "Normal";
@@ -442,35 +443,36 @@ public class VekaletIslemleriTest extends BaseTest {
 
         login(username3, password3);
 
-        gelenEvraklarPage
-                .openPage();
-        int size = gelenEvraklarPage.tabloEvrakAdetKontrol();
-
-        if (size == 0) {
-            gelenEvrakKayitPage
-                    .openPage()
+//        gelenEvraklarPage
+//                .openPage();
+//        int size = gelenEvraklarPage.tabloEvrakAdetKontrol();
+//
+//        Test için gelen evrak kayit işlemi ile data oluşturuluyor.
+//        if (size == 0) {
+        gelenEvrakKayitPage
+                .openPage()
 //                .evrakBilgileriUstYaziEkle("C:\\Users\\Emre_Sencan\\Pictures\\pdf.pdf")
-                    .konuKoduDoldur(konuKodu)
-                    .evrakTuruSec(evrakTuru)
-                    .evrakDiliSec(evrakDili)
-                    .evrakTarihiDoldur(getSysDateForKis())
-                    .gizlilikDerecesiSec(gizlilikDerecesi)
-                    .kisiKurumSec("Kurum")
-                    .geldigiKurumDoldurLovText2(geldigiKurum)
-                    .evrakSayiSagDoldur()
-                    .evrakGelisTipiSec(evrakGelisTipi)
-                    .ivedilikSec(ivedilik)
-                    .dagitimBilgileriKisiSec("YASEMİN")
-                    .kaydet();
-            String evrakNO11 = gelenEvrakKayitPage.popUps();
-            gelenEvrakKayitPage.islemMesaji().isBasarili();
-        }
+                .konuKoduDoldur(konuKodu)
+                .evrakTuruSec(evrakTuru)
+                .evrakDiliSec(evrakDili)
+                .evrakTarihiDoldur(getSysDateForKis())
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .kisiKurumSec("Kurum")
+                .geldigiKurumDoldurLovText2(geldigiKurum)
+                .evrakSayiSagDoldur()
+                .evrakGelisTipiSec(evrakGelisTipi)
+                .ivedilikSec(ivedilik)
+                .dagitimBilgileriKisiSec("YASEMİN")
+                .kaydet();
+        String evrakNO11 = gelenEvrakKayitPage.popUps();
+        gelenEvrakKayitPage.islemMesaji().isBasarili();
+//        }
 
-        String[] evrakNo = new String[2];
-        gelenEvraklarPage
-                .openPage();
-
-        evrakNo = gelenEvraklarPage.tablodanEvrakNoAl(1);
+//        String[] evrakNo = new String[2];
+//        gelenEvraklarPage
+//                .openPage();
+//
+//        evrakNo = gelenEvraklarPage.tablodanEvrakNoAl(1);
 
         gelenEvraklarPage
                 .evrakSec()
@@ -486,7 +488,9 @@ public class VekaletIslemleriTest extends BaseTest {
                 .vekaletVarUyarıPopUp();
 
         gelenEvraklarPage
-                .tabloOlmayanEvrakNoKontrol(evrakNo[0].toString());
+                .openPage()
+                .filter().findRowsWith(Condition.text(evrakNO11))
+                .shouldHaveSize(0);
 
 
         logout();
@@ -494,9 +498,11 @@ public class VekaletIslemleriTest extends BaseTest {
 
         mainPage
                 .vekaletVarUyarıPopUp()
-                .birimSec(getSysDateForKis());
+                .birimSec("Vekalet");
 
         gelenEvraklarPage
-                .tabloEvrakNoKontrol(evrakNo[0].toString());
+                .openPage()
+                .filter().findRowsWith(Condition.text(evrakNO11))
+                .shouldHaveSize(1);
     }
 }
