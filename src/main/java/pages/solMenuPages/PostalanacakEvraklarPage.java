@@ -1,6 +1,7 @@
 package pages.solMenuPages;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
@@ -148,6 +149,9 @@ public class PostalanacakEvraklarPage extends MainPage {
 
         postalanacakEvrakOrijinalYazdir.click();
         btnPopupOrjYazdir.click();
+        Thread.sleep(2000);
+         Selenide.switchTo();
+
         popupPostaYazdirmaKapat();
         return this;
     }
@@ -174,6 +178,9 @@ public class PostalanacakEvraklarPage extends MainPage {
 
     public PostalanacakEvraklarPage popupPostalanacakEvrakYazdir() throws InterruptedException {
         btnPopupYazdir.click();
+        Thread.sleep(2000);
+       Selenide.switchTo();
+
         return this;
     }
 }
