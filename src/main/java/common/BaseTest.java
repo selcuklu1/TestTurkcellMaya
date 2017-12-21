@@ -26,7 +26,6 @@ public class BaseTest extends BaseLibrary {
 
     @BeforeClass(alwaysRun = true)
     public void driverSetUp() {
-        //killProcess();
 
         Locale turkishLocal = new Locale("tr", "TR");
         Locale.setDefault(turkishLocal);
@@ -39,7 +38,7 @@ public class BaseTest extends BaseLibrary {
         Configuration.baseUrl = belgenetURL;
         Configuration.browser = "chrome";
         //Configuration.browser = "drivers.Firefox";
-//        Configuration.browser = "marionette";
+        //Configuration.browser = "marionette";
 
         //Configuration.remote = "http://192.168.1.3:6585/wd/hub";
         //Configuration.remote = "http://10.101.20.153:4444/wd/hub";
@@ -53,12 +52,12 @@ public class BaseTest extends BaseLibrary {
         Configuration.startMaximized = true;
         Configuration.pollingInterval = 100;
         Configuration.collectionsPollingInterval = 100;
-//        Configuration.closeBrowserTimeoutMs = 34000;
-//        Configuration.openBrowserTimeoutMs = 34000;
+        //Configuration.closeBrowserTimeoutMs = 34000;
+        //Configuration.openBrowserTimeoutMs = 34000;
         //Configuration.browserSize = "1024x600";
         //endregion
 
-//        System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, "/dev/null");
+        // System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, "/dev/null");
 
         setDocPath();
 
@@ -67,20 +66,20 @@ public class BaseTest extends BaseLibrary {
     @AfterClass(alwaysRun = true)
     public void afterClass() {
         Selenide.close();
-        }
+    }
 
     @AfterMethod
     public void tearDown() throws Exception {
         try {
-          //Selenide.clearBrowserLocalStorage();
-          //Selenide.clearBrowserCookies();
+            Selenide.clearBrowserLocalStorage();
+            Selenide.clearBrowserCookies();
         } catch (Exception e) {
         }
     }
 
     @AfterSuite(alwaysRun = true)
     public void afterSuite() {
-       // killProcess();
+        // killProcess();
     }
 
     @Step("Login")
