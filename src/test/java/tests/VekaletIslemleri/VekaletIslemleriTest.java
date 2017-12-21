@@ -212,7 +212,7 @@ public class VekaletIslemleriTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true,dependsOnMethods = {"TC2208"}, description = "TC0015 : Vekaleti alan kullanıcının onay akışında seçilmesi(vekaleten)")
+    @Test(enabled = true, dependsOnMethods = {"TC2208"}, description = "TC0015 : Vekaleti alan kullanıcının onay akışında seçilmesi(vekaleten)")
     public void TC0015() throws InterruptedException {
 
         login(username3, password3);
@@ -407,18 +407,41 @@ public class VekaletIslemleriTest extends BaseTest {
     @Test(enabled = true, dependsOnMethods = {"TC2208"}, description = "TC2212 : Vekalet veren kullanıcının bulunduğu kullanıcı listesine evrak havalesi ve kontrolü")
     public void TC2212() throws InterruptedException {
 
-        login(username2, password2);
+        login(username3, password3);
 
-        String[] evrakNo = new String[2];
-        gelenEvraklarPage
-                .openPage();
+        String evrakGelisTipi = "Posta";
+        String geldigiKurum = "Esk Kurum 071216 2";
 
-        evrakNo = gelenEvraklarPage.tablodanEvrakNoAl(1);
+//        String[] evrakNo = new String[2];
+//        gelenEvraklarPage
+//                .openPage();
+//
+//        evrakNo = gelenEvraklarPage.tablodanEvrakNoAl(1);
+
+        gelenEvrakKayitPage
+                .openPage()
+//                .evrakBilgileriUstYaziEkle("C:\\Users\\Emre_Sencan\\Pictures\\pdf.pdf")
+                .konuKoduDoldur(konuKodu)
+                .evrakTuruSec(evrakTuru)
+                .evrakDiliSec(evrakDili)
+                .evrakTarihiDoldur(getSysDateForKis())
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .kisiKurumSec("Kurum")
+                .geldigiKurumDoldurLovText2(geldigiKurum)
+                .evrakSayiSagDoldur()
+                .evrakGelisTipiSec(evrakGelisTipi)
+                .ivedilikSec(ivedilik)
+                .dagitimBilgileriKisiSec("YASEMİN")
+                .kaydet();
+        String evrakNO2212 = gelenEvrakKayitPage.popUps();
+        gelenEvrakKayitPage.islemMesaji().isBasarili();
 
         String mesaj = "Seçmiş olduğunuz kullanıcı grubunda vekalet vermiş kişiler bulunmaktadır. Kullanıcı grubunu kullanırsanız havale asıl kişilere(vekalet veren) gidecektir. Yine de işleme devam etmek istiyor musunuz?";
         gelenEvraklarPage
                 .evrakSec()
                 .havaleYap()
+                .havaleYapKisiTreeSec(vekaletVeren)
+                .vekeletAlanVerenTabloVekaletAlanveyaVerenSec(vekaletVeren)
                 .kullanciListesiSecWithTitle("OPTİİM")  //ikinci gelen seçilmeli
                 .evrakOnIzlemeUyarıPopUpKontol(mesaj)
                 .havaleYapGonder()
@@ -430,8 +453,9 @@ public class VekaletIslemleriTest extends BaseTest {
                 .vekaletVarUyarıPopUp();
 
         gelenEvraklarPage
-                .tabloEvrakNoKontrol(evrakNo[0].toString());
-
+                .openPage()
+                .filter().findRowsWith(Condition.text("5272"))
+                .shouldHaveSize(1);
     }
 
     @Severity(SeverityLevel.CRITICAL)

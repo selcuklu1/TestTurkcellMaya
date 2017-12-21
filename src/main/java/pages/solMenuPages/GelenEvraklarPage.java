@@ -49,9 +49,10 @@ public class GelenEvraklarPage extends MainPage {
     SelenideElement btnHavaleYapGonder = $("[id^='mainPreviewForm:j_idt'] [class$='havaleGonderButonClass']");
     SelenideElement btnHavaleYapHavaleOnayinaGonder = $(By.id("mainPreviewForm:j_idt30599"));
     ElementsCollection tblVekaletVerenAlan =$$("[id='mainPreviewForm:kullaniciBirimSecenekleriHavaleIcin_data'] tr[role='row']");
+
     BelgenetElement txtKullaniciListesi = comboLov (By.id("mainPreviewForm:dagitimBilgileriKisiListesiLov:LovText"));
-    SelenideElement popUpUyari = $(By.xpath("//body[@class='ui-layout-container']/div[104]//p"));
-    SelenideElement popUpUyariEvet = $(By.xpath("//body[@class='ui-layout-container']/div[104]//center/button[1]/span[@class='ui-button-text']"));
+    SelenideElement popUpUyari = $("[id='mainPreviewForm:j_idt4714'] p");
+    SelenideElement popUpUyariEvet = $("[id='mainPreviewForm:j_idt4714'] button:nth-child(1)");
     ElementsCollection tblEvrak = $$("[id^='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
     BelgenetElement txtHavaleYapKisi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKullaniciLov:LovText"));
     BelgenetElement txtHavaleYapKullaniciListesi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKisiListesiLov:LovText"));
@@ -478,14 +479,16 @@ public class GelenEvraklarPage extends MainPage {
     public GelenEvraklarPage vekeletAlanVerenTabloVekaletAlanveyaVerenSec(String isim) {
         tblVekaletVerenAlan
                 .filterBy(Condition.text(isim)).first()
-                .$("[id='mainPreviewForm:kullaniciBirimSecenekleriHavaleIcin_data'] td:nth-child(4) button").click();
+                .$("button").click();
         return this;
     }
     @Step("Vekalet var uyarısı ")
     public GelenEvraklarPage evrakOnIzlemeUyarıPopUpKontol(String mesaj) {
-        Selenide.sleep(2000);
+        SelenideElement popUp = $(By.id("mainPreviewForm:j_idt4714"));
+        popUp.should(Condition.visible);
+
        if(popUpUyari.text().equals(mesaj));
-           popUpUyariEvet.click();
+           clickJs(popUpUyariEvet);
         return this;
     }
     @Step("Kullacici listesi seç")
