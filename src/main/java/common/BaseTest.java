@@ -40,13 +40,13 @@ public class BaseTest extends BaseLibrary {
         //Configuration.browser = "drivers.Firefox";
 //        Configuration.browser = "marionette";
 
-        Configuration.remote = "http://192.168.1.3:6585/wd/hub";
+        //Configuration.remote = "http://192.168.1.3:6585/wd/hub";
         //Configuration.remote = "http://10.101.20.153:4444/wd/hub";
         Configuration.reportsFolder = "test-result/reports";
         Configuration.screenshots = false;
         Configuration.savePageSource = false;
-        Configuration.collectionsTimeout = 20000;
-        Configuration.timeout = 20000;
+        Configuration.collectionsTimeout = 30000;
+        Configuration.timeout = 30000;
         Configuration.holdBrowserOpen = false;
         Configuration.headless = false;
         Configuration.startMaximized = true;
@@ -66,20 +66,20 @@ public class BaseTest extends BaseLibrary {
     @AfterClass(alwaysRun = true)
     public void afterClass() {
         Selenide.close();
-    }
+        }
 
     @AfterMethod
     public void tearDown() throws Exception {
         try {
-            Selenide.clearBrowserLocalStorage();
-            Selenide.clearBrowserCookies();
+          //Selenide.clearBrowserLocalStorage();
+          //Selenide.clearBrowserCookies();
         } catch (Exception e) {
         }
     }
 
     @AfterSuite(alwaysRun = true)
     public void afterSuite() {
-        // killProcess();
+       // killProcess();
     }
 
     @Step("Login")
