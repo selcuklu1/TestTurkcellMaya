@@ -220,7 +220,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .adDoldur(ad)
                 .soyadDoldur(soyad)
                 .kepAdresiKullaniyor(true)
-                .kaydet2()
+                .kaydet()
                 .islemMesaji().basariliOlmali(basariMesaji);
     }
 
