@@ -1,6 +1,7 @@
 package drivers;
 
 import com.codeborne.selenide.WebDriverProvider;
+import common.BaseTest;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxDriverLogLevel;
@@ -10,7 +11,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.util.logging.Level;
 
-public class Firefox implements WebDriverProvider {
+public class Firefox extends BaseTest implements WebDriverProvider {
     @Override
     public WebDriver createDriver(DesiredCapabilities capabilities) {
         //<editor-fold desc="ProdilesIni can be used to set "default" or pre created profile">
@@ -21,7 +22,6 @@ public class Firefox implements WebDriverProvider {
 //        System.setProperty("webdriver.gecko.driver","/Users/ilyas/Documents/WebDrivers/geckodriver-v0.19.0");
 //        System.setProperty("webdriver.gecko.driver","/Users/ilyas/Documents/WebDrivers/geckodriver-v0.18.0");
 
-
         FirefoxProfile profile = new FirefoxProfile();
         FirefoxOptions options = new FirefoxOptions()
                 .setProfile(profile)
@@ -31,7 +31,6 @@ public class Firefox implements WebDriverProvider {
 
 //        System.setProperty(FirefoxDriver.SystemProperty.DRIVER_USE_MARIONETTE,"false");
 //        System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE,"/dev/null");
-
         return new FirefoxDriver(options);
     }
 }

@@ -72,7 +72,8 @@ public class MainPage extends BaseLibrary {
     //endregion
 
     public IslemMesajlari islemMesaji() {
-        return islemMesajlari;
+//        return islemMesajlari;
+        return new IslemMesajlari();
     }
 
     //region Sayfalar

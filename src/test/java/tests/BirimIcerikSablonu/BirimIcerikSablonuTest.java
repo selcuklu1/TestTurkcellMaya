@@ -1,5 +1,6 @@
 package tests.BirimIcerikSablonu;
 
+import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;
 import common.BaseTest;
 import io.qameta.allure.Feature;
@@ -77,7 +78,7 @@ public class BirimIcerikSablonuTest extends BaseTest {
         birimIcerikSablonlarPage.getLovKullanilacakBirimler()
                 .openTree()
                 .titleItems().first().click();
-        birimIcerikSablonlarPage.getLovKullanilacakBirimler().closeLovTreePanel();
+//        birimIcerikSablonlarPage.getLovKullanilacakBirimler().closeLovTreePanel();
         birimIcerikSablonlarPage.getBtnKaydet().click();
         birimIcerikSablonlarPage.islemMesaji().dikkatOlmali("Şablon içeriği boş olamaz!");
 
@@ -110,7 +111,7 @@ public class BirimIcerikSablonuTest extends BaseTest {
         birimIcerikSablonlarPage.getBtnYeniSablonOlustur().click();
         birimIcerikSablonlarPage.getLovKullanilacakBirimler().shouldBe(enabled);
         birimIcerikSablonlarPage.getLovKullanilacakBirimler().openTree().titleItems().first().click();
-        birimIcerikSablonlarPage.getLovKullanilacakBirimler().closeLovTreePanel();
+//        birimIcerikSablonlarPage.getLovKullanilacakBirimler().closeLovTreePanel();
         birimIcerikSablonlarPage.getEditor().type("text in editor");
         birimIcerikSablonlarPage.getBtnKaydet().click();
         birimIcerikSablonlarPage.islemMesaji().uyariOlmali("Zorunlu alanları doldurunuz");
@@ -194,11 +195,14 @@ public class BirimIcerikSablonuTest extends BaseTest {
         cmbSablon.getComboBoxValues().filterBy(text(sablonAdi_1082)).shouldHaveSize(1);
         cmbSablon.selectComboBox(sablonAdi_1082);
 
+        sleep(2000);
+
         switchTo().frame($("[id='yeniGidenEvrakForm:onizlemeField'] iframe"));
         String actualText = $("body").text();
+        $("body").shouldBe(visible).shouldHave(exactText(editorText));
         switchTo().defaultContent();
 
-        Assert.assertEquals(editorText, actualText);
+//        Assert.assertEquals(editorText, actualText);
 
         $x("//div[@id='yeniGidenEvrakForm:icerikSablonDialogD1']//button/span[text()='Uygula']/..").click();
 
@@ -252,14 +256,22 @@ public class BirimIcerikSablonuTest extends BaseTest {
         editor.toolbarButton("Öntanımlı İçerik Şablonu Kullan", true);
 
         BelgenetElement cmbSablon = comboBox("#yeniGidenEvrakForm\\:icerikSablonDialogD1 label[id$='_label']");
+
+        for (int i = 0; i < Configuration.timeout/1000; i++) {
+            sleep(1000);
+            if(cmbSablon.is(visible))
+                break;
+        }
+        cmbSablon.waitUntil(visible, 1000);
         cmbSablon.getComboBoxValues().filterBy(text(sablonAdi)).shouldHaveSize(1);
         cmbSablon.selectComboBox(sablonAdi);
 
         switchTo().frame($("[id='yeniGidenEvrakForm:onizlemeField'] iframe"));
-        String actualText = $("body").text();
+//        String actualText = $("body").text();
+        $("body").shouldHave(exactText(editorText));
         switchTo().defaultContent();
 
-        Assert.assertEquals(editorText, actualText);
+//        Assert.assertEquals(editorText, actualText);
 
         $x("//div[@id='yeniGidenEvrakForm:icerikSablonDialogD1']//button/span[text()='Uygula']/..").click();
 
@@ -364,11 +376,25 @@ public class BirimIcerikSablonuTest extends BaseTest {
 
     }
 
+    @Test(description = "Şablonları sil", dependsOnMethods = {"tc1079_kontrol"}, priority = 13)
+    public void sablonSil() {
+        login();
+        birimIcerikSablonlarPage = new BirimIcerikSablonlarPage().openPage();
+        birimIcerikSablonlarPage.sablonuSil(sablonAdi_1079);
+    }
+
+    /*@Test(description = "Şablonları sil", dependsOnMethods = {"tc1085"}, priority = 13)
+    public void sablonSil2() {
+        login();
+        birimIcerikSablonlarPage = new BirimIcerikSablonlarPage().openPage();
+        birimIcerikSablonlarPage.sablonuSil("DENEME ŞABLON");
+    }*/
+
     @Test(enabled = false)
     public void testName() throws Exception {
         login();
         birimIcerikSablonlarPage = new BirimIcerikSablonlarPage().openPage();
 
-        birimIcerikSablonlarPage.sablonuSil("DENEME ŞABLON");
+        birimIcerikSablonlarPage.sablonuSilD("DENEME ŞABLON");
     }
 }
