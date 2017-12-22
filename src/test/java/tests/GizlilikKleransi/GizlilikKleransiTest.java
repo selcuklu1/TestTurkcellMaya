@@ -12,6 +12,7 @@ import pages.solMenuPages.*;
 import pages.ustMenuPages.*;
 
 import static data.TestData.*;
+
 /****************************************************
  * Tarih: 2017-12-22
  * Proje: Türksat Functional Test Automation
@@ -59,7 +60,7 @@ public class GizlilikKleransiTest extends BaseTest {
         imzaladiklarimPage = new ImzaladiklarimPage();
         genelEvrakRaporuPage = new GenelEvrakRaporuPage();
         evrakAramaPage = new EvrakAramaPage();
-        imzaBekleyenlerPage= new ImzaBekleyenlerPage();
+        imzaBekleyenlerPage = new ImzaBekleyenlerPage();
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -614,7 +615,7 @@ public class GizlilikKleransiTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TC2191 : Akışta gizlilik kleransı değiştirilen evrakın dağıtım yeri kontrolü\n")
-    public void TC2191() throws InterruptedException{
+    public void TC2191() throws InterruptedException {
 //8.tepten Devam edilecek
 
 
@@ -630,9 +631,9 @@ public class GizlilikKleransiTest extends BaseTest {
         String gizlilikDerecesi = "Normal";
         String ivedilik = "Normal";
         String kullaniciNormal = "USERNAME22N TEST";
-        String mesaj = kullaniciNormal+" kullanıcısının gizlilik kleransı evrakı görüntülemek için yeterli değildir.";
+        String mesaj = kullaniciNormal + " kullanıcısının gizlilik kleransı evrakı görüntülemek için yeterli değildir.";
 
-        login(username3,password3);
+        login(username3, password3);
 
         evrakOlusturPage
                 .openPage()
@@ -667,7 +668,7 @@ public class GizlilikKleransiTest extends BaseTest {
 //        evrakNo = parafladiklarimPage.evrakDetayiEvrakNoAl();
 
         logout();
-        login("username21g","123");
+        login("username21g", "123");
 
         imzaBekleyenlerPage
                 .openPage()
@@ -685,7 +686,7 @@ public class GizlilikKleransiTest extends BaseTest {
                 .islemMesaji().beklenenMesaj(basariMesaji);
 
         logout();
-        login(username3,password3);
+        login(username3, password3);
 
 
         parafBekleyenlerPage
@@ -697,7 +698,7 @@ public class GizlilikKleransiTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TC1472 : Dağıtımda gizlilik derecesi kontrolü")
-    public void TC1472() throws InterruptedException{
+    public void TC1472() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
         String tur2 = "IMZALAMA";
@@ -712,10 +713,12 @@ public class GizlilikKleransiTest extends BaseTest {
         String kullaniciOzel = "USERNAME24O TEST";
         String kullaniciTasnifDisi = "USERNAME23T TEST";
 
-        String mesaj = kullaniciTasnifDisi+" kullanıcısının gizlilik kleransı evrakı görüntülemek için yeterli değildir.";
+        String mesaj = kullaniciTasnifDisi + " kullanıcısının gizlilik kleransı evrakı görüntülemek için yeterli değildir.";
+        String mesaj2 = "DAGPLAN1 adlı Dağıtım Planınında gizlilik kleransı yetersiz kullanıcılar vardır: " + kullaniciTasnifDisi;
 
 
-        login(username3,password3);
+        login(username3, password3);
+
 
         evrakOlusturPage
                 .openPage()
@@ -745,14 +748,98 @@ public class GizlilikKleransiTest extends BaseTest {
         evrakOlusturPage
                 .bilgilerTabiAc()
                 .geregiSonKayitSil()
-                .geregiSecimTipiSecByText("Birim")
-                .geregiSec("Yazılım");
+                .geregiSecimTipiSecByText("Dağıtım Planları")
+                .geregiSec("DAGPLAN1");
 
         evrakOlusturPage
                 .editorTabAc()
-                .parafla();
-//                .islemMesaji().dikkatOlmali(mesaj);
+                .parafla()
+                .islemMesaji().dikkatOlmali(mesaj2);
+    }
 
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TC2190 : Dağıtımda gizlilik klerans kontrolü (Cevap)")
+    public void TC2190() throws InterruptedException {
+
+        String basariMesaji = "İşlem başarılıdır!";
+        String tur2 = "IMZALAMA";
+        String icerik = "TC1472 " + getSysDate();
+        String konuKodu = "010.01";
+        String konu = "TC1472 " + getSysDate();
+        String kaldiralacakKlasor = "Diğer";
+        String evrakTuru = "Resmi Yazışma";
+        String evrakDili = "Türkçe";
+        String gizlilikDerecesi = "Hizmete Özel";
+        String ivedilik = "Normal";
+        String kullaniciOzel = "USERNAME24O TEST";
+        String kullaniciTasnifDisi = "USERNAME23T TEST";
+
+        String evrakGelisTipi = "Posta";
+        String geldigiKurum = "Esk Kurum 071216 2";
+
+        String mesaj = kullaniciTasnifDisi + " kullanıcısının gizlilik kleransı evrakı görüntülemek için yeterli değildir.";
+        String mesaj2 = "DAGPLAN1 adlı Dağıtım Planınında gizlilik kleransı yetersiz kullanıcılar vardır:" + kullaniciTasnifDisi;
+
+        login(username3, password3);
+
+        gelenEvrakKayitPage
+                .openPage()
+//                .evrakBilgileriUstYaziEkle("C:\\Users\\Emre_Sencan\\Pictures\\pdf.pdf")
+                .konuKoduDoldur(konuKodu)
+                .konuDoldur(konu)
+                .evrakTuruSec(evrakTuru)
+                .evrakDiliSec(evrakDili)
+                .evrakTarihiDoldur(getSysDateForKis())
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .kisiKurumSec("Kurum")
+                .geldigiKurumDoldurLovText2(geldigiKurum)
+                .evrakSayiSagDoldur()
+                .evrakGelisTipiSec(evrakGelisTipi)
+                .ivedilikSec(ivedilik)
+                .dagitimBilgileriKisiSec("YASEMİN")
+                .kaydet()
+                .islemMesaji().isBasarili();
+
+        gelenEvraklarPage
+                .openPage()
+                .tabloEvrakNoKontrol(konu)
+                .cevapYaz();
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .konuKoduSec(konuKodu)
+                .konuDoldur(konu)
+                .kaldiralacakKlasorlerSec(kaldiralacakKlasor)
+                .evrakTuruSec(evrakTuru)
+                .evrakDiliSec(evrakDili)
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .aciklamaDoldur(icerik)
+                .ivedikSec(ivedilik)
+                .geregiSecimTipiSecByText("Kullanıcı")
+                .geregiSec(kullaniciOzel)
+                .geregiSec(kullaniciTasnifDisi)
+                .onayAkisiEkle()
+                .kullaniciTabloKontrol()
+                .kullanicilarImzaciSec(tur2)
+                .kullan();
+
+        evrakOlusturPage
+                .editorTabAc()
+                .editorIcerikDoldur(icerik)
+                .parafla()
+                .islemMesaji().dikkatOlmali(mesaj);
+
+        evrakOlusturPage
+                .bilgilerTabiAc()
+                .geregiSonKayitSil()
+                .geregiSecimTipiSecByText("Dağıtım Planı")
+                .geregiSec("DAGPLAN1");
+
+        evrakOlusturPage
+                .editorTabAc()
+                .parafla()
+                .islemMesaji().dikkatOlmali(mesaj);
 
     }
 }
