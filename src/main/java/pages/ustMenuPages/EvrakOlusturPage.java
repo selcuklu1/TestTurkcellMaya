@@ -1193,13 +1193,10 @@ public class EvrakOlusturPage extends MainPage {
 //            Thread.sleep(2000);*/
 
 //           .$("input")
-            $("div[id='imzalaForm:imzalaRadio']").shouldBe(visible).click();
+            $("div[id='imzalaForm:imzalaRadio']").shouldBe(visible);
+            $("div[id='imzalaForm:imzalaRadio'] input").click();
             $("#imzalaForm\\:sayisalImzaConfirmDialogOpener").click();
-
-            SelenideElement sayisalImzaOnay = $(By.id("imzalaForm:sayisalImzaConfirmForm:sayisalImzaEvetButton"));
-
-            Thread.sleep(1500);
-            sayisalImzaOnay.click();
+            $("#imzalaForm\\:sayisalImzaConfirmForm\\:sayisalImzaEvetButton").shouldBe(visible).click();
             return this;
         }
 

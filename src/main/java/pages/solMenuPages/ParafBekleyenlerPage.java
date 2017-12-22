@@ -14,6 +14,7 @@ import pages.pageData.SolMenuData;
 
 import java.util.List;
 
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
@@ -55,6 +56,10 @@ public class ParafBekleyenlerPage extends MainPage {
     @Step("Paylaştıklarım sayfası aç")
     public ParafBekleyenlerPage openPage() {
         solMenu(SolMenuData.KapatmaIslemleri.ParafBekleyenler);
+        String pageTitle = SolMenuData.KapatmaIslemleri.ParafBekleyenler.getMenuText();
+        $("#mainInboxForm\\:inboxDataTable .ui-inbox-header-title")
+                .shouldHave(text(pageTitle));
+        System.out.println("Page: " + pageTitle);
         return this;
     }
 

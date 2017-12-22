@@ -9,9 +9,11 @@ import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
 
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
+import static pages.pageData.SolMenuData.*;
 
 public class ParafladiklarimPage extends MainPage {
 
@@ -40,7 +42,11 @@ public class ParafladiklarimPage extends MainPage {
 
     @Step("Parafladıklarım sayfası aç")
     public ParafladiklarimPage openPage() {
-        solMenu(SolMenuData.IslemYaptiklarim.Parafladiklarim);
+        solMenu(IslemYaptiklarim.Parafladiklarim);
+        String pageTitle = IslemYaptiklarim.Parafladiklarim.getMenuText();
+        $("#mainInboxForm\\:inboxDataTable .ui-inbox-header-title")
+                .shouldHave(text(pageTitle));
+        System.out.println("Page: " + pageTitle);
         return this;
     }
 

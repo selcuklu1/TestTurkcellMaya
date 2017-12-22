@@ -1,13 +1,22 @@
 package pages.pageComponents.belgenetElements;
 
+import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.WebDriverRunner;
+import com.codeborne.selenide.commands.Click;
 import com.codeborne.selenide.commands.Commands;
+import com.codeborne.selenide.commands.Find;
 import com.codeborne.selenide.impl.ElementFinder;
+import com.codeborne.selenide.impl.WebElementSource;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
+import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfAllElements;
 
 public class BelgenetFramework {
 
@@ -46,6 +55,31 @@ public class BelgenetFramework {
         Commands.getInstance().add("getComboBoxHtmlList", new ComboBox().new GetComboBoxList());
         //endregion
 
+
+        Commands.getInstance().add("click", new Click() {
+            @Override
+            protected void click(WebElement element) {
+                if (WebDriverRunner.isFirefox()) {
+                    executeJavaScript("arguments[0].scrollIntoView(true);", element);
+                }
+                super.click(element);
+            }
+        });
+
+        /*Commands.getInstance().add("Find", new Find() {
+            @Override
+            public SelenideElement execute(SelenideElement proxy, WebElementSource locator, Object... args) {
+                By loadingLocator = By.cssSelector("div[style*='display: block;'] .loading");
+                long timeout = Configuration.timeout/1000;
+                WebDriver driver = WebDriverRunner.getWebDriver();
+                new WebDriverWait(driver, timeout, 50).until(
+                        invisibilityOfAllElements(driver.findElements(loadingLocator)));
+                return args.length == 1 ?
+                        locator.find(proxy, args[0], 0) :
+                        locator.find(proxy, args[0], (Integer) args[1]);
+            }
+        });*/
+
     }
 
     /**
@@ -69,7 +103,6 @@ public class BelgenetFramework {
     public static BelgenetElement comboBox(By locator) {
         return ElementFinder.wrap(BelgenetElement.class, null, locator, 0);
     }
-
 
     /**
      * First search in main iframe, then first level child iframes(optiona iframe locator).

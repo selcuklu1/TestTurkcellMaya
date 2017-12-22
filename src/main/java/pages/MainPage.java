@@ -17,12 +17,12 @@ import static com.codeborne.selenide.Selenide.executeJavaScript;
 public class MainPage extends BaseLibrary {
     private SolMenu solMenu = new SolMenu();
     private UstMenu ustMenu = new UstMenu();
-    private IslemMesajlari islemMesajlari = new IslemMesajlari();
-    private UserMenu userMenu = new UserMenu();
-    private Filtreler filter = new Filtreler();
+//    private IslemMesajlari islemMesajlari = new IslemMesajlari();
+//    private UserMenu userMenu = new UserMenu();
+//    private Filtreler filter = new Filtreler();
 
     public Filtreler filter() {
-        return filter;
+        return new Filtreler();
     }
 
 

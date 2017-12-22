@@ -35,6 +35,10 @@ public class ImzaBekleyenlerPage extends MainPage {
     @Step("İmza bekleyenler sayfası aç")
     public ImzaBekleyenlerPage openPage(){
         solMenu(SolMenuData.IslemBekleyenEvraklar.ImzaBekleyenler);
+        String pageTitle = SolMenuData.IslemBekleyenEvraklar.ImzaBekleyenler.getMenuText();
+        $("#mainInboxForm\\:inboxDataTable .ui-inbox-header-title")
+                .shouldHave(text(pageTitle));
+        System.out.println("Page: " + pageTitle);
         return this;
     }
 
