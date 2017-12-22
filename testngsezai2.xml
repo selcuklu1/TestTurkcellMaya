@@ -5,7 +5,6 @@
 
     <test name="SezaiTests">
         <packages>
-            <package name="tests.GercekKisiYonetimi"/>
             <package name="tests.OnayAkisi"/>
         </packages>
     </test>

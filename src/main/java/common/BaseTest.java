@@ -21,7 +21,7 @@ public class BaseTest extends BaseLibrary {
 
     @BeforeSuite(alwaysRun = true)
     public void beforeSuite() {
-        killProcess();
+        //killProcess();
     }
 
     @BeforeClass(alwaysRun = true)
@@ -37,11 +37,11 @@ public class BaseTest extends BaseLibrary {
         //region Selenide Driver Configuration
         Configuration.baseUrl = belgenetURL;
 
-        //Configuration.browser = "chrome";
-        //Configuration.browser = "drivers.Firefox";
-        Configuration.browser = "marionette";
+        Configuration.browser = "chrome";
+        //Configuration.browser = "firefox";
+        //Configuration.browser = "marionette";
 
-        Configuration.remote = "http://localhost:4444/wd/hub";
+        //Configuration.remote = "http://localhost:4444/wd/hub";
 
         Configuration.reportsFolder = "test-result/reports";
         Configuration.screenshots = false;
@@ -50,7 +50,7 @@ public class BaseTest extends BaseLibrary {
         Configuration.collectionsTimeout = 40000;
         Configuration.timeout = 40000;
         //Configuration.clickViaJs = true;
-        // Configuration.holdBrowserOpen = true;
+        Configuration.holdBrowserOpen = true;
         //Configuration.headless = false;
 
         Configuration.startMaximized = true;
@@ -75,7 +75,7 @@ public class BaseTest extends BaseLibrary {
 
     @AfterMethod
     public void tearDown() throws Exception {
-        Selenide.close();
+       // Selenide.close();
 /*        try {
             Selenide.clearBrowserLocalStorage();
             Selenide.clearBrowserCookies();
@@ -85,7 +85,7 @@ public class BaseTest extends BaseLibrary {
 
     @AfterSuite(alwaysRun = true)
     public void afterSuite() {
-        killProcess();
+        //killProcess();
     }
 
     @Step("Login")

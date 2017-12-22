@@ -20,17 +20,6 @@
         <classes>
             <class name="tests.TuzelKisiYonetimi.TuzelKisiYonetimiTest"/>
         </classes>
-    </test>
-<<<<<<< HEAD
-    <test name="YonetimHavuzuIslemleriTest">
-        <classes>
-            <class name="tests.YonetimHavuzuIslemleri.YonetimHavuzuIslemleriTest"/>
-        </classes>
-    </test>
-    <test name="tests.EvrakPostalama">
-        <classes>
-            <class name="tests.EvrakPostalama.EvrakPostalamaTest"/>
-        </classes>
     </test>-->
     <test name="All">
         <packages>
@@ -39,6 +28,4 @@
             <package name="tests.EvrakNot"/>-->
         </packages>
     </test>
-=======
->>>>>>> master
 </suite>
