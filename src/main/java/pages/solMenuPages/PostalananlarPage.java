@@ -25,7 +25,7 @@ public class PostalananlarPage extends MainPage {
     SelenideElement chkPostaladiklarim = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:postaladiklarimCheckbox_input"));
     SelenideElement tblEvrakSec = $(By.id("mainInboxForm:inboxDataTable:1:evrakTable"));
     SelenideElement  tblPostalananlartbl =  $(By.id("mainInboxForm:inboxDataTable_data"));
-
+    SelenideElement btnRadioPostaladiklarim = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:postaladiklarimCheckbox"));
     SelenideElement tblEvrakDetayPanel = $(By.id("mainPreviewForm:evrakDetayPanelGrid"));
     //ElementsCollection  tblPostalananlartbl =  $$("tbody[id='mainInboxForm:inboxDataTable_data']");
     //Hüseyin
@@ -38,6 +38,18 @@ public class PostalananlarPage extends MainPage {
     SelenideElement btnKaydet = $(By.id("mainPreviewForm:j_idt18809"));
     SelenideElement btnTarihGuncelle = $(By.id("mainPreviewForm:tebligatMazbatasiTarihiId_input"));
     ElementsCollection dlgPostaGuncelle = $$("table[id='mainPreviewForm:postaGuncellePanel']");
+    SelenideElement btnKurdele = $(By.id("mainInboxForm:inboxDataTable:0:btnImzasiz"));
+    SelenideElement btnImzaciPopupKapat = $x("//*[@id='mainInboxForm:imzaListesiDialog']/div[1]/a/span");
+    SelenideElement btnTamEkran = $(By.id("mainInboxForm:inboxDataTable:0:tamEkranModuButton"));
+    SelenideElement btnTamEkranKapat = $x("//*[@id='fullScreenDialog']/div[1]/a/span");
+    SelenideElement btnIcerikGoster = $(By.id("mainInboxForm:inboxDataTable:0:detayGosterButton"));
+    SelenideElement btnIlgileriIcerik = $(By.id("inboxItemInfoForm:dialogTabMenuLeft:uiRepeat:2:cmdbutton"));
+    SelenideElement btnEkleriIcerik = $(By.id("inboxItemInfoForm:dialogTabMenuLeft:uiRepeat:1:cmdbutton"));
+    SelenideElement btnIcerikPencereKapat = $x("//*[@id='windowItemInfoDialog']/div[1]/a[1]/span");
+    SelenideElement btnKapatmaOnayı = $(By.id("kapatButton"));
+    SelenideElement btnFiltreBaslangicTarihi = $x("//*[@id='mainInboxForm:inboxDataTable:filtersAccordion:filtersGrid']/tbody/tr[2]/td[2]/table/tbody/tr/td[1]/span/input");
+    SelenideElement btnFiltreSpan = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion"));
+    SelenideElement ImzaDialog = $(By.id("mainInboxForm:imzaListesiDialog"));
     @Step("Postalananlar sayfası aç")
     public PostalananlarPage openPage() throws  InterruptedException {
         solMenu(SolMenuData.BirimEvraklari.Postalananlar);
@@ -166,4 +178,67 @@ return this;
 
         return $x("//tbody/tr[3]/td[3]/label").getAttribute("outerText");
    }
+
+   public PostalananlarPage btnKurdele () {
+
+       btnKurdele.click();
+       return this;
+   }
+
+   public PostalananlarPage btnImzaciPopupKapat () {
+       btnImzaciPopupKapat.click();
+       return this;
+   }
+
+   public PostalananlarPage btnTamEkran() {
+       btnTamEkran.click();
+       return this;
+   }
+
+   public PostalananlarPage btnTamEkranKapat() {
+       btnTamEkranKapat.click();
+       return this;
+   }
+
+   public PostalananlarPage btnIcerikGoster() throws InterruptedException {
+       btnIcerikGoster.click();
+       Thread.sleep(1000);
+       return this;
+   }
+   public PostalananlarPage btnIcerikIlgileriTab () throws InterruptedException {
+       btnIlgileriIcerik.click();
+       Thread.sleep(500);
+       return this;
+   }
+   public PostalananlarPage btnIcerikEkleriTab () {
+       btnEkleriIcerik.click();
+       return this;
+   }
+   public PostalananlarPage btnIcerikDetayKapat () {
+       btnIcerikPencereKapat.click();
+       btnKapatmaOnayı.click();
+       return this;
+   }
+
+   public PostalananlarPage btnFiltrePostaladiklarim () {
+
+       btnRadioPostaladiklarim.click();
+       return this;
+   }
+   public PostalananlarPage btnFiltreBaslangicTarihi (String txt) {
+
+       btnFiltreBaslangicTarihi.setValue(txt);
+       return this;
+   }
+   public PostalananlarPage btnFiltreSpan (){
+
+       btnFiltreSpan.click();
+       return this;
+   }
+    public PostalananlarPage mngImzaDialog() {
+
+       ImzaDialog.click();
+       ImzaDialog.scrollTo();
+       return this;
+    }
 }

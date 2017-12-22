@@ -44,6 +44,7 @@ public class PostalanacakEvraklarPage extends MainPage {
     SelenideElement btnPopupHesaplaTamam = $(By.id("mainPreviewForm:tutarDialogButtonId"));
     SelenideElement btnPostala = $(By.id("mainPreviewForm:postalaButton_id"));
     SelenideElement btnDialogEvet =$(By.id("mainPreviewForm:postalaDogrulaDialogForm:evetButton_id"));
+
     @Step("Postalanacak Evraklar sayfası aç")
     public PostalanacakEvraklarPage openPage() {
         solMenu(SolMenuData.BirimEvraklari.PostalanacakEvraklar);
@@ -190,4 +191,5 @@ public class PostalanacakEvraklarPage extends MainPage {
         btnDialogEvet.click();
         return this;
     }
+
 }

@@ -183,7 +183,7 @@ public class EvrakPostalamaTest extends BaseTest {
     @Test(enabled = true , description = "TC1685 : Fiziksel eki olan iç yazışmaların postaya düşürülmesi")
     public void TC1685() throws InterruptedException {
         login("Mbozdemir", "123");
-        String konu = "TC1685" + getSysDate();
+        String konu = "TC1685_" + getSysDate();
 
         evrakOlusturPage
                 .openPage()
@@ -228,5 +228,31 @@ public class EvrakPostalamaTest extends BaseTest {
         postalanacakEvraklarPage.evrakPostala()
                 .gidisSekli("Evrak Servisi Elden")
                 .postala();
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true , description = "TC0312 : postalama işlemi sonrası postalananlar listesinin kontrolü")
+    public void TC0312 () throws InterruptedException {
+        login("Mbozdemir", "123");
+        String konu = "TC1685_" + getSysDate();
+
+        postalananlarPage.openPage();
+        postalananlarPage.btnKurdele()
+                .mngImzaDialog()
+                .btnImzaciPopupKapat()
+                .btnTamEkran()
+                .btnTamEkranKapat()
+                .btnIcerikGoster();
+
+        postalananlarPage
+                .btnIcerikIlgileriTab()
+                .btnIcerikEkleriTab()
+                .btnIcerikDetayKapat();
+
+        postalananlarPage
+                .btnFiltreSpan()
+                .btnFiltreBaslangicTarihi(getSysDateForKis())
+                .btnFiltrePostaladiklarim();
+
     }
 }
