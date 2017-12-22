@@ -49,25 +49,20 @@ public class BaseTest extends BaseLibrary {
         Configuration.screenshots = false;
         Configuration.savePageSource = false;
 
-<<<<<<< HEAD
-
         Configuration.collectionsTimeout = 20000;
         Configuration.timeout = 20000;
 //        Configuration.clickViaJs = true;
         Configuration.holdBrowserOpen = true;
 //        Configuration.headless = false;
 
-=======
->>>>>>> 4630794664f9ca92652923048f8c6bcf0d24fc94
+
         Configuration.collectionsTimeout = 40000;
         Configuration.timeout = 40000;
         //Configuration.clickViaJs = true;
         Configuration.holdBrowserOpen = true;
         //Configuration.headless = false;
-<<<<<<< HEAD
-=======
 
->>>>>>> 4630794664f9ca92652923048f8c6bcf0d24fc94
+
 
         Configuration.startMaximized = true;
         Configuration.pollingInterval = 100;
