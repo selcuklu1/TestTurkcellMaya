@@ -21,6 +21,7 @@
             <class name="tests.TuzelKisiYonetimi.TuzelKisiYonetimiTest"/>
         </classes>
     </test>
+<<<<<<< HEAD
     <test name="YonetimHavuzuIslemleriTest">
         <classes>
             <class name="tests.YonetimHavuzuIslemleri.YonetimHavuzuIslemleriTest"/>
@@ -38,4 +39,6 @@
             <package name="tests.EvrakNot"/>-->
         </packages>
     </test>
+=======
+>>>>>>> master
 </suite>
