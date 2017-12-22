@@ -21,6 +21,8 @@ import pages.solMenuPages.PostalanacakEvraklarPage;
 import pages.solMenuPages.PostalananlarPage;
 import pages.ustMenuPages.EvrakOlusturPage;
 
+import java.sql.Driver;
+
 public class EvrakPostalamaTest extends BaseTest {
 
     EvrakOlusturPage evrakOlusturPage;
@@ -110,8 +112,8 @@ public class EvrakPostalamaTest extends BaseTest {
                 .bilgilerTabiAc()
                 .konuKoduSec("YAZILIM GEL")
                 .konuDoldur(konu)
-                .kaldirilacakKlasorler("B1K1")
-//                .kaldirilacakKlasorler("Diğer")
+              //  .kaldirilacakKlasorler("B1K1")
+                .kaldirilacakKlasorler("Diğer")
                 .evrakTuruSec("Resmi Yazışma")
                 .geregiSecimTipiSec("Kurum")
                 .geregiDoldur("Başbakanlık")
@@ -136,8 +138,7 @@ public class EvrakPostalamaTest extends BaseTest {
         imzaladiklarimPage
                 .openPage()
                 .dokumaniSec(konu)
-                .evrakGecmisi()
-                .evrakGecmisiWith("Evrak kurum içi otomatik postalandı");
+                .evrakGecmisi();
 
     }
 
