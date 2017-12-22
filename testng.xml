@@ -2,7 +2,7 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <!--<suite thread-count="1" name="Test Suite" parallel="none" verbose="1">-->
 <!--<suite thread-count="5" name="Test Suite" parallel="classes" verbose="1">-->
-<suite thread-count="1" name="Test Suite" parallel="methods" verbose="1">
+<suite name="Test Suite" parallel="classes" verbose="1">
     <!--thread-count="10"-->
     <!--<listeners>-->
     <!--<listener class-name="listeners.TestListener"></listener>-->
@@ -21,7 +21,6 @@
             <class name="tests.TuzelKisiYonetimi.TuzelKisiYonetimiTest"/>
         </classes>
     </test>
-<<<<<<< HEAD
     <test name="YonetimHavuzuIslemleriTest">
         <classes>
             <class name="tests.YonetimHavuzuIslemleri.YonetimHavuzuIslemleriTest"/>
@@ -34,11 +33,9 @@
     </test>-->
     <test name="All">
         <packages>
-            <package name="tests.*"/>
- <!--           <package name="tests.BirimIcerikSablonu"/>
-            <package name="tests.EvrakNot"/>-->
+            <!--<package name="tests.*"/>-->
+            <package name="tests.BirimIcerikSablonu"/>
+            <package name="tests.EvrakNot"/>
         </packages>
     </test>
-=======
->>>>>>> master
 </suite>

@@ -4,6 +4,7 @@ import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
 import org.openqa.selenium.*;
@@ -12,6 +13,7 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 
 import java.io.File;
 import java.io.IOException;
@@ -764,4 +766,43 @@ public class BaseLibrary {
         return docPath;
     }
 
+    public String getPcUserName() {
+
+        String userName = System.getProperty("user.name");
+
+        return userName;
+    }
+
+    //Dosyanın bilgisayara inip inmediğini kontrol eder.
+    public boolean searchDownloadedFileWithName(String downloadPath, String fileName) {
+        boolean flag = false;
+        File dir = new File(downloadPath);
+        File[] dir_contents = dir.listFiles();
+        Pattern y = Pattern.compile("[^0-9]");
+        String s = null;
+        SoftAssert sa = new SoftAssert();
+
+        for (int i = 0; i < dir_contents.length; i++) {
+            String file = dir_contents[i].getName().toString();
+            s="";
+            Matcher m = y.matcher(file);
+            while (m.find()) {
+                s =s+ m.group();
+            }
+//            sa.assertEquals(s,fileName,"Klasör "+ dir_contents[i].getName().toString() +"indirilmiştir.");
+//            sa.assertNotEquals(s,fileName,"İstenilen dosya indirilmemiştir.");
+//            assert s.equals(fileName) : "Klasör "+ dir_contents[i].getName().toString() + "indirilmiştir.";
+//            assert s.equalsIgnoreCase(fileName) : "İstenilen dosya indirilmemiştir.";
+
+            if (s.contains(fileName)) {
+                System.out.println("dosya indirilmiştir.");
+                Allure.addAttachment(dir_contents[i].getName().toString(),"raporu indirilmiştir");
+                flag = true;
+                break;
+            }
+            else
+                Allure.addAttachment("Rapor Sonucu", "İstenilen dosya indirilememiştir.");
+        }
+        return flag;
+    }
 }

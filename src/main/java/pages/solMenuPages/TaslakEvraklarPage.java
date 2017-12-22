@@ -9,6 +9,7 @@ import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
 
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
@@ -52,7 +53,12 @@ public class TaslakEvraklarPage extends MainPage {
 
     @Step("Taslak Evraklar sayfası aç")
     public TaslakEvraklarPage openPage(){
+
         solMenu(SolMenuData.IslemBekleyenEvraklar.TaslakEvraklar);
+        String pageTitle = SolMenuData.IslemBekleyenEvraklar.TaslakEvraklar.getMenuText();
+        $("#mainInboxForm\\:inboxDataTable .ui-inbox-header-title")
+                .shouldHave(text(pageTitle));
+        System.out.println("Page: " + pageTitle);
         return this;
     }
     @Step("Evrak notları popup iptal")
@@ -162,9 +168,9 @@ public class TaslakEvraklarPage extends MainPage {
     @Step("Evrak seç.")
     public TaslakEvraklarPage evrakSec(String konu, String gidecegiYer, String tarihSaat) {
         tableEvraklar
-                .filterBy(Condition.text("Konu: " + konu))
-                .filterBy(Condition.text("Gideceği Yer: " + gidecegiYer))
-                .filterBy(Condition.text(tarihSaat))
+                .filterBy(text("Konu: " + konu))
+                .filterBy(text("Gideceği Yer: " + gidecegiYer))
+                .filterBy(text(tarihSaat))
                 .get(0)
                 .click();
         return this;

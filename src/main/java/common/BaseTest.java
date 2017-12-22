@@ -14,7 +14,6 @@ import java.util.Locale;
 
 import static data.TestData.belgenetURL;
 
-
 //BrowserPerTest.class
 @Listeners({SettingsListener.class})
 public class BaseTest extends BaseLibrary {
@@ -30,27 +29,37 @@ public class BaseTest extends BaseLibrary {
         Locale turkishLocal = new Locale("tr", "TR");
         Locale.setDefault(turkishLocal);
 
-        //region SetUp BelgenetFramework for BelgenetElements usage
         BelgenetFramework.setUp();
-        //endregion
 
         //region Selenide Driver Configuration
+//        Configuration.browser = "chrome";
+        //Configuration.browser = "drivers.Firefox";
+
         Configuration.baseUrl = belgenetURL;
 
         Configuration.browser = "chrome";
+
         //Configuration.browser = "drivers.Firefox";
 //        Configuration.browser = "marionette";
 
 //        Configuration.remote = "http://localhost:4444/wd/hub";
+        //Configuration.browser = "firefox";
 
         Configuration.reportsFolder = "test-result/reports";
         Configuration.screenshots = false;
         Configuration.savePageSource = false;
 
+
+        Configuration.collectionsTimeout = 20000;
+        Configuration.timeout = 20000;
+//        Configuration.clickViaJs = true;
+        Configuration.holdBrowserOpen = true;
+//        Configuration.headless = false;
+
         Configuration.collectionsTimeout = 40000;
         Configuration.timeout = 40000;
         //Configuration.clickViaJs = true;
-        // Configuration.holdBrowserOpen = true;
+        Configuration.holdBrowserOpen = true;
         //Configuration.headless = false;
 
         Configuration.startMaximized = true;
@@ -59,6 +68,8 @@ public class BaseTest extends BaseLibrary {
         //Configuration.closeBrowserTimeoutMs = 34000;
         //Configuration.openBrowserTimeoutMs = 34000;
         //Configuration.browserSize = "1024x600";
+
+        Configuration.baseUrl = belgenetURL;
         //endregion
 
         // System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, "/dev/null");
@@ -75,7 +86,7 @@ public class BaseTest extends BaseLibrary {
 
     @AfterMethod
     public void tearDown() throws Exception {
-        Selenide.close();
+       // Selenide.close();
 /*        try {
             Selenide.clearBrowserLocalStorage();
             Selenide.clearBrowserCookies();
@@ -85,7 +96,7 @@ public class BaseTest extends BaseLibrary {
 
     @AfterSuite(alwaysRun = true)
     public void afterSuite() {
-        killProcess();
+        //killProcess();
     }
 
     @Step("Login")
