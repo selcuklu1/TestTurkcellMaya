@@ -629,47 +629,48 @@ public class GizlilikKleransiTest extends BaseTest {
         String evrakDili = "Türkçe";
         String gizlilikDerecesi = "Normal";
         String ivedilik = "Normal";
-        String geregi = "Optiim Birim";
+        String geregi = "USERNAME22N TEST";
 
-//        login(username3,password3);
-//
-//        evrakOlusturPage
-//                .openPage()
-//                .bilgilerTabiAc()
-//                .konuKoduSec(konuKodu)
-//                .konuDoldur(konu)
-//                .kaldiralacakKlasorlerSec(kaldiralacakKlasor)
-//                .evrakTuruSec(evrakTuru)
-//                .evrakDiliSec(evrakDili)
-//                .gizlilikDerecesiSec(gizlilikDerecesi)
-//                .aciklamaDoldur(icerik)
-//                .ivedikSec(ivedilik)
-//                .geregiSec(geregi)
-//                .onayAkisiEkle()
-//                .kullaniciTabloKontrol()
-//                .kullanicilarDoldur("username21g")
-//                .kullaniciTabloKontrol()
-//                .kullniciIsmineGoreImzaParafSec("username21g", tur2)
-//                .kullan();
-//
-//        evrakOlusturPage
-//                .editorTabAc()
-//                .editorIcerikDoldur(icerik)
-//                .parafla()
-//                .sImzasec()
-//                .sImzaImzala2();
-////                .islemMesaji().beklenenMesaj(basariMesaji);
-//
-////        parafladiklarimPage
-////                .openPage();
-////        evrakNo = parafladiklarimPage.evrakDetayiEvrakNoAl();
-//
-//        logout();
+        login(username3,password3);
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .konuKoduSec(konuKodu)
+                .konuDoldur(konu)
+                .kaldiralacakKlasorlerSec(kaldiralacakKlasor)
+                .evrakTuruSec(evrakTuru)
+                .evrakDiliSec(evrakDili)
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .aciklamaDoldur(icerik)
+                .ivedikSec(ivedilik)
+                .geregiSecimTipiSecByText("Kullanıcı")
+                .geregiSec(geregi)
+                .onayAkisiEkle()
+                .kullaniciTabloKontrol()
+                .kullanicilarDoldur("username21g")
+                .kullaniciTabloKontrol()
+                .kullniciIsmineGoreImzaParafSec("username21g", tur2)
+                .kullan();
+
+        evrakOlusturPage
+                .editorTabAc()
+                .editorIcerikDoldur(icerik)
+                .parafla()
+                .sImzasec()
+                .sImzaImzala2();
+//                .islemMesaji().beklenenMesaj(basariMesaji);
+
+//        parafladiklarimPage
+//                .openPage();
+//        evrakNo = parafladiklarimPage.evrakDetayiEvrakNoAl();
+
+        logout();
         login("username21g","123");
 
         imzaBekleyenlerPage
                 .openPage()
-                .evrakKonusunaGoreIcerikTiklama("TC2191 20171222095103");
+                .evrakKonusunaGoreIcerikTiklama(konu);
 
         evrakOlusturPage
                 .bilgilerTabiAc()
@@ -679,12 +680,17 @@ public class GizlilikKleransiTest extends BaseTest {
                 .kullaniciListesiKontrol("Yasemin")
                 .notDoldur("iade")
                 .iadeEt2()
-                .popUpEvraktaDegisiklik();
+                .popUpEvraktaDegisiklik()
+                .islemMesaji().beklenenMesaj(basariMesaji);
+
         logout();
         login(username3,password3);
+
+        String mesaj = geregi+" kullanıcısının gizlilik kleransı evrakı görüntülemek için yeterli değildir.";
         parafBekleyenlerPage
                 .openPage()
-                .evrakSec("TC2191 20171222095103");
-
+                .konuyaGoreEvrakSec("TC2191 20171222131358")
+                .parafla()
+                .islemMesaji().dikkatOlmali(mesaj);
     }
 }
