@@ -109,11 +109,17 @@ public class DataTest extends BaseTest {
                 .ekleriTabAc()
                 .ekleriDosyaEkle(filePath)
                 .ekleriDosyaAciklamaDoldur(ekleriDosyaAciklama)
-                .ekleriEkle()
+//                .ekleriEkle()
                 .imzala()
                 .popupImzalaVeEvrakKapatma();
 
     }
 
-    
+
+    /*
+        Evrak Beklemeye Alma
+    */
+    @Test(description = "TC2095: Evrak Beklemeye Alma", dependsOnMethods = {"TC2234"})
+    public void TC2095() {
+    }
 }
