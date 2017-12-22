@@ -129,6 +129,14 @@ public class ParafBekleyenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Evrak seç ")
+    public ParafBekleyenlerPage konuyaGoreEvrakSec(String konu) {
+        tablePaylastiklarim
+                .filterBy(Condition.text(konu)).first()
+                .click();
+        return this;
+    }
+
     @Step("Evrak seçildi")
     public ParafBekleyenlerPage evrakSec(String[] paylasilanKullanicilar) {
         String _paylasilanKullanicilar = "";

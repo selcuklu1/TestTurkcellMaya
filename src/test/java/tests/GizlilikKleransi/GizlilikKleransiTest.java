@@ -613,7 +613,7 @@ public class GizlilikKleransiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = false, description = "TC2191 : Akışta gizlilik kleransı değiştirilen evrakın dağıtım yeri kontrolü\n")
+    @Test(enabled = true, description = "TC2191 : Akışta gizlilik kleransı değiştirilen evrakın dağıtım yeri kontrolü\n")
     public void TC2191() throws InterruptedException{
 //8.tepten Devam edilecek
 
@@ -623,58 +623,68 @@ public class GizlilikKleransiTest extends BaseTest {
         String tur2 = "IMZALAMA";
         String icerik = "TC2191 " + getSysDate();
         String konuKodu = "010.01";
-        String kaldiralacakKlasor = "ESK05";
+        String konu = "TC2191 " + getSysDate();
+        String kaldiralacakKlasor = "Diğer";
         String evrakTuru = "Resmi Yazışma";
         String evrakDili = "Türkçe";
         String gizlilikDerecesi = "Normal";
         String ivedilik = "Normal";
         String geregi = "Optiim Birim";
 
-        login(username,password);
-
-        evrakOlusturPage
-                .openPage()
-                .bilgilerTabiAc()
-                .konuKoduSec(konuKodu)
-                .kaldiralacakKlasorlerSec(kaldiralacakKlasor)
-                .evrakTuruSec(evrakTuru)
-                .evrakDiliSec(evrakDili)
-                .gizlilikDerecesiSec(gizlilikDerecesi)
-                .aciklamaDoldur(icerik)
-                .ivedikSec(ivedilik)
-                .geregiSec(geregi)
-                .onayAkisiEkle()
-                .kullaniciTabloKontrol()
-                .kullanicilarDoldur("username20n")
-                .kullaniciTabloKontrol()
-                .kullniciIsmineGoreImzaParafSec("username20n", tur2)
-                .kullan();
-
-        evrakOlusturPage
-                .editorTabAc()
-                .editorIcerikDoldur(icerik)
-                .parafla()
-                .sImzasec()
-                .sImzaImzala2()
-                .islemMesaji().beklenenMesaj(basariMesaji);
-
-        parafladiklarimPage
-                .openPage();
-        evrakNo = parafladiklarimPage.evrakDetayiEvrakNoAl();
-
-        logout();
-        login("username20n","123");
+//        login(username3,password3);
+//
+//        evrakOlusturPage
+//                .openPage()
+//                .bilgilerTabiAc()
+//                .konuKoduSec(konuKodu)
+//                .konuDoldur(konu)
+//                .kaldiralacakKlasorlerSec(kaldiralacakKlasor)
+//                .evrakTuruSec(evrakTuru)
+//                .evrakDiliSec(evrakDili)
+//                .gizlilikDerecesiSec(gizlilikDerecesi)
+//                .aciklamaDoldur(icerik)
+//                .ivedikSec(ivedilik)
+//                .geregiSec(geregi)
+//                .onayAkisiEkle()
+//                .kullaniciTabloKontrol()
+//                .kullanicilarDoldur("username21g")
+//                .kullaniciTabloKontrol()
+//                .kullniciIsmineGoreImzaParafSec("username21g", tur2)
+//                .kullan();
+//
+//        evrakOlusturPage
+//                .editorTabAc()
+//                .editorIcerikDoldur(icerik)
+//                .parafla()
+//                .sImzasec()
+//                .sImzaImzala2();
+////                .islemMesaji().beklenenMesaj(basariMesaji);
+//
+////        parafladiklarimPage
+////                .openPage();
+////        evrakNo = parafladiklarimPage.evrakDetayiEvrakNoAl();
+//
+//        logout();
+        login("username21g","123");
 
         imzaBekleyenlerPage
                 .openPage()
-                .evrakNumarisnaGoreIcerikTiklama(evrakNo)
-                .icerik();
+                .evrakKonusunaGoreIcerikTiklama("TC2191 20171222095103");
+
         evrakOlusturPage
-                .openPage()
                 .bilgilerTabiAc()
-                .gizlilikDerecesiSec("Özel");
-
-
+                .gizlilikDerecesiSec("Özel")
+                .iadeEtbutonKontol()
+                .iadeEt()
+                .kullaniciListesiKontrol("Yasemin")
+                .notDoldur("iade")
+                .iadeEt2()
+                .popUpEvraktaDegisiklik();
+        logout();
+        login(username3,password3);
+        parafBekleyenlerPage
+                .openPage()
+                .evrakSec("TC2191 20171222095103");
 
     }
 }
