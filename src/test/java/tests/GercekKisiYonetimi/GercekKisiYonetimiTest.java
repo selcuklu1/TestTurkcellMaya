@@ -53,7 +53,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
         String postaTipi = "P";
         String bilgiSecimTipi = "Gerçek Kişi";
         String geregiSecimTipi = "Gerçek Kişi";
-        String evrakBilgileriListKisiKurumTipi = "G";
+        String evrakBilgileriListKisiKurumTipi = "Gerçek Kişi";
         String gercekKisiMesaj = "Seçtiğiniz gerçek kişi gereği / bilgi listesinde ekli olduğu için bu gerçek kişiyi seçemezsiniz.";
         String basariMesaji = "İşlem başarılıdır!";
 
@@ -96,7 +96,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
 
         gelenEvrakKayitPage
                 .openPage()
-                .kisiKurumSec(evrakBilgileriListKisiKurumTipi)
+                .kisiKurumSecByText(evrakBilgileriListKisiKurumTipi)
                 .geldigiGercekKisiDoldur(adSoyad);
 
     }
@@ -220,7 +220,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .adDoldur(ad)
                 .soyadDoldur(soyad)
                 .kepAdresiKullaniyor(true)
-                .kaydet2()
+                .kaydet()
                 .islemMesaji().basariliOlmali(basariMesaji);
     }
 

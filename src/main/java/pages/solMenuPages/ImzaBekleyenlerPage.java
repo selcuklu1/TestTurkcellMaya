@@ -35,6 +35,10 @@ public class ImzaBekleyenlerPage extends MainPage {
     @Step("İmza bekleyenler sayfası aç")
     public ImzaBekleyenlerPage openPage(){
         solMenu(SolMenuData.IslemBekleyenEvraklar.ImzaBekleyenler);
+        String pageTitle = SolMenuData.IslemBekleyenEvraklar.ImzaBekleyenler.getMenuText();
+        $("#mainInboxForm\\:inboxDataTable .ui-inbox-header-title")
+                .shouldHave(text(pageTitle));
+        System.out.println("Page: " + pageTitle);
         return this;
     }
 
@@ -139,8 +143,8 @@ public class ImzaBekleyenlerPage extends MainPage {
         return this;
     }
     @Step("Evrak no'ya göre İçerik tıklama")
-    public ImzaBekleyenlerPage evrakNumarisnaGoreIcerikTiklama(String evrakNo){
-        tableKararIzlemeEvraklar.filterBy(Condition.text(evrakNo)).first()
+    public ImzaBekleyenlerPage evrakKonusunaGoreIcerikTiklama(String konu){
+        tableKararIzlemeEvraklar.filterBy(Condition.text(konu)).first()
                 .$("[id^='mainInboxForm:inboxDataTable'][id$='detayGosterButton']").click();
         return this;
     }

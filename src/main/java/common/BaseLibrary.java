@@ -4,13 +4,16 @@ import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
 import org.openqa.selenium.*;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,6 +37,7 @@ public class BaseLibrary {
     private int doWaitLoading = 0;
     private boolean doNotWaitLoading = false;
     public static String docPath = null;
+    public static String browserName = null;
     protected static final Logger log = Logger.getLogger(BaseLibrary.class.getName());
     protected static String winHandleBefore = null;
 
@@ -99,9 +103,22 @@ public class BaseLibrary {
 
     public void waitForLoadingToDisappear(WebDriver driver) {
 //        driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
+
         try {
-            new WebDriverWait(driver, 20, 50).
-                    until(invisibilityOfElementLocated(By.className("loading")));
+
+            /*List<WebElement> loading = driver.findElements(By.className("loading"));
+            System.out.println("Count:" + loading.size());
+            int i = 0;
+            for (WebElement e:loading) {
+                System.out.println(i + ": innerHtml-" + executeJavaScript("return arguments[0].outerHTML", e));
+                System.out.println(i + ": isDisplayed-" + e.isDisplayed() + "   isEnabled-" + e.isEnabled());
+            }*/
+
+//            System.out.println("Count:" + driver.findElements(By.className("loading")).size());
+            System.out.println("Count:" + driver.findElements(By.cssSelector("div[style*='display: block;'] .loading")).size());
+            new WebDriverWait(driver, 10, 50).
+                    until(ExpectedConditions.invisibilityOfAllElements(driver.findElements(
+                            By.className("loading"))));
 //            System.out.println("Loading: Ok");
         } catch (Exception e) {
 //            System.out.println("Loading window error: " + e.getMessage());
@@ -715,6 +732,16 @@ public class BaseLibrary {
         return operationSystem.name();
     }
 
+    public static String getBrowserName() {
+
+        // Get Browser name and version.
+        Capabilities caps = ((RemoteWebDriver) WebDriverRunner.getWebDriver()).getCapabilities();
+        browserName = caps.getBrowserName();
+        System.out.println("Browser Name : " + browserName);
+
+        return browserName;
+    }
+
     public static String setDocPath() {
 
         // Get Browser name and version.
@@ -739,4 +766,43 @@ public class BaseLibrary {
         return docPath;
     }
 
+    public String getPcUserName() {
+
+        String userName = System.getProperty("user.name");
+
+        return userName;
+    }
+
+    //Dosyanın bilgisayara inip inmediğini kontrol eder.
+    public boolean searchDownloadedFileWithName(String downloadPath, String fileName) {
+        boolean flag = false;
+        File dir = new File(downloadPath);
+        File[] dir_contents = dir.listFiles();
+        Pattern y = Pattern.compile("[^0-9]");
+        String s = null;
+        SoftAssert sa = new SoftAssert();
+
+        for (int i = 0; i < dir_contents.length; i++) {
+            String file = dir_contents[i].getName().toString();
+            s="";
+            Matcher m = y.matcher(file);
+            while (m.find()) {
+                s =s+ m.group();
+            }
+//            sa.assertEquals(s,fileName,"Klasör "+ dir_contents[i].getName().toString() +"indirilmiştir.");
+//            sa.assertNotEquals(s,fileName,"İstenilen dosya indirilmemiştir.");
+//            assert s.equals(fileName) : "Klasör "+ dir_contents[i].getName().toString() + "indirilmiştir.";
+//            assert s.equalsIgnoreCase(fileName) : "İstenilen dosya indirilmemiştir.";
+
+            if (s.contains(fileName)) {
+                System.out.println("dosya indirilmiştir.");
+                Allure.addAttachment(dir_contents[i].getName().toString(),"raporu indirilmiştir");
+                flag = true;
+                break;
+            }
+            else
+                Allure.addAttachment("Rapor Sonucu", "İstenilen dosya indirilememiştir.");
+        }
+        return flag;
+    }
 }

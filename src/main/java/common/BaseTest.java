@@ -14,26 +14,22 @@ import java.util.Locale;
 
 import static data.TestData.belgenetURL;
 
-
 //BrowserPerTest.class
 @Listeners({SettingsListener.class})
 public class BaseTest extends BaseLibrary {
 
     @BeforeSuite(alwaysRun = true)
     public void beforeSuite() {
-        //killProcess();
+//        killProcess();
     }
 
     @BeforeClass(alwaysRun = true)
     public void driverSetUp() {
-        //killProcess();
 
         Locale turkishLocal = new Locale("tr", "TR");
         Locale.setDefault(turkishLocal);
 
-        //region SetUp BelgenetFramework for BelgenetElements usage
         BelgenetFramework.setUp();
-        //endregion
 
         //region Selenide Driver Configuration
         Configuration.baseUrl = belgenetURL;
@@ -41,26 +37,30 @@ public class BaseTest extends BaseLibrary {
         //Configuration.browser = "drivers.Firefox";
 //        Configuration.browser = "marionette";
 
-        Configuration.remote = "http://192.168.1.3:6585/wd/hub";
-        //Configuration.remote = "http://10.101.20.153:4444/wd/hub";
+//        Configuration.remote = "http://localhost:4444/wd/hub";
         Configuration.reportsFolder = "test-result/reports";
         Configuration.screenshots = false;
         Configuration.savePageSource = false;
-        Configuration.collectionsTimeout = 20000;
-        Configuration.timeout = 20000;
-        Configuration.holdBrowserOpen = false;
-        Configuration.headless = false;
+        Configuration.collectionsTimeout = 40000;
+        Configuration.timeout = 40000;
+        //Configuration.clickViaJs = true;
+        Configuration.holdBrowserOpen = true;
+        //Configuration.headless = false;
+
         Configuration.startMaximized = true;
         Configuration.pollingInterval = 100;
         Configuration.collectionsPollingInterval = 100;
-//        Configuration.closeBrowserTimeoutMs = 34000;
-//        Configuration.openBrowserTimeoutMs = 34000;
+        //Configuration.closeBrowserTimeoutMs = 34000;
+        //Configuration.openBrowserTimeoutMs = 34000;
         //Configuration.browserSize = "1024x600";
+
+        Configuration.baseUrl = belgenetURL;
         //endregion
 
-//        System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, "/dev/null");
+        // System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, "/dev/null");
 
         setDocPath();
+        getBrowserName();
 
     }
 
@@ -71,16 +71,17 @@ public class BaseTest extends BaseLibrary {
 
     @AfterMethod
     public void tearDown() throws Exception {
-        try {
+       // Selenide.close();
+/*        try {
             Selenide.clearBrowserLocalStorage();
             Selenide.clearBrowserCookies();
         } catch (Exception e) {
-        }
+        }*/
     }
 
     @AfterSuite(alwaysRun = true)
     public void afterSuite() {
-        // killProcess();
+        //killProcess();
     }
 
     @Step("Login")

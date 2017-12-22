@@ -1,16 +1,19 @@
 package pages.pageComponents;
 
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.*;
 import common.BaseLibrary;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NotFoundException;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
+import static com.codeborne.selenide.CollectionCondition.sizeGreaterThanOrEqual;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
+import static org.openqa.selenium.support.ui.ExpectedConditions.*;
+import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 
 public class Filtreler extends BaseLibrary {
 
@@ -106,26 +109,37 @@ public class Filtreler extends BaseLibrary {
     public ElementsCollection findRowsWith(Condition condition) {
         while (true) {
             SelenideElement table = $("#mainInboxForm\\:inboxDataTable_data");
-//            table.shouldHave(visible);
+            table.shouldHave(visible);
             //SelenideElement row = table.$x("//*[contains(text(),'" + text + "')]/ancestor::tr[@data-ri and @role='row']");
             SelenideElement nextPage = $("#mainInboxForm\\:inboxDataTable span[class~='ui-paginator-next']");
             ElementsCollection rows = table.$$("tr[data-ri][role='row']");//.shouldHave(sizeGreaterThan(0));
-            if (rows.size() == 0)
-                return rows;
-            nextPage.shouldHave(visible);
-            rows.last().shouldBe(visible);
-            System.out.println(condition.toString());
 
+            System.out.println("===================");
+            System.out.println(table.innerHtml());
+            System.out.println("===================");
+//            rows.shouldHave(sizeGreaterThan(0));
             ElementsCollection filtered = rows.filterBy(condition);
+            if (filtered.size() > 0 || nextPage.has(cssClass("ui-state-disabled")))
+                return filtered;
 
+            /*if (nextPage.has(cssClass("ui-state-disabled")))
+                return filtered;*/
+
+            /*nextPage.shouldBe(visible);
+            rows.last().shouldBe(visible);
+            System.out.println(condition.toString());*/
+
+            /*filtered = rows.filterBy(condition);
             if (filtered.size() > 0)
                 return filtered;
 
             if (nextPage.has(cssClass("ui-state-disabled")))
-                return filtered;
+                return filtered;*/
 
             nextPage.click();
+
         }
+
     }
 
 }

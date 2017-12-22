@@ -1,5 +1,7 @@
 package pages.ustMenuPages;
 
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
@@ -15,6 +17,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 public class KaydedilenGelenEvrakPage extends MainPage {
@@ -26,7 +29,7 @@ public class KaydedilenGelenEvrakPage extends MainPage {
     SelenideElement btnRaporAlExcel = $("[id='birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable'] button:nth-child(4)");
     SelenideElement btnRaporAlPdf = $("[id='birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable'] button:nth-child(2)");
     SelenideElement tblKaydedilenGelenEvrak = $(By.id("birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable_data"));
-    SelenideElement tbldene = $(By.xpath("//tbody[@id='birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable_data']/tr/td[2]/div"));
+    ElementsCollection tbldene = $$("[id='birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable_data'] tr[role='row']");
 
     public KaydedilenGelenEvrakPage openPage() {
         ustMenu("Raporlar", "Kaydedilen Gelen Evrak");
@@ -53,60 +56,30 @@ public class KaydedilenGelenEvrakPage extends MainPage {
 
     @Step("Sorgula butununa bas")
     public KaydedilenGelenEvrakPage sorgula() {
-        btnSorgula.click();
+        btnSorgula.pressEnter();
         return this;
     }
 
     @Step("Rapor al Excel")
     public KaydedilenGelenEvrakPage raporAlExcel() throws IOException, InterruptedException {
 
-        deleteFile("C:\\Users\\Emre_Sencan\\Downloads\\","Rapor_");
+        deleteFile("C:\\Users\\" + getPcUserName() + "\\Downloads\\","Rapor_");
         btnRaporAlExcel.click();
         Thread.sleep(4000);
-        searchDownloadedFileWithName("C:\\Users\\Emre_Sencan\\Downloads\\","Rapor_.xls");
+        searchDownloadedFileWithName("C:\\Users\\" + getPcUserName() + "\\Downloads\\","Rapor_.xls");
         return this;
     }
 
 
     //Dosyanın bilgisayara inip inmediğini kontrol eder.
-    public boolean searchDownloadedFileWithName(String downloadPath, String fileName) {
-        boolean flag = false;
-        File dir = new File(downloadPath);
-        File[] dir_contents = dir.listFiles();
-        Pattern y = Pattern.compile("[^0-9]");
-        String s = null;
-        SoftAssert sa = new SoftAssert();
 
-        for (int i = 0; i < dir_contents.length; i++) {
-            String file = dir_contents[i].getName().toString();
-            s="";
-            Matcher m = y.matcher(file);
-            while (m.find()) {
-                s =s+ m.group();
-            }
-//            sa.assertEquals(s,fileName,"Klasör "+ dir_contents[i].getName().toString() +"indirilmiştir.");
-//            sa.assertNotEquals(s,fileName,"İstenilen dosya indirilmemiştir.");
-//            assert s.equals(fileName) : "Klasör "+ dir_contents[i].getName().toString() + "indirilmiştir.";
-//            assert s.equalsIgnoreCase(fileName) : "İstenilen dosya indirilmemiştir.";
-
-            if (s.contains(fileName)) {
-                System.out.println("dosya indirilmiştir.");
-                Allure.addAttachment(dir_contents[i].getName().toString(),"raporu indirilmiştir");
-                flag = true;
-                break;
-            }
-            else
-                Allure.addAttachment("Rapor Sonucu", "İstenilen dosya indirilememiştir.");
-        }
-        return flag;
-    }
 
     @Step("Rapor al PDF")
     public KaydedilenGelenEvrakPage raporAlPdf() throws IOException, InterruptedException {
-        deleteFile("C:\\Users\\Emre_Sencan\\Downloads\\","Rapor_");
+        deleteFile("C:\\Users\\" + getPcUserName() + "\\Downloads\\","Rapor_");
         btnRaporAlPdf.click();
         Thread.sleep(4000);
-        searchDownloadedFileWithName("C:\\Users\\Emre_Sencan\\Downloads\\", "Rapor_.pdf");
+        searchDownloadedFileWithName("C:\\Users\\" + getPcUserName() + "\\Downloads\\", "Rapor_.pdf");
         return this;
     }
 
@@ -118,8 +91,7 @@ public class KaydedilenGelenEvrakPage extends MainPage {
 
     public KaydedilenGelenEvrakPage tabloKontrolu(String evrakNo) {
 //        WebElement columnId =  findElementOnTableByColumnInput(tblKaydedilenGelenEvrak,1,evrakNo);
-        String text = tbldene.text();
-        Assert.assertEquals(text, evrakNo);
+        tbldene.filterBy(Condition.text(evrakNo));
         return this;
     }
 

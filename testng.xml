@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <!--<suite thread-count="1" name="Test Suite" parallel="none" verbose="1">-->
-<suite thread-count="5" name="Test Suite" parallel="classes" verbose="1">
+<!--<suite thread-count="5" name="Test Suite" parallel="classes" verbose="1">-->
+<suite name="Test Suite" parallel="classes" verbose="1">
     <!--thread-count="10"-->
     <!--<listeners>-->
     <!--<listener class-name="listeners.TestListener"></listener>-->
@@ -32,11 +33,9 @@
     </test>-->
     <test name="All">
         <packages>
-            <package name="tests.EvrakPostalama"/>
-            <!--<package name="tests.BirimIcerikSablonu"/>-->
-            <!--<package name="tests.GercekKisiYonetimi"/>-->
-            <!--<package name="tests.TuzelKisiYonetimi"/>-->
-            <!--<package name="tests.EvrakPostalama"/>-->
+            <!--<package name="tests.*"/>-->
+            <package name="tests.BirimIcerikSablonu"/>
+            <package name="tests.EvrakNot"/>
         </packages>
     </test>
 </suite>

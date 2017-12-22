@@ -2,6 +2,7 @@ package pages.ustMenuPages;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
@@ -96,7 +97,7 @@ public class GelenEvrakKayitPage extends MainPage {
     BelgenetElement cmbHavaleIslemleriBirim = comboLov(By.id("evrakBilgileriForm:dagitimBilgileriBirimLov:LovText"));
     BelgenetElement cmbDagitimBilgileriKisi = comboLov(By.id("evrakBilgileriForm:dagitimBilgileriKullaniciLov:LovText"));
     BelgenetElement cmbDagitimBilgileriKullaniciListesi = comboLov(By.id("evrakBilgileriForm:dagitimBilgileriKisiListesiLov:LovText"));
-    ElementsCollection tblVekaletVerenAlan =$$("[id='evrakBilgileriForm:kullaniciBirimSecenekleriHavaleIcin_data'] tr[role='row']");
+    ElementsCollection tblVekaletVerenAlan = $$("[id='evrakBilgileriForm:kullaniciBirimSecenekleriHavaleIcin_data'] tr[role='row']");
 
 
     //İlgi Bilgileri sekmesinde bulunanlar
@@ -208,7 +209,7 @@ public class GelenEvrakKayitPage extends MainPage {
 
         return this;
     }
-    
+
     public GelenEvrakKayitPage ekBilgiFizikselEkEkle() throws InterruptedException {
         clickJs(btnFizikselEkEkle);
         return this;
@@ -232,8 +233,8 @@ public class GelenEvrakKayitPage extends MainPage {
     }
 
     @Step("Konu doldur")
-    public GelenEvrakKayitPage konuDoldur(String konu){
-    $(By.id("evrakBilgileriForm:evrakBilgileriList:3:konuTextArea")).setValue(konu);
+    public GelenEvrakKayitPage konuDoldur(String konu) {
+        $("[id$='konuTextArea']").setValue(konu);
         return this;
     }
 
@@ -259,13 +260,13 @@ public class GelenEvrakKayitPage extends MainPage {
     }
 
     public GelenEvrakKayitPage gizlilikDerecesiSec(String gizlilikDerecesi) {
-        cmbEvrakBilgileriListGizlilikDerecesi.selectOptionByValue(gizlilikDerecesi);
+        cmbEvrakBilgileriListGizlilikDerecesi.selectOption(gizlilikDerecesi);
         return this;
     }
 
     @Step("Kişi kurum tipi alanında {kisiKurum} seç")
     public GelenEvrakKayitPage kisiKurumSec(String kisiKurum) {
-        cmbEvrakBilgileriListKisiKurum.selectOptionByValue(kisiKurum);
+        cmbEvrakBilgileriListKisiKurum.selectOption(kisiKurum);
         return this;
     }
 
@@ -373,6 +374,11 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
+    public GelenEvrakKayitPage geldigiKurumDoldurLovText2(String geldigiKurum) {
+        comboGeldigiKurum.selectLov(geldigiKurum);
+        return this;
+    }
+
     public GelenEvrakKayitPage evrakSayiSolDoldur(String evrakSayiSol) {
         txtEvrakBilgileriListEvrakSayiTextAreaSol.sendKeys(evrakSayiSol);
         return this;
@@ -427,6 +433,7 @@ public class GelenEvrakKayitPage extends MainPage {
         txtDagitimBilgileriKisi.sendKeys(kisi);
         return this;
     }
+
     public GelenEvrakKayitPage dagitimBilgileriKisiSec(String kisi) {
         txtDagitimBilgileriKisiComboLov.selectLov(kisi);
         return this;
@@ -634,26 +641,27 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    public GelenEvrakKayitPage yeniKayitButton(){
+    public GelenEvrakKayitPage yeniKayitButton() {
         $("[id='evrakKaydetBasariliDialogForm:yeniKayitButton']").pressEnter();
         return this;
     }
-    
-    public GelenEvrakKayitPage evetDugmesi(){
+
+    public GelenEvrakKayitPage evetDugmesi() {
         $("[id='evetDugmesi']").pressEnter();
         return this;
     }
 
-    public GelenEvrakKayitPage benzerKayit(){
+    public GelenEvrakKayitPage benzerKayit() {
         $(By.id("evetButtonBenzerKaydet")).pressEnter();
         return this;
     }
 
+
     public String popUps() throws InterruptedException {
 //        popUp.shouldHave(Condition.visible);  pop up kontrolu
-        String text;
 
-        Thread.sleep(2000);
+        String text;
+        Selenide.sleep(5000);
 
         if (ustYaziveHavaleYeriYokpopUp.isDisplayed()) {
             popUpEvet.click();
@@ -873,7 +881,7 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("Üst yazı değiştirilsim mi?")
     public GelenEvrakKayitPage ustYaziDegistirilmisPopUpKontrol() {
-       popUpUstYaziDegistirilme.shouldBe(Condition.visible);
+        popUpUstYaziDegistirilme.shouldBe(Condition.visible);
         clickJs(btnUstYaziDegistirmeHayır);
         return this;
     }
@@ -959,6 +967,7 @@ public class GelenEvrakKayitPage extends MainPage {
         lblUstyaziGoster.click();
         return this;
     }
+
     @Step("Vekalet alan Ve Veren tablo vekalet alan seç")
     public GelenEvrakKayitPage vekeletAlanVerenTabloVekaletAlanveyaVerenSec(String isim) {
         tblVekaletVerenAlan
