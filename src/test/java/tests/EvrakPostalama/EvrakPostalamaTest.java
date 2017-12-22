@@ -255,4 +255,84 @@ public class EvrakPostalamaTest extends BaseTest {
                 .btnFiltrePostaladiklarim();
 
     }
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true , description = "TC2235 : Ek ilgi ilişiği olan evrakı postaya düşürme")
+    public void TC2235() throws InterruptedException {
+        login("Mbozdemir", "123");
+        String konu = "TC2235_" + getSysDate();
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .konuKoduSec("YAZILIM GEL")
+                .konuDoldur(konu)
+                .kaldirilacakKlasorler("Diğer")
+//                .kaldirilacakKlasorler("B1K1")
+                .evrakTuruSec("Resmi Yazışma")
+                .geregiSecimTipiSec("Gerçek Kişi")
+                .geregiDoldur("OptiimTest")
+                .geregiKurumPostaTipi("APS")
+                .geregiSecimTipiSec("Dağıtım Planları")
+                .geregiDoldur("50 BİRİMLİK")
+                .geregiKurumPostaTipi("İadeli Taahhütlü")
+                .geregiSecimTipiSec("Birim")
+                .geregiDoldur("HUKUK")
+                .geregiSecimTipiSec("Tüzel Kişi")
+                .geregiDoldur("Optiim İş")
+                .geregiKurumPostaTipi("APS")
+                .geregiSecimTipiSec("Kullanıcı")
+                .geregiDoldur("Optiim TEST")
+                .geregiSecimTipiSec("Kurum")
+                .geregiDoldur("Başbakanlık")
+                .geregiKurumPostaTipi("Evrak Servisi Elden")
+                .onayAkisiKullanicilariTemizle()
+                .onayAkisiEkle()
+                .onayAkisiKullaniciTipiSec("Mehmet BOZDEMİR", "İmzalama")
+//                .onayAkisiKullaniciTipiSec(user1.getName(), "İmzalama")
+                .onayAkisiKullan();
+
+        evrakOlusturPage
+                .ilgileriTabAc()
+                .sistemeKayitliEvrakEkleTab()
+                .sistemeKayitliEvrakAra("yazı")
+                .sistemeKayitliDokumanArama()
+                .tablodaBulunanEvrakiEkle();
+
+        evrakOlusturPage
+                .islemMesaji().basariliOlmali("İşlem başarılıdır!");
+
+
+        evrakOlusturPage
+                .editorTabAc()
+                .editorIcerikDoldur(konu)
+                .imzala()
+                .popupSImzalaIslemleri();
+
+
+
+        Thread.sleep(4000);
+
+        postalanacakEvraklarPage
+                .openPage()
+                .filter().findRowsWith(Condition.text(konu)).shouldHaveSize(1).first().click();
+        postalanacakEvraklarPage
+                .icerikGoster()
+                .icerikIlgileriTab()
+                .icerikEkleriTab()
+                .icerikPencereKapatma();
+
+        postalanacakEvraklarPage
+                 .filter().findRowsWith(Condition.text(konu)).shouldHaveSize(1).first().click();
+        postalanacakEvraklarPage
+                .evrakPostala()
+                .postalanacakEvrakYaz()
+                .popupPostalanacakEvrakYazdir()
+                .popupPostaYazdirmaKapat()
+                .dagitimDetay();
+
+        Selenide.close();
+
+
+
+
+    }
 }
