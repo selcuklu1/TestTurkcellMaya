@@ -114,6 +114,7 @@ public class GercekKisiYonetimPage extends MainPage {
 
     @Step("Kaydet")
     public GercekKisiYonetimPage kaydet() {
+        btnKaydet.shouldBe(visible);
         clickJs(btnKaydet);
         //  btnKaydet.click();
         if (btnEvetPopup.isDisplayed()) {

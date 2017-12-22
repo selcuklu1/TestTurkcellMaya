@@ -283,7 +283,8 @@ public class TuzelKisiYonetimiPage extends MainPage {
 
     @Step("Tüzel kişi kaydet")
     public TuzelKisiYonetimiPage tuzelKisiKaydet() {
-        btnTuzelKisiKaydet.click();
+        btnTuzelKisiKaydet.shouldBe(visible);
+        clickJs(btnTuzelKisiKaydet);
         if (btnPopupEvet.isDisplayed()) {
             btnPopupEvet.click();
         }

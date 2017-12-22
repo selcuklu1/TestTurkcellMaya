@@ -230,7 +230,7 @@ public class OnayAkisiTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TC1896: Onay akışı güncelleme")
-    public void TC1896() {
+    public void TC1896() throws InterruptedException {
 
         String onayAkisi = "Sezaiii Çelikkk";
         String kullanici = "Zübeyde TEKİN";

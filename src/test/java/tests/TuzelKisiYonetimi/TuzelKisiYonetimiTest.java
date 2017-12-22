@@ -49,8 +49,6 @@ public class TuzelKisiYonetimiTest extends BaseTest {
         String faksNo = "2121111111";
         String basariMesaji = "İşlem başarılıdır!";
 
-        String path = docPath + "Otomasyon.pdf";
-
         tuzelKisiYonetimiPage
                 .openPage()
                 .yeniTuzelKisiEkle()
