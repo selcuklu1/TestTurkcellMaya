@@ -778,13 +778,13 @@ public class GizlilikKleransiTest extends BaseTest {
         String geldigiKurum = "Esk Kurum 071216 2";
 
         String mesaj = kullaniciTasnifDisi + " kullanıcısının gizlilik kleransı evrakı görüntülemek için yeterli değildir.";
-        String mesaj2 = "DAGPLAN1 adlı Dağıtım Planınında gizlilik kleransı yetersiz kullanıcılar vardır:" + kullaniciTasnifDisi;
+        String mesaj2 = "DAGPLAN1 adlı Dağıtım Planınında gizlilik kleransı yetersiz kullanıcılar vardır: " + kullaniciTasnifDisi;
 
         login(username3, password3);
 
+        //testte kullanılacak data oluşturuluyor.
         gelenEvrakKayitPage
                 .openPage()
-//                .evrakBilgileriUstYaziEkle("C:\\Users\\Emre_Sencan\\Pictures\\pdf.pdf")
                 .konuKoduDoldur(konuKodu)
                 .konuDoldur(konu)
                 .evrakTuruSec(evrakTuru)
@@ -797,12 +797,13 @@ public class GizlilikKleransiTest extends BaseTest {
                 .evrakGelisTipiSec(evrakGelisTipi)
                 .ivedilikSec(ivedilik)
                 .dagitimBilgileriKisiSec("YASEMİN")
-                .kaydet()
-                .islemMesaji().isBasarili();
+                .kaydet();
+        String evrakNO2190 = gelenEvrakKayitPage.popUps();
+        gelenEvrakKayitPage.islemMesaji().isBasarili();
 
         gelenEvraklarPage
                 .openPage()
-                .tabloEvrakNoKontrol(konu)
+                .tabloKonuyaGoreEvrakAc(konu)
                 .cevapYaz();
 
         evrakOlusturPage
@@ -833,13 +834,13 @@ public class GizlilikKleransiTest extends BaseTest {
         evrakOlusturPage
                 .bilgilerTabiAc()
                 .geregiSonKayitSil()
-                .geregiSecimTipiSecByText("Dağıtım Planı")
+                .geregiSecimTipiSecByText("Dağıtım Planları")
                 .geregiSec("DAGPLAN1");
 
         evrakOlusturPage
                 .editorTabAc()
                 .parafla()
-                .islemMesaji().dikkatOlmali(mesaj);
+                .islemMesaji().dikkatOlmali(mesaj2);
 
     }
 }
