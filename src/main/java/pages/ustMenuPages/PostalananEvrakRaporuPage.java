@@ -43,7 +43,7 @@ public PostalananEvrakRaporuPage postaSorgulama() {
 public PostalananEvrakRaporuPage sonucKarsilastirma () {
 
     tblSorgulamaSonuc.get(0);
-    
+
     return this;
 }
 }

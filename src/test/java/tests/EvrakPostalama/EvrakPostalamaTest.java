@@ -100,7 +100,7 @@ public class EvrakPostalamaTest extends BaseTest {
                 .postalanacakEvrakOrjYaz()
                 .gramajDoldur("111111")
                 .hesapla()
-                .evrakPostala();
+                .postala();
 
 
         Selenide.close();
@@ -179,4 +179,54 @@ public class EvrakPostalamaTest extends BaseTest {
 
     }
 
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true , description = "TC1685 : Fiziksel eki olan iç yazışmaların postaya düşürülmesi")
+    public void TC1685() throws InterruptedException {
+        login("Mbozdemir", "123");
+        String konu = "TC1685" + getSysDate();
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .konuKoduSec("YAZILIM GEL")
+                .konuDoldur(konu)
+                .kaldirilacakKlasorler("Diğer")
+//                .kaldirilacakKlasorler("B1K1")
+                .evrakTuruSec("Resmi Yazışma")
+                .onayAkisiKullanicilariTemizle()
+                .onayAkisiEkle()
+                .onayAkisiKullaniciTipiSec("Mehmet BOZDEMİR", "İmzalama")
+//                .onayAkisiKullaniciTipiSec(user1.getName(), "İmzalama")
+                .onayAkisiKullan();
+
+        evrakOlusturPage
+                .ilgileriTabAc()
+                .sistemeKayitliEvrakEkleTab()
+                .sistemeKayitliEvrakAra("yazı")
+                .sistemeKayitliDokumanArama()
+                .tablodaBulunanEvrakiEkle();
+
+        evrakOlusturPage
+                .islemMesaji().basariliOlmali("İşlem başarılıdır!");
+
+
+        evrakOlusturPage
+                .editorTabAc()
+                .editorIcerikDoldur(konu)
+                .editorEvrakGeregiSec("YAZILIM GELİ")
+                .imzala()
+                .popupSImzalaIslemleri();
+
+
+
+        Thread.sleep(4000);
+
+        postalanacakEvraklarPage
+                .openPage()
+                .filter().findRowsWith(Condition.text(konu)).shouldHaveSize(1).first().click();
+
+        postalanacakEvraklarPage.evrakPostala()
+                .gidisSekli("Evrak Servisi Elden")
+                .postala();
+    }
 }

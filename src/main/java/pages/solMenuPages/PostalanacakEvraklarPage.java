@@ -42,7 +42,8 @@ public class PostalanacakEvraklarPage extends MainPage {
     SelenideElement btnPopupYazdir = $(By.id("postaDetayYazdirForm:dtPostaEvrakUstVeri:0:evrakDetayiViewDialogYazdir"));
     SelenideElement btnPopupOrjYazdir = $(By.id("postaDetayYazdirForm:dtPostaEvrakUstVeri:0:evrakDetayiViewDialogOrjYazdir"));
     SelenideElement btnPopupHesaplaTamam = $(By.id("mainPreviewForm:tutarDialogButtonId"));
-
+    SelenideElement btnPostala = $(By.id("mainPreviewForm:postalaButton_id"));
+    SelenideElement btnDialogEvet =$(By.id("mainPreviewForm:postalaDogrulaDialogForm:evetButton_id"));
     @Step("Postalanacak Evraklar sayfası aç")
     public PostalanacakEvraklarPage openPage() {
         solMenu(SolMenuData.BirimEvraklari.PostalanacakEvraklar);
@@ -181,6 +182,12 @@ public class PostalanacakEvraklarPage extends MainPage {
         Thread.sleep(2000);
        Selenide.switchTo();
 
+        return this;
+    }
+    public PostalanacakEvraklarPage postala () {
+
+        btnPostala.click();
+        btnDialogEvet.click();
         return this;
     }
 }
