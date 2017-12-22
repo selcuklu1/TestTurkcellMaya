@@ -70,7 +70,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
         cevaplananEvrakRaporuPage
                 .sayfayiRaporla()
                 .islemMesaji().basariliOlmali(basariMesaji);
-        Thread.sleep(10000);
+
         cevaplananEvrakRaporuPage
                 .excellIndirilmeKontrolu(filePath, fileName2);
 
