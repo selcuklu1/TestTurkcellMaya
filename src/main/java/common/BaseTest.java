@@ -21,7 +21,7 @@ public class BaseTest extends BaseLibrary {
 
     @BeforeSuite(alwaysRun = true)
     public void beforeSuite() {
-        killProcess();
+       // killProcess();
     }
 
     @BeforeClass(alwaysRun = true)
@@ -52,7 +52,7 @@ public class BaseTest extends BaseLibrary {
         Configuration.collectionsTimeout = 40000;
         Configuration.timeout = 40000;
 //      Configuration.clickViaJs = true;
-        Configuration.holdBrowserOpen = true;
+ //       Configuration.holdBrowserOpen = true;
 //      Configuration.headless = false;
 
         Configuration.startMaximized = true;
@@ -66,6 +66,7 @@ public class BaseTest extends BaseLibrary {
         // System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, "/dev/null");
 
         setDocPath();
+        getBrowserName();
 
     }
 
@@ -76,16 +77,17 @@ public class BaseTest extends BaseLibrary {
 
     @AfterMethod
     public void tearDown() throws Exception {
-        try {
+     //   Selenide.close();
+/*        try {
             Selenide.clearBrowserLocalStorage();
             Selenide.clearBrowserCookies();
         } catch (Exception e) {
-        }
+        }*/
     }
 
     @AfterSuite(alwaysRun = true)
     public void afterSuite() {
-         killProcess();
+         //killProcess();
     }
 
     @Step("Login")
