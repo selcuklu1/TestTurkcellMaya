@@ -3,7 +3,6 @@ package pages.ustMenuPages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
-import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -1082,6 +1081,8 @@ public class EvrakOlusturPage extends MainPage {
 
     public class EditorTab extends MainPage {
 
+        SelenideElement divContainer = $(By.id("yeniGidenEvrakForm:allPanels_content"));
+
         SelenideElement divHitap = $("div[id='yeniGidenEvrakForm:hitapInplace'] > span");
         // SelenideElement divEditor = $(By.id("yeniGidenEvrakForm:allPanels"));
         SelenideElement divEditor = $("span[id='yeniGidenEvrakForm:D1Editor']");
@@ -1113,9 +1114,12 @@ public class EvrakOlusturPage extends MainPage {
 
 
         private EditorTab open() {
-            tabEditor.click();
-            return this;
 
+            if (divContainer.is(not(visible)))
+                tabEditor.click();
+
+            //divContainer.shouldBe(visible);
+            return this;
         }
 
         @Step("Hitap alanı {0} olarak gelmeli")
