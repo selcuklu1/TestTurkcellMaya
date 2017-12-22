@@ -2,6 +2,7 @@ package pages.solMenuPages;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
@@ -12,6 +13,7 @@ import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
+import static com.codeborne.selenide.Selenide.sleep;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 public class GelenEvraklarPage extends MainPage {
@@ -481,6 +483,7 @@ public class GelenEvraklarPage extends MainPage {
     }
     @Step("Vekalet var uyarısı ")
     public GelenEvraklarPage evrakOnIzlemeUyarıPopUpKontol(String mesaj) {
+        Selenide.sleep(2000);
        if(popUpUyari.text().equals(mesaj));
            popUpUyariEvet.click();
         return this;
@@ -494,7 +497,6 @@ public class GelenEvraklarPage extends MainPage {
     public GelenEvraklarPage kullanciListesiSecWithTitle(String kullanici) {
         txtKullaniciListesi.type(kullanici).detailItems()
                 .filterBy(Condition.exactText("optiim")).first().click();
-        txtKullaniciListesi.closeLovTreePanel();
         return this;
     }
 }

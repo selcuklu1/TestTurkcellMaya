@@ -1,5 +1,7 @@
 package pages.ustMenuPages;
 
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
@@ -15,6 +17,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 public class KaydedilenGelenEvrakPage extends MainPage {
@@ -26,7 +29,7 @@ public class KaydedilenGelenEvrakPage extends MainPage {
     SelenideElement btnRaporAlExcel = $("[id='birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable'] button:nth-child(4)");
     SelenideElement btnRaporAlPdf = $("[id='birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable'] button:nth-child(2)");
     SelenideElement tblKaydedilenGelenEvrak = $(By.id("birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable_data"));
-    SelenideElement tbldene = $(By.xpath("//tbody[@id='birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable_data']/tr/td[2]/div"));
+    ElementsCollection tbldene = $$("[id='birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable_data'] tr[role='row']");
 
     public KaydedilenGelenEvrakPage openPage() {
         ustMenu("Raporlar", "Kaydedilen Gelen Evrak");
@@ -53,7 +56,7 @@ public class KaydedilenGelenEvrakPage extends MainPage {
 
     @Step("Sorgula butununa bas")
     public KaydedilenGelenEvrakPage sorgula() {
-        btnSorgula.click();
+        btnSorgula.pressEnter();
         return this;
     }
 
@@ -118,8 +121,7 @@ public class KaydedilenGelenEvrakPage extends MainPage {
 
     public KaydedilenGelenEvrakPage tabloKontrolu(String evrakNo) {
 //        WebElement columnId =  findElementOnTableByColumnInput(tblKaydedilenGelenEvrak,1,evrakNo);
-        String text = tbldene.text();
-        Assert.assertEquals(text, evrakNo);
+        tbldene.filterBy(Condition.text(evrakNo));
         return this;
     }
 

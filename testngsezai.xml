@@ -4,7 +4,6 @@
 <suite thread-count="3" name="Test Suite" parallel="classes" verbose="1">
 
     <test name="SezaiTests">
-
         <packages>
             <package name="tests.GercekKisiYonetimi"/>
             <package name="tests.TuzelKisiYonetimi"/>

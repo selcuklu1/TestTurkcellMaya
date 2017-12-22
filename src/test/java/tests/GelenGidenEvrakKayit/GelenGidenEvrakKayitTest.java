@@ -32,15 +32,16 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     String evrakNO321;
     String evrakNO328;
     String konuKodu = "010.01";
-    String evrakTuru = "R";
-    String evrakDili = "917";
-    String evrakTarihi = "16.11.2017";
-    String gizlilikDerecesi = "N";
-    String kisiKurum = "D";
+    String evrakTuru = "Resmi Yazışma";
+    String evrakDili = "Türkçe";
+    String evrakTarihi = getSysDateForKis();
+    String gizlilikDerecesi = "Normal";
+    String kisiKurum = "Kurum";
     String geldigiKurum = "Esk Kurum 071216 2";
-    String evrakGelisTipi = "P";
-    String ivedilik = "N";
+    String evrakGelisTipi = "Posta";
+    String ivedilik = "Normal";
     String ekMetni = "test otomasyon";
+
 
     @BeforeMethod
     public void loginBeforeTests() {
@@ -65,6 +66,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         String excelPath = "C:\\TestAutomation2\\BelgenetFTA\\documents\\test.xlsx";
         String ustYaziAdi = "pdf.pdf";
         String excelAdi = "test.xlsx";
+        String konu = "Test "+getSysDate();
 
 
         gelenEvrakKayitPage
@@ -75,6 +77,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
         gelenEvrakKayitPage
                 .konuKoduDoldur(konuKodu)
+                .konuDoldur(konu)
                 .evrakTuruSec(evrakTuru)
                 .evrakDiliSec(evrakDili)
                 .evrakTarihiDoldur(evrakTarihi)
@@ -104,31 +107,31 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
         kaydedilenGelenEvraklarPage
                 .openPage()
-                .filtreleAc()
-                .tarihDoldur(getSysDateForKis())
-                .tabloKontrolu(evrakNO321);
+                .filter().findRowsWith(Condition.text(konu))
+                .shouldHaveSize(1);
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true,description = "TC2163 : Kaydedilen gelen evrakın güncellenmesi")
+    @Test(enabled = true, dependsOnMethods = {"TC0321"}, description = "TC2163 : Kaydedilen gelen evrakın güncellenmesi")
     public void TC2163() throws InterruptedException {
 
-        String evrakTuru = "D";
+        String evrakTuru = "Dilekçe";
         String ustYaziPath = "C:\\TestAutomation2\\BelgenetFTA\\documents\\Otomasyon.pdf";
         String ustYaziAdi = "Otomasyon.pdf";
         String basariMesaji = "İşlem başarılıdır!";
         String aciklama = "Test Otomasyon";
         String evrakTarihi = getSysDateForKis();
         String evrakTuru2 = "Dilekçe";
+        String konu = "Test "+getSysDate();
 
 // TC0321 de oluşturulan evrak no burada kullanılacak.
 
         kaydedilenGelenEvraklarPage
                 .openPage()
-                .tabloEvrakNoileIcerikSec("5140"); // sırayla çalışma yapıldığında evrakNO321 parametre olarak eklenecek
+                .tabloEvrakNoileIcerikSec(evrakNO321); // sırayla çalışma yapıldığında evrakNO321 parametre olarak eklenecek
 
-        String evrakNo = gelenEvrakKayitPage
-                .evrakDetayiEvrakNoTextAl();
+//        String evrakNo = gelenEvrakKayitPage
+//                .evrakDetayiEvrakNoTextAl();
 
         gelenEvrakKayitPage
                 .evrakDetaylariAlanGuncellenebilirlikKontrolü()
@@ -136,12 +139,13 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .evrakDetayiPdfDegisiklikpopUpClose()
 //                .ustYaziPdfAdiKontrol(ustYaziAdi)
                 .konuKoduDoldur(konuKodu)
+                .konuDoldur(konu)
                 .evrakTuruSec(evrakTuru)
                 .evrakDiliSec(evrakDili)
                 .evrakTarihiDoldur(evrakTarihi)
                 .gizlilikDerecesiSec(gizlilikDerecesi)
                 .kisiKurumSec(kisiKurum)
-                .geldigiKurumDoldurLovText(geldigiKurum)
+                 .geldigiKurumDoldurLovText2(geldigiKurum)
                 .evrakSayiSagDoldur()
                 .evrakGelisTipiSec(evrakGelisTipi)
                 .ivedilikSec(ivedilik)
@@ -156,7 +160,8 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
         kaydedilenGelenEvraklarPage
                 .openPage()
-                .tabloEvrakNoileIcerikSec(evrakNo);
+                .filter().findRowsWith(Condition.text(konu))
+                .shouldHaveSize(1);
 
         gelenEvrakKayitPage
                 .guncellenenAlanKontrolleri(evrakTarihi, evrakTuru, gizlilikDerecesi);
@@ -167,11 +172,13 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     public void TC0328() throws InterruptedException {
 
         String birim = "OPTİİM BİRİM";
+        String konu = "Test "+getSysDate();
 
         gelenEvrakKayitPage
                 .openPage()
 //                .evrakBilgileriUstYaziEkle("C:\\Users\\Emre_Sencan\\Pictures\\pdf.pdf")
                 .konuKoduDoldur(konuKodu)
+                .konuDoldur(konu)
                 .evrakTuruSec(evrakTuru)
                 .evrakDiliSec(evrakDili)
                 .evrakTarihiDoldur(evrakTarihi)
@@ -188,7 +195,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
         birimHavaleEdilenlerPage
                 .openPage()
-                .filter().findRowsWith(Condition.text(evrakNO328))
+                .filter().findRowsWith(Condition.text(konu))
                 .shouldHaveSize(1);
 
         //TeslimAlınanBelgeler sayfasında yetkili bir kullanıcı ile giriş yapılacak.
@@ -199,8 +206,11 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, dependsOnMethods = {"TC0328"}, description = "TC1401 : Kaydedilen Gelen Evrak raporu")
+    @Test(enabled = true, priority = 7, description = "TC1401 : Kaydedilen Gelen Evrak raporu")
     public void TC1401() throws InterruptedException, IOException {
+
+//        String evrakNO321 = "5187";
+//        String evrakNO328 = "5187";
 
         String basariMesaji = "İşlem başarılıdır!";
         String evrakNo = evrakNO321;
@@ -234,7 +244,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         String TCKN = "51091330934";
         String ad = "Test";
         String soyad = "Otomasyon";
-        String kisiKurum = "G";
+        String kisiKurum = "Gerçek Kişi";
 
         String mernisNo = createMernisTCKN();
 
@@ -256,7 +266,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true,dependsOnMethods = {"TC0328"}, description = "TC0394 : Gelen maillerin evrak olarak sisteme dahil edilmesi")
+    @Test(enabled = true, description = "TC0394 : Gelen maillerin evrak olarak sisteme dahil edilmesi")
     public void TC0394() throws InterruptedException {
 
         String birim = "OPTİİM BİRİM11";
@@ -264,12 +274,15 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         String pathToFilePdf = "C:\\TestAutomation2\\BelgenetFTA\\documents\\TestOtomasyon.msg";
         String pathToFileExcel = "C:\\TestAutomation2\\BelgenetFTA\\documents\\test.xlsx";
         String ustYaziAdi = "TestOtomasyon.msg";
+        String konu = "Test "+getSysDate();
+
 //        String ustYaziAdi = "ustYazi.pdf";  // TestOtomasyon.msg ekiini eklememe rağmen ustYazi.pdf  olarak ekrana geliyor.
         gelenEvrakKayitPage
                 .openPage()
                 .evrakBilgileriUstYaziEkle(pathToFilePdf)
                 .ustYaziMailAdiKontrol(ustYaziAdi)
                 .konuKoduDoldur(konuKodu)
+                .konuDoldur(konu)
                 .evrakTuruSec(evrakTuru)
                 .evrakDiliSec(evrakDili)
                 .evrakTarihiDoldur(evrakTarihi)
@@ -295,22 +308,21 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
         kaydedilenGelenEvraklarPage
                 .openPage()
-                .filtreleAc()
-//                .tarihDoldur(getSysDateForKis())
-                .tabloKontrolu(evrakNo);
+                .filter().findRowsWith(Condition.text(konu))
+                .shouldHaveSize(1);
     }
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = false, description = "TC0322 : Gelen evrak kayıtta alan kontrolleri")
     public void TC0322() throws InterruptedException {
 
-        String kisiKurum = "G";
-        String kisiKurum1 = "D";
+        String kisiKurum = "Gerçek Kişi";
+        String kisiKurum1 = "Kurum";
         String geldigiKurum = "Cumhurbaşkanlığı";
         String solAlan = "24301012-";
         String evrakTuru = "Dilekçe";
-        String ivedilik = "G";
-        String evrakGelisTipi = "P";
+        String ivedilik = "Günlü";
+        String evrakGelisTipi = "Posta";
         String message = "Zorunlu alanları doldurunuz";
         String message2 = "Dosya büyüklüğü uygun değildir.";
         String evrakTuru1 = "A";
@@ -377,6 +389,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         String ustYaziAdi = "pdf.pdf";
         String excelAdi = "test.xlsx";
         String miatTarihi = getSysDateForKis();
+        String konu = "Test "+getSysDate();
 
         gidenEvrakKayitPage
                 .openPage()
@@ -389,18 +402,17 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .ivedilikSec(ivedilik)
                 .gizlilikDerecesiSec(gizlilikDerecesi)
                 .konuKoduDoldur(konuKodu)
+                .konuDoldur(konu)
                 .evrakDiliSec(evrakDili)
                 .miatDoldur(miatTarihi)
                 .geregiDoldur("AFYON VALİLİĞİ")
                 .kaldiralacakKlasorDoldur("ESK05")
                 .bilgiDoldur("TAŞRA TEŞKİLATI")
                 .evrakTarihiDoldur("16.02.2017")
-
                 .ekBilgiFiltreAc()
                 .ekBilgiFizikselEkEkle()
                 .evrakEkTabFizikselEkMetniDoldur(ekMetni)
                 .fizikselEkTabViewAciklamaEkle()
-
                 .ilgiEkleriFiltreAc()
                 .ilgiEkleriMetinTabAc()
                 .ilgiEkleriMetinEkMetniDoldur(ekMetni)
@@ -416,8 +428,8 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
         kaydedilenGidenEvraklarPage
                 .openPage()
-//                .filtreleAc()
-//                .tarihDoldur(getSysDateForKis())
-                .tabloKontrolu(evrakNo1340);
+                .filter().findRowsWith(Condition.text(konu))
+                .shouldHaveSize(1);
+
     }
 }

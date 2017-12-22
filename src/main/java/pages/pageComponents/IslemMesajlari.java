@@ -8,8 +8,7 @@ import javafx.scene.text.Text;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 
-import static com.codeborne.selenide.Condition.exactText;
-import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
 import static pages.pageComponents.IslemMesajlari.MessageTitle.*;
 
@@ -83,8 +82,16 @@ public class IslemMesajlari extends BaseLibrary {
     public void basariliOlmali(String... expectedMessage) {
 //        Assert.assertEquals(getMessageTitle(), BASARILI.value());
         messageTitle.shouldHave(exactText(BASARILI.value()));
-        if (expectedMessage.length > 0)
+        if (expectedMessage.length > 0){
+            String text;
+            while (messageBody.text().isEmpty()){
+                /*text = messageBody.text();
+                if (!text.isEmpty())
+                    break;*/
+            }
             messageBody.shouldHave(text(expectedMessage[0]));
+        }
+
 //            Assert.assertEquals(getMessageBody(), expectedMessage[0]);
         waitDisappear();
     }
@@ -93,8 +100,10 @@ public class IslemMesajlari extends BaseLibrary {
     public void uyariOlmali(String... expectedMessage) {
 //        Assert.assertEquals(getMessageTitle(), UYARI.value());
         messageTitle.shouldHave(text((UYARI.value())));
-        if (expectedMessage.length > 0)
+        if (expectedMessage.length > 0){
+            while (messageBody.text().isEmpty()){}
             messageBody.shouldHave(text(expectedMessage[0]));
+        }
 //            Assert.assertEquals(getMessageBody(), expectedMessage[0]);
         waitDisappear();
     }
@@ -104,8 +113,11 @@ public class IslemMesajlari extends BaseLibrary {
 //        Assert.assertEquals(getMessageTitle(), DIKKAT.value());
         messageTitle.shouldHave(exactText(DIKKAT.value()));
 
-        if (expectedMessage.length > 0)
+        if (expectedMessage.length > 0){
+            while (messageBody.text().isEmpty()){}
             messageBody.shouldHave(text(expectedMessage[0]));
+        }
+
 //            Assert.assertEquals(getMessageBody(), expectedMessage[0]);
         waitDisappear();
     }

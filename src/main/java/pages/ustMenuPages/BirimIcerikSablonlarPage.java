@@ -3,10 +3,12 @@ package pages.ustMenuPages;
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NotFoundException;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.MainPage;
 import pages.pageComponents.TextEditor;
 import pages.pageComponents.UstMenu;
@@ -142,7 +144,7 @@ public class BirimIcerikSablonlarPage extends MainPage {
 
     public boolean sablonExistInTable(String sablonAdi) {
         while (true) {
-            $$(rowsBirimSablonlari).first().shouldBe(visible);
+            $$(rowsBirimSablonlari).last().shouldBe(visible);
             if ($$(rowsBirimSablonlariSablonAdi).filterBy(and("Filter by visible and text"
                     , visible
                     , exactText(sablonAdi))).size() == 1) {
@@ -210,12 +212,19 @@ public class BirimIcerikSablonlarPage extends MainPage {
         }
     }
 
-    public SelenideElement sablonuSil(String sablonAdi) {
+    public void sablonuSil(String sablonAdi) {
+        SelenideElement row = findSablonRowInTable(sablonAdi);
+        row.shouldBe(visible).$("[id$='sablonListesiDetayButton_id']").click();
+        btnSil.click();
+        $("#sablonSilDialog button").click();
+    }
+
+    public SelenideElement sablonuSilD(String sablonAdi) {
 
         while (true) {
             $$(rowsBirimSablonlari).get(2).$("[id$='sablonListesiDetayButton_id']").click();
             btnSil.click();
-            $("#j_idt4716").click();
+            $("#sablonSilDialog button").click();
         }
 //        while (true) {
 //            for (SelenideElement row : $$(rowsBirimSablonlari)) {

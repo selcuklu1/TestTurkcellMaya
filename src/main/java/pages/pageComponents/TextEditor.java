@@ -1,10 +1,12 @@
 package pages.pageComponents;
 
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.SelenideElement;
-import com.codeborne.selenide.WebDriverRunner;
+import com.codeborne.selenide.*;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.MainPage;
 
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
@@ -41,7 +43,12 @@ public class TextEditor extends MainPage {
 //      $inFrame("body[class*='cke_contents_ltr']");
 //        return $inFrame("body[class~='cke_contents_ltr']", frame);
 //        return $inFrame(By.tagName("body"), frame);
-        SelenideElement editor = $inFrame(".cke_editable", frame).shouldBe(visible);
+
+        new WebDriverWait(WebDriverRunner.getWebDriver(), Configuration.timeout/1000, Configuration.pollingInterval)
+                .until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frame));
+
+        SelenideElement editor = $(".cke_editable");
+//                $inFrame(".cke_editable", frame);
         return editor;
 //        return $inFrame("body[class='cke_editable cke_editable_themed cke_contents_ltr']", frame);
 //        return $inFrame(".cke_contents_ltr", frame);
@@ -61,6 +68,9 @@ public class TextEditor extends MainPage {
 
     @Step("Editore tekst yaz")
     public TextEditor type(CharSequence... keysToSend) {
+//        Selenide.sleep(1000);
+
+
         SelenideElement editor = editor();
         editor.shouldBe(visible);
         editor.sendKeys(keysToSend);
@@ -73,6 +83,7 @@ public class TextEditor extends MainPage {
 
     @Step("\"{name}\" toolbar butonun etkin durumu \"{value}\" yap")
     public TextEditor toolbarButton(String name, boolean value) {
+//        Selenide.sleep(2000);
         SelenideElement button = $$x("//a[span[contains(@class,'cke_button_label') and normalize-space(text())='" + name + "']]")
                 .shouldHave(sizeGreaterThan(0))
                 .filterBy(visible)
@@ -85,11 +96,14 @@ public class TextEditor extends MainPage {
 //        System.out.println(button.is(disabled));
 //        System.out.println(button.is(enabled));
 
-        if (button.is(toolboxButtonOn) != value) {
+        /*new WebDriverWait(WebDriverRunner.getWebDriver(),Configuration.timeout/1000, 500)
+                .until(ExpectedConditions.elementToBeClickable(button));*/
 
-            clickJs(button);
-//            button.click();
-            System.out.println("Clicked");
+        if (button.is(toolboxButtonOn) != value) {
+//            Selenide.sleep(1000);
+//            clickJs(button);
+            button.click();
+//            System.out.println("Clicked");
         }
 
         return this;
@@ -97,7 +111,8 @@ public class TextEditor extends MainPage {
 
     @Step("\"{name}\" toolbar alanda \"{value}\" seç")
     public TextEditor toolbarCombo(String name, String value) {
-        SelenideElement combo = $$x("//span[span[contains(@class,'cke_combo_label') and normalize-space(text())='" + name + "']]/a")
+//        Selenide.sleep(1000);
+        SelenideElement combo = $$x("//span[span[contains(@class,'cke_combo_label') and normalize-space(text())='" + name + "']]/a/span[@class='cke_combo_open']")
                 .shouldHave(sizeGreaterThan(0))
                 .filterBy(visible)
                 .shouldHaveSize(1)
@@ -105,13 +120,16 @@ public class TextEditor extends MainPage {
                 .shouldBe(visible)
                 .shouldBe(enabled);
 
-//        clickJs(combo);
-        combo.click();
+        clickJs(combo);
+//        combo.shouldBe(visible).click();
 
         By iframeLocator = By.cssSelector("iframe[class='cke_panel_frame']");
-        $inFrame(".cke_panel_block a[title='" + value + "']", iframeLocator)
-                .shouldBe(visible)
-                .click();
+        SelenideElement element = $inFrame(".cke_panel_block a[title='" + value + "']", iframeLocator);
+//                .shouldBe(visible)
+//        element.click();
+        clickJs(element);
+
+
 
 /*        By iframeLocator = By.cssSelector("iframe[class='cke_panel_frame']");
         $(iframeLocator).shouldBe(visible);

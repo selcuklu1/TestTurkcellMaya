@@ -104,21 +104,30 @@ public class Filtreler extends BaseLibrary {
      * @return
      */
     public ElementsCollection findRowsWith(Condition condition) {
-
         while (true) {
-            SelenideElement table = $("#mainInboxForm\\:inboxDataTable_data").shouldBe(visible);
+            SelenideElement table = $("#mainInboxForm\\:inboxDataTable_data");
+            table.shouldHave(visible);
             //SelenideElement row = table.$x("//*[contains(text(),'" + text + "')]/ancestor::tr[@data-ri and @role='row']");
             SelenideElement nextPage = $("#mainInboxForm\\:inboxDataTable span[class~='ui-paginator-next']");
-            ElementsCollection rows = table.$$("tr[data-ri][role='row']").shouldHave(sizeGreaterThan(0));
-            rows.last().shouldBe(visible);
+            ElementsCollection rows = table.$$("tr[data-ri][role='row']");//.shouldHave(sizeGreaterThan(0));
 
             ElementsCollection filtered = rows.filterBy(condition);
+            if (filtered.size() > 0 || nextPage.has(cssClass("ui-state-disabled")))
+                return filtered;
 
+            /*if (nextPage.has(cssClass("ui-state-disabled")))
+                return filtered;*/
+
+            /*nextPage.shouldBe(visible);
+            rows.last().shouldBe(visible);
+            System.out.println(condition.toString());*/
+
+            /*filtered = rows.filterBy(condition);
             if (filtered.size() > 0)
                 return filtered;
 
             if (nextPage.has(cssClass("ui-state-disabled")))
-                return filtered;
+                return filtered;*/
 
             nextPage.click();
         }
