@@ -20,6 +20,7 @@ import pages.solMenuPages.ImzaladiklarimPage;
 import pages.solMenuPages.PostalanacakEvraklarPage;
 import pages.solMenuPages.PostalananlarPage;
 import pages.ustMenuPages.EvrakOlusturPage;
+import pages.ustMenuPages.PostalananEvrakRaporuPage;
 
 import java.sql.Driver;
 
@@ -29,6 +30,8 @@ public class EvrakPostalamaTest extends BaseTest {
     PostalanacakEvraklarPage postalanacakEvraklarPage;
     PostalananlarPage postalananlarPage;
     ImzaladiklarimPage imzaladiklarimPage;
+    PostalananEvrakRaporuPage postalananEvrakRaporuPage;
+
     User user1 = new User("user1", "123", "User1 TEST");
 
     @BeforeMethod
@@ -38,6 +41,7 @@ public class EvrakPostalamaTest extends BaseTest {
         postalanacakEvraklarPage = new PostalanacakEvraklarPage();
         postalananlarPage = new PostalananlarPage();
         imzaladiklarimPage = new ImzaladiklarimPage();
+        postalananEvrakRaporuPage = new PostalananEvrakRaporuPage();
     }
 
 
@@ -142,5 +146,37 @@ public class EvrakPostalamaTest extends BaseTest {
 
     }
 
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true , description = "TC520 : Postalanan evrak posta bilgilerinin içerik ekranından güncellenmesi ve rapordan kontrolü")
+    public void TC0520() throws InterruptedException {
+        login("Mbozdemir", "123");
+        String konu = "Konu:";
+
+        postalananlarPage
+                .openPage();
+
+        Thread.sleep(2000);
+        postalananlarPage.tablodanSecim();
+
+        Thread.sleep(1000);
+        postalananlarPage.postaDetayiTikla();
+        postalananlarPage.btnGuncelle();
+        Thread.sleep(1000);
+        postalananlarPage.btnTarihGuncelle("10.10.2017");
+        postalananlarPage.btnPostakoduGuncelle("121212");
+        postalananlarPage.txtAciklama("Bu bir açıklamadır");
+        postalananlarPage = postalananlarPage.btnKaydet();
+
+        String txt = postalananlarPage.evSay();
+        postalananEvrakRaporuPage
+                .openPage();
+
+        postalananEvrakRaporuPage
+                .evrakSayisi(txt)
+                .postaAramaBaslangicTarihi("01.12.2017 00:00")
+                .postaSorgulama()
+                .sonucKarsilastirma();
+
+    }
 
 }
