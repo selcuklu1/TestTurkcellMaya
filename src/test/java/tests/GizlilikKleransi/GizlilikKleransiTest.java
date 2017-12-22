@@ -629,7 +629,8 @@ public class GizlilikKleransiTest extends BaseTest {
         String evrakDili = "Türkçe";
         String gizlilikDerecesi = "Normal";
         String ivedilik = "Normal";
-        String geregi = "USERNAME22N TEST";
+        String kullaniciNormal = "USERNAME22N TEST";
+        String mesaj = kullaniciNormal+" kullanıcısının gizlilik kleransı evrakı görüntülemek için yeterli değildir.";
 
         login(username3,password3);
 
@@ -645,7 +646,7 @@ public class GizlilikKleransiTest extends BaseTest {
                 .aciklamaDoldur(icerik)
                 .ivedikSec(ivedilik)
                 .geregiSecimTipiSecByText("Kullanıcı")
-                .geregiSec(geregi)
+                .geregiSec(kullaniciNormal)
                 .onayAkisiEkle()
                 .kullaniciTabloKontrol()
                 .kullanicilarDoldur("username21g")
@@ -686,11 +687,72 @@ public class GizlilikKleransiTest extends BaseTest {
         logout();
         login(username3,password3);
 
-        String mesaj = geregi+" kullanıcısının gizlilik kleransı evrakı görüntülemek için yeterli değildir.";
+
         parafBekleyenlerPage
                 .openPage()
                 .konuyaGoreEvrakSec("TC2191 20171222131358")
                 .parafla()
                 .islemMesaji().dikkatOlmali(mesaj);
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TC1472 : Dağıtımda gizlilik derecesi kontrolü")
+    public void TC1472() throws InterruptedException{
+
+        String basariMesaji = "İşlem başarılıdır!";
+        String tur2 = "IMZALAMA";
+        String icerik = "TC1472 " + getSysDate();
+        String konuKodu = "010.01";
+        String konu = "TC1472 " + getSysDate();
+        String kaldiralacakKlasor = "Diğer";
+        String evrakTuru = "Resmi Yazışma";
+        String evrakDili = "Türkçe";
+        String gizlilikDerecesi = "Hizmete Özel";
+        String ivedilik = "Normal";
+        String kullaniciOzel = "USERNAME24O TEST";
+        String kullaniciTasnifDisi = "USERNAME23T TEST";
+
+        String mesaj = kullaniciTasnifDisi+" kullanıcısının gizlilik kleransı evrakı görüntülemek için yeterli değildir.";
+
+
+        login(username3,password3);
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .konuKoduSec(konuKodu)
+                .konuDoldur(konu)
+                .kaldiralacakKlasorlerSec(kaldiralacakKlasor)
+                .evrakTuruSec(evrakTuru)
+                .evrakDiliSec(evrakDili)
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .aciklamaDoldur(icerik)
+                .ivedikSec(ivedilik)
+                .geregiSecimTipiSecByText("Kullanıcı")
+                .geregiSec(kullaniciOzel)
+                .geregiSec(kullaniciTasnifDisi)
+                .onayAkisiEkle()
+                .kullaniciTabloKontrol()
+                .kullanicilarImzaciSec(tur2)
+                .kullan();
+
+        evrakOlusturPage
+                .editorTabAc()
+                .editorIcerikDoldur(icerik)
+                .parafla()
+                .islemMesaji().dikkatOlmali(mesaj);
+
+        evrakOlusturPage
+                .bilgilerTabiAc()
+                .geregiSonKayitSil()
+                .geregiSecimTipiSecByText("Birim")
+                .geregiSec("Yazılım");
+
+        evrakOlusturPage
+                .editorTabAc()
+                .parafla();
+//                .islemMesaji().dikkatOlmali(mesaj);
+
+
     }
 }

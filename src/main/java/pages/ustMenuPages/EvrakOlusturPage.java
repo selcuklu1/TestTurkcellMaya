@@ -481,7 +481,11 @@ public class EvrakOlusturPage extends MainPage {
             txtGeregi.closeLovTreePanel();
             return this;
         }
-
+        @Step("Geregi alanını seçilenleri kaldır")
+        public BilgilerTab geregiSecilenleriKaldır() {
+            txtGeregi.clearAllSelectedLov();
+            return this;
+        }
         @Step("Geregi alanında {0} seç")
         public BilgilerTab geregiSec(String text, Boolean clearAfterSelecion) {
             cmbGeregi.sendKeys(Keys.SHIFT);
