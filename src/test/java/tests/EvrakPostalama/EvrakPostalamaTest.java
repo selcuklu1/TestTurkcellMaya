@@ -103,7 +103,7 @@ public class EvrakPostalamaTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TC2076: Evrak Postalama işlemleri")
     public void TC2076() throws InterruptedException {
-        login(user1);
+        login("Mbozdemir", "123");
         String konu = "TC2076_" + getSysDate();
         evrakOlusturPage
                 .openPage()
@@ -118,8 +118,8 @@ public class EvrakPostalamaTest extends BaseTest {
                 .geregiKurumPostaTipi("Evrak Servisi Elden")
                 .onayAkisiKullanicilariTemizle()
                 .onayAkisiEkle()
-//                .onayAkisiKullaniciTipiSec("Mehmet BOZDEMİR", "İmzalama")
-                .onayAkisiKullaniciTipiSec(user1.getName(), "İmzalama")
+                .onayAkisiKullaniciTipiSec("Mehmet BOZDEMİR", "İmzalama")
+            //    .onayAkisiKullaniciTipiSec(user1.getName(), "İmzalama")
                 .onayAkisiKullan();
 
         EvrakOlusturPage.EditorTab editorTab = evrakOlusturPage.editorTabAc();
