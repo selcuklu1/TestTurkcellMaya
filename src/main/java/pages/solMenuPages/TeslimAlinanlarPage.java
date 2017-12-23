@@ -44,6 +44,15 @@ public class TeslimAlinanlarPage extends MainPage {
         return this;
     }
 
+    @Step("Evrak seçilir")
+    public TeslimAlinanlarPage evrakSec(String konu, String yer, String tarih, String no) {
+        tblEvraklar.filterBy(Condition.text(konu))
+                .filterBy(Condition.text(yer))
+                .filterBy(Condition.text(tarih))
+                .filterBy(Condition.text(no)).get(0).click();
+        return this;
+    }
+
     @Step("Filtrele alanını aç")
     public TeslimAlinanlarPage filtreleAc() {
         f.click();

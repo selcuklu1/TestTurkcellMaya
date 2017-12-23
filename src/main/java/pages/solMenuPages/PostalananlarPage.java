@@ -27,10 +27,28 @@ public class PostalananlarPage extends MainPage {
     //Hüseyin
     ElementsCollection tablePostalananlar = $$("tbody[id='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
     SelenideElement btnPostaDetayi = $x("//span[text() = 'Posta Detayı']/../../..//button");
+    ElementsCollection tblEvraklar = $$("[id^='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
 
     @Step("Postalananlar sayfası aç")
     public PostalananlarPage openPage(){
         solMenu(SolMenuData.BirimEvraklari.Postalananlar);
+        return this;
+    }
+
+    @Step("Evrak seçilir")
+    public PostalananlarPage evrakSec(String konu, String yer, String tarih) {
+        tblEvraklar.filterBy(Condition.text(konu))
+                .filterBy(Condition.text(yer))
+                .filterBy(Condition.text(tarih)).get(0).click();
+        return this;
+    }
+
+    @Step("Evrak içerik göster")
+    public PostalananlarPage evrakSecIcerikGoster(String konu, String yer, String tarih) {
+        tblEvraklar.filterBy(Condition.text(konu))
+                .filterBy(Condition.text(yer))
+                .filterBy(Condition.text(tarih))
+                .get(0).$$("[id$='detayGosterButton']").first().click();
         return this;
     }
 
