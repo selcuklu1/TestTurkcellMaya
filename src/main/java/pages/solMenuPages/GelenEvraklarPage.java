@@ -89,6 +89,7 @@ public class GelenEvraklarPage extends MainPage {
     SelenideElement txtPaylasKisi = $(By.id("mainPreviewForm:evrakPaylasKisiLov:LovText"));
     BelgenetElement txtPaylasilanKisi = comboLov(By.id("mainPreviewForm:evrakPaylasKisiLov:LovText"));
     SelenideElement txtPaylasanAciklama = $(By.id("mainPreviewForm:evrakPaylasAciklama"));
+    SelenideElement btnPaylasBirim = $(By.id("mainPreviewForm:paylasTumuBoolean"));
     SelenideElement btnPaylasIcPaylas = $(By.id("mainPreviewForm:paylasButtonId"));
 
     SelenideElement tblIlkEvrak = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
@@ -151,6 +152,17 @@ public class GelenEvraklarPage extends MainPage {
     @Step("Evrak seç")
     public GelenEvraklarPage evrakSec() {
         tblIlkEvrak.click();
+        return this;
+    }
+
+    @Step("Evrak seç")
+    public GelenEvraklarPage evrakSec(String konu, String geldigiYer, String kayitTarihiSayi, String no) {
+        tableEvraklar
+                .filterBy(Condition.text(konu))
+                .filterBy(Condition.text(geldigiYer))
+                .filterBy(Condition.text(kayitTarihiSayi))
+                .filterBy(Condition.text(no))
+                .get(0).click();
         return this;
     }
 
@@ -414,6 +426,12 @@ public class GelenEvraklarPage extends MainPage {
 
     public GelenEvraklarPage paylas() {
         btnPaylas.click();
+        return this;
+    }
+
+    @Step("Birim")
+    public GelenEvraklarPage paylasBirim(){
+        clickJs(btnPaylasBirim);
         return this;
     }
 

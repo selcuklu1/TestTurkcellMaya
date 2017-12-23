@@ -70,6 +70,17 @@ public class BenimlePaylasilanlarPage extends MainPage {
         return this;
     }
 
+    @Step("Benimle paylaşılanlar tablosundan evrak seçildi")
+    public BenimlePaylasilanlarPage evrakSec(String paylasan, String paylasilmaTarihi, String konu) {
+        tableBenimlePaylasilanlar
+                .filterBy(Condition.text("Paylaşan: " + paylasan))
+                .filterBy(Condition.text("Paylaşılma Tarihi: " + paylasilmaTarihi))
+                .filterBy(Condition.text("Konu: " + konu))
+                .get(0)
+                .click();
+        return this;
+    }
+
     @Step("\"{0}\" tabını seç")
     public BenimlePaylasilanlarPage evrakOnizlemeTabSec(String tabAdi) {
         tabsEvrakOnizleme
