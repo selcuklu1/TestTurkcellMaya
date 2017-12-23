@@ -28,8 +28,10 @@ public class ImzaladiklarimPage extends MainPage {
     @Step("Imzaladiklarim Sayfasini aç")
     public ImzaladiklarimPage openPage() {
         solMenu(SolMenuData.IslemYaptiklarim.Imzaladiklarim);
-        $("#mainInboxForm\\:inboxDataTable label[class='ui-inbox-header-title']")
-                .shouldHave(text("İmzaladıklarım"));
+        String pageTitle = SolMenuData.IslemYaptiklarim.Imzaladiklarim.getMenuText();
+        $("#mainInboxForm\\:inboxDataTable .ui-inbox-header-title")
+                .shouldHave(text(pageTitle));
+        System.out.println("Page: " + pageTitle);
         return this;
     }
 

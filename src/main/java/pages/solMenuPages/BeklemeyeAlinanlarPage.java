@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 import pages.MainPage;
 import pages.pageData.SolMenuData;
 
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 
 public class BeklemeyeAlinanlarPage extends MainPage {
@@ -26,6 +27,10 @@ public class BeklemeyeAlinanlarPage extends MainPage {
     @Step("Beklemeye Alınanlar sayfası aç")
     public BeklemeyeAlinanlarPage openPage() {
         solMenu(SolMenuData.IslemBekleyenEvraklar.BeklemeyeAlinanlar);
+        String pageTitle = SolMenuData.IslemBekleyenEvraklar.BeklemeyeAlinanlar.getMenuText();
+        $("#mainInboxForm\\:inboxDataTable .ui-inbox-header-title")
+                .shouldHave(text(pageTitle));
+        System.out.println("Page: " + pageTitle);
         return this;
     }
 

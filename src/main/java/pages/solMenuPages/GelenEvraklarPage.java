@@ -11,6 +11,7 @@ import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
 
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static com.codeborne.selenide.Selenide.sleep;
@@ -99,6 +100,10 @@ public class GelenEvraklarPage extends MainPage {
 
     public GelenEvraklarPage openPage() {
         solMenu(SolMenuData.IslemBekleyenEvraklar.GelenEvraklar);
+        String pageTitle = SolMenuData.IslemBekleyenEvraklar.GelenEvraklar.getMenuText();
+        $("#mainInboxForm\\:inboxDataTable .ui-inbox-header-title")
+                .shouldHave(text(pageTitle));
+        System.out.println("Page: " + pageTitle);
         return this;
     }
 

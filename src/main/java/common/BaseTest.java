@@ -41,8 +41,8 @@ public class BaseTest extends BaseLibrary {
         Configuration.reportsFolder = "test-result/reports";
         Configuration.screenshots = false;
         Configuration.savePageSource = false;
-        Configuration.collectionsTimeout = 40000;
-        Configuration.timeout = 40000;
+        Configuration.collectionsTimeout = 20000;
+        Configuration.timeout = 20000;
         //Configuration.clickViaJs = true;
         Configuration.holdBrowserOpen = true;
         //Configuration.headless = false;
@@ -69,14 +69,13 @@ public class BaseTest extends BaseLibrary {
         Selenide.close();
     }
 
-    @AfterMethod
-    public void tearDown() throws Exception {
+    public void clearCookies() throws Exception {
        // Selenide.close();
-/*        try {
+        try {
             Selenide.clearBrowserLocalStorage();
             Selenide.clearBrowserCookies();
         } catch (Exception e) {
-        }*/
+        }
     }
 
     @AfterSuite(alwaysRun = true)

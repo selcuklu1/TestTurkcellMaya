@@ -73,6 +73,16 @@ public class EvrakOlusturPage extends MainPage {
         return this;
     }
 
+    @Step("")
+    public EvrakOlusturPage closePage(){
+        $x("//form[@id='yeniGidenEvrakForm']" +
+                "/ancestor::div[contains(@class,'windowDialog')]" +
+                "/div[contains(@class,'ui-dialog-titlebar')]" +
+                "/a[contains(@class,'ui-dialog-titlebar-close')]").click();
+
+        //span[text()='Gelen Evrak Kayıt']/../a[contains(@class,'ui-dialog-titlebar-close')]
+        return this;
+    }
 
     @Step("PDF Önizleme")
     public EvrakOlusturPage pdfOnIzleme() {
@@ -565,6 +575,7 @@ public class EvrakOlusturPage extends MainPage {
         }
 
         public BilgilerTab miatDoldur(String date) {
+//            dateMiat.setValue(date).pressTab();
             setValueJS(dateMiat, date);
             return this;
         }
@@ -683,7 +694,7 @@ public class EvrakOlusturPage extends MainPage {
 
         public BilgilerTab onayAkisiEkle(String kullanici) {
 
-            btnOnayAkisiEkle.click();
+//            btnOnayAkisiEkle.click();
             txtOnayAkisiKullanicilar.selectLov(kullanici);
 
             return this;
@@ -901,7 +912,8 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Kullan")
         public BilgilerTab kullan() {
-            clickJs(btnKullan);
+//            clickJs(btnKullan);
+            btnKullan.pressEnter();
             return this;
         }
 
@@ -1222,6 +1234,8 @@ public class EvrakOlusturPage extends MainPage {
             }
             SelenideElement evrakKapat = $(By.xpath("//*[@id='window1Dialog']/div[1]/a[1]/span"));
             evrakKapat.click();
+//            $("#kapatKaydetEvetButton").click();
+            $("#kapatKaydetHayirButton").click();
         /*Thread.sleep(2000);
         SelenideElement sayisalImzaOnay = $(By.id("imzalaForm:sayisalImzaConfirmForm:sayisalImzaEvetButton"));
         sayisalImzaOnay.click();*/
@@ -1244,7 +1258,8 @@ public class EvrakOlusturPage extends MainPage {
 
 //           .$("input")
             $("div[id='imzalaForm:imzalaRadio']").shouldBe(visible);
-            $("div[id='imzalaForm:imzalaRadio'] input").click();
+//            $("div[id='imzalaForm:imzalaRadio']").click();
+            clickJs($("#imzalaForm\\:imzalaRadio").find(By.tagName("input")));
             $("#imzalaForm\\:sayisalImzaConfirmDialogOpener").click();
             $("#imzalaForm\\:sayisalImzaConfirmForm\\:sayisalImzaEvetButton").shouldBe(visible).click();
             return this;

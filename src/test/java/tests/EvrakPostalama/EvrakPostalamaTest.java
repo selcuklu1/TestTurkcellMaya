@@ -38,7 +38,6 @@ public class EvrakPostalamaTest extends BaseTest {
         imzaladiklarimPage = new ImzaladiklarimPage();
     }
 
-
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TC0308: Evrak Postalama")
     public void TC0308() throws InterruptedException {
