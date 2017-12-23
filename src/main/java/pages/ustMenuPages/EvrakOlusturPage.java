@@ -295,7 +295,13 @@ public class EvrakOlusturPage extends MainPage {
             txtOnayAkisiKullanicilar.closeLovTreePanel();
             return this;
         }
-
+        @Step("Kullanıcılar alanı doldur")
+        public BilgilerTab kullanicilarDoldurWithTitle(String kullanici, String title) {
+            txtOnayAkisiKullanicilar.type(kullanici).titleItems()
+                    .filterBy(Condition.exactText(kullanici + title)).first().click();
+            txtOnayAkisiKullanicilar.closeLovTreePanel();
+            return this;
+        }
         @Step("Konu Kodu alanında {0} seç")
         public BilgilerTab otomatikOnayAkisi() {
             btnOtomatikOnayAkisi.click();
