@@ -31,10 +31,15 @@ public class ImzaBekleyenlerPage extends MainPage {
     SelenideElement btnIcerik = $("[id^='mainInboxForm:inboxDataTable'][id$='detayGosterButton']");
     SelenideElement pdfIcerikKontrol = $(By.xpath("/html//div[@id='inboxItemInfoForm:imzacilarPanel']/center/table/tbody/tr/td[3]/center/table/tbody/tr[6]/td/button[@role='button']/span[@class='ui-button-text']"));
     ElementsCollection solMenuBirim = $$("[id='birimlerimMenusuContainer'] li");
+    ElementsCollection tblImzaBekleyenler = $$("tbody[id='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
 
     @Step("İmza bekleyenler sayfası aç")
     public ImzaBekleyenlerPage openPage(){
         solMenu(SolMenuData.IslemBekleyenEvraklar.ImzaBekleyenler);
+        String pageTitle = SolMenuData.IslemBekleyenEvraklar.ImzaBekleyenler.getMenuText();
+        $("#mainInboxForm\\:inboxDataTable .ui-inbox-header-title")
+                .shouldHave(text(pageTitle));
+        System.out.println("Page: " + pageTitle);
         return this;
     }
 
@@ -139,9 +144,21 @@ public class ImzaBekleyenlerPage extends MainPage {
         return this;
     }
     @Step("Evrak no'ya göre İçerik tıklama")
-    public ImzaBekleyenlerPage evrakNumarisnaGoreIcerikTiklama(String evrakNo){
-        tableKararIzlemeEvraklar.filterBy(Condition.text(evrakNo)).first()
+    public ImzaBekleyenlerPage evrakKonusunaGoreIcerikTiklama(String konu){
+        tableKararIzlemeEvraklar.filterBy(Condition.text(konu)).first()
                 .$("[id^='mainInboxForm:inboxDataTable'][id$='detayGosterButton']").click();
+        return this;
+    }
+
+    @Step("Evrak Seç")
+    public ImzaBekleyenlerPage evrakSec(String konu, String gidecegiYer, String gonderen, String evrakNo){
+        tblImzaBekleyenler
+                .filterBy(text("Konu:" + konu))
+                .filterBy(text("Gideceği Yer:" + gidecegiYer))
+                .filterBy(text("Gönderen:" + gonderen))
+                .filterBy(text("Evrak No:" + evrakNo))
+                .first()
+                .click();
         return this;
     }
 

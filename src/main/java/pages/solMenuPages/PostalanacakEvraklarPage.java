@@ -6,6 +6,7 @@ import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.Sleeper;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
@@ -46,6 +47,15 @@ public class PostalanacakEvraklarPage extends MainPage {
     SelenideElement btnPopupHesaplaTamam = $(By.id("mainPreviewForm:tutarDialogButtonId"));
     ElementsCollection tblEvraklar = $$("[id^='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
     ElementsCollection btnEvrakDetayKapat = $$("[id='windowItemInfoDialog'] a[class='ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all'] span[class='ui-icon ui-icon-closethick']");
+    SelenideElement btnPostala = $(By.id("mainPreviewForm:postalaButton_id"));
+    SelenideElement btnDialogEvet =$(By.id("mainPreviewForm:postalaDogrulaDialogForm:evetButton_id"));
+    SelenideElement btnIcerikGoster = $(By.id("mainInboxForm:inboxDataTable:0:detayGosterButton"));
+    SelenideElement btnDagitimYerDetay = $x("//*[@id='mainPreviewForm:dataTableId_data']/tr[2]/td[2]/div/button");
+    SelenideElement tabIcerikIlgileri = $(By.id("inboxItemInfoForm:dialogTabMenuLeft:uiRepeat:2:cmdbutton"));
+    SelenideElement tabIcerikEkleri = $(By.id("inboxItemInfoForm:dialogTabMenuLeft:uiRepeat:1:cmdbutton"));
+    SelenideElement tabIcerikKapat = $x("//*[@id='windowItemInfoDialog']/div[1]/a[1]/span");
+    SelenideElement tabIcerikKapatmaOnay = $(By.id("kapatButton"));
+
     @Step("Postalanacak Evraklar sayfası aç")
     public PostalanacakEvraklarPage openPage() {
         solMenu(SolMenuData.BirimEvraklari.PostalanacakEvraklar);
@@ -225,6 +235,35 @@ public class PostalanacakEvraklarPage extends MainPage {
         Thread.sleep(2000);
        Selenide.switchTo();
 
+        return this;
+    }
+    public PostalanacakEvraklarPage postala () {
+
+        btnPostala.click();
+        btnDialogEvet.click();
+        return this;
+    }
+
+    public PostalanacakEvraklarPage dagitimDetay() {
+        btnDagitimYerDetay.click();
+        return this;
+    }
+
+    public PostalanacakEvraklarPage icerikGoster() {
+        btnIcerikGoster.click();
+        return this;
+    }
+    public PostalanacakEvraklarPage icerikIlgileriTab () {
+        tabIcerikIlgileri.click();
+        return this;
+    }
+    public PostalanacakEvraklarPage icerikEkleriTab() {
+        tabIcerikEkleri.click();
+        return this;
+    }
+    public PostalanacakEvraklarPage icerikPencereKapatma() {
+        tabIcerikKapat.click();
+        tabIcerikKapatmaOnay.click();
         return this;
     }
 }

@@ -354,14 +354,16 @@ public class OnayAkisYonetimiPage extends MainPage {
         return this;
     }
 
-    public OnayAkisYonetimiPage kullaniciYerleriDegistir(String kullanici1, String kullanici2) {
+    public OnayAkisYonetimiPage kullaniciYerleriDegistir(String kullanici1, String kullanici2) throws InterruptedException {
 
+        Thread.sleep(1000);
         trOnayAkisiEkleKullanicilar
                 .filterBy(text(kullanici1))
                 .get(0)
                 .shouldBe(exist)
                 .$("[class$='ui-icon-arrowthick-1-s']").click();
 
+        Thread.sleep(1000);
         trOnayAkisiEkleKullanicilar
                 .filterBy(text(kullanici2))
                 .get(0)
