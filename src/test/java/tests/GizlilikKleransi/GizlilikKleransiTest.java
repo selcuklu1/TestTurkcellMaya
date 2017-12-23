@@ -965,7 +965,7 @@ public class GizlilikKleransiTest extends BaseTest {
                     .devredecekKisiSec("Yasemin Çakıl")
                     .listele()
                     .islemMesaji().basariliOlmali(basariMesaji);
-        
+
         kullaniciEvrakDevretPage
                     .ekranTabKontrolleri()
                     .tabloEvrakSecimi(text)
