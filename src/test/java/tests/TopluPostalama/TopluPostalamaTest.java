@@ -15,6 +15,9 @@ public class TopluPostalamaTest extends BaseTest {
     PostaListesiPage postaListesiPage;
     PostalananlarPage postalananlarPage;
     PttRaporuPage pttRaporuPage;
+    TopluPostaladiklarimPage topluPostaladiklarimPage;
+    ImzaladiklarimPage imzaladiklarimPage;
+    ImzaBekleyenlerPage imzaBekleyenlerPage;
 
     @BeforeMethod
     public void loginBeforeTests() {
@@ -22,6 +25,9 @@ public class TopluPostalamaTest extends BaseTest {
         topluPostalanacakEvraklarPage = new TopluPostalanacakEvraklarPage();
         postaListesiPage = new PostaListesiPage();
         pttRaporuPage = new PttRaporuPage();
+        topluPostaladiklarimPage = new TopluPostaladiklarimPage();
+        imzaladiklarimPage = new ImzaladiklarimPage();
+        imzaBekleyenlerPage = new ImzaBekleyenlerPage();
     }
 
     @Test(enabled = true, description = "1804 : Toplu Postalanacak Evrakların Sorgulanması (UC_POSTAYÖNETİMİ_001)")
@@ -217,11 +223,6 @@ public class TopluPostalamaTest extends BaseTest {
                 .sorgula()
                 .evrakKontrol(evrak1KayitTarihiSayi, evrak1GidecegiYer, evrak1Konu, evrak1HazirlayanBirim, evrak1PostaTipi, true)
                 .evrakKontrol(evrak2KayitTarihiSayi, evrak2GidecegiYer, evrak2Konu, evrak2HazirlayanBirim, evrak2PostaTipi, true);
-
-
-
-
-
     }
 
     @Test(enabled = true, description = "1807 : Posta Listesi Oluşturma- Tüzel Kişi Listesi (UC_POSTAYÖNETİMİ_002)")
@@ -652,6 +653,123 @@ public class TopluPostalamaTest extends BaseTest {
 
 
     }
+
+    // DÜZENLENECEK
+    @Test(enabled = true, description = "TC1675 : Toplu Postaladıklarım İzleme / Alan Kontrolleri (UC_POSTAYÖNETİMİ_004)")
+    public void TC1675() {
+
+
+        topluPostaladiklarimPage
+                .openPage()
+                .filtrePaneliAc()
+                .postaListesiAdiDoldur("")
+                .filtrele()
+                .postaListesiKontrol("","","","","", true)
+
+                .temizle()
+                .postaListesiAdiDoldur("")
+                .filtrele()
+                .postaListesiKontrol("","","","","", false)
+
+                .temizle()
+
+                .evrakSayisiDoldur("")
+                .filtrele()
+                .postaListesiKontrol("","","","","", true)
+                .evrakSayisiDoldur("")
+                .filtrele()
+                .postaListesiKontrol("","","","","", false)
+
+                .temizle()
+                .postaListesiAdiDoldur("")
+                .evrakSayisiDoldur("")
+                .postaTarihiDoldur("")
+                .filtrele()
+                .postaListesiKontrol("","","","","", true)
+
+                .temizle()
+                .postaListesiAdiDoldur("")
+                .evrakSayisiDoldur("")
+                .postaTarihiDoldur("")
+                .filtrele()
+                .postaListesiKontrol("","","","","", false);
+
+
+
+
+
+    }
+
+    @Test(enabled = true, description = "TC2087 : Toplu postaladıklarım listesinden evrakın geri alınması")
+    public void TC2087() {
+
+
+        topluPostaladiklarimPage
+                .openPage()
+                .postaListesiSec("", "" ,"" ,"" ,"")
+                .evrakSil("","","")
+                .islemMesaji().basariliOlmali();
+
+        topluPostalanacakEvraklarPage
+                .openPage()
+                .gidecegiYerSec("", true)
+                .sorgula()
+                .evrakKontrol("", "", "", "", "", true);
+
+        pttRaporuPage
+                .openPage()
+                .postaTarihiDoldur("")
+                .sorgula()
+                .tabloKontrolEt("", "", "", false);
+
+        logout();
+        login("", "");
+
+        // Step: 8 - Silinen evrakın imzacısı ile sisteme login ol - Geri alınabildiği görülür.
+
+        imzaladiklarimPage
+                .openPage()
+                .gidecegiYerSec("")
+                .baslangicTarihiDoldur("")
+                .bitisTarihiDoldur("")
+                .evrakSec("","","","")
+                .geriAl()
+                .geriAlAciklamaDoldurVeOnayla("")
+                .islemMesaji().basariliOlmali();
+
+        imzaBekleyenlerPage
+                .openPage()
+                .evrakSec("","", "", "")
+                .imzala();
+
+        topluPostalanacakEvraklarPage
+                .openPage()
+                .evrakSec("", "", "", "", "")
+                .evrakTikSec("", "", "", "", "", true)
+                .postaListesineAktar()
+                .postaListesiSec("")
+                .listeyeEkle();
+
+        postaListesiPage
+                .evrakSec("", "", "", "", "")
+                .postaListesiPostala()
+                .postaDetayiPostala();
+
+        topluPostaladiklarimPage
+                .openPage()
+                .postaListesiSec("" ,"" ,"","", "")
+                .evrakKontrol("", "", "");
+
+
+
+
+
+
+
+    }
+
+
+
 
 
 

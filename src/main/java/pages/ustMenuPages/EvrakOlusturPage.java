@@ -1,6 +1,7 @@
 package pages.ustMenuPages;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
@@ -177,7 +178,8 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement cmbEvrakDili = $("select[id$=evrakDili]");
         SelenideElement cmbGizlilikDerecesi = $("select[id$=guvenlikKodu]");
         SelenideElement btnIletisimbilgileriOnayAkisiEkle = $("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='onayAkisiEkle']");
-
+        ElementsCollection cmbKullanicilarIlkImzalama = $$("[id='yeniGidenEvrakForm:evrakBilgileriList:18:anlikakisOlusturPanelGrid'] [id^='yeniGidenEvrakForm:evrakBilgileriList:'][id$='selectOneMenu']");
+        SelenideElement btnKullanicilarKullan = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:anlikAkisKullanButton"));
         //Kanun Kapsam Tipi
         SelenideElement rdbKanunKapsamTipiNormal = $x("//input[contains(@id,'kanunKapsamTipiRadio') and (../label[contains(@for,'kanunKapsamTipiRadio') and normalize-space(text())='Normal'])]");
         SelenideElement rdbKanunKapsamTipiBilgiEdinmeKanunu = $("//input[contains(@id,'kanunKapsamTipiRadio') and (../label[contains(@for,'kanunKapsamTipiRadio') and normalize-space(text())='Bilgi Edinme Kanunu'])]");
@@ -257,7 +259,7 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement txtDagitimHitapAdres = $(By.xpath("//div[@id='yeniGidenEvrakForm:pnlHitapDuzenle']//div/textarea[@role='textbox']"));
         SelenideElement btnDagitimHitapDuzenlemeKaydet = $(By.xpath("//*[@id='yeniGidenEvrakForm:pnlHitapDuzenle']//span[normalize-space(text())='Kaydet']/parent::button"));
 
-        BelgenetElement cmbBilgi = comboLov(By.cssSelector("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='bilgiLov:LovText']"));
+        BelgenetElement cmbBilgi = comboLov("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='bilgiLov:LovText']");
         By cmbBilgiBy = By.cssSelector("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='bilgiLov:LovText']");
 
         SelenideElement lovTreeKapat = $(By.cssSelector("[id^='yeniGidenEvrakForm:evrakBilgileriList:'][id$='bilgiLov:lovTreePanelKapat']"));
@@ -305,7 +307,13 @@ public class EvrakOlusturPage extends MainPage {
             txtOnayAkisiKullanicilar.closeLovTreePanel();
             return this;
         }
-
+        @Step("Kullanıcılar alanı doldur")
+        public BilgilerTab kullanicilarDoldurWithTitle(String kullanici, String title) {
+            txtOnayAkisiKullanicilar.type(kullanici).titleItems()
+                    .filterBy(Condition.exactText(kullanici + title)).first().click();
+            txtOnayAkisiKullanicilar.closeLovTreePanel();
+            return this;
+        }
         @Step("Konu Kodu alanında {0} seç")
         public BilgilerTab otomatikOnayAkisi() {
             btnOtomatikOnayAkisi.click();
@@ -381,6 +389,18 @@ public class EvrakOlusturPage extends MainPage {
         @Step("Onay Akışı ekle")
         public BilgilerTab OnayAkisiEkle() {
             btnIletisimbilgileriOnayAkisiEkle.click();
+            return this;
+        }
+
+        @Step("Onay Akışı imzalama seç")
+        public BilgilerTab onayAkisiEkleIlkImzalaSec(String imzalama) {
+            cmbKullanicilarIlkImzalama.get(0).selectOption(imzalama);
+            return this;
+        }
+
+        @Step("Kullan")
+        public BilgilerTab imzalamaIlkKullan(){
+            btnKullanicilarKullan.pressEnter();
             return this;
         }
 
@@ -702,8 +722,8 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Onay Akışı Ekle")
         public BilgilerTab onayAkisiEkle() {
-//            clickJs(btnOnayAkisiEkle);
-            btnOnayAkisiEkle.pressEnter();
+            clickJs(btnOnayAkisiEkle);
+//            btnOnayAkisiEkle.pressEnter();
             return this;
         }
 
@@ -1244,24 +1264,42 @@ public class EvrakOlusturPage extends MainPage {
 
         public EditorTab popupSImzalaIslemleri() throws InterruptedException {
 
-            //switchTo().window("");
+            /*//switchTo().window("");
 //            Thread.sleep(5000);
 //            SelenideElement sImza = $(By.id("imzalaForm:imzalamaYontemiRadio:1"));
 //            sImza.selectRadio("I");
 
-           /* $("#evrakImzalaDialog").shouldBe(visible);
+           *//* $("#evrakImzalaDialog").shouldBe(visible);
             executeJavaScript("arguments[0].click()", WebDriverRunner.getWebDriver().findElement(By.id("imzalaForm:imzalamaYontemiRadio:1")));
 //            Thread.sleep(2000);
             SelenideElement imzala = $(By.xpath("//*[@id='imzalaForm:sayisalImzaConfirmDialogOpener']"));
             imzala.click();
-//            Thread.sleep(2000);*/
+//            Thread.sleep(2000);*//*
 
 //           .$("input")
             $("div[id='imzalaForm:imzalaRadio']").shouldBe(visible);
 //            $("div[id='imzalaForm:imzalaRadio']").click();
             clickJs($("#imzalaForm\\:imzalaRadio").find(By.tagName("input")));
+
             $("#imzalaForm\\:sayisalImzaConfirmDialogOpener").click();
-            $("#imzalaForm\\:sayisalImzaConfirmForm\\:sayisalImzaEvetButton").shouldBe(visible).click();
+            Thread.sleep(700);
+
+            $("#imzalaForm\\:sayisalImzaConfirmForm\\:sayisalImzaEvetButton").shouldBe(visible).click();*/
+            $x("//*[text()='İmzala']/ancestor::tbody[1]//button").click();
+            $("div[id='imzalaForm:imzalaRadio']").shouldBe(visible).click();
+//        clickJs($("#imzalaForm\\:imzalaRadio").find(By.tagName("input")));
+            for (int i = 0; i < Configuration.timeout/1000; i++) {
+                sleep(1000);
+                if ($("#imzalaForm\\:sayisalImzaConfirmDialogOpener").is(visible)){
+                    $("#imzalaForm\\:sayisalImzaConfirmDialogOpener").click();
+                    clickJs($("#imzalaForm\\:sayisalImzaConfirmForm\\:sayisalImzaEvetButton"));
+                    break;
+                }
+                else{
+                    $("#imzalaForm\\:imzalaButton").click();
+                    break;
+                }
+            }
             return this;
         }
 

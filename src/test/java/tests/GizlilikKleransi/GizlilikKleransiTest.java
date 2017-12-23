@@ -38,6 +38,9 @@ public class GizlilikKleransiTest extends BaseTest {
     GenelEvrakRaporuPage genelEvrakRaporuPage;
     EvrakAramaPage evrakAramaPage;
     ImzaBekleyenlerPage imzaBekleyenlerPage;
+    PostalanacakEvraklarPage postalanacakEvraklarPage;
+    PostalananlarPage postalananlarPage;
+    KullaniciEvrakDevretPage kullaniciEvrakDevretPage;
 
     String evrakNo = "";
     String basariMesaji = "İşlem başarılıdır!";
@@ -60,7 +63,11 @@ public class GizlilikKleransiTest extends BaseTest {
         imzaladiklarimPage = new ImzaladiklarimPage();
         genelEvrakRaporuPage = new GenelEvrakRaporuPage();
         evrakAramaPage = new EvrakAramaPage();
+        imzaBekleyenlerPage= new ImzaBekleyenlerPage();
+        postalanacakEvraklarPage = new PostalanacakEvraklarPage();
+        postalananlarPage = new PostalananlarPage();
         imzaBekleyenlerPage = new ImzaBekleyenlerPage();
+        kullaniciEvrakDevretPage = new KullaniciEvrakDevretPage();
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -437,6 +444,119 @@ public class GizlilikKleransiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TC2227: Teslim alınmayı bekleyenler ve teslim alınanlar listesinde gizlilik klerans kontrolü (evrakta izi olmayan kullanıcı ile)")
+    public void TC2227() throws InterruptedException {
+
+        String basariMesaji = "İşlem başarılıdır!";
+        String uyariMesaj1 = "Gizlilik kleransınız evrakın gizlilik derecesini görüntülemek için yeterli değildir.";
+        String konuKodu = "Diğer";
+        String konuKoduRandom = "TC-2227-" + createRandomNumber(10);
+        String evrakTarihi = getSysDateForKis();
+        String kaldirilicakKlasor = "Gündem";
+        String kurum = "BÜYÜK HARFLERLE KURUM";
+        String kullaniciAdi = "Yazılım Geliştirme Direktörlüğ";
+        String gizlilikDerecesi = "Gizli";
+        String evrakSayiSag = createRandomNumber(10);
+
+        //TODO Pre Condition Teslim alınmayı bekleyenler sayfası data oluşturmakta
+        login("gklerans", password3);
+        gelenEvrakKayitPage
+                .openPage()
+                .konuKoduDoldur(konuKodu)
+                .konuDoldur(konuKoduRandom)
+                .evrakTarihiDoldur(evrakTarihi)
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .geldigiKurumDoldurLovText2(kurum)
+                .evrakSayiSagDoldur(evrakSayiSag)
+                .havaleIslemleriBirimDoldur(kullaniciAdi)
+                .kaydet()
+                .evetDugmesi()
+                .yeniKayitButton();
+        //TODO
+
+        login(username3, password3);
+
+        teslimAlinmayiBekleyenlerPage
+                .openPage()
+                .evrakSec(konuKoduRandom, kurum, evrakTarihi, evrakSayiSag)
+                .islemMesaji().beklenenMesaj(uyariMesaj1);
+
+        teslimAlinmayiBekleyenlerPage
+                .evrakSecIcerikGoster(konuKoduRandom, kurum, evrakTarihi, evrakSayiSag)
+                .islemMesaji().beklenenMesaj(uyariMesaj1);
+
+        teslimAlinmayiBekleyenlerPage
+                .evrakSecTeslimAl(konuKoduRandom, kurum, evrakTarihi, evrakSayiSag,true)
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        teslimAlinanlarPage
+                .openPage()
+                .evrakSec(konuKoduRandom, kurum, evrakTarihi, evrakSayiSag)
+                .islemMesaji().beklenenMesaj(uyariMesaj1);
+
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TC2225: Posta işleminde gizlilik klerans kontrolü (evrakta izi olan kullanıcı ile)")
+    public void TC2225() throws InterruptedException {
+
+        String basariMesaji = "İşlem başarılıdır!";
+        String uyariMesaj1 = "Gizlilik kleransınız evrakın gizlilik derecesini görüntülemek için yeterli değildir.";
+        String konuKodu = "Diğer";
+        String konuKoduRandom = "TC-2225-" + createRandomNumber(10);
+        String evrakTarihi = getSysDateForKis();
+        String kaldirilicakKlasor = "Gündem";
+        String kurum = "BÜYÜK HARFLERLE KURUM";
+        String kullaniciAdi = "Yazılım Geliştirme Direktörlüğ";
+        String gizlilikDerecesi = "Gizli";
+        String gizlilikKlerans = "Gizlilik Kleransı";
+        String bilgi = "Kurum";
+        String imzalama = "İmzalama";
+        String editor = createRandomText(15);
+
+        //TODO Pre Condition Postalanacak evraklar sayfası data oluşturmakta
+        login("gklerans", password3);
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .konuKoduDoldur(konuKodu)
+                .konuDoldur(konuKoduRandom)
+                .kaldiralacakKlasorlerSec(gizlilikKlerans)
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .bilgiSecimTipiSecByText(bilgi)
+                .bilgiDoldur(kurum)
+                .OnayAkisiEkle()
+                .onayAkisiEkleIlkImzalaSec(imzalama)
+                .onayAkisiKullan();
+
+        evrakOlusturPage
+                .editorTabAc()
+                .editorIcerikDoldur(editor)
+                .imzala()
+                .sImzasec()
+                .sImzaImzala()
+                .sayisalImzaEvetPopup();
+        //TODO
+
+        login("gklerans", password3);
+
+        postalanacakEvraklarPage
+                .openPage()
+                .evrakSec(konuKoduRandom, kurum, evrakTarihi)
+                .evrakSecIcerikGoster(konuKoduRandom, kurum, evrakTarihi)
+                .evrakSecIcerikKapat(true)
+                .evrakSec(konuKoduRandom, kurum, evrakTarihi)
+                .evrakPostala()
+                .evrakPostalaPostala(true)
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        postalananlarPage
+                .openPage()
+                .evrakSec(konuKoduRandom, kurum, evrakTarihi)
+                .evrakSecIcerikGoster(konuKoduRandom, kurum, evrakTarihi);
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, dependsOnMethods = {"TC1471"}, description = "TC1938: Yüksek kleranslı evrak oluşturma")
     public void TC1938() throws InterruptedException {
 
@@ -596,11 +716,11 @@ public class GizlilikKleransiTest extends BaseTest {
                 .onayAkisiEkle()
                 .kullaniciTabloKontrol()
 
-                .kullanicilarDoldur2(kullaniciOzel)
+                .kullanicilarDoldur(kullaniciOzel)
                 .kullaniciTabloKontrol()
                 .kullniciIsmineGoreImzaParafSec(kullaniciOzel, tur)
 
-                .kullanicilarDoldur2(kullaniciTasnifDisi)
+                .kullanicilarDoldur(kullaniciTasnifDisi)
                 .kullaniciTabloKontrol()
                 .kullniciIsmineGoreImzaParafSec(kullaniciTasnifDisi, tur2)
                 .kullan();
@@ -763,9 +883,8 @@ public class GizlilikKleransiTest extends BaseTest {
 
         String basariMesaji = "İşlem başarılıdır!";
         String tur2 = "IMZALAMA";
-        String icerik = "TC1472 " + getSysDate();
+        String text = "TC2190 " + getSysDate();
         String konuKodu = "010.01";
-        String konu = "TC1472 " + getSysDate();
         String kaldiralacakKlasor = "Diğer";
         String evrakTuru = "Resmi Yazışma";
         String evrakDili = "Türkçe";
@@ -786,7 +905,7 @@ public class GizlilikKleransiTest extends BaseTest {
         gelenEvrakKayitPage
                 .openPage()
                 .konuKoduDoldur(konuKodu)
-                .konuDoldur(konu)
+                .konuDoldur(text)
                 .evrakTuruSec(evrakTuru)
                 .evrakDiliSec(evrakDili)
                 .evrakTarihiDoldur(getSysDateForKis())
@@ -803,19 +922,19 @@ public class GizlilikKleransiTest extends BaseTest {
 
         gelenEvraklarPage
                 .openPage()
-                .tabloKonuyaGoreEvrakAc(konu)
+                .tabloKonuyaGoreEvrakAc(text)
                 .cevapYaz();
 
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
                 .konuKoduSec(konuKodu)
-                .konuDoldur(konu)
+                .konuDoldur(text)
                 .kaldiralacakKlasorlerSec(kaldiralacakKlasor)
                 .evrakTuruSec(evrakTuru)
                 .evrakDiliSec(evrakDili)
                 .gizlilikDerecesiSec(gizlilikDerecesi)
-                .aciklamaDoldur(icerik)
+                .aciklamaDoldur(text)
                 .ivedikSec(ivedilik)
                 .geregiSecimTipiSecByText("Kullanıcı")
                 .geregiSec(kullaniciOzel)
@@ -827,7 +946,7 @@ public class GizlilikKleransiTest extends BaseTest {
 
         evrakOlusturPage
                 .editorTabAc()
-                .editorIcerikDoldur(icerik)
+                .editorIcerikDoldur(text)
                 .parafla()
                 .islemMesaji().dikkatOlmali(mesaj);
 
@@ -841,6 +960,139 @@ public class GizlilikKleransiTest extends BaseTest {
                 .editorTabAc()
                 .parafla()
                 .islemMesaji().dikkatOlmali(mesaj2);
+    }
 
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TC2189 : Onay akışında gizlilik klerans kontrolü (Cevap)")
+    public void TC2189() throws InterruptedException{
+
+        String basariMesaji = "İşlem başarılıdır!";
+        String tur = "PARAFLAMA";
+        String tur2 = "IMZALAMA";
+        String text = "TC2189 " + getSysDate();
+        String konuKodu = "010.01";
+        String kaldiralacakKlasor = "Diğer";
+        String evrakTuru = "Resmi Yazışma";
+        String evrakDili = "Türkçe";
+        String gizlilikDerecesi = "Hizmete Özel";
+        String ivedilik = "Normal";
+        String birim = "AFYON VALİLİĞİ";
+        String kullaniciOzel = "USERNAME24O TEST";
+        String kullaniciTasnifDisi = "USERNAME23T TEST";
+
+        String evrakGelisTipi = "Posta";
+        String geldigiKurum = "Esk Kurum 071216 2";
+
+        String mesaj = kullaniciTasnifDisi + " kullanıcısının gizlilik kleransı evrakı görüntülemek için yeterli değildir.";
+
+        login(username3, password3);
+
+        //testte kullanılacak data oluşturuluyor.
+        gelenEvrakKayitPage
+                .openPage()
+                .konuKoduDoldur(konuKodu)
+                .konuDoldur(text)
+                .evrakTuruSec(evrakTuru)
+                .evrakDiliSec(evrakDili)
+                .evrakTarihiDoldur(getSysDateForKis())
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .kisiKurumSec("Kurum")
+                .geldigiKurumDoldurLovText2(geldigiKurum)
+                .evrakSayiSagDoldur()
+                .evrakGelisTipiSec(evrakGelisTipi)
+                .ivedilikSec(ivedilik)
+                .dagitimBilgileriKisiSec("YASEMİN")
+                .kaydet();
+        String evrakNO2189 = gelenEvrakKayitPage.popUps();
+        gelenEvrakKayitPage.islemMesaji().isBasarili();
+
+        gelenEvraklarPage
+                .openPage()
+                .tabloKonuyaGoreEvrakAc(text)
+                .cevapYaz();
+
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .konuKoduSec(konuKodu)
+                .konuDoldur(text)
+                .kaldiralacakKlasorlerSec(kaldiralacakKlasor)
+                .evrakTuruSec(evrakTuru)
+                .evrakDiliSec(evrakDili)
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .aciklamaDoldur(text)
+                .ivedikSec(ivedilik)
+                .geregiSec(birim)
+                .onayAkisiEkle()
+                .kullaniciTabloKontrol()
+                .kullanicilarDoldur(kullaniciOzel)
+                .kullniciIsmineGoreImzaParafSec(kullaniciOzel,tur)
+                .kullanicilarDoldur(kullaniciTasnifDisi)
+                .kullniciIsmineGoreImzaParafSec(kullaniciTasnifDisi,tur2)
+                .kullan();
+
+        evrakOlusturPage
+                .editorTabAc()
+                .editorIcerikDoldur(text)
+                .parafla()
+                .islemMesaji().dikkatOlmali(mesaj);
+
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TC2181 : Gizlilik kleransı yeterli olmayan kullanıcıya evrak devrediemelmesi")
+    public void TC2181() throws InterruptedException{
+
+        String basariMesaji = "İşlem başarılıdır!";
+        String text = "TC2181 "+getSysDate();
+//        String text = "TC2181 20171223151625";
+        String konuKodu = "010.01";
+        String evrakTuru = "Resmi Yazışma";
+        String evrakDili = "Türkçe";
+        String gizlilikDerecesi = "Gizli";
+        String ivedilik = "Normal";
+        String kullaniciNormal = "USERNAME22N TEST";
+        String evrakGelisTipi = "Posta";
+        String geldigiKurum = "Esk Kurum 071216 2";
+        String aciklama = "Yetersiz Klerans";
+
+        login(username3,password3);
+
+        //testte kullanılacak data oluşturuluyor.
+        gelenEvrakKayitPage
+                .openPage()
+                .konuKoduDoldur(konuKodu)
+                .konuDoldur(text)
+                .evrakTuruSec(evrakTuru)
+                .evrakDiliSec(evrakDili)
+                .evrakTarihiDoldur(getSysDateForKis())
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .kisiKurumSec("Kurum")
+                .geldigiKurumDoldurLovText2(geldigiKurum)
+                .evrakSayiSagDoldur()
+                .evrakGelisTipiSec(evrakGelisTipi)
+                .ivedilikSec(ivedilik)
+                .dagitimBilgileriKisiSec("YASEMİN")
+                .kaydet();
+        String evrakNO2189 = gelenEvrakKayitPage.popUps();
+        gelenEvrakKayitPage.islemMesaji().isBasarili();
+
+            kullaniciEvrakDevretPage
+                    .openPage()
+                    .devredecekKisiSec("Yasemin Çakıl")
+                    .listele()
+                    .islemMesaji().basariliOlmali(basariMesaji);
+
+        kullaniciEvrakDevretPage
+                    .ekranTabKontrolleri()
+                    .tabloEvrakSecimi(text)
+                    .devret()
+                    .devralacakKisiAlanKontolu()
+                    .devralacakKisiSec(kullaniciNormal)
+                    .aciklamaDoldur(text)
+                    .devretTamam()
+                    .popUpDevredilemeyenEvraklarKontrol()
+                    .devredelimeyenEvraklarEvrakKontrolu(text, aciklama);
     }
 }

@@ -215,6 +215,7 @@ public class VekaletIslemleriTest extends BaseTest {
     @Test(enabled = true, dependsOnMethods = {"TC2208"}, description = "TC0015 : Vekaleti alan kullanıcının onay akışında seçilmesi(vekaleten)")
     public void TC0015() throws InterruptedException {
 
+        String kullaniciTitle = " [Ağ (Network) Uzman Yardımcısı]";
         login(username3, password3);
 
         evrakOlusturPage
@@ -230,7 +231,7 @@ public class VekaletIslemleriTest extends BaseTest {
                 .onayAkisiEkle()
                 .kullaniciTabloKontrol()
                 .kullanicilarImzaciSec("PARAFLAMA")
-                .kullanicilarDoldur2(vekaletVeren)
+                .kullanicilarDoldurWithTitle(vekaletVeren,kullaniciTitle)
                 .vekeletAlanVerenTabloKontrolu()
                 .vekeletAlanVerenTabloVekaletAlanveyaVerenSec(vekaletAlan)
 //                .vekeletAlanVerenTabloKapat()
@@ -293,6 +294,7 @@ public class VekaletIslemleriTest extends BaseTest {
 
         String tur = "IMZALAMA";
         String icerik = "Test Otomasyon " + getSysDate();
+        String kullaniciTitle = " [Ağ (Network) Uzman Yardımcısı]";
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
@@ -306,7 +308,7 @@ public class VekaletIslemleriTest extends BaseTest {
                 .onayAkisiEkle()
                 .kullaniciTabloKontrol()
                 .kullanicilarImzaciSec("PARAFLAMA")
-                .kullanicilarDoldur2(vekaletVeren)
+                .kullanicilarDoldurWithTitle(vekaletVeren,kullaniciTitle)
                 .vekeletAlanVerenTabloKontrolu()
                 .vekeletAlanVerenTabloVekaletAlanveyaVerenSec(vekaletVeren)
                 .kullniciIsmineGoreImzaParafSec(vekaletVeren, tur)

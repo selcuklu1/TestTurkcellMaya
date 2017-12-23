@@ -1,10 +1,12 @@
 package pages.solMenuPages;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.Sleeper;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
@@ -27,6 +29,7 @@ public class PostalanacakEvraklarPage extends MainPage {
 
     SelenideElement tblEvrakSec = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
     SelenideElement btnEvrakPostala = $("button .postala");
+    SelenideElement btnEvrakPostalaPostala = $(By.id("mainPreviewForm:postalaButton_id"));
     SelenideElement tblSec =$(By.xpath("//tbody[@id='mainInboxForm:inboxDataTable_data']/tr[@data-ri='3']"));
     SelenideElement btnPostaDetayi3 = $(By.id("mainInboxForm:inboxDataTable:3:postaDagitimGosterButton"));
     SelenideElement btnGonderilenYerDetay = $(By.id("mainPreviewForm:dataTableId:0:j_idt20289"));
@@ -43,6 +46,16 @@ public class PostalanacakEvraklarPage extends MainPage {
     SelenideElement btnPopupYazdir = $(By.id("postaDetayYazdirForm:dtPostaEvrakUstVeri:0:evrakDetayiViewDialogYazdir"));
     SelenideElement btnPopupOrjYazdir = $(By.id("postaDetayYazdirForm:dtPostaEvrakUstVeri:0:evrakDetayiViewDialogOrjYazdir"));
     SelenideElement btnPopupHesaplaTamam = $(By.id("mainPreviewForm:tutarDialogButtonId"));
+    ElementsCollection tblEvraklar = $$("[id^='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
+    ElementsCollection btnEvrakDetayKapat = $$("[id='windowItemInfoDialog'] a[class='ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all'] span[class='ui-icon ui-icon-closethick']");
+    SelenideElement btnPostala = $(By.id("mainPreviewForm:postalaButton_id"));
+    SelenideElement btnDialogEvet =$(By.id("mainPreviewForm:postalaDogrulaDialogForm:evetButton_id"));
+    SelenideElement btnIcerikGoster = $(By.id("mainInboxForm:inboxDataTable:0:detayGosterButton"));
+    SelenideElement btnDagitimYerDetay = $x("//*[@id='mainPreviewForm:dataTableId_data']/tr[2]/td[2]/div/button");
+    SelenideElement tabIcerikIlgileri = $(By.id("inboxItemInfoForm:dialogTabMenuLeft:uiRepeat:2:cmdbutton"));
+    SelenideElement tabIcerikEkleri = $(By.id("inboxItemInfoForm:dialogTabMenuLeft:uiRepeat:1:cmdbutton"));
+    SelenideElement tabIcerikKapat = $x("//*[@id='windowItemInfoDialog']/div[1]/a[1]/span");
+    SelenideElement tabIcerikKapatmaOnay = $(By.id("kapatButton"));
 
     @Step("Postalanacak Evraklar sayfası aç")
     public PostalanacakEvraklarPage openPage() {
@@ -53,9 +66,50 @@ public class PostalanacakEvraklarPage extends MainPage {
         System.out.println("Page: " + pageTitle);
         return this;
     }
+
+    @Step("Evrak seçilir")
+    public PostalanacakEvraklarPage evrakSec(String konu, String yer, String tarih) {
+        tblEvraklar.filterBy(Condition.text(konu))
+                .filterBy(Condition.text(yer))
+                .filterBy(Condition.text(tarih)).get(0).click();
+        return this;
+    }
+
+    @Step("Evrak içerik göster")
+    public PostalanacakEvraklarPage evrakSecIcerikGoster(String konu, String yer, String tarih) {
+        tblEvraklar.filterBy(Condition.text(konu))
+                .filterBy(Condition.text(yer))
+                .filterBy(Condition.text(tarih))
+                .get(0).$$("[id$='detayGosterButton']").first().click();
+        return this;
+    }
+
+    public PostalanacakEvraklarPage evrakSecIcerikKapat(boolean secim) {
+        btnEvrakDetayKapat.get(0).click();
+        if (secim==true){
+            $(By.id("kapatButton")).pressEnter();
+        }
+        else
+        {
+            $(By.id("iptalButton")).pressEnter();
+        }
+        return this;
+    }
+
     @Step("Evrak Postala")
     public PostalanacakEvraklarPage evrakPostala() {
         btnEvrakPostala.click();
+        return this;
+    }
+    @Step("Postala")
+    public PostalanacakEvraklarPage evrakPostalaPostala(boolean secim) {
+        btnEvrakPostalaPostala.pressEnter();
+        if (secim =true){
+            $(By.id("mainPreviewForm:postalaDogrulaDialogForm:evetButton_id")).pressEnter();
+        }
+        else {
+            $(By.id("mainPreviewForm:postalaDogrulaDialogForm:hayirButton_id")).pressEnter();
+        }
         return this;
     }
     @Step("Evrak Seçilir")
@@ -186,6 +240,35 @@ public class PostalanacakEvraklarPage extends MainPage {
         Thread.sleep(2000);
        Selenide.switchTo();
 
+        return this;
+    }
+    public PostalanacakEvraklarPage postala () {
+
+        btnPostala.click();
+        btnDialogEvet.click();
+        return this;
+    }
+
+    public PostalanacakEvraklarPage dagitimDetay() {
+        btnDagitimYerDetay.click();
+        return this;
+    }
+
+    public PostalanacakEvraklarPage icerikGoster() {
+        btnIcerikGoster.click();
+        return this;
+    }
+    public PostalanacakEvraklarPage icerikIlgileriTab () {
+        tabIcerikIlgileri.click();
+        return this;
+    }
+    public PostalanacakEvraklarPage icerikEkleriTab() {
+        tabIcerikEkleri.click();
+        return this;
+    }
+    public PostalanacakEvraklarPage icerikPencereKapatma() {
+        tabIcerikKapat.click();
+        tabIcerikKapatmaOnay.click();
         return this;
     }
 }
