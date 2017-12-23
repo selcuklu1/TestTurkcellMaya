@@ -697,8 +697,8 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Onay Akışı Ekle")
         public BilgilerTab onayAkisiEkle() {
-//            clickJs(btnOnayAkisiEkle);
-            btnOnayAkisiEkle.pressEnter();
+            clickJs(btnOnayAkisiEkle);
+//            btnOnayAkisiEkle.pressEnter();
             return this;
         }
 
