@@ -335,4 +335,28 @@ public class EvrakPostalamaTest extends BaseTest {
 
 
     }
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true , description = "TC0802 : Postalanan Evrak Raporu")
+    public void TC0802() throws InterruptedException {
+        login("Mbozdemir", "123");
+        postalananEvrakRaporuPage
+                .openPage()
+                .evrakSayisi("6345202")
+                .postaAramaBaslangicTarihi("01.12.2017 00:00")
+                .postaSorgulama()
+                .sonucKarsilastirma();
+
+        postalananEvrakRaporuPage
+                .ilkEvrakGecmisi()
+                .evrakGecmisiKapat();
+        postalananEvrakRaporuPage
+                .evrakIcerikGoster()
+                .evrakIcerikKapat();
+        postalananEvrakRaporuPage
+                .etiketBastir();
+        postalananEvrakRaporuPage
+                .btnExcel()
+                .btnPdf()
+                .btnEtiket();
+    }
 }
