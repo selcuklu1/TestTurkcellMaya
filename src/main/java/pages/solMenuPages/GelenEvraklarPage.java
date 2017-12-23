@@ -2,7 +2,6 @@ package pages.solMenuPages;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
@@ -14,7 +13,6 @@ import pages.pageData.SolMenuData;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
-import static com.codeborne.selenide.Selenide.sleep;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 public class GelenEvraklarPage extends MainPage {
@@ -519,4 +517,6 @@ public class GelenEvraklarPage extends MainPage {
                 .filterBy(Condition.exactText("optiim")).first().click();
         return this;
     }
+
+
 }

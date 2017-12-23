@@ -5,9 +5,16 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import pages.EvrakDetayiPage;
+import pages.solMenuPages.GelenEvraklarPage;
 import pages.ustMenuPages.CevaplananEvrakRaporuPage;
+import pages.ustMenuPages.GelenEvrakKayitPage;
+import pages.ustMenuPages.GelenEvraklarCevapYazPage;
 
 import java.io.IOException;
+
+import static data.TestData.password;
+import static data.TestData.username;
 
 /****************************************************
  * Tarih: 2017-12-22
@@ -18,11 +25,19 @@ import java.io.IOException;
 public class GelenEvrakiCevapliKapatTest extends BaseTest {
 
     CevaplananEvrakRaporuPage cevaplananEvrakRaporuPage;
+    GelenEvrakKayitPage gelenEvrakKayitPage;
+    GelenEvraklarPage gelenEvraklarPage;
+    EvrakDetayiPage evrakDetayiPage;
+    GelenEvraklarCevapYazPage gelenEvraklarCevapYazPage;
 
     @BeforeMethod
     public void loginBeforeTests() {
         login("ztekin", "123");
         cevaplananEvrakRaporuPage = new CevaplananEvrakRaporuPage();
+        gelenEvrakKayitPage = new GelenEvrakKayitPage();
+        gelenEvraklarPage = new GelenEvraklarPage();
+        evrakDetayiPage  = new EvrakDetayiPage();
+        gelenEvraklarCevapYazPage = new GelenEvraklarCevapYazPage();
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -87,6 +102,58 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
         cevaplananEvrakRaporuPage
                 .temizle()
                 .temizleSonrasiKontrol();
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TC0373: Cevap yazma işleminde evrakın onay akışından silinmesi")
+    public void TC0373() throws InterruptedException {
+
+        String onayAkisi = "Tc373 OnayAkışı";
+        String tuzelKisi = "Tc373 TüzelKişi";
+        String kisiKurum = "Tüzel Kişi";
+        String kisi = "Optiim TEST";
+        String konuKodu = "040"; //Faaliyet Raporları
+        String konu = "Faaliyet Raporları";
+        String kayitTarihi = getSysDateForKis();
+        String evrakSayiSol = createRandomNumber(10);
+        String evrakSayiSag = createRandomNumber(4);
+        String evrakTarihi = "18.12.2017";
+        String basariMesaji = "İşlem başarılıdır!";
+        String no =evrakSayiSol + "-" + evrakSayiSag;
+
+        gelenEvrakKayitPage
+                .openPage()
+                .kisiKurumSecByText(kisiKurum)
+                .geldigiTuzelKisiDoldur(tuzelKisi)
+                .konuKoduDoldur(konuKodu)
+                .evrakTarihiDoldur(kayitTarihi)
+                .evrakSayiSolDoldur(evrakSayiSol)
+                .evrakSayiSagDoldur(evrakSayiSag)
+                .havaleIslemleriKisiDoldur(kisi)
+                .kaydet();
+
+        String evrakNo = gelenEvrakKayitPage.popUps();
+        String kayitTarihiSayi = kayitTarihi + " / " + evrakNo;
+
+        gelenEvrakKayitPage
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        login(username, password);
+
+        gelenEvraklarPage
+                .openPage()
+                .evrakSec(tuzelKisi, konu, kayitTarihiSayi, kayitTarihi, no);
+
+        evrakDetayiPage
+                .sayfaAcilmali()
+                .ikonKontrolleri()
+                .cevapYaz();
+
+        gelenEvraklarCevapYazPage
+                .geregiKontrolu(tuzelKisi)
+                .konuKonuKontrolu(konu);
+
+
     }
 
 }

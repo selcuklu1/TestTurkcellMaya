@@ -2,9 +2,13 @@ package pages.ustMenuPages;
 
 import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.testng.Assert;
+import pages.pageComponents.belgenetElements.BelgenetElement;
 
 import static com.codeborne.selenide.Selenide.$;
+import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 public class GelenEvraklarCevapYazPage extends BaseLibrary {
 
@@ -108,6 +112,8 @@ public class GelenEvraklarCevapYazPage extends BaseLibrary {
     SelenideElement txtIlisikIslemleriTabViewEvrakSayi = $(By.id("windowCevapEvrakForm:ilisikIslemleriTabView:arsivdenIlisikEvrakAraSayiInputTextId"));
     SelenideElement btnIlisikIslemleriTabViewArsivdenIlisikEvrakAra = $(By.xpath("//*[@id='windowCevapEvrakForm:ilisikIslemleriTabView:arsivdenIlisikEvrakAraButtonId']"));
 
+    BelgenetElement cmbGeregi = comboLov("[id^='windowCevapEvrakForm:evrakBilgileriList'][id$='geregiLov:LovText']");
+    BelgenetElement cmbKonuKodu = comboLov("[id^='windowCevapEvrakForm:evrakBilgileriList'][id$='''konuKoduLov:LovText'']");
 
     public GelenEvraklarCevapYazPage evrakTuruSec(String evrakTuru) {
         cmbEvrakTuru.selectOption(evrakTuru);
@@ -463,4 +469,27 @@ public class GelenEvraklarCevapYazPage extends BaseLibrary {
         btnIlisikIslemleriTabViewArsivdenIlisikEvrakAra.click();
         return this;
     }
+
+    @Step("Kişinin geregi alanında görüntülenme kontrolu")
+    public GelenEvraklarCevapYazPage geregiKontrolu(String adSoyad) {
+
+        cmbGeregi.selectLov(adSoyad);
+        System.out.println("Gelen geregi:     " + cmbGeregi.lastSelectedLovTitleText());
+        System.out.println("Beklenen geregi:  " + adSoyad);
+        Assert.assertEquals(cmbGeregi.lastSelectedLovTitleText().contains(adSoyad), true);
+
+        return this;
+    }
+
+    @Step("Konu kodu alanında görüntülenme kontrolu")
+    public GelenEvraklarCevapYazPage konuKonuKontrolu(String konu) {
+
+        cmbKonuKodu.selectLov(konu);
+        System.out.println("Gelen konuKodu:     " + cmbKonuKodu.lastSelectedLovTitleText());
+        System.out.println("Beklenen konuKodu:  " + konu);
+        Assert.assertEquals(cmbKonuKodu.lastSelectedLovTitleText().contains(konu), true);
+
+        return this;
+    }
+
 }
