@@ -1,6 +1,8 @@
 package tests.TopluPostalama;
 
 import common.BaseTest;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.solMenuPages.*;
@@ -324,12 +326,6 @@ public class TopluPostalamaTest extends BaseTest {
                 .evrakSec(evrakKayitTarihiSayi, evrakGidecegiYer, evrakKonu, evrakHazirlayanBirim, evrakPostaTipi)
                 .evrakSec(evrak1KayitTarihiSayi, evrak1GidecegiYer, evrak1Konu, evrak1HazirlayanBirim, evrak1PostaTipi)
                 .postaListesiPostala();
-
-
-
-
-
-
     }
 
     @Test(enabled = true, description = "1807 : Posta Listesi Oluşturma- Gerçek Kişi Listesi (UC_POSTAYÖNETİMİ_002)")
@@ -759,25 +755,5 @@ public class TopluPostalamaTest extends BaseTest {
                 .openPage()
                 .postaListesiSec("" ,"" ,"","", "")
                 .evrakKontrol("", "", "");
-
-
-
-
-
-
-
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

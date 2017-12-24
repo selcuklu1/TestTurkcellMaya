@@ -90,7 +90,7 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .evrakOnizlemeTabSec("Evrak Notları")
                 .evrakNotEklemeButonuAktifOlmali(false);
     }
-    
+
     @Test(enabled = true, description = "TC1882 : Paylaştıklarım listesinden evrak paylaşma")
     public void TC1882() {
 
@@ -102,6 +102,9 @@ public class EvrakPaylasmaTest extends BaseTest {
         String evrakKonuKodu = "Entegrasyon İşlemleri";
         String kaldirilacakKlasorler = "Diğer";
         String kullaniciAdi = "Mehmet BOZDEMİR [Antalya İl Müdürü]";
+        String tabPaylaşılanlar = "Paylaşılanlar";
+        String bi̇ri̇m = "OPTİİM BİRİM";
+        String durumu = "Paylaşımda";
 
         String basariMesaji = "İşlem başarılıdır!";
 
@@ -117,7 +120,6 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .kaydet(true)
                 .evrakOlusturSayfaKapat();
 
-
         taslakEvraklarPage
                 .openPage()
                 .evrakSecKonuyaGore(text)
@@ -127,36 +129,29 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .paylasPaylasGonder()
                 .islemMesaji().basariliOlmali();
 
-
         String[] paylasilacakKullanicilar = new String[]{
                 "Optiim TEST1",
                 "Optiim TEST2",
                 "Optiim TEST3"
         };
 
+
         paylastiklarimPage
                 .openPage()
                 .evrakSecKonuyaGore(text)
-                .evrakOnizlemeTabSec("Paylaşılanlar")
+                .evrakOnizlemeTabSec(tabPaylaşılanlar)
                 .paylasTabTikla()
                 .paylasKisiSec(paylasilacakKullanicilar)
                 .paylasimAciklamaYaz(paylasanKisiNotAciklamasi)
                 .paylas()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
-
-        login("optiim", "123");
-
-        paylasilanKullanici = "Optiim TEST1 / Optiim TEST2 / Optiim TEST3";
-
-        String bi̇ri̇m = "OPTİİM BİRİM";
-        String durumu = "Paylaşımda";
         paylastiklarimPage
                 .openPage()
                 .evrakSecKonuyaGore(text)
                 .evrakOnizlemeTabSec("Evrak Notları")
                 .evrakNotuKontrol(paylasanKisi, "", paylasanKisiNotAciklamasi)
-                .evrakOnizlemeTabSec("Paylaşılanlar")
+                .evrakOnizlemeTabSec(tabPaylaşılanlar)
                 .paylasilanKontrolTumKullanıcılıar(paylasilacakKullanicilar, durumu);
 
         logout();
@@ -171,6 +166,7 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .evrakNotuEkle()
                 .evrakNotuGirVeSil(text)
                 .evrakNotuGirVeKaydet(text);
+
         logout();
         login("mbozdemir","123");
 
@@ -179,7 +175,6 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .evrakSecKonuyaGore(text)
                 .evrakOnizlemeTabSec("Evrak Notları")
                 .evrakNotuKontrol("OPTİİM TEST1","",text);
-
     }
 
     @Test(enabled = true, description = "TC1877 : Paylaşılan evrakın geri alınması")
