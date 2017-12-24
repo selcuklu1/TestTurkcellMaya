@@ -23,6 +23,7 @@ public class EvrakPaylasmaTest extends BaseTest {
     KullaniciEvrakDevretPage kullaniciEvrakDevretPage;
     GelenEvrakKayitPage gelenEvrakKayitPage;
     GelenEvraklarPage gelenEvraklarPage;
+    ImzaladiklarimPage imzaladiklarimPage;
 
     @BeforeMethod
     public void loginBeforeTests() {
@@ -35,6 +36,7 @@ public class EvrakPaylasmaTest extends BaseTest {
         kullaniciEvrakDevretPage = new KullaniciEvrakDevretPage();
         gelenEvrakKayitPage = new GelenEvrakKayitPage();
         gelenEvraklarPage = new GelenEvraklarPage();
+        imzaladiklarimPage = new ImzaladiklarimPage();
     }
 
     @Test(enabled = true, description = "TC1881 : Evrak paylaşımını durdurma")
@@ -439,9 +441,10 @@ public class EvrakPaylasmaTest extends BaseTest {
         String gizlilikDerecesi = "Gizli";
         String evrakSayiSag = createRandomNumber(10);
         String kisi = "Zübeyde Tekin";
-        String kisi2 = "Optiim TEST";
+        String kisi2 = "Yasemin Çakıl Akyol";
         String aciklama = createRandomText(15);
-
+        String birim = "TEST HASAN BİRİMİ";
+        String anaBirim = "Yazılım Geliştirme Direktörlüğü";
         //TODO Pre Condition Gelen Evraklar sayfası data oluşturmakta
         login(username2, password2);
 
@@ -466,7 +469,7 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .evrakSec(konuKoduRandom,kurum,evrakTarihi,evrakSayiSag)
                 .paylas()
                 .paylasBirim()
-                .paylasKisiSec(kisi2)
+                .paylasKisiSecBirim(kisi2,birim)
                 .paylasanAciklamaDoldur(aciklama)
                 .paylasIcPaylas()
                 .islemMesaji().basariliOlmali(basariMesaji);
@@ -479,18 +482,29 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .paylasilanlarTabAc()
                 .paylasilanlarKullaniciGorme(kisi2);
 
-        login("optiim", "123");
+        login(username3, password3);
 
         benimlePaylasilanlarPage
+                .birimSec(birim)
                 .openPage()
                 .evrakSec(kisi, evrakTarihi, konuKoduRandom)
                 .evrakOnizlemeTabSec("Evrak Notları")
                 .evrakNotuEkle()
                 .evrakNotuGirVeKaydet(aciklama)
-                .evrakNotuKontrol("Optiim", "2017", aciklama);
+                .evrakNotuKontrol(kisi2, "2017", aciklama);
 
-        login("test1", "123");
+        gelenEvraklarPage
+                .openPage()
+                .evrakSec()
+                .paylasButonGelmedigiGorme("Paylaş");
 
+        imzaladiklarimPage
+                .openPage()
+                .evrakSec()
+                .paylasButonGelmedigiGorme("Paylaş");
+
+        benimlePaylasilanlarPage
+                .birimSec(anaBirim);
     }
 
     @Test(enabled = true, description = "TC2195 : Cevap evrakını paylaşma")

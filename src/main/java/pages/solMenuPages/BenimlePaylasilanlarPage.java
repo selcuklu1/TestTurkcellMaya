@@ -26,10 +26,15 @@ public class BenimlePaylasilanlarPage extends MainPage {
     SelenideElement txtEvrakNotu = $(By.id("evrakKisiselNotDialogFormId:evrakKisiselNotAciklamaid"));
     SelenideElement btnEvrakNotuPanelIptal = $(By.id("evrakKisiselNotDialogFormId:evrakKisiselNotIptal"));
     SelenideElement btnEvrakNotuKaydet = $(By.id("evrakKisiselNotDialogFormId:paylasimNotKaydet"));
-
+    ElementsCollection birimSec = $$("[id='birimlerimMenusuContainer'] li a span");
     @Step("Benimle Paylaşılanlar sayfasını aç")
     public BenimlePaylasilanlarPage openPage() {
         solMenu(SolMenuData.IslemBekleyenEvraklar.BenimlePaylasilanlar);
+        return this;
+    }
+
+    public BenimlePaylasilanlarPage birimSec(String birim){
+        birimSec.filterBy(Condition.text(birim)).get(0).click();
         return this;
     }
 
