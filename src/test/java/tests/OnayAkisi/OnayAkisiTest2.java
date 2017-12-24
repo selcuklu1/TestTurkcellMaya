@@ -37,7 +37,7 @@ public class OnayAkisiTest2 extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TC2112PasifYapma: Onay Akışı Yönetimi - Aktif/Pasif Yapma ve Varsayılan Yapma")
-    public void TC2112PasifYapma() {
+    public void TC2112PasifYapma() throws InterruptedException {
 
         String onayAkisAdi = "Optiim";
         String kullanici = "TC2112 OnayAkisi";
@@ -68,7 +68,7 @@ public class OnayAkisiTest2 extends BaseTest {
                 .durumKontrol("Sadece Aktifler")
                 .filtredeAdDoldur(kullanici)
                 .ara()
-               // .aktiflerTumListeKayitKontrolu()   Bu adımda tüm tabloyu kontrol ettiği için yavaşlatıyor otomasyonu. Çıkartılmalı.
+                .aktiflerTumListeKayitKontrolu()   //Bu adımda tüm tabloyu kontrol ettiği için yavaşlatıyor otomasyonu. Çıkartılmalı.
                 .adaGorePasifYap(kullanici)
                 .islemOnayi("Evet");
 

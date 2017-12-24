@@ -46,6 +46,7 @@ public class OnayAkisiTest3 extends BaseTest {
         String ikinciKullanici = "Zübeyde Tekin";
         String basariMesaji = "İşlem başarılıdır!";
 
+        //NOTE: Note:  Kullanılan data güncelleneceği için bir sonraki adımda test patlar. O yüzden data eski haline geti getiriliyor.
         //Test steplerinde yok ama data için eklendi. Kullanıcı eski haline güncellemek için.
         onayAkisYonetimiPage
                 .openPage()

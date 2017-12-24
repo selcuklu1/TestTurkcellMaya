@@ -75,7 +75,7 @@ public class EvrakOlusturPage extends MainPage {
     }
 
     @Step("")
-    public EvrakOlusturPage closePage(){
+    public EvrakOlusturPage closePage() {
         $x("//form[@id='yeniGidenEvrakForm']" +
                 "/ancestor::div[contains(@class,'windowDialog')]" +
                 "/div[contains(@class,'ui-dialog-titlebar')]" +
@@ -307,6 +307,7 @@ public class EvrakOlusturPage extends MainPage {
             txtOnayAkisiKullanicilar.closeLovTreePanel();
             return this;
         }
+
         @Step("Kullanıcılar alanı doldur")
         public BilgilerTab kullanicilarDoldurWithTitle(String kullanici, String title) {
             txtOnayAkisiKullanicilar.type(kullanici).titleItems()
@@ -314,6 +315,7 @@ public class EvrakOlusturPage extends MainPage {
             txtOnayAkisiKullanicilar.closeLovTreePanel();
             return this;
         }
+
         @Step("Konu Kodu alanında {0} seç")
         public BilgilerTab otomatikOnayAkisi() {
             btnOtomatikOnayAkisi.click();
@@ -399,7 +401,7 @@ public class EvrakOlusturPage extends MainPage {
         }
 
         @Step("Kullan")
-        public BilgilerTab imzalamaIlkKullan(){
+        public BilgilerTab imzalamaIlkKullan() {
             btnKullanicilarKullan.pressEnter();
             return this;
         }
@@ -473,31 +475,31 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Bilgi Secim Tipi alanında {0} seç")
+        @Step("Bilgi Secim Tipi alanında \"{text}\" seç")
         public BilgilerTab bilgiSecimTipiSec(String text) {
             cmbBilgiSecimTipi.selectOption(text);
             return this;
         }
 
-        @Step("Bilgi Secim Tipi alanında {0} seç")
+        @Step("Bilgi Secim Tipi alanında \"{text}\" seç")
         public BilgilerTab bilgiSecimTipiSecByText(String text) {
             cmbBilgiSecimTipi.selectOption(text);
             return this;
         }
 
-        @Step("Bilgi seçim tipi tree alanında {0} geliyor mu? kontrol et")
+        @Step("Bilgi seçim tipi tree alanında \"{kurumAdi}\" geliyor mu? kontrol et")
         public BilgilerTab bilgiSecimTipiTreeKontrolEt(String kurumAdi, Boolean shouldBeSelectable) {
             Assert.assertEquals(txtBilgi.isLovValueSelectable(kurumAdi), shouldBeSelectable);
             return this;
         }
 
-        @Step("Bilgi alanında {0} seç")
+        @Step("Bilgi alanında {text} seç")
         public BilgilerTab bilgiSec(String text) {
             txtBilgi.selectLov(text);
             return this;
         }
 
-        @Step("Bilgi alanında temizle ve {0} seç")
+        @Step("Bilgi alanında temizle ve {text} seç")
         public BilgilerTab bilgiSec(String text, Boolean clearAll) {
             txtBilgi.sendKeys(Keys.SHIFT);
             txtBilgi.selectLov(text);
@@ -505,18 +507,20 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Geregi alanında {0} seç")
+        @Step("Geregi alanında {text} seç")
         public BilgilerTab geregiSec(String text) {
             txtGeregi.selectLov(text);
             txtGeregi.closeLovTreePanel();
             return this;
         }
+
         @Step("Geregi alanını seçilenleri kaldır")
         public BilgilerTab geregiSecilenleriKaldır() {
             txtGeregi.clearAllSelectedLov();
             return this;
         }
-        @Step("Geregi alanında {0} seç")
+
+        @Step("Geregi alanında {text} seç")
         public BilgilerTab geregiSec(String text, Boolean clearAfterSelecion) {
             cmbGeregi.sendKeys(Keys.SHIFT);
             txtGeregi.selectLov(text);
@@ -524,14 +528,14 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Gereği tree alanında {0} geliyor mu? kontrol et")
+        @Step("Gereği tree alanında {kurumAdi} geliyor mu? kontrol et")
         public BilgilerTab geregiTreeKontrolEt(String kurumAdi, Boolean shouldBeSelectable) {
             txtGeregi.sendKeys(Keys.SHIFT);
             Assert.assertEquals(txtGeregi.isLovValueSelectable(kurumAdi), shouldBeSelectable);
             return this;
         }
 
-        @Step("Dagitimi Ek Yap alanı {0} seç")
+        @Step("Dagitimi Ek Yap alanı {setSelected} seç")
         public BilgilerTab dagitimiEkYapSec(boolean setSelected) {
             chkDagitimiEkYap.setSelected(setSelected);
             return this;
@@ -648,13 +652,13 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Geregi Secim Tipi alanında {value} seç")
+        @Step("Geregi Secim Tipi alanında \" {value}\" seç")
         public BilgilerTab geregiSecimTipiSec(String value) {
             cmbGeregiSecimTipi.selectOption(value);
             return this;
         }
 
-        @Step("Geregi Secim Tipi alanında {value} seç")
+        @Step("Geregi Secim Tipi alanında \" {value}\" seç")
         public BilgilerTab geregiSecimTipiSecByText(String value) {
             cmbGeregiSecimTipi.selectOption(value);
             return this;
@@ -779,11 +783,13 @@ public class EvrakOlusturPage extends MainPage {
             txtNot.sendKeys(not);
             return this;
         }
+
         @Step("İade et")
         public BilgilerTab iadeEt2() {
             btnIadeEt2.click();
             return this;
         }
+
         @Step("İade et")
         public BilgilerTab popUpEvraktaDegisiklik() {
             popUpEvrakDegisiklik.should(Condition.visible);
@@ -1111,6 +1117,7 @@ public class EvrakOlusturPage extends MainPage {
 
     }
 
+    @Step("Editör tabını aç")
     public EditorTab editorTabAc() {
         return editorTab.open();
     }
@@ -1288,14 +1295,13 @@ public class EvrakOlusturPage extends MainPage {
             $x("//*[text()='İmzala']/ancestor::tbody[1]//button").click();
             $("div[id='imzalaForm:imzalaRadio']").shouldBe(visible).click();
 //        clickJs($("#imzalaForm\\:imzalaRadio").find(By.tagName("input")));
-            for (int i = 0; i < Configuration.timeout/1000; i++) {
+            for (int i = 0; i < Configuration.timeout / 1000; i++) {
                 sleep(1000);
-                if ($("#imzalaForm\\:sayisalImzaConfirmDialogOpener").is(visible)){
+                if ($("#imzalaForm\\:sayisalImzaConfirmDialogOpener").is(visible)) {
                     $("#imzalaForm\\:sayisalImzaConfirmDialogOpener").click();
                     clickJs($("#imzalaForm\\:sayisalImzaConfirmForm\\:sayisalImzaEvetButton"));
                     break;
-                }
-                else{
+                } else {
                     $("#imzalaForm\\:imzalaButton").click();
                     break;
                 }

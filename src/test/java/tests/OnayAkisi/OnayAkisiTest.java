@@ -625,6 +625,7 @@ public class OnayAkisiTest extends BaseTest {
                 .openPage()
                 .yeniOnayAkisiEkle()
                 .onayAkisiIslemleriAdDoldur(onayAkisi)
+                .onayAkisiKullaniciKontrol(defaultGelenKullanici, "PARAFLAMA")
                 .onayAkisiIslemlerKullaniciDoldur(kullanici2)
                 .kullaniciyaKullaniciTipiSec(kullanici2, "KONTROL")
                 .onayAkisiIslemlerKullaniciDoldur(kullanici3)

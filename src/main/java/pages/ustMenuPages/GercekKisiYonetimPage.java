@@ -100,13 +100,13 @@ public class GercekKisiYonetimPage extends MainPage {
         return this;
     }
 
-    @Step("Gerçek Kişi Güncelle")
+    @Step("Gerçek kişi güncelle")
     public GercekKisiYonetimPage gercekKisiGuncelle() {
         btnGercekKisiGuncelle.click();
         return this;
     }
 
-    @Step("Yeni gerçek kişi ekle")
+    @Step("Yeni gerçek Kişi ekle")
     public GercekKisiYonetimPage yeniGercekKisiEkle() {
         btnGercekKisiEkle.click();
         return this;
@@ -194,6 +194,14 @@ public class GercekKisiYonetimPage extends MainPage {
     @Step("Filtrede durum seç")
     public GercekKisiYonetimPage filtreDurumSec(String value) {
         cmbFiltreDurum.selectOptionByValue(value);
+        return this;
+    }
+
+    @Step("Aktifler seçeneğinin default gelme kontrolu")
+    public GercekKisiYonetimPage defaultDurumComboKontrol(String durum) {
+
+        String defaultDurum = cmbFiltreDurum.getText();
+        Assert.assertEquals(cmbFiltreDurum.getText().contains(durum), true);
         return this;
     }
 
@@ -285,7 +293,7 @@ public class GercekKisiYonetimPage extends MainPage {
         return this;
     }
 
-    @Step("Web Adresi doldur")
+    @Step("Web adresi doldur")
     public GercekKisiYonetimPage iletisimBilgisiWebAdresiDoldur(String webAdres) {
         txtIletisimBilgisiWebAdres.setValue(webAdres);
         return this;
@@ -338,7 +346,7 @@ public class GercekKisiYonetimPage extends MainPage {
         return this;
     }
 
-    @Step("Aktif Kayit kontrolu")
+    @Step("Aktif kayit kontrolu")
     public GercekKisiYonetimPage aktifKisiKayitKontrolu(String tcNO, String ad, String soyad) {
 
         tblGercekKisiDataTableData.shouldBe(visible);
@@ -386,7 +394,7 @@ public class GercekKisiYonetimPage extends MainPage {
         return this;
     }
 
-    @Step("Pasif kayit kontrolu")
+    @Step("Pasif kayıt kontrolu")
     public GercekKisiYonetimPage pasifKisiKayitKontrolu(String tcNO, String ad, String soyad) {
 
         btnGercekKisiGuncelle.shouldBe(visible); //tablo biraz geç geliyor
@@ -402,13 +410,13 @@ public class GercekKisiYonetimPage extends MainPage {
         return this;
     }
 
-    @Step("Gerçek Kişi Aktif Yap")
+    @Step("Gerçek kişi aktif Yap")
     public GercekKisiYonetimPage gercekKisiAktifYap() {
         btnGercekKisiAktifYap.shouldBe(visible).click();
         return this;
     }
 
-    @Step("Gerçek Kişi Aktif Yap")
+    @Step("Gerçek kişi pasif ise aktif yap")
     public GercekKisiYonetimPage gercekKisiPasifIseAktifYap() {
 
         btnGercekKisiGuncelle.shouldBe(exist); //tablo biraz geç geliyor
@@ -420,7 +428,7 @@ public class GercekKisiYonetimPage extends MainPage {
         return this;
     }
 
-    @Step("Gerçek Kişi Pasif Yap")
+    @Step("Gerçek kişi aktif ise pasif yap")
     public GercekKisiYonetimPage gercekKisiAktifIsePasifYap() {
 
         btnGercekKisiGuncelle.shouldBe(exist); //tablo biraz geç geliyor
@@ -432,7 +440,7 @@ public class GercekKisiYonetimPage extends MainPage {
         return this;
     }
 
-    @Step("Gerçek Kişi Pasif Yap")
+    @Step("Gerçek kişi pasif yap")
     public GercekKisiYonetimPage gercekKisiPasifYap() {
 
         btnGercekKisiPasiYap.click();
