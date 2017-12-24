@@ -128,7 +128,12 @@ public class EvrakOlusturPage extends MainPage {
         $(By.xpath("//div[@id='mainTaskBar']//span[text()='[Evrak Oluştur]']"))
                 .contextClick();
         btbEvrakOlusturKapatEvet.click();
-
+//div[@id='window1Dialog']//span[@class='ui-icon ui-icon-closethick']
+        return this;
+    }
+    public EvrakOlusturPage evrakOlusturSayfaKapat() {
+        $(By.xpath("//div[@id='window1Dialog']//span[@class='ui-icon ui-icon-closethick']")).click();
+        islemPenceresiKaydetPopup("Evet");
         return this;
     }
 
