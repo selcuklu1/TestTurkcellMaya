@@ -156,7 +156,7 @@ public class EvrakOlusturPage extends MainPage {
 
 
     //region Tabs
-    @Step("Bilgiler tab aç")
+    @Step("Bilgiler tabını aç")
     public BilgilerTab bilgilerTabiAc() {
         return bilgilerTab.open();
     }
@@ -653,13 +653,13 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Geregi Secim Tipi alanında \" {value}\" seç")
+        @Step("Geregi Secim Tipi alanında \"{value}\" seç")
         public BilgilerTab geregiSecimTipiSec(String value) {
             cmbGeregiSecimTipi.selectOption(value);
             return this;
         }
 
-        @Step("Geregi Secim Tipi alanında \" {value}\" seç")
+        @Step("Geregi Secim Tipi alanında \"{value}\" seç")
         public BilgilerTab geregiSecimTipiSecByText(String value) {
             cmbGeregiSecimTipi.selectOption(value);
             return this;
@@ -999,7 +999,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }*/
 
-        @Step("Gerçek Kişi gereği alanı kontrolu başarılı")
+        @Step("Gerçek Kişi gereği alanı kontrolu")
         public BilgilerTab gercekKisiGeregiAlaniKontrol(String adSoyad, String unvan, String adres, String posta) {
             System.out.println("Gelen title:     " + cmbGeregi.lastSelectedLovTitleText());
             System.out.println("Beklenen title:  " + adSoyad);

@@ -251,7 +251,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
         String postaTipi = "Z"; //Z=KEP
         String hitap = "Sayın";
 
-        //Test Datası yaratmak için.
+        //Test Datası yaratmak için bu adımlar yazıldı.
         gercekKisiYonetimPage
                 .openPage()
                 .yeniGercekKisiEkle()

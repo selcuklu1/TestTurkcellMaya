@@ -191,6 +191,7 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
+    @Step("Gelen Evrak Kayıt sayfasını aç")
     public GelenEvrakKayitPage openPage() {
         new UstMenu().ustMenu("Gelen Evrak Kayıt");
         return this;
@@ -264,20 +265,20 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("Kişi kurum tipi alanında {kisiKurum} seç")
+    @Step("Kişi kurum tipi alanında \"{kisiKurum}\" seç")
     public GelenEvrakKayitPage kisiKurumSec(String kisiKurum) {
         cmbEvrakBilgileriListKisiKurum.selectOption(kisiKurum);
         return this;
     }
 
-    @Step("Kişi kurum tipi alanında {kisiKurum} seç")
+    @Step("Kişi kurum tipi alanında \"{kisiKurum}\" seç")
     public GelenEvrakKayitPage kisiKurumSecByText(String kisiKurum) {
         cmbEvrakBilgileriListKisiKurum.selectOption(kisiKurum);
         return this;
     }
 
 
-    @Step("Geldiği Gerçek kişi doldur")
+    @Step("Geldiği gerçek kişi alanını doldur")
     public GelenEvrakKayitPage geldigiGercekKisiDoldur(String geldigiKisi) {
 
         cmbGeldigiGercekKisi.selectLov(geldigiKisi);

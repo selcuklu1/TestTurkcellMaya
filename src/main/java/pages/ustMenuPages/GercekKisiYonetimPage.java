@@ -106,7 +106,7 @@ public class GercekKisiYonetimPage extends MainPage {
         return this;
     }
 
-    @Step("Yeni gerçek Kişi ekle")
+    @Step("Yeni gerçek kişi ekle")
     public GercekKisiYonetimPage yeniGercekKisiEkle() {
         btnGercekKisiEkle.click();
         return this;
@@ -156,32 +156,32 @@ public class GercekKisiYonetimPage extends MainPage {
     }
 
     @Step("Soyad doldur")
-    public GercekKisiYonetimPage soyadDoldur(String text) {
-        txtSoyad.setValue(text);
+    public GercekKisiYonetimPage soyadDoldur(String soyad) {
+        txtSoyad.setValue(soyad);
         return this;
     }
 
     @Step("Ad doldur")
-    public GercekKisiYonetimPage adDoldur(String text) {
-        txtAd.setValue(text);
+    public GercekKisiYonetimPage adDoldur(String ad) {
+        txtAd.setValue(ad);
         return this;
     }
 
     @Step("Ünvan doldur")
-    public GercekKisiYonetimPage unvanDoldur(String text) {
-        txtUnvan.setValue(text);
+    public GercekKisiYonetimPage unvanDoldur(String unvan) {
+        txtUnvan.setValue(unvan);
         return this;
     }
 
     @Step("Ön ek doldur")
-    public GercekKisiYonetimPage onEkDoldur(String text) {
-        txtOnEk.setValue(text);
+    public GercekKisiYonetimPage onEkDoldur(String onEk) {
+        txtOnEk.setValue(onEk);
         return this;
     }
 
-    @Step("TC doldur")
-    public GercekKisiYonetimPage tcKimlikNoDoldur(String text) {
-        txtTCKimlikNo.setValue(text);
+    @Step("TC numarası doldur")
+    public GercekKisiYonetimPage tcKimlikNoDoldur(String tcNo) {
+        txtTCKimlikNo.setValue(tcNo);
         return this;
     }
 
@@ -218,8 +218,8 @@ public class GercekKisiYonetimPage extends MainPage {
     }
 
     @Step("Filtrede TC kimlik no doldur")
-    public GercekKisiYonetimPage filtreTCKimlikNoDoldur(String text) {
-        txtFiltreTCKimlikNo.setValue(text);
+    public GercekKisiYonetimPage filtreTCKimlikNoDoldur(String tckn) {
+        txtFiltreTCKimlikNo.setValue(tckn);
         return this;
     }
 
@@ -265,19 +265,19 @@ public class GercekKisiYonetimPage extends MainPage {
         return this;
     }
 
-    @Step("İl doldur")
+    @Step("İl seç")
     public GercekKisiYonetimPage iletisimBilgisiIlDoldur(String il) {
         txtIletisimBilgisiIl.selectLov(il);
         return this;
     }
 
-    @Step("İlçe doldur")
+    @Step("İlçe seç")
     public GercekKisiYonetimPage iletisimBilgisiIlceDoldur(String ilce) {
         txtIletisimBilgisiIlce.selectLov(ilce);
         return this;
     }
 
-    @Step("Ülke doldur")
+    @Step("Ülke seç")
     public GercekKisiYonetimPage iletisimBilgisiUlkeDoldur(String ulke) {
 
         if (btnUlkeDelete.isDisplayed() == false) {
@@ -346,7 +346,7 @@ public class GercekKisiYonetimPage extends MainPage {
         return this;
     }
 
-    @Step("Aktif kayit kontrolu")
+    @Step("Aktif kişi kayit kontrolu")
     public GercekKisiYonetimPage aktifKisiKayitKontrolu(String tcNO, String ad, String soyad) {
 
         tblGercekKisiDataTableData.shouldBe(visible);
