@@ -11,6 +11,7 @@ import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
@@ -91,6 +92,7 @@ public class GelenEvraklarPage extends MainPage {
     SelenideElement btnPaylasIcPaylas = $(By.id("mainPreviewForm:paylasButtonId"));
 
     SelenideElement tblIlkEvrak = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
+    SelenideElement tblIkinciEvrak = $(By.id("mainInboxForm:inboxDataTable:1:evrakTable"));
 
     BelgenetElement cmbOnayAkisi = comboLov(By.cssSelector("[id^='windowCevapEvrakForm:evrakBilgileriList'][id$='akisLov:LovText']"));
     BelgenetElement txtTakipListesiKullanicilar = comboLov(By.id("evrakTakibimeEkleDialogForm:takipListLov:LovText"));
@@ -154,6 +156,13 @@ public class GelenEvraklarPage extends MainPage {
     @Step("Evrak seç")
     public GelenEvraklarPage evrakSec() {
         tblIlkEvrak.click();
+        return this;
+    }
+
+
+    @Step("Evrak seç")
+    public GelenEvraklarPage evrakSec2() {
+        tblIkinciEvrak.click();
         return this;
     }
 
@@ -360,7 +369,9 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Cevap yaz")
     public GelenEvraklarPage cevapYaz() {
+        btnCevapYaz.shouldBe(visible);
         btnCevapYaz.click();
         return this;
     }

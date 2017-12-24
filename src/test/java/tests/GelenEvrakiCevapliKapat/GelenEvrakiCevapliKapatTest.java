@@ -172,8 +172,8 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .evrakKayitUyariPopup("Evet")
                 .islemMesaji().basariliOlmali(basariMesaji);
 
-        gelenEvraklarPage
-                .tabloOlmayanEvrakNoKontrol(evrakNo);
+        //gelenEvraklarPage
+               // .tabloOlmayanEvrakNoKontrol(evrakNo);
 
         //TODO: devam edilecek.
     }

@@ -143,6 +143,7 @@ public class EvrakOlusturPage extends MainPage {
         return this;
     }
 
+    @Step("Kullanıcı işlem ve sıra kontrolu")
     public EvrakOlusturPage kullaniciIslemVeSiraKontrolu(String kullanici1, String islemTipi1, String kullanici2, String islemTipi2) {
 
         Assert.assertEquals(labelIlkIslemTipi.getText(), "1. " + islemTipi1);
@@ -355,32 +356,32 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Konu alanı {0} ile doldur")
+        @Step("Konu alanı doldur")
         public BilgilerTab zorunluKodu() {
             txtKonu.is(required);
             return this;
         }
 
-        @Step("Kaldiralacak Klasörler alanında {0} seç")
+        @Step("Kaldiralacak Klasörler alanında \"{value}\" seç")
         public BilgilerTab kaldiralacakKlasorlerSec(String value) {
             cmbKaldiralacakKlasorler.selectLov(value);
             return this;
         }
 
-        @Step("Evrak Türü alanında {text} seç")
+        @Step("Evrak Türü alanında \"{text}\" seç")
         public BilgilerTab evrakTuruSec(String text) {
 //            if (!cmbEvrakTuru.getSelectedOption().equals(text))
             cmbEvrakTuru.selectOption(text);
             return this;
         }
 
-        @Step("Kayıt Tarih alanında {0} seç")
+        @Step("Kayıt Tarih alanında \"{dateText}\" seç")
         public BilgilerTab dateKayitTarihiSec(String dateText) {
             dateKayitTarihi.setValue(dateText);
             return this;
         }
 
-        @Step("Evrak Dili alanında {0} seç")
+        @Step("Evrak Dili alanında \"{text}\" seç")
         public BilgilerTab evrakDiliSec(String text) {
             cmbEvrakDili.selectOption(text);
 //            if (cmbEvrakTuru.getSelectedOption().equals(text))

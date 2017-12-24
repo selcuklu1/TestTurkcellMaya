@@ -35,8 +35,6 @@ public class OnayAkisiTest extends BaseTest {
         gelenEvraklarPage = new GelenEvraklarPage();
     }
 
-
-
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TC1900: Evrak oluşturma ekranından kayıtlı onay akışı güncelleme")
     public void TC1900() {
@@ -166,7 +164,7 @@ public class OnayAkisiTest extends BaseTest {
 
         gelenEvraklarPage
                 .openPage()
-                .evrakSec()
+                .evrakSec2()
                 .cevapYaz()
                 .onayAkisiTitleKontrol(kullanici);
     }
