@@ -7,29 +7,43 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
+import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
+import static com.codeborne.selenide.Selenide.$x;
+import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 
 public class ImzaladiklarimPage extends MainPage {
 
-    SelenideElement tblImzaladiklarim = $(By.id("mainInboxForm:inboxDataTable_data"));
+    //SelenideElement tblImzaladiklarim = $(By.id("mainInboxForm:inboxDataTable_data"));
     SelenideElement tabEvrakGecmisi = $(By.xpath("//*[text()[contains(.,'Evrak Geçmişi')]]"));
     SelenideElement btnIlkEvrak = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
     SelenideElement tabEvrakOnizleme = $(By.id("mainPreviewForm:evrakOnizlemeTab"));
     ElementsCollection tableKararIzlemeEvraklar = $$("[id='mainInboxForm:inboxDataTable_data'] tr[role='row']");// span[class='ui-chkbox-icon']");
     ElementsCollection tblImzalananEvraklar = $$("[id='mainInboxForm:inboxDataTable_data'] tr[role='row'] table");
     SelenideElement txtEvrakDetayiEvrakNo = $("[id^='inboxItemInfoForm:evrakBilgileriList'][id$='evrakNoPanelGrid'] td:nth-child(3) div");
+    SelenideElement btnGidecegiYer = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:gidecegiYerFilterOpenDialogButton"));
+    BelgenetElement txtGidecegiYer = comboLov(By.id("inboxFiltreDialogForm:gidecegiYerFilterLovId:LovText"));
+    SelenideElement txtBaslangicTarihi = $x("//label[normalize-space(text())='Başlangıç Tarihi :']/../../following-sibling::td//input");
+    SelenideElement txtBitisTarihi = $x("//label[normalize-space(text())='Bitiş Tarihi :']/../../following-sibling::td//input");
+    ElementsCollection tblImzaladiklarim = $$("tbody[id='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
+    SelenideElement btnGeriAl = $x("//span[contains(@class, 'evrakGeriAl')]/..");
+    SelenideElement txtGeriAlAciklama = $(By.id("mainPreviewForm:evrakGeriAlInputTextareaId"));
+    SelenideElement btnGeriAlOnay = $x("//div[@class='form-buttons']//span[. = 'Geri Al']/..");
+
 
     @Step("Imzaladiklarim Sayfasini aç")
     public ImzaladiklarimPage openPage() {
         solMenu(SolMenuData.IslemYaptiklarim.Imzaladiklarim);
-        $("#mainInboxForm\\:inboxDataTable label[class='ui-inbox-header-title']")
-                .shouldHave(text("İmzaladıklarım"));
+        String pageTitle = SolMenuData.IslemYaptiklarim.Imzaladiklarim.getMenuText();
+        $("#mainInboxForm\\:inboxDataTable .ui-inbox-header-title")
+                .shouldHave(text(pageTitle));
+        System.out.println("Page: " + pageTitle);
         return this;
     }
 
@@ -96,5 +110,62 @@ public class ImzaladiklarimPage extends MainPage {
     public String evrakDetayiEvrakNoAl() {
         String evrakNo = txtEvrakDetayiEvrakNo.text();
         return evrakNo;
+    }
+
+    @Step("Gideceği yer seç: {gidecegiYer}")
+    public ImzaladiklarimPage gidecegiYerSec(String gidecegiYer){
+        btnGidecegiYer.click();
+        txtGidecegiYer.selectLov(gidecegiYer);
+        return this;
+    }
+
+    @Step("Başlangıç Tarihi doldur: {baslangicTarihi}")
+    public ImzaladiklarimPage baslangicTarihiDoldur(String baslangicTarihi){
+        txtBaslangicTarihi.setValue(baslangicTarihi);
+        return this;
+    }
+
+    @Step("Bitiş Tarihi doldur: {bitisTarihi}")
+    public ImzaladiklarimPage bitisTarihiDoldur(String bitisTarihi){
+        txtBitisTarihi.setValue(bitisTarihi);
+        return this;
+    }
+
+    @Step("Evrak Seç")
+    public ImzaladiklarimPage evrakSec(String konu, String gidecegiYer, String evrakTarihi, String no){
+
+        ElementsCollection kisiselPages = $$("td[id$='mainInboxForm:inboxDataTable_paginator_bottom'] > span[class='ui-paginator-pages'] >  span");
+
+        for (int i = 0; i < kisiselPages.size(); i++) {
+            kisiselPages.get(i).click();
+
+            SelenideElement postaListesi = tblImzaladiklarim
+                    .filterBy(text("Konu: " + konu))
+                    .filterBy(text("Gideceği Yer: " + gidecegiYer))
+                    .filterBy(text("Evrak Tarihi: " + evrakTarihi))
+                    .filterBy(text("No: " + no))
+                    .first();
+
+            if(postaListesi.isDisplayed() && postaListesi.exists()){
+                postaListesi.click();
+                break;
+            }
+        }
+        Assert.fail("Evrak bulunamadı.");
+        return this;
+
+    }
+
+    @Step("Geri al butonuna tıkla")
+    public ImzaladiklarimPage geriAl(){
+        btnGeriAl.click();
+        return this;
+    }
+
+    @Step("Geri Al açıklaması doldur: {aciklama}")
+    public ImzaladiklarimPage geriAlAciklamaDoldurVeOnayla(String aciklama){
+        txtGeriAlAciklama.setValue(aciklama);
+        btnGeriAlOnay.click();
+        return this;
     }
 }

@@ -9,6 +9,7 @@ import pages.MainPage;
 import pages.pageData.SolMenuData;
 import java.lang.String;
 
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static com.codeborne.selenide.Selenide.$x;
@@ -31,6 +32,7 @@ public class PostalananlarPage extends MainPage {
     //Hüseyin
     ElementsCollection tablePostalananlar = $$("tbody[id='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
     SelenideElement btnPostaDetayi = $x("//span[text() = 'Posta Detayı']/../../..//button");
+    ElementsCollection tblEvraklar = $$("[id^='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
 
     SelenideElement btnGuncelle = $(By.id("mainPreviewForm:j_idt18728:0:j_idt18764"));
     SelenideElement txtPosta = $(By.id("mainPreviewForm:j_idt18803"));
@@ -53,7 +55,28 @@ public class PostalananlarPage extends MainPage {
     @Step("Postalananlar sayfası aç")
     public PostalananlarPage openPage() throws  InterruptedException {
         solMenu(SolMenuData.BirimEvraklari.Postalananlar);
+        String pageTitle = SolMenuData.BirimEvraklari.Postalananlar.getMenuText();
+        $("#mainInboxForm\\:inboxDataTable .ui-inbox-header-title")
+                .shouldHave(text(pageTitle));
+        System.out.println("Page: " + pageTitle);
         Thread.sleep(1500);
+        return this;
+    }
+
+    @Step("Evrak seçilir")
+    public PostalananlarPage evrakSec(String konu, String yer, String tarih) {
+        tblEvraklar.filterBy(Condition.text(konu))
+                .filterBy(Condition.text(yer))
+                .filterBy(Condition.text(tarih)).get(0).click();
+        return this;
+    }
+
+    @Step("Evrak içerik göster")
+    public PostalananlarPage evrakSecIcerikGoster(String konu, String yer, String tarih) {
+        tblEvraklar.filterBy(Condition.text(konu))
+                .filterBy(Condition.text(yer))
+                .filterBy(Condition.text(tarih))
+                .get(0).$$("[id$='detayGosterButton']").first().click();
         return this;
     }
 

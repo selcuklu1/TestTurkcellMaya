@@ -48,6 +48,7 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
                 .filterBy(Condition.text(no))
                 .shouldHaveSize(1).first();
         evrak.click();
+        //evrak.click();
         return this;
     }
 
@@ -78,6 +79,40 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     @Step("Evrak seçilir")
     public TeslimAlinmayiBekleyenlerPage evrakSec() {
         tblIlkEvrak.click();
+        return this;
+    }
+    @Step("Evrak seçilir")
+    public TeslimAlinmayiBekleyenlerPage evrakSec(String konu, String yer, String tarih, String no) {
+        tblEvraklar.filterBy(Condition.text(konu))
+                .filterBy(Condition.text(yer))
+                .filterBy(Condition.text(tarih))
+                .filterBy(Condition.text(no)).get(0).click();
+        return this;
+    }
+
+    @Step("Evrak içerik göster")
+    public TeslimAlinmayiBekleyenlerPage evrakSecIcerikGoster(String konu, String yer, String tarih, String no) {
+        tblEvraklar.filterBy(Condition.text(konu))
+                .filterBy(Condition.text(yer))
+                .filterBy(Condition.text(tarih))
+                .filterBy(Condition.text(no)).get(0).$$("[id$='detayGosterButton']").first().click();
+        return this;
+    }
+
+    @Step("Evrak içerik göster")
+    public TeslimAlinmayiBekleyenlerPage evrakSecTeslimAl(String konu, String yer, String tarih, String no,boolean secim) {
+        tblEvraklar.filterBy(Condition.text(konu))
+                .filterBy(Condition.text(yer))
+                .filterBy(Condition.text(tarih))
+                .filterBy(Condition.text(no)).get(0).$$("[id$='teslimAlButton']").first().click();
+
+        if (secim==true){
+            $(By.id("teslimAlEvetButton")).click();
+        }
+        else{
+            $(By.id("teslimAlHayirButton")).click();
+        }
+
         return this;
     }
 

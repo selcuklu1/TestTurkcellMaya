@@ -98,7 +98,7 @@ public class TextEditor extends MainPage {
 
         /*new WebDriverWait(WebDriverRunner.getWebDriver(),Configuration.timeout/1000, 500)
                 .until(ExpectedConditions.elementToBeClickable(button));*/
-
+        button.shouldBe(visible);
         if (button.is(toolboxButtonOn) != value) {
 //            Selenide.sleep(1000);
 //            clickJs(button);

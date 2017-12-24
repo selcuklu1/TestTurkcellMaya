@@ -391,6 +391,12 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
+    public GelenEvrakKayitPage evrakSayiSagDoldur(String sayi) {
+        txtEvrakBilgileriListEvrakSayiTextAreaSag.clear();
+        txtEvrakBilgileriListEvrakSayiTextAreaSag.sendKeys(sayi);
+        return this;
+    }
+
     public GelenEvrakKayitPage evrakGelisTipiSec(String evrakGelisTipi) {
         cmbEvrakBilgileriListEvrakGelisTipi.selectOption(evrakGelisTipi);
         return this;
