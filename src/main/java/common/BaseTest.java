@@ -20,7 +20,7 @@ public class BaseTest extends BaseLibrary {
 
     @BeforeSuite(alwaysRun = true)
     public void beforeSuite() {
-//        killProcess();
+        //killProcess();
     }
 
     @BeforeClass(alwaysRun = true)
@@ -33,8 +33,8 @@ public class BaseTest extends BaseLibrary {
 
         //region Selenide Driver Configuration
         Configuration.baseUrl = belgenetURL;
-        Configuration.browser = "chrome";
-        //Configuration.browser = "drivers.Firefox";
+       // Configuration.browser = "chrome";
+        Configuration.browser = "firefox";
 //        Configuration.browser = "marionette";
 
 //        Configuration.remote = "http://localhost:4444/wd/hub";
@@ -64,19 +64,23 @@ public class BaseTest extends BaseLibrary {
 
     }
 
-    @AfterClass(alwaysRun = true)
-    public void afterClass() {
-        Selenide.close();
+    @AfterMethod (alwaysRun = true)
+    public void afterMethod() {
+        //Selenide.close();
     }
 
-    @AfterMethod
-    public void tearDown() throws Exception {
+    @AfterClass(alwaysRun = true)
+    public void afterClass() {
+        //Selenide.close();
+    }
+
+    public void clearCookies() throws Exception {
        // Selenide.close();
-/*        try {
+        try {
             Selenide.clearBrowserLocalStorage();
             Selenide.clearBrowserCookies();
         } catch (Exception e) {
-        }*/
+        }
     }
 
     @AfterSuite(alwaysRun = true)

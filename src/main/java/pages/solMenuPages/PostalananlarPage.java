@@ -9,6 +9,7 @@ import pages.MainPage;
 import pages.pageData.SolMenuData;
 import java.lang.String;
 
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static com.codeborne.selenide.Selenide.$x;
@@ -54,6 +55,10 @@ public class PostalananlarPage extends MainPage {
     @Step("Postalananlar sayfası aç")
     public PostalananlarPage openPage() throws  InterruptedException {
         solMenu(SolMenuData.BirimEvraklari.Postalananlar);
+        String pageTitle = SolMenuData.BirimEvraklari.Postalananlar.getMenuText();
+        $("#mainInboxForm\\:inboxDataTable .ui-inbox-header-title")
+                .shouldHave(text(pageTitle));
+        System.out.println("Page: " + pageTitle);
         Thread.sleep(1500);
         return this;
     }

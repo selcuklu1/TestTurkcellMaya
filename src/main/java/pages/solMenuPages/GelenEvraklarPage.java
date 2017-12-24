@@ -2,7 +2,6 @@ package pages.solMenuPages;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
@@ -15,7 +14,6 @@ import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
-import static com.codeborne.selenide.Selenide.sleep;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 public class GelenEvraklarPage extends MainPage {
@@ -102,6 +100,10 @@ public class GelenEvraklarPage extends MainPage {
     ElementsCollection evrakSecButonlar = $$("[id='mainPreviewForm:onizlemeRightTab:onizlemeRightTab'] td");
     public GelenEvraklarPage openPage() {
         solMenu(SolMenuData.IslemBekleyenEvraklar.GelenEvraklar);
+        String pageTitle = SolMenuData.IslemBekleyenEvraklar.GelenEvraklar.getMenuText();
+        $("#mainInboxForm\\:inboxDataTable .ui-inbox-header-title")
+                .shouldHave(text(pageTitle));
+        System.out.println("Page: " + pageTitle);
         return this;
     }
 
@@ -183,7 +185,7 @@ public class GelenEvraklarPage extends MainPage {
                 .filterBy(text("Evrak Tarihi: " + evrakTarihi))
                 .filterBy(text("No: " + no))
                 .get(0)
-                .click();
+                .$("[id^='mainInboxForm:inboxDataTable'] [id$='detayGosterButton']").click();
 
         $(By.id("mainPreviewForm:eastLayout")).waitUntil(Condition.visible, 5000);
         return this;
@@ -549,4 +551,6 @@ public class GelenEvraklarPage extends MainPage {
                 .filterBy(Condition.exactText("optiim")).first().click();
         return this;
     }
+
+
 }

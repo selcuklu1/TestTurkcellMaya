@@ -333,20 +333,23 @@ public class TuzelKisiYonetimiPage extends MainPage {
     }
 
     @Step("Aktif Tüzel kişi tüm liste kayıt kontrolu")
-    public TuzelKisiYonetimiPage aktiflerTumListeKayitKontrolu() {
+    public TuzelKisiYonetimiPage aktiflerTumListeKayitKontrolu() throws InterruptedException {
 
+        String formTuzelKisiYonetimi = "tuzelKisiYonetimiListingForm";
         btnTuzelKisiPasifYap.shouldBe(visible);
 
-        boolean status = findElementOnTableAllPages(btnTuzelKisiAktifYap);
+        boolean status = findElementOnTableAllPages(formTuzelKisiYonetimi, btnTuzelKisiAktifYap);
         Assert.assertEquals(status, false);
         return this;
     }
 
     @Step("Pasif Tüzel kişi tüm liste kayıt kontrolu")
-    public TuzelKisiYonetimiPage pasiflerTumListeKayitKontrolu() {
+    public TuzelKisiYonetimiPage pasiflerTumListeKayitKontrolu() throws InterruptedException {
+
+        String formTuzelKisiYonetimi = "tuzelKisiYonetimiListingForm";
 
         btnTuzelKisiAktifYap.shouldBe(visible);
-        boolean status = findElementOnTableAllPages(btnTuzelKisiPasifYap);
+        boolean status = findElementOnTableAllPages(formTuzelKisiYonetimi, btnTuzelKisiPasifYap);
         Assert.assertEquals(status, false);
         return this;
     }

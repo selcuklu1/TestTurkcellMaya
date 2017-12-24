@@ -232,9 +232,11 @@ public class OnayAkisYonetimiPage extends MainPage {
     }
 
     @Step("Tüm liste kayıt kontrolu")
-    public OnayAkisYonetimiPage aktiflerTumListeKayitKontrolu() {
+    public OnayAkisYonetimiPage aktiflerTumListeKayitKontrolu() throws InterruptedException {
 
-        boolean status = findElementOnTableAllPages(durumPasif);
+        String formOnayAkisiYonetimi = "onayAkisiYonetimiListingForm";
+
+        boolean status = findElementOnTableAllPages(formOnayAkisiYonetimi, durumPasif);
         Assert.assertEquals(status, false);
         return this;
     }

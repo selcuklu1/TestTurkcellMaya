@@ -1,6 +1,7 @@
 package pages.ustMenuPages;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
@@ -73,6 +74,16 @@ public class EvrakOlusturPage extends MainPage {
         return this;
     }
 
+    @Step("")
+    public EvrakOlusturPage closePage(){
+        $x("//form[@id='yeniGidenEvrakForm']" +
+                "/ancestor::div[contains(@class,'windowDialog')]" +
+                "/div[contains(@class,'ui-dialog-titlebar')]" +
+                "/a[contains(@class,'ui-dialog-titlebar-close')]").click();
+
+        //span[text()='Gelen Evrak Kayıt']/../a[contains(@class,'ui-dialog-titlebar-close')]
+        return this;
+    }
 
     @Step("PDF Önizleme")
     public EvrakOlusturPage pdfOnIzleme() {
@@ -584,6 +595,7 @@ public class EvrakOlusturPage extends MainPage {
         }
 
         public BilgilerTab miatDoldur(String date) {
+//            dateMiat.setValue(date).pressTab();
             setValueJS(dateMiat, date);
             return this;
         }
@@ -702,7 +714,7 @@ public class EvrakOlusturPage extends MainPage {
 
         public BilgilerTab onayAkisiEkle(String kullanici) {
 
-            btnOnayAkisiEkle.click();
+//            btnOnayAkisiEkle.click();
             txtOnayAkisiKullanicilar.selectLov(kullanici);
 
             return this;
@@ -920,7 +932,8 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Kullan")
         public BilgilerTab kullan() {
-            clickJs(btnKullan);
+//            clickJs(btnKullan);
+            btnKullan.pressEnter();
             return this;
         }
 
@@ -1241,6 +1254,8 @@ public class EvrakOlusturPage extends MainPage {
             }
             SelenideElement evrakKapat = $(By.xpath("//*[@id='window1Dialog']/div[1]/a[1]/span"));
             evrakKapat.click();
+//            $("#kapatKaydetEvetButton").click();
+            $("#kapatKaydetHayirButton").click();
         /*Thread.sleep(2000);
         SelenideElement sayisalImzaOnay = $(By.id("imzalaForm:sayisalImzaConfirmForm:sayisalImzaEvetButton"));
         sayisalImzaOnay.click();*/
@@ -1249,26 +1264,42 @@ public class EvrakOlusturPage extends MainPage {
 
         public EditorTab popupSImzalaIslemleri() throws InterruptedException {
 
-            //switchTo().window("");
+            /*//switchTo().window("");
 //            Thread.sleep(5000);
 //            SelenideElement sImza = $(By.id("imzalaForm:imzalamaYontemiRadio:1"));
 //            sImza.selectRadio("I");
 
-           /* $("#evrakImzalaDialog").shouldBe(visible);
+           *//* $("#evrakImzalaDialog").shouldBe(visible);
             executeJavaScript("arguments[0].click()", WebDriverRunner.getWebDriver().findElement(By.id("imzalaForm:imzalamaYontemiRadio:1")));
 //            Thread.sleep(2000);
             SelenideElement imzala = $(By.xpath("//*[@id='imzalaForm:sayisalImzaConfirmDialogOpener']"));
             imzala.click();
-//            Thread.sleep(2000);*/
+//            Thread.sleep(2000);*//*
 
 //           .$("input")
             $("div[id='imzalaForm:imzalaRadio']").shouldBe(visible);
-            $("div[id='imzalaForm:imzalaRadio']").click();
-            Thread.sleep(700);
+//            $("div[id='imzalaForm:imzalaRadio']").click();
+            clickJs($("#imzalaForm\\:imzalaRadio").find(By.tagName("input")));
+
             $("#imzalaForm\\:sayisalImzaConfirmDialogOpener").click();
             Thread.sleep(700);
 
-            $("#imzalaForm\\:sayisalImzaConfirmForm\\:sayisalImzaEvetButton").shouldBe(visible).click();
+            $("#imzalaForm\\:sayisalImzaConfirmForm\\:sayisalImzaEvetButton").shouldBe(visible).click();*/
+            $x("//*[text()='İmzala']/ancestor::tbody[1]//button").click();
+            $("div[id='imzalaForm:imzalaRadio']").shouldBe(visible).click();
+//        clickJs($("#imzalaForm\\:imzalaRadio").find(By.tagName("input")));
+            for (int i = 0; i < Configuration.timeout/1000; i++) {
+                sleep(1000);
+                if ($("#imzalaForm\\:sayisalImzaConfirmDialogOpener").is(visible)){
+                    $("#imzalaForm\\:sayisalImzaConfirmDialogOpener").click();
+                    clickJs($("#imzalaForm\\:sayisalImzaConfirmForm\\:sayisalImzaEvetButton"));
+                    break;
+                }
+                else{
+                    $("#imzalaForm\\:imzalaButton").click();
+                    break;
+                }
+            }
             return this;
         }
 

@@ -13,6 +13,17 @@ import pages.ustMenuPages.GelenEvrakKayitPage;
 import java.io.IOException;
 
 import static data.TestData.*;
+import pages.EvrakDetayiPage;
+import pages.pageComponents.TextEditor;
+import pages.solMenuPages.GelenEvraklarPage;
+import pages.ustMenuPages.CevaplananEvrakRaporuPage;
+import pages.ustMenuPages.GelenEvrakKayitPage;
+import pages.ustMenuPages.GelenEvraklarCevapYazPage;
+
+import java.io.IOException;
+
+import static data.TestData.password;
+import static data.TestData.username;
 
 /****************************************************
  * Tarih: 2017-12-22
@@ -26,6 +37,10 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
     GelenEvrakKayitPage gelenEvrakKayitPage;
     GelenEvraklarPage gelenEvraklarPage;
     EvrakOlusturPage evrakOlusturPage;
+    EvrakDetayiPage evrakDetayiPage;
+    GelenEvraklarCevapYazPage gelenEvraklarCevapYazPage;
+    TextEditor editor;
+
     @BeforeMethod
     public void loginBeforeTests() {
         login("ztekin", "123");
@@ -83,6 +98,9 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .onayAkisiKullan();
 
 
+        evrakDetayiPage = new EvrakDetayiPage();
+        gelenEvraklarCevapYazPage = new GelenEvraklarCevapYazPage();
+        editor = new TextEditor();
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -147,6 +165,77 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
         cevaplananEvrakRaporuPage
                 .temizle()
                 .temizleSonrasiKontrol();
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TC0373: Cevap yazma işleminde evrakın onay akışından silinmesi")
+    public void TC0373() throws InterruptedException {
+
+        String onayAkisi = "Tc373 OnayAkışı";
+        String tuzelKisi = "Tc373 TüzelKişi";
+        String kisiKurum = "Tüzel Kişi";
+        String kisi = "Optiim TEST";
+        String konuKodu = "040"; //Faaliyet Raporları
+        String konu = "Faaliyet Raporları";
+        String kayitTarihi = getSysDateForKis();
+        String evrakSayiSol = createRandomNumber(10);
+        String evrakSayiSag = createRandomNumber(4);
+        String basariMesaji = "İşlem başarılıdır!";
+        String evrakSayi = evrakSayiSol + "-" + evrakSayiSag;
+        String kaldirilacakKlasorler = "ESK05";
+        String aciklama = "Onay işlemi açıklamasıdır.";
+
+        gelenEvrakKayitPage
+                .openPage()
+                .kisiKurumSecByText(kisiKurum)
+                .geldigiTuzelKisiDoldur(tuzelKisi)
+                .konuKoduDoldur(konuKodu)
+                .evrakTarihiDoldur(kayitTarihi)
+                .evrakSayiSolDoldur(evrakSayiSol)
+                .evrakSayiSagDoldur(evrakSayiSag)
+                .havaleIslemleriKisiDoldur(kisi)
+                .kaydet();
+
+        String evrakNo = gelenEvrakKayitPage.popUps();
+        String kayitTarihiSayi = kayitTarihi + " / " + evrakNo;
+
+        gelenEvrakKayitPage
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        login(username, password);
+
+        gelenEvraklarPage
+                .openPage()
+                .evrakSec(tuzelKisi, konu, kayitTarihiSayi, kayitTarihi, evrakSayi);
+
+        evrakDetayiPage
+                .sayfaAcilmali()
+                .ikonKontrolleri()
+                .cevapYaz();
+
+        gelenEvraklarCevapYazPage
+                .geregiKontrolu(tuzelKisi)
+                .konuKonuKontrolu(konu)
+                .editorTabAc()
+                .editorSayiTarihKontrolu(evrakSayi, kayitTarihi);
+
+        editor
+                .type("Bu bir text yazısıdır.");
+
+        gelenEvraklarCevapYazPage
+                .bilgilerTabAc()
+                .kaldirilacakKlasorlerDoldur(kaldirilacakKlasorler)
+                .onayAkisiDoldur(onayAkisi)
+                .kaydetVeOnayaSun()
+                .onayIslemiAciklamaDoldur(aciklama)
+                .gonder()
+                .evrakKayitUyariPopup("Evet")
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        gelenEvraklarPage
+                .tabloOlmayanEvrakNoKontrol(evrakNo);
+
+        //TODO: devam edilecek.
     }
 
 }

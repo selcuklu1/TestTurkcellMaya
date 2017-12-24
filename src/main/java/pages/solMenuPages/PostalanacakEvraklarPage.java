@@ -11,6 +11,7 @@ import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
 
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboBox;
 
@@ -27,7 +28,7 @@ public class PostalanacakEvraklarPage extends MainPage {
     SelenideElement dateBitisTarihi = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt373_input"));
 
     SelenideElement tblEvrakSec = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
-    SelenideElement btnEvrakPostala = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:4:cmdbutton"));
+    SelenideElement btnEvrakPostala = $("button .postala");
     SelenideElement btnEvrakPostalaPostala = $(By.id("mainPreviewForm:postalaButton_id"));
     SelenideElement tblSec =$(By.xpath("//tbody[@id='mainInboxForm:inboxDataTable_data']/tr[@data-ri='3']"));
     SelenideElement btnPostaDetayi3 = $(By.id("mainInboxForm:inboxDataTable:3:postaDagitimGosterButton"));
@@ -59,6 +60,10 @@ public class PostalanacakEvraklarPage extends MainPage {
     @Step("Postalanacak Evraklar sayfası aç")
     public PostalanacakEvraklarPage openPage() {
         solMenu(SolMenuData.BirimEvraklari.PostalanacakEvraklar);
+        String pageTitle = SolMenuData.BirimEvraklari.PostalanacakEvraklar.getMenuText();
+        $("#mainInboxForm\\:inboxDataTable .ui-inbox-header-title")
+                .shouldHave(text(pageTitle));
+        System.out.println("Page: " + pageTitle);
         return this;
     }
 
