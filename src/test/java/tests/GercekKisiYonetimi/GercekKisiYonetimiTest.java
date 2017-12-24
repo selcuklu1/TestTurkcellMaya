@@ -229,6 +229,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
     @Test(enabled = true, description = "TC1137: Gerçek Kişi Bilgisi Güncelleme ve kontrolleri")
     public void TC1137() throws InterruptedException {
 
+        //Demo
         String tcNO = createMernisTCKN();
         String ad = createRandomText(6);
         String soyad = createRandomText(6);
