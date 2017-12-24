@@ -90,8 +90,7 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .evrakOnizlemeTabSec("Evrak Notları")
                 .evrakNotEklemeButonuAktifOlmali(false);
     }
-
-    // DÜZENLENECEK
+    
     @Test(enabled = true, description = "TC1882 : Paylaştıklarım listesinden evrak paylaşma")
     public void TC1882() {
 
