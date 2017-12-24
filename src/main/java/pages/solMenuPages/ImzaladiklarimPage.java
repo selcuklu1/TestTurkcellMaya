@@ -35,16 +35,27 @@ public class ImzaladiklarimPage extends MainPage {
     SelenideElement btnGeriAl = $x("//span[contains(@class, 'evrakGeriAl')]/..");
     SelenideElement txtGeriAlAciklama = $(By.id("mainPreviewForm:evrakGeriAlInputTextareaId"));
     SelenideElement btnGeriAlOnay = $x("//div[@class='form-buttons']//span[. = 'Geri Al']/..");
+
     SelenideElement filtrePanelHeader = $("div[id='mainInboxForm:inboxDataTable:filtersAccordion'] > h3");
+
+    ElementsCollection evrakSecButonlar = $$("[id='mainPreviewForm:onizlemeRightTab:onizlemeRightTab'] td");
+
 
     @Step("Imzaladiklarim Sayfasini aç")
     public ImzaladiklarimPage openPage() {
         solMenu(SolMenuData.IslemYaptiklarim.Imzaladiklarim);
-        $("#mainInboxForm\\:inboxDataTable label[class='ui-inbox-header-title']")
-                .shouldHave(text("İmzaladıklarım"));
+        String pageTitle = SolMenuData.IslemYaptiklarim.Imzaladiklarim.getMenuText();
+        $("#mainInboxForm\\:inboxDataTable .ui-inbox-header-title")
+                .shouldHave(text(pageTitle));
+        System.out.println("Page: " + pageTitle);
         return this;
     }
-
+    @Step("Paylaş buton gelmediği görme")
+    public ImzaladiklarimPage paylasButonGelmedigiGorme(String buton){
+        boolean t = evrakSecButonlar.filterBy(text(buton)).size() > 0;
+        Assert.assertEquals(t, false, "kdkdkdkd");
+        return this;
+    }
     @Step("Evrak geldiği görülür")
     public ImzaladiklarimPage evrakGeldigiGorme(String toplantiNo, String konu, String toplantiTarih) {
         tableKararIzlemeEvraklar.filterBy(text(toplantiNo))

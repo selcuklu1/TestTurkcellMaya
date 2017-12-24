@@ -2,7 +2,6 @@ package pages.solMenuPages;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
@@ -11,9 +10,10 @@ import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
 
+import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
-import static com.codeborne.selenide.Selenide.sleep;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 public class GelenEvraklarPage extends MainPage {
@@ -89,6 +89,7 @@ public class GelenEvraklarPage extends MainPage {
     SelenideElement txtPaylasKisi = $(By.id("mainPreviewForm:evrakPaylasKisiLov:LovText"));
     BelgenetElement txtPaylasilanKisi = comboLov(By.id("mainPreviewForm:evrakPaylasKisiLov:LovText"));
     SelenideElement txtPaylasanAciklama = $(By.id("mainPreviewForm:evrakPaylasAciklama"));
+    SelenideElement btnPaylasBirim = $(By.id("mainPreviewForm:paylasTumuBoolean"));
     SelenideElement btnPaylasIcPaylas = $(By.id("mainPreviewForm:paylasButtonId"));
 
     SelenideElement tblIlkEvrak = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
@@ -96,18 +97,22 @@ public class GelenEvraklarPage extends MainPage {
     BelgenetElement cmbOnayAkisi = comboLov(By.cssSelector("[id^='windowCevapEvrakForm:evrakBilgileriList'][id$='akisLov:LovText']"));
     BelgenetElement txtTakipListesiKullanicilar = comboLov(By.id("evrakTakibimeEkleDialogForm:takipListLov:LovText"));
     SelenideElement btnTakipListesiKapat = $("[id^='evrakTakibimeEkleDialogForm:takipDialog'] span[class='ui-icon ui-icon-closethick']");
-
+    ElementsCollection evrakSecButonlar = $$("[id='mainPreviewForm:onizlemeRightTab:onizlemeRightTab'] td");
     public GelenEvraklarPage openPage() {
         solMenu(SolMenuData.IslemBekleyenEvraklar.GelenEvraklar);
+        String pageTitle = SolMenuData.IslemBekleyenEvraklar.GelenEvraklar.getMenuText();
+        $("#mainInboxForm\\:inboxDataTable .ui-inbox-header-title")
+                .shouldHave(text(pageTitle));
+        System.out.println("Page: " + pageTitle);
         return this;
     }
 
     @Step("Tablodan rapor seç")
     public GelenEvraklarPage gizlilikRaporSecTakibeEkle(String konu, String yer, String tarih, String no) {
-        SelenideElement evrak = filter().findRowsWith(Condition.text(konu))
-                .filterBy(Condition.text(yer))
-                .filterBy(Condition.text(tarih))
-                .filterBy(Condition.text(no))
+        SelenideElement evrak = filter().findRowsWith(text(konu))
+                .filterBy(text(yer))
+                .filterBy(text(tarih))
+                .filterBy(text(no))
                 .shouldHaveSize(1).first();
         evrak.$$("button[id^='mainInboxForm:inboxDataTable:']").get(0).click();
         return this;
@@ -126,10 +131,10 @@ public class GelenEvraklarPage extends MainPage {
 
     @Step("Tablodan rapor seç")
     public GelenEvraklarPage gizlilikRaporSec(String konu, String yer, String tarih, String no) {
-        SelenideElement evrak = filter().findRowsWith(Condition.text(konu))
-                .filterBy(Condition.text(yer))
-                .filterBy(Condition.text(tarih))
-                .filterBy(Condition.text(no))
+        SelenideElement evrak = filter().findRowsWith(text(konu))
+                .filterBy(text(yer))
+                .filterBy(text(tarih))
+                .filterBy(text(no))
                 .shouldHaveSize(1).first();
         evrak.click();
         return this;
@@ -154,15 +159,33 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Paylaş buton gelmediği görme")
+    public GelenEvraklarPage paylasButonGelmedigiGorme(String buton){
+        boolean t = evrakSecButonlar.filterBy(text(buton)).size() > 0;
+        Assert.assertEquals(t, false, "kdkdkdkd");
+        return this;
+    }
+
+    @Step("Evrak seç")
+    public GelenEvraklarPage evrakSec(String konu, String geldigiYer, String kayitTarihiSayi, String no) {
+        tableEvraklar
+                .filterBy(text(konu))
+                .filterBy(text(geldigiYer))
+                .filterBy(text(kayitTarihiSayi))
+                .filterBy(text(no))
+                .get(0).click();
+        return this;
+    }
+
     public GelenEvraklarPage evrakSec(String konu, String geldigiYer, String kayitTarihiSayi, String evrakTarihi, String no) {
         tableEvraklar
-                .filterBy(Condition.text("Konu: " + konu))
-                .filterBy(Condition.text("Geldiği Yer: " + geldigiYer))
-                .filterBy(Condition.text("Kayıt Tarihi / Sayı: " + kayitTarihiSayi))
-                .filterBy(Condition.text("Evrak Tarihi: " + evrakTarihi))
-                .filterBy(Condition.text("No: " + no))
+                .filterBy(text("Konu: " + konu))
+                .filterBy(text("Geldiği Yer: " + geldigiYer))
+                .filterBy(text("Kayıt Tarihi / Sayı: " + kayitTarihiSayi))
+                .filterBy(text("Evrak Tarihi: " + evrakTarihi))
+                .filterBy(text("No: " + no))
                 .get(0)
-                .click();
+                .$("[id^='mainInboxForm:inboxDataTable'] [id$='detayGosterButton']").click();
 
         $(By.id("mainPreviewForm:eastLayout")).waitUntil(Condition.visible, 5000);
         return this;
@@ -273,6 +296,7 @@ public class GelenEvraklarPage extends MainPage {
 
     public GelenEvraklarPage paylasanAciklamaDoldur(String text) {
         txtPaylasanAciklama.sendKeys(text);
+        txtPaylasanAciklama.click();
         return this;
     }
 
@@ -283,6 +307,13 @@ public class GelenEvraklarPage extends MainPage {
 
     public GelenEvraklarPage paylasKisiSec(String kisi) {
         txtPaylasilanKisi.selectLov(kisi);
+        return this;
+    }
+    @Step("Kişi doldur")
+    public GelenEvraklarPage paylasKisiSecBirim(String kisi,String birim) {
+        txtPaylasilanKisi.type(kisi).detailItems().filterBy(text(birim)).get(0).click();
+        txtPaylasilanKisi.closeLovTreePanel();
+        //$(By.id("mainPreviewForm:evrakOnizlemeTab")).pressEnter();
         return this;
     }
 
@@ -417,6 +448,12 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Birim")
+    public GelenEvraklarPage paylasBirim(){
+        clickJs(btnPaylasBirim);
+        return this;
+    }
+
     @Step("Tablodan istenilen sayıda evrak no al")
     public String[] tablodanEvrakNoAl(int adet) {
         String text = "";
@@ -438,7 +475,7 @@ public class GelenEvraklarPage extends MainPage {
     @Step("Tabloda evrak no kontrolü")
     public GelenEvraklarPage tabloEvrakNoKontrol(String evrakNo) {
         int size = tableEvraklar
-                .filterBy(Condition.text(evrakNo)).size();
+                .filterBy(text(evrakNo)).size();
         Assert.assertEquals(size, 1);
 
         return this;
@@ -447,7 +484,7 @@ public class GelenEvraklarPage extends MainPage {
     @Step("Tabloda evrak no kontrolü")
     public GelenEvraklarPage tabloKonuyaGoreEvrakAc(String konu) {
         tableEvraklar
-                .filterBy(Condition.text(konu))
+                .filterBy(text(konu))
                 .first().click();
         return this;
     }
@@ -462,7 +499,7 @@ public class GelenEvraklarPage extends MainPage {
     @Step("Tabloda olmayan evrak no kontrolü")
     public GelenEvraklarPage tabloOlmayanEvrakNoKontrol(String evrakNo) {
         int size = tableEvraklar
-                .filterBy(Condition.text(evrakNo)).size();
+                .filterBy(text(evrakNo)).size();
         Assert.assertEquals(size, 0);
 
         return this;
@@ -487,7 +524,7 @@ public class GelenEvraklarPage extends MainPage {
     @Step("Vekalet alan Ve Veren tablo vekalet alan seç")
     public GelenEvraklarPage vekeletAlanVerenTabloVekaletAlanveyaVerenSec(String isim) {
         tblVekaletVerenAlan
-                .filterBy(Condition.text(isim)).first()
+                .filterBy(text(isim)).first()
                 .$("button").click();
         return this;
     }
@@ -514,4 +551,6 @@ public class GelenEvraklarPage extends MainPage {
                 .filterBy(Condition.exactText("optiim")).first().click();
         return this;
     }
+
+
 }

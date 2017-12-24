@@ -56,7 +56,7 @@ public class BelgenetFramework {
         //endregion
 
 
-        Commands.getInstance().add("click", new Click() {
+       /* Commands.getInstance().add("click", new Click() {
             @Override
             protected void click(WebElement element) {
                 if (WebDriverRunner.isFirefox()) {
@@ -64,7 +64,7 @@ public class BelgenetFramework {
                 }
                 super.click(element);
             }
-        });
+        });*/
 
         /*Commands.getInstance().add("Find", new Find() {
             @Override

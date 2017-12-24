@@ -26,10 +26,15 @@ public class BenimlePaylasilanlarPage extends MainPage {
     SelenideElement txtEvrakNotu = $(By.id("evrakKisiselNotDialogFormId:evrakKisiselNotAciklamaid"));
     SelenideElement btnEvrakNotuPanelIptal = $(By.id("evrakKisiselNotDialogFormId:evrakKisiselNotIptal"));
     SelenideElement btnEvrakNotuKaydet = $(By.id("evrakKisiselNotDialogFormId:paylasimNotKaydet"));
-
+    ElementsCollection birimSec = $$("[id='birimlerimMenusuContainer'] li a span");
     @Step("Benimle Paylaşılanlar sayfasını aç")
     public BenimlePaylasilanlarPage openPage() {
         solMenu(SolMenuData.IslemBekleyenEvraklar.BenimlePaylasilanlar);
+        return this;
+    }
+
+    public BenimlePaylasilanlarPage birimSec(String birim){
+        birimSec.filterBy(Condition.text(birim)).get(0).click();
         return this;
     }
 
@@ -65,6 +70,17 @@ public class BenimlePaylasilanlarPage extends MainPage {
                 .filterBy(Condition.text("Paylaşılma Tarihi: " + paylasilmaTarihi))
                 .filterBy(Condition.text("Konu: " + konu))
                 .filterBy(Condition.text("Evrak No: " + evrakNo))
+                .get(0)
+                .click();
+        return this;
+    }
+
+    @Step("Benimle paylaşılanlar tablosundan evrak seçildi")
+    public BenimlePaylasilanlarPage evrakSec(String paylasan, String paylasilmaTarihi, String konu) {
+        tableBenimlePaylasilanlar
+                .filterBy(Condition.text("Paylaşan: " + paylasan))
+                .filterBy(Condition.text("Paylaşılma Tarihi: " + paylasilmaTarihi))
+                .filterBy(Condition.text("Konu: " + konu))
                 .get(0)
                 .click();
         return this;

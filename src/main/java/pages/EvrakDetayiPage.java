@@ -6,13 +6,9 @@ import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
-import pages.pageComponents.belgenetElements.BelgenetElement;
-import pages.pageData.SolMenuData;
+import org.testng.Assert;
 
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
-import static com.codeborne.selenide.Selenide.$x;
-import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
+import static com.codeborne.selenide.Selenide.*;
 
 public class EvrakDetayiPage extends MainPage {
 
@@ -21,6 +17,14 @@ public class EvrakDetayiPage extends MainPage {
 
     SelenideElement btnPanelEvet = $(By.id("mainInboxForm:tebellugEtEvetButton"));
     SelenideElement btnPanelHayir = $(By.id("mainInboxForm:tebellugEtHayirButton"));
+
+    SelenideElement dialogTabMenuRight = $(By.id("inboxItemInfoForm:dialogTabMenuRight:dialogTabMenuRight"));
+    SelenideElement btnEvrakGoster = $(By.id("inboxItemInfoForm:dialogTabMenuRight:uiRepeat:4:cmdbutton"));
+    SelenideElement btnHavaleYap = $(By.id("inboxItemInfoForm:dialogTabMenuRight:uiRepeat:5:panelGrid"));
+    SelenideElement btnTebligEt = $(By.id("inboxItemInfoForm:dialogTabMenuRight:uiRepeat:6:cmdbutton"));
+    SelenideElement btnIadeEt = $(By.id("inboxItemInfoForm:dialogTabMenuRight:uiRepeat:7:cmdbutton"));
+    SelenideElement btnCevapYaz = $(By.id("inboxItemInfoForm:dialogTabMenuRight:uiRepeat:8:cmdbutton"));
+    SelenideElement btnEvrakKapat = $(By.id("inboxItemInfoForm:dialogTabMenuRight:uiRepeat:8:cmdbutton"));
 
 
     @Step("Sayfa açıldı mı kontrolü")
@@ -117,5 +121,24 @@ public class EvrakDetayiPage extends MainPage {
         return this;
     }
 
+    @Step("Ikon kontrolleri")
+    public EvrakDetayiPage ikonKontrolleri() {
+
+        dialogTabMenuRight.shouldBe(Condition.visible);
+
+        Assert.assertEquals(btnEvrakGoster.isDisplayed(), true);
+        Assert.assertEquals(btnHavaleYap.isDisplayed(), true);
+        Assert.assertEquals(btnTebligEt.isDisplayed(), true);
+        Assert.assertEquals(btnIadeEt.isDisplayed(), true);
+        Assert.assertEquals(btnCevapYaz.isDisplayed(), true);
+        Assert.assertEquals(btnEvrakKapat.isDisplayed(), true);
+
+        return  this;
+    }
+
+    public  EvrakDetayiPage cevapYaz() {
+        btnCevapYaz.click();
+        return this;
+    }
 
 }

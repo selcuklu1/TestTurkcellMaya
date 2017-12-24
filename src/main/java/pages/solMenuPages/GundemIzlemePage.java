@@ -9,12 +9,15 @@ import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.apache.poi.xwpf.usermodel.XWPFTableCell;
 import org.apache.poi.xwpf.usermodel.XWPFTableRow;
 import org.openqa.selenium.By;
+import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.support.ui.Wait;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
 
+import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -71,7 +74,16 @@ public class GundemIzlemePage extends MainPage {
     @Step("Aralikli gündem oluştur")
     public GundemIzlemePage aralikliGundemOlustur() {
         islemButonlar.get(0).click();
-        return this;
+/*
+        try {
+            Robot robotobj = new Robot();
+            robotobj.keyPress(KeyEvent.VK_TAB);
+            robotobj.keyPress(KeyEvent.VK_ENTER);
+        } catch (AWTException e) {
+            e.printStackTrace();
+        }
+  */
+      return this;
     }
 
     @Step("Yayımla")

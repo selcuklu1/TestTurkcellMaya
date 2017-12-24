@@ -1,11 +1,27 @@
 package tests.Data;
 
+import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.SelenideElement;
 import common.BaseTest;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
+import org.openqa.selenium.By;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import pages.pageComponents.IslemMesajlari;
+import pages.solMenuPages.BeklemeyeAlinanlarPage;
+import pages.solMenuPages.ImzaBekleyenlerPage;
+import pages.solMenuPages.ImzaladiklarimPage;
 import pages.ustMenuPages.EvrakOlusturPage;
+
+import java.sql.Time;
+import java.time.LocalDateTime;
+
+import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
+import static com.codeborne.selenide.Condition.exist;
+import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Selenide.*;
 
 /****************************************************
  * Tarih: 2017-12-22
@@ -20,8 +36,7 @@ public class DataTest extends BaseTest {
 
     @BeforeMethod
     public void loginBeforeTests() {
-        login("ztekin", "123");
-        evrakOlustur = new EvrakOlusturPage();
+
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -42,6 +57,8 @@ public class DataTest extends BaseTest {
         String editorIcerik = "Bu bir deneme mesajıdır. Lütfen dikkate almayınız.";
         String basariMesaji = "İşlem başarılıdır!";
 
+        login("ztekin", "123");
+        evrakOlustur = new EvrakOlusturPage();
         evrakOlustur
                 .openPage()
                 .bilgilerTabiAc()
@@ -84,7 +101,8 @@ public class DataTest extends BaseTest {
         String editorIcerik = "Bu bir deneme mesajıdır. Lütfen dikkate almayınız.";
         String ekleriDosyaAciklama = "Açıklama";
         String filePath = "C:\\Users\\TheKing\\Desktop\\s1.txt";
-
+        login("ztekin", "123");
+        evrakOlustur = new EvrakOlusturPage();
         evrakOlustur
                 .openPage()
                 .bilgilerTabiAc()
@@ -109,17 +127,8 @@ public class DataTest extends BaseTest {
                 .ekleriTabAc()
                 .ekleriDosyaEkle(filePath)
                 .ekleriDosyaAciklamaDoldur(ekleriDosyaAciklama)
-//                .ekleriEkle()
+                .ekleriEkle()
                 .imzala()
                 .popupImzalaVeEvrakKapatma();
-
-    }
-
-
-    /*
-        Evrak Beklemeye Alma
-    */
-    @Test(description = "TC2095: Evrak Beklemeye Alma", dependsOnMethods = {"TC2234"})
-    public void TC2095() {
     }
 }

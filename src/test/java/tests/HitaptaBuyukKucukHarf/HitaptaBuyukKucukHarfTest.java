@@ -138,6 +138,13 @@ public class HitaptaBuyukKucukHarfTest extends BaseTest {
 
     }
 
+    @Test(description = "TC2090: Dağıtım planına ve kullanıcıya hitap")
+    public void testName() throws Exception {
+        //sistemde kayıtlı dağıtım planı olmalı, dağıtım planının içeriğinde küçük harfli birim, büyük harfli kurum olmalı
+
+//        DAĞITIM YERLERİNE
+    }
+
     public void hitapKontrol(String geregiSecimTipi, String geregi, String beklenenHitap) throws InterruptedException {
 
         evrakOlustur

@@ -11,6 +11,7 @@ import pages.MainPage;
 import pages.pageComponents.UstMenu;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
@@ -202,6 +203,12 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
+    @Step("Kişi alanını doldur")
+    public GelenEvrakKayitPage havaleIslemleriKisiDoldur(String kisi,String birim) {
+        txtHavaleIslemleriKisi.type(kisi).detailItems().filterBy(text(birim)).first().click();
+        return this;
+    }
+
     @Step("Kullanıcı Listesi doldur")
     public GelenEvrakKayitPage havaleIslemleriKullaniciListesiDoldur(String kisi) {
         //txtHavaleIslemleriKullaniciListesi.selectLov(kisi);
@@ -388,6 +395,12 @@ public class GelenEvrakKayitPage extends MainPage {
         String evrakSayiSag = createRandomNumber(5);
         txtEvrakBilgileriListEvrakSayiTextAreaSag.clear();
         txtEvrakBilgileriListEvrakSayiTextAreaSag.sendKeys(evrakSayiSag);
+        return this;
+    }
+
+    public GelenEvrakKayitPage evrakSayiSagDoldur(String sayi) {
+        txtEvrakBilgileriListEvrakSayiTextAreaSag.clear();
+        txtEvrakBilgileriListEvrakSayiTextAreaSag.sendKeys(sayi);
         return this;
     }
 
