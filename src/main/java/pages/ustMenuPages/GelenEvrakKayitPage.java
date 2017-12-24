@@ -11,6 +11,7 @@ import pages.MainPage;
 import pages.pageComponents.UstMenu;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
@@ -199,6 +200,12 @@ public class GelenEvrakKayitPage extends MainPage {
     @Step("Kişi alanını doldur")
     public GelenEvrakKayitPage havaleIslemleriKisiDoldur(String kisi) {
         txtHavaleIslemleriKisi.selectLov(kisi);
+        return this;
+    }
+
+    @Step("Kişi alanını doldur")
+    public GelenEvrakKayitPage havaleIslemleriKisiDoldur(String kisi,String birim) {
+        txtHavaleIslemleriKisi.type(kisi).detailItems().filterBy(text(birim)).first().click();
         return this;
     }
 

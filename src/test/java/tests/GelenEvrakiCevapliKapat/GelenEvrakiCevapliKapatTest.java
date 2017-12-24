@@ -5,7 +5,16 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import pages.solMenuPages.GelenEvraklarPage;
+import pages.ustMenuPages.CevaplananEvrakRaporuPage;
+import pages.ustMenuPages.EvrakOlusturPage;
+import pages.ustMenuPages.GelenEvrakKayitPage;
+
+import java.io.IOException;
+
+import static data.TestData.*;
 import pages.EvrakDetayiPage;
+import pages.pageComponents.TextEditor;
 import pages.solMenuPages.GelenEvraklarPage;
 import pages.ustMenuPages.CevaplananEvrakRaporuPage;
 import pages.ustMenuPages.GelenEvrakKayitPage;
@@ -27,8 +36,10 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
     CevaplananEvrakRaporuPage cevaplananEvrakRaporuPage;
     GelenEvrakKayitPage gelenEvrakKayitPage;
     GelenEvraklarPage gelenEvraklarPage;
+    EvrakOlusturPage evrakOlusturPage;
     EvrakDetayiPage evrakDetayiPage;
     GelenEvraklarCevapYazPage gelenEvraklarCevapYazPage;
+    TextEditor editor;
 
     @BeforeMethod
     public void loginBeforeTests() {
@@ -36,8 +47,60 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
         cevaplananEvrakRaporuPage = new CevaplananEvrakRaporuPage();
         gelenEvrakKayitPage = new GelenEvrakKayitPage();
         gelenEvraklarPage = new GelenEvraklarPage();
-        evrakDetayiPage  = new EvrakDetayiPage();
+        evrakOlusturPage = new EvrakOlusturPage();
+    }
+
+    @Test(enabled = true, description = "TC310: Kurum içi gelen evraka cevap yaz")
+    public void TC310() throws InterruptedException{
+
+        String basariMesaji = "İşlem başarılıdır!";
+        String konuKodu = "Diğer";
+        String konuKoduRandom = "TC-2227-" + createRandomNumber(10);
+        String evrakTarihi = getSysDateForKis();
+        String kurum = "BÜYÜK HARFLERLE KURUM";
+        String gizlilikDerecesi = "Gizli";
+        String evrakSayiSag = createRandomNumber(10);
+        String kisi = "Zübeyde Tekin";
+        String icerik = createRandomText(15);
+
+        //TODO Pre Condition Gelen Evraklar sayfası data oluşturmakta
+        login(username2, password2);
+
+        gelenEvrakKayitPage
+                .openPage()
+                .konuKoduDoldur(konuKodu)
+                .konuDoldur(konuKoduRandom)
+                .evrakTarihiDoldur(evrakTarihi)
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .geldigiKurumDoldurLovText2(kurum)
+                .evrakSayiSagDoldur(evrakSayiSag)
+                .havaleIslemleriKisiDoldur(kisi)
+                .kaydet()
+                .evetDugmesi()
+                .yeniKayitButton();
+        //TODO
+
+        login(username2, password2);
+
+        gelenEvraklarPage
+                .openPage()
+                .evrakSec(konuKoduRandom,kurum,evrakTarihi,evrakSayiSag)
+                .cevapYaz();
+
+        evrakOlusturPage
+                .editorTabAc()
+                .editorIcerikDoldur(icerik);
+        evrakOlusturPage
+                .bilgilerTabiAc()
+                .konuKoduSec(konuKodu)
+                .kaldiralacakKlasorlerSec(konuKodu)
+                .onayAkisiEkle()
+                .onayAkisiKullan();
+
+
+        evrakDetayiPage = new EvrakDetayiPage();
         gelenEvraklarCevapYazPage = new GelenEvraklarCevapYazPage();
+        editor = new TextEditor();
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -117,9 +180,10 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
         String kayitTarihi = getSysDateForKis();
         String evrakSayiSol = createRandomNumber(10);
         String evrakSayiSag = createRandomNumber(4);
-        String evrakTarihi = "18.12.2017";
         String basariMesaji = "İşlem başarılıdır!";
-        String no =evrakSayiSol + "-" + evrakSayiSag;
+        String evrakSayi = evrakSayiSol + "-" + evrakSayiSag;
+        String kaldirilacakKlasorler = "ESK05";
+        String aciklama = "Onay işlemi açıklamasıdır.";
 
         gelenEvrakKayitPage
                 .openPage()
@@ -142,7 +206,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
 
         gelenEvraklarPage
                 .openPage()
-                .evrakSec(tuzelKisi, konu, kayitTarihiSayi, kayitTarihi, no);
+                .evrakSec(tuzelKisi, konu, kayitTarihiSayi, kayitTarihi, evrakSayi);
 
         evrakDetayiPage
                 .sayfaAcilmali()
@@ -151,9 +215,27 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
 
         gelenEvraklarCevapYazPage
                 .geregiKontrolu(tuzelKisi)
-                .konuKonuKontrolu(konu);
+                .konuKonuKontrolu(konu)
+                .editorTabAc()
+                .editorSayiTarihKontrolu(evrakSayi, kayitTarihi);
 
+        editor
+                .type("Bu bir text yazısıdır.");
 
+        gelenEvraklarCevapYazPage
+                .bilgilerTabAc()
+                .kaldirilacakKlasorlerDoldur(kaldirilacakKlasorler)
+                .onayAkisiDoldur(onayAkisi)
+                .kaydetVeOnayaSun()
+                .onayIslemiAciklamaDoldur(aciklama)
+                .gonder()
+                .evrakKayitUyariPopup("Evet")
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        gelenEvraklarPage
+                .tabloOlmayanEvrakNoKontrol(evrakNo);
+
+        //TODO: devam edilecek.
     }
 
 }

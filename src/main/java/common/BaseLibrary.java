@@ -615,8 +615,9 @@ public class BaseLibrary {
         }
     }
 
-    public boolean findElementOnTableAllPages(SelenideElement element) {
-        SelenideElement next = $(("[class='ui-paginator-next ui-state-default ui-corner-all']"));
+    public boolean findElementOnTableAllPages(String form, SelenideElement element) throws InterruptedException {
+
+        SelenideElement next = $(("[id='"+form+"'] [class='ui-paginator-next ui-state-default ui-corner-all']"));
 
         boolean status = false;
         while (status == false) {
