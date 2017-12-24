@@ -157,7 +157,8 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
-    public GelenEvraklarPage evrakSec(String konu, String geldigiYer, String kayitTarihiSayi, String evrakTarihi, String no) {
+    public GelenEvraklarPage evrakSec(String geldigiYer, String konu, String kayitTarihiSayi, String evrakTarihi, String no) {
+
         tableEvraklar
                 .filterBy(Condition.text("Konu: " + konu))
                 .filterBy(Condition.text("Geldiği Yer: " + geldigiYer))
@@ -165,7 +166,7 @@ public class GelenEvraklarPage extends MainPage {
                 .filterBy(Condition.text("Evrak Tarihi: " + evrakTarihi))
                 .filterBy(Condition.text("No: " + no))
                 .get(0)
-                .click();
+                .$("[id^='mainInboxForm:inboxDataTable'] [id$='detayGosterButton']").click();
 
         $(By.id("mainPreviewForm:eastLayout")).waitUntil(Condition.visible, 5000);
         return this;

@@ -1,16 +1,17 @@
 package pages.ustMenuPages;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
-import common.BaseLibrary;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
+import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
 import static com.codeborne.selenide.Selenide.$;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
-public class GelenEvraklarCevapYazPage extends BaseLibrary {
+public class GelenEvraklarCevapYazPage extends MainPage {
 
     //Bilgileri sekmesinde bulunanlar
     SelenideElement cmbEvrakTuru = $(By.id("windowCevapEvrakForm:evrakBilgileriList:1:evrakTuruCombo"));
@@ -18,7 +19,6 @@ public class GelenEvraklarCevapYazPage extends BaseLibrary {
     SelenideElement cmbEvrakDili = $(By.id("windowCevapEvrakForm:evrakBilgileriList:3:evrakDili"));
     SelenideElement txtKonuKodu = $(By.id("windowCevapEvrakForm:evrakBilgileriList:4:konuKoduLov:LovText"));
     SelenideElement txtKonu = $(By.id("windowCevapEvrakForm:evrakBilgileriList:5:konuTextArea"));
-    SelenideElement txtKaldirilacakKlasorler = $(By.id("windowCevapEvrakForm:evrakBilgileriList:6:eklenecekKlasorlerLov:LovText"));
     SelenideElement cmbArsivKategorisi = $(By.id("windowCevapEvrakForm:evrakBilgileriList:7:j_idt35880"));
     SelenideElement cmbGizlilikDerecesi = $(By.xpath("//*[@id='windowCevapEvrakForm:evrakBilgileriList:9:guvenlikKodu']"));
     SelenideElement cmbIvedilik = $(By.id("windowCevapEvrakForm:evrakBilgileriList:10:ivedilik"));
@@ -27,8 +27,11 @@ public class GelenEvraklarCevapYazPage extends BaseLibrary {
     SelenideElement txtGeregi = $(By.id("windowCevapEvrakForm:evrakBilgileriList:12:geregiLov:LovText"));
     SelenideElement cmbBilgiSecimTipi = $(By.id("windowCevapEvrakForm:evrakBilgileriList:13:j_idt35912"));
     SelenideElement txtBilgi = $(By.id("windowCevapEvrakForm:evrakBilgileriList:13:bilgiLov:LovText"));
-    SelenideElement txtOnayAkisi = $(By.id("windowCevapEvrakForm:evrakBilgileriList:14:akisLov:LovText"));
     SelenideElement chkDagitimiEkYap = $(By.id("windowCevapEvrakForm:evrakBilgileriList:16:dagitimEkYapCheckBoxId_input"));
+    SelenideElement btnKaydetVeOnayaSun = $(By.cssSelector("[id^='windowCevapEvrakForm:j_idt'] [id$='uiRepeat:2:panelGrid'] span[class$='kaydetHavaleEt']"));
+    BelgenetElement cmbKaldiralacakKlasorler = comboLov("input[id$='eklenecekKlasorlerLov:LovText']");
+    BelgenetElement cmbOnayAkisi = comboLov(By.cssSelector("[id^='windowCevapEvrakForm:evrakBilgileriList'][id$='akisLov:LovText']"));
+
 
     //Ekleri Sekmesi
     //Dosya Ekle alt sekmesi
@@ -112,8 +115,19 @@ public class GelenEvraklarCevapYazPage extends BaseLibrary {
     SelenideElement txtIlisikIslemleriTabViewEvrakSayi = $(By.id("windowCevapEvrakForm:ilisikIslemleriTabView:arsivdenIlisikEvrakAraSayiInputTextId"));
     SelenideElement btnIlisikIslemleriTabViewArsivdenIlisikEvrakAra = $(By.xpath("//*[@id='windowCevapEvrakForm:ilisikIslemleriTabView:arsivdenIlisikEvrakAraButtonId']"));
 
+    //Editor
+    SelenideElement btnEditor = $("[id^='windowCevapEvrakForm:j_idt'] [id$='uiRepeat:1:cmdbutton'] [class$='editor']");
+    SelenideElement btnBilgiler = $("[id^='windowCevapEvrakForm:j_idt'] [id$='uiRepeat:0:cmdbutton'] [class$='kullaniciBilgileri']");
+
+
+    SelenideElement editorIlgiKismi = $(By.id("windowCevapEvrakForm:ilgiOutPanel"));
     BelgenetElement cmbGeregi = comboLov("[id^='windowCevapEvrakForm:evrakBilgileriList'][id$='geregiLov:LovText']");
-    BelgenetElement cmbKonuKodu = comboLov("[id^='windowCevapEvrakForm:evrakBilgileriList'][id$='''konuKoduLov:LovText'']");
+    BelgenetElement cmbKonuKodu = comboLov("[id^='windowCevapEvrakForm:evrakBilgileriList'][id$='konuKoduLov:LovText']");
+    SelenideElement txtOnayIslemiAciklama = $(By.id("windowCevapEvrakForm:onayIslemiAciklama"));
+    SelenideElement btnGonder = $(By.id("windowCevapEvrakForm:gonderButton"));
+    SelenideElement btnEvetPopup = $(By.cssSelector("div[class*='ui-confirm-dialog'] button[id='kaydetEvetButton']"));
+    SelenideElement btnHayirPopup = $(By.cssSelector("div[class*='ui-confirm-dialog'] button[id='kaydetHayirButton']"));
+
 
     public GelenEvraklarCevapYazPage evrakTuruSec(String evrakTuru) {
         cmbEvrakTuru.selectOption(evrakTuru);
@@ -141,7 +155,7 @@ public class GelenEvraklarCevapYazPage extends BaseLibrary {
     }
 
     public GelenEvraklarCevapYazPage kaldirilacakKlasorlerDoldur(String kaldirilacakKlasorler) {
-        txtKaldirilacakKlasorler.sendKeys(kaldirilacakKlasorler);
+        cmbKaldiralacakKlasorler.selectLov(kaldirilacakKlasorler);
         return this;
     }
 
@@ -186,7 +200,7 @@ public class GelenEvraklarCevapYazPage extends BaseLibrary {
     }
 
     public GelenEvraklarCevapYazPage onayAkisiDoldur(String onayAkisi) {
-        txtOnayAkisi.sendKeys(onayAkisi);
+        cmbOnayAkisi.selectLov(onayAkisi);
         return this;
     }
 
@@ -470,10 +484,38 @@ public class GelenEvraklarCevapYazPage extends BaseLibrary {
         return this;
     }
 
+    public GelenEvraklarCevapYazPage editorTabAc() {
+        btnEditor.click();
+        return this;
+    }
+
+    public GelenEvraklarCevapYazPage bilgilerTabAc() {
+        btnBilgiler.click();
+        return this;
+    }
+
+    @Step("Kaydet ve Onaya sun")
+    public GelenEvraklarCevapYazPage kaydetVeOnayaSun() {
+        btnKaydetVeOnayaSun.click();
+        return this;
+    }
+
+    @Step("Kaydet ve Onaya sun")
+    public GelenEvraklarCevapYazPage onayIslemiAciklamaDoldur(String aciklama) {
+        txtOnayIslemiAciklama.shouldBe(Condition.visible);
+        txtOnayIslemiAciklama.setValue(aciklama);
+        return this;
+    }
+
+    @Step("Gönder")
+    public GelenEvraklarCevapYazPage gonder() {
+        btnGonder.click();
+        return this;
+    }
+
     @Step("Kişinin geregi alanında görüntülenme kontrolu")
     public GelenEvraklarCevapYazPage geregiKontrolu(String adSoyad) {
 
-        cmbGeregi.selectLov(adSoyad);
         System.out.println("Gelen geregi:     " + cmbGeregi.lastSelectedLovTitleText());
         System.out.println("Beklenen geregi:  " + adSoyad);
         Assert.assertEquals(cmbGeregi.lastSelectedLovTitleText().contains(adSoyad), true);
@@ -484,7 +526,6 @@ public class GelenEvraklarCevapYazPage extends BaseLibrary {
     @Step("Konu kodu alanında görüntülenme kontrolu")
     public GelenEvraklarCevapYazPage konuKonuKontrolu(String konu) {
 
-        cmbKonuKodu.selectLov(konu);
         System.out.println("Gelen konuKodu:     " + cmbKonuKodu.lastSelectedLovTitleText());
         System.out.println("Beklenen konuKodu:  " + konu);
         Assert.assertEquals(cmbKonuKodu.lastSelectedLovTitleText().contains(konu), true);
@@ -492,4 +533,32 @@ public class GelenEvraklarCevapYazPage extends BaseLibrary {
         return this;
     }
 
+    @Step("Editörde ilgi satırının, seçilen evrakın tarih ve sayısı ile geldiği kontrolu")
+    public GelenEvraklarCevapYazPage editorSayiTarihKontrolu(String sayi, String tarih) {
+
+        //Tc373 Tüzelkişi'nin 24.12.2017 tarihli ve 1367405182-1012 sayılı yazısı.
+        String getIlgi = editorIlgiKismi.shouldHave(Condition.visible).getText();
+
+        System.out.println("Gelen Ilgi Alanı:   " + getIlgi);
+        System.out.println("Girilen Ilgi Alanı: " + sayi + " " + tarih);
+        Assert.assertEquals(getIlgi.contains(sayi), true);
+        Assert.assertEquals(getIlgi.contains(tarih), true);
+        return this;
+    }
+
+
+    @Step("Popup İşlem Kayıt Uyarı:  \"{secim}\"")
+    public GelenEvraklarCevapYazPage evrakKayitUyariPopup(String secim) {
+
+        switch (secim) {
+            case "Evet":
+                btnEvetPopup.click();
+                break;
+            case "Hayır":
+                btnHayirPopup.click();
+                break;
+        }
+        return this;
+
+    }
 }
