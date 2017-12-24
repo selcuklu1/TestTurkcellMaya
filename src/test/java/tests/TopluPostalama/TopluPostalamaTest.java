@@ -1,11 +1,13 @@
 package tests.TopluPostalama;
 
+import com.codeborne.selenide.Selenide;
 import common.BaseTest;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.solMenuPages.*;
 import pages.ustMenuPages.PttRaporuPage;
 
+import javax.swing.table.TableRowSorter;
 import java.util.Random;
 
 
@@ -694,74 +696,221 @@ public class TopluPostalamaTest extends BaseTest {
                 .filtrele()
                 .postaListesiKontrol("","","","","", false);
 
+    }
+
+    @Test(enabled = true, description = "TC2087 : Toplu postaladıklarım listesinden evrakın geri alınması")
+    public void TC2087() {
+
+        String postaListesiAdi = "TC2087";
+        String postaTarihi = "23.12.2017";
+        String postaGramaji = "1000";
+        String pttTutari = "787.50";
+
+        String evrakGonderildigiYer = "BÜYÜK HARFLERLE KURUM(G)";
+        String evrakKonu = "Anketler";
+        String evrakSayi = "6345202-044-9647";
+
+        String evrakKayitTarihiSayi = "23.12.2017";
+        String hazirlayanBirim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞ";
+        String postaTipi = "Adi Posta";
+        String postaTarih = "23.12.2017";
+        String gorunmeyecekEvrakSayi = "9647";
+        String gorunecekEvrakSayi = "9645";
+
+        String gidecegiYer = "BÜYÜK HARFLERLE KURUM";
+
+        String geriAlAciklama = "CASE TC2087";
+
+        String gonderen = "Mehmet BOZDEMİR";
+        String yeniPostaListesiAdi = "Liste" + (new Random().nextInt((900000 - 100000) + 1) + 100000);
+
+
+        topluPostaladiklarimPage
+                .openPage()
+                .postaListesiSec(postaListesiAdi, "" , postaTarihi, postaGramaji, pttTutari)
+                .evrakSil(evrakGonderildigiYer, evrakKonu, evrakSayi)
+                .islemMesaji().basariliOlmali();
+
+        topluPostalanacakEvraklarPage
+                .openPage()
+                .gidecegiYerSec(evrakGonderildigiYer, true)
+                .sorgula()
+                .evrakKontrol(evrakKayitTarihiSayi, evrakGonderildigiYer, evrakKonu, hazirlayanBirim, postaTipi, true);
+
+        pttRaporuPage
+                .openPage()
+                .aramaDetaylariPanelAc()
+                .postaTarihiDoldur(postaTarih)
+                .sorgula()
+                .tabloKontrolEt(evrakGonderildigiYer, gorunmeyecekEvrakSayi, postaTipi, false)
+                .tabloKontrolEt(evrakGonderildigiYer, gorunecekEvrakSayi, postaTipi, true);
+
+        imzaladiklarimPage
+                .openPage()
+                .filtrePanelAc()
+                .gidecegiYerSec(gidecegiYer)
+                .baslangicTarihiDoldur(postaTarih)
+                .bitisTarihiDoldur(postaTarih)
+                .evrakSec(evrakKonu, evrakGonderildigiYer, postaTarih, evrakSayi)
+                .geriAl()
+                .geriAlAciklamaDoldurVeOnayla(geriAlAciklama)
+                .islemMesaji().basariliOlmali();
+
+        imzaBekleyenlerPage
+                .openPage()
+                .evrakSec(evrakKonu,evrakGonderildigiYer, gonderen, evrakSayi)
+                .imzala()
+                .sImzaSec()
+                .imzala()
+                .sImzaImzala(true);
+
+
+        topluPostalanacakEvraklarPage
+                .openPage()
+                .gidecegiYerSec(gidecegiYer, true)
+                .sorgula()
+                .evrakSec(evrakKayitTarihiSayi, evrakGonderildigiYer, evrakKonu, hazirlayanBirim, postaTipi)
+                .evrakTikSec(evrakKayitTarihiSayi, evrakGonderildigiYer, evrakKonu, hazirlayanBirim, postaTipi, true)
+                .postaListesineAktar()
+                .listeAdiDoldur(yeniPostaListesiAdi)
+                .listeOlustur()
+                .postaListesiSec(postaListesiAdi)
+                .listeyeEkle();
+
+        postaListesiPage
+                .filtreleAc()
+                .postaListesiDoldur(yeniPostaListesiAdi)
+                .evrakSec(evrakKayitTarihiSayi, evrakGonderildigiYer, evrakKonu, hazirlayanBirim, postaTipi)
+                .postaListesiPostala()
+                .postaDetayiPostala();
+
+        postaGramaji = "0";
+        pttTutari = "0.00";
+
+        topluPostaladiklarimPage
+                .openPage()
+                .postaListesiSec(yeniPostaListesiAdi ,"" , postaTarihi, postaGramaji, pttTutari)
+                .evrakKontrol(evrakGonderildigiYer, evrakKonu, evrakSayi);
+
+
+
 
 
 
 
     }
 
-    @Test(enabled = true, description = "TC2087 : Toplu postaladıklarım listesinden evrakın geri alınması")
-    public void TC2087() {
+    @Test(enabled = true, description = "TC1809 : Posta Listesi Görüntüleme (UC_POSTAYÖNETİMİ_003)")
+    public void TC1809() {
 
+        login("mbozdemir", "123");
 
-        topluPostaladiklarimPage
+        String postalanmisListeAdi = topluPostaladiklarimPage
                 .openPage()
-                .postaListesiSec("", "" ,"" ,"" ,"")
-                .evrakSil("","","")
-                .islemMesaji().basariliOlmali();
+                .postaListesiAdiGetir(0);
 
-        topluPostalanacakEvraklarPage
-                .openPage()
-                .gidecegiYerSec("", true)
-                .sorgula()
-                .evrakKontrol("", "", "", "", "", true);
-
-        pttRaporuPage
-                .openPage()
-                .postaTarihiDoldur("")
-                .sorgula()
-                .tabloKontrolEt("", "", "", false);
-
-        logout();
-        login("", "");
-
-        // Step: 8 - Silinen evrakın imzacısı ile sisteme login ol - Geri alınabildiği görülür.
-
-        imzaladiklarimPage
-                .openPage()
-                .gidecegiYerSec("")
-                .baslangicTarihiDoldur("")
-                .bitisTarihiDoldur("")
-                .evrakSec("","","","")
-                .geriAl()
-                .geriAlAciklamaDoldurVeOnayla("")
-                .islemMesaji().basariliOlmali();
-
-        imzaBekleyenlerPage
-                .openPage()
-                .evrakSec("","", "", "")
-                .imzala();
-
-        topluPostalanacakEvraklarPage
-                .openPage()
-                .evrakSec("", "", "", "", "")
-                .evrakTikSec("", "", "", "", "", true)
-                .postaListesineAktar()
-                .postaListesiSec("")
-                .listeyeEkle();
+        postalanmisListeAdi = postalanmisListeAdi.substring(postalanmisListeAdi.indexOf("Posta Listesi Adı:") + 18, postalanmisListeAdi.indexOf("Posta Kodu:") - 1);
 
         postaListesiPage
-                .evrakSec("", "", "", "", "")
-                .postaListesiPostala()
-                .postaDetayiPostala();
-
-        topluPostaladiklarimPage
                 .openPage()
-                .postaListesiSec("" ,"" ,"","", "")
-                .evrakKontrol("", "", "");
+                .filtreleAc()
+                .postaListesiKontrol(postalanmisListeAdi, false);
+
+        String gidecegiYer1 = "Adalet Bakanlığı Döner Sermaye İşletmesi";
+        String postaListesiAdi = "TC1809-01";
+        String gonderildigiYer = "Kurum";
+        String gonderildigiKurum = "Adalet Bakanlığı Döner Sermaye İşletmesi(G)";
+        String adres = "1099314815";
+        String gidisSekli = "Evrak Servisi Elden";
+        String gramaj = "0";
+        String indirimOncesiTutar = "140.00";
+        String indirimOrani = "0";
+        String tutar = "140.00";
 
 
+        String kayitTarihiSayi = "9497";
+        String gidecegiYer = "Adalet Bakanlığı Döner Sermaye İşletmesi(G)";
+        String konu = "Kanunlar";
+        String hazirlayanBirim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞ";
+        String postaTipi = "Adi Posta";
 
+
+        postaListesiPage
+                .openPage()
+                .filtreleAc()
+                .postaListesiDoldur(postaListesiAdi)
+                .evrakSec(kayitTarihiSayi, gidecegiYer, konu, hazirlayanBirim, postaTipi)
+                .postaListesindenCikart(kayitTarihiSayi, gidecegiYer, konu, hazirlayanBirim, postaTipi)
+                .islemMesaji().basariliOlmali();
+
+        topluPostalanacakEvraklarPage
+                .openPage()
+                .gidecegiYerSec(gidecegiYer1, true)
+                .sorgula()
+                .evrakKontrol(kayitTarihiSayi, gidecegiYer, konu, hazirlayanBirim, postaTipi, true);
+
+
+        postaListesiPage
+                .openPage()
+                .filtreleAc()
+                .postaListesiDoldur(postaListesiAdi)
+                .postaListesiPostala()
+                .postaListesiAdiKontrol(postaListesiAdi, true)
+                .gonderildigiYerKontrol(gonderildigiYer, true)
+                .gonderildigiKurumKontro(gonderildigiKurum, true)
+                .adresKontrol(adres , true)
+                .gidisSekliKontrol(gidisSekli , true)
+                .gramajKontrol(gramaj , true)
+                .tutarHesapla()
+                .indirimOncesiTutarKontrol(indirimOncesiTutar, true)
+                .indirimOraniKontrol(indirimOrani, true)
+                .tutarKontrol(tutar, true)
+                .etiketBastir();
+
+    }
+
+    @Test(enabled = true, description = "TC1817 : Tutar alanı kontrol edilir.")
+    public void TC1817() {
+
+        login("mbozdemir", "123");
+
+
+        postaListesiPage
+                .openPage()
+                .filtreleAc()
+                .postaListesiDoldur("cubbada")
+                .postaListesiPostala()
+                .gidisSekliSec("Adi Posta")
+                .gramajDoldur("1000")
+                .tutarHesapla()
+                .indirimOncesiTutarKontrol("1050.00", true)
+                .indirimOraniKontrol("3", true)
+                .tutarKontrol("1018.5000", true);
+
+
+    }
+
+    @Test(enabled = true, description = "TC1675 : Toplu Postaladıklarım İzleme / Alan Kontrolleri (UC_POSTAYÖNETİMİ_004)")
+    public void TC1818() {
+
+        login("mbozdemir", "123");
+
+        postaListesiPage
+                .openPage()
+                .filtreleAc()
+                .postaListesiDoldur("cubbada")
+                .postaListesiPostala()
+                .gidisSekliSec("Adi Posta")
+                .gramajDoldur("1000")
+                .tutarHesapla()
+                .indirimOncesiTutarKontrol("1050.00", true)
+                .indirimOraniKontrol("0", true)
+                .tutarKontrol("1050.00", true)
+                .gramajDoldur("2000")
+                .tutarHesapla()
+                .indirimOncesiTutarKontrol("1050.00", true)
+                .indirimOraniKontrol("0", true)
+                .tutarKontrol("1050.00", true);
 
 
 

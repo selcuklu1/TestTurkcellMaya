@@ -462,5 +462,16 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("İlk posta listesi adını getir.")
+    public String postaListesiAdiGetir(){
+        btnPostaListesiDropDown.click();
+        if(listPostaListesi.size() > 0)
+            return listPostaListesi.first().getText();
+        else
+            Assert.fail("Posta Listesi Yok");
+
+        return "POSTA LISTESI BULUNAMADI!";
+    }
+
 }
 

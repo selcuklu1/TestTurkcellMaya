@@ -35,7 +35,7 @@ public class ImzaladiklarimPage extends MainPage {
     SelenideElement btnGeriAl = $x("//span[contains(@class, 'evrakGeriAl')]/..");
     SelenideElement txtGeriAlAciklama = $(By.id("mainPreviewForm:evrakGeriAlInputTextareaId"));
     SelenideElement btnGeriAlOnay = $x("//div[@class='form-buttons']//span[. = 'Geri Al']/..");
-
+    SelenideElement filtrePanelHeader = $("div[id='mainInboxForm:inboxDataTable:filtersAccordion'] > h3");
 
     @Step("Imzaladiklarim Sayfasini aç")
     public ImzaladiklarimPage openPage() {
@@ -164,6 +164,12 @@ public class ImzaladiklarimPage extends MainPage {
     public ImzaladiklarimPage geriAlAciklamaDoldurVeOnayla(String aciklama){
         txtGeriAlAciklama.setValue(aciklama);
         btnGeriAlOnay.click();
+        return this;
+    }
+
+    @Step("Filtre panelini aç")
+    public ImzaladiklarimPage filtrePanelAc(){
+        filtrePanelHeader.click();
         return this;
     }
 }

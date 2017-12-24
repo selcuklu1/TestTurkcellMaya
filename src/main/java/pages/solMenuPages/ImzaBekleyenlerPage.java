@@ -67,6 +67,18 @@ public class ImzaBekleyenlerPage extends MainPage {
         return this;
     }
 
+    @Step("İmzala")
+    public ImzaBekleyenlerPage sImzaImzala(boolean secim){
+        btnSImzaImzala.click();
+        if (secim==true){
+            btnSImzaImzalaEvet.pressEnter();
+        }
+        else {
+            btnSImzaImzalaHayir.pressEnter();
+        }
+        return this;
+    }
+
     public ImzaBekleyenlerPage dogruKonuVeNoKontrol(String toplantiNo, String konu){
 
         tableKararIzlemeEvraklar
