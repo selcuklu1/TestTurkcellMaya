@@ -168,7 +168,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC0328 : Gelen evrak kayıt ekranından havale")
+    @Test(enabled = true, priority = 3,description = "TC0328 : Gelen evrak kayıt ekranından havale")
     public void TC0328() throws InterruptedException {
 
         String birim = "OPTİİM BİRİM";

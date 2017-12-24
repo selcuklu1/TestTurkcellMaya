@@ -98,6 +98,7 @@ public class GelenEvraklarPage extends MainPage {
     BelgenetElement txtTakipListesiKullanicilar = comboLov(By.id("evrakTakibimeEkleDialogForm:takipListLov:LovText"));
     SelenideElement btnTakipListesiKapat = $("[id^='evrakTakibimeEkleDialogForm:takipDialog'] span[class='ui-icon ui-icon-closethick']");
     ElementsCollection evrakSecButonlar = $$("[id='mainPreviewForm:onizlemeRightTab:onizlemeRightTab'] td");
+
     public GelenEvraklarPage openPage() {
         solMenu(SolMenuData.IslemBekleyenEvraklar.GelenEvraklar);
         String pageTitle = SolMenuData.IslemBekleyenEvraklar.GelenEvraklar.getMenuText();
@@ -160,7 +161,7 @@ public class GelenEvraklarPage extends MainPage {
     }
 
     @Step("Paylaş buton gelmediği görme")
-    public GelenEvraklarPage paylasButonGelmedigiGorme(String buton){
+    public GelenEvraklarPage paylasButonGelmedigiGorme(String buton) {
         boolean t = evrakSecButonlar.filterBy(text(buton)).size() > 0;
         Assert.assertEquals(t, false, "kdkdkdkd");
         return this;
@@ -309,8 +310,9 @@ public class GelenEvraklarPage extends MainPage {
         txtPaylasilanKisi.selectLov(kisi);
         return this;
     }
+
     @Step("Kişi doldur")
-    public GelenEvraklarPage paylasKisiSecBirim(String kisi,String birim) {
+    public GelenEvraklarPage paylasKisiSecBirim(String kisi, String birim) {
         txtPaylasilanKisi.type(kisi).detailItems().filterBy(text(birim)).get(0).click();
         txtPaylasilanKisi.closeLovTreePanel();
         //$(By.id("mainPreviewForm:evrakOnizlemeTab")).pressEnter();
@@ -449,7 +451,7 @@ public class GelenEvraklarPage extends MainPage {
     }
 
     @Step("Birim")
-    public GelenEvraklarPage paylasBirim(){
+    public GelenEvraklarPage paylasBirim() {
         clickJs(btnPaylasBirim);
         return this;
     }
@@ -504,6 +506,14 @@ public class GelenEvraklarPage extends MainPage {
 
         return this;
     }
+
+    @Step("Tabloda olmayan evrak no kontrolü")
+    public GelenEvraklarPage tabloOlmayanEvrakKontrol(String konu) {
+        tableEvraklar
+                .filterBy(text(konu)).shouldHaveSize(0);
+        return this;
+    }
+
 
     //Cevap yaz sayfası
     @Step("Seçilen onay akışı detail kontrolu: \"{secim}\" ")

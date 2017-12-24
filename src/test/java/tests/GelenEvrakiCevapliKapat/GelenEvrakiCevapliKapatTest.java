@@ -5,6 +5,8 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import pages.pageComponents.IslemMesajlari;
+import pages.pageData.SolMenuData;
 import pages.solMenuPages.GelenEvraklarPage;
 import pages.ustMenuPages.CevaplananEvrakRaporuPage;
 import pages.ustMenuPages.EvrakOlusturPage;
@@ -12,6 +14,7 @@ import pages.ustMenuPages.GelenEvrakKayitPage;
 
 import java.io.IOException;
 
+import static com.codeborne.selenide.Selenide.$;
 import static data.TestData.*;
 import pages.EvrakDetayiPage;
 import pages.pageComponents.TextEditor;
@@ -40,6 +43,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
     EvrakDetayiPage evrakDetayiPage;
     GelenEvraklarCevapYazPage gelenEvraklarCevapYazPage;
     TextEditor editor;
+
 
     @BeforeMethod
     public void loginBeforeTests() {
@@ -238,4 +242,81 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
         //TODO: devam edilecek.
     }
 
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "")
+    public void TC2186() throws InterruptedException{
+
+        String konuKodu = "010.01";
+        String evrakTuru = "Resmi Yazışma";
+        String evrakDili = "Türkçe";
+        String evrakTarihi = getSysDateForKis();
+        String gizlilikDerecesi = "Normal";
+        String geldigiKurum = "Esk Kurum 071216 2";
+        String evrakGelisTipi = "Posta";
+        String ivedilik = "Normal";
+        String birim = "OPTİİM BİRİM";
+        String konu = "Test " + getSysDate();
+        String ad = "Test";
+        String soyad = "Otomasyon";
+        String kisiKurum = "Gerçek Kişi";
+        String basariMesaji = "İşlem başarılıdır!";
+
+        String mernisNo = createMernisTCKN();
+
+        gelenEvrakKayitPage
+                .openPage()
+                .konuKoduDoldur(konuKodu)
+                .konuDoldur(konu)
+                .evrakTuruSec(evrakTuru)
+                .evrakDiliSec(evrakDili)
+                .evrakTarihiDoldur(evrakTarihi)
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .kisiKurumSec(kisiKurum)
+                .geldigiKisiEkle()
+                .iletisimBilgisiTCKNEkle(mernisNo)
+                .iletisimBilgisiTCKNAra()
+                .iletisimBilgisiAdDoldur(ad)
+                .iletisimBilgisiSoyadDoldur(soyad)
+                .iletisimBilgisikaydet();
+        gelenEvrakKayitPage
+                .evrakSayiSagDoldur()
+                .evrakGelisTipiSec(evrakGelisTipi)
+                .ivedilikSec(ivedilik)
+                .dagitimBilgileriKisiSec("Mehmet Bozdemir")
+                .kaydet();
+
+        String evrakNO2186 = gelenEvrakKayitPage.popUps();
+
+        gelenEvrakKayitPage
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        logout();
+//        login("username21g","123");
+        login(username4,password4);
+
+        gelenEvraklarPage
+                .openPage()
+                .tabloKonuyaGoreEvrakAc(konu)
+                .cevapYaz();
+
+        alanDegeriKontrolEt($("[id$='konuTextArea']"),konu,true,true);
+
+        evrakOlusturPage
+                .bilgilerTabiAc()
+                .evrakTuruSec("Form")
+                .formSec("Kopya Optiim form şablonu")
+                .kaldiralacakKlasorlerSec("gündem")
+                .onayAkisiEkle("MehmetOnayAkış")
+                .kaydetVeOnayaSun()
+                .onayIslemiAciklamaDoldur(konu)
+                .onayIslemiGonder()
+                .onayIslemiOnayaSunmaPopUp()
+                .islemMesaji().beklenenMesaj(basariMesaji);
+
+        gelenEvraklarPage
+                .openPage()
+                .tabloOlmayanEvrakKontrol(konu);
+
+
+    }
 }

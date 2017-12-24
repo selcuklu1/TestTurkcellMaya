@@ -881,7 +881,7 @@ public class TopluPostalamaTest extends BaseTest {
 
     }
 
-    @Test(enabled = true, description = "TC1675 : Toplu Postaladıklarım İzleme / Alan Kontrolleri (UC_POSTAYÖNETİMİ_004)")
+    @Test(enabled = true, description = "TC1818 : Posta Tutarı Hesaplama İşlemleri ve Güncelleme (UC_POSTAYÖNETİMİ_006)")
     public void TC1818() {
 
         login("mbozdemir", "123");
