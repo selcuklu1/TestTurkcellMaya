@@ -364,4 +364,42 @@ public class EvrakPostalamaTest extends BaseTest {
                 .popupEtiketBastirma("3" , "3");
 
     }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true , description = "")
+    public void TC0309() throws InterruptedException {
+        login("Mbozdemir", "123");
+        String konu = "TC2235_";
+        postalanacakEvraklarPage
+                .openPage()
+                .filter().findRowsWith(Condition.text(konu)).first().click();
+
+        postalanacakEvraklarPage.evrakPostala()
+                .tuzelKisiPostaKod("309")
+                .tuzelKisiPostaAciklama("TC0309")
+                .birimPostaKod("309")
+                .birimPostaAciklama("TC0309")
+                .dagitimDetay()
+                .dagitimDetayKapat()
+                .gidisSekli("Adi Posta")
+                .ilkPostaPostaKod("309")
+                .ilkPostaAciklama("TC0309")
+                .gramajDoldur("15")
+                .hesapla()
+                .etiketYazdir()
+                .etiketYazdirPopupKapat()
+                .postalanacakEvrakYaz()
+                .popupPostalanacakEvrakYazdir()
+                .popupPostaYazdirmaKapat()
+                .postala()
+                .dialogpostalaEvet();
+
+        postalananlarPage
+                .openPage()
+                .filter().findRowsWith(Condition.text(konu)).first().click();
+
+
+
+
+    }
 }
