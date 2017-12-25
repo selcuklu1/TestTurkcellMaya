@@ -1,6 +1,7 @@
 package pages.ustMenuPages;
 
 import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
 import pages.MainPage;
@@ -24,8 +25,13 @@ public class PostalananEvrakRaporuPage extends MainPage {
     SelenideElement btnEtiketBastir = $x("//*[@id='postalananEvrakRaporuForm:postalananEvrakDataTable_data']/tr[1]/td[16]/div/button");
     SelenideElement btnPdfBastir = $x("//*[@id='postalananEvrakRaporuForm:postalananEvrakDataTable']/table/thead/tr[1]/th/button[3]");
     SelenideElement btnEtiketYazdir = $x("//*[@id='postalananEvrakRaporuForm:postalananEvrakDataTable']/table/thead/tr[1]/th/button");
+    SelenideElement btnPopupKapat = $x("//*[@id='postalananEvrakRaporuForm:showAppletContainer']/div/div[1]/a");
+    SelenideElement etiketBastirPopupIlkSatir = $x("//*[@id='etiketBastirDaialog']/div[2]/form/center/table/tbody/tr[1]/td/input");
+    SelenideElement etiketBastirPopupIlkKolon = $x("//*[@id='etiketBastirDaialog']/div[2]/form/center/table/tbody/tr[2]/td/input");
+    SelenideElement etiketBastirPopupTamam = $x("//*[@id='etiketBastirDaialog']/div[2]/form/center/table/tbody/tr[3]/td/button");
 
-public PostalananEvrakRaporuPage openPage() {
+
+    public PostalananEvrakRaporuPage openPage() {
 
         ustMenu("Postalanan Evrak Raporu");
         return this;
@@ -78,16 +84,29 @@ public PostalananEvrakRaporuPage etiketBastir() {
          btnEtiketBastir.click();
          return this;
 }
+public PostalananEvrakRaporuPage etiketBastirPopupKapat() {
+
+    btnPopupKapat.click();
+    return this;
+}
 public PostalananEvrakRaporuPage btnExcel () {
-         btnExcel.click();
+         //btnExcel.click();
+    clickJs(btnExcel);
          return this;
 }
 public PostalananEvrakRaporuPage btnPdf() {
-    btnPdfBastir.click();
+    clickJs(btnPdfBastir);
     return this;
 }
 public PostalananEvrakRaporuPage btnEtiket() {
     btnEtiketYazdir.click();
     return this;
+}
+
+public PostalananEvrakRaporuPage popupEtiketBastirma (String satir , String kolon) {
+        etiketBastirPopupIlkSatir.setValue(satir);
+        etiketBastirPopupIlkKolon.setValue(kolon);
+        etiketBastirPopupTamam.click();
+        return this;
 }
 }

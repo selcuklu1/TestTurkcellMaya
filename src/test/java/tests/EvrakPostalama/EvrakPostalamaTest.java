@@ -338,6 +338,7 @@ public class EvrakPostalamaTest extends BaseTest {
     @Test(enabled = true , description = "TC0802 : Postalanan Evrak Raporu")
     public void TC0802() throws InterruptedException {
         login("Mbozdemir", "123");
+//Download control should be added. But working now.
         postalananEvrakRaporuPage
                 .openPage()
                 .evrakSayisi("6345202")
@@ -354,8 +355,13 @@ public class EvrakPostalamaTest extends BaseTest {
         postalananEvrakRaporuPage
                 .etiketBastir();
         postalananEvrakRaporuPage
+                .etiketBastirPopupKapat();
+        postalananEvrakRaporuPage
                 .btnExcel()
                 .btnPdf()
                 .btnEtiket();
+        postalananEvrakRaporuPage
+                .popupEtiketBastirma("3" , "3");
+
     }
 }
