@@ -140,8 +140,8 @@ public class TopluPostaladiklarimPage extends MainPage {
     public TopluPostaladiklarimPage evrakSil(String gonderildigiYer, String evrakKonusu, String evrakSayisi){
         tblEvrakListesi
                 .filterBy(text(gonderildigiYer))
-                .filterBy(text(evrakKonusu))
-                .filterBy(text(evrakSayisi))
+                .filterBy(text("Konu: " + evrakKonusu))
+                .filterBy(text("Sayı: " + evrakSayisi))
                 .first()
                 .$("button[id$='silButton']")
                 .click();
@@ -161,6 +161,18 @@ public class TopluPostaladiklarimPage extends MainPage {
                 .shouldBe(visible);
 
         return this;
+    }
+
+    @Step("İlk posta listesi adını getir.")
+    public String postaListesiAdiGetir(int index){
+        String postaListesiAdi = tblPostaladiklarim
+                .get(0)
+                .$$("td")
+                .filterBy(text("Posta Listesi Adı:"))
+                .get(0)
+                .getText();
+
+        return postaListesiAdi;
     }
 
 

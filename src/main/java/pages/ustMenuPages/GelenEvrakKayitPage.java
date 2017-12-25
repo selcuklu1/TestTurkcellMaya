@@ -11,6 +11,7 @@ import pages.MainPage;
 import pages.pageComponents.UstMenu;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
@@ -29,13 +30,13 @@ public class GelenEvrakKayitPage extends MainPage {
 
     SelenideElement dateTxtEvrakBilgileriListEvrakTarihi = $("[id$='evrakTarihi_input']");
     SelenideElement cmbEvrakBilgileriListGizlilikDerecesi = $("[id$='guvenlikKodu']");
-
-
     SelenideElement cmbEvrakBilgileriListKisiKurum = $("[id$='kisiKurum']");
+
     //SelenideElement cmbEvrakBilgileriListKisiKurum = $("[id$='kisiKurum']");
     //BelgenetElement cmbEvrakBilgileriListGeldigiKisi = comboLov(By.id("evrakBilgileriForm:evrakBilgileriList:9:geldigiGercekKisiLov:LovText"));
     BelgenetElement cmbGeldigiGercekKisi = comboLov("[id$='geldigiGercekKisiLov:LovText']");
     BelgenetElement cmbGeldigiTuzelKisi = comboLov("[id$='geldigiTuzelKisiLov:LovText']");
+
     By cmbGeldiğiGercekKisiBy = By.cssSelector("[id$='geldigiGercekKisiLov:LovText']");
     By cmbGeldiğiTuzelKisiBy = By.cssSelector("[id$='geldigiTuzelKisiLov:LovText']");
 
@@ -200,6 +201,12 @@ public class GelenEvrakKayitPage extends MainPage {
     @Step("Kişi alanını doldur")
     public GelenEvrakKayitPage havaleIslemleriKisiDoldur(String kisi) {
         txtHavaleIslemleriKisi.selectLov(kisi);
+        return this;
+    }
+
+    @Step("Kişi alanını doldur")
+    public GelenEvrakKayitPage havaleIslemleriKisiDoldur(String kisi,String birim) {
+        txtHavaleIslemleriKisi.type(kisi).detailItems().filterBy(text(birim)).first().click();
         return this;
     }
 
@@ -982,4 +989,5 @@ public class GelenEvrakKayitPage extends MainPage {
                 .$("[id='evrakBilgileriForm:kullaniciBirimSecenekleriHavaleIcin_data'] td:nth-child(4) button").click();
         return this;
     }
+
 }

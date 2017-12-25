@@ -139,7 +139,13 @@ public class EvrakOlusturPage extends MainPage {
         $(By.xpath("//div[@id='mainTaskBar']//span[text()='[Evrak Oluştur]']"))
                 .contextClick();
         btbEvrakOlusturKapatEvet.click();
+//div[@id='window1Dialog']//span[@class='ui-icon ui-icon-closethick']
+        return this;
+    }
 
+    public EvrakOlusturPage evrakOlusturSayfaKapat() {
+        $(By.xpath("//div[@id='window1Dialog']//span[@class='ui-icon ui-icon-closethick']")).click();
+        islemPenceresiKaydetPopup("Evet");
         return this;
     }
 
@@ -169,6 +175,7 @@ public class EvrakOlusturPage extends MainPage {
 
         //label[normalize-space(text())='Konu Kodu']/../..//input
 
+        BelgenetElement txtcomboLovForm = comboLov("[id$='formSablonuId:LovText']");
         BelgenetElement cmlKonuKodu = comboLov("input[id$='konuKoduLov:LovText']");
         SelenideElement btnKonuKoduTree = $("button[id$='konuKoduLov:treeButton']");
         SelenideElement txtKonu = $("textarea[id$='konuTextArea']");
@@ -217,11 +224,12 @@ public class EvrakOlusturPage extends MainPage {
         ElementsCollection cmbKullanicilarImzaSec2 = $$("[id^='yeniGidenEvrakForm:evrakBilgileriList:18:akisAdimLov:LovSecilenTable'][id$='selectOneMenu']");
         SelenideElement cmbKullanicilarImza = $("[id^='yeniGidenEvrakForm:evrakBilgileriList:18:akisAdimLov:LovSecilenTable'][id$='selectOneMenu']");
         SelenideElement btnOnayAkisGuncelle = $(By.cssSelector("[id^='yeniGidenEvrakForm:evrakBilgileriList:18:akisLov:j_idt'] [class$='update-icon']"));
-        BelgenetElement cmbOnayAkisi = comboLov(By.cssSelector("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='akisLov:LovText']"));
+        BelgenetElement cmbOnayAkisi2 = comboLov(By.cssSelector("[id$='akisLov:LovText']"));
         By cmbOnayAkisiBy = By.cssSelector("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='akisLov:LovText']");
 
         //Bilgileri tabı
         BelgenetElement txtKonuKodu = comboLov("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='konuKoduLov:LovText']");
+        SelenideElement btnKaydetveOnayaSun = $(By.xpath("//div[@id='windowCevapEvrakDialog']//tr//td[2]//td[3]//button"));
 
         SelenideElement txtKaldiralacakKlasorler = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:4:eklenecekKlasorlerLov:LovText"));
         SelenideElement rdbNormal = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:10:kanunKapsamTipiRadio:0"));
@@ -229,16 +237,18 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement rdbKisiselVerilerinKorunmasiKanunu = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:10:kanunKapsamTipiRadio:2"));
         SelenideElement cbmAkisAdim = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:akisAdimLov:LovSecilenTable:0:selectOneMenu"));
         SelenideElement tblKullanıcılar = $("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='akisAdimLov:LovSecilenTable_data']");
-        ElementsCollection tblKullanıcılar2 = $$("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='akisAdimLov:LovSecilenTable_data'] >tr");
+        ElementsCollection tblKullanıcılar2 = $$("[id$='akisAdimLov:LovSecilenTable_data'] >tr");
         SelenideElement tblVekalet = $(By.id("yeniGidenEvrakForm:kullaniciBirimSecimiDialogId"));
         SelenideElement btnVekaletTablosuKapat = $(By.xpath("//div[@id='yeniGidenEvrakForm:kullaniciBirimSecimiDialogId']//span[@class='ui-icon ui-icon-closethick']"));
-        SelenideElement btnKullan = $("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='anlikAkisKullanButton']");
+        SelenideElement btnKullan = $("[id$='anlikAkisKullanButton']");
         SelenideElement txtOnayAkisi = $("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='akisLov:LovSecilen']");
         SelenideElement btnIadeEt = $("[id='inboxItemInfoForm:dialogTabMenuRight:dialogTabMenuRight'] td:nth-child(7) button");
         BelgenetElement cmbKullaniciListesi = comboBox(By.id("inboxItemInfoForm:kullaniciListOneMenu_id_label"));
         SelenideElement txtNot = $(By.id("inboxItemInfoForm:notTextArea_id"));
         SelenideElement btnIadeEt2 = $(By.id("inboxItemInfoForm:iadeEtButton_id"));
         SelenideElement popUpEvrakDegisiklik = $(By.xpath("//span[normalize-space(text())='Evrakta değişiklik var, kaydetmek ister misiniz?']"));
+        SelenideElement txtOnayIslemiAciklama = $(By.id("windowCevapEvrakForm:onayIslemiAciklama"));
+        SelenideElement btnOnayIslemiGonder = $(By.id("windowCevapEvrakForm:gonderButton"));
 
         BelgenetElement cmbGeregi = comboLov("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='geregiLov:LovText']");
         BelgenetElement cmbGeregiPostaTipi = comboLov(By.id("yeniGidenEvrakForm:evrakBilgileriList:16:geregiLov:LovSecilenTable:0:selectOneMenu"));
@@ -246,7 +256,7 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement cmbPostaTipi = $("select[id^='yeniGidenEvrakForm:evrakBilgileriList:16:geregiLov:LovSecilenTable:'][id$=':selectOneMenu']");
         By cmbGeregiBy = By.cssSelector("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='geregiLov:LovText']");
 
-        // BelgenetElement cmbOnayAkisi = comboLov("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='akisLov:LovText']");
+        BelgenetElement cmbOnayAkisi = comboLov("[id$='akisLov:LovText']");
         SelenideElement btnOnayAkisiTemizle = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:17:akisLov:j_idt134"));
         SelenideElement btnOnayAkisiEdit = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:17:akisLov:j_idt135"));
         //SelenideElement btnOnayAkisiEkle = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:17:onayAkisiEkle"));
@@ -544,7 +554,7 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Onay Akisi alanında {text} seç")
         public BilgilerTab cmbOnayAkisi(String text) {
-            cmbOnayAkisi.selectLov(text);
+            cmbOnayAkisi2.selectLov(text);
             return this;
         }
 
@@ -581,6 +591,12 @@ public class EvrakOlusturPage extends MainPage {
 
         public BilgilerTab evrakDerecesiSec(String value) {
             cmbGizlilikDerecesi.selectOption(value);
+            return this;
+        }
+
+        @Step("Kaydet ve Onaya Sun buton ")
+        public BilgilerTab kaydetVeOnayaSun() {
+            clickJs(btnKaydetveOnayaSun);
             return this;
         }
 
@@ -937,6 +953,12 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Form Sec : {form} ")
+        public BilgilerTab formSec(String form) {
+            txtcomboLovForm.selectLov(form);
+            return this;
+        }
+
         @Step("Kullan")
         public BilgilerTab kullan() {
 //            clickJs(btnKullan);
@@ -982,6 +1004,24 @@ public class EvrakOlusturPage extends MainPage {
             if (btnOnayAkisiPanelKapat.isDisplayed())
                 btnOnayAkisiPanelKapat.click();
 
+            return this;
+        }
+
+        @Step("Onay İşlemi acıklama doldur : {aciklama}")
+        public BilgilerTab onayIslemiAciklamaDoldur(String aciklama) {
+            txtOnayIslemiAciklama.sendKeys(aciklama);
+            return this;
+        }
+
+        @Step("Onay İşlemi Gonder")
+        public BilgilerTab onayIslemiGonder() {
+            btnOnayIslemiGonder.click();
+            return this;
+        }
+
+        @Step("")
+        public BilgilerTab onayIslemiOnayaSunmaPopUp() {
+            $(By.id("kaydetEvetButton")).click();
             return this;
         }
 
@@ -1233,6 +1273,13 @@ public class EvrakOlusturPage extends MainPage {
         }
 
         @Step("İmzala")
+        public EditorTab cevapYazEditörimzala() {
+            $(By.xpath("//div[@id='windowCevapEvrakDialog']//tbody//td[2]//td[3]//button")).click();
+            return this;
+        }
+
+
+        @Step("İmzala")
         public EditorTab sImzaImzala() {
             clickJs(btnSimzaImzala);
             return this;
@@ -1267,6 +1314,12 @@ public class EvrakOlusturPage extends MainPage {
         /*Thread.sleep(2000);
         SelenideElement sayisalImzaOnay = $(By.id("imzalaForm:sayisalImzaConfirmForm:sayisalImzaEvetButton"));
         sayisalImzaOnay.click();*/
+            return this;
+        }
+
+        public EditorTab popupSimzaEvet() {
+            SelenideElement sayisalImzaOnay = $(By.id("imzalaForm:sayisalImzaConfirmForm:sayisalImzaEvetButton"));
+            sayisalImzaOnay.click();
             return this;
         }
 

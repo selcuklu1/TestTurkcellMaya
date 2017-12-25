@@ -1,5 +1,7 @@
 package pages.solMenuPages;
 
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
 import io.qameta.allure.Step;
@@ -8,18 +10,20 @@ import pages.MainPage;
 import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
 
 public class KlasoreKaldirdiklarimPage extends MainPage {
 
     //Filtreler sekmesi
-    private SelenideElement cmbFiltre = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt9553_input"));
-    private SelenideElement txtSayfadaAra = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt353"));
-    private SelenideElement txtBaslangicTarihi = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt378_input"));
-    private SelenideElement txtBitisTarihi = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt383_input"));
-    private SelenideElement btnRaporAl = $(By.id("mainInboxForm:inboxDataTable:j_idt682"));
+    SelenideElement cmbFiltre = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt9553_input"));
+    SelenideElement txtSayfadaAra = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt353"));
+    SelenideElement txtBaslangicTarihi = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt378_input"));
+    SelenideElement txtBitisTarihi = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt383_input"));
+    SelenideElement btnRaporAl = $(By.id("mainInboxForm:inboxDataTable:j_idt682"));
 
-    private SelenideElement btnEvrakGoster = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:0:cmdbutton"));
-    private SelenideElement btnEvrakKopyala = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:1:cmdbutton"));
+    SelenideElement btnEvrakGoster = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:0:cmdbutton"));
+    SelenideElement btnEvrakKopyala = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:1:cmdbutton"));
+    ElementsCollection tblKlasoreKaldirdiklarim = $$("[id='mainInboxForm:inboxDataTable_data'] tr[role='row']");
 
     @Step("Klasöre kaldırdıklarım sayfası aç")
     public KlasoreKaldirdiklarimPage openPage() {
@@ -33,36 +37,42 @@ public class KlasoreKaldirdiklarimPage extends MainPage {
         cmbFiltre.selectOption(filtre);
         return this;
     }
+
     @Step("Sayfada ara")
     public KlasoreKaldirdiklarimPage sayfadaAraDoldur(String sayfadaAra) {
         //sendKeys(sayfadaAraInput, sayfadaAra, false);
         txtSayfadaAra.sendKeys(sayfadaAra);
         return this;
     }
+
     @Step("Başlangıç tarih doldur")
     public KlasoreKaldirdiklarimPage baslangicTarihiDoldur(String baslangicTarihi) {
         //sendKeys(baslangicTarihiInput, baslangicTarihi, false);
         txtBaslangicTarihi.sendKeys(baslangicTarihi);
         return this;
     }
+
     @Step("Bitiş tarihi doldur")
     public KlasoreKaldirdiklarimPage bitisTarihiDoldur(String bitisTarihi) {
         //sendKeys(bitisTarihiInput, bitisTarihi, false);
         txtBitisTarihi.sendKeys(bitisTarihi);
         return this;
     }
+
     @Step("Rapor al")
     public KlasoreKaldirdiklarimPage raporAl() {
         //click(raporAlButton);
         btnRaporAl.click();
         return this;
     }
+
     @Step("Evrak goster")
     public KlasoreKaldirdiklarimPage evrakGoster() {
         //click(evrakGosterButton);
         btnEvrakGoster.click();
         return this;
     }
+
     @Step("Evrak kopyala")
     public KlasoreKaldirdiklarimPage evrakKopyala() {
         //click(evrakKopyalaButton);
@@ -70,4 +80,11 @@ public class KlasoreKaldirdiklarimPage extends MainPage {
         return this;
     }
 
+    @Step("Konuya göre tablo kontrol : {konu}")
+    public KlasoreKaldirdiklarimPage konuyaGoreTabloKontol(String konu) {
+        tblKlasoreKaldirdiklarim
+                .filterBy(Condition.text(konu))
+                .shouldHaveSize(1);
+        return this;
+    }
 }

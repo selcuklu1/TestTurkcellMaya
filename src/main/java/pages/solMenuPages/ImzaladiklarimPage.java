@@ -36,6 +36,10 @@ public class ImzaladiklarimPage extends MainPage {
     SelenideElement txtGeriAlAciklama = $(By.id("mainPreviewForm:evrakGeriAlInputTextareaId"));
     SelenideElement btnGeriAlOnay = $x("//div[@class='form-buttons']//span[. = 'Geri Al']/..");
 
+    SelenideElement filtrePanelHeader = $("div[id='mainInboxForm:inboxDataTable:filtersAccordion'] > h3");
+
+    ElementsCollection evrakSecButonlar = $$("[id='mainPreviewForm:onizlemeRightTab:onizlemeRightTab'] td");
+
 
     @Step("Imzaladiklarim Sayfasini aç")
     public ImzaladiklarimPage openPage() {
@@ -46,7 +50,12 @@ public class ImzaladiklarimPage extends MainPage {
         System.out.println("Page: " + pageTitle);
         return this;
     }
-
+    @Step("Paylaş buton gelmediği görme")
+    public ImzaladiklarimPage paylasButonGelmedigiGorme(String buton){
+        boolean t = evrakSecButonlar.filterBy(text(buton)).size() > 0;
+        Assert.assertEquals(t, false, "kdkdkdkd");
+        return this;
+    }
     @Step("Evrak geldiği görülür")
     public ImzaladiklarimPage evrakGeldigiGorme(String toplantiNo, String konu, String toplantiTarih) {
         tableKararIzlemeEvraklar.filterBy(text(toplantiNo))
@@ -166,6 +175,12 @@ public class ImzaladiklarimPage extends MainPage {
     public ImzaladiklarimPage geriAlAciklamaDoldurVeOnayla(String aciklama){
         txtGeriAlAciklama.setValue(aciklama);
         btnGeriAlOnay.click();
+        return this;
+    }
+
+    @Step("Filtre panelini aç")
+    public ImzaladiklarimPage filtrePanelAc(){
+        filtrePanelHeader.click();
         return this;
     }
 }

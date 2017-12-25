@@ -23,7 +23,7 @@ public class CevapladiklarimPage extends MainPage {
     private SelenideElement txtBitisTarihi = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt383_input"));
     ElementsCollection tblEvrak = $$("[id^='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
     BelgenetElement txtKullanicilar = comboLov(By.id("evrakTakibimeEkleDialogForm:takipListLov:LovText"));
-    SelenideElement btnTakipListesiKapat =$("[id^='evrakTakibimeEkleDialogForm:takipDialog'] span[class='ui-icon ui-icon-closethick']");
+    SelenideElement btnTakipListesiKapat = $("[id^='evrakTakibimeEkleDialogForm:takipDialog'] span[class='ui-icon ui-icon-closethick']");
 
     @Step("Birim Havale Edilenler sayfası aç")
     public CevapladiklarimPage openPage() {
@@ -33,7 +33,7 @@ public class CevapladiklarimPage extends MainPage {
 
 
     @Step("Kullancılar doldur")
-    public CevapladiklarimPage kullanicilarDoldur(String kullanicilar){
+    public CevapladiklarimPage kullanicilarDoldur(String kullanicilar) {
         txtKullanicilar.selectLov(kullanicilar);
         return this;
     }
@@ -49,7 +49,7 @@ public class CevapladiklarimPage extends MainPage {
         return this;
     }
 
-    public CevapladiklarimPage takipListeKapat(){
+    public CevapladiklarimPage takipListeKapat() {
         btnTakipListesiKapat.click();
         return this;
     }
@@ -60,18 +60,21 @@ public class CevapladiklarimPage extends MainPage {
         cmbFiltre.selectOption(filtre);
         return this;
     }
+
     @Step("Sayfada ara doldur")
     public CevapladiklarimPage sayfadaAraDoldur(String sayfadaAra) {
         //sendKeys(sayfadaAraInput, sayfadaAra, false);
         txtSayfadaAra.sendKeys(sayfadaAra);
         return this;
     }
+
     @Step("Başlangıç tarih doldur")
     public CevapladiklarimPage baslangicTarihiDoldur(String baslangicTarihi) {
         //sendKeys(baslangicTarihiInput, baslangicTarihi, false);
         txtBaslangicTarihi.sendKeys(baslangicTarihi);
         return this;
     }
+
     @Step("Bitiş tarih doldur")
     public CevapladiklarimPage bitisTarihiDoldur(String bitisTarihi) {
         //sendKeys(bitisTarihiInput, bitisTarihi, false);
@@ -79,4 +82,13 @@ public class CevapladiklarimPage extends MainPage {
         return this;
     }
 
+    @Step("Tablo Erak Kontorlü ")
+    public CevapladiklarimPage tabloKonuyaGoreEvrakKontrolu(String konu) {
+        tblEvrak
+                .filterBy(Condition.text(konu))
+                .shouldHaveSize(1)
+                .first()
+                .$("[id^='mainInboxForm:inboxDataTable'][id$='detayGosterButton']").click();
+        return this;
+    }
 }

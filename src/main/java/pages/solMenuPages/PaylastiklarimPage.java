@@ -11,9 +11,12 @@ import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
+import pages.ustMenuPages.EvrakOlusturPage;
 
 import java.util.List;
 
+import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
@@ -22,7 +25,9 @@ import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 public class PaylastiklarimPage extends MainPage {
 
 
-    ElementsCollection tablePaylastiklarim = $$("[id='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
+
+    ElementsCollection tablePaylastiklarim = $$("[id='mainInboxForm:inboxDataTable_data'] tr[role='row']");
+    ElementsCollection evrakSecTablar = $$("[id='mainPreviewForm:evrakOnizlemeTab'] ul li");
     SelenideElement btnPaylasTab = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:4:cmdbutton"));
     SelenideElement txtKisi = $(By.id("mainPreviewForm:evrakPaylasKisiLov:LovText"));
     SelenideElement txtAciklama = $(By.id("mainPreviewForm:evrakPaylasAciklama"));
@@ -94,7 +99,52 @@ public class PaylastiklarimPage extends MainPage {
                 .click();
         return this;
     }
+    @Step("Evrak seç ")
+    public PaylastiklarimPage evrakSec(String konu, String paylasilmaTarihi) {
+        tablePaylastiklarim
+                .filterBy(Condition.text(konu))
+                .filterBy(Condition.text(paylasilmaTarihi))
+                .first()
+                .click();
+        return this;
+    }
 
+    @Step("Evrak Notları")
+    public PaylastiklarimPage evrakNotlariTabAc(){
+        evrakSecTablar.get(3).click();
+        return this;
+    }
+
+    @Step("Evrak Notları")
+    public PaylastiklarimPage paylasilanlarTabAc(){
+        evrakSecTablar.get(4).click();
+        return this;
+    }
+
+    @Step("Otomatik onay akışı kontrol")
+    public PaylastiklarimPage evrakNotlariAciklamaGorme(String aciklama) {
+
+        $$("[id='mainPreviewForm:evrakOnizlemeTab'] table tbody tr")
+                .filterBy(text(aciklama)).shouldHave(sizeGreaterThan(0)).get(0).click();
+        return this;
+    }
+
+    @Step("Paylaşılanlar kullanıcı görme")
+    public PaylastiklarimPage paylasilanlarKullaniciGorme(String kisi) {
+
+        $$("[id='mainPreviewForm:evrakOnizlemeTab'] div[class='ui-datatable ui-widget'] table tbody tr")
+                .filterBy(text(kisi)).shouldHave(sizeGreaterThan(0)).get(0).click();
+        return this;
+    }
+
+    @Step("Evrak seç : {konu}")
+    public PaylastiklarimPage evrakSecKonuyaGore(String konu) {
+        tablePaylastiklarim
+                .filterBy(Condition.text(konu))
+                .first()
+                .click();
+        return this;
+    }
     @Step("Evrak seç ")
     public PaylastiklarimPage evrakSec(String konu, String evrakNo, String paylasilanKullanici, String paylasilmaTarihi) {
         tablePaylastiklarim
@@ -159,7 +209,16 @@ public class PaylastiklarimPage extends MainPage {
 
         return this;
     }
+    @Step("\"{0}\" tabını seç")
+    public PaylastiklarimPage paylasilanlarTabSec(String tabAdi) {
 
+        tabEvrakOnizleme
+                .filterBy(Condition.text(tabAdi))
+                .get(0)
+                .click();;
+
+        return this;
+    }
 
     // Paylaş tab fonsiyonlar
     @Step("Paylaşımı durdur")
@@ -280,6 +339,15 @@ public class PaylastiklarimPage extends MainPage {
                 .filterBy(Condition.text(geriAlinmaTarihi))
                 .get(0)
                 .shouldBe(Condition.exist);
+        return this;
+    }
+    @Step("Açıklama kontrol")
+    public PaylastiklarimPage paylasilanKontrolTumKullanıcılıar(String[] kullanici, String paylasimDurumu) {
+       for(int  i = 0 ; i<kullanici.length; i++)
+        tablePaylasilanlar
+                .filterBy(Condition.text(kullanici[i]))
+                .filterBy(Condition.text(paylasimDurumu))
+                .shouldHaveSize(1);
         return this;
     }
 
