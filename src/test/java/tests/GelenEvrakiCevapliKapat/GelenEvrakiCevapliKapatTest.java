@@ -55,6 +55,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
         imzaBekleyenlerPage = new ImzaBekleyenlerPage();
     }
 
+    //TODO: Can case ismi doğru mu?
     @Test(enabled = true, description = "TC310: Kurum içi gelen evraka cevap yaz")
     public void TC310() throws InterruptedException {
 
@@ -102,7 +103,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .onayAkisiEkle()
                 .onayAkisiKullan();
 
-
+        //TODO: Can bunları yukarda tanımlamamız gerekir.
         evrakDetayiPage = new EvrakDetayiPage();
         gelenEvraklarCevapYazPage = new GelenEvraklarCevapYazPage();
         editor = new TextEditor();
@@ -300,6 +301,8 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .tabloKonuyaGoreEvrakAc(konu)
                 .cevapYaz();
 
+        //TODO: Emre bu kontrolu libraryde yazsak bile pageden yazıp libraryden çağıralım. Testin içi daha temiz durur. id'ler testte olmamaSlı.
+        //Örnek: alanDegeriKontrolEt(konu, true, true);
         alanDegeriKontrolEt($("[id$='konuTextArea']"), konu, true, true);
 
         evrakOlusturPage
@@ -340,6 +343,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .hareketGecmisiTabAc()
                 .tabloKontol(" tarihli yazı ile cevap yazılarak kapatılmıştır.");
 
+        //TODO: Emre bu kontrolu klasoreKaldirdiklarimPage sayfasında yapalım. Bu testin içindekini başkasını kullanamaz çünkü.
         klasoreKaldirdiklarimPage
                 .openPage()
                 .filter().findRowsWith(Condition.text(konu))
