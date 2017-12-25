@@ -46,6 +46,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
     KlasorEvrakIslemleriPage klasorEvrakIslemleriPage;
     PostalanacakEvraklarPage postalanacakEvraklarPage;
     PostalananlarPage postalananlarPage;
+    ImzaBekleyenlerPage imzaBekleyenlerPage;
     TextEditor editor;
 
 
@@ -62,6 +63,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
         evrakDetayiPage = new EvrakDetayiPage();
         postalanacakEvraklarPage = new PostalanacakEvraklarPage();
         postalananlarPage = new PostalananlarPage();
+        imzaBekleyenlerPage = new ImzaBekleyenlerPage();
     }
 
     @Test(enabled = true, description = "TC310: Kurum içi gelen evraka cevap yaz")
@@ -302,7 +304,6 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .islemMesaji().basariliOlmali(basariMesaji);
 
         logout();
-//        login("username21g","123");
         login(username4, password4);
 
         gelenEvraklarPage
@@ -317,31 +318,31 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .evrakTuruSec("Form")
                 .formSec("Kopya Optiim form şablonu")
                 .kaldiralacakKlasorlerSec("Diğer")
-//                .onayAkisiEkle("MehmetOnayAkış")
-//                .kaydetVeOnayaSun()
-//                .onayIslemiAciklamaDoldur(konu)
-//                .onayIslemiGonder()
-//                .onayIslemiOnayaSunmaPopUp()
-//                .islemMesaji().beklenenMesaj(basariMesaji);
-                .onayAkisiEkle()
-                .kullniciIsmineGoreImzaParafSec("Mehmet BOZDEMİR",tur)
-                .kullan();
+                .cmbOnayAkisi("DenemeListe")
+                .kaydetVeOnayaSun()
+                .onayIslemiAciklamaDoldur(konu)
+                .onayIslemiGonder()
+                .onayIslemiOnayaSunmaPopUp()
+                .islemMesaji().beklenenMesaj(basariMesaji);
 
-        evrakOlusturPage
-                .editorTabAc()
-                .cevapYazEditörimzala()
-                .sImzasec()
-                .sImzaImzala()
-                .popupSimzaEvet();
+        //DenemeListesindeki kullnıcı veya kullanıcılarla giriş yapılır işlemdeki aksiyonlar alınır.
+        logout();
+        login("username24o","123");
+
+        imzaBekleyenlerPage
+                .openPage()
+                .evrakKonusunaGoreKontrol(konu)
+                .evrakOnizlemeImzala()
+                .sImzaSec()
+                .sImzaImzala(true);
+
+        logout();
+        login(username4,password4);
 
         gelenEvraklarPage
                 .openPage()
                 .tabloOlmayanEvrakKontrol(konu);
 
-
-//        String konu = "Test 20171225142131";
-//        logout();
-//        login(username4, password4);
         cevapladiklarimPage
                 .openPage()
                 .tabloKonuyaGoreEvrakKontrolu(konu);
@@ -360,7 +361,6 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .klasorDoldurwithDetail("Diğer","[Klasör] 000")
                 .evrakTarihiDoldur(getSysDateForKis2())
                 .ara();
-//        .evrakGeldigiGorme(konu);
 
         klasorEvrakIslemleriPage
                 .filter().findRowsWith(Condition.text(konu))
@@ -387,9 +387,5 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .openPage()
                 .filter().findRowsWith(Condition.text(konu))
                 .shouldHaveSize(1);
-
-
-
-
     }
 }
