@@ -52,6 +52,8 @@ public class PostalananlarPage extends MainPage {
     SelenideElement btnFiltreBaslangicTarihi = $x("//*[@id='mainInboxForm:inboxDataTable:filtersAccordion:filtersGrid']/tbody/tr[2]/td[2]/table/tbody/tr/td[1]/span/input");
     SelenideElement btnFiltreSpan = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion"));
     SelenideElement ImzaDialog = $(By.id("mainInboxForm:imzaListesiDialog"));
+    SelenideElement postalananEvrakYazdir = $x("//button[span[text()='Yazdır']]");
+    SelenideElement postalananEvrakEtiketYazdir = $x("//button[span[text()='Etiket Bastır']]");
     @Step("Postalananlar sayfası aç")
     public PostalananlarPage openPage() throws  InterruptedException {
         solMenu(SolMenuData.BirimEvraklari.Postalananlar);
@@ -262,6 +264,16 @@ return this;
 
        ImzaDialog.click();
        ImzaDialog.scrollTo();
+       return this;
+    }
+
+    public PostalananlarPage evrakYazdir() {
+        postalananEvrakYazdir.click();
+        return this;
+    }
+    public PostalananlarPage etiketBastir() {
+
+       postalananEvrakEtiketYazdir.click();
        return this;
     }
 }

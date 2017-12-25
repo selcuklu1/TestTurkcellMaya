@@ -399,6 +399,16 @@ public class EvrakPostalamaTest extends BaseTest {
                 .filter().findRowsWith(Condition.text(konu)).first().click();
 
 
+        postalananlarPage
+                .btnIcerikGoster()
+                .btnIcerikEkleriTab()
+                .btnIcerikIlgileriTab()
+                .btnIcerikDetayKapat();
+
+        postalananlarPage
+                .postaDetayiTikla()
+                .evrakYazdir()
+                .etiketBastir();
 
 
     }
