@@ -338,6 +338,7 @@ public class EvrakPostalamaTest extends BaseTest {
     @Test(enabled = true , description = "TC0802 : Postalanan Evrak Raporu")
     public void TC0802() throws InterruptedException {
         login("Mbozdemir", "123");
+//Download control should be added. But working now.
         postalananEvrakRaporuPage
                 .openPage()
                 .evrakSayisi("6345202")
@@ -354,8 +355,61 @@ public class EvrakPostalamaTest extends BaseTest {
         postalananEvrakRaporuPage
                 .etiketBastir();
         postalananEvrakRaporuPage
+                .etiketBastirPopupKapat();
+        postalananEvrakRaporuPage
                 .btnExcel()
                 .btnPdf()
                 .btnEtiket();
+        postalananEvrakRaporuPage
+                .popupEtiketBastirma("3" , "3");
+
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true , description = "")
+    public void TC0309() throws InterruptedException {
+        login("Mbozdemir", "123");
+        String konu = "TC2235_";
+        postalanacakEvraklarPage
+                .openPage()
+                .filter().findRowsWith(Condition.text(konu)).first().click();
+
+        postalanacakEvraklarPage.evrakPostala()
+                .tuzelKisiPostaKod("309")
+                .tuzelKisiPostaAciklama("TC0309")
+                .birimPostaKod("309")
+                .birimPostaAciklama("TC0309")
+                .dagitimDetay()
+                .dagitimDetayKapat()
+                .gidisSekli("Adi Posta")
+                .ilkPostaPostaKod("309")
+                .ilkPostaAciklama("TC0309")
+                .gramajDoldur("15")
+                .hesapla()
+                .etiketYazdir()
+                .etiketYazdirPopupKapat()
+                .postalanacakEvrakYaz()
+                .popupPostalanacakEvrakYazdir()
+                .popupPostaYazdirmaKapat()
+                .postala()
+                .dialogpostalaEvet();
+
+        postalananlarPage
+                .openPage()
+                .filter().findRowsWith(Condition.text(konu)).first().click();
+
+
+        postalananlarPage
+                .btnIcerikGoster()
+                .btnIcerikEkleriTab()
+                .btnIcerikIlgileriTab()
+                .btnIcerikDetayKapat();
+
+        postalananlarPage
+                .postaDetayiTikla()
+                .evrakYazdir()
+                .etiketBastir();
+
+
     }
 }

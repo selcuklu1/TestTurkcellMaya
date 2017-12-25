@@ -56,7 +56,15 @@ public class PostalanacakEvraklarPage extends MainPage {
     SelenideElement tabIcerikEkleri = $(By.id("inboxItemInfoForm:dialogTabMenuLeft:uiRepeat:1:cmdbutton"));
     SelenideElement tabIcerikKapat = $x("//*[@id='windowItemInfoDialog']/div[1]/a[1]/span");
     SelenideElement tabIcerikKapatmaOnay = $(By.id("kapatButton"));
-
+    SelenideElement birimPostaKodu = $x("//*[@id='mainPreviewForm:dataTableId_data']/tr[3]/td[4]/div/div/div//table/tbody/tr[1]/td[2]/input");
+    SelenideElement birimPostaAciklama = $x("//*[@id='mainPreviewForm:dataTableId_data']/tr[3]/td[4]/div/div/div//table/tbody/tr[2]/td[2]/textarea") ;
+    SelenideElement tuzelKisiPostaKodu = $x("//*[@id='mainPreviewForm:dataTableId_data']/tr[4]/td[4]/div/div/div//table/tbody/tr[1]/td[2]/input");
+    SelenideElement tuzelKisiPostaAciklama =  $x("//*[@id='mainPreviewForm:dataTableId_data']/tr[4]/td[4]/div/div/div//table/tbody/tr[2]/td[2]/textarea") ;
+    SelenideElement ilkPostaPostaKodu = $x("//*[@id='mainPreviewForm:dataTableId_data']/tr[1]/td[4]/div/div/div//table/tbody/tr[1]/td[2]/input");
+    SelenideElement ilkPostaAciklama = $x("//*[@id='mainPreviewForm:dataTableId_data']/tr[1]/td[4]/div/div/div//table/tbody/tr[2]/td[2]/textarea");
+    SelenideElement btnEtiketYazdir = $x("//*[@id='mainPreviewForm:dataTableId_data']/tr[1]/td[5]/div//table/tbody/tr[3]/td/button");
+    SelenideElement btnEtiketPopupKapat = $x("//*[@id='mainPreviewForm:showAppletContainer']/div/div[1]/a/span");
+    SelenideElement btnDagitimYerDetayKapat = $x("//*[@id='mainPreviewForm:dagitimPlaniDetayViewDialog']/div[1]/a/span");
     @Step("Postalanacak Evraklar sayfası aç")
     public PostalanacakEvraklarPage openPage() {
         solMenu(SolMenuData.BirimEvraklari.PostalanacakEvraklar);
@@ -253,6 +261,10 @@ public class PostalanacakEvraklarPage extends MainPage {
     public PostalanacakEvraklarPage postala () {
 
         btnPostala.click();
+        return this;
+    }
+    public PostalanacakEvraklarPage dialogpostalaEvet() {
+
         btnDialogEvet.click();
         return this;
     }
@@ -277,6 +289,53 @@ public class PostalanacakEvraklarPage extends MainPage {
     public PostalanacakEvraklarPage icerikPencereKapatma() {
         tabIcerikKapat.click();
         tabIcerikKapatmaOnay.click();
+        return this;
+    }
+
+    public PostalanacakEvraklarPage tuzelKisiPostaKod (String txt) {
+    tuzelKisiPostaKodu.setValue(txt);
+    return this;
+
+    }
+    public PostalanacakEvraklarPage tuzelKisiPostaAciklama (String txt) {
+
+        tuzelKisiPostaAciklama.setValue(txt);
+        return this;
+    }
+    public PostalanacakEvraklarPage birimPostaKod (String txt) {
+        birimPostaKodu.setValue(txt);
+        return this;
+
+    }
+    public PostalanacakEvraklarPage birimPostaAciklama (String txt) {
+
+        birimPostaAciklama.setValue(txt);
+        return this;
+    }
+
+    public PostalanacakEvraklarPage ilkPostaPostaKod (String txt) {
+        ilkPostaPostaKodu.setValue(txt);
+        return this;
+    }
+    public PostalanacakEvraklarPage ilkPostaAciklama (String txt) {
+
+        ilkPostaAciklama.setValue(txt);
+        return this;
+    }
+
+    public PostalanacakEvraklarPage etiketYazdir () throws InterruptedException {
+        btnEtiketYazdir.click();
+        Thread.sleep(1000);
+        return this;
+    }
+
+    public PostalanacakEvraklarPage etiketYazdirPopupKapat () {
+        btnEtiketPopupKapat.click();
+        return this;
+    }
+    public PostalanacakEvraklarPage dagitimDetayKapat() {
+
+        btnDagitimYerDetayKapat.click();
         return this;
     }
 }
