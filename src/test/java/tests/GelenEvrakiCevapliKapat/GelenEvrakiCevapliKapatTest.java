@@ -366,8 +366,6 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .filter().findRowsWith(Condition.text(konu))
                 .shouldHaveSize(1);
 
-
-
         postalanacakEvraklarPage
                 .openPage()
                 .filter().findRowsWith(Condition.text(konu))
