@@ -236,10 +236,10 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement rdbKisiselVerilerinKorunmasiKanunu = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:10:kanunKapsamTipiRadio:2"));
         SelenideElement cbmAkisAdim = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:akisAdimLov:LovSecilenTable:0:selectOneMenu"));
         SelenideElement tblKullanıcılar = $("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='akisAdimLov:LovSecilenTable_data']");
-        ElementsCollection tblKullanıcılar2 = $$("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='akisAdimLov:LovSecilenTable_data'] >tr");
+        ElementsCollection tblKullanıcılar2 = $$("[id$='akisAdimLov:LovSecilenTable_data'] >tr");
         SelenideElement tblVekalet = $(By.id("yeniGidenEvrakForm:kullaniciBirimSecimiDialogId"));
         SelenideElement btnVekaletTablosuKapat = $(By.xpath("//div[@id='yeniGidenEvrakForm:kullaniciBirimSecimiDialogId']//span[@class='ui-icon ui-icon-closethick']"));
-        SelenideElement btnKullan = $("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='anlikAkisKullanButton']");
+        SelenideElement btnKullan = $("[id$='anlikAkisKullanButton']");
         SelenideElement txtOnayAkisi = $("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='akisLov:LovSecilen']");
         SelenideElement btnIadeEt = $("[id='inboxItemInfoForm:dialogTabMenuRight:dialogTabMenuRight'] td:nth-child(7) button");
         BelgenetElement cmbKullaniciListesi = comboBox(By.id("inboxItemInfoForm:kullaniciListOneMenu_id_label"));
@@ -1268,6 +1268,12 @@ SelenideElement btnOnayIslemiGonder = $(By.id("windowCevapEvrakForm:gonderButton
             btnImzala.click();
             return this;
         }
+        @Step("İmzala")
+        public EditorTab cevapYazEditörimzala() {
+            $(By.xpath("//div[@id='windowCevapEvrakDialog']//tbody//td[2]//td[3]//button")).click();
+            return this;
+        }
+
 
         @Step("İmzala")
         public EditorTab sImzaImzala() {
@@ -1305,6 +1311,11 @@ SelenideElement btnOnayIslemiGonder = $(By.id("windowCevapEvrakForm:gonderButton
         SelenideElement sayisalImzaOnay = $(By.id("imzalaForm:sayisalImzaConfirmForm:sayisalImzaEvetButton"));
         sayisalImzaOnay.click();*/
             return this;
+        }
+        public EditorTab popupSimzaEvet() {
+            SelenideElement sayisalImzaOnay = $(By.id("imzalaForm:sayisalImzaConfirmForm:sayisalImzaEvetButton"));
+            sayisalImzaOnay.click();
+            return  this;
         }
 
         public EditorTab popupSImzalaIslemleri() throws InterruptedException {

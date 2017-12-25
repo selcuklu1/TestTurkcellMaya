@@ -1,5 +1,6 @@
 package tests.GelenEvrakiCevapliKapat;
 
+import com.codeborne.selenide.Condition;
 import common.BaseTest;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
@@ -7,21 +8,19 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.pageComponents.IslemMesajlari;
 import pages.pageData.SolMenuData;
-import pages.solMenuPages.GelenEvraklarPage;
-import pages.ustMenuPages.CevaplananEvrakRaporuPage;
-import pages.ustMenuPages.EvrakOlusturPage;
-import pages.ustMenuPages.GelenEvrakKayitPage;
+import pages.solMenuPages.*;
+import pages.ustMenuPages.*;
 
 import java.io.IOException;
 
 import static com.codeborne.selenide.Selenide.$;
 import static data.TestData.*;
+
 import pages.EvrakDetayiPage;
 import pages.pageComponents.TextEditor;
 import pages.solMenuPages.GelenEvraklarPage;
 import pages.ustMenuPages.CevaplananEvrakRaporuPage;
 import pages.ustMenuPages.GelenEvrakKayitPage;
-import pages.ustMenuPages.GelenEvraklarCevapYazPage;
 
 import java.io.IOException;
 
@@ -42,6 +41,11 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
     EvrakOlusturPage evrakOlusturPage;
     EvrakDetayiPage evrakDetayiPage;
     GelenEvraklarCevapYazPage gelenEvraklarCevapYazPage;
+    CevapladiklarimPage cevapladiklarimPage;
+    KlasoreKaldirdiklarimPage klasoreKaldirdiklarimPage;
+    KlasorEvrakIslemleriPage klasorEvrakIslemleriPage;
+    PostalanacakEvraklarPage postalanacakEvraklarPage;
+    PostalananlarPage postalananlarPage;
     TextEditor editor;
 
 
@@ -52,10 +56,16 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
         gelenEvrakKayitPage = new GelenEvrakKayitPage();
         gelenEvraklarPage = new GelenEvraklarPage();
         evrakOlusturPage = new EvrakOlusturPage();
+        cevapladiklarimPage = new CevapladiklarimPage();
+        klasoreKaldirdiklarimPage = new KlasoreKaldirdiklarimPage();
+        klasorEvrakIslemleriPage = new KlasorEvrakIslemleriPage();
+        evrakDetayiPage = new EvrakDetayiPage();
+        postalanacakEvraklarPage = new PostalanacakEvraklarPage();
+        postalananlarPage = new PostalananlarPage();
     }
 
     @Test(enabled = true, description = "TC310: Kurum içi gelen evraka cevap yaz")
-    public void TC310() throws InterruptedException{
+    public void TC310() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
         String konuKodu = "Diğer";
@@ -88,7 +98,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
 
         gelenEvraklarPage
                 .openPage()
-                .evrakSec(konuKoduRandom,kurum,evrakTarihi,evrakSayiSag)
+                .evrakSec(konuKoduRandom, kurum, evrakTarihi, evrakSayiSag)
                 .cevapYaz();
 
         evrakOlusturPage
@@ -244,7 +254,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "")
-    public void TC2186() throws InterruptedException{
+    public void TC2186() throws InterruptedException {
 
         String konuKodu = "010.01";
         String evrakTuru = "Resmi Yazışma";
@@ -260,6 +270,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
         String soyad = "Otomasyon";
         String kisiKurum = "Gerçek Kişi";
         String basariMesaji = "İşlem başarılıdır!";
+        String tur = "IMZALAMA";
 
         String mernisNo = createMernisTCKN();
 
@@ -292,30 +303,92 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
 
         logout();
 //        login("username21g","123");
-        login(username4,password4);
+        login(username4, password4);
 
         gelenEvraklarPage
                 .openPage()
                 .tabloKonuyaGoreEvrakAc(konu)
                 .cevapYaz();
 
-        alanDegeriKontrolEt($("[id$='konuTextArea']"),konu,true,true);
+        alanDegeriKontrolEt($("[id$='konuTextArea']"), konu, true, true);
 
         evrakOlusturPage
                 .bilgilerTabiAc()
                 .evrakTuruSec("Form")
                 .formSec("Kopya Optiim form şablonu")
-                .kaldiralacakKlasorlerSec("gündem")
-                .onayAkisiEkle("MehmetOnayAkış")
-                .kaydetVeOnayaSun()
-                .onayIslemiAciklamaDoldur(konu)
-                .onayIslemiGonder()
-                .onayIslemiOnayaSunmaPopUp()
-                .islemMesaji().beklenenMesaj(basariMesaji);
+                .kaldiralacakKlasorlerSec("Diğer")
+//                .onayAkisiEkle("MehmetOnayAkış")
+//                .kaydetVeOnayaSun()
+//                .onayIslemiAciklamaDoldur(konu)
+//                .onayIslemiGonder()
+//                .onayIslemiOnayaSunmaPopUp()
+//                .islemMesaji().beklenenMesaj(basariMesaji);
+                .onayAkisiEkle()
+                .kullniciIsmineGoreImzaParafSec("Mehmet BOZDEMİR",tur)
+                .kullan();
+
+        evrakOlusturPage
+                .editorTabAc()
+                .cevapYazEditörimzala()
+                .sImzasec()
+                .sImzaImzala()
+                .popupSimzaEvet();
 
         gelenEvraklarPage
                 .openPage()
                 .tabloOlmayanEvrakKontrol(konu);
+
+
+//        String konu = "Test 20171225142131";
+//        logout();
+//        login(username4, password4);
+        cevapladiklarimPage
+                .openPage()
+                .tabloKonuyaGoreEvrakKontrolu(konu);
+
+        evrakDetayiPage
+                .hareketGecmisiTabAc()
+                .tabloKontol(" tarihli yazı ile cevap yazılarak kapatılmıştır.");
+
+        klasoreKaldirdiklarimPage
+                .openPage()
+                .filter().findRowsWith(Condition.text(konu))
+                .shouldHaveSize(1);
+
+        klasorEvrakIslemleriPage
+                .openPage()
+                .klasorDoldurwithDetail("Diğer","[Klasör] 000")
+                .evrakTarihiDoldur(getSysDateForKis2())
+                .ara();
+//        .evrakGeldigiGorme(konu);
+
+        klasorEvrakIslemleriPage
+                .filter().findRowsWith(Condition.text(konu))
+                .shouldHaveSize(1);
+
+
+
+        postalanacakEvraklarPage
+                .openPage()
+                .filter().findRowsWith(Condition.text(konu))
+                .shouldHaveSize(1);
+
+        logout();
+        login("username24o","123");
+
+        postalanacakEvraklarPage
+                .openPage()
+                .evrakSecKonuyaGoreIcerikGoster(konu)
+                .evrakPostala()
+                .postala()
+                .islemMesaji().beklenenMesaj(basariMesaji);
+
+        postalananlarPage
+                .openPage()
+                .filter().findRowsWith(Condition.text(konu))
+                .shouldHaveSize(1);
+
+
 
 
     }

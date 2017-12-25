@@ -84,6 +84,14 @@ public class PostalanacakEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Evrak içerik göster")
+    public PostalanacakEvraklarPage evrakSecKonuyaGoreIcerikGoster(String konu) {
+        tblEvraklar.filterBy(Condition.text(konu))
+                .first()
+                .click();
+        return this;
+    }
+
     public PostalanacakEvraklarPage evrakSecIcerikKapat(boolean secim) {
         btnEvrakDetayKapat.get(0).click();
         if (secim==true){

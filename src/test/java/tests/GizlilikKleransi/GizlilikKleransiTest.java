@@ -837,7 +837,7 @@ public class GizlilikKleransiTest extends BaseTest {
         String mesaj2 = "DAGPLAN1 adlı Dağıtım Planınında gizlilik kleransı yetersiz kullanıcılar vardır: " + kullaniciTasnifDisi;
 
 
-        login(username3, password3);
+        login(username4, password4);
 
 
         evrakOlusturPage
