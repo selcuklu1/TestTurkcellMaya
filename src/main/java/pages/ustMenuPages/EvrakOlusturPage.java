@@ -653,13 +653,13 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Geregi Secim Tipi alanında \"{value}\" seç")
+        @Step("Gereği Seçim Tipi alanında \"{value}\" seç")
         public BilgilerTab geregiSecimTipiSec(String value) {
             cmbGeregiSecimTipi.selectOption(value);
             return this;
         }
 
-        @Step("Geregi Secim Tipi alanında \"{value}\" seç")
+        @Step("Gereği Seçim Tipi alanında \"{value}\" seç")
         public BilgilerTab geregiSecimTipiSecByText(String value) {
             cmbGeregiSecimTipi.selectOption(value);
             return this;
