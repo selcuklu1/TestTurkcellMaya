@@ -86,6 +86,7 @@ public class OnayAkisYonetimiPage extends MainPage {
         return this;
     }
 
+    @Step("Filtrede durum seç")
     public OnayAkisYonetimiPage filtreDurumSec(String secim) {
         cmbFiltreDurum.selectOptionByValue(secim);
         return this;
@@ -121,6 +122,7 @@ public class OnayAkisYonetimiPage extends MainPage {
         return this;
     }
 
+    @Step("Kontrolcu yoksa ekle")
     public OnayAkisYonetimiPage kontrolcuYoksaEkle(String kullanici) {
 
         if (onayAkisListesiKontrolRow.isDisplayed() == false) {
@@ -136,7 +138,7 @@ public class OnayAkisYonetimiPage extends MainPage {
         return this;
     }
 
-
+    @Step("Kontrolcu sil")
     public OnayAkisYonetimiPage kontrolcuSil() {
 
         onayAkisListesiKontrolRow
@@ -168,16 +170,19 @@ public class OnayAkisYonetimiPage extends MainPage {
         return this;
     }
 
+    @Step("Varsayılan yap")
     public OnayAkisYonetimiPage varsayilanYap() {
         btnVarsayilanYap.click();
         return this;
     }
 
+    @Step("Pasif yap")
     public OnayAkisYonetimiPage pasifYap() {
         btnPasifYap.click();
         return this;
     }
 
+    @Step("Aktif yap")
     public OnayAkisYonetimiPage aktifYap() {
         btnAktifYap.click();
         return this;
@@ -307,22 +312,26 @@ public class OnayAkisYonetimiPage extends MainPage {
         return this;
     }
 
+    @Step("Ekranı kapat")
     public OnayAkisYonetimiPage ekraniKapat() {
         btnEkranKapat.click();
         islemPenceresiKapatmaOnayiPopup("Kapat");
         return this;
     }
 
+    @Step("Filtre aç")
     public OnayAkisYonetimiPage filtreAc() {
         filtreAcmaKapatma.click();
         return this;
     }
 
+    @Step("Güncelle")
     public OnayAkisYonetimiPage guncelle() {
         btnGuncelle.click();
         return this;
     }
 
+    @Step("Onay akışı sil")
     public OnayAkisYonetimiPage silOnayAkisiItem2() {
         if (btnSilOnayAkisiItem2.isDisplayed()) {
             btnSilOnayAkisiItem2.click();
@@ -330,7 +339,7 @@ public class OnayAkisYonetimiPage extends MainPage {
         return this;
     }
 
-
+    @Step("Onay akışı işlemleri kullanıcı sil")
     public OnayAkisYonetimiPage onayAkisiIslemleriKullaniciSil(String kullanici) {
 
         trOnayAkisiEkleKullanicilar
@@ -356,6 +365,7 @@ public class OnayAkisYonetimiPage extends MainPage {
         return this;
     }
 
+    @Step("Kullanici yerlerini değiştir")
     public OnayAkisYonetimiPage kullaniciYerleriDegistir(String kullanici1, String kullanici2) throws InterruptedException {
 
         Thread.sleep(1000);
@@ -375,6 +385,7 @@ public class OnayAkisYonetimiPage extends MainPage {
         return this;
     }
 
+    @Step("Kullanici en alta getirme")
     public OnayAkisYonetimiPage onayAkisiKullaniciEnAlttaGetirme(String kullanici) {
 
         trOnayAkisiEkleKullanicilar
@@ -386,6 +397,7 @@ public class OnayAkisYonetimiPage extends MainPage {
         return this;
     }
 
+    @Step("Kullanıcıya kullanıcı tipi seçme")
     public OnayAkisYonetimiPage kullaniciyaKullaniciTipiSec(String kullanici, String secimTipi) {
 
         trOnayAkisiEkleKullanicilar

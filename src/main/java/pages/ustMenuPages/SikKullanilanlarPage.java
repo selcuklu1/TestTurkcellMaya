@@ -72,17 +72,20 @@ public class SikKullanilanlarPage extends MainPage {
         return this;
     }
 
+    @Step("Seçili dağıtımlar kaldır")
     public SikKullanilanlarPage dagitimlarKaldir() {
         btnDagitimlarKaldir.click();
         return this;
     }
 
+    @Step("Ekranı kapat")
     public SikKullanilanlarPage ekraniKapat() {
         btnEkranKapat.click();
         islemPenceresiKapatmaOnayiPopup("Kapat");
         return this;
     }
 
+    @Step("Dağıtımlar listesinde görüntülenmeme kontrolu")
     public SikKullanilanlarPage dagitimlarListesindeKisininGoruntulenmemeKontrolu(String kisi) {
 
         boolean selectable = comboLov(txtDagitimlarDagitimlarBy).isLovValueSelectable(kisi);

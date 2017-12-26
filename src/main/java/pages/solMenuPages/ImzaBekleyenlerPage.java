@@ -24,6 +24,7 @@ public class ImzaBekleyenlerPage extends MainPage {
     SelenideElement txtNot = $(By.id("mainPreviewForm:notTextArea_id"));
     SelenideElement btnIadeEtIadeEt = $(By.id("mainPreviewForm:iadeEtButton_id"));
     SelenideElement btnImzala = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:5:cmdbutton"));
+    SelenideElement btnEvrakOnizlemeImzala = $("[id='mainPreviewForm:onizlemeRightTab:onizlemeRightTab'] td:nth-child(5) button");
     SelenideElement rdbSImaza = $("[id='imzalaForm:imzalaRadio'] [class='ui-radiobutton-box ui-widget ui-corner-all ui-radiobutton-relative ui-state-default']");
     SelenideElement btnSImzaImzala = $(By.id("imzalaForm:sayisalImzaConfirmDialogOpener"));
     SelenideElement btnSImzaImzalaEvet = $(By.id("imzalaForm:sayisalImzaConfirmForm:sayisalImzaEvetButton"));
@@ -49,6 +50,11 @@ public class ImzaBekleyenlerPage extends MainPage {
         return this;
     }
 
+    @Step("İmzala")
+    public ImzaBekleyenlerPage evrakOnizlemeImzala(){
+        btnEvrakOnizlemeImzala.click();
+        return this;
+    }
     @Step("S-İmza seç")
     public ImzaBekleyenlerPage sImzaSec(){
         rdbSImaza.click();
@@ -159,6 +165,13 @@ public class ImzaBekleyenlerPage extends MainPage {
     public ImzaBekleyenlerPage evrakKonusunaGoreIcerikTiklama(String konu){
         tableKararIzlemeEvraklar.filterBy(Condition.text(konu)).first()
                 .$("[id^='mainInboxForm:inboxDataTable'][id$='detayGosterButton']").click();
+        return this;
+    }
+    @Step("Evrak no'ya göre İçerik tıklama")
+    public ImzaBekleyenlerPage evrakKonusunaGoreKontrol(String konu){
+        tableKararIzlemeEvraklar.filterBy(Condition.text(konu))
+                .first()
+                .click();
         return this;
     }
 

@@ -2,6 +2,8 @@ package tests.TopluPostalama;
 
 import com.codeborne.selenide.Selenide;
 import common.BaseTest;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.solMenuPages.*;
@@ -326,12 +328,6 @@ public class TopluPostalamaTest extends BaseTest {
                 .evrakSec(evrakKayitTarihiSayi, evrakGidecegiYer, evrakKonu, evrakHazirlayanBirim, evrakPostaTipi)
                 .evrakSec(evrak1KayitTarihiSayi, evrak1GidecegiYer, evrak1Konu, evrak1HazirlayanBirim, evrak1PostaTipi)
                 .postaListesiPostala();
-
-
-
-
-
-
     }
 
     @Test(enabled = true, description = "1807 : Posta Listesi Oluşturma- Gerçek Kişi Listesi (UC_POSTAYÖNETİMİ_002)")
@@ -789,15 +785,10 @@ public class TopluPostalamaTest extends BaseTest {
 
         topluPostaladiklarimPage
                 .openPage()
+//                .postaListesiSec("" ,"" ,"","", "")
+//                .evrakKontrol("", "", "");
                 .postaListesiSec(yeniPostaListesiAdi ,"" , postaTarihi, postaGramaji, pttTutari)
                 .evrakKontrol(evrakGonderildigiYer, evrakKonu, evrakSayi);
-
-
-
-
-
-
-
     }
 
     @Test(enabled = true, description = "TC1809 : Posta Listesi Görüntüleme (UC_POSTAYÖNETİMİ_003)")
@@ -890,7 +881,7 @@ public class TopluPostalamaTest extends BaseTest {
 
     }
 
-    @Test(enabled = true, description = "TC1675 : Toplu Postaladıklarım İzleme / Alan Kontrolleri (UC_POSTAYÖNETİMİ_004)")
+    @Test(enabled = true, description = "TC1818 : Posta Tutarı Hesaplama İşlemleri ve Güncelleme (UC_POSTAYÖNETİMİ_006)")
     public void TC1818() {
 
         login("mbozdemir", "123");
@@ -911,22 +902,5 @@ public class TopluPostalamaTest extends BaseTest {
                 .indirimOncesiTutarKontrol("1050.00", true)
                 .indirimOraniKontrol("0", true)
                 .tutarKontrol("1050.00", true);
-
-
-
-
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

@@ -115,6 +115,8 @@ public class TuzelKisiYonetimiTest extends BaseTest {
         String ad = "Tc1133 TüzelKişi";
         String kisaAd = "tc1133";
 
+        //NOTE: Test steplerinin sıralaması değiştirildi.
+
         tuzelKisiYonetimiPage
                 //Step num: 2
                 .openPage()

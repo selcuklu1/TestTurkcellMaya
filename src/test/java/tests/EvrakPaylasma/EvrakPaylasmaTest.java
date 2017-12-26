@@ -95,23 +95,22 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .evrakSec(paylasan)
                 .evrakOnizlemeTabSec("Evrak Notları")
                 .evrakNotEklemeButonuAktifOlmali(false);
-
-
-
-
     }
 
-    // DÜZENLENECEK
     @Test(enabled = true, description = "TC1882 : Paylaştıklarım listesinden evrak paylaşma")
     public void TC1882() {
 
         String paylasilanKullanici = "Huser TUMER";
         String paylasanKisi = "Mehmet BOZDEMİR";
         String paylasanKisiNotAciklamasi = "TC1882 : Paylaştıklarım listesinden evrak paylaşma";
+        String text = "TC1882 "+ getSysDate();
 
         String evrakKonuKodu = "Entegrasyon İşlemleri";
         String kaldirilacakKlasorler = "Diğer";
         String kullaniciAdi = "Mehmet BOZDEMİR [Antalya İl Müdürü]";
+        String tabPaylaşılanlar = "Paylaşılanlar";
+        String bi̇ri̇m = "OPTİİM BİRİM";
+        String durumu = "Paylaşımda";
 
         String basariMesaji = "İşlem başarılıdır!";
 
@@ -119,22 +118,22 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .openPage()
                 .bilgilerTabiAc()
                 .konuKoduDoldur(evrakKonuKodu)
+                .konuDoldur(text)
                 .kaldiralacakKlasorlerSec(kaldirilacakKlasorler)
                 .onayAkisiEkle()
                 .onayAkisiKullaniciTipiSec(kullaniciAdi, "İmzalama");
         evrakOlusturPage
                 .kaydet(true)
-                .evrakOlusturPageKapat();
+                .evrakOlusturSayfaKapat();
 
         taslakEvraklarPage
                 .openPage()
-                .evrakSec(evrakKonuKodu, "", "")
+                .evrakSecKonuyaGore(text)
                 .paylasTabTikla()
                 .paylasKisiDoldur(paylasilanKullanici)
                 .paylasanAciklamaDoldur("TC1882 case i için evrak oluşturuldu ve paylaşıldı.")
                 .paylasPaylasGonder()
                 .islemMesaji().basariliOlmali();
-
 
         String[] paylasilacakKullanicilar = new String[]{
                 "Optiim TEST1",
@@ -142,28 +141,46 @@ public class EvrakPaylasmaTest extends BaseTest {
                 "Optiim TEST3"
         };
 
+
         paylastiklarimPage
                 .openPage()
-                .evrakSec(evrakKonuKodu, "", paylasilanKullanici, "")
-                .evrakOnizlemeTabSec("Paylaşılanlar")
+                .evrakSecKonuyaGore(text)
+                .evrakOnizlemeTabSec(tabPaylaşılanlar)
                 .paylasTabTikla()
                 .paylasKisiSec(paylasilacakKullanicilar)
                 .paylasimAciklamaYaz(paylasanKisiNotAciklamasi)
                 .paylas()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
+        paylastiklarimPage
+                .openPage()
+                .evrakSecKonuyaGore(text)
+                .evrakOnizlemeTabSec("Evrak Notları")
+                .evrakNotuKontrol(paylasanKisi, "", paylasanKisiNotAciklamasi)
+                .evrakOnizlemeTabSec(tabPaylaşılanlar)
+                .paylasilanKontrolTumKullanıcılıar(paylasilacakKullanicilar, durumu);
+
         logout();
 
-        login("optiim", "123");
+        login("test1","123");
 
-        paylasilanKullanici = "Optiim TEST1 / Optiim TEST2 / Optiim TEST3";
+        benimlePaylasilanlarPage
+                .openPage()
+                .evrakSecKonuyaGore(text)
+                .evrakOnizlemeTabSec("Evrak Notları")
+                .evrakNotuKontrol(paylasanKisi,"",paylasanKisiNotAciklamasi)
+                .evrakNotuEkle()
+                .evrakNotuGirVeSil(text)
+                .evrakNotuGirVeKaydet(text);
+
+        logout();
+        login("mbozdemir","123");
 
         paylastiklarimPage
                 .openPage()
-                .evrakSec(evrakKonuKodu, "", paylasilanKullanici, "")
+                .evrakSecKonuyaGore(text)
                 .evrakOnizlemeTabSec("Evrak Notları")
-                .evrakNotuKontrol(paylasanKisi, "", paylasanKisiNotAciklamasi);
-
+                .evrakNotuKontrol("OPTİİM TEST1","",text);
     }
 
     @Test(enabled = true, description = "TC1877 : Paylaşılan evrakın geri alınması")

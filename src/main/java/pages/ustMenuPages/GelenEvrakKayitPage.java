@@ -30,13 +30,13 @@ public class GelenEvrakKayitPage extends MainPage {
 
     SelenideElement dateTxtEvrakBilgileriListEvrakTarihi = $("[id$='evrakTarihi_input']");
     SelenideElement cmbEvrakBilgileriListGizlilikDerecesi = $("[id$='guvenlikKodu']");
-
-
     SelenideElement cmbEvrakBilgileriListKisiKurum = $("[id$='kisiKurum']");
+
     //SelenideElement cmbEvrakBilgileriListKisiKurum = $("[id$='kisiKurum']");
     //BelgenetElement cmbEvrakBilgileriListGeldigiKisi = comboLov(By.id("evrakBilgileriForm:evrakBilgileriList:9:geldigiGercekKisiLov:LovText"));
     BelgenetElement cmbGeldigiGercekKisi = comboLov("[id$='geldigiGercekKisiLov:LovText']");
     BelgenetElement cmbGeldigiTuzelKisi = comboLov("[id$='geldigiTuzelKisiLov:LovText']");
+
     By cmbGeldiğiGercekKisiBy = By.cssSelector("[id$='geldigiGercekKisiLov:LovText']");
     By cmbGeldiğiTuzelKisiBy = By.cssSelector("[id$='geldigiTuzelKisiLov:LovText']");
 
@@ -192,6 +192,7 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
+    @Step("Gelen Evrak Kayıt sayfasını aç")
     public GelenEvrakKayitPage openPage() {
         new UstMenu().ustMenu("Gelen Evrak Kayıt");
         return this;
@@ -271,20 +272,20 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("Kişi kurum tipi alanında {kisiKurum} seç")
+    @Step("Kişi kurum tipi alanında \"{kisiKurum}\" seç")
     public GelenEvrakKayitPage kisiKurumSec(String kisiKurum) {
         cmbEvrakBilgileriListKisiKurum.selectOption(kisiKurum);
         return this;
     }
 
-    @Step("Kişi kurum tipi alanında {kisiKurum} seç")
+    @Step("Kişi kurum tipi alanında \"{kisiKurum}\" seç")
     public GelenEvrakKayitPage kisiKurumSecByText(String kisiKurum) {
         cmbEvrakBilgileriListKisiKurum.selectOption(kisiKurum);
         return this;
     }
 
 
-    @Step("Geldiği Gerçek kişi doldur")
+    @Step("Geldiği gerçek kişi alanını doldur")
     public GelenEvrakKayitPage geldigiGercekKisiDoldur(String geldigiKisi) {
 
         cmbGeldigiGercekKisi.selectLov(geldigiKisi);
@@ -988,4 +989,5 @@ public class GelenEvrakKayitPage extends MainPage {
                 .$("[id='evrakBilgileriForm:kullaniciBirimSecenekleriHavaleIcin_data'] td:nth-child(4) button").click();
         return this;
     }
+
 }

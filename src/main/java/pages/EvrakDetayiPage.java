@@ -7,10 +7,15 @@ import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
+import pages.pageData.SolMenuData;
 
+import static com.codeborne.selenide.Condition.not;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
 
 public class EvrakDetayiPage extends MainPage {
+
+    private HareketGecmisiTab hareketGecmisiTab = new HareketGecmisiTab();
 
     SelenideElement pageTitle = $(By.xpath("//span[. = 'Evrak Detayı' and @class = 'ui-dialog-title']"));
     SelenideElement btnTebellugEt = $("button .tebellugEt");
@@ -25,12 +30,17 @@ public class EvrakDetayiPage extends MainPage {
     SelenideElement btnIadeEt = $(By.id("inboxItemInfoForm:dialogTabMenuRight:uiRepeat:7:cmdbutton"));
     SelenideElement btnCevapYaz = $(By.id("inboxItemInfoForm:dialogTabMenuRight:uiRepeat:8:cmdbutton"));
     SelenideElement btnEvrakKapat = $(By.id("inboxItemInfoForm:dialogTabMenuRight:uiRepeat:8:cmdbutton"));
-
+    SelenideElement divContainer = $("#evrakBilgileriContainerDiv");
 
     @Step("Sayfa açıldı mı kontrolü")
     public EvrakDetayiPage sayfaAcilmali() {
-        pageTitle.shouldBe(Condition.visible);
+        pageTitle.shouldBe(visible);
         return this;
+    }
+
+    @Step("Hareket Geçmisi tab aç")
+    public HareketGecmisiTab hareketGecmisiTabAc() {
+        return hareketGecmisiTab.open();
     }
 
     @Step("Tebliğ geçmişi tab aç")
@@ -51,12 +61,12 @@ public class EvrakDetayiPage extends MainPage {
         @Step("Teblig geçmişi kontrol et")
         public TebligGecmisiTab tebligGecmisiKontrol(String tebligEdenveTarih, String[] kullanicilar) {
 
-            $x("//span[contains(text(), 'Mehmet BOZDEMİR - (18.12.2017)')]").waitUntil(Condition.visible, 5000);
+            $x("//span[contains(text(), 'Mehmet BOZDEMİR - (18.12.2017)')]").waitUntil(visible, 5000);
 
             SelenideElement currentRow = tableTebligGecmisi
                     .filterBy(Condition.text(tebligEdenveTarih))
                     .last()
-                    .waitUntil(Condition.visible, 5000);
+                    .waitUntil(visible, 5000);
 
             if (currentRow.$(By.xpath(".//span[. = '" + tebligEdenveTarih + "']/..//span[contains(@class, 'ui-icon-plusthick')]")).isDisplayed()) {
                 currentRow.$(By.xpath(".//span[. = '" + tebligEdenveTarih + "']/..//span[contains(@class, 'ui-icon-plusthick')]")).click();
@@ -69,7 +79,7 @@ public class EvrakDetayiPage extends MainPage {
                 tableTebligEdilen
                         .filterBy(Condition.text(kullanicilar[i]))
                         .first()
-                        .shouldBe(Condition.visible);
+                        .shouldBe(visible);
             }
 
 
@@ -96,7 +106,7 @@ public class EvrakDetayiPage extends MainPage {
                         .filterBy(Condition.text(kullanicilar[i]))
                         .filterBy(Condition.text(tebellugTarih[i]))
                         .first()
-                        .shouldBe(Condition.visible);
+                        .shouldBe(visible);
             }
 
 
@@ -109,7 +119,7 @@ public class EvrakDetayiPage extends MainPage {
     @Step("Tebellüğ Et butonuna tıkla.")
     public EvrakDetayiPage tebellugEt(boolean onay) {
         Selenide.sleep(5000);
-        btnTebellugEt.waitUntil(Condition.visible, 5000);
+        btnTebellugEt.waitUntil(visible, 5000);
         btnTebellugEt.click();
 
         if (onay == true)
@@ -124,7 +134,7 @@ public class EvrakDetayiPage extends MainPage {
     @Step("Ikon kontrolleri")
     public EvrakDetayiPage ikonKontrolleri() {
 
-        dialogTabMenuRight.shouldBe(Condition.visible);
+        dialogTabMenuRight.shouldBe(visible);
 
         Assert.assertEquals(btnEvrakGoster.isDisplayed(), true);
         Assert.assertEquals(btnHavaleYap.isDisplayed(), true);
@@ -133,12 +143,32 @@ public class EvrakDetayiPage extends MainPage {
         Assert.assertEquals(btnCevapYaz.isDisplayed(), true);
         Assert.assertEquals(btnEvrakKapat.isDisplayed(), true);
 
-        return  this;
+        return this;
     }
 
-    public  EvrakDetayiPage cevapYaz() {
+    public EvrakDetayiPage cevapYaz() {
         btnCevapYaz.click();
         return this;
     }
 
+
+    public class HareketGecmisiTab extends MainPage {
+
+        SelenideElement tabHareketGecmisi = $("button .kullaniciGecmisi");
+        ElementsCollection tblHareketGecmisi = $$("tbody[id='inboxItemInfoForm:hareketGecmisiDataTable_data'] > tr[role='row']");
+
+        private HareketGecmisiTab open() {
+            tabHareketGecmisi.click();
+            return this;
+        }
+
+        @Step("")
+        public HareketGecmisiTab tabloKontol(String text) {
+            tblHareketGecmisi
+                    .filterBy(Condition.text(text))
+                    .shouldHaveSize(1);
+            return this;
+        }
+
+    }
 }

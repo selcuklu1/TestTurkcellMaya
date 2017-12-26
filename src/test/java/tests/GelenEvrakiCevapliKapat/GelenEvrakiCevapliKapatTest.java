@@ -1,5 +1,6 @@
 package tests.GelenEvrakiCevapliKapat;
 
+import com.codeborne.selenide.Condition;
 import common.BaseTest;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
@@ -17,21 +18,19 @@ import java.io.IOException;
 import static data.TestData.*;
 import pages.EvrakDetayiPage;
 import pages.pageComponents.TextEditor;
-import pages.solMenuPages.GelenEvraklarPage;
-import pages.ustMenuPages.CevaplananEvrakRaporuPage;
-import pages.ustMenuPages.GelenEvrakKayitPage;
-import pages.ustMenuPages.GelenEvraklarCevapYazPage;
+import pages.solMenuPages.*;
+import pages.ustMenuPages.*;
 
 import java.io.IOException;
 
-import static data.TestData.password;
-import static data.TestData.username;
+import static com.codeborne.selenide.Selenide.$;
+import static data.TestData.*;
 
 /****************************************************
  * Tarih: 2017-12-22
  * Proje: Türksat Functional Test Automation
  * Class: "Gelen Evrakı Cevaplı Kapat" konulu senaryoları içerir
- * Yazan: Sezai Çelik 
+ * Yazan: Sezai Çelik, Emre Şencan, Can Şeker
  ****************************************************/
 public class GelenEvrakiCevapliKapatTest extends BaseTest {
 
@@ -43,7 +42,13 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
     GelenEvraklarCevapYazPage gelenEvraklarCevapYazPage;
     KontrolBekleyenlerPage kontrolBekleyenlerPage;
     CevapladiklarimPage cevapladiklarimPage;
+    KlasoreKaldirdiklarimPage klasoreKaldirdiklarimPage;
+    KlasorEvrakIslemleriPage klasorEvrakIslemleriPage;
+    PostalanacakEvraklarPage postalanacakEvraklarPage;
+    PostalananlarPage postalananlarPage;
+    ImzaBekleyenlerPage imzaBekleyenlerPage;
     TextEditor editor;
+
 
     @BeforeMethod
     public void loginBeforeTests() {
@@ -54,10 +59,17 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
         evrakOlusturPage = new EvrakOlusturPage();
         kontrolBekleyenlerPage = new KontrolBekleyenlerPage();
         cevapladiklarimPage = new CevapladiklarimPage();
+        cevapladiklarimPage = new CevapladiklarimPage();
+        klasoreKaldirdiklarimPage = new KlasoreKaldirdiklarimPage();
+        klasorEvrakIslemleriPage = new KlasorEvrakIslemleriPage();
+        evrakDetayiPage = new EvrakDetayiPage();
+        postalanacakEvraklarPage = new PostalanacakEvraklarPage();
+        postalananlarPage = new PostalananlarPage();
+        imzaBekleyenlerPage = new ImzaBekleyenlerPage();
     }
 
     @Test(enabled = true, description = "TC930: Kurum içi gelen evraka cevap yaz")
-    public void TC930() throws InterruptedException{
+    public void TC930() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
         String konuKodu = "Diğer";
@@ -91,7 +103,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
 
         gelenEvraklarPage
                 .openPage()
-                .evrakSec(konuKoduRandom,kurum,evrakTarihi,evrakSayiSag)
+                .evrakSec(konuKoduRandom, kurum, evrakTarihi, evrakSayiSag)
                 .cevapYaz();
 
         evrakOlusturPage
@@ -126,10 +138,6 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .openPage();
 
 
-
-       /* evrakDetayiPage = new EvrakDetayiPage();
-        gelenEvraklarCevapYazPage = new GelenEvraklarCevapYazPage();
-        editor = new TextEditor();*/
     }
 
     @Test(enabled = true, description = "TC931: Gerçek kişiden gelen evraka cevap yaz")
@@ -202,10 +210,6 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .openPage();
 
 
-
-       /* evrakDetayiPage = new EvrakDetayiPage();
-        gelenEvraklarCevapYazPage = new GelenEvraklarCevapYazPage();
-        editor = new TextEditor();*/
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -337,10 +341,145 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .evrakKayitUyariPopup("Evet")
                 .islemMesaji().basariliOlmali(basariMesaji);
 
-        gelenEvraklarPage
-                .tabloOlmayanEvrakNoKontrol(evrakNo);
+        //gelenEvraklarPage
+               // .tabloOlmayanEvrakNoKontrol(evrakNo);
 
         //TODO: devam edilecek.
     }
 
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "")
+    public void TC2186() throws InterruptedException {
+
+        String konuKodu = "010.01";
+        String evrakTuru = "Resmi Yazışma";
+        String evrakDili = "Türkçe";
+        String evrakTarihi = getSysDateForKis();
+        String gizlilikDerecesi = "Normal";
+        String geldigiKurum = "Esk Kurum 071216 2";
+        String evrakGelisTipi = "Posta";
+        String ivedilik = "Normal";
+        String birim = "OPTİİM BİRİM";
+        String konu = "Test " + getSysDate();
+        String ad = "Test";
+        String soyad = "Otomasyon";
+        String kisiKurum = "Gerçek Kişi";
+        String basariMesaji = "İşlem başarılıdır!";
+        String tur = "IMZALAMA";
+
+        String mernisNo = createMernisTCKN();
+
+        gelenEvrakKayitPage
+                .openPage()
+                .konuKoduDoldur(konuKodu)
+                .konuDoldur(konu)
+                .evrakTuruSec(evrakTuru)
+                .evrakDiliSec(evrakDili)
+                .evrakTarihiDoldur(evrakTarihi)
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .kisiKurumSec(kisiKurum)
+                .geldigiKisiEkle()
+                .iletisimBilgisiTCKNEkle(mernisNo)
+                .iletisimBilgisiTCKNAra()
+                .iletisimBilgisiAdDoldur(ad)
+                .iletisimBilgisiSoyadDoldur(soyad)
+                .iletisimBilgisikaydet();
+        gelenEvrakKayitPage
+                .evrakSayiSagDoldur()
+                .evrakGelisTipiSec(evrakGelisTipi)
+                .ivedilikSec(ivedilik)
+                .dagitimBilgileriKisiSec("Mehmet Bozdemir")
+                .kaydet();
+
+        String evrakNO2186 = gelenEvrakKayitPage.popUps();
+
+        gelenEvrakKayitPage
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        logout();
+        login(username4, password4);
+
+        gelenEvraklarPage
+                .openPage()
+                .tabloKonuyaGoreEvrakAc(konu)
+                .cevapYaz();
+
+        //TODO: Emre bu kontrolu libraryde yazsak bile pageden yazıp libraryden çağıralım. Testin içi daha temiz durur. id'ler testte olmamaSlı.
+        //Örnek: alanDegeriKontrolEt(konu, true, true);
+        alanDegeriKontrolEt($("[id$='konuTextArea']"), konu, true, true);
+
+        evrakOlusturPage
+                .bilgilerTabiAc()
+                .evrakTuruSec("Form")
+                .formSec("Kopya Optiim form şablonu")
+                .kaldiralacakKlasorlerSec("Diğer")
+                .cmbOnayAkisi("DenemeListe")
+                .kaydetVeOnayaSun()
+                .onayIslemiAciklamaDoldur(konu)
+                .onayIslemiGonder()
+                .onayIslemiOnayaSunmaPopUp()
+                .islemMesaji().beklenenMesaj(basariMesaji);
+
+        //DenemeListesindeki kullnıcı veya kullanıcılarla giriş yapılır işlemdeki aksiyonlar alınır.
+        logout();
+        login("username24o","123");
+
+        imzaBekleyenlerPage
+                .openPage()
+                .evrakKonusunaGoreKontrol(konu)
+                .evrakOnizlemeImzala()
+                .sImzaSec()
+                .sImzaImzala(true);
+
+        logout();
+        login(username4,password4);
+
+        gelenEvraklarPage
+                .openPage()
+                .tabloOlmayanEvrakKontrol(konu);
+
+        cevapladiklarimPage
+                .openPage()
+                .tabloKonuyaGoreEvrakKontrolu(konu);
+
+        evrakDetayiPage
+                .hareketGecmisiTabAc()
+                .tabloKontol(" tarihli yazı ile cevap yazılarak kapatılmıştır.");
+
+        //TODO: Emre bu kontrolu klasoreKaldirdiklarimPage sayfasında yapalım. Bu testin içindekini başkasını kullanamaz çünkü.
+        klasoreKaldirdiklarimPage
+                .openPage()
+                .filter().findRowsWith(Condition.text(konu))
+                .shouldHaveSize(1);
+
+        klasorEvrakIslemleriPage
+                .openPage()
+                .klasorDoldurwithDetail("Diğer","[Klasör] 000")
+                .evrakTarihiDoldur(getSysDateForKis2())
+                .ara();
+
+        klasorEvrakIslemleriPage
+                .filter().findRowsWith(Condition.text(konu))
+                .shouldHaveSize(1);
+
+        postalanacakEvraklarPage
+                .openPage()
+                .filter().findRowsWith(Condition.text(konu))
+                .shouldHaveSize(1);
+
+        logout();
+        login("username24o","123");
+
+        postalanacakEvraklarPage
+                .openPage()
+                .evrakSecKonuyaGoreIcerikGoster(konu)
+                .evrakPostala()
+                .postala()
+                .islemMesaji().beklenenMesaj(basariMesaji);
+
+        postalananlarPage
+                .openPage()
+                .filter().findRowsWith(Condition.text(konu))
+                .shouldHaveSize(1);
+    }
 }

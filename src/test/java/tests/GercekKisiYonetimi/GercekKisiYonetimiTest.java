@@ -114,6 +114,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .openPage()
                 //.ara()
                 //.filtreSorgulamaPaneliAc()
+                .defaultDurumComboKontrol("Sadece Aktifler")
                 .filtreSoyadDoldur(soyad)
                 .filtreDurumSec("AKTIFLER")
                 .ara()
@@ -214,7 +215,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .kepAdresiDoldur(duzgunKepAdresi)
                 .kepHizmetSaglayiciSec(kepHizmetSaglayici)
                 .kepAdresiKaydet();
-//                .islemMesaji().basariliOlmali(basariMesaji);
+//                .islemMesaji().basariliOlmali(basariMesaji); //kaydet tıklanmadığı için çıkmıyor.
 
         gercekKisiYonetimPage
                 .adDoldur(ad)
@@ -250,7 +251,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
         String postaTipi = "Z"; //Z=KEP
         String hitap = "Sayın";
 
-        //tests.Data yaratmak için.
+        //Test Datası yaratmak için bu adımlar yazıldı.
         gercekKisiYonetimPage
                 .openPage()
                 .yeniGercekKisiEkle()
@@ -366,7 +367,8 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .islemMesaji().basariliOlmali(basariMesaji);
 
         gercekKisiYonetimPage
-                .kaydet();
+                .kaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
 
         evrakOlusturPage
                 .openPage()
@@ -395,21 +397,17 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .bilgilerTabiAc()
                 .adresDagitimdaGorunsunSec(true)
                 .dagitimHitapDuzenlemeKaydet();
-        //.windowHandleBefore();
 
         evrakOlusturPage
                 .pdfOnIzleme();
         switchTo().window(1);
-        //  .switchToNewWindow();
 
         evrakOlusturPage
                 .pdfKontrol
                 .geregiBilgiAlaniAdresPdfKontrol(birinciKullaniciGeregiAdresi, getIkinciKullaniciAdres);
-        //.switchToDefaultWindow();
+
         closeNewWindow();
         switchTo().window(0);
-        //switchTo().defaultContent();
-
     }
 
     @Severity(SeverityLevel.CRITICAL)

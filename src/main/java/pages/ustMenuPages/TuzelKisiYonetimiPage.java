@@ -85,13 +85,13 @@ public class TuzelKisiYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Filtrede Vergi No doldur")
+    @Step("Filtrede vergi no doldur")
     public TuzelKisiYonetimiPage filtreVergiNoDoldur(String vergiNo) {
         txtFiltreVergiSGKNo.setValue(vergiNo);
         return this;
     }
 
-    @Step("Filtrede Ad doldur")
+    @Step("Filtrede ad doldur")
     public TuzelKisiYonetimiPage filtreAdDoldur(String ad) {
         txtFiltreAd.setValue(ad);
         return this;
@@ -132,7 +132,7 @@ public class TuzelKisiYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("İletişim Bilgileri güncelle")
+    @Step("İletişim bilgileri güncelle")
     public TuzelKisiYonetimiPage iletisimBilgileriGuncelle() {
         btnIletisimBilgileriGuncelle.click();
         return this;
@@ -181,7 +181,7 @@ public class TuzelKisiYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Vergi No doldur")
+    @Step("Vergi no doldur")
     public TuzelKisiYonetimiPage vergiNoDoldur(String vergiNo) {
         txtVergiNo.setValue(vergiNo);
         return this;
@@ -193,7 +193,7 @@ public class TuzelKisiYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Kısa Ad doldur")
+    @Step("Kısa ad doldur")
     public TuzelKisiYonetimiPage kisaAdDoldur(String kisaAd) {
         txtTuzelKisiKisaAd.setValue(kisaAd);
         return this;
@@ -354,21 +354,21 @@ public class TuzelKisiYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Tüzel Kişi Aktif Yap")
+    @Step("Tüzel kişi aktif yap")
     public TuzelKisiYonetimiPage tuzelKisiAktifYap() {
         btnTuzelKisiAktifYap.shouldBe(visible);
         btnTuzelKisiAktifYap.click();
         return this;
     }
 
-    @Step("Tüzel Kişi Pasif Yap")
+    @Step("Tüzel kişi pasif yap")
     public TuzelKisiYonetimiPage tuzelKisiPasifYap() {
         btnTuzelKisiPasifYap.shouldBe(visible);
         btnTuzelKisiPasifYap.click();
         return this;
     }
 
-    @Step("Tüzel Kişi Aktif Yap")
+    @Step("Tüzel kişi pasif ise aktif yap")
     public TuzelKisiYonetimiPage tuzelKisiPasifIseAktifYap() {
 
         if (btnTuzelKisiAktifYap.isDisplayed()) {
@@ -379,7 +379,7 @@ public class TuzelKisiYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Tüzel Kişi Pasif Yap")
+    @Step("Tüzel kişi aktif ise pasif yap")
     public TuzelKisiYonetimiPage tuzelKisiAktifIsePasifYap() {
 
         if (btnTuzelKisiPasifYap.isDisplayed()) {

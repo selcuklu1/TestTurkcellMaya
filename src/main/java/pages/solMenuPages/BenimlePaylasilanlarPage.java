@@ -61,7 +61,14 @@ public class BenimlePaylasilanlarPage extends MainPage {
                 .click();
         return this;
     }
-
+    @Step("Evrak seç : {konu}")
+    public BenimlePaylasilanlarPage evrakSecKonuyaGore(String konu) {
+        tableBenimlePaylasilanlar
+                .filterBy(Condition.text(konu))
+                .first()
+                .click();
+        return this;
+    }
 
     @Step("Benimle paylaşılanlar tablosundan evrak seçildi")
     public BenimlePaylasilanlarPage evrakSec(String paylasan, String paylasilmaTarihi, String konu, String evrakNo) {
@@ -137,6 +144,13 @@ public class BenimlePaylasilanlarPage extends MainPage {
     public BenimlePaylasilanlarPage evrakNotuGirVeKaydet(String evrakNotu) {
         txtEvrakNotu.setValue(evrakNotu);
         btnEvrakNotuKaydet.click();
+        return this;
+    }
+
+    @Step("evrak notu eklendi: \"{0}\" ")
+    public BenimlePaylasilanlarPage evrakNotuGirVeSil(String evrakNotu) {
+        txtEvrakNotu.setValue(evrakNotu);
+        txtEvrakNotu.clear();
         return this;
     }
 

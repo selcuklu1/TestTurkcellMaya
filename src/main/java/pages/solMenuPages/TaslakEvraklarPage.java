@@ -176,6 +176,15 @@ public class TaslakEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Evrak seç : {konu}")
+    public TaslakEvraklarPage evrakSecKonuyaGore(String konu) {
+        tableEvraklar
+                .filterBy(Condition.text(konu))
+                .first()
+                .click();
+        return this;
+    }
+
     @Step("Paylaş tab tıkla")
     public TaslakEvraklarPage paylasTabTikla() {
         btnPaylasTab.click();
