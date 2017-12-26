@@ -36,7 +36,7 @@ public class BaseTest extends BaseLibrary {
         Configuration.browser = "chrome";
        //Configuration.browser = "firefox";
 
-        // Configuration.remote = "http://10.101.20.151:4444/wd/hub";
+        //Configuration.remote = "http://10.101.20.151:4444/wd/hub";
         //Configuration.remote = "http://localhost:4444/wd/hub";
         Configuration.reportsFolder = "test-result/reports";
         Configuration.screenshots = false;
@@ -44,7 +44,7 @@ public class BaseTest extends BaseLibrary {
         Configuration.collectionsTimeout = 40000;
         Configuration.timeout = 40000;
         //Configuration.clickViaJs = true;
-        Configuration.holdBrowserOpen = true;
+        //Configuration.holdBrowserOpen = true;
         //Configuration.headless = false;
 
         Configuration.startMaximized = true;
@@ -68,18 +68,25 @@ public class BaseTest extends BaseLibrary {
 
     @AfterMethod (alwaysRun = true)
     public void afterMethod() {
-       // Selenide.close();
+
+        try {
+            Selenide.clearBrowserLocalStorage();
+            Selenide.clearBrowserCookies();
+        } catch (Exception e) {
+        }
+
+        Selenide.close();
         log.info("Driver has been quit.");
     }
 
     @AfterClass(alwaysRun = true)
     public void afterClass() {
-      //  Selenide.close();
+        Selenide.close();
         log.info("Browser has been closed.");
     }
 
     public void clearCookies() throws Exception {
-       // Selenide.close();
+         Selenide.close();
         try {
             Selenide.clearBrowserLocalStorage();
             Selenide.clearBrowserCookies();
