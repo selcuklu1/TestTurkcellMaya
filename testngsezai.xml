@@ -8,7 +8,9 @@
             <package name="tests.GercekKisiYonetimi"/>
             <package name="tests.OnayAkisi"/>
             <package name="tests.TuzelKisiYonetimi"/>
+<!--
             <package name="tests.GelenEvrakiCevapliKapat"/>
+-->
         </packages>
     </test>
 

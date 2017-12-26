@@ -727,6 +727,7 @@ public class EvrakOlusturPage extends MainPage {
         @Step("Kişinin Geregi alanında görüntülenme kontrolu")
         public BilgilerTab geregiAlanindaGoruntulenmeKontrolu(String adSoyad) {
 
+            cmbGeregi.shouldBe(visible);
             cmbGeregi.selectLov(adSoyad);
             System.out.println("Gelen title:     " + cmbGeregi.lastSelectedLovTitleText());
             System.out.println("Beklenen title:  " + adSoyad);

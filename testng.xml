@@ -2,11 +2,8 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <!--<suite thread-count="1" name="Test Suite" parallel="none" verbose="1">-->
 <!--<suite thread-count="5" name="Test Suite" parallel="classes" verbose="1">-->
-<<<<<<< HEAD
+
 <suite name="Test Suite" parallel="classes" verbose="1">
-=======
-<suite thread-count="1" name="Test Suite" parallel="methods" verbose="1">
->>>>>>> b421810c0f81a9212a9249d07b3481035453d9f7
     <!--thread-count="10"-->
     <!--<listeners>-->
     <!--<listener class-name="listeners.TestListener"></listener>-->

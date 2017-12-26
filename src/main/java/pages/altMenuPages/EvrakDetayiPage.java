@@ -1,4 +1,4 @@
-package pages;
+package pages.altMenuPages;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
@@ -7,9 +7,8 @@ import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
-import pages.pageData.SolMenuData;
+import pages.MainPage;
 
-import static com.codeborne.selenide.Condition.not;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
 

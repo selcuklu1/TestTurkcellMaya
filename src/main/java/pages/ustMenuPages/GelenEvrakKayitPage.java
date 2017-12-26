@@ -12,6 +12,7 @@ import pages.pageComponents.UstMenu;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
 import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
@@ -186,15 +187,17 @@ public class GelenEvrakKayitPage extends MainPage {
     BelgenetElement txtHavaleIslemleriBirim = comboLov(By.id("evrakBilgileriForm:dagitimBilgileriBirimLov:LovText"));
     //endregion
 
-
-    public GelenEvrakKayitPage otomatikHavaleSec(boolean secim) {
-        chkOtomatikHavale.setSelected(secim);
-        return this;
-    }
-
     @Step("Gelen Evrak Kayıt sayfasını aç")
     public GelenEvrakKayitPage openPage() {
         new UstMenu().ustMenu("Gelen Evrak Kayıt");
+        $("form[id='evrakBilgileriForm']").shouldBe(visible);
+
+        return this;
+    }
+
+    @Step("Otomatik havale seç")
+    public GelenEvrakKayitPage otomatikHavaleSec(boolean secim) {
+        chkOtomatikHavale.setSelected(secim);
         return this;
     }
 

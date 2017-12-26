@@ -65,6 +65,8 @@ public class OnayAkisYonetimiPage extends MainPage {
     @Step("Onay akışı sayfası aç")
     public OnayAkisYonetimiPage openPage() {
         ustMenu("Onay Akışı Yönetimi");
+        $("form[id='onayAkisiYonetimiEditorForm']").shouldBe(visible);
+
         return this;
     }
 
