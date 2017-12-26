@@ -8,6 +8,7 @@ import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
 import static com.codeborne.selenide.Condition.exactText;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboBox;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
@@ -34,6 +35,7 @@ public class SikKullanilanlarPage extends MainPage {
     @Step("Sık Kullanılanlar sayfasını aç")
     public SikKullanilanlarPage openPage() {
         ustMenu("Sık Kullanılanlar");
+        $("#sikKullanilanForm").shouldBe(visible);
         return this;
     }
 

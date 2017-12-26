@@ -301,7 +301,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .tabloKonuyaGoreEvrakAc(konu)
                 .cevapYaz();
 
-        //TODO: Emre bu kontrolu libraryde yazsak bile pageden yazıp libraryden çağıralım. Testin içi daha temiz durur. id'ler testte olmamaSlı.
+        //TODO: Emre bu kontrolu libraryde yazsak bile pageden yazıp libraryden çağıralım. Testin içi daha temiz durur. id'ler testte olmamalı.
         //Örnek: alanDegeriKontrolEt(konu, true, true);
         alanDegeriKontrolEt($("[id$='konuTextArea']"), konu, true, true);
 
@@ -343,7 +343,6 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .hareketGecmisiTabAc()
                 .tabloKontol(" tarihli yazı ile cevap yazılarak kapatılmıştır.");
 
-        //TODO: Emre bu kontrolu klasoreKaldirdiklarimPage sayfasında yapalım. Bu testin içindekini başkasını kullanamaz çünkü.
         klasoreKaldirdiklarimPage
                 .openPage()
                 .filter().findRowsWith(Condition.text(konu))
