@@ -21,7 +21,7 @@ public class BaseTest extends BaseLibrary {
     @BeforeSuite(alwaysRun = true)
     public void beforeSuite() {
 
-        killProcess();
+        //killProcess();
         //log.info("Kill all process");
 
     }
