@@ -75,7 +75,7 @@ public class BaseTest extends BaseLibrary {
         } catch (Exception e) {
         }
 
-        Selenide.close();
+        //Selenide.close();
         log.info("Driver has been quit.");
     }
 
