@@ -10,6 +10,8 @@ import pages.ustMenuPages.GelenEvrakKayitPage;
 import pages.ustMenuPages.GercekKisiYonetimPage;
 import pages.ustMenuPages.GidenEvrakKayitPage;
 
+import java.lang.reflect.Method;
+
 import static com.codeborne.selenide.Selenide.switchTo;
 
 /****************************************************
@@ -26,12 +28,16 @@ public class GercekKisiYonetimiTest extends BaseTest {
     GidenEvrakKayitPage gidenEvrakKayitPage;
 
     @BeforeMethod
-    public void loginBeforeTests() {
+    public void loginBeforeTests(Method method) {
+
+        log.info(method.getName() + "Nolu test senaryosu başladı.");
+
         login();
         gercekKisiYonetimPage = new GercekKisiYonetimPage();
         evrakOlusturPage = new EvrakOlusturPage();
         gelenEvrakKayitPage = new GelenEvrakKayitPage();
         gidenEvrakKayitPage = new GidenEvrakKayitPage();
+
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -50,7 +56,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
         String eposta = "test@turksat.com.tr";
         String adSoyad = ad + " " + soyad;
         String hitap = "Sayın";
-        String postaTipi = "P";
+        String postaTipi = "Adi Posta";
         String bilgiSecimTipi = "Gerçek Kişi";
         String geregiSecimTipi = "Gerçek Kişi";
         String evrakBilgileriListKisiKurumTipi = "Gerçek Kişi";
@@ -86,7 +92,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
 
         evrakOlusturPage
                 .editorTabAc()
-                .hitapAlaniUnvanAdSoyadKontrol(hitap, onEk, ad, soyad);
+                .hitapAlanindaSayinOnAdAdSoyadKontrol(hitap, onEk, ad, soyad);
 
         evrakOlusturPage
                 .bilgilerTabiAc()
@@ -169,7 +175,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
         String duzgunPostaFormati = "optim@turksat.com.tr";
         String duzgunOlmayanKepAdresi = "tr6787";
         String duzgunKepAdresi = "turksat.kamu2@testkep.pttkep.gov.tr";
-        String kepHizmetSaglayici = "P";
+        String kepHizmetSaglayici = "PTT KEP Servisi";
         String kepMesaj1 = "Kep adresi boş bırakılamaz! Lütfen bir kep adresi ekleyiniz.";
         String ePostaMesaj = "Lütfen Türkçe karakter ve boşluk içermeyen, @ işareti ve nokta içeren geçerli bir e-mail giriniz!";
         String kepMesaj2 = "Girilen kep adresi geçersiz!";
@@ -248,7 +254,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
         String unvan2 = "Doktor";
         String duzgunKepAdresi = "turksat.kamu2@testkep.pttkep.gov.tr";
         String adSoyad2 = ad2 + " " + soyad2;
-        String postaTipi = "Z"; //Z=KEP
+        String postaTipi = "KEP"; //Z=KEP
         String hitap = "Sayın";
 
         //Test Datası yaratmak için bu adımlar yazıldı.
@@ -304,7 +310,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
 
         evrakOlusturPage
                 .editorTabAc()
-                .hitapAlaniUnvanAdSoyadKontrol(hitap, onEk2, ad2, soyad2);
+                .hitapAlanindaSayinOnAdAdSoyadKontrol(hitap, onEk2, ad2, soyad2);
 
         gelenEvrakKayitPage
                 .openPage()
@@ -329,7 +335,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
         String ulke = "TÜRKİYE";
         String il = "İstanbul";
         String ilce = "Şişli";
-        String postaTipi = "P";
+        String postaTipi = "Adi Posta";
         String ePosta = createRandomText(5) + "@turksat.com.tr";
         String webAdres = "http://www.belgenet.com.tr/";
         String basariMesaji = "İşlem başarılıdır!";

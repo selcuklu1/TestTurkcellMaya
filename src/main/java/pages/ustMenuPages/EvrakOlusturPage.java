@@ -521,7 +521,7 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Bilgi Secim Tipi alanında \"{text}\" seç")
         public BilgilerTab bilgiSecimTipiSecByText(String text) {
-            cmbBilgiSecimTipi.selectOption(text);
+            cmbBilgiSecimTipi.shouldBe(visible).selectOption(text);
             return this;
         }
 
@@ -531,13 +531,13 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Bilgi alanında {text} seç")
-        public BilgilerTab bilgiSec(String text) {
-            txtBilgi.selectLov(text);
+        @Step("Bilgi alanında \"{text}\" seç")
+        public BilgilerTab bilgiSec(String bilgi) {
+            txtBilgi.selectLov(bilgi);
             return this;
         }
 
-        @Step("Bilgi alanında temizle ve {text} seç")
+        @Step("Bilgi alanında temizle ve \"{text}\" seç")
         public BilgilerTab bilgiSec(String text, Boolean clearAll) {
             txtBilgi.sendKeys(Keys.SHIFT);
             txtBilgi.selectLov(text);
@@ -545,7 +545,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Geregi alanında {text} seç")
+        @Step("Geregi alanında \"{text}\" seç")
         public BilgilerTab geregiSec(String text) {
             txtGeregi.selectLov(text);
             txtGeregi.closeLovTreePanel();
@@ -558,7 +558,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Geregi alanında {text} seç")
+        @Step("Geregi alanında \"{text}\" seç")
         public BilgilerTab geregiSec(String text, Boolean clearAfterSelecion) {
             cmbGeregi.sendKeys(Keys.SHIFT);
             txtGeregi.selectLov(text);
@@ -566,14 +566,14 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Gereği tree alanında {kurumAdi} geliyor mu? kontrol et")
+        @Step("Gereği tree alanında \"{kurumAdi}\" geliyor mu? kontrol et")
         public BilgilerTab geregiTreeKontrolEt(String kurumAdi, Boolean shouldBeSelectable) {
             txtGeregi.sendKeys(Keys.SHIFT);
             Assert.assertEquals(txtGeregi.isLovValueSelectable(kurumAdi), shouldBeSelectable);
             return this;
         }
 
-        @Step("Dagitimi Ek Yap alanı {setSelected} seç")
+        @Step("Dagitimi Ek Yap alanı \"{setSelected}\" seç")
         public BilgilerTab dagitimiEkYapSec(boolean setSelected) {
             chkDagitimiEkYap.setSelected(setSelected);
             return this;
@@ -704,6 +704,7 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Gereği Seçim Tipi alanında \"{value}\" seç")
         public BilgilerTab geregiSecimTipiSecByText(String value) {
+            cmbGeregiSecimTipi.shouldBe(visible);
             cmbGeregiSecimTipi.selectOption(value);
             return this;
         }
@@ -756,11 +757,14 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Seçilen gereği sil")
         public BilgilerTab secilenGeregiSil() {
+            cmbGeregi.shouldBe(visible);
             cmbGeregi.clearLastSelectedLov();
             return this;
         }
 
+        @Step("Onay akışı ekle")
         public BilgilerTab onayAkisiEkle(String kullanici) {
 
 //            btnOnayAkisiEkle.click();
@@ -1096,7 +1100,7 @@ public class EvrakOlusturPage extends MainPage {
 
             Assert.assertEquals(cmbGeregi.lastSelectedLovTitleText().contains(adSoyad), true);
             Assert.assertEquals(cmbGeregi.lastSelectedLovDetailText().contains(unvan + " | " + adres), true);
-            Assert.assertEquals(cmbPostaTipi.getSelectedValue().contains(posta), true);
+            Assert.assertEquals(cmbPostaTipi.getSelectedText().contains(posta), true);
 
             return this;
         }
@@ -1265,10 +1269,10 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Hitap Alanı: Hitap, Unvan, Ad, Soyad kontrolu")
-        public EditorTab hitapAlaniUnvanAdSoyadKontrol(String sayin, String unvan, String ad, String soyad) {
+        @Step("Hitap Alanı: Hitap, Ön ad, Ad, Soyad kontrolu")
+        public EditorTab hitapAlanindaSayinOnAdAdSoyadKontrol(String sayin, String onAd, String ad, String soyad) {
             String getHitapAlani = editorHitapKismi.shouldHave(Condition.visible).getText();
-            String girilenHitapAlani = sayin + " " + unvan + " " + toUpperCaseFirst(ad) + " " + soyad.toUpperCase();
+            String girilenHitapAlani = sayin + " " + onAd + " " + toUpperCaseFirst(ad) + " " + soyad.toUpperCase();
             System.out.println("Gelen Hitap Alanı:   " + getHitapAlani);
             System.out.println("Girilen Hitap Alanı: " + girilenHitapAlani);
             Assert.assertEquals(getHitapAlani.contains(girilenHitapAlani), true);

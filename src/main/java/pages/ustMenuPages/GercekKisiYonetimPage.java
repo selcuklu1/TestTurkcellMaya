@@ -332,7 +332,7 @@ public class GercekKisiYonetimPage extends MainPage {
 
     @Step("Kep hizmet sağlayıcı seç")
     public GercekKisiYonetimPage kepHizmetSaglayiciSec(String kepHizmetSaglayici) {
-        cmbKepHizmetSaglayici.selectOptionByValue(kepHizmetSaglayici);
+        cmbKepHizmetSaglayici.selectOption(kepHizmetSaglayici);
         return this;
     }
 
