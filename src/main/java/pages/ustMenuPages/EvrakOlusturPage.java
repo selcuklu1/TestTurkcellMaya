@@ -348,7 +348,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Konu Kodu alanında {0} seç")
+        @Step("Konu Kodu alanında seç")
         public BilgilerTab otomatikOnayAkisi() {
             btnOtomatikOnayAkisi.click();
             return this;
@@ -366,7 +366,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("")
+        @Step("Kullnici ismine göre imza paraf seç")
         public BilgilerTab kullniciIsmineGoreImzaParafSec(String kullanici, String value) {
 
             tblKullanıcılar2.filterBy(Condition.text(kullanici)).first()
@@ -381,9 +381,9 @@ public class EvrakOlusturPage extends MainPage {
             return cmlKonuKodu.is(required);
         }
 
-        @Step("Konu alanında {0} seç")
-        public BilgilerTab konuSec(String value) {
-            txtKonu.setValue(value);
+        @Step("Konu alanında {konu} seç")
+        public BilgilerTab konuSec(String konu) {
+            txtKonu.setValue(konu);
             return this;
         }
 
@@ -506,7 +506,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Miat alanında {0} seç")
+        @Step("Miat alanında {dateText} seç")
         public BilgilerTab miatSec(String dateText) {
             dateMiat.setValue(dateText);
             return this;
@@ -1830,13 +1830,13 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("{0}")
+        @Step("Şablon adi doldur {sablonAdi}")
         public SablonIslemleriTab sablonAdiDoldur(String sablonAdi) {
             txtSablonAdi.setValue(sablonAdi);
             return this;
         }
 
-        @Step("Evrakı yeni şablon olarak kaydet: {sablonAdi} ")
+        @Step("Evrakı yeni şablon olarak kaydet ")
         public SablonIslemleriTab evrakiYeniSablonOlarakKaydet() {
             btnEvrakiYeniSablonOlarakKaydet.click();
             return this;
@@ -1926,6 +1926,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Pdf önizleme kisayol gonder")
         public PDFKontrol PDFOnizlemeKisayolGonder(String kisayol) throws InterruptedException {
 
             SelenideElement tc = $(By.xpath("//div[@id='viewer']/div[@class='page']//div[.='T.C.']"));
@@ -1937,6 +1938,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Pdf hitap kontrolu")
         public PDFKontrol PDFHitapKontrol(String beklenenPDFHitap) {
             String PDFHitap = $(By.xpath("//*[@id='viewer']/div/div[2]/div[5]")).getText();
             Assert.assertEquals(PDFHitap.contains(beklenenPDFHitap), true);

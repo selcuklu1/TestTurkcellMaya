@@ -66,10 +66,10 @@ public class GidenEvrakKayitPage extends MainPage {
     SelenideElement popUpEvrakDefterBasariliKapat = $(By.id("gidenEvrakDefterKaydiBasarili:vazgecButton"));
     //endregion
 
+    @Step("Giden Evrak Kayit sayfasını aç")
     public GidenEvrakKayitPage openPage() {
         new UstMenu().ustMenu("Giden Evrak Kayıt");
         $("form[id='gidenEvrakDefterKaydiForm']").shouldBe(visible);
-
         return this;
     }
 
