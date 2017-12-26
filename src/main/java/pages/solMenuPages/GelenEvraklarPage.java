@@ -100,6 +100,7 @@ public class GelenEvraklarPage extends MainPage {
     SelenideElement btnTakipListesiKapat = $("[id^='evrakTakibimeEkleDialogForm:takipDialog'] span[class='ui-icon ui-icon-closethick']");
     ElementsCollection evrakSecButonlar = $$("[id='mainPreviewForm:onizlemeRightTab:onizlemeRightTab'] td");
 
+    @Step("Gelen Evraklar Sayfası aç")
     public GelenEvraklarPage openPage() {
         solMenu(SolMenuData.IslemBekleyenEvraklar.GelenEvraklar);
         String pageTitle = SolMenuData.IslemBekleyenEvraklar.GelenEvraklar.getMenuText();
@@ -494,7 +495,7 @@ public class GelenEvraklarPage extends MainPage {
         return evrakNo;
     }
 
-    @Step("Tabloda evrak no kontrolü")
+    @Step("Tabloda evrak no kontrolü : \"{evrakNo}\" ")
     public GelenEvraklarPage tabloEvrakNoKontrol(String evrakNo) {
         int size = tableEvraklar
                 .filterBy(text(evrakNo)).size();
@@ -503,7 +504,7 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
-    @Step("Tabloda evrak no kontrolü")
+    @Step("Tabloda evrak konu kontrolü : \"{konu}\" ")
     public GelenEvraklarPage tabloKonuyaGoreEvrakAc(String konu) {
         tableEvraklar
                 .filterBy(text(konu))
@@ -511,14 +512,14 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
-    @Step("Tabloda evrak no kontrolü")
+    @Step("Tabloda evrak adet kontrolü")
     public int tabloEvrakAdetKontrol() {
         int size = tableEvraklar2
                 .size();
         return size;
     }
 
-    @Step("Tabloda olmayan evrak no kontrolü")
+    @Step("Tabloda olmayan evrak no kontrolü : \"{evrakNo}\" ")
     public GelenEvraklarPage tabloOlmayanEvrakNoKontrol(String evrakNo) {
         int size = tableEvraklar
                 .filterBy(text(evrakNo)).size();
@@ -527,7 +528,7 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
-    @Step("Tabloda olmayan evrak no kontrolü")
+    @Step("Tabloda olmayan evrak konu kontrolü : \"{konu}\" ")
     public GelenEvraklarPage tabloOlmayanEvrakKontrol(String konu) {
         tableEvraklar
                 .filterBy(text(konu)).shouldHaveSize(0);
@@ -551,7 +552,7 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
-    @Step("Vekalet alan Ve Veren tablo vekalet alan seç")
+    @Step("Vekalet alan Ve Veren tablo vekalet alan seç : \"{isim}\" ")
     public GelenEvraklarPage vekeletAlanVerenTabloVekaletAlanveyaVerenSec(String isim) {
         tblVekaletVerenAlan
                 .filterBy(text(isim)).first()
@@ -559,7 +560,7 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
-    @Step("Vekalet var uyarısı ")
+    @Step("Vekalet var uyarısı : \"{mesaj}\" ")
     public GelenEvraklarPage evrakOnIzlemeUyarıPopUpKontol(String mesaj) {
         SelenideElement popUp = $(By.id("mainPreviewForm:j_idt5031"));
         popUp.should(Condition.visible);
@@ -569,16 +570,16 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
-    @Step("Kullacici listesi seç")
+    @Step("Kullacici listesi seç : \"{kullanici}\" ")
     public GelenEvraklarPage kullanciListesiSec(String kullanici) {
         txtKullaniciListesi.selectLov(kullanici);
         return this;
     }
 
-    @Step("Kullanıcılar alanı doldur")
-    public GelenEvraklarPage kullanciListesiSecWithTitle(String kullanici) {
+    @Step("Kullanıcılar alanı doldur : Kullanıcı :\n \"{kullanici}\", \nTitle : \"{title}\" ")
+    public GelenEvraklarPage kullanciListesiSecWithTitle(String kullanici, String title) {
         txtKullaniciListesi.type(kullanici).detailItems()
-                .filterBy(Condition.exactText("optiim")).first().click();
+                .filterBy(Condition.exactText(title)).first().click();
         return this;
     }
 

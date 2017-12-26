@@ -112,13 +112,13 @@ public class ImzaBekleyenlerPage extends MainPage {
         tableKararIzlemeEvraklar.filterBy(Condition.text(toplantiNo)).get(0).shouldBe(not(Condition.exist));;
         return this;
     }
-    @Step("Evrak olmadığı görünür")
+    @Step("Evrak olmadığı görülür : \"{evrakNo}\" ")
     public ImzaBekleyenlerPage evrakOlmadigiGorme(String evrakNo){
         tableKararIzlemeEvraklar.filterBy(Condition.text(evrakNo)).shouldHaveSize(0);
         return this;
     }
 
-    @Step("Evrak  kontrolü")
+    @Step("Evrak  kontrolü : \"{evrakNo}\" ")
     public ImzaBekleyenlerPage evrakNoKontrolu(String evrakNo){
         tableKararIzlemeEvraklar.filterBy(Condition.text(evrakNo)).shouldHaveSize(1);
         return this;
@@ -150,7 +150,7 @@ public class ImzaBekleyenlerPage extends MainPage {
         btnIadeEtIadeEt.click();
         return this;
     }
-    @Step("icerik Kontrol")
+    @Step("icerik Kontrol : \"{deger}\" ")
     public ImzaBekleyenlerPage icerikKontrol(String deger){
         String text = pdfIcerikKontrol.getText();
         text.contains(deger);
@@ -161,13 +161,13 @@ public class ImzaBekleyenlerPage extends MainPage {
         solMenuBirim.filterBy(text(birim)).first().click();
         return this;
     }
-    @Step("Evrak no'ya göre İçerik tıklama")
+    @Step("Evrak no'ya göre İçerik tıklama : \"{konu}\" ")
     public ImzaBekleyenlerPage evrakKonusunaGoreIcerikTiklama(String konu){
         tableKararIzlemeEvraklar.filterBy(Condition.text(konu)).first()
                 .$("[id^='mainInboxForm:inboxDataTable'][id$='detayGosterButton']").click();
         return this;
     }
-    @Step("Evrak no'ya göre İçerik tıklama")
+    @Step("Evrak no'ya göre İçerik tıklama : \"{konu}\" ")
     public ImzaBekleyenlerPage evrakKonusunaGoreKontrol(String konu){
         tableKararIzlemeEvraklar.filterBy(Condition.text(konu))
                 .first()

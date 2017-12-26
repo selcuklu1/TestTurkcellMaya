@@ -1,7 +1,5 @@
 package tests.VekaletIslemleri;
 
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.Selenide;
 import common.BaseTest;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
@@ -104,11 +102,12 @@ public class VekaletIslemleriTest extends BaseTest {
                     .dokumanAra()
                     .evrakAramaTabloKontrolveSecim(evrakNo[i]);
         }
+        String onayVerecekKullanici = "Zübeyde TEKİN";
         vekaletVerPage
                 .vekaletVerenDoldur(vekaletVeren)
                 .devredilecekEvraklarKontrolu()
                 .vekaletAlanDoldur(vekaletAlan)
-                .onayVerecekDoldur("Zübeyde TEKİN")
+                .onayVerecekDoldur(onayVerecekKullanici)
                 .aciklamaDoldur(aciklama)
                 .devredilecekEvrakSec(evrakNo1)
                 .uygula();
@@ -226,7 +225,7 @@ public class VekaletIslemleriTest extends BaseTest {
                 .evrakTuruSec(evrakTuru)
                 .evrakDiliSec(evrakDili)
                 .gizlilikDerecesiSec(gizlilikDerecesi)
-                .ivedikSec(ivedilik)
+                .ivedilikSec(ivedilik)
                 .geregiSec(geregi)
                 .onayAkisiEkle()
                 .kullaniciTabloKontrol()
@@ -239,7 +238,7 @@ public class VekaletIslemleriTest extends BaseTest {
                 .kullniciIsmineGoreImzaParafSec(vekaletAlan, tur)
                 .kullan()
                 .onaAkisiTextKontol()
-                .onayAkisiKullanilanKullanilanKontrolEt("Yasemin");
+                .onayAkisiKullanilanKullaniciKontrolEt("Yasemin");
 
         evrakOlusturPage
                 .editorTabAc()
@@ -303,7 +302,7 @@ public class VekaletIslemleriTest extends BaseTest {
                 .evrakTuruSec(evrakTuru)
                 .evrakDiliSec(evrakDili)
                 .gizlilikDerecesiSec(gizlilikDerecesi)
-                .ivedikSec(ivedilik)
+                .ivedilikSec(ivedilik)
                 .geregiSec(geregi)
                 .onayAkisiEkle()
                 .kullaniciTabloKontrol()
@@ -314,7 +313,7 @@ public class VekaletIslemleriTest extends BaseTest {
                 .kullniciIsmineGoreImzaParafSec(vekaletVeren, tur)
                 .kullan()
                 .onaAkisiTextKontol()
-                .onayAkisiKullanilanKullanilanKontrolEt("Yasemin");
+                .onayAkisiKullanilanKullaniciKontrolEt("Yasemin");
 
         evrakOlusturPage
                 .editorTabAc()
@@ -439,12 +438,14 @@ public class VekaletIslemleriTest extends BaseTest {
         gelenEvrakKayitPage.islemMesaji().isBasarili();
 
         String mesaj = "Seçmiş olduğunuz kullanıcı grubunda vekalet vermiş kişiler bulunmaktadır. Kullanıcı grubunu kullanırsanız havale asıl kişilere(vekalet veren) gidecektir. Yine de işleme devam etmek istiyor musunuz?";
+        String kullanici = "OPTİİM";
+        String title = "optiim";
         gelenEvraklarPage
                 .evrakSec()
                 .havaleYap()
                 .havaleYapKisiTreeSec(vekaletVeren)
                 .vekeletAlanVerenTabloVekaletAlanveyaVerenSec(vekaletVeren)
-                .kullanciListesiSecWithTitle("OPTİİM")  //ikinci gelen seçilmeli
+                .kullanciListesiSecWithTitle(kullanici, title)  //ikinci gelen seçilmeli
                 .evrakOnIzlemeUyarıPopUpKontol(mesaj)
                 .havaleYapGonder()
                 .islemMesaji().basariliOlmali(basariMesaji);
