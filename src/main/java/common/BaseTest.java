@@ -21,6 +21,7 @@ public class BaseTest extends BaseLibrary {
     @BeforeSuite(alwaysRun = true)
     public void beforeSuite() {
         //killProcess();
+        //log.info("Kill all process");
     }
 
     @BeforeClass(alwaysRun = true)
@@ -34,7 +35,7 @@ public class BaseTest extends BaseLibrary {
         //region Selenide Driver Configuration
         Configuration.baseUrl = belgenetURL;
         Configuration.browser = "chrome";
-       //Configuration.browser = "firefox";
+        //Configuration.browser = "firefox";
 
         // Configuration.remote = "http://10.101.20.151:4444/wd/hub";
         //Configuration.remote = "http://localhost:4444/wd/hub";
@@ -44,7 +45,7 @@ public class BaseTest extends BaseLibrary {
         Configuration.collectionsTimeout = 40000;
         Configuration.timeout = 40000;
         //Configuration.clickViaJs = true;
-        Configuration.holdBrowserOpen = true;
+        // Configuration.holdBrowserOpen = true;
         //Configuration.headless = false;
 
         Configuration.startMaximized = true;
@@ -62,20 +63,32 @@ public class BaseTest extends BaseLibrary {
         setDocPath();
         getBrowserName();
 
+        log.info("Selenide/Selenium driver has been set up.");
     }
 
-    @AfterMethod (alwaysRun = true)
+    @AfterMethod(alwaysRun = true)
     public void afterMethod() {
+
+        try {
+            Selenide.clearBrowserLocalStorage();
+            Selenide.clearBrowserCookies();
+        } catch (Exception e) {
+        }
+
         //Selenide.close();
+
+        log.info("Driver has been quit.");
     }
 
     @AfterClass(alwaysRun = true)
     public void afterClass() {
-        //Selenide.close();
+        Selenide.close();
+
+        log.info("Browser has been closed.");
     }
 
     public void clearCookies() throws Exception {
-       // Selenide.close();
+        // Selenide.close();
         try {
             Selenide.clearBrowserLocalStorage();
             Selenide.clearBrowserCookies();

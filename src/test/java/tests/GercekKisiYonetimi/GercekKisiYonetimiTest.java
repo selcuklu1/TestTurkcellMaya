@@ -28,7 +28,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
     GidenEvrakKayitPage gidenEvrakKayitPage;
 
     @BeforeMethod
-    public void loginBeforeTests(Method method) {
+    public void beforeTests(Method method) {
 
         log.info(method.getName() + "Nolu test senaryosu başladı.");
 
@@ -486,7 +486,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "1458: Pasif yapılan gerçek kişinin aktif yapılması ve ekranlardan kontrolü")
-    public void TC1458() {
+    public void TC1458() throws InterruptedException {
 
         String TCKN = "21861197500";
         String ad = "Tc1458";

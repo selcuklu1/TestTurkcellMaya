@@ -544,10 +544,10 @@ public class GelenEvraklarPage extends MainPage {
     }
 
     //Cevap yaz sayfası
-    @Step("Seçilen onay akışı title kontrolu: \"{secim}\" ")
-    public GelenEvraklarPage onayAkisiTitleKontrol(String secim) {
+    @Step("Seçilen onay akışı title kontrolu: \"{onayAkisiTitle}\" ")
+    public GelenEvraklarPage onayAkisiTitleKontrol(String onayAkisiTitle) {
         System.out.println("Gelen detail:     " + cmbOnayAkisi.lastSelectedLovTitleText());
-        Assert.assertEquals(cmbOnayAkisi.lastSelectedLovTitleText().contains(secim), true);
+        Assert.assertEquals(cmbOnayAkisi.lastSelectedLovTitleText().contains(onayAkisiTitle), true);
         return this;
     }
 

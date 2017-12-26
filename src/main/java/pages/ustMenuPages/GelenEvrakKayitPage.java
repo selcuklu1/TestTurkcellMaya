@@ -299,17 +299,19 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
+    @Step("Seçilen gereği gerçek kişi sil")
     public GelenEvrakKayitPage secilenGeregiGercekKisiSil() {
         cmbGeldigiGercekKisi.clearLastSelectedLov();
         return this;
     }
 
+    @Step("Seçilen gereği tüzel kişi sil")
     public GelenEvrakKayitPage secilenGeregiTuzelKisiSil() {
         cmbGeldigiTuzelKisi.clearLastSelectedLov();
         return this;
     }
 
-    @Step("Geldiği Tüzel kişi doldur")
+    @Step("Geldiği tüzel kişi doldur")
     public GelenEvrakKayitPage geldigiTuzelKisiDoldur(String geldigiTuzelKisi) {
 
         cmbGeldigiTuzelKisi.selectLov(geldigiTuzelKisi);
