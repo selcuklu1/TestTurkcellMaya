@@ -1,7 +1,5 @@
 package tests.GizlilikKleransi;
 
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.SelenideElement;
 import common.BaseTest;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
@@ -597,7 +595,7 @@ public class GizlilikKleransiTest extends BaseTest {
                 .evrakDiliSec(evrakDili)
                 .gizlilikDerecesiSec(gizlilikDerecesi)
                 .aciklamaDoldur(icerik)
-                .ivedikSec(ivedilik)
+                .ivedilikSec(ivedilik)
                 .geregiSec(geregi)
                 .onayAkisiEkle()
                 .kullaniciTabloKontrol()
@@ -711,7 +709,7 @@ public class GizlilikKleransiTest extends BaseTest {
                 .evrakDiliSec(evrakDili)
                 .gizlilikDerecesiSec(gizlilikDerecesi)
                 .aciklamaDoldur(icerik)
-                .ivedikSec(ivedilik)
+                .ivedilikSec(ivedilik)
                 .geregiSec(geregi)
                 .onayAkisiEkle()
                 .kullaniciTabloKontrol()
@@ -765,7 +763,7 @@ public class GizlilikKleransiTest extends BaseTest {
                 .evrakDiliSec(evrakDili)
                 .gizlilikDerecesiSec(gizlilikDerecesi)
                 .aciklamaDoldur(icerik)
-                .ivedikSec(ivedilik)
+                .ivedilikSec(ivedilik)
                 .geregiSecimTipiSecByText("Kullanıcı")
                 .geregiSec(kullaniciNormal)
                 .onayAkisiEkle()
@@ -850,7 +848,7 @@ public class GizlilikKleransiTest extends BaseTest {
                 .evrakDiliSec(evrakDili)
                 .gizlilikDerecesiSec(gizlilikDerecesi)
                 .aciklamaDoldur(icerik)
-                .ivedikSec(ivedilik)
+                .ivedilikSec(ivedilik)
                 .geregiSecimTipiSecByText("Kullanıcı")
                 .geregiSec(kullaniciOzel)
                 .geregiSec(kullaniciTasnifDisi)
@@ -935,7 +933,7 @@ public class GizlilikKleransiTest extends BaseTest {
                 .evrakDiliSec(evrakDili)
                 .gizlilikDerecesiSec(gizlilikDerecesi)
                 .aciklamaDoldur(text)
-                .ivedikSec(ivedilik)
+                .ivedilikSec(ivedilik)
                 .geregiSecimTipiSecByText("Kullanıcı")
                 .geregiSec(kullaniciOzel)
                 .geregiSec(kullaniciTasnifDisi)
@@ -1022,7 +1020,7 @@ public class GizlilikKleransiTest extends BaseTest {
                 .evrakDiliSec(evrakDili)
                 .gizlilikDerecesiSec(gizlilikDerecesi)
                 .aciklamaDoldur(text)
-                .ivedikSec(ivedilik)
+                .ivedilikSec(ivedilik)
                 .geregiSec(birim)
                 .onayAkisiEkle()
                 .kullaniciTabloKontrol()

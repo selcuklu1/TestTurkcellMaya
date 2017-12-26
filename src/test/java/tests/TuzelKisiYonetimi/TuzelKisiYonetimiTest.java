@@ -7,6 +7,8 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.ustMenuPages.*;
 
+import java.lang.reflect.Method;
+
 /****************************************************
  * Tarih: 2017-11-24
  * Proje: Türksat Functional Test Automation
@@ -22,7 +24,10 @@ public class TuzelKisiYonetimiTest extends BaseTest {
     SikKullanilanlarPage sikKullanilanlarPage;
 
     @BeforeMethod
-    public void loginBeforeTests() {
+    public void beforeTests(Method method) {
+
+        log.info(method.getName() + "Nolu test senaryosu başladı.");
+
         login();
         tuzelKisiYonetimiPage = new TuzelKisiYonetimiPage();
         evrakOlusturPage = new EvrakOlusturPage();
@@ -33,7 +38,7 @@ public class TuzelKisiYonetimiTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TC1124: Yeni tüzel kişi kayıt ve ekranlardan kontrolleri")
-    public void TC1124() {
+    public void TC1124() throws InterruptedException {
 
         String vergiNo = createRandomNumber(10);
         String kisaAd = createRandomText(7);
@@ -278,7 +283,7 @@ public class TuzelKisiYonetimiTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TC1126: Tüzel Kişi Bilgisi Güncelleme ve kontrolleri")
-    public void TC1126() {
+    public void TC1126() throws InterruptedException {
 
         String vergiNo = createRandomNumber(10);
         String kisaAd = createRandomText(7);
@@ -289,7 +294,7 @@ public class TuzelKisiYonetimiTest extends BaseTest {
         String tuzelKisiTipi = "LİMİTED ŞİRKETİ";
         String kepAdresi = kisaAd + "@testkep.pttkep.gov.tr";
         String basariMesaji = "İşlem başarılıdır!";
-        String postaTipi = "Z";
+        String postaTipi = "KEP";
 
         tuzelKisiYonetimiPage
 

@@ -201,7 +201,7 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("Kişi alanını doldur")
+    @Step("Hava İşlemleri Kişi alanında \"{kisi}\" seç")
     public GelenEvrakKayitPage havaleIslemleriKisiDoldur(String kisi) {
         txtHavaleIslemleriKisi.selectLov(kisi);
         return this;
@@ -213,14 +213,14 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("Kullanıcı Listesi doldur")
+    @Step("Kullanıcı Listesi alnında \"{kisi}\" seç")
     public GelenEvrakKayitPage havaleIslemleriKullaniciListesiDoldur(String kisi) {
         //txtHavaleIslemleriKullaniciListesi.selectLov(kisi);
         txtHavaleIslemleriKullaniciListesi.selectLov(kisi);
 
         return this;
     }
-
+    @Step("Fiziksel Ek ekle")
     public GelenEvrakKayitPage ekBilgiFizikselEkEkle() throws InterruptedException {
         clickJs(btnFizikselEkEkle);
         return this;
@@ -231,19 +231,20 @@ public class GelenEvrakKayitPage extends MainPage {
         clickJs(btnEvrakEkleri);
         return this;
     }
-
+    @Step("Üst yazi \"{path}\" ekle")
     public GelenEvrakKayitPage evrakBilgileriUstYaziEkle(String path) throws InterruptedException {
         uploadFile(ustYazi, path);
         //ustYaziUploadFile(path);
         return this;
     }
 
+    @Step("Konu Kodu alanında \"{konuKodu}\" seç")
     public GelenEvrakKayitPage konuKoduDoldur(String konuKodu) throws InterruptedException {
         comboKonuKodu.selectLov(konuKodu);
         return this;
     }
 
-    @Step("Konu doldur")
+    @Step("Konu alanına \"{konu}\" girilir")
     public GelenEvrakKayitPage konuDoldur(String konu) {
         $("[id$='konuTextArea']").setValue(konu);
         return this;
@@ -253,23 +254,23 @@ public class GelenEvrakKayitPage extends MainPage {
         txtEvrakBilgileriListKonu.sendKeys(konu);
         return this;
     }
-
+    @Step("Evrak Türü alanında \"{evrakTuru}\" seç")
     public GelenEvrakKayitPage evrakTuruSec(String evrakTuru) {
         cmbEvrakBilgileriListEvrakTuru.selectOption(evrakTuru);
         return this;
     }
-
+    @Step("Evrak Dili alanında \"{evrakDili}\" seç")
     public GelenEvrakKayitPage evrakDiliSec(String evrakDili) {
         cmbEvrakBilgileriListEvrakDili.selectOption(evrakDili);
         return this;
     }
-
+    @Step("Evrak Tarihi alanını \"{evrakTarihi}\" doldur")
     public GelenEvrakKayitPage evrakTarihiDoldur(String evrakTarihi) {
         dateTxtEvrakBilgileriListEvrakTarihi.clear();
         dateTxtEvrakBilgileriListEvrakTarihi.sendKeys(evrakTarihi);
         return this;
     }
-
+    @Step("Gizlilik Derecesi alanında \"{gizlilikDerecesi}\" seç")
     public GelenEvrakKayitPage gizlilikDerecesiSec(String gizlilikDerecesi) {
         cmbEvrakBilgileriListGizlilikDerecesi.selectOption(gizlilikDerecesi);
         return this;
@@ -299,17 +300,19 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
+    @Step("Seçilen gereği gerçek kişi sil")
     public GelenEvrakKayitPage secilenGeregiGercekKisiSil() {
         cmbGeldigiGercekKisi.clearLastSelectedLov();
         return this;
     }
 
+    @Step("Seçilen gereği tüzel kişi sil")
     public GelenEvrakKayitPage secilenGeregiTuzelKisiSil() {
         cmbGeldigiTuzelKisi.clearLastSelectedLov();
         return this;
     }
 
-    @Step("Geldiği Tüzel kişi doldur")
+    @Step("Geldiği tüzel kişi doldur")
     public GelenEvrakKayitPage geldigiTuzelKisiDoldur(String geldigiTuzelKisi) {
 
         cmbGeldigiTuzelKisi.selectLov(geldigiTuzelKisi);
@@ -673,7 +676,7 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-
+    @Step("PopUp kontrolleri")
     public String popUps() throws InterruptedException {
 //        popUp.shouldHave(Condition.visible);  pop up kontrolu
 
@@ -711,7 +714,7 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("TC kimlik No ekle")
+    @Step("TC kimlik No ekle : {mernisNo}")
     public GelenEvrakKayitPage iletisimBilgisiTCKNEkle(String mernisNo) {
         txtTCKN.clear();
         txtTCKN.sendKeys(mernisNo);
@@ -725,25 +728,25 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("Ad doldur")
+    @Step("Ad doldur : {ad}")
     public GelenEvrakKayitPage iletisimBilgisiAdDoldur(String ad) {
         txtAd.setValue(ad);
         return this;
     }
 
-    @Step("Soyad doldur")
+    @Step("Soyad doldur : {soyad}")
     public GelenEvrakKayitPage iletisimBilgisiSoyadDoldur(String soyad) {
         txtSoyad.setValue(soyad);
         return this;
     }
 
-    @Step("Kaydet")
+    @Step("Kaydet tıkla")
     public GelenEvrakKayitPage iletisimBilgisikaydet() {
         btnKaydetIletisimBilgisi.click();
         return this;
     }
 
-    @Step("Evrak Ekleri Dosya Ekleme")
+    @Step("Evrak Ekleri Dosya Ekleme : \"{pathToFile}\" ")
     public GelenEvrakKayitPage evrakEkleriDosyaEkleme(String pathToFile) throws InterruptedException {
         uploadFile(dosyaPath, pathToFile);
         Thread.sleep(4000);
@@ -753,13 +756,13 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("Ek Bilgiler dosya ekleme açıklama alanı doldur")
+    @Step("Ek Bilgiler dosya ekleme açıklama alanı doldur : \"{aciklama}\" ")
     public GelenEvrakKayitPage evrakEkleriDosyaEkleEkMetinDoldur(String aciklama) {
         txtEvrakEkTabViewEkMetni.sendKeys(aciklama);
         return this;
     }
 
-    @Step("EkBilgiler dosya ekleme excel adi kontrol")
+    @Step("EkBilgiler dosya ekleme excel adi kontrol : \"{excelAdi}\" ")
     public GelenEvrakKayitPage evrakEkleriDosyaEkleDosyaAdiKontrol(String excelAdi) {
         $(byText(excelAdi)).shouldBe(Condition.visible);
 //        String text = lblDosyaAdi.text();
@@ -768,7 +771,7 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("PDF Ust Yazi adi kontrol")
+    @Step("PDF Ust Yazi adi kontrol : \"{ustYaziAdi}\" ")
     public GelenEvrakKayitPage ustYaziPdfAdiKontrol(String ustYaziAdi) throws InterruptedException {
         String text = lblEklenenPdfUstYazi.text();
         System.out.println(text);
@@ -776,7 +779,7 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("Mail Ust Yazi adi kontrol")
+    @Step("Mail Ust Yazi adi kontrol : \"{ustYaziAdi}\" ")
     public GelenEvrakKayitPage ustYaziMailAdiKontrol(String ustYaziAdi) throws InterruptedException {
 //        String text = lblEklenenMailUstYazi.text();
         lblEklenenMailUstYazi.shouldBe(Condition.text(ustYaziAdi));
@@ -786,13 +789,13 @@ public class GelenEvrakKayitPage extends MainPage {
     }
 
 
-    @Step("Birim butonu")
+    @Step("Birim butonu tıkla")
     public GelenEvrakKayitPage havaleIslemleriBirim() {
         btnBirim.click();
         return this;
     }
 
-    @Step("Birim doldur")
+    @Step("Havale İşlemleri Birim alanında \"{birim}\" seç")
     public GelenEvrakKayitPage havaleIslemleriBirimDoldur(String birim) {
         txtHavaleIslemleriBirim.selectLov(birim);
         return this;
@@ -985,7 +988,7 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("Vekalet alan Ve Veren tablo vekalet alan seç")
+    @Step("Vekalet alan Ve Veren tablosu vekalet alan \"{isim}\" seç")
     public GelenEvrakKayitPage vekeletAlanVerenTabloVekaletAlanveyaVerenSec(String isim) {
         tblVekaletVerenAlan
                 .filterBy(Condition.text(isim)).first()

@@ -78,7 +78,7 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
                 .onayAkisiKullaniciEkle(eklenecekKullanici)
                 .onayAkisiKullaniciTipiSec(eklenecekKullanici, "İmzalama")
                 .onayAkisiKullan()
-                .onayAkisiKullanilanKullanilanKontrolEt("Optiim TEST-Paraflama / " + eklenecekKullanici + "-İmzalama");
+                .onayAkisiKullanilanKullaniciKontrolEt("Optiim TEST-Paraflama / " + eklenecekKullanici + "-İmzalama");
 
 
         logout();

@@ -30,7 +30,7 @@ public class KaydedilenGidenEvraklarPage extends MainPage {
     SelenideElement chkKaydettiklerim = $("[id$='kaydettiklerimCheckbox']");
     SelenideElement btnIcerikGöster = $("[id$='detayGosterButton']");
     SelenideElement btnTamEkranGöster = $("[id$='tamEkranModuButton']");
-    ElementsCollection tblRapor = $$("tbody[id='mainInboxForm:inboxDataTable_data'] tr[role='row'] tbody tr:nth-child(4)");
+    ElementsCollection tblRapor = $$("tbody[id='mainInboxForm:inboxDataTable_data'] tr[data-ri='0']");
 
 
     @Step("Kaydedilen giden evraklar sayfası aç")
@@ -70,6 +70,13 @@ public class KaydedilenGidenEvraklarPage extends MainPage {
         int row = tblRapor.filterBy(Condition.text(evrakNo)).size();
         System.out.println(row);
         Assert.assertEquals(row, 1);
+        return this;
+    }
+
+    @Step("Tabloda evrak no kontrolu")
+    public KaydedilenGidenEvraklarPage tabloKontrolKonuyaGore(String konu) {
+        tblRapor.filterBy(Condition.text(konu))
+                .shouldHaveSize(1);
         return this;
     }
 

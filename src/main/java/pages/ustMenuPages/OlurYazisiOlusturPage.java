@@ -134,17 +134,17 @@ public class OlurYazisiOlusturPage extends MainPage {
         }
 
 
-        @Step("Seçilen onay akışı detail kontrolu: \"{secim}\" ")
-        public BilgilerTab onayAkisiDetailKontrol(String secim) {
+        @Step("Seçilen onay akışı detail kontrolu: \"{onayAkisiDetail}\" ")
+        public BilgilerTab onayAkisiDetailKontrol(String onayAkisiDetail) {
             System.out.println("Gelen detail:     " + cmbOnayAkisi.lastSelectedLovDetailText());
-            Assert.assertEquals(cmbOnayAkisi.lastSelectedLovDetailText().contains(secim), true);
+            Assert.assertEquals(cmbOnayAkisi.lastSelectedLovDetailText().contains(onayAkisiDetail), true);
             return this;
         }
 
-        @Step("Seçilen onay akışı title kontrolu: \"{secim}\" ")
-        public BilgilerTab onayAkisiTitleKontrol(String secim) {
+        @Step("Seçilen onay akışı title kontrolu: \"{onayAkisiTitle}\" ")
+        public BilgilerTab onayAkisiTitleKontrol(String onayAkisiTitle) {
             System.out.println("Gelen detail:     " + cmbOnayAkisi.lastSelectedLovTitleText());
-            Assert.assertEquals(cmbOnayAkisi.lastSelectedLovTitleText().contains(secim), true);
+            Assert.assertEquals(cmbOnayAkisi.lastSelectedLovTitleText().contains(onayAkisiTitle), true);
             return this;
         }
 
@@ -169,6 +169,7 @@ public class OlurYazisiOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Kullaniciya kullanici tipi sec")
         public BilgilerTab kullaniciyaKullaniciTipiSec(String kullanici, String secimTipi) {
 
             trOnayAkisiEkleKullanicilar

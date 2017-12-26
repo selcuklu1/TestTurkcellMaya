@@ -20,7 +20,10 @@ public class BaseTest extends BaseLibrary {
 
     @BeforeSuite(alwaysRun = true)
     public void beforeSuite() {
-        killProcess();
+
+        //killProcess();
+        //log.info("Kill all process");
+
     }
 
     @BeforeClass(alwaysRun = true)
@@ -34,9 +37,10 @@ public class BaseTest extends BaseLibrary {
         //region Selenide Driver Configuration
         Configuration.baseUrl = belgenetURL;
         Configuration.browser = "chrome";
-       //Configuration.browser = "firefox";
+        //Configuration.browser = "firefox";
 
         Configuration.remote = "http://10.101.20.151:4444/wd/hub";
+        // Configuration.remote = "http://10.101.20.151:4444/wd/hub";
         //Configuration.remote = "http://localhost:4444/wd/hub";
         Configuration.reportsFolder = "test-result/reports";
         Configuration.screenshots = false;
@@ -63,10 +67,9 @@ public class BaseTest extends BaseLibrary {
         getBrowserName();
 
         log.info("Selenide/Selenium driver has been set up.");
-
     }
 
-    @AfterMethod (alwaysRun = true)
+    @AfterMethod(alwaysRun = true)
     public void afterMethod() {
 
         try {
@@ -76,6 +79,7 @@ public class BaseTest extends BaseLibrary {
         }
 
         //Selenide.close();
+
         log.info("Driver has been quit.");
     }
 
@@ -86,7 +90,11 @@ public class BaseTest extends BaseLibrary {
     }
 
     public void clearCookies() throws Exception {
+
          Selenide.close();
+
+        // Selenide.close();
+
         try {
             Selenide.clearBrowserLocalStorage();
             Selenide.clearBrowserCookies();
