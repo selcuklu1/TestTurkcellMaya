@@ -47,6 +47,7 @@ public class SikKullanilanlarPage extends MainPage {
 
     @Step("Sık Kullanılan Dağıtımlar - Dağıtım Doldur")
     public SikKullanilanlarPage dagitimlarDoldur(String dagitim) {
+        txtDagitimlarDagitimlar.shouldBe(visible);
         txtDagitimlarDagitimlar.selectLov(dagitim);
 
         return this;
@@ -59,6 +60,7 @@ public class SikKullanilanlarPage extends MainPage {
         //comboLov("").titleItems().contains(exactText("Türksat Optiim"))
         //comboLov("").titleItems().filterBy(exactText("Türksat Optiim")).size() > 0
 
+        txtDagitimlarDagitimlar.shouldBe(visible);
         if (txtDagitimlarDagitimlar.selectedTitles().filterBy(exactText(dagitim)).size() > 0) {
             dagitimlarKaldir();
             ekraniKapat();

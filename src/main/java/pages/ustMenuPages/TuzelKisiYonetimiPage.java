@@ -371,6 +371,8 @@ public class TuzelKisiYonetimiPage extends MainPage {
     @Step("Tüzel kişi pasif ise aktif yap")
     public TuzelKisiYonetimiPage tuzelKisiPasifIseAktifYap() {
 
+        btnTuzelisiGuncelle.shouldBe(visible);
+
         if (btnTuzelKisiAktifYap.isDisplayed()) {
             btnTuzelKisiAktifYap.click();
             btnIslemOnayiEvet.click();
@@ -381,6 +383,8 @@ public class TuzelKisiYonetimiPage extends MainPage {
 
     @Step("Tüzel kişi aktif ise pasif yap")
     public TuzelKisiYonetimiPage tuzelKisiAktifIsePasifYap() {
+
+        btnTuzelisiGuncelle.shouldBe(visible);
 
         if (btnTuzelKisiPasifYap.isDisplayed()) {
             btnTuzelKisiPasifYap.click();
