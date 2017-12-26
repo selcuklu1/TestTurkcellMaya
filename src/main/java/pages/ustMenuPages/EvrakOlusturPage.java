@@ -521,7 +521,7 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Bilgi Secim Tipi alanında \"{text}\" seç")
         public BilgilerTab bilgiSecimTipiSecByText(String text) {
-            cmbBilgiSecimTipi.selectOption(text);
+            cmbBilgiSecimTipi.shouldBe(visible).selectOption(text);
             return this;
         }
 
@@ -704,7 +704,7 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Gereği Seçim Tipi alanında \"{value}\" seç")
         public BilgilerTab geregiSecimTipiSecByText(String value) {
-            cmbGeregiSecimTipi.selectOption(value);
+            cmbGeregiSecimTipi.shouldBe(visible).selectOption(value);
             return this;
         }
 
@@ -757,6 +757,7 @@ public class EvrakOlusturPage extends MainPage {
         }
 
         public BilgilerTab secilenGeregiSil() {
+            cmbGeregi.shouldBe(visible);
             cmbGeregi.clearLastSelectedLov();
             return this;
         }
