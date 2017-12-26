@@ -175,6 +175,17 @@ public class GelenEvraklarPage extends MainPage {
     }
 
     @Step("Evrak seç")
+    public GelenEvraklarPage evrakGelmedigiGorme(String konu, String geldigiYer, String kayitTarihiSayi, String no) {
+      boolean durum = tableEvraklar
+                .filterBy(text(konu))
+                .filterBy(text(geldigiYer))
+                .filterBy(text(kayitTarihiSayi))
+                .filterBy(text(no)).size() > 0;
+      Assert.assertEquals(durum,false);
+        return this;
+    }
+
+    @Step("Evrak seç")
     public GelenEvraklarPage evrakSec(String konu, String geldigiYer, String kayitTarihiSayi, String no) {
         tableEvraklar
                 .filterBy(text(konu))
