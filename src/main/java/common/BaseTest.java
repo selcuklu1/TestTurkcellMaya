@@ -20,8 +20,10 @@ public class BaseTest extends BaseLibrary {
 
     @BeforeSuite(alwaysRun = true)
     public void beforeSuite() {
-        //killProcess();
+
+        killProcess();
         //log.info("Kill all process");
+
     }
 
     @BeforeClass(alwaysRun = true)
@@ -38,6 +40,7 @@ public class BaseTest extends BaseLibrary {
         //Configuration.browser = "firefox";
 
         // Configuration.remote = "http://10.101.20.151:4444/wd/hub";
+
         //Configuration.remote = "http://localhost:4444/wd/hub";
         Configuration.reportsFolder = "test-result/reports";
         Configuration.screenshots = false;

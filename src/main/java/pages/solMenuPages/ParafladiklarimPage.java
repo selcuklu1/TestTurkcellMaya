@@ -103,7 +103,7 @@ public class ParafladiklarimPage extends MainPage {
         return this;
     }
 
-    @Step("Bitiş Tarihi doldur")
+    @Step("Bitiş Tarihi alanına \"{tarih}\" doldur")
     public ParafladiklarimPage bitisTarihiDoldur(String tarih) {
         dateTxtBitisTarihi.sendKeys(tarih);
         return this;

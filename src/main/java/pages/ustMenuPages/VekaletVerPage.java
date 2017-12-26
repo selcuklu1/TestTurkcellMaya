@@ -81,30 +81,32 @@ public class VekaletVerPage extends MainPage {
         return this;
     }
 
-    @Step("Onay verecek doldur")
-    public VekaletVerPage onayVerecekDoldur(String kullanici) {
-        txtOnaylayacakKisi.selectLov(kullanici);
+    @Step("Onay verecek kullanıcı doldur : \"{onayVerecekKullanici}\" ")
+    public VekaletVerPage onayVerecekDoldur(String onayVerecekKullanici) {
+        txtOnaylayacakKisi.selectLov(onayVerecekKullanici);
         return this;
     }
 
-    @Step("Vekalet veren alanını doldur")
-    public VekaletVerPage vekaletVerenDoldur(String text) {
-        txtVekaletVerenCombolov.selectLov(text);
+    @Step("Vekalet veren alanını doldur : \"{vekaletVeren}\" ")
+    public VekaletVerPage vekaletVerenDoldur(String vekaletVeren) {
+        txtVekaletVerenCombolov.selectLov(vekaletVeren);
         return this;
     }
 
-    @Step("Vekalet alan alanını doldur")
-    public VekaletVerPage vekaletAlanDoldur(String text) {
-        txtVekaletAlanCombolov.selectLov(text);
+    @Step("Vekalet alan alanını doldur : \"{vekaletAlan}\" ")
+    public VekaletVerPage vekaletAlanDoldur(String vekaletAlan) {
+        txtVekaletAlanCombolov.selectLov(vekaletAlan);
         return this;
     }
 
 
+    @Step("Uygula butonu")
     public VekaletVerPage uygula() {
         btnUygula.click();
         return this;
     }
 
+    @Step("Açıklama alanı doldur : \"{aciklama}\" ")
     public VekaletVerPage aciklamaDoldur(String aciklama) {
         txtAciklama.setValue(aciklama);
         return this;
@@ -141,13 +143,13 @@ public class VekaletVerPage extends MainPage {
         return this;
     }
 
-    @Step("Evrak arama doldur")
+    @Step("Evrak arama alanı doldur : \"{evrakNo}\" ")
     public VekaletVerPage evrakAramaDoldur(String evrakNo) {
         txtEvrakArama.sendKeys(evrakNo);
         return this;
     }
 
-    @Step("Tablo Kontrolü ve seçim")
+    @Step("Evrak no'ya göre tablo Kontrolü ve seçim : \"{evrakNo}\" ")
     public VekaletVerPage evrakAramaTabloKontrolveSecim(String evrakNo) {
         tblEvrakListesi
                 .filterBy(Condition.text(evrakNo)).shouldHaveSize(1)
@@ -163,7 +165,7 @@ public class VekaletVerPage extends MainPage {
         return this;
     }
 
-    @Step("Devredilecek Evrak seç")
+    @Step("Devredilecek Evrak no seç : \"{evrakNo}\" ")
     public VekaletVerPage devredilecekEvrakSec(String evrakNo) {
         tblDevredilecekEvrakklar
                 .filterBy(Condition.text(evrakNo)).first()
@@ -182,7 +184,7 @@ public class VekaletVerPage extends MainPage {
         tabVekaletListesi.click();
         return this;
     }
-    @Step("Yenş vekalet Tab aç")
+    @Step("Yeni vekalet Tab aç")
     public VekaletVerPage yeniVekaletTabAc() {
         tabYeniVekalet.click();
         return this;
@@ -193,7 +195,7 @@ public class VekaletVerPage extends MainPage {
         return this;
     }
 
-    @Step("Vekalet Listesi Tablo Kontrol")
+    @Step("Vekalet Listesi red  nedeni tablo kontrolü : \"{retNedeni}\" ")
     public VekaletVerPage vekaletListesiTabloKontrol(int column, String retNedeni) {
         boolean status = findElementOnTableByColumnInputInAllPages(tblVekaletListesi2, column, retNedeni).isDisplayed();
         Assert.assertEquals(status, true);
@@ -206,7 +208,7 @@ public class VekaletVerPage extends MainPage {
        return this;
     }
 
-    @Step("Vekalet Listesi Tablo Kontrol")
+    @Step("Vekalet Listesi Tablo Kontrol : \"{vekaletveren}\" ")
     public VekaletVerPage vekaletListesiVekaletIptal(String vekaletveren) {
         Selenide.sleep(3000); // tablo yavaş geldiğinden sleep koyuldu.
         ElementsCollection rows = tblVekaletListesi
@@ -222,15 +224,15 @@ public class VekaletVerPage extends MainPage {
         return this;
     }
 
-    @Step("Vekalet Listesi bitiş tarihi doldur")
-    public VekaletVerPage vekaletListesiBitisTarihiDoldur(String text) {
-        dateTxtVekaletListesiBitisTarihi.setValue(text);
+    @Step("Vekalet Listesi bitiş tarihi doldur : \"{bitisTarihi}\" ")
+    public VekaletVerPage vekaletListesiBitisTarihiDoldur(String bitisTarihi) {
+        dateTxtVekaletListesiBitisTarihi.setValue(bitisTarihi);
         return this;
     }
 
-    @Step("Vekalet Listesi bitiş tarihi doldur")
-    public VekaletVerPage vekaletListesiBaslangicTarihiDoldur(String text) {
-        dateTxtVekaletListesiBaslangicTarihi.setValue(text);
+    @Step("Vekalet Listesi başlangıç tarihi doldur : \"{baslangiTarihi}\" ")
+    public VekaletVerPage vekaletListesiBaslangicTarihiDoldur(String baslangiTarihi) {
+        dateTxtVekaletListesiBaslangicTarihi.setValue(baslangiTarihi);
         return this;
     }
 
@@ -248,9 +250,9 @@ public class VekaletVerPage extends MainPage {
         return this;
     }
 
-    @Step("Durum Seç")
-    public VekaletVerPage durumSec(String value) {
-        cmbDurum.selectOptionByValue(value);
+    @Step("Durum Seç : \"{durum}\" ")
+    public VekaletVerPage durumSec(String durum) {
+        cmbDurum.selectOptionByValue(durum);
         return this;
     }
 }

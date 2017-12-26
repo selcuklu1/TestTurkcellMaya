@@ -354,9 +354,9 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Konu Kodu alanında {0} seç")
-        public BilgilerTab konuKoduSec(String value) {
-            cmlKonuKodu.selectLov(value);
+        @Step("Konu Kodu alanında \"{konuKodu}\" seç")
+        public BilgilerTab konuKoduSec(String konuKodu) {
+            cmlKonuKodu.selectLov(konuKodu);
             return this;
         }
 
@@ -392,7 +392,6 @@ public class EvrakOlusturPage extends MainPage {
             txtKonu.is(required);
             return this;
         }
-
         @Step("Kaldiralacak Klasörler alanında \"{kaldirilacakKlasorler}\" seç")
         public BilgilerTab kaldiralacakKlasorlerSec(String kaldirilacakKlasorler) {
             cmbKaldiralacakKlasorler.selectLov(kaldirilacakKlasorler);
@@ -412,9 +411,9 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Evrak Dili alanında \"{text}\" seç")
-        public BilgilerTab evrakDiliSec(String text) {
-            cmbEvrakDili.selectOption(text);
+        @Step("Evrak Dili alanında \"{evrakDili}\" seç")
+        public BilgilerTab evrakDiliSec(String evrakDili) {
+            cmbEvrakDili.selectOption(evrakDili);
 //            if (cmbEvrakTuru.getSelectedOption().equals(text))
 //                throw new RuntimeException("Alan seçilemedi");
             return this;
@@ -445,9 +444,9 @@ public class EvrakOlusturPage extends MainPage {
         }
 
 
-        @Step("Gizlilik Derecesi alanında {0} seç")
-        public BilgilerTab gizlilikDerecesiSec(String text) {
-            cmbGizlilikDerecesi.selectOption(text);
+        @Step("Gizlilik Derecesi alanında {gizlilikDerecesi} seç")
+        public BilgilerTab gizlilikDerecesiSec(String gizlilikDerecesi) {
+            cmbGizlilikDerecesi.selectOption(gizlilikDerecesi);
             return this;
         }
 
@@ -469,7 +468,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Vekalet alan Ve Veren tablo vekalet alan seç")
+        @Step("Vekalet alan Ve Veren tablosu vekalet alan seç : \"{isim}\" ")
         public BilgilerTab vekeletAlanVerenTabloVekaletAlanveyaVerenSec(String isim) {
             tblVekaletVerenAlan
                     .filterBy(Condition.text(isim)).first()
@@ -489,7 +488,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Evrak Sayi Ek Metni alanında {0} seç")
+        @Step("Evrak Sayi Ek Metni alanında {text} seç")
         public BilgilerTab evrakSayiEkMetniSec(String text) {
             txtEvrakSayiEkMetni.setValue(text);
             return this;
@@ -501,9 +500,9 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("İvedik alanında {0} seç")
-        public BilgilerTab ivedikSec(String text) {
-            cmbIvedik.selectOption(text);
+        @Step("İvedik alanında \"{ivedilik}\" seç")
+        public BilgilerTab ivedilikSec(String ivedilik) {
+            cmbIvedik.selectOption(ivedilik);
             return this;
         }
 
@@ -1084,8 +1083,8 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Kullanılan onay akışı kontrol et")
-        public BilgilerTab onayAkisiKullanilanKullanilanKontrolEt(String kullaniciAdi) {
+        @Step("Onay akışı kullanılan kullanici kontrol et : \"{kullaniciAdi}\" ")
+        public BilgilerTab onayAkisiKullanilanKullaniciKontrolEt(String kullaniciAdi) {
             listOnayAkisiKullanilan
                     .$(By.xpath(".//span[contains(., '" + kullaniciAdi + "') and @class='lovItemDetail']")).shouldBe(exist);
             return this;
