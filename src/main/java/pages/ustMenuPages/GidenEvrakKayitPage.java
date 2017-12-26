@@ -87,9 +87,9 @@ public class GidenEvrakKayitPage extends MainPage {
     }
 
     @Step("Gereği doldur")
-    public GidenEvrakKayitPage geregiDoldur(String geregiAdSoyad) {
+    public GidenEvrakKayitPage geregiDoldur(String geregi) {
 
-        cmbGeregi.selectLov(geregiAdSoyad);
+        cmbGeregi.selectLov(geregi);
 
         System.out.println("title: " + cmbGeregi.lastSelectedLovTitleText());
         System.out.println("detail: " + cmbGeregi.lastSelectedLovDetailText());

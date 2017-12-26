@@ -27,7 +27,6 @@ public class TuzelKisiYonetimiTest extends BaseTest {
     public void beforeTests(Method method) {
 
         log.info(method.getName() + "Nolu test senaryosu başladı.");
-
         login();
         tuzelKisiYonetimiPage = new TuzelKisiYonetimiPage();
         evrakOlusturPage = new EvrakOlusturPage();
