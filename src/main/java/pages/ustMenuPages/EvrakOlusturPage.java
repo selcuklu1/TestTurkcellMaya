@@ -52,6 +52,8 @@ public class EvrakOlusturPage extends MainPage {
     SelenideElement btnPDFOnizleme = $("button[id^='yeniGidenEvrakForm:rightTab:uiRepeat'] span[class$='pdfOnIzleme']");
     SelenideElement btnKaydet = $("button[id^='yeniGidenEvrakForm:rightTab:uiRepeat'] span[class*='kaydet']");
     SelenideElement btnKaydetOnayaSun = $("button[id^='yeniGidenEvrakForm:rightTab:uiRepeat'] span[class$='kaydetHavaleEt']");
+    SelenideElement btnKaydetOnayaSun2 = $("div[class='ui-tabmenu ui-tabmenu-right'] span[class='ui-button-icon-left ui-icon kaydetHavaleEt']");
+    SelenideElement txtKaydetOnayaSunAciklama = $(By.id("windowCevapEvrakForm:onayIslemiAciklama"));
     SelenideElement btnPaylas = $("button[id^='yeniGidenEvrakForm:rightTab:uiRepeat'] span[class$='evrakPaylas']");
     SelenideElement btnEvrakOlusturKapat = $(By.xpath("//div[@id='window3Dialog']//a/span[@class='ui-icon ui-icon-closethick']"));
     SelenideElement btbEvrakOlusturKapatEvet = $(By.id("kapatKaydetEvetButton"));
@@ -91,9 +93,23 @@ public class EvrakOlusturPage extends MainPage {
         return this;
     }
 
-    @Step("PDF Önizleme")
+    @Step("Kaydet ve onay sun")
     public EvrakOlusturPage kaydetOnayaSun() {
         btnKaydetOnayaSun.click();
+        return this;
+    }
+
+    @Step("Kaydet ve onay sun")
+    public EvrakOlusturPage kaydetOnayaSun2() {
+        btnKaydetOnayaSun2.parent().click();
+        return this;
+    }
+
+    @Step("Kaydet ve onay sun")
+    public EvrakOlusturPage kaydetOnayaSunAciklamaDoldur2(String aciklama) {
+        txtKaydetOnayaSunAciklama.setValue(aciklama);
+        $(By.id("windowCevapEvrakForm:gonderButton")).click();
+        $(By.id("kaydetEvetButton")).click();
         return this;
     }
 
@@ -179,6 +195,7 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement cmbGizlilikDerecesi = $("select[id$=guvenlikKodu]");
         SelenideElement btnIletisimbilgileriOnayAkisiEkle = $("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='onayAkisiEkle']");
         ElementsCollection cmbKullanicilarIlkImzalama = $$("[id='yeniGidenEvrakForm:evrakBilgileriList:18:anlikakisOlusturPanelGrid'] [id^='yeniGidenEvrakForm:evrakBilgileriList:'][id$='selectOneMenu']");
+        SelenideElement cmbKullanicilarIlkImzalama2 = $(By.id("windowCevapEvrakForm:evrakBilgileriList:18:akisAdimLov:LovSecilenTable:0:selectOneMenu"));
         SelenideElement btnKullanicilarKullan = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:anlikAkisKullanButton"));
         //Kanun Kapsam Tipi
         SelenideElement rdbKanunKapsamTipiNormal = $x("//input[contains(@id,'kanunKapsamTipiRadio') and (../label[contains(@for,'kanunKapsamTipiRadio') and normalize-space(text())='Normal'])]");
@@ -217,11 +234,13 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement cmbKullanicilarImza = $("[id^='yeniGidenEvrakForm:evrakBilgileriList:18:akisAdimLov:LovSecilenTable'][id$='selectOneMenu']");
         SelenideElement btnOnayAkisGuncelle = $(By.cssSelector("[id^='yeniGidenEvrakForm:evrakBilgileriList:18:akisLov:j_idt'] [class$='update-icon']"));
         BelgenetElement cmbOnayAkisi = comboLov(By.cssSelector("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='akisLov:LovText']"));
+        BelgenetElement cmbOnayAkisi2 = comboLov(By.id("windowCevapEvrakForm:evrakBilgileriList:18:akisLov:LovText"));
+        SelenideElement btnOnayAkisiEkle2 = $(By.id("windowCevapEvrakForm:evrakBilgileriList:18:onayAkisiEkle"));
         By cmbOnayAkisiBy = By.cssSelector("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='akisLov:LovText']");
 
         //Bilgileri tabı
         BelgenetElement txtKonuKodu = comboLov("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='konuKoduLov:LovText']");
-
+        SelenideElement txtCevapYazKaydetVeOnaySunAciklama =  $(By.id("windowCevapEvrakForm:onayIslemiAciklama"));
         SelenideElement txtKaldiralacakKlasorler = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:4:eklenecekKlasorlerLov:LovText"));
         SelenideElement rdbNormal = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:10:kanunKapsamTipiRadio:0"));
         SelenideElement rdbBilgiEdinmeKanunu = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:10:kanunKapsamTipiRadio:1"));
@@ -395,6 +414,12 @@ public class EvrakOlusturPage extends MainPage {
         @Step("Onay Akışı imzalama seç")
         public BilgilerTab onayAkisiEkleIlkImzalaSec(String imzalama) {
             cmbKullanicilarIlkImzalama.get(0).selectOption(imzalama);
+            return this;
+        }
+
+        @Step("Onay Akışı imzalama seç")
+        public BilgilerTab onayAkisiEkleIlkImzalaSec2(String imzalama) {
+            cmbKullanicilarIlkImzalama2.selectOption(imzalama);
             return this;
         }
 
@@ -822,6 +847,18 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Onay akışı doldurma ve görüntüleme kontrolu")
+        public BilgilerTab onayAkisiDoldur2(String onay) {
+            cmbOnayAkisi2.selectLov(onay);
+            return this;
+        }
+
+        @Step("Onay akışı ekle")
+        public BilgilerTab onayAkisiEkle2(String onay) {
+            btnOnayAkisiEkle2.click();
+            return this;
+        }
+
         public BilgilerTab secilenOnayAkisiSil() {
 
             if (cmbOnayAkisi.isLovSelected()) {
@@ -953,6 +990,12 @@ public class EvrakOlusturPage extends MainPage {
             //executeJavaScript("arguments[0].scrollIntoView();",btnOnayAkisiKullaniciKullan);
 
             btnOnayAkisiKullaniciKullan.pressEnter();
+            return this;
+        }
+
+        @Step("Onay akışı kullan butonu tıkla")
+        public BilgilerTab onayAkisiKullan2() {
+            clickJs($("[id='windowCevapEvrakForm:evrakBilgileriList:18:anlikAkisKullanButton']"));
             return this;
         }
 

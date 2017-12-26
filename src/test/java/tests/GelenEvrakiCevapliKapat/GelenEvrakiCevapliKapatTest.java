@@ -5,7 +5,9 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import pages.solMenuPages.CevapladiklarimPage;
 import pages.solMenuPages.GelenEvraklarPage;
+import pages.solMenuPages.KontrolBekleyenlerPage;
 import pages.ustMenuPages.CevaplananEvrakRaporuPage;
 import pages.ustMenuPages.EvrakOlusturPage;
 import pages.ustMenuPages.GelenEvrakKayitPage;
@@ -39,6 +41,8 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
     EvrakOlusturPage evrakOlusturPage;
     EvrakDetayiPage evrakDetayiPage;
     GelenEvraklarCevapYazPage gelenEvraklarCevapYazPage;
+    KontrolBekleyenlerPage kontrolBekleyenlerPage;
+    CevapladiklarimPage cevapladiklarimPage;
     TextEditor editor;
 
     @BeforeMethod
@@ -48,10 +52,12 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
         gelenEvrakKayitPage = new GelenEvrakKayitPage();
         gelenEvraklarPage = new GelenEvraklarPage();
         evrakOlusturPage = new EvrakOlusturPage();
+        kontrolBekleyenlerPage = new KontrolBekleyenlerPage();
+        cevapladiklarimPage = new CevapladiklarimPage();
     }
 
-    @Test(enabled = true, description = "TC310: Kurum içi gelen evraka cevap yaz")
-    public void TC310() throws InterruptedException{
+    @Test(enabled = true, description = "TC930: Kurum içi gelen evraka cevap yaz")
+    public void TC930() throws InterruptedException{
 
         String basariMesaji = "İşlem başarılıdır!";
         String konuKodu = "Diğer";
@@ -62,6 +68,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
         String evrakSayiSag = createRandomNumber(10);
         String kisi = "Zübeyde Tekin";
         String icerik = createRandomText(15);
+        String onayAkisi = "CanKontrol";
 
         //TODO Pre Condition Gelen Evraklar sayfası data oluşturmakta
         login(username2, password2);
@@ -90,17 +97,115 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
         evrakOlusturPage
                 .editorTabAc()
                 .editorIcerikDoldur(icerik);
+
         evrakOlusturPage
                 .bilgilerTabiAc()
                 .konuKoduSec(konuKodu)
                 .kaldiralacakKlasorlerSec(konuKodu)
-                .onayAkisiEkle()
-                .onayAkisiKullan();
+                .onayAkisiDoldur2(onayAkisi);
+
+        evrakOlusturPage
+                .kaydetOnayaSun2()
+                .kaydetOnayaSunAciklamaDoldur2(icerik)
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        gelenEvraklarPage
+                .openPage()
+                .evrakGelmedigiGorme(konuKoduRandom,kurum,evrakTarihi,evrakSayiSag);
+
+        login("test1", "123");
+
+        kontrolBekleyenlerPage
+                .openPage()
+                .evrakSec(konuKodu,kurum,evrakTarihi)
+                .kontrolEt();
+
+        login(username2, password2);
+
+        cevapladiklarimPage
+                .openPage();
 
 
-        evrakDetayiPage = new EvrakDetayiPage();
+
+       /* evrakDetayiPage = new EvrakDetayiPage();
         gelenEvraklarCevapYazPage = new GelenEvraklarCevapYazPage();
-        editor = new TextEditor();
+        editor = new TextEditor();*/
+    }
+
+    @Test(enabled = true, description = "TC931: Gerçek kişiden gelen evraka cevap yaz")
+    public void TC931() throws InterruptedException{
+
+        String basariMesaji = "İşlem başarılıdır!";
+        String konuKodu = "Diğer";
+        String konuKoduRandom = "TC-2227-" + createRandomNumber(10);
+        String evrakTarihi = getSysDateForKis();
+        String kurum = "BÜYÜK HARFLERLE KURUM";
+        String gizlilikDerecesi = "Gizli";
+        String evrakSayiSag = createRandomNumber(10);
+        String kisi = "Zübeyde Tekin";
+        String icerik = createRandomText(15);
+        String onayAkisi = "CanKontrol";
+
+        //TODO Pre Condition Gelen Evraklar sayfası data oluşturmakta
+        login(username2, password2);
+
+        gelenEvrakKayitPage
+                .openPage()
+                .konuKoduDoldur(konuKodu)
+                .konuDoldur(konuKoduRandom)
+                .evrakTarihiDoldur(evrakTarihi)
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .geldigiKurumDoldurLovText2(kurum)
+                .evrakSayiSagDoldur(evrakSayiSag)
+                .havaleIslemleriKisiDoldur(kisi)
+                .kaydet()
+                .evetDugmesi()
+                .yeniKayitButton();
+        //TODO
+
+        login(username2, password2);
+
+        gelenEvraklarPage
+                .openPage()
+                .evrakSec(konuKoduRandom,kurum,evrakTarihi,evrakSayiSag)
+                .cevapYaz();
+
+        evrakOlusturPage
+                .editorTabAc()
+                .editorIcerikDoldur(icerik);
+
+        evrakOlusturPage
+                .bilgilerTabiAc()
+                .konuKoduSec(konuKodu)
+                .kaldiralacakKlasorlerSec(konuKodu)
+                .onayAkisiEkle2("asd");
+
+        evrakOlusturPage
+                .kaydetOnayaSun2()
+                .kaydetOnayaSunAciklamaDoldur2(icerik)
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        gelenEvraklarPage
+                .openPage()
+                .evrakGelmedigiGorme(konuKoduRandom,kurum,evrakTarihi,evrakSayiSag);
+
+        login("test1", "123");
+
+        kontrolBekleyenlerPage
+                .openPage()
+                .evrakSec(konuKodu,kurum,evrakTarihi)
+                .kontrolEt();
+
+        login(username2, password2);
+
+        cevapladiklarimPage
+                .openPage();
+
+
+
+       /* evrakDetayiPage = new EvrakDetayiPage();
+        gelenEvraklarCevapYazPage = new GelenEvraklarCevapYazPage();
+        editor = new TextEditor();*/
     }
 
     @Severity(SeverityLevel.CRITICAL)

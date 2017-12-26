@@ -11,6 +11,7 @@ public class SolMenuData {
         ParafBekleyenler("Paraf Bekleyenler"),
         BenimlePaylasilanlar("Benimle Paylaşılanlar"),
         KoordineBekleyenler("Koordine Bekleyenler"),
+        KontrolBekleyenler("Kontrol Bekleyenler"),
         YanParafBekleyenler("Yan Paraf Bekleyenler"),
         TakibimdekiEvraklar("Takibimdeki Evraklar"),
         TaslakEvraklar("Taslak Evraklar"),
