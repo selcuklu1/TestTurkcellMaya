@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite thread-count="1" name="Gerçek Kişi Yönetimi" parallel="classes" verbose="1">
+<!--By Sezai-->
+   
+    <test name="Gerçek Kişi Yönetimi Testleri">
+        <packages>
+            <package name="tests.GercekKisiYonetimi"/>
+        </packages>
+    </test>
+</suite>
