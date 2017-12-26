@@ -119,8 +119,8 @@ public class OnayAkisYonetimiPage extends MainPage {
 
 
     @Step("İmzacı seç")
-    public OnayAkisYonetimiPage imzacıSonSec(String value) {
-        cmbKullaniciBirimDataTable.last().selectOption(value);
+    public OnayAkisYonetimiPage imzacıSonSec(String imzaci) {
+        cmbKullaniciBirimDataTable.last().selectOption(imzaci);
         return this;
     }
 
