@@ -25,9 +25,9 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
     SelenideElement btnIcerikGöster = $(By.id("mainInboxForm:inboxDataTable:0:detayGosterButton"));
     SelenideElement btnTamEkranGöster = $(By.id("mainInboxForm:inboxDataTable:0:tamEkranModuButton"));
     SelenideElement tblRapor = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
-    ElementsCollection  tblKaydedilenGelenEvraklar = $$("[id='mainInboxForm:inboxDataTable_data'] tr[data-ri='0']");
+    ElementsCollection  tblKaydedilenGelenEvraklar = $$("tbody[id='mainInboxForm:inboxDataTable_data'] tr[data-ri='0']");
     SelenideElement tblIlkRapor = $(By.id("mainInboxForm:inboxDataTable:0:detayGosterButton"));
-    ElementsCollection tblKaydedilenGelenEvraklar2 = $$("tbody[id$='mainInboxForm:inboxDataTable_data'] tr[role=row]");
+    ElementsCollection tblKaydedilenGelenEvraklar2 = $$("tbody[id$='mainInboxForm:inboxDataTable_data'] tr[role='row']");
 
 
 //    Evrak Detayları Sayfası

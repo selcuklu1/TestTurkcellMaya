@@ -62,8 +62,8 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     public void TC0321() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
-        String ustYaziPath = "C:\\TestAutomation2\\BelgenetFTA\\documents\\pdf.pdf";
-        String excelPath = "C:\\TestAutomation2\\BelgenetFTA\\documents\\test.xlsx";
+        String ustYaziPath = "C:\\TestAutomation\\BelgenetFTA\\documents\\pdf.pdf";
+        String excelPath = "C:\\TestAutomation\\BelgenetFTA\\documents\\test.xlsx";
         String ustYaziAdi = "pdf.pdf";
         String excelAdi = "test.xlsx";
         String konu = "Test " + getSysDate();
@@ -112,17 +112,18 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, dependsOnMethods = {"TC0321"}, description = "TC2163 : Kaydedilen gelen evrakın güncellenmesi")
+    @Test(enabled = true, description = "TC2163 : Kaydedilen gelen evrakın güncellenmesi")
     public void TC2163() throws InterruptedException {
 
         String evrakTuru = "Dilekçe";
-        String ustYaziPath = "C:\\TestAutomation2\\BelgenetFTA\\documents\\Otomasyon.pdf";
+        String ustYaziPath = "C:\\TestAutomation\\BelgenetFTA\\documents\\Otomasyon.pdf";
         String ustYaziAdi = "Otomasyon.pdf";
         String basariMesaji = "İşlem başarılıdır!";
         String aciklama = "Test Otomasyon";
         String evrakTarihi = getSysDateForKis();
         String evrakTuru2 = "Dilekçe";
         String konu = "Test " + getSysDate();
+        String evrakNO321 = "5569";
 
 // TC0321 de oluşturulan evrak no burada kullanılacak.
 
@@ -271,8 +272,8 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
         String birim = "OPTİİM BİRİM11";
 
-        String pathToFilePdf = "C:\\TestAutomation2\\BelgenetFTA\\documents\\TestOtomasyon.msg";
-        String pathToFileExcel = "C:\\TestAutomation2\\BelgenetFTA\\documents\\test.xlsx";
+        String pathToFilePdf = "C:\\TestAutomation\\BelgenetFTA\\documents\\TestOtomasyon.msg";
+        String pathToFileExcel = "C:\\TestAutomation\\BelgenetFTA\\documents\\test.xlsx";
         String ustYaziAdi = "TestOtomasyon.msg";
         String konu = "Test " + getSysDate();
 
@@ -326,7 +327,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         String message2 = "Dosya büyüklüğü uygun değildir.";
         String evrakTuru1 = "A";
         String path = "C:\\Users\\Emre_Sencan\\Pictures\\tsunami_posteroct08.pdf";
-        String ustYaziPath = "C:\\TestAutomation2\\BelgenetFTA\\documents\\pdf.pdf";
+        String ustYaziPath = "C:\\TestAutomation\\BelgenetFTA\\documents\\pdf.pdf";
         String birim = "OPTİİM BİRİM";
 
         gelenEvrakKayitPage
@@ -383,8 +384,8 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     public void TC1340() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
-        String ustYaziPath = "C:\\TestAutomation2\\BelgenetFTA\\documents\\pdf.pdf";
-        String excelPath = "C:\\TestAutomation2\\BelgenetFTA\\documents\\test.xlsx";
+        String ustYaziPath = "C:\\TestAutomation\\BelgenetFTA\\documents\\pdf.pdf";
+        String excelPath = "C:\\TestAutomation\\BelgenetFTA\\documents\\test.xlsx";
         String ustYaziAdi = "pdf.pdf";
         String excelAdi = "test.xlsx";
         String miatTarihi = getSysDateForKis();
