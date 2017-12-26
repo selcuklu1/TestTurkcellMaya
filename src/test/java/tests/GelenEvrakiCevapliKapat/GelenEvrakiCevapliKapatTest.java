@@ -366,6 +366,12 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
         String kisiKurum = "Gerçek Kişi";
         String basariMesaji = "İşlem başarılıdır!";
         String tur = "IMZALAMA";
+        String kaldirilacakKlasor = "Diğer";
+        String kladirilacakKlasorTitle = "[Klasör] 000";
+        String dagitimBilgisiKisi = "Mehmet Bozdemir";
+        String evrakTuru2 = "Form";
+        String formSablonu = "Kopya Optiim form şablonu";
+        String onayAkisiListe = "DenemeListe";
 
         String mernisNo = createMernisTCKN();
 
@@ -384,11 +390,12 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .iletisimBilgisiAdDoldur(ad)
                 .iletisimBilgisiSoyadDoldur(soyad)
                 .iletisimBilgisikaydet();
+
         gelenEvrakKayitPage
                 .evrakSayiSagDoldur()
                 .evrakGelisTipiSec(evrakGelisTipi)
                 .ivedilikSec(ivedilik)
-                .dagitimBilgileriKisiSec("Mehmet Bozdemir")
+                .dagitimBilgileriKisiSec(dagitimBilgisiKisi)
                 .kaydet();
 
         String evrakNO2186 = gelenEvrakKayitPage.popUps();
@@ -410,10 +417,10 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
 
         evrakOlusturPage
                 .bilgilerTabiAc()
-                .evrakTuruSec("Form")
-                .formSec("Kopya Optiim form şablonu")
-                .kaldiralacakKlasorlerSec("Diğer")
-                .cmbOnayAkisi("DenemeListe")
+                .evrakTuruSec(evrakTuru2)
+                .formSec(formSablonu)
+                .kaldiralacakKlasorlerSec(kaldirilacakKlasor)
+                .cmbOnayAkisi(onayAkisiListe)
                 .kaydetVeOnayaSun()
                 .onayIslemiAciklamaDoldur(konu)
                 .onayIslemiGonder()
@@ -442,9 +449,10 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .openPage()
                 .tabloKonuyaGoreEvrakKontrolu(konu);
 
+        String text = " tarihli yazı ile cevap yazılarak kapatılmıştır.";
         evrakDetayiPage
                 .hareketGecmisiTabAc()
-                .tabloKontol(" tarihli yazı ile cevap yazılarak kapatılmıştır.");
+                .tabloKontol(text);
 
         //TODO: Emre bu kontrolu klasoreKaldirdiklarimPage sayfasında yapalım. Bu testin içindekini başkasını kullanamaz çünkü.
         klasoreKaldirdiklarimPage
@@ -452,9 +460,10 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .filter().findRowsWith(Condition.text(konu))
                 .shouldHaveSize(1);
 
+
         klasorEvrakIslemleriPage
                 .openPage()
-                .klasorDoldurwithDetail("Diğer","[Klasör] 000")
+                .klasorDoldurwithDetail(kaldirilacakKlasor, kladirilacakKlasorTitle)
                 .evrakTarihiDoldur(getSysDateForKis2())
                 .ara();
 

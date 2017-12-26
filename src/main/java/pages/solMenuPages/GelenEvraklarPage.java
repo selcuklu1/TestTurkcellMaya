@@ -51,8 +51,8 @@ public class GelenEvraklarPage extends MainPage {
     ElementsCollection tblVekaletVerenAlan = $$("[id='mainPreviewForm:kullaniciBirimSecenekleriHavaleIcin_data'] tr[role='row']");
 
     BelgenetElement txtKullaniciListesi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKisiListesiLov:LovText"));
-    SelenideElement popUpUyari = $("[id='mainPreviewForm:j_idt4714'] p");
-    SelenideElement popUpUyariEvet = $("[id='mainPreviewForm:j_idt4714'] button:nth-child(1)");
+    SelenideElement popUpUyari = $("[id='mainPreviewForm:j_idt5031'] p");
+    SelenideElement popUpUyariEvet = $(By.id("mainPreviewForm:j_idt5033"));
     ElementsCollection tblEvrak = $$("[id^='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
     BelgenetElement txtHavaleYapKisi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKullaniciLov:LovText"));
     BelgenetElement txtHavaleYapKullaniciListesi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKisiListesiLov:LovText"));
@@ -176,12 +176,12 @@ public class GelenEvraklarPage extends MainPage {
 
     @Step("Evrak seç")
     public GelenEvraklarPage evrakGelmedigiGorme(String konu, String geldigiYer, String kayitTarihiSayi, String no) {
-      boolean durum = tableEvraklar
+        boolean durum = tableEvraklar
                 .filterBy(text(konu))
                 .filterBy(text(geldigiYer))
                 .filterBy(text(kayitTarihiSayi))
                 .filterBy(text(no)).size() > 0;
-      Assert.assertEquals(durum,false);
+        Assert.assertEquals(durum, false);
         return this;
     }
 
@@ -561,11 +561,11 @@ public class GelenEvraklarPage extends MainPage {
 
     @Step("Vekalet var uyarısı ")
     public GelenEvraklarPage evrakOnIzlemeUyarıPopUpKontol(String mesaj) {
-        SelenideElement popUp = $(By.id("mainPreviewForm:j_idt4714"));
+        SelenideElement popUp = $(By.id("mainPreviewForm:j_idt5031"));
         popUp.should(Condition.visible);
 
-        if (popUpUyari.text().equals(mesaj)) ;
-        clickJs(popUpUyariEvet);
+        if (popUpUyari.text().equals(mesaj))
+            clickJs(popUpUyariEvet);
         return this;
     }
 

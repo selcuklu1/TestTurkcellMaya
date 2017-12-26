@@ -308,8 +308,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
         kaydedilenGelenEvraklarPage
                 .openPage()
-                .filter().findRowsWith(Condition.text(konu))
-                .shouldHaveSize(1);
+                .tabloKonuyaGoreEvrakKontrolu(konu);
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -390,6 +389,10 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         String excelAdi = "test.xlsx";
         String miatTarihi = getSysDateForKis();
         String konu = "Test " + getSysDate();
+        String geregi = "AFYON VALİLİĞİ";
+        String kaldirlacakKlasor = "ESK05";
+        String bilgi = "TAŞRA TEŞKİLATI";
+        String evrakTarihi = "16.02.2017";
 
         gidenEvrakKayitPage
                 .openPage()
@@ -405,10 +408,10 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .konuDoldur(konu)
                 .evrakDiliSec(evrakDili)
                 .miatDoldur(miatTarihi)
-                .geregiDoldur("AFYON VALİLİĞİ")
-                .kaldiralacakKlasorDoldur("ESK05")
-                .bilgiDoldur("TAŞRA TEŞKİLATI")
-                .evrakTarihiDoldur("16.02.2017")
+                .geregiDoldur(geregi)
+                .kaldiralacakKlasorDoldur(kaldirlacakKlasor)
+                .bilgiDoldur(bilgi)
+                .evrakTarihiDoldur(evrakTarihi)
                 .ekBilgiFiltreAc()
                 .ekBilgiFizikselEkEkle()
                 .evrakEkTabFizikselEkMetniDoldur(ekMetni)
@@ -417,7 +420,6 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .ilgiEkleriMetinTabAc()
                 .ilgiEkleriMetinEkMetniDoldur(ekMetni)
                 .ilgiEkleriMetinEkle()
-
                 .kaydet()
                 .popUpkaydetEvet();
         String evrakNo1340 = gidenEvrakKayitPage.popUpBasariliKapat();
@@ -428,8 +430,6 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
         kaydedilenGidenEvraklarPage
                 .openPage()
-                .filter().findRowsWith(Condition.text(konu))
-                .shouldHaveSize(1);
-
+                .tabloKontrolKonuyaGore(konu);
     }
 }

@@ -20,7 +20,7 @@ public class BaseTest extends BaseLibrary {
 
     @BeforeSuite(alwaysRun = true)
     public void beforeSuite() {
-        //killProcess();
+        killProcess();
     }
 
     @BeforeClass(alwaysRun = true)
