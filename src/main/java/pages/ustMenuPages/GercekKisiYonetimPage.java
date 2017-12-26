@@ -179,7 +179,7 @@ public class GercekKisiYonetimPage extends MainPage {
         return this;
     }
 
-    @Step("TC numarası doldur")
+    @Step("TC kimlik numarası doldur")
     public GercekKisiYonetimPage tcKimlikNoDoldur(String tcNo) {
         txtTCKimlikNo.setValue(tcNo);
         return this;
@@ -192,8 +192,8 @@ public class GercekKisiYonetimPage extends MainPage {
     }
 
     @Step("Filtrede durum seç")
-    public GercekKisiYonetimPage filtreDurumSec(String value) {
-        cmbFiltreDurum.selectOptionByValue(value);
+    public GercekKisiYonetimPage filtreDurumSec(String filtreDurumu) {
+        cmbFiltreDurum.selectOptionByValue(filtreDurumu);
         return this;
     }
 
@@ -332,7 +332,7 @@ public class GercekKisiYonetimPage extends MainPage {
 
     @Step("Kep hizmet sağlayıcı seç")
     public GercekKisiYonetimPage kepHizmetSaglayiciSec(String kepHizmetSaglayici) {
-        cmbKepHizmetSaglayici.selectOptionByValue(kepHizmetSaglayici);
+        cmbKepHizmetSaglayici.selectOption(kepHizmetSaglayici);
         return this;
     }
 
@@ -379,7 +379,7 @@ public class GercekKisiYonetimPage extends MainPage {
         return this;
     }
 
-    @Step("TC kimlik no alma")
+    @Step("TC kimlik no alma \"{getTC}\" ")
     public String getTbleTCNO() {
         String getTC = tblTc.getText();
         return getTC;

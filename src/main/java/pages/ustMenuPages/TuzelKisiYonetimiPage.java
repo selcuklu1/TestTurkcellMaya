@@ -109,8 +109,8 @@ public class TuzelKisiYonetimiPage extends MainPage {
     }
 
     @Step("Filtrede durum seç")
-    public TuzelKisiYonetimiPage filtreDurumSec(String secim) {
-        txtFiltreDurum.selectOptionByValue(secim);
+    public TuzelKisiYonetimiPage filtreDurumSec(String filtreDurumu) {
+        txtFiltreDurum.selectOptionByValue(filtreDurumu);
         return this;
     }
 
@@ -176,8 +176,8 @@ public class TuzelKisiYonetimiPage extends MainPage {
     }
 
     @Step("Tüzel kişi tipi seç")
-    public TuzelKisiYonetimiPage tuzelKisiTipiSec(String secim) {
-        cmbTuzelKisiTipi.selectOption(secim);
+    public TuzelKisiYonetimiPage tuzelKisiTipiSec(String tuzelKisiTipi) {
+        cmbTuzelKisiTipi.selectOption(tuzelKisiTipi);
         return this;
     }
 
@@ -332,7 +332,7 @@ public class TuzelKisiYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Aktif Tüzel kişi tüm liste kayıt kontrolu")
+    @Step("Aktif tüzel kişi tüm liste kayıt kontrolu")
     public TuzelKisiYonetimiPage aktiflerTumListeKayitKontrolu() throws InterruptedException {
 
         String formTuzelKisiYonetimi = "tuzelKisiYonetimiListingForm";
@@ -343,7 +343,7 @@ public class TuzelKisiYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Pasif Tüzel kişi tüm liste kayıt kontrolu")
+    @Step("Pasif tüzel kişi tüm liste kayıt kontrolu")
     public TuzelKisiYonetimiPage pasiflerTumListeKayitKontrolu() throws InterruptedException {
 
         String formTuzelKisiYonetimi = "tuzelKisiYonetimiListingForm";
@@ -389,6 +389,8 @@ public class TuzelKisiYonetimiPage extends MainPage {
         if (btnTuzelKisiPasifYap.isDisplayed()) {
             btnTuzelKisiPasifYap.click();
             btnIslemOnayiEvet.click();
+            Allure.addAttachment("Tüzel kişi aktif olduğu için pasif yapıldı.", "");
+
         }
         return this;
     }

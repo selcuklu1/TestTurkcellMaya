@@ -117,7 +117,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
     public void TC1513c() throws InterruptedException {
 
         String popupKepAdresi = "turksat.kamu1@testkep.pttkep.gov.tr";
-        String popupKepHizmetSaglayicisiSec = "P";
+        String popupKepHizmetSaglayicisiSec = "PTT KEP Servisi";
         String basariMesaji = "İşlem başarılıdır!";
         String bilgiSecimTipi = "Gerçek Kişi";
 

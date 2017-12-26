@@ -11,6 +11,8 @@ import pages.ustMenuPages.KararYazisiOlusturPage;
 import pages.ustMenuPages.OlurYazisiOlusturPage;
 import pages.ustMenuPages.OnayAkisYonetimiPage;
 
+import java.lang.reflect.Method;
+
 /****************************************************
  * Tarih: 2017-12-04
  * Proje: Türksat Functional Test Automation
@@ -26,8 +28,12 @@ public class OnayAkisiTest2 extends BaseTest {
     GelenEvraklarPage gelenEvraklarPage;
 
     @BeforeMethod
-    public void loginBeforeTests() {
+    public void beforeTests(Method method) {
+
+        log.info(method.getName() + "Nolu test senaryosu başladı.");
+
         login();
+
         evrakOlusturPage = new EvrakOlusturPage();
         onayAkisYonetimiPage = new OnayAkisYonetimiPage();
         olurYazisiOlusturPage = new OlurYazisiOlusturPage();
