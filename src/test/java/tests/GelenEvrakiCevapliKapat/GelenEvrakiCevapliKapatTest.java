@@ -16,15 +16,12 @@ import pages.ustMenuPages.GelenEvrakKayitPage;
 import java.io.IOException;
 
 import static data.TestData.*;
-import pages.EvrakDetayiPage;
+import pages.altMenuPages.EvrakDetayiPage;
 import pages.pageComponents.TextEditor;
 import pages.solMenuPages.*;
 import pages.ustMenuPages.*;
 
-import java.io.IOException;
-
 import static com.codeborne.selenide.Selenide.$;
-import static data.TestData.*;
 
 /****************************************************
  * Tarih: 2017-12-22

@@ -3,7 +3,7 @@ package tests.TebligTebellug;
 import common.BaseTest;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pages.EvrakDetayiPage;
+import pages.altMenuPages.EvrakDetayiPage;
 import pages.solMenuPages.*;
 
 
