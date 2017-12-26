@@ -44,7 +44,7 @@ public class BaseTest extends BaseLibrary {
         Configuration.collectionsTimeout = 40000;
         Configuration.timeout = 40000;
         //Configuration.clickViaJs = true;
-        Configuration.holdBrowserOpen = true;
+        //Configuration.holdBrowserOpen = true;
         //Configuration.headless = false;
 
         Configuration.startMaximized = true;
@@ -62,16 +62,20 @@ public class BaseTest extends BaseLibrary {
         setDocPath();
         getBrowserName();
 
+        log.info("Selenide/Selenium driver has been set up.");
+
     }
 
     @AfterMethod (alwaysRun = true)
     public void afterMethod() {
-        //Selenide.close();
+        Selenide.close();
+        log.info("Driver has been quit.");
     }
 
     @AfterClass(alwaysRun = true)
     public void afterClass() {
-        //Selenide.close();
+        Selenide.close();
+        log.info("Browser has been closed.");
     }
 
     public void clearCookies() throws Exception {
