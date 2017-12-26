@@ -43,7 +43,7 @@ public class BaseTest extends BaseLibrary {
         Configuration.collectionsTimeout = 40000;
         Configuration.timeout = 40000;
         //Configuration.clickViaJs = true;
-        //Configuration.holdBrowserOpen = true;
+        Configuration.holdBrowserOpen = true;
         //Configuration.headless = false;
 
         Configuration.startMaximized = true;
@@ -65,12 +65,12 @@ public class BaseTest extends BaseLibrary {
 
     @AfterMethod (alwaysRun = true)
     public void afterMethod() {
-        Selenide.close();
+        //Selenide.close();
     }
 
     @AfterClass(alwaysRun = true)
     public void afterClass() {
-        Selenide.close();
+        //Selenide.close();
     }
 
     public void clearCookies() throws Exception {

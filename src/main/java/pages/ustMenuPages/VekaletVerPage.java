@@ -1,18 +1,16 @@
 package pages.ustMenuPages;
 
 import com.codeborne.selenide.*;
-import common.BaseLibrary;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.UstMenu;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
-import static pages.pageComponents.belgenetElements.BelgenetFramework.comboBox;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 public class VekaletVerPage extends MainPage {
@@ -59,6 +57,7 @@ public class VekaletVerPage extends MainPage {
     @Step("Vekalet Ver sayfası aç")
     public VekaletVerPage openPage() {
         new UstMenu().ustMenu("Vekalet Ver");
+        $("form[id='vekaletVerForm']").shouldBe(visible);
         return this;
     }
 
