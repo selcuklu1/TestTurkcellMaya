@@ -9,7 +9,6 @@ import pages.pageComponents.*;
 import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Condition.exist;
-import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static com.codeborne.selenide.Selenide.executeJavaScript;
@@ -271,7 +270,7 @@ public class MainPage extends BaseLibrary {
     }
 
     @Step("Birim Seç")
-    public MainPage birimSec(String menuText){
+    public MainPage birimSec(String menuText) throws InterruptedException {
 //        ElementsCollection solMenuBirim = $$("[id='birimlerimMenusuContainer'] li");
 //        SelenideElement element = solMenuBirim.filterBy(text(menuText)).first()
 //                .$("[id^='leftMenuForm:edysMenuItem_']");

@@ -1,9 +1,6 @@
 package pages.ustMenuPages;
 
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.*;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -688,6 +685,7 @@ public class EvrakOlusturPage extends MainPage {
         public BilgilerTab bilgiAlanindaGoruntulenmeKontrolu(String ad, String soyad) {
 
             String adSoyad = ad + " " + soyad.toUpperCase();
+            cmbBilgi.shouldBe(visible);
             cmbBilgi.selectLov(adSoyad);
             System.out.println("Gelen title:     " + cmbBilgi.lastSelectedLovTitleText());
             System.out.println("Beklenen title:  " + adSoyad);
@@ -703,7 +701,7 @@ public class EvrakOlusturPage extends MainPage {
         }
 
         @Step("Gereği Seçim Tipi alanında \"{geregiSecimTipi}\" seç")
-        public BilgilerTab geregiSecimTipiSecByText(String geregiSecimTipi) {
+        public BilgilerTab geregiSecimTipiSecByText(String geregiSecimTipi) throws InterruptedException {
             cmbGeregiSecimTipi.shouldBe(visible);
             cmbGeregiSecimTipi.selectOption(geregiSecimTipi);
             return this;

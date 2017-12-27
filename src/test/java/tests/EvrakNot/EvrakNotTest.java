@@ -38,22 +38,22 @@ import static pages.pageComponents.belgenetElements.BelgenetFramework.comboBox;
  */
 @Feature("Evrak Not")
 public class EvrakNotTest extends BaseTest {
-//    User user1 = new User("user1", "123", "User1 TEST", "AnaBirim1");
+    //    User user1 = new User("user1", "123", "User1 TEST", "AnaBirim1");
     User user1 = new User("user1", "123", "User1 TEST", "AnaBirim1");
     User user2 = new User("ztekin", "123", "Zübeyde TEKİN");
-//    User user2 = new User("user2", "123", "User2 TEST", "AnaBirim1AltBirim1");
+    //    User user2 = new User("user2", "123", "User2 TEST", "AnaBirim1AltBirim1");
     User user3 = new User("user3", "123", "User3 TEST", "AnaBirim1");
     User user5 = new User("mbozdemir", "123", "Mehmet BOZDEMİR", "YAZILIM GELİŞTİRME");
-//    User user2 = new User("ztekin", "123", "Zübeyde TEKİN", "YAZILIM GELİŞTİRME");
+    //    User user2 = new User("ztekin", "123", "Zübeyde TEKİN", "YAZILIM GELİŞTİRME");
     String konu;
     String kaldiralacakKlasor = "Diğer";
     EvrakNot evrakNot = new EvrakNot();
     EvrakOnizleme.Notlari notlar = new EvrakOnizleme().new Notlari();
 
     String[][] newNotes = {{"Genel", "Açıklama1", "", ""}
-                            , {"Kişisel", "Açıklama2", "", ""}
-                            , {"Genel", "Açıklama3", "", ""}
-                            , {"Kişisel", "Açıklama4", "", ""}};
+            , {"Kişisel", "Açıklama2", "", ""}
+            , {"Genel", "Açıklama3", "", ""}
+            , {"Kişisel", "Açıklama4", "", ""}};
 
 
     private String createTextWith(int length) {
@@ -184,7 +184,7 @@ public class EvrakNotTest extends BaseTest {
     }
 
     @Test(enabled = true, description = "TC2155: Not İzleme - Evrak Notunun Taslak evraklarda izlenmesi")//, dependsOnMethods = {"tc2091"})
-    public void tc2155() {
+    public void tc2155() throws InterruptedException {
         EvrakOlusturPage page = new EvrakOlusturPage();
         TaslakEvraklarPage taslakEvraklarPage = new TaslakEvraklarPage();
         EvrakNot evrakNot = new EvrakNot();
@@ -943,7 +943,7 @@ public class EvrakNotTest extends BaseTest {
     }
 
     @Step("Evrak Oluştur ve kaydet")
-    private void evrakOlusturVeKaydet(EvrakOlusturPage page, String konu) {
+    private void evrakOlusturVeKaydet(EvrakOlusturPage page, String konu) throws InterruptedException {
         page.bilgilerTabiAc()
                 .konuKoduSec("310.04")
                 .konuDoldur(konu)

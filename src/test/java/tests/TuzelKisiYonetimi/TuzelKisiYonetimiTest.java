@@ -434,7 +434,7 @@ public class TuzelKisiYonetimiTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TC1132: Tüzel kişinin pasif yapılması ve kontrolü")
-    public void TC1132() {
+    public void TC1132() throws InterruptedException {
 
         String vergiNo = "34378564433";
         String ad = "Tc1132 TüzelKişi";

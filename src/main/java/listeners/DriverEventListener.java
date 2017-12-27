@@ -103,7 +103,10 @@ public class DriverEventListener extends BaseLibrary implements WebDriverEventLi
         if (log) {
             Timestamp timestamp = new Timestamp(System.currentTimeMillis());
             System.out.println(timestamp + "    looking for element: " + by.toString());
+        }
+
         }*/
+
     }
 
     public void afterFindBy(By by, WebElement element, WebDriver driver) {
@@ -117,6 +120,8 @@ public class DriverEventListener extends BaseLibrary implements WebDriverEventLi
         Selenide.sleep(2000);
         waitForLoadingJS(driver);
         new WebDriverWait(driver, Configuration.timeout/1000).until(elementToBeClickable(element));
+
+        Selenide.sleep(2000);
         /**
          * Focus on element: Belgenete özel
          * Visible fakat ekranda görünmeyen olan buronlar için.
