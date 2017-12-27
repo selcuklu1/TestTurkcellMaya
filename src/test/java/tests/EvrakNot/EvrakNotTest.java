@@ -163,7 +163,7 @@ public class EvrakNotTest extends BaseTest {
             , {"Kişisel", "Açıklama4", "", ""}};
 
     @Test(enabled = true, description = "TC2155: Evrak Notları")//, dependsOnMethods = {"tc2091"})
-    public void tc2155() {
+    public void tc2155() throws InterruptedException {
         EvrakOlusturPage page = new EvrakOlusturPage();
         TaslakEvraklarPage taslakEvraklarPage = new TaslakEvraklarPage();
         EvrakNot evrakNot = new EvrakNot();
@@ -926,7 +926,7 @@ public class EvrakNotTest extends BaseTest {
     }
 
     @Step("Evrak Oluştur")
-    private void evrakOlusturVeKaydet(EvrakOlusturPage page, String konu) {
+    private void evrakOlusturVeKaydet(EvrakOlusturPage page, String konu) throws InterruptedException {
         page.bilgilerTabiAc()
                 .konuKoduSec("310.04")
                 .konuDoldur(konu)

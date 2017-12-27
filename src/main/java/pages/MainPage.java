@@ -1,17 +1,21 @@
 package pages;
 
-import com.codeborne.selenide.*;
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.WebDriverRunner;
 import common.BaseLibrary;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
-import pages.pageComponents.*;
+import pages.pageComponents.Filtreler;
+import pages.pageComponents.IslemMesajlari;
+import pages.pageComponents.SolMenu;
+import pages.pageComponents.UstMenu;
 import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Condition.exist;
-import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
 import static com.codeborne.selenide.Selenide.executeJavaScript;
 
 public class MainPage extends BaseLibrary {
@@ -271,7 +275,7 @@ public class MainPage extends BaseLibrary {
     }
 
     @Step("Birim Seç")
-    public MainPage birimSec(String menuText){
+    public MainPage birimSec(String menuText) throws InterruptedException {
 //        ElementsCollection solMenuBirim = $$("[id='birimlerimMenusuContainer'] li");
 //        SelenideElement element = solMenuBirim.filterBy(text(menuText)).first()
 //                .$("[id^='leftMenuForm:edysMenuItem_']");

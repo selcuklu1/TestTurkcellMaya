@@ -101,9 +101,10 @@ public class BaseLibrary {
         });
     }
 
-    public void waitForLoadingToDisappear(WebDriver driver) {
+    public void waitForLoadingToDisappear(WebDriver driver) throws InterruptedException {
 //        driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
 
+        //Thread.sleep(3000);
         try {
 
             /*List<WebElement> loading = driver.findElements(By.className("loading"));
@@ -152,7 +153,7 @@ public class BaseLibrary {
         this.doNotWaitLoading = doNotWaitLoading;
     }
 
-    public void waitForLoading(WebDriver driver) {
+    public void waitForLoading(WebDriver driver) throws InterruptedException {
         if (doNotWaitLoading)
             return;
         //waitForJS();
