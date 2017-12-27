@@ -1,16 +1,16 @@
 package tests.EvrakBeklemeyeAlma;
 
-import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.SelenideElement;
 import common.BaseTest;
 import data.User;
-import io.qameta.allure.Step;
+import io.qameta.allure.*;
 import org.testng.annotations.Test;
+import pages.pageComponents.Filtreler;
 import pages.solMenuPages.*;
 import pages.ustMenuPages.EvrakOlusturPage;
 
 import static com.codeborne.selenide.CollectionCondition.*;
-import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
@@ -22,61 +22,132 @@ import static com.codeborne.selenide.Selenide.sleep;
  * Tarih: 23.12.2017
  * Açıklama:
  */
-public class TC2095 extends BaseTest {
-    EvrakOlusturPage evrakOlustur;
-    User user1 = new User("user1", "123", "User1 TEST");
-    User user2 = new User("ztekin", "123");
 
-    @Test(description = "TC2095: Evrak Beklemeye Alma")
-    public void TC2095_imza() {
+@Feature("Evrakı Beklemeye Alma")
+public class TC2095 extends BaseTest {
+
+    User user1 = new User("user1", "123", "User1 TEST");
+    User ztekin = new User("ztekin", "123", "Zübeyde TEKİN");
+    Filtreler filtrelerPage = new Filtreler();
+
+
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(description = "TC2095: Evrakı beklemeye alma ve imzalama")
+    public void TC2095_1_imza() {
+
         String konu = evrakOlustur();
-        System.out.println(konu);
+
         ImzaBekleyenlerPage imzaBekleyenlerPage = new ImzaBekleyenlerPage().openPage();
-        imzaBekleyenlerPage.filter().findRowsWith(text(konu)).shouldHaveSize(1).first().click();
-//        SelenideElement beklemeyeAlButton = $x("//*[text()='Beklemeye Al']/ancestor::tbody[1]//button");
-        $x("//*[text()='Beklemeye Al']/ancestor::tbody[1]//button").click();
-//        SelenideElement beklemeyeAlEvetButton = $("#mainInboxForm\\:beklemeyeAlEvetButton");
-        clickJs($("#mainInboxForm\\:beklemeyeAlEvetButton"));
-//        $$("#mainInboxForm\\:beklemeyeAlEvetButton").shouldHave(sizeGreaterThan(0))
-//                .filterBy(visible).last().click();
+        dokumaniAraVeSec(konu);
+        beklemeyeAlButonaTikla();
+        beklemeyeAlOnayMessage(true);
         imzaBekleyenlerPage.islemMesaji().basariliOlmali();
-        imzaBekleyenlerPage.filter().findRowsWith(text(konu)).shouldHaveSize(0);
+        dokumanBulunmamali(konu);
 
         BeklemeyeAlinanlarPage beklemeyeAlinanlarPage = new BeklemeyeAlinanlarPage().openPage();
-        beklemeyeAlinanlarPage.filter().findRowsWith(text(konu)).shouldHaveSize(1).first().click();
-        $x("//*[text()='Beklemeye Al']/ancestor::tbody[1]//button").shouldNotBe(exist);
+        dokumaniAraVeSec(konu);
+        beklemeyeAlNotVisible();
         imzala();
         beklemeyeAlinanlarPage.islemMesaji().basariliOlmali();
 
         ImzaladiklarimPage imzaladiklarimPage = new ImzaladiklarimPage().openPage();
-        imzaladiklarimPage.filter().findRowsWith(text(konu)).shouldHaveSize(1);
+        dokumanBulunmali(konu);
     }
 
-    @Test(description = "TC2095: Paraf bekleyen evarkalarda \"Beklemeye\" al butonun gelmediği görülür")
-    public void TC2095_parafla() throws Exception {
-        login(user1);
-        ParafBekleyenlerPage page = new ParafBekleyenlerPage().openPage();
-        page.filter().getTableRows().shouldHave(sizeGreaterThan(0)).first().click();
-        $("#mainInboxForm\\:beklemeyeAlEvetButton").shouldNotBe(visible);
+    @Severity(SeverityLevel.MINOR)
+    @Test(description = "TC2095: Paraf, Gelen, Postalanacak bekleyen evarkalar \"Beklemeye Al\" butonun gelmediği görülür", enabled = true)
+    public void TC2095_2() throws Exception {
+
+        login(ztekin);
+
+        new ParafBekleyenlerPage().openPage();
+        ilkDokumaniSecBeklemeyeAlBulunmamali();
+
+        new GelenEvraklarPage().openPage();
+        ilkDokumaniSecBeklemeyeAlBulunmamali();
+
+        new PostalanacakEvraklarPage().openPage();
+        ilkDokumaniSecBeklemeyeAlBulunmamali();
     }
 
-    @Test(description = "TC2095: Gelen evarkalarda \"Beklemeye\" al butonun gelmediği görülür")
-    public void TC2095_gelen() throws Exception {
-        login(user2);
-        GelenEvraklarPage page = new GelenEvraklarPage().openPage();
-        page.filter().getTableRows().shouldHave(sizeGreaterThan(0)).first().click();
-        $("#mainInboxForm\\:beklemeyeAlEvetButton").shouldNotBe(visible);
+    @Severity(SeverityLevel.MINOR)
+    @Test(description = "TC2095: Paraf bekleyen evarkalarda \"Beklemeye\" al butonun gelmediği görülür", enabled = false)
+    public void TC2095_3_parafla() throws Exception {
+        login(ztekin);
+        new ParafBekleyenlerPage().openPage();
+        ilkDokumaniSecBeklemeyeAlBulunmamali();
     }
 
-    @Test(description = "TC2095: Postalanacak evarkalarda \"Beklemeye\" al butonun gelmediği görülür")
-    public void TC2095_postalanacak() throws Exception {
-        login(user1);
-        PostalanacakEvraklarPage page = new PostalanacakEvraklarPage().openPage();
-        page.filter().getTableRows().shouldHave(sizeGreaterThan(0)).first().click();
-        $("#mainInboxForm\\:beklemeyeAlEvetButton").shouldNotBe(visible);
+    @Severity(SeverityLevel.MINOR)
+    @Test(description = "TC2095: Gelen evarkalarda \"Beklemeye\" al butonun gelmediği görülür", enabled = false)
+    public void TC2095_4_gelen() throws Exception {
+        login(ztekin);
+        new GelenEvraklarPage().openPage();
+        ilkDokumaniSecBeklemeyeAlBulunmamali();
     }
 
-    @Step("Evrak Oluştur, imzala tıkla imzalamadan çık")
+    @Severity(SeverityLevel.MINOR)
+    @Test(description = "TC2095: Postalanacak evarkalarda \"Beklemeye\" al butonun gelmediği görülür", enabled = false)
+    public void TC2095_5_postalanacak() throws Exception {
+        login(ztekin);
+        new PostalanacakEvraklarPage().openPage();
+        ilkDokumaniSecBeklemeyeAlBulunmamali();
+    }
+
+    @Step("Seçilen evrakta \"Beklemeye Al\" butonun gelmediği görülür")
+    public TC2095 ilkDokumaniSecBeklemeyeAlBulunmamali(){
+        filtrelerPage.getSearchRows().shouldHave(sizeGreaterThan(0)).first().click();
+        beklemeyeAlNotVisible();
+        return this;
+    }
+
+    @Step("Dokumanı bulunmalı")
+    public TC2095 dokumanBulunmali(String konu){
+        filtrelerPage.findRowsWith(text(konu)).shouldHaveSize(1);
+        return this;
+    }
+
+    @Step("Dokumanı ara ve seç")
+    public TC2095 dokumaniAraVeSec(String konu){
+        filtrelerPage.findRowsWith(text(konu)).shouldHaveSize(1).first().click();
+        return this;
+    }
+
+    @Step("Dokumanı bulunamamalı")
+    public TC2095 dokumanBulunmamali(String konu){
+        filtrelerPage.findRowsWith(text(konu)).shouldHaveSize(0);
+        return this;
+    }
+
+    @Step("Beklemeye Al butonu ara")
+    public SelenideElement beklemeyeAlButton(){
+        return $x("//*[text()='Beklemeye Al']/ancestor::tbody[1]//button");
+    }
+
+    @Step("Beklemeye Al butona tıkla")
+    public TC2095 beklemeyeAlButonaTikla(){
+        beklemeyeAlButton().click();
+        return this;
+    }
+
+    @Step("Beklemeye Al butonu gelmediği görülür")
+    public TC2095 beklemeyeAlNotVisible(){
+        takeScreenshot();
+        beklemeyeAlButton().shouldNotBe(visible);
+        return this;
+    }
+
+    @Step("Uyarı Messajı: Evrakı beklemeye almak istediğinize emin misiniz? Evet")
+    public TC2095 beklemeyeAlOnayMessage(boolean evet){
+        if (evet) {
+            $("#mainInboxForm\\:beklemeyeAlEvetButton").shouldBe(visible);
+            $("#mainInboxForm\\:beklemeyeAlEvetButton").pressEnter();
+        }
+        return this;
+    }
+
+    @Step("Evrak oluştur, imzala tıkla ve imzalamadan çık")
     public String evrakOlustur() {
         String konuKodu = "Gelen-Giden Evrak";
         String evrakTuru = "Resmi Yazışma";
@@ -91,10 +162,13 @@ public class TC2095 extends BaseTest {
         String editorIcerik = "Bu bir deneme mesajıdır. Lütfen dikkate almayınız.";
         String ekleriDosyaAciklama = "Açıklama";
 
+        EvrakOlusturPage evrakOlustur = new EvrakOlusturPage();
+
         String konu = "TC2095_" + getSysDate();
         login(user1);
-        evrakOlustur = new EvrakOlusturPage().openPage();
-        EvrakOlusturPage.BilgilerTab tab = evrakOlustur.bilgilerTabiAc()
+        EvrakOlusturPage.BilgilerTab tab = evrakOlustur
+                .openPage()
+                .bilgilerTabiAc()
                 .konuKoduDoldur(konuKodu)
                 .konuDoldur(konu)
                 .kaldirilacakKlasorler(kaldirilacakKlasorler)
@@ -113,24 +187,47 @@ public class TC2095 extends BaseTest {
 //                .onayAkisiEkle("User1 TEST")
 //                .onayAkisiKullaniciTipiSec("User1 TEST", "İmzalama")
                 .onayAkisiEkle()
-//                .onayAkisiKullaniciTipiSec("User1 TEST", akisAdim)
+//                .onayAkisiKullaniciTipiSec(user1.getName(), akisAdim)
                 .akisAdimSec(akisAdim)
 //                .akisAdimSec(akisAdim)
                 .onayAkisiKullan()
                 .miatDoldur(miat);
 
-
         evrakOlustur.editorTabAc()
                 .editorIcerikDoldur(editorIcerik)
                 .imzala()
                 .popupImzalaVeEvrakKapatma();
+
+        log.info("Oluşturan dokümanın konu: " + konu);
         return konu;
+    }
+
+    @Step("İmzala butonu ara")
+    public SelenideElement imzalaButton(){
+        return $x("//*[text()='İmzala']/ancestor::tbody[1]//button");
+    }
+
+    @Step("İmzala butona tıkla")
+    public TC2095 imzalaButonaTikla(){
+        imzalaButton().click();
+        return this;
+    }
+
+    @Step("s-İmzla radio butonu ara")
+    public SelenideElement sImzalaRadio(){
+        return $("#imzalaForm\\:imzalaRadio .ui-radiobutton-box");
+    }
+
+    @Step("s-İmzla seç")
+    public TC2095 sImzalaRadioSec(){
+        sImzalaRadio().shouldBe(visible).click();
+        return this;
     }
 
     @Step("İmzala")
     private void imzala() {
-        $x("//*[text()='İmzala']/ancestor::tbody[1]//button").click();
-        $("div[id='imzalaForm:imzalaRadio']").shouldBe(visible).click();
+        imzalaButonaTikla();
+        sImzalaRadioSec();
 //        clickJs($("#imzalaForm\\:imzalaRadio").find(By.tagName("input")));
         for (int i = 0; i < Configuration.timeout/1000; i++) {
             sleep(1000);
@@ -144,6 +241,5 @@ public class TC2095 extends BaseTest {
                 break;
             }
         }
-
     }
 }

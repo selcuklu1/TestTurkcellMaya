@@ -2,9 +2,11 @@ package common;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.testng.BrowserPerTest;
 import data.User;
 import io.qameta.allure.Step;
 import listeners.SettingsListener;
+import org.openqa.selenium.WebDriver;
 import org.testng.annotations.*;
 import pages.LoginPage;
 import pages.MainPage;
@@ -15,7 +17,7 @@ import java.util.Locale;
 import static data.TestData.belgenetURL;
 
 //BrowserPerTest.class
-@Listeners({SettingsListener.class})
+@Listeners({SettingsListener.class})//, BrowserPerTest.class})
 public class BaseTest extends BaseLibrary {
 
     @BeforeSuite(alwaysRun = true)
@@ -45,8 +47,8 @@ public class BaseTest extends BaseLibrary {
         Configuration.reportsFolder = "test-result/reports";
         Configuration.screenshots = false;
         Configuration.savePageSource = false;
-        Configuration.collectionsTimeout = 30000;
-        Configuration.timeout = 30000;
+        Configuration.collectionsTimeout = 20000;
+        Configuration.timeout = 20000;
         //Configuration.clickViaJs = true;
         // Configuration.holdBrowserOpen = true;
         //Configuration.headless = false;
@@ -60,6 +62,7 @@ public class BaseTest extends BaseLibrary {
 
         Configuration.baseUrl = belgenetURL;
         //endregion
+
 
         // System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, "/dev/null");
 
@@ -89,6 +92,7 @@ public class BaseTest extends BaseLibrary {
 
         log.info("Browser has been closed.");
     }
+
 
     public void clearCookies() throws Exception {
         // Selenide.close();

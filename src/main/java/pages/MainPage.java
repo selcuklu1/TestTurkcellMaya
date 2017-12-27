@@ -1,21 +1,16 @@
 package pages;
 
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.SelenideElement;
-import com.codeborne.selenide.WebDriverRunner;
+import com.codeborne.selenide.*;
 import common.BaseLibrary;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
-import pages.pageComponents.Filtreler;
-import pages.pageComponents.IslemMesajlari;
-import pages.pageComponents.SolMenu;
-import pages.pageComponents.UstMenu;
+import pages.pageComponents.*;
 import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
 import static com.codeborne.selenide.Selenide.executeJavaScript;
 
 public class MainPage extends BaseLibrary {
@@ -285,6 +280,25 @@ public class MainPage extends BaseLibrary {
         SelenideElement menuLink =element.find(By.xpath("//span[starts-with(text(),'" + menuText + "')]")).waitUntil(exist, Configuration.timeout);
         executeJavaScript("arguments[0].click();", menuLink);
         waitForLoading(WebDriverRunner.getWebDriver());
+        return this;
+    }
+
+    public ConfirmDialog confirmDialog() {return new ConfirmDialog();}
+
+    public ElementsCollection getPageCloseButtons(){
+        return $$("div[id^='window'][id$='Dialog'] > div[class~='ui-dialog-titlebar'] > a[class~='ui-dialog-titlebar-close']");
+    }
+
+    public ElementsCollection getPageTitles(){
+        return $$("div[id^='window'][id$='Dialog'] > div[class~='ui-dialog-titlebar'] > span[class='ui-dialog-title']");
+    }
+
+    @Step("\"{tabName}\" tabı aç")
+    public MainPage openTab(String tabName) {
+        By locator = By.xpath("//td[contains(@class,'tabMenuContainer')" +
+                " and descendant::span[contains(@class,'tabMenu')" +
+                " and text()='" + tabName + "']]//button");
+        $(locator).click();
         return this;
     }
 

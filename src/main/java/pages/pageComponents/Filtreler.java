@@ -2,6 +2,7 @@ package pages.pageComponents;
 
 import com.codeborne.selenide.*;
 import common.BaseLibrary;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NotFoundException;
@@ -12,19 +13,20 @@ import static com.codeborne.selenide.Selenide.*;
 
 public class Filtreler extends BaseLibrary {
 
-
-    SelenideElement pageTilte = $(".ui-inbox-header-title");
-
-    String filtreMainDivId = "mainInboxForm:inboxDataTable:filtersAccordion";
+    //    SelenideElement pageTilte = $(".ui-inbox-header-title");
+    private String filtreMainDivId = "mainInboxForm\\:inboxDataTable\\:filtersAccordion";
     SelenideElement filtre = $("[id='" + filtreMainDivId + "'] h3");
     SelenideElement filtersGrid = $(By.id(filtreMainDivId + ":filtersGrid"));
-    ElementsCollection filterList = $$("[id='mainInboxForm:inboxDataTable:filtersAccordion:filtersGrid'] label");
+    ElementsCollection filterList = filtersGrid.$$("label");
+
+    SelenideElement searchTable = $("#mainInboxForm\\:inboxDataTable_data");
+    SelenideElement nextPageButton = $("#mainInboxForm\\:inboxDataTable span[class~='ui-paginator-next']");
 
     By icerikGoster = By.cssSelector("button[id$='detayGosterButton']");
-    SelenideElement sonucTablosu = $(By.id("mainInboxForm:inboxDataTable_data"));
+//    ElementsCollection searchRows = searchTable.$$("tr[data-ri][role='row']");
 
 
-    @Step("")
+    @Step("İçetik göster")
     public By icerikGoster() {
         return icerikGoster;
     }
@@ -32,6 +34,60 @@ public class Filtreler extends BaseLibrary {
     @Step("\"Filtreler\"i genişlet")
     public void filtrelerAc() {
         if (filtre.attr("aria-expanded").equalsIgnoreCase("false")) filtre.find("a").click();
+    }
+
+    private SelenideElement getRowWith(Condition condition) {
+        while (true) {
+            searchTable.shouldBe(visible);
+
+            ElementsCollection rows = getSearchRows();
+            rows.shouldHave(sizeGreaterThan(0));
+
+            for (SelenideElement row : rows) {
+                row.shouldBe(visible);
+                ElementsCollection filtered = row.$$("[class='searchText']").filterBy(condition);
+                if (filtered.size() > 0)
+                    return row;
+            }
+
+            if (nextPageButton.has(cssClass("ui-state-disabled")))
+                throw new NotFoundException("Satır bulunamadı: filterBy: " + condition.toString());
+
+            nextPageButton.click();
+        }
+    }
+
+    @Step("Arama tablosundan satırları al")
+    public ElementsCollection getSearchRows(){
+        searchTable.shouldBe(visible);
+        Allure.addAttachment("Satır sayısı:" + String.valueOf(searchTable.$$("tr[data-ri][role='row']").size()),
+                (searchTable.$$("tr[data-ri][role='row']").size()>0)?searchTable.$$("tr[data-ri][role='row']").texts().toString(): "");
+        takeScreenshot();
+        return searchTable.$$("tr[data-ri][role='row']");
+    }
+
+    /**
+     * Find rows by Selenide.Condition in all pages
+     *
+     * @param condition
+     * @return
+     */
+    @Step("Arama tablosunda satırı bul")
+    public ElementsCollection findRowsWith(Condition condition) {
+        while (true) {
+//            System.out.println("===================");
+//            System.out.println(searchTable.innerHtml());
+//            System.out.println("===================");
+//            rows.shouldHave(sizeGreaterThan(0));
+            ElementsCollection filtered = getSearchRows().filterBy(condition);
+
+            if (filtered.size() > 0 || nextPageButton.has(cssClass("ui-state-disabled"))){
+                Allure.addAttachment("Filtereye göre bulunan satırlar", filtered.texts().toString());
+                return filtered;
+            }
+
+            nextPageButton.click();
+        }
     }
 
 
@@ -70,74 +126,9 @@ public class Filtreler extends BaseLibrary {
         SelenideElement parentElement = getParentElement(element, "TD");
     }
 
-    public String getTitle() {
-        return pageTilte.text().trim();
-    }
+//    private String getTitle() {
+//        return pageTilte.text().trim();
+//    }
 
-    private SelenideElement getRowWith(Condition condition) {
-
-        while (true) {
-            SelenideElement table = $("#mainInboxForm\\:inboxDataTable_data").shouldBe(visible);
-            //SelenideElement row = table.$x("//*[contains(text(),'" + text + "')]/ancestor::tr[@data-ri and @role='row']");
-            SelenideElement nextPage = $("#mainInboxForm\\:inboxDataTable span[class~='ui-paginator-next']");
-            ElementsCollection rows = table.$$("tr[data-ri][role='row']").shouldHave(sizeGreaterThan(0));
-
-            for (SelenideElement row : rows) {
-                row.shouldBe(visible);
-                ElementsCollection filtered = row.$$("[class='searchText']").filterBy(condition);
-                if (filtered.size() > 0)
-                    return row;
-            }
-            if (nextPage.has(cssClass("ui-state-disabled")))
-                throw new NotFoundException("Row bulunamadı: filterBy: " + condition.toString());
-
-            nextPage.click();
-        }
-    }
-
-
-    SelenideElement mainInbox = $("#mainInboxForm\\:inboxDataTable_data");
-    SelenideElement nextPage = $("#mainInboxForm\\:inboxDataTable span[class~='ui-paginator-next']");
-
-    public ElementsCollection getTableRows(){
-        mainInbox.shouldBe(visible);
-        return mainInbox.$$("tr[data-ri][role='row']");
-    }
-
-    /**
-     * Find rows by Selenide.Condition in all pages
-     *
-     * @param condition
-     * @return
-     */
-    public ElementsCollection findRowsWith(Condition condition) {
-        while (true) {
-            System.out.println("===================");
-            System.out.println(mainInbox.innerHtml());
-            System.out.println("===================");
-//            rows.shouldHave(sizeGreaterThan(0));
-            ElementsCollection filtered = getTableRows().filterBy(condition);
-            if (filtered.size() > 0 || nextPage.has(cssClass("ui-state-disabled")))
-                return filtered;
-
-            /*if (nextPage.has(cssClass("ui-state-disabled")))
-                return filtered;*/
-
-            /*nextPage.shouldBe(visible);
-            rows.last().shouldBe(visible);
-            System.out.println(condition.toString());*/
-
-            /*filtered = rows.filterBy(condition);
-            if (filtered.size() > 0)
-                return filtered;
-
-            if (nextPage.has(cssClass("ui-state-disabled")))
-                return filtered;*/
-
-            nextPage.click();
-
-        }
-
-    }
 
 }

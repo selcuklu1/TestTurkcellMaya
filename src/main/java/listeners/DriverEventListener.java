@@ -74,11 +74,12 @@ public class DriverEventListener extends BaseLibrary implements WebDriverEventLi
         By loadingLocator = By.cssSelector("div[style*='display: block;'] .loading");
         long timeout = Configuration.timeout/1000;
 
-        //İşlem Mesajları için loading kaybolması beklememeli.
+        waitForLoadingJS(driver);
+        /*//İşlem Mesajları için loading kaybolması beklememeli.
         if (by.equals(By.cssSelector(".lobibox-notify-title")) || by.equals(By.cssSelector(".lobibox-notify-msg")))
-                return;
+                return;*/
 
-        final String[] readyState = new String[1];
+        /*final String[] readyState = new String[1];
         //JS readyStates: loading, interactive, complete
         new WebDriverWait(driver, timeout, 10)
                 .until(Boolean -> {
@@ -88,9 +89,9 @@ public class DriverEventListener extends BaseLibrary implements WebDriverEventLi
         if (log) {
             Timestamp timestamp = new Timestamp(System.currentTimeMillis());
             System.out.println(timestamp + "    readyState:  " + readyState[0]);
-        }
+        }*/
 
-        //Loading aramalarda beklememeli.
+        /*//Loading aramalarda beklememeli.
         if (by.equals(loadingLocator))
             return;
 
@@ -104,6 +105,8 @@ public class DriverEventListener extends BaseLibrary implements WebDriverEventLi
             System.out.println(timestamp + "    looking for element: " + by.toString());
         }
 
+        }*/
+
     }
 
     public void afterFindBy(By by, WebElement element, WebDriver driver) {
@@ -114,6 +117,7 @@ public class DriverEventListener extends BaseLibrary implements WebDriverEventLi
     }
 
     public void beforeClickOn(WebElement element, WebDriver driver) {
+        waitForLoadingJS(driver);
         new WebDriverWait(driver, Configuration.timeout/1000).until(elementToBeClickable(element));
 
         Selenide.sleep(2000);
@@ -148,7 +152,7 @@ public class DriverEventListener extends BaseLibrary implements WebDriverEventLi
     }
 
     public void beforeChangeValueOf(WebElement element, WebDriver driver, CharSequence[] keysToSend) {
-
+        waitForLoadingJS(driver);
     }
 
     public void afterChangeValueOf(WebElement element, WebDriver driver, CharSequence[] keysToSend) {
