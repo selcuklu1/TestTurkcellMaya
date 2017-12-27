@@ -192,6 +192,7 @@ public class BirimIcerikSablonlarPage extends MainPage {
         return count;
     }
 
+    @Step("Şablonu bul")
     public SelenideElement findSablonRowInTable(String sablonAdi) {
         while (true) {
             $$(rowsBirimSablonlari).first().shouldBe(visible);
@@ -322,10 +323,19 @@ public class BirimIcerikSablonlarPage extends MainPage {
         return this;
     }
 
-
     @Step("Evrak Tipi seç")
     public BirimIcerikSablonlarPage evrakTipiSec(String option){
         selEvrakTipi.selectOption(option);
+        return this;
+    }
+
+    @Step("Şablonda Detay butona tıkla")
+    public BirimIcerikSablonlarPage detayButonaTikla(SelenideElement row){
+        try {
+            row.$("[id$='sablonListesiDetayButton_id']").sendKeys("\n");
+        } catch (Exception e) {
+        }
+        row.$("[id$='sablonListesiDetayButton_id']").click();
         return this;
     }
 }
