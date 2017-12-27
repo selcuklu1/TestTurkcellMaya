@@ -141,7 +141,7 @@ public class KararYazisiOlusturmaTest extends BaseTest{
         String basariMesaji = "İşlem başarılıdır!";
         String kaldirilicakKlasor = "Gündem";
         String konuKodu = "Usul ve Esaslar";
-        String konuKoduRandom = createRandomText(12);
+        String konuKoduRandom = "TC-2240-"+createRandomNumber(15);
         String evrakTarihi = getSysDateForKis();
         String kurum = "BÜYÜK HARFLERLE KURUM";
         String kullaniciAdi = "Yazılım Geliştirme Direktörlüğ";
@@ -489,9 +489,9 @@ public class KararYazisiOlusturmaTest extends BaseTest{
     public void TC1715() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
-        String konuKodu = "Usul ve Esaslar";
+        String konuKodu = "Diğer";
         String kaldirilicakKlasor = "Gündem";
-        String konuKoduRandom = createRandomText(12);
+        String konuKoduRandom = "TC-1715_"+createRandomNumber(12);
         String evrakTarihi = getSysDateForKis();
         String kurum = "BÜYÜK HARFLERLE KURUM";
         String kullaniciAdi = "Zübeyde Tekin";
@@ -500,20 +500,21 @@ public class KararYazisiOlusturmaTest extends BaseTest{
         gelenEvrakKayitPage
                 .openPage()
                 .konuKoduDoldur(konuKodu)
+                .konuDoldur(konuKoduRandom)
                 .evrakTarihiDoldur(evrakTarihi)
                 .geldigiKurumDoldurLovText(kurum)
                 .evrakSayiSagDoldur()
                 .havaleIslemleriKisiDoldur(kullaniciAdi)
                 .kaydet()
+                //.benzerKayit()
                 .evetDugmesi()
                 .yeniKayitButton();
-
 
         gelenEvraklarPage
                 .openPage()
                 .evrakSec()
                 .evrakKapat()
-                .evrakKapatKaldirilacakKlasorlerDoldur(kaldirilicakKlasor)
+                .evrakKapatKaldirilacakKlasorlerDoldur(kaldirilicakKlasor,kaldirilicakKlasor)
                 .evrakKapatKonuKodu(konuKodu)
                 .evrakKapatEvrakKapat();
 

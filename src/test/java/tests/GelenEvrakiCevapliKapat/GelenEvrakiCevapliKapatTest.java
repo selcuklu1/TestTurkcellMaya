@@ -63,7 +63,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
 
         String basariMesaji = "İşlem başarılıdır!";
         String konuKodu = "Diğer";
-        String konuKoduRandom = "TC-2227-" + createRandomNumber(10);
+        String konuKoduRandom = "TC-930-" + createRandomNumber(10);
         String evrakTarihi = getSysDateForKis();
         String kurum = "BÜYÜK HARFLERLE KURUM";
         String gizlilikDerecesi = "Gizli";
@@ -104,11 +104,12 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .bilgilerTabiAc()
                 .konuKoduSec(konuKodu)
                 .kaldiralacakKlasorlerSec(konuKodu)
-                .onayAkisiDoldur2(onayAkisi);
+                .onayAkisiEkle()
+                .onayAkisiEkleIlkImzalaSec2("İmzalama")
+                .onayAkisiKullan2();
 
         evrakOlusturPage
-                .kaydetOnayaSun2()
-                .kaydetOnayaSunAciklamaDoldur2(icerik)
+                .cevapYazImzalama()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
         gelenEvraklarPage
@@ -135,7 +136,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
 
         String basariMesaji = "İşlem başarılıdır!";
         String konuKodu = "Diğer";
-        String konuKoduRandom = "TC-2227-" + createRandomNumber(10);
+        String konuKoduRandom = "TC-931-" + createRandomNumber(10);
         String evrakTarihi = getSysDateForKis();
         String kurum = "BÜYÜK HARFLERLE KURUM";
         String gizlilikDerecesi = "Gizli";

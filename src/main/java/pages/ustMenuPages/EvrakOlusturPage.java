@@ -69,7 +69,7 @@ public class EvrakOlusturPage extends MainPage {
     SelenideElement btnKaydetEvet = $(By.id("kaydetConfirmForm:kaydetEvetButton"));
     SelenideElement btnKaydetHayir = $(By.id("kaydetConfirmForm:kaydetHayirButton"));
     //endregion
-
+    ElementsCollection cevapYazImzalama = $$("[id='windowCevapEvrakForm'] [id^='windowCevapEvrakForm'] table div[class='ui-tabmenu ui-tabmenu-right'] td[class='buttonMenuContainerDefault'] button");
     @Step("Evrak Oluştur sayfası aç")
     public EvrakOlusturPage openPage() {
         new UstMenu().ustMenu("Evrak Oluştur");
@@ -91,6 +91,12 @@ public class EvrakOlusturPage extends MainPage {
     @Step("PDF Önizleme")
     public EvrakOlusturPage pdfOnIzleme() {
         btnPDFOnizleme.click();
+        return this;
+    }
+
+    @Step("İmzalama")
+    public EvrakOlusturPage cevapYazImzalama(){
+        cevapYazImzalama.get(2).click();
         return this;
     }
 
@@ -879,7 +885,8 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Onay akışı doldur")
         public BilgilerTab onayAkisiTemizle(String deger) {
-            $(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:akisLov:j_idt134")).click();
+            ElementsCollection btnOnayAkisiKaldir = $$("[id='yeniGidenEvrakForm:evrakBilgileriList:18:akisLov:LovSecilen'] button");
+            btnOnayAkisiKaldir.get(0).pressEnter();
             // comboLov("yeniGidenEvrakForm:evrakBilgileriList:18:akisLov:LovText").selectLov(deger);
             cmbOnayAkisi.type(deger).titleItems().first().click();
 
