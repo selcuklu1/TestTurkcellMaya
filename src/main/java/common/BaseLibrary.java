@@ -797,7 +797,7 @@ public class BaseLibrary extends ElementsContainer {
             docPath = "/selenium/";
         } else if (operationSystem.is(Platform.MAC)) {
             //TODO: Mac pathi verilecek
-            docPath = "/selenium/";
+            docPath = "/documents/";
         }
         System.out.println("File path: " + docPath);
         return docPath;

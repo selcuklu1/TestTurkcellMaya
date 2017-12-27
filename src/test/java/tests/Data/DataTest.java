@@ -100,7 +100,8 @@ public class DataTest extends BaseTest {
         String kaldirilacakKlasorler = "KURUL KARARLARI";
         String editorIcerik = "Bu bir deneme mesajıdır. Lütfen dikkate almayınız.";
         String ekleriDosyaAciklama = "Açıklama";
-        String filePath = "C:\\Users\\TheKing\\Desktop\\s1.txt";
+        String filePath = System.getProperty("user.dir") + "/Documents/Otomasyon.pdf";//"C:\\Users\\TheKing\\Desktop\\s1.txt";
+
         login("ztekin", "123");
         evrakOlustur = new EvrakOlusturPage();
         evrakOlustur

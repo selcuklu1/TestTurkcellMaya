@@ -1,13 +1,11 @@
 package tests.BirimIcerikSablonu;
 
 import com.codeborne.selenide.*;
-import com.sun.xml.internal.ws.api.ha.StickyFeature;
 import common.BaseTest;
 import data.User;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Step;
-import org.apache.xmlbeans.impl.xb.xsdschema.All;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.testng.Assert;

@@ -126,7 +126,8 @@ public class EvrakOlusturPage extends MainPage {
         return this;
     }
 
-    @Step("\"{0}\" ekran açılması beklenen statü: {1}")
+//    @Step("\"{0}\" ekran açılması beklenen statü: {0}")
+    @Step("PDF önizleme kısayol gönder")
     public EvrakOlusturPage PDFOnizlemeKisayolGonder(String kisayol) throws InterruptedException {
 
         SelenideElement tc = $(By.xpath("//div[@id='viewer']/div[@class='page']//div[.='T.C.']"));
@@ -138,7 +139,7 @@ public class EvrakOlusturPage extends MainPage {
         return this;
     }
 
-    @Step("{0} ekran açılması beklenen statü: {1}")
+    @Step("{ekranAdi} ekran açılması beklenen statü: {acilmali}")
     public EvrakOlusturPage kisayolEkranKontrol(String ekranAdi, boolean acilmali) {
         boolean t = $$("[id^='window'][id$='Button_ID'] .ui-button-text")
                 .filterBy(Condition.text(ekranAdi)).size() > 0;
