@@ -89,8 +89,8 @@ public class OnayAkisYonetimiPage extends MainPage {
     }
 
     @Step("Filtrede durum seç")
-    public OnayAkisYonetimiPage filtreDurumSec(String secim) {
-        cmbFiltreDurum.selectOptionByValue(secim);
+    public OnayAkisYonetimiPage filtreDurumSec(String filtreDurumu) {
+        cmbFiltreDurum.selectOptionByValue(filtreDurumu);
         return this;
     }
 
@@ -119,8 +119,8 @@ public class OnayAkisYonetimiPage extends MainPage {
 
 
     @Step("İmzacı seç")
-    public OnayAkisYonetimiPage imzacıSonSec(String value) {
-        cmbKullaniciBirimDataTable.last().selectOption(value);
+    public OnayAkisYonetimiPage imzacıSonSec(String imzaci) {
+        cmbKullaniciBirimDataTable.last().selectOption(imzaci);
         return this;
     }
 
@@ -202,7 +202,7 @@ public class OnayAkisYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Pasif yap")
+    @Step("Ada göre pasif yap")
     public OnayAkisYonetimiPage adaGorePasifYap(String kullanici) {
 
         tblOnayAkisListesi
@@ -213,7 +213,7 @@ public class OnayAkisYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Aktif yap")
+    @Step("Ada göre aktif yap")
     public OnayAkisYonetimiPage adaGoreAktifYap(String kullanici) {
 
         tblOnayAkisListesi
@@ -224,7 +224,7 @@ public class OnayAkisYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Kullanıcı birimin seçili geldiği kontrolu")
+    @Step("Kullanıcı birimin seçili gelme kontrolu")
     public OnayAkisYonetimiPage birimKontrol(String birim) {
         // Assert.assertEquals(txtFiltreBirim.selectedTitles().filterBy(Condition.text(birim)).size(), 1);
         txtFiltreBirim.lastSelectedLovTitle().shouldHave(text(birim));
@@ -233,12 +233,12 @@ public class OnayAkisYonetimiPage extends MainPage {
     }
 
     @Step("Durum alanı kontrolu")
-    public OnayAkisYonetimiPage durumKontrol(String aktifler) {
-        Assert.assertEquals(cmbFiltreDurum.getText(), aktifler);
+    public OnayAkisYonetimiPage durumKontrol(String filtreDurum) {
+        Assert.assertEquals(cmbFiltreDurum.getText(), filtreDurum);
         return this;
     }
 
-    @Step("Tüm liste kayıt kontrolu")
+    @Step("Aktifler tüm liste kayıt kontrolu")
     public OnayAkisYonetimiPage aktiflerTumListeKayitKontrolu() throws InterruptedException {
 
         String formOnayAkisiYonetimi = "onayAkisiYonetimiListingForm";
@@ -258,7 +258,7 @@ public class OnayAkisYonetimiPage extends MainPage {
     }
 
 
-    @Step("Onay akışı Pasif ise Aktif Yap")
+    @Step("Onay akışı pasif ise aktif yap")
     public OnayAkisYonetimiPage onayAkisiPasifIseAktifYap(String onayAkisi) {
 
 

@@ -302,7 +302,7 @@ public class BirimIcerikSablonuTest extends BaseTest {
     }
 
 
-    @Test(enabled = false, description = "TC1079: Şablon güncelleme", dependsOnMethods = {"tc1085"}, priority = 11)
+    @Test(enabled = true, description = "TC1079: Şablon güncelleme", dependsOnMethods = {"tc1085"}, priority = 11)
     public void tc1079() {
         login();
         birimIcerikSablonlarPage = new BirimIcerikSablonlarPage().openPage();
@@ -335,7 +335,7 @@ public class BirimIcerikSablonuTest extends BaseTest {
         birimIcerikSablonlarPage.islemMesaji().basariliOlmali();
     }
 
-    @Test(enabled = false, description = "TC1079: Şablon güncellendiğini kontrolü", dependsOnMethods = {"tc1079"}, priority = 12)
+    @Test(enabled = true, description = "TC1079: Şablon güncellendiğini kontrolü", dependsOnMethods = {"tc1079"}, priority = 12)
     public void tc1079_kontrol() {
         login("optiimtest4", "123");
         EvrakOlusturPage evrakOlusturPage = new EvrakOlusturPage().openPage();
@@ -367,7 +367,7 @@ public class BirimIcerikSablonuTest extends BaseTest {
 
     }
 
-    @Test(enabled = false, description = "Şablonları sil", dependsOnMethods = {"tc1079_kontrol"}, priority = 13)
+    @Test(enabled = true, description = "Şablonları sil", dependsOnMethods = {"tc1079_kontrol"}, priority = 13)
     public void sablonSil() {
         login();
         birimIcerikSablonlarPage = new BirimIcerikSablonlarPage().openPage();

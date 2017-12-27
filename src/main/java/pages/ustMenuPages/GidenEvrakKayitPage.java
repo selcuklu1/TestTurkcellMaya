@@ -66,10 +66,10 @@ public class GidenEvrakKayitPage extends MainPage {
     SelenideElement popUpEvrakDefterBasariliKapat = $(By.id("gidenEvrakDefterKaydiBasarili:vazgecButton"));
     //endregion
 
+    @Step("Giden Evrak Kayit sayfasını aç")
     public GidenEvrakKayitPage openPage() {
         new UstMenu().ustMenu("Giden Evrak Kayıt");
         $("form[id='gidenEvrakDefterKaydiForm']").shouldBe(visible);
-
         return this;
     }
 
@@ -80,16 +80,16 @@ public class GidenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("Gereği seçim tipi alanında {value} seç")
+    @Step("Gereği seçim tipi alanında \"{kisiKurum}\" seç")
     public GidenEvrakKayitPage geregiSecimTipiSecByText(String kisiKurum) {
         cmbGeregiSecimTipi.selectOption(kisiKurum);
         return this;
     }
 
     @Step("Gereği doldur")
-    public GidenEvrakKayitPage geregiDoldur(String geregiAdSoyad) {
+    public GidenEvrakKayitPage geregiDoldur(String geregi) {
 
-        cmbGeregi.selectLov(geregiAdSoyad);
+        cmbGeregi.selectLov(geregi);
 
         System.out.println("title: " + cmbGeregi.lastSelectedLovTitleText());
         System.out.println("detail: " + cmbGeregi.lastSelectedLovDetailText());
@@ -108,7 +108,7 @@ public class GidenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("Kişinin Geregi alanında görüntülenmediği kontrolu")
+    @Step("Kişinin Geregi alanında görüntülenmeme kontrolu")
     public GidenEvrakKayitPage geregiAlanindaGoruntulenmemeKontrolu(String kisi) {
 
         boolean selectable = comboLov(cmbGeregiBy).isLovValueSelectable(kisi);
@@ -135,16 +135,16 @@ public class GidenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("Bilgi seçim tipi alanında {value} seç")
-    public GidenEvrakKayitPage bilgiSecimTipiSec(String bilgi) {
+    @Step("Bilgi seçim tipi alanında \"{bilgiSecimTipi}\" seç")
+    public GidenEvrakKayitPage bilgiSecimTipiSec(String bilgiSecimTipi) {
         cmbBilgiSecimTipi.sendKeys(Keys.SHIFT);
-        cmbBilgiSecimTipi.selectOption(bilgi);
+        cmbBilgiSecimTipi.selectOption(bilgiSecimTipi);
         return this;
     }
 
-    @Step("Bilgi seçim tipi alanında {value} seç")
-    public GidenEvrakKayitPage bilgiSecimTipiSecByText(String bilgi) {
-        cmbBilgiSecimTipi.selectOption(bilgi);
+    @Step("Bilgi seçim tipi alanında \"{bilgiSecimTipi}\" seç")
+    public GidenEvrakKayitPage bilgiSecimTipiSecByText(String bilgiSecimTipi) {
+        cmbBilgiSecimTipi.selectOption(bilgiSecimTipi);
         return this;
     }
 
@@ -170,7 +170,7 @@ public class GidenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("Kişinin Bilgi alanında görüntülenmediği kontrolu")
+    @Step("Kişinin Bilgi alanında görüntülenmeme kontrolu")
     public GidenEvrakKayitPage bilgiAlanindaGoruntulenmemeKontrolu(String kisi) {
 
         boolean selectable = comboLov(cmbBilgiBy).isLovValueSelectable(kisi);
@@ -201,6 +201,7 @@ public class GidenEvrakKayitPage extends MainPage {
         return this;
     }
 
+    @Step("Seçilen gereği sil")
     public GidenEvrakKayitPage secilenGeregiSil() {
         btnGeregiDelete.shouldBe(Condition.visible);
         clickJs(btnGeregiDelete);

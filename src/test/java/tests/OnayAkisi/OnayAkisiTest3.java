@@ -18,6 +18,8 @@ import pages.ustMenuPages.KararYazisiOlusturPage;
 import pages.ustMenuPages.OlurYazisiOlusturPage;
 import pages.ustMenuPages.OnayAkisYonetimiPage;
 
+import java.lang.reflect.Method;
+
 public class OnayAkisiTest3 extends BaseTest {
 
     EvrakOlusturPage evrakOlusturPage;
@@ -27,7 +29,10 @@ public class OnayAkisiTest3 extends BaseTest {
     GelenEvraklarPage gelenEvraklarPage;
 
     @BeforeMethod
-    public void loginBeforeTests() {
+    public void beforeTests(Method method) {
+
+        log.info(method.getName() + "Nolu test senaryosu başladı.");
+
         login();
         evrakOlusturPage = new EvrakOlusturPage();
         onayAkisYonetimiPage = new OnayAkisYonetimiPage();

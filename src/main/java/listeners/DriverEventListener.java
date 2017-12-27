@@ -2,25 +2,18 @@ package listeners;
 
 
 import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.SelenideElement;
-import com.codeborne.selenide.WebDriverRunner;
 import common.BaseLibrary;
-import org.openqa.selenium.*;
-import org.openqa.selenium.interactions.Action;
-import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.events.WebDriverEventListener;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.sql.Timestamp;
-import java.util.function.Function;
 
-import static com.codeborne.selenide.Configuration.timeout;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.executeJavaScript;
-import static org.openqa.selenium.support.ui.ExpectedConditions.*;
+import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
+import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfAllElements;
 
 public class DriverEventListener extends BaseLibrary implements WebDriverEventListener {
 
@@ -76,6 +69,7 @@ public class DriverEventListener extends BaseLibrary implements WebDriverEventLi
 
 
     public void beforeFindBy(By by, WebElement element, WebDriver driver) {
+
         By loadingLocator = By.cssSelector("div[style*='display: block;'] .loading");
         long timeout = Configuration.timeout/1000;
 
