@@ -2,11 +2,9 @@ package common;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.testng.BrowserPerTest;
 import data.User;
 import io.qameta.allure.Step;
 import listeners.SettingsListener;
-import org.openqa.selenium.WebDriver;
 import org.testng.annotations.*;
 import pages.LoginPage;
 import pages.MainPage;
