@@ -117,7 +117,6 @@ public class DriverEventListener extends BaseLibrary implements WebDriverEventLi
     }
 
     public void beforeClickOn(WebElement element, WebDriver driver) {
-        Selenide.sleep(2000);
         waitForLoadingJS(driver);
         new WebDriverWait(driver, Configuration.timeout/1000).until(elementToBeClickable(element));
 
