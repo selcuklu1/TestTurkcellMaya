@@ -1,9 +1,6 @@
 package common;
 
-import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.SelenideElement;
-import com.codeborne.selenide.WebDriverRunner;
+import com.codeborne.selenide.*;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
@@ -32,7 +29,7 @@ import static com.codeborne.selenide.Selenide.*;
 import static org.apache.commons.io.FileUtils.deleteDirectory;
 import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfElementLocated;
 
-public class BaseLibrary {
+public class BaseLibrary extends ElementsContainer {
 
     private int doWaitLoading = 0;
     private boolean doNotWaitLoading = false;
@@ -101,9 +98,10 @@ public class BaseLibrary {
         });
     }
 
-    public void waitForLoadingToDisappear(WebDriver driver) {
+    public void waitForLoadingToDisappear(WebDriver driver) throws InterruptedException {
 //        driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
 
+        //Thread.sleep(3000);
         try {
 
             /*List<WebElement> loading = driver.findElements(By.className("loading"));
@@ -152,11 +150,48 @@ public class BaseLibrary {
         this.doNotWaitLoading = doNotWaitLoading;
     }
 
-    public void waitForLoading(WebDriver driver) {
+    public void waitForLoading(WebDriver driver) throws InterruptedException {
         if (doNotWaitLoading)
             return;
         //waitForJS();
         waitForLoadingToDisappear(driver);
+    }
+
+    public void waitForLoadingJS(WebDriver driver){
+        long timeout = Configuration.timeout / 1000;
+        new WebDriverWait(driver, timeout, 10).until(driver1 ->
+        {
+            JavascriptExecutor js = (JavascriptExecutor) driver1;
+            boolean isJsFinished = false;
+            try {
+                isJsFinished = (boolean) js.executeScript("return (document.readyState == \"complete\" || document.readyState == \"interactive\")");
+            } catch (Exception e) {
+                isJsFinished = true;
+                System.out.println("Load: isJsFinished error: " + e.getMessage());
+            }
+
+            //            boolean isAjaxFinished = (boolean) ((JavascriptExecutor) driver1).
+//                    executeScript("return jQuery.active == 0");
+
+            boolean isAjaxFinished = false;
+            try {
+                isAjaxFinished = (boolean) js.executeScript("var result = true; try { result = (typeof jQuery != 'undefined') ? jQuery.active == 0 : true } catch (e) {}; return result;");
+            } catch (Exception e) {
+                isAjaxFinished = true;
+                System.out.println("Load: isAjaxFinished error: " + e.getMessage());
+            }
+
+            boolean isLoaderHidden = false;
+            try {
+                isLoaderHidden = (boolean) js.executeScript("return document.querySelectorAll('div[id*=\"bekleyiniz\"][style*=\"visibility: visible\"]').length == 0");
+//                    executeScript("return $('.loading').is(':visible') == false");
+            } catch (Exception e) {
+                isLoaderHidden = true;
+                System.out.println("Load: isLoaderHidden error: " + e.getMessage());
+            }
+
+            return isJsFinished  && isLoaderHidden && isAjaxFinished;
+        });
     }
     //</editor-fold>
 

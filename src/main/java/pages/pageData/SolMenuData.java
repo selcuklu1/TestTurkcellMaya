@@ -73,7 +73,7 @@ public class SolMenuData {
         HavaleOnayinaSunduklarim("Havale Onayına Sunduklarım"),
         KaydedilenGelenEvraklar("Kaydedilen Gelen Evraklar"),
         KaydedilenGidenEvraklar("Kaydedilen Giden Evraklar"),
-        PostalanacakEvraklar("Postalanacak Evraklar "),
+        PostalanacakEvraklar("Postalanacak Evraklar"),
         TopluPostaladiklarim("Toplu Postaladıklarım"),
         Postalananlar("Postalananlar"),
         KEPGelenkutusu("KEP Gelen Kutusu"),
@@ -81,11 +81,11 @@ public class SolMenuData {
         MedasileGonderilecekler("Medas ile Gönderilecekler"),
         KEPilePostalanacaklar("KEP ile Postalanacaklar"),
         TopluPostalanacakEvraklar("Toplu Postalanacak Evraklar"),
-        TeslimAlinmayiBekleyenler("Teslim Alınmayı Bekleyenler "),
-        TeslimAlinanlar("Teslim Alınanlar "),
+        TeslimAlinmayiBekleyenler("Teslim Alınmayı Bekleyenler"),
+        TeslimAlinanlar("Teslim Alınanlar"),
         AskidakiEvraklar("Askıdaki Evraklar"),
         BirimHavaleEdilenler("Birim Havale Edilenler"),
-        BirimeIadeEdilenler("Birime İade Edilenler "),
+        BirimeIadeEdilenler("Birime İade Edilenler"),
         PostaListesi("Posta Listesi"),
         EpostaKutusu("E-posta Kutusu");
 
@@ -108,11 +108,11 @@ public class SolMenuData {
 
     public enum KapatmaIslemleri {
         CevapliKapattiklarim("Cevaplı Kapattıklarım"),
-        ImzaBekleyenler("İmza Bekleyenler "),
+        ImzaBekleyenler("İmza Bekleyenler"),
         Imzaladiklarim("İmzaladıklarım"),
         Kapattiklarim("Kapattıklarım"),
         OnayaSunduklarim("Onaya Sunduklarım"),
-        ParafBekleyenler("Paraf Bekleyenler "),
+        ParafBekleyenler("Paraf Bekleyenler"),
         Parafladiklarim("Parafladıklarım"),
         SureliKapattiklarim("Süreli Kapattıklarım");
 
