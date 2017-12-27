@@ -662,7 +662,8 @@ public class GelenEvrakKayitPage extends MainPage {
     }
 
     public GelenEvrakKayitPage yeniKayitButton() {
-        $("[id='evrakKaydetBasariliDialogForm:yeniKayitButton']").pressEnter();
+        $("[id$='yeniKayitButton']").pressEnter();
+        sleep(5000);
         return this;
     }
 

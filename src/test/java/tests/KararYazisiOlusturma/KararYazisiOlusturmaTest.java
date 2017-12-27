@@ -158,6 +158,7 @@ public class KararYazisiOlusturmaTest extends BaseTest{
                 .evrakSayiSagDoldur()
                 .havaleIslemleriBirimDoldur(kullaniciAdi)
                 .kaydet()
+                //.benzerKayit()
                 .evetDugmesi()
                 .yeniKayitButton();
         //TODO
