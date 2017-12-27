@@ -1392,7 +1392,7 @@ public class EvrakOlusturPage extends MainPage {
             Thread.sleep(700);
 
             $("#imzalaForm\\:sayisalImzaConfirmForm\\:sayisalImzaEvetButton").shouldBe(visible).click();*/
-            $x("//*[text()='İmzala']/ancestor::tbody[1]//button").click();
+//            $x("//*[text()='İmzala']/ancestor::tbody[1]//button").click();
             $("div[id='imzalaForm:imzalaRadio']").shouldBe(visible).click();
 //        clickJs($("#imzalaForm\\:imzalaRadio").find(By.tagName("input")));
             for (int i = 0; i < Configuration.timeout / 1000; i++) {

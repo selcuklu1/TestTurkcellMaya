@@ -2,9 +2,11 @@ package common;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.testng.BrowserPerTest;
 import data.User;
 import io.qameta.allure.Step;
 import listeners.SettingsListener;
+import org.openqa.selenium.WebDriver;
 import org.testng.annotations.*;
 import pages.LoginPage;
 import pages.MainPage;
@@ -15,7 +17,7 @@ import java.util.Locale;
 import static data.TestData.belgenetURL;
 
 //BrowserPerTest.class
-@Listeners({SettingsListener.class})
+@Listeners({SettingsListener.class})//, BrowserPerTest.class})
 public class BaseTest extends BaseLibrary {
 
     @BeforeSuite(alwaysRun = true)
@@ -37,12 +39,12 @@ public class BaseTest extends BaseLibrary {
        //Configuration.browser = "firefox";
 
         // Configuration.remote = "http://10.101.20.151:4444/wd/hub";
-        Configuration.remote = "http://localhost:4444/wd/hub";
+//        Configuration.remote = "http://localhost:4444/wd/hub";
         Configuration.reportsFolder = "test-result/reports";
         Configuration.screenshots = false;
         Configuration.savePageSource = false;
-        Configuration.collectionsTimeout = 40000;
-        Configuration.timeout = 40000;
+        Configuration.collectionsTimeout = 20000;
+        Configuration.timeout = 20000;
         //Configuration.clickViaJs = true;
         Configuration.holdBrowserOpen = true;
         //Configuration.headless = false;
@@ -57,6 +59,7 @@ public class BaseTest extends BaseLibrary {
         Configuration.baseUrl = belgenetURL;
         //endregion
 
+
         // System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, "/dev/null");
 
         setDocPath();
@@ -67,6 +70,7 @@ public class BaseTest extends BaseLibrary {
     @AfterMethod (alwaysRun = true)
     public void afterMethod() {
         //Selenide.close();
+//        clearCookies();
     }
 
     @AfterClass(alwaysRun = true)
@@ -74,7 +78,7 @@ public class BaseTest extends BaseLibrary {
         //Selenide.close();
     }
 
-    public void clearCookies() throws Exception {
+    public void clearCookies() {
        // Selenide.close();
         try {
             Selenide.clearBrowserLocalStorage();

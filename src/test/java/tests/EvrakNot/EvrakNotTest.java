@@ -3,11 +3,13 @@ package tests.EvrakNot;
 import com.codeborne.selenide.*;
 import common.BaseTest;
 import data.User;
+import io.qameta.allure.Feature;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
+import pages.pageComponents.Filtreler;
 import pages.pageComponents.IslemMesajlari;
 import pages.pageComponents.TextEditor;
 import pages.pageComponents.belgenetElements.BelgenetElement;
@@ -34,15 +36,25 @@ import static pages.pageComponents.belgenetElements.BelgenetFramework.comboBox;
  * Tarih: 13.12.2017
  * Açıklama:
  */
+@Feature("Evrak Not")
 public class EvrakNotTest extends BaseTest {
+//    User user1 = new User("user1", "123", "User1 TEST", "AnaBirim1");
     User user1 = new User("user1", "123", "User1 TEST", "AnaBirim1");
-    User user2 = new User("user2", "123", "User2 TEST", "AnaBirim1AltBirim1");
+    User user2 = new User("ztekin", "123", "Zübeyde TEKİN");
+//    User user2 = new User("user2", "123", "User2 TEST", "AnaBirim1AltBirim1");
     User user3 = new User("user3", "123", "User3 TEST", "AnaBirim1");
-    User user4 = new User("mbozdemir", "123", "Mehmet BOZDEMİR", "YAZILIM GELİŞTİRME");
+    User user5 = new User("mbozdemir", "123", "Mehmet BOZDEMİR", "YAZILIM GELİŞTİRME");
 //    User user2 = new User("ztekin", "123", "Zübeyde TEKİN", "YAZILIM GELİŞTİRME");
     String konu;
     String kaldiralacakKlasor = "Diğer";
     EvrakNot evrakNot = new EvrakNot();
+    EvrakOnizleme.Notlari notlar = new EvrakOnizleme().new Notlari();
+
+    String[][] newNotes = {{"Genel", "Açıklama1", "", ""}
+                            , {"Kişisel", "Açıklama2", "", ""}
+                            , {"Genel", "Açıklama3", "", ""}
+                            , {"Kişisel", "Açıklama4", "", ""}};
+
 
     private String createTextWith(int length) {
         String text = "";
@@ -53,7 +65,87 @@ public class EvrakNotTest extends BaseTest {
         return text;
     }
 
-    @Test(enabled = true, description = "TC2093: Evrak Notları. Karar Yazısı Oluştur")
+    //Bitmedi
+    @Test(enabled = false, description = "TC2026: Evrak Önizleme - Evrak Notları Post-it")
+    public void tc2026() throws Exception {
+
+        PostalanacakEvraklarPage postalanacakEvraklarPage = new PostalanacakEvraklarPage();
+        EvrakOnizleme.Notlari notlar = new EvrakOnizleme().new Notlari();
+        UstYazi ustYazi = new UstYazi();
+        String konu = "TC2026" + getSysDate();
+        String[][] notes = {{"Genel", "Açıklama1", "", ""}
+                , {"Kişisel", "Açıklama2", "", ""}
+                , {"Genel", "Açıklama3", "", ""}};
+        evrakOlusturVeImzala(konu, notes);
+
+
+    }
+
+    @Test(enabled = true, description = "TC2091: Not Oluşturma - Evrak Oluşturma da Kişisel ve Genel Not oluşturma")
+    public void tc2091() {
+        int maxLength = 400;
+
+        String notTipi1 = "Genel", aciklama1 = createTextWith(maxLength);
+        String notTipi2 = "Kişisel", aciklama2 = "Açıklama2";
+        String notTipi3 = "Genel", aciklama3 = "Açıklama3";
+        String notTipi4 = "Kişisel", aciklama4 = "Açıklama4";
+
+        EvrakOlusturPage page = new EvrakOlusturPage();
+        EvrakNot evrakNot = new EvrakNot();
+        UstYazi ustYazi = new UstYazi();
+
+        login(user1);
+        page.openPage().editorTabAc();
+        evrakNot.notOlustur(user1.getName(), notTipi1, aciklama1, maxLength);
+        evrakNot.notOlustur(user1.getName(), notTipi2, aciklama2, maxLength);
+
+        page.bilgilerTabiAc();
+        ustYazi.ustYaziGoruntule().evrakNotlariTabiAc();
+        ustYazi.olusturulanNot(user1.getName(), notTipi1, aciklama1).shouldHaveSize(1);
+        ustYazi.olusturulanNot(user1.getName(), notTipi2, aciklama2).shouldHaveSize(1);
+
+        ustYazi.notOlustur(user1.getName(), notTipi3, aciklama3, 500);
+        ustYazi.notOlustur(user1.getName(), notTipi4, aciklama4, 500);
+
+        page.editorTabAc();
+        evrakNot.olusturulanNot(user1.getName(), aciklama1).shouldHaveSize(1);
+        evrakNot.olusturulanNot(user1.getName(), aciklama2).shouldHaveSize(1);
+        evrakNot.olusturulanNot(user1.getName(), aciklama3).shouldHaveSize(1);
+        evrakNot.olusturulanNot(user1.getName(), aciklama4).shouldHaveSize(1);
+        logout();
+    }
+
+    @Test(enabled = true, description = "TC2092: Not Oluşturma - Olur/Takrir Yazısı Oluşturma da Kişisel ve Genel Not oluşturma")
+    public void tc2092() throws Exception {
+        String notTipi, aciklama;
+
+        OlurYazisiOlusturPage page = new OlurYazisiOlusturPage();
+        EvrakNot evrakNot = new EvrakNot();
+        UstYazi ustYazi = new UstYazi();
+
+        login(user1);
+        page.openPage().editorTabAc();
+
+        notTipi = "Genel";
+        aciklama = "Açıklama1";
+        evrakNot.notOlustur(user1.getName(), notTipi, aciklama, 400);
+
+        page.bilgilerTabiAc();
+        ustYazi.ustYaziGoruntule()
+                .evrakNotlariTabiAc()
+                .olusturulanNot(user1.getName(), notTipi, aciklama).shouldHaveSize(1);
+
+
+        notTipi = "Kişisel";
+        aciklama = "açıklama2";
+        ustYazi.notOlustur(user1.getName(), notTipi, aciklama, 500);
+        page.editorTabAc();
+        evrakNot.olusturulanNot(user1.getName(), aciklama).shouldHaveSize(1);
+        logout();
+        clearCookies();
+    }
+
+    @Test(enabled = true, description = "TC2093: Not Oluşturma - Karar Yazısı Oluşturma da Kişisel ve Genel Not oluşturma")
     public void tc2093() {
 
         String notTipi, aciklama, date, time;
@@ -91,78 +183,7 @@ public class EvrakNotTest extends BaseTest {
         logout();
     }
 
-    @Test(enabled = true, description = "TC2091: Evrak Notları. Evrak Oluştur")
-    public void tc2091() {
-        int maxLength = 400;
-
-        String notTipi1 = "Genel", aciklama1 = createTextWith(maxLength);
-        String notTipi2 = "Kişisel", aciklama2 = "Açıklama2";
-        String notTipi3 = "Genel", aciklama3 = "Açıklama3";
-        String notTipi4 = "Kişisel", aciklama4 = "Açıklama4";
-
-        EvrakOlusturPage page = new EvrakOlusturPage();
-        EvrakNot evrakNot = new EvrakNot();
-        UstYazi ustYazi = new UstYazi();
-
-        login(user1);
-        page.openPage().editorTabAc();
-        evrakNot.notOlustur(user1.getName(), notTipi1, aciklama1, maxLength);
-        evrakNot.notOlustur(user1.getName(), notTipi2, aciklama2, maxLength);
-
-        page.bilgilerTabiAc();
-        ustYazi.ustYaziGoruntule().evrakNotlariTabiAc();
-        ustYazi.olusturulanNot(user1.getName(), notTipi1, aciklama1).shouldHaveSize(1);
-        ustYazi.olusturulanNot(user1.getName(), notTipi2, aciklama2).shouldHaveSize(1);
-
-        ustYazi.notOlustur(user1.getName(), notTipi3, aciklama3, 500);
-        ustYazi.notOlustur(user1.getName(), notTipi4, aciklama4, 500);
-
-        page.editorTabAc();
-        evrakNot.olusturulanNot(user1.getName(), aciklama1).shouldHaveSize(1);
-        evrakNot.olusturulanNot(user1.getName(), aciklama2).shouldHaveSize(1);
-        evrakNot.olusturulanNot(user1.getName(), aciklama3).shouldHaveSize(1);
-        evrakNot.olusturulanNot(user1.getName(), aciklama4).shouldHaveSize(1);
-        logout();
-    }
-
-    @Test(enabled = true, description = "TC2092: Evrak Notları. Olur/Takrir Yazısı Oluştur")
-    public void tc2092() throws Exception {
-        String notTipi, aciklama;
-
-        OlurYazisiOlusturPage page = new OlurYazisiOlusturPage();
-        EvrakNot evrakNot = new EvrakNot();
-        UstYazi ustYazi = new UstYazi();
-
-        login(user1);
-        page.openPage().editorTabAc();
-
-        notTipi = "Genel";
-        aciklama = "Açıklama1";
-        evrakNot.notOlustur(user1.getName(), notTipi, aciklama, 400);
-
-        page.bilgilerTabiAc();
-        ustYazi.ustYaziGoruntule()
-                .evrakNotlariTabiAc()
-                .olusturulanNot(user1.getName(), notTipi, aciklama).shouldHaveSize(1);
-
-
-        notTipi = "Kişisel";
-        aciklama = "açıklama2";
-        ustYazi.notOlustur(user1.getName(), notTipi, aciklama, 500);
-        page.editorTabAc();
-        evrakNot.olusturulanNot(user1.getName(), aciklama).shouldHaveSize(1);
-        logout();
-        clearCookies();
-    }
-
-
-    EvrakOnizleme.Notlari notlar = new EvrakOnizleme().new Notlari();
-    String[][] newNotes = {{"Genel", "Açıklama1", "", ""}
-            , {"Kişisel", "Açıklama2", "", ""}
-            , {"Genel", "Açıklama3", "", ""}
-            , {"Kişisel", "Açıklama4", "", ""}};
-
-    @Test(enabled = true, description = "TC2155: Evrak Notları")//, dependsOnMethods = {"tc2091"})
+    @Test(enabled = true, description = "TC2155: Not İzleme - Evrak Notunun Taslak evraklarda izlenmesi")//, dependsOnMethods = {"tc2091"})
     public void tc2155() {
         EvrakOlusturPage page = new EvrakOlusturPage();
         TaslakEvraklarPage taslakEvraklarPage = new TaslakEvraklarPage();
@@ -178,18 +199,19 @@ public class EvrakNotTest extends BaseTest {
             newNote[2] = getDateFromText(t);
             newNote[3] = getTimeFromText(t);
         }
-
+        takeScreenshot();
 
         //------------------------------------
         konu = "TC2155_" + getSysDate();
         System.out.println("Konu: " + konu);
+
         evrakOlusturVeKaydet(page, konu);
 
         //------------------------------------
         taslakEvraklarPage.openPage();
-        SelenideElement evrak = taslakEvraklarPage.filter().findRowsWith(text(konu))
-                .shouldHaveSize(1).first();
-        SelenideElement icerikGoster = evrak.$(page.filter().icerikGoster());
+//        SelenideElement evrak = taslakEvraklarPage.filter().findRowsWith(text(konu)).shouldHaveSize(1).first();
+        SelenideElement evrak = evragiBul(konu);
+//        icerikGoster = evrak.$(page.filter().icerikGoster());
         evrak.click();
         notlariKontrolEt(newNotes);
 
@@ -201,16 +223,19 @@ public class EvrakNotTest extends BaseTest {
             n.$(ustYazi.updateButton).shouldBe(visible);
             n.$(ustYazi.deleteButton).shouldBe(visible);
         }
+        takeScreenshot();
 
-        icerikGoster.click();
+//        icerikGoster.click();
+        evrak.$(page.filter().icerikGoster()).click();
         for (int i = 0; i < newNotes.length; i++) {
             evrakNot.olusturulanNot(newNotes[i][1]).shouldHaveSize(1);
         }
+        takeScreenshot();
         logout();
         Selenide.close();
     }
 
-    @Test(enabled = true, description = "TC2160", dependsOnMethods = {"tc2155"})
+    @Test(enabled = true, description = "TC2160: Not İzleme - Evrak Notunun Paraf bekleneler, Parafladıklarım, İmza Bekleyenler ve İmzaladıklarım ekranlarında izlenmesi", dependsOnMethods = {"tc2155"})
     public void tc2160() throws Exception {
         UstYazi ustYazi = new UstYazi();
         TaslakEvraklarPage taslakEvraklarPage = new TaslakEvraklarPage();
@@ -230,7 +255,8 @@ public class EvrakNotTest extends BaseTest {
         taslakEvraklarPage.islemMesaji().basariliOlmali();
 
         parafladiklarimPage.openPage();
-        SelenideElement evrak = parafladiklarimPage.filter().findRowsWith(text(konu)).shouldHaveSize(1).first();
+//        SelenideElement evrak = parafladiklarimPage.filter().findRowsWith(text(konu)).shouldHaveSize(1).first();
+        SelenideElement evrak = evrak = evragiBul(konu);
         evrak.click();
         notlariKontrolEt(newNotes);
         notlar.evrakNotlariDialoguKapat();
@@ -241,7 +267,9 @@ public class EvrakNotTest extends BaseTest {
             n.$(ustYazi.updateButton).shouldBe(visible);
             n.$(ustYazi.deleteButton).shouldBe(visible);
         }
-        SelenideElement icerikGoster = evrak.$(taslakEvraklarPage.filter().icerikGoster());
+        takeScreenshot();
+
+        SelenideElement icerikGoster = evrak.$(imzaBekleyenlerPage.filter().icerikGoster());
         icerikGoster.click();
         $("button .evrakNot").click();
         ////td[starts-with(@class,'tabMenuContainer')]//*[normalize-space(text())='Evrak Notları']/ancestor::td[starts-with(@class,'tabMenuContainer')]//button
@@ -251,13 +279,14 @@ public class EvrakNotTest extends BaseTest {
         for (int i = 0; i < newNotes.length; i++) {
             rows.get(i).shouldHave(text(newNotes[i][1]));
         }
-
+        takeScreenshot();
         logout();
         clearCookies();
 //        Selenide.close();
         login(user2);
         imzaBekleyenlerPage.openPage();
-        evrak = imzaBekleyenlerPage.filter().findRowsWith(text(konu)).shouldHaveSize(1).first();
+//        evrak = imzaBekleyenlerPage.filter().findRowsWith(text(konu)).shouldHaveSize(1).first();
+        evrak = evragiBul(konu);
         evrak.click();
         //Sadece Genel notları olmalı, kişisel olmamalı
         ArrayList<String[]> newNotesGenel = new ArrayList<String[]>();
@@ -276,6 +305,7 @@ public class EvrakNotTest extends BaseTest {
         }
         notlar.getSonrakiButton().shouldHave(cssClass("ui-state-disabled"));
         notlar.evrakNotlariDialoguKapat();
+        takeScreenshot();
 
         icerikGoster = evrak.$(imzaBekleyenlerPage.filter().icerikGoster());
         icerikGoster.click();
@@ -301,7 +331,8 @@ public class EvrakNotTest extends BaseTest {
         login(user1);
         ParafBekleyenlerPage parafBekleyenlerPage = new ParafBekleyenlerPage();
         parafBekleyenlerPage.openPage();
-        evrak = parafBekleyenlerPage.filter().findRowsWith(text(konu)).shouldHaveSize(1).first();
+//        evrak = parafBekleyenlerPage.filter().findRowsWith(text(konu)).shouldHaveSize(1).first();
+        evrak = evragiBul(konu);
         evrak.click();
         for (String[] n : newNotesGenel) {
             notlar.getNote()
@@ -380,7 +411,8 @@ public class EvrakNotTest extends BaseTest {
         Selenide.close();
         login(user2);
         imzaBekleyenlerPage.openPage();
-        evrak = imzaBekleyenlerPage.filter().findRowsWith(text(konu)).shouldHaveSize(1).first();
+//        evrak = imzaBekleyenlerPage.filter().findRowsWith(text(konu)).shouldHaveSize(1).first();
+        evrak = evragiBul(konu);
         evrak.click();
         for (String[] n1 : newNotesGenel) {
             notlar.getNote()
@@ -408,7 +440,7 @@ public class EvrakNotTest extends BaseTest {
         clearCookies();
     }
 
-    @Test(enabled = true, description = "Not İzleme - Evrak Notunun Postalanacak Evraklar ve Postananlar ekranlarında izlenmesi")
+    @Test(enabled = true, description = "TC2162: Not İzleme - Evrak Notunun Postalanacak Evraklar ve Postananlar ekranlarında izlenmesi")
     public void tc2162() throws Exception {
         PostalanacakEvraklarPage postalanacakEvraklarPage = new PostalanacakEvraklarPage();
         EvrakOnizleme.Notlari notlar = new EvrakOnizleme().new Notlari();
@@ -419,11 +451,11 @@ public class EvrakNotTest extends BaseTest {
                 , {"Kişisel", "Açıklama2", "", ""}
                 , {"Genel", "Açıklama3", "", ""}};
 
-        evrakOlusturma(konu, notes);
+        evrakOlusturVeImzala(konu, notes);
 
 //        Selenide.close();
         clearCookies();
-        login(user3);
+        login(user2);
         SelenideElement evrak = postalanacakEvraklarPage.openPage().filter()
                 .findRowsWith(Condition.text(konu)).shouldHaveSize(1).first();
         evrak.click();
@@ -474,21 +506,6 @@ public class EvrakNotTest extends BaseTest {
         notlar.getSonrakiButton().shouldHave(cssClass("ui-state-disabled"));
         notlar.evrakNotlariDialoguKapat();
         clearCookies();
-    }
-
-    @Test(enabled = false, description = "TC2026: Evrak Önizleme - Evrak Notları Post-it")
-    public void tc2026() throws Exception {
-
-        PostalanacakEvraklarPage postalanacakEvraklarPage = new PostalanacakEvraklarPage();
-        EvrakOnizleme.Notlari notlar = new EvrakOnizleme().new Notlari();
-        UstYazi ustYazi = new UstYazi();
-        String konu = "TC2026" + getSysDate();
-        String[][] notes = {{"Genel", "Açıklama1", "", ""}
-                , {"Kişisel", "Açıklama2", "", ""}
-                , {"Genel", "Açıklama3", "", ""}};
-        evrakOlusturma(konu, notes);
-
-
     }
 
     /**
@@ -881,7 +898,7 @@ public class EvrakNotTest extends BaseTest {
     }
 
     @Step("Evrak Oluştur")
-    public void evrakOlusturma(String konu, String[][] notes) throws InterruptedException {
+    public void evrakOlusturVeImzala(String konu, String[][] notes) throws InterruptedException {
         EvrakOlusturPage evrakOlusturPage = new EvrakOlusturPage();
         EvrakNot evrakNot = new EvrakNot();
         login(user1);
@@ -925,7 +942,7 @@ public class EvrakNotTest extends BaseTest {
                 .evrakPostala();*/
     }
 
-    @Step("Evrak Oluştur")
+    @Step("Evrak Oluştur ve kaydet")
     private void evrakOlusturVeKaydet(EvrakOlusturPage page, String konu) {
         page.bilgilerTabiAc()
                 .konuKoduSec("310.04")
@@ -980,4 +997,9 @@ public class EvrakNotTest extends BaseTest {
         return this;
     }
 
+    @Step("Evrağı bul")
+    public SelenideElement evragiBul(String konu){
+        SelenideElement evrak = new Filtreler().findRowsWith(Condition.text(konu)).shouldHaveSize(1).first();
+        return evrak;
+    }
 }

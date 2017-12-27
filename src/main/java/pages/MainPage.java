@@ -284,4 +284,23 @@ public class MainPage extends BaseLibrary {
         return this;
     }
 
+    public ConfirmDialog confirmDialog() {return new ConfirmDialog();}
+
+    public ElementsCollection getPageCloseButtons(){
+        return $$("div[id^='window'][id$='Dialog'] > div[class~='ui-dialog-titlebar'] > a[class~='ui-dialog-titlebar-close']");
+    }
+
+    public ElementsCollection getPageTitles(){
+        return $$("div[id^='window'][id$='Dialog'] > div[class~='ui-dialog-titlebar'] > span[class='ui-dialog-title']");
+    }
+
+    @Step("\"{tabName}\" tabı aç")
+    public MainPage openTab(String tabName) {
+        By locator = By.xpath("//td[contains(@class,'tabMenuContainer')" +
+                " and descendant::span[contains(@class,'tabMenu')" +
+                " and text()='" + tabName + "']]//button");
+        $(locator).click();
+        return this;
+    }
+
 }
