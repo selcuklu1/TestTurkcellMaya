@@ -50,7 +50,7 @@ public class BaseTest extends BaseLibrary {
         Configuration.collectionsTimeout = 5000;
         Configuration.timeout = 10000;
         //Configuration.clickViaJs = true;
-        // Configuration.holdBrowserOpen = true;
+        Configuration.holdBrowserOpen = true;
         //Configuration.headless = false;
 
         Configuration.startMaximized = true;
@@ -76,8 +76,10 @@ public class BaseTest extends BaseLibrary {
     public void afterMethod() {
 
         try {
+
 //            Selenide.clearBrowserLocalStorage();
 //            Selenide.clearBrowserCookies();
+
         } catch (Exception e) {
         }
 
