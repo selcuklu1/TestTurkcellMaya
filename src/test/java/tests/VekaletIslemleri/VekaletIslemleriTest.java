@@ -332,6 +332,7 @@ public class VekaletIslemleriTest extends BaseTest {
                 .konuyaGoreRaporSec(icerik)
                 .icerikIlkKayıt();
 
+
         String evrakNo = parafladiklarimPage.evrakDetayiEvrakNoAl();
 
         logout();

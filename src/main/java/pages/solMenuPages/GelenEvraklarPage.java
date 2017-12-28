@@ -562,8 +562,8 @@ public class GelenEvraklarPage extends MainPage {
 
     @Step("Vekalet var uyarısı : \"{mesaj}\" ")
     public GelenEvraklarPage evrakOnIzlemeUyarıPopUpKontol(String mesaj) throws InterruptedException {
-        SelenideElement popUp = $(By.id("mainPreviewForm:j_idt22567"));
-        SelenideElement popUpEvet = $(By.id("mainPreviewForm:j_idt22569"));
+        SelenideElement popUp = $(By.id("mainPreviewForm:j_idt5692"));
+        SelenideElement popUpEvet = $(By.id("mainPreviewForm:j_idt5694"));
         popUp.should(Condition.visible);
 
         if (popUp.text().contains(mesaj))
