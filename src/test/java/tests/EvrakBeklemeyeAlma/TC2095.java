@@ -27,7 +27,8 @@ import static com.codeborne.selenide.Selenide.*;
 @Feature("Evrakı Beklemeye Alma")
 public class TC2095 extends BaseTest {
 
-    User user1 = new User("user1", "123", "User1 TEST");
+//    User user1 = new User("user1", "123", "User1 TEST");
+    User user1 = new User("optiim", "123", "Optiim TEST");
     User ztekin = new User("ztekin", "123", "Zübeyde TEKİN");
     Filtreler filtrelerPage = new Filtreler();
 
