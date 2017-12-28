@@ -66,8 +66,8 @@ public class BaseTest extends BaseLibrary {
         //Configuration.browserSize = "1024x600";
         //endregion
 
-        System.out.println("after selenide.browser: " + System.getProperty("selenide.browser"));
-        System.out.println("after selenide.baseUrl: " + System.getProperty("selenide.baseUrl"));
+//        System.out.println("after selenide.browser: " + System.getProperty("selenide.browser"));
+//        System.out.println("after selenide.baseUrl: " + System.getProperty("selenide.baseUrl"));
         // System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, "/dev/null");
 
         setDocPath();
