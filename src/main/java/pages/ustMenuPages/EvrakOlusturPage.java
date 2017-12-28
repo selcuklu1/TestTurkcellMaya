@@ -1,9 +1,6 @@
 package pages.ustMenuPages;
 
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.*;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -129,9 +126,7 @@ public class EvrakOlusturPage extends MainPage {
             btnKaydetHayir.click();
         return this;
     }
-
-
-
+    
     @Step("\"{0}\" ekran açılması beklenen statü: {1}")
     public EvrakOlusturPage PDFOnizlemeKisayolGonder(String kisayol) throws InterruptedException {
 
@@ -144,7 +139,7 @@ public class EvrakOlusturPage extends MainPage {
         return this;
     }
 
-    @Step("{0} ekran açılması beklenen statü: {1}")
+    @Step("{ekranAdi} ekran açılması beklenen statü: {acilmali}")
     public EvrakOlusturPage kisayolEkranKontrol(String ekranAdi, boolean acilmali) {
         boolean t = $$("[id^='window'][id$='Button_ID'] .ui-button-text")
                 .filterBy(Condition.text(ekranAdi)).size() > 0;
@@ -359,7 +354,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Konu Kodu alanında {0} seç")
+        @Step("Konu Kodu alanında seç")
         public BilgilerTab otomatikOnayAkisi() {
             btnOtomatikOnayAkisi.click();
             return this;
@@ -377,7 +372,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("")
+        @Step("Kullnici ismine göre imza paraf seç")
         public BilgilerTab kullniciIsmineGoreImzaParafSec(String kullanici, String value) {
 
             tblKullanıcılar2.filterBy(Condition.text(kullanici)).first()
@@ -392,9 +387,9 @@ public class EvrakOlusturPage extends MainPage {
             return cmlKonuKodu.is(required);
         }
 
-        @Step("Konu alanında {0} seç")
-        public BilgilerTab konuSec(String value) {
-            txtKonu.setValue(value);
+        @Step("Konu alanında {konu} seç")
+        public BilgilerTab konuSec(String konu) {
+            txtKonu.setValue(konu);
             return this;
         }
 
@@ -517,7 +512,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Miat alanında {0} seç")
+        @Step("Miat alanında {dateText} seç")
         public BilgilerTab miatSec(String dateText) {
             dateMiat.setValue(dateText);
             return this;
@@ -699,6 +694,7 @@ public class EvrakOlusturPage extends MainPage {
         public BilgilerTab bilgiAlanindaGoruntulenmeKontrolu(String ad, String soyad) {
 
             String adSoyad = ad + " " + soyad.toUpperCase();
+            cmbBilgi.shouldBe(visible);
             cmbBilgi.selectLov(adSoyad);
             System.out.println("Gelen title:     " + cmbBilgi.lastSelectedLovTitleText());
             System.out.println("Beklenen title:  " + adSoyad);
@@ -714,7 +710,7 @@ public class EvrakOlusturPage extends MainPage {
         }
 
         @Step("Gereği Seçim Tipi alanında \"{geregiSecimTipi}\" seç")
-        public BilgilerTab geregiSecimTipiSecByText(String geregiSecimTipi) {
+        public BilgilerTab geregiSecimTipiSecByText(String geregiSecimTipi) throws InterruptedException {
             cmbGeregiSecimTipi.shouldBe(visible);
             cmbGeregiSecimTipi.selectOption(geregiSecimTipi);
             return this;
@@ -1420,7 +1416,7 @@ public class EvrakOlusturPage extends MainPage {
             Thread.sleep(700);
 
             $("#imzalaForm\\:sayisalImzaConfirmForm\\:sayisalImzaEvetButton").shouldBe(visible).click();*/
-            $x("//*[text()='İmzala']/ancestor::tbody[1]//button").click();
+//            $x("//*[text()='İmzala']/ancestor::tbody[1]//button").click();
             $("div[id='imzalaForm:imzalaRadio']").shouldBe(visible).click();
 //        clickJs($("#imzalaForm\\:imzalaRadio").find(By.tagName("input")));
             for (int i = 0; i < Configuration.timeout / 1000; i++) {
@@ -1841,13 +1837,13 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("{0}")
+        @Step("Şablon adi doldur {sablonAdi}")
         public SablonIslemleriTab sablonAdiDoldur(String sablonAdi) {
             txtSablonAdi.setValue(sablonAdi);
             return this;
         }
 
-        @Step("Evrakı yeni şablon olarak kaydet: {sablonAdi} ")
+        @Step("Evrakı yeni şablon olarak kaydet ")
         public SablonIslemleriTab evrakiYeniSablonOlarakKaydet() {
             btnEvrakiYeniSablonOlarakKaydet.click();
             return this;
@@ -1937,6 +1933,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Pdf önizleme kisayol gonder")
         public PDFKontrol PDFOnizlemeKisayolGonder(String kisayol) throws InterruptedException {
 
             SelenideElement tc = $(By.xpath("//div[@id='viewer']/div[@class='page']//div[.='T.C.']"));
@@ -1948,6 +1945,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Pdf hitap kontrolu")
         public PDFKontrol PDFHitapKontrol(String beklenenPDFHitap) {
             String PDFHitap = $(By.xpath("//*[@id='viewer']/div/div[2]/div[5]")).getText();
             Assert.assertEquals(PDFHitap.contains(beklenenPDFHitap), true);

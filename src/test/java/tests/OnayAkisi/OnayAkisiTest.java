@@ -681,7 +681,7 @@ public class OnayAkisiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC2111: Onay Akışı Yönetimi - Kayıtlı Onay Akışınu kullanım sırasında anlık değiştirme")
+    @Test(enabled = true, description = "TC2111: Onay Akışı Yönetimi - Kayıtlı Onay Akışını kullanım sırasında anlık değiştirme")
     public void TC2111() {
 
         String onayAkisi = "TC2111 Onay Akisi"; //parafçı, kontrolcu, koordinecisi ve imzacısı olmalı.

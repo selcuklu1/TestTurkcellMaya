@@ -1,6 +1,6 @@
 package pages.ustMenuPages;
 
-import com.codeborne.selenide.CollectionCondition;
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
@@ -8,15 +8,17 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NotFoundException;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import pages.MainPage;
+import pages.pageComponents.IslemMesajlari;
 import pages.pageComponents.TextEditor;
 import pages.pageComponents.UstMenu;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
 import java.util.List;
 
-import static com.codeborne.selenide.CollectionCondition.*;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
@@ -25,13 +27,12 @@ public class BirimIcerikSablonlarPage extends MainPage {
 
     private SelenideElement txtSablonAdi = $(By.id("birimSablonForm:sablonAdiText_id"));
     private BelgenetElement lovKullanilacakBirimler = comboLov(By.id("birimSablonForm:sablonLov_id:LovText"));
-    private SelenideElement selEvrakTipi = $x("//label[normalize-space(text())='Evrak Tipi']/ancestor::tr[last()]//select[starts-with(@id,'birimSablonForm')]");
+    private SelenideElement selEvrakTipi = $x("//label[normalize-space(text())='Evrak Tipi']/ancestor::tr[1]//select");
     //$("#birimSablonForm select:first-child")
     private SelenideElement btnYeniSablonOlustur = $(By.id("birimSablonForm:sablonIslemYeniButton_Id"));
     private SelenideElement btnKaydet = $(By.id("birimSablonForm:sablonIslemKaydetButton_id"));
     private SelenideElement btnSil = $(By.id("birimSablonForm:sablonIslemSilButton_id"));
     private SelenideElement btnEvrakOnizleme = $(By.id("birimSablonForm:sablonOnizlemeButton_id"));
-
 
     private SelenideElement tblBirimSablonlari = $("[id^='birimSablonForm'][id$='sablonDataTable']");
     private SelenideElement btnBirimSablonlariNext = $("[id^='birimSablonForm'][id$='sablonDataTable'] thead span[class~='ui-paginator-next']");
@@ -158,6 +159,21 @@ public class BirimIcerikSablonlarPage extends MainPage {
         }
     }
 
+    @Step("Her şablonun Detay butonunun bulunmalı")
+    public BirimIcerikSablonlarPage editButtonInAllRows() {
+        while (true) {
+
+            Assert.assertEquals(getRowsBirimSablonlari().size(), getBtnDetayInEachRow().size(),
+                    "Birim Şablonlar tablosunda her satırda Detay butonu olması");
+
+            if (btnBirimSablonlariNext.has(cssClass("ui-state-disabled")))
+                break;
+
+            btnBirimSablonlariNext.click();
+        }
+        return this;
+    }
+
     public int sablonExistCountInTable(String sablonAdi) {
         int count = 0;
         while (true) {
@@ -176,6 +192,7 @@ public class BirimIcerikSablonlarPage extends MainPage {
         return count;
     }
 
+    @Step("Şablonu bul")
     public SelenideElement findSablonRowInTable(String sablonAdi) {
         while (true) {
             $$(rowsBirimSablonlari).first().shouldBe(visible);
@@ -243,5 +260,82 @@ public class BirimIcerikSablonlarPage extends MainPage {
 //        }
     }
 
+    @Step("Yeni şablon oluştur butona tıkla")
+    public BirimIcerikSablonlarPage yeniSablonOlustur(){
+            btnYeniSablonOlustur.click();
+        return this;
+    }
 
+    @Step("Şablon adı doldur")
+    public BirimIcerikSablonlarPage sablonAdiDoldur(String sablonAdi){
+            txtSablonAdi.setValue(sablonAdi);
+        return this;
+    }
+
+    @Step("Kullanılack Birimi seç")
+    public BirimIcerikSablonlarPage kullanilacakBirimiSec(String birim){
+        lovKullanilacakBirimler.selectLov(birim);
+        return this;
+    }
+
+    @Step("Kullanılack Birimi seç")
+    public BirimIcerikSablonlarPage kullanilacakBirimiSec(String birim, Condition condition){
+        lovKullanilacakBirimler.type(birim).titleItems().filterBy(condition).first().click();
+        lovKullanilacakBirimler.closeLovTreePanel();
+        return this;
+    }
+
+    @Step("Kaydet")
+    public BirimIcerikSablonlarPage kaydet(){
+        btnKaydet.click();
+        return this;
+    }
+
+    @Step("Editöre yaz")
+    public BirimIcerikSablonlarPage editoreYaz(CharSequence... keysToSend){
+        getEditor().type(keysToSend);
+        return this;
+    }
+
+    @Step("Var olan şablonun adını al")
+    public String sablonAdiAl(int satir){
+        return getRowsBirimSablonlariSablonAdi().filterBy(visible).get(satir).text();
+    }
+
+    @Step("Alt birimler görsün mü seç")
+    public BirimIcerikSablonlarPage altBirimlerGorsunMu(String value){
+        lovKullanilacakBirimler.lastSelectedLov()
+                .$(By.tagName("select")).selectOption(value);
+        return this;
+    }
+
+    @Step("Önizleme kontrolü")
+    public BirimIcerikSablonlarPage pdfOnzileme(Condition... conditions){
+        $("#birimSablonForm\\:sablonOnizlemeButton_id").click();
+        WebDriver driver = switchTo().window("htmlToPdfServlet");
+        for (Condition condition:conditions) {
+            $(".textLayer").shouldHave(condition);
+        }
+        takeScreenshot();
+        driver.close();
+        switchTo().window(0);
+
+        return this;
+    }
+
+    @Step("Evrak Tipi seç")
+    public BirimIcerikSablonlarPage evrakTipiSec(String option){
+        selEvrakTipi.selectOption(option);
+        return this;
+    }
+
+    @Step("Şablonda Detay butona tıkla")
+    public BirimIcerikSablonlarPage detayButonaTikla(SelenideElement row){
+        try {
+            row.$("[id$='sablonListesiDetayButton_id']").sendKeys("\n");
+        } catch (Exception e) {
+        }
+        row.$("[id$='sablonListesiDetayButton_id']").click();
+        return this;
+    }
 }

@@ -1,19 +1,28 @@
 package tests.BirimIcerikSablonu;
 
-import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.*;
 import common.BaseTest;
+import data.User;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Feature;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
+import pages.newPages.OlurYazisiOlusturPage;
 import pages.pageComponents.TextEditor;
+import pages.pageComponents.UstMenuPageHeader;
 import pages.pageComponents.belgenetElements.BelgenetElement;
+import pages.pageData.alanlar.Ivedilik;
+import pages.solMenuPages.ImzaBekleyenlerPage;
 import pages.ustMenuPages.BirimIcerikSablonlarPage;
 import pages.ustMenuPages.EvrakOlusturPage;
 
+
+import static com.codeborne.selenide.CollectionCondition.*;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboBox;
@@ -27,356 +36,312 @@ import static pages.pageComponents.belgenetElements.BelgenetFramework.comboBox;
 @Feature("Birim İçerik Şablonu")
 public class BirimIcerikSablonuTest extends BaseTest {
 
+    @AfterMethod
+    public void tearDown() throws Exception {
+        logout();
+        clearCookies();
+    }
+
     String sablonAdi;
     String sablonAdi_1082;
     String sablonAdi_1079;
     String editorText;
     String editorText_1079;
 
-    BirimIcerikSablonlarPage birimIcerikSablonlarPage;
+    BirimIcerikSablonlarPage birimIcerikSablonlarPage = new BirimIcerikSablonlarPage();
+    EvrakOlusturPage evrakOlusturPage;
+    OlurYazisiOlusturPage olurYazisiOlusturPage;
 
-    @Test(description = "TC1084: Alan aktif durum kontrolleri", enabled = true, priority = 1)
+    User optiim = new User("optiim", "123", "Optiim TEST","Optiim Birim");
+    User optiim4 = new User( "optiimtest4", "123", "Optiim TEST4", "Optiim Alt Birim1");
+    User ztekin = new User("ztekin", "123", "Zübeyde TEKİN");
+    User user1 = new User("user1", "123", "User1 TEST", "AnaBirim1");
+    User user2 = new User("user2", "123", "User2 TEST", "AnaBirim1AltBirim1");
+
+    String onizlemeText = "T.C.\nGENEL MÜDÜRLÜK MAKAMI\nBİLİŞİM HİZMETLERİ GENEL MÜDÜR YARDIMCISI\nYAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ\nOptiim Birim";
+
+    @Test(description = "TC1084: Alan aktif durum kontrolleri", enabled = false, priority = 1)
     public void tc1084a() {
         login();
         birimIcerikSablonlarPage = new BirimIcerikSablonlarPage().openPage();
-
         birimIcerikSablonlarPage.getBtnYeniSablonOlustur().shouldBe(visible);
         SoftAssert sa = new SoftAssert();
 
-        sa.assertTrue(birimIcerikSablonlarPage.getTxtSablonAdi().is(disabled)
-                , "Sablon Adı disabled olmalı");
-        sa.assertTrue(birimIcerikSablonlarPage.getLovKullanilacakBirimler().is(disabled)
-                , "Birimler disabled olmalı");
-        sa.assertTrue(birimIcerikSablonlarPage.getSelEvrakTipi().is(disabled)
-                , "Evrak Tipi disabled olmalı");
-        sa.assertTrue(birimIcerikSablonlarPage.getBtnYeniSablonOlustur().is(enabled)
-                , "Yeni Şablon Oluştur enable olmalı");
-        sa.assertTrue(birimIcerikSablonlarPage.getBtnKaydet().is(disabled)
-                , "Kaydet disabled olmalı");
-        sa.assertTrue(birimIcerikSablonlarPage.getBtnSil().is(disabled)
-                , "Sil disabled olmalı");
-        sa.assertTrue(birimIcerikSablonlarPage.getBtnEvrakOnizleme().is(disabled)
-                , "Evrak Önizleme disabled olmalı");
+        Allure.addAttachment("Sablon Adı disabled olmalı","");
+        sa.assertTrue(birimIcerikSablonlarPage.getTxtSablonAdi().is(disabled), "Sablon Adı disabled olmalı");
+
+        Allure.addAttachment("Birimler disabled olmalı","");
+        sa.assertTrue(birimIcerikSablonlarPage.getLovKullanilacakBirimler().is(disabled), "Birimler disabled olmalı");
+
+        Allure.addAttachment("Evrak Tipi disabled olmalı","");
+        sa.assertTrue(birimIcerikSablonlarPage.getSelEvrakTipi().is(disabled), "Evrak Tipi disabled olmalı");
+
+        Allure.addAttachment("Yeni Şablon Oluştur enable olmalı","");
+        sa.assertTrue(birimIcerikSablonlarPage.getBtnYeniSablonOlustur().is(enabled), "Yeni Şablon Oluştur enable olmalı");
+
+        Allure.addAttachment("Kaydet disabled olmalı","");
+        sa.assertTrue(birimIcerikSablonlarPage.getBtnKaydet().is(disabled), "Kaydet disabled olmalı");
+
+        Allure.addAttachment("Sil disabled olmalı","");
+        sa.assertTrue(birimIcerikSablonlarPage.getBtnSil().is(disabled), "Sil disabled olmalı");
+
+        Allure.addAttachment("Evrak Önizleme disabled olmalı","");
+        sa.assertTrue(birimIcerikSablonlarPage.getBtnEvrakOnizleme().is(disabled), "Evrak Önizleme disabled olmalı");
 
         //Güncelleme testinde tıklanacağı için gerek kalmıyor.
-//        sa.assertEquals(birimIcerikSablonlarPage.getRowsBirimSablonlari().size(),
-//                birimIcerikSablonlarPage.getBtnDetayInEachRow().size(),
-//                "Birim Şablonlar tablosunda her satırda Detay butonu olması");
+        /*sa.assertEquals(birimIcerikSablonlarPage.getRowsBirimSablonlari().size(),
+                birimIcerikSablonlarPage.getBtnDetayInEachRow().size(),
+                "Birim Şablonlar tablosunda her satırda Detay butonu olması");*/
+        birimIcerikSablonlarPage.editButtonInAllRows();
 
         sa.assertAll();
     }
 
-    @Test(description = "TC1084: Şablon içeriği boş ise oluşturmamalı", enabled = true, priority = 2)
+    @Test(description = "TC1084: Şablon içeriği boş ise oluşturmamalı", enabled = false, priority = 2)
     public void tc1084b() {
-        login();
-        birimIcerikSablonlarPage = new BirimIcerikSablonlarPage().openPage();
-
+        login(optiim);
         String sablonAdi = "SABLON_" + getSysDate();
+        new BirimIcerikSablonlarPage()
+                .openPage()
+                .yeniSablonOlustur()
+                .sablonAdiDoldur(sablonAdi)
+                .kullanilacakBirimiSec(optiim.getBirimAdi())
+                .kaydet()
+                .islemMesaji().dikkatOlmali("Şablon içeriği boş olamaz!");
 
-        birimIcerikSablonlarPage.getBtnYeniSablonOlustur().click();
-        birimIcerikSablonlarPage.getTxtSablonAdi().setValue(sablonAdi);
-        birimIcerikSablonlarPage.getLovKullanilacakBirimler()
-                .openTree()
-                .titleItems().first().click();
-//        birimIcerikSablonlarPage.getLovKullanilacakBirimler().closeLovTreePanel();
-        birimIcerikSablonlarPage.getBtnKaydet().click();
-        birimIcerikSablonlarPage.islemMesaji().dikkatOlmali("Şablon içeriği boş olamaz!");
-
-        Assert.assertFalse(birimIcerikSablonlarPage.sablonExistInTable(sablonAdi)
-                , "Birim şablonları tablosunda bulunmamalı");
+        /*Assert.assertFalse(birimIcerikSablonlarPage.sablonExistInTable(sablonAdi)
+                , "Birim şablonları tablosunda bulunmamalı");*/
     }
 
-    @Test(description = "TC1084: Kullanacak Birimler boş ise oluşturmamalı", enabled = true, priority = 3)
+    @Test(description = "TC1084: Kullanacak Birimler boş ise oluşturmamalı", enabled = false, priority = 3)
     public void tc1084c() {
-        login();
-        birimIcerikSablonlarPage = new BirimIcerikSablonlarPage().openPage();
-
+        login(optiim);
         String sablonAdi = "SABLON_" + getSysDate();
+        new BirimIcerikSablonlarPage()
+                .openPage()
+                .yeniSablonOlustur()
+                .sablonAdiDoldur(sablonAdi)
+                .editoreYaz("text in editor")
+                .kaydet()
+                .islemMesaji().uyariOlmali("Zorunlu alanları doldurunuz");
 
-        birimIcerikSablonlarPage.getBtnYeniSablonOlustur().click();
-        birimIcerikSablonlarPage.getTxtSablonAdi().setValue(sablonAdi);
-        birimIcerikSablonlarPage.getEditor().type("text in editor");
-        birimIcerikSablonlarPage.getBtnKaydet().click();
-        birimIcerikSablonlarPage.islemMesaji().uyariOlmali("Zorunlu alanları doldurunuz");
-
-        Assert.assertFalse(birimIcerikSablonlarPage.sablonExistInTable(sablonAdi)
-                , "Birim şablonları tablosunda bulunmamalı");
+        /*Assert.assertFalse(birimIcerikSablonlarPage.sablonExistInTable(sablonAdi)
+                , "Birim şablonları tablosunda bulunmamalı");*/
     }
 
-    @Test(description = "TC1084: Şablon adı boş ise oluşturmamalı", enabled = true, priority = 4)
+    @Test(description = "TC1084: Şablon adı boş ise oluşturmamalı", enabled = false, priority = 4)
     public void tc1084d() {
-        login();
-        birimIcerikSablonlarPage = new BirimIcerikSablonlarPage().openPage();
+        login(optiim);
+        String sablonAdi = "SABLON_" + getSysDate();
+        new BirimIcerikSablonlarPage()
+                .openPage()
+                .yeniSablonOlustur()
+                .kullanilacakBirimiSec(optiim.getBirimAdi())
+                .editoreYaz("text in editor")
+                .kaydet()
+                .islemMesaji().uyariOlmali("Zorunlu alanları doldurunuz");
 
-        birimIcerikSablonlarPage.getBtnYeniSablonOlustur().click();
-        birimIcerikSablonlarPage.getLovKullanilacakBirimler().shouldBe(enabled);
-        birimIcerikSablonlarPage.getLovKullanilacakBirimler().openTree().titleItems().first().click();
-//        birimIcerikSablonlarPage.getLovKullanilacakBirimler().closeLovTreePanel();
-        birimIcerikSablonlarPage.getEditor().type("text in editor");
-        birimIcerikSablonlarPage.getBtnKaydet().click();
-        birimIcerikSablonlarPage.islemMesaji().uyariOlmali("Zorunlu alanları doldurunuz");
-
-        Assert.assertFalse(birimIcerikSablonlarPage.sablonExistInTable("")
-                , "Birim şablonları tablosunda boş adı ile kayıt bulunmamalı");
+        /*Assert.assertFalse(birimIcerikSablonlarPage.sablonExistInTable("")
+                , "Birim şablonları tablosunda boş adı ile kayıt bulunmamalı");*/
     }
 
-    @Test(description = "TC1084: Şablon adı kayıtlı ise oluşturmamalı", enabled = true, priority = 5)
+    @Test(description = "TC1084: Şablon adı kayıtlı ise oluşturmamalı", enabled = false, priority = 5)
     public void tc1084e() {
-        login();
+        login(optiim);
         birimIcerikSablonlarPage = new BirimIcerikSablonlarPage().openPage();
 
-        String sablonAdi = birimIcerikSablonlarPage
-                .getRowsBirimSablonlariSablonAdi().filterBy(visible).first().text();
+        String sablonAdi = birimIcerikSablonlarPage.sablonAdiAl(0);
 
-        birimIcerikSablonlarPage.getBtnYeniSablonOlustur().click();
-        birimIcerikSablonlarPage.getTxtSablonAdi().setValue(sablonAdi);
-        birimIcerikSablonlarPage.getLovKullanilacakBirimler()
-                .openTree()
-                .titleItems().first().click();
-        birimIcerikSablonlarPage.getEditor().type("text in editor");
-        birimIcerikSablonlarPage.getBtnKaydet().click();
+        birimIcerikSablonlarPage
+                .openPage()
+                .yeniSablonOlustur()
+                .sablonAdiDoldur(sablonAdi)
+                .kullanilacakBirimiSec(optiim.getBirimAdi())
+                .editoreYaz("text in editor")
+                .kaydet();
         birimIcerikSablonlarPage.islemMesaji()
                 .dikkatOlmali("Daha önce tanımlanmış şablon ismi ile aynı isimli şablon tanımlanamaz!");
 
-
         //Database'dan kontrol yapılmalı
-        Assert.assertEquals(birimIcerikSablonlarPage.sablonExistCountInTable(sablonAdi), 1
-                , "Birim şablonları tablosunda bulunmamalı");
+        /*Assert.assertEquals(birimIcerikSablonlarPage.sablonExistCountInTable(sablonAdi), 1
+                , "Birim şablonları tablosunda bulunmamalı");*/
     }
 
     @Test(description = "TC1082: Yeni şablon oluştur (Alt birimler görsün)", enabled = true, priority = 6)
     public void tc1082() {
-        login();
-        birimIcerikSablonlarPage = new BirimIcerikSablonlarPage().openPage();
-
-//        String sablonAdi = "SABLON_" + getSysDate();
+        login(optiim);
         sablonAdi_1082 = "SABLON_" + getSysDate();
+//        String altBirimler = "ALT BİRİMLER GÖRSÜN";
 //        String altBirimler = "ALT BİRİMLER GÖRMESİN";
-        String altBirimler = "ALT BİRİMLER GÖRSÜN";
+        birimIcerikSablonlarPage
+                .openPage()
+                .yeniSablonOlustur()
+                .sablonAdiDoldur(sablonAdi_1082)
+                .kullanilacakBirimiSec(optiim.getBirimAdi(), exactText(optiim.getBirimAdi()))
+                .altBirimlerGorsunMu("ALT BİRİMLER GÖRSÜN");
+        editorText = birimIcerikSablonlarPage.getEditor()
+                .type(sablonAdi_1082).type(Keys.ENTER)
+                .toolbarCombo("Etiket Ekle", "Birim")
+                .getText();
 
-        birimIcerikSablonlarPage.getBtnYeniSablonOlustur().click();
-
-        birimIcerikSablonlarPage.getTxtSablonAdi().setValue(sablonAdi_1082);
-
-        String birim = "optiim birim";
-        birimIcerikSablonlarPage.getLovKullanilacakBirimler().type(birim).titleItems()
-                .filterBy(exactText(birim))
-                .first()
-                .click();
-        birimIcerikSablonlarPage.getLovKullanilacakBirimler().closeLovTreePanel()
-                .lastSelectedLov()
-                .$(By.tagName("select")).selectOption(altBirimler);
-
-        birimIcerikSablonlarPage.getEditor()
-                .type("my text").type(Keys.ENTER)
-                .toolbarCombo("Etiket Ekle", "Birim");
-
-        editorText = birimIcerikSablonlarPage.getEditor().getText();
-        birimIcerikSablonlarPage.getBtnKaydet().click();
-
-        birimIcerikSablonlarPage.islemMesaji().basariliOlmali();
-
-        Assert.assertTrue(birimIcerikSablonlarPage.sablonExistInTable(sablonAdi_1082)
-                , "Birim şablonları tablosunda bulunmalı");
-//        this.sablonAdi = sablonAdi;
+        birimIcerikSablonlarPage
+                .pdfOnzileme(text(onizlemeText), text(sablonAdi_1082), text("(@BIRIM)"))
+                .kaydet()
+                .islemMesaji().basariliOlmali();
     }
 
-    @Test(description = "TC1082: Yeni şablon (Alt birimler görsün) Evrak Oluşturmada kullan", dependsOnMethods = {"tc1082"}, enabled = true
+    @Test(description = "TC1082: Yeni şablon (Alt birimler görsün) Evrak Oluşturmada kullan"
+            , dependsOnMethods = {"tc1082"}, enabled = true
             , priority = 7)
     public void tc1082_kontrol() {
-        login("optiimtest4", "123");
-        EvrakOlusturPage evrakOlusturPage = new EvrakOlusturPage().openPage();
-        TextEditor editor = evrakOlusturPage.editorTabAc().getEditor();
+        login(optiim4);
+
+        String konu = "TC1082_" + getSysDate();
+        olurYazisiOlusturPage = page(OlurYazisiOlusturPage.class).openPage();
+//        olurYazisiOlusturPage = new OlurYazisiOlusturPage().openPage();
+        TextEditor editor = olurYazisiOlusturPage.editorTabAc().getEditor();
         editor.toolbarButton("Öntanımlı İçerik Şablonu Kullan", true);
-
-        $(By.id("yeniGidenEvrakForm:icerikSablonDialogD1")).shouldBe(visible);
-        BelgenetElement cmbSablon = comboBox("[id='yeniGidenEvrakForm:icerikSablonDialogD1'] label[id$='_label']");
-        cmbSablon.shouldBe(visible);
-        cmbSablon.getComboBoxValues().filterBy(text(sablonAdi_1082)).shouldHaveSize(1);
-        cmbSablon.selectComboBox(sablonAdi_1082);
-
-        sleep(2000);
-
-        switchTo().frame($("[id='yeniGidenEvrakForm:onizlemeField'] iframe"));
-        String actualText = $("body").text();
-        $("body").shouldBe(visible).shouldHave(exactText(editorText));
-        switchTo().defaultContent();
-
+        editorTabOntanimliSablonuSec(sablonAdi_1082);
+        checkEditorHasText(exactText(editorText));
 //        Assert.assertEquals(editorText, actualText);
+        editorTabOntanimliSablonUygula();
 
-        $x("//div[@id='yeniGidenEvrakForm:icerikSablonDialogD1']//button/span[text()='Uygula']/..").click();
-
-        Assert.assertTrue(editor.getText().contains("Optiim Alt Birim1"), "Optiim Alt Birim1 olmalı");
+        Assert.assertFalse(optiim4.getBirimAdi().isEmpty(), "Kullanıcının birim boş olamamalı");
+        Assert.assertTrue(editor.getText().contains(optiim4.getBirimAdi()), optiim4.getBirimAdi() + " olmalı");
         Assert.assertFalse(editor.getText().contains("(@BIRIM)"), "(@BIRIM) olmamalı");
 
+        olurYazisiOlustur(konu);
+        olurYazisiOlusturPage.ustMenuPageHeader.parafla();
+
+        logout();
+        login(ztekin);
+
+        ImzaBekleyenlerPage imzaBekleyenlerPage = new ImzaBekleyenlerPage().openPage();
+        imzaBekleyenlerPage.filter().findRowsWith(text(konu)).shouldHaveSize(1)
+                .first().click();
+        new UstMenuPageHeader().imzala();
+        imzaBekleyenlerPage.islemMesaji().basariliOlmali();
     }
 
     @Test(description = "TC1085: Yeni şablon oluştur (Alt birimler görmesin)", priority = 8)
     public void tc1085() {
-        login();
-        birimIcerikSablonlarPage = new BirimIcerikSablonlarPage().openPage();
+        login(optiim);
 
         String sablonAdi = "SABLON_" + getSysDate();
-        String altBirimler = "ALT BİRİMLER GÖRMESİN";
+//        String altBirimler = "ALT BİRİMLER GÖRMESİN";
 //        String altBirimler = "ALT BİRİMLER GÖRSÜN";
 
-        birimIcerikSablonlarPage.getBtnYeniSablonOlustur().shouldBe(visible).click();
+        birimIcerikSablonlarPage
+                .openPage()
+                .yeniSablonOlustur()
+                .sablonAdiDoldur(sablonAdi)
+                .kullanilacakBirimiSec(optiim.getBirimAdi(), exactText(optiim.getBirimAdi()))
+                .altBirimlerGorsunMu("ALT BİRİMLER GÖRMESİN")
+                .evrakTipiSec("Giden Evrak");
 
-        birimIcerikSablonlarPage.getTxtSablonAdi().setValue(sablonAdi);
+        editorText = birimIcerikSablonlarPage.getEditor()
+                .type(sablonAdi).type(Keys.ENTER)
+                .toolbarCombo("Etiket Ekle", "Kullanıcı Soyadı")
+                .getText();
 
-        String birim = "optiim birim";
-        birimIcerikSablonlarPage.getLovKullanilacakBirimler().type(birim).titleItems()
-                .filterBy(exactText(birim))
-                .first()
-                .click();
-        birimIcerikSablonlarPage.getLovKullanilacakBirimler().closeLovTreePanel()
-                .lastSelectedLov()
-                .$(By.tagName("select")).selectOption(altBirimler);
+        birimIcerikSablonlarPage
+                .pdfOnzileme(text(onizlemeText), text(sablonAdi), text("(@KULLANICI_SOYADI)"))
+                .kaydet()
+                .islemMesaji().basariliOlmali();
 
-        birimIcerikSablonlarPage.getEditor()
-                .type("my text").type(Keys.ENTER)
-                .toolbarCombo("Etiket Ekle", "Birim");
-
-        editorText = birimIcerikSablonlarPage.getEditor().getText();
-        birimIcerikSablonlarPage.getBtnKaydet().click();
-
-        birimIcerikSablonlarPage.islemMesaji().basariliOlmali();
-
-        Assert.assertTrue(birimIcerikSablonlarPage.sablonExistInTable(sablonAdi)
-                , "Birim şablonları tablosunda bulunmalı");
+        /*Assert.assertTrue(birimIcerikSablonlarPage.sablonExistInTable(sablonAdi)
+                , "Birim şablonları tablosunda bulunmalı");*/
         this.sablonAdi = sablonAdi;
     }
 
-    @Test(description = "TC1085: Yeni şablon (Alt birimler görmesin) biriminde görünmeli", dependsOnMethods = {"tc1085"}, enabled = true
-            , priority = 9)
-    public void tc1085_kontrol_birim() throws InterruptedException {
-        login("optiim", "123");
-        EvrakOlusturPage evrakOlusturPage = new EvrakOlusturPage().openPage();
+    @Test(description = "TC1085: Yeni şablon (Alt birimler görmesin) alt biriminde görünmemeli", dependsOnMethods = {"tc1085"}
+            , enabled = true, priority = 9)
+    public void tc1085_kontrolAltbirim() {
+        login(optiim4);
+        evrakOlusturPage = new EvrakOlusturPage().openPage();
         TextEditor editor = evrakOlusturPage.editorTabAc().getEditor();
         editor.toolbarButton("Öntanımlı İçerik Şablonu Kullan", true);
-
-        BelgenetElement cmbSablon = comboBox("#yeniGidenEvrakForm\\:icerikSablonDialogD1 label[id$='_label']");
-
-        for (int i = 0; i < Configuration.timeout/1000; i++) {
-            sleep(1000);
-            if(cmbSablon.is(visible))
-                break;
-        }
-        cmbSablon.waitUntil(visible, 1000);
-        cmbSablon.getComboBoxValues().filterBy(text(sablonAdi)).shouldHaveSize(1);
-        cmbSablon.selectComboBox(sablonAdi);
-
-        switchTo().frame($("[id='yeniGidenEvrakForm:onizlemeField'] iframe"));
-//        String actualText = $("body").text();
-        $("body").shouldHave(exactText(editorText));
-        switchTo().defaultContent();
-
-//        Assert.assertEquals(editorText, actualText);
-
-        $x("//div[@id='yeniGidenEvrakForm:icerikSablonDialogD1']//button/span[text()='Uygula']/..").click();
-
-        Assert.assertTrue(editor.getText().contains("Optiim Birim"), "Optiim Birim olmalı");
-        Assert.assertFalse(editor.getText().contains("(@BIRIM)"), "(@BIRIM) olmamalı");
-
-        evrakOlusturPage
-                .bilgilerTabiAc()
-                .konuKoduSec("YAZILIM GEL")
-                .kaldirilacakKlasorler("ESK05")
-                .evrakTuruSec("Resmi Yazışma")
-                .geregiSecimTipiSecByText("Kurum")
-                .geregiDoldur("Başbakanlık")
-                .onayAkisiKullanicilariTemizle()
-                .onayAkisiEkle()
-                .onayAkisiKullaniciTipiSec("Optiim", "İmzalama")
-                .onayAkisiKullan();
-
-        evrakOlusturPage
-                .editorTabAc()
-//                .editorEvrakGeregiSec("Başbakanlık")
-                .imzala()
-                .popupSImzalaIslemleri()
-                .islemMesaji().basariliOlmali();
+        editorTabOntanimliSablonuOlmadigi();
     }
 
     @Test(description = "TC1085: Yeni şablon (Alt birimler görmesin) alt biriminde görünmemeli", dependsOnMethods = {"tc1085"}
-            , enabled = true, priority = 10)
-    public void tc1085_kontrol_altbirim() {
-        login("optiimtest4", "123");
+            , enabled = true, priority = 9)
+    public void tc1085_kontrolFarkliBirim() {
+        login(user1);
+        evrakOlusturPage = new EvrakOlusturPage().openPage();
+        TextEditor editor = evrakOlusturPage.editorTabAc().getEditor();
+        editor.toolbarButton("Öntanımlı İçerik Şablonu Kullan", true);
+        editorTabOntanimliSablonuOlmadigi();
+    }
+
+    @Test(description = "TC1085: Yeni şablon (Alt birimler görmesin) biriminde görünmeli"
+            , dependsOnMethods = {"tc1085"}, enabled = true
+            , priority = 10)
+    public void tc1085_kontrol_birim() throws InterruptedException {
+        login(optiim);
+        String konu = "TC1085_" + getSysDate();
         EvrakOlusturPage evrakOlusturPage = new EvrakOlusturPage().openPage();
         TextEditor editor = evrakOlusturPage.editorTabAc().getEditor();
         editor.toolbarButton("Öntanımlı İçerik Şablonu Kullan", true);
-//        $(By.id("yeniGidenEvrakForm:icerikSablonDialogD1")).shouldBe(visible);
-        BelgenetElement cmbSablon = comboBox("#yeniGidenEvrakForm\\:icerikSablonDialogD1 label[id$='_label']");
-        cmbSablon.getComboBoxValues().filterBy(exactText(sablonAdi)).shouldHaveSize(0);
 
+        editorTabOntanimliSablonuSec(sablonAdi);
+        checkEditorHasText(exactText(editorText));
+        editorTabOntanimliSablonUygula();
+
+        Assert.assertTrue(editor.getText().contains("TEST"), "Soyadı TEST olmalı");
+        Assert.assertFalse(editor.getText().contains("(@KULLANICI_SOYADI)"), "(@KULLANICI_SOYADI) olmamalı");
+        evrakOlusturPage.closePage();
+        evrakOlusturPage.confirmDialog().button("Hayır").shouldBe(visible).click();
+
+        olurYazisiOlusturPage = page(OlurYazisiOlusturPage.class).openPage();
+        editor = olurYazisiOlusturPage.editorTabAc().getEditor();
+        editor.toolbarButton("Öntanımlı İçerik Şablonu Kullan", true);
+        editorTabOntanimliSablonuOlmadigi();
     }
 
-    @Test(description = "TC1079: Şablon güncelleme", dependsOnMethods = {"tc1085"}, priority = 11)
+
+    @Test(enabled = true, description = "TC1079: Şablon güncelleme", dependsOnMethods = {"tc1085"}, priority = 11)
     public void tc1079() {
         login();
         birimIcerikSablonlarPage = new BirimIcerikSablonlarPage().openPage();
         SelenideElement sablonRow = birimIcerikSablonlarPage.findSablonRowInTable(sablonAdi);
 
-        try {
-            sablonRow.$("[id$='sablonListesiDetayButton_id']").sendKeys("\n");
-        } catch (Exception e) {
-        }
-        sablonRow.$("[id$='sablonListesiDetayButton_id']").click();
+        birimIcerikSablonlarPage.detayButonaTikla(sablonRow);
 
         sablonAdi_1079 = sablonAdi + "_UPDATED";
-        birimIcerikSablonlarPage.getTxtSablonAdi().setValue(sablonAdi_1079);
+        birimIcerikSablonlarPage.sablonAdiDoldur(sablonAdi_1079)
+                .evrakTipiSec("Giden Evrak")
+                .altBirimlerGorsunMu("ALT BİRİMLER GÖRSÜN");
 
-        birimIcerikSablonlarPage.getSelEvrakTipi().selectOption("Giden Evrak");
-
-        String altBirimler = "ALT BİRİMLER GÖRSÜN";
-        birimIcerikSablonlarPage.getLovKullanilacakBirimler().lastSelectedLov()
-                .$(By.tagName("select")).selectOption(altBirimler);
-
-
-        birimIcerikSablonlarPage.getEditor()
+        /*birimIcerikSablonlarPage.getEditor()
                 .type(Keys.END)
                 .type(Keys.ENTER)
-                .toolbarCombo("Etiket Ekle", "Kullanıcı Adı");
-
+                .toolbarCombo("Etiket Ekle", "Kullanıcı Adı");*/
         editorText_1079 = birimIcerikSablonlarPage.getEditor().getText();
 
-        birimIcerikSablonlarPage.getBtnKaydet().click();
-        birimIcerikSablonlarPage.islemMesaji().basariliOlmali();
+        birimIcerikSablonlarPage.kaydet().islemMesaji().basariliOlmali();
     }
 
-    @Test(description = "TC1079: Şablon güncellendiğini kontrolü", dependsOnMethods = {"tc1079"}, priority = 12)
+    @Test(enabled = true, description = "TC1079: Şablon güncellendiğini kontrolü"
+//            , dependsOnMethods = {"tc1079"}
+            , priority = 12)
     public void tc1079_kontrol() {
-        login("optiimtest4", "123");
-        EvrakOlusturPage evrakOlusturPage = new EvrakOlusturPage().openPage();
-        TextEditor editor = evrakOlusturPage.editorTabAc().getEditor();
-        editor.toolbarButton("Öntanımlı İçerik Şablonu Kullan", true);
-        if ($(By.id("yeniGidenEvrakForm:icerikSablonDialogD1")).is(not(visible)))
-            editor.toolbarButton("Öntanımlı İçerik Şablonu Kullan", true);
-        $(By.id("yeniGidenEvrakForm:icerikSablonDialogD1")).shouldBe(visible);
+        login(optiim4);
+        sablonAdi_1079 = "SABLON_20171221011230";
+        birimIcerikSablonlarPage = new BirimIcerikSablonlarPage().openPage();
+        SelenideElement sablonRow = birimIcerikSablonlarPage.findSablonRowInTable(sablonAdi_1079);
+        sablonAdi_1079 = sablonAdi_1079 + "2";
+        birimIcerikSablonlarPage.detayButonaTikla(sablonRow)
+        .sablonAdiDoldur(sablonAdi_1079)
+        .kaydet()
+        .islemMesaji().dikkatOlmali("Üst birim şablonuna işlem yapılamaz!");
 
-
-        BelgenetElement cmbSablon = comboBox("#yeniGidenEvrakForm\\:icerikSablonDialogD1 label[id$='_label']");
-
-        cmbSablon.getComboBoxValues().filterBy(text(sablonAdi_1079)).shouldHaveSize(1);
-        cmbSablon.selectComboBox(sablonAdi_1079);
-
-        switchTo().frame($("[id='yeniGidenEvrakForm:onizlemeField'] iframe"));
-        String actualText = $("body").text();
-        switchTo().defaultContent();
-
-        Assert.assertEquals(editorText_1079.trim(), actualText.trim());
-
-        $x("//div[@id='yeniGidenEvrakForm:icerikSablonDialogD1']//button/span[text()='Uygula']/..").click();
-
-        Assert.assertTrue(editor.getText().contains("Optiim Alt Birim1"), "Optiim Alt Birim1 olmalı");
-        Assert.assertFalse(editor.getText().contains("(@BIRIM)"), "(@BIRIM) olmamalı");
-
-        Assert.assertTrue(editor.getText().contains("Optiim"), "Optiim kullanıcı adı olmalı");
-        Assert.assertFalse(editor.getText().contains("(@KULLANICI_ADI)"), "(@KULLANICI_ADI) olmamalı");
-
+        birimIcerikSablonlarPage.getEditor().type("Güncelleme denemesi");
+        birimIcerikSablonlarPage
+                .kaydet().islemMesaji().dikkatOlmali("Üst birim şablonuna işlem yapılamaz!");
     }
 
-    @Test(description = "Şablonları sil", dependsOnMethods = {"tc1079_kontrol"}, priority = 13)
+    @Test(enabled = true, description = "Şablonları sil", dependsOnMethods = {"tc1079_kontrol"}, priority = 13)
     public void sablonSil() {
         login();
         birimIcerikSablonlarPage = new BirimIcerikSablonlarPage().openPage();
@@ -397,4 +362,70 @@ public class BirimIcerikSablonuTest extends BaseTest {
 
         birimIcerikSablonlarPage.sablonuSilD("DENEME ŞABLON");
     }
+
+
+    @Step("Ön tanımlı şablonu seç")
+    public BirimIcerikSablonuTest editorTabOntanimliSablonuSec(String sablonAdi){
+        $("div[id*='icerikSablonDialog']").shouldBe(visible);
+//        $(By.id("yeniOnayEvrakForm:icerikSablonDialogDOnay")).shouldBe(visible);
+//        $(By.id("yeniGidenEvrakForm:icerikSablonDialogD1")).shouldBe(visible);
+        BelgenetElement cmbSablon = comboBox("div[id*='icerikSablonDialog'] label[id$='_label']");
+//        BelgenetElement cmbSablon = comboBox("[id='yeniGidenEvrakForm:icerikSablonDialogD1'] label[id$='_label']");
+        cmbSablon.shouldBe(visible);
+//        cmbSablon.getComboBoxValues().shouldHave(sizeGreaterThan(0)).filterBy(text(sablonAdi)).shouldHaveSize(1);
+        cmbSablon.selectComboBox(sablonAdi);
+        return this;
+    }
+
+    @Step("Gelen şablon ekranındaki comboda kaydedilen şablonun gelmediği görülür")
+    public BirimIcerikSablonuTest editorTabOntanimliSablonuOlmadigi(){
+        BelgenetElement cmbSablon = comboBox("div[id*='icerikSablonDialog'] label[id$='_label']");
+        cmbSablon.shouldBe(visible);
+        ElementsCollection s = cmbSablon.getComboBoxValues();
+        s.filterBy(text(sablonAdi)).shouldHaveSize(0);
+        Allure.addAttachment("Şablonlar", (s.size()>0)?s.texts().toString():"");
+        return this;
+    }
+
+    @Step("Editör teksti kontrol et")
+    public BirimIcerikSablonuTest checkEditorHasText(Condition condition){
+        sleep(5000);
+//        switchTo().frame($("[id='yeniGidenEvrakForm:onizlemeField'] iframe"));
+        switchTo().frame($("[id$='onizlemeField'] iframe"));
+        String actualText = $("body").text();
+        $("body").shouldBe(visible).shouldHave(condition);
+        switchTo().defaultContent();
+        return this;
+    }
+
+    @Step("Uygula")
+    public BirimIcerikSablonuTest editorTabOntanimliSablonUygula(){
+//        $x("//div[@id='yeniGidenEvrakForm:icerikSablonDialogD1']//button/span[text()='Uygula']/..").click();
+        $("div[id*='icerikSablonDialog']").$x("//button/span[text()='Uygula']/..").click();
+        return this;
+    }
+
+    @Step("Evrak oluştur")
+    public BirimIcerikSablonuTest olurYazisiOlustur(String konu){
+        olurYazisiOlusturPage.bilgileriTabiAc()
+                .konuKoduSec("310.04")
+                .konuDoldur(konu)
+                .kaldiralacakKlasorleriSec("Diğer")
+                .ivedilikSec(Ivedilik.Normal)
+                /*.bilgiSecimTipiSec("Kurum")
+                .bilgiSec("Başbakanlık")*/
+                .geregiSecimTipiSec("Birim")
+                .geregiSec("AFYON VALİLİĞİ")
+//                .onayAkisiTemizle()
+                .onayAkisiEkleButonaTikla()
+                .onayAkisiKullanicilarSec(ztekin.getName())
+//                .onayAkisiKullaniciTipiSec("Optiim TEST [Ağ (Network) Uzman Yardımcısı]", "Paraflama")
+                .onayAkisiKullaniciTipiSec(optiim.getName(), "Paraflama")
+                .onayAkisiKullaniciTipiSec(ztekin.getName(), "İmzalama")
+                .kullanButonaTikla();
+//                .onayAkisiTitleKontrol("Yeni akış")
+//                .onayAkisiDetailKontrol(user1.getName() + "-Paraflama / " + user2.getName() + "-İmzalama");
+        return this;
+    }
+
 }

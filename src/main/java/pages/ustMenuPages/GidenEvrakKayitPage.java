@@ -66,10 +66,10 @@ public class GidenEvrakKayitPage extends MainPage {
     SelenideElement popUpEvrakDefterBasariliKapat = $(By.id("gidenEvrakDefterKaydiBasarili:vazgecButton"));
     //endregion
 
+    @Step("Giden Evrak Kayit sayfasını aç")
     public GidenEvrakKayitPage openPage() {
         new UstMenu().ustMenu("Giden Evrak Kayıt");
         $("form[id='gidenEvrakDefterKaydiForm']").shouldBe(visible);
-
         return this;
     }
 
@@ -87,9 +87,9 @@ public class GidenEvrakKayitPage extends MainPage {
     }
 
     @Step("Gereği doldur")
-    public GidenEvrakKayitPage geregiDoldur(String geregiAdSoyad) {
+    public GidenEvrakKayitPage geregiDoldur(String geregi) {
 
-        cmbGeregi.selectLov(geregiAdSoyad);
+        cmbGeregi.selectLov(geregi);
 
         System.out.println("title: " + cmbGeregi.lastSelectedLovTitleText());
         System.out.println("detail: " + cmbGeregi.lastSelectedLovDetailText());
