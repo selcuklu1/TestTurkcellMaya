@@ -34,8 +34,8 @@ public class BaseTest extends BaseLibrary {
 
         BelgenetFramework.setUp();
 
-        System.out.println("selenide.browser: " + System.getProperty("selenide.browser"));
-        System.out.println("selenide.baseUrl: " + System.getProperty("selenide.baseUrl"));
+        System.out.println("before selenide.browser: " + System.getProperty("selenide.browser"));
+        System.out.println("before selenide.baseUrl: " + System.getProperty("selenide.baseUrl"));
         //Configuration.remote = "http://10.101.20.151:4444/wd/hub";
         //Configuration.remote = "http://localhost:4444/wd/hub";
 
@@ -62,8 +62,8 @@ public class BaseTest extends BaseLibrary {
         //Configuration.browserSize = "1024x600";
         //endregion
 
-        System.out.println("selenide.browser: " + System.getProperty("selenide.browser"));
-        System.out.println("selenide.baseUrl: " + System.getProperty("selenide.baseUrl"));
+        System.out.println("after selenide.browser: " + System.getProperty("selenide.browser"));
+        System.out.println("after selenide.baseUrl: " + System.getProperty("selenide.baseUrl"));
         // System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, "/dev/null");
 
         setDocPath();
