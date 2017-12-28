@@ -3,6 +3,7 @@ package tests.EvrakNot;
 import com.codeborne.selenide.*;
 import common.BaseTest;
 import data.User;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
@@ -23,6 +24,7 @@ import pages.ustMenuPages.OlurYazisiOlusturPage;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.function.Supplier;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -240,7 +242,7 @@ public class EvrakNotTest extends BaseTest {
     }
 
     @Test(enabled = true, description = "TC2160: Not İzleme - Evrak Notunun Paraf bekleneler, Parafladıklarım, İmza Bekleyenler ve İmzaladıklarım ekranlarında izlenmesi", dependsOnMethods = {"tc2155"})
-    public void tc2160() throws Exception {
+    public void tc2160() {
         UstYazi ustYazi = new UstYazi();
         TaslakEvraklarPage taslakEvraklarPage = new TaslakEvraklarPage();
         ParafladiklarimPage parafladiklarimPage = new ParafladiklarimPage();
@@ -331,7 +333,6 @@ public class EvrakNotTest extends BaseTest {
 
         logout();
         clearCookies();
-//        Selenide.close();
         login(user1);
         ParafBekleyenlerPage parafBekleyenlerPage = new ParafBekleyenlerPage();
         parafBekleyenlerPage.openPage();
@@ -671,6 +672,10 @@ public class EvrakNotTest extends BaseTest {
                     .notTipiSecenekDegerleriKontrolu("Seçiniz", "Genel", "Kişisel")
                     .notTipiSec(notTipi)
                     .kaydet();
+
+//            Supplier<byte[]> screenshot = () -> takeScreenshot();
+//            Allure.addByteAttachmentAsync("Oluşturan not", "image/png", () -> takeScreenshot());
+            takeScreenshot();
 
             String date = DateTimeFormatter.ofPattern("dd.MM.yyyy").format(LocalDateTime.now());
             String time = DateTimeFormatter.ofPattern("HH:mm").format(LocalDateTime.now());

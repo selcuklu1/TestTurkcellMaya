@@ -8,7 +8,8 @@ import org.testng.Assert;
 import pages.pageComponents.*;
 import pages.pageData.SolMenuData;
 
-import static com.codeborne.selenide.Condition.exist;
+import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.Selectors.byLinkText;
 import static com.codeborne.selenide.Selenide.*;
 
 public class MainPage extends BaseLibrary {
@@ -269,8 +270,22 @@ public class MainPage extends BaseLibrary {
     }
 
     @Step("Birim Seç")
-    public MainPage birimSec(String menuText) throws InterruptedException {
-//        ElementsCollection solMenuBirim = $$("[id='birimlerimMenusuContainer'] li");
+    public MainPage birimSec(String birim) {
+        String currentBirim = $("#kullaniciBirimAd").shouldBe(visible)
+                .shouldHave(matchText(".*")).text();
+
+        if (!currentBirim.equals(birim))
+            $("#leftMenuForm #birimlerimMenusuContainer").$(byLinkText(birim)).click();
+
+        $("#kullaniciBirimAd").shouldHave(text(birim));
+
+
+//        $("#birimlerimMenusuContainer");
+//        $$("#leftMenuForm #birimlerimMenusuContainer li a");
+
+
+      /*
+        //        ElementsCollection solMenuBirim = $$("[id='birimlerimMenusuContainer'] li");
 //        SelenideElement element = solMenuBirim.filterBy(text(menuText)).first()
 //                .$("[id^='leftMenuForm:edysMenuItem_']");
 //        clickJs(element);
@@ -278,7 +293,7 @@ public class MainPage extends BaseLibrary {
         SelenideElement element = $("[id='birimlerimMenusuContainer']");
         SelenideElement menuLink =element.find(By.xpath("//span[starts-with(text(),'" + menuText + "')]")).waitUntil(exist, Configuration.timeout);
         executeJavaScript("arguments[0].click();", menuLink);
-        waitForLoading(WebDriverRunner.getWebDriver());
+        waitForLoading(WebDriverRunner.getWebDriver());*/
         return this;
     }
 

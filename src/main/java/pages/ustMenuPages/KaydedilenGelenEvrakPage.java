@@ -1,5 +1,6 @@
 package pages.ustMenuPages;
 
+import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
@@ -10,6 +11,7 @@ import pages.pageComponents.belgenetElements.BelgenetElement;
 
 import java.io.IOException;
 
+import static com.codeborne.selenide.CollectionCondition.*;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
@@ -87,7 +89,7 @@ public class KaydedilenGelenEvrakPage extends MainPage {
     @Step("Tablo kontrolu")
     public KaydedilenGelenEvrakPage tabloKontrolu(String evrakNo) {
 //        WebElement columnId =  findElementOnTableByColumnInput(tblKaydedilenGelenEvrak,1,evrakNo);
-        tbldene.filterBy(Condition.text(evrakNo));
+        tbldene.filterBy(Condition.text(evrakNo)).shouldHave(sizeGreaterThan(0));
         return this;
     }
 

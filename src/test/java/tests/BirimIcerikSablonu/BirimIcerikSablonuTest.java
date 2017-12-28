@@ -13,6 +13,7 @@ import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
+import pages.MainPage;
 import pages.newPages.OlurYazisiOlusturPage;
 import pages.pageComponents.TextEditor;
 import pages.pageComponents.UstMenuPageHeader;
@@ -23,6 +24,7 @@ import pages.ustMenuPages.BirimIcerikSablonlarPage;
 import pages.ustMenuPages.EvrakOlusturPage;
 
 import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.Selectors.byLinkText;
 import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboBox;
 
@@ -35,11 +37,10 @@ import static pages.pageComponents.belgenetElements.BelgenetFramework.comboBox;
 @Feature("Birim İçerik Şablonu")
 public class BirimIcerikSablonuTest extends BaseTest {
 
-    @AfterMethod
+    /*@AfterMethod
     public void tearDown() throws Exception {
         logout();
-        clearCookies();
-    }
+    }*/
 
     String sablonAdi;
     String sablonAdi_1082;
@@ -298,7 +299,6 @@ public class BirimIcerikSablonuTest extends BaseTest {
         editorTabOntanimliSablonuOlmadigi();
     }
 
-
     @Test(enabled = true, description = "TC1079: Şablon güncelleme", dependsOnMethods = {"tc1085"}, priority = 11)
     public void tc1079() {
         login();
@@ -326,7 +326,6 @@ public class BirimIcerikSablonuTest extends BaseTest {
             , priority = 12)
     public void tc1079_kontrol() {
         login(optiim4);
-        sablonAdi_1079 = "SABLON_20171221011230";
         birimIcerikSablonlarPage = new BirimIcerikSablonlarPage().openPage();
         SelenideElement sablonRow = birimIcerikSablonlarPage.findSablonRowInTable(sablonAdi_1079);
         sablonAdi_1079 = sablonAdi_1079 + "2";
@@ -356,7 +355,8 @@ public class BirimIcerikSablonuTest extends BaseTest {
 
     @Test(enabled = false)
     public void testName() throws Exception {
-        login();
+        login("user1", "123");
+
         birimIcerikSablonlarPage = new BirimIcerikSablonlarPage().openPage();
 
         birimIcerikSablonlarPage.sablonuSilD("DENEME ŞABLON");

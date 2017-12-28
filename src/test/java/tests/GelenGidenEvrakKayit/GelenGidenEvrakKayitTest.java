@@ -116,7 +116,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     public void TC2163() throws InterruptedException {
 
         String evrakTuru = "Dilekçe";
-        String ustYaziPath = getDocPath()+"Otomasyon.pdf";
+        String ustYaziPath = getDocPath() + "Otomasyon.pdf";
         String ustYaziAdi = "Otomasyon.pdf";
         String basariMesaji = "İşlem başarılıdır!";
         String aciklama = "Test Otomasyon";

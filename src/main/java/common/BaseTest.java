@@ -78,19 +78,12 @@ public class BaseTest extends BaseLibrary {
 
     @AfterMethod(alwaysRun = true)
     public void afterMethod() {
-
         try {
-
-
             Selenide.clearBrowserLocalStorage();
             Selenide.clearBrowserCookies();
-
         } catch (Exception e) {
+            log.info("Error clearBrowserLocalStorage and clearBrowserCookies: " + e.getMessage());
         }
-
-        //Selenide.close();
-
-        log.info("Driver has been quit.");
     }
 
     @AfterClass(alwaysRun = true)
@@ -100,16 +93,12 @@ public class BaseTest extends BaseLibrary {
     }
 
 
-    public void clearCookies() throws Exception {
-
-        Selenide.close();
-
-        // Selenide.close();
-
+    public void clearCookies() {
         try {
             Selenide.clearBrowserLocalStorage();
             Selenide.clearBrowserCookies();
         } catch (Exception e) {
+            log.info("Error clearBrowserLocalStorage and clearBrowserCookies: " + e.getMessage());
         }
     }
 
@@ -120,7 +109,9 @@ public class BaseTest extends BaseLibrary {
 
     @Step("Login")
     public void login(User user) {
-        new LoginPage().login(user.getUsername(), user.getPassword());
+        LoginPage loginPage = new LoginPage().login(user.getUsername(), user.getPassword());
+        if (!user.getBirimAdi().isEmpty() && user.getBirimAdi() != null)
+            loginPage.birimSec(user.getBirimAdi());
     }
 
     @Step("Login")
