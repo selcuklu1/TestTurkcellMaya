@@ -46,6 +46,7 @@ public class EvrakOlusturPage extends MainPage {
     SelenideElement tabIliskiliEvraklar = $("button .kullaniciIliskileri");
     SelenideElement tabSablonIslemleri = $("button .sablonOlustur");
     SelenideElement tabEvrakNotlari = $("button .evrakNot");
+    SelenideElement btnCloseScreen = $("[id='window1Dialog'] span[class='ui-icon ui-icon-closethick']");
 
     SelenideElement tabEvrakDogrulama = $("button .evrakDogrulamaAktarimIslemleri");
 
@@ -129,6 +130,8 @@ public class EvrakOlusturPage extends MainPage {
         return this;
     }
 
+
+
     @Step("\"{0}\" ekran açılması beklenen statü: {1}")
     public EvrakOlusturPage PDFOnizlemeKisayolGonder(String kisayol) throws InterruptedException {
 
@@ -159,6 +162,14 @@ public class EvrakOlusturPage extends MainPage {
         return this;
     }
 
+    @Step("Evrak Oluştur sayfası kapat")
+    public EvrakOlusturPage evrakOlusturKapat(){
+        $(By.xpath("//div[@id='mainTaskBar']//span[text()='[Evrak Oluştur]']"))
+                .click();
+        btnCloseScreen.click();
+        islemPenceresiKaydetPopup("Evet");
+        return this;
+    }
     public EvrakOlusturPage evrakOlusturSayfaKapat() {
         $(By.xpath("//div[@id='window1Dialog']//span[@class='ui-icon ui-icon-closethick']")).click();
         islemPenceresiKaydetPopup("Evet");
@@ -1882,6 +1893,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+
         @Step("Şablon Türü seç: {sablonTuru}")
         public SablonIslemleriTab sablonTuruSec(String sablonTuru) {
             cmbSablonTuru.click();
@@ -1900,7 +1912,6 @@ public class EvrakOlusturPage extends MainPage {
 
 
     }
-
 
     public class PDFKontrol extends MainPage {
 

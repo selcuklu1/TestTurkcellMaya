@@ -69,7 +69,7 @@ public class GizlilikKleransiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, priority = 1, description = "TC1471: Kullanıcı gizlilik derecesi değiştirme")
+    @Test(enabled = true, priority = 0, description = "TC1471: Kullanıcı gizlilik derecesi değiştirme")
     public void TC1471() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
@@ -698,7 +698,7 @@ public class GizlilikKleransiTest extends BaseTest {
         login(username, password);
 
         String kullaniciTasnifDisi = "OPTİİM TEST3";
-        String kullaniciOzel = "Optiim Test2";
+        String kullaniciOzel = "username24o";
 
         evrakOlusturPage
                 .openPage()

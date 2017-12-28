@@ -6,7 +6,6 @@ import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
@@ -32,7 +31,6 @@ public class PostaListesiPage extends MainPage {
     BelgenetElement cmbGonderildigiYer = comboBox(By.id("mainPreviewForm:postaListesiYurticiYurtdisi_label"));
     SelenideElement txtGramaj = $(By.xpath("//*[@id='mainPreviewForm:eastLayout']//label[normalize-space(text())='Gramaj :']/../..//input"));//$(By.id("mainPreviewForm:j_idt2574"));
     SelenideElement btnHesapla = $x("//span[. = 'Tutar Hesapla']/..");
-    //SelenideElement txtIndirimOrani = $(By.id("mainPreviewForm:j_idt2582"));
     SelenideElement btnPostaDetayiPostola = $(By.id("mainPreviewForm:postalaButton"));
     SelenideElement lblPostaListesiAdi = $(By.xpath("//label[contains(text(), 'Posta Listesi Adı :')]"));
     SelenideElement lblBarkodNo = $(By.xpath("//label[contains(text(), 'Barkod No : ')]"));
@@ -61,8 +59,9 @@ public class PostaListesiPage extends MainPage {
     SelenideElement lblGonderildigiYerCmb = $(By.id("mainPreviewForm:postaListesiYurticiYurtdisi_label"));
     SelenideElement lblIndirimOncesiTutar = $x("//table[@id='mainPreviewForm:indirimOncesiTutarId']//label[contains(., 'TL')]");
     SelenideElement txtTutar = $x("//label[normalize-space(text())='Tutar :']/../following-sibling::td//input");
-    SelenideElement txtIndirimOrani = $x("//label[normalize-space(text())='Tutar :']/../following-sibling::td//input");
+    SelenideElement txtIndirimOrani = $x("//label[normalize-space(text())='İndirim Oranı :']/../following-sibling::td//input");
     SelenideElement txtEtiketBastir = $(By.id("mainPreviewForm:etiketMetinID"));
+    SelenideElement txtIndirimOrani2 = $("[id='mainPreviewForm:indirimOraniId'] td:nth-child(2) input");
 
     @Step("Posta Listesi Sayfasını aç")
     public PostaListesiPage openPage() {
@@ -77,7 +76,7 @@ public class PostaListesiPage extends MainPage {
         return this;
     }
 
-    @Step("Posta Listesi doldur")
+    @Step("Posta Listesi doldur : \"{postaListesi}\" ")
     public PostaListesiPage postaListesiDoldur(String postaListesi) {
         txtPostaListesi.setValue(postaListesi);
         Selenide.sleep(2000);
@@ -85,7 +84,7 @@ public class PostaListesiPage extends MainPage {
         return this;
     }
 
-    @Step("Posta Listesi doldur")
+    @Step("Posta Listesi kontrolü : \"{postaListesi}\" ")
     public PostaListesiPage postaListesiKontrol(String postaListesi, boolean shouldBeExist) {
         btnPostaListesiDropDown.click();
         txtPostaListesi.setValue(postaListesi);
@@ -113,19 +112,19 @@ public class PostaListesiPage extends MainPage {
         return this;
     }
 
-    @Step("Gidis Sekli seç")
+    @Step("Gidis Sekli \"{gidisSekli}\" seç")
     public PostaListesiPage gidisSekliSec(String gidisSekli) {
         cmbGidisSekli.selectComboBox(gidisSekli);
         return this;
     }
 
-    @Step("Gonderildiğgi Yer seç")
+    @Step("Gonderildiği Yeri \"{gonderildigiYer}\" seç")
     public PostaListesiPage gonderildigiYerSec(String gonderildigiYer) {
         cmbGonderildigiYer.selectComboBox(gonderildigiYer);
         return this;
     }
 
-    @Step("Gramaj doldur")
+    @Step("Gramaj alanını doldur : \"{gramaj}\"")
     public PostaListesiPage gramajDoldur(String gramaj) {
         setValueJS(txtGramaj, gramaj);
         return this;
@@ -133,23 +132,30 @@ public class PostaListesiPage extends MainPage {
 
     @Step("Etiket hesapla Tıkla")
     public PostaListesiPage tutarHesapla() {
-        btnHesapla.click();
+        clickJs(btnHesapla);
         return this;
     }
 
-    @Step("Indirim oranı doldur")
+    @Step("Indirim oranı alanını doldur : \"{indirimOrani}\" ")
     public PostaListesiPage indirimOraniDoldur(String indirimOrani) {
+        txtIndirimOrani.clear();
         txtIndirimOrani.setValue(indirimOrani);
         return this;
     }
 
+    @Step("Indirim oranı alanını doldur : \"{indirimOrani}\" ")
+    public PostaListesiPage indirimOraniDoldur2(String indirimOrani) {
+        txtIndirimOrani2.setValue(indirimOrani);
+        txtIndirimOrani2.pressTab();
+        return this;
+    }
     @Step("Posta Detayı Postala tıkla")
     public PostaListesiPage postaDetayiPostala() {
         btnPostaDetayiPostola.click();
         return this;
     }
 
-    @Step("Alanların Kontrolü")
+    @Step("Ekrandaki alanların Kontrolü")
     public PostaListesiPage alanKontrolu() {
         lblPostaListesiAdi.isDisplayed();
         lblBarkodNo.isDisplayed();
@@ -161,7 +167,7 @@ public class PostaListesiPage extends MainPage {
         lblTutar.isDisplayed();
         return this;
     }
-    @Step("Tutar doldur")
+    @Step("Tutar alanı doldur : \"{tutar}\" ")
     public PostaListesiPage tutarDoldur(String tutar){
         txtTutar.clear();
         txtTutar.sendKeys(tutar);
@@ -228,7 +234,7 @@ public class PostaListesiPage extends MainPage {
 
     ElementsCollection tableEvrakListesi = $$("tbody[id='mainPreviewForm:dataTableId_data'] > tr[role='row']");
 
-    @Step("{0}")
+    @Step("Evrak Listesi kontrolü")
     public PostaListesiPage evrakListesiKontrol(String gonderilenYer, String evrakSayisiEvrakKonusu){
 
         tableEvrakListesi
@@ -267,7 +273,7 @@ public class PostaListesiPage extends MainPage {
         return this;
     }
 
-    @Step("Posta listesi adında '{postaListesiAdi}' değeri olmali mi? : '{shouldBeEquals}'")
+    @Step("Posta listesi adında \"{postaListesiAdi}\" değeri olmali mi? : \"{shouldBeEquals}\" ")
     public PostaListesiPage postaListesiAdiKontrol(String postaListesiAdi, boolean shouldBeEquals){
         if(shouldBeEquals == true)
             txtPostaListesiAdi.shouldHave(Condition.value(postaListesiAdi));
@@ -277,7 +283,7 @@ public class PostaListesiPage extends MainPage {
     }
 
     
-    @Step("Gönderildiğü kurum alanında '{kurum}' değeri olmali mi? : '{shouldBeEquals}'")
+    @Step("Gönderildiğü kurum alanında \"{kurum}\" değeri olmali mi? : \"{shouldBeEquals}\" ")
     public PostaListesiPage gonderildigiKurumKontro(String kurum, boolean shouldBeEquals){
         if(shouldBeEquals == true)
             divGonderildigiKurm.shouldNotHave(Condition.text(kurum));
@@ -287,7 +293,7 @@ public class PostaListesiPage extends MainPage {
     }
 
     
-    @Step("Gönderildiği yer combosunda '{gonderildigiYer}' seçili olmalı mı? : '{shouldBeEquals}'")
+    @Step("Gönderildiği yer combosunda \"{gonderildigiYer}\" seçili olmalı mı? : \"{shouldBeEquals}\" ")
     public PostaListesiPage gonderildigiYerKontrol(String gonderildigiYer, boolean shouldBeEquals){
         if(shouldBeEquals == true)
             lblGonderildigiYerCombo.shouldHave(Condition.text(gonderildigiYer));
@@ -297,7 +303,7 @@ public class PostaListesiPage extends MainPage {
     }
 
     
-    @Step("Adres alanında '{adres}' değeri olmalı mı? : '{shouldBeEquals}'")
+    @Step("Adres alanında \"{adres}\" değeri olmalı mı? : \"{shouldBeEquals}\" ")
     public PostaListesiPage adresKontrol(String adres, boolean shouldBeEquals){
         if(shouldBeEquals == true)
             txtAdres.shouldHave(Condition.text(adres));
@@ -307,7 +313,7 @@ public class PostaListesiPage extends MainPage {
     }
 
     
-    @Step("Gidiş şekli combosunda '{gidisSekli}' değeri olmalı mı? : '{shouldBeEquals}'")
+    @Step("Gidiş şekli combosunda \"{gidisSekli}\" değeri olmalı mı? : \"{shouldBeEquals}\" ")
     public PostaListesiPage gidisSekliKontrol(String gidisSekli, boolean shouldBeEquals){
         if(shouldBeEquals == true)
             lblGidisSekliCmb.shouldHave(Condition.text(gidisSekli));
@@ -317,7 +323,7 @@ public class PostaListesiPage extends MainPage {
     }
 
     
-    @Step("Gönderildiği yer combosunda '{gonderildigiYer}' değeri olmalı mı? : '{shouldBeEquals}'")
+    @Step("Gönderildiği yer combosunda \"{gonderildigiYer\" değeri olmalı mı? : \"{shouldBeEquals}\" ")
     public PostaListesiPage yurticiYurtdisiKontrol(String gonderildigiYer, boolean shouldBeEquals){
         if(shouldBeEquals == true)
             lblGonderildigiYerCmb.shouldHave(Condition.text(gonderildigiYer));
@@ -327,7 +333,7 @@ public class PostaListesiPage extends MainPage {
     }
 
     
-    @Step("İndirim Öncesi tutar alaninda '{indirimOncesiTutar}' değeri olmalı mı? : '{shouldBeEquals}'")
+    @Step("İndirim Öncesi tutar alaninda \"{indirimOncesiTutar}\" değeri olmalı mı? : \"{shouldBeEquals}\" ")
     public PostaListesiPage indirimOncesiTutarKontrol(String indirimOncesiTutar, boolean shouldBeEquals){
         if(shouldBeEquals == true)
             lblIndirimOncesiTutar.shouldHave(Condition.text(indirimOncesiTutar + " TL"));
@@ -336,7 +342,7 @@ public class PostaListesiPage extends MainPage {
         return this;
     }
 
-    @Step("Gramaj alaninda '{gramaj}' değeri olmalı mı? : '{shouldBeEquals}'")
+    @Step("Gramaj alaninda \"{gramaj}\" değeri olmalı mı? : \"{shouldBeEquals}\" ")
     public PostaListesiPage gramajKontrol(String gramaj, boolean shouldBeEquals){
         if(shouldBeEquals == true)
             txtGramaj.shouldHave(Condition.value(gramaj));
@@ -347,7 +353,7 @@ public class PostaListesiPage extends MainPage {
 
     
 
-    @Step("Tutar alaninda '{tutar}' değeri olmalı mı? : '{shouldBeEquals}'")
+    @Step("Tutar alaninda \"{tutar}\" değeri olmalı mı? : \"{shouldBeEquals}\" ")
     public PostaListesiPage tutarKontrol(String tutar, boolean shouldBeEquals){
         if(shouldBeEquals == true)
             txtTutar.shouldHave(Condition.value(tutar));
@@ -356,8 +362,8 @@ public class PostaListesiPage extends MainPage {
         return this;
     }
 
-    @Step("Tutar alaninda '{tutar}' değeri olmalı mı? : '{shouldBeEquals}'")
-    public PostaListesiPage indirimOraniKontrol(String indirimOrani, boolean shouldBeEquals){
+    @Step("Tutar alaninda \"{tutar}\" değeri olmalı mı? : \"{shouldBeEquals}\" ")
+    public PostaListesiPage indirimOraniKontrol(String indirimOrani, boolean shouldBeEquals){ txtIndirimOrani.text();
         if(shouldBeEquals == true)
             txtIndirimOrani.shouldHave(Condition.value(indirimOrani));
         else

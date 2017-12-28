@@ -36,7 +36,7 @@ public class PostalanacakEvraklarPage extends MainPage {
     BelgenetElement cmbGidisSekli = comboBox(By.xpath("//*[normalize-space(text())='Gidiş Şekli :']/ancestor::td[@role='gridcell'][1]//label[contains(@id,'_label')]"));
     SelenideElement txtGramaj = $(By.id("mainPreviewForm:dataTableId:0:postaGramaj"));
     SelenideElement btnTamam = $(By.id("mainPreviewForm:tutarDialogButtonId"));
-    SelenideElement txtTutar = $(By.id("mainPreviewForm:dataTableId:0:dpPostaTutarId"));
+    SelenideElement txtTutar = $("[id$='dpPostaTutarId']");
     SelenideElement btnKaydet = $(By.id("mainPreviewForm:dagitimPlaniDetayKaydetViewDialog"));
     SelenideElement btnHesapla = $x("//button[span[text()='Hesapla']]");
     SelenideElement epostaTxt = $x("//label[normalize-space(text())='e-posta :']/ancestor::tr[1]//input");
@@ -65,6 +65,11 @@ public class PostalanacakEvraklarPage extends MainPage {
     SelenideElement btnEtiketYazdir = $x("//*[@id='mainPreviewForm:dataTableId_data']/tr[1]/td[5]/div//table/tbody/tr[3]/td/button");
     SelenideElement btnEtiketPopupKapat = $x("//*[@id='mainPreviewForm:showAppletContainer']/div/div[1]/a/span");
     SelenideElement btnDagitimYerDetayKapat = $x("//*[@id='mainPreviewForm:dagitimPlaniDetayViewDialog']/div[1]/a/span");
+    SelenideElement lblIndirimOncesiTutari =$("[id='mainPreviewForm:tutarDialogId'] table:nth-child(1) tbody td:nth-child(2) label");
+    SelenideElement lblIndirimOrani =$("[id='mainPreviewForm:tutarDialogId'] table:nth-child(2) tbody td:nth-child(2) label");
+    SelenideElement lblTutar =$("[id='mainPreviewForm:tutarDialogId'] table:nth-child(3) tbody td:nth-child(2) label");
+    SelenideElement popUP = $(By.id("mainPreviewForm:tutarDialogId"));
+
     @Step("Postalanacak Evraklar sayfası aç")
     public PostalanacakEvraklarPage openPage() {
         solMenu(SolMenuData.BirimEvraklari.PostalanacakEvraklar);
@@ -92,7 +97,7 @@ public class PostalanacakEvraklarPage extends MainPage {
         return this;
     }
 
-    @Step("Evrak içerik göster")
+    @Step("Evrak içerik göster : \"{konu}\" ")
     public PostalanacakEvraklarPage evrakSecKonuyaGoreIcerikGoster(String konu) {
         tblEvraklar.filterBy(Condition.text(konu))
                 .first()
@@ -201,8 +206,8 @@ public class PostalanacakEvraklarPage extends MainPage {
         btnPopupHesaplaTamam.click();
         return this;
     }
-    @Step("Tamam tıkla")
-    public PostalanacakEvraklarPage tamam(){
+    @Step("Popup Tamam tıkla")
+    public PostalanacakEvraklarPage popUpTamam(){
         btnTamam.click();
         return this;
     }
@@ -336,6 +341,47 @@ public class PostalanacakEvraklarPage extends MainPage {
     public PostalanacakEvraklarPage dagitimDetayKapat() {
 
         btnDagitimYerDetayKapat.click();
+        return this;
+    }
+
+    @Step("İndirim Öncesi tutar alaninda \"{indirimOncesiTutar}\" değeri olmalı mı? : \"{shouldBeEquals}\" ")
+    public PostalanacakEvraklarPage popUpIndirimOncesiTutarKontrol(String indirimOncesiTutar, boolean shouldBeEquals){
+        if(shouldBeEquals == true)
+            lblIndirimOncesiTutari.shouldHave(Condition.text(indirimOncesiTutar + " TL"));
+        else
+            lblIndirimOncesiTutari.shouldNotHave(Condition.text(indirimOncesiTutar + " TL"));
+        return this;
+    }
+
+    @Step("Tutar alaninda \"{tutar}\" değeri olmalı mı? : \"{shouldBeEquals}\" ")
+    public PostalanacakEvraklarPage popUpIndirimOraniKontrol(String indirimOrani, boolean shouldBeEquals){
+        if(shouldBeEquals == true)
+            lblIndirimOrani.shouldHave(Condition.text(indirimOrani));
+        else
+            lblIndirimOrani.shouldNotHave(Condition.text(indirimOrani));
+        return this;
+    }
+
+    @Step("Tutar alaninda \"{tutar}\" değeri olmalı mı? : \"{shouldBeEquals}\" ")
+    public PostalanacakEvraklarPage popUpTutarKontrol(String tutar, boolean shouldBeEquals){
+        if(shouldBeEquals == true)
+            lblTutar.shouldHave(Condition.text(tutar));
+        else
+            lblTutar.shouldNotHave(Condition.text(tutar));
+        return this;
+    }
+
+    @Step("Popup kontrolü")
+    public PostalanacakEvraklarPage popUpKontrol(){
+        popUP.shouldHave(Condition.visible);
+        return this;
+    }
+    @Step("Tutar alaninda \"{tutar}\" değeri olmalı mı? : \"{shouldBeEquals}\" ")
+    public PostalanacakEvraklarPage tutarAlaniKontrolu(String tutar, boolean shouldBeEquals){
+        if(shouldBeEquals == true)
+            txtTutar.shouldHave(Condition.text(tutar));
+        else
+            txtTutar.shouldNotHave(Condition.text(tutar));
         return this;
     }
 }
