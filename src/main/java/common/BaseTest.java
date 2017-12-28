@@ -1,6 +1,7 @@
 package common;
 
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.Selenide;
 import data.User;
 import io.qameta.allure.Step;
 import listeners.SettingsListener;
@@ -74,8 +75,8 @@ public class BaseTest extends BaseLibrary {
 
         try {
 
-//            Selenide.clearBrowserLocalStorage();
-//            Selenide.clearBrowserCookies();
+            Selenide.clearBrowserLocalStorage();
+            Selenide.clearBrowserCookies();
 
         } catch (Exception e) {
         }
@@ -96,8 +97,8 @@ public class BaseTest extends BaseLibrary {
     public void clearCookies() throws Exception {
         // Selenide.close();
         try {
-//            Selenide.clearBrowserLocalStorage();
-//            Selenide.clearBrowserCookies();
+            Selenide.clearBrowserLocalStorage();
+            Selenide.clearBrowserCookies();
         } catch (Exception e) {
         }
     }
