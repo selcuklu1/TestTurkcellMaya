@@ -338,6 +338,151 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
         //TODO: devam edilecek.
     }
 
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TC-2188: Cevap evrakında kullanıcı şablonu kullanma")
+    public void TC2188() throws InterruptedException {
+
+        String konuKodu = "010.01";
+        String evrakTuru = "Resmi Yazışma";
+        String evrakDili = "Türkçe";
+        String evrakTarihi = getSysDateForKis();
+        String gizlilikDerecesi = "Normal";
+        String geldigiKurum = "Esk Kurum 071216 2";
+        String evrakGelisTipi = "Posta";
+        String ivedilik = "Normal";
+        String birim = "OPTİİM BİRİM";
+        String konu = "Test " + getSysDate();
+        String ad = "Test";
+        String soyad = "Otomasyon";
+        String kisiKurum = "Gerçek Kişi";
+        String basariMesaji = "İşlem başarılıdır!";
+        String tur = "IMZALAMA";
+        String kaldirilacakKlasor = "Diğer";
+        String kladirilacakKlasorTitle = "[Klasör] 000";
+        String dagitimBilgisiKisi = "Mehmet Bozdemir";
+        String evrakTuru2 = "Form";
+        String formSablonu = "Kopya Optiim form şablonu";
+        String onayAkisiListe = "DenemeListe";
+
+        String mernisNo = createMernisTCKN();
+
+        gelenEvrakKayitPage
+                .openPage()
+                .konuKoduDoldur(konuKodu)
+                .konuDoldur(konu)
+                .evrakTuruSec(evrakTuru)
+                .evrakDiliSec(evrakDili)
+                .evrakTarihiDoldur(evrakTarihi)
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .kisiKurumSec(kisiKurum)
+                .geldigiKisiEkle()
+                .iletisimBilgisiTCKNEkle(mernisNo)
+                .iletisimBilgisiTCKNAra()
+                .iletisimBilgisiAdDoldur(ad)
+                .iletisimBilgisiSoyadDoldur(soyad)
+                .iletisimBilgisikaydet();
+
+        gelenEvrakKayitPage
+                .evrakSayiSagDoldur()
+                .evrakGelisTipiSec(evrakGelisTipi)
+                .ivedilikSec(ivedilik)
+                .dagitimBilgileriKisiSec(dagitimBilgisiKisi)
+                .kaydet();
+
+        String evrakNO2186 = gelenEvrakKayitPage.popUps();
+
+        gelenEvrakKayitPage
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        logout();
+        login(username4, password4);
+
+        gelenEvraklarPage
+                .openPage()
+                .tabloKonuyaGoreEvrakAc(konu)
+                .cevapYaz();
+
+        //TODO: Emre bu kontrolu libraryde yazsak bile pageden yazıp libraryden çağıralım. Testin içi daha temiz durur. id'ler testte olmamalı.
+        //Örnek: alanDegeriKontrolEt(konu, true, true);
+        alanDegeriKontrolEt($("[id$='konuTextArea']"), konu, true, true);
+
+        evrakOlusturPage
+                .bilgilerTabiAc()
+                .evrakTuruSec(evrakTuru2)
+                .formSec(formSablonu)
+                .kaldiralacakKlasorlerSec(kaldirilacakKlasor)
+                .cmbOnayAkisi(onayAkisiListe)
+                .kaydetVeOnayaSun()
+                .onayIslemiAciklamaDoldur(konu)
+                .onayIslemiGonder()
+                .onayIslemiOnayaSunmaPopUp()
+                .islemMesaji().beklenenMesaj(basariMesaji);
+
+        //DenemeListesindeki kullnıcı veya kullanıcılarla giriş yapılır işlemdeki aksiyonlar alınır.
+        logout();
+        login("username24o","123");
+
+        imzaBekleyenlerPage
+                .openPage()
+                .evrakKonusunaGoreKontrol(konu)
+                .evrakOnizlemeImzala()
+                .sImzaSec()
+                .sImzaImzala(true);
+
+        logout();
+        login(username4,password4);
+
+        gelenEvraklarPage
+                .openPage()
+                .tabloOlmayanEvrakKontrol(konu);
+
+        cevapladiklarimPage
+                .openPage()
+                .tabloKonuyaGoreEvrakKontrolu(konu);
+
+        String text = " tarihli yazı ile cevap yazılarak kapatılmıştır.";
+        evrakDetayiPage
+                .hareketGecmisiTabAc()
+                .tabloKontol(text);
+
+        klasoreKaldirdiklarimPage
+                .openPage()
+                .filter().findRowsWith(Condition.text(konu))
+                .shouldHaveSize(1);
+
+
+        klasorEvrakIslemleriPage
+                .openPage()
+                .klasorDoldurwithDetail(kaldirilacakKlasor, kladirilacakKlasorTitle)
+                .evrakTarihiDoldur(getSysDateForKis2())
+                .ara();
+
+        klasorEvrakIslemleriPage
+                .filter().findRowsWith(Condition.text(konu))
+                .shouldHaveSize(1);
+
+        postalanacakEvraklarPage
+                .openPage()
+                .filter().findRowsWith(Condition.text(konu))
+                .shouldHaveSize(1);
+
+        logout();
+        login("username24o","123");
+
+        postalanacakEvraklarPage
+                .openPage()
+                .evrakSecKonuyaGoreIcerikGoster(konu)
+                .evrakPostala()
+                .postala()
+                .islemMesaji().beklenenMesaj(basariMesaji);
+
+        postalananlarPage
+                .openPage()
+                .filter().findRowsWith(Condition.text(konu))
+                .shouldHaveSize(1);
+    }
+
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "")
     public void TC2186() throws InterruptedException {

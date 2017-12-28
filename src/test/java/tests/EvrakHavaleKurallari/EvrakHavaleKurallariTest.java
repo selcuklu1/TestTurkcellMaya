@@ -41,13 +41,27 @@ public class EvrakHavaleKurallariTest extends BaseTest {
         String basariMesaji = "İşlem başarılıdır!";
         String bagTipi = "Y";
         String farkliKullanici = "Optiim";
-
-        login(username4, password2);
+        String kuralAdi = "TC-2069_" + createRandomNumber(12);
+        String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞ";
+        String kisi = "Zübeyde Tekin";
+        login(username2, password2);
+        //TODO PRE Conditon bir kural bulunmalı
+        evrakHavaleKurallariYonetimiPage
+                .openPage()
+                .yeniKural()
+                .evrakTuruSec()
+                .kuralinTanimliOlduguBirimlerYeni()
+                .birimEkleBirimDoldur(birim)
+                .birimEkleEkle()
+                .kuralAdiDoldur(kuralAdi)
+                .kimeHavaleEdilecekKisiDoldur(kisi)
+                .kuralEklemeKaydet();
+        //TODO
 
         evrakHavaleKurallariYonetimiPage
                 .openPage()
                 .ara()
-                .sil()
+                .sil(kuralAdi)
                 .islemOnayiEvet()
                 .islemMesaji().basariliOlmali(basariMesaji);
         gelenEvrakKayitPage
