@@ -58,9 +58,6 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
         String eklenecekBirim = "Optiim Alt Birim";
         String eklenecekKullanici = "Yasin TELLİ";
 
-
-
-
         yonetimHavuzuYonetimiPage
                 .openPage()
                 .yonetimHavuzuEkle(eklenecekYonetimHavuzuAdi)
@@ -68,7 +65,6 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
                 .kullaniciEkle(eklenecekKullanici)
                 .yonetimHavuzuKaydet()
                 .ara(eklenecekBirim, eklenecekYonetimHavuzuAdi, null, true);
-
 
         evrakOlusturPage
                 .openPage()
