@@ -16,6 +16,10 @@
 # Belgenet
 belgenetTa.iml
 
+BaseTest.java
+TestData.java
+src/main/java/common/BaseTest.java
+src/main/java/data/TestData.java
 
 
 # Allure Report
