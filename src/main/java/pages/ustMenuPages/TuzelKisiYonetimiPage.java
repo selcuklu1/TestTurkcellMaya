@@ -1,5 +1,7 @@
 package pages.ustMenuPages;
 
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
@@ -10,6 +12,7 @@ import pages.pageComponents.belgenetElements.BelgenetElement;
 
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 /****************************************************
@@ -75,7 +78,7 @@ public class TuzelKisiYonetimiPage extends MainPage {
     SelenideElement btnTuzelKisiPasifYap = $(By.cssSelector("[id^='tuzelKisiYonetimiListingForm:tuzelKisiDataTable'][id$='pasifEtTuzelKisi']"));
     SelenideElement tblKayitBulunamadi = $(By.xpath("//*[@id=\"tuzelKisiYonetimiListingForm:tuzelKisiDataTable_data\"]/tr/td"));
     SelenideElement btnTuzelisiGuncelle = $("[id^='tuzelKisiYonetimiListingForm:tuzelKisiDataTable'][id$='updateTuzelKisiButton']");
-
+    ElementsCollection tblKisiler = $$("[id='tuzelKisiYonetimiListingForm:tuzelKisiDataTable'] tr[class^='ui-widget-content']");
     //</editor-fold>
 
     @Step("Tüzel Kişi Yönetimi sayfasını aç")
@@ -105,6 +108,13 @@ public class TuzelKisiYonetimiPage extends MainPage {
     @Step("Tüzel kişi güncelle")
     public TuzelKisiYonetimiPage tuzelKisiGuncelle() {
         btnTuzelisiGuncelle.click();
+        return this;
+    }
+
+    @Step("Tüzel kişi güncelle")
+    public TuzelKisiYonetimiPage tuzelKisiSecGuncele(String kullanici){
+        tblKisiler.filterBy(Condition.text(kullanici)).get(0)
+                .$$("[id^='tuzelKisiYonetimiListingForm:tuzelKisiDataTable'][id$='updateTuzelKisiButton']").get(0).click();
         return this;
     }
 

@@ -82,8 +82,10 @@ public class VekaletIslemleriTest extends BaseTest {
                 .openPage()
                 .veklatListesiTabAc()
                 .sorgula()
-                .vekaletListesiVekaletIptal(vekaletVeren)
-                .yeniVekaletTabAc();
+                .vekaletListesiVekaletIptal(vekaletVeren);
+
+        vekaletVerPage
+                .openPage();
 
         gelenEvraklarPage
                 .openPage();
@@ -279,6 +281,12 @@ public class VekaletIslemleriTest extends BaseTest {
 
 
         imzaBekleyenlerPage
+
+
+
+
+
+
                 .openPage()
                 .evrakNoKontrolu(evrakNo)
                 .icerik()

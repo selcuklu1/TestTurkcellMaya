@@ -54,6 +54,7 @@ public class VekaletVerPage extends MainPage {
 //    BelgenetElement cmbDurum = comboBox (By.xpath("//table[@id='vekaletVerForm:vekaletLayout:vekaletSorgulaPanelGrid']//select"));
 
     SelenideElement cmbDurum = $(By.xpath("//table[@id='vekaletVerForm:vekaletLayout:vekaletSorgulaPanelGrid']//select"));
+
     @Step("Vekalet Ver sayfası aç")
     public VekaletVerPage openPage() {
         new UstMenu().ustMenu("Vekalet Ver");
@@ -184,11 +185,13 @@ public class VekaletVerPage extends MainPage {
         tabVekaletListesi.click();
         return this;
     }
+
     @Step("Yeni vekalet Tab aç")
     public VekaletVerPage yeniVekaletTabAc() {
         tabYeniVekalet.click();
         return this;
     }
+
     @Step("Sorgula butonu")
     public VekaletVerPage sorgula() {
         btnSorgula.click();
@@ -204,8 +207,8 @@ public class VekaletVerPage extends MainPage {
 
     @Step("Vekalet Listesi Tablo Kontrol")
     public VekaletVerPage vekaletListesiTabloKontrol() {
-       tblVekaletListesi.shouldHave(CollectionCondition.sizeGreaterThan(0));
-       return this;
+        tblVekaletListesi.shouldHave(CollectionCondition.sizeGreaterThan(0));
+        return this;
     }
 
     @Step("Vekalet Listesi Tablo Kontrol : \"{vekaletveren}\" ")
@@ -214,13 +217,22 @@ public class VekaletVerPage extends MainPage {
         ElementsCollection rows = tblVekaletListesi
                 .filterBy(Condition.text(vekaletveren));
 
-        for (SelenideElement row:rows) {
+        for (SelenideElement row : rows) {
             row.$("textarea").sendKeys("İptal");
             row.$("button").click();
             SelenideElement popUp = $("[id='vekaletUyariDaialog']");
             popUp.shouldBe(Condition.visible);
             $(By.xpath("//div[@id= 'vekaletUyariDaialog']//button[span[text()='Evet']]")).click();
         }
+        vekaletIslemleriSayfasıKapat();
+        return this;
+    }
+
+
+    @Step("Vekalet İşlemleri sayfası kapat")
+    public VekaletVerPage vekaletIslemleriSayfasıKapat() {
+        $(By.xpath("//div[@id='window1Dialog']//span[@class='ui-icon ui-icon-closethick']")).click();
+        islemPenceresiKapatmaOnayiPopup("Kapat");
         return this;
     }
 

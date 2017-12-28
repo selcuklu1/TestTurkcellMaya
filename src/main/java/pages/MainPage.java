@@ -177,6 +177,7 @@ public class MainPage extends BaseLibrary {
     @Step("Çıkış yap")
     public void logout() {
         $("button[id='topMenuForm:userMenuButton_button']").click();
+        $("#topMenuForm\\:logOutButton").click();
     }
 
     public MainPage ustMenuEvrakIslemleriAc() {

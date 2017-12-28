@@ -44,7 +44,7 @@ public class HavaleEttiklerimPage extends MainPage {
 
     @Step("Kullanıcı listesi doldur")
     public HavaleEttiklerimPage havaleYapKullaniciListesiDoldur(String kullaniciListesi) {
-        //txtHavaleYapKullaniciListesi.selectLov(kullaniciListesi);
+        txtHavaleYapKullaniciListesi.selectLov(kullaniciListesi);
         txtHavaleYapKullaniciListesi.selectLov(kullaniciListesi);
         return this;
     }

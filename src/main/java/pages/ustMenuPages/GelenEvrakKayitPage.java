@@ -215,11 +215,17 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("Kullanıcı Listesi alnında \"{kisi}\" seç")
     public GelenEvrakKayitPage havaleIslemleriKullaniciListesiDoldur(String kisi) {
-        //txtHavaleIslemleriKullaniciListesi.selectLov(kisi);
         txtHavaleIslemleriKullaniciListesi.selectLov(kisi);
-
+        txtHavaleIslemleriKullaniciListesi.selectLov(kisi);
         return this;
     }
+    @Step("Kullanıcı Listesi alnında \"{kisi}\" seç")
+    public GelenEvrakKayitPage havaleIslemleriKullaniciListesiDoldur(String kisi, String detay) {
+        //txtHavaleIslemleriKullaniciListesi.selectLov(kisi);
+        txtHavaleIslemleriKullaniciListesi.type(kisi).detailItems().filterBy(text(detay)).first().click();
+        return this;
+    }
+
     @Step("Fiziksel Ek ekle")
     public GelenEvrakKayitPage ekBilgiFizikselEkEkle() throws InterruptedException {
         clickJs(btnFizikselEkEkle);
@@ -662,7 +668,8 @@ public class GelenEvrakKayitPage extends MainPage {
     }
 
     public GelenEvrakKayitPage yeniKayitButton() {
-        $("[id='evrakKaydetBasariliDialogForm:yeniKayitButton']").pressEnter();
+        $("[id$='yeniKayitButton']").pressEnter();
+        sleep(5000);
         return this;
     }
 
