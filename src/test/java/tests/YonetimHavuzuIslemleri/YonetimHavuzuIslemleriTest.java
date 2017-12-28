@@ -76,6 +76,7 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
     @Test(enabled = true, description = "TC0002 : Yeni yönetim havuzu kayıt")
     public void TC0002() {
 
+
         String yeniBirimAdi = birimYonetimiPage
                 .openPage()
                 .birimOlustur("YAZILIM GELİŞTİRME DİREKTÖRLÜĞ");
@@ -88,7 +89,7 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
         String eklenecekBirim = yeniBirimAdi;
         String eklenecekKullanici = yeniKullanici;
 
-        yonetimHavuzuYonetimiPage
+                yonetimHavuzuYonetimiPage
                 .openPage()
                 .yonetimHavuzuEkle(eklenecekYonetimHavuzuAdi)
                 .kullananBirimEkle(eklenecekBirim)

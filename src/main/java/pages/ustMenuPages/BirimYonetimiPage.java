@@ -350,7 +350,7 @@ public class BirimYonetimiPage extends MainPage {
         String idariKimlikKodu = "1" + (new Random().nextInt((900000 - 100000) + 1) + 100000);
         String yeniBirimAdi = "Birim" + idariKimlikKodu;
         String postaBirimi = ustBirim;
-        String birimAmiri = "Mehmet BOZDEMİR";
+        String birimAmiri = "Huser TUMER";
         String gorev = "Ağ (Network) Uzman Yardımcısı";
 
         btnBirimEkle.click();
