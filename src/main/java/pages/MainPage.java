@@ -9,9 +9,7 @@ import pages.pageComponents.*;
 import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Condition.exist;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
-import static com.codeborne.selenide.Selenide.executeJavaScript;
+import static com.codeborne.selenide.Selenide.*;
 
 public class MainPage extends BaseLibrary {
     private SolMenu solMenu = new SolMenu();

@@ -1,27 +1,11 @@
 package tests.Data;
 
-import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.SelenideElement;
 import common.BaseTest;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
-import org.openqa.selenium.By;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pages.pageComponents.IslemMesajlari;
-import pages.solMenuPages.BeklemeyeAlinanlarPage;
-import pages.solMenuPages.ImzaBekleyenlerPage;
-import pages.solMenuPages.ImzaladiklarimPage;
 import pages.ustMenuPages.EvrakOlusturPage;
-
-import java.sql.Time;
-import java.time.LocalDateTime;
-
-import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
-import static com.codeborne.selenide.Condition.exist;
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.*;
 
 /****************************************************
  * Tarih: 2017-12-22
@@ -100,7 +84,8 @@ public class DataTest extends BaseTest {
         String kaldirilacakKlasorler = "KURUL KARARLARI";
         String editorIcerik = "Bu bir deneme mesajıdır. Lütfen dikkate almayınız.";
         String ekleriDosyaAciklama = "Açıklama";
-        String filePath = "C:\\Users\\TheKing\\Desktop\\s1.txt";
+        String filePath = System.getProperty("user.dir") + "/Documents/Otomasyon.pdf";//"C:\\Users\\TheKing\\Desktop\\s1.txt";
+
         login("ztekin", "123");
         evrakOlustur = new EvrakOlusturPage();
         evrakOlustur

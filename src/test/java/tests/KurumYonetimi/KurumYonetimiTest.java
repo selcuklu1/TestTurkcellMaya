@@ -1,7 +1,6 @@
 package tests.KurumYonetimi;
 
 import common.BaseTest;
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.ustMenuPages.EvrakOlusturPage;

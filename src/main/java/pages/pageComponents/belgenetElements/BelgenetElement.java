@@ -2,9 +2,6 @@ package pages.pageComponents.belgenetElements;
 
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
-import org.openqa.selenium.By;
-
-import java.util.List;
 
 public interface BelgenetElement extends SelenideElement {
 

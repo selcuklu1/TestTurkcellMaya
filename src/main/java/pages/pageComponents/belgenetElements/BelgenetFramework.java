@@ -1,22 +1,13 @@
 package pages.pageComponents.belgenetElements;
 
-import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
-import com.codeborne.selenide.WebDriverRunner;
-import com.codeborne.selenide.commands.Click;
 import com.codeborne.selenide.commands.Commands;
-import com.codeborne.selenide.commands.Find;
 import com.codeborne.selenide.impl.ElementFinder;
-import com.codeborne.selenide.impl.WebElementSource;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
-import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfAllElements;
 
 public class BelgenetFramework {
 

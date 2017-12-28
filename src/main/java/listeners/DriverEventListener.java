@@ -2,6 +2,7 @@ package listeners;
 
 
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.Selenide;
 import common.BaseLibrary;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -118,6 +119,7 @@ public class DriverEventListener extends BaseLibrary implements WebDriverEventLi
         new WebDriverWait(driver, Configuration.timeout/1000).until(elementToBeClickable(element));
 
        // Selenide.sleep(2000);
+        Selenide.sleep(1300);
         /**
          * Focus on element: Belgenete özel
          * Visible fakat ekranda görünmeyen olan buronlar için.

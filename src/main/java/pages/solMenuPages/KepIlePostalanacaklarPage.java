@@ -5,11 +5,9 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
-import pages.pageComponents.SolMenu;
 import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.assertNoJavascriptErrors;
 
 public class KepIlePostalanacaklarPage extends MainPage{
 

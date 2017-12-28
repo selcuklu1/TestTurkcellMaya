@@ -123,7 +123,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         String evrakTarihi = getSysDateForKis();
         String evrakTuru2 = "Dilekçe";
         String konu = "Test " + getSysDate();
-        String evrakNO321 = "5569";
+//        String evrakNO321 = "5569";
 
 // TC0321 de oluşturulan evrak no burada kullanılacak.
 
