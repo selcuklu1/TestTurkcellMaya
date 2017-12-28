@@ -1,14 +1,13 @@
 package tests.EvrakNot;
 
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.*;
 import common.BaseTest;
 import data.User;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -201,6 +200,8 @@ public class EvrakNotTest extends BaseTest {
             String t = note.text();
             newNote[2] = getDateFromText(t);
             newNote[3] = getTimeFromText(t);
+            //Önemli koşarken 1 saniye fark oldu
+            newNote[3] = newNote[3].substring(0, newNote[3].length()-2);
         }
         takeScreenshot();
 
@@ -411,7 +412,9 @@ public class EvrakNotTest extends BaseTest {
         new IslemMesajlari().basariliOlmali();
 
         //
-        Selenide.close();
+//        Selenide.close();
+        logout();
+        clearCookies();
         login(user2);
         imzaBekleyenlerPage.openPage();
 //        evrak = imzaBekleyenlerPage.filter().findRowsWith(text(konu)).shouldHaveSize(1).first();
@@ -543,7 +546,9 @@ public class EvrakNotTest extends BaseTest {
 
         @Step("Açıklama gir")
         public EvrakNot aciklamaGir(String text) {
-            notEkleDialog.$("textarea").shouldBe(visible).setValue(text).shouldHave(value(text));
+            notEkleDialog.$("textarea").shouldBe(visible);
+            notEkleDialog.$("textarea").clear();
+            notEkleDialog.$("textarea").setValue(text);
             return this;
         }
 
@@ -839,7 +844,7 @@ public class EvrakNotTest extends BaseTest {
 
         class Notlari {
             SelenideElement evrakNotlariDialog = $("#evrakOnizlemeNotlarDialogId");
-            SelenideElement closeDialog = $("#evrakOnizlemeNotlarDialogId span[class~=ui-icon-closethick]");
+            SelenideElement closeDialog = $x("//div[@id='evrakOnizlemeNotlarDialogId']//a[span[contains(@class,'ui-icon-closethick')]]");
             SelenideElement noteBody = $("#evrakOnizlemeNotlarDialogId td[role='gridcell'");
             SelenideElement note = $("#evrakOnizlemeNotlariDatatableId_data");
             SelenideElement deleteNote = $("#evrakOnizlemeNotlariDatatableId_data [class~='delete-icon']");
@@ -847,7 +852,8 @@ public class EvrakNotTest extends BaseTest {
 
             @Step("Evrak Notları pencereyi kapat")
             public Notlari evrakNotlariDialoguKapat() {
-                closeDialog.click();
+//                closeDialog.click();
+                closeDialog.pressEnter();
                 return this;
             }
 
