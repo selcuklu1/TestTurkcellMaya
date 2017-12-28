@@ -259,7 +259,7 @@ public class MainPage extends BaseLibrary {
     }
 
     @Step("Vekalet var uyarı popup")
-    public MainPage vekaletVarUyarıPopUp() {
+    public MainPage vekaletVarUyariPopUp() {
         SelenideElement popUpAktifVekaletUyarı = $(By.id("aktifVekaletinizVarUyariMesajiDialog"));
         SelenideElement btnTamam = $(By.id("aktifVekaletinizVarUyariMesajiDialogEvetBtn"));
         popUpAktifVekaletUyarı.exists();

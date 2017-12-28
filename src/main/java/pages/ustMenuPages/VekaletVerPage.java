@@ -244,7 +244,7 @@ public class VekaletVerPage extends MainPage {
     }
 
     @Step("Vekalet var uyarı popup")
-    public VekaletVerPage vekaletVarUyarıPopUp() {
+    public VekaletVerPage vekaletVarUyariPopUp() {
         popUpAktifVekaletUyarı.exists();
         btnTamam.click();
         return this;

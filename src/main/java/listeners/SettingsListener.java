@@ -16,7 +16,7 @@ public class SettingsListener extends TestNG.ExitCodeListener {
     public void onTestStart(ITestResult result) {
         super.onTestStart(result);
         registerDriverEvenListener();
-        try {
+        /*try {
             if (Configuration.browserSize != null) {
                 try {
                     String[] size = Configuration.browserSize.split("x");
@@ -30,7 +30,7 @@ public class SettingsListener extends TestNG.ExitCodeListener {
             } else
                 WebDriverRunner.getWebDriver().manage().window().maximize();
         } catch (Exception e) {
-        }
+        }*/
     }
 
     @Override

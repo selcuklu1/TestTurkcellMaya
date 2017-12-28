@@ -75,7 +75,7 @@ public class VekaletIslemleriTest extends BaseTest {
 
         if ($("[id='aktifVekaletinizVarUyariMesajiDialog']").isDisplayed()) {
             mainPage
-                    .vekaletVarUyarıPopUp();
+                    .vekaletVarUyariPopUp();
         }
 
         vekaletVerPage
@@ -191,7 +191,7 @@ public class VekaletIslemleriTest extends BaseTest {
 
 
         mainPage
-                .vekaletVarUyarıPopUp();
+                .vekaletVarUyariPopUp();
 
 
         gelenEvraklarPage
@@ -203,7 +203,7 @@ public class VekaletIslemleriTest extends BaseTest {
         login("optiimTest2", "123");
 
         mainPage
-                .vekaletVarUyarıPopUp();
+                .vekaletVarUyariPopUp();
 
         gelenEvraklarPage
                 .openPage()
@@ -262,7 +262,7 @@ public class VekaletIslemleriTest extends BaseTest {
         login("test1", "123");
 
         mainPage
-                .vekaletVarUyarıPopUp();
+                .vekaletVarUyariPopUp();
 
         imzaBekleyenlerPage
                 .openPage()
@@ -273,7 +273,7 @@ public class VekaletIslemleriTest extends BaseTest {
         login("optiimtest2", "123");
 
         mainPage
-                .vekaletVarUyarıPopUp()
+                .vekaletVarUyariPopUp()
                 .birimSec("Vekalet");
         Thread.sleep(2000);
 
@@ -340,7 +340,7 @@ public class VekaletIslemleriTest extends BaseTest {
         login("optiimtest2", "123");
 
         mainPage
-                .vekaletVarUyarıPopUp();
+                .vekaletVarUyariPopUp();
 
         imzaBekleyenlerPage
                 .openPage()
@@ -351,7 +351,7 @@ public class VekaletIslemleriTest extends BaseTest {
         login("test1", "123");
 
         mainPage
-                .vekaletVarUyarıPopUp();
+                .vekaletVarUyariPopUp();
 
         imzaBekleyenlerPage
                 .openPage()
@@ -399,7 +399,7 @@ public class VekaletIslemleriTest extends BaseTest {
         login("test1", "123");
 
         mainPage
-                .vekaletVarUyarıPopUp();
+                .vekaletVarUyariPopUp();
 
         gelenEvraklarPage
                 .openPage()
@@ -455,7 +455,7 @@ public class VekaletIslemleriTest extends BaseTest {
         login("test1", "123");
 
         mainPage
-                .vekaletVarUyarıPopUp();
+                .vekaletVarUyariPopUp();
 
         gelenEvraklarPage
                 .openPage()
@@ -513,7 +513,7 @@ public class VekaletIslemleriTest extends BaseTest {
         login("test1", "123");
 
         mainPage
-                .vekaletVarUyarıPopUp();
+                .vekaletVarUyariPopUp();
 
         gelenEvraklarPage
                 .openPage()
@@ -524,7 +524,7 @@ public class VekaletIslemleriTest extends BaseTest {
         login("optiimtest2", "123");
 
         mainPage
-                .vekaletVarUyarıPopUp()
+                .vekaletVarUyariPopUp()
                 .birimSec("Vekalet");
 
         gelenEvraklarPage
