@@ -80,7 +80,7 @@ public class GizlilikKleransiTest extends BaseTest {
         String evrakTuru = "Resmi Yazışma";
         String evrakDili = "Türkçe";
         String evrakTarihi = getSysDateForKis();
-        String gizlilikDerecesi = "G";
+        String gizlilikDerecesi = "Gizli";
         String kisiKurum = "Kurum";
         String geldigiKurum = "BÜYÜK HARFLERLE KURUM";
         String evrakGelisTipi = "Posta";

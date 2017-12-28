@@ -1,11 +1,15 @@
 package pages.ustMenuPages;
 
 import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
+
+import java.util.Random;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
@@ -17,6 +21,7 @@ public class BirimYonetimiPage extends MainPage {
     SelenideElement btnDuzenle = $(By.cssSelector("birimYonetimiListingForm:birimTreeTable:0:updateBirimButton"));
     ElementsCollection paylastiklarimList = $$("[id='birimYonetimiListingForm:birimTreeTable'] > button[role='row']");
     SelenideElement cmbBirimTuru = $(By.id("birimYonetimiFilterForm:accordionPanel:birimTuruSelectBox"));
+    SelenideElement btnBirimTurumDropDownButton = $("span[id='birimYonetimiEditorForm:birimTipiAutoComplete'] > button");
     SelenideElement cmbDurum = $(By.id("birimYonetimiFilterForm:accordionPanel:durumSelectBox"));
     SelenideElement btnArti = $(By.id("birimYonetimiListingForm:birimTreeTable:0:addNewBirimButton"));
     SelenideElement cmbGorunurlukTipi = $(By.id("birimYonetimiEditorForm:gorunurlukTipiSelect"));
@@ -58,6 +63,11 @@ public class BirimYonetimiPage extends MainPage {
     SelenideElement cmbPopupHizmetSaglayicisi = $(By.id("kepAdresBilgiEditorForm:kephs"));
     SelenideElement btnPopupKaydet = $(By.id("kepAdresBilgiEditorForm:saveKepAdresiButton"));
     SelenideElement btnKaydet = $(By.id("birimYonetimiEditorForm:saveBirimButton"));
+
+    // Hüseyin TÜMER
+
+    SelenideElement btnBirimEkle = $(By.id("birimYonetimiListingForm:birimTreeTable:addNewBirimButton"));
+
 
     @Step("Birim Yönetimi sayfası aç")
     public BirimYonetimiPage openPage() {
@@ -228,7 +238,7 @@ public class BirimYonetimiPage extends MainPage {
     }
 
     @Step("Birimi tipi seç")
-    public BirimYonetimiPage birimTipiSec(String value) throws InterruptedException {
+    public BirimYonetimiPage birimTipiSec(String value) {
         cmbBirimTipi.selectOption(value);
         return this;
     }
@@ -321,5 +331,46 @@ public class BirimYonetimiPage extends MainPage {
     public BirimYonetimiPage birimDoldur(String birim) {
         txtBirim.selectLov(birim);
         return this;
+    }
+
+    SelenideElement txtAntetBilgisi = $(By.id("birimYonetimiEditorForm:antetBilgisiInput"));
+    BelgenetElement txtPostaBirimi = comboLov(By.id("birimYonetimiEditorForm:postaBirimiLov:LovText"));
+    BelgenetElement txtKepPostaBirimi = comboLov(By.id("birimYonetimiEditorForm:kepPostaBirimiLov:LovText"));
+    SelenideElement btnBirimAmiriEkle = $(By.id("birimYonetimiEditorForm:birimKullaniciDataTable:addNewBirimKullaniciLinkButton"));
+    BelgenetElement txtKullanici = comboLov(By.id("birimAmiriEditorForm:birimAmiriLov:LovText"));
+    SelenideElement txtGorev = $(By.id("birimAmiriEditorForm:gorevAutoComplete_input"));
+    SelenideElement cmbGizlilikDerecesi = $(By.id("birimAmiriEditorForm:birimGuvenlikKoduSelect"));
+    SelenideElement btnBirimAmiriKaydet = $(By.id("birimAmiriEditorForm:saveBirimKullaniciIliskiButton"));
+    BelgenetElement txtUstBirim = comboLov(By.id("birimYonetimiEditorForm:ustBirimLov:LovText"));
+    SelenideElement btnBirimKaydet = $(By.id("birimYonetimiEditorForm:saveBirimButton"));
+
+    @Step("Birim oluştur")
+    public String birimOlustur(String ustBirim){
+
+        String idariKimlikKodu = "1" + (new Random().nextInt((900000 - 100000) + 1) + 100000);
+        String yeniBirimAdi = "Birim" + idariKimlikKodu;
+        String postaBirimi = ustBirim;
+        String birimAmiri = "Huser TUMER";
+        String gorev = "Ağ (Network) Uzman Yardımcısı";
+
+        btnBirimEkle.click();
+        txtAd.setValue(yeniBirimAdi);
+        txtAntetBilgisi.setValue(yeniBirimAdi);
+        txtIdariKimlikKodu.setValue(idariKimlikKodu);
+        cmbBirimTipi.setValue("Genel Müdürlüğü");
+        Selenide.sleep(3000);
+        cmbBirimTipi.sendKeys(Keys.ENTER);
+        txtUstBirim.selectLov(postaBirimi);
+        txtPostaBirimi.selectLov(postaBirimi);
+        txtKepPostaBirimi.selectLov(postaBirimi);
+        btnBirimAmiriEkle.click();
+        txtKullanici.selectLov(birimAmiri);
+        txtGorev.setValue(gorev);
+        Selenide.sleep(3000);
+        txtGorev.sendKeys(Keys.ENTER);
+        cmbGizlilikDerecesi.selectOption("Hizmete Özel");
+        btnBirimAmiriKaydet.click();
+        btnBirimKaydet.click();
+        return yeniBirimAdi;
     }
 }

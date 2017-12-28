@@ -27,7 +27,8 @@ import static com.codeborne.selenide.Selenide.*;
 @Feature("Evrakı Beklemeye Alma")
 public class TC2095 extends BaseTest {
 
-    User user1 = new User("user1", "123", "User1 TEST");
+//    User user1 = new User("user1", "123", "User1 TEST");
+    User user1 = new User("optiim", "123", "Optiim TEST");
     User ztekin = new User("ztekin", "123", "Zübeyde TEKİN");
     Filtreler filtrelerPage = new Filtreler();
 
@@ -73,7 +74,7 @@ public class TC2095 extends BaseTest {
     }
 
     @Severity(SeverityLevel.MINOR)
-    @Test(description = "TC2095: Paraf bekleyen evarkalarda \"Beklemeye\" al butonun gelmediği görülür", enabled = false)
+    @Test(description = "TC2095: Paraf bekleyen evarkalarda \"Beklemeye\" al butonun gelmediği görülür", enabled = true)
     public void TC2095_3_parafla() throws Exception {
         login(ztekin);
         new ParafBekleyenlerPage().openPage();
@@ -81,7 +82,7 @@ public class TC2095 extends BaseTest {
     }
 
     @Severity(SeverityLevel.MINOR)
-    @Test(description = "TC2095: Gelen evarkalarda \"Beklemeye\" al butonun gelmediği görülür", enabled = false)
+    @Test(description = "TC2095: Gelen evarkalarda \"Beklemeye\" al butonun gelmediği görülür", enabled = true)
     public void TC2095_4_gelen() throws Exception {
         login(ztekin);
         new GelenEvraklarPage().openPage();
@@ -89,7 +90,7 @@ public class TC2095 extends BaseTest {
     }
 
     @Severity(SeverityLevel.MINOR)
-    @Test(description = "TC2095: Postalanacak evarkalarda \"Beklemeye\" al butonun gelmediği görülür", enabled = false)
+    @Test(description = "TC2095: Postalanacak evarkalarda \"Beklemeye\" al butonun gelmediği görülür", enabled = true)
     public void TC2095_5_postalanacak() throws Exception {
         login(ztekin);
         new PostalanacakEvraklarPage().openPage();

@@ -177,6 +177,7 @@ public class MainPage extends BaseLibrary {
     @Step("Çıkış yap")
     public void logout() {
         $("button[id='topMenuForm:userMenuButton_button']").click();
+        $("#topMenuForm\\:logOutButton").click();
     }
 
     public MainPage ustMenuEvrakIslemleriAc() {
@@ -259,7 +260,7 @@ public class MainPage extends BaseLibrary {
     }
 
     @Step("Vekalet var uyarı popup")
-    public MainPage vekaletVarUyarıPopUp() {
+    public MainPage vekaletVarUyariPopUp() {
         SelenideElement popUpAktifVekaletUyarı = $(By.id("aktifVekaletinizVarUyariMesajiDialog"));
         SelenideElement btnTamam = $(By.id("aktifVekaletinizVarUyariMesajiDialogEvetBtn"));
         popUpAktifVekaletUyarı.exists();

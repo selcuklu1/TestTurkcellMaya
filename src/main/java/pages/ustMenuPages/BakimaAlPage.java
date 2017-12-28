@@ -126,7 +126,6 @@ public class BakimaAlPage extends MainPage {
     public BakimaAlPage kullanicilarTemizle() {
 
         ElementsCollection allClearButtons = $$("tbody[id='bakimaAlFormId:bakimaAlKullanicilarId:LovSecilenTable_data'] button[id^='bakimaAlFormId:bakimaAlKullanicilarId:LovSecilenTable']");
-
         if(allClearButtons.size() > 0){
             for (int i = 0; i < allClearButtons.size(); i ++)
             {

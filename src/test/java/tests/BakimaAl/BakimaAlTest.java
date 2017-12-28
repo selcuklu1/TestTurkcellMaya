@@ -65,7 +65,6 @@ public class BakimaAlTest extends BaseTest {
 
     }
 
-
     @Test(enabled = true, description = "2109 : Bakım Modundan Çıkar")
     public void TC02109() {
 

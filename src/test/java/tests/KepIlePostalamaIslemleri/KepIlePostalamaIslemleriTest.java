@@ -40,6 +40,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
         mainPage = new MainPage();
     }
 
+    //TC
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "1610: KEP Hesap Menüsü - Tanımlanan KEP hesapları ile login işlemleri")
     public void TC1610() throws InterruptedException {
@@ -82,8 +83,8 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "1513b: Kurum Kep Hesabı Tanımlama ve Evrak Oluşturma Ekranından kontrolü")
-    public void TC1513b() throws InterruptedException {
+    @Test(enabled = true, description = "1513: Kurum Kep Hesabı Tanımlama ve Evrak Oluşturma Ekranından kontrolü")
+    public void TC1513B() throws InterruptedException {
 
         String popupKepAdresi = "turksat.kamu1@testkep.pttkep.gov.tr";
         String popupKepHizmetSaglayicisiSec = "Diğer";
@@ -113,8 +114,8 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "1513c: Gerçek Kişi Kep Hesabı Tanımlama ve Evrak Oluşturma Ekranından Kontrolü")
-    public void TC1513c() throws InterruptedException {
+    @Test(enabled = true, description = "1513: Gerçek Kişi Kep Hesabı Tanımlama ve Evrak Oluşturma Ekranından Kontrolü")
+    public void TC1513C() throws InterruptedException {
 
         String popupKepAdresi = "turksat.kamu1@testkep.pttkep.gov.tr";
         String popupKepHizmetSaglayicisiSec = "PTT KEP Servisi";
@@ -144,20 +145,21 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "1513d: Tüzel Kişi Kep Hesabı Tanımlama ve Evrak Oluşturma Ekranından Kontrolü")
-    public void TC1513d() throws InterruptedException {
+    @Test(enabled = true, description = "1513: Tüzel Kişi Kep Hesabı Tanımlama ve Evrak Oluşturma Ekranından Kontrolü")
+    public void TC1513D() throws InterruptedException {
 
         String popupKepAdresi = "turksat.kamu1@testkep.pttkep.gov.tr";
         String popupKepHizmetSaglayicisiSec = "PTT KEP Servisi";
         String basariMesaji = "İşlem başarılıdır!";
         String bilgiSecimTipi = "Tüzel Kişi";
+        String kullanici = "Büyük Küçük Harflerle Tüzel Kişi";
 
         login(username, password);
 
         tuzelKisiYonetimiPage
                 .openPage()
                 .ara()
-                .tuzelKisiGuncelle()
+                .tuzelKisiSecGuncele(kullanici)
                 .kepAdresiKullaniyorSec(true)
                 .kepAdresBilgileriEkle()
                 .kepAdresiDoldur(popupKepAdresi)

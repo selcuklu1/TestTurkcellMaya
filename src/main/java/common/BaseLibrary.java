@@ -803,6 +803,30 @@ public class BaseLibrary extends ElementsContainer {
         return docPath;
     }
 
+    public static String getDocPath() {
+
+        // Get Browser name and version.
+        Capabilities caps = ((RemoteWebDriver) WebDriverRunner.getWebDriver()).getCapabilities();
+        // String browserName = caps.getBrowserName();
+        // String browserVersion = caps.getVersion();
+        Platform operationSystem = caps.getPlatform();
+        System.out.println("Operation System: " + operationSystem.name());
+
+        if (operationSystem.is(Platform.WINDOWS)) {
+            docPath = "C:\\TestAutomation\\BelgenetFTA\\documents\\";
+        } else if (operationSystem.is(Platform.XP)) {
+            docPath = "C:\\TestAutomation\\BelgenetFTA\\documents\\";
+        } else if (operationSystem.is(Platform.LINUX)) {
+            //TODO: Linux pathi verilecek
+            docPath = "/selenium/";
+        } else if (operationSystem.is(Platform.MAC)) {
+            //TODO: Mac pathi verilecek
+            docPath = "/documents/";
+        }
+        System.out.println("File path: " + docPath);
+        return docPath;
+    }
+
     public String getPcUserName() {
 
         String userName = System.getProperty("user.name");

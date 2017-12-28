@@ -30,6 +30,7 @@ public class SettingsListener extends TestNG.ExitCodeListener {
             } else
                 WebDriverRunner.getWebDriver().manage().window().maximize();
         } catch (Exception e) {
+            System.out.println("SettingsListener maximize:" + e.getMessage());
         }
     }
 
