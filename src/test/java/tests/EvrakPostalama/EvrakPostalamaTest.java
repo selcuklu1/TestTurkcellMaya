@@ -188,11 +188,10 @@ public class EvrakPostalamaTest extends BaseTest {
                 .openPage();
 
         Thread.sleep(2000);
-        postalananlarPage.filter(Condition.text(konu));
+        postalananlarPage.filter().findRowsWith(Condition.text(konu)).first().click();
         Thread.sleep(1000);
 
         postalananlarPage.postaDetayiTikla();
-        postalananlarPage;
         Thread.sleep(1000);
         postalananlarPage.btnTarihGuncelle("10.10.2017");
         postalananlarPage.btnPostakoduGuncelle("121212");
