@@ -33,7 +33,6 @@ public class TC2095 extends BaseTest {
     Filtreler filtrelerPage = new Filtreler();
 
 
-
     @Severity(SeverityLevel.CRITICAL)
     @Test(description = "TC2095: Evrakı beklemeye alma ve imzalama")
     public void TC2095_1_imza() {
