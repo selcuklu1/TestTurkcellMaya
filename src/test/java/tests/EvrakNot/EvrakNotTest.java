@@ -853,7 +853,8 @@ public class EvrakNotTest extends BaseTest {
             @Step("Evrak Notları pencereyi kapat")
             public Notlari evrakNotlariDialoguKapat() {
 //                closeDialog.click();
-                closeDialog.pressEnter();
+//                closeDialog.pressEnter();
+                clickJs(closeDialog);
                 return this;
             }
 
