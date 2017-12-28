@@ -9,6 +9,7 @@ import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
 
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
@@ -85,7 +86,7 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
 
     @Step("Tabloda evrak no kontrolu")
     public KaydedilenGelenEvraklarPage tabloKontrolu(String evrakNo) {
-        tblKaydedilenGelenEvraklar2.filterBy(Condition.text(evrakNo)).shouldHaveSize(1);
+        tblKaydedilenGelenEvraklar2.filterBy(text(evrakNo)).shouldHaveSize(1);
 //        System.out.println(row);
 //        Assert.assertEquals(row, 1);
         return this;
@@ -99,16 +100,17 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
 
     @Step("Tabloda evrak noya göre İçerik tıklama")
     public KaydedilenGelenEvraklarPage tabloEvrakNoileIcerikSec(String evrakNo) {
-        tblKaydedilenGelenEvraklar
+        /*tblKaydedilenGelenEvraklar
                 .filterBy(Condition.text(evrakNo)).shouldHaveSize(1)
                 .first()
-                .$("[id$='detayGosterButton']").click();
+                .$("[id$='detayGosterButton']").click();*/
+        filter().findRowsWith(text(evrakNo)).shouldHaveSize(1).first().click();
         return this;
     }
     @Step("Tabloda konuya göre evrak kontrolu : {konu}")
     public KaydedilenGelenEvraklarPage tabloKonuyaGoreEvrakKontrolu(String konu) {
         tblKaydedilenGelenEvraklar
-                .filterBy(Condition.text(konu))
+                .filterBy(text(konu))
                 .shouldHaveSize(1);
         return this;
     }
