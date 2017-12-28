@@ -54,6 +54,19 @@ public class PostalananlarPage extends MainPage {
     SelenideElement ImzaDialog = $(By.id("mainInboxForm:imzaListesiDialog"));
     SelenideElement postalananEvrakYazdir = $x("//button[span[text()='Yazdır']]");
     SelenideElement postalananEvrakEtiketYazdir = $x("//button[span[text()='Etiket Bastır']]");
+    SelenideElement tabIcerikIlgileri = $(By.id("inboxItemInfoForm:dialogTabMenuLeft:uiRepeat:2:cmdbutton"));
+    SelenideElement tabIcerikEkleri = $(By.id("inboxItemInfoForm:dialogTabMenuLeft:uiRepeat:1:cmdbutton"));
+    SelenideElement tabIcerikKapat = $x("//*[@id='windowItemInfoDialog']/div[1]/a[1]/span");
+    SelenideElement tabIcerikKapatmaOnay = $(By.id("kapatButton"));
+    //
+    SelenideElement tuzelKisiGuncelle = $x("//*[@id='mainPreviewForm:postalananDataGrid']/tbody/tr/td/div/table/tbody/tr[4]/td[8]/div/button[1]");
+    //
+    SelenideElement kullaniciGuncelle =  $x("//*[@id='mainPreviewForm:postalananDataGrid']/tbody/tr/td/div/table/tbody/tr[5]/td[8]/div/button[1]") ;
+
+    //SelenideElement btnEtiketPopupKapat = $x("//*[@id='mainPreviewForm:showAppletContainer']/div/div[1]/a/span");
+  //  SelenideElement btnDagitimYerDetayKapat = $x("//*[@id='mainPreviewForm:dagitimPlaniDetayViewDialog']/div[1]/a/span");
+
+
     @Step("Postalananlar sayfası aç")
     public PostalananlarPage openPage() throws  InterruptedException {
         solMenu(SolMenuData.BirimEvraklari.Postalananlar);
@@ -276,4 +289,16 @@ return this;
        postalananEvrakEtiketYazdir.click();
        return this;
     }
+    public PostalananlarPage tuzelKisiPostaKodu() {
+
+        tuzelKisiGuncelle.click();
+        return this;
+   }
+   public PostalananlarPage kullaniciGuncelle() {
+
+       kullaniciGuncelle.click();
+       return this;
+   }
+
+
 }
