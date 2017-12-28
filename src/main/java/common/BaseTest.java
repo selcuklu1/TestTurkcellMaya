@@ -34,18 +34,22 @@ public class BaseTest extends BaseLibrary {
 
         BelgenetFramework.setUp();
 
-        //region Selenide Driver Configuration
-        Configuration.baseUrl = belgenetURL;
-        Configuration.browser = "chrome";
-        //Configuration.browser = "firefox";
-
-        Configuration.remote = "http://10.101.20.151:4444/wd/hub";
+        System.out.println("selenide.browser: " + System.getProperty("selenide.browser"));
+        System.out.println("selenide.baseUrl: " + System.getProperty("selenide.baseUrl"));
+        //Configuration.remote = "http://10.101.20.151:4444/wd/hub";
         //Configuration.remote = "http://localhost:4444/wd/hub";
+
+        if (System.getProperty("selenide.baseUrl") == null)
+            Configuration.baseUrl = belgenetURL;
+
+        if (System.getProperty("selenide.browser") == null)
+            Configuration.browser = "chrome";
+
         Configuration.reportsFolder = "test-result/reports";
         Configuration.screenshots = false;
         Configuration.savePageSource = false;
-        Configuration.collectionsTimeout = 10000;
-        Configuration.timeout = 10000;
+        Configuration.collectionsTimeout = 30000;
+        Configuration.timeout = 30000;
         //Configuration.clickViaJs = true;
 //        Configuration.holdBrowserOpen = true;
         //Configuration.headless = false;
@@ -56,11 +60,10 @@ public class BaseTest extends BaseLibrary {
         //Configuration.closeBrowserTimeoutMs = 34000;
         //Configuration.openBrowserTimeoutMs = 34000;
         //Configuration.browserSize = "1024x600";
-
-        Configuration.baseUrl = belgenetURL;
         //endregion
 
-
+        System.out.println("selenide.browser: " + System.getProperty("selenide.browser"));
+        System.out.println("selenide.baseUrl: " + System.getProperty("selenide.baseUrl"));
         // System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, "/dev/null");
 
         setDocPath();
@@ -69,7 +72,7 @@ public class BaseTest extends BaseLibrary {
         log.info("Selenide/Selenium driver has been set up.");
     }
 
-    /*@AfterMethod(alwaysRun = true)
+    @AfterMethod(alwaysRun = true)
     public void afterMethod() {
 
         try {
@@ -90,7 +93,7 @@ public class BaseTest extends BaseLibrary {
     public void afterClass() {
         Selenide.close();
         log.info("Browser has been closed.");
-    }*/
+    }
 
 
     public void clearCookies() throws Exception {

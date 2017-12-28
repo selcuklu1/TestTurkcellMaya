@@ -73,7 +73,7 @@ public class TC2095 extends BaseTest {
     }
 
     @Severity(SeverityLevel.MINOR)
-    @Test(description = "TC2095: Paraf bekleyen evarkalarda \"Beklemeye\" al butonun gelmediği görülür", enabled = false)
+    @Test(description = "TC2095: Paraf bekleyen evarkalarda \"Beklemeye\" al butonun gelmediği görülür", enabled = true)
     public void TC2095_3_parafla() throws Exception {
         login(ztekin);
         new ParafBekleyenlerPage().openPage();
@@ -81,7 +81,7 @@ public class TC2095 extends BaseTest {
     }
 
     @Severity(SeverityLevel.MINOR)
-    @Test(description = "TC2095: Gelen evarkalarda \"Beklemeye\" al butonun gelmediği görülür", enabled = false)
+    @Test(description = "TC2095: Gelen evarkalarda \"Beklemeye\" al butonun gelmediği görülür", enabled = true)
     public void TC2095_4_gelen() throws Exception {
         login(ztekin);
         new GelenEvraklarPage().openPage();
@@ -89,7 +89,7 @@ public class TC2095 extends BaseTest {
     }
 
     @Severity(SeverityLevel.MINOR)
-    @Test(description = "TC2095: Postalanacak evarkalarda \"Beklemeye\" al butonun gelmediği görülür", enabled = false)
+    @Test(description = "TC2095: Postalanacak evarkalarda \"Beklemeye\" al butonun gelmediği görülür", enabled = true)
     public void TC2095_5_postalanacak() throws Exception {
         login(ztekin);
         new PostalanacakEvraklarPage().openPage();
