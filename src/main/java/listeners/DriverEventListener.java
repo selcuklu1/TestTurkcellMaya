@@ -118,7 +118,7 @@ public class DriverEventListener extends BaseLibrary implements WebDriverEventLi
         waitForLoadingJS(driver);
         new WebDriverWait(driver, Configuration.timeout/1000).until(elementToBeClickable(element));
 
-        Selenide.sleep(2000);
+        Selenide.sleep(1000);
         /**
          * Focus on element: Belgenete özel
          * Visible fakat ekranda görünmeyen olan buronlar için.
