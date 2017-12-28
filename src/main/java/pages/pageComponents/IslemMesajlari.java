@@ -4,11 +4,11 @@ import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
 import common.BaseLibrary;
 import io.qameta.allure.Step;
-import javafx.scene.text.Text;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 
-import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.Condition.exactText;
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 import static pages.pageComponents.IslemMesajlari.MessageTitle.*;
 

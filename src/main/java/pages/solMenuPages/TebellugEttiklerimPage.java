@@ -7,7 +7,6 @@ import org.openqa.selenium.By;
 import pages.MainPage;
 import pages.pageData.SolMenuData;
 
-import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 
 public class TebellugEttiklerimPage extends MainPage {

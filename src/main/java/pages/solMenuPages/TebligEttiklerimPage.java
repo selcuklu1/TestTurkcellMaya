@@ -5,14 +5,11 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
-import org.testng.Assert;
 import pages.MainPage;
-import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
-import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 public class TebligEttiklerimPage extends MainPage {
 

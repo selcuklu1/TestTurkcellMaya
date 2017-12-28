@@ -3,13 +3,11 @@ package pages.ustMenuPages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
-import common.BaseLibrary;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
-import pages.solMenuPages.ImzaladiklarimPage;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;

@@ -10,14 +10,12 @@ import common.BaseTest;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
-
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pages.ustMenuPages.*;
+import pages.ustMenuPages.EvrakHavaleKurallariYonetimiPage;
+import pages.ustMenuPages.GelenEvrakKayitPage;
 
-import static data.TestData.password2;
-import static data.TestData.username2;
-import static data.TestData.username4;
+import static data.TestData.*;
 
 /****************************************************
  * Tarih: 2017-12-27

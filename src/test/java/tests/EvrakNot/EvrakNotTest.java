@@ -1,6 +1,9 @@
 package tests.EvrakNot;
 
-import com.codeborne.selenide.*;
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.SelenideElement;
 import common.BaseTest;
 import data.User;
 import io.qameta.allure.Feature;

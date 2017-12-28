@@ -1,15 +1,11 @@
 package tests.TopluPostalama;
 
-import com.codeborne.selenide.Selenide;
 import common.BaseTest;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.solMenuPages.*;
 import pages.ustMenuPages.PttRaporuPage;
 
-import javax.swing.table.TableRowSorter;
 import java.util.Random;
 
 

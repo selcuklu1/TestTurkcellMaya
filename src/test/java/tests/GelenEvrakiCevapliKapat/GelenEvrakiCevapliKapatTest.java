@@ -6,22 +6,15 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pages.solMenuPages.CevapladiklarimPage;
-import pages.solMenuPages.GelenEvraklarPage;
-import pages.solMenuPages.KontrolBekleyenlerPage;
-import pages.ustMenuPages.CevaplananEvrakRaporuPage;
-import pages.ustMenuPages.EvrakOlusturPage;
-import pages.ustMenuPages.GelenEvrakKayitPage;
-
-import java.io.IOException;
-
-import static data.TestData.*;
 import pages.altMenuPages.EvrakDetayiPage;
 import pages.pageComponents.TextEditor;
 import pages.solMenuPages.*;
 import pages.ustMenuPages.*;
 
+import java.io.IOException;
+
 import static com.codeborne.selenide.Selenide.$;
+import static data.TestData.*;
 
 /****************************************************
  * Tarih: 2017-12-22
