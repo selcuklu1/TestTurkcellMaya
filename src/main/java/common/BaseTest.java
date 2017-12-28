@@ -41,9 +41,13 @@ public class BaseTest extends BaseLibrary {
 
         if (System.getProperty("selenide.baseUrl") == null)
             Configuration.baseUrl = belgenetURL;
+        else
+            Configuration.baseUrl = System.getProperty("selenide.baseUrl");
 
         if (System.getProperty("selenide.browser") == null)
             Configuration.browser = "chrome";
+        else
+            Configuration.browser = System.getProperty("selenide.browser");
 
         Configuration.reportsFolder = "test-result/reports";
         Configuration.screenshots = false;
