@@ -4,7 +4,7 @@
 <!--By Emre-->
     <test name="Vekalet İşlemleri Testleri">
         <packages>
-            <package name="tests.Vekaletislemleri"/>
+            <package name="tests.VekaletIslemleri"/>
         </packages>
     </test>
 </suite>
