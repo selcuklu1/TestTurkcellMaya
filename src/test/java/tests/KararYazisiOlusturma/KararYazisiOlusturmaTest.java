@@ -88,8 +88,7 @@ public class KararYazisiOlusturmaTest extends BaseTest{
                     .bilgilerTabiAc()
                     .kararNoDoldur("")
                     .kaydetveOnaySun()
-                    .islemMesaji().beklenenMesaj(uyariMesajZorunlu)
-                    .beklenenMesaj(uyariMesajZorunlu);
+                    .islemMesaji().beklenenMesaj(uyariMesajZorunlu);
 
             kararYazisiOlusturPage
                     .bilgilerTabiAc()

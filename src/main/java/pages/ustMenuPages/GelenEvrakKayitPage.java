@@ -215,16 +215,14 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("Kullanıcı Listesi alnında \"{kisi}\" seç")
     public GelenEvrakKayitPage havaleIslemleriKullaniciListesiDoldur(String kisi) {
-        //txtHavaleIslemleriKullaniciListesi.selectLov(kisi);
         txtHavaleIslemleriKullaniciListesi.selectLov(kisi);
-        sleep(3000);
-
+        txtHavaleIslemleriKullaniciListesi.selectLov(kisi);
         return this;
     }
     @Step("Kullanıcı Listesi alnında \"{kisi}\" seç")
     public GelenEvrakKayitPage havaleIslemleriKullaniciListesiDoldur(String kisi, String detay) {
         //txtHavaleIslemleriKullaniciListesi.selectLov(kisi);
-        txtHavaleIslemleriKullaniciListesi.type(kisi).detailItems().filterBy(Condition.text(detay)).get(0).click();
+        txtHavaleIslemleriKullaniciListesi.type(kisi).detailItems().filterBy(text(detay)).first().click();
         return this;
     }
 
