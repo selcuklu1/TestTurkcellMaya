@@ -47,15 +47,15 @@ public class BaseTest extends BaseLibrary {
         Configuration.reportsFolder = "test-result/reports";
         Configuration.screenshots = false;
         Configuration.savePageSource = false;
-        Configuration.collectionsTimeout = 5000;
-        Configuration.timeout = 10000;
+        Configuration.collectionsTimeout = 20000;
+        Configuration.timeout = 20000;
         //Configuration.clickViaJs = true;
         Configuration.holdBrowserOpen = true;
         //Configuration.headless = false;
 
         Configuration.startMaximized = true;
-        Configuration.pollingInterval = 10;
-        Configuration.collectionsPollingInterval = 10;
+        Configuration.pollingInterval = 100;
+        Configuration.collectionsPollingInterval = 100;
         //Configuration.closeBrowserTimeoutMs = 34000;
         //Configuration.openBrowserTimeoutMs = 34000;
         //Configuration.browserSize = "1024x600";
