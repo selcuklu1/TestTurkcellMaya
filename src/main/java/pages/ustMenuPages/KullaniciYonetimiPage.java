@@ -3,12 +3,16 @@ package pages.ustMenuPages;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import pages.MainPage;
 import pages.pageComponents.UstMenu;
 import pages.pageComponents.belgenetElements.BelgenetElement;
+
+import java.util.Random;
+import java.util.Vector;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
@@ -65,6 +69,9 @@ public class KullaniciYonetimiPage extends MainPage {
     //
     SelenideElement kaydet = $(By.id("kullaniciYonetimiEditorForm:saveKullaniciButton"));
 
+
+    // Hüseyin TÜMER
+    SelenideElement btnKullaniciEkle = $(By.id("kullaniciYonetimiListingForm:kullaniciDataTable:addNewKullaniciButton"));
 
 
     @Step("Birim alanında \"{0}\" sec")
@@ -249,5 +256,83 @@ public class KullaniciYonetimiPage extends MainPage {
             txtUnvan.pressEnter();
         }
         return this;
+    }
+
+    SelenideElement txtTcKimlikNo1 = $(By.id("kullaniciYonetimiEditorForm:tcKimlikNoInput"));
+    SelenideElement txtSicilNo1 = $(By.id("kullaniciYonetimiEditorForm:sicilNoInput"));
+    SelenideElement txtAd1 = $(By.id("kullaniciYonetimiEditorForm:ilkAdInput"));
+    SelenideElement txtSoyad1 = $(By.id("kullaniciYonetimiEditorForm:soyadInput"));
+    SelenideElement txtKullaniciAdi1 = $(By.id("kullaniciYonetimiEditorForm:kullaniciAdiInput"));
+    SelenideElement txtEmail1 = $(By.id("kullaniciYonetimiEditorForm:emailInput"));
+    SelenideElement txtSifre = $(By.id("kullaniciYonetimiEditorForm:sifre"));
+    SelenideElement txtSifreTekrar = $(By.id("kullaniciYonetimiEditorForm:sifreTekrar"));
+    SelenideElement btnGorevliOlduguBirimEkle = $(By.id("kullaniciYonetimiEditorForm:kullaniciBirimDataTable:addNewKullaniciBirimLinkButton"));
+    BelgenetElement txtBirim = comboLov(By.id("kullaniciBirimEditorForm:kullaniciBirimIliskiBirimLov:LovText"));
+    SelenideElement btnRolEkle = $(By.id("kullaniciYonetimiEditorForm:kullaniciRolBirimDataTable:addNewRolLinkButton"));
+    SelenideElement txtGorev = $(By.id("kullaniciBirimEditorForm:unvanAutoComplete_input"));
+    BelgenetElement txtRol = comboLov(By.id("kullaniciRolEkleEditorForm:rolEkleLovRolList:LovText"));
+    SelenideElement btnRolKaydet = $(By.id("kullaniciRolEkleEditorForm:saveKullaniciRolEkleButton"));
+
+    @Step("Kullanıcı Oluştur")
+    public String kullaniciOlustur(String gorevliOlduguBirim, String gorev){
+
+        String kullaniciAdi = "Kullanici" + (new Random().nextInt((900000 - 100000) + 1) + 100000);
+        String sicilNo = "" + (new Random().nextInt((900000 - 100000) + 1) + 100000);
+        btnKullaniciEkle.click();
+        txtTcKimlikNo1.setValue(createMernisTCKN());
+        txtSicilNo1.setValue(sicilNo);
+        txtAd1.setValue(kullaniciAdi);
+        txtSoyad1.setValue(kullaniciAdi);
+        txtKullaniciAdi1.setValue(kullaniciAdi);
+        txtEmail1.setValue(kullaniciAdi + "@turksat.com.tr");
+        txtSifre.setValue("123");
+        txtSifreTekrar.setValue("123");
+        txtUnvan.setValue(gorev);
+        Selenide.sleep(2000);
+        txtUnvan.pressEnter();
+        btnGorevliOlduguBirimEkle.click();
+        txtBirim.selectLov(gorevliOlduguBirim);
+        txtGorev.setValue(gorev);
+        Selenide.sleep(2000);
+        txtGorev.pressEnter();
+        btnKullaniciBirimAtamaKaydet.click();
+        btnRolEkle.click();
+        txtRol.selectLov("ENTERPRİSE");
+        txtRol.selectLov("STANDART KULLANICI (EVRAK KAPATMA HARİÇ)");
+        btnRolKaydet.click();
+        String ekranAdi = txtEkranAdi.getValue();
+        btnKullaniciGuncelleKaydet.click();
+        return ekranAdi;
+    }
+
+    @Step("Kullanıcı Oluştur")
+    public String kullaniciOlustur(String kullaniciAdi, String sifre, String gorevliOlduguBirim, String gorev){
+
+        String sicilNo = "" + (new Random().nextInt((900000 - 100000) + 1) + 100000);
+        btnKullaniciEkle.click();
+        txtTcKimlikNo1.setValue(createMernisTCKN());
+        txtSicilNo1.setValue(sicilNo);
+        txtAd1.setValue(kullaniciAdi);
+        txtSoyad1.setValue(kullaniciAdi);
+        txtKullaniciAdi1.setValue(kullaniciAdi);
+        txtEmail1.setValue(kullaniciAdi + "@turksat.com.tr");
+        txtSifre.setValue(sifre);
+        txtSifreTekrar.setValue(sifre);
+        txtUnvan.setValue(gorev);
+        Selenide.sleep(2000);
+        txtUnvan.pressEnter();
+        btnGorevliOlduguBirimEkle.click();
+        txtBirim.selectLov(gorevliOlduguBirim);
+        txtGorev.setValue(gorev);
+        Selenide.sleep(2000);
+        txtGorev.pressEnter();
+        btnKullaniciBirimAtamaKaydet.click();
+        btnRolEkle.click();
+        txtRol.selectLov("ENTERPRİSE");
+        txtRol.selectLov("STANDART KULLANICI (EVRAK KAPATMA HARİÇ)");
+        btnRolKaydet.click();
+        String ekranAdi = txtEkranAdi.getValue();
+        btnKullaniciGuncelleKaydet.click();
+        return ekranAdi;
     }
 }
