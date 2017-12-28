@@ -10,14 +10,12 @@ import common.BaseTest;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
-
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pages.ustMenuPages.*;
+import pages.ustMenuPages.EvrakHavaleKurallariYonetimiPage;
+import pages.ustMenuPages.GelenEvrakKayitPage;
 
-import static data.TestData.password2;
-import static data.TestData.username2;
-import static data.TestData.username4;
+import static data.TestData.*;
 
 /****************************************************
  * Tarih: 2017-12-27
@@ -43,13 +41,27 @@ public class EvrakHavaleKurallariTest extends BaseTest {
         String basariMesaji = "İşlem başarılıdır!";
         String bagTipi = "Y";
         String farkliKullanici = "Optiim";
-
-        login(username4, password2);
+        String kuralAdi = "TC-2069_" + createRandomNumber(12);
+        String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞ";
+        String kisi = "Zübeyde Tekin";
+        login(username2, password2);
+        //TODO PRE Conditon bir kural bulunmalı
+        evrakHavaleKurallariYonetimiPage
+                .openPage()
+                .yeniKural()
+                .evrakTuruSec()
+                .kuralinTanimliOlduguBirimlerYeni()
+                .birimEkleBirimDoldur(birim)
+                .birimEkleEkle()
+                .kuralAdiDoldur(kuralAdi)
+                .kimeHavaleEdilecekKisiDoldur(kisi)
+                .kuralEklemeKaydet();
+        //TODO
 
         evrakHavaleKurallariYonetimiPage
                 .openPage()
                 .ara()
-                .sil()
+                .sil(kuralAdi)
                 .islemOnayiEvet()
                 .islemMesaji().basariliOlmali(basariMesaji);
         gelenEvrakKayitPage

@@ -2,11 +2,9 @@ package common;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.testng.BrowserPerTest;
 import data.User;
 import io.qameta.allure.Step;
 import listeners.SettingsListener;
-import org.openqa.selenium.WebDriver;
 import org.testng.annotations.*;
 import pages.LoginPage;
 import pages.MainPage;
@@ -41,16 +39,15 @@ public class BaseTest extends BaseLibrary {
         Configuration.browser = "chrome";
         //Configuration.browser = "firefox";
 
-        // Configuration.remote = "http://10.101.20.151:4444/wd/hub";
-
+        Configuration.remote = "http://10.101.20.151:4444/wd/hub";
         //Configuration.remote = "http://localhost:4444/wd/hub";
         Configuration.reportsFolder = "test-result/reports";
         Configuration.screenshots = false;
         Configuration.savePageSource = false;
-        Configuration.collectionsTimeout = 20000;
-        Configuration.timeout = 20000;
+        Configuration.collectionsTimeout = 10000;
+        Configuration.timeout = 10000;
         //Configuration.clickViaJs = true;
-        Configuration.holdBrowserOpen = true;
+//        Configuration.holdBrowserOpen = true;
         //Configuration.headless = false;
 
         Configuration.startMaximized = true;
@@ -72,12 +69,15 @@ public class BaseTest extends BaseLibrary {
         log.info("Selenide/Selenium driver has been set up.");
     }
 
-    @AfterMethod(alwaysRun = true)
+    /*@AfterMethod(alwaysRun = true)
     public void afterMethod() {
 
         try {
-            //Selenide.clearBrowserLocalStorage();
-            //Selenide.clearBrowserCookies();
+
+
+            Selenide.clearBrowserLocalStorage();
+            Selenide.clearBrowserCookies();
+
         } catch (Exception e) {
         }
 
@@ -89,13 +89,16 @@ public class BaseTest extends BaseLibrary {
     @AfterClass(alwaysRun = true)
     public void afterClass() {
         Selenide.close();
-
         log.info("Browser has been closed.");
-    }
+    }*/
 
 
     public void clearCookies() throws Exception {
+
+        Selenide.close();
+
         // Selenide.close();
+
         try {
             Selenide.clearBrowserLocalStorage();
             Selenide.clearBrowserCookies();

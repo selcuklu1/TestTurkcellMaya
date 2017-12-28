@@ -9,9 +9,7 @@ import pages.pageComponents.*;
 import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Condition.exist;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
-import static com.codeborne.selenide.Selenide.executeJavaScript;
+import static com.codeborne.selenide.Selenide.*;
 
 public class MainPage extends BaseLibrary {
     private SolMenu solMenu = new SolMenu();
@@ -179,6 +177,7 @@ public class MainPage extends BaseLibrary {
     @Step("Çıkış yap")
     public void logout() {
         $("button[id='topMenuForm:userMenuButton_button']").click();
+        $("#topMenuForm\\:logOutButton").click();
     }
 
     public MainPage ustMenuEvrakIslemleriAc() {
@@ -261,7 +260,7 @@ public class MainPage extends BaseLibrary {
     }
 
     @Step("Vekalet var uyarı popup")
-    public MainPage vekaletVarUyarıPopUp() {
+    public MainPage vekaletVarUyariPopUp() {
         SelenideElement popUpAktifVekaletUyarı = $(By.id("aktifVekaletinizVarUyariMesajiDialog"));
         SelenideElement btnTamam = $(By.id("aktifVekaletinizVarUyariMesajiDialogEvetBtn"));
         popUpAktifVekaletUyarı.exists();

@@ -52,7 +52,7 @@ public class GelenEvraklarPage extends MainPage {
 
     BelgenetElement txtKullaniciListesi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKisiListesiLov:LovText"));
     SelenideElement popUpUyari = $("[id='mainPreviewForm:j_idt5031'] p");
-    SelenideElement popUpUyariEvet = $(By.id("mainPreviewForm:j_idt5033"));
+    SelenideElement popUpUyariEvet = $(By.xpath("//body[@class='ui-layout-container']/div[131]//center/button[1]"));
     ElementsCollection tblEvrak = $$("[id^='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
     BelgenetElement txtHavaleYapKisi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKullaniciLov:LovText"));
     BelgenetElement txtHavaleYapKullaniciListesi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKisiListesiLov:LovText"));
@@ -151,7 +151,7 @@ public class GelenEvraklarPage extends MainPage {
 
     @Step("Kullanıcı listesi doldur")
     public GelenEvraklarPage havaleYapKullaniciListesiDoldur(String kullaniciListesi) {
-        //txtHavaleYapKullaniciListesi.selectLov(kullaniciListesi);
+        txtHavaleYapKullaniciListesi.selectLov(kullaniciListesi);
         txtHavaleYapKullaniciListesi.selectLov(kullaniciListesi);
         return this;
     }
@@ -449,9 +449,15 @@ public class GelenEvraklarPage extends MainPage {
         txtEvrakKapatNot.sendKeys(text);
         return this;
     }
-
+    @Step("Kaldırılacak klasor doldur")
     public GelenEvraklarPage evrakKapatKaldirilacakKlasorlerDoldur(String text) {
         txtEvrakKapatKaldirilacakKlasorler.selectLov(text);
+        return this;
+    }
+    @Step("Kaldırılıcak klasor doldur")
+    public GelenEvraklarPage evrakKapatKaldirilacakKlasorlerDoldur(String text,String birim) {
+        txtEvrakKapatKaldirilacakKlasorler.type(text).detailItems().filterBy(text(birim)).first().click();
+        txtEvrakKapatKaldirilacakKlasorler.closeLovTreePanel();
         return this;
     }
 
@@ -561,12 +567,13 @@ public class GelenEvraklarPage extends MainPage {
     }
 
     @Step("Vekalet var uyarısı : \"{mesaj}\" ")
-    public GelenEvraklarPage evrakOnIzlemeUyarıPopUpKontol(String mesaj) {
-        SelenideElement popUp = $(By.id("mainPreviewForm:j_idt5031"));
+    public GelenEvraklarPage evrakOnIzlemeUyarıPopUpKontol(String mesaj) throws InterruptedException {
+        SelenideElement popUp = $(By.id("mainPreviewForm:j_idt5692"));
+        SelenideElement popUpEvet = $(By.id("mainPreviewForm:j_idt5694"));
         popUp.should(Condition.visible);
 
-        if (popUpUyari.text().equals(mesaj))
-            clickJs(popUpUyariEvet);
+        if (popUp.text().contains(mesaj))
+            clickJs(popUpEvet);
         return this;
     }
 
@@ -576,7 +583,7 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
-    @Step("Kullanıcılar alanı doldur : Kullanıcı :\n \"{kullanici}\", \nTitle : \"{title}\" ")
+    @Step("Kullanıcılar alanı doldur : \nKullanıcı : \"{kullanici}\", \nTitle : \"{title}\" ")
     public GelenEvraklarPage kullanciListesiSecWithTitle(String kullanici, String title) {
         txtKullaniciListesi.type(kullanici).detailItems()
                 .filterBy(Condition.exactText(title)).first().click();
