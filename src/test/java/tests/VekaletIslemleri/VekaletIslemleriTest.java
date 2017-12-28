@@ -292,12 +292,13 @@ public class VekaletIslemleriTest extends BaseTest {
         login(username3, password3);
 
         String tur = "IMZALAMA";
-        String icerik = "Test Otomasyon " + getSysDate();
+        String icerik = "TC0012 " + getSysDate();
         String kullaniciTitle = " [Ağ (Network) Uzman Yardımcısı]";
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
                 .konuKoduSec(konuKodu)
+                .konuDoldur(icerik)
                 .kaldiralacakKlasorlerSec(kaldiralacakKlasor)
                 .evrakTuruSec(evrakTuru)
                 .evrakDiliSec(evrakDili)
@@ -325,10 +326,10 @@ public class VekaletIslemleriTest extends BaseTest {
 
         parafladiklarimPage
                 .openPage()
-                .filtreleAc()
-                .baslangicTarihiDoldur(getSysDateForKis())
-                .bitisTarihiDoldur(getSysDateForKis())
-                .raporSec()
+//                .filtreleAc()
+//                .baslangicTarihiDoldur(getSysDateForKis())
+//                .bitisTarihiDoldur(getSysDateForKis())
+                .konuyaGoreRaporSec(icerik)
                 .icerikIlkKayıt();
 
         String evrakNo = parafladiklarimPage.evrakDetayiEvrakNoAl();

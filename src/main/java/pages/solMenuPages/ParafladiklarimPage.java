@@ -115,6 +115,14 @@ public class ParafladiklarimPage extends MainPage {
         return this;
     }
 
+    @Step("Tablodan konuya göre rapor seç")
+    public ParafladiklarimPage konuyaGoreRaporSec(String konu) {
+        $$("[id='mainInboxForm:inboxDataTable_data'] tr[role='row']")
+                .filterBy(Condition.text(konu)).first()
+                .$("[id$='detayGosterButton']");
+        return this;
+    }
+
     @Step("Paylaş ikonuna  bas")
     public ParafladiklarimPage havaleYap() {
         btnIconPaylas.click();
