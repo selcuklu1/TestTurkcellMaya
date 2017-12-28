@@ -334,22 +334,43 @@ public class BirimYonetimiPage extends MainPage {
     }
 
     SelenideElement txtAntetBilgisi = $(By.id("birimYonetimiEditorForm:antetBilgisiInput"));
+    BelgenetElement txtPostaBirimi = comboLov(By.id("birimYonetimiEditorForm:postaBirimiLov:LovText"));
+    BelgenetElement txtKepPostaBirimi = comboLov(By.id("birimYonetimiEditorForm:kepPostaBirimiLov:LovText"));
+    SelenideElement btnBirimAmiriEkle = $(By.id("birimYonetimiEditorForm:birimKullaniciDataTable:addNewBirimKullaniciLinkButton"));
+    BelgenetElement txtKullanici = comboLov(By.id("birimAmiriEditorForm:birimAmiriLov:LovText"));
+    SelenideElement txtGorev = $(By.id("birimAmiriEditorForm:gorevAutoComplete_input"));
+    SelenideElement cmbGizlilikDerecesi = $(By.id("birimAmiriEditorForm:birimGuvenlikKoduSelect"));
+    SelenideElement btnBirimAmiriKaydet = $(By.id("birimAmiriEditorForm:saveBirimKullaniciIliskiButton"));
+    BelgenetElement txtUstBirim = comboLov(By.id("birimYonetimiEditorForm:ustBirimLov:LovText"));
+    SelenideElement btnBirimKaydet = $(By.id("birimYonetimiEditorForm:saveBirimButton"));
 
-    @Step("{0}")
-    public String birimOlustur(){
-        String idariKimlikKodu = "" + (new Random().nextInt((900000 - 100000) + 1) + 100000);
+    @Step("Birim oluştur")
+    public String birimOlustur(String ustBirim){
+
+        String idariKimlikKodu = "1" + (new Random().nextInt((900000 - 100000) + 1) + 100000);
         String yeniBirimAdi = "Birim" + idariKimlikKodu;
-        String postaBirimi = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞ";
+        String postaBirimi = ustBirim;
+        String birimAmiri = "Mehmet BOZDEMİR";
+        String gorev = "Ağ (Network) Uzman Yardımcısı";
 
         btnBirimEkle.click();
         txtAd.setValue(yeniBirimAdi);
         txtAntetBilgisi.setValue(yeniBirimAdi);
         txtIdariKimlikKodu.setValue(idariKimlikKodu);
-        cmbBirimTuru.setValue("Genel Müdürlüğü");
+        cmbBirimTipi.setValue("Genel Müdürlüğü");
         Selenide.sleep(3000);
-        cmbBirimTuru.sendKeys(Keys.ENTER);
-        // YAZILIM GELİŞTİRME DİREKTÖRLÜĞ
-
-        return "";
+        cmbBirimTipi.sendKeys(Keys.ENTER);
+        txtUstBirim.selectLov(postaBirimi);
+        txtPostaBirimi.selectLov(postaBirimi);
+        txtKepPostaBirimi.selectLov(postaBirimi);
+        btnBirimAmiriEkle.click();
+        txtKullanici.selectLov(birimAmiri);
+        txtGorev.setValue(gorev);
+        Selenide.sleep(3000);
+        txtGorev.sendKeys(Keys.ENTER);
+        cmbGizlilikDerecesi.selectOption("Hizmete Özel");
+        btnBirimAmiriKaydet.click();
+        btnBirimKaydet.click();
+        return yeniBirimAdi;
     }
 }
