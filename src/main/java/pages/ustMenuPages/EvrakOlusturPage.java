@@ -126,7 +126,7 @@ public class EvrakOlusturPage extends MainPage {
             btnKaydetHayir.click();
         return this;
     }
-    
+
     @Step("\"{0}\" ekran açılması beklenen statü: {1}")
     public EvrakOlusturPage PDFOnizlemeKisayolGonder(String kisayol) throws InterruptedException {
 

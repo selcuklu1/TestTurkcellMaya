@@ -47,15 +47,15 @@ public class BaseTest extends BaseLibrary {
         Configuration.reportsFolder = "test-result/reports";
         Configuration.screenshots = false;
         Configuration.savePageSource = false;
-        Configuration.collectionsTimeout = 20000;
-        Configuration.timeout = 20000;
+        Configuration.collectionsTimeout = 5000;
+        Configuration.timeout = 10000;
         //Configuration.clickViaJs = true;
         // Configuration.holdBrowserOpen = true;
         //Configuration.headless = false;
 
         Configuration.startMaximized = true;
-        Configuration.pollingInterval = 100;
-        Configuration.collectionsPollingInterval = 100;
+        Configuration.pollingInterval = 10;
+        Configuration.collectionsPollingInterval = 10;
         //Configuration.closeBrowserTimeoutMs = 34000;
         //Configuration.openBrowserTimeoutMs = 34000;
         //Configuration.browserSize = "1024x600";
@@ -76,8 +76,8 @@ public class BaseTest extends BaseLibrary {
     public void afterMethod() {
 
         try {
-            Selenide.clearBrowserLocalStorage();
-            Selenide.clearBrowserCookies();
+//            Selenide.clearBrowserLocalStorage();
+//            Selenide.clearBrowserCookies();
         } catch (Exception e) {
         }
 
@@ -88,7 +88,7 @@ public class BaseTest extends BaseLibrary {
 
     @AfterClass(alwaysRun = true)
     public void afterClass() {
-        Selenide.close();
+//        Selenide.close();
 
         log.info("Browser has been closed.");
     }
@@ -97,8 +97,8 @@ public class BaseTest extends BaseLibrary {
     public void clearCookies() throws Exception {
         // Selenide.close();
         try {
-            Selenide.clearBrowserLocalStorage();
-            Selenide.clearBrowserCookies();
+//            Selenide.clearBrowserLocalStorage();
+//            Selenide.clearBrowserCookies();
         } catch (Exception e) {
         }
     }
