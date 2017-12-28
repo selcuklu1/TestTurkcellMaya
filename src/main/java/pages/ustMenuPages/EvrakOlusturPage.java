@@ -1,6 +1,9 @@
 package pages.ustMenuPages;
 
-import com.codeborne.selenide.*;
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -43,6 +46,7 @@ public class EvrakOlusturPage extends MainPage {
     SelenideElement tabIliskiliEvraklar = $("button .kullaniciIliskileri");
     SelenideElement tabSablonIslemleri = $("button .sablonOlustur");
     SelenideElement tabEvrakNotlari = $("button .evrakNot");
+    SelenideElement btnCloseScreen = $("[id='window1Dialog'] span[class='ui-icon ui-icon-closethick']");
 
     SelenideElement tabEvrakDogrulama = $("button .evrakDogrulamaAktarimIslemleri");
 
@@ -138,7 +142,7 @@ public class EvrakOlusturPage extends MainPage {
         return this;
     }
 
-    @Step("{0} ekran açılması beklenen statü: {1}")
+    @Step("{ekranAdi} ekran açılması beklenen statü: {acilmali}")
     public EvrakOlusturPage kisayolEkranKontrol(String ekranAdi, boolean acilmali) {
         boolean t = $$("[id^='window'][id$='Button_ID'] .ui-button-text")
                 .filterBy(Condition.text(ekranAdi)).size() > 0;
@@ -156,6 +160,14 @@ public class EvrakOlusturPage extends MainPage {
         return this;
     }
 
+    @Step("Evrak Oluştur sayfası kapat")
+    public EvrakOlusturPage evrakOlusturKapat(){
+        $(By.xpath("//div[@id='mainTaskBar']//span[text()='[Evrak Oluştur]']"))
+                .click();
+        btnCloseScreen.click();
+        islemPenceresiKaydetPopup("Evet");
+        return this;
+    }
     public EvrakOlusturPage evrakOlusturSayfaKapat() {
         $(By.xpath("//div[@id='window1Dialog']//span[@class='ui-icon ui-icon-closethick']")).click();
         islemPenceresiKaydetPopup("Evet");
@@ -1882,6 +1894,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+
         @Step("Şablon Türü seç: {sablonTuru}")
         public SablonIslemleriTab sablonTuruSec(String sablonTuru) {
             cmbSablonTuru.click();
@@ -1900,7 +1913,6 @@ public class EvrakOlusturPage extends MainPage {
 
 
     }
-
 
     public class PDFKontrol extends MainPage {
 

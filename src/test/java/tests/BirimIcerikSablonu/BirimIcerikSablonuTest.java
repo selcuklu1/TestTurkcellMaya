@@ -1,12 +1,13 @@
 package tests.BirimIcerikSablonu;
 
-import com.codeborne.selenide.*;
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.SelenideElement;
 import common.BaseTest;
 import data.User;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Step;
-import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
@@ -21,8 +22,6 @@ import pages.solMenuPages.ImzaBekleyenlerPage;
 import pages.ustMenuPages.BirimIcerikSablonlarPage;
 import pages.ustMenuPages.EvrakOlusturPage;
 
-
-import static com.codeborne.selenide.CollectionCondition.*;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboBox;
@@ -306,63 +305,39 @@ public class BirimIcerikSablonuTest extends BaseTest {
         birimIcerikSablonlarPage = new BirimIcerikSablonlarPage().openPage();
         SelenideElement sablonRow = birimIcerikSablonlarPage.findSablonRowInTable(sablonAdi);
 
-        try {
-            sablonRow.$("[id$='sablonListesiDetayButton_id']").sendKeys("\n");
-        } catch (Exception e) {
-        }
-        sablonRow.$("[id$='sablonListesiDetayButton_id']").click();
+        birimIcerikSablonlarPage.detayButonaTikla(sablonRow);
 
         sablonAdi_1079 = sablonAdi + "_UPDATED";
-        birimIcerikSablonlarPage.getTxtSablonAdi().setValue(sablonAdi_1079);
+        birimIcerikSablonlarPage.sablonAdiDoldur(sablonAdi_1079)
+                .evrakTipiSec("Giden Evrak")
+                .altBirimlerGorsunMu("ALT BİRİMLER GÖRSÜN");
 
-        birimIcerikSablonlarPage.getSelEvrakTipi().selectOption("Giden Evrak");
-
-        String altBirimler = "ALT BİRİMLER GÖRSÜN";
-        birimIcerikSablonlarPage.getLovKullanilacakBirimler().lastSelectedLov()
-                .$(By.tagName("select")).selectOption(altBirimler);
-
-
-        birimIcerikSablonlarPage.getEditor()
+        /*birimIcerikSablonlarPage.getEditor()
                 .type(Keys.END)
                 .type(Keys.ENTER)
-                .toolbarCombo("Etiket Ekle", "Kullanıcı Adı");
-
+                .toolbarCombo("Etiket Ekle", "Kullanıcı Adı");*/
         editorText_1079 = birimIcerikSablonlarPage.getEditor().getText();
 
-        birimIcerikSablonlarPage.getBtnKaydet().click();
-        birimIcerikSablonlarPage.islemMesaji().basariliOlmali();
+        birimIcerikSablonlarPage.kaydet().islemMesaji().basariliOlmali();
     }
 
-    @Test(enabled = true, description = "TC1079: Şablon güncellendiğini kontrolü", dependsOnMethods = {"tc1079"}, priority = 12)
+    @Test(enabled = true, description = "TC1079: Şablon güncellendiğini kontrolü"
+//            , dependsOnMethods = {"tc1079"}
+            , priority = 12)
     public void tc1079_kontrol() {
-        login("optiimtest4", "123");
-        EvrakOlusturPage evrakOlusturPage = new EvrakOlusturPage().openPage();
-        TextEditor editor = evrakOlusturPage.editorTabAc().getEditor();
-        editor.toolbarButton("Öntanımlı İçerik Şablonu Kullan", true);
-        if ($(By.id("yeniGidenEvrakForm:icerikSablonDialogD1")).is(not(visible)))
-            editor.toolbarButton("Öntanımlı İçerik Şablonu Kullan", true);
-        $(By.id("yeniGidenEvrakForm:icerikSablonDialogD1")).shouldBe(visible);
+        login(optiim4);
+        sablonAdi_1079 = "SABLON_20171221011230";
+        birimIcerikSablonlarPage = new BirimIcerikSablonlarPage().openPage();
+        SelenideElement sablonRow = birimIcerikSablonlarPage.findSablonRowInTable(sablonAdi_1079);
+        sablonAdi_1079 = sablonAdi_1079 + "2";
+        birimIcerikSablonlarPage.detayButonaTikla(sablonRow)
+        .sablonAdiDoldur(sablonAdi_1079)
+        .kaydet()
+        .islemMesaji().dikkatOlmali("Üst birim şablonuna işlem yapılamaz!");
 
-
-        BelgenetElement cmbSablon = comboBox("#yeniGidenEvrakForm\\:icerikSablonDialogD1 label[id$='_label']");
-
-        cmbSablon.getComboBoxValues().filterBy(text(sablonAdi_1079)).shouldHaveSize(1);
-        cmbSablon.selectComboBox(sablonAdi_1079);
-
-        switchTo().frame($("[id='yeniGidenEvrakForm:onizlemeField'] iframe"));
-        String actualText = $("body").text();
-        switchTo().defaultContent();
-
-        Assert.assertEquals(editorText_1079.trim(), actualText.trim());
-
-        $x("//div[@id='yeniGidenEvrakForm:icerikSablonDialogD1']//button/span[text()='Uygula']/..").click();
-
-        Assert.assertTrue(editor.getText().contains("Optiim Alt Birim1"), "Optiim Alt Birim1 olmalı");
-        Assert.assertFalse(editor.getText().contains("(@BIRIM)"), "(@BIRIM) olmamalı");
-
-        Assert.assertTrue(editor.getText().contains("Optiim"), "Optiim kullanıcı adı olmalı");
-        Assert.assertFalse(editor.getText().contains("(@KULLANICI_ADI)"), "(@KULLANICI_ADI) olmamalı");
-
+        birimIcerikSablonlarPage.getEditor().type("Güncelleme denemesi");
+        birimIcerikSablonlarPage
+                .kaydet().islemMesaji().dikkatOlmali("Üst birim şablonuna işlem yapılamaz!");
     }
 
     @Test(enabled = true, description = "Şablonları sil", dependsOnMethods = {"tc1079_kontrol"}, priority = 13)

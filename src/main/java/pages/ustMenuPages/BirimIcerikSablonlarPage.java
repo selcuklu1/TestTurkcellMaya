@@ -3,16 +3,13 @@ package pages.ustMenuPages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
-import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NotFoundException;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import pages.MainPage;
-import pages.pageComponents.IslemMesajlari;
 import pages.pageComponents.TextEditor;
 import pages.pageComponents.UstMenu;
 import pages.pageComponents.belgenetElements.BelgenetElement;
@@ -192,6 +189,7 @@ public class BirimIcerikSablonlarPage extends MainPage {
         return count;
     }
 
+    @Step("Şablonu bul")
     public SelenideElement findSablonRowInTable(String sablonAdi) {
         while (true) {
             $$(rowsBirimSablonlari).first().shouldBe(visible);
@@ -322,10 +320,19 @@ public class BirimIcerikSablonlarPage extends MainPage {
         return this;
     }
 
-
     @Step("Evrak Tipi seç")
     public BirimIcerikSablonlarPage evrakTipiSec(String option){
         selEvrakTipi.selectOption(option);
+        return this;
+    }
+
+    @Step("Şablonda Detay butona tıkla")
+    public BirimIcerikSablonlarPage detayButonaTikla(SelenideElement row){
+        try {
+            row.$("[id$='sablonListesiDetayButton_id']").sendKeys("\n");
+        } catch (Exception e) {
+        }
+        row.$("[id$='sablonListesiDetayButton_id']").click();
         return this;
     }
 }

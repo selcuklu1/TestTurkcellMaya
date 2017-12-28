@@ -7,13 +7,12 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
-import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
-import static pages.pageData.SolMenuData.*;
+import static pages.pageData.SolMenuData.IslemYaptiklarim;
 
 public class ParafladiklarimPage extends MainPage {
 
@@ -112,6 +111,14 @@ public class ParafladiklarimPage extends MainPage {
     @Step("Tablodan rapor seç")
     public ParafladiklarimPage raporSec() {
         tblRapor.click();
+        return this;
+    }
+
+    @Step("Tablodan konuya göre rapor seç")
+    public ParafladiklarimPage konuyaGoreRaporSec(String konu) {
+        $$("[id='mainInboxForm:inboxDataTable_data'] tr[role='row']")
+                .filterBy(Condition.text(konu)).first()
+                .$("[id$='detayGosterButton']");
         return this;
     }
 

@@ -8,6 +8,7 @@ import org.testng.annotations.Test;
 import pages.MainPage;
 import pages.solMenuPages.PostaListesiPage;
 import pages.solMenuPages.PostalanacakEvraklarPage;
+import pages.ustMenuPages.EvrakOlusturPage;
 import pages.ustMenuPages.PulYonetimiPage;
 
 /****************************************************
@@ -21,19 +22,23 @@ public class PulYonetimiTest extends BaseTest {
     PulYonetimiPage pulYonetimiPage;
     PostaListesiPage postaListesiPage;
     PostalanacakEvraklarPage postalanacakEvraklarPage;
+    EvrakOlusturPage evrakOlusturPage;
 
     @BeforeMethod
     public void loginBeforeTests() {
         pulYonetimiPage = new PulYonetimiPage();
         postaListesiPage = new PostaListesiPage();
         postalanacakEvraklarPage = new PostalanacakEvraklarPage();
-        login("yakyol", "123");
+        evrakOlusturPage = new EvrakOlusturPage();
+
+
     }
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TC1732: Pul Yönetimi ekranından yeni tanımlama yapma")
     public void TC1732() throws InterruptedException {
 
+        login("mbozdemir", "123");
         String basariMesaji = "İşlem başarılıdır!";
 
         String postaTipi = "X";
@@ -75,58 +80,132 @@ public class PulYonetimiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = false, description = "Pul yönetimi ekranındaki tanımın posta listesinde kontrolü")
+    @Test(enabled = true, description = "Pul yönetimi ekranındaki tanımın posta listesinde kontrolü")
     public void TC2215() throws InterruptedException {
 
-        String postaListesi = "optiim";
+        login("mbozdemir", "123");
+        String postaListesi = "cubbada";
         String gidisSekli = "Ankara İçi APS";
-        String gramaj = "1";
+        String gramaj1 = "1";
         String indirimOrani = "20";
-        String gramaj1 = "3";
-        String gramaj2 = "5";
+        String gramaj3 = "3";
+        String gramaj5 = "5";
         String tutar = "120";
+        String basariMesaji = "İşlem başarılıdır!";
+
         postaListesiPage
                 .openPage()
                 .filtreleAc()
                 .postaListesiDoldur(postaListesi)
-                .tablodanIlkRowSec()
+
                 .postaListesiPostala()
                 .alanKontrolu()
                 .gidisSekliSec(gidisSekli)
-                .gramajDoldur(gramaj)
-//                .alanKontrolu()
-//                .gidisSekliSec("Ankara İçi APS")
-                .gramajDoldur("1")
-                .tutarHesapla()
-//        ekranda gelen bilgilerin kontrolü
-                .indirimOraniDoldur(indirimOrani)
+
                 .gramajDoldur(gramaj1)
                 .tutarHesapla()
-                .gramajDoldur(gramaj2)
-                .tutarHesapla()
-                .tutarDoldur(tutar);
-//                .postaDetayiPostala();
-//        alan kontrolleri için mail atıldı.
+                .indirimOncesiTutarKontrol("50.00", true)
+                .indirimOraniKontrol("10", true)
+                .tutarKontrol("45.00", true)
 
+                .indirimOraniDoldur(indirimOrani)
+                .tutarKontrol("40.00", true)
+
+                .gramajDoldur(gramaj3)
+                .tutarHesapla()
+                .indirimOncesiTutarKontrol("100.00", true)
+                .indirimOraniKontrol("20", true)
+                .tutarKontrol("80.00", true)
+
+                .gramajDoldur(gramaj5)
+                .tutarHesapla()
+                .indirimOncesiTutarKontrol("100.00", true)
+                .indirimOraniKontrol("0", true)
+                .tutarKontrol("100.00", true)
+
+                .tutarDoldur(tutar)
+                .postaDetayiPostala()
+                .islemMesaji().beklenenMesaj(basariMesaji);
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = false, description = "TC2214 : Pul yönetimi ekranındaki tanımın postalanacaklar listesinde kontrolü")
+    @Test(enabled = true, description = "TC2214 : Pul yönetimi ekranındaki tanımın postalanacaklar listesinde kontrolü")
     public void TC2214() throws InterruptedException {
+
+        login("yakyol", "123");
+        String konuKodu = "010.01";
+        String kaldiralacakKlasor = "Diğer";
+        String evrakTuru = "Resmi Yazışma";
+        String evrakDili = "Türkçe";
+        String gizlilikDerecesi = "Normal";
+        String ivedilik = "Normal";
+        String geregi = "Ahmet ÇELİK";
+        String konu = "TC2214 " + getSysDate();
+        String tur = "İmzalama";
+        String geregiTipi = "Gerçek Kişi";
+        String basariMesaji = "İşlem başarılıdır!";
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .konuKoduSec(konuKodu)
+                .konuDoldur(konu)
+                .kaldiralacakKlasorlerSec(kaldiralacakKlasor)
+                .evrakTuruSec(evrakTuru)
+                .evrakDiliSec(evrakDili)
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .ivedilikSec(ivedilik)
+                .geregiSecimTipiSecByText(geregiTipi)
+                .geregiSec(geregi)
+                .onayAkisiEkle()
+                .onayAkisiEkleIlkImzalaSec(tur)
+                .kullan();
+        evrakOlusturPage
+                .editorTabAc()
+                .editorIcerikDoldur(konu)
+                .imzala()
+                .sImzasec()
+                .sImzaImzala()
+                .sayisalImzaEvetPopup();
+
+        logout();
+        login("mbozdemir", "123");
 
         postalanacakEvraklarPage
                 .openPage()
-                .postaDetayi()
-                .gonderilenYerDetay()
+                .evrakSecKonuyaGoreIcerikGoster(konu)
+                .evrakPostala()
                 .gidisSekli("Ankara İçi APS")
                 .gramajDoldur("1")
-                .tamam()
+                .hesapla()
+                .popUpKontrol()
+                .popUpIndirimOncesiTutarKontrol("50.00", true)
+                .popUpIndirimOraniKontrol("10", true)
+                .popUpTutarKontrol("45.00", true)
+                .popUpTamam()
+                .tutarAlaniKontrolu("45.00", true)
+
                 .gramajDoldur("3")
                 .hesapla()
+                .popUpKontrol()
+                .popUpIndirimOncesiTutarKontrol("100.00", true)
+                .popUpIndirimOraniKontrol("20", true)
+                .popUpTutarKontrol("80.00", true)
+                .popUpTamam()
+                .tutarAlaniKontrolu("80.00", true)
+
+
                 .gramajDoldur("5")
                 .hesapla()
-                .tutarDoldur("120");
-//        Postala butonu mevcut değil
+                .popUpKontrol()
+                .popUpIndirimOncesiTutarKontrol("100.00", true)
+                .popUpIndirimOraniKontrol("0", true)
+                .popUpTutarKontrol("100.00", true)
+                .popUpTamam()
+                .tutarAlaniKontrolu("100.00", true)
+
+                .tutarDoldur("120")
+                .evrakPostalaPostala(true);
     }
 
 }

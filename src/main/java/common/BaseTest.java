@@ -74,8 +74,11 @@ public class BaseTest extends BaseLibrary {
     public void afterMethod() {
 
         try {
+
+
             Selenide.clearBrowserLocalStorage();
             Selenide.clearBrowserCookies();
+
         } catch (Exception e) {
         }
 
@@ -93,7 +96,7 @@ public class BaseTest extends BaseLibrary {
 
     public void clearCookies() throws Exception {
 
-         Selenide.close();
+        Selenide.close();
 
         // Selenide.close();
 

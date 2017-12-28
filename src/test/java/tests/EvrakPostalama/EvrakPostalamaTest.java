@@ -15,14 +15,11 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pages.MainPage;
 import pages.solMenuPages.ImzaladiklarimPage;
 import pages.solMenuPages.PostalanacakEvraklarPage;
 import pages.solMenuPages.PostalananlarPage;
 import pages.ustMenuPages.EvrakOlusturPage;
 import pages.ustMenuPages.PostalananEvrakRaporuPage;
-
-import java.sql.Driver;
 
 public class EvrakPostalamaTest extends BaseTest {
 
@@ -147,7 +144,7 @@ public class EvrakPostalamaTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true , description = "TC520 : Postalanan evrak posta bilgilerinin içerik ekranından güncellenmesi ve rapordan kontrolü")
-    public void TC0520() throws InterruptedException {
+    public void TC0520b() throws InterruptedException {
         login("Mbozdemir", "123");
         String konu = "Konu:";
 
@@ -178,6 +175,37 @@ public class EvrakPostalamaTest extends BaseTest {
 
     }
 
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true , description = "TC520 : Postalanan evrak posta bilgilerinin önizleme ekranından güncellenmesi ve rapor üzerinde kontrolü")
+    public void TC0520a() throws InterruptedException {
+        login("Mbozdemir", "123");
+        String konu = "Konu: TC2235:";
+
+        postalananlarPage
+                .openPage();
+
+        Thread.sleep(2000);
+        postalananlarPage.filter().findRowsWith(Condition.text(konu)).first().click();
+        Thread.sleep(1000);
+
+        postalananlarPage.postaDetayiTikla();
+        Thread.sleep(1000);
+        postalananlarPage.btnTarihGuncelle("10.10.2017");
+        postalananlarPage.btnPostakoduGuncelle("121212");
+        postalananlarPage.txtAciklama("Bu bir açıklamadır");
+        postalananlarPage = postalananlarPage.btnKaydet();
+
+        String txt = postalananlarPage.evSay();
+        postalananEvrakRaporuPage
+                .openPage();
+
+        postalananEvrakRaporuPage
+                .evrakSayisi(txt)
+                .postaAramaBaslangicTarihi("01.12.2017 00:00")
+                .postaSorgulama()
+                .sonucKarsilastirma();
+
+    }
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true , description = "TC1685 : Fiziksel eki olan iç yazışmaların postaya düşürülmesi")
     public void TC1685() throws InterruptedException {

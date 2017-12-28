@@ -292,12 +292,13 @@ public class VekaletIslemleriTest extends BaseTest {
         login(username3, password3);
 
         String tur = "IMZALAMA";
-        String icerik = "Test Otomasyon " + getSysDate();
+        String icerik = "TC0012 " + getSysDate();
         String kullaniciTitle = " [Ağ (Network) Uzman Yardımcısı]";
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
                 .konuKoduSec(konuKodu)
+                .konuDoldur(icerik)
                 .kaldiralacakKlasorlerSec(kaldiralacakKlasor)
                 .evrakTuruSec(evrakTuru)
                 .evrakDiliSec(evrakDili)
@@ -406,7 +407,7 @@ public class VekaletIslemleriTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true,dependsOnMethods = {"TC2208"},  description = "TC2212 : Vekalet veren kullanıcının bulunduğu kullanıcı listesine evrak havalesi ve kontrolü")
+    @Test(enabled = true,dependsOnMethods = {"TC2208"}, description = "TC2212 : Vekalet veren kullanıcının bulunduğu kullanıcı listesine evrak havalesi ve kontrolü")
     public void TC2212() throws InterruptedException {
 
         login(username3, password3);
@@ -462,7 +463,7 @@ public class VekaletIslemleriTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, dependsOnMethods = {"TC0012"}, description = "TC0011 : Vekalet alan kullanıcıya evrak havalesi ve kontrolü")
+    @Test(enabled = false, dependsOnMethods = {"TC0012"}, description = "TC0011 : Vekalet alan kullanıcıya evrak havalesi ve kontrolü")
     public void TC0011() throws InterruptedException {
 
         String evrakGelisTipi = "Posta";

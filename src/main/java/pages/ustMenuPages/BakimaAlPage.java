@@ -1,9 +1,10 @@
 package pages.ustMenuPages;
 
-import com.codeborne.selenide.*;
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
@@ -123,8 +124,15 @@ public class BakimaAlPage extends MainPage {
 
     @Step("Kullanıcıları temizle.")
     public BakimaAlPage kullanicilarTemizle() {
-        if(txtKullanicilar.isDisplayed())
-            txtKullanicilar.clearAllSelectedLov();
+
+        ElementsCollection allClearButtons = $$("tbody[id='bakimaAlFormId:bakimaAlKullanicilarId:LovSecilenTable_data'] button[id^='bakimaAlFormId:bakimaAlKullanicilarId:LovSecilenTable']");
+
+        if(allClearButtons.size() > 0){
+            for (int i = 0; i < allClearButtons.size(); i ++)
+            {
+                allClearButtons.get(i).click();
+            }
+        }
         return this;
     }
 
