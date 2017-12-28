@@ -195,6 +195,27 @@ public class BaseLibrary extends ElementsContainer {
     }
     //</editor-fold>
 
+
+    public void maximazeBrowser() {
+        try {
+            if (Configuration.browserSize != null) {
+                try {
+                    String[] size = Configuration.browserSize.split("x");
+                    int width = Integer.parseInt(size[0]);
+                    int height = Integer.parseInt(size[1]);
+                    Dimension browserSize = new Dimension(width, height);
+                    WebDriverRunner.getWebDriver().manage().window().setSize(browserSize);
+                } catch (NumberFormatException e) {
+                    WebDriverRunner.getWebDriver().manage().window().maximize();
+                }
+            } else
+                WebDriverRunner.getWebDriver().manage().window().maximize();
+        } catch (Exception e) {
+            System.out.println("SettingsListener maximize:" + e.getMessage());
+        }
+    }
+
+
     /**
      * Alan setValue, sendKeys doğru çalışmıyor ise bu metodu kullanılır.
      *
