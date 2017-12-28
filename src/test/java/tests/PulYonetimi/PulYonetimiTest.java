@@ -157,6 +157,7 @@ public class PulYonetimiTest extends BaseTest {
                 .ivedilikSec(ivedilik)
                 .geregiSecimTipiSecByText(geregiTipi)
                 .geregiSec(geregi)
+                .gercekKisiGeregiAlaniPostaTipiSec("Ankara İçi APS")
                 .onayAkisiEkle()
                 .onayAkisiEkleIlkImzalaSec(tur)
                 .kullan();
@@ -177,7 +178,7 @@ public class PulYonetimiTest extends BaseTest {
                 .evrakPostala()
                 .gidisSekli("Ankara İçi APS")
                 .gramajDoldur("1")
-                .hesapla()
+                .evrakOnzilemeHesapla()
                 .popUpKontrol()
                 .popUpIndirimOncesiTutarKontrol("50.00", true)
                 .popUpIndirimOraniKontrol("10", true)
@@ -186,7 +187,7 @@ public class PulYonetimiTest extends BaseTest {
                 .tutarAlaniKontrolu("45.00", true)
 
                 .gramajDoldur("3")
-                .hesapla()
+                .evrakOnzilemeHesapla()
                 .popUpKontrol()
                 .popUpIndirimOncesiTutarKontrol("100.00", true)
                 .popUpIndirimOraniKontrol("20", true)
@@ -196,7 +197,7 @@ public class PulYonetimiTest extends BaseTest {
 
 
                 .gramajDoldur("5")
-                .hesapla()
+                .evrakOnzilemeHesapla()
                 .popUpKontrol()
                 .popUpIndirimOncesiTutarKontrol("100.00", true)
                 .popUpIndirimOraniKontrol("0", true)

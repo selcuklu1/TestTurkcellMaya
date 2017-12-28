@@ -188,12 +188,12 @@ public class PostalanacakEvraklarPage extends MainPage {
         btnGonderilenYerDetay.click();
         return this;
     }
-    @Step("Gidis Sekli Seç")
+    @Step("Gidis Sekli \"{gidisSekli}\" seçilir")
     public PostalanacakEvraklarPage gidisSekli(String gidisSekli){
         cmbGidisSekli.selectComboBox(gidisSekli);
         return this;
     }
-    @Step("Gramaj doldur")
+    @Step("Gramaj alnına \"{gramaj}\" girilir.")
     public PostalanacakEvraklarPage gramajDoldur(String gramaj){
         txtGramaj.setValue(gramaj);
         return this;
@@ -205,12 +205,17 @@ public class PostalanacakEvraklarPage extends MainPage {
         btnPopupHesaplaTamam.click();
         return this;
     }
+    @Step("Hesapla tıkla")
+    public PostalanacakEvraklarPage evrakOnzilemeHesapla() throws InterruptedException {
+        btnHesapla.click();
+        return this;
+    }
     @Step("Popup Tamam tıkla")
     public PostalanacakEvraklarPage popUpTamam(){
         btnTamam.click();
         return this;
     }
-    @Step("Tutar doldur")
+    @Step("Tutar alanına \"{tutar}\" girilir")
     public PostalanacakEvraklarPage tutarDoldur(String tutar){
         txtTutar.sendKeys(tutar);
         return this;
