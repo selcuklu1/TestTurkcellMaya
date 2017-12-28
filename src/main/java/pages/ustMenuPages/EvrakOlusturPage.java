@@ -286,7 +286,6 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement txtOnayIslemiAciklama = $(By.id("windowCevapEvrakForm:onayIslemiAciklama"));
         SelenideElement btnOnayIslemiGonder = $(By.id("windowCevapEvrakForm:gonderButton"));
 
-        BelgenetElement cmbGeregi = comboLov("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='geregiLov:LovText']");
         BelgenetElement cmbGeregi = comboLov(By.id("yeniGidenEvrakForm:evrakBilgileriList:16:geregiLov:LovText"));
         BelgenetElement cmbGeregiPostaTipi = comboLov(By.id("yeniGidenEvrakForm:evrakBilgileriList:16:geregiLov:LovSecilenTable:0:selectOneMenu"));
         // select[id^='yeniGidenEvrakForm:evrakBilgileriList:16:geregiLov:LovSecilenTable:'][id$=':selectOneMenu']

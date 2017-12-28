@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<!--<suite thread-count="1" name="Test Suite" parallel="none" verbose="1">-->
+<!--<suite thread-count="5" name="Test Suite" parallel="classes" verbose="1">-->
+
+<suite name="Test Suite" parallel="classes" verbose="1">
+    <!--thread-count="10"-->
+    <!--<listeners>-->
+    <!--<listener class-name="listeners.TestListener"></listener>-->
+    <!--</listeners>-->
+    <!--<suite-files>-->
+    <!--<suite-file path="testSuite1.xml"></suite-file>-->
+    <!--<suite-file path="testSuite2.xml"></suite-file>-->
+    <!--</suite-files>-->
+    <!--<test name="GercekKisiYonetimiTest">
+        <classes>
+            <class name="tests.GercekKisiYonetimi.GercekKisiYonetimiTest"/>
+        </classes>
+    </test>
+    <test name="TuzelKisiYonetimiTest">
+        <classes>
+            <class name="tests.TuzelKisiYonetimi.TuzelKisiYonetimiTest"/>
+        </classes>
+    </test>-->
+    <test name="All">
+        <packages>
+            <package name="tests.BirimIcerikSablonu"/>
+ <!--           <package name="tests.BirimIcerikSablonu"/>
+            <package name="tests.EvrakNot"/>-->
+        </packages>
+    </test>
+</suite>
