@@ -325,11 +325,12 @@ public class VekaletIslemleriTest extends BaseTest {
 
         parafladiklarimPage
                 .openPage()
-                .filtreleAc()
-                .baslangicTarihiDoldur(getSysDateForKis())
-                .bitisTarihiDoldur(getSysDateForKis())
-                .raporSec()
+//                .filtreleAc()
+//                .baslangicTarihiDoldur(getSysDateForKis())
+//                .bitisTarihiDoldur(getSysDateForKis())
+                .konuyaGoreRaporSec(icerik)
                 .icerikIlkKayıt();
+
 
         String evrakNo = parafladiklarimPage.evrakDetayiEvrakNoAl();
 
