@@ -5,10 +5,13 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
+import pages.ustMenuPages.GelenEvrakKayitPage;
 
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
@@ -71,8 +74,11 @@ public class TeslimAlinanlarPage extends MainPage {
     }
 
     @Step("Tarihi doldur")
-    public TeslimAlinanlarPage TarihiDoldur(String tarih) {
+    public TeslimAlinanlarPage tarihiDoldur(String tarih, Keys... keys) {
         dateTxtTarih.sendKeys(tarih);
+        for (Keys k:keys) {
+            dateTxtTarih.sendKeys(keys);
+        }
         return this;
     }
 
@@ -88,10 +94,22 @@ public class TeslimAlinanlarPage extends MainPage {
         return this;
     }
 
+    @Step("Kisi alanında \"{kisi}\" seçmeye dene")
+    public TeslimAlinanlarPage havaleYapKisiSecmeyeDene(String kisi) {
+        txtHavaleYapKisi.type(kisi).titleItems().filterBy(text(kisi)).first().click();
+        return this;
+    }
+
     @Step("Kullanıcı listesi doldur")
     public TeslimAlinanlarPage havaleYapKullaniciListesiDoldur(String kullaniciListesi){
         //txtHavaleYapKullaniciListesi.selectLov(kullaniciListesi);
         txtHavaleYapKullaniciListesi.selectLov(kullaniciListesi);
+        return this;
+    }
+
+    @Step("Kullanıcı listesi seçmeye dene")
+    public TeslimAlinanlarPage havaleYapKullaniciListesiSecmeyeDene(String kullaniciListesi) {
+        txtHavaleYapKullaniciListesi.type(kullaniciListesi).titleItems().filterBy(text(kullaniciListesi)).first().click();
         return this;
     }
 

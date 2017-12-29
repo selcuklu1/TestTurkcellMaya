@@ -89,7 +89,7 @@ public class EvrakAramaPage extends MainPage {
         return this;
     }
 
-    @Step("Tablodao detay butonuna tıkla")
+    @Step("Tabloda detay butonuna tıkla")
     public EvrakAramaPage tablodaDetayTikla(String evrakNo) {
         tblListe
                 .filterBy(Condition.text(evrakNo)).first()

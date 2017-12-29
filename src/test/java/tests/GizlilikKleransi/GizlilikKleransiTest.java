@@ -3,6 +3,7 @@ package tests.GizlilikKleransi;
 import common.BaseTest;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
+import org.openqa.selenium.Keys;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.MainPage;
@@ -152,13 +153,16 @@ public class GizlilikKleransiTest extends BaseTest {
 
         teslimAlinmayiBekleyenlerPage
                 .openPage()
+                .filtreleAc().tarihiDoldur(evrakTarihi, Keys.ENTER)
                 .gizlilikRaporSec(konuKodu, geldigiYer, evrakTarihi, no)
                 .havaleYap()
-                .havaleYapKisiDoldur(kisi)
+//                .havaleYapKisiDoldur(kisi)
+                .havaleYapKisiKisiSecmeyeDene(kisi)
                 .islemMesaji().beklenenMesaj(uyariMesaj1);
 
         teslimAlinmayiBekleyenlerPage
-                .havaleYapKullaniciListesiDoldur(kullaniciListesi)
+//                .havaleYapKullaniciListesiDoldur(kullaniciListesi)
+                .havaleYapKullaniciListesiSecmeyeDene(kullaniciListesi)
                 .islemMesaji().beklenenMesaj(uyariMesaj2);
     }
 
@@ -179,13 +183,16 @@ public class GizlilikKleransiTest extends BaseTest {
 
         teslimAlinanlarPage
                 .openPage()
+                .filtreleAc().tarihiDoldur(evrakTarihi, Keys.ENTER)
                 .gizlilikRaporSec(konuKodu, geldigiYer, evrakTarihi, no)
                 .havaleYap()
-                .havaleYapKisiDoldur(kisi)
+//                .havaleYapKisiDoldur(kisi)
+                .havaleYapKisiSecmeyeDene(kisi)
                 .islemMesaji().beklenenMesaj(uyariMesaj1);
 
         teslimAlinanlarPage
-                .havaleYapKullaniciListesiDoldur(kullaniciListesi)
+//                .havaleYapKullaniciListesiDoldur(kullaniciListesi)
+                .havaleYapKullaniciListesiSecmeyeDene(kullaniciListesi)
                 .islemMesaji().beklenenMesaj(uyariMesaj2);
     }
 
@@ -492,8 +499,7 @@ public class GizlilikKleransiTest extends BaseTest {
                 .gorevliOlduguBirimGuncelle()
                 .kullaniciBirimAtamaGizlilikDerecesiKontrolu();
     }
-
-
+    
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, dependsOnMethods = {"TC1471"}, description = "TC1938: Yüksek kleranslı evrak oluşturma")
     public void TC1938() throws InterruptedException {
@@ -613,9 +619,9 @@ public class GizlilikKleransiTest extends BaseTest {
                 .evrakAramaDoldur(evrakNo)
                 .dokumanAra()
                 .tabloEvrakNoKontrol(evrakNo)
-                .tablodaDetayTikla(evrakNo);
-//                .islemMesaji().beklenenMesaj(basariMesaji);
-        Thread.sleep(4000);
+                .tablodaDetayTikla(evrakNo)
+                .islemMesaji().beklenenMesaj(basariMesaji);
+//        Thread.sleep(4000);
 //        evrakOlusturPage
 //                .islemMesaji().beklenenMesaj(mesaj);
 
