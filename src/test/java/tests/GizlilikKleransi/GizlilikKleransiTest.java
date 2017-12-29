@@ -555,7 +555,7 @@ public class GizlilikKleransiTest extends BaseTest {
                 .sImzasec()
                 .sImzaImzala()
                 .sayisalImzaEvetPopup()
-                .islemMesaji().basariliOlmali(basariMesaji);
+                .islemMesaji().basariliOlmali();
 
         imzaladiklarimPage
                 .openPage();

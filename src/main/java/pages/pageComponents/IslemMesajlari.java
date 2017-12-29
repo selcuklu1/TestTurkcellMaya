@@ -94,15 +94,14 @@ public class IslemMesajlari extends BaseLibrary {
 //        Assert.assertEquals(getMessageTitle(), BASARILI.value());
         messageTitle.shouldHave(exactText(BASARILI.value()));
         if (expectedMessage.length > 0){
-            String text;
             takeScreenshot();
-            while (messageBody.text().isEmpty()){
-                /*text = messageBody.text();
+            /*while (messageBody.text().isEmpty()){
+                *//*text = messageBody.text();
                 if (!text.isEmpty())
-                    break;*/
+                    break;*//*
                 sleep(100);
             }
-            takeScreenshot();
+            takeScreenshot();*/
             messageBody.shouldHave(text(expectedMessage[0]));
         }
 
@@ -116,8 +115,8 @@ public class IslemMesajlari extends BaseLibrary {
         messageTitle.shouldHave(text((UYARI.value())));
         if (expectedMessage.length > 0){
             takeScreenshot();
-            while (messageBody.text().isEmpty()){}
-            takeScreenshot();
+//            while (messageBody.text().isEmpty()){}
+//            takeScreenshot();
             messageBody.shouldHave(text(expectedMessage[0]));
         }
 //            Assert.assertEquals(getMessageBody(), expectedMessage[0]);
@@ -131,8 +130,8 @@ public class IslemMesajlari extends BaseLibrary {
 
         if (expectedMessage.length > 0){
             takeScreenshot();
-            while (messageBody.text().isEmpty()){}
-            takeScreenshot();
+//            while (messageBody.text().isEmpty()){}
+//            takeScreenshot();
             messageBody.shouldHave(text(expectedMessage[0]));
         }
 
