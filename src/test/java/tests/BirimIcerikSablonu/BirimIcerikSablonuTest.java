@@ -328,8 +328,8 @@ public class BirimIcerikSablonuTest extends BaseTest {
         login(optiim4);
         birimIcerikSablonlarPage = new BirimIcerikSablonlarPage().openPage();
         SelenideElement sablonRow = birimIcerikSablonlarPage.findSablonRowInTable(sablonAdi_1079);
-        sablonAdi_1079 = sablonAdi_1079 + "2";
-        birimIcerikSablonlarPage.detayButonaTikla(sablonRow).sablonAdiDoldur(sablonAdi_1079)
+        String sablonAdi = sablonAdi_1079 + "2";
+        birimIcerikSablonlarPage.detayButonaTikla(sablonRow).sablonAdiDoldur(sablonAdi)
                 .kaydet().islemMesaji().dikkatOlmali("Üst birim şablonuna işlem yapılamaz!");
 
         birimIcerikSablonlarPage.getEditor().type("Güncelleme denemesi");

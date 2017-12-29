@@ -62,7 +62,8 @@ public class KaydedilenGelenEvrakPage extends MainPage {
 
         deleteFile("C:\\Users\\" + getPcUserName() + "\\Downloads\\","Rapor_");
         btnRaporAlExcel.click();
-        Thread.sleep(8000);
+//        Thread.sleep(8000);
+        btnSorgula.click();
         searchDownloadedFileWithName("C:\\Users\\" + getPcUserName() + "\\Downloads\\","Rapor_.xls");
         return this;
     }

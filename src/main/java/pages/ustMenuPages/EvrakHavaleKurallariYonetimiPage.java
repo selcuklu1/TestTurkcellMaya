@@ -22,7 +22,7 @@ import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
  ****************************************************/
 public class EvrakHavaleKurallariYonetimiPage extends MainPage{
 
-    SelenideElement btnAra = $("[id='havaleKuralYonetimiListingForm:filterPanel:searchEntitiesButton]'");
+    SelenideElement btnAra = $("[id='havaleKuralYonetimiListingForm:filterPanel:searchEntitiesButton']");
     SelenideElement btnSil = $(By.id("havaleKuralYonetimiListingForm:havaleKuralDataTable:0:deleteHavaleKuralButton"));
     SelenideElement btnIslemOnayiEvet = $(By.id("baseConfirmationDialog:confirmButton"));
     BelgenetElement txtBirim = comboLov(By.id("havaleKuralYonetimiListingForm:filterPanel:birimLov:LovText"));
@@ -119,8 +119,8 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage{
     }
     
     @Step("Kişi doldur")
-    public EvrakHavaleKurallariYonetimiPage kimeHavaleEdilecekKisiDoldur(String kisi){
-        txtKimeHavaleEdilecekKisi.selectLov(kisi);
+    public EvrakHavaleKurallariYonetimiPage kimeHavaleEdilecekKisiDoldur(String kisi, String birim){
+        txtKimeHavaleEdilecekKisi.type(kisi).detailItems().filterBy(Condition.text(birim)).first().click();
         return this;
     }
 

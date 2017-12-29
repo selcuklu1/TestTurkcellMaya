@@ -207,16 +207,23 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
+    @Step("Hava İşlemleri Kişi alanında \"{kisi}\" seçmeye dene")
+    public GelenEvrakKayitPage havaleIslemleriKisiSecmeyeDene(String kisi) {
+        txtHavaleIslemleriKisi.type(kisi).titleItems().filterBy(text(kisi)).first().click();
+        return this;
+    }
+
     @Step("Kişi alanını doldur")
     public GelenEvrakKayitPage havaleIslemleriKisiDoldur(String kisi,String birim) {
         txtHavaleIslemleriKisi.type(kisi).detailItems().filterBy(text(birim)).first().click();
         return this;
     }
 
-    @Step("Kullanıcı Listesi alnında \"{kisi}\" seç")
-    public GelenEvrakKayitPage havaleIslemleriKullaniciListesiDoldur(String kisi) {
-        txtHavaleIslemleriKullaniciListesi.selectLov(kisi);
-        txtHavaleIslemleriKullaniciListesi.selectLov(kisi);
+    @Step("Kullanıcı Listesi alnında \"{kisi}\" seçmeye dene")
+    public GelenEvrakKayitPage havaleIslemleriKullaniciListesiSecmeyeDene(String kisi) {
+        txtHavaleIslemleriKullaniciListesi.type(kisi).titleItems().filterBy(text(kisi)).first().click();
+    /*    txtHavaleIslemleriKullaniciListesi.selectLov(kisi);
+        txtHavaleIslemleriKullaniciListesi.selectLov(kisi);*/
         return this;
     }
     @Step("Kullanıcı Listesi alnında \"{kisi}\" seç")
@@ -679,7 +686,7 @@ public class GelenEvrakKayitPage extends MainPage {
     }
 
     public GelenEvrakKayitPage benzerKayit() {
-       // boolean evrak = $("evetButtonBenzerKaydet").shouldBe(Condition.visible);
+        //boolean evrak = $("evetButtonBenzerKaydet").shouldBe(Condition.visible);
        // if ( evrak == true)
         $(By.id("evetButtonBenzerKaydet")).pressEnter();
         return this;

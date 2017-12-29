@@ -5,11 +5,14 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
+import pages.ustMenuPages.GelenEvrakKayitPage;
 
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
@@ -40,10 +43,10 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
 
     @Step("Tablodan rapor seç")
     public TeslimAlinmayiBekleyenlerPage gizlilikRaporSec(String konu, String yer, String tarih, String no) {
-        SelenideElement evrak = filter().findRowsWith(Condition.text(konu))
-                .filterBy(Condition.text(yer))
-                .filterBy(Condition.text(tarih))
-                .filterBy(Condition.text(no))
+        SelenideElement evrak = filter().findRowsWith(text(konu),text(yer),text(tarih),text(no))
+//                .filterBy(text(yer))
+//                .filterBy(text(tarih))
+//                .filterBy(text(no))
                 .shouldHaveSize(1).first();
         evrak.click();
         //evrak.click();
@@ -81,28 +84,28 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     }
     @Step("Evrak seçilir")
     public TeslimAlinmayiBekleyenlerPage evrakSec(String konu, String yer, String tarih, String no) {
-        tblEvraklar.filterBy(Condition.text(konu))
-                .filterBy(Condition.text(yer))
-                .filterBy(Condition.text(tarih))
-                .filterBy(Condition.text(no)).get(0).click();
+        tblEvraklar.filterBy(text(konu))
+                .filterBy(text(yer))
+                .filterBy(text(tarih))
+                .filterBy(text(no)).get(0).click();
         return this;
     }
 
     @Step("Evrak içerik göster")
     public TeslimAlinmayiBekleyenlerPage evrakSecIcerikGoster(String konu, String yer, String tarih, String no) {
-        tblEvraklar.filterBy(Condition.text(konu))
-                .filterBy(Condition.text(yer))
-                .filterBy(Condition.text(tarih))
-                .filterBy(Condition.text(no)).get(0).$$("[id$='detayGosterButton']").first().click();
+        tblEvraklar.filterBy(text(konu))
+                .filterBy(text(yer))
+                .filterBy(text(tarih))
+                .filterBy(text(no)).get(0).$$("[id$='detayGosterButton']").first().click();
         return this;
     }
 
     @Step("Evrak içerik göster")
     public TeslimAlinmayiBekleyenlerPage evrakSecTeslimAl(String konu, String yer, String tarih, String no,boolean secim) {
-        tblEvraklar.filterBy(Condition.text(konu))
-                .filterBy(Condition.text(yer))
-                .filterBy(Condition.text(tarih))
-                .filterBy(Condition.text(no)).get(0).$$("[id$='teslimAlButton']").first().click();
+        tblEvraklar.filterBy(text(konu))
+                .filterBy(text(yer))
+                .filterBy(text(tarih))
+                .filterBy(text(no)).get(0).$$("[id$='teslimAlButton']").first().click();
 
         if (secim==true){
             $(By.id("teslimAlEvetButton")).click();
@@ -133,8 +136,11 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     }
 
     @Step("Tarihi doldur")
-    public TeslimAlinmayiBekleyenlerPage tarihiDoldur(String tarih) {
+    public TeslimAlinmayiBekleyenlerPage tarihiDoldur(String tarih, Keys... keys) {
         dateTxtTarih.sendKeys(tarih);
+        for (Keys k:keys) {
+            dateTxtTarih.sendKeys(keys);
+        }
         return this;
     }
 
@@ -156,6 +162,12 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Kişi alanında \"{kisi}\" seçmeye dene")
+    public TeslimAlinmayiBekleyenlerPage havaleYapKisiKisiSecmeyeDene(String kisi) {
+        txtHavaleYapKisi.type(kisi).titleItems().filterBy(text(kisi)).first().click();
+        return this;
+    }
+
     @Step("Kullanıcı listesi doldur")
     public TeslimAlinmayiBekleyenlerPage havaleYapKullaniciListesiDoldur(String kullaniciListesi){
         //txtHavaleYapKullaniciListesi.selectLov(kullaniciListesi);
@@ -163,10 +175,16 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Kullanıcı listesinde \"{kisi}\" seçmeye dene")
+    public TeslimAlinmayiBekleyenlerPage havaleYapKullaniciListesiSecmeyeDene(String kisi) {
+        txtHavaleYapKullaniciListesi.type(kisi).titleItems().filterBy(text(kisi)).first().click();
+        return this;
+    }
+
     @Step("Tabloda evrak no kontrolü")
     public TeslimAlinmayiBekleyenlerPage tabloKontrolu(String evrakNo)
     {
-        int row = $$("tbody[id$='mainInboxForm:inboxDataTable_data'] tr[role=row] div[class=searchText]").filterBy(Condition.text(evrakNo)).size();
+        int row = $$("tbody[id$='mainInboxForm:inboxDataTable_data'] tr[role=row] div[class=searchText]").filterBy(text(evrakNo)).size();
         System.out.println(row);
         Assert.assertEquals(row,1);
         //log başarılı

@@ -3,6 +3,7 @@ package tests.GizlilikKleransi;
 import common.BaseTest;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
+import org.openqa.selenium.Keys;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.MainPage;
@@ -100,11 +101,13 @@ public class GizlilikKleransiTest extends BaseTest {
                 .evrakSayiSagDoldur()
                 .evrakGelisTipiSec(evrakGelisTipi)
                 .ivedilikSec(ivedilik)
-                .havaleIslemleriKisiDoldur(kisi)
+                .havaleIslemleriKisiSecmeyeDene(kisi)
                 .islemMesaji().beklenenMesaj(uyariMesaj1);
+                /*.havaleIslemleriKisiDoldur(kisi)
+                .islemMesaji().beklenenMesaj(uyariMesaj1);*/
 
         gelenEvrakKayitPage
-                .havaleIslemleriKullaniciListesiDoldur(kullaniciListesi)
+                .havaleIslemleriKullaniciListesiSecmeyeDene(kullaniciListesi)
                 .islemMesaji().beklenenMesaj(uyariMesaj2);
     }
 
@@ -141,7 +144,7 @@ public class GizlilikKleransiTest extends BaseTest {
         String uyariMesaj2 = "Havale etmek istediğiniz kullanıcı grubundaki Mehmet Emin YÜCEANT, Mehmet Gökhan BAYSAN, Mehmet Koray BALCIOĞLU ın kleransı yetersizdir, kleransı yeterli olmayan kullanıcılara havale edilmeyecektir !!";
         String kisi = "Can Şeker";
         String kullaniciListesi = "Optiim";
-        String konuKodu = "Diğer-TC2223";
+        String konuKodu = "Diğer-TC272";
         String geldigiYer = "Yargı / BÜYÜK HARFLERLE KURUM(G)";
         String evrakTarihi = "15.12.2017";
         String no = "123";
@@ -150,13 +153,16 @@ public class GizlilikKleransiTest extends BaseTest {
 
         teslimAlinmayiBekleyenlerPage
                 .openPage()
+                .filtreleAc().tarihiDoldur(evrakTarihi, Keys.ENTER)
                 .gizlilikRaporSec(konuKodu, geldigiYer, evrakTarihi, no)
                 .havaleYap()
-                .havaleYapKisiDoldur(kisi)
+//                .havaleYapKisiDoldur(kisi)
+                .havaleYapKisiKisiSecmeyeDene(kisi)
                 .islemMesaji().beklenenMesaj(uyariMesaj1);
 
         teslimAlinmayiBekleyenlerPage
-                .havaleYapKullaniciListesiDoldur(kullaniciListesi)
+//                .havaleYapKullaniciListesiDoldur(kullaniciListesi)
+                .havaleYapKullaniciListesiSecmeyeDene(kullaniciListesi)
                 .islemMesaji().beklenenMesaj(uyariMesaj2);
     }
 
@@ -177,13 +183,16 @@ public class GizlilikKleransiTest extends BaseTest {
 
         teslimAlinanlarPage
                 .openPage()
+                .filtreleAc().tarihiDoldur(evrakTarihi, Keys.ENTER)
                 .gizlilikRaporSec(konuKodu, geldigiYer, evrakTarihi, no)
                 .havaleYap()
-                .havaleYapKisiDoldur(kisi)
+//                .havaleYapKisiDoldur(kisi)
+                .havaleYapKisiSecmeyeDene(kisi)
                 .islemMesaji().beklenenMesaj(uyariMesaj1);
 
         teslimAlinanlarPage
-                .havaleYapKullaniciListesiDoldur(kullaniciListesi)
+//                .havaleYapKullaniciListesiDoldur(kullaniciListesi)
+                .havaleYapKullaniciListesiSecmeyeDene(kullaniciListesi)
                 .islemMesaji().beklenenMesaj(uyariMesaj2);
     }
 
@@ -491,7 +500,6 @@ public class GizlilikKleransiTest extends BaseTest {
                 .kullaniciBirimAtamaGizlilikDerecesiKontrolu();
     }
 
-
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, dependsOnMethods = {"TC1471"}, description = "TC1938: Yüksek kleranslı evrak oluşturma")
     public void TC1938() throws InterruptedException {
@@ -547,7 +555,7 @@ public class GizlilikKleransiTest extends BaseTest {
                 .sImzasec()
                 .sImzaImzala()
                 .sayisalImzaEvetPopup()
-                .islemMesaji().basariliOlmali(basariMesaji);
+                .islemMesaji().basariliOlmali();
 
         imzaladiklarimPage
                 .openPage();
@@ -611,9 +619,9 @@ public class GizlilikKleransiTest extends BaseTest {
                 .evrakAramaDoldur(evrakNo)
                 .dokumanAra()
                 .tabloEvrakNoKontrol(evrakNo)
-                .tablodaDetayTikla(evrakNo);
-//                .islemMesaji().beklenenMesaj(basariMesaji);
-        Thread.sleep(4000);
+                .tablodaDetayTikla(evrakNo)
+                .islemMesaji().beklenenMesaj(basariMesaji);
+//        Thread.sleep(4000);
 //        evrakOlusturPage
 //                .islemMesaji().beklenenMesaj(mesaj);
 

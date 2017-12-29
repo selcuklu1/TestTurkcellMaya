@@ -31,6 +31,8 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfEl
 
 public class BaseLibrary extends ElementsContainer {
 
+
+    private long waitForLoading = 20;
     private int doWaitLoading = 0;
     private boolean doNotWaitLoading = false;
     public static String docPath = null;
@@ -157,8 +159,17 @@ public class BaseLibrary extends ElementsContainer {
         waitForLoadingToDisappear(driver);
     }
 
+    public long getWaitForLoading() {
+        return waitForLoading;
+    }
+
+    public void setWaitForLoading(long seconds) {
+        this.waitForLoading = waitForLoading;
+    }
+
     public void waitForLoadingJS(WebDriver driver){
-        long timeout = Configuration.timeout / 1000;
+//        long timeout = Configuration.timeout / 1000;
+        long timeout = getWaitForLoading();
         new WebDriverWait(driver, timeout, 10).until(driver1 ->
         {
             JavascriptExecutor js = (JavascriptExecutor) driver1;
