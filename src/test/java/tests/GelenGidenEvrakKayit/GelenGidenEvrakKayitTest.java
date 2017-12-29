@@ -61,7 +61,7 @@ public  String getDocPath1()
     return "C:\\TestAutomation\\BelgenetFTA\\documents\\";
 }
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true,priority = 0, description = "TC0321: Üstyazı ek ve ilgi eklenerek gelen evrak kaydı")
+    @Test(enabled = true,priority = 1, description = "TC0321: Üstyazı ek ve ilgi eklenerek gelen evrak kaydı")
     public void TC0321() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
@@ -115,7 +115,7 @@ public  String getDocPath1()
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, priority = 1, description = "TC2163 : Kaydedilen gelen evrakın güncellenmesi")
+    @Test(enabled = true, priority = 3, description = "TC2163 : Kaydedilen gelen evrakın güncellenmesi")
     public void TC2163() throws InterruptedException {
 
         String evrakTuru = "Dilekçe";
@@ -164,7 +164,7 @@ public  String getDocPath1()
 
         kaydedilenGelenEvraklarPage
                 .openPage()
-                .tabloEvrakNoileEvrakKontrolu(evrakNO321)
+//                .tabloEvrakNoileEvrakKontrolu(evrakNO321)
                 .tabloEvrakNoileIcerikSec(evrakNO321)
                 .guncellenenAlanKontrolleri(evrakTarihi, evrakTuru, gizlilikDerecesi);
     }
