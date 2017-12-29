@@ -56,14 +56,17 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         login("optiim", "123");
 //        login("ztekin", "123");
     }
-
+public  String getDocPath1()
+{
+    return "C:\\TestAutomation\\BelgenetFTA\\documents\\";
+}
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true,priority = 0, description = "TC0321: Üstyazı ek ve ilgi eklenerek gelen evrak kaydı")
     public void TC0321() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
-        String ustYaziPath = getDocPath()+"pdf.pdf";
-        String excelPath = getDocPath()+"test.xlsx";
+        String ustYaziPath = getDocPath1()+"pdf.pdf";
+        String excelPath = getDocPath1()+"test.xlsx";
         String ustYaziAdi = "pdf.pdf";
         String excelAdi = "test.xlsx";
         String konu = "Test " + getSysDate();
@@ -116,7 +119,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     public void TC2163() throws InterruptedException {
 
         String evrakTuru = "Dilekçe";
-        String ustYaziPath = getDocPath() + "Otomasyon.pdf";
+        String ustYaziPath = getDocPath1() + "Otomasyon.pdf";
         String ustYaziAdi = "Otomasyon.pdf";
         String basariMesaji = "İşlem başarılıdır!";
         String aciklama = "Test Otomasyon";
@@ -270,8 +273,8 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
         String birim = "OPTİİM BİRİM11";
 
-        String pathToFilePdf = getDocPath()+"TestOtomasyon.msg";
-        String pathToFileExcel = getDocPath()+"test.xlsx";
+        String pathToFilePdf = getDocPath1()+"TestOtomasyon.msg";
+        String pathToFileExcel = getDocPath1()+"test.xlsx";
         String ustYaziAdi = "TestOtomasyon.msg";
         String konu = "Test " + getSysDate();
 
@@ -325,7 +328,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         String message2 = "Dosya büyüklüğü uygun değildir.";
         String evrakTuru1 = "A";
 //        String path = "C:\\Users\\Emre_Sencan\\Pictures\\tsunami_posteroct08.pdf";
-        String ustYaziPath = getDocPath()+"pdf.pdf";
+        String ustYaziPath = getDocPath1()+"pdf.pdf";
         String birim = "OPTİİM BİRİM";
 
         gelenEvrakKayitPage
@@ -382,8 +385,8 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     public void TC1340() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
-        String ustYaziPath = getDocPath()+"pdf.pdf";
-        String excelPath = getDocPath()+"test.xlsx";
+        String ustYaziPath = getDocPath1()+"pdf.pdf";
+        String excelPath = getDocPath1()+"test.xlsx";
         String ustYaziAdi = "pdf.pdf";
         String excelAdi = "test.xlsx";
         String miatTarihi = getSysDateForKis();

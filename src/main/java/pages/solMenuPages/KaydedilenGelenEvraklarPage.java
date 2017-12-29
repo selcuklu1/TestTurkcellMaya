@@ -113,8 +113,9 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
     }
 
     @Step("Tabloda evrak noya göre İçerik tıklama : \"{evrakNo}\" ")
-    public KaydedilenGelenEvraklarPage tabloEvrakNoileIcerikSec(String evrakNo) {
+    public KaydedilenGelenEvraklarPage tabloEvrakNoileIcerikSec(String evrakNo) throws InterruptedException {
 
+        Thread.sleep(2000);
         tblKaydedilenGelenEvraklar
                 .filterBy(Condition.text(evrakNo))
                 .first()
