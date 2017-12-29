@@ -144,7 +144,7 @@ public class EvrakNotTest extends BaseTest {
         page.editorTabAc();
         evrakNot.olusturulanNot(user1.getName(), aciklama).shouldHaveSize(1);
         logout();
-        clearCookies();
+        //clearCookies();
     }
 
     @Test(enabled = true, description = "TC2093: Not Oluşturma - Karar Yazısı Oluşturma da Kişisel ve Genel Not oluşturma")
@@ -258,7 +258,7 @@ public class EvrakNotTest extends BaseTest {
 ///////////////////////
 
         logout();
-        clearCookies();
+        //clearCookies();
         login(user2);
         imzaBekleyenlerPage.openPage();
         evrak = evragiBul(konu);
@@ -284,7 +284,7 @@ public class EvrakNotTest extends BaseTest {
         imzaBekleyenlerPage.evrakIadeEt("İade notu").islemMesaji().basariliOlmali();
 
         logout();
-        clearCookies();
+        ////clearCookies();
         login(user1);
         ParafBekleyenlerPage parafBekleyenlerPage = new ParafBekleyenlerPage();
         parafBekleyenlerPage.openPage();
@@ -311,13 +311,13 @@ public class EvrakNotTest extends BaseTest {
         ustYazi.parafla().islemMesaji().basariliOlmali();
 
         logout();
-        clearCookies();
+        //clearCookies();
         login(user2);
         imzaBekleyenlerPage.openPage();
         evrak = evragiBul(konu);
         evrak.click();
         notlar.notlariKontolEt(newNotesGenel);
-        imzaBekleyenlerPage.imzala().islemMesaji().basariliOlmali();
+        imzaBekleyenlerPage.evrakImzala().islemMesaji().basariliOlmali();
         new IslemMesajlari().basariliOlmali();
     }
 
@@ -335,7 +335,7 @@ public class EvrakNotTest extends BaseTest {
 
         evrakOlusturVeImzala(konu, notes);
 
-        clearCookies();
+        //clearCookies();
         login(user2);
         SelenideElement evrak = postalanacakEvraklarPage.openPage().filter()
                 .findRowsWith(Condition.text(konu)).shouldHaveSize(1).first();
