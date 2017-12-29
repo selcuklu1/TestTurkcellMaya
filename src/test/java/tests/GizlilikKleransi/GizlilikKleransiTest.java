@@ -499,7 +499,7 @@ public class GizlilikKleransiTest extends BaseTest {
                 .gorevliOlduguBirimGuncelle()
                 .kullaniciBirimAtamaGizlilikDerecesiKontrolu();
     }
-    
+
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, dependsOnMethods = {"TC1471"}, description = "TC1938: Yüksek kleranslı evrak oluşturma")
     public void TC1938() throws InterruptedException {

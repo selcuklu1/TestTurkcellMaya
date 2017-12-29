@@ -225,8 +225,8 @@ public  String getDocPath1()
                 .gelenEvrakNoDoldur(evrakNO321)
                 .sorgula()
                 .tabloKontrolu(evrakNO321)
-                .raporAlExcel();
-//                .islemMesaji().basariliOlmali(basariMesaji);
+                .raporAlExcel()
+                .islemMesaji().basariliOlmali(basariMesaji);
 
         kaydedilenGelenEvrakPage
                 .txtClear()
@@ -235,8 +235,8 @@ public  String getDocPath1()
                 .geldigiYerSec(geldigiYer)
                 .sorgula()
                 .tabloKontrolu(evrakNO328)
-                .raporAlPdf();
-//                .islemMesaji().basariliOlmali(basariMesaji);
+                .raporAlPdf()
+                .islemMesaji().basariliOlmali(basariMesaji);
     }
 
     @Severity(SeverityLevel.CRITICAL)
