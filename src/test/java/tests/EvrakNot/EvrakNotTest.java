@@ -535,7 +535,8 @@ public class EvrakNotTest extends BaseTest {
             takeScreenshot();
 
             String date = DateTimeFormatter.ofPattern("dd.MM.yyyy").format(LocalDateTime.now());
-            String time = DateTimeFormatter.ofPattern("HH:mm").format(LocalDateTime.now());
+            String time = DateTimeFormatter.ofPattern("HH").format(LocalDateTime.now());
+//            String time = DateTimeFormatter.ofPattern("HH:mm").format(LocalDateTime.now());
             return evrakNot.olusturulanNot(olusturanAdSoyad, aciklama, date, time).shouldHaveSize(1).first();
         }
 
@@ -627,7 +628,8 @@ public class EvrakNotTest extends BaseTest {
             noteEkleDialog.should(disappear);
 
             String date = DateTimeFormatter.ofPattern("dd.MM.yyyy").format(LocalDateTime.now());
-            String time = DateTimeFormatter.ofPattern("HH:mm").format(LocalDateTime.now());
+            String time = DateTimeFormatter.ofPattern("HH").format(LocalDateTime.now());
+//            String time = DateTimeFormatter.ofPattern("HH:mm").format(LocalDateTime.now());
             return olusturulanNot(olusturan, notTipi, aciklama, date, time).shouldHaveSize(1).first();
         }
 
