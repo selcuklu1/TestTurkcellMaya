@@ -5,10 +5,12 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
 
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
@@ -85,7 +87,7 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
 
     @Step("Tabloda evrak no kontrolu")
     public KaydedilenGelenEvraklarPage tabloKontrolu(String evrakNo) {
-        tblKaydedilenGelenEvraklar2.filterBy(Condition.text(evrakNo)).shouldHaveSize(1);
+        tblKaydedilenGelenEvraklar2.filterBy(text(evrakNo)).shouldHaveSize(1);
 //        System.out.println(row);
 //        Assert.assertEquals(row, 1);
         return this;
@@ -97,19 +99,51 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
         return this;
     }
 
-    @Step("Tabloda evrak noya göre İçerik tıklama")
+    @Step("Guncelleme Kontrolleri")
+    public KaydedilenGelenEvraklarPage guncellenenAlanKontrolleri(String evrakTarihi, String evrakTuru, String gizlilikDerecesi) {
+        String txtEvrakTarihi = dateTxtEvrakBilgileriListEvrakTarihi.getValue();
+        String txtEvrakTuru = cmbEvrakBilgileriListEvrakTuru.getSelectedText();
+        String txtGizlilikDerecesi = cmbEvrakBilgileriListGizlilikDerecesi.getSelectedText();
+
+        Assert.assertEquals(txtEvrakTarihi, evrakTarihi);
+        Assert.assertEquals(txtEvrakTuru, evrakTuru);
+        Assert.assertEquals(txtGizlilikDerecesi, gizlilikDerecesi);
+
+        return this;
+    }
+
+    @Step("Tabloda evrak noya göre İçerik tıklama : \"{evrakNo}\" ")
     public KaydedilenGelenEvraklarPage tabloEvrakNoileIcerikSec(String evrakNo) {
+
         tblKaydedilenGelenEvraklar
-                .filterBy(Condition.text(evrakNo)).shouldHaveSize(1)
+                .filterBy(Condition.text(evrakNo))
                 .first()
                 .$("[id$='detayGosterButton']").click();
         return this;
     }
+    @Step("Tabloda konuya göre evrak kontrolu : {evrakNo}")
+    public KaydedilenGelenEvraklarPage tabloEvrakNoileEvrakKontrolu(String evrakNo) {
+        tblKaydedilenGelenEvraklar
+                .filterBy(Condition.text(evrakNo))
+                .shouldHaveSize(1);
+        return this;
+    }
+
+
     @Step("Tabloda konuya göre evrak kontrolu : {konu}")
     public KaydedilenGelenEvraklarPage tabloKonuyaGoreEvrakKontrolu(String konu) {
         tblKaydedilenGelenEvraklar
-                .filterBy(Condition.text(konu))
+                .filterBy(text(konu))
                 .shouldHaveSize(1);
+        return this;
+    }
+
+    @Step("Tabloda konuya göre evrak İcerik tıklama : {konu}")
+    public KaydedilenGelenEvraklarPage tabloKonuyaGoreIcerikSec(String konu) {
+        tblKaydedilenGelenEvraklar
+                .filterBy(Condition.text(konu))
+                .first()
+                .$("[id$='detayGosterButton']").click();
         return this;
     }
 }

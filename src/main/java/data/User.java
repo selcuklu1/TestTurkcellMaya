@@ -6,11 +6,11 @@ package data;
  * Açıklama:
  */
 public class User {
-    private String username;
-    private String password;
-    private String name;
-    private String birimAdi;
-    private String gorev;
+    private String username = "";
+    private String password = "";
+    private String name = "";
+    private String birimAdi = "";
+    private String gorev = "";
 
     public User(String username, String password, String name, String birimAdi, String gorev) {
         this.username = username;

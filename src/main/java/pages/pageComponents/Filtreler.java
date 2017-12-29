@@ -93,6 +93,53 @@ public class Filtreler extends BaseLibrary {
         }
     }
 
+    /**
+     * Find rows by Selenide.Condition in all pages
+     *
+     * @param condition
+     * @return
+     */
+    @Step("Arama tablosunda satırı bul")
+    public ElementsCollection findRowsWith(Condition condition, Condition... conditions){
+        while (true) {
+            ElementsCollection filtered = getSearchRows().filterBy(condition);
+            if (filtered.size() > 0) {
+                for (Condition con : conditions) {
+                    filtered = filtered.filterBy(con);
+                }
+            }
+            if (filtered.size() > 0 || nextPageButton.has(cssClass("ui-state-disabled"))){
+                Allure.addAttachment("Filtereye göre bulunan satırlar", filtered.texts().toString());
+                return filtered;
+            }
+            nextPageButton.click();
+        }
+    }
+
+    /**
+     * Find rows by Selenide.Condition in all pages
+     *
+     * @param condition
+     * @return
+     */
+    @Step("Arama tablosunda satırı bul")
+    public ElementsCollection findRowsWithToday(Condition condition, Condition... conditions){
+        while (true) {
+            ElementsCollection filtered = getSearchRows().filterBy(text(getSysDateForKis())).filterBy(condition);
+            if (filtered.size() > 0) {
+                for (Condition con : conditions) {
+                    filtered = filtered.filterBy(con);
+                }
+            }
+            if (filtered.size() > 0 || nextPageButton.has(cssClass("ui-state-disabled"))){
+                Allure.addAttachment("Filtereye göre bulunan satırlar", filtered.texts().toString());
+                return filtered;
+            }
+            nextPageButton.click();
+        }
+    }
+
+
 
 //    Function HtmlGetParentObject(ByVal obj, ByVal parentTagName)
 //    Dim parent : Set parent = obj.parentElement

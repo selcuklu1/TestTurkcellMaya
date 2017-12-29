@@ -167,13 +167,14 @@ public class EvrakOlusturPage extends MainPage {
     }
 
     @Step("Evrak Oluştur sayfası kapat")
-    public EvrakOlusturPage evrakOlusturKapat(){
+    public EvrakOlusturPage evrakOlusturKapat() {
         $(By.xpath("//div[@id='mainTaskBar']//span[text()='[Evrak Oluştur]']"))
                 .click();
         btnCloseScreen.click();
         islemPenceresiKaydetPopup("Evet");
         return this;
     }
+
     public EvrakOlusturPage evrakOlusturSayfaKapat() {
         $(By.xpath("//div[@id='window1Dialog']//span[@class='ui-icon ui-icon-closethick']")).click();
         islemPenceresiKaydetPopup("Evet");
@@ -264,7 +265,7 @@ public class EvrakOlusturPage extends MainPage {
 
         //Bilgileri tabı
         BelgenetElement txtKonuKodu = comboLov("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='konuKoduLov:LovText']");
-        SelenideElement txtCevapYazKaydetVeOnaySunAciklama =  $(By.id("windowCevapEvrakForm:onayIslemiAciklama"));
+        SelenideElement txtCevapYazKaydetVeOnaySunAciklama = $(By.id("windowCevapEvrakForm:onayIslemiAciklama"));
         SelenideElement btnKaydetveOnayaSun = $(By.xpath("//div[@id='windowCevapEvrakDialog']//tr//td[2]//td[3]//button"));
 
         SelenideElement txtKaldiralacakKlasorler = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:4:eklenecekKlasorlerLov:LovText"));
@@ -286,11 +287,13 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement txtOnayIslemiAciklama = $(By.id("windowCevapEvrakForm:onayIslemiAciklama"));
         SelenideElement btnOnayIslemiGonder = $(By.id("windowCevapEvrakForm:gonderButton"));
 
-        BelgenetElement cmbGeregi = comboLov(By.id("yeniGidenEvrakForm:evrakBilgileriList:16:geregiLov:LovText"));
+        BelgenetElement cmbGeregi = comboLov("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='geregiLov:LovText']");
         BelgenetElement cmbGeregiPostaTipi = comboLov(By.id("yeniGidenEvrakForm:evrakBilgileriList:16:geregiLov:LovSecilenTable:0:selectOneMenu"));
         // select[id^='yeniGidenEvrakForm:evrakBilgileriList:16:geregiLov:LovSecilenTable:'][id$=':selectOneMenu']
         SelenideElement cmbPostaTipi = $("select[id^='yeniGidenEvrakForm:evrakBilgileriList:16:geregiLov:LovSecilenTable:'][id$=':selectOneMenu']");
         By cmbGeregiBy = By.cssSelector("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='geregiLov:LovText']");
+
+        BelgenetElement cmbPostaTipi2 = comboBox(" [id='yeniGidenEvrakForm:evrakBilgileriList:16:geregiLov:LovSecilenTable_data'] tr[role='row'] select");
 
         BelgenetElement cmbOnayAkisi = comboLov("[id$='akisLov:LovText']");
         SelenideElement btnOnayAkisiTemizle = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:17:akisLov:j_idt134"));
@@ -407,6 +410,7 @@ public class EvrakOlusturPage extends MainPage {
             txtKonu.is(required);
             return this;
         }
+
         @Step("Kaldiralacak Klasörler alanında \"{kaldirilacakKlasorler}\" seç")
         public BilgilerTab kaldiralacakKlasorlerSec(String kaldirilacakKlasorler) {
             cmbKaldiralacakKlasorler.selectLov(kaldirilacakKlasorler);
@@ -870,7 +874,7 @@ public class EvrakOlusturPage extends MainPage {
         @Step("Dağıtım hitap adresi al")
         public String getDagitimHitapAdres() {
 
-            String dagitimHitapAdres =   txtDagitimHitapAdres.getText();
+            String dagitimHitapAdres = txtDagitimHitapAdres.getText();
             return dagitimHitapAdres;
         }
 
@@ -1131,6 +1135,15 @@ public class EvrakOlusturPage extends MainPage {
 
             return this;
         }
+
+        @Step("Gerçek alanında posta şekli \"{postaTipi}\" seçilir. ")
+        public BilgilerTab gercekKisiGeregiAlaniPostaTipiSec(String postaTipi) {
+            SelenideElement cmbPostaTipi2 = $(" [id='yeniGidenEvrakForm:evrakBilgileriList:16:geregiLov:LovSecilenTable_data'] tr[role='row'] select");
+            cmbPostaTipi2.selectOption(postaTipi);
+
+            return this;
+        }
+
 
         @Step("Tüzel Kişi gereği alanı kontrolu")
         public BilgilerTab tuzelKisiGeregiAlaniVergiNoPostaTipiKontrol(String vergiNo2, String postaTipi) {

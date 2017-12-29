@@ -8,7 +8,8 @@ import org.testng.Assert;
 import pages.pageComponents.*;
 import pages.pageData.SolMenuData;
 
-import static com.codeborne.selenide.Condition.exist;
+import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.Selectors.byLinkText;
 import static com.codeborne.selenide.Selenide.*;
 
 public class MainPage extends BaseLibrary {
@@ -269,8 +270,22 @@ public class MainPage extends BaseLibrary {
     }
 
     @Step("Birim Seç")
-    public MainPage birimSec(String menuText) throws InterruptedException {
-//        ElementsCollection solMenuBirim = $$("[id='birimlerimMenusuContainer'] li");
+    public MainPage birimSec(String birim) {
+        String currentBirim = $("#kullaniciBirimAd").shouldBe(visible)
+                .shouldHave(matchText(".*")).text();
+
+        if (!currentBirim.equals(birim))
+            $("#leftMenuForm #birimlerimMenusuContainer").$(byLinkText(birim)).click();
+
+        $("#kullaniciBirimAd").shouldHave(text(birim));
+
+
+//        $("#birimlerimMenusuContainer");
+//        $$("#leftMenuForm #birimlerimMenusuContainer li a");
+
+
+      /*
+        //        ElementsCollection solMenuBirim = $$("[id='birimlerimMenusuContainer'] li");
 //        SelenideElement element = solMenuBirim.filterBy(text(menuText)).first()
 //                .$("[id^='leftMenuForm:edysMenuItem_']");
 //        clickJs(element);
@@ -278,7 +293,7 @@ public class MainPage extends BaseLibrary {
         SelenideElement element = $("[id='birimlerimMenusuContainer']");
         SelenideElement menuLink =element.find(By.xpath("//span[starts-with(text(),'" + menuText + "')]")).waitUntil(exist, Configuration.timeout);
         executeJavaScript("arguments[0].click();", menuLink);
-        waitForLoading(WebDriverRunner.getWebDriver());
+        waitForLoading(WebDriverRunner.getWebDriver());*/
         return this;
     }
 
@@ -301,4 +316,72 @@ public class MainPage extends BaseLibrary {
         return this;
     }
 
+    @Step("Parafla")
+    public MainPage parafla(){
+        SelenideElement paraflaButon = $x("//*[text()='Parafla']/ancestor::tbody[1]//button");
+        paraflaButon.click();
+        sImzalaRadioSec();
+        evrakImzaOnay();
+        return this;
+    }
+
+    @Step("İmzala butonu ara")
+    public SelenideElement imzalaButton(){
+        return $x("//*[text()='İmzala']/ancestor::tbody[1]//button");
+    }
+
+    @Step("İmzala butona tıkla")
+    public MainPage imzalaButonaTikla(){
+        imzalaButton().click();
+        return this;
+    }
+
+    @Step("s-İmzla radio butonu ara")
+    public SelenideElement sImzalaRadio(){
+        return $("#imzalaForm\\:imzalaRadio .ui-radiobutton-box");
+    }
+
+    @Step("s-İmzla seç")
+    public MainPage sImzalaRadioSec(){
+        sImzalaRadio().shouldBe(visible).click();
+        return this;
+    }
+
+    @Step("İmzala")
+    public void evrakImzala() {
+        imzalaButonaTikla();
+        sImzalaRadioSec();
+//        clickJs($("#imzalaForm\\:imzalaRadio").find(By.tagName("input")));
+        evrakImzaOnay();
+    }
+
+    public void evrakImzaOnay() {
+        for (int i = 0; i < Configuration.timeout/1000; i++) {
+            sleep(1000);
+            if ($("#imzalaForm\\:sayisalImzaConfirmDialogOpener").is(visible)){
+                $("#imzalaForm\\:sayisalImzaConfirmDialogOpener").click();
+                clickJs($("#imzalaForm\\:sayisalImzaConfirmForm\\:sayisalImzaEvetButton"));
+                break;
+            }
+            else{
+                $("#imzalaForm\\:imzalaButton").click();
+                break;
+            }
+        }
+    }
+
+    @Step("Iade et")
+    public MainPage evrakIadeEt(String iadeNotu){
+        $("button .iadeEt").click();
+        $("#inboxItemInfoForm\\:notTextArea_id").setValue("İade notu");
+        $("#inboxItemInfoForm\\:iadeEtButton_id").click();
+        return this;
+    }
+
+    @Step("Kaydet")
+    public MainPage evrakKaydet(){
+        $("button .kaydet").click();
+        $("#kaydetConfirmForm\\:kaydetEvetButton").click();
+        return this;
+    }
 }
