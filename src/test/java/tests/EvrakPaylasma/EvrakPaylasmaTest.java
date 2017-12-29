@@ -445,7 +445,7 @@ public class EvrakPaylasmaTest extends BaseTest {
 
 
     }
-
+    //TODO Can Şeker yazmıştır
     @Test(enabled = true, description = "TC1905: Evrak paylaşma yetkisi olmayan kullanıcıda evrak paylaşma kontrolü")
     public void TC1905() throws InterruptedException{
 
@@ -461,7 +461,7 @@ public class EvrakPaylasmaTest extends BaseTest {
         String kisi2 = "Yasemin Çakıl Akyol";
         String aciklama = createRandomText(15);
         String birim = "TEST HASAN BİRİMİ";
-        String anaBirim = "Yazılım Geliştirme Direktörlüğü";
+        String anaBirim = "Yazılım Geliştirme Direktörlüğ";
         //TODO Pre Condition Gelen Evraklar sayfası data oluşturmakta
         login(username2, password2);
 

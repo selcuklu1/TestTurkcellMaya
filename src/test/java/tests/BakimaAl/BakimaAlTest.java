@@ -37,7 +37,6 @@ public class BakimaAlTest extends BaseTest {
             bilgilendirmeMetni600Karakter += "x";
         }
 
-
         bakimaAlPage
                 .openPage()
                 .bilgilendirmeMetniGir(bilgilendirmeMetni500Karakter)

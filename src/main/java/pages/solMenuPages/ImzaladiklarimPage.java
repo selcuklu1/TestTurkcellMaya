@@ -50,8 +50,8 @@ public class ImzaladiklarimPage extends MainPage {
     }
     @Step("Paylaş buton gelmediği görme")
     public ImzaladiklarimPage paylasButonGelmedigiGorme(String buton){
-        boolean t = evrakSecButonlar.filterBy(text(buton)).size() > 0;
-        Assert.assertEquals(t, false, "kdkdkdkd");
+        boolean t = evrakSecButonlar.filterBy(text(buton)).size() == 0;
+        Assert.assertEquals(t, true);
         return this;
     }
     @Step("Evrak geldiği görülür")

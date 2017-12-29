@@ -537,6 +537,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+
         @Step("Bilgi Secim Tipi alanında \"{bilgiSecimTipi}\" seç")
         public BilgilerTab bilgiSecimTipiSecByText(String bilgiSecimTipi) {
             cmbBilgiSecimTipi.shouldBe(visible).selectOption(bilgiSecimTipi);
@@ -723,6 +724,7 @@ public class EvrakOlusturPage extends MainPage {
             cmbGeregiSecimTipi.selectOption(geregiSecimTipi);
             return this;
         }
+
 
         @Step("Gereği Seçim Tipi alanında \"{geregiSecimTipi}\" seç")
         public BilgilerTab geregiSecimTipiSecByText(String geregiSecimTipi) throws InterruptedException {

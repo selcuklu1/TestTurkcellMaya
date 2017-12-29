@@ -348,11 +348,12 @@ public class MainPage extends BaseLibrary {
     }
 
     @Step("İmzala")
-    public void evrakImzala() {
+    public MainPage evrakImzala() {
         imzalaButonaTikla();
         sImzalaRadioSec();
 //        clickJs($("#imzalaForm\\:imzalaRadio").find(By.tagName("input")));
         evrakImzaOnay();
+        return this;
     }
 
     public void evrakImzaOnay() {
