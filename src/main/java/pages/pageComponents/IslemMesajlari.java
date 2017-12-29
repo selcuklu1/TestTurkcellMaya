@@ -66,15 +66,17 @@ public class IslemMesajlari extends BaseLibrary {
         }
     }
 
-    @Step("Beklenen mesaj tipi \"{0}\"")
-    public IslemMesajlari beklenenMesajTipi(MessageTitle messageTitle) {
-        Assert.assertEquals(getMessageTitle(), messageTitle.value());
+    @Step("İşlem mesaj kontolü")
+    public IslemMesajlari beklenenMesajTipi(MessageTitle messageTitleText) {
+        messageTitle.shouldHave(exactText(messageTitleText.value()));
+//        Assert.assertEquals(getMessageTitle(), messageTitle.value());
         return this;
     }
 
-    @Step("Beklenen mesaj \"{0}\"")
+    @Step("İşlem mesaj kontolü")
     public IslemMesajlari beklenenMesaj(String message) {
-        Assert.assertEquals(getMessageBody(), message);
+        $(".lobibox-notify-msg").shouldHave(text(message));
+//        Assert.assertEquals(getMessageBody(), message);
         return this;
     }
 
@@ -135,16 +137,16 @@ public class IslemMesajlari extends BaseLibrary {
     }
 
     public String getMessageTitle() {
-        setDoNotWaitLoading(true);
+//        setDoNotWaitLoading(true);
         String text = $(".lobibox-notify-title").text();
-        setDoNotWaitLoading(false);
+//        setDoNotWaitLoading(false);
         return text;
     }
 
     public String getMessageBody() {
-        setDoNotWaitLoading(true);
+//        setDoNotWaitLoading(true);
         String text = $(".lobibox-notify-msg").text();
-        setDoNotWaitLoading(false);
+//        setDoNotWaitLoading(false);
         return text;
     }
 

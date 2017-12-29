@@ -33,6 +33,8 @@ public class BirimIcerikSablonlarPage extends MainPage {
 
     private SelenideElement tblBirimSablonlari = $("[id^='birimSablonForm'][id$='sablonDataTable']");
     private SelenideElement btnBirimSablonlariNext = $("[id^='birimSablonForm'][id$='sablonDataTable'] thead span[class~='ui-paginator-next']");
+    private SelenideElement btnBirimSablonlariPrev = $("[id^='birimSablonForm'][id$='sablonDataTable'] thead span[class~='ui-paginator-prev']");
+    private SelenideElement btnBirimSablonlariLast = $("[id^='birimSablonForm'][id$='sablonDataTable'] thead span[class~='ui-icon-seek-end']");
     //Detay butonları row sayısına eşit olmalı
     private By rowsBirimSablonlari = By.cssSelector("[id$='sablonDataTable'] tbody tr[role='row']");
 
@@ -191,7 +193,31 @@ public class BirimIcerikSablonlarPage extends MainPage {
 
     @Step("Şablonu bul")
     public SelenideElement findSablonRowInTable(String sablonAdi) {
+        $$(rowsBirimSablonlari).first().shouldBe(visible);
+        ElementsCollection rows = $$(rowsBirimSablonlari).filterBy(and("Filter by visible and text"
+                , visible
+                , text(sablonAdi)));
+        if (rows.size() == 1) {
+            return rows.first();
+        }
+
+        btnBirimSablonlariLast.click();
         while (true) {
+            $$(rowsBirimSablonlari).last().shouldBe(visible);
+            rows = $$(rowsBirimSablonlari).filterBy(and("Filter by visible and text"
+                    , visible
+                    , text(sablonAdi)));
+            if (rows.size() == 1)
+                return rows.first();
+
+            if (btnBirimSablonlariPrev.has(cssClass("ui-state-disabled")))
+                throw new NotFoundException(sablonAdi + " şablon bulunamadı");
+
+            btnBirimSablonlariPrev.click();
+        }
+
+
+        /*while (true) {
             $$(rowsBirimSablonlari).first().shouldBe(visible);
             ElementsCollection rows = $$(rowsBirimSablonlari).filterBy(and("Filter by visible and text"
                     , visible
@@ -204,7 +230,7 @@ public class BirimIcerikSablonlarPage extends MainPage {
                 throw new NotFoundException(sablonAdi + " şablon bulunamadı");
 
             btnBirimSablonlariNext.click();
-        }
+        }*/
     }
 
 
@@ -226,6 +252,7 @@ public class BirimIcerikSablonlarPage extends MainPage {
         }
     }
 
+    @Step("Şablon sil")
     public void sablonuSil(String sablonAdi) {
         SelenideElement row = findSablonRowInTable(sablonAdi);
         row.shouldBe(visible).$("[id$='sablonListesiDetayButton_id']").click();

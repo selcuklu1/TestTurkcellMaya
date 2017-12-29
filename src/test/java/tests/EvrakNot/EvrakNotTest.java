@@ -45,6 +45,7 @@ public class EvrakNotTest extends BaseTest {
     //    User user1 = new User("user1", "123", "User1 TEST", "AnaBirim1");
     User user1 = new User("user1", "123", "User1 TEST", "AnaBirim1");
     User user2 = new User("ztekin", "123", "Zübeyde TEKİN");
+    User user6 = new User("optiim", "123", "Optiim TEST");
     //    User user2 = new User("user2", "123", "User2 TEST", "AnaBirim1AltBirim1");
     User user3 = new User("user3", "123", "User3 TEST", "AnaBirim1");
     User user5 = new User("mbozdemir", "123", "Mehmet BOZDEMİR", "YAZILIM GELİŞTİRME");
@@ -80,7 +81,8 @@ public class EvrakNotTest extends BaseTest {
         String[][] notes = {{"Genel", "Açıklama1", "", ""}
                 , {"Kişisel", "Açıklama2", "", ""}
                 , {"Genel", "Açıklama3", "", ""}};
-        evrakOlusturVeImzala(konu, notes);
+        login(user1);
+        evrakOlusturVeImzala(user1, konu, notes);
     }
 
     @Test(enabled = true, description = "TC2091: Not Oluşturma - Evrak Oluşturma da Kişisel ve Genel Not oluşturma")
@@ -318,22 +320,22 @@ public class EvrakNotTest extends BaseTest {
         evrak.click();
         notlar.notlariKontolEt(newNotesGenel);
         imzaBekleyenlerPage.evrakImzala().islemMesaji().basariliOlmali();
-        new IslemMesajlari().basariliOlmali();
     }
 
     @Test(enabled = true, description = "TC2162: Not İzleme - Evrak Notunun Postalanacak Evraklar ve Postananlar ekranlarında izlenmesi"
-            ,dependsOnMethods = {"tc2160"})
+//            ,dependsOnMethods = {"tc2160"}
+            )
     public void tc2162() throws Exception {
         PostalanacakEvraklarPage postalanacakEvraklarPage = new PostalanacakEvraklarPage();
         EvrakOnizleme.Notlari notlar = new EvrakOnizleme().new Notlari();
         UstYazi ustYazi = new UstYazi();
         String konu = "TC2162_" + getSysDate();
+        System.out.println("Konu: " + konu);
 
-        String[][] notes = {{"Genel", "Açıklama1", "", ""}
-                , {"Kişisel", "Açıklama2", "", ""}
-                , {"Genel", "Açıklama3", "", ""}};
+        String[][] notes = {{"Genel", "Açıklama1", "", ""}, {"Kişisel", "Açıklama2", "", ""}, {"Genel", "Açıklama3", "", ""}};
 
-        evrakOlusturVeImzala(konu, notes);
+        login(user6);
+        evrakOlusturVeImzala(user6, konu, notes);
 
         //clearCookies();
         login(user2);
@@ -341,28 +343,29 @@ public class EvrakNotTest extends BaseTest {
                 .findRowsWith(Condition.text(konu)).shouldHaveSize(1).first();
         evrak.click();
 
-        String[][] genelNotes = {{"Genel", "Açıklama1", "", ""}
-                , {"Genel", "Açıklama3", "", ""}};
+        String[][] genelNotes = {{"Genel", "Açıklama1", "", ""}, {"Genel", "Açıklama3", "", ""}};
         notlar.notlariKontolEtLogoVeRenk(genelNotes, "tccbLogo.png");
-        notlar.getSonrakiButton().shouldHave(cssClass("ui-state-disabled"));
-        notlar.evrakNotlariDialoguKapat();
 
         postalanacakEvraklarPage.evrakPostala()
                 .gidisSekli("E-Posta")
                 .postalacanakEposta("test@test.com")
                 .postalamaAciklama(konu);
-        clickJs($("#mainPreviewForm\\:postalaButton_id"));
-        $(byText("Belge elektronik imzalı değil! Evrakı postalamak üzeresiniz. Devam etmek istiyor musunuz?")).shouldBe(visible);
-        $("#mainPreviewForm\\:postalaDogrulaDialogForm\\:evetButton_id").click();
+        postala();
         postalanacakEvraklarPage.islemMesaji().basariliOlmali();
 
         PostalananlarPage postalananlarPage = new PostalananlarPage();
         evrak = postalananlarPage.openPage().filter()
-                .findRowsWith(Condition.text(konu)).shouldHaveSize(1).first();
+                .findRowsWithToday(Condition.text(konu)).shouldHaveSize(1).first();
         evrak.click();
         notlar.notlariKontolEtLogoVeRenk(genelNotes, "tccbLogo.png");
-        notlar.getSonrakiButton().shouldHave(cssClass("ui-state-disabled"));
-        notlar.evrakNotlariDialoguKapat();
+    }
+
+    @Step("Postala")
+    public EvrakNotTest postala(){
+        clickJs($("#mainPreviewForm\\:postalaButton_id"));
+        $(byText("Belge elektronik imzalı değil! Evrakı postalamak üzeresiniz. Devam etmek istiyor musunuz?")).shouldBe(visible);
+        $("#mainPreviewForm\\:postalaDogrulaDialogForm\\:evetButton_id").click();
+        return this;
     }
 
     /**
@@ -935,17 +938,17 @@ public class EvrakNotTest extends BaseTest {
                     sonrakiNot();
                 }*/
                 getSonrakiButton().shouldHave(cssClass("ui-state-disabled"));
-                notlar.evrakNotlariDialoguKapat();
+                evrakNotlariDialoguKapat();
                 return this;
             }
         }
     }
 
     @Step("Evrak Oluştur")
-    public void evrakOlusturVeImzala(String konu, String[][] notes) throws InterruptedException {
+    public void evrakOlusturVeImzala(User user, String konu, String[][] notes) throws InterruptedException {
         EvrakOlusturPage evrakOlusturPage = new EvrakOlusturPage();
         EvrakNot evrakNot = new EvrakNot();
-        login(user1);
+
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
@@ -955,7 +958,7 @@ public class EvrakNotTest extends BaseTest {
                 .evrakTuruSec("Resmi Yazışma")
                 .onayAkisiKullanicilariTemizle()
                 .onayAkisiEkle()
-                .onayAkisiKullaniciTipiSec(user1.getName(), "İmzalama")
+                .onayAkisiKullaniciTipiSec(user.getName(), "İmzalama")
                 .onayAkisiKullan();
 
         EvrakOlusturPage.EditorTab editorTab = evrakOlusturPage
@@ -964,7 +967,7 @@ public class EvrakNotTest extends BaseTest {
                 .editorEvrakGeregiSec("YAZILIM GELİ");
 
         for (String[] note : notes) {
-            SelenideElement n = evrakNot.notOlustur(user1.getName(), note[0], note[1]);
+            SelenideElement n = evrakNot.notOlustur(user.getName(), note[0], note[1]);
             String t = n.text();
             note[2] = getDateFromText(t);
             note[3] = getTimeFromText(t);
