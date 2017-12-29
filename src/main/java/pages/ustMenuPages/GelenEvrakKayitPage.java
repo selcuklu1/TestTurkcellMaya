@@ -686,7 +686,7 @@ public class GelenEvrakKayitPage extends MainPage {
     }
 
     public GelenEvrakKayitPage benzerKayit() {
-       // boolean evrak = $("evetButtonBenzerKaydet").shouldBe(Condition.visible);
+        //boolean evrak = $("evetButtonBenzerKaydet").shouldBe(Condition.visible);
        // if ( evrak == true)
         $(By.id("evetButtonBenzerKaydet")).pressEnter();
         return this;
