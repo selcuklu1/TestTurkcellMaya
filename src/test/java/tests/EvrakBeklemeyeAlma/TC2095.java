@@ -27,10 +27,10 @@ import static com.codeborne.selenide.Selenide.*;
 @Feature("Evrakı Beklemeye Alma")
 public class TC2095 extends BaseTest {
 
-    User user1 = new User("user1", "123", "User1 TEST");
+//    User user1 = new User("user1", "123", "User1 TEST");
+    User user1 = new User("optiim", "123", "Optiim TEST");
     User ztekin = new User("ztekin", "123", "Zübeyde TEKİN");
     Filtreler filtrelerPage = new Filtreler();
-
 
 
     @Severity(SeverityLevel.CRITICAL)
@@ -49,7 +49,7 @@ public class TC2095 extends BaseTest {
         BeklemeyeAlinanlarPage beklemeyeAlinanlarPage = new BeklemeyeAlinanlarPage().openPage();
         dokumaniAraVeSec(konu);
         beklemeyeAlNotVisible();
-        imzala();
+        beklemeyeAlinanlarPage.evrakImzala();
         beklemeyeAlinanlarPage.islemMesaji().basariliOlmali();
 
         ImzaladiklarimPage imzaladiklarimPage = new ImzaladiklarimPage().openPage();
@@ -201,46 +201,5 @@ public class TC2095 extends BaseTest {
 
         log.info("Oluşturan dokümanın konu: " + konu);
         return konu;
-    }
-
-    @Step("İmzala butonu ara")
-    public SelenideElement imzalaButton(){
-        return $x("//*[text()='İmzala']/ancestor::tbody[1]//button");
-    }
-
-    @Step("İmzala butona tıkla")
-    public TC2095 imzalaButonaTikla(){
-        imzalaButton().click();
-        return this;
-    }
-
-    @Step("s-İmzla radio butonu ara")
-    public SelenideElement sImzalaRadio(){
-        return $("#imzalaForm\\:imzalaRadio .ui-radiobutton-box");
-    }
-
-    @Step("s-İmzla seç")
-    public TC2095 sImzalaRadioSec(){
-        sImzalaRadio().shouldBe(visible).click();
-        return this;
-    }
-
-    @Step("İmzala")
-    private void imzala() {
-        imzalaButonaTikla();
-        sImzalaRadioSec();
-//        clickJs($("#imzalaForm\\:imzalaRadio").find(By.tagName("input")));
-        for (int i = 0; i < Configuration.timeout/1000; i++) {
-            sleep(1000);
-            if ($("#imzalaForm\\:sayisalImzaConfirmDialogOpener").is(visible)){
-                $("#imzalaForm\\:sayisalImzaConfirmDialogOpener").click();
-                clickJs($("#imzalaForm\\:sayisalImzaConfirmForm\\:sayisalImzaEvetButton"));
-                break;
-            }
-            else{
-                $("#imzalaForm\\:imzalaButton").click();
-                break;
-            }
-        }
     }
 }

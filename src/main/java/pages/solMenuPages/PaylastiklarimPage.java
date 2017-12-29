@@ -21,7 +21,7 @@ public class PaylastiklarimPage extends MainPage {
 
 
     ElementsCollection tablePaylastiklarim = $$("[id='mainInboxForm:inboxDataTable_data'] tr[role='row']");
-    ElementsCollection evrakSecTablar = $$("[id='mainPreviewForm:evrakOnizlemeTab'] ul li");
+    ElementsCollection evrakSecTablar = $$("[id='mainPreviewForm:evrakOnizlemeTab'] ul li a");
     SelenideElement btnPaylasTab = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:4:cmdbutton"));
     SelenideElement txtKisi = $(By.id("mainPreviewForm:evrakPaylasKisiLov:LovText"));
     SelenideElement txtAciklama = $(By.id("mainPreviewForm:evrakPaylasAciklama"));

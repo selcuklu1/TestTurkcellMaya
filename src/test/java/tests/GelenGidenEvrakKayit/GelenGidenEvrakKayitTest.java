@@ -56,14 +56,17 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         login("optiim", "123");
 //        login("ztekin", "123");
     }
-
+public  String getDocPath1()
+{
+    return "C:\\TestAutomation\\BelgenetFTA\\documents\\";
+}
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC0321: Üstyazı ek ve ilgi eklenerek gelen evrak kaydı")
+    @Test(enabled = true,priority = 0, description = "TC0321: Üstyazı ek ve ilgi eklenerek gelen evrak kaydı")
     public void TC0321() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
-        String ustYaziPath = "C:\\TestAutomation\\BelgenetFTA\\documents\\pdf.pdf";
-        String excelPath = "C:\\TestAutomation\\BelgenetFTA\\documents\\test.xlsx";
+        String ustYaziPath = getDocPath1()+"pdf.pdf";
+        String excelPath = getDocPath1()+"test.xlsx";
         String ustYaziAdi = "pdf.pdf";
         String excelAdi = "test.xlsx";
         String konu = "Test " + getSysDate();
@@ -112,11 +115,11 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = false, description = "TC2163 : Kaydedilen gelen evrakın güncellenmesi")
+    @Test(enabled = true, priority = 1, description = "TC2163 : Kaydedilen gelen evrakın güncellenmesi")
     public void TC2163() throws InterruptedException {
 
         String evrakTuru = "Dilekçe";
-        String ustYaziPath = "C:\\TestAutomation\\BelgenetFTA\\documents\\Otomasyon.pdf";
+        String ustYaziPath = getDocPath1() + "Otomasyon.pdf";
         String ustYaziAdi = "Otomasyon.pdf";
         String basariMesaji = "İşlem başarılıdır!";
         String aciklama = "Test Otomasyon";
@@ -161,15 +164,13 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
         kaydedilenGelenEvraklarPage
                 .openPage()
-                .filter().findRowsWith(Condition.text(konu))
-                .shouldHaveSize(1);
-
-        gelenEvrakKayitPage
+                .tabloEvrakNoileEvrakKontrolu(evrakNO321)
+                .tabloEvrakNoileIcerikSec(evrakNO321)
                 .guncellenenAlanKontrolleri(evrakTarihi, evrakTuru, gizlilikDerecesi);
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, priority = 3,description = "TC0328 : Gelen evrak kayıt ekranından havale")
+    @Test(enabled = true, priority = 2,description = "TC0328 : Gelen evrak kayıt ekranından havale")
     public void TC0328() throws InterruptedException {
 
         String birim = "OPTİİM BİRİM";
@@ -272,8 +273,8 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
         String birim = "OPTİİM BİRİM11";
 
-        String pathToFilePdf = "C:\\TestAutomation\\BelgenetFTA\\documents\\TestOtomasyon.msg";
-        String pathToFileExcel = "C:\\TestAutomation\\BelgenetFTA\\documents\\test.xlsx";
+        String pathToFilePdf = getDocPath1()+"TestOtomasyon.msg";
+        String pathToFileExcel = getDocPath1()+"test.xlsx";
         String ustYaziAdi = "TestOtomasyon.msg";
         String konu = "Test " + getSysDate();
 
@@ -326,8 +327,8 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         String message = "Zorunlu alanları doldurunuz";
         String message2 = "Dosya büyüklüğü uygun değildir.";
         String evrakTuru1 = "A";
-        String path = "C:\\Users\\Emre_Sencan\\Pictures\\tsunami_posteroct08.pdf";
-        String ustYaziPath = "C:\\TestAutomation\\BelgenetFTA\\documents\\pdf.pdf";
+//        String path = "C:\\Users\\Emre_Sencan\\Pictures\\tsunami_posteroct08.pdf";
+        String ustYaziPath = getDocPath1()+"pdf.pdf";
         String birim = "OPTİİM BİRİM";
 
         gelenEvrakKayitPage
@@ -384,8 +385,8 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     public void TC1340() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
-        String ustYaziPath = "C:\\TestAutomation\\BelgenetFTA\\documents\\pdf.pdf";
-        String excelPath = "C:\\TestAutomation\\BelgenetFTA\\documents\\test.xlsx";
+        String ustYaziPath = getDocPath1()+"pdf.pdf";
+        String excelPath = getDocPath1()+"test.xlsx";
         String ustYaziAdi = "pdf.pdf";
         String excelAdi = "test.xlsx";
         String miatTarihi = getSysDateForKis();

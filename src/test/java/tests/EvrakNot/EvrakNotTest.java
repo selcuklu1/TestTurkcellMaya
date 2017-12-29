@@ -1,16 +1,18 @@
 package tests.EvrakNot;
 
-import com.codeborne.selenide.*;
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.SelenideElement;
 import common.BaseTest;
 import data.User;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
+import pages.MainPage;
 import pages.pageComponents.Filtreler;
 import pages.pageComponents.IslemMesajlari;
 import pages.pageComponents.TextEditor;
@@ -79,8 +81,6 @@ public class EvrakNotTest extends BaseTest {
                 , {"Kişisel", "Açıklama2", "", ""}
                 , {"Genel", "Açıklama3", "", ""}};
         evrakOlusturVeImzala(konu, notes);
-
-
     }
 
     @Test(enabled = true, description = "TC2091: Not Oluşturma - Evrak Oluşturma da Kişisel ve Genel Not oluşturma")
@@ -185,7 +185,8 @@ public class EvrakNotTest extends BaseTest {
         logout();
     }
 
-    @Test(enabled = true, description = "TC2155: Not İzleme - Evrak Notunun Taslak evraklarda izlenmesi")//, dependsOnMethods = {"tc2091"})
+    @Test(enabled = true, description = "TC2155: Not İzleme - Evrak Notunun Taslak evraklarda izlenmesi")
+//, dependsOnMethods = {"tc2091"})
     public void tc2155() throws InterruptedException {
         EvrakOlusturPage page = new EvrakOlusturPage();
         TaslakEvraklarPage taslakEvraklarPage = new TaslakEvraklarPage();
@@ -195,14 +196,7 @@ public class EvrakNotTest extends BaseTest {
         login(user1);
         page.openPage().editorTabAc().getEditor().type("Editor Text");
         page.editorTabAc();
-        for (String[] newNote : newNotes) {
-            SelenideElement note = evrakNot.notOlustur(user1.getName(), newNote[0], newNote[1]);
-            String t = note.text();
-            newNote[2] = getDateFromText(t);
-            newNote[3] = getTimeFromText(t);
-            //Önemli koşarken 1 saniye fark oldu
-            newNote[3] = newNote[3].substring(0, newNote[3].length()-2);
-        }
+        newNotes = evrakNot.notlariOlustur(newNotes);
         takeScreenshot();
 
         //------------------------------------
@@ -213,34 +207,21 @@ public class EvrakNotTest extends BaseTest {
 
         //------------------------------------
         taslakEvraklarPage.openPage();
-//        SelenideElement evrak = taslakEvraklarPage.filter().findRowsWith(text(konu)).shouldHaveSize(1).first();
         SelenideElement evrak = evragiBul(konu);
-//        icerikGoster = evrak.$(page.filter().icerikGoster());
         evrak.click();
-        notlariKontrolEt(newNotes);
+        notlar.notlariKontolEtLogoVeRenk(newNotes, "tccbLogo.png");
 
-        notlar.evrakNotlariDialoguKapat();
 
-        ustYazi.evrakNotlariTabiAc();
-        for (int i = 0; i < newNotes.length; i++) {
-            SelenideElement n = ustYazi.olusturulanNot(newNotes[i][1]).shouldHaveSize(1).first();
-            n.$(ustYazi.updateButton).shouldBe(visible);
-            n.$(ustYazi.deleteButton).shouldBe(visible);
-        }
+        ustYazi.evrakNotlariTabiAc().notlariKontolEt(newNotes);
         takeScreenshot();
 
-//        icerikGoster.click();
         evrak.$(page.filter().icerikGoster()).click();
-        for (int i = 0; i < newNotes.length; i++) {
-            evrakNot.olusturulanNot(newNotes[i][1]).shouldHaveSize(1);
-        }
-        takeScreenshot();
+        evrakNot.notlariKontrolEt(newNotes);
         logout();
-        Selenide.close();
     }
 
     @Test(enabled = true, description = "TC2160: Not İzleme - Evrak Notunun Paraf bekleneler, Parafladıklarım, İmza Bekleyenler ve İmzaladıklarım ekranlarında izlenmesi", dependsOnMethods = {"tc2155"})
-    public void tc2160() throws Exception {
+    public void tc2160() {
         UstYazi ustYazi = new UstYazi();
         TaslakEvraklarPage taslakEvraklarPage = new TaslakEvraklarPage();
         ParafladiklarimPage parafladiklarimPage = new ParafladiklarimPage();
@@ -249,30 +230,20 @@ public class EvrakNotTest extends BaseTest {
         login(user1);
         taslakEvraklarPage.openPage();
         System.out.println("Konu: " + konu);
-        taslakEvraklarPage.filter().findRowsWith(text(konu)).shouldHaveSize(1).first().click();
-        SelenideElement paraflaButon = $x("//*[text()='Parafla']/ancestor::tbody[1]//button");
-        paraflaButon.click();
-        SelenideElement sImzaCheckbox = $("div[id='imzalaForm:imzalaRadio']");
-        sImzaCheckbox.click();
-        clickJs($("#imzalaForm\\:imzalaRadio").find(By.tagName("input")));
-        $("#imzalaForm\\:imzalaButton").click();
-        taslakEvraklarPage.islemMesaji().basariliOlmali();
+        evragiBul(konu).click();
+
+        taslakEvraklarPage.parafla().islemMesaji().basariliOlmali();
 
         parafladiklarimPage.openPage();
-//        SelenideElement evrak = parafladiklarimPage.filter().findRowsWith(text(konu)).shouldHaveSize(1).first();
         SelenideElement evrak = evrak = evragiBul(konu);
         evrak.click();
-        notlariKontrolEt(newNotes);
+        notlar.notlariKontolEtLogoVeRenk(newNotes, "tccbLogo.png");
         notlar.evrakNotlariDialoguKapat();
 
-        ustYazi.evrakNotlariTabiAc();
-        for (int i = 0; i < newNotes.length; i++) {
-            SelenideElement n = ustYazi.olusturulanNot(newNotes[i][1]).shouldHaveSize(1).first();
-            n.$(ustYazi.updateButton).shouldBe(visible);
-            n.$(ustYazi.deleteButton).shouldBe(visible);
-        }
+        ustYazi.evrakNotlariTabiAc().notlariKontolEt(newNotes);
         takeScreenshot();
 
+//////////////////////
         SelenideElement icerikGoster = evrak.$(imzaBekleyenlerPage.filter().icerikGoster());
         icerikGoster.click();
         $("button .evrakNot").click();
@@ -284,169 +255,74 @@ public class EvrakNotTest extends BaseTest {
             rows.get(i).shouldHave(text(newNotes[i][1]));
         }
         takeScreenshot();
+///////////////////////
+
         logout();
         clearCookies();
-//        Selenide.close();
         login(user2);
         imzaBekleyenlerPage.openPage();
-//        evrak = imzaBekleyenlerPage.filter().findRowsWith(text(konu)).shouldHaveSize(1).first();
         evrak = evragiBul(konu);
         evrak.click();
         //Sadece Genel notları olmalı, kişisel olmamalı
         ArrayList<String[]> newNotesGenel = new ArrayList<String[]>();
         newNotesGenel.add(newNotes[2]);
         newNotesGenel.add(newNotes[0]);
-        for (String[] n : newNotesGenel) {
-            notlar.getNote()
-                    .shouldBe(visible)
-                    .shouldHave(text(n[0])
-                            , text(n[1])
-                            , text(n[2])
-                            , text(n[3]));
-//            if (notlar.getSonrakiButton().has(cssClass("ui-state-disabled")))
-//                break;
-            notlar.sonrakiNot();
-        }
-        notlar.getSonrakiButton().shouldHave(cssClass("ui-state-disabled"));
-        notlar.evrakNotlariDialoguKapat();
+
+        notlar.notlariKontolEt(newNotesGenel);
         takeScreenshot();
 
         icerikGoster = evrak.$(imzaBekleyenlerPage.filter().icerikGoster());
         icerikGoster.click();
         evrakNot.getCreatedNotes().shouldHaveSize(2);
-        evrakNot.olusturulanNot(newNotesGenel.get(0)[1]).shouldHaveSize(1);
-        evrakNot.olusturulanNot(newNotesGenel.get(1)[1]).shouldHaveSize(1);
+        evrakNot.notlariKontrolEt(newNotesGenel);
+
         newNotesGenel.add(0, new String[]{"Genel", "Açıklama5", "", ""});
         evrakNot.notOlustur(user2.getName(), newNotesGenel.get(0)[0], newNotesGenel.get(0)[1]);
         String t = new TextEditor().type(newNotesGenel.get(0)[1]).getText();
         Assert.assertTrue(t.contains(newNotesGenel.get(0)[1]), "Evrakım metin alanında " + newNotesGenel.get(0)[1] + " olmalı");
-        $("button .kaydet").click();
-        $("#kaydetConfirmForm\\:kaydetEvetButton").click();
-        new IslemMesajlari().basariliOlmali();
-
-        $("button .iadeEt").click();
-        $("#inboxItemInfoForm\\:notTextArea_id").setValue("İade notu");
-        $("#inboxItemInfoForm\\:iadeEtButton_id").click();
-        new IslemMesajlari().basariliOlmali();
+        imzaBekleyenlerPage.evrakKaydet().islemMesaji().basariliOlmali();
+        imzaBekleyenlerPage.evrakIadeEt("İade notu").islemMesaji().basariliOlmali();
 
         logout();
         clearCookies();
-//        Selenide.close();
         login(user1);
         ParafBekleyenlerPage parafBekleyenlerPage = new ParafBekleyenlerPage();
         parafBekleyenlerPage.openPage();
 //        evrak = parafBekleyenlerPage.filter().findRowsWith(text(konu)).shouldHaveSize(1).first();
         evrak = evragiBul(konu);
         evrak.click();
-        for (String[] n : newNotesGenel) {
-            notlar.getNote()
-                    .shouldBe(visible)
-                    .shouldHave(text(n[0])
-                            , text(n[1])
-                            , text(n[2])
-                            , text(n[3]));
-            notlar.sonrakiNot();
-        }
-        notlar.getSonrakiButton().shouldHave(cssClass("ui-state-disabled"));
-        notlar.evrakNotlariDialoguKapat();
+
+        notlar.notlariKontolEt(newNotesGenel);
 
         ustYazi.evrakNotlariTabiAc();
         ustYazi.getCreatedNotes().shouldHaveSize(newNotesGenel.size());
-        for (String[] n1 : newNotesGenel) {
-            SelenideElement n2 = ustYazi.olusturulanNot(n1[1]).shouldHaveSize(1).first();
-            n2.shouldBe(visible)
-                    .shouldHave(text(n1[0])
-                            , text(n1[1])
-                            , text(n1[2])
-                            , text(n1[3]));
-            if (n1[1].equals(newNotesGenel.get(0)[1])) {
-                n2.$(ustYazi.updateButton).shouldNotBe(exist);
-                n2.$(ustYazi.deleteButton).shouldNotBe(exist);
-            } else {
-                n2.$(ustYazi.updateButton).shouldBe(visible);
-                n2.$(ustYazi.deleteButton).shouldBe(visible);
-            }
-        }
+        ustYazi.notlariVeButonlariKontolEt(newNotesGenel, newNotesGenel.get(0)[1]);
 
         //Delete note
         int lastIndex = newNotesGenel.size() - 1;
-        SelenideElement n = ustYazi.olusturulanNot(newNotesGenel.get(lastIndex)[1]).shouldHaveSize(1).first();
-        n.$(ustYazi.deleteButton).click();
-        ustYazi.getCreatedNotes().shouldHaveSize(newNotesGenel.size() - 1);
-        for (String[] n1 : newNotesGenel) {
-
-            if (n1[1].equals(newNotesGenel.get(lastIndex)[1])) {
-                ustYazi.olusturulanNot(n1[1]).shouldHaveSize(0);
-            } else {
-                SelenideElement n2 = ustYazi.olusturulanNot(n1[1]).shouldHaveSize(1).first();
-                n2.shouldBe(visible)
-                        .shouldHave(text(n1[0])
-                                , text(n1[1])
-                                , text(n1[2])
-                                , text(n1[3]));
-            }
-        }
+        ustYazi.notuSil(newNotesGenel, lastIndex);
         newNotesGenel.remove(lastIndex);
 
         //Güncelleme
-        n = ustYazi.olusturulanNot(newNotesGenel.get(1)[1]).shouldHaveSize(1).first();
-        n.$(ustYazi.updateButton).shouldBe(visible).click();
-        ustYazi.aciklamaAlaniDegitir("Değiştirilen açıklama");
-        ustYazi.kaydet();
-        newNotesGenel.get(1)[1] = "Değiştirilen açıklama";
-        for (String[] n1 : newNotesGenel) {
-            SelenideElement n2 = ustYazi.olusturulanNot(n1[1]).shouldHaveSize(1).first();
-            n2.shouldBe(visible)
-                    .shouldHave(text(n1[0])
-                            , text(n1[1])
-                            , text(n1[2])
-                            , text(n1[3]));
-        }
-
+        String yeniAciklama = "Güncellene açıklama";
+        ustYazi.notuGuncelle(newNotesGenel, 1, yeniAciklama);
 
         //Parafla
-        paraflaButon.click();
-        sImzaCheckbox.click();
-        clickJs($("#imzalaForm\\:imzalaRadio").find(By.tagName("input")));
-        $("#imzalaForm\\:imzalaButton").click();
-        new IslemMesajlari().basariliOlmali();
+        ustYazi.parafla().islemMesaji().basariliOlmali();
 
-        //
-//        Selenide.close();
         logout();
         clearCookies();
         login(user2);
         imzaBekleyenlerPage.openPage();
-//        evrak = imzaBekleyenlerPage.filter().findRowsWith(text(konu)).shouldHaveSize(1).first();
         evrak = evragiBul(konu);
         evrak.click();
-        for (String[] n1 : newNotesGenel) {
-            notlar.getNote()
-                    .shouldBe(visible)
-                    .shouldHave(text(n1[0])
-                            , text(n1[1])
-                            , text(n1[2])
-                            , text(n1[3]));
-            notlar.sonrakiNot();
-        }
-        notlar.getSonrakiButton().shouldHave(cssClass("ui-state-disabled"));
-        notlar.evrakNotlariDialoguKapat();
-        $x("//*[text()='İmzala']/ancestor::tbody[1]//button").click();
-        sImzaCheckbox.click();
-        clickJs($("#imzalaForm\\:imzalaRadio").find(By.tagName("input")));
-        $("#imzalaForm\\:sayisalImzaConfirmDialogOpener").click();
-
-        $$("#imzalaForm\\:sayisalImzaConfirmForm\\:sayisalImzaEvetButton")
-                .shouldHave(sizeGreaterThan(0))
-                .filterBy(visible)
-                .last()
-                .click();
+        notlar.notlariKontolEt(newNotesGenel);
+        imzaBekleyenlerPage.imzala().islemMesaji().basariliOlmali();
         new IslemMesajlari().basariliOlmali();
-        logout();
-        clearCookies();
     }
 
-    @Test(enabled = true, description = "TC2162: Not İzleme - Evrak Notunun Postalanacak Evraklar ve Postananlar ekranlarında izlenmesi")
+    @Test(enabled = true, description = "TC2162: Not İzleme - Evrak Notunun Postalanacak Evraklar ve Postananlar ekranlarında izlenmesi"
+            ,dependsOnMethods = {"tc2160"})
     public void tc2162() throws Exception {
         PostalanacakEvraklarPage postalanacakEvraklarPage = new PostalanacakEvraklarPage();
         EvrakOnizleme.Notlari notlar = new EvrakOnizleme().new Notlari();
@@ -459,7 +335,6 @@ public class EvrakNotTest extends BaseTest {
 
         evrakOlusturVeImzala(konu, notes);
 
-//        Selenide.close();
         clearCookies();
         login(user2);
         SelenideElement evrak = postalanacakEvraklarPage.openPage().filter()
@@ -468,32 +343,9 @@ public class EvrakNotTest extends BaseTest {
 
         String[][] genelNotes = {{"Genel", "Açıklama1", "", ""}
                 , {"Genel", "Açıklama3", "", ""}};
-        notlariKontrolEt(genelNotes);
+        notlar.notlariKontolEtLogoVeRenk(genelNotes, "tccbLogo.png");
         notlar.getSonrakiButton().shouldHave(cssClass("ui-state-disabled"));
         notlar.evrakNotlariDialoguKapat();
-
-        /*ustYazi.evrakNotlariTabiAc();
-        ustYazi.getCreatedNotes().shouldHaveSize(genelNotes.length);
-        for (String[] n1 : genelNotes) {
-            SelenideElement n2 = ustYazi.olusturulanNot(n1[1]).shouldHaveSize(1).first();
-            n2.shouldBe(visible)
-                    .shouldHave(text(n1[0])
-                            , text(n1[1])
-                            , text(n1[2])
-                            , text(n1[3]));
-            n2.$(ustYazi.updateButton).shouldNotBe(exist);
-            n2.$(ustYazi.deleteButton).shouldNotBe(exist);
-        }*/
-        /*SelenideElement icerikGoster = evrak.$(postalanacakEvraklarPage.filter().icerikGoster());
-        icerikGoster.click();
-        $("button .evrakNot").click();
-        ElementsCollection rows = $$("#inboxItemInfoForm\\:kisiselNotEkleDataTableId_data > tr");
-        rows.shouldHaveSize(2);
-        for (int i = 0; i < genelNotes.length; i++) {
-            rows.get(i).shouldHave(text(genelNotes[i][1]));
-            rows.get(i).$("button  .update-icon").shouldNotBe(exist);
-            rows.get(i).$("button  .delete-icon").shouldNotBe(exist);
-        }*/
 
         postalanacakEvraklarPage.evrakPostala()
                 .gidisSekli("E-Posta")
@@ -508,10 +360,9 @@ public class EvrakNotTest extends BaseTest {
         evrak = postalananlarPage.openPage().filter()
                 .findRowsWith(Condition.text(konu)).shouldHaveSize(1).first();
         evrak.click();
-        notlariKontrolEt(genelNotes);
+        notlar.notlariKontolEtLogoVeRenk(genelNotes, "tccbLogo.png");
         notlar.getSonrakiButton().shouldHave(cssClass("ui-state-disabled"));
         notlar.evrakNotlariDialoguKapat();
-        clearCookies();
     }
 
     /**
@@ -523,7 +374,7 @@ public class EvrakNotTest extends BaseTest {
         SelenideElement notEkleDialog = $("div[id*='notEkleDialog']");
         BelgenetElement notTipi = comboBox("div[id*='notEkleDialog'] label[class~='ui-selectonemenu-label']");
         ElementsCollection olusturulanNotları = $$("div[id*='evrakNotlariTable']>div");
-
+        SelenideElement notesDiv = $("div[id*='evrakNotlariTable']");
 
         @Step("Not Ekle butona basılır, not ekleme ekranı gelmeli")
         public EvrakNot notEkle() {
@@ -608,8 +459,8 @@ public class EvrakNotTest extends BaseTest {
         }
 
         public ElementsCollection getCreatedNotes() {
-            olusturulanNotları.shouldHave(sizeGreaterThan(0)).last().shouldBe(visible);
-            return olusturulanNotları;
+            $$("div[id*='evrakNotlariTable']>div").shouldHave(sizeGreaterThan(0)).last().shouldBe(visible);
+            return $$("div[id*='evrakNotlariTable']>div");
         }
 
         @Step("Oluşturulan notu bul")
@@ -620,6 +471,7 @@ public class EvrakNotTest extends BaseTest {
 
         @Step("Oluşturulan notu bul")
         public ElementsCollection olusturulanNot(String olusturan, String notTipi, String aciklamaText) {
+            notesDiv.shouldHave(text(aciklamaText));
             ElementsCollection rows = getCreatedNotes();
             return rows
                     .filterBy(text(olusturan))
@@ -629,12 +481,17 @@ public class EvrakNotTest extends BaseTest {
 
         @Step("Oluşturulan notu bul")
         public ElementsCollection olusturulanNot(String olusturan, String aciklamaText, String date, String time) {
+            notesDiv.shouldBe(visible).shouldHave(text(aciklamaText));
             ElementsCollection rows = getCreatedNotes();
-            return rows
-                    .filterBy(text(olusturan))
-                    .filterBy(text(aciklamaText))
-                    .filterBy(text(date))
-                    .filterBy(text(time));
+            for (int i = 0; i < 5; i++) {
+                rows = getCreatedNotes().filterBy(text(olusturan)).filterBy(text(aciklamaText))
+                        .filterBy(text(date)).filterBy(text(time));
+                if (rows.size() > 0)
+                    break;
+                sleep(1000);
+            }
+
+            return rows;
         }
 
         @Step("Oluşturulan notu bul")
@@ -671,18 +528,56 @@ public class EvrakNotTest extends BaseTest {
                     .notTipiSecenekDegerleriKontrolu("Seçiniz", "Genel", "Kişisel")
                     .notTipiSec(notTipi)
                     .kaydet();
+            notEkleDialog.should(disappear);
+            sleep(2000);
+//            Supplier<byte[]> screenshot = () -> takeScreenshot();
+//            Allure.addByteAttachmentAsync("Oluşturan not", "image/png", () -> takeScreenshot());
+            takeScreenshot();
 
             String date = DateTimeFormatter.ofPattern("dd.MM.yyyy").format(LocalDateTime.now());
-            String time = DateTimeFormatter.ofPattern("HH:mm").format(LocalDateTime.now());
+            String time = DateTimeFormatter.ofPattern("HH").format(LocalDateTime.now());
+//            String time = DateTimeFormatter.ofPattern("HH:mm").format(LocalDateTime.now());
             return evrakNot.olusturulanNot(olusturanAdSoyad, aciklama, date, time).shouldHaveSize(1).first();
         }
 
+        @Step("Notları kontrol et")
+        public EvrakNot notlariKontrolEt(String[][] notes) {
+            for (int i = 0; i < notes.length; i++) {
+                olusturulanNot(notes[i][1]).shouldHaveSize(1);
+            }
+            return this;
+        }
+
+        @Step("Notları kontrol et")
+        public EvrakNot notlariKontrolEt(ArrayList<String[]> notes) {
+            for (int i = 0; i < notes.size(); i++) {
+                olusturulanNot(notes.get(i)[1]).shouldHaveSize(1);
+            }
+            return this;
+        }
+
+        /**
+         * @param notes [][4] 1.oluşturan 2.açıklama,3.tarih,4.saat
+         * @return notes with full details
+         */
+        @Step("Notları oluştur")
+        public String[][] notlariOlustur(String[][] notes) {
+            for (String[] note : notes) {
+                SelenideElement createdNote = notOlustur(user1.getName(), note[0], note[1]);
+                String text = createdNote.text();
+                note[2] = getDateFromText(text);
+                note[3] = getTimeFromText(text);
+                //Önemli koşarken 1 saniye fark oldu
+                note[3] = note[3].substring(0, note[3].length() - 2);
+            }
+            return notes;
+        }
     }
 
     /**
      * Bilgiler Tab Üst yazıyı görüntüle
      */
-    class UstYazi {
+    class UstYazi extends MainPage {
 
         SelenideElement notEkle = $("button[id$='kisiselNotEkleDataTableId:kisiselNotEkleId']");
         SelenideElement noteEkleDialog = $("div[id='evrakKisiselNotDialogFormId:evrakKisiselNotDialogId']");
@@ -733,7 +628,8 @@ public class EvrakNotTest extends BaseTest {
             noteEkleDialog.should(disappear);
 
             String date = DateTimeFormatter.ofPattern("dd.MM.yyyy").format(LocalDateTime.now());
-            String time = DateTimeFormatter.ofPattern("HH:mm").format(LocalDateTime.now());
+            String time = DateTimeFormatter.ofPattern("HH").format(LocalDateTime.now());
+//            String time = DateTimeFormatter.ofPattern("HH:mm").format(LocalDateTime.now());
             return olusturulanNot(olusturan, notTipi, aciklama, date, time).shouldHaveSize(1).first();
         }
 
@@ -835,6 +731,62 @@ public class EvrakNotTest extends BaseTest {
             int number = Integer.parseInt(m.group());
             return number;
         }
+
+        @Step("Notları kontrol et")
+        public UstYazi notlariKontolEt(String[][] notes) {
+            for (int i = 0; i < newNotes.length; i++) {
+                SelenideElement note = olusturulanNot(notes[i][1]).shouldHaveSize(1).first();
+                note.$(updateButton).shouldBe(visible);
+                note.$(deleteButton).shouldBe(visible);
+            }
+            return this;
+        }
+
+        @Step("Notları kontrol et")
+        public UstYazi notlariVeButonlariKontolEt(ArrayList<String[]> notes, String butonlarOlmayacakNot) {
+            for (String[] note : notes) {
+                SelenideElement n = olusturulanNot(note[1]).shouldHaveSize(1).first();
+                n.shouldBe(visible).shouldHave(text(note[0]), text(note[1]), text(note[2]), text(note[3]));
+                if (note[1].equals(butonlarOlmayacakNot)) {
+                    n.$(updateButton).shouldNotBe(exist);
+                    n.$(deleteButton).shouldNotBe(exist);
+                } else {
+                    n.$(updateButton).shouldBe(visible);
+                    n.$(deleteButton).shouldBe(visible);
+                }
+            }
+            return this;
+        }
+
+        @Step("Notu sil")
+        public UstYazi notuSil(ArrayList<String[]> notes, int index) {
+            SelenideElement deleteNote = olusturulanNot(notes.get(index)[1]).shouldHaveSize(1).first();
+            deleteNote.$(deleteButton).click();
+            getCreatedNotes().shouldHaveSize(notes.size() - 1);
+            for (String[] note : notes) {
+                if (note[1].equals(notes.get(index)[1])) {
+                    olusturulanNot(note[1]).shouldHaveSize(0);
+                } else {
+                    olusturulanNot(note[1]).shouldHaveSize(1).first().shouldBe(visible)
+                            .shouldHave(text(note[0]), text(note[1]), text(note[2]), text(note[3]));
+                }
+            }
+            return this;
+        }
+
+        @Step("")
+        public UstYazi notuGuncelle(ArrayList<String[]> notes, int index, String yeniAciklama) {
+            SelenideElement note = olusturulanNot(notes.get(index)[1]).shouldHaveSize(1).first();
+            note.$(updateButton).shouldBe(visible).click();
+            aciklamaAlaniDegitir(yeniAciklama);
+            kaydet();
+            notes.get(index)[1] = yeniAciklama;
+            for (String[] n : notes) {
+                olusturulanNot(n[1]).shouldHaveSize(1).first().shouldBe(visible)
+                        .shouldHave(text(n[0]), text(n[1]), text(n[2]), text(n[3]));
+            }
+            return this;
+        }
     }
 
     /**
@@ -853,7 +805,8 @@ public class EvrakNotTest extends BaseTest {
             @Step("Evrak Notları pencereyi kapat")
             public Notlari evrakNotlariDialoguKapat() {
 //                closeDialog.click();
-                closeDialog.pressEnter();
+//                closeDialog.pressEnter();
+                clickJs(closeDialog);
                 return this;
             }
 
@@ -901,9 +854,91 @@ public class EvrakNotTest extends BaseTest {
                     src = note.$("img").attr("src");
                 return src;
             }
+
+            @Step("Notlatı kontrol et")
+            public Notlari notlariKontolEt(String[][] notes) {
+                int i = 0;
+                for (String[] note : notes) {
+                    Allure.addAttachment(String.valueOf(++i), note.toString());
+
+                    notlar.getNote()
+                            .shouldBe(visible)
+                            .shouldHave(text(note[0])
+                                    , text(note[1])
+                                    , text(note[2])
+                                    , text(note[3]));
+                    notlar.sonrakiNot();
+                }
+                notlar.getSonrakiButton().shouldHave(cssClass("ui-state-disabled"));
+                notlar.evrakNotlariDialoguKapat();
+                return this;
+            }
+
+            @Step("Notlatı kontrol et")
+            public Notlari notlariKontolEt(ArrayList<String[]> notes) {
+                int i = 0;
+                for (String[] note : notes) {
+                    Allure.addAttachment(String.valueOf(++i), note.toString());
+                    getNote()
+                            .shouldBe(visible)
+                            .shouldHave(text(note[0])
+                                    , text(note[1])
+                                    , text(note[2])
+                                    , text(note[3]));
+                    sonrakiNot();
+                }
+                getSonrakiButton().shouldHave(cssClass("ui-state-disabled"));
+                notlar.evrakNotlariDialoguKapat();
+                return this;
+            }
+
+            @Step("Notlatı kontrol et")
+            public Notlari notlariKontolEtLogoVeRenk(String[][] notes, String kurumLogo) {
+                for (int i = notes.length - 1; i >= 0 ; i--) {
+                    Allure.addAttachment(String.valueOf(i), note.toString());
+                    getNote()
+                            .shouldBe(visible)
+                            .shouldHave(text(notes[i][0])
+                                    , text(notes[i][1])
+                                    , text(notes[i][2])
+                                    , text(notes[i][3]));
+
+                    Assert.assertTrue(kurumLogosu().contains(kurumLogo), kurumLogo + " kurum logosu olmalı");
+
+                    if (notes[i][0].equals("Kişisel"))
+                        Assert.assertTrue(notlar.zeminRengiBeyaz(), "Kişisel notun arka plan beyaz");
+                    else if (notes[i][0].equals("Genel"))
+                        Assert.assertTrue(notlar.zeminRengiSari(), "Genel notun arka plan sarı");
+                    else
+                        throw new RuntimeException(notes[i][0] + " not arka palan ne beyaz ne de sarı");
+
+                    sonrakiNot();
+                }
+                /*for (String[] note : notes) {
+                    Allure.addAttachment(String.valueOf(++i), note.toString());
+                    getNote()
+                            .shouldBe(visible)
+                            .shouldHave(text(note[0])
+                                    , text(note[1])
+                                    , text(note[2])
+                                    , text(note[3]));
+
+                    Assert.assertTrue(kurumLogosu().contains(kurumLogo), kurumLogo + " kurum logosu olmalı");
+
+                    if (note[0].equals("Kişisel"))
+                        Assert.assertTrue(notlar.zeminRengiBeyaz(), "Kişisel notun arka plan beyaz");
+                    else if (note[0].equals("Genel"))
+                        Assert.assertTrue(notlar.zeminRengiSari(), "Genel notun arka plan sarı");
+                    else
+                        throw new RuntimeException(note[0] + " not arka palan ne beyaz ne de sarı");
+
+                    sonrakiNot();
+                }*/
+                getSonrakiButton().shouldHave(cssClass("ui-state-disabled"));
+                notlar.evrakNotlariDialoguKapat();
+                return this;
+            }
         }
-
-
     }
 
     @Step("Evrak Oluştur")
@@ -983,7 +1018,7 @@ public class EvrakNotTest extends BaseTest {
     }
 
     @Step("Evrak Önizlemede notları kontrol")
-    public EvrakNotTest notlariKontrolEt(String[][] notes) {
+    public EvrakNotTest notlariKontrolEt(String[][] notes, String kurumLogo, boolean renk) {
         for (int i = notes.length - 1; i > -1; i--) {
             notlar.getNote()
                     .shouldBe(visible)
@@ -991,12 +1026,12 @@ public class EvrakNotTest extends BaseTest {
                             , text(notes[i][1])
                             , text(notes[i][2])
                             , text(notes[i][3]));
-            Assert.assertTrue(notlar.kurumLogosu().contains("tccbLogo.png"), "Kurum logosu");
+            Assert.assertTrue(notlar.kurumLogosu().contains("tccbLogo.png"), "Kurum logosu olmalı");
 
             if (notes[i][0].equals("Kişisel"))
-                Assert.assertTrue(notlar.zeminRengiBeyaz(), "Arka plan beyaz");
+                Assert.assertTrue(notlar.zeminRengiBeyaz(), "Kişisel notun arka plan beyaz");
             else if (notes[i][0].equals("Genel"))
-                Assert.assertTrue(notlar.zeminRengiSari(), "Arka plan sarı");
+                Assert.assertTrue(notlar.zeminRengiSari(), "Genel notun arka plan sarı");
             else
                 throw new RuntimeException(notes[i][0] + " not arka palan ne beyaz ne de sarı");
 
@@ -1007,7 +1042,7 @@ public class EvrakNotTest extends BaseTest {
     }
 
     @Step("Evrağı bul")
-    public SelenideElement evragiBul(String konu){
+    public SelenideElement evragiBul(String konu) {
         SelenideElement evrak = new Filtreler().findRowsWith(Condition.text(konu)).shouldHaveSize(1).first();
         return evrak;
     }
