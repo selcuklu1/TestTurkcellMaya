@@ -141,7 +141,7 @@ public class GizlilikKleransiTest extends BaseTest {
         String uyariMesaj2 = "Havale etmek istediğiniz kullanıcı grubundaki Mehmet Emin YÜCEANT, Mehmet Gökhan BAYSAN, Mehmet Koray BALCIOĞLU ın kleransı yetersizdir, kleransı yeterli olmayan kullanıcılara havale edilmeyecektir !!";
         String kisi = "Can Şeker";
         String kullaniciListesi = "Optiim";
-        String konuKodu = "Diğer-TC272";
+        String konuKodu = "Diğer-TC2223";
         String geldigiYer = "Yargı / BÜYÜK HARFLERLE KURUM(G)";
         String evrakTarihi = "15.12.2017";
         String no = "123";
@@ -378,7 +378,7 @@ public class GizlilikKleransiTest extends BaseTest {
                 .yeniKayitButton();
         //TODO
 
-        login(username3, password3);
+        login("cseker", password3);
 
         teslimAlinmayiBekleyenlerPage
                 .openPage()

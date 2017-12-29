@@ -445,7 +445,7 @@ public class EvrakPaylasmaTest extends BaseTest {
 
 
     }
-
+    //TODO Can Şeker yazmıştır
     @Test(enabled = true, description = "TC1905: Evrak paylaşma yetkisi olmayan kullanıcıda evrak paylaşma kontrolü")
     public void TC1905() throws InterruptedException{
 

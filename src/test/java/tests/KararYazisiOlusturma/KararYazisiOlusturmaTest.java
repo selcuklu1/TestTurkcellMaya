@@ -88,42 +88,42 @@ public class KararYazisiOlusturmaTest extends BaseTest{
                     .bilgilerTabiAc()
                     .kararNoDoldur("")
                     .kaydetveOnaySun()
-                    .islemMesaji().beklenenMesaj(uyariMesajZorunlu);
+                    .islemMesaji().uyariOlmali(uyariMesajZorunlu);
 
             kararYazisiOlusturPage
                     .bilgilerTabiAc()
                     .kararNoDoldur(kararNo)
                     .konuKoduTemizle()
                     .kaydetveOnaySun()
-                    .islemMesaji().beklenenMesaj(uyariMesajZorunlu);
+                    .islemMesaji().uyariOlmali(uyariMesajZorunlu);
 
             kararYazisiOlusturPage
                     .bilgilerTabiAc()
                     .konuKoduDoldur(konuKodu)
                     .konuDoldur("")
                     .kaydetveOnaySun()
-                    .islemMesaji().beklenenMesaj(uyariMesajZorunlu);
+                    .islemMesaji().uyariOlmali(uyariMesajZorunlu);
 
             kararYazisiOlusturPage
                     .bilgilerTabiAc()
                     .kaldirilacakKlasorTemizle()
                     .konuKoduDoldur(konuKodu)
                     .kaydetveOnaySun()
-                    .islemMesaji().beklenenMesaj(uyariMesajZorunlu);
+                    .islemMesaji().uyariOlmali(uyariMesajZorunlu);
 
             kararYazisiOlusturPage
                     .bilgilerTabiAc()
                     .kaldirilacakKlasorlerDoldur(kaldirilicakKlasorler)
                     .toplantiNoDoldur("")
                     .kaydetveOnaySun()
-                    .islemMesaji().beklenenMesaj(uyariMesajZorunlu);
+                    .islemMesaji().uyariOlmali(uyariMesajZorunlu);
 
             kararYazisiOlusturPage
                     .bilgilerTabiAc()
                     .toplantiNoDoldur(toplantiNo)
                     .onayAkisiTemizle()
                     .kaydetveOnaySun()
-                    .islemMesaji().beklenenMesaj(uyariMesajZorunlu);
+                    .islemMesaji().uyariOlmali(uyariMesajZorunlu);
 
             kararYazisiOlusturPage
                     .bilgilerTabiAc()
