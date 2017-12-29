@@ -144,7 +144,7 @@ public class EvrakNotTest extends BaseTest {
         page.editorTabAc();
         evrakNot.olusturulanNot(user1.getName(), aciklama).shouldHaveSize(1);
         logout();
-        clearCookies();
+        //clearCookies();
     }
 
     @Test(enabled = true, description = "TC2093: Not Oluşturma - Karar Yazısı Oluşturma da Kişisel ve Genel Not oluşturma")
@@ -258,7 +258,7 @@ public class EvrakNotTest extends BaseTest {
 ///////////////////////
 
         logout();
-        clearCookies();
+        //clearCookies();
         login(user2);
         imzaBekleyenlerPage.openPage();
         evrak = evragiBul(konu);
@@ -284,7 +284,7 @@ public class EvrakNotTest extends BaseTest {
         imzaBekleyenlerPage.evrakIadeEt("İade notu").islemMesaji().basariliOlmali();
 
         logout();
-        clearCookies();
+        ////clearCookies();
         login(user1);
         ParafBekleyenlerPage parafBekleyenlerPage = new ParafBekleyenlerPage();
         parafBekleyenlerPage.openPage();
@@ -311,13 +311,13 @@ public class EvrakNotTest extends BaseTest {
         ustYazi.parafla().islemMesaji().basariliOlmali();
 
         logout();
-        clearCookies();
+        //clearCookies();
         login(user2);
         imzaBekleyenlerPage.openPage();
         evrak = evragiBul(konu);
         evrak.click();
         notlar.notlariKontolEt(newNotesGenel);
-        imzaBekleyenlerPage.imzala().islemMesaji().basariliOlmali();
+        imzaBekleyenlerPage.evrakImzala().islemMesaji().basariliOlmali();
         new IslemMesajlari().basariliOlmali();
     }
 
@@ -335,7 +335,7 @@ public class EvrakNotTest extends BaseTest {
 
         evrakOlusturVeImzala(konu, notes);
 
-        clearCookies();
+        //clearCookies();
         login(user2);
         SelenideElement evrak = postalanacakEvraklarPage.openPage().filter()
                 .findRowsWith(Condition.text(konu)).shouldHaveSize(1).first();
@@ -519,12 +519,12 @@ public class EvrakNotTest extends BaseTest {
         @Step("Editör tabında yeni not oluştur")
         public SelenideElement notOlustur(String olusturanAdSoyad, String notTipi, String aciklama, int... maxLength) {
 //            EvrakNot evrakNot = new EvrakNot();
-            evrakNot.notEkle();
+            notEkle();
 
             if (maxLength.length > 0)
-                evrakNot.aciklamaKarakterSayisiKontrolu(maxLength[0]);
+                aciklamaKarakterSayisiKontrolu(maxLength[0]);
 
-            evrakNot.aciklamaGir(aciklama)
+                aciklamaGir(aciklama)
                     .notTipiSecenekDegerleriKontrolu("Seçiniz", "Genel", "Kişisel")
                     .notTipiSec(notTipi)
                     .kaydet();
@@ -537,7 +537,7 @@ public class EvrakNotTest extends BaseTest {
             String date = DateTimeFormatter.ofPattern("dd.MM.yyyy").format(LocalDateTime.now());
             String time = DateTimeFormatter.ofPattern("HH").format(LocalDateTime.now());
 //            String time = DateTimeFormatter.ofPattern("HH:mm").format(LocalDateTime.now());
-            return evrakNot.olusturulanNot(olusturanAdSoyad, aciklama, date, time).shouldHaveSize(1).first();
+            return olusturulanNot(olusturanAdSoyad, aciklama, date, time).shouldHaveSize(1).first();
         }
 
         @Step("Notları kontrol et")

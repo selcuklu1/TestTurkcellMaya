@@ -3,6 +3,7 @@ package common;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import data.User;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import listeners.SettingsListener;
 import org.testng.annotations.*;
