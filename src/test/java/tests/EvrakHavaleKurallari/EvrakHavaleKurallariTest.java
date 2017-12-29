@@ -44,6 +44,7 @@ public class EvrakHavaleKurallariTest extends BaseTest {
         String kuralAdi = "TC-2069_" + createRandomNumber(12);
         String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞ";
         String kisi = "Zübeyde Tekin";
+        String birim2 = "BİLİŞİM HİZMETLERİ VE UYDU PAZARLAMA GENEL MÜDÜR";
         login(username2, password2);
         //TODO PRE Conditon bir kural bulunmalı
         evrakHavaleKurallariYonetimiPage
@@ -54,12 +55,11 @@ public class EvrakHavaleKurallariTest extends BaseTest {
                 .birimEkleBirimDoldur(birim)
                 .birimEkleEkle()
                 .kuralAdiDoldur(kuralAdi)
-                .kimeHavaleEdilecekKisiDoldur(kisi)
+                .kimeHavaleEdilecekKisiDoldur(kisi,birim2)
                 .kuralEklemeKaydet();
         //TODO
 
         evrakHavaleKurallariYonetimiPage
-                .openPage()
                 .ara()
                 .sil(kuralAdi)
                 .islemOnayiEvet()

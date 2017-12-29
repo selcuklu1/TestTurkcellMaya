@@ -158,13 +158,13 @@ public class GundemIzlemePage extends MainPage {
                                     System.out.println(geldigiYer[1] + " İçerisinde bulunuyor");
                                 boolean tarihDurum = cell.getText().contains(tarih[0]);
                                 if (tarihDurum == true) System.out.println(tarih[0] + " İçerisinde bulunuyor");
-                                if (deger % 10 == 0){
-                                    $("[id='mainInboxForm:inboxDataTable_paginator_top'] span[class='ui-paginator-next ui-state-default ui-corner-all ui-state-disabled']").click();
-                                }
                                 deger++;
+                                if (deger % 10 == 0){
+                                    $$("[id='mainInboxForm:inboxDataTable_paginator_top'] span[class='ui-paginator-next ui-state-default ui-corner-all']").get(0).click();
+                                }
+
                             }
                         }
-
                         counter++;
                     }
                 }
