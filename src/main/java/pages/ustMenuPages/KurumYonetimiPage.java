@@ -10,6 +10,7 @@ import org.openqa.selenium.Keys;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
@@ -85,7 +86,7 @@ public class KurumYonetimiPage extends MainPage {
         return getIdariBirimKodu;
     }
     @Step("Kaydet")
-    public  KurumYonetimiPage popupKaydet() throws InterruptedException{
+    public  KurumYonetimiPage popupKaydet(){
         btnPopupKaydet.click();
         return this;
     }
@@ -95,7 +96,7 @@ public class KurumYonetimiPage extends MainPage {
         return this;
     }
     @Step("Kep adresi doldur")
-    public KurumYonetimiPage popupKepAdresiDoldur(String text) throws InterruptedException{
+    public KurumYonetimiPage popupKepAdresiDoldur(String text){
         txtPopupKepAdresi.setValue(text);
         return this;
     }
@@ -214,11 +215,23 @@ public class KurumYonetimiPage extends MainPage {
         }
 
         if(kurumAdi != null && kurumAdi != ""){
-            currentTable
-                    .filterBy(Condition.text(kurumAdi))
-                    .get(0)
-                    .shouldBe(Condition.exist);
-            checkAll = false;
+
+            ElementsCollection pages = $$("td[id='kurumYonetimiListingForm:pasifKurumlarDataTable_paginator_bottom'] > span[class='ui-paginator-pages'] >  span");
+
+            for (int i = 0; i < pages.size(); i++) {
+                pages.get(i).click();
+
+                SelenideElement currentRow = currentTable
+                        .filterBy(Condition.text(kurumAdi))
+                        .first();
+
+                if(currentRow.isDisplayed() && currentRow.exists()){
+                    checkAll = false;
+                    break;
+                }
+
+            }
+
         }
 
         if(durum != null || durum != "")
@@ -274,11 +287,7 @@ public class KurumYonetimiPage extends MainPage {
 
     @Step("Filtrele panelini aç")
     public KurumYonetimiPage filtrePanelAc(){
-        $("div[id='kurumYonetimiListingForm:filterPanel'] > h3").waitUntil(Condition.visible, 10000);
-        String isExpanded = $("div[id='kurumYonetimiListingForm:filterPanel'] > h3").getAttribute("aria-expanded");
-        if(isExpanded == "false") {
-            $("div[id='kurumYonetimiListingForm:filterPanel'] > h3").click();
-        }
+        $("div[id='kurumYonetimiListingForm:filterPanel'] > h3").click();
         return this;
     }
 
@@ -366,7 +375,9 @@ public class KurumYonetimiPage extends MainPage {
 
     @Step("Ülke doldur")
     public KurumYonetimiPage ulkeDoldur(String ulke){
-        txtUlke.selectLov(ulke);
+        txtUlke.setValue(ulke);
+        txtUlke.detailItems().filterBy(Condition.text("TC")).first().click();
+        //txtUlke.selectLov(ulke);
         return this;
     }
 
@@ -580,18 +591,40 @@ public class KurumYonetimiPage extends MainPage {
         btnPasifYapEvet.click();
         return this;
     }
+
+
     @Step("{0} kurumu pasif edildi.")
     public KurumYonetimiPage kurumAktifYap(String kurumAdi){
 
-        tablePasifKurumlar
-                .filterBy(Condition.text(kurumAdi))
-                .get(0)
-                .$(selectorBtnChangeStatu)
-                .click();
+        ElementsCollection pages = $$("td[id='kurumYonetimiListingForm:pasifKurumlarDataTable_paginator_bottom'] > span[class='ui-paginator-pages'] >  span");
 
+        for (int i = 0; i < pages.size(); i++) {
+            pages.get(i).click();
+
+            SelenideElement currentRow = tablePasifKurumlar
+                    .filterBy(Condition.text(kurumAdi))
+                    .get(0)
+                    .$(selectorBtnChangeStatu);
+
+            if(currentRow.isDisplayed() && currentRow.exists()){
+                currentRow.click();
+                break;
+            }
+
+        }
         btnPasifYapEvet.click();
         return this;
     }
+
+    SelenideElement btnKepAdresiBilgisiEkle = $(By.id("kurumYonetimiEditorForm:kepBilgileriDataTable:addNewKepAdresiButton"));
+
+
+    @Step("Kep Adresi Bilgisi Ekle butonuna tıkla.")
+    public KurumYonetimiPage kepAdresiBilgisiEkle(){
+        btnKepAdresiBilgisiEkle.click();
+        return this;
+    }
+
 
 
 }
