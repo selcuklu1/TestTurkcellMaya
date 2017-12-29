@@ -62,7 +62,7 @@ public class KaydedilenGelenEvrakPage extends MainPage {
 
         deleteFile("C:\\Users\\" + getPcUserName() + "\\Downloads\\","Rapor_");
         btnRaporAlExcel.click();
-        Thread.sleep(4000);
+        Thread.sleep(8000);
         searchDownloadedFileWithName("C:\\Users\\" + getPcUserName() + "\\Downloads\\","Rapor_.xls");
         return this;
     }
@@ -75,7 +75,7 @@ public class KaydedilenGelenEvrakPage extends MainPage {
     public KaydedilenGelenEvrakPage raporAlPdf() throws IOException, InterruptedException {
         deleteFile("C:\\Users\\" + getPcUserName() + "\\Downloads\\","Rapor_");
         btnRaporAlPdf.click();
-        Thread.sleep(4000);
+        Thread.sleep(8000);
         searchDownloadedFileWithName("C:\\Users\\" + getPcUserName() + "\\Downloads\\", "Rapor_.pdf");
         return this;
     }
