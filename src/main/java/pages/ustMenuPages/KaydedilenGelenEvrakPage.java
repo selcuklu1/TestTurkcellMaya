@@ -75,7 +75,8 @@ public class KaydedilenGelenEvrakPage extends MainPage {
     public KaydedilenGelenEvrakPage raporAlPdf() throws IOException, InterruptedException {
         deleteFile("C:\\Users\\" + getPcUserName() + "\\Downloads\\","Rapor_");
         btnRaporAlPdf.click();
-        Thread.sleep(8000);
+//        Thread.sleep(8000);
+        btnSorgula.click();
         searchDownloadedFileWithName("C:\\Users\\" + getPcUserName() + "\\Downloads\\", "Rapor_.pdf");
         return this;
     }
