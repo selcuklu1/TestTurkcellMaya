@@ -125,7 +125,11 @@ public class Filtreler extends BaseLibrary {
     @Step("Arama tablosunda satırı bul")
     public ElementsCollection findRowsWithToday(Condition condition, Condition... conditions){
         while (true) {
-            ElementsCollection filtered = getSearchRows().filterBy(text(getSysDateForKis())).filterBy(condition);
+            ElementsCollection filtered = getSearchRows().filterBy(text(getSysDateForKis()));
+            if (filtered.size() == 0)
+                return filtered;
+
+            filtered = filtered.filterBy(condition);
             if (filtered.size() > 0) {
                 for (Condition con : conditions) {
                     filtered = filtered.filterBy(con);
