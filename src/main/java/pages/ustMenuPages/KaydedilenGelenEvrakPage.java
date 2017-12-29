@@ -24,8 +24,8 @@ public class KaydedilenGelenEvrakPage extends MainPage {
     SelenideElement btnSorgula = $(By.id("birimeGelenEvrakRaporuForm:sorgulaButton"));
     SelenideElement btnRaporAlExcel = $("[id='birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable'] button:nth-child(4)");
     SelenideElement btnRaporAlPdf = $("[id='birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable'] button:nth-child(2)");
-    SelenideElement tblKaydedilenGelenEvrak = $(By.id("birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable_data"));
-    ElementsCollection tbldene = $$("[id='birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable_data'] tr[role='row']");
+//    SelenideElement tblKaydedilenGelenEvrak = $(By.id("birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable_data"));
+    ElementsCollection tblKaydedilenGelenEvrak = $$("[id='birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable_data'] tr[role='row']");
 
     @Step("Kaydedilen Gelen Evrak sayfasını aç")
     public KaydedilenGelenEvrakPage openPage() {
@@ -89,7 +89,7 @@ public class KaydedilenGelenEvrakPage extends MainPage {
     @Step("Tablo kontrolu")
     public KaydedilenGelenEvrakPage tabloKontrolu(String evrakNo) {
 //        WebElement columnId =  findElementOnTableByColumnInput(tblKaydedilenGelenEvrak,1,evrakNo);
-        tbldene.filterBy(Condition.text(evrakNo)).shouldHave(sizeGreaterThan(0));
+        tblKaydedilenGelenEvrak.filterBy(Condition.text(evrakNo)).shouldHave(sizeGreaterThan(0));
         return this;
     }
 
