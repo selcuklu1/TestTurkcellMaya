@@ -12,8 +12,7 @@ import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
+import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 public class GelenEvraklarPage extends MainPage {
@@ -93,6 +92,7 @@ public class GelenEvraklarPage extends MainPage {
     SelenideElement btnPaylasIcPaylas = $(By.id("mainPreviewForm:paylasButtonId"));
 
     SelenideElement tblIlkEvrak = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
+    ElementsCollection tblGelenEvrakListesi = $$("tbody[id='mainInboxForm:inboxDataTable_data'] tr[role='row']");
     SelenideElement tblIkinciEvrak = $(By.id("mainInboxForm:inboxDataTable:1:evrakTable"));
 
     BelgenetElement cmbOnayAkisi = comboLov(By.cssSelector("[id^='windowCevapEvrakForm:evrakBilgileriList'][id$='akisLov:LovText']"));
@@ -159,6 +159,14 @@ public class GelenEvraklarPage extends MainPage {
     @Step("Evrak seç")
     public GelenEvraklarPage evrakSec() {
         tblIlkEvrak.click();
+        return this;
+    }
+
+    @Step("Evrak Noya göre evrak seç : \"{evrakNo}\" ")
+    public GelenEvraklarPage evrakNoyaGoreEvrakSec(String evrakNo) {
+        tblGelenEvrakListesi.filterBy(Condition.text(evrakNo))
+                .first()
+                .click();
         return this;
     }
 
@@ -568,12 +576,11 @@ public class GelenEvraklarPage extends MainPage {
 
     @Step("Vekalet var uyarısı : \"{mesaj}\" ")
     public GelenEvraklarPage evrakOnIzlemeUyarıPopUpKontol(String mesaj) throws InterruptedException {
-        SelenideElement popUp = $(By.id("mainPreviewForm:j_idt5692"));
-        SelenideElement popUpEvet = $(By.id("mainPreviewForm:j_idt5694"));
+        SelenideElement popUp = $("div[class='ui-confirm-dialog ui-dialog ui-widget ui-widget-content ui-corner-all ui-helper-hidden ui-shadow ui-overlay-visible']");
+        SelenideElement popUpEvet = $(By.xpath("//div[@class='ui-confirm-dialog ui-dialog ui-widget ui-widget-content ui-corner-all ui-helper-hidden ui-shadow ui-overlay-visible']//center//button[@class='ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only']//span[text()='Evet']"));
         popUp.should(Condition.visible);
-
         if (popUp.text().contains(mesaj))
-            clickJs(popUpEvet);
+            popUpEvet.click();
         return this;
     }
 

@@ -33,19 +33,19 @@ public class KaydedilenGelenEvrakPage extends MainPage {
         return this;
     }
 
-    @Step("Birim alanı doldur")
+    @Step("Birim alanı \"{birim}\" doldurulur")
     public KaydedilenGelenEvrakPage birimDoldur(String birim) {
         cmbBirim.selectLov(birim);
         return this;
     }
 
-    @Step("Geldiği yer seç")
+    @Step("Geldiği yer \"{geldigiYer}\" seçilir")
     public KaydedilenGelenEvrakPage geldigiYerSec(String geldigiYer) {
         cmbGeldigiYer.selectOptionByValue(geldigiYer);
         return this;
     }
 
-    @Step("Gelen Evrak no alanını doldur")
+    @Step("Gelen Evrak no alanını \"{evrakNo}\" girilir")
     public KaydedilenGelenEvrakPage gelenEvrakNoDoldur(String evrakNo) {
         txtEvrakKayitNo.sendKeys(evrakNo);
         return this;
@@ -87,7 +87,7 @@ public class KaydedilenGelenEvrakPage extends MainPage {
         return this;
     }
 
-    @Step("Tablo kontrolu")
+    @Step("Tablo kontrolu : \"{evrakNo}\" ")
     public KaydedilenGelenEvrakPage tabloKontrolu(String evrakNo) {
 //        WebElement columnId =  findElementOnTableByColumnInput(tblKaydedilenGelenEvrak,1,evrakNo);
         tblKaydedilenGelenEvrak.filterBy(Condition.text(evrakNo)).shouldHave(sizeGreaterThan(0));

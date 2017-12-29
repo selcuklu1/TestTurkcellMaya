@@ -415,19 +415,13 @@ public class VekaletIslemleriTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true,dependsOnMethods = {"TC2208"}, description = "TC2212 : Vekalet veren kullanıcının bulunduğu kullanıcı listesine evrak havalesi ve kontrolü")
+    @Test(enabled = true, description = "TC2212 : Vekalet veren kullanıcının bulunduğu kullanıcı listesine evrak havalesi ve kontrolü")
     public void TC2212() throws InterruptedException {
 
         login(username3, password3);
 
         String evrakGelisTipi = "Posta";
         String geldigiKurum = "Esk Kurum 071216 2";
-
-//        String[] evrakNo = new String[2];
-//        gelenEvraklarPage
-//                .openPage();
-//
-//        evrakNo = gelenEvraklarPage.tablodanEvrakNoAl(1);
 
         gelenEvrakKayitPage
                 .openPage()
@@ -451,7 +445,7 @@ public class VekaletIslemleriTest extends BaseTest {
         String kullanici = "OPTİİM";
         String title = "optiim";
         gelenEvraklarPage
-                .evrakSec()
+                .evrakNoyaGoreEvrakSec(evrakNO2212)
                 .havaleYap()
                 .havaleYapKisiTreeSec(vekaletVeren)
                 .vekeletAlanVerenTabloVekaletAlanveyaVerenSec(vekaletVeren)
