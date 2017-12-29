@@ -461,7 +461,7 @@ public class EvrakPaylasmaTest extends BaseTest {
         String kisi2 = "Yasemin Çakıl Akyol";
         String aciklama = createRandomText(15);
         String birim = "TEST HASAN BİRİMİ";
-        String anaBirim = "Yazılım Geliştirme Direktörlüğü";
+        String anaBirim = "Yazılım Geliştirme Direktörlüğ";
         //TODO Pre Condition Gelen Evraklar sayfası data oluşturmakta
         login(username2, password2);
 
