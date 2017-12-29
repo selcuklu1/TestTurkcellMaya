@@ -3,6 +3,7 @@ package pages.pageComponents;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
+import io.qameta.allure.Step;
 
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$$;
@@ -19,11 +20,13 @@ public class ConfirmDialog extends BaseLibrary {
         return $$("div[class~='ui-confirm-dialog'][class~='ui-dialog'][id*=Confirm]");
     }
 
+    @Step("Onay dialog başlığı")
     public SelenideElement dialogTitle() {
         return $$("div[class~='ui-confirm-dialog'][class~='ui-dialog'][id*=Confirm] span.ui-dialog-title")
                 .filterBy(visible).first();
     }
 
+    @Step("Onay dialog messaji")
     public SelenideElement dialogMessage() {
         return $$("div[class~='ui-confirm-dialog'][class~='ui-dialog'][id*=Confirm] .ui-dialog-content p")
                 .filterBy(visible).first();
@@ -34,6 +37,7 @@ public class ConfirmDialog extends BaseLibrary {
                 .filterBy(visible);
     }
 
+    @Step("Onay dialog butonu")
     public SelenideElement button(String name) {
         return $$x("//div[contains(@class,'ui-confirm-dialog') and contains(@id,'Confirm')]//button[span[text()='" + name + "']]")
                 .filterBy(visible).first();

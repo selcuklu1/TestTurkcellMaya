@@ -316,4 +316,72 @@ public class MainPage extends BaseLibrary {
         return this;
     }
 
+    @Step("Parafla")
+    public MainPage parafla(){
+        SelenideElement paraflaButon = $x("//*[text()='Parafla']/ancestor::tbody[1]//button");
+        paraflaButon.click();
+        sImzalaRadioSec();
+        evrakImzaOnay();
+        return this;
+    }
+
+    @Step("İmzala butonu ara")
+    public SelenideElement imzalaButton(){
+        return $x("//*[text()='İmzala']/ancestor::tbody[1]//button");
+    }
+
+    @Step("İmzala butona tıkla")
+    public MainPage imzalaButonaTikla(){
+        imzalaButton().click();
+        return this;
+    }
+
+    @Step("s-İmzla radio butonu ara")
+    public SelenideElement sImzalaRadio(){
+        return $("#imzalaForm\\:imzalaRadio .ui-radiobutton-box");
+    }
+
+    @Step("s-İmzla seç")
+    public MainPage sImzalaRadioSec(){
+        sImzalaRadio().shouldBe(visible).click();
+        return this;
+    }
+
+    @Step("İmzala")
+    public void evrakImzala() {
+        imzalaButonaTikla();
+        sImzalaRadioSec();
+//        clickJs($("#imzalaForm\\:imzalaRadio").find(By.tagName("input")));
+        evrakImzaOnay();
+    }
+
+    public void evrakImzaOnay() {
+        for (int i = 0; i < Configuration.timeout/1000; i++) {
+            sleep(1000);
+            if ($("#imzalaForm\\:sayisalImzaConfirmDialogOpener").is(visible)){
+                $("#imzalaForm\\:sayisalImzaConfirmDialogOpener").click();
+                clickJs($("#imzalaForm\\:sayisalImzaConfirmForm\\:sayisalImzaEvetButton"));
+                break;
+            }
+            else{
+                $("#imzalaForm\\:imzalaButton").click();
+                break;
+            }
+        }
+    }
+
+    @Step("Iade et")
+    public MainPage evrakIadeEt(String iadeNotu){
+        $("button .iadeEt").click();
+        $("#inboxItemInfoForm\\:notTextArea_id").setValue("İade notu");
+        $("#inboxItemInfoForm\\:iadeEtButton_id").click();
+        return this;
+    }
+
+    @Step("Kaydet")
+    public MainPage evrakKaydet(){
+        $("button .kaydet").click();
+        $("#kaydetConfirmForm\\:kaydetEvetButton").click();
+        return this;
+    }
 }

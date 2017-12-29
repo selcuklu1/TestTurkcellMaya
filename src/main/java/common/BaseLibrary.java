@@ -826,7 +826,7 @@ public class BaseLibrary extends ElementsContainer {
 
     public static String getDocPath() {
 
-        // Get Browser name and version.
+        /*// Get Browser name and version.
         Capabilities caps = ((RemoteWebDriver) WebDriverRunner.getWebDriver()).getCapabilities();
         // String browserName = caps.getBrowserName();
         // String browserVersion = caps.getVersion();
@@ -844,7 +844,7 @@ public class BaseLibrary extends ElementsContainer {
             //TODO: Mac pathi verilecek
             docPath = "/documents/";
         }
-        System.out.println("File path: " + docPath);
+        System.out.println("File path: " + docPath);*/
         return docPath;
     }
 

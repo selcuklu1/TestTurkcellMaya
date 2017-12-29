@@ -322,17 +322,15 @@ public class BirimIcerikSablonuTest extends BaseTest {
     }
 
     @Test(enabled = true, description = "TC1079: Şablon güncellendiğini kontrolü"
-//            , dependsOnMethods = {"tc1079"}
+            , dependsOnMethods = {"tc1079"}
             , priority = 12)
     public void tc1079_kontrol() {
         login(optiim4);
         birimIcerikSablonlarPage = new BirimIcerikSablonlarPage().openPage();
         SelenideElement sablonRow = birimIcerikSablonlarPage.findSablonRowInTable(sablonAdi_1079);
         sablonAdi_1079 = sablonAdi_1079 + "2";
-        birimIcerikSablonlarPage.detayButonaTikla(sablonRow)
-        .sablonAdiDoldur(sablonAdi_1079)
-        .kaydet()
-        .islemMesaji().dikkatOlmali("Üst birim şablonuna işlem yapılamaz!");
+        birimIcerikSablonlarPage.detayButonaTikla(sablonRow).sablonAdiDoldur(sablonAdi_1079)
+                .kaydet().islemMesaji().dikkatOlmali("Üst birim şablonuna işlem yapılamaz!");
 
         birimIcerikSablonlarPage.getEditor().type("Güncelleme denemesi");
         birimIcerikSablonlarPage

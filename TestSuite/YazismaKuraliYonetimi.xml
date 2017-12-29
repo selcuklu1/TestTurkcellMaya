@@ -4,7 +4,7 @@
 <!--By Huseyin-->
     <test name="Yazışma Kuralı Yönetimi Testleri">
         <packages>
-            <package name="tests.YazismaKuraliYonetimi"/>
+            <package name="tests.YazismaKurallariYonetimi"/>
         </packages>
     </test>
 </suite>
