@@ -100,11 +100,13 @@ public class GizlilikKleransiTest extends BaseTest {
                 .evrakSayiSagDoldur()
                 .evrakGelisTipiSec(evrakGelisTipi)
                 .ivedilikSec(ivedilik)
-                .havaleIslemleriKisiDoldur(kisi)
+                .havaleIslemleriKisiSecmeyeDene(kisi)
                 .islemMesaji().beklenenMesaj(uyariMesaj1);
+                /*.havaleIslemleriKisiDoldur(kisi)
+                .islemMesaji().beklenenMesaj(uyariMesaj1);*/
 
         gelenEvrakKayitPage
-                .havaleIslemleriKullaniciListesiDoldur(kullaniciListesi)
+                .havaleIslemleriKullaniciListesiSecmeyeDene(kullaniciListesi)
                 .islemMesaji().beklenenMesaj(uyariMesaj2);
     }
 

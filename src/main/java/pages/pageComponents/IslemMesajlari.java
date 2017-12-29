@@ -3,13 +3,16 @@ package pages.pageComponents;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
 import common.BaseLibrary;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 
 import static com.codeborne.selenide.Condition.exactText;
 import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.sleep;
 import static pages.pageComponents.IslemMesajlari.MessageTitle.*;
 
 public class IslemMesajlari extends BaseLibrary {
@@ -68,15 +71,21 @@ public class IslemMesajlari extends BaseLibrary {
 
     @Step("İşlem mesaj kontolü")
     public IslemMesajlari beklenenMesajTipi(MessageTitle messageTitleText) {
+        messageTitle.shouldBe(visible);
+        takeScreenshot();
         messageTitle.shouldHave(exactText(messageTitleText.value()));
 //        Assert.assertEquals(getMessageTitle(), messageTitle.value());
+        waitDisappear();
         return this;
     }
 
     @Step("İşlem mesaj kontolü")
     public IslemMesajlari beklenenMesaj(String message) {
-        $(".lobibox-notify-msg").shouldHave(text(message));
+        messageBody.shouldBe(visible);
+        takeScreenshot();
+        messageBody.shouldHave(text(message));
 //        Assert.assertEquals(getMessageBody(), message);
+        waitDisappear();
         return this;
     }
 
@@ -86,11 +95,14 @@ public class IslemMesajlari extends BaseLibrary {
         messageTitle.shouldHave(exactText(BASARILI.value()));
         if (expectedMessage.length > 0){
             String text;
+            takeScreenshot();
             while (messageBody.text().isEmpty()){
                 /*text = messageBody.text();
                 if (!text.isEmpty())
                     break;*/
+                sleep(100);
             }
+            takeScreenshot();
             messageBody.shouldHave(text(expectedMessage[0]));
         }
 
@@ -103,7 +115,9 @@ public class IslemMesajlari extends BaseLibrary {
 //        Assert.assertEquals(getMessageTitle(), UYARI.value());
         messageTitle.shouldHave(text((UYARI.value())));
         if (expectedMessage.length > 0){
+            takeScreenshot();
             while (messageBody.text().isEmpty()){}
+            takeScreenshot();
             messageBody.shouldHave(text(expectedMessage[0]));
         }
 //            Assert.assertEquals(getMessageBody(), expectedMessage[0]);
@@ -116,7 +130,9 @@ public class IslemMesajlari extends BaseLibrary {
         messageTitle.shouldHave(exactText(DIKKAT.value()));
 
         if (expectedMessage.length > 0){
+            takeScreenshot();
             while (messageBody.text().isEmpty()){}
+            takeScreenshot();
             messageBody.shouldHave(text(expectedMessage[0]));
         }
 
