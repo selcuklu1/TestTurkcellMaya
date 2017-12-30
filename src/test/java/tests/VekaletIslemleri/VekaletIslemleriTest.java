@@ -281,12 +281,6 @@ public class VekaletIslemleriTest extends BaseTest {
 
 
         imzaBekleyenlerPage
-
-
-
-
-
-
                 .openPage()
                 .evrakNoKontrolu(evrakNo)
                 .icerik()
@@ -415,7 +409,7 @@ public class VekaletIslemleriTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC2212 : Vekalet veren kullanıcının bulunduğu kullanıcı listesine evrak havalesi ve kontrolü")
+    @Test(enabled = true, dependsOnMethods = {"TC2208"}, description = "TC2212 : Vekalet veren kullanıcının bulunduğu kullanıcı listesine evrak havalesi ve kontrolü")
     public void TC2212() throws InterruptedException {
 
         login(username3, password3);
