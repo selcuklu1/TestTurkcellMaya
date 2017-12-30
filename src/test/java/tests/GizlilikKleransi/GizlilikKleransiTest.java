@@ -582,7 +582,7 @@ public class GizlilikKleransiTest extends BaseTest {
     @Test(enabled = true, dependsOnMethods = {"TC1938"}, description = "TC2139 : Evrak aramada gizlilik kleransı kontrolü (evrakta izi olmayan kullanıcı ile)")
     public void TC2139() throws InterruptedException {
 
-        login(username4, password4);
+        login("username22n", "123");
 //9267
 //        String evrakNo = "9267";
         String aranacagiYer = "Birim Evrakları Ara";
@@ -599,8 +599,8 @@ public class GizlilikKleransiTest extends BaseTest {
                 .aramaKriteriDoldur(evrakNo)
                 .ara()
                 .tabloEvrakNoKontrol(evrakNo)
-                .tablodaDetayTikla(evrakNo);
-//                .islemMesaji().beklenenMesaj(mesaj);
+                .tablodaDetayTikla(evrakNo)
+                .islemMesaji().beklenenMesaj(mesaj);
 
         evrakAramaPage
                 .evrakinAranacagiYerSec(aranacagiYer)
@@ -608,8 +608,8 @@ public class GizlilikKleransiTest extends BaseTest {
                 .aramaKriteriDoldur(evrakNo)
                 .ara()
                 .tabloEvrakNoKontrol(evrakNo)
-                .tablodaDetayTikla(evrakNo);
-//                .islemMesaji().beklenenMesaj(mesaj);
+                .tablodaDetayTikla(evrakNo)
+                .islemMesaji().beklenenMesaj(mesaj);
 
         evrakOlusturPage
                 .openPage()

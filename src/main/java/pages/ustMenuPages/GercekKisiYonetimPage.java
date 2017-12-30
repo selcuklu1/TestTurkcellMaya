@@ -217,7 +217,7 @@ public class GercekKisiYonetimPage extends MainPage {
         return this;
     }
 
-    @Step("Filtrede TC kimlik no doldur")
+    @Step("Filtrede TC kimlik no alanına \"{tckn}\" girilir")
     public GercekKisiYonetimPage filtreTCKimlikNoDoldur(String tckn) {
         txtFiltreTCKimlikNo.setValue(tckn);
         return this;
@@ -447,7 +447,7 @@ public class GercekKisiYonetimPage extends MainPage {
         return this;
     }
 
-    @Step("Tabloda listelenen TCKN kontrolü")
+    @Step("Tabloda \"{tbNO}\" TCKN kontrolü")
     public GercekKisiYonetimPage tabloTCKNKontrol(String tcNO) {
         $(byText(tcNO)).shouldBe(Condition.visible);
 //        boolean statusTCNO = findElementOnTableByColumnInputInAllPages(tblGercekKisiDataTable, 1, tcNO).isDisplayed();
