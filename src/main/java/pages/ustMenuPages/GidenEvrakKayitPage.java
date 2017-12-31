@@ -360,7 +360,7 @@ public class GidenEvrakKayitPage extends MainPage {
     }
 
     @Step("Konu doldur")
-    public GidenEvrakKayitPage konuDoldur(String konu){
+    public GidenEvrakKayitPage konuDoldur(String konu) {
         $("[id$='konuTextArea']").setValue(konu);
         return this;
     }

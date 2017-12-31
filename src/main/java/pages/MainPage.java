@@ -1,6 +1,9 @@
 package pages;
 
-import com.codeborne.selenide.*;
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
@@ -134,43 +137,44 @@ public class MainPage extends BaseLibrary {
     //endregion
 
     @Step("Kep bağlantısı alanı aç")
-    public MainPage kepBaglantisi(){
-    $(By.id("topMenuForm:userMenuButton_button")).click();
-    $(By.id("topMenuForm:kepLoginButton")).click();
+    public MainPage kepBaglantisi() {
+        $(By.id("topMenuForm:userMenuButton_button")).click();
+        $(By.id("topMenuForm:kepLoginButton")).click();
         return this;
     }
+
     @Step("Bağlan")
-    public MainPage kepAdresBaglantisiBaglan1(){
+    public MainPage kepAdresBaglantisiBaglan1() {
         $("[id^='kepForm:kayitliKepDataTable:0:j_idt235']").click();
         return this;
     }
 
-    public MainPage kepAdresBaglantisiBaglan2(){
+    public MainPage kepAdresBaglantisiBaglan2() {
         $("[id='kepForm:kayitliKepDataTable:1:j_idt235']").click();
         return this;
     }
 
     @Step("Kullanıcı adı ve Tc Kimlik no kontrol et")
-    public MainPage kullaniciAdiTcKimlikNoKontol(){
+    public MainPage kullaniciAdiTcKimlikNoKontol() {
         $(By.id("kepLogin2FormId:kullaniciAdi")).shouldBe(Condition.disabled);
         $(By.id("kepLogin2FormId:tcKimlikNo")).shouldBe(Condition.disabled);
         return this;
     }
 
     @Step("Parola doldur")
-    public MainPage parolaDoldur(String parola){
+    public MainPage parolaDoldur(String parola) {
         $(By.id("kepLogin2FormId:parola")).setValue(parola);
         return this;
     }
 
     @Step("Şifre Doldur")
-    public MainPage sifreDoldur(String sifre){
+    public MainPage sifreDoldur(String sifre) {
         $(By.id("kepLogin2FormId:sifre")).setValue(sifre);
         return this;
     }
 
     @Step("Bağlan")
-    public MainPage kepBaglantisiBaglan(){
+    public MainPage kepBaglantisiBaglan() {
         $(By.id("kepLogin2FormId:j_idt255")).click();
         return this;
     }
@@ -186,13 +190,13 @@ public class MainPage extends BaseLibrary {
         return this;
     }
 
-    public MainPage ustMenuKullaniciIslemleri() throws InterruptedException{
+    public MainPage ustMenuKullaniciIslemleri() throws InterruptedException {
         //Thread.sleep(2000);
         $(By.id("topMenuForm2:ust:3:ustMenuEleman")).click();
         return this;
     }
 
-    public MainPage ustMenuRaporlar() throws InterruptedException{
+    public MainPage ustMenuRaporlar() throws InterruptedException {
         //Thread.sleep(2000);
         $(By.id("topMenuForm2:ust:6:ustMenuEleman")).click();
         return this;
@@ -200,7 +204,7 @@ public class MainPage extends BaseLibrary {
 
     public MainPage altMenuTooltipKontrol(String altMenuAd) {
 
-        String tooltip="";
+        String tooltip = "";
         switch (altMenuAd) {
             case "Evrak Oluştur":
                 $(By.id("topMenuForm2:ust:0:ust:0:ust:0:ust")).hover();
@@ -297,13 +301,15 @@ public class MainPage extends BaseLibrary {
         return this;
     }
 
-    public ConfirmDialog confirmDialog() {return new ConfirmDialog();}
+    public ConfirmDialog confirmDialog() {
+        return new ConfirmDialog();
+    }
 
-    public ElementsCollection getPageCloseButtons(){
+    public ElementsCollection getPageCloseButtons() {
         return $$("div[id^='window'][id$='Dialog'] > div[class~='ui-dialog-titlebar'] > a[class~='ui-dialog-titlebar-close']");
     }
 
-    public ElementsCollection getPageTitles(){
+    public ElementsCollection getPageTitles() {
         return $$("div[id^='window'][id$='Dialog'] > div[class~='ui-dialog-titlebar'] > span[class='ui-dialog-title']");
     }
 
@@ -317,7 +323,7 @@ public class MainPage extends BaseLibrary {
     }
 
     @Step("Parafla")
-    public MainPage parafla(){
+    public MainPage parafla() {
         SelenideElement paraflaButon = $x("//*[text()='Parafla']/ancestor::tbody[1]//button");
         paraflaButon.click();
         sImzalaRadioSec();
@@ -326,23 +332,23 @@ public class MainPage extends BaseLibrary {
     }
 
     @Step("İmzala butonu ara")
-    public SelenideElement imzalaButton(){
+    public SelenideElement imzalaButton() {
         return $x("//*[text()='İmzala']/ancestor::tbody[1]//button");
     }
 
     @Step("İmzala butona tıkla")
-    public MainPage imzalaButonaTikla(){
+    public MainPage imzalaButonaTikla() {
         imzalaButton().click();
         return this;
     }
 
     @Step("s-İmzla radio butonu ara")
-    public SelenideElement sImzalaRadio(){
+    public SelenideElement sImzalaRadio() {
         return $("#imzalaForm\\:imzalaRadio .ui-radiobutton-box");
     }
 
     @Step("s-İmzla seç")
-    public MainPage sImzalaRadioSec(){
+    public MainPage sImzalaRadioSec() {
         sImzalaRadio().shouldBe(visible).click();
         return this;
     }
@@ -357,14 +363,13 @@ public class MainPage extends BaseLibrary {
     }
 
     public void evrakImzaOnay() {
-        for (int i = 0; i < Configuration.timeout/1000; i++) {
+        for (int i = 0; i < Configuration.timeout / 1000; i++) {
             sleep(1000);
-            if ($("#imzalaForm\\:sayisalImzaConfirmDialogOpener").is(visible)){
+            if ($("#imzalaForm\\:sayisalImzaConfirmDialogOpener").is(visible)) {
                 $("#imzalaForm\\:sayisalImzaConfirmDialogOpener").click();
                 clickJs($("#imzalaForm\\:sayisalImzaConfirmForm\\:sayisalImzaEvetButton"));
                 break;
-            }
-            else{
+            } else {
                 $("#imzalaForm\\:imzalaButton").click();
                 break;
             }
@@ -372,7 +377,7 @@ public class MainPage extends BaseLibrary {
     }
 
     @Step("Iade et")
-    public MainPage evrakIadeEt(String iadeNotu){
+    public MainPage evrakIadeEt(String iadeNotu) {
         $("button .iadeEt").click();
         $("#inboxItemInfoForm\\:notTextArea_id").setValue("İade notu");
         $("#inboxItemInfoForm\\:iadeEtButton_id").click();
@@ -380,7 +385,7 @@ public class MainPage extends BaseLibrary {
     }
 
     @Step("Kaydet")
-    public MainPage evrakKaydet(){
+    public MainPage evrakKaydet() {
         $("button .kaydet").click();
         $("#kaydetConfirmForm\\:kaydetEvetButton").click();
         return this;

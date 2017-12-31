@@ -62,7 +62,7 @@ public class GizlilikKleransiTest extends BaseTest {
         imzaladiklarimPage = new ImzaladiklarimPage();
         genelEvrakRaporuPage = new GenelEvrakRaporuPage();
         evrakAramaPage = new EvrakAramaPage();
-        imzaBekleyenlerPage= new ImzaBekleyenlerPage();
+        imzaBekleyenlerPage = new ImzaBekleyenlerPage();
         postalanacakEvraklarPage = new PostalanacakEvraklarPage();
         postalananlarPage = new PostalananlarPage();
         imzaBekleyenlerPage = new ImzaBekleyenlerPage();
@@ -399,7 +399,7 @@ public class GizlilikKleransiTest extends BaseTest {
                 .islemMesaji().beklenenMesaj(uyariMesaj1);
 
         teslimAlinmayiBekleyenlerPage
-                .evrakSecTeslimAl(konuKoduRandom, kurum, evrakTarihi, evrakSayiSag,true)
+                .evrakSecTeslimAl(konuKoduRandom, kurum, evrakTarihi, evrakSayiSag, true)
                 .islemMesaji().basariliOlmali(basariMesaji);
 
         teslimAlinanlarPage
@@ -972,7 +972,7 @@ public class GizlilikKleransiTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TC2189 : Onay akışında gizlilik klerans kontrolü (Cevap)")
-    public void TC2189() throws InterruptedException{
+    public void TC2189() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
         String tur = "PARAFLAMA";
@@ -1035,9 +1035,9 @@ public class GizlilikKleransiTest extends BaseTest {
                 .onayAkisiEkle()
                 .kullaniciTabloKontrol()
                 .kullanicilarDoldur(kullaniciOzel)
-                .kullniciIsmineGoreImzaParafSec(kullaniciOzel,tur)
+                .kullniciIsmineGoreImzaParafSec(kullaniciOzel, tur)
                 .kullanicilarDoldur(kullaniciTasnifDisi)
-                .kullniciIsmineGoreImzaParafSec(kullaniciTasnifDisi,tur2)
+                .kullniciIsmineGoreImzaParafSec(kullaniciTasnifDisi, tur2)
                 .kullan();
 
         evrakOlusturPage
@@ -1050,10 +1050,10 @@ public class GizlilikKleransiTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TC2181 : Gizlilik kleransı yeterli olmayan kullanıcıya evrak devrediemelmesi")
-    public void TC2181() throws InterruptedException{
+    public void TC2181() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
-        String text = "TC2181 "+getSysDate();
+        String text = "TC2181 " + getSysDate();
 //        String text = "TC2181 20171223151625";
         String konuKodu = "010.01";
         String evrakTuru = "Resmi Yazışma";
@@ -1065,7 +1065,7 @@ public class GizlilikKleransiTest extends BaseTest {
         String geldigiKurum = "Esk Kurum 071216 2";
         String aciklama = "Yetersiz Klerans";
 
-        login(username3,password3);
+        login(username3, password3);
 
         //testte kullanılacak data oluşturuluyor.
         gelenEvrakKayitPage
@@ -1086,21 +1086,21 @@ public class GizlilikKleransiTest extends BaseTest {
         String evrakNO2189 = gelenEvrakKayitPage.popUps();
         gelenEvrakKayitPage.islemMesaji().isBasarili();
 
-            kullaniciEvrakDevretPage
-                    .openPage()
-                    .devredecekKisiSec("Yasemin Çakıl")
-                    .listele()
-                    .islemMesaji().basariliOlmali(basariMesaji);
+        kullaniciEvrakDevretPage
+                .openPage()
+                .devredecekKisiSec("Yasemin Çakıl")
+                .listele()
+                .islemMesaji().basariliOlmali(basariMesaji);
 
         kullaniciEvrakDevretPage
-                    .ekranTabKontrolleri()
-                    .tabloEvrakSecimi(text)
-                    .devret()
-                    .devralacakKisiAlanKontolu()
-                    .devralacakKisiSec(kullaniciNormal)
-                    .aciklamaDoldur(text)
-                    .devretTamam()
-                    .popUpDevredilemeyenEvraklarKontrol()
-                    .devredelimeyenEvraklarEvrakKontrolu(text, aciklama);
+                .ekranTabKontrolleri()
+                .tabloEvrakSecimi(text)
+                .devret()
+                .devralacakKisiAlanKontolu()
+                .devralacakKisiSec(kullaniciNormal)
+                .aciklamaDoldur(text)
+                .devretTamam()
+                .popUpDevredilemeyenEvraklarKontrol()
+                .devredelimeyenEvraklarEvrakKontrolu(text, aciklama);
     }
 }

@@ -1,11 +1,13 @@
 package common;
 
 import com.codeborne.selenide.*;
+import data.TestData;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
 import org.openqa.selenium.*;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -32,22 +34,59 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfEl
 public class BaseLibrary extends ElementsContainer {
 
 
+    protected static final Logger log = Logger.getLogger(BaseLibrary.class.getName());
+    protected static String winHandleBefore = null;
+    private static String docPath = null;
+    private static String browserName = null;
+    private String downoladPath = null;
     private long waitForLoading = 20;
     private int doWaitLoading = 0;
     private boolean doNotWaitLoading = false;
-    public static String docPath = null;
-    public static String browserName = null;
-    protected static final Logger log = Logger.getLogger(BaseLibrary.class.getName());
-    protected static String winHandleBefore = null;
+
+    public static void killProcess() {
+
+        Runtime rt = Runtime.getRuntime();
+        try {
+            rt.exec("taskkill /f /im " + "chrome.exe");
+            rt.exec("taskkill /f /im " + "chromedriver.exe");
+            rt.exec("taskkill /f /im " + "conhost.exe");
+            rt.exec("taskkill /f /im " + "firefox.exe");
+            rt.exec("taskkill /f /im " + "geckodriver.exe");
+            rt.exec("taskkill /f /im " + "iexplore.exe");
+            rt.exec("taskkill /f /im " + "iedriver.server");
+            rt.exec("taskkill /f /im " + "iedriver.server64");
+            //rt.exec("taskkill /f /im " + "WerFault");
+            //rt.exec("taskkill /f /im " + "AcroRd32");
+            //rt.exec("taskkill /f /im " + "Excel");
+        } catch (IOException e) {
+            System.out.println("Processler Kill Edilememdi!!!");
+        }
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="Page loading methods">
+
+    /**
+     * Türkçe harfleri inglizce harflere dönüştürüyor
+     *
+     * @param str
+     * @return
+     */
+    public static String clearTurkishChars(String str) {
+        String ret = str;
+        char[] turkishChars = new char[]{0x131, 0x130, 0xFC, 0xDC, 0xF6, 0xD6, 0x15F, 0x15E, 0xE7, 0xC7, 0x11F, 0x11E};
+        char[] englishChars = new char[]{'i', 'I', 'u', 'U', 'o', 'O', 's', 'S', 'c', 'C', 'g', 'G'};
+        for (int i = 0; i < turkishChars.length; i++) {
+            ret = ret.replaceAll(new String(new char[]{turkishChars[i]}), new String(new char[]{englishChars[i]}));
+        }
+        return ret;
+    }
 
     //<editor-fold desc="Allure screenshooter">
     @Attachment(value = "Page screenshot", type = "image/png")
     public byte[] takeScreenshot() {
         return ((TakesScreenshot) WebDriverRunner.getWebDriver()).getScreenshotAs(OutputType.BYTES);
     }
-    //</editor-fold>
-
-    //<editor-fold desc="Page loading methods">
 
     /**
      * Waiting to JS and jQuery ready state and object with class "loading" to disappear.
@@ -162,12 +201,13 @@ public class BaseLibrary extends ElementsContainer {
     public long getWaitForLoading() {
         return waitForLoading;
     }
+    //</editor-fold>
 
     public void setWaitForLoading(long seconds) {
         this.waitForLoading = waitForLoading;
     }
 
-    public void waitForLoadingJS(WebDriver driver){
+    public void waitForLoadingJS(WebDriver driver) {
 //        long timeout = Configuration.timeout / 1000;
         long timeout = getWaitForLoading();
         new WebDriverWait(driver, timeout, 10).until(driver1 ->
@@ -201,11 +241,9 @@ public class BaseLibrary extends ElementsContainer {
                 System.out.println("Load: isLoaderHidden error: " + e.getMessage());
             }
 
-            return isJsFinished  && isLoaderHidden && isAjaxFinished;
+            return isJsFinished && isLoaderHidden && isAjaxFinished;
         });
     }
-    //</editor-fold>
-
 
     public void maximazeBrowser() {
         try {
@@ -226,7 +264,6 @@ public class BaseLibrary extends ElementsContainer {
         }
     }
 
-
     /**
      * Alan setValue, sendKeys doğru çalışmıyor ise bu metodu kullanılır.
      *
@@ -236,27 +273,6 @@ public class BaseLibrary extends ElementsContainer {
     public void setValueJS(SelenideElement element, String value) {
         executeJavaScript("arguments[0].value = arguments[1]", element, value);
     }
-
-    public static void killProcess() {
-
-        Runtime rt = Runtime.getRuntime();
-        try {
-            rt.exec("taskkill /f /im " + "chrome.exe");
-            rt.exec("taskkill /f /im " + "chromedriver.exe");
-            rt.exec("taskkill /f /im " + "conhost.exe");
-            rt.exec("taskkill /f /im " + "firefox.exe");
-            rt.exec("taskkill /f /im " + "geckodriver.exe");
-            rt.exec("taskkill /f /im " + "iexplore.exe");
-            rt.exec("taskkill /f /im " + "iedriver.server");
-            rt.exec("taskkill /f /im " + "iedriver.server64");
-            //rt.exec("taskkill /f /im " + "WerFault");
-            //rt.exec("taskkill /f /im " + "AcroRd32");
-            //rt.exec("taskkill /f /im " + "Excel");
-        } catch (IOException e) {
-            System.out.println("Processler Kill Edilememdi!!!");
-        }
-    }
-
 
     /**
      * get date from text in format 31.12.2017
@@ -292,22 +308,6 @@ public class BaseLibrary extends ElementsContainer {
             result = matcher.group();
 
         return result;
-    }
-
-    /**
-     * Türkçe harfleri inglizce harflere dönüştürüyor
-     *
-     * @param str
-     * @return
-     */
-    public static String clearTurkishChars(String str) {
-        String ret = str;
-        char[] turkishChars = new char[]{0x131, 0x130, 0xFC, 0xDC, 0xF6, 0xD6, 0x15F, 0x15E, 0xE7, 0xC7, 0x11F, 0x11E};
-        char[] englishChars = new char[]{'i', 'I', 'u', 'U', 'o', 'O', 's', 'S', 'c', 'C', 'g', 'G'};
-        for (int i = 0; i < turkishChars.length; i++) {
-            ret = ret.replaceAll(new String(new char[]{turkishChars[i]}), new String(new char[]{englishChars[i]}));
-        }
-        return ret;
     }
 
     /**
@@ -652,6 +652,7 @@ public class BaseLibrary extends ElementsContainer {
     }
 
 
+    //region Neden burada?
     public String cssSE(String element, String attribute, String startsWith, String endsWith) {
 
         if (element != "" || element == null) {
@@ -684,7 +685,7 @@ public class BaseLibrary extends ElementsContainer {
 
     public boolean findElementOnTableAllPages(String form, SelenideElement element) throws InterruptedException {
 
-        SelenideElement next = $(("[id='"+form+"'] [class='ui-paginator-next ui-state-default ui-corner-all']"));
+        SelenideElement next = $(("[id='" + form + "'] [class='ui-paginator-next ui-state-default ui-corner-all']"));
 
         boolean status = false;
         while (status == false) {
@@ -787,82 +788,10 @@ public class BaseLibrary extends ElementsContainer {
                 break;
         }
     }
+    //endregion
 
-
-    public static String getOS() {
-
-        // Get Browser name and version.
-        Capabilities caps = ((RemoteWebDriver) WebDriverRunner.getWebDriver()).getCapabilities();
-        // String browserName = caps.getBrowserName();
-        // String browserVersion = caps.getVersion();
-        Platform operationSystem = caps.getPlatform();
-        System.out.println("Operation System: " + operationSystem.name());
-
-        return operationSystem.name();
-    }
-
-    public static String getBrowserName() {
-
-        // Get Browser name and version.
-        Capabilities caps = ((RemoteWebDriver) WebDriverRunner.getWebDriver()).getCapabilities();
-        browserName = caps.getBrowserName();
-        System.out.println("Browser Name : " + browserName);
-
-        return browserName;
-    }
-
-    public static String setDocPath() {
-
-        // Get Browser name and version.
-        Capabilities caps = ((RemoteWebDriver) WebDriverRunner.getWebDriver()).getCapabilities();
-        // String browserName = caps.getBrowserName();
-        // String browserVersion = caps.getVersion();
-        Platform operationSystem = caps.getPlatform();
-        System.out.println("Operation System: " + operationSystem.name());
-
-        if (operationSystem.is(Platform.WINDOWS)) {
-            docPath = "C:\\TestAutomation\\BelgenetFTA\\documents\\";
-        } else if (operationSystem.is(Platform.XP)) {
-            docPath = "C:\\TestAutomation\\BelgenetFTA\\documents\\";
-        } else if (operationSystem.is(Platform.LINUX)) {
-            //TODO: Linux pathi verilecek
-            docPath = "/selenium/";
-        } else if (operationSystem.is(Platform.MAC)) {
-            //TODO: Mac pathi verilecek
-            docPath = "/documents/";
-        }
-        System.out.println("File path: " + docPath);
-        return docPath;
-    }
-
-    public static String getDocPath() {
-
-        /*// Get Browser name and version.
-        Capabilities caps = ((RemoteWebDriver) WebDriverRunner.getWebDriver()).getCapabilities();
-        // String browserName = caps.getBrowserName();
-        // String browserVersion = caps.getVersion();
-        Platform operationSystem = caps.getPlatform();
-        System.out.println("Operation System: " + operationSystem.name());
-
-        if (operationSystem.is(Platform.WINDOWS)) {
-            docPath = "C:\\TestAutomation\\BelgenetFTA\\documents\\";
-        } else if (operationSystem.is(Platform.XP)) {
-            docPath = "C:\\TestAutomation\\BelgenetFTA\\documents\\";
-        } else if (operationSystem.is(Platform.LINUX)) {
-            //TODO: Linux pathi verilecek
-            docPath = "/selenium/";
-        } else if (operationSystem.is(Platform.MAC)) {
-            //TODO: Mac pathi verilecek
-            docPath = "/documents/";
-        }
-        System.out.println("File path: " + docPath);*/
-        return docPath;
-    }
-
-    public String getPcUserName() {
-
+    private String getPCUsername() {
         String userName = System.getProperty("user.name");
-
         return userName;
     }
 
@@ -877,10 +806,10 @@ public class BaseLibrary extends ElementsContainer {
 
         for (int i = 0; i < dir_contents.length; i++) {
             String file = dir_contents[i].getName().toString();
-            s="";
+            s = "";
             Matcher m = y.matcher(file);
             while (m.find()) {
-                s =s+ m.group();
+                s = s + m.group();
             }
 //            sa.assertEquals(s,fileName,"Klasör "+ dir_contents[i].getName().toString() +"indirilmiştir.");
 //            sa.assertNotEquals(s,fileName,"İstenilen dosya indirilmemiştir.");
@@ -889,13 +818,102 @@ public class BaseLibrary extends ElementsContainer {
 
             if (s.contains(fileName)) {
                 System.out.println("dosya indirilmiştir.");
-                Allure.addAttachment(dir_contents[i].getName().toString(),"raporu indirilmiştir");
+                Allure.addAttachment(dir_contents[i].getName().toString(), "raporu indirilmiştir");
                 flag = true;
                 break;
-            }
-            else
+            } else
                 Allure.addAttachment("Rapor Sonucu", "İstenilen dosya indirilememiştir.");
         }
         return flag;
     }
+
+
+    //region Capabilities
+    public String getOS() {
+        Capabilities caps = getCapabilities();
+        String platformName = caps.getCapability("platformName").toString();
+        System.out.println("Operation System: " + platformName);
+        return platformName;
+    }
+
+    public String getBrowserName() {
+        String browserName = getCapabilities().getBrowserName();
+        System.out.println("Browser Name : " + browserName);
+        return browserName;
+    }
+
+    @Deprecated
+    private String setDocPath() {
+
+        // Get Browser name and version.
+        Capabilities caps = ((RemoteWebDriver) WebDriverRunner.getWebDriver()).getCapabilities();
+        // String browserName = caps.getBrowserName();
+        // String browserVersion = caps.getVersion();
+        Platform operationSystem = caps.getPlatform();
+        System.out.println("Operation System: " + operationSystem.name());
+
+        if (operationSystem.is(Platform.WINDOWS)) {
+            docPath = "C:\\TestAutomation\\BelgenetFTA\\documents\\";
+        } else if (operationSystem.is(Platform.XP)) {
+            docPath = "C:\\TestAutomation\\BelgenetFTA\\documents\\";
+        } else if (operationSystem.is(Platform.LINUX)) {
+            //TODO: Linux pathi verilecek
+            docPath = System.getProperty("user.name") + "/BelgenetFTA/documents";
+        } else if (operationSystem.is(Platform.MAC)) {
+            //TODO: Mac pathi verilecek
+            docPath = System.getProperty("user.name") + "/BelgenetFTA/documents";
+        }
+        System.out.println("File path: " + docPath);
+        return docPath;
+    }
+
+    public String getDocPath() {
+        Capabilities caps = getCapabilities();
+        Platform operationSystem = caps.getPlatform();
+
+        String path = "";
+        if (operationSystem.is(Platform.WINDOWS) || operationSystem.is(Platform.XP))
+            path = TestData.docPathWindows;
+        else
+            path = TestData.docPathLinux;
+
+        log.info("Documents path: " + path);
+        return path;
+    }
+
+    public String getDownoladPath() {
+        Capabilities caps = getCapabilities();
+        Platform operationSystem = caps.getPlatform();
+
+        String path = "";
+        if (operationSystem.is(Platform.WINDOWS) || operationSystem.is(Platform.XP))
+            path = TestData.docDownloadPathWindows;
+        else
+            path = TestData.docDownloadPathLinux;
+
+        log.info("Downloads path: " + path);
+        return path;
+    }
+
+    /**
+     * Get Capabilities of EventFiringWebDriver
+     */
+    public Capabilities getCapabilities() {
+        //This 'if' handle case when LoggingWebDriver.driver is instanceof EventFiringWebDriver .
+        //In this case RemoteWebDriver is field within EventFiringWebDriver while EventFiringWebDriver don't support getting Capabilities
+        WebDriver driver = WebDriverRunner.getWebDriver();
+
+        if (driver instanceof EventFiringWebDriver
+                && ((EventFiringWebDriver) driver).getWrappedDriver() instanceof HasCapabilities) {
+            return ((HasCapabilities) ((EventFiringWebDriver) driver)
+                    .getWrappedDriver()).getCapabilities();
+        } else if (driver instanceof HasCapabilities) {
+            return ((HasCapabilities) driver).getCapabilities();
+        }
+        throw new UnsupportedOperationException(
+                "Underlying driver instance does not support capabilities");
+    }
+    //endregion
+
+
 }

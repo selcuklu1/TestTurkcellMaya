@@ -30,14 +30,14 @@ public class OlurYazisiOlusturPage extends MainPage {
 
     private SelenideElement page = $("#yeniOnayEvrakForm");
 
-    public OlurYazisiOlusturPage openPage(){
+    public OlurYazisiOlusturPage openPage() {
         ustMenu(UstMenuData.EvrakIslemleri.OlurYazisiOlustur.getName());
         ustMenuPageHeader.getPageTitle().shouldHave(text(UstMenuData.EvrakIslemleri.OlurYazisiOlustur.getName()));
         return this;
     }
 
     @Step("Sayfayı kapat")
-    public void closePage(boolean save){
+    public void closePage(boolean save) {
         ustMenuPageHeader.closePageButton.click();
         if (save)
             confirmDialog().button("Evet").shouldBe(visible).click();
@@ -45,7 +45,7 @@ public class OlurYazisiOlusturPage extends MainPage {
             confirmDialog().button("Hayır").shouldBe(visible).click();
     }
 
-    public BilgilerTab bilgileriTabiAc(){
+    public BilgilerTab bilgileriTabiAc() {
         return bilgilerTab.openTab();
     }
 
@@ -55,11 +55,11 @@ public class OlurYazisiOlusturPage extends MainPage {
     }
 
     public class EditorTab extends MainPage {
+        private TextEditor editor = new TextEditor();
+
         public TextEditor getEditor() {
             return editor;
         }
-
-        private TextEditor editor = new TextEditor();
 
         private EditorTab openTab() {
             if ($("[id*=allPanels_content]").is(not(visible)))

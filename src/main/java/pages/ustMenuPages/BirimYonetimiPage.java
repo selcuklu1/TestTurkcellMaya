@@ -67,7 +67,16 @@ public class BirimYonetimiPage extends MainPage {
     // Hüseyin TÜMER
 
     SelenideElement btnBirimEkle = $(By.id("birimYonetimiListingForm:birimTreeTable:addNewBirimButton"));
-
+    SelenideElement txtAntetBilgisi = $(By.id("birimYonetimiEditorForm:antetBilgisiInput"));
+    BelgenetElement txtPostaBirimi = comboLov(By.id("birimYonetimiEditorForm:postaBirimiLov:LovText"));
+    BelgenetElement txtKepPostaBirimi = comboLov(By.id("birimYonetimiEditorForm:kepPostaBirimiLov:LovText"));
+    SelenideElement btnBirimAmiriEkle = $(By.id("birimYonetimiEditorForm:birimKullaniciDataTable:addNewBirimKullaniciLinkButton"));
+    BelgenetElement txtKullanici = comboLov(By.id("birimAmiriEditorForm:birimAmiriLov:LovText"));
+    SelenideElement txtGorev = $(By.id("birimAmiriEditorForm:gorevAutoComplete_input"));
+    SelenideElement cmbGizlilikDerecesi = $(By.id("birimAmiriEditorForm:birimGuvenlikKoduSelect"));
+    SelenideElement btnBirimAmiriKaydet = $(By.id("birimAmiriEditorForm:saveBirimKullaniciIliskiButton"));
+    BelgenetElement txtUstBirim = comboLov(By.id("birimYonetimiEditorForm:ustBirimLov:LovText"));
+    SelenideElement btnBirimKaydet = $(By.id("birimYonetimiEditorForm:saveBirimButton"));
 
     @Step("Birim Yönetimi sayfası aç")
     public BirimYonetimiPage openPage() {
@@ -333,19 +342,8 @@ public class BirimYonetimiPage extends MainPage {
         return this;
     }
 
-    SelenideElement txtAntetBilgisi = $(By.id("birimYonetimiEditorForm:antetBilgisiInput"));
-    BelgenetElement txtPostaBirimi = comboLov(By.id("birimYonetimiEditorForm:postaBirimiLov:LovText"));
-    BelgenetElement txtKepPostaBirimi = comboLov(By.id("birimYonetimiEditorForm:kepPostaBirimiLov:LovText"));
-    SelenideElement btnBirimAmiriEkle = $(By.id("birimYonetimiEditorForm:birimKullaniciDataTable:addNewBirimKullaniciLinkButton"));
-    BelgenetElement txtKullanici = comboLov(By.id("birimAmiriEditorForm:birimAmiriLov:LovText"));
-    SelenideElement txtGorev = $(By.id("birimAmiriEditorForm:gorevAutoComplete_input"));
-    SelenideElement cmbGizlilikDerecesi = $(By.id("birimAmiriEditorForm:birimGuvenlikKoduSelect"));
-    SelenideElement btnBirimAmiriKaydet = $(By.id("birimAmiriEditorForm:saveBirimKullaniciIliskiButton"));
-    BelgenetElement txtUstBirim = comboLov(By.id("birimYonetimiEditorForm:ustBirimLov:LovText"));
-    SelenideElement btnBirimKaydet = $(By.id("birimYonetimiEditorForm:saveBirimButton"));
-
     @Step("Birim oluştur")
-    public String birimOlustur(String ustBirim){
+    public String birimOlustur(String ustBirim) {
 
         String idariKimlikKodu = "1" + (new Random().nextInt((900000 - 100000) + 1) + 100000);
         String yeniBirimAdi = "Birim" + idariKimlikKodu;

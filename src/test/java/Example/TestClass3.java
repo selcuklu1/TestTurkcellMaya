@@ -22,7 +22,7 @@ public class TestClass3 extends BaseTest {
     @BeforeMethod
     public void loginBeforeTests() {
         open("https://www.google.com.tr/");
-      //  login();
+        //  login();
     }
 /*
     MainPage page = new MainPage();
@@ -105,7 +105,7 @@ public class TestClass3 extends BaseTest {
 
     @Test()
     public void setPathTest() {
-        setDocPath();
+//        setDocPath();
     }
 
 }

@@ -132,13 +132,13 @@ public class KullaniciEvrakDevretPage extends MainPage {
     }
 
     @Step("Devredilemeyen Evraklar popup kontrolü")
-    public KullaniciEvrakDevretPage popUpDevredilemeyenEvraklarKontrol(){
+    public KullaniciEvrakDevretPage popUpDevredilemeyenEvraklarKontrol() {
         popUpDevredilemeyenEvraklar.shouldHave(Condition.visible);
         return this;
     }
 
     @Step("Devredilemeyen Evraklar popup kontrolü")
-    public KullaniciEvrakDevretPage devredelimeyenEvraklarEvrakKontrolu(String konu, String aciklama){
+    public KullaniciEvrakDevretPage devredelimeyenEvraklarEvrakKontrolu(String konu, String aciklama) {
         tblDevredilemeyenEvraklar
                 .filterBy(Condition.text(konu))
                 .filterBy(Condition.text(aciklama))

@@ -68,7 +68,8 @@ public class KlasorEvrakIslemleriPage extends MainPage {
         txtKlasor.selectLov(klasor);
         return this;
     }
-    public KlasorEvrakIslemleriPage klasorDoldurwithDetail(String klasor,String title) {
+
+    public KlasorEvrakIslemleriPage klasorDoldurwithDetail(String klasor, String title) {
         txtKlasor.type(klasor).detailItems().filterBy(text(title)).first().click();
         return this;
     }

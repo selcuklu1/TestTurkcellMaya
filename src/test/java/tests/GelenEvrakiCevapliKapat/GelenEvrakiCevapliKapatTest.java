@@ -114,13 +114,13 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
 
         gelenEvraklarPage
                 .openPage()
-                .evrakGelmedigiGorme(konuKoduRandom,kurum,evrakTarihi,evrakSayiSag);
+                .evrakGelmedigiGorme(konuKoduRandom, kurum, evrakTarihi, evrakSayiSag);
 
         login("test1", "123");
 
         kontrolBekleyenlerPage
                 .openPage()
-                .evrakSec(konuKodu,kurum,evrakTarihi)
+                .evrakSec(konuKodu, kurum, evrakTarihi)
                 .kontrolEt();
 
         login(username2, password2);
@@ -132,7 +132,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
     }
 
     @Test(enabled = true, description = "TC931: Gerçek kişiden gelen evraka cevap yaz")
-    public void TC931() throws InterruptedException{
+    public void TC931() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
         String konuKodu = "Diğer";
@@ -166,7 +166,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
 
         gelenEvraklarPage
                 .openPage()
-                .evrakSec(konuKoduRandom,kurum,evrakTarihi,evrakSayiSag)
+                .evrakSec(konuKoduRandom, kurum, evrakTarihi, evrakSayiSag)
                 .cevapYaz();
 
         evrakOlusturPage
@@ -186,13 +186,13 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
 
         gelenEvraklarPage
                 .openPage()
-                .evrakGelmedigiGorme(konuKoduRandom,kurum,evrakTarihi,evrakSayiSag);
+                .evrakGelmedigiGorme(konuKoduRandom, kurum, evrakTarihi, evrakSayiSag);
 
         login("test1", "123");
 
         kontrolBekleyenlerPage
                 .openPage()
-                .evrakSec(konuKodu,kurum,evrakTarihi)
+                .evrakSec(konuKodu, kurum, evrakTarihi)
                 .kontrolEt();
 
         login(username2, password2);
@@ -221,7 +221,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
         String cevaplananEvrakSayisi = "6345202-010.01-9075";
         String cevaplananEvrakTarihi = "17.11.2017";
         String basariMesaji = "İşlem başarılıdır!";
-        String filePath = "C:\\Users\\" + getPcUserName() + "\\Downloads\\";
+        String filePath = getDownoladPath();//"C:\\Users\\" + getPCUsername() + "\\Downloads\\";
         String fileName = "Rapor_";
         String fileName2 = "Rapor_.xls";
 
@@ -333,7 +333,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .islemMesaji().basariliOlmali(basariMesaji);
 
         //gelenEvraklarPage
-               // .tabloOlmayanEvrakNoKontrol(evrakNo);
+        // .tabloOlmayanEvrakNoKontrol(evrakNo);
 
         //TODO: devam edilecek.
     }
@@ -421,7 +421,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
 
         //DenemeListesindeki kullnıcı veya kullanıcılarla giriş yapılır işlemdeki aksiyonlar alınır.
         logout();
-        login("username24o","123");
+        login("username24o", "123");
 
         imzaBekleyenlerPage
                 .openPage()
@@ -431,7 +431,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .sImzaImzala(true);
 
         logout();
-        login(username4,password4);
+        login(username4, password4);
 
         gelenEvraklarPage
                 .openPage()
@@ -468,7 +468,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .shouldHaveSize(1);
 
         logout();
-        login("username24o","123");
+        login("username24o", "123");
 
         postalanacakEvraklarPage
                 .openPage()
@@ -565,7 +565,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
 
         //DenemeListesindeki kullnıcı veya kullanıcılarla giriş yapılır işlemdeki aksiyonlar alınır.
         logout();
-        login("username24o","123");
+        login("username24o", "123");
 
         imzaBekleyenlerPage
                 .openPage()
@@ -575,7 +575,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .sImzaImzala(true);
 
         logout();
-        login(username4,password4);
+        login(username4, password4);
 
         gelenEvraklarPage
                 .openPage()
@@ -612,7 +612,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .shouldHaveSize(1);
 
         logout();
-        login("username24o","123");
+        login("username24o", "123");
 
         postalanacakEvraklarPage
                 .openPage()

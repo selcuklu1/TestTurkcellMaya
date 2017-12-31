@@ -9,7 +9,7 @@ import static com.codeborne.selenide.Selenide.*;
 
 public class PostalananEvrakRaporuPage extends MainPage {
 
-    SelenideElement txtEvrakSayisi = $( By.id("postalananEvrakRaporuForm:evrakSayiTextId"));
+    SelenideElement txtEvrakSayisi = $(By.id("postalananEvrakRaporuForm:evrakSayiTextId"));
     SelenideElement btnPostaBaslangicTarihi = $(By.id("postalananEvrakRaporuForm:ilkTarihCalendar_input"));
     SelenideElement btnSorgula = $(By.id("postalananEvrakRaporuForm:sorgulaButton"));
     ElementsCollection tblSorgulamaSonuc = $$("tbody[id='postalananEvrakRaporuForm:postalananEvrakDataTable_data']");
@@ -32,78 +32,85 @@ public class PostalananEvrakRaporuPage extends MainPage {
 
         ustMenu("Postalanan Evrak Raporu");
         return this;
-}
+    }
 
-public PostalananEvrakRaporuPage evrakSayisi (String txt) {
-    txtEvrakSayisi.setValue(txt);
-    return this;
-}
+    public PostalananEvrakRaporuPage evrakSayisi(String txt) {
+        txtEvrakSayisi.setValue(txt);
+        return this;
+    }
 
-public PostalananEvrakRaporuPage postaAramaBaslangicTarihi (String txt) {
+    public PostalananEvrakRaporuPage postaAramaBaslangicTarihi(String txt) {
 
-    btnPostaBaslangicTarihi.setValue(txt);
-    return this;
-}
+        btnPostaBaslangicTarihi.setValue(txt);
+        return this;
+    }
 
-public PostalananEvrakRaporuPage postaSorgulama() {
+    public PostalananEvrakRaporuPage postaSorgulama() {
 
-    btnSorgula.click();
-    return this;
+        btnSorgula.click();
+        return this;
 
-}
+    }
 
-public PostalananEvrakRaporuPage sonucKarsilastirma () {
+    public PostalananEvrakRaporuPage sonucKarsilastirma() {
 
-    tblSorgulamaSonuc.get(0);
+        tblSorgulamaSonuc.get(0);
 
-    return this;
-}
+        return this;
+    }
 
-public PostalananEvrakRaporuPage ilkEvrakGecmisi() {
-    btnIlkEvrakGecmisi.click();
-    return this;
-}
-public PostalananEvrakRaporuPage evrakGecmisiKapat() {
+    public PostalananEvrakRaporuPage ilkEvrakGecmisi() {
+        btnIlkEvrakGecmisi.click();
+        return this;
+    }
+
+    public PostalananEvrakRaporuPage evrakGecmisiKapat() {
         btnEvrakGecmisiKapat.click();
         return this;
-}
-public PostalananEvrakRaporuPage evrakIcerikGoster() {
+    }
+
+    public PostalananEvrakRaporuPage evrakIcerikGoster() {
         btnEvrakGoster.click();
         return this;
-}
+    }
 
-public PostalananEvrakRaporuPage evrakIcerikKapat() {
-         btnEvrakIcerikKapat.click();
-         btnEvrakDialogKapat.click();
-         return this;
-}
-public PostalananEvrakRaporuPage etiketBastir() {
-         btnEtiketBastir.click();
-         return this;
-}
-public PostalananEvrakRaporuPage etiketBastirPopupKapat() {
+    public PostalananEvrakRaporuPage evrakIcerikKapat() {
+        btnEvrakIcerikKapat.click();
+        btnEvrakDialogKapat.click();
+        return this;
+    }
 
-    btnPopupKapat.click();
-    return this;
-}
-public PostalananEvrakRaporuPage btnExcel () {
-         //btnExcel.click();
-    clickJs(btnExcel);
-         return this;
-}
-public PostalananEvrakRaporuPage btnPdf() {
-    clickJs(btnPdfBastir);
-    return this;
-}
-public PostalananEvrakRaporuPage btnEtiket() {
-    btnEtiketYazdir.click();
-    return this;
-}
+    public PostalananEvrakRaporuPage etiketBastir() {
+        btnEtiketBastir.click();
+        return this;
+    }
 
-public PostalananEvrakRaporuPage popupEtiketBastirma (String satir , String kolon) {
+    public PostalananEvrakRaporuPage etiketBastirPopupKapat() {
+
+        btnPopupKapat.click();
+        return this;
+    }
+
+    public PostalananEvrakRaporuPage btnExcel() {
+        //btnExcel.click();
+        clickJs(btnExcel);
+        return this;
+    }
+
+    public PostalananEvrakRaporuPage btnPdf() {
+        clickJs(btnPdfBastir);
+        return this;
+    }
+
+    public PostalananEvrakRaporuPage btnEtiket() {
+        btnEtiketYazdir.click();
+        return this;
+    }
+
+    public PostalananEvrakRaporuPage popupEtiketBastirma(String satir, String kolon) {
         etiketBastirPopupIlkSatir.setValue(satir);
         etiketBastirPopupIlkKolon.setValue(kolon);
         etiketBastirPopupTamam.click();
         return this;
-}
+    }
 }

@@ -33,12 +33,12 @@ public class TopluPostalamaTest extends BaseTest {
     @Test(enabled = true, description = "1804 : Toplu Postalanacak Evrakların Sorgulanması (UC_POSTAYÖNETİMİ_001)")
     public void TC01804() {
 
-        String[] gidecegiYerler = new String[] {
+        String[] gidecegiYerler = new String[]{
                 "Adalet Bakanlığı",
                 "Başbakan Başmüşavirleri"
         };
 
-        String[] postaTipleri = new String[] {
+        String[] postaTipleri = new String[]{
                 "Adi Posta"
         };
 
@@ -63,7 +63,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .gidecegiYerSec(gidecegiYerler, true, true)
                 .postaTipiSec(postaTipleri)
                 .sorgula();
-                //.islemMesaji().uyariOlmali("");
+        //.islemMesaji().uyariOlmali("");
 
         baslangicTarihi = "01.12.2016";
         bitisTarihi = "02.12.2018";
@@ -73,7 +73,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .postaTipiSec(postaTipleri)
                 .gidecegiYerTumunuIsaretle(false)
                 .sorgula();
-                //.islemMesaji().uyariOlmali("");
+        //.islemMesaji().uyariOlmali("");
 
         topluPostalanacakEvraklarPage
                 .gidecegiYerTumunuIsaretle(true)
@@ -116,7 +116,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .openPage()
                 .filtreleAc()
                 .postaListesiDoldur(listeAdi)
-                .postaListesindenCikart("",evrakGidecegiYer,evrakKonu,evrakHazirlayanBirim,evrakPostaTipi)
+                .postaListesindenCikart("", evrakGidecegiYer, evrakKonu, evrakHazirlayanBirim, evrakPostaTipi)
                 .islemMesaji().basariliOlmali();
 
 
@@ -134,13 +134,13 @@ public class TopluPostalamaTest extends BaseTest {
     @Test(enabled = true, description = "1808 : Posta Listesine Evrak Ekleme ve Çıkartma (UC_POSTAYÖNETİMİ_002)")
     public void TC01808() {
 
-        String[] gidecegiYerler = new String[] {
+        String[] gidecegiYerler = new String[]{
                 "Adalet Bakanlığı Döner Sermaye İşletmesi",
                 "Başbakanlık",
                 "Başbakan Müşavirleri"
         };
 
-        String[] postaYerleri = new String[] {
+        String[] postaYerleri = new String[]{
                 "Adi Posta"
         };
 
@@ -228,11 +228,11 @@ public class TopluPostalamaTest extends BaseTest {
     @Test(enabled = true, description = "1807 : Posta Listesi Oluşturma- Tüzel Kişi Listesi (UC_POSTAYÖNETİMİ_002)")
     public void TC01807() {
 
-        String[] gidecegiYerler = new String[] {
+        String[] gidecegiYerler = new String[]{
                 "mehmet ali"
         };
 
-        String[] postaTipleri = new String[] {
+        String[] postaTipleri = new String[]{
                 "Adi Posta"
         };
 
@@ -283,7 +283,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .openPage();
 
 
-        gidecegiYerler = new String[] {
+        gidecegiYerler = new String[]{
                 "mehmet ali",
                 "dfyfzek holding"
         };
@@ -329,11 +329,11 @@ public class TopluPostalamaTest extends BaseTest {
     @Test(enabled = true, description = "1807 : Posta Listesi Oluşturma- Gerçek Kişi Listesi (UC_POSTAYÖNETİMİ_002)")
     public void TC01807A() {
 
-        String[] gidecegiYerler = new String[] {
+        String[] gidecegiYerler = new String[]{
                 "Ahmet Çelik"
         };
 
-        String[] postaTipleri = new String[] {
+        String[] postaTipleri = new String[]{
                 "Adi Posta"
         };
 
@@ -385,7 +385,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .openPage();
 
 
-        gidecegiYerler = new String[] {
+        gidecegiYerler = new String[]{
                 "Ahmet Çelik",
                 "Arif Hakan"
         };
@@ -432,11 +432,11 @@ public class TopluPostalamaTest extends BaseTest {
     @Test(enabled = true, description = "1805 : Posta Listesi Oluşturma- Kurum Listesi (UC_POSTAYÖNETİMİ_002)")
     public void TC01805() {
 
-        String[] gidecegiYerler = new String[] {
+        String[] gidecegiYerler = new String[]{
                 "Cumhurbaşkanlığı"
         };
 
-        String[] postaTipleri = new String[] {
+        String[] postaTipleri = new String[]{
                 "Adi Posta"
         };
 
@@ -444,7 +444,6 @@ public class TopluPostalamaTest extends BaseTest {
 
         String baslangicTarihi = "01.12.2015";
         String bitisTarihi = "02.12.2018";
-
 
 
         String evrakKayitTarihiSayi = "9258";
@@ -489,7 +488,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .openPage();
 
 
-        gidecegiYerler = new String[] {
+        gidecegiYerler = new String[]{
                 "Cumhurbaşkanlığı",
                 "Çalışma ve Sosyal Güvenlik Bakanlığı"
         };
@@ -644,8 +643,6 @@ public class TopluPostalamaTest extends BaseTest {
         */
 
 
-
-
     }
 
     // DÜZENLENECEK
@@ -658,35 +655,35 @@ public class TopluPostalamaTest extends BaseTest {
                 .filtrePaneliAc()
                 .postaListesiAdiDoldur("")
                 .filtrele()
-                .postaListesiKontrol("","","","","", true)
+                .postaListesiKontrol("", "", "", "", "", true)
 
                 .temizle()
                 .postaListesiAdiDoldur("")
                 .filtrele()
-                .postaListesiKontrol("","","","","", false)
+                .postaListesiKontrol("", "", "", "", "", false)
 
                 .temizle()
 
                 .evrakSayisiDoldur("")
                 .filtrele()
-                .postaListesiKontrol("","","","","", true)
+                .postaListesiKontrol("", "", "", "", "", true)
                 .evrakSayisiDoldur("")
                 .filtrele()
-                .postaListesiKontrol("","","","","", false)
-
-                .temizle()
-                .postaListesiAdiDoldur("")
-                .evrakSayisiDoldur("")
-                .postaTarihiDoldur("")
-                .filtrele()
-                .postaListesiKontrol("","","","","", true)
+                .postaListesiKontrol("", "", "", "", "", false)
 
                 .temizle()
                 .postaListesiAdiDoldur("")
                 .evrakSayisiDoldur("")
                 .postaTarihiDoldur("")
                 .filtrele()
-                .postaListesiKontrol("","","","","", false);
+                .postaListesiKontrol("", "", "", "", "", true)
+
+                .temizle()
+                .postaListesiAdiDoldur("")
+                .evrakSayisiDoldur("")
+                .postaTarihiDoldur("")
+                .filtrele()
+                .postaListesiKontrol("", "", "", "", "", false);
 
     }
 
@@ -719,7 +716,7 @@ public class TopluPostalamaTest extends BaseTest {
 
         topluPostaladiklarimPage
                 .openPage()
-                .postaListesiSec(postaListesiAdi, "" , postaTarihi, postaGramaji, pttTutari)
+                .postaListesiSec(postaListesiAdi, "", postaTarihi, postaGramaji, pttTutari)
                 .evrakSil(evrakGonderildigiYer, evrakKonu, evrakSayi)
                 .islemMesaji().basariliOlmali();
 
@@ -750,7 +747,7 @@ public class TopluPostalamaTest extends BaseTest {
 
         imzaBekleyenlerPage
                 .openPage()
-                .evrakSec(evrakKonu,evrakGonderildigiYer, gonderen, evrakSayi)
+                .evrakSec(evrakKonu, evrakGonderildigiYer, gonderen, evrakSayi)
                 .imzala()
                 .sImzaSec()
                 .imzala()
@@ -783,7 +780,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .openPage()
 //                .postaListesiSec("" ,"" ,"","", "")
 //                .evrakKontrol("", "", "");
-                .postaListesiSec(yeniPostaListesiAdi ,"" , postaTarihi, postaGramaji, pttTutari)
+                .postaListesiSec(yeniPostaListesiAdi, "", postaTarihi, postaGramaji, pttTutari)
                 .evrakKontrol(evrakGonderildigiYer, evrakKonu, evrakSayi);
     }
 
@@ -845,9 +842,9 @@ public class TopluPostalamaTest extends BaseTest {
                 .postaListesiAdiKontrol(postaListesiAdi, true)
                 .gonderildigiYerKontrol(gonderildigiYer, true)
                 .gonderildigiKurumKontro(gonderildigiKurum, true)
-                .adresKontrol(adres , true)
-                .gidisSekliKontrol(gidisSekli , true)
-                .gramajKontrol(gramaj , true)
+                .adresKontrol(adres, true)
+                .gidisSekliKontrol(gidisSekli, true)
+                .gramajKontrol(gramaj, true)
                 .tutarHesapla()
                 .indirimOncesiTutarKontrol(indirimOncesiTutar, true)
                 .indirimOraniKontrol(indirimOrani, true)

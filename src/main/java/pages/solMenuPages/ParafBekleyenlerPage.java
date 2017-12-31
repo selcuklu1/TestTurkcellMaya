@@ -48,6 +48,7 @@ public class ParafBekleyenlerPage extends MainPage {
 
     BelgenetElement txtTakipListesiKullanicilar = comboLov(By.id("evrakTakibimeEkleDialogForm:takipListLov:LovText"));
     SelenideElement btnTakipListesiKapat = $("[id^='evrakTakibimeEkleDialogForm:takipDialog'] span[class='ui-icon ui-icon-closethick']");
+    ElementsCollection tableEvrakNotlari = $$(By.xpath("//th[contains(., 'Evrak Notları')]/../../../tbody/tr"));
 
     @Step("Paylaştıklarım sayfası aç")
     public ParafBekleyenlerPage openPage() {
@@ -98,16 +99,16 @@ public class ParafBekleyenlerPage extends MainPage {
         return this;
     }
 
+
+    //     // Yasin ÖZGÜL / Yasin TELLİ / Veysel KIRAN
+
+    // yeniler
+
     @Step("Paylaş tabına tıkla")
     public ParafBekleyenlerPage paylasTabTikla() {
         btnPaylasTab.click();
         return this;
     }
-
-
-    //     // Yasin ÖZGÜL / Yasin TELLİ / Veysel KIRAN
-
-    // yeniler
 
     @Step("Evrak seç ")
     public ParafBekleyenlerPage evrakSec(String paylasilanKullanici) {
@@ -117,7 +118,6 @@ public class ParafBekleyenlerPage extends MainPage {
                 .click();
         return this;
     }
-
 
     @Step("Evrak seç ")
     public ParafBekleyenlerPage evrakSec(String konu, String gidecegiYer, String gonderen, String tarih) {
@@ -167,7 +167,6 @@ public class ParafBekleyenlerPage extends MainPage {
         return this;
     }
 
-
     // Paylaş tab fonsiyonlar
     @Step("Paylaşımı durdur")
     public ParafBekleyenlerPage paylasimiDurdur() {
@@ -185,7 +184,6 @@ public class ParafBekleyenlerPage extends MainPage {
             btnEvratNotEkle.shouldHave(Condition.attribute("aria-disabled", "true"));
         return this;
     }
-
 
     @Step("Paylaşımdan geri al tabına tıklandı. ")
     public ParafBekleyenlerPage paylasimdanGeriAlTabSec() {
@@ -226,13 +224,11 @@ public class ParafBekleyenlerPage extends MainPage {
         return this;
     }
 
-
     @Step("paylaş butonuna tıklandı. ")
     public ParafBekleyenlerPage paylas() {
         btnPaylas.click();
         return this;
     }
-
 
     @Step("Paylaş")
     public ParafBekleyenlerPage paylasPaylas() {
@@ -264,8 +260,6 @@ public class ParafBekleyenlerPage extends MainPage {
         txtPaylasKisi.clearAllSelectedLov();
         return this;
     }
-
-    ElementsCollection tableEvrakNotlari = $$(By.xpath("//th[contains(., 'Evrak Notları')]/../../../tbody/tr"));
 
     @Step("Açıklama kontrol")
     public ParafBekleyenlerPage evrakNotuKontrol(String ekleyen, String tarih, String aciklama, Boolean shouldBeExist) {

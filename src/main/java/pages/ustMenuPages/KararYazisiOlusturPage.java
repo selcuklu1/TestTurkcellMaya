@@ -17,17 +17,7 @@ import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 public class KararYazisiOlusturPage extends MainPage {
 
-    //region Tabs local variables
-    private BilgilerTab bilgilerTab = new BilgilerTab();
-    private EkleriTab ekleriTab = new EkleriTab();
-    private EditorTab editorTab = new EditorTab();
-    private IlgileriTab ilgileriTab = new IlgileriTab();
-    private IliskiliEvraklarTab iliskiliEvraklarTab = new IliskiliEvraklarTab();
-    private EvrakNotlariTab evrakNotlariTab = new EvrakNotlariTab();
     public PDFKontrol pdfKontrol = new PDFKontrol();
-    //endregion
-
-
     //region Elements
     SelenideElement tabBilgiler = $("button[id^='yeniKararEvrakForm'] span[class$='kullaniciBilgileri']");
     //SelenideElement tabBilgiler = $("button .kullaniciBilgileri");
@@ -36,8 +26,8 @@ public class KararYazisiOlusturPage extends MainPage {
     SelenideElement tabIlgileri = $("button .kullaniciIlgileri");
     SelenideElement tabIliskiliEvraklar = $("button .kullaniciIliskileri");
     SelenideElement tabEvrakNotlari = $("button .evrakNot");
+    //endregion
     SelenideElement tabEvrakDogrulama = $("button .evrakDogrulamaAktarimIslemleri");
-
     SelenideElement btnPDFOnizleme = $("button[id^='yeniGidenEvrakForm:rightTab:uiRepeat'] span[class$='pdfOnIzleme']");
     SelenideElement btnKaydet = $(By.id("yeniKararEvrakForm:kararEvrakRightTab:uiRepeat:1:cmdbutton"));
     SelenideElement btnKaydetOnayaSun = $("button[id^='yeniKararEvrakForm:kararEvrakRightTab:uiRepeat'] span[class$='kaydetHavaleEt']");
@@ -47,8 +37,14 @@ public class KararYazisiOlusturPage extends MainPage {
     SelenideElement btnGonder = $(By.id("yeniKararEvrakForm:gonderButton"));
     SelenideElement btnEvet = $(By.id("kaydetConfirmForm:kaydetEvetButton"));
     SelenideElement btnHayir = $(By.id("kaydetConfirmForm:kaydetHayirButton"));
+    //region Tabs local variables
+    private BilgilerTab bilgilerTab = new BilgilerTab();
+    private EkleriTab ekleriTab = new EkleriTab();
+    private EditorTab editorTab = new EditorTab();
+    private IlgileriTab ilgileriTab = new IlgileriTab();
+    private IliskiliEvraklarTab iliskiliEvraklarTab = new IliskiliEvraklarTab();
+    private EvrakNotlariTab evrakNotlariTab = new EvrakNotlariTab();
     //endregion
-
 
     @Step("Karar yazısı oluştur sayfası aç")
     public KararYazisiOlusturPage openPage() {
@@ -61,6 +57,26 @@ public class KararYazisiOlusturPage extends MainPage {
     @Step("Bilgiler tab aç")
     public BilgilerTab bilgilerTabiAc() {
         return bilgilerTab.open();
+    }
+
+    public EditorTab editorTabAc() {
+        return editorTab.open();
+    }
+
+    public EkleriTab ekleriTabAc() {
+        return ekleriTab.open();
+    }
+
+    public IlgileriTab ilgileriTabAc() {
+        return ilgileriTab.open();
+    }
+
+    public IliskiliEvraklarTab iliskiliEvraklarTabAc() {
+        return iliskiliEvraklarTab.open();
+    }
+
+    public EvrakNotlariTab evrakNotlariTabAc() {
+        return evrakNotlariTab.open();
     }
 
     public class BilgilerTab extends MainPage {
@@ -313,11 +329,6 @@ public class KararYazisiOlusturPage extends MainPage {
 
     }
 
-
-    public EditorTab editorTabAc() {
-        return editorTab.open();
-    }
-
     public class EditorTab extends MainPage {
         //SelenideElement divEditor = $("editorAntetBaslik");
         SelenideElement divEditor1 = $(By.id("cke_1_contents"));
@@ -337,15 +348,15 @@ public class KararYazisiOlusturPage extends MainPage {
             btnKaydetOnayaSun.click();
             return this;
         }
-        
+
         @Step("Açıklama doldur")
-        public EditorTab kaydetVeOnaySunAciklamaDoldur(String aciklama){
+        public EditorTab kaydetVeOnaySunAciklamaDoldur(String aciklama) {
             txtAciklama.setValue(aciklama);
             return this;
         }
 
         @Step("Gönder")
-        public EditorTab gonder(boolean secim){
+        public EditorTab gonder(boolean secim) {
             btnGonder.click();
             if (secim == true) {
                 btnKaydetEvet.click();
@@ -361,7 +372,7 @@ public class KararYazisiOlusturPage extends MainPage {
             if (secim == true) {
                 btnEvet.pressEnter();
             } else {
-               btnHayir.pressEnter();
+                btnHayir.pressEnter();
             }
             return this;
         }
@@ -375,10 +386,6 @@ public class KararYazisiOlusturPage extends MainPage {
         }
 
 
-    }
-
-    public EkleriTab ekleriTabAc() {
-        return ekleriTab.open();
     }
 
     public class EkleriTab extends MainPage {
@@ -428,10 +435,6 @@ public class KararYazisiOlusturPage extends MainPage {
         }
     }
 
-    public IlgileriTab ilgileriTabAc() {
-        return ilgileriTab.open();
-    }
-
     public class IlgileriTab extends MainPage {
 
         SelenideElement metinEkleTab = $("a[href='#yeniKararEvrakForm:ilgiIslemleriTabView:aciklamaEkleTab']");
@@ -464,10 +467,6 @@ public class KararYazisiOlusturPage extends MainPage {
 
     }
 
-    public IliskiliEvraklarTab iliskiliEvraklarTabAc() {
-        return iliskiliEvraklarTab.open();
-    }
-
     public class IliskiliEvraklarTab extends MainPage {
 
         //Sistemde kayıtlı evrak ekle tabı
@@ -493,27 +492,27 @@ public class KararYazisiOlusturPage extends MainPage {
             sistemdeKayitliEvrakEkleTab.click();
             return this;
         }
-        
+
         @Step("Tercüme ekle tab aç")
-        public IliskiliEvraklarTab tercumeEkleTabAc(){
+        public IliskiliEvraklarTab tercumeEkleTabAc() {
             btnTercumeEkleTab.click();
             return this;
         }
 
         @Step("Dosya ekle")
-        public IliskiliEvraklarTab tercumeEkleDosyaEkle(String pathFile){
+        public IliskiliEvraklarTab tercumeEkleDosyaEkle(String pathFile) {
             uploadFile(btnTercumeEkleDosyaEkle, pathFile);
             return this;
         }
 
         @Step("Ekle")
-        public IliskiliEvraklarTab tercumeEkleEkle(){
+        public IliskiliEvraklarTab tercumeEkleEkle() {
             btnTercumeEkleEkle.click();
             return this;
         }
 
         @Step("İlişki metni doldur")
-        public IliskiliEvraklarTab tercumeEkleIliskiMetniDoldur(String iliskiMetni){
+        public IliskiliEvraklarTab tercumeEkleIliskiMetniDoldur(String iliskiMetni) {
             txtTercumeEkleIliskiMetni.setValue(iliskiMetni);
             return this;
         }
@@ -536,10 +535,6 @@ public class KararYazisiOlusturPage extends MainPage {
             return this;
         }
 
-    }
-
-    public EvrakNotlariTab evrakNotlariTabAc() {
-        return evrakNotlariTab.open();
     }
 
     public class EvrakNotlariTab extends MainPage {

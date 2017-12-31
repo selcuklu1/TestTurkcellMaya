@@ -73,7 +73,7 @@ public class GundemIzlemePage extends MainPage {
             e.printStackTrace();
         }
   */
-      return this;
+        return this;
     }
 
     @Step("Yayımla")
@@ -159,7 +159,7 @@ public class GundemIzlemePage extends MainPage {
                                 boolean tarihDurum = cell.getText().contains(tarih[0]);
                                 if (tarihDurum == true) System.out.println(tarih[0] + " İçerisinde bulunuyor");
                                 deger++;
-                                if (deger % 10 == 0){
+                                if (deger % 10 == 0) {
                                     $$("[id='mainInboxForm:inboxDataTable_paginator_top'] span[class='ui-paginator-next ui-state-default ui-corner-all']").get(0).click();
                                 }
 

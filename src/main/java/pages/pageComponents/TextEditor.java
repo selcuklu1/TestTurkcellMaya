@@ -45,7 +45,7 @@ public class TextEditor extends MainPage {
 //        return $inFrame("body[class~='cke_contents_ltr']", frame);
 //        return $inFrame(By.tagName("body"), frame);
 
-        new WebDriverWait(WebDriverRunner.getWebDriver(), Configuration.timeout/1000, Configuration.pollingInterval)
+        new WebDriverWait(WebDriverRunner.getWebDriver(), Configuration.timeout / 1000, Configuration.pollingInterval)
                 .until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frame));
 
         SelenideElement editor = $(".cke_editable");

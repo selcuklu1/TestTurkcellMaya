@@ -21,7 +21,7 @@ public class BirimHavaleEdilenlerPage extends MainPage {
 
 
     SelenideElement f = $(By.xpath("//div[@id='mainInboxForm:inboxDataTable:filtersAccordion']//a[text()='Filtreler']/parent::h3"));
-    SelenideElement cmbTopluSecim  =$(By.id("mainInboxForm:inboxDataTable:j_idt666_button"));
+    SelenideElement cmbTopluSecim = $(By.id("mainInboxForm:inboxDataTable:j_idt666_button"));
     SelenideElement cmbFiltre = $(By.xpath("//select[starts-with(@id,'mainInboxForm:inboxDataTable:filtersAccordion:j_idt']"));
     SelenideElement txtSayfadaAra = $(By.xpath("//select[starts-with(@id,'mainInboxForm:inboxDataTable:filtersAccordion:j_idt']"));
     SelenideElement dateTxtBaslangicTarihi = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt389_input"));
@@ -29,7 +29,7 @@ public class BirimHavaleEdilenlerPage extends MainPage {
     SelenideElement btnIcerikGöster = $(By.id("mainInboxForm:inboxDataTable:0:detayGosterButton"));
     SelenideElement btnTamEkranGöster = $(By.id("mainInboxForm:inboxDataTable:0:tamEkranModuButton"));
     SelenideElement tblRapor = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
-    SelenideElement tblKaydedilenGelenEvraklar =$(By.id("mainInboxForm:inboxDataTable_data"));
+    SelenideElement tblKaydedilenGelenEvraklar = $(By.id("mainInboxForm:inboxDataTable_data"));
 
     @Step("Birim Havale Edilenler sayfası aç")
     public BirimHavaleEdilenlerPage openPage() {
@@ -73,13 +73,13 @@ public class BirimHavaleEdilenlerPage extends MainPage {
         tblRapor.click();
         return this;
     }
+
     @Step("Tabloda evrak no kontrolü")
-    public BirimHavaleEdilenlerPage tabloKontrolu(String evrakNo)
-    {
+    public BirimHavaleEdilenlerPage tabloKontrolu(String evrakNo) {
         int row = $$("tbody[id$='mainInboxForm:inboxDataTable_data'] tr[role=row] tbody").filterBy(Condition.text(evrakNo)).size();
         System.out.println(row);
-        Assert.assertEquals(row,1);
+        Assert.assertEquals(row, 1);
         //log başarılı
-        return  this;
+        return this;
     }
 }

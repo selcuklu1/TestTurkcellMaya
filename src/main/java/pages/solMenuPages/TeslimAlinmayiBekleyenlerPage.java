@@ -1,6 +1,5 @@
 package pages.solMenuPages;
 
-import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
@@ -10,9 +9,8 @@ import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
-import pages.ustMenuPages.GelenEvrakKayitPage;
 
-import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
@@ -43,7 +41,7 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
 
     @Step("Tablodan rapor seç")
     public TeslimAlinmayiBekleyenlerPage gizlilikRaporSec(String konu, String yer, String tarih, String no) {
-        SelenideElement evrak = filter().findRowsWith(text(konu),text(yer),text(tarih),text(no))
+        SelenideElement evrak = filter().findRowsWith(text(konu), text(yer), text(tarih), text(no))
 //                .filterBy(text(yer))
 //                .filterBy(text(tarih))
 //                .filterBy(text(no))
@@ -82,6 +80,7 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         tblIlkEvrak.click();
         return this;
     }
+
     @Step("Evrak seçilir")
     public TeslimAlinmayiBekleyenlerPage evrakSec(String konu, String yer, String tarih, String no) {
         tblEvraklar.filterBy(text(konu))
@@ -101,16 +100,15 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     }
 
     @Step("Evrak içerik göster")
-    public TeslimAlinmayiBekleyenlerPage evrakSecTeslimAl(String konu, String yer, String tarih, String no,boolean secim) {
+    public TeslimAlinmayiBekleyenlerPage evrakSecTeslimAl(String konu, String yer, String tarih, String no, boolean secim) {
         tblEvraklar.filterBy(text(konu))
                 .filterBy(text(yer))
                 .filterBy(text(tarih))
                 .filterBy(text(no)).get(0).$$("[id$='teslimAlButton']").first().click();
 
-        if (secim==true){
+        if (secim == true) {
             $(By.id("teslimAlEvetButton")).click();
-        }
-        else{
+        } else {
             $(By.id("teslimAlHayirButton")).click();
         }
 
@@ -138,7 +136,7 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     @Step("Tarihi doldur")
     public TeslimAlinmayiBekleyenlerPage tarihiDoldur(String tarih, Keys... keys) {
         dateTxtTarih.sendKeys(tarih);
-        for (Keys k:keys) {
+        for (Keys k : keys) {
             dateTxtTarih.sendKeys(keys);
         }
         return this;
@@ -157,7 +155,7 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     }
 
     @Step("Kisi doldur")
-    public TeslimAlinmayiBekleyenlerPage havaleYapKisiDoldur(String kisi){
+    public TeslimAlinmayiBekleyenlerPage havaleYapKisiDoldur(String kisi) {
         txtHavaleYapKisi.selectLov(kisi);
         return this;
     }
@@ -169,7 +167,7 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     }
 
     @Step("Kullanıcı listesi doldur")
-    public TeslimAlinmayiBekleyenlerPage havaleYapKullaniciListesiDoldur(String kullaniciListesi){
+    public TeslimAlinmayiBekleyenlerPage havaleYapKullaniciListesiDoldur(String kullaniciListesi) {
         //txtHavaleYapKullaniciListesi.selectLov(kullaniciListesi);
         txtHavaleYapKullaniciListesi.selectLov(kullaniciListesi);
         return this;
@@ -182,11 +180,10 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     }
 
     @Step("Tabloda evrak no kontrolü")
-    public TeslimAlinmayiBekleyenlerPage tabloKontrolu(String evrakNo)
-    {
+    public TeslimAlinmayiBekleyenlerPage tabloKontrolu(String evrakNo) {
         int row = $$("tbody[id$='mainInboxForm:inboxDataTable_data'] tr[role=row] div[class=searchText]").filterBy(text(evrakNo)).size();
         System.out.println(row);
-        Assert.assertEquals(row,1);
+        Assert.assertEquals(row, 1);
         //log başarılı
         return this;
     }

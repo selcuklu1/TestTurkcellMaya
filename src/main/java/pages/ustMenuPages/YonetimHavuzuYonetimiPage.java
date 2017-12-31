@@ -15,24 +15,17 @@ import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 public class YonetimHavuzuYonetimiPage extends MainPage {
 
-    private String EklenilenHavuzAdi = null;
-    private String EklenilenBirimAdi = null;
-    private String EklenilenKullaniciAdi = null;
-
     BelgenetElement txtFiltreBirim = comboLov(By.id("yonetimHavuzuYonetimiListingForm:filterPanel:birimLov:LovText"));
     SelenideElement btnFiltreAra = $(By.id("yonetimHavuzuYonetimiListingForm:filterPanel:searchEntitiesButton"));
     ElementsCollection treeFiltreBirimler = $$("div[id='yonetimHavuzuYonetimiListingForm:filterPanel:birimLov:lovTree'] > ul > li");
     SelenideElement txtFiltreHavuzuAdi = $(By.id("yonetimHavuzuYonetimiListingForm:filterPanel:adFilterInput"));
     SelenideElement cmbFiltreDurum = $(By.id("yonetimHavuzuYonetimiListingForm:filterPanel:durumSelectBox"));
     SelenideElement btnGuncelleOnay = $(By.id("baseConfirmationDialog:confirmButton"));
-
     SelenideElement btnYonetimHavuzuEkle = $(By.id("yonetimHavuzuYonetimiListingForm:yonetimHavuzuDataTable:addNewYonetimHavuzuButton"));
     SelenideElement txtYonetimHavuzuAdi = $(By.id("yonetimHavuzuYonetimiEditorForm:adInput"));
     SelenideElement btnYonetimHavuzuKaydet = $(By.id("yonetimHavuzuYonetimiEditorForm:saveYonetimHavuzuButton"));
     SelenideElement tableYonetimHavuzuListesi = $(By.xpath("//tbody[@id='yonetimHavuzuYonetimiListingForm:yonetimHavuzuDataTable_data']"));
     ElementsCollection trYonetimHavuzuListesi = $$("tbody[id='yonetimHavuzuYonetimiListingForm:yonetimHavuzuDataTable_data'] tr[role='row']");
-
-
     SelenideElement btnBirimEkle = $(By.id("yonetimHavuzuYonetimiEditorForm:yonetimHavuzuBirimDataTable:addNewBirimLinkButton"));
     BelgenetElement txtKullananBirim = comboLov(By.id("birimForm:birimList:LovText"));
     ElementsCollection treeKullananBirimler = $$("div[id='birimForm:birimList:D1birimListlovDialogId'] > div[id='birimForm:birimList:lovTree'] > ul > li");
@@ -41,7 +34,6 @@ public class YonetimHavuzuYonetimiPage extends MainPage {
     //SelenideElement tableKullananBirimListesi = $("tbody[id='yonetimHavuzuYonetimiEditorForm:yonetimHavuzuBirimDataTable_data']");
     ElementsCollection tableKullananBirimListesi = $$("tbody[id='yonetimHavuzuYonetimiEditorForm:yonetimHavuzuBirimDataTable_data'] tr");
     SelenideElement btnKullananBirimTree = $(By.id("birimForm:birimList:treeButton"));
-
     SelenideElement btnKullaniciTanimla = $(By.id("yonetimHavuzuYonetimiEditorForm:yonetimHavuzuKullaniciBirimDataTable:addNewYonetimHavuzuKullaniciBirimLinkButton"));
     BelgenetElement txtKullaniciAdi = comboLov(By.id("kullaniciBirimForm:kullaniciBirimList:LovText"));
     ElementsCollection treeKullanicilar = $$("div[id='kullaniciBirimForm:kullaniciBirimList:lovTree'] > ul > li");
@@ -49,14 +41,10 @@ public class YonetimHavuzuYonetimiPage extends MainPage {
     SelenideElement btnKullanicilarKaydet = $(By.id("kullaniciBirimForm:addKullaniciBirimListButton"));
     SelenideElement tableKullaniciListesi = $("tbody[id='yonetimHavuzuYonetimiEditorForm:yonetimHavuzuKullaniciBirimDataTable_data']");
     ElementsCollection trKullaniciListesi = $$("tbody[id='yonetimHavuzuYonetimiEditorForm:yonetimHavuzuKullaniciBirimDataTable_data'] tr");
-
     SelenideElement divFiltrePanel = $(By.id("yonetimHavuzuYonetimiListingForm:filterPanel"));
-
-    public static class Durum {
-        public static String TUMU = "TUMU";
-        public static String AKTIF = "AKTIFLER";
-        public static String PASIF = "PASIFLER";
-    }
+    private String EklenilenHavuzAdi = null;
+    private String EklenilenBirimAdi = null;
+    private String EklenilenKullaniciAdi = null;
 
     public YonetimHavuzuYonetimiPage() {
 
@@ -68,11 +56,10 @@ public class YonetimHavuzuYonetimiPage extends MainPage {
         return this;
     }
 
-
     // Arama işlemleri
     @Step("Yönetim Havuzu arama")
     public YonetimHavuzuYonetimiPage ara(String birimAdi, String yonetimHavuzuAdi, String durum, boolean checkIfExists) {
-        if(!btnFiltreAra.isDisplayed())
+        if (!btnFiltreAra.isDisplayed())
             divFiltrePanel.click();
 
         if (birimAdi != null) {
@@ -235,6 +222,12 @@ public class YonetimHavuzuYonetimiPage extends MainPage {
                 .shouldHave(CollectionCondition.sizeLessThan(1));
         // yonetimHavuzuYonetimiEditorForm:yonetimHavuzuKullaniciBirimDataTable:0:deleteYonetimHavuzuKullaniciBirimButton
         return this;
+    }
+
+    public static class Durum {
+        public static String TUMU = "TUMU";
+        public static String AKTIF = "AKTIFLER";
+        public static String PASIF = "PASIFLER";
     }
 
 

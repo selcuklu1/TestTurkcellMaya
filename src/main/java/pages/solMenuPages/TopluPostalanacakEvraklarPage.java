@@ -46,7 +46,6 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
     BelgenetElement txtKurum = comboLov(By.id("mainPreviewForm:tpbeGonderildigiKurumLovId:LovText"));
 
 
-
     @Step("Toplu postalanacak evraklar sayfasını aç")
     public TopluPostalanacakEvraklarPage openPage() {
         solMenu(SolMenuData.BirimEvraklari.TopluPostalanacakEvraklar);
@@ -110,7 +109,7 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
     @Step("Gideceği yerler alanından tümünü işaretle/işaretini kaldır")
     public TopluPostalanacakEvraklarPage gidecegiYerTumunuIsaretle(boolean isaretle) {
 
-        if(isaretle == true) {
+        if (isaretle == true) {
 
             for (int i = 0; i < tableGidecegiYer.size(); i++) {
                 Boolean isSelected = false;
@@ -147,7 +146,6 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
             }
 
         }
-
 
 
         return this;
@@ -387,56 +385,56 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
     }
 
     @Step("Evrak göster butonuna tıkla")
-    public TopluPostalanacakEvraklarPage evrakGoster(){
+    public TopluPostalanacakEvraklarPage evrakGoster() {
         btnEvrakGoster.click();
         return this;
     }
 
     @Step("Yeni liste oluştur ekranında liste adı gir: {listeAdi}")
-    public TopluPostalanacakEvraklarPage listeAdiDoldur(String listeAdi){
+    public TopluPostalanacakEvraklarPage listeAdiDoldur(String listeAdi) {
         txtListeAdi.setValue(listeAdi);
         return this;
     }
 
     @Step("Liste oluştur butnonuna tıkla")
-    public TopluPostalanacakEvraklarPage listeOlustur(){
+    public TopluPostalanacakEvraklarPage listeOlustur() {
         btnListeOlustur.click();
         return this;
     }
 
     @Step("Seçilen tüzel kişi: {tuzelKisi} olmalı")
-    public TopluPostalanacakEvraklarPage tuzelKisiKontrolet(String tuzelKisi){
+    public TopluPostalanacakEvraklarPage tuzelKisiKontrolet(String tuzelKisi) {
         Assert.assertEquals(tuzelKisi, lblSecilenTuzelKisi.innerText());
         return this;
     }
 
     @Step("Seçili tüzel kişiyi kaldır")
-    public TopluPostalanacakEvraklarPage seciliTuzelKisiKaldir(){
+    public TopluPostalanacakEvraklarPage seciliTuzelKisiKaldir() {
         btnSeciliTuzelKisiKaldir.click();
         return this;
     }
 
     @Step("Seçili kurumu kaldır")
-    public TopluPostalanacakEvraklarPage seciliKurumKaldir(){
+    public TopluPostalanacakEvraklarPage seciliKurumKaldir() {
         btnSeciliKurumKaldir.click();
         return this;
     }
 
     @Step("Gönderildiği tüzel kişi seç: {tuzelKisi}")
-    public TopluPostalanacakEvraklarPage gonderildigiTuzelKisiSec(String tuzelKisi){
+    public TopluPostalanacakEvraklarPage gonderildigiTuzelKisiSec(String tuzelKisi) {
         txtGonderildigiTuzelKisi.selectLov(tuzelKisi);
         return this;
     }
 
     @Step("Gönderildiği kurum seç: {kurum}")
-    public TopluPostalanacakEvraklarPage gonderildigiKurumSec(String kurum){
+    public TopluPostalanacakEvraklarPage gonderildigiKurumSec(String kurum) {
         txtKurum.selectLov(kurum);
         return this;
     }
 
     @Step("Seçilen gerçek kişi: {gercekKisi} olmalı")
-    public TopluPostalanacakEvraklarPage gerceklKisiKontrolet(String gercekKisi){
-        if(lblSecilenGercekKisi.innerText().contains(gercekKisi))
+    public TopluPostalanacakEvraklarPage gerceklKisiKontrolet(String gercekKisi) {
+        if (lblSecilenGercekKisi.innerText().contains(gercekKisi))
             Assert.assertEquals(true, true);
         else
             Assert.assertEquals(false, true);
@@ -445,27 +443,27 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
     }
 
     @Step("Seçili gerçek kişiyi kaldır")
-    public TopluPostalanacakEvraklarPage seciliGercekKisiKaldir(){
+    public TopluPostalanacakEvraklarPage seciliGercekKisiKaldir() {
         btnSeciliGercekKisiKaldir.click();
         return this;
     }
 
     @Step("Gönderildiği gerçek kişi seç: {gercekKkisi}")
-    public TopluPostalanacakEvraklarPage gonderildigiGercekKisiSec(String gercekKisi){
+    public TopluPostalanacakEvraklarPage gonderildigiGercekKisiSec(String gercekKisi) {
         txtGonderildigiGercekKisi.selectLov(gercekKisi);
         return this;
     }
 
     @Step("Seçilen kurum: {kurum} olmalı")
-    public TopluPostalanacakEvraklarPage kurumKontrolet(String kurum){
+    public TopluPostalanacakEvraklarPage kurumKontrolet(String kurum) {
         Assert.assertEquals(kurum, lblSecilenKurum.innerText());
         return this;
     }
 
     @Step("İlk posta listesi adını getir.")
-    public String postaListesiAdiGetir(){
+    public String postaListesiAdiGetir() {
         btnPostaListesiDropDown.click();
-        if(listPostaListesi.size() > 0)
+        if (listPostaListesi.size() > 0)
             return listPostaListesi.first().getText();
         else
             Assert.fail("Posta Listesi Yok");

@@ -15,7 +15,8 @@ import org.testng.annotations.Test;
 import pages.ustMenuPages.EvrakHavaleKurallariYonetimiPage;
 import pages.ustMenuPages.GelenEvrakKayitPage;
 
-import static data.TestData.*;
+import static data.TestData.password2;
+import static data.TestData.username2;
 
 /****************************************************
  * Tarih: 2017-12-27
@@ -55,7 +56,7 @@ public class EvrakHavaleKurallariTest extends BaseTest {
                 .birimEkleBirimDoldur(birim)
                 .birimEkleEkle()
                 .kuralAdiDoldur(kuralAdi)
-                .kimeHavaleEdilecekKisiDoldur(kisi,birim2)
+                .kimeHavaleEdilecekKisiDoldur(kisi, birim2)
                 .kuralEklemeKaydet();
         //TODO
 
@@ -123,8 +124,6 @@ public class EvrakHavaleKurallariTest extends BaseTest {
                 .islemMesaji().basariliOlmali(basariMesaji);*/
 
     }
-
-
 
 
 }

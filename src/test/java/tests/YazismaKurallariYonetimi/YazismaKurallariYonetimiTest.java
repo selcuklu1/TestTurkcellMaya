@@ -8,7 +8,7 @@ import pages.ustMenuPages.YazismaKurallariYonetimiPage;
 
 public class YazismaKurallariYonetimiTest extends BaseTest {
 
-   YazismaKurallariYonetimiPage yazismaKurallariYonetimiPage;
+    YazismaKurallariYonetimiPage yazismaKurallariYonetimiPage;
 
     @BeforeMethod
     public void loginBeforeTests() {
@@ -73,10 +73,6 @@ public class YazismaKurallariYonetimiTest extends BaseTest {
                 .islemMesaji().basariliOlmali(basariMesaj);
 
     }
-
-
-
-
 
 
 }

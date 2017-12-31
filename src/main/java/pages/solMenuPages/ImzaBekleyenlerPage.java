@@ -29,7 +29,7 @@ public class ImzaBekleyenlerPage extends MainPage {
     ElementsCollection tblImzaBekleyenler = $$("tbody[id='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
 
     @Step("İmza bekleyenler sayfası aç")
-    public ImzaBekleyenlerPage openPage(){
+    public ImzaBekleyenlerPage openPage() {
         solMenu(SolMenuData.IslemBekleyenEvraklar.ImzaBekleyenler);
         String pageTitle = SolMenuData.IslemBekleyenEvraklar.ImzaBekleyenler.getMenuText();
         $("#mainInboxForm\\:inboxDataTable .ui-inbox-header-title")
@@ -39,47 +39,46 @@ public class ImzaBekleyenlerPage extends MainPage {
     }
 
     @Step("İmzala")
-    public ImzaBekleyenlerPage imzala(){
+    public ImzaBekleyenlerPage imzala() {
         btnImzala.click();
         return this;
     }
 
     @Step("İmzala")
-    public ImzaBekleyenlerPage evrakOnizlemeImzala(){
+    public ImzaBekleyenlerPage evrakOnizlemeImzala() {
         btnEvrakOnizlemeImzala.click();
         return this;
     }
+
     @Step("S-İmza seç")
-    public ImzaBekleyenlerPage sImzaSec(){
+    public ImzaBekleyenlerPage sImzaSec() {
         rdbSImaza.click();
         return this;
     }
 
     @Step("İmzala")
-    public ImzaBekleyenlerPage sImzaİmzala(boolean secim){
+    public ImzaBekleyenlerPage sImzaİmzala(boolean secim) {
         btnSImzaImzala.click();
-        if (secim==true){
+        if (secim == true) {
             btnSImzaImzalaEvet.pressEnter();
-        }
-        else {
+        } else {
             btnSImzaImzalaHayir.pressEnter();
         }
         return this;
     }
 
     @Step("İmzala")
-    public ImzaBekleyenlerPage sImzaImzala(boolean secim){
+    public ImzaBekleyenlerPage sImzaImzala(boolean secim) {
         btnSImzaImzala.click();
-        if (secim==true){
+        if (secim == true) {
             btnSImzaImzalaEvet.pressEnter();
-        }
-        else {
+        } else {
             btnSImzaImzalaHayir.pressEnter();
         }
         return this;
     }
 
-    public ImzaBekleyenlerPage dogruKonuVeNoKontrol(String toplantiNo, String konu){
+    public ImzaBekleyenlerPage dogruKonuVeNoKontrol(String toplantiNo, String konu) {
 
         tableKararIzlemeEvraklar
                 .filterBy(Condition.text(toplantiNo)).filterBy(Condition.text(konu)).get(0).shouldBe(visible);
@@ -87,10 +86,9 @@ public class ImzaBekleyenlerPage extends MainPage {
 
     }
 
-    public ImzaBekleyenlerPage evrakSec(String toplantiNo, String konu){
-        int i=0;
-        while (i<100)
-        {
+    public ImzaBekleyenlerPage evrakSec(String toplantiNo, String konu) {
+        int i = 0;
+        while (i < 100) {
             sleep(i);
             i++;
         }
@@ -102,67 +100,76 @@ public class ImzaBekleyenlerPage extends MainPage {
     }
 
     @Step("Evrak olmadığı görünür")
-    public ImzaBekleyenlerPage evrakOlmadigiGorme(String toplantiNo, String konu,boolean vardir){
-        tableKararIzlemeEvraklar.filterBy(Condition.text(toplantiNo)).get(0).shouldBe(not(Condition.exist));;
+    public ImzaBekleyenlerPage evrakOlmadigiGorme(String toplantiNo, String konu, boolean vardir) {
+        tableKararIzlemeEvraklar.filterBy(Condition.text(toplantiNo)).get(0).shouldBe(not(Condition.exist));
+        ;
         return this;
     }
+
     @Step("Evrak olmadığı görülür : \"{evrakNo}\" ")
-    public ImzaBekleyenlerPage evrakOlmadigiGorme(String evrakNo){
+    public ImzaBekleyenlerPage evrakOlmadigiGorme(String evrakNo) {
         tableKararIzlemeEvraklar.filterBy(Condition.text(evrakNo)).shouldHaveSize(0);
         return this;
     }
 
     @Step("Evrak  kontrolü : \"{evrakNo}\" ")
-    public ImzaBekleyenlerPage evrakNoKontrolu(String evrakNo){
+    public ImzaBekleyenlerPage evrakNoKontrolu(String evrakNo) {
         tableKararIzlemeEvraklar.filterBy(Condition.text(evrakNo)).shouldHaveSize(1);
         return this;
     }
+
     @Step("İade et")
-    public ImzaBekleyenlerPage iadeEt(){
+    public ImzaBekleyenlerPage iadeEt() {
         btnIadeEt.click();
         return this;
     }
+
     @Step("İçerik")
-    public ImzaBekleyenlerPage icerik(){
+    public ImzaBekleyenlerPage icerik() {
         btnIcerik.click();
         return this;
     }
+
     @Step("Dosya ekle")
     public ImzaBekleyenlerPage iadeEtDosyaEkle(String pathToFile) {
         uploadFile(btnDosyaEkle, pathToFile);
         return this;
     }
-    
+
     @Step("Not doldur")
-    public ImzaBekleyenlerPage notDoldur(String not){
+    public ImzaBekleyenlerPage notDoldur(String not) {
         txtNot.setValue(not);
         return this;
     }
-    
+
     @Step("İade et")
-    public ImzaBekleyenlerPage iadeEtIadeEt(){
+    public ImzaBekleyenlerPage iadeEtIadeEt() {
         btnIadeEtIadeEt.click();
         return this;
     }
+
     @Step("icerik Kontrol : \"{deger}\" ")
-    public ImzaBekleyenlerPage icerikKontrol(String deger){
+    public ImzaBekleyenlerPage icerikKontrol(String deger) {
         String text = pdfIcerikKontrol.getText();
         text.contains(deger);
         return this;
     }
+
     @Step("İade et")
-    public ImzaBekleyenlerPage birimSec(String birim){
+    public ImzaBekleyenlerPage birimSec(String birim) {
         solMenuBirim.filterBy(text(birim)).first().click();
         return this;
     }
+
     @Step("Evrak no'ya göre İçerik tıklama : \"{konu}\" ")
-    public ImzaBekleyenlerPage evrakKonusunaGoreIcerikTiklama(String konu){
+    public ImzaBekleyenlerPage evrakKonusunaGoreIcerikTiklama(String konu) {
         tableKararIzlemeEvraklar.filterBy(Condition.text(konu)).first()
                 .$("[id^='mainInboxForm:inboxDataTable'][id$='detayGosterButton']").click();
         return this;
     }
+
     @Step("Evrak no'ya göre İçerik tıklama : \"{konu}\" ")
-    public ImzaBekleyenlerPage evrakKonusunaGoreKontrol(String konu){
+    public ImzaBekleyenlerPage evrakKonusunaGoreKontrol(String konu) {
         tableKararIzlemeEvraklar.filterBy(Condition.text(konu))
                 .first()
                 .click();
@@ -170,7 +177,7 @@ public class ImzaBekleyenlerPage extends MainPage {
     }
 
     @Step("Evrak Seç")
-    public ImzaBekleyenlerPage evrakSec(String konu, String gidecegiYer, String gonderen, String evrakNo){
+    public ImzaBekleyenlerPage evrakSec(String konu, String gidecegiYer, String gonderen, String evrakNo) {
         tblImzaBekleyenler
                 .filterBy(text("Konu:" + konu))
                 .filterBy(text("Gideceği Yer:" + gidecegiYer))
