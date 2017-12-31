@@ -599,8 +599,8 @@ public class GizlilikKleransiTest extends BaseTest {
                 .aramaKriteriDoldur(evrakNo)
                 .ara()
                 .tabloEvrakNoKontrol(evrakNo)
-                .tablodaDetayTikla(evrakNo)
-                .islemMesaji().beklenenMesaj(mesaj);
+                .tablodaDetayTikla(evrakNo);
+//                .islemMesaji().beklenenMesaj(mesaj);
 
         evrakAramaPage
                 .evrakinAranacagiYerSec(aranacagiYer)
@@ -608,8 +608,8 @@ public class GizlilikKleransiTest extends BaseTest {
                 .aramaKriteriDoldur(evrakNo)
                 .ara()
                 .tabloEvrakNoKontrol(evrakNo)
-                .tablodaDetayTikla(evrakNo)
-                .islemMesaji().beklenenMesaj(mesaj);
+                .tablodaDetayTikla(evrakNo);
+//                .islemMesaji().beklenenMesaj(mesaj);
 
         evrakOlusturPage
                 .openPage()

@@ -23,8 +23,8 @@ public class KaydedilenGelenEvrakPage extends MainPage {
     SelenideElement btnSorgula = $(By.id("birimeGelenEvrakRaporuForm:sorgulaButton"));
     SelenideElement btnRaporAlExcel = $("[id='birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable'] button:nth-child(4)");
     SelenideElement btnRaporAlPdf = $("[id='birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable'] button:nth-child(2)");
-    SelenideElement tblKaydedilenGelenEvrak = $(By.id("birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable_data"));
-    ElementsCollection tbldene = $$("[id='birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable_data'] tr[role='row']");
+//    SelenideElement tblKaydedilenGelenEvrak = $(By.id("birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable_data"));
+    ElementsCollection tblKaydedilenGelenEvrak = $$("[id='birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable_data'] tr[role='row']");
 
     @Step("Kaydedilen Gelen Evrak sayfasını aç")
     public KaydedilenGelenEvrakPage openPage() {
@@ -32,19 +32,19 @@ public class KaydedilenGelenEvrakPage extends MainPage {
         return this;
     }
 
-    @Step("Birim alanı doldur")
+    @Step("Birim alanı \"{birim}\" doldurulur")
     public KaydedilenGelenEvrakPage birimDoldur(String birim) {
         cmbBirim.selectLov(birim);
         return this;
     }
 
-    @Step("Geldiği yer seç")
+    @Step("Geldiği yer \"{geldigiYer}\" seçilir")
     public KaydedilenGelenEvrakPage geldigiYerSec(String geldigiYer) {
         cmbGeldigiYer.selectOptionByValue(geldigiYer);
         return this;
     }
 
-    @Step("Gelen Evrak no alanını doldur")
+    @Step("Gelen Evrak no alanını \"{evrakNo}\" girilir")
     public KaydedilenGelenEvrakPage gelenEvrakNoDoldur(String evrakNo) {
         txtEvrakKayitNo.sendKeys(evrakNo);
         return this;
@@ -90,10 +90,10 @@ public class KaydedilenGelenEvrakPage extends MainPage {
         return this;
     }
 
-    @Step("Tablo kontrolu")
+    @Step("Tablo kontrolu : \"{evrakNo}\" ")
     public KaydedilenGelenEvrakPage tabloKontrolu(String evrakNo) {
 //        WebElement columnId =  findElementOnTableByColumnInput(tblKaydedilenGelenEvrak,1,evrakNo);
-        tbldene.filterBy(Condition.text(evrakNo)).shouldHave(sizeGreaterThan(0));
+        tblKaydedilenGelenEvrak.filterBy(Condition.text(evrakNo)).shouldHave(sizeGreaterThan(0));
         return this;
     }
 

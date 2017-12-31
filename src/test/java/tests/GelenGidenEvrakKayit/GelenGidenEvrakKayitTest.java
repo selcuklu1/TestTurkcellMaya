@@ -97,7 +97,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .ustYaziDegistirilmisPopUpKontrol()
                 .evrakEkleriDosyaEkleEkMetinDoldur(ekMetni)
                 .evrakEkTabViewEkle()
-//                .dosyaEkleTabTabloKontrolu("Ek-1")  //
+//                .dosyaEkleTabTabloKontrolu("Ek-1")
                 .ekBilgiFizikselEkEkle()
                 .evrakEkTabFizikselEkMetniDoldur(ekMetni)
                 .fizikselEkTabViewAciklamaEkle()
@@ -210,7 +210,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, priority = 7, description = "TC1401 : Kaydedilen Gelen Evrak raporu")
-    public void TC1401() throws InterruptedException, IOException {
+    public void     TC1401() throws InterruptedException, IOException {
 
 //        String evrakNO321 = "5187";
 //        String evrakNO328 = "5187";
@@ -429,7 +429,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         gidenEvrakKayitPage
                 .islemMesaji().isBasarili();
 
-        Thread.sleep(2000);
+//        Thread.sleep(2000);
 
         kaydedilenGidenEvraklarPage
                 .openPage()
