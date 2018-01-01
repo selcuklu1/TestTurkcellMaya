@@ -7,17 +7,12 @@ import org.openqa.selenium.WebElement;
 import static com.codeborne.selenide.WebDriverRunner.isIE;
 
 public abstract class BelgentCondition extends Condition {
-    public BelgentCondition(String name) {
-        super(name);
-    }
-
     public static final Condition required = new Condition("required") {
         @Override
         public boolean apply(WebElement element) {
             return element.getAttribute("class").contains("required");
         }
     };
-
     public static final Condition toolboxButtonOn = new Condition("toolboxButtonOn") {
         @Override
         public boolean apply(WebElement element) {
@@ -25,6 +20,10 @@ public abstract class BelgentCondition extends Condition {
             return element.getAttribute("class").contains("cke_button_on");
         }
     };
+
+    public BelgentCondition(String name) {
+        super(name);
+    }
 
     /**
      * <p>Sample: <code>$("h1").shouldHave(exactText("Hello"))</code></p>

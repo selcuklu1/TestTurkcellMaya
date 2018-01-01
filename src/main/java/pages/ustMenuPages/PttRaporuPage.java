@@ -37,32 +37,32 @@ public class PttRaporuPage extends MainPage {
     }
 
     @Step("Posta tarihi gir: {postTarihi}")
-    public PttRaporuPage postaTarihiDoldur(String postaTarihi){
+    public PttRaporuPage postaTarihiDoldur(String postaTarihi) {
         txtPostaTarihi.setValue(postaTarihi);
         return this;
     }
 
     @Step("Posta tipi sec: {postaTipi}")
-    public PttRaporuPage postaTipiSec(String postaTipi){
+    public PttRaporuPage postaTipiSec(String postaTipi) {
         cmbPostaTipi.selectOption(postaTipi);
         return this;
     }
 
     @Step("Arama Detayları Panelini Aç")
-    public PttRaporuPage aramaDetaylariPanelAc(){
+    public PttRaporuPage aramaDetaylariPanelAc() {
         divAramaDetaylar.click();
         return this;
     }
 
     @Step("Sorgula butonuna tıkla")
-    public PttRaporuPage sorgula(){
+    public PttRaporuPage sorgula() {
         btnSorgula.click();
         return this;
     }
 
     @Step("Tablo kontrolü")
-    public PttRaporuPage tabloKontrolEt(String gittigiYer, String evrakSayi, String gidisSekli, boolean shouldBeExist){
-        if(shouldBeExist == true){
+    public PttRaporuPage tabloKontrolEt(String gittigiYer, String evrakSayi, String gidisSekli, boolean shouldBeExist) {
+        if (shouldBeExist == true) {
 
             tableRaporlar
                     .filterBy(Condition.text(gittigiYer))
@@ -87,74 +87,74 @@ public class PttRaporuPage extends MainPage {
     }
 
     @Step("Tablo kontrolü")
-    public String  tablodanDegerAl(String kolonAdi){
+    public String tablodanDegerAl(String kolonAdi) {
 
         String returnValue = "";
         int columnIndex = -1;
 
-        for(int i = 0; i < tableColumns.size(); i++){
-            if(tableColumns.get(i).getText() == kolonAdi) {
+        for (int i = 0; i < tableColumns.size(); i++) {
+            if (tableColumns.get(i).getText() == kolonAdi) {
                 columnIndex = i + 1;
                 break;
             }
         }
 
 
-        returnValue = $x("//tbody[@id='pttRaporuForm:havaleEvrakRaporOutputTab_data']/tr[@role='row']/td["+columnIndex+"]").getText();
+        returnValue = $x("//tbody[@id='pttRaporuForm:havaleEvrakRaporOutputTab_data']/tr[@role='row']/td[" + columnIndex + "]").getText();
 
         return returnValue;
     }
-    
+
     @Step("Dağıtıcı doldur: {dagitici}")
-    public PttRaporuPage dagiticiDoldur(String dagitici){
+    public PttRaporuPage dagiticiDoldur(String dagitici) {
         txtDagitici.setValue(dagitici);
         return this;
     }
 
     @Step("Duzenleyen doldur: {duzenleyen}")
-    public PttRaporuPage duzenleyenDoldur(String duzenleyen){
+    public PttRaporuPage duzenleyenDoldur(String duzenleyen) {
         txtDuzenleyen.setValue(duzenleyen);
         return this;
     }
 
     @Step("Avans Sorumlusu doldur: {avansSorumlusu}")
-    public PttRaporuPage avansSorumlusuDoldur(String avansSorumlusu){
+    public PttRaporuPage avansSorumlusuDoldur(String avansSorumlusu) {
         txtAvansSorumlusu.setValue(avansSorumlusu);
         return this;
     }
 
     @Step("Kontrol Eden doldur: {kontrolEden}")
-    public PttRaporuPage kontrolEdenDoldur(String kontrolEden){
+    public PttRaporuPage kontrolEdenDoldur(String kontrolEden) {
         txtKontrolEden.setValue(kontrolEden);
         return this;
     }
 
     @Step("Ptt Merkez doldur: {pttMerkez}")
-    public PttRaporuPage pttMerkezDoldur(String pttMerkez){
+    public PttRaporuPage pttMerkezDoldur(String pttMerkez) {
         txtPttMerkez.setValue(pttMerkez);
         return this;
     }
 
     @Step("Ülke doldur: {ulke}")
-    public PttRaporuPage ulkeDoldur(String ulke){
+    public PttRaporuPage ulkeDoldur(String ulke) {
         txtUlke.setValue(ulke);
         return this;
     }
 
     @Step("İl doldur: {il}")
-    public PttRaporuPage ilDoldur(String il){
+    public PttRaporuPage ilDoldur(String il) {
         txtIl.setValue(il);
         return this;
     }
 
     @Step("Tüm Sonuçları Raporla butonuna tıkla")
-    public PttRaporuPage tumSonuclariRaporla(){
+    public PttRaporuPage tumSonuclariRaporla() {
         btnTumSonuclariRaporla.click();
         return this;
     }
 
-   @Step("Excell kontrol et")
-   public PttRaporuPage excellKontrolEt(){
+    @Step("Excell kontrol et")
+    public PttRaporuPage excellKontrolEt() {
         /*
        String excelFilePath = "/Users/huseyintumer/Downloads/Rapor_1513693363904.xls";
        try (Workbook workbook = WorkbookFactory.create(new File(excelFilePath))) {
@@ -190,13 +190,13 @@ public class PttRaporuPage extends MainPage {
        } catch (InvalidFormatException e) {
            e.printStackTrace();
        }*/
-       return this;
+        return this;
 
-   }
+    }
 
 
-   @Step("Excel test")
-   public PttRaporuPage excell() {
+    @Step("Excel test")
+    public PttRaporuPage excell() {
 
 
         /*
@@ -214,11 +214,8 @@ public class PttRaporuPage extends MainPage {
         */
 
 
-       return this;
-   }
-
-
-
+        return this;
+    }
 
 
 }

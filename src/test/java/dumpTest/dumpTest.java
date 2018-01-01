@@ -1,9 +1,16 @@
 package dumpTest;
 
 import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.WebDriverRunner;
 import common.BaseTest;
+import data.TestData;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Capabilities;
+import org.openqa.selenium.HasCapabilities;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -19,19 +26,10 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.executeJavaScript;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
-public class EvrakOlusturTest extends BaseTest {
+
+public class dumpTest extends BaseTest {
 
     EvrakOlusturPage evrakOlusturPage;
-
-    @BeforeMethod
-    public void setUp() throws Exception {
-//        WebDriver driver = new FirefoxDriver();
-//        driver.get("https://www.google.com/");
-//        login();
-//        evrakOlusturPage = new EvrakOlusturPage();
-//        evrakOlusturPage.open().bilgilerTabiAc();
-        login();
-    }
 
     public void clickOnInvisibleElement(SelenideElement element) {
 
@@ -41,6 +39,66 @@ public class EvrakOlusturTest extends BaseTest {
                 + "object.dispatchEvent(theEvent);";
 
         executeJavaScript(script, element);
+    }
+
+
+    @BeforeMethod
+    public void setUp() throws Exception {
+       /* DesiredCapabilities caps;
+        if (Configuration.browser.equals("chrome")){
+            caps = DesiredCapabilities.chrome();
+            caps.setPlatform(Platform.MAC);
+            Map<String, Object> prefs = new HashMap<String, Object>();
+            prefs.put("download.default_directory",  TestData.docDownloadPathLinux);
+            ChromeOptions options = new ChromeOptions();
+            options.setExperimentalOption("prefs", prefs);
+            WebDriverRunner.setWebDriver(new ChromeDriver(options));
+        }*/
+
+    }
+
+    @Test(description = "", enabled = true)
+    public void findFileInPath() throws Exception {
+
+        Selenide.open("http://fiyat.mercedes-benz.com.tr/a-serisi");
+
+//        RemoteWebDriver driver = (RemoteWebDriver) ((HasCapabilities)((EventFiringWebDriver) WebDriverRunner.getWebDriver()).getWrappedDriver());
+
+
+        String href = $("a[class='btn downloadpdf']").attr("href");
+       /* $("a[class='btn downloadpdf']").click();
+
+        getDocPath();
+        login();*/
+
+
+//        if (capabilities.getBrowserName().equals("firefox")){
+//            FirefoxProfile profile = new FirefoxProfile();
+           /* FirefoxOptions options =  new FirefoxOptions();
+            options.addPreference("browser.download.folderList", 2);
+            options.addPreference("browser.download.dir", getDownoladPath());*/
+
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+        capabilities.setCapability("browser.download.folderList", 2);
+        capabilities.setCapability("browser.download.dir", TestData.docDownloadPathLinux);
+
+        Capabilities caps = ((HasCapabilities) ((EventFiringWebDriver) WebDriverRunner.getWebDriver())
+                .getWrappedDriver())
+                .getCapabilities().merge(capabilities);
+            /*FirefoxDriver driver = (FirefoxDriver) ((HasCapabilities)((EventFiringWebDriver) WebDriverRunner.getWebDriver()).getWrappedDriver());
+            driver = new FirefoxDriver(options);*/
+
+//            WebDriverRunner.setWebDriver(d);
+//        }
+
+        /*profile['browser.download.folderList'] = 2 # custom location
+        profile['browser.download.dir'] = download_directory
+        profile['browser.helperApps.neverAsk.saveToDisk'] = "text/csv,application/pdf"*/
+
+
+//        File file = new File(filePath);
+//        Path path = file.toPath();
+//        Files.find(path, 1, (dir, basicFileAttributes) -> path.toFile().getName().matches(".*." + ext));
     }
 
     @Test
@@ -58,7 +116,7 @@ public class EvrakOlusturTest extends BaseTest {
         ElementsCollection col = el.titleItems();
         int q = col.size();
 
-        String a1 =  comboLov("input[id$='konuKoduLov:LovText']").lastSelectedLov().text();
+        String a1 = comboLov("input[id$='konuKoduLov:LovText']").lastSelectedLov().text();
         String a = comboLov(By.id("yeniGidenEvrakForm:evrakBilgileriList:16:geregiLov:LovText"))
                 .selectLov("optiim").lastSelectedLov().text();
         String b = comboLov(By.id("yeniGidenEvrakForm:evrakBilgileriList:16:geregiLov:LovText")).selectLov("optiim")
@@ -81,7 +139,6 @@ public class EvrakOlusturTest extends BaseTest {
 //        boolean b = comboLov("input[id$='konuKoduLov:LovText']").type("111111111").isEmpty();
         int i = comboLov("input[id$='konuKoduLov:LovText']").type("010.01")
                 .titleItems().filterBy(text("Kanunlar")).size();
-
 
 
 //        new UstMenu().ustMenu("Evrak İşlemleri", "Evrak Oluştur");

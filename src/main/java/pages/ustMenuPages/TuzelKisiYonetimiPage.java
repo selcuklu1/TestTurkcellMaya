@@ -112,7 +112,7 @@ public class TuzelKisiYonetimiPage extends MainPage {
     }
 
     @Step("Tüzel kişi güncelle")
-    public TuzelKisiYonetimiPage tuzelKisiSecGuncele(String kullanici){
+    public TuzelKisiYonetimiPage tuzelKisiSecGuncele(String kullanici) {
         tblKisiler.filterBy(Condition.text(kullanici)).get(0)
                 .$$("[id^='tuzelKisiYonetimiListingForm:tuzelKisiDataTable'][id$='updateTuzelKisiButton']").get(0).click();
         return this;
@@ -251,7 +251,7 @@ public class TuzelKisiYonetimiPage extends MainPage {
         if (btnUlkeDelete.isDisplayed() == false) {
             txtIletisimBilgisiUlke.selectLov(ulke);
         }
-        
+
         return this;
     }
 

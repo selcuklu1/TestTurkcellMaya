@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite thread-count="1" name="Tebliğ Tebellüğ" parallel="classes" verbose="1">
-<!--By Huseyin-->
+    <!--By Huseyin-->
     <test name="Tebliğ Tebellüğ Testleri">
         <packages>
             <package name="tests.TebligTebellug"/>

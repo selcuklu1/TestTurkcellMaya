@@ -73,7 +73,8 @@ public class KurumYonetimiTest extends BaseTest {
 
 
         String guncellenecekKurumAdi = yeniKurumAdi1;
-        String yeniKurumAdi = "kurumm" + (new Random().nextInt((9000 - 1000) + 1) + 1000);;
+        String yeniKurumAdi = "kurumm" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
+        ;
         String isTelefonNo = "5444444446";
         String faxNumarasi1 = "5444444447";
         String faxNumarasi2 = "5444444448";

@@ -2,7 +2,6 @@ package listeners;
 
 
 import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.Selenide;
 import common.BaseLibrary;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -70,7 +69,7 @@ public class DriverEventListener extends BaseLibrary implements WebDriverEventLi
     public void beforeFindBy(By by, WebElement element, WebDriver driver) {
 
         By loadingLocator = By.cssSelector("div[style*='display: block;'] .loading");
-        long timeout = Configuration.timeout/1000;
+        long timeout = Configuration.timeout / 1000;
 
         waitForLoadingJS(driver);
         /*//İşlem Mesajları için loading kaybolması beklememeli.
@@ -116,7 +115,7 @@ public class DriverEventListener extends BaseLibrary implements WebDriverEventLi
 
     public void beforeClickOn(WebElement element, WebDriver driver) {
         waitForLoadingJS(driver);
-        new WebDriverWait(driver, Configuration.timeout/1000).until(elementToBeClickable(element));
+        new WebDriverWait(driver, Configuration.timeout / 1000).until(elementToBeClickable(element));
 
 //        Selenide.sleep(2000);
         /**
@@ -164,7 +163,8 @@ public class DriverEventListener extends BaseLibrary implements WebDriverEventLi
 
     }
 
-    public void afterScript(String script, WebDriver driver) { }
+    public void afterScript(String script, WebDriver driver) {
+    }
 
     public void onException(Throwable throwable, WebDriver driver) {
 

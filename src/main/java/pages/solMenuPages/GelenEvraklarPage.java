@@ -457,13 +457,15 @@ public class GelenEvraklarPage extends MainPage {
         txtEvrakKapatNot.sendKeys(text);
         return this;
     }
+
     @Step("Kaldırılacak klasor doldur")
     public GelenEvraklarPage evrakKapatKaldirilacakKlasorlerDoldur(String text) {
         txtEvrakKapatKaldirilacakKlasorler.selectLov(text);
         return this;
     }
+
     @Step("Kaldırılıcak klasor doldur")
-    public GelenEvraklarPage evrakKapatKaldirilacakKlasorlerDoldur(String text,String birim) {
+    public GelenEvraklarPage evrakKapatKaldirilacakKlasorlerDoldur(String text, String birim) {
         txtEvrakKapatKaldirilacakKlasorler.type(text).detailItems().filterBy(text(birim)).first().click();
         txtEvrakKapatKaldirilacakKlasorler.closeLovTreePanel();
         return this;

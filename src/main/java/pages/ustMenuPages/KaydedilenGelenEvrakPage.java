@@ -1,6 +1,5 @@
 package pages.ustMenuPages;
 
-import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
@@ -11,7 +10,7 @@ import pages.pageComponents.belgenetElements.BelgenetElement;
 
 import java.io.IOException;
 
-import static com.codeborne.selenide.CollectionCondition.*;
+import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
@@ -60,11 +59,13 @@ public class KaydedilenGelenEvrakPage extends MainPage {
     @Step("Rapor al Excel")
     public KaydedilenGelenEvrakPage raporAlExcel() throws IOException, InterruptedException {
 
-        deleteFile("C:\\Users\\" + getPcUserName() + "\\Downloads\\","Rapor_");
+//        deleteFile("C:\\Users\\" + getPCUsername() + "\\Downloads\\","Rapor_");
         btnRaporAlExcel.click();
+        islemMesaji().basariliOlmali();
 //        Thread.sleep(8000);
-        btnSorgula.click();
-        searchDownloadedFileWithName("C:\\Users\\" + getPcUserName() + "\\Downloads\\","Rapor_.xls");
+//        btnSorgula.click();
+        islemMesaji().basariliOlmali();
+//        searchDownloadedFileWithName("C:\\Users\\" + getPCUsername() + "\\Downloads\\","Rapor_.xls");
         return this;
     }
 
@@ -74,11 +75,12 @@ public class KaydedilenGelenEvrakPage extends MainPage {
 
     @Step("Rapor al PDF")
     public KaydedilenGelenEvrakPage raporAlPdf() throws IOException, InterruptedException {
-        deleteFile("C:\\Users\\" + getPcUserName() + "\\Downloads\\","Rapor_");
+        deleteFile(getDownoladPath(), "Rapor_");
         btnRaporAlPdf.click();
 //        Thread.sleep(8000);
-        btnSorgula.click();
-        searchDownloadedFileWithName("C:\\Users\\" + getPcUserName() + "\\Downloads\\", "Rapor_.pdf");
+        islemMesaji().basariliOlmali();
+//        btnSorgula.click();
+        searchDownloadedFileWithName(getDownoladPath(), "Rapor_.pdf");
         return this;
     }
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite thread-count="1" name="Kısayol Tuşları" parallel="classes" verbose="1">
-<!--By Samed-->
+    <!--By Samed-->
     <test name="Kısayol Tuşları Testleri">
         <packages>
             <package name="tests.KisayolTuslari"/>

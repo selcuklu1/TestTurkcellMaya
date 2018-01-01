@@ -19,30 +19,24 @@ import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 public class GelenEvrakKayitPage extends MainPage {
 
+    public SelenideElement txtEvrakBilgileriListEvrakSayiTextAreaSol = $("[id$='evrakSayiTextAreaSol']");
     //region Elements
     SelenideElement pageTitle = $(By.cssSelector("#baseLayoutCenter .ui-dialog-title"));
-
     // Evrak Bilgileri Sekmesinde bulunanlar
     SelenideElement btnUstYaziEkle = $(By.xpath("//input[@id='evrakBilgileriForm:ustYaziForm:ustYaziUpload_input']"));
     SelenideElement txtEvrakBilgileriListKonuKodu = $("[id$='konuKoduLov:LovText']");
     SelenideElement txtEvrakBilgileriListKonu = $("[[id$='konuTextArea']");
     SelenideElement cmbEvrakBilgileriListEvrakTuru = $("[id$='evrakTuruCombo']");
     SelenideElement cmbEvrakBilgileriListEvrakDili = $("[id$='evrakDili']");
-
     SelenideElement dateTxtEvrakBilgileriListEvrakTarihi = $("[id$='evrakTarihi_input']");
     SelenideElement cmbEvrakBilgileriListGizlilikDerecesi = $("[id$='guvenlikKodu']");
     SelenideElement cmbEvrakBilgileriListKisiKurum = $("[id$='kisiKurum']");
-
     //SelenideElement cmbEvrakBilgileriListKisiKurum = $("[id$='kisiKurum']");
     //BelgenetElement cmbEvrakBilgileriListGeldigiKisi = comboLov(By.id("evrakBilgileriForm:evrakBilgileriList:9:geldigiGercekKisiLov:LovText"));
     BelgenetElement cmbGeldigiGercekKisi = comboLov("[id$='geldigiGercekKisiLov:LovText']");
     BelgenetElement cmbGeldigiTuzelKisi = comboLov("[id$='geldigiTuzelKisiLov:LovText']");
-
     By cmbGeldiğiGercekKisiBy = By.cssSelector("[id$='geldigiGercekKisiLov:LovText']");
     By cmbGeldiğiTuzelKisiBy = By.cssSelector("[id$='geldigiTuzelKisiLov:LovText']");
-
-
-    public SelenideElement txtEvrakBilgileriListEvrakSayiTextAreaSol = $("[id$='evrakSayiTextAreaSol']");
     SelenideElement txtEvrakBilgileriListEvrakSayiTextAreaSag = $("[id$='evrakSayiTextAreaSag']");
     SelenideElement cmbEvrakBilgileriListEvrakGelisTipi = $("[id$='evrakGelisTipi']");
     SelenideElement cmbEvrakBilgileriListIvedilik = $("[id$='ivedilik']");
@@ -186,6 +180,7 @@ public class GelenEvrakKayitPage extends MainPage {
     BelgenetElement txtHavaleIslemleriKullaniciListesi = comboLov(By.id("evrakBilgileriForm:dagitimBilgileriKisiListesiLov:LovText"));
     BelgenetElement txtHavaleIslemleriBirim = comboLov(By.id("evrakBilgileriForm:dagitimBilgileriBirimLov:LovText"));
     //endregion
+    SelenideElement btnSecilenGeldigiKurumKaldir = $("div[id$='geldigiKurumLov:LovSecilen'] button");
 
     @Step("Gelen Evrak Kayıt sayfasını aç")
     public GelenEvrakKayitPage openPage() {
@@ -214,7 +209,7 @@ public class GelenEvrakKayitPage extends MainPage {
     }
 
     @Step("Kişi alanını doldur")
-    public GelenEvrakKayitPage havaleIslemleriKisiDoldur(String kisi,String birim) {
+    public GelenEvrakKayitPage havaleIslemleriKisiDoldur(String kisi, String birim) {
         txtHavaleIslemleriKisi.type(kisi).detailItems().filterBy(text(birim)).first().click();
         return this;
     }
@@ -226,6 +221,7 @@ public class GelenEvrakKayitPage extends MainPage {
         txtHavaleIslemleriKullaniciListesi.selectLov(kisi);*/
         return this;
     }
+
     @Step("Kullanıcı Listesi alnında \"{kisi}\" seç")
     public GelenEvrakKayitPage havaleIslemleriKullaniciListesiDoldur(String kisi, String detay) {
         //txtHavaleIslemleriKullaniciListesi.selectLov(kisi);
@@ -244,6 +240,7 @@ public class GelenEvrakKayitPage extends MainPage {
         clickJs(btnEvrakEkleri);
         return this;
     }
+
     @Step("Üst yazi \"{path}\" ekle")
     public GelenEvrakKayitPage evrakBilgileriUstYaziEkle(String path) throws InterruptedException {
         uploadFile(ustYazi, path);
@@ -267,22 +264,26 @@ public class GelenEvrakKayitPage extends MainPage {
         txtEvrakBilgileriListKonu.sendKeys(konu);
         return this;
     }
+
     @Step("Evrak Türü alanında \"{evrakTuru}\" seç")
     public GelenEvrakKayitPage evrakTuruSec(String evrakTuru) {
         cmbEvrakBilgileriListEvrakTuru.selectOption(evrakTuru);
         return this;
     }
+
     @Step("Evrak Dili alanında \"{evrakDili}\" seç")
     public GelenEvrakKayitPage evrakDiliSec(String evrakDili) {
         cmbEvrakBilgileriListEvrakDili.selectOption(evrakDili);
         return this;
     }
+
     @Step("Evrak Tarihi alanını \"{evrakTarihi}\" doldur")
     public GelenEvrakKayitPage evrakTarihiDoldur(String evrakTarihi) {
         dateTxtEvrakBilgileriListEvrakTarihi.clear();
         dateTxtEvrakBilgileriListEvrakTarihi.sendKeys(evrakTarihi);
         return this;
     }
+
     @Step("Gizlilik Derecesi alanında \"{gizlilikDerecesi}\" seç")
     public GelenEvrakKayitPage gizlilikDerecesiSec(String gizlilikDerecesi) {
         cmbEvrakBilgileriListGizlilikDerecesi.selectOption(gizlilikDerecesi);
@@ -300,7 +301,6 @@ public class GelenEvrakKayitPage extends MainPage {
         cmbEvrakBilgileriListKisiKurum.selectOption(kisiKurum);
         return this;
     }
-
 
     @Step("Geldiği gerçek kişi alanını doldur")
     public GelenEvrakKayitPage geldigiGercekKisiDoldur(String geldigiKisi) {
@@ -391,8 +391,6 @@ public class GelenEvrakKayitPage extends MainPage {
 
         return this;
     }
-
-    SelenideElement btnSecilenGeldigiKurumKaldir = $("div[id$='geldigiKurumLov:LovSecilen'] button");
 
     public GelenEvrakKayitPage geldigiKurumDoldurLovText(String geldigiKurum) {
         if (btnSecilenGeldigiKurumKaldir.isDisplayed())
@@ -687,7 +685,7 @@ public class GelenEvrakKayitPage extends MainPage {
 
     public GelenEvrakKayitPage benzerKayit() {
         //boolean evrak = $("evetButtonBenzerKaydet").shouldBe(Condition.visible);
-       // if ( evrak == true)
+        // if ( evrak == true)
         $(By.id("evetButtonBenzerKaydet")).pressEnter();
         return this;
     }

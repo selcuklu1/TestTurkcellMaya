@@ -16,13 +16,13 @@ import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 /****************************************************
  * Tarih: 2017-12-22
  * Proje: Türksat Functional Test Automation
-<<<<<<< HEAD
+ <<<<<<< HEAD
  * Class: "Evrak kontroller" konulu senaryoları içerir
  * Yazan: Sezai Çelik 
-=======
+ =======
  * Class: "CevaplananEvrakRaporuPage" konulu senaryoları içerir
  * Yazan: Sezai Çelik
->>>>>>> 36645eaf85cda015b40d4bcf32eef5e0a62d4a37
+ >>>>>>> 36645eaf85cda015b40d4bcf32eef5e0a62d4a37
  ****************************************************/
 public class CevaplananEvrakRaporuPage extends MainPage {
 

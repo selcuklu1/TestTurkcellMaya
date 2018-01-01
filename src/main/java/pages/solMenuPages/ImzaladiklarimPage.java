@@ -48,12 +48,14 @@ public class ImzaladiklarimPage extends MainPage {
         System.out.println("Page: " + pageTitle);
         return this;
     }
+
     @Step("Paylaş buton gelmediği görme")
-    public ImzaladiklarimPage paylasButonGelmedigiGorme(String buton){
+    public ImzaladiklarimPage paylasButonGelmedigiGorme(String buton) {
         boolean t = evrakSecButonlar.filterBy(text(buton)).size() == 0;
         Assert.assertEquals(t, true);
         return this;
     }
+
     @Step("Evrak geldiği görülür")
     public ImzaladiklarimPage evrakGeldigiGorme(String toplantiNo, String konu, String toplantiTarih) {
         tableKararIzlemeEvraklar.filterBy(text(toplantiNo))
@@ -69,7 +71,7 @@ public class ImzaladiklarimPage extends MainPage {
     }
 
     @Step("Dokümanı bul ve seç")
-    public ImzaladiklarimPage dokumaniSec(String text){
+    public ImzaladiklarimPage dokumaniSec(String text) {
         filter().findRowsWith(text(text))
                 .shouldHaveSize(1)
                 .first()
@@ -86,7 +88,7 @@ public class ImzaladiklarimPage extends MainPage {
     }
 
     @Step("Evrak Geçmişi \"Evrak kurum içi otomatik postalandı\" tekst içermeli")
-    public ImzaladiklarimPage evrakGecmisiWith(String text){
+    public ImzaladiklarimPage evrakGecmisiWith(String text) {
         $("tbody[id$='hareketGecmisiDataTable_data']").shouldHave(text(text));
         return this;
     }
@@ -99,7 +101,7 @@ public class ImzaladiklarimPage extends MainPage {
 
         for (int i = 0; i < size; i++) {
             $(By.id("mainInboxForm:inboxDataTable:" + i + ":detayGosterButton")).click();
-            evrakNo= evrakDetayiEvrakNoAl();
+            evrakNo = evrakDetayiEvrakNoAl();
             String icerikTxt = $("[id='inboxItemInfoForm:evrakBilgileriList_content'] tr:nth-child(13) tr textarea").text();
             if (icerik.equals(icerikTxt)) {
                 flag = true;
@@ -109,7 +111,7 @@ public class ImzaladiklarimPage extends MainPage {
             islemPenceresiKapatmaOnayiPopup("Kapat");
 
         }
-        Assert.assertEquals(flag,true,"Evrak listelenmiştir");
+        Assert.assertEquals(flag, true, "Evrak listelenmiştir");
         return evrakNo;
     }
 
@@ -120,26 +122,26 @@ public class ImzaladiklarimPage extends MainPage {
     }
 
     @Step("Gideceği yer seç: {gidecegiYer}")
-    public ImzaladiklarimPage gidecegiYerSec(String gidecegiYer){
+    public ImzaladiklarimPage gidecegiYerSec(String gidecegiYer) {
         btnGidecegiYer.click();
         txtGidecegiYer.selectLov(gidecegiYer);
         return this;
     }
 
     @Step("Başlangıç Tarihi doldur: {baslangicTarihi}")
-    public ImzaladiklarimPage baslangicTarihiDoldur(String baslangicTarihi){
+    public ImzaladiklarimPage baslangicTarihiDoldur(String baslangicTarihi) {
         txtBaslangicTarihi.setValue(baslangicTarihi);
         return this;
     }
 
     @Step("Bitiş Tarihi doldur: {bitisTarihi}")
-    public ImzaladiklarimPage bitisTarihiDoldur(String bitisTarihi){
+    public ImzaladiklarimPage bitisTarihiDoldur(String bitisTarihi) {
         txtBitisTarihi.setValue(bitisTarihi);
         return this;
     }
 
     @Step("Evrak Seç")
-    public ImzaladiklarimPage evrakSec(String konu, String gidecegiYer, String evrakTarihi, String no){
+    public ImzaladiklarimPage evrakSec(String konu, String gidecegiYer, String evrakTarihi, String no) {
 
         ElementsCollection kisiselPages = $$("td[id$='mainInboxForm:inboxDataTable_paginator_bottom'] > span[class='ui-paginator-pages'] >  span");
 
@@ -153,7 +155,7 @@ public class ImzaladiklarimPage extends MainPage {
                     .filterBy(text("No: " + no))
                     .first();
 
-            if(postaListesi.isDisplayed() && postaListesi.exists()){
+            if (postaListesi.isDisplayed() && postaListesi.exists()) {
                 postaListesi.click();
                 break;
             }
@@ -164,20 +166,20 @@ public class ImzaladiklarimPage extends MainPage {
     }
 
     @Step("Geri al butonuna tıkla")
-    public ImzaladiklarimPage geriAl(){
+    public ImzaladiklarimPage geriAl() {
         btnGeriAl.click();
         return this;
     }
 
     @Step("Geri Al açıklaması doldur: {aciklama}")
-    public ImzaladiklarimPage geriAlAciklamaDoldurVeOnayla(String aciklama){
+    public ImzaladiklarimPage geriAlAciklamaDoldurVeOnayla(String aciklama) {
         txtGeriAlAciklama.setValue(aciklama);
         btnGeriAlOnay.click();
         return this;
     }
 
     @Step("Filtre panelini aç")
-    public ImzaladiklarimPage filtrePanelAc(){
+    public ImzaladiklarimPage filtrePanelAc() {
         filtrePanelHeader.click();
         return this;
     }

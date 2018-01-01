@@ -12,6 +12,11 @@ import static com.codeborne.selenide.Selenide.*;
 
 class ComboBoxHelper extends BaseLibrary {
 
+    private String panelXpath;
+    private By btnTrigger;
+    private By liLocator;
+    private By ulLocator;
+
     void selectComboBox(SelenideElement proxy, String text, boolean js) {
         setLocators(proxy);
 
@@ -57,11 +62,6 @@ class ComboBoxHelper extends BaseLibrary {
 
         return $$(liLocator);
     }
-
-    private String panelXpath;
-    private By btnTrigger;
-    private By liLocator;
-    private By ulLocator;
 
     private void setLocators(SelenideElement proxy) {
         //region Get id without _label. This id is parent Div element id

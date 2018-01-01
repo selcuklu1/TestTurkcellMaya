@@ -1,6 +1,5 @@
 package tests.EvrakBeklemeyeAlma;
 
-import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;
 import common.BaseTest;
 import data.User;
@@ -16,7 +15,8 @@ import pages.ustMenuPages.EvrakOlusturPage;
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$x;
 
 /**
  * Yazan: Ilyas Bayraktar
@@ -27,7 +27,7 @@ import static com.codeborne.selenide.Selenide.*;
 @Feature("Evrakı Beklemeye Alma")
 public class TC2095 extends BaseTest {
 
-//    User user1 = new User("user1", "123", "User1 TEST");
+    //    data.User user1 = new data.User("user1", "123", "User1 TEST");
     User user1 = new User("optiim", "123", "Optiim TEST");
     User ztekin = new User("ztekin", "123", "Zübeyde TEKİN");
     Filtreler filtrelerPage = new Filtreler();
@@ -97,50 +97,50 @@ public class TC2095 extends BaseTest {
     }
 
     @Step("Seçilen evrakta \"Beklemeye Al\" butonun gelmediği görülür")
-    public TC2095 ilkDokumaniSecBeklemeyeAlBulunmamali(){
+    public TC2095 ilkDokumaniSecBeklemeyeAlBulunmamali() {
         filtrelerPage.getSearchRows().shouldHave(sizeGreaterThan(0)).first().click();
         beklemeyeAlNotVisible();
         return this;
     }
 
     @Step("Dokumanı bulunmalı")
-    public TC2095 dokumanBulunmali(String konu){
+    public TC2095 dokumanBulunmali(String konu) {
         filtrelerPage.findRowsWith(text(konu)).shouldHaveSize(1);
         return this;
     }
 
     @Step("Dokumanı ara ve seç")
-    public TC2095 dokumaniAraVeSec(String konu){
+    public TC2095 dokumaniAraVeSec(String konu) {
         filtrelerPage.findRowsWith(text(konu)).shouldHaveSize(1).first().click();
         return this;
     }
 
     @Step("Dokumanı bulunamamalı")
-    public TC2095 dokumanBulunmamali(String konu){
+    public TC2095 dokumanBulunmamali(String konu) {
         filtrelerPage.findRowsWith(text(konu)).shouldHaveSize(0);
         return this;
     }
 
     @Step("Beklemeye Al butonu ara")
-    public SelenideElement beklemeyeAlButton(){
+    public SelenideElement beklemeyeAlButton() {
         return $x("//*[text()='Beklemeye Al']/ancestor::tbody[1]//button");
     }
 
     @Step("Beklemeye Al butona tıkla")
-    public TC2095 beklemeyeAlButonaTikla(){
+    public TC2095 beklemeyeAlButonaTikla() {
         beklemeyeAlButton().click();
         return this;
     }
 
     @Step("Beklemeye Al butonu gelmediği görülür")
-    public TC2095 beklemeyeAlNotVisible(){
+    public TC2095 beklemeyeAlNotVisible() {
         takeScreenshot();
         beklemeyeAlButton().shouldNotBe(visible);
         return this;
     }
 
     @Step("Uyarı Messajı: Evrakı beklemeye almak istediğinize emin misiniz? Evet")
-    public TC2095 beklemeyeAlOnayMessage(boolean evet){
+    public TC2095 beklemeyeAlOnayMessage(boolean evet) {
         if (evet) {
             $("#mainInboxForm\\:beklemeyeAlEvetButton").shouldBe(visible);
             $("#mainInboxForm\\:beklemeyeAlEvetButton").pressEnter();

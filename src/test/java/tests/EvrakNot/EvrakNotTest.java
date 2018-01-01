@@ -14,7 +14,6 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import pages.MainPage;
 import pages.pageComponents.Filtreler;
-import pages.pageComponents.IslemMesajlari;
 import pages.pageComponents.TextEditor;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.solMenuPages.*;
@@ -42,14 +41,14 @@ import static pages.pageComponents.belgenetElements.BelgenetFramework.comboBox;
  */
 @Feature("Evrak Not")
 public class EvrakNotTest extends BaseTest {
-    //    User user1 = new User("user1", "123", "User1 TEST", "AnaBirim1");
+    //    data.User user1 = new data.User("user1", "123", "User1 TEST", "AnaBirim1");
     User user1 = new User("user1", "123", "User1 TEST", "AnaBirim1");
     User user2 = new User("ztekin", "123", "Zübeyde TEKİN");
     User user6 = new User("optiim", "123", "Optiim TEST");
-    //    User user2 = new User("user2", "123", "User2 TEST", "AnaBirim1AltBirim1");
+    //    data.User user2 = new data.User("user2", "123", "User2 TEST", "AnaBirim1AltBirim1");
     User user3 = new User("user3", "123", "User3 TEST", "AnaBirim1");
     User user5 = new User("mbozdemir", "123", "Mehmet BOZDEMİR", "YAZILIM GELİŞTİRME");
-    //    User user2 = new User("ztekin", "123", "Zübeyde TEKİN", "YAZILIM GELİŞTİRME");
+    //    data.User user2 = new data.User("ztekin", "123", "Zübeyde TEKİN", "YAZILIM GELİŞTİRME");
     String konu;
     String kaldiralacakKlasor = "Diğer";
     EvrakNot evrakNot = new EvrakNot();
@@ -324,7 +323,7 @@ public class EvrakNotTest extends BaseTest {
 
     @Test(enabled = true, description = "TC2162: Not İzleme - Evrak Notunun Postalanacak Evraklar ve Postananlar ekranlarında izlenmesi"
 //            ,dependsOnMethods = {"tc2160"}
-            )
+    )
     public void tc2162() throws Exception {
         PostalanacakEvraklarPage postalanacakEvraklarPage = new PostalanacakEvraklarPage();
         EvrakOnizleme.Notlari notlar = new EvrakOnizleme().new Notlari();
@@ -361,11 +360,117 @@ public class EvrakNotTest extends BaseTest {
     }
 
     @Step("Postala")
-    public EvrakNotTest postala(){
+    public EvrakNotTest postala() {
         clickJs($("#mainPreviewForm\\:postalaButton_id"));
         $(byText("Belge elektronik imzalı değil! Evrakı postalamak üzeresiniz. Devam etmek istiyor musunuz?")).shouldBe(visible);
         $("#mainPreviewForm\\:postalaDogrulaDialogForm\\:evetButton_id").click();
         return this;
+    }
+
+    @Step("Evrak Oluştur")
+    public void evrakOlusturVeImzala(User user, String konu, String[][] notes) throws InterruptedException {
+        EvrakOlusturPage evrakOlusturPage = new EvrakOlusturPage();
+        EvrakNot evrakNot = new EvrakNot();
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .konuKoduSec("YAZILIM GEL")
+                .konuDoldur(konu)
+                .kaldirilacakKlasorler("Diğer")
+                .evrakTuruSec("Resmi Yazışma")
+                .onayAkisiKullanicilariTemizle()
+                .onayAkisiEkle()
+                .onayAkisiKullaniciTipiSec(user.getName(), "İmzalama")
+                .onayAkisiKullan();
+
+        EvrakOlusturPage.EditorTab editorTab = evrakOlusturPage
+                .editorTabAc()
+                .editorIcerikDoldur("TC2162")
+                .editorEvrakGeregiSec("YAZILIM GELİ");
+
+        for (String[] note : notes) {
+            SelenideElement n = evrakNot.notOlustur(user.getName(), note[0], note[1]);
+            String t = n.text();
+            note[2] = getDateFromText(t);
+            note[3] = getTimeFromText(t);
+        }
+        editorTab.imzala()
+                .popupSImzalaIslemleri().islemMesaji().basariliOlmali();
+
+
+        /*postalanacakEvraklarPage.evrakPostala()
+                .gidisSekli("E-Posta")
+                .postalacanakEposta("test@test.com")
+                .postalamaAciklama("Test")
+                .postalanacakEvrakYaz()
+                .popupPostalanacakEvrakYazdir()
+                .popupPostaYazdirmaKapat()
+                .postalanacakEvrakOrjYaz()
+                .gramajDoldur("111111")
+                .hesapla()
+                .evrakPostala();*/
+    }
+
+    @Step("Evrak Oluştur ve kaydet")
+    private void evrakOlusturVeKaydet(EvrakOlusturPage page, String konu) throws InterruptedException {
+        page.bilgilerTabiAc()
+                .konuKoduSec("310.04")
+                .konuDoldur(konu)
+                .kaldiralacakKlasorlerSec(kaldiralacakKlasor)
+                .evrakTuruSec("Resmi Yazışma")
+                .evrakDiliSec("Türkçe")
+                .gizlilikDerecesiSec("Normal")
+                .kanunKapsamTipiNormalSec()
+                .ivedilikSec("Normal")
+                .bilgiSecimTipiSecByText("Kurum")
+                .bilgiSec("Başbakanlık")
+                .geregiSecimTipiSecByText("Birim")
+                .geregiSec(user1.getBirimAdi())
+                .onayAkisiEkle()
+//                .onayAkisiKullaniciTipiSec("Optiim TEST [Ağ (Network) Uzman Yardımcısı]", "Paraflama")
+                .onayAkisiKullaniciTipiSec(user1.getName(), "Paraflama")
+                .onayAkisiEkle(user2.getName())
+                .onayAkisiKullaniciTipiSec(user2.getName(), "İmzalama")
+                .kullan()
+                .onayAkisiTitleKontrol("Yeni akış")
+                .onayAkisiDetailKontrol(user1.getName() + "-Paraflama / " + user2.getName() + "-İmzalama");
+        page.kaydet();
+        $("#kaydetConfirmForm\\:kaydetEvetButton").click();
+        page.islemMesaji().basariliOlmali();
+        $x("//form[@id='yeniGidenEvrakForm']/ancestor::div[starts-with(@id,'window') and contains(@id,'Dialog')]/div[contains(@class,'ui-dialog-titlebar')]/a[contains(@class,'ui-dialog-titlebar-close')]").click();
+        $("#kapatKaydetEvetButton").click();
+        page.islemMesaji().basariliOlmali();
+    }
+
+    @Step("Evrak Önizlemede notları kontrol")
+    public EvrakNotTest notlariKontrolEt(String[][] notes, String kurumLogo, boolean renk) {
+        for (int i = notes.length - 1; i > -1; i--) {
+            notlar.getNote()
+                    .shouldBe(visible)
+                    .shouldHave(text(notes[i][0])
+                            , text(notes[i][1])
+                            , text(notes[i][2])
+                            , text(notes[i][3]));
+            Assert.assertTrue(notlar.kurumLogosu().contains("tccbLogo.png"), "Kurum logosu olmalı");
+
+            if (notes[i][0].equals("Kişisel"))
+                Assert.assertTrue(notlar.zeminRengiBeyaz(), "Kişisel notun arka plan beyaz");
+            else if (notes[i][0].equals("Genel"))
+                Assert.assertTrue(notlar.zeminRengiSari(), "Genel notun arka plan sarı");
+            else
+                throw new RuntimeException(notes[i][0] + " not arka palan ne beyaz ne de sarı");
+
+            if (i != 0)
+                notlar.sonrakiNot();
+        }
+        return this;
+    }
+
+    @Step("Evrağı bul")
+    public SelenideElement evragiBul(String konu) {
+        SelenideElement evrak = new Filtreler().findRowsWith(Condition.text(konu)).shouldHaveSize(1).first();
+        return evrak;
     }
 
     /**
@@ -527,7 +632,7 @@ public class EvrakNotTest extends BaseTest {
             if (maxLength.length > 0)
                 aciklamaKarakterSayisiKontrolu(maxLength[0]);
 
-                aciklamaGir(aciklama)
+            aciklamaGir(aciklama)
                     .notTipiSecenekDegerleriKontrolu("Seçiniz", "Genel", "Kişisel")
                     .notTipiSec(notTipi)
                     .kaydet();
@@ -582,12 +687,12 @@ public class EvrakNotTest extends BaseTest {
      */
     class UstYazi extends MainPage {
 
+        public By updateButton = By.cssSelector("button span[class~='update-icon']");
+        public By deleteButton = By.cssSelector("button span[class~='delete-icon']");
         SelenideElement notEkle = $("button[id$='kisiselNotEkleDataTableId:kisiselNotEkleId']");
         SelenideElement noteEkleDialog = $("div[id='evrakKisiselNotDialogFormId:evrakKisiselNotDialogId']");
         BelgenetElement noteTipi = comboBox("label[id='evrakKisiselNotDialogFormId:evrakNotTipi_label']");
         SelenideElement kaydet = $("button[id='evrakKisiselNotDialogFormId:evrakKisiselNotKaydet']");
-        public By updateButton = By.cssSelector("button span[class~='update-icon']");
-        public By deleteButton = By.cssSelector("button span[class~='delete-icon']");
 
         @Step("Üst yazıyı görüntüle")
         public UstYazi ustYaziGoruntule() {
@@ -897,7 +1002,7 @@ public class EvrakNotTest extends BaseTest {
 
             @Step("Notlatı kontrol et")
             public Notlari notlariKontolEtLogoVeRenk(String[][] notes, String kurumLogo) {
-                for (int i = notes.length - 1; i >= 0 ; i--) {
+                for (int i = notes.length - 1; i >= 0; i--) {
                     Allure.addAttachment(String.valueOf(i), note.toString());
                     getNote()
                             .shouldBe(visible)
@@ -942,111 +1047,5 @@ public class EvrakNotTest extends BaseTest {
                 return this;
             }
         }
-    }
-
-    @Step("Evrak Oluştur")
-    public void evrakOlusturVeImzala(User user, String konu, String[][] notes) throws InterruptedException {
-        EvrakOlusturPage evrakOlusturPage = new EvrakOlusturPage();
-        EvrakNot evrakNot = new EvrakNot();
-
-        evrakOlusturPage
-                .openPage()
-                .bilgilerTabiAc()
-                .konuKoduSec("YAZILIM GEL")
-                .konuDoldur(konu)
-                .kaldirilacakKlasorler("Diğer")
-                .evrakTuruSec("Resmi Yazışma")
-                .onayAkisiKullanicilariTemizle()
-                .onayAkisiEkle()
-                .onayAkisiKullaniciTipiSec(user.getName(), "İmzalama")
-                .onayAkisiKullan();
-
-        EvrakOlusturPage.EditorTab editorTab = evrakOlusturPage
-                .editorTabAc()
-                .editorIcerikDoldur("TC2162")
-                .editorEvrakGeregiSec("YAZILIM GELİ");
-
-        for (String[] note : notes) {
-            SelenideElement n = evrakNot.notOlustur(user.getName(), note[0], note[1]);
-            String t = n.text();
-            note[2] = getDateFromText(t);
-            note[3] = getTimeFromText(t);
-        }
-        editorTab.imzala()
-                .popupSImzalaIslemleri().islemMesaji().basariliOlmali();
-
-
-        /*postalanacakEvraklarPage.evrakPostala()
-                .gidisSekli("E-Posta")
-                .postalacanakEposta("test@test.com")
-                .postalamaAciklama("Test")
-                .postalanacakEvrakYaz()
-                .popupPostalanacakEvrakYazdir()
-                .popupPostaYazdirmaKapat()
-                .postalanacakEvrakOrjYaz()
-                .gramajDoldur("111111")
-                .hesapla()
-                .evrakPostala();*/
-    }
-
-    @Step("Evrak Oluştur ve kaydet")
-    private void evrakOlusturVeKaydet(EvrakOlusturPage page, String konu) throws InterruptedException {
-        page.bilgilerTabiAc()
-                .konuKoduSec("310.04")
-                .konuDoldur(konu)
-                .kaldiralacakKlasorlerSec(kaldiralacakKlasor)
-                .evrakTuruSec("Resmi Yazışma")
-                .evrakDiliSec("Türkçe")
-                .gizlilikDerecesiSec("Normal")
-                .kanunKapsamTipiNormalSec()
-                .ivedilikSec("Normal")
-                .bilgiSecimTipiSecByText("Kurum")
-                .bilgiSec("Başbakanlık")
-                .geregiSecimTipiSecByText("Birim")
-                .geregiSec(user1.getBirimAdi())
-                .onayAkisiEkle()
-//                .onayAkisiKullaniciTipiSec("Optiim TEST [Ağ (Network) Uzman Yardımcısı]", "Paraflama")
-                .onayAkisiKullaniciTipiSec(user1.getName(), "Paraflama")
-                .onayAkisiEkle(user2.getName())
-                .onayAkisiKullaniciTipiSec(user2.getName(), "İmzalama")
-                .kullan()
-                .onayAkisiTitleKontrol("Yeni akış")
-                .onayAkisiDetailKontrol(user1.getName() + "-Paraflama / " + user2.getName() + "-İmzalama");
-        page.kaydet();
-        $("#kaydetConfirmForm\\:kaydetEvetButton").click();
-        page.islemMesaji().basariliOlmali();
-        $x("//form[@id='yeniGidenEvrakForm']/ancestor::div[starts-with(@id,'window') and contains(@id,'Dialog')]/div[contains(@class,'ui-dialog-titlebar')]/a[contains(@class,'ui-dialog-titlebar-close')]").click();
-        $("#kapatKaydetEvetButton").click();
-        page.islemMesaji().basariliOlmali();
-    }
-
-    @Step("Evrak Önizlemede notları kontrol")
-    public EvrakNotTest notlariKontrolEt(String[][] notes, String kurumLogo, boolean renk) {
-        for (int i = notes.length - 1; i > -1; i--) {
-            notlar.getNote()
-                    .shouldBe(visible)
-                    .shouldHave(text(notes[i][0])
-                            , text(notes[i][1])
-                            , text(notes[i][2])
-                            , text(notes[i][3]));
-            Assert.assertTrue(notlar.kurumLogosu().contains("tccbLogo.png"), "Kurum logosu olmalı");
-
-            if (notes[i][0].equals("Kişisel"))
-                Assert.assertTrue(notlar.zeminRengiBeyaz(), "Kişisel notun arka plan beyaz");
-            else if (notes[i][0].equals("Genel"))
-                Assert.assertTrue(notlar.zeminRengiSari(), "Genel notun arka plan sarı");
-            else
-                throw new RuntimeException(notes[i][0] + " not arka palan ne beyaz ne de sarı");
-
-            if (i != 0)
-                notlar.sonrakiNot();
-        }
-        return this;
-    }
-
-    @Step("Evrağı bul")
-    public SelenideElement evragiBul(String konu) {
-        SelenideElement evrak = new Filtreler().findRowsWith(Condition.text(konu)).shouldHaveSize(1).first();
-        return evrak;
     }
 }

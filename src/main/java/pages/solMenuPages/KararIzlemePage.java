@@ -25,30 +25,30 @@ public class KararIzlemePage extends MainPage {
     SelenideElement filtrelerAcordion = $("[id^='mainInboxForm:inboxDataTable:filtersAccordion'] [class='ui-accordion-header ui-helper-reset ui-state-default ui-corner-all']");
 
     @Step("Karar izleme sayfası aç")
-    public KararIzlemePage openPage(){
+    public KararIzlemePage openPage() {
         solMenu(SolMenuData.KurulIslemleri.KararIzleme);
         return this;
     }
 
-    public KararIzlemePage filtreler(){
+    public KararIzlemePage filtreler() {
         filtrelerAcordion.click();
         return this;
     }
 
     @Step("Filtrele")
-    public KararIzlemePage filtrele(){
+    public KararIzlemePage filtrele() {
         btnFiltrele.click();
         return this;
     }
 
     @Step("Evrak durumu seç")
-    public KararIzlemePage evrakDurumuSec(String value){
+    public KararIzlemePage evrakDurumuSec(String value) {
         cmbEvrakDurumu.selectOptionByValue(value);
         return this;
     }
 
     @Step("İlk evrak seç")
-    public KararIzlemePage ilkEvrakSec(String toplantiNo, String konu){
+    public KararIzlemePage ilkEvrakSec(String toplantiNo, String konu) {
         tblIlkEvrak.
                 filterBy(Condition.text(toplantiNo))
                 .filterBy(Condition.text(konu))
@@ -57,36 +57,35 @@ public class KararIzlemePage extends MainPage {
     }
 
     @Step("İade bilgisi gelidği görünür")
-    public KararIzlemePage iadeBilgisiGorme(String not){
+    public KararIzlemePage iadeBilgisiGorme(String not) {
         divEvrakNotlari.filterBy(Condition.text(not)).get(0).shouldBe(visible);
         return this;
     }
 
     @Step("Evrak seç")
-    public KararIzlemePage evrakSec(String toplantiNo, String konu, String toplantiTarih){
-               tableKararIzlemeEvraklar.filterBy(Condition.text(toplantiNo))
-                       .filterBy(Condition.text(konu)).filterBy(Condition.text(konu))
-                       .filterBy(Condition.text(toplantiTarih)).first()
-                       .$("[class='ui-chkbox-box ui-widget ui-corner-all ui-state-default']").click();
+    public KararIzlemePage evrakSec(String toplantiNo, String konu, String toplantiTarih) {
+        tableKararIzlemeEvraklar.filterBy(Condition.text(toplantiNo))
+                .filterBy(Condition.text(konu)).filterBy(Condition.text(konu))
+                .filterBy(Condition.text(toplantiTarih)).first()
+                .$("[class='ui-chkbox-box ui-widget ui-corner-all ui-state-default']").click();
         return this;
     }
-    
+
     @Step("Evrak geldiği görme")
-    public KararIzlemePage evrakGeldigiGorme(String toplantiNo, String konu, String toplantiTarih){
+    public KararIzlemePage evrakGeldigiGorme(String toplantiNo, String konu, String toplantiTarih) {
         tableKararIzlemeEvraklar.filterBy(Condition.text(toplantiNo))
                 .filterBy(Condition.text(konu)).filterBy(Condition.text(konu))
                 .filterBy(Condition.text(toplantiTarih)).filterBy(Condition.visible);
         return this;
     }
-    
+
     @Step("Toplu onay sun")
-    public KararIzlemePage topluOnayaSun(boolean secim){
+    public KararIzlemePage topluOnayaSun(boolean secim) {
         btnTopluOnayaSun.click();
-        if (secim == true){
-        btnTopluOnaySunEvet.click();
-        }
-        else{
-        getBtnTopluOnayaSunHayir.click();
+        if (secim == true) {
+            btnTopluOnaySunEvet.click();
+        } else {
+            getBtnTopluOnayaSunHayir.click();
         }
         return this;
     }

@@ -56,7 +56,7 @@ public class BakimaAlPage extends MainPage {
     }
 
     @Step("{0}")
-    public BakimaAlPage bilgilendirmeMetniTikla(){
+    public BakimaAlPage bilgilendirmeMetniTikla() {
         spanBilgilendirmeMetni.click();
         return this;
     }
@@ -66,7 +66,7 @@ public class BakimaAlPage extends MainPage {
 
         btnBakimaAl.waitUntil(Condition.visible, 5000);
 
-        if(spanBilgilendirmeMetni.isDisplayed())
+        if (spanBilgilendirmeMetni.isDisplayed())
             spanBilgilendirmeMetni.click();
 
         txtBilgilendirmeMetni
@@ -126,9 +126,8 @@ public class BakimaAlPage extends MainPage {
     public BakimaAlPage kullanicilarTemizle() {
 
         ElementsCollection allClearButtons = $$("tbody[id='bakimaAlFormId:bakimaAlKullanicilarId:LovSecilenTable_data'] button[id^='bakimaAlFormId:bakimaAlKullanicilarId:LovSecilenTable']");
-        if(allClearButtons.size() > 0){
-            for (int i = 0; i < allClearButtons.size(); i ++)
-            {
+        if (allClearButtons.size() > 0) {
+            for (int i = 0; i < allClearButtons.size(); i++) {
                 allClearButtons.get(i).click();
             }
         }

@@ -3,7 +3,6 @@ package common;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import data.User;
-import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import listeners.SettingsListener;
 import org.testng.annotations.*;
@@ -45,10 +44,12 @@ public class BaseTest extends BaseLibrary {
         else
             Configuration.baseUrl = System.getProperty("selenide.baseUrl");
 
-        if (System.getProperty("selenide.browser") == null)
+        /*if (System.getProperty("selenide.browser") == null)
             Configuration.browser = "chrome";
         else
-            Configuration.browser = System.getProperty("selenide.browser");
+            Configuration.browser = System.getProperty("selenide.browser");*/
+
+        Configuration.browser = "chrome";
 
         Configuration.reportsFolder = "test-result/reports";
         Configuration.screenshots = false;
@@ -68,13 +69,12 @@ public class BaseTest extends BaseLibrary {
         //Configuration.browserSize = "1024x600";
         //endregion
 
-//        System.out.println("after selenide.browser: " + System.getProperty("selenide.browser"));
-//        System.out.println("after selenide.baseUrl: " + System.getProperty("selenide.baseUrl"));
         // System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, "/dev/null");
 
-        setDocPath();
         getBrowserName();
-
+        System.out.println("Doc path: " + getDocPath());
+        System.out.println("Download path: " + getDownoladPath());
+//        mymethod();
         log.info("Selenide/Selenium driver has been set up.");
     }
 
@@ -130,5 +130,4 @@ public class BaseTest extends BaseLibrary {
     public void logout() {
         new MainPage().logout();
     }
-
 }

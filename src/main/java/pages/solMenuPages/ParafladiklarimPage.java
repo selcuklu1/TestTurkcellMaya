@@ -29,7 +29,7 @@ public class ParafladiklarimPage extends MainPage {
     SelenideElement tblRapor = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
     SelenideElement btnHavaleYap = $(By.id(""));
     SelenideElement btnIconPaylas = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:6:cmdbutton"));
-    SelenideElement txtKisi =$(By.id("mainPreviewForm:evrakPaylasKisiLov:LovText"));
+    SelenideElement txtKisi = $(By.id("mainPreviewForm:evrakPaylasKisiLov:LovText"));
     SelenideElement txtAciklama = $(By.id("mainPreviewForm:evrakPaylasAciklama"));
     SelenideElement btnPaylas = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:5:cmdbutton"));
     SelenideElement btnIcerik = $(By.id("mainInboxForm:inboxDataTable:0:detayGosterButton"));
@@ -50,19 +50,19 @@ public class ParafladiklarimPage extends MainPage {
     }
 
     @Step("Açıklama doldur")
-    public ParafladiklarimPage paylasAciklamaDoldur(String aciklama){
+    public ParafladiklarimPage paylasAciklamaDoldur(String aciklama) {
         txtPaylasAciklama.setValue(aciklama);
         return this;
     }
 
     @Step("Kişi doldur")
-    public ParafladiklarimPage paylasKisiDoldur(String kisi){
+    public ParafladiklarimPage paylasKisiDoldur(String kisi) {
         txtPaylasKisi.selectLov(kisi);
         return this;
     }
 
     @Step("Paylaş")
-    public ParafladiklarimPage paylasPaylas(){
+    public ParafladiklarimPage paylasPaylas() {
         btnPaylasPaylas.click();
         return this;
     }
@@ -145,11 +145,13 @@ public class ParafladiklarimPage extends MainPage {
         btnPaylas.click();
         return this;
     }
+
     @Step("İçerik ilk kayıt")
     public ParafladiklarimPage icerikIlkKayıt() {
         btnIcerik.click();
         return this;
     }
+
     @Step("Evrak No al")
     public String evrakDetayiEvrakNoAl() {
         String evrakNo = txtEvrakDetayiEvrakNo.text();

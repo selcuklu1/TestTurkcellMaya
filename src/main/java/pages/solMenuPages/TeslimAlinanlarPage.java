@@ -9,7 +9,6 @@ import org.openqa.selenium.Keys;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
-import pages.ustMenuPages.GelenEvrakKayitPage;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
@@ -22,7 +21,7 @@ public class TeslimAlinanlarPage extends MainPage {
     SelenideElement cmbFiltre = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt10493_input"));
     SelenideElement txtSayfadaAra = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt353"));
     SelenideElement dateTxtTarih = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt353"));
-    SelenideElement cmbTopluSecim  =$(By.id("mainInboxForm:inboxDataTable:j_idt657_button"));
+    SelenideElement cmbTopluSecim = $(By.id("mainInboxForm:inboxDataTable:j_idt657_button"));
     SelenideElement tblRapor = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
     SelenideElement btnHavaleYap = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:5:cmdbutton"));
     ElementsCollection tblEvraklar = $$("[id^='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
@@ -76,7 +75,7 @@ public class TeslimAlinanlarPage extends MainPage {
     @Step("Tarihi doldur")
     public TeslimAlinanlarPage tarihiDoldur(String tarih, Keys... keys) {
         dateTxtTarih.sendKeys(tarih);
-        for (Keys k:keys) {
+        for (Keys k : keys) {
             dateTxtTarih.sendKeys(keys);
         }
         return this;
@@ -89,7 +88,7 @@ public class TeslimAlinanlarPage extends MainPage {
     }
 
     @Step("Kisi doldur")
-    public TeslimAlinanlarPage havaleYapKisiDoldur(String kisi){
+    public TeslimAlinanlarPage havaleYapKisiDoldur(String kisi) {
         txtHavaleYapKisi.selectLov(kisi);
         return this;
     }
@@ -101,7 +100,7 @@ public class TeslimAlinanlarPage extends MainPage {
     }
 
     @Step("Kullanıcı listesi doldur")
-    public TeslimAlinanlarPage havaleYapKullaniciListesiDoldur(String kullaniciListesi){
+    public TeslimAlinanlarPage havaleYapKullaniciListesiDoldur(String kullaniciListesi) {
         //txtHavaleYapKullaniciListesi.selectLov(kullaniciListesi);
         txtHavaleYapKullaniciListesi.selectLov(kullaniciListesi);
         return this;

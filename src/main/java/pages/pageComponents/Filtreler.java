@@ -15,19 +15,16 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.executeJavaScript;
 
 public class Filtreler extends BaseLibrary {
-
-    //    SelenideElement pageTilte = $(".ui-inbox-header-title");
     private String filtreMainDivId = "mainInboxForm\\:inboxDataTable\\:filtersAccordion";
     SelenideElement filtre = $("[id='" + filtreMainDivId + "'] h3");
+    //    ElementsCollection searchRows = searchTable.$$("tr[data-ri][role='row']");
     SelenideElement filtersGrid = $(By.id(filtreMainDivId + ":filtersGrid"));
-    ElementsCollection filterList = filtersGrid.$$("label");
 
+    ElementsCollection filterList = filtersGrid.$$("label");
     SelenideElement searchTable = $("#mainInboxForm\\:inboxDataTable_data");
     SelenideElement nextPageButton = $("#mainInboxForm\\:inboxDataTable span[class~='ui-paginator-next']");
-
     By icerikGoster = By.cssSelector("button[id$='detayGosterButton']");
-//    ElementsCollection searchRows = searchTable.$$("tr[data-ri][role='row']");
-
+    //    SelenideElement pageTilte = $(".ui-inbox-header-title");
 
     @Step("İçetik göster")
     public By icerikGoster() {
@@ -61,10 +58,10 @@ public class Filtreler extends BaseLibrary {
     }
 
     @Step("Arama tablosundan satırları al")
-    public ElementsCollection getSearchRows(){
+    public ElementsCollection getSearchRows() {
         searchTable.shouldBe(visible);
         Allure.addAttachment("Satır sayısı:" + String.valueOf(searchTable.$$("tr[data-ri][role='row']").size()),
-                (searchTable.$$("tr[data-ri][role='row']").size()>0)?searchTable.$$("tr[data-ri][role='row']").texts().toString(): "");
+                (searchTable.$$("tr[data-ri][role='row']").size() > 0) ? searchTable.$$("tr[data-ri][role='row']").texts().toString() : "");
         takeScreenshot();
         return searchTable.$$("tr[data-ri][role='row']");
     }
@@ -84,7 +81,7 @@ public class Filtreler extends BaseLibrary {
 //            rows.shouldHave(sizeGreaterThan(0));
             ElementsCollection filtered = getSearchRows().filterBy(condition);
 
-            if (filtered.size() > 0 || nextPageButton.has(cssClass("ui-state-disabled"))){
+            if (filtered.size() > 0 || nextPageButton.has(cssClass("ui-state-disabled"))) {
                 Allure.addAttachment("Filtereye göre bulunan satırlar", filtered.texts().toString());
                 return filtered;
             }
@@ -100,7 +97,7 @@ public class Filtreler extends BaseLibrary {
      * @return
      */
     @Step("Arama tablosunda satırı bul")
-    public ElementsCollection findRowsWith(Condition condition, Condition... conditions){
+    public ElementsCollection findRowsWith(Condition condition, Condition... conditions) {
         while (true) {
             ElementsCollection filtered = getSearchRows().filterBy(condition);
             if (filtered.size() > 0) {
@@ -108,7 +105,7 @@ public class Filtreler extends BaseLibrary {
                     filtered = filtered.filterBy(con);
                 }
             }
-            if (filtered.size() > 0 || nextPageButton.has(cssClass("ui-state-disabled"))){
+            if (filtered.size() > 0 || nextPageButton.has(cssClass("ui-state-disabled"))) {
                 Allure.addAttachment("Filtereye göre bulunan satırlar", filtered.texts().toString());
                 return filtered;
             }
@@ -123,7 +120,7 @@ public class Filtreler extends BaseLibrary {
      * @return
      */
     @Step("Arama tablosunda satırı bul")
-    public ElementsCollection findRowsWithToday(Condition condition, Condition... conditions){
+    public ElementsCollection findRowsWithToday(Condition condition, Condition... conditions) {
         while (true) {
             ElementsCollection filtered = getSearchRows().filterBy(text(getSysDateForKis()));
             if (filtered.size() == 0)
@@ -135,14 +132,13 @@ public class Filtreler extends BaseLibrary {
                     filtered = filtered.filterBy(con);
                 }
             }
-            if (filtered.size() > 0 || nextPageButton.has(cssClass("ui-state-disabled"))){
+            if (filtered.size() > 0 || nextPageButton.has(cssClass("ui-state-disabled"))) {
                 Allure.addAttachment("Filtereye göre bulunan satırlar", filtered.texts().toString());
                 return filtered;
             }
             nextPageButton.click();
         }
     }
-
 
 
 //    Function HtmlGetParentObject(ByVal obj, ByVal parentTagName)

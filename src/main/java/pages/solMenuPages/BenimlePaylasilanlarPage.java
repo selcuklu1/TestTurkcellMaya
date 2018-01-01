@@ -26,20 +26,22 @@ public class BenimlePaylasilanlarPage extends MainPage {
     SelenideElement btnEvrakNotuPanelIptal = $(By.id("evrakKisiselNotDialogFormId:evrakKisiselNotIptal"));
     SelenideElement btnEvrakNotuKaydet = $(By.id("evrakKisiselNotDialogFormId:paylasimNotKaydet"));
     ElementsCollection birimSec = $$("[id='birimlerimMenusuContainer'] li a span");
+    ElementsCollection tableEvrakNotlari = $$(By.xpath("//th[contains(., 'Evrak Notları')]/../../../tbody/tr"));
+
     @Step("Benimle Paylaşılanlar sayfasını aç")
     public BenimlePaylasilanlarPage openPage() {
         solMenu(SolMenuData.IslemBekleyenEvraklar.BenimlePaylasilanlar);
         return this;
     }
 
-    public BenimlePaylasilanlarPage birimSec(String birim){
+    public BenimlePaylasilanlarPage birimSec(String birim) {
         birimSec.filterBy(Condition.text(birim)).get(0).click();
         return this;
     }
 
     @Step("Durdurulmuş paylaşımlar checkbox seç")
     public BenimlePaylasilanlarPage durdurulmusPaylasimlarSec() {
-        if(chkDurdurulmusPaylasimlar.isDisplayed() == false)
+        if (chkDurdurulmusPaylasimlar.isDisplayed() == false)
             divFiltrelePanel.click();
 
         chkDurdurulmusPaylasimlar.click();
@@ -60,6 +62,7 @@ public class BenimlePaylasilanlarPage extends MainPage {
                 .click();
         return this;
     }
+
     @Step("Evrak seç : {konu}")
     public BenimlePaylasilanlarPage evrakSecKonuyaGore(String konu) {
         tableBenimlePaylasilanlar
@@ -97,14 +100,15 @@ public class BenimlePaylasilanlarPage extends MainPage {
         tabsEvrakOnizleme
                 .filterBy(Condition.text(tabAdi))
                 .get(0)
-                .click();;
+                .click();
+        ;
         return this;
     }
 
     // Evrak notları fonksiyonları
     @Step("Evrak ekleme butonu aktif olmalı mı? : \"{0}\" ")
     public BenimlePaylasilanlarPage evrakNotEklemeButonuAktifOlmali(boolean aktifOlmali) {
-        if(aktifOlmali == true)
+        if (aktifOlmali == true)
             btnEvratNotEkle.shouldHave(Condition.attribute("aria-disabled", "false"));
         else
             btnEvratNotEkle.shouldHave(Condition.attribute("aria-disabled", "true"));
@@ -114,7 +118,7 @@ public class BenimlePaylasilanlarPage extends MainPage {
     @Step("Paylaşan: \"{paylasan}\" listede olmalımı?: \"{shouldBeExist}\"")
     public BenimlePaylasilanlarPage paylasilanlarKontrol(String paylasan, String konu, String paylasilmaTarihi, Boolean shouldBeExist) {
 
-        if(shouldBeExist == true){
+        if (shouldBeExist == true) {
             tableBenimlePaylasilanlar
                     .filterBy(Condition.text("Paylaşan: " + paylasan))
                     .filterBy(Condition.text("Konu: " + konu))
@@ -159,8 +163,6 @@ public class BenimlePaylasilanlarPage extends MainPage {
         return this;
     }
 
-    ElementsCollection tableEvrakNotlari = $$(By.xpath("//th[contains(., 'Evrak Notları')]/../../../tbody/tr"));
-
     @Step("Açıklama kontrol")
     public BenimlePaylasilanlarPage evrakNotuKontrol(String ekleyen, String tarih, String aciklama) {
         tableEvrakNotlari
@@ -171,12 +173,6 @@ public class BenimlePaylasilanlarPage extends MainPage {
                 .shouldBe(Condition.exist);
         return this;
     }
-
-
-
-
-
-
 
 
 }

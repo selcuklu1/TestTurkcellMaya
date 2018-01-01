@@ -11,7 +11,6 @@ import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
 import java.util.Random;
-import java.util.Vector;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
@@ -71,7 +70,20 @@ public class KullaniciYonetimiPage extends MainPage {
 
     // Hüseyin TÜMER
     SelenideElement btnKullaniciEkle = $(By.id("kullaniciYonetimiListingForm:kullaniciDataTable:addNewKullaniciButton"));
-
+    SelenideElement txtTcKimlikNo1 = $(By.id("kullaniciYonetimiEditorForm:tcKimlikNoInput"));
+    SelenideElement txtSicilNo1 = $(By.id("kullaniciYonetimiEditorForm:sicilNoInput"));
+    SelenideElement txtAd1 = $(By.id("kullaniciYonetimiEditorForm:ilkAdInput"));
+    SelenideElement txtSoyad1 = $(By.id("kullaniciYonetimiEditorForm:soyadInput"));
+    SelenideElement txtKullaniciAdi1 = $(By.id("kullaniciYonetimiEditorForm:kullaniciAdiInput"));
+    SelenideElement txtEmail1 = $(By.id("kullaniciYonetimiEditorForm:emailInput"));
+    SelenideElement txtSifre = $(By.id("kullaniciYonetimiEditorForm:sifre"));
+    SelenideElement txtSifreTekrar = $(By.id("kullaniciYonetimiEditorForm:sifreTekrar"));
+    SelenideElement btnGorevliOlduguBirimEkle = $(By.id("kullaniciYonetimiEditorForm:kullaniciBirimDataTable:addNewKullaniciBirimLinkButton"));
+    BelgenetElement txtBirim = comboLov(By.id("kullaniciBirimEditorForm:kullaniciBirimIliskiBirimLov:LovText"));
+    SelenideElement btnRolEkle = $(By.id("kullaniciYonetimiEditorForm:kullaniciRolBirimDataTable:addNewRolLinkButton"));
+    SelenideElement txtGorev = $(By.id("kullaniciBirimEditorForm:unvanAutoComplete_input"));
+    BelgenetElement txtRol = comboLov(By.id("kullaniciRolEkleEditorForm:rolEkleLovRolList:LovText"));
+    SelenideElement btnRolKaydet = $(By.id("kullaniciRolEkleEditorForm:saveKullaniciRolEkleButton"));
 
     @Step("Birim alanında \"{0}\" sec")
     public KullaniciYonetimiPage birimSec(String text) {
@@ -109,13 +121,13 @@ public class KullaniciYonetimiPage extends MainPage {
     }
 
     @Step("Görevli olduğu birimler güncelle")
-    public KullaniciYonetimiPage gorevliOlduguBirimlerGuncelle(){
+    public KullaniciYonetimiPage gorevliOlduguBirimlerGuncelle() {
         clickJs(btnGorevliOlduguBirimlerGuncelle);
         return this;
     }
 
     @Step("Seçilen kullanıcı güncelle tıkla")
-    public KullaniciYonetimiPage kullaniciListesiGuncelle(){
+    public KullaniciYonetimiPage kullaniciListesiGuncelle() {
         clickJs(btnKullaniciListesiGuncelle);
         return this;
     }
@@ -180,6 +192,7 @@ public class KullaniciYonetimiPage extends MainPage {
         chkAltBirimiOlmayanlar.setSelected(value);
         return this;
     }
+
     @Step("Ara")
     public KullaniciYonetimiPage ara() {
         btnAra.click();
@@ -257,23 +270,8 @@ public class KullaniciYonetimiPage extends MainPage {
         return this;
     }
 
-    SelenideElement txtTcKimlikNo1 = $(By.id("kullaniciYonetimiEditorForm:tcKimlikNoInput"));
-    SelenideElement txtSicilNo1 = $(By.id("kullaniciYonetimiEditorForm:sicilNoInput"));
-    SelenideElement txtAd1 = $(By.id("kullaniciYonetimiEditorForm:ilkAdInput"));
-    SelenideElement txtSoyad1 = $(By.id("kullaniciYonetimiEditorForm:soyadInput"));
-    SelenideElement txtKullaniciAdi1 = $(By.id("kullaniciYonetimiEditorForm:kullaniciAdiInput"));
-    SelenideElement txtEmail1 = $(By.id("kullaniciYonetimiEditorForm:emailInput"));
-    SelenideElement txtSifre = $(By.id("kullaniciYonetimiEditorForm:sifre"));
-    SelenideElement txtSifreTekrar = $(By.id("kullaniciYonetimiEditorForm:sifreTekrar"));
-    SelenideElement btnGorevliOlduguBirimEkle = $(By.id("kullaniciYonetimiEditorForm:kullaniciBirimDataTable:addNewKullaniciBirimLinkButton"));
-    BelgenetElement txtBirim = comboLov(By.id("kullaniciBirimEditorForm:kullaniciBirimIliskiBirimLov:LovText"));
-    SelenideElement btnRolEkle = $(By.id("kullaniciYonetimiEditorForm:kullaniciRolBirimDataTable:addNewRolLinkButton"));
-    SelenideElement txtGorev = $(By.id("kullaniciBirimEditorForm:unvanAutoComplete_input"));
-    BelgenetElement txtRol = comboLov(By.id("kullaniciRolEkleEditorForm:rolEkleLovRolList:LovText"));
-    SelenideElement btnRolKaydet = $(By.id("kullaniciRolEkleEditorForm:saveKullaniciRolEkleButton"));
-
     @Step("Kullanıcı Oluştur")
-    public String kullaniciOlustur(String gorevliOlduguBirim, String gorev){
+    public String kullaniciOlustur(String gorevliOlduguBirim, String gorev) {
 
         String kullaniciAdi = "Kullanici" + (new Random().nextInt((900000 - 100000) + 1) + 100000);
         String sicilNo = "" + (new Random().nextInt((900000 - 100000) + 1) + 100000);
@@ -305,7 +303,7 @@ public class KullaniciYonetimiPage extends MainPage {
     }
 
     @Step("Kullanıcı Oluştur")
-    public String kullaniciOlustur(String kullaniciAdi, String sifre, String gorevliOlduguBirim, String gorev){
+    public String kullaniciOlustur(String kullaniciAdi, String sifre, String gorevliOlduguBirim, String gorev) {
 
         String sicilNo = "" + (new Random().nextInt((900000 - 100000) + 1) + 100000);
         btnKullaniciEkle.click();

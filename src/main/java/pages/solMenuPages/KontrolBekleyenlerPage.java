@@ -10,12 +10,13 @@ import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 
-public class KontrolBekleyenlerPage extends MainPage{
+public class KontrolBekleyenlerPage extends MainPage {
 
     ElementsCollection tableEvraklar = $$("tbody[id='mainInboxForm:inboxDataTable_data'] > tr");
     SelenideElement bntKontrolEt = $("[id='mainPreviewForm:onizlemeRightTab:onizlemeRightTab'] td[class='buttonMenuContainerDefault'] span[class='ui-button-icon-left ui-icon kontrol']");
+
     @Step("Kontrol bekleyenler sayfası aç")
-    public KontrolBekleyenlerPage openPage(){
+    public KontrolBekleyenlerPage openPage() {
         solMenu(SolMenuData.IslemBekleyenEvraklar.KontrolBekleyenler);
         return this;
     }
@@ -31,7 +32,7 @@ public class KontrolBekleyenlerPage extends MainPage{
     }
 
     @Step("Kontrol et")
-    public KontrolBekleyenlerPage kontrolEt(){
+    public KontrolBekleyenlerPage kontrolEt() {
         bntKontrolEt.parent().click();
         return this;
     }

@@ -89,7 +89,7 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
         String eklenecekBirim = yeniBirimAdi;
         String eklenecekKullanici = yeniKullanici;
 
-                yonetimHavuzuYonetimiPage
+        yonetimHavuzuYonetimiPage
                 .openPage()
                 .yonetimHavuzuEkle(eklenecekYonetimHavuzuAdi)
                 .kullananBirimEkle(eklenecekBirim)

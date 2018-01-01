@@ -103,7 +103,7 @@ public class EvrakPaylasmaTest extends BaseTest {
         String paylasilanKullanici = "Huser TUMER";
         String paylasanKisi = "Mehmet BOZDEMİR";
         String paylasanKisiNotAciklamasi = "TC1882 : Paylaştıklarım listesinden evrak paylaşma";
-        String text = "TC1882 "+ getSysDate();
+        String text = "TC1882 " + getSysDate();
 
         String evrakKonuKodu = "Entegrasyon İşlemleri";
         String kaldirilacakKlasorler = "Diğer";
@@ -162,25 +162,25 @@ public class EvrakPaylasmaTest extends BaseTest {
 
         logout();
 
-        login("test1","123");
+        login("test1", "123");
 
         benimlePaylasilanlarPage
                 .openPage()
                 .evrakSecKonuyaGore(text)
                 .evrakOnizlemeTabSec("Evrak Notları")
-                .evrakNotuKontrol(paylasanKisi,"",paylasanKisiNotAciklamasi)
+                .evrakNotuKontrol(paylasanKisi, "", paylasanKisiNotAciklamasi)
                 .evrakNotuEkle()
                 .evrakNotuGirVeSil(text)
                 .evrakNotuGirVeKaydet(text);
 
         logout();
-        login("mbozdemir","123");
+        login("mbozdemir", "123");
 
         paylastiklarimPage
                 .openPage()
                 .evrakSecKonuyaGore(text)
                 .evrakOnizlemeTabSec("Evrak Notları")
-                .evrakNotuKontrol("OPTİİM TEST1","",text);
+                .evrakNotuKontrol("OPTİİM TEST1", "", text);
     }
 
     @Test(enabled = true, description = "TC1877 : Paylaşılan evrakın geri alınması")
@@ -219,10 +219,10 @@ public class EvrakPaylasmaTest extends BaseTest {
         paylastiklarimPage
                 .openPage();
 
-        paylasilmaTarihi = paylastiklarimPage.evrakPaylasimTarihiGetir(paylasilanlar, evrakKonuKodu, "","");
+        paylasilmaTarihi = paylastiklarimPage.evrakPaylasimTarihiGetir(paylasilanlar, evrakKonuKodu, "", "");
 
         paylastiklarimPage
-                .evrakSec(paylasilanlar, evrakKonuKodu, "","")
+                .evrakSec(paylasilanlar, evrakKonuKodu, "", "")
                 .paylasimdanGeriAlTabSec()
                 .paylasimdanGeriAl(paylasimdanGeriAlanicaklar);
 
@@ -232,7 +232,7 @@ public class EvrakPaylasmaTest extends BaseTest {
 
         benimlePaylasilanlarPage
                 .openPage()
-                .paylasilanlarKontrol(paylasan, evrakKonuKodu, paylasilmaTarihi,false);
+                .paylasilanlarKontrol(paylasan, evrakKonuKodu, paylasilmaTarihi, false);
 
 
         logout();
@@ -240,7 +240,7 @@ public class EvrakPaylasmaTest extends BaseTest {
 
         benimlePaylasilanlarPage
                 .openPage()
-                .paylasilanlarKontrol(paylasan, evrakKonuKodu,paylasilmaTarihi,true);
+                .paylasilanlarKontrol(paylasan, evrakKonuKodu, paylasilmaTarihi, true);
 
     }
 
@@ -277,7 +277,7 @@ public class EvrakPaylasmaTest extends BaseTest {
 
         paylastiklarimPage
                 .openPage()
-                .evrakSec(evrakKonuKodu,"", paylasilacakUser,"")
+                .evrakSec(evrakKonuKodu, "", paylasilacakUser, "")
                 .paylasTabTikla()
                 .paylas()
                 .islemMesaji().dikkatOlmali("Evrakın paylaşılacağı Kullanıcıyı seçiniz!");
@@ -445,9 +445,10 @@ public class EvrakPaylasmaTest extends BaseTest {
 
 
     }
+
     //TODO Can Şeker yazmıştır
     @Test(enabled = true, description = "TC1905: Evrak paylaşma yetkisi olmayan kullanıcıda evrak paylaşma kontrolü")
-    public void TC1905() throws InterruptedException{
+    public void TC1905() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
         String uyariMesaj1 = "Gizlilik kleransınız evrakın gizlilik derecesini görüntülemek için yeterli değildir.";
@@ -483,17 +484,17 @@ public class EvrakPaylasmaTest extends BaseTest {
 
         gelenEvraklarPage
                 .openPage()
-                .evrakSec(konuKoduRandom,kurum,evrakTarihi,evrakSayiSag)
+                .evrakSec(konuKoduRandom, kurum, evrakTarihi, evrakSayiSag)
                 .paylas()
                 .paylasBirim()
-                .paylasKisiSecBirim(kisi2,birim)
+                .paylasKisiSecBirim(kisi2, birim)
                 .paylasanAciklamaDoldur(aciklama)
                 .paylasIcPaylas()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
         paylastiklarimPage
                 .openPage()
-                .evrakSec(konuKoduRandom,evrakTarihi)
+                .evrakSec(konuKoduRandom, evrakTarihi)
                 .evrakNotlariTabAc()
                 .evrakNotlariAciklamaGorme(aciklama)
                 .paylasilanlarTabAc()
@@ -837,7 +838,6 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .evrakNotuKontrol(yeniPaylasan, "2017", yeniEvrakPaylasimNotu);
 
 
-
     }
 
     // DÜZENLENECEK!!
@@ -1015,8 +1015,6 @@ public class EvrakPaylasmaTest extends BaseTest {
 
 
     }
-
-
 
 
 }

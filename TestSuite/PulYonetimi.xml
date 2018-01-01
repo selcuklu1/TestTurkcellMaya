@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite thread-count="1" name="Pul Yönetimi" parallel="classes" verbose="1">
-<!--By Emre-->
+    <!--By Emre-->
     <test name="Pul Yönetimi Testleri">
         <packages>
             <package name="tests.PulYonetimi"/>

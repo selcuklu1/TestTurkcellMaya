@@ -9,6 +9,7 @@ public interface BelgenetElement extends SelenideElement {
 
     /**
      * Seçili ise temizler ve seçer. Mutlti select ise daha önce seçilmiş ise fail verir.
+     *
      * @param value
      * @return
      * @see pages.pageComponents.belgenetElements.ComboLovHelper
@@ -33,6 +34,7 @@ public interface BelgenetElement extends SelenideElement {
 
     /**
      * Click treeButton on comboLov
+     *
      * @return
      */
     BelgenetElement openTree();
@@ -45,6 +47,7 @@ public interface BelgenetElement extends SelenideElement {
 
     /**
      * Type text to comboLov input
+     *
      * @param text
      * @return
      */
@@ -52,18 +55,21 @@ public interface BelgenetElement extends SelenideElement {
 
     /**
      * "Sonuç bulunamamıştır" kontrolü, type ya da openTree sonrası kullanılır
+     *
      * @return
      */
     Boolean isEmpty();
 
     /**
      * selectable title list
+     *
      * @return
      */
     ElementsCollection titleItems();
 
     /**
      * selectable detail list
+     *
      * @return
      */
     ElementsCollection detailItems();
@@ -73,7 +79,9 @@ public interface BelgenetElement extends SelenideElement {
     BelgenetElement closeLovTreePanel();
 
     ElementsCollection selectedTitles();
+
     ElementsCollection selectedDetails();
+
     ElementsCollection allSelectedLov();
 
     //endregion
