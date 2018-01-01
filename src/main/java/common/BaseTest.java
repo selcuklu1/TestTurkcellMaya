@@ -42,7 +42,8 @@ public class BaseTest extends BaseLibrary {
         if (System.getProperty("selenide.baseUrl") == null)
             Configuration.baseUrl = belgenetURL;
         else
-            Configuration.baseUrl = System.getProperty("selenide.baseUrl");
+            //Configuration.baseUrl = System.getProperty("selenide.baseUrl");
+            Configuration.baseUrl = System.getProperty("URL");
 
         /*if (System.getProperty("selenide.browser") == null)
             Configuration.browser = "chrome";
