@@ -42,16 +42,16 @@ public class BaseTest extends BaseLibrary {
 
         Configuration.baseUrl = (System.getProperty("URL") == null) ? belgenetURL : System.getProperty("URL");
         Configuration.browser = (System.getProperty("browser") == null) ? "chrome" : System.getProperty("browser");
-        Configuration.browserVersion = (System.getProperty("node") != null) ? System.getProperty("node") : null;
-        Configuration.remote = (System.getProperty("hub") != null) ? System.getProperty("hub") : null;
+        Configuration.browserVersion = System.getProperty("node");
+        Configuration.remote = System.getProperty("hub");
 
 
         Configuration.reportsFolder = "test-result/reports";
         Configuration.screenshots = false;
         Configuration.savePageSource = false;
-        Configuration.collectionsTimeout = 30000;
-        Configuration.timeout = 30000;
-//        setWaitForLoading(20);
+        Configuration.collectionsTimeout = 20 * 1000;
+        Configuration.timeout = 20 * 1000;
+        setWaitForLoading(20);
         //Configuration.clickViaJs = true;
 //        Configuration.holdBrowserOpen = true;
         //Configuration.headless = false;

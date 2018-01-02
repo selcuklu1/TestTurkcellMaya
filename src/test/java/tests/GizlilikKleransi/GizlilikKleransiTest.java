@@ -546,7 +546,7 @@ public class GizlilikKleransiTest extends BaseTest {
                 .kullaniciListesiGuncelleButonuTikla()
                 .gorevliOlduguBirimlerKontol()
                 .gorevliOlduguBirimGuncelle()
-                .kullaniciBirimAtamaGizlilikDerecesiKontrolu();
+                .kullaniciBirimAtamaGizlilikDerecesiDeğerKontrolu("Tasnif Dışı");
     }
 
     @Severity(SeverityLevel.CRITICAL)
