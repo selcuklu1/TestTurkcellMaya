@@ -224,7 +224,7 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
                 isSelected = true;
 
             if (isSelected == false) {
-                Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", chkBox);
+//                Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", chkBox);
                 chkBox.click();
             }
 
@@ -320,6 +320,21 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Konuya göre Evrak seç. \"{konu}\" ")
+    public TopluPostalanacakEvraklarPage evrakSec(String konu) {
+
+
+        SelenideElement currentRow = tableEvraklar
+                .filterBy(Condition.text(konu))
+                .first();
+
+        Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", currentRow);
+
+        currentRow.click();
+
+
+        return this;
+    }
     @Step("Evrak seç.")
     public TopluPostalanacakEvraklarPage evrakKontrol(String kayitTarihiSayi, String gidecegiYer, String konu, String hazirlayanBirim, String postTipi, boolean shouldBeExist) {
 

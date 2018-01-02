@@ -8,6 +8,7 @@ import org.testng.annotations.Test;
 import pages.MainPage;
 import pages.solMenuPages.PostaListesiPage;
 import pages.solMenuPages.PostalanacakEvraklarPage;
+import pages.solMenuPages.TopluPostalanacakEvraklarPage;
 import pages.ustMenuPages.EvrakOlusturPage;
 import pages.ustMenuPages.PulYonetimiPage;
 
@@ -23,6 +24,7 @@ public class PulYonetimiTest extends BaseTest {
     PostaListesiPage postaListesiPage;
     PostalanacakEvraklarPage postalanacakEvraklarPage;
     EvrakOlusturPage evrakOlusturPage;
+    TopluPostalanacakEvraklarPage topluPostalanacakEvraklarPage;
 
     @BeforeMethod
     public void loginBeforeTests() {
@@ -30,9 +32,22 @@ public class PulYonetimiTest extends BaseTest {
         postaListesiPage = new PostaListesiPage();
         postalanacakEvraklarPage = new PostalanacakEvraklarPage();
         evrakOlusturPage = new EvrakOlusturPage();
+        topluPostalanacakEvraklarPage = new TopluPostalanacakEvraklarPage();
 
 
     }
+
+    String konuKodu = "010.01";
+    String kaldiralacakKlasor = "Diğer";
+    String evrakTuru = "Resmi Yazışma";
+    String evrakDili = "Türkçe";
+    String gizlilikDerecesi = "Normal";
+    String ivedilik = "Normal";
+    String geregi = "Ahmet ÇELİK";
+    String konu = "TC2214 " + getSysDate();
+    String tur = "İmzalama";
+    String geregiTipi = "Gerçek Kişi";
+    String basariMesaji = "İşlem başarılıdır!";
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TC1732: Pul Yönetimi ekranından yeni tanımlama yapma")
@@ -92,6 +107,45 @@ public class PulYonetimiTest extends BaseTest {
         String gramaj5 = "5";
         String tutar = "120";
         String basariMesaji = "İşlem başarılıdır!";
+        String[] postaTipleri = new String[]{
+                "Adi Posta"
+        };
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .konuKoduSec(konuKodu)
+                .konuDoldur(konu)
+                .kaldiralacakKlasorlerSec(kaldiralacakKlasor)
+                .evrakTuruSec(evrakTuru)
+                .evrakDiliSec(evrakDili)
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .ivedilikSec(ivedilik)
+                .geregiSecimTipiSecByText(geregiTipi)
+                .geregiSec(geregi)
+                .gercekKisiGeregiAlaniPostaTipiSec(gidisSekli)
+                .onayAkisiEkle()
+                .onayAkisiEkleIlkImzalaSec(tur)
+                .kullan();
+        evrakOlusturPage
+                .editorTabAc()
+                .editorIcerikDoldur(konu)
+                .imzala()
+                .sImzasec()
+                .sImzaImzala()
+                .sayisalImzaEvetPopup();
+
+
+        topluPostalanacakEvraklarPage
+                .openPage()
+                .tarihAraligiSec("01.01.2017", getSysDateForKis())
+                .postaTipiSec(postaTipleri)
+                .sorgula()
+                .evrakSec(konu)
+                .postaListesineAktar()
+                .listeAdiDoldur(konu)
+                .listeOlustur()
+                .postaListesiSec(konu);
 
         postaListesiPage
                 .openPage()
@@ -104,24 +158,24 @@ public class PulYonetimiTest extends BaseTest {
 
                 .gramajDoldur(gramaj1)
                 .tutarHesapla()
-                .indirimOncesiTutarKontrol("50.00", true)
+                .indirimOncesiTutarKontrol("50.000", true)
                 .indirimOraniKontrol("10", true)
-                .tutarKontrol("45.00", true)
+                .tutarKontrol("45.000", true)
 
                 .indirimOraniDoldur(indirimOrani)
-                .tutarKontrol("40.00", true)
+                .tutarKontrol("40.000", true)
 
                 .gramajDoldur(gramaj3)
                 .tutarHesapla()
-                .indirimOncesiTutarKontrol("100.00", true)
+                .indirimOncesiTutarKontrol("100.000", true)
                 .indirimOraniKontrol("20", true)
-                .tutarKontrol("80.00", true)
+                .tutarKontrol("80.000", true)
 
                 .gramajDoldur(gramaj5)
                 .tutarHesapla()
-                .indirimOncesiTutarKontrol("100.00", true)
+                .indirimOncesiTutarKontrol("100.000", true)
                 .indirimOraniKontrol("0", true)
-                .tutarKontrol("100.00", true)
+                .tutarKontrol("100.000", true)
 
                 .tutarDoldur(tutar)
                 .postaDetayiPostala()
@@ -133,17 +187,7 @@ public class PulYonetimiTest extends BaseTest {
     public void TC2214() throws InterruptedException {
 
         login("yakyol", "123");
-        String konuKodu = "010.01";
-        String kaldiralacakKlasor = "Diğer";
-        String evrakTuru = "Resmi Yazışma";
-        String evrakDili = "Türkçe";
-        String gizlilikDerecesi = "Normal";
-        String ivedilik = "Normal";
-        String geregi = "Ahmet ÇELİK";
-        String konu = "TC2214 " + getSysDate();
-        String tur = "İmzalama";
-        String geregiTipi = "Gerçek Kişi";
-        String basariMesaji = "İşlem başarılıdır!";
+
 
         evrakOlusturPage
                 .openPage()
@@ -180,28 +224,28 @@ public class PulYonetimiTest extends BaseTest {
                 .gramajDoldur("1")
                 .evrakOnzilemeHesapla()
                 .popUpKontrol()
-                .popUpIndirimOncesiTutarKontrol("50.00", true)
+                .popUpIndirimOncesiTutarKontrol("50.000", true)
                 .popUpIndirimOraniKontrol("10", true)
-                .popUpTutarKontrol("45.00", true)
+                .popUpTutarKontrol("45.000", true)
                 .popUpTamam()
-                .tutarAlaniKontrolu("45.00", true)
+                .tutarAlaniKontrolu("45.000", true)
 
                 .gramajDoldur("3")
                 .evrakOnzilemeHesapla()
                 .popUpKontrol()
-                .popUpIndirimOncesiTutarKontrol("100.00", true)
+                .popUpIndirimOncesiTutarKontrol("100.000", true)
                 .popUpIndirimOraniKontrol("20", true)
-                .popUpTutarKontrol("80.00", true)
+                .popUpTutarKontrol("80.000", true)
                 .popUpTamam()
-                .tutarAlaniKontrolu("80.00", true)
+                .tutarAlaniKontrolu("80.000", true)
 
 
                 .gramajDoldur("5")
                 .evrakOnzilemeHesapla()
                 .popUpKontrol()
-                .popUpIndirimOncesiTutarKontrol("100.00", true)
+                .popUpIndirimOncesiTutarKontrol("100.000", true)
                 .popUpIndirimOraniKontrol("0", true)
-                .popUpTutarKontrol("100.00", true)
+                .popUpTutarKontrol("100.000", true)
                 .popUpTamam()
                 .tutarAlaniKontrolu("100.00", true)
 

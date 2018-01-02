@@ -210,7 +210,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, priority = 7, description = "TC1401 : Kaydedilen Gelen Evrak raporu")
-    public void     TC1401() throws InterruptedException, IOException {
+    public void TC1401() throws InterruptedException, IOException {
 
 //        String evrakNO321 = "5187";
 //        String evrakNO328 = "5187";
