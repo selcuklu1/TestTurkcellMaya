@@ -492,7 +492,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
         String basariMesaji = "İşlem başarılıdır!";
         String konuKodu = "Diğer";
         String kaldirilicakKlasor = "Gündem";
-        String konuKoduRandom = "TC-1715_" + createRandomNumber(12);
+        String konuKoduRandom = "TC-1715_123123";
         String evrakTarihi = getSysDateForKis();
         String kurum = "BÜYÜK HARFLERLE KURUM";
         String kullaniciAdi = "Zübeyde Tekin";
@@ -507,7 +507,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
                 .evrakSayiSagDoldur()
                 .havaleIslemleriKisiDoldur(kullaniciAdi)
                 .kaydet()
-                //.benzerKayit()
+//                .benzerKayit()
                 .evetDugmesi()
                 .yeniKayitButton();
 

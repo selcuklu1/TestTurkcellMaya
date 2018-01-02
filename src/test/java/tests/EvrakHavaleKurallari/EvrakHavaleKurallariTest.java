@@ -43,7 +43,7 @@ public class EvrakHavaleKurallariTest extends BaseTest {
         String bagTipi = "Y";
         String farkliKullanici = "Optiim";
         String kuralAdi = "TC-2069_" + createRandomNumber(12);
-        String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞ";
+        String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
         String kisi = "Zübeyde Tekin";
         String birim2 = "BİLİŞİM HİZMETLERİ VE UYDU PAZARLAMA GENEL MÜDÜR";
         login(username2, password2);
@@ -67,6 +67,8 @@ public class EvrakHavaleKurallariTest extends BaseTest {
                 .islemMesaji().basariliOlmali(basariMesaji);
         gelenEvrakKayitPage
                 .openPage()
+                .konuKoduDoldur("Diğer")
+                .evrakTuruSec("Genelge")
                 .otomatikHavaleSec(true);
     }
 

@@ -35,6 +35,7 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
     BelgenetElement txtBirimEkleBirim = comboLov(By.id("hkKullaniciBirimEditorForm:havaleKuralKullaniciBirimIliskiBirimLov:LovText"));
     SelenideElement btnBirimEkleEkle = $(By.id("hkKullaniciBirimEditorForm:saveKullaniciBirimButton"));
     SelenideElement btnKuralEklemeKaydet = $(By.id("havaleKuralYonetimiEditorForm:saveHavaleKuralButton"));
+    SelenideElement sonTable = $("[id='havaleKuralYonetimiListingForm:havaleKuralDataTable_paginator_top'] [class='ui-paginator-last ui-state-default ui-corner-all']");
 
     //TODO Kime havale edilicek
     BelgenetElement txtKimeHavaleEdilecekKisi = comboLov(By.id("havaleKuralYonetimiEditorForm:havaleKullaniciLov:LovText"));
@@ -135,11 +136,9 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
 
     @Step("Sil")
     public EvrakHavaleKurallariYonetimiPage sil(String konu) {
-        SelenideElement evrak = filter().findRowsWith(Condition.text(konu))
-                .shouldHaveSize(1).first();
-        evrak.$("[id^='havaleKuralYonetimiListingForm:havaleKuralDataTable'][id$='updateHavaleKuralButton']").click();
-
-        // [id^='havaleKuralYonetimiListingForm:havaleKuralDataTable'][id$='updateHavaleKuralButton']
+       // sonTable.click();
+        ElementsCollection evrak2 = $$("[id='havaleKuralYonetimiListingForm:havaleKuralDataTable'] table tbody tr");
+        evrak2.filterBy(Condition.text(konu)).get(0).$("[id^='havaleKuralYonetimiListingForm:havaleKuralDataTable'][id$='deleteHavaleKuralButton']").click();
         return this;
     }
 
@@ -151,11 +150,7 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
 
     @Step("Ara")
     public EvrakHavaleKurallariYonetimiPage ara() {
-        clickJs(btnAra);
-        int i = 0;
-        while (i < 100) {
-            sleep(i);
-        }
+        btnAra.click();
         return this;
     }
 

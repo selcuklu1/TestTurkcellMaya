@@ -129,11 +129,11 @@ public class GizlilikKleransiTest extends BaseTest {
                 .gizlilikRaporSec(konuKodu, geldigiYer, evrakTarihi)
                 .havaleYap()
                 .havaleYapKisiDoldur(kisi)
-                .islemMesaji().beklenenMesaj(uyariMesaj1);
+                .islemMesaji().dikkatOlmali(uyariMesaj1);
 
         havaleEttiklerimPage
                 .havaleYapKullaniciListesiDoldur(kullaniciListesi)
-                .islemMesaji().beklenenMesaj(uyariMesaj2);
+                .islemMesaji().dikkatOlmali(uyariMesaj2);
     }
 
 
@@ -231,7 +231,7 @@ public class GizlilikKleransiTest extends BaseTest {
         String kisi = "Can Şeker";
         String kullaniciListesi = "Optiim";
         String konuKodu = "Diğer-TC2131";
-        String geldigiYer = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞ / Gizlilik Klerans";
+        String geldigiYer = "Gizlilik Klerans";
         String gidecegiyer = "Gizlilik Klerans(B)";
         String evrakTarihi = "15.12.2017";
         String no = "5107";
@@ -312,7 +312,7 @@ public class GizlilikKleransiTest extends BaseTest {
                 .openPage()
                 .gizlilikRaporSec(konuKodu, geldigiYer, gidecegiyer, evrakTarihi, no)
                 .kullanicilarDoldur(kisi)
-                .islemMesaji().beklenenMesaj(uyariMesaj1);
+                .islemMesaji().dikkatOlmali(uyariMesaj1);
 
         iadeEttiklerimPage
                 .takipListeKapat();
@@ -321,7 +321,7 @@ public class GizlilikKleransiTest extends BaseTest {
                 .openPage()
                 .gizlilikRaporSec(konuKodu, geldigiYer, evrakTarihi, no)
                 .kullanicilarDoldur(kisi)
-                .islemMesaji().beklenenMesaj(uyariMesaj1);
+                .islemMesaji().dikkatOlmali(uyariMesaj1);
 
     }
 
