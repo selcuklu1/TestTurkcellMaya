@@ -3,6 +3,7 @@ package tests.TuzelKisiYonetimi;
 import common.BaseTest;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Step;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.ustMenuPages.*;
@@ -87,11 +88,11 @@ public class TuzelKisiYonetimiTest extends BaseTest {
                 .openPage()
                 .bilgilerTabiAc()
                 .geregiSecimTipiSecByText("Tüzel Kişi")
-                .geregiDoldur(ad)
+                .geregiDoldur(ad, "Ad")
                 .secilenGeregiSil()
-                .geregiDoldur(kisaAd)
+                .geregiDoldur(kisaAd, "Kısa Ad")
                 .secilenGeregiSil()
-                .geregiDoldur(vergiNo);
+                .geregiDoldur(vergiNo, "Vergi No");
 
         gelenEvrakKayitPage
                 .openPage()
@@ -331,13 +332,13 @@ public class TuzelKisiYonetimiTest extends BaseTest {
                 .openPage()
                 .bilgilerTabiAc()
                 .geregiSecimTipiSecByText("Tüzel Kişi")
-                .geregiDoldur(ad2)
+                .geregiDoldur(ad2, "Ad")
                 .tuzelKisiGeregiAlaniVergiNoPostaTipiKontrol(vergiNo2, postaTipi)
 
                 .secilenGeregiSil()
-                .geregiDoldur(vergiNo2)
+                .geregiDoldur(vergiNo2, "Vergi No")
                 .secilenGeregiSil()
-                .geregiDoldur(kisaAd2);
+                .geregiDoldur(kisaAd2, "Kısa Ad");
 
         gelenEvrakKayitPage
                 .openPage()
@@ -397,7 +398,7 @@ public class TuzelKisiYonetimiTest extends BaseTest {
                 .openPage()
                 .bilgilerTabiAc()
                 .geregiSecimTipiSecByText("Tüzel Kişi")
-                .geregiDoldur(ad)
+                .geregiDoldur(ad, "Ad")
                 .tuzelKisiGeregiAlaniVergiNoAdAdresKontrol(vergiNo, ad, adres)
 
                 .geregiAlaniGuncelle()
