@@ -14,6 +14,7 @@ import pages.ustMenuPages.EvrakOlusturPage;
 import pages.ustMenuPages.GelenEvrakKayitPage;
 import pages.ustMenuPages.VekaletVerPage;
 
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 import static data.TestData.*;
 
@@ -444,7 +445,9 @@ public class VekaletIslemleriTest extends BaseTest {
                 .havaleYapKisiTreeSec(vekaletVeren)
                 .vekeletAlanVerenTabloVekaletAlanveyaVerenSec(vekaletVeren)
                 .kullanciListesiSecWithTitle(kullanici, title)  //ikinci gelen seçilmeli
-                .evrakOnIzlemeUyarıPopUpKontol(mesaj)
+                .confirmDialog().dialogMessage().shouldHave(text(mesaj));
+        gelenEvraklarPage.confirmDialog().button("Evet").click();
+        gelenEvraklarPage.evrakOnIzlemeUyarıPopUpKontol(mesaj)
                 .havaleYapGonder()
                 .islemMesaji().basariliOlmali(basariMesaji);
         logout();

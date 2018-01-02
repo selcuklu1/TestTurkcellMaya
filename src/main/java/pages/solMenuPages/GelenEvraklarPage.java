@@ -151,10 +151,18 @@ public class GelenEvraklarPage extends MainPage {
 
     @Step("Kullanıcı listesi doldur")
     public GelenEvraklarPage havaleYapKullaniciListesiDoldur(String kullaniciListesi) {
-        txtHavaleYapKullaniciListesi.selectLov(kullaniciListesi);
+//        txtHavaleYapKullaniciListesi.selectLov(kullaniciListesi);
         txtHavaleYapKullaniciListesi.selectLov(kullaniciListesi);
         return this;
     }
+
+    @Step("Kullanıcı listesinde alanında \"{kisi}\" seçmeye dene")
+    public GelenEvraklarPage havaleYapKullaniciyiSecmeyeDene(String kisi) {
+        txtHavaleYapKullaniciListesi.type(kisi).titleItems().filterBy(text(kisi)).first().click();
+        return this;
+    }
+
+
 
     @Step("Evrak seç")
     public GelenEvraklarPage evrakSec() {

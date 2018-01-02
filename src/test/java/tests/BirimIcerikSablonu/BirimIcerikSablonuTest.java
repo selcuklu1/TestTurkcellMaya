@@ -222,6 +222,7 @@ public class BirimIcerikSablonuTest extends BaseTest {
     }
 
     @Test(description = "TC1085: Yeni şablon oluştur (Alt birimler görmesin)", priority = 8)
+    @Description("Yeni şablon \"Alt birimler görmesin\" olarak oluştur")
     public void tc1085() {
         login(optiim);
 
@@ -252,8 +253,9 @@ public class BirimIcerikSablonuTest extends BaseTest {
         this.sablonAdi = sablonAdi;
     }
 
-    @Test(dependsOnMethods = {"tc1085"}, enabled = true, priority = 9)
-    @Description("TC1085: Yeni şablon (Alt birimler görmesin) alt biriminde görünmemeli")
+    @Test(description = "TC1085: alt biriminde görünmemeli",
+            dependsOnMethods = {"tc1085"}, enabled = true, priority = 9)
+    @Description("TC1085'da oluşturulan şablon alt biriminde görünmemeli")
     public void tc1085_kontrolAltbirim() {
         login(optiim4);
         evrakOlusturPage = new EvrakOlusturPage().openPage();
@@ -262,8 +264,9 @@ public class BirimIcerikSablonuTest extends BaseTest {
         editorTabOntanimliSablonuOlmadigi();
     }
 
-    @Test(description = "TC1085: Yeni şablon (Alt birimler görmesin) farklı biriminde görünmemeli", dependsOnMethods = {"tc1085"}
+    @Test(description = "TC1085: farklı biriminde görünmemeli", dependsOnMethods = {"tc1085"}
             , enabled = true, priority = 9)
+    @Description("TC1085'da oluşturulan şablon farklı biriminde görünmemeli")
     public void tc1085_kontrolFarkliBirim() {
         login(user1);
         evrakOlusturPage = new EvrakOlusturPage().openPage();
@@ -272,7 +275,7 @@ public class BirimIcerikSablonuTest extends BaseTest {
         editorTabOntanimliSablonuOlmadigi();
     }
 
-    @Test(description = "TC1085: Yeni şablon (Alt birimler görmesin) yaratılan biriminde görünmeli"
+    @Test(description = "TC1085: yaratılan biriminde seçilebilir olmalı ve !Olur Yazisi Olustur sayfada görünmemeli"
             , dependsOnMethods = {"tc1085"}, enabled = true
             , priority = 10)
     public void tc1085_kontrol_birim() throws InterruptedException {
@@ -335,7 +338,7 @@ public class BirimIcerikSablonuTest extends BaseTest {
                 .kaydet().islemMesaji().dikkatOlmali("Üst birim şablonuna işlem yapılamaz!");
     }
 
-    @Test(enabled = true, description = "Şablonları sil", dependsOnMethods = {"tc1079_kontrol"}, priority = 13)
+    @Test(enabled = true, description = "Şablonu sil", dependsOnMethods = {"tc1079_kontrol"}, priority = 13)
     public void sablonSil() {
         login();
         birimIcerikSablonlarPage = new BirimIcerikSablonlarPage().openPage();

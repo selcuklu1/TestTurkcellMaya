@@ -7,12 +7,24 @@ import org.openqa.selenium.WebElement;
 import static com.codeborne.selenide.WebDriverRunner.isIE;
 
 public abstract class BelgentCondition extends Condition {
+
     public static final Condition required = new Condition("required") {
         @Override
         public boolean apply(WebElement element) {
             return element.getAttribute("class").contains("required");
         }
     };
+
+    /**
+     * Sonuç tabloda navigasyon buton disabled
+     */
+    public static final Condition isTableNavButtonDisabled = new Condition("isTableNavButtonDisabled") {
+        @Override
+        public boolean apply(WebElement element) {
+            return element.getAttribute("class").contains("ui-state-disabled");
+        }
+    };
+
     public static final Condition toolboxButtonOn = new Condition("toolboxButtonOn") {
         @Override
         public boolean apply(WebElement element) {

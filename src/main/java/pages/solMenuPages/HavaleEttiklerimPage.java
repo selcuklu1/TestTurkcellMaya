@@ -5,10 +5,12 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
 
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
@@ -45,10 +47,17 @@ public class HavaleEttiklerimPage extends MainPage {
 
     @Step("Kullanıcı listesi doldur")
     public HavaleEttiklerimPage havaleYapKullaniciListesiDoldur(String kullaniciListesi) {
+//        txtHavaleYapKullaniciListesi.selectLov(kullaniciListesi);
         txtHavaleYapKullaniciListesi.selectLov(kullaniciListesi);
-        //txtHavaleYapKullaniciListesi.selectLov(kullaniciListesi);
         return this;
     }
+
+    @Step("Kullanıcı listesinde \"{kisi}\" seçmeye dene")
+    public HavaleEttiklerimPage havaleYapKullaniciyiSecmeyeDene(String kisi) {
+        txtHavaleYapKullaniciListesi.type(kisi).titleItems().filterBy(text(kisi)).first().click();
+        return this;
+    }
+
 
     @Step("Filtrele alanını aç")
     public HavaleEttiklerimPage filtreleAc() {

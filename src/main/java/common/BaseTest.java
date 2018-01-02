@@ -34,34 +34,23 @@ public class BaseTest extends BaseLibrary {
 
         BelgenetFramework.setUp();
 
-        System.out.println("before selenide.browser: " + System.getProperty("selenide.browser"));
-        System.out.println("before selenide.baseUrl: " + System.getProperty("selenide.baseUrl"));
+        log.info("input pramater browser: " + System.getProperty("browser"));
+        log.info("input pramater url: " + System.getProperty("url"));
         //Configuration.remote = "http://10.101.20.151:4444/wd/hub";
         //Configuration.remote = "http://localhost:4444/wd/hub";
 
-        if (System.getProperty("selenide.baseUrl") == null)
-            Configuration.baseUrl = belgenetURL;
-        else
-            //Configuration.baseUrl = System.getProperty("selenide.baseUrl");
-            Configuration.baseUrl = System.getProperty("URL");
-
-        /*if (System.getProperty("selenide.browser") == null)
-            Configuration.browser = "chrome";
-        else
-            Configuration.browser = System.getProperty("selenide.browser");*/
-
-        Configuration.browser = "chrome";
+        Configuration.baseUrl = (System.getProperty("url") == null) ? belgenetURL : System.getProperty("url");
+        Configuration.browser = (System.getProperty("browser") == null) ? "chrome" : System.getProperty("browser");
 
         Configuration.reportsFolder = "test-result/reports";
         Configuration.screenshots = false;
         Configuration.savePageSource = false;
-        Configuration.collectionsTimeout = 20000;
-        Configuration.timeout = 20000;
-        setWaitForLoading(20);
+        Configuration.collectionsTimeout = 10000;
+        Configuration.timeout = 10000;
+        setWaitForLoading(30);
         //Configuration.clickViaJs = true;
-//        Configuration.holdBrowserOpen = true;
+        Configuration.holdBrowserOpen = true;
         //Configuration.headless = false;
-
         Configuration.startMaximized = true;
         Configuration.pollingInterval = 100;
         Configuration.collectionsPollingInterval = 100;
@@ -71,11 +60,13 @@ public class BaseTest extends BaseLibrary {
         //endregion
 
         // System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, "/dev/null");
+//      getBrowserName();
 
-        getBrowserName();
-        System.out.println("Doc path: " + getDocPath());
-        System.out.println("Download path: " + getDownoladPath());
-//        mymethod();
+        log.info("remote: " + Configuration.remote);
+        log.info("browser: " + Configuration.browser);
+        log.info("url: " + Configuration.baseUrl);
+        log.info("Doc path: " + getDocPath());
+        log.info("Download path: " + getDownoladPath());
         log.info("Selenide/Selenium driver has been set up.");
     }
 

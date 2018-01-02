@@ -73,7 +73,7 @@ public class EvrakPostalamaTest extends BaseTest {
 
         evrakOlusturPage
                 .editorTabAc()
-                .editorIcerikDoldur("TC308")
+                .editorIcerikDoldur("TC0308")
                 .editorEvrakGeregiSec("YAZILIM GELİ")
                 .imzala()
                 .popupSImzalaIslemleri();
@@ -115,7 +115,7 @@ public class EvrakPostalamaTest extends BaseTest {
                 .kaldirilacakKlasorler("Diğer")
                 .evrakTuruSec("Resmi Yazışma")
                 .geregiSecimTipiSec("Kurum")
-                .geregiDoldur("Başbakanlık")
+                .geregiDoldur("Başbakanlık",   "")
                 .geregiKurumPostaTipi("Evrak Servisi Elden")
                 .onayAkisiKullanicilariTemizle()
                 .onayAkisiEkle()
@@ -176,7 +176,7 @@ public class EvrakPostalamaTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC520 : Postalanan evrak posta bilgilerinin önizleme ekranından güncellenmesi ve rapor üzerinde kontrolü")
+    @Test(enabled = true, description = "TC0520 : Postalanan evrak posta bilgilerinin önizleme ekranından güncellenmesi ve rapor üzerinde kontrolü")
     public void TC0520a() throws InterruptedException {
         login("Mbozdemir", "123");
         String konu = "Konu: TC2235:";
@@ -297,20 +297,20 @@ public class EvrakPostalamaTest extends BaseTest {
 //                .kaldirilacakKlasorler("B1K1")
                 .evrakTuruSec("Resmi Yazışma")
                 .geregiSecimTipiSec("Gerçek Kişi")
-                .geregiDoldur("OptiimTest")
+                .geregiDoldur("OptiimTest", "Kullanıcı Adı")
                 .geregiKurumPostaTipi("APS")
                 .geregiSecimTipiSec("Dağıtım Planları")
-                .geregiDoldur("50 BİRİMLİK")
+                .geregiDoldur("50 BİRİMLİK", "Dağıtım Planları")
                 .geregiKurumPostaTipi("İadeli Taahhütlü")
                 .geregiSecimTipiSec("Birim")
-                .geregiDoldur("HUKUK")
+                .geregiDoldur("HUKUK", "Birim")
                 .geregiSecimTipiSec("Tüzel Kişi")
-                .geregiDoldur("Optiim İş")
+                .geregiDoldur("Optiim İş", "Ad")
                 .geregiKurumPostaTipi("APS")
                 .geregiSecimTipiSec("Kullanıcı")
-                .geregiDoldur("Optiim TEST")
+                .geregiDoldur("Optiim TEST", "Kullanıcı")
                 .geregiSecimTipiSec("Kurum")
-                .geregiDoldur("Başbakanlık")
+                .geregiDoldur("Başbakanlık", "Kurum")
                 .geregiKurumPostaTipi("Evrak Servisi Elden")
                 .onayAkisiKullanicilariTemizle()
                 .onayAkisiEkle()

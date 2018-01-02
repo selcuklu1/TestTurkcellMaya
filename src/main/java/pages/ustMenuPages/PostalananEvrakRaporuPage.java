@@ -2,6 +2,7 @@ package pages.ustMenuPages;
 
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import pages.MainPage;
 
@@ -27,86 +28,80 @@ public class PostalananEvrakRaporuPage extends MainPage {
     SelenideElement etiketBastirPopupIlkKolon = $x("//*[@id='etiketBastirDaialog']/div[2]/form/center/table/tbody/tr[2]/td/input");
     SelenideElement etiketBastirPopupTamam = $x("//*[@id='etiketBastirDaialog']/div[2]/form/center/table/tbody/tr[3]/td/button");
 
-
+    @Step("Postalanan Evrak Raporu sayfasını aç")
     public PostalananEvrakRaporuPage openPage() {
 
         ustMenu("Postalanan Evrak Raporu");
         return this;
     }
-
-    public PostalananEvrakRaporuPage evrakSayisi(String txt) {
-        txtEvrakSayisi.setValue(txt);
+    @Step("Evrak Sayı numarası girişi")
+    public PostalananEvrakRaporuPage evrakSayisi(String eSayi) {
+        txtEvrakSayisi.setValue(eSayi);
         return this;
     }
-
-    public PostalananEvrakRaporuPage postaAramaBaslangicTarihi(String txt) {
-
-        btnPostaBaslangicTarihi.setValue(txt);
+    @Step("Posta Arama Başlangıç Tarihi girişi")
+    public PostalananEvrakRaporuPage postaAramaBaslangicTarihi(String date) {
+        btnPostaBaslangicTarihi.setValue(date);
         return this;
     }
-
+    @Step("Posta Sorgulama butonuna tıkla")
     public PostalananEvrakRaporuPage postaSorgulama() {
-
         btnSorgula.click();
         return this;
-
     }
-
+    @Step("Çıkan sonuçları kontrol et")
     public PostalananEvrakRaporuPage sonucKarsilastirma() {
-
         tblSorgulamaSonuc.get(0);
-
         return this;
     }
-
+    @Step("Evrak Geçmişi butonuna tıkla")
     public PostalananEvrakRaporuPage ilkEvrakGecmisi() {
         btnIlkEvrakGecmisi.click();
         return this;
     }
-
+    @Step("Evrak Geçmişini kapat")
     public PostalananEvrakRaporuPage evrakGecmisiKapat() {
         btnEvrakGecmisiKapat.click();
         return this;
     }
-
+    @Step("Evrak İçerik Gösterimi")
     public PostalananEvrakRaporuPage evrakIcerikGoster() {
         btnEvrakGoster.click();
         return this;
     }
-
+    @Step("Evrak İçerik Kapat")
     public PostalananEvrakRaporuPage evrakIcerikKapat() {
         btnEvrakIcerikKapat.click();
         btnEvrakDialogKapat.click();
         return this;
     }
-
+    @Step("Etiket Bastir")
     public PostalananEvrakRaporuPage etiketBastir() {
         btnEtiketBastir.click();
         return this;
     }
-
+    @Step("Etiket Bastir Popup Kapatma")
     public PostalananEvrakRaporuPage etiketBastirPopupKapat() {
-
         btnPopupKapat.click();
         return this;
     }
-
+    @Step("Excele Tıkla ve indir")
     public PostalananEvrakRaporuPage btnExcel() {
         //btnExcel.click();
         clickJs(btnExcel);
         return this;
     }
-
+    @Step("Pdfe Tıkla ve indir")
     public PostalananEvrakRaporuPage btnPdf() {
         clickJs(btnPdfBastir);
         return this;
     }
-
+    @Step("Etiket butonuna tıkla")
     public PostalananEvrakRaporuPage btnEtiket() {
         btnEtiketYazdir.click();
         return this;
     }
-
+    @Step("Etiket Bastirma Popup Satir ve Kolon girişi")
     public PostalananEvrakRaporuPage popupEtiketBastirma(String satir, String kolon) {
         etiketBastirPopupIlkSatir.setValue(satir);
         etiketBastirPopupIlkKolon.setValue(kolon);

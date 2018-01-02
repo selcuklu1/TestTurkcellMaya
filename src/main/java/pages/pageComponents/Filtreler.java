@@ -7,6 +7,7 @@ import common.BaseLibrary;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.NotFoundException;
 
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
@@ -15,16 +16,43 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.executeJavaScript;
 
 public class Filtreler extends BaseLibrary {
-    private String filtreMainDivId = "mainInboxForm\\:inboxDataTable\\:filtersAccordion";
-    SelenideElement filtre = $("[id='" + filtreMainDivId + "'] h3");
-    //    ElementsCollection searchRows = searchTable.$$("tr[data-ri][role='row']");
-    SelenideElement filtersGrid = $(By.id(filtreMainDivId + ":filtersGrid"));
 
-    ElementsCollection filterList = filtersGrid.$$("label");
+    SelenideElement filtre = $("[id='mainInboxForm:inboxDataTable:filtersAccordion']");
+    SelenideElement filtersGrid = $("table[id='mainInboxForm:inboxDataTable:filtersAccordion:filtersGrid']");
     SelenideElement searchTable = $("#mainInboxForm\\:inboxDataTable_data");
+    SelenideElement firstPageButton = $("#mainInboxForm\\:inboxDataTable span[class~='ui-paginator-first']");
+    SelenideElement prevPageButton = $("#mainInboxForm\\:inboxDataTable span[class~='ui-paginator-prev']");
     SelenideElement nextPageButton = $("#mainInboxForm\\:inboxDataTable span[class~='ui-paginator-next']");
+    SelenideElement lastPageButton = $("#mainInboxForm\\:inboxDataTable span[class~='ui-paginator-last']");
+
     By icerikGoster = By.cssSelector("button[id$='detayGosterButton']");
-    //    SelenideElement pageTilte = $(".ui-inbox-header-title");
+
+
+    @Step("Filtrelerde alanı doldur")
+    public Filtreler filtrelerdeAlaniDoldur(String name, CharSequence... keysToSend){
+        SelenideElement field = filtersGrid.$x("//label[contains(.,'" + name + "')]/ancestor::td[1]/following-sibling::td[1]//input");
+        field.shouldBe(visible);
+//        field.sendKeys(keysToSend);
+        for (CharSequence keys:keysToSend) {
+            field.sendKeys(keys);
+        }
+        return this;
+    }
+
+    @Step("Filtrelerde alanin butonu tıkla")
+    public Filtreler filtrelerdeAlaninButonuTikla(String fieldName, int index){
+        filtersGrid.$$x("//label[contains(.,'" + fieldName + "')]/ancestor::td[1]/following-sibling::td[1]//button")
+            .shouldHave(sizeGreaterThan(0))
+                .get(index)
+                .click();
+        return this;
+    }
+
+    @Step("Filtrelerde butonu tıkla")
+    public Filtreler filtrelerButonuTikla(String buttonName){
+        filtre.$x("//button[.='"+ buttonName +"']").click();
+        return this;
+    }
 
     @Step("İçetik göster")
     public By icerikGoster() {
@@ -32,8 +60,10 @@ public class Filtreler extends BaseLibrary {
     }
 
     @Step("\"Filtreler\"i genişlet")
-    public void filtrelerAc() {
-        if (filtre.attr("aria-expanded").equalsIgnoreCase("false")) filtre.find("a").click();
+    public Filtreler filtrelerAc() {
+        if (filtre.$("h3").attr("aria-expanded").equalsIgnoreCase("false"))
+            filtre.$("h3").find("a").click();
+        return this;
     }
 
     private SelenideElement getRowWith(Condition condition) {
@@ -170,11 +200,6 @@ public class Filtreler extends BaseLibrary {
 //        return p;
     }
 
-    private void m(String elementLabel) {
-        filtrelerAc();
-        SelenideElement element = filterList.filter(text(elementLabel)).get(0).parent();
-        SelenideElement parentElement = getParentElement(element, "TD");
-    }
 
 //    private String getTitle() {
 //        return pageTilte.text().trim();
