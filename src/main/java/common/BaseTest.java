@@ -43,6 +43,8 @@ public class BaseTest extends BaseLibrary {
         Configuration.baseUrl = (System.getProperty("URL") == null) ? belgenetURL : System.getProperty("URL");
         Configuration.browser = (System.getProperty("browser") == null) ? "chrome" : System.getProperty("browser");
         Configuration.browserVersion = (System.getProperty("node") != null) ? System.getProperty("node") : null;
+        Configuration.remote = (System.getProperty("hub") != null) ? System.getProperty("hub") : null;
+
 
         Configuration.reportsFolder = "test-result/reports";
         Configuration.screenshots = false;
