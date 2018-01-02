@@ -33,7 +33,7 @@ public class PostalanacakEvraklarPage extends MainPage {
     SelenideElement btnPostaDetayi3 = $(By.id("mainInboxForm:inboxDataTable:3:postaDagitimGosterButton"));
     SelenideElement btnGonderilenYerDetay = $(By.id("mainPreviewForm:dataTableId:0:j_idt20289"));
     BelgenetElement cmbGidisSekli = comboBox(By.xpath("//*[normalize-space(text())='Gidiş Şekli :']/ancestor::td[@role='gridcell'][1]//label[contains(@id,'_label')]"));
-    SelenideElement txtGramaj = $(By.id("mainPreviewForm:dataTableId:0:postaGramaj"));
+    SelenideElement txtGramaj = $("[id^='mainPreviewForm:dataTableId'][id$='postaGramaj']");
     SelenideElement btnTamam = $(By.id("mainPreviewForm:tutarDialogButtonId"));
     SelenideElement txtTutar = $("[id$='dpPostaTutarId']");
     SelenideElement btnKaydet = $(By.id("mainPreviewForm:dagitimPlaniDetayKaydetViewDialog"));
@@ -204,8 +204,9 @@ public class PostalanacakEvraklarPage extends MainPage {
     }
 
     @Step("Gramaj alnına \"{gramaj}\" girilir.")
-    public PostalanacakEvraklarPage gramajDoldur(String gramaj) {
-        txtGramaj.setValue(gramaj);
+    public PostalanacakEvraklarPage gramajDoldur(String gramaj) throws InterruptedException {
+        txtGramaj.clear();
+        txtGramaj.sendKeys(gramaj);
         return this;
     }
 

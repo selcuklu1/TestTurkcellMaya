@@ -66,8 +66,8 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     public void TC0321() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
-        String ustYaziPath = getDocPath1() + "pdf.pdf";
-        String excelPath = getDocPath1() + "test.xlsx";
+        String ustYaziPath = getDocPath() + "pdf.pdf";
+        String excelPath = getDocPath() + "test.xlsx";
         String ustYaziAdi = "pdf.pdf";
         String excelAdi = "test.xlsx";
         String konu = "Test " + getSysDate();
@@ -209,8 +209,8 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, priority = 7, description = "TC1401 : Kaydedilen Gelen Evrak raporu")
-    public void     TC1401() throws InterruptedException, IOException {
+    @Test(enabled = false, priority = 7, description = "TC1401 : Kaydedilen Gelen Evrak raporu")
+    public void TC1401() throws InterruptedException, IOException {
 
 //        String evrakNO321 = "5187";
 //        String evrakNO328 = "5187";

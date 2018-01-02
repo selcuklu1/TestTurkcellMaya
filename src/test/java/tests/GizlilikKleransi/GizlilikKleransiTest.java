@@ -1072,7 +1072,6 @@ public class GizlilikKleransiTest extends BaseTest {
                 .tabloKonuyaGoreEvrakAc(text)
                 .cevapYaz();
 
-
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
