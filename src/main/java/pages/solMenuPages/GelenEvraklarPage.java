@@ -590,7 +590,7 @@ public class GelenEvraklarPage extends MainPage {
         SelenideElement popUpEvet = $(By.xpath("//div[@class='ui-confirm-dialog ui-dialog ui-widget ui-widget-content ui-corner-all ui-helper-hidden ui-shadow ui-overlay-visible']//center//button[1]"));
         popUp.should(Condition.visible);
         if (popUp.text().contains(mesaj))
-            popUpEvet.click();
+            clickJs(popUpEvet);
         return this;
     }
 

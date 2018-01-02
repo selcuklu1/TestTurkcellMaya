@@ -138,7 +138,7 @@ public class VekaletVerPage extends MainPage {
         return this;
     }
 
-    @Step("Evrak Ekle butnu")
+    @Step("Evrak Ekle butonu")
     public VekaletVerPage evrakEkle() {
         clickJs(btnEvrakEkle);
         return this;
