@@ -99,17 +99,19 @@ public class PulYonetimiTest extends BaseTest {
     public void TC2215() throws InterruptedException {
 
         login("mbozdemir", "123");
-        String postaListesi = "cubbada";
+//        String konu = "TC2214 20180102112101";
+        String postaListesi = konu;
         String gidisSekli = "Ankara İçi APS";
         String gramaj1 = "1";
         String indirimOrani = "20";
         String gramaj3 = "3";
         String gramaj5 = "5";
         String tutar = "120";
-        String basariMesaji = "İşlem başarılıdır!";
         String[] postaTipleri = new String[]{
-                "Adi Posta"
+                "Ankara İçi APS"
         };
+
+//        Test datası oluşturuluyor
 
         evrakOlusturPage
                 .openPage()
@@ -135,17 +137,19 @@ public class PulYonetimiTest extends BaseTest {
                 .sImzaImzala()
                 .sayisalImzaEvetPopup();
 
-
         topluPostalanacakEvraklarPage
                 .openPage()
                 .tarihAraligiSec("01.01.2017", getSysDateForKis())
                 .postaTipiSec(postaTipleri)
                 .sorgula()
-                .evrakSec(konu)
+                .evrakSec(konu, true)
                 .postaListesineAktar()
                 .listeAdiDoldur(konu)
                 .listeOlustur()
-                .postaListesiSec(konu);
+                .postaListesiSec(konu)
+                .listeyeEkle();
+
+//         Test başlangıcı
 
         postaListesiPage
                 .openPage()
@@ -158,28 +162,28 @@ public class PulYonetimiTest extends BaseTest {
 
                 .gramajDoldur(gramaj1)
                 .tutarHesapla()
-                .indirimOncesiTutarKontrol("50.000", true)
+                .indirimOncesiTutarKontrol("50.00", true)
                 .indirimOraniKontrol("10", true)
-                .tutarKontrol("45.000", true)
+                .tutarKontrol("45.00", true)
 
                 .indirimOraniDoldur(indirimOrani)
-                .tutarKontrol("40.000", true)
+                .tutarKontrol("40.00", true)
 
                 .gramajDoldur(gramaj3)
                 .tutarHesapla()
-                .indirimOncesiTutarKontrol("100.000", true)
+                .indirimOncesiTutarKontrol("100.00", true)
                 .indirimOraniKontrol("20", true)
-                .tutarKontrol("80.000", true)
+                .tutarKontrol("80.00", true)
 
                 .gramajDoldur(gramaj5)
                 .tutarHesapla()
-                .indirimOncesiTutarKontrol("100.000", true)
+                .indirimOncesiTutarKontrol("100.00", true)
                 .indirimOraniKontrol("0", true)
-                .tutarKontrol("100.000", true)
+                .tutarKontrol("100.00", true)
 
                 .tutarDoldur(tutar)
                 .postaDetayiPostala()
-                .islemMesaji().beklenenMesaj(basariMesaji);
+                .islemMesaji().basariliOlmali(basariMesaji);
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -188,64 +192,68 @@ public class PulYonetimiTest extends BaseTest {
 
         login("yakyol", "123");
 
+        String gramaj = "1";
+        String gramaj1 = "3";
+        String gramaj2 = "5";
+        String konu = "TC2214 20180102113202";
 
-        evrakOlusturPage
-                .openPage()
-                .bilgilerTabiAc()
-                .konuKoduSec(konuKodu)
-                .konuDoldur(konu)
-                .kaldiralacakKlasorlerSec(kaldiralacakKlasor)
-                .evrakTuruSec(evrakTuru)
-                .evrakDiliSec(evrakDili)
-                .gizlilikDerecesiSec(gizlilikDerecesi)
-                .ivedilikSec(ivedilik)
-                .geregiSecimTipiSecByText(geregiTipi)
-                .geregiSec(geregi)
-                .gercekKisiGeregiAlaniPostaTipiSec("Ankara İçi APS")
-                .onayAkisiEkle()
-                .onayAkisiEkleIlkImzalaSec(tur)
-                .kullan();
-        evrakOlusturPage
-                .editorTabAc()
-                .editorIcerikDoldur(konu)
-                .imzala()
-                .sImzasec()
-                .sImzaImzala()
-                .sayisalImzaEvetPopup();
-
-        logout();
-        login("mbozdemir", "123");
+//        evrakOlusturPage
+//                .openPage()
+//                .bilgilerTabiAc()
+//                .konuKoduSec(konuKodu)
+//                .konuDoldur(konu)
+//                .kaldiralacakKlasorlerSec(kaldiralacakKlasor)
+//                .evrakTuruSec(evrakTuru)
+//                .evrakDiliSec(evrakDili)
+//                .gizlilikDerecesiSec(gizlilikDerecesi)
+//                .ivedilikSec(ivedilik)
+//                .geregiSecimTipiSecByText(geregiTipi)
+//                .geregiSec(geregi)
+//                .gercekKisiGeregiAlaniPostaTipiSec("Ankara İçi APS")
+//                .onayAkisiEkle()
+//                .onayAkisiEkleIlkImzalaSec(tur)
+//                .kullan();
+//        evrakOlusturPage
+//                .editorTabAc()
+//                .editorIcerikDoldur(konu)
+//                .imzala()
+//                .sImzasec()
+//                .sImzaImzala()
+//                .sayisalImzaEvetPopup();
+//
+//        logout();
+//        login("mbozdemir", "123");
 
         postalanacakEvraklarPage
                 .openPage()
                 .evrakSecKonuyaGoreIcerikGoster(konu)
                 .evrakPostala()
                 .gidisSekli("Ankara İçi APS")
-                .gramajDoldur("1")
+                .gramajDoldur(gramaj)
                 .evrakOnzilemeHesapla()
                 .popUpKontrol()
-                .popUpIndirimOncesiTutarKontrol("50.000", true)
+                .popUpIndirimOncesiTutarKontrol("50.00", true)
                 .popUpIndirimOraniKontrol("10", true)
-                .popUpTutarKontrol("45.000", true)
+                .popUpTutarKontrol("45.00", true)
                 .popUpTamam()
-                .tutarAlaniKontrolu("45.000", true)
+                .tutarAlaniKontrolu("45.00", true)
 
-                .gramajDoldur("3")
+                .gramajDoldur(gramaj1)
                 .evrakOnzilemeHesapla()
                 .popUpKontrol()
-                .popUpIndirimOncesiTutarKontrol("100.000", true)
+                .popUpIndirimOncesiTutarKontrol("100.00", true)
                 .popUpIndirimOraniKontrol("20", true)
-                .popUpTutarKontrol("80.000", true)
+                .popUpTutarKontrol("80.00", true)
                 .popUpTamam()
-                .tutarAlaniKontrolu("80.000", true)
+                .tutarAlaniKontrolu("80.00", true)
 
 
-                .gramajDoldur("5")
+                .gramajDoldur(gramaj2)
                 .evrakOnzilemeHesapla()
                 .popUpKontrol()
-                .popUpIndirimOncesiTutarKontrol("100.000", true)
+                .popUpIndirimOncesiTutarKontrol("100.00", true)
                 .popUpIndirimOraniKontrol("0", true)
-                .popUpTutarKontrol("100.000", true)
+                .popUpTutarKontrol("100.00", true)
                 .popUpTamam()
                 .tutarAlaniKontrolu("100.00", true)
 

@@ -14,6 +14,7 @@ import pages.pageData.SolMenuData;
 import java.util.Arrays;
 
 import static com.codeborne.selenide.Selenide.*;
+import static pages.pageComponents.belgenetElements.BelgenetFramework.comboBox;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 public class TopluPostalanacakEvraklarPage extends MainPage {
@@ -51,6 +52,14 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
         solMenu(SolMenuData.BirimEvraklari.TopluPostalanacakEvraklar);
         return this;
     }
+
+    @Step("Gönderildiği Yer alanından \"{gonderildigiYer}\" seç")
+    public TopluPostalanacakEvraklarPage gonderilecegiYer(String gonderildigiYer) {
+        BelgenetElement cmbGonderildigiYer = comboBox("mainPreviewForm:tpbeGidecegiYerSelectOneMenuId_label");
+        cmbGonderildigiYer.selectComboBox(gonderildigiYer);
+        return this;
+    }
+
 
     @Step("Gideceği yer alanından {0} seç")
     public TopluPostalanacakEvraklarPage gidecegiYerSec(String gidecegiYer, boolean secim) {
@@ -321,8 +330,8 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
     }
 
     @Step("Konuya göre Evrak seç. \"{konu}\" ")
-    public TopluPostalanacakEvraklarPage evrakSec(String konu) {
-
+    public TopluPostalanacakEvraklarPage evrakSec(String konu,boolean secim) {
+        Boolean isSelected = false;
 
         SelenideElement currentRow = tableEvraklar
                 .filterBy(Condition.text(konu))
@@ -330,11 +339,23 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
 
         Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", currentRow);
 
-        currentRow.click();
+        SelenideElement currentRowCheckBox = currentRow.$(By.xpath(".//div[contains(@class, 'ui-chkbox ui-widget')]"));
+
+        if (currentRowCheckBox.$(By.xpath(".//div[contains(@class, 'ui-state-active')]")).exists())
+            isSelected = true;
+
+        if (secim == true) {
+            if (isSelected == false)
+                currentRowCheckBox.click();
+        } else {
+            if (isSelected == true)
+                currentRowCheckBox.click();
+        }
 
 
         return this;
     }
+
     @Step("Evrak seç.")
     public TopluPostalanacakEvraklarPage evrakKontrol(String kayitTarihiSayi, String gidecegiYer, String konu, String hazirlayanBirim, String postTipi, boolean shouldBeExist) {
 
