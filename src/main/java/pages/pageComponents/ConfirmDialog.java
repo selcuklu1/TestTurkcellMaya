@@ -43,6 +43,6 @@ public class ConfirmDialog extends BaseLibrary {
     @Step("Onay dialog butonu")
     public SelenideElement button(String name) {
         return $$x("//div[contains(@class,'ui-confirm-dialog')]//button[span[text()='" + name + "']]")
-                .filterBy(visible).first();
+                .filterBy(visible).last();
     }
 }
