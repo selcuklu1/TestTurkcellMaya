@@ -362,7 +362,7 @@ public class MainPage extends BaseLibrary {
         return this;
     }
 
-    public void evrakImzaOnay() {
+    public MainPage evrakImzaOnay() {
         for (int i = 0; i < Configuration.timeout / 1000; i++) {
             sleep(1000);
             if ($("#imzalaForm\\:sayisalImzaConfirmDialogOpener").is(visible)) {
@@ -374,6 +374,7 @@ public class MainPage extends BaseLibrary {
                 break;
             }
         }
+        return this;
     }
 
     @Step("Iade et")

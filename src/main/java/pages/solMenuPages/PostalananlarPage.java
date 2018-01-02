@@ -214,91 +214,94 @@ public class PostalananlarPage extends MainPage {
     /**
      * @return
      */
-    public String evSay() {
 
+    public String evSay() {
         return $x("//tbody/tr[3]/td[3]/label").getAttribute("outerText");
     }
 
+    @Step("Kurdele Butonuna Tıkla")
     public PostalananlarPage btnKurdele() {
 
         btnKurdele.click();
         return this;
     }
 
+    @Step("Imza Popup kapat")
     public PostalananlarPage btnImzaciPopupKapat() {
         btnImzaciPopupKapat.click();
         return this;
     }
 
+    @Step("Tam Ekran görünüme tıkla")
     public PostalananlarPage btnTamEkran() {
         btnTamEkran.click();
         return this;
     }
-
+    @Step("Tam Ekran görünümü kapat")
     public PostalananlarPage btnTamEkranKapat() {
         btnTamEkranKapat.click();
         return this;
     }
-
+    @Step("Icerik Goster butonuna tıkla")
     public PostalananlarPage btnIcerikGoster() throws InterruptedException {
         btnIcerikGoster.click();
         Thread.sleep(1000);
         return this;
     }
-
+    @Step("Icerik içinde Ilgileri Tabına tıklama")
     public PostalananlarPage btnIcerikIlgileriTab() throws InterruptedException {
         btnIlgileriIcerik.click();
         Thread.sleep(500);
         return this;
     }
-
+    @Step("Icerik içinde Ekleri Tabına tıklama")
     public PostalananlarPage btnIcerikEkleriTab() {
         btnEkleriIcerik.click();
         return this;
     }
-
+    @Step("Icerik Detay Kapatma")
     public PostalananlarPage btnIcerikDetayKapat() {
         btnIcerikPencereKapat.click();
         btnKapatmaOnayı.click();
         return this;
     }
-
+    @Step("Filtereden Postaladıklarımı işaretle")
     public PostalananlarPage btnFiltrePostaladiklarim() {
 
         btnRadioPostaladiklarim.click();
         return this;
     }
+    @Step("Filtreden başlangıç tarihi girişi")
+    public PostalananlarPage btnFiltreBaslangicTarihi(String date) {
 
-    public PostalananlarPage btnFiltreBaslangicTarihi(String txt) {
-
-        btnFiltreBaslangicTarihi.setValue(txt);
+        btnFiltreBaslangicTarihi.setValue(date);
         return this;
     }
-
+    @Step("Filtre sekmesini aç")
     public PostalananlarPage btnFiltreSpan() {
 
         btnFiltreSpan.click();
         return this;
     }
-
+    @Step("Imza Dialog Ekranını göster")
     public PostalananlarPage mngImzaDialog() {
 
         ImzaDialog.click();
         ImzaDialog.scrollTo();
         return this;
     }
-
+    @Step("Evrak Yazdır")
     public PostalananlarPage evrakYazdir() {
         postalananEvrakYazdir.click();
         return this;
     }
-
+    @Step("Etiket Bastir")
     public PostalananlarPage etiketBastir() {
 
         postalananEvrakEtiketYazdir.click();
         return this;
     }
-
+    @Step("Tuzel Kisi Posta Kodu Guncelle")
     public PostalananlarPage tuzelKisiPostaKodu() {
 
         tuzelKisiGuncelle.click();

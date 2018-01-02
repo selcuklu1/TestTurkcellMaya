@@ -73,7 +73,7 @@ public class EvrakPostalamaTest extends BaseTest {
 
         evrakOlusturPage
                 .editorTabAc()
-                .editorIcerikDoldur("TC308")
+                .editorIcerikDoldur("TC0308")
                 .editorEvrakGeregiSec("YAZILIM GELİ")
                 .imzala()
                 .popupSImzalaIslemleri();
@@ -176,7 +176,7 @@ public class EvrakPostalamaTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC520 : Postalanan evrak posta bilgilerinin önizleme ekranından güncellenmesi ve rapor üzerinde kontrolü")
+    @Test(enabled = true, description = "TC0520 : Postalanan evrak posta bilgilerinin önizleme ekranından güncellenmesi ve rapor üzerinde kontrolü")
     public void TC0520a() throws InterruptedException {
         login("Mbozdemir", "123");
         String konu = "Konu: TC2235:";
