@@ -29,7 +29,6 @@ public class Firefox extends BaseTest implements WebDriverProvider {
                 .setAcceptInsecureCerts(true)
                 .addPreference("security.insecure_field_warning.contextual.enabled", false)
                 .setLogLevel(FirefoxDriverLogLevel.fromLevel(Level.OFF));
-
         options.addPreference("browser.download.folderList", 2);
         options.addPreference("browser.download.dir", TestData.docDownloadPathLinux);
 

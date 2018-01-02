@@ -884,7 +884,6 @@ public class BaseLibrary extends ElementsContainer {
     public String getDownoladPath() {
         Capabilities caps = getCapabilities();
         Platform operationSystem = caps.getPlatform();
-
         String path = "";
         if (operationSystem.is(Platform.WINDOWS) || operationSystem.is(Platform.XP))
             path = TestData.docDownloadPathWindows;
