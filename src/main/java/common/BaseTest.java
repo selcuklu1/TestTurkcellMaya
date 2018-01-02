@@ -35,22 +35,26 @@ public class BaseTest extends BaseLibrary {
 
         BelgenetFramework.setUp();
 
-        log.info("input pramater browser: " + System.getProperty("browser"));
-        log.info("input pramater url: " + System.getProperty("url"));
+//        log.info("input pramater browser: " + System.getProperty("selenide.browser"));
+//        log.info("input pramater url: " + System.getProperty("selenide.baseUrl"));
         //Configuration.remote = "http://10.101.20.151:4444/wd/hub";
         //Configuration.remote = "http://localhost:4444/wd/hub";
 
-        Configuration.baseUrl = (System.getProperty("url") == null) ? belgenetURL : System.getProperty("url");
+        Configuration.baseUrl = (System.getProperty("URL") == null) ? belgenetURL : System.getProperty("URL");
         Configuration.browser = (System.getProperty("browser") == null) ? "chrome" : System.getProperty("browser");
+        Configuration.browserVersion = (System.getProperty("node") != null) ? System.getProperty("node") : null;
+        Configuration.remote = (System.getProperty("hub") != null) ? System.getProperty("hub") : null;
+
 
         Configuration.reportsFolder = "test-result/reports";
         Configuration.screenshots = false;
         Configuration.savePageSource = false;
-        Configuration.collectionsTimeout = 20000;
-        Configuration.timeout = 20000;
+
+        Configuration.collectionsTimeout = 30000;
+        Configuration.timeout = 30000;
         setWaitForLoading(30);
         //Configuration.clickViaJs = true;
-        Configuration.holdBrowserOpen = true;
+//        Configuration.holdBrowserOpen = true;
         //Configuration.headless = false;
         Configuration.startMaximized = true;
         Configuration.pollingInterval = 100;
