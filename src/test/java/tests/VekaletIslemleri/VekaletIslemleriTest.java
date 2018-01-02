@@ -215,9 +215,7 @@ public class VekaletIslemleriTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true,
-            //dependsOnMethods = {"TC2208"},
-            description = "TC0015 : Vekaleti alan kullanıcının onay akışında seçilmesi(vekaleten)")
+    @Test(enabled = false, dependsOnMethods = {"TC2208"}, description = "TC0015 : Vekaleti alan kullanıcının onay akışında seçilmesi(vekaleten)")
     public void TC0015() throws InterruptedException {
 
         String kullaniciTitle = " [Ağ (Network) Uzman Yardımcısı]";
@@ -280,11 +278,12 @@ public class VekaletIslemleriTest extends BaseTest {
 
         mainPage
                 .vekaletVarUyariPopUp()
-                .birimSec(Condition.text("Vekalet"));
+                .birimSec(Condition.text("Vekalet"))
+                .islemMesaji().basariliOlmali(basariMesaji);
 
         imzaBekleyenlerPage
                 .openPage()
-//                .evrakNoKontrolu(evrakNo)
+                .evrakNoKontrolu(evrakNo)
                 .icerik()
                 .icerikKontrol("V.");
     }
@@ -525,7 +524,8 @@ public class VekaletIslemleriTest extends BaseTest {
 
         mainPage
                 .vekaletVarUyariPopUp()
-                .birimSec(Condition.text("Vekalet"));
+                .birimSec(Condition.text("Vekalet"))
+                .islemMesaji().basariliOlmali(basariMesaji);
 
         gelenEvraklarPage
                 .openPage()

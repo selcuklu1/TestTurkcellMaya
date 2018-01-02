@@ -285,6 +285,12 @@ public class MainPage extends BaseLibrary {
                 .first().click();
             //$("#leftMenuForm #birimlerimMenusuContainer").$(byLinkText(birim)).click();
 
+        //$("#kullaniciBirimAd").shouldHave(condition);
+        return this;
+    }
+
+    @Step("Şuanki Birim kontrolü")
+    public MainPage currentBirimKontrol(Condition condition){
         $("#kullaniciBirimAd").shouldHave(condition);
         return this;
     }

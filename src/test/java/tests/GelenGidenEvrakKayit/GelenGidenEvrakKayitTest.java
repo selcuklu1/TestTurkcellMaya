@@ -66,8 +66,8 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     public void TC0321() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
-        String ustYaziPath = getDocPath() + "pdf.pdf";
-        String excelPath = getDocPath() + "test.xlsx";
+        String ustYaziPath = getDocPath1() + "pdf.pdf";
+        String excelPath = getDocPath1() + "test.xlsx";
         String ustYaziAdi = "pdf.pdf";
         String excelAdi = "test.xlsx";
         String konu = "Test " + getSysDate();
