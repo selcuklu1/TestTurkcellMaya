@@ -35,19 +35,19 @@ public class BaseTest extends BaseLibrary {
 
         BelgenetFramework.setUp();
 
-        log.info("input pramater browser: " + System.getProperty("browser"));
-        log.info("input pramater url: " + System.getProperty("url"));
+        log.info("input pramater browser: " + System.getProperty("selenide.browser"));
+        log.info("input pramater url: " + System.getProperty("selenide.baseUrl"));
         //Configuration.remote = "http://10.101.20.151:4444/wd/hub";
         //Configuration.remote = "http://localhost:4444/wd/hub";
 
-        Configuration.baseUrl = (System.getProperty("url") == null) ? belgenetURL : System.getProperty("url");
-        Configuration.browser = (System.getProperty("browser") == null) ? "chrome" : System.getProperty("browser");
+        Configuration.baseUrl = (System.getProperty("selenide.baseUrl") == null) ? belgenetURL : System.getProperty("url");
+        Configuration.browser = (System.getProperty("selenide.browser") == null) ? "chrome" : System.getProperty("browser");
 
         Configuration.reportsFolder = "test-result/reports";
         Configuration.screenshots = false;
         Configuration.savePageSource = false;
-        Configuration.collectionsTimeout = 10000;
-        Configuration.timeout = 10000;
+        Configuration.collectionsTimeout = 20000;
+        Configuration.timeout = 20000;
         setWaitForLoading(30);
         //Configuration.clickViaJs = true;
 //        Configuration.holdBrowserOpen = true;
