@@ -410,7 +410,9 @@ public class VekaletIslemleriTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, dependsOnMethods = {"TC2208"}, description = "TC2212 : Vekalet veren kullanıcının bulunduğu kullanıcı listesine evrak havalesi ve kontrolü")
+    @Test(enabled = true,
+//            dependsOnMethods = {"TC2208"},
+            description = "TC2212 : Vekalet veren kullanıcının bulunduğu kullanıcı listesine evrak havalesi ve kontrolü")
     public void TC2212() throws InterruptedException {
 
         login(username3, password3);
@@ -447,7 +449,7 @@ public class VekaletIslemleriTest extends BaseTest {
                 .kullanciListesiSecWithTitle(kullanici, title)  //ikinci gelen seçilmeli
                 .confirmDialog().dialogMessage().shouldHave(text(mesaj));
         gelenEvraklarPage.confirmDialog().button("Evet").click();
-        gelenEvraklarPage.evrakOnIzlemeUyarıPopUpKontol(mesaj)
+        gelenEvraklarPage
                 .havaleYapGonder()
                 .islemMesaji().basariliOlmali(basariMesaji);
         logout();
