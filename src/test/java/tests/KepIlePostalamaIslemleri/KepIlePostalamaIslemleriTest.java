@@ -110,7 +110,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
                 .openPage()
                 .bilgilerTabiAc()
                 .geregiSecimTipiSec(bilgiSecimTipi)
-                .geregiDoldur(getIdariBirimKodu);
+                .geregiDoldur(getIdariBirimKodu, "İdari Birim Kodu");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -141,7 +141,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
                 .openPage()
                 .bilgilerTabiAc()
                 .geregiSecimTipiSec(bilgiSecimTipi)
-                .geregiDoldur(getIdariBirimKodu);
+                .geregiDoldur(getIdariBirimKodu,  "İdari Birim Kodu");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -173,7 +173,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
                 .openPage()
                 .bilgilerTabiAc()
                 .geregiSecimTipiSec(bilgiSecimTipi)
-                .geregiDoldur(vergiNo);
+                .geregiDoldur(vergiNo, "Vergi No");
     }
 
     @Severity(SeverityLevel.CRITICAL)

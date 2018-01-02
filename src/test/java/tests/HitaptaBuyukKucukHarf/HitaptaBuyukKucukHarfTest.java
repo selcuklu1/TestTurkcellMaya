@@ -150,7 +150,7 @@ public class HitaptaBuyukKucukHarfTest extends BaseTest {
         evrakOlustur
                 .bilgilerTabiAc()
                 .geregiSecimTipiSec(geregiSecimTipi)
-                .geregiDoldur(geregi);
+                .geregiDoldur(geregi, "");
 
         evrakOlustur
                 .editorTabAc()

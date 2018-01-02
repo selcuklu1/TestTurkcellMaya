@@ -181,7 +181,7 @@ public class TC2095 extends BaseTest {
                 String dayOfMonth =  String.valueOf(LocalDateTime.now().getDayOfMonth());
                 $("div[id='ui-datepicker-div']").$(By.linkText(dayOfMonth)).click();*/
                 .geregiSecimTipiSec(geregiSecimBirim)
-                .geregiDoldur(geregiBirim)
+                .geregiDoldur(geregiBirim, "Birim")
 //                .onayAkisiKullanicilariTemizle()
 //                .onayAkisiEkle("User2 TEST")
 //                .onayAkisiKullaniciTipiSec("User2 TEST", "Paraflama")

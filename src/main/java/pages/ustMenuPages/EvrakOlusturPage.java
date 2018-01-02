@@ -4,6 +4,7 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -753,8 +754,8 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Gereği doldur")
-        public BilgilerTab geregiDoldur(String geregi) {
+        @Step("Gereği alanı doldurulur: {geregi} | {description}")
+        public BilgilerTab geregiDoldur(String geregi, String description) {
             cmbGeregi.selectLov(geregi);
             return this;
         }
@@ -1496,8 +1497,8 @@ public class EvrakOlusturPage extends MainPage {
         }
 
         @Step("Gereği alani doldur")
-        public EditorTab geregiDoldur(String geregi) {
-            cmbGeregi.selectLov(geregi);
+        public EditorTab geregiDoldur(String text) {
+            cmbGeregi.selectLov(text);
             return this;
         }
 
@@ -1533,7 +1534,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Seçilen gereği sil")
+        @Step("Gereği alanı temizle")
         public EditorTab secilenGeregiSil() {
             cmbGeregi.clearLastSelectedLov();
             return this;
