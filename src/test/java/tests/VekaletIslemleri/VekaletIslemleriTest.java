@@ -1,5 +1,6 @@
 package tests.VekaletIslemleri;
 
+import com.codeborne.selenide.Condition;
 import common.BaseTest;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
@@ -214,7 +215,9 @@ public class VekaletIslemleriTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = false, dependsOnMethods = {"TC2208"}, description = "TC0015 : Vekaleti alan kullanıcının onay akışında seçilmesi(vekaleten)")
+    @Test(enabled = true,
+            //dependsOnMethods = {"TC2208"},
+            description = "TC0015 : Vekaleti alan kullanıcının onay akışında seçilmesi(vekaleten)")
     public void TC0015() throws InterruptedException {
 
         String kullaniciTitle = " [Ağ (Network) Uzman Yardımcısı]";
@@ -277,13 +280,11 @@ public class VekaletIslemleriTest extends BaseTest {
 
         mainPage
                 .vekaletVarUyariPopUp()
-                .birimSec("Vekalet");
-        Thread.sleep(2000);
-
+                .birimSec(Condition.text("Vekalet"));
 
         imzaBekleyenlerPage
                 .openPage()
-                .evrakNoKontrolu(evrakNo)
+//                .evrakNoKontrolu(evrakNo)
                 .icerik()
                 .icerikKontrol("V.");
     }
@@ -410,9 +411,7 @@ public class VekaletIslemleriTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true,
-//            dependsOnMethods = {"TC2208"},
-            description = "TC2212 : Vekalet veren kullanıcının bulunduğu kullanıcı listesine evrak havalesi ve kontrolü")
+    @Test(enabled = true, dependsOnMethods = {"TC2208"}, description = "TC2212 : Vekalet veren kullanıcının bulunduğu kullanıcı listesine evrak havalesi ve kontrolü")
     public void TC2212() throws InterruptedException {
 
         login(username3, password3);
@@ -526,7 +525,7 @@ public class VekaletIslemleriTest extends BaseTest {
 
         mainPage
                 .vekaletVarUyariPopUp()
-                .birimSec("Vekalet");
+                .birimSec(Condition.text("Vekalet"));
 
         gelenEvraklarPage
                 .openPage()

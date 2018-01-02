@@ -1,5 +1,6 @@
 package common;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import data.User;
@@ -105,7 +106,7 @@ public class BaseTest extends BaseLibrary {
     public void login(User user) {
         LoginPage loginPage = new LoginPage().login(user.getUsername(), user.getPassword());
         if (!user.getBirimAdi().isEmpty() && user.getBirimAdi() != null)
-            loginPage.birimSec(user.getBirimAdi());
+            loginPage.birimSec(Condition.text(user.getBirimAdi()));
     }
 
     @Step("Login")
