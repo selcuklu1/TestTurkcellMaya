@@ -353,8 +353,8 @@ public class EvrakOlusturPage extends MainPage {
             return divContainer.is(visible);
         }
 
-        @Step("Kullanıcılar alanında imzacı seç")
-        public BilgilerTab kullanicilarImzaciSec(String value) {
+        @Step("Kullanıcılar alanında \"{value}\" seç")
+        public BilgilerTab IlkKullaniciImzalamaVeyaParaflamaSec(String value) {
             cmbKullanicilarImza.selectOptionByValue(value);
             return this;
         }
@@ -379,7 +379,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Kullanıcılar alanı doldur")
+        @Step("Kullanıcılar alanında \"{kullanici}\" seç")
         public BilgilerTab kullanicilarDoldurWithTitle(String kullanici, String title) {
             txtOnayAkisiKullanicilar.type(kullanici).titleItems()
                     .filterBy(Condition.exactText(kullanici + title)).first().click();
@@ -405,7 +405,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Kullnici ismine göre imza paraf seç")
+        @Step("Kullnici ismine göre imzalama veya paraflama seç")
         public BilgilerTab kullniciIsmineGoreImzaParafSec(String kullanici, String value) {
 
             tblKullanıcılar2.filterBy(Condition.text(kullanici)).first()

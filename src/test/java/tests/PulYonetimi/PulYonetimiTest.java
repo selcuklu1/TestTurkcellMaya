@@ -197,6 +197,7 @@ public class PulYonetimiTest extends BaseTest {
         String gramaj2 = "5";
         String konu = "TC2214 20180102113202";
 
+        // test datası oluşturuluyor
 //        evrakOlusturPage
 //                .openPage()
 //                .bilgilerTabiAc()
@@ -223,6 +224,8 @@ public class PulYonetimiTest extends BaseTest {
 //
 //        logout();
 //        login("mbozdemir", "123");
+
+        // test başlangıcı
 
         postalanacakEvraklarPage
                 .openPage()

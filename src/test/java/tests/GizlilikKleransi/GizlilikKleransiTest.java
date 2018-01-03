@@ -594,7 +594,7 @@ public class GizlilikKleransiTest extends BaseTest {
                 .geregiSec(geregi)
                 .onayAkisiEkle()
                 .kullaniciTabloKontrol()
-                .kullanicilarImzaciSec(tur)
+                .IlkKullaniciImzalamaVeyaParaflamaSec(tur)
                 .kullan();
 
         evrakOlusturPage
@@ -917,7 +917,7 @@ public class GizlilikKleransiTest extends BaseTest {
                 .geregiSec(kullaniciTasnifDisi)
                 .onayAkisiEkle()
                 .kullaniciTabloKontrol()
-                .kullanicilarImzaciSec(tur2)
+                .IlkKullaniciImzalamaVeyaParaflamaSec(tur2)
                 .kullan();
 
         evrakOlusturPage
@@ -1002,7 +1002,7 @@ public class GizlilikKleransiTest extends BaseTest {
                 .geregiSec(kullaniciTasnifDisi)
                 .onayAkisiEkle()
                 .kullaniciTabloKontrol()
-                .kullanicilarImzaciSec(tur2)
+                .IlkKullaniciImzalamaVeyaParaflamaSec(tur2)
                 .kullan();
 
         evrakOlusturPage

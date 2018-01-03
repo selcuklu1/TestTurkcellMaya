@@ -135,9 +135,6 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .openPage()
                 .tabloEvrakNoileIcerikSec(evrakNO321); // sırayla çalışma yapıldığında evrakNO321 parametre olarak eklenecek
 
-//        String evrakNo = gelenEvrakKayitPage
-//                .evrakDetayiEvrakNoTextAl();
-
         gelenEvrakKayitPage
                 .evrakDetaylariAlanGuncellenebilirlikKontrolü()
                 .evrakBilgileriUstYaziEkle(ustYaziPath)
@@ -158,7 +155,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .evrakDetayiFizikselEkEkleTab()
                 .evrakDetayiAciklamaDoldur(aciklama)
                 .evrakDetayiEkle()
-//                .dosyaEkleTabTabloKontrolu("Ek-3") // TC0321 deki evrak no kullanıldığında bu satır aktif olarak kullanılabilir.
+//                .dosyaEkleTabTabloKontrolu("Ek-3") // office converter açıldıktan sonra TC0321 deki evrak no kullanıldığında bu satır aktif olarak kullanılabilir.
                 .evrakDetayiKaydet()
                 .evrakDetayiKaydetPopUpClose()
                 .islemMesaji().basariliOlmali(basariMesaji);
@@ -315,7 +312,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = false, description = "TC0322 : Gelen evrak kayıtta alan kontrolleri")
+    @Test(enabled = true, description = "TC0322 : Gelen evrak kayıtta alan kontrolleri")
     public void TC0322() throws InterruptedException {
 
         String kisiKurum = "Gerçek Kişi";
@@ -327,7 +324,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         String evrakGelisTipi = "Posta";
         String message = "Zorunlu alanları doldurunuz";
         String message2 = "Dosya büyüklüğü uygun değildir.";
-        String evrakTuru1 = "A";
+        String evrakTuru1 = "Diğer";
 //        String path = "C:\\Users\\Emre_Sencan\\Pictures\\tsunami_posteroct08.pdf";
         String ustYaziPath = getDocPath1() + "pdf.pdf";
         String birim = "OPTİİM BİRİM";
@@ -344,26 +341,26 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .evrakTarihiDoldur(evrakTarihi)
                 .evrakSayiSagDoldur()
                 .evrakGelisTipiSec(evrakGelisTipi)
-                .kaydet();
-//                .islemMesaji().beklenenMesaj(message);
+                .kaydet()
+                .islemMesaji().uyariOlmali(message);
 
         gelenEvrakKayitPage
                 .miatDoldur(getSysDateForKis())
                 .konuKoduSil()
-                .kaydet();
-//                .islemMesaji().beklenenMesaj(message);
+                .kaydet()
+                .islemMesaji().uyariOlmali(message);
 
         gelenEvrakKayitPage
                 .konuKoduDoldur(konuKodu)
                 .evrakTarihiSil()
-                .kaydet();
-//                .islemMesaji().beklenenMesaj(message);
+                .kaydet()
+                .islemMesaji().uyariOlmali(message);
 
         gelenEvrakKayitPage
                 .evrakTarihiDoldur(evrakTarihi)
                 .evrakSayiSagSil()
-                .kaydet();
-//                .islemMesaji().beklenenMesaj(message);
+                .kaydet()
+                .islemMesaji().uyariOlmali(message);
 
         gelenEvrakKayitPage
                 .evrakTuruSec(evrakTuru1);
