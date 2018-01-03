@@ -15,7 +15,7 @@ public class SettingsListener extends TestNG.ExitCodeListener {
         super.onTestStart(result);
         registerDriverEvenListener();
         System.out.println("///////////////////////////////////////////////////////");
-        System.out.println("Test: " + result.getName());
+        System.out.println("Test Started: " + result.getName());
         System.out.println("///////////////////////////////////////////////////////");
     }
 
@@ -23,12 +23,18 @@ public class SettingsListener extends TestNG.ExitCodeListener {
     public void onTestFailure(ITestResult result) {
         super.onTestFailure(result);
         takeScreenshotOnFail();
+        System.out.println("///////////////////////////////////////////////////////");
+        System.out.println("Test Failed: " + result.getName());
+        System.out.println("///////////////////////////////////////////////////////");
     }
 
     @Override
     public void onConfigurationFailure(ITestResult itr) {
         super.onConfigurationFailure(itr);
         takeScreenshotOnFail();
+        System.out.println("///////////////////////////////////////////////////////");
+        System.out.println("Test Configuration Failed: " + itr.getName());
+        System.out.println("///////////////////////////////////////////////////////");
     }
 
     @Attachment(value = "Fail screenshot", type = "image/png")
