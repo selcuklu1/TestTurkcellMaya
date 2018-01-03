@@ -15,6 +15,7 @@ import org.testng.annotations.Test;
 import pages.ustMenuPages.EvrakHavaleKurallariYonetimiPage;
 import pages.ustMenuPages.GelenEvrakKayitPage;
 
+import static com.codeborne.selenide.Condition.text;
 import static data.TestData.password2;
 import static data.TestData.username2;
 
@@ -144,9 +145,9 @@ public class EvrakHavaleKurallariTest extends BaseTest {
         evrakHavaleKurallariYonetimiPage
                 .openPage()
                 .sorgulamaVeFiltreleme()
-                .filtrelemeCombolovAlaniDoldur("Birim","1234567")
-                .filtrelemedeButonaTikla("Ara");;
-        //TODO
+                .filtrelemedeButonaTikla("Ara")
+        .findRow(1, text("cantest Kopya"));
+
 
         evrakHavaleKurallariYonetimiPage
                 .ara()
