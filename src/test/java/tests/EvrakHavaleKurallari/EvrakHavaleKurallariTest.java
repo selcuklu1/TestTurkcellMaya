@@ -15,6 +15,7 @@ import org.testng.annotations.Test;
 import pages.ustMenuPages.EvrakHavaleKurallariYonetimiPage;
 import pages.ustMenuPages.GelenEvrakKayitPage;
 
+import static com.codeborne.selenide.Condition.text;
 import static data.TestData.password2;
 import static data.TestData.username2;
 
@@ -40,10 +41,11 @@ public class EvrakHavaleKurallariTest extends BaseTest {
     @Test(enabled = true, description = "2069: Evrak Havale Kuralları - Kural Silme")
     public void TC2069A() throws InterruptedException {
         String basariMesaji = "İşlem başarılıdır!";
-        String bagTipi = "Y";
-        String farkliKullanici = "Optiim";
+        String uyariMesaji = "Evrak Bilgilerine Tanımlanmış Otomatik Havale Kuralı Bulunamamıştır.";
         String kuralAdi = "TC-2069_" + createRandomNumber(12);
-        String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞ";
+        String konuKodu = "Diğer";
+        String evrakTuru = "Genelge";
+        String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
         String kisi = "Zübeyde Tekin";
         String birim2 = "BİLİŞİM HİZMETLERİ VE UYDU PAZARLAMA GENEL MÜDÜR";
         login(username2, password2);
@@ -58,6 +60,9 @@ public class EvrakHavaleKurallariTest extends BaseTest {
                 .kuralAdiDoldur(kuralAdi)
                 .kimeHavaleEdilecekKisiDoldur(kisi, birim2)
                 .kuralEklemeKaydet();
+
+        evrakHavaleKurallariYonetimiPage
+                .filtreleKuralAdiDoldur(kuralAdi,"Kural adı");
         //TODO
 
         evrakHavaleKurallariYonetimiPage
@@ -67,7 +72,10 @@ public class EvrakHavaleKurallariTest extends BaseTest {
                 .islemMesaji().basariliOlmali(basariMesaji);
         gelenEvrakKayitPage
                 .openPage()
-                .otomatikHavaleSec(true);
+                .konuKoduDoldur(konuKodu)
+                .evrakTuruSec(evrakTuru)
+                .otomatikHavaleSec(true)
+                .islemMesaji().beklenenMesaj(uyariMesaji);
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -125,5 +133,33 @@ public class EvrakHavaleKurallariTest extends BaseTest {
 
     }
 
+
+    @Test(enabled = true, description = "2069: Evrak Havale Kuralları - Kural Silme")
+    public void deneme1() throws InterruptedException {
+        String basariMesaji = "İşlem başarılıdır!";
+        String bagTipi = "Y";
+        String farkliKullanici = "Optiim";
+        String kuralAdi = "TC-2069_" + createRandomNumber(12);
+        String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞ";
+        String kisi = "Zübeyde Tekin";
+        String birim2 = "BİLİŞİM HİZMETLERİ VE UYDU PAZARLAMA GENEL MÜDÜR";
+        login(username2, password2);
+        //TODO PRE Conditon bir kural bulunmalı
+        evrakHavaleKurallariYonetimiPage
+                .openPage()
+                .sorgulamaVeFiltreleme()
+                .filtrelemedeButonaTikla("Ara")
+        .findRow(1, text("cantest Kopya"));
+
+
+        evrakHavaleKurallariYonetimiPage
+                .ara()
+                .sil(kuralAdi)
+                .islemOnayiEvet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+        gelenEvrakKayitPage
+                .openPage()
+                .otomatikHavaleSec(true);
+    }
 
 }

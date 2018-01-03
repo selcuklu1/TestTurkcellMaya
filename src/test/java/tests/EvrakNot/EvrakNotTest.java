@@ -322,7 +322,7 @@ public class EvrakNotTest extends BaseTest {
     }
 
     @Test(enabled = true, description = "TC2162: Not İzleme - Evrak Notunun Postalanacak Evraklar ve Postananlar ekranlarında izlenmesi"
-//            ,dependsOnMethods = {"tc2160"}
+            ,dependsOnMethods = {"tc2160"}
     )
     public void tc2162() throws Exception {
         PostalanacakEvraklarPage postalanacakEvraklarPage = new PostalanacakEvraklarPage();
