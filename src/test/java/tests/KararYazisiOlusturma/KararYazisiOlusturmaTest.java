@@ -143,8 +143,8 @@ public class KararYazisiOlusturmaTest extends BaseTest {
 
         String basariMesaji = "İşlem başarılıdır!";
         String kaldirilicakKlasor = "Gündem";
-        String konuKodu = "Usul ve Esaslar";
-        String konuKoduRandom = "TC-2240-123123";
+        String konuKodu = "Diğer";
+        String konuKoduRandom = "TC-2240_"+createRandomNumber(25);
         String evrakTarihi = getSysDateForKis();
         String kurum = "BÜYÜK HARFLERLE KURUM";
         String kullaniciAdi = "Yazılım Geliştirme Direktörlüğ";
@@ -492,7 +492,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
         String basariMesaji = "İşlem başarılıdır!";
         String konuKodu = "Diğer";
         String kaldirilicakKlasor = "Gündem";
-        String konuKoduRandom = "TC-1715_123123";
+        String konuKoduRandom = "TC-1715_"+createRandomNumber(25);
         String evrakTarihi = getSysDateForKis();
         String kurum = "BÜYÜK HARFLERLE KURUM";
         String kullaniciAdi = "Zübeyde Tekin";
@@ -507,8 +507,8 @@ public class KararYazisiOlusturmaTest extends BaseTest {
                 .evrakSayiSagDoldur()
                 .havaleIslemleriKisiDoldur(kullaniciAdi)
                 .kaydet()
-//                .benzerKayit()
                 .evetDugmesi()
+                .benzerKayit()
                 .yeniKayitButton();
 
         gelenEvraklarPage

@@ -80,7 +80,7 @@ public class GelenEvrakKayitPage extends MainPage {
     SelenideElement txtEvrakEkTabViewArsivdenEvrakAraSayi = $(By.id("evrakBilgileriForm:evrakEkTabView:arsivdenEvrakAraSayiInputTextId"));
 
     // Havale işlemleri sekmesinde bulunanlar
-    SelenideElement chkOtomatikHavale = $(By.id("evrakBilgileriForm:onaylayacakKisiIleAyniMiId"));
+    ElementsCollection chkOtomatikHavale = $$("[id='evrakBilgileriForm:havalePanel'] [class='ui-chkbox-box ui-widget ui-corner-all ui-state-default']");
     SelenideElement txtDagitimBilgileriBirim = $(By.id("evrakBilgileriForm:dagitimBilgileriBirimLov:LovText"));
     BelgenetElement txtDagitimBilgileriKisiComboLov = comboLov(By.id("evrakBilgileriForm:dagitimBilgileriKullaniciLov:LovText"));
     SelenideElement txtDagitimBilgileriKisi = $(By.id("evrakBilgileriForm:dagitimBilgileriKullaniciLov:LovText"));
@@ -193,8 +193,7 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("Otomatik havale seç")
     public GelenEvrakKayitPage otomatikHavaleSec(boolean secim) {
-        chkOtomatikHavale.setSelected(true);
-        chkOtomatikHavale.click();
+        chkOtomatikHavale.get(0).click();
         return this;
     }
 
