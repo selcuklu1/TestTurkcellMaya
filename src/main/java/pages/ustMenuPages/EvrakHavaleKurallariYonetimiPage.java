@@ -39,7 +39,7 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
     SelenideElement btnBirimEkleEkle = $(By.id("hkKullaniciBirimEditorForm:saveKullaniciBirimButton"));
     SelenideElement btnKuralEklemeKaydet = $(By.id("havaleKuralYonetimiEditorForm:saveHavaleKuralButton"));
     SelenideElement sonTable = $("[id='havaleKuralYonetimiListingForm:havaleKuralDataTable_paginator_top'] [class='ui-paginator-last ui-state-default ui-corner-all']");
-
+    SelenideElement txtFiltreleKuralAdi = $(By.id("havaleKuralYonetimiListingForm:filterPanel:adFilterInput"));
     //TODO Kime havale edilicek
     BelgenetElement txtKimeHavaleEdilecekKisi = comboLov(By.id("havaleKuralYonetimiEditorForm:havaleKullaniciLov:LovText"));
     //TODO
@@ -67,6 +67,12 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
     @Step("Birim doldur")
     public EvrakHavaleKurallariYonetimiPage birimEkleBirimDoldur(String birim) {
         txtBirimEkleBirim.selectLov(birim);
+        return this;
+    }
+
+    @Step("Filtrele alanındaki kural adı alanını doldur {kuralAdi} | {alan}")
+    public EvrakHavaleKurallariYonetimiPage filtreleKuralAdiDoldur(String kuralAdi, String alan){
+        txtFiltreleKuralAdi.setValue(kuralAdi);
         return this;
     }
 
