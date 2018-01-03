@@ -132,10 +132,7 @@ public class PulYonetimiTest extends BaseTest {
         evrakOlusturPage
                 .editorTabAc()
                 .editorIcerikDoldur(konu)
-                .imzala()
-                .sImzasec()
-                .sImzaImzala()
-                .sayisalImzaEvetPopup();
+                .evrakImzala();
 
         topluPostalanacakEvraklarPage
                 .openPage()
@@ -198,32 +195,29 @@ public class PulYonetimiTest extends BaseTest {
         String konu = "TC2214 20180102113202";
 
         // test datası oluşturuluyor
-//        evrakOlusturPage
-//                .openPage()
-//                .bilgilerTabiAc()
-//                .konuKoduSec(konuKodu)
-//                .konuDoldur(konu)
-//                .kaldiralacakKlasorlerSec(kaldiralacakKlasor)
-//                .evrakTuruSec(evrakTuru)
-//                .evrakDiliSec(evrakDili)
-//                .gizlilikDerecesiSec(gizlilikDerecesi)
-//                .ivedilikSec(ivedilik)
-//                .geregiSecimTipiSecByText(geregiTipi)
-//                .geregiSec(geregi)
-//                .gercekKisiGeregiAlaniPostaTipiSec("Ankara İçi APS")
-//                .onayAkisiEkle()
-//                .onayAkisiEkleIlkImzalaSec(tur)
-//                .kullan();
-//        evrakOlusturPage
-//                .editorTabAc()
-//                .editorIcerikDoldur(konu)
-//                .imzala()
-//                .sImzasec()
-//                .sImzaImzala()
-//                .sayisalImzaEvetPopup();
-//
-//        logout();
-//        login("mbozdemir", "123");
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .konuKoduSec(konuKodu)
+                .konuDoldur(konu)
+                .kaldiralacakKlasorlerSec(kaldiralacakKlasor)
+                .evrakTuruSec(evrakTuru)
+                .evrakDiliSec(evrakDili)
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .ivedilikSec(ivedilik)
+                .geregiSecimTipiSecByText(geregiTipi)
+                .geregiSec(geregi)
+                .gercekKisiGeregiAlaniPostaTipiSec("Ankara İçi APS")
+                .onayAkisiEkle()
+                .onayAkisiEkleIlkImzalaSec(tur)
+                .kullan();
+        evrakOlusturPage
+                .editorTabAc()
+                .editorIcerikDoldur(konu)
+                .evrakImzala();
+
+        logout();
+        login("mbozdemir", "123");
 
         // test başlangıcı
 
@@ -234,21 +228,21 @@ public class PulYonetimiTest extends BaseTest {
                 .gidisSekli("Ankara İçi APS")
                 .gramajDoldur(gramaj)
                 .evrakOnzilemeHesapla()
-                .popUpKontrol()
+//                .popUpKontrol()
                 .popUpIndirimOncesiTutarKontrol("50.00", true)
                 .popUpIndirimOraniKontrol("10", true)
-                .popUpTutarKontrol("45.00", true)
+                .popUpTutarKontrol("45.000", true)
                 .popUpTamam()
-                .tutarAlaniKontrolu("45.00", true)
+                .tutarAlaniKontrolu("45.000", true)
 
                 .gramajDoldur(gramaj1)
                 .evrakOnzilemeHesapla()
                 .popUpKontrol()
                 .popUpIndirimOncesiTutarKontrol("100.00", true)
                 .popUpIndirimOraniKontrol("20", true)
-                .popUpTutarKontrol("80.00", true)
+                .popUpTutarKontrol("80.000", true)
                 .popUpTamam()
-                .tutarAlaniKontrolu("80.00", true)
+                .tutarAlaniKontrolu("80.000", true)
 
 
                 .gramajDoldur(gramaj2)
