@@ -78,8 +78,8 @@ public class BaseTest extends BaseLibrary {
     @AfterMethod(alwaysRun = true)
     public void afterMethod() {
         try {
-//            Selenide.clearBrowserLocalStorage();
-//            Selenide.clearBrowserCookies();
+            Selenide.clearBrowserLocalStorage();
+            Selenide.clearBrowserCookies();
         } catch (Exception e) {
             log.info("Error clearBrowserLocalStorage and clearBrowserCookies: " + e.getMessage());
         }
