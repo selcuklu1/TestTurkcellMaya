@@ -162,7 +162,6 @@ public class GundemIzlemePage extends MainPage {
                                 if (deger % 10 == 0) {
                                     $$("[id='mainInboxForm:inboxDataTable_paginator_top'] span[class='ui-paginator-next ui-state-default ui-corner-all']").get(0).click();
                                 }
-
                             }
                         }
                         counter++;

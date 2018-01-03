@@ -473,7 +473,7 @@ public class KararYazisiOlusturPage extends MainPage {
         SelenideElement sistemdeKayitliEvrakEkleTab = $("a[href='#yeniKararEvrakForm:ilisikIslemleriTabView:sistemdeKayitliEvragiEkleTab']");
         SelenideElement txtSistemdeKayitliEvrakEkleEvrakArama = $(By.id("yeniKararEvrakForm:ilisikIslemleriTabView:evrakAramaText"));
         SelenideElement btnSistemdeKayitliEvrakEkleDokumanAra = $(By.id("yeniKararEvrakForm:ilisikIslemleriTabView:dokumanAraButton"));
-        ElementsCollection btnSistemdeKayitliEvrakEkleArti = $$("[id^='yeniKararEvrakForm:ilisikIslemleriTabView:sistemdeKayitliEvrakListesiDataTable:0:']");
+        ElementsCollection btnSistemdeKayitliEvrakEkleArti = $$("[class='ui-button-icon-left ui-icon document-follow']");
 
         //Tercüme ekle tabı
         SelenideElement btnTercumeEkleTab = $("a[href='#yeniKararEvrakForm:ilisikIslemleriTabView:tercumeEvragiEkleTab']");
@@ -519,7 +519,7 @@ public class KararYazisiOlusturPage extends MainPage {
 
         @Step("Sistemde kayıtlı evrak ekle artı")
         public IliskiliEvraklarTab sistemdeKayitliEvrakEkleArti() {
-            btnSistemdeKayitliEvrakEkleArti.get(0).click();
+            btnSistemdeKayitliEvrakEkleArti.get(0).parent().click();
             return this;
         }
 

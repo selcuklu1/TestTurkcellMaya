@@ -144,7 +144,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
         String basariMesaji = "İşlem başarılıdır!";
         String kaldirilicakKlasor = "Gündem";
         String konuKodu = "Usul ve Esaslar";
-        String konuKoduRandom = "TC-2240-" + createRandomNumber(15);
+        String konuKoduRandom = "TC-2240-123123";
         String evrakTarihi = getSysDateForKis();
         String kurum = "BÜYÜK HARFLERLE KURUM";
         String kullaniciAdi = "Yazılım Geliştirme Direktörlüğ";
@@ -161,8 +161,8 @@ public class KararYazisiOlusturmaTest extends BaseTest {
                 .evrakSayiSagDoldur()
                 .havaleIslemleriBirimDoldur(kullaniciAdi)
                 .kaydet()
-                //.benzerKayit()
                 .evetDugmesi()
+                .benzerKayit()
                 .yeniKayitButton();
         //TODO
 
@@ -275,7 +275,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
         kararYazisiOlusturPage
                 .iliskiliEvraklarTabAc()
                 .sistemdeKayitliEvrakEkleTabAc()
-                .sistemdeKayitliEvrakEkleEvrakAramaDoldur("2")
+                .sistemdeKayitliEvrakEkleEvrakAramaDoldur("4")
                 .sistemdeKayitliEvrakEkleEvrakDokumanAra()
                 .sistemdeKayitliEvrakEkleArti()
                 .tercumeEkleTabAc()
