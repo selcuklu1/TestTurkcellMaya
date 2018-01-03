@@ -1,5 +1,6 @@
 package tests.VekaletIslemleri;
 
+import com.codeborne.selenide.Condition;
 import common.BaseTest;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
@@ -232,7 +233,7 @@ public class VekaletIslemleriTest extends BaseTest {
                 .geregiSec(geregi)
                 .onayAkisiEkle()
                 .kullaniciTabloKontrol()
-                .kullanicilarImzaciSec("PARAFLAMA")
+                .IlkKullaniciImzalamaVeyaParaflamaSec("PARAFLAMA")
                 .kullanicilarDoldurWithTitle(vekaletVeren, kullaniciTitle)
                 .vekeletAlanVerenTabloKontrolu()
                 .vekeletAlanVerenTabloVekaletAlanveyaVerenSec(vekaletAlan)
@@ -277,9 +278,8 @@ public class VekaletIslemleriTest extends BaseTest {
 
         mainPage
                 .vekaletVarUyariPopUp()
-                .birimSec("Vekalet");
-        Thread.sleep(2000);
-
+                .birimSec(Condition.text("Vekalet"))
+                .islemMesaji().basariliOlmali(basariMesaji);
 
         imzaBekleyenlerPage
                 .openPage()
@@ -310,7 +310,7 @@ public class VekaletIslemleriTest extends BaseTest {
                 .geregiSec(geregi)
                 .onayAkisiEkle()
                 .kullaniciTabloKontrol()
-                .kullanicilarImzaciSec("PARAFLAMA")
+                .IlkKullaniciImzalamaVeyaParaflamaSec("PARAFLAMA")
                 .kullanicilarDoldurWithTitle(vekaletVeren, kullaniciTitle)
                 .vekeletAlanVerenTabloKontrolu()
                 .vekeletAlanVerenTabloVekaletAlanveyaVerenSec(vekaletVeren)
@@ -447,7 +447,7 @@ public class VekaletIslemleriTest extends BaseTest {
                 .kullanciListesiSecWithTitle(kullanici, title)  //ikinci gelen seçilmeli
                 .confirmDialog().dialogMessage().shouldHave(text(mesaj));
         gelenEvraklarPage.confirmDialog().button("Evet").click();
-        gelenEvraklarPage.evrakOnIzlemeUyarıPopUpKontol(mesaj)
+        gelenEvraklarPage
                 .havaleYapGonder()
                 .islemMesaji().basariliOlmali(basariMesaji);
         logout();
@@ -524,7 +524,8 @@ public class VekaletIslemleriTest extends BaseTest {
 
         mainPage
                 .vekaletVarUyariPopUp()
-                .birimSec("Vekalet");
+                .birimSec(Condition.text("Vekalet"))
+                .islemMesaji().basariliOlmali(basariMesaji);
 
         gelenEvraklarPage
                 .openPage()

@@ -210,6 +210,7 @@ public class BaseLibrary extends ElementsContainer {
     public void waitForLoadingJS(WebDriver driver) {
 //        long timeout = Configuration.timeout / 1000;
         long timeout = getWaitForLoading();
+//        long timeout = 20;
         new WebDriverWait(driver, timeout, 10).until(driver1 ->
         {
             JavascriptExecutor js = (JavascriptExecutor) driver1;

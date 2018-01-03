@@ -8,6 +8,7 @@ import org.testng.annotations.Test;
 import pages.MainPage;
 import pages.solMenuPages.PostaListesiPage;
 import pages.solMenuPages.PostalanacakEvraklarPage;
+import pages.solMenuPages.TopluPostalanacakEvraklarPage;
 import pages.ustMenuPages.EvrakOlusturPage;
 import pages.ustMenuPages.PulYonetimiPage;
 
@@ -23,6 +24,7 @@ public class PulYonetimiTest extends BaseTest {
     PostaListesiPage postaListesiPage;
     PostalanacakEvraklarPage postalanacakEvraklarPage;
     EvrakOlusturPage evrakOlusturPage;
+    TopluPostalanacakEvraklarPage topluPostalanacakEvraklarPage;
 
     @BeforeMethod
     public void loginBeforeTests() {
@@ -30,9 +32,22 @@ public class PulYonetimiTest extends BaseTest {
         postaListesiPage = new PostaListesiPage();
         postalanacakEvraklarPage = new PostalanacakEvraklarPage();
         evrakOlusturPage = new EvrakOlusturPage();
+        topluPostalanacakEvraklarPage = new TopluPostalanacakEvraklarPage();
 
 
     }
+
+    String konuKodu = "010.01";
+    String kaldiralacakKlasor = "Diğer";
+    String evrakTuru = "Resmi Yazışma";
+    String evrakDili = "Türkçe";
+    String gizlilikDerecesi = "Normal";
+    String ivedilik = "Normal";
+    String geregi = "Ahmet ÇELİK";
+    String konu = "TC2214 " + getSysDate();
+    String tur = "İmzalama";
+    String geregiTipi = "Gerçek Kişi";
+    String basariMesaji = "İşlem başarılıdır!";
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TC1732: Pul Yönetimi ekranından yeni tanımlama yapma")
@@ -84,14 +99,57 @@ public class PulYonetimiTest extends BaseTest {
     public void TC2215() throws InterruptedException {
 
         login("mbozdemir", "123");
-        String postaListesi = "cubbada";
+//        String konu = "TC2214 20180102112101";
+        String postaListesi = konu;
         String gidisSekli = "Ankara İçi APS";
         String gramaj1 = "1";
         String indirimOrani = "20";
         String gramaj3 = "3";
         String gramaj5 = "5";
         String tutar = "120";
-        String basariMesaji = "İşlem başarılıdır!";
+        String[] postaTipleri = new String[]{
+                "Ankara İçi APS"
+        };
+
+//        Test datası oluşturuluyor
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .konuKoduSec(konuKodu)
+                .konuDoldur(konu)
+                .kaldiralacakKlasorlerSec(kaldiralacakKlasor)
+                .evrakTuruSec(evrakTuru)
+                .evrakDiliSec(evrakDili)
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .ivedilikSec(ivedilik)
+                .geregiSecimTipiSecByText(geregiTipi)
+                .geregiSec(geregi)
+                .gercekKisiGeregiAlaniPostaTipiSec(gidisSekli)
+                .onayAkisiEkle()
+                .onayAkisiEkleIlkImzalaSec(tur)
+                .kullan();
+        evrakOlusturPage
+                .editorTabAc()
+                .editorIcerikDoldur(konu)
+                .imzala()
+                .sImzasec()
+                .sImzaImzala()
+                .sayisalImzaEvetPopup();
+
+        topluPostalanacakEvraklarPage
+                .openPage()
+                .tarihAraligiSec(getSysDateForKis(), getSysDateForKis())
+                .postaTipiSec(postaTipleri)
+                .sorgula()
+                .evrakSec(konu, true)
+                .postaListesineAktar()
+                .listeAdiDoldur(konu)
+                .listeOlustur()
+                .postaListesiSec(konu)
+                .listeyeEkle();
+
+//         Test başlangıcı
 
         postaListesiPage
                 .openPage()
@@ -125,7 +183,7 @@ public class PulYonetimiTest extends BaseTest {
 
                 .tutarDoldur(tutar)
                 .postaDetayiPostala()
-                .islemMesaji().beklenenMesaj(basariMesaji);
+                .islemMesaji().basariliOlmali(basariMesaji);
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -133,51 +191,48 @@ public class PulYonetimiTest extends BaseTest {
     public void TC2214() throws InterruptedException {
 
         login("yakyol", "123");
-        String konuKodu = "010.01";
-        String kaldiralacakKlasor = "Diğer";
-        String evrakTuru = "Resmi Yazışma";
-        String evrakDili = "Türkçe";
-        String gizlilikDerecesi = "Normal";
-        String ivedilik = "Normal";
-        String geregi = "Ahmet ÇELİK";
-        String konu = "TC2214 " + getSysDate();
-        String tur = "İmzalama";
-        String geregiTipi = "Gerçek Kişi";
-        String basariMesaji = "İşlem başarılıdır!";
 
-        evrakOlusturPage
-                .openPage()
-                .bilgilerTabiAc()
-                .konuKoduSec(konuKodu)
-                .konuDoldur(konu)
-                .kaldiralacakKlasorlerSec(kaldiralacakKlasor)
-                .evrakTuruSec(evrakTuru)
-                .evrakDiliSec(evrakDili)
-                .gizlilikDerecesiSec(gizlilikDerecesi)
-                .ivedilikSec(ivedilik)
-                .geregiSecimTipiSecByText(geregiTipi)
-                .geregiSec(geregi)
-                .gercekKisiGeregiAlaniPostaTipiSec("Ankara İçi APS")
-                .onayAkisiEkle()
-                .onayAkisiEkleIlkImzalaSec(tur)
-                .kullan();
-        evrakOlusturPage
-                .editorTabAc()
-                .editorIcerikDoldur(konu)
-                .imzala()
-                .sImzasec()
-                .sImzaImzala()
-                .sayisalImzaEvetPopup();
+        String gramaj = "1";
+        String gramaj1 = "3";
+        String gramaj2 = "5";
+        String konu = "TC2214 20180102113202";
 
-        logout();
-        login("mbozdemir", "123");
+        // test datası oluşturuluyor
+//        evrakOlusturPage
+//                .openPage()
+//                .bilgilerTabiAc()
+//                .konuKoduSec(konuKodu)
+//                .konuDoldur(konu)
+//                .kaldiralacakKlasorlerSec(kaldiralacakKlasor)
+//                .evrakTuruSec(evrakTuru)
+//                .evrakDiliSec(evrakDili)
+//                .gizlilikDerecesiSec(gizlilikDerecesi)
+//                .ivedilikSec(ivedilik)
+//                .geregiSecimTipiSecByText(geregiTipi)
+//                .geregiSec(geregi)
+//                .gercekKisiGeregiAlaniPostaTipiSec("Ankara İçi APS")
+//                .onayAkisiEkle()
+//                .onayAkisiEkleIlkImzalaSec(tur)
+//                .kullan();
+//        evrakOlusturPage
+//                .editorTabAc()
+//                .editorIcerikDoldur(konu)
+//                .imzala()
+//                .sImzasec()
+//                .sImzaImzala()
+//                .sayisalImzaEvetPopup();
+//
+//        logout();
+//        login("mbozdemir", "123");
+
+        // test başlangıcı
 
         postalanacakEvraklarPage
                 .openPage()
                 .evrakSecKonuyaGoreIcerikGoster(konu)
                 .evrakPostala()
                 .gidisSekli("Ankara İçi APS")
-                .gramajDoldur("1")
+                .gramajDoldur(gramaj)
                 .evrakOnzilemeHesapla()
                 .popUpKontrol()
                 .popUpIndirimOncesiTutarKontrol("50.00", true)
@@ -186,7 +241,7 @@ public class PulYonetimiTest extends BaseTest {
                 .popUpTamam()
                 .tutarAlaniKontrolu("45.00", true)
 
-                .gramajDoldur("3")
+                .gramajDoldur(gramaj1)
                 .evrakOnzilemeHesapla()
                 .popUpKontrol()
                 .popUpIndirimOncesiTutarKontrol("100.00", true)
@@ -196,7 +251,7 @@ public class PulYonetimiTest extends BaseTest {
                 .tutarAlaniKontrolu("80.00", true)
 
 
-                .gramajDoldur("5")
+                .gramajDoldur(gramaj2)
                 .evrakOnzilemeHesapla()
                 .popUpKontrol()
                 .popUpIndirimOncesiTutarKontrol("100.00", true)

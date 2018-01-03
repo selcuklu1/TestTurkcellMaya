@@ -922,7 +922,7 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("PopUp close")
+    @Step("Evrak Detayi PdfDegisiklik PopUp close")
     public GelenEvrakKayitPage evrakDetayiPdfDegisiklikpopUpClose() {
 //        popUpPdfDegisiklik.shouldBe(Condition.visible);
         if (popUpPdfDegisiklik.isDisplayed()) {

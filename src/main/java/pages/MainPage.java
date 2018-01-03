@@ -1,9 +1,6 @@
 package pages;
 
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.*;
 import common.BaseLibrary;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
@@ -11,6 +8,7 @@ import org.testng.Assert;
 import pages.pageComponents.*;
 import pages.pageData.SolMenuData;
 
+import static com.codeborne.selenide.CollectionCondition.*;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.byLinkText;
 import static com.codeborne.selenide.Selenide.*;
@@ -274,30 +272,26 @@ public class MainPage extends BaseLibrary {
     }
 
     @Step("Birim Seç")
-    public MainPage birimSec(String birim) {
-        String currentBirim = $("#kullaniciBirimAd").shouldBe(visible)
-                .shouldHave(matchText(".*")).text();
+    public MainPage birimSec(Condition condition) {
+        SelenideElement currentBirim = $("#kullaniciBirimAd").shouldBe(visible)
+                .shouldHave(matchText(".*"));
+        //String currentBirim = $("#kullaniciBirimAd").shouldBe(visible).shouldHave(matchText(".*")).text();
 
-        if (!currentBirim.equals(birim))
-            $("#leftMenuForm #birimlerimMenusuContainer").$(byLinkText(birim)).click();
+        if (currentBirim.has(condition))
+            return this;
 
-        $("#kullaniciBirimAd").shouldHave(text(birim));
+        $$("#leftMenuForm #birimlerimMenusuContainer a")
+                .filterBy(condition).shouldHave(sizeGreaterThan(0))
+                .first().click();
+            //$("#leftMenuForm #birimlerimMenusuContainer").$(byLinkText(birim)).click();
 
+        //$("#kullaniciBirimAd").shouldHave(condition);
+        return this;
+    }
 
-//        $("#birimlerimMenusuContainer");
-//        $$("#leftMenuForm #birimlerimMenusuContainer li a");
-
-
-      /*
-        //        ElementsCollection solMenuBirim = $$("[id='birimlerimMenusuContainer'] li");
-//        SelenideElement element = solMenuBirim.filterBy(text(menuText)).first()
-//                .$("[id^='leftMenuForm:edysMenuItem_']");
-//        clickJs(element);
-
-        SelenideElement element = $("[id='birimlerimMenusuContainer']");
-        SelenideElement menuLink =element.find(By.xpath("//span[starts-with(text(),'" + menuText + "')]")).waitUntil(exist, Configuration.timeout);
-        executeJavaScript("arguments[0].click();", menuLink);
-        waitForLoading(WebDriverRunner.getWebDriver());*/
+    @Step("Şuanki Birim kontrolü")
+    public MainPage currentBirimKontrol(Condition condition){
+        $("#kullaniciBirimAd").shouldHave(condition);
         return this;
     }
 

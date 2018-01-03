@@ -1,5 +1,6 @@
 package common;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import data.User;
@@ -34,22 +35,26 @@ public class BaseTest extends BaseLibrary {
 
         BelgenetFramework.setUp();
 
-        log.info("input pramater browser: " + System.getProperty("browser"));
-        log.info("input pramater url: " + System.getProperty("url"));
+//        log.info("input pramater browser: " + System.getProperty("selenide.browser"));
+//        log.info("input pramater url: " + System.getProperty("selenide.baseUrl"));
         //Configuration.remote = "http://10.101.20.151:4444/wd/hub";
         //Configuration.remote = "http://localhost:4444/wd/hub";
 
-        Configuration.baseUrl = (System.getProperty("url") == null) ? belgenetURL : System.getProperty("url");
+        Configuration.baseUrl = (System.getProperty("URL") == null) ? belgenetURL : System.getProperty("URL");
         Configuration.browser = (System.getProperty("browser") == null) ? "chrome" : System.getProperty("browser");
+        Configuration.browserVersion = System.getProperty("node");
+        Configuration.remote = System.getProperty("hub");
+
 
         Configuration.reportsFolder = "test-result/reports";
         Configuration.screenshots = false;
         Configuration.savePageSource = false;
-        Configuration.collectionsTimeout = 10000;
-        Configuration.timeout = 10000;
-        setWaitForLoading(30);
+
+        Configuration.collectionsTimeout = 20 * 1000;
+        Configuration.timeout = 20 * 1000;
+        setWaitForLoading(20);
         //Configuration.clickViaJs = true;
-        Configuration.holdBrowserOpen = true;
+//        Configuration.holdBrowserOpen = true;
         //Configuration.headless = false;
         Configuration.startMaximized = true;
         Configuration.pollingInterval = 100;
@@ -73,8 +78,8 @@ public class BaseTest extends BaseLibrary {
     @AfterMethod(alwaysRun = true)
     public void afterMethod() {
         try {
-            Selenide.clearBrowserLocalStorage();
-            Selenide.clearBrowserCookies();
+//            Selenide.clearBrowserLocalStorage();
+//            Selenide.clearBrowserCookies();
         } catch (Exception e) {
             log.info("Error clearBrowserLocalStorage and clearBrowserCookies: " + e.getMessage());
         }
@@ -89,8 +94,8 @@ public class BaseTest extends BaseLibrary {
 
     public void clearCookies() {
         try {
-            Selenide.clearBrowserLocalStorage();
-            Selenide.clearBrowserCookies();
+//            Selenide.clearBrowserLocalStorage();
+//            Selenide.clearBrowserCookies();
         } catch (Exception e) {
             log.info("Error clearBrowserLocalStorage and clearBrowserCookies: " + e.getMessage());
         }
@@ -105,7 +110,7 @@ public class BaseTest extends BaseLibrary {
     public void login(User user) {
         LoginPage loginPage = new LoginPage().login(user.getUsername(), user.getPassword());
         if (!user.getBirimAdi().isEmpty() && user.getBirimAdi() != null)
-            loginPage.birimSec(user.getBirimAdi());
+            loginPage.birimSec(Condition.text(user.getBirimAdi()));
     }
 
     @Step("Login")

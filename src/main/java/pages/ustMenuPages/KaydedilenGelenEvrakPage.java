@@ -56,16 +56,17 @@ public class KaydedilenGelenEvrakPage extends MainPage {
         return this;
     }
 
+
     @Step("Rapor al Excel")
     public KaydedilenGelenEvrakPage raporAlExcel() throws IOException, InterruptedException {
 
-//        deleteFile("C:\\Users\\" + getPCUsername() + "\\Downloads\\","Rapor_");
+        deleteFile(getDownoladPath(),"Rapor_");
         btnRaporAlExcel.click();
-        islemMesaji().basariliOlmali();
+//        islemMesaji().basariliOlmali();
 //        Thread.sleep(8000);
 //        btnSorgula.click();
-        islemMesaji().basariliOlmali();
-//        searchDownloadedFileWithName("C:\\Users\\" + getPCUsername() + "\\Downloads\\","Rapor_.xls");
+//        islemMesaji().basariliOlmali();
+        searchDownloadedFileWithName(getDownoladPath(),"Rapor_.xls");
         return this;
     }
 

@@ -6,6 +6,7 @@ import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import pages.MainPage;
+import pages.pageComponents.SorgulamaVeFiltreleme;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
 import static com.codeborne.selenide.Selenide.*;
@@ -18,6 +19,8 @@ import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
  * Yazan: Can Şeker
  ****************************************************/
 public class EvrakHavaleKurallariYonetimiPage extends MainPage {
+
+    SelenideElement window = $("#havaleKuralYonetimiListingForm");
 
     SelenideElement btnAra = $("[id='havaleKuralYonetimiListingForm:filterPanel:searchEntitiesButton']");
     SelenideElement btnSil = $(By.id("havaleKuralYonetimiListingForm:havaleKuralDataTable:0:deleteHavaleKuralButton"));
@@ -40,6 +43,13 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
     //TODO Kime havale edilicek
     BelgenetElement txtKimeHavaleEdilecekKisi = comboLov(By.id("havaleKuralYonetimiEditorForm:havaleKullaniciLov:LovText"));
     //TODO
+
+
+    @Step("")
+    public SorgulamaVeFiltreleme sorgulamaVeFiltreleme(){
+        return new SorgulamaVeFiltreleme(window);
+    }
+
 
     @Step("Kural ekleme kaydet")
     public EvrakHavaleKurallariYonetimiPage kuralEklemeKaydet() {
