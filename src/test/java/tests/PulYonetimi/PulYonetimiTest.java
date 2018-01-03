@@ -95,7 +95,7 @@ public class PulYonetimiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "Pul yönetimi ekranındaki tanımın posta listesinde kontrolü")
+    @Test(enabled = true, description = "TC2215 : Pul yönetimi ekranındaki tanımın posta listesinde kontrolü")
     public void TC2215() throws InterruptedException {
 
         login("mbozdemir", "123");

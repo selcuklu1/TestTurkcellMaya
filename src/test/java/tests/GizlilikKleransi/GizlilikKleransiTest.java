@@ -564,7 +564,7 @@ public class GizlilikKleransiTest extends BaseTest {
         String ivedilik = "Normal";
         String geregi = "Optiim Birim";
 
-        login("gsahin", "123");
+        login("mbozdemir", "123");
 
         kullaniciYonetimiPage
                 .openPage()
@@ -600,18 +600,16 @@ public class GizlilikKleransiTest extends BaseTest {
         evrakOlusturPage
                 .editorTabAc()
                 .editorIcerikDoldur(icerik)
-                .parafla()
-                .sImzalaRadioSec()
-                .evrakImzaOnay()
+                .evrakImzala()
                 /*.sImzasec()
                 .sImzaImzala()
                 .sayisalImzaEvetPopup()*/
                 .islemMesaji().basariliOlmali();
 
-        imzaladiklarimPage
-                .openPage();
 
-        evrakNo = imzaladiklarimPage.evrakIcerikKontroluveEvrakNoAl(icerik);
+        evrakNo = imzaladiklarimPage
+                .openPage()
+                .evrakIcerikKontroluveEvrakNoAl(icerik);
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -632,7 +630,7 @@ public class GizlilikKleransiTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true
             , dependsOnMethods = {"TC1938"}
-    , description = "TC2139 : Evrak aramada gizlilik kleransı kontrolü (evrakta izi olmayan kullanıcı ile)")
+            , description = "TC2139 : Evrak aramada gizlilik kleransı kontrolü (evrakta izi olmayan kullanıcı ile)")
     public void TC2139() throws InterruptedException {
 
         login("username22n", "123");
@@ -923,7 +921,7 @@ public class GizlilikKleransiTest extends BaseTest {
         evrakOlusturPage
                 .editorTabAc()
                 .editorIcerikDoldur(icerik)
-                .parafla()
+                .imzalaButonaTikla()
                 .islemMesaji().dikkatOlmali(mesaj);
 
         evrakOlusturPage
@@ -934,7 +932,7 @@ public class GizlilikKleransiTest extends BaseTest {
 
         evrakOlusturPage
                 .editorTabAc()
-                .parafla()
+                .imzalaButonaTikla()
                 .islemMesaji().dikkatOlmali(mesaj2);
     }
 
@@ -1008,7 +1006,7 @@ public class GizlilikKleransiTest extends BaseTest {
         evrakOlusturPage
                 .editorTabAc()
                 .editorIcerikDoldur(konu)
-                .parafla()
+                .imzalaButonaTikla()
                 .islemMesaji().dikkatOlmali(mesaj);
 
         evrakOlusturPage
@@ -1019,7 +1017,7 @@ public class GizlilikKleransiTest extends BaseTest {
 
         evrakOlusturPage
                 .editorTabAc()
-                .parafla()
+                .imzalaButonaTikla()
                 .islemMesaji().dikkatOlmali(mesaj2);
     }
 

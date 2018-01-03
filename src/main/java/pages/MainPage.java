@@ -336,6 +336,16 @@ public class MainPage extends BaseLibrary {
         return this;
     }
 
+    @Step("Parafla butonu ara")
+    public SelenideElement paraflaButton() {
+        return $x("//*[text()='Parafla']/ancestor::tbody[1]//button");
+    }
+
+    @Step("Parafla butona tıkla")
+    public MainPage paraflaButonaTikla() {
+        paraflaButton().click();
+        return this;
+    }
     @Step("s-İmzla radio butonu ara")
     public SelenideElement sImzalaRadio() {
         return $("#imzalaForm\\:imzalaRadio .ui-radiobutton-box");
