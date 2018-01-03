@@ -1,10 +1,7 @@
 package pages.ustMenuPages;
 
 
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.*;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import pages.MainPage;
@@ -12,6 +9,11 @@ import pages.pageComponents.belgenetElements.BelgenetElement;
 
 import java.util.Random;
 
+import static com.codeborne.selenide.CollectionCondition.*;
+import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.value;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
@@ -61,7 +63,7 @@ public class KullaniciYonetimiPage extends MainPage {
     SelenideElement txtUnvan = $(By.id("kullaniciYonetimiEditorForm:unvanAutoComplete_input"));
     SelenideElement txtEkranAdi = $(By.id("kullaniciYonetimiEditorForm:ekranAdiInput"));
 
-    ElementsCollection tblKullaniciBirim = $$("[id='kullaniciYonetimiEditorForm:kullaniciBirimDataTable_data'] tr[role=row]");
+    ElementsCollection tblKullaniciBirim = $$("[id='kullaniciYonetimiEditorForm:kullaniciBirimDataTable_data'] tr[role=row][data-ri]");
 
 
     //
@@ -215,6 +217,9 @@ public class KullaniciYonetimiPage extends MainPage {
 
     @Step("Gorevli oldugu birimler")
     public KullaniciYonetimiPage gorevliOlduguBirimlerKontol() {
+        tblGorevliOlduguBirimler.shouldBe(visible);
+        tblGorevliOlduguBirimler.$("label").shouldHave(text("Görevli Olduğu Birimler"));
+        tblKullaniciBirim.shouldHave(sizeGreaterThan(0));
         tblGorevliOlduguBirimler.exists();
         return this;
     }
@@ -240,12 +245,10 @@ public class KullaniciYonetimiPage extends MainPage {
 
     @Step("Görevli olduğu birim guncelleme")
     public KullaniciYonetimiPage gorevliOlduguBirimGuncelle() {
-
         String title = cmlBirim.lastSelectedLovTitleText();
-        tblKullaniciBirim
-                .filterBy(Condition.text(title)).shouldHaveSize(1)
-                .first()
-                .$("[id$='updateKullaniciBirimButton']").click();
+
+        tblKullaniciBirim.filterBy(text(title)).shouldHaveSize(1)
+                .first().$("[id$='updateKullaniciBirimButton']").click();
         return this;
     }
 
@@ -255,9 +258,9 @@ public class KullaniciYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Kullanici Birim Atama Gizlilik Derecesi Kontrolu")
-    public KullaniciYonetimiPage kullaniciBirimAtamaGizlilikDerecesiKontrolu() {
-        cmbKullaniciBirimAtamaGizlilikDerecesi.shouldBe(Condition.text("Tasnif Dışı"));
+    @Step("Kullanici Birim Atama Gizlilik Derecesi seçilen değer kontrolu")
+    public KullaniciYonetimiPage kullaniciBirimAtamaGizlilikDerecesiDeğerKontrolu(String value) {
+        cmbKullaniciBirimAtamaGizlilikDerecesi.shouldHave(text(value));
         return this;
     }
 
