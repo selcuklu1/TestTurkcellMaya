@@ -1,9 +1,6 @@
 package pages.pageComponents;
 
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.Selectors;
-import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.*;
 import com.codeborne.selenide.impl.WebElementsCollection;
 import common.BaseLibrary;
 import io.qameta.allure.Allure;
@@ -178,13 +175,18 @@ public class SorgulamaVeFiltreleme extends BaseLibrary {
 
     @Step("Arama tablosunda satırı ara")
     public SelenideElement findRow(int columnIndex, Condition condition){
-        ElementsCollection columns = dataTable().$$("tr[data-ri][role=row] td[role=gridcell]:nth-child("+ columnIndex +")");
+        SelenideElement dataTable = dataTable();
+        ElementsCollection columns = dataTable.$$("tr[data-ri][role=row] td[role=gridcell]:nth-child("+ columnIndex +")");
+//        ElementsCollection columns = dataTable.$$x("//tr[@data-ri and @role='row']//td[@role='gridcell']["+ columnIndex +"]");
         if (columns.size() == 0)
             throw new NotFoundException("Kayıt Bulunamamıştır");
 
         columns.shouldHave(sizeGreaterThan(0));
-        SelenideElement row = columns.filterBy(condition).shouldHave(sizeGreaterThan(0)).first();
-        return row;
+        SelenideElement row1 = columns.filterBy(condition).shouldHave(sizeGreaterThan(0)).first().$(By.xpath("//ancetor::tr[@data-ri and @role='row']"));
+        SelenideElement row2 = columns.filterBy(condition).shouldHave(sizeGreaterThan(0)).first().$(By.xpath("ancetor::tr[@data-ri and @role='row']"));
+        SelenideElement row3 = columns.filterBy(condition).shouldHave(sizeGreaterThan(0)).first().$x("ancetor::tr[@data-ri and @role='row']");
+        SelenideElement row4 = columns.filterBy(condition).shouldHave(sizeGreaterThan(0)).first().$x("//ancetor::tr[@data-ri and @role='row']");
+        return row4;
     }
 
     private SelenideElement getRowWith(Condition condition) {
