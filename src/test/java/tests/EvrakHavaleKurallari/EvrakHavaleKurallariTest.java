@@ -126,4 +126,32 @@ public class EvrakHavaleKurallariTest extends BaseTest {
     }
 
 
+    @Test(enabled = true, description = "2069: Evrak Havale Kuralları - Kural Silme")
+    public void deneme1() throws InterruptedException {
+        String basariMesaji = "İşlem başarılıdır!";
+        String bagTipi = "Y";
+        String farkliKullanici = "Optiim";
+        String kuralAdi = "TC-2069_" + createRandomNumber(12);
+        String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞ";
+        String kisi = "Zübeyde Tekin";
+        String birim2 = "BİLİŞİM HİZMETLERİ VE UYDU PAZARLAMA GENEL MÜDÜR";
+        login(username2, password2);
+        //TODO PRE Conditon bir kural bulunmalı
+        evrakHavaleKurallariYonetimiPage
+                .openPage()
+                .sorgulamaVeFiltreleme()
+                .filtrelemeCombolovAlaniDoldur("Birim","1234567")
+                .filtrelemedeButonaTikla("Ara");;
+        //TODO
+
+        evrakHavaleKurallariYonetimiPage
+                .ara()
+                .sil(kuralAdi)
+                .islemOnayiEvet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+        gelenEvrakKayitPage
+                .openPage()
+                .otomatikHavaleSec(true);
+    }
+
 }

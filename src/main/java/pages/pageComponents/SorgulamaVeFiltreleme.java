@@ -11,12 +11,14 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NotFoundException;
 import org.openqa.selenium.WebElement;
+import pages.pageComponents.belgenetElements.BelgenetElement;
 
 import java.util.List;
 
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
+import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 /**
  * Yazan: Ilyas Bayraktar
@@ -61,7 +63,7 @@ public class SorgulamaVeFiltreleme extends BaseLibrary {
 
     @Step("Get label")
     public SelenideElement getLabel(String text){
-        SelenideElement label = getFilterPanel().$("//label[normalize-space(.)='"+ text +"']");
+        SelenideElement label = getFilterPanel().$x("//label[normalize-space(.)='"+ text +"']");
         label.shouldBe(visible);
         return label;
     }
@@ -70,22 +72,24 @@ public class SorgulamaVeFiltreleme extends BaseLibrary {
         SelenideElement filterElement = null;
 
         //Onay Akış Yönetimi ve Form Şablon Yönetimi sayfada yapı farklı
-        if (getFilterPanel().find(By.xpath("span[@class='filterElement']")).exists())
-            return getFilterPanel().$x("span[@class='filterElement' and label[normalize-space(.)='" + label + "']]");
+        if (getFilterPanel().find("span[class='filterElement']").exists())
+            return getFilterPanel().$x("//span[@class='filterElement' and label[normalize-space(.)='" + label + "']]");
 
 
         log.info("Sorgulama ve Filtreleme: element with span[@class='filterElement'] not found");
+
+        SelenideElement labelElement = getLabel(label);
         //----------------
         //Onay Akışı Yönetimi gibi sayfalar
         //<tr class="ui-widget-content" role="row">
-        SelenideElement parentElement = getLabel(label).parent();
+        SelenideElement parentElement = labelElement.parent();
         if (parentElement.getTagName().equals("tr") && parentElement.has(cssClass("ui-widget-content")) && parentElement.has(attribute("role","row")))
             return parentElement;
 
         //----------------
         //Form Şablon Yönetimi gibi sayfalar
         //tbody parent olacak
-        parentElement = getLabel(label).$x("//ancestor::tbody[1]");
+        parentElement = labelElement.$x("//ancestor::tbody[1]");
         return parentElement;
     }
 
@@ -111,10 +115,18 @@ public class SorgulamaVeFiltreleme extends BaseLibrary {
     public SorgulamaVeFiltreleme filtrelemeAlaniDoldur(String name, CharSequence... keysToSend){
         sorgulamaVeFiltrelemeyiGenislet();
         SelenideElement field = getFilterInput(name);
-        field.shouldBe(visible);
         for (CharSequence keys:keysToSend) {
             field.sendKeys(keys);
         }
+        return this;
+    }
+
+    @Step("\"Sorgulama ve Filtreleme\"de \"{name}\" alanı doldur")
+    public SorgulamaVeFiltreleme filtrelemeCombolovAlaniDoldur(String name, String value){
+        sorgulamaVeFiltrelemeyiGenislet();
+        SelenideElement parent = getFilterElement(name);
+        comboLov(By.xpath(parent.getSearchCriteria().split("By.xpath:")[1].trim() + "//input"))
+            .selectLov(value);
         return this;
     }
 

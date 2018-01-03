@@ -14,6 +14,9 @@ public class SettingsListener extends TestNG.ExitCodeListener {
     public void onTestStart(ITestResult result) {
         super.onTestStart(result);
         registerDriverEvenListener();
+        System.out.println("///////////////////////////////////////////////////////");
+        System.out.println("Test: " + result.getName());
+        System.out.println("///////////////////////////////////////////////////////");
     }
 
     @Override
