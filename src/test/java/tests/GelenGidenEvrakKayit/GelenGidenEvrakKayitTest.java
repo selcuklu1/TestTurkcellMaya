@@ -62,7 +62,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, priority = 1, description = "TC0321: Üstyazı ek ve ilgi eklenerek gelen evrak kaydı")
+    @Test(enabled = true, priority = 0, description = "TC0321: Üstyazı ek ve ilgi eklenerek gelen evrak kaydı")
     public void TC0321() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
@@ -97,11 +97,11 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .ustYaziDegistirilmisPopUpKontrol()
                 .evrakEkleriDosyaEkleEkMetinDoldur(ekMetni)
                 .evrakEkTabViewEkle()
-//                .dosyaEkleTabTabloKontrolu("Ek-1")
+                .dosyaEkleTabTabloKontrolu("Ek-1")
                 .ekBilgiFizikselEkEkle()
                 .evrakEkTabFizikselEkMetniDoldur(ekMetni)
                 .fizikselEkTabViewAciklamaEkle()
-//                .dosyaEkleTabTabloKontrolu("Ek-2")
+                .dosyaEkleTabTabloKontrolu("Ek-2")
                 .kaydet();
 
         evrakNO321 = gelenEvrakKayitPage.popUps();
@@ -116,7 +116,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, priority = 3, description = "TC2163 : Kaydedilen gelen evrakın güncellenmesi")
+    @Test(enabled = true, priority = 2, description = "TC2163 : Kaydedilen gelen evrakın güncellenmesi")
     public void TC2163() throws InterruptedException {
 
         String evrakTuru = "Dilekçe";
@@ -155,7 +155,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .evrakDetayiFizikselEkEkleTab()
                 .evrakDetayiAciklamaDoldur(aciklama)
                 .evrakDetayiEkle()
-//                .dosyaEkleTabTabloKontrolu("Ek-3") // office converter açıldıktan sonra TC0321 deki evrak no kullanıldığında bu satır aktif olarak kullanılabilir.
+                .dosyaEkleTabTabloKontrolu("Ek-3") // office converter açıldıktan sonra TC0321 deki evrak no kullanıldığında bu satır aktif olarak kullanılabilir.
                 .evrakDetayiKaydet()
                 .evrakDetayiKaydetPopUpClose()
                 .islemMesaji().basariliOlmali(basariMesaji);
@@ -168,7 +168,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, priority = 2, description = "TC0328 : Gelen evrak kayıt ekranından havale")
+    @Test(enabled = true, priority = 1, description = "TC0328 : Gelen evrak kayıt ekranından havale")
     public void TC0328() throws InterruptedException {
 
         String birim = "OPTİİM BİRİM";
@@ -276,11 +276,11 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         String ustYaziAdi = "TestOtomasyon.msg";
         String konu = "Test " + getSysDate();
 
-//        String ustYaziAdi = "ustYazi.pdf";  // TestOtomasyon.msg ekiini eklememe rağmen ustYazi.pdf  olarak ekrana geliyor.
+//        String ustYaziAdi = "ustYazi.pdf";  // TestOtomasyon.msg ekini eklememe rağmen ustYazi.pdf  olarak ekrana geliyor.
         gelenEvrakKayitPage
                 .openPage()
                 .evrakBilgileriUstYaziEkle(pathToFilePdf)
-                .ustYaziMailAdiKontrol(ustYaziAdi)
+//                .ustYaziMailAdiKontrol(ustYaziAdi)
                 .konuKoduDoldur(konuKodu)
                 .konuDoldur(konu)
                 .evrakTuruSec(evrakTuru)
@@ -297,11 +297,11 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .ustYaziDegistirilmisPopUpKontrol()
                 .evrakEkleriDosyaEkleEkMetinDoldur(ekMetni)
                 .evrakEkleriDosyaEkle()
-//                .dosyaEkleTabTabloKontrolu("Ek-2") //Webservise  baglanılamadı hatası alnıyor.
+                .dosyaEkleTabTabloKontrolu("Ek-2") //Webservise  baglanılamadı hatası alnıyor.
                 .ekBilgiFizikselEkEkle()
                 .evrakEkTabFizikselEkMetniDoldur(ekMetni)
                 .fizikselEkTabViewAciklamaEkle()
-//                .dosyaEkleTabTabloKontrolu("Ek-3")
+                .dosyaEkleTabTabloKontrolu("Ek-3")
                 .kaydet();
 
         String evrakNo = gelenEvrakKayitPage.popUps();

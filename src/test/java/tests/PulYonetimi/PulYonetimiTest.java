@@ -139,7 +139,7 @@ public class PulYonetimiTest extends BaseTest {
 
         topluPostalanacakEvraklarPage
                 .openPage()
-                .tarihAraligiSec("01.01.2017", getSysDateForKis())
+                .tarihAraligiSec(getSysDateForKis(), getSysDateForKis())
                 .postaTipiSec(postaTipleri)
                 .sorgula()
                 .evrakSec(konu, true)

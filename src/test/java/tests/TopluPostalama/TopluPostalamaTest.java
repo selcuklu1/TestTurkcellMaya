@@ -1,9 +1,12 @@
 package tests.TopluPostalama;
 
 import common.BaseTest;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.solMenuPages.*;
+import pages.ustMenuPages.EvrakOlusturPage;
 import pages.ustMenuPages.PttRaporuPage;
 
 import java.util.Random;
@@ -18,6 +21,7 @@ public class TopluPostalamaTest extends BaseTest {
     TopluPostaladiklarimPage topluPostaladiklarimPage;
     ImzaladiklarimPage imzaladiklarimPage;
     ImzaBekleyenlerPage imzaBekleyenlerPage;
+    EvrakOlusturPage evrakOlusturPage;
 
     @BeforeMethod
     public void loginBeforeTests() {
@@ -28,6 +32,7 @@ public class TopluPostalamaTest extends BaseTest {
         topluPostaladiklarimPage = new TopluPostaladiklarimPage();
         imzaladiklarimPage = new ImzaladiklarimPage();
         imzaBekleyenlerPage = new ImzaBekleyenlerPage();
+        evrakOlusturPage = new EvrakOlusturPage();
     }
 
     @Test(enabled = true, description = "1804 : Toplu Postalanacak Evrakların Sorgulanması (UC_POSTAYÖNETİMİ_001)")
@@ -895,5 +900,62 @@ public class TopluPostalamaTest extends BaseTest {
                 .indirimOncesiTutarKontrol("1050.00", true)
                 .indirimOraniKontrol("0", true)
                 .tutarKontrol("1050.00", true);
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "Posta Listesi Postalama İşlemleri (UC_POSTAYÖNETİMİ_003)")
+    public void TC1811() throws InterruptedException {
+
+        login("mbozdemir", "123");
+        String konuKodu = "010.01";
+        String kaldiralacakKlasor = "Diğer";
+        String evrakTuru = "Resmi Yazışma";
+        String evrakDili = "Türkçe";
+        String gizlilikDerecesi = "Normal";
+        String ivedilik = "Normal";
+        String geregi = "Ahmet ÇELİK";
+        String konu = "TC2214 " + getSysDate();
+        String tur = "İmzalama";
+        String geregiTipi = "Gerçek Kişi";
+        String basariMesaji = "İşlem başarılıdır!";
+//        String konu = "TC2214 20180102112101";
+        String postaListesi = konu;
+        String gidisSekli = "Ankara İçi APS";
+        String gramaj1 = "1";
+        String indirimOrani = "20";
+        String gramaj3 = "3";
+        String gramaj5 = "5";
+        String tutar = "120";
+        String[] postaTipleri = new String[]{
+                "Ankara İçi APS"
+        };
+
+        //        Test datası oluşturuluyor
+
+        for (int i = 0; i < 2; i++) {
+            evrakOlusturPage
+                    .openPage()
+                    .bilgilerTabiAc()
+                    .konuKoduSec(konuKodu)
+                    .konuDoldur(konu)
+                    .kaldiralacakKlasorlerSec(kaldiralacakKlasor)
+                    .evrakTuruSec(evrakTuru)
+                    .evrakDiliSec(evrakDili)
+                    .gizlilikDerecesiSec(gizlilikDerecesi)
+                    .ivedilikSec(ivedilik)
+                    .geregiSecimTipiSecByText(geregiTipi)
+                    .geregiSec(geregi)
+                    .gercekKisiGeregiAlaniPostaTipiSec(gidisSekli)
+                    .onayAkisiEkle()
+                    .onayAkisiEkleIlkImzalaSec(tur)
+                    .kullan();
+            evrakOlusturPage
+                    .editorTabAc()
+                    .editorIcerikDoldur(konu)
+                    .imzala()
+                    .sImzasec()
+                    .sImzaImzala()
+                    .sayisalImzaEvetPopup();
+        }
     }
 }
