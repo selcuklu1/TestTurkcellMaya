@@ -54,7 +54,7 @@ public class BaseTest extends BaseLibrary {
         Configuration.timeout = 40 * 1000;
         setWaitForLoading(20);
         //Configuration.clickViaJs = true;
-//        Configuration.holdBrowserOpen = true;
+        Configuration.holdBrowserOpen = true;
         //Configuration.headless = false;
         Configuration.startMaximized = true;
         Configuration.pollingInterval = 100;
