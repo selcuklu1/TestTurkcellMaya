@@ -85,7 +85,7 @@ public class GundemIzlemePage extends MainPage {
 
     public String indirilenDosyaAd() {
         int i = 0;
-        while (i < 150) {
+        while (i < 140) {
             sleep(i);
             i++;
         }
@@ -160,7 +160,10 @@ public class GundemIzlemePage extends MainPage {
                                 if (tarihDurum == true) System.out.println(tarih[0] + " İçerisinde bulunuyor");
                                 deger++;
                                 if (deger % 10 == 0) {
-                                    $$("[id='mainInboxForm:inboxDataTable_paginator_top'] span[class='ui-paginator-next ui-state-default ui-corner-all']").get(0).click();
+                                    if ($$("[id='mainInboxForm:inboxDataTable_paginator_top'] span[class='ui-paginator-next ui-state-default ui-corner-all']").size()==1)
+                                    {
+                                       clickJs( $$("[id='mainInboxForm:inboxDataTable_paginator_top'] span[class='ui-paginator-next ui-state-default ui-corner-all']").get(0));
+                                    }
                                 }
                             }
                         }
