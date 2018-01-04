@@ -467,7 +467,7 @@ public class PostaListesiPage extends MainPage {
             switchTo().window(1);
             closeNewWindow();
             switchTo().window(0);
-            $(By.xpath("//div[@id='mainPreviewForm:evrakDetayiViewDialog']//span[@class='ui-icon ui-icon-closethick']")).clear();
+            $(By.xpath("//div[@id='mainPreviewForm:evrakDetayiViewDialog']//span[@class='ui-icon ui-icon-closethick']")).click();
 
 //            pdfKontrol
 //                    .geregiBilgiAlaniAdresPdfKontrol(konu[0]);
