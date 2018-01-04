@@ -671,7 +671,7 @@ public class GizlilikKleransiTest extends BaseTest {
                 .dokumanAra()
                 .tabloEvrakNoKontrol(evrakNo)
                 .tablodaDetayTikla(evrakNo)
-                .islemMesaji().beklenenMesaj(basariMesaji);
+                .islemMesaji().basariliOlmali(basariMesaji);
 //        Thread.sleep(4000);
 //        evrakOlusturPage
 //                .islemMesaji().beklenenMesaj(mesaj);
