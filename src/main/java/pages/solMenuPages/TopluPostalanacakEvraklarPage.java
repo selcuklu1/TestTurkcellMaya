@@ -407,14 +407,24 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
         return this;
     }
 
-    @Step("konuya gore Evrak kontrolu : \"{konu}\" ")
-    public TopluPostalanacakEvraklarPage konuyaGoreEvrakKontrolu(String konu) {
+    @Step("konuya gore Evrak kontrolu : \"{konu}\", \"{shouldBeExist}\" ")
+    public TopluPostalanacakEvraklarPage konuyaGoreEvrakKontrolu(String konu, boolean shouldBeExist) {
 
+        if (shouldBeExist == true) {
             tableEvraklar
                     .filterBy(Condition.text(konu))
                     .first()
                     .shouldBe(Condition.exist)
                     .shouldBe(Condition.visible);
+        }
+        else {
+            tableEvraklar
+                    .filterBy(Condition.text(konu))
+                    .first()
+                    .shouldNotBe(Condition.exist)
+                    .shouldNotBe(Condition.visible);
+
+        }
         return this;
     }
 

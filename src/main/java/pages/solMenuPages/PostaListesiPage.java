@@ -175,8 +175,16 @@ public class PostaListesiPage extends MainPage {
 
     @Step("Posta Listesi Adı alanı kontrolü. \"{postaListesiAdi}\" ")
     public PostaListesiPage postaListesiAdiKontrolu(String postaListesiAdi) {
-        SelenideElement txtPostaListesiAdi = $("[id='mainPreviewForm:eastLayout'] table tr:nth-child(1) td:nth-child(2)");
+        SelenideElement txtPostaListesiAdi = $("[id='mainPreviewForm:eastLayout'] table tr:nth-child(1) textarea");
         txtPostaListesiAdi.shouldBe(Condition.text(postaListesiAdi));
+        return this;
+    }
+
+    @Step("Posta Listesi Adı alanı değiştirilir. \"{postaListesiAdi}\" ")
+    public PostaListesiPage postaListesiAdiDegistirme(String postaListesiAdi) {
+        SelenideElement txtPostaListesiAdi = $("[id='mainPreviewForm:eastLayout'] table tr:nth-child(1) textarea");
+        txtPostaListesiAdi.clear();
+        txtPostaListesiAdi.sendKeys(postaListesiAdi);
         return this;
     }
 
@@ -362,6 +370,7 @@ public class PostaListesiPage extends MainPage {
 
     @Step("Adres alanında \"{adres}\" girilir.")
     public PostaListesiPage adresDoldur(String adres) {
+        txtAdres.clear();
         txtAdres.sendKeys(adres);
         return this;
     }
@@ -455,8 +464,13 @@ public class PostaListesiPage extends MainPage {
                     .$x("//span[text() = 'Yazdır']/../../button").click();
             evrakDetayiPopUpKontrolü();
             evrakDetayiYazdır();
-            pdfKontrol
-                    .geregiBilgiAlaniAdresPdfKontrol(konu[0]);
+            switchTo().window(1);
+            closeNewWindow();
+            switchTo().window(0);
+            $(By.xpath("//div[@id='mainPreviewForm:evrakDetayiViewDialog']//span[@class='ui-icon ui-icon-closethick']")).clear();
+
+//            pdfKontrol
+//                    .geregiBilgiAlaniAdresPdfKontrol(konu[0]);
 
         }
         return this;
