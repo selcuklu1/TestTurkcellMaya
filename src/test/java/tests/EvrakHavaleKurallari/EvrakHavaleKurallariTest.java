@@ -6,16 +6,26 @@
  ****************************************************/
 package tests.EvrakHavaleKurallari;
 
+import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.SelenideElement;
 import common.BaseTest;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
+import org.openqa.selenium.Keys;
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import pages.pageComponents.SorgulamaVeFiltreleme;
+import pages.solMenuPages.GelenEvraklarPage;
+import pages.ustMenuPages.BirimYonetimiPage;
 import pages.ustMenuPages.EvrakHavaleKurallariYonetimiPage;
 import pages.ustMenuPages.GelenEvrakKayitPage;
+import pages.ustMenuPages.KlasorYonetimiPage;
 
+import static com.codeborne.selenide.Condition.exactText;
 import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Selenide.$;
 import static data.TestData.password2;
 import static data.TestData.username2;
 
@@ -124,35 +134,6 @@ public class EvrakHavaleKurallariTest extends BaseTest {
                 .kuralAdiDoldur("birim")
                 .islemMesaji().basariliOlmali(basariMesaji);*/
 
-    }
-
-
-    @Test(enabled = true, description = "2069: Evrak Havale Kuralları - Kural Silme")
-    public void deneme1() throws InterruptedException {
-        String basariMesaji = "İşlem başarılıdır!";
-        String bagTipi = "Y";
-        String farkliKullanici = "Optiim";
-        String kuralAdi = "TC-2069_" + createRandomNumber(12);
-        String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞ";
-        String kisi = "Zübeyde Tekin";
-        String birim2 = "BİLİŞİM HİZMETLERİ VE UYDU PAZARLAMA GENEL MÜDÜR";
-        login(username2, password2);
-        //TODO PRE Conditon bir kural bulunmalı
-        evrakHavaleKurallariYonetimiPage
-                .openPage()
-                .sorgulamaVeFiltreleme()
-                .filtrelemedeButonaTikla("Ara")
-        .findRow(1, text("cantest Kopya"));
-
-
-        evrakHavaleKurallariYonetimiPage
-                .ara()
-                .sil(kuralAdi)
-                .islemOnayiEvet()
-                .islemMesaji().basariliOlmali(basariMesaji);
-        gelenEvrakKayitPage
-                .openPage()
-                .otomatikHavaleSec(true);
     }
 
 }
