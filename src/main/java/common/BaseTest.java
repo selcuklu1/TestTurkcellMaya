@@ -50,8 +50,8 @@ public class BaseTest extends BaseLibrary {
         Configuration.screenshots = false;
         Configuration.savePageSource = false;
 
-        Configuration.collectionsTimeout = 20 * 1000;
-        Configuration.timeout = 20 * 1000;
+        Configuration.collectionsTimeout = 40 * 1000;
+        Configuration.timeout = 40 * 1000;
         setWaitForLoading(20);
         //Configuration.clickViaJs = true;
 //        Configuration.holdBrowserOpen = true;
