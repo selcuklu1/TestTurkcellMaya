@@ -50,8 +50,8 @@ public class BaseTest extends BaseLibrary {
         Configuration.screenshots = false;
         Configuration.savePageSource = false;
 
-        Configuration.collectionsTimeout = 40 * 1000;
-        Configuration.timeout = 40 * 1000;
+        Configuration.collectionsTimeout = 20 * 1000;
+        Configuration.timeout = 20 * 1000;
         setWaitForLoading(20);
         //Configuration.clickViaJs = true;
 //        Configuration.holdBrowserOpen = true;
@@ -94,8 +94,8 @@ public class BaseTest extends BaseLibrary {
 
     public void clearCookies() {
         try {
-//            Selenide.clearBrowserLocalStorage();
-//            Selenide.clearBrowserCookies();
+            Selenide.clearBrowserLocalStorage();
+            Selenide.clearBrowserCookies();
         } catch (Exception e) {
             log.info("Error clearBrowserLocalStorage and clearBrowserCookies: " + e.getMessage());
         }
