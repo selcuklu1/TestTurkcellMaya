@@ -21,11 +21,9 @@ import pages.ustMenuPages.EvrakOlusturPage;
 import pages.ustMenuPages.KlasorYonetimiPage;
 import pages.ustMenuPages.PulYonetimiPage;
 
-import static com.codeborne.selenide.Condition.exactText;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$x;
 import static com.codeborne.selenide.Selenide.executeJavaScript;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
@@ -66,45 +64,7 @@ public class dumpTest extends BaseTest {
     public void sorgulamaVefiltremeDeneme() throws Exception {
         login();
 
-        new UstMenu().ustMenu("Form Şablon Yönetimi");
-        $(Selectors.byText("Form Şablon Yönetimi")).shouldBe(visible);
-        new SorgulamaVeFiltreleme($("#formSablonYonetimiListingForm"))
-                .filtrelemeAlaniDoldur("Form Adı", "123");
 
-
-
-        new EvrakHavaleKurallariYonetimiPage().openPage();
-        new SorgulamaVeFiltreleme($("#havaleKuralYonetimiListingForm"))
-                .filtrelemedeButonaTikla("Ara");
-                /*.searchTable()
-                    .findRowsInAllPages(1, exactText("TC-2069_1674108259301"))
-                    .shouldHave(CollectionCondition.sizeGreaterThan(0))
-                    .first();
-        e.$(".update-icon").click();*/
-
-
-
-       /* new KlasorYonetimiPage().openPage();
-        new SorgulamaVeFiltreleme($("#klasorYonetimiListingForm"))
-            .filtrelemeCombolovAlaniDoldur("Birim", "Optiim")
-                .filtrelemedeButonaTikla("Ara");*/
-
-        new KlasorYonetimiPage().openPage();
-        SelenideElement filter = $("#klasorYonetimiListingForm\\:filterPanel").shouldBe(visible);
-//        Filtreleme f = new Filtreleme(filter);
-//       new Filtreleme($x("//*[@id='klasorYonetimiListingForm:filterPanel']"))
-       new Filtreleme($("#klasorYonetimiListingForm\\:filterPanel"))
-//        f.filtrelemeCombolovAlaniDoldur("Birim", "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ")
-//                f.filtrelemeAlaniDoldur("Klasör Kodu", "123")
-//                .filtrelemedeButonaTikla("Ara")
-       ;
-
-        SelenideElement b =  new SearchTable($("#klasorYonetimiListingForm\\:klasorTreeTable"))
-                    .findRowsByText( "123")
-                    .shouldHave(CollectionCondition.sizeGreaterThan(0))
-                    .first();
-        SelenideElement r = b.$x("button[span[contains(@class,'update-icon')]]");
-        System.out.println(r.isDisplayed());
     }
 
     @Test(description = "", enabled = true)

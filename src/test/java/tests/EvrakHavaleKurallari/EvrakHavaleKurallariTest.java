@@ -6,25 +6,15 @@
  ****************************************************/
 package tests.EvrakHavaleKurallari;
 
-import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.SelenideElement;
 import common.BaseTest;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
-import org.openqa.selenium.Keys;
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pages.pageComponents.SorgulamaVeFiltreleme;
-import pages.solMenuPages.GelenEvraklarPage;
-import pages.ustMenuPages.BirimYonetimiPage;
 import pages.ustMenuPages.EvrakHavaleKurallariYonetimiPage;
 import pages.ustMenuPages.GelenEvrakKayitPage;
-import pages.ustMenuPages.KlasorYonetimiPage;
 
-import static com.codeborne.selenide.Condition.exactText;
-import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 import static data.TestData.password2;
 import static data.TestData.username2;

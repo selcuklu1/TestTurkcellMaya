@@ -6,7 +6,6 @@ import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import pages.MainPage;
-import pages.pageComponents.SorgulamaVeFiltreleme;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
 import static com.codeborne.selenide.Selenide.*;
@@ -43,11 +42,6 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
     //TODO Kime havale edilicek
     BelgenetElement txtKimeHavaleEdilecekKisi = comboLov(By.id("havaleKuralYonetimiEditorForm:havaleKullaniciLov:LovText"));
     //TODO
-
-
-    public SorgulamaVeFiltreleme sorgulamaVeFiltreleme(){
-        return new SorgulamaVeFiltreleme(window);
-    }
 
 
     @Step("Kural ekleme kaydet")
