@@ -4,6 +4,7 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
@@ -19,30 +20,24 @@ import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 public class GelenEvrakKayitPage extends MainPage {
 
+    public SelenideElement txtEvrakBilgileriListEvrakSayiTextAreaSol = $("[id$='evrakSayiTextAreaSol']");
     //region Elements
     SelenideElement pageTitle = $(By.cssSelector("#baseLayoutCenter .ui-dialog-title"));
-
     // Evrak Bilgileri Sekmesinde bulunanlar
     SelenideElement btnUstYaziEkle = $(By.xpath("//input[@id='evrakBilgileriForm:ustYaziForm:ustYaziUpload_input']"));
     SelenideElement txtEvrakBilgileriListKonuKodu = $("[id$='konuKoduLov:LovText']");
     SelenideElement txtEvrakBilgileriListKonu = $("[[id$='konuTextArea']");
     SelenideElement cmbEvrakBilgileriListEvrakTuru = $("[id$='evrakTuruCombo']");
     SelenideElement cmbEvrakBilgileriListEvrakDili = $("[id$='evrakDili']");
-
     SelenideElement dateTxtEvrakBilgileriListEvrakTarihi = $("[id$='evrakTarihi_input']");
     SelenideElement cmbEvrakBilgileriListGizlilikDerecesi = $("[id$='guvenlikKodu']");
     SelenideElement cmbEvrakBilgileriListKisiKurum = $("[id$='kisiKurum']");
-
     //SelenideElement cmbEvrakBilgileriListKisiKurum = $("[id$='kisiKurum']");
     //BelgenetElement cmbEvrakBilgileriListGeldigiKisi = comboLov(By.id("evrakBilgileriForm:evrakBilgileriList:9:geldigiGercekKisiLov:LovText"));
     BelgenetElement cmbGeldigiGercekKisi = comboLov("[id$='geldigiGercekKisiLov:LovText']");
     BelgenetElement cmbGeldigiTuzelKisi = comboLov("[id$='geldigiTuzelKisiLov:LovText']");
-
     By cmbGeldiğiGercekKisiBy = By.cssSelector("[id$='geldigiGercekKisiLov:LovText']");
     By cmbGeldiğiTuzelKisiBy = By.cssSelector("[id$='geldigiTuzelKisiLov:LovText']");
-
-
-    public SelenideElement txtEvrakBilgileriListEvrakSayiTextAreaSol = $("[id$='evrakSayiTextAreaSol']");
     SelenideElement txtEvrakBilgileriListEvrakSayiTextAreaSag = $("[id$='evrakSayiTextAreaSag']");
     SelenideElement cmbEvrakBilgileriListEvrakGelisTipi = $("[id$='evrakGelisTipi']");
     SelenideElement cmbEvrakBilgileriListIvedilik = $("[id$='ivedilik']");
@@ -85,7 +80,7 @@ public class GelenEvrakKayitPage extends MainPage {
     SelenideElement txtEvrakEkTabViewArsivdenEvrakAraSayi = $(By.id("evrakBilgileriForm:evrakEkTabView:arsivdenEvrakAraSayiInputTextId"));
 
     // Havale işlemleri sekmesinde bulunanlar
-    SelenideElement chkOtomatikHavale = $(By.id("evrakBilgileriForm:j_idt11601_input"));
+    ElementsCollection chkOtomatikHavale = $$("[id='evrakBilgileriForm:havalePanel'] [class='ui-chkbox-box ui-widget ui-corner-all ui-state-default']");
     SelenideElement txtDagitimBilgileriBirim = $(By.id("evrakBilgileriForm:dagitimBilgileriBirimLov:LovText"));
     BelgenetElement txtDagitimBilgileriKisiComboLov = comboLov(By.id("evrakBilgileriForm:dagitimBilgileriKullaniciLov:LovText"));
     SelenideElement txtDagitimBilgileriKisi = $(By.id("evrakBilgileriForm:dagitimBilgileriKullaniciLov:LovText"));
@@ -186,6 +181,7 @@ public class GelenEvrakKayitPage extends MainPage {
     BelgenetElement txtHavaleIslemleriKullaniciListesi = comboLov(By.id("evrakBilgileriForm:dagitimBilgileriKisiListesiLov:LovText"));
     BelgenetElement txtHavaleIslemleriBirim = comboLov(By.id("evrakBilgileriForm:dagitimBilgileriBirimLov:LovText"));
     //endregion
+    SelenideElement btnSecilenGeldigiKurumKaldir = $("div[id$='geldigiKurumLov:LovSecilen'] button");
 
     @Step("Gelen Evrak Kayıt sayfasını aç")
     public GelenEvrakKayitPage openPage() {
@@ -197,7 +193,7 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("Otomatik havale seç")
     public GelenEvrakKayitPage otomatikHavaleSec(boolean secim) {
-        chkOtomatikHavale.setSelected(secim);
+        chkOtomatikHavale.get(0).click();
         return this;
     }
 
@@ -207,19 +203,33 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
+    @Step("Hava İşlemleri Kişi alanında \"{kisi}\" seçmeye dene")
+    public GelenEvrakKayitPage havaleIslemleriKisiSecmeyeDene(String kisi) {
+        txtHavaleIslemleriKisi.type(kisi).titleItems().filterBy(text(kisi)).first().click();
+        return this;
+    }
+
     @Step("Kişi alanını doldur")
-    public GelenEvrakKayitPage havaleIslemleriKisiDoldur(String kisi,String birim) {
+    public GelenEvrakKayitPage havaleIslemleriKisiDoldur(String kisi, String birim) {
         txtHavaleIslemleriKisi.type(kisi).detailItems().filterBy(text(birim)).first().click();
         return this;
     }
 
-    @Step("Kullanıcı Listesi alnında \"{kisi}\" seç")
-    public GelenEvrakKayitPage havaleIslemleriKullaniciListesiDoldur(String kisi) {
-        //txtHavaleIslemleriKullaniciListesi.selectLov(kisi);
-        txtHavaleIslemleriKullaniciListesi.selectLov(kisi);
-
+    @Step("Kullanıcı Listesi alnında \"{kisi}\" seçmeye dene")
+    public GelenEvrakKayitPage havaleIslemleriKullaniciListesiSecmeyeDene(String kisi) {
+        txtHavaleIslemleriKullaniciListesi.type(kisi).titleItems().filterBy(text(kisi)).first().click();
+    /*    txtHavaleIslemleriKullaniciListesi.selectLov(kisi);
+        txtHavaleIslemleriKullaniciListesi.selectLov(kisi);*/
         return this;
     }
+
+    @Step("Kullanıcı Listesi alnında \"{kisi}\" seç")
+    public GelenEvrakKayitPage havaleIslemleriKullaniciListesiDoldur(String kisi, String detay) {
+        //txtHavaleIslemleriKullaniciListesi.selectLov(kisi);
+        txtHavaleIslemleriKullaniciListesi.type(kisi).detailItems().filterBy(text(detay)).first().click();
+        return this;
+    }
+
     @Step("Fiziksel Ek ekle")
     public GelenEvrakKayitPage ekBilgiFizikselEkEkle() throws InterruptedException {
         clickJs(btnFizikselEkEkle);
@@ -231,6 +241,7 @@ public class GelenEvrakKayitPage extends MainPage {
         clickJs(btnEvrakEkleri);
         return this;
     }
+
     @Step("Üst yazi \"{path}\" ekle")
     public GelenEvrakKayitPage evrakBilgileriUstYaziEkle(String path) throws InterruptedException {
         uploadFile(ustYazi, path);
@@ -254,22 +265,26 @@ public class GelenEvrakKayitPage extends MainPage {
         txtEvrakBilgileriListKonu.sendKeys(konu);
         return this;
     }
+
     @Step("Evrak Türü alanında \"{evrakTuru}\" seç")
     public GelenEvrakKayitPage evrakTuruSec(String evrakTuru) {
         cmbEvrakBilgileriListEvrakTuru.selectOption(evrakTuru);
         return this;
     }
+
     @Step("Evrak Dili alanında \"{evrakDili}\" seç")
     public GelenEvrakKayitPage evrakDiliSec(String evrakDili) {
         cmbEvrakBilgileriListEvrakDili.selectOption(evrakDili);
         return this;
     }
+
     @Step("Evrak Tarihi alanını \"{evrakTarihi}\" doldur")
     public GelenEvrakKayitPage evrakTarihiDoldur(String evrakTarihi) {
         dateTxtEvrakBilgileriListEvrakTarihi.clear();
         dateTxtEvrakBilgileriListEvrakTarihi.sendKeys(evrakTarihi);
         return this;
     }
+
     @Step("Gizlilik Derecesi alanında \"{gizlilikDerecesi}\" seç")
     public GelenEvrakKayitPage gizlilikDerecesiSec(String gizlilikDerecesi) {
         cmbEvrakBilgileriListGizlilikDerecesi.selectOption(gizlilikDerecesi);
@@ -288,8 +303,7 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-
-    @Step("Geldiği gerçek kişi alanını doldur")
+    @Step("Geldiği gerçek kişi alanında \"{geldigiKisi}\"  seçilir")
     public GelenEvrakKayitPage geldigiGercekKisiDoldur(String geldigiKisi) {
 
         cmbGeldigiGercekKisi.selectLov(geldigiKisi);
@@ -312,7 +326,7 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("Geldiği tüzel kişi doldur")
+    @Step("Geldiği tüzel kişi alanında \"{geldigiTuzelKisi}\" seçilir")
     public GelenEvrakKayitPage geldigiTuzelKisiDoldur(String geldigiTuzelKisi) {
 
         cmbGeldigiTuzelKisi.selectLov(geldigiTuzelKisi);
@@ -323,7 +337,7 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("Gerçek kişinin geldiği alanında görüntülenmeme kontrolu")
+    @Step("Gerçek kişinin geldiği alanında \" {kisi}\" görüntülenmeme kontrolu")
     public GelenEvrakKayitPage geldigiGercekKisiGoruntulenmemeKontrolu(String kisi) {
 
         boolean selectable = comboLov(cmbGeldiğiGercekKisiBy).isLovValueSelectable(kisi);
@@ -333,7 +347,7 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("Tüzel kişinin geldiği alanında görüntülenmeme kontrolu")
+    @Step("Tüzel kişinin geldiği alanında \" {kisi}\" görüntülenmeme kontrolu")
     public GelenEvrakKayitPage geldigiTuzelKisiGoruntulenmemeKontrolu(String kisi) {
 
         boolean selectable = comboLov(cmbGeldiğiTuzelKisiBy).isLovValueSelectable(kisi);
@@ -343,7 +357,7 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("Tüzel kişinin geldiği alanında görüntülenme kontrolu")
+    @Step("Tüzel kişinin geldiği alanında \" {kisi}\" görüntülenme kontrolu")
     public GelenEvrakKayitPage geldigiTuzelKisiGoruntulenmeKontrolu(String kisi) {
 
         cmbGeldigiTuzelKisi.selectLov(kisi);
@@ -379,8 +393,7 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    SelenideElement btnSecilenGeldigiKurumKaldir = $("div[id$='geldigiKurumLov:LovSecilen'] button");
-
+    @Step("Geldiği kurum alanında \"{geldigiKurum}\" seçilir ")
     public GelenEvrakKayitPage geldigiKurumDoldurLovText(String geldigiKurum) {
         if (btnSecilenGeldigiKurumKaldir.isDisplayed())
             btnSecilenGeldigiKurumKaldir.click();
@@ -388,16 +401,19 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
+    @Step("Geldiği kurum alanında \"{geldigiKurum}\" seçilir ")
     public GelenEvrakKayitPage geldigiKurumDoldurLovText2(String geldigiKurum) {
         comboGeldigiKurum.selectLov(geldigiKurum);
         return this;
     }
 
+    @Step("Evrak sayısı sol tarafına \"{evrakSayiSol}\" girilir ")
     public GelenEvrakKayitPage evrakSayiSolDoldur(String evrakSayiSol) {
         txtEvrakBilgileriListEvrakSayiTextAreaSol.sendKeys(evrakSayiSol);
         return this;
     }
 
+    @Step("Evrak sayısı sağ tarafı doldurulur ")
     public GelenEvrakKayitPage evrakSayiSagDoldur() {
         String evrakSayiSag = createRandomNumber(5);
         txtEvrakBilgileriListEvrakSayiTextAreaSag.clear();
@@ -405,42 +421,50 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
+    @Step("Evrak sayısı sağ tarafına \"{sayi}\" girilir ")
     public GelenEvrakKayitPage evrakSayiSagDoldur(String sayi) {
         txtEvrakBilgileriListEvrakSayiTextAreaSag.clear();
         txtEvrakBilgileriListEvrakSayiTextAreaSag.sendKeys(sayi);
         return this;
     }
 
+    @Step("Evrak Geliş Tipi alanında \"{evrakGelisTipi}\" seçilir ")
     public GelenEvrakKayitPage evrakGelisTipiSec(String evrakGelisTipi) {
         cmbEvrakBilgileriListEvrakGelisTipi.selectOption(evrakGelisTipi);
         return this;
     }
 
+    @Step("İvedilik alanında \"{ivedilik}\" seçilir ")
     public GelenEvrakKayitPage ivedilikSec(String ivedilik) {
         cmbEvrakBilgileriListIvedilik.selectOption(ivedilik);
         return this;
     }
 
+    @Step("Miat alanı \"{miat}\" doldurulur ")
     public GelenEvrakKayitPage miatDoldur(String miat) {
         txtEvrakBilgileriListMiat.setValue(miat);
         return this;
     }
 
+    @Step("Evrak Bilgileri Açıklama alanına \"{evrakBilgileriAciklama}\" girilir")
     public GelenEvrakKayitPage evrakBilgileriAciklamaDoldur(String evrakBilgileriAciklama) {
         txtEvrakBilgileriListAciklama.sendKeys(evrakBilgileriAciklama);
         return this;
     }
 
+    @Step("Özel Kategori alanıda \"{ozelKategori}\" seçilir")
     public GelenEvrakKayitPage ozelKategoriSec(String ozelKategori) {
         cmbEvrakBilgileriListOzelKategori.selectOption(ozelKategori);
         return this;
     }
 
+    @Step("Postalama Tarihi alanına \"{postalamaTarihi}\" girilir")
     public GelenEvrakKayitPage postalanmaTarihiDoldur(String postalanmaTarihi) {
         dateTxtEvrakBilgileriListPostalanmaTarihi.sendKeys(postalanmaTarihi);
         return this;
     }
 
+    @Step("Dağıtım Bilgileri Birim alanında \"{birim}\" seçilir")
     public GelenEvrakKayitPage dagitimBilgileriBirimDoldur(String birim) {
 //        txtDagitimBilgileriBirim.sendKeys(birim);
         cmbHavaleIslemleriBirim.type(birim).titleItems()
@@ -449,16 +473,19 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
+    @Step("Dağıtım Bilgileri Kişi alanında \"{kisi}\" seçilir")
     public GelenEvrakKayitPage dagitimBilgileriKisiDoldur(String kisi) {
         txtDagitimBilgileriKisi.sendKeys(kisi);
         return this;
     }
 
+    @Step("Dağıtım Bilgileri Kişi alanında \"{kisi}\" seçilir")
     public GelenEvrakKayitPage dagitimBilgileriKisiSec(String kisi) {
         txtDagitimBilgileriKisiComboLov.selectLov(kisi);
         return this;
     }
 
+    @Step("Dağıtım Bilgileri Kullanıcı Listesi alanında \"{kullaniciListesi}\" seçilir")
     public GelenEvrakKayitPage dagitimBilgileriKullaniciListesiDoldur(String kullaniciListesi) {
 //        txtDagitimBilgileriKullaniciListesi.sendKeys(kullaniciListesi);
         cmbDagitimBilgileriKullaniciListesi.selectLov(kullaniciListesi);
@@ -466,61 +493,73 @@ public class GelenEvrakKayitPage extends MainPage {
 
     }
 
+    @Step("Dağıtım Bilgileri Onaylayacak Kişi eklenir")
     public GelenEvrakKayitPage dagitimBilgileriOnaylayacakKisi() {
         btnDagitimBilgileriOnaylayacakKisi.click();
         return this;
     }
 
+    @Step("Dağıtım Bilgileri açıklama alanına \"{aciklama}\" girilir")
     public GelenEvrakKayitPage dagitimBilgileriAciklamaDoldur(String aciklama) {
         txtDagitimBilgileriAciklama.sendKeys(aciklama);
         return this;
     }
 
+    @Step("Dağıtım Bilgileri Dosya Ekle")
     public GelenEvrakKayitPage dagitimBilgileriDosyaEkle() {
         btnDagitimBilgileriDosyaEkle.click();
         return this;
     }
 
+    @Step("Dağıtım Bilgileri İşlem Süresi alanına \"{islemSuresi}\" girilir")
     public GelenEvrakKayitPage dagitimBilgileriIslemSuresiDoldur(String islemSuresi) {
         txtDagitimBilgileriIslemSuresi.sendKeys(islemSuresi);
         return this;
     }
 
+    @Step("Dağıtım Bilgileri Evrakı Kapatacak Kisi seçilir")
     public GelenEvrakKayitPage dagitimBilgileriEvragiKapatacakKisi() {
         btnDagitimBilgileriEvragiKapatacakKisi.click();
         return this;
     }
 
+    @Step("Evrak Tab View Ekle")
     public GelenEvrakKayitPage evrakEkTabViewEkle() {
         clickJs(btnEvrakEkTabViewEkle);
         return this;
     }
 
+    @Step("Evrak Tab View Temizle")
     public GelenEvrakKayitPage evrakEkTabViewTemizle() {
         btnEvrakEkTabViewTemizle.click();
         return this;
     }
 
+    @Step("Evrak Ek Tabı Gizlilik Derecesi alanında \"{gizlilikDerecesi}\" seçilir")
     public GelenEvrakKayitPage evrakEkTabGizlilikDerecesiSec(String gizlilikDerecesi) {
         cmbEvrakEkTabViewGizlilikDerecesi.selectOption(gizlilikDerecesi);
         return this;
     }
 
+    @Step("Fiziksel Ek Tabı Ek Metin alanına \"{evrakEkTabViewEkMetni}\" girilir")
     public GelenEvrakKayitPage fizikselEkTabEkMetniDoldur(String evrakEkTabViewEkMetni) {
         txtEvrakFizikselEkTabViewEkMetni.sendKeys(evrakEkTabViewEkMetni);
         return this;
     }
 
+    @Step("Evrak Ek Tabı Ek Metin alanına \"{evrakEkTabViewEkMetni}\" girilir")
     public GelenEvrakKayitPage evrakEkTabFizikselEkMetniDoldur(String evrakEkTabViewEkMetni) {
         txtEvrakFizikselEkTabViewEkMetni.sendKeys(evrakEkTabViewEkMetni);
         return this;
     }
 
+    @Step("Evrak Ek Tabı Dosya Ekle")
     public GelenEvrakKayitPage evrakEkTabDosyaEkle() {
         btvEvrakEkTabViewDosyaEkle.click();
         return this;
     }
 
+    @Step("Dağıtım Bilgileri Evrakı Onaylı Kapat seçilir")
     public GelenEvrakKayitPage dagitimBilgileriEvragiOnayliKapatSec(boolean check) {
         chkDagitimBilgileriEvragiOnayliKapat.setSelected(check);
         return this;
@@ -531,11 +570,13 @@ public class GelenEvrakKayitPage extends MainPage {
 //        return this;
 //    }
 
+    @Step("Evrak Ek Tabı Güvenlik Kodu alanında \"{guvenlikKoduAciklama}\" seçilir")
     public GelenEvrakKayitPage evrakEkTabGuvenlikKoduAciklamaSec(String guvenlikKoduAciklama) {
         cmbEvrakEkTabViewGuvenlikKoduAciklama.selectOption(guvenlikKoduAciklama);
         return this;
     }
 
+    @Step("Fiziksel Ek Tabı Açıklama Ekle")
     public GelenEvrakKayitPage fizikselEkTabViewAciklamaEkle() {
         btnEvrakFizikselEkTabViewAciklamaEkle.click();
         return this;
@@ -661,18 +702,23 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
+    @Step("Yenş Kayıt tıklanır")
     public GelenEvrakKayitPage yeniKayitButton() {
-        $("[id='evrakKaydetBasariliDialogForm:yeniKayitButton']").pressEnter();
+        $("[id$='yeniKayitButton']").pressEnter();
+        sleep(5000);
         return this;
     }
 
+    @Step("Evet butonu")
     public GelenEvrakKayitPage evetDugmesi() {
         $("[id='evetDugmesi']").pressEnter();
         return this;
     }
 
     public GelenEvrakKayitPage benzerKayit() {
+        if ( $$(By.id("evetButtonBenzerKaydet")).get(0).shouldHave(visible).exists()==true){
         $(By.id("evetButtonBenzerKaydet")).pressEnter();
+        }
         return this;
     }
 
@@ -685,21 +731,27 @@ public class GelenEvrakKayitPage extends MainPage {
 
         if (ustYaziveHavaleYeriYokpopUp.isDisplayed()) {
             popUpEvet.click();
+            Allure.addAttachment("Üst Yazı ve Havale Yeri yok PopUp'ı","Üst Yazı ve Havale Yeri yok PopUp'ı kapatılır.");
         }
         if (popUphavaleYeriSecmediniz.isDisplayed()) {
             String mesaj2 = "Havale yeri seçmediniz. Evrak kaydedildiğinde Kaydedilen Gelen Evraklar kutusuna düşecektir. İşleme devam etmek istiyor musunuz?";
             popUphavaleYeriSecmediniz.getText().equals(mesaj2);
             btnHavaleYeriSecmedinizEvet.click();
+            Allure.addAttachment("Havale Yeri Seçmediniz PopUp'ı",mesaj2);
         }
         if (ustYaziYokpopUp.isDisplayed()) {
             ustYaziYokEvet.click();
+            Allure.addAttachment("Üst Yazı Seçmediniz PopUp'ı","Üst Yazı gelmemiştir PopUp'ı kapatılır.");
         }
         if (mukerrerPopUp.isDisplayed()) {
             mukerrerPopUpEvet.click();
+            Allure.addAttachment("Mükerrer İşlem PopUp'ı","Mükerrer İşlem PopUp'ı kapatılır.");
         }
         basariliPopUp.shouldBe(Condition.visible);
         String mesaj4 = "Evrak başarıyla kaydedilmiştir.";
         basariliPopUp.getText().contains(mesaj4);
+        Allure.addAttachment("İşlem başarılı PopUp'ı",mesaj4);
+
 
         String evrakNo = getIntegerInText(By.id("evrakKaydetBasariliDialog"));
         basariliPopUpKapat.click();
@@ -714,7 +766,7 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("TC kimlik No ekle : {mernisNo}")
+    @Step("TC kimlik No ekle : \"{mernisNo}\" ")
     public GelenEvrakKayitPage iletisimBilgisiTCKNEkle(String mernisNo) {
         txtTCKN.clear();
         txtTCKN.sendKeys(mernisNo);
@@ -728,13 +780,13 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("Ad doldur : {ad}")
+    @Step("Ad doldur : \"{ad}\" ")
     public GelenEvrakKayitPage iletisimBilgisiAdDoldur(String ad) {
         txtAd.setValue(ad);
         return this;
     }
 
-    @Step("Soyad doldur : {soyad}")
+    @Step("Soyad doldur : \"{soyad}\" ")
     public GelenEvrakKayitPage iletisimBilgisiSoyadDoldur(String soyad) {
         txtSoyad.setValue(soyad);
         return this;
@@ -831,7 +883,7 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("Evrak Detayi Aciklama doldur")
+    @Step("Evrak Detayi Aciklama alanına \"{aciklama}\" girilir")
     public GelenEvrakKayitPage evrakDetayiAciklamaDoldur(String aciklama) {
         txtEvrakDetayiAciklama.sendKeys(aciklama);
         SelenideElement btnEvrakDetayiEkle = $(By.id("inboxItemInfoForm:evrakEkTabView:aciklamaEkleButton"));
@@ -870,7 +922,7 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("PopUp close")
+    @Step("Evrak Detayi PdfDegisiklik PopUp close")
     public GelenEvrakKayitPage evrakDetayiPdfDegisiklikpopUpClose() {
 //        popUpPdfDegisiklik.shouldBe(Condition.visible);
         if (popUpPdfDegisiklik.isDisplayed()) {
@@ -899,14 +951,14 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("Üst yazı değiştirilsim mi?")
+    @Step("Üst yazı değiştirilsim mi? popUp kontrolü")
     public GelenEvrakKayitPage ustYaziDegistirilmisPopUpKontrol() {
         popUpUstYaziDegistirilme.shouldBe(Condition.visible);
         clickJs(btnUstYaziDegistirmeHayır);
         return this;
     }
 
-    @Step("")
+    @Step("Dosya Ekle Tabı tabloda \"{dosyaAdi}\" kontrolü")
     public GelenEvrakKayitPage dosyaEkleTabTabloKontrolu(String dosyaAdi) {
 //        boolean status = findElementOnTableByColumnInputInAllPages(tblDosyaEkle,columIndex,dosyaAdi).isDisplayed();
         tblDosyaEkle
@@ -935,14 +987,14 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("Evrak turu alan kontrolü")
+    @Step("Evrak turu alanında \"{evrakTuru}\" kontrolü")
     public GelenEvrakKayitPage evrakTuruKontrol(String evrakTuru) {
         cmbEvrakBilgileriListEvrakTuru.shouldHave(Condition.text(evrakTuru));
 //        Assert.assertEquals(cmbEvrakBilgileriListEvrakTuru.getText(), evrakTuru);
         return this;
     }
 
-    @Step("Evrak Sayısı sol alan kontrolü")
+    @Step("Evrak Sayısı sol alan kontrolü : \"{solAlan}\" ")
     public GelenEvrakKayitPage evrakSayisiSolAlanKontrolu(String solAlan) {
         Assert.assertEquals(txtEvrakBilgileriListEvrakSayiTextAreaSol.getValue(), solAlan);
         return this;

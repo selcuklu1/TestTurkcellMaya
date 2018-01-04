@@ -2,6 +2,7 @@ package drivers;
 
 import com.codeborne.selenide.WebDriverProvider;
 import common.BaseTest;
+import data.TestData;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxDriverLogLevel;
@@ -28,6 +29,9 @@ public class Firefox extends BaseTest implements WebDriverProvider {
                 .setAcceptInsecureCerts(true)
                 .addPreference("security.insecure_field_warning.contextual.enabled", false)
                 .setLogLevel(FirefoxDriverLogLevel.fromLevel(Level.OFF));
+        options.addPreference("browser.download.folderList", 2);
+        options.addPreference("browser.download.dir", TestData.docDownloadPathLinux);
+
 
 //        System.setProperty(FirefoxDriver.SystemProperty.DRIVER_USE_MARIONETTE,"false");
 //        System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE,"/dev/null");

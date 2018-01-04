@@ -16,6 +16,12 @@
 # Belgenet
 belgenetTa.iml
 
+BaseTest.java
+TestData.java
+src/main/java/common/BaseTest.java
+src/main/java/data/TestData.java
+
+
 # Allure Report
 allure-results/*
 allure-results/
@@ -27,6 +33,7 @@ allure-report/
 .LSOverride
 
 # Maven
+pom.xml
 target/
 pom.xml.tag
 pom.xml.releaseBackup

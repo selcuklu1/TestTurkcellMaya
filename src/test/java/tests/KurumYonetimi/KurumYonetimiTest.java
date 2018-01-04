@@ -1,7 +1,6 @@
 package tests.KurumYonetimi;
 
 import common.BaseTest;
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.ustMenuPages.EvrakOlusturPage;
@@ -30,37 +29,65 @@ public class KurumYonetimiTest extends BaseTest {
     @Test(enabled = true, description = "TC01459 : Kurum bilgisi güncelleme")
     public void TC01459() {
 
-
-        String guncellenecekKurumAdi = "huseyindeneme";
-        String yeniKurumAdi = "huseyindeneme" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
-        ;
+        String yeniKurumAdi1 = "Yenikurum" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
         String idariBirimKimlikKodu = (new Random().nextInt((900000 - 100000) + 1) + 100000) + "";
-        String ustKurum = "Adalet Bakanlığı";
+        String ustKurum = "Maliye Bakanlığı";
+        String hitap = "yeniHitap";
+
         String kontrolEdilecekGeregiDetay = "";
 
         // İletişim bilgileri güncelleme
         String mobilTelNo = "5444444444";
         String telefonNo = "5444444445";
-        String isTelefonNo = "5444444446";
-        String faxNumarasi1 = "5444444447";
-        String faxNumarasi2 = "5444444448";
         String adres = "yeni adersim";
         String ulke = "TÜRKİYE";
         String il = "İSTANBUL";
-        String ilce = "Avcılar";
         String ePosta = "xxx@xxx.com";
-        String webAdresi = "example.com";
+        String kepAdresi = "xxx@turksat.com.tr";
         String basariMesaji = "İşlem başarılıdır!";
 
+        login("mbozdemir", "123");
+        kurumYonetimiPage
+                .openPage()
+                .yeniKurumEkle()
+                .ozelHitapSec(true)
+                .hitapDoldur(hitap)
+                .kurumAdiDoldur(yeniKurumAdi1)
+                .idariBirimKimlikKoduDoldur(idariBirimKimlikKodu)
+                .ustKurumSec(ustKurum);
+
+        kurumYonetimiPage
+                .yeniIletisimBilgisiEkle()
+                .mobilTelNoDoldur(mobilTelNo)
+                .telefonNoDoldur(telefonNo)
+                .adresDoldur(adres)
+                //.ulkeDoldur(ulke)
+                .ilDoldur(il)
+                .ePostaDoldur(ePosta)
+                .iletisimBilgisiKaydet()
+                .kepAdresiBilgisiEkle()
+                .popupKepAdresiDoldur(kepAdresi)
+                .popupKaydet()
+                .kurumKaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+
+        String guncellenecekKurumAdi = yeniKurumAdi1;
+        String yeniKurumAdi = "kurumm" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
+        ;
+        String isTelefonNo = "5444444446";
+        String faxNumarasi1 = "5444444447";
+        String faxNumarasi2 = "5444444448";
+        String ilce = "Avcılar";
+        String webAdresi = "example.com";
+
         // Kep adresi güncelleme
-        String guncellenecekKepAdresi = "hihihaha2223@kepadresim.com";
+        String guncellenecekKepAdresi = kepAdresi;
         String yeniKepadresi = "hihihaha2223@kepadresim.com";
         String kepHizmetSaglayicisi = "KEPKUR";
 
-        login("mbozdemir", "123");
 
         kurumYonetimiPage
-                .openPage()
                 .sorgulaKurumDoldur(guncellenecekKurumAdi)
                 .ara()
                 .kurumGuncelle(guncellenecekKurumAdi)
@@ -78,7 +105,7 @@ public class KurumYonetimiTest extends BaseTest {
                 .faxNumarasi1Doldur(faxNumarasi1)
                 .faxNumarasi2Doldur(faxNumarasi2)
                 .adresDoldur(adres)
-                .ulkeDoldur(ulke)
+//              .ulkeDoldur(ulke)
                 .ilDoldur(il)
                 .ilceDoldur(ilce)
                 .ePostaDoldur(ePosta)
@@ -99,11 +126,11 @@ public class KurumYonetimiTest extends BaseTest {
                 .kurumHiyerarsisiniGuncelle()
                 .islemMesaji().basariliOlmali(basariMesaji);
         kurumYonetimiPage
+                .filtrePanelAc()
                 .sorgulaKurumDoldur(yeniKurumAdi)
                 .ara()
                 .kurumKontrolEt(yeniKurumAdi, true)
                 .panelKapat();
-
 
         gelenEvrakKayitPage
                 .openPage()
@@ -123,7 +150,7 @@ public class KurumYonetimiTest extends BaseTest {
 
         evrakOlusturPage
                 .editorTabAc()
-                .hitapKontrol(yeniKurumAdi);
+                .hitapKontrol(hitap);
 
         evrakOlusturPage
                 .evrakOlusturPageKapat();
@@ -159,7 +186,6 @@ public class KurumYonetimiTest extends BaseTest {
         String yeniKurumAdi = "Yenikurum" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
         String idariBirimKimlikKodu = (new Random().nextInt((900000 - 100000) + 1) + 100000) + "";
         String ustKurum = "Maliye Bakanlığı";
-        String kisaAdi = "ynkrm" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
         String hitap = "yeniHitap";
 
         String kontrolEdilecekGeregiDetay = "";
@@ -167,28 +193,16 @@ public class KurumYonetimiTest extends BaseTest {
         // İletişim bilgileri güncelleme
         String mobilTelNo = "5444444444";
         String telefonNo = "5444444445";
-        String isTelefonNo = "5444444446";
-        String faxNumarasi1 = "5444444447";
-        String faxNumarasi2 = "5444444448";
         String adres = "yeni adersim";
         String ulke = "TÜRKİYE";
         String il = "İSTANBUL";
-        String ilce = "Avcılar";
         String ePosta = "xxx@xxx.com";
-        String webAdresi = "example.com";
         String basariMesaji = "İşlem başarılıdır!";
-
-        // Kep adresi güncelleme
-        String guncellenecekKepAdresi = "hihihaha2223@kepadresim.com";
-        String yeniKepadresi = "hihihaha2223@kepadresim.com";
-        String kepHizmetSaglayicisi = "KEPKUR";
 
         login("mbozdemir", "123");
         kurumYonetimiPage
                 .openPage()
-                .yeniKurumEkle();
-
-        kurumYonetimiPage
+                .yeniKurumEkle()
                 .ozelHitapSec(true)
                 .hitapDoldur(hitap)
                 .kurumAdiDoldur(yeniKurumAdi)
@@ -200,7 +214,7 @@ public class KurumYonetimiTest extends BaseTest {
                 .mobilTelNoDoldur(mobilTelNo)
                 .telefonNoDoldur(telefonNo)
                 .adresDoldur(adres)
-                .ulkeDoldur(ulke)
+                //.ulkeDoldur(ulke)
                 .ilDoldur(il)
                 .ePostaDoldur(ePosta)
                 .iletisimBilgisiKaydet()
@@ -233,20 +247,70 @@ public class KurumYonetimiTest extends BaseTest {
     @Test(enabled = true, description = "TC01108 : Kurum Sorgulama")
     public void TC01108() {
 
-        String aktifKurumAdi = "Yenikurum3207";
-        String aktifIdariBirimKimlikKodu = "889700";
+        String pasifYapilacakKurum = "PasifKurum" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
+        String pasifYapilacakKurumIdariKimlikkodu = (new Random().nextInt((900000 - 100000) + 1) + 100000) + "";
+
+        String aktifKurumAdi = "Yenikurum" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
+        String aktifIdariBirimKimlikKodu = (new Random().nextInt((900000 - 100000) + 1) + 100000) + "";
+        String ustKurum = "Maliye Bakanlığı";
+        String hitap = "yeniHitap";
+
+        String mobilTelNo = "5444444444";
+        String telefonNo = "5444444445";
+        String adres = "yeni adersim";
+        String ulke = "TÜRKİYE";
+        String il = "İSTANBUL";
+        String ePosta = "xxx@xxx.com";
+        String basariMesaji = "İşlem başarılıdır!";
 
         String pasifKurumadi = "Maliye Bakanlığı";
         String pasifIdariBirimKimlikKodu = "24316011";
-
-        String pasifYapilacakKurum = "Yenikurum2038";
         String pasifYapilacakKurumUstKurum = "Maliye Bakanlığı";
-
 
         login("mbozdemir", "123");
 
         kurumYonetimiPage
                 .openPage()
+                .yeniKurumEkle()
+                .ozelHitapSec(true)
+                .hitapDoldur(hitap)
+                .kurumAdiDoldur(aktifKurumAdi)
+                .idariBirimKimlikKoduDoldur(aktifIdariBirimKimlikKodu)
+                .ustKurumSec(ustKurum)
+                .yeniIletisimBilgisiEkle()
+                .mobilTelNoDoldur(mobilTelNo)
+                .telefonNoDoldur(telefonNo)
+                .adresDoldur(adres)
+                //.ulkeDoldur(ulke)
+                .ilDoldur(il)
+                .ePostaDoldur(ePosta)
+                .iletisimBilgisiKaydet()
+                .kurumKaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        kurumYonetimiPage
+                .yeniKurumEkle()
+                .ozelHitapSec(true)
+                .hitapDoldur(hitap)
+                .kurumAdiDoldur(pasifYapilacakKurum)
+                .idariBirimKimlikKoduDoldur(pasifYapilacakKurumIdariKimlikkodu)
+                .ustKurumSec(ustKurum)
+                .yeniIletisimBilgisiEkle()
+                .mobilTelNoDoldur(mobilTelNo)
+                .telefonNoDoldur(telefonNo)
+                .adresDoldur(adres)
+                //.ulkeDoldur(ulke)
+                .ilDoldur(il)
+                .ePostaDoldur(ePosta)
+                .iletisimBilgisiKaydet()
+                .kurumKaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        kurumYonetimiPage
+                .kurumHiyerarsisiniGuncelle()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        kurumYonetimiPage
                 .durumSec("Sadece Aktifler")
                 .ara()
                 .kurumTableKontrol(null, "Sadece Aktifler", true)
@@ -274,12 +338,13 @@ public class KurumYonetimiTest extends BaseTest {
                 .ara()
                 .kurumTableKontrol(null, "Sadece Aktifler", true)
 
+                .filtrePanelAc()
                 .sorgulaKurumDoldur(pasifKurumadi)
                 .durumSec("Sadece Pasifler")
                 .ara()
                 .kurumTableKontrol(null, "Sadece Pasifler", true)
 
-
+                .filtrePanelAc()
                 .sorgulaKurumDoldur(pasifIdariBirimKimlikKodu)
                 .durumSec("Sadece Pasifler")
                 .ara()
@@ -362,6 +427,7 @@ public class KurumYonetimiTest extends BaseTest {
                 .kurumAktifYap(pasifYapilacakKurum);
         kurumYonetimiPage.yeniKurumEkle();
         kurumYonetimiPage
+                .filtrePanelAc()
                 .sorgulaKurumDoldur(pasifYapilacakKurum)
                 .durumSec("Sadece Aktifler")
                 .ara()

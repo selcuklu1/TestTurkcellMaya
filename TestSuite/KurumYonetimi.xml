@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite thread-count="1" name="Kurum Yönetimi" parallel="classes" verbose="1">
+    <!--By Huseyin-->
+    <test name="Kurum Yönetimi Testleri">
+        <packages>
+            <package name="tests.KurumYonetimi"/>
+        </packages>
+    </test>
+</suite>

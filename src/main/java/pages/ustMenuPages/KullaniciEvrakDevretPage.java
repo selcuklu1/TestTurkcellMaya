@@ -6,13 +6,11 @@ import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
-import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
-import static com.codeborne.selenide.Selenide.$x;
+import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 public class KullaniciEvrakDevretPage extends MainPage {
@@ -51,7 +49,7 @@ public class KullaniciEvrakDevretPage extends MainPage {
     @Step("Listele butonuna tıkla.")
     public KullaniciEvrakDevretPage listele() {
         btnListele.click();
-        $("div[id='bekleyinizStatusDialog']").waitUntil(Condition.not(Condition.visible), 50000);
+        $("div[id='bekleyinizStatusDialog']").waitUntil(not(visible), 50000);
         return this;
     }
 
@@ -61,8 +59,8 @@ public class KullaniciEvrakDevretPage extends MainPage {
         Boolean isSelected = false;
 
         SelenideElement currentRow = tableTaslakEvraklar
-                .filterBy(Condition.text("Konu: " + konu))
-                .filterBy(Condition.text("Gideceği Yer: " + gidecegiYer))
+                .filterBy(text("Konu: " + konu))
+                .filterBy(text("Gideceği Yer: " + gidecegiYer))
                 .first();
 
         SelenideElement currentRowCheckBox = currentRow.$(By.xpath(".//div[contains(@class, 'ui-chkbox ui-widget')]"));
@@ -102,17 +100,17 @@ public class KullaniciEvrakDevretPage extends MainPage {
 
     @Step("Ekran Alan kontrolleri")
     public KullaniciEvrakDevretPage ekranTabKontrolleri() {
-        $x("//h3[.='Gelen Evraklar']").shouldBe(Condition.visible);
-        $x("//h3[.='Taslak Evraklar']").shouldBe(Condition.visible);
-        $x("//h3[.='İmza Bekleyen Evraklar']").shouldBe(Condition.visible);
-        $x("//h3[.='Paraf Bekleyen Evraklar']").shouldBe(Condition.visible);
-        $x("//h3[.='Koordine Bekleyen Evraklar']").shouldBe(Condition.visible);
-        $x("//h3[.='Kontrol Bekleyen Evraklar']").shouldBe(Condition.visible);
-        $x("//h3[.='Havale Onayına Gelen Evraklar']").shouldBe(Condition.visible);
-        $x("//h3[.='Teslim Aldıklarım']").shouldBe(Condition.visible);
-        $x("//h3[.='Kapatma İmzasi Bekleyenler']").shouldBe(Condition.visible);
-        $x("//h3[.='Kapatma Parafı Bekleyenler']").shouldBe(Condition.visible);
-        btnDevret.shouldBe(Condition.visible);
+        $x("//h3[.='Gelen Evraklar']").shouldBe(visible);
+        $x("//h3[.='Taslak Evraklar']").shouldBe(visible);
+        $x("//h3[.='İmza Bekleyen Evraklar']").shouldBe(visible);
+        $x("//h3[.='Paraf Bekleyen Evraklar']").shouldBe(visible);
+        $x("//h3[.='Koordine Bekleyen Evraklar']").shouldBe(visible);
+        $x("//h3[.='Kontrol Bekleyen Evraklar']").shouldBe(visible);
+        $x("//h3[.='Havale Onayına Gelen Evraklar']").shouldBe(visible);
+        $x("//h3[.='Teslim Aldıklarım']").shouldBe(visible);
+        $x("//h3[.='Kapatma İmzasi Bekleyenler']").shouldBe(visible);
+        $x("//h3[.='Kapatma Parafı Bekleyenler']").shouldBe(visible);
+        btnDevret.shouldBe(visible);
 
         return this;
     }
@@ -120,31 +118,31 @@ public class KullaniciEvrakDevretPage extends MainPage {
     @Step("Tablo Evrak Seçimi : {konu}")
     public KullaniciEvrakDevretPage tabloEvrakSecimi(String konu) {
         tblGelenEvraklar
-                .filterBy(Condition.text(konu)).first()
+                .filterBy(text(konu)).first()
                 .$("div[class='ui-chkbox-box ui-widget ui-corner-all ui-state-default']").click();
         return this;
     }
 
     @Step("Devralacak popup alan kontrolleri")
     public KullaniciEvrakDevretPage devralacakKisiAlanKontolu() {
-        txtDevralacakKisi.shouldBe(Condition.visible);
-        txtAciklama.shouldBe(Condition.visible);
-        btnDevretTamam.shouldBe(Condition.visible);
-        btnDevretIptal.shouldBe(Condition.visible);
+        txtDevralacakKisi.shouldBe(visible);
+        txtAciklama.shouldBe(visible);
+        btnDevretTamam.shouldBe(visible);
+        btnDevretIptal.shouldBe(visible);
         return this;
     }
 
     @Step("Devredilemeyen Evraklar popup kontrolü")
-    public KullaniciEvrakDevretPage popUpDevredilemeyenEvraklarKontrol(){
-        popUpDevredilemeyenEvraklar.shouldHave(Condition.visible);
+    public KullaniciEvrakDevretPage popUpDevredilemeyenEvraklarKontrol() {
+        popUpDevredilemeyenEvraklar.shouldBe(visible);
         return this;
     }
 
     @Step("Devredilemeyen Evraklar popup kontrolü")
-    public KullaniciEvrakDevretPage devredelimeyenEvraklarEvrakKontrolu(String konu, String aciklama){
+    public KullaniciEvrakDevretPage devredelimeyenEvraklarEvrakKontrolu(String konu, String aciklama) {
         tblDevredilemeyenEvraklar
-                .filterBy(Condition.text(konu))
-                .filterBy(Condition.text(aciklama))
+                .filterBy(text(konu))
+                .filterBy(text(aciklama))
                 .shouldHaveSize(1);
         return this;
     }

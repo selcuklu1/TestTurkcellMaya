@@ -4,9 +4,7 @@ import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
 import common.BaseLibrary;
 import io.qameta.allure.Step;
-import javafx.scene.text.Text;
 import org.openqa.selenium.By;
-import org.testng.Assert;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
@@ -31,6 +29,112 @@ public class IslemMesajlari extends BaseLibrary {
     //http://www.belgenet.com.tr:8282/edys-web/mainInbox.xhtml
     // private SelenideElement messageTitle = $(".ui-growl-message  > .ui-growl-title");
     // private SelenideElement messageBody = $(".ui-growl-message p");
+
+    @Step("İşlem mesaj kontolü")
+    public IslemMesajlari beklenenMesajTipi(MessageTitle messageTitleText) {
+        messageTitle.shouldBe(visible);
+        takeScreenshot();
+        messageTitle.shouldHave(exactText(messageTitleText.value()));
+//        Assert.assertEquals(getMessageTitle(), messageTitle.value());
+        waitDisappear();
+        return this;
+    }
+
+    @Step("İşlem mesaj kontolü")
+    public IslemMesajlari beklenenMesaj(String message) {
+        messageBody.shouldBe(visible);
+        takeScreenshot();
+        messageBody.shouldHave(text(message));
+//        Assert.assertEquals(getMessageBody(), message);
+        waitDisappear();
+        return this;
+    }
+
+    @Step("Başarılı mesajı gelmeli")
+    public void basariliOlmali(String... expectedMessage) {
+//        Assert.assertEquals(getMessageTitle(), BASARILI.value());
+        messageTitle.shouldHave(exactText(BASARILI.value()));
+        if (expectedMessage.length > 0) {
+            takeScreenshot();
+            /*while (messageBody.text().isEmpty()){
+             *//*text = messageBody.text();
+                if (!text.isEmpty())
+                    break;*//*
+                sleep(100);
+            }
+            takeScreenshot();*/
+            messageBody.shouldHave(text(expectedMessage[0]));
+        }
+
+//            Assert.assertEquals(getMessageBody(), expectedMessage[0]);
+        waitDisappear();
+    }
+
+    @Step("Uyarı mesajı gelmeli")
+    public void uyariOlmali(String... expectedMessage) {
+//        Assert.assertEquals(getMessageTitle(), UYARI.value());
+        messageTitle.shouldHave(text((UYARI.value())));
+        if (expectedMessage.length > 0) {
+            takeScreenshot();
+//            while (messageBody.text().isEmpty()){}
+//            takeScreenshot();
+            messageBody.shouldHave(text(expectedMessage[0]));
+        }
+//            Assert.assertEquals(getMessageBody(), expectedMessage[0]);
+        waitDisappear();
+    }
+
+    @Step("Dikkat mesajı gelmeli")
+    public void dikkatOlmali(String... expectedMessage) {
+//        Assert.assertEquals(getMessageTitle(), DIKKAT.value());
+        messageTitle.shouldHave(exactText(DIKKAT.value()));
+
+        if (expectedMessage.length > 0) {
+            takeScreenshot();
+//            while (messageBody.text().isEmpty()){}
+//            takeScreenshot();
+            messageBody.shouldHave(text(expectedMessage[0]));
+        }
+
+//            Assert.assertEquals(getMessageBody(), expectedMessage[0]);
+        waitDisappear();
+    }
+
+    public boolean isBasarili() {
+        return getMessageTitle().equalsIgnoreCase(BASARILI.value());
+    }
+
+    public boolean isUyari() {
+        return getMessageTitle().equalsIgnoreCase(UYARI.value());
+    }
+
+    public boolean isDikkat() {
+        return getMessageTitle().equalsIgnoreCase(DIKKAT.value());
+    }
+
+    public String getMessageTitle() {
+//        setDoNotWaitLoading(true);
+        String text = $(".lobibox-notify-title").text();
+//        setDoNotWaitLoading(false);
+        return text;
+    }
+
+    public String getMessageBody() {
+//        setDoNotWaitLoading(true);
+        String text = $(".lobibox-notify-msg").text();
+//        setDoNotWaitLoading(false);
+        return text;
+    }
+
+    public void waitDisappear() {
+        try {
+            WebDriverRunner.getWebDriver().findElement(By.className("lobibox-close")).click();
+        } catch (Exception ignored) {
+        }
+
+//        if (closeMessagePopup.exists())
+//            closeMessagePopup.click();
+    }
 
     public enum MessageTitle {
 
@@ -64,98 +168,6 @@ public class IslemMesajlari extends BaseLibrary {
         public String value() {
             return value;
         }
-    }
-
-    @Step("Beklenen mesaj tipi \"{0}\"")
-    public IslemMesajlari beklenenMesajTipi(MessageTitle messageTitle) {
-        Assert.assertEquals(getMessageTitle(), messageTitle.value());
-        return this;
-    }
-
-    @Step("Beklenen mesaj \"{0}\"")
-    public IslemMesajlari beklenenMesaj(String message) {
-        Assert.assertEquals(getMessageBody(), message);
-        return this;
-    }
-
-    @Step("Başarılı mesajı gelmeli")
-    public void basariliOlmali(String... expectedMessage) {
-//        Assert.assertEquals(getMessageTitle(), BASARILI.value());
-        messageTitle.shouldHave(exactText(BASARILI.value()));
-        if (expectedMessage.length > 0){
-            String text;
-            while (messageBody.text().isEmpty()){
-                /*text = messageBody.text();
-                if (!text.isEmpty())
-                    break;*/
-            }
-            messageBody.shouldHave(text(expectedMessage[0]));
-        }
-
-//            Assert.assertEquals(getMessageBody(), expectedMessage[0]);
-        waitDisappear();
-    }
-
-    @Step("Uyarı mesajı gelmeli")
-    public void uyariOlmali(String... expectedMessage) {
-//        Assert.assertEquals(getMessageTitle(), UYARI.value());
-        messageTitle.shouldHave(text((UYARI.value())));
-        if (expectedMessage.length > 0){
-            while (messageBody.text().isEmpty()){}
-            messageBody.shouldHave(text(expectedMessage[0]));
-        }
-//            Assert.assertEquals(getMessageBody(), expectedMessage[0]);
-        waitDisappear();
-    }
-
-    @Step("Dikkat mesajı gelmeli")
-    public void dikkatOlmali(String... expectedMessage) {
-//        Assert.assertEquals(getMessageTitle(), DIKKAT.value());
-        messageTitle.shouldHave(exactText(DIKKAT.value()));
-
-        if (expectedMessage.length > 0){
-            while (messageBody.text().isEmpty()){}
-            messageBody.shouldHave(text(expectedMessage[0]));
-        }
-
-//            Assert.assertEquals(getMessageBody(), expectedMessage[0]);
-        waitDisappear();
-    }
-
-    public boolean isBasarili() {
-        return getMessageTitle().equalsIgnoreCase(BASARILI.value());
-    }
-
-    public boolean isUyari() {
-        return getMessageTitle().equalsIgnoreCase(UYARI.value());
-    }
-
-    public boolean isDikkat() {
-        return getMessageTitle().equalsIgnoreCase(DIKKAT.value());
-    }
-
-    public String getMessageTitle() {
-        setDoNotWaitLoading(true);
-        String text = $(".lobibox-notify-title").text();
-        setDoNotWaitLoading(false);
-        return text;
-    }
-
-    public String getMessageBody() {
-        setDoNotWaitLoading(true);
-        String text = $(".lobibox-notify-msg").text();
-        setDoNotWaitLoading(false);
-        return text;
-    }
-
-    public void waitDisappear() {
-        try {
-            WebDriverRunner.getWebDriver().findElement(By.className("lobibox-close")).click();
-        } catch (Exception ignored) {
-        }
-
-//        if (closeMessagePopup.exists())
-//            closeMessagePopup.click();
     }
 
 }

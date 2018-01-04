@@ -7,12 +7,9 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import pages.MainPage;
 import pages.pageData.SolMenuData;
-import java.lang.String;
 
 import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
-import static com.codeborne.selenide.Selenide.$x;
+import static com.codeborne.selenide.Selenide.*;
 
 public class PostalananlarPage extends MainPage {
 
@@ -25,7 +22,7 @@ public class PostalananlarPage extends MainPage {
     SelenideElement chkMedasIlePostalananlar = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:medaslaPostalananlarCheckbox_input"));
     SelenideElement chkPostaladiklarim = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:postaladiklarimCheckbox_input"));
     SelenideElement tblEvrakSec = $(By.id("mainInboxForm:inboxDataTable:1:evrakTable"));
-    SelenideElement  tblPostalananlartbl =  $(By.id("mainInboxForm:inboxDataTable_data"));
+    SelenideElement tblPostalananlartbl = $(By.id("mainInboxForm:inboxDataTable_data"));
     SelenideElement btnRadioPostaladiklarim = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:postaladiklarimCheckbox"));
     SelenideElement tblEvrakDetayPanel = $(By.id("mainPreviewForm:evrakDetayPanelGrid"));
     //ElementsCollection  tblPostalananlartbl =  $$("tbody[id='mainInboxForm:inboxDataTable_data']");
@@ -54,8 +51,21 @@ public class PostalananlarPage extends MainPage {
     SelenideElement ImzaDialog = $(By.id("mainInboxForm:imzaListesiDialog"));
     SelenideElement postalananEvrakYazdir = $x("//button[span[text()='Yazdır']]");
     SelenideElement postalananEvrakEtiketYazdir = $x("//button[span[text()='Etiket Bastır']]");
+    SelenideElement tabIcerikIlgileri = $(By.id("inboxItemInfoForm:dialogTabMenuLeft:uiRepeat:2:cmdbutton"));
+    SelenideElement tabIcerikEkleri = $(By.id("inboxItemInfoForm:dialogTabMenuLeft:uiRepeat:1:cmdbutton"));
+    SelenideElement tabIcerikKapat = $x("//*[@id='windowItemInfoDialog']/div[1]/a[1]/span");
+    SelenideElement tabIcerikKapatmaOnay = $(By.id("kapatButton"));
+    //
+    SelenideElement tuzelKisiGuncelle = $x("//*[@id='mainPreviewForm:postalananDataGrid']/tbody/tr/td/div/table/tbody/tr[4]/td[8]/div/button[1]");
+    //
+    SelenideElement kullaniciGuncelle = $x("//*[@id='mainPreviewForm:postalananDataGrid']/tbody/tr/td/div/table/tbody/tr[5]/td[8]/div/button[1]");
+
+    //SelenideElement btnEtiketPopupKapat = $x("//*[@id='mainPreviewForm:showAppletContainer']/div/div[1]/a/span");
+    //  SelenideElement btnDagitimYerDetayKapat = $x("//*[@id='mainPreviewForm:dagitimPlaniDetayViewDialog']/div[1]/a/span");
+
+
     @Step("Postalananlar sayfası aç")
-    public PostalananlarPage openPage() throws  InterruptedException {
+    public PostalananlarPage openPage() throws InterruptedException {
         solMenu(SolMenuData.BirimEvraklari.Postalananlar);
         String pageTitle = SolMenuData.BirimEvraklari.Postalananlar.getMenuText();
         $("#mainInboxForm\\:inboxDataTable .ui-inbox-header-title")
@@ -87,16 +97,19 @@ public class PostalananlarPage extends MainPage {
         cmbFiltre.selectOption(text);
         return this;
     }
+
     @Step("Sayfada ara doldur")
     public PostalananlarPage sayfadaAraDoldur(String text) throws InterruptedException {
         txtSayfadaAra.setValue(text);
         return this;
     }
+
     @Step("Başlangıç tarihi doldur")
     public PostalananlarPage baslangicTarihiDoldur(String text) throws InterruptedException {
         dateBaslangicTarihi.setValue(text);
         return this;
     }
+
     @Step("Bitiş tarihi doldur")
     public PostalananlarPage bitisTarihiDoldur(String text) throws InterruptedException {
         dateBitisTarihi.setValue(text);
@@ -114,6 +127,7 @@ public class PostalananlarPage extends MainPage {
         chkMedasIlePostalananlar.setSelected(text);
         return this;
     }
+
     @Step("Postaladıklarım seç")
     public PostalananlarPage postaladiklarimSec() throws InterruptedException {
         tblEvrakSec.click();
@@ -135,7 +149,7 @@ public class PostalananlarPage extends MainPage {
     }
 
     @Step("Posta Detayı na tıkla")
-    public PostalananlarPage postaDetayiTikla(){
+    public PostalananlarPage postaDetayiTikla() {
         btnPostaDetayi.click();
         return this;
     }
@@ -163,16 +177,17 @@ public class PostalananlarPage extends MainPage {
         btnTarihGuncelle.click();
         btnTarihGuncelle.setValue(text);
 
-    return this;
+        return this;
     }
 
     @Step("Posta Kodu Güncelle")
     public PostalananlarPage btnPostakoduGuncelle(String txt) {
         txtPosta.setValue(txt);
-return this;
+        return this;
     }
+
     @Step("Açıklama Güncelle")
-    public PostalananlarPage txtAciklama (String txt) {
+    public PostalananlarPage txtAciklama(String txt) {
         txtAciklama.setValue(txt);
 
         return this;
@@ -180,16 +195,16 @@ return this;
     }
 
     @Step("Guncelleme Kaydet")
-    public PostalananlarPage btnKaydet () {
+    public PostalananlarPage btnKaydet() {
         btnKaydet.click();
 
         return this;
     }
 
     @Step("Evrak Detay Panel Sayıyı çekme")
-    public PostalananlarPage detayEvrakSayisi () {
+    public PostalananlarPage detayEvrakSayisi() {
 
-        String txt =  $x("//tbody/tr[3]/td[3]/label").getAttribute("outerText");
+        String txt = $x("//tbody/tr[3]/td[3]/label").getAttribute("outerText");
 
         System.out.println(txt);
         return this;
@@ -199,81 +214,105 @@ return this;
     /**
      * @return
      */
-   public String evSay() {
 
+    public String evSay() {
         return $x("//tbody/tr[3]/td[3]/label").getAttribute("outerText");
-   }
-
-   public PostalananlarPage btnKurdele () {
-
-       btnKurdele.click();
-       return this;
-   }
-
-   public PostalananlarPage btnImzaciPopupKapat () {
-       btnImzaciPopupKapat.click();
-       return this;
-   }
-
-   public PostalananlarPage btnTamEkran() {
-       btnTamEkran.click();
-       return this;
-   }
-
-   public PostalananlarPage btnTamEkranKapat() {
-       btnTamEkranKapat.click();
-       return this;
-   }
-
-   public PostalananlarPage btnIcerikGoster() throws InterruptedException {
-       btnIcerikGoster.click();
-       Thread.sleep(1000);
-       return this;
-   }
-   public PostalananlarPage btnIcerikIlgileriTab () throws InterruptedException {
-       btnIlgileriIcerik.click();
-       Thread.sleep(500);
-       return this;
-   }
-   public PostalananlarPage btnIcerikEkleriTab () {
-       btnEkleriIcerik.click();
-       return this;
-   }
-   public PostalananlarPage btnIcerikDetayKapat () {
-       btnIcerikPencereKapat.click();
-       btnKapatmaOnayı.click();
-       return this;
-   }
-
-   public PostalananlarPage btnFiltrePostaladiklarim () {
-
-       btnRadioPostaladiklarim.click();
-       return this;
-   }
-   public PostalananlarPage btnFiltreBaslangicTarihi (String txt) {
-
-       btnFiltreBaslangicTarihi.setValue(txt);
-       return this;
-   }
-   public PostalananlarPage btnFiltreSpan (){
-
-       btnFiltreSpan.click();
-       return this;
-   }
-    public PostalananlarPage mngImzaDialog() {
-
-       ImzaDialog.click();
-       ImzaDialog.scrollTo();
-       return this;
     }
 
+    @Step("Kurdele Butonuna Tıkla")
+    public PostalananlarPage btnKurdele() {
+
+        btnKurdele.click();
+        return this;
+    }
+
+    @Step("Imza Popup kapat")
+    public PostalananlarPage btnImzaciPopupKapat() {
+        btnImzaciPopupKapat.click();
+        return this;
+    }
+
+    @Step("Tam Ekran görünüme tıkla")
+    public PostalananlarPage btnTamEkran() {
+        btnTamEkran.click();
+        return this;
+    }
+    @Step("Tam Ekran görünümü kapat")
+    public PostalananlarPage btnTamEkranKapat() {
+        btnTamEkranKapat.click();
+        return this;
+    }
+    @Step("Icerik Goster butonuna tıkla")
+    public PostalananlarPage btnIcerikGoster() throws InterruptedException {
+        btnIcerikGoster.click();
+        Thread.sleep(1000);
+        return this;
+    }
+    @Step("Icerik içinde Ilgileri Tabına tıklama")
+    public PostalananlarPage btnIcerikIlgileriTab() throws InterruptedException {
+        btnIlgileriIcerik.click();
+        Thread.sleep(500);
+        return this;
+    }
+    @Step("Icerik içinde Ekleri Tabına tıklama")
+    public PostalananlarPage btnIcerikEkleriTab() {
+        btnEkleriIcerik.click();
+        return this;
+    }
+    @Step("Icerik Detay Kapatma")
+    public PostalananlarPage btnIcerikDetayKapat() {
+        btnIcerikPencereKapat.click();
+        btnKapatmaOnayı.click();
+        return this;
+    }
+    @Step("Filtereden Postaladıklarımı işaretle")
+    public PostalananlarPage btnFiltrePostaladiklarim() {
+
+        btnRadioPostaladiklarim.click();
+        return this;
+    }
+    @Step("Filtreden başlangıç tarihi girişi")
+    public PostalananlarPage btnFiltreBaslangicTarihi(String date) {
+
+        btnFiltreBaslangicTarihi.setValue(date);
+        return this;
+    }
+    @Step("Filtre sekmesini aç")
+    public PostalananlarPage btnFiltreSpan() {
+
+        btnFiltreSpan.click();
+        return this;
+    }
+    @Step("Imza Dialog Ekranını göster")
+    public PostalananlarPage mngImzaDialog() {
+
+        ImzaDialog.click();
+        ImzaDialog.scrollTo();
+        return this;
+    }
+    @Step("Evrak Yazdır")
     public PostalananlarPage evrakYazdir() {
         postalananEvrakYazdir.click();
         return this;
     }
+    @Step("Etiket Bastir")
     public PostalananlarPage etiketBastir() {
 
-       postalananEvrakEtiketYazdir.click();
-       return this;
+        postalananEvrakEtiketYazdir.click();
+        return this;
     }
+    @Step("Tuzel Kisi Posta Kodu Guncelle")
+    public PostalananlarPage tuzelKisiPostaKodu() {
+
+        tuzelKisiGuncelle.click();
+        return this;
+    }
+
+    public PostalananlarPage kullaniciGuncelle() {
+
+        kullaniciGuncelle.click();
+        return this;
+    }
+
+
 }

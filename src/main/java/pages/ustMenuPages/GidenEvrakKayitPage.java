@@ -260,7 +260,7 @@ public class GidenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("PDF Ust Yazi adi kontrol")
+    @Step("PDF Ust Yazi adi kontrol : \"{ustYaziAdi}\" ")
     public GidenEvrakKayitPage ustYaziPdfAdiKontrol(String ustYaziAdi) {
         String text = lblEklenenPdfUstYazi.text();
         System.out.println(text);
@@ -268,22 +268,22 @@ public class GidenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("İvedilik Seç")
+    @Step("İvedilik alanından \"{ivedilik}\" Seç")
     public GidenEvrakKayitPage ivedilikSec(String ivedilik) {
         cmbEvrakBilgileriListIvedilik.selectOption(ivedilik);
         return this;
     }
 
-    @Step("Miat doldur")
+    @Step("Miat alnına \"{miatTarihi}\" girilir")
     public GidenEvrakKayitPage miatDoldur(String miatTarihi) {
         dateTxtMiat.clear();
         dateTxtMiat.sendKeys(miatTarihi);
         return this;
     }
 
-    @Step("Kaldıralacak Klasör doldur")
-    public GidenEvrakKayitPage kaldiralacakKlasorDoldur(String kaldirlacakKlasor) throws InterruptedException {
-        comboKaldiralacakKlasörler.selectLov(kaldirlacakKlasor);
+    @Step("Kaldıralacak Klasör alanından \"{kaldirilacakKlasor}\" seçilir")
+    public GidenEvrakKayitPage kaldiralacakKlasorDoldur(String kaldirilacakKlasor) throws InterruptedException {
+        comboKaldiralacakKlasörler.selectLov(kaldirilacakKlasor);
         return this;
     }
 
@@ -293,19 +293,19 @@ public class GidenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("Fiziksel Ek metin doldur")
+    @Step("Fiziksel Ek metin alanınıa \"{evrakEkTabViewEkMetni}\" girilir")
     public GidenEvrakKayitPage evrakEkTabFizikselEkMetniDoldur(String evrakEkTabViewEkMetni) {
         txtEvrakFizikselEkTabViewEkMetni.sendKeys(evrakEkTabViewEkMetni);
         return this;
     }
 
-    @Step("Fiziksel Ek Ekle buton")
+    @Step("Fiziksel Ek Ekle buton tıkla")
     public GidenEvrakKayitPage fizikselEkTabViewAciklamaEkle() {
         btnEvrakFizikselEkEkle.click();
         return this;
     }
 
-    @Step("Fiziksel Ek Ekle buton")
+    @Step("Fiziksel Ek Ekle buton tıkla")
     public GidenEvrakKayitPage ekBilgiFizikselEkEkle() throws InterruptedException {
         clickJs(btnFizikselEkEkle);
         return this;
@@ -317,7 +317,7 @@ public class GidenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("Metin açıklama doldur")
+    @Step("İlgi Ekleri Ek Metin alanına \"{evrakEkTabViewEkMetni}\" girilir")
     public GidenEvrakKayitPage ilgiEkleriMetinEkMetniDoldur(String evrakEkTabViewEkMetni) {
         txtIlgiEkleriMetinEkTabViewEkMetni.sendKeys(evrakEkTabViewEkMetni);
         return this;
@@ -359,7 +359,7 @@ public class GidenEvrakKayitPage extends MainPage {
         return evrakNo;
     }
 
-    @Step("Konu doldur")
+    @Step("Konu alnına \"{konu}\" girilir")
     public GidenEvrakKayitPage konuDoldur(String konu){
         $("[id$='konuTextArea']").setValue(konu);
         return this;

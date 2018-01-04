@@ -23,7 +23,25 @@ public class OnayAkisYonetimiPage extends MainPage {
     SelenideElement cmbFiltreDurum = $(By.id("onayAkisiYonetimiListingForm:filterPanel:durumSelectBoxOnayAkisiYonetimiListing"));
     SelenideElement txtFiltreAd = $(By.id("onayAkisiYonetimiListingForm:filterPanel:adFilterInputOnayAkisiYonetimiListing"));
     SelenideElement filtreAcmaKapatma = $(By.id("onayAkisiYonetimiListingForm:filterPanel"));
-
+    SelenideElement btnEkranKapat = $(By.cssSelector("[id='window1Dialog'] span[class='ui-icon ui-icon-closethick']"));
+    SelenideElement durumAktif = $(By.cssSelector("[id^='onayAkisiYonetimiListingForm:rolDataTable'] [class='true']"));
+    SelenideElement durumPasif = $(By.cssSelector("[id^='onayAkisiYonetimiListingForm:rolDataTable'] [class='false']"));
+    ElementsCollection tblOnayAkisListesi = $$("[id='onayAkisiYonetimiListingForm:rolDataTable_data'] tr[role=row]");
+    SelenideElement tblOnayAkisListesiSelenide = $(By.id("onayAkisiYonetimiListingForm:rolDataTable"));
+    SelenideElement btnPasifYap = $(By.cssSelector("[id$='changeOnayAkisiStatusButton'] [class$='to-passive-status-icon']"));
+    SelenideElement btnAktifYap = $(By.cssSelector("[id$='changeOnayAkisiStatusButton'] [class$='to-active-status-icon']"));
+    SelenideElement btnGuncelle = $(By.id("onayAkisiYonetimiListingForm:rolDataTable:0:updateRolButton"));
+    SelenideElement btnSilOnayAkisiItem2 = $(By.id("onayAkisiYonetimiEditorForm:onayAkisiYonetimiKullaniciBirimDataTable:1:removeOnayAkisiItem"));
+    SelenideElement cmbOnayAkisiYonetimIslemTipi = $(By.id("onayAkisiYonetimiEditorForm:onayAkisiYonetimiKullaniciBirimDataTable:1:onayAkisiYonetimiIslemTipi"));
+    SelenideElement btnKontrolUp = $(By.id("onayAkisiYonetimiEditorForm:onayAkisiYonetimiKullaniciBirimDataTable:1:j_idt1768"));
+    SelenideElement onayAkisListesiKontrolRow = $x("//tbody[@id='onayAkisiYonetimiEditorForm:onayAkisiYonetimiKullaniciBirimDataTable_data']/tr//select/option[@selected and @value='KONTROL']//ancestor::tr[1]");
+    ElementsCollection trOnayAkisiEkleKullanicilar = $$("tbody[id*='onayAkisiYonetimiEditorForm:onayAkisiYonetimiKullaniciBirimDataTable_data'] tr[role='row']");
+    SelenideElement chkKoordineli = $(By.id("onayAkisiYonetimiEditorForm:onayAkisiYonetimiKoordineliBooleanCheckbox"));
+    SelenideElement chkVekalet = $(By.id("    onayAkisiYonetimiEditorForm:onayAkisiYonetimiKullaniciBirimDataTable:1:onayAkisiYonetimiVekilBooleanCheckbox"));
+    By txtKullanicilar = By.id("onayAkisiYonetimiEditorForm:onayAkisiYonetimiKullaniciBirimLov:LovText");
+    //Değişecek burası
+    SelenideElement btnBirim = $(By.xpath("//div[@id='onayAkisiYonetimiEditorForm:onayAkisiYonetimiAkisOlusturPanel_content']/table[@role='grid']/tbody/tr[3]//div[@type='button']"));
+    SelenideElement txtKullanicilarSelenide = $(By.id("onayAkisiYonetimiEditorForm:onayAkisiYonetimiKullaniciBirimLov:LovText"));
     private SelenideElement btnVarsayilanYap = $(By.id("onayAkisiYonetimiListingForm:rolDataTable:0:default"));
     //private SelenideElement btnPasifYap = $(By.id("onayAkisiYonetimiListingForm:rolDataTable:0:changeOnayAkisiStatusButton"));
     private SelenideElement onayAkisAlani;
@@ -37,30 +55,6 @@ public class OnayAkisYonetimiPage extends MainPage {
     private BelgenetElement txtOnayAkisiIslemleriKullanicilar = comboLov("[id='onayAkisiYonetimiEditorForm:onayAkisiYonetimiKullaniciBirimLov:LovText']");
     private SelenideElement btnOnayAkisiIslemleriKaydet = $(By.id("onayAkisiYonetimiEditorForm:onayAkisiYonetimiEditorKaydetId"));
     private SelenideElement txtOnayAkisiIslemleriAd = $(By.id("onayAkisiYonetimiEditorForm:onayAkisiYonetimiAkisAdiInput"));
-    SelenideElement btnEkranKapat = $(By.cssSelector("[id='window1Dialog'] span[class='ui-icon ui-icon-closethick']"));
-
-    SelenideElement durumAktif = $(By.cssSelector("[id^='onayAkisiYonetimiListingForm:rolDataTable'] [class='true']"));
-    SelenideElement durumPasif = $(By.cssSelector("[id^='onayAkisiYonetimiListingForm:rolDataTable'] [class='false']"));
-    ElementsCollection tblOnayAkisListesi = $$("[id='onayAkisiYonetimiListingForm:rolDataTable_data'] tr[role=row]");
-    SelenideElement tblOnayAkisListesiSelenide = $(By.id("onayAkisiYonetimiListingForm:rolDataTable"));
-    SelenideElement btnPasifYap = $(By.cssSelector("[id$='changeOnayAkisiStatusButton'] [class$='to-passive-status-icon']"));
-    SelenideElement btnAktifYap = $(By.cssSelector("[id$='changeOnayAkisiStatusButton'] [class$='to-active-status-icon']"));
-    SelenideElement btnGuncelle = $(By.id("onayAkisiYonetimiListingForm:rolDataTable:0:updateRolButton"));
-
-    SelenideElement btnSilOnayAkisiItem2 = $(By.id("onayAkisiYonetimiEditorForm:onayAkisiYonetimiKullaniciBirimDataTable:1:removeOnayAkisiItem"));
-    SelenideElement cmbOnayAkisiYonetimIslemTipi = $(By.id("onayAkisiYonetimiEditorForm:onayAkisiYonetimiKullaniciBirimDataTable:1:onayAkisiYonetimiIslemTipi"));
-    SelenideElement btnKontrolUp = $(By.id("onayAkisiYonetimiEditorForm:onayAkisiYonetimiKullaniciBirimDataTable:1:j_idt1768"));
-    SelenideElement onayAkisListesiKontrolRow = $x("//tbody[@id='onayAkisiYonetimiEditorForm:onayAkisiYonetimiKullaniciBirimDataTable_data']/tr//select/option[@selected and @value='KONTROL']//ancestor::tr[1]");
-
-    ElementsCollection trOnayAkisiEkleKullanicilar = $$("tbody[id*='onayAkisiYonetimiEditorForm:onayAkisiYonetimiKullaniciBirimDataTable_data'] tr[role='row']");
-    SelenideElement chkKoordineli = $(By.id("onayAkisiYonetimiEditorForm:onayAkisiYonetimiKoordineliBooleanCheckbox"));
-    SelenideElement chkVekalet = $(By.id("    onayAkisiYonetimiEditorForm:onayAkisiYonetimiKullaniciBirimDataTable:1:onayAkisiYonetimiVekilBooleanCheckbox"));
-    By txtKullanicilar = By.id("onayAkisiYonetimiEditorForm:onayAkisiYonetimiKullaniciBirimLov:LovText");
-
-    //Değişecek burası
-    SelenideElement btnBirim = $(By.xpath("//div[@id='onayAkisiYonetimiEditorForm:onayAkisiYonetimiAkisOlusturPanel_content']/table[@role='grid']/tbody/tr[3]//div[@type='button']"));
-    SelenideElement txtKullanicilarSelenide = $(By.id("onayAkisiYonetimiEditorForm:onayAkisiYonetimiKullaniciBirimLov:LovText"));
-
 
     @Step("Onay akışı sayfası aç")
     public OnayAkisYonetimiPage openPage() {

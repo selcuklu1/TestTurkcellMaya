@@ -54,7 +54,8 @@ public class VekaletVerPage extends MainPage {
 //    BelgenetElement cmbDurum = comboBox (By.xpath("//table[@id='vekaletVerForm:vekaletLayout:vekaletSorgulaPanelGrid']//select"));
 
     SelenideElement cmbDurum = $(By.xpath("//table[@id='vekaletVerForm:vekaletLayout:vekaletSorgulaPanelGrid']//select"));
-    @Step("Vekalet Ver sayfası aç")
+
+    @Step("Vekalet Ver sayfasını aç")
     public VekaletVerPage openPage() {
         new UstMenu().ustMenu("Vekalet Ver");
         $("form[id='vekaletVerForm']").shouldBe(visible);
@@ -74,10 +75,10 @@ public class VekaletVerPage extends MainPage {
         return this;
     }
 
-    @Step("Vekalet veren alanını farklı doldur")
-    public VekaletVerPage vekaletVerenFarkliDoldur(String text) {
+    @Step("Vekalet veren alanını farklı doldur \"{vekaletVeren}\" ")
+    public VekaletVerPage vekaletVerenFarkliDoldur(String vekaletVeren) {
         btnVekalelVerenTemizle.click();
-        txtVekaletVerenCombolov.selectLov(text);
+        txtVekaletVerenCombolov.selectLov(vekaletVeren);
         return this;
     }
 
@@ -137,7 +138,7 @@ public class VekaletVerPage extends MainPage {
         return this;
     }
 
-    @Step("Evrak Ekle butnu")
+    @Step("Evrak Ekle butonu")
     public VekaletVerPage evrakEkle() {
         clickJs(btnEvrakEkle);
         return this;
@@ -184,11 +185,13 @@ public class VekaletVerPage extends MainPage {
         tabVekaletListesi.click();
         return this;
     }
+
     @Step("Yeni vekalet Tab aç")
     public VekaletVerPage yeniVekaletTabAc() {
         tabYeniVekalet.click();
         return this;
     }
+
     @Step("Sorgula butonu")
     public VekaletVerPage sorgula() {
         btnSorgula.click();
@@ -204,8 +207,8 @@ public class VekaletVerPage extends MainPage {
 
     @Step("Vekalet Listesi Tablo Kontrol")
     public VekaletVerPage vekaletListesiTabloKontrol() {
-       tblVekaletListesi.shouldHave(CollectionCondition.sizeGreaterThan(0));
-       return this;
+        tblVekaletListesi.shouldHave(CollectionCondition.sizeGreaterThan(0));
+        return this;
     }
 
     @Step("Vekalet Listesi Tablo Kontrol : \"{vekaletveren}\" ")
@@ -214,13 +217,22 @@ public class VekaletVerPage extends MainPage {
         ElementsCollection rows = tblVekaletListesi
                 .filterBy(Condition.text(vekaletveren));
 
-        for (SelenideElement row:rows) {
+        for (SelenideElement row : rows) {
             row.$("textarea").sendKeys("İptal");
             row.$("button").click();
             SelenideElement popUp = $("[id='vekaletUyariDaialog']");
             popUp.shouldBe(Condition.visible);
             $(By.xpath("//div[@id= 'vekaletUyariDaialog']//button[span[text()='Evet']]")).click();
         }
+        vekaletIslemleriSayfasıKapat();
+        return this;
+    }
+
+
+    @Step("Vekalet İşlemleri sayfası kapat")
+    public VekaletVerPage vekaletIslemleriSayfasıKapat() {
+        $(By.xpath("//div[@id='window1Dialog']//span[@class='ui-icon ui-icon-closethick']")).click();
+        islemPenceresiKapatmaOnayiPopup("Kapat");
         return this;
     }
 
@@ -244,7 +256,7 @@ public class VekaletVerPage extends MainPage {
     }
 
     @Step("Vekalet var uyarı popup")
-    public VekaletVerPage vekaletVarUyarıPopUp() {
+    public VekaletVerPage vekaletVarUyariPopUp() {
         popUpAktifVekaletUyarı.exists();
         btnTamam.click();
         return this;

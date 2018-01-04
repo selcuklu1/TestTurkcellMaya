@@ -1,15 +1,19 @@
 package pages.ustMenuPages;
 
 
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.*;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import pages.MainPage;
-import pages.pageComponents.UstMenu;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
+import java.util.Random;
+
+import static com.codeborne.selenide.CollectionCondition.*;
+import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.value;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
@@ -59,13 +63,29 @@ public class KullaniciYonetimiPage extends MainPage {
     SelenideElement txtUnvan = $(By.id("kullaniciYonetimiEditorForm:unvanAutoComplete_input"));
     SelenideElement txtEkranAdi = $(By.id("kullaniciYonetimiEditorForm:ekranAdiInput"));
 
-    ElementsCollection tblKullaniciBirim = $$("[id='kullaniciYonetimiEditorForm:kullaniciBirimDataTable_data'] tr[role=row]");
+    ElementsCollection tblKullaniciBirim = $$("[id='kullaniciYonetimiEditorForm:kullaniciBirimDataTable_data'] tr[role=row][data-ri]");
 
 
     //
     SelenideElement kaydet = $(By.id("kullaniciYonetimiEditorForm:saveKullaniciButton"));
 
 
+    // Hüseyin TÜMER
+    SelenideElement btnKullaniciEkle = $(By.id("kullaniciYonetimiListingForm:kullaniciDataTable:addNewKullaniciButton"));
+    SelenideElement txtTcKimlikNo1 = $(By.id("kullaniciYonetimiEditorForm:tcKimlikNoInput"));
+    SelenideElement txtSicilNo1 = $(By.id("kullaniciYonetimiEditorForm:sicilNoInput"));
+    SelenideElement txtAd1 = $(By.id("kullaniciYonetimiEditorForm:ilkAdInput"));
+    SelenideElement txtSoyad1 = $(By.id("kullaniciYonetimiEditorForm:soyadInput"));
+    SelenideElement txtKullaniciAdi1 = $(By.id("kullaniciYonetimiEditorForm:kullaniciAdiInput"));
+    SelenideElement txtEmail1 = $(By.id("kullaniciYonetimiEditorForm:emailInput"));
+    SelenideElement txtSifre = $(By.id("kullaniciYonetimiEditorForm:sifre"));
+    SelenideElement txtSifreTekrar = $(By.id("kullaniciYonetimiEditorForm:sifreTekrar"));
+    SelenideElement btnGorevliOlduguBirimEkle = $(By.id("kullaniciYonetimiEditorForm:kullaniciBirimDataTable:addNewKullaniciBirimLinkButton"));
+    BelgenetElement txtBirim = comboLov(By.id("kullaniciBirimEditorForm:kullaniciBirimIliskiBirimLov:LovText"));
+    SelenideElement btnRolEkle = $(By.id("kullaniciYonetimiEditorForm:kullaniciRolBirimDataTable:addNewRolLinkButton"));
+    SelenideElement txtGorev = $(By.id("kullaniciBirimEditorForm:unvanAutoComplete_input"));
+    BelgenetElement txtRol = comboLov(By.id("kullaniciRolEkleEditorForm:rolEkleLovRolList:LovText"));
+    SelenideElement btnRolKaydet = $(By.id("kullaniciRolEkleEditorForm:saveKullaniciRolEkleButton"));
 
     @Step("Birim alanında \"{0}\" sec")
     public KullaniciYonetimiPage birimSec(String text) {
@@ -73,7 +93,6 @@ public class KullaniciYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Ekran adı çekilir")
     public String ekranAdiCek() {
         String ekranAdi = txtEkranAdi.getValue();
         return ekranAdi;
@@ -90,26 +109,26 @@ public class KullaniciYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Kullanıcı Yönetim sayfası aç")
+    @Step("Kullanıcı Yönetim sayfasını aç")
     public KullaniciYonetimiPage openPage() {
         ustMenu("Kullanıcı Yönetim");
         return this;
     }
 
-    @Step("Kullanıcı Birim atama bağ tipi seç")
-    public KullaniciYonetimiPage popupKullaniciBirimAtamaBagTipiSec(String value) {
-        cmbPopupKullaniciBirimAtamaBagTipi.selectOption(value);
+    @Step("Kullanıcı Birim atama bağ tipi seçilir {value} | {bag}")
+    public KullaniciYonetimiPage popupKullaniciBirimAtamaBagTipiSec(String bagTipi, String bag) {
+        cmbPopupKullaniciBirimAtamaBagTipi.selectOption(bagTipi);
         return this;
     }
 
-    @Step("Görevli olduğu birimler güncelle")
-    public KullaniciYonetimiPage gorevliOlduguBirimlerGuncelle(){
+    @Step("Görevli olduğu birimleri güncelle")
+    public KullaniciYonetimiPage gorevliOlduguBirimlerGuncelle() {
         clickJs(btnGorevliOlduguBirimlerGuncelle);
         return this;
     }
 
-    @Step("Seçilen kullanıcı güncelle tıkla")
-    public KullaniciYonetimiPage kullaniciListesiGuncelle(){
+    @Step("Seçilen kullanıcıyı güncelle tıkla")
+    public KullaniciYonetimiPage kullaniciListesiGuncelle() {
         clickJs(btnKullaniciListesiGuncelle);
         return this;
     }
@@ -174,6 +193,7 @@ public class KullaniciYonetimiPage extends MainPage {
         chkAltBirimiOlmayanlar.setSelected(value);
         return this;
     }
+
     @Step("Ara")
     public KullaniciYonetimiPage ara() {
         btnAra.click();
@@ -196,6 +216,9 @@ public class KullaniciYonetimiPage extends MainPage {
 
     @Step("Gorevli oldugu birimler")
     public KullaniciYonetimiPage gorevliOlduguBirimlerKontol() {
+        tblGorevliOlduguBirimler.shouldBe(visible);
+        tblGorevliOlduguBirimler.$("label").shouldHave(text("Görevli Olduğu Birimler"));
+        tblKullaniciBirim.shouldHave(sizeGreaterThan(0));
         tblGorevliOlduguBirimler.exists();
         return this;
     }
@@ -208,7 +231,7 @@ public class KullaniciYonetimiPage extends MainPage {
 //    }
     @Step("Gizlilik derecesi seç")
     public KullaniciYonetimiPage kullaniciBirimAtamaGizlilikDerecesiSec(String gizlilikDerecesi) {
-        if (cmbKullaniciBirimAtamaGizlilikDerecesi.isDisplayed())
+//        if (cmbKullaniciBirimAtamaGizlilikDerecesi.isDisplayed())
             cmbKullaniciBirimAtamaGizlilikDerecesi.selectOption(gizlilikDerecesi);
         return this;
     }
@@ -221,24 +244,22 @@ public class KullaniciYonetimiPage extends MainPage {
 
     @Step("Görevli olduğu birim guncelleme")
     public KullaniciYonetimiPage gorevliOlduguBirimGuncelle() {
-
         String title = cmlBirim.lastSelectedLovTitleText();
-        tblKullaniciBirim
-                .filterBy(Condition.text(title)).shouldHaveSize(1)
-                .first()
-                .$("[id$='updateKullaniciBirimButton']").click();
+
+        tblKullaniciBirim.filterBy(text(title)).shouldHaveSize(1)
+                .first().$("[id$='updateKullaniciBirimButton']").click();
         return this;
     }
 
-    @Step("Kullanıcı guncelleme kaydet")
+    @Step("Kullanıcı güncelleme alanında kaydet")
     public KullaniciYonetimiPage kullaniciGuncellemeKaydet() {
         btnKullaniciGuncelleKaydet.click();
         return this;
     }
 
-    @Step("Kullanici Birim Atama Gizlilik Derecesi Kontrolu")
-    public KullaniciYonetimiPage kullaniciBirimAtamaGizlilikDerecesiKontrolu() {
-        cmbKullaniciBirimAtamaGizlilikDerecesi.shouldBe(Condition.text("Tasnif Dışı"));
+    @Step("Kullanici Birim Atama Gizlilik Derecesi seçilen değer kontrolu")
+    public KullaniciYonetimiPage kullaniciBirimAtamaGizlilikDerecesiDeğerKontrolu(String value) {
+        cmbKullaniciBirimAtamaGizlilikDerecesi.shouldHave(text(value));
         return this;
     }
 
@@ -249,5 +270,68 @@ public class KullaniciYonetimiPage extends MainPage {
             txtUnvan.pressEnter();
         }
         return this;
+    }
+
+    @Step("Kullanıcı Oluştur")
+    public String kullaniciOlustur(String gorevliOlduguBirim, String gorev) {
+
+        String kullaniciAdi = "Kullanici" + (new Random().nextInt((900000 - 100000) + 1) + 100000);
+        String sicilNo = "" + (new Random().nextInt((900000 - 100000) + 1) + 100000);
+        btnKullaniciEkle.click();
+        txtTcKimlikNo1.setValue(createMernisTCKN());
+        txtSicilNo1.setValue(sicilNo);
+        txtAd1.setValue(kullaniciAdi);
+        txtSoyad1.setValue(kullaniciAdi);
+        txtKullaniciAdi1.setValue(kullaniciAdi);
+        txtEmail1.setValue(kullaniciAdi + "@turksat.com.tr");
+        txtSifre.setValue("123");
+        txtSifreTekrar.setValue("123");
+        txtUnvan.setValue(gorev);
+        Selenide.sleep(2000);
+        txtUnvan.pressEnter();
+        btnGorevliOlduguBirimEkle.click();
+        txtBirim.selectLov(gorevliOlduguBirim);
+        txtGorev.setValue(gorev);
+        Selenide.sleep(2000);
+        txtGorev.pressEnter();
+        btnKullaniciBirimAtamaKaydet.click();
+        btnRolEkle.click();
+        txtRol.selectLov("ENTERPRİSE");
+        txtRol.selectLov("STANDART KULLANICI (EVRAK KAPATMA HARİÇ)");
+        btnRolKaydet.click();
+        String ekranAdi = txtEkranAdi.getValue();
+        btnKullaniciGuncelleKaydet.click();
+        return ekranAdi;
+    }
+
+    @Step("Kullanıcı Oluştur")
+    public String kullaniciOlustur(String kullaniciAdi, String sifre, String gorevliOlduguBirim, String gorev) {
+
+        String sicilNo = "" + (new Random().nextInt((900000 - 100000) + 1) + 100000);
+        btnKullaniciEkle.click();
+        txtTcKimlikNo1.setValue(createMernisTCKN());
+        txtSicilNo1.setValue(sicilNo);
+        txtAd1.setValue(kullaniciAdi);
+        txtSoyad1.setValue(kullaniciAdi);
+        txtKullaniciAdi1.setValue(kullaniciAdi);
+        txtEmail1.setValue(kullaniciAdi + "@turksat.com.tr");
+        txtSifre.setValue(sifre);
+        txtSifreTekrar.setValue(sifre);
+        txtUnvan.setValue(gorev);
+        Selenide.sleep(2000);
+        txtUnvan.pressEnter();
+        btnGorevliOlduguBirimEkle.click();
+        txtBirim.selectLov(gorevliOlduguBirim);
+        txtGorev.setValue(gorev);
+        Selenide.sleep(2000);
+        txtGorev.pressEnter();
+        btnKullaniciBirimAtamaKaydet.click();
+        btnRolEkle.click();
+        txtRol.selectLov("ENTERPRİSE");
+        txtRol.selectLov("STANDART KULLANICI (EVRAK KAPATMA HARİÇ)");
+        btnRolKaydet.click();
+        String ekranAdi = txtEkranAdi.getValue();
+        btnKullaniciGuncelleKaydet.click();
+        return ekranAdi;
     }
 }

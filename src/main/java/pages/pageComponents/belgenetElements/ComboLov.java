@@ -37,8 +37,7 @@ class ComboLov {
             if (args.length > 0) {
                 By by = comboLovHelper.selectLov(args[0].toString());
                 return ElementFinder.wrap(BelgenetElement.class, null, by, 0);
-            }
-            else
+            } else
                 return (BelgenetElement) proxy;
         }
     }

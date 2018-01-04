@@ -20,6 +20,8 @@ public class TebliglerPage extends MainPage {
     SelenideElement btnTebligSil = $(By.xpath("//div[@id='mainInboxForm:inboxDataTable:inboxIslemlerToolbar']//span[contains(@class, 'document-messageDelete')]"));
 
     SelenideElement btnTebellugEt = $(By.xpath("//span[contains(@class, 'tebellugEt')]/.."));
+    SelenideElement btnTebellugEvet = $(By.id("mainInboxForm:tebellugEtEvetButton"));
+    SelenideElement btnTebellugHayir = $(By.id("mainInboxForm:tebellugEtHayirButton"));
 
     @Step("Tebliğler sayfasını aç")
     public TebliglerPage openPage() {
@@ -78,7 +80,6 @@ public class TebliglerPage extends MainPage {
         return this;
     }
 
-
     @Step("İçerik göster butonuna tıkla.")
     public TebliglerPage icerikGoster(String konu, String birim, String tebligEden, String evrakTipi, String aciklama) {
         tableTebligler
@@ -112,9 +113,6 @@ public class TebliglerPage extends MainPage {
                 .click();
         return this;
     }
-
-    SelenideElement btnTebellugEvet = $(By.id("mainInboxForm:tebellugEtEvetButton"));
-    SelenideElement btnTebellugHayir = $(By.id("mainInboxForm:tebellugEtHayirButton"));
 
     @Step("Tebelliğ Et butonuna tıkla.")
     public TebliglerPage tebellugEt(boolean onay) {

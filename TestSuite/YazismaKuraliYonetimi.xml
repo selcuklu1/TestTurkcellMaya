@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite thread-count="1" name="Yazışma Kuralı Yönetimi" parallel="classes" verbose="1">
+    <!--By Huseyin-->
+    <test name="Yazışma Kuralı Yönetimi Testleri">
+        <packages>
+            <package name="tests.YazismaKurallariYonetimi"/>
+        </packages>
+    </test>
+</suite>

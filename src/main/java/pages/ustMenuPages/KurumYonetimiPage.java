@@ -1,13 +1,14 @@
 package pages.ustMenuPages;
 
-import com.codeborne.selenide.*;
+import com.codeborne.selenide.CollectionCondition;
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
-
-import java.security.Key;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
@@ -72,44 +73,56 @@ public class KurumYonetimiPage extends MainPage {
     SelenideElement filtrePanel = $("div[id='kurumYonetimiListingForm:filterPanel'] > h3");
 
     SelenideElement btnSecileniKaldir = $("button[id^='kurumYonetimiListingForm:filterPanel:kurumFilterLov:'] span[class='ui-button-icon-left ui-icon delete-icon']");
+    ElementsCollection treeIdariBirimKimlikKodu = $$("div[id='kurumYonetimiListingForm:filterPanel:kurumFilterLov:lovTree'] > ul > li");
+    SelenideElement btnKurumEkle = $("button[id$=':addNewKurumButton']");
+    SelenideElement txtHitap = $(By.xpath("//form[@id='kurumYonetimiEditorForm']//label[contains(.,'Hitap')]/../textarea"));
+    SelenideElement btnIletisimBilgisiEkle = $(By.id("kurumYonetimiEditorForm:iletisimBilgileriDataTable:addNewIletisimBilgisiButton"));
+    By selectorBtnChangeStatu = By.cssSelector("button[id$='changeKurumStatusButton']");
+    SelenideElement btnPasifYapEvet = $(By.id("baseConfirmationDialog:confirmButton"));
+    SelenideElement btnKepAdresiBilgisiEkle = $(By.id("kurumYonetimiEditorForm:kepBilgileriDataTable:addNewKepAdresiButton"));
 
     @Step("Kurum Yönetimi sayfası aç")
     public KurumYonetimiPage openPage() {
         ustMenu("Kurum Yönetimi");
         return this;
     }
+
     @Step("TC kimlik no alma")
     public String idariBirimKimlikKoduCek() {
         String getIdariBirimKodu = txtIdariBirimKimlikKodu.getValue();
         return getIdariBirimKodu;
     }
+
     @Step("Kaydet")
-    public  KurumYonetimiPage popupKaydet() throws InterruptedException{
+    public KurumYonetimiPage popupKaydet() {
         btnPopupKaydet.click();
         return this;
     }
+
     @Step("Kep hizmet sağlayıcısı seç")
-    public KurumYonetimiPage popupKepHizmetSaglayicisiSec(String value) throws InterruptedException{
+    public KurumYonetimiPage popupKepHizmetSaglayicisiSec(String value) throws InterruptedException {
         cmbPopupKepHizmetSaglayicisi.selectOption(value);
         return this;
     }
+
     @Step("Kep adresi doldur")
-    public KurumYonetimiPage popupKepAdresiDoldur(String text) throws InterruptedException{
+    public KurumYonetimiPage popupKepAdresiDoldur(String text) {
         txtPopupKepAdresi.setValue(text);
         return this;
     }
+
     @Step("Güncelle ")
-    public KurumYonetimiPage guncelle() throws InterruptedException{
+    public KurumYonetimiPage guncelle() throws InterruptedException {
         btnAltMenuAc.click();
         btnGuncelle.click();
         return this;
     }
+
     @Step("Kep Adres Bilgileri ekle")
     public KurumYonetimiPage kepAdresBilgileriArti() {
         clickJs(btnKepAdresBilgileriArti);
         return this;
     }
-
 
     @Step("Kaydet")
     public KurumYonetimiPage kaydet() {
@@ -124,11 +137,11 @@ public class KurumYonetimiPage extends MainPage {
         if (chkOzelHitap.$(By.xpath("./div[contains(@class, 'ui-state-active')]")).exists())
             isSelected = true;
 
-        if(secim == true){
-            if(isSelected == false)
+        if (secim == true) {
+            if (isSelected == false)
                 chkOzelHitap.click();
         } else {
-            if(isSelected == true)
+            if (isSelected == true)
                 chkOzelHitap.click();
         }
 
@@ -142,11 +155,11 @@ public class KurumYonetimiPage extends MainPage {
         if (chkKepAdresiKullaniyor.$(By.xpath("./div[contains(@class, 'ui-state-active')]")).exists())
             isSelected = true;
 
-        if(secim == true){
-            if(isSelected == false)
+        if (secim == true) {
+            if (isSelected == false)
                 chkKepAdresiKullaniyor.click();
         } else {
-            if(isSelected == true)
+            if (isSelected == true)
                 chkKepAdresiKullaniyor.click();
         }
 
@@ -183,8 +196,9 @@ public class KurumYonetimiPage extends MainPage {
         cmbDurum.selectOption(value);
         return this;
     }
+
     @Step("Ara")
-    public KurumYonetimiPage ara(){
+    public KurumYonetimiPage ara() {
         btnAra.click();
         return this;
     }
@@ -196,67 +210,70 @@ public class KurumYonetimiPage extends MainPage {
         String durumClass = "";
         int durumColumnIndex = 0;
 
-        if(durum == "Sadece Aktifler"){
+        if (durum == "Sadece Aktifler") {
             durumClass = "true";
             currentTable = tableKurumListesi;
             durumColumnIndex = 4;
-        }
-        else if(durum == "Sadece Pasifler"){
+        } else if (durum == "Sadece Pasifler") {
             durumClass = "false";
             currentTable = tablePasifKurumlar;
             durumColumnIndex = 2;
-        }
-        else if(durum == "Tümü") {
+        } else if (durum == "Tümü") {
             durumClass = "all";
             currentTable = tableKurumListesi;
             durumColumnIndex = 4;
         }
 
-        if(kurumAdi != null && kurumAdi != ""){
-            currentTable
-                    .filterBy(Condition.text(kurumAdi))
-                    .get(0)
-                    .shouldBe(Condition.exist);
-            checkAll = false;
-        }
+        if (kurumAdi != null && kurumAdi != "") {
 
-        if(durum != null || durum != "")
-        {
+            ElementsCollection pages = $$("td[id='kurumYonetimiListingForm:pasifKurumlarDataTable_paginator_bottom'] > span[class='ui-paginator-pages'] >  span");
 
-            if(checkAll){
+            for (int i = 0; i < pages.size(); i++) {
+                pages.get(i).click();
 
-                if(durumClass == "all")
-                {
-                    currentTable.shouldHave(CollectionCondition.sizeGreaterThan(0));
+                SelenideElement currentRow = currentTable
+                        .filterBy(Condition.text(kurumAdi))
+                        .first();
+
+                if (currentRow.isDisplayed() && currentRow.exists()) {
+                    checkAll = false;
+                    break;
                 }
 
-                else{
+            }
 
-                    for(int i = 0; i < currentTable.size(); i++){
+        }
+
+        if (durum != null || durum != "") {
+
+            if (checkAll) {
+
+                if (durumClass == "all") {
+                    currentTable.shouldHave(CollectionCondition.sizeGreaterThan(0));
+                } else {
+
+                    for (int i = 0; i < currentTable.size(); i++) {
                         currentTable
                                 .get(i)
-                                .$("td:nth-child("+durumColumnIndex+") span")
+                                .$("td:nth-child(" + durumColumnIndex + ") span")
                                 .shouldHave(Condition.attribute("class", durumClass));
                     }
 
                 }
 
 
-            }
-            else{
+            } else {
 
-                if(durumClass == "all")
-                {
+                if (durumClass == "all") {
                     currentTable.shouldHave(CollectionCondition.sizeGreaterThan(0));
                 } else {
 
                     currentTable
                             .get(0)
-                            .$("td:nth-child("+durumColumnIndex+") span")
+                            .$("td:nth-child(" + durumColumnIndex + ") span")
                             .shouldHave(Condition.attribute("class", durumClass));
 
                 }
-
 
 
             }
@@ -272,16 +289,11 @@ public class KurumYonetimiPage extends MainPage {
     }
 
     @Step("Filtrele panelini aç")
-    public KurumYonetimiPage filtrePanelAc(){
-        $("div[id='kurumYonetimiListingForm:filterPanel'] > h3").waitUntil(Condition.visible, 10000);
-        String isExpanded = $("div[id='kurumYonetimiListingForm:filterPanel'] > h3").getAttribute("aria-expanded");
-        if(isExpanded == "false") {
-            $("div[id='kurumYonetimiListingForm:filterPanel'] > h3").click();
-        }
+    public KurumYonetimiPage filtrePanelAc() {
+        $("div[id='kurumYonetimiListingForm:filterPanel'] > h3").click();
         return this;
     }
 
-    ElementsCollection treeIdariBirimKimlikKodu = $$("div[id='kurumYonetimiListingForm:filterPanel:kurumFilterLov:lovTree'] > ul > li");
     @Step("Sorgulama panelinde kurum alanına idari birim kimlik kodu doldur.")
     public KurumYonetimiPage sorgulaIdariKimlikKoduSec(String idariBirimKimlikKodu) {
 
@@ -301,10 +313,9 @@ public class KurumYonetimiPage extends MainPage {
         return this;
     }
 
-
     // Hüseyin Methods
     @Step("{0} kurumunu güncelle")
-    public KurumYonetimiPage kurumGuncelle(String kurumAdi){
+    public KurumYonetimiPage kurumGuncelle(String kurumAdi) {
         tableKurumListesi
                 .filterBy(Condition.text(kurumAdi))
                 .get(0)
@@ -314,87 +325,89 @@ public class KurumYonetimiPage extends MainPage {
     }
 
     @Step("{0} kurumunu seç")
-    public KurumYonetimiPage ustKurumSec(String ustKurum){
-        if(divSecilenUstKurum.exists())
+    public KurumYonetimiPage ustKurumSec(String ustKurum) {
+        if (divSecilenUstKurum.exists())
             btnSecilenKurumListedenCikar.exists();
         txtUstKurum.selectLov(ustKurum);
         return this;
     }
 
     @Step("İletişim bilgisi güncelle")
-    public KurumYonetimiPage iletisimGuncelle(){
+    public KurumYonetimiPage iletisimGuncelle() {
         btnIletisimGuncelle.click();
         return this;
     }
 
     @Step("Mobil telefon no doldur")
-    public KurumYonetimiPage mobilTelNoDoldur(String mobilTelNo){
+    public KurumYonetimiPage mobilTelNoDoldur(String mobilTelNo) {
         txtMobilTelNo.setValue(mobilTelNo);
         return this;
     }
 
     @Step("Telefon No doldur")
-    public KurumYonetimiPage telefonNoDoldur(String telefonNo){
+    public KurumYonetimiPage telefonNoDoldur(String telefonNo) {
         txtTelefonNo.setValue(telefonNo);
         return this;
     }
 
     @Step("İş Telefon No doldur")
-    public KurumYonetimiPage isTelefonNoDoldur(String isTelefonNo){
+    public KurumYonetimiPage isTelefonNoDoldur(String isTelefonNo) {
         txtIsTelefonNo.setValue(isTelefonNo);
         return this;
     }
 
     @Step("Fax Numarası 1 doldur")
-    public KurumYonetimiPage faxNumarasi1Doldur(String faxNumarasi1){
+    public KurumYonetimiPage faxNumarasi1Doldur(String faxNumarasi1) {
         txtFaxNumarasi1.setValue(faxNumarasi1);
         return this;
     }
 
     @Step("Fax Numarası 2 doldur")
-    public KurumYonetimiPage faxNumarasi2Doldur(String faxNumarasi2){
+    public KurumYonetimiPage faxNumarasi2Doldur(String faxNumarasi2) {
         txtFaxNumarasi2.setValue(faxNumarasi2);
         return this;
     }
 
     @Step("Adres doldur")
-    public KurumYonetimiPage adresDoldur(String adres){
+    public KurumYonetimiPage adresDoldur(String adres) {
         txtAdres.setValue(adres);
         return this;
     }
 
     @Step("Ülke doldur")
-    public KurumYonetimiPage ulkeDoldur(String ulke){
-        txtUlke.selectLov(ulke);
+    public KurumYonetimiPage ulkeDoldur(String ulke) {
+        txtUlke.setValue(ulke);
+        txtUlke.detailItems().filterBy(Condition.text("TC")).first().click();
+        //txtUlke.selectLov(ulke);
         return this;
     }
 
     @Step("İl doldur")
-    public KurumYonetimiPage ilDoldur(String il){
+    public KurumYonetimiPage ilDoldur(String il) {
         txtIl.selectLov(il);
         return this;
     }
 
     @Step("İlçe doldur")
-    public KurumYonetimiPage ilceDoldur(String ilce){
+    public KurumYonetimiPage ilceDoldur(String ilce) {
         txtIlce.selectLov(ilce);
         return this;
     }
 
     @Step("E Posta doldur")
-    public KurumYonetimiPage ePostaDoldur(String eposta){
+    public KurumYonetimiPage ePostaDoldur(String eposta) {
         txtEPosta.setValue(eposta);
         return this;
     }
 
     @Step("Web Adresi doldur")
-    public KurumYonetimiPage webAdresiDoldur(String webAdresi){
+    public KurumYonetimiPage webAdresiDoldur(String webAdresi) {
         txtWebAdresi.setValue(webAdresi);
         return this;
     }
 
     @Step("İletişim bilgisi kaydet")
-    public KurumYonetimiPage iletisimBilgisiKaydet(){
+    public KurumYonetimiPage iletisimBilgisiKaydet() {
         btnIletisimBilgisiKaydet.click();
         return this;
     }
@@ -402,7 +415,7 @@ public class KurumYonetimiPage extends MainPage {
     @Step("Kep adresi güncelle")
     public KurumYonetimiPage kepAdresiGuncelle(String kepAdresi, Integer kepIndex) {
 
-        if(kepIndex == null){
+        if (kepIndex == null) {
             tableKepAdresleri
                     .filterBy(Condition.text(kepAdresi))
                     .get(0)
@@ -452,10 +465,9 @@ public class KurumYonetimiPage extends MainPage {
     @Step("Description")
     public KurumYonetimiPage kepAdresiKontrol(String kepAdresi, Integer kepIndex, Boolean shouldBeExist) {
 
-        if(shouldBeExist){
+        if (shouldBeExist) {
 
-            if(kepIndex == null)
-            {
+            if (kepIndex == null) {
                 tableKepAdresleri
                         .filterBy(Condition.text(kepAdresi))
                         .get(0)
@@ -468,8 +480,7 @@ public class KurumYonetimiPage extends MainPage {
             }
 
         } else {
-            if(kepIndex == null)
-            {
+            if (kepIndex == null) {
                 tableKepAdresleri
                         .filterBy(Condition.text(kepAdresi))
                         .get(0)
@@ -502,7 +513,7 @@ public class KurumYonetimiPage extends MainPage {
     @Step("kurum kontrol et")
     public KurumYonetimiPage kurumKontrolEt(String kurumAdi, Boolean shouldBeExist) {
 
-        if(shouldBeExist == true){
+        if (shouldBeExist == true) {
             tableKurumListesi
                     .filterBy(Condition.text(kurumAdi))
                     .get(0)
@@ -518,7 +529,7 @@ public class KurumYonetimiPage extends MainPage {
     }
 
     @Step("Panel kapat")
-    public KurumYonetimiPage panelKapat(){
+    public KurumYonetimiPage panelKapat() {
 
 
         //btnEvrakOlusturKapat.click();
@@ -530,23 +541,17 @@ public class KurumYonetimiPage extends MainPage {
         return this;
     }
 
-    SelenideElement btnKurumEkle = $("button[id$=':addNewKurumButton']");
-
     @Step("Yeni kurum ekle ")
-    public KurumYonetimiPage yeniKurumEkle(){
+    public KurumYonetimiPage yeniKurumEkle() {
         btnKurumEkle.click();
         return this;
     }
-
-    SelenideElement txtHitap = $(By.xpath("//form[@id='kurumYonetimiEditorForm']//label[contains(.,'Hitap')]/../textarea"));
 
     @Step("Hitap alanı dolduruldu")
     public KurumYonetimiPage hitapDoldur(String hitap) {
         txtHitap.setValue(hitap);
         return this;
     }
-
-    SelenideElement btnIletisimBilgisiEkle = $(By.id("kurumYonetimiEditorForm:iletisimBilgileriDataTable:addNewIletisimBilgisiButton"));
 
     @Step("Yeni iletişim bilgisi ekle")
     public KurumYonetimiPage yeniIletisimBilgisiEkle() {
@@ -555,7 +560,7 @@ public class KurumYonetimiPage extends MainPage {
     }
 
     @Step("Üst kurum değeri dön")
-    public String ustKurumGetir(){
+    public String ustKurumGetir() {
         return divSecilenUstKurum.$("span[class='lovItemDetail']").innerText();
     }
 
@@ -565,10 +570,8 @@ public class KurumYonetimiPage extends MainPage {
         return this;
     }
 
-    By selectorBtnChangeStatu = By.cssSelector("button[id$='changeKurumStatusButton']");
-    SelenideElement btnPasifYapEvet = $(By.id("baseConfirmationDialog:confirmButton"));
     @Step("{0} kurumu pasif edildi.")
-    public KurumYonetimiPage kurumPasifYap(String kurumAdi){
+    public KurumYonetimiPage kurumPasifYap(String kurumAdi) {
 
         tableKurumListesi
                 .filterBy(Condition.text(kurumAdi))
@@ -579,16 +582,33 @@ public class KurumYonetimiPage extends MainPage {
         btnPasifYapEvet.click();
         return this;
     }
+
     @Step("{0} kurumu pasif edildi.")
-    public KurumYonetimiPage kurumAktifYap(String kurumAdi){
+    public KurumYonetimiPage kurumAktifYap(String kurumAdi) {
 
-        tablePasifKurumlar
-                .filterBy(Condition.text(kurumAdi))
-                .get(0)
-                .$(selectorBtnChangeStatu)
-                .click();
+        ElementsCollection pages = $$("td[id='kurumYonetimiListingForm:pasifKurumlarDataTable_paginator_bottom'] > span[class='ui-paginator-pages'] >  span");
 
+        for (int i = 0; i < pages.size(); i++) {
+            pages.get(i).click();
+
+            SelenideElement currentRow = tablePasifKurumlar
+                    .filterBy(Condition.text(kurumAdi))
+                    .get(0)
+                    .$(selectorBtnChangeStatu);
+
+            if (currentRow.isDisplayed() && currentRow.exists()) {
+                currentRow.click();
+                break;
+            }
+
+        }
         btnPasifYapEvet.click();
+        return this;
+    }
+
+    @Step("Kep Adresi Bilgisi Ekle butonuna tıkla.")
+    public KurumYonetimiPage kepAdresiBilgisiEkle() {
+        btnKepAdresiBilgisiEkle.click();
         return this;
     }
 

@@ -52,7 +52,7 @@ public class TaslakEvraklarPage extends MainPage {
     SelenideElement btnPaylasBirim = $("div[id='mainPreviewForm:paylasTumuBoolean']");
 
     @Step("Taslak Evraklar sayfası aç")
-    public TaslakEvraklarPage openPage(){
+    public TaslakEvraklarPage openPage() {
 
         solMenu(SolMenuData.IslemBekleyenEvraklar.TaslakEvraklar);
         String pageTitle = SolMenuData.IslemBekleyenEvraklar.TaslakEvraklar.getMenuText();
@@ -61,11 +61,13 @@ public class TaslakEvraklarPage extends MainPage {
         System.out.println("Page: " + pageTitle);
         return this;
     }
+
     @Step("Evrak notları popup iptal")
     public TaslakEvraklarPage evrakNotlariModalIptalGonder() {
         btnEvrakNotlariModalIptal.click();
         return this;
     }
+
     @Step("Evrak notları popup kaydet")
     public TaslakEvraklarPage evrakNotlariModalKaydetGonder() {
         btnEvrakNotlariModalKaydet.click();
@@ -153,7 +155,7 @@ public class TaslakEvraklarPage extends MainPage {
     }
 
     public TaslakEvraklarPage paylasKisiDoldur(String[] kisiler) {
-        for(int i = 0; i < kisiler.length; i++){
+        for (int i = 0; i < kisiler.length; i++) {
             txtPaylasKisi.selectLov(kisiler[i]);
         }
         return this;

@@ -1,6 +1,5 @@
 package pages.pageComponents.belgenetElements;
 
-import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
@@ -8,13 +7,15 @@ import common.BaseLibrary;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 
 class ComboBoxHelper extends BaseLibrary {
+
+    private String panelXpath;
+    private By btnTrigger;
+    private By liLocator;
+    private By ulLocator;
 
     void selectComboBox(SelenideElement proxy, String text, boolean js) {
         setLocators(proxy);
@@ -61,11 +62,6 @@ class ComboBoxHelper extends BaseLibrary {
 
         return $$(liLocator);
     }
-
-    private String panelXpath;
-    private By btnTrigger;
-    private By liLocator;
-    private By ulLocator;
 
     private void setLocators(SelenideElement proxy) {
         //region Get id without _label. This id is parent Div element id

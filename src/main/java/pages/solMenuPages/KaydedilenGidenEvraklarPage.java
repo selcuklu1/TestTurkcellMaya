@@ -3,7 +3,6 @@ package pages.solMenuPages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
-import com.codeborne.selenide.collections.ExactTexts;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
@@ -30,7 +29,7 @@ public class KaydedilenGidenEvraklarPage extends MainPage {
     SelenideElement chkKaydettiklerim = $("[id$='kaydettiklerimCheckbox']");
     SelenideElement btnIcerikGöster = $("[id$='detayGosterButton']");
     SelenideElement btnTamEkranGöster = $("[id$='tamEkranModuButton']");
-    ElementsCollection tblRapor = $$("tbody[id='mainInboxForm:inboxDataTable_data'] tr[data-ri='0']");
+    ElementsCollection tblRapor = $$("tbody[id='mainInboxForm:inboxDataTable_data'] tr[data-ri]");
 
 
     @Step("Kaydedilen giden evraklar sayfası aç")

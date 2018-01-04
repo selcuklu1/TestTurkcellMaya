@@ -6,18 +6,28 @@
  ****************************************************/
 package tests.EvrakHavaleKurallari;
 
+import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.SelenideElement;
 import common.BaseTest;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
-
+import org.openqa.selenium.Keys;
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pages.ustMenuPages.*;
+import pages.pageComponents.SorgulamaVeFiltreleme;
+import pages.solMenuPages.GelenEvraklarPage;
+import pages.ustMenuPages.BirimYonetimiPage;
+import pages.ustMenuPages.EvrakHavaleKurallariYonetimiPage;
+import pages.ustMenuPages.GelenEvrakKayitPage;
+import pages.ustMenuPages.KlasorYonetimiPage;
 
+import static com.codeborne.selenide.Condition.exactText;
+import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Selenide.$;
 import static data.TestData.password2;
 import static data.TestData.username2;
-import static data.TestData.username4;
 
 /****************************************************
  * Tarih: 2017-12-27
@@ -41,20 +51,41 @@ public class EvrakHavaleKurallariTest extends BaseTest {
     @Test(enabled = true, description = "2069: Evrak Havale Kuralları - Kural Silme")
     public void TC2069A() throws InterruptedException {
         String basariMesaji = "İşlem başarılıdır!";
-        String bagTipi = "Y";
-        String farkliKullanici = "Optiim";
-
-        login(username4, password2);
-
+        String uyariMesaji = "Evrak Bilgilerine Tanımlanmış Otomatik Havale Kuralı Bulunamamıştır.";
+        String kuralAdi = "TC-2069_" + createRandomNumber(12);
+        String konuKodu = "Diğer";
+        String evrakTuru = "Genelge";
+        String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
+        String kisi = "Zübeyde Tekin";
+        String birim2 = "BİLİŞİM HİZMETLERİ VE UYDU PAZARLAMA GENEL MÜDÜR";
+        login(username2, password2);
+        //TODO PRE Conditon bir kural bulunmalı
         evrakHavaleKurallariYonetimiPage
                 .openPage()
+                .yeniKural()
+                .evrakTuruSec()
+                .kuralinTanimliOlduguBirimlerYeni()
+                .birimEkleBirimDoldur(birim)
+                .birimEkleEkle()
+                .kuralAdiDoldur(kuralAdi)
+                .kimeHavaleEdilecekKisiDoldur(kisi, birim2)
+                .kuralEklemeKaydet();
+
+        evrakHavaleKurallariYonetimiPage
+                .filtreleKuralAdiDoldur(kuralAdi,"Kural adı");
+        //TODO
+
+        evrakHavaleKurallariYonetimiPage
                 .ara()
-                .sil()
+                .sil(kuralAdi)
                 .islemOnayiEvet()
                 .islemMesaji().basariliOlmali(basariMesaji);
         gelenEvrakKayitPage
                 .openPage()
-                .otomatikHavaleSec(true);
+                .konuKoduDoldur(konuKodu)
+                .evrakTuruSec(evrakTuru)
+                .otomatikHavaleSec(true)
+                .islemMesaji().beklenenMesaj(uyariMesaji);
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -111,8 +142,5 @@ public class EvrakHavaleKurallariTest extends BaseTest {
                 .islemMesaji().basariliOlmali(basariMesaji);*/
 
     }
-
-
-
 
 }

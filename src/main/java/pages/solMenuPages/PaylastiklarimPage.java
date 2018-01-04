@@ -3,17 +3,11 @@ package pages.solMenuPages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
-import common.BaseLibrary;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
-import pages.ustMenuPages.EvrakOlusturPage;
-
-import java.util.List;
 
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Condition.text;
@@ -25,9 +19,8 @@ import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 public class PaylastiklarimPage extends MainPage {
 
 
-
     ElementsCollection tablePaylastiklarim = $$("[id='mainInboxForm:inboxDataTable_data'] tr[role='row']");
-    ElementsCollection evrakSecTablar = $$("[id='mainPreviewForm:evrakOnizlemeTab'] ul li");
+    ElementsCollection evrakSecTablar = $$("[id='mainPreviewForm:evrakOnizlemeTab'] ul li a");
     SelenideElement btnPaylasTab = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:4:cmdbutton"));
     SelenideElement txtKisi = $(By.id("mainPreviewForm:evrakPaylasKisiLov:LovText"));
     SelenideElement txtAciklama = $(By.id("mainPreviewForm:evrakPaylasAciklama"));
@@ -45,7 +38,6 @@ public class PaylastiklarimPage extends MainPage {
     SelenideElement btnPaylasimiDurdur = $(By.xpath("//span[contains(@class, 'evrakPaylasimDurdur')]/.."));
 
 
-
     // Evrak Notları elementleri
     SelenideElement btnEvratNotEkle = $("button[id$=':paylasimNotuEkleId']");
     BelgenetElement txtPaylasKisi = comboLov(By.id("mainPreviewForm:evrakPaylasKisiLov:LovText"));
@@ -55,6 +47,7 @@ public class PaylastiklarimPage extends MainPage {
 
     ElementsCollection tblEvrak = $$("[id^='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
     SelenideElement btnPaylasPaylas = $(By.id("mainPreviewForm:paylasButtonId"));
+    ElementsCollection tableEvrakNotlari = $$(By.xpath("//th[contains(., 'Evrak Notları')]/../../../tbody/tr"));
 
     @Step("Paylaştıklarım sayfası aç")
     public PaylastiklarimPage openPage() {
@@ -79,17 +72,16 @@ public class PaylastiklarimPage extends MainPage {
         return this;
     }
 
+
+    //     // Yasin ÖZGÜL / Yasin TELLİ / Veysel KIRAN
+
+    // yeniler
+
     @Step("Paylaş tabına tıkla")
     public PaylastiklarimPage paylasTabTikla() {
         clickJs(btnPaylasTab);
         return this;
     }
-
-
-
-    //     // Yasin ÖZGÜL / Yasin TELLİ / Veysel KIRAN
-
-    // yeniler
 
     @Step("Evrak seç ")
     public PaylastiklarimPage evrakSec(String paylasilanKullanici) {
@@ -99,6 +91,7 @@ public class PaylastiklarimPage extends MainPage {
                 .click();
         return this;
     }
+
     @Step("Evrak seç ")
     public PaylastiklarimPage evrakSec(String konu, String paylasilmaTarihi) {
         tablePaylastiklarim
@@ -110,13 +103,13 @@ public class PaylastiklarimPage extends MainPage {
     }
 
     @Step("Evrak Notları")
-    public PaylastiklarimPage evrakNotlariTabAc(){
+    public PaylastiklarimPage evrakNotlariTabAc() {
         evrakSecTablar.get(3).click();
         return this;
     }
 
     @Step("Evrak Notları")
-    public PaylastiklarimPage paylasilanlarTabAc(){
+    public PaylastiklarimPage paylasilanlarTabAc() {
         evrakSecTablar.get(4).click();
         return this;
     }
@@ -145,6 +138,7 @@ public class PaylastiklarimPage extends MainPage {
                 .click();
         return this;
     }
+
     @Step("Evrak seç ")
     public PaylastiklarimPage evrakSec(String konu, String evrakNo, String paylasilanKullanici, String paylasilmaTarihi) {
         tablePaylastiklarim
@@ -205,17 +199,20 @@ public class PaylastiklarimPage extends MainPage {
         tabEvrakOnizleme
                 .filterBy(Condition.text(tabAdi))
                 .get(0)
-                .click();;
+                .click();
+        ;
 
         return this;
     }
+
     @Step("\"{0}\" tabını seç")
     public PaylastiklarimPage paylasilanlarTabSec(String tabAdi) {
 
         tabEvrakOnizleme
                 .filterBy(Condition.text(tabAdi))
                 .get(0)
-                .click();;
+                .click();
+        ;
 
         return this;
     }
@@ -231,13 +228,12 @@ public class PaylastiklarimPage extends MainPage {
     // Evrak notları fonksiyonları
     @Step("Evrak ekleme butonu aktif olmalı mı? : \"{0}\" ")
     public PaylastiklarimPage evrakNotEklemeButonuAktifOlmali(boolean aktifOlmali) {
-        if(aktifOlmali == true)
+        if (aktifOlmali == true)
             btnEvratNotEkle.shouldHave(Condition.attribute("aria-disabled", "false"));
         else
             btnEvratNotEkle.shouldHave(Condition.attribute("aria-disabled", "true"));
         return this;
     }
-
 
     @Step("Paylaşımdan geri al tabına tıklandı. ")
     public PaylastiklarimPage paylasimdanGeriAlTabSec() {
@@ -248,7 +244,7 @@ public class PaylastiklarimPage extends MainPage {
     @Step("\"{0}\" kullanıcısını paylaşımdan geri al")
     public PaylastiklarimPage paylasimdanGeriAl(String[] paylasilanlar) {
 
-        for(int i = 0; i < paylasilanlar.length; i ++){
+        for (int i = 0; i < paylasilanlar.length; i++) {
 
             SelenideElement currentRow = tablePaylasimdanGeriAl
                     .filterBy(Condition.text(paylasilanlar[i]))
@@ -278,13 +274,11 @@ public class PaylastiklarimPage extends MainPage {
         return this;
     }
 
-
     @Step("paylaş butonuna tıklandı. ")
     public PaylastiklarimPage paylas() {
         btnPaylas.click();
         return this;
     }
-
 
     @Step("Paylaşılacak kişi seç: {0} ")
     public PaylastiklarimPage paylasKisiSec(String kisiAdi) {
@@ -306,7 +300,7 @@ public class PaylastiklarimPage extends MainPage {
     }
 
     @Step("Paylaş")
-    public PaylastiklarimPage paylasPaylas(){
+    public PaylastiklarimPage paylasPaylas() {
         btnPaylasPaylas.click();
         return this;
     }
@@ -316,8 +310,6 @@ public class PaylastiklarimPage extends MainPage {
         txtPaylasKisi.clearAllSelectedLov();
         return this;
     }
-
-    ElementsCollection tableEvrakNotlari = $$(By.xpath("//th[contains(., 'Evrak Notları')]/../../../tbody/tr"));
 
     @Step("Açıklama kontrol")
     public PaylastiklarimPage evrakNotuKontrol(String ekleyen, String tarih, String aciklama) {
@@ -341,13 +333,14 @@ public class PaylastiklarimPage extends MainPage {
                 .shouldBe(Condition.exist);
         return this;
     }
+
     @Step("Açıklama kontrol")
     public PaylastiklarimPage paylasilanKontrolTumKullanıcılıar(String[] kullanici, String paylasimDurumu) {
-       for(int  i = 0 ; i<kullanici.length; i++)
-        tablePaylasilanlar
-                .filterBy(Condition.text(kullanici[i]))
-                .filterBy(Condition.text(paylasimDurumu))
-                .shouldHaveSize(1);
+        for (int i = 0; i < kullanici.length; i++)
+            tablePaylasilanlar
+                    .filterBy(Condition.text(kullanici[i]))
+                    .filterBy(Condition.text(paylasimDurumu))
+                    .shouldHaveSize(1);
         return this;
     }
 

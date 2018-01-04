@@ -1,21 +1,16 @@
 package pages.newPages;
 
-import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
-import org.openqa.selenium.By;
 import org.openqa.selenium.support.FindBy;
 import pages.MainPage;
 import pages.pageComponents.TextEditor;
 import pages.pageComponents.UstMenuPageHeader;
 import pages.pageComponents.tabs.BilgilerTab;
 import pages.pageData.UstMenuData;
-import pages.ustMenuPages.EvrakOlusturPage;
 
-import static com.codeborne.selenide.CollectionCondition.*;
-import static com.codeborne.selenide.Condition.not;
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 
@@ -35,14 +30,14 @@ public class OlurYazisiOlusturPage extends MainPage {
 
     private SelenideElement page = $("#yeniOnayEvrakForm");
 
-    public OlurYazisiOlusturPage openPage(){
+    public OlurYazisiOlusturPage openPage() {
         ustMenu(UstMenuData.EvrakIslemleri.OlurYazisiOlustur.getName());
         ustMenuPageHeader.getPageTitle().shouldHave(text(UstMenuData.EvrakIslemleri.OlurYazisiOlustur.getName()));
         return this;
     }
 
     @Step("Sayfayı kapat")
-    public void closePage(boolean save){
+    public void closePage(boolean save) {
         ustMenuPageHeader.closePageButton.click();
         if (save)
             confirmDialog().button("Evet").shouldBe(visible).click();
@@ -50,7 +45,7 @@ public class OlurYazisiOlusturPage extends MainPage {
             confirmDialog().button("Hayır").shouldBe(visible).click();
     }
 
-    public BilgilerTab bilgileriTabiAc(){
+    public BilgilerTab bilgileriTabiAc() {
         return bilgilerTab.openTab();
     }
 
@@ -60,11 +55,11 @@ public class OlurYazisiOlusturPage extends MainPage {
     }
 
     public class EditorTab extends MainPage {
+        private TextEditor editor = new TextEditor();
+
         public TextEditor getEditor() {
             return editor;
         }
-
-        private TextEditor editor = new TextEditor();
 
         private EditorTab openTab() {
             if ($("[id*=allPanels_content]").is(not(visible)))

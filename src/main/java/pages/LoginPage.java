@@ -20,6 +20,8 @@ public class LoginPage extends MainPage {
         Selenide.open("");
 //        Selenide.openPage("http://www.belgenet.com.tr:8282/edys-web/sistemeGiris.xhtml");
 //        username.shouldBe(visible);
+
+        maximazeBrowser();
         return this;
     }
 

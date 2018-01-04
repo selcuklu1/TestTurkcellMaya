@@ -3,14 +3,11 @@ package pages.pageComponents;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
-import org.openqa.selenium.By;
 import org.openqa.selenium.support.FindBy;
 import pages.MainPage;
 
 import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$x;
-import static com.codeborne.selenide.Selenide.sleep;
+import static com.codeborne.selenide.Selenide.*;
 
 /**
  * Yazan: Ilyas Bayraktar
@@ -19,7 +16,7 @@ import static com.codeborne.selenide.Selenide.sleep;
  */
 public class UstMenuPageHeader extends MainPage {
 
-//    SelenideElement pageWindow;
+    //    SelenideElement pageWindow;
     @FindBy(xpath = "//ancestor::div[contains(@class,'windowDialog')]")
     public SelenideElement pageWindow;
 
@@ -44,28 +41,28 @@ public class UstMenuPageHeader extends MainPage {
         return pageTitle;
     }
 
-    public void close(){
+    public void close() {
         closePageButton.click();
     }
 
     @Step("İmzala butonu ara")
-    public SelenideElement imzalaButton(){
+    public SelenideElement imzalaButton() {
         return $x("//*[text()='İmzala']/ancestor::tbody[1]//button");
     }
 
     @Step("İmzala butona tıkla")
-    public UstMenuPageHeader imzalaButonaTikla(){
+    public UstMenuPageHeader imzalaButonaTikla() {
         imzalaButton().click();
         return this;
     }
 
     @Step("s-İmzla radio butonu ara")
-    public SelenideElement sImzalaRadio(){
+    public SelenideElement sImzalaRadio() {
         return $("#imzalaForm\\:imzalaRadio .ui-radiobutton-box");
     }
 
     @Step("s-İmzla seç")
-    public UstMenuPageHeader sImzalaRadioSec(){
+    public UstMenuPageHeader sImzalaRadioSec() {
         sImzalaRadio().shouldBe(visible).click();
         return this;
     }
@@ -75,14 +72,13 @@ public class UstMenuPageHeader extends MainPage {
         imzalaButonaTikla();
         sImzalaRadioSec();
 //        clickJs($("#imzalaForm\\:imzalaRadio").find(By.tagName("input")));
-        for (int i = 0; i < Configuration.timeout/1000; i++) {
+        for (int i = 0; i < Configuration.timeout / 1000; i++) {
             sleep(1000);
-            if ($("#imzalaForm\\:sayisalImzaConfirmDialogOpener").is(visible)){
+            if ($("#imzalaForm\\:sayisalImzaConfirmDialogOpener").is(visible)) {
                 $("#imzalaForm\\:sayisalImzaConfirmDialogOpener").click();
                 clickJs($("#imzalaForm\\:sayisalImzaConfirmForm\\:sayisalImzaEvetButton"));
                 break;
-            }
-            else{
+            } else {
                 $("#imzalaForm\\:imzalaButton").click();
                 break;
             }
@@ -90,17 +86,16 @@ public class UstMenuPageHeader extends MainPage {
     }
 
     @Step("Parafla")
-    public UstMenuPageHeader parafla(){
+    public UstMenuPageHeader parafla() {
         $("button span[class~=parafla]").click();
         sImzalaRadioSec();
-        for (int i = 0; i < Configuration.timeout/1000; i++) {
+        for (int i = 0; i < Configuration.timeout / 1000; i++) {
             sleep(1000);
-            if ($("#imzalaForm\\:sayisalImzaConfirmDialogOpener").is(visible)){
+            if ($("#imzalaForm\\:sayisalImzaConfirmDialogOpener").is(visible)) {
                 $("#imzalaForm\\:sayisalImzaConfirmDialogOpener").click();
                 clickJs($("#imzalaForm\\:sayisalImzaConfirmForm\\:sayisalImzaEvetButton"));
                 break;
-            }
-            else{
+            } else {
                 $("#imzalaForm\\:imzalaButton").click();
                 break;
             }

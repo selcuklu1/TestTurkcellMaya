@@ -7,13 +7,12 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
-import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
-import static pages.pageData.SolMenuData.*;
+import static pages.pageData.SolMenuData.IslemYaptiklarim;
 
 public class ParafladiklarimPage extends MainPage {
 
@@ -30,7 +29,7 @@ public class ParafladiklarimPage extends MainPage {
     SelenideElement tblRapor = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
     SelenideElement btnHavaleYap = $(By.id(""));
     SelenideElement btnIconPaylas = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:6:cmdbutton"));
-    SelenideElement txtKisi =$(By.id("mainPreviewForm:evrakPaylasKisiLov:LovText"));
+    SelenideElement txtKisi = $(By.id("mainPreviewForm:evrakPaylasKisiLov:LovText"));
     SelenideElement txtAciklama = $(By.id("mainPreviewForm:evrakPaylasAciklama"));
     SelenideElement btnPaylas = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:5:cmdbutton"));
     SelenideElement btnIcerik = $(By.id("mainInboxForm:inboxDataTable:0:detayGosterButton"));
@@ -51,19 +50,19 @@ public class ParafladiklarimPage extends MainPage {
     }
 
     @Step("Açıklama doldur")
-    public ParafladiklarimPage paylasAciklamaDoldur(String aciklama){
+    public ParafladiklarimPage paylasAciklamaDoldur(String aciklama) {
         txtPaylasAciklama.setValue(aciklama);
         return this;
     }
 
     @Step("Kişi doldur")
-    public ParafladiklarimPage paylasKisiDoldur(String kisi){
+    public ParafladiklarimPage paylasKisiDoldur(String kisi) {
         txtPaylasKisi.selectLov(kisi);
         return this;
     }
 
     @Step("Paylaş")
-    public ParafladiklarimPage paylasPaylas(){
+    public ParafladiklarimPage paylasPaylas() {
         btnPaylasPaylas.click();
         return this;
     }
@@ -115,6 +114,14 @@ public class ParafladiklarimPage extends MainPage {
         return this;
     }
 
+    @Step("Tablodan konuya göre rapor seç")
+    public ParafladiklarimPage konuyaGoreRaporSec(String konu) {
+        $$("[id='mainInboxForm:inboxDataTable_data'] tr[role='row']")
+                .filterBy(Condition.text(konu)).first()
+                .$("[id$='detayGosterButton']");
+        return this;
+    }
+
     @Step("Paylaş ikonuna  bas")
     public ParafladiklarimPage havaleYap() {
         btnIconPaylas.click();
@@ -138,11 +145,13 @@ public class ParafladiklarimPage extends MainPage {
         btnPaylas.click();
         return this;
     }
+
     @Step("İçerik ilk kayıt")
     public ParafladiklarimPage icerikIlkKayıt() {
         btnIcerik.click();
         return this;
     }
+
     @Step("Evrak No al")
     public String evrakDetayiEvrakNoAl() {
         String evrakNo = txtEvrakDetayiEvrakNo.text();

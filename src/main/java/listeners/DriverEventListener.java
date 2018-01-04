@@ -69,7 +69,7 @@ public class DriverEventListener extends BaseLibrary implements WebDriverEventLi
     public void beforeFindBy(By by, WebElement element, WebDriver driver) {
 
         By loadingLocator = By.cssSelector("div[style*='display: block;'] .loading");
-        long timeout = Configuration.timeout/1000;
+        long timeout = Configuration.timeout / 1000;
 
         waitForLoadingJS(driver);
         /*//İşlem Mesajları için loading kaybolması beklememeli.
@@ -115,9 +115,10 @@ public class DriverEventListener extends BaseLibrary implements WebDriverEventLi
 
     public void beforeClickOn(WebElement element, WebDriver driver) {
         waitForLoadingJS(driver);
-        new WebDriverWait(driver, Configuration.timeout/1000).until(elementToBeClickable(element));
+        new WebDriverWait(driver, Configuration.timeout / 1000).until(elementToBeClickable(element));
 
         //Selenide.sleep(2000);
+
         /**
          * Focus on element: Belgenete özel
          * Visible fakat ekranda görünmeyen olan buronlar için.
@@ -163,7 +164,8 @@ public class DriverEventListener extends BaseLibrary implements WebDriverEventLi
 
     }
 
-    public void afterScript(String script, WebDriver driver) { }
+    public void afterScript(String script, WebDriver driver) {
+    }
 
     public void onException(Throwable throwable, WebDriver driver) {
 

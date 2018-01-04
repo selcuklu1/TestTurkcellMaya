@@ -12,8 +12,7 @@ import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
+import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 public class GelenEvraklarPage extends MainPage {
@@ -52,7 +51,7 @@ public class GelenEvraklarPage extends MainPage {
 
     BelgenetElement txtKullaniciListesi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKisiListesiLov:LovText"));
     SelenideElement popUpUyari = $("[id='mainPreviewForm:j_idt5031'] p");
-    SelenideElement popUpUyariEvet = $(By.id("mainPreviewForm:j_idt5033"));
+    SelenideElement popUpUyariEvet = $(By.xpath("//body[@class='ui-layout-container']/div[131]//center/button[1]"));
     ElementsCollection tblEvrak = $$("[id^='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
     BelgenetElement txtHavaleYapKisi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKullaniciLov:LovText"));
     BelgenetElement txtHavaleYapKullaniciListesi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKisiListesiLov:LovText"));
@@ -93,6 +92,7 @@ public class GelenEvraklarPage extends MainPage {
     SelenideElement btnPaylasIcPaylas = $(By.id("mainPreviewForm:paylasButtonId"));
 
     SelenideElement tblIlkEvrak = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
+    ElementsCollection tblGelenEvrakListesi = $$("tbody[id='mainInboxForm:inboxDataTable_data'] tr[role='row']");
     SelenideElement tblIkinciEvrak = $(By.id("mainInboxForm:inboxDataTable:1:evrakTable"));
 
     BelgenetElement cmbOnayAkisi = comboLov(By.cssSelector("[id^='windowCevapEvrakForm:evrakBilgileriList'][id$='akisLov:LovText']"));
@@ -100,7 +100,7 @@ public class GelenEvraklarPage extends MainPage {
     SelenideElement btnTakipListesiKapat = $("[id^='evrakTakibimeEkleDialogForm:takipDialog'] span[class='ui-icon ui-icon-closethick']");
     ElementsCollection evrakSecButonlar = $$("[id='mainPreviewForm:onizlemeRightTab:onizlemeRightTab'] td");
 
-    @Step("Gelen Evraklar Sayfası aç")
+    @Step("Gelen Evraklar Sayfasını aç")
     public GelenEvraklarPage openPage() {
         solMenu(SolMenuData.IslemBekleyenEvraklar.GelenEvraklar);
         String pageTitle = SolMenuData.IslemBekleyenEvraklar.GelenEvraklar.getMenuText();
@@ -151,14 +151,30 @@ public class GelenEvraklarPage extends MainPage {
 
     @Step("Kullanıcı listesi doldur")
     public GelenEvraklarPage havaleYapKullaniciListesiDoldur(String kullaniciListesi) {
-        //txtHavaleYapKullaniciListesi.selectLov(kullaniciListesi);
+//        txtHavaleYapKullaniciListesi.selectLov(kullaniciListesi);
         txtHavaleYapKullaniciListesi.selectLov(kullaniciListesi);
         return this;
     }
 
-    @Step("Evrak seç")
+    @Step("Kullanıcı listesinde alanında \"{kisi}\" seçmeye dene")
+    public GelenEvraklarPage havaleYapKullaniciyiSecmeyeDene(String kisi) {
+        txtHavaleYapKullaniciListesi.type(kisi).titleItems().filterBy(text(kisi)).first().click();
+        return this;
+    }
+
+
+
+    @Step("Evrak seçilir")
     public GelenEvraklarPage evrakSec() {
         tblIlkEvrak.click();
+        return this;
+    }
+
+    @Step("Evrak Noya göre evrak seç : \"{evrakNo}\" ")
+    public GelenEvraklarPage evrakNoyaGoreEvrakSec(String evrakNo) {
+        tblGelenEvrakListesi.filterBy(Condition.text(evrakNo))
+                .first()
+                .click();
         return this;
     }
 
@@ -282,10 +298,9 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
-    @Step("Havale onaylanacak kisi doldur")
-    public GelenEvraklarPage havaleYapOnaylanacakKisiTreeDoldur(String text) {
-        treeHavaleYapOnaylanacakKisi.selectLov(text);
-        System.out.println("Başarı Bu selectlı geçmiştir");
+    @Step("Havale onaylanacak kisi alanını doldur \"{onaylayacakKisi}\" | \"{onaylanacakKisi2}\"")
+    public GelenEvraklarPage havaleYapOnaylanacakKisiTreeDoldur(String onaylanacakKisi, String onaylanacakKisi2) {
+        treeHavaleYapOnaylanacakKisi.selectLov(onaylanacakKisi);
         return this;
     }
 
@@ -450,8 +465,16 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Kaldırılacak klasor doldur")
     public GelenEvraklarPage evrakKapatKaldirilacakKlasorlerDoldur(String text) {
         txtEvrakKapatKaldirilacakKlasorler.selectLov(text);
+        return this;
+    }
+
+    @Step("Kaldırılıcak klasor doldur")
+    public GelenEvraklarPage evrakKapatKaldirilacakKlasorlerDoldur(String text, String birim) {
+        txtEvrakKapatKaldirilacakKlasorler.type(text).detailItems().filterBy(text(birim)).first().click();
+        txtEvrakKapatKaldirilacakKlasorler.closeLovTreePanel();
         return this;
     }
 
@@ -561,12 +584,12 @@ public class GelenEvraklarPage extends MainPage {
     }
 
     @Step("Vekalet var uyarısı : \"{mesaj}\" ")
-    public GelenEvraklarPage evrakOnIzlemeUyarıPopUpKontol(String mesaj) {
-        SelenideElement popUp = $(By.id("mainPreviewForm:j_idt5031"));
+    public GelenEvraklarPage evrakOnIzlemeUyarıPopUpKontol(String mesaj) throws InterruptedException {
+        SelenideElement popUp = $("div[class='ui-confirm-dialog ui-dialog ui-widget ui-widget-content ui-corner-all ui-helper-hidden ui-shadow ui-overlay-visible']");
+        SelenideElement popUpEvet = $(By.xpath("//div[@class='ui-confirm-dialog ui-dialog ui-widget ui-widget-content ui-corner-all ui-helper-hidden ui-shadow ui-overlay-visible']//center//button[1]"));
         popUp.should(Condition.visible);
-
-        if (popUpUyari.text().equals(mesaj))
-            clickJs(popUpUyariEvet);
+        if (popUp.text().contains(mesaj))
+            clickJs(popUpEvet);
         return this;
     }
 
@@ -576,7 +599,7 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
-    @Step("Kullanıcılar alanı doldur : Kullanıcı :\n \"{kullanici}\", \nTitle : \"{title}\" ")
+    @Step("Kullanıcılar alanı doldur : \nKullanıcı : \"{kullanici}\", \nTitle : \"{title}\" ")
     public GelenEvraklarPage kullanciListesiSecWithTitle(String kullanici, String title) {
         txtKullaniciListesi.type(kullanici).detailItems()
                 .filterBy(Condition.exactText(title)).first().click();

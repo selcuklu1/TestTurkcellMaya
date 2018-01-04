@@ -1,6 +1,5 @@
 package pages.solMenuPages;
 
-import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
@@ -9,23 +8,14 @@ import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.apache.poi.xwpf.usermodel.XWPFTableCell;
 import org.apache.poi.xwpf.usermodel.XWPFTableRow;
 import org.openqa.selenium.By;
-import org.openqa.selenium.firefox.FirefoxProfile;
-import org.openqa.selenium.support.ui.Wait;
-import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
 
-import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.io.*;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.List;
 
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
-import static com.codeborne.selenide.Selenide.sleep;
+import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 public class GundemIzlemePage extends MainPage {
@@ -83,7 +73,7 @@ public class GundemIzlemePage extends MainPage {
             e.printStackTrace();
         }
   */
-      return this;
+        return this;
     }
 
     @Step("Yayımla")
@@ -95,13 +85,15 @@ public class GundemIzlemePage extends MainPage {
 
     public String indirilenDosyaAd() {
         int i = 0;
-        while (i < 100) {
+        while (i < 140) {
             sleep(i);
             i++;
         }
 
         //İndirilen file name çeker
-        File root = new File("C://users//" + System.getProperty("user.name") + "//Downloads//");
+       // File root = new File("C://users//" + System.getProperty("user.name") + "//Downloads//");
+        //Windows makine için sabit url
+        File root = new File("C://users//optiim//Downloads//");
         FilenameFilter beginswithm = new FilenameFilter() {
             public boolean accept(File directory, String filename) {
                 return filename.matches("Rapor_.*\\.docx");
@@ -168,11 +160,15 @@ public class GundemIzlemePage extends MainPage {
                                     System.out.println(geldigiYer[1] + " İçerisinde bulunuyor");
                                 boolean tarihDurum = cell.getText().contains(tarih[0]);
                                 if (tarihDurum == true) System.out.println(tarih[0] + " İçerisinde bulunuyor");
-
                                 deger++;
+                                if (deger % 10 == 0) {
+                                    if ($$("[id='mainInboxForm:inboxDataTable_paginator_top'] span[class='ui-paginator-next ui-state-default ui-corner-all']").size()==1)
+                                    {
+                                       clickJs( $$("[id='mainInboxForm:inboxDataTable_paginator_top'] span[class='ui-paginator-next ui-state-default ui-corner-all']").get(0));
+                                    }
+                                }
                             }
                         }
-
                         counter++;
                     }
                 }

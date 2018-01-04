@@ -24,9 +24,9 @@
     </test>-->
     <test name="All">
         <packages>
-            <package name="tests.*"/>
- <!--           <package name="tests.BirimIcerikSablonu"/>
-            <package name="tests.EvrakNot"/>-->
+            <package name="tests.BirimIcerikSablonu"/>
+            <!--           <package name="tests.BirimIcerikSablonu"/>
+                       <package name="tests.EvrakNot"/>-->
         </packages>
     </test>
 </suite>

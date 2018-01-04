@@ -58,7 +58,6 @@ public class TebligTebellugTest extends BaseTest {
                 .tebligEtTebligEt();
 
 
-
         tebligEttiklerimPage
                 .openPage()
                 .icreikGoster(konu, "", evrakTarihi, evrakNo);
@@ -186,7 +185,6 @@ public class TebligTebellugTest extends BaseTest {
 
 
         logout();
-
 
 
         login("optiimtest6", "123");
