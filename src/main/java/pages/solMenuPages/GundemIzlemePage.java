@@ -91,7 +91,9 @@ public class GundemIzlemePage extends MainPage {
         }
 
         //İndirilen file name çeker
-        File root = new File("C://users//" + System.getProperty("user.name") + "//Downloads//");
+       // File root = new File("C://users//" + System.getProperty("user.name") + "//Downloads//");
+        //Windows makine için sabit url
+        File root = new File("C://users//optiim//Downloads//");
         FilenameFilter beginswithm = new FilenameFilter() {
             public boolean accept(File directory, String filename) {
                 return filename.matches("Rapor_.*\\.docx");
