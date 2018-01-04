@@ -85,13 +85,15 @@ public class GundemIzlemePage extends MainPage {
 
     public String indirilenDosyaAd() {
         int i = 0;
-        while (i < 100) {
+        while (i < 140) {
             sleep(i);
             i++;
         }
 
         //İndirilen file name çeker
-        File root = new File("C://users//" + System.getProperty("user.name") + "//Downloads//");
+       // File root = new File("C://users//" + System.getProperty("user.name") + "//Downloads//");
+        //Windows makine için sabit url
+        File root = new File("C://users//optiim//Downloads//");
         FilenameFilter beginswithm = new FilenameFilter() {
             public boolean accept(File directory, String filename) {
                 return filename.matches("Rapor_.*\\.docx");
@@ -160,9 +162,11 @@ public class GundemIzlemePage extends MainPage {
                                 if (tarihDurum == true) System.out.println(tarih[0] + " İçerisinde bulunuyor");
                                 deger++;
                                 if (deger % 10 == 0) {
-                                    $$("[id='mainInboxForm:inboxDataTable_paginator_top'] span[class='ui-paginator-next ui-state-default ui-corner-all']").get(0).click();
+                                    if ($$("[id='mainInboxForm:inboxDataTable_paginator_top'] span[class='ui-paginator-next ui-state-default ui-corner-all']").size()==1)
+                                    {
+                                       clickJs( $$("[id='mainInboxForm:inboxDataTable_paginator_top'] span[class='ui-paginator-next ui-state-default ui-corner-all']").get(0));
+                                    }
                                 }
-
                             }
                         }
                         counter++;

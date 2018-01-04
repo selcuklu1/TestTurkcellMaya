@@ -100,7 +100,7 @@ public class GelenEvraklarPage extends MainPage {
     SelenideElement btnTakipListesiKapat = $("[id^='evrakTakibimeEkleDialogForm:takipDialog'] span[class='ui-icon ui-icon-closethick']");
     ElementsCollection evrakSecButonlar = $$("[id='mainPreviewForm:onizlemeRightTab:onizlemeRightTab'] td");
 
-    @Step("Gelen Evraklar Sayfası aç")
+    @Step("Gelen Evraklar Sayfasını aç")
     public GelenEvraklarPage openPage() {
         solMenu(SolMenuData.IslemBekleyenEvraklar.GelenEvraklar);
         String pageTitle = SolMenuData.IslemBekleyenEvraklar.GelenEvraklar.getMenuText();
@@ -164,7 +164,7 @@ public class GelenEvraklarPage extends MainPage {
 
 
 
-    @Step("Evrak seç")
+    @Step("Evrak seçilir")
     public GelenEvraklarPage evrakSec() {
         tblIlkEvrak.click();
         return this;
@@ -298,10 +298,9 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
-    @Step("Havale onaylanacak kisi doldur")
-    public GelenEvraklarPage havaleYapOnaylanacakKisiTreeDoldur(String text) {
-        treeHavaleYapOnaylanacakKisi.selectLov(text);
-        System.out.println("Başarı Bu selectlı geçmiştir");
+    @Step("Havale onaylanacak kisi alanını doldur \"{onaylayacakKisi}\" | \"{onaylanacakKisi2}\"")
+    public GelenEvraklarPage havaleYapOnaylanacakKisiTreeDoldur(String onaylanacakKisi, String onaylanacakKisi2) {
+        treeHavaleYapOnaylanacakKisi.selectLov(onaylanacakKisi);
         return this;
     }
 

@@ -143,8 +143,8 @@ public class KararYazisiOlusturmaTest extends BaseTest {
 
         String basariMesaji = "İşlem başarılıdır!";
         String kaldirilicakKlasor = "Gündem";
-        String konuKodu = "Usul ve Esaslar";
-        String konuKoduRandom = "TC-2240-" + createRandomNumber(15);
+        String konuKodu = "Diğer";
+        String konuKoduRandom = "TC-2240_"+createRandomNumber(25);
         String evrakTarihi = getSysDateForKis();
         String kurum = "BÜYÜK HARFLERLE KURUM";
         String kullaniciAdi = "Yazılım Geliştirme Direktörlüğ";
@@ -161,8 +161,8 @@ public class KararYazisiOlusturmaTest extends BaseTest {
                 .evrakSayiSagDoldur()
                 .havaleIslemleriBirimDoldur(kullaniciAdi)
                 .kaydet()
-                //.benzerKayit()
                 .evetDugmesi()
+                .benzerKayit()
                 .yeniKayitButton();
         //TODO
 
@@ -275,7 +275,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
         kararYazisiOlusturPage
                 .iliskiliEvraklarTabAc()
                 .sistemdeKayitliEvrakEkleTabAc()
-                .sistemdeKayitliEvrakEkleEvrakAramaDoldur("2")
+                .sistemdeKayitliEvrakEkleEvrakAramaDoldur("4")
                 .sistemdeKayitliEvrakEkleEvrakDokumanAra()
                 .sistemdeKayitliEvrakEkleArti()
                 .tercumeEkleTabAc()
@@ -492,7 +492,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
         String basariMesaji = "İşlem başarılıdır!";
         String konuKodu = "Diğer";
         String kaldirilicakKlasor = "Gündem";
-        String konuKoduRandom = "TC-1715_" + createRandomNumber(12);
+        String konuKoduRandom = "TC-1715_"+createRandomNumber(25);
         String evrakTarihi = getSysDateForKis();
         String kurum = "BÜYÜK HARFLERLE KURUM";
         String kullaniciAdi = "Zübeyde Tekin";
@@ -507,8 +507,8 @@ public class KararYazisiOlusturmaTest extends BaseTest {
                 .evrakSayiSagDoldur()
                 .havaleIslemleriKisiDoldur(kullaniciAdi)
                 .kaydet()
-                //.benzerKayit()
                 .evetDugmesi()
+               .benzerKayit()
                 .yeniKayitButton();
 
         gelenEvraklarPage

@@ -66,7 +66,7 @@ public class EvrakOlusturPage extends MainPage {
     private EvrakNotlariTab evrakNotlariTab = new EvrakNotlariTab();
     private SablonIslemleriTab sablonIslemleriTab = new SablonIslemleriTab();
 
-    @Step("Evrak Oluştur sayfası aç")
+    @Step("Evrak Oluştur sayfasını aç")
     public EvrakOlusturPage openPage() {
         new UstMenu().ustMenu("Evrak Oluştur");
         $("#yeniGidenEvrakForm").shouldBe(visible);
@@ -387,7 +387,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Konu Kodu alanında seç")
+        @Step("Otomatik onay akışı seç")
         public BilgilerTab otomatikOnayAkisi() {
             btnOtomatikOnayAkisi.click();
             return this;
@@ -782,8 +782,8 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Otomatik onay akışı kontrol")
-        public BilgilerTab otomatikOnayAkisiGeldigiGorme(String ekranAdi) {
+        @Step("Otomatik onay akışı alanında geldiği görünür \"{ekranAdi}\" | \"{ekranAdi}\"")
+        public BilgilerTab otomatikOnayAkisiGeldigiGorme(String ekranAdi,String ad) {
 
             $$(" [id='yeniGidenEvrakForm:hiyerarsikAkisOlusturForm:otomatikAkisKullaniciBirimListId'] tbody tr")
                     .filterBy(text(ekranAdi)).shouldHave(sizeGreaterThan(0)).get(0).click();
@@ -1584,7 +1584,7 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement cmbEvrakAranacakyer = $(By.id("yeniGidenEvrakForm:evrakEkTabView:ekIslemleriEvrakAramaAranacakYerId"));
         SelenideElement btnSistemdeDokumanAra = $(By.id("yeniGidenEvrakForm:evrakEkTabView:dokumanAraButton"));
         SelenideElement txtEvrakArama = $(By.id("yeniGidenEvrakForm:evrakEkTabView:evrakAramaText"));
-        ElementsCollection tblSistemdeKayitliEvrakListe = $$("[id='yeniGidenEvrakForm:evrakEkTabView:sistemdeKayitliEvrakListesiDataTable_data'] tr[role='row']");
+        ElementsCollection tblSistemdeKayitliEvrakListe = $$("[id='yeniGidenEvrakForm:evrakEkTabView:sistemdeKayitliEvrakListesiDataTable_data'] tr[data-ri]");
         ElementsCollection tblEkListesi = $$("[id='yeniGidenEvrakForm:ekListesiDataTable_data'] tr[role='row']");
         SelenideElement btnIlgiEkle = $("[id^='yeniGidenEvrakForm:evrakEkTabView:sistemdeKayitliEvrakListesiDataTable'][id$='ekEkleButton1']");
 

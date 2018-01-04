@@ -12,6 +12,7 @@ import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboBox;
+import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 /****************************************************
  * Tarih: 2017-12-22
@@ -20,6 +21,8 @@ import static pages.pageComponents.belgenetElements.BelgenetFramework.comboBox;
  * Yazan: Emre Sencan
  ****************************************************/
 public class PostaListesiPage extends MainPage {
+
+    public PDFKontrol pdfKontrol = new PDFKontrol();
 
     SelenideElement filterPanelHeader = $("div[id='mainInboxForm:inboxDataTable:filtersAccordion'] > h3");
     SelenideElement txtPostaListesi = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:postaListesiAdi_input"));
@@ -38,7 +41,9 @@ public class PostaListesiPage extends MainPage {
     SelenideElement lblGidisSekli = $(By.xpath("//label[contains(text(), 'Gidiş Şekli :')]"));
     //    SelenideElement lblGonderildigiYer2 = $(By.xpath("mainPreviewForm:postaListesiYurticiYurtdisi_label"));
     SelenideElement lblTutar = $(By.xpath("//label[contains(text(), 'Tutar : ')]"));
+    SelenideElement popUpEvrakDetayi = $(By.xpath("//span[text()='Evrak Detayları']"));
     //SelenideElement txtTutar = $(By.id("mainPreviewForm:j_idt2585"));
+    BelgenetElement txtGonderildigiKurum = comboLov("mainPreviewForm:tpbeGonderildigiGercekKisiLovId:LovSecilen");
 
     // Hüseyin
 
@@ -49,7 +54,7 @@ public class PostaListesiPage extends MainPage {
 
     SelenideElement txtPostaListesiAdi = $x("//label[normalize-space(text())='Posta Listesi Adı :']/../following-sibling::td//textarea");
     SelenideElement btnEtiketBastir = $x("//span[text() = 'Etiket Bastır']/../../button");
-
+    ElementsCollection tblEvrakDetayi = $$("[id='mainPreviewForm:dtEvrakUstVeri_data'] tr[role='row']");
     SelenideElement divGonderildigiKurm = $("div[id='mainPreviewForm:tpbeGonderildigiKurumLovId:LovSecilen'] div[id^='mainPreviewForm:tpbeGonderildigiKurumLovId']");
     SelenideElement lblGonderildigiYerCombo = $("label[id='mainPreviewForm:tpbeGidecegiYerSelectOneMenuId_label']");
     SelenideElement txtAdres = $(By.id("mainPreviewForm:gidecegiAdresId"));
@@ -123,7 +128,7 @@ public class PostaListesiPage extends MainPage {
         return this;
     }
 
-    @Step("Gramaj alanını doldur : \"{gramaj}\"")
+    @Step("Gramaj alanını doldur : \"{gramaj}\" ")
     public PostaListesiPage gramajDoldur(String gramaj) {
         setValueJS(txtGramaj, gramaj);
         return this;
@@ -155,7 +160,7 @@ public class PostaListesiPage extends MainPage {
         return this;
     }
 
-    @Step("Ekrandaki alanların Kontrolü")
+    @Step("Ekrandaki alanların kontrolü")
     public PostaListesiPage alanKontrolu() {
         lblPostaListesiAdi.isDisplayed();
         lblBarkodNo.isDisplayed();
@@ -165,6 +170,20 @@ public class PostaListesiPage extends MainPage {
         lblGidisSekli.isDisplayed();
 //        lblGonderildigiYer2.isDisplayed();
         lblTutar.isDisplayed();
+        return this;
+    }
+
+    @Step("Posta Listesi Adı alanı kontrolü. \"{postaListesiAdi}\" ")
+    public PostaListesiPage postaListesiAdiKontrolu(String postaListesiAdi) {
+        SelenideElement txtPostaListesiAdi = $("[id='mainPreviewForm:eastLayout'] table tr:nth-child(1) td:nth-child(2)");
+        txtPostaListesiAdi.shouldBe(Condition.text(postaListesiAdi));
+        return this;
+    }
+
+    @Step("Posta Listesi Adı alanı kontrolü. \"{postaListesiAdi}\" ")
+    public PostaListesiPage postaDetayiGonderildigiYer(String gonderildigiYer) {
+        SelenideElement cmbGonderildigiYer = $(By.id("mainPreviewForm:tpbeGidecegiYerSelectOneMenuId_input"));
+        cmbGonderildigiYer.getSelectedText().equals(gonderildigiYer);
         return this;
     }
 
@@ -197,6 +216,24 @@ public class PostaListesiPage extends MainPage {
                 .get(index)
                 .click();
 
+        return this;
+    }
+
+    @Step("Konuye göre evrak seç. \"{konu}\" ")
+    public PostaListesiPage evrakSec(String konu) {
+
+        tableEvraklar
+                .filterBy(Condition.text(konu))
+                .first()
+                .click();
+
+        return this;
+    }
+
+
+    @Step("Evrak önizleme kontrolü")
+    public PostaListesiPage evrakOnizlemeKontrolu() {
+        $(By.id("mainPreviewForm:eastLayout")).shouldBe(Condition.visible);
         return this;
     }
 
@@ -262,6 +299,20 @@ public class PostaListesiPage extends MainPage {
         return this;
     }
 
+    @Step("Posta listesinden çıkart. \"{konu}\" ")
+    public PostaListesiPage konuyaGorePostaListesindenCikart(String konu) {
+        //
+
+        tableEvraklar
+                .filterBy(Condition.text(konu))
+                .first()
+                .$("button[id$='postaListesindenCikarButton']")
+                .click();
+
+
+        return this;
+    }
+
     @Step("Posta listesinden çıkart.")
     public PostaListesiPage postaListesindenCikart(int index) {
         tableEvraklar
@@ -309,6 +360,11 @@ public class PostaListesiPage extends MainPage {
         return this;
     }
 
+    @Step("Adres alanında \"{adres}\" girilir.")
+    public PostaListesiPage adresDoldur(String adres) {
+        txtAdres.sendKeys(adres);
+        return this;
+    }
 
     @Step("Gidiş şekli combosunda \"{gidisSekli}\" değeri olmalı mı? : \"{shouldBeEquals}\" ")
     public PostaListesiPage gidisSekliKontrol(String gidisSekli, boolean shouldBeEquals) {
@@ -358,7 +414,7 @@ public class PostaListesiPage extends MainPage {
         return this;
     }
 
-    @Step("Tutar alaninda \"{tutar}\" değeri olmalı mı? : \"{shouldBeEquals}\" ")
+    @Step("Tutar alaninda \"{indirimOrani}\" değeri olmalı mı? : \"{shouldBeEquals}\" ")
     public PostaListesiPage indirimOraniKontrol(String indirimOrani, boolean shouldBeEquals) {
         txtIndirimOrani.text();
         if (shouldBeEquals == true)
@@ -375,6 +431,63 @@ public class PostaListesiPage extends MainPage {
         return this;
     }
 
+    @Step("Etiket bastır ekranında Gideceği Yer ve Adres kontrolü")
+    public PostaListesiPage etiketBastirEkraniKontrolü(String adres, String konu) {
+        txtEtiketBastir.text().contains(konu);
+        txtEtiketBastir.text().contains(adres);
+        return this;
+    }
 
+    @Step("Etiket bastır ekranı kapama")
+    public PostaListesiPage etiketBastirEkraniKapat() {
+        SelenideElement btnEtiketBastırEkraniKapat = $(By.xpath("//div[@class='ui-dialog-titlebar ui-widget-header ui-helper-clearfix ui-corner-top']//a/span[@class='ui-icon ui-icon-closethick']"));
+        btnEtiketBastırEkraniKapat.click();
+        return this;
+    }
+
+    @Step("Evrak Listesi tablosunda Yazdır butonu tıklanır.")
+    public PostaListesiPage evrakListesiYazdir(String[] konu ) {
+        int size = tableEvrakListesi.size();
+        for (int i = 0; i < size; i++) {
+
+            tableEvrakListesi
+                    .get(i)
+                    .$x("//span[text() = 'Yazdır']/../../button").click();
+            evrakDetayiPopUpKontrolü();
+            evrakDetayiYazdır();
+            pdfKontrol
+                    .geregiBilgiAlaniAdresPdfKontrol(konu[0]);
+
+        }
+        return this;
+    }
+
+    @Step("Etiket bastır ekranı kapama")
+    public PostaListesiPage evrakDetayiPopUpKontrolü() {
+        popUpEvrakDetayi.shouldBe(Condition.visible);
+        return this;
+    }
+    @Step("Etiket bastır ekranı kapama")
+    public PostaListesiPage evrakDetayiYazdır() {
+        tblEvrakDetayi.first()
+                .$("[id$='evrakDetayiViewDialogYazdir']").click();
+        return this;
+    }
+
+    public class PDFKontrol extends MainPage {
+
+        public PDFKontrol geregiBilgiAlaniAdresPdfKontrol(String konu){
+
+            switchTo().window(1);
+//            SelenideElement geregiAdresAlaniPDF = $(By.xpath("//div[@id='viewer']/div[@class='page']//div[.='" + sayi + "']"));
+            SelenideElement bilgiAdresAlaniPDF = $(By.xpath("//div[@id='viewer']/div[@class='page']//div[.='" + konu + "']"));
+
+//            System.out.println(sayi);
+            System.out.println("Beklenen konu: " + konu);
+            System.out.println("Gelen konu: " + bilgiAdresAlaniPDF.getText());
+            return this;
+        }
+
+    }
 }
 
