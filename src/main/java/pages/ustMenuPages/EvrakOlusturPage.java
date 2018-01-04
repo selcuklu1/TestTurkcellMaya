@@ -1584,7 +1584,7 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement cmbEvrakAranacakyer = $(By.id("yeniGidenEvrakForm:evrakEkTabView:ekIslemleriEvrakAramaAranacakYerId"));
         SelenideElement btnSistemdeDokumanAra = $(By.id("yeniGidenEvrakForm:evrakEkTabView:dokumanAraButton"));
         SelenideElement txtEvrakArama = $(By.id("yeniGidenEvrakForm:evrakEkTabView:evrakAramaText"));
-        ElementsCollection tblSistemdeKayitliEvrakListe = $$("[id='yeniGidenEvrakForm:evrakEkTabView:sistemdeKayitliEvrakListesiDataTable_data'] tr[role='row']");
+        ElementsCollection tblSistemdeKayitliEvrakListe = $$("[id='yeniGidenEvrakForm:evrakEkTabView:sistemdeKayitliEvrakListesiDataTable_data'] tr[data-ri]");
         ElementsCollection tblEkListesi = $$("[id='yeniGidenEvrakForm:ekListesiDataTable_data'] tr[role='row']");
         SelenideElement btnIlgiEkle = $("[id^='yeniGidenEvrakForm:evrakEkTabView:sistemdeKayitliEvrakListesiDataTable'][id$='ekEkleButton1']");
 

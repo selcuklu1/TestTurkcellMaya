@@ -5,15 +5,19 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import pages.MainPage;
 import pages.solMenuPages.*;
 import pages.ustMenuPages.EvrakOlusturPage;
 import pages.ustMenuPages.PttRaporuPage;
 
 import java.util.Random;
 
+import static com.codeborne.selenide.Selenide.switchTo;
+
 
 public class TopluPostalamaTest extends BaseTest {
 
+    MainPage mainPage;
     TopluPostalanacakEvraklarPage topluPostalanacakEvraklarPage;
     PostaListesiPage postaListesiPage;
     PostalananlarPage postalananlarPage;
@@ -33,6 +37,7 @@ public class TopluPostalamaTest extends BaseTest {
         imzaladiklarimPage = new ImzaladiklarimPage();
         imzaBekleyenlerPage = new ImzaBekleyenlerPage();
         evrakOlusturPage = new EvrakOlusturPage();
+        mainPage = new MainPage();
     }
 
     @Test(enabled = true, description = "1804 : Toplu Postalanacak Evrakların Sorgulanması (UC_POSTAYÖNETİMİ_001)")
@@ -914,12 +919,15 @@ public class TopluPostalamaTest extends BaseTest {
         String gizlilikDerecesi = "Normal";
         String ivedilik = "Normal";
         String geregi = "Ahmet ÇELİK";
-        String konu = "TC2214 " + getSysDate();
+        String adres = "adres " + getSysDateForKis();
+        String[] konu = new String[]{
+                "TC1811 " + getSysDate(), "TC1811 " + getSysDate() + 100
+        };
         String tur = "İmzalama";
         String geregiTipi = "Gerçek Kişi";
         String basariMesaji = "İşlem başarılıdır!";
 //        String konu = "TC2214 20180102112101";
-        String postaListesi = konu;
+        String postaListesi = konu[0];
         String gidisSekli = "Ankara İçi APS";
         String gramaj1 = "1";
         String indirimOrani = "20";
@@ -930,32 +938,93 @@ public class TopluPostalamaTest extends BaseTest {
                 "Ankara İçi APS"
         };
 
-        //        Test datası oluşturuluyor
 
-        for (int i = 0; i < 2; i++) {
-            evrakOlusturPage
-                    .openPage()
-                    .bilgilerTabiAc()
-                    .konuKoduSec(konuKodu)
-                    .konuDoldur(konu)
-                    .kaldiralacakKlasorlerSec(kaldiralacakKlasor)
-                    .evrakTuruSec(evrakTuru)
-                    .evrakDiliSec(evrakDili)
-                    .gizlilikDerecesiSec(gizlilikDerecesi)
-                    .ivedilikSec(ivedilik)
-                    .geregiSecimTipiSecByText(geregiTipi)
-                    .geregiSec(geregi)
-                    .gercekKisiGeregiAlaniPostaTipiSec(gidisSekli)
-                    .onayAkisiEkle()
-                    .onayAkisiEkleIlkImzalaSec(tur)
-                    .kullan();
-            evrakOlusturPage
-                    .editorTabAc()
-                    .editorIcerikDoldur(konu)
-                    .imzala()
-                    .sImzasec()
-                    .sImzaImzala()
-                    .sayisalImzaEvetPopup();
-        }
+//        //        Test datası oluşturuluyor
+//
+//        for (int i = 0; i < 2; i++) {
+//            evrakOlusturPage
+//                    .openPage()
+//                    .bilgilerTabiAc()
+//                    .konuKoduSec(konuKodu)
+//                    .konuDoldur(konu[i])
+//                    .kaldiralacakKlasorlerSec(kaldiralacakKlasor)
+//                    .evrakTuruSec(evrakTuru)
+//                    .evrakDiliSec(evrakDili)
+//                    .gizlilikDerecesiSec(gizlilikDerecesi)
+//                    .ivedilikSec(ivedilik)
+//                    .geregiSecimTipiSecByText(geregiTipi)
+//                    .geregiSec(geregi)
+//                    .gercekKisiGeregiAlaniPostaTipiSec(gidisSekli)
+//                    .onayAkisiEkle()
+//                    .onayAkisiEkleIlkImzalaSec(tur)
+//                    .kullan();
+//
+//            evrakOlusturPage
+//                    .editorTabAc()
+//                    .editorIcerikDoldur(konu[i]);
+//            mainPage
+//                    .evrakImzala();
+//        }
+//
+//        topluPostalanacakEvraklarPage
+//                .openPage()
+//                .tarihAraligiSec(getSysDateForKis(), getSysDateForKis())
+//                .postaTipiSec(postaTipleri)
+//                .sorgula()
+//                .evrakTumunuSec(true)
+//                .postaListesineAktar()
+//                .listeAdiDoldur(konu[0])
+//                .listeOlustur()
+//                .postaListesiSec(konu[0])
+//                .listeyeEkle();
+//
+//        postaListesiPage
+//                .openPage()
+//                .filtreleAc()
+//                .postaListesiDoldur(postaListesi)
+//                .evrakSec(konu[0])
+////                .evrakOnizlemeKontrolu()
+//                .konuyaGorePostaListesindenCikart(konu[1]);
+//
+//        topluPostalanacakEvraklarPage
+//                .openPage()
+//                .tarihAraligiSec(getSysDateForKis(), getSysDateForKis())
+//                .postaTipiSec(postaTipleri)
+//                .sorgula()
+//                .konuyaGoreEvrakKontrolu(konu[1]);
+
+
+        String[] konu1 = new String[]{
+                "TC1811 20180103164344", "TC1811 20180103155248100"
+        };
+
+        postaListesiPage
+                .openPage()
+                .filtreleAc()
+                .postaListesiDoldur("TC1811 20180103164344")
+//                .postaListesiDoldur(postaListesi)
+                .evrakSec(konu1[0])
+                .postaListesiPostala()
+                .postaListesiAdiKontrolu(konu1[0])
+                .postaDetayiGonderildigiYer(geregiTipi)
+                .adresDoldur(adres)
+                .gidisSekliSec("İadeli Taahhütlü")
+                .gonderildigiYerSec("Yurt İçi")
+                .gramajDoldur("deneme")
+
+                .gramajDoldur(gramaj1)
+                .tutarHesapla()
+                .indirimOncesiTutarKontrol("50.00", true)
+                .indirimOraniKontrol("10", true)
+                .tutarKontrol("45.000", true)
+
+                .etiketBastir()
+                .etiketBastirEkraniKontrolü(adres, geregi)
+                .etiketBastirEkraniKapat()
+                .evrakListesiYazdir(konu1);
+        switchTo().window(1);
+
+
+
     }
 }

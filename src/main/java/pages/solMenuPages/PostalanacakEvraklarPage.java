@@ -35,7 +35,7 @@ public class PostalanacakEvraklarPage extends MainPage {
     BelgenetElement cmbGidisSekli = comboBox(By.xpath("//*[normalize-space(text())='Gidiş Şekli :']/ancestor::td[@role='gridcell'][1]//label[contains(@id,'_label')]"));
     SelenideElement txtGramaj = $("[id^='mainPreviewForm:dataTableId'][id$='postaGramaj']");
     SelenideElement btnTamam = $(By.id("mainPreviewForm:tutarDialogButtonId"));
-    SelenideElement txtTutar = $("[id$='dpPostaTutarId']");
+    SelenideElement txtTutar = $("[id$='postaTutarId']");
     SelenideElement btnKaydet = $(By.id("mainPreviewForm:dagitimPlaniDetayKaydetViewDialog"));
     SelenideElement btnHesapla = $x("//button[span[text()='Hesapla']]");
     SelenideElement epostaTxt = $x("//label[normalize-space(text())='e-posta :']/ancestor::tr[1]//input");
@@ -205,8 +205,7 @@ public class PostalanacakEvraklarPage extends MainPage {
 
     @Step("Gramaj alnına \"{gramaj}\" girilir.")
     public PostalanacakEvraklarPage gramajDoldur(String gramaj) throws InterruptedException {
-        txtGramaj.clear();
-        txtGramaj.sendKeys(gramaj);
+        setValueJS(txtGramaj, gramaj);
         return this;
     }
 
@@ -402,16 +401,16 @@ public class PostalanacakEvraklarPage extends MainPage {
 
     @Step("Popup kontrolü")
     public PostalanacakEvraklarPage popUpKontrol() {
-        popUP.shouldHave(Condition.visible);
+        popUP.shouldBe(Condition.visible);
         return this;
     }
 
     @Step("Tutar alaninda \"{tutar}\" değeri olmalı mı? : \"{shouldBeEquals}\" ")
     public PostalanacakEvraklarPage tutarAlaniKontrolu(String tutar, boolean shouldBeEquals) {
         if (shouldBeEquals == true)
-            txtTutar.shouldHave(Condition.text(tutar));
+            txtTutar.getValue().equals(Condition.text(tutar));
         else
-            txtTutar.shouldNotHave(Condition.text(tutar));
+            txtTutar.shouldNotBe(Condition.text(tutar));
         return this;
     }
 }

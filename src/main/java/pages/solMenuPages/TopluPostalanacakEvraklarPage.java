@@ -356,6 +356,26 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Tüm evrakları seç. ")
+    public TopluPostalanacakEvraklarPage evrakTumunuSec(boolean secim) {
+        Boolean isSelected = false;
+
+        SelenideElement currentRowCheckBox = $("div[id='mainInboxForm:inboxDataTable'] table tr:nth-child(3)  div[id^='mainInboxForm:inboxDataTable:j_idt']");
+
+        if (currentRowCheckBox.$(By.xpath(".//div[contains(@class, 'ui-state-active')]")).exists())
+            isSelected = true;
+
+        if (secim == true) {
+            if (isSelected == false)
+                currentRowCheckBox.click();
+        } else {
+            if (isSelected == true)
+                currentRowCheckBox.click();
+        }
+        return this;
+    }
+
+
     @Step("Evrak seç.")
     public TopluPostalanacakEvraklarPage evrakKontrol(String kayitTarihiSayi, String gidecegiYer, String konu, String hazirlayanBirim, String postTipi, boolean shouldBeExist) {
 
@@ -386,6 +406,18 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
         }
         return this;
     }
+
+    @Step("konuya gore Evrak kontrolu : \"{konu}\" ")
+    public TopluPostalanacakEvraklarPage konuyaGoreEvrakKontrolu(String konu) {
+
+            tableEvraklar
+                    .filterBy(Condition.text(konu))
+                    .first()
+                    .shouldBe(Condition.exist)
+                    .shouldBe(Condition.visible);
+        return this;
+    }
+
 
     @Step("Gideceği yerler seç")
     public TopluPostalanacakEvraklarPage gidecegiYerKontrol(String[] gidecegiYerler, boolean shouldBeExist) {
