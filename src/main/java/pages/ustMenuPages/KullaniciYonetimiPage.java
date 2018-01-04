@@ -93,7 +93,6 @@ public class KullaniciYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Ekran adı çekilir")
     public String ekranAdiCek() {
         String ekranAdi = txtEkranAdi.getValue();
         return ekranAdi;
@@ -110,25 +109,25 @@ public class KullaniciYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Kullanıcı Yönetim sayfası aç")
+    @Step("Kullanıcı Yönetim sayfasını aç")
     public KullaniciYonetimiPage openPage() {
         ustMenu("Kullanıcı Yönetim");
         return this;
     }
 
-    @Step("Kullanıcı Birim atama bağ tipi seç")
-    public KullaniciYonetimiPage popupKullaniciBirimAtamaBagTipiSec(String value) {
-        cmbPopupKullaniciBirimAtamaBagTipi.selectOption(value);
+    @Step("Kullanıcı Birim atama bağ tipi seçilir {value} | {bag}")
+    public KullaniciYonetimiPage popupKullaniciBirimAtamaBagTipiSec(String bagTipi, String bag) {
+        cmbPopupKullaniciBirimAtamaBagTipi.selectOption(bagTipi);
         return this;
     }
 
-    @Step("Görevli olduğu birimler güncelle")
+    @Step("Görevli olduğu birimleri güncelle")
     public KullaniciYonetimiPage gorevliOlduguBirimlerGuncelle() {
         clickJs(btnGorevliOlduguBirimlerGuncelle);
         return this;
     }
 
-    @Step("Seçilen kullanıcı güncelle tıkla")
+    @Step("Seçilen kullanıcıyı güncelle tıkla")
     public KullaniciYonetimiPage kullaniciListesiGuncelle() {
         clickJs(btnKullaniciListesiGuncelle);
         return this;
@@ -252,7 +251,7 @@ public class KullaniciYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Kullanıcı guncelleme kaydet")
+    @Step("Kullanıcı güncelleme alanında kaydet")
     public KullaniciYonetimiPage kullaniciGuncellemeKaydet() {
         btnKullaniciGuncelleKaydet.click();
         return this;

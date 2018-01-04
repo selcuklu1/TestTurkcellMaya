@@ -45,7 +45,6 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
     //TODO
 
 
-    @Step("")
     public SorgulamaVeFiltreleme sorgulamaVeFiltreleme(){
         return new SorgulamaVeFiltreleme(window);
     }

@@ -94,8 +94,8 @@ public class BaseTest extends BaseLibrary {
 
     public void clearCookies() {
         try {
-//            Selenide.clearBrowserLocalStorage();
-//            Selenide.clearBrowserCookies();
+            Selenide.clearBrowserLocalStorage();
+            Selenide.clearBrowserCookies();
         } catch (Exception e) {
             log.info("Error clearBrowserLocalStorage and clearBrowserCookies: " + e.getMessage());
         }
