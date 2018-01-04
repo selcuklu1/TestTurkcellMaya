@@ -10,7 +10,6 @@ import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.CollectionCondition.*;
 import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Selectors.byLinkText;
 import static com.codeborne.selenide.Selenide.*;
 
 public class MainPage extends BaseLibrary {

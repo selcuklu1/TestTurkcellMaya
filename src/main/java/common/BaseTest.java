@@ -87,8 +87,8 @@ public class BaseTest extends BaseLibrary {
 
     @AfterClass(alwaysRun = true)
     public void afterClass() {
-        Selenide.close();
-        log.info("Browser has been closed.");
+//        Selenide.close();
+//        log.info("Browser has been closed.");
     }
 
 

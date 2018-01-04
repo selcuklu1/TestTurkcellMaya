@@ -1,186 +1,95 @@
 package pages.pageComponents;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.Selectors;
 import com.codeborne.selenide.SelenideElement;
-import common.BaseLibrary;
+import com.codeborne.selenide.impl.WebElementsCollectionWrapper;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
-import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.testng.Assert;
+
+import java.util.ArrayList;
 
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
+import static com.codeborne.selenide.CollectionCondition.sizeGreaterThanOrEqual;
 import static com.codeborne.selenide.Condition.*;
-import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
+import static pages.pageComponents.belgenetElements.BelgentCondition.isTableNavButtonDisabled;
 
 /**
  * Yazan: Ilyas Bayraktar
- * Tarih: 3.01.2018
+ * Tarih: 4.01.2018
  * Açıklama:
  */
-public class SorgulamaVeFiltreleme extends BaseLibrary {
-    private SelenideElement window;
+public class SearchTable {
 
-    /**
-     * Ekranın ana form ya da div
-     * @param window
-     */
-    public SorgulamaVeFiltreleme(SelenideElement window) {
-        this.window = window;
+    public SearchTable(SelenideElement parentElement) {
+        this.parentElement = parentElement;
     }
 
-    //region Filter
-    /**
-     * Filter alanların oluduğu panel
-     * @return
-     */
-    public SelenideElement getFilterPanel(){
-        SelenideElement filterPanel = window.$("div[id$='filterPanel']");
-        filterPanel.shouldBe(visible);
-        return filterPanel;
+    private final SelenideElement parentElement;
+
+    @Step
+    public SelenideElement getTableHeader(){
+        return parentElement.$("th.ui-datatable-header");
     }
 
-    public SelenideElement getSorgulamaVeFiltreleme(){
-        return getFilterPanel().$("h3");
+    @Step
+    public SelenideElement getTableLabel(){
+        return getTableHeader().$("label");
     }
 
-    @Step("\"Sorgulama ve Filtreleme\"yi genişlet")
-    public SorgulamaVeFiltreleme sorgulamaVeFiltrelemeyiGenislet() {
-        SelenideElement element = getSorgulamaVeFiltreleme();
-        element.shouldHave(text("Sorgulama ve Filtreleme"));
-        if (element.attr("aria-expanded").equalsIgnoreCase("false"))
-            element.find("a").click();
+    @Step
+    public SelenideElement getAddNewButton(){
+        return parentElement.$x("descendant::button[span[contains(@class,'add-icon')]]");
+    }
+
+    @Step
+    public SearchTable yeniKayitEkle(){
+        getAddNewButton().shouldBe(visible,enabled).click();
         return this;
     }
 
-    @Step("Get label")
-    public SelenideElement getLabel(String text){
-        SelenideElement label = getFilterPanel().$x("descendant::label[normalize-space(.)='"+ text +"']");
-        label.shouldBe(visible);
-        return label;
-    }
+//    [id='havaleKuralYonetimiListingForm:havaleKuralDataTable'] th.ui-datatable-header label
 
-    public SelenideElement getFilterElement(String label){
-        SelenideElement filterElement = null;
-
-        //Onay Akış Yönetimi ve Form Şablon Yönetimi sayfada yapı farklı
-        if (getFilterPanel().find("span[class='filterElement']").exists())
-            return getFilterPanel().$x("descendant::span[@class='filterElement' and label[normalize-space(.)='" + label + "']]");
-
-
-        log.info("Sorgulama ve Filtreleme: element with span[@class='filterElement'] not found");
-
-        SelenideElement labelElement = getLabel(label);
-        //----------------
-        //Onay Akışı Yönetimi gibi sayfalar
-        //<tr class="ui-widget-content" role="row">
-        SelenideElement parentElement = labelElement.parent();
-        if (parentElement.getTagName().equals("tr") && parentElement.has(cssClass("ui-widget-content")) && parentElement.has(attribute("role","row")))
-            return parentElement;
-
-        //----------------
-        //Form Şablon Yönetimi gibi sayfalar
-        //tbody parent olacak
-        parentElement = labelElement.$x("ancestor::tbody[1]");
-        return parentElement;
-    }
-
-    @Step("Get input element with label")
-    public SelenideElement getFilterInput(String label){
-        SelenideElement parentElement = getFilterElement(label);
-        return parentElement.find("input");
-    }
-
-    @Step("Get select element with label")
-    public SelenideElement getFilterSelect(String label){
-        SelenideElement selectElement = getFilterElement(label).$("select");
-        return selectElement;
-    }
-
-    @Step("Get button elements of labeled field")
-    public ElementsCollection getFilterFieldButtons(String label){
-        ElementsCollection elements = getFilterElement(label).$$("button");
-        return elements;
-    }
-
-    @Step("\"Sorgulama ve Filtreleme\"de \"{name}\" alanı doldur")
-    public SorgulamaVeFiltreleme filtrelemeAlaniDoldur(String name, CharSequence... keysToSend){
-        sorgulamaVeFiltrelemeyiGenislet();
-        SelenideElement field = getFilterInput(name);
-        for (CharSequence keys:keysToSend) {
-            field.sendKeys(keys);
-        }
-        return this;
-    }
-
-    @Step("\"Sorgulama ve Filtreleme\"de \"{name}\" alanı doldur")
-    public SorgulamaVeFiltreleme filtrelemeCombolovAlaniDoldur(String name, String value){
-        sorgulamaVeFiltrelemeyiGenislet();
-        SelenideElement parent = getFilterElement(name);
-        comboLov(By.xpath(parent.getSearchCriteria().split("By.xpath:")[1].trim() + "//input"))
-            .selectLov(value);
-        return this;
-    }
-
-    @Step("\"Sorgulama ve Filtreleme\"de \"{fieldName}\"'ın butonu tıkla")
-    public SorgulamaVeFiltreleme filtrelemedeAlaninButonuTikla(String fieldName, int index){
-        sorgulamaVeFiltrelemeyiGenislet();
-        ElementsCollection filterElement = getFilterFieldButtons(fieldName);
-        filterElement.shouldHave(sizeGreaterThan(0));
-        filterElement.get(index).click();
-        return this;
-    }
-
-    @Step("\"Sorgulama ve Filtreleme\"de \"{name}\"'butona tıkla")
-    public SorgulamaVeFiltreleme filtrelemedeButonaTikla(String name){
-        sorgulamaVeFiltrelemeyiGenislet();
-        SelenideElement filterPanel = getFilterPanel();
-        /*SelenideElement button = filterPanel.$$("button").filterBy(visible).filterBy(text(name)).last();
-        button.click();*/
-        filterPanel.$x("descendant::button[.='"+ name +"']").shouldBe(visible, enabled).click();
-        return this;
-    }
-    //endregion
-
-    @Step("")
-    public SearchTable searchTable(){
-        return new SearchTable(window);
-    }
-
-    /*
     @Step("İlk sayfaya git butonu")
     public SelenideElement getFirstPageButton() {
-        return window.$("span[class~='ui-paginator-first']");
+        return parentElement.$("span[class~='ui-paginator-first']");
     }
 
     @Step("Önceki sayfaya git butonu")
     public SelenideElement getPrevPageButton() {
-        return window.$("span[class~='ui-paginator-prev']");
+        return parentElement.$("span[class~='ui-paginator-prev']");
     }
 
     @Step("Sonraki sayfaya git butonu")
     public SelenideElement getNextPageButton() {
-        return window.$("span[class~='ui-paginator-next']");
+        return parentElement.$("span[class~='ui-paginator-next']");
     }
 
     @Step("Son sayfaya git butonu")
     public SelenideElement getLastPageButton() {
-        return window.$("span[class~='ui-paginator-last']");
+        return parentElement.$("span[class~='ui-paginator-last']");
     }
 
     public SelenideElement getDataTable(){
-//        return window.$("[id$='SearchTable']");
+//        return parentElement.$("[id$='SearchTable']");
 //        ,[id$='SearchTable'] table[role=grid],table[role=treegrid]
-        SelenideElement table = window.find("[id$='SearchTable']");
+        /*SelenideElement table = parentElement.find("[id$='SearchTable']");
         if (table.isDisplayed())
             return table;
 
-        return window.$("div[id$=TreeTable]");
+        return parentElement.$("div[id$=TreeTable]");*/
+        return parentElement;
     }
-//    [data-ri]
+
     private SelenideElement getDataTableData(){
-        return window.$("[id$='DataTable_data']");
+        return parentElement.$("[id$='DataTable_data']");
     }
 
     private ElementsCollection getDataTableRows() {
-        return getDataTable().$$("tr[role=row]");
+        return parentElement.$$("tr[role=row]");
     }
 
     private SelenideElement getColumn(SelenideElement row, int columnIndex){
@@ -188,27 +97,25 @@ public class SorgulamaVeFiltreleme extends BaseLibrary {
     }
 
     public boolean isRowsExist(){
-        SelenideElement searchTable = getDataTable();
-        ElementsCollection columns = searchTable.$$("tr[role=row] td[role=gridcell]");
-        if (columns.size() == 0 || searchTable.find(Selectors.byText("Kayıt Bulunamamıştır")).exists())
+        ElementsCollection columns = parentElement.$$("tr[role=row] td[role=gridcell]");
+        if (columns.size() == 0 || parentElement.find(Selectors.byText("Kayıt Bulunamamıştır")).exists())
             return false;
 
         return false;
     }
 
     public ElementsCollection getRows() {
-        SelenideElement searchTable = getDataTable();
-        searchTable.shouldBe(visible);
-        *//*Allure.addAttachment("Satır sayısı:" + String.valueOf(searchTable.$$("tr[role='row']").size()),
+        parentElement.shouldBe(visible);
+        /*Allure.addAttachment("Satır sayısı:" + String.valueOf(searchTable.$$("tr[role='row']").size()),
                 (searchTable.$$("tr[role='row']").size() > 0) ? getDataTableData().$$("tr[role='row']").texts().toString() : "");
-        takeScreenshot();*//*
-        return searchTable.$$("tr[role='row']");
+        takeScreenshot();*/
+        return parentElement.$$("tr[role='row']");
     }
 
     @Step("Kolonun index")
     public int getColumnIndex(String columnName){
-        SelenideElement searchTable = getDataTable();
-        ElementsCollection columnheaders = searchTable.$$("[id$='SearchTable'] th[role='columnheader']");
+
+        ElementsCollection columnheaders = parentElement.$$("[id$='SearchTable'] th[role='columnheader']");
         columnheaders.filterBy(exactText(columnName)).shouldHave(sizeGreaterThan(0));
         int i = 1;
         for (SelenideElement header:columnheaders) {
@@ -222,21 +129,21 @@ public class SorgulamaVeFiltreleme extends BaseLibrary {
         return i;
     }
 
-    *//**
+    /**
      *
      * @param index start with 1
      * @return
-     *//*
+     */
     @Step("Kolonun ismi")
     public String getColumnName(int index){
-        String name = getDataTable().$$("th[role='columnheader']")
+        String name = parentElement.$$("th[role='columnheader']")
                 .shouldHave(sizeGreaterThanOrEqual(index))
                 .get(index - 1).text().trim();
         Allure.addAttachment("Kolon ismi", name);
         return name;
     }
 
-    *//**
+    /**
      * Row'da tüm condition'lar sağlanmalı. Örnek:
      * |    kolon1   |      kolon2    |   kolon3    |
      *      aaabb           ccc;ddd         222
@@ -249,11 +156,10 @@ public class SorgulamaVeFiltreleme extends BaseLibrary {
      *
      * @param conditions
      * @return
-     *//*
+     */
     private ElementsCollection getFilteredRows(Condition... conditions){
-        SelenideElement searchTable = getDataTable();
         ArrayList<WebElement> resulrRows = new ArrayList<>();
-        ElementsCollection rows = searchTable.$$("tr[role=row]");
+        ElementsCollection rows = parentElement.$$("tr[role=row]");
         for (SelenideElement row:rows) {
             ElementsCollection columns = row.$$("td[role=gridcell]");
             int i = conditions.length;
@@ -270,22 +176,20 @@ public class SorgulamaVeFiltreleme extends BaseLibrary {
     }
 
     private ElementsCollection getFilteredRows(int columnIndex, Condition... conditions){
-        SelenideElement searchTable = getDataTable();
         ArrayList<WebElement> rows = new ArrayList<>();
-        ElementsCollection columns = searchTable.$$("tr[role=row] td[role=gridcell]:nth-child("+ columnIndex +")");
+        ElementsCollection columns = parentElement.$$("tr[role=row] td[role=gridcell]:nth-child("+ columnIndex +")");
         for (Condition condition:conditions)
             columns = columns.filterBy(condition);
 
         for (SelenideElement column : columns)
-            rows.add(column.$x("ancestor::tr[@data-ri and @role='row'][1]"));
+            rows.add(column.$x("ancestor::tr[@role='row'][1]")); //@data-ri and
         return new ElementsCollection(new WebElementsCollectionWrapper(rows));
     }
 
     private ElementsCollection getFilteredRows(String columnName, Condition... conditions){
-        SelenideElement searchTable = getDataTable();
         ArrayList<WebElement> rows = new ArrayList<>();
         int columnIndex = getColumnIndex(columnName);
-        ElementsCollection columns = searchTable.$$("tr[role=row] td[role=gridcell]:nth-child("+ columnIndex +")");
+        ElementsCollection columns = parentElement.$$("tr[role=row] td[role=gridcell]:nth-child("+ columnIndex +")");
         for (Condition condition:conditions)
             columns = columns.filterBy(condition);
 
@@ -294,7 +198,7 @@ public class SorgulamaVeFiltreleme extends BaseLibrary {
         return new ElementsCollection(new WebElementsCollectionWrapper(rows));
     }
 
-    *//**
+    /**
      * Row'da tüm condition'lar sağlanmalı. Örnek:
      * |    kolon1   |      kolon2    |   kolon3    |
      *      aaabb           ccc;ddd         222
@@ -307,7 +211,7 @@ public class SorgulamaVeFiltreleme extends BaseLibrary {
      *
      * @param conditions
      * @return
-     *//*
+     */
     @Step("Arama tablosunda kolonlara göre satırları ara")
     public ElementsCollection findRows(Condition... conditions){
         ElementsCollection rows = getFilteredRows(conditions);
@@ -315,7 +219,7 @@ public class SorgulamaVeFiltreleme extends BaseLibrary {
         return rows;
     }
 
-    *//**
+    /**
      * Row'da tüm condition'lar sağlanmalı. Örnek:
      * |    kolon1   |      kolon2    |   kolon3    |
      *      aaabb           ccc;ddd         222
@@ -328,14 +232,14 @@ public class SorgulamaVeFiltreleme extends BaseLibrary {
      *
      * @param conditions
      * @return
-     *//*
+     */
     @Step("Arama tablosunda kolon tekste göre satırları ara")
     public ElementsCollection findRows(int columnIndex, Condition... conditions){
         String columnName = getColumnName(columnIndex);
         return getFilteredRows(columnIndex, conditions);
     }
 
-    *//**
+    /**
      * Row'da tüm condition'lar sağlanmalı. Örnek:
      * |    kolon1   |      kolon2    |   kolon3    |
      *      aaabb           ccc;ddd         222
@@ -348,14 +252,14 @@ public class SorgulamaVeFiltreleme extends BaseLibrary {
      *
      * @param conditions
      * @return
-     *//*
+     */
     @Step("Arama tablosunda kolon tekste göre satırları ara")
     public ElementsCollection findRows(String columnName, Condition... conditions){
         int columnIndex = getColumnIndex(columnName);
         return getFilteredRows(columnIndex, conditions);
     }
 
-    private ElementsCollection getFilteredRows(String... texts){
+    ElementsCollection getFilteredRows(String... texts){
         ElementsCollection filtered = getRows();
         for (String text : texts)
             filtered = filtered.filterBy(text(text));
@@ -369,7 +273,7 @@ public class SorgulamaVeFiltreleme extends BaseLibrary {
         return filtered;
     }
 
-    *//**
+    /**
      * Row'da tüm condition'lar sağlanmalı. Örnek:
      * |    kolon1   |      kolon2    |   kolon3    |
      *      aaabb           ccc;ddd         222
@@ -382,7 +286,7 @@ public class SorgulamaVeFiltreleme extends BaseLibrary {
      *
      * @param texts
      * @return
-     *//*
+     */
     @Step("Arama tablosunda tüm sayfalarda ara")
     public ElementsCollection findRowsInAllPagesByText(String... texts){
         while (true) {
@@ -395,7 +299,7 @@ public class SorgulamaVeFiltreleme extends BaseLibrary {
         }
     }
 
-    *//**
+    /**
      * Row'da tüm condition'lar sağlanmalı. Örnek:
      * |    kolon1   |      kolon2    |   kolon3    |
      *      aaabb           ccc;ddd         222
@@ -408,7 +312,7 @@ public class SorgulamaVeFiltreleme extends BaseLibrary {
      *
      * @param conditions
      * @return
-     *//*
+     */
     @Step("Arama tablosunda tüm sayfalarda ara")
     public ElementsCollection findRowsInAllPages(Condition... conditions){
         while (true) {
@@ -421,7 +325,7 @@ public class SorgulamaVeFiltreleme extends BaseLibrary {
         }
     }
 
-    *//**
+    /**
      * Row'da tüm condition'lar sağlanmalı. Örnek:
      * |    kolon1   |      kolon2    |   kolon3    |
      *      aaabb           ccc;ddd         222
@@ -434,7 +338,7 @@ public class SorgulamaVeFiltreleme extends BaseLibrary {
      *
      * @param conditions
      * @return
-     *//*
+     */
     @Step("Arama tablosunda tüm sayfalarda ara")
     public ElementsCollection findRowsInAllPages(int columnIndex, Condition... conditions){
         while (true) {
@@ -447,7 +351,7 @@ public class SorgulamaVeFiltreleme extends BaseLibrary {
         }
     }
 
-    *//**
+    /**
      * Row'da tüm condition'lar sağlanmalı. Örnek:
      * |    kolon1   |      kolon2    |   kolon3    |
      *      aaabb           ccc;ddd         222
@@ -460,7 +364,7 @@ public class SorgulamaVeFiltreleme extends BaseLibrary {
      *
      * @param conditions
      * @return
-     *//*
+     */
     @Step("Arama tablosunda tüm sayfalarda ara")
     public ElementsCollection findRowsInAllPages(String columnName, Condition... conditions){
         while (true) {
@@ -473,15 +377,5 @@ public class SorgulamaVeFiltreleme extends BaseLibrary {
         }
     }
 
-    @Step
-    public SelenideElement addNewButton(){
-        return window.$x("//button[span[contains(@class,'add-icon')]]");
-    }
 
-    @Step("")
-    public SorgulamaVeFiltreleme yeniKayitEkle(){
-        addNewButton().shouldBe(visible,enabled).click();
-        return this;
-    }
-*/
 }
