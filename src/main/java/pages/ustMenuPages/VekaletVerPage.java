@@ -55,7 +55,7 @@ public class VekaletVerPage extends MainPage {
 
     SelenideElement cmbDurum = $(By.xpath("//table[@id='vekaletVerForm:vekaletLayout:vekaletSorgulaPanelGrid']//select"));
 
-    @Step("Vekalet Ver sayfası aç")
+    @Step("Vekalet Ver sayfasını aç")
     public VekaletVerPage openPage() {
         new UstMenu().ustMenu("Vekalet Ver");
         $("form[id='vekaletVerForm']").shouldBe(visible);
@@ -75,10 +75,10 @@ public class VekaletVerPage extends MainPage {
         return this;
     }
 
-    @Step("Vekalet veren alanını farklı doldur")
-    public VekaletVerPage vekaletVerenFarkliDoldur(String text) {
+    @Step("Vekalet veren alanını farklı doldur \"{vekaletVeren}\" ")
+    public VekaletVerPage vekaletVerenFarkliDoldur(String vekaletVeren) {
         btnVekalelVerenTemizle.click();
-        txtVekaletVerenCombolov.selectLov(text);
+        txtVekaletVerenCombolov.selectLov(vekaletVeren);
         return this;
     }
 

@@ -66,7 +66,7 @@ public class EvrakOlusturPage extends MainPage {
     private EvrakNotlariTab evrakNotlariTab = new EvrakNotlariTab();
     private SablonIslemleriTab sablonIslemleriTab = new SablonIslemleriTab();
 
-    @Step("Evrak Oluştur sayfası aç")
+    @Step("Evrak Oluştur sayfasını aç")
     public EvrakOlusturPage openPage() {
         new UstMenu().ustMenu("Evrak Oluştur");
         $("#yeniGidenEvrakForm").shouldBe(visible);
@@ -387,7 +387,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Konu Kodu alanında seç")
+        @Step("Otomatik onay akışı seç")
         public BilgilerTab otomatikOnayAkisi() {
             btnOtomatikOnayAkisi.click();
             return this;
@@ -782,8 +782,8 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Otomatik onay akışı kontrol")
-        public BilgilerTab otomatikOnayAkisiGeldigiGorme(String ekranAdi) {
+        @Step("Otomatik onay akışı alanında geldiği görünür \"{ekranAdi}\" | \"{ekranAdi}\"")
+        public BilgilerTab otomatikOnayAkisiGeldigiGorme(String ekranAdi,String ad) {
 
             $$(" [id='yeniGidenEvrakForm:hiyerarsikAkisOlusturForm:otomatikAkisKullaniciBirimListId'] tbody tr")
                     .filterBy(text(ekranAdi)).shouldHave(sizeGreaterThan(0)).get(0).click();

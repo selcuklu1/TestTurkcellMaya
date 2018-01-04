@@ -62,7 +62,7 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
                 .ara()
                 .kullaniciListesiGuncelle()
                 .gorevliOlduguBirimlerGuncelle()
-                .popupKullaniciBirimAtamaBagTipiSec(bagTipi)
+                .popupKullaniciBirimAtamaBagTipiSec(bagTipi,"Bağ Tipi")
                 .popupKullaniciBirimAtamaKaydet();
 
         String ekranAdi = kullaniciYonetimiPage.ekranAdiCek();
@@ -75,7 +75,7 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
                 .openPage()
                 .bilgilerTabiAc()
                 .otomatikOnayAkisi()
-                .otomatikOnayAkisiGeldigiGorme(ekranAdi);
+                .otomatikOnayAkisiGeldigiGorme(ekranAdi, "Kullanıcı");
 
         vekaletVerPage
                 .openPage()
@@ -87,7 +87,7 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
                 .openPage()
                 .evrakSec()
                 .tabHavaleYap()
-                .havaleYapOnaylanacakKisiTreeDoldur(ekranAdi);
+                .havaleYapOnaylanacakKisiTreeDoldur(ekranAdi,"Onaylanacak kişi");
     }
 
 
@@ -113,7 +113,7 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
                 .ara()
                 .kullaniciListesiGuncelle()
                 .gorevliOlduguBirimlerGuncelle()
-                .popupKullaniciBirimAtamaBagTipiSec(bagTipi)
+                .popupKullaniciBirimAtamaBagTipiSec(bagTipi, "Bağ Tipi")
                 .popupKullaniciBirimAtamaKaydet();
 
         String ekranAdi = kullaniciYonetimiPage.ekranAdiCek();
@@ -126,7 +126,7 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
                 .openPage()
                 .bilgilerTabiAc()
                 .otomatikOnayAkisi()
-                .otomatikOnayAkisiGeldigiGorme(ekranAdi)
+                .otomatikOnayAkisiGeldigiGorme(ekranAdi, "Kullanıcı")
                 .onayAkisiEkle()
                 .kullanicilarDoldur(ekranAdi)
                 .kullanicilarImzaciSec2(kullanicilarTuru)
@@ -168,7 +168,7 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
                 .openPage()
                 .evrakSec()
                 .tabHavaleYap()
-                .havaleYapOnaylanacakKisiTreeDoldur(ekranAdi);
+                .havaleYapOnaylanacakKisiTreeDoldur(ekranAdi,"Onaylanacak kişi");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -189,7 +189,7 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
                 .ara()
                 .kullaniciListesiGuncelle()
                 .gorevliOlduguBirimlerGuncelle()
-                .popupKullaniciBirimAtamaBagTipiSec(bagTipi)
+                .popupKullaniciBirimAtamaBagTipiSec(bagTipi,"Bağ Tipi")
                 .popupKullaniciBirimAtamaKaydet();
 
         String ekranAdi = kullaniciYonetimiPage.ekranAdiCek();
@@ -215,7 +215,7 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
                 .openPage()
                 .evrakSec()
                 .tabHavaleYap()
-                .havaleYapOnaylanacakKisiTreeDoldur(ekranAdi);
+                .havaleYapOnaylanacakKisiTreeDoldur(ekranAdi,"Onaylanacak kişi");
     }
 
 }
