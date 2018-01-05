@@ -100,11 +100,11 @@ public class BaseTest extends BaseLibrary {
             log.info("Error clearBrowserLocalStorage and clearBrowserCookies: " + e.getMessage());
         }*//*
     }*/
-
+    
     @AfterClass(alwaysRun = true)
     public void afterClass() {
         Selenide.close();
-        log.info("Browser has been closed.");
+       log.info("Browser has been closed.");
     }
 
     @Step("Login")

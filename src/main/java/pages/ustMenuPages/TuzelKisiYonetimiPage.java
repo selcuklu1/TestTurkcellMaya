@@ -36,7 +36,7 @@ public class TuzelKisiYonetimiPage extends MainPage {
     SelenideElement txtFiltreDurum = $(By.id("tuzelKisiYonetimiListingForm:filterPanel:durumSelectBox"));
     SelenideElement btnIslemOnayiHayir = $(By.id("baseConfirmationDialog:baseConfirmationDialogCancelButton"));
     SelenideElement btnIslemOnayiEvet = $(By.id("baseConfirmationDialog:confirmButton"));
-
+    SelenideElement strPopupAktifEtmeMesaji = $("[id='baseConfirmationDialog:form'] [class='content']");
 
     //Tüzel kişi ekleme alanı
     SelenideElement cmbTuzelKisiTipi = $(By.id("tuzelKisiYonetimiEditorForm:tuzelKisiTipi"));
@@ -418,6 +418,18 @@ public class TuzelKisiYonetimiPage extends MainPage {
         Assert.assertEquals(chkKepAdresiKullaniyor.isDisplayed(), true);
         Assert.assertEquals(btnKepAdresBilgileriEkle.isDisplayed(), true);
 
+        return this;
+    }
+
+
+    @Step("Gelen popup mesaji kontrolu: {popupAktifEtmeMesaji}")
+    public TuzelKisiYonetimiPage popupTuzelKisiAktifEtmeKontrolu(String popupAktifEtmeMesaji) {
+
+        strPopupAktifEtmeMesaji.shouldBe(visible);
+
+        String getPopupMessage = strPopupAktifEtmeMesaji.text();
+
+        Assert.assertEquals(getPopupMessage.contains(popupAktifEtmeMesaji), true);
         return this;
     }
 }
