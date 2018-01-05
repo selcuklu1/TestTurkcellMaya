@@ -42,10 +42,10 @@ public class EvrakPostalamaTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC0308: Evrak Postalama")
-    public void TC0308() throws InterruptedException {
+    @Test(enabled = true, description = "TS0308: Evrak Postalama")
+    public void TS0308() throws InterruptedException {
         login("Mbozdemir", "123");
-        String konu = "TC0308_" + getSysDate();
+        String konu = "TS0308_" + getSysDate();
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
@@ -73,7 +73,7 @@ public class EvrakPostalamaTest extends BaseTest {
 
         evrakOlusturPage
                 .editorTabAc()
-                .editorIcerikDoldur("TC0308")
+                .editorIcerikDoldur("TS0308")
                 .editorEvrakGeregiSec("YAZILIM GELİ")
                 .imzala()
                 .popupSImzalaIslemleri();
@@ -102,10 +102,10 @@ public class EvrakPostalamaTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC2076: Evrak Postalama işlemleri")
-    public void TC2076() throws InterruptedException {
+    @Test(enabled = true, description = "TS2076: Evrak Postalama işlemleri")
+    public void TS2076() throws InterruptedException {
         login("Mbozdemir", "123");
-        String konu = "TC2076_" + getSysDate();
+        String konu = "TS2076_" + getSysDate();
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
@@ -124,7 +124,7 @@ public class EvrakPostalamaTest extends BaseTest {
                 .onayAkisiKullan();
 
         EvrakOlusturPage.EditorTab editorTab = evrakOlusturPage.editorTabAc();
-        editorTab.getEditor().type("TC2076");
+        editorTab.getEditor().type("TS2076");
         editorTab.imzala()
                 .popupSImzalaIslemleri()
                 .islemMesaji().basariliOlmali();
@@ -143,8 +143,8 @@ public class EvrakPostalamaTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC520 : Postalanan evrak posta bilgilerinin içerik ekranından güncellenmesi ve rapordan kontrolü")
-    public void TC0520b() throws InterruptedException {
+    @Test(enabled = true, description = "TS520 : Postalanan evrak posta bilgilerinin içerik ekranından güncellenmesi ve rapordan kontrolü")
+    public void TS0520b() throws InterruptedException {
         login("Mbozdemir", "123");
         String konu = "Konu:";
 
@@ -176,10 +176,10 @@ public class EvrakPostalamaTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC0520 : Postalanan evrak posta bilgilerinin önizleme ekranından güncellenmesi ve rapor üzerinde kontrolü")
-    public void TC0520a() throws InterruptedException {
+    @Test(enabled = true, description = "TS0520 : Postalanan evrak posta bilgilerinin önizleme ekranından güncellenmesi ve rapor üzerinde kontrolü")
+    public void TS0520a() throws InterruptedException {
         login("Mbozdemir", "123");
-        String konu = "Konu: TC2235:";
+        String konu = "Konu: TS2235:";
 
         postalananlarPage
                 .openPage();
@@ -208,10 +208,10 @@ public class EvrakPostalamaTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC1685 : Fiziksel eki olan iç yazışmaların postaya düşürülmesi")
-    public void TC1685() throws InterruptedException {
+    @Test(enabled = true, description = "TS1685 : Fiziksel eki olan iç yazışmaların postaya düşürülmesi")
+    public void TS1685() throws InterruptedException {
         login("Mbozdemir", "123");
-        String konu = "TC1685_" + getSysDate();
+        String konu = "TS1685_" + getSysDate();
 
         evrakOlusturPage
                 .openPage()
@@ -258,10 +258,10 @@ public class EvrakPostalamaTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC0312 : postalama işlemi sonrası postalananlar listesinin kontrolü")
-    public void TC0312() throws InterruptedException {
+    @Test(enabled = true, description = "TS0312 : postalama işlemi sonrası postalananlar listesinin kontrolü")
+    public void TS0312() throws InterruptedException {
         login("Mbozdemir", "123");
-        String konu = "TC1685_" + getSysDate();
+        String konu = "TS1685_" + getSysDate();
 
         postalananlarPage.openPage();
         postalananlarPage.btnKurdele()
@@ -284,10 +284,10 @@ public class EvrakPostalamaTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC2235 : Ek ilgi ilişiği olan evrakı postaya düşürme")
-    public void TC2235() throws InterruptedException {
+    @Test(enabled = true, description = "TS2235 : Ek ilgi ilişiği olan evrakı postaya düşürme")
+    public void TS2235() throws InterruptedException {
         login("Mbozdemir", "123");
-        String konu = "TC2235_" + getSysDate();
+        String konu = "TS2235_" + getSysDate();
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
@@ -362,8 +362,8 @@ public class EvrakPostalamaTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC0802 : Postalanan Evrak Raporu")
-    public void TC0802() throws InterruptedException {
+    @Test(enabled = true, description = "TS0802 : Postalanan Evrak Raporu")
+    public void TS0802() throws InterruptedException {
         login("Mbozdemir", "123");
 //Download control should be added. But working now.
         postalananEvrakRaporuPage
@@ -394,23 +394,23 @@ public class EvrakPostalamaTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "")
-    public void TC0309() throws InterruptedException {
+    public void TS0309() throws InterruptedException {
         login("Mbozdemir", "123");
-        String konu = "TC2235_";
+        String konu = "TS2235_";
         postalanacakEvraklarPage
                 .openPage()
                 .filter().findRowsWith(Condition.text(konu)).first().click();
 
         postalanacakEvraklarPage.evrakPostala()
                 .tuzelKisiPostaKod("309")
-                .tuzelKisiPostaAciklama("TC0309")
+                .tuzelKisiPostaAciklama("TS0309")
                 .birimPostaKod("309")
-                .birimPostaAciklama("TC0309")
+                .birimPostaAciklama("TS0309")
                 .dagitimDetay()
                 .dagitimDetayKapat()
                 .gidisSekli("Adi Posta")
                 .ilkPostaPostaKod("309")
-                .ilkPostaAciklama("TC0309")
+                .ilkPostaAciklama("TS0309")
                 .gramajDoldur("15")
                 .hesapla()
                 .etiketYazdir()

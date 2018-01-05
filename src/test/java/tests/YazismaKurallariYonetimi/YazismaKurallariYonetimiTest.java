@@ -16,8 +16,8 @@ public class YazismaKurallariYonetimiTest extends BaseTest {
         login();
     }
 
-    @Test(enabled = true, description = "TC01957_A : Yazışma Kuralı Ekle")
-    public void TC01957_A() {
+    @Test(enabled = true, description = "TS01957_A : Yazışma Kuralı Ekle")
+    public void TS01957_A() {
 
         String basariMesaj = "İşlem başarılıdır!";
         String birimAdi = "Diğer Birimler";
@@ -26,7 +26,7 @@ public class YazismaKurallariYonetimiTest extends BaseTest {
         Boolean sonImzaSeviyesi = false;
 
         yazismaKurallariYonetimiPage
-                .open()
+                .openPage()
                 .yazismaKurallariEkle()
                 .birimTipiSec(birimAdi)
                 .tiklaSinirsizYazilabilir(sinirsizYazilabilir)
@@ -38,21 +38,21 @@ public class YazismaKurallariYonetimiTest extends BaseTest {
 
     }
 
-    @Test(enabled = true, description = "TC01957_B : Yazışma Kuralı Sil")
-    public void TC01957_B() {
+    @Test(enabled = true, description = "TS01957_B : Yazışma Kuralı Sil")
+    public void TS01957_B() {
 
         String basariMesaj = "İşlem başarılıdır!";
         String birimAdi = "Belde Belediyesi";
 
         yazismaKurallariYonetimiPage
-                .open()
+                .openPage()
                 .yazismaKuraliSil(birimAdi)
                 .islemMesaji().basariliOlmali(basariMesaj);
 
     }
 
-    @Test(enabled = true, description = "TC01957_C : Yazışma Kuralı Güncelle")
-    public void TC01957_C() {
+    @Test(enabled = true, description = "TS01957_C : Yazışma Kuralı Güncelle")
+    public void TS01957_C() {
 
         String basariMesaj = "İşlem başarılıdır!";
         String guncellenecekBirimadi = "Diğer Birimler";
@@ -62,7 +62,7 @@ public class YazismaKurallariYonetimiTest extends BaseTest {
         Boolean sonImzaSeviyesi = false;
 
         yazismaKurallariYonetimiPage
-                .open()
+                .openPage()
                 .yazismaKuraliGuncelle(guncellenecekBirimadi)
                 .birimTipiSec(yeniBirimAdi)
                 .tiklaSinirsizYazilabilir(sinirsizYazilabilir)

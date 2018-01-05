@@ -6,6 +6,7 @@ import com.codeborne.selenide.Selenide;
 import data.User;
 import io.qameta.allure.Step;
 import listeners.SettingsListener;
+import org.testng.ITestResult;
 import org.testng.annotations.*;
 import pages.LoginPage;
 import pages.MainPage;
@@ -19,13 +20,6 @@ import static data.TestData.belgenetURL;
 @Listeners({SettingsListener.class})//, BrowserPerTest.class})
 public class BaseTest extends BaseLibrary {
 
-    @BeforeSuite(alwaysRun = true)
-    public void beforeSuite() {
-
-        //killProcess();
-        //log.info("Kill all process");
-
-    }
 
     @BeforeClass(alwaysRun = true)
     public void driverSetUp() {
@@ -35,8 +29,6 @@ public class BaseTest extends BaseLibrary {
 
         BelgenetFramework.setUp();
 
-//        log.info("input pramater browser: " + System.getProperty("selenide.browser"));
-//        log.info("input pramater url: " + System.getProperty("selenide.baseUrl"));
         //Configuration.remote = "http://10.101.20.151:4444/wd/hub";
         //Configuration.remote = "http://localhost:4444/wd/hub";
 
@@ -50,8 +42,8 @@ public class BaseTest extends BaseLibrary {
         Configuration.screenshots = false;
         Configuration.savePageSource = false;
 
-        Configuration.collectionsTimeout = 40 * 1000;
-        Configuration.timeout = 40 * 1000;
+        Configuration.collectionsTimeout = 30 * 1000;
+        Configuration.timeout = 30 * 1000;
         setWaitForLoading(20);
         //Configuration.clickViaJs = true;
 //        Configuration.holdBrowserOpen = true;
@@ -75,36 +67,45 @@ public class BaseTest extends BaseLibrary {
         log.info("Selenide/Selenium driver has been set up.");
     }
 
-    @AfterMethod(alwaysRun = true)
+    @AfterMethod
+    public void takeScreenshotOnFailure(ITestResult testResult) {
+        int SUCCESS = 1;
+        int FAILURE = 2;
+        int SKIP = 3;
+        int SUCCESS_PERCENTAGE_FAILURE = 4;
+        int STARTED= 16;
+        String result = "unknown";
+        switch (testResult.getStatus()){
+            case 1 : result = "SUCCESS"; break;
+            case 2 : result = "FAILURE"; break;
+            case 3 : result = "SKIP"; break;
+            case 4 : result = "SUCCESS_PERCENTAGE_FAILURE"; break;
+            case 16 : result = "STARTED"; break;
+        }
+
+        if (testResult.getStatus() == ITestResult.FAILURE)
+            takeScreenshot();
+
+        System.out.println("///////////////////////////////////////////////////////");
+        System.out.println("Test " + result + ": " + testResult.getName());
+        System.out.println("///////////////////////////////////////////////////////");
+    }
+
+    /*@AfterMethod(alwaysRun = true)
     public void afterMethod() {
-        try {
+        *//*try {
             Selenide.clearBrowserLocalStorage();
             Selenide.clearBrowserCookies();
         } catch (Exception e) {
             log.info("Error clearBrowserLocalStorage and clearBrowserCookies: " + e.getMessage());
-        }
+        }*//*
     }
 
     @AfterClass(alwaysRun = true)
     public void afterClass() {
-        Selenide.close();
-        log.info("Browser has been closed.");
-    }
-
-
-    public void clearCookies() {
-        try {
-//            Selenide.clearBrowserLocalStorage();
-//            Selenide.clearBrowserCookies();
-        } catch (Exception e) {
-            log.info("Error clearBrowserLocalStorage and clearBrowserCookies: " + e.getMessage());
-        }
-    }
-
-    @AfterSuite(alwaysRun = true)
-    public void afterSuite() {
-        //killProcess();
-    }
+//        Selenide.close();
+//        log.info("Browser has been closed.");
+    }*/
 
     @Step("Login")
     public void login(User user) {

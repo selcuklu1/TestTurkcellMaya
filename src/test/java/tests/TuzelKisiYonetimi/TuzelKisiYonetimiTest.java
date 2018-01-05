@@ -3,7 +3,6 @@ package tests.TuzelKisiYonetimi;
 import common.BaseTest;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
-import io.qameta.allure.Step;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.ustMenuPages.*;
@@ -38,8 +37,8 @@ public class TuzelKisiYonetimiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC1124: Yeni tüzel kişi kayıt ve ekranlardan kontrolleri")
-    public void TC1124() throws InterruptedException {
+    @Test(enabled = true, description = "TS1124: Yeni tüzel kişi kayıt ve ekranlardan kontrolleri")
+    public void TS1124() throws InterruptedException {
 
         String vergiNo = createRandomNumber(10);
         String kisaAd = createRandomText(7);
@@ -58,6 +57,7 @@ public class TuzelKisiYonetimiTest extends BaseTest {
         tuzelKisiYonetimiPage
                 .openPage()
                 .yeniTuzelKisiEkle()
+                .kepAdresiAlanKontrolu()
                 .tuzelKisiTipiSec(tuzelKisiTipi)
                 .vergiNoDoldur(vergiNo)
                 .adDoldur(ad)
@@ -97,29 +97,29 @@ public class TuzelKisiYonetimiTest extends BaseTest {
         gelenEvrakKayitPage
                 .openPage()
                 .kisiKurumSecByText("Tüzel Kişi")
-                .geldigiTuzelKisiDoldur(ad)
+                .geldigiTuzelKisiDoldur(ad, "Ad")
                 .secilenGeregiTuzelKisiSil()
-                .geldigiTuzelKisiDoldur(kisaAd)
+                .geldigiTuzelKisiDoldur(kisaAd, "Kısa Ad")
                 .secilenGeregiTuzelKisiSil()
-                .geldigiTuzelKisiDoldur(vergiNo);
+                .geldigiTuzelKisiDoldur(vergiNo, "Vergi No");
 
         gidenEvrakKayitPage
                 .openPage()
                 .geregiSecimTipiSecByText("Tüzel Kişi")
-                .geregiDoldur(ad)
+                .geregiDoldur(ad, "Ad")
                 .secilenGeregiSil()
-                .geregiDoldur(kisaAd)
+                .geregiDoldur(kisaAd, "Kısa Ad")
                 .secilenGeregiSil()
-                .geregiDoldur(vergiNo);
+                .geregiDoldur(vergiNo, "Vergi No");
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC1133: Tüzel kişi sorgulama")
-    public void TC1133() throws InterruptedException {
+    @Test(enabled = true, description = "TS1133: Tüzel kişi sorgulama")
+    public void TS1133() throws InterruptedException {
 
         String vergiNo = "1257452322";
-        String ad = "Tc1133 TüzelKişi";
-        String kisaAd = "tc1133";
+        String ad = "TS1133 TüzelKişi";
+        String kisaAd = "TS1133";
 
         //NOTE: Test steplerinin sıralaması değiştirildi.
 
@@ -206,8 +206,8 @@ public class TuzelKisiYonetimiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC1460: Yeni tüzel kişi kayıtta alan kontrolleri")
-    public void TC1460() {
+    @Test(enabled = true, description = "TS1460: Yeni tüzel kişi kayıtta alan kontrolleri")
+    public void TS1460() {
 
         String vergiNo = createRandomNumber(10);
         String kisaAd = createRandomText(7);
@@ -283,8 +283,8 @@ public class TuzelKisiYonetimiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC1126: Tüzel Kişi Bilgisi Güncelleme ve kontrolleri")
-    public void TC1126() throws InterruptedException {
+    @Test(enabled = true, description = "TS1126: Tüzel Kişi Bilgisi Güncelleme ve kontrolleri")
+    public void TS1126() throws InterruptedException {
 
         String vergiNo = createRandomNumber(10);
         String kisaAd = createRandomText(7);
@@ -343,20 +343,20 @@ public class TuzelKisiYonetimiTest extends BaseTest {
         gelenEvrakKayitPage
                 .openPage()
                 .kisiKurumSecByText("Tüzel Kişi")
-                .geldigiTuzelKisiDoldur(ad2)
+                .geldigiTuzelKisiDoldur(ad2, "Ad2")
                 .secilenGeregiTuzelKisiSil()
-                .geldigiTuzelKisiDoldur(vergiNo2)
+                .geldigiTuzelKisiDoldur(vergiNo2, "Vergi No2")
                 .secilenGeregiTuzelKisiSil()
-                .geldigiTuzelKisiDoldur(kisaAd2);
+                .geldigiTuzelKisiDoldur(kisaAd2, "Kısa Ad");
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC2241: Tüzel kişinin iletişim bilgisinin değiştirilmesi")
-    public void TC2241() throws InterruptedException {
+    @Test(enabled = true, description = "TS2241: Tüzel kişinin iletişim bilgisinin değiştirilmesi")
+    public void TS2241() throws InterruptedException {
 
         String vergiNo = "85212364597";
-        String ad = "Tc2241 Üniversitesi";
-        String kisaAd = "tc2241unv";
+        String ad = "TS2241 Üniversitesi";
+        String kisaAd = "TS2241unv";
 
         String mobilTelNo = "539" + createRandomNumber(7);
         String telNo = "212" + createRandomNumber(11);
@@ -434,12 +434,12 @@ public class TuzelKisiYonetimiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC1132: Tüzel kişinin pasif yapılması ve kontrolü")
-    public void TC1132() throws InterruptedException {
+    @Test(enabled = true, description = "TS1132: Tüzel kişinin pasif yapılması ve kontrolü")
+    public void TS1132() throws InterruptedException {
 
         String vergiNo = "34378564433";
-        String ad = "Tc1132 TüzelKişi";
-        String kisaAd = "tc1132tk";
+        String ad = "TS1132 TüzelKişi";
+        String kisaAd = "TS1132tk";
         String tip = "Tüzel Kişi";
         String basariMesaji = "İşlem başarılıdır!";
 
@@ -521,14 +521,14 @@ public class TuzelKisiYonetimiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC1132: Pasif yapılan tüzel kişinin aktif yapılması ve kontrolü")
-    public void TC1458() throws InterruptedException {
+    @Test(enabled = true, description = "TS1458: Pasif yapılan tüzel kişinin aktif yapılması ve kontrolü")
+    public void TS1458() throws InterruptedException {
 
         String vergiNo = "55665732323";
-        String ad = "TC1458";
+        String ad = "TS1458";
         String soyad = "TüzelKişi";
-        String tamAd = "TC1458 TüzelKişi";
-        String kisaAd = "tc1458tk";
+        String tamAd = "TS1458 TüzelKişi";
+        String kisaAd = "TS1458tk";
         String tip = "Tüzel Kişi";
         String basariMesaji = "İşlem başarılıdır!";
 

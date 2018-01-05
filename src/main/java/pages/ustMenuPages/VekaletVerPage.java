@@ -7,6 +7,7 @@ import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.UstMenu;
 import pages.pageComponents.belgenetElements.BelgenetElement;
+import pages.pageData.UstMenuData;
 
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
@@ -57,8 +58,7 @@ public class VekaletVerPage extends MainPage {
 
     @Step("Vekalet Ver sayfasını aç")
     public VekaletVerPage openPage() {
-        new UstMenu().ustMenu("Vekalet Ver");
-        $("form[id='vekaletVerForm']").shouldBe(visible);
+        ustMenu(UstMenuData.AmirIslemleri.VekaletVer);
         return this;
     }
 

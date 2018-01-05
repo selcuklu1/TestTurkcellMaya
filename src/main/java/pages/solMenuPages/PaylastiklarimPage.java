@@ -307,7 +307,7 @@ public class PaylastiklarimPage extends MainPage {
 
     @Step("paylaşılan kişileri temizle ")
     public PaylastiklarimPage paylasilanKisileriTemizle() {
-        txtPaylasKisi.clearAllSelectedLov();
+        txtPaylasKisi.clearAllSelectedItems();
         return this;
     }
 

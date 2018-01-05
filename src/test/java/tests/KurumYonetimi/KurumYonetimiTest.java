@@ -26,8 +26,8 @@ public class KurumYonetimiTest extends BaseTest {
         gidenEvrakKayitPage = new GidenEvrakKayitPage();
     }
 
-    @Test(enabled = true, description = "TC01459 : Kurum bilgisi güncelleme")
-    public void TC01459() {
+    @Test(enabled = true, description = "TS01459 : Kurum bilgisi güncelleme")
+    public void TS01459() {
 
         String yeniKurumAdi1 = "Yenikurum" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
         String idariBirimKimlikKodu = (new Random().nextInt((900000 - 100000) + 1) + 100000) + "";
@@ -180,8 +180,8 @@ public class KurumYonetimiTest extends BaseTest {
 
     }
 
-    @Test(enabled = true, description = "TC01109 : Kurum tanımlama ve kontrolü")
-    public void TC01109() {
+    @Test(enabled = true, description = "TS01109 : Kurum tanımlama ve kontrolü")
+    public void TS01109() {
 
         String yeniKurumAdi = "Yenikurum" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
         String idariBirimKimlikKodu = (new Random().nextInt((900000 - 100000) + 1) + 100000) + "";
@@ -244,8 +244,8 @@ public class KurumYonetimiTest extends BaseTest {
                 .geregiSecilenKontrol(yeniKurumAdi, kontrolEdilecekGeregiDetay, "Adi Posta");
     }
 
-    @Test(enabled = true, description = "TC01108 : Kurum Sorgulama")
-    public void TC01108() {
+    @Test(enabled = true, description = "TS01108 : Kurum Sorgulama")
+    public void TS01108() {
 
         String pasifYapilacakKurum = "PasifKurum" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
         String pasifYapilacakKurumIdariKimlikkodu = (new Random().nextInt((900000 - 100000) + 1) + 100000) + "";

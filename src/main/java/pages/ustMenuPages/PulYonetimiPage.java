@@ -7,6 +7,7 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import pages.MainPage;
 import pages.pageComponents.UstMenu;
+import pages.pageData.UstMenuData;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
@@ -29,7 +30,7 @@ public class PulYonetimiPage extends MainPage {
 
 
     public PulYonetimiPage openPage() {
-        new UstMenu().ustMenu("Pul Yönetimi");
+        ustMenu(UstMenuData.YonetimSayfalari.PulYonetimi);
         return this;
     }
 

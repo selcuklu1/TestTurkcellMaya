@@ -158,7 +158,7 @@ public class GelenEvraklarPage extends MainPage {
 
     @Step("Kullanıcı listesinde alanında \"{kisi}\" seçmeye dene")
     public GelenEvraklarPage havaleYapKullaniciyiSecmeyeDene(String kisi) {
-        txtHavaleYapKullaniciListesi.type(kisi).titleItems().filterBy(text(kisi)).first().click();
+        txtHavaleYapKullaniciListesi.type(kisi).getTitleItems().filterBy(text(kisi)).first().click();
         return this;
     }
 
@@ -347,8 +347,8 @@ public class GelenEvraklarPage extends MainPage {
 
     @Step("Kişi doldur")
     public GelenEvraklarPage paylasKisiSecBirim(String kisi, String birim) {
-        txtPaylasilanKisi.type(kisi).detailItems().filterBy(text(birim)).get(0).click();
-        txtPaylasilanKisi.closeLovTreePanel();
+        txtPaylasilanKisi.type(kisi).getDetailItems().filterBy(text(birim)).get(0).click();
+        txtPaylasilanKisi.closeTreePanel();
         //$(By.id("mainPreviewForm:evrakOnizlemeTab")).pressEnter();
         return this;
     }
@@ -473,8 +473,8 @@ public class GelenEvraklarPage extends MainPage {
 
     @Step("Kaldırılıcak klasor doldur")
     public GelenEvraklarPage evrakKapatKaldirilacakKlasorlerDoldur(String text, String birim) {
-        txtEvrakKapatKaldirilacakKlasorler.type(text).detailItems().filterBy(text(birim)).first().click();
-        txtEvrakKapatKaldirilacakKlasorler.closeLovTreePanel();
+        txtEvrakKapatKaldirilacakKlasorler.type(text).getDetailItems().filterBy(text(birim)).first().click();
+        txtEvrakKapatKaldirilacakKlasorler.closeTreePanel();
         return this;
     }
 
@@ -562,16 +562,18 @@ public class GelenEvraklarPage extends MainPage {
     //Cevap yaz sayfası
     @Step("Seçilen onay akışı detail kontrolu: \"{secim}\" ")
     public GelenEvraklarPage onayAkisiDetailKontrol(String secim) {
-        System.out.println("Gelen detail:     " + cmbOnayAkisi.lastSelectedLovDetailText());
-        Assert.assertEquals(cmbOnayAkisi.lastSelectedLovDetailText().contains(secim), true);
+//        System.out.println("Gelen detail:     " + cmbOnayAkisi.lastSelectedLovDetailText());
+        cmbOnayAkisi.getSelectedDetails().last().shouldHave(text(secim));
+//        Assert.assertEquals(cmbOnayAkisi.lastSelectedLovDetailText().contains(secim), true);
         return this;
     }
 
     //Cevap yaz sayfası
     @Step("Seçilen onay akışı title kontrolu: \"{onayAkisiTitle}\" ")
     public GelenEvraklarPage onayAkisiTitleKontrol(String onayAkisiTitle) {
-        System.out.println("Gelen detail:     " + cmbOnayAkisi.lastSelectedLovTitleText());
-        Assert.assertEquals(cmbOnayAkisi.lastSelectedLovTitleText().contains(onayAkisiTitle), true);
+        /*System.out.println("Gelen detail:     " + cmbOnayAkisi.lastSelectedLovTitleText());
+        Assert.assertEquals(cmbOnayAkisi.lastSelectedLovTitleText().contains(onayAkisiTitle), true);*/
+        cmbOnayAkisi.getSelectedTitles().last().shouldHave(text(onayAkisiTitle));
         return this;
     }
 
@@ -601,7 +603,7 @@ public class GelenEvraklarPage extends MainPage {
 
     @Step("Kullanıcılar alanı doldur : \nKullanıcı : \"{kullanici}\", \nTitle : \"{title}\" ")
     public GelenEvraklarPage kullanciListesiSecWithTitle(String kullanici, String title) {
-        txtKullaniciListesi.type(kullanici).detailItems()
+        txtKullaniciListesi.type(kullanici).getDetailItems()
                 .filterBy(Condition.exactText(title)).first().click();
         return this;
     }

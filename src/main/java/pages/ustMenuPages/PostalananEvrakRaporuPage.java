@@ -5,6 +5,7 @@ import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import pages.MainPage;
+import pages.pageData.UstMenuData;
 
 import static com.codeborne.selenide.Selenide.*;
 
@@ -31,7 +32,7 @@ public class PostalananEvrakRaporuPage extends MainPage {
     @Step("Postalanan Evrak Raporu sayfasını aç")
     public PostalananEvrakRaporuPage openPage() {
 
-        ustMenu("Postalanan Evrak Raporu");
+        ustMenu(UstMenuData.Raporlar.PostalananEvrakRaporu);
         return this;
     }
     @Step("Evrak Sayı numarası girişi")

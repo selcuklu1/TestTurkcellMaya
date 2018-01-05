@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
+import pages.pageData.UstMenuData;
 
 import java.io.IOException;
 
@@ -41,7 +42,7 @@ public class CevaplananEvrakRaporuPage extends MainPage {
 
     @Step("Cevaplanan Evrak Raporu sayfasını aç")
     public CevaplananEvrakRaporuPage openPage() {
-        ustMenu("Cevaplanan Evrak Raporu");
+        ustMenu(UstMenuData.Raporlar.CevaplananEvrakRaporu);
         $("#cevaplananEvrakRaporuForm").shouldBe(visible);
         return this;
     }

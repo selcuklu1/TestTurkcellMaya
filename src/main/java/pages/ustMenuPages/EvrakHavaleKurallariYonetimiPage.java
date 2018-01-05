@@ -6,8 +6,8 @@ import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import pages.MainPage;
-import pages.pageComponents.SorgulamaVeFiltreleme;
 import pages.pageComponents.belgenetElements.BelgenetElement;
+import pages.pageData.UstMenuData;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.*;
@@ -55,14 +55,7 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
     SelenideElement txtKimeHavaleEdilecekAciklama = $(By.id("havaleKuralYonetimiEditorForm:havaleAciklama"));
     //TODO
 
-
-    @Step("")
-    public SorgulamaVeFiltreleme sorgulamaVeFiltreleme(){
-        return new SorgulamaVeFiltreleme(window);
-    }
-
-
-    @Step("Kaydet")
+    @Step("Kural ekleme kaydet")
     public EvrakHavaleKurallariYonetimiPage kuralEklemeKaydet() {
         btnKuralEklemeKaydet.click();
         return this;
@@ -217,7 +210,7 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
 
     @Step("Kişi doldur")
     public EvrakHavaleKurallariYonetimiPage kimeHavaleEdilecekKisiDoldur(String kisi, String birim) {
-        txtKimeHavaleEdilecekKisi.type(kisi).detailItems().filterBy(text(birim)).first().click();
+        txtKimeHavaleEdilecekKisi.type(kisi).getDetailItems().filterBy(Condition.text(birim)).first().click();
         return this;
     }
 
@@ -309,8 +302,8 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
     }
 
     @Step("Evrak havale kuralları yonetimi sayfası açılır")
-    public EvrakHavaleKurallariYonetimiPage openPage() {
-        ustMenu("Evrak Havale Kuralları Yönetimi");
+    public EvrakHavaleKurallariYonetimiPage openPage(){
+        ustMenu(UstMenuData.YonetimSayfalari.EvrakHavaleKurallariYonetimi);
         return this;
     }
 

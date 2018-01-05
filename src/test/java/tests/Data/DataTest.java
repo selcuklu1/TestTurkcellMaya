@@ -24,8 +24,8 @@ public class DataTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC2224: DATA-Teslim alınmayı bekleyenler, gelen kutusu ve postalanacaklar listesine gizlilik derecesi yüksek evrak düşürme")
-    public void TC2224() throws InterruptedException {
+    @Test(enabled = true, description = "TS2224: DATA-Teslim alınmayı bekleyenler, gelen kutusu ve postalanacaklar listesine gizlilik derecesi yüksek evrak düşürme")
+    public void TS2224() throws InterruptedException {
 
         String konu = "Kanunlar";
         String konuKodu = "Kanunlar";
@@ -69,8 +69,8 @@ public class DataTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC2224: DATA-Teslim alınmayı bekleyenler, gelen kutusu ve postalanacaklar listesine gizlilik derecesi yüksek evrak düşürme")
-    public void TC2234() throws InterruptedException {
+    @Test(enabled = true, description = "TS2224: DATA-Teslim alınmayı bekleyenler, gelen kutusu ve postalanacaklar listesine gizlilik derecesi yüksek evrak düşürme")
+    public void TS2234() throws InterruptedException {
 
         String konuKodu = "Gelen-Giden Evrak";
         String evrakTuru = "Resmi Yazışma";

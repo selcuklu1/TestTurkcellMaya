@@ -15,7 +15,7 @@ import org.testng.annotations.Test;
 import pages.ustMenuPages.EvrakHavaleKurallariYonetimiPage;
 import pages.ustMenuPages.GelenEvrakKayitPage;
 
-import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Selenide.$;
 import static data.TestData.password2;
 import static data.TestData.username2;
 
@@ -353,5 +353,4 @@ public class EvrakHavaleKurallariTest extends BaseTest {
                 .islemOnayiEvet()
                 .islemMesaji().basariliOlmali(basariMesaji);
     }
-
 }

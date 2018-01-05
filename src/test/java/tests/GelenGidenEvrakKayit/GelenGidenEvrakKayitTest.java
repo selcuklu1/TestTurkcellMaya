@@ -62,8 +62,8 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, priority = 0, description = "TC0321: Üstyazı ek ve ilgi eklenerek gelen evrak kaydı")
-    public void TC0321() throws InterruptedException {
+    @Test(enabled = true, priority = 0, description = "TS0321: Üstyazı ek ve ilgi eklenerek gelen evrak kaydı")
+    public void TS0321() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
         String ustYaziPath = getDocPath1() + "pdf.pdf";
@@ -116,8 +116,9 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, priority = 2, description = "TC2163 : Kaydedilen gelen evrakın güncellenmesi")
-    public void TC2163() throws InterruptedException {
+    @Test(enabled = true, priority = 2, description = "TS2163 : Kaydedilen gelen evrakın güncellenmesi"
+    ,dependsOnMethods = {"TS0321"})
+    public void TS2163() throws InterruptedException {
 
         String evrakTuru = "Dilekçe";
         String ustYaziPath = getDocPath1() + "Otomasyon.pdf";
@@ -129,7 +130,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         String konu = "Test " + getSysDate();
 //        String evrakNO321 = "5569";
 
-// TC0321 de oluşturulan evrak no burada kullanılacak.
+// TS0321 de oluşturulan evrak no burada kullanılacak.
 
         kaydedilenGelenEvraklarPage
                 .openPage()
@@ -155,7 +156,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .evrakDetayiFizikselEkEkleTab()
                 .evrakDetayiAciklamaDoldur(aciklama)
                 .evrakDetayiEkle()
-                .dosyaEkleTabTabloKontrolu("Ek-3") // office converter açıldıktan sonra TC0321 deki evrak no kullanıldığında bu satır aktif olarak kullanılabilir.
+                .dosyaEkleTabTabloKontrolu("Ek-3") // office converter açıldıktan sonra TS0321 deki evrak no kullanıldığında bu satır aktif olarak kullanılabilir.
                 .evrakDetayiKaydet()
                 .evrakDetayiKaydetPopUpClose()
                 .islemMesaji().basariliOlmali(basariMesaji);
@@ -168,8 +169,8 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, priority = 1, description = "TC0328 : Gelen evrak kayıt ekranından havale")
-    public void TC0328() throws InterruptedException {
+    @Test(enabled = true, priority = 1, description = "TS0328 : Gelen evrak kayıt ekranından havale")
+    public void TS0328() throws InterruptedException {
 
         String birim = "OPTİİM BİRİM";
         String konu = "Test " + getSysDate();
@@ -206,8 +207,8 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = false, priority = 7, description = "TC1401 : Kaydedilen Gelen Evrak raporu")
-    public void TC1401() throws InterruptedException, IOException {
+    @Test(enabled = false, priority = 7, description = "TS1401 : Kaydedilen Gelen Evrak raporu")
+    public void TS1401() throws InterruptedException, IOException {
 
 //        String evrakNO321 = "5187";
 //        String evrakNO328 = "5187";
@@ -216,7 +217,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         String evrakNo = evrakNO321;
         String evrakNo1 = evrakNO328;
         String geldigiYer = "D";
-// Testin öncesinde TC0321 ve TC0328 caselerinin çalışması gerekli..
+// Testin öncesinde TS0321 ve TS0328 caselerinin çalışması gerekli..
 
         kaydedilenGelenEvrakPage
                 .openPage()
@@ -238,8 +239,8 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC1136 : Gelen evrak kaydederken yeni gerçek ve tüzel kişi tanımlama")
-    public void TC1136() throws InterruptedException {
+    @Test(enabled = true, description = "TS1136 : Gelen evrak kaydederken yeni gerçek ve tüzel kişi tanımlama")
+    public void TS1136() throws InterruptedException {
 
         String TCKN = "51091330934";
         String ad = "Test";
@@ -266,8 +267,8 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC0394 : Gelen maillerin evrak olarak sisteme dahil edilmesi")
-    public void TC0394() throws InterruptedException {
+    @Test(enabled = true, description = "TS0394 : Gelen maillerin evrak olarak sisteme dahil edilmesi")
+    public void TS0394() throws InterruptedException {
 
         String birim = "OPTİİM BİRİM11";
 
@@ -312,8 +313,8 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC0322 : Gelen evrak kayıtta alan kontrolleri")
-    public void TC0322() throws InterruptedException {
+    @Test(enabled = true, description = "TS0322 : Gelen evrak kayıtta alan kontrolleri")
+    public void TS0322() throws InterruptedException {
 
         String kisiKurum = "Gerçek Kişi";
         String kisiKurum1 = "Kurum";
@@ -379,8 +380,8 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC1340 : Giden evrak kaydı")
-    public void TC1340() throws InterruptedException {
+    @Test(enabled = true, description = "TS1340 : Giden evrak kaydı")
+    public void TS1340() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
         String ustYaziPath = getDocPath1() + "pdf.pdf";
@@ -408,7 +409,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .konuDoldur(konu)
                 .evrakDiliSec(evrakDili)
                 .miatDoldur(miatTarihi)
-                .geregiDoldur(geregi)
+                .geregiDoldur(geregi, "Ad")
                 .kaldiralacakKlasorDoldur(kaldirlacakKlasor)
                 .bilgiDoldur(bilgi)
                 .evrakTarihiDoldur(evrakTarihi)
@@ -431,5 +432,62 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         kaydedilenGidenEvraklarPage
                 .openPage()
                 .tabloKontrolKonuyaGore(konu);
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS0326 : Gelen evrakın tarama havuzundan evrak eklenerek kaydedilmesi")
+    public void TS0326() throws InterruptedException {
+
+        String basariMesaji = "İşlem başarılıdır!";
+        String ustYaziPath = getDocPath1() + "pdf.pdf";
+        String excelPath = getDocPath1() + "test.xlsx";
+        String ustYaziAdi = "pdf.pdf";
+        String excelAdi = "test.xlsx";
+        String konu = "Test " + getSysDate();
+        String birim = "OPTİİM BİRİM";
+        String evrakNO326 = "";
+
+
+        gelenEvrakKayitPage
+                .openPage()
+                .taramaHavuzundanEkleSayfasiAc()
+                .taramaHavuzuIlkKayitSec()
+                .taramaHavuzuIlkKayitTurSec("Üst Yazı")
+                .taramaHavuzuTamam();
+
+        gelenEvrakKayitPage
+                .openPage()
+                .evrakBilgileriUstYaziEkle(ustYaziPath)
+                .ustYaziPdfAdiKontrol(ustYaziAdi)
+                .islemMesaji().isBasarili();
+
+        gelenEvrakKayitPage
+                .konuKoduDoldur(konuKodu)
+                .konuDoldur(konu)
+                .evrakTuruSec(evrakTuru)
+                .evrakDiliSec(evrakDili)
+                .evrakTarihiDoldur(evrakTarihi)
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .kisiKurumSec(kisiKurum)
+                .geldigiKurumDoldurLovText(geldigiKurum)
+                .evrakSayiSagDoldur()
+                .evrakGelisTipiSec(evrakGelisTipi)
+                .ivedilikSec(ivedilik)
+                .dagitimBilgileriBirimDoldur(birim)
+                .kaydet();
+
+        evrakNO326 = gelenEvrakKayitPage.popUps();
+
+        gelenEvrakKayitPage
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        birimHavaleEdilenlerPage
+                .openPage()
+                .evrakNoIleTabloKontrolu(evrakNO326)
+                .evrakNoIleTablodanEvrakSecme(evrakNO326);
+
+        teslimAlinmayiBekleyenlerPage
+                .openPage();
+
     }
 }

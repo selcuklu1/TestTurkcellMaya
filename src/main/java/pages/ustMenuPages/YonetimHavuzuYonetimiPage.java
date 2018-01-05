@@ -7,6 +7,7 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
+import pages.pageData.UstMenuData;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
@@ -52,7 +53,7 @@ public class YonetimHavuzuYonetimiPage extends MainPage {
     }
 
     public YonetimHavuzuYonetimiPage openPage() {
-        ustMenu("Yönetim Havuzu Yönetimi");
+        ustMenu(UstMenuData.KullaniciIslemleri.YonetimHavuzuYonetimi);
         return this;
     }
 

@@ -4,15 +4,14 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
-import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.TextEditor;
-import pages.pageComponents.UstMenu;
 import pages.pageComponents.belgenetElements.BelgenetElement;
+import pages.pageData.UstMenuData;
 
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Condition.*;
@@ -22,9 +21,6 @@ import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 import static pages.pageComponents.belgenetElements.BelgentCondition.not;
 import static pages.pageComponents.belgenetElements.BelgentCondition.required;
 
-///////////////////////////////////////////////////////////////////////////
-// Ilyas Bayraktar
-///////////////////////////////////////////////////////////////////////////
 public class EvrakOlusturPage extends MainPage {
 
     public PDFKontrol pdfKontrol = new PDFKontrol();
@@ -67,9 +63,8 @@ public class EvrakOlusturPage extends MainPage {
     private SablonIslemleriTab sablonIslemleriTab = new SablonIslemleriTab();
 
     @Step("Evrak Oluştur sayfasını aç")
-    public EvrakOlusturPage openPage() {
-        new UstMenu().ustMenu("Evrak Oluştur");
-        $("#yeniGidenEvrakForm").shouldBe(visible);
+    public EvrakOlusturPage openPage(){
+        ustMenu(UstMenuData.EvrakIslemleri.EvrakOlustur);
         return this;
     }
 
@@ -373,17 +368,17 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Kullanıcılar alanı doldur")
         public BilgilerTab kullanicilarDoldur2(String kullanici) {
-            txtOnayAkisiKullanicilar.type(kullanici).titleItems()
+            txtOnayAkisiKullanicilar.type(kullanici).getTitleItems()
                     .filterBy(Condition.exactText(kullanici + " [Ağ (Network) Uzman Yardımcısı]")).first().click();
-            txtOnayAkisiKullanicilar.closeLovTreePanel();
+            txtOnayAkisiKullanicilar.closeTreePanel();
             return this;
         }
 
         @Step("Kullanıcılar alanında \"{kullanici}\" seç")
         public BilgilerTab kullanicilarDoldurWithTitle(String kullanici, String title) {
-            txtOnayAkisiKullanicilar.type(kullanici).titleItems()
+            txtOnayAkisiKullanicilar.type(kullanici).getTitleItems()
                     .filterBy(Condition.exactText(kullanici + title)).first().click();
-            txtOnayAkisiKullanicilar.closeLovTreePanel();
+            txtOnayAkisiKullanicilar.closeTreePanel();
             return this;
         }
 
@@ -581,7 +576,7 @@ public class EvrakOlusturPage extends MainPage {
         public BilgilerTab bilgiSec(String bilgi, Boolean clearAll) {
             txtBilgi.sendKeys(Keys.SHIFT);
             txtBilgi.selectLov(bilgi);
-            txtBilgi.clearAllSelectedLov();
+            txtBilgi.clearAllSelectedItems();
             return this;
         }
 
@@ -590,13 +585,13 @@ public class EvrakOlusturPage extends MainPage {
             sleep(4000);
             cmbGeregi.sendKeys(geregi);
             cmbGeregi.selectLov(geregi);
-            cmbGeregi.closeLovTreePanel();
+            cmbGeregi.closeTreePanel();
             return this;
         }
 
         @Step("Geregi alanını seçilenleri kaldır")
         public BilgilerTab geregiSecilenleriKaldır() {
-            txtGeregi.clearAllSelectedLov();
+            txtGeregi.clearAllSelectedItems();
             return this;
         }
 
@@ -604,7 +599,7 @@ public class EvrakOlusturPage extends MainPage {
         public BilgilerTab geregiSec(String geregi, Boolean clearAfterSelecion) {
             cmbGeregi.sendKeys(Keys.SHIFT);
             txtGeregi.selectLov(geregi);
-            txtGeregi.clearLastSelectedLov();
+            txtGeregi.clearLastSelectedItem();
             return this;
         }
 
@@ -632,8 +627,8 @@ public class EvrakOlusturPage extends MainPage {
             txtKonuKodu.selectLov(konuKodu);
             //shouldHave(Condition.text(konuKodu));
 
-            System.out.println("title: " + txtKonuKodu.lastSelectedLovTitleText());
-            System.out.println("detail: " + txtKonuKodu.lastSelectedLovDetailText());
+            /*System.out.println("title: " + txtKonuKodu.lastSelectedLovTitleText());
+            System.out.println("detail: " + txtKonuKodu.lastSelectedLovDetailText());*/
 
             return this;
         }
@@ -733,9 +728,10 @@ public class EvrakOlusturPage extends MainPage {
             String adSoyad = ad + " " + soyad.toUpperCase();
             cmbBilgi.shouldBe(visible);
             cmbBilgi.selectLov(adSoyad);
-            System.out.println("Gelen title:     " + cmbBilgi.lastSelectedLovTitleText());
-            System.out.println("Beklenen title:  " + adSoyad);
-            Assert.assertEquals(cmbBilgi.lastSelectedLovTitleText().contains(adSoyad), true);
+            /*System.out.println("Gelen title:     " + cmbBilgi.lastSelectedLovTitleText());
+            System.out.println("Beklenen title:  " + adSoyad);*/
+            /*Assert.assertEquals(cmbBilgi.lastSelectedLovTitleText().contains(adSoyad), true);*/
+            cmbBilgi.getSelectedTitles().last().shouldHave(text(adSoyad));
 
             return this;
         }
@@ -754,7 +750,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Gereği alanı doldurulur: {geregi} | {description}")
+        @Step("Gereği {description} doldur: | {geregi}")
         public BilgilerTab geregiDoldur(String geregi, String description) {
             cmbGeregi.selectLov(geregi);
             return this;
@@ -775,10 +771,10 @@ public class EvrakOlusturPage extends MainPage {
 
             cmbGeregi.shouldBe(visible);
             cmbGeregi.selectLov(adSoyad);
-            System.out.println("Gelen title:     " + cmbGeregi.lastSelectedLovTitleText());
+            /*System.out.println("Gelen title:     " + cmbGeregi.lastSelectedLovTitleText());
             System.out.println("Beklenen title:  " + adSoyad);
-            Assert.assertEquals(cmbGeregi.lastSelectedLovTitleText().contains(adSoyad), true);
-
+            Assert.assertEquals(cmbGeregi.lastSelectedLovTitleText().contains(adSoyad), true);*/
+            cmbGeregi.getSelectedTitles().last().shouldHave(text(adSoyad));
             return this;
         }
 
@@ -806,7 +802,7 @@ public class EvrakOlusturPage extends MainPage {
         public BilgilerTab secilenGeregiSil() throws InterruptedException {
             Thread.sleep(1000);
             cmbGeregi.shouldBe(visible);
-            cmbGeregi.clearLastSelectedLov();
+            cmbGeregi.clearLastSelectedItem();
             return this;
         }
 
@@ -917,7 +913,7 @@ public class EvrakOlusturPage extends MainPage {
             ElementsCollection btnOnayAkisiKaldir = $$("[id='yeniGidenEvrakForm:evrakBilgileriList:18:akisLov:LovSecilen'] button");
             btnOnayAkisiKaldir.get(0).pressEnter();
             // comboLov("yeniGidenEvrakForm:evrakBilgileriList:18:akisLov:LovText").selectLov(deger);
-            cmbOnayAkisi.type(deger).titleItems().first().click();
+            cmbOnayAkisi.type(deger).getTitleItems().first().click();
 
             return this;
         }
@@ -944,7 +940,7 @@ public class EvrakOlusturPage extends MainPage {
         public BilgilerTab secilenOnayAkisiSil() {
 
             if (cmbOnayAkisi.isLovSelected()) {
-                cmbOnayAkisi.clearLastSelectedLov();
+                cmbOnayAkisi.clearLastSelectedItem();
             }
 
             return this;
@@ -953,8 +949,8 @@ public class EvrakOlusturPage extends MainPage {
         @Step("Bilgileri tabında Onay Akışı alanında görüntülenmeme kontrolu")
         public BilgilerTab onayAkisiAlanindaGoruntulenmemeKontrolu(String onayAkisi) {
 
-            comboLov(cmbOnayAkisiBy).type(onayAkisi).titleItems().filterBy(exactText(onayAkisi)).shouldHaveSize(0);
-            comboLov(cmbOnayAkisiBy).closeLovTreePanel();
+            comboLov(cmbOnayAkisiBy).type(onayAkisi).getTitleItems().filterBy(exactText(onayAkisi)).shouldHaveSize(0);
+            comboLov(cmbOnayAkisiBy).closeTreePanel();
             System.out.println("MyCombolov alanında " + onayAkisi + ": Onay Akışın görüntülenmediği görülür.");
 
             return this;
@@ -1036,7 +1032,7 @@ public class EvrakOlusturPage extends MainPage {
         @Step("Onay akışı kullanıcıları silme")
         public BilgilerTab onayAkisiKullanicilariTemizle() {
             btnOnayAkisiEkle.click();
-            txtOnayAkisiKullanicilar.clearAllSelectedLov();
+            txtOnayAkisiKullanicilar.clearAllSelectedItems();
             return this;
         }
 
@@ -1145,15 +1141,17 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Gerçek kişi gereği alanı kontrolu")
         public BilgilerTab gercekKisiGeregiAlaniKontrol(String adSoyad, String unvan, String adres, String posta) {
-            System.out.println("Gelen title:     " + cmbGeregi.lastSelectedLovTitleText());
+            /*System.out.println("Gelen title:     " + cmbGeregi.lastSelectedLovTitleText());
             System.out.println("Beklenen title:  " + adSoyad);
             System.out.println("Gelen detail:    " + cmbGeregi.lastSelectedLovDetailText());
             System.out.println("Beklenen detail: " + unvan + " | " + adres);
             System.out.println("Gelen posta:     " + cmbPostaTipi.getSelectedText());
-            System.out.println("Beklenen posta:  " + posta);
+            System.out.println("Beklenen posta:  " + posta);*/
 
-            Assert.assertEquals(cmbGeregi.lastSelectedLovTitleText().contains(adSoyad), true);
-            Assert.assertEquals(cmbGeregi.lastSelectedLovDetailText().contains(unvan + " | " + adres), true);
+            cmbGeregi.getSelectedTitles().last().shouldHave(text(adSoyad));
+            cmbGeregi.getSelectedDetails().last().shouldHave(text(unvan + " | " + adres));
+            /*Assert.assertEquals(cmbGeregi.lastSelectedLovTitleText().contains(adSoyad), true);
+            Assert.assertEquals(cmbGeregi.lastSelectedLovDetailText().contains(unvan + " | " + adres), true);*/
             Assert.assertEquals(cmbPostaTipi.getSelectedText().contains(posta), true);
 
             return this;
@@ -1171,12 +1169,13 @@ public class EvrakOlusturPage extends MainPage {
         @Step("Tüzel Kişi gereği alanı kontrolu")
         public BilgilerTab tuzelKisiGeregiAlaniVergiNoPostaTipiKontrol(String vergiNo2, String postaTipi) {
 
-            System.out.println("Gelen detail:    " + cmbGeregi.lastSelectedLovDetailText());
+            /*System.out.println("Gelen detail:    " + cmbGeregi.lastSelectedLovDetailText());
             System.out.println("Beklenen detail: " + "Vergi No: " + vergiNo2);
             System.out.println("Gelen posta:     " + cmbPostaTipi.getText());
-            System.out.println("Beklenen posta:  " + postaTipi);
+            System.out.println("Beklenen posta:  " + postaTipi);*/
 
-            Assert.assertEquals(cmbGeregi.lastSelectedLovDetailText().contains("Vergi No: " + vergiNo2), true);
+            cmbGeregi.getSelectedDetails().last().shouldHave(text("Vergi No: " + vergiNo2));
+//            Assert.assertEquals(cmbGeregi.lastSelectedLovDetailText().contains("Vergi No: " + vergiNo2), true);
             Assert.assertEquals(cmbPostaTipi.getText().contains(postaTipi), true);
 
             return this;
@@ -1184,8 +1183,8 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Tüzel Kişi gereği alanı kontrolu")
         public BilgilerTab tuzelKisiGeregiAlaniVergiNoAdAdresKontrol(String vergiNo, String ad, String adres) {
-            String gelenTitle = cmbGeregi.lastSelectedLovTitleText();
-            String gelenDetail = cmbGeregi.lastSelectedLovDetailText();
+            String gelenTitle = cmbGeregi.getSelectedTitles().last().text();
+            String gelenDetail = cmbGeregi.getSelectedDetails().last().text();
             String beklenenDetail = adres + " / " + "Vergi No: " + vergiNo;
 
             System.out.println("Gelen title:    " + gelenTitle);
@@ -1200,7 +1199,7 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Kurum için seçilen geregi posta tipi")
         public BilgilerTab geregiKurumPostaTipi(String posta) {
-            txtGeregi.lastSelectedLov().$("select").selectOption(posta);
+            txtGeregi.getSelectedItems().last().$("select").selectOption(posta);
 //            cmbGeregiPostaTipi.selectLov(posta);
             return this;
 
@@ -1218,8 +1217,11 @@ public class EvrakOlusturPage extends MainPage {
         @Step("Secilen geregi kontrol")
         public BilgilerTab geregiSecilenKontrol(String baslik, String detay, String postaTipi) {
 
-            Assert.assertEquals(cmbGeregi.lastSelectedLovTitleText().contains(baslik), true);
-            Assert.assertEquals(cmbGeregi.lastSelectedLovDetailText().contains(detay), true);
+            cmbGeregi.getSelectedTitles().last().shouldHave(text(baslik));
+            cmbGeregi.getSelectedDetails().last().shouldHave(text(detay));
+
+            /*Assert.assertEquals(cmbGeregi.lastSelectedLovTitleText().contains(baslik), true);
+            Assert.assertEquals(cmbGeregi.lastSelectedLovDetailText().contains(detay), true);*/
             Assert.assertEquals(cmbPostaTipi.getSelectedText().contains(postaTipi), true);
 
 
@@ -1228,21 +1230,23 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Gereği son kayıt sil")
         public BilgilerTab geregiSonKayitSil() {
-            cmbGeregi.clearLastSelectedLov();
+            cmbGeregi.clearLastSelectedItem();
             return this;
         }
 
         @Step("Seçilen onay akışı detail kontrolu: \"{onayAkisiDetail}\" ")
         public BilgilerTab onayAkisiDetailKontrol(String onayAkisiDetail) {
-            System.out.println("Gelen detail:     " + cmbOnayAkisi.lastSelectedLovDetailText());
-            Assert.assertEquals(cmbOnayAkisi.lastSelectedLovDetailText().contains(onayAkisiDetail), true);
+//            System.out.println("Gelen detail:     " + cmbOnayAkisi.lastSelectedLovDetailText());
+//            Assert.assertEquals(cmbOnayAkisi.lastSelectedLovDetailText().contains(onayAkisiDetail), true);
+            cmbOnayAkisi.getSelectedDetails().last().shouldHave(text(onayAkisiDetail));
             return this;
         }
 
         @Step("Seçilen onay akışı title kontrolu: \"{onayAkisiTitle}\" ")
         public BilgilerTab onayAkisiTitleKontrol(String onayAkisiTitle) {
-            System.out.println("Gelen title:     " + cmbOnayAkisi.lastSelectedLovTitleText());
-            Assert.assertEquals(cmbOnayAkisi.lastSelectedLovTitleText().contains(onayAkisiTitle), true);
+//            System.out.println("Gelen title:     " + cmbOnayAkisi.lastSelectedLovTitleText());
+//            Assert.assertEquals(cmbOnayAkisi.lastSelectedLovTitleText().contains(onayAkisiTitle), true);
+            cmbOnayAkisi.getSelectedTitles().last().shouldHave(text(onayAkisiTitle));
             return this;
         }
 
@@ -1536,13 +1540,13 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Gereği alanı temizle")
         public EditorTab secilenGeregiSil() {
-            cmbGeregi.clearLastSelectedLov();
+            cmbGeregi.clearLastSelectedItem();
             return this;
         }
 
         @Step("Seçilen bilgi sil")
         public EditorTab secilenBilgiSil() {
-            cmbBilgi.clearLastSelectedLov();
+            cmbBilgi.clearLastSelectedItem();
             return this;
         }
 

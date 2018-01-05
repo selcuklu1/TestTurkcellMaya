@@ -70,8 +70,8 @@ public class GizlilikKleransiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC1474 : Havale ettiklerim listesinden havalede gizlilik derecesi kontrolü")
-    public void TC1474() throws InterruptedException {
+    @Test(enabled = true, description = "TS1474 : Havale ettiklerim listesinden havalede gizlilik derecesi kontrolü")
+    public void TS1474() throws InterruptedException {
         String uyariMesaj1 = "Havale etmek istediğiniz kullanıcı kleransı yetersizdir!!";
         String uyariMesaj2 = "Havale etmek istediğiniz kullanıcı grubundaki Mehmet Emin YÜCEANT, Mehmet Gökhan BAYSAN, Mehmet Koray BALCIOĞLU ın kleransı yetersizdir, kleransı yeterli olmayan kullanıcılara havale edilmeyecektir !!";
         String kisi = "Can Şeker";
@@ -111,13 +111,13 @@ public class GizlilikKleransiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC1475: Havale ettiklerim listesinden havalede gizlilik derecesi kontrolü")
-    public void TC1475A() throws InterruptedException {
+    @Test(enabled = true, description = "TS1475: Havale ettiklerim listesinden havalede gizlilik derecesi kontrolü")
+    public void TS1475A() throws InterruptedException {
         String uyariMesaj1 = "Havale etmek istediğiniz kullanıcı kleransı yetersizdir!!";
         String uyariMesaj2 = "Havale etmek istediğiniz kullanıcı grubundaki Mehmet Emin YÜCEANT, Mehmet Gökhan BAYSAN, Mehmet Koray BALCIOĞLU ın kleransı yetersizdir, kleransı yeterli olmayan kullanıcılara havale edilmeyecektir !!";
         String kisi = "Can Şeker";
         String kullaniciListesi = "Optiim";
-        String konuKodu = "Diğer TC1475";
+        String konuKodu = "Diğer TS1475";
         String geldigiYer = "Gizlilik Kler";
         String evrakTarihi = "15.12.2017";
 
@@ -141,13 +141,13 @@ public class GizlilikKleransiTest extends BaseTest {
 
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC2223: Teslim aldıklarım listesinden havalede gizlilik klerans kontrolü")
-    public void TC2223() throws InterruptedException {
+    @Test(enabled = true, description = "TS2223: Teslim aldıklarım listesinden havalede gizlilik klerans kontrolü")
+    public void TS2223() throws InterruptedException {
         String uyariMesaj1 = "Havale etmek istediğiniz kullanıcı kleransı yetersizdir!!";
         String uyariMesaj2 = "Havale etmek istediğiniz kullanıcı grubundaki Mehmet Emin YÜCEANT, Mehmet Gökhan BAYSAN, Mehmet Koray BALCIOĞLU ın kleransı yetersizdir, kleransı yeterli olmayan kullanıcılara havale edilmeyecektir !!";
         String kisi = "Can Şeker";
         String kullaniciListesi = "Optiim";
-        String konuKodu = "Diğer-TC272";
+        String konuKodu = "Diğer-TS272";
         String geldigiYer = "Yargı / BÜYÜK HARFLERLE KURUM(G)";
         String evrakTarihi = "15.12.2017";
         String no = "123";
@@ -173,14 +173,14 @@ public class GizlilikKleransiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC272: Teslim almayı bekleyenler listesinden havale ederken gizlilik kontrolü")
-    public void TC272() throws InterruptedException {
+    @Test(enabled = true, description = "TS272: Teslim almayı bekleyenler listesinden havale ederken gizlilik kontrolü")
+    public void TS272() throws InterruptedException {
 
         String uyariMesaj1 = "Havale etmek istediğiniz kullanıcı kleransı yetersizdir!!";
         String uyariMesaj2 = "Havale etmek istediğiniz kullanıcı grubundaki Mehmet Emin YÜCEANT, Mehmet Gökhan BAYSAN, Mehmet Koray BALCIOĞLU ın kleransı yetersizdir, kleransı yeterli olmayan kullanıcılara havale edilmeyecektir !!";
         String kisi = "Can Şeker";
         String kullaniciListesi = "Optiim";
-        String konuKodu = "Diğer TC2223";
+        String konuKodu = "Diğer TS2223";
         String geldigiYer = "Gizlilik KLERANS";
         String evrakTarihi = "15.12.2017";
         String no = "5096";
@@ -206,13 +206,13 @@ public class GizlilikKleransiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC1475: Gelen evrak listesinden havalede gizlilik derecesi kontrolü")
-    public void TC1475B() throws InterruptedException {
+    @Test(enabled = true, description = "TS1475: Gelen evrak listesinden havalede gizlilik derecesi kontrolü")
+    public void TS1475B() throws InterruptedException {
         String uyariMesaj1 = "Havale etmek istediğiniz kullanıcı kleransı yetersizdir!!";
         String uyariMesaj2 = "Havale etmek istediğiniz kullanıcı grubundaki Mehmet Emin YÜCEANT, Mehmet Gökhan BAYSAN, Mehmet Koray BALCIOĞLU ın kleransı yetersizdir, kleransı yeterli olmayan kullanıcılara havale edilmeyecektir !!";
         String kisi = "Can Şeker";
         String kullaniciListesi = "Optiim";
-        String konuKodu = "Konu: K/Frekans Yıllık Kullanım Ücreti TC1475";
+        String konuKodu = "Konu: K/Frekans Yıllık Kullanım Ücreti TS1475";
         String geldigiYer = "Yargı / BÜYÜK HARFLERLE KURUM";
         String evrakTarihi = "15.12.2017";
         String no = "1";
@@ -236,13 +236,13 @@ public class GizlilikKleransiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC2131: İşlem bekleyen evraklardan evrak paylaşırken gizlilik kontrolü")
-    public void TC2131() throws InterruptedException {
+    @Test(enabled = true, description = "TS2131: İşlem bekleyen evraklardan evrak paylaşırken gizlilik kontrolü")
+    public void TS2131() throws InterruptedException {
         String uyariMesaj1 = "Can ŞEKER kullanıcısının gizlilik kleransı evrakı görüntülemek için yeterli değildir.";
         String uyariMesaj2 = "Havale etmek istediğiniz kullanıcı grubundaki Mehmet Emin YÜCEANT, Mehmet Gökhan BAYSAN, Mehmet Koray BALCIOĞLU ın kleransı yetersizdir, kleransı yeterli olmayan kullanıcılara havale edilmeyecektir !!";
         String kisi = "Can Şeker";
         String kullaniciListesi = "Optiim";
-        String konuKodu = "Diğer-TC2131";
+        String konuKodu = "Diğer-TS2131";
         String geldigiYer = "Gizlilik Klerans";
         String gidecegiyer = "Gizlilik Klerans(B)";
         String evrakTarihi = "15.12.2017";
@@ -281,14 +281,14 @@ public class GizlilikKleransiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC2132: İşlem yaptıklarım listesinden evrak paylaşırken gizlilik kontrolü")
-    public void TC2132() throws InterruptedException {
+    @Test(enabled = true, description = "TS2132: İşlem yaptıklarım listesinden evrak paylaşırken gizlilik kontrolü")
+    public void TS2132() throws InterruptedException {
 
         String uyariMesaj1 = "Can ŞEKER kullanıcısının gizlilik kleransı evrakı görüntülemek için yeterli değildir.";
         String uyariMesaj2 = "Havale etmek istediğiniz kullanıcı grubundaki Mehmet Emin YÜCEANT, Mehmet Gökhan BAYSAN, Mehmet Koray BALCIOĞLU ın kleransı yetersizdir, kleransı yeterli olmayan kullanıcılara havale edilmeyecektir !!";
         String kisi = "Can Şeker";
         String kullaniciListesi = "Optiim";
-        String konuKodu = "Diğer-TC2132";
+        String konuKodu = "Diğer-TS2132";
         String geldigiYer = "Gizlilik Klerans";
         String gidecegiyer = "Gizlilik Klerans(B)";
         String evrakTarihi = "15.12.2017";
@@ -327,11 +327,11 @@ public class GizlilikKleransiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC2135: İşlem yaptıklarım listesinden evrak takibe eklerken gizlilik kontrolü")
-    public void TC2135() throws InterruptedException {
+    @Test(enabled = true, description = "TS2135: İşlem yaptıklarım listesinden evrak takibe eklerken gizlilik kontrolü")
+    public void TS2135() throws InterruptedException {
         String uyariMesaj1 = "Kullanici kleransı evrakı takibe eklemek için yetersizdir!";
         String kisi = "Can Şeker";
-        String konuKodu = "Diğer-TC2135";
+        String konuKodu = "Diğer-TS2135";
         String geldigiYer = "BÜYÜK HARFLERLE KURUM";
         String gidecegiyer = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞ";
         String evrakTarihi = "15.12.2017";
@@ -363,12 +363,12 @@ public class GizlilikKleransiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC2134: İşlem bekleyen evraklardan takibe eklerken gizlilik kontrolü")
-    public void TC2134() throws InterruptedException {
+    @Test(enabled = true, description = "TS2134: İşlem bekleyen evraklardan takibe eklerken gizlilik kontrolü")
+    public void TS2134() throws InterruptedException {
         String uyariMesaj1 = "Kullanici kleransı evrakı takibe eklemek için yetersizdir!";
         String kisi = "Can Şeker";
-        String konuKodu = "Diğer-TC2131";
-        String konuKodu2 = "Diğer-TC2131";
+        String konuKodu = "Diğer-TS2131";
+        String konuKodu2 = "Diğer-TS2131";
         String geldigiYer = "Gizlilik Klerans";
         String geldigiYer2 = "Gizlilik Klerans(B)";
         String evrakTarihi = "15.12.2017";
@@ -400,13 +400,13 @@ public class GizlilikKleransiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC2227: Teslim alınmayı bekleyenler ve teslim alınanlar listesinde gizlilik klerans kontrolü (evrakta izi olmayan kullanıcı ile)")
-    public void TC2227() throws InterruptedException {
+    @Test(enabled = true, description = "TS2227: Teslim alınmayı bekleyenler ve teslim alınanlar listesinde gizlilik klerans kontrolü (evrakta izi olmayan kullanıcı ile)")
+    public void TS2227() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
         String uyariMesaj1 = "Gizlilik kleransınız evrakın gizlilik derecesini görüntülemek için yeterli değildir.";
         String konuKodu = "Diğer";
-        String konuKoduRandom = "TC-2227-" + createRandomNumber(10);
+        String konuKoduRandom = "TS-2227-" + createRandomNumber(10);
         String evrakTarihi = getSysDateForKis();
         String kaldirilicakKlasor = "Gündem";
         String kurum = "BÜYÜK HARFLERLE KURUM";
@@ -457,13 +457,13 @@ public class GizlilikKleransiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC2225: Posta işleminde gizlilik klerans kontrolü (evrakta izi olan kullanıcı ile)")
-    public void TC2225() throws InterruptedException {
+    @Test(enabled = true, description = "TS2225: Posta işleminde gizlilik klerans kontrolü (evrakta izi olan kullanıcı ile)")
+    public void TS2225() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
         String uyariMesaj1 = "Gizlilik kleransınız evrakın gizlilik derecesini görüntülemek için yeterli değildir.";
         String konuKodu = "Diğer";
-        String konuKoduRandom = "TC-2225-" + createRandomNumber(10);
+        String konuKoduRandom = "TS-2225-" + createRandomNumber(10);
         String evrakTarihi = getSysDateForKis();
         String kaldirilicakKlasor = "Gündem";
         String kurum = "BÜYÜK HARFLERLE KURUM";
@@ -519,8 +519,8 @@ public class GizlilikKleransiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, priority = 0, description = "TC1471: Kullanıcı gizlilik derecesi değiştirme")
-    public void TC1471() throws InterruptedException {
+    @Test(enabled = true, priority = 0, description = "TS1471: Kullanıcı gizlilik derecesi değiştirme")
+    public void TS1471() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
         String unvan = "BT İş Analist / Yazılımcı";
@@ -550,12 +550,12 @@ public class GizlilikKleransiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, dependsOnMethods = {"TC1471"}, description = "TC1938: Yüksek kleranslı evrak oluşturma")
-    public void TC1938() throws InterruptedException {
+    @Test(enabled = true, dependsOnMethods = {"TS1471"}, description = "TS1938: Yüksek kleranslı evrak oluşturma")
+    public void TS1938() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
         String tur = "IMZALAMA";
-        String icerik = "TC1938() " + getSysDate();
+        String icerik = "TS1938() " + getSysDate();
         String konuKodu = "010.01";
         String kaldiralacakKlasor = "TestBaris";
         String evrakTuru = "Resmi Yazışma";
@@ -613,8 +613,8 @@ public class GizlilikKleransiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, dependsOnMethods = {"TC1938"}, description = "TC2138 : Genel evrak raporunda gizlilik kleransı kontrolü (evrakta izi olmayan kullanıcı ile)")
-    public void TC2138() throws InterruptedException {
+    @Test(enabled = true, dependsOnMethods = {"TS1938"}, description = "TS2138 : Genel evrak raporunda gizlilik kleransı kontrolü (evrakta izi olmayan kullanıcı ile)")
+    public void TS2138() throws InterruptedException {
 //9267
         login("username20g", "123");
 
@@ -629,9 +629,9 @@ public class GizlilikKleransiTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true
-            , dependsOnMethods = {"TC1938"}
-            , description = "TC2139 : Evrak aramada gizlilik kleransı kontrolü (evrakta izi olmayan kullanıcı ile)")
-    public void TC2139() throws InterruptedException {
+            , dependsOnMethods = {"TS1938"}
+            , description = "TS2139 : Evrak aramada gizlilik kleransı kontrolü (evrakta izi olmayan kullanıcı ile)")
+    public void TS2139() throws InterruptedException {
 
         login("username22n", "123");
 
@@ -679,8 +679,8 @@ public class GizlilikKleransiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, dependsOnMethods = {"TC1938"}, description = "TC2226: Genel evrak raporunda gizlilik klerans kontrolü (evrakta izi olan kullanıcı ile)")
-    public void TC2226() throws InterruptedException {
+    @Test(enabled = true, dependsOnMethods = {"TS1938"}, description = "TS2226: Genel evrak raporunda gizlilik klerans kontrolü (evrakta izi olan kullanıcı ile)")
+    public void TS2226() throws InterruptedException {
 
         login("gsahin", "123");
 
@@ -694,8 +694,8 @@ public class GizlilikKleransiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, dependsOnMethods = {"TC1938"}, description = "TC2140 : Evrak aramada gizlilik kleransı kontrolü (evrakta izi olan kullanıcı ile)\n")
-    public void TC2140() throws InterruptedException {
+    @Test(enabled = true, dependsOnMethods = {"TS1938"}, description = "TS2140 : Evrak aramada gizlilik kleransı kontrolü (evrakta izi olan kullanıcı ile)\n")
+    public void TS2140() throws InterruptedException {
 
         login("gsahin", "123");
 //9261
@@ -741,13 +741,13 @@ public class GizlilikKleransiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC1473 : Onay akışında gizlilik derecesi kontrolü")
-    public void TC1473() throws InterruptedException {
+    @Test(enabled = true, description = "TS1473 : Onay akışında gizlilik derecesi kontrolü")
+    public void TS1473() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
         String tur = "PARAFLAMA";
         String tur2 = "IMZALAMA";
-        String icerik = "TC1473() " + getSysDate();
+        String icerik = "TS1473() " + getSysDate();
         String konuKodu = "010.01";
         String kaldiralacakKlasor = "Diğer";
         String evrakTuru = "Resmi Yazışma";
@@ -793,17 +793,17 @@ public class GizlilikKleransiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC2191 : Akışta gizlilik kleransı değiştirilen evrakın dağıtım yeri kontrolü")
-    public void TC2191() throws InterruptedException {
+    @Test(enabled = true, description = "TS2191 : Akışta gizlilik kleransı değiştirilen evrakın dağıtım yeri kontrolü")
+    public void TS2191() throws InterruptedException {
 //8.tepten Devam edilecek
 
 
         String basariMesaji = "İşlem başarılıdır!";
         String tur = "PARAFLAMA";
         String tur2 = "IMZALAMA";
-        String icerik = "TC2191 " + getSysDate();
+        String icerik = "TS2191 " + getSysDate();
         String konuKodu = "010.01";
-        String konu = "TC2191 " + getSysDate();
+        String konu = "TS2191 " + getSysDate();
         String kaldiralacakKlasor = "Diğer";
         String evrakTuru = "Resmi Yazışma";
         String evrakDili = "Türkçe";
@@ -876,14 +876,14 @@ public class GizlilikKleransiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC1472 : Dağıtımda gizlilik derecesi kontrolü")
-    public void TC1472() throws InterruptedException {
+    @Test(enabled = true, description = "TS1472 : Dağıtımda gizlilik derecesi kontrolü")
+    public void TS1472() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
         String tur2 = "IMZALAMA";
-        String icerik = "TC1472 " + getSysDate();
+        String icerik = "TS1472 " + getSysDate();
         String konuKodu = "010.01";
-        String konu = "TC1472 " + getSysDate();
+        String konu = "TS1472 " + getSysDate();
         String kaldiralacakKlasor = "Diğer";
         String evrakTuru = "Resmi Yazışma";
         String evrakDili = "Türkçe";
@@ -937,12 +937,12 @@ public class GizlilikKleransiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC2190 : Dağıtımda gizlilik klerans kontrolü (Cevap)")
-    public void TC2190() throws InterruptedException {
+    @Test(enabled = true, description = "TS2190 : Dağıtımda gizlilik klerans kontrolü (Cevap)")
+    public void TS2190() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
         String tur2 = "IMZALAMA";
-        String konu = "TC2190 " + getSysDate();
+        String konu = "TS2190 " + getSysDate();
         String konuKodu = "010.01";
         String kaldiralacakKlasor = "Diğer";
         String evrakTuru = "Resmi Yazışma";
@@ -1022,13 +1022,13 @@ public class GizlilikKleransiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC2189 : Onay akışında gizlilik klerans kontrolü (Cevap)")
-    public void TC2189() throws InterruptedException {
+    @Test(enabled = true, description = "TS2189 : Onay akışında gizlilik klerans kontrolü (Cevap)")
+    public void TS2189() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
         String tur = "PARAFLAMA";
         String tur2 = "IMZALAMA";
-        String text = "TC2189 " + getSysDate();
+        String text = "TS2189 " + getSysDate();
         String konuKodu = "010.01";
         String kaldiralacakKlasor = "Diğer";
         String evrakTuru = "Resmi Yazışma";
@@ -1099,12 +1099,12 @@ public class GizlilikKleransiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC2181 : Gizlilik kleransı yeterli olmayan kullanıcıya evrak devrediemelmesi")
-    public void TC2181() throws InterruptedException {
+    @Test(enabled = true, description = "TS2181 : Gizlilik kleransı yeterli olmayan kullanıcıya evrak devrediemelmesi")
+    public void TS2181() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
-        String text = "TC2181 " + getSysDate();
-//        String text = "TC2181 20171223151625";
+        String text = "TS2181 " + getSysDate();
+//        String text = "TS2181 20171223151625";
         String konuKodu = "010.01";
         String evrakTuru = "Resmi Yazışma";
         String evrakDili = "Türkçe";

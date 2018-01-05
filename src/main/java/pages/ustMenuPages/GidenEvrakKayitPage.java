@@ -14,10 +14,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.testng.Assert;
 import pages.MainPage;
-import pages.pageComponents.UstMenu;
 import pages.pageComponents.belgenetElements.BelgenetElement;
+import pages.pageData.UstMenuData;
 
-import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
@@ -67,9 +67,8 @@ public class GidenEvrakKayitPage extends MainPage {
     //endregion
 
     @Step("Giden Evrak Kayit sayfasını aç")
-    public GidenEvrakKayitPage openPage() {
-        new UstMenu().ustMenu("Giden Evrak Kayıt");
-        $("form[id='gidenEvrakDefterKaydiForm']").shouldBe(visible);
+    public GidenEvrakKayitPage openPage(){
+        ustMenu(UstMenuData.EvrakIslemleri.GidenEvrakKayit);
         return this;
     }
 
@@ -86,13 +85,14 @@ public class GidenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("Gereği doldur")
-    public GidenEvrakKayitPage geregiDoldur(String geregi) {
+
+    @Step("Gereği {description} doldur: | {geregi}")
+    public GidenEvrakKayitPage geregiDoldur(String geregi, String description) {
 
         cmbGeregi.selectLov(geregi);
 
-        System.out.println("title: " + cmbGeregi.lastSelectedLovTitleText());
-        System.out.println("detail: " + cmbGeregi.lastSelectedLovDetailText());
+        /*System.out.println("title: " + cmbGeregi.lastSelectedLovTitleText());
+        System.out.println("detail: " + cmbGeregi.lastSelectedLovDetailText());*/
         return this;
     }
 
@@ -101,10 +101,10 @@ public class GidenEvrakKayitPage extends MainPage {
 
         cmbGeregi.selectLov(geregiAdSoyad);
 
-        System.out.println("title: " + cmbGeregi.lastSelectedLovTitleText());
-        System.out.println("detail: " + cmbGeregi.lastSelectedLovDetailText());
+        /*System.out.println("title: " + cmbGeregi.lastSelectedLovTitleText());
+        System.out.println("detail: " + cmbGeregi.lastSelectedLovDetailText());*/
 
-        cmbGeregi.clearAllSelectedLov();
+        cmbGeregi.clearAllSelectedItems();
         return this;
     }
 
@@ -128,10 +128,10 @@ public class GidenEvrakKayitPage extends MainPage {
     public GidenEvrakKayitPage geregiAlanindaGoruntulenmeKontrolu(String adSoyad) {
 
         cmbGeregi.selectLov(adSoyad);
-        System.out.println("Gelen title:     " + cmbGeregi.lastSelectedLovTitleText());
+        /*System.out.println("Gelen title:     " + cmbGeregi.lastSelectedLovTitleText());
         System.out.println("Beklenen title:  " + adSoyad);
-        Assert.assertEquals(cmbGeregi.lastSelectedLovTitleText().contains(adSoyad), true);
-
+        Assert.assertEquals(cmbGeregi.lastSelectedLovTitleText().contains(adSoyad), true);*/
+        cmbGeregi.getSelectedTitles().last().shouldHave(text(adSoyad));
         return this;
     }
 
@@ -152,8 +152,8 @@ public class GidenEvrakKayitPage extends MainPage {
     public GidenEvrakKayitPage bilgiDoldur(String geregiAdSoyad) {
 
         cmbBilgi.selectLov(geregiAdSoyad);
-        System.out.println("title: " + cmbBilgi.lastSelectedLovTitleText());
-        System.out.println("detail: " + cmbBilgi.lastSelectedLovDetailText());
+        /*System.out.println("title: " + cmbBilgi.lastSelectedLovTitleText());
+        System.out.println("detail: " + cmbBilgi.lastSelectedLovDetailText());*/
 
         return this;
     }
@@ -162,10 +162,10 @@ public class GidenEvrakKayitPage extends MainPage {
     public GidenEvrakKayitPage bilgiDoldur(String geregiAdSoyad, Boolean clearAfter) {
 
         cmbBilgi.selectLov(geregiAdSoyad);
-        System.out.println("title: " + cmbBilgi.lastSelectedLovTitleText());
-        System.out.println("detail: " + cmbBilgi.lastSelectedLovDetailText());
+        /*System.out.println("title: " + cmbBilgi.lastSelectedLovTitleText());
+        System.out.println("detail: " + cmbBilgi.lastSelectedLovDetailText());*/
 
-        cmbBilgi.clearAllSelectedLov();
+        cmbBilgi.clearAllSelectedItems();
 
         return this;
     }
@@ -186,10 +186,11 @@ public class GidenEvrakKayitPage extends MainPage {
 
         String adSoyad = ad + " " + soyad.toUpperCase();
         cmbBilgi.selectLov(adSoyad);
-        System.out.println("Gelen title:     " + cmbBilgi.lastSelectedLovTitleText());
-        System.out.println("Beklenen title:  " + adSoyad);
-        Assert.assertEquals(cmbBilgi.lastSelectedLovTitleText().contains(adSoyad), true);
+        /*System.out.println("Gelen title:     " + cmbBilgi.lastSelectedLovTitleText());
+        System.out.println("Beklenen title:  " + adSoyad);*/
+        /*Assert.assertEquals(cmbBilgi.lastSelectedLovTitleText().contains(adSoyad), true);*/
 
+        cmbBilgi.getSelectedTitles().last().shouldHave(text(adSoyad));
         return this;
     }
 

@@ -58,12 +58,12 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
         imzaBekleyenlerPage = new ImzaBekleyenlerPage();
     }
 
-    @Test(enabled = true, description = "TC930: Kurum içi gelen evraka cevap yaz")
-    public void TC930() throws InterruptedException {
+    @Test(enabled = true, description = "TS930: Kurum içi gelen evraka cevap yaz")
+    public void TS930() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
         String konuKodu = "Diğer";
-        String konuKoduRandom = "TC-930-" + createRandomNumber(10);
+        String konuKoduRandom = "TS-930-" + createRandomNumber(10);
         String evrakTarihi = getSysDateForKis();
         String kurum = "BÜYÜK HARFLERLE KURUM";
         String gizlilikDerecesi = "Gizli";
@@ -131,12 +131,12 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
 
     }
 
-    @Test(enabled = true, description = "TC931: Gerçek kişiden gelen evraka cevap yaz")
-    public void TC931() throws InterruptedException {
+    @Test(enabled = true, description = "TS931: Gerçek kişiden gelen evraka cevap yaz")
+    public void TS931() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
         String konuKodu = "Diğer";
-        String konuKoduRandom = "TC-931-" + createRandomNumber(10);
+        String konuKoduRandom = "TS-931-" + createRandomNumber(10);
         String evrakTarihi = getSysDateForKis();
         String kurum = "BÜYÜK HARFLERLE KURUM";
         String gizlilikDerecesi = "Gizli";
@@ -204,8 +204,8 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC1368: Cevaplanan Evrak Raporu")
-    public void TC1368() throws IOException, InterruptedException {
+    @Test(enabled = true, description = "TS1368: Cevaplanan Evrak Raporu")
+    public void TS1368() throws IOException, InterruptedException {
 
         String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞ";
         String konuKodu = "Kanunlar";
@@ -268,11 +268,11 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC0373: Cevap yazma işleminde evrakın onay akışından silinmesi")
-    public void TC0373() throws InterruptedException {
+    @Test(enabled = true, description = "TS0373: Cevap yazma işleminde evrakın onay akışından silinmesi")
+    public void TS0373() throws InterruptedException {
 
-        String onayAkisi = "Tc373 OnayAkışı";
-        String tuzelKisi = "Tc373 TüzelKişi";
+        String onayAkisi = "TS373 OnayAkışı";
+        String tuzelKisi = "TS373 TüzelKişi";
         String kisiKurum = "Tüzel Kişi";
         String kisi = "Optiim TEST";
         String konuKodu = "040"; //Faaliyet Raporları
@@ -288,7 +288,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
         gelenEvrakKayitPage
                 .openPage()
                 .kisiKurumSecByText(kisiKurum)
-                .geldigiTuzelKisiDoldur(tuzelKisi)
+                .geldigiTuzelKisiDoldur(tuzelKisi, "Ad")
                 .konuKoduDoldur(konuKodu)
                 .evrakTarihiDoldur(kayitTarihi)
                 .evrakSayiSolDoldur(evrakSayiSol)
@@ -340,8 +340,8 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
 
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC-2188: Cevap evrakında kullanıcı şablonu kullanma")
-    public void TC2188() throws InterruptedException {
+    @Test(enabled = true, description = "TS-2188: Cevap evrakında kullanıcı şablonu kullanma")
+    public void TS2188() throws InterruptedException {
 
         String konuKodu = "010.01";
         String evrakTuru = "Resmi Yazışma";
@@ -485,7 +485,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "")
-    public void TC2186() throws InterruptedException {
+    public void TS2186() throws InterruptedException {
 
         String konuKodu = "010.01";
         String evrakTuru = "Resmi Yazışma";

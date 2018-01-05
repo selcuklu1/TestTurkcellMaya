@@ -53,7 +53,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "1488: Karar yazısında zorunlu alan kontrolleri")
-    public void TC1488() throws InterruptedException {
+    public void TS1488() throws InterruptedException {
 
         String uyariMesajYaziIcerik = "Yazı içeriği boş olamaz!";
         String uyariMesajZorunlu = "Zorunlu alanları doldurunuz";
@@ -139,12 +139,12 @@ public class KararYazisiOlusturmaTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "2240: Teslim alınmayı bekleyenler listesinden Gündem klasörüne evrak kapatma")
-    public void TC2240() throws InterruptedException {
+    public void TS2240() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
         String kaldirilicakKlasor = "Gündem";
         String konuKodu = "Diğer";
-        String konuKoduRandom = "TC-2240_"+createRandomNumber(25);
+        String konuKoduRandom = "TS-2240_"+createRandomNumber(25);
         String evrakTarihi = getSysDateForKis();
         String kurum = "BÜYÜK HARFLERLE KURUM";
         String kullaniciAdi = "Yazılım Geliştirme Direktörlüğ";
@@ -199,7 +199,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "2239: Gündem yayınlama")
-    public void TC2239() throws InterruptedException {
+    public void TS2239() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
         String kaldirilicakKlasor = "Gündem";
@@ -230,7 +230,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "1497: Karar Yazısı oluşturulması")
-    public void TC1497() throws InterruptedException {
+    public void TS1497() throws InterruptedException {
         String basariMesaji = "İşlem başarılıdır!";
         String konuKodu = "K/Frekans Yıllık Kullanım Ücreti";
         String kaldirilicakKlasorler = "Diğer";
@@ -322,7 +322,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "2232: Karar izleme ekranının toplu onaya sunma")
-    public void TC2232() throws InterruptedException {
+    public void TS2232() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
         String konuKodu = "Usul ve Esaslar";
@@ -368,7 +368,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "1714: Karar yazsının iadesi")
-    public void TC1714() throws InterruptedException {
+    public void TS1714() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
         String konuKodu = "Usul ve Esaslar";
@@ -440,7 +440,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "2238: Gündem klasörü oluşturma")
-    public void TC2238() throws InterruptedException {
+    public void TS2238() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
         String birim = "Yazılım Geliştirme Direktörlüğ";
@@ -487,12 +487,12 @@ public class KararYazisiOlusturmaTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "1715: Gelen evrak listesinden Gündem klasörüne evrak kapatma")
-    public void TC1715() throws InterruptedException {
+    public void TS1715() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
         String konuKodu = "Diğer";
         String kaldirilicakKlasor = "Gündem";
-        String konuKoduRandom = "TC-1715_"+createRandomNumber(25);
+        String konuKoduRandom = "TS-1715_"+createRandomNumber(25);
         String evrakTarihi = getSysDateForKis();
         String kurum = "BÜYÜK HARFLERLE KURUM";
         String kullaniciAdi = "Zübeyde Tekin";

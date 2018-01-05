@@ -39,8 +39,8 @@ public class EvrakPaylasmaTest extends BaseTest {
         imzaladiklarimPage = new ImzaladiklarimPage();
     }
 
-    @Test(enabled = true, description = "TC1881 : Evrak paylaşımını durdurma")
-    public void TC1881() {
+    @Test(enabled = true, description = "TS1881 : Evrak paylaşımını durdurma")
+    public void TS1881() {
 
         String evrakKonuKodu = "Entegrasyon İşlemleri";
         String kaldirilacakKlasorler = "Diğer";
@@ -67,7 +67,7 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .evrakSec(evrakKonuKodu, "", "")
                 .paylasTabTikla()
                 .paylasKisiDoldur(paylasilacakUser)
-                .paylasanAciklamaDoldur("TC1881 case i için evrak oluşturuldu ve paylaşıldı.")
+                .paylasanAciklamaDoldur("TS1881 case i için evrak oluşturuldu ve paylaşıldı.")
                 .paylasPaylasGonder()
                 .islemMesaji().basariliOlmali();
 
@@ -97,13 +97,13 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .evrakNotEklemeButonuAktifOlmali(false);
     }
 
-    @Test(enabled = true, description = "TC1882 : Paylaştıklarım listesinden evrak paylaşma")
-    public void TC1882() {
+    @Test(enabled = true, description = "TS1882 : Paylaştıklarım listesinden evrak paylaşma")
+    public void TS1882() {
 
         String paylasilanKullanici = "Huser TUMER";
         String paylasanKisi = "Mehmet BOZDEMİR";
-        String paylasanKisiNotAciklamasi = "TC1882 : Paylaştıklarım listesinden evrak paylaşma";
-        String text = "TC1882 " + getSysDate();
+        String paylasanKisiNotAciklamasi = "TS1882 : Paylaştıklarım listesinden evrak paylaşma";
+        String text = "TS1882 " + getSysDate();
 
         String evrakKonuKodu = "Entegrasyon İşlemleri";
         String kaldirilacakKlasorler = "Diğer";
@@ -131,7 +131,7 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .evrakSecKonuyaGore(text)
                 .paylasTabTikla()
                 .paylasKisiDoldur(paylasilanKullanici)
-                .paylasanAciklamaDoldur("TC1882 case i için evrak oluşturuldu ve paylaşıldı.")
+                .paylasanAciklamaDoldur("TS1882 case i için evrak oluşturuldu ve paylaşıldı.")
                 .paylasPaylasGonder()
                 .islemMesaji().basariliOlmali();
 
@@ -183,8 +183,8 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .evrakNotuKontrol("OPTİİM TEST1", "", text);
     }
 
-    @Test(enabled = true, description = "TC1877 : Paylaşılan evrakın geri alınması")
-    public void TC1877() {
+    @Test(enabled = true, description = "TS1877 : Paylaşılan evrakın geri alınması")
+    public void TS1877() {
 
         String evrakKonuKodu = "Entegrasyon İşlemleri";
         String kaldirilacakKlasorler = "Diğer";
@@ -212,7 +212,7 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .evrakSec(evrakKonuKodu, "", "")
                 .paylasTabTikla()
                 .paylasKisiDoldur(paylasilanlar)
-                .paylasanAciklamaDoldur("TC1877 case i için evrak oluşturuldu ve paylaşıldı.")
+                .paylasanAciklamaDoldur("TS1877 case i için evrak oluşturuldu ve paylaşıldı.")
                 .paylasPaylasGonder()
                 .islemMesaji().basariliOlmali();
 
@@ -244,8 +244,8 @@ public class EvrakPaylasmaTest extends BaseTest {
 
     }
 
-    @Test(enabled = true, description = "TC1876 : Evrakı paylaşmada alan kontrolleri")
-    public void TC1876() {
+    @Test(enabled = true, description = "TS1876 : Evrakı paylaşmada alan kontrolleri")
+    public void TS1876() {
 
         String evrakKonuKodu = "Entegrasyon İşlemleri";
         String kaldirilacakKlasorler = "Diğer";
@@ -271,7 +271,7 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .evrakSec(evrakKonuKodu, "", "")
                 .paylasTabTikla()
                 .paylasKisiDoldur(paylasilacakUser)
-                .paylasanAciklamaDoldur("TC1876 case i için evrak oluşturuldu ve paylaşıldı.")
+                .paylasanAciklamaDoldur("TS1876 case i için evrak oluşturuldu ve paylaşıldı.")
                 .paylasPaylasGonder()
                 .islemMesaji().basariliOlmali();
 
@@ -311,8 +311,8 @@ public class EvrakPaylasmaTest extends BaseTest {
 
     }
 
-    @Test(enabled = true, description = "TC1876A : Taslak Evrakı kullanıcı ile paylaşma (Tümü aksiyonu ile)")
-    public void TC1876A() {
+    @Test(enabled = true, description = "TS1876A : Taslak Evrakı kullanıcı ile paylaşma (Tümü aksiyonu ile)")
+    public void TS1876A() {
 
         String evrakKonuKodu = "Entegrasyon İşlemleri";
         String kaldirilacakKlasorler = "Diğer";
@@ -391,8 +391,8 @@ public class EvrakPaylasmaTest extends BaseTest {
 
     }
 
-    @Test(enabled = true, description = "TC1904 : Evrak paylaşmada not kontrolü")
-    public void TC1904() {
+    @Test(enabled = true, description = "TS1904 : Evrak paylaşmada not kontrolü")
+    public void TS1904() {
 
         String evrakKonu = "Bilimsel ve Kültürel Organizasyonlar, Toplantılar";
         String evrakGidecegiYer = "Optiim TEST2(B) / Optiim TEST1(G)";
@@ -447,13 +447,13 @@ public class EvrakPaylasmaTest extends BaseTest {
     }
 
     //TODO Can Şeker yazmıştır
-    @Test(enabled = true, description = "TC1905: Evrak paylaşma yetkisi olmayan kullanıcıda evrak paylaşma kontrolü")
-    public void TC1905() throws InterruptedException {
+    @Test(enabled = true, description = "TS1905: Evrak paylaşma yetkisi olmayan kullanıcıda evrak paylaşma kontrolü")
+    public void TS1905() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
         String uyariMesaj1 = "Gizlilik kleransınız evrakın gizlilik derecesini görüntülemek için yeterli değildir.";
         String konuKodu = "Diğer";
-        String konuKoduRandom = "TC-2227-" + createRandomNumber(10);
+        String konuKoduRandom = "TS-2227-" + createRandomNumber(10);
         String evrakTarihi = getSysDateForKis();
         String kurum = "BÜYÜK HARFLERLE KURUM";
         String gizlilikDerecesi = "Gizli";
@@ -525,8 +525,8 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .birimSec(anaBirim);
     }
 
-    @Test(enabled = true, description = "TC2195 : Cevap evrakını paylaşma")
-    public void TC2195() {
+    @Test(enabled = true, description = "TS2195 : Cevap evrakını paylaşma")
+    public void TS2195() {
 
         String evrakKonu = "Yurtiçi Projeler";
         String evrakGidecegiYer = "Başbakan Başmüşavirleri(G)";
@@ -587,8 +587,8 @@ public class EvrakPaylasmaTest extends BaseTest {
 
     }
 
-    @Test(enabled = true, description = "TC2194 : İçeriğinde kişisel şablon olan evrakı paylaşma")
-    public void TC2194() {
+    @Test(enabled = true, description = "TS2194 : İçeriğinde kişisel şablon olan evrakı paylaşma")
+    public void TS2194() {
 
         String evrakAciklamasi = "evrak açıklaması için kontrol";
         String evrakiPaylasan = "Mehmet BOZDEMİR";
@@ -673,8 +673,8 @@ public class EvrakPaylasmaTest extends BaseTest {
 
     }
 
-    @Test(enabled = true, description = "TC2192 : İçeriğinde form olan evrakı paylaşma")
-    public void TC2192() {
+    @Test(enabled = true, description = "TS2192 : İçeriğinde form olan evrakı paylaşma")
+    public void TS2192() {
 
 
         String evrakAciklamasi = "İçeriğinde form olan evrakı paylaşma";
@@ -751,8 +751,8 @@ public class EvrakPaylasmaTest extends BaseTest {
 
     }
 
-    @Test(enabled = true, description = "TC2193 : İçeriğinde birim içerik şablonu olan evrakı paylaşma")
-    public void TC2193() {
+    @Test(enabled = true, description = "TS2193 : İçeriğinde birim içerik şablonu olan evrakı paylaşma")
+    public void TS2193() {
 
         String evrakAciklamasi = "evrak açıklaması için kontrol";
         String evrakiPaylasan = "Mehmet BOZDEMİR";
@@ -841,8 +841,8 @@ public class EvrakPaylasmaTest extends BaseTest {
     }
 
     // DÜZENLENECEK!!
-    @Test(enabled = true, description = "TC2197 : Devredilen evrakı paylaşma")
-    public void TC2197() {
+    @Test(enabled = true, description = "TS2197 : Devredilen evrakı paylaşma")
+    public void TS2197() {
 
         String evrakKonuKodu = "Entegrasyon İşlemleri";
         String kaldirilacakKlasorler = "Diğer";
@@ -930,8 +930,8 @@ public class EvrakPaylasmaTest extends BaseTest {
 
     }
 
-    @Test(enabled = true, description = "TC1876 : İşlem bekleyen Evrakı kullanıcılarla paylaşma")
-    public void TC1876B() {
+    @Test(enabled = true, description = "TS1876 : İşlem bekleyen Evrakı kullanıcılarla paylaşma")
+    public void TS1876B() {
 
         String evrakAciklamasi = "evrak açıklaması için kontrol";
         String evrakiPaylasan = "Mehmet BOZDEMİR";

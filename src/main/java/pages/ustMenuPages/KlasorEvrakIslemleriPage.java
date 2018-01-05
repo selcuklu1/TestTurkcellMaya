@@ -8,6 +8,7 @@ import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
+import pages.pageData.UstMenuData;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
@@ -43,8 +44,8 @@ public class KlasorEvrakIslemleriPage extends MainPage {
 
 
     @Step("Klasor evrak işlemleri sayfası aç")
-    public KlasorEvrakIslemleriPage openPage() {
-        ustMenu("Klasör Evrak İşlemleri");
+    public KlasorEvrakIslemleriPage openPage(){
+        ustMenu(UstMenuData.KlasorIslemleri.KlasorEvrakIslemleri);
         return this;
     }
 
@@ -70,7 +71,7 @@ public class KlasorEvrakIslemleriPage extends MainPage {
     }
 
     public KlasorEvrakIslemleriPage klasorDoldurwithDetail(String klasor, String title) {
-        txtKlasor.type(klasor).detailItems().filterBy(text(title)).first().click();
+        txtKlasor.type(klasor).getDetailItems().filterBy(text(title)).first().click();
         return this;
     }
 

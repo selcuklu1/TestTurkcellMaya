@@ -24,7 +24,7 @@ import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
  * Tarih: 25.12.2017
  * Açıklama:
  */
-public class BilgilerTab extends MainPage {
+public class BilgilerTab2 extends MainPage {
 
     final static String tabName = "Bilgileri";
 
@@ -122,7 +122,7 @@ public class BilgilerTab extends MainPage {
     SelenideElement kullanButton = $("button[id$='anlikAkisKullanButton']");
 
     @Step(tabName + " tabı aç")
-    public BilgilerTab openTab(boolean... clickIfOpen) {
+    public BilgilerTab2 openTab(boolean... clickIfOpen) {
         SelenideElement tab = $x("//td[contains(@class,'tabMenuContainer') and descendant::span[contains(@class,'tabMenu') and text()='Bilgileri']]");
 
         if (clickIfOpen.length > 0 || !tab.attr("class").equals("tabMenuContainerSelected"))
@@ -140,28 +140,28 @@ public class BilgilerTab extends MainPage {
     }
 
     @Step("Konu Kodu seç")
-    public BilgilerTab konuKoduSec(String text) {
+    public BilgilerTab2 konuKoduSec(String text) {
         konuKoduCombolov.selectLov(text);
         konuKoduCombolov.closeTreePanel();
         return this;
     }
 
     @Step("Konu Kodu seç")
-    public BilgilerTab konuKoduSecFilterByTitle(String text, Condition filter) {
+    public BilgilerTab2 konuKoduSecFilterByTitle(String text, Condition filter) {
         konuKoduCombolov.type(text).getTitleItems().filterBy(filter).first().click();
         konuKoduCombolov.closeTreePanel();
         return this;
     }
 
     @Step("Konu Kodu seç")
-    public BilgilerTab konuKoduSecFilterByDetail(String text, Condition filterBy) {
+    public BilgilerTab2 konuKoduSecFilterByDetail(String text, Condition filterBy) {
         konuKoduCombolov.type(text).getDetailItems().filterBy(filterBy).first().click();
         konuKoduCombolov.closeTreePanel();
         return this;
     }
 
     @Step("Konu Kodu alanı temizle")
-    public BilgilerTab konuKoduTemizle() {
+    public BilgilerTab2 konuKoduTemizle() {
         konuKoduCombolov.clearAllSelectedItems();
         return this;
     }
@@ -171,7 +171,7 @@ public class BilgilerTab extends MainPage {
     }
 
     @Step("Konu doldur")
-    public BilgilerTab konuDoldur(String text) {
+    public BilgilerTab2 konuDoldur(String text) {
         /*konuTextarea.clear();
         konuTextarea.sendKeys(text);*/
         konuTextarea.setValue(text);
@@ -184,13 +184,13 @@ public class BilgilerTab extends MainPage {
     }
 
     @Step("Kaldırılacak Klasörleri seç ")
-    public BilgilerTab kaldiralacakKlasorleriSec(String text) {
+    public BilgilerTab2 kaldiralacakKlasorleriSec(String text) {
         kaldiralacakKlasorler.selectLov(text);
         return this;
     }
 
     @Step("Kayit Tarihi doldur")
-    public BilgilerTab kayitTarihiDoldur(String text) {
+    public BilgilerTab2 kayitTarihiDoldur(String text) {
         kayitTarihiDateInput.setValue(text);
         return this;
     }
@@ -203,25 +203,25 @@ public class BilgilerTab extends MainPage {
     }
 
     @Step("Evrak Dili seç")
-    public BilgilerTab evrakDiliSec(String text) {
+    public BilgilerTab2 evrakDiliSec(String text) {
         evrakDiliSelect.selectOption(text);
         return this;
     }
 
     @Step("Evrak Dili seç")
-    public BilgilerTab evrakDiliSec(EvrakDili evrakDili) {
+    public BilgilerTab2 evrakDiliSec(EvrakDili evrakDili) {
         evrakDiliSelect.selectOption(evrakDili.getOptionText());
         return this;
     }
 
     @Step("Gizlilik Derecesi seç")
-    public BilgilerTab gizlilikDerecesiSec(String text) {
+    public BilgilerTab2 gizlilikDerecesiSec(String text) {
         gizlilikDerecesiSelect.selectOption(text);
         return this;
     }
 
     @Step("Gizlilik Derecesi seç")
-    public BilgilerTab gizlilikDerecesiSec(Enum gizlilikDerecesi) {
+    public BilgilerTab2 gizlilikDerecesiSec(Enum gizlilikDerecesi) {
         if (!gizlilikDerecesi.getClass().equals(GizlilikDerecesi.class))
             throw new RuntimeException("Yanlış input enum. Olması gereken: " + GizlilikDerecesi.class.toString());
 
@@ -230,7 +230,7 @@ public class BilgilerTab extends MainPage {
     }
 
     @Step("Kanun Kapsam Tipi seç")
-    public BilgilerTab kanunKapsamTipiSec(String radioText) {
+    public BilgilerTab2 kanunKapsamTipiSec(String radioText) {
         SelenideElement radio = kanunKapsamTipiRadioButtons.first();
         radio.shouldBe(visible);
         switch (radioText) {
@@ -261,13 +261,13 @@ public class BilgilerTab extends MainPage {
     }
 
     @Step("Evrak Sayı Ek Metni doldur")
-    public BilgilerTab evrakSayiEkMetniDoldur(String text) {
+    public BilgilerTab2 evrakSayiEkMetniDoldur(String text) {
         evrakSayiEkMetniInput.setValue(text);
         return this;
     }
 
     @Step("İvedilik seç")
-    public BilgilerTab ivedilikSec(Enum ivedilik) {
+    public BilgilerTab2 ivedilikSec(Enum ivedilik) {
         if (!ivedilik.getClass().equals(Ivedilik.class))
             throw new RuntimeException("Yanlış input enum. Olması gereken: " + GizlilikDerecesi.class.toString());
         ivedilikSelect.selectOption(((Ivedilik) ivedilik).getOptionText());
@@ -275,32 +275,32 @@ public class BilgilerTab extends MainPage {
     }
 
     @Step("İvedilik seç")
-    public BilgilerTab ivedilikSec(String text) {
+    public BilgilerTab2 ivedilikSec(String text) {
         ivedilikSelect.selectOption(text);
         return this;
     }
 
     @Step("Miat doldur")
-    public BilgilerTab miatDoldur(String text) {
+    public BilgilerTab2 miatDoldur(String text) {
         miatDateInput.setValue(text);
         return this;
     }
 
     @Step("Miat temizle")
-    public BilgilerTab miatTemizle() {
+    public BilgilerTab2 miatTemizle() {
         miatTemizleButton.click();
         miatDateInput.shouldBe(empty);
         return this;
     }
 
     @Step("Açıklamayı doldur")
-    public BilgilerTab aciklamaDoldur(String text) {
+    public BilgilerTab2 aciklamaDoldur(String text) {
         aciklamaTextarea.setValue(text);
         return this;
     }
 
     @Step("Bilgi Seçim Tipi seç")
-    public BilgilerTab bilgiSecimTipiSec(String text) {
+    public BilgilerTab2 bilgiSecimTipiSec(String text) {
         bilgiSecimTipiSelect.selectOption(text);
         return this;
     }
@@ -311,13 +311,13 @@ public class BilgilerTab extends MainPage {
     }
 
     @Step("Bilgi seç")
-    public BilgilerTab bilgiSec(String text) {
+    public BilgilerTab2 bilgiSec(String text) {
         bilgiCombolov.selectLov(text);
         return this;
     }
 
     @Step("Gereği Seçim Tipi seç")
-    public BilgilerTab geregiSecimTipiSec(String text) {
+    public BilgilerTab2 geregiSecimTipiSec(String text) {
         geregiSecimTipiSelect.selectOption(text);
         return this;
     }
@@ -328,13 +328,13 @@ public class BilgilerTab extends MainPage {
     }
 
     @Step("Gereği seç")
-    public BilgilerTab geregiSec(String text) {
+    public BilgilerTab2 geregiSec(String text) {
         geregiCombolov.selectLov(text);
         return this;
     }
 
     @Step("Dağıtımı Ek Yap seç")
-    public BilgilerTab dagitimiEkYapSec(boolean setSelected) {
+    public BilgilerTab2 dagitimiEkYapSec(boolean setSelected) {
         dagitimiEkYapCheckbox.setSelected(setSelected);
         return this;
     }
@@ -345,7 +345,7 @@ public class BilgilerTab extends MainPage {
     }
 
     @Step("Onay Akışı doldur")
-    public BilgilerTab onayAkisiSec(String... texts) {
+    public BilgilerTab2 onayAkisiSec(String... texts) {
         for (int i = 0; i < texts.length; i++) {
             onayAkisiCombolov.selectLov(texts[0]);
         }
@@ -354,19 +354,19 @@ public class BilgilerTab extends MainPage {
     }
 
     @Step("Onay Akışı alanı temizle")
-    public BilgilerTab onayAkisiTemizle() {
+    public BilgilerTab2 onayAkisiTemizle() {
         onayAkisiCombolov.clearAllSelectedItems();
         return this;
     }
 
     @Step("Onay Akışı Ekle butona tıkla")
-    public BilgilerTab onayAkisiEkleButonaTikla() {
+    public BilgilerTab2 onayAkisiEkleButonaTikla() {
         onayAkisiEkleButton.click();
         return this;
     }
 
     @Step("Otomatik Onay Akışı Ekle butona tıkla")
-    public BilgilerTab otomatikOnayAkisiEkleButonaTikla() {
+    public BilgilerTab2 otomatikOnayAkisiEkleButonaTikla() {
         otomatikOnayAkisiEkleButton.click();
         otomatikOnayAkisiIslemleriDialog.shouldBe(visible);
         return this;
@@ -388,7 +388,7 @@ public class BilgilerTab extends MainPage {
     }
 
     @Step("Otomatik Onay Akışı İşlemlerinde tüm seçilenleri kaldır")
-    public BilgilerTab otomatikOnayAkisiIslemlerindeTumSecilenleriKaldir() {
+    public BilgilerTab2 otomatikOnayAkisiIslemlerindeTumSecilenleriKaldir() {
         int count = otomatikOnayAkisiIslemlerindeTumSecilenleri().size();
         Allure.addAttachment("Seçilen sayısı", String.valueOf(count));
 
@@ -428,7 +428,7 @@ public class BilgilerTab extends MainPage {
     }
 
     @Step("Otomatik Onay Akışında bul ve seç")
-    public BilgilerTab otomatikOnayAkisindaBulVeSec(String secilecekIslem, String... searchTextFirstExact) {
+    public BilgilerTab2 otomatikOnayAkisindaBulVeSec(String secilecekIslem, String... searchTextFirstExact) {
         otomatikOnayAkisiEkleButonaTikla();
         otomatikOnayAkisiIslemleriDialog.shouldBe(visible);
         otomatikOnayAkisiIslemleriDialogTitle.shouldHave(text("Otomatik Onay Akışı İşlemleri"));
@@ -447,7 +447,7 @@ public class BilgilerTab extends MainPage {
     }
 
     @Step("Otomatik Onay Akışında işlem seç")
-    public BilgilerTab otomatikOnayAkisindaIslemiSec(SelenideElement row, String secilecekIslem) {
+    public BilgilerTab2 otomatikOnayAkisindaIslemiSec(SelenideElement row, String secilecekIslem) {
         row.$("select").selectOption(secilecekIslem);
         return this;
     }
@@ -456,19 +456,19 @@ public class BilgilerTab extends MainPage {
     //region Onay Akışı Kullanıcılar
 
     @Step("Otomatik Onay Akışı İşlemleri kullan tıkla")
-    public BilgilerTab otomatikOnayAkisiIslemleriKullanTikla() {
+    public BilgilerTab2 otomatikOnayAkisiIslemleriKullanTikla() {
         otomatikOnayAkisiIslemleriDialog.$("button[id$='hiyerarsikAkisOlusturForm:hiyerarsikAkisKullan']").click();
         return this;
     }
 
     @Step("Otomatik Onay Akışı İşlemleri penceriyi kapat")
-    public BilgilerTab otomatikOnayAkisiIslemleriDialogKapat() {
+    public BilgilerTab2 otomatikOnayAkisiIslemleriDialogKapat() {
         otomatikOnayAkisiIslemleriDialogClose.click();
         return this;
     }
 
     @Step("Onay akışı kullanıcıları seç")
-    public BilgilerTab onayAkisiKullanicilarSec(String... texts) {
+    public BilgilerTab2 onayAkisiKullanicilarSec(String... texts) {
         for (int i = 0; i < texts.length; i++) {
             onayAkisiKullanicilarCombolov.selectLov(texts[i]);
         }
@@ -476,7 +476,7 @@ public class BilgilerTab extends MainPage {
     }
 
     @Step("Onay akışı kullanıcı tipi seç")
-    public BilgilerTab onayAkisiKullaniciTipiSec(String kullaniciAdi, String kullaniciTipi) {
+    public BilgilerTab2 onayAkisiKullaniciTipiSec(String kullaniciAdi, String kullaniciTipi) {
         onayAkisiKullanicilarCombolov.getSelectedItems()
                 .filterBy(text(kullaniciAdi))
                 .get(0)
@@ -501,7 +501,7 @@ public class BilgilerTab extends MainPage {
     }
 
     @Step("Onay akiş kullanıcıları kullan")
-    public BilgilerTab kullanButonaTikla() {
+    public BilgilerTab2 kullanButonaTikla() {
         kullanButton.pressEnter();
         return this;
     }
