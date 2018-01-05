@@ -21,7 +21,7 @@ import static data.TestData.belgenetURL;
 //@Listeners({SettingsListener.class})
 public class BaseTest extends BaseLibrary {
 
-    static final int timeout = 20;
+    static final int timeout = 30;
     static final int loadingTimeout = 30;
 
     @BeforeClass(alwaysRun = true)
