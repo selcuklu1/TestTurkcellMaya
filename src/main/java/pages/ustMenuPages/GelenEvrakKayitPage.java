@@ -198,6 +198,14 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
+    @Step("")
+    public GelenEvrakKayitPage otomatikHavaleGeldigiGorme(String otomatikHavale){
+        ElementsCollection lblOtomoatikHavale = $$("[id='evrakBilgileriForm:havalePanel'] label[class='columnLabelFixSmallWidth']");
+        boolean durum = lblOtomoatikHavale.filterBy(Condition.text(otomatikHavale)).size()==1;
+        Assert.assertEquals(durum,true);
+        return this;
+    }
+
    @Step("Otomatik havale seç \"{otomatikHavale}\" ")
     public GelenEvrakKayitPage popupOtomatikHavaleSec(String otomatikHavale){
         cmbPopupOtomatikHavale.selectOption(otomatikHavale);
