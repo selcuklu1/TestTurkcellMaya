@@ -4,14 +4,12 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
-import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.TextEditor;
-import pages.pageComponents.UstMenu;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.UstMenuData;
 
@@ -752,7 +750,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Gereği alanı doldurulur: {geregi} | {description}")
+        @Step("Gereği {description} doldur: | {geregi}")
         public BilgilerTab geregiDoldur(String geregi, String description) {
             cmbGeregi.selectLov(geregi);
             return this;

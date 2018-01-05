@@ -9,7 +9,6 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
-import pages.pageComponents.UstMenu;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.UstMenuData;
 
@@ -302,8 +301,8 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("Geldiği gerçek kişi alanında \"{geldigiKisi}\"  seçilir")
-    public GelenEvrakKayitPage geldigiGercekKisiDoldur(String geldigiKisi) {
+    @Step("Geldiği gerçek kişi alanı doldur: {geldigiKisi} | {description} ")
+    public GelenEvrakKayitPage geldigiGercekKisiDoldur(String geldigiKisi, String description) {
 
         cmbGeldigiGercekKisi.selectLov(geldigiKisi);
 
@@ -325,8 +324,8 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("Geldiği tüzel kişi alanında \"{geldigiTuzelKisi}\" seçilir")
-    public GelenEvrakKayitPage geldigiTuzelKisiDoldur(String geldigiTuzelKisi) {
+    @Step("Geldiği tüzel kişi {description} doldur: | {geldigiTuzelKisi}")
+    public GelenEvrakKayitPage geldigiTuzelKisiDoldur(String geldigiTuzelKisi, String description) {
 
         cmbGeldigiTuzelKisi.selectLov(geldigiTuzelKisi);
 
@@ -707,7 +706,7 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("Yenş Kayıt tıklanır")
+    @Step("Yeni Kayıt tıklanır")
     public GelenEvrakKayitPage yeniKayitButton() {
         $("[id$='yeniKayitButton']").pressEnter();
         sleep(5000);

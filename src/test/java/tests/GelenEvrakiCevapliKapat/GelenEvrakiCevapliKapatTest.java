@@ -288,7 +288,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
         gelenEvrakKayitPage
                 .openPage()
                 .kisiKurumSecByText(kisiKurum)
-                .geldigiTuzelKisiDoldur(tuzelKisi)
+                .geldigiTuzelKisiDoldur(tuzelKisi, "Ad")
                 .konuKoduDoldur(konuKodu)
                 .evrakTarihiDoldur(kayitTarihi)
                 .evrakSayiSolDoldur(evrakSayiSol)
