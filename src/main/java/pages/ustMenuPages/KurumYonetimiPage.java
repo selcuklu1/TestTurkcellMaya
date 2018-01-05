@@ -9,6 +9,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
+import pages.pageData.UstMenuData;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
@@ -83,7 +84,7 @@ public class KurumYonetimiPage extends MainPage {
 
     @Step("Kurum Yönetimi sayfası aç")
     public KurumYonetimiPage openPage() {
-        ustMenu("Kurum Yönetimi");
+        ustMenu(UstMenuData.TeskilatKisiTanimlari.KurumYonetimi);
         return this;
     }
 
@@ -377,7 +378,7 @@ public class KurumYonetimiPage extends MainPage {
     @Step("Ülke doldur")
     public KurumYonetimiPage ulkeDoldur(String ulke) {
         txtUlke.setValue(ulke);
-        txtUlke.detailItems().filterBy(Condition.text("TC")).first().click();
+        txtUlke.getDetailItems().filterBy(Condition.text("TC")).first().click();
         //txtUlke.selectLov(ulke);
         return this;
     }

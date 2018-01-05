@@ -163,7 +163,7 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
 
     @Step("Kişi alanında \"{kisi}\" seçmeye dene")
     public TeslimAlinmayiBekleyenlerPage havaleYapKisiKisiSecmeyeDene(String kisi) {
-        txtHavaleYapKisi.type(kisi).titleItems().filterBy(text(kisi)).first().click();
+        txtHavaleYapKisi.type(kisi).getTitleItems().filterBy(text(kisi)).first().click();
         return this;
     }
 
@@ -176,7 +176,7 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
 
     @Step("Kullanıcı listesinde \"{kisi}\" seçmeye dene")
     public TeslimAlinmayiBekleyenlerPage havaleYapKullaniciListesiSecmeyeDene(String kisi) {
-        txtHavaleYapKullaniciListesi.type(kisi).titleItems().filterBy(text(kisi)).first().click();
+        txtHavaleYapKullaniciListesi.type(kisi).getTitleItems().filterBy(text(kisi)).first().click();
         return this;
     }
 

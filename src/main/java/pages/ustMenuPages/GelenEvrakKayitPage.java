@@ -11,6 +11,7 @@ import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.UstMenu;
 import pages.pageComponents.belgenetElements.BelgenetElement;
+import pages.pageData.UstMenuData;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
@@ -185,9 +186,7 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("Gelen Evrak Kayıt sayfasını aç")
     public GelenEvrakKayitPage openPage() {
-        new UstMenu().ustMenu("Gelen Evrak Kayıt");
-        $("form[id='evrakBilgileriForm']").shouldBe(visible);
-
+        ustMenu(UstMenuData.EvrakIslemleri.GelenEvrakKayit);
         return this;
     }
 
@@ -205,19 +204,19 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("Hava İşlemleri Kişi alanında \"{kisi}\" seçmeye dene")
     public GelenEvrakKayitPage havaleIslemleriKisiSecmeyeDene(String kisi) {
-        txtHavaleIslemleriKisi.type(kisi).titleItems().filterBy(text(kisi)).first().click();
+        txtHavaleIslemleriKisi.type(kisi).getTitleItems().filterBy(text(kisi)).first().click();
         return this;
     }
 
     @Step("Kişi alanını doldur")
     public GelenEvrakKayitPage havaleIslemleriKisiDoldur(String kisi, String birim) {
-        txtHavaleIslemleriKisi.type(kisi).detailItems().filterBy(text(birim)).first().click();
+        txtHavaleIslemleriKisi.type(kisi).getDetailItems().filterBy(text(birim)).first().click();
         return this;
     }
 
     @Step("Kullanıcı Listesi alnında \"{kisi}\" seçmeye dene")
     public GelenEvrakKayitPage havaleIslemleriKullaniciListesiSecmeyeDene(String kisi) {
-        txtHavaleIslemleriKullaniciListesi.type(kisi).titleItems().filterBy(text(kisi)).first().click();
+        txtHavaleIslemleriKullaniciListesi.type(kisi).getTitleItems().filterBy(text(kisi)).first().click();
     /*    txtHavaleIslemleriKullaniciListesi.selectLov(kisi);
         txtHavaleIslemleriKullaniciListesi.selectLov(kisi);*/
         return this;
@@ -226,7 +225,7 @@ public class GelenEvrakKayitPage extends MainPage {
     @Step("Kullanıcı Listesi alnında \"{kisi}\" seç")
     public GelenEvrakKayitPage havaleIslemleriKullaniciListesiDoldur(String kisi, String detay) {
         //txtHavaleIslemleriKullaniciListesi.selectLov(kisi);
-        txtHavaleIslemleriKullaniciListesi.type(kisi).detailItems().filterBy(text(detay)).first().click();
+        txtHavaleIslemleriKullaniciListesi.type(kisi).getDetailItems().filterBy(text(detay)).first().click();
         return this;
     }
 
@@ -308,21 +307,21 @@ public class GelenEvrakKayitPage extends MainPage {
 
         cmbGeldigiGercekKisi.selectLov(geldigiKisi);
 
-        System.out.println("title: " + cmbGeldigiGercekKisi.lastSelectedLovTitleText());
-        System.out.println("detail: " + cmbGeldigiGercekKisi.lastSelectedLovDetailText());
+        /*System.out.println("title: " + cmbGeldigiGercekKisi.lastSelectedLovTitleText());
+        System.out.println("detail: " + cmbGeldigiGercekKisi.lastSelectedLovDetailText());*/
 
         return this;
     }
 
     @Step("Seçilen gereği gerçek kişi sil")
     public GelenEvrakKayitPage secilenGeregiGercekKisiSil() {
-        cmbGeldigiGercekKisi.clearLastSelectedLov();
+        cmbGeldigiGercekKisi.clearLastSelectedItem();
         return this;
     }
 
     @Step("Seçilen gereği tüzel kişi sil")
     public GelenEvrakKayitPage secilenGeregiTuzelKisiSil() {
-        cmbGeldigiTuzelKisi.clearLastSelectedLov();
+        cmbGeldigiTuzelKisi.clearLastSelectedItem();
         return this;
     }
 
@@ -331,8 +330,8 @@ public class GelenEvrakKayitPage extends MainPage {
 
         cmbGeldigiTuzelKisi.selectLov(geldigiTuzelKisi);
 
-        System.out.println("title: " + cmbGeldigiTuzelKisi.lastSelectedLovTitleText());
-        System.out.println("detail: " + cmbGeldigiTuzelKisi.lastSelectedLovDetailText());
+        /*System.out.println("title: " + cmbGeldigiTuzelKisi.lastSelectedLovTitleText());
+        System.out.println("detail: " + cmbGeldigiTuzelKisi.lastSelectedLovDetailText());*/
 
         return this;
     }
@@ -362,15 +361,21 @@ public class GelenEvrakKayitPage extends MainPage {
 
         cmbGeldigiTuzelKisi.selectLov(kisi);
 
-        if (cmbGeldigiTuzelKisi.lastSelectedLovTitleText().contains(kisi)) {
-            System.out.println("Gelen title:     " + cmbGeldigiTuzelKisi.lastSelectedLovTitleText());
-            System.out.println("Beklenen title:  " + kisi);
-            Assert.assertEquals(cmbGeldigiTuzelKisi.lastSelectedLovTitleText().contains(kisi), true);
-        } else if (cmbGeldigiTuzelKisi.lastSelectedLovDetailText().contains(kisi)) {
-            System.out.println("Gelen title:     " + cmbGeldigiTuzelKisi.lastSelectedLovDetailText());
-            System.out.println("Beklenen title:  " + kisi);
-            Assert.assertEquals(cmbGeldigiTuzelKisi.lastSelectedLovDetailText().contains(kisi), true);
-        }
+        cmbGeldigiTuzelKisi.getSelectedItems().last().shouldHave(text(kisi));
+
+        /*String t = cmbGeldigiTuzelKisi.getSelectedItems().last().text();
+        String d = cmbGeldigiTuzelKisi.getSelectedDetails().last().text();
+        if (t.contains(kisi)) {
+            *//*System.out.println("Gelen title:     " + cmbGeldigiTuzelKisi.lastSelectedLovTitleText());
+            System.out.println("Beklenen title:  " + kisi);*//*
+            *//*Assert.assertEquals(cmbGeldigiTuzelKisi.lastSelectedLovTitleText().contains(kisi), true);*//*
+            cmbGeldigiTuzelKisi.getSelectedItems().last().shouldHave(text(kisi));
+        } else if (d.contains(kisi)) {
+            *//*System.out.println("Gelen title:     " + cmbGeldigiTuzelKisi.lastSelectedLovDetailText());
+            System.out.println("Beklenen title:  " + kisi);*//*
+            *//*Assert.assertEquals(cmbGeldigiTuzelKisi.lastSelectedLovDetailText().contains(kisi), true);*//*
+            cmbGeldigiTuzelKisi.getSelectedDetails().last().shouldHave(text(kisi));
+        }*/
 
         return this;
     }
@@ -385,10 +390,10 @@ public class GelenEvrakKayitPage extends MainPage {
     public GelenEvrakKayitPage gercekKisiGoruntulenmeKontrolu(String tckn, String adSoyad) {
 
         cmbGeldigiGercekKisi.selectLov(tckn);
-        System.out.println("Gelen title:     " + cmbGeldigiGercekKisi.lastSelectedLovTitleText());
-        System.out.println("Beklenen title:  " + adSoyad);
-
-        Assert.assertEquals(cmbGeldigiGercekKisi.lastSelectedLovTitleText().contains(adSoyad), true);
+        /*System.out.println("Gelen title:     " + cmbGeldigiGercekKisi.lastSelectedLovTitleText());
+        System.out.println("Beklenen title:  " + adSoyad);*/
+        cmbGeldigiGercekKisi.getSelectedTitles().last().shouldHave(text(adSoyad));
+//        Assert.assertEquals(cmbGeldigiGercekKisi.lastSelectedLovTitleText().contains(adSoyad), true);
 
         return this;
     }
@@ -467,9 +472,9 @@ public class GelenEvrakKayitPage extends MainPage {
     @Step("Dağıtım Bilgileri Birim alanında \"{birim}\" seçilir")
     public GelenEvrakKayitPage dagitimBilgileriBirimDoldur(String birim) {
 //        txtDagitimBilgileriBirim.sendKeys(birim);
-        cmbHavaleIslemleriBirim.type(birim).titleItems()
+        cmbHavaleIslemleriBirim.type(birim).getTitleItems()
                 .filterBy(Condition.exactText(birim)).get(0).click();
-        cmbHavaleIslemleriBirim.closeLovTreePanel();
+        cmbHavaleIslemleriBirim.closeTreePanel();
         return this;
     }
 
@@ -1002,7 +1007,7 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("Konu kodu sil")
     public GelenEvrakKayitPage konuKoduSil() throws InterruptedException {
-        comboKonuKodu.clearLastSelectedLov();
+        comboKonuKodu.clearLastSelectedItem();
         return this;
     }
 

@@ -8,6 +8,7 @@ import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
@@ -516,20 +517,20 @@ public class GelenEvraklarCevapYazPage extends MainPage {
     @Step("Kişinin geregi alanında görüntülenme kontrolu")
     public GelenEvraklarCevapYazPage geregiKontrolu(String adSoyad) {
 
-        System.out.println("Gelen geregi:     " + cmbGeregi.lastSelectedLovTitleText());
+        /*System.out.println("Gelen geregi:     " + cmbGeregi.lastSelectedLovTitleText());
         System.out.println("Beklenen geregi:  " + adSoyad);
-        Assert.assertEquals(cmbGeregi.lastSelectedLovTitleText().contains(adSoyad), true);
-
+        Assert.assertEquals(cmbGeregi.lastSelectedLovTitleText().contains(adSoyad), true);*/
+        cmbGeregi.getSelectedTitles().last().shouldHave(text(adSoyad));
         return this;
     }
 
     @Step("Konu kodu alanında görüntülenme kontrolu")
     public GelenEvraklarCevapYazPage konuKonuKontrolu(String konu) {
 
-        System.out.println("Gelen konuKodu:     " + cmbKonuKodu.lastSelectedLovTitleText());
-        System.out.println("Beklenen konuKodu:  " + konu);
-        Assert.assertEquals(cmbKonuKodu.lastSelectedLovTitleText().contains(konu), true);
-
+        /*System.out.println("Gelen konuKodu:     " + cmbKonuKodu.lastSelectedLovTitleText());
+        System.out.println("Beklenen konuKodu:  " + konu);*/
+        /*Assert.assertEquals(cmbKonuKodu.lastSelectedLovTitleText().contains(konu), true);*/
+        cmbKonuKodu.getSelectedTitles().last().shouldHave(text(konu));
         return this;
     }
 

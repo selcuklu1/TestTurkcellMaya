@@ -7,6 +7,7 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import pages.MainPage;
 import pages.pageComponents.UstMenu;
+import pages.pageData.UstMenuData;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
@@ -25,7 +26,7 @@ public class GenelEvrakRaporuPage extends MainPage {
     SelenideElement btnDetay = $("[id^='genelEvrakRaporuForm:genelEvrakDataTable'][id$='evrakGosterButton']");
 
     public GenelEvrakRaporuPage openPage() {
-        new UstMenu().ustMenu("Genel Evrak Raporu");
+        ustMenu(UstMenuData.Raporlar.GenelEvrakRaporu);
         return this;
     }
 

@@ -8,6 +8,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
+import pages.pageData.UstMenuData;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
@@ -29,7 +30,7 @@ public class KullaniciEvrakDevretPage extends MainPage {
 
     @Step("Kullanıcı Evrak Devret sayfasını aç")
     public KullaniciEvrakDevretPage openPage() {
-        ustMenu("Kullanıcı Evrak Devret");
+        ustMenu(UstMenuData.AmirIslemleri.KullaniciEvrakDevret);
         return this;
     }
 

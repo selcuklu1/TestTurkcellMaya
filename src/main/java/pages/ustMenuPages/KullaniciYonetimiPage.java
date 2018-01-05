@@ -6,6 +6,7 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
+import pages.pageData.UstMenuData;
 
 import java.util.Random;
 
@@ -111,7 +112,7 @@ public class KullaniciYonetimiPage extends MainPage {
 
     @Step("Kullanıcı Yönetim sayfasını aç")
     public KullaniciYonetimiPage openPage() {
-        ustMenu("Kullanıcı Yönetim");
+        ustMenu(UstMenuData.KullaniciIslemleri.KullaniciListesiYonetimi);
         return this;
     }
 
@@ -244,7 +245,7 @@ public class KullaniciYonetimiPage extends MainPage {
 
     @Step("Görevli olduğu birim guncelleme")
     public KullaniciYonetimiPage gorevliOlduguBirimGuncelle() {
-        String title = cmlBirim.lastSelectedLovTitleText();
+        String title = cmlBirim.getSelectedTitles().last().text();
 
         tblKullaniciBirim.filterBy(text(title)).shouldHaveSize(1)
                 .first().$("[id$='updateKullaniciBirimButton']").click();

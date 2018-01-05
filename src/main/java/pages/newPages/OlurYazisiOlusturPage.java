@@ -31,7 +31,7 @@ public class OlurYazisiOlusturPage extends MainPage {
     private SelenideElement page = $("#yeniOnayEvrakForm");
 
     public OlurYazisiOlusturPage openPage() {
-        ustMenu(UstMenuData.EvrakIslemleri.OlurYazisiOlustur.getName());
+        ustMenu(UstMenuData.EvrakIslemleri.OlurYazisiOlustur);
         ustMenuPageHeader.getPageTitle().shouldHave(text(UstMenuData.EvrakIslemleri.OlurYazisiOlustur.getName()));
         return this;
     }

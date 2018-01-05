@@ -7,6 +7,7 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
+import pages.pageData.UstMenuData;
 
 import java.io.IOException;
 
@@ -28,7 +29,7 @@ public class KaydedilenGelenEvrakPage extends MainPage {
 
     @Step("Kaydedilen Gelen Evrak sayfasını aç")
     public KaydedilenGelenEvrakPage openPage() {
-        ustMenu("Raporlar", "Kaydedilen Gelen Evrak");
+        ustMenu(UstMenuData.Raporlar.KaydedilenGelenEvrak);
         return this;
     }
 

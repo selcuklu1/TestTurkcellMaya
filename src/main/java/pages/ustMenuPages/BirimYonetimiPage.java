@@ -8,6 +8,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
+import pages.pageData.UstMenuData;
 
 import java.util.Random;
 
@@ -80,7 +81,7 @@ public class BirimYonetimiPage extends MainPage {
 
     @Step("Birim Yönetimi sayfası aç")
     public BirimYonetimiPage openPage() {
-        ustMenu("Birim Yönetimi");
+        ustMenu(UstMenuData.TeskilatKisiTanimlari.BirimYonetimi);
         return this;
     }
 

@@ -26,7 +26,7 @@ public class YazismaKurallariYonetimiTest extends BaseTest {
         Boolean sonImzaSeviyesi = false;
 
         yazismaKurallariYonetimiPage
-                .open()
+                .openPage()
                 .yazismaKurallariEkle()
                 .birimTipiSec(birimAdi)
                 .tiklaSinirsizYazilabilir(sinirsizYazilabilir)
@@ -45,7 +45,7 @@ public class YazismaKurallariYonetimiTest extends BaseTest {
         String birimAdi = "Belde Belediyesi";
 
         yazismaKurallariYonetimiPage
-                .open()
+                .openPage()
                 .yazismaKuraliSil(birimAdi)
                 .islemMesaji().basariliOlmali(basariMesaj);
 
@@ -62,7 +62,7 @@ public class YazismaKurallariYonetimiTest extends BaseTest {
         Boolean sonImzaSeviyesi = false;
 
         yazismaKurallariYonetimiPage
-                .open()
+                .openPage()
                 .yazismaKuraliGuncelle(guncellenecekBirimadi)
                 .birimTipiSec(yeniBirimAdi)
                 .tiklaSinirsizYazilabilir(sinirsizYazilabilir)

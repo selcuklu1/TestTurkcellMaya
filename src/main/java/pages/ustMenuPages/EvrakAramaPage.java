@@ -8,6 +8,7 @@ import org.openqa.selenium.By;
 import pages.MainPage;
 import pages.pageComponents.UstMenu;
 import pages.pageComponents.belgenetElements.BelgenetElement;
+import pages.pageData.UstMenuData;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
@@ -37,8 +38,8 @@ public class EvrakAramaPage extends MainPage {
     SelenideElement btnDetaylıAra = $(By.id("menuYonetimiTabView:detayliEvrakAramaForm:detayliAraButton_id"));
     ElementsCollection tblDetayliAramaTabListe = $$("[id='menuYonetimiTabView:detayliEvrakAramaForm:evrakAramaDataTable_data'] tr[role='row']");
 
-    public EvrakAramaPage openPage() {
-        new UstMenu().ustMenu("Evrak Arama");
+    public EvrakAramaPage openPage(){
+        ustMenu(UstMenuData.EvrakIslemleri.EvrakArama);
         return this;
     }
 

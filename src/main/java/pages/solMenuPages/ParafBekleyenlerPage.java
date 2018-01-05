@@ -257,7 +257,7 @@ public class ParafBekleyenlerPage extends MainPage {
 
     @Step("paylaşılan kişileri temizle ")
     public ParafBekleyenlerPage paylasilanKisileriTemizle() {
-        txtPaylasKisi.clearAllSelectedLov();
+        txtPaylasKisi.clearAllSelectedItems();
         return this;
     }
 

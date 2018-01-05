@@ -2,6 +2,7 @@ package tests.EvrakNot;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.Selectors;
 import com.codeborne.selenide.SelenideElement;
 import common.BaseTest;
 import data.User;
@@ -9,6 +10,8 @@ import io.qameta.allure.Allure;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -645,7 +648,7 @@ public class EvrakNotTest extends BaseTest {
             String date = DateTimeFormatter.ofPattern("dd.MM.yyyy").format(LocalDateTime.now());
             String time = DateTimeFormatter.ofPattern("HH").format(LocalDateTime.now());
 //            String time = DateTimeFormatter.ofPattern("HH:mm").format(LocalDateTime.now());
-            return olusturulanNot(olusturanAdSoyad, aciklama, date, time).shouldHaveSize(1).first();
+            return olusturulanNot(olusturanAdSoyad, aciklama, date, time).shouldHaveSize(1).first().shouldBe(visible);
         }
 
         @Step("Notları kontrol et")

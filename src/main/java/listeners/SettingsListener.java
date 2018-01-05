@@ -22,19 +22,19 @@ public class SettingsListener extends TestNG.ExitCodeListener {
     @Override
     public void onTestFailure(ITestResult result) {
         super.onTestFailure(result);
-        takeScreenshotOnFail();
-        System.out.println("///////////////////////////////////////////////////////");
+//        takeScreenshotOnFail();
+        /*System.out.println("///////////////////////////////////////////////////////");
         System.out.println("Test Failed: " + result.getName());
-        System.out.println("///////////////////////////////////////////////////////");
+        System.out.println("///////////////////////////////////////////////////////");*/
     }
 
     @Override
     public void onConfigurationFailure(ITestResult itr) {
         super.onConfigurationFailure(itr);
-        takeScreenshotOnFail();
-        System.out.println("///////////////////////////////////////////////////////");
+//        takeScreenshotOnFail();
+        /*System.out.println("///////////////////////////////////////////////////////");
         System.out.println("Test Configuration Failed: " + itr.getName());
-        System.out.println("///////////////////////////////////////////////////////");
+        System.out.println("///////////////////////////////////////////////////////");*/
     }
 
     @Attachment(value = "Fail screenshot", type = "image/png")

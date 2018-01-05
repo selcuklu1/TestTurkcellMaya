@@ -13,6 +13,7 @@ import pages.MainPage;
 import pages.pageComponents.TextEditor;
 import pages.pageComponents.UstMenu;
 import pages.pageComponents.belgenetElements.BelgenetElement;
+import pages.pageData.UstMenuData;
 
 import java.util.List;
 
@@ -90,7 +91,7 @@ public class BirimIcerikSablonlarPage extends MainPage {
     }
 
     public BirimIcerikSablonlarPage openPage() {
-        new UstMenu().ustMenu("Birim İçerik Şablonları");
+        ustMenu(UstMenuData.YonetimSayfalari.BirimIcerikSablonlari);
         return this;
     }
 
@@ -102,13 +103,13 @@ public class BirimIcerikSablonlarPage extends MainPage {
 
         txtSablonAdi.setValue(sablonAdi);
 
-        lovKullanilacakBirimler.type(birim).titleItems()
+        lovKullanilacakBirimler.type(birim).getTitleItems()
                 .filterBy(exactText(birim))
                 .first()
                 .click();
 
-        lovKullanilacakBirimler.closeLovTreePanel()
-                .lastSelectedLov()
+        lovKullanilacakBirimler.closeTreePanel()
+                .getSelectedItems().last()
                 .$(By.tagName("select")).selectOption(altBirimler);
 
         getEditor()
@@ -303,8 +304,8 @@ public class BirimIcerikSablonlarPage extends MainPage {
 
     @Step("Kullanılack Birimi seç")
     public BirimIcerikSablonlarPage kullanilacakBirimiSec(String birim, Condition condition) {
-        lovKullanilacakBirimler.type(birim).titleItems().filterBy(condition).first().click();
-        lovKullanilacakBirimler.closeLovTreePanel();
+        lovKullanilacakBirimler.type(birim).getTitleItems().filterBy(condition).first().click();
+        lovKullanilacakBirimler.closeTreePanel();
         return this;
     }
 
@@ -327,7 +328,7 @@ public class BirimIcerikSablonlarPage extends MainPage {
 
     @Step("Alt birimler görsün mü seç")
     public BirimIcerikSablonlarPage altBirimlerGorsunMu(String value) {
-        lovKullanilacakBirimler.lastSelectedLov()
+        lovKullanilacakBirimler.getSelectedItems().last()
                 .$(By.tagName("select")).selectOption(value);
         return this;
     }

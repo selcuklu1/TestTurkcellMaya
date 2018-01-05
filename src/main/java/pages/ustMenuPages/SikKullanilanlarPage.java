@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
+import pages.pageData.UstMenuData;
 
 import static com.codeborne.selenide.Condition.exactText;
 import static com.codeborne.selenide.Condition.visible;
@@ -34,8 +35,7 @@ public class SikKullanilanlarPage extends MainPage {
 
     @Step("Sık Kullanılanlar sayfasını aç")
     public SikKullanilanlarPage openPage() {
-        ustMenu("Sık Kullanılanlar");
-        $("#sikKullanilanForm").shouldBe(visible);
+        ustMenu(UstMenuData.KisiselIslemlerim.SikKullanilanlar);
         return this;
     }
 
@@ -61,7 +61,7 @@ public class SikKullanilanlarPage extends MainPage {
         //comboLov("").titleItems().filterBy(exactText("Türksat Optiim")).size() > 0
 
         txtDagitimlarDagitimlar.shouldBe(visible);
-        if (txtDagitimlarDagitimlar.selectedTitles().filterBy(exactText(dagitim)).size() > 0) {
+        if (txtDagitimlarDagitimlar.getSelectedTitles().filterBy(exactText(dagitim)).size() > 0) {
             dagitimlarKaldir();
             ekraniKapat();
             openPage();

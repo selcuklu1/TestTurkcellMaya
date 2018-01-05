@@ -66,6 +66,16 @@ public class BaseLibrary extends ElementsContainer {
 
     //<editor-fold desc="Page loading methods">
 
+
+    public void clearCookies() {
+        try {
+            Selenide.clearBrowserLocalStorage();
+            Selenide.clearBrowserCookies();
+        } catch (Exception e) {
+            log.info("Error clearBrowserLocalStorage and clearBrowserCookies: " + e.getMessage());
+        }
+    }
+
     /**
      * Türkçe harfleri inglizce harflere dönüştürüyor
      *
@@ -85,9 +95,14 @@ public class BaseLibrary extends ElementsContainer {
     //<editor-fold desc="Allure screenshooter">
     @Attachment(value = "Page screenshot", type = "image/png")
     public byte[] takeScreenshot() {
-        return ((TakesScreenshot) WebDriverRunner.getWebDriver()).getScreenshotAs(OutputType.BYTES);
+        try {
+            return ((TakesScreenshot) WebDriverRunner.getWebDriver()).getScreenshotAs(OutputType.BYTES);
+        } catch (WebDriverException e) {
+            e.printStackTrace();
+            return new byte[]{};
+        }
     }
-
+    
     /**
      * Waiting to JS and jQuery ready state and object with class "loading" to disappear.
      * Used in DriverInvokeListener beforeFindBy method

@@ -17,11 +17,9 @@ public class LoginPage extends MainPage {
     private SelenideElement btnLogin = $(By.id("eForm:egirisYapButton"));
 
     private LoginPage open() {
+        clearCookies();
         Selenide.open("");
-//        Selenide.openPage("http://www.belgenet.com.tr:8282/edys-web/sistemeGiris.xhtml");
-//        username.shouldBe(visible);
-
-        maximazeBrowser();
+//      maximazeBrowser();
         return this;
     }
 

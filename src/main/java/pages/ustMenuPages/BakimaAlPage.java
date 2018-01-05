@@ -8,6 +8,7 @@ import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
+import pages.pageData.UstMenuData;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
@@ -51,7 +52,7 @@ public class BakimaAlPage extends MainPage {
 
     @Step("Bakıma al sayfası aç")
     public BakimaAlPage openPage() {
-        ustMenu("Bakıma Al");
+        ustMenu(UstMenuData.YonetimSayfalari.BakimaAl);
         return this;
     }
 

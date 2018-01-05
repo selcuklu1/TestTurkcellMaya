@@ -9,6 +9,7 @@ import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
+import pages.pageData.UstMenuData;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
@@ -58,9 +59,7 @@ public class OnayAkisYonetimiPage extends MainPage {
 
     @Step("Onay akışı sayfası aç")
     public OnayAkisYonetimiPage openPage() {
-        ustMenu("Onay Akışı Yönetimi");
-        $("form[id='onayAkisiYonetimiEditorForm']").shouldBe(visible);
-
+        ustMenu(UstMenuData.KisiselIslemlerim.OnayAkisiYonetimi);
         return this;
     }
 
@@ -91,7 +90,7 @@ public class OnayAkisYonetimiPage extends MainPage {
     //Title göre doldurur.
     @Step("Onay akışı işlemleri kullanıcılar alanı doldur")
     public OnayAkisYonetimiPage onayAkisiIslemlerKullaniciDoldur(String kullanici) {
-        txtOnayAkisiIslemleriKullanicilar.type(kullanici).titleItems().first().click();
+        txtOnayAkisiIslemleriKullanicilar.type(kullanici).getTitleItems().first().click();
         //selectLov(kullanici);
         return this;
     }
@@ -99,7 +98,7 @@ public class OnayAkisYonetimiPage extends MainPage {
     //Detaile göre doldurur.
     @Step("Onay akışı işlemleri kullanıcılar alanı doldur")
     public OnayAkisYonetimiPage onayAkisiIslemlerIstenilenDetaildeKullaniciDoldur(String kullanici) {
-        txtOnayAkisiIslemleriKullanicilar.type(kullanici).detailItems().filterBy(text("Vekalet")).first().click();
+        txtOnayAkisiIslemleriKullanicilar.type(kullanici).getDetailItems().filterBy(text("Vekalet")).first().click();
         //selectLov(kullanici);
         return this;
     }
@@ -221,7 +220,7 @@ public class OnayAkisYonetimiPage extends MainPage {
     @Step("Kullanıcı birimin seçili gelme kontrolu")
     public OnayAkisYonetimiPage birimKontrol(String birim) {
         // Assert.assertEquals(txtFiltreBirim.selectedTitles().filterBy(Condition.text(birim)).size(), 1);
-        txtFiltreBirim.lastSelectedLovTitle().shouldHave(text(birim));
+        txtFiltreBirim.getSelectedTitles().last().shouldHave(text(birim));
 
         return this;
     }
@@ -422,7 +421,7 @@ public class OnayAkisYonetimiPage extends MainPage {
     @Step("Onay Akışı İşlemlerinde birim dışı kullanıcı görüntülenmeme kontrolu")
     public OnayAkisYonetimiPage kullanicilarAlanindaGoruntulenmemeKontrolu(String kullanici) {
 
-        comboLov(txtKullanicilar).type(kullanici).titleItems().filterBy(exactText(kullanici)).shouldHaveSize(0);
+        comboLov(txtKullanicilar).type(kullanici).getTitleItems().filterBy(exactText(kullanici)).shouldHaveSize(0);
         System.out.println("Kullanıcılar alanında " + kullanici + ": Birim dışı kullanıcının görüntülenmediği görülür.");
 
         return this;

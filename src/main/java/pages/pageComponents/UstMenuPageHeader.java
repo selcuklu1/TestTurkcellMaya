@@ -16,7 +16,7 @@ import static com.codeborne.selenide.Selenide.*;
  */
 public class UstMenuPageHeader extends MainPage {
 
-    //    SelenideElement pageWindow;
+    //SelenideElement pageWindow;
     @FindBy(xpath = "//ancestor::div[contains(@class,'windowDialog')]")
     public SelenideElement pageWindow;
 
@@ -26,12 +26,6 @@ public class UstMenuPageHeader extends MainPage {
     @FindBy(css = "div[class~='ui-dialog-titlebar'] > span[class='ui-dialog-title']")
     public SelenideElement pageTitle;
 
-
-
-
-    /*public SelenideElement getPageWindow() {
-        return pageWindow;
-    }*/
 
     public SelenideElement getPageCloseButton() {
         return closePageButton;

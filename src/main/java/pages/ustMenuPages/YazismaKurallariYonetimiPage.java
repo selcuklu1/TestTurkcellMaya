@@ -6,6 +6,7 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import pages.MainPage;
 import pages.pageComponents.UstMenu;
+import pages.pageData.UstMenuData;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
@@ -24,8 +25,8 @@ public class YazismaKurallariYonetimiPage extends MainPage {
     ElementsCollection tableYazismaKurallari = $$(By.id("grupBirimTipleriListingForm:grupBirimTipleriDataTable_data"));
     SelenideElement btnYazismaKuraliSilEvet = $(By.id("baseConfirmationDialog:confirmButton"));
 
-    public YazismaKurallariYonetimiPage open() {
-        new UstMenu().ustMenu("Yazışma Kuralları Yönetimi");
+    public YazismaKurallariYonetimiPage openPage() {
+        ustMenu(UstMenuData.YonetimSayfalari.YazismaKurallariYonetimi);
         return this;
     }
 

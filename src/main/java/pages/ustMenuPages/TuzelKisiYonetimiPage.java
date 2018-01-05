@@ -9,6 +9,7 @@ import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
+import pages.pageData.UstMenuData;
 
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
@@ -83,7 +84,7 @@ public class TuzelKisiYonetimiPage extends MainPage {
 
     @Step("Tüzel Kişi Yönetimi sayfasını aç")
     public TuzelKisiYonetimiPage openPage() {
-        ustMenu("Tüzel Kişi Yönetimi");
+        ustMenu(UstMenuData.TeskilatKisiTanimlari.TuzelKisiYonetimi);
         $("#tuzelKisiYonetimiListingForm").shouldBe(visible);
         return this;
     }

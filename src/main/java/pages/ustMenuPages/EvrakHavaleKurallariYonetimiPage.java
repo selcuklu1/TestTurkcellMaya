@@ -7,6 +7,7 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
+import pages.pageData.UstMenuData;
 
 import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
@@ -127,7 +128,7 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
 
     @Step("Kişi doldur")
     public EvrakHavaleKurallariYonetimiPage kimeHavaleEdilecekKisiDoldur(String kisi, String birim) {
-        txtKimeHavaleEdilecekKisi.type(kisi).detailItems().filterBy(Condition.text(birim)).first().click();
+        txtKimeHavaleEdilecekKisi.type(kisi).getDetailItems().filterBy(Condition.text(birim)).first().click();
         return this;
     }
 
@@ -170,8 +171,8 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
     }
 
     @Step("Evrak havale kuralları yonetimi sayfası açılır")
-    public EvrakHavaleKurallariYonetimiPage openPage() {
-        ustMenu("Evrak Havale Kuralları Yönetimi");
+    public EvrakHavaleKurallariYonetimiPage openPage(){
+        ustMenu(UstMenuData.YonetimSayfalari.EvrakHavaleKurallariYonetimi);
         return this;
     }
 
