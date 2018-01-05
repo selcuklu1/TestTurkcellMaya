@@ -57,7 +57,7 @@ public class TS2095 extends BaseTest {
     }
 
     @Severity(SeverityLevel.MINOR)
-    @Test(description = "TS2095: Paraf, Gelen, Postalanacak bekleyen evarkalar \"Beklemeye Al\" butonun gelmediği görülür", enabled = true)
+    @Test(description = "TS2095: Paraf, Gelen, Postalanacak bekleyen evarklarda \"Beklemeye Al\" butonun gelmediği görülür", enabled = true)
     public void TS2095_2() throws Exception {
 
         login(ztekin);
@@ -72,8 +72,10 @@ public class TS2095 extends BaseTest {
         ilkDokumaniSecBeklemeyeAlBulunmamali();
     }
 
+
+    //TS2095_2 birleştirilmiştir, müşterinin isteği!
     @Severity(SeverityLevel.MINOR)
-    @Test(description = "TS2095: Paraf bekleyen evarkalarda \"Beklemeye\" al butonun gelmediği görülür", enabled = true)
+    @Test(description = "TS2095: Paraf bekleyen evarkalarda \"Beklemeye\" al butonun gelmediği görülür", enabled = false)
     public void TS2095_3_parafla() throws Exception {
         login(ztekin);
         new ParafBekleyenlerPage().openPage();
@@ -81,7 +83,7 @@ public class TS2095 extends BaseTest {
     }
 
     @Severity(SeverityLevel.MINOR)
-    @Test(description = "TS2095: Gelen evarkalarda \"Beklemeye\" al butonun gelmediği görülür", enabled = true)
+    @Test(description = "TS2095: Gelen evarkalarda \"Beklemeye\" al butonun gelmediği görülür", enabled = false)
     public void TS2095_4_gelen() throws Exception {
         login(ztekin);
         new GelenEvraklarPage().openPage();
@@ -89,12 +91,14 @@ public class TS2095 extends BaseTest {
     }
 
     @Severity(SeverityLevel.MINOR)
-    @Test(description = "TS2095: Postalanacak evarkalarda \"Beklemeye\" al butonun gelmediği görülür", enabled = true)
+    @Test(description = "TS2095: Postalanacak evarkalarda \"Beklemeye\" al butonun gelmediği görülür", enabled = false)
     public void TS2095_5_postalanacak() throws Exception {
         login(ztekin);
         new PostalanacakEvraklarPage().openPage();
         ilkDokumaniSecBeklemeyeAlBulunmamali();
     }
+
+
 
     @Step("Seçilen evrakta \"Beklemeye Al\" butonun gelmediği görülür")
     public TS2095 ilkDokumaniSecBeklemeyeAlBulunmamali() {
@@ -134,8 +138,11 @@ public class TS2095 extends BaseTest {
 
     @Step("Beklemeye Al butonu gelmediği görülür")
     public TS2095 beklemeyeAlNotVisible() {
+        $("#mainPreviewForm").shouldBe(visible)
+                .$$(".buttonMenuTextDefault").filterBy(text("Beklemeye Al"))
+                .shouldHaveSize(0);
         takeScreenshot();
-        beklemeyeAlButton().shouldNotBe(visible);
+//        beklemeyeAlButton().shouldNotBe(visible);
         return this;
     }
 
