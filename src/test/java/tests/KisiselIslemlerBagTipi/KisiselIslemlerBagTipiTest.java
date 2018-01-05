@@ -47,7 +47,7 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "2141: Bağ tipi amir yardımcısı olması kontrolleri")
-    public void TC2141() {
+    public void TS2141() {
 
         String basariMesaji = "İşlem başarılıdır!";
         String bagTipi = "Amir Yardımcısı";
@@ -93,7 +93,7 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "2142: Bağ tipi vekaleten amir yardımcısı kontrolleri")
-    public void TC2142() {
+    public void TS2142() {
 
         String basariMesaji = "İşlem başarılıdır!";
         String bagTipi = "Amir Yardımcısı";
@@ -173,7 +173,7 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "2168: Bağ tipi personel kontrolleri")
-    public void TC2168() {
+    public void TS2168() {
 
         String basariMesaji = "İşlem başarılıdır!";
         String bagTipi = "Personel";

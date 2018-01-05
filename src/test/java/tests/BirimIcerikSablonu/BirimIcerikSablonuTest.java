@@ -58,8 +58,8 @@ public class BirimIcerikSablonuTest extends BaseTest {
 
     String onizlemeText = "T.C.\nGENEL MÜDÜRLÜK MAKAMI\nBİLİŞİM HİZMETLERİ GENEL MÜDÜR YARDIMCISI\nYAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ\nOptiim Birim";
 
-    @Test(description = "TC1084: Alan aktif durum kontrolleri", enabled = false, priority = 1)
-    public void tc1084a() {
+    @Test(description = "TS1084: Alan aktif durum kontrolleri", enabled = false, priority = 1)
+    public void TS1084a() {
         login();
         birimIcerikSablonlarPage = new BirimIcerikSablonlarPage().openPage();
         birimIcerikSablonlarPage.getBtnYeniSablonOlustur().shouldBe(visible);
@@ -95,8 +95,8 @@ public class BirimIcerikSablonuTest extends BaseTest {
         sa.assertAll();
     }
 
-    @Test(description = "TC1084: Şablon içeriği boş ise oluşturmamalı", enabled = false, priority = 2)
-    public void tc1084b() {
+    @Test(description = "TS1084: Şablon içeriği boş ise oluşturmamalı", enabled = false, priority = 2)
+    public void TS1084b() {
         login(optiim);
         String sablonAdi = "SABLON_" + getSysDate();
         new BirimIcerikSablonlarPage()
@@ -111,8 +111,8 @@ public class BirimIcerikSablonuTest extends BaseTest {
                 , "Birim şablonları tablosunda bulunmamalı");*/
     }
 
-    @Test(description = "TC1084: Kullanacak Birimler boş ise oluşturmamalı", enabled = false, priority = 3)
-    public void tc1084c() {
+    @Test(description = "TS1084: Kullanacak Birimler boş ise oluşturmamalı", enabled = false, priority = 3)
+    public void TS1084c() {
         login(optiim);
         String sablonAdi = "SABLON_" + getSysDate();
         new BirimIcerikSablonlarPage()
@@ -127,8 +127,8 @@ public class BirimIcerikSablonuTest extends BaseTest {
                 , "Birim şablonları tablosunda bulunmamalı");*/
     }
 
-    @Test(description = "TC1084: Şablon adı boş ise oluşturmamalı", enabled = false, priority = 4)
-    public void tc1084d() {
+    @Test(description = "TS1084: Şablon adı boş ise oluşturmamalı", enabled = false, priority = 4)
+    public void TS1084d() {
         login(optiim);
         String sablonAdi = "SABLON_" + getSysDate();
         new BirimIcerikSablonlarPage()
@@ -143,8 +143,8 @@ public class BirimIcerikSablonuTest extends BaseTest {
                 , "Birim şablonları tablosunda boş adı ile kayıt bulunmamalı");*/
     }
 
-    @Test(description = "TC1084: Şablon adı kayıtlı ise oluşturmamalı", enabled = false, priority = 5)
-    public void tc1084e() {
+    @Test(description = "TS1084: Şablon adı kayıtlı ise oluşturmamalı", enabled = false, priority = 5)
+    public void TS1084e() {
         login(optiim);
         birimIcerikSablonlarPage = new BirimIcerikSablonlarPage().openPage();
 
@@ -161,12 +161,12 @@ public class BirimIcerikSablonuTest extends BaseTest {
                 .dikkatOlmali("Daha önce tanımlanmış şablon ismi ile aynı isimli şablon tanımlanamaz!");
 
         //Database'dan kontrol yapılmalı
-        /*Assert.assertEquals(birimIcerikSablonlarPage.sablonExistCountInTable(sablonAdi), 1
+        /*Assert.assertEquals(birimIcerikSablonlarPage.sablonExisTSountInTable(sablonAdi), 1
                 , "Birim şablonları tablosunda bulunmamalı");*/
     }
 
-    @Test(description = "TC1082: Yeni şablon oluştur (Alt birimler görsün)", enabled = true, priority = 6)
-    public void tc1082() {
+    @Test(description = "TS1082: Yeni şablon oluştur (Alt birimler görsün)", enabled = true, priority = 6)
+    public void TS1082() {
         login(optiim);
         sablonAdi_1082 = "SABLON_" + getSysDate();
 //        String altBirimler = "ALT BİRİMLER GÖRSÜN";
@@ -188,13 +188,13 @@ public class BirimIcerikSablonuTest extends BaseTest {
                 .islemMesaji().basariliOlmali();
     }
 
-    @Test(description = "TC1082: Yeni şablon (Alt birimler görsün) Evrak Oluşturmada kullan"
-            , dependsOnMethods = {"tc1082"}, enabled = true
+    @Test(description = "TS1082: Yeni şablon (Alt birimler görsün) Evrak Oluşturmada kullan"
+            , dependsOnMethods = {"TS1082"}, enabled = true
             , priority = 7)
-    public void tc1082_kontrol() {
+    public void TS1082_kontrol() {
         login(optiim4);
 
-        String konu = "TC1082_" + getSysDate();
+        String konu = "TS1082_" + getSysDate();
         olurYazisiOlusturPage = page(OlurYazisiOlusturPage.class).openPage();
 //        olurYazisiOlusturPage = new OlurYazisiOlusturPage().openPage();
         TextEditor editor = olurYazisiOlusturPage.editorTabAc().getEditor();
@@ -221,9 +221,9 @@ public class BirimIcerikSablonuTest extends BaseTest {
         imzaBekleyenlerPage.islemMesaji().basariliOlmali();
     }
 
-    @Test(description = "TC1085: Yeni şablon oluştur (Alt birimler görmesin)", priority = 8)
+    @Test(description = "TS1085: Yeni şablon oluştur (Alt birimler görmesin)", priority = 8)
     @Description("Yeni şablon \"Alt birimler görmesin\" olarak oluştur")
-    public void tc1085() {
+    public void TS1085() {
         login(optiim);
 
         String sablonAdi = "SABLON_" + getSysDate();
@@ -253,10 +253,10 @@ public class BirimIcerikSablonuTest extends BaseTest {
         this.sablonAdi = sablonAdi;
     }
 
-    @Test(description = "TC1085: alt biriminde görünmemeli",
-            dependsOnMethods = {"tc1085"}, enabled = true, priority = 9)
-    @Description("TC1085'da oluşturulan şablon alt biriminde görünmemeli")
-    public void tc1085_kontrolAltbirim() {
+    @Test(description = "TS1085: alt biriminde görünmemeli",
+            dependsOnMethods = {"TS1085"}, enabled = true, priority = 9)
+    @Description("TS1085'da oluşturulan şablon alt biriminde görünmemeli")
+    public void TS1085_kontrolAltbirim() {
         login(optiim4);
         evrakOlusturPage = new EvrakOlusturPage().openPage();
         TextEditor editor = evrakOlusturPage.editorTabAc().getEditor();
@@ -264,10 +264,10 @@ public class BirimIcerikSablonuTest extends BaseTest {
         editorTabOntanimliSablonuOlmadigi();
     }
 
-    @Test(description = "TC1085: farklı biriminde görünmemeli", dependsOnMethods = {"tc1085"}
+    @Test(description = "TS1085: farklı biriminde görünmemeli", dependsOnMethods = {"TS1085"}
             , enabled = true, priority = 9)
-    @Description("TC1085'da oluşturulan şablon farklı biriminde görünmemeli")
-    public void tc1085_kontrolFarkliBirim() {
+    @Description("TS1085'da oluşturulan şablon farklı biriminde görünmemeli")
+    public void TS1085_kontrolFarkliBirim() {
         login(user1);
         evrakOlusturPage = new EvrakOlusturPage().openPage();
         TextEditor editor = evrakOlusturPage.editorTabAc().getEditor();
@@ -275,12 +275,12 @@ public class BirimIcerikSablonuTest extends BaseTest {
         editorTabOntanimliSablonuOlmadigi();
     }
 
-    @Test(description = "TC1085: yaratılan biriminde seçilebilir olmalı ve !Olur Yazisi Olustur sayfada görünmemeli"
-            , dependsOnMethods = {"tc1085"}, enabled = true
+    @Test(description = "TS1085: yaratılan biriminde seçilebilir olmalı ve !Olur Yazisi Olustur sayfada görünmemeli"
+            , dependsOnMethods = {"TS1085"}, enabled = true
             , priority = 10)
-    public void tc1085_kontrol_birim() throws InterruptedException {
+    public void TS1085_kontrol_birim() throws InterruptedException {
         login(optiim);
-        String konu = "TC1085_" + getSysDate();
+        String konu = "TS1085_" + getSysDate();
         EvrakOlusturPage evrakOlusturPage = new EvrakOlusturPage().openPage();
         TextEditor editor = evrakOlusturPage.editorTabAc().getEditor();
         editor.toolbarButton("Öntanımlı İçerik Şablonu Kullan", true);
@@ -300,8 +300,8 @@ public class BirimIcerikSablonuTest extends BaseTest {
         editorTabOntanimliSablonuOlmadigi();
     }
 
-    @Test(enabled = true, description = "TC1079: Şablon güncelleme", dependsOnMethods = {"tc1085"}, priority = 11)
-    public void tc1079() {
+    @Test(enabled = true, description = "TS1079: Şablon güncelleme", dependsOnMethods = {"TS1085"}, priority = 11)
+    public void TS1079() {
         login();
         birimIcerikSablonlarPage = new BirimIcerikSablonlarPage().openPage();
         SelenideElement sablonRow = birimIcerikSablonlarPage.findSablonRowInTable(sablonAdi);
@@ -322,10 +322,10 @@ public class BirimIcerikSablonuTest extends BaseTest {
         birimIcerikSablonlarPage.kaydet().islemMesaji().basariliOlmali();
     }
 
-    @Test(enabled = true, description = "TC1079: Şablon güncellendiğini kontrolü"
-            , dependsOnMethods = {"tc1079"}
+    @Test(enabled = true, description = "TS1079: Şablon güncellendiğini kontrolü"
+            , dependsOnMethods = {"TS1079"}
             , priority = 12)
-    public void tc1079_kontrol() {
+    public void TS1079_kontrol() {
         login(optiim4);
         birimIcerikSablonlarPage = new BirimIcerikSablonlarPage().openPage();
         SelenideElement sablonRow = birimIcerikSablonlarPage.findSablonRowInTable(sablonAdi_1079);
@@ -338,14 +338,14 @@ public class BirimIcerikSablonuTest extends BaseTest {
                 .kaydet().islemMesaji().dikkatOlmali("Üst birim şablonuna işlem yapılamaz!");
     }
 
-    @Test(enabled = true, description = "Şablonu sil", dependsOnMethods = {"tc1079_kontrol"}, priority = 13)
+    @Test(enabled = true, description = "Şablonu sil", dependsOnMethods = {"TS1079_kontrol"}, priority = 13)
     public void sablonSil() {
         login();
         birimIcerikSablonlarPage = new BirimIcerikSablonlarPage().openPage();
         birimIcerikSablonlarPage.sablonuSil(sablonAdi_1079);
     }
 
-    /*@Test(description = "Şablonları sil", dependsOnMethods = {"tc1085"}, priority = 13)
+    /*@Test(description = "Şablonları sil", dependsOnMethods = {"TS1085"}, priority = 13)
     public void sablonSil2() {
         login();
         birimIcerikSablonlarPage = new BirimIcerikSablonlarPage().openPage();

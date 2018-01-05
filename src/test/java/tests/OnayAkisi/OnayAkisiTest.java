@@ -41,8 +41,8 @@ public class OnayAkisiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC1900: Evrak oluşturma ekranından kayıtlı onay akışı güncelleme")
-    public void TC1900() {
+    @Test(enabled = true, description = "TS1900: Evrak oluşturma ekranından kayıtlı onay akışı güncelleme")
+    public void TS1900() {
 
         String ad = "Yaşar Yaşamaz";
         String kullanici1 = "Mehmet BOZDEMİR";
@@ -74,10 +74,10 @@ public class OnayAkisiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC1897a: Varsayılan onay akışının pasif edilmesi")
-    public void TC1897a() {
+    @Test(enabled = true, description = "TS1897a: Varsayılan onay akışının pasif edilmesi")
+    public void TS1897a() {
 
-        String kullanici = "TC1897 OnayAkisi";
+        String kullanici = "TS1897 OnayAkisi";
         String basariMesaji = "İşlem başarılıdır!";
 
         //tests.Data kontrolu için yazıldı. Pasif ise aktif yapılır.
@@ -137,10 +137,10 @@ public class OnayAkisiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC1897b: Onay akışı varsayılan yapma")
-    public void TC1897b() {
+    @Test(enabled = true, description = "TS1897b: Onay akışı varsayılan yapma")
+    public void TS1897b() {
 
-        String kullanici = "TC1897 OnayAkisi";
+        String kullanici = "TS1897 OnayAkisi";
         String basariMesaji = "İşlem başarılıdır!";
 
         //tests.Data kontrolu için yazıldı. Pasif ise aktif yapılır.
@@ -176,8 +176,8 @@ public class OnayAkisiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC1901a: Son imza seviyesi kısıtlı ise hiyerarşik onay akışı kullanma (yazışma kuralları yönetimi)")
-    public void TC1901a() {
+    @Test(enabled = true, description = "TS1901a: Son imza seviyesi kısıtlı ise hiyerarşik onay akışı kullanma (yazışma kuralları yönetimi)")
+    public void TS1901a() {
 
         //Optiim TEST7, Optiim TEST6 ya
         String onayAkisi = "Vekaletli Kullanici";
@@ -205,8 +205,8 @@ public class OnayAkisiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC1901b: Hiyararşik onay akışı kullanma- Vekaletli")
-    public void TC1901b() {
+    @Test(enabled = true, description = "TS1901b: Hiyararşik onay akışı kullanma- Vekaletli")
+    public void TS1901b() {
 
         //Optiim TEST7, Optiim TEST6 ya
         String onayAkisi = "Vekaletli Kullanici";
@@ -233,8 +233,8 @@ public class OnayAkisiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC1896: Onay akışı güncelleme")
-    public void TC1896() throws InterruptedException {
+    @Test(enabled = true, description = "TS1896: Onay akışı güncelleme")
+    public void TS1896() throws InterruptedException {
 
         String onayAkisi = "Sezaiii Çelikkk";
         String kullanici = "Zübeyde TEKİN";
@@ -312,8 +312,8 @@ public class OnayAkisiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC1895a: Vekaleti olan kullanıcıyı onay akışına ekleme")
-    public void TC1895a() {
+    @Test(enabled = true, description = "TS1895a: Vekaleti olan kullanıcıyı onay akışına ekleme")
+    public void TS1895a() {
 
         //Sistemde vekaleti olan bir kullanıcı olmalı
         //Optiim TEST7, Optiim TEST6 ya
@@ -371,8 +371,8 @@ public class OnayAkisiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC1895b: Vekaleti olan kullanıcının vekilini onay akışına ekleme")
-    public void TC1895b() {
+    @Test(enabled = true, description = "TS1895b: Vekaleti olan kullanıcının vekilini onay akışına ekleme")
+    public void TS1895b() {
 
         //Sistemde vekaleti olan bir kullanıcı olmalı
         //Optiim TEST7, Optiim TEST6 ya
@@ -431,8 +431,8 @@ public class OnayAkisiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC1892a: Onay akışı güncellemede alan kontrolleri")
-    public void TC1892a() {
+    @Test(enabled = true, description = "TS1892a: Onay akışı güncellemede alan kontrolleri")
+    public void TS1892a() {
 
         String onayAkisi = "OptiimTest" + getSysDate();
         String baskaKullanicininKaydettigiOnayAkisi = "SezaiÇelik" + getSysDate();
@@ -523,8 +523,8 @@ public class OnayAkisiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC1892b: Onay akışı kaydetmede alan kontrolleri")
-    public void TC1892b() {
+    @Test(enabled = true, description = "TS1892b: Onay akışı kaydetmede alan kontrolleri")
+    public void TS1892b() {
 
         String onayAkisi = "OptiimTest" + getSysDate();
         String baskaKullanicininKaydettigiOnayAkisi = "SezaiÇelik" + getSysDate();
@@ -613,8 +613,8 @@ public class OnayAkisiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC2110: Onay Akışı Yönetimi - Yeni Onay Akışı Oluşturma ve evrak üzerinde kontrolü")
-    public void TC2110() {
+    @Test(enabled = true, description = "TS2110: Onay Akışı Yönetimi - Yeni Onay Akışı Oluşturma ve evrak üzerinde kontrolü")
+    public void TS2110() {
 
         String onayAkisi = "ÇelikSezai" + getSysDate();
         String defaultGelenKullanici = "Optiim TEST";
@@ -682,10 +682,10 @@ public class OnayAkisiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC2111: Onay Akışı Yönetimi - Kayıtlı Onay Akışını kullanım sırasında anlık değiştirme")
-    public void TC2111() {
+    @Test(enabled = true, description = "TS2111: Onay Akışı Yönetimi - Kayıtlı Onay Akışını kullanım sırasında anlık değiştirme")
+    public void TS2111() {
 
-        String onayAkisi = "TC2111 Onay Akisi"; //parafçı, kontrolcu, koordinecisi ve imzacısı olmalı.
+        String onayAkisi = "TS2111 Onay Akisi"; //parafçı, kontrolcu, koordinecisi ve imzacısı olmalı.
         String kullanici1 = "Optiim TEST"; //parafçı
         String kullanici2 = "Zübeyde TEKİN"; //koordineci
         String kullanici3 = "Sezai ÇELİK"; //kontrolcu

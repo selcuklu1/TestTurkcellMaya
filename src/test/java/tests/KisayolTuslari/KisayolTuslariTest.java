@@ -32,8 +32,8 @@ public class KisayolTuslariTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC1952: Kısayol tuşları kullanarak Olur Oluştur ekranını açma")
-    public void TC1952a() throws InterruptedException {
+    @Test(enabled = true, description = "TS1952: Kısayol tuşları kullanarak Olur Oluştur ekranını açma")
+    public void TS1952a() throws InterruptedException {
 
         String sayfaAdi = "Olur Yazısı Oluştur";
         String kisayol = Keys.LEFT_SHIFT + "o";
@@ -42,8 +42,8 @@ public class KisayolTuslariTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC1952: Kısayol tuşları kullanarak Kullanıcı Yönetimi ekranını açma")
-    public void TC1952b() throws InterruptedException {
+    @Test(enabled = true, description = "TS1952: Kısayol tuşları kullanarak Kullanıcı Yönetimi ekranını açma")
+    public void TS1952b() throws InterruptedException {
 
         String sayfaAdi = "Kullanıcı Yönetimi";
         String kisayol = Keys.LEFT_SHIFT + "u";
@@ -52,8 +52,8 @@ public class KisayolTuslariTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC1952: Kısayol tuşları kullanarak Giden Evrak Kayıt ekranını açma")
-    public void TC1952c() throws InterruptedException {
+    @Test(enabled = true, description = "TS1952: Kısayol tuşları kullanarak Giden Evrak Kayıt ekranını açma")
+    public void TS1952c() throws InterruptedException {
 
         String sayfaAdi = "Giden Evrak Kayıt";
         String kisayol = Keys.LEFT_SHIFT + "ı";
@@ -62,8 +62,8 @@ public class KisayolTuslariTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC1952: Kısayol tuşları kullanarak Evrak Oluştur ekranını açma")
-    public void TC1952e() throws InterruptedException {
+    @Test(enabled = true, description = "TS1952: Kısayol tuşları kullanarak Evrak Oluştur ekranını açma")
+    public void TS1952e() throws InterruptedException {
 
         String sayfaAdi = "Evrak Oluştur";
         String kisayol = Keys.LEFT_SHIFT + "e";
@@ -72,8 +72,8 @@ public class KisayolTuslariTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC1952: Kısayol tuşları kullanarak Evrak Arama ekranını açma")
-    public void TC1952f() throws InterruptedException {
+    @Test(enabled = true, description = "TS1952: Kısayol tuşları kullanarak Evrak Arama ekranını açma")
+    public void TS1952f() throws InterruptedException {
 
         String sayfaAdi = "Evrak Arama";
         String kisayol = Keys.LEFT_SHIFT + "a";
@@ -82,8 +82,8 @@ public class KisayolTuslariTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC1952: Kısayol tuşları kullanarak Genel Evrak Raporu ekranını açma")
-    public void TC1952g() throws InterruptedException {
+    @Test(enabled = true, description = "TS1952: Kısayol tuşları kullanarak Genel Evrak Raporu ekranını açma")
+    public void TS1952g() throws InterruptedException {
 
         String sayfaAdi = "Genel Evrak Raporu";
         String kisayol = Keys.LEFT_SHIFT + "n";
@@ -92,8 +92,8 @@ public class KisayolTuslariTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC1952: Kısayol tuşları kullanarak Gelen Evrak Kayıt ekranını açma")
-    public void TC1952h() throws InterruptedException {
+    @Test(enabled = true, description = "TS1952: Kısayol tuşları kullanarak Gelen Evrak Kayıt ekranını açma")
+    public void TS1952h() throws InterruptedException {
 
         String sayfaAdi = "Gelen Evrak Kayıt";
         String kisayol = Keys.LEFT_SHIFT + "g";
@@ -102,8 +102,8 @@ public class KisayolTuslariTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC1952: Kısayol tuşları kullanarak Karar Yazısı Oluştur ekranını açma")
-    public void TC1952i() throws InterruptedException {
+    @Test(enabled = true, description = "TS1952: Kısayol tuşları kullanarak Karar Yazısı Oluştur ekranını açma")
+    public void TS1952i() throws InterruptedException {
 
         String sayfaAdi = "Karar Yazısı Oluştur";
         String kisayol = Keys.LEFT_SHIFT + "k";
@@ -112,8 +112,8 @@ public class KisayolTuslariTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC1955: Kısayol Tuşlarının Tooltipleri")
-    public void TC1955() throws InterruptedException {
+    @Test(enabled = true, description = "TS1955: Kısayol Tuşlarının Tooltipleri")
+    public void TS1955() throws InterruptedException {
 
         mainPage
                 .ustMenuEvrakIslemleriAc()
@@ -131,8 +131,8 @@ public class KisayolTuslariTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC1952: Kısayol tuşları kullanarak Personel ve Açık Evrak İstatistiği ekranını açma")
-    public void TC1952d() throws InterruptedException {
+    @Test(enabled = true, description = "TS1952: Kısayol tuşları kullanarak Personel ve Açık Evrak İstatistiği ekranını açma")
+    public void TS1952d() throws InterruptedException {
 
         String sayfaAdi = "Personel ve Açık Evrak İstatistiği";
         String kisayol = Keys.LEFT_SHIFT + "p";

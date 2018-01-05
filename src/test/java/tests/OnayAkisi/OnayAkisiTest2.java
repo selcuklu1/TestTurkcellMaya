@@ -42,11 +42,11 @@ public class OnayAkisiTest2 extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC2112PasifYapma: Onay Akışı Yönetimi - Aktif/Pasif Yapma ve Varsayılan Yapma")
-    public void TC2112PasifYapma() throws InterruptedException {
+    @Test(enabled = true, description = "TS2112PasifYapma: Onay Akışı Yönetimi - Aktif/Pasif Yapma ve Varsayılan Yapma")
+    public void TS2112PasifYapma() throws InterruptedException {
 
         String onayAkisAdi = "Optiim";
-        String kullanici = "TC2112 OnayAkisi";
+        String kullanici = "TS2112 OnayAkisi";
         String basariMesaji = "İşlem başarılıdır!";
 
         //tests.Data kontrolu için yazıldı. Pasif ise aktif yapılır.
@@ -106,11 +106,11 @@ public class OnayAkisiTest2 extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC2112AktifYapma: Onay Akışı Yönetimi - Aktif/Pasif Yapma ve Varsayılan Yapma")
-    public void TC2112AktifYapma() {
+    @Test(enabled = true, description = "TS2112AktifYapma: Onay Akışı Yönetimi - Aktif/Pasif Yapma ve Varsayılan Yapma")
+    public void TS2112AktifYapma() {
 
         String onayAkisAdi = "Optiim";
-        String kullanici = "TC2112 OnayAkisi";
+        String kullanici = "TS2112 OnayAkisi";
         String basariMesaji = "İşlem başarılıdır!";
 
         //tests.Data kontrolu için yazıldı. Pasif ise aktif yapılır.

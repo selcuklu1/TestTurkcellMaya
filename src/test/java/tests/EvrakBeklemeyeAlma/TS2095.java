@@ -25,7 +25,7 @@ import static com.codeborne.selenide.Selenide.$x;
  */
 
 @Feature("Evrakı Beklemeye Alma")
-public class TC2095 extends BaseTest {
+public class TS2095 extends BaseTest {
 
     //    data.User user1 = new data.User("user1", "123", "User1 TEST");
     User user1 = new User("optiim", "123", "Optiim TEST");
@@ -34,8 +34,8 @@ public class TC2095 extends BaseTest {
 
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(description = "TC2095: Evrakı beklemeye alma ve imzalama")
-    public void TC2095_1_imza() {
+    @Test(description = "TS2095: Evrakı beklemeye alma ve imzalama")
+    public void TS2095_1_imza() {
 
         String konu = evrakOlustur();
 
@@ -57,8 +57,8 @@ public class TC2095 extends BaseTest {
     }
 
     @Severity(SeverityLevel.MINOR)
-    @Test(description = "TC2095: Paraf, Gelen, Postalanacak bekleyen evarkalar \"Beklemeye Al\" butonun gelmediği görülür", enabled = true)
-    public void TC2095_2() throws Exception {
+    @Test(description = "TS2095: Paraf, Gelen, Postalanacak bekleyen evarkalar \"Beklemeye Al\" butonun gelmediği görülür", enabled = true)
+    public void TS2095_2() throws Exception {
 
         login(ztekin);
 
@@ -73,50 +73,50 @@ public class TC2095 extends BaseTest {
     }
 
     @Severity(SeverityLevel.MINOR)
-    @Test(description = "TC2095: Paraf bekleyen evarkalarda \"Beklemeye\" al butonun gelmediği görülür", enabled = true)
-    public void TC2095_3_parafla() throws Exception {
+    @Test(description = "TS2095: Paraf bekleyen evarkalarda \"Beklemeye\" al butonun gelmediği görülür", enabled = true)
+    public void TS2095_3_parafla() throws Exception {
         login(ztekin);
         new ParafBekleyenlerPage().openPage();
         ilkDokumaniSecBeklemeyeAlBulunmamali();
     }
 
     @Severity(SeverityLevel.MINOR)
-    @Test(description = "TC2095: Gelen evarkalarda \"Beklemeye\" al butonun gelmediği görülür", enabled = true)
-    public void TC2095_4_gelen() throws Exception {
+    @Test(description = "TS2095: Gelen evarkalarda \"Beklemeye\" al butonun gelmediği görülür", enabled = true)
+    public void TS2095_4_gelen() throws Exception {
         login(ztekin);
         new GelenEvraklarPage().openPage();
         ilkDokumaniSecBeklemeyeAlBulunmamali();
     }
 
     @Severity(SeverityLevel.MINOR)
-    @Test(description = "TC2095: Postalanacak evarkalarda \"Beklemeye\" al butonun gelmediği görülür", enabled = true)
-    public void TC2095_5_postalanacak() throws Exception {
+    @Test(description = "TS2095: Postalanacak evarkalarda \"Beklemeye\" al butonun gelmediği görülür", enabled = true)
+    public void TS2095_5_postalanacak() throws Exception {
         login(ztekin);
         new PostalanacakEvraklarPage().openPage();
         ilkDokumaniSecBeklemeyeAlBulunmamali();
     }
 
     @Step("Seçilen evrakta \"Beklemeye Al\" butonun gelmediği görülür")
-    public TC2095 ilkDokumaniSecBeklemeyeAlBulunmamali() {
+    public TS2095 ilkDokumaniSecBeklemeyeAlBulunmamali() {
         filtrelerPage.getSearchRows().shouldHave(sizeGreaterThan(0)).first().click();
         beklemeyeAlNotVisible();
         return this;
     }
 
     @Step("Dokumanı bulunmalı")
-    public TC2095 dokumanBulunmali(String konu) {
+    public TS2095 dokumanBulunmali(String konu) {
         filtrelerPage.findRowsWith(text(konu)).shouldHaveSize(1);
         return this;
     }
 
     @Step("Dokumanı ara ve seç")
-    public TC2095 dokumaniAraVeSec(String konu) {
+    public TS2095 dokumaniAraVeSec(String konu) {
         filtrelerPage.findRowsWith(text(konu)).shouldHaveSize(1).first().click();
         return this;
     }
 
     @Step("Dokumanı bulunamamalı")
-    public TC2095 dokumanBulunmamali(String konu) {
+    public TS2095 dokumanBulunmamali(String konu) {
         filtrelerPage.findRowsWith(text(konu)).shouldHaveSize(0);
         return this;
     }
@@ -127,20 +127,20 @@ public class TC2095 extends BaseTest {
     }
 
     @Step("Beklemeye Al butona tıkla")
-    public TC2095 beklemeyeAlButonaTikla() {
+    public TS2095 beklemeyeAlButonaTikla() {
         beklemeyeAlButton().click();
         return this;
     }
 
     @Step("Beklemeye Al butonu gelmediği görülür")
-    public TC2095 beklemeyeAlNotVisible() {
+    public TS2095 beklemeyeAlNotVisible() {
         takeScreenshot();
         beklemeyeAlButton().shouldNotBe(visible);
         return this;
     }
 
     @Step("Uyarı Messajı: Evrakı beklemeye almak istediğinize emin misiniz? Evet")
-    public TC2095 beklemeyeAlOnayMessage(boolean evet) {
+    public TS2095 beklemeyeAlOnayMessage(boolean evet) {
         if (evet) {
             $("#mainInboxForm\\:beklemeyeAlEvetButton").shouldBe(visible);
             $("#mainInboxForm\\:beklemeyeAlEvetButton").pressEnter();
@@ -165,7 +165,7 @@ public class TC2095 extends BaseTest {
 
         EvrakOlusturPage evrakOlustur = new EvrakOlusturPage();
 
-        String konu = "TC2095_" + getSysDate();
+        String konu = "TS2095_" + getSysDate();
         login(user1);
         EvrakOlusturPage.BilgilerTab tab = evrakOlustur
                 .openPage()
@@ -177,7 +177,7 @@ public class TC2095 extends BaseTest {
                 .evrakDerecesiSec(evrakDerecesi)
                 .evrakSayiEkMetniDoldur(evrakSayiEkMetni)
                 .ivediSec(ivedilik)
-                /*$("span[id$='miatCalendar'] button[class~='ui-datepicker-trigger']").click();
+                /*$("span[id$='miaTSalendar'] button[class~='ui-datepicker-trigger']").click();
                 String dayOfMonth =  String.valueOf(LocalDateTime.now().getDayOfMonth());
                 $("div[id='ui-datepicker-div']").$(By.linkText(dayOfMonth)).click();*/
                 .geregiSecimTipiSec(geregiSecimBirim)

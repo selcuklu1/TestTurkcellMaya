@@ -44,14 +44,14 @@ public class PulYonetimiTest extends BaseTest {
     String gizlilikDerecesi = "Normal";
     String ivedilik = "Normal";
     String geregi = "Ahmet ÇELİK";
-    String konu = "TC2214 " + getSysDate();
+    String konu = "TS2214 " + getSysDate();
     String tur = "İmzalama";
     String geregiTipi = "Gerçek Kişi";
     String basariMesaji = "İşlem başarılıdır!";
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC1732: Pul Yönetimi ekranından yeni tanımlama yapma")
-    public void TC1732() throws InterruptedException {
+    @Test(enabled = true, description = "TS1732: Pul Yönetimi ekranından yeni tanımlama yapma")
+    public void TS1732() throws InterruptedException {
 
         login("mbozdemir", "123");
         String basariMesaji = "İşlem başarılıdır!";
@@ -95,11 +95,11 @@ public class PulYonetimiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC2215 : Pul yönetimi ekranındaki tanımın posta listesinde kontrolü")
-    public void TC2215() throws InterruptedException {
+    @Test(enabled = true, description = "TS2215 : Pul yönetimi ekranındaki tanımın posta listesinde kontrolü")
+    public void TS2215() throws InterruptedException {
 
         login("mbozdemir", "123");
-//        String konu = "TC2214 20180102112101";
+//        String konu = "TS2214 20180102112101";
         String postaListesi = konu;
         String gidisSekli = "Ankara İçi APS";
         String gramaj1 = "1";
@@ -184,15 +184,15 @@ public class PulYonetimiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC2214 : Pul yönetimi ekranındaki tanımın postalanacaklar listesinde kontrolü")
-    public void TC2214() throws InterruptedException {
+    @Test(enabled = true, description = "TS2214 : Pul yönetimi ekranındaki tanımın postalanacaklar listesinde kontrolü")
+    public void TS2214() throws InterruptedException {
 
         login("yakyol", "123");
 
         String gramaj = "1";
         String gramaj1 = "3";
         String gramaj2 = "5";
-        String konu = "TC2214 20180102113202";
+        String konu = "TS2214 20180102113202";
 
         // test datası oluşturuluyor
         evrakOlusturPage

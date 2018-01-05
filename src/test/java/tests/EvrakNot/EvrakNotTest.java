@@ -73,13 +73,13 @@ public class EvrakNotTest extends BaseTest {
     }
 
     //Bitmedi
-    @Test(enabled = false, description = "TC2026: Evrak Önizleme - Evrak Notları Post-it")
-    public void tc2026() throws Exception {
+    @Test(enabled = false, description = "TS2026: Evrak Önizleme - Evrak Notları Post-it")
+    public void TS2026() throws Exception {
 
         PostalanacakEvraklarPage postalanacakEvraklarPage = new PostalanacakEvraklarPage();
         EvrakOnizleme.Notlari notlar = new EvrakOnizleme().new Notlari();
         UstYazi ustYazi = new UstYazi();
-        String konu = "TC2026" + getSysDate();
+        String konu = "TS2026" + getSysDate();
         String[][] notes = {{"Genel", "Açıklama1", "", ""}
                 , {"Kişisel", "Açıklama2", "", ""}
                 , {"Genel", "Açıklama3", "", ""}};
@@ -87,8 +87,8 @@ public class EvrakNotTest extends BaseTest {
         evrakOlusturVeImzala(user1, konu, notes);
     }
 
-    @Test(enabled = true, description = "TC2091: Not Oluşturma - Evrak Oluşturma da Kişisel ve Genel Not oluşturma")
-    public void tc2091() {
+    @Test(enabled = true, description = "TS2091: Not Oluşturma - Evrak Oluşturma da Kişisel ve Genel Not oluşturma")
+    public void TS2091() {
         int maxLength = 400;
 
         String notTipi1 = "Genel", aciklama1 = createTextWith(maxLength);
@@ -121,8 +121,8 @@ public class EvrakNotTest extends BaseTest {
         logout();
     }
 
-    @Test(enabled = true, description = "TC2092: Not Oluşturma - Olur/Takrir Yazısı Oluşturma da Kişisel ve Genel Not oluşturma")
-    public void tc2092() throws Exception {
+    @Test(enabled = true, description = "TS2092: Not Oluşturma - Olur/Takrir Yazısı Oluşturma da Kişisel ve Genel Not oluşturma")
+    public void TS2092() throws Exception {
         String notTipi, aciklama;
 
         OlurYazisiOlusturPage page = new OlurYazisiOlusturPage();
@@ -151,8 +151,8 @@ public class EvrakNotTest extends BaseTest {
         //clearCookies();
     }
 
-    @Test(enabled = true, description = "TC2093: Not Oluşturma - Karar Yazısı Oluşturma da Kişisel ve Genel Not oluşturma")
-    public void tc2093() {
+    @Test(enabled = true, description = "TS2093: Not Oluşturma - Karar Yazısı Oluşturma da Kişisel ve Genel Not oluşturma")
+    public void TS2093() {
 
         String notTipi, aciklama, date, time;
         SelenideElement note;
@@ -189,9 +189,9 @@ public class EvrakNotTest extends BaseTest {
         logout();
     }
 
-    @Test(enabled = true, description = "TC2155: Not İzleme - Evrak Notunun Taslak evraklarda izlenmesi")
-//, dependsOnMethods = {"tc2091"})
-    public void tc2155() throws InterruptedException {
+    @Test(enabled = true, description = "TS2155: Not İzleme - Evrak Notunun Taslak evraklarda izlenmesi")
+//, dependsOnMethods = {"TS2091"})
+    public void TS2155() throws InterruptedException {
         EvrakOlusturPage page = new EvrakOlusturPage();
         TaslakEvraklarPage taslakEvraklarPage = new TaslakEvraklarPage();
         EvrakNot evrakNot = new EvrakNot();
@@ -204,7 +204,7 @@ public class EvrakNotTest extends BaseTest {
         takeScreenshot();
 
         //------------------------------------
-        konu = "TC2155_" + getSysDate();
+        konu = "TS2155_" + getSysDate();
         System.out.println("Konu: " + konu);
 
         evrakOlusturVeKaydet(page, konu);
@@ -213,7 +213,7 @@ public class EvrakNotTest extends BaseTest {
         taslakEvraklarPage.openPage();
         SelenideElement evrak = evragiBul(konu);
         evrak.click();
-        notlar.notlariKontolEtLogoVeRenk(newNotes, "tccbLogo.png");
+        notlar.notlariKontolEtLogoVeRenk(newNotes, "TScbLogo.png");
 
 
         ustYazi.evrakNotlariTabiAc().notlariKontolEt(newNotes);
@@ -224,8 +224,8 @@ public class EvrakNotTest extends BaseTest {
         logout();
     }
 
-    @Test(enabled = true, description = "TC2160: Not İzleme - Evrak Notunun Paraf bekleneler, Parafladıklarım, İmza Bekleyenler ve İmzaladıklarım ekranlarında izlenmesi", dependsOnMethods = {"tc2155"})
-    public void tc2160() {
+    @Test(enabled = true, description = "TS2160: Not İzleme - Evrak Notunun Paraf bekleneler, Parafladıklarım, İmza Bekleyenler ve İmzaladıklarım ekranlarında izlenmesi", dependsOnMethods = {"TS2155"})
+    public void TS2160() {
         UstYazi ustYazi = new UstYazi();
         TaslakEvraklarPage taslakEvraklarPage = new TaslakEvraklarPage();
         ParafladiklarimPage parafladiklarimPage = new ParafladiklarimPage();
@@ -241,7 +241,7 @@ public class EvrakNotTest extends BaseTest {
         parafladiklarimPage.openPage();
         SelenideElement evrak = evrak = evragiBul(konu);
         evrak.click();
-        notlar.notlariKontolEtLogoVeRenk(newNotes, "tccbLogo.png");
+        notlar.notlariKontolEtLogoVeRenk(newNotes, "TScbLogo.png");
         notlar.evrakNotlariDialoguKapat();
 
         ustYazi.evrakNotlariTabiAc().notlariKontolEt(newNotes);
@@ -277,7 +277,7 @@ public class EvrakNotTest extends BaseTest {
 
         icerikGoster = evrak.$(imzaBekleyenlerPage.filter().icerikGoster());
         icerikGoster.click();
-        evrakNot.getCreatedNotes().shouldHaveSize(2);
+        evrakNot.geTSreatedNotes().shouldHaveSize(2);
         evrakNot.notlariKontrolEt(newNotesGenel);
 
         newNotesGenel.add(0, new String[]{"Genel", "Açıklama5", "", ""});
@@ -299,7 +299,7 @@ public class EvrakNotTest extends BaseTest {
         notlar.notlariKontolEt(newNotesGenel);
 
         ustYazi.evrakNotlariTabiAc();
-        ustYazi.getCreatedNotes().shouldHaveSize(newNotesGenel.size());
+        ustYazi.geTSreatedNotes().shouldHaveSize(newNotesGenel.size());
         ustYazi.notlariVeButonlariKontolEt(newNotesGenel, newNotesGenel.get(0)[1]);
 
         //Delete note
@@ -324,14 +324,14 @@ public class EvrakNotTest extends BaseTest {
         imzaBekleyenlerPage.evrakImzala().islemMesaji().basariliOlmali();
     }
 
-    @Test(enabled = true, description = "TC2162: Not İzleme - Evrak Notunun Postalanacak Evraklar ve Postananlar ekranlarında izlenmesi"
-            ,dependsOnMethods = {"tc2160"}
+    @Test(enabled = true, description = "TS2162: Not İzleme - Evrak Notunun Postalanacak Evraklar ve Postananlar ekranlarında izlenmesi"
+            ,dependsOnMethods = {"TS2160"}
     )
-    public void tc2162() throws Exception {
+    public void TS2162() throws Exception {
         PostalanacakEvraklarPage postalanacakEvraklarPage = new PostalanacakEvraklarPage();
         EvrakOnizleme.Notlari notlar = new EvrakOnizleme().new Notlari();
         UstYazi ustYazi = new UstYazi();
-        String konu = "TC2162_" + getSysDate();
+        String konu = "TS2162_" + getSysDate();
         System.out.println("Konu: " + konu);
 
         String[][] notes = {{"Genel", "Açıklama1", "", ""}, {"Kişisel", "Açıklama2", "", ""}, {"Genel", "Açıklama3", "", ""}};
@@ -346,7 +346,7 @@ public class EvrakNotTest extends BaseTest {
         evrak.click();
 
         String[][] genelNotes = {{"Genel", "Açıklama1", "", ""}, {"Genel", "Açıklama3", "", ""}};
-        notlar.notlariKontolEtLogoVeRenk(genelNotes, "tccbLogo.png");
+        notlar.notlariKontolEtLogoVeRenk(genelNotes, "TScbLogo.png");
 
         postalanacakEvraklarPage.evrakPostala()
                 .gidisSekli("E-Posta")
@@ -359,7 +359,7 @@ public class EvrakNotTest extends BaseTest {
         evrak = postalananlarPage.openPage().filter()
                 .findRowsWithToday(Condition.text(konu)).shouldHaveSize(1).first();
         evrak.click();
-        notlar.notlariKontolEtLogoVeRenk(genelNotes, "tccbLogo.png");
+        notlar.notlariKontolEtLogoVeRenk(genelNotes, "TScbLogo.png");
     }
 
     @Step("Postala")
@@ -389,7 +389,7 @@ public class EvrakNotTest extends BaseTest {
 
         EvrakOlusturPage.EditorTab editorTab = evrakOlusturPage
                 .editorTabAc()
-                .editorIcerikDoldur("TC2162")
+                .editorIcerikDoldur("TS2162")
                 .editorEvrakGeregiSec("YAZILIM GELİ");
 
         for (String[] note : notes) {
@@ -439,7 +439,7 @@ public class EvrakNotTest extends BaseTest {
                 .onayAkisiTitleKontrol("Yeni akış")
                 .onayAkisiDetailKontrol(user1.getName() + "-Paraflama / " + user2.getName() + "-İmzalama");
         page.kaydet();
-        $("#kaydetConfirmForm\\:kaydetEvetButton").click();
+        $("#kaydeTSonfirmForm\\:kaydetEvetButton").click();
         page.islemMesaji().basariliOlmali();
         $x("//form[@id='yeniGidenEvrakForm']/ancestor::div[starts-with(@id,'window') and contains(@id,'Dialog')]/div[contains(@class,'ui-dialog-titlebar')]/a[contains(@class,'ui-dialog-titlebar-close')]").click();
         $("#kapatKaydetEvetButton").click();
@@ -455,7 +455,7 @@ public class EvrakNotTest extends BaseTest {
                             , text(notes[i][1])
                             , text(notes[i][2])
                             , text(notes[i][3]));
-            Assert.assertTrue(notlar.kurumLogosu().contains("tccbLogo.png"), "Kurum logosu olmalı");
+            Assert.assertTrue(notlar.kurumLogosu().contains("TScbLogo.png"), "Kurum logosu olmalı");
 
             if (notes[i][0].equals("Kişisel"))
                 Assert.assertTrue(notlar.zeminRengiBeyaz(), "Kişisel notun arka plan beyaz");
@@ -517,10 +517,10 @@ public class EvrakNotTest extends BaseTest {
         @Step("Açıklama karakter sayısı kontrolü")
         public EvrakNot aciklamaKarakterSayisiKontrolu(int maxLength) {
 
-            int leftCount = getNumber($("span[id$='NotEkleDialogCounter']").text());
+            int lefTSount = getNumber($("span[id$='NotEkleDialogCounter']").text());
 
             SoftAssert sa = new SoftAssert();
-            sa.assertEquals(leftCount, maxLength, "Max karakter sayısı ");
+            sa.assertEquals(lefTSount, maxLength, "Max karakter sayısı ");
 
             String text = "";
             for (int i = 0; i < maxLength - (int) (Math.log10(maxLength) + 1); i++) {
@@ -528,8 +528,8 @@ public class EvrakNotTest extends BaseTest {
             }
             notEkleDialog.$("textarea").sendKeys(text + String.valueOf(maxLength));
 
-            leftCount = getNumber($("span[id$='NotEkleDialogCounter']").text());
-            sa.assertEquals(leftCount, 0, "Kalan karakter sayısı");
+            lefTSount = getNumber($("span[id$='NotEkleDialogCounter']").text());
+            sa.assertEquals(lefTSount, 0, "Kalan karakter sayısı");
 
             notEkleDialog.$("textarea").shouldHave(value(String.valueOf(maxLength)));
             notEkleDialog.$("textarea").sendKeys("*");
@@ -569,21 +569,21 @@ public class EvrakNotTest extends BaseTest {
             return this;
         }
 
-        public ElementsCollection getCreatedNotes() {
+        public ElementsCollection geTSreatedNotes() {
             $$("div[id*='evrakNotlariTable']>div").shouldHave(sizeGreaterThan(0)).last().shouldBe(visible);
             return $$("div[id*='evrakNotlariTable']>div");
         }
 
         @Step("Oluşturulan notu bul")
         public ElementsCollection olusturulanNot(String aciklamaText) {
-            ElementsCollection rows = getCreatedNotes();
+            ElementsCollection rows = geTSreatedNotes();
             return rows.filterBy(text(aciklamaText));
         }
 
         @Step("Oluşturulan notu bul")
         public ElementsCollection olusturulanNot(String olusturan, String notTipi, String aciklamaText) {
             notesDiv.shouldHave(text(aciklamaText));
-            ElementsCollection rows = getCreatedNotes();
+            ElementsCollection rows = geTSreatedNotes();
             return rows
                     .filterBy(text(olusturan))
                     .filterBy(text(notTipi))
@@ -593,9 +593,9 @@ public class EvrakNotTest extends BaseTest {
         @Step("Oluşturulan notu bul")
         public ElementsCollection olusturulanNot(String olusturan, String aciklamaText, String date, String time) {
             notesDiv.shouldBe(visible).shouldHave(text(aciklamaText));
-            ElementsCollection rows = getCreatedNotes();
+            ElementsCollection rows = geTSreatedNotes();
             for (int i = 0; i < 5; i++) {
-                rows = getCreatedNotes().filterBy(text(olusturan)).filterBy(text(aciklamaText))
+                rows = geTSreatedNotes().filterBy(text(olusturan)).filterBy(text(aciklamaText))
                         .filterBy(text(date)).filterBy(text(time));
                 if (rows.size() > 0)
                     break;
@@ -744,7 +744,7 @@ public class EvrakNotTest extends BaseTest {
             return olusturulanNot(olusturan, notTipi, aciklama, date, time).shouldHaveSize(1).first();
         }
 
-        public ElementsCollection getCreatedNotes() {
+        public ElementsCollection geTSreatedNotes() {
             $("tbody[id$='kisiselNotEkleDataTableId_data']").shouldHave(visible);
             $("tbody[id$='kisiselNotEkleDataTableId_data'] > tr[data-ri][role=row]").shouldBe(visible);
             ElementsCollection rows = $$("tbody[id$='kisiselNotEkleDataTableId_data'] > tr[data-ri][role=row]");
@@ -754,13 +754,13 @@ public class EvrakNotTest extends BaseTest {
 
         @Step("Oluşturulan notu bul")
         public ElementsCollection olusturulanNot(String aciklamaText) {
-            ElementsCollection rows = getCreatedNotes();
+            ElementsCollection rows = geTSreatedNotes();
             return rows.filterBy(text(aciklamaText));
         }
 
         @Step("Oluşturulan notu bul")
         public ElementsCollection olusturulanNot(String olusturan, String notTipi, String aciklamaText) {
-            ElementsCollection rows = getCreatedNotes();
+            ElementsCollection rows = geTSreatedNotes();
             return rows
                     .filterBy(text(olusturan))
                     .filterBy(text(notTipi))
@@ -770,7 +770,7 @@ public class EvrakNotTest extends BaseTest {
         @Step("Oluşturulan notu bul")
         public ElementsCollection olusturulanNot(String olusturan, String notTipi, String aciklamaText, String date, String time) {
 //            sleep(3000);
-            ElementsCollection rows = getCreatedNotes();
+            ElementsCollection rows = geTSreatedNotes();
             return rows
                     .filterBy(text(olusturan))
                     .filterBy(text(notTipi))
@@ -808,10 +808,10 @@ public class EvrakNotTest extends BaseTest {
             SelenideElement counter = $("span[id='evrakKisiselNotDialogFormId:aciklamaCounter']");
 
             counter.should(visible);
-            int leftCount = getNumber(counter.text());
+            int lefTSount = getNumber(counter.text());
 
             SoftAssert sa = new SoftAssert();
-            sa.assertEquals(leftCount, maxCount, "Max karakter sayısı");
+            sa.assertEquals(lefTSount, maxCount, "Max karakter sayısı");
 
             String text = "";
             for (int i = 0; i < maxCount - (int) (Math.log10(maxCount) + 1); i++) {
@@ -819,8 +819,8 @@ public class EvrakNotTest extends BaseTest {
             }
             noteEkleDialog.$("textarea").sendKeys(text + String.valueOf(maxCount));
 
-            leftCount = getNumber(counter.text());
-            sa.assertEquals(leftCount, 0, "Kalan karakter sayısı");
+            lefTSount = getNumber(counter.text());
+            sa.assertEquals(lefTSount, 0, "Kalan karakter sayısı");
 
             noteEkleDialog.$("textarea").shouldHave(value(String.valueOf(maxCount)));
             noteEkleDialog.$("textarea").sendKeys("*");
@@ -873,7 +873,7 @@ public class EvrakNotTest extends BaseTest {
         public UstYazi notuSil(ArrayList<String[]> notes, int index) {
             SelenideElement deleteNote = olusturulanNot(notes.get(index)[1]).shouldHaveSize(1).first();
             deleteNote.$(deleteButton).click();
-            getCreatedNotes().shouldHaveSize(notes.size() - 1);
+            geTSreatedNotes().shouldHaveSize(notes.size() - 1);
             for (String[] note : notes) {
                 if (note[1].equals(notes.get(index)[1])) {
                     olusturulanNot(note[1]).shouldHaveSize(0);

@@ -40,10 +40,10 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
         mainPage = new MainPage();
     }
 
-    //TC
+    //TS
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "1610: KEP Hesap Menüsü - Tanımlanan KEP hesapları ile login işlemleri")
-    public void TC1610() throws InterruptedException {
+    public void TS1610() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
         String hataMesaji = "Bağlantı kurulamadı, girilen parola veya şifre yanlış !";
@@ -84,7 +84,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "1513: Kurum Kep Hesabı Tanımlama ve Evrak Oluşturma Ekranından kontrolü")
-    public void TC1513B() throws InterruptedException {
+    public void TS1513B() throws InterruptedException {
 
         String popupKepAdresi = "turksat.kamu1@testkep.pttkep.gov.tr";
         String popupKepHizmetSaglayicisiSec = "Diğer";
@@ -115,7 +115,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "1513: Gerçek Kişi Kep Hesabı Tanımlama ve Evrak Oluşturma Ekranından Kontrolü")
-    public void TC1513C() throws InterruptedException {
+    public void TS1513C() throws InterruptedException {
 
         String popupKepAdresi = "turksat.kamu1@testkep.pttkep.gov.tr";
         String popupKepHizmetSaglayicisiSec = "PTT KEP Servisi";
@@ -146,7 +146,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "1513: Tüzel Kişi Kep Hesabı Tanımlama ve Evrak Oluşturma Ekranından Kontrolü")
-    public void TC1513D() throws InterruptedException {
+    public void TS1513D() throws InterruptedException {
 
         String popupKepAdresi = "turksat.kamu1@testkep.pttkep.gov.tr";
         String popupKepHizmetSaglayicisiSec = "PTT KEP Servisi";
@@ -178,7 +178,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "KEP Adresi Tanımlama işlemleri")
-    public void TC1520() throws InterruptedException {
+    public void TS1520() throws InterruptedException {
 
         String birim = "Yazılım";
         String birimTuru = "İç Birim";

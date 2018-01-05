@@ -27,7 +27,7 @@ public class TebligTebellugTest extends BaseTest {
     }
 
     @Test(enabled = true, description = "845 : Gelen Evrakın kullanıcı listesine detay ekrandan tebliğ edilmesi.")
-    public void TC00845() {
+    public void TS00845() {
 
         String konu = "Brifingler ve Bilgi Notları";
         String geldigiYer = "Yürütme / Adalet Bakanlığı";
@@ -68,7 +68,7 @@ public class TebligTebellugTest extends BaseTest {
 
         logout();
 
-        login("botcu", "qskJfhcQ");
+        login("boTSu", "qskJfhcQ");
 
         tebliglerPage
                 .openPage()
@@ -83,9 +83,9 @@ public class TebligTebellugTest extends BaseTest {
     }
 
     @Test(enabled = true, description = "845 : Gelen Evrakın Önizleme ekranından kullanıcıya tebliğ edilmesi")
-    public void TC00845A() {
+    public void TS00845A() {
 
-        String konu = "TC845";
+        String konu = "TS845";
         String geldigiYer = "Yargı / hepsi küçük harflerle kurum ";
         String kayitTarihiSayi = "18.12.2017 / 5129";
         String evrakTarihi = "18.12.2017";
@@ -139,9 +139,9 @@ public class TebligTebellugTest extends BaseTest {
     }
 
     @Test(enabled = true, description = "67 : Tebliğe gelen evrakın tebellüğ edilmesi ve tebliğ eden kullanıcıdan kontrolü")
-    public void TC00067() {
+    public void TS00067() {
 
-        String konu = "TC845";
+        String konu = "TS845";
         String geldigiYer = "Yargı / hepsi küçük harflerle kurum ";
         String kayitTarihiSayi = "18.12.2017 / 5129";
         String evrakTarihi = "18.12.2017";
@@ -218,8 +218,8 @@ public class TebligTebellugTest extends BaseTest {
     }
 
     @Test(enabled = true, description = "936 : Tebliğ hatırlatma ve Mesaj kontrolü")
-    public void TC00936() {
-        String konu = "TC845";
+    public void TS00936() {
+        String konu = "TS845";
         String evrakTarihi = "18.12.2017";
 
         String no = "123";
@@ -254,7 +254,7 @@ public class TebligTebellugTest extends BaseTest {
     }
 
     @Test(enabled = true, description = "847 : Tebliğlerin teker teker ve toplu silinmesi")
-    public void TC00847() {
+    public void TS00847() {
 
         String konu = "Kanunlar";
         String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞ";

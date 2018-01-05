@@ -28,8 +28,8 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
         login("huser", "123");
     }
 
-    @Test(enabled = true, description = "TC0001 : Yönetim havuzunu pasife alma")
-    public void TC0001() {
+    @Test(enabled = true, description = "TS0001 : Yönetim havuzunu pasife alma")
+    public void TS0001() {
 
 
         String yeniBirimAdi = birimYonetimiPage
@@ -73,8 +73,8 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
 
     }
 
-    @Test(enabled = true, description = "TC0002 : Yeni yönetim havuzu kayıt")
-    public void TC0002() {
+    @Test(enabled = true, description = "TS0002 : Yeni yönetim havuzu kayıt")
+    public void TS0002() {
 
 
         String yeniBirimAdi = birimYonetimiPage
@@ -120,8 +120,8 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
 
     }
 
-    @Test(enabled = true, description = "TC0003 : yönetim havuzunu güncelleme")
-    public void TC0009() throws Exception {
+    @Test(enabled = true, description = "TS0003 : yönetim havuzunu güncelleme")
+    public void TS0009() throws Exception {
 
 
         String yeniBirimAdi = birimYonetimiPage
