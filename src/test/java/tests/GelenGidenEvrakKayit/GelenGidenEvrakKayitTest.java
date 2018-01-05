@@ -409,7 +409,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .konuDoldur(konu)
                 .evrakDiliSec(evrakDili)
                 .miatDoldur(miatTarihi)
-                .geregiDoldur(geregi)
+                .geregiDoldur(geregi, "Ad")
                 .kaldiralacakKlasorDoldur(kaldirlacakKlasor)
                 .bilgiDoldur(bilgi)
                 .evrakTarihiDoldur(evrakTarihi)
@@ -432,5 +432,62 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         kaydedilenGidenEvraklarPage
                 .openPage()
                 .tabloKontrolKonuyaGore(konu);
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS0326 : Gelen evrakın tarama havuzundan evrak eklenerek kaydedilmesi")
+    public void TS0326() throws InterruptedException {
+
+        String basariMesaji = "İşlem başarılıdır!";
+        String ustYaziPath = getDocPath1() + "pdf.pdf";
+        String excelPath = getDocPath1() + "test.xlsx";
+        String ustYaziAdi = "pdf.pdf";
+        String excelAdi = "test.xlsx";
+        String konu = "Test " + getSysDate();
+        String birim = "OPTİİM BİRİM";
+        String evrakNO326 = "";
+
+
+        gelenEvrakKayitPage
+                .openPage()
+                .taramaHavuzundanEkleSayfasiAc()
+                .taramaHavuzuIlkKayitSec()
+                .taramaHavuzuIlkKayitTurSec("Üst Yazı")
+                .taramaHavuzuTamam();
+
+        gelenEvrakKayitPage
+                .openPage()
+                .evrakBilgileriUstYaziEkle(ustYaziPath)
+                .ustYaziPdfAdiKontrol(ustYaziAdi)
+                .islemMesaji().isBasarili();
+
+        gelenEvrakKayitPage
+                .konuKoduDoldur(konuKodu)
+                .konuDoldur(konu)
+                .evrakTuruSec(evrakTuru)
+                .evrakDiliSec(evrakDili)
+                .evrakTarihiDoldur(evrakTarihi)
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .kisiKurumSec(kisiKurum)
+                .geldigiKurumDoldurLovText(geldigiKurum)
+                .evrakSayiSagDoldur()
+                .evrakGelisTipiSec(evrakGelisTipi)
+                .ivedilikSec(ivedilik)
+                .dagitimBilgileriBirimDoldur(birim)
+                .kaydet();
+
+        evrakNO326 = gelenEvrakKayitPage.popUps();
+
+        gelenEvrakKayitPage
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        birimHavaleEdilenlerPage
+                .openPage()
+                .evrakNoIleTabloKontrolu(evrakNO326)
+                .evrakNoIleTablodanEvrakSecme(evrakNO326);
+
+        teslimAlinmayiBekleyenlerPage
+                .openPage();
+
     }
 }

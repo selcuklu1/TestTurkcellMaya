@@ -3,7 +3,6 @@ package tests.TuzelKisiYonetimi;
 import common.BaseTest;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
-import io.qameta.allure.Step;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.ustMenuPages.*;
@@ -58,6 +57,7 @@ public class TuzelKisiYonetimiTest extends BaseTest {
         tuzelKisiYonetimiPage
                 .openPage()
                 .yeniTuzelKisiEkle()
+                .kepAdresiAlanKontrolu()
                 .tuzelKisiTipiSec(tuzelKisiTipi)
                 .vergiNoDoldur(vergiNo)
                 .adDoldur(ad)
@@ -97,20 +97,20 @@ public class TuzelKisiYonetimiTest extends BaseTest {
         gelenEvrakKayitPage
                 .openPage()
                 .kisiKurumSecByText("Tüzel Kişi")
-                .geldigiTuzelKisiDoldur(ad)
+                .geldigiTuzelKisiDoldur(ad, "Ad")
                 .secilenGeregiTuzelKisiSil()
-                .geldigiTuzelKisiDoldur(kisaAd)
+                .geldigiTuzelKisiDoldur(kisaAd, "Kısa Ad")
                 .secilenGeregiTuzelKisiSil()
-                .geldigiTuzelKisiDoldur(vergiNo);
+                .geldigiTuzelKisiDoldur(vergiNo, "Vergi No");
 
         gidenEvrakKayitPage
                 .openPage()
                 .geregiSecimTipiSecByText("Tüzel Kişi")
-                .geregiDoldur(ad)
+                .geregiDoldur(ad, "Ad")
                 .secilenGeregiSil()
-                .geregiDoldur(kisaAd)
+                .geregiDoldur(kisaAd, "Kısa Ad")
                 .secilenGeregiSil()
-                .geregiDoldur(vergiNo);
+                .geregiDoldur(vergiNo, "Vergi No");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -343,11 +343,11 @@ public class TuzelKisiYonetimiTest extends BaseTest {
         gelenEvrakKayitPage
                 .openPage()
                 .kisiKurumSecByText("Tüzel Kişi")
-                .geldigiTuzelKisiDoldur(ad2)
+                .geldigiTuzelKisiDoldur(ad2, "Ad2")
                 .secilenGeregiTuzelKisiSil()
-                .geldigiTuzelKisiDoldur(vergiNo2)
+                .geldigiTuzelKisiDoldur(vergiNo2, "Vergi No2")
                 .secilenGeregiTuzelKisiSil()
-                .geldigiTuzelKisiDoldur(kisaAd2);
+                .geldigiTuzelKisiDoldur(kisaAd2, "Kısa Ad");
     }
 
     @Severity(SeverityLevel.CRITICAL)

@@ -1,9 +1,11 @@
 package pages.solMenuPages;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.openqa.selenium.ElementClickInterceptedException;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.pageData.SolMenuData;
@@ -29,7 +31,7 @@ public class BirimHavaleEdilenlerPage extends MainPage {
     SelenideElement btnIcerikGöster = $(By.id("mainInboxForm:inboxDataTable:0:detayGosterButton"));
     SelenideElement btnTamEkranGöster = $(By.id("mainInboxForm:inboxDataTable:0:tamEkranModuButton"));
     SelenideElement tblRapor = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
-    SelenideElement tblKaydedilenGelenEvraklar = $(By.id("mainInboxForm:inboxDataTable_data"));
+    ElementsCollection tblKaydedilenGelenEvraklar = $$("tbody[id='mainInboxForm:inboxDataTable_data'] > tr");
 
     @Step("Birim Havale Edilenler sayfası aç")
     public BirimHavaleEdilenlerPage openPage() {
@@ -74,12 +76,22 @@ public class BirimHavaleEdilenlerPage extends MainPage {
         return this;
     }
 
-    @Step("Tabloda evrak no kontrolü")
-    public BirimHavaleEdilenlerPage tabloKontrolu(String evrakNo) {
-        int row = $$("tbody[id$='mainInboxForm:inboxDataTable_data'] tr[role=row] tbody").filterBy(Condition.text(evrakNo)).size();
-        System.out.println(row);
-        Assert.assertEquals(row, 1);
-        //log başarılı
+    @Step("Tabloda evrak no kontrolü : \"{evrakNo}\" ")
+    public BirimHavaleEdilenlerPage evrakNoIleTabloKontrolu(String evrakNo) {
+        tblKaydedilenGelenEvraklar
+                .filterBy(Condition.text(evrakNo))
+                .shouldHaveSize(1);
         return this;
     }
+
+    @Step("Tabloda evrak no ile evrak seçme. \"{evrakNo}\" ")
+    public BirimHavaleEdilenlerPage evrakNoIleTablodanEvrakSecme(String evrakNo) {
+        tblKaydedilenGelenEvraklar
+                .filterBy(Condition.text(evrakNo))
+                .first()
+                .click();
+        return this;
+    }
+
+
 }

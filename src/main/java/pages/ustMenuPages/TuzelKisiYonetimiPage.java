@@ -411,5 +411,14 @@ public class TuzelKisiYonetimiPage extends MainPage {
         Assert.assertEquals(tblKayitBulunamadi.getText().contains("Kayıt Bulunamamıştır"), true);
         return this;
     }
+
+    @Step("Kep Adresi Kullaniyor ve Kep Adres Bilgileri alan kontrolleri")
+    public TuzelKisiYonetimiPage kepAdresiAlanKontrolu() {
+
+        Assert.assertEquals(chkKepAdresiKullaniyor.isDisplayed(), true);
+        Assert.assertEquals(btnKepAdresBilgileriEkle.isDisplayed(), true);
+
+        return this;
+    }
 }
 
