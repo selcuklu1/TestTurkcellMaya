@@ -433,8 +433,12 @@ public class ComboLovHelper extends BaseLibrary {
 
         $(lovSecilenItemTitle).shouldBe(visible);
 
-        Allure.addAttachment("Seçilen değerleri:", $(lovSecilenItemTitle).text()
-                + "\n" + $(lovSecilenItemDetail).text());
+        try {
+            Allure.addAttachment("Seçilen değerleri:", $(lovSecilenItemTitle).text()
+                    + "\n" + $(lovSecilenItemDetail).text());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Step("Multi select type")
@@ -475,10 +479,9 @@ public class ComboLovHelper extends BaseLibrary {
 
         try {
             if ($$(lovSecilen).size() > 0)
-                Allure.addAttachment("Seçilen değerleri:", $$(lovSecilen).last().$(lovItemTitle).text()
-                        +"\n" + $$(lovSecilen).last().$(lovItemDetail).text());
-//                Allure.addAttachment("Seçilen değerleri:", $$(lovSecilenItemTitle).get(getSelectedDetails.size()).text()
-//                    + "\n" + $$(lovSecilenItemDetail).get(getSelectedDetails.size()).text());
+                Allure.addAttachment("Seçilen değerleri:", $$(lovSecilen).last().text());
+//                Allure.addAttachment("Seçilen değerleri:", $$(lovSecilenItemTitle).get(selectedDetails.size()).text()
+//                    + "\n" + $$(lovSecilenItemDetail).get(selectedDetails.size()).text());
         } catch (Exception ignored) {
         }
     }
