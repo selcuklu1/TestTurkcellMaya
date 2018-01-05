@@ -215,7 +215,7 @@ public class VekaletIslemleriTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = false, dependsOnMethods = {"TS2208"}, description = "TS0015 : Vekaleti alan kullanıcının onay akışında seçilmesi(vekaleten)")
+    @Test(enabled = true, dependsOnMethods = {"TS2208"}, description = "TS0015 : Vekaleti alan kullanıcının onay akışında seçilmesi(vekaleten)")
     public void TS0015() throws InterruptedException {
 
         String kullaniciTitle = " [Ağ (Network) Uzman Yardımcısı]";
@@ -462,7 +462,7 @@ public class VekaletIslemleriTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = false, dependsOnMethods = {"TS0012"}, description = "TS0011 : Vekalet alan kullanıcıya evrak havalesi ve kontrolü")
+    @Test(enabled = true, dependsOnMethods = {"TS0012"}, description = "TS0011 : Vekalet alan kullanıcıya evrak havalesi ve kontrolü")
     public void TS0011() throws InterruptedException {
 
         String evrakGelisTipi = "Posta";
