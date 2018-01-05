@@ -42,8 +42,8 @@ public class OnayAkisiTest3 extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TS2113A: Onay Akıışı Yönetimi - Güncelleme")
-    public void TS2113A() {
+    @Test(enabled = true, description = "TS2113a: Onay Akıışı Yönetimi - Güncelleme")
+    public void TS2113a() {
 
         String onayAkisAdi = "Optiim";
         String eskiKullanici = "Bulut Toprak";
@@ -93,8 +93,8 @@ public class OnayAkisiTest3 extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TS2113B: Onay Akıışı Yönetimi - Güncelleme")
-    public void TS2113B() {
+    @Test(enabled = true, description = "TS2113b: Onay Akıışı Yönetimi - Güncelleme")
+    public void TS2113b() {
 
         String ad = "Alex de Souza";
         String kullanici = "Zübeyde Tekin";
@@ -120,8 +120,8 @@ public class OnayAkisiTest3 extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TS2113C: Onay Akıışı Yönetimi - Güncelleme")
-    public void TS2113C() {
+    @Test(enabled = true, description = "TS2113c: Onay Akıışı Yönetimi - Güncelleme")
+    public void TS2113c() {
 
         String ad = "Daniel Guiza";
         String kullanici = "Mehmet BOZDEMİR";
