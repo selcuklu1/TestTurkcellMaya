@@ -51,7 +51,7 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
     }
 
 
-    @Step("Kural ekleme kaydet")
+    @Step("Kaydet")
     public EvrakHavaleKurallariYonetimiPage kuralEklemeKaydet() {
         btnKuralEklemeKaydet.click();
         return this;
@@ -89,9 +89,25 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
     }
 
     @Step("Evrak türü seç")
-    public EvrakHavaleKurallariYonetimiPage evrakTuruSec() {
+    public EvrakHavaleKurallariYonetimiPage evrakTuruSecGenelge() {
         cmbEvrakTuru.get(0).click();
         cmbEvrakTuruGenelge.get(2).click();
+        cmbEvrakTuru.get(0).click();
+        return this;
+    }
+
+    @Step("Evrak türü seç")
+    public EvrakHavaleKurallariYonetimiPage evrakTuruSecBeyanname() {
+        cmbEvrakTuru.get(0).click();
+        cmbEvrakTuruGenelge.get(3).click();
+        cmbEvrakTuru.get(0).click();
+        return this;
+    }
+
+    @Step("Evrak türü seç")
+    public EvrakHavaleKurallariYonetimiPage evrakTuruSec(int i) {
+        cmbEvrakTuru.get(0).click();
+        cmbEvrakTuruGenelge.get(i).click();
         cmbEvrakTuru.get(0).click();
         return this;
     }
@@ -132,6 +148,12 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
         return this;
     }
 
+    public String kuralAdiCek(){
+        String kuralAdi = txtKuralAdi.getValue();
+        System.out.println(kuralAdi);
+        return kuralAdi;
+    }
+
     @Step("Kişi doldur")
     public EvrakHavaleKurallariYonetimiPage kimeHavaleEdilecekKisiDoldur(String kisi, String birim) {
         txtKimeHavaleEdilecekKisi.type(kisi).detailItems().filterBy(Condition.text(birim)).first().click();
@@ -150,13 +172,42 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Sil")
-    public EvrakHavaleKurallariYonetimiPage sil(String konu) {
-       // sonTable.click();
+    @Step("Sil \"{konu}\" | \"{konuAdi}\" ")
+    public EvrakHavaleKurallariYonetimiPage sil(String konu,String konuAdi) {
         ElementsCollection evrak2 = $$("[id='havaleKuralYonetimiListingForm:havaleKuralDataTable'] table tbody tr");
         evrak2.filterBy(Condition.text(konu)).get(0).$("[id^='havaleKuralYonetimiListingForm:havaleKuralDataTable'][id$='deleteHavaleKuralButton']").click();
         return this;
     }
+
+    @Step("Kopyala \"{konu}\" | \"{konuAdi}\" ")
+    public EvrakHavaleKurallariYonetimiPage kopyala(String konu,String konuAdi) {
+        ElementsCollection evrak2 = $$("[id='havaleKuralYonetimiListingForm:havaleKuralDataTable'] table tbody tr");
+        evrak2.filterBy(Condition.text(konu)).get(0).$("[id^='havaleKuralYonetimiListingForm:havaleKuralDataTable'][id$='copyHavaleKuralButton']").click();
+        return this;
+    }
+
+    @Step("PasifYap \"{konu}\" | \"{konuAdi}\" ")
+    public EvrakHavaleKurallariYonetimiPage pasifYap(String konu,String konuAdi) {
+        ElementsCollection evrak2 = $$("[id='havaleKuralYonetimiListingForm:havaleKuralDataTable'] table tbody tr");
+        evrak2.filterBy(Condition.text(konu)).get(0).$("[id^='havaleKuralYonetimiListingForm:havaleKuralDataTable'][id$='havaleKuralPasifButton']").click();
+        return this;
+    }
+
+    @Step("Güncelle \"{konu}\" | \"{konuAdi}\" ")
+    public EvrakHavaleKurallariYonetimiPage havaleKurallariListesiGuncelle(String konu,String konuAdi) {
+        ElementsCollection evrak2 = $$("[id='havaleKuralYonetimiListingForm:havaleKuralDataTable'] table tbody tr");
+        evrak2.filterBy(Condition.text(konu)).get(0).$("[id^='havaleKuralYonetimiListingForm:havaleKuralDataTable'][id$='updateHavaleKuralButton']").click();
+        return this;
+    }
+
+    @Step("Aktif yap \"{konu}\" | \"{konuAdi}\" ")
+    public EvrakHavaleKurallariYonetimiPage aktifYap(String konu,String konuAdi) {
+        ElementsCollection evrak2 = $$("[id='havaleKuralYonetimiListingForm:havaleKuralDataTable'] table tbody tr");
+        evrak2.filterBy(Condition.text(konu)).get(0).$("[id^='havaleKuralYonetimiListingForm:havaleKuralDataTable'][id$='kuralAktifButton']").click();
+        return this;
+    }
+
+
 
     @Step("İslem onayı evet")
     public EvrakHavaleKurallariYonetimiPage islemOnayiEvet() {
