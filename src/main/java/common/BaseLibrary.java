@@ -270,11 +270,15 @@ public class BaseLibrary extends ElementsContainer {
                     int height = Integer.parseInt(size[1]);
                     Dimension browserSize = new Dimension(width, height);
                     WebDriverRunner.getWebDriver().manage().window().setSize(browserSize);
+                    System.out.println("custom maximize()");
                 } catch (NumberFormatException e) {
                     WebDriverRunner.getWebDriver().manage().window().maximize();
+                    System.out.println("manage().window().maximize()");
                 }
-            } else
+            } else {
                 WebDriverRunner.getWebDriver().manage().window().maximize();
+                System.out.println("manage().window().maximize()");
+            }
         } catch (Exception e) {
             System.out.println("SettingsListener maximize:" + e.getMessage());
         }
@@ -928,6 +932,23 @@ public class BaseLibrary extends ElementsContainer {
         throw new UnsupportedOperationException(
                 "Underlying driver instance does not support capabilities");
     }
+
+    public RemoteWebDriver getDriverAsRemoteWebDriver() {
+        //This 'if' handle case when LoggingWebDriver.driver is instanceof EventFiringWebDriver .
+        //In this case RemoteWebDriver is field within EventFiringWebDriver while EventFiringWebDriver don't support getting Capabilities
+        WebDriver driver = WebDriverRunner.getWebDriver();
+
+        if (driver instanceof EventFiringWebDriver
+                && ((EventFiringWebDriver) driver).getWrappedDriver() instanceof HasCapabilities) {
+            return (RemoteWebDriver) ((EventFiringWebDriver) driver)
+                    .getWrappedDriver();
+        } else if (driver instanceof HasCapabilities) {
+            return (RemoteWebDriver) driver;
+        }
+        throw new UnsupportedOperationException(
+                "Underlying driver instance does not support capabilities");
+    }
+
     //endregion
 
 

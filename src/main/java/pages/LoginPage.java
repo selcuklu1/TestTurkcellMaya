@@ -1,8 +1,6 @@
 package pages;
 
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.*;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 
@@ -19,7 +17,7 @@ public class LoginPage extends MainPage {
     private LoginPage open() {
         clearCookies();
         Selenide.open("");
-//      maximazeBrowser();
+        maximazeBrowser();
         return this;
     }
 
@@ -29,7 +27,7 @@ public class LoginPage extends MainPage {
         txtUsername.sendKeys(username);
         txtPassword.sendKeys(password);
         btnLogin.shouldBe(Condition.visible).click();
-        $(By.id("topMenuForm:userMenuButton_button")).shouldBe(Condition.visible);
+        $(By.id("topMenuForm:userMenuButton_button")).waitUntil(Condition.visible, 40);
         return this;
     }
 
@@ -39,7 +37,7 @@ public class LoginPage extends MainPage {
         txtUsername.sendKeys(username);
         txtPassword.sendKeys(password);
         btnLogin.click();
-//        $(By.id("topMenuForm:userMenuButton_button")).shouldBe(visible);
+        $(By.id("topMenuForm:userMenuButton_button")).waitUntil(Condition.visible, 40);
         return this;
     }
 

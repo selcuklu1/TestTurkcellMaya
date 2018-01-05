@@ -224,7 +224,9 @@ public class EvrakNotTest extends BaseTest {
         logout();
     }
 
-    @Test(enabled = true, description = "TS2160: Not İzleme - Evrak Notunun Paraf bekleneler, Parafladıklarım, İmza Bekleyenler ve İmzaladıklarım ekranlarında izlenmesi", dependsOnMethods = {"TS2155"})
+    @Test(enabled = true, description = "TS2160: Not İzleme - Evrak Notunun Paraf bekleneler, Parafladıklarım, İmza Bekleyenler ve İmzaladıklarım ekranlarında izlenmesi"
+            , dependsOnMethods = {"TS2155"}
+            )
     public void TS2160() {
         UstYazi ustYazi = new UstYazi();
         TaslakEvraklarPage taslakEvraklarPage = new TaslakEvraklarPage();

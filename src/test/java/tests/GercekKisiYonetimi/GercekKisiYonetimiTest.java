@@ -323,7 +323,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
     public void TS1119() throws InterruptedException {
 
         String TCKN1 = "54548785445";
-        String ad = "TS1119";
+        String ad = "Ts1119";
         String soyad = "GerçekKişi";
         String TCKN2 = "69848836158"; //TCKN2 = "69848836158" kullanıcının adresi
         String adSoyad = ad + " " + soyad;
@@ -370,7 +370,8 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .iletisimBilgisiEpostaDoldur(ePosta)
                 .iletisimBilgisiWebAdresiDoldur(webAdres)
                 .iletisimBilgisiKaydet()
-                .islemMesaji().basariliOlmali(basariMesaji);
+                .islemMesaji()
+                .basariliOlmali(basariMesaji);
 
         gercekKisiYonetimPage
                 .kaydet()
