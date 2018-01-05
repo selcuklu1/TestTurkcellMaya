@@ -153,16 +153,16 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .filtreSorgulamaPaneliAc()
                 .filtreDurumSec("PASIFLER")
                 .ara()
-                .pasiflerKayitKontrolu();
+                .pasiflerTumListeKayitKontrolu();
 
-        String getTbleTS = gercekKisiYonetimPage.getTbleTCNO();
+        String getTbleTCNO = gercekKisiYonetimPage.getTbleTCNO();
 
         gercekKisiYonetimPage
                 .filtreSorgulamaPaneliAc()
                 .filtreDurumSec("PASIFLER")
-                .filtreTCKimlikNoDoldur(getTbleTS)
+                .filtreTCKimlikNoDoldur(getTbleTCNO)
                 .ara()
-                .tcNoKontrolu(getTbleTS);
+                .tcNoKontrolu(getTbleTCNO);
     }
 
     @Severity(SeverityLevel.CRITICAL)

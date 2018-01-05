@@ -521,7 +521,7 @@ public class TuzelKisiYonetimiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TS1132: Pasif yapılan tüzel kişinin aktif yapılması ve kontrolü")
+    @Test(enabled = true, description = "TS1458: Pasif yapılan tüzel kişinin aktif yapılması ve kontrolü")
     public void TS1458() throws InterruptedException {
 
         String vergiNo = "55665732323";
