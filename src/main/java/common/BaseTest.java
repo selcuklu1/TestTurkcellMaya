@@ -9,10 +9,12 @@ import listeners.DriverEventListener;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import pages.LoginPage;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetFramework;
 
+import java.lang.reflect.Method;
 import java.util.Locale;
 
 import static data.TestData.belgenetURL;
@@ -70,6 +72,13 @@ public class BaseTest extends BaseLibrary {
         System.out.println("Selenide/Selenium driver has been set up.");
     }
 
+    @BeforeMethod(alwaysRun = true)
+    public void beforeMethod(Method test) {
+        System.out.println("///////////////////////////////////////////////////////");
+        System.out.println("Test Started: " + test.getName());
+        System.out.println("///////////////////////////////////////////////////////");
+    }
+
     @AfterMethod(alwaysRun = true)
     public void afterMethod(ITestResult testResult) {
         int SUCCESS = 1;
@@ -92,25 +101,14 @@ public class BaseTest extends BaseLibrary {
         System.out.println("///////////////////////////////////////////////////////");
         System.out.println("Test " + result + ": " + testResult.getName());
         System.out.println("///////////////////////////////////////////////////////");
+
+        //Parallelde hatası vermemesi WebDriverRunner.closeWebDriver() eklendi.
+        //login da WebDriverRunner.clearBrowserCache(); eklendi
+        //Selenide.close();
+        //WebDriverRunner.getAndCheckWebDriver().quit();
         WebDriverRunner.closeWebDriver();
-//        WebDriverRunner.getAndCheckWebDriver().quit();
     }
 
-    /*@AfterMethod(alwaysRun = true)
-    public void afterMethod() {
-        *//*try {
-            Selenide.clearBrowserLocalStorage();
-            Selenide.clearBrowserCookies();
-        } catch (Exception e) {
-            log.info("Error clearBrowserLocalStorage and clearBrowserCookies: " + e.getMessage());
-        }*//*
-    }*/
-
-    /*@AfterClass(alwaysRun = true)
-    public void afterClass() {
-        Selenide.close();
-        log.info("Browser has been closed.");
-    }*/
 
     @Step("Login")
     public void login(User user) {
