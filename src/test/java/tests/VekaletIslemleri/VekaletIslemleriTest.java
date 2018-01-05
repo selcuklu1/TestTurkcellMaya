@@ -278,8 +278,8 @@ public class VekaletIslemleriTest extends BaseTest {
 
         mainPage
                 .vekaletVarUyariPopUp()
-                .birimSec(Condition.text("Vekalet"))
-                .islemMesaji().basariliOlmali(basariMesaji);
+                .birimSec(Condition.text("Vekalet"));
+//                .islemMesaji().basariliOlmali(basariMesaji);
 
         imzaBekleyenlerPage
                 .openPage()
@@ -516,7 +516,7 @@ public class VekaletIslemleriTest extends BaseTest {
 
         gelenEvraklarPage
                 .openPage()
-                .tabloEvrakNoKontrol(evrakNO11);
+                .tabloOlmayanEvrakNoKontrol(evrakNO11);
 
 
         logout();
@@ -524,8 +524,8 @@ public class VekaletIslemleriTest extends BaseTest {
 
         mainPage
                 .vekaletVarUyariPopUp()
-                .birimSec(Condition.text("Vekalet"))
-                .islemMesaji().basariliOlmali(basariMesaji);
+                .birimSec(Condition.text("Vekalet"));
+//                .islemMesaji().basariliOlmali(basariMesaji);
 
         gelenEvraklarPage
                 .openPage()
