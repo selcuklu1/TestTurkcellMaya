@@ -118,8 +118,8 @@ public class TuzelKisiYonetimiTest extends BaseTest {
     public void TS1133() throws InterruptedException {
 
         String vergiNo = "1257452322";
-        String ad = "TS1133 TüzelKişi";
-        String kisaAd = "TS1133";
+        String ad = "Ts1133 TüzelKişi";
+        String kisaAd = "ts1133";
 
         //NOTE: Test steplerinin sıralaması değiştirildi.
 
@@ -347,7 +347,7 @@ public class TuzelKisiYonetimiTest extends BaseTest {
                 .secilenGeregiTuzelKisiSil()
                 .geldigiTuzelKisiDoldur(vergiNo2, "Vergi No2")
                 .secilenGeregiTuzelKisiSil()
-                .geldigiTuzelKisiDoldur(kisaAd2, "Kısa Ad");
+                .geldigiTuzelKisiDoldur(kisaAd2, "Kısa Ad2");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -355,8 +355,8 @@ public class TuzelKisiYonetimiTest extends BaseTest {
     public void TS2241() throws InterruptedException {
 
         String vergiNo = "85212364597";
-        String ad = "TS2241 Üniversitesi";
-        String kisaAd = "TS2241unv";
+        String ad = "Ts2241 Üniversitesi";
+        String kisaAd = "ts2241unv";
 
         String mobilTelNo = "539" + createRandomNumber(7);
         String telNo = "212" + createRandomNumber(11);
@@ -439,7 +439,7 @@ public class TuzelKisiYonetimiTest extends BaseTest {
 
         String vergiNo = "34378564433";
         String ad = "TS1132 TüzelKişi";
-        String kisaAd = "TS1132tk";
+        String kisaAd = "ts1132tk";
         String tip = "Tüzel Kişi";
         String basariMesaji = "İşlem başarılıdır!";
 
@@ -525,12 +525,13 @@ public class TuzelKisiYonetimiTest extends BaseTest {
     public void TS1458() throws InterruptedException {
 
         String vergiNo = "55665732323";
-        String ad = "TS1458";
+        String ad = "Ts1458";
         String soyad = "TüzelKişi";
-        String tamAd = "TS1458 TüzelKişi";
-        String kisaAd = "TS1458tk";
+        String tamAd = "Ts1458 TüzelKişi";
+        String kisaAd = "ts1458tk";
         String tip = "Tüzel Kişi";
         String basariMesaji = "İşlem başarılıdır!";
+        String popupAktifEtmeMesaji = "Tüzel kişi tekrar aktif etmek istediğinize emin misiniz?";
 
         //Tüzel kişi datası aktif ise pasif yap. Bu adım testte yok ama data bozulmuşsa düzeltilir.
         //TODO: DB'den data alınıp, update sql ile aktif yapılabilir.
@@ -548,6 +549,7 @@ public class TuzelKisiYonetimiTest extends BaseTest {
                 .pasifTuzelKisiKayitKontrolu(vergiNo, tamAd, kisaAd)
 
                 .tuzelKisiAktifYap()
+                .popupTuzelKisiAktifEtmeKontrolu(popupAktifEtmeMesaji)
                 .islemOnayi("Evet");
 
         tuzelKisiYonetimiPage

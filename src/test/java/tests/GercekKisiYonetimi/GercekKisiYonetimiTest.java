@@ -323,7 +323,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
     public void TS1119() throws InterruptedException {
 
         String TCKN1 = "54548785445";
-        String ad = "TS1119";
+        String ad = "Ts1119";
         String soyad = "GerçekKişi";
         String TCKN2 = "69848836158"; //TCKN2 = "69848836158" kullanıcının adresi
         String adSoyad = ad + " " + soyad;
@@ -421,7 +421,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
     public void TS1132() throws InterruptedException {
 
         String TCNO = "43534543543";
-        String ad = "TS1132";
+        String ad = "Ts1132";
         String soyad = "GerçekKişi";
         String adSoyad = ad + " " + soyad;
 
@@ -489,7 +489,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
     public void TS1458() throws InterruptedException {
 
         String TCKN = "21861197500";
-        String ad = "TS1458";
+        String ad = "Ts1458";
         String soyad = "GerçekKişi";
         String adSoyad = ad + " " + soyad;
 
