@@ -6,7 +6,6 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
-import pages.pageComponents.UstMenu;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.UstMenuData;
 
@@ -45,7 +44,7 @@ public class GelenEvrakKayitPage extends MainPage {
     SelenideElement dateTxtEvrakBilgileriListPostalanmaTarihi = $(By.id("evrakBilgileriForm:evrakBilgileriList:18:postalanmaTarihi_input"));
     BelgenetElement comboKonuKodu = comboLov("[id$='konuKoduLov:LovText']");
     BelgenetElement comboGeldigiKurum = comboLov("[id$='geldigiKurumLov:LovText']");
-
+    SelenideElement txtKonuKoduTemizle = $("[id='evrakBilgileriForm:evrakBilgileriList:1:konuKoduLov:LovSecilen'] button");
     // Evrak Ekleri sekmesinde bulunanlar
     // Dosya ekle alt sekmesinde bulunanlar
 
@@ -79,6 +78,7 @@ public class GelenEvrakKayitPage extends MainPage {
 
     // Havale işlemleri sekmesinde bulunanlar
     ElementsCollection chkOtomatikHavale = $$("[id='evrakBilgileriForm:havalePanel'] [class='ui-chkbox-box ui-widget ui-corner-all ui-state-default']");
+    SelenideElement cmbPopupOtomatikHavale = $(By.id("evrakBilgileriForm:havaleKuralSelect"));
     SelenideElement txtDagitimBilgileriBirim = $(By.id("evrakBilgileriForm:dagitimBilgileriBirimLov:LovText"));
     BelgenetElement txtDagitimBilgileriKisiComboLov = comboLov(By.id("evrakBilgileriForm:dagitimBilgileriKullaniciLov:LovText"));
     SelenideElement txtDagitimBilgileriKisi = $(By.id("evrakBilgileriForm:dagitimBilgileriKullaniciLov:LovText"));
@@ -195,11 +195,26 @@ public class GelenEvrakKayitPage extends MainPage {
     }
 
     @Step("Otomatik havale seç")
-    public GelenEvrakKayitPage otomatikHavaleSec(boolean secim) {
+    public GelenEvrakKayitPage otomatikHavaleSec() {
         chkOtomatikHavale.get(0).click();
         return this;
     }
 
+    @Step("")
+    public GelenEvrakKayitPage otomatikHavaleGeldigiGorme(String otomatikHavale){
+        ElementsCollection lblOtomoatikHavale = $$("[id='evrakBilgileriForm:havalePanel'] label[class='columnLabelFixSmallWidth']");
+        boolean durum = lblOtomoatikHavale.filterBy(Condition.text(otomatikHavale)).size()==1;
+        Assert.assertEquals(durum,true);
+        return this;
+    }
+
+   @Step("Otomatik havale seç \"{otomatikHavale}\" ")
+    public GelenEvrakKayitPage popupOtomatikHavaleSec(String otomatikHavale){
+        cmbPopupOtomatikHavale.selectOption(otomatikHavale);
+        $("[class='ui-dialog ui-widget ui-widget-content ui-corner-all ui-shadow havaleKuralSecimiDialog ui-draggable ui-overlay-visible'] [class='ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all']").click();
+        sleep(3000);
+        return this;
+    }
     @Step("Hava İşlemleri Kişi alanında \"{kisi}\" seç")
     public GelenEvrakKayitPage havaleIslemleriKisiDoldur(String kisi) {
         txtHavaleIslemleriKisi.selectLov(kisi);
@@ -306,8 +321,8 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("Geldiği gerçek kişi alanında \"{geldigiKisi}\"  seçilir")
-    public GelenEvrakKayitPage geldigiGercekKisiDoldur(String geldigiKisi) {
+    @Step("Geldiği gerçek kişi alanı doldur: {geldigiKisi} | {description} ")
+    public GelenEvrakKayitPage geldigiGercekKisiDoldur(String geldigiKisi, String description) {
 
         cmbGeldigiGercekKisi.selectLov(geldigiKisi);
 
@@ -329,8 +344,8 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("Geldiği tüzel kişi alanında \"{geldigiTuzelKisi}\" seçilir")
-    public GelenEvrakKayitPage geldigiTuzelKisiDoldur(String geldigiTuzelKisi) {
+    @Step("Geldiği tüzel kişi {description} doldur: | {geldigiTuzelKisi}")
+    public GelenEvrakKayitPage geldigiTuzelKisiDoldur(String geldigiTuzelKisi, String description) {
 
         cmbGeldigiTuzelKisi.selectLov(geldigiTuzelKisi);
 
@@ -711,9 +726,9 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("Yenş Kayıt tıklanır")
+    @Step("Yeni Kayıt tıklanır")
     public GelenEvrakKayitPage yeniKayitButton() {
-        $("[id$='yeniKayitButton']").pressEnter();
+        $("[id='evrakKaydetBasariliDialogForm:yeniKayitButton']").pressEnter();
         sleep(5000);
         return this;
     }
@@ -728,6 +743,7 @@ public class GelenEvrakKayitPage extends MainPage {
         if ($$(By.id("evetButtonBenzerKaydet")).get(0).shouldHave(visible).exists() == true) {
             $(By.id("evetButtonBenzerKaydet")).pressEnter();
         }
+        else {}
         return this;
     }
 
@@ -1025,6 +1041,13 @@ public class GelenEvrakKayitPage extends MainPage {
     @Step("Konu kodu sil")
     public GelenEvrakKayitPage konuKoduSil() throws InterruptedException {
         comboKonuKodu.clearLastSelectedItem();
+        return this;
+    }
+
+    @Step("Konu kodu temizle")
+    public GelenEvrakKayitPage konuKoduTemizle() throws InterruptedException {
+        txtKonuKoduTemizle.click();
+        sleep(2000);
         return this;
     }
 

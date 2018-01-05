@@ -33,7 +33,7 @@ public class GercekKisiYonetimPage extends MainPage {
     SelenideElement filtreSorgulamaPanel = $("[id='gercekKisiYonetimiListingForm'] [id='gercekKisiYonetimiListingForm:filterPanel']");
     SelenideElement btnAra = $(By.id("gercekKisiYonetimiListingForm:filterPanel:searchGercekKisiButton"));
     SelenideElement btnGercekKisiGuncelle = $("[id^='gercekKisiYonetimiListingForm:gercekKisiDataTable'][id$='updateGercekKisiButton']");
-    SelenideElement btnGercekKisiPasiYap = $("[id^='gercekKisiYonetimiListingForm:gercekKisiDataTable'][id$='pasifEtGercekKisi']");
+    SelenideElement btnGercekKisiPasifYap = $("[id^='gercekKisiYonetimiListingForm:gercekKisiDataTable'][id$='pasifEtGercekKisi']");
     SelenideElement btnGercekKisiAktifYap = $("[id^='gercekKisiYonetimiListingForm:gercekKisiDataTable'][id$='aktifEtGercekKisi']");
 
     SelenideElement btnIslemOnayiEvet = $(By.id("baseConfirmationDialog:confirmButton"));
@@ -380,7 +380,18 @@ public class GercekKisiYonetimPage extends MainPage {
         return this;
     }
 
-    @Step("TC kimlik no alma \"{getTC}\" ")
+    @Step("Pasif gerçek kişi tüm liste kayıt kontrolu")
+    public GercekKisiYonetimPage pasiflerTumListeKayitKontrolu() throws InterruptedException {
+
+        String formGercekKisiYonetimi = "gercekKisiYonetimiListingForm";
+
+        btnGercekKisiAktifYap.shouldBe(visible);
+        boolean status = findElementOnTableAllPages(formGercekKisiYonetimi, btnGercekKisiPasifYap);
+        Assert.assertEquals(status, false);
+        return this;
+    }
+
+    @Step("TC kimlik no alma")
     public String getTbleTCNO() {
         String getTC = tblTc.getText();
         return getTC;
@@ -434,8 +445,8 @@ public class GercekKisiYonetimPage extends MainPage {
 
         btnGercekKisiGuncelle.shouldBe(exist); //tablo biraz geç geliyor
 
-        if (btnGercekKisiPasiYap.isDisplayed()) {
-            btnGercekKisiPasiYap.click();
+        if (btnGercekKisiPasifYap.isDisplayed()) {
+            btnGercekKisiPasifYap.click();
             btnIslemOnayiEvet.click();
         }
         return this;
@@ -444,7 +455,7 @@ public class GercekKisiYonetimPage extends MainPage {
     @Step("Gerçek kişi pasif yap")
     public GercekKisiYonetimPage gercekKisiPasifYap() {
 
-        btnGercekKisiPasiYap.click();
+        btnGercekKisiPasifYap.click();
         return this;
     }
 

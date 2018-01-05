@@ -415,7 +415,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .konuDoldur(konu)
                 .evrakDiliSec(evrakDili)
                 .miatDoldur(miatTarihi)
-                .geregiDoldur(geregi)
+                .geregiDoldur(geregi, "Ad")
                 .kaldiralacakKlasorDoldur(kaldirlacakKlasor)
                 .bilgiDoldur(bilgi)
                 .evrakTarihiDoldur(evrakTarihi)

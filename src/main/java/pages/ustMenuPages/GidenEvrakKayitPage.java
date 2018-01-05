@@ -14,12 +14,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.testng.Assert;
 import pages.MainPage;
-import pages.pageComponents.UstMenu;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.UstMenuData;
 
 import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
@@ -87,8 +85,9 @@ public class GidenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("Gereği doldur")
-    public GidenEvrakKayitPage geregiDoldur(String geregi) {
+
+    @Step("Gereği {description} doldur: | {geregi}")
+    public GidenEvrakKayitPage geregiDoldur(String geregi, String description) {
 
         cmbGeregi.selectLov(geregi);
 
