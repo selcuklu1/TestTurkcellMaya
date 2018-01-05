@@ -438,7 +438,7 @@ public class TuzelKisiYonetimiTest extends BaseTest {
     public void TS1132() throws InterruptedException {
 
         String vergiNo = "34378564433";
-        String ad = "TS1132 TüzelKişi";
+        String ad = "Ts1132 TüzelKişi";
         String kisaAd = "ts1132tk";
         String tip = "Tüzel Kişi";
         String basariMesaji = "İşlem başarılıdır!";
