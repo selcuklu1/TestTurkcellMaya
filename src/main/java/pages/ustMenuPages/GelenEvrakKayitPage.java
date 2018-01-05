@@ -169,7 +169,7 @@ public class GelenEvrakKayitPage extends MainPage {
     SelenideElement btnEvrakDetayiPdfDegisiklikKabul = $(By.id("inboxItemInfoForm:ustyaziDegistirButton"));
     SelenideElement btnEvrakDetayiKaydetUyarisi = $(By.id("kaydetConfirmForm:kaydetEvetButton"));
 
-    SelenideElement btnTaramaHavuzundanEkle = $(By.id("evrakBilgileriForm:uploadFromTarananEvrakHavuzuGelenEvrak"));
+//    SelenideElement btnTaramaHavuzundanEkle = $(By.id("evrakBilgileriForm:uploadFromTarananEvrakHavuzuGelenEvrak"));
     SelenideElement btnTarayicidanEkle = $(By.id("evrakBilgileriForm:dogrudanTaramaBaslat"));
     SelenideElement btnTaramaArayuzundenEkle = $(By.id("evrakBilgileriForm:taramaArayuzundenEkle"));
     SelenideElement btnTaramaServisindenEkle = $(By.id("evrakBilgileriForm:taramaServisEkle"));
@@ -183,6 +183,12 @@ public class GelenEvrakKayitPage extends MainPage {
     BelgenetElement txtHavaleIslemleriBirim = comboLov(By.id("evrakBilgileriForm:dagitimBilgileriBirimLov:LovText"));
     //endregion
     SelenideElement btnSecilenGeldigiKurumKaldir = $("div[id$='geldigiKurumLov:LovSecilen'] button");
+
+    //Tarama Havuzundan Ekle
+    SelenideElement btnTaramaHavuzundanEkle = $x("//span[text()='Tarama Havuzundan Ekle']/../../button");
+    SelenideElement chkTaramaHavuzuIlkEvrak = $(By.id("taramaHavuzuFormId:taramaHavuzuDataTableId:0:selectionId"));
+    SelenideElement cmbTaramaHavuzuIlkEvrakTur = $(By.id("taramaHavuzuFormId:taramaHavuzuDataTableId:0:tarananTuruId"));
+    SelenideElement btnTaramaHavuzuTamam = $(By.id("taramaHavuzuFormId:taramaHavuzuTamamButton"));
 
     @Step("Gelen Evrak Kayıt sayfasını aç")
     public GelenEvrakKayitPage openPage() {
@@ -1052,5 +1058,27 @@ public class GelenEvrakKayitPage extends MainPage {
                 .$("[id='evrakBilgileriForm:kullaniciBirimSecenekleriHavaleIcin_data'] td:nth-child(4) button").click();
         return this;
     }
+
+    @Step("Tarama Havuzundan Ekle sayfası açılır")
+    public GelenEvrakKayitPage taramaHavuzundanEkleSayfasiAc(){
+        btnTaramaHavuzundanEkle.click();
+        return this;
+    }
+    @Step("Tarama Havuzu ilk kayıt seçilir")
+    public GelenEvrakKayitPage taramaHavuzuIlkKayitSec(){
+        btnTaramaHavuzundanEkle.click();
+        return this;
+    }
+    @Step("Tarama Havuzu ilk kayıt Tür \"{tur}\" seçilir ")
+    public GelenEvrakKayitPage taramaHavuzuIlkKayitTurSec(String tur){
+        cmbTaramaHavuzuIlkEvrakTur.selectOption(tur);
+        return this;
+    }
+    @Step("Tarama Havuzu Tamam butonu ")
+    public GelenEvrakKayitPage taramaHavuzuTamam(){
+        btnTaramaHavuzuTamam.click();
+        return this;
+    }
+
 
 }
