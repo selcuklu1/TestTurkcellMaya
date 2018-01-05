@@ -65,11 +65,15 @@ public class DriverEventListener extends BaseLibrary implements WebDriverEventLi
 
     }
 
-
     public void beforeFindBy(By by, WebElement element, WebDriver driver) {
 
         By loadingLocator = By.cssSelector("div[style*='display: block;'] .loading");
         long timeout = Configuration.timeout / 1000;
+
+        if (by.equals(By.className("lobibox-notify")) ||
+                (element != null ? element.toString().contains("lobibox-notify") : false))
+            return;
+
 
         waitForLoadingJS(driver);
         /*//İşlem Mesajları için loading kaybolması beklememeli.
@@ -167,6 +171,11 @@ public class DriverEventListener extends BaseLibrary implements WebDriverEventLi
     }
 
     public void onException(Throwable throwable, WebDriver driver) {
-
+        /*System.out.println("///////////////////////////////////////////////////////////////////////////");
+        System.out.println("Case Error: " + throwable.getMessage());
+        System.out.println("///////////////////////////////////////////////////////////////////////////");
+        takeScreenshot(driver);*/
     }
+
+
 }

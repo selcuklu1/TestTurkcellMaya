@@ -1,22 +1,20 @@
 package pages.pageComponents;
 
-import com.codeborne.selenide.*;
+import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.WebDriverRunner;
 import common.BaseLibrary;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 
-import static com.codeborne.selenide.CollectionCondition.*;
-import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Condition.empty;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
-import static com.codeborne.selenide.Selenide.sleep;
+import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
+import static com.codeborne.selenide.Condition.exactText;
+import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.IslemMesajlari.MessageTitle.*;
 
 public class IslemMesajlari extends BaseLibrary {
-
-    //WebDriverRunner.getWebDriver() = driver
     //yeni env objeleri
     //div class="lobibox-notify lobibox-notify-success animated-fast fadeInDown notify-mini"
     //                          lobibox-notify-warning
@@ -25,20 +23,15 @@ public class IslemMesajlari extends BaseLibrary {
     //div class=lobibox-notify-msg
     //div class=lobibox-close
 
-    //http://94.55.114.18:8889/edys-web/mainInbox.xhtml
-    private SelenideElement messageTitle = $(".lobibox-notify-title");
+    /*private SelenideElement messageTitle = $(".lobibox-notify-title");
     private SelenideElement messageBody = $(".lobibox-notify-msg");
-    private SelenideElement closeMessagePopup = $(".lobibox-close");
+    private SelenideElement closeMessagePopup = $(".lobibox-close");*/
 
     private By messageLocator = By.cssSelector(".lobibox-notify");
     private By bodyLocator = By.cssSelector(".lobibox-notify-body");
     private By titleLocator = By.cssSelector(".lobibox-notify-title");
     private By msgLocator = By.cssSelector(".lobibox-notify-msg");
     private By closeButtonLocator = By.cssSelector(".lobibox-close");
-
-    //http://www.belgenet.com.tr:8282/edys-web/mainInbox.xhtml
-    // private SelenideElement messageTitle = $(".ui-growl-message  > .ui-growl-title");
-    // private SelenideElement messageBody = $(".ui-growl-message p");
 
 
     ///////////////////////////////////////////////////////////////////////////
@@ -53,43 +46,41 @@ public class IslemMesajlari extends BaseLibrary {
         return $$(msgLocator);
     }
 
-    @Step("Messaj bulunmalı")
+    //    @Step("Messaj bulunmalı")
     private SelenideElement getMessageBody() {
-        SelenideElement body = $$(messageLocator).shouldHave(sizeGreaterThan(0)).filterBy(visible).last();
-        takeScreenshot();
-        return body;
+        return $$(messageLocator).filterBy(visible).shouldHave(sizeGreaterThan(0)).last();
     }
 
-    @Step("Messaj başlığı kontrolü")
-    private void checkTitle(SelenideElement messageBody, String messageType){
-        String titleText = messageBody.$(titleLocator).text();
-        System.out.println("İşlem Mesajı başlık: " + titleText);
+    //    @Step("Messaj başlığı kontrolü")
+    private void checkTitle(SelenideElement element, String messageType) {
+        String titleText = element.text();
         Assert.assertTrue(titleText.contains(messageType)
                 , "\nAlınan mesaj başlığı : " + titleText + "\nBeklenen: " + messageType + "\n");
+        System.out.println("İşlem Mesajı başlık: " + titleText);
     }
 
-    @Step("Messaj teksti kontrolü")
-    private void checkMessage(SelenideElement messageBody, String expectedMessage){
-        SelenideElement msg = messageBody.$(msgLocator);
+    //    @Step("Messaj teksti kontrolü")
+    private void checkMessageText(SelenideElement element, String expectedMessage) {
+        String text = element.text();
         for (int i = 0; i < 500; i++) {
-            msg.shouldBe(exist, visible);
-            if (msg.is(not(empty))) {
-                System.out.println("İşlem Mesajı teksti: " + msg.text());
-                Assert.assertTrue(msg.text().contains(expectedMessage)
-                        , "\nAlınan mesaj: " + msg.text() + "\nBeklenen: " + expectedMessage + "\n");
+            if (!text.isEmpty()) {
+                System.out.println("İşlem Mesajı teksti: " + text);
+                Assert.assertTrue(text.contains(expectedMessage)
+                        , "\nAlınan mesaj: " + text + "\nBeklenen: " + expectedMessage + "\n");
                 break;
             }
             sleep(10);
+            text = element.text();
         }
     }
 
-//    @Step("İşlem mesajı kontrolü")
-    private void checkMessage(String messageType, String... expectedMessage){
+    @Step("Messaj kontrolü")
+    private void checkMessage(String messageTitle, String... expectedMessage) {
         SelenideElement message = getMessageBody();
-
-        checkTitle(message, messageType);
+        takeScreenshot();
+        checkTitle(message.$(titleLocator), messageTitle);
         if (expectedMessage.length > 0)
-            checkMessage(message, expectedMessage[0]);
+            checkMessageText(message.$(msgLocator), expectedMessage[0]);
 
         closeMessage();
     }
@@ -109,47 +100,33 @@ public class IslemMesajlari extends BaseLibrary {
         checkMessage(DIKKAT.value(), expectedMessage);
     }
 
-    @Step("İşlem mesaj kontolü")
+    @Step("İşlem mesaj tipi kontolü")
     public void beklenenMesajTipi(MessageTitle messageTitleText) {
-        checkTitle(getMessageBody(), messageTitleText.value());
+        checkTitle(getMessageBody().$(titleLocator), messageTitleText.value());
     }
 
     @Step("İşlem mesaj kontolü")
     public void beklenenMesaj(String message) {
-        checkMessage(getMessageBody(), message);
+        checkMessage(getMessageBody().$(titleLocator).text(), message);
     }
 
     public boolean isBasarili() {
-        SelenideElement lastMessage = getMessageBody().$(titleLocator).shouldBe(visible);
+        boolean b = $(titleLocator).has(exactText(BASARILI.value()));
         takeScreenshot();
-        return lastMessage.has(exactText(BASARILI.value()));
+        return b;
     }
 
     public boolean isUyari() {
-        SelenideElement lastMessage = getMessageBody().$(titleLocator).shouldBe(visible);
+        boolean b = $(titleLocator).shouldBe(visible).has(exactText(UYARI.value()));
         takeScreenshot();
-        return lastMessage.has(exactText(UYARI.value()));
+        return b;
     }
 
     public boolean isDikkat() {
-        SelenideElement lastMessage = getMessageBody().$(titleLocator).shouldBe(visible);
+        boolean b = $(titleLocator).shouldBe(visible).has(exactText(DIKKAT.value()));
         takeScreenshot();
-        return lastMessage.has(exactText(DIKKAT.value()));
+        return b;
     }
-
-/*    public String getMessageTitle() {
-//        setDoNotWaitLoading(true);
-        String text = $(titleLocator).text();
-//        setDoNotWaitLoading(false);
-        return text;
-    }
-
-    public String getMessageBody() {
-//        setDoNotWaitLoading(true);
-        String text = $(msgLocator).text();
-//        setDoNotWaitLoading(false);
-        return text;
-    }*/
 
     public void closeMessage() {
         try {

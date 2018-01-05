@@ -44,6 +44,8 @@ public class BirimIcerikSablonuTest extends BaseTest {
     String sablonAdi_1082;
     String sablonAdi_1079;
     String editorText;
+    String editorText_1082;
+    String editorText_1085;
     String editorText_1079;
 
     BirimIcerikSablonlarPage birimIcerikSablonlarPage = new BirimIcerikSablonlarPage();
@@ -177,7 +179,7 @@ public class BirimIcerikSablonuTest extends BaseTest {
                 .sablonAdiDoldur(sablonAdi_1082)
                 .kullanilacakBirimiSec(optiim.getBirimAdi(), exactText(optiim.getBirimAdi()))
                 .altBirimlerGorsunMu("ALT BİRİMLER GÖRSÜN");
-        editorText = birimIcerikSablonlarPage.getEditor()
+        editorText_1082 = birimIcerikSablonlarPage.getEditor()
                 .type(sablonAdi_1082).type(Keys.ENTER)
                 .toolbarCombo("Etiket Ekle", "Birim")
                 .getText();
@@ -200,8 +202,7 @@ public class BirimIcerikSablonuTest extends BaseTest {
         TextEditor editor = olurYazisiOlusturPage.editorTabAc().getEditor();
         editor.toolbarButton("Öntanımlı İçerik Şablonu Kullan", true);
         editorTabOntanimliSablonuSec(sablonAdi_1082);
-        checkEditorHasText(exactText(editorText));
-//        Assert.assertEquals(editorText, actualText);
+        checkEditorHasText(exactText(editorText_1082));
         editorTabOntanimliSablonUygula();
 
         Assert.assertFalse(optiim4.getBirimAdi().isEmpty(), "Kullanıcının birim boş olamamalı");
@@ -238,7 +239,7 @@ public class BirimIcerikSablonuTest extends BaseTest {
                 .altBirimlerGorsunMu("ALT BİRİMLER GÖRMESİN")
                 .evrakTipiSec("Giden Evrak");
 
-        editorText = birimIcerikSablonlarPage.getEditor()
+        editorText_1085 = birimIcerikSablonlarPage.getEditor()
                 .type(sablonAdi).type(Keys.ENTER)
                 .toolbarCombo("Etiket Ekle", "Kullanıcı Soyadı")
                 .getText();
@@ -265,7 +266,7 @@ public class BirimIcerikSablonuTest extends BaseTest {
     }
 
     @Test(description = "TS1085: farklı biriminde görünmemeli", dependsOnMethods = {"TS1085"}
-            , enabled = true, priority = 9)
+            , enabled = true, priority = 10)
     @Description("TS1085'da oluşturulan şablon farklı biriminde görünmemeli")
     public void TS1085_kontrolFarkliBirim() {
         login(user1);
@@ -277,7 +278,7 @@ public class BirimIcerikSablonuTest extends BaseTest {
 
     @Test(description = "TS1085: yaratılan biriminde seçilebilir olmalı ve !Olur Yazisi Olustur sayfada görünmemeli"
             , dependsOnMethods = {"TS1085"}, enabled = true
-            , priority = 10)
+            , priority = 11)
     public void TS1085_kontrol_birim() throws InterruptedException {
         login(optiim);
         String konu = "TS1085_" + getSysDate();
@@ -286,7 +287,7 @@ public class BirimIcerikSablonuTest extends BaseTest {
         editor.toolbarButton("Öntanımlı İçerik Şablonu Kullan", true);
 
         editorTabOntanimliSablonuSec(sablonAdi);
-        checkEditorHasText(exactText(editorText));
+        checkEditorHasText(exactText(editorText_1085));
         editorTabOntanimliSablonUygula();
 
         Assert.assertTrue(editor.getText().contains("TEST"), "Soyadı TEST olmalı");
@@ -300,7 +301,7 @@ public class BirimIcerikSablonuTest extends BaseTest {
         editorTabOntanimliSablonuOlmadigi();
     }
 
-    @Test(enabled = true, description = "TS1079: Şablon güncelleme", dependsOnMethods = {"TS1085"}, priority = 11)
+    @Test(enabled = true, description = "TS1079: Şablon güncelleme", dependsOnMethods = {"TS1085"}, priority = 12)
     public void TS1079() {
         login();
         birimIcerikSablonlarPage = new BirimIcerikSablonlarPage().openPage();
@@ -324,7 +325,7 @@ public class BirimIcerikSablonuTest extends BaseTest {
 
     @Test(enabled = true, description = "TS1079: Şablon güncellendiğini kontrolü"
             , dependsOnMethods = {"TS1079"}
-            , priority = 12)
+            , priority = 13)
     public void TS1079_kontrol() {
         login(optiim4);
         birimIcerikSablonlarPage = new BirimIcerikSablonlarPage().openPage();
@@ -338,7 +339,7 @@ public class BirimIcerikSablonuTest extends BaseTest {
                 .kaydet().islemMesaji().dikkatOlmali("Üst birim şablonuna işlem yapılamaz!");
     }
 
-    @Test(enabled = true, description = "Şablonu sil", dependsOnMethods = {"TS1079_kontrol"}, priority = 13)
+    @Test(enabled = true, description = "Şablonu sil", dependsOnMethods = {"TS1079_kontrol"}, priority = 14)
     public void sablonSil() {
         login();
         birimIcerikSablonlarPage = new BirimIcerikSablonlarPage().openPage();

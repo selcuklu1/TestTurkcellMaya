@@ -977,7 +977,7 @@ public class GizlilikKleransiTest extends BaseTest {
                 .dagitimBilgileriKisiSec("Mehmet Bozdemir")
                 .kaydet();
         String evrakNO2190 = gelenEvrakKayitPage.popUps();
-        gelenEvrakKayitPage.islemMesaji().isBasarili();
+        gelenEvrakKayitPage.islemMesaji().basariliOlmali();
 
         gelenEvraklarPage
                 .openPage()
@@ -1063,7 +1063,7 @@ public class GizlilikKleransiTest extends BaseTest {
                 .dagitimBilgileriKisiSec("Mehmet Bozdemir")
                 .kaydet();
         String evrakNO2189 = gelenEvrakKayitPage.popUps();
-        gelenEvrakKayitPage.islemMesaji().isBasarili();
+        gelenEvrakKayitPage.islemMesaji().basariliOlmali();
 
         gelenEvraklarPage
                 .openPage()
@@ -1134,7 +1134,7 @@ public class GizlilikKleransiTest extends BaseTest {
                 .dagitimBilgileriKisiSec("YASEMİN")
                 .kaydet();
         String evrakNO2189 = gelenEvrakKayitPage.popUps();
-        gelenEvrakKayitPage.islemMesaji().isBasarili();
+        gelenEvrakKayitPage.islemMesaji().basariliOlmali();
 
         kullaniciEvrakDevretPage
                 .openPage()

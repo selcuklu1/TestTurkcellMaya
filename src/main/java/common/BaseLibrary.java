@@ -95,12 +95,24 @@ public class BaseLibrary extends ElementsContainer {
     //<editor-fold desc="Allure screenshooter">
     @Attachment(value = "Page screenshot", type = "image/png")
     public byte[] takeScreenshot() {
+        byte[] bytes = new byte[]{};
         try {
-            return ((TakesScreenshot) WebDriverRunner.getWebDriver()).getScreenshotAs(OutputType.BYTES);
+            bytes = ((TakesScreenshot) WebDriverRunner.getWebDriver()).getScreenshotAs(OutputType.BYTES);
         } catch (WebDriverException e) {
-            e.printStackTrace();
-            return new byte[]{};
+            System.out.println("Error takeScreenshot:" + e.getMessage());
         }
+        return bytes;
+    }
+
+    @Attachment(value = "Page screenshot", type = "image/png")
+    public byte[] takeScreenshot(WebDriver driver) {
+        byte[] bytes = new byte[]{};
+        try {
+            bytes = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+        } catch (WebDriverException e) {
+            System.out.println("Error takeScreenshot:" + e.getMessage());
+        }
+        return bytes;
     }
     
     /**

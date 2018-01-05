@@ -2,12 +2,13 @@ package common;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.WebDriverRunner;
 import data.User;
 import io.qameta.allure.Step;
-import listeners.SettingsListener;
+import listeners.DriverEventListener;
 import org.testng.ITestResult;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
 import pages.LoginPage;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetFramework;
@@ -17,9 +18,11 @@ import java.util.Locale;
 import static data.TestData.belgenetURL;
 
 //BrowserPerTest.class
-@Listeners({SettingsListener.class})//, BrowserPerTest.class})
+//@Listeners({SettingsListener.class})
 public class BaseTest extends BaseLibrary {
 
+    static final int timeout = 20;
+    static final int loadingTimeout = 30;
 
     @BeforeClass(alwaysRun = true)
     public void driverSetUp() {
@@ -28,6 +31,7 @@ public class BaseTest extends BaseLibrary {
         Locale.setDefault(turkishLocal);
 
         BelgenetFramework.setUp();
+        WebDriverRunner.addListener(new DriverEventListener());
 
         //Configuration.remote = "http://10.101.20.151:4444/wd/hub";
         //Configuration.remote = "http://localhost:4444/wd/hub";
@@ -37,14 +41,13 @@ public class BaseTest extends BaseLibrary {
         Configuration.browserVersion = System.getProperty("node");
         Configuration.remote = System.getProperty("hub");
 
-
         Configuration.reportsFolder = "test-result/reports";
         Configuration.screenshots = false;
         Configuration.savePageSource = false;
 
-        Configuration.collectionsTimeout = 30 * 1000;
-        Configuration.timeout = 30 * 1000;
-        setWaitForLoading(20);
+        Configuration.collectionsTimeout = timeout * 1000;
+        Configuration.timeout = timeout * 1000;
+        setWaitForLoading(loadingTimeout);
         //Configuration.clickViaJs = true;
 //        Configuration.holdBrowserOpen = true;
         //Configuration.headless = false;
@@ -59,16 +62,16 @@ public class BaseTest extends BaseLibrary {
         // System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, "/dev/null");
 //      getBrowserName();
 
-        log.info("remote: " + Configuration.remote);
-        log.info("browser: " + Configuration.browser);
-        log.info("url: " + Configuration.baseUrl);
-        log.info("Doc path: " + getDocPath());
-        log.info("Download path: " + getDownoladPath());
-        log.info("Selenide/Selenium driver has been set up.");
+        System.out.println("remote: " + Configuration.remote);
+        System.out.println("browser: " + Configuration.browser);
+        System.out.println("url: " + Configuration.baseUrl);
+        System.out.println("Doc path: " + getDocPath());
+        System.out.println("Download path: " + getDownoladPath());
+        System.out.println("Selenide/Selenium driver has been set up.");
     }
 
-    @AfterMethod
-    public void takeScreenshotOnFailure(ITestResult testResult) {
+    @AfterMethod(alwaysRun = true)
+    public void afterMethod(ITestResult testResult) {
         int SUCCESS = 1;
         int FAILURE = 2;
         int SKIP = 3;
@@ -89,6 +92,8 @@ public class BaseTest extends BaseLibrary {
         System.out.println("///////////////////////////////////////////////////////");
         System.out.println("Test " + result + ": " + testResult.getName());
         System.out.println("///////////////////////////////////////////////////////");
+        WebDriverRunner.closeWebDriver();
+//        WebDriverRunner.getAndCheckWebDriver().quit();
     }
 
     /*@AfterMethod(alwaysRun = true)
@@ -101,11 +106,11 @@ public class BaseTest extends BaseLibrary {
         }*//*
     }*/
 
-    @AfterClass(alwaysRun = true)
+    /*@AfterClass(alwaysRun = true)
     public void afterClass() {
         Selenide.close();
-       log.info("Browser has been closed.");
-    }
+        log.info("Browser has been closed.");
+    }*/
 
     @Step("Login")
     public void login(User user) {

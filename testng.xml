@@ -3,7 +3,7 @@
 <!--<suite thread-count="1" name="Test Suite" parallel="none" verbose="1">-->
 <!--<suite thread-count="5" name="Test Suite" parallel="classes" verbose="1">-->
 
-<suite name="Test Suite" parallel="classes" verbose="1">
+<suite name="AAAAAA" parallel="classes" verbose="1">
     <!--thread-count="10"-->
     <!--<listeners>-->
     <!--<listener class-name="listeners.TestListener"></listener>-->
@@ -25,8 +25,8 @@
     <test name="All">
         <packages>
             <package name="tests.BirimIcerikSablonu"/>
-            <!--           <package name="tests.BirimIcerikSablonu"/>
-                       <package name="tests.EvrakNot"/>-->
+            <package name="tests.EvrakNot"/>
+            <package name="tests.EvrakBeklemeyeAlma"/>
         </packages>
     </test>
 </suite>

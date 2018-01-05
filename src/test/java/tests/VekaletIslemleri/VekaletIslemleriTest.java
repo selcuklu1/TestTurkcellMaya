@@ -434,7 +434,7 @@ public class VekaletIslemleriTest extends BaseTest {
                 .dagitimBilgileriKisiSec("YASEMİN")
                 .kaydet();
         String evrakNO2212 = gelenEvrakKayitPage.popUps();
-        gelenEvrakKayitPage.islemMesaji().isBasarili();
+        gelenEvrakKayitPage.islemMesaji().basariliOlmali();
 
         String mesaj = "Seçmiş olduğunuz kullanıcı grubunda vekalet vermiş kişiler bulunmaktadır. Kullanıcı grubunu kullanırsanız havale asıl kişilere(vekalet veren) gidecektir. Yine de işleme devam etmek istiyor musunuz?";
         String kullanici = "OPTİİM";
@@ -492,7 +492,7 @@ public class VekaletIslemleriTest extends BaseTest {
                 .dagitimBilgileriKisiSec("YASEMİN")
                 .kaydet();
         String evrakNO11 = gelenEvrakKayitPage.popUps();
-        gelenEvrakKayitPage.islemMesaji().isBasarili();
+        gelenEvrakKayitPage.islemMesaji().basariliOlmali();
 //        }
 
 //        String[] evrakNo = new String[2];

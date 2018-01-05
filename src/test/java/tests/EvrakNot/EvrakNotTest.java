@@ -2,7 +2,6 @@ package tests.EvrakNot;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.Selectors;
 import com.codeborne.selenide.SelenideElement;
 import common.BaseTest;
 import data.User;
@@ -10,8 +9,6 @@ import io.qameta.allure.Allure;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -201,7 +198,7 @@ public class EvrakNotTest extends BaseTest {
         page.openPage().editorTabAc().getEditor().type("Editor Text");
         page.editorTabAc();
         newNotes = evrakNot.notlariOlustur(newNotes);
-        takeScreenshot();
+        //takeScreenshot();
 
         //------------------------------------
         konu = "TS2155_" + getSysDate();
@@ -213,19 +210,20 @@ public class EvrakNotTest extends BaseTest {
         taslakEvraklarPage.openPage();
         SelenideElement evrak = evragiBul(konu);
         evrak.click();
-        notlar.notlariKontolEtLogoVeRenk(newNotes, "TScbLogo.png");
+        notlar.notlariKontolEtLogoVeRenk(newNotes, "tccbLogo.png");
 
 
         ustYazi.evrakNotlariTabiAc().notlariKontolEt(newNotes);
-        takeScreenshot();
+        //takeScreenshot();
 
         evrak.$(page.filter().icerikGoster()).click();
         evrakNot.notlariKontrolEt(newNotes);
         logout();
     }
 
-    @Test(enabled = true, description = "TS2160: Not İzleme - Evrak Notunun Paraf bekleneler, Parafladıklarım, İmza Bekleyenler ve İmzaladıklarım ekranlarında izlenmesi"
+    @Test(description = "TS2160: Not İzleme - Evrak Notunun Paraf bekleneler, Parafladıklarım, İmza Bekleyenler ve İmzaladıklarım ekranlarında izlenmesi"
             , dependsOnMethods = {"TS2155"}
+            , enabled = true
             )
     public void TS2160() {
         UstYazi ustYazi = new UstYazi();
@@ -243,11 +241,11 @@ public class EvrakNotTest extends BaseTest {
         parafladiklarimPage.openPage();
         SelenideElement evrak = evrak = evragiBul(konu);
         evrak.click();
-        notlar.notlariKontolEtLogoVeRenk(newNotes, "TScbLogo.png");
+        notlar.notlariKontolEtLogoVeRenk(newNotes, "tccbLogo.png");
         notlar.evrakNotlariDialoguKapat();
 
         ustYazi.evrakNotlariTabiAc().notlariKontolEt(newNotes);
-        takeScreenshot();
+        //takeScreenshot();
 
 //////////////////////
         SelenideElement icerikGoster = evrak.$(imzaBekleyenlerPage.filter().icerikGoster());
@@ -260,7 +258,7 @@ public class EvrakNotTest extends BaseTest {
         for (int i = 0; i < newNotes.length; i++) {
             rows.get(i).shouldHave(text(newNotes[i][1]));
         }
-        takeScreenshot();
+        //takeScreenshot();
 ///////////////////////
 
         logout();
@@ -275,11 +273,11 @@ public class EvrakNotTest extends BaseTest {
         newNotesGenel.add(newNotes[0]);
 
         notlar.notlariKontolEt(newNotesGenel);
-        takeScreenshot();
+        //takeScreenshot();
 
         icerikGoster = evrak.$(imzaBekleyenlerPage.filter().icerikGoster());
         icerikGoster.click();
-        evrakNot.geTSreatedNotes().shouldHaveSize(2);
+        evrakNot.getCreatedNotes().shouldHaveSize(2);
         evrakNot.notlariKontrolEt(newNotesGenel);
 
         newNotesGenel.add(0, new String[]{"Genel", "Açıklama5", "", ""});
@@ -301,7 +299,7 @@ public class EvrakNotTest extends BaseTest {
         notlar.notlariKontolEt(newNotesGenel);
 
         ustYazi.evrakNotlariTabiAc();
-        ustYazi.geTSreatedNotes().shouldHaveSize(newNotesGenel.size());
+        ustYazi.getCreatedNotes().shouldHaveSize(newNotesGenel.size());
         ustYazi.notlariVeButonlariKontolEt(newNotesGenel, newNotesGenel.get(0)[1]);
 
         //Delete note
@@ -348,7 +346,7 @@ public class EvrakNotTest extends BaseTest {
         evrak.click();
 
         String[][] genelNotes = {{"Genel", "Açıklama1", "", ""}, {"Genel", "Açıklama3", "", ""}};
-        notlar.notlariKontolEtLogoVeRenk(genelNotes, "TScbLogo.png");
+        notlar.notlariKontolEtLogoVeRenk(genelNotes, "tccbLogo.png");
 
         postalanacakEvraklarPage.evrakPostala()
                 .gidisSekli("E-Posta")
@@ -361,7 +359,7 @@ public class EvrakNotTest extends BaseTest {
         evrak = postalananlarPage.openPage().filter()
                 .findRowsWithToday(Condition.text(konu)).shouldHaveSize(1).first();
         evrak.click();
-        notlar.notlariKontolEtLogoVeRenk(genelNotes, "TScbLogo.png");
+        notlar.notlariKontolEtLogoVeRenk(genelNotes, "tccbLogo.png");
     }
 
     @Step("Postala")
@@ -440,8 +438,9 @@ public class EvrakNotTest extends BaseTest {
                 .kullan()
                 .onayAkisiTitleKontrol("Yeni akış")
                 .onayAkisiDetailKontrol(user1.getName() + "-Paraflama / " + user2.getName() + "-İmzalama");
-        page.kaydet();
-        $("#kaydeTSonfirmForm\\:kaydetEvetButton").click();
+//        page.kaydet();
+        page.evrakKaydet();
+//        $("#kaydeTSonfirmForm\\:kaydetEvetButton").click();
         page.islemMesaji().basariliOlmali();
         $x("//form[@id='yeniGidenEvrakForm']/ancestor::div[starts-with(@id,'window') and contains(@id,'Dialog')]/div[contains(@class,'ui-dialog-titlebar')]/a[contains(@class,'ui-dialog-titlebar-close')]").click();
         $("#kapatKaydetEvetButton").click();
@@ -457,7 +456,7 @@ public class EvrakNotTest extends BaseTest {
                             , text(notes[i][1])
                             , text(notes[i][2])
                             , text(notes[i][3]));
-            Assert.assertTrue(notlar.kurumLogosu().contains("TScbLogo.png"), "Kurum logosu olmalı");
+            Assert.assertTrue(notlar.kurumLogosu().contains("tccbLogo.png"), "Kurum logosu olmalı");
 
             if (notes[i][0].equals("Kişisel"))
                 Assert.assertTrue(notlar.zeminRengiBeyaz(), "Kişisel notun arka plan beyaz");
@@ -571,21 +570,21 @@ public class EvrakNotTest extends BaseTest {
             return this;
         }
 
-        public ElementsCollection geTSreatedNotes() {
+        public ElementsCollection getCreatedNotes() {
             $$("div[id*='evrakNotlariTable']>div").shouldHave(sizeGreaterThan(0)).last().shouldBe(visible);
             return $$("div[id*='evrakNotlariTable']>div");
         }
 
         @Step("Oluşturulan notu bul")
         public ElementsCollection olusturulanNot(String aciklamaText) {
-            ElementsCollection rows = geTSreatedNotes();
+            ElementsCollection rows = getCreatedNotes();
             return rows.filterBy(text(aciklamaText));
         }
 
         @Step("Oluşturulan notu bul")
         public ElementsCollection olusturulanNot(String olusturan, String notTipi, String aciklamaText) {
             notesDiv.shouldHave(text(aciklamaText));
-            ElementsCollection rows = geTSreatedNotes();
+            ElementsCollection rows = getCreatedNotes();
             return rows
                     .filterBy(text(olusturan))
                     .filterBy(text(notTipi))
@@ -595,9 +594,9 @@ public class EvrakNotTest extends BaseTest {
         @Step("Oluşturulan notu bul")
         public ElementsCollection olusturulanNot(String olusturan, String aciklamaText, String date, String time) {
             notesDiv.shouldBe(visible).shouldHave(text(aciklamaText));
-            ElementsCollection rows = geTSreatedNotes();
+            ElementsCollection rows = getCreatedNotes();
             for (int i = 0; i < 5; i++) {
-                rows = geTSreatedNotes().filterBy(text(olusturan)).filterBy(text(aciklamaText))
+                rows = getCreatedNotes().filterBy(text(olusturan)).filterBy(text(aciklamaText))
                         .filterBy(text(date)).filterBy(text(time));
                 if (rows.size() > 0)
                     break;
@@ -645,7 +644,7 @@ public class EvrakNotTest extends BaseTest {
             sleep(2000);
 //            Supplier<byte[]> screenshot = () -> takeScreenshot();
 //            Allure.addByteAttachmentAsync("Oluşturan not", "image/png", () -> takeScreenshot());
-            takeScreenshot();
+//            takeScreenshot();
 
             String date = DateTimeFormatter.ofPattern("dd.MM.yyyy").format(LocalDateTime.now());
             String time = DateTimeFormatter.ofPattern("HH").format(LocalDateTime.now());
@@ -746,7 +745,7 @@ public class EvrakNotTest extends BaseTest {
             return olusturulanNot(olusturan, notTipi, aciklama, date, time).shouldHaveSize(1).first();
         }
 
-        public ElementsCollection geTSreatedNotes() {
+        public ElementsCollection getCreatedNotes() {
             $("tbody[id$='kisiselNotEkleDataTableId_data']").shouldHave(visible);
             $("tbody[id$='kisiselNotEkleDataTableId_data'] > tr[data-ri][role=row]").shouldBe(visible);
             ElementsCollection rows = $$("tbody[id$='kisiselNotEkleDataTableId_data'] > tr[data-ri][role=row]");
@@ -756,13 +755,13 @@ public class EvrakNotTest extends BaseTest {
 
         @Step("Oluşturulan notu bul")
         public ElementsCollection olusturulanNot(String aciklamaText) {
-            ElementsCollection rows = geTSreatedNotes();
+            ElementsCollection rows = getCreatedNotes();
             return rows.filterBy(text(aciklamaText));
         }
 
         @Step("Oluşturulan notu bul")
         public ElementsCollection olusturulanNot(String olusturan, String notTipi, String aciklamaText) {
-            ElementsCollection rows = geTSreatedNotes();
+            ElementsCollection rows = getCreatedNotes();
             return rows
                     .filterBy(text(olusturan))
                     .filterBy(text(notTipi))
@@ -772,7 +771,7 @@ public class EvrakNotTest extends BaseTest {
         @Step("Oluşturulan notu bul")
         public ElementsCollection olusturulanNot(String olusturan, String notTipi, String aciklamaText, String date, String time) {
 //            sleep(3000);
-            ElementsCollection rows = geTSreatedNotes();
+            ElementsCollection rows = getCreatedNotes();
             return rows
                     .filterBy(text(olusturan))
                     .filterBy(text(notTipi))
@@ -810,10 +809,10 @@ public class EvrakNotTest extends BaseTest {
             SelenideElement counter = $("span[id='evrakKisiselNotDialogFormId:aciklamaCounter']");
 
             counter.should(visible);
-            int lefTSount = getNumber(counter.text());
+            int leftCount = getNumber(counter.text());
 
             SoftAssert sa = new SoftAssert();
-            sa.assertEquals(lefTSount, maxCount, "Max karakter sayısı");
+            sa.assertEquals(leftCount, maxCount, "Max karakter sayısı");
 
             String text = "";
             for (int i = 0; i < maxCount - (int) (Math.log10(maxCount) + 1); i++) {
@@ -821,8 +820,8 @@ public class EvrakNotTest extends BaseTest {
             }
             noteEkleDialog.$("textarea").sendKeys(text + String.valueOf(maxCount));
 
-            lefTSount = getNumber(counter.text());
-            sa.assertEquals(lefTSount, 0, "Kalan karakter sayısı");
+            leftCount = getNumber(counter.text());
+            sa.assertEquals(leftCount, 0, "Kalan karakter sayısı");
 
             noteEkleDialog.$("textarea").shouldHave(value(String.valueOf(maxCount)));
             noteEkleDialog.$("textarea").sendKeys("*");
@@ -875,7 +874,7 @@ public class EvrakNotTest extends BaseTest {
         public UstYazi notuSil(ArrayList<String[]> notes, int index) {
             SelenideElement deleteNote = olusturulanNot(notes.get(index)[1]).shouldHaveSize(1).first();
             deleteNote.$(deleteButton).click();
-            geTSreatedNotes().shouldHaveSize(notes.size() - 1);
+            getCreatedNotes().shouldHaveSize(notes.size() - 1);
             for (String[] note : notes) {
                 if (note[1].equals(notes.get(index)[1])) {
                     olusturulanNot(note[1]).shouldHaveSize(0);
@@ -906,7 +905,6 @@ public class EvrakNotTest extends BaseTest {
      * Evrak Önizleme
      */
     class EvrakOnizleme {
-
         class Notlari {
             SelenideElement evrakNotlariDialog = $("#evrakOnizlemeNotlarDialogId");
             SelenideElement closeDialog = $x("//div[@id='evrakOnizlemeNotlarDialogId']//a[span[contains(@class,'ui-icon-closethick')]]");
