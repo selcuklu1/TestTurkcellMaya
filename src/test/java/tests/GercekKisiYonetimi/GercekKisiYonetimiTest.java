@@ -370,7 +370,8 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .iletisimBilgisiEpostaDoldur(ePosta)
                 .iletisimBilgisiWebAdresiDoldur(webAdres)
                 .iletisimBilgisiKaydet()
-                .islemMesaji().basariliOlmali(basariMesaji);
+                .islemMesaji()
+                .basariliOlmali(basariMesaji);
 
         gercekKisiYonetimPage
                 .kaydet()

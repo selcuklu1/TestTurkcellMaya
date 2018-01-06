@@ -82,7 +82,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .openPage()
                 .evrakBilgileriUstYaziEkle(ustYaziPath)
                 .ustYaziPdfAdiKontrol(ustYaziAdi)
-                .islemMesaji().isBasarili();
+                .islemMesaji().basariliOlmali();
 
         gelenEvrakKayitPage
                 .konuKoduDoldur(konuKodu)
@@ -198,7 +198,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .dagitimBilgileriBirimDoldur(birim)
                 .kaydet();
         evrakNO328 = gelenEvrakKayitPage.popUps();
-        gelenEvrakKayitPage.islemMesaji().isBasarili();
+        gelenEvrakKayitPage.islemMesaji().basariliOlmali();
 
         birimHavaleEdilenlerPage
                 .openPage()
@@ -405,7 +405,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .openPage()
                 .evrakBilgileriUstYaziEkle(ustYaziPath)
                 .ustYaziPdfAdiKontrol(ustYaziAdi)
-                .islemMesaji().isBasarili();
+                .islemMesaji().basariliOlmali();
 
         gidenEvrakKayitPage
                 .evrakTuruSec(evrakTuru)
@@ -431,7 +431,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .popUpkaydetEvet();
         String evrakNo1340 = gidenEvrakKayitPage.popUpBasariliKapat();
         gidenEvrakKayitPage
-                .islemMesaji().isBasarili();
+                .islemMesaji().basariliOlmali();
 
 //        Thread.sleep(2000);
 
@@ -466,7 +466,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .evrakBilgileriUstYaziEkle(ustYaziPath)
                 .ustYaziDegistirilmisPopUpKontrol(true)
                 .ustYaziPdfAdiKontrol(ustYaziAdi)
-                .islemMesaji().isBasarili();
+                .islemMesaji().basariliOlmali();
         pdfText = gelenEvrakKayitPage.onIzlemePdfText();
 
         gelenEvrakKayitPage

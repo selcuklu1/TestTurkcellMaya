@@ -77,7 +77,7 @@ public class OnayAkisiTest extends BaseTest {
     @Test(enabled = true, description = "TS1897a: Varsayılan onay akışının pasif edilmesi")
     public void TS1897a() {
 
-        String kullanici = "TS1897 OnayAkisi";
+        String kullanici = "Ts1897 OnayAkisi";
         String basariMesaji = "İşlem başarılıdır!";
 
         //tests.Data kontrolu için yazıldı. Pasif ise aktif yapılır.
@@ -140,7 +140,7 @@ public class OnayAkisiTest extends BaseTest {
     @Test(enabled = true, description = "TS1897b: Onay akışı varsayılan yapma")
     public void TS1897b() {
 
-        String kullanici = "TS1897 OnayAkisi";
+        String kullanici = "Ts1897 OnayAkisi";
         String basariMesaji = "İşlem başarılıdır!";
 
         //tests.Data kontrolu için yazıldı. Pasif ise aktif yapılır.
@@ -685,7 +685,7 @@ public class OnayAkisiTest extends BaseTest {
     @Test(enabled = true, description = "TS2111: Onay Akışı Yönetimi - Kayıtlı Onay Akışını kullanım sırasında anlık değiştirme")
     public void TS2111() {
 
-        String onayAkisi = "TS2111 Onay Akisi"; //parafçı, kontrolcu, koordinecisi ve imzacısı olmalı.
+        String onayAkisi = "Ts2111 Onay Akisi"; //parafçı, kontrolcu, koordinecisi ve imzacısı olmalı.
         String kullanici1 = "Optiim TEST"; //parafçı
         String kullanici2 = "Zübeyde TEKİN"; //koordineci
         String kullanici3 = "Sezai ÇELİK"; //kontrolcu

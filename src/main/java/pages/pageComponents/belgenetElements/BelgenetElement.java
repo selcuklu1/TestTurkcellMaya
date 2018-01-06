@@ -115,9 +115,9 @@ public interface BelgenetElement extends SelenideElement {
 
     BelgenetElement clearAllSelectedLov();
 
-    BelgenetElement lastSelectedLovTitle();
+    BelgenetElement getLastSelectedItemTitle();
 
-    BelgenetElement lastSelectedLovDetail();
+    BelgenetElement getLastSelectedItemDetail();
 
     String lastSelectedLovTitleText();
 
