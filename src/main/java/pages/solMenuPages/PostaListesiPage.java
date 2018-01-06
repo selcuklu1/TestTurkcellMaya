@@ -4,6 +4,7 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import pages.MainPage;
@@ -170,6 +171,13 @@ public class PostaListesiPage extends MainPage {
         lblGidisSekli.isDisplayed();
 //        lblGonderildigiYer2.isDisplayed();
         lblTutar.isDisplayed();
+        Allure.addAttachment("label",lblPostaListesiAdi.text());
+        Allure.addAttachment("label",lblBarkodNo.text());
+        Allure.addAttachment("label",lblGonderildigiYer.text());
+        Allure.addAttachment("label",lblGonderildigiKurum.text());
+        Allure.addAttachment("label",lblAdres.text());
+        Allure.addAttachment("label",lblGidisSekli.text());
+        Allure.addAttachment("label",lblTutar.text());
         return this;
     }
 

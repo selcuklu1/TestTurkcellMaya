@@ -111,8 +111,8 @@ public class PulYonetimiTest extends BaseTest {
                 "Ankara İçi APS"
         };
 
-//        Test datası oluşturuluyor
 
+        //region Test Datası
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
@@ -145,6 +145,7 @@ public class PulYonetimiTest extends BaseTest {
                 .listeOlustur()
                 .postaListesiSec(konu)
                 .listeyeEkle();
+        //endregion
 
 //         Test başlangıcı
 
@@ -194,7 +195,8 @@ public class PulYonetimiTest extends BaseTest {
         String gramaj2 = "5";
         String konu = "TS2214 20180102113202";
 
-        // test datası oluşturuluyor
+
+        //region Test Datası
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
@@ -215,6 +217,7 @@ public class PulYonetimiTest extends BaseTest {
                 .editorTabAc()
                 .editorIcerikDoldur(konu)
                 .evrakImzala();
+        //endregion
 
         logout();
         login("mbozdemir", "123");
