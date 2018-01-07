@@ -12,7 +12,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import static com.codeborne.selenide.Condition.exist;
-import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
 
 public class UstMenu extends BaseLibrary {
@@ -81,14 +80,15 @@ public class UstMenu extends BaseLibrary {
 //            System.out.println("""\"" + e.text() + "\"");
         }
     }
-    private void printUstMenuAsEnum() throws Exception {
+
+    private void printUstMenuAsEnum() {
 //        System.out.println("public enum UstMenuData {");
 //        System.out.println("DUMP;");
 
         ElementsCollection sections = $$x("//fieldset[legend[span]]").filterBy(Condition.visible);
 //        ElementsCollection sections = $$("legend").filterBy(Condition.visible);
 //        System.out.println("public enum UstMenuGroup {");
-        for (SelenideElement section:sections) {
+        for (SelenideElement section : sections) {
             String sectionName = section.$("legend").text().trim();
             String sectionEnumName = clearTurkishChars(sectionName);
             sectionEnumName = sectionEnumName.replace(" ", "");
@@ -96,24 +96,24 @@ public class UstMenu extends BaseLibrary {
 //            System.out.println(sectionEnumName + "(\""+ sectionName +"\"),");
             System.out.println("public enum " + sectionEnumName + " {");
 
-            String menuName="";
-            String menuEnumName="";
+            String menuName = "";
+            String menuEnumName = "";
 //            ElementsCollection menus = $$x("//fieldset[legend[span]]//a/span").filterBy(Condition.visible);
             ElementsCollection menus = section.$$("a span").filterBy(Condition.visible);
             for (int i = 0; i < menus.size(); i++) {
                 menuName = menus.get(i).text().trim();
                 menuEnumName = clearTurkishChars(menuName).replace(" ", "");
-                if (i == menus.size()-1)
-                    System.out.println(menuEnumName + "(\""+ menuName +"\");");
+                if (i == menus.size() - 1)
+                    System.out.println(menuEnumName + "(\"" + menuName + "\");");
                 else
-                    System.out.println(menuEnumName + "(\""+ menuName +"\"),");
+                    System.out.println(menuEnumName + "(\"" + menuName + "\"),");
             }
 
             System.out.println("private String name;\n" +
                     "    private String groupName;\n" +
-                    "    "+ sectionEnumName +"(String name) {\n" +
+                    "    " + sectionEnumName + "(String name) {\n" +
                     "        this.name = name;\n" +
-                    "        this.groupName = UstMenuGroup."+ sectionEnumName +".getName();\n" +
+                    "        this.groupName = UstMenuGroup." + sectionEnumName + ".getName();\n" +
                     "    }\n" +
                     "\n" +
                     "    public String getName() {\n" +

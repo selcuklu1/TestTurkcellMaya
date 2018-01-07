@@ -25,18 +25,6 @@ public class PulYonetimiTest extends BaseTest {
     PostalanacakEvraklarPage postalanacakEvraklarPage;
     EvrakOlusturPage evrakOlusturPage;
     TopluPostalanacakEvraklarPage topluPostalanacakEvraklarPage;
-
-    @BeforeMethod
-    public void loginBeforeTests() {
-        pulYonetimiPage = new PulYonetimiPage();
-        postaListesiPage = new PostaListesiPage();
-        postalanacakEvraklarPage = new PostalanacakEvraklarPage();
-        evrakOlusturPage = new EvrakOlusturPage();
-        topluPostalanacakEvraklarPage = new TopluPostalanacakEvraklarPage();
-
-
-    }
-
     String konuKodu = "010.01";
     String kaldiralacakKlasor = "Diğer";
     String evrakTuru = "Resmi Yazışma";
@@ -49,9 +37,20 @@ public class PulYonetimiTest extends BaseTest {
     String geregiTipi = "Gerçek Kişi";
     String basariMesaji = "İşlem başarılıdır!";
 
+    @BeforeMethod
+    public void loginBeforeTests() {
+        pulYonetimiPage = new PulYonetimiPage();
+        postaListesiPage = new PostaListesiPage();
+        postalanacakEvraklarPage = new PostalanacakEvraklarPage();
+        evrakOlusturPage = new EvrakOlusturPage();
+        topluPostalanacakEvraklarPage = new TopluPostalanacakEvraklarPage();
+
+
+    }
+
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS1732: Pul Yönetimi ekranından yeni tanımlama yapma")
-    public void TS1732() throws InterruptedException {
+    public void TS1732() {
 
         login("mbozdemir", "123");
         String basariMesaji = "İşlem başarılıdır!";

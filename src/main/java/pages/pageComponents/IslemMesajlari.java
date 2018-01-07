@@ -38,11 +38,11 @@ public class IslemMesajlari extends BaseLibrary {
     // v.2.0
     ///////////////////////////////////////////////////////////////////////////
 
-    public ElementsCollection getMessageTitles(){
+    public ElementsCollection getMessageTitles() {
         return $$(titleLocator);
     }
 
-    public ElementsCollection getMessageBodies(){
+    public ElementsCollection getMessageBodies() {
         return $$(msgLocator);
     }
 
@@ -131,7 +131,8 @@ public class IslemMesajlari extends BaseLibrary {
     public void closeMessage() {
         try {
             WebDriverRunner.getWebDriver().findElement(closeButtonLocator).click();
-        } catch (Exception ignored) { }
+        } catch (Exception ignored) {
+        }
     }
 
     public enum MessageTitle {
@@ -167,8 +168,6 @@ public class IslemMesajlari extends BaseLibrary {
             return value;
         }
     }
-
-
 
 
     ///////////////////////////////////////////////////////////////////////////

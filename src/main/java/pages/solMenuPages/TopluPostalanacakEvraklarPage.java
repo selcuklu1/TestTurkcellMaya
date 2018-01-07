@@ -330,7 +330,7 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
     }
 
     @Step("Konuya göre Evrak seç. \"{konu}\" ")
-    public TopluPostalanacakEvraklarPage evrakSec(String konu,boolean secim) {
+    public TopluPostalanacakEvraklarPage evrakSec(String konu, boolean secim) {
         Boolean isSelected = false;
 
         SelenideElement currentRow = tableEvraklar
@@ -416,8 +416,7 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
                     .first()
                     .shouldBe(Condition.exist)
                     .shouldBe(Condition.visible);
-        }
-        else {
+        } else {
             tableEvraklar
                     .filterBy(Condition.text(konu))
                     .first()

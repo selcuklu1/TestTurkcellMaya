@@ -115,7 +115,7 @@ public class EvrakPostalamaTest extends BaseTest {
                 .kaldirilacakKlasorler("Diğer")
                 .evrakTuruSec("Resmi Yazışma")
                 .geregiSecimTipiSec("Kurum")
-                .geregiDoldur("Başbakanlık",   "")
+                .geregiDoldur("Başbakanlık", "")
                 .geregiKurumPostaTipi("Evrak Servisi Elden")
                 .onayAkisiKullanicilariTemizle()
                 .onayAkisiEkle()
@@ -128,7 +128,6 @@ public class EvrakPostalamaTest extends BaseTest {
         editorTab.imzala()
                 .popupSImzalaIslemleri()
                 .islemMesaji().basariliOlmali();
-        ;
 
         postalananlarPage
                 .openPage()
@@ -363,7 +362,7 @@ public class EvrakPostalamaTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS0802 : Postalanan Evrak Raporu")
-    public void TS0802() throws InterruptedException {
+    public void TS0802() {
         login("Mbozdemir", "123");
 //Download control should be added. But working now.
         postalananEvrakRaporuPage

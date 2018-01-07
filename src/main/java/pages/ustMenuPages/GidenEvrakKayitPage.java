@@ -67,7 +67,7 @@ public class GidenEvrakKayitPage extends MainPage {
     //endregion
 
     @Step("Giden Evrak Kayit sayfasını aç")
-    public GidenEvrakKayitPage openPage(){
+    public GidenEvrakKayitPage openPage() {
         ustMenu(UstMenuData.EvrakIslemleri.GidenEvrakKayit);
         return this;
     }
@@ -222,7 +222,7 @@ public class GidenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    public GidenEvrakKayitPage konuKoduDoldur(String konuKodu) throws InterruptedException {
+    public GidenEvrakKayitPage konuKoduDoldur(String konuKodu) {
         comboKonuKodu.selectLov(konuKodu);
         return this;
     }
@@ -255,7 +255,7 @@ public class GidenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    public GidenEvrakKayitPage evrakBilgileriUstYaziEkle(String path) throws InterruptedException {
+    public GidenEvrakKayitPage evrakBilgileriUstYaziEkle(String path) {
         uploadFile(ustYazi, path);
         //ustYaziUploadFile(path);
         return this;
@@ -283,13 +283,13 @@ public class GidenEvrakKayitPage extends MainPage {
     }
 
     @Step("Kaldıralacak Klasör alanından \"{kaldirilacakKlasor}\" seçilir")
-    public GidenEvrakKayitPage kaldiralacakKlasorDoldur(String kaldirilacakKlasor) throws InterruptedException {
+    public GidenEvrakKayitPage kaldiralacakKlasorDoldur(String kaldirilacakKlasor) {
         comboKaldiralacakKlasörler.selectLov(kaldirilacakKlasor);
         return this;
     }
 
     @Step("Evrak Ekleri filtre ac")
-    public GidenEvrakKayitPage ekBilgiFiltreAc() throws InterruptedException {
+    public GidenEvrakKayitPage ekBilgiFiltreAc() {
         clickJs(btnEvrakEkleri);
         return this;
     }
@@ -307,13 +307,13 @@ public class GidenEvrakKayitPage extends MainPage {
     }
 
     @Step("Fiziksel Ek Ekle buton tıkla")
-    public GidenEvrakKayitPage ekBilgiFizikselEkEkle() throws InterruptedException {
+    public GidenEvrakKayitPage ekBilgiFizikselEkEkle() {
         clickJs(btnFizikselEkEkle);
         return this;
     }
 
     @Step("İlgi Ekleri filtre ac")
-    public GidenEvrakKayitPage ilgiEkleriFiltreAc() throws InterruptedException {
+    public GidenEvrakKayitPage ilgiEkleriFiltreAc() {
         clickJs(btnİlgiEkleri);
         return this;
     }
@@ -331,26 +331,26 @@ public class GidenEvrakKayitPage extends MainPage {
     }
 
     @Step("Metin Ekle buton")
-    public GidenEvrakKayitPage ilgiEkleriMetinEkle() throws InterruptedException {
+    public GidenEvrakKayitPage ilgiEkleriMetinEkle() {
         clickJs(btnIlgiEkleriEkle);
         return this;
     }
 
     @Step("Kaydet buton")
-    public GidenEvrakKayitPage kaydet() throws InterruptedException {
+    public GidenEvrakKayitPage kaydet() {
         btnKaydet.click();
         return this;
     }
 
     @Step("Pop up kontrol")
-    public GidenEvrakKayitPage popUpkaydetEvet() throws InterruptedException {
+    public GidenEvrakKayitPage popUpkaydetEvet() {
         if (popUpKaydetEvet.isDisplayed())
             popUpKaydetEvet.click();
         return this;
     }
 
     @Step("Başarılı Pop up kontrol")
-    public String popUpBasariliKapat() throws InterruptedException {
+    public String popUpBasariliKapat() {
         popUpEvrakDefterBasarili.shouldBe(Condition.visible);
         String mesaj4 = "Evrak başarıyla kaydedilmiştir.";
         popUpEvrakDefterBasarili.getText().contains(mesaj4);
@@ -361,7 +361,7 @@ public class GidenEvrakKayitPage extends MainPage {
     }
 
     @Step("Konu alnına \"{konu}\" girilir")
-    public GidenEvrakKayitPage konuDoldur(String konu){
+    public GidenEvrakKayitPage konuDoldur(String konu) {
         $("[id$='konuTextArea']").setValue(konu);
         return this;
     }

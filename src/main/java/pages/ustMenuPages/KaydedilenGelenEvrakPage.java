@@ -24,7 +24,7 @@ public class KaydedilenGelenEvrakPage extends MainPage {
     SelenideElement btnSorgula = $(By.id("birimeGelenEvrakRaporuForm:sorgulaButton"));
     SelenideElement btnRaporAlExcel = $("[id='birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable'] button:nth-child(4)");
     SelenideElement btnRaporAlPdf = $("[id='birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable'] button:nth-child(2)");
-//    SelenideElement tblKaydedilenGelenEvrak = $(By.id("birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable_data"));
+    //    SelenideElement tblKaydedilenGelenEvrak = $(By.id("birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable_data"));
     ElementsCollection tblKaydedilenGelenEvrak = $$("[id='birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable_data'] tr[role='row']");
 
     @Step("Kaydedilen Gelen Evrak sayfasını aç")
@@ -59,15 +59,15 @@ public class KaydedilenGelenEvrakPage extends MainPage {
 
 
     @Step("Rapor al Excel")
-    public KaydedilenGelenEvrakPage raporAlExcel() throws IOException, InterruptedException {
+    public KaydedilenGelenEvrakPage raporAlExcel() throws IOException {
 
-        deleteFile(getDownoladPath(),"Rapor_");
+        deleteFile(getDownoladPath(), "Rapor_");
         btnRaporAlExcel.click();
 //        islemMesaji().basariliOlmali();
 //        Thread.sleep(8000);
 //        btnSorgula.click();
 //        islemMesaji().basariliOlmali();
-        searchDownloadedFileWithName(getDownoladPath(),"Rapor_.xls");
+        searchDownloadedFileWithName(getDownoladPath(), "Rapor_.xls");
         return this;
     }
 
@@ -76,7 +76,7 @@ public class KaydedilenGelenEvrakPage extends MainPage {
 
 
     @Step("Rapor al PDF")
-    public KaydedilenGelenEvrakPage raporAlPdf() throws IOException, InterruptedException {
+    public KaydedilenGelenEvrakPage raporAlPdf() throws IOException {
         deleteFile(getDownoladPath(), "Rapor_");
         btnRaporAlPdf.click();
 //        Thread.sleep(8000);

@@ -1,15 +1,18 @@
 package pages;
 
-import com.codeborne.selenide.*;
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.pageComponents.*;
-import pages.pageData.SolMenuData;
 
-import static com.codeborne.selenide.CollectionCondition.*;
-import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
+import static com.codeborne.selenide.Condition.matchText;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
 
 public class MainPage extends BaseLibrary {
@@ -27,7 +30,7 @@ public class MainPage extends BaseLibrary {
         new UstMenu().openMenu(ustMenuData, useJS);
     }
 
-    public void solMenu(Enum solMenuData, boolean... useJS){
+    public void solMenu(Enum solMenuData, boolean... useJS) {
         new SolMenu().openMenu(solMenuData, useJS);
     }
 
@@ -90,13 +93,13 @@ public class MainPage extends BaseLibrary {
         return this;
     }
 
-    public MainPage ustMenuKullaniciIslemleri() throws InterruptedException {
+    public MainPage ustMenuKullaniciIslemleri() {
         //Thread.sleep(2000);
         $(By.id("topMenuForm2:ust:3:ustMenuEleman")).click();
         return this;
     }
 
-    public MainPage ustMenuRaporlar() throws InterruptedException {
+    public MainPage ustMenuRaporlar() {
         //Thread.sleep(2000);
         $(By.id("topMenuForm2:ust:6:ustMenuEleman")).click();
         return this;
@@ -185,14 +188,14 @@ public class MainPage extends BaseLibrary {
         $$("#leftMenuForm #birimlerimMenusuContainer a")
                 .filterBy(condition).shouldHave(sizeGreaterThan(0))
                 .first().click();
-            //$("#leftMenuForm #birimlerimMenusuContainer").$(byLinkText(birim)).click();
+        //$("#leftMenuForm #birimlerimMenusuContainer").$(byLinkText(birim)).click();
 
         //$("#kullaniciBirimAd").shouldHave(condition);
         return this;
     }
 
     @Step("Şuanki Birim kontrolü")
-    public MainPage currentBirimKontrol(Condition condition){
+    public MainPage currentBirimKontrol(Condition condition) {
         $("#kullaniciBirimAd").shouldHave(condition);
         return this;
     }
@@ -248,6 +251,7 @@ public class MainPage extends BaseLibrary {
         paraflaButton().click();
         return this;
     }
+
     @Step("s-İmzla radio butonu ara")
     public SelenideElement sImzalaRadio() {
         return $("#imzalaForm\\:imzalaRadio .ui-radiobutton-box");
@@ -297,9 +301,6 @@ public class MainPage extends BaseLibrary {
         $("#kaydetConfirmForm\\:kaydetEvetButton").click();
         return this;
     }
-
-
-
 
 
     //region Sayfalar
