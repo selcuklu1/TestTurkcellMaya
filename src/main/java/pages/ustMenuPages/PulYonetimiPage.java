@@ -30,7 +30,7 @@ public class PulYonetimiPage extends MainPage {
     SelenideElement lblPostaTipi = $(By.xpath("//form[@id='pulYonetimiEditorForm']//tr[1]//label"));
     SelenideElement lblGramaj = $(By.xpath("//form[@id='pulYonetimiEditorForm']//tr[2]//label"));
     SelenideElement lblTutar = $(By.xpath("//form[@id='pulYonetimiEditorForm']//tr[3]//label"));
-    SelenideElement lblIndirimOrani = $(By.xpath("//form[@id='pulYonetimiEditorForm']//tr[4]//label"));
+    SelenideElement lblIndirimOrani = $(By.xpath("//form[@id='pulYonetimiEditorForm']//tr[5]//label"));
 
 
     public PulYonetimiPage openPage() {
