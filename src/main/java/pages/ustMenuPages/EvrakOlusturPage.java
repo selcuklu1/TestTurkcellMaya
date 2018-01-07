@@ -63,7 +63,7 @@ public class EvrakOlusturPage extends MainPage {
     private SablonIslemleriTab sablonIslemleriTab = new SablonIslemleriTab();
 
     @Step("Evrak Oluştur sayfasını aç")
-    public EvrakOlusturPage openPage(){
+    public EvrakOlusturPage openPage() {
         ustMenu(UstMenuData.EvrakIslemleri.EvrakOlustur);
         return this;
     }
@@ -128,7 +128,7 @@ public class EvrakOlusturPage extends MainPage {
     }
 
     @Step("\"{0}\" ekran açılması beklenen statü: {1}")
-    public EvrakOlusturPage PDFOnizlemeKisayolGonder(String kisayol) throws InterruptedException {
+    public EvrakOlusturPage PDFOnizlemeKisayolGonder(String kisayol) {
 
         SelenideElement tc = $(By.xpath("//div[@id='viewer']/div[@class='page']//div[.='T.C.']"));
         String str = tc.getText();
@@ -744,7 +744,7 @@ public class EvrakOlusturPage extends MainPage {
 
 
         @Step("Gereği Seçim Tipi alanında \"{geregiSecimTipi}\" seç")
-        public BilgilerTab geregiSecimTipiSecByText(String geregiSecimTipi) throws InterruptedException {
+        public BilgilerTab geregiSecimTipiSecByText(String geregiSecimTipi) {
             cmbGeregiSecimTipi.shouldBe(visible);
             cmbGeregiSecimTipi.selectOption(geregiSecimTipi);
             return this;
@@ -779,7 +779,7 @@ public class EvrakOlusturPage extends MainPage {
         }
 
         @Step("Otomatik onay akışı alanında geldiği görünür \"{ekranAdi}\" | \"{ekranAdi}\"")
-        public BilgilerTab otomatikOnayAkisiGeldigiGorme(String ekranAdi,String ad) {
+        public BilgilerTab otomatikOnayAkisiGeldigiGorme(String ekranAdi, String ad) {
 
             $$(" [id='yeniGidenEvrakForm:hiyerarsikAkisOlusturForm:otomatikAkisKullaniciBirimListId'] tbody tr")
                     .filterBy(text(ekranAdi)).shouldHave(sizeGreaterThan(0)).get(0).click();
@@ -1438,7 +1438,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        public EditorTab popupSImzalaIslemleri() throws InterruptedException {
+        public EditorTab popupSImzalaIslemleri() {
 
             /*//switchTo().window("");
 //            Thread.sleep(5000);
@@ -1615,7 +1615,7 @@ public class EvrakOlusturPage extends MainPage {
         }
 
         @Step("Ekleri Tab - Açıklama")
-        public EkleriTab ekleriDosyaAciklamaDoldur(String aciklama) throws InterruptedException {
+        public EkleriTab ekleriDosyaAciklamaDoldur(String aciklama) {
             txtEkleriDosyaAciklama.sendKeys(aciklama);
             return this;
         }
@@ -1937,7 +1937,7 @@ public class EvrakOlusturPage extends MainPage {
     public class PDFKontrol extends MainPage {
 
         @Step("Gereği alanında adres gelmedigi, Bilgi alanında dagitim yerinin adresi ile geldigi kontrolu")
-        public PDFKontrol geregiBilgiAlaniAdresPdfKontrol(String birinciKullaniciGeregiAdresi, String ikinciKullaniciBilgiAdresi) throws InterruptedException {
+        public PDFKontrol geregiBilgiAlaniAdresPdfKontrol(String birinciKullaniciGeregiAdresi, String ikinciKullaniciBilgiAdresi) {
 
             //gereği: div[@id='viewer']/div[@class='page']//div[.='xrpisak Mahallesi ŞİŞLİ / İSTANBUL']
             //blgil : div[@id='viewer']/div[@class='page']//div[.='Gültepe Mahallesi KAĞITHANE / İSTANBUL']
@@ -1959,7 +1959,7 @@ public class EvrakOlusturPage extends MainPage {
         }
 
         @Step("Pdf önizleme kisayol gonder")
-        public PDFKontrol PDFOnizlemeKisayolGonder(String kisayol) throws InterruptedException {
+        public PDFKontrol PDFOnizlemeKisayolGonder(String kisayol) {
 
             SelenideElement tc = $(By.xpath("//div[@id='viewer']/div[@class='page']//div[.='T.C.']"));
             String str = tc.getText();

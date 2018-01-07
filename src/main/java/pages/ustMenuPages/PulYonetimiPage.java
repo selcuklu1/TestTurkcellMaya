@@ -7,7 +7,6 @@ import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import pages.MainPage;
-import pages.pageComponents.UstMenu;
 import pages.pageData.UstMenuData;
 
 import static com.codeborne.selenide.Selenide.$;

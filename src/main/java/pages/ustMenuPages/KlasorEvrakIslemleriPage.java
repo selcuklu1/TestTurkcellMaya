@@ -44,7 +44,7 @@ public class KlasorEvrakIslemleriPage extends MainPage {
 
 
     @Step("Klasor evrak işlemleri sayfası aç")
-    public KlasorEvrakIslemleriPage openPage(){
+    public KlasorEvrakIslemleriPage openPage() {
         ustMenu(UstMenuData.KlasorIslemleri.KlasorEvrakIslemleri);
         return this;
     }

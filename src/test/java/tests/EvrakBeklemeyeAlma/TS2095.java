@@ -58,7 +58,7 @@ public class TS2095 extends BaseTest {
 
     @Severity(SeverityLevel.MINOR)
     @Test(description = "TS2095: Paraf, Gelen, Postalanacak bekleyen evarklarda \"Beklemeye Al\" butonun gelmediği görülür", enabled = true)
-    public void TS2095_2() throws Exception {
+    public void TS2095_2() {
 
         login(ztekin);
 
@@ -76,7 +76,7 @@ public class TS2095 extends BaseTest {
     //TS2095_2 birleştirilmiştir, müşterinin isteği!
     @Severity(SeverityLevel.MINOR)
     @Test(description = "TS2095: Paraf bekleyen evarkalarda \"Beklemeye\" al butonun gelmediği görülür", enabled = false)
-    public void TS2095_3_parafla() throws Exception {
+    public void TS2095_3_parafla() {
         login(ztekin);
         new ParafBekleyenlerPage().openPage();
         ilkDokumaniSecBeklemeyeAlBulunmamali();
@@ -84,7 +84,7 @@ public class TS2095 extends BaseTest {
 
     @Severity(SeverityLevel.MINOR)
     @Test(description = "TS2095: Gelen evarkalarda \"Beklemeye\" al butonun gelmediği görülür", enabled = false)
-    public void TS2095_4_gelen() throws Exception {
+    public void TS2095_4_gelen() {
         login(ztekin);
         new GelenEvraklarPage().openPage();
         ilkDokumaniSecBeklemeyeAlBulunmamali();
@@ -92,12 +92,11 @@ public class TS2095 extends BaseTest {
 
     @Severity(SeverityLevel.MINOR)
     @Test(description = "TS2095: Postalanacak evarkalarda \"Beklemeye\" al butonun gelmediği görülür", enabled = false)
-    public void TS2095_5_postalanacak() throws Exception {
+    public void TS2095_5_postalanacak() {
         login(ztekin);
         new PostalanacakEvraklarPage().openPage();
         ilkDokumaniSecBeklemeyeAlBulunmamali();
     }
-
 
 
     @Step("Seçilen evrakta \"Beklemeye Al\" butonun gelmediği görülür")

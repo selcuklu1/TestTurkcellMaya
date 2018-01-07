@@ -93,43 +93,43 @@ public class PostalananlarPage extends MainPage {
     }
 
     @Step("Filtrele Seç")
-    public PostalananlarPage filtreSec(String text) throws InterruptedException {
+    public PostalananlarPage filtreSec(String text) {
         cmbFiltre.selectOption(text);
         return this;
     }
 
     @Step("Sayfada ara doldur")
-    public PostalananlarPage sayfadaAraDoldur(String text) throws InterruptedException {
+    public PostalananlarPage sayfadaAraDoldur(String text) {
         txtSayfadaAra.setValue(text);
         return this;
     }
 
     @Step("Başlangıç tarihi doldur")
-    public PostalananlarPage baslangicTarihiDoldur(String text) throws InterruptedException {
+    public PostalananlarPage baslangicTarihiDoldur(String text) {
         dateBaslangicTarihi.setValue(text);
         return this;
     }
 
     @Step("Bitiş tarihi doldur")
-    public PostalananlarPage bitisTarihiDoldur(String text) throws InterruptedException {
+    public PostalananlarPage bitisTarihiDoldur(String text) {
         dateBitisTarihi.setValue(text);
         return this;
     }
 
     @Step("Kep ile PostalananlarPage seç")
-    public PostalananlarPage kepIlePostalananlarSec(boolean text) throws InterruptedException {
+    public PostalananlarPage kepIlePostalananlarSec(boolean text) {
         chkKepIlePostalananlar.setSelected(text);
         return this;
     }
 
     @Step("Medas ile PostalananlarPage seç")
-    public PostalananlarPage medasIlePostalananlarSec(boolean text) throws InterruptedException {
+    public PostalananlarPage medasIlePostalananlarSec(boolean text) {
         chkMedasIlePostalananlar.setSelected(text);
         return this;
     }
 
     @Step("Postaladıklarım seç")
-    public PostalananlarPage postaladiklarimSec() throws InterruptedException {
+    public PostalananlarPage postaladiklarimSec() {
         tblEvrakSec.click();
         return this;
     }
@@ -237,52 +237,61 @@ public class PostalananlarPage extends MainPage {
         btnTamEkran.click();
         return this;
     }
+
     @Step("Tam Ekran görünümü kapat")
     public PostalananlarPage btnTamEkranKapat() {
         btnTamEkranKapat.click();
         return this;
     }
+
     @Step("Icerik Goster butonuna tıkla")
     public PostalananlarPage btnIcerikGoster() throws InterruptedException {
         btnIcerikGoster.click();
         Thread.sleep(1000);
         return this;
     }
+
     @Step("Icerik içinde Ilgileri Tabına tıklama")
     public PostalananlarPage btnIcerikIlgileriTab() throws InterruptedException {
         btnIlgileriIcerik.click();
         Thread.sleep(500);
         return this;
     }
+
     @Step("Icerik içinde Ekleri Tabına tıklama")
     public PostalananlarPage btnIcerikEkleriTab() {
         btnEkleriIcerik.click();
         return this;
     }
+
     @Step("Icerik Detay Kapatma")
     public PostalananlarPage btnIcerikDetayKapat() {
         btnIcerikPencereKapat.click();
         btnKapatmaOnayı.click();
         return this;
     }
+
     @Step("Filtereden Postaladıklarımı işaretle")
     public PostalananlarPage btnFiltrePostaladiklarim() {
 
         btnRadioPostaladiklarim.click();
         return this;
     }
+
     @Step("Filtreden başlangıç tarihi girişi")
     public PostalananlarPage btnFiltreBaslangicTarihi(String date) {
 
         btnFiltreBaslangicTarihi.setValue(date);
         return this;
     }
+
     @Step("Filtre sekmesini aç")
     public PostalananlarPage btnFiltreSpan() {
 
         btnFiltreSpan.click();
         return this;
     }
+
     @Step("Imza Dialog Ekranını göster")
     public PostalananlarPage mngImzaDialog() {
 
@@ -290,17 +299,20 @@ public class PostalananlarPage extends MainPage {
         ImzaDialog.scrollTo();
         return this;
     }
+
     @Step("Evrak Yazdır")
     public PostalananlarPage evrakYazdir() {
         postalananEvrakYazdir.click();
         return this;
     }
+
     @Step("Etiket Bastir")
     public PostalananlarPage etiketBastir() {
 
         postalananEvrakEtiketYazdir.click();
         return this;
     }
+
     @Step("Tuzel Kisi Posta Kodu Guncelle")
     public PostalananlarPage tuzelKisiPostaKodu() {
 

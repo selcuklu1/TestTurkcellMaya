@@ -53,7 +53,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "1488: Karar yazısında zorunlu alan kontrolleri")
-    public void TS1488() throws InterruptedException {
+    public void TS1488() {
 
         String uyariMesajYaziIcerik = "Yazı içeriği boş olamaz!";
         String uyariMesajZorunlu = "Zorunlu alanları doldurunuz";
@@ -144,7 +144,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
         String basariMesaji = "İşlem başarılıdır!";
         String kaldirilicakKlasor = "Gündem";
         String konuKodu = "Diğer";
-        String konuKoduRandom = "TS-2240_"+createRandomNumber(25);
+        String konuKoduRandom = "TS-2240_" + createRandomNumber(25);
         String evrakTarihi = getSysDateForKis();
         String kurum = "BÜYÜK HARFLERLE KURUM";
         String kullaniciAdi = "Yazılım Geliştirme Direktörlüğ";
@@ -199,7 +199,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "2239: Gündem yayınlama")
-    public void TS2239() throws InterruptedException {
+    public void TS2239() {
 
         String basariMesaji = "İşlem başarılıdır!";
         String kaldirilicakKlasor = "Gündem";
@@ -322,7 +322,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "2232: Karar izleme ekranının toplu onaya sunma")
-    public void TS2232() throws InterruptedException {
+    public void TS2232() {
 
         String basariMesaji = "İşlem başarılıdır!";
         String konuKodu = "Usul ve Esaslar";
@@ -368,7 +368,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "1714: Karar yazsının iadesi")
-    public void TS1714() throws InterruptedException {
+    public void TS1714() {
 
         String basariMesaji = "İşlem başarılıdır!";
         String konuKodu = "Usul ve Esaslar";
@@ -440,7 +440,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "2238: Gündem klasörü oluşturma")
-    public void TS2238() throws InterruptedException {
+    public void TS2238() {
 
         String basariMesaji = "İşlem başarılıdır!";
         String birim = "Yazılım Geliştirme Direktörlüğ";
@@ -492,7 +492,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
         String basariMesaji = "İşlem başarılıdır!";
         String konuKodu = "Diğer";
         String kaldirilicakKlasor = "Gündem";
-        String konuKoduRandom = "TS-1715_"+createRandomNumber(25);
+        String konuKoduRandom = "TS-1715_" + createRandomNumber(25);
         String evrakTarihi = getSysDateForKis();
         String kurum = "BÜYÜK HARFLERLE KURUM";
         String kullaniciAdi = "Zübeyde Tekin";
@@ -508,7 +508,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
                 .havaleIslemleriKisiDoldur(kullaniciAdi)
                 .kaydet()
                 .evetDugmesi()
-             //  .benzerKayit()
+                //  .benzerKayit()
                 .yeniKayitButton();
 
         gelenEvraklarPage

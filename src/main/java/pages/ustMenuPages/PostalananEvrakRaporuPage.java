@@ -35,73 +35,87 @@ public class PostalananEvrakRaporuPage extends MainPage {
         ustMenu(UstMenuData.Raporlar.PostalananEvrakRaporu);
         return this;
     }
+
     @Step("Evrak Sayı numarası girişi")
     public PostalananEvrakRaporuPage evrakSayisi(String eSayi) {
         txtEvrakSayisi.setValue(eSayi);
         return this;
     }
+
     @Step("Posta Arama Başlangıç Tarihi girişi")
     public PostalananEvrakRaporuPage postaAramaBaslangicTarihi(String date) {
         btnPostaBaslangicTarihi.setValue(date);
         return this;
     }
+
     @Step("Posta Sorgulama butonuna tıkla")
     public PostalananEvrakRaporuPage postaSorgulama() {
         btnSorgula.click();
         return this;
     }
+
     @Step("Çıkan sonuçları kontrol et")
     public PostalananEvrakRaporuPage sonucKarsilastirma() {
         tblSorgulamaSonuc.get(0);
         return this;
     }
+
     @Step("Evrak Geçmişi butonuna tıkla")
     public PostalananEvrakRaporuPage ilkEvrakGecmisi() {
         btnIlkEvrakGecmisi.click();
         return this;
     }
+
     @Step("Evrak Geçmişini kapat")
     public PostalananEvrakRaporuPage evrakGecmisiKapat() {
         btnEvrakGecmisiKapat.click();
         return this;
     }
+
     @Step("Evrak İçerik Gösterimi")
     public PostalananEvrakRaporuPage evrakIcerikGoster() {
         btnEvrakGoster.click();
         return this;
     }
+
     @Step("Evrak İçerik Kapat")
     public PostalananEvrakRaporuPage evrakIcerikKapat() {
         btnEvrakIcerikKapat.click();
         btnEvrakDialogKapat.click();
         return this;
     }
+
     @Step("Etiket Bastir")
     public PostalananEvrakRaporuPage etiketBastir() {
         btnEtiketBastir.click();
         return this;
     }
+
     @Step("Etiket Bastir Popup Kapatma")
     public PostalananEvrakRaporuPage etiketBastirPopupKapat() {
         btnPopupKapat.click();
         return this;
     }
+
     @Step("Excele Tıkla ve indir")
     public PostalananEvrakRaporuPage btnExcel() {
         //btnExcel.click();
         clickJs(btnExcel);
         return this;
     }
+
     @Step("Pdfe Tıkla ve indir")
     public PostalananEvrakRaporuPage btnPdf() {
         clickJs(btnPdfBastir);
         return this;
     }
+
     @Step("Etiket butonuna tıkla")
     public PostalananEvrakRaporuPage btnEtiket() {
         btnEtiketYazdir.click();
         return this;
     }
+
     @Step("Etiket Bastirma Popup Satir ve Kolon girişi")
     public PostalananEvrakRaporuPage popupEtiketBastirma(String satir, String kolon) {
         etiketBastirPopupIlkSatir.setValue(satir);

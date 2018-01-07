@@ -5,10 +5,8 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
-import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.TextEditor;
-import pages.pageComponents.UstMenu;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.UstMenuData;
 
@@ -28,7 +26,7 @@ public class OlurYazisiOlusturPage extends MainPage {
     private EditorTab editorTab = new EditorTab();
 
     @Step("Olur Yazısı Oluştur sayfasını aç")
-    public OlurYazisiOlusturPage openPage(){
+    public OlurYazisiOlusturPage openPage() {
         ustMenu(UstMenuData.EvrakIslemleri.OlurYazisiOlustur);
         return this;
     }

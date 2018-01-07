@@ -12,8 +12,6 @@ import pages.ustMenuPages.PttRaporuPage;
 
 import java.util.Random;
 
-import static com.codeborne.selenide.Selenide.switchTo;
-
 
 public class TopluPostalamaTest extends BaseTest {
 

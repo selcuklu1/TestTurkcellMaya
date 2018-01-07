@@ -464,7 +464,7 @@ public class PostaListesiPage extends MainPage {
     }
 
     @Step("Evrak Listesi tablosunda Yazdır butonu tıklanır.")
-    public PostaListesiPage evrakListesiYazdir(String[] konu ) {
+    public PostaListesiPage evrakListesiYazdir(String[] konu) {
         int size = tableEvrakListesi.size();
         for (int i = 0; i < size; i++) {
 
@@ -490,6 +490,7 @@ public class PostaListesiPage extends MainPage {
         popUpEvrakDetayi.shouldBe(Condition.visible);
         return this;
     }
+
     @Step("Etiket bastır ekranı kapama")
     public PostaListesiPage evrakDetayiYazdır() {
         tblEvrakDetayi.first()
@@ -499,7 +500,7 @@ public class PostaListesiPage extends MainPage {
 
     public class PDFKontrol extends MainPage {
 
-        public PDFKontrol geregiBilgiAlaniAdresPdfKontrol(String konu){
+        public PDFKontrol geregiBilgiAlaniAdresPdfKontrol(String konu) {
 
             switchTo().window(1);
 //            SelenideElement geregiAdresAlaniPDF = $(By.xpath("//div[@id='viewer']/div[@class='page']//div[.='" + sayi + "']"));

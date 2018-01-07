@@ -119,7 +119,7 @@ public class EvrakNotTest extends BaseTest {
     }
 
     @Test(enabled = true, description = "TS2092: Not Oluşturma - Olur/Takrir Yazısı Oluşturma da Kişisel ve Genel Not oluşturma")
-    public void TS2092() throws Exception {
+    public void TS2092() {
         String notTipi, aciklama;
 
         OlurYazisiOlusturPage page = new OlurYazisiOlusturPage();
@@ -224,7 +224,7 @@ public class EvrakNotTest extends BaseTest {
     @Test(description = "TS2160: Not İzleme - Evrak Notunun Paraf bekleneler, Parafladıklarım, İmza Bekleyenler ve İmzaladıklarım ekranlarında izlenmesi"
             , dependsOnMethods = {"TS2155"}
             , enabled = true
-            )
+    )
     public void TS2160() {
         UstYazi ustYazi = new UstYazi();
         TaslakEvraklarPage taslakEvraklarPage = new TaslakEvraklarPage();
@@ -325,7 +325,7 @@ public class EvrakNotTest extends BaseTest {
     }
 
     @Test(enabled = true, description = "TS2162: Not İzleme - Evrak Notunun Postalanacak Evraklar ve Postananlar ekranlarında izlenmesi"
-            ,dependsOnMethods = {"TS2160"}
+            , dependsOnMethods = {"TS2160"}
     )
     public void TS2162() throws Exception {
         PostalanacakEvraklarPage postalanacakEvraklarPage = new PostalanacakEvraklarPage();

@@ -60,8 +60,6 @@
         <aspectj.version>1.8.11</aspectj.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-
-
     <build>
         <plugins>
             <plugin>
@@ -85,6 +83,12 @@
                     <argLine>
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
                     </argLine>
+                    <properties>
+                        <property>
+                            <name>listener</name>
+                            <value>listeners.RerunFailedTests</value>
+                        </property>
+                    </properties>
                     <!--<systemProperties>-->
                     <!--<property>-->
                     <!--<name>allure.results.directory</name>-->
@@ -120,6 +124,7 @@
                     <!--<value>/Users/Shared/Jenkins/Home/workspace/test/allure-results</value>-->
                     <!--</property>-->
                     <!--</systemProperties>-->
+
                 </configuration>
                 <dependencies>
                     <dependency>
