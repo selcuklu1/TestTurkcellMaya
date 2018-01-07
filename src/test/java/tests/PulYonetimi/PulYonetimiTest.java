@@ -43,10 +43,10 @@ public class PulYonetimiTest extends BaseTest {
     String evrakDili = "Türkçe";
     String gizlilikDerecesi = "Normal";
     String ivedilik = "Normal";
-    String geregi = "Ahmet ÇELİK";
+    String geregi = "Esk Kurum 071216 2";
     String konu = "TS2214 " + getSysDate();
     String tur = "İmzalama";
-    String geregiTipi = "Gerçek Kişi";
+    String geregiTipi = "Kurum";
     String basariMesaji = "İşlem başarılıdır!";
 
     @Severity(SeverityLevel.CRITICAL)
@@ -72,6 +72,7 @@ public class PulYonetimiTest extends BaseTest {
         pulYonetimiPage
                 .openPage()
                 .yeniPulEkle()
+                .alanKontrolleri()
                 .pulEklemePostaTipiSec(postaTipi)
                 .gramajiDoldur(gramaj)
                 .tutariDoldur(tutar)

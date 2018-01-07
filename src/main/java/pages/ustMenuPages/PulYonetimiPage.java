@@ -45,7 +45,7 @@ public class PulYonetimiPage extends MainPage {
         clickJs(btnAddNewPul);
         return this;
     }
-    @Step("Yeni Pul ekle")
+    @Step("Alan Kontrolleri")
     public PulYonetimiPage alanKontrolleri() {
 
         lblPostaTipi.isDisplayed();

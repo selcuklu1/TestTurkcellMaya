@@ -40,8 +40,8 @@ public class PostaListesiPage extends MainPage {
     SelenideElement lblGonderildigiKurum = $(By.xpath("//label[contains(text(), 'Gönderildiği Kurum : ')]"));
     SelenideElement lblAdres = $(By.xpath("//label[contains(text(), 'Adres : ')]"));
     SelenideElement lblGidisSekli = $(By.xpath("//label[contains(text(), 'Gidiş Şekli :')]"));
-    //    SelenideElement lblGonderildigiYer2 = $(By.xpath("mainPreviewForm:postaListesiYurticiYurtdisi_label"));
-    SelenideElement lblTutar = $(By.xpath("//label[contains(text(), 'Tutar : ')]"));
+    SelenideElement lblGonderildigiYer2 = $(By.xpath("//label[contains(text(), 'Gönderildiği Yer : ')]"));
+    SelenideElement lblTutar = $(By.xpath("//label[contains(text(), 'Tutar\t : ')]"));
     SelenideElement popUpEvrakDetayi = $(By.xpath("//span[text()='Evrak Detayları']"));
     //SelenideElement txtTutar = $(By.id("mainPreviewForm:j_idt2585"));
     BelgenetElement txtGonderildigiKurum = comboLov("mainPreviewForm:tpbeGonderildigiGercekKisiLovId:LovSecilen");
@@ -169,7 +169,7 @@ public class PostaListesiPage extends MainPage {
         lblGonderildigiKurum.isDisplayed();
         lblAdres.isDisplayed();
         lblGidisSekli.isDisplayed();
-//        lblGonderildigiYer2.isDisplayed();
+        lblGonderildigiYer2.isDisplayed();
         lblTutar.isDisplayed();
         Allure.addAttachment("label",lblPostaListesiAdi.text());
         Allure.addAttachment("label",lblBarkodNo.text());
@@ -178,6 +178,7 @@ public class PostaListesiPage extends MainPage {
         Allure.addAttachment("label",lblAdres.text());
         Allure.addAttachment("label",lblGidisSekli.text());
         Allure.addAttachment("label",lblTutar.text());
+        Allure.addAttachment("label",lblGonderildigiYer2.text());
         return this;
     }
 
