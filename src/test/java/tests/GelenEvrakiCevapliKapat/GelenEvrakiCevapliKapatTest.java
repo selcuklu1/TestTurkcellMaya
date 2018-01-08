@@ -271,12 +271,12 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
     @Test(enabled = true, description = "TS0373: Cevap yazma işleminde evrakın onay akışından silinmesi")
     public void TS0373() throws InterruptedException {
 
-        String onayAkisi = "TS373 OnayAkışı";
-        String tuzelKisi = "TS373 TüzelKişi";
+        String onayAkisi = "Ts373 OnayAkışı";
+        String tuzelKisi = "Ts373 TüzelKişi";
         String kisiKurum = "Tüzel Kişi";
         String kisi = "Optiim TEST";
         String konuKodu = "040"; //Faaliyet Raporları
-        String konu = "Faaliyet Raporları";
+        String konu = "TS0373 " + getSysDate();
         String kayitTarihi = getSysDateForKis();
         String evrakSayiSol = createRandomNumber(10);
         String evrakSayiSag = createRandomNumber(4);
@@ -284,12 +284,14 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
         String evrakSayi = evrakSayiSol + "-" + evrakSayiSag;
         String kaldirilacakKlasorler = "ESK05";
         String aciklama = "Onay işlemi açıklamasıdır.";
+        String evrakSilmeNotu = konu + " konulu evrak silinecektir.";
 
         gelenEvrakKayitPage
                 .openPage()
                 .kisiKurumSecByText(kisiKurum)
                 .geldigiTuzelKisiDoldur(tuzelKisi, "Ad")
                 .konuKoduDoldur(konuKodu)
+                .konuDoldur(konu)
                 .evrakTarihiDoldur(kayitTarihi)
                 .evrakSayiSolDoldur(evrakSayiSol)
                 .evrakSayiSagDoldur(evrakSayiSag)
@@ -306,12 +308,15 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
 
         gelenEvraklarPage
                 .openPage()
-                .evrakSec(tuzelKisi, konu, kayitTarihiSayi, kayitTarihi, evrakSayi);
+                .evrakSec(konu, tuzelKisi, kayitTarihiSayi, kayitTarihi, evrakSayi);
 
         evrakDetayiPage
                 .sayfaAcilmali()
                 .ikonKontrolleri()
                 .cevapYaz();
+
+        //gelenEvraklarCevapYazPage
+          //      .sayfaAcilmali();
 
         gelenEvraklarCevapYazPage
                 .geregiKontrolu(tuzelKisi)
@@ -326,16 +331,32 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .bilgilerTabAc()
                 .kaldirilacakKlasorlerDoldur(kaldirilacakKlasorler)
                 .onayAkisiDoldur(onayAkisi)
-                .kaydetVeOnayaSun()
-                .onayIslemiAciklamaDoldur(aciklama)
-                .gonder()
-                .evrakKayitUyariPopup("Evet")
-                .islemMesaji().basariliOlmali(basariMesaji);
+                .imzalama()
+                .imzalamaEkraniKapat();
 
-        //gelenEvraklarPage
-        // .tabloOlmayanEvrakNoKontrol(evrakNo);
+        imzaBekleyenlerPage
+                .openPage()
+                .evrakKonusunaGoreKontrol(konu);
 
-        //TODO: devam edilecek.
+        gelenEvraklarPage
+                .openPage()
+                .evrakGelmedigiGorme(konu,kisiKurum, kayitTarihi, evrakNo);
+
+        imzaBekleyenlerPage
+                .openPage()
+                .evrakKonusunaGoreKontrolVeTiklama(konu)
+                .evrakSil()
+                .evrakSilmeNotuGir(evrakSilmeNotu)
+                .sil()
+                .popupSilmeOnayi("Evet");
+
+        gelenEvraklarPage
+                .openPage()
+                .evrakSec(tuzelKisi, konu, kayitTarihiSayi, kayitTarihi, evrakSayi);
+
+        cevapladiklarimPage
+                .openPage()
+                .evrakGelmedigiGorme(konu,kisiKurum, kayitTarihi, evrakNo);
     }
 
 
@@ -425,7 +446,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
 
         imzaBekleyenlerPage
                 .openPage()
-                .evrakKonusunaGoreKontrol(konu)
+                .evrakKonusunaGoreKontrolVeTiklama(konu)
                 .evrakOnizlemeImzala()
                 .sImzaSec()
                 .sImzaImzala(true);
@@ -569,7 +590,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
 
         imzaBekleyenlerPage
                 .openPage()
-                .evrakKonusunaGoreKontrol(konu)
+                .evrakKonusunaGoreKontrolVeTiklama(konu)
                 .evrakOnizlemeImzala()
                 .sImzaSec()
                 .sImzaImzala(true);

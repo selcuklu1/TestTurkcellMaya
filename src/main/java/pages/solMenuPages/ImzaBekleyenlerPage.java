@@ -5,6 +5,7 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.testng.Assert;
 import pages.MainPage;
 import pages.pageData.SolMenuData;
 
@@ -27,6 +28,11 @@ public class ImzaBekleyenlerPage extends MainPage {
     SelenideElement pdfIcerikKontrol = $(By.xpath("/html//div[@id='inboxItemInfoForm:imzacilarPanel']/center/table/tbody/tr/td[3]/center/table/tbody/tr[6]/td/button[@role='button']/span[@class='ui-button-text']"));
     ElementsCollection solMenuBirim = $$("[id='birimlerimMenusuContainer'] li");
     ElementsCollection tblImzaBekleyenler = $$("tbody[id='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
+    SelenideElement btnEvrakSil = $("[id^='mainPreviewForm:onizlemeRightTab:uiRepeat'] [class$='evrakSil']");
+    SelenideElement btnSil = $("[id^='mainPreviewForm:j_idt'] [class$='ui-button-text']");
+
+
+    SelenideElement txtEvrakSilmeNotu = $(By.xpath("/html//table[@id='mainPreviewForm:evrakSilPanelGrid']/tbody//table[@class='gridForm']//textarea[@role='textbox']"));
 
     @Step("İmza bekleyenler sayfası aç")
     public ImzaBekleyenlerPage openPage() {
@@ -136,6 +142,18 @@ public class ImzaBekleyenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Evrak Sil")
+    public ImzaBekleyenlerPage evrakSil() {
+        btnEvrakSil.shouldBe(visible).click();
+        return this;
+    }
+
+    @Step("Not sonrası Evrak Sil")
+    public ImzaBekleyenlerPage sil() {
+        btnSil.shouldBe(visible).click();
+        return this;
+    }
+
     @Step("Not doldur")
     public ImzaBekleyenlerPage notDoldur(String not) {
         txtNot.setValue(not);
@@ -161,18 +179,27 @@ public class ImzaBekleyenlerPage extends MainPage {
         return this;
     }
 
-    @Step("Evrak no'ya göre İçerik tıklama : \"{konu}\" ")
+    @Step("Evrak konusuna göre İçerik tıklama : {konu} ")
     public ImzaBekleyenlerPage evrakKonusunaGoreIcerikTiklama(String konu) {
         tableKararIzlemeEvraklar.filterBy(Condition.text(konu)).first()
                 .$("[id^='mainInboxForm:inboxDataTable'][id$='detayGosterButton']").click();
         return this;
     }
 
-    @Step("Evrak no'ya göre İçerik tıklama : \"{konu}\" ")
-    public ImzaBekleyenlerPage evrakKonusunaGoreKontrol(String konu) {
+    @Step("Evrak konusuna göre İçerik tıklama : \"{konu}\" ")
+    public ImzaBekleyenlerPage evrakKonusunaGoreKontrolVeTiklama(String konu) {
         tableKararIzlemeEvraklar.filterBy(Condition.text(konu))
                 .first()
                 .click();
+        return this;
+    }
+
+    @Step("Evrakın İmza Bekleyenler menüsünde olduğunu görme")
+    public ImzaBekleyenlerPage evrakKonusunaGoreKontrol(String konu) {
+        boolean durum = tableKararIzlemeEvraklar
+                .filterBy(Condition.text(konu))
+                .size() > 0;
+        Assert.assertEquals(durum, true);
         return this;
     }
 
@@ -188,4 +215,27 @@ public class ImzaBekleyenlerPage extends MainPage {
         return this;
     }
 
+
+    @Step("Evrak silme notu gir")
+    public ImzaBekleyenlerPage evrakSilmeNotuGir(String not) {
+        txtEvrakSilmeNotu.setValue(not);
+        return this;
+    }
+
+    @Step("Popup Silme Onayı:  {secim}")
+    public void popupSilmeOnayi(String secim) {
+
+        SelenideElement btnIslemOnayiEvet = $(By.id("mainPreviewForm:evrakSilEvetButton"));
+        SelenideElement btnIslemOnayiHayir = $(By.id("mainPreviewForm:evrakSilHayirButton"));
+
+        switch (secim) {
+            case "Evet":
+                btnIslemOnayiEvet.click();
+                break;
+            case "Hayır":
+                btnIslemOnayiHayir.click();
+                break;
+        }
+
+    }
 }

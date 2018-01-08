@@ -20,11 +20,11 @@ public class EvrakDetayiPage extends MainPage {
     SelenideElement btnPanelHayir = $(By.id("mainInboxForm:tebellugEtHayirButton"));
     SelenideElement dialogTabMenuRight = $(By.id("inboxItemInfoForm:dialogTabMenuRight:dialogTabMenuRight"));
     SelenideElement btnEvrakGoster = $(By.id("inboxItemInfoForm:dialogTabMenuRight:uiRepeat:4:cmdbutton"));
-    SelenideElement btnHavaleYap = $(By.id("inboxItemInfoForm:dialogTabMenuRight:uiRepeat:5:panelGrid"));
-    SelenideElement btnTebligEt = $(By.id("inboxItemInfoForm:dialogTabMenuRight:uiRepeat:6:cmdbutton"));
-    SelenideElement btnIadeEt = $(By.id("inboxItemInfoForm:dialogTabMenuRight:uiRepeat:7:cmdbutton"));
-    SelenideElement btnCevapYaz = $(By.id("inboxItemInfoForm:dialogTabMenuRight:uiRepeat:8:cmdbutton"));
-    SelenideElement btnEvrakKapat = $(By.id("inboxItemInfoForm:dialogTabMenuRight:uiRepeat:8:cmdbutton"));
+    SelenideElement btnHavaleYap = $("[id^='inboxItemInfoForm:dialogTabMenuRight:uiRepeat'] [class$='havaleEt']");
+    SelenideElement btnTebligEt = $("[id^='inboxItemInfoForm:dialogTabMenuRight:uiRepeat'] [class$='tebligEt']");
+    SelenideElement btnIadeEt = $("[id^='inboxItemInfoForm:dialogTabMenuRight:uiRepeat'] [class$='iadeEt']");
+    SelenideElement btnCevapYaz = $("[id^='inboxItemInfoForm:dialogTabMenuRight:uiRepeat'] [class$='cevapYaz']");
+    SelenideElement btnEvrakKapat = $("[id^='inboxItemInfoForm:dialogTabMenuRight:uiRepeat'] [class$='evrakKapat']");
     SelenideElement divContainer = $("#evrakBilgileriContainerDiv");
     private HareketGecmisiTab hareketGecmisiTab = new HareketGecmisiTab();
 
@@ -59,7 +59,7 @@ public class EvrakDetayiPage extends MainPage {
         return this;
     }
 
-    @Step("Ikon kontrolleri")
+    @Step("Evrak göster, Havale yap, tebliğ et, iade et, cevap yaz, evrak kapat Ikon kontrolleri")
     public EvrakDetayiPage ikonKontrolleri() {
 
         dialogTabMenuRight.shouldBe(visible);
@@ -74,7 +74,9 @@ public class EvrakDetayiPage extends MainPage {
         return this;
     }
 
+    @Step("Cevap Yaz")
     public EvrakDetayiPage cevapYaz() {
+        btnCevapYaz.shouldBe(visible);
         btnCevapYaz.click();
         return this;
     }

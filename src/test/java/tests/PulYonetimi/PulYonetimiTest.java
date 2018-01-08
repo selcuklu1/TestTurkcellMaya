@@ -31,10 +31,10 @@ public class PulYonetimiTest extends BaseTest {
     String evrakDili = "Türkçe";
     String gizlilikDerecesi = "Normal";
     String ivedilik = "Normal";
-    String geregi = "Ahmet ÇELİK";
+    String geregi = "Esk Kurum 071216 2";
     String konu = "TS2214 " + getSysDate();
     String tur = "İmzalama";
-    String geregiTipi = "Gerçek Kişi";
+    String geregiTipi = "Kurum";
     String basariMesaji = "İşlem başarılıdır!";
 
     @BeforeMethod
@@ -71,6 +71,7 @@ public class PulYonetimiTest extends BaseTest {
         pulYonetimiPage
                 .openPage()
                 .yeniPulEkle()
+                .alanKontrolleri()
                 .pulEklemePostaTipiSec(postaTipi)
                 .gramajiDoldur(gramaj)
                 .tutariDoldur(tutar)
@@ -110,8 +111,8 @@ public class PulYonetimiTest extends BaseTest {
                 "Ankara İçi APS"
         };
 
-//        Test datası oluşturuluyor
 
+        //region Test Datası
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
@@ -144,6 +145,7 @@ public class PulYonetimiTest extends BaseTest {
                 .listeOlustur()
                 .postaListesiSec(konu)
                 .listeyeEkle();
+        //endregion
 
 //         Test başlangıcı
 
@@ -193,7 +195,8 @@ public class PulYonetimiTest extends BaseTest {
         String gramaj2 = "5";
         String konu = "TS2214 20180102113202";
 
-        // test datası oluşturuluyor
+
+        //region Test Datası
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
@@ -214,6 +217,7 @@ public class PulYonetimiTest extends BaseTest {
                 .editorTabAc()
                 .editorIcerikDoldur(konu)
                 .evrakImzala();
+        //endregion
 
         logout();
         login("mbozdemir", "123");

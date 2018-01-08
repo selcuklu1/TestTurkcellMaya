@@ -550,7 +550,9 @@ public class GizlilikKleransiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, dependsOnMethods = {"TS1471"}, description = "TS1938: Yüksek kleranslı evrak oluşturma")
+    @Test(enabled = true
+            , dependsOnMethods = {"TS1471"}
+            , description = "TS1938: Yüksek kleranslı evrak oluşturma")
     public void TS1938() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
@@ -629,13 +631,13 @@ public class GizlilikKleransiTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true
-            , dependsOnMethods = {"TS1938"}
+//           ,  dependsOnMethods = {"TS1938"}
             , description = "TS2139 : Evrak aramada gizlilik kleransı kontrolü (evrakta izi olmayan kullanıcı ile)")
     public void TS2139() throws InterruptedException {
 
         login("username22n", "123");
 
-//        String evrakNo = "9267";
+        String evrakNo = "10180";
         String aranacagiYer = "Birim Evrakları Ara";
         String aranacagiYer2 = "İşlem Yaptıklarımda Ara";
         String aramaKriteri = "Evrak Sayı";
@@ -660,7 +662,7 @@ public class GizlilikKleransiTest extends BaseTest {
                 .ara()
                 .tabloEvrakNoKontrol(evrakNo)
                 .tablodaDetayTikla(evrakNo)
-                .islemMesaji().beklenenMesaj(mesaj);
+                .islemMesaji().dikkatOlmali(mesaj);
 
         evrakOlusturPage
                 .openPage()
@@ -669,12 +671,13 @@ public class GizlilikKleransiTest extends BaseTest {
                 .evrakinAranacagiYerSec(aranacagiYer)
                 .evrakAramaDoldur(evrakNo)
                 .dokumanAra()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        evrakOlusturPage
+                .ekleriTabAc()
                 .tabloEvrakNoKontrol(evrakNo)
                 .tablodaDetayTikla(evrakNo)
-                .islemMesaji().basariliOlmali(basariMesaji);
-//        Thread.sleep(4000);
-//        evrakOlusturPage
-//                .islemMesaji().beklenenMesaj(mesaj);
+                .islemMesaji().beklenenMesaj(mesaj);
 
     }
 
