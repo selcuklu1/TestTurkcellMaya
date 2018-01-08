@@ -2,11 +2,13 @@ package common;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.WebDriverRunner;
 import data.User;
 import io.qameta.allure.Step;
 import listeners.DriverEventListener;
 import org.testng.ITestResult;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -52,7 +54,7 @@ public class BaseTest extends BaseLibrary {
         Configuration.timeout = timeout * 1000;
         setWaitForLoading(loadingTimeout);
         //Configuration.clickViaJs = true;
-        Configuration.holdBrowserOpen = true;
+        //Configuration.holdBrowserOpen = true;
         //Configuration.headless = false;
         Configuration.startMaximized = true;
         Configuration.pollingInterval = 100;
@@ -119,7 +121,7 @@ public class BaseTest extends BaseLibrary {
         //WebDriverRunner.getAndCheckWebDriver().quit();
         WebDriverRunner.closeWebDriver();
     }
-
+    
 
     @Step("Login")
     public void login(User user) {
