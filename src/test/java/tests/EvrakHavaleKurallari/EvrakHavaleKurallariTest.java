@@ -352,4 +352,90 @@ public class EvrakHavaleKurallariTest extends BaseTest {
                 .islemOnayiEvet()
                 .islemMesaji().basariliOlmali(basariMesaji);
     }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS2069: Evrak Havale Kuralları - Birim Kaydet - Güncelleme")
+    public void TS2069D() throws InterruptedException {
+        String basariMesaji = "İşlem başarılıdır!";
+        String uyariMesaji = "Evrak Bilgilerine Tanımlanmış Otomatik Havale Kuralı Bulunamamıştır.";
+        String kuralAdi = "TC-2069D_" + createRandomNumber(12);
+        String konuKodu = "Diğer";
+        String evrakTuru = "Resmi Yazı";
+        String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
+        String kisi = "Zübeyde Tekin";
+        String birim2 = "BİLİŞİM HİZMETLERİ VE UYDU PAZARLAMA GENEL MÜDÜR";
+        String sadecePasifler = "Sadece Pasifler";
+
+        login("cseker", password2);
+
+        //TODO PRE Conditon bir kural bulunmalı
+        evrakHavaleKurallariYonetimiPage
+                .openPage()
+                .yeniKural()
+                .evrakTuruSec(0)
+                .kuralinTanimliOlduguBirimlerYeni()
+                .birimEkleBirimDoldur(birim2)
+                .birimEkleEkle()
+                .kuralinTanimliOlduguBirimlerYeni()
+                .birimEkleBirimDoldur(birim)
+                .birimEkleEkle()
+                .kuralAdiDoldur(kuralAdi)
+                .kimeHavaleEdilecekKisiDoldur(kisi, birim2)
+                .kuralEklemeKaydet();
+
+        evrakHavaleKurallariYonetimiPage
+                .filtreleKuralAdiDoldur(kuralAdi,"Kural adı");
+        //TODO
+
+        evrakHavaleKurallariYonetimiPage
+                .ara()
+                .havaleKurallariListesiGuncelle(kuralAdi,"")
+                .ilkPasifYap()
+                .islemOnayiEvet();
+
+        evrakHavaleKurallariYonetimiPage
+                .kuralinTanimliOlduguBirimlerSec(sadecePasifler)
+                .kuralEklemeKaydet();
+                //.islemMesaji().basariliOlmali(basariMesaji);
+
+        gelenEvrakKayitPage
+                .openPage()
+                .konuKoduDoldur(konuKodu)
+                .evrakTuruSec(evrakTuru)
+                .otomatikHavaleSec()
+                .islemMesaji().dikkatOlmali(uyariMesaji);
+
+
+               /* .pasifYap(kuralAdi,"Konu")
+                .islemOnayiEvet();
+
+        gelenEvrakKayitPage
+                .openPage()
+                .konuKoduDoldur(konuKodu)
+                .evrakTuruSec(evrakTuru)
+                .otomatikHavaleSec()
+                .islemMesaji().beklenenMesaj(uyariMesaji);
+
+        evrakHavaleKurallariYonetimiPage
+                .openPage()
+                .filtreleKuralAdiDoldur(kuralAdi,"Kural adı");
+        //TODO
+
+        evrakHavaleKurallariYonetimiPage
+                .ara()
+                .aktifYap(kuralAdi,"Konu")
+                .islemOnayiEvet();
+
+        gelenEvrakKayitPage
+                .openPage()
+                .otomatikHavaleSec();
+
+        //Test bittikten sonra datamızı siliyoruz. Bir sonraki koşumda hata almamamız için.
+        evrakHavaleKurallariYonetimiPage
+                .openPage()
+                .ara()
+                .sil(kuralAdi,"Konu")
+                .islemOnayiEvet()
+                .islemMesaji().basariliOlmali(basariMesaji);*/
+    }
 }
