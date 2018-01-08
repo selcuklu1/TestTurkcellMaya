@@ -5,10 +5,12 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
 
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
@@ -23,6 +25,8 @@ public class CevapladiklarimPage extends MainPage {
     private SelenideElement txtSayfadaAra = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt353"));
     private SelenideElement txtBaslangicTarihi = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt378_input"));
     private SelenideElement txtBitisTarihi = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt383_input"));
+    ElementsCollection tableEvraklar = $$("tbody[id='mainInboxForm:inboxDataTable_data'] > tr");
+
 
     @Step("Birim Havale Edilenler sayfası aç")
     public CevapladiklarimPage openPage() {
@@ -90,4 +94,18 @@ public class CevapladiklarimPage extends MainPage {
                 .$("[id^='mainInboxForm:inboxDataTable'][id$='detayGosterButton']").click();
         return this;
     }
+
+    @Step("Cevapladıklarım sayfasında evrakın listeye düşmediği kontrolu")
+    public CevapladiklarimPage evrakGelmedigiGorme(String konu, String geldigiYer, String kayitTarihiSayi, String no) {
+
+        boolean durum = tableEvraklar
+                .filterBy(text(konu))
+                .filterBy(text(geldigiYer))
+                .filterBy(text(kayitTarihiSayi))
+                .filterBy(text(no)).size() > 0;
+        Assert.assertEquals(durum, false);
+
+        return this;
+    }
+
 }

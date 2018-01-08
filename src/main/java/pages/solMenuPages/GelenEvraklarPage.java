@@ -191,7 +191,7 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
-    @Step("Evrak seç")
+    @Step("Gelen Evraklar sayfasında evrakın listeye düşmediği kontrolu")
     public GelenEvraklarPage evrakGelmedigiGorme(String konu, String geldigiYer, String kayitTarihiSayi, String no) {
         boolean durum = tableEvraklar
                 .filterBy(text(konu))
@@ -213,7 +213,15 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Gelen Evraklar sayfasında evrakın geldiği kontrolu ve seçme")
     public GelenEvraklarPage evrakSec(String konu, String geldigiYer, String kayitTarihiSayi, String evrakTarihi, String no) {
+
+        System.out.println(konu);
+        System.out.println(geldigiYer);
+        System.out.println(kayitTarihiSayi);
+        System.out.println(evrakTarihi);
+        System.out.println(no);
+
         tableEvraklar
                 .filterBy(text("Konu: " + konu))
                 .filterBy(text("Geldiği Yer: " + geldigiYer))

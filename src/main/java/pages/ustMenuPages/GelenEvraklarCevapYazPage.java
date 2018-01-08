@@ -9,10 +9,13 @@ import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
 import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 public class GelenEvraklarCevapYazPage extends MainPage {
+
+    SelenideElement pageTitle = $(By.xpath("//span[. = 'Cevap Yaz' and @class = 'ui-dialog-title']"));
 
     //Bilgileri sekmesinde bulunanlar
     SelenideElement cmbEvrakTuru = $(By.id("windowCevapEvrakForm:evrakBilgileriList:1:evrakTuruCombo"));
@@ -30,8 +33,11 @@ public class GelenEvraklarCevapYazPage extends MainPage {
     SelenideElement txtBilgi = $(By.id("windowCevapEvrakForm:evrakBilgileriList:13:bilgiLov:LovText"));
     SelenideElement chkDagitimiEkYap = $(By.id("windowCevapEvrakForm:evrakBilgileriList:16:dagitimEkYapCheckBoxId_input"));
     SelenideElement btnKaydetVeOnayaSun = $(By.cssSelector("[id^='windowCevapEvrakForm:j_idt'] [id$='uiRepeat:2:panelGrid'] span[class$='kaydetHavaleEt']"));
+    SelenideElement btnImzala = $(By.cssSelector("[id^='windowCevapEvrakForm:j_idt'] [id$='uiRepeat:2:panelGrid'] span[class$='imzala']"));
     BelgenetElement cmbKaldiralacakKlasorler = comboLov("input[id$='eklenecekKlasorlerLov:LovText']");
     BelgenetElement cmbOnayAkisi = comboLov(By.cssSelector("[id^='windowCevapEvrakForm:evrakBilgileriList'][id$='akisLov:LovText']"));
+    SelenideElement btnImzalaEkraniKapat = $("[id='evrakImzalaDialog'] [class$='closethick']");
+
 
 
     //Ekleri Sekmesi
@@ -123,12 +129,18 @@ public class GelenEvraklarCevapYazPage extends MainPage {
 
     SelenideElement editorIlgiKismi = $(By.id("windowCevapEvrakForm:ilgiOutPanel"));
     BelgenetElement cmbGeregi = comboLov("[id^='windowCevapEvrakForm:evrakBilgileriList'][id$='geregiLov:LovText']");
+    BelgenetElement cmbGeregiDataTable = comboLov("[id^='windowCevapEvrakForm:evrakBilgileriList'][id$='geregiLov:LovSecilenTable_data']");
     BelgenetElement cmbKonuKodu = comboLov("[id^='windowCevapEvrakForm:evrakBilgileriList'][id$='konuKoduLov:LovText']");
     SelenideElement txtOnayIslemiAciklama = $(By.id("windowCevapEvrakForm:onayIslemiAciklama"));
     SelenideElement btnGonder = $(By.id("windowCevapEvrakForm:gonderButton"));
     SelenideElement btnEvetPopup = $(By.cssSelector("div[class*='ui-confirm-dialog'] button[id='kaydetEvetButton']"));
     SelenideElement btnHayirPopup = $(By.cssSelector("div[class*='ui-confirm-dialog'] button[id='kaydetHayirButton']"));
 
+    @Step("Sayfa açıldı mı kontrolü")
+    public GelenEvraklarCevapYazPage sayfaAcilmali() {
+        pageTitle.shouldBe(visible);
+        return this;
+    }
 
     public GelenEvraklarCevapYazPage evrakTuruSec(String evrakTuru) {
         cmbEvrakTuru.selectOption(evrakTuru);
@@ -501,6 +513,20 @@ public class GelenEvraklarCevapYazPage extends MainPage {
         return this;
     }
 
+    @Step("İmzala")
+    public GelenEvraklarCevapYazPage imzalama() {
+        btnImzala.click();
+        return this;
+    }
+
+
+    @Step("İmzalama Ekranı kapat")
+    public GelenEvraklarCevapYazPage imzalamaEkraniKapat() {
+        btnImzalaEkraniKapat.shouldBe(visible);
+        btnImzalaEkraniKapat.click();
+        return this;
+    }
+
     @Step("Kaydet ve Onaya sun")
     public GelenEvraklarCevapYazPage onayIslemiAciklamaDoldur(String aciklama) {
         txtOnayIslemiAciklama.shouldBe(Condition.visible);
@@ -517,9 +543,10 @@ public class GelenEvraklarCevapYazPage extends MainPage {
     @Step("Kişinin geregi alanında görüntülenme kontrolu")
     public GelenEvraklarCevapYazPage geregiKontrolu(String adSoyad) {
 
-        /*System.out.println("Gelen geregi:     " + cmbGeregi.lastSelectedLovTitleText());
+/*        System.out.println("Gelen geregi:     " + cmbGeregi.lastSelectedLovTitleText());
         System.out.println("Beklenen geregi:  " + adSoyad);
         Assert.assertEquals(cmbGeregi.lastSelectedLovTitleText().contains(adSoyad), true);*/
+        cmbGeregi.shouldBe(visible);
         cmbGeregi.getSelectedTitles().last().shouldHave(text(adSoyad));
         return this;
     }
