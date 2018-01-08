@@ -113,7 +113,7 @@ public class KullaniciYonetimiPage extends MainPage {
 
     @Step("Kullanıcı Yönetim sayfasını aç")
     public KullaniciYonetimiPage openPage() {
-        ustMenu(UstMenuData.KullaniciIslemleri.KullaniciListesiYonetimi);
+        ustMenu(UstMenuData.KullaniciIslemleri.KullaniciYonetimi);
         return this;
     }
 

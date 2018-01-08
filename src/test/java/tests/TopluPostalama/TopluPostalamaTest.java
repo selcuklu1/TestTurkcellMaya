@@ -917,13 +917,13 @@ public class TopluPostalamaTest extends BaseTest {
         String evrakDili = "Türkçe";
         String gizlilikDerecesi = "Normal";
         String ivedilik = "Normal";
-        String geregi = "Ahmet ÇELİK";
+        String geregi = "Esk Kurum 071216 2";
         String adres = "adres " + getSysDateForKis();
         String[] konu = new String[]{
                 "TC1811 " + getSysDate(), "TC1811 " + getSysDate() + 100
         };
         String tur = "İmzalama";
-        String geregiTipi = "Gerçek Kişi";
+        String geregiTipi = "Kurum";
         String basariMesaji = "İşlem başarılıdır!";
 //        String konu = "TC2214 20180102112101";
         String postaListesi = konu[0];
