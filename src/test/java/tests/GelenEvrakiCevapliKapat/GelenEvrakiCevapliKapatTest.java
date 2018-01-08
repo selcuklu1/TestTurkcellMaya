@@ -56,6 +56,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
         postalanacakEvraklarPage = new PostalanacakEvraklarPage();
         postalananlarPage = new PostalananlarPage();
         imzaBekleyenlerPage = new ImzaBekleyenlerPage();
+        gelenEvraklarCevapYazPage = new GelenEvraklarCevapYazPage();
     }
 
     @Test(enabled = true, description = "TS930: Kurum içi gelen evraka cevap yaz")

@@ -543,7 +543,7 @@ public class GelenEvraklarCevapYazPage extends MainPage {
     @Step("Kişinin geregi alanında görüntülenme kontrolu")
     public GelenEvraklarCevapYazPage geregiKontrolu(String adSoyad) {
 
-/*        System.out.println("Gelen geregi:     " + cmbGeregi.lastSelectedLovTitleText());
+/*      System.out.println("Gelen geregi:     " + cmbGeregi.lastSelectedLovTitleText());
         System.out.println("Beklenen geregi:  " + adSoyad);
         Assert.assertEquals(cmbGeregi.lastSelectedLovTitleText().contains(adSoyad), true);*/
         cmbGeregi.shouldBe(visible);
