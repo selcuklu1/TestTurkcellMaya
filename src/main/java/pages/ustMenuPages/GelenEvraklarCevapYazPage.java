@@ -552,12 +552,12 @@ public class GelenEvraklarCevapYazPage extends MainPage {
     }
 
     @Step("Konu kodu alanında görüntülenme kontrolu")
-    public GelenEvraklarCevapYazPage konuKonuKontrolu(String konu) {
+    public GelenEvraklarCevapYazPage konuAlaniKontrolu(String konuKodu) {
 
         /*System.out.println("Gelen konuKodu:     " + cmbKonuKodu.lastSelectedLovTitleText());
         System.out.println("Beklenen konuKodu:  " + konu);*/
         /*Assert.assertEquals(cmbKonuKodu.lastSelectedLovTitleText().contains(konu), true);*/
-        cmbKonuKodu.getSelectedTitles().last().shouldHave(text(konu));
+        cmbKonuKodu.getSelectedTitles().last().shouldHave(text(konuKodu));
         return this;
     }
 

@@ -57,6 +57,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
         postalananlarPage = new PostalananlarPage();
         imzaBekleyenlerPage = new ImzaBekleyenlerPage();
         gelenEvraklarCevapYazPage = new GelenEvraklarCevapYazPage();
+        editor = new TextEditor();
     }
 
     @Test(enabled = true, description = "TS930: Kurum içi gelen evraka cevap yaz")
@@ -277,6 +278,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
         String kisiKurum = "Tüzel Kişi";
         String kisi = "Optiim TEST";
         String konuKodu = "040"; //Faaliyet Raporları
+        String konuKodu2 = "Faaliyet Raporları";
         String konu = "TS0373 " + getSysDate();
         String kayitTarihi = getSysDateForKis();
         String evrakSayiSol = createRandomNumber(10);
@@ -316,12 +318,12 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .ikonKontrolleri()
                 .cevapYaz();
 
-        //gelenEvraklarCevapYazPage
-          //      .sayfaAcilmali();
+        gelenEvraklarCevapYazPage
+                .sayfaAcilmali();
 
         gelenEvraklarCevapYazPage
                 .geregiKontrolu(tuzelKisi)
-                .konuKonuKontrolu(konu)
+                .konuAlaniKontrolu(konuKodu2)
                 .editorTabAc()
                 .editorSayiTarihKontrolu(evrakSayi, kayitTarihi);
 
@@ -341,7 +343,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
 
         gelenEvraklarPage
                 .openPage()
-                .evrakGelmedigiGorme(konu,kisiKurum, kayitTarihi, evrakNo);
+                .evrakGelmedigiGorme(konu, kisiKurum, kayitTarihi, evrakNo);
 
         imzaBekleyenlerPage
                 .openPage()
@@ -353,11 +355,11 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
 
         gelenEvraklarPage
                 .openPage()
-                .evrakSec(tuzelKisi, konu, kayitTarihiSayi, kayitTarihi, evrakSayi);
+                .evrakSec(konu, tuzelKisi, kayitTarihiSayi, kayitTarihi, evrakSayi);
 
         cevapladiklarimPage
                 .openPage()
-                .evrakGelmedigiGorme(konu,kisiKurum, kayitTarihi, evrakNo);
+                .evrakGelmedigiGorme(konu, kisiKurum, kayitTarihi, evrakNo);
     }
 
 
