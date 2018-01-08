@@ -15,7 +15,6 @@ import org.testng.annotations.Test;
 import pages.ustMenuPages.EvrakHavaleKurallariYonetimiPage;
 import pages.ustMenuPages.GelenEvrakKayitPage;
 
-import static com.codeborne.selenide.Selenide.$;
 import static data.TestData.password2;
 import static data.TestData.username2;
 
@@ -62,12 +61,12 @@ public class EvrakHavaleKurallariTest extends BaseTest {
                 .kuralEklemeKaydet();
 
         evrakHavaleKurallariYonetimiPage
-                .filtreleKuralAdiDoldur(kuralAdi,"Kural adı");
+                .filtreleKuralAdiDoldur(kuralAdi, "Kural adı");
         //TODO
 
         evrakHavaleKurallariYonetimiPage
                 .ara()
-                .sil(kuralAdi,"Konu")
+                .sil(kuralAdi, "Konu")
                 .islemOnayiEvet()
                 .islemMesaji().basariliOlmali(basariMesaji);
         gelenEvrakKayitPage
@@ -81,7 +80,7 @@ public class EvrakHavaleKurallariTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS2068: Evrak Havale Kuralları - Kural Silme")
-    public void TS2068() throws InterruptedException {
+    public void TS2068() {
         String basariMesaji = "İşlem başarılıdır!";
         String uyariMesaji = "Aynı ada sahip başka havale kuralı vardır.";
         String kuralAdi = "TC-2068_" + createRandomNumber(12);
@@ -162,12 +161,12 @@ public class EvrakHavaleKurallariTest extends BaseTest {
                 .kuralEklemeKaydet();
 
         evrakHavaleKurallariYonetimiPage
-                .filtreleKuralAdiDoldur(kuralAdi,"Kural adı");
+                .filtreleKuralAdiDoldur(kuralAdi, "Kural adı");
         //TODO
 
         evrakHavaleKurallariYonetimiPage
                 .ara()
-                .kopyala(kuralAdi,"Konu");
+                .kopyala(kuralAdi, "Konu");
 
         String kuralAd = evrakHavaleKurallariYonetimiPage.kuralAdiCek();
 
@@ -186,7 +185,7 @@ public class EvrakHavaleKurallariTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS2069: Evrak Havale Kuralları Sorgulama ve Filtreleme")
-    public void TS2069B() throws InterruptedException {
+    public void TS2069B() {
         String basariMesaji = "İşlem başarılıdır!";
         String durumSadecePasifler = "Sadece Pasifler";
         String durumSadeceAktifler = "Sadece Aktifler";
@@ -265,12 +264,12 @@ public class EvrakHavaleKurallariTest extends BaseTest {
                 .kuralEklemeKaydet();
 
         evrakHavaleKurallariYonetimiPage
-                .filtreleKuralAdiDoldur(kuralAdi,"Kural adı");
+                .filtreleKuralAdiDoldur(kuralAdi, "Kural adı");
         //TODO
 
         evrakHavaleKurallariYonetimiPage
                 .ara()
-                .pasifYap(kuralAdi,"Konu")
+                .pasifYap(kuralAdi, "Konu")
                 .islemOnayiEvet();
 
         gelenEvrakKayitPage
@@ -282,12 +281,12 @@ public class EvrakHavaleKurallariTest extends BaseTest {
 
         evrakHavaleKurallariYonetimiPage
                 .openPage()
-                .filtreleKuralAdiDoldur(kuralAdi,"Kural adı");
+                .filtreleKuralAdiDoldur(kuralAdi, "Kural adı");
         //TODO
 
         evrakHavaleKurallariYonetimiPage
                 .ara()
-                .aktifYap(kuralAdi,"Konu")
+                .aktifYap(kuralAdi, "Konu")
                 .islemOnayiEvet();
 
         gelenEvrakKayitPage
@@ -298,7 +297,7 @@ public class EvrakHavaleKurallariTest extends BaseTest {
         evrakHavaleKurallariYonetimiPage
                 .openPage()
                 .ara()
-                .sil(kuralAdi,"Konu")
+                .sil(kuralAdi, "Konu")
                 .islemOnayiEvet()
                 .islemMesaji().basariliOlmali(basariMesaji);
     }
@@ -314,7 +313,7 @@ public class EvrakHavaleKurallariTest extends BaseTest {
         String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
         String kisi = "Zübeyde Tekin";
         String birim2 = "BİLİŞİM HİZMETLERİ VE UYDU PAZARLAMA GENEL MÜDÜR";
-        String kuralAdiGuncelle = kuralAdi+" Güncelle";
+        String kuralAdiGuncelle = kuralAdi + " Güncelle";
         login("cseker", password2);
         //TODO PRE Conditon bir kural bulunmalı
         evrakHavaleKurallariYonetimiPage
@@ -329,12 +328,12 @@ public class EvrakHavaleKurallariTest extends BaseTest {
                 .kuralEklemeKaydet();
 
         evrakHavaleKurallariYonetimiPage
-                .filtreleKuralAdiDoldur(kuralAdi , "Kural adı");
+                .filtreleKuralAdiDoldur(kuralAdi, "Kural adı");
         //TODO
 
         evrakHavaleKurallariYonetimiPage
                 .ara()
-                .havaleKurallariListesiGuncelle(kuralAdi,"Konu")
+                .havaleKurallariListesiGuncelle(kuralAdi, "Konu")
                 .kuralAdiDoldur(kuralAdiGuncelle)
                 .kuralEklemeKaydet();
 
@@ -349,7 +348,7 @@ public class EvrakHavaleKurallariTest extends BaseTest {
         evrakHavaleKurallariYonetimiPage
                 .openPage()
                 .ara()
-                .sil(kuralAdi,"Konu")
+                .sil(kuralAdi, "Konu")
                 .islemOnayiEvet()
                 .islemMesaji().basariliOlmali(basariMesaji);
     }

@@ -1,7 +1,10 @@
 package pages.ustMenuPages;
 
 
-import com.codeborne.selenide.*;
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import pages.MainPage;
@@ -10,10 +13,8 @@ import pages.pageData.UstMenuData;
 
 import java.util.Random;
 
-import static com.codeborne.selenide.CollectionCondition.*;
-import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.value;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
@@ -233,7 +234,7 @@ public class KullaniciYonetimiPage extends MainPage {
     @Step("Gizlilik derecesi seç")
     public KullaniciYonetimiPage kullaniciBirimAtamaGizlilikDerecesiSec(String gizlilikDerecesi) {
 //        if (cmbKullaniciBirimAtamaGizlilikDerecesi.isDisplayed())
-            cmbKullaniciBirimAtamaGizlilikDerecesi.selectOption(gizlilikDerecesi);
+        cmbKullaniciBirimAtamaGizlilikDerecesi.selectOption(gizlilikDerecesi);
         return this;
     }
 

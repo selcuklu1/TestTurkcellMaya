@@ -34,6 +34,7 @@ public interface BelgenetElement extends SelenideElement {
 
     /**
      * Click treeButton on comboLov
+     *
      * @return
      */
     BelgenetElement openTreePanel();
@@ -45,6 +46,7 @@ public interface BelgenetElement extends SelenideElement {
 
     /**
      * Type text to comboLov input
+     *
      * @param text
      * @return
      */
@@ -52,6 +54,7 @@ public interface BelgenetElement extends SelenideElement {
 
     /**
      * "Sonuç bulunamamıştır" kontrolü, type ya da openTreePanel sonrası kullanılır
+     *
      * @return
      */
     Boolean isEmpty();
@@ -63,12 +66,14 @@ public interface BelgenetElement extends SelenideElement {
 
     /**
      * selectable title list
+     *
      * @return
      */
     ElementsCollection getTitleItems();
 
     /**
      * selectable detail list
+     *
      * @return
      */
     ElementsCollection getDetailItems();
@@ -115,9 +120,9 @@ public interface BelgenetElement extends SelenideElement {
 
     BelgenetElement clearAllSelectedLov();
 
-    BelgenetElement lastSelectedLovTitle();
+    BelgenetElement getLastSelectedItemTitle();
 
-    BelgenetElement lastSelectedLovDetail();
+    BelgenetElement getLastSelectedItemDetail();
 
     String lastSelectedLovTitleText();
 

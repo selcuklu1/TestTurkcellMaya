@@ -53,7 +53,7 @@ class ComboLov {
         public SelenideElement execute(SelenideElement proxy, WebElementSource locator, Object[] args) throws IOException {
             ComboLovHelper comboLovHelper = new ComboLovHelper();
             comboLovHelper.setLocators(proxy);
-            return comboLovHelper.lastSelectedLovTitle();
+            return comboLovHelper.getLastSelectedItemTitle();
         }
     }
 
@@ -62,7 +62,7 @@ class ComboLov {
         public SelenideElement execute(SelenideElement proxy, WebElementSource locator, Object[] args) throws IOException {
             ComboLovHelper comboLovHelper = new ComboLovHelper();
             comboLovHelper.setLocators(proxy);
-            return comboLovHelper.lastSelectedLovDetail();
+            return comboLovHelper.getLastSelectedItemDetail();
         }
     }
 
@@ -251,7 +251,7 @@ class ComboLov {
         public BelgenetElement execute(SelenideElement proxy, WebElementSource locator, Object[] args) throws IOException {
             ComboLovHelper comboLovHelper = new ComboLovHelper();
             comboLovHelper.setLocators(proxy);
-            return comboLovHelper.lastSelectedLovTitle();
+            return comboLovHelper.getLastSelectedItemTitle();
         }
     }
 
@@ -260,7 +260,7 @@ class ComboLov {
         public BelgenetElement execute(SelenideElement proxy, WebElementSource locator, Object[] args) throws IOException {
             ComboLovHelper comboLovHelper = new ComboLovHelper();
             comboLovHelper.setLocators(proxy);
-            return comboLovHelper.lastSelectedLovDetail();
+            return comboLovHelper.getLastSelectedItemDetail();
         }
     }
 

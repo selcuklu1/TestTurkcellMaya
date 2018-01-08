@@ -66,16 +66,6 @@ public class BaseLibrary extends ElementsContainer {
 
     //<editor-fold desc="Page loading methods">
 
-
-    public void clearCookies() {
-        try {
-            Selenide.clearBrowserLocalStorage();
-            Selenide.clearBrowserCookies();
-        } catch (Exception e) {
-            log.info("Error clearBrowserLocalStorage and clearBrowserCookies: " + e.getMessage());
-        }
-    }
-
     /**
      * Türkçe harfleri inglizce harflere dönüştürüyor
      *
@@ -92,17 +82,38 @@ public class BaseLibrary extends ElementsContainer {
         return ret;
     }
 
+    public void clearCookies() {
+        try {
+            Selenide.clearBrowserLocalStorage();
+            Selenide.clearBrowserCookies();
+        } catch (Exception e) {
+            log.info("Error clearBrowserLocalStorage and clearBrowserCookies: " + e.getMessage());
+        }
+    }
+
     //<editor-fold desc="Allure screenshooter">
     @Attachment(value = "Page screenshot", type = "image/png")
     public byte[] takeScreenshot() {
+        byte[] bytes = new byte[]{};
         try {
-            return ((TakesScreenshot) WebDriverRunner.getWebDriver()).getScreenshotAs(OutputType.BYTES);
+            bytes = ((TakesScreenshot) WebDriverRunner.getWebDriver()).getScreenshotAs(OutputType.BYTES);
         } catch (WebDriverException e) {
-            e.printStackTrace();
-            return new byte[]{};
+            System.out.println("Error takeScreenshot:" + e.getMessage());
         }
+        return bytes;
     }
-    
+
+    @Attachment(value = "Page screenshot", type = "image/png")
+    public byte[] takeScreenshot(WebDriver driver) {
+        byte[] bytes = new byte[]{};
+        try {
+            bytes = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+        } catch (WebDriverException e) {
+            System.out.println("Error takeScreenshot:" + e.getMessage());
+        }
+        return bytes;
+    }
+
     /**
      * Waiting to JS and jQuery ready state and object with class "loading" to disappear.
      * Used in DriverInvokeListener beforeFindBy method
@@ -113,7 +124,7 @@ public class BaseLibrary extends ElementsContainer {
         try {
             new WebDriverWait(WebDriverRunner.getWebDriver(), Configuration.timeout / 1000, 50).
                     until((ExpectedCondition<Boolean>) driver -> {
-                        String readyState = (String) executeJavaScript("return document.readyState");
+                        String readyState = executeJavaScript("return document.readyState");
 //                        System.out.println("Internal ready state:" + readyState);
 //                        return readyState.equals("complete") || readyState.equals("interactive");
                         return !readyState.equals("loading");
@@ -154,7 +165,7 @@ public class BaseLibrary extends ElementsContainer {
         });
     }
 
-    public void waitForLoadingToDisappear(WebDriver driver) throws InterruptedException {
+    public void waitForLoadingToDisappear(WebDriver driver) {
 //        driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
 
         //Thread.sleep(3000);
@@ -270,11 +281,15 @@ public class BaseLibrary extends ElementsContainer {
                     int height = Integer.parseInt(size[1]);
                     Dimension browserSize = new Dimension(width, height);
                     WebDriverRunner.getWebDriver().manage().window().setSize(browserSize);
+                    System.out.println("custom maximize()");
                 } catch (NumberFormatException e) {
                     WebDriverRunner.getWebDriver().manage().window().maximize();
+                    System.out.println("manage().window().maximize()");
                 }
-            } else
+            } else {
                 WebDriverRunner.getWebDriver().manage().window().maximize();
+                System.out.println("manage().window().maximize()");
+            }
         } catch (Exception e) {
             System.out.println("SettingsListener maximize:" + e.getMessage());
         }
@@ -497,7 +512,7 @@ public class BaseLibrary extends ElementsContainer {
     }
 
     //Bilgisayara indirilen dosyaları siler.
-    public boolean deleteFile(String pathToFile) throws IOException {
+    public boolean deleteFile(String pathToFile) {
         try {
             File file = new File(pathToFile);
 
@@ -641,7 +656,7 @@ public class BaseLibrary extends ElementsContainer {
     }
 
     // Store the current window handle
-    public String windowHandleBefore() throws InterruptedException {
+    public String windowHandleBefore() {
         winHandleBefore = WebDriverRunner.getWebDriver().getWindowHandle();
         return winHandleBefore;
     }
@@ -699,7 +714,7 @@ public class BaseLibrary extends ElementsContainer {
         }
     }
 
-    public boolean findElementOnTableAllPages(String form, SelenideElement element) throws InterruptedException {
+    public boolean findElementOnTableAllPages(String form, SelenideElement element) {
 
         SelenideElement next = $(("[id='" + form + "'] [class='ui-paginator-next ui-state-default ui-corner-all']"));
 
@@ -804,6 +819,7 @@ public class BaseLibrary extends ElementsContainer {
                 break;
         }
     }
+
     //endregion
 
     private String getPCUsername() {
@@ -928,6 +944,23 @@ public class BaseLibrary extends ElementsContainer {
         throw new UnsupportedOperationException(
                 "Underlying driver instance does not support capabilities");
     }
+
+    public RemoteWebDriver getDriverAsRemoteWebDriver() {
+        //This 'if' handle case when LoggingWebDriver.driver is instanceof EventFiringWebDriver .
+        //In this case RemoteWebDriver is field within EventFiringWebDriver while EventFiringWebDriver don't support getting Capabilities
+        WebDriver driver = WebDriverRunner.getWebDriver();
+
+        if (driver instanceof EventFiringWebDriver
+                && ((EventFiringWebDriver) driver).getWrappedDriver() instanceof HasCapabilities) {
+            return (RemoteWebDriver) ((EventFiringWebDriver) driver)
+                    .getWrappedDriver();
+        } else if (driver instanceof HasCapabilities) {
+            return (RemoteWebDriver) driver;
+        }
+        throw new UnsupportedOperationException(
+                "Underlying driver instance does not support capabilities");
+    }
+
     //endregion
 
 

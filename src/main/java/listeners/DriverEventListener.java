@@ -2,7 +2,6 @@ package listeners;
 
 
 import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.Selenide;
 import common.BaseLibrary;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -66,11 +65,15 @@ public class DriverEventListener extends BaseLibrary implements WebDriverEventLi
 
     }
 
-
     public void beforeFindBy(By by, WebElement element, WebDriver driver) {
 
         By loadingLocator = By.cssSelector("div[style*='display: block;'] .loading");
         long timeout = Configuration.timeout / 1000;
+
+        if (by.equals(By.className("lobibox-notify")) ||
+                (element != null && element.toString().contains("lobibox-notify")))
+            return;
+
 
         waitForLoadingJS(driver);
         /*//İşlem Mesajları için loading kaybolması beklememeli.
@@ -118,7 +121,7 @@ public class DriverEventListener extends BaseLibrary implements WebDriverEventLi
         waitForLoadingJS(driver);
         new WebDriverWait(driver, Configuration.timeout / 1000).until(elementToBeClickable(element));
 
-        Selenide.sleep(1000);
+        // Selenide.sleep(1000);
         /**
          * Focus on element: Belgenete özel
          * Visible fakat ekranda görünmeyen olan buronlar için.
@@ -168,6 +171,11 @@ public class DriverEventListener extends BaseLibrary implements WebDriverEventLi
     }
 
     public void onException(Throwable throwable, WebDriver driver) {
-
+        /*System.out.println("///////////////////////////////////////////////////////////////////////////");
+        System.out.println("Case Error: " + throwable.getMessage());
+        System.out.println("///////////////////////////////////////////////////////////////////////////");
+        takeScreenshot(driver);*/
     }
+
+
 }

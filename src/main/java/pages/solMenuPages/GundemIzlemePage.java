@@ -91,7 +91,7 @@ public class GundemIzlemePage extends MainPage {
         }
 
         //İndirilen file name çeker
-       // File root = new File("C://users//" + System.getProperty("user.name") + "//Downloads//");
+        // File root = new File("C://users//" + System.getProperty("user.name") + "//Downloads//");
         //Windows makine için sabit url
         File root = new File("C://users//optiim//Downloads//");
         FilenameFilter beginswithm = new FilenameFilter() {
@@ -162,9 +162,8 @@ public class GundemIzlemePage extends MainPage {
                                 if (tarihDurum == true) System.out.println(tarih[0] + " İçerisinde bulunuyor");
                                 deger++;
                                 if (deger % 10 == 0) {
-                                    if ($$("[id='mainInboxForm:inboxDataTable_paginator_top'] span[class='ui-paginator-next ui-state-default ui-corner-all']").size()==1)
-                                    {
-                                       clickJs( $$("[id='mainInboxForm:inboxDataTable_paginator_top'] span[class='ui-paginator-next ui-state-default ui-corner-all']").get(0));
+                                    if ($$("[id='mainInboxForm:inboxDataTable_paginator_top'] span[class='ui-paginator-next ui-state-default ui-corner-all']").size() == 1) {
+                                        clickJs($$("[id='mainInboxForm:inboxDataTable_paginator_top'] span[class='ui-paginator-next ui-state-default ui-corner-all']").get(0));
                                     }
                                 }
                             }

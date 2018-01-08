@@ -45,7 +45,7 @@ public class ComboLovHelper extends BaseLibrary {
 
     private String lovTreePanelKapat;
 
-    public void setLocators(SelenideElement proxy) {
+    void setLocators(SelenideElement proxy) {
 
         element = proxy;
 
@@ -118,34 +118,18 @@ public class ComboLovHelper extends BaseLibrary {
     }
 
     @Step("Clear all selected items")
-    public BelgenetElement clearAllSelectedItems() {
+    BelgenetElement clearAllSelectedItems() {
 
         int count = getSelectedItems().size();
         for (int i = 0; i < count; i++) {
             getSelectedItems().last().$(lovSecilenTemizleButton).pressEnter();
             getSelectedItems().shouldHaveSize(count - i - 1);
         }
-
-
-        /*int count = $$(lovInputTextleriTemizle).size();
-        Allure.addAttachment("Items count", String.valueOf(count));
-
-        SelenideElement b = $$(lovInputTextleriTemizle).last().shouldBe(visible);
-
-        while ($$(lovInputTextleriTemizle).size() > 0) {
-            SelenideElement e = $$(lovInputTextleriTemizle).first();
-            e.pressEnter();
-            count--;
-           *//* if (e.is())
-                e.click();*//*
-            e.shouldBe(not(visible));
-            $$(lovInputTextleriTemizle).shouldHaveSize(count);
-        }*/
-
         return (BelgenetElement) element;
 //        return ElementFinder.wrap(BelgenetElement.class, null, By.cssSelector(lovText), 0);
     }
 
+    //return type belgenetelement olsun
     By getLastSelectedItem() {
 
         SelenideElement e;
@@ -154,79 +138,29 @@ public class ComboLovHelper extends BaseLibrary {
         else
             e = $(lovSecilen);
 
-        String locator = e.getWrappedElement().toString();
-        locator = locator.split("css selector:")[1].trim();
-        locator = locator.substring(0, locator.length() - 1);
-
-//        locator = multiType ? locator + ":nth-child("+ $$(l).size() +")" : lovSecilen;
-//        return locator;
+        String locator = e.getSearchCriteria();
+        Allure.addAttachment("item", $(locator).text());
         return By.cssSelector(locator);
     }
 
     //Depricated
     @Step("Get last selected title")
-    SelenideElement lastSelectedLovTitle() {
+    SelenideElement getLastSelectedItemTitle() {
         ElementsCollection selectedItems = getSelectedTitles();
         selectedItems = selectedItems.filterBy(visible);
         selectedItems.shouldHave(sizeGreaterThan(0));
+        Allure.addAttachment("item", selectedItems.last().text());
         return selectedItems.last();
-
-        /*String xpath = "";
-
-        int count = $$(lovSecilenItemTitle).size();
-        if (count == 0)
-            throw new RuntimeException("lastSelectedLovTitle bulunamadı");
-        if ($$(lovSecilenItemTitle).filter(visible).size() == 0)
-            throw new RuntimeException("lastSelectedLovTitle bulunamadı");
-
-        SelenideElement title = $$(lovSecilenItemTitle).filter(visible).get(count - 1);
-        if (!title.attr("id").isEmpty())
-            return ElementFinder.wrap(BelgenetElement.class, null, By.id(title.attr("id")), 0);
-        else {
-
-            SelenideElement parent = title.parent();
-            while (parent.attr("id") == "" && !parent.equals(null)) {
-                parent = parent.parent();
-            }
-            xpath = parent.attr("id");
-            if (xpath.isEmpty()) throw new RuntimeException("lastSelectedLovTitle'in xpath! bulunamadı");
-
-            xpath = "//*[@id='" + xpath + "']//*[@class='lovItemTitle']";
-            return ElementFinder.wrap(BelgenetElement.class, null, By.xpath(xpath), 0);
-        }*/
     }
 
     //Depricated
     @Step("Get last selected detail")
-    SelenideElement lastSelectedLovDetail() {
+    SelenideElement getLastSelectedItemDetail() {
         ElementsCollection selectedItems = getSelectedDetails();
         selectedItems = selectedItems.filterBy(visible);
         selectedItems.shouldHave(sizeGreaterThan(0));
-
+        Allure.addAttachment("item", selectedItems.last().text());
         return selectedItems.last();
-        /*String xpath = "";
-
-        int count = $$(lovSecilenItemDetail).size();
-        if (count == 0)
-            throw new RuntimeException("lovSecilenItemDetail bulunamadı");
-        if ($$(lovSecilenItemDetail).filter(visible).size() == 0)
-            throw new RuntimeException("lovSecilenItemDetail bulunamadı");
-
-        SelenideElement title = $$(lovSecilenItemDetail).filter(visible).get(count - 1);
-        if (!title.attr("id").isEmpty())
-            return ElementFinder.wrap(BelgenetElement.class, null, By.id(title.attr("id")), 0);
-        else {
-
-            SelenideElement parent = title.parent();
-            while (parent.attr("id") == "" && !parent.equals(null)) {
-                parent = parent.parent();
-            }
-            xpath = parent.attr("id");
-            if (xpath.isEmpty()) throw new RuntimeException("lovSecilenItemDetail'in xpath! bulunamadı");
-
-            xpath = "//*[@id='" + xpath + "']//*[@class='lovItemDetail']";
-            return ElementFinder.wrap(BelgenetElement.class, null, By.xpath(xpath), 0);
-        }*/
     }
 
     @Step("Get all selected items")
@@ -248,7 +182,7 @@ public class ComboLovHelper extends BaseLibrary {
     @Step("Get selected titles")
     ElementsCollection getSelectedTitles() {
         List<String> texts = null;
-        if ($$(lovSecilenItemTitle).size()>0)
+        if ($$(lovSecilenItemTitle).size() > 0)
             texts = $$(lovSecilenItemTitle).texts();
         Allure.addAttachment("Value", texts.toString());
         return $$(lovSecilenItemTitle);
@@ -284,7 +218,7 @@ public class ComboLovHelper extends BaseLibrary {
         return text;
     }
 
-    @Step("Is field selected")
+    @Step("Is field selected?")
     Boolean isLovSelected() {
         boolean isselected = $(lovSecilen).is(visible);
         Allure.addAttachment("Value", String.valueOf(isselected));
@@ -302,15 +236,10 @@ public class ComboLovHelper extends BaseLibrary {
         } catch (Exception ignored) {
         }
 
-//        WebElement element = WebDriverRunner.getWebDriver().findElement(By.cssSelector(lovText));
-
-//        boolean multiType = element.getAttribute("class").contains("lovMultipleType");
-
         if (multiType)
             selectMultiType(value);
         else
             selectSingleType(value);
-
 
 //        return By.cssSelector(lovText);
 
@@ -324,7 +253,7 @@ public class ComboLovHelper extends BaseLibrary {
             return By.cssSelector(lovSecilen);
     }
 
-    @Step("Is selectable")
+    @Step("Is item selectable?")
     public boolean isLovValueSelectable(String value) {
 
 /*        WebElement weblovText = WebDriverRunner.getWebDriver().findElement(By.cssSelector(lovText));
@@ -508,13 +437,13 @@ public class ComboLovHelper extends BaseLibrary {
         return ElementFinder.wrap(BelgenetElement.class, null, By.cssSelector(lovText), 0);
     }
 
-    @Step("Type text in field")
+    @Step("Type text")
     public BelgenetElement type(String text) {
         $(lovText).setValue(text);
         return ElementFinder.wrap(BelgenetElement.class, null, By.cssSelector(lovTree), 0);
     }
 
-    @Step("Is empty")
+    @Step("Is empty?")
     public boolean isEmpty() {
         boolean isempty = $$(lovTreeList).get(0).is(have(text("Sonuç bulunamamıştır")));
         Allure.addAttachment("Value", String.valueOf(isempty));
@@ -523,13 +452,11 @@ public class ComboLovHelper extends BaseLibrary {
 
     @Step("Get title items")
     public ElementsCollection getTitleItems() {
-
         String locator = "li span[class*='ui-tree-selectable-node'] " + lovItemTitle;
         $$(lovTreeList).get(0).shouldBe(visible);
         $$(lovTree).last().shouldBe(visible);
+        Allure.addAttachment("items", $$(lovTree).last().$$(locator).texts().toString());
         return $$(lovTree).last().$$(locator);
-//        $$(lovTreeList).get(0).shouldBe(visible);
-//        return  $$(lovTree).last().$$(lovTreeListSelectableItemsTitle);
     }
 
     @Step("Get detail items")
@@ -537,9 +464,8 @@ public class ComboLovHelper extends BaseLibrary {
         String locator = "li span[class*='ui-tree-selectable-node'] " + lovItemDetail;
         $$(lovTreeList).get(0).shouldBe(visible);
         $$(lovTree).last().shouldBe(visible);
+        Allure.addAttachment("items", $$(lovTree).last().$$(locator).texts().toString());
         return $$(lovTree).last().$$(locator);
-//        $$(lovTreeList).get(0).shouldBe(visible);
-//        return  $$(lovTree).last().$$(lovTreeListSelectableItemsDetail);
     }
 
 }

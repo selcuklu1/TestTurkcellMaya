@@ -48,7 +48,7 @@ public class KararYazisiOlusturPage extends MainPage {
     //endregion
 
     @Step("Karar yazısı oluştur sayfası aç")
-    public KararYazisiOlusturPage openPage(){
+    public KararYazisiOlusturPage openPage() {
         ustMenu(UstMenuData.EvrakIslemleri.KararYazisiOlustur);
         return this;
     }
@@ -552,7 +552,7 @@ public class KararYazisiOlusturPage extends MainPage {
     public class PDFKontrol extends MainPage {
 
         @Step("Gereği alanında adres gelmedigi, Bilgi alanında dagitim yerinin adresi ile geldigi gorulur")
-        public PDFKontrol geregiBilgiAlaniAdresPdfKontrol(String birinciKullaniciGeregiAdresi, String ikinciKullaniciBilgiAdresi) throws InterruptedException {
+        public PDFKontrol geregiBilgiAlaniAdresPdfKontrol(String birinciKullaniciGeregiAdresi, String ikinciKullaniciBilgiAdresi) {
 
             return this;
         }

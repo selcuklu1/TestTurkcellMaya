@@ -7,7 +7,6 @@ import common.BaseLibrary;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.NotFoundException;
 
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
@@ -29,28 +28,28 @@ public class Filtreler extends BaseLibrary {
 
 
     @Step("Filtrelerde alanı doldur")
-    public Filtreler filtrelerdeAlaniDoldur(String name, CharSequence... keysToSend){
+    public Filtreler filtrelerdeAlaniDoldur(String name, CharSequence... keysToSend) {
         SelenideElement field = filtersGrid.$x("//label[contains(.,'" + name + "')]/ancestor::td[1]/following-sibling::td[1]//input");
         field.shouldBe(visible);
 //        field.sendKeys(keysToSend);
-        for (CharSequence keys:keysToSend) {
+        for (CharSequence keys : keysToSend) {
             field.sendKeys(keys);
         }
         return this;
     }
 
     @Step("Filtrelerde alanin butonu tıkla")
-    public Filtreler filtrelerdeAlaninButonuTikla(String fieldName, int index){
+    public Filtreler filtrelerdeAlaninButonuTikla(String fieldName, int index) {
         filtersGrid.$$x("//label[contains(.,'" + fieldName + "')]/ancestor::td[1]/following-sibling::td[1]//button")
-            .shouldHave(sizeGreaterThan(0))
+                .shouldHave(sizeGreaterThan(0))
                 .get(index)
                 .click();
         return this;
     }
 
     @Step("Filtrelerde butonu tıkla")
-    public Filtreler filtrelerButonuTikla(String buttonName){
-        filtre.$x("//button[.='"+ buttonName +"']").click();
+    public Filtreler filtrelerButonuTikla(String buttonName) {
+        filtre.$x("//button[.='" + buttonName + "']").click();
         return this;
     }
 
