@@ -173,6 +173,7 @@ public class PostaListesiPage extends MainPage {
         lblGonderildigiYer2.isDisplayed();
         lblTutar.isDisplayed();
         lblGramaj.isDisplayed();
+        
         Allure.addAttachment("label",lblPostaListesiAdi.text());
         Allure.addAttachment("label",lblBarkodNo.text());
         Allure.addAttachment("label",lblGonderildigiYer.text());
