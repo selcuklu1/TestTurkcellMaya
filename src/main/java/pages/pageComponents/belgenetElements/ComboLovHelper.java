@@ -182,7 +182,7 @@ public class ComboLovHelper extends BaseLibrary {
     @Step("Get selected titles")
     ElementsCollection getSelectedTitles() {
         List<String> texts = null;
-        if ($$(lovSecilenItemTitle).size()>0)
+        if ($$(lovSecilenItemTitle).size() > 0)
             texts = $$(lovSecilenItemTitle).texts();
         Allure.addAttachment("Value", texts.toString());
         return $$(lovSecilenItemTitle);

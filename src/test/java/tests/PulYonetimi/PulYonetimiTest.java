@@ -25,6 +25,17 @@ public class PulYonetimiTest extends BaseTest {
     PostalanacakEvraklarPage postalanacakEvraklarPage;
     EvrakOlusturPage evrakOlusturPage;
     TopluPostalanacakEvraklarPage topluPostalanacakEvraklarPage;
+    String konuKodu = "010.01";
+    String kaldiralacakKlasor = "Diğer";
+    String evrakTuru = "Resmi Yazışma";
+    String evrakDili = "Türkçe";
+    String gizlilikDerecesi = "Normal";
+    String ivedilik = "Normal";
+    String geregi = "Esk Kurum 071216 2";
+    String konu = "TS2214 " + getSysDate();
+    String tur = "İmzalama";
+    String geregiTipi = "Kurum";
+    String basariMesaji = "İşlem başarılıdır!";
 
     @BeforeMethod
     public void loginBeforeTests() {
@@ -37,21 +48,9 @@ public class PulYonetimiTest extends BaseTest {
 
     }
 
-    String konuKodu = "010.01";
-    String kaldiralacakKlasor = "Diğer";
-    String evrakTuru = "Resmi Yazışma";
-    String evrakDili = "Türkçe";
-    String gizlilikDerecesi = "Normal";
-    String ivedilik = "Normal";
-    String geregi = "Ahmet ÇELİK";
-    String konu = "TS2214 " + getSysDate();
-    String tur = "İmzalama";
-    String geregiTipi = "Gerçek Kişi";
-    String basariMesaji = "İşlem başarılıdır!";
-
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS1732: Pul Yönetimi ekranından yeni tanımlama yapma")
-    public void TS1732() throws InterruptedException {
+    public void TS1732() {
 
         login("mbozdemir", "123");
         String basariMesaji = "İşlem başarılıdır!";
@@ -72,6 +71,7 @@ public class PulYonetimiTest extends BaseTest {
         pulYonetimiPage
                 .openPage()
                 .yeniPulEkle()
+                .alanKontrolleri()
                 .pulEklemePostaTipiSec(postaTipi)
                 .gramajiDoldur(gramaj)
                 .tutariDoldur(tutar)
@@ -111,8 +111,8 @@ public class PulYonetimiTest extends BaseTest {
                 "Ankara İçi APS"
         };
 
-//        Test datası oluşturuluyor
 
+        //region Test Datası
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
@@ -145,6 +145,7 @@ public class PulYonetimiTest extends BaseTest {
                 .listeOlustur()
                 .postaListesiSec(konu)
                 .listeyeEkle();
+        //endregion
 
 //         Test başlangıcı
 
@@ -194,7 +195,8 @@ public class PulYonetimiTest extends BaseTest {
         String gramaj2 = "5";
         String konu = "TS2214 20180102113202";
 
-        // test datası oluşturuluyor
+
+        //region Test Datası
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
@@ -215,6 +217,7 @@ public class PulYonetimiTest extends BaseTest {
                 .editorTabAc()
                 .editorIcerikDoldur(konu)
                 .evrakImzala();
+        //endregion
 
         logout();
         login("mbozdemir", "123");

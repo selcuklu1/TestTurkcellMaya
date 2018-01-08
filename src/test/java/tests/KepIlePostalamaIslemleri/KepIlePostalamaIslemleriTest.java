@@ -43,7 +43,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
     //TS
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "1610: KEP Hesap Menüsü - Tanımlanan KEP hesapları ile login işlemleri")
-    public void TS1610() throws InterruptedException {
+    public void TS1610() {
 
         String basariMesaji = "İşlem başarılıdır!";
         String hataMesaji = "Bağlantı kurulamadı, girilen parola veya şifre yanlış !";
@@ -115,7 +115,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "1513: Gerçek Kişi Kep Hesabı Tanımlama ve Evrak Oluşturma Ekranından Kontrolü")
-    public void TS1513C() throws InterruptedException {
+    public void TS1513C() {
 
         String popupKepAdresi = "turksat.kamu1@testkep.pttkep.gov.tr";
         String popupKepHizmetSaglayicisiSec = "PTT KEP Servisi";
@@ -141,12 +141,12 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
                 .openPage()
                 .bilgilerTabiAc()
                 .geregiSecimTipiSec(bilgiSecimTipi)
-                .geregiDoldur(getIdariBirimKodu,  "İdari Birim Kodu");
+                .geregiDoldur(getIdariBirimKodu, "İdari Birim Kodu");
     }
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "1513: Tüzel Kişi Kep Hesabı Tanımlama ve Evrak Oluşturma Ekranından Kontrolü")
-    public void TS1513D() throws InterruptedException {
+    public void TS1513D() {
 
         String popupKepAdresi = "turksat.kamu1@testkep.pttkep.gov.tr";
         String popupKepHizmetSaglayicisiSec = "PTT KEP Servisi";
@@ -178,7 +178,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "KEP Adresi Tanımlama işlemleri")
-    public void TS1520() throws InterruptedException {
+    public void TS1520() {
 
         String birim = "Yazılım";
         String birimTuru = "İç Birim";

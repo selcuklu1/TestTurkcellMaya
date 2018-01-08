@@ -12,9 +12,7 @@ import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
-import static com.codeborne.selenide.Selenide.switchTo;
+import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 public class TeslimAlinmayiBekleyenlerPage extends MainPage {
@@ -82,6 +80,7 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         tblIlkEvrak.click();
         return this;
     }
+
     @Step("Evrak no ile evrak seçilir : \"{evrakNo}\" ")
     public TeslimAlinmayiBekleyenlerPage evrakNoIleEvrakSec(String evrakNo) {
         tblEvraklar
@@ -93,9 +92,9 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
 
     @Step("Evrak önizleme evrak kontrolü : \"{pdfText}\" ")
     public TeslimAlinmayiBekleyenlerPage evrakOnizlemeEklenenUstYaziKontrolu(String pdfText) {
-        String text="";
+        String text = "";
         switchTo().frame(1);
-        text =  $(By.xpath("//div[@id='viewer']/div[@class='page']/div[@class='textLayer']/div[4]")).getText();
+        text = $(By.xpath("//div[@id='viewer']/div[@class='page']/div[@class='textLayer']/div[4]")).getText();
         text.equals(pdfText);
         switchTo().parentFrame();
         return this;

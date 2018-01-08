@@ -76,7 +76,7 @@ public class SearchFiltreleme extends BaseLibrary {
     }
 
     @Step("Get combolov element with label")
-    public BelgenetElement getFilterCombolov(String label){
+    public BelgenetElement getFilterCombolov(String label) {
         SelenideElement parent = getFilterElement(label);
         return comboLov(By.xpath(parent.getSearchCriteria().split("By.xpath:")[1].trim() + "//input"));
     }

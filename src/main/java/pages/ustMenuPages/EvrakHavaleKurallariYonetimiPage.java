@@ -22,7 +22,8 @@ import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 public class EvrakHavaleKurallariYonetimiPage extends MainPage {
 
     SelenideElement window = $("#havaleKuralYonetimiListingForm");
-
+    SelenideElement btnIlkGuncelle = $(By.id("havaleKuralYonetimiListingForm:havaleKuralDataTable:0:updateHavaleKuralButton"));
+    SelenideElement btnIlkPasifYap = $(By.id("havaleKuralYonetimiEditorForm:kullaniciBirimDataTable:0:kullaniciBirimPasifButton"));
     SelenideElement btnAra = $("[id='havaleKuralYonetimiListingForm:filterPanel:searchEntitiesButton']");
     SelenideElement btnSil = $(By.id("havaleKuralYonetimiListingForm:havaleKuralDataTable:0:deleteHavaleKuralButton"));
     SelenideElement btnIslemOnayiEvet = $(By.id("baseConfirmationDialog:confirmButton"));
@@ -55,9 +56,32 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
     SelenideElement txtKimeHavaleEdilecekAciklama = $(By.id("havaleKuralYonetimiEditorForm:havaleAciklama"));
     //TODO
 
+    //Kuralın tanımlı olduğu birimler
+    SelenideElement cmbKuralınTanimliOlduguBirimler = $(By.id("havaleKuralYonetimiEditorForm:kullaniciBirimDataTable:durumSelectBox"));
+
+
     @Step("Kural ekleme kaydet")
     public EvrakHavaleKurallariYonetimiPage kuralEklemeKaydet() {
         btnKuralEklemeKaydet.click();
+        return this;
+    }
+
+
+    @Step("Kuralın tanımlı olduğu birimler alanından seç")
+    public EvrakHavaleKurallariYonetimiPage kuralinTanimliOlduguBirimlerSec(String durum){
+        cmbKuralınTanimliOlduguBirimler.selectOption(durum);
+        return this;
+    }
+
+    @Step("Güncelle")
+    public EvrakHavaleKurallariYonetimiPage ilkGuncelle(){
+        btnIlkGuncelle.click();
+        return this;
+    }
+
+    @Step("Pasif Yap")
+    public EvrakHavaleKurallariYonetimiPage ilkPasifYap(){
+        btnIlkPasifYap.click();
         return this;
     }
 
@@ -75,7 +99,7 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
     }
 
     @Step("Filtrele alanındaki kural adı alanını doldur {kuralAdi} | {alan}")
-    public EvrakHavaleKurallariYonetimiPage filtreleKuralAdiDoldur(String kuralAdi, String alan){
+    public EvrakHavaleKurallariYonetimiPage filtreleKuralAdiDoldur(String kuralAdi, String alan) {
         txtFiltreleKuralAdi.setValue(kuralAdi);
         return this;
     }
@@ -119,7 +143,7 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
     }
 
     @Step("Konu kodu doldur")
-    public EvrakHavaleKurallariYonetimiPage konuKoduDoldur(String konuKodu){
+    public EvrakHavaleKurallariYonetimiPage konuKoduDoldur(String konuKodu) {
         txtKonuKodu.selectLov(konuKodu);
         return this;
     }
@@ -161,31 +185,31 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
     }
 
     @Step("Birim doldur")
-    public EvrakHavaleKurallariYonetimiPage geldigiYerBirimDoldur(String birim){
+    public EvrakHavaleKurallariYonetimiPage geldigiYerBirimDoldur(String birim) {
         txtGeldigiYerBirim.selectLov(birim);
         return this;
     }
 
     @Step("Gerçek Kişi doldur")
-    public EvrakHavaleKurallariYonetimiPage geldigiYerGercekKisiDoldur(String gercekKisi){
+    public EvrakHavaleKurallariYonetimiPage geldigiYerGercekKisiDoldur(String gercekKisi) {
         txtGeldigiYerGercekKisi.selectLov(gercekKisi);
         return this;
     }
 
     @Step("Kullanıcı doldur")
-    public EvrakHavaleKurallariYonetimiPage geldigiYerKullaniciDoldur(String kullanici){
+    public EvrakHavaleKurallariYonetimiPage geldigiYerKullaniciDoldur(String kullanici) {
         txtGeldigiYerKullanici.selectLov(kullanici);
         return this;
     }
 
     @Step("Tüzel Kişi doldur")
-    public EvrakHavaleKurallariYonetimiPage geldigiYerTuzelKisiDoldur(String tuzelKisi){
+    public EvrakHavaleKurallariYonetimiPage geldigiYerTuzelKisiDoldur(String tuzelKisi) {
         txtGeldigiYerTuzelKisi.selectLov(tuzelKisi);
         return this;
     }
 
     @Step("Kurum doldur")
-    public EvrakHavaleKurallariYonetimiPage geldigiYerKurumDoldur(String kurum){
+    public EvrakHavaleKurallariYonetimiPage geldigiYerKurumDoldur(String kurum) {
         txtGeldigiYerKurum.selectLov(kurum);
         return this;
     }
@@ -202,7 +226,7 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
         return this;
     }
 
-    public String kuralAdiCek(){
+    public String kuralAdiCek() {
         String kuralAdi = txtKuralAdi.getValue();
         System.out.println(kuralAdi);
         return kuralAdi;
@@ -233,7 +257,6 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
     }
 
 
-
     @Step("Birim alanı doldurulur")
     public EvrakHavaleKurallariYonetimiPage birimDoldur(String birim) {
         txtBirim.selectLov(birim);
@@ -247,40 +270,39 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
     }
 
     @Step("Sil \"{konu}\" | \"{konuAdi}\" ")
-    public EvrakHavaleKurallariYonetimiPage sil(String konu,String konuAdi) {
+    public EvrakHavaleKurallariYonetimiPage sil(String konu, String konuAdi) {
         ElementsCollection evrak2 = $$("[id='havaleKuralYonetimiListingForm:havaleKuralDataTable'] table tbody tr");
         evrak2.filterBy(text(konu)).get(0).$("[id^='havaleKuralYonetimiListingForm:havaleKuralDataTable'][id$='deleteHavaleKuralButton']").click();
         return this;
     }
 
     @Step("Kopyala \"{konu}\" | \"{konuAdi}\" ")
-    public EvrakHavaleKurallariYonetimiPage kopyala(String konu,String konuAdi) {
+    public EvrakHavaleKurallariYonetimiPage kopyala(String konu, String konuAdi) {
         ElementsCollection evrak2 = $$("[id='havaleKuralYonetimiListingForm:havaleKuralDataTable'] table tbody tr");
         evrak2.filterBy(text(konu)).get(0).$("[id^='havaleKuralYonetimiListingForm:havaleKuralDataTable'][id$='copyHavaleKuralButton']").click();
         return this;
     }
 
     @Step("PasifYap \"{konu}\" | \"{konuAdi}\" ")
-    public EvrakHavaleKurallariYonetimiPage pasifYap(String konu,String konuAdi) {
+    public EvrakHavaleKurallariYonetimiPage pasifYap(String konu, String konuAdi) {
         ElementsCollection evrak2 = $$("[id='havaleKuralYonetimiListingForm:havaleKuralDataTable'] table tbody tr");
         evrak2.filterBy(text(konu)).get(0).$("[id^='havaleKuralYonetimiListingForm:havaleKuralDataTable'][id$='havaleKuralPasifButton']").click();
         return this;
     }
 
     @Step("Güncelle \"{konu}\" | \"{konuAdi}\" ")
-    public EvrakHavaleKurallariYonetimiPage havaleKurallariListesiGuncelle(String konu,String konuAdi) {
+    public EvrakHavaleKurallariYonetimiPage havaleKurallariListesiGuncelle(String konu, String konuAdi) {
         ElementsCollection evrak2 = $$("[id='havaleKuralYonetimiListingForm:havaleKuralDataTable'] table tbody tr");
         evrak2.filterBy(text(konu)).get(0).$("[id^='havaleKuralYonetimiListingForm:havaleKuralDataTable'][id$='updateHavaleKuralButton']").click();
         return this;
     }
 
     @Step("Aktif yap \"{konu}\" | \"{konuAdi}\" ")
-    public EvrakHavaleKurallariYonetimiPage aktifYap(String konu,String konuAdi) {
+    public EvrakHavaleKurallariYonetimiPage aktifYap(String konu, String konuAdi) {
         ElementsCollection evrak2 = $$("[id='havaleKuralYonetimiListingForm:havaleKuralDataTable'] table tbody tr");
         evrak2.filterBy(text(konu)).get(0).$("[id^='havaleKuralYonetimiListingForm:havaleKuralDataTable'][id$='kuralAktifButton']").click();
         return this;
     }
-
 
 
     @Step("İslem onayı evet")
@@ -302,7 +324,7 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
     }
 
     @Step("Evrak havale kuralları yonetimi sayfası açılır")
-    public EvrakHavaleKurallariYonetimiPage openPage(){
+    public EvrakHavaleKurallariYonetimiPage openPage() {
         ustMenu(UstMenuData.YonetimSayfalari.EvrakHavaleKurallariYonetimi);
         return this;
     }

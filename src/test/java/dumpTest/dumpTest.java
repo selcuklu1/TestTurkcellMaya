@@ -1,9 +1,11 @@
 package dumpTest;
 
-import com.codeborne.selenide.*;
+import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.WebDriverRunner;
 import common.BaseTest;
 import data.TestData;
-import org.openqa.selenium.By;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.HasCapabilities;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -12,20 +14,12 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pages.MainPage;
-import pages.pageComponents.*;
-import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageComponents.belgenetElements.BelgentCondition;
 import pages.pageData.SolMenuData;
-import pages.ustMenuPages.EvrakHavaleKurallariYonetimiPage;
 import pages.ustMenuPages.EvrakOlusturPage;
-import pages.ustMenuPages.KlasorYonetimiPage;
-import pages.ustMenuPages.PulYonetimiPage;
 
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.executeJavaScript;
-import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 
 public class dumpTest extends BaseTest {
@@ -44,7 +38,7 @@ public class dumpTest extends BaseTest {
 
 
     @BeforeMethod
-    public void caps() throws Exception {
+    public void caps() {
        /* DesiredCapabilities caps;
         if (Configuration.browser.equals("chrome")){
             caps = DesiredCapabilities.chrome();
@@ -56,19 +50,19 @@ public class dumpTest extends BaseTest {
             WebDriverRunner.setWebDriver(new ChromeDriver(options));
         }*/
 
-       Configuration.timeout = 5000;
-       Configuration.collectionsTimeout = 5000;
+        Configuration.timeout = 5000;
+        Configuration.collectionsTimeout = 5000;
     }
 
     @Test(description = "", enabled = true)
-    public void sorgulamaVefiltremeDeneme() throws Exception {
+    public void sorgulamaVefiltremeDeneme() {
         login();
 
 
     }
 
     @Test(description = "", enabled = true)
-    public void findFileInPath() throws Exception {
+    public void findFileInPath() {
 
         Selenide.open("http://fiyat.mercedes-benz.com.tr/a-serisi");
 
@@ -112,7 +106,7 @@ public class dumpTest extends BaseTest {
     }
 
     @Test
-    public void solMenuTest() throws Exception {
+    public void solMenuTest() {
         new MainPage().solMenu(SolMenuData.KurulIslemleri.KararIzleme);
     }
 

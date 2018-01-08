@@ -1,6 +1,9 @@
 package pages.ustMenuPages;
 
-import com.codeborne.selenide.*;
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
@@ -201,20 +204,21 @@ public class GelenEvrakKayitPage extends MainPage {
     }
 
     @Step("")
-    public GelenEvrakKayitPage otomatikHavaleGeldigiGorme(String otomatikHavale){
+    public GelenEvrakKayitPage otomatikHavaleGeldigiGorme(String otomatikHavale) {
         ElementsCollection lblOtomoatikHavale = $$("[id='evrakBilgileriForm:havalePanel'] label[class='columnLabelFixSmallWidth']");
-        boolean durum = lblOtomoatikHavale.filterBy(Condition.text(otomatikHavale)).size()==1;
-        Assert.assertEquals(durum,true);
+        boolean durum = lblOtomoatikHavale.filterBy(Condition.text(otomatikHavale)).size() == 1;
+        Assert.assertEquals(durum, true);
         return this;
     }
 
-   @Step("Otomatik havale seç \"{otomatikHavale}\" ")
-    public GelenEvrakKayitPage popupOtomatikHavaleSec(String otomatikHavale){
+    @Step("Otomatik havale seç \"{otomatikHavale}\" ")
+    public GelenEvrakKayitPage popupOtomatikHavaleSec(String otomatikHavale) {
         cmbPopupOtomatikHavale.selectOption(otomatikHavale);
         $("[class='ui-dialog ui-widget ui-widget-content ui-corner-all ui-shadow havaleKuralSecimiDialog ui-draggable ui-overlay-visible'] [class='ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all']").click();
         sleep(3000);
         return this;
     }
+
     @Step("Hava İşlemleri Kişi alanında \"{kisi}\" seç")
     public GelenEvrakKayitPage havaleIslemleriKisiDoldur(String kisi) {
         txtHavaleIslemleriKisi.selectLov(kisi);
@@ -249,26 +253,26 @@ public class GelenEvrakKayitPage extends MainPage {
     }
 
     @Step("Fiziksel Ek ekle")
-    public GelenEvrakKayitPage ekBilgiFizikselEkEkle() throws InterruptedException {
+    public GelenEvrakKayitPage ekBilgiFizikselEkEkle() {
         clickJs(btnFizikselEkEkle);
         return this;
     }
 
-    public GelenEvrakKayitPage ekBilgiFiltreAc() throws InterruptedException {
+    public GelenEvrakKayitPage ekBilgiFiltreAc() {
 //        btnEvrakEkleri.click();
         clickJs(btnEvrakEkleri);
         return this;
     }
 
     @Step("Üst yazi \"{path}\" ekle")
-    public GelenEvrakKayitPage evrakBilgileriUstYaziEkle(String path) throws InterruptedException {
+    public GelenEvrakKayitPage evrakBilgileriUstYaziEkle(String path) {
         uploadFile(ustYazi, path);
         //ustYaziUploadFile(path);
         return this;
     }
 
     @Step("Konu Kodu alanında \"{konuKodu}\" seç")
-    public GelenEvrakKayitPage konuKoduDoldur(String konuKodu) throws InterruptedException {
+    public GelenEvrakKayitPage konuKoduDoldur(String konuKodu) {
         comboKonuKodu.selectLov(konuKodu);
         return this;
     }
@@ -387,12 +391,12 @@ public class GelenEvrakKayitPage extends MainPage {
         if (t.contains(kisi)) {
             *//*System.out.println("Gelen title:     " + cmbGeldigiTuzelKisi.lastSelectedLovTitleText());
             System.out.println("Beklenen title:  " + kisi);*//*
-            *//*Assert.assertEquals(cmbGeldigiTuzelKisi.lastSelectedLovTitleText().contains(kisi), true);*//*
+         *//*Assert.assertEquals(cmbGeldigiTuzelKisi.lastSelectedLovTitleText().contains(kisi), true);*//*
             cmbGeldigiTuzelKisi.getSelectedItems().last().shouldHave(text(kisi));
         } else if (d.contains(kisi)) {
             *//*System.out.println("Gelen title:     " + cmbGeldigiTuzelKisi.lastSelectedLovDetailText());
             System.out.println("Beklenen title:  " + kisi);*//*
-            *//*Assert.assertEquals(cmbGeldigiTuzelKisi.lastSelectedLovDetailText().contains(kisi), true);*//*
+         *//*Assert.assertEquals(cmbGeldigiTuzelKisi.lastSelectedLovDetailText().contains(kisi), true);*//*
             cmbGeldigiTuzelKisi.getSelectedDetails().last().shouldHave(text(kisi));
         }*/
 
@@ -742,13 +746,13 @@ public class GelenEvrakKayitPage extends MainPage {
     public GelenEvrakKayitPage benzerKayit() {
         if ($$(By.id("evetButtonBenzerKaydet")).get(0).shouldHave(visible).exists() == true) {
             $(By.id("evetButtonBenzerKaydet")).pressEnter();
+        } else {
         }
-        else {}
         return this;
     }
 
     @Step("PopUp kontrolleri")
-    public String popUps() throws InterruptedException {
+    public String popUps() {
 //        popUp.shouldHave(Condition.visible);  pop up kontrolu
 
         String text;
@@ -849,7 +853,7 @@ public class GelenEvrakKayitPage extends MainPage {
     }
 
     @Step("PDF Ust Yazi adi kontrol : \"{ustYaziAdi}\" ")
-    public GelenEvrakKayitPage ustYaziPdfAdiKontrol(String ustYaziAdi) throws InterruptedException {
+    public GelenEvrakKayitPage ustYaziPdfAdiKontrol(String ustYaziAdi) {
         String text = lblEklenenPdfUstYazi.text();
         System.out.println(text);
         Assert.assertEquals(text.contains(ustYaziAdi), true);
@@ -857,17 +861,17 @@ public class GelenEvrakKayitPage extends MainPage {
     }
 
     @Step("PDF text alır ")
-    public String onIzlemePdfText() throws InterruptedException {
-        String text="";
+    public String onIzlemePdfText() {
+        String text = "";
         switchTo().frame(3);
-        text =  $(By.xpath("//div[@id='viewer']/div[@class='page']/div[@class='textLayer']/div[4]")).getText();
+        text = $(By.xpath("//div[@id='viewer']/div[@class='page']/div[@class='textLayer']/div[4]")).getText();
         System.out.println(text);
         switchTo().parentFrame();
         return text;
     }
 
     @Step("Mail Ust Yazi adi kontrol : \"{ustYaziAdi}\" ")
-    public GelenEvrakKayitPage ustYaziMailAdiKontrol(String ustYaziAdi) throws InterruptedException {
+    public GelenEvrakKayitPage ustYaziMailAdiKontrol(String ustYaziAdi) {
 //        String text = lblEklenenMailUstYazi.text();
         lblEklenenMailUstYazi.shouldBe(Condition.text(ustYaziAdi));
 //        System.out.println(text);
@@ -1039,13 +1043,13 @@ public class GelenEvrakKayitPage extends MainPage {
     }
 
     @Step("Konu kodu sil")
-    public GelenEvrakKayitPage konuKoduSil() throws InterruptedException {
+    public GelenEvrakKayitPage konuKoduSil() {
         comboKonuKodu.clearLastSelectedItem();
         return this;
     }
 
     @Step("Konu kodu temizle")
-    public GelenEvrakKayitPage konuKoduTemizle() throws InterruptedException {
+    public GelenEvrakKayitPage konuKoduTemizle() {
         txtKonuKoduTemizle.click();
         sleep(2000);
         return this;

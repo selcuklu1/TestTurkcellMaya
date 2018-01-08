@@ -30,7 +30,7 @@ public class BilgilerTab extends MainPage {
 
     SelenideElement tab = $x("//td[contains(@class,'tabMenuContainer') and descendant::span[contains(@class,'tabMenu') and text()='" + tabName + "']]//button");
 
-//******************************************************
+    //******************************************************
     //region Konu Kodu
     BelgenetElement konuKoduCombolov = comboLov("input[id$='konuKoduLov:LovText']");
     //endregion

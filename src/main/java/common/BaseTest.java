@@ -21,6 +21,7 @@ import static data.TestData.belgenetURL;
 
 //BrowserPerTest.class
 //@Listeners({SettingsListener.class})
+//@Listeners({RerunFailedTests.class})
 public class BaseTest extends BaseLibrary {
 
     static final int timeout = 30;
@@ -85,14 +86,24 @@ public class BaseTest extends BaseLibrary {
         int FAILURE = 2;
         int SKIP = 3;
         int SUCCESS_PERCENTAGE_FAILURE = 4;
-        int STARTED= 16;
+        int STARTED = 16;
         String result = "unknown";
-        switch (testResult.getStatus()){
-            case 1 : result = "SUCCESS"; break;
-            case 2 : result = "FAILURE"; break;
-            case 3 : result = "SKIP"; break;
-            case 4 : result = "SUCCESS_PERCENTAGE_FAILURE"; break;
-            case 16 : result = "STARTED"; break;
+        switch (testResult.getStatus()) {
+            case 1:
+                result = "SUCCESS";
+                break;
+            case 2:
+                result = "FAILURE";
+                break;
+            case 3:
+                result = "SKIP";
+                break;
+            case 4:
+                result = "SUCCESS_PERCENTAGE_FAILURE";
+                break;
+            case 16:
+                result = "STARTED";
+                break;
         }
 
         if (testResult.getStatus() == ITestResult.FAILURE)

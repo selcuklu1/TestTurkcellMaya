@@ -66,16 +66,6 @@ public class BaseLibrary extends ElementsContainer {
 
     //<editor-fold desc="Page loading methods">
 
-
-    public void clearCookies() {
-        try {
-            Selenide.clearBrowserLocalStorage();
-            Selenide.clearBrowserCookies();
-        } catch (Exception e) {
-            log.info("Error clearBrowserLocalStorage and clearBrowserCookies: " + e.getMessage());
-        }
-    }
-
     /**
      * Türkçe harfleri inglizce harflere dönüştürüyor
      *
@@ -90,6 +80,15 @@ public class BaseLibrary extends ElementsContainer {
             ret = ret.replaceAll(new String(new char[]{turkishChars[i]}), new String(new char[]{englishChars[i]}));
         }
         return ret;
+    }
+
+    public void clearCookies() {
+        try {
+            Selenide.clearBrowserLocalStorage();
+            Selenide.clearBrowserCookies();
+        } catch (Exception e) {
+            log.info("Error clearBrowserLocalStorage and clearBrowserCookies: " + e.getMessage());
+        }
     }
 
     //<editor-fold desc="Allure screenshooter">
@@ -114,7 +113,7 @@ public class BaseLibrary extends ElementsContainer {
         }
         return bytes;
     }
-    
+
     /**
      * Waiting to JS and jQuery ready state and object with class "loading" to disappear.
      * Used in DriverInvokeListener beforeFindBy method
@@ -125,7 +124,7 @@ public class BaseLibrary extends ElementsContainer {
         try {
             new WebDriverWait(WebDriverRunner.getWebDriver(), Configuration.timeout / 1000, 50).
                     until((ExpectedCondition<Boolean>) driver -> {
-                        String readyState = (String) executeJavaScript("return document.readyState");
+                        String readyState = executeJavaScript("return document.readyState");
 //                        System.out.println("Internal ready state:" + readyState);
 //                        return readyState.equals("complete") || readyState.equals("interactive");
                         return !readyState.equals("loading");
@@ -166,7 +165,7 @@ public class BaseLibrary extends ElementsContainer {
         });
     }
 
-    public void waitForLoadingToDisappear(WebDriver driver) throws InterruptedException {
+    public void waitForLoadingToDisappear(WebDriver driver) {
 //        driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
 
         //Thread.sleep(3000);
@@ -513,7 +512,7 @@ public class BaseLibrary extends ElementsContainer {
     }
 
     //Bilgisayara indirilen dosyaları siler.
-    public boolean deleteFile(String pathToFile) throws IOException {
+    public boolean deleteFile(String pathToFile) {
         try {
             File file = new File(pathToFile);
 
@@ -657,7 +656,7 @@ public class BaseLibrary extends ElementsContainer {
     }
 
     // Store the current window handle
-    public String windowHandleBefore() throws InterruptedException {
+    public String windowHandleBefore() {
         winHandleBefore = WebDriverRunner.getWebDriver().getWindowHandle();
         return winHandleBefore;
     }
@@ -715,7 +714,7 @@ public class BaseLibrary extends ElementsContainer {
         }
     }
 
-    public boolean findElementOnTableAllPages(String form, SelenideElement element) throws InterruptedException {
+    public boolean findElementOnTableAllPages(String form, SelenideElement element) {
 
         SelenideElement next = $(("[id='" + form + "'] [class='ui-paginator-next ui-state-default ui-corner-all']"));
 

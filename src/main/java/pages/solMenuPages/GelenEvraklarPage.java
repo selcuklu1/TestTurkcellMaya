@@ -12,7 +12,8 @@ import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 public class GelenEvraklarPage extends MainPage {
@@ -161,7 +162,6 @@ public class GelenEvraklarPage extends MainPage {
         txtHavaleYapKullaniciListesi.type(kisi).getTitleItems().filterBy(text(kisi)).first().click();
         return this;
     }
-
 
 
     @Step("Evrak seçilir")
@@ -594,7 +594,7 @@ public class GelenEvraklarPage extends MainPage {
     }
 
     @Step("Vekalet var uyarısı : \"{mesaj}\" ")
-    public GelenEvraklarPage evrakOnIzlemeUyarıPopUpKontol(String mesaj) throws InterruptedException {
+    public GelenEvraklarPage evrakOnIzlemeUyarıPopUpKontol(String mesaj) {
         SelenideElement popUp = $("div[class='ui-confirm-dialog ui-dialog ui-widget ui-widget-content ui-corner-all ui-helper-hidden ui-shadow ui-overlay-visible']");
         SelenideElement popUpEvet = $(By.xpath("//div[@class='ui-confirm-dialog ui-dialog ui-widget ui-widget-content ui-corner-all ui-helper-hidden ui-shadow ui-overlay-visible']//center//button[1]"));
         popUp.should(Condition.visible);

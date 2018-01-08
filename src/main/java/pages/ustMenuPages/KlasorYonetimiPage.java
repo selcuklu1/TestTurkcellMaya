@@ -30,7 +30,7 @@ public class KlasorYonetimiPage extends MainPage {
     SelenideElement btnKlasorEklemeKaydet = $(By.id("klasorYonetimiEditorForm:saveKlasorButton"));
 
     @Step("Klasör Yönetimi sayfası aç")
-    public KlasorYonetimiPage openPage(){
+    public KlasorYonetimiPage openPage() {
         ustMenu(UstMenuData.KlasorIslemleri.KlasorYonetimi);
         return this;
     }
