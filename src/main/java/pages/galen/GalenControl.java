@@ -1,8 +1,4 @@
-package Example;//import com.galenframework.api.Galen;
-//import com.galenframework.api.GalenPageDump;
-//import com.galenframework.reports.GalenTestInfo;
-//import com.galenframework.reports.HtmlReportBuilder;
-//import com.galenframework.reports.model.LayoutReport;
+package pages.galen;
 
 import com.codeborne.selenide.WebDriverRunner;
 import com.galenframework.api.Galen;
@@ -10,35 +6,21 @@ import com.galenframework.api.GalenPageDump;
 import com.galenframework.reports.GalenTestInfo;
 import com.galenframework.reports.HtmlReportBuilder;
 import com.galenframework.reports.model.LayoutReport;
-import common.BaseTest;
 import io.qameta.allure.Allure;
+import io.qameta.allure.Step;
 import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
 
 import java.io.IOException;
-import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-public class GalenExampleTest extends BaseTest {
-
-    @BeforeMethod
-    public void beforeMethod(Method method) {
-
-        /*// Go to swtestacademy.com
-        driver.get("http://www.swtestacademy.com/");
-        driver.manage().window().setSize(new Dimension(1200, 800));*/
-    }
-
-    @Test
-    public void homePageLayoutTest(Method method) throws IOException {
-
-        galenGenerateDump("homePageLayoutTest");
-        galenLayoutControl("homePageLayoutTest");
-
-    }
+/**
+ * Yazan: Ilyas Bayraktar
+ * Tarih: 8.01.2018
+ * Açıklama:
+ */
+public class GalenControl {
 
     /**
      *
@@ -57,6 +39,7 @@ public class GalenExampleTest extends BaseTest {
         }
     }
 
+    @Step
     public void galenLayoutControl(String testName) throws IOException {
 
         // Create a layoutReport object

@@ -24,6 +24,7 @@ import static data.TestData.belgenetURL;
 //@Listeners({RerunFailedTests.class})
 public class BaseTest extends BaseLibrary {
 
+    //Seconds
     static final int timeout = 30;
     static final int loadingTimeout = 30;
 
@@ -52,7 +53,7 @@ public class BaseTest extends BaseLibrary {
         Configuration.timeout = timeout * 1000;
         setWaitForLoading(loadingTimeout);
         //Configuration.clickViaJs = true;
-//        Configuration.holdBrowserOpen = true;
+        Configuration.holdBrowserOpen = true;
         //Configuration.headless = false;
         Configuration.startMaximized = true;
         Configuration.pollingInterval = 100;

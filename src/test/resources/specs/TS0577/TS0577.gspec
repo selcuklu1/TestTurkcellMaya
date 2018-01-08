@@ -1,0 +1,13 @@
+#Declaring objects with css and xpath locators
+@objects
+    hitapInplace            css     [id='yeniOnayEvrakForm:hitapInplace']
+    hitapInplaceInput       css     [id='yeniOnayEvrakForm:hitapInplace']>button[onclick*='DOnayhitapEkInplaceDialog.show()']
+    hitapInplaceText        css     [id='yeniOnayEvrakForm:hitapInplace']>button[onclick*='DOnayhitapInplaceDialog.show()']
+    metinAlan               css     [id='yeniOnayEvrakForm:DOnayEditor']>table
+    imzaciPanel             css     [id='yeniOnayEvrakForm:imzacilarPanel']
+    imzaci1Input            xpath   ((//table[contains(@id,'imzaciGridPanel')])[1]//button[contains(@onclick,'imzaciAdinaInplaceDialog')])[1]
+    imzaci1Text             xpath   (//table[contains(@id,'imzaciGridPanel')])[1]//span[normalize-space(.)='User2 TEST']
+    olurYazisi              xpath   (//table[contains(@id,'imzaciGridPanel')])//span[normalize-space(.)='OLUR']
+    olurYazisiTarih         xpath   (//table[contains(@id,'imzaciGridPanel')])//span[normalize-space(.)='../../....']
+    imzaci2Input            xpath   ((//table[contains(@id,'imzaciGridPanel')])[1]//button[contains(@onclick,'imzaciAdinaInplaceDialog')])[1]
+    imzaci2Text             xpath   (//table[contains(@id,'imzaciGridPanel')])[1]//span[normalize-space(.)='Zübeyde TEKİN']

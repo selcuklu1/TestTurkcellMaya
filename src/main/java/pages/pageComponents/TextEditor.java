@@ -1,5 +1,6 @@
 package pages.pageComponents;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
@@ -59,6 +60,14 @@ public class TextEditor extends MainPage {
         String text = editor().text();
         switchTo().defaultContent();
         return text;
+    }
+
+    public TextEditor editorTextShouldHave(Condition... condition) {
+        for (Condition con:condition) {
+            editor().shouldHave(con);
+        }
+        switchTo().defaultContent();
+        return this;
     }
 
     public String getInnerText() {

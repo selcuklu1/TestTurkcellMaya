@@ -122,7 +122,8 @@ public class ComboLovHelper extends BaseLibrary {
 
         int count = getSelectedItems().size();
         for (int i = 0; i < count; i++) {
-            getSelectedItems().last().$(lovSecilenTemizleButton).pressEnter();
+            clickJs(getSelectedItems().last().$(lovSecilenTemizleButton));
+            //getSelectedItems().last().$(lovSecilenTemizleButton).pressEnter();
             getSelectedItems().shouldHaveSize(count - i - 1);
         }
         return (BelgenetElement) element;
