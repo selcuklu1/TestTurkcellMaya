@@ -30,7 +30,7 @@ public class OnayAkisiTest extends BaseTest {
     @BeforeMethod
     public void beforeTests(Method method) {
 
-        log.info(method.getName() + "Nolu test senaryosu başladı.");
+        //log.info(method.getName() + "Nolu test senaryosu başladı.");
 
         login();
         evrakOlusturPage = new EvrakOlusturPage();

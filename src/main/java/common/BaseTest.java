@@ -71,7 +71,7 @@ public class BaseTest extends BaseLibrary {
         System.out.println("browser: " + Configuration.browser);
         System.out.println("url: " + Configuration.baseUrl);
         System.out.println("Doc path: " + getDocPath());
-        System.out.println("Download path: " + getDownoladPath());
+        System.out.println("Download path: " + getDownloadPath());
         System.out.println("Selenide/Selenium driver has been set up.");
     }
 
@@ -121,7 +121,12 @@ public class BaseTest extends BaseLibrary {
         //WebDriverRunner.getAndCheckWebDriver().quit();
         WebDriverRunner.closeWebDriver();
     }
-    
+
+    @AfterClass(alwaysRun = true)
+    public void afterClass() {
+        Selenide.close();
+        log.info("Browser has been closed.");
+    }
 
     @Step("Login")
     public void login(User user) {

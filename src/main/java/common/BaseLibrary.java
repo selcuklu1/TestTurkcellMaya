@@ -822,7 +822,7 @@ public class BaseLibrary extends ElementsContainer {
 
     //endregion
 
-    private String getPCUsername() {
+    public static String getPCUsername() {
         String userName = System.getProperty("user.name");
         return userName;
     }
@@ -913,7 +913,7 @@ public class BaseLibrary extends ElementsContainer {
         return path;
     }
 
-    public String getDownoladPath() {
+    public String getDownloadPath() {
         Capabilities caps = getCapabilities();
         Platform operationSystem = caps.getPlatform();
         String path = "";

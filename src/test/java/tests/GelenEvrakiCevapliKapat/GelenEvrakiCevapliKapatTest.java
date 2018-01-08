@@ -222,7 +222,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
         String cevaplananEvrakSayisi = "6345202-010.01-9075";
         String cevaplananEvrakTarihi = "17.11.2017";
         String basariMesaji = "İşlem başarılıdır!";
-        String filePath = getDownoladPath();//"C:\\Users\\" + getPCUsername() + "\\Downloads\\";
+        String filePath = getDownloadPath();//"C:\\Users\\" + getPCUsername() + "\\Downloads\\";
         String fileName = "Rapor_";
         String fileName2 = "Rapor_.xls";
 
