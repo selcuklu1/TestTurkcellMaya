@@ -1,8 +1,9 @@
 package tests.OlurYazisiİslemleri;
 
-import com.codeborne.selenide.Condition;
 import common.BaseTest;
 import data.User;
+import io.qameta.allure.Allure;
+import io.qameta.allure.Link;
 import org.testng.annotations.Test;
 import pages.galen.GalenControl;
 import pages.newPages.OlurYazisiOlusturPage;
@@ -11,7 +12,6 @@ import pages.pageData.alanlar.GeregiSecimTipi;
 import pages.pageData.alanlar.GizlilikDerecesi;
 import pages.pageData.alanlar.Ivedilik;
 
-import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.page;
 
 /**
@@ -23,8 +23,10 @@ public class OlurYazisiİslemleriTest extends BaseTest {
 
     User user1 = new User("user1", "123", "User1 TEST", "AnaBirim1", "Altyapı ve Sistem Yönetim Uzmanı");
 
+
     //Teskilat Kisi tanimlari-->birim yönetimi ekranında birimin olur metni boş olmalı
     @Test(description = "TS0577: Olur yazısı oluşturulması ve gönderilmesi", enabled = true)
+    @Link(name = "Galen", type = "mylink", url = "file:///Users/ilyas/WorkspaceJava/Git/BelgenetFTA/galenReports/TS0577/report.html")
     public void TS0577() throws Exception {
         login(user1);
         OlurYazisiOlusturPage olurYazisiOlusturPage = page(OlurYazisiOlusturPage.class);
@@ -44,6 +46,10 @@ public class OlurYazisiİslemleriTest extends BaseTest {
         olurYazisiOlusturPage.editorTabAc();
                 //.getEditor().editorTextShouldHave(text("... Makamına"));
 
-        new GalenControl().galenGenerateDump("TS0577");
+        new GalenControl()
+                .galenLayoutControl("TS0577");
+//                .galenGenerateDump("TS0577");
+
+
     }
 }
