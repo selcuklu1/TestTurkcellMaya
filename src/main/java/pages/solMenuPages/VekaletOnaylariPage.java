@@ -3,6 +3,7 @@ package pages.solMenuPages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
@@ -56,25 +57,39 @@ public class VekaletOnaylariPage extends MainPage {
         return this;
     }
 
-    @Step("Onaylanacak Kayıt Seç")
+    @Step("Onaylanacak Kayıt Seçilir : \"{text}\" ")
     public VekaletOnaylariPage tablodanOnaylanacakKayıtSec(String text) {
         tblOnayBekleyenler
                 .filterBy(Condition.text(text)).first()
                 .click();
         return this;
     }
+    @Step("Tabloda Onaylanacak Kayıt Kontrolü")
+    public VekaletOnaylariPage tablodanOnaylanacakKayıtKontrolu(String vekaletVeren, String vekaletAlan, String vekaletTarihi,String aciklama) {
+        tblOnayBekleyenler
+                .filterBy(Condition.text(vekaletVeren))
+                .filterBy(Condition.text(vekaletAlan))
+                .filterBy(Condition.text(vekaletTarihi))
+                .filterBy(Condition.text(aciklama))
+                .shouldHaveSize(1);
+        return this;
+    }
 
-    @Step("")
-    public VekaletOnaylariPage alanKontrolleri(String vekaletVeren, String vekaletAlan, String vekaletTarihi) {
+    @Step("Alan Kontrolleri")
+    public VekaletOnaylariPage alanKontrolleri(String vekaletVeren, String vekaletAlan, String vekaletTarihi,String aciklama) {
+        SelenideElement lblaciklama = $(By.xpath("//span[text()='"+aciklama+"']"));
+
         boolean vvSonuc = lblVekaletVeren.text().contains(vekaletVeren);
         boolean vaSonuc = txtVekaletAlan.text().contains(vekaletAlan);
         boolean dbaSonuc = dateTxtBaslangicTarihi.getValue().equals(vekaletTarihi);
         boolean dbiSonuc = dateTxtBitisTarihi.getValue().equals(vekaletTarihi);
+        boolean aSonuc= lblaciklama.getText().equals(aciklama);
 
         Assert.assertEquals(vvSonuc, true);
         Assert.assertEquals(vaSonuc, true);
         Assert.assertEquals(dbaSonuc, true);
         Assert.assertEquals(dbiSonuc, true);
+        Assert.assertEquals(aSonuc, true);
         return this;
     }
 
@@ -93,6 +108,7 @@ public class VekaletOnaylariPage extends MainPage {
     @Step("Onay evrakı alan kontrolü")
     public VekaletOnaylariPage onayEvrakiKontrol() {
         txtOnayEvraki.shouldBe(Condition.not(Condition.empty));
+        Allure.addAttachment("Onay Evraki : ",txtOnayEvraki.text());
         return this;
     }
 
@@ -105,10 +121,15 @@ public class VekaletOnaylariPage extends MainPage {
     @Step("Evrak detay kontrolü")
     public VekaletOnaylariPage evrakKontol(String evrakNo) {
         tblEvrakNoPanel.text().equals(evrakNo);
+        return this;
+    }
+    @Step("Evrak detay ekranı kapat")
+    public VekaletOnaylariPage detayEkraniKapat() {
         btnEkranKapat.click();
         islemPenceresiKapatmaOnayiPopup("Kapat");
         return this;
     }
+
 
     @Step("Onay onay")
     public VekaletOnaylariPage onay() {

@@ -566,7 +566,7 @@ public class GizlilikKleransiTest extends BaseTest {
         String ivedilik = "Normal";
         String geregi = "Optiim Birim";
 
-        login("mbozdemir", "123");
+        login("gsahin", "123");
 
         kullaniciYonetimiPage
                 .openPage()

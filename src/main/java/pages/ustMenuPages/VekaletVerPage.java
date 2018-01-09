@@ -196,9 +196,9 @@ public class VekaletVerPage extends MainPage {
         return this;
     }
 
-    @Step("Vekalet Listesi red  nedeni tablo kontrolü : \"{retNedeni}\" ")
-    public VekaletVerPage vekaletListesiTabloKontrol(int column, String retNedeni) {
-        boolean status = findElementOnTableByColumnInputInAllPages(tblVekaletListesi2, column, retNedeni).isDisplayed();
+    @Step("Vekalet Listesi statü tablo kontrolü : \"{statu}\" ")
+    public VekaletVerPage vekaletListesiTabloKontrol(int column, String statu) {
+        boolean status = findElementOnTableByColumnInputInAllPages(tblVekaletListesi2, column, statu).isDisplayed();
         Assert.assertEquals(status, true);
         return this;
     }
