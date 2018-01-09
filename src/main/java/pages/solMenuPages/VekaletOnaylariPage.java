@@ -108,7 +108,7 @@ public class VekaletOnaylariPage extends MainPage {
     @Step("Onay evrakı alan kontrolü")
     public VekaletOnaylariPage onayEvrakiKontrol() {
         txtOnayEvraki.shouldBe(Condition.not(Condition.empty));
-        Allure.addAttachment("Onay Evraki : ",txtOnayEvraki.text());
+        Allure.addAttachment("Onay Evraki : ",txtOnayEvraki.getText());
         return this;
     }
 

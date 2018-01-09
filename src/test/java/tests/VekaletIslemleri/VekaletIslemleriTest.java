@@ -429,7 +429,7 @@ public class VekaletIslemleriTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true
-            , dependsOnMethods = {"TS2208"}
+//            , dependsOnMethods = {"TS2208"}
             , description = "TS2212 : Vekalet veren kullanıcının bulunduğu kullanıcı listesine evrak havalesi ve kontrolü")
     public void TS2212() throws InterruptedException {
 
@@ -463,9 +463,9 @@ public class VekaletIslemleriTest extends BaseTest {
         gelenEvraklarPage
                 .evrakNoyaGoreEvrakSec(evrakNO2212)
                 .havaleYap()
-//                .havaleYapKisiTreeSec(vekaletVeren)
-//                .vekeletAlanVerenTabloVekaletAlanveyaVerenSec(vekaletVeren)
-                .kullanciListesiSecWithTitle(kullanici, title)  //ikinci gelen seçilmeli
+                .havaleYapKisiTreeSec(vekaletVeren)
+                .vekeletAlanVerenTabloVekaletAlanveyaVerenSec(vekaletVeren)
+                .kullanciListesiSecWithTitle(kullanici, title)//ikinci gelen seçilmeli
                 .confirmDialog().dialogMessage().shouldHave(text(mesaj));
         gelenEvraklarPage.confirmDialog().button("Evet").click();
         gelenEvraklarPage
@@ -480,11 +480,12 @@ public class VekaletIslemleriTest extends BaseTest {
         gelenEvraklarPage
                 .openPage()
                 .tabloEvrakNoKontrol(evrakNO2212);
+
     }
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true
-//            , dependsOnMethods = {"TS0012"}
+            , dependsOnMethods = {"TS0012"}
             , description = "TS0011 : Vekalet alan kullanıcıya evrak havalesi ve kontrolü")
     public void TS0011() throws InterruptedException {
 

@@ -295,7 +295,7 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement btnVekaletTablosuKapat = $(By.xpath("//div[@id='yeniGidenEvrakForm:kullaniciBirimSecimiDialogId']//span[@class='ui-icon ui-icon-closethick']"));
         SelenideElement btnKullan = $("[id$='anlikAkisKullanButton']");
         SelenideElement txtOnayAkisi = $("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='akisLov:LovSecilen']");
-        SelenideElement btnIadeEt = $("[id='inboxItemInfoForm:dialogTabMenuRight:dialogTabMenuRight'] td:nth-child(7) button");
+        SelenideElement btnIadeEt = $(By.xpath("//span[text()='İade Et']/ancestor::tbody[1]//button"));
         BelgenetElement cmbKullaniciListesi = comboBox(By.id("inboxItemInfoForm:kullaniciListOneMenu_id_label"));
         SelenideElement txtNot = $(By.id("inboxItemInfoForm:notTextArea_id"));
         SelenideElement btnIadeEt2 = $(By.id("inboxItemInfoForm:iadeEtButton_id"));
@@ -333,7 +333,7 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement btnOtomatikOnayAkisi = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:otomatikOnayAkisiEkle"));
 
         BelgenetElement txtForm = comboLov("input[id$='formSablonuId:LovText']");
-
+        SelenideElement btnKaydet = $(By.xpath("//span[text()='Kaydet']/ancestor::tbody[1]//button"));
         //endregion
 
         private BilgilerTab open() {
@@ -858,13 +858,20 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Kaydet butonu")
+        public BilgilerTab kaydet() {
+            btnKaydet.click();
+            return this;
+        }
+
+
         @Step("İade Et butonu")
         public BilgilerTab iadeEt() {
             btnIadeEt.click();
             return this;
         }
 
-        @Step("Kullanıcı Listesi kontrol")
+        @Step("Kullanıcı Listesi kontrol : \"{kullanici}\" ")
         public BilgilerTab kullaniciListesiKontrol(String kullanici) {
             String text = cmbKullaniciListesi.text();
             text.contains(kullanici);
@@ -877,7 +884,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("İade et")
+        @Step("İade et tıklanır")
         public BilgilerTab iadeEt2() {
             btnIadeEt2.click();
             return this;

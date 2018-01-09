@@ -455,7 +455,7 @@ public class PostaListesiPage extends MainPage {
         return this;
     }
 
-    @Step("Tutar alaninda \"{indirimOrani}\" değeri olmalı mı? : \"{shouldBeEquals}\" ")
+    @Step("İndirim Oranı alaninda \"{indirimOrani}\" değeri olmalı mı? : \"{shouldBeEquals}\" ")
     public PostaListesiPage indirimOraniKontrol(String indirimOrani, boolean shouldBeEquals) {
         txtIndirimOrani.text();
         if (shouldBeEquals == true)

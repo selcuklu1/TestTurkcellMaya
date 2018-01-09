@@ -757,7 +757,7 @@ public class GizlilikKleransiTest extends BaseTest {
         String evrakDili = "Türkçe";
         String gizlilikDerecesi = "Hizmete Özel";
         String ivedilik = "Normal";
-        String geregi = "Optiim Birim";
+        String geregi = "Esk Kurum 071216 2";
 
         login(username4, password4);
 
@@ -774,6 +774,7 @@ public class GizlilikKleransiTest extends BaseTest {
                 .gizlilikDerecesiSec(gizlilikDerecesi)
                 .aciklamaDoldur(icerik)
                 .ivedilikSec(ivedilik)
+                .geregiSecimTipiSecByText("Kurum")
                 .geregiSec(geregi)
                 .onayAkisiEkle()
                 .kullaniciTabloKontrol()
@@ -859,12 +860,16 @@ public class GizlilikKleransiTest extends BaseTest {
         evrakOlusturPage
                 .bilgilerTabiAc()
                 .gizlilikDerecesiSec("Özel")
+                .kaydet()
+                .confirmDialog().button("Evet").click();
+        evrakOlusturPage
+                .bilgilerTabiAc()
                 .iadeEtbutonKontol()
                 .iadeEt()
-                .kullaniciListesiKontrol("Yasemin")
+                .kullaniciListesiKontrol("Mehmet BOZDEMİR")
                 .notDoldur("iade")
                 .iadeEt2()
-                .popUpEvraktaDegisiklik()
+//                .popUpEvraktaDegisiklik()
                 .islemMesaji().beklenenMesaj(basariMesaji);
 
         logout();
