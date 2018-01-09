@@ -1,4 +1,4 @@
-package pages.ustMenuPages;
+package pages.altMenuPages;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
@@ -9,10 +9,13 @@ import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
 import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
-public class GelenEvraklarCevapYazPage extends MainPage {
+public class CevapYazPage extends MainPage {
+
+    SelenideElement pageTitle = $(By.xpath("//span[. = 'Cevap Yaz' and @class = 'ui-dialog-title']"));
 
     //Bilgileri sekmesinde bulunanlar
     SelenideElement cmbEvrakTuru = $(By.id("windowCevapEvrakForm:evrakBilgileriList:1:evrakTuruCombo"));
@@ -30,8 +33,11 @@ public class GelenEvraklarCevapYazPage extends MainPage {
     SelenideElement txtBilgi = $(By.id("windowCevapEvrakForm:evrakBilgileriList:13:bilgiLov:LovText"));
     SelenideElement chkDagitimiEkYap = $(By.id("windowCevapEvrakForm:evrakBilgileriList:16:dagitimEkYapCheckBoxId_input"));
     SelenideElement btnKaydetVeOnayaSun = $(By.cssSelector("[id^='windowCevapEvrakForm:j_idt'] [id$='uiRepeat:2:panelGrid'] span[class$='kaydetHavaleEt']"));
+    SelenideElement btnImzala = $(By.cssSelector("[id^='windowCevapEvrakForm:j_idt'] [id$='uiRepeat:2:panelGrid'] span[class$='imzala']"));
     BelgenetElement cmbKaldiralacakKlasorler = comboLov("input[id$='eklenecekKlasorlerLov:LovText']");
     BelgenetElement cmbOnayAkisi = comboLov(By.cssSelector("[id^='windowCevapEvrakForm:evrakBilgileriList'][id$='akisLov:LovText']"));
+    SelenideElement btnImzalaEkraniKapat = $("[id='evrakImzalaDialog'] [class$='closethick']");
+
 
 
     //Ekleri Sekmesi
@@ -123,419 +129,440 @@ public class GelenEvraklarCevapYazPage extends MainPage {
 
     SelenideElement editorIlgiKismi = $(By.id("windowCevapEvrakForm:ilgiOutPanel"));
     BelgenetElement cmbGeregi = comboLov("[id^='windowCevapEvrakForm:evrakBilgileriList'][id$='geregiLov:LovText']");
+    BelgenetElement cmbGeregiDataTable = comboLov("[id^='windowCevapEvrakForm:evrakBilgileriList'][id$='geregiLov:LovSecilenTable_data']");
     BelgenetElement cmbKonuKodu = comboLov("[id^='windowCevapEvrakForm:evrakBilgileriList'][id$='konuKoduLov:LovText']");
     SelenideElement txtOnayIslemiAciklama = $(By.id("windowCevapEvrakForm:onayIslemiAciklama"));
     SelenideElement btnGonder = $(By.id("windowCevapEvrakForm:gonderButton"));
     SelenideElement btnEvetPopup = $(By.cssSelector("div[class*='ui-confirm-dialog'] button[id='kaydetEvetButton']"));
     SelenideElement btnHayirPopup = $(By.cssSelector("div[class*='ui-confirm-dialog'] button[id='kaydetHayirButton']"));
 
+    @Step("Sayfa açıldı mı kontrolü")
+    public CevapYazPage sayfaAcilmali() {
+        pageTitle.shouldBe(visible);
+        return this;
+    }
 
-    public GelenEvraklarCevapYazPage evrakTuruSec(String evrakTuru) {
+    public CevapYazPage evrakTuruSec(String evrakTuru) {
         cmbEvrakTuru.selectOption(evrakTuru);
         return this;
     }
 
-    public GelenEvraklarCevapYazPage emirTalimatSec(String emirTalimat) {
+    public CevapYazPage emirTalimatSec(String emirTalimat) {
         cmbEmirTalimat.selectOption(emirTalimat);
         return this;
     }
 
-    public GelenEvraklarCevapYazPage evrakDiliSec(String evrakDili) {
+    public CevapYazPage evrakDiliSec(String evrakDili) {
         cmbEvrakDili.selectOption(evrakDili);
         return this;
     }
 
-    public GelenEvraklarCevapYazPage konuKoduDoldur(String konuKodu) {
+    public CevapYazPage konuKoduDoldur(String konuKodu) {
         txtKonuKodu.sendKeys(konuKodu);
         return this;
     }
 
-    public GelenEvraklarCevapYazPage konuDoldur(String konu) {
+    public CevapYazPage konuDoldur(String konu) {
         txtKonu.sendKeys(konu);
         return this;
     }
 
-    public GelenEvraklarCevapYazPage kaldirilacakKlasorlerDoldur(String kaldirilacakKlasorler) {
+    public CevapYazPage kaldirilacakKlasorlerDoldur(String kaldirilacakKlasorler) {
         cmbKaldiralacakKlasorler.selectLov(kaldirilacakKlasorler);
         return this;
     }
 
-    public GelenEvraklarCevapYazPage arsivKategorisiSec(String arsivKategorisi) {
+    public CevapYazPage arsivKategorisiSec(String arsivKategorisi) {
         cmbArsivKategorisi.selectOption(arsivKategorisi);
         return this;
     }
 
-    public GelenEvraklarCevapYazPage gizlilikDerecesiSec(String gizlilikDerecesi) {
+    public CevapYazPage gizlilikDerecesiSec(String gizlilikDerecesi) {
         cmbGizlilikDerecesi.selectOption(gizlilikDerecesi);
         return this;
     }
 
-    public GelenEvraklarCevapYazPage ivedilikSec(String ivedilik) {
+    public CevapYazPage ivedilikSec(String ivedilik) {
         cmbIvedilik.selectOption(ivedilik);
         return this;
     }
 
-    public GelenEvraklarCevapYazPage miatDoldur(String miat) {
+    public CevapYazPage miatDoldur(String miat) {
         txtMiat.sendKeys(miat);
         return this;
     }
 
-    public GelenEvraklarCevapYazPage geregiSecimTipiSec(String geregiSecimTipi) {
+    public CevapYazPage geregiSecimTipiSec(String geregiSecimTipi) {
         cmbGeregiSecimTipi.selectOption(geregiSecimTipi);
         return this;
     }
 
-    public GelenEvraklarCevapYazPage geregiDoldur(String geregi) {
+    public CevapYazPage geregiDoldur(String geregi) {
         txtGeregi.sendKeys(geregi);
         return this;
     }
 
-    public GelenEvraklarCevapYazPage bilgiSecimTipiSec(String bilgiSecimTipi) {
+    public CevapYazPage bilgiSecimTipiSec(String bilgiSecimTipi) {
         cmbBilgiSecimTipi.selectOption(bilgiSecimTipi);
         return this;
     }
 
-    public GelenEvraklarCevapYazPage bilgiDoldur(String bilgi) {
+    public CevapYazPage bilgiDoldur(String bilgi) {
         txtBilgi.sendKeys(bilgi);
         return this;
     }
 
-    public GelenEvraklarCevapYazPage onayAkisiDoldur(String onayAkisi) {
+    public CevapYazPage onayAkisiDoldur(String onayAkisi) {
         cmbOnayAkisi.selectLov(onayAkisi);
         return this;
     }
 
-    public GelenEvraklarCevapYazPage dagitimiEkYapSec(boolean dagitimiEkYap) {
+    public CevapYazPage dagitimiEkYapSec(boolean dagitimiEkYap) {
         chkDagitimiEkYap.setSelected(dagitimiEkYap);
         return this;
     }
 
-    public GelenEvraklarCevapYazPage evrakEkTabViewEkMetniDoldur(String ekMetin) {
+    public CevapYazPage evrakEkTabViewEkMetniDoldur(String ekMetin) {
         txtEvrakEkTabViewEkMetni.sendKeys(ekMetin);
         return this;
     }
 
-    public GelenEvraklarCevapYazPage evrakEkTabViewGizlilikDerecesiSec(String gizlilikDerecesi) {
+    public CevapYazPage evrakEkTabViewGizlilikDerecesiSec(String gizlilikDerecesi) {
         cmbEvrakEkTabViewGizlilikDerecesi.selectOption(gizlilikDerecesi);
         return this;
     }
 
-    public GelenEvraklarCevapYazPage evrakEkTabViewDosyaEkle() {
+    public CevapYazPage evrakEkTabViewDosyaEkle() {
         btnEvrakEkTabViewDosyaEkle.click();
         return this;
     }
 
-    public GelenEvraklarCevapYazPage evrakEkTabViewEkle() {
+    public CevapYazPage evrakEkTabViewEkle() {
         btnEvrakEkTabViewEkle.click();
         return this;
     }
 
-    public GelenEvraklarCevapYazPage evrakEkTabViewTemizle() {
+    public CevapYazPage evrakEkTabViewTemizle() {
         btnEvrakEkTabViewTemizle.click();
         return this;
     }
 
-    public GelenEvraklarCevapYazPage evrakEkTabViewFizikselEkMetniDoldur(String fizikselEkMetin) {
+    public CevapYazPage evrakEkTabViewFizikselEkMetniDoldur(String fizikselEkMetin) {
         txtEvrakEkTabViewFizikselEkMetni.sendKeys(fizikselEkMetin);
         return this;
     }
 
-    public GelenEvraklarCevapYazPage evrakEkTabViewGuvenlikKoduAciklamaSec(String gizlilikDerecesi) {
+    public CevapYazPage evrakEkTabViewGuvenlikKoduAciklamaSec(String gizlilikDerecesi) {
         cmbEvrakEkTabViewGuvenlikKoduAciklama.selectOption(gizlilikDerecesi);
         return this;
     }
 
-    public GelenEvraklarCevapYazPage evrakEkTabViewFizikselEkEkle() {
+    public CevapYazPage evrakEkTabViewFizikselEkEkle() {
         btnEvrakEkTabViewFizikselEkEkle.click();
         return this;
     }
 
-    public GelenEvraklarCevapYazPage evrakEkTabViewEvrakBaslamaTarihDoldur(String baslamaTarih) {
+    public CevapYazPage evrakEkTabViewEvrakBaslamaTarihDoldur(String baslamaTarih) {
         dateTxtEvrakEkTabViewEvrakBaslamaTarih.sendKeys(baslamaTarih);
         return this;
     }
 
-    public GelenEvraklarCevapYazPage evrakEkTabViewEvrakSonTarihDoldur(String sonTarih) {
+    public CevapYazPage evrakEkTabViewEvrakSonTarihDoldur(String sonTarih) {
         dateTxtEvrakEkTabViewEvrakSonTarih.sendKeys(sonTarih);
         return this;
     }
 
-    public GelenEvraklarCevapYazPage evrakEkTabViewEvrakinAranacagiYerSec(String evraginAranacagiYer) {
+    public CevapYazPage evrakEkTabViewEvrakinAranacagiYerSec(String evraginAranacagiYer) {
         cmbEvrakEkTabViewEvrakinAranacagiYer.selectOption(evraginAranacagiYer);
         return this;
     }
 
-    public GelenEvraklarCevapYazPage evrakEkTabViewDokumanAra() {
+    public CevapYazPage evrakEkTabViewDokumanAra() {
         btnEvrakEkTabViewDokumanAra.click();
         return this;
     }
 
-    public GelenEvraklarCevapYazPage evrakEkTabViewEvrakAramaDoldur(String evrakArama) {
+    public CevapYazPage evrakEkTabViewEvrakAramaDoldur(String evrakArama) {
         txtEvrakEkTabViewEvrakArama.sendKeys(evrakArama);
         return this;
     }
 
-    public GelenEvraklarCevapYazPage evrakEkTabViewArsivdeKayitliEvrakBaslamaTarihDoldur(String baslamaTarih) {
+    public CevapYazPage evrakEkTabViewArsivdeKayitliEvrakBaslamaTarihDoldur(String baslamaTarih) {
         dateTxtEvrakEkTabViewArsivdeKayitliEvrakBaslamaTarih.sendKeys(baslamaTarih);
         return this;
     }
 
-    public GelenEvraklarCevapYazPage evrakEkTabViewArsivdeKayitliEvrakSonTarihDoldur(String sonTarih) {
+    public CevapYazPage evrakEkTabViewArsivdeKayitliEvrakSonTarihDoldur(String sonTarih) {
         dateTxtEvrakEkTabViewArsivdeKayitliEvrakSonTarih.sendKeys(sonTarih);
         return this;
     }
 
-    public GelenEvraklarCevapYazPage evrakEkTabViewKonuDoldur(String konu) {
+    public CevapYazPage evrakEkTabViewKonuDoldur(String konu) {
         txtEvrakEkTabViewKonu.sendKeys(konu);
         return this;
     }
 
-    public GelenEvraklarCevapYazPage evrakEkTabViewKullaniciDoldur(String kullanici) {
+    public CevapYazPage evrakEkTabViewKullaniciDoldur(String kullanici) {
         txtEvrakEkTabViewKullanici.sendKeys(kullanici);
         return this;
     }
 
-    public GelenEvraklarCevapYazPage evrakEkTabViewEvrakSayisiDoldur(String evrakSayi) {
+    public CevapYazPage evrakEkTabViewEvrakSayisiDoldur(String evrakSayi) {
         txtEvrakEkTabViewEvrakSayisi.sendKeys(evrakSayi);
         return this;
     }
 
-    public GelenEvraklarCevapYazPage evrakEkTabViewArsivdeKayitliDokumanAra() {
+    public CevapYazPage evrakEkTabViewArsivdeKayitliDokumanAra() {
         btnEvrakEkTabViewArsivdeKayitliDokumanAra.click();
         return this;
     }
 
-    public GelenEvraklarCevapYazPage ilgiIslemleriTabViewIlgiMetniDoldur(String ilgiMetni) {
+    public CevapYazPage ilgiIslemleriTabViewIlgiMetniDoldur(String ilgiMetni) {
         txtIlgiIslemleriTabViewIlgiMetni.sendKeys(ilgiMetni);
         return this;
     }
 
-    public GelenEvraklarCevapYazPage ilgiIslemleriTabViewDosyaEkle() {
+    public CevapYazPage ilgiIslemleriTabViewDosyaEkle() {
         btnIlgiIslemleriTabViewDosyaEkle.click();
         return this;
     }
 
-    public GelenEvraklarCevapYazPage ilgiIslemleriTabViewEkle() {
+    public CevapYazPage ilgiIslemleriTabViewEkle() {
         btnIlgiIslemleriTabViewEkle.click();
         return this;
     }
 
-    public GelenEvraklarCevapYazPage ilgiIslemleriTabViewTemizle() {
+    public CevapYazPage ilgiIslemleriTabViewTemizle() {
         btnIlgiIslemleriTabViewTemizle.click();
         return this;
     }
 
-    public GelenEvraklarCevapYazPage ilgiIslemleriTabViewMetinEkleIlgiMetniDoldur(String ilgiMetni) {
+    public CevapYazPage ilgiIslemleriTabViewMetinEkleIlgiMetniDoldur(String ilgiMetni) {
         txtIlgiIslemleriTabViewMetinEkleIlgiMetni.sendKeys(ilgiMetni);
         return this;
     }
 
-    public GelenEvraklarCevapYazPage ilgiIslemleriTabViewAciklamaEkle() {
+    public CevapYazPage ilgiIslemleriTabViewAciklamaEkle() {
         btnIlgiIslemleriTabViewAciklamaEkle.click();
         return this;
     }
 
-    public GelenEvraklarCevapYazPage ilgiIslemleriTabViewIlgiIslemleriEvrakTarihBasIdDoldur(String baslamaTarih) {
+    public CevapYazPage ilgiIslemleriTabViewIlgiIslemleriEvrakTarihBasIdDoldur(String baslamaTarih) {
         dateTxtIlgiIslemleriTabViewIlgiIslemleriEvrakTarihBasId.sendKeys(baslamaTarih);
         return this;
     }
 
-    public GelenEvraklarCevapYazPage ilgiIslemleriTabViewIlgiIslemleriEvrakTarihSonIdDoldur(String sonTarih) {
+    public CevapYazPage ilgiIslemleriTabViewIlgiIslemleriEvrakTarihSonIdDoldur(String sonTarih) {
         dateTxtIlgiIslemleriTabViewIlgiIslemleriEvrakTarihSonId.sendKeys(sonTarih);
         return this;
     }
 
-    public GelenEvraklarCevapYazPage ilgiIslemleriTabViewIlgiIslemleriEvrakAramaAranacakYerIdSec(String aranacakYer) {
+    public CevapYazPage ilgiIslemleriTabViewIlgiIslemleriEvrakAramaAranacakYerIdSec(String aranacakYer) {
         cmbIlgiIslemleriTabViewIlgiIslemleriEvrakAramaAranacakYerId.selectOption(aranacakYer);
         return this;
     }
 
-    public GelenEvraklarCevapYazPage ilgiIslemleriTabViewEvrakAramaDoldur(String evrakArama) {
+    public CevapYazPage ilgiIslemleriTabViewEvrakAramaDoldur(String evrakArama) {
         txtIlgiIslemleriTabViewEvrakArama.sendKeys(evrakArama);
         return this;
     }
 
-    public GelenEvraklarCevapYazPage ilgiIslemleriTabViewDokumanAra() {
+    public CevapYazPage ilgiIslemleriTabViewDokumanAra() {
         btnIlgiIslemleriTabViewDokumanAra.click();
         return this;
     }
 
-    public GelenEvraklarCevapYazPage ilgiIslemleriTabViewarsivdenEvrakAraIlgiEkleTarihBasIdDoldur(String baslamaTarihi) {
+    public CevapYazPage ilgiIslemleriTabViewarsivdenEvrakAraIlgiEkleTarihBasIdDoldur(String baslamaTarihi) {
         dateTxtIlgiIslemleriTabViewarsivdenEvrakAraIlgiEkleTarihBasId.sendKeys(baslamaTarihi);
         return this;
     }
 
-    public GelenEvraklarCevapYazPage ilgiIslemleriTabViewarsivdenEvrakAraIlgiEkleTarihSonIdDoldur(String sonTarih) {
+    public CevapYazPage ilgiIslemleriTabViewarsivdenEvrakAraIlgiEkleTarihSonIdDoldur(String sonTarih) {
         dateTxtIlgiIslemleriTabViewarsivdenEvrakAraIlgiEkleTarihSonId.sendKeys(sonTarih);
         return this;
     }
 
-    public GelenEvraklarCevapYazPage ilgiIslemleriTabViewKonuDoldur(String konu) {
+    public CevapYazPage ilgiIslemleriTabViewKonuDoldur(String konu) {
         txtIlgiIslemleriTabViewKonu.sendKeys(konu);
         return this;
     }
 
-    public GelenEvraklarCevapYazPage ilgiIslemleriTabViewKullaniciDoldur(String kullanici) {
+    public CevapYazPage ilgiIslemleriTabViewKullaniciDoldur(String kullanici) {
         txtIlgiIslemleriTabViewKullanici.sendKeys(kullanici);
         return this;
     }
 
-    public GelenEvraklarCevapYazPage ilgiIslemleriTabViewEvrakSayiDoldur(String evrakSayi) {
+    public CevapYazPage ilgiIslemleriTabViewEvrakSayiDoldur(String evrakSayi) {
         txtIlgiIslemleriTabViewEvrakSayi.sendKeys(evrakSayi);
         return this;
     }
 
-    public GelenEvraklarCevapYazPage ilgiIslemleriTabViewArsivdenIlgiEvrakAra() {
+    public CevapYazPage ilgiIslemleriTabViewArsivdenIlgiEvrakAra() {
         btnIlgiIslemleriTabViewArsivdenIlgiEvrakAra.click();
         return this;
     }
 
-    public GelenEvraklarCevapYazPage ilisikIslemleriTabViewIlisikMetniDoldur(String ilisikMetni) {
+    public CevapYazPage ilisikIslemleriTabViewIlisikMetniDoldur(String ilisikMetni) {
         txtIlisikIslemleriTabViewIlisikMetni.sendKeys(ilisikMetni);
         return this;
     }
 
-    public GelenEvraklarCevapYazPage ilisikIslemleriTabViewDosyaEkle() {
+    public CevapYazPage ilisikIslemleriTabViewDosyaEkle() {
         btnIlisikIslemleriTabViewDosyaEkle.click();
         return this;
     }
 
-    public GelenEvraklarCevapYazPage ilisikIslemleriTabViewEkle() {
+    public CevapYazPage ilisikIslemleriTabViewEkle() {
         btnIlisikIslemleriTabViewEkle.click();
         return this;
     }
 
-    public GelenEvraklarCevapYazPage ilisikIslemleriTabViewTemizle() {
+    public CevapYazPage ilisikIslemleriTabViewTemizle() {
         btnIlisikIslemleriTabViewTemizle.click();
         return this;
     }
 
-    public GelenEvraklarCevapYazPage ilisikIslemleriTabViewIliskiliEvrakTarihBasIdDoldur(String baslamaTarih) {
+    public CevapYazPage ilisikIslemleriTabViewIliskiliEvrakTarihBasIdDoldur(String baslamaTarih) {
         dateTxtIlisikIslemleriTabViewIliskiliEvrakTarihBasId.sendKeys(baslamaTarih);
         return this;
     }
 
-    public GelenEvraklarCevapYazPage ilisikIslemleriTabViewIliskiliEvrakTarihSonIdDoldur(String sonTarih) {
+    public CevapYazPage ilisikIslemleriTabViewIliskiliEvrakTarihSonIdDoldur(String sonTarih) {
         dateTxtIlisikIslemleriTabViewIliskiliEvrakTarihSonId.sendKeys(sonTarih);
         return this;
     }
 
-    public GelenEvraklarCevapYazPage ilisikIslemleriTabViewEvrakınAranacagiYerSec(String evrakınAranacagiYer) {
+    public CevapYazPage ilisikIslemleriTabViewEvrakınAranacagiYerSec(String evrakınAranacagiYer) {
         cmbIlisikIslemleriTabViewEvrakınAranacagiYer.selectOption(evrakınAranacagiYer);
         return this;
     }
 
-    public GelenEvraklarCevapYazPage ilisikIslemleriTabViewEvrakAramaDoldur(String evrakArama) {
+    public CevapYazPage ilisikIslemleriTabViewEvrakAramaDoldur(String evrakArama) {
         txtIlisikIslemleriTabViewEvrakArama.sendKeys(evrakArama);
         return this;
     }
 
-    public GelenEvraklarCevapYazPage ilisikIslemleriTabViewDokumanAra() {
+    public CevapYazPage ilisikIslemleriTabViewDokumanAra() {
         btnIlisikIslemleriTabViewDokumanAra.click();
         return this;
     }
 
-    public GelenEvraklarCevapYazPage ilisikIslemleriTabViewTercumeAciklamaDoldur(String tercumeAciklama) {
+    public CevapYazPage ilisikIslemleriTabViewTercumeAciklamaDoldur(String tercumeAciklama) {
         txtIlisikIslemleriTabViewTercumeAciklama.sendKeys(tercumeAciklama);
         return this;
     }
 
-    public GelenEvraklarCevapYazPage ilisikIslemleriTabViewTercumeDosyaEkle() {
+    public CevapYazPage ilisikIslemleriTabViewTercumeDosyaEkle() {
         btnIlisikIslemleriTabViewTercumeDosyaEkle.click();
         return this;
     }
 
-    public GelenEvraklarCevapYazPage ilisikIslemleriTabViewTercumeEkle() {
+    public CevapYazPage ilisikIslemleriTabViewTercumeEkle() {
         btnIlisikIslemleriTabViewTercumeEkle.click();
         return this;
     }
 
-    public GelenEvraklarCevapYazPage ilisikIslemleriTabViewTercumeTemizle() {
+    public CevapYazPage ilisikIslemleriTabViewTercumeTemizle() {
         btnIlisikIslemleriTabViewTercumeTemizle.click();
         return this;
     }
 
-    public GelenEvraklarCevapYazPage ilisikIslemleriTabViewArsivdenEvrakAraIlisikEkleTarihBasIdDoldur(String baslamaTarih) {
+    public CevapYazPage ilisikIslemleriTabViewArsivdenEvrakAraIlisikEkleTarihBasIdDoldur(String baslamaTarih) {
         dateTxtIlisikIslemleriTabViewArsivdenEvrakAraIlisikEkleTarihBasId.sendKeys(baslamaTarih);
         return this;
     }
 
-    public GelenEvraklarCevapYazPage ilisikIslemleriTabViewArsivdenEvrakAraIlisikEkleTarihSonIdDoldur(String sonTarih) {
+    public CevapYazPage ilisikIslemleriTabViewArsivdenEvrakAraIlisikEkleTarihSonIdDoldur(String sonTarih) {
         dateTxtIlisikIslemleriTabViewArsivdenEvrakAraIlisikEkleTarihSonId.sendKeys(sonTarih);
         return this;
     }
 
-    public GelenEvraklarCevapYazPage ilisikIslemleriTabViewKonuDoldur(String konu) {
+    public CevapYazPage ilisikIslemleriTabViewKonuDoldur(String konu) {
         txtIlisikIslemleriTabViewKonu.sendKeys(konu);
         return this;
     }
 
-    public GelenEvraklarCevapYazPage ilisikIslemleriTabViewKullaniciDoldur(String kullanici) {
+    public CevapYazPage ilisikIslemleriTabViewKullaniciDoldur(String kullanici) {
         txtIlisikIslemleriTabViewKullanici.sendKeys(kullanici);
         return this;
     }
 
-    public GelenEvraklarCevapYazPage ilisikIslemleriTabViewEvrakSayiDoldur(String evrakSayi) {
+    public CevapYazPage ilisikIslemleriTabViewEvrakSayiDoldur(String evrakSayi) {
         txtIlisikIslemleriTabViewEvrakSayi.sendKeys(evrakSayi);
         return this;
     }
 
-    public GelenEvraklarCevapYazPage ilisikIslemleriTabViewArsivdenIlisikEvrakAra() {
+    public CevapYazPage ilisikIslemleriTabViewArsivdenIlisikEvrakAra() {
         btnIlisikIslemleriTabViewArsivdenIlisikEvrakAra.click();
         return this;
     }
 
-    public GelenEvraklarCevapYazPage editorTabAc() {
+    public CevapYazPage editorTabAc() {
         btnEditor.click();
         return this;
     }
 
-    public GelenEvraklarCevapYazPage bilgilerTabAc() {
+    public CevapYazPage bilgilerTabAc() {
         btnBilgiler.click();
         return this;
     }
 
     @Step("Kaydet ve Onaya sun")
-    public GelenEvraklarCevapYazPage kaydetVeOnayaSun() {
+    public CevapYazPage kaydetVeOnayaSun() {
         btnKaydetVeOnayaSun.click();
         return this;
     }
 
+    @Step("İmzala")
+    public CevapYazPage imzalama() {
+        btnImzala.click();
+        return this;
+    }
+
+
+    @Step("İmzalama Ekranı kapat")
+    public CevapYazPage imzalamaEkraniKapat() {
+        btnImzalaEkraniKapat.shouldBe(visible);
+        btnImzalaEkraniKapat.click();
+        return this;
+    }
+
     @Step("Kaydet ve Onaya sun")
-    public GelenEvraklarCevapYazPage onayIslemiAciklamaDoldur(String aciklama) {
+    public CevapYazPage onayIslemiAciklamaDoldur(String aciklama) {
         txtOnayIslemiAciklama.shouldBe(Condition.visible);
         txtOnayIslemiAciklama.setValue(aciklama);
         return this;
     }
 
     @Step("Gönder")
-    public GelenEvraklarCevapYazPage gonder() {
+    public CevapYazPage gonder() {
         btnGonder.click();
         return this;
     }
 
     @Step("Kişinin geregi alanında görüntülenme kontrolu")
-    public GelenEvraklarCevapYazPage geregiKontrolu(String adSoyad) {
+    public CevapYazPage geregiKontrolu(String adSoyad) {
 
-        /*System.out.println("Gelen geregi:     " + cmbGeregi.lastSelectedLovTitleText());
+/*      System.out.println("Gelen geregi:     " + cmbGeregi.lastSelectedLovTitleText());
         System.out.println("Beklenen geregi:  " + adSoyad);
         Assert.assertEquals(cmbGeregi.lastSelectedLovTitleText().contains(adSoyad), true);*/
+        cmbGeregi.shouldBe(visible);
         cmbGeregi.getSelectedTitles().last().shouldHave(text(adSoyad));
         return this;
     }
 
     @Step("Konu kodu alanında görüntülenme kontrolu")
-    public GelenEvraklarCevapYazPage konuKonuKontrolu(String konu) {
+    public CevapYazPage konuAlaniKontrolu(String konuKodu) {
 
         /*System.out.println("Gelen konuKodu:     " + cmbKonuKodu.lastSelectedLovTitleText());
         System.out.println("Beklenen konuKodu:  " + konu);*/
         /*Assert.assertEquals(cmbKonuKodu.lastSelectedLovTitleText().contains(konu), true);*/
-        cmbKonuKodu.getSelectedTitles().last().shouldHave(text(konu));
+        cmbKonuKodu.getSelectedTitles().last().shouldHave(text(konuKodu));
         return this;
     }
 
     @Step("Editörde ilgi satırının, seçilen evrakın tarih ve sayısı ile geldiği kontrolu")
-    public GelenEvraklarCevapYazPage editorSayiTarihKontrolu(String sayi, String tarih) {
+    public CevapYazPage editorSayiTarihKontrolu(String sayi, String tarih) {
 
         //Tc373 Tüzelkişi'nin 24.12.2017 tarihli ve 1367405182-1012 sayılı yazısı.
         String getIlgi = editorIlgiKismi.shouldHave(Condition.visible).getText();
@@ -549,7 +576,7 @@ public class GelenEvraklarCevapYazPage extends MainPage {
 
 
     @Step("Popup İşlem Kayıt Uyarı:  \"{secim}\"")
-    public GelenEvraklarCevapYazPage evrakKayitUyariPopup(String secim) {
+    public CevapYazPage evrakKayitUyariPopup(String secim) {
 
         switch (secim) {
             case "Evet":

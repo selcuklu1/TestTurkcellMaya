@@ -41,7 +41,7 @@ public class LoginPage extends MainPage {
         txtUsername.sendKeys(username);
         txtPassword.sendKeys(password);
         btnLogin.click();
-        $(By.id("topMenuForm:userMenuButton_button")).waitUntil(Condition.visible, 40);
+        $(By.id("topMenuForm:userMenuButton_button")).waitUntil(Condition.visible, 40000);
         return this;
     }
 

@@ -1,6 +1,8 @@
 package data;
 
-public class TestData {
+import common.BaseLibrary;
+
+public class TestData extends BaseLibrary{
 
     // PoC'de kullnailan Belgenet
     // public static final String belgenetURL = "http://www.belgenet.com.tr:8282/edys-web/mainInbox.xhtml";
@@ -24,7 +26,8 @@ public class TestData {
     public static final String username5 = "sezaicelik";
     public static final String password45 = "123";
     public static String docPathWindows = "C:\\TestAutomation\\BelgenetFTA\\documents";
-    public static String docDownloadPathWindows = "C:\\TestAutomation\\BelgenetFTA\\downloads";
+    //public static String docDownloadPathWindows = "C:\\TestAutomation\\BelgenetFTA\\downloads";
+    public static String docDownloadPathWindows = "C:\\Users\\" + getPCUsername() + "\\Downloads\\";
     public static String docPathLinux = "/Users/ilyas/TestAutomation/BelgenetFTA/documents";
     public static String docDownloadPathLinux = "/Users/ilyas/TestAutomation/downloads";
 }

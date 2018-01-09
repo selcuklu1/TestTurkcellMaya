@@ -120,7 +120,7 @@ public class BaseLibrary extends ElementsContainer {
      *
      * @param
      */
-    public void waitForJS() {
+    private void waitForJS() {
         try {
             new WebDriverWait(WebDriverRunner.getWebDriver(), Configuration.timeout / 1000, 50).
                     until((ExpectedCondition<Boolean>) driver -> {
@@ -156,7 +156,7 @@ public class BaseLibrary extends ElementsContainer {
         }*/
     }
 
-    public void waitForJSreadyState() {
+    private void waitForJSreadyState() {
         Wait().until(new ExpectedCondition<Boolean>() {
             @Override
             public Boolean apply(WebDriver driver) {
@@ -165,7 +165,7 @@ public class BaseLibrary extends ElementsContainer {
         });
     }
 
-    public void waitForLoadingToDisappear(WebDriver driver) {
+    private void waitForLoadingToDisappear(WebDriver driver) {
 //        driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
 
         //Thread.sleep(3000);
@@ -191,7 +191,7 @@ public class BaseLibrary extends ElementsContainer {
 //        driver.manage().timeouts().implicitlyWait(Configuration.timeout, TimeUnit.MILLISECONDS);
     }
 
-    public void waitForLoadingToDisappear1(WebDriver driver) {
+    private void waitForLoadingToDisappear1(WebDriver driver) {
         try {
 
             //div[starts-with(@id,"bekleyiniz") and contains(@style, "display")]
@@ -213,18 +213,18 @@ public class BaseLibrary extends ElementsContainer {
         }
     }
 
-    public void setDoNotWaitLoading(boolean doNotWaitLoading) {
+    private void setDoNotWaitLoading(boolean doNotWaitLoading) {
         this.doNotWaitLoading = doNotWaitLoading;
     }
 
-    public void waitForLoading(WebDriver driver) throws InterruptedException {
+    private void waitForLoading(WebDriver driver) throws InterruptedException {
         if (doNotWaitLoading)
             return;
         //waitForJS();
         waitForLoadingToDisappear(driver);
     }
 
-    public long getWaitForLoading() {
+    private long getWaitForLoading() {
         return waitForLoading;
     }
     //</editor-fold>
@@ -822,7 +822,7 @@ public class BaseLibrary extends ElementsContainer {
 
     //endregion
 
-    private String getPCUsername() {
+    public static String getPCUsername() {
         String userName = System.getProperty("user.name");
         return userName;
     }
@@ -913,7 +913,7 @@ public class BaseLibrary extends ElementsContainer {
         return path;
     }
 
-    public String getDownoladPath() {
+    public String getDownloadPath() {
         Capabilities caps = getCapabilities();
         Platform operationSystem = caps.getPlatform();
         String path = "";

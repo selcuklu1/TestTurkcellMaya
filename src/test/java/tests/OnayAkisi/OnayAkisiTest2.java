@@ -30,7 +30,7 @@ public class OnayAkisiTest2 extends BaseTest {
     @BeforeMethod
     public void beforeTests(Method method) {
 
-        log.info(method.getName() + "Nolu test senaryosu başladı.");
+        //log.info(method.getName() + "Nolu test senaryosu başladı.");
 
         login();
 
@@ -47,7 +47,7 @@ public class OnayAkisiTest2 extends BaseTest {
 
         //Pasif yapma
         String onayAkisAdi = "Optiim";
-        String kullanici = "Ts2112 OnayAkisi";
+        String kullanici = "TS2112 OnayAkisi";
         String basariMesaji = "İşlem başarılıdır!";
 
         //tests.Data kontrolu için yazıldı. Pasif ise aktif yapılır.
@@ -112,7 +112,7 @@ public class OnayAkisiTest2 extends BaseTest {
 
         //Aktif yapma
         String onayAkisAdi = "Optiim";
-        String kullanici = "Ts2112 OnayAkisi";
+        String kullanici = "TS2112 OnayAkisi";
         String basariMesaji = "İşlem başarılıdır!";
 
         //tests.Data kontrolu için yazıldı. Pasif ise aktif yapılır.

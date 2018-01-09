@@ -80,7 +80,7 @@ public class dumpTest extends BaseTest {
 //            FirefoxProfile profile = new FirefoxProfile();
            /* FirefoxOptions options =  new FirefoxOptions();
             options.addPreference("browser.download.folderList", 2);
-            options.addPreference("browser.download.dir", getDownoladPath());*/
+            options.addPreference("browser.download.dir", getDownloadPath());*/
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("browser.download.folderList", 2);

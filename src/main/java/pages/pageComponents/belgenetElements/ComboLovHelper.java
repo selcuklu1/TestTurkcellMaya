@@ -122,7 +122,8 @@ public class ComboLovHelper extends BaseLibrary {
 
         int count = getSelectedItems().size();
         for (int i = 0; i < count; i++) {
-            getSelectedItems().last().$(lovSecilenTemizleButton).pressEnter();
+            clickJs(getSelectedItems().last().$(lovSecilenTemizleButton));
+            //getSelectedItems().last().$(lovSecilenTemizleButton).pressEnter();
             getSelectedItems().shouldHaveSize(count - i - 1);
         }
         return (BelgenetElement) element;
@@ -172,7 +173,7 @@ public class ComboLovHelper extends BaseLibrary {
             rows = $$(lovSecilen);
         rows = rows.filter(visible);
 
-        System.out.println("size " + rows.size());
+        System.out.println("Combolov selected items size " + rows.size());
         Allure.addAttachment("Items count", String.valueOf(rows.size()));
         if (rows.size() > 0)
             Allure.addAttachment("Values", rows.texts().toString());
