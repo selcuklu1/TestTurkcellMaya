@@ -2,6 +2,7 @@ package common;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.WebDriverRunner;
 import data.User;
 import io.qameta.allure.*;
@@ -11,6 +12,7 @@ import net.bytebuddy.description.annotation.AnnotationDescription;
 import org.apache.poi.ss.formula.functions.T;
 import org.testng.ITestNGMethod;
 import org.testng.ITestResult;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -62,7 +64,7 @@ public class BaseTest extends BaseLibrary {
         Configuration.timeout = timeout * 1000;
         setWaitForLoading(loadingTimeout);
         //Configuration.clickViaJs = true;
-        Configuration.holdBrowserOpen = true;
+        //Configuration.holdBrowserOpen = true;
         //Configuration.headless = false;
         Configuration.startMaximized = true;
         Configuration.pollingInterval = 100;
@@ -79,7 +81,7 @@ public class BaseTest extends BaseLibrary {
         System.out.println("browser: " + Configuration.browser);
         System.out.println("url: " + Configuration.baseUrl);
         System.out.println("Doc path: " + getDocPath());
-        System.out.println("Download path: " + getDownoladPath());
+        System.out.println("Download path: " + getDownloadPath());
         System.out.println("Selenide/Selenium driver has been set up.");
 
         AllureEnvironmentUtils.create();
@@ -133,7 +135,7 @@ public class BaseTest extends BaseLibrary {
 
         System.out.println("///////////////////////////////////////////////////////");
         System.out.println("Test " + result + ": " + testResult.getMethod().getDescription());
-        System.out.println("Test Annotations: " + testResult.getMethod().getMethod().getDeclaredAnnotation(org.testng.annotations.Test.class).toString());
+//        System.out.println("Test Annotations: " + testResult.getMethod().getMethod().getDeclaredAnnotation(org.testng.annotations.Test.class).toString());
         System.out.println("///////////////////////////////////////////////////////");
 
         //Parallelde hatası vermemesi WebDriverRunner.closeWebDriver() eklendi.
@@ -143,6 +145,11 @@ public class BaseTest extends BaseLibrary {
         WebDriverRunner.closeWebDriver();
     }
 
+    @AfterClass(alwaysRun = true)
+    public void afterClass() {
+        Selenide.close();
+        log.info("Browser has been closed.");
+    }
 
     @Step("Login")
     public void login(User user) {

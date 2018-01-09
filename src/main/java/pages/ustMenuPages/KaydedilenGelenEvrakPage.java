@@ -61,13 +61,13 @@ public class KaydedilenGelenEvrakPage extends MainPage {
     @Step("Rapor al Excel")
     public KaydedilenGelenEvrakPage raporAlExcel() throws IOException {
 
-        deleteFile(getDownoladPath(), "Rapor_");
+        deleteFile(getDownloadPath(), "Rapor_");
         btnRaporAlExcel.click();
 //        islemMesaji().basariliOlmali();
 //        Thread.sleep(8000);
 //        btnSorgula.click();
 //        islemMesaji().basariliOlmali();
-        searchDownloadedFileWithName(getDownoladPath(), "Rapor_.xls");
+        searchDownloadedFileWithName(getDownloadPath(), "Rapor_.xls");
         return this;
     }
 
@@ -77,12 +77,12 @@ public class KaydedilenGelenEvrakPage extends MainPage {
 
     @Step("Rapor al PDF")
     public KaydedilenGelenEvrakPage raporAlPdf() throws IOException {
-        deleteFile(getDownoladPath(), "Rapor_");
+        deleteFile(getDownloadPath(), "Rapor_");
         btnRaporAlPdf.click();
 //        Thread.sleep(8000);
         islemMesaji().basariliOlmali();
 //        btnSorgula.click();
-        searchDownloadedFileWithName(getDownoladPath(), "Rapor_.pdf");
+        searchDownloadedFileWithName(getDownloadPath(), "Rapor_.pdf");
         return this;
     }
 

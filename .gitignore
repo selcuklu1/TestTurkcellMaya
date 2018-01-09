@@ -50,3 +50,5 @@ test-output
 # JIRA plugin
 atlassian-ide-plugin.xml
 
+/galenReports/
+/galenDumps/
