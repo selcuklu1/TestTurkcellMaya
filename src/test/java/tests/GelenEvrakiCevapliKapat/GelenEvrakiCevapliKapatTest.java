@@ -318,8 +318,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
         //gelenEvraklarCevapYazPage
           //      .sayfaAcilmali();
 
-        gelenEvraklarCevapYazPage
-                .geregiKontrolu(tuzelKisi)
+        gelenEvraklarCevapYazPage.geregiKontrolu(tuzelKisi)
                 .konuKonuKontrolu(konu)
                 .editorTabAc()
                 .editorSayiTarihKontrolu(evrakSayi, kayitTarihi);
