@@ -108,9 +108,11 @@ public interface BelgenetElement extends SelenideElement {
 
 
     //region Selenide $ to BelgenetElements
+
     /**
      * ATTENTION! This method doesn't start any search yet!
      * Same as {@link #find(String)}
+     *
      * @see com.codeborne.selenide.commands.Find
      */
     BelgenetElement $(String cssSelector);
@@ -118,6 +120,7 @@ public interface BelgenetElement extends SelenideElement {
     /**
      * ATTENTION! This method doesn't start any search yet!
      * Same as {@link #find(String, int)}
+     *
      * @see com.codeborne.selenide.commands.Find
      */
     BelgenetElement $(String cssSelector, int index);
@@ -125,6 +128,7 @@ public interface BelgenetElement extends SelenideElement {
     /**
      * ATTENTION! This method doesn't start any search yet!
      * Same as {@link #find(String)}
+     *
      * @see com.codeborne.selenide.commands.Find
      */
     BelgenetElement $(By selector);
@@ -132,6 +136,7 @@ public interface BelgenetElement extends SelenideElement {
     /**
      * ATTENTION! This method doesn't start any search yet!
      * Same as {@link #find(String, int)}
+     *
      * @see com.codeborne.selenide.commands.Find
      */
     BelgenetElement $(By selector, int index);
@@ -164,7 +169,6 @@ public interface BelgenetElement extends SelenideElement {
      * </p>
      *
      * @return list of elements inside given element matching given CSS selector
-     *
      * @see com.codeborne.selenide.commands.FindAll
      */
     ElementsCollection findAll(String cssSelector);
@@ -179,7 +183,6 @@ public interface BelgenetElement extends SelenideElement {
      * </p>
      *
      * @return list of elements inside given element matching given criteria
-     *
      * @see com.codeborne.selenide.commands.FindAll
      */
     ElementsCollection findAll(By selector);
@@ -205,7 +208,6 @@ public interface BelgenetElement extends SelenideElement {
      * </p>
      *
      * @return list of elements inside given element matching given xpath locator
-     *
      * @see com.codeborne.selenide.commands.FindAllByXpath
      */
     ElementsCollection $$x(String xpath);

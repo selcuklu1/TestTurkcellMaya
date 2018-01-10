@@ -2,10 +2,8 @@ package tests.VekaletIslemleri;
 
 import com.codeborne.selenide.Condition;
 import common.BaseTest;
-import io.qameta.allure.Allure;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
-import org.apache.xmlbeans.impl.xb.xsdschema.All;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.MainPage;
@@ -220,7 +218,7 @@ public class VekaletIslemleriTest extends BaseTest {
 
         gelenEvraklarPage
                 .openPage()
-                .birimKontol("Vekalet "+vekaletVeren+" - "+geregi+" - "+getSysDateForKis()+" - "+getSysDateForKis())
+                .birimKontol("Vekalet " + vekaletVeren + " - " + geregi + " - " + getSysDateForKis() + " - " + getSysDateForKis())
                 .birimSec(Condition.text("Vekalet"))
                 .takeScreenshot();
         //                .islemMesaji().basariliOlmali(basariMesaji);

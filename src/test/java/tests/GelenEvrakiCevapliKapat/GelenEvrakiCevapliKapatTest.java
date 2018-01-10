@@ -10,7 +10,10 @@ import pages.altMenuPages.CevapYazPage;
 import pages.altMenuPages.EvrakDetayiPage;
 import pages.pageComponents.TextEditor;
 import pages.solMenuPages.*;
-import pages.ustMenuPages.*;
+import pages.ustMenuPages.CevaplananEvrakRaporuPage;
+import pages.ustMenuPages.EvrakOlusturPage;
+import pages.ustMenuPages.GelenEvrakKayitPage;
+import pages.ustMenuPages.KlasorEvrakIslemleriPage;
 
 import java.io.IOException;
 

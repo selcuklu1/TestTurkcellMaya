@@ -2,12 +2,6 @@ package pages.pageData;
 
 public class SolMenuData {
 
-    public interface SolMenuDataInterface{
-        public String getGroupId();
-
-        public String getMenuText();
-    }
-
     private static String groupIdPrefix = "leftMenuForm:leftMenu";
 
     public enum IslemBekleyenEvraklar implements SolMenuDataInterface {
@@ -223,6 +217,12 @@ public class SolMenuData {
         public String getMenuText() {
             return menuText;
         }
+    }
+
+    public interface SolMenuDataInterface {
+        public String getGroupId();
+
+        public String getMenuText();
     }
 }
 

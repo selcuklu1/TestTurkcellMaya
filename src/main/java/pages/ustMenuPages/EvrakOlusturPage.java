@@ -189,7 +189,7 @@ public class EvrakOlusturPage extends MainPage {
     }
 
     @Step("Kaydet ve onaya sun panelinde gönder butonuna tıkla.")
-    public EvrakOlusturPage kaydetOnayaSunGonder(){
+    public EvrakOlusturPage kaydetOnayaSunGonder() {
         btnKaydetOnayaSunGonder.click();
         return this;
     }
@@ -1296,7 +1296,7 @@ public class EvrakOlusturPage extends MainPage {
         }
 
         @Step("Kendimi ekle linkine tıkla.")
-        public BilgilerTab kendimiEkle(){
+        public BilgilerTab kendimiEkle() {
             aKendimiEkle.click();
             return this;
         }
@@ -1749,7 +1749,7 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Dosya yüklenene kadar 60 dk bekle, 60 dktan fazla sürerse timeout hatası ver")
         public EkleriTab dosyaYukleneneKadarBekle() {
-
+            
             waitForLoadingJS(WebDriverRunner.getWebDriver(), 60);
 
             return this;

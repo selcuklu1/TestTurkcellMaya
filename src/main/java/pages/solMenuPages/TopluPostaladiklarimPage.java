@@ -296,6 +296,7 @@ public class TopluPostaladiklarimPage extends MainPage {
             lblIndirimOncesiTutar.shouldNotHave(Condition.text(indirimOncesiTutar + " TL"));
         return this;
     }
+
     @Step("Tutar alaninda \"{indirimOrani}\" değeri olmalı mı? : \"{shouldBeEquals}\" ")
     public TopluPostaladiklarimPage indirimOraniKontrol(String indirimOrani, boolean shouldBeEquals) {
         txtIndirimOrani.text();

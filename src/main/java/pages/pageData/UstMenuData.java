@@ -1,19 +1,11 @@
 package pages.pageData;
 
-import pages.ustMenuPages.EvrakOlusturPage;
-import pages.ustMenuPages.OlurYazisiOlusturPage;
-
 /**
  * Yazan: Ilyas Bayraktar
  * Tarih: 25.12.2017
  * Açıklama:
  */
 public class UstMenuData {
-
-    public interface UstMenuDataInterface {
-        public String getName();
-        public String getGroupName();
-    }
 
     private enum UstMenuGroup {
         EvrakIslemleri("Evrak İşlemleri"),
@@ -254,6 +246,12 @@ public class UstMenuData {
         public String getGroupName() {
             return groupName;
         }
+    }
+
+    public interface UstMenuDataInterface {
+        public String getName();
+
+        public String getGroupName();
     }
 
 }

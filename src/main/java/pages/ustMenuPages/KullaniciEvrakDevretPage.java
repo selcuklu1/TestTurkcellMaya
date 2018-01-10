@@ -4,27 +4,15 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
-import com.sun.javafx.scene.layout.region.Margins;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.UstMenuData;
 
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.Charset;
-import java.text.Normalizer;
-import java.util.Locale;
-
 import static com.codeborne.selenide.Condition.*;
-
 import static com.codeborne.selenide.Selenide.$$;
-import static java.text.Normalizer.Form.NFD;
-import static pages.pageComponents.belgenetElements.Belgenet.$;
-
-import static pages.pageComponents.belgenetElements.Belgenet.$x;
-import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
+import static pages.pageComponents.belgenetElements.Belgenet.*;
 
 
 public class KullaniciEvrakDevretPage extends MainPage {
@@ -40,6 +28,16 @@ public class KullaniciEvrakDevretPage extends MainPage {
     SelenideElement btnDevretIptal = $(By.id("devredilenKullaniciDialogForm:evrakDevretIptalButtonId"));
     SelenideElement popUpDevredilemeyenEvraklar = $(By.id("devredilemeyenEvraklarRaporDialogId"));
     ElementsCollection tblDevredilemeyenEvraklar = $$("[id='devredilemeyenEvraklarDatatableId_data'] tr[role='row']");
+
+    public static String clearTurkishChars(String str) {
+        String ret = str;
+        char[] turkishChars = new char[]{0x131, 0x130, 0xFC, 0xDC, 0xF6, 0xD6, 0x15F, 0x15E, 0xE7, 0xC7, 0x11F, 0x11E};
+        char[] englishChars = new char[]{'i', 'I', 'u', 'U', 'o', 'O', 's', 'S', 'c', 'C', 'g', 'G'};
+        for (int i = 0; i < turkishChars.length; i++) {
+            ret = ret.replaceAll(new String(new char[]{turkishChars[i]}), new String(new char[]{englishChars[i]}));
+        }
+        return ret;
+    }
 
     @Step("Kullanıcı Evrak Devret sayfasını aç")
     public KullaniciEvrakDevretPage openPage() {
@@ -132,10 +130,9 @@ public class KullaniciEvrakDevretPage extends MainPage {
         return this;
     }
 
-
     @Step("")
-    public KullaniciEvrakDevretPage tabloAlanKontrolleri()  {
-        String tabText ="";
+    public KullaniciEvrakDevretPage tabloAlanKontrolleri() {
+        String tabText = "";
         ElementsCollection tblgenel = $$(By.id("'kullaniciEvrakDevretForm:evrakDevretAccordionPanelId'"));
 
         for (int i = 2; i < 11; i++) {
@@ -143,7 +140,7 @@ public class KullaniciEvrakDevretPage extends MainPage {
             tabText = tab.text();
             tabText = tabText.replaceAll("\\s+", "");
 
-            String txt =clearTurkishChars(tabText);
+            String txt = clearTurkishChars(tabText);
             System.out.println(txt);
             tab.click();
             ElementsCollection tblTab = $$("[id='kullaniciEvrakDevretForm:evrakDevretAccordionPanelId:devir" + txt + "_data'] tr[data-ri]");
@@ -157,16 +154,6 @@ public class KullaniciEvrakDevretPage extends MainPage {
             }
         }
         return this;
-    }
-
-    public static String clearTurkishChars(String str) {
-        String ret = str;
-        char[] turkishChars = new char[]{0x131, 0x130, 0xFC, 0xDC, 0xF6, 0xD6, 0x15F, 0x15E, 0xE7, 0xC7, 0x11F, 0x11E};
-        char[] englishChars = new char[]{'i', 'I', 'u', 'U', 'o', 'O', 's', 'S', 'c', 'C', 'g', 'G'};
-        for (int i = 0; i < turkishChars.length; i++) {
-            ret = ret.replaceAll(new String(new char[]{turkishChars[i]}), new String(new char[]{englishChars[i]}));
-        }
-        return ret;
     }
 
     @Step("Tablo Evrak Seçimi : {konu}")
@@ -202,7 +189,7 @@ public class KullaniciEvrakDevretPage extends MainPage {
     }
 
     @Step("Sayfayı kapat")
-    public KullaniciEvrakDevretPage panelKapat(){
+    public KullaniciEvrakDevretPage panelKapat() {
         $(By.xpath("//span[@class='ui-dialog-title' and text()='Kullanıcı Evrak Devret']/..//span[@class='ui-icon ui-icon-closethick']")).click();
         $(By.id("kapatButton")).click();
         return this;

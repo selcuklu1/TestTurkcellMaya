@@ -19,6 +19,7 @@ public class Belgenet extends Selenide {
     /**
      * Locates the first element matching given CSS selector
      * ATTENTION! This method doesn't start any search yet!
+     *
      * @param cssSelector any CSS selector like "input[name='first_name']" or "#messages .new_message"
      * @return SelenideElement
      */
@@ -29,6 +30,7 @@ public class Belgenet extends Selenide {
     /**
      * Locates the first element matching given XPATH expression
      * ATTENTION! This method doesn't start any search yet!
+     *
      * @param xpathExpression any XPATH expression //*[@id='value'] //E[contains(@A, 'value')]
      * @return SelenideElement which locates elements via XPath
      */
@@ -39,6 +41,7 @@ public class Belgenet extends Selenide {
     /**
      * Locates the first element matching given CSS selector
      * ATTENTION! This method doesn't start any search yet!
+     *
      * @param seleniumSelector any Selenium selector like By.id(), By.name() etc.
      * @return SelenideElement
      */
@@ -56,8 +59,9 @@ public class Belgenet extends Selenide {
     /**
      * Locates the Nth element matching given criteria
      * ATTENTION! This method doesn't start any search yet!
+     *
      * @param cssSelector any CSS selector like "input[name='first_name']" or "#messages .new_message"
-     * @param index 0..N
+     * @param index       0..N
      * @return SelenideElement
      */
     public static BelgenetElement $(String cssSelector, int index) {
@@ -67,25 +71,25 @@ public class Belgenet extends Selenide {
     /**
      * Locates the first element matching given criteria
      * ATTENTION! This method doesn't start any search yet!
+     *
      * @param criteria instance of By: By.id(), By.className() etc.
      * @return SelenideElement
      */
     public static BelgenetElement getElement(By criteria) {
-        return ElementFinder.wrap(BelgenetElement.class,null, criteria, 0);
+        return ElementFinder.wrap(BelgenetElement.class, null, criteria, 0);
     }
 
     /**
      * Locates the Nth element matching given criteria
      * ATTENTION! This method doesn't start any search yet!
+     *
      * @param criteria instance of By: By.id(), By.className() etc.
-     * @param index 0..N
+     * @param index    0..N
      * @return SelenideElement
      */
     public static BelgenetElement getElement(By criteria, int index) {
-        return ElementFinder.wrap(BelgenetElement.class,null, criteria, index);
+        return ElementFinder.wrap(BelgenetElement.class, null, criteria, index);
     }
-
-
 
 
     /**
@@ -113,8 +117,6 @@ public class Belgenet extends Selenide {
     public static BelgenetElement comboBox(By locator) {
         return ElementFinder.wrap(BelgenetElement.class, null, locator, 0);
     }
-
-
 
 
     /**
