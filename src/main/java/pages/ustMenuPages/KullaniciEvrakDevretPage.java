@@ -2,6 +2,7 @@ package pages.ustMenuPages;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import com.sun.javafx.scene.layout.region.Margins;
 import io.qameta.allure.Step;
@@ -49,15 +50,16 @@ public class KullaniciEvrakDevretPage extends MainPage {
 
     @Step("Panel aç: {panelAdi}")
     public KullaniciEvrakDevretPage panelAc(String panelAdi) {
-        $x("//h3[.='" + panelAdi + "']").sendKeys(Keys.SHIFT);
-        $x("//h3[.='" + panelAdi + "']").click();
+        SelenideElement panelHeader = $x("//h3[.='" + panelAdi + "']");
+        Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", panelHeader);
+        panelHeader.click();
         return this;
     }
 
     @Step("Listele butonuna tıkla.")
     public KullaniciEvrakDevretPage listele() {
         btnListele.click();
-        $("div[id='bekleyinizStatusDialog']").waitUntil(not(visible), 50000);
+        $("div[id='bekleyinizStatusDialog']").waitUntil(not(visible), 120000);
         return this;
     }
 
@@ -103,6 +105,7 @@ public class KullaniciEvrakDevretPage extends MainPage {
     @Step("Devret panelinde Tamam butonuna tıkla.")
     public KullaniciEvrakDevretPage devretTamam() {
         btnDevretTamam.click();
+        $("div[id='bekleyinizStatusDialog']").waitUntil(not(visible), 120000);
         return this;
     }
 
@@ -190,6 +193,13 @@ public class KullaniciEvrakDevretPage extends MainPage {
                 .filterBy(text(konu))
                 .filterBy(text(aciklama))
                 .shouldHaveSize(1);
+        return this;
+    }
+
+    @Step("Sayfayı kapat")
+    public KullaniciEvrakDevretPage panelKapat(){
+        $(By.xpath("//span[@class='ui-dialog-title' and text()='Kullanıcı Evrak Devret']/..//span[@class='ui-icon ui-icon-closethick']")).click();
+        $(By.id("kapatButton")).click();
         return this;
     }
 }

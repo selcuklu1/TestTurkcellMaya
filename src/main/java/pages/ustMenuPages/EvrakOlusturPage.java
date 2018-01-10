@@ -42,7 +42,7 @@ public class EvrakOlusturPage extends MainPage {
     SelenideElement txtKaydetOnayaSunAciklama = $(By.id("windowCevapEvrakForm:onayIslemiAciklama"));
     SelenideElement btnPaylas = $("button[id^='yeniGidenEvrakForm:rightTab:uiRepeat'] span[class$='evrakPaylas']");
     SelenideElement btnEvrakOlusturKapat = $(By.xpath("//div[@id='window3Dialog']//a/span[@class='ui-icon ui-icon-closethick']"));
-    SelenideElement btbEvrakOlusturKapatEvet = $(By.id("kapatKaydetEvetButton"));
+    SelenideElement btnEvrakOlusturKapatEvet = $(By.id("kapatKaydetEvetButton"));
     SelenideElement divBilgileri = $(By.id("evrakBilgileriContainerDiv"));
     SelenideElement labelIlkIslemTipi = $(By.xpath("//form[@id='yeniGidenEvrakForm']/table[1]//label[@class='columnLabelFixWidth']"));
     SelenideElement labelIkinciIslemTipi = $(By.xpath("//form[@id='yeniGidenEvrakForm']/table[2]//label[@class='columnLabelFixWidth']"));
@@ -51,6 +51,9 @@ public class EvrakOlusturPage extends MainPage {
     ElementsCollection tblVekaletVerenAlan = $$("[id='yeniGidenEvrakForm:kullaniciBirimSecenekleri_data'] tr[role='row']");
     SelenideElement btnKaydetEvet = $(By.id("kaydetConfirmForm:kaydetEvetButton"));
     SelenideElement btnKaydetHayir = $(By.id("kaydetConfirmForm:kaydetHayirButton"));
+    SelenideElement btnKaydetOnayaSunGonder = $(By.id("yeniGidenEvrakForm:gonderButton"));
+    SelenideElement btnKaydetOnayaSunGonderEvet = $(By.id("kaydetEvetButton"));
+
     //endregion
     ElementsCollection cevapYazImzalama = $$("[id='windowCevapEvrakForm'] [id^='windowCevapEvrakForm'] table div[class='ui-tabmenu ui-tabmenu-right'] td[class='buttonMenuContainerDefault'] button");
     //region Tabs local variables
@@ -97,7 +100,13 @@ public class EvrakOlusturPage extends MainPage {
         return this;
     }
 
-    @Step("Kaydet ve onay sun")
+    @Step("Kaydet ve onay sun paneli: EVET butonuna tıkla.")
+    public EvrakOlusturPage kaydetOnayaSunGonderEvet() {
+        btnKaydetOnayaSunGonderEvet.click();
+        return this;
+    }
+
+    @Step("Kaydet ve onay sun a ")
     public EvrakOlusturPage kaydetOnayaSun2() {
         btnKaydetOnayaSun2.parent().click();
         return this;
@@ -150,9 +159,8 @@ public class EvrakOlusturPage extends MainPage {
     public EvrakOlusturPage evrakOlusturPageKapat() {
         //btnEvrakOlusturKapat.click();
 
-        $(By.xpath("//div[@id='mainTaskBar']//span[text()='[Evrak Oluştur]']"))
-                .contextClick();
-        btbEvrakOlusturKapatEvet.click();
+        $(By.xpath("//span[@class='ui-dialog-title' and text()='Evrak Oluştur']/..//span[@class='ui-icon ui-icon-closethick']")).click();
+        btnEvrakOlusturKapatEvet.click();
 //div[@id='window1Dialog']//span[@class='ui-icon ui-icon-closethick']
         return this;
     }
@@ -180,6 +188,12 @@ public class EvrakOlusturPage extends MainPage {
         Assert.assertEquals(labelIlkKullanici.getText(), kullanici1);
         Assert.assertEquals(labelIkinciKullanici.getText(), kullanici2);
 
+        return this;
+    }
+
+    @Step("Kaydet ve onaya sun panelinde gönder butonuna tıkla.")
+    public EvrakOlusturPage kaydetOnayaSunGonder(){
+        btnKaydetOnayaSunGonder.click();
         return this;
     }
 
@@ -333,7 +347,11 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement btnOtomatikOnayAkisi = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:otomatikOnayAkisiEkle"));
 
         BelgenetElement txtForm = comboLov("input[id$='formSablonuId:LovText']");
+
         SelenideElement btnKaydet = $(By.xpath("//span[text()='Kaydet']/ancestor::tbody[1]//button"));
+
+        SelenideElement aKendimiEkle = $("a[id$=':kendimiEkleCommand']");
+
         //endregion
 
         private BilgilerTab open() {
@@ -973,7 +991,6 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Onay akışı kullanıcı ekle")
         public BilgilerTab onayAkisiKullaniciEkle(String kullaniciAdi) {
-            btnOnayAkisiEkle.click();
             txtOnayAkisiKullanicilar.selectLov(kullaniciAdi);
             return this;
         }
@@ -1038,7 +1055,7 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Onay akışı kullanıcıları silme")
         public BilgilerTab onayAkisiKullanicilariTemizle() {
-            btnOnayAkisiEkle.click();
+            //btnOnayAkisiEkle.click();
             txtOnayAkisiKullanicilar.clearAllSelectedItems();
             return this;
         }
@@ -1278,6 +1295,12 @@ public class EvrakOlusturPage extends MainPage {
         @Step("Form şablonu seç: {sablonAdi}")
         public BilgilerTab formSablonuSec(String sablonAdi) {
             txtForm.selectLov(sablonAdi);
+            return this;
+        }
+
+        @Step("Kendimi ekle linkine tıkla.")
+        public BilgilerTab kendimiEkle(){
+            aKendimiEkle.click();
             return this;
         }
 
