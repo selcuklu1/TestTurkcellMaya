@@ -1,9 +1,6 @@
 package pages.ustMenuPages;
 
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.*;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -42,7 +39,7 @@ public class EvrakOlusturPage extends MainPage {
     SelenideElement txtKaydetOnayaSunAciklama = $(By.id("windowCevapEvrakForm:onayIslemiAciklama"));
     SelenideElement btnPaylas = $("button[id^='yeniGidenEvrakForm:rightTab:uiRepeat'] span[class$='evrakPaylas']");
     SelenideElement btnEvrakOlusturKapat = $(By.xpath("//div[@id='window3Dialog']//a/span[@class='ui-icon ui-icon-closethick']"));
-    SelenideElement btbEvrakOlusturKapatEvet = $(By.id("kapatKaydetEvetButton"));
+    SelenideElement btnEvrakOlusturKapatEvet = $(By.id("kapatKaydetEvetButton"));
     SelenideElement divBilgileri = $(By.id("evrakBilgileriContainerDiv"));
     SelenideElement labelIlkIslemTipi = $(By.xpath("//form[@id='yeniGidenEvrakForm']/table[1]//label[@class='columnLabelFixWidth']"));
     SelenideElement labelIkinciIslemTipi = $(By.xpath("//form[@id='yeniGidenEvrakForm']/table[2]//label[@class='columnLabelFixWidth']"));
@@ -51,6 +48,9 @@ public class EvrakOlusturPage extends MainPage {
     ElementsCollection tblVekaletVerenAlan = $$("[id='yeniGidenEvrakForm:kullaniciBirimSecenekleri_data'] tr[role='row']");
     SelenideElement btnKaydetEvet = $(By.id("kaydetConfirmForm:kaydetEvetButton"));
     SelenideElement btnKaydetHayir = $(By.id("kaydetConfirmForm:kaydetHayirButton"));
+    SelenideElement btnKaydetOnayaSunGonder = $(By.id("yeniGidenEvrakForm:gonderButton"));
+    SelenideElement btnKaydetOnayaSunGonderEvet = $(By.id("kaydetEvetButton"));
+
     //endregion
     ElementsCollection cevapYazImzalama = $$("[id='windowCevapEvrakForm'] [id^='windowCevapEvrakForm'] table div[class='ui-tabmenu ui-tabmenu-right'] td[class='buttonMenuContainerDefault'] button");
     //region Tabs local variables
@@ -97,7 +97,13 @@ public class EvrakOlusturPage extends MainPage {
         return this;
     }
 
-    @Step("Kaydet ve onay sun")
+    @Step("Kaydet ve onay sun paneli: EVET butonuna tıkla.")
+    public EvrakOlusturPage kaydetOnayaSunGonderEvet() {
+        btnKaydetOnayaSunGonderEvet.click();
+        return this;
+    }
+
+    @Step("Kaydet ve onay sun a ")
     public EvrakOlusturPage kaydetOnayaSun2() {
         btnKaydetOnayaSun2.parent().click();
         return this;
@@ -150,9 +156,8 @@ public class EvrakOlusturPage extends MainPage {
     public EvrakOlusturPage evrakOlusturPageKapat() {
         //btnEvrakOlusturKapat.click();
 
-        $(By.xpath("//div[@id='mainTaskBar']//span[text()='[Evrak Oluştur]']"))
-                .contextClick();
-        btbEvrakOlusturKapatEvet.click();
+        $(By.xpath("//span[@class='ui-dialog-title' and text()='Evrak Oluştur']/..//span[@class='ui-icon ui-icon-closethick']")).click();
+        btnEvrakOlusturKapatEvet.click();
 //div[@id='window1Dialog']//span[@class='ui-icon ui-icon-closethick']
         return this;
     }
@@ -180,6 +185,12 @@ public class EvrakOlusturPage extends MainPage {
         Assert.assertEquals(labelIlkKullanici.getText(), kullanici1);
         Assert.assertEquals(labelIkinciKullanici.getText(), kullanici2);
 
+        return this;
+    }
+
+    @Step("Kaydet ve onaya sun panelinde gönder butonuna tıkla.")
+    public EvrakOlusturPage kaydetOnayaSunGonder(){
+        btnKaydetOnayaSunGonder.click();
         return this;
     }
 
@@ -333,7 +344,7 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement btnOtomatikOnayAkisi = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:otomatikOnayAkisiEkle"));
 
         BelgenetElement txtForm = comboLov("input[id$='formSablonuId:LovText']");
-
+        SelenideElement aKendimiEkle = $("a[id$=':kendimiEkleCommand']");
         //endregion
 
         private BilgilerTab open() {
@@ -966,7 +977,6 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Onay akışı kullanıcı ekle")
         public BilgilerTab onayAkisiKullaniciEkle(String kullaniciAdi) {
-            btnOnayAkisiEkle.click();
             txtOnayAkisiKullanicilar.selectLov(kullaniciAdi);
             return this;
         }
@@ -1031,7 +1041,7 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Onay akışı kullanıcıları silme")
         public BilgilerTab onayAkisiKullanicilariTemizle() {
-            btnOnayAkisiEkle.click();
+            //btnOnayAkisiEkle.click();
             txtOnayAkisiKullanicilar.clearAllSelectedItems();
             return this;
         }
@@ -1271,6 +1281,12 @@ public class EvrakOlusturPage extends MainPage {
         @Step("Form şablonu seç: {sablonAdi}")
         public BilgilerTab formSablonuSec(String sablonAdi) {
             txtForm.selectLov(sablonAdi);
+            return this;
+        }
+
+        @Step("Kendimi ekle linkine tıkla.")
+        public BilgilerTab kendimiEkle(){
+            aKendimiEkle.click();
             return this;
         }
 
@@ -1575,6 +1591,7 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement btnEkleriDosyaEkle = $(By.id("yeniGidenEvrakForm:evrakEkTabView:dosyaEkleButton"));
         SelenideElement btnEkleriDosyaTemizle = $(By.id("yeniGidenEvrakForm:evrakEkTabView:dosyaTemizleButton"));
         SelenideElement chkEkListesiniEkYap = $(By.id("yeniGidenEvrakForm:j_idt30306"));
+        SelenideElement btnDosyaEkle = $(By.xpath("//input[@id='yeniGidenEvrakForm:evrakEkTabView:fileUploadButtonA_input']"));
 
         //Ekleri tabı - Fiziksel Ekle
         SelenideElement txtEkleriFizikselMetni = $(By.id("yeniGidenEvrakForm:evrakEkTabView:aciklamaTextArea"));
@@ -1614,8 +1631,8 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Ekleri Tab - Açıklama")
-        public EkleriTab ekleriDosyaAciklamaDoldur(String aciklama) {
+        @Step("Ekleri Tab - Ek Metni")
+        public EkleriTab ekleriEkMetniDoldur(String aciklama) {
             txtEkleriDosyaAciklama.sendKeys(aciklama);
             return this;
         }
@@ -1708,6 +1725,27 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Dosya ekle {description} : {pathPDF}")
+        public EkleriTab dosyaEkle(String pathPDF, String description) {
+
+            uploadFile(btnDosyaEkle, pathPDF);
+
+            return this;
+        }
+
+        public EkleriTab dosyaYukleneneKadarBekleme(int time, int count) {
+
+            System.out.println("Count:" +  WebDriverRunner.getWebDriver().findElements(By.cssSelector("div[style*='display: block;'] .ui-progressbar-value")).size());
+
+            boolean exists = WebDriverRunner.getWebDriver().findElements(By.cssSelector("div[style*='display: block;'] .ui-progressbar-value"))
+                    .size() != 0;
+            if (exists && count > 0) {
+                count--;
+                dosyaYukleneneKadarBekleme(500, count);
+            }
+
+            return this;
+        }
     }
 
     public class IlgileriTab extends MainPage {
