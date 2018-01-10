@@ -843,9 +843,10 @@ public class GizlilikKleransiTest extends BaseTest {
         evrakOlusturPage
                 .editorTabAc()
                 .editorIcerikDoldur(icerik)
-                .parafla()
-                .sImzasec()
-                .sImzaImzala2();
+                .evrakParafla();
+//                .parafla()
+//                .sImzasec()
+//                .sImzaImzala2();
 //                .islemMesaji().beklenenMesaj(basariMesaji);
 
 //        parafladiklarimPage
