@@ -5,6 +5,7 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import com.sun.javafx.scene.layout.region.Margins;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -116,46 +117,68 @@ public class KullaniciEvrakDevretPage extends MainPage {
 
     @Step("Ekran Alan kontrolleri")
     public KullaniciEvrakDevretPage ekranTabKontrolleri() {
-        $x("//h3[.='Gelen Evraklar']").shouldBe(visible);
-        $x("//h3[.='Taslak Evraklar']").shouldBe(visible);
-        $x("//h3[.='İmza Bekleyen Evraklar']").shouldBe(visible);
-        $x("//h3[.='Paraf Bekleyen Evraklar']").shouldBe(visible);
-        $x("//h3[.='Koordine Bekleyen Evraklar']").shouldBe(visible);
-        $x("//h3[.='Kontrol Bekleyen Evraklar']").shouldBe(visible);
-        $x("//h3[.='Havale Onayına Gelen Evraklar']").shouldBe(visible);
-        $x("//h3[.='Teslim Aldıklarım']").shouldBe(visible);
-        $x("//h3[.='Kapatma İmzasi Bekleyenler']").shouldBe(visible);
-        $x("//h3[.='Kapatma Parafı Bekleyenler']").shouldBe(visible);
+        SelenideElement tabGelenEvraklar = $x("//h3[.='Gelen Evraklar']").shouldBe(visible);
+        SelenideElement tabTaslakEvraklar = $x("//h3[.='Taslak Evraklar']").shouldBe(visible);
+        SelenideElement tabImzaBekleyenEvraklar = $x("//h3[.='İmza Bekleyen Evraklar']").shouldBe(visible);
+        SelenideElement tabParafBekleyenEvraklar = $x("//h3[.='Paraf Bekleyen Evraklar']").shouldBe(visible);
+        SelenideElement tabKoordineBekleyenEvraklar = $x("//h3[.='Koordine Bekleyen Evraklar']").shouldBe(visible);
+        SelenideElement tabKontrolBekleyenEvraklar = $x("//h3[.='Kontrol Bekleyen Evraklar']").shouldBe(visible);
+        SelenideElement tabHavaleOnayinaGelenEvraklar = $x("//h3[.='Havale Onayına Gelen Evraklar']").shouldBe(visible);
+        SelenideElement tabTeslimAldiklarim = $x("//h3[.='Teslim Aldıklarım']").shouldBe(visible);
+        SelenideElement tabKapatmaImzasiBekleyenler = $x("//h3[.='Kapatma İmzasi Bekleyenler']").shouldBe(visible);
+        SelenideElement tabKapatmaParafiBekleyenler = $x("//h3[.='Kapatma Parafı Bekleyenler']").shouldBe(visible);
         btnListele.shouldBe(visible);
         btnDevret.shouldNotBe(enabled);
+
+        Allure.addAttachment(tabGelenEvraklar.text(), "Ekran Kontrolü ok");
+        Allure.addAttachment(tabTaslakEvraklar.text(), "Ekran Kontrolü ok");
+        Allure.addAttachment(tabImzaBekleyenEvraklar.text(), "Ekran Kontrolü ok");
+        Allure.addAttachment(tabParafBekleyenEvraklar.text(), "Ekran Kontrolü ok");
+        Allure.addAttachment(tabKoordineBekleyenEvraklar.text(), "Ekran Kontrolü ok");
+        Allure.addAttachment(tabKontrolBekleyenEvraklar.text(), "Ekran Kontrolü ok");
+        Allure.addAttachment(tabHavaleOnayinaGelenEvraklar.text(), "Ekran Kontrolü ok");
+        Allure.addAttachment(tabTeslimAldiklarim.text(), "Ekran Kontrolü ok");
+        Allure.addAttachment(tabKapatmaImzasiBekleyenler.text(), "Ekran Kontrolü ok");
+        Allure.addAttachment(tabKapatmaParafiBekleyenler.text(), "Ekran Kontrolü ok");
+        Allure.addAttachment(btnListele.text(), "Ekran Kontrolü ok");
+        Allure.addAttachment(btnDevret.text(), "Ekran Kontrolü ok");
+
 
         return this;
     }
 
 
     @Step("")
-    public KullaniciEvrakDevretPage tabloAlanKontrolleri()  {
-        String tabText ="";
-        ElementsCollection tblgenel = $$(By.id("'kullaniciEvrakDevretForm:evrakDevretAccordionPanelId'"));
+    public KullaniciEvrakDevretPage tabloAlanKontrolleri() {
+        String tabText = "";
+//        ElementsCollection tblgenel = $$(By.id("'kullaniciEvrakDevretForm:evrakDevretAccordionPanelId'"));
 
         for (int i = 2; i < 11; i++) {
             SelenideElement tab = $x("//div[@id='kullaniciEvrakDevretForm:evrakDevretAccordionPanelId']/h3[" + i + "]/a");
             tabText = tab.text();
             tabText = tabText.replaceAll("\\s+", "");
 
-            String txt =clearTurkishChars(tabText);
+            String txt = clearTurkishChars(tabText);
             System.out.println(txt);
             tab.click();
             ElementsCollection tblTab = $$("[id='kullaniciEvrakDevretForm:evrakDevretAccordionPanelId:devir" + txt + "_data'] tr[data-ri]");
-            for (int j = 0; j < tblTab.size(); j++) {
-                tblTab.get(j)
-                        .$("div[class='ui-chkbox-box ui-widget ui-corner-all ui-state-default']")
-                        .shouldBe(Condition.visible);
-                tblTab.get(j)
-                        .$("button[id^='kullaniciEvrakDevretForm:evrakDevretAccordionPanelId:devirTaslakEvraklar:" + j + ":j_idt'")
-                        .shouldBe(Condition.visible);
-            }
+            int size = tblTab.size();
+            if (size > 0) {
+                for (int j = 0; j < size; j++) {
+                    tblTab.get(j)
+                            .$("div[class='ui-chkbox-box ui-widget ui-corner-all ui-state-default']")
+                            .shouldBe(Condition.visible);
+                    tblTab.get(j)
+                            .$("button[id^='kullaniciEvrakDevretForm:evrakDevretAccordionPanelId:devir" + txt + ":" + j + ":j_idt'")
+                            .shouldBe(Condition.visible);
+                }
+                Allure.addAttachment(tabText, tabText+" listesinde kayıt bulundu. Buton ve checkbox kontrolleri yapıldı.");
+            } else
+                Allure.addAttachment(tabText, tabText+" listesi boş.");
         }
+
+        SelenideElement tab = $x("//div[@id='kullaniciEvrakDevretForm:evrakDevretAccordionPanelId']/h3[1]/a");
+        tab.click();
         return this;
     }
 
@@ -183,6 +206,12 @@ public class KullaniciEvrakDevretPage extends MainPage {
         txtAciklama.shouldBe(visible);
         btnDevretTamam.shouldBe(visible);
         btnDevretIptal.shouldBe(visible);
+
+        Allure.addAttachment($(By.xpath("//label[normalize-space(text())='Devralacak Kişi']")).text(),"Ekran Kontrolü ok");
+        Allure.addAttachment($(By.xpath("//label[normalize-space(text())='Açıklama']")).text(),"Ekran Kontrolü ok");
+        Allure.addAttachment(btnDevretTamam.text(),"Ekran Kontrolü ok");
+        Allure.addAttachment(btnDevretIptal.text(),"Ekran Kontrolü ok");
+
         return this;
     }
 
@@ -202,7 +231,7 @@ public class KullaniciEvrakDevretPage extends MainPage {
     }
 
     @Step("Sayfayı kapat")
-    public KullaniciEvrakDevretPage panelKapat(){
+    public KullaniciEvrakDevretPage panelKapat() {
         $(By.xpath("//span[@class='ui-dialog-title' and text()='Kullanıcı Evrak Devret']/..//span[@class='ui-icon ui-icon-closethick']")).click();
         $(By.id("kapatButton")).click();
         return this;

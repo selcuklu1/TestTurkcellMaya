@@ -618,7 +618,8 @@ public class GizlilikKleransiTest extends BaseTest {
     @Test(enabled = true, dependsOnMethods = {"TS1938"}, description = "TS2138 : Genel evrak raporunda gizlilik kleransı kontrolü (evrakta izi olmayan kullanıcı ile)")
     public void TS2138() throws InterruptedException {
 //9267
-        login("username20g", "123");
+        login("username23t", "123");
+        String mesaj = "Gizlilik kleransınız evrakın gizlilik derecesini görüntülemek için yeterli değildir.";
 
         genelEvrakRaporuPage
                 .openPage()
@@ -626,7 +627,8 @@ public class GizlilikKleransiTest extends BaseTest {
                 .sorgula()
                 .tabloEvrakNoKontrol(evrakNo)
                 .tablodaDetayTikla(evrakNo)
-                .detayEkranınıAcildigiKontrolu();
+                .islemMesaji().dikkatOlmali(mesaj);
+//                .detayEkranınıAcildigiKontrolu();
     }
 
     @Severity(SeverityLevel.CRITICAL)
