@@ -4,7 +4,6 @@ import common.BaseTest;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
-import org.apache.xmlbeans.impl.xb.xsdschema.All;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.MainPage;
@@ -12,7 +11,6 @@ import pages.solMenuPages.*;
 import pages.ustMenuPages.EvrakOlusturPage;
 import pages.ustMenuPages.PttRaporuPage;
 
-import java.time.temporal.ValueRange;
 import java.util.Random;
 
 
@@ -1199,7 +1197,7 @@ public class TopluPostalamaTest extends BaseTest {
                 "Ankara İçi APS"
         };
         //endregion
-        Allure.addAttachment("Test Datası","Test Datası oluşturuluyor.");
+        Allure.addAttachment("Test Datası", "Test Datası oluşturuluyor.");
 //        //region Test Datası
 //        for (int i = 0; i < 2; i++) {
 //            evrakOlusturPage
@@ -1251,7 +1249,7 @@ public class TopluPostalamaTest extends BaseTest {
 //                .tutarHesapla()
 //                .postaDetayiPostala();
 //        //endregion
-        Allure.addAttachment("Test Datası","Test Datası oluşturuldu.");
+        Allure.addAttachment("Test Datası", "Test Datası oluşturuldu.");
 //        String postaListesi = "TC1811 20180108145101";
         topluPostaladiklarimPage
                 .openPage()

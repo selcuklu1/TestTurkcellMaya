@@ -25,6 +25,79 @@ import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 public class BilgilerTab extends MainPage {
 
     final static String tabName = "Bilgileri";
+    //region Konu Kodu
+    BelgenetElement konuKoduCombolov = comboLov("input[id$='konuKoduLov:LovText']");
+
+
+    //******************************************************
+    //region Konu
+    SelenideElement konuTextarea = $("textarea[id$='konuTextArea']");
+    //region Kaldıralacak Klasörler
+    BelgenetElement kaldiralacakKlasorler = comboLov("input[id$='eklenecekKlasorlerLov:LovText']");
+    //region Kayıt Tarihi
+    SelenideElement kayitTarihiDateInput = $("input[id$='kayitTarih_input']");
+    //region Evrak Dili
+    SelenideElement evrakDiliSelect = $("select[id$='evrakDili']");
+    //region Gizlilik Derecesi
+    SelenideElement gizlilikDerecesiSelect = $("select[id$=guvenlikKodu]");
+    //region Kanun Kapsam Tipi
+    ElementsCollection kanunKapsamTipiRadioButtons = $$("table[id$='kanunKapsamTipiRadio'] input");
+    //endregion
+
+    //******************************************************
+    //region Evrak Sayı Ek Metni
+    SelenideElement evrakSayiEkMetniInput = $("input[id$=evrakSayiEkMetniInputText]");
+    //region İvedilik
+    SelenideElement ivedilikSelect = $("select[id$=ivedilik]");
+    //region Miat
+    SelenideElement miatDateInput = $("input[id$=miatCalendar_input]");
+    //endregion
+
+    //******************************************************
+    SelenideElement miatTemizleButton = $("button[id$=miatTarihTemizle]");
+    //region Açıklama
+    SelenideElement aciklamaTextarea = $x("tr[@class='ui-datagrid-row' and descendant::label[normalize-space(text())='Açıklama']]//textarea");
+    //region Bilgi Seçim Tipi
+    SelenideElement bilgiSecimTipiSelect = $x("tr[@class='ui-datagrid-row' and descendant::label[normalize-space(text())='Bilgi Seçim Tip']]//select");
+    //endregion
+
+    //******************************************************
+    //region Bilgi
+    BelgenetElement bilgiCombolov = comboLov("input[id$='bilgiLov:LovText']");
+    //region Gereği Seçim Tipi
+    SelenideElement geregiSecimTipiSelect = $x("//tr[@class='ui-datagrid-row' and descendant::label[normalize-space(text())='Gereği Seçim Tipi']]//select");
+    //region Gereği
+    BelgenetElement geregiCombolov = comboLov("input[id$='geregiLov:LovText']");
+    //endregion
+
+    //******************************************************
+    //region Dağıtımı Ek Yap
+    SelenideElement dagitimiEkYapCheckbox = $("div[id$=dagitimEkYapCheckBoxId]").find("input");
+    BelgenetElement onayAkisiCombolov = comboLov("table[id$='akisOlusturPanelGrid'] input[id$='akisLov:LovText']");
+    //Onay Akışı Ekle
+    SelenideElement onayAkisiEkleButton = $("button[id$=onayAkisiEkle]");
+    //Otomatik Onay Akışı Ekle
+    SelenideElement otomatikOnayAkisiEkleButton = $("button[id$=otomatikOnayAkisiEkle]");
+    //endregion
+
+    //******************************************************
+    //Otomatik Onay Akışı İşlemleri Dialog
+    SelenideElement otomatikOnayAkisiIslemleriDialog = $("div[id$=hiyerarsikAkisOlusturDialog]");
+    //Otomatik Onay Akışı İşlemleri Dialog Title
+    public SelenideElement otomatikOnayAkisiIslemleriDialogTitle = otomatikOnayAkisiIslemleriDialog.$(".ui-dialog-titlebar .ui-dialog-title");
+    //Otomatik Onay Akışı İşlemleri Dialog Close
+    SelenideElement otomatikOnayAkisiIslemleriDialogClose = otomatikOnayAkisiIslemleriDialog.$(".ui-dialog-titlebar .ui-dialog-titlebar-close");
+    //endregion
+
+    //******************************************************
+    SelenideElement otomatikOnayAkisiIslemleri = $("div[id$='hiyerarsikAkisOlusturForm:otomatikAkisKullaniciBirimListId']");
+    ElementsCollection otomatikOnayAkisiIslemleriList = otomatikOnayAkisiIslemleri.$$("tr[data-ri][data-rk]");
+    BelgenetElement onayAkisiKullanicilarCombolov = comboLov("input[id$='akisAdimLov:LovText']");
+
+    //endregion
+
+    //******************************************************
+    SelenideElement kullanButton = $("button[id$='anlikAkisKullanButton']");
 
     @Step(tabName + " tabı aç")
     public BilgilerTab openTab(boolean... clickIfOpen) {
@@ -35,12 +108,9 @@ public class BilgilerTab extends MainPage {
 
         return this;
     }
-
+    //endregion
 
     //******************************************************
-
-    //region Konu Kodu
-    BelgenetElement konuKoduCombolov = comboLov("input[id$='konuKoduLov:LovText']");
 
     @Step("Konu Kodu alan")
     public BelgenetElement getKonuKodu() {
@@ -60,6 +130,9 @@ public class BilgilerTab extends MainPage {
         konuKoduCombolov.closeTreePanel();
         return this;
     }
+    //endregion
+
+    //******************************************************
 
     @Step("Konu Kodu seç")
     public BilgilerTab konuKoduSecFilterByDetail(String text, Condition filterBy) {
@@ -73,12 +146,6 @@ public class BilgilerTab extends MainPage {
         konuKoduCombolov.clearAllSelectedItems();
         return this;
     }
-    //endregion
-
-    //******************************************************
-
-    //region Konu
-    SelenideElement konuTextarea = $("textarea[id$='konuTextArea']");
 
     public SelenideElement getKonuTextarea() {
         return konuTextarea;
@@ -95,9 +162,6 @@ public class BilgilerTab extends MainPage {
 
     //******************************************************
 
-    //region Kaldıralacak Klasörler
-    BelgenetElement kaldiralacakKlasorler = comboLov("input[id$='eklenecekKlasorlerLov:LovText']");
-
     @Step("Kaldırılacak Klasörler")
     public BelgenetElement getKaldiralacakKlasorlerCombolov() {
         return kaldiralacakKlasorler;
@@ -112,9 +176,6 @@ public class BilgilerTab extends MainPage {
 
     //******************************************************
 
-    //region Kayıt Tarihi
-    SelenideElement kayitTarihiDateInput = $("input[id$='kayitTarih_input']");
-
     @Step("Kayit Tarihi doldur")
     public BilgilerTab getKayitTarihiDoldur(String text) {
         kayitTarihiDateInput.setValue(text);
@@ -127,16 +188,14 @@ public class BilgilerTab extends MainPage {
         Allure.addAttachment("Değer", text);
         return text;
     }
-    //endregion
-
-    //******************************************************
-
-    //region Evrak Dili
-    SelenideElement evrakDiliSelect = $("select[id$='evrakDili']");
 
     public SelenideElement getEvrakDiliSelect() {
         return evrakDiliSelect;
     }
+
+    //endregion
+
+    //******************************************************
 
     @Step("Evrak Dili seç")
     public BilgilerTab evrakDiliSec(String text) {
@@ -149,18 +208,16 @@ public class BilgilerTab extends MainPage {
         evrakDiliSelect.selectOption(evrakDili.getOptionText());
         return this;
     }
-    //endregion
-
-    //******************************************************
-
-    //region Gizlilik Derecesi
-    SelenideElement gizlilikDerecesiSelect = $("select[id$=guvenlikKodu]");
 
     @Step("Gizlilik Derecesi seç")
     public BilgilerTab gizlilikDerecesiSec(String text) {
         gizlilikDerecesiSelect.selectOption(text);
         return this;
     }
+
+    //endregion
+
+    //******************************************************
 
     @Step("Gizlilik Derecesi seç")
     public BilgilerTab gizlilikDerecesiSec(Enum gizlilikDerecesi) {
@@ -170,12 +227,6 @@ public class BilgilerTab extends MainPage {
         gizlilikDerecesiSelect.selectOption(((GizlilikDerecesi) gizlilikDerecesi).getOptionText());
         return this;
     }
-    //endregion
-
-    //******************************************************
-
-    //region Kanun Kapsam Tipi
-    ElementsCollection kanunKapsamTipiRadioButtons = $$("table[id$='kanunKapsamTipiRadio'] input");
 
     @Step("Kanun Kapsam Tipi seç")
     public BilgilerTab kanunKapsamTipiSec(String radioText) {
@@ -212,20 +263,11 @@ public class BilgilerTab extends MainPage {
 
     //******************************************************
 
-    //region Evrak Sayı Ek Metni
-    SelenideElement evrakSayiEkMetniInput = $("input[id$=evrakSayiEkMetniInputText]");
-
     @Step("Evrak Sayı Ek Metni doldur")
     public BilgilerTab evrakSayiEkMetniDoldur(String text) {
         evrakSayiEkMetniInput.setValue(text);
         return this;
     }
-    //endregion
-
-    //******************************************************
-
-    //region İvedilik
-    SelenideElement ivedilikSelect = $("select[id$=ivedilik]");
 
     @Step("İvedilik seç")
     public BilgilerTab ivedilikSec(Enum ivedilik) {
@@ -244,10 +286,6 @@ public class BilgilerTab extends MainPage {
 
     //******************************************************
 
-    //region Miat
-    SelenideElement miatDateInput = $("input[id$=miatCalendar_input]");
-    SelenideElement miatTemizleButton = $("button[id$=miatTarihTemizle]");
-
     @Step("Miat doldur")
     public BilgilerTab miatDoldur(String text) {
         miatDateInput.setValue(text);
@@ -264,20 +302,13 @@ public class BilgilerTab extends MainPage {
 
     //******************************************************
 
-    //region Açıklama
-    SelenideElement aciklamaTextarea = $x("tr[@class='ui-datagrid-row' and descendant::label[normalize-space(text())='Açıklama']]//textarea");
+    //region Onay Akışı
 
     @Step("Açıklamayı doldur")
     public BilgilerTab aciklamaDoldur(String text) {
         aciklamaTextarea.setValue(text);
         return this;
     }
-    //endregion
-
-    //******************************************************
-
-    //region Bilgi Seçim Tipi
-    SelenideElement bilgiSecimTipiSelect = $x("tr[@class='ui-datagrid-row' and descendant::label[normalize-space(text())='Bilgi Seçim Tip']]//select");
 
     @Step("Bilgi Seçim Tipi seç")
     public BilgilerTab bilgiSecimTipiSec(String text) {
@@ -294,13 +325,6 @@ public class BilgilerTab extends MainPage {
         return this;
     }
 
-    //endregion
-
-    //******************************************************
-
-    //region Bilgi
-    BelgenetElement bilgiCombolov = comboLov("input[id$='bilgiLov:LovText']");
-
     @Step("Bilgi alan")
     public BelgenetElement getBilgiCombolov() {
         return bilgiCombolov;
@@ -312,18 +336,16 @@ public class BilgilerTab extends MainPage {
         return this;
     }
 
-    //endregion
-
-    //******************************************************
-
-    //region Gereği Seçim Tipi
-    SelenideElement geregiSecimTipiSelect = $x("//tr[@class='ui-datagrid-row' and descendant::label[normalize-space(text())='Gereği Seçim Tipi']]//select");
-
     @Step("Gereği Seçim Tipi seç")
     public BilgilerTab geregiSecimTipiSec(String text) {
         geregiSecimTipiSelect.selectOption(text);
         return this;
     }
+    //endregion
+
+    //******************************************************
+
+    //region Otomatik Onay Akışı Ekle
 
     @Step("Gereği Seçim Tipi seç")
     public BilgilerTab geregiSecimTipiSec(Enum geregiSecimTipi) {
@@ -333,13 +355,6 @@ public class BilgilerTab extends MainPage {
         geregiSecimTipiSelect.selectOption(((GeregiSecimTipi) geregiSecimTipi).getOptionText());
         return this;
     }
-
-    //endregion
-
-    //******************************************************
-
-    //region Gereği
-    BelgenetElement geregiCombolov = comboLov("input[id$='geregiLov:LovText']");
 
     @Step("Gereği alanı")
     public BelgenetElement geregiCombolov() {
@@ -351,28 +366,12 @@ public class BilgilerTab extends MainPage {
         geregiCombolov.selectLov(text);
         return this;
     }
-    //endregion
-
-    //******************************************************
-
-    //region Dağıtımı Ek Yap
-    SelenideElement dagitimiEkYapCheckbox = $("div[id$=dagitimEkYapCheckBoxId]").find("input");
 
     @Step("Dağıtımı Ek Yap seç")
     public BilgilerTab dagitimiEkYapSec(boolean setSelected) {
         dagitimiEkYapCheckbox.setSelected(setSelected);
         return this;
     }
-    //endregion
-
-    //******************************************************
-
-    //region Onay Akışı
-
-    BelgenetElement onayAkisiCombolov = comboLov("table[id$='akisOlusturPanelGrid'] input[id$='akisLov:LovText']");
-
-    //Onay Akışı Ekle
-    SelenideElement onayAkisiEkleButton = $("button[id$=onayAkisiEkle]");
 
     @Step("Onay Akışı alan")
     public BelgenetElement onayAkisiCombolov() {
@@ -399,23 +398,6 @@ public class BilgilerTab extends MainPage {
         clickJs(onayAkisiEkleButton);
         return this;
     }
-    //endregion
-
-    //******************************************************
-
-    //region Otomatik Onay Akışı Ekle
-
-    //Otomatik Onay Akışı Ekle
-    SelenideElement otomatikOnayAkisiEkleButton = $("button[id$=otomatikOnayAkisiEkle]");
-    //Otomatik Onay Akışı İşlemleri Dialog
-    SelenideElement otomatikOnayAkisiIslemleriDialog = $("div[id$=hiyerarsikAkisOlusturDialog]");
-    //Otomatik Onay Akışı İşlemleri Dialog Title
-    public SelenideElement otomatikOnayAkisiIslemleriDialogTitle = otomatikOnayAkisiIslemleriDialog.$(".ui-dialog-titlebar .ui-dialog-title");
-    //Otomatik Onay Akışı İşlemleri Dialog Close
-    SelenideElement otomatikOnayAkisiIslemleriDialogClose = otomatikOnayAkisiIslemleriDialog.$(".ui-dialog-titlebar .ui-dialog-titlebar-close");
-    SelenideElement otomatikOnayAkisiIslemleri = $("div[id$='hiyerarsikAkisOlusturForm:otomatikAkisKullaniciBirimListId']");
-    ElementsCollection otomatikOnayAkisiIslemleriList = otomatikOnayAkisiIslemleri.$$("tr[data-ri][data-rk]");
-
 
     @Step("Otomatik Onay Akışı Ekle butona tıkla")
     public BilgilerTab otomatikOnayAkisiEkleButonaTikla() {
@@ -504,6 +486,10 @@ public class BilgilerTab extends MainPage {
         return this;
     }
 
+    //endregion
+
+    //region Onay Akışı Kullanıcılar
+
     @Step("Otomatik Onay Akışı İşlemleri kullan tıkla")
     public BilgilerTab otomatikOnayAkisiIslemleriKullanTikla() {
         otomatikOnayAkisiIslemleriDialog.$("button[id$='hiyerarsikAkisOlusturForm:hiyerarsikAkisKullan']").click();
@@ -515,13 +501,6 @@ public class BilgilerTab extends MainPage {
         otomatikOnayAkisiIslemleriDialogClose.click();
         return this;
     }
-
-    //endregion
-
-    //region Onay Akışı Kullanıcılar
-
-    BelgenetElement onayAkisiKullanicilarCombolov = comboLov("input[id$='akisAdimLov:LovText']");
-    SelenideElement kullanButton = $("button[id$='anlikAkisKullanButton']");
 
     @Step("Kullanıcılar alan")
     public BelgenetElement getKullanicilarCombolov() {

@@ -8,5 +8,4 @@ package pages.pageComponents.tabs;
 public class IliskiliEvraklar {
 
 
-
 }

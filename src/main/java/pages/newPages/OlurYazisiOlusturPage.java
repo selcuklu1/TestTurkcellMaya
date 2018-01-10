@@ -55,6 +55,11 @@ public class OlurYazisiOlusturPage extends MainPage {
         return new EditorTab().openTab();
     }
 
+    @Step("")
+    public EkleriTab ekleriTabAc() {
+        return new EkleriTab($("[id='yeniOnayEvrakForm']")).openTab();
+    }
+
     public class EditorTab extends MainPage {
         private TextEditor editor = new TextEditor();
 
@@ -68,11 +73,6 @@ public class OlurYazisiOlusturPage extends MainPage {
             $$("#DOnayDivToolbar span.cke_toolbar a[id*=cke]").shouldHave(sizeGreaterThan(0));
             return this;
         }
-    }
-
-    @Step("")
-    public EkleriTab ekleriTabAc(){
-        return new EkleriTab($("[id='yeniOnayEvrakForm']")).openTab();
     }
 
 }

@@ -39,11 +39,12 @@ public class PulYonetimiPage extends MainPage {
     }
 
     @Step("Yeni Pul ekle")
-        public PulYonetimiPage yeniPulEkle() {
+    public PulYonetimiPage yeniPulEkle() {
 //        btnAddNewPul.click();
-            clickJs(btnAddNewPul);
-            return this;
+        clickJs(btnAddNewPul);
+        return this;
     }
+
     @Step("Alan Kontrolleri")
     public PulYonetimiPage alanKontrolleri() {
 
@@ -53,11 +54,11 @@ public class PulYonetimiPage extends MainPage {
         lblIndirimOrani.isDisplayed();
         chkYurtDisi.isDisplayed();
 
-        Allure.addAttachment("label",lblPostaTipi.text());
-        Allure.addAttachment("label",lblGramaj.text());
-        Allure.addAttachment("label",lblTutar.text());
-        Allure.addAttachment("label",lblIndirimOrani.text());
-        Allure.addAttachment("Yurt Dişi checkBox","Ok");
+        Allure.addAttachment("label", lblPostaTipi.text());
+        Allure.addAttachment("label", lblGramaj.text());
+        Allure.addAttachment("label", lblTutar.text());
+        Allure.addAttachment("label", lblIndirimOrani.text());
+        Allure.addAttachment("Yurt Dişi checkBox", "Ok");
         return this;
     }
 

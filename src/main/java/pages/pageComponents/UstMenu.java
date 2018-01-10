@@ -17,8 +17,8 @@ public class UstMenu extends BaseLibrary {
 
     @Step("\"{ustMenuData.groupName}\" -> \"{ustMenuData.name}\" üst menu aç")
     public void openMenu(Enum ustMenuData, boolean... useJS) {
-        String groupName = ((UstMenuData.UstMenuDataInterface)ustMenuData).getGroupName();
-        String menuName = ((UstMenuData.UstMenuDataInterface)ustMenuData).getName();
+        String groupName = ((UstMenuData.UstMenuDataInterface) ustMenuData).getGroupName();
+        String menuName = ((UstMenuData.UstMenuDataInterface) ustMenuData).getName();
 
         if ((useJS.length <= 0) || useJS[0])
             openMenu(menuName);
@@ -116,7 +116,6 @@ public class UstMenu extends BaseLibrary {
         }
 
     }
-
 
 
 }

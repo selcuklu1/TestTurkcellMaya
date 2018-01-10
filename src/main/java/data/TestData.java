@@ -2,7 +2,7 @@ package data;
 
 import common.BaseLibrary;
 
-public class TestData extends BaseLibrary{
+public class TestData extends BaseLibrary {
 
     // PoC'de kullnailan Belgenet
     // public static final String belgenetURL = "http://www.belgenet.com.tr:8282/edys-web/mainInbox.xhtml";

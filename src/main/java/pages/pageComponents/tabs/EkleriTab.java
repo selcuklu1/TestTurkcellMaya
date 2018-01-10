@@ -2,7 +2,6 @@ package pages.pageComponents.tabs;
 
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
-import pages.pageComponents.belgenetElements.BelgenetElement;
 
 import static com.codeborne.selenide.Condition.visible;
 
@@ -23,7 +22,7 @@ public class EkleriTab {
 
     @Step(tabName + " tabı aç")
     public EkleriTab openTab(boolean... clickIfOpen) {
-        SelenideElement tab = page.$x("descendant::td[contains(@class,'tabMenuContainer') and descendant::span[contains(@class,'tabMenu') and text()='"+ tabName +"']]");
+        SelenideElement tab = page.$x("descendant::td[contains(@class,'tabMenuContainer') and descendant::span[contains(@class,'tabMenu') and text()='" + tabName + "']]");
 
         if (clickIfOpen.length > 0 || !tab.attr("class").equals("tabMenuContainerSelected"))
             tab.$("button").click();
@@ -34,9 +33,8 @@ public class EkleriTab {
     }
 
 
-
     @Step("")
-    public AltTabs altTabs(){
+    public AltTabs altTabs() {
         return new AltTabs(tab);
     }
 

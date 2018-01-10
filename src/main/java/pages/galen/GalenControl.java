@@ -1,22 +1,17 @@
 package pages.galen;
 
 import com.codeborne.selenide.WebDriverRunner;
-import com.codeborne.selenide.impl.Html;
 import com.galenframework.api.Galen;
 import com.galenframework.api.GalenPageDump;
 import com.galenframework.reports.GalenTestInfo;
 import com.galenframework.reports.HtmlReportBuilder;
 import com.galenframework.reports.model.LayoutReport;
-import com.sun.corba.se.pept.encoding.InputObject;
 import common.BaseLibrary;
 import io.qameta.allure.Allure;
-import io.qameta.allure.Attachment;
-import io.qameta.allure.Link;
 import io.qameta.allure.Step;
 import org.openqa.selenium.Dimension;
 import org.testng.Assert;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -35,11 +30,10 @@ public class GalenControl extends BaseLibrary {
 
 
     /**
-     *
      * @param testName
      * @see "/src/test/resources/testName/" path must be exist with
-     *      "testName".gspec, dump path will be generated in
-     *      "/src/test/resources/testName/dump" path
+     * "testName".gspec, dump path will be generated in
+     * "/src/test/resources/testName/dump" path
      */
     public void galenGenerateDump(String testName) {
         try {
@@ -67,7 +61,7 @@ public class GalenControl extends BaseLibrary {
         // checkLayout function checks the layout and returns a LayoutReport
         // object
         LayoutReport layoutReport = Galen.checkLayout(WebDriverRunner.getWebDriver()
-                ,pageSpecPath + testName +"/" + testName + ".gspec",
+                , pageSpecPath + testName + "/" + testName + ".gspec",
                 Arrays.asList("desktop"));
 
         // Create a tests list
@@ -77,7 +71,7 @@ public class GalenControl extends BaseLibrary {
         GalenTestInfo galenTest = GalenTestInfo.fromString(testName + " layout");
 
         // Get layoutReport and assign to test object
-        galenTest.getReport().layout(layoutReport, "Check "+ testName +" layout");
+        galenTest.getReport().layout(layoutReport, "Check " + testName + " layout");
 
         // Add test object to the tests list
         galenTests.add(galenTest);

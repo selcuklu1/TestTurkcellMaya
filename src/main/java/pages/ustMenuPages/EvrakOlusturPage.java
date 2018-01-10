@@ -189,7 +189,7 @@ public class EvrakOlusturPage extends MainPage {
     }
 
     @Step("Kaydet ve onaya sun panelinde gönder butonuna tıkla.")
-    public EvrakOlusturPage kaydetOnayaSunGonder(){
+    public EvrakOlusturPage kaydetOnayaSunGonder() {
         btnKaydetOnayaSunGonder.click();
         return this;
     }
@@ -1296,7 +1296,7 @@ public class EvrakOlusturPage extends MainPage {
         }
 
         @Step("Kendimi ekle linkine tıkla.")
-        public BilgilerTab kendimiEkle(){
+        public BilgilerTab kendimiEkle() {
             aKendimiEkle.click();
             return this;
         }
@@ -1746,7 +1746,7 @@ public class EvrakOlusturPage extends MainPage {
 
         public EkleriTab dosyaYukleneneKadarBekleme(int time, int count) {
 
-            System.out.println("Count:" +  WebDriverRunner.getWebDriver().findElements(By.cssSelector("div[style*='display: block;'] .ui-progressbar-value")).size());
+            System.out.println("Count:" + WebDriverRunner.getWebDriver().findElements(By.cssSelector("div[style*='display: block;'] .ui-progressbar-value")).size());
 
             boolean exists = WebDriverRunner.getWebDriver().findElements(By.cssSelector("div[style*='display: block;'] .ui-progressbar-value"))
                     .size() != 0;

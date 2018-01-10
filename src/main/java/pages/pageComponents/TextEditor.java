@@ -63,7 +63,7 @@ public class TextEditor extends MainPage {
     }
 
     public TextEditor editorTextShouldHave(Condition... condition) {
-        for (Condition con:condition) {
+        for (Condition con : condition) {
             editor().shouldHave(con);
         }
         switchTo().defaultContent();
