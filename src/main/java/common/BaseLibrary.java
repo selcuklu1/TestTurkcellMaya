@@ -961,6 +961,10 @@ public class BaseLibrary extends ElementsContainer {
                 "Underlying driver instance does not support capabilities");
     }
 
+    public int getRandomNumber(int startIndex, int endIndex){
+        return (new Random().nextInt((endIndex - startIndex) + 1) + startIndex);
+    }
+
     //endregion
 
 

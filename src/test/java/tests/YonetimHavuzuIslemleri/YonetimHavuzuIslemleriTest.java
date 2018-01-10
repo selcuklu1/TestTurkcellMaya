@@ -76,7 +76,6 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
     @Test(enabled = true, description = "TS0002 : Yeni yönetim havuzu kayıt")
     public void TS0002() {
 
-
         String yeniBirimAdi = birimYonetimiPage
                 .openPage()
                 .birimOlustur("YAZILIM GELİŞTİRME DİREKTÖRLÜĞ");
@@ -121,7 +120,7 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
     }
 
     @Test(enabled = true, description = "TS0003 : yönetim havuzunu güncelleme")
-    public void TS0009() throws Exception {
+    public void TS0009() {
 
 
         String yeniBirimAdi = birimYonetimiPage
