@@ -27,7 +27,7 @@ public class GelenEvrakKayitPage extends MainPage {
     SelenideElement btnUstYaziEkle = $(By.xpath("//input[@id='evrakBilgileriForm:ustYaziForm:ustYaziUpload_input']"));
     SelenideElement txtEvrakBilgileriListKonuKodu = $("[id$='konuKoduLov:LovText']");
     SelenideElement txtEvrakBilgileriListKonu = $("[[id$='konuTextArea']");
-    SelenideElement cmbEvrakBilgileriListEvrakTuru = $("[id$='evrakTuruCombo']");
+    SelenideElement cmbEvrakBilgileriListEvrakTuru = $("[id^='evrakBilgileriForm:evrakBilgileriList'][id$='evrakTuruCombo']");
     SelenideElement cmbEvrakBilgileriListEvrakDili = $("[id$='evrakDili']");
     SelenideElement dateTxtEvrakBilgileriListEvrakTarihi = $("[id$='evrakTarihi_input']");
     SelenideElement cmbEvrakBilgileriListGizlilikDerecesi = $("[id$='guvenlikKodu']");
@@ -80,7 +80,7 @@ public class GelenEvrakKayitPage extends MainPage {
     SelenideElement txtEvrakEkTabViewArsivdenEvrakAraSayi = $(By.id("evrakBilgileriForm:evrakEkTabView:arsivdenEvrakAraSayiInputTextId"));
 
     // Havale işlemleri sekmesinde bulunanlar
-    ElementsCollection chkOtomatikHavale = $$("[id='evrakBilgileriForm:havalePanel'] [class='ui-chkbox-box ui-widget ui-corner-all ui-state-default']");
+    ElementsCollection chkOtomatikHavale = $$("[id='evrakBilgileriForm:havaleDagitimLovPanel'] [class='ui-chkbox ui-widget'] [class='ui-chkbox-box ui-widget ui-corner-all ui-state-default']");
     SelenideElement cmbPopupOtomatikHavale = $(By.id("evrakBilgileriForm:havaleKuralSelect"));
     SelenideElement txtDagitimBilgileriBirim = $(By.id("evrakBilgileriForm:dagitimBilgileriBirimLov:LovText"));
     BelgenetElement txtDagitimBilgileriKisiComboLov = comboLov(By.id("evrakBilgileriForm:dagitimBilgileriKullaniciLov:LovText"));
@@ -199,7 +199,15 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("Otomatik havale seç")
     public GelenEvrakKayitPage otomatikHavaleSec() {
+        if (chkOtomatikHavale.get(0).shouldBe(visible).exists()==true){
         chkOtomatikHavale.get(0).click();
+        }
+        else{
+            $("[id='evrakBilgileriForm:havaleDagitimLovPanel'] [class='ui-chkbox ui-widget'] [class='ui-chkbox-box ui-widget ui-corner-all ui-state-default ui-state-active']").click();
+            //$("[id='evrakBilgileriForm:havaleDagitimLovPanel'] [class='ui-chkbox ui-widget'] input[type='checkbox']").setSelected(false);
+            sleep(7000);
+            chkOtomatikHavale.get(0).click();
+        }
         return this;
     }
 
