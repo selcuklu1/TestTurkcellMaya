@@ -111,7 +111,7 @@ public class DataTest extends BaseTest {
         evrakOlustur
                 .ekleriTabAc()
                 .ekleriDosyaEkle(filePath)
-                .ekleriDosyaAciklamaDoldur(ekleriDosyaAciklama)
+                .ekleriEkMetniDoldur(ekleriDosyaAciklama)
                 .ekleriEkle()
                 .imzala()
                 .popupImzalaVeEvrakKapatma();

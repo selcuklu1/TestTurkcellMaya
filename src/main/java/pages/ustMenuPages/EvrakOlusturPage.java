@@ -1,9 +1,6 @@
 package pages.ustMenuPages;
 
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.*;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -1594,6 +1591,7 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement btnEkleriDosyaEkle = $(By.id("yeniGidenEvrakForm:evrakEkTabView:dosyaEkleButton"));
         SelenideElement btnEkleriDosyaTemizle = $(By.id("yeniGidenEvrakForm:evrakEkTabView:dosyaTemizleButton"));
         SelenideElement chkEkListesiniEkYap = $(By.id("yeniGidenEvrakForm:j_idt30306"));
+        SelenideElement btnDosyaEkle = $(By.xpath("//input[@id='yeniGidenEvrakForm:evrakEkTabView:fileUploadButtonA_input']"));
 
         //Ekleri tabı - Fiziksel Ekle
         SelenideElement txtEkleriFizikselMetni = $(By.id("yeniGidenEvrakForm:evrakEkTabView:aciklamaTextArea"));
@@ -1633,8 +1631,8 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Ekleri Tab - Açıklama")
-        public EkleriTab ekleriDosyaAciklamaDoldur(String aciklama) {
+        @Step("Ekleri Tab - Ek Metni")
+        public EkleriTab ekleriEkMetniDoldur(String aciklama) {
             txtEkleriDosyaAciklama.sendKeys(aciklama);
             return this;
         }
@@ -1727,6 +1725,27 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Dosya ekle {description} : {pathPDF}")
+        public EkleriTab dosyaEkle(String pathPDF, String description) {
+
+            uploadFile(btnDosyaEkle, pathPDF);
+
+            return this;
+        }
+
+        public EkleriTab dosyaYukleneneKadarBekleme(int time, int count) {
+
+            System.out.println("Count:" +  WebDriverRunner.getWebDriver().findElements(By.cssSelector("div[style*='display: block;'] .ui-progressbar-value")).size());
+
+            boolean exists = WebDriverRunner.getWebDriver().findElements(By.cssSelector("div[style*='display: block;'] .ui-progressbar-value"))
+                    .size() != 0;
+            if (exists && count > 0) {
+                count--;
+                dosyaYukleneneKadarBekleme(500, count);
+            }
+
+            return this;
+        }
     }
 
     public class IlgileriTab extends MainPage {

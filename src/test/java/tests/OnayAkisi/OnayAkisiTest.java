@@ -239,8 +239,8 @@ public class OnayAkisiTest extends BaseTest {
         String onayAkisi = "Sezaiii Çelikkk";
         String kullanici = "Zübeyde TEKİN";
         String eklenenKullanici1 = "Optiim TEST3";
-        String eklenenKullanici2 = "MEHMET EMİN YÜCEANT";
-        String ayniBirimliKullanici = "OPTİİM TEST4";
+        String eklenenKullanici2 = "Mehmet Emin YÜCEANT";
+        String ayniBirimliKullanici = "Optiim TEST4";
         String basariMesaji = "İşlem başarılıdır!";
 
         //tests.Data kontrolu için yazıldı. Pasif ise aktif yapılır.
@@ -619,7 +619,7 @@ public class OnayAkisiTest extends BaseTest {
         String onayAkisi = "ÇelikSezai" + getSysDate();
         String defaultGelenKullanici = "Optiim TEST";
         String kullanici2 = "Sezai ÇELİK";
-        String kullanici3 = "MEHMET EMİN YÜCEANT";
+        String kullanici3 = "Mehmet Emin YÜCEANT";
         String kullanici4 = "Zübeyde TEKİN";
         String kullanici5 = "MEHMET BAYER"; //birim dışı kullanıcı
         String dikkatMesaji1 = "Onay akışındaki kullanıcıların yapacağı işlemi seçiniz.";
@@ -689,7 +689,7 @@ public class OnayAkisiTest extends BaseTest {
         String kullanici1 = "Optiim TEST"; //parafçı
         String kullanici2 = "Zübeyde TEKİN"; //koordineci
         String kullanici3 = "Sezai ÇELİK"; //kontrolcu
-        String kullanici4 = "MEHMET EMİN YÜCEANT"; //imzacı
+        String kullanici4 = "Mehmet Emin YÜCEANT"; //imzacı
         String eklenecekYeniKullanici = "Mehmet BOZDEMİR";
 
         evrakOlusturPage
