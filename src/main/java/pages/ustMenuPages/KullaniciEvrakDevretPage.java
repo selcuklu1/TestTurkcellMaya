@@ -141,7 +141,7 @@ public class KullaniciEvrakDevretPage extends MainPage {
             String txt =clearTurkishChars(tabText);
             System.out.println(txt);
             tab.click();
-            ElementsCollection tblTab = $$("[id='kullaniciEvrakDevretForm:evrakDevretAccordionPanelId:devir" + tabText + "_data'] tr[data-ri]");
+            ElementsCollection tblTab = $$("[id='kullaniciEvrakDevretForm:evrakDevretAccordionPanelId:devir" + txt + "_data'] tr[data-ri]");
             for (int j = 0; j < tblTab.size(); j++) {
                 tblTab.get(j)
                         .$("div[class='ui-chkbox-box ui-widget ui-corner-all ui-state-default']")
