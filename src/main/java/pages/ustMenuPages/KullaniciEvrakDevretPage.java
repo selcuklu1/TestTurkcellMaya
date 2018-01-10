@@ -1,7 +1,9 @@
 package pages.ustMenuPages;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import com.sun.javafx.scene.layout.region.Margins;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -9,8 +11,14 @@ import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.UstMenuData;
 
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
+import java.text.Normalizer;
+import java.util.Locale;
+
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
+import static java.text.Normalizer.Form.NFD;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
 public class KullaniciEvrakDevretPage extends MainPage {
@@ -110,9 +118,47 @@ public class KullaniciEvrakDevretPage extends MainPage {
         $x("//h3[.='Teslim Aldıklarım']").shouldBe(visible);
         $x("//h3[.='Kapatma İmzasi Bekleyenler']").shouldBe(visible);
         $x("//h3[.='Kapatma Parafı Bekleyenler']").shouldBe(visible);
-        btnDevret.shouldBe(visible);
+        btnListele.shouldBe(visible);
+        btnDevret.shouldNotBe(enabled);
 
         return this;
+    }
+
+
+    @Step("")
+    public KullaniciEvrakDevretPage tabloAlanKontrolleri()  {
+        String tabText ="";
+        ElementsCollection tblgenel = $$(By.id("'kullaniciEvrakDevretForm:evrakDevretAccordionPanelId'"));
+
+        for (int i = 2; i < 11; i++) {
+            SelenideElement tab = $x("//div[@id='kullaniciEvrakDevretForm:evrakDevretAccordionPanelId']/h3[" + i + "]/a");
+            tabText = tab.text();
+            tabText = tabText.replaceAll("\\s+", "");
+
+            String txt =clearTurkishChars(tabText);
+            System.out.println(txt);
+            tab.click();
+            ElementsCollection tblTab = $$("[id='kullaniciEvrakDevretForm:evrakDevretAccordionPanelId:devir" + tabText + "_data'] tr[data-ri]");
+            for (int j = 0; j < tblTab.size(); j++) {
+                tblTab.get(j)
+                        .$("div[class='ui-chkbox-box ui-widget ui-corner-all ui-state-default']")
+                        .shouldBe(Condition.visible);
+                tblTab.get(j)
+                        .$("button[id^='kullaniciEvrakDevretForm:evrakDevretAccordionPanelId:devirTaslakEvraklar:" + j + ":j_idt'")
+                        .shouldBe(Condition.visible);
+            }
+        }
+        return this;
+    }
+
+    public static String clearTurkishChars(String str) {
+        String ret = str;
+        char[] turkishChars = new char[]{0x131, 0x130, 0xFC, 0xDC, 0xF6, 0xD6, 0x15F, 0x15E, 0xE7, 0xC7, 0x11F, 0x11E};
+        char[] englishChars = new char[]{'i', 'I', 'u', 'U', 'o', 'O', 's', 'S', 'c', 'C', 'g', 'G'};
+        for (int i = 0; i < turkishChars.length; i++) {
+            ret = ret.replaceAll(new String(new char[]{turkishChars[i]}), new String(new char[]{englishChars[i]}));
+        }
+        return ret;
     }
 
     @Step("Tablo Evrak Seçimi : {konu}")

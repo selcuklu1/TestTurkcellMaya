@@ -616,5 +616,11 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Birimler menüsünde \"{birim}\" biriminin geldiği görülür.")
+    public GelenEvraklarPage birimKontol(String birim){
+        $$("#leftMenuForm #birimlerimMenusuContainer a")
+                .filterBy(Condition.text(birim)).shouldHaveSize(1);
+        return this;
+    }
 
 }

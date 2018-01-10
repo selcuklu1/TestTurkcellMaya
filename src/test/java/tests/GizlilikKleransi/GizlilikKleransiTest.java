@@ -1146,12 +1146,13 @@ public class GizlilikKleransiTest extends BaseTest {
 
         kullaniciEvrakDevretPage
                 .openPage()
+                .ekranTabKontrolleri()
                 .devredecekKisiSec("Yasemin Çakıl")
-                .listele()
-                .islemMesaji().basariliOlmali(basariMesaji);
+                .listele();
+//                .islemMesaji().basariliOlmali(basariMesaji);
 
         kullaniciEvrakDevretPage
-                .ekranTabKontrolleri()
+                .tabloAlanKontrolleri()
                 .tabloEvrakSecimi(text)
                 .devret()
                 .devralacakKisiAlanKontolu()

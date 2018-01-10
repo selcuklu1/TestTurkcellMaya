@@ -5,6 +5,7 @@ import common.BaseTest;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
+import org.apache.xmlbeans.impl.xb.xsdschema.All;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.MainPage;
@@ -143,7 +144,7 @@ public class VekaletIslemleriTest extends BaseTest {
 //                .filtreleAc()
 //                .tarihiDoldur(getSysDateForKis())
                 .tablodanOnaylanacakKayıtSec(aciklama)
-                .alanKontrolleri(vekaletVeren, vekaletAlan, getSysDateForKis(),aciklama)
+                .alanKontrolleri(vekaletVeren, vekaletAlan, getSysDateForKis(), aciklama)
                 .ekleyeceginizNotlarDoldur(redNedeni)
                 .reddet();
 
@@ -167,16 +168,16 @@ public class VekaletIslemleriTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, priority = 3, description = "TS2208 : Onaya göndererek Vekalet Verme işleminde onayın kabul edilmesi")
     public void TS2208() throws InterruptedException {
-        Allure.addAttachment("Test Datası","Test Datası oluşturuluyor.");
+//        Allure.addAttachment("Test Datası", "Test Datası oluşturuluyor.");
         TS0025a();
-        Allure.addAttachment("Test Datası","Test Datası oluşturuldu.");
+//        Allure.addAttachment("Test Datası", "Test Datası oluşturuldu.");
 
         login(username2, password2);
 
 //        String aciklama = "onay 20180109134612 evrak";
         vekaletOnaylariPage
                 .openPage()
-                .tablodanOnaylanacakKayıtKontrolu(vekaletVeren, vekaletAlan, getSysDateForKis(),aciklama)
+                .tablodanOnaylanacakKayıtKontrolu(vekaletVeren, vekaletAlan, getSysDateForKis(), aciklama)
                 .tablodanOnaylanacakKayıtSec(aciklama)
                 .onayEvrakiKontrol()
                 .detay()
@@ -219,8 +220,10 @@ public class VekaletIslemleriTest extends BaseTest {
 
         gelenEvraklarPage
                 .openPage()
-                .birimSec(Condition.text("Vekalet"));
-//                .islemMesaji().basariliOlmali(basariMesaji);
+                .birimKontol("Vekalet "+vekaletVeren+" - "+geregi+" - "+getSysDateForKis()+" - "+getSysDateForKis())
+                .birimSec(Condition.text("Vekalet"))
+                .takeScreenshot();
+        //                .islemMesaji().basariliOlmali(basariMesaji);
 
         gelenEvraklarPage
                 .openPage()
