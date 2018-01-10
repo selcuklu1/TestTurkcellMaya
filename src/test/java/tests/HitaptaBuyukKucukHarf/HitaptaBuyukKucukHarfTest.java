@@ -139,7 +139,11 @@ public class HitaptaBuyukKucukHarfTest extends BaseTest {
     }
 
     @Test(description = "TS2090: Dağıtım planına ve kullanıcıya hitap")
-    public void testName() throws Exception {
+    public void TS2090() throws Exception {
+
+        //Dağıtım planına ve kullanıcıya hitap
+
+
         //sistemde kayıtlı dağıtım planı olmalı, dağıtım planının içeriğinde küçük harfli birim, büyük harfli kurum olmalı
 
 //        DAĞITIM YERLERİNE

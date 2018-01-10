@@ -39,10 +39,10 @@ public class PulYonetimiPage extends MainPage {
     }
 
     @Step("Yeni Pul ekle")
-    public PulYonetimiPage yeniPulEkle() {
+        public PulYonetimiPage yeniPulEkle() {
 //        btnAddNewPul.click();
-        clickJs(btnAddNewPul);
-        return this;
+            clickJs(btnAddNewPul);
+            return this;
     }
     @Step("Alan Kontrolleri")
     public PulYonetimiPage alanKontrolleri() {

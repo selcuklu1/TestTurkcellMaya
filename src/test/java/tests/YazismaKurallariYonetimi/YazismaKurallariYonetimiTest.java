@@ -55,21 +55,35 @@ public class YazismaKurallariYonetimiTest extends BaseTest {
     public void TS01957_C() {
 
         String basariMesaj = "İşlem başarılıdır!";
-        String guncellenecekBirimadi = "Diğer Birimler";
-        String yeniBirimAdi = "Belde Belediyesi";
+        String birimAdi = "Diğer Birimler";
         Boolean sinirsizYazilabilir = true;
         Boolean vekaletSeviyesi = true;
         Boolean sonImzaSeviyesi = false;
 
         yazismaKurallariYonetimiPage
                 .openPage()
-                .yazismaKuraliGuncelle(guncellenecekBirimadi)
+                .yazismaKurallariEkle()
+                .birimTipiSec(birimAdi)
+                .tiklaSinirsizYazilabilir(sinirsizYazilabilir)
+                .tiklaVekaletSeviyesi(vekaletSeviyesi)
+                .tiklaSonImzaSeviyesi(sonImzaSeviyesi)
+                .grupBirimTipleriKaydet()
+                .yazismakurallariKontrolEt(birimAdi, true, sinirsizYazilabilir, vekaletSeviyesi, sonImzaSeviyesi)
+                .islemMesaji().basariliOlmali(basariMesaj);
+
+        String yeniBirimAdi = "Belde Belediyesi";
+        sinirsizYazilabilir = true;
+        vekaletSeviyesi = true;
+        sonImzaSeviyesi = false;
+
+        yazismaKurallariYonetimiPage
+                .yazismaKuraliGuncelle(birimAdi)
                 .birimTipiSec(yeniBirimAdi)
                 .tiklaSinirsizYazilabilir(sinirsizYazilabilir)
                 .tiklaVekaletSeviyesi(vekaletSeviyesi)
                 .tiklaSonImzaSeviyesi(sonImzaSeviyesi)
                 .grupBirimTipleriKaydet()
-                .yazismakurallariKontrolEt(guncellenecekBirimadi, true, sinirsizYazilabilir, vekaletSeviyesi, sonImzaSeviyesi)
+                .yazismakurallariKontrolEt(yeniBirimAdi, true, sinirsizYazilabilir, vekaletSeviyesi, sonImzaSeviyesi)
                 .islemMesaji().basariliOlmali(basariMesaj);
 
     }
