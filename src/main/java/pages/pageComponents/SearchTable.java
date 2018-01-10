@@ -211,7 +211,7 @@ public class SearchTable {
      * @param conditions
      * @return
      */
-    @Step("Arama tablosunda kolonlara göre satırları ara")
+    @Step("Tabloda kolonlara göre satırları ara")
     public ElementsCollection findRows(Condition... conditions) {
         ElementsCollection rows = getFilteredRows(conditions);
         Allure.addAttachment("Filtereye göre bulunan satırlar", rows.texts().toString());
@@ -232,7 +232,7 @@ public class SearchTable {
      * @param conditions
      * @return
      */
-    @Step("Arama tablosunda kolon tekste göre satırları ara")
+    @Step("Tabloda kolon tekste göre satırları ara")
     public ElementsCollection findRows(int columnIndex, Condition... conditions) {
         String columnName = getColumnName(columnIndex);
         return getFilteredRows(columnIndex, conditions);
@@ -252,7 +252,7 @@ public class SearchTable {
      * @param conditions
      * @return
      */
-    @Step("Arama tablosunda kolon tekste göre satırları ara")
+    @Step("Tabloda kolon tekste göre satırları ara")
     public ElementsCollection findRows(String columnName, Condition... conditions) {
         int columnIndex = getColumnIndex(columnName);
         return getFilteredRows(columnIndex, conditions);
@@ -265,7 +265,7 @@ public class SearchTable {
         return filtered;
     }
 
-    @Step("Arama tablosunda tekste göre satırları ara")
+    @Step("Tabloda tekste göre satırları ara")
     public ElementsCollection findRowsByText(String... texts) {
         ElementsCollection filtered = getFilteredRows(texts);
         Allure.addAttachment("Filtereye göre bulunan satırlar", filtered.texts().toString());
@@ -286,7 +286,7 @@ public class SearchTable {
      * @param texts
      * @return
      */
-    @Step("Arama tablosunda tüm sayfalarda ara")
+    @Step("Tabloda tüm sayfalarda ara")
     public ElementsCollection findRowsInAllPagesByText(String... texts) {
         while (true) {
             ElementsCollection filtered = getFilteredRows(texts);
@@ -312,7 +312,7 @@ public class SearchTable {
      * @param conditions
      * @return
      */
-    @Step("Arama tablosunda tüm sayfalarda ara")
+    @Step("Tabloda tüm sayfalarda ara")
     public ElementsCollection findRowsInAllPages(Condition... conditions) {
         while (true) {
             ElementsCollection filtered = getFilteredRows(conditions);
@@ -338,7 +338,7 @@ public class SearchTable {
      * @param conditions
      * @return
      */
-    @Step("Arama tablosunda tüm sayfalarda ara")
+    @Step("Tabloda tüm sayfalarda ara")
     public ElementsCollection findRowsInAllPages(int columnIndex, Condition... conditions) {
         while (true) {
             ElementsCollection filtered = getFilteredRows(columnIndex, conditions);
@@ -364,7 +364,7 @@ public class SearchTable {
      * @param conditions
      * @return
      */
-    @Step("Arama tablosunda tüm sayfalarda ara")
+    @Step("Tabloda tüm sayfalarda ara")
     public ElementsCollection findRowsInAllPages(String columnName, Condition... conditions) {
         while (true) {
             ElementsCollection filtered = getFilteredRows(columnName, conditions);
