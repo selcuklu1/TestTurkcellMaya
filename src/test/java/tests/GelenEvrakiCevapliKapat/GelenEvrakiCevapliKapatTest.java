@@ -6,6 +6,7 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import pages.altMenuPages.CevapYazPage;
 import pages.altMenuPages.EvrakDetayiPage;
 import pages.pageComponents.TextEditor;
 import pages.solMenuPages.*;
@@ -29,7 +30,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
     GelenEvraklarPage gelenEvraklarPage;
     EvrakOlusturPage evrakOlusturPage;
     EvrakDetayiPage evrakDetayiPage;
-    GelenEvraklarCevapYazPage gelenEvraklarCevapYazPage;
+    CevapYazPage cevapYazPage;
     KontrolBekleyenlerPage kontrolBekleyenlerPage;
     CevapladiklarimPage cevapladiklarimPage;
     KlasoreKaldirdiklarimPage klasoreKaldirdiklarimPage;
@@ -56,7 +57,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
         postalanacakEvraklarPage = new PostalanacakEvraklarPage();
         postalananlarPage = new PostalananlarPage();
         imzaBekleyenlerPage = new ImzaBekleyenlerPage();
-        gelenEvraklarCevapYazPage = new GelenEvraklarCevapYazPage();
+        cevapYazPage = new CevapYazPage();
         editor = new TextEditor();
     }
 
@@ -318,10 +319,10 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .ikonKontrolleri()
                 .cevapYaz();
 
-        gelenEvraklarCevapYazPage
+        cevapYazPage
                 .sayfaAcilmali();
 
-        gelenEvraklarCevapYazPage
+        cevapYazPage
                 .geregiKontrolu(tuzelKisi)
                 .konuAlaniKontrolu(konuKodu2)
                 .editorTabAc()
@@ -330,7 +331,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
         editor
                 .type("Bu bir text yazısıdır.");
 
-        gelenEvraklarCevapYazPage
+        cevapYazPage
                 .bilgilerTabAc()
                 .kaldirilacakKlasorlerDoldur(kaldirilacakKlasorler)
                 .onayAkisiDoldur(onayAkisi)

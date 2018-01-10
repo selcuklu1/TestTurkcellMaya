@@ -419,8 +419,8 @@ public class BirimIcerikSablonuTest extends BaseTest {
                 .onayAkisiEkleButonaTikla()
                 .onayAkisiKullanicilarSec(ztekin.getName())
 //                .onayAkisiKullaniciTipiSec("Optiim TEST [Ağ (Network) Uzman Yardımcısı]", "Paraflama")
-                .onayAkisiKullaniciTipiSec(optiim.getName(), "Paraflama")
-                .onayAkisiKullaniciTipiSec(ztekin.getName(), "İmzalama")
+                .onayAkisiKullanicininTipiSec(optiim.getName(), "Paraflama")
+                .onayAkisiKullanicininTipiSec(ztekin.getName(), "İmzalama")
                 .kullanButonaTikla();
 //                .onayAkisiTitleKontrol("Yeni akış")
 //                .onayAkisiDetailKontrol(user1.getName() + "-Paraflama / " + user2.getName() + "-İmzalama");
