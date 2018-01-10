@@ -14,7 +14,7 @@ import pages.pageData.UstMenuData;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
-import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
+import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 /****************************************************
  * Tarih: 2017-11-23

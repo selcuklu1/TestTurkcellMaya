@@ -13,7 +13,7 @@ import pages.pageData.alanlar.*;
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
-import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
+import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 //import static com.codeborne.selenide.Selenide.$$;
 
@@ -26,15 +26,9 @@ public class BilgilerTab extends MainPage {
 
     final static String tabName = "Bilgileri";
 
-    SelenideElement tab = $x("//td[contains(@class,'tabMenuContainer') and descendant::span[contains(@class,'tabMenu') and text()='" + tabName + "']]//button");
-
-
     @Step(tabName + " tabı aç")
     public BilgilerTab openTab(boolean... clickIfOpen) {
-        SelenideElement tab = $x("//td[contains(@class,'tabMenuContainer') and descendant::span[contains(@class,'tabMenu') and text()='Bilgileri']]");
-
-        if (clickIfOpen.length > 0 || !tab.attr("class").equals("tabMenuContainerSelected"))
-            tab.$("button").click();
+        SelenideElement tab = $x("//td[contains(@class,'tabMenuContainer') and descendant::span[contains(@class,'tabMenu') and text()='" + tabName + "']]");
 
         if (clickIfOpen.length > 0 || !tab.attr("class").equals("tabMenuContainerSelected"))
             tab.$("button").click();

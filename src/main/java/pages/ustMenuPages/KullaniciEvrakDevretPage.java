@@ -18,9 +18,14 @@ import java.text.Normalizer;
 import java.util.Locale;
 
 import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Selenide.*;
+
+import static com.codeborne.selenide.Selenide.$$;
 import static java.text.Normalizer.Form.NFD;
-import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
+import static pages.pageComponents.belgenetElements.Belgenet.$;
+
+import static pages.pageComponents.belgenetElements.Belgenet.$x;
+import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
+
 
 public class KullaniciEvrakDevretPage extends MainPage {
 

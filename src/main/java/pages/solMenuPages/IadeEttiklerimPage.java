@@ -11,7 +11,7 @@ import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
-import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
+import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 public class IadeEttiklerimPage extends MainPage {
     ElementsCollection tblEvrak = $$("[id^='mainInboxForm:inboxDataTable_data'] > tr[role='row']");

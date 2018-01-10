@@ -13,7 +13,8 @@ import pages.pageData.SolMenuData;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
-import static pages.pageComponents.belgenetElements.BelgenetFramework.comboBox;
+import static pages.pageComponents.belgenetElements.Belgenet.comboBox;
+
 
 public class TopluPostaladiklarimPage extends MainPage {
 

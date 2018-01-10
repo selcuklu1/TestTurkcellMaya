@@ -14,8 +14,8 @@ import pages.pageData.SolMenuData;
 import java.util.Arrays;
 
 import static com.codeborne.selenide.Selenide.*;
-import static pages.pageComponents.belgenetElements.BelgenetFramework.comboBox;
-import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
+import static pages.pageComponents.belgenetElements.Belgenet.comboBox;
+import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 public class TopluPostalanacakEvraklarPage extends MainPage {
 

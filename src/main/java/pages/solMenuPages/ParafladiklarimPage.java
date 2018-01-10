@@ -11,7 +11,7 @@ import pages.pageComponents.belgenetElements.BelgenetElement;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
-import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
+import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 import static pages.pageData.SolMenuData.IslemYaptiklarim;
 
 public class ParafladiklarimPage extends MainPage {

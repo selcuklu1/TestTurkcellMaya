@@ -12,8 +12,8 @@ import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Selenide.*;
-import static pages.pageComponents.belgenetElements.BelgenetFramework.comboBox;
-import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
+import static pages.pageComponents.belgenetElements.Belgenet.comboBox;
+import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 /****************************************************
  * Tarih: 2017-12-22
