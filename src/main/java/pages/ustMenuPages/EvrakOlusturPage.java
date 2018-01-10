@@ -1603,6 +1603,8 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement btnEkleriDosyaTemizle = $(By.id("yeniGidenEvrakForm:evrakEkTabView:dosyaTemizleButton"));
         SelenideElement chkEkListesiniEkYap = $(By.id("yeniGidenEvrakForm:j_idt30306"));
         SelenideElement btnDosyaEkle = $(By.xpath("//input[@id='yeniGidenEvrakForm:evrakEkTabView:fileUploadButtonA_input']"));
+        SelenideElement lblDosyaAdi = $(By.id("yeniGidenEvrakForm:evrakEkTabView:dosyaAdi"));
+
 
         //Ekleri tabı - Fiziksel Ekle
         SelenideElement txtEkleriFizikselMetni = $(By.id("yeniGidenEvrakForm:evrakEkTabView:aciklamaTextArea"));
@@ -1630,6 +1632,7 @@ public class EvrakOlusturPage extends MainPage {
 
         SelenideElement btnImzala = $("button[id^='yeniGidenEvrakForm:rightTab:uiRepeat'] span[class$='imzala']");
 
+        @Step("Ekleri Tabını aç")
         private EkleriTab open() {
             tabEkleri.click();
             return this;
@@ -1744,19 +1747,18 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        public EkleriTab dosyaYukleneneKadarBekleme(int time, int count) {
+        @Step("Dosya yüklenene kadar 60 dk bekle, 60 dktan fazla sürerse timeout hatası ver")
+        public EkleriTab dosyaYukleneneKadarBekle() {
 
+            waitForLoadingJS(WebDriverRunner.getWebDriver(), 60);
 
-            //waitForLoadingJS2(WebDriverRunner.getWebDriver());
-            System.out.println("   Sezai ............................. ");
-            /*            System.out.println("Count:" +  WebDriverRunner.getWebDriver().findElements(By.cssSelector("div[style*='display: block;'] .ui-progressbar-value")).size());
+            return this;
+        }
 
-            boolean exists = WebDriverRunner.getWebDriver().findElements(By.cssSelector("div[style*='display: block;'] .ui-progressbar-value"))
-                    .size() != 0;
-            if (exists && count > 0) {
-                count--;
-                dosyaYukleneneKadarBekleme(500, count);
-            }*/
+        @Step("Eklenen dosya adi kontrol : {dosyaAdi}")
+        public EkleriTab eklenenDosyaAdiKontrol(String dosyaAdi) {
+
+            Assert.assertEquals(lblDosyaAdi.getText().contains(dosyaAdi), true);
 
             return this;
         }

@@ -308,7 +308,7 @@ public class KararYazisiOlusturPage extends MainPage {
             }
 
             comboLov(cmbOnayAkisiBy).type(onayAkisi).getTitleItems().filterBy(exactText(onayAkisi)).shouldHaveSize(0);
-            comboLov(cmbOnayAkisiBy).closeTreePanel();
+            //comboLov(cmbOnayAkisiBy).closeTreePanel();
             System.out.println("MyCombolov alanında " + onayAkisi + ": Onay Akışın görüntülenmediği görülür.");
 
             return this;
