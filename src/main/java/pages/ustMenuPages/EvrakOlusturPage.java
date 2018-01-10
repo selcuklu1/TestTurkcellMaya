@@ -1735,14 +1735,17 @@ public class EvrakOlusturPage extends MainPage {
 
         public EkleriTab dosyaYukleneneKadarBekleme(int time, int count) {
 
-            System.out.println("Count:" +  WebDriverRunner.getWebDriver().findElements(By.cssSelector("div[style*='display: block;'] .ui-progressbar-value")).size());
+
+            //waitForLoadingJS2(WebDriverRunner.getWebDriver());
+            System.out.println("   Sezai ............................. ");
+            /*            System.out.println("Count:" +  WebDriverRunner.getWebDriver().findElements(By.cssSelector("div[style*='display: block;'] .ui-progressbar-value")).size());
 
             boolean exists = WebDriverRunner.getWebDriver().findElements(By.cssSelector("div[style*='display: block;'] .ui-progressbar-value"))
                     .size() != 0;
             if (exists && count > 0) {
                 count--;
                 dosyaYukleneneKadarBekleme(500, count);
-            }
+            }*/
 
             return this;
         }
