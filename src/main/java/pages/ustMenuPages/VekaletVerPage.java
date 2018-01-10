@@ -10,7 +10,7 @@ import pages.pageData.UstMenuData;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
-import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
+import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 public class VekaletVerPage extends MainPage {
 
@@ -196,9 +196,9 @@ public class VekaletVerPage extends MainPage {
         return this;
     }
 
-    @Step("Vekalet Listesi red  nedeni tablo kontrolü : \"{retNedeni}\" ")
-    public VekaletVerPage vekaletListesiTabloKontrol(int column, String retNedeni) {
-        boolean status = findElementOnTableByColumnInputInAllPages(tblVekaletListesi2, column, retNedeni).isDisplayed();
+    @Step("Vekalet Listesi statü tablo kontrolü : \"{statu}\" ")
+    public VekaletVerPage vekaletListesiTabloKontrol(int column, String statu) {
+        boolean status = findElementOnTableByColumnInputInAllPages(tblVekaletListesi2, column, statu).isDisplayed();
         Assert.assertEquals(status, true);
         return this;
     }

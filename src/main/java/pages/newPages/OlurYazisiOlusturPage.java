@@ -1,13 +1,13 @@
 package pages.newPages;
 
 import com.codeborne.selenide.SelenideElement;
-import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Step;
 import org.openqa.selenium.support.FindBy;
 import pages.MainPage;
 import pages.pageComponents.TextEditor;
 import pages.pageComponents.UstMenuPageHeader;
 import pages.pageComponents.tabs.BilgilerTab;
+import pages.pageComponents.tabs.EkleriTab;
 import pages.pageData.UstMenuData;
 
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
@@ -68,6 +68,11 @@ public class OlurYazisiOlusturPage extends MainPage {
             $$("#DOnayDivToolbar span.cke_toolbar a[id*=cke]").shouldHave(sizeGreaterThan(0));
             return this;
         }
+    }
+
+    @Step("")
+    public EkleriTab ekleriTabAc(){
+        return new EkleriTab($("[id='yeniOnayEvrakForm']")).openTab();
     }
 
 }

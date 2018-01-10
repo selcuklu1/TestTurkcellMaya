@@ -12,8 +12,8 @@ import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Selenide.*;
-import static pages.pageComponents.belgenetElements.BelgenetFramework.comboBox;
-import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
+import static pages.pageComponents.belgenetElements.Belgenet.comboBox;
+import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 /****************************************************
  * Tarih: 2017-12-22
@@ -30,6 +30,7 @@ public class PostaListesiPage extends MainPage {
     SelenideElement btnPostala = $(By.id("mainInboxForm:inboxDataTable:j_idt726"));
     SelenideElement tblIlkRow = $(By.xpath("//tbody[@id='mainInboxForm:inboxDataTable_data']/tr[@data-ri='0']"));
     BelgenetElement cmbGidisSekli = comboBox(By.id("mainPreviewForm:postaListesiPostaTipi_label"));
+    BelgenetElement cmbGonderildigiKurum = comboLov(By.id("mainPreviewForm:tpbeGonderildigiKurumLovId:LovSecilen"));
     BelgenetElement cmbGonderildigiYer = comboBox(By.id("mainPreviewForm:postaListesiYurticiYurtdisi_label"));
     SelenideElement txtGramaj = $(By.xpath("//*[@id='mainPreviewForm:eastLayout']//label[normalize-space(text())='Gramaj :']/../..//input"));//$(By.id("mainPreviewForm:j_idt2574"));
     SelenideElement btnHesapla = $x("//span[. = 'Tutar Hesapla']/..");
@@ -130,6 +131,15 @@ public class PostaListesiPage extends MainPage {
         return this;
     }
 
+    @Step("Gonderildiği Yeri \"{gonderildigiYer}\" seç")
+    public PostaListesiPage gonderildigiKurumKontrolu(String gonderildigiYer,boolean shouldBeEquals) {
+        if (shouldBeEquals == true)
+            cmbGonderildigiKurum.getSelectedTitles().first().shouldBe(Condition.text(gonderildigiYer));
+        else
+            cmbGonderildigiKurum.getSelectedTitles().first().shouldNotHave(Condition.text(gonderildigiYer));
+        return this;
+    }
+
     @Step("Gramaj alanını doldur : \"{gramaj}\" ")
     public PostaListesiPage gramajDoldur(String gramaj) {
         setValueJS(txtGramaj, gramaj);
@@ -192,6 +202,15 @@ public class PostaListesiPage extends MainPage {
         txtPostaListesiAdi.shouldBe(Condition.text(postaListesiAdi));
         return this;
     }
+
+    @Step("Barkod No girilir. \"{barkodNo}\" ")
+    public PostaListesiPage postaListesiBarkodNoDoldur(String barkodNo) {
+        SelenideElement txtBarkoNo = $("[id='mainPreviewForm:eastLayout'] table tr:nth-child(1) input");
+        txtBarkoNo.clear();
+        txtBarkoNo.sendKeys(barkodNo);
+        return this;
+    }
+
 
     @Step("Posta Listesi Adı alanı değiştirilir. \"{postaListesiAdi}\" ")
     public PostaListesiPage postaListesiAdiDegistirme(String postaListesiAdi) {
@@ -436,7 +455,7 @@ public class PostaListesiPage extends MainPage {
         return this;
     }
 
-    @Step("Tutar alaninda \"{indirimOrani}\" değeri olmalı mı? : \"{shouldBeEquals}\" ")
+    @Step("İndirim Oranı alaninda \"{indirimOrani}\" değeri olmalı mı? : \"{shouldBeEquals}\" ")
     public PostaListesiPage indirimOraniKontrol(String indirimOrani, boolean shouldBeEquals) {
         txtIndirimOrani.text();
         if (shouldBeEquals == true)
@@ -476,11 +495,11 @@ public class PostaListesiPage extends MainPage {
                     .get(i)
                     .$x("//span[text() = 'Yazdır']/../../button").click();
             evrakDetayiPopUpKontrolü();
-            evrakDetayiYazdır();
+            evrakDetayiYazdır(konu[i]);
             switchTo().window(1);
             closeNewWindow();
             switchTo().window(0);
-            $(By.xpath("//div[@id='mainPreviewForm:evrakDetayiViewDialog']//span[@class='ui-icon ui-icon-closethick']")).clear();
+            $(By.xpath("//div[@id='mainPreviewForm:evrakDetayiViewDialog']//span[@class='ui-icon ui-icon-closethick']")).click();
 
 //            pdfKontrol
 //                    .geregiBilgiAlaniAdresPdfKontrol(konu[0]);
@@ -489,15 +508,16 @@ public class PostaListesiPage extends MainPage {
         return this;
     }
 
-    @Step("Etiket bastır ekranı kapama")
+    @Step("Evrak Detayı popup kontrolü")
     public PostaListesiPage evrakDetayiPopUpKontrolü() {
         popUpEvrakDetayi.shouldBe(Condition.visible);
         return this;
     }
 
-    @Step("Etiket bastır ekranı kapama")
-    public PostaListesiPage evrakDetayiYazdır() {
-        tblEvrakDetayi.first()
+    @Step("Evrak Detayı Yazdır butonu")
+    public PostaListesiPage evrakDetayiYazdır(String konu) {
+        tblEvrakDetayi.filterBy(Condition.text(konu))
+                .first()
                 .$("[id$='evrakDetayiViewDialogYazdir']").click();
         return this;
     }

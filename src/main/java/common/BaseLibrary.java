@@ -233,11 +233,8 @@ public class BaseLibrary extends ElementsContainer {
         this.waitForLoading = waitForLoading;
     }
 
-    public void waitForLoadingJS(WebDriver driver) {
-//        long timeout = Configuration.timeout / 1000;
-        long timeout = getWaitForLoading();
-//        long timeout = 20;
-        new WebDriverWait(driver, timeout, 10).until(driver1 ->
+    public void waitForLoadingJS(WebDriver driver, long timeoutSec) {
+        new WebDriverWait(driver, timeoutSec, 10).until(driver1 ->
         {
             JavascriptExecutor js = (JavascriptExecutor) driver1;
             boolean isJsFinished = false;
@@ -270,6 +267,12 @@ public class BaseLibrary extends ElementsContainer {
 
             return isJsFinished && isLoaderHidden && isAjaxFinished;
         });
+    }
+
+    public void waitForLoadingJS(WebDriver driver) {
+//        long timeout = Configuration.timeout / 1000;
+        long timeout = getWaitForLoading();
+        waitForLoadingJS(driver, timeout);
     }
 
     public void maximazeBrowser() {

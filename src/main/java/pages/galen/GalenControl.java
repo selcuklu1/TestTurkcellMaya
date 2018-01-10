@@ -31,6 +31,7 @@ public class GalenControl extends BaseLibrary {
 
     private String pageSpecPath = "src/test/resources/specs/";
     private String reportFolderPath = "galenReports/";
+    private String dumpFolderPath = "galenDumps/";
 
 
     /**
@@ -47,7 +48,7 @@ public class GalenControl extends BaseLibrary {
 
             new GalenPageDump(testName).dumpPage(WebDriverRunner.getWebDriver(),
                     pageSpecPath + testName + "/" + testName + ".gspec",
-                    pageSpecPath + testName + "/dump");
+                    dumpFolderPath);
 
             maximazeBrowser();
         } catch (IOException e) {
@@ -95,24 +96,7 @@ public class GalenControl extends BaseLibrary {
             Assert.fail("Layout test failed");
         }
 
-
-        addHtmlToReport(testName);
-
-        /*Path content = Paths.get("Users/ilyas/WorkspaceJava/Git/BelgenetFTA/galenReports/TS0577/report.html");
-        try (InputStream is = Files.newInputStream(content)) {
-            Allure.addAttachment("My attachment", is);
-        }*/
-
-        mymethod();
         maximazeBrowser();
     }
-    @io.qameta.allure.Link(url = "file:///Users/ilyas/WorkspaceJava/Git/BelgenetFTA/galenReports/TS0577/report.html", name = "Galen Link")
-    public void mymethod(){
-    }
 
-    @Attachment(value = "Galen layout", type = "html/xhtml", fileExtension = ".html")
-    public File addHtmlToReport(String testName) throws IOException {
-        File file = new File("file:/Users/ilyas/WorkspaceJava/Git/BelgenetFTA/galenReports/TS0577/report.html");
-        return file;
-    }
 }
