@@ -5,17 +5,14 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
-import pages.MainPage;
 import pages.pageComponents.SearchTable;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
 import java.io.File;
 
 import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Selectors.byLinkText;
 import static com.codeborne.selenide.Selenide.$;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
-import static pages.pageComponents.belgenetElements.BelgenetFramework.*;
 
 /**
  * Yazan: Ilyas Bayraktar
