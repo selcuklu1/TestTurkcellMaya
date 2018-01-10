@@ -68,19 +68,19 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
 
 
     @Step("Kuralın tanımlı olduğu birimler alanından seç")
-    public EvrakHavaleKurallariYonetimiPage kuralinTanimliOlduguBirimlerSec(String durum){
+    public EvrakHavaleKurallariYonetimiPage kuralinTanimliOlduguBirimlerSec(String durum) {
         cmbKuralınTanimliOlduguBirimler.selectOption(durum);
         return this;
     }
 
     @Step("Güncelle")
-    public EvrakHavaleKurallariYonetimiPage ilkGuncelle(){
+    public EvrakHavaleKurallariYonetimiPage ilkGuncelle() {
         btnIlkGuncelle.click();
         return this;
     }
 
     @Step("Pasif Yap")
-    public EvrakHavaleKurallariYonetimiPage ilkPasifYap(){
+    public EvrakHavaleKurallariYonetimiPage ilkPasifYap() {
         btnIlkPasifYap.click();
         return this;
     }

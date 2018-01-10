@@ -39,7 +39,6 @@ public class CevapYazPage extends MainPage {
     SelenideElement btnImzalaEkraniKapat = $("[id='evrakImzalaDialog'] [class$='closethick']");
 
 
-
     //Ekleri Sekmesi
     //Dosya Ekle alt sekmesi
     SelenideElement txtEvrakEkTabViewEkMetni = $(By.xpath("//*[@id='windowCevapEvrakForm:evrakEkTabView:dosyaAciklama']"));

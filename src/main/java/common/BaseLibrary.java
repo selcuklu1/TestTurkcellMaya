@@ -82,6 +82,11 @@ public class BaseLibrary extends ElementsContainer {
         return ret;
     }
 
+    public static String getPCUsername() {
+        String userName = System.getProperty("user.name");
+        return userName;
+    }
+
     public void clearCookies() {
         try {
             Selenide.clearBrowserLocalStorage();
@@ -223,11 +228,11 @@ public class BaseLibrary extends ElementsContainer {
         //waitForJS();
         waitForLoadingToDisappear(driver);
     }
+    //</editor-fold>
 
     private long getWaitForLoading() {
         return waitForLoading;
     }
-    //</editor-fold>
 
     public void setWaitForLoading(long seconds) {
         this.waitForLoading = waitForLoading;
@@ -362,17 +367,6 @@ public class BaseLibrary extends ElementsContainer {
         executeJavaScript("arguments[0].click();", element);
     }
 
-    //Dosya ekler
-    public void uploadFile(SelenideElement element, String pathToFile) {
-        try {
-            element.sendKeys(pathToFile);
-            log.info("Dosya yüklendi.");
-        } catch (Exception e) {
-            log.info("Error in attaching file.s : " + e);
-            throw new RuntimeException(e);
-        }
-    }
-
 //    private String closeAlertAndGetItsText() {
 //        try {
 //            Alert alert = driver.switchTo().alert();
@@ -387,6 +381,17 @@ public class BaseLibrary extends ElementsContainer {
 //            acceptNextAlert = true;
 //        }
 //    }
+
+    //Dosya ekler
+    public void uploadFile(SelenideElement element, String pathToFile) {
+        try {
+            element.sendKeys(pathToFile);
+            log.info("Dosya yüklendi.");
+        } catch (Exception e) {
+            log.info("Error in attaching file.s : " + e);
+            throw new RuntimeException(e);
+        }
+    }
 
     //Random numara üretir.
     public String createRandomNumber(int length) {
@@ -685,7 +690,6 @@ public class BaseLibrary extends ElementsContainer {
         WebDriverRunner.getWebDriver().close();
     }
 
-
     //region Neden burada?
     public String cssSE(String element, String attribute, String startsWith, String endsWith) {
 
@@ -806,6 +810,7 @@ public class BaseLibrary extends ElementsContainer {
         }
     }
 
+    //endregion
 
     @Step("Popup İşlem Onayı:  \"{secim}\"")
     public void islemOnayi(String secim) {
@@ -821,13 +826,6 @@ public class BaseLibrary extends ElementsContainer {
                 btnIslemOnayiHayir.click();
                 break;
         }
-    }
-
-    //endregion
-
-    public static String getPCUsername() {
-        String userName = System.getProperty("user.name");
-        return userName;
     }
 
     //Dosyanın bilgisayara inip inmediğini kontrol eder.
@@ -964,7 +962,7 @@ public class BaseLibrary extends ElementsContainer {
                 "Underlying driver instance does not support capabilities");
     }
 
-    public int getRandomNumber(int startIndex, int endIndex){
+    public int getRandomNumber(int startIndex, int endIndex) {
         return (new Random().nextInt((endIndex - startIndex) + 1) + startIndex);
     }
 

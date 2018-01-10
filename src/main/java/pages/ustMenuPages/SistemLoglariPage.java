@@ -10,7 +10,8 @@ import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.UstMenuData;
 
 import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 public class SistemLoglariPage extends MainPage {
@@ -31,43 +32,43 @@ public class SistemLoglariPage extends MainPage {
 
 
     @Step("Başlangıç Tarihi doldur: {baslangicTarihi}")
-    public SistemLoglariPage baslangicTarihiDoldur(String baslangicTarihi){
+    public SistemLoglariPage baslangicTarihiDoldur(String baslangicTarihi) {
         txtBaslangicTarihi.setValue(baslangicTarihi);
         return this;
     }
 
     @Step("Bitiş Tarihi doldur: {bitisTarihi}")
-    public SistemLoglariPage bitisTarihiDoldur(String bitisTarihi){
+    public SistemLoglariPage bitisTarihiDoldur(String bitisTarihi) {
         txtBitisTarihi.setValue(bitisTarihi);
         return this;
     }
 
     @Step("Kullanıcı Seç: {kullanici}")
-    public SistemLoglariPage kullaniciSec(String kullanici){
+    public SistemLoglariPage kullaniciSec(String kullanici) {
         txtKullanici.selectLov(kullanici);
         return this;
     }
 
     @Step("Birim Seç: {birim}")
-    public SistemLoglariPage birimSec(String birim){
+    public SistemLoglariPage birimSec(String birim) {
         txtBirim.selectLov(birim);
         return this;
     }
 
     @Step("Aksiyon Seç: {aksiyon}")
-    public SistemLoglariPage aksiyonSec(String aksiyon){
+    public SistemLoglariPage aksiyonSec(String aksiyon) {
         txtAksiyon.selectLov(aksiyon);
         return this;
     }
 
     @Step("Sorgula butonuna tıkla.")
-    public SistemLoglariPage sorgula(){
+    public SistemLoglariPage sorgula() {
         btnSorgula.click();
         return this;
     }
 
     @Step("Sistem Raporu Tablosunda kontrol. Aksiyon: {aksiyon}, Kullanıcı: {kullanici}, Açıklama: {aciklama}, Log olmalı: {shouldBeExist}")
-    public SistemLoglariPage sistemRaporuKontrol(String aksiyon, String tarih, String kullanici, String aciklama, boolean shouldBeExist){
+    public SistemLoglariPage sistemRaporuKontrol(String aksiyon, String tarih, String kullanici, String aciklama, boolean shouldBeExist) {
         ElementsCollection sistemRaporuTablePages = $$("td[id='sistemLogRaporForm:sistemLogRaporDataTable_paginator_bottom'] > span[class='ui-paginator-pages'] >  span");
 
         boolean elementFound = false;
@@ -93,13 +94,6 @@ public class SistemLoglariPage extends MainPage {
 
         return this;
     }
-
-
-
-
-
-
-
 
 
 }

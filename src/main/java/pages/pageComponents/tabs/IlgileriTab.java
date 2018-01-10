@@ -22,7 +22,7 @@ public class IlgileriTab {
 
     @Step(tabName + " tabı aç")
     public IlgileriTab openTab(boolean... clickIfOpen) {
-        SelenideElement tab = page.$x("descendant::td[contains(@class,'tabMenuContainer') and descendant::span[contains(@class,'tabMenu') and text()='"+ tabName +"']]");
+        SelenideElement tab = page.$x("descendant::td[contains(@class,'tabMenuContainer') and descendant::span[contains(@class,'tabMenu') and text()='" + tabName + "']]");
 
         if (clickIfOpen.length > 0 || !tab.attr("class").equals("tabMenuContainerSelected"))
             tab.$("button").click();

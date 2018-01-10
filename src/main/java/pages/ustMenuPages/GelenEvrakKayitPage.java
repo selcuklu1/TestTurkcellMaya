@@ -501,6 +501,7 @@ public class GelenEvrakKayitPage extends MainPage {
         cmbHavaleIslemleriBirim.closeTreePanel();
         return this;
     }
+
     @Step("Dağıtım Bilgileri Birim alanında \"{birim}\" seçilir")
     public GelenEvrakKayitPage dagitimBilgileriBirimDoldur2(String birim) {
 //        txtDagitimBilgileriBirim.sendKeys(birim);
