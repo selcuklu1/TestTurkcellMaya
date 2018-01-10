@@ -372,7 +372,7 @@ public class PostalanacakEvraklarPage extends MainPage {
         return this;
     }
 
-    @Step("İndirim Öncesi tutar alaninda \"{indirimOncesiTutar}\" değeri olmalı mı? : \"{shouldBeEquals}\" ")
+    @Step("PopUp İndirim Öncesi tutar alaninda \"{indirimOncesiTutar}\" değeri olmalı mı? : \"{shouldBeEquals}\" ")
     public PostalanacakEvraklarPage popUpIndirimOncesiTutarKontrol(String indirimOncesiTutar, boolean shouldBeEquals) {
         if (shouldBeEquals == true)
             lblIndirimOncesiTutari.shouldHave(Condition.text(indirimOncesiTutar + " TL"));
@@ -381,7 +381,7 @@ public class PostalanacakEvraklarPage extends MainPage {
         return this;
     }
 
-    @Step("Tutar alaninda \"{tutar}\" değeri olmalı mı? : \"{shouldBeEquals}\" ")
+    @Step("PopUp İndirim Oranı alaninda \"{indirimOrani}\" değeri olmalı mı? : \"{shouldBeEquals}\" ")
     public PostalanacakEvraklarPage popUpIndirimOraniKontrol(String indirimOrani, boolean shouldBeEquals) {
         if (shouldBeEquals == true)
             lblIndirimOrani.shouldHave(Condition.text(indirimOrani));
@@ -390,7 +390,7 @@ public class PostalanacakEvraklarPage extends MainPage {
         return this;
     }
 
-    @Step("Tutar alaninda \"{tutar}\" değeri olmalı mı? : \"{shouldBeEquals}\" ")
+    @Step("PopUp Tutar alaninda \"{tutar}\" değeri olmalı mı? : \"{shouldBeEquals}\" ")
     public PostalanacakEvraklarPage popUpTutarKontrol(String tutar, boolean shouldBeEquals) {
         if (shouldBeEquals == true)
             lblTutar.shouldHave(Condition.text(tutar));

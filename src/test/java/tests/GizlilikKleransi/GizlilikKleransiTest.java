@@ -566,7 +566,7 @@ public class GizlilikKleransiTest extends BaseTest {
         String ivedilik = "Normal";
         String geregi = "Optiim Birim";
 
-        login("mbozdemir", "123");
+        login("gsahin", "123");
 
         kullaniciYonetimiPage
                 .openPage()
@@ -757,7 +757,7 @@ public class GizlilikKleransiTest extends BaseTest {
         String evrakDili = "Türkçe";
         String gizlilikDerecesi = "Hizmete Özel";
         String ivedilik = "Normal";
-        String geregi = "Optiim Birim";
+        String geregi = "Esk Kurum 071216 2";
 
         login(username4, password4);
 
@@ -774,6 +774,7 @@ public class GizlilikKleransiTest extends BaseTest {
                 .gizlilikDerecesiSec(gizlilikDerecesi)
                 .aciklamaDoldur(icerik)
                 .ivedilikSec(ivedilik)
+                .geregiSecimTipiSecByText("Kurum")
                 .geregiSec(geregi)
                 .onayAkisiEkle()
                 .kullaniciTabloKontrol()
@@ -859,12 +860,16 @@ public class GizlilikKleransiTest extends BaseTest {
         evrakOlusturPage
                 .bilgilerTabiAc()
                 .gizlilikDerecesiSec("Özel")
+                .kaydet()
+                .confirmDialog().button("Evet").click();
+        evrakOlusturPage
+                .bilgilerTabiAc()
                 .iadeEtbutonKontol()
                 .iadeEt()
-                .kullaniciListesiKontrol("Yasemin")
+                .kullaniciListesiKontrol("Mehmet BOZDEMİR")
                 .notDoldur("iade")
                 .iadeEt2()
-                .popUpEvraktaDegisiklik()
+//                .popUpEvraktaDegisiklik()
                 .islemMesaji().beklenenMesaj(basariMesaji);
 
         logout();
@@ -1141,12 +1146,13 @@ public class GizlilikKleransiTest extends BaseTest {
 
         kullaniciEvrakDevretPage
                 .openPage()
+                .ekranTabKontrolleri()
                 .devredecekKisiSec("Yasemin Çakıl")
-                .listele()
-                .islemMesaji().basariliOlmali(basariMesaji);
+                .listele();
+//                .islemMesaji().basariliOlmali(basariMesaji);
 
         kullaniciEvrakDevretPage
-                .ekranTabKontrolleri()
+                .tabloAlanKontrolleri()
                 .tabloEvrakSecimi(text)
                 .devret()
                 .devralacakKisiAlanKontolu()

@@ -280,7 +280,7 @@ public class GelenEvraklarPage extends MainPage {
         btnHavaleYapHavaleOnayinaGonder.click();
         return this;
     }
-
+@Step("Havele Yap Gönder butonu")
     public GelenEvraklarPage havaleYapGonder() {
         btnHavaleYapGonder.click();
         return this;
@@ -321,7 +321,7 @@ public class GelenEvraklarPage extends MainPage {
         treeHavaleYapKisi.sendKeys(text);
         return this;
     }
-
+@Step("Havale Yap Kişi alanında \"{kisi}\" seçilir.")
     public GelenEvraklarPage havaleYapKisiTreeSec(String kisi) {
         txtComboLovKisi.selectLov(kisi);
         return this;
@@ -415,7 +415,7 @@ public class GelenEvraklarPage extends MainPage {
         btnEvrakGoster.click();
         return this;
     }
-
+@Step("Havele Yap butonu")
     public GelenEvraklarPage havaleYap() {
         btnHavaleYap.click();
         return this;
@@ -616,5 +616,11 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Birimler menüsünde \"{birim}\" biriminin geldiği görülür.")
+    public GelenEvraklarPage birimKontol(String birim){
+        $$("#leftMenuForm #birimlerimMenusuContainer a")
+                .filterBy(Condition.text(birim)).shouldHaveSize(1);
+        return this;
+    }
 
 }

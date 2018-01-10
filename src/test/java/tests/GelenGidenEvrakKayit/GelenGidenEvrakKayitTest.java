@@ -481,7 +481,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .evrakSayiSagDoldur()
                 .evrakGelisTipiSec(evrakGelisTipi)
                 .ivedilikSec(ivedilik)
-                .dagitimBilgileriBirimDoldur(birim)
+                .dagitimBilgileriBirimDoldur2(birim)
                 .kaydet();
 
         evrakNO326 = gelenEvrakKayitPage.popUps();
