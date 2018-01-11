@@ -1,7 +1,6 @@
 package tests.GelenGidenEvrakKayit;
 
 import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.WebDriverRunner;
 import common.BaseTest;
 import data.User;
 import io.qameta.allure.Severity;
@@ -19,8 +18,6 @@ import pages.ustMenuPages.GidenEvrakKayitPage;
 import pages.ustMenuPages.KaydedilenGelenEvrakPage;
 
 import java.io.IOException;
-
-import static com.codeborne.selenide.Selenide.sleep;
 
 public class GelenGidenEvrakKayitTest extends BaseTest {
     MainPage mainPage;
@@ -40,15 +37,28 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     String evrakNO321;
     String evrakNO328;
     String konuKodu = "010.01";
+    String konu = "Test " + getSysDate();
     String evrakTuru = "Resmi Yazışma";
     String evrakDili = "Türkçe";
     String evrakTarihi = getSysDateForKis();
     String gizlilikDerecesi = "Normal";
     String kisiKurum = "Kurum";
     String geldigiKurum = "Esk Kurum 071216 2";
+    String kisiGercek = "Gerçek Kişi";
     String evrakGelisTipi = "Posta";
     String ivedilik = "Normal";
-    String ekMetni = "test otomasyon";
+    String ekMetni = "test otomasyon"+ getSysDateForKis();
+    String aciklama = "Test Otomasyon";
+
+    String pathToFilePdf = getDocPath() + "Otomasyon.pdf";
+    String pdfName = "Otomasyon.pdf";
+    String pathToFileExcel = getDocPath() + "test.xlsx";
+    String excelName = "test.xlsx";
+    String pathToFileEmail = getDocPath() + "ekranGoruntuleri.msg";
+    String ustYaziAdiMail = "ekranGoruntuleri.msg";
+    String bigPdfPath = getDocPath() + "emresencan.pdf";
+
+    String basariMesaji = "İşlem başarılıdır!";
 
 
     @BeforeMethod
@@ -65,26 +75,20 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 //        login("ztekin", "123");
     }
 
-    public String getDocPath1() {
-        return "C:\\TestAutomation\\BelgenetFTA\\documents\\";
-    }
+//    public String getDocPath1() {
+//        return "C:\\TestAutomation\\BelgenetFTA\\documents\\";
+//    }
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, priority = 0, description = "TS0321: Üstyazı ek ve ilgi eklenerek gelen evrak kaydı")
     public void TS0321() throws InterruptedException {
 
-        String basariMesaji = "İşlem başarılıdır!";
-        String ustYaziPath = getDocPath1() + "pdf.pdf";
-        String excelPath = getDocPath1() + "test.xlsx";
-        String ustYaziAdi = "pdf.pdf";
-        String excelAdi = "test.xlsx";
-        String konu = "Test " + getSysDate();
         login(optiim);
 
         gelenEvrakKayitPage
                 .openPage()
-                .evrakBilgileriUstYaziEkle(ustYaziPath)
-                .ustYaziPdfAdiKontrol(ustYaziAdi)
+                .evrakBilgileriUstYaziEkle(pathToFilePdf)
+                .ustYaziPdfAdiKontrol(pdfName)
                 .islemMesaji().basariliOlmali();
 
         gelenEvrakKayitPage
@@ -100,8 +104,8 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .evrakGelisTipiSec(evrakGelisTipi)
                 .ivedilikSec(ivedilik)
                 .ekBilgiFiltreAc()
-                .evrakEkleriDosyaEkleme(excelPath)
-                .evrakEkleriDosyaEkleDosyaAdiKontrol(excelAdi)
+                .evrakEkleriDosyaEkleme(pathToFileExcel)
+                .evrakEkleriDosyaEkleDosyaAdiKontrol(excelName)
                 .ustYaziDegistirilmisPopUpKontrol(false)
                 .evrakEkleriDosyaEkleEkMetinDoldur(ekMetni)
                 .evrakEkTabViewEkle()
@@ -129,13 +133,6 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     public void TS2163() throws InterruptedException {
 
         String evrakTuru = "Dilekçe";
-        String ustYaziPath = getDocPath1() + "Otomasyon.pdf";
-        String ustYaziAdi = "Otomasyon.pdf";
-        String basariMesaji = "İşlem başarılıdır!";
-        String aciklama = "Test Otomasyon";
-        String evrakTarihi = getSysDateForKis();
-        String evrakTuru2 = "Dilekçe";
-        String konu = "Test " + getSysDate();
         login(optiim);
 //        String evrakNO321 = "5569";
 
@@ -147,7 +144,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
         gelenEvrakKayitPage
                 .evrakDetaylariAlanGuncellenebilirlikKontrolü()
-                .evrakBilgileriUstYaziEkle(ustYaziPath)
+                .evrakBilgileriUstYaziEkle(pathToFilePdf)
                 .evrakDetayiPdfDegisiklikpopUpClose()
 //                .ustYaziPdfAdiKontrol(ustYaziAdi)
                 .konuKoduDoldur(konuKodu)
@@ -182,15 +179,14 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     public void TS0328() throws InterruptedException {
 
         String birim = "OPTİİM BİRİM";
-        String konu = "Test " + getSysDate();
-        String ustYaziPath = getDocPath1() + "pdf.pdf";
-        String ustYaziAdi = "pdf.pdf";
-        login(optiim);
         String details = "YGD";
+
+        login(optiim);
+
         gelenEvrakKayitPage
                 .openPage()
-                .evrakBilgileriUstYaziEkle(ustYaziPath)
-                .ustYaziPdfAdiKontrol(ustYaziAdi)
+                .evrakBilgileriUstYaziEkle(pathToFilePdf)
+                .ustYaziPdfAdiKontrol(pdfName)
                 .konuKoduDoldur(konuKodu)
                 .konuDoldur(konu)
                 .evrakTuruSec(evrakTuru)
@@ -223,8 +219,6 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
 //        String evrakNO321 = "5187";
 //        String evrakNO328 = "5187";
-
-        String basariMesaji = "İşlem başarılıdır!";
         String evrakNo = evrakNO321;
         String evrakNo1 = evrakNO328;
         String geldigiYer = "D";
@@ -253,16 +247,16 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     @Test(enabled = true, description = "TS1136 : Gelen evrak kaydederken yeni gerçek ve tüzel kişi tanımlama")
     public void TS1136() throws InterruptedException {
 
-        String TCKN = "51091330934";
+//        String TCKN = "51091330934";
         String ad = "Test";
         String soyad = "Otomasyon";
-        String kisiKurum = "Gerçek Kişi";
-
         String mernisNo = createMernisTCKN();
+
         login(optiim);
+
         gelenEvrakKayitPage
                 .openPage()
-                .kisiKurumSec(kisiKurum)
+                .kisiKurumSec(kisiGercek)
                 .geldigiKisiEkle()
                 .iletisimBilgisiTCKNEkle(mernisNo)
                 .iletisimBilgisiTCKNAra()
@@ -283,16 +277,13 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
         String birim = "OPTİİM BİRİM11";
 
-        String pathToFilemail = getDocPath1() + "ekranGoruntuleri.msg";
-        String pathToFileExcel = getDocPath1() + "test.xlsx";
-        String ustYaziAdi = "TestOtomasyon.msg";
-        String konu = "Test " + getSysDate();
+
         login(optiim);
 //        String ustYaziAdi = "ustYazi.pdf";  // TestOtomasyon.msg ekini eklememe rağmen ustYazi.pdf  olarak ekrana geliyor.
         gelenEvrakKayitPage
                 .openPage()
-                .evrakBilgileriUstYaziEkle(pathToFilemail)
-//                .ustYaziMailAdiKontrol(ustYaziAdi)
+                .evrakBilgileriUstYaziEkle(pathToFileEmail)
+//                .ustYaziMailAdiKontrol(ustYaziAdiMail)
                 .konuKoduDoldur(konuKodu)
                 .konuDoldur(konu)
                 .evrakTuruSec(evrakTuru)
@@ -327,7 +318,6 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     @Test(enabled = true, description = "TS0322 : Gelen evrak kayıtta alan kontrolleri")
     public void TS0322() throws InterruptedException {
 
-        String kisiKurum = "Gerçek Kişi";
         String kisiKurum1 = "Kurum";
         String geldigiKurum = "Cumhurbaşkanlığı";
         String solAlan = "24301012-";
@@ -337,17 +327,15 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         String message = "Zorunlu alanları doldurunuz";
         String message2 = "Dosya büyüklüğü uygun değildir.";
         String evrakTuru1 = "Diğer";
-//        String path = getDocPath1() + "tsunami_posteroct08.pdf";
-        String path = getDocPath1() + "emresencan.pdf";
-        String ustYaziPath = getDocPath1() + "pdf.pdf";
         String birim = "OPTİİM BİRİM";
         String uyariMesajı = "Dosya büyüklüğü uygun değildir!!";
+        String secim = "Hayır";
 
         login(optiim);
         gelenEvrakKayitPage
                 .openPage()
                 .alanKontrolleri()
-                .kisiKurumSec(kisiKurum)
+                .kisiKurumSec(kisiGercek)
                 .evrakTuruKontrol(evrakTuru)
                 .kisiKurumSec(kisiKurum1)
                 .geldigiKurumDoldurLovText(geldigiKurum)
@@ -379,27 +367,27 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .kaydet()
                 .islemMesaji().uyariOlmali(message);
 
+
         gelenEvrakKayitPage
                 .evrakTuruSec(evrakTuru1)
                 .kaydet()
-                .popUpKontrol2("Hayır");
+                .popUpKontrol2(secim);
 
 
 //        gelenEvrakKayitPage
-//                .evrakBilgileriUstYaziEkle(path);
+//                .evrakBilgileriUstYaziEkle(bigPdfPath);
 //                .islemMesaji().uyariOlmali(uyariMesajı);
         //        250 mb pdf yuklerken timeouta düşüyor....
 
 //        waitForLoadingJS(WebDriverRunner.getWebDriver(),1200);
 //işlem mesajı eklenecek
 
-
         gelenEvrakKayitPage
-                .evrakBilgileriUstYaziEkle(ustYaziPath)
+                .evrakBilgileriUstYaziEkle(pathToFilePdf)
                 .ustYaziGizle()
                 .ustYaziGoster()
                 .kaydet()
-                .popUpKontrol("Hayır");
+                .popUpKontrol(secim);
         gelenEvrakKayitPage
                 .dagitimBilgileriBirimDoldur2(birim)
                 .kaydet()
@@ -410,22 +398,17 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     @Test(enabled = true, description = "TS1340 : Giden evrak kaydı")
     public void TS1340() throws InterruptedException {
 
-        String basariMesaji = "İşlem başarılıdır!";
-        String ustYaziPath = getDocPath1() + "pdf.pdf";
-        String excelPath = getDocPath1() + "test.xlsx";
-        String ustYaziAdi = "pdf.pdf";
-        String excelAdi = "test.xlsx";
         String miatTarihi = getSysDateForKis();
-        String konu = "Test " + getSysDate();
         String geregi = "AFYON VALİLİĞİ";
         String kaldirlacakKlasor = "ESK05";
         String bilgi = "TAŞRA TEŞKİLATI";
-        String evrakTarihi = "16.02.2017";
+
         login(optiim);
+
         gidenEvrakKayitPage
                 .openPage()
-                .evrakBilgileriUstYaziEkle(ustYaziPath)
-                .ustYaziPdfAdiKontrol(ustYaziAdi)
+                .evrakBilgileriUstYaziEkle(pathToFilePdf)
+                .ustYaziPdfAdiKontrol(pdfName)
                 .islemMesaji().basariliOlmali();
 
         gidenEvrakKayitPage
@@ -471,16 +454,12 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     @Test(enabled = true, description = "TS0326 : Gelen evrakın tarama havuzundan evrak eklenerek kaydedilmesi")
     public void TS0326() throws InterruptedException {
 
-        String basariMesaji = "İşlem başarılıdır!";
-        String ustYaziPath = getDocPath1() + "pdf.pdf";
-        String excelPath = getDocPath1() + "test.xlsx";
-        String ustYaziAdi = "pdf.pdf";
-        String excelAdi = "test.xlsx";
-        String konu = "Test " + getSysDate();
+
         String birim = "OPTİİM BİRİM";
         String evrakNO326 = "";
         String pdfText = "";
         String details = "YGD";
+
         login(yakyol);
 
         gelenEvrakKayitPage
@@ -491,9 +470,9 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .taramaHavuzuTamam();
 
         gelenEvrakKayitPage
-                .evrakBilgileriUstYaziEkle(ustYaziPath)
+                .evrakBilgileriUstYaziEkle(pathToFilePdf)
                 .ustYaziDegistirilmisPopUpKontrol(true)
-                .ustYaziPdfAdiKontrol(ustYaziAdi)
+                .ustYaziPdfAdiKontrol(pdfName)
                 .islemMesaji().basariliOlmali();
         pdfText = gelenEvrakKayitPage.onIzlemePdfText();
 
@@ -511,7 +490,6 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .evrakGelisTipiSec(evrakGelisTipi)
                 .ivedilikSec(ivedilik)
                 .dagitimBilgileriBirimDoldurWithDetails(birim, details)
-//                .dagitimBilgileriBirimDoldur2(birim)
                 .kaydet();
 
         evrakNO326 = gelenEvrakKayitPage.popUps();
