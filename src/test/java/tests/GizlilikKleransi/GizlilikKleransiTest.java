@@ -102,8 +102,6 @@ public class GizlilikKleransiTest extends BaseTest {
                 .ivedilikSec(ivedilik)
                 .havaleIslemleriKisiSecmeyeDene(kisi)
                 .islemMesaji().beklenenMesaj(uyariMesaj1);
-                /*.havaleIslemleriKisiDoldur(kisi)
-                .islemMesaji().beklenenMesaj(uyariMesaj1);*/
 
         gelenEvrakKayitPage
                 .havaleIslemleriKullaniciListesiSecmeyeDene(kullaniciListesi)
@@ -117,7 +115,7 @@ public class GizlilikKleransiTest extends BaseTest {
         String uyariMesaj2 = "Havale etmek istediğiniz kullanıcı grubundaki Mehmet Emin YÜCEANT, Mehmet Gökhan BAYSAN, Mehmet Koray BALCIOĞLU ın kleransı yetersizdir, kleransı yeterli olmayan kullanıcılara havale edilmeyecektir !!";
         String kisi = "Can Şeker";
         String kullaniciListesi = "Optiim";
-        String konuKodu = "Diğer TS1475";
+        String konuKodu = "Diğer TC1475";
         String geldigiYer = "Gizlilik Kler";
         String evrakTarihi = "15.12.2017";
 
@@ -141,13 +139,13 @@ public class GizlilikKleransiTest extends BaseTest {
 
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TS2223: Teslim aldıklarım listesinden havalede gizlilik klerans kontrolü")
-    public void TS2223() throws InterruptedException {
+    @Test(enabled = true, description = "TS0272: Teslim almayı bekleyenler listesinden havale ederken gizlilik kontrolü")
+    public void TS0272() throws InterruptedException {
         String uyariMesaj1 = "Havale etmek istediğiniz kullanıcı kleransı yetersizdir!!";
         String uyariMesaj2 = "Havale etmek istediğiniz kullanıcı grubundaki Mehmet Emin YÜCEANT, Mehmet Gökhan BAYSAN, Mehmet Koray BALCIOĞLU ın kleransı yetersizdir, kleransı yeterli olmayan kullanıcılara havale edilmeyecektir !!";
         String kisi = "Can Şeker";
         String kullaniciListesi = "Optiim";
-        String konuKodu = "Diğer-TS272";
+        String konuKodu = "Diğer-TC272";
         String geldigiYer = "Yargı / BÜYÜK HARFLERLE KURUM(G)";
         String evrakTarihi = "15.12.2017";
         String no = "123";
@@ -173,14 +171,14 @@ public class GizlilikKleransiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TS272: Teslim almayı bekleyenler listesinden havale ederken gizlilik kontrolü")
-    public void TS272() throws InterruptedException {
+    @Test(enabled = true, description = "TS2223: Teslim aldıklarım listesinden havalede gizlilik klerans kontrolü")
+    public void TS2223() throws InterruptedException {
 
         String uyariMesaj1 = "Havale etmek istediğiniz kullanıcı kleransı yetersizdir!!";
         String uyariMesaj2 = "Havale etmek istediğiniz kullanıcı grubundaki Mehmet Emin YÜCEANT, Mehmet Gökhan BAYSAN, Mehmet Koray BALCIOĞLU ın kleransı yetersizdir, kleransı yeterli olmayan kullanıcılara havale edilmeyecektir !!";
         String kisi = "Can Şeker";
         String kullaniciListesi = "Optiim";
-        String konuKodu = "Diğer TS2223";
+        String konuKodu = "Diğer TC2223";
         String geldigiYer = "Gizlilik KLERANS";
         String evrakTarihi = "15.12.2017";
         String no = "5096";
@@ -212,7 +210,7 @@ public class GizlilikKleransiTest extends BaseTest {
         String uyariMesaj2 = "Havale etmek istediğiniz kullanıcı grubundaki Mehmet Emin YÜCEANT, Mehmet Gökhan BAYSAN, Mehmet Koray BALCIOĞLU ın kleransı yetersizdir, kleransı yeterli olmayan kullanıcılara havale edilmeyecektir !!";
         String kisi = "Can Şeker";
         String kullaniciListesi = "Optiim";
-        String konuKodu = "Konu: K/Frekans Yıllık Kullanım Ücreti TS1475";
+        String konuKodu = "Konu: K/Frekans Yıllık Kullanım Ücreti TC1475";
         String geldigiYer = "Yargı / BÜYÜK HARFLERLE KURUM";
         String evrakTarihi = "15.12.2017";
         String no = "1";
@@ -239,10 +237,8 @@ public class GizlilikKleransiTest extends BaseTest {
     @Test(enabled = true, description = "TS2131: İşlem bekleyen evraklardan evrak paylaşırken gizlilik kontrolü")
     public void TS2131() throws InterruptedException {
         String uyariMesaj1 = "Can ŞEKER kullanıcısının gizlilik kleransı evrakı görüntülemek için yeterli değildir.";
-        String uyariMesaj2 = "Havale etmek istediğiniz kullanıcı grubundaki Mehmet Emin YÜCEANT, Mehmet Gökhan BAYSAN, Mehmet Koray BALCIOĞLU ın kleransı yetersizdir, kleransı yeterli olmayan kullanıcılara havale edilmeyecektir !!";
         String kisi = "Can Şeker";
-        String kullaniciListesi = "Optiim";
-        String konuKodu = "Diğer-TS2131";
+        String konuKodu = "Diğer-TC2131";
         String geldigiYer = "Gizlilik Klerans";
         String gidecegiyer = "Gizlilik Klerans(B)";
         String evrakTarihi = "15.12.2017";
@@ -276,7 +272,8 @@ public class GizlilikKleransiTest extends BaseTest {
                 .paylas()
                 .paylasKisiSec(kisi)
                 .paylasimAciklamaYaz(aciklama)
-                .paylasPaylas();
+                .paylasPaylas()
+                .islemMesaji().dikkatOlmali(uyariMesaj1);
 
     }
 
@@ -288,7 +285,7 @@ public class GizlilikKleransiTest extends BaseTest {
         String uyariMesaj2 = "Havale etmek istediğiniz kullanıcı grubundaki Mehmet Emin YÜCEANT, Mehmet Gökhan BAYSAN, Mehmet Koray BALCIOĞLU ın kleransı yetersizdir, kleransı yeterli olmayan kullanıcılara havale edilmeyecektir !!";
         String kisi = "Can Şeker";
         String kullaniciListesi = "Optiim";
-        String konuKodu = "Diğer-TS2132";
+        String konuKodu = "Diğer-TC2132";
         String geldigiYer = "Gizlilik Klerans";
         String gidecegiyer = "Gizlilik Klerans(B)";
         String evrakTarihi = "15.12.2017";
@@ -331,7 +328,7 @@ public class GizlilikKleransiTest extends BaseTest {
     public void TS2135() throws InterruptedException {
         String uyariMesaj1 = "Kullanici kleransı evrakı takibe eklemek için yetersizdir!";
         String kisi = "Can Şeker";
-        String konuKodu = "Diğer-TS2135";
+        String konuKodu = "Diğer-TC2135";
         String geldigiYer = "BÜYÜK HARFLERLE KURUM";
         String gidecegiyer = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞ";
         String evrakTarihi = "15.12.2017";
@@ -367,8 +364,8 @@ public class GizlilikKleransiTest extends BaseTest {
     public void TS2134() throws InterruptedException {
         String uyariMesaj1 = "Kullanici kleransı evrakı takibe eklemek için yetersizdir!";
         String kisi = "Can Şeker";
-        String konuKodu = "Diğer-TS2131";
-        String konuKodu2 = "Diğer-TS2131";
+        String konuKodu = "Diğer-TC2131";
+        String konuKodu2 = "Diğer-TC2131";
         String geldigiYer = "Gizlilik Klerans";
         String geldigiYer2 = "Gizlilik Klerans(B)";
         String evrakTarihi = "15.12.2017";
@@ -446,13 +443,6 @@ public class GizlilikKleransiTest extends BaseTest {
         teslimAlinmayiBekleyenlerPage
                 .evrakSecTeslimAl(konuKoduRandom, kurum, evrakTarihi, evrakSayiSag, true)
                 .islemMesaji().basariliOlmali(basariMesaji);
-
-        teslimAlinanlarPage
-                .openPage()
-                .filter().filtrelerAc()
-                .filtrelerdeAlaniDoldur("Tarih", evrakTarihi, Keys.ENTER);
-        teslimAlinanlarPage.evrakSec(konuKoduRandom, kurum, evrakTarihi, evrakSayiSag)
-                .islemMesaji().beklenenMesaj(uyariMesaj1);
 
     }
 
