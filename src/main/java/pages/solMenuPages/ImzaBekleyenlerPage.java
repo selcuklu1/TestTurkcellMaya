@@ -18,7 +18,7 @@ public class ImzaBekleyenlerPage extends MainPage {
     SelenideElement btnDosyaEkle = $(By.xpath("//input[@id='mainPreviewForm:fileUploadIadeEk_input']"));
     SelenideElement txtNot = $(By.id("mainPreviewForm:notTextArea_id"));
     SelenideElement btnIadeEtIadeEt = $(By.id("mainPreviewForm:iadeEtButton_id"));
-    SelenideElement btnImzala = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:5:cmdbutton"));
+    SelenideElement btnImzala = $(By.xpath("//span[contains(@class, 'imzala')]/.."));
     SelenideElement btnEvrakOnizlemeImzala = $("[id='mainPreviewForm:onizlemeRightTab:onizlemeRightTab'] td:nth-child(5) button");
     SelenideElement rdbSImaza = $("[id='imzalaForm:imzalaRadio'] [class='ui-radiobutton-box ui-widget ui-corner-all ui-radiobutton-relative ui-state-default']");
     SelenideElement btnSImzaImzala = $(By.id("imzalaForm:sayisalImzaConfirmDialogOpener"));
@@ -206,10 +206,10 @@ public class ImzaBekleyenlerPage extends MainPage {
     @Step("Evrak Seç")
     public ImzaBekleyenlerPage evrakSec(String konu, String gidecegiYer, String gonderen, String evrakNo) {
         tblImzaBekleyenler
-                .filterBy(text("Konu:" + konu))
-                .filterBy(text("Gideceği Yer:" + gidecegiYer))
-                .filterBy(text("Gönderen:" + gonderen))
-                .filterBy(text("Evrak No:" + evrakNo))
+                .filterBy(text("Konu: " + konu))
+                .filterBy(text("Gideceği Yer: " + gidecegiYer))
+                .filterBy(text("Gönderen: " + gonderen))
+                .filterBy(text(evrakNo))
                 .first()
                 .click();
         return this;
