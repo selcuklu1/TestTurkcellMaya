@@ -1092,7 +1092,6 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .aciklamaDoldur("evrak huser e devredildi.")
                 .devretTamam();
 
-        logout();
         login("huser", "123");
 
         String evrakAciklamasi = "Devredilen evrakı paylaşma NOT 1";
