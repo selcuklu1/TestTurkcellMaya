@@ -26,9 +26,9 @@ public class GelenEvrakKayitPage extends MainPage {
     SelenideElement pageTitle = $(By.cssSelector("#baseLayoutCenter .ui-dialog-title"));
     // Evrak Bilgileri Sekmesinde bulunanlar
     SelenideElement btnUstYaziEkle = $(By.xpath("//input[@id='evrakBilgileriForm:ustYaziForm:ustYaziUpload_input']"));
-    SelenideElement txtEvrakBilgileriListKonuKodu = $("[id$='konuKoduLov:LovText']");
-    SelenideElement txtEvrakBilgileriListKonu = $("[[id$='konuTextArea']");
-    SelenideElement cmbEvrakBilgileriListEvrakTuru = $("[id^='evrakBilgileriForm:evrakBilgileriList'][id$='evrakTuruCombo']");
+    BelgenetElement txtEvrakBilgileriListKonuKodu = comboLov("[id$='konuKoduLov:LovText']");
+    SelenideElement txtEvrakBilgileriListKonu = $("[id$='konuTextArea']");
+    SelenideElement cmbEvrakBilgileriListEvrakTuru = $("[id$='evrakTuruCombo']");
     SelenideElement cmbEvrakBilgileriListEvrakDili = $("[id$='evrakDili']");
     SelenideElement dateTxtEvrakBilgileriListEvrakTarihi = $("[id$='evrakTarihi_input']");
     SelenideElement cmbEvrakBilgileriListGizlilikDerecesi = $("[id$='guvenlikKodu']");
@@ -127,7 +127,7 @@ public class GelenEvrakKayitPage extends MainPage {
     SelenideElement btnUstYaziveHavaleYeriSecmedinizEvet = $("[id='evetButtonBos']");
     SelenideElement btnUstYaziveHavaleYeriSecmedinizHayır = $(By.id("hayirButtonBos"));
     SelenideElement btnHavaleYeriSecmedinizHayır=$(By.id("hayirDugmesiUstYaziHavaleYer"));
-    SelenideElement btnHavaleYeriSecmedinizEvet=$(By.id("evetDugmesiUstYaziHavaleYer"));
+    SelenideElement btnHavaleYeriSecmedinizEvet=$(By.id("evetButtonBos"));
 
     SelenideElement ustYaziveHavaleYeriYokpopUp = $("[id='ustYaziveHavaleYeriYokConfirmDialog']");
     SelenideElement ustYaziYokEvet = $("[id='evetDugmesi']");
@@ -511,10 +511,9 @@ public class GelenEvrakKayitPage extends MainPage {
     }
 
     @Step("Dağıtım Bilgileri Birim alanında \"{birim}\" seçilir")
-    public GelenEvrakKayitPage dagitimBilgileriBirimDoldur(String birim) {
-//        txtDagitimBilgileriBirim.sendKeys(birim);
-        cmbHavaleIslemleriBirim.type(birim).getTitleItems()
-                .filterBy(Condition.exactText(birim)).get(0).click();
+    public GelenEvrakKayitPage dagitimBilgileriBirimDoldurWithDetails(String birim,String details) {
+        cmbHavaleIslemleriBirim.type(birim).getDetailItems()
+                    .filterBy(Condition.exactText(details)).first().click();
         cmbHavaleIslemleriBirim.closeTreePanel();
         return this;
     }
@@ -922,18 +921,30 @@ public class GelenEvrakKayitPage extends MainPage {
     @Step("Alanların güncellenebilirlik kontrolü")
     public GelenEvrakKayitPage evrakDetaylariAlanGuncellenebilirlikKontrolü() {
         txtEvrakBilgileriListKonuKodu.shouldBe(Condition.enabled);
-//        txtEvrakBilgileriListKonu.shouldBe(Condition.enabled);
+        txtEvrakBilgileriListKonu.shouldBe(Condition.enabled);
         cmbEvrakBilgileriListEvrakTuru.shouldBe(Condition.enabled);
         cmbEvrakBilgileriListEvrakDili.shouldBe(Condition.enabled);
         dateTxtEvrakBilgileriListEvrakTarihi.shouldBe(Condition.enabled);
         cmbEvrakBilgileriListGizlilikDerecesi.shouldBe(Condition.enabled);
         cmbEvrakBilgileriListKisiKurum.shouldBe(Condition.enabled);
         txtEvrakBilgileriListEvrakSayiTextAreaSag.shouldBe(Condition.enabled);
-//        cmbEvrakBilgileriListGeldigiKisi.shouldBe(Condition.enabled);
+        comboGeldigiKurum.shouldBe(Condition.enabled);
         cmbEvrakBilgileriListEvrakGelisTipi.shouldBe(Condition.enabled);
         cmbEvrakBilgileriListIvedilik.shouldBe(Condition.enabled);
-//        txtEvrakBilgileriListMiat.shouldBe(Condition.enabled);
-//        txtEvrakBilgileriListAciklama.shouldBe(Condition.enabled);
+        txtEvrakBilgileriListMiat.shouldBe(Condition.enabled);
+
+//        Allure.addAttachment(txtEvrakBilgileriListKonuKodu.getSelectedTitles().toString(), "Ekran kontolü ok");
+        Allure.addAttachment(txtEvrakBilgileriListKonu.text(), "Ekran kontolü ok");
+        Allure.addAttachment(cmbEvrakBilgileriListEvrakTuru.getText(), "Ekran kontolü ok");
+        Allure.addAttachment(cmbEvrakBilgileriListEvrakDili.getText(), "Ekran kontolü ok");
+        Allure.addAttachment(dateTxtEvrakBilgileriListEvrakTarihi.getValue(), "Ekran kontolü ok");
+        Allure.addAttachment(cmbEvrakBilgileriListGizlilikDerecesi.getText(), "Ekran kontolü ok");
+        Allure.addAttachment(cmbEvrakBilgileriListKisiKurum.getText(), "Ekran kontolü ok");
+        Allure.addAttachment(txtEvrakBilgileriListEvrakSayiTextAreaSag.text(), "Ekran kontolü ok");
+//        Allure.addAttachment(comboGeldigiKurum.getSelectedText(), "Ekran kontolü ok");
+        Allure.addAttachment(cmbEvrakBilgileriListEvrakGelisTipi.getText(), "Ekran kontolü ok");
+        Allure.addAttachment(cmbEvrakBilgileriListIvedilik.text(), "Ekran kontolü ok");
+        Allure.addAttachment(txtEvrakBilgileriListMiat.getValue(), "Ekran kontolü ok");
         return this;
     }
 
@@ -1053,7 +1064,7 @@ public class GelenEvrakKayitPage extends MainPage {
         btnTaramaArayuzundenEkle.shouldBe(Condition.exist);
         btnTaramaServisindenEkle.shouldBe(Condition.exist);
 
-        Allure.addAttachment(btnUstYaziEkle.text(), "Ekran Kontrolü ok");
+        Allure.addAttachment(btnUstYaziEkle.getText(), "Ekran Kontrolü ok");
         Allure.addAttachment(lblUstyaziGoster.text(), "Ekran Kontrolü ok");
         Allure.addAttachment(lblUstyaziGizle.text(), "Ekran Kontrolü ok");
         Allure.addAttachment(btnTaramaHavuzundanEkle.text(), "Ekran Kontrolü ok");
@@ -1116,6 +1127,8 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("Evrak üst yazı ve havale yeri seçmediniz Popup kontrolü")
     public GelenEvrakKayitPage popUpKontrol2(String secim) {
+        SelenideElement btnHavaleYeriSecmedinizHayır=$(By.id("hayirDugmesiUstYaziHavaleYer"));
+        SelenideElement btnHavaleYeriSecmedinizEvet=$(By.id("evetDugmesiUstYaziHavaleYer"));
         String mesaj2 = "Evrak üst yazı ve havale yeri seçmediniz. Evrak kaydedildiğinde havale işlemine devam edecektir.İşleme devam etmek istiyor musunuz?";
         if (ustYaziveHavaleYeriYokpopUp.isDisplayed()) {
             if (secim.equals("Hayır"))

@@ -183,10 +183,14 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
         String birim = "OPTİİM BİRİM";
         String konu = "Test " + getSysDate();
+        String ustYaziPath = getDocPath1() + "pdf.pdf";
+        String ustYaziAdi = "pdf.pdf";
         login(optiim);
+        String details = "YGD";
         gelenEvrakKayitPage
                 .openPage()
-//                .evrakBilgileriUstYaziEkle("C:\\Users\\Emre_Sencan\\Pictures\\pdf.pdf")
+                .evrakBilgileriUstYaziEkle(ustYaziPath)
+                .ustYaziPdfAdiKontrol(ustYaziAdi)
                 .konuKoduDoldur(konuKodu)
                 .konuDoldur(konu)
                 .evrakTuruSec(evrakTuru)
@@ -198,21 +202,19 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .evrakSayiSagDoldur()
                 .evrakGelisTipiSec(evrakGelisTipi)
                 .ivedilikSec(ivedilik)
-                .dagitimBilgileriBirimDoldur(birim)
+                .dagitimBilgileriBirimDoldurWithDetails(birim, details)
                 .kaydet();
         evrakNO328 = gelenEvrakKayitPage.popUps();
         gelenEvrakKayitPage.islemMesaji().basariliOlmali();
 
         birimHavaleEdilenlerPage
                 .openPage()
-                .filter().findRowsWith(Condition.text(konu))
-                .shouldHaveSize(1);
+                .evrakNoIleTabloKontrolu(evrakNO328);
 
         //TeslimAlınanBelgeler sayfasında yetkili bir kullanıcı ile giriş yapılacak.
         teslimAlinmayiBekleyenlerPage
                 .openPage()
-                .filter().findRowsWith(Condition.text(evrakNO328))
-                .shouldHaveSize(1);
+                .tabloKontrolu(evrakNO328);
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -281,7 +283,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
         String birim = "OPTİİM BİRİM11";
 
-        String pathToFilePdf = getDocPath1() + "TestOtomasyon.msg";
+        String pathToFilemail = getDocPath1() + "ekranGoruntuleri.msg";
         String pathToFileExcel = getDocPath1() + "test.xlsx";
         String ustYaziAdi = "TestOtomasyon.msg";
         String konu = "Test " + getSysDate();
@@ -289,7 +291,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 //        String ustYaziAdi = "ustYazi.pdf";  // TestOtomasyon.msg ekini eklememe rağmen ustYazi.pdf  olarak ekrana geliyor.
         gelenEvrakKayitPage
                 .openPage()
-                .evrakBilgileriUstYaziEkle(pathToFilePdf)
+                .evrakBilgileriUstYaziEkle(pathToFilemail)
 //                .ustYaziMailAdiKontrol(ustYaziAdi)
                 .konuKoduDoldur(konuKodu)
                 .konuDoldur(konu)
@@ -307,11 +309,11 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .ustYaziDegistirilmisPopUpKontrol(false)
                 .evrakEkleriDosyaEkleEkMetinDoldur(ekMetni)
                 .evrakEkleriDosyaEkle()
-                .dosyaEkleTabTabloKontrolu("Ek-2") //Webservise  baglanılamadı hatası alnıyor.
+                .dosyaEkleTabTabloKontrolu("Ek-3") //Webservise  baglanılamadı hatası alnıyor.
                 .ekBilgiFizikselEkEkle()
                 .evrakEkTabFizikselEkMetniDoldur(ekMetni)
                 .fizikselEkTabViewAciklamaEkle()
-                .dosyaEkleTabTabloKontrolu("Ek-3")
+                .dosyaEkleTabTabloKontrolu("Ek-4")
                 .kaydet();
 
         String evrakNo = gelenEvrakKayitPage.popUps();
@@ -431,6 +433,12 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .ivedilikSec(ivedilik)
                 .gizlilikDerecesiSec(gizlilikDerecesi)
                 .konuKoduDoldur(konuKodu)
+                .evrakTuruIcerikKontrolu("Resmi Yazışma")
+                .evrakTuruIcerikKontrolu("Olur Yazısı")
+                .evrakTuruSec("Olur Yazısı")
+                .ivedilikIcerikKontrol()
+                .gizlilikDerecesiIcerikKontrol()
+                .gizlilikDerecesiSec(gizlilikDerecesi)
                 .konuDoldur(konu)
                 .evrakDiliSec(evrakDili)
                 .miatDoldur(miatTarihi)
@@ -456,7 +464,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
         kaydedilenGidenEvraklarPage
                 .openPage()
-                .tabloKontrolKonuyaGore(konu);
+                .tabloKontrolu(evrakNo1340);
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -472,6 +480,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         String birim = "OPTİİM BİRİM";
         String evrakNO326 = "";
         String pdfText = "";
+        String details = "YGD";
         login(yakyol);
 
         gelenEvrakKayitPage
@@ -488,6 +497,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .islemMesaji().basariliOlmali();
         pdfText = gelenEvrakKayitPage.onIzlemePdfText();
 
+
         gelenEvrakKayitPage
                 .konuKoduDoldur(konuKodu)
                 .konuDoldur(konu)
@@ -500,7 +510,8 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .evrakSayiSagDoldur()
                 .evrakGelisTipiSec(evrakGelisTipi)
                 .ivedilikSec(ivedilik)
-                .dagitimBilgileriBirimDoldur2(birim)
+                .dagitimBilgileriBirimDoldurWithDetails(birim, details)
+//                .dagitimBilgileriBirimDoldur2(birim)
                 .kaydet();
 
         evrakNO326 = gelenEvrakKayitPage.popUps();

@@ -198,11 +198,11 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         return this;
     }
 
-    @Step("Tabloda evrak no kontrolü")
+    @Step("Tabloda evrak no kontrolü : \"{evrakNo}\" ")
     public TeslimAlinmayiBekleyenlerPage tabloKontrolu(String evrakNo) {
-        int row = $$("tbody[id$='mainInboxForm:inboxDataTable_data'] tr[role=row] div[class=searchText]").filterBy(text(evrakNo)).size();
-        System.out.println(row);
-        Assert.assertEquals(row, 1);
+        $$("tbody[id$='mainInboxForm:inboxDataTable_data'] tr[data-ri]")
+                .filterBy(text(evrakNo))
+                .shouldHaveSize(1);
         //log başarılı
         return this;
     }
