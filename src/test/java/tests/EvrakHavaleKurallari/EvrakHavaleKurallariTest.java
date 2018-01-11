@@ -398,8 +398,8 @@ public class EvrakHavaleKurallariTest extends BaseTest {
 
         evrakHavaleKurallariYonetimiPage
                 .kuralinTanimliOlduguBirimlerSec(sadecePasifler)
-                .kuralEklemeKaydet();
-                //.islemMesaji().basariliOlmali(basariMesaji);
+                .kuralEklemeKaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
 
         gelenEvrakKayitPage
                 .openPage()
@@ -448,15 +448,23 @@ public class EvrakHavaleKurallariTest extends BaseTest {
                 .openPage()
                 .konuKoduDoldur(konuKodu)
                 .evrakTuruSec(evrakTuru2)
-                .otomatikHavaleSec()
+                .otomatikHavaleSec2()
                 .otomatikHavaleGeldigiGorme(kuralAdi2);
 
         //Test bittikten sonra datamızı siliyoruz. Bir sonraki koşumda hata almamamız için.
-     /*   evrakHavaleKurallariYonetimiPage
+        evrakHavaleKurallariYonetimiPage
                 .openPage()
+                //.filtreleKuralAdiDoldur(kuralAdi2,"Kural adı")
                 .ara()
                 .sil(kuralAdi,"Konu")
                 .islemOnayiEvet()
-                .islemMesaji().basariliOlmali(basariMesaji);*/
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        evrakHavaleKurallariYonetimiPage
+                //.filtreleKuralAdiDoldur(kuralAdi2,"Kural adı")
+                .ara()
+                .sil(kuralAdi2,"Konu")
+                .islemOnayiEvet()
+                .islemMesaji().basariliOlmali(basariMesaji);
     }
 }

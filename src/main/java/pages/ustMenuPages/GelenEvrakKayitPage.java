@@ -199,15 +199,21 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("Otomatik havale seç")
     public GelenEvrakKayitPage otomatikHavaleSec() {
-        if (chkOtomatikHavale.get(0).shouldBe(visible).exists()==true){
+        if (chkOtomatikHavale.size()==1){
         chkOtomatikHavale.get(0).click();
         }
         else{
-            $("[id='evrakBilgileriForm:havaleDagitimLovPanel'] [class='ui-chkbox ui-widget'] [class='ui-chkbox-box ui-widget ui-corner-all ui-state-default ui-state-active']").click();
+            $("[id='evrakBilgileriForm:havaleDagitimLovPanel'] [class='ui-chkbox-box ui-widget ui-corner-all ui-state-default ui-state-active']").click();
             //$("[id='evrakBilgileriForm:havaleDagitimLovPanel'] [class='ui-chkbox ui-widget'] input[type='checkbox']").setSelected(false);
-            sleep(7000);
+            sleep(1000);
             chkOtomatikHavale.get(0).click();
         }
+        return this;
+    }@Step("Otomatik havale seç")
+    public GelenEvrakKayitPage otomatikHavaleSec2() {
+            $("[id='evrakBilgileriForm:havaleDagitimLovPanel'] [class='ui-chkbox-box ui-widget ui-corner-all ui-state-default ui-state-active']").click();
+            sleep(5000);
+        $("[id='evrakBilgileriForm:havaleDagitimLovPanel'] [class='ui-chkbox-box ui-widget ui-corner-all ui-state-default").click();
         return this;
     }
 
