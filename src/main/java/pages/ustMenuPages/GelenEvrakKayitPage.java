@@ -82,7 +82,7 @@ public class GelenEvrakKayitPage extends MainPage {
 
     // Havale işlemleri sekmesinde bulunanlar
     ElementsCollection chkOtomatikHavale = $$("[id='evrakBilgileriForm:havaleDagitimLovPanel'] [class='ui-chkbox ui-widget'] [class='ui-chkbox-box ui-widget ui-corner-all ui-state-default']");
-    SelenideElement cmbPopupOtomatikHavale = $(By.id("evrakBilgileriForm:havaleKuralSelect"));
+    SelenideElement cmbPopupOtomatikHavale = $("[id$='havaleKuralSelect']");
     SelenideElement txtDagitimBilgileriBirim = $(By.id("evrakBilgileriForm:dagitimBilgileriBirimLov:LovText"));
     BelgenetElement txtDagitimBilgileriKisiComboLov = comboLov(By.id("evrakBilgileriForm:dagitimBilgileriKullaniciLov:LovText"));
     SelenideElement txtDagitimBilgileriKisi = $(By.id("evrakBilgileriForm:dagitimBilgileriKullaniciLov:LovText"));
@@ -216,8 +216,7 @@ public class GelenEvrakKayitPage extends MainPage {
     }@Step("Otomatik havale seç")
     public GelenEvrakKayitPage otomatikHavaleSec2() {
             $("[id='evrakBilgileriForm:havaleDagitimLovPanel'] [class='ui-chkbox-box ui-widget ui-corner-all ui-state-default ui-state-active']").click();
-            sleep(5000);
-        $("[id='evrakBilgileriForm:havaleDagitimLovPanel'] [class='ui-chkbox-box ui-widget ui-corner-all ui-state-default").click();
+        clickJs($("[id='evrakBilgileriForm:havaleDagitimLovPanel'] [class='ui-chkbox-box ui-widget ui-corner-all ui-state-default"));
         return this;
     }
 
@@ -231,9 +230,9 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("Otomatik havale seç \"{otomatikHavale}\" ")
     public GelenEvrakKayitPage popupOtomatikHavaleSec(String otomatikHavale) {
+        sleep(3000);
         cmbPopupOtomatikHavale.selectOption(otomatikHavale);
         $("[class='ui-dialog ui-widget ui-widget-content ui-corner-all ui-shadow havaleKuralSecimiDialog ui-draggable ui-overlay-visible'] [class='ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all']").click();
-        sleep(3000);
         return this;
     }
 

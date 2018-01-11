@@ -181,6 +181,22 @@ public class EvrakHavaleKurallariTest extends BaseTest {
                 .otomatikHavaleSec()
                 .popupOtomatikHavaleSec(kuralAd);
 
+        //Test bittikten sonra datamızı siliyoruz. Bir sonraki koşumda hata almamamız için.
+        evrakHavaleKurallariYonetimiPage
+                .openPage()
+                .filtreleKuralAdiDoldur(kuralAdi,"Kural adı")
+                .ara()
+                .sil(kuralAdi,"Konu")
+                .islemOnayiEvet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        evrakHavaleKurallariYonetimiPage
+                .filtreleKuralAdiDoldur(kuralAd,"Kural adı")
+                .ara()
+                .sil(kuralAd,"Konu")
+                .islemOnayiEvet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -454,14 +470,14 @@ public class EvrakHavaleKurallariTest extends BaseTest {
         //Test bittikten sonra datamızı siliyoruz. Bir sonraki koşumda hata almamamız için.
         evrakHavaleKurallariYonetimiPage
                 .openPage()
-                //.filtreleKuralAdiDoldur(kuralAdi2,"Kural adı")
+                .filtreleKuralAdiDoldur(kuralAdi,"Kural adı")
                 .ara()
                 .sil(kuralAdi,"Konu")
                 .islemOnayiEvet()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
         evrakHavaleKurallariYonetimiPage
-                //.filtreleKuralAdiDoldur(kuralAdi2,"Kural adı")
+                .filtreleKuralAdiDoldur(kuralAdi2,"Kural adı")
                 .ara()
                 .sil(kuralAdi2,"Konu")
                 .islemOnayiEvet()
