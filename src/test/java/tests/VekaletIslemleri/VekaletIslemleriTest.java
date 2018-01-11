@@ -382,7 +382,9 @@ public class VekaletIslemleriTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, dependsOnMethods = {"TS2208"}, description = "TS0014 : Vekalet veren kullanıcıya evrak havalesi ve kontrolü")
+    @Test(enabled = true
+    //, dependsOnMethods = {"TS2208"}
+    , description = "TS0014 : Vekalet veren kullanıcıya evrak havalesi ve kontrolü")
     public void TS0014() throws InterruptedException {
 
         String kisiKurum = "Kurum";
