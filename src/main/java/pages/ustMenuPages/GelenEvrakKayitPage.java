@@ -6,6 +6,7 @@ import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
+import org.apache.xmlbeans.impl.xb.xsdschema.All;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
@@ -123,8 +124,11 @@ public class GelenEvrakKayitPage extends MainPage {
 
     SelenideElement btnKaydet = $("[id='buttonPanelForm:kaydetButton']");
     SelenideElement popUphavaleYeriSecmediniz = $(By.id("havaleYeriSecmedinizConfirmDialog"));
-    SelenideElement btnHavaleYeriSecmedinizEvet = $("[id='evetButtonBos']");
-    SelenideElement btnHavaleYeriSecmedinizHayır = $(By.id("hayirButtonBos"));
+    SelenideElement btnUstYaziveHavaleYeriSecmedinizEvet = $("[id='evetButtonBos']");
+    SelenideElement btnUstYaziveHavaleYeriSecmedinizHayır = $(By.id("hayirButtonBos"));
+    SelenideElement btnHavaleYeriSecmedinizHayır=$(By.id("hayirDugmesiUstYaziHavaleYer"));
+    SelenideElement btnHavaleYeriSecmedinizEvet=$(By.id("evetDugmesiUstYaziHavaleYer"));
+
     SelenideElement ustYaziveHavaleYeriYokpopUp = $("[id='ustYaziveHavaleYeriYokConfirmDialog']");
     SelenideElement ustYaziYokEvet = $("[id='evetDugmesi']");
     SelenideElement ustYaziYokpopUp = $("[id='ustYaziYokConfirmDialog']");
@@ -509,7 +513,6 @@ public class GelenEvrakKayitPage extends MainPage {
     @Step("Dağıtım Bilgileri Birim alanında \"{birim}\" seçilir")
     public GelenEvrakKayitPage dagitimBilgileriBirimDoldur(String birim) {
 //        txtDagitimBilgileriBirim.sendKeys(birim);
-        cmbHavaleIslemleriBirim.selectLov(birim);
         cmbHavaleIslemleriBirim.type(birim).getTitleItems()
                 .filterBy(Condition.exactText(birim)).get(0).click();
         cmbHavaleIslemleriBirim.closeTreePanel();
@@ -1050,6 +1053,14 @@ public class GelenEvrakKayitPage extends MainPage {
         btnTaramaArayuzundenEkle.shouldBe(Condition.exist);
         btnTaramaServisindenEkle.shouldBe(Condition.exist);
 
+        Allure.addAttachment(btnUstYaziEkle.text(), "Ekran Kontrolü ok");
+        Allure.addAttachment(lblUstyaziGoster.text(), "Ekran Kontrolü ok");
+        Allure.addAttachment(lblUstyaziGizle.text(), "Ekran Kontrolü ok");
+        Allure.addAttachment(btnTaramaHavuzundanEkle.text(), "Ekran Kontrolü ok");
+        Allure.addAttachment(btnTarayicidanEkle.text(), "Ekran Kontrolü ok");
+        Allure.addAttachment(btnTaramaArayuzundenEkle.text(), "Ekran Kontrolü ok");
+        Allure.addAttachment(btnTaramaServisindenEkle.text(), "Ekran Kontrolü ok");
+
         return this;
     }
 
@@ -1091,25 +1102,40 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("Popup kontrol")
-    public GelenEvrakKayitPage popUpKontrol() {
-        if (popUphavaleYeriSecmediniz.exists()) {
-            String mesaj2 = "Havale yeri seçmediniz. Evrak kaydedildiğinde Kaydedilen Gelen Evraklar kutusuna düşecektir. İşleme devam etmek istiyor musunuz?";
-            popUphavaleYeriSecmediniz.getText().equals(mesaj2);
-            clickJs(btnHavaleYeriSecmedinizHayır);
-        }
+    @Step("Havale yeri seçmediniz Popup kontrolü")
+    public GelenEvrakKayitPage popUpKontrol(String secim) {
+        String mesaj2 = "Havale yeri seçmediniz. Evrak kaydedildiğinde Kaydedilen Gelen Evraklar kutusuna düşecektir. İşleme devam etmek istiyor musunuz?";
+
+        if (popUphavaleYeriSecmediniz.isDisplayed()) {
+            if (secim.equals("Hayır"))
+                clickJs(btnUstYaziveHavaleYeriSecmedinizHayır);
+        } else
+            clickJs(btnUstYaziveHavaleYeriSecmedinizEvet);
+        return this;
+    }
+
+    @Step("Evrak üst yazı ve havale yeri seçmediniz Popup kontrolü")
+    public GelenEvrakKayitPage popUpKontrol2(String secim) {
+        String mesaj2 = "Evrak üst yazı ve havale yeri seçmediniz. Evrak kaydedildiğinde havale işlemine devam edecektir.İşleme devam etmek istiyor musunuz?";
+        if (ustYaziveHavaleYeriYokpopUp.isDisplayed()) {
+            if (secim.equals("Hayır"))
+                clickJs(btnHavaleYeriSecmedinizHayır);
+        } else
+            clickJs(btnHavaleYeriSecmedinizEvet);
         return this;
     }
 
     @Step("Ust yazi gizle")
     public GelenEvrakKayitPage ustYaziGizle() {
         lblUstyaziGizle.click();
+        takeScreenshot();
         return this;
     }
 
     @Step("Ust yazi gözter")
     public GelenEvrakKayitPage ustYaziGoster() {
         lblUstyaziGoster.click();
+        takeScreenshot();
         return this;
     }
 
