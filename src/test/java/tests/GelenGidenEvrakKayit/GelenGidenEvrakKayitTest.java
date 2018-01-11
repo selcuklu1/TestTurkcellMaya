@@ -1,6 +1,7 @@
 package tests.GelenGidenEvrakKayit;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.WebDriverRunner;
 import common.BaseTest;
 import data.User;
 import io.qameta.allure.Severity;
@@ -18,6 +19,8 @@ import pages.ustMenuPages.GidenEvrakKayitPage;
 import pages.ustMenuPages.KaydedilenGelenEvrakPage;
 
 import java.io.IOException;
+
+import static com.codeborne.selenide.Selenide.sleep;
 
 public class GelenGidenEvrakKayitTest extends BaseTest {
     MainPage mainPage;
@@ -332,12 +335,16 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         String message = "Zorunlu alanları doldurunuz";
         String message2 = "Dosya büyüklüğü uygun değildir.";
         String evrakTuru1 = "Diğer";
-//        String path = "C:\\Users\\Emre_Sencan\\Pictures\\tsunami_posteroct08.pdf";
+//        String path = getDocPath1() + "tsunami_posteroct08.pdf";
+        String path = getDocPath1() + "emresencan.pdf";
         String ustYaziPath = getDocPath1() + "pdf.pdf";
         String birim = "OPTİİM BİRİM";
+        String uyariMesajı = "Dosya büyüklüğü uygun değildir!!";
+
         login(optiim);
         gelenEvrakKayitPage
                 .openPage()
+                .alanKontrolleri()
                 .kisiKurumSec(kisiKurum)
                 .evrakTuruKontrol(evrakTuru)
                 .kisiKurumSec(kisiKurum1)
@@ -350,6 +357,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .evrakGelisTipiSec(evrakGelisTipi)
                 .kaydet()
                 .islemMesaji().uyariOlmali(message);
+
 
         gelenEvrakKayitPage
                 .miatDoldur(getSysDateForKis())
@@ -370,17 +378,28 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .islemMesaji().uyariOlmali(message);
 
         gelenEvrakKayitPage
-                .evrakTuruSec(evrakTuru1);
-//        250 mb pdf yuklerken timeouta düşüyor....
-//                .kaydet()
-//                .evrakBilgileriUstYaziEkle(path)
-//                .islemMesaji().beklenenMesaj(message2);
+                .evrakTuruSec(evrakTuru1)
+                .kaydet()
+                .popUpKontrol2("Hayır");
+
+
+//        gelenEvrakKayitPage
+//                .evrakBilgileriUstYaziEkle(path);
+//                .islemMesaji().uyariOlmali(uyariMesajı);
+        //        250 mb pdf yuklerken timeouta düşüyor....
+
+//        waitForLoadingJS(WebDriverRunner.getWebDriver(),1200);
+//işlem mesajı eklenecek
+
 
         gelenEvrakKayitPage
                 .evrakBilgileriUstYaziEkle(ustYaziPath)
+                .ustYaziGizle()
+                .ustYaziGoster()
                 .kaydet()
-                .popUpKontrol()
-                .dagitimBilgileriBirimDoldur(birim)
+                .popUpKontrol("Hayır");
+        gelenEvrakKayitPage
+                .dagitimBilgileriBirimDoldur2(birim)
                 .kaydet()
                 .popUps();
     }
