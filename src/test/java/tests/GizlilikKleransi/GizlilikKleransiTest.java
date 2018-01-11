@@ -551,7 +551,7 @@ public class GizlilikKleransiTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true
-            , dependsOnMethods = {"TS1471"}
+            , priority = 1
             , description = "TS1938: Yüksek kleranslı evrak oluşturma")
     public void TS1938() throws InterruptedException {
 
@@ -615,11 +615,17 @@ public class GizlilikKleransiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, dependsOnMethods = {"TS1938"}, description = "TS2138 : Genel evrak raporunda gizlilik kleransı kontrolü (evrakta izi olmayan kullanıcı ile)")
+    @Test(enabled = true
+//            , dependsOnMethods = {"TS1938"}
+            ,description = "TS2138 : Genel evrak raporunda gizlilik kleransı kontrolü (evrakta izi olmayan kullanıcı ile)")
     public void TS2138() throws InterruptedException {
 //9267
+                TS1938();
+
         login("username23t", "123");
         String mesaj = "Gizlilik kleransınız evrakın gizlilik derecesini görüntülemek için yeterli değildir.";
+
+
 
         genelEvrakRaporuPage
                 .openPage()
@@ -633,7 +639,7 @@ public class GizlilikKleransiTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true
-//           ,  dependsOnMethods = {"TS1938"}
+            ,  dependsOnMethods = {"TS1938"}
             , description = "TS2139 : Evrak aramada gizlilik kleransı kontrolü (evrakta izi olmayan kullanıcı ile)")
     public void TS2139() throws InterruptedException {
 
