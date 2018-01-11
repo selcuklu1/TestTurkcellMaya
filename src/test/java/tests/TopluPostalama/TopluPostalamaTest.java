@@ -10,6 +10,8 @@ import pages.solMenuPages.*;
 import pages.ustMenuPages.EvrakOlusturPage;
 import pages.ustMenuPages.PttRaporuPage;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
 
 
@@ -49,20 +51,37 @@ public class TopluPostalamaTest extends BaseTest {
         String[] postaTipleri = new String[]{
                 "Adi Posta"
         };
-
+        String listeAdi = "Liste" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
+        String gidecegiYer = "Yenikurum6507";
         String baslangicTarihi = "01.12.2015";
         String bitisTarihi = "02.12.2015";
-
-        String evrakKayitTarihiSayi = "14.12.2017 12:44:59 / 9230";
-        String evrakGidecegiYer = "BÜYÜK HARFLERLE KURUM(G)";
-        String evrakKonu = "K/Frekans Yıllık Kullanım Ücreti";
+        String tarihBugun = "" + new SimpleDateFormat("dd.MM.yyyy").format(new Date());
+        String evrakKayitTarihiSayi = tarihBugun;
+        String evrakGidecegiYer = "Yenikurum6507(G)";
         String evrakHazirlayanBirim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞ";
         String evrakPostaTipi = "Adi Posta";
-
-        String listeAdi = "Liste" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
-
         login("mbozdemir", "123");
-
+        String evrakKonu = "TS1804-" + getRandomNumber(1000, 9000);
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .konuKoduSec("Entegrasyon İşlemleri")
+                .konuDoldur(evrakKonu)
+                .kaldiralacakKlasorlerSec("Diğer")
+                .geregiSecimTipiSec("Kurum")
+                .geregiSec(gidecegiYer)
+                .geregiKurumPostaTipi(evrakPostaTipi)
+                .onayAkisiEkle()
+                .onayAkisiKullaniciTipiSec("Mehmet BOZDEMİR [Antalya İl Müdürü]", "İmzalama")
+                .kullan();
+        evrakOlusturPage
+                .editorTabAc()
+                .editorIcerikDoldur("TS1804 için evrak.")
+                .imzala()
+                .sImzasec()
+                .sImzaImzala()
+                .sayisalImzaEvetPopup()
+                .islemMesaji().basariliOlmali();
 
         topluPostalanacakEvraklarPage
                 .openPage()
@@ -88,10 +107,16 @@ public class TopluPostalamaTest extends BaseTest {
                 .sorgula();
 
         topluPostalanacakEvraklarPage
+                .filtreGidecegiYer(gidecegiYer)
+                .gidecegiYerSec(new String[]{gidecegiYer}, true)
+                .sorgula();
+
+        topluPostalanacakEvraklarPage
                 .evrakSec(evrakKayitTarihiSayi, evrakGidecegiYer, evrakKonu, evrakHazirlayanBirim, evrakPostaTipi)
                 .evrakGoster()
                 .evrakTikSec(evrakKayitTarihiSayi, evrakGidecegiYer, evrakKonu, evrakHazirlayanBirim, evrakPostaTipi, true)
                 .postaListesineAktar()
+                .filtreGidecegiYer("")
                 .gidecegiYerTumunuIsaretle(true)
                 .sorgula()
                 .listeAdiDoldur(listeAdi)
@@ -99,6 +124,8 @@ public class TopluPostalamaTest extends BaseTest {
                 .islemMesaji().basariliOlmali();
 
         topluPostalanacakEvraklarPage
+                .filtreGidecegiYer(gidecegiYer)
+                .sorgula()
                 .evrakTikSec(evrakKayitTarihiSayi, evrakGidecegiYer, evrakKonu, evrakHazirlayanBirim, evrakPostaTipi, true)
                 .postaListesiSec(listeAdi)
                 .listeyeEkle();
@@ -115,6 +142,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .openPage()
                 .gidecegiYerListesiAlfabetikSiraKontrolu()
                 .tarihAraligiSec(baslangicTarihi, bitisTarihi)
+                .filtreGidecegiYer(gidecegiYer)
                 .gidecegiYerSec(gidecegiYerler, true, true)
                 .postaTipiSec(postaTipleri)
                 .sorgula()
@@ -124,7 +152,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .openPage()
                 .filtreleAc()
                 .postaListesiDoldur(listeAdi)
-                .postaListesindenCikart("", evrakGidecegiYer, evrakKonu, evrakHazirlayanBirim, evrakPostaTipi)
+                .postaListesindenCikart(evrakKayitTarihiSayi, evrakGidecegiYer, evrakKonu, evrakHazirlayanBirim, evrakPostaTipi)
                 .islemMesaji().basariliOlmali();
 
 
@@ -132,6 +160,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .openPage()
                 .gidecegiYerListesiAlfabetikSiraKontrolu()
                 .tarihAraligiSec(baslangicTarihi, bitisTarihi)
+                .filtreGidecegiYer(gidecegiYer)
                 .gidecegiYerSec(gidecegiYerler, true, true)
                 .postaTipiSec(postaTipleri)
                 .sorgula()
@@ -143,32 +172,84 @@ public class TopluPostalamaTest extends BaseTest {
     public void TS01808() {
 
         String[] gidecegiYerler = new String[]{
-                "Adalet Bakanlığı Döner Sermaye İşletmesi",
-                "Başbakanlık",
-                "Başbakan Müşavirleri"
+                "Yenikurum6507",
+                "Yenikurum4105"
         };
 
-        String[] postaYerleri = new String[]{
+        String[] postaTipleri = new String[]{
                 "Adi Posta"
         };
+
+
+        String tarihBugun = "" + new SimpleDateFormat("dd.MM.yyyy").format(new Date());
+
+        String gidecegiYer = "Yenikurum6507";
+        String evrakPostaTipi = "Adi Posta";
+        String evrakKonu = "TS01808-" + getRandomNumber(1000, 9000);
+
+        login("mbozdemir", "123");
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .konuKoduSec("Entegrasyon İşlemleri")
+                .konuDoldur(evrakKonu)
+                .kaldiralacakKlasorlerSec("Diğer")
+                .geregiSecimTipiSec("Kurum")
+                .geregiSec(gidecegiYer)
+                .geregiKurumPostaTipi(evrakPostaTipi)
+                .onayAkisiEkle()
+                .onayAkisiKullaniciTipiSec("Mehmet BOZDEMİR [Antalya İl Müdürü]", "İmzalama")
+                .kullan();
+        evrakOlusturPage
+                .editorTabAc()
+                .editorIcerikDoldur("TS01808 için evrak.")
+                .imzala()
+                .sImzasec()
+                .sImzaImzala()
+                .popupSimzaEvet();
+
+        String evrakKonu2 = "TS01808-" + getRandomNumber(1000, 9000);
+        String gidecegiYer2 = "Yenikurum4105";
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .konuKoduSec("Entegrasyon İşlemleri")
+                .konuDoldur(evrakKonu2)
+                .kaldiralacakKlasorlerSec("Diğer")
+                .geregiSecimTipiSec("Kurum")
+                .geregiSec(gidecegiYer2)
+                .geregiKurumPostaTipi(evrakPostaTipi)
+                .onayAkisiEkle()
+                .onayAkisiKullaniciTipiSec("Mehmet BOZDEMİR [Antalya İl Müdürü]", "İmzalama")
+                .kullan();
+        evrakOlusturPage
+                .editorTabAc()
+                .editorIcerikDoldur("TS01808 için evrak.")
+                .imzala()
+                .sImzasec()
+                .sImzaImzala()
+                .popupSimzaEvet();
+
+
 
         String baslangicTarihi = "01.12.2017";
         String bitisTarihi = "01.12.2018";
 
-        String postaListesi = "Liste5761";
+        String postaListesi = "Liste" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
 
-
-        String evrak1KayitTarihiSayi = "9181";
-        String evrak1Sayi = "9181";
-        String evrak1GidecegiYer = "Başbakanlık(G)";
-        String evrak1Konu = "Entegrasyon İşlemleri";
-        String evrak1HazirlayanBirim = "Optiim Birim";
+        String evrak1KayitTarihiSayi = "";
+        String evrak1Sayi = "";
+        String evrak1GidecegiYer = gidecegiYer;
+        String evrak1Konu = evrakKonu;
+        String evrak1HazirlayanBirim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞ";
         String evrak1PostaTipi = "Adi Posta";
 
-        String evrak2KayitTarihiSayi = "9232";
-        String evrak2Sayi = "9232";
-        String evrak2GidecegiYer = "Başbakan Müşavirleri(B)";
-        String evrak2Konu = "Veri Toplama";
+        String evrak2KayitTarihiSayi = "";
+        String evrak2Sayi = "";
+        String evrak2GidecegiYer = gidecegiYer2;
+        String evrak2Konu = evrakKonu2;
         String evrak2HazirlayanBirim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞ";
         String evrak2PostaTipi = "Adi Posta";
 
@@ -178,21 +259,44 @@ public class TopluPostalamaTest extends BaseTest {
         String dikkatMesaji = "Posta Listesine eklenecek evrak seçiniz!";
 
 
-        login("mbozdemir", "123");
-
+        /*
+        topluPostalanacakEvraklarPage
+                .openPage()
+                .filtreGidecegiYer(evrak1GidecegiYer)
+                .gidecegiYerSec(evrak1GidecegiYer, true)
+                .filtreGidecegiYer(evrak2GidecegiYer)
+                .gidecegiYerSec(evrak2GidecegiYer, true)
+                .sorgula()
+                .evrakSec(evrak1KayitTarihiSayi, evrak1GidecegiYer, evrak1Konu, evrak1HazirlayanBirim, evrak1PostaTipi)
+                .evrakTikSec(evrak1KayitTarihiSayi, evrak1GidecegiYer, evrak1Konu, evrak1HazirlayanBirim, evrak1PostaTipi, true)
+                .evrakTikSec(evrak2KayitTarihiSayi, evrak2GidecegiYer, evrak2Konu, evrak2HazirlayanBirim, evrak2PostaTipi, true)
+                .postaListesineAktar()
+                .listeAdiDoldur(postaListesi)
+                .listeOlustur()
+                .postaListesiSec(postaListesi)
+                .listeyeEkle();
+        */
 
         topluPostalanacakEvraklarPage
                 .openPage()
                 .tarihAraligiSec(baslangicTarihi, bitisTarihi)
                 .gidecegiYerSec(gidecegiYerler, true)
-                .postaTipiSec(postaYerleri)
+                .postaTipiSec(postaTipleri)
                 .sorgula()
                 .postaListesineAktar()
+                .listeAdiDoldur(postaListesi)
+                .gonderildigiKurumSec(gidecegiYer)
+                .listeOlustur()
                 .postaListesiSec(postaListesi)
-                .listeyeEkle()
-                .islemMesaji().dikkatOlmali(dikkatMesaji);
+                .listeyeEkle();
+                //.islemMesaji().dikkatOlmali(dikkatMesaji);
 
         topluPostalanacakEvraklarPage
+                .filtreGidecegiYer(evrak1GidecegiYer)
+                .gidecegiYerSec(evrak1GidecegiYer, true)
+                .filtreGidecegiYer(evrak2GidecegiYer)
+                .gidecegiYerSec(evrak2GidecegiYer, true)
+                .sorgula()
                 .evrakSec(evrak1KayitTarihiSayi, evrak1GidecegiYer, evrak1Konu, evrak1HazirlayanBirim, evrak1PostaTipi)
                 .evrakSec(evrak2KayitTarihiSayi, evrak2GidecegiYer, evrak2Konu, evrak2HazirlayanBirim, evrak2PostaTipi)
                 .evrakTikSec(evrak1KayitTarihiSayi, evrak1GidecegiYer, evrak1Konu, evrak1HazirlayanBirim, evrak1PostaTipi, true)
@@ -206,7 +310,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .openPage()
                 .tarihAraligiSec(baslangicTarihi, bitisTarihi)
                 .gidecegiYerSec(gidecegiYerler, true, true)
-                .postaTipiSec(postaYerleri)
+                .postaTipiSec(postaTipleri)
                 .sorgula()
                 .evrakKontrol(evrak1KayitTarihiSayi, evrak1GidecegiYer, evrak1Konu, evrak1HazirlayanBirim, evrak1PostaTipi, false)
                 .evrakKontrol(evrak2KayitTarihiSayi, evrak2GidecegiYer, evrak2Konu, evrak2HazirlayanBirim, evrak2PostaTipi, false);
@@ -227,7 +331,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .openPage()
                 .tarihAraligiSec(baslangicTarihi, bitisTarihi)
                 .gidecegiYerSec(gidecegiYerler, true, true)
-                .postaTipiSec(postaYerleri)
+                .postaTipiSec(postaTipleri)
                 .sorgula()
                 .evrakKontrol(evrak1KayitTarihiSayi, evrak1GidecegiYer, evrak1Konu, evrak1HazirlayanBirim, evrak1PostaTipi, true)
                 .evrakKontrol(evrak2KayitTarihiSayi, evrak2GidecegiYer, evrak2Konu, evrak2HazirlayanBirim, evrak2PostaTipi, true);
@@ -236,35 +340,87 @@ public class TopluPostalamaTest extends BaseTest {
     @Test(enabled = true, description = "1807 : Posta Listesi Oluşturma- Tüzel Kişi Listesi (UC_POSTAYÖNETİMİ_002)")
     public void TS01807() {
 
+        String tuzelKisi1 = "TS01807-TK1";
+        String tuzelKisi2 = "TS01807-TK2";
+
+        String evrakKonu1 = "TS01807-" + getRandomNumber(1000, 9000);
+        String evrakKonu2 = "TS01807-" + getRandomNumber(1000, 9000);
+
+
+        login("mbozdemir", "123");
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .konuKoduSec("Entegrasyon İşlemleri")
+                .konuDoldur(evrakKonu1)
+                .kaldiralacakKlasorlerSec("Diğer")
+                .geregiSecimTipiSec("Tüzel Kişi")
+                .geregiTuzelKisiSec(tuzelKisi1)
+                .geregiKurumPostaTipi("Adi Posta")
+                .onayAkisiEkle()
+                .onayAkisiKullaniciTipiSec("Mehmet BOZDEMİR [Antalya İl Müdürü]", "İmzalama")
+                .kullan();
+        evrakOlusturPage
+                .editorTabAc();
+        evrakOlusturPage
+                .editorTabAc()
+                .editorIcerikDoldur("TS01807 için evrak.")
+                .imzala()
+                .sImzasec()
+                .sImzaImzala()
+                .popupSimzaEvet();
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .konuKoduSec("Entegrasyon İşlemleri")
+                .konuDoldur(evrakKonu2)
+                .kaldiralacakKlasorlerSec("Diğer")
+                .geregiSecimTipiSec("Tüzel Kişi")
+                .geregiTuzelKisiSec(tuzelKisi2)
+                .geregiKurumPostaTipi("Adi Posta")
+                .onayAkisiEkle()
+                .onayAkisiKullaniciTipiSec("Mehmet BOZDEMİR [Antalya İl Müdürü]", "İmzalama")
+                .kullan();
+        evrakOlusturPage
+                .editorTabAc();
+        evrakOlusturPage
+                .editorTabAc()
+                .editorIcerikDoldur("TS01807 için evrak.")
+                .imzala()
+                .sImzasec()
+                .sImzaImzala()
+                .popupSimzaEvet();
+
         String[] gidecegiYerler = new String[]{
-                "mehmet ali"
+                tuzelKisi1
         };
 
         String[] postaTipleri = new String[]{
                 "Adi Posta"
         };
 
-        String tuzelKisi = "mehmet ali";
+        String tuzelKisi = tuzelKisi1;
 
         String baslangicTarihi = "01.12.2015";
         String bitisTarihi = "02.12.2018";
 
-        String evrakKayitTarihiSayi = "9246";
-        String evrakGidecegiYer = "mehmet ali(G)";
-        String evrakKonu = "İstatistikler";
+        String evrakKayitTarihiSayi = "";
+        String evrakGidecegiYer = tuzelKisi1;
+        String evrakKonu = evrakKonu1;
         String evrakHazirlayanBirim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞ";
         String evrakPostaTipi = "Adi Posta";
 
-        String evrak1KayitTarihiSayi = "9252";
-        String evrak1GidecegiYer = "dfyfzek holding(G)";
-        String evrak1Konu = "memo";
+        String evrak1KayitTarihiSayi = "";
+        String evrak1GidecegiYer = tuzelKisi2;
+        String evrak1Konu = evrakKonu2;
         String evrak1HazirlayanBirim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞ";
         String evrak1PostaTipi = "Adi Posta";
 
 
-        String listeAdi = "TS01807-" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
+        String listeAdi = "ListeTS01807-" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
 
-        login("mbozdemir", "123");
 
         topluPostalanacakEvraklarPage
                 .openPage()
@@ -275,6 +431,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .sorgula()
                 .postaListesineAktar();
         // UYARI MESAJI GELMELİ !!!!!!!!!!!! <<<<<<<<<<<<<<<<<<
+
 
         topluPostalanacakEvraklarPage
                 .evrakTikSec(evrakKayitTarihiSayi, evrakGidecegiYer, evrakKonu, evrakHazirlayanBirim, evrakPostaTipi, true)
@@ -292,8 +449,8 @@ public class TopluPostalamaTest extends BaseTest {
 
 
         gidecegiYerler = new String[]{
-                "mehmet ali",
-                "dfyfzek holding"
+                tuzelKisi1,
+                tuzelKisi2
         };
 
         topluPostalanacakEvraklarPage
@@ -308,8 +465,8 @@ public class TopluPostalamaTest extends BaseTest {
                 .postaListesineAktar()
                 .tuzelKisiKontrolet(tuzelKisi)
                 .listeAdiDoldur(listeAdi)
-                .listeOlustur()
-                .islemMesaji().dikkatOlmali("Bu Liste Adında posta listesi vardır. Yeni Liste Adı verin! ");
+                .listeOlustur();
+                //.islemMesaji().dikkatOlmali("Bu Liste Adında posta listesi vardır. Yeni Liste Adı verin! ");
 
         listeAdi = "TS01807-1-" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
 
@@ -337,34 +494,87 @@ public class TopluPostalamaTest extends BaseTest {
     @Test(enabled = true, description = "1807 : Posta Listesi Oluşturma- Gerçek Kişi Listesi (UC_POSTAYÖNETİMİ_002)")
     public void TS01807A() {
 
+        String gercekKisi1 = "TS01807GKAD";
+        String gercekKisi2 = "TS01807GKYAD";
+
+        String evrakKonu1 = "TS01807A-" + getRandomNumber(1000, 9000);
+        String evrakKonu2 = "TS01807A-" + getRandomNumber(1000, 9000);
+
+
+        login("mbozdemir", "123");
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .konuKoduSec("Entegrasyon İşlemleri")
+                .konuDoldur(evrakKonu1)
+                .kaldiralacakKlasorlerSec("Diğer")
+                .geregiSecimTipiSec("Gerçek Kişi")
+                .geregiTuzelKisiSec(gercekKisi1)
+                .geregiKurumPostaTipi("Adi Posta")
+                .onayAkisiEkle()
+                .onayAkisiKullaniciTipiSec("Mehmet BOZDEMİR [Antalya İl Müdürü]", "İmzalama")
+                .kullan();
+        evrakOlusturPage
+                .editorTabAc();
+        evrakOlusturPage
+                .editorTabAc()
+                .editorIcerikDoldur("TS01807 için evrak.")
+                .imzala()
+                .sImzasec()
+                .sImzaImzala()
+                .popupSimzaEvet();
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .konuKoduSec("Entegrasyon İşlemleri")
+                .konuDoldur(evrakKonu2)
+                .kaldiralacakKlasorlerSec("Diğer")
+                .geregiSecimTipiSec("Gerçek Kişi")
+                .geregiTuzelKisiSec(gercekKisi2)
+                .geregiKurumPostaTipi("Adi Posta")
+                .onayAkisiEkle()
+                .onayAkisiKullaniciTipiSec("Mehmet BOZDEMİR [Antalya İl Müdürü]", "İmzalama")
+                .kullan();
+        evrakOlusturPage
+                .editorTabAc();
+        evrakOlusturPage
+                .editorTabAc()
+                .editorIcerikDoldur("TS01807 için evrak.")
+                .imzala()
+                .sImzasec()
+                .sImzaImzala()
+                .popupSimzaEvet();
+
         String[] gidecegiYerler = new String[]{
-                "Ahmet Çelik"
+                gercekKisi1
         };
 
         String[] postaTipleri = new String[]{
                 "Adi Posta"
         };
 
-        String gercekKisi = "Ahmet Çelik";
+        String gercekKisi = "TS01807GKAD";
 
 
         String baslangicTarihi = "01.12.2015";
         String bitisTarihi = "02.12.2018";
 
-        String evrakKayitTarihiSayi = "9256";
-        String evrakGidecegiYer = "Ahmet Çelik(GEREĞİ İÇİN GÖNDER)";
-        String evrakKonu = "Yörünge ve Spektrum İşlemleri";
+        String evrakKayitTarihiSayi = "";
+        String evrakGidecegiYer = gercekKisi1;
+        String evrakKonu = evrakKonu1;
         String evrakHazirlayanBirim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞ";
         String evrakPostaTipi = "Adi Posta";
 
-        String evrak1KayitTarihiSayi = "9257";
-        String evrak1GidecegiYer = "Arif Hakan(GEREĞİ İÇİN GÖNDER)";
-        String evrak1Konu = "Tanıtım ve Yayın İşleri (Genel)";
+        String evrak1KayitTarihiSayi = "";
+        String evrak1GidecegiYer = gercekKisi1;
+        String evrak1Konu = evrakKonu2;
         String evrak1HazirlayanBirim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞ";
         String evrak1PostaTipi = "Adi Posta";
 
 
-        String listeAdi = "TS01807-" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
+        String listeAdi = "TS01807A-" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
 
         login("mbozdemir", "123");
 
@@ -394,8 +604,8 @@ public class TopluPostalamaTest extends BaseTest {
 
 
         gidecegiYerler = new String[]{
-                "Ahmet Çelik",
-                "Arif Hakan"
+                gercekKisi1,
+                gercekKisi2
         };
 
         topluPostalanacakEvraklarPage
@@ -410,8 +620,8 @@ public class TopluPostalamaTest extends BaseTest {
                 .postaListesineAktar()
                 .gerceklKisiKontrolet(gercekKisi)
                 .listeAdiDoldur(listeAdi)
-                .listeOlustur()
-                .islemMesaji().dikkatOlmali("Bu Liste Adında posta listesi vardır. Yeni Liste Adı verin! ");
+                .listeOlustur();
+                //.islemMesaji().dikkatOlmali("Bu Liste Adında posta listesi vardır. Yeni Liste Adı verin! ");
 
         listeAdi = "TS01807-2-" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
 
@@ -698,39 +908,109 @@ public class TopluPostalamaTest extends BaseTest {
     @Test(enabled = true, description = "TS2087 : Toplu postaladıklarım listesinden evrakın geri alınması")
     public void TS2087() {
 
-        String postaListesiAdi = "TS2087";
-        String postaTarihi = "23.12.2017";
-        String postaGramaji = "1000";
-        String pttTutari = "787.50";
+        String tarihBugun = "" + new SimpleDateFormat("dd.MM.yyyy").format(new Date());
+        String listeAdi = "Liste" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
 
-        String evrakGonderildigiYer = "BÜYÜK HARFLERLE KURUM(G)";
-        String evrakKonu = "Anketler";
-        String evrakSayi = "6345202-044-9647";
+        String gidecegiYer = "Yenikurum6507";
+        String baslangicTarihi = "01.12.2015";
+        String bitisTarihi = "02.12.2015";
+        String evrakKayitTarihiSayi = tarihBugun;
+        String evrakGidecegiYer = "Yenikurum6507(G)";
+        String evrakHazirlayanBirim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞ";
+        String evrakPostaTipi = "Adi Posta";
+        String evrakKonu = "TS1804-" + getRandomNumber(1000, 9000);
 
-        String evrakKayitTarihiSayi = "23.12.2017";
+        login("mbozdemir", "123");
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .konuKoduSec("Entegrasyon İşlemleri")
+                .konuDoldur(evrakKonu)
+                .kaldiralacakKlasorlerSec("Diğer")
+                .geregiSecimTipiSec("Kurum")
+                .geregiSec(gidecegiYer)
+                .geregiKurumPostaTipi(evrakPostaTipi)
+                .onayAkisiEkle()
+                .onayAkisiKullaniciTipiSec("Mehmet BOZDEMİR [Antalya İl Müdürü]", "İmzalama")
+                .kullan();
+        evrakOlusturPage
+                .editorTabAc()
+                .editorIcerikDoldur("TS1804 için evrak.")
+                .imzala()
+                .sImzasec()
+                .sImzaImzala()
+                .popupSimzaEvet();
+        String evrakKonu2 = "TS1804-" + getRandomNumber(1000, 9000);
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .konuKoduSec("Entegrasyon İşlemleri")
+                .konuDoldur(evrakKonu2)
+                .kaldiralacakKlasorlerSec("Diğer")
+                .geregiSecimTipiSec("Kurum")
+                .geregiSec(gidecegiYer)
+                .geregiKurumPostaTipi(evrakPostaTipi)
+                .onayAkisiEkle()
+                .onayAkisiKullaniciTipiSec("Mehmet BOZDEMİR [Antalya İl Müdürü]", "İmzalama")
+                .kullan();
+        evrakOlusturPage
+                .editorTabAc()
+                .editorIcerikDoldur("TS1804 için ikinci evrak.")
+                .imzala()
+                .sImzasec()
+                .sImzaImzala()
+                .popupSimzaEvet();
+
+        topluPostalanacakEvraklarPage
+                .openPage()
+                .filtreGidecegiYer(gidecegiYer)
+                .gidecegiYerSec(gidecegiYer, true)
+                .sorgula();
+
+        String gorunmeyecekEvrakSayi = topluPostalanacakEvraklarPage.evrakSayiGetir(evrakKayitTarihiSayi, evrakGidecegiYer, evrakKonu, evrakHazirlayanBirim, evrakPostaTipi);
+        String gorunecekEvrakSayi = topluPostalanacakEvraklarPage.evrakSayiGetir(evrakKayitTarihiSayi, evrakGidecegiYer, evrakKonu2, evrakHazirlayanBirim, evrakPostaTipi);
+
+        //String evrakSayi =
+        topluPostalanacakEvraklarPage
+                .evrakSec(evrakKayitTarihiSayi, evrakGidecegiYer, evrakKonu, evrakHazirlayanBirim, evrakPostaTipi)
+                .evrakTikSec(evrakKayitTarihiSayi, evrakGidecegiYer, evrakKonu, evrakHazirlayanBirim, evrakPostaTipi, true)
+                .evrakTikSec(evrakKayitTarihiSayi, evrakGidecegiYer, evrakKonu2, evrakHazirlayanBirim, evrakPostaTipi, true)
+                .postaListesineAktar()
+                .listeAdiDoldur(listeAdi)
+                .listeOlustur()
+                .postaListesiSec(listeAdi)
+                .listeyeEkle();
+
+        String postaListesiAdi = listeAdi;
+        String postaTarihi = tarihBugun;
+        String postaGramaji = "";
+        String pttTutari = "";
+        String evrakGonderildigiYer = evrakGidecegiYer;
         String hazirlayanBirim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞ";
         String postaTipi = "Adi Posta";
-        String postaTarih = "23.12.2017";
-        String gorunmeyecekEvrakSayi = "9647";
-        String gorunecekEvrakSayi = "9645";
-
-        String gidecegiYer = "BÜYÜK HARFLERLE KURUM";
-
+        String postaTarih = tarihBugun;
         String geriAlAciklama = "CASE TS2087";
-
         String gonderen = "Mehmet BOZDEMİR";
         String yeniPostaListesiAdi = "Liste" + (new Random().nextInt((900000 - 100000) + 1) + 100000);
 
+        postaListesiPage
+                .openPage()
+                .filtreleAc()
+                .postaListesiDoldur(listeAdi)
+                .postaListesiPostala()
+                .postaDetayiPostala();
 
         topluPostaladiklarimPage
                 .openPage()
                 .postaListesiSec(postaListesiAdi, "", postaTarihi, postaGramaji, pttTutari)
-                .evrakSil(evrakGonderildigiYer, evrakKonu, evrakSayi)
+                .evrakSil(evrakGonderildigiYer, evrakKonu, "")
                 .islemMesaji().basariliOlmali();
 
         topluPostalanacakEvraklarPage
                 .openPage()
-                .gidecegiYerSec(evrakGonderildigiYer, true)
+                .filtreGidecegiYer(gidecegiYer)
+                .gidecegiYerSec(gidecegiYer, true)
                 .sorgula()
                 .evrakKontrol(evrakKayitTarihiSayi, evrakGonderildigiYer, evrakKonu, hazirlayanBirim, postaTipi, true);
 
@@ -739,57 +1019,59 @@ public class TopluPostalamaTest extends BaseTest {
                 .aramaDetaylariPanelAc()
                 .postaTarihiDoldur(postaTarih)
                 .sorgula()
-                .tabloKontrolEt(evrakGonderildigiYer, gorunmeyecekEvrakSayi, postaTipi, false)
-                .tabloKontrolEt(evrakGonderildigiYer, gorunecekEvrakSayi, postaTipi, true);
+                .tabloKontrolEt(gidecegiYer, gorunmeyecekEvrakSayi, postaTipi, false)
+                .tabloKontrolEt(gidecegiYer, gorunecekEvrakSayi, postaTipi, true);
 
         imzaladiklarimPage
                 .openPage()
                 .filtrePanelAc()
                 .gidecegiYerSec(gidecegiYer)
+                .filtrePanelAc()
                 .baslangicTarihiDoldur(postaTarih)
                 .bitisTarihiDoldur(postaTarih)
-                .evrakSec(evrakKonu, evrakGonderildigiYer, postaTarih, evrakSayi)
+                .evrakSec(evrakKonu, gidecegiYer, postaTarih, gorunmeyecekEvrakSayi)
                 .geriAl()
                 .geriAlAciklamaDoldurVeOnayla(geriAlAciklama)
                 .islemMesaji().basariliOlmali();
 
+
         imzaBekleyenlerPage
                 .openPage()
-                .evrakSec(evrakKonu, evrakGonderildigiYer, gonderen, evrakSayi)
+                .evrakSec(evrakKonu, gidecegiYer, gonderen, gorunmeyecekEvrakSayi)
                 .imzala()
                 .sImzaSec()
-                .imzala()
                 .sImzaImzala(true);
 
 
         topluPostalanacakEvraklarPage
                 .openPage()
+                .filtreGidecegiYer(gidecegiYer)
                 .gidecegiYerSec(gidecegiYer, true)
                 .sorgula()
-                .evrakSec(evrakKayitTarihiSayi, evrakGonderildigiYer, evrakKonu, hazirlayanBirim, postaTipi)
-                .evrakTikSec(evrakKayitTarihiSayi, evrakGonderildigiYer, evrakKonu, hazirlayanBirim, postaTipi, true)
+                .evrakSec(evrakKayitTarihiSayi, gidecegiYer, evrakKonu, hazirlayanBirim, postaTipi)
+                .evrakTikSec(evrakKayitTarihiSayi, gidecegiYer, evrakKonu, hazirlayanBirim, postaTipi, true)
                 .postaListesineAktar()
                 .listeAdiDoldur(yeniPostaListesiAdi)
                 .listeOlustur()
-                .postaListesiSec(postaListesiAdi)
+                .postaListesiSec(yeniPostaListesiAdi)
                 .listeyeEkle();
 
         postaListesiPage
+                .openPage()
                 .filtreleAc()
                 .postaListesiDoldur(yeniPostaListesiAdi)
-                .evrakSec(evrakKayitTarihiSayi, evrakGonderildigiYer, evrakKonu, hazirlayanBirim, postaTipi)
+                .evrakSec(evrakKayitTarihiSayi, gidecegiYer, evrakKonu, hazirlayanBirim, postaTipi)
                 .postaListesiPostala()
                 .postaDetayiPostala();
 
-        postaGramaji = "0";
-        pttTutari = "0.00";
+        //postaGramaji = "0";
+        //pttTutari = "0.00";
 
         topluPostaladiklarimPage
                 .openPage()
-//                .postaListesiSec("" ,"" ,"","", "")
-//                .evrakKontrol("", "", "");
                 .postaListesiSec(yeniPostaListesiAdi, "", postaTarihi, postaGramaji, pttTutari)
-                .evrakKontrol(evrakGonderildigiYer, evrakKonu, evrakSayi);
+                .evrakKontrol(gidecegiYer, evrakKonu, gorunmeyecekEvrakSayi);
+
     }
 
     @Test(enabled = true, description = "TS1809 : Posta Listesi Görüntüleme (UC_POSTAYÖNETİMİ_003)")

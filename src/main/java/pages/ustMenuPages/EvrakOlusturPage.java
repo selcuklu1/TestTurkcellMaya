@@ -316,7 +316,7 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement popUpEvrakDegisiklik = $(By.xpath("//span[normalize-space(text())='Evrakta değişiklik var, kaydetmek ister misiniz?']"));
         SelenideElement txtOnayIslemiAciklama = $(By.id("windowCevapEvrakForm:onayIslemiAciklama"));
         SelenideElement btnOnayIslemiGonder = $(By.id("windowCevapEvrakForm:gonderButton"));
-
+        SelenideElement cmbGeregiTuzelKisi = $("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='geregiLov:LovText']");
         BelgenetElement cmbGeregi = comboLov("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='geregiLov:LovText']");
         BelgenetElement cmbGeregiPostaTipi = comboLov(By.id("yeniGidenEvrakForm:evrakBilgileriList:16:geregiLov:LovSecilenTable:0:selectOneMenu"));
         // select[id^='yeniGidenEvrakForm:evrakBilgileriList:16:geregiLov:LovSecilenTable:'][id$=':selectOneMenu']
@@ -600,6 +600,20 @@ public class EvrakOlusturPage extends MainPage {
             cmbGeregi.sendKeys(geregi);
             cmbGeregi.selectLov(geregi);
             cmbGeregi.closeTreePanel();
+            return this;
+        }
+
+        @Step("Geregi alanında Tüzel Kişi olarak \"{tuzelkisi}\" seç")
+        public BilgilerTab geregiTuzelKisiSec(String tuzelkisi){
+            cmbGeregi.sendKeys(tuzelkisi);
+
+            SelenideElement currentList = $$("div[id^='yeniGidenEvrakForm:evrakBilgileriList:'][id$=':geregiLov:lovTree']").last();
+            currentList.waitUntil(Condition.visible, 5000);
+            currentList
+                    .$$("span[class='lovItemTitle ']")
+                    .filterBy(text(tuzelkisi))
+                    .last()
+                    .click();
             return this;
         }
 
@@ -1452,7 +1466,7 @@ public class EvrakOlusturPage extends MainPage {
         }
 
         public EditorTab popupSimzaEvet() {
-            SelenideElement sayisalImzaOnay = $(By.id("imzalaForm:sayisalImzaConfirmForm:sayisalImzaEvetButton"));
+            SelenideElement sayisalImzaOnay = $$(By.id("imzalaForm:sayisalImzaConfirmForm:sayisalImzaEvetButton")).last();
             sayisalImzaOnay.click();
             return this;
         }

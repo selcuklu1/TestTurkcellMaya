@@ -4,10 +4,12 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
+import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.UstMenuData;
 
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
 
@@ -65,23 +67,52 @@ public class PttRaporuPage extends MainPage {
     public PttRaporuPage tabloKontrolEt(String gittigiYer, String evrakSayi, String gidisSekli, boolean shouldBeExist) {
         if (shouldBeExist == true) {
 
-            tableRaporlar
-                    .filterBy(Condition.text(gittigiYer))
-                    .filterBy(Condition.text(evrakSayi))
-                    .filterBy(Condition.text(gidisSekli))
-                    .first()
-                    .shouldBe(Condition.exist)
-                    .shouldBe(Condition.visible);
+            ElementsCollection tablePages = $$("td[id$='pttRaporuForm:havaleEvrakRaporOutputTab_paginator_bottom'] > span[class='ui-paginator-pages'] >  span");
+
+            boolean elementFound = false;
+
+            for (int i = 0; i < tablePages.size(); i++) {
+                tablePages.get(i).click();
+
+                SelenideElement currentLine = tableRaporlar
+                        .filterBy(Condition.text(gittigiYer))
+                        .filterBy(Condition.text(evrakSayi))
+                        .filterBy(Condition.text(gidisSekli))
+                        .first();
+
+                if (currentLine.isDisplayed() && currentLine.exists()) {
+                    elementFound = true;
+                    break;
+                }
+
+            }
+
+            Assert.assertEquals(elementFound, shouldBeExist);
+
+            return this;
 
         } else {
 
-            tableRaporlar
-                    .filterBy(Condition.text(gittigiYer))
-                    .filterBy(Condition.text(evrakSayi))
-                    .filterBy(Condition.text(gidisSekli))
-                    .first()
-                    .shouldNotBe(Condition.exist)
-                    .shouldNotBe(Condition.visible);
+            ElementsCollection tablePages = $$("td[id$='pttRaporuForm:havaleEvrakRaporOutputTab_paginator_bottom'] > span[class='ui-paginator-pages'] >  span");
+
+            boolean elementFound = false;
+
+            for (int i = 0; i < tablePages.size(); i++) {
+                tablePages.get(i).click();
+
+                SelenideElement currentLine = tableRaporlar
+                        .filterBy(Condition.text(gittigiYer))
+                        .filterBy(Condition.text(evrakSayi))
+                        .filterBy(Condition.text(gidisSekli))
+                        .first();
+
+                if (currentLine.isDisplayed() && currentLine.exists()) {
+                    elementFound = true;
+                }
+
+                Assert.assertEquals(elementFound, shouldBeExist);
+
+            }
 
         }
         return this;

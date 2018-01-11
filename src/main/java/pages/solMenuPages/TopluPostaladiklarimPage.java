@@ -86,7 +86,7 @@ public class TopluPostaladiklarimPage extends MainPage {
                     .filterBy(text("Posta Kodu: " + postaKodu))
                     .filterBy(text("Posta Tarihi: " + postaTarihi))
                     .filterBy(text("Posta Gramajı: " + postaGramaji))
-                    .filterBy(text("PTT Tutarı: " + pttTutari + " TL"))
+                    .filterBy(text("PTT Tutarı: " + pttTutari))
                     .first();
 
             if (postaListesi.isDisplayed() && postaListesi.exists()) {
