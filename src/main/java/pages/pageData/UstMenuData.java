@@ -5,8 +5,7 @@ package pages.pageData;
  * Tarih: 25.12.2017
  * Açıklama:
  */
-public enum UstMenuData {
-    DUMP;
+public class UstMenuData {
 
     private enum UstMenuGroup {
         EvrakIslemleri("Evrak İşlemleri"),
@@ -29,7 +28,7 @@ public enum UstMenuData {
         }
     }
 
-    public enum EvrakIslemleri {
+    public enum EvrakIslemleri implements UstMenuDataInterface {
         EvrakOlustur("Evrak Oluştur"),
         OlurYazisiOlustur("Olur Yazısı Oluştur"),
         GidenEvrakKayit("Giden Evrak Kayıt"),
@@ -56,7 +55,7 @@ public enum UstMenuData {
         }
     }
 
-    public enum TeskilatKisiTanimlari {
+    public enum TeskilatKisiTanimlari implements UstMenuDataInterface {
         TuzelKisiYonetimi("Tüzel Kişi Yönetimi"),
         GercekKisiYonetimi("Gerçek Kişi Yönetimi"),
         KurumYonetimi("Kurum Yönetimi"),
@@ -81,7 +80,7 @@ public enum UstMenuData {
         }
     }
 
-    public enum KlasorIslemleri {
+    public enum KlasorIslemleri implements UstMenuDataInterface {
         KlasorYonetimi("Klasör Yönetimi"),
         KonuKoduYonetimi("Konu Kodu Yönetimi"),
         KlasorEvrakIslemleri("Klasör Evrak İşlemleri"),
@@ -105,7 +104,7 @@ public enum UstMenuData {
         }
     }
 
-    public enum KullaniciIslemleri {
+    public enum KullaniciIslemleri implements UstMenuDataInterface {
         YonetimHavuzuYonetimi("Yönetim Havuzu Yönetimi"),
         KullaniciYonetimi("Kullanıcı Yönetimi"),
         KullaniciListesiYonetimi("Kullanıcı Listesi Yönetimi"),
@@ -127,7 +126,7 @@ public enum UstMenuData {
         }
     }
 
-    public enum YonetimSayfalari {
+    public enum YonetimSayfalari implements UstMenuDataInterface {
         BakimaAl("Bakıma Al"),
         EImzaDenetimi("E-İmza Denetimi"),
         EvrakDogrulamaAktarim("Evrak Doğrulama Aktarım"),
@@ -166,7 +165,7 @@ public enum UstMenuData {
         }
     }
 
-    public enum KisiselIslemlerim {
+    public enum KisiselIslemlerim implements UstMenuDataInterface {
         KullaniciIcerikSablonlari("Kullanıcı İçerik Şablonları"),
         SikKullanilanlar("Sık Kullanılanlar"),
         KullaniciVarsayilanYonetimi("Kullanıcı Varsayılan Yönetimi"),
@@ -189,7 +188,7 @@ public enum UstMenuData {
         }
     }
 
-    public enum Raporlar {
+    public enum Raporlar implements UstMenuDataInterface {
         EvrakBeklemeSuresiRaporu("Evrak Bekleme Süresi Raporu"),
         IptalEdilenEvraklarRaporu("İptal Edilen Evraklar Raporu"),
         VekaletRaporu("Vekalet Raporu"),
@@ -229,7 +228,7 @@ public enum UstMenuData {
         }
     }
 
-    public enum AmirIslemleri {
+    public enum AmirIslemleri implements UstMenuDataInterface {
         KullaniciEvrakDevret("Kullanıcı Evrak Devret"),
         VekaletVer("Vekalet Ver");
 
@@ -247,6 +246,12 @@ public enum UstMenuData {
         public String getGroupName() {
             return groupName;
         }
+    }
+
+    public interface UstMenuDataInterface {
+        public String getName();
+
+        public String getGroupName();
     }
 
 }

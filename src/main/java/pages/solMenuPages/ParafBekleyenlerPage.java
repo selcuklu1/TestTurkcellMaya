@@ -12,7 +12,8 @@ import pages.pageData.SolMenuData;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
-import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
+import static com.codeborne.selenide.Selenide.sleep;
+import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 
 public class ParafBekleyenlerPage extends MainPage {
@@ -50,7 +51,7 @@ public class ParafBekleyenlerPage extends MainPage {
     SelenideElement btnTakipListesiKapat = $("[id^='evrakTakibimeEkleDialogForm:takipDialog'] span[class='ui-icon ui-icon-closethick']");
     ElementsCollection tableEvrakNotlari = $$(By.xpath("//th[contains(., 'Evrak Notları')]/../../../tbody/tr"));
 
-    @Step("Paylaştıklarım sayfası aç")
+    @Step("Paraf Bekleyenler sayfası aç")
     public ParafBekleyenlerPage openPage() {
         solMenu(SolMenuData.KapatmaIslemleri.ParafBekleyenler);
         String pageTitle = SolMenuData.KapatmaIslemleri.ParafBekleyenler.getMenuText();

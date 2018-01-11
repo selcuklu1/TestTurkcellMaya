@@ -14,7 +14,7 @@ import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Condition.enabled;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
-import static pages.pageComponents.belgenetElements.BelgenetFramework.$inFrame;
+import static pages.pageComponents.belgenetElements.Belgenet.$inFrame;
 import static pages.pageComponents.belgenetElements.BelgentCondition.toolboxButtonOn;
 
 /**
@@ -63,7 +63,7 @@ public class TextEditor extends MainPage {
     }
 
     public TextEditor editorTextShouldHave(Condition... condition) {
-        for (Condition con:condition) {
+        for (Condition con : condition) {
             editor().shouldHave(con);
         }
         switchTo().defaultContent();

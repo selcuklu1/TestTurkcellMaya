@@ -5,6 +5,7 @@ import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
@@ -188,6 +189,9 @@ public class MainPage extends BaseLibrary {
         $$("#leftMenuForm #birimlerimMenusuContainer a")
                 .filterBy(condition).shouldHave(sizeGreaterThan(0))
                 .first().click();
+
+        Allure.addAttachment("Birim Adı : ", $$("#leftMenuForm #birimlerimMenusuContainer a")
+                .filterBy(condition).first().getText());
         //$("#leftMenuForm #birimlerimMenusuContainer").$(byLinkText(birim)).click();
 
         //$("#kullaniciBirimAd").shouldHave(condition);
@@ -252,6 +256,14 @@ public class MainPage extends BaseLibrary {
         return this;
     }
 
+    @Step("Parafla")
+    public MainPage evrakParafla() {
+        paraflaButonaTikla();
+        sImzalaRadioSec();
+//        clickJs($("#imzalaForm\\:imzalaRadio").find(By.tagName("input")));
+        evrakImzaOnay();
+        return this;
+    }
     @Step("s-İmzla radio butonu ara")
     public SelenideElement sImzalaRadio() {
         return $("#imzalaForm\\:imzalaRadio .ui-radiobutton-box");

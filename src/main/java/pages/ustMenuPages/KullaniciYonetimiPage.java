@@ -18,7 +18,7 @@ import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
-import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
+import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 public class KullaniciYonetimiPage extends MainPage {
 
@@ -155,8 +155,9 @@ public class KullaniciYonetimiPage extends MainPage {
         return this;
     }
 
-    public KullaniciYonetimiPage kullaniciAdiDoldur(String value) {
-        txtKullaniciAdi.sendKeys(value);
+    @Step("Kullanici alanı \"{kullaniciAdi}\" doldurulur")
+    public KullaniciYonetimiPage kullaniciAdiDoldur(String kullaniciAdi) {
+        txtKullaniciAdi.sendKeys(kullaniciAdi);
         return this;
     }
 
@@ -202,13 +203,13 @@ public class KullaniciYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Birim Kontrol")
+    @Step("Birim Kontrolü")
     public KullaniciYonetimiPage tabloBirimKontrol() {
         tblKolonBirim.exists();
         return this;
     }
 
-    @Step("Güncelle butonu")
+    @Step("Güncelle butonu tıklanır")
     public KullaniciYonetimiPage kullaniciListesiGuncelleButonuTikla() {
 //        clickJs(btnKullaniciListesiGuncelle);
 //        btnKullaniciListesiGuncelle.exists();
@@ -216,7 +217,7 @@ public class KullaniciYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Gorevli oldugu birimler")
+    @Step("Gorevli oldugu birimler kontrolü")
     public KullaniciYonetimiPage gorevliOlduguBirimlerKontol() {
         tblGorevliOlduguBirimler.shouldBe(visible);
         tblGorevliOlduguBirimler.$("label").shouldHave(text("Görevli Olduğu Birimler"));
@@ -231,7 +232,7 @@ public class KullaniciYonetimiPage extends MainPage {
 //        btnGorevliOlduguBirimlerGuncelle2.click();
 //        return this;
 //    }
-    @Step("Gizlilik derecesi seç")
+    @Step("Gizlilik derecesi \"{gizlilikDerecesi}\" seçilir")
     public KullaniciYonetimiPage kullaniciBirimAtamaGizlilikDerecesiSec(String gizlilikDerecesi) {
 //        if (cmbKullaniciBirimAtamaGizlilikDerecesi.isDisplayed())
         cmbKullaniciBirimAtamaGizlilikDerecesi.selectOption(gizlilikDerecesi);

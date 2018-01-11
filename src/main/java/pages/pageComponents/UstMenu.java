@@ -9,9 +9,6 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import pages.pageData.UstMenuData;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
 import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Selenide.*;
 
@@ -20,19 +17,8 @@ public class UstMenu extends BaseLibrary {
 
     @Step("\"{ustMenuData.groupName}\" -> \"{ustMenuData.name}\" üst menu aç")
     public void openMenu(Enum ustMenuData, boolean... useJS) {
-        String groupName;
-        String menuName;
-        try {
-
-            Method getGroupNameMethod = ustMenuData.getClass().getMethod("getGroupName");
-            Method getNameMethod = ustMenuData.getClass().getMethod("getName");
-            groupName = getGroupNameMethod.invoke(ustMenuData).toString();
-            menuName = getNameMethod.invoke(ustMenuData).toString();
-
-        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-            e.printStackTrace();
-            throw new RuntimeException("SolMenuData hatası: \n" + e.getMessage());
-        }
+        String groupName = ((UstMenuData.UstMenuDataInterface) ustMenuData).getGroupName();
+        String menuName = ((UstMenuData.UstMenuDataInterface) ustMenuData).getName();
 
         if ((useJS.length <= 0) || useJS[0])
             openMenu(menuName);
@@ -130,5 +116,6 @@ public class UstMenu extends BaseLibrary {
         }
 
     }
+
 
 }

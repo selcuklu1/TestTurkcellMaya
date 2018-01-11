@@ -12,7 +12,7 @@ import pages.pageData.SolMenuData;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
-import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
+import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 public class HavaleEttiklerimPage extends MainPage {
 
@@ -104,9 +104,10 @@ public class HavaleEttiklerimPage extends MainPage {
         return this;
     }
 
-    @Step("Havale yap butonana bas")
-    public HavaleEttiklerimPage havaleYap() {
+    @Step("Havale Yap")
+    public HavaleEttiklerimPage havaleYap(){
         btnHavaleYap.click();
         return this;
     }
+
 }

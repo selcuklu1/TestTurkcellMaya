@@ -1,9 +1,6 @@
 package pages.ustMenuPages;
 
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.*;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -16,8 +13,8 @@ import pages.pageData.UstMenuData;
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
-import static pages.pageComponents.belgenetElements.BelgenetFramework.comboBox;
-import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
+import static pages.pageComponents.belgenetElements.Belgenet.comboBox;
+import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 import static pages.pageComponents.belgenetElements.BelgentCondition.not;
 import static pages.pageComponents.belgenetElements.BelgentCondition.required;
 
@@ -192,7 +189,7 @@ public class EvrakOlusturPage extends MainPage {
     }
 
     @Step("Kaydet ve onaya sun panelinde gönder butonuna tıkla.")
-    public EvrakOlusturPage kaydetOnayaSunGonder(){
+    public EvrakOlusturPage kaydetOnayaSunGonder() {
         btnKaydetOnayaSunGonder.click();
         return this;
     }
@@ -309,7 +306,7 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement btnVekaletTablosuKapat = $(By.xpath("//div[@id='yeniGidenEvrakForm:kullaniciBirimSecimiDialogId']//span[@class='ui-icon ui-icon-closethick']"));
         SelenideElement btnKullan = $("[id$='anlikAkisKullanButton']");
         SelenideElement txtOnayAkisi = $("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='akisLov:LovSecilen']");
-        SelenideElement btnIadeEt = $("[id='inboxItemInfoForm:dialogTabMenuRight:dialogTabMenuRight'] td:nth-child(7) button");
+        SelenideElement btnIadeEt = $(By.xpath("//span[text()='İade Et']/ancestor::tbody[1]//button"));
         BelgenetElement cmbKullaniciListesi = comboBox(By.id("inboxItemInfoForm:kullaniciListOneMenu_id_label"));
         SelenideElement txtNot = $(By.id("inboxItemInfoForm:notTextArea_id"));
         SelenideElement btnIadeEt2 = $(By.id("inboxItemInfoForm:iadeEtButton_id"));
@@ -347,7 +344,11 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement btnOtomatikOnayAkisi = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:otomatikOnayAkisiEkle"));
 
         BelgenetElement txtForm = comboLov("input[id$='formSablonuId:LovText']");
+
+        SelenideElement btnKaydet = $(By.xpath("//span[text()='Kaydet']/ancestor::tbody[1]//button"));
+
         SelenideElement aKendimiEkle = $("a[id$=':kendimiEkleCommand']");
+
         //endregion
 
         private BilgilerTab open() {
@@ -886,13 +887,20 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Kaydet butonu")
+        public BilgilerTab kaydet() {
+            btnKaydet.click();
+            return this;
+        }
+
+
         @Step("İade Et butonu")
         public BilgilerTab iadeEt() {
             btnIadeEt.click();
             return this;
         }
 
-        @Step("Kullanıcı Listesi kontrol")
+        @Step("Kullanıcı Listesi kontrol : \"{kullanici}\" ")
         public BilgilerTab kullaniciListesiKontrol(String kullanici) {
             String text = cmbKullaniciListesi.text();
             text.contains(kullanici);
@@ -905,7 +913,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("İade et")
+        @Step("İade et tıklanır")
         public BilgilerTab iadeEt2() {
             btnIadeEt2.click();
             return this;
@@ -1302,7 +1310,7 @@ public class EvrakOlusturPage extends MainPage {
         }
 
         @Step("Kendimi ekle linkine tıkla.")
-        public BilgilerTab kendimiEkle(){
+        public BilgilerTab kendimiEkle() {
             aKendimiEkle.click();
             return this;
         }
@@ -1608,6 +1616,9 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement btnEkleriDosyaEkle = $(By.id("yeniGidenEvrakForm:evrakEkTabView:dosyaEkleButton"));
         SelenideElement btnEkleriDosyaTemizle = $(By.id("yeniGidenEvrakForm:evrakEkTabView:dosyaTemizleButton"));
         SelenideElement chkEkListesiniEkYap = $(By.id("yeniGidenEvrakForm:j_idt30306"));
+        SelenideElement btnDosyaEkle = $(By.xpath("//input[@id='yeniGidenEvrakForm:evrakEkTabView:fileUploadButtonA_input']"));
+        SelenideElement lblDosyaAdi = $(By.id("yeniGidenEvrakForm:evrakEkTabView:dosyaAdi"));
+
 
         //Ekleri tabı - Fiziksel Ekle
         SelenideElement txtEkleriFizikselMetni = $(By.id("yeniGidenEvrakForm:evrakEkTabView:aciklamaTextArea"));
@@ -1635,6 +1646,7 @@ public class EvrakOlusturPage extends MainPage {
 
         SelenideElement btnImzala = $("button[id^='yeniGidenEvrakForm:rightTab:uiRepeat'] span[class$='imzala']");
 
+        @Step("Ekleri Tabını aç")
         private EkleriTab open() {
             tabEkleri.click();
             return this;
@@ -1647,8 +1659,8 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Ekleri Tab - Açıklama")
-        public EkleriTab ekleriDosyaAciklamaDoldur(String aciklama) {
+        @Step("Ekleri Tab - Ek Metni")
+        public EkleriTab ekleriEkMetniDoldur(String aciklama) {
             txtEkleriDosyaAciklama.sendKeys(aciklama);
             return this;
         }
@@ -1741,6 +1753,29 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Dosya ekle {description} : {pathPDF}")
+        public EkleriTab dosyaEkle(String pathPDF, String description) {
+
+            uploadFile(btnDosyaEkle, pathPDF);
+
+            return this;
+        }
+
+        @Step("Dosya yüklenene kadar 60 dk bekle, 60 dktan fazla sürerse timeout hatası ver")
+        public EkleriTab dosyaYukleneneKadarBekle() {
+            
+            waitForLoadingJS(WebDriverRunner.getWebDriver(), 60);
+
+            return this;
+        }
+
+        @Step("Eklenen dosya adi kontrol : {dosyaAdi}")
+        public EkleriTab eklenenDosyaAdiKontrol(String dosyaAdi) {
+
+            Assert.assertEquals(lblDosyaAdi.getText().contains(dosyaAdi), true);
+
+            return this;
+        }
     }
 
     public class IlgileriTab extends MainPage {

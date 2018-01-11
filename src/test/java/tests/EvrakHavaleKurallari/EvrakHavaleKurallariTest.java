@@ -359,12 +359,15 @@ public class EvrakHavaleKurallariTest extends BaseTest {
         String basariMesaji = "İşlem başarılıdır!";
         String uyariMesaji = "Evrak Bilgilerine Tanımlanmış Otomatik Havale Kuralı Bulunamamıştır.";
         String kuralAdi = "TC-2069D_" + createRandomNumber(12);
+        String kuralAdi2 = "TC-2069D_" + createRandomNumber(12);
         String konuKodu = "Diğer";
-        String evrakTuru = "Resmi Yazı";
+        String evrakTuru = "Resmi Yazışma";
+        String evrakTuru2 = "Tebrik,Davetiye vb.";
         String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
         String kisi = "Zübeyde Tekin";
         String birim2 = "BİLİŞİM HİZMETLERİ VE UYDU PAZARLAMA GENEL MÜDÜR";
         String sadecePasifler = "Sadece Pasifler";
+        String sadeceAktifler = "Sadece Aktifler";
 
         login("cseker", password2);
 
@@ -374,29 +377,29 @@ public class EvrakHavaleKurallariTest extends BaseTest {
                 .yeniKural()
                 .evrakTuruSec(0)
                 .kuralinTanimliOlduguBirimlerYeni()
-                .birimEkleBirimDoldur(birim2)
+                .birimEkleBirimDoldur(birim)
                 .birimEkleEkle()
                 .kuralinTanimliOlduguBirimlerYeni()
-                .birimEkleBirimDoldur(birim)
+                .birimEkleBirimDoldur(birim2)
                 .birimEkleEkle()
                 .kuralAdiDoldur(kuralAdi)
                 .kimeHavaleEdilecekKisiDoldur(kisi, birim2)
                 .kuralEklemeKaydet();
 
         evrakHavaleKurallariYonetimiPage
-                .filtreleKuralAdiDoldur(kuralAdi,"Kural adı");
+                .filtreleKuralAdiDoldur(kuralAdi, "Kural adı");
         //TODO
 
         evrakHavaleKurallariYonetimiPage
                 .ara()
-                .havaleKurallariListesiGuncelle(kuralAdi,"")
+                .havaleKurallariListesiGuncelle(kuralAdi, "")
                 .ilkPasifYap()
                 .islemOnayiEvet();
 
         evrakHavaleKurallariYonetimiPage
                 .kuralinTanimliOlduguBirimlerSec(sadecePasifler)
-                .kuralEklemeKaydet();
-                //.islemMesaji().basariliOlmali(basariMesaji);
+                .kuralEklemeKaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
 
         gelenEvrakKayitPage
                 .openPage()
@@ -405,37 +408,63 @@ public class EvrakHavaleKurallariTest extends BaseTest {
                 .otomatikHavaleSec()
                 .islemMesaji().dikkatOlmali(uyariMesaji);
 
-
-               /* .pasifYap(kuralAdi,"Konu")
-                .islemOnayiEvet();
+        evrakHavaleKurallariYonetimiPage
+                .openPage()
+                .ara()
+                .pasifYapilanKullaniciGuncelle(kuralAdi)
+                .kuralinTanimliOlduguBirimlerSec(sadecePasifler)
+                .ilkAktifYap()
+                .islemOnayiEvet()
+                .kuralEklemeKaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
 
         gelenEvrakKayitPage
                 .openPage()
                 .konuKoduDoldur(konuKodu)
                 .evrakTuruSec(evrakTuru)
                 .otomatikHavaleSec()
-                .islemMesaji().beklenenMesaj(uyariMesaji);
+                .otomatikHavaleGeldigiGorme(kuralAdi);
 
         evrakHavaleKurallariYonetimiPage
                 .openPage()
-                .filtreleKuralAdiDoldur(kuralAdi,"Kural adı");
-        //TODO
+                .yeniKural()
+                .evrakTuruSec(4)
+                .kimeHavaleEdilecekKisiDoldur(kisi, birim2)
+                .kuralinTanimliOlduguBirimlerYeni()
+                .birimEkleAltBirimlerDahil(true)
+                .birimEkleBirimDoldur(birim)
+                .birimEkleAltBirimEkle(true);
 
-        evrakHavaleKurallariYonetimiPage
-                .ara()
-                .aktifYap(kuralAdi,"Konu")
-                .islemOnayiEvet();
+            String isim = evrakHavaleKurallariYonetimiPage.birimEkleAltBirimIlkAdCek();
+
+            evrakHavaleKurallariYonetimiPage
+                .birimEkleEkle()
+                .yeniBirimSil(isim)
+                .islemOnayiEvet()
+                .kuralAdiDoldur(kuralAdi2)
+                .kuralEklemeKaydet();
 
         gelenEvrakKayitPage
                 .openPage()
-                .otomatikHavaleSec();
+                .konuKoduDoldur(konuKodu)
+                .evrakTuruSec(evrakTuru2)
+                .otomatikHavaleSec2()
+                .otomatikHavaleGeldigiGorme(kuralAdi2);
 
         //Test bittikten sonra datamızı siliyoruz. Bir sonraki koşumda hata almamamız için.
         evrakHavaleKurallariYonetimiPage
                 .openPage()
+                //.filtreleKuralAdiDoldur(kuralAdi2,"Kural adı")
                 .ara()
                 .sil(kuralAdi,"Konu")
                 .islemOnayiEvet()
-                .islemMesaji().basariliOlmali(basariMesaji);*/
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        evrakHavaleKurallariYonetimiPage
+                //.filtreleKuralAdiDoldur(kuralAdi2,"Kural adı")
+                .ara()
+                .sil(kuralAdi2,"Konu")
+                .islemOnayiEvet()
+                .islemMesaji().basariliOlmali(basariMesaji);
     }
 }
