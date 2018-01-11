@@ -42,7 +42,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
 
     //TS
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "1610: KEP Hesap Menüsü - Tanımlanan KEP hesapları ile login işlemleri")
+    @Test(enabled = true, description = "TS1610: KEP Hesap Menüsü - Tanımlanan KEP hesapları ile login işlemleri")
     public void TS1610() {
 
         String basariMesaji = "İşlem başarılıdır!";
@@ -83,7 +83,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "1513: Kurum Kep Hesabı Tanımlama ve Evrak Oluşturma Ekranından kontrolü")
+    @Test(enabled = true, description = "TS1513: Kurum Kep Hesabı Tanımlama ve Evrak Oluşturma Ekranından kontrolü")
     public void TS1513B() throws InterruptedException {
 
         String popupKepAdresi = "turksat.kamu1@testkep.pttkep.gov.tr";
@@ -114,7 +114,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "1513: Gerçek Kişi Kep Hesabı Tanımlama ve Evrak Oluşturma Ekranından Kontrolü")
+    @Test(enabled = true, description = "TS1513: Gerçek Kişi Kep Hesabı Tanımlama ve Evrak Oluşturma Ekranından Kontrolü")
     public void TS1513C() {
 
         String popupKepAdresi = "turksat.kamu1@testkep.pttkep.gov.tr";
@@ -145,7 +145,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "1513: Tüzel Kişi Kep Hesabı Tanımlama ve Evrak Oluşturma Ekranından Kontrolü")
+    @Test(enabled = true, description = "TS1513: Tüzel Kişi Kep Hesabı Tanımlama ve Evrak Oluşturma Ekranından Kontrolü")
     public void TS1513D() {
 
         String popupKepAdresi = "turksat.kamu1@testkep.pttkep.gov.tr";
@@ -177,7 +177,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "KEP Adresi Tanımlama işlemleri")
+    @Test(enabled = true, description = "TS1520: KEP Adresi Tanımlama işlemleri")
     public void TS1520() {
 
         String birim = "Yazılım";
@@ -217,6 +217,48 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
 
         kepIlePostalanacaklarPage
                 .gondericiKontrol(popupKepAdresi2);
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "KEP Adresi Tanımlama işlemleri")
+    public void TS2236() {
+
+        String konuKodu = "Diğer";
+        String konuKoduRandom = "TS2236_"+createRandomNumber(15);
+        String klerans= "Gizlilik Klerans";
+        String bilgi = "";
+        String kurum = "";
+        String imzalama = "";
+        String editor = "";
+        String evrakTuru = "Resmi yazışma";
+
+
+        login(username2, password2);
+
+//TODO Pre Condition Postalanacak evraklar sayfası data oluşturmakta
+        login("gklerans", password3);
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .konuKoduDoldur(konuKodu)
+                .konuDoldur(konuKoduRandom)
+                .evrakTuruSec(evrakTuru)
+                .kaldiralacakKlasorlerSec(klerans)
+                .bilgiSecimTipiSecByText(bilgi)
+                .bilgiDoldur(kurum)
+                .OnayAkisiEkle()
+                .onayAkisiEkleIlkImzalaSec(imzalama)
+                .onayAkisiKullan();
+
+        evrakOlusturPage
+                .editorTabAc()
+                .editorIcerikDoldur(editor)
+                .imzala()
+                .sImzasec()
+                .sImzaImzala()
+                .sayisalImzaEvetPopup();
+        //TODO
+
     }
 
 }
