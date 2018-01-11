@@ -5,6 +5,7 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.testng.Assert;
 import pages.MainPage;
 import pages.pageData.SolMenuData;
 
@@ -165,12 +166,13 @@ public class BenimlePaylasilanlarPage extends MainPage {
 
     @Step("Açıklama kontrol")
     public BenimlePaylasilanlarPage evrakNotuKontrol(String ekleyen, String tarih, String aciklama) {
-        tableEvrakNotlari
+        boolean durum = tableEvrakNotlari
                 .filterBy(Condition.text(ekleyen))
                 .filterBy(Condition.text(tarih))
                 .filterBy(Condition.text(aciklama))
                 .get(0)
-                .shouldBe(Condition.exist);
+                .shouldBe(Condition.visible).exists();
+        Assert.assertEquals(durum,true);
         return this;
     }
 

@@ -67,7 +67,7 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
 
     @Step("Kural ekleme kaydet")
     public EvrakHavaleKurallariYonetimiPage kuralEklemeKaydet() {
-        btnKuralEklemeKaydet.click();
+        clickJs(btnKuralEklemeKaydet);
         return this;
     }
 

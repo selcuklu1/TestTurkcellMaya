@@ -578,7 +578,7 @@ public class EvrakPaylasmaTest extends BaseTest {
         String basariMesaji = "İşlem başarılıdır!";
         String uyariMesaj1 = "Gizlilik kleransınız evrakın gizlilik derecesini görüntülemek için yeterli değildir.";
         String konuKodu = "Diğer";
-        String konuKoduRandom = "TS-2227-" + createRandomNumber(10);
+        String konuKoduRandom = "TS-1905-" + createRandomNumber(10);
         String evrakTarihi = getSysDateForKis();
         String kurum = "BÜYÜK HARFLERLE KURUM";
         String gizlilikDerecesi = "Gizli";
@@ -634,7 +634,7 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .evrakOnizlemeTabSec("Evrak Notları")
                 .evrakNotuEkle()
                 .evrakNotuGirVeKaydet(aciklama)
-                .evrakNotuKontrol(kisi2, "2017", aciklama);
+                .evrakNotuKontrol(kisi2,  "2018", aciklama);
 
         gelenEvraklarPage
                 .openPage()
