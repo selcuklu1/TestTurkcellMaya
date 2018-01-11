@@ -828,6 +828,23 @@ public class BaseLibrary extends ElementsContainer {
         }
     }
 
+
+    @Step("Popup Silme Onayı:  \"{secim}\"")
+    public void silmeOnayi(String secim) {
+
+        SelenideElement btnSilmeOnayiEvet = $("[id$='ekSilEvetButton']");
+        SelenideElement btnSilmeOnayiHayir = $("['ekSilHayirButton']");
+
+        switch (secim) {
+            case "Evet":
+                clickJs(btnSilmeOnayiEvet);
+                break;
+            case "Hayır":
+                clickJs(btnSilmeOnayiHayir);
+                break;
+        }
+    }
+
     //Dosyanın bilgisayara inip inmediğini kontrol eder.
     public boolean searchDownloadedFileWithName(String downloadPath, String fileName) {
         boolean flag = false;
