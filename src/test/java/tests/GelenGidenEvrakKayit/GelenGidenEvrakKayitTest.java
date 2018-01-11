@@ -34,32 +34,6 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     User yakyol = new User("yakyol", "123");
     User mbozdemir = new User("mbozdemir", "123");
 
-    String evrakNO321;
-    String evrakNO328;
-    String konuKodu = "010.01";
-    String konu = "Test " + getSysDate();
-    String evrakTuru = "Resmi Yazışma";
-    String evrakDili = "Türkçe";
-    String evrakTarihi = getSysDateForKis();
-    String gizlilikDerecesi = "Normal";
-    String kisiKurum = "Kurum";
-    String geldigiKurum = "Esk Kurum 071216 2";
-    String kisiGercek = "Gerçek Kişi";
-    String evrakGelisTipi = "Posta";
-    String ivedilik = "Normal";
-    String ekMetni = "test otomasyon"+ getSysDateForKis();
-    String aciklama = "Test Otomasyon";
-
-    String pathToFilePdf = getDocPath() + "Otomasyon.pdf";
-    String pdfName = "Otomasyon.pdf";
-    String pathToFileExcel = getDocPath() + "test.xlsx";
-    String excelName = "test.xlsx";
-    String pathToFileEmail = getDocPath() + "ekranGoruntuleri.msg";
-    String ustYaziAdiMail = "ekranGoruntuleri.msg";
-    String bigPdfPath = getDocPath() + "emresencan.pdf";
-
-    String basariMesaji = "İşlem başarılıdır!";
-
 
     @BeforeMethod
     public void loginBeforeTests() {
@@ -79,9 +53,39 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 //        return "C:\\TestAutomation\\BelgenetFTA\\documents\\";
 //    }
 
+    String evrakNO321;
+    String evrakNO328;
+    String konuKodu = "010.01";
+    String konu = "Test " + getSysDate();
+    String evrakTuru = "Resmi Yazışma";
+    String evrakDili = "Türkçe";
+    String evrakTarihi = getSysDateForKis();
+    String gizlilikDerecesi = "Normal";
+    String kisiKurum = "Kurum";
+    String geldigiKurum = "Esk Kurum 071216 2";
+    String kisiGercek = "Gerçek Kişi";
+    String evrakGelisTipi = "Posta";
+    String ivedilik = "Normal";
+    String ekMetni = "test otomasyon"+ getSysDateForKis();
+    String aciklama = "Test Otomasyon";
+
+//    String pathToFilePdf = getDocPath() + "Otomasyon.pdf";
+//    String pdfName = "Otomasyon.pdf";
+//    String pathToFileExcel = getDocPath() + "test.xlsx";
+//    String excelName = "test.xlsx";
+//    String pathToFileEmail = getDocPath() + "ekranGoruntuleri.msg";
+//    String ustYaziAdiMail = "ekranGoruntuleri.msg";
+//    String bigPdfPath = getDocPath() + "emresencan.pdf";
+
+    String basariMesaji = "İşlem başarılıdır!";
+
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, priority = 0, description = "TS0321: Üstyazı ek ve ilgi eklenerek gelen evrak kaydı")
     public void TS0321() throws InterruptedException {
+        String pathToFilePdf = getDocPath() + "Otomasyon.pdf";
+        String pdfName = "Otomasyon.pdf";
+        String pathToFileExcel = getDocPath() + "test.xlsx";
+        String excelName = "test.xlsx";
 
         login(optiim);
 
@@ -132,6 +136,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
             , dependsOnMethods = {"TS0321"})
     public void TS2163() throws InterruptedException {
 
+        String pathToFilePdf = getDocPath() + "Otomasyon.pdf";
         String evrakTuru = "Dilekçe";
         login(optiim);
 //        String evrakNO321 = "5569";
@@ -180,6 +185,8 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
         String birim = "OPTİİM BİRİM";
         String details = "YGD";
+        String pathToFilePdf = getDocPath() + "Otomasyon.pdf";
+        String pdfName = "Otomasyon.pdf";
 
         login(optiim);
 
@@ -222,6 +229,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         String evrakNo = evrakNO321;
         String evrakNo1 = evrakNO328;
         String geldigiYer = "D";
+
 // Testin öncesinde TS0321 ve TS0328 caselerinin çalışması gerekli..
 
         kaydedilenGelenEvrakPage
@@ -277,6 +285,8 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
         String birim = "OPTİİM BİRİM11";
 
+        String pathToFileExcel = getDocPath() + "test.xlsx";
+        String pathToFileEmail = getDocPath() + "ekranGoruntuleri.msg";
 
         login(optiim);
 //        String ustYaziAdi = "ustYazi.pdf";  // TestOtomasyon.msg ekini eklememe rağmen ustYazi.pdf  olarak ekrana geliyor.
@@ -330,6 +340,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         String birim = "OPTİİM BİRİM";
         String uyariMesajı = "Dosya büyüklüğü uygun değildir!!";
         String secim = "Hayır";
+        String pathToFilePdf = getDocPath() + "Otomasyon.pdf";
 
         login(optiim);
         gelenEvrakKayitPage
@@ -402,6 +413,8 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         String geregi = "AFYON VALİLİĞİ";
         String kaldirlacakKlasor = "ESK05";
         String bilgi = "TAŞRA TEŞKİLATI";
+        String pathToFilePdf = getDocPath() + "Otomasyon.pdf";
+        String pdfName = "Otomasyon.pdf";
 
         login(optiim);
 
@@ -459,6 +472,8 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         String evrakNO326 = "";
         String pdfText = "";
         String details = "YGD";
+        String pathToFilePdf = getDocPath() + "Otomasyon.pdf";
+        String pdfName = "Otomasyon.pdf";
 
         login(yakyol);
 

@@ -889,7 +889,7 @@ public class GelenEvrakKayitPage extends MainPage {
     public String onIzlemePdfText() {
         String text = "";
         switchTo().frame(3);
-        text = $(By.xpath("//div[@id='viewer']/div[@class='page']/div[@class='textLayer']/div[4]")).getText();
+        text = $(By.xpath("//div[@id='viewer']/div[@class='page']/div[@class='textLayer']/div[1]")).getText();
         System.out.println(text);
         switchTo().parentFrame();
         return text;

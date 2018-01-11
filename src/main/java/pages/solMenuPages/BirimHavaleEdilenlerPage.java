@@ -94,7 +94,7 @@ public class BirimHavaleEdilenlerPage extends MainPage {
     public BirimHavaleEdilenlerPage evrakOnizlemeEklenenUstYaziKontrolu(String pdfText) {
         String text = "";
         switchTo().frame(1);
-        text = $(By.xpath("//div[@id='viewer']/div[@class='page']/div[@class='textLayer']/div[4]")).getText();
+        text = $(By.xpath("//div[@id='viewer']/div[@class='page']/div[@class='textLayer']/div[1]")).getText();
         text.equals(pdfText);
         switchTo().parentFrame();
         return this;
