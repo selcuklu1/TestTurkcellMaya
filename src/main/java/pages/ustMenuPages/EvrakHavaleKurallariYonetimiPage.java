@@ -20,10 +20,12 @@ import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
  * Yazan: Can Şeker
  ****************************************************/
 public class EvrakHavaleKurallariYonetimiPage extends MainPage {
-
+    ElementsCollection tblEvraklar = $$("[id='havaleKuralYonetimiListingForm:havaleKuralDataTable'] tbody tr");
+    ElementsCollection tblKuralinTanimliOlduguBirimler = $$("[id='havaleKuralYonetimiEditorForm:kullaniciBirimDataTable'] tbody tr");
     SelenideElement window = $("#havaleKuralYonetimiListingForm");
     SelenideElement btnIlkGuncelle = $(By.id("havaleKuralYonetimiListingForm:havaleKuralDataTable:0:updateHavaleKuralButton"));
     SelenideElement btnIlkPasifYap = $(By.id("havaleKuralYonetimiEditorForm:kullaniciBirimDataTable:0:kullaniciBirimPasifButton"));
+    SelenideElement btnIlkAktifYap = $("[id$='kullaniciBirimAktifButton']");
     SelenideElement btnAra = $("[id='havaleKuralYonetimiListingForm:filterPanel:searchEntitiesButton']");
     SelenideElement btnSil = $(By.id("havaleKuralYonetimiListingForm:havaleKuralDataTable:0:deleteHavaleKuralButton"));
     SelenideElement btnIslemOnayiEvet = $(By.id("baseConfirmationDialog:confirmButton"));
@@ -39,6 +41,9 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
     SelenideElement txtKuralAdi = $(By.id("havaleKuralYonetimiEditorForm:kuralAdi"));
     SelenideElement btnKuralinTanimliOlduguBirimlerYeni = $(By.id("havaleKuralYonetimiEditorForm:kullaniciBirimDataTable:addNewKullaniciBirimLinkButton"));
     BelgenetElement txtBirimEkleBirim = comboLov(By.id("hkKullaniciBirimEditorForm:havaleKuralKullaniciBirimIliskiBirimLov:LovText"));
+    SelenideElement chkBirimEkleAltBirimIlk = $("[id='hkKullaniciBirimEditorForm:birimDataTable'] tbody tr div[id^='hkKullaniciBirimEditorForm:birimDataTable:0'] div[class='ui-chkbox-box ui-widget ui-corner-all ui-state-default']");
+    ElementsCollection chkBirimEkleAltBirimIlkAd = $$("[id='hkKullaniciBirimEditorForm:birimDataTable_data'] tr[data-ri='0'] td");
+    SelenideElement chkBirimAltBirimlerDahil = $(By.id("hkKullaniciBirimEditorForm:altBirimlerDahilCheckbox_input"));
     SelenideElement btnBirimEkleEkle = $(By.id("hkKullaniciBirimEditorForm:saveKullaniciBirimButton"));
     SelenideElement btnKuralEklemeKaydet = $(By.id("havaleKuralYonetimiEditorForm:saveHavaleKuralButton"));
     SelenideElement sonTable = $("[id='havaleKuralYonetimiListingForm:havaleKuralDataTable_paginator_top'] [class='ui-paginator-last ui-state-default ui-corner-all']");
@@ -62,7 +67,7 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
 
     @Step("Kural ekleme kaydet")
     public EvrakHavaleKurallariYonetimiPage kuralEklemeKaydet() {
-        btnKuralEklemeKaydet.click();
+        clickJs(btnKuralEklemeKaydet);
         return this;
     }
 
@@ -80,21 +85,50 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
     }
 
     @Step("Pasif Yap")
-    public EvrakHavaleKurallariYonetimiPage ilkPasifYap() {
-        btnIlkPasifYap.click();
+    public EvrakHavaleKurallariYonetimiPage ilkPasifYap(){
+        clickJs(btnIlkPasifYap);
+        return this;
+    }
+
+    @Step("Aktif Yap")
+    public EvrakHavaleKurallariYonetimiPage ilkAktifYap(){
+        clickJs(btnIlkAktifYap);
         return this;
     }
 
     @Step("Birim ekle")
     public EvrakHavaleKurallariYonetimiPage birimEkleEkle() {
         clickJs(btnBirimEkleEkle);
-        sleep(5000);
+        return this;
+    }
+
+    @Step("Birim sil")
+    public EvrakHavaleKurallariYonetimiPage yeniBirimSil(String birimAdi) {
+        tblKuralinTanimliOlduguBirimler.filterBy(Condition.text(birimAdi)).get(0).$("[id$='deleteKullaniciBirimButton']").click();
         return this;
     }
 
     @Step("Birim doldur")
     public EvrakHavaleKurallariYonetimiPage birimEkleBirimDoldur(String birim) {
         txtBirimEkleBirim.selectLov(birim);
+        return this;
+    }
+
+    @Step("Alt birim eklenir")
+    public EvrakHavaleKurallariYonetimiPage birimEkleAltBirimEkle(boolean durum) {
+        chkBirimEkleAltBirimIlk.click();
+        return this;
+    }
+
+    public String birimEkleAltBirimIlkAdCek() {
+        String altBirim = chkBirimEkleAltBirimIlkAd.get(1).$("div[class='ui-dt-c']").getText();
+            return altBirim;
+    }
+
+    @Step("Birim alanında alt birim seçeneği seçilir")
+    public EvrakHavaleKurallariYonetimiPage birimEkleAltBirimlerDahil(boolean durum) {
+        //chkBirimAltBirimlerDahil.setSelected(durum);
+        $("[id='hkKullaniciBirimDialogPanel'] [class='ui-chkbox-box ui-widget ui-corner-all ui-state-default']").click();
         return this;
     }
 
@@ -307,13 +341,22 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
 
     @Step("İslem onayı evet")
     public EvrakHavaleKurallariYonetimiPage islemOnayiEvet() {
-        btnIslemOnayiEvet.click();
+        btnIslemOnayiEvet.pressEnter();
         return this;
     }
 
     @Step("Ara")
     public EvrakHavaleKurallariYonetimiPage ara() {
         btnAra.click();
+        return this;
+    }
+    @Step("")
+    public EvrakHavaleKurallariYonetimiPage pasifYapilanKullaniciGuncelle(String kuralAdi){
+
+        if ($("[id='havaleKuralYonetimiListingForm:havaleKuralDataTable_paginator_top'] [class='ui-paginator-last ui-state-default ui-corner-all']").exists()==true)
+        $("[id='havaleKuralYonetimiListingForm:havaleKuralDataTable_paginator_top'] [class='ui-paginator-last ui-state-default ui-corner-all']").pressEnter();
+
+    tblEvraklar.filterBy(Condition.text(kuralAdi)).get(0).$("[id$='updateHavaleKuralButton']").click();
         return this;
     }
 

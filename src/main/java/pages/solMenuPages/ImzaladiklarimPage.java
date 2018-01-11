@@ -27,6 +27,8 @@ public class ImzaladiklarimPage extends MainPage {
     SelenideElement txtEvrakDetayiEvrakNo = $("[id^='inboxItemInfoForm:evrakBilgileriList'][id$='evrakNoPanelGrid'] td:nth-child(3) div");
     SelenideElement btnGidecegiYer = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:gidecegiYerFilterOpenDialogButton"));
     BelgenetElement txtGidecegiYer = comboLov(By.id("inboxFiltreDialogForm:gidecegiYerFilterLovId:LovText"));
+    SelenideElement txtGidecegiYer2 = $(By.id("inboxFiltreDialogForm:gidecegiYerFilterLovId:LovText"));
+
     SelenideElement txtBaslangicTarihi = $x("//label[normalize-space(text())='Başlangıç Tarihi :']/../../following-sibling::td//input");
     SelenideElement txtBitisTarihi = $x("//label[normalize-space(text())='Bitiş Tarihi :']/../../following-sibling::td//input");
     ElementsCollection tblImzaladiklarim = $$("tbody[id='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
@@ -124,7 +126,16 @@ public class ImzaladiklarimPage extends MainPage {
     @Step("Gideceği yer seç: {gidecegiYer}")
     public ImzaladiklarimPage gidecegiYerSec(String gidecegiYer) {
         btnGidecegiYer.click();
-        txtGidecegiYer.selectLov(gidecegiYer);
+        txtGidecegiYer2.setValue(gidecegiYer);
+
+        SelenideElement currentList = $$("div[id='inboxFiltreDialogForm:gidecegiYerFilterLovId:gidecegiYerFilterLovIdlovDialogId']").last();
+        currentList.waitUntil(Condition.visible, 5000);
+        currentList
+                .$$("span[class='lovItemTitle ']")
+                .filterBy(text(gidecegiYer))
+                .last()
+                .click();
+
         return this;
     }
 
@@ -152,12 +163,12 @@ public class ImzaladiklarimPage extends MainPage {
                     .filterBy(text("Konu: " + konu))
                     .filterBy(text("Gideceği Yer: " + gidecegiYer))
                     .filterBy(text("Evrak Tarihi: " + evrakTarihi))
-                    .filterBy(text("No: " + no))
+                    .filterBy(text(no))
                     .first();
 
             if (postaListesi.isDisplayed() && postaListesi.exists()) {
                 postaListesi.click();
-                break;
+                return this;
             }
         }
         Assert.fail("Evrak bulunamadı.");

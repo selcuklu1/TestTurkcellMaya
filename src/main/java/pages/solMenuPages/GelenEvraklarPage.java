@@ -418,8 +418,8 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
-    @Step("Havele Yap butonu")
-    public GelenEvraklarPage havaleYap() {
+    @Step("Havale Yap")
+    public GelenEvraklarPage havaleYap(){
         btnHavaleYap.click();
         return this;
     }

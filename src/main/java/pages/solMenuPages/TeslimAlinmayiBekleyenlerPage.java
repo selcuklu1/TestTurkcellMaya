@@ -118,8 +118,8 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         return this;
     }
 
-    @Step("Evrak içerik göster")
-    public TeslimAlinmayiBekleyenlerPage evrakSecTeslimAl(String konu, String yer, String tarih, String no, boolean secim) {
+    @Step("Evrak teslim al")
+    public TeslimAlinmayiBekleyenlerPage evrakSecTeslimAl(String konu, String yer, String tarih, String no, boolean secim){
         tblEvraklar.filterBy(text(konu))
                 .filterBy(text(yer))
                 .filterBy(text(tarih))
