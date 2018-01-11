@@ -284,6 +284,7 @@ public class MainPage extends BaseLibrary {
         return this;
     }
 
+    @Step("Evrak imza onay")
     public MainPage evrakImzaOnay() {
         for (int i = 0; i < Configuration.timeout / 1000; i++) {
             sleep(1000);

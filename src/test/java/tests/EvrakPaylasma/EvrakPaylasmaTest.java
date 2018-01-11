@@ -47,6 +47,8 @@ public class EvrakPaylasmaTest extends BaseTest {
 
     @Test(enabled = true, description = "TS1881 : Evrak paylaşımını durdurma")
     public void TS1881() {
+        String tarihBugun = "" + new SimpleDateFormat("dd.MM.yyyy").format(new Date());
+        String evrakKonu = "TS1881-" + getRandomNumber(1000, 9000);
 
         String evrakKonuKodu = "Entegrasyon İşlemleri";
         String kaldirilacakKlasorler = "Diğer";
@@ -61,6 +63,7 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .openPage()
                 .bilgilerTabiAc()
                 .konuKoduDoldur(evrakKonuKodu)
+                .konuDoldur(evrakKonu)
                 .kaldiralacakKlasorlerSec(kaldirilacakKlasorler)
                 .onayAkisiEkle()
                 .onayAkisiKullaniciTipiSec(kullaniciAdi, "İmzalama");
@@ -70,7 +73,7 @@ public class EvrakPaylasmaTest extends BaseTest {
 
         taslakEvraklarPage
                 .openPage()
-                .evrakSec(evrakKonuKodu, "", "")
+                .evrakSec(evrakKonu, "", tarihBugun)
                 .paylasTabTikla()
                 .paylasKisiDoldur(paylasilacakUser)
                 .paylasanAciklamaDoldur("TS1881 case i için evrak oluşturuldu ve paylaşıldı.")
@@ -79,7 +82,7 @@ public class EvrakPaylasmaTest extends BaseTest {
 
         paylastiklarimPage
                 .openPage()
-                .evrakSec(evrakKonuKodu, "", paylasilan, "")
+                .evrakSec(evrakKonu, "", paylasilan, tarihBugun)
                 .paylasTabTikla()
                 .paylasimiDurdur()
                 .islemMesaji().basariliOlmali(basariMesaji);
@@ -187,7 +190,7 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .openPage()
                 .evrakSecKonuyaGore(konu)
                 .evrakOnizlemeTabSec("Evrak Notları")
-                .evrakNotuKontrol("OPTİİM TEST1", tarihBugun, konu);
+                .evrakNotuKontrol("Optiim TEST1", tarihBugun, konu);
 
         String baslangicTarihi = tarihBugun;
 
@@ -221,6 +224,8 @@ public class EvrakPaylasmaTest extends BaseTest {
 
     @Test(enabled = true, description = "TS1877 : Paylaşılan evrakın geri alınması")
     public void TS1877() {
+        String tarihBugun = "" + new SimpleDateFormat("dd.MM.yyyy").format(new Date());
+        String evrakKonu = "TS1881-" + getRandomNumber(1000, 9000);
 
         String evrakKonuKodu = "Entegrasyon İşlemleri";
         String kaldirilacakKlasorler = "Diğer";
@@ -236,6 +241,7 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .openPage()
                 .bilgilerTabiAc()
                 .konuKoduDoldur(evrakKonuKodu)
+                .konuDoldur(evrakKonu)
                 .kaldiralacakKlasorlerSec(kaldirilacakKlasorler)
                 .onayAkisiEkle()
                 .onayAkisiKullaniciTipiSec(kullaniciAdi, "İmzalama");
@@ -245,7 +251,7 @@ public class EvrakPaylasmaTest extends BaseTest {
 
         taslakEvraklarPage
                 .openPage()
-                .evrakSec(evrakKonuKodu, "", "")
+                .evrakSec(evrakKonu, "", tarihBugun)
                 .paylasTabTikla()
                 .paylasKisiDoldur(paylasilanlar)
                 .paylasanAciklamaDoldur("TS1877 case i için evrak oluşturuldu ve paylaşıldı.")
@@ -255,10 +261,10 @@ public class EvrakPaylasmaTest extends BaseTest {
         paylastiklarimPage
                 .openPage();
 
-        paylasilmaTarihi = paylastiklarimPage.evrakPaylasimTarihiGetir(paylasilanlar, evrakKonuKodu, "", "");
+        paylasilmaTarihi = paylastiklarimPage.evrakPaylasimTarihiGetir(paylasilanlar, evrakKonu, "", tarihBugun);
 
         paylastiklarimPage
-                .evrakSec(paylasilanlar, evrakKonuKodu, "", "")
+                .evrakSec(paylasilanlar, evrakKonu, "", tarihBugun)
                 .paylasimdanGeriAlTabSec()
                 .paylasimdanGeriAl(paylasimdanGeriAlanicaklar);
 
@@ -268,7 +274,7 @@ public class EvrakPaylasmaTest extends BaseTest {
 
         benimlePaylasilanlarPage
                 .openPage()
-                .paylasilanlarKontrol(paylasan, evrakKonuKodu, paylasilmaTarihi, false);
+                .paylasilanlarKontrol(paylasan, evrakKonu, paylasilmaTarihi, false);
 
 
         logout();
@@ -276,7 +282,7 @@ public class EvrakPaylasmaTest extends BaseTest {
 
         benimlePaylasilanlarPage
                 .openPage()
-                .paylasilanlarKontrol(paylasan, evrakKonuKodu, paylasilmaTarihi, true);
+                .paylasilanlarKontrol(paylasan, evrakKonu, paylasilmaTarihi, true);
 
     }
 
@@ -493,6 +499,7 @@ public class EvrakPaylasmaTest extends BaseTest {
         String evrakKonu = "TS1904" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
         String evrakGidecegiYer = "AFYON VALİLİĞİ";
         String evrakGonderen = "Mehmet BOZDEMİR";
+        String tarihBugun = "" + new SimpleDateFormat("dd.MM.yyyy").format(new Date());
 
 
         evrakOlusturPage
@@ -548,7 +555,7 @@ public class EvrakPaylasmaTest extends BaseTest {
 
         benimlePaylasilanlarPage
                 .openPage()
-                .evrakSec(evrakiPaylasan, "", evrakKonu, "")
+                .evrakSec(evrakiPaylasan, tarihBugun, evrakKonu, "")
                 .evrakOnizlemeTabSec("Evrak Notları")
                 .evrakNotuEkle()
                 .evrakNotuGirVeKaydet(eklenenNot);
@@ -559,7 +566,7 @@ public class EvrakPaylasmaTest extends BaseTest {
 
         paylastiklarimPage
                 .openPage()
-                .evrakSec(evrakKonu, "", paylasilan, "")
+                .evrakSec(evrakKonu, "", paylasilan, tarihBugun)
                 .evrakOnizlemeTabSec("Evrak Notları")
                 .evrakNotuKontrol(notEkleyen, "", eklenenNot);
 
@@ -567,7 +574,7 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .openPage()
                 .evrakSec(evrakKonu, evrakGidecegiYer, evrakGonderen, evrakTarih)
                 .evrakOnizlemeTabSec("Evrak Notları")
-                .evrakNotuKontrol(notEkleyen, "", eklenenNot, false);
+                .evrakNotuKontrol(notEkleyen, tarihBugun, eklenenNot, false);
 
     }
 
@@ -1085,7 +1092,6 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .aciklamaDoldur("evrak huser e devredildi.")
                 .devretTamam();
 
-        logout();
         login("huser", "123");
 
         String evrakAciklamasi = "Devredilen evrakı paylaşma NOT 1";
@@ -1171,7 +1177,6 @@ public class EvrakPaylasmaTest extends BaseTest {
     @Test(enabled = true, description = "TS1876 : İşlem bekleyen Evrakı kullanıcılarla paylaşma")
     public void TS1876B() {
         String evrakKonu = "TS1876B-" + getRandomNumber(1000, 9000);
-
         String tarihBugun = "" + new SimpleDateFormat("dd.MM.yyyy").format(new Date());
         String evrakAciklamasi = "evrak açıklaması için kontrol";
         String evrakiPaylasan = "Mehmet BOZDEMİR";
