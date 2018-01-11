@@ -387,12 +387,12 @@ public class EvrakHavaleKurallariTest extends BaseTest {
                 .kuralEklemeKaydet();
 
         evrakHavaleKurallariYonetimiPage
-                .filtreleKuralAdiDoldur(kuralAdi,"Kural adı");
+                .filtreleKuralAdiDoldur(kuralAdi, "Kural adı");
         //TODO
 
         evrakHavaleKurallariYonetimiPage
                 .ara()
-                .havaleKurallariListesiGuncelle(kuralAdi,"")
+                .havaleKurallariListesiGuncelle(kuralAdi, "")
                 .ilkPasifYap()
                 .islemOnayiEvet();
 

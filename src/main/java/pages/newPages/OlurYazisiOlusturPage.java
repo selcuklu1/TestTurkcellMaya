@@ -1,13 +1,13 @@
 package pages.newPages;
 
 import com.codeborne.selenide.SelenideElement;
-import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Step;
 import org.openqa.selenium.support.FindBy;
 import pages.MainPage;
 import pages.pageComponents.TextEditor;
 import pages.pageComponents.UstMenuPageHeader;
 import pages.pageComponents.tabs.BilgilerTab;
+import pages.pageComponents.tabs.EkleriTab;
 import pages.pageData.UstMenuData;
 
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
@@ -53,6 +53,11 @@ public class OlurYazisiOlusturPage extends MainPage {
     @Step("Editör tabını aç")
     public EditorTab editorTabAc() {
         return new EditorTab().openTab();
+    }
+
+    @Step("")
+    public EkleriTab ekleriTabAc() {
+        return new EkleriTab($("[id='yeniOnayEvrakForm']")).openTab();
     }
 
     public class EditorTab extends MainPage {

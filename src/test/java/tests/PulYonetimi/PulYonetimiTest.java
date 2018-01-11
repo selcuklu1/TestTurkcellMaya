@@ -258,7 +258,8 @@ public class PulYonetimiTest extends BaseTest {
                 .tutarAlaniKontrolu("100.00", true)
 
                 .tutarDoldur("120")
-                .evrakPostalaPostala(true);
+                .evrakPostalaPostala(true)
+                .islemMesaji().basariliOlmali(basariMesaji);
     }
 
 }

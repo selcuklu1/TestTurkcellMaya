@@ -566,7 +566,7 @@ public class GizlilikKleransiTest extends BaseTest {
         String ivedilik = "Normal";
         String geregi = "Optiim Birim";
 
-        login("mbozdemir", "123");
+        login("gsahin", "123");
 
         kullaniciYonetimiPage
                 .openPage()
@@ -618,7 +618,8 @@ public class GizlilikKleransiTest extends BaseTest {
     @Test(enabled = true, dependsOnMethods = {"TS1938"}, description = "TS2138 : Genel evrak raporunda gizlilik kleransı kontrolü (evrakta izi olmayan kullanıcı ile)")
     public void TS2138() throws InterruptedException {
 //9267
-        login("username20g", "123");
+        login("username23t", "123");
+        String mesaj = "Gizlilik kleransınız evrakın gizlilik derecesini görüntülemek için yeterli değildir.";
 
         genelEvrakRaporuPage
                 .openPage()
@@ -626,7 +627,8 @@ public class GizlilikKleransiTest extends BaseTest {
                 .sorgula()
                 .tabloEvrakNoKontrol(evrakNo)
                 .tablodaDetayTikla(evrakNo)
-                .detayEkranınıAcildigiKontrolu();
+                .islemMesaji().dikkatOlmali(mesaj);
+//                .detayEkranınıAcildigiKontrolu();
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -757,7 +759,7 @@ public class GizlilikKleransiTest extends BaseTest {
         String evrakDili = "Türkçe";
         String gizlilikDerecesi = "Hizmete Özel";
         String ivedilik = "Normal";
-        String geregi = "Optiim Birim";
+        String geregi = "Esk Kurum 071216 2";
 
         login(username4, password4);
 
@@ -774,6 +776,7 @@ public class GizlilikKleransiTest extends BaseTest {
                 .gizlilikDerecesiSec(gizlilikDerecesi)
                 .aciklamaDoldur(icerik)
                 .ivedilikSec(ivedilik)
+                .geregiSecimTipiSecByText("Kurum")
                 .geregiSec(geregi)
                 .onayAkisiEkle()
                 .kullaniciTabloKontrol()
@@ -840,9 +843,10 @@ public class GizlilikKleransiTest extends BaseTest {
         evrakOlusturPage
                 .editorTabAc()
                 .editorIcerikDoldur(icerik)
-                .parafla()
-                .sImzasec()
-                .sImzaImzala2();
+                .evrakParafla();
+//                .parafla()
+//                .sImzasec()
+//                .sImzaImzala2();
 //                .islemMesaji().beklenenMesaj(basariMesaji);
 
 //        parafladiklarimPage
@@ -859,12 +863,16 @@ public class GizlilikKleransiTest extends BaseTest {
         evrakOlusturPage
                 .bilgilerTabiAc()
                 .gizlilikDerecesiSec("Özel")
+                .kaydet()
+                .confirmDialog().button("Evet").click();
+        evrakOlusturPage
+                .bilgilerTabiAc()
                 .iadeEtbutonKontol()
                 .iadeEt()
-                .kullaniciListesiKontrol("Yasemin")
+                .kullaniciListesiKontrol("Mehmet BOZDEMİR")
                 .notDoldur("iade")
                 .iadeEt2()
-                .popUpEvraktaDegisiklik()
+//                .popUpEvraktaDegisiklik()
                 .islemMesaji().beklenenMesaj(basariMesaji);
 
         logout();
@@ -1141,12 +1149,13 @@ public class GizlilikKleransiTest extends BaseTest {
 
         kullaniciEvrakDevretPage
                 .openPage()
+                .ekranTabKontrolleri()
                 .devredecekKisiSec("Yasemin Çakıl")
-                .listele()
-                .islemMesaji().basariliOlmali(basariMesaji);
+                .listele();
+//                .islemMesaji().basariliOlmali(basariMesaji);
 
         kullaniciEvrakDevretPage
-                .ekranTabKontrolleri()
+                .tabloAlanKontrolleri()
                 .tabloEvrakSecimi(text)
                 .devret()
                 .devralacakKisiAlanKontolu()

@@ -16,7 +16,7 @@ import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
-import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
+import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 public class GelenEvrakKayitPage extends MainPage {
 
@@ -509,8 +509,17 @@ public class GelenEvrakKayitPage extends MainPage {
     @Step("Dağıtım Bilgileri Birim alanında \"{birim}\" seçilir")
     public GelenEvrakKayitPage dagitimBilgileriBirimDoldur(String birim) {
 //        txtDagitimBilgileriBirim.sendKeys(birim);
+        cmbHavaleIslemleriBirim.selectLov(birim);
         cmbHavaleIslemleriBirim.type(birim).getTitleItems()
                 .filterBy(Condition.exactText(birim)).get(0).click();
+        cmbHavaleIslemleriBirim.closeTreePanel();
+        return this;
+    }
+
+    @Step("Dağıtım Bilgileri Birim alanında \"{birim}\" seçilir")
+    public GelenEvrakKayitPage dagitimBilgileriBirimDoldur2(String birim) {
+//        txtDagitimBilgileriBirim.sendKeys(birim);
+        cmbHavaleIslemleriBirim.selectLov(birim);
         cmbHavaleIslemleriBirim.closeTreePanel();
         return this;
     }
@@ -739,6 +748,7 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
+    @Step("Kaydet butonu")
     public GelenEvrakKayitPage kaydet() {
         btnKaydet.click();
         return this;

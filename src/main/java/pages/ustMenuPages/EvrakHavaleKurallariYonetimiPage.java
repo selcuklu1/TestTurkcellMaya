@@ -11,7 +11,7 @@ import pages.pageData.UstMenuData;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.*;
-import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
+import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 /****************************************************
  * Tarih: 2017-12-27
@@ -73,13 +73,13 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
 
 
     @Step("Kuralın tanımlı olduğu birimler alanından seç")
-    public EvrakHavaleKurallariYonetimiPage kuralinTanimliOlduguBirimlerSec(String durum){
+    public EvrakHavaleKurallariYonetimiPage kuralinTanimliOlduguBirimlerSec(String durum) {
         cmbKuralınTanimliOlduguBirimler.selectOption(durum);
         return this;
     }
 
     @Step("Güncelle")
-    public EvrakHavaleKurallariYonetimiPage ilkGuncelle(){
+    public EvrakHavaleKurallariYonetimiPage ilkGuncelle() {
         btnIlkGuncelle.click();
         return this;
     }

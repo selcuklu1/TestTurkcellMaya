@@ -41,11 +41,10 @@ public class GalenExampleTest extends BaseTest {
     }
 
     /**
-     *
      * @param testName
      * @see "/src/test/resources/testName/" path must be exist with
-     *      "testName".gspec, dump path will be generated in
-     *      "/src/test/resources/testName/dump" path
+     * "testName".gspec, dump path will be generated in
+     * "/src/test/resources/testName/dump" path
      */
     public void galenGenerateDump(String testName) {
         try {

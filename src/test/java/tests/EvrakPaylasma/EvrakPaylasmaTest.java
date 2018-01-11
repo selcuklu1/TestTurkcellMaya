@@ -10,7 +10,6 @@ import pages.ustMenuPages.KullaniciEvrakDevretPage;
 import pages.ustMenuPages.SistemLoglariPage;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
@@ -825,7 +824,6 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .sistemRaporuKontrol(aksiyon, tarihSaatBugun, kullanici.toUpperCase(), aciklama, true);
 
 
-
     }
 
     @Test(enabled = true, description = "TS2192 : İçeriğinde form olan evrakı paylaşma")
@@ -931,7 +929,6 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .aksiyonSec(aksiyon)
                 .sorgula()
                 .sistemRaporuKontrol(aksiyon, tarihSaatBugun, kullanici.toUpperCase(), aciklama, true);
-
 
 
     }

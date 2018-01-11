@@ -14,7 +14,7 @@ import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
-import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
+import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 public class GelenEvraklarPage extends MainPage {
 
@@ -281,6 +281,7 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Havele Yap Gönder butonu")
     public GelenEvraklarPage havaleYapGonder() {
         btnHavaleYapGonder.click();
         return this;
@@ -322,6 +323,7 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Havale Yap Kişi alanında \"{kisi}\" seçilir.")
     public GelenEvraklarPage havaleYapKisiTreeSec(String kisi) {
         txtComboLovKisi.selectLov(kisi);
         return this;
@@ -416,6 +418,7 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Havele Yap butonu")
     public GelenEvraklarPage havaleYap() {
         btnHavaleYap.click();
         return this;
@@ -616,5 +619,11 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Birimler menüsünde \"{birim}\" biriminin geldiği görülür.")
+    public GelenEvraklarPage birimKontol(String birim) {
+        $$("#leftMenuForm #birimlerimMenusuContainer a")
+                .filterBy(Condition.text(birim)).shouldHaveSize(1);
+        return this;
+    }
 
 }

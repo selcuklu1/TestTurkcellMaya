@@ -6,7 +6,6 @@ import common.BaseLibrary;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
-import pages.pageData.SolMenuData;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
