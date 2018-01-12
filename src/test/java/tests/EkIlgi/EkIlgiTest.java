@@ -46,7 +46,6 @@ public class EkIlgiTest extends BaseTest {
         String dosyaAdiXLSX = "TS2199.xlsx";
         String dosyaAdiPPT = "TS2199.ppt";
         String dosyaAdiPPTX = "TS2199.pptx";
-        String dosyaAdiDOC2 = "TS2199test.doc";  //silinecek sonra
 
         String pathPDF = getDocPath() + "TS2199.pdf";
         String pathDOC = getDocPath() + "TS2199.doc";
@@ -55,9 +54,6 @@ public class EkIlgiTest extends BaseTest {
         String pathXLSX = getDocPath() + "TS2199.xlsx";
         String pathPPT = getDocPath() + "TS2199.ppt";
         String pathPPTX = getDocPath() + "TS2199.pptx";
-
-        //Denemk için yazıldı. Silinecek sonra
-        String pathDOC2 = getDocPath() + "TS2199test.doc";
 
         String ekMetniAciklama = " isimli dosya eklendi";
         String fizikselEkMetni = "Dosya eklendi " +getSysDate();
@@ -202,10 +198,11 @@ public class EkIlgiTest extends BaseTest {
                 .geregiDoldur(geregi, "Gerçek Kişi Adı")
                 .onayAkisiDoldur(onayAkisi);
 
-        evrakOlusturPage
+        //TODO: Müşteriden yeni güncelleme bekleniyor.
+/*        evrakOlusturPage
                 .imzalaButonaTikla()
                 .sImzalaRadioSec()
                 .evrakImzaOnay()
-                .islemMesaji().basariliOlmali(basariMesaji);
+                .islemMesaji().basariliOlmali(basariMesaji);*/
     }
 }
