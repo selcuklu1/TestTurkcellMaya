@@ -374,7 +374,7 @@ public class PostaListesiPage extends MainPage {
     @Step("Gönderildiğü kurum alanında \"{kurum}\" değeri olmali mi? : \"{shouldBeEquals}\" ")
     public PostaListesiPage gonderildigiKurumKontro(String kurum, boolean shouldBeEquals) {
         if (shouldBeEquals == true)
-            divGonderildigiKurm.shouldNotHave(Condition.text(kurum));
+            divGonderildigiKurm.shouldHave(Condition.text(kurum));
         else
             divGonderildigiKurm.shouldNotHave(Condition.text(kurum));
         return this;

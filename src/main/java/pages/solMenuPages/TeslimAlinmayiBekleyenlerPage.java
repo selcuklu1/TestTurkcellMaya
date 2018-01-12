@@ -94,7 +94,8 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     public TeslimAlinmayiBekleyenlerPage evrakOnizlemeEklenenUstYaziKontrolu(String pdfText) {
         String text = "";
         switchTo().frame(1);
-        text = $(By.xpath("//div[@id='viewer']/div[@class='page']/div[@class='textLayer']/div[4]")).getText();
+        sleep(1000);
+        text = $(By.xpath("//div[@id='viewer']/div[@class='page']/div[@class='textLayer']/div[1]")).getText();
         text.equals(pdfText);
         switchTo().parentFrame();
         return this;
@@ -118,8 +119,8 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         return this;
     }
 
-    @Step("Evrak içerik göster")
-    public TeslimAlinmayiBekleyenlerPage evrakSecTeslimAl(String konu, String yer, String tarih, String no, boolean secim) {
+    @Step("Evrak teslim al")
+    public TeslimAlinmayiBekleyenlerPage evrakSecTeslimAl(String konu, String yer, String tarih, String no, boolean secim){
         tblEvraklar.filterBy(text(konu))
                 .filterBy(text(yer))
                 .filterBy(text(tarih))
@@ -198,11 +199,11 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         return this;
     }
 
-    @Step("Tabloda evrak no kontrolü")
+    @Step("Tabloda evrak no kontrolü : \"{evrakNo}\" ")
     public TeslimAlinmayiBekleyenlerPage tabloKontrolu(String evrakNo) {
-        int row = $$("tbody[id$='mainInboxForm:inboxDataTable_data'] tr[role=row] div[class=searchText]").filterBy(text(evrakNo)).size();
-        System.out.println(row);
-        Assert.assertEquals(row, 1);
+        $$("tbody[id$='mainInboxForm:inboxDataTable_data'] tr[data-ri]")
+                .filterBy(text(evrakNo))
+                .shouldHaveSize(1);
         //log başarılı
         return this;
     }

@@ -6,6 +6,7 @@ import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
@@ -23,7 +24,7 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
     SelenideElement txtBaslangic = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:topluPostalanacakEvraklarIlkTarihTemizleButtonId_input"));
     SelenideElement txtBitis = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:topluPostalanacakEvraklarSonTarihTemizleButtonId_input"));
     SelenideElement lblPostaTipiSeciniz = $x("//label[contains(., 'Posta Tipi Seçiniz ...')]");
-    ElementsCollection listPostaTipleri = $$(By.xpath("//label[.='Adi Posta']/../../li"));
+    ElementsCollection listPostaTipleri = $$(By.xpath("//label[.='Adi Posta']/../../../ul/li"));
     SelenideElement btnSorgula = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:topluPostalanacakEvraklarFiltrele"));
     SelenideElement btnPostaListesineAktar = $x("//span[text() = 'Posta Listesine Aktar']/..");
     SelenideElement btnPostaListesiDropDown = $x("//fieldset[@id='mainPreviewForm:postaListesiAktarimFieldsetId']//div[contains(@class, 'ui-corner-right')]/span");
@@ -46,6 +47,7 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
     BelgenetElement txtGonderildigiGercekKisi = comboLov(By.id("mainPreviewForm:tpbeGonderildigiGercekKisiLovId:LovText"));
     BelgenetElement txtKurum = comboLov(By.id("mainPreviewForm:tpbeGonderildigiKurumLovId:LovText"));
 
+    SelenideElement txtFiltreGidecegiYer = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:topluPostalanacakEvraklarGidecegiYerDataTable:topluPostalanacakYerFilterText"));
 
     @Step("Toplu postalanacak evraklar sayfasını aç")
     public TopluPostalanacakEvraklarPage openPage() {
@@ -92,6 +94,8 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
         for (int i = 0; i < gidecegiYerler.length; i++) {
             Boolean isSelected = false;
 
+            filtreGidecegiYer(gidecegiYerler[i]);
+
             SelenideElement currentRow = tableGidecegiYer
                     .filterBy(Condition.text(gidecegiYerler[i]))
                     .first();
@@ -111,6 +115,7 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
 
 
         }
+        filtreGidecegiYer("");
 
         return this;
     }
@@ -166,6 +171,8 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
         for (int i = 0; i < gidecegiYerler.length; i++) {
             Boolean isSelected = false;
 
+            filtreGidecegiYer(gidecegiYerler[i]);
+
             SelenideElement currentRow = tableGidecegiYer
                     .filterBy(Condition.text(gidecegiYerler[i]))
                     .first();
@@ -186,6 +193,7 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
             }
 
         }
+        filtreGidecegiYer("");
 
         return this;
     }
@@ -220,9 +228,10 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
     @Step("Posta tipi seç.")
     public TopluPostalanacakEvraklarPage postaTipiSec(String[] postaTipleri) {
         lblPostaTipiSeciniz.click();
+        ElementsCollection currentListElement = $$(By.xpath("//label[.='Adi Posta']/../../../ul")).last().$$("li");
         for (int i = 0; i < postaTipleri.length; i++) {
 
-            SelenideElement currentRow = listPostaTipleri
+            SelenideElement currentRow = currentListElement
                     .filterBy(Condition.text(postaTipleri[i]))
                     .first();
 
@@ -233,7 +242,7 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
                 isSelected = true;
 
             if (isSelected == false) {
-//                Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", chkBox);
+                Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", chkBox);
                 chkBox.click();
             }
 
@@ -329,6 +338,26 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Evrak seç.")
+    public String evrakSayiGetir(String kayitTarihiSayi, String gidecegiYer, String konu, String hazirlayanBirim, String postTipi) {
+
+
+        String currentText = tableEvraklar
+                .filterBy(Condition.text(kayitTarihiSayi))
+                .filterBy(Condition.text("Gideceği Yer: " + gidecegiYer))
+                .filterBy(Condition.text("Konu: " + konu))
+                .filterBy(Condition.text("Hazırlayan Birim: " + hazirlayanBirim))
+                .filterBy(Condition.text("Posta Tipi: " + postTipi))
+                .first()
+                .$("td[class='ui-inbox-satir1'] > div")
+                .innerText();
+
+        currentText = currentText.substring(currentText.lastIndexOf("/ ") + 2, currentText.length());
+
+        return currentText;
+
+    }
+
     @Step("Konuya göre Evrak seç. \"{konu}\" ")
     public TopluPostalanacakEvraklarPage evrakSec(String konu, boolean secim) {
         Boolean isSelected = false;
@@ -381,17 +410,23 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
 
         if (shouldBeExist == true) {
 
-            tableEvraklar
+
+            SelenideElement currentItem = tableEvraklar
                     .filterBy(Condition.text(kayitTarihiSayi))
                     .filterBy(Condition.text("Gideceği Yer: " + gidecegiYer))
                     .filterBy(Condition.text("Konu: " + konu))
                     .filterBy(Condition.text("Hazırlayan Birim: " + hazirlayanBirim))
                     .filterBy(Condition.text("Posta Tipi: " + postTipi))
-                    .first()
+                    .first();
+
+            Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", currentItem);
+            currentItem
                     .shouldBe(Condition.exist)
                     .shouldBe(Condition.visible);
 
         } else {
+
+            Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", $("tbody[id='mainInboxForm:inboxDataTable_data']"));
 
             tableEvraklar
                     .filterBy(Condition.text(kayitTarihiSayi))
@@ -546,6 +581,13 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
             Assert.fail("Posta Listesi Yok");
 
         return "POSTA LISTESI BULUNAMADI!";
+    }
+
+    @Step("Filtre Panelinde Gideceği Yer doldur: {gidecegiYer}")
+    public TopluPostalanacakEvraklarPage filtreGidecegiYer(String gidecegiYer){
+        txtFiltreGidecegiYer.setValue(gidecegiYer);
+        txtFiltreGidecegiYer.pressEnter();
+        return this;
     }
 
 }

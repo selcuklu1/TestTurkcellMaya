@@ -17,9 +17,7 @@
 belgenetTa.iml
 
 BaseTest.java
-TestData.java
 src/main/java/common/BaseTest.java
-src/main/java/data/TestData.java
 
 
 # Allure Report
@@ -52,3 +50,6 @@ atlassian-ide-plugin.xml
 
 /galenReports/
 /galenDumps/
+
+#Dökümanlar
+documents/*

@@ -256,6 +256,14 @@ public class MainPage extends BaseLibrary {
         return this;
     }
 
+    @Step("Parafla")
+    public MainPage evrakParafla() {
+        paraflaButonaTikla();
+        sImzalaRadioSec();
+//        clickJs($("#imzalaForm\\:imzalaRadio").find(By.tagName("input")));
+        evrakImzaOnay();
+        return this;
+    }
     @Step("s-İmzla radio butonu ara")
     public SelenideElement sImzalaRadio() {
         return $("#imzalaForm\\:imzalaRadio .ui-radiobutton-box");
@@ -276,6 +284,7 @@ public class MainPage extends BaseLibrary {
         return this;
     }
 
+    @Step("Evrak imza onay")
     public MainPage evrakImzaOnay() {
         for (int i = 0; i < Configuration.timeout / 1000; i++) {
             sleep(1000);

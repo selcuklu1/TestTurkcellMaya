@@ -104,9 +104,10 @@ public class HavaleEttiklerimPage extends MainPage {
         return this;
     }
 
-    @Step("Havale yap butonana bas")
-    public HavaleEttiklerimPage havaleYap() {
+    @Step("Havale Yap")
+    public HavaleEttiklerimPage havaleYap(){
         btnHavaleYap.click();
         return this;
     }
+
 }

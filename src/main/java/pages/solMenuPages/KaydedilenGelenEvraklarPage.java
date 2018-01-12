@@ -25,7 +25,7 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
     SelenideElement btnIcerikGöster = $(By.id("mainInboxForm:inboxDataTable:0:detayGosterButton"));
     SelenideElement btnTamEkranGöster = $(By.id("mainInboxForm:inboxDataTable:0:tamEkranModuButton"));
     SelenideElement tblRapor = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
-    ElementsCollection tblKaydedilenGelenEvraklar = $$("tbody[id='mainInboxForm:inboxDataTable_data'] tr[data-ri]");
+    ElementsCollection tblKaydedilenGelenEvraklar = $$("[id='mainInboxForm:inboxDataTable_data'] tr[data-ri]");
     SelenideElement tblIlkRapor = $(By.id("mainInboxForm:inboxDataTable:0:detayGosterButton"));
     ElementsCollection tblKaydedilenGelenEvraklar2 = $$("tbody[id$='mainInboxForm:inboxDataTable_data'] tr[role='row']");
 
@@ -135,7 +135,7 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
     @Step("Tabloda konuya göre evrak kontrolu : {konu}")
     public KaydedilenGelenEvraklarPage tabloKonuyaGoreEvrakKontrolu(String konu) {
         tblKaydedilenGelenEvraklar
-                .filterBy(text(konu))
+                .filterBy(Condition.text(konu))
                 .shouldHaveSize(1);
         return this;
     }
