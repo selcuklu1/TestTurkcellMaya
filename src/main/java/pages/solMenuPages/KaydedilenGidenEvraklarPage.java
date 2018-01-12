@@ -64,7 +64,7 @@ public class KaydedilenGidenEvraklarPage extends MainPage {
         return this;
     }
 
-    @Step("Tabloda evrak no kontrolu")
+    @Step("Tabloda evrak no kontrolu : \"{evrakNo}\" ")
     public KaydedilenGidenEvraklarPage tabloKontrolu(String evrakNo) {
         int row = tblRapor.filterBy(Condition.text(evrakNo)).size();
         System.out.println(row);
@@ -72,7 +72,7 @@ public class KaydedilenGidenEvraklarPage extends MainPage {
         return this;
     }
 
-    @Step("Tabloda evrak no kontrolu")
+    @Step("Tabloda evrak no kontrolu : \"{konu}\" ")
     public KaydedilenGidenEvraklarPage tabloKontrolKonuyaGore(String konu) {
         tblRapor.filterBy(Condition.text(konu))
                 .shouldHaveSize(1);
