@@ -216,14 +216,14 @@ public class MainPage extends BaseLibrary {
         return $$("div[id^='window'][id$='Dialog'] > div[class~='ui-dialog-titlebar'] > span[class='ui-dialog-title']");
     }
 
-    @Step("\"{tabName}\" tabı aç")
-    public MainPage openTab(String tabName) {
-        By locator = By.xpath("//td[contains(@class,'tabMenuContainer')" +
+    /*@Step("\"{tabName}\" tabı aç")
+    public MainPage openTab1(SelenideElement page, String tabName) {
+        By locator = By.xpath("descendant::td[contains(@class,'tabMenuContainer')" +
                 " and descendant::span[contains(@class,'tabMenu')" +
                 " and text()='" + tabName + "']]//button");
-        $(locator).click();
+        page.$(locator).click();
         return this;
-    }
+    }*/
 
     @Step("Parafla")
     public MainPage parafla() {
@@ -307,62 +307,4 @@ public class MainPage extends BaseLibrary {
     }
 
 
-    //region Sayfalar
-
-    /*public BaseLibrary baseLibrary() {
-        return new BaseLibrary();
-    }
-
-    public Filtreler mainPage() {
-        return new Filtreler();
-    }
-
-    public LoginPage loginPage() {
-        return new LoginPage();
-    }
-
-    public PulYonetimiPage pulYonetimiPage() {
-        return new PulYonetimiPage();
-    }
-
-    public EvrakOlusturPage evrakOlusturPage() {
-        return new EvrakOlusturPage();
-    }
-
-    public PaylastiklarimPage paylastiklarimPage() {
-        return new PaylastiklarimPage();
-    }
-
-    public TuzelKisiYonetimiPage TuzelKisiYonetimiPage() {
-        return new TuzelKisiYonetimiPage();
-    }
-
-//    public BirimIcerikSablonlarPage BirimIcerikSablonlarPage() {
-  //      return new BirimIcerikSablonlarPage();
-//    }
-
-    public YonetimHavuzuYonetimiPage yonetimHavuzuYonetimiPage() {
-        return new YonetimHavuzuYonetimiPage();
-    }
-
-    public OnayAkisYonetimiPage onayAkisYonetimiPage() {
-        return new OnayAkisYonetimiPage();
-    }
-
-    public GercekKisiYonetimPage gercekKisiYonetimPage() {
-        return new GercekKisiYonetimPage();
-    }
-
-    public GelenEvrakKayitPage gelenEvrakKayitPage(){return new GelenEvrakKayitPage();}
-
-    public KaydedilenGelenEvraklarPage kaydedilenGelenEvraklar() {return new KaydedilenGelenEvraklarPage();}
-
-    public TeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage() {return new TeslimAlinmayiBekleyenlerPage();}
-
-    public BirimYonetimiPage BirimYonetimiPage() { return  new BirimYonetimiPage();
-    }
-
-    public KurumYonetimiPage KurumYonetimiPage() { return new KurumYonetimiPage();
-    }*/
-    //endregion
 }

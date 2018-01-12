@@ -43,10 +43,10 @@ import static pages.pageComponents.belgenetElements.Belgenet.comboBox;
 public class EvrakNotTest extends BaseTest {
     //    data.User user1 = new data.User("user1", "123", "User1 TEST", "AnaBirim1");
     User user1 = new User("user1", "123", "User1 TEST", "AnaBirim1");
-    User user2 = new User("ztekin", "123", "Zübeyde TEKİN");
+    //User user2 = new User("ztekin", "123", "Zübeyde TEKİN");
     User user6 = new User("optiim", "123", "Optiim TEST");
     //    data.User user2 = new data.User("user2", "123", "User2 TEST", "AnaBirim1AltBirim1");
-    User user3 = new User("user3", "123", "User3 TEST", "AnaBirim1");
+    User user2 = new User("user3", "123", "User3 TEST", "AnaBirim1");
     User user5 = new User("mbozdemir", "123", "Mehmet BOZDEMİR", "YAZILIM GELİŞTİRME");
     //    data.User user2 = new data.User("ztekin", "123", "Zübeyde TEKİN", "YAZILIM GELİŞTİRME");
     String konu;
@@ -99,22 +99,22 @@ public class EvrakNotTest extends BaseTest {
 
         login(user1);
         page.openPage().editorTabAc();
-        evrakNot.notOlustur(user1.getName(), notTipi1, aciklama1, maxLength);
-        evrakNot.notOlustur(user1.getName(), notTipi2, aciklama2, maxLength);
+        evrakNot.notOlustur(user1.getFullname(), notTipi1, aciklama1, maxLength);
+        evrakNot.notOlustur(user1.getFullname(), notTipi2, aciklama2, maxLength);
 
         page.bilgilerTabiAc();
         ustYazi.ustYaziGoruntule().evrakNotlariTabiAc();
-        ustYazi.olusturulanNot(user1.getName(), notTipi1, aciklama1).shouldHaveSize(1);
-        ustYazi.olusturulanNot(user1.getName(), notTipi2, aciklama2).shouldHaveSize(1);
+        ustYazi.olusturulanNot(user1.getFullname(), notTipi1, aciklama1).shouldHaveSize(1);
+        ustYazi.olusturulanNot(user1.getFullname(), notTipi2, aciklama2).shouldHaveSize(1);
 
-        ustYazi.notOlustur(user1.getName(), notTipi3, aciklama3, 500);
-        ustYazi.notOlustur(user1.getName(), notTipi4, aciklama4, 500);
+        ustYazi.notOlustur(user1.getFullname(), notTipi3, aciklama3, 500);
+        ustYazi.notOlustur(user1.getFullname(), notTipi4, aciklama4, 500);
 
         page.editorTabAc();
-        evrakNot.olusturulanNot(user1.getName(), aciklama1).shouldHaveSize(1);
-        evrakNot.olusturulanNot(user1.getName(), aciklama2).shouldHaveSize(1);
-        evrakNot.olusturulanNot(user1.getName(), aciklama3).shouldHaveSize(1);
-        evrakNot.olusturulanNot(user1.getName(), aciklama4).shouldHaveSize(1);
+        evrakNot.olusturulanNot(user1.getFullname(), aciklama1).shouldHaveSize(1);
+        evrakNot.olusturulanNot(user1.getFullname(), aciklama2).shouldHaveSize(1);
+        evrakNot.olusturulanNot(user1.getFullname(), aciklama3).shouldHaveSize(1);
+        evrakNot.olusturulanNot(user1.getFullname(), aciklama4).shouldHaveSize(1);
         logout();
     }
 
@@ -131,19 +131,19 @@ public class EvrakNotTest extends BaseTest {
 
         notTipi = "Genel";
         aciklama = "Açıklama1";
-        evrakNot.notOlustur(user1.getName(), notTipi, aciklama, 400);
+        evrakNot.notOlustur(user1.getFullname(), notTipi, aciklama, 400);
 
         page.bilgilerTabiAc();
         ustYazi.ustYaziGoruntule()
                 .evrakNotlariTabiAc()
-                .olusturulanNot(user1.getName(), notTipi, aciklama).shouldHaveSize(1);
+                .olusturulanNot(user1.getFullname(), notTipi, aciklama).shouldHaveSize(1);
 
 
         notTipi = "Kişisel";
         aciklama = "açıklama2";
-        ustYazi.notOlustur(user1.getName(), notTipi, aciklama, 500);
+        ustYazi.notOlustur(user1.getFullname(), notTipi, aciklama, 500);
         page.editorTabAc();
-        evrakNot.olusturulanNot(user1.getName(), aciklama).shouldHaveSize(1);
+        evrakNot.olusturulanNot(user1.getFullname(), aciklama).shouldHaveSize(1);
         logout();
         //clearCookies();
     }
@@ -164,7 +164,7 @@ public class EvrakNotTest extends BaseTest {
         //------------------------------------
         notTipi = "Genel";
         aciklama = "Açıklama1";
-        note = evrakNot.notOlustur(user1.getName(), notTipi, aciklama, 400);
+        note = evrakNot.notOlustur(user1.getFullname(), notTipi, aciklama, 400);
         noteText = note.text();
         date = getDateFromText(noteText);
         time = getTimeFromText(noteText);
@@ -172,17 +172,17 @@ public class EvrakNotTest extends BaseTest {
         page.bilgilerTabiAc();
         ustYazi.ustYaziGoruntule()
                 .evrakNotlariTabiAc()
-                .olusturulanNot(user1.getName(), notTipi, aciklama, date, time).shouldHaveSize(1);
+                .olusturulanNot(user1.getFullname(), notTipi, aciklama, date, time).shouldHaveSize(1);
 
         //------------------------------------
         notTipi = "Kişisel";
         aciklama = "Açıklama2";
-        note = ustYazi.notOlustur(user1.getName(), notTipi, aciklama, 500);
+        note = ustYazi.notOlustur(user1.getFullname(), notTipi, aciklama, 500);
         noteText = note.text();
         date = getDateFromText(noteText);
         time = getTimeFromText(noteText);
         page.editorTabAc();
-        evrakNot.olusturulanNot(user1.getName(), aciklama, date, time).shouldHaveSize(1);
+        evrakNot.olusturulanNot(user1.getFullname(), aciklama, date, time).shouldHaveSize(1);
         logout();
     }
 
@@ -281,7 +281,7 @@ public class EvrakNotTest extends BaseTest {
         evrakNot.notlariKontrolEt(newNotesGenel);
 
         newNotesGenel.add(0, new String[]{"Genel", "Açıklama5", "", ""});
-        evrakNot.notOlustur(user2.getName(), newNotesGenel.get(0)[0], newNotesGenel.get(0)[1]);
+        evrakNot.notOlustur(user2.getFullname(), newNotesGenel.get(0)[0], newNotesGenel.get(0)[1]);
         String t = new TextEditor().type(newNotesGenel.get(0)[1]).getText();
         Assert.assertTrue(t.contains(newNotesGenel.get(0)[1]), "Evrakım metin alanında " + newNotesGenel.get(0)[1] + " olmalı");
         imzaBekleyenlerPage.evrakKaydet().islemMesaji().basariliOlmali();
@@ -336,8 +336,10 @@ public class EvrakNotTest extends BaseTest {
 
         String[][] notes = {{"Genel", "Açıklama1", "", ""}, {"Kişisel", "Açıklama2", "", ""}, {"Genel", "Açıklama3", "", ""}};
 
-        login(user6);
-        evrakOlusturVeImzala(user6, konu, notes);
+        /*login(user6);
+        evrakOlusturVeImzala(user6, konu, notes);*/
+        login(user1);
+        evrakOlusturVeImzala(user1, konu, notes);
 
         //clearCookies();
         login(user2);
@@ -378,22 +380,24 @@ public class EvrakNotTest extends BaseTest {
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
-                .konuKoduSec("YAZILIM GEL")
+                .konuKoduSec("010.10")
+//                .konuKoduSec(user.getBirimAdi())
                 .konuDoldur(konu)
                 .kaldirilacakKlasorler("Diğer")
                 .evrakTuruSec("Resmi Yazışma")
                 .onayAkisiKullanicilariTemizle()
                 .onayAkisiEkle()
-                .onayAkisiKullaniciTipiSec(user.getName(), "İmzalama")
+                .onayAkisiKullaniciTipiSec(user.getFullname(), "İmzalama")
                 .onayAkisiKullan();
 
         EvrakOlusturPage.EditorTab editorTab = evrakOlusturPage
                 .editorTabAc()
                 .editorIcerikDoldur("TS2162")
-                .editorEvrakGeregiSec("YAZILIM GELİ");
+//                .editorEvrakGeregiSec("YAZILIM GELİ");
+                .editorEvrakGeregiSec(user.getBirimAdi());
 
         for (String[] note : notes) {
-            SelenideElement n = evrakNot.notOlustur(user.getName(), note[0], note[1]);
+            SelenideElement n = evrakNot.notOlustur(user.getFullname(), note[0], note[1]);
             String t = n.text();
             note[2] = getDateFromText(t);
             note[3] = getTimeFromText(t);
@@ -432,12 +436,12 @@ public class EvrakNotTest extends BaseTest {
                 .geregiSec(user1.getBirimAdi())
                 .onayAkisiEkle()
 //                .onayAkisiKullaniciTipiSec("Optiim TEST [Ağ (Network) Uzman Yardımcısı]", "Paraflama")
-                .onayAkisiKullaniciTipiSec(user1.getName(), "Paraflama")
-                .onayAkisiEkle(user2.getName())
-                .onayAkisiKullaniciTipiSec(user2.getName(), "İmzalama")
+                .onayAkisiKullaniciTipiSec(user1.getFullname(), "Paraflama")
+                .onayAkisiEkle(user2.getFullname())
+                .onayAkisiKullaniciTipiSec(user2.getFullname(), "İmzalama")
                 .kullan()
                 .onayAkisiTitleKontrol("Yeni akış")
-                .onayAkisiDetailKontrol(user1.getName() + "-Paraflama / " + user2.getName() + "-İmzalama");
+                .onayAkisiDetailKontrol(user1.getFullname() + "-Paraflama / " + user2.getFullname() + "-İmzalama");
 //        page.kaydet();
         page.evrakKaydet();
 //        $("#kaydeTSonfirmForm\\:kaydetEvetButton").click();
@@ -675,7 +679,7 @@ public class EvrakNotTest extends BaseTest {
         @Step("Notları oluştur")
         public String[][] notlariOlustur(String[][] notes) {
             for (String[] note : notes) {
-                SelenideElement createdNote = notOlustur(user1.getName(), note[0], note[1]);
+                SelenideElement createdNote = notOlustur(user1.getFullname(), note[0], note[1]);
                 String text = createdNote.text();
                 note[2] = getDateFromText(text);
                 note[3] = getTimeFromText(text);

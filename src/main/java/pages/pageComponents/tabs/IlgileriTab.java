@@ -2,6 +2,8 @@ package pages.pageComponents.tabs;
 
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
+import pages.MainPage;
+import pages.pageComponents.SearchTable;
 
 import static com.codeborne.selenide.Condition.visible;
 
@@ -10,14 +12,15 @@ import static com.codeborne.selenide.Condition.visible;
  * Tarih: 9.01.2018
  * Açıklama:
  */
-public class IlgileriTab {
+public class IlgileriTab extends MainPage {
 
-    final static String tabName = "Ekleri";
+    final static String tabName = "İlgileri";
     protected SelenideElement tab;
     protected SelenideElement page;
 
     public IlgileriTab(SelenideElement page) {
         this.page = page;
+        this.tab = page.$("div[id$='ilgiIslemleriTabView']");
     }
 
     @Step(tabName + " tabı aç")
@@ -27,13 +30,17 @@ public class IlgileriTab {
         if (clickIfOpen.length > 0 || !tab.attr("class").equals("tabMenuContainerSelected"))
             tab.$("button").click();
 
-        this.tab = page.$("div[id$='evrakEkTabView']").shouldBe(visible);
+        this.tab.shouldBe(visible);
 
         return this;
     }
 
-    public AltTabs altTab() {
+    public AltTabs altTabs() {
         return new AltTabs(tab);
     }
 
+    @Step("İlgi Listesi tablosunda işlem yapılacak")
+    public SearchTable getEkListesiTablosu() {
+        return new SearchTable(page.$("div[id$='ilgiListesiDataTable']"));
+    }
 }

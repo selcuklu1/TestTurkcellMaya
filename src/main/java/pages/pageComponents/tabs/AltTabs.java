@@ -27,12 +27,6 @@ public class AltTabs {
         this.tab = tab;
     }
 
-    @Step("Ek Listesi Tablosunda işlem yapılacak")
-    public SearchTable getEkListesiTablosu() {
-        return new SearchTable($("div[id$='ekListesiDataTable']"));
-    }
-
-
     ///////////////////////////////////////////////////////////////////////////
     // Alt Tabs
     ///////////////////////////////////////////////////////////////////////////
@@ -252,6 +246,7 @@ public class AltTabs {
         @Step("Aranan Evrak tablosunda işlem yapılacak")
         public SearchTable getArananEvrakTablosu() {
             return new SearchTable($("div[id$='sistemdeKayitliEvrakListesiDataTable']"));
+            //sistemdeKayitliEvrakListesiDataTable_data
         }
 
     }
