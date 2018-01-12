@@ -395,7 +395,7 @@ public class BirimIcerikSablonuTest extends BaseTest {
         Assert.assertFalse(editor.getText().contains("(@BIRIM)"), "(@BIRIM) olmamalı");*/
     }
 
-    @Step("Birimden bir kullanıcıda şablonun geldiği kontrolü")
+    @Step("Birimden bir kullanıcıda şablonun geldiği kontrolü (Evrak Oluştur)")
     public void TS1082_BirimKullanici() {
         login(user1);
         EditorTab editorTab = evrakOlusturPage.openPage().editorTab().openTab();
@@ -410,7 +410,7 @@ public class BirimIcerikSablonuTest extends BaseTest {
         Assert.assertFalse(editor.getText().contains("(@BIRIM)"), "(@BIRIM) olmamalı");*/
     }
 
-    @Step("Birimden bir kullanıcıda şablonun geldiği kontrolü")
+    @Step("Birimden bir kullanıcıda şablonun geldiği kontrolü (Olur Yazısı Oluştur)")
     public void TS1082_BirimKullaniciOlurYazisiOlustur() {
         EditorTab editorTab = olurYazisiOlusturPage.openPage().editorTab().openTab();
         editorTab.getEditor().toolbarButton("Öntanımlı İçerik Şablonu Kullan", true);
