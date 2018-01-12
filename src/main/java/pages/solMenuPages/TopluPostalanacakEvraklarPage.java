@@ -6,6 +6,7 @@ import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
@@ -23,7 +24,7 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
     SelenideElement txtBaslangic = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:topluPostalanacakEvraklarIlkTarihTemizleButtonId_input"));
     SelenideElement txtBitis = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:topluPostalanacakEvraklarSonTarihTemizleButtonId_input"));
     SelenideElement lblPostaTipiSeciniz = $x("//label[contains(., 'Posta Tipi Seçiniz ...')]");
-    ElementsCollection listPostaTipleri = $$(By.xpath("//label[.='Adi Posta']/../../li"));
+    ElementsCollection listPostaTipleri = $$(By.xpath("//label[.='Adi Posta']/../../../ul/li"));
     SelenideElement btnSorgula = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:topluPostalanacakEvraklarFiltrele"));
     SelenideElement btnPostaListesineAktar = $x("//span[text() = 'Posta Listesine Aktar']/..");
     SelenideElement btnPostaListesiDropDown = $x("//fieldset[@id='mainPreviewForm:postaListesiAktarimFieldsetId']//div[contains(@class, 'ui-corner-right')]/span");
@@ -227,9 +228,10 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
     @Step("Posta tipi seç.")
     public TopluPostalanacakEvraklarPage postaTipiSec(String[] postaTipleri) {
         lblPostaTipiSeciniz.click();
+        ElementsCollection currentListElement = $$(By.xpath("//label[.='Adi Posta']/../../../ul")).last().$$("li");
         for (int i = 0; i < postaTipleri.length; i++) {
 
-            SelenideElement currentRow = listPostaTipleri
+            SelenideElement currentRow = currentListElement
                     .filterBy(Condition.text(postaTipleri[i]))
                     .first();
 
