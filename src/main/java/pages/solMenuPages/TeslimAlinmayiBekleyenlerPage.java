@@ -94,6 +94,7 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     public TeslimAlinmayiBekleyenlerPage evrakOnizlemeEklenenUstYaziKontrolu(String pdfText) {
         String text = "";
         switchTo().frame(1);
+        sleep(1000);
         text = $(By.xpath("//div[@id='viewer']/div[@class='page']/div[@class='textLayer']/div[1]")).getText();
         text.equals(pdfText);
         switchTo().parentFrame();

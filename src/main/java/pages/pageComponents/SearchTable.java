@@ -1,12 +1,11 @@
 package pages.pageComponents;
 
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.Selectors;
-import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.*;
 import com.codeborne.selenide.impl.WebElementsCollectionWrapper;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
+import org.openqa.selenium.By;
+import org.openqa.selenium.NotFoundException;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
@@ -15,6 +14,7 @@ import java.util.ArrayList;
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThanOrEqual;
 import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.Selenide.$;
 import static pages.pageComponents.belgenetElements.BelgentCondition.isTableNavButtonDisabled;
 
 /**
@@ -30,9 +30,53 @@ public class SearchTable {
         this.parentElement = parentElement;
     }
 
+    public SearchTable(By parentElementLocator) {
+        this.parentElement = $(parentElementLocator);
+    }
+
+    public SearchTable(String parentElementCssLocator) {
+        this.parentElement = $(By.cssSelector(parentElementCssLocator));
+    }
+
+    //Güncelle button .update-icon  button[id*='update']
+    //Havale Kural Listesi - Kopyala button .formSablonKopyala    button[id*='copy']
+    //Aktif Yap     button .to-active-status-icon
+    //Passif Yap button .to-passive-status-icon     button[id*='Pasif']
+    //Sil button .delete-icon  button[id*='delete']
+    //Eposta Seçenekleri button .email-icon
+    //button .user-block-icon   User! Bloke Et
+    //Rapor Al  button .document-getReport
+
+
+    ///////////////////////////////////////////////////////////////////////////
+    //
+    ///////////////////////////////////////////////////////////////////////////
+
+    private SelenideElement foundedRow;
+    private ElementsCollection foundedRows;
+
+    public SearchTable first(){
+        foundedRow = foundedRows.first();
+        return this;
+    }
+
+    @Step("Tabloda kolonlara göre satırları ara")
+    public SearchTable findRowsMy(Condition... conditions) {
+        foundedRows = getFilteredRows(conditions);
+        Allure.addAttachment("Filtereye göre bulunan satırlar", foundedRows.texts().toString());
+        return this;
+    }
+
+
+    ///////////////////////////////////////////////////////////////////////////
+    //
+    ///////////////////////////////////////////////////////////////////////////
+
+    //    [id='havaleKuralYonetimiListingForm:havaleKuralDataTable'] th.ui-datatable-header label
     @Step
     public SelenideElement getTableHeader() {
-        return parentElement.$("th.ui-datatable-header");
+        return parentElement.$("thead");
+//                $("th.ui-datatable-header");
     }
 
     @Step
@@ -41,17 +85,16 @@ public class SearchTable {
     }
 
     @Step
-    public SelenideElement getAddNewButton() {
-        return parentElement.$x("descendant::button[span[contains(@class,'add-icon')]]");
+    public SelenideElement getYeniKayitEkleButton() {
+//        return parentElement.$x("descendant::button[span[contains(@class,'add-icon')]]");
+        return parentElement.$("button .add-icon");
     }
 
-    @Step
-    public SearchTable yeniKayitEkle() {
-        getAddNewButton().shouldBe(visible, enabled).click();
+    @Step("Yeni Kayıt Ekle butona tıkla")
+    public SearchTable yeniKayitEkleTikla() {
+        getYeniKayitEkleButton().shouldBe(visible, enabled).click();
         return this;
     }
-
-//    [id='havaleKuralYonetimiListingForm:havaleKuralDataTable'] th.ui-datatable-header label
 
     @Step("İlk sayfaya git butonu")
     public SelenideElement getFirstPageButton() {
@@ -73,49 +116,17 @@ public class SearchTable {
         return parentElement.$("span[class~='ui-paginator-last']");
     }
 
-    public SelenideElement getDataTable() {
-//        return parentElement.$("[id$='SearchTable']");
-//        ,[id$='SearchTable'] table[role=grid],table[role=treegrid]
-        /*SelenideElement table = parentElement.find("[id$='SearchTable']");
-        if (table.isDisplayed())
-            return table;
-
-        return parentElement.$("div[id$=TreeTable]");*/
-        return parentElement;
-    }
-
-    private SelenideElement getDataTableData() {
-        return parentElement.$("[id$='DataTable_data']");
-    }
-
-    private ElementsCollection getDataTableRows() {
-        return parentElement.$$("tr[role=row]");
-    }
-
-    private SelenideElement getColumn(SelenideElement row, int columnIndex) {
-        return row.$("td[role=gridcell]");
-    }
-
-    public boolean isRowsExist() {
-        ElementsCollection columns = parentElement.$$("tr[role=row] td[role=gridcell]");
-        if (columns.size() == 0 || parentElement.find(Selectors.byText("Kayıt Bulunamamıştır")).exists())
-            return false;
-
-        return false;
-    }
-
-    public ElementsCollection getRows() {
-        parentElement.shouldBe(visible);
-        /*Allure.addAttachment("Satır sayısı:" + String.valueOf(searchTable.$$("tr[role='row']").size()),
-                (searchTable.$$("tr[role='row']").size() > 0) ? getDataTableData().$$("tr[role='row']").texts().toString() : "");
-        takeScreenshot();*/
-        return parentElement.$$("tr[role='row']");
+    public ElementsCollection getColumnHeaders() {
+        //ElementsCollection columnheaders = parentElement.$$("[id$='SearchTable'] th[role='columnheader']");
+        ElementsCollection columnheaders = parentElement.$$("thead th[role='columnheader']");
+        if (columnheaders.size() == 0)
+            columnheaders = parentElement.$$("thead th");
+        return columnheaders;
     }
 
     @Step("Kolonun index")
     public int getColumnIndex(String columnName) {
-
-        ElementsCollection columnheaders = parentElement.$$("[id$='SearchTable'] th[role='columnheader']");
+        ElementsCollection columnheaders = getColumnHeaders();
         columnheaders.filterBy(exactText(columnName)).shouldHave(sizeGreaterThan(0));
         int i = 1;
         for (SelenideElement header : columnheaders) {
@@ -135,11 +146,27 @@ public class SearchTable {
      */
     @Step("Kolonun ismi")
     public String getColumnName(int index) {
-        String name = parentElement.$$("th[role='columnheader']")
-                .shouldHave(sizeGreaterThanOrEqual(index))
+        String name = getColumnHeaders().shouldHave(sizeGreaterThanOrEqual(index))
                 .get(index - 1).text().trim();
         Allure.addAttachment("Kolon ismi", name);
         return name;
+    }
+
+    public boolean isRowsExist() {
+        ElementsCollection columns = parentElement.$$("tr[role=row] td[role=gridcell]");
+        if (columns.size() == 0 || parentElement.find(Selectors.byText("Kayıt Bulunamamıştır")).exists())
+            return false;
+
+        return true;
+    }
+
+    @Step("Tüm satırları bul")
+    public ElementsCollection getRows() {
+//        parentElement.shouldBe(visible);
+        /*Allure.addAttachment("Satır sayısı:" + String.valueOf(searchTable.$$("tr[role='row']").size()),
+                (searchTable.$$("tr[role='row']").size() > 0) ? getDataTableData().$$("tr[role='row']").texts().toString() : "");
+        takeScreenshot();*/
+        return parentElement.$$("tbody>tr[role='row']");
     }
 
     /**
@@ -158,7 +185,7 @@ public class SearchTable {
      */
     private ElementsCollection getFilteredRows(Condition... conditions) {
         ArrayList<WebElement> resulrRows = new ArrayList<>();
-        ElementsCollection rows = parentElement.$$("tr[role=row]");
+        ElementsCollection rows = getRows();
         for (SelenideElement row : rows) {
             ElementsCollection columns = row.$$("td[role=gridcell]");
             int i = conditions.length;
@@ -176,7 +203,7 @@ public class SearchTable {
 
     private ElementsCollection getFilteredRows(int columnIndex, Condition... conditions) {
         ArrayList<WebElement> rows = new ArrayList<>();
-        ElementsCollection columns = parentElement.$$("tr[role=row] td[role=gridcell]:nth-child(" + columnIndex + ")");
+        ElementsCollection columns = parentElement.$$("tbody tr[role=row] td[role=gridcell]:nth-child(" + columnIndex + ")");
         for (Condition condition : conditions)
             columns = columns.filterBy(condition);
 
@@ -188,7 +215,7 @@ public class SearchTable {
     private ElementsCollection getFilteredRows(String columnName, Condition... conditions) {
         ArrayList<WebElement> rows = new ArrayList<>();
         int columnIndex = getColumnIndex(columnName);
-        ElementsCollection columns = parentElement.$$("tr[role=row] td[role=gridcell]:nth-child(" + columnIndex + ")");
+        ElementsCollection columns = parentElement.$$("tbody tr[role=row] td[role=gridcell]:nth-child(" + columnIndex + ")");
         for (Condition condition : conditions)
             columns = columns.filterBy(condition);
 
@@ -197,6 +224,14 @@ public class SearchTable {
         return new ElementsCollection(new WebElementsCollectionWrapper(rows));
     }
 
+    private ElementsCollection getFilteredRows(String... texts) {
+        ElementsCollection filtered = getRows();
+        for (String text : texts)
+            filtered = filtered.filterBy(text(text));
+        return filtered;
+    }
+
+    //region Find Rows
     /**
      * Row'da tüm condition'lar sağlanmalı. Örnek:
      * |    kolon1   |      kolon2    |   kolon3    |
@@ -258,13 +293,6 @@ public class SearchTable {
         return getFilteredRows(columnIndex, conditions);
     }
 
-    ElementsCollection getFilteredRows(String... texts) {
-        ElementsCollection filtered = getRows();
-        for (String text : texts)
-            filtered = filtered.filterBy(text(text));
-        return filtered;
-    }
-
     @Step("Tabloda tekste göre satırları ara")
     public ElementsCollection findRowsByText(String... texts) {
         ElementsCollection filtered = getFilteredRows(texts);
@@ -295,6 +323,35 @@ public class SearchTable {
                 return filtered;
             }
             getNextPageButton().click();
+        }
+    }
+
+    /**
+     * Row'da tüm condition'lar sağlanmalı. Örnek:
+     * |    kolon1   |      kolon2    |   kolon3    |
+     * aaabb           ccc;ddd         222
+     * aaa           ccc;ddd;fff      1111
+     * aaa              ddd           1111
+     * <p>
+     * getFilteredRows(exactText(aaa), text(fff)) ikinci satırı bulur
+     * getFilteredRows(text(aaa), exactText(222)) birinci satırı bulur
+     * getFilteredRows(exactText(aaa), exactText(ddd), exactText(1111)) üçüncü satırı bulur
+     *
+     * @param texts
+     * @return
+     */
+    @Step("Tabloda tüm sayfalarda ara")
+    public ElementsCollection findRowsInAllPagesByTextFromLast(String... texts) {
+        if (getLastPageButton().is(not(isTableNavButtonDisabled)))
+            getLastPageButton().click();
+
+        while (true) {
+            ElementsCollection filtered = getFilteredRows(texts);
+            if (filtered.size() > 0 || getPrevPageButton().is(isTableNavButtonDisabled)) {
+                Allure.addAttachment("Filtereye göre bulunan satırlar", filtered.texts().toString());
+                return filtered;
+            }
+            getPrevPageButton().click();
         }
     }
 
@@ -375,6 +432,216 @@ public class SearchTable {
             getNextPageButton().click();
         }
     }
+    //endregion
 
+    //region Find Row
+    /**
+     * Row'da tüm condition'lar sağlanmalı. Örnek:
+     * |    kolon1   |      kolon2    |   kolon3    |
+     * aaabb           ccc;ddd         222
+     * aaa           ccc;ddd;fff      1111
+     * aaa              ddd           1111
+     * <p>
+     * getFilteredRows(exactText(aaa), text(fff)) ikinci satırı bulur
+     * getFilteredRows(text(aaa), exactText(222)) birinci satırı bulur
+     * getFilteredRows(exactText(aaa), exactText(ddd), exactText(1111)) üçüncü satırı bulur
+     *
+     * @param conditions
+     * @return
+     */
+    @Step("Tabloda kolonlara göre satırları ara")
+    public SelenideElement findRow(Condition... conditions) {
+        SelenideElement row = getFilteredRows(conditions).shouldHave(sizeGreaterThan(0)).first();
+        Allure.addAttachment("Filtereye göre bulunan satır", row.text());
+        return row;
+    }
+
+    /**
+     * Row'da tüm condition'lar sağlanmalı. Örnek:
+     * |    kolon1   |      kolon2    |   kolon3    |
+     * aaabb           ccc;ddd         222
+     * aaa           ccc;ddd;fff      1111
+     * aaa              ddd           1111
+     * <p>
+     * getFilteredRows(exactText(aaa), text(fff)) ikinci satırı bulur
+     * getFilteredRows(text(aaa), exactText(222)) birinci satırı bulur
+     * getFilteredRows(exactText(aaa), exactText(ddd), exactText(1111)) üçüncü satırı bulur
+     *
+     * @param conditions
+     * @return
+     */
+    @Step("Tabloda kolon tekste göre satırları ara")
+    public SelenideElement findRow(int columnIndex, Condition... conditions) {
+        String columnName = getColumnName(columnIndex);
+        return getFilteredRows(columnIndex, conditions).shouldHave(sizeGreaterThan(0)).first();
+    }
+
+    /**
+     * Row'da tüm condition'lar sağlanmalı. Örnek:
+     * |    kolon1   |      kolon2    |   kolon3    |
+     * aaabb           ccc;ddd         222
+     * aaa           ccc;ddd;fff      1111
+     * aaa              ddd           1111
+     * <p>
+     * getFilteredRows(exactText(aaa), text(fff)) ikinci satırı bulur
+     * getFilteredRows(text(aaa), exactText(222)) birinci satırı bulur
+     * getFilteredRows(exactText(aaa), exactText(ddd), exactText(1111)) üçüncü satırı bulur
+     *
+     * @param conditions
+     * @return
+     */
+    @Step("Tabloda kolon tekste göre satırları ara")
+    public SelenideElement findRow(String columnName, Condition... conditions) {
+        int columnIndex = getColumnIndex(columnName);
+        return getFilteredRows(columnIndex, conditions).shouldHave(sizeGreaterThan(0)).first();
+    }
+
+    @Step("Tabloda tekste göre satırları ara")
+    public SelenideElement findRowByText(String... texts) {
+        SelenideElement row = getFilteredRows(texts).shouldHave(sizeGreaterThan(0)).first();
+        Allure.addAttachment("Filtereye göre bulunan satırlar", row.text());
+        return row;
+    }
+
+    /**
+     * Row'da tüm condition'lar sağlanmalı. Örnek:
+     * |    kolon1   |      kolon2    |   kolon3    |
+     * aaabb           ccc;ddd         222
+     * aaa           ccc;ddd;fff      1111
+     * aaa              ddd           1111
+     * <p>
+     * getFilteredRows(exactText(aaa), text(fff)) ikinci satırı bulur
+     * getFilteredRows(text(aaa), exactText(222)) birinci satırı bulur
+     * getFilteredRows(exactText(aaa), exactText(ddd), exactText(1111)) üçüncü satırı bulur
+     *
+     * @param texts
+     * @return
+     */
+    @Step("Tabloda tüm sayfalarda ara")
+    public SelenideElement findRowInAllPagesByText(String... texts) {
+        while (true) {
+            ElementsCollection filtered = getFilteredRows(texts);
+            if (filtered.size() > 0) {
+                SelenideElement row = filtered.first();
+                Allure.addAttachment("Filtereye göre bulunan satırlar", row.text());
+                return row;
+            }
+            if (getNextPageButton().is(not(isTableNavButtonDisabled)))
+                break;
+
+            getNextPageButton().click();
+        }
+        throw new NotFoundException("Satır bulunamadı:" + texts.toString());
+    }
+
+    /**
+     * Row'da tüm condition'lar sağlanmalı. Örnek:
+     * |    kolon1   |      kolon2    |   kolon3    |
+     * aaabb           ccc;ddd         222
+     * aaa           ccc;ddd;fff      1111
+     * aaa              ddd           1111
+     * <p>
+     * getFilteredRows(exactText(aaa), text(fff)) ikinci satırı bulur
+     * getFilteredRows(text(aaa), exactText(222)) birinci satırı bulur
+     * getFilteredRows(exactText(aaa), exactText(ddd), exactText(1111)) üçüncü satırı bulur
+     *
+     * @param conditions
+     * @return
+     */
+    @Step("Tabloda tüm sayfalarda ara")
+    public SelenideElement findRowInAllPages(Condition... conditions) {
+        while (true) {
+            ElementsCollection filtered = getFilteredRows(conditions);
+            if (filtered.size() > 0) {
+                SelenideElement row = filtered.first();
+                Allure.addAttachment("Filtereye göre bulunan satırlar", row.text());
+                return row;
+            }
+            if (getNextPageButton().is(not(isTableNavButtonDisabled)))
+                break;
+
+            getNextPageButton().click();
+        }
+        throw new NotFoundException("Satır bulunamadı:" + conditions.toString());
+    }
+
+    /**
+     * Row'da tüm condition'lar sağlanmalı. Örnek:
+     * |    kolon1   |      kolon2    |   kolon3    |
+     * aaabb           ccc;ddd         222
+     * aaa           ccc;ddd;fff      1111
+     * aaa              ddd           1111
+     * <p>
+     * getFilteredRows(exactText(aaa), text(fff)) ikinci satırı bulur
+     * getFilteredRows(text(aaa), exactText(222)) birinci satırı bulur
+     * getFilteredRows(exactText(aaa), exactText(ddd), exactText(1111)) üçüncü satırı bulur
+     *
+     * @param conditions
+     * @return
+     */
+    @Step("Tabloda tüm sayfalarda ara")
+    public SelenideElement findRowInAllPages(int columnIndex, Condition... conditions) {
+        while (true) {
+            ElementsCollection filtered = getFilteredRows(columnIndex, conditions);
+            if (filtered.size() > 0) {
+                SelenideElement row = filtered.first();
+                Allure.addAttachment("Filtereye göre bulunan satırlar", row.text());
+                return row;
+            }
+            if (getNextPageButton().is(not(isTableNavButtonDisabled)))
+                break;
+
+            getNextPageButton().click();
+        }
+        throw new NotFoundException("Satır bulunamadı:" + conditions.toString());
+    }
+
+    /**
+     * Row'da tüm condition'lar sağlanmalı. Örnek:
+     * |    kolon1   |      kolon2    |   kolon3    |
+     * aaabb           ccc;ddd         222
+     * aaa           ccc;ddd;fff      1111
+     * aaa              ddd           1111
+     * <p>
+     * getFilteredRows(exactText(aaa), text(fff)) ikinci satırı bulur
+     * getFilteredRows(text(aaa), exactText(222)) birinci satırı bulur
+     * getFilteredRows(exactText(aaa), exactText(ddd), exactText(1111)) üçüncü satırı bulur
+     *
+     * @param conditions
+     * @return
+     */
+    @Step("Tabloda tüm sayfalarda ara")
+    public SelenideElement findRowInAllPages(String columnName, Condition... conditions) {
+        while (true) {
+            ElementsCollection filtered = getFilteredRows(columnName, conditions);
+            if (filtered.size() > 0) {
+                SelenideElement row = filtered.first();
+                Allure.addAttachment("Filtereye göre bulunan satırlar", row.text());
+                return row;
+            }
+            if (getNextPageButton().is(not(isTableNavButtonDisabled)))
+                break;
+
+            getNextPageButton().click();
+        }
+        throw new NotFoundException("Satır bulunamadı:" + conditions.toString());
+    }
+    //endregion
+
+    @Step("")
+    public ElementsCollection getColumns(SelenideElement row) {
+        return row.$$("td[role=gridcell]");
+    }
+
+    @Step("")
+    public SelenideElement getColumn(SelenideElement row, int columnIndex) {
+        return row.$$("td[role=gridcell]").get(columnIndex);
+    }
+
+    @Step("")
+    public SelenideElement getColumn(SelenideElement row, String columnName) {
+        int index = getColumnIndex(columnName);
+        return row.$$("td[role=gridcell]").get(index - 1);
+    }
 
 }

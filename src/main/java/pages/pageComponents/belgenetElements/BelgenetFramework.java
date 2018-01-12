@@ -1,6 +1,9 @@
 package pages.pageComponents.belgenetElements;
 
+import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.commands.Commands;
+import com.codeborne.selenide.commands.Find;
+import com.codeborne.selenide.impl.WebElementSource;
 
 public class BelgenetFramework {
 
@@ -19,6 +22,8 @@ public class BelgenetFramework {
         Commands.getInstance().add("isLovSelected", new ComboLov().new IsLovSelected());
 
         Commands.getInstance().add("isLovValueSelectable", new ComboLov().new IsLovValueSelectable());
+
+        Commands.getInstance().add("getSelectableItems", new ComboLov().new GetSelectableItems());
 
         Commands.getInstance().add("getSelectedItems", new ComboLov().new GetSelectedItems());
 
@@ -45,6 +50,5 @@ public class BelgenetFramework {
         Commands.getInstance().add("getComboBoxValues", new ComboBox().new GetComboBoxValues());
         Commands.getInstance().add("getComboBoxHtmlList", new ComboBox().new GetComboBoxList());
         //endregion
-
     }
 }

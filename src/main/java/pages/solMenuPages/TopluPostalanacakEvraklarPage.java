@@ -410,17 +410,23 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
 
         if (shouldBeExist == true) {
 
-            tableEvraklar
+
+            SelenideElement currentItem = tableEvraklar
                     .filterBy(Condition.text(kayitTarihiSayi))
                     .filterBy(Condition.text("Gideceği Yer: " + gidecegiYer))
                     .filterBy(Condition.text("Konu: " + konu))
                     .filterBy(Condition.text("Hazırlayan Birim: " + hazirlayanBirim))
                     .filterBy(Condition.text("Posta Tipi: " + postTipi))
-                    .first()
+                    .first();
+
+            Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", currentItem);
+            currentItem
                     .shouldBe(Condition.exist)
                     .shouldBe(Condition.visible);
 
         } else {
+
+            Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", $("tbody[id='mainInboxForm:inboxDataTable_data']"));
 
             tableEvraklar
                     .filterBy(Condition.text(kayitTarihiSayi))

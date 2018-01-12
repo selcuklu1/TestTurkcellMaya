@@ -1067,7 +1067,8 @@ public class EvrakOlusturPage extends MainPage {
         @Step("Onay akışı kullanıcıları silme")
         public BilgilerTab onayAkisiKullanicilariTemizle() {
             //btnOnayAkisiEkle.click();
-            txtOnayAkisiKullanicilar.clearAllSelectedItems();
+            if (txtOnayAkisiKullanicilar.exists())
+                txtOnayAkisiKullanicilar.clearAllSelectedItems();
             return this;
         }
 

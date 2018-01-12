@@ -110,6 +110,11 @@ public class Belgenet extends Selenide {
         return ElementFinder.wrap(BelgenetElement.class, null, locator, 0);
     }
 
+
+    public static BelgenetElement comboBox(WebElement parentElement, String selector) {
+        return ElementFinder.wrap(BelgenetElement.class, parentElement, By.cssSelector(selector), 0);
+    }
+
     public static BelgenetElement comboBox(String selector) {
         return ElementFinder.wrap(BelgenetElement.class, null, By.cssSelector(selector), 0);
     }
@@ -169,5 +174,7 @@ public class Belgenet extends Selenide {
 
 //        return;// $(elementLocator);
     }
+
+
 }
 
