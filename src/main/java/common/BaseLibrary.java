@@ -789,7 +789,7 @@ public class BaseLibrary extends ElementsContainer {
     }
 
     // İşlem penceresi kapatma onay - popup
-    @Step("Popup : İşlem penceresi kaydet: \"{secim}\" ")
+    @Step("Popup : İşlem penceresi kaydet: {secim}")
     public void islemPenceresiKaydetPopup(String secim) {
 
         SelenideElement islemKaydetPopup = $(By.id("saveOnCloseWindowConfirm"));
@@ -812,24 +812,25 @@ public class BaseLibrary extends ElementsContainer {
 
     //endregion
 
-    @Step("Popup İşlem Onayı:  \"{secim}\"")
+    @Step("Popup İşlem Onayı: {secim}")
     public void islemOnayi(String secim) {
 
         SelenideElement btnIslemOnayiEvet = $(By.id("baseConfirmationDialog:confirmButton"));
         SelenideElement btnIslemOnayiHayir = $(By.id("baseConfirmationDialog:baseConfirmationDialogCancelButton"));
+        btnIslemOnayiEvet.shouldBe(visible);
 
         switch (secim) {
             case "Evet":
-                btnIslemOnayiEvet.click();
+                clickJs(btnIslemOnayiEvet);
                 break;
             case "Hayır":
-                btnIslemOnayiHayir.click();
+                clickJs(btnIslemOnayiHayir);
                 break;
         }
     }
 
 
-    @Step("Popup Silme Onayı:  \"{secim}\"")
+    @Step("Popup Silme Onayı: {secim}")
     public void silmeOnayi(String secim) {
 
         SelenideElement btnSilmeOnayiEvet = $("[id$='ekSilEvetButton']");
