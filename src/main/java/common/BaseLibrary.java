@@ -386,9 +386,9 @@ public class BaseLibrary extends ElementsContainer {
     public void uploadFile(SelenideElement element, String pathToFile) {
         try {
             element.sendKeys(pathToFile);
-            log.info("Dosya yüklendi.");
+            log.info("Dosya yüklemeye başlandı.");
         } catch (Exception e) {
-            log.info("Error in attaching file.s : " + e);
+            log.info("Dosya yükleme başarısız. : " + e);
             throw new RuntimeException(e);
         }
     }

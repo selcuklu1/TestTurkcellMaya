@@ -1643,7 +1643,6 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement lblDosyaAdi = $(By.id("yeniGidenEvrakForm:evrakEkTabView:dosyaAdi"));
         ElementsCollection trEkLlistesi = $$("tbody[id*='yeniGidenEvrakForm:ekListesiDataTable'] tr[role='row']");
 
-
         //Ekleri tabı - Fiziksel Ekle
         SelenideElement btnEkleriFizikselEkEkleTab = $(By.xpath("//a[@href='#yeniGidenEvrakForm:evrakEkTabView:aciklamaEkleTab']"));
         SelenideElement txtEkleriFizikselMetni = $(By.id("yeniGidenEvrakForm:evrakEkTabView:aciklamaTextArea"));
@@ -1963,6 +1962,7 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement txtIlisikIslemleriTabViewArsivdeEvrakAraSayi = $(By.id("yeniGidenEvrakForm:ilgiIslemleriTabView:arsivdenIlgiEvrakAraSayiInputTextId"));
         SelenideElement btnIlisikIslemleriTabViewArsivdenEvrakDokumanAra = $(By.id("yeniGidenEvrakForm:ilisikIslemleriTabView:arsivdenIlisikEvrakAraButtonId"));
 
+        @Step("Ilgileri tabını aç")
         private IlgileriTab open() {
             tabIlgileri.click();
             return this;
@@ -2016,10 +2016,25 @@ public class EvrakOlusturPage extends MainPage {
     public class IliskiliEvraklarTab extends MainPage {
 
         //İlişkili Evraklar tabı - Dosya Ekle
-        SelenideElement txtIliskiliDosyaIlgiMetni = $(By.id("yeniGidenEvrakForm:ilisikIslemleriTabView:dosyaAciklama"));
+        SelenideElement txtIliskiliEvraklarIlisikMetni = $(By.id("yeniGidenEvrakForm:ilisikIslemleriTabView:dosyaAciklama"));
+        SelenideElement btnIliskiliEvraklarTaramaHavuzudanEkle = $(By.id("yeniGidenEvrakForm:ilisikIslemleriTabView:uploadFromTarananEvrakHavuzuIliskiA"));
+        SelenideElement btnTaramaHavuzuSorgula = $(By.id("taramaHavuzuFormId:filterAccordionPanelId:taramaHavuzuSorgulaButton"));
+        SelenideElement chkTaramaHavuzuDosya1 = $(By.id("taramaHavuzuFormId:taramaHavuzuDataTableId:0:selectionId"));
+        SelenideElement chkTaramaHavuzuDosya2 = $(By.id("taramaHavuzuFormId:taramaHavuzuDataTableId:1:selectionId"));
+        SelenideElement txtDosya1Aciklama = $("[id^='taramaHavuzuFormId:taramaHavuzuDataTableId:0:j_idt']");
+        SelenideElement txtDosya2Aciklama = $("[id^='taramaHavuzuFormId:taramaHavuzuDataTableId:1:j_idt']");
+        SelenideElement cmbTaramaTuru = $(By.id("taramaHavuzuFormId:taramaHavuzuDataTableId:0:tarananTuruId"));
+        SelenideElement cmbEvrakTuru = $(By.id("taramaHavuzuFormId:filterAccordionPanelId:tarananTuruId"));
+
+        SelenideElement btnTaramaHavuzuTamam = $(By.id("taramaHavuzuFormId:taramaHavuzuTamamButton"));;
+        ElementsCollection trDosyalistesi = $$("tbody[id*='yeniGidenEvrakForm:ilisikListesiDataTable'] tr[role='row']");
+        SelenideElement btnDosyaEkle = $(By.id("yeniGidenEvrakForm:ilisikIslemleriTabView:fileUploadButtonA_input"));;
+        SelenideElement lblDosyaAdi = $(By.id("yeniGidenEvrakForm:ilisikIslemleriTabView:dosyaAdi"));
+
         SelenideElement btnIliskiliDosyaFileUpload = $(By.id("yeniGidenEvrakForm:ilisikIslemleriTabView:fileUploadButtonA"));
         SelenideElement btnIliskiliEkle = $(By.id("yeniGidenEvrakForm:ilisikIslemleriTabView:ilisikEkleButton"));
         SelenideElement btnIliskiliTemizle = $(By.id("yeniGidenEvrakForm:ilisikIslemleriTabView:ilisikTemizleButton"));
+
 
         //İlişkili Evraklar tab - Sistemde kayıtlı evrak ekle
         SelenideElement dateIliskiliSistemdeEvrakTarihiBaslangic = $(By.id("yeniGidenEvrakForm:ilisikIslemleriTabView:iliskiliEvrakTarihBasId_input"));
@@ -2027,6 +2042,9 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement cmbIliskiliSistemdeEvrakAranacakyer = $(By.id("yeniGidenEvrakForm:ilisikIslemleriTabView:iliskiliEvrakAramaAranacakYerId"));
         SelenideElement txtIliskiliSistemdeEvrakArama = $(By.id("yeniGidenEvrakForm:ilisikIslemleriTabView:evrakAramaText"));
         SelenideElement btnIliskiliSistemdeDokumanAra = $(By.id("yeniGidenEvrakForm:ilisikIslemleriTabView:dokumanAraButton"));
+        SelenideElement btnSistemdeKayitliEvrakTab = $("a[href='#yeniGidenEvrakForm:ilisikIslemleriTabView:sistemdeKayitliEvragiEkleTab']");
+        ElementsCollection trEvraklarListesi = $$("tbody[id*='yeniGidenEvrakForm:ilisikIslemleriTabView:sistemdeKayitliEvrakListesiDataTable'] tr[role='row']");
+
 
         //İlişkili Evraklar tab - Tercüme Ekle
         SelenideElement txtIlisikIslemleriTabViewIlisikMetni = $(By.id("yeniGidenEvrakForm:ilisikIslemleriTabView:tercumeAciklama"));
@@ -2034,10 +2052,180 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement btnIlisikIslemleriTabViewEkle = $(By.id("yeniGidenEvrakForm:ilisikIslemleriTabView:tercumeEkleButton"));
         SelenideElement btnIlisikIslemleriTabViewTemizle = $(By.id("yeniGidenEvrakForm:ilisikIslemleriTabView:tercumeTemizleButton"));
 
+        @Step("Ilişkili evraklar tabını aç")
         private IliskiliEvraklarTab open() {
             tabIliskiliEvraklar.click();
             return this;
+        }
 
+        @Step("İlişik metni doldur")
+        public IliskiliEvraklarTab ilisikMetniDoldur(String ilisikMetni) {
+            txtIliskiliEvraklarIlisikMetni.setValue(ilisikMetni);
+            return this;
+        }
+
+        @Step("Tarama havuzundan ekle")
+        public IliskiliEvraklarTab taramaHavuzundanEkle() {
+            btnIliskiliEvraklarTaramaHavuzudanEkle.click();
+            return this;
+        }
+
+        @Step("Tarama havuzu sorgula")
+        public IliskiliEvraklarTab taramaHavuzuSorgula() {
+            btnTaramaHavuzuSorgula.click();
+            return this;
+        }
+
+        @Step("Ilişkili dosya seç")
+        public IliskiliEvraklarTab birinciEvrakSec(boolean secim) {
+            chkTaramaHavuzuDosya1.setSelected(secim);
+            return this;
+        }
+
+        @Step("Ilişkili dosya seç")
+        public IliskiliEvraklarTab ikinciEvrakSec(boolean secim) {
+            chkTaramaHavuzuDosya2.setSelected(secim);
+            return this;
+        }
+
+        @Step("İlişik metni doldur")
+        public IliskiliEvraklarTab dosya1AciklamaDoldur(String ilisikMetni) {
+            txtDosya1Aciklama.setValue(ilisikMetni);
+            return this;
+        }
+
+
+        @Step("İlişik metni doldur")
+        public IliskiliEvraklarTab dosya2AciklamaDoldur(String ilisikMetni) {
+            txtDosya2Aciklama.setValue(ilisikMetni);
+            return this;
+        }
+
+        @Step("Evrak aranacak yer seç")
+        public IliskiliEvraklarTab evrakAranacakYerSec(String turu) {
+            cmbIliskiliSistemdeEvrakAranacakyer.selectOption(turu);
+            return this;
+        }
+
+
+        @Step("Tarama türü seç")
+        public IliskiliEvraklarTab taramaTuruSec(String turu) {
+            cmbTaramaTuru.selectOption(turu);
+            return this;
+        }
+
+        @Step("Evrak türü seç")
+        public IliskiliEvraklarTab evrakTuruSec(String turu) {
+            cmbEvrakTuru.selectOption(turu);
+            return this;
+        }
+
+        @Step("Tarama havuzu tamam")
+        public IliskiliEvraklarTab taramaHavuzuTamam() {
+            btnTaramaHavuzuTamam.shouldBe(visible);
+            clickJs(btnTaramaHavuzuTamam);
+            return this;
+        }
+
+        @Step("Ekranın alt kısmında listelenen evraklara dosyanın geldiği kontrolu: {description}")
+        public IliskiliEvraklarTab listelenenEvraklaraDosyanınGeldigiKontrolu(String value, String description) {
+
+            trDosyalistesi
+                    .filterBy(text(value))
+                    .get(0)
+                    .shouldBe(exist);
+            return this;
+        }
+
+        @Step("Ekranın alt kısmında listelenen evraklara indir butonunun aktif geldiği kontrolu")
+        public IliskiliEvraklarTab listelenenEvraklardaIndırButonuKontrol(String dosyaAdi) {
+
+            trDosyalistesi
+                    .filterBy(text(dosyaAdi))
+                    .get(0)
+                    .$("[class$='ui-icon-disk']").shouldBe(visible);
+
+            return this;
+        }
+
+        @Step("Dosya ekle: {dosyaAdi}")
+        public IliskiliEvraklarTab dosyaEkle(String pathPDF, String dosyaAdi) {
+
+            uploadFile(btnDosyaEkle, pathPDF);
+
+            return this;
+        }
+
+        @Step("Eklenen dosya adi kontrol : {dosyaAdi}")
+        public IliskiliEvraklarTab eklenenDosyaAdiKontrol(String dosyaAdi) {
+
+            Assert.assertEquals(lblDosyaAdi.getText().contains(dosyaAdi), true);
+
+            return this;
+        }
+
+        @Step("İlişkili Evraklar Tab - Ekle")
+        public IliskiliEvraklarTab iliskiliEkle() {
+            btnIliskiliEkle.click();
+            return this;
+        }
+
+        @Step("Dosya yüklenene kadar 60 dk bekle, 60 dktan fazla sürerse timeout hatası ver")
+        public IliskiliEvraklarTab dosyaYukleneneKadarBekle() {
+
+            waitForLoadingJS(WebDriverRunner.getWebDriver(), 60);
+
+            return this;
+        }
+
+        @Step("İlişkili Evraklar/Sistemde Kayıtlı Evrak Ekle Tab - Açma")
+        public IliskiliEvraklarTab sistemdeKayitliEvrakEkleTabiniAc() {
+            btnSistemdeKayitliEvrakTab.click();
+            return this;
+        }
+
+        @Step("Sistemde Kayıtlı Evrak Ekle alan kontrolleri")
+        public IliskiliEvraklarTab sistemdeKayitliEvrakEkleAlanKontrolleri() {
+
+            dateIliskiliSistemdeEvrakTarihiBaslangic.shouldBe(visible);
+            dateIliskiliSistemdeEvrakTarihiSon.shouldBe(visible);
+            cmbIliskiliSistemdeEvrakAranacakyer.shouldBe(visible);
+            txtIliskiliSistemdeEvrakArama.shouldBe(visible);
+            btnIliskiliSistemdeDokumanAra.shouldBe(visible);
+
+            return this;
+        }
+
+        @Step("Evrak Arama doldur: {evrakNo}")
+        public IliskiliEvraklarTab evrakAramaDoldur(String evrakNo) {
+            txtIliskiliSistemdeEvrakArama.setValue(evrakNo);
+            return this;
+        }
+
+        @Step("Dokuman Ara")
+        public IliskiliEvraklarTab dokumanAra() {
+            btnIliskiliSistemdeDokumanAra.click();
+            return this;
+        }
+
+        @Step("Evrakların listelendiği kontrolu")
+        public IliskiliEvraklarTab listelenenEvraklardaKontrol(String evrakNo) {
+
+            trEvraklarListesi
+                    .filterBy(text(evrakNo))
+                    .get(0)
+                    .shouldBe(exist);
+            return this;
+        }
+
+        @Step("Evrakın listeye gelmediği kontrolu")
+        public IliskiliEvraklarTab listelenenEvraklardaGelmemeKontrolu(String evrakNo) {
+
+           int size =  trEvraklarListesi
+                    .filterBy(text(evrakNo)).size();
+           Assert.assertEquals(size==0, true);
+
+            return this;
         }
 
     }
