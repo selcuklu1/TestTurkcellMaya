@@ -3,6 +3,7 @@ package pages.solMenuPages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
@@ -40,6 +41,9 @@ public class TopluPostaladiklarimPage extends MainPage {
     SelenideElement txtGramaj = $(By.xpath("//*[@id='mainPreviewForm:eastLayout']//label[normalize-space(text())='Gramaj :']/../..//input"));
     SelenideElement btnHesapla = $x("//span[. = 'Tutar Hesapla']/..");
     SelenideElement lblIndirimOncesiTutar = $x("//table[@id='mainPreviewForm:indirimOncesiTutarId']//label[contains(., 'TL')]");
+    SelenideElement btnEtiketBastir = $x("//span[text() = 'Etiket Bastır']/../../button");
+    SelenideElement txtEtiketBastir = $(By.id("mainPreviewForm:etiketMetinID"));
+
 
     @Step("Toplu Postaladıklarım sayfasını aç")
     public TopluPostaladiklarimPage openPage() {
@@ -276,6 +280,32 @@ public class TopluPostaladiklarimPage extends MainPage {
         return this;
     }
 
+    @Step("Etiket bastır butonuna tıkla.")
+    public TopluPostaladiklarimPage etiketBastir() {
+        btnEtiketBastir.click();
+        txtEtiketBastir.waitUntil(Condition.visible, 5000);
+        return this;
+    }
+
+    @Step("İndirim oranı göre Tutar kontrolü. \n İndirim Oranı : \"{indirimOrani}\" ")
+    public TopluPostaladiklarimPage indirimSonrasiTutarKontrol(int indirimOrani ) {
+
+        String tutar = lblIndirimOncesiTutar.text();
+        System.out.println(tutar);
+
+        String[] parts = tutar.split(" ");// "004: 034556"
+        String part1 = parts[0]; // 004
+        String part2 = parts[1]; // 034556
+
+        double result = Double.parseDouble(part1);
+        double sonuc =result-((indirimOrani*result)/100);
+
+        System.out.println(sonuc);
+        txtTutar.text().contains(Double.toString(sonuc));
+        Allure.addAttachment("Tutar Kontrolü : ",Double.toString(sonuc));
+        return this;
+    }
+
     @Step("Gramaj alanını doldur : \"{gramaj}\" ")
     public TopluPostaladiklarimPage gramajDoldur(String gramaj) {
         setValueJS(txtGramaj, gramaj);
@@ -287,6 +317,20 @@ public class TopluPostaladiklarimPage extends MainPage {
         clickJs(btnHesapla);
         return this;
     }
+
+    public TopluPostaladiklarimPage etiketBastirEkraniKontrolü(String adres, String konu) {
+        txtEtiketBastir.text().contains(konu);
+        txtEtiketBastir.text().contains(adres);
+        return this;
+    }
+
+    @Step("Etiket bastır ekranı kapama")
+    public TopluPostaladiklarimPage etiketBastirEkraniKapat() {
+        SelenideElement btnEtiketBastırEkraniKapat = $(By.xpath("//div[@class='ui-dialog-titlebar ui-widget-header ui-helper-clearfix ui-corner-top']//a/span[@class='ui-icon ui-icon-closethick']"));
+        btnEtiketBastırEkraniKapat.click();
+        return this;
+    }
+
 
     @Step("İndirim Öncesi tutar alaninda \"{indirimOncesiTutar}\" değeri olmalı mı? : \"{shouldBeEquals}\" ")
     public TopluPostaladiklarimPage indirimOncesiTutarKontrol(String indirimOncesiTutar, boolean shouldBeEquals) {
