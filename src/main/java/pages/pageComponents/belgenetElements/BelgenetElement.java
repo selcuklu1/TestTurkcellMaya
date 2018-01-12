@@ -69,6 +69,13 @@ public interface BelgenetElement extends SelenideElement {
      *
      * @return
      */
+    ElementsCollection getSelectableItems();
+
+    /**
+     * selectable title list
+     *
+     * @return
+     */
     ElementsCollection getTitleItems();
 
     /**
