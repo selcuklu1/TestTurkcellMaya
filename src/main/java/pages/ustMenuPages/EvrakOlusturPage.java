@@ -1347,6 +1347,7 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement btnGeregiSil = $(By.cssSelector("[id='yeniGidenEvrakForm:geregiKurumLov:LovSecilenTable'] [class$='delete-icon']"));
         SelenideElement btnBilgiSil = $(By.cssSelector("[id='yeniGidenEvrakForm:bilgiKurumLov:LovSecilenTable'] [class$='delete-icon']"));
         private TextEditor editor = new TextEditor();
+        ElementsCollection trEditorEkLlistesi = $$("[id='yeniGidenEvrakForm:eklerPanell'] tr");
 
         public TextEditor getEditor() {
             return editor;
@@ -1606,6 +1607,27 @@ public class EvrakOlusturPage extends MainPage {
 
             return this;
         }
+
+        @Step("Editorde eklenen ek kontrolu")
+        public EditorTab editordeEkKontrol(String ek) {
+
+            trEditorEkLlistesi
+                    .filterBy(text(ek))
+                    .get(0)
+                    .shouldBe(exist);
+
+            return this;
+        }
+
+        @Step("Editorde silenen ekin gelmediği kontrolu")
+        public EditorTab editordeEkGelmedigiKontrolu(String ek) {
+
+            int a = trEditorEkLlistesi
+                    .filterBy(text(ek)).size();
+
+            Assert.assertEquals(a==0, true);
+            return this;
+        }
     }
 
     public class EkleriTab extends MainPage {
@@ -1619,9 +1641,11 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement chkEkListesiniEkYap = $(By.id("yeniGidenEvrakForm:j_idt30306"));
         SelenideElement btnDosyaEkle = $(By.xpath("//input[@id='yeniGidenEvrakForm:evrakEkTabView:fileUploadButtonA_input']"));
         SelenideElement lblDosyaAdi = $(By.id("yeniGidenEvrakForm:evrakEkTabView:dosyaAdi"));
+        ElementsCollection trEkLlistesi = $$("tbody[id*='yeniGidenEvrakForm:ekListesiDataTable'] tr[role='row']");
 
 
         //Ekleri tabı - Fiziksel Ekle
+        SelenideElement btnEkleriFizikselEkEkleTab = $(By.xpath("//a[@href='#yeniGidenEvrakForm:evrakEkTabView:aciklamaEkleTab']"));
         SelenideElement txtEkleriFizikselMetni = $(By.id("yeniGidenEvrakForm:evrakEkTabView:aciklamaTextArea"));
         SelenideElement cmbEkleriFizikselGizlilikDerecesi = $(By.id("yeniGidenEvrakForm:evrakEkTabView:guvenlikKoduAciklama"));
         SelenideElement btnEkleriFizikselEkle = $(By.id("yeniGidenEvrakForm:evrakEkTabView:aciklamaEkleButton"));
@@ -1636,6 +1660,14 @@ public class EvrakOlusturPage extends MainPage {
         ElementsCollection tblSistemdeKayitliEvrakListe = $$("[id='yeniGidenEvrakForm:evrakEkTabView:sistemdeKayitliEvrakListesiDataTable_data'] tr[data-ri]");
         ElementsCollection tblEkListesi = $$("[id='yeniGidenEvrakForm:ekListesiDataTable_data'] tr[role='row']");
         SelenideElement btnIlgiEkle = $("[id^='yeniGidenEvrakForm:evrakEkTabView:sistemdeKayitliEvrakListesiDataTable'][id$='ekEkleButton1']");
+        ElementsCollection trEvraklarListesi = $$("tbody[id*='yeniGidenEvrakForm:evrakEkTabView:sistemdeKayitliEvrakListesiDataTable'] tr[role='row']");
+        SelenideElement btnEvrakDetay = $(By.id("yeniGidenEvrakForm:evrakEkTabView:sistemdeKayitliEvrakListesiDataTable:0:detayGosterButton"));
+        SelenideElement evrakDetayiPageTitle = $(By.xpath("//span[. = 'Evrak Detayı' and @class = 'ui-dialog-title']"));
+        SelenideElement btnEvrakDetayiPenceresiKapat = $("#windowReadOnlyEvrakDialog > div:nth-of-type(1) .ui-icon-closethick");
+        SelenideElement btnEvrakEkEkle = $(By.id("yeniGidenEvrakForm:evrakEkTabView:sistemdeKayitliEvrakListesiDataTable:0:ekEkleButton1"));
+        ElementsCollection trEvraklarTumListe = $$("tbody[id*='yeniGidenEvrakForm:ekListesiDataTable_data'] tr[role='row']");
+
+
 
         //Ekleri tabı - Arşivde Kayıtlı Evrak Ekle
         SelenideElement dateArsivdeEvrakAraTarihiBaslangic = $(By.id("yeniGidenEvrakForm:evrakEkTabView:arsivdenEvrakAraEkEkleTarihBasId_input"));
@@ -1652,6 +1684,18 @@ public class EvrakOlusturPage extends MainPage {
             tabEkleri.click();
             return this;
 
+        }
+
+        @Step("Ekleri/Fiziksel Ek Ekle Tab - Açma")
+        public EkleriTab fizikselEkEkleTabiniAc() {
+           btnEkleriFizikselEkEkleTab.click();
+            return this;
+        }
+
+        @Step("Ekleri/Sistemde Kayıtlı Evrak Ekle Tab - Açma")
+        public EkleriTab sistemdeKayitliEvrakEkleTabiniAc() {
+            btnSistemdeKayitliEvrakTab.click();
+            return this;
         }
 
         @Step("Ekleri Tab - Dosya Ekle")
@@ -1705,9 +1749,9 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Evrak Arama doldur")
-        public EkleriTab evrakAramaDoldur(String value) {
-            txtEvrakArama.sendKeys(value);
+        @Step("Evrak Arama doldur: {evrakNo}")
+        public EkleriTab evrakAramaDoldur(String evrakNo) {
+            txtEvrakArama.setValue(evrakNo);
             return this;
         }
 
@@ -1764,7 +1808,7 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Dosya yüklenene kadar 60 dk bekle, 60 dktan fazla sürerse timeout hatası ver")
         public EkleriTab dosyaYukleneneKadarBekle() {
-            
+
             waitForLoadingJS(WebDriverRunner.getWebDriver(), 60);
 
             return this;
@@ -1774,6 +1818,109 @@ public class EvrakOlusturPage extends MainPage {
         public EkleriTab eklenenDosyaAdiKontrol(String dosyaAdi) {
 
             Assert.assertEquals(lblDosyaAdi.getText().contains(dosyaAdi), true);
+
+            return this;
+        }
+
+        @Step("Ekranın alt kısmında listelenen eklere dosyanın geldiği kontrolu: {description}")
+        public EkleriTab listelenenEklerdeKontrol(String value, String description) {
+
+            trEkLlistesi
+                    .filterBy(text(value))
+                    .get(0)
+                    .shouldBe(exist);
+            return this;
+        }
+
+        @Step("Ekranın alt kısmında listelenen eklere dosyanın indir butonunun aktif geldiği kontrolu")
+        public EkleriTab listelenenEklerdeIndırButonuKontrol(String dosyaAdi) {
+
+            trEkLlistesi
+                    .filterBy(text(dosyaAdi))
+                    .get(0)
+                    .$("[id$='indirButton']").shouldBe(visible);
+
+            return this;
+        }
+
+        @Step("Fiziksel ek metni doldur")
+        public EkleriTab fizikselEkMetniDoldur(String fizikselEkMetni) {
+
+            txtEkleriFizikselMetni.setValue(fizikselEkMetni);
+
+            return this;
+        }
+
+
+        @Step("Fiziksel Ek Metni ekle")
+        public EkleriTab fizikselEkMetniEkle() {
+
+            btnEkleriFizikselEkle.click();
+
+            return this;
+        }
+
+        @Step("Evrakların listelendiği kontrolu")
+        public EkleriTab listelenenEvraklardaKontrol(String evrakNo) {
+
+            trEvraklarListesi
+                    .filterBy(text(evrakNo))
+                    .get(0)
+                    .shouldBe(exist);
+            return this;
+        }
+
+        @Step("Evrak Detayı göster")
+        public EkleriTab evrakDetayiGoster() {
+
+            btnEvrakDetay.click();
+
+            return this;
+        }
+
+        @Step("Evrak Detayının geldiği kontrolu")
+        public EkleriTab evrakDetayiKontrol() {
+
+            evrakDetayiPageTitle.shouldBe(visible);
+
+            return this;
+        }
+
+        @Step("Evrak Detayı sayfasını kapat")
+        public EkleriTab evrakDetayiSayfasınıKapat() {
+
+            btnEvrakDetayiPenceresiKapat.click();
+
+            return this;
+        }
+
+        @Step("Evrak EK ekle")
+        public EkleriTab evrakEkEkle() {
+
+            btnEvrakEkEkle.click();
+
+            return this;
+        }
+
+        @Step("Ekler listesinde detay göster")
+        public EkleriTab eklenenEklerListesindeDetayGoster(String evrakSayisi) {
+
+            trEkLlistesi
+                    .filterBy(text(evrakSayisi))
+                    .get(0)
+                    .shouldBe(exist)
+                    .$("[id$='detayButton']").click();
+
+            return this;
+        }
+
+        @Step("Ekler listesinde ek sil")
+        public EkleriTab ekIsmineGoreEkSilme(String ek) {
+
+            trEvraklarTumListe
+                    .filterBy(text(ek))
+                    .get(0)
+                    .$("[id$='ekListesiSilButton']").click();
 
             return this;
         }

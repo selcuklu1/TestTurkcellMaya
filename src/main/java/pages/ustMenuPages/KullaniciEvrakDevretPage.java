@@ -40,6 +40,15 @@ public class KullaniciEvrakDevretPage extends MainPage {
         }
         return ret;
     }
+    public static String clearHorizantalTabChars(String str) {
+        String ret = str;
+        char[] horizantalTabChars = new char[]{0x9};
+        char[] newChars = new char[]{' '};
+        for (int i = 0; i < horizantalTabChars.length; i++) {
+            ret = ret.replaceAll(new String(new char[]{horizantalTabChars[i]}), new String(new char[]{newChars[i]}));
+        }
+        return ret;
+    }
 
     @Step("Kullanıcı Evrak Devret sayfasını aç")
     public KullaniciEvrakDevretPage openPage() {
