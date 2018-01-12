@@ -1575,7 +1575,8 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Sayısal Imza Evet")
         public EditorTab sayisalImzaEvetPopup() {
-            btnSayısalImzeEvet.click();
+            $$(By.id("imzalaForm:sayisalImzaConfirmForm:sayisalImzaEvetButton")).last().click();
+            //btnSayısalImzeEvet.click();
             return this;
         }
 
