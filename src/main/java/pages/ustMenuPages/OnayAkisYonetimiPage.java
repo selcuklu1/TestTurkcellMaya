@@ -179,7 +179,8 @@ public class OnayAkisYonetimiPage extends MainPage {
 
     @Step("Aktif yap")
     public OnayAkisYonetimiPage aktifYap() {
-        btnAktifYap.click();
+        btnAktifYap.shouldBe(visible);
+        clickJs(btnAktifYap);
         return this;
     }
 
