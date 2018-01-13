@@ -473,7 +473,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .miatDoldur(miatTarihi)
                 .geregiDoldur(geregi, "Ad")
                 .kaldiralacakKlasorDoldur(kaldirlacakKlasor)
-                .bilgiDoldur(geregi)
+                .bilgiDoldur(geregi )
                 .evrakTarihiDoldur(evrakTarihi)
                 .ekBilgiFiltreAc()
                 .ekBilgiFizikselEkEkle()
