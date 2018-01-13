@@ -17,10 +17,12 @@ public class IlgileriTab extends MainPage {
     final static String tabName = "İlgileri";
     protected SelenideElement tab;
     protected SelenideElement page;
+    SearchTable searchTable;
 
     public IlgileriTab(SelenideElement page) {
         this.page = page;
         this.tab = page.$("div[id$='ilgiIslemleriTabView']");
+        searchTable = new SearchTable(page.$("div[id$='ilgiListesiDataTable']"));
     }
 
     @Step(tabName + " tabı aç")
@@ -39,8 +41,8 @@ public class IlgileriTab extends MainPage {
         return new AltTabs(tab);
     }
 
-    @Step("İlgi Listesi tablosunda işlem yapılacak")
-    public SearchTable getEkListesiTablosu() {
-        return new SearchTable(page.$("div[id$='ilgiListesiDataTable']"));
+    @Step("İlgileri Listesi bul")
+    public SearchTable getIlgliliListesiTablosu() {
+        return searchTable;
     }
 }

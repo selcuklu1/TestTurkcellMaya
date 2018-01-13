@@ -18,10 +18,12 @@ public class EkleriTab extends MainPage {
     final static String tabName = "Ekleri";
     protected SelenideElement tab;
     protected SelenideElement page;
+    SearchTable searchTable;
 
     public EkleriTab(SelenideElement page) {
         this.page = page;
         this.tab = page.$("div[id$='evrakEkTabView']");
+        searchTable = new SearchTable(page.$("div[id$='ekListesiDataTable']"));
     }
 
     @Step(tabName + " tabı aç")
@@ -39,9 +41,8 @@ public class EkleriTab extends MainPage {
         return new AltTabs(tab);
     }
 
-    @Step("Ek Listesi tablosunda işlem yapılacak")
+    @Step("Ek Listesi bul")
     public SearchTable getEkListesiTablosu() {
-        return new SearchTable(page.$("div[id$='ekListesiDataTable']"));
+        return searchTable;
     }
-
 }

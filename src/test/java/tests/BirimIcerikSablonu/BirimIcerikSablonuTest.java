@@ -279,7 +279,7 @@ public class BirimIcerikSablonuTest extends BaseTest {
     public void tumSablonalariSil() throws Exception {
         login("user1", "123");
         birimIcerikSablonlarPage = new BirimIcerikSablonlarPage().openPage();
-        birimIcerikSablonlarPage.sablonuSilD("DENEME ŞABLON");
+        birimIcerikSablonlarPage.tumSablonlariSil();
     }
 
     ///////////////////////////////////////////////////////////////////////////

@@ -104,4 +104,15 @@ public class EvrakPageButtons extends MainPage {
         $("#kaydetConfirmForm\\:kaydetEvetButton").click();
         return this;
     }
+
+    @Step("Kaydet ve Onaya Sun butonu bul")
+    public SelenideElement getEvrakKaydetVeOnayaSun(){
+        return getContainer().$x("descendant::*[text()='Kaydet ve Onaya Sun']/ancestor::tbody[1]//button");
+    }
+
+    @Step("Kaydet ve Onaya Sun")
+    public EvrakPageButtons evrakKaydetVeOnayaSun(){
+        getEvrakKaydetVeOnayaSun().click();
+        return this;
+    }
 }
