@@ -220,9 +220,13 @@ public class EkIlgiTest extends BaseTest {
         String ilisikDosya2Aciklama = "İlisik_Dosya2_"+getSysDate();
         String ilisikDosya3Aciklama = "İlisik_Dosya3_"+getSysDate();
 
-        String dosyaAdi3 = "TS2346.pdf";
-        String pathPDF = getDocPath() + "TS2346.pdf";
+        String dosyaAdi3 = "TS2346_dosya3.pdf";
+        String pathDosya3 = getDocPath() + "TS2346_dosya3.pdf";
 
+
+        String ilisikDosya4Aciklama = "İlisik_Dosya4_"+getSysDate();
+        String dosyaAdi4 = "TS2346_dosya4.pdf";
+        String pathDosya4 = getDocPath() + "TS2346_dosya4.pdf";
 
         login(TestData.username4, TestData.password4); //mbozdemir
 
@@ -230,6 +234,7 @@ public class EkIlgiTest extends BaseTest {
                 .openPage()
                 .iliskiliEvraklarTabAc()
 
+                //Dosya ekle tabı
                 //ilisik dosya1
                 .ilisikMetniDoldur(ilisikDosya1Aciklama)
                 .taramaHavuzundanEkle()
@@ -256,13 +261,14 @@ public class EkIlgiTest extends BaseTest {
 
                 //ilisik dosya3
                 .ilisikMetniDoldur(ilisikDosya3Aciklama)
-                .dosyaEkle(pathPDF, dosyaAdi3)
+                .dosyaEkle(pathDosya3, dosyaAdi3)
                 .dosyaYukleneneKadarBekle()
-                .eklenenDosyaAdiKontrol(dosyaAdi3)
+                .iliskiliSitemdeEklenenDosyaAdiKontrol(dosyaAdi3)
                 .iliskiliEkle()
                 .listelenenEvraklaraDosyanınGeldigiKontrolu(dosyaAdi3, "Dosya Adı")
                 .listelenenEvraklardaIndırButonuKontrol(dosyaAdi3)
 
+                //Sistemde kayıtlı evrak ekle tabı
                 .sistemdeKayitliEvrakEkleTabiniAc()
                 .sistemdeKayitliEvrakEkleAlanKontrolleri()
 
@@ -274,9 +280,30 @@ public class EkIlgiTest extends BaseTest {
                 .evrakAranacakYerSec("Birim Evrakları Ara")
                 .evrakAramaDoldur(evrakSayisi)
                 .dokumanAra()
-                .listelenenEvraklardaKontrol(evrakSayisi);
+                .listelenenEvraklardaKontrol(evrakSayisi)
+                .evrakIlisikEkle()
+                .listelenenEvraklaraDosyanınGeldigiKontrolu(evrakSayisi, "Evrak Sayısı")
 
-        //TODO: Devam edecek
+                .eklenenEvrakVeDosyaListesindeDetayGoster(evrakSayisi)
+                .evrakDetayiKontrol()
+                .evrakDetayiSayfasınıKapat()
+                .islemPenceresiKapatmaOnayiPopup("Kapat");
+
+        //Tercüme ekle tabı
+        evrakOlusturPage
+                .iliskiliEvraklarTabAc()
+                .tercumeEkleTabiniAc()
+                .tercumeIlisikMetniDoldur(ilisikDosya4Aciklama)
+                .tercumeDosyaEkle(pathDosya4, dosyaAdi4)
+                .dosyaYukleneneKadarBekle()
+                .tercumeEklenenDosyaAdiKontrol(dosyaAdi4)
+                .tercumeEkleEkle()
+                .listelenenEvraklaraDosyanınGeldigiKontrolu(dosyaAdi4, "Dosya Adı")
+                .listelenenEvraklardaIndırButonuKontrol(dosyaAdi4)
+                .eklenenEvrakVeDosyaListesindeDetayGoster(evrakSayisi)
+                .eklenTercumeDosyaKontrolu();
+
+
 
 
     }
