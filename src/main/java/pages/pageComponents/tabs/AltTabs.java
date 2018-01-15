@@ -71,7 +71,7 @@ public class AltTabs extends MainPage {
 
 
     @Step(dosyaEkleTabName + " tabı aç")
-    public AltTabs getDosyaEkleTabiAc() {
+    public AltTabs dosyaEkleTabiAc() {
         getDosyaEkleTab().click();
         tab = container.$("div[id$='dosyaEkleTab']");
         return this;

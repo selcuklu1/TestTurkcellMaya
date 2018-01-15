@@ -214,8 +214,8 @@ public class PostalananlarPage extends MainPage {
     /**
      * @return
      */
-
-    public String evSay() {
+        @Step("Postalanan Evrak Sayisi")
+        public String evSay() {
         return $x("//tbody/tr[3]/td[3]/label").getAttribute("outerText");
     }
 
@@ -319,7 +319,7 @@ public class PostalananlarPage extends MainPage {
         tuzelKisiGuncelle.click();
         return this;
     }
-
+    @Step("Kullanıcı Guncelle")
     public PostalananlarPage kullaniciGuncelle() {
 
         kullaniciGuncelle.click();

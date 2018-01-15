@@ -242,7 +242,7 @@ public class PostalanacakEvraklarPage extends MainPage {
         return this;
 
     }
-
+    @Step("Postalancak Evrak Orjinal Yazdır")
     public PostalanacakEvraklarPage postalanacakEvrakOrjYaz() throws InterruptedException {
 
         postalanacakEvrakOrijinalYazdir.click();
@@ -253,19 +253,19 @@ public class PostalanacakEvraklarPage extends MainPage {
         popupPostaYazdirmaKapat();
         return this;
     }
-
+    @Step("Postalancak Eposta")
     public PostalanacakEvraklarPage postalacanakEposta(String eposta) {
 
         epostaTxt.setValue(eposta);
         return this;
     }
-
+    @Step("Postalancak Postalama Açıklama")
     public PostalanacakEvraklarPage postalamaAciklama(String text) {
 
         epostaAciklama.setValue(text);
         return this;
     }
-
+    @Step("Postalancak popup Posta yazdırma kapat")
     public PostalanacakEvraklarPage popupPostaYazdirmaKapat() throws InterruptedException {
 
         $(By.id("postaDetayYazdirForm:dlgPostaDetayYazdir")).shouldBe(Condition.visible);
@@ -273,7 +273,7 @@ public class PostalanacakEvraklarPage extends MainPage {
 
         return this;
     }
-
+    @Step("Popup postalanacak Evrak Yazdır")
     public PostalanacakEvraklarPage popupPostalanacakEvrakYazdir() throws InterruptedException {
         btnPopupYazdir.click();
         Thread.sleep(2000);
@@ -281,91 +281,90 @@ public class PostalanacakEvraklarPage extends MainPage {
 
         return this;
     }
-
+    @Step("Postalanacak evrak Postala")
     public PostalanacakEvraklarPage postala() {
 
         btnPostala.click();
         return this;
     }
-
+    @Step("Postalanacak Evrak Postalama popup Evet seçmiş")
     public PostalanacakEvraklarPage dialogpostalaEvet() {
 
         btnDialogEvet.click();
         return this;
     }
-
+    @Step("Postalanacak Evrak Dağitim Detayi")
     public PostalanacakEvraklarPage dagitimDetay() {
         btnDagitimYerDetay.click();
         return this;
     }
-
+    @Step("Postalanacak Evrak içerik Göster")
     public PostalanacakEvraklarPage icerikGoster() {
         btnIcerikGoster.click();
         return this;
     }
-
+    @Step("Postalanacak Evrak içerik ilgileri tab")
     public PostalanacakEvraklarPage icerikIlgileriTab() {
         tabIcerikIlgileri.click();
         return this;
     }
-
+    @Step("Postalanacak Evrak içerik Ekleri tab")
     public PostalanacakEvraklarPage icerikEkleriTab() {
         tabIcerikEkleri.click();
         return this;
     }
-
+    @Step("Postalanacak Evrak içerik detay pencere kapatma")
     public PostalanacakEvraklarPage icerikPencereKapatma() {
         tabIcerikKapat.click();
         tabIcerikKapatmaOnay.click();
         return this;
     }
+    @Step("Postalanacak Evrak tüzel kişi posta kodu")
+    public PostalanacakEvraklarPage tuzelKisiPostaKod(String postakod) {
+        tuzelKisiPostaKodu.setValue(postakod);
+        return this;
 
-    public PostalanacakEvraklarPage tuzelKisiPostaKod(String txt) {
-        tuzelKisiPostaKodu.setValue(txt);
+    }
+    @Step("Postalanacak Evrak tüzel kişi posta açıklama")
+    public PostalanacakEvraklarPage tuzelKisiPostaAciklama(String aciklama) {
+
+        tuzelKisiPostaAciklama.setValue(aciklama);
+        return this;
+    }
+    @Step("Postalanacak Evrak birim posta kodu")
+    public PostalanacakEvraklarPage birimPostaKod(String postakod) {
+        birimPostaKodu.setValue(postakod);
         return this;
 
     }
 
-    public PostalanacakEvraklarPage tuzelKisiPostaAciklama(String txt) {
-
-        tuzelKisiPostaAciklama.setValue(txt);
+    public PostalanacakEvraklarPage birimPostaAciklama(String aciklama) {
+        birimPostaAciklama.setValue(aciklama);
         return this;
     }
-
-    public PostalanacakEvraklarPage birimPostaKod(String txt) {
-        birimPostaKodu.setValue(txt);
-        return this;
-
-    }
-
-    public PostalanacakEvraklarPage birimPostaAciklama(String txt) {
-
-        birimPostaAciklama.setValue(txt);
+    @Step("Postalanacak Evrak kullanıcı posta kodu")
+    public PostalanacakEvraklarPage ilkPostaPostaKod(String postakod) {
+        ilkPostaPostaKodu.setValue(postakod);
         return this;
     }
+    @Step("Postalanacak Evrak kullanıcı posta açıklama")
+    public PostalanacakEvraklarPage ilkPostaAciklama(String aciklama) {
 
-    public PostalanacakEvraklarPage ilkPostaPostaKod(String txt) {
-        ilkPostaPostaKodu.setValue(txt);
+        ilkPostaAciklama.setValue(aciklama);
         return this;
     }
-
-    public PostalanacakEvraklarPage ilkPostaAciklama(String txt) {
-
-        ilkPostaAciklama.setValue(txt);
-        return this;
-    }
-
+    @Step("Postalanacak Evrak etiket yazdir")
     public PostalanacakEvraklarPage etiketYazdir() throws InterruptedException {
         btnEtiketYazdir.click();
         Thread.sleep(1000);
         return this;
     }
-
+    @Step("Postalanacak Evrak etiket yazdir popup kapat")
     public PostalanacakEvraklarPage etiketYazdirPopupKapat() {
         btnEtiketPopupKapat.click();
         return this;
     }
-
+    @Step("Postalanacak Evrak dağıtım detay kapat")
     public PostalanacakEvraklarPage dagitimDetayKapat() {
 
         btnDagitimYerDetayKapat.click();

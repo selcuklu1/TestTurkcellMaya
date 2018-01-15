@@ -96,7 +96,7 @@ public class TopluPostalamaTest extends BaseTest {
                         "Birim Elden"
                 })
                 .sorgula();
-                //.islemMesaji().uyariOlmali("");
+        //.islemMesaji().uyariOlmali("");
 
         baslangicTarihi = "01.12.2016";
         bitisTarihi = "02.12.2018";
@@ -107,7 +107,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .gidecegiYerTumunuIsaretle(false)
                 .gidecegiYerSec(gidecegiYerler, false)
                 .sorgula();
-                //.islemMesaji().uyariOlmali("");
+        //.islemMesaji().uyariOlmali("");
 
         topluPostalanacakEvraklarPage
                 .filtreGidecegiYer(evrakGidecegiYer)
@@ -129,7 +129,7 @@ public class TopluPostalamaTest extends BaseTest {
         int gramaj = 1999;
         double tutarInt = 200;
         int indirimOrani = 50;
-        double indirimSonrasiTutarInt =  tutarInt - (tutarInt * indirimOrani / 100);
+        double indirimSonrasiTutarInt = tutarInt - (tutarInt * indirimOrani / 100);
 
         String indirimOncesiTutar = String.format("%.2f", tutarInt);
         String tutar = String.format("%.3f", indirimSonrasiTutarInt);
@@ -242,7 +242,6 @@ public class TopluPostalamaTest extends BaseTest {
                 .popupSimzaEvet();
 
 
-
         String baslangicTarihi = "01.12.2017";
         String bitisTarihi = "01.12.2018";
 
@@ -277,7 +276,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .listeOlustur()
                 .postaListesiSec(postaListesi)
                 .listeyeEkle();
-                //.islemMesaji().dikkatOlmali(dikkatMesaji);
+        //.islemMesaji().dikkatOlmali(dikkatMesaji);
 
         topluPostalanacakEvraklarPage
                 .filtreGidecegiYer(evrak1GidecegiYer)
@@ -306,7 +305,7 @@ public class TopluPostalamaTest extends BaseTest {
         int gramaj = 1999;
         double tutarInt = 200;
         int indirimOrani = 50;
-        double indirimSonrasiTutarInt =  tutarInt - (tutarInt * indirimOrani / 100);
+        double indirimSonrasiTutarInt = tutarInt - (tutarInt * indirimOrani / 100);
 
         String indirimOncesiTutar = String.format("%.2f", tutarInt);
         String tutar = String.format("%.3f", indirimSonrasiTutarInt);
@@ -468,7 +467,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .tuzelKisiKontrolet(tuzelKisi)
                 .listeAdiDoldur(listeAdi)
                 .listeOlustur();
-                //.islemMesaji().dikkatOlmali("Bu Liste Adında posta listesi vardır. Yeni Liste Adı verin! ");
+        //.islemMesaji().dikkatOlmali("Bu Liste Adında posta listesi vardır. Yeni Liste Adı verin! ");
 
         listeAdi = "TS01807-1-" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
 
@@ -486,7 +485,7 @@ public class TopluPostalamaTest extends BaseTest {
         int gramaj = 1999;
         double tutarInt = 200;
         int indirimOrani = 50;
-        double indirimSonrasiTutarInt =  tutarInt - (tutarInt * indirimOrani / 100);
+        double indirimSonrasiTutarInt = tutarInt - (tutarInt * indirimOrani / 100);
 
         String indirimOncesiTutar = String.format("%.2f", tutarInt);
         String tutar = String.format("%.3f", indirimSonrasiTutarInt);
@@ -637,7 +636,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .gerceklKisiKontrolet(gercekKisi)
                 .listeAdiDoldur(listeAdi)
                 .listeOlustur();
-                //.islemMesaji().dikkatOlmali("Bu Liste Adında posta listesi vardır. Yeni Liste Adı verin! ");
+        //.islemMesaji().dikkatOlmali("Bu Liste Adında posta listesi vardır. Yeni Liste Adı verin! ");
 
         listeAdi = "TS01807-2-" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
 
@@ -655,7 +654,7 @@ public class TopluPostalamaTest extends BaseTest {
         int gramaj = 1999;
         double tutarInt = 200;
         int indirimOrani = 50;
-        double indirimSonrasiTutarInt =  tutarInt - (tutarInt * indirimOrani / 100);
+        double indirimSonrasiTutarInt = tutarInt - (tutarInt * indirimOrani / 100);
 
         String indirimOncesiTutar = String.format("%.2f", tutarInt);
         String tutar = String.format("%.3f", indirimSonrasiTutarInt);
@@ -816,7 +815,7 @@ public class TopluPostalamaTest extends BaseTest {
         int gramaj = 1999;
         double tutarInt = 200;
         int indirimOrani = 50;
-        double indirimSonrasiTutarInt =  tutarInt - (tutarInt * indirimOrani / 100);
+        double indirimSonrasiTutarInt = tutarInt - (tutarInt * indirimOrani / 100);
 
         String indirimOncesiTutar = String.format("%.2f", tutarInt);
         String tutar = String.format("%.3f", indirimSonrasiTutarInt);
@@ -1053,44 +1052,238 @@ public class TopluPostalamaTest extends BaseTest {
     }
 
     // DÜZENLENECEK
+    @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS1675 : Toplu Postaladıklarım İzleme / Alan Kontrolleri (UC_POSTAYÖNETİMİ_004)")
     public void TS1675() {
 
+//        String[] konu = new String[]{
+//                "TC1675 20180113152416", "TC1675 20180113152416100"
+//        };
+//
 
+//        String[] konu2 = new String[]{
+//                "TC1811 20180115115312", "TC1811 20180115115312100"
+//        };
+//                String[] evrakNo1675 = new String[]{
+//                "10538", "10537"
+//        };
+
+        login("mbozdemir", "123");
+        //region Parameters
+        String konuKodu = "010.01";
+        String kaldiralacakKlasor = "Diğer";
+        String evrakTuru = "Resmi Yazışma";
+        String evrakDili = "Türkçe";
+        String gizlilikDerecesi = "Normal";
+        String ivedilik = "Normal";
+        String geregi = "Ahmet Çelik";
+        String adres = "adres " + getSysDateForKis();
+
+        String[] konu = new String[]{
+                "TC1675 " + getSysDate(), "1675 " + getSysDate() + 100
+        };
+        String[] evrakNo1675 = new String[2];
+
+        String[] konu2 = new String[]{
+                "TC1811 " + getSysDate(), "TC1811 " + getSysDate() + 100
+        };
+
+
+        String tur = "İmzalama";
+        String geregiTipi = "Gerçek Kişi";
+        String basariMesaji = "İşlem başarılıdır!";
+//        String konu = "TC2214 20180102112101";
+        String postaListesi = konu[0];
+        String postaListesi2 = konu2[0];
+        String gidisSekli = "Ankara İçi APS";
+        String gramaj1 = "1";
+        String indirimOrani = "20";
+        String gramaj3 = "3";
+        String gramaj5 = "5";
+        String hesaplananTutar;
+        String number = createRandomNumber(4);
+String tutar = "20.000";
+
+        String[] postaTipleri = new String[]{
+                "Ankara İçi APS"
+        };
+//        //endregion
+        Allure.addAttachment("Test Datası", "Test Datası oluşturuluyor.");
+//        region Test Datası
+        for (int i = 0; i < 2; i++) {
+            evrakOlusturPage
+                    .openPage()
+                    .bilgilerTabiAc()
+                    .konuKoduSec(konuKodu)
+                    .konuDoldur(konu[i])
+                    .kaldiralacakKlasorlerSec(kaldiralacakKlasor)
+                    .evrakTuruSec(evrakTuru)
+                    .evrakDiliSec(evrakDili)
+                    .gizlilikDerecesiSec(gizlilikDerecesi)
+                    .ivedilikSec(ivedilik)
+                    .geregiSecimTipiSecByText(geregiTipi)
+                    .geregiSec(geregi)
+                    .gercekKisiGeregiAlaniPostaTipiSec(gidisSekli)
+                    .aciklamaDoldur(konu[i])
+                    .onayAkisiEkle()
+                    .onayAkisiEkleIlkImzalaSec(tur)
+                    .kullan();
+
+            evrakOlusturPage
+                    .editorTabAc()
+                    .editorIcerikDoldur(konu[i]);
+            mainPage
+                    .evrakImzala();
+            imzaladiklarimPage
+                    .openPage();
+            evrakNo1675[i] = imzaladiklarimPage.evrakIcerikKontroluveEvrakNoAl(konu[i]);
+        }
+
+
+        topluPostalanacakEvraklarPage
+                .openPage()
+                .tarihAraligiSec(getSysDateForKis(), getSysDateForKis())
+                .postaTipiSec(postaTipleri)
+                .sorgula()
+                .evrakTumunuSec(true)
+                .postaListesineAktar()
+                .listeAdiDoldur(konu[0])
+                .listeOlustur()
+                .postaListesiSec(konu[0])
+                .listeyeEkle();
+
+
+        postaListesiPage
+                .openPage()
+                .filtreleAc()
+                .postaListesiDoldur(postaListesi)
+                .evrakSec(konu[0])
+                .postaListesiPostala()
+                .postaDetayiGonderildigiYer(geregiTipi)
+                .adresDoldur(adres)
+                .gramajDoldur(gramaj1)
+                .tutarHesapla();
+        hesaplananTutar = postaListesiPage.tutarAl();
+        hesaplananTutar=hesaplananTutar.substring(0,5);
+
+        postaListesiPage.postaDetayiPostala();
+        //endregion
+        Allure.addAttachment("Test Datası", "Test Datası oluşturuldu.");
+//        String postaListesi = "TC1811 20180112161120";
         topluPostaladiklarimPage
                 .openPage()
+                .topluPostaladiklarimTabloKontrolu()
+                .postaListesiKontrol(postaListesi, "", getSysDateForKis(), gramaj1, hesaplananTutar, true)
                 .filtrePaneliAc()
-                .postaListesiAdiDoldur("")
+                .postaListesiAdiDoldur(postaListesi)
                 .filtrele()
-                .postaListesiKontrol("", "", "", "", "", true)
+                .topluPostaladiklarimTabloKontrolu(postaListesi)
 
                 .temizle()
-                .postaListesiAdiDoldur("")
+                .postaListesiAdiDoldur("Posta Listesi")
                 .filtrele()
-                .postaListesiKontrol("", "", "", "", "", false)
-
+                .topluPostaladiklarimTabloKontrolu("Posta Listesi")
                 .temizle()
 
-                .evrakSayisiDoldur("")
+                .evrakSayisiDoldur(evrakNo1675[0])
                 .filtrele()
-                .postaListesiKontrol("", "", "", "", "", true)
-                .evrakSayisiDoldur("")
-                .filtrele()
-                .postaListesiKontrol("", "", "", "", "", false)
-
+                .topluPostaladiklarimTabloKontrolu(evrakNo1675[0])
                 .temizle()
-                .postaListesiAdiDoldur("")
-                .evrakSayisiDoldur("")
-                .postaTarihiDoldur("")
+                .evrakSayisiDoldur(number)
                 .filtrele()
-                .postaListesiKontrol("", "", "", "", "", true)
-
+                .topluPostaladiklarimTabloKontrolu(number)
                 .temizle()
-                .postaListesiAdiDoldur("")
-                .evrakSayisiDoldur("")
-                .postaTarihiDoldur("")
+
+                .postaListesiAdiDoldur(postaListesi)
+                .evrakSayisiDoldur(evrakNo1675[0])
+                .postaTarihiDoldur(getSysDateForKis())
                 .filtrele()
-                .postaListesiKontrol("", "", "", "", "", false);
+                .topluPostaladiklarimTabloKontrolu(postaListesi)
+                .temizle()
+
+                .postaListesiAdiDoldur("Posta Listesi")
+                .evrakSayisiDoldur(number)
+                .postaTarihiDoldur(getSysDateForKis())
+                .filtrele()
+                .topluPostaladiklarimTabloKontrolu("Posta Listesi")
+                .temizle()
+
+                .postaListesiAdiDoldur(postaListesi)
+                .filtrele()
+                .topluPostaladiklarimEvrakSec(konu[0])
+                .postaDetayiAlanKontrolleri(postaListesi, adres, gramaj1, hesaplananTutar);
+
+
+//        1811 in stepleri tekrar ediliyor
+
+        //region Test Datası
+        for (int i = 0; i < 2; i++) {
+            evrakOlusturPage
+                    .openPage()
+                    .bilgilerTabiAc()
+                    .konuKoduSec(konuKodu)
+                    .konuDoldur(konu2[i])
+                    .kaldiralacakKlasorlerSec(kaldiralacakKlasor)
+                    .evrakTuruSec(evrakTuru)
+                    .evrakDiliSec(evrakDili)
+                    .gizlilikDerecesiSec(gizlilikDerecesi)
+                    .ivedilikSec(ivedilik)
+                    .geregiSecimTipiSecByText(geregiTipi)
+                    .geregiSec(geregi)
+                    .gercekKisiGeregiAlaniPostaTipiSec(gidisSekli)
+                    .onayAkisiEkle()
+                    .onayAkisiEkleIlkImzalaSec(tur)
+                    .kullan();
+
+            evrakOlusturPage
+                    .editorTabAc()
+                    .editorIcerikDoldur(konu2[i]);
+            mainPage
+                    .evrakImzala();
+        }
+
+        topluPostalanacakEvraklarPage
+                .openPage()
+                .tarihAraligiSec(getSysDateForKis(), getSysDateForKis())
+                .postaTipiSec(postaTipleri)
+                .sorgula()
+                .evrakTumunuSec(true)
+                .postaListesineAktar()
+                .listeAdiDoldur(konu2[0])
+                .listeOlustur()
+                .postaListesiSec(konu2[0])
+                .listeyeEkle();
+
+        postaListesiPage
+                .openPage()
+                .filtreleAc()
+                .postaListesiDoldur(postaListesi2)
+                .evrakSec(konu2[0])
+                .postaListesiPostala()
+                .postaDetayiGonderildigiYer(geregiTipi)
+                .adresDoldur(adres)
+                .gramajDoldur(gramaj1)
+                .tutarHesapla();
+        hesaplananTutar=postaListesiPage.tutarAl();
+        hesaplananTutar=hesaplananTutar.substring(0,5);
+        postaListesiPage
+                .postaDetayiPostala();
+        //endregion
+        topluPostaladiklarimPage
+                .openPage()
+                .topluPostaladiklarimTabloKontrolu()
+                .postaListesiKontrol(postaListesi2, "", getSysDateForKis(), gramaj1, hesaplananTutar, true)
+                .filtrePaneliAc()
+                .postaListesiAdiDoldur(postaListesi2)
+                .filtrele()
+                .topluPostaladiklarimTabloKontrolu(postaListesi2)
+                .topluPostaladiklarimEvrakSec(konu2[0])
+                .postaDetayiAlanKontrolleri(postaListesi2, adres, gramaj1, hesaplananTutar)
+                .etiketBastir()
+                .etiketBastirEkraniKontrolü(adres, geregi)
+                .etiketBastirEkraniKapat()
+                .evrakListesiYazdir(konu2)
+                .evrakListesiOrjinaliYazdir(konu2);
 
     }
 
@@ -1352,7 +1545,7 @@ public class TopluPostalamaTest extends BaseTest {
         int gramaj = 1999;
         double tutarInt = 200;
         int indirimOrani = 50;
-        double indirimSonrasiTutarInt =  tutarInt - (tutarInt * indirimOrani / 100);
+        double indirimSonrasiTutarInt = tutarInt - (tutarInt * indirimOrani / 100);
 
         String indirimOncesiTutar = String.format("%.2f", tutarInt);
         String tutar = String.format("%.3f", indirimSonrasiTutarInt);
@@ -1429,7 +1622,7 @@ public class TopluPostalamaTest extends BaseTest {
         int gramaj = 1999;
         double tutarInt = 200;
         int indirimOrani = 50;
-        double indirimSonrasiTutarInt =  tutarInt - (tutarInt * indirimOrani / 100);
+        double indirimSonrasiTutarInt = tutarInt - (tutarInt * indirimOrani / 100);
 
         String indirimOncesiTutar = String.format("%.2f", tutarInt);
         String tutar = String.format("%.3f", indirimSonrasiTutarInt);
@@ -1500,7 +1693,7 @@ public class TopluPostalamaTest extends BaseTest {
         int gramaj = 1999;
         double tutarInt = 200;
         int indirimOrani = 50;
-        double indirimSonrasiTutarInt =  tutarInt - (tutarInt * indirimOrani / 100);
+        double indirimSonrasiTutarInt = tutarInt - (tutarInt * indirimOrani / 100);
 
         String indirimOncesiTutar = String.format("%.2f", tutarInt);
         String tutar = String.format("%.3f", indirimSonrasiTutarInt);
@@ -1508,7 +1701,7 @@ public class TopluPostalamaTest extends BaseTest {
         int gramaj2 = 2499;
         double tutarInt2 = 250;
         int indirimOrani2 = 5;
-        double indirimSonrasiTutarInt2 =  tutarInt2 - (tutarInt2 * indirimOrani2 / 100);
+        double indirimSonrasiTutarInt2 = tutarInt2 - (tutarInt2 * indirimOrani2 / 100);
 
         String indirimOncesiTutar2 = String.format("%.2f", tutarInt2);
         String tutar2 = String.format("%.3f", indirimSonrasiTutarInt2);
@@ -1791,7 +1984,7 @@ public class TopluPostalamaTest extends BaseTest {
 
 
         String[] konu = new String[]{
-                "TC1811 20180112161120", "TC1811 20180112161120100"
+                "TC1816 20180115150635", "TC1816 20180115150635100"
         };
 
         login("mbozdemir", "123");
@@ -1805,7 +1998,7 @@ public class TopluPostalamaTest extends BaseTest {
         String geregi = "Ahmet Çelik";
         String adres = "adres " + getSysDateForKis();
 //        String[] konu = new String[]{
-//                "TC1811 " + getSysDate(), "TC1811 " + getSysDate() + 100
+//                "TC1816 " + getSysDate(), "TC1816 " + getSysDate() + 100
 //        };
         String tur = "İmzalama";
         String geregiTipi = "Gerçek Kişi";
@@ -1881,6 +2074,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .topluPostaladiklarimPostaListesiKontrol(postaListesi, "", getSysDateForKis(), gramaj1, "45.000", true)
                 .topluPostaladiklarimEvrakSec(postaListesi)
                 .evrakListesiYazdir(konu)
+                .evrakListesiYazdirPdfKontrol(konu)//kontrol amaçlı konuldu.
                 .evrakListesiOrjinaliYazdir(konu)
                 .tutarGuncelle("65.00")
                 .guncelle()
@@ -1901,7 +2095,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .indirimOraniKontrol("20", true)
                 .tutarKontrol("80.00", true)
                 .etiketBastir()
-                .etiketBastirEkraniKontrolü(adres,geregi)
+                .etiketBastirEkraniKontrolü(adres, geregi)
                 .etiketBastirEkraniKapat();
 
         //TODO
