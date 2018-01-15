@@ -134,7 +134,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, priority = 2, description = "TS2163 : Kaydedilen gelen evrakın güncellenmesi"
+    @Test(enabled = true, priority = 1, description = "TS2163 : Kaydedilen gelen evrakın güncellenmesi"
             , dependsOnMethods = {"TS0321"})
     public void TS2163() throws InterruptedException {
 
@@ -228,8 +228,8 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     @Test(enabled = true, priority = 7, description = "TS1401 : Kaydedilen Gelen Evrak raporu")
     public void TS1401() throws InterruptedException, IOException, ParseException {
 
-//        String evrakNO321 = "6315";
-//        String evrakNO328 = "6316";
+//        String evrakNO321 = "6387";
+//        String evrakNO328 = "6391";
 //        String evrakNo = evrakNO321;
 //        String evrakNo1 = evrakNO328;
         String geldigiYer = "Kurum";
@@ -266,21 +266,25 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         kaydedilenGelenEvrakPage
                 .openPage()
                 .evrakTarihiBaslangicDoldur(getSysDateForKis())
-                .gelenEvrakNoDoldur(evrakNO321)
+//                .gelenEvrakNoDoldur(evrakNO321)
                 .sorgula()
-                .tabloKontrolu(evrakNO321)
-//                .tabloKontrouAll(evrakNO321)
+//                .tabloKontrolu(evrakNO321)
+                .tabloKontrouAll(evrakNO321, evrakNO328)
 //                .tabloKontrouAll(evrakNO328)
                 .raporAlExcel()
                 .waitForLoadingJS(WebDriverRunner.getWebDriver(), 180);
 
+//        kaydedilenGelenEvrakPage
+//                .gelenEvrakNoDoldur(evrakNO328)
+//                .sorgula()
+//                .tabloKontrolu(evrakNO328)
+//                .raporAlPdf()
+//                .waitForLoadingJS(WebDriverRunner.getWebDriver(), 180);
+//                .islemMesaji().basariliOlmali(basariMesaji);
+
         kaydedilenGelenEvrakPage
-                .gelenEvrakNoDoldur(evrakNO328)
-                .sorgula()
-                .tabloKontrolu(evrakNO328)
                 .raporAlPdf()
                 .waitForLoadingJS(WebDriverRunner.getWebDriver(), 180);
-//                .islemMesaji().basariliOlmali(basariMesaji);
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -380,8 +384,8 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         gelenEvrakKayitPage
                 .openPage()
                 .evrakBilgileriUstYaziEkle(bigPdfPath)
-        .islemMesaji().uyariOlmali(uyariMesajı);
-        gelenEvrakKayitPage      .alanKontrolleri()
+                .islemMesaji().uyariOlmali(uyariMesajı);
+        gelenEvrakKayitPage.alanKontrolleri()
                 .kisiKurumSec(kisiGercek)
                 .evrakTuruKontrol(evrakTuru)
                 .kisiKurumSec(kisiKurum1)
@@ -478,7 +482,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .miatDoldur(miatTarihi)
                 .geregiDoldur(geregi, "Ad")
                 .kaldiralacakKlasorDoldur(kaldirlacakKlasor)
-                .bilgiDoldur(geregi )
+                .bilgiDoldur(geregi)
                 .evrakTarihiDoldur(evrakTarihi)
                 .ekBilgiFiltreAc()
                 .ekBilgiFizikselEkEkle()
