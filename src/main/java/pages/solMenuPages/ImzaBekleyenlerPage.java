@@ -206,10 +206,21 @@ public class ImzaBekleyenlerPage extends MainPage {
     @Step("Evrak Seç")
     public ImzaBekleyenlerPage evrakSec(String konu, String gidecegiYer, String gonderen, String evrakNo) {
         tblImzaBekleyenler
-                .filterBy(text("Konu: " + konu))
-                .filterBy(text("Gideceği Yer: " + gidecegiYer))
-                .filterBy(text("Gönderen: " + gonderen))
+                .filterBy(text(konu))
+                .filterBy(text(gidecegiYer))
+                .filterBy(text(gonderen))
                 .filterBy(text(evrakNo))
+                .first()
+                .click();
+        return this;
+    }
+
+    @Step("Evrak Seç")
+    public ImzaBekleyenlerPage evrakSec(String konu, String gidecegiYer, String gonderen) {
+        tblImzaBekleyenler
+                .filterBy(text(konu))
+                .filterBy(text(gidecegiYer))
+                .filterBy(text(gonderen))
                 .first()
                 .click();
         return this;

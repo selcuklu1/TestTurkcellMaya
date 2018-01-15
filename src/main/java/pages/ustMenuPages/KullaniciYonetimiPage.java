@@ -129,8 +129,21 @@ public class KullaniciYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Seçilen kullanıcıyı güncelle tıkla")
+    @Step("\"{birim}\" adlı birimi güncelle")
+    public KullaniciYonetimiPage gorevliOlduguBirimlerGuncelle(String birim) {
+        clickJs(btnGorevliOlduguBirimlerGuncelle);
+        return this;
+    }
+
+    @Step("\"{kullanici}\" Seçilen kullanıcıyı güncelle tıkla")
     public KullaniciYonetimiPage kullaniciListesiGuncelle() {
+        clickJs(btnKullaniciListesiGuncelle);
+        return this;
+    }
+
+    @Step("\"{kullanici}\" adlı seçilen kullanıcıdaki güncelle tıklanır")
+    public KullaniciYonetimiPage kullaniciListesiGuncelle(String kullanici) {
+        kullanici = $$("[id='kullaniciYonetimiListingForm:kullaniciDataTable_data'] tr[data-ri='0'] div").get(1).getText();
         clickJs(btnKullaniciListesiGuncelle);
         return this;
     }
@@ -197,10 +210,20 @@ public class KullaniciYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Ara")
+    @Step("Ara tıklanır. Kullanıcıların TCKN, ad soyad ve birim bilgileri ile listelendiği görülür.")
     public KullaniciYonetimiPage ara() {
         btnAra.click();
         return this;
+    }
+
+    public String adCek(){
+       String ad = $$("[id='kullaniciYonetimiListingForm:kullaniciDataTable_data'] tr[data-ri='0'] div").get(1).getText();
+        return ad;
+    }
+
+    public String birimAdCek(){
+       String ad = $$("[id='kullaniciYonetimiEditorForm:kullaniciBirimDataTable_data'] span").get(0).getText();
+        return ad;
     }
 
     @Step("Birim Kontrolü")

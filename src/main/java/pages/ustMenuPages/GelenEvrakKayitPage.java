@@ -761,8 +761,12 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("Yeni Kayıt tıklanır")
     public GelenEvrakKayitPage yeniKayitButton() {
-        $("[id='evrakKaydetBasariliDialogForm:yeniKayitButton']").pressEnter();
-        sleep(5000);
+        //if($("[id='evrakKaydetBasariliDialogForm:yeniKayitButton']").shouldBe(visible).exists()==true){
+         //   $("[id='evrakKaydetBasariliDialogForm:yeniKayitButton']").pressEnter();
+        //}
+        //else {
+        //}
+
         return this;
     }
 
@@ -772,6 +776,7 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
+    @Step("Benzer Kayıt tıklanır")
     public GelenEvrakKayitPage benzerKayit() {
         if ($$(("[id$='benzerKayitButton']")).get(0).shouldHave(visible).exists() == true) {
             $("[id$='benzerKayitButton']").pressEnter();

@@ -400,8 +400,8 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Otomatik onay akışı seç")
-        public BilgilerTab otomatikOnayAkisi() {
+        @Step("Otomatik Onay akışı tıklanır")
+        public BilgilerTab otomatikOnayAkisiSec(){
             btnOtomatikOnayAkisi.click();
             return this;
         }
@@ -1650,9 +1650,21 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement btnEkleriDosyaEkle = $(By.id("yeniGidenEvrakForm:evrakEkTabView:dosyaEkleButton"));
         SelenideElement btnEkleriDosyaTemizle = $(By.id("yeniGidenEvrakForm:evrakEkTabView:dosyaTemizleButton"));
         SelenideElement chkEkListesiniEkYap = $(By.id("yeniGidenEvrakForm:j_idt30306"));
-        SelenideElement btnDosyaEkle = $(By.xpath("//input[@id='yeniGidenEvrakForm:evrakEkTabView:fileUploadButtonA_input']"));
+        SelenideElement btnDosyaEkle = $(By.id("yeniGidenEvrakForm:evrakEkTabView:fileUploadButtonA_input"));;
         SelenideElement lblDosyaAdi = $(By.id("yeniGidenEvrakForm:evrakEkTabView:dosyaAdi"));
         ElementsCollection trEkLlistesi = $$("tbody[id*='yeniGidenEvrakForm:ekListesiDataTable'] tr[role='row']");
+        SelenideElement btnEkleriEvraklarTaramaHavuzudanEkle = $(By.id("yeniGidenEvrakForm:evrakEkTabView:uploadFromTarananEvrakHavuzuEkA"));
+        SelenideElement cmbEvrakTuru = $(By.id("taramaHavuzuFormId:filterAccordionPanelId:tarananTuruId"));
+        SelenideElement btnTaramaHavuzuSorgula = $(By.id("taramaHavuzuFormId:filterAccordionPanelId:taramaHavuzuSorgulaButton"));
+        SelenideElement chkTaramaHavuzuDosya1 = $(By.id("taramaHavuzuFormId:taramaHavuzuDataTableId:0:selectionId"));
+        SelenideElement chkTaramaHavuzuDosya2 = $(By.id("taramaHavuzuFormId:taramaHavuzuDataTableId:1:selectionId"));
+        SelenideElement txtDosya1Aciklama = $("[id^='taramaHavuzuFormId:taramaHavuzuDataTableId:0:j_idt']");
+        SelenideElement txtDosya2Aciklama = $("[id^='taramaHavuzuFormId:taramaHavuzuDataTableId:1:j_idt']");
+        SelenideElement cmbTaramaTuru = $(By.id("taramaHavuzuFormId:taramaHavuzuDataTableId:0:tarananTuruId"));
+
+
+        SelenideElement btnTaramaHavuzuTamam = $(By.id("taramaHavuzuFormId:taramaHavuzuTamamButton"));
+        ElementsCollection trEklistesi= $$("tbody[id*='yeniGidenEvrakForm:ekListesiDataTable'] tr[role='row']");
 
         //Ekleri tabı - Fiziksel Ekle
         SelenideElement btnEkleriFizikselEkEkleTab = $(By.xpath("//a[@href='#yeniGidenEvrakForm:evrakEkTabView:aciklamaEkleTab']"));
@@ -1678,6 +1690,7 @@ public class EvrakOlusturPage extends MainPage {
         ElementsCollection trEvraklarTumListe = $$("tbody[id*='yeniGidenEvrakForm:ekListesiDataTable_data'] tr[role='row']");
 
 
+        //İlişkili Evraklar tab - Sistemde kayıtlı evrak ekle
 
         //Ekleri tabı - Arşivde Kayıtlı Evrak Ekle
         SelenideElement dateArsivdeEvrakAraTarihiBaslangic = $(By.id("yeniGidenEvrakForm:evrakEkTabView:arsivdenEvrakAraEkEkleTarihBasId_input"));
@@ -1691,9 +1704,9 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Ekleri Tabını aç")
         private EkleriTab open() {
-            tabEkleri.click();
+            tabEkleri.shouldBe(visible);
+            clickJs(tabEkleri);
             return this;
-
         }
 
         @Step("Ekleri/Fiziksel Ek Ekle Tab - Açma")
@@ -1716,7 +1729,7 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Ekleri Tab - Ek Metni")
         public EkleriTab ekleriEkMetniDoldur(String aciklama) {
-            txtEkleriDosyaAciklama.sendKeys(aciklama);
+            txtEkleriDosyaAciklama.setValue(aciklama);
             return this;
         }
 
@@ -1747,7 +1760,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Sistemde Kayıtlı Evrak Ekle tab aç")
+        @Step("Ekleri/Sistemde Kayıtlı Evrak Ekle tab aç")
         public EkleriTab sistemdeKayitliEvrakEkleTabAc() {
             btnSistemdeKayitliEvrakTab.click();
             return this;
@@ -1825,7 +1838,7 @@ public class EvrakOlusturPage extends MainPage {
         }
 
         @Step("Eklenen dosya adi kontrol : {dosyaAdi}")
-        public EkleriTab eklenenDosyaAdiKontrol(String dosyaAdi) {
+        public EkleriTab ekleriEklenenDosyaAdiKontrol(String dosyaAdi) {
 
             Assert.assertEquals(lblDosyaAdi.getText().contains(dosyaAdi), true);
 
@@ -1839,17 +1852,6 @@ public class EvrakOlusturPage extends MainPage {
                     .filterBy(text(value))
                     .get(0)
                     .shouldBe(exist);
-            return this;
-        }
-
-        @Step("Ekranın alt kısmında listelenen eklere dosyanın indir butonunun aktif geldiği kontrolu")
-        public EkleriTab listelenenEklerdeIndırButonuKontrol(String dosyaAdi) {
-
-            trEkLlistesi
-                    .filterBy(text(dosyaAdi))
-                    .get(0)
-                    .$("[id$='indirButton']").shouldBe(visible);
-
             return this;
         }
 
@@ -1932,6 +1934,125 @@ public class EvrakOlusturPage extends MainPage {
                     .get(0)
                     .$("[id$='ekListesiSilButton']").click();
 
+            return this;
+        }
+
+        @Step("Tarama havuzundan ekle")
+        public EkleriTab taramaHavuzundanEkle() {
+            btnEkleriEvraklarTaramaHavuzudanEkle.click();
+            return this;
+        }
+
+        @Step("Evrak türü seç")
+        public EkleriTab evrakTuruSec(String turu) {
+            cmbEvrakTuru.selectOption(turu);
+            return this;
+        }
+
+        @Step("Tarama havuzu sorgula")
+        public EkleriTab taramaHavuzuSorgula() {
+            btnTaramaHavuzuSorgula.click();
+            return this;
+        }
+
+        @Step("Ek dosya seç")
+        public EkleriTab birinciEvrakSec(boolean secim) {
+            chkTaramaHavuzuDosya1.setSelected(secim);
+            return this;
+        }
+
+        @Step("Ek dosya seç")
+        public EkleriTab ikinciEvrakSec(boolean secim) {
+            chkTaramaHavuzuDosya2.setSelected(secim);
+            return this;
+        }
+
+        @Step("Ek metni doldur")
+        public EkleriTab dosya1AciklamaDoldur(String ilisikMetni) {
+            txtDosya1Aciklama.setValue(ilisikMetni);
+            return this;
+        }
+
+        @Step("Ek metni doldur")
+        public EkleriTab dosya2AciklamaDoldur(String ilisikMetni) {
+            txtDosya2Aciklama.setValue(ilisikMetni);
+            return this;
+        }
+
+        @Step("Tarama havuzu tamam")
+        public EkleriTab taramaHavuzuTamam() {
+            btnTaramaHavuzuTamam.shouldBe(visible);
+            clickJs(btnTaramaHavuzuTamam);
+            return this;
+        }
+
+        @Step("Ekranın alt kısmında listelenen evraklara eklerin geldiği kontrolu: {description}")
+        public EkleriTab listelenenEklereDosyanınGeldigiKontrolu(String value, String description) {
+
+            trEklistesi
+                    .filterBy(text(value))
+                    .get(0)
+                    .shouldBe(exist);
+            return this;
+        }
+
+        @Step("Ekranın alt kısmında listelenen eklerde indir butonunun aktif geldiği kontrolu")
+        public EkleriTab listelenenEklerdeIndırButonuKontrol(String dosyaAdi) {
+
+            trEklistesi
+                    .filterBy(text(dosyaAdi))
+                    .get(0)
+                    .$("[class='ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only tipTip'] [class$='ui-icon-disk']").shouldBe(visible);
+
+            return this;
+        }
+
+        @Step("Sistemde Kayıtlı Evrak Ekle alan kontrolleri")
+        public EkleriTab sistemdeKayitliEvrakEkleAlanKontrolleri() {
+
+            dateSistemdeEvrakTarihiBaslangic.shouldBe(visible);
+            dateSistemdeEvrakTarihiSon.shouldBe(visible);
+            cmbEvrakAranacakyer.shouldBe(visible);
+            txtEvrakArama.shouldBe(visible);
+            btnSistemdeDokumanAra.shouldBe(visible);
+
+            return this;
+        }
+
+        @Step("Evrak aranacak yer seç")
+        public EkleriTab evrakAranacakYerSec(String turu) {
+            cmbEvrakAranacakyer.selectOption(turu);
+            return this;
+        }
+
+        @Step("Evrakın listeye gelmediği kontrolu")
+        public EkleriTab listelenenEvraklardaGelmemeKontrolu(String evrakNo) {
+
+            trEvraklarListesi
+                    .filterBy(text(evrakNo)).shouldHaveSize(0);
+
+            return this;
+        }
+
+        @Step("Ek listesinde detay göster")
+        public EkleriTab ekListesindeDetayGoster(String value) {
+
+            trEklistesi
+                    .filterBy(text(value))
+                    .get(0)
+                    .shouldBe(exist)
+                    .$("[id$='detayButton']").click();
+
+            return this;
+        }
+
+        @Step("Detay tıklanarak açılan ek detay kontrolu")
+        public EkleriTab ekleriDetayGeldigiKontrolu() {
+
+            switchTo().window(1);
+            Selenide.sleep(1000);
+            closeNewWindow();
+            switchTo().window(0);
             return this;
         }
     }
