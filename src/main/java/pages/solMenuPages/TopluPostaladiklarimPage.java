@@ -5,10 +5,13 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
+import org.apache.xmlbeans.impl.xb.xsdschema.All;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
+import pages.galen.GalenControl;
 import pages.pageComponents.belgenetElements.BelgenetElement;
+import pages.pageComponents.tabs.AltTabs;
 import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Condition.text;
@@ -20,14 +23,15 @@ import static pages.pageComponents.belgenetElements.Belgenet.comboBox;
 public class TopluPostaladiklarimPage extends MainPage {
 
     SelenideElement filtrePanelHeader = $("div[id='mainInboxForm:inboxDataTable:filtersAccordion'] > h3");
-    SelenideElement txtPostaListesiAdi = $("//label[normalize-space(text())='Posta Listesi Adı :']/ancestor::tr[@class='ui-widget-content']//input");
-    SelenideElement txtBarkodNo = $("//label[normalize-space(text())='Barkod No :']/ancestor::tr[@class='ui-widget-content']//input");
-    SelenideElement txtEvrakSayisi = $("//label[normalize-space(text())='Evrak Sayısı :']/ancestor::tr[@class='ui-widget-content']//input");
-    SelenideElement txtPostaTarihi = $("//label[normalize-space(text())='Posta Tarihi :']/ancestor::tr[@class='ui-widget-content']//input");
+    SelenideElement txtPostaListesiAdi = $(By.xpath("//label[normalize-space(text())='Posta Listesi Adı :']/ancestor::tr[@class='ui-widget-content']//input"));
+    SelenideElement txtBarkodNo = $(By.xpath("//label[normalize-space(text())='Barkod No :']/ancestor::tr[@class='ui-widget-content']//input"));
+    SelenideElement txtEvrakSayisi = $(By.xpath("//label[normalize-space(text())='Evrak Sayısı :']/ancestor::tr[@class='ui-widget-content']//input"));
+    SelenideElement txtPostaTarihi = $(By.xpath("//label[normalize-space(text())='Posta Tarihi :']/ancestor::tr[@class='ui-widget-content']//input"));
     ElementsCollection tblPostaladiklarim = $$("tbody[id='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
-    SelenideElement btnFiltrele = $("mainInboxForm:inboxDataTable:filtersAccordion:topluPostaladiklarimFiltreButton");
-    SelenideElement btnTemizle = $("mainInboxForm:inboxDataTable:filtersAccordion:topluPostaladiklarimFiltreButton");
+    SelenideElement btnFiltrele = $("[id='mainInboxForm:inboxDataTable:filtersAccordion:topluPostaladiklarimFiltreButton']");
+    SelenideElement btnTemizle = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:topluPostaladiklarimTemizleButton"));
     ElementsCollection tblEvrakListesi = $$("tbody[id='mainPreviewForm:dataTableId_data'] > tr[role='row']");
+    SelenideElement tabloEvrakListesi = $("tbody[id='mainInboxForm:inboxDataTable_data']");
     ElementsCollection tblPostaListesi = $$("tbody[id='mainInboxForm:inboxDataTable_data'] tr[data-ri]");
     SelenideElement popUpEvrakDetayi = $(By.xpath("//span[text()='Evrak Detayları']"));
     ElementsCollection tblEvrakDetayi = $$("[id='mainPreviewForm:dtEvrakUstVeri_data'] tr[role='row']");
@@ -51,6 +55,32 @@ public class TopluPostaladiklarimPage extends MainPage {
         return this;
     }
 
+    @Step("Toplu Postaladıklarım tablo kontrolü")
+    public TopluPostaladiklarimPage topluPostaladiklarimTabloKontrolu() {
+        tabloEvrakListesi.isDisplayed();
+        Allure.addAttachment("Tablo Listesi : ", "Ekran Kontrolü ok");
+        return this;
+    }
+
+    @Step("Filtrelenen parametreye göre tablo kontrolü : \"{kontrolText}\" ")
+    public TopluPostaladiklarimPage topluPostaladiklarimTabloKontrolu(String kontrolText) {
+        ElementsCollection kisiselPages = $$("td[id$='mainInboxForm:inboxDataTable_paginator_bottom'] > span[class='ui-paginator-pages'] >  span");
+        int size = 0;
+        for (int i = 0; i < kisiselPages.size(); i++) {
+            kisiselPages.get(i).click();
+
+            size = tblPostaListesi
+                    .filterBy(Condition.text(kontrolText))
+                    .size();
+        }
+        if (size > 0)
+            Allure.addAttachment("Tablo Listesi : ", "Aranılan evrak tabloda bulundu");
+        else
+            Allure.addAttachment("Tablo Listesi : ", "Aranılan evrak tabloda bulunamadı");
+
+        return this;
+    }
+
     @Step("Filtre Panel aç")
     public TopluPostaladiklarimPage filtrePaneliAc() {
         filtrePanelHeader.click();
@@ -59,7 +89,7 @@ public class TopluPostaladiklarimPage extends MainPage {
 
     @Step("Posta listesi adı doldur: {postaListesiAdi}")
     public TopluPostaladiklarimPage postaListesiAdiDoldur(String postaListesiAdi) {
-        txtPostaListesiAdi.setValue(postaListesiAdi);
+        txtPostaListesiAdi.sendKeys(postaListesiAdi);
         return this;
     }
 
@@ -89,7 +119,7 @@ public class TopluPostaladiklarimPage extends MainPage {
 
     @Step("Temizle butonuna tıkla")
     public TopluPostaladiklarimPage temizle() {
-        btnTemizle.click();
+        clickJs(btnTemizle);
         return this;
     }
 
@@ -141,8 +171,13 @@ public class TopluPostaladiklarimPage extends MainPage {
 
             if (postaListesi.isDisplayed() && postaListesi.exists()) {
                 elementFound = true;
+                Allure.addAttachment("Posta Listesi Adı: ", postaListesiAdi);
+                Allure.addAttachment("Posta Kodu: ", postaKodu);
+                Allure.addAttachment("Posta Tarihi: ", postaTarihi);
+                Allure.addAttachment("Posta Gramajı: ", postaGramaji);
+                Allure.addAttachment("PTT Tutarı: ", pttTutari + " TL");
+                break;
             }
-
         }
 
         Assert.assertEquals(elementFound, shouldBeExist);
@@ -171,6 +206,24 @@ public class TopluPostaladiklarimPage extends MainPage {
         return this;
     }
 
+    @Step("")
+    public TopluPostaladiklarimPage postaDetayiAlanKontrolleri(String postaListesi,String adres,String gramaj,String tutar){
+
+        SelenideElement txtPostaDetayiPostaListesiAdi = $(By.xpath("//label[normalize-space(text())='Posta Listesi Adı :']//ancestor::tr//textarea"));
+
+        txtPostaListesiAdi.text().equals(postaListesi);
+        txtAdres.text().equals(adres);
+        txtGramaj.text().equals(gramaj);
+        txtTutar.text().equals(tutar);
+
+        Allure.addAttachment("Ekran Alan Kontrolü : ","  Seçilen posta listesinin adının doğru geldiği görülür.\n" +
+                                                                        "//Posta listesinin gönderildiği adresin posta kodunun doğru geldiği görülür.\n" +
+                                                                        "//Posta Tarihi ve Saatinin doğru geldiği görülür.\n" +
+                                                                        "//Posta gramajının doğru geldiği görülür.\n" +
+                                                                        "//Pul Yönetimi ekranında girilen tutarlara göre hesaplama işleminin yapıldığı PTT Tutarının doğru geldiği görülür.");
+
+        return this;
+    }
     @Step("Evrak Listesi tablosunda Yazdır butonu tıklanır.")
     public TopluPostaladiklarimPage evrakListesiYazdir(String[] konu) {
         int size = tblEvrakListesi.size();
@@ -187,6 +240,36 @@ public class TopluPostaladiklarimPage extends MainPage {
             $(By.xpath("//div[@id='mainPreviewForm:evrakDetayiViewDialog']//span[@class='ui-icon ui-icon-closethick']")).click();
         }
         return this;
+    }
+
+    @Step("Evrak Listesi tablosunda Yazdır butonu tıklanır.")
+    public TopluPostaladiklarimPage evrakListesiYazdirPdfKontrol(String[] konu) {
+        int size = tblEvrakListesi.size();
+        for (int i = 0; i < size; i++) {
+
+            tblEvrakListesi
+                    .get(i)
+                    .$x("//span[text() = 'Yazdır']/../../button").click();
+            evrakDetayiPopUpKontrolü();
+            evrakDetayiYazdır(konu[i]);
+            switchTo().window(1);
+            pdfKontrol();
+//            closeNewWindow();
+//            switchTo().window(0);
+//            $(By.xpath("//div[@id='mainPreviewForm:evrakDetayiViewDialog']//span[@class='ui-icon ui-icon-closethick']")).click();
+        }
+        return this;
+    }
+
+    @Step("")
+    public TopluPostaladiklarimPage pdfKontrol() {
+
+        new GalenControl().galenGenerateDump("TS1816");
+        String fileName = "Otomasyon.pdf";
+        String ekMetni = "QQQQQ";
+
+        return this;
+
     }
 
     @Step("Evrak Listesi tablosunda Yazdır butonu tıklanır.")
@@ -288,7 +371,7 @@ public class TopluPostaladiklarimPage extends MainPage {
     }
 
     @Step("İndirim oranı göre Tutar kontrolü. \n İndirim Oranı : \"{indirimOrani}\" ")
-    public TopluPostaladiklarimPage indirimSonrasiTutarKontrol(int indirimOrani ) {
+    public TopluPostaladiklarimPage indirimSonrasiTutarKontrol(int indirimOrani) {
 
         String tutar = lblIndirimOncesiTutar.text();
         System.out.println(tutar);
@@ -298,11 +381,11 @@ public class TopluPostaladiklarimPage extends MainPage {
         String part2 = parts[1]; // 034556
 
         double result = Double.parseDouble(part1);
-        double sonuc =result-((indirimOrani*result)/100);
+        double sonuc = result - ((indirimOrani * result) / 100);
 
         System.out.println(sonuc);
         txtTutar.text().contains(Double.toString(sonuc));
-        Allure.addAttachment("Tutar Kontrolü : ",Double.toString(sonuc));
+        Allure.addAttachment("Tutar Kontrolü : ", Double.toString(sonuc));
         return this;
     }
 

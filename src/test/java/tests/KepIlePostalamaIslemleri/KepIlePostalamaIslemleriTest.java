@@ -14,6 +14,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.MainPage;
 import pages.solMenuPages.KepIlePostalanacaklarPage;
+import pages.solMenuPages.PostalanacakEvraklarPage;
 import pages.ustMenuPages.*;
 
 import static data.TestData.*;
@@ -27,6 +28,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
     BirimYonetimiPage birimYonetimiPage;
     GercekKisiYonetimPage gercekKisiYonetimPage;
     KepIlePostalanacaklarPage kepIlePostalanacaklarPage;
+    PostalanacakEvraklarPage postalanacakEvraklarPage;
     MainPage mainPage;
 
     @BeforeMethod
@@ -37,6 +39,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
         birimYonetimiPage = new BirimYonetimiPage();
         gercekKisiYonetimPage = new GercekKisiYonetimPage();
         kepIlePostalanacaklarPage = new KepIlePostalanacaklarPage();
+        postalanacakEvraklarPage = new PostalanacakEvraklarPage();
         mainPage = new MainPage();
     }
 
@@ -223,32 +226,56 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
     @Test(enabled = true, description = "KEP Adresi Tanımlama işlemleri")
     public void TS2236() {
 
+        String basariMesaji = "İşlem başarılıdır!";
+        String uyariMesaj1 = "Gizlilik kleransınız evrakın gizlilik derecesini görüntülemek için yeterli değildir.";
         String konuKodu = "Diğer";
-        String konuKoduRandom = "TS2236_"+createRandomNumber(15);
-        String klerans= "Gizlilik Klerans";
-        String bilgi = "";
-        String kurum = "";
-        String imzalama = "";
-        String editor = "";
-        String evrakTuru = "Resmi yazışma";
+        String konuKoduRandom = "TS-2236-" + createRandomNumber(10);
+        String kaldirilicakKlasor = "Diğer";
+        String evrakTuru = "Resmi Yazışma";
+        String gizlilikDerecesi = "Normal";
+        String bilgi = "Kurum";
+        String imzalama = "İmzalama";
+        String editor = createRandomText(15);
+        String ivedilik = "Normal";
+        String gercekKisi = "Gerçek Kişi";
+        String tuzelKisi = "Tüzel Kişi";
+        String kurum = "Kurum";
+        String geregiGercekKisi = "Cansuu Denizz";
+        String geregiTuzelKisi = "OPTİİMc1";
+        String geregiKurum = "Adalet Bakanlığı";
+        String pathFile = getDocPath() + "Otomasyon.pdf";
+        String tarih = getSysDateForKis();
 
+        login(username4, password4);
 
-        login(username2, password2);
-
-//TODO Pre Condition Postalanacak evraklar sayfası data oluşturmakta
-        login("gklerans", password3);
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
                 .konuKoduDoldur(konuKodu)
                 .konuDoldur(konuKoduRandom)
                 .evrakTuruSec(evrakTuru)
-                .kaldiralacakKlasorlerSec(klerans)
-                .bilgiSecimTipiSecByText(bilgi)
-                .bilgiDoldur(kurum)
-                .OnayAkisiEkle()
-                .onayAkisiEkleIlkImzalaSec(imzalama)
-                .onayAkisiKullan();
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .ivedilikSec(ivedilik)
+                .geregiSecimTipiSec(tuzelKisi)
+                .geregiDoldur(geregiTuzelKisi,"Tüzel kişi")
+                .geregiSecimTipiSec(gercekKisi)
+                .geregiDoldur(geregiGercekKisi,"Gerçek kişi")
+                .geregiSecimTipiSec(kurum)
+                .geregiDoldur(geregiKurum,"Kurum")
+                .gercekKisiPostaTipiAPSSec(geregiGercekKisi)
+                .onayAkisiEkle()
+                .onayAkisiEkleIlkImzalaSec("İmzalama")
+                .kullan()
+                .kaldiralacakKlasorlerSec(kaldirilicakKlasor);
+
+        evrakOlusturPage
+                .editorTabAc();
+
+        evrakOlusturPage
+                .ekleriTabAc()
+                .dosyaEkle(pathFile,"Dosya yolu")
+                .ekleriEkMetniDoldur(editor)
+                .ekleriEkle();
 
         evrakOlusturPage
                 .editorTabAc()
@@ -257,6 +284,14 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
                 .sImzasec()
                 .sImzaImzala()
                 .sayisalImzaEvetPopup();
+
+        postalanacakEvraklarPage
+                .openPage()
+                .evrakSec(konuKoduRandom,geregiGercekKisi,tarih)
+                .evrakPostala()
+                .evrakPostalaPostala(true);
+
+        login(username2, password2);
         //TODO
 
     }
