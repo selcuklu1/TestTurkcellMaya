@@ -45,7 +45,7 @@ public class TaslakEvraklarPage extends MainPage {
     SelenideElement btnEvrakNotlariModalKaydet = $(By.id("evrakKisiselNotDialogFormId:evrakKisiselNotKaydet"));
     SelenideElement btnEvrakNotlariModalIptal = $(By.id("evrakKisiselNotDialogFormId:evrakKisiselNotIptal"));
 
-    ElementsCollection tableEvraklar = $$("tbody[id='mainInboxForm:inboxDataTable_data'] tr[role='row']");
+    ElementsCollection tableEvraklar = $$("tbody[id='mainInboxForm:inboxDataTable_data'] tr[data-ri]");
     ElementsCollection tabEvrakOnizleme = $$("div[id='mainPreviewForm:evrakOnizlemeTab'] ul[role='tablist'] li");
     SelenideElement btnPaylasTab = $(By.xpath("//span[contains(@class, 'evrakPaylas')]/.."));
 
@@ -196,6 +196,14 @@ public class TaslakEvraklarPage extends MainPage {
     @Step("Birim butonuna tıkla")
     public TaslakEvraklarPage paylasBirimTikla() {
         btnPaylasBirim.click();
+        return this;
+    }
+
+    @Step("Evrak kontrolu")
+    public TaslakEvraklarPage evrakKontrolu(String konu) {
+
+        tableEvraklar
+                .filterBy(Condition.text("Konu: " + konu)).shouldHaveSize(1);
         return this;
     }
 
