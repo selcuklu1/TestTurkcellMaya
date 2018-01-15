@@ -1201,6 +1201,13 @@ public class EvrakOlusturPage extends MainPage {
         }
 
 
+        @Step("Gerçek Kişi posta türü APS seçilir.")
+        public BilgilerTab gercekKisiPostaTipiAPSSec(String gercekKisi){
+                ElementsCollection geregiOlanlar = $$("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='geregiLov:LovSecilenTable_data'] tr[role='row']");
+                geregiOlanlar.filterBy(Condition.text(gercekKisi)).get(0).$("select").selectOption("APS");
+            return this;
+        }
+
         @Step("Tüzel Kişi gereği alanı kontrolu")
         public BilgilerTab tuzelKisiGeregiAlaniVergiNoPostaTipiKontrol(String vergiNo2, String postaTipi) {
 

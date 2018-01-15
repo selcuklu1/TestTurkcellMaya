@@ -11,6 +11,7 @@ import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
+import static com.codeborne.selenide.Selenide.sleep;
 
 
 public class BenimlePaylasilanlarPage extends MainPage {
@@ -37,6 +38,7 @@ public class BenimlePaylasilanlarPage extends MainPage {
 
     public BenimlePaylasilanlarPage birimSec(String birim) {
         birimSec.filterBy(Condition.text(birim)).get(0).click();
+        sleep(3000);
         return this;
     }
 

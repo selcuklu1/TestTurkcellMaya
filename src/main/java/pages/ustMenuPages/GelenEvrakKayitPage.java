@@ -769,8 +769,8 @@ public class GelenEvrakKayitPage extends MainPage {
     }
 
     public GelenEvrakKayitPage benzerKayit() {
-        if ($$(By.id("evetButtonBenzerKaydet")).get(0).shouldHave(visible).exists() == true) {
-            $(By.id("evetButtonBenzerKaydet")).pressEnter();
+        if ($$(("[id$='benzerKayitButton']")).get(0).shouldHave(visible).exists() == true) {
+            $("[id$='benzerKayitButton']").pressEnter();
         } else {
         }
         return this;
