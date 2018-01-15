@@ -302,7 +302,7 @@ public class EvrakPostalamaTest extends BaseTest {
                 .geregiDoldur("50 BİRİMLİK", "Dağıtım Planları")
                 .geregiKurumPostaTipi("İadeli Taahhütlü")
                 .geregiSecimTipiSec("Birim")
-                .geregiDoldur("HUKUK", "Birim")
+                .geregiDoldur("ARAŞ", "Birim")
                 .geregiSecimTipiSec("Tüzel Kişi")
                 .geregiDoldur("Optiim İş", "Ad")
                 .geregiKurumPostaTipi("APS")
