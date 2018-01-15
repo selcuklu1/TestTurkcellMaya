@@ -33,7 +33,7 @@ public class EvrakOlusturPage extends MainPage {
     SelenideElement btnCloseScreen = $("[id='window1Dialog'] span[class='ui-icon ui-icon-closethick']");
     SelenideElement tabEvrakDogrulama = $("button .evrakDogrulamaAktarimIslemleri");
     SelenideElement btnPDFOnizleme = $("button[id^='yeniGidenEvrakForm:rightTab:uiRepeat'] span[class$='pdfOnIzleme']");
-    SelenideElement btnKaydet = $("button[id^='yeniGidenEvrakForm:rightTab:uiRepeat'] span[class*='kaydet']");
+    SelenideElement btnKaydet = $("button[id^='yeniGidenEvrakForm:rightTab:uiRepeat'] span[class$='kaydet']");
     SelenideElement btnKaydetOnayaSun = $("button[id^='yeniGidenEvrakForm:rightTab:uiRepeat'] span[class$='kaydetHavaleEt']");
     SelenideElement btnKaydetOnayaSun2 = $("div[class='ui-tabmenu ui-tabmenu-right'] span[class='ui-button-icon-left ui-icon kaydetHavaleEt']");
     SelenideElement txtKaydetOnayaSunAciklama = $(By.id("windowCevapEvrakForm:onayIslemiAciklama"));
@@ -206,14 +206,17 @@ public class EvrakOlusturPage extends MainPage {
         return editorTab.open();
     }
 
+    @Step("Ekleri tabını aç")
     public EkleriTab ekleriTabAc() {
         return ekleriTab.open();
     }
 
+    @Step("İlgileri tabını aç")
     public IlgileriTab ilgileriTabAc() {
         return ilgileriTab.open();
     }
 
+    @Step("İlişkili evraklar tabını aç")
     public IliskiliEvraklarTab iliskiliEvraklarTabAc() {
         return iliskiliEvraklarTab.open();
     }
@@ -2062,7 +2065,8 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Ilişkili evraklar tabını aç")
         private IliskiliEvraklarTab open() {
-            tabIliskiliEvraklar.click();
+            tabIliskiliEvraklar.shouldBe(visible);
+            clickJs(tabIliskiliEvraklar);
             return this;
         }
 
@@ -2251,7 +2255,7 @@ public class EvrakOlusturPage extends MainPage {
                     .filterBy(text(value))
                     .get(0)
                     .shouldBe(exist)
-                    .$("[id$='detayButton']").click();
+                    .$("[id$='ilisikListesiDetayButton']").click();
 
             return this;
         }
@@ -2309,6 +2313,17 @@ public class EvrakOlusturPage extends MainPage {
             switchTo().window(1);
             closeNewWindow();
             switchTo().window(0);
+            return this;
+        }
+
+        @Step("Eklenen ilişik silme")
+        public IliskiliEvraklarTab ismeGoreIlisikSilme(String ilisik) {
+
+            trDosyalistesi
+                    .filterBy(text(ilisik))
+                    .get(0)
+                    .$("[id$='ilisikListesiSilButton']").click();
+
             return this;
         }
     }
