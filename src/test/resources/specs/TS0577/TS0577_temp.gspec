@@ -1,4 +1,4 @@
-@objects
+            @objects
     container                       css         div[id='yeniOnayEvrakForm:allPanels_content']
         firstPageHeader             css         div[class=firstPageHeader]
             editorAntetBaslik       xpath       //td[@id='editorAntetBaslik']//button/span[.='T.C.']
@@ -13,7 +13,7 @@
             sayiValue               xpath       //span[@id='yeniOnayEvrakForm:editorTarihKonuSayi']//tbody/tr[1]/td[.='${sayiValue}']
             konuLabel               xpath       //span[@id='yeniOnayEvrakForm:editorTarihKonuSayi']//tbody/tr[2]/td[.='Konu']
             konuDots                xpath       //span[@id='yeniOnayEvrakForm:editorTarihKonuSayi']//tbody/tr[2]/td[.=':']
-            konuValue               xpath       //span[@id='yeniOnayEvrakForm:editorTarihKonuSayi']//tbody/tr[2]/td[.='{konuValue}']
+            konuValue               xpath       //span[@id='yeniOnayEvrakForm:editorTarihKonuSayi']//tbody/tr[2]/td[.='${konuValue}']
 
         hitapInplace                css         div[id='yeniOnayEvrakForm:hitapInplace']
             hitapInplace            xpath       //div[@id='yeniOnayEvrakForm:hitapInplace']//button[span[.='... Makamına']]

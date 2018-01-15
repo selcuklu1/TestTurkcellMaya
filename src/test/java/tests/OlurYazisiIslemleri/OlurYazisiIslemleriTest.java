@@ -5,12 +5,17 @@ import data.User;
 import io.qameta.allure.Link;
 import io.qameta.allure.Step;
 import org.testng.annotations.Test;
+import pages.galen.GalenControl;
 import pages.newPages.OlurYazisiOlusturPage;
 import pages.pageComponents.tabs.AltTabs;
 import pages.pageComponents.tabs.BilgilerTab;
 import pages.pageData.alanlar.GeregiSecimTipi;
 import pages.pageData.alanlar.GizlilikDerecesi;
 import pages.pageData.alanlar.Ivedilik;
+import pages.pageData.alanlar.OnayKullaniciTipi;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.value;
@@ -118,6 +123,16 @@ public class OlurYazisiIslemleriTest extends BaseTest {
 
         //Editör Tab
         olurYazisiOlusturPage.editorTab().openTab();
+        Map params = new HashMap<String, String>();
+        params.put("birim", user1.getBirimAdi());
+        params.put("sayiValue", "01-010.10-");
+        params.put("konuValue", "USUL VE ESASLAR");
+        params.put("ilgiDocAValue", "İlgileri Tab "+ konu);
+        params.put("ilgiDocBValue", "Metni Tab " + konu);
+        params.put("ekValue", "Ekleri Tab "+ konu);
+        new GalenControl().setTextValuesToGalenSpec("TS0577", params);
+        new GalenControl().galenGenerateDump("TS0577");
+                //.galenLayoutControl("TS0577");
 
         /*
             @objects
@@ -135,7 +150,7 @@ public class OlurYazisiIslemleriTest extends BaseTest {
             sayiValue               xpath       //span[@id='yeniOnayEvrakForm:editorTarihKonuSayi']//tbody/tr[1]/td[.='${sayiValue}']
             konuLabel               xpath       //span[@id='yeniOnayEvrakForm:editorTarihKonuSayi']//tbody/tr[2]/td[.='Konu']
             konuDots                xpath       //span[@id='yeniOnayEvrakForm:editorTarihKonuSayi']//tbody/tr[2]/td[.=':']
-            konuValue               xpath       //span[@id='yeniOnayEvrakForm:editorTarihKonuSayi']//tbody/tr[2]/td[.='{konuValue}']
+            konuValue               xpath       //span[@id='yeniOnayEvrakForm:editorTarihKonuSayi']//tbody/tr[2]/td[.='${konuValue}']
 
         hitapInplace                css         div[id='yeniOnayEvrakForm:hitapInplace']
             hitapInplace            xpath       //div[@id='yeniOnayEvrakForm:hitapInplace']//button[span[.='... Makamına']]

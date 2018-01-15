@@ -11,11 +11,10 @@ import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.Dimension;
 import org.testng.Assert;
+import pages.pageData.alanlar.OnayKullaniciTipi;
 
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
+import java.io.*;
+import java.util.*;
 
 /**
  * Yazan: Ilyas Bayraktar
@@ -91,6 +90,141 @@ public class GalenControl extends BaseLibrary {
         }
 
         maximazeBrowser();
+    }
+
+    public void setTextValuesToGalenSpec(String testName, Map<String, String> params){
+        String filePath = pageSpecPath + testName + "/" + testName + "_temp.gspec";
+        String specContent = getFileContent(filePath);
+        for (Map.Entry<String,String> entry : params.entrySet()){
+            specContent = specContent.replace("${" + entry.getKey() + "}", entry.getValue());
+        }
+            /*System.out.println("Key = " + entry.getKey() +
+                    ", Value = " + entry.getValue());
+        params.forEach((name,value)-> specContent.replace("${" + name + "}", value));*/
+
+        writeContentToFile(pageSpecPath + testName + "/"+ testName + ".gspec", specContent);
+    }
+
+    public void modifyFile(String filePath, String oldString, String newString) {
+        File fileToBeModified = new File(filePath);
+        String oldContent = "";
+        BufferedReader reader = null;
+        FileWriter writer = null;
+        try
+        {
+            reader = new BufferedReader(new FileReader(fileToBeModified));
+            //Reading all the lines of input text file into oldContent
+            String line = reader.readLine();
+            while (line != null)
+            {
+                oldContent = oldContent + line + System.lineSeparator();
+                line = reader.readLine();
+            }
+
+            //Replacing oldString with newString in the oldContent
+            String newContent = oldContent.replaceAll(oldString, newString);
+            //Rewriting the input text file with newContent
+            writer = new FileWriter(fileToBeModified);
+            writer.write(newContent);
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            try
+            {
+                //Closing the resources
+                reader.close();
+                writer.close();
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public String getFileContent(String filePath) {
+        File file = new File(filePath);
+        String content = "";
+        BufferedReader reader = null;
+        try
+        {
+            reader = new BufferedReader(new FileReader(file));
+            String line = reader.readLine();
+            while (line != null)
+            {
+                content = content + line + System.lineSeparator();
+                line = reader.readLine();
+            }
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            try
+            {
+                reader.close();
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
+        return content;
+    }
+
+    public void writeContentToFile_o(String filePath, String content) {
+        FileWriter writer = null;
+        try
+        {
+            writer = new FileWriter(filePath);
+            writer.write(content);
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            try
+            {
+                writer.close();
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void writeContentToFile(String filePath, String content) {
+        //File file = new File(filePath);
+        FileWriter writer = null;
+        try
+        {
+            writer = new FileWriter(filePath);
+            writer.write(content);
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            try
+            {
+                writer.close();
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
     }
 
 }
