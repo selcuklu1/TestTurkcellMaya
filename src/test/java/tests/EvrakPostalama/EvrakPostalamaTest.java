@@ -392,7 +392,7 @@ public class EvrakPostalamaTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "Önizleme ekranından ek ilgi ve ilişiği olan evrakın postalanması")
+    @Test(enabled = true, description = "TS0309 : Önizleme ekranından ek ilgi ve ilişiği olan evrakın postalanması")
     public void TS0309() throws InterruptedException {
         login("Mbozdemir", "123");
         String konu = "TS2235_";
