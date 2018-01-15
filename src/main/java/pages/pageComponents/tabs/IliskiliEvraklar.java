@@ -16,10 +16,12 @@ public class IliskiliEvraklar {
     final static String tabName = "İlişkili Evraklar";
     protected SelenideElement tab;
     protected SelenideElement page;
+    SearchTable searchTable;
 
     public IliskiliEvraklar(SelenideElement page) {
         this.page = page;
         this.tab = page.$("div[id$='ilisikIslemleriTabView']");
+        searchTable = new SearchTable(page.$("div[id$='ilisikListesiDataTable']"));
     }
 
     @Step(tabName + " tabı aç")
@@ -38,8 +40,8 @@ public class IliskiliEvraklar {
         return new AltTabs(tab);
     }
 
-    @Step("İlişikler Listesi tablosunda işlem yapılacak")
+    @Step("İlişikler Listesi bul")
     public SearchTable getEkListesiTablosu() {
-        return new SearchTable(page.$("div[id$='ilisikListesiDataTable']"));
+        return searchTable;
     }
 }

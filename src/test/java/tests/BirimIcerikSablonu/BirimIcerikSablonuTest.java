@@ -48,7 +48,7 @@ public class BirimIcerikSablonuTest extends BaseTest {
 
     BirimIcerikSablonlarPage birimIcerikSablonlarPage = new BirimIcerikSablonlarPage();
     pages.newPages.EvrakOlusturPage evrakOlusturPage = new pages.newPages.EvrakOlusturPage();
-    OlurYazisiOlusturPage olurYazisiOlusturPage;
+    OlurYazisiOlusturPage olurYazisiOlusturPage = new OlurYazisiOlusturPage();
 
     User user1 = new User("user1", "123", "User1 TEST", "AnaBirim1");
     User user2 = new User("user2", "123", "User2 TEST", "AnaBirim1AltBirim1");
@@ -93,6 +93,7 @@ public class BirimIcerikSablonuTest extends BaseTest {
     public void TS1082_kontrol() {
         TS1082_AltBirimKullanici();
         TS1082_BirimKullanici();
+        TS1082_BirimKullaniciOlurYazisiOlustur();
     }
 
     @Test(description = "TS1089: Şablonun Güncellenmesi", dependsOnMethods = {"TS1082"}, enabled = true, priority = 4)
@@ -278,7 +279,7 @@ public class BirimIcerikSablonuTest extends BaseTest {
     public void tumSablonalariSil() throws Exception {
         login("user1", "123");
         birimIcerikSablonlarPage = new BirimIcerikSablonlarPage().openPage();
-        birimIcerikSablonlarPage.sablonuSilD("DENEME ŞABLON");
+        birimIcerikSablonlarPage.tumSablonlariSil();
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -394,7 +395,7 @@ public class BirimIcerikSablonuTest extends BaseTest {
         Assert.assertFalse(editor.getText().contains("(@BIRIM)"), "(@BIRIM) olmamalı");*/
     }
 
-    @Step("Birimden bir kullanıcıda şablonun geldiği kontrolü")
+    @Step("Birimden bir kullanıcıda şablonun geldiği kontrolü (Evrak Oluştur)")
     public void TS1082_BirimKullanici() {
         login(user1);
         EditorTab editorTab = evrakOlusturPage.openPage().editorTab().openTab();
@@ -404,13 +405,25 @@ public class BirimIcerikSablonuTest extends BaseTest {
                 .onTanimliSablonuUygula();
 
         editorTab.getEditor().editorShouldHave(text(user1.getBirimAdi()));
-        /*Assert.assertTrue(editor.getText().contains(user1.getBirimAdi()), "Editörde " + user1.getBirimAdi() + " olmalı");
+        evrakOlusturPage.closePage(false);
+        /*Assert.assertTrue(editor.getText().contains(user2.getBirimAdi()), "Editörde " + user2.getBirimAdi() + " olmalı");
         Assert.assertFalse(editor.getText().contains("(@BIRIM)"), "(@BIRIM) olmamalı");*/
+    }
+
+    @Step("Birimden bir kullanıcıda şablonun geldiği kontrolü (Olur Yazısı Oluştur)")
+    public void TS1082_BirimKullaniciOlurYazisiOlustur() {
+        EditorTab editorTab = olurYazisiOlusturPage.openPage().editorTab().openTab();
+        editorTab.getEditor().toolbarButton("Öntanımlı İçerik Şablonu Kullan", true);
+        editorTab.onTanimliSablonuSec(sablonAdi1082)
+                .onTanimliSablonuOnizlemeKontrol(exactText(editorText1082))
+                .onTanimliSablonuUygula();
+
+        editorTab.getEditor().editorShouldHave(text(user1.getBirimAdi()));
 
         Map staff = new HashMap<String, OnayKullaniciTipi>();
         //staff.put(user1.getFullname(), OnayKullaniciTipi.PARAFLAMA);
         staff.put(user3.getFullname(), OnayKullaniciTipi.IMZALAMA);
-        evrakOlusturPage.bilgileriTab().openTab().alanlariDoldur(
+        olurYazisiOlusturPage.bilgileriTab().openTab().alanlariDoldur(
                 "310.04"
                 , sablonAdi1082
                 , "Diğer"
@@ -420,7 +433,7 @@ public class BirimIcerikSablonuTest extends BaseTest {
 //                , "optiimtekin"
                 , new String[][]{{user3.getFullname(), OnayKullaniciTipi.IMZALAMA.getOptionText()},}
         );
-        evrakOlusturPage.pageButtons().evrakParafla()
+        olurYazisiOlusturPage.pageButtons().evrakParafla()
                 .islemMesaji().basariliOlmali();
         /*evrakOlustur(evrakOlusturPage, konu);
         new EvrakPageButtons().evrakParafla();

@@ -1791,7 +1791,7 @@ public class TopluPostalamaTest extends BaseTest {
 
 
         String[] konu = new String[]{
-                "TC1811 20180109111103", "TC1811 20180109111103100"
+                "TC1811 20180112161120", "TC1811 20180112161120100"
         };
 
         login("mbozdemir", "123");
@@ -1823,7 +1823,7 @@ public class TopluPostalamaTest extends BaseTest {
         };
         //endregion
         Allure.addAttachment("Test Datası", "Test Datası oluşturuluyor.");
-//        //region Test Datası
+////        region Test Datası
 //        for (int i = 0; i < 2; i++) {
 //            evrakOlusturPage
 //                    .openPage()
@@ -1875,7 +1875,7 @@ public class TopluPostalamaTest extends BaseTest {
 //                .postaDetayiPostala();
 //        //endregion
         Allure.addAttachment("Test Datası", "Test Datası oluşturuldu.");
-//        String postaListesi = "TC1811 20180108145101";
+//        String postaListesi = "TC1811 20180112161120";
         topluPostaladiklarimPage
                 .openPage()
                 .topluPostaladiklarimPostaListesiKontrol(postaListesi, "", getSysDateForKis(), gramaj1, "45.000", true)
@@ -1892,12 +1892,18 @@ public class TopluPostalamaTest extends BaseTest {
                 .gidisSekliSec("Kurye")
                 .gidisSekliSec("Ankara İçi APS")
                 .gonderildigiYerSec2("Yurt İçi")
+                .tutarHesapla()
                 .indirimOraniDoldur("20")
+                .indirimSonrasiTutarKontrol(20)
                 .gramajDoldur(gramaj3)
                 .tutarHesapla()
                 .indirimOncesiTutarKontrol("100.00", true)
                 .indirimOraniKontrol("20", true)
-                .tutarKontrol("80.00", true);
+                .tutarKontrol("80.00", true)
+                .etiketBastir()
+                .etiketBastirEkraniKontrolü(adres,geregi)
+                .etiketBastirEkraniKapat();
+
         //TODO
         //17.step
     }

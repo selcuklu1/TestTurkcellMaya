@@ -118,21 +118,21 @@ public class IslemMesajlari extends BaseLibrary {
     }
 
     public boolean isBasarili() {
-        boolean b = $(titleLocator).has(exactText(BASARILI.value()));
-        takeScreenshot();
-        return b;
+        //Not working?! boolean b = getMessageBody().$(titleLocator).has(exactText(BASARILI.value()));
+        //takeScreenshot();
+        return getMessageBody().$(titleLocator).text().equals(BASARILI.value());
     }
 
     public boolean isUyari() {
-        boolean b = $(titleLocator).shouldBe(visible).has(exactText(UYARI.value()));
-        takeScreenshot();
-        return b;
+        /*boolean b = $(titleLocator).shouldBe(visible).has(exactText(UYARI.value()));
+        takeScreenshot();*/
+        return getMessageBody().$(titleLocator).text().equals(UYARI.value());
     }
 
     public boolean isDikkat() {
-        boolean b = $(titleLocator).shouldBe(visible).has(exactText(DIKKAT.value()));
-        takeScreenshot();
-        return b;
+        /*boolean b = $(titleLocator).shouldBe(visible).has(exactText(DIKKAT.value()));
+        takeScreenshot();*/
+        return getMessageBody().$(titleLocator).text().equals(DIKKAT.value());
     }
 
     public void closeMessage() {
