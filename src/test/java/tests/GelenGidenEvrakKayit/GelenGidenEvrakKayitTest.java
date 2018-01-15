@@ -374,11 +374,14 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         String uyariMesajı = "Dosya büyüklüğü uygun değildir!!";
         String secim = "Hayır";
         String pathToFilePdf = getDocPath() + "Otomasyon.pdf";
+        String bigPdfPath = getDocPath() + "emresencan.pdf";
 
         login(optiim);
         gelenEvrakKayitPage
                 .openPage()
-                .alanKontrolleri()
+                .evrakBilgileriUstYaziEkle(bigPdfPath)
+        .islemMesaji().uyariOlmali(uyariMesajı);
+        gelenEvrakKayitPage      .alanKontrolleri()
                 .kisiKurumSec(kisiGercek)
                 .evrakTuruKontrol(evrakTuru)
                 .kisiKurumSec(kisiKurum1)
@@ -417,13 +420,15 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .kaydet()
                 .popUpKontrol2(secim);
 
-
+//
 //        gelenEvrakKayitPage
 //                .evrakBilgileriUstYaziEkle(bigPdfPath);
-//                .islemMesaji().uyariOlmali(uyariMesajı);
-        //        250 mb pdf yuklerken timeouta düşüyor....
-
+//        gelenEvrakKayitPage.islemMesaji().uyariOlmali(uyariMesajı);
+////                250 mb pdf yuklerken timeouta düşüyor....
+//
 //        waitForLoadingJS(WebDriverRunner.getWebDriver(),1200);
+
+//        gelenEvrakKayitPage.islemMesaji().uyariOlmali(uyariMesajı);
 //işlem mesajı eklenecek
 
         gelenEvrakKayitPage

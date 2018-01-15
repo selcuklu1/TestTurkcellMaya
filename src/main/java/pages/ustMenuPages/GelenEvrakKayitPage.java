@@ -13,6 +13,8 @@ import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.UstMenuData;
 
+import java.io.File;
+
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
@@ -283,7 +285,9 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("Üst yazi \"{path}\" ekle")
     public GelenEvrakKayitPage evrakBilgileriUstYaziEkle(String path) {
-        uploadFile(ustYazi, path);
+        //uploadFile(ustYazi, path);
+        File file = new File(path);
+        ustYazi.uploadFile(file);
         //ustYaziUploadFile(path);
         return this;
     }

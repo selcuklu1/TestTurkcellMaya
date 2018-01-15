@@ -206,6 +206,24 @@ public class TopluPostaladiklarimPage extends MainPage {
         return this;
     }
 
+    @Step("")
+    public TopluPostaladiklarimPage postaDetayiAlanKontrolleri(String postaListesi,String adres,String gramaj,String tutar){
+
+        SelenideElement txtPostaDetayiPostaListesiAdi = $(By.xpath("//label[normalize-space(text())='Posta Listesi Adı :']//ancestor::tr//textarea"));
+
+        txtPostaListesiAdi.text().equals(postaListesi);
+        txtAdres.text().equals(adres);
+        txtGramaj.text().equals(gramaj);
+        txtTutar.text().equals(tutar);
+
+        Allure.addAttachment("Ekran Alan Kontrolü : ","  Seçilen posta listesinin adının doğru geldiği görülür.\n" +
+                                                                        "//Posta listesinin gönderildiği adresin posta kodunun doğru geldiği görülür.\n" +
+                                                                        "//Posta Tarihi ve Saatinin doğru geldiği görülür.\n" +
+                                                                        "//Posta gramajının doğru geldiği görülür.\n" +
+                                                                        "//Pul Yönetimi ekranında girilen tutarlara göre hesaplama işleminin yapıldığı PTT Tutarının doğru geldiği görülür.");
+
+        return this;
+    }
     @Step("Evrak Listesi tablosunda Yazdır butonu tıklanır.")
     public TopluPostaladiklarimPage evrakListesiYazdir(String[] konu) {
         int size = tblEvrakListesi.size();
