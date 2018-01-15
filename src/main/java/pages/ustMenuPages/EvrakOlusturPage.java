@@ -1491,8 +1491,8 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        public EditorTab popupSImzalaIslemleri() {
-
+        public EditorTab popupSImzalaIslemleri() throws InterruptedException {
+            Thread.sleep(10000);
             /*//switchTo().window("");
 //            Thread.sleep(5000);
 //            SelenideElement sImza = $(By.id("imzalaForm:imzalamaYontemiRadio:1"));
