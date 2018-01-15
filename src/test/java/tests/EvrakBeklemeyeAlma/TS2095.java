@@ -163,7 +163,7 @@ public class TS2095 extends BaseTest {
         String ivedilik = "Günlü";
         String miat = getSysDateForKis();
         String geregiSecimBirim = "Birim";
-        String geregiBirim = "AFYON VALİLİĞİ";
+        String geregiBirim = "Optiim Birim";//"AFYON VALİLİĞİ";
         String akisAdim = "İmzalama";
         String kaldirilacakKlasorler = "Diğer";
         String editorIcerik = "Bu bir deneme mesajıdır. Lütfen dikkate almayınız.";
