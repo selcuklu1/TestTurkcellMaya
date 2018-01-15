@@ -17,12 +17,8 @@ import pages.pageData.alanlar.OnayKullaniciTipi;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.value;
-import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.page;
-import static pages.pageComponents.belgenetElements.Belgenet.$;
-import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 /**
  * Yazan: Ilyas Bayraktar

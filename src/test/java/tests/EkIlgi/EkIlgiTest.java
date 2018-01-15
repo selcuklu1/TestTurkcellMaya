@@ -82,7 +82,7 @@ public class EkIlgiTest extends BaseTest {
                 .ekleriEkMetniDoldur(dosyaAdiPDF + " " +ekMetniAciklama)
                 .dosyaEkle(pathPDF, "PDF")
                 .dosyaYukleneneKadarBekle()
-                .eklenenDosyaAdiKontrol(dosyaAdiPDF)
+                .ekleriEklenenDosyaAdiKontrol(dosyaAdiPDF)
                 .ekleriEkle()
                 .listelenenEklerdeKontrol(dosyaAdiPDF, "Dosya Adı")
                 .listelenenEklerdeIndırButonuKontrol(dosyaAdiPDF)
@@ -91,7 +91,7 @@ public class EkIlgiTest extends BaseTest {
                 .ekleriEkMetniDoldur(dosyaAdiDOC + " " +ekMetniAciklama)
                 .dosyaEkle(pathDOC, "DOC")
                 .dosyaYukleneneKadarBekle()
-                .eklenenDosyaAdiKontrol(dosyaAdiDOC)
+                .ekleriEklenenDosyaAdiKontrol(dosyaAdiDOC)
                 .ekleriEkle()
                 .listelenenEklerdeKontrol(dosyaAdiDOC, "Dosya Adı")
                 .listelenenEklerdeIndırButonuKontrol(dosyaAdiDOC)
@@ -100,7 +100,7 @@ public class EkIlgiTest extends BaseTest {
                 .ekleriEkMetniDoldur(dosyaAdiDOCX + " " +ekMetniAciklama)
                 .dosyaEkle(pathDOCX, "DOCX")
                 .dosyaYukleneneKadarBekle()
-                .eklenenDosyaAdiKontrol(dosyaAdiDOCX)
+                .ekleriEklenenDosyaAdiKontrol(dosyaAdiDOCX)
                 .ekleriEkle()
                 .listelenenEklerdeKontrol(dosyaAdiDOCX, "Dosya Adı")
                 .listelenenEklerdeIndırButonuKontrol(dosyaAdiDOCX)
@@ -109,7 +109,7 @@ public class EkIlgiTest extends BaseTest {
                 .ekleriEkMetniDoldur(dosyaAdiXLS + " " +ekMetniAciklama)
                 .dosyaEkle(pathXLS, "XLS")
                 .dosyaYukleneneKadarBekle()
-                .eklenenDosyaAdiKontrol(dosyaAdiXLS)
+                .ekleriEklenenDosyaAdiKontrol(dosyaAdiXLS)
                 .ekleriEkle()
                 .listelenenEklerdeKontrol(dosyaAdiXLS, "Dosya Adı")
                 .listelenenEklerdeIndırButonuKontrol(dosyaAdiXLS)
@@ -118,7 +118,7 @@ public class EkIlgiTest extends BaseTest {
                 .ekleriEkMetniDoldur(dosyaAdiXLSX + " " +ekMetniAciklama)
                 .dosyaEkle(pathXLSX, "XLSX")
                 .dosyaYukleneneKadarBekle()
-                .eklenenDosyaAdiKontrol(dosyaAdiXLSX)
+                .ekleriEklenenDosyaAdiKontrol(dosyaAdiXLSX)
                 .ekleriEkle()
                 .listelenenEklerdeKontrol(dosyaAdiXLSX, "Dosya Adı")
                 .listelenenEklerdeIndırButonuKontrol(dosyaAdiXLS)
@@ -127,7 +127,7 @@ public class EkIlgiTest extends BaseTest {
                 .ekleriEkMetniDoldur(dosyaAdiPPT + " " +ekMetniAciklama)
                 .dosyaEkle(pathPPT, "PPT")
                 .dosyaYukleneneKadarBekle()
-                .eklenenDosyaAdiKontrol(dosyaAdiPPT)
+                .ekleriEklenenDosyaAdiKontrol(dosyaAdiPPT)
                 .ekleriEkle()
                 .listelenenEklerdeKontrol(dosyaAdiPPT, "Dosya Adı")
                 .listelenenEklerdeIndırButonuKontrol(dosyaAdiPPT)
@@ -136,7 +136,7 @@ public class EkIlgiTest extends BaseTest {
                 .ekleriEkMetniDoldur(dosyaAdiPPTX + " " +ekMetniAciklama)
                 .dosyaEkle(pathPPTX, "PPTX")
                 .dosyaYukleneneKadarBekle()
-                .eklenenDosyaAdiKontrol(dosyaAdiPPTX)
+                .ekleriEklenenDosyaAdiKontrol(dosyaAdiPPTX)
                 .ekleriEkle()
                 .listelenenEklerdeKontrol(dosyaAdiPPTX, "Dosya Adı")
                 .listelenenEklerdeIndırButonuKontrol(dosyaAdiPPTX)
@@ -240,6 +240,7 @@ public class EkIlgiTest extends BaseTest {
 
         login(TestData.username4, TestData.password4); //mbozdemir
 
+        //en son taslaklar listesinde kontrol için uniquq konu giriliyor.
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
@@ -335,5 +336,133 @@ public class EkIlgiTest extends BaseTest {
                 .openPage()
                 .evrakKontrolu(evrakKonusu);
 
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS2348: Evrak oluşturmada ek iliştirme")
+    public void TS2348() {
+
+        String evrakSayisi = "6345202-150-1065";
+        String evrakKonusu = "TS2348_EkIlgi_Senaryosu_"+getSysDate();
+
+        String ekDosya1Aciklama = "Ek_Dosya1_"+getSysDate();
+        String ekDosya2Aciklama = "Ek_Dosya2_"+getSysDate();
+        String ekDosya3Aciklama = "Ek_Dosya3_"+getSysDate();
+        String fizikselEkAciklama = "Fiziksel_Ek_"+getSysDate();
+
+        String dosyaAdi3 = "TS2348_dosya3.pdf";
+        String pathDosya3 = getDocPath() + "TS2348_dosya3.pdf";
+
+        String basariMesaji = "İşlem başarılıdır!";
+
+        login(TestData.username4, TestData.password4); //mbozdemir
+
+        //Taslaklar listesinde kontrol için unique konu giriliyor.
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .konuDoldur(evrakKonusu);
+
+        evrakOlusturPage
+                .ekleriTabAc()
+
+                //Dosya ekle tabı
+                //ek1
+                .ekleriEkMetniDoldur(ekDosya1Aciklama)
+                .taramaHavuzundanEkle()
+                .evrakTuruSec("Ek")
+                .taramaHavuzuSorgula()
+                .birinciEvrakSec(true)
+                .dosya1AciklamaDoldur(ekDosya1Aciklama)
+                .taramaHavuzuTamam()
+                .listelenenEklereDosyanınGeldigiKontrolu(ekDosya1Aciklama, "Açıklama")
+                .listelenenEklerdeIndırButonuKontrol(ekDosya1Aciklama)
+
+                //ek2
+                .ekleriEkMetniDoldur(ekDosya2Aciklama)
+                .taramaHavuzundanEkle()
+                .evrakTuruSec("Ek")
+                .taramaHavuzuSorgula()
+                .ikinciEvrakSec(true)
+                .dosya2AciklamaDoldur(ekDosya2Aciklama)
+                .taramaHavuzuTamam()
+                .listelenenEklereDosyanınGeldigiKontrolu(ekDosya2Aciklama, "Açıklama")
+                .listelenenEklerdeIndırButonuKontrol(ekDosya2Aciklama)
+
+                //ek3
+                .ekleriEkMetniDoldur(ekDosya3Aciklama)
+                .dosyaEkle(pathDosya3, dosyaAdi3)
+                .dosyaYukleneneKadarBekle()
+                .ekleriEklenenDosyaAdiKontrol(dosyaAdi3)
+                .ekleriEkle()
+                .listelenenEklereDosyanınGeldigiKontrolu(dosyaAdi3, "Dosya Adı")
+                .listelenenEklerdeIndırButonuKontrol(dosyaAdi3)
+
+                //fiziksel ek
+                .fizikselEkEkleTabiniAc()
+                .fizikselEkMetniDoldur(fizikselEkAciklama)
+                .fizikselEkMetniEkle()
+                .listelenenEklereDosyanınGeldigiKontrolu(dosyaAdi3, "Açıklama")
+
+                .sistemdeKayitliEvrakEkleTabAc()
+                .sistemdeKayitliEvrakEkleAlanKontrolleri()
+
+                .evrakAranacakYerSec("İşlem Yaptıklarımda Ara")
+                .evrakAramaDoldur(evrakSayisi)
+                .dokumanAra()
+                .listelenenEvraklardaGelmemeKontrolu(evrakSayisi)
+
+
+                .evrakAranacakYerSec("Birim Evrakları Ara")
+                .evrakAramaDoldur(evrakSayisi)
+                .dokumanAra()
+                .listelenenEvraklardaKontrol(evrakSayisi)
+                .evrakEkEkle()
+                .listelenenEklereDosyanınGeldigiKontrolu(evrakSayisi, "Evrak Sayısı")
+
+                .ekListesindeDetayGoster(evrakSayisi)
+                .evrakDetayiKontrol()
+                .evrakDetayiSayfasınıKapat()
+                .islemPenceresiKapatmaOnayiPopup("Kapat");
+
+        evrakOlusturPage
+                .ekleriTabAc()
+
+                //ek1 detay
+                .ekListesindeDetayGoster(ekDosya1Aciklama)
+                .ekleriDetayGeldigiKontrolu()
+
+                //ek2 detay
+                .ekListesindeDetayGoster(ekDosya2Aciklama)
+                .ekleriDetayGeldigiKontrolu()
+
+                //ek3 detay
+                .ekListesindeDetayGoster(ekDosya3Aciklama)
+                .ekleriDetayGeldigiKontrolu();
+
+        evrakOlusturPage
+                .editorTabAc()
+                .editordeEkKontrol(ekDosya1Aciklama)
+                .editordeEkKontrol(ekDosya2Aciklama)
+                .editordeEkKontrol(ekDosya3Aciklama)
+                .editordeEkKontrol(fizikselEkAciklama)
+                .editordeEkKontrol(evrakSayisi);
+
+        evrakOlusturPage
+                .ekleriTabAc()
+                .ekIsmineGoreEkSilme(fizikselEkAciklama)
+                .ekSilmeOnayi("Evet");
+
+        evrakOlusturPage
+                .editorTabAc()
+                .editordeEkGelmedigiKontrolu(fizikselEkAciklama);
+
+        evrakOlusturPage
+                .kaydet(true)
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        taslakEvraklarPage
+                .openPage()
+                .evrakKontrolu(evrakKonusu);
     }
 }
