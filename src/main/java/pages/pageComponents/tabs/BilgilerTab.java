@@ -6,6 +6,7 @@ import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.NotFoundException;
+import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.SearchTable;
 import pages.pageComponents.belgenetElements.BelgenetElement;
@@ -517,16 +518,18 @@ public class BilgilerTab extends MainPage {
     }
 
     ElementsCollection otomatikOnayAkisiIslemlerindeTumSecilenleri(){
-        return searchTable.getRows().filterBy(cssClass("ui-state-active"));
+        return searchTable.findRows().getFoundRows().filterBy(cssClass("ui-state-active"));
+                //getRows().filterBy(cssClass("ui-state-active"));
     }
 
     @Step("Otomatik Onay Akışında bul ve seç")
-    public BilgilerTab otomatikOnayAkisindaBulVeSec(String secilecekIslem, String... searchText){
+    public BilgilerTab otomatikOnayAkisindaBulVeSec(String secilecekIslem, Condition... conditions){
         otomatikOnayAkisiEkleButonaTikla();
         getOtomatikOnayAkisiIslemleriDialog().shouldBe(visible);
         getOtomatikOnayAkisiIslemleriDialogTitle().shouldHave(text("Otomatik Onay Akışı İşlemleri"));
 
-        SelenideElement row = searchTable.findRowByText(searchText);
+        SelenideElement row = searchTable.findRows(conditions).useFirstFoundRow().getFoundRow();
+                //findRowByText(searchText);
 
         if (row.attr("class").contains("ui-state-active"))
             Allure.addAttachment("Seçiliydi", row.toString());
@@ -637,15 +640,47 @@ public class BilgilerTab extends MainPage {
     //region Kullanıcıları - Anlık Akış Oluştur
     //BelgenetElement kullanicilarCombolov = comboLov("input[id$='akisAdimLov:LovText']");
 
-    @Step("Kullanıcılar alan combolov")
+    @Step("Anlık onay Kullanıcılar alan combolov")
     public BelgenetElement getKullanicilarCombolov(){
         return comboLov(getContainer(),"input[id$='akisAdimLov:LovText']");
     }
 
-    @Step("Kullanıcıları seç")
+    @Step("Anlık onay Kullanıcıları seç")
     public BilgilerTab kullanicilariSec(String... texts){
         for (String text:texts)
             getKullanicilarCombolov().selectLov(text);
+        return this;
+    }
+
+    @Step("Anlık onay seçilen Kullanıcıları kontrol et")
+    public BilgilerTab secilenKullanicilariKontrolEt(String kullanici, String tipi){
+        Allure.addAttachment("Seçlen olmalı kullanicilar", kullanici + " / " + tipi);
+        Allure.addAttachment("Mevcut seçlen kullanicilar", getKullanicilarCombolov().getSelectedItems().texts().toString());
+        getKullanicilarCombolov().getSelectedItems().filterBy(text(kullanici)).shouldHaveSize(1)
+                 .first().$("select").getSelectedOption().shouldHave(text(tipi));
+        return this;
+    }
+
+    @Step("Anlık onay seçilen Kullanıcıları kontrol et")
+    public BilgilerTab secilenKullanicilariKontrolEt(String kullanici, OnayKullaniciTipi tipi){
+        Allure.addAttachment("Seçlen olmalı kullanicilar", kullanici + " / " + tipi);
+        Allure.addAttachment("Mevcut seçlen kullanicilar", getKullanicilarCombolov().getSelectedItems().texts().toString());
+        getKullanicilarCombolov().getSelectedItems().filterBy(text(kullanici)).shouldHaveSize(1)
+                .first().$("select").getSelectedOption().shouldHave(text(tipi.getOptionText()));
+        return this;
+    }
+
+    @Step("Anlık onay seçilen Kullanıcıları kontrol et")
+    public BilgilerTab secilenKullanicilariKontrolEt(String[][] kullaniciTipi){
+        Allure.addAttachment("Seçlen olmalı kullanicilar", kullaniciTipi.toString());
+        Allure.addAttachment("Mevcut seçlen kullanicilar", getKullanicilarCombolov().getSelectedItems().texts().toString());
+
+        for (String[] kullanici:kullaniciTipi) {
+            String k = getKullanicilarCombolov().getSelectedItems().filterBy(text(kullanici[0]))
+                    .shouldHaveSize(1).first().$("select").getSelectedOption().text();
+            //Allure.addAttachment("Seçlen kullanici kontrol", kullanici[0] + "/" + kullanici[1]);
+            Assert.assertEquals(k, kullanici[1], "Kullanici tipi");
+        }
         return this;
     }
 
@@ -656,8 +691,9 @@ public class BilgilerTab extends MainPage {
         return this;
     }*/
 
-    @Step("Onay akışındaki kullanıcı ve tipi seç")
+    @Step("Anlık onay akışındaki kullanıcı ve tipi seç")
     public BilgilerTab onayAkisiKullaniciVeTipiSec(String kullanici, String tipi) {
+        kullanicilarAlaninBirimTumuSec(true);
         getKullanicilarCombolov().selectLov(kullanici);
         getKullanicilarCombolov().getSelectedItems().last()
                 .shouldBe(exist)
@@ -666,14 +702,15 @@ public class BilgilerTab extends MainPage {
         return this;
     }
 
-    @Step("Onay akışı kullanıcıları temizle")
+    @Step("Anlık onay akışı kullanıcıları temizle")
     public BilgilerTab onayAkisiKullanicilarTemizle() {
-        getKullanicilarCombolov().getSelectedItems().shouldHaveSize(1);
-        getKullanicilarCombolov().clearAllSelectedItems();
+        //getKullanicilarCombolov().getSelectedItems().shouldHaveSize(1);
+        if (getKullanicilarCombolov().exists())
+            getKullanicilarCombolov().clearAllSelectedItems();
         return this;
     }
 
-    @Step("Onay akışındaki kullanıcının tipi seç")
+    @Step("Anlık onay akışındaki kullanıcının tipi seç")
     public BilgilerTab onayAkisiKullanicininTipiSec(String kullaniciAdi, String kullaniciTipi) {
         getKullanicilarCombolov().getSelectedItems()
                 .filterBy(text(kullaniciAdi))
@@ -685,8 +722,8 @@ public class BilgilerTab extends MainPage {
     }
 
     //table[contains(@id,'anlikakisOlusturPanelGrid')]//div[@type='button']/input[@type='checkbox']
-    @Step("")
-    public BilgilerTab kullanicilarBirimTumu(boolean tumu){
+    @Step("Anlık onay akışı kullanıcıları alanın Birim/Tümü sec")
+    public BilgilerTab kullanicilarAlaninBirimTumuSec(boolean tumu){
         SelenideElement button = container.$("[id$='anlikakisOlusturPanelGrid'] div[type='button'] input[type='checkbox']");
         if (tumu != button.isSelected())
             clickJs(button);
@@ -697,12 +734,12 @@ public class BilgilerTab extends MainPage {
         return $("input[id$='koordineliBooleanCheckbox_input']");
     }
 
-    @Step("Kullan buton")
+    @Step("Anlık onay Kullan buton")
     public SelenideElement getKullanButton(){
         return $("button[id$='anlikAkisKullanButton']");
     }
 
-    @Step("Onay akiş kullanıcıları kullan")
+    @Step("Anlık onay akiş Kullan butona tıkla")
     public BilgilerTab kullanButonaTikla() {
         getKullanButton().pressEnter();
         return this;
@@ -777,7 +814,7 @@ public class BilgilerTab extends MainPage {
         geregiSec(geregi);
         onayAkisiTemizle();
         onayAkisiEkleButonaTikla();
-        kullanicilarBirimTumu(true);
+        kullanicilarAlaninBirimTumuSec(true);
         //onayAkisiKullanicilarTemizle();
         String kendisi = getKullanicilarCombolov().getSelectedTitles().first().text();
         for (String[] kullanici:onayAkisKullaniciTipi) {

@@ -241,10 +241,10 @@ public class BirimIcerikSablonlarPage extends MainPage {
 
     @Step("Birim Şablonlarında şablonu bul")
     public SelenideElement sablonuBul(String sablonAdi){
-        return searchTable
-                .findRowsInAllPagesByTextFromLast(sablonAdi)
+        return searchTable.searchStartFromLastPage(true).findRows(text(sablonAdi)).shouldHaveSize(1).useFirstFoundRow().getFoundRow();
+                /*.findRowsInAllPagesByTextFromLast(sablonAdi)
                 .shouldHaveSize(1)
-                .first();
+                .first();*/
     }
 
     private boolean birimSablonlardaAra(String sablonAdi) {
@@ -274,28 +274,19 @@ public class BirimIcerikSablonlarPage extends MainPage {
         $("#sablonSilDialog button").click();
     }
 
-    public SelenideElement sablonuSilD(String sablonAdi) {
-
+    public void tumSablonlariSil() {
+        int i = 0;
         while (true) {
-            $$(rowsBirimSablonlari).get(2).$("[id$='sablonListesiDetayButton_id']").click();
+            if (!$$(rowsBirimSablonlari).get(i).exists())
+                break;
+
+            $$(rowsBirimSablonlari).get(i).$("[id$='sablonListesiDetayButton_id']").click();
             btnSil.click();
             $("#sablonSilDialog button").click();
+            boolean b = islemMesaji().isBasarili();
+            if(!b)
+                i++;
         }
-//        while (true) {
-//            for (SelenideElement row : $$(rowsBirimSablonlari)) {
-//                row.shouldBe(visible);
-//                if (!row.text().trim().equals(sablonAdi)) {
-//                    row.$("button").click();
-//                    btnSil.click();
-//                    $("#j_idt4716").click();
-//                }
-////                    return row.parent();
-//            }
-//            if (!btnBirimSablonlariNext.has(cssClass("ui-state-disabled")))
-//                btnBirimSablonlariNext.click();
-//            else
-//                return null;
-//        }
     }
 
     @Step("Yeni şablon oluştur butona tıkla")
@@ -337,7 +328,8 @@ public class BirimIcerikSablonlarPage extends MainPage {
 
     @Step("Var olan şablonun adını al")
     public String sablonAdiAl(int satir) {
-        return searchTable.getColumn(searchTable.getRows().shouldHave(sizeGreaterThan(0)).get(satir), 1).text();
+        return searchTable.findRows().shouldHave(sizeGreaterThan(0)).useFirstFoundRow().getColumn(1).text();
+//        return searchTable.getColumn(searchTable.getRows().shouldHave(sizeGreaterThan(0)).get(satir), 1).text();
     }
 
     @Step("Alt birimler görsün mü seç")
@@ -364,6 +356,9 @@ public class BirimIcerikSablonlarPage extends MainPage {
             for (int i = 0; i < 10; i++) {
                 if (!$(".textLayer").text().isEmpty() || condition.equals(text("")))
                     break;
+
+                if (!driver.getTitle().equals("htmlToPdfServlet"))
+                    driver = switchTo().window("htmlToPdfServlet");
 
                 System.out.println($(".textLayer").text());
                 sleep(1000);
