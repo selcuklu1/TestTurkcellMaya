@@ -536,7 +536,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "")
+    @Test(enabled = true, description = "TS2186 : Cevap evrakında form kullanma")
     public void TS2186() throws InterruptedException {
 
         String konuKodu = "010.01";

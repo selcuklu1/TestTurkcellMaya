@@ -471,9 +471,11 @@ public class VekaletIslemleriTest extends BaseTest {
                 .kullanciListesiSecWithTitle(kullanici, title)//ikinci gelen seçilmeli
                 .confirmDialog().dialogMessage().shouldHave(text(mesaj));
         gelenEvraklarPage.confirmDialog().button("Evet").click();
+        gelenEvraklarPage.islemMesaji().basariliOlmali(basariMesaji);
+
         gelenEvraklarPage
-                .havaleYapGonder();
-//                .islemMesaji().basariliOlmali(basariMesaji);
+                .havaleYapGonder()
+                .islemMesaji().basariliOlmali(basariMesaji);
         logout();
         login("test1", "123");
 
