@@ -230,7 +230,9 @@ public class VekaletIslemleriTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, dependsOnMethods = {"TS2208"}, description = "TS0015 : Vekaleti alan kullanıcının onay akışında seçilmesi(vekaleten)")
+    @Test(enabled = true
+//            , dependsOnMethods = {"TS2208"}
+            , description = "TS0015 : Vekaleti alan kullanıcının onay akışında seçilmesi(vekaleten)")
     public void TS0015() throws InterruptedException {
 
         String kullaniciTitle = " [Ağ (Network) Uzman Yardımcısı]";
@@ -490,14 +492,15 @@ public class VekaletIslemleriTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true
-            , dependsOnMethods = {"TS0012"}
+//            , dependsOnMethods = {"TS0012"}
             , description = "TS0011 : Vekalet alan kullanıcıya evrak havalesi ve kontrolü")
     public void TS0011() throws InterruptedException {
 
         String evrakGelisTipi = "Posta";
         String geldigiKurum = "Esk Kurum 071216 2";
+        String konu = "konu " + getSysDateForKis();
 
-        login(username3, password3);
+        login(username, password);
 
 //        gelenEvraklarPage
 //                .openPage();
@@ -509,6 +512,7 @@ public class VekaletIslemleriTest extends BaseTest {
                 .openPage()
 //                .evrakBilgileriUstYaziEkle("C:\\Users\\Emre_Sencan\\Pictures\\pdf.pdf")
                 .konuKoduDoldur(konuKodu)
+                .konuDoldur(konu)
                 .evrakTuruSec(evrakTuru)
                 .evrakDiliSec(evrakDili)
                 .evrakTarihiDoldur(getSysDateForKis())
@@ -518,7 +522,8 @@ public class VekaletIslemleriTest extends BaseTest {
                 .evrakSayiSagDoldur()
                 .evrakGelisTipiSec(evrakGelisTipi)
                 .ivedilikSec(ivedilik)
-                .dagitimBilgileriKisiSec("YASEMİN")
+                .dagitimBilgileriKisiSec(vekaletVeren)
+                .vekeletAlanVerenTabloVekaletAlanveyaVerenSec(vekaletAlan)
                 .kaydet();
         String evrakNO11 = gelenEvrakKayitPage.popUps();
         gelenEvrakKayitPage.islemMesaji().basariliOlmali();
@@ -535,8 +540,8 @@ public class VekaletIslemleriTest extends BaseTest {
                 .havaleYap()
                 .havaleYapKisiTreeSec(vekaletVeren)
                 .vekeletAlanVerenTabloVekaletAlanveyaVerenSec(vekaletAlan)
-                .havaleYapGonder();
-//                .islemMesaji().basariliOlmali(basariMesaji);
+                .havaleYapGonder()
+                .islemMesaji().basariliOlmali(basariMesaji);
         logout();
         login("test1", "123");
 
