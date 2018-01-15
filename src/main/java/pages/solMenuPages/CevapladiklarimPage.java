@@ -21,6 +21,7 @@ public class CevapladiklarimPage extends MainPage {
     BelgenetElement txtKullanicilar = comboLov(By.id("evrakTakibimeEkleDialogForm:takipListLov:LovText"));
     SelenideElement btnTakipListesiKapat = $("[id^='evrakTakibimeEkleDialogForm:takipDialog'] span[class='ui-icon ui-icon-closethick']");
     ElementsCollection tableEvraklar = $$("tbody[id='mainInboxForm:inboxDataTable_data'] > tr");
+    ElementsCollection tblEvrakGecmisi = $$("[id$='hareketGecmisiDataTable_data'] tr[role='row']");
     //Filtreler sekmesi
     private SelenideElement cmbFiltre = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt9553_input"));
     private SelenideElement txtSayfadaAra = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt353"));
@@ -48,6 +49,32 @@ public class CevapladiklarimPage extends MainPage {
                 .filterBy(Condition.text(no))
                 .shouldHaveSize(1).first();
         evrak.$$("button[id^='mainInboxForm:inboxDataTable:']").get(0).click();
+        return this;
+    }
+
+
+
+    @Step("Evrak Geçmişinde geldiği görülür")
+    public CevapladiklarimPage evrakGecmisiEvrakKapandiIbaresiGorme(){
+        boolean durum = tblEvrakGecmisi.filterBy(Condition.text("Evrak"))
+                .filterBy(Condition.text("tarihli yazı ile cevap yazılarak kapatılmıştır."))
+                .size() == 1;
+
+        Assert.assertEquals(durum,true);
+        return this;
+    }
+    
+    @Step("Evrak seçilir")
+    public CevapladiklarimPage tabloEvrakSec(String konu, String yer, String tarih){
+        tblEvrak.filterBy(Condition.text(konu))
+                .filterBy(Condition.text(yer))
+                .filterBy(Condition.text(tarih)).get(0).click();
+        return this;
+    }
+
+    @Step("Evrak geçmişi alanına tıklanır")
+    public CevapladiklarimPage secilenEvrakEvrakGecmisi(){
+        $$("[id$='evrakOnizlemeTab'] ul li").filterBy(Condition.text("Evrak Geçmişi")).get(0).$("a").click();
         return this;
     }
 

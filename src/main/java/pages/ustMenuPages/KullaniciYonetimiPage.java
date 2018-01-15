@@ -129,8 +129,8 @@ public class KullaniciYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Seçilen kullanıcıyı güncelle tıkla")
-    public KullaniciYonetimiPage kullaniciListesiGuncelle() {
+    @Step("\"{kullanici}\" Seçilen kullanıcıyı güncelle tıkla")
+    public KullaniciYonetimiPage kullaniciListesiGuncelle(String kullanici) {
         clickJs(btnKullaniciListesiGuncelle);
         return this;
     }

@@ -69,6 +69,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
 
         String basariMesaji = "İşlem başarılıdır!";
         String konuKodu = "Diğer";
+        String kaldirilacakKlasor = "Diğer";
         String konuKoduRandom = "TS-930-" + createRandomNumber(10);
         String evrakTarihi = getSysDateForKis();
         String kurum = "BÜYÜK HARFLERLE KURUM";
@@ -92,7 +93,8 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .havaleIslemleriKisiDoldur(kisi)
                 .kaydet()
                 .evetDugmesi()
-                .yeniKayitButton();
+                .yeniKayitButton()
+                .benzerKayit();
         //TODO
 
         login(username2, password2);
@@ -110,12 +112,11 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .bilgilerTabiAc()
                 .konuKoduSec(konuKodu)
                 .kaldiralacakKlasorlerSec(konuKodu)
-                .onayAkisiEkle()
-                .onayAkisiEkleIlkImzalaSec2("İmzalama")
-                .onayAkisiKullan2();
+                .onayAkisiDoldur(onayAkisi);
 
         evrakOlusturPage
-                .cevapYazImzalama()
+                .kaydetOnayaSun2()
+                .kaydetOnayaSunAciklamaDoldur2(icerik)
                 .islemMesaji().basariliOlmali(basariMesaji);
 
         gelenEvraklarPage
@@ -127,13 +128,36 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
         kontrolBekleyenlerPage
                 .openPage()
                 .evrakSec(konuKodu, kurum, evrakTarihi)
-                .kontrolEt();
+                .kontrolEt()
+                .kontrolEtNotDoldur(icerik)
+                .kontrolEtGonder();
 
         login(username2, password2);
 
-        cevapladiklarimPage
-                .openPage();
+        imzaBekleyenlerPage
+                .openPage()
+                .evrakSec(konuKodu, kurum, evrakTarihi)
+                .imzala()
+                .sImzaSec()
+                .sImzaImzala(true)
+                .islemMesaji().basariliOlmali(basariMesaji);
 
+        cevapladiklarimPage
+                .openPage()
+                .tabloEvrakSec(konuKoduRandom,kurum,evrakTarihi)
+                .secilenEvrakEvrakGecmisi()
+                .evrakGecmisiEvrakKapandiIbaresiGorme();
+
+        klasoreKaldirdiklarimPage
+                .openPage()
+                .cevapYazilanEvrakListeyeDustuguGorme(konuKoduRandom);
+
+        klasorEvrakIslemleriPage
+                .openPage()
+                .klasorDoldur(kaldirilacakKlasor)
+                .ara();
+
+        login(username2, password2);
 
     }
 

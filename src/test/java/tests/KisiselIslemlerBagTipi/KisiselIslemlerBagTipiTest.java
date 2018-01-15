@@ -46,7 +46,7 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "2141: Bağ tipi amir yardımcısı olması kontrolleri")
+    @Test(enabled = true, description = "TS2141: Bağ tipi amir yardımcısı olması kontrolleri")
     public void TS2141() {
 
         String basariMesaji = "İşlem başarılıdır!";
