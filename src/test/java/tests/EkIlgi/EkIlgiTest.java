@@ -7,6 +7,7 @@ import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.pageComponents.TextEditor;
+import pages.solMenuPages.TaslakEvraklarPage;
 import pages.ustMenuPages.EvrakOlusturPage;
 
 import java.lang.reflect.Method;
@@ -21,12 +22,15 @@ public class EkIlgiTest extends BaseTest {
 
     EvrakOlusturPage evrakOlusturPage;
     TextEditor editor;
+    TaslakEvraklarPage taslakEvraklarPage;
 
     @BeforeMethod
     public void beforeTests(Method method) {
 
         evrakOlusturPage = new EvrakOlusturPage();
         editor = new TextEditor();
+        taslakEvraklarPage = new TaslakEvraklarPage();
+
 
     }
 
@@ -174,12 +178,12 @@ public class EkIlgiTest extends BaseTest {
         evrakOlusturPage
                 .ekleriTabAc()
                 .ekIsmineGoreEkSilme(fizikselEkMetni)
-                .silmeOnayi("Evet");
+                .ekSilmeOnayi("Evet");
 
         evrakOlusturPage
                 .ekleriTabAc()
                 .ekIsmineGoreEkSilme(evrakSayisi)
-                .silmeOnayi("Evet");
+                .ekSilmeOnayi("Evet");
 
         evrakOlusturPage
                 .editorTabAc()
@@ -213,23 +217,38 @@ public class EkIlgiTest extends BaseTest {
     public void TS2346() {
 
         String evrakSayisi = "6345202-044-10495";
-        String evrakKonusu = "TS2346_EkIlgi_Senaryosu";
+        String evrakKonusu = "TS2346_EkIlgi_Senaryosu_"+getSysDate();
 
 
         String ilisikDosya1Aciklama = "İlisik_Dosya1_"+getSysDate();
         String ilisikDosya2Aciklama = "İlisik_Dosya2_"+getSysDate();
         String ilisikDosya3Aciklama = "İlisik_Dosya3_"+getSysDate();
 
-        String dosyaAdi3 = "TS2346.pdf";
-        String pathPDF = getDocPath() + "TS2346.pdf";
+        String dosyaAdi3 = "TS2346_dosya3.pdf";
+        String pathDosya3 = getDocPath() + "TS2346_dosya3.pdf";
 
+
+        String ilisikDosya4Aciklama = "İlisik_Dosya4_"+getSysDate();
+        String dosyaAdi4 = "TS2346_dosya4.pdf";
+        String pathDosya4 = getDocPath() + "TS2346_dosya4.pdf";
+
+        String ilisikDosya5Aciklama = "İlisik_Dosya5_"+getSysDate();
+        String dosyaAdi5 = "TS2346_dosya5.pdf";
+        String pathDosya5 = getDocPath() + "TS2346_dosya5.pdf";
+
+        String basariMesaji = "İşlem başarılıdır!";
 
         login(TestData.username4, TestData.password4); //mbozdemir
 
         evrakOlusturPage
                 .openPage()
+                .bilgilerTabiAc()
+                .konuDoldur(evrakKonusu);
+
+        evrakOlusturPage
                 .iliskiliEvraklarTabAc()
 
+                //Dosya ekle tabı
                 //ilisik dosya1
                 .ilisikMetniDoldur(ilisikDosya1Aciklama)
                 .taramaHavuzundanEkle()
@@ -256,13 +275,14 @@ public class EkIlgiTest extends BaseTest {
 
                 //ilisik dosya3
                 .ilisikMetniDoldur(ilisikDosya3Aciklama)
-                .dosyaEkle(pathPDF, dosyaAdi3)
+                .dosyaEkle(pathDosya3, dosyaAdi3)
                 .dosyaYukleneneKadarBekle()
-                .eklenenDosyaAdiKontrol(dosyaAdi3)
+                .iliskiliSitemdeEklenenDosyaAdiKontrol(dosyaAdi3)
                 .iliskiliEkle()
                 .listelenenEvraklaraDosyanınGeldigiKontrolu(dosyaAdi3, "Dosya Adı")
                 .listelenenEvraklardaIndırButonuKontrol(dosyaAdi3)
 
+                //Sistemde kayıtlı evrak ekle tabı
                 .sistemdeKayitliEvrakEkleTabiniAc()
                 .sistemdeKayitliEvrakEkleAlanKontrolleri()
 
@@ -274,10 +294,46 @@ public class EkIlgiTest extends BaseTest {
                 .evrakAranacakYerSec("Birim Evrakları Ara")
                 .evrakAramaDoldur(evrakSayisi)
                 .dokumanAra()
-                .listelenenEvraklardaKontrol(evrakSayisi);
+                .listelenenEvraklardaKontrol(evrakSayisi)
+                .evrakIlisikEkle()
+                .listelenenEvraklaraDosyanınGeldigiKontrolu(evrakSayisi, "Evrak Sayısı")
 
-        //TODO: Devam edecek
+                .eklenenEvrakVeDosyaListesindeDetayGoster(evrakSayisi)
+                .evrakDetayiKontrol()
+                .evrakDetayiSayfasınıKapat()
+                .islemPenceresiKapatmaOnayiPopup("Kapat");
 
+        //Tercüme ekle tabı
+        evrakOlusturPage
+                .iliskiliEvraklarTabAc()
+                .tercumeEkleTabiniAc()
+                .tercumeIlisikMetniDoldur(ilisikDosya4Aciklama)
+                .tercumeDosyaEkle(pathDosya4, dosyaAdi4)
+                .dosyaYukleneneKadarBekle()
+                .tercumeEklenenDosyaAdiKontrol(dosyaAdi4)
+                .tercumeEkleEkle()
+                .listelenenEvraklaraDosyanınGeldigiKontrolu(dosyaAdi4, "Dosya Adı")
+                .listelenenEvraklardaIndırButonuKontrol(dosyaAdi4)
+                .eklenenEvrakVeDosyaListesindeDetayGoster(dosyaAdi4)
+                .eklenTercumeDosyaKontrolu()
+                .ismeGoreIlisikSilme(dosyaAdi4)
+                .ilisikSilmeOnayi("Evet");
+
+        evrakOlusturPage
+                .iliskiliEvraklarTabAc()
+                .tercumeIlisikMetniDoldur(ilisikDosya5Aciklama)
+                .tercumeDosyaEkle(pathDosya5, dosyaAdi5)
+                .dosyaYukleneneKadarBekle()
+                .tercumeEklenenDosyaAdiKontrol(dosyaAdi5)
+                .tercumeEkleEkle();
+
+        evrakOlusturPage
+                .kaydet(true)
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        taslakEvraklarPage
+                .openPage()
+                .evrakKontrolu(evrakKonusu);
 
     }
 }

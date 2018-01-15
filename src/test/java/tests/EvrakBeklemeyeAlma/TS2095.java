@@ -35,7 +35,7 @@ public class TS2095 extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(description = "TS2095: Evrakı beklemeye alma ve imzalama")
-    public void TS2095_1_imza() {
+    public void TS2095a() {
 
         String konu = evrakOlustur();
 
@@ -58,7 +58,7 @@ public class TS2095 extends BaseTest {
 
     @Severity(SeverityLevel.MINOR)
     @Test(description = "TS2095: Paraf, Gelen, Postalanacak bekleyen evarklarda \"Beklemeye Al\" butonun gelmediği görülür", enabled = true)
-    public void TS2095_2() {
+    public void TS2095b() {
 
         login(ztekin);
 
@@ -76,7 +76,7 @@ public class TS2095 extends BaseTest {
     //TS2095_2 birleştirilmiştir, müşterinin isteği!
     @Severity(SeverityLevel.MINOR)
     @Test(description = "TS2095: Paraf bekleyen evarkalarda \"Beklemeye\" al butonun gelmediği görülür", enabled = false)
-    public void TS2095_3_parafla() {
+    public void TS2095c() {
         login(ztekin);
         new ParafBekleyenlerPage().openPage();
         ilkDokumaniSecBeklemeyeAlBulunmamali();
@@ -84,7 +84,7 @@ public class TS2095 extends BaseTest {
 
     @Severity(SeverityLevel.MINOR)
     @Test(description = "TS2095: Gelen evarkalarda \"Beklemeye\" al butonun gelmediği görülür", enabled = false)
-    public void TS2095_4_gelen() {
+    public void TS2095d() {
         login(ztekin);
         new GelenEvraklarPage().openPage();
         ilkDokumaniSecBeklemeyeAlBulunmamali();
@@ -92,7 +92,7 @@ public class TS2095 extends BaseTest {
 
     @Severity(SeverityLevel.MINOR)
     @Test(description = "TS2095: Postalanacak evarkalarda \"Beklemeye\" al butonun gelmediği görülür", enabled = false)
-    public void TS2095_5_postalanacak() {
+    public void TS2095e() {
         login(ztekin);
         new PostalanacakEvraklarPage().openPage();
         ilkDokumaniSecBeklemeyeAlBulunmamali();
@@ -163,7 +163,7 @@ public class TS2095 extends BaseTest {
         String ivedilik = "Günlü";
         String miat = getSysDateForKis();
         String geregiSecimBirim = "Birim";
-        String geregiBirim = "AFYON VALİLİĞİ";
+        String geregiBirim = "Optiim Birim";//"AFYON VALİLİĞİ";
         String akisAdim = "İmzalama";
         String kaldirilacakKlasorler = "Diğer";
         String editorIcerik = "Bu bir deneme mesajıdır. Lütfen dikkate almayınız.";

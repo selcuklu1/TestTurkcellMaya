@@ -142,7 +142,7 @@ public class EvrakPostalamaTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TS520 : Postalanan evrak posta bilgilerinin içerik ekranından güncellenmesi ve rapordan kontrolü")
+    @Test(enabled = true, description = "TS0520b : Postalanan evrak posta bilgilerinin içerik ekranından güncellenmesi ve rapordan kontrolü")
     public void TS0520b() throws InterruptedException {
         login("Mbozdemir", "123");
         String konu = "Konu:";
@@ -175,7 +175,7 @@ public class EvrakPostalamaTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TS0520 : Postalanan evrak posta bilgilerinin önizleme ekranından güncellenmesi ve rapor üzerinde kontrolü")
+    @Test(enabled = true, description = "TS0520a : Postalanan evrak posta bilgilerinin önizleme ekranından güncellenmesi ve rapor üzerinde kontrolü")
     public void TS0520a() throws InterruptedException {
         login("Mbozdemir", "123");
         String konu = "Konu: TS2235:";
@@ -302,7 +302,7 @@ public class EvrakPostalamaTest extends BaseTest {
                 .geregiDoldur("50 BİRİMLİK", "Dağıtım Planları")
                 .geregiKurumPostaTipi("İadeli Taahhütlü")
                 .geregiSecimTipiSec("Birim")
-                .geregiDoldur("HUKUK", "Birim")
+                .geregiDoldur("ARAŞ", "Birim")
                 .geregiSecimTipiSec("Tüzel Kişi")
                 .geregiDoldur("Optiim İş", "Ad")
                 .geregiKurumPostaTipi("APS")
@@ -392,7 +392,7 @@ public class EvrakPostalamaTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "")
+    @Test(enabled = true, description = "TS0309 : Önizleme ekranından ek ilgi ve ilişiği olan evrakın postalanması")
     public void TS0309() throws InterruptedException {
         login("Mbozdemir", "123");
         String konu = "TS2235_";

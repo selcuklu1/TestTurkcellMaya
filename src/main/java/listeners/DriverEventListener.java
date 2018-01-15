@@ -70,8 +70,18 @@ public class DriverEventListener extends BaseLibrary implements WebDriverEventLi
         By loadingLocator = By.cssSelector("div[style*='display: block;'] .loading");
         long timeout = Configuration.timeout / 1000;
 
-        if (by.equals(By.className("lobibox-notify")) ||
-                (element != null && element.toString().contains("lobibox-notify")))
+        /*private By messageLocator = By.cssSelector(".lobibox-notify");
+        private By bodyLocator = By.cssSelector(".lobibox-notify-body");
+        private By titleLocator = By.cssSelector(".lobibox-notify-title");
+        private By msgLocator = By.cssSelector(".lobibox-notify-msg");
+        private By closeButtonLocator = By.cssSelector(".lobibox-close");*/
+
+        /*(by.equals(By.className("lobibox-notify"))
+                || by.equals(By.cssSelector(".lobibox-notify"))
+                ||*/
+
+        if (by.toString().contains("lobibox-notify")
+                || (element != null && element.toString().contains("lobibox")))
             return;
 
 
@@ -118,8 +128,8 @@ public class DriverEventListener extends BaseLibrary implements WebDriverEventLi
     }
 
     public void beforeClickOn(WebElement element, WebDriver driver) {
-        waitForLoadingJS(driver);
-        new WebDriverWait(driver, Configuration.timeout / 1000).until(elementToBeClickable(element));
+        //waitForLoadingJS(driver);
+        //new WebDriverWait(driver, Configuration.timeout / 1000).until(elementToBeClickable(element));
 
         // Selenide.sleep(1000);
         /**
