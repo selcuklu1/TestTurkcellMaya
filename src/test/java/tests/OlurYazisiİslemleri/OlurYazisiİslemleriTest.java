@@ -1,6 +1,5 @@
 package tests.OlurYazisiİslemleri;
 
-import com.codeborne.selenide.SelenideElement;
 import common.BaseTest;
 import data.User;
 import io.qameta.allure.Link;
@@ -13,13 +12,8 @@ import pages.pageData.alanlar.GeregiSecimTipi;
 import pages.pageData.alanlar.GizlilikDerecesi;
 import pages.pageData.alanlar.Ivedilik;
 
-import static com.codeborne.selenide.CollectionCondition.*;
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.value;
-import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.page;
-import static pages.pageComponents.belgenetElements.Belgenet.$;
-import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 /**
  * Yazan: Ilyas Bayraktar

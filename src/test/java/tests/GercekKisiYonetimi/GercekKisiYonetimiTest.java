@@ -418,7 +418,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "1132: Gerçek kişinin pasif yapılması ve ekranlardan kontrolü")
+    @Test(enabled = true, description = "TS1132: Gerçek kişinin pasif yapılması ve ekranlardan kontrolü")
     public void TS1132() throws InterruptedException {
 
         String TCNO = "43534543543";
@@ -486,7 +486,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "1458: Pasif yapılan gerçek kişinin aktif yapılması ve ekranlardan kontrolü")
+    @Test(enabled = true, description = "TS1458: Pasif yapılan gerçek kişinin aktif yapılması ve ekranlardan kontrolü")
     public void TS1458() throws InterruptedException {
 
         String TCKN = "21861197500";
