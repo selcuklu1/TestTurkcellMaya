@@ -139,6 +139,15 @@ class ComboLov {
         }
     }
 
+    class GetSelectableItems implements Command<ElementsCollection> {
+        @Override
+        public ElementsCollection execute(SelenideElement proxy, WebElementSource locator, Object[] args) throws IOException {
+            ComboLovHelper comboLovHelper = new ComboLovHelper();
+            comboLovHelper.setLocators(proxy);
+            return comboLovHelper.getSelectableItems();
+        }
+    }
+
     class GetTitleItems implements Command<ElementsCollection> {
         @Override
         public ElementsCollection execute(SelenideElement proxy, WebElementSource locator, Object[] args) throws IOException {

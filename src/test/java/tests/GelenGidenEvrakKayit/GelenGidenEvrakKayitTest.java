@@ -1,6 +1,7 @@
 package tests.GelenGidenEvrakKayit;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.WebDriverRunner;
 import common.BaseTest;
 import data.User;
 import io.qameta.allure.Severity;
@@ -18,6 +19,7 @@ import pages.ustMenuPages.GidenEvrakKayitPage;
 import pages.ustMenuPages.KaydedilenGelenEvrakPage;
 
 import java.io.IOException;
+import java.text.ParseException;
 
 public class GelenGidenEvrakKayitTest extends BaseTest {
     MainPage mainPage;
@@ -66,7 +68,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     String kisiGercek = "Gerçek Kişi";
     String evrakGelisTipi = "Posta";
     String ivedilik = "Normal";
-    String ekMetni = "test otomasyon"+ getSysDateForKis();
+    String ekMetni = "test otomasyon" + getSysDateForKis();
     String aciklama = "Test Otomasyon";
 
 //    String pathToFilePdf = getDocPath() + "Otomasyon.pdf";
@@ -87,7 +89,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         String pathToFileExcel = getDocPath() + "test.xlsx";
         String excelName = "test.xlsx";
 
-        login(optiim);
+        login(mbozdemir);
 
         gelenEvrakKayitPage
                 .openPage()
@@ -138,7 +140,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
         String pathToFilePdf = getDocPath() + "Otomasyon.pdf";
         String evrakTuru = "Dilekçe";
-        login(optiim);
+        login(mbozdemir);
 //        String evrakNO321 = "5569";
 
 // TS0321 de oluşturulan evrak no burada kullanılacak.
@@ -180,7 +182,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, priority = 1, description = "TS0328 : Gelen evrak kayıt ekranından havale")
+    @Test(enabled = true, dependsOnMethods = {"TS0321"}, description = "TS0328 : Gelen evrak kayıt ekranından havale")
     public void TS0328() throws InterruptedException {
 
         String birim = "OPTİİM BİRİM";
@@ -188,7 +190,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         String pathToFilePdf = getDocPath() + "Otomasyon.pdf";
         String pdfName = "Otomasyon.pdf";
 
-        login(optiim);
+        login(mbozdemir);
 
         gelenEvrakKayitPage
                 .openPage()
@@ -213,6 +215,8 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         birimHavaleEdilenlerPage
                 .openPage()
                 .evrakNoIleTabloKontrolu(evrakNO328);
+        logout();
+        login(optiim);
 
         //TeslimAlınanBelgeler sayfasında yetkili bir kullanıcı ile giriş yapılacak.
         teslimAlinmayiBekleyenlerPage
@@ -221,33 +225,61 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = false, priority = 7, description = "TS1401 : Kaydedilen Gelen Evrak raporu")
-    public void TS1401() throws InterruptedException, IOException {
+    @Test(enabled = true, priority = 7, description = "TS1401 : Kaydedilen Gelen Evrak raporu")
+    public void TS1401() throws InterruptedException, IOException, ParseException {
 
-//        String evrakNO321 = "5187";
-//        String evrakNO328 = "5187";
-        String evrakNo = evrakNO321;
-        String evrakNo1 = evrakNO328;
-        String geldigiYer = "D";
+//        String evrakNO321 = "6315";
+//        String evrakNO328 = "6316";
+//        String evrakNo = evrakNO321;
+//        String evrakNo1 = evrakNO328;
+        String geldigiYer = "Kurum";
+
+        login(yakyol);
 
 // Testin öncesinde TS0321 ve TS0328 caselerinin çalışması gerekli..
 
         kaydedilenGelenEvrakPage
                 .openPage()
+                .ekranAlanKontrolleri()
+                .birimKontrol()
+                .evrakTarihiKontrol()
+                .altBirimSec(true)
+                .sorgula()
+                .gelenEvrakNoDoldur(evrakNO328)
+                .sorgula()
+                .tabloKontrolu(evrakNO328)
+
                 .gelenEvrakNoDoldur(evrakNO321)
                 .sorgula()
                 .tabloKontrolu(evrakNO321)
-                .raporAlExcel();
+
+                .geldigiYerSec(geldigiYer)
+                .geldigiKurumSec("Esk Kurum 071216 2")
+                .gelenEvrakNoDoldur(evrakNO321)
+                .sorgula()
+                .tabloKontrolu(evrakNO321);
 //                .islemMesaji().basariliOlmali(basariMesaji);
 
+        logout();
+        login(mbozdemir);
+
         kaydedilenGelenEvrakPage
-                .txtClear()
+                .openPage()
+                .evrakTarihiBaslangicDoldur(getSysDateForKis())
+                .gelenEvrakNoDoldur(evrakNO321)
+                .sorgula()
+                .tabloKontrolu(evrakNO321)
+//                .tabloKontrouAll(evrakNO321)
+//                .tabloKontrouAll(evrakNO328)
+                .raporAlExcel()
+                .waitForLoadingJS(WebDriverRunner.getWebDriver(), 180);
+
+        kaydedilenGelenEvrakPage
                 .gelenEvrakNoDoldur(evrakNO328)
                 .sorgula()
-                .geldigiYerSec(geldigiYer)
-                .sorgula()
                 .tabloKontrolu(evrakNO328)
-                .raporAlPdf();
+                .raporAlPdf()
+                .waitForLoadingJS(WebDriverRunner.getWebDriver(), 180);
 //                .islemMesaji().basariliOlmali(basariMesaji);
     }
 
@@ -321,7 +353,8 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
         kaydedilenGelenEvraklarPage
                 .openPage()
-                .tabloKonuyaGoreEvrakKontrolu(konu);
+                .tabloEvrakNoileEvrakKontrolu(evrakNo);
+//                .tabloKonuyaGoreEvrakKontrolu(konu);
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -410,7 +443,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     public void TS1340() throws InterruptedException {
 
         String miatTarihi = getSysDateForKis();
-        String geregi = "AFYON VALİLİĞİ";
+        String geregi = "OPTİİM BİRİM";
         String kaldirlacakKlasor = "ESK05";
         String bilgi = "TAŞRA TEŞKİLATI";
         String pathToFilePdf = getDocPath() + "Otomasyon.pdf";
@@ -440,7 +473,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .miatDoldur(miatTarihi)
                 .geregiDoldur(geregi, "Ad")
                 .kaldiralacakKlasorDoldur(kaldirlacakKlasor)
-                .bilgiDoldur(bilgi)
+                .bilgiDoldur(geregi )
                 .evrakTarihiDoldur(evrakTarihi)
                 .ekBilgiFiltreAc()
                 .ekBilgiFizikselEkEkle()

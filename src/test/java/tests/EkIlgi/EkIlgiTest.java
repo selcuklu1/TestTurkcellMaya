@@ -1,6 +1,7 @@
 package tests.EkIlgi;
 
 import common.BaseTest;
+import data.TestData;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
@@ -24,7 +25,6 @@ public class EkIlgiTest extends BaseTest {
     @BeforeMethod
     public void beforeTests(Method method) {
 
-        login();
         evrakOlusturPage = new EvrakOlusturPage();
         editor = new TextEditor();
 
@@ -46,7 +46,6 @@ public class EkIlgiTest extends BaseTest {
         String dosyaAdiXLSX = "TS2199.xlsx";
         String dosyaAdiPPT = "TS2199.ppt";
         String dosyaAdiPPTX = "TS2199.pptx";
-        String dosyaAdiDOC2 = "TS2199test.doc";  //silinecek sonra
 
         String pathPDF = getDocPath() + "TS2199.pdf";
         String pathDOC = getDocPath() + "TS2199.doc";
@@ -55,9 +54,6 @@ public class EkIlgiTest extends BaseTest {
         String pathXLSX = getDocPath() + "TS2199.xlsx";
         String pathPPT = getDocPath() + "TS2199.ppt";
         String pathPPTX = getDocPath() + "TS2199.pptx";
-
-        //Denemk için yazıldı. Silinecek sonra
-        String pathDOC2 = getDocPath() + "TS2199test.doc";
 
         String ekMetniAciklama = " isimli dosya eklendi";
         String fizikselEkMetni = "Dosya eklendi " +getSysDate();
@@ -71,6 +67,8 @@ public class EkIlgiTest extends BaseTest {
         String bilgi = "TS2199 Senaryosu";
         String geregi = "TS2199a Senaryosu";
         String basariMesaji = "İşlem başarılıdır!";
+
+        login();
 
         evrakOlusturPage
                 .openPage()
@@ -202,10 +200,84 @@ public class EkIlgiTest extends BaseTest {
                 .geregiDoldur(geregi, "Gerçek Kişi Adı")
                 .onayAkisiDoldur(onayAkisi);
 
-        evrakOlusturPage
+        //TODO: Müşteriden yeni güncelleme bekleniyor.
+/*        evrakOlusturPage
                 .imzalaButonaTikla()
                 .sImzalaRadioSec()
                 .evrakImzaOnay()
-                .islemMesaji().basariliOlmali(basariMesaji);
+                .islemMesaji().basariliOlmali(basariMesaji);*/
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS2346: Evrak oluşturmada ilişkili evrak ekleme")
+    public void TS2346() {
+
+        String evrakSayisi = "6345202-044-10495";
+        String evrakKonusu = "TS2346_EkIlgi_Senaryosu";
+
+
+        String ilisikDosya1Aciklama = "İlisik_Dosya1_"+getSysDate();
+        String ilisikDosya2Aciklama = "İlisik_Dosya2_"+getSysDate();
+        String ilisikDosya3Aciklama = "İlisik_Dosya3_"+getSysDate();
+
+        String dosyaAdi3 = "TS2346.pdf";
+        String pathPDF = getDocPath() + "TS2346.pdf";
+
+
+        login(TestData.username4, TestData.password4); //mbozdemir
+
+        evrakOlusturPage
+                .openPage()
+                .iliskiliEvraklarTabAc()
+
+                //ilisik dosya1
+                .ilisikMetniDoldur(ilisikDosya1Aciklama)
+                .taramaHavuzundanEkle()
+                .evrakTuruSec("İlişik")
+                .taramaHavuzuSorgula()
+                .birinciEvrakSec(true)
+                .dosya1AciklamaDoldur(ilisikDosya1Aciklama)
+                //.taramaTuruSec("İlişik")
+                .taramaHavuzuTamam()
+                .listelenenEvraklaraDosyanınGeldigiKontrolu(ilisikDosya1Aciklama, "Açıklama")
+                .listelenenEvraklardaIndırButonuKontrol(ilisikDosya1Aciklama)
+
+                //ilisik dosya2
+                .ilisikMetniDoldur(ilisikDosya2Aciklama)
+                .taramaHavuzundanEkle()
+                .evrakTuruSec("İlişik")
+                .taramaHavuzuSorgula()
+                .ikinciEvrakSec(true)
+                .dosya2AciklamaDoldur(ilisikDosya2Aciklama)
+                //.taramaTuruSec("İlişik")
+                .taramaHavuzuTamam()
+                .listelenenEvraklaraDosyanınGeldigiKontrolu(ilisikDosya2Aciklama, "Açıklama")
+                .listelenenEvraklardaIndırButonuKontrol(ilisikDosya2Aciklama)
+
+                //ilisik dosya3
+                .ilisikMetniDoldur(ilisikDosya3Aciklama)
+                .dosyaEkle(pathPDF, dosyaAdi3)
+                .dosyaYukleneneKadarBekle()
+                .eklenenDosyaAdiKontrol(dosyaAdi3)
+                .iliskiliEkle()
+                .listelenenEvraklaraDosyanınGeldigiKontrolu(dosyaAdi3, "Dosya Adı")
+                .listelenenEvraklardaIndırButonuKontrol(dosyaAdi3)
+
+                .sistemdeKayitliEvrakEkleTabiniAc()
+                .sistemdeKayitliEvrakEkleAlanKontrolleri()
+
+                .evrakAranacakYerSec("İşlem Yaptıklarımda Ara")
+                .evrakAramaDoldur(evrakSayisi)
+                .dokumanAra()
+                .listelenenEvraklardaGelmemeKontrolu(evrakSayisi)
+
+                .evrakAranacakYerSec("Birim Evrakları Ara")
+                .evrakAramaDoldur(evrakSayisi)
+                .dokumanAra()
+                .listelenenEvraklardaKontrol(evrakSayisi);
+
+        //TODO: Devam edecek
+
+
     }
 }

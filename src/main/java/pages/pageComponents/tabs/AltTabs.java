@@ -5,12 +5,15 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
+import org.openqa.selenium.By;
+import pages.MainPage;
 import pages.pageComponents.SearchTable;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
 import java.io.File;
 
 import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.Selectors.byLinkText;
 import static com.codeborne.selenide.Selenide.$;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
@@ -19,454 +22,339 @@ import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
  * Tarih: 9.01.2018
  * Açıklama:
  */
-public class AltTabs {
+public class AltTabs extends MainPage {
 
-    private SelenideElement tab;
+    protected SelenideElement container;
+    protected SelenideElement tab;
 
-    public AltTabs(SelenideElement tab) {
-        this.tab = tab;
+    private final static String dosyaEkleTabName = "Dosya Ekle";
+    private final static String fizikselEkEkleTabName = "Fiziksel Ek Ekle";
+    private final static String sistemdeKayitliEvrakEkleTabName = "Sistemde Kayıtlı Evrak Ekle";
+    private final static String webAdresiniEkleTabName = "Web Adresini Ekle";
+    private final static String arsivdeKayitliEvrakEkleTabName = "Arşivde Kayıtlı Evrak Ekle";
+    private final static String metinEkleTabName = "Metin Ekle";
+    private final static String tercumeEkleTabName = "Tercüme Ekle";
+
+    SearchTable sistemdeKayitliEvrakListesiDataTable;
+    SearchTable arsivdenEvrakAraListesiDataTable;
+
+
+    public AltTabs(SelenideElement container) {
+        this.container = container;
     }
 
-    @Step("Ek Listesi Tablosunda işlem yapılacak")
-    public SearchTable getEkListesiTablosu() {
-        return new SearchTable($("div[id$='ekListesiDataTable']"));
+    private BelgenetElement findBelgenetElement(String labelText, String parentTag, String targetTag, int index){
+        return comboLov(tab, By.xpath("(descendant::"+ parentTag +"[descendant::label[normalize-space(.)='"+labelText+"']]//"+ targetTag +")[" + index + "]"));
+        //return pages.pageComponents.belgenetElements.Belgenet.$(By.xpath("(descendant::"+ parentTag +"[descendant::label[normalize-space(.)='"+labelText+"']])[" + index + "]"));
+    }
+    private SelenideElement findElement(String labelText, String parentTag, String targetTag, int index){
+        return tab.$x("(descendant::"+ parentTag +"[descendant::label[normalize-space(.)='"+labelText+"']]//"+ targetTag +")[" + index + "]");
+    }
+    public BelgenetElement inputComboLov(String label, int... index){
+        return findBelgenetElement(label, "table", "input", ((index.length > 0)?index[0]:1));
+    }
+    public SelenideElement input(String label, int... index){
+        return findElement(label, "table", "input", ((index.length > 0)?index[0]:1));
+    }
+    public SelenideElement inputButton(String label, int... index){
+        return findElement(label, "table", "button", ((index.length > 0)?index[0]:1));
+    }
+    public SelenideElement textarea(String label, int... index){
+        return findElement(label, "table", "textarea", ((index.length > 0)?index[0]:1));
+    }
+    public SelenideElement select(String label, int... index){
+        return findElement(label, "table", "select", ((index.length > 0)?index[0]:1));
+    }
+    public SelenideElement button(String name, int... index){
+        return tab.$x("(descendant::button[descendant::span[normalize-space(.)='"+name+"']])[" + ((index.length > 0)?index[0]:1) + "]");
     }
 
 
-    ///////////////////////////////////////////////////////////////////////////
-    // Alt Tabs
-    ///////////////////////////////////////////////////////////////////////////
-    //region Open Tabs
-    @Step("Dosya Ekle tabı aç")
-    public DosyaEkleTab dosyaEkleTabiAc() {
-        return new DosyaEkleTab().openTab();
+    @Step(dosyaEkleTabName + " tabı aç")
+    public AltTabs getDosyaEkleTabiAc() {
+        getDosyaEkleTab().click();
+        tab = container.$("div[id$='dosyaEkleTab']");
+        return this;
+    }
+    @Step(dosyaEkleTabName + " tabı bul")
+    public SelenideElement getDosyaEkleTab() {
+        return container.$(byLinkText(dosyaEkleTabName));
     }
 
-    @Step("Fiziksel Ek Ekle tabı aç")
-    public FizikselEkEkleTab fizikselEkEkleTabiAc() {
-        return new FizikselEkEkleTab().openTab();
+    @Step(tercumeEkleTabName + " tabı aç")
+    public AltTabs tercumeEkleTabiAc() {
+        getTercumeEkleTab().click();
+        tab = container.$("div[id$='tercumeEvragiEkleTab']");
+        return this;
+    }
+    @Step(tercumeEkleTabName + " tabı bul")
+    public SelenideElement getTercumeEkleTab() {
+        return container.$(byLinkText(tercumeEkleTabName));
     }
 
-    @Step("Sistemde Kayıtlı Evrak Ekle")
-    public SistemdeKayitliEvrakEkleTab sistemdeKayitliEvrakEkleTabiAc() {
-        return new SistemdeKayitliEvrakEkleTab().openTab();
+    @Step(metinEkleTabName + " tabı aç")
+    public AltTabs metinEkleTabiAc() {
+        getMetinEkleTab().click();
+        tab = container.$("div[id$='aciklamaEkleTab']");
+        return this;
+    }
+    @Step(metinEkleTabName + " tabı bul")
+    public SelenideElement getMetinEkleTab() {
+        return container.$(byLinkText(metinEkleTabName));
     }
 
-    @Step("Web Adresini Ekle tabı aç")
-    public WebAdresiniEkleTab webAdresiniEkleTabiAc() {
-        return new WebAdresiniEkleTab().openTab();
+    @Step(arsivdeKayitliEvrakEkleTabName + " tabı aç")
+    public AltTabs arsivdeKayitliEvrakEkleTabiac() {
+        getArsivdeKayitliEvrakEkleTab().click();
+        tab = tab.$("div[id$='arsivdenEkEkleTabId']");
+        arsivdenEvrakAraListesiDataTable = new SearchTable($("div[id$='arsivdenEvrakAraListesiDataTable']"));
+        return this;
+    }
+    @Step(arsivdeKayitliEvrakEkleTabName + " tabı bul")
+    public SelenideElement getArsivdeKayitliEvrakEkleTab() {
+        return container.$(byLinkText(arsivdeKayitliEvrakEkleTabName));
     }
 
-    @Step("Arşivde Kayıtlı Evrak Ekle tabı aç")
-    public ArsivdeKayitliEvrakEkleTab arsivdeKayitliEvrakEkleTabiAc() {
-        return new ArsivdeKayitliEvrakEkleTab().openTab();
+    @Step(webAdresiniEkleTabName + " tabı aç")
+    public AltTabs webAdresiniEkleTabiAc() {
+        getWebAdresiniEkleTab().click();
+        tab = container.$("div[id$='webAdresindenEkEkle']");
+        return this;
+    }
+    @Step(webAdresiniEkleTabName + " tabı bul")
+    public SelenideElement getWebAdresiniEkleTab() {
+        return container.$(byLinkText(webAdresiniEkleTabName));
     }
 
-    @Step("Metin Ekle tabı aç")
-    public MetinEkleTab metinEkleTabiAc() {
-        return new MetinEkleTab().openTab();
+    @Step(sistemdeKayitliEvrakEkleTabName + " tabı aç")
+    public AltTabs sistemdeKayitliEvrakEkleTabiAc() {
+        getSistemdeKayitliEvrakEkleTab().click();
+        tab = container.$("div[id$='sistemdeKayitliEvragiEkleTab']");
+        sistemdeKayitliEvrakListesiDataTable = new SearchTable(tab.$("div[id$='sistemdeKayitliEvrakListesiDataTable']"));
+        return this;
+    }
+    @Step(sistemdeKayitliEvrakEkleTabName + " tabı bul")
+    public SelenideElement getSistemdeKayitliEvrakEkleTab() {
+        return container.$(byLinkText(sistemdeKayitliEvrakEkleTabName));
     }
 
-    @Step("Tercüme Ekle tabı aç")
-    public TercumeEkleTab tercumeEkleTabiAc() {
-        return new TercumeEkleTab().openTab();
+    @Step(fizikselEkEkleTabName + " tabı aç")
+    public AltTabs fizikselEkEkleTabiAc() {
+        getFiziksetEkEkleTab().click();
+        tab = container.$("div[id$='aciklamaEkleTab']");
+        return this;
     }
-    //endregion
-
-    public class DosyaEkleTab {
-
-        private final static String tabName = "Dosya Ekle";
-        private SelenideElement altTab;
-
-        @Step(tabName + " tabı aç")
-        private DosyaEkleTab openTab() {
-            tab.$("a[href$='dosyaEkleTab']").click();
-            altTab = tab.$("div[id$='dosyaEkleTab']");
-            return this;
-        }
-
-        @Step("Ek Metni bul")
-        public SelenideElement getEkMetniTextarea() {
-            return altTab.$("textarea[id$='dosyaAciklama']");
-        }
-
-        @Step("Ek Metni doldur")
-        public DosyaEkleTab ekMetniDoldur(String text) {
-            getEkMetniTextarea().setValue(text);
-            return this;
-        }
-
-        @Step("Tarama Havuzundan Ekle bul")
-        public SelenideElement getTaramaHavuzundanEkleButton() {
-            return altTab.$("button[id$='uploadFromTarananEvrakHavuzuEkA']");
-        }
-
-        @Step("Tarama Havuzundan Ekle butona tıkla")
-        public DosyaEkleTab taramaHavuzundanEkleTikla() {
-            getTaramaHavuzundanEkleButton().shouldBe(visible, enabled).click();
-            return this;
-        }
-
-        @Step("Tarayıcıdan Ekle bul")
-        public SelenideElement getTarayicidanEkleButton() {
-            return altTab.$("button[id$='dogrudanTaramaBaslatEkA']");
-        }
-
-        @Step("Tarayıcıdan Ekle butona tıkla")
-        public DosyaEkleTab tarayicidanEkleTikla() {
-            getTarayicidanEkleButton().shouldBe(visible, enabled).click();
-            return this;
-        }
-
-        @Step("Dosya Ekle alanı bul")
-        public SelenideElement getDosyaEkleInput() {
-            return altTab.$("input[id$='fileUploadButtonA_input']");
-        }
-
-        @Step("Dosya Ekle alanda dosyayı seç")
-        public DosyaEkleTab dosyaEkleAlan(String fileName) {
-            getDosyaEkleInput().uploadFromClasspath(fileName);
-            tab.shouldHave(text(fileName));
-            return this;
-        }
-
-        @Step("Dosya Ekle alanda dosyayı seç")
-        public DosyaEkleTab dosyaEkleAlanFromCustomPath(String filePath) {
-            File file = new File(filePath);
-            getDosyaEkleInput().uploadFile(file);
-            return this;
-        }
-
-        @Step("Dosya Ekle butonu bul")
-        public SelenideElement getDosyaEkleButton() {
-            return altTab.$("button[id$='dosyaEkleButton']");
-        }
-
-        @Step("Dosya Ekle butona tıkla")
-        public DosyaEkleTab getDosyaEkleButonaTikla() {
-            getDosyaEkleButton().click();
-            return this;
-        }
+    @Step(fizikselEkEkleTabName + " tabı bul")
+    public SelenideElement getFiziksetEkEkleTab() {
+        return container.$(byLinkText(fizikselEkEkleTabName));
     }
 
-    public class FizikselEkEkleTab {
-        private final static String tabName = "Fiziksel Ek Ekle";
-        private SelenideElement altTab;
 
-        @Step(tabName + " tabı aç")
-        private FizikselEkEkleTab openTab() {
-            tab.$("a[href$='aciklamaEkleTab']").click();
-            altTab = tab.$("div[id$='aciklamaEkleTab']");
-            return this;
-        }
 
-        @Step("Fiziksel Ek Metni bul")
-        public SelenideElement getFizikselEkMetniTextarea() {
-            return altTab.$("textarea[id$='aciklamaTextArea']");
-        }
 
-        @Step("Ek Metni doldur")
-        public FizikselEkEkleTab fizikselEkMetniDoldur(String text) {
-            getFizikselEkMetniTextarea().setValue(text);
-            return this;
-        }
-
-        @Step("Dosya Ekle butonu bul")
-        public SelenideElement getEkleButton() {
-            return altTab.$("button[id$='aciklamaEkleButton']");
-        }
-
-        @Step("Dosya Ekle butona tikla")
-        public FizikselEkEkleTab getDosyaEkleButonaTikla() {
-            getEkleButton().click();
-            return this;
-        }
+    @Step("Ek Metni bul")
+    public SelenideElement getEkMetniTextarea() {
+        return textarea("Ek Metni");
+    }
+    @Step("Ek Metni doldur")
+    public AltTabs ekMetniDoldur(String text) {
+        getEkMetniTextarea().setValue(text);
+        return this;
     }
 
-    public class SistemdeKayitliEvrakEkleTab {
-        private final static String tabName = "Sistemde Kayıtlı Evrak Ekle";
-        private SelenideElement altTab;
-
-        @Step(tabName + " tabı aç")
-        private SistemdeKayitliEvrakEkleTab openTab() {
-            tab.$("a[href$='sistemdeKayitliEvragiEkleTab']").click();
-            altTab = tab.$("div[id$='sistemdeKayitliEvragiEkleTab']");
-            return this;
-        }
-
-        @Step("Dosya Ekle alanı bul")
-        public SelenideElement getEvrakTarihiBasInput() {
-            return altTab.$("input[id$='ekIslemleriEvrakTarihBasId_input']");
-        }
-
-        @Step("Evrak Tarihi başlangiç gir")
-        public SistemdeKayitliEvrakEkleTab evrakTarihiBasGir(String tarih) {
-            getEvrakTarihiBasInput().setValue(tarih);
-            return this;
-        }
-
-        @Step("Dosya Ekle alanı bul")
-        public SelenideElement getEvrakTarihiSonInput() {
-            return altTab.$("input[id$='ekIslemleriEvrakTarihSonId_input']");
-        }
-
-        @Step("Evrak Tarihi başlangiç tarihi gir")
-        public SistemdeKayitliEvrakEkleTab evrakTarihiSonGir(String tarih) {
-            getEvrakTarihiSonInput().setValue(tarih);
-            return this;
-        }
-
-        @Step("Evrakın Aranacağı Yer alanı bul")
-        public SelenideElement getEvrakinAranacagiYerSelect() {
-            return altTab.$("input[id$='ekIslemleriEvrakAramaAranacakYerId']");
-        }
-
-        @Step("Evrakın Aranacağı Yeri seç")
-        public SistemdeKayitliEvrakEkleTab evrakinAranacagiYeriSec(String text) {
-            getEvrakinAranacagiYerSelect().selectOption(text);
-            return this;
-        }
-
-        @Step("Evrak Arama alanı bul")
-        public SelenideElement getEvrakAramaInput() {
-            return altTab.$("input[id$='evrakAramaText']");
-        }
-
-        @Step("Evrak Arama alanı doldur")
-        public SistemdeKayitliEvrakEkleTab evrakAraDoldur(String text) {
-            getEvrakAramaInput().setValue(text);
-            return this;
-        }
-
-        @Step("Doküman Ara butonu bul")
-        public SelenideElement getDokumanAraButton() {
-            return altTab.$("button[id$='dokumanAraButton']");
-        }
-
-        @Step("Doküman Ara butona tıkla")
-        public SistemdeKayitliEvrakEkleTab dokumanAraTikla() {
-            getDokumanAraButton().click();
-            return this;
-        }
-
-        @Step("Aranan Evrak tablosunda işlem yapılacak")
-        public SearchTable getArananEvrakTablosu() {
-            return new SearchTable($("div[id$='sistemdeKayitliEvrakListesiDataTable']"));
-        }
-
+    @Step("Tarama Havuzundan Ekle butonu bul")
+    public SelenideElement getTaramaHavuzundanEkleButton() {
+        return button("Tarama Havuzundan Ekle");
+    }
+    @Step("Tarama Havuzundan Ekle butona tıkla")
+    public AltTabs taramaHavuzundanEkleTikla() {
+        getTaramaHavuzundanEkleButton().shouldBe(visible, enabled).click();
+        return this;
     }
 
-    public class WebAdresiniEkleTab {
-        private final static String tabName = "Web Adresini Ekle";
-        private SelenideElement altTab;
-
-        @Step(tabName + " tabı aç")
-        private WebAdresiniEkleTab openTab() {
-            tab.$("a[href$='webAdresindenEkEkle']").click();
-            altTab = tab.$("div[id$='webAdresindenEkEkle']");
-            return this;
-        }
-
-        @Step("Ek Metni bul")
-        public SelenideElement getEkMetniTextarea() {
-            return altTab.$("textarea[id$='webAdresiAciklamaTextArea']");
-        }
-
-        @Step("Ek Metni doldur")
-        public WebAdresiniEkleTab ekMetniDoldur(String text) {
-            getEkMetniTextarea().setValue(text);
-            return this;
-        }
-
-        @Step("Web Adresi alanı bul")
-        public SelenideElement getWebAdresiInput() {
-            return altTab.$("descendant::tr[descendant::label[normalize-space(.)='Web Adresi']]//input");
-        }
-
-        @Step("Web Adresi alanı doldur")
-        public WebAdresiniEkleTab webAdresiAlan(String text) {
-            getWebAdresiInput().setValue(text);
-            return this;
-        }
-
-        @Step("Web Adresi Ekle butonu bul")
-        public SelenideElement getWebAdresiEkleButton() {
-            return altTab.$("button[id$='webAdresindenEkleButton']");
-        }
-
-        @Step("Web Adresi Ekle butona tıkla")
-        public WebAdresiniEkleTab webAdresiEkleTikla() {
-            getWebAdresiEkleButton().click();
-            return this;
-        }
-
-        @Step("Dosya Ekle butonu bul")
-        public SelenideElement getEkleButton() {
-            return altTab.$("button[id$='webAdresindenEkEkleButton']");
-        }
-
-        @Step("Dosya Ekle butona tikla")
-        public WebAdresiniEkleTab getDosyaEkleButonaTikla() {
-            getEkleButton().click();
-            return this;
-        }
-
+    @Step("Tarayıcıdan Ekle butonu bul")
+    public SelenideElement getTarayicidanEkleButton() {
+        return button("Tarayıcıdan Ekle");
+    }
+    @Step("Tarayıcıdan Ekle butona tıkla")
+    public AltTabs tarayicidanEkleTikla() {
+        getTarayicidanEkleButton().shouldBe(visible, enabled).click();
+        return this;
     }
 
-    public class ArsivdeKayitliEvrakEkleTab {
-        private final static String tabName = "Arşivde Kayıtlı Evrak Ekle";
-        private SelenideElement altTab;
-
-        @Step(tabName + " tabı aç")
-        private ArsivdeKayitliEvrakEkleTab openTab() {
-            tab.$("a[href$='arsivdenEkEkleTabId']").click();
-            altTab = tab.$("div[id$='arsivdenEkEkleTabId']");
-            return this;
-        }
-
-        @Step("Konu alanı bul")
-        public SelenideElement getKonuInput() {
-            return altTab.$("input[id$='arsivdenEvrakAraKonuInputTextId']");
-        }
-
-        @Step("Konu alanı doldur")
-        public ArsivdeKayitliEvrakEkleTab konuDoldur(String text) {
-            getKonuInput().setValue(text);
-            return this;
-        }
-
-        @Step("Kullanıcı alanı bul")
-        public BelgenetElement getKullaniciCombolov() {
-            return comboLov(altTab, "input[id$='kisiyeLov_id:LovText']");
-        }
-
-        @Step("Konu alanı doldur")
-        public ArsivdeKayitliEvrakEkleTab kullaniciSec(String value, Condition... filterByTitle) {
-            if (filterByTitle.length > 0) {
-                ElementsCollection filtered = getKullaniciCombolov().type(value).getTitleItems();
-                for (Condition condition : filterByTitle) {
-                    filtered = filtered.filterBy(condition);
-                }
-                filtered.shouldHave(CollectionCondition.sizeGreaterThan(0)).first().click();
-            } else
-                getKullaniciCombolov().selectLov(value);
-
-            return this;
-        }
-
-        @Step("Evrak Sayı alanı bul")
-        public SelenideElement getEvrakSayiInput() {
-            return altTab.$("input[id$='arsivdenEvrakAraSayiInputTextId']");
-        }
-
-        @Step("Evrak Sayı alanı doldur")
-        public ArsivdeKayitliEvrakEkleTab evrakSayiDoldur(String text) {
-            getEvrakSayiInput().setValue(text);
-            return this;
-        }
-
-        @Step("Doküman Ara butonu bul")
-        public SelenideElement getDokumanAraButton() {
-            return altTab.$("button[id$='arsivdenEvrakAraButtonId']");
-        }
-
-        @Step("Doküman Ara butona tıkla")
-        public ArsivdeKayitliEvrakEkleTab dokumanAraTikla() {
-            getDokumanAraButton().click();
-            return this;
-        }
-
-        @Step("Aranan Evrak tablosunda işlem yapılacak")
-        public SearchTable getArananEvrakTablosu() {
-            return new SearchTable($("div[id$='arsivdenEvrakAraListesiDataTable']"));
-        }
+    @Step("Dosya Ekle butonu bul")
+    public SelenideElement getDosyaEkleButton(){
+        return tab.$x("descendant::label[span[normalize-space(.)='Dosya Ekle']]/input");
+    }
+    @Step("Dosya Ekle alanda dosyayı seç")
+    public AltTabs dosyaEkle(String filePath) {
+        File file = new File(filePath);
+        getDosyaEkleButton().uploadFile(file);
+        tab.shouldHave(text(file.getName()));
+        return this;
+    }
+    @Step("Dosya Ekle alanda dosyayı seç")
+    public AltTabs dosyaEkleFromClasspath(String filePath) {
+        getDosyaEkleButton().uploadFromClasspath(filePath);
+        tab.shouldHave(text(filePath));
+        return this;
     }
 
-    public class MetinEkleTab {
-        private final static String tabName = "Metin Ekle";
-        private SelenideElement altTab;
-
-        @Step(tabName + " tabı aç")
-        private MetinEkleTab openTab() {
-            tab.$("a[href$='aciklamaEkleTab']").click();
-            altTab = tab.$("div[id$='aciklamaEkleTab']");
-            return this;
-        }
-
-        @Step("İlgi Metni bul")
-        public SelenideElement getIlgiMetniTextarea() {
-            return altTab.$("textarea[id$='aciklamaTextArea']");
-        }
-
-        @Step("İlgi Metni doldur")
-        public MetinEkleTab ilgiMetniDoldur(String text) {
-            getIlgiMetniTextarea().setValue(text);
-            return this;
-        }
-
-        @Step("Ekle butonu bul")
-        public SelenideElement getEkleButton() {
-            return altTab.$("button[id$='aciklamaEkleButton']");
-        }
-
-        @Step("Ekle butona tikla")
-        public MetinEkleTab getDosyaEkleButonaTikla() {
-            getEkleButton().click();
-            return this;
-        }
+    @Step("Ekle butonu bul")
+    public SelenideElement getEkleButton() {
+        return button("Ekle");
+    }
+    @Step("Dosya Ekle butona tıkla")
+    public AltTabs ekleButonaTikla() {
+        getEkleButton().click();
+        return this;
     }
 
-    public class TercumeEkleTab {
-        private final static String tabName = "Tercüme Ekle";
-        private SelenideElement altTab;
+    @Step("Konu alanı bul")
+    public SelenideElement getKonuInput() {
+        return input("Konu");
+    }
+    @Step("Konu alanı doldur")
+    public AltTabs konuDoldur(String text) {
+        getKonuInput().setValue(text);
+        return this;
+    }
 
-        @Step(tabName + " tabı aç")
-        private TercumeEkleTab openTab() {
-            tab.$("a[href$='tercumeEvragiEkleTab']").click();
-            altTab = tab.$("div[id$='tercumeEvragiEkleTab']");
-            return this;
-        }
+    @Step("Kullanıcı alanı bul")
+    public BelgenetElement getKullaniciCombolov() {
+        return inputComboLov("Kullanıcı");
+    }
+    @Step("Konu alanı doldur")
+    public AltTabs kullaniciSec(String value, Condition... filterBy) {
+        if (filterBy.length > 0) {
+            ElementsCollection filtered = getKullaniciCombolov().type(value).getSelectableItems();
+            for (Condition condition : filterBy) {
+                filtered = filtered.filterBy(condition);
+            }
+            filtered.shouldHave(CollectionCondition.sizeGreaterThan(0)).first().click();
+        } else
+            getKullaniciCombolov().selectLov(value);
 
-        @Step("İlişik Metni bul")
-        public SelenideElement getIlisikMetniTextarea() {
-            return altTab.$("textarea[id$='tercumeAciklama']");
-        }
+        return this;
+    }
 
-        @Step("İlişik Metni doldur")
-        public TercumeEkleTab ilisikMetniDoldur(String text) {
-            getIlisikMetniTextarea().setValue(text);
-            return this;
-        }
+    @Step("Evrak Sayı alanı bul")
+    public SelenideElement getEvrakSayiInput() {
+        return input("Evrak Sayı");
+    }
+    @Step("Evrak Sayı alanı doldur")
+    public AltTabs evrakSayiDoldur(String text) {
+        getEvrakSayiInput().setValue(text);
+        return this;
+    }
 
-        @Step("Dosya Ekle alanı bul")
-        public SelenideElement getDosyaEkleInput() {
-            return altTab.$("input[id$='fileUploadButtonB_input']");
-        }
+    @Step("Doküman Ara butonu bul")
+    public SelenideElement getDokumanAraButton() {
+        return button("Doküman Ara");
+    }
+    @Step("Doküman Ara butona tıkla")
+    public AltTabs dokumanAraTikla() {
+        getDokumanAraButton().click();
+        return this;
+    }
 
-        @Step("Dosya Ekle alanda dosyayı seç")
-        public TercumeEkleTab dosyaEkleAlan(String fileName) {
-            getDosyaEkleInput().uploadFromClasspath(fileName);
-            tab.shouldHave(text(fileName));
-            return this;
-        }
+    @Step("Aranan Evrak tablosunda işlem yapılacak")
+    public SearchTable getArsivdeKayitliEvrakListesi() {
+        return arsivdenEvrakAraListesiDataTable;
+    }
 
-        @Step("Dosya Ekle alanda dosyayı seç")
-        public TercumeEkleTab dosyaEkleAlanFromCustomPath(String filePath) {
-            File file = new File(filePath);
-            getDosyaEkleInput().uploadFile(file);
-            return this;
-        }
+    @Step("İlişik Metni alanı bul")
+    public SelenideElement getIlisikMetniTextarea() {
+        return textarea("İlişik Metni");
+    }
+    @Step("İlişik Metni doldur")
+    public AltTabs ilisikMetniDoldur(String text) {
+        getIlisikMetniTextarea().setValue(text);
+        return this;
+    }
 
-        @Step("Ekle butonu bul")
-        public SelenideElement getEkleButton() {
-            return altTab.$("button[id$='tercumeEkleButton']");
-        }
+    @Step("İlgi Metni alanı bul")
+    public SelenideElement getIlgiMetniTextarea() {
+        return textarea("İlgi Metni");
+    }
+    @Step("İlgi Metni doldur")
+    public AltTabs ilgiMetniDoldur(String text) {
+        getIlgiMetniTextarea().setValue(text);
+        return this;
+    }
 
-        @Step("Ekle butona tıkla")
-        public TercumeEkleTab getDosyaEkleButonaTikla() {
-            getEkleButton().click();
-            return this;
-        }
+    @Step("Web Adresi alanı bul")
+    public SelenideElement getWebAdresiInput() {
+        return input("Web Adresi");
+    }
+    @Step("Web Adresi alanı doldur")
+    public AltTabs webAdresiAlan(String text) {
+        getWebAdresiInput().setValue(text);
+        return this;
+    }
+    @Step("Web Adresi Ekle butonu bul")
+    public SelenideElement getWebAdresiEkleButton() {
+        return inputButton("Ekle");
+    }
+    @Step("Web Adresi Ekle butona tıkla")
+    public AltTabs webAdresiEkleTikla() {
+        getWebAdresiEkleButton().click();
+        return this;
+    }
+
+    @Step("Evrak Tarihi başlangıç alanı bul")
+    public SelenideElement getEvrakTarihiBasInput() {
+        return input("Evrak Tarihi", 0);
+    }
+    @Step("Evrak Tarihi başlangiç gir")
+    public AltTabs evrakTarihiBasGir(String tarih) {
+        getEvrakTarihiBasInput().setValue(tarih);
+        return this;
+    }
+
+    @Step("Evrak Tarihi son alanı bul")
+    public SelenideElement getEvrakTarihiSonInput() {
+        return input("Evrak Tarihi", 1);
+    }
+    @Step("Evrak Tarihi başlangiç tarihi gir")
+    public AltTabs evrakTarihiSonGir(String tarih) {
+        getEvrakTarihiSonInput().setValue(tarih);
+        return this;
+    }
+
+    @Step("Evrakın Aranacağı Yer alanı bul")
+    public SelenideElement getEvrakinAranacagiYerSelect() {
+        return input("Evrakın Aranacağı Yer");
+    }
+    @Step("Evrakın Aranacağı Yeri seç")
+    public AltTabs evrakinAranacagiYeriSec(String text) {
+        getEvrakinAranacagiYerSelect().selectOption(text);
+        return this;
+    }
+
+    @Step("Evrak Arama alanı bul")
+    public SelenideElement getEvrakAramaInput() {
+        return input("Evrak Arama");
+    }
+    @Step("Evrak Arama alanı doldur")
+    public AltTabs evrakAraDoldur(String text) {
+        getEvrakAramaInput().setValue(text);
+        return this;
+    }
+
+    @Step("Aranan Evrak tablosunda işlem yapılacak")
+    public SearchTable getSistemdeKayitliEvrakListesi() {
+        return sistemdeKayitliEvrakListesiDataTable;
+    }
+
+    @Step("Fiziksel Ek Metni bul")
+    public SelenideElement getFizikselEkMetniTextarea() {
+        return input("Fiziksel Ek Metni");
+    }
+    @Step("Ek Metni doldur")
+    public AltTabs fizikselEkMetniDoldur(String text) {
+        getFizikselEkMetniTextarea().setValue(text);
+        return this;
     }
 
 }

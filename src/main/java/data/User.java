@@ -8,34 +8,47 @@ package data;
 public class User {
     private String username = "";
     private String password = "";
-    private String name = "";
+    private String fullname = "";
     private String birimAdi = "";
     private String gorev = "";
-
-    public User(String username, String password, String name, String birimAdi, String gorev) {
-        this.username = username;
-        this.password = password;
-        this.name = name;
-        this.birimAdi = birimAdi;
-        this.gorev = gorev;
-    }
-
-    public User(String username, String password, String name, String birimAdi) {
-        this.username = username;
-        this.password = password;
-        this.name = name;
-        this.birimAdi = birimAdi;
-    }
-
-    public User(String username, String password, String name) {
-        this.username = username;
-        this.password = password;
-        this.name = name;
-    }
+    private String name = "";
+    private String surname = "";
 
     public User(String username, String password) {
         this.username = username;
         this.password = password;
+    }
+    public User(String username, String password, String fullname) {
+        this.username = username;
+        this.password = password;
+        this.fullname = fullname;
+        splitFullname(fullname);
+    }
+    public User(String username, String password, String fullname, String birimAdi) {
+        this.username = username;
+        this.password = password;
+        this.fullname = fullname;
+        this.birimAdi = birimAdi;
+        splitFullname(fullname);
+    }
+    public User(String username, String password, String fullname, String birimAdi, String gorev) {
+        this.username = username;
+        this.password = password;
+        this.fullname = fullname;
+        this.birimAdi = birimAdi;
+        this.gorev = gorev;
+
+        splitFullname(fullname);
+
+    }
+    public User(String username, String password, String fullname, String birimAdi, String gorev, String name, String surname) {
+        this.username = username;
+        this.password = password;
+        this.fullname = fullname;
+        this.birimAdi = birimAdi;
+        this.gorev = gorev;
+        this.name = name;
+        this.surname = surname;
     }
 
     public String getUsername() {
@@ -46,8 +59,8 @@ public class User {
         return password;
     }
 
-    public String getName() {
-        return name;
+    public String getFullname() {
+        return fullname;
     }
 
     public String getBirimAdi() {
@@ -56,5 +69,22 @@ public class User {
 
     public String getGorev() {
         return gorev;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+
+    private void splitFullname(String fullname){
+        if (!fullname.isEmpty()){
+            String[] n = fullname.split(" ", 2);
+            this.name = n[0];
+            this.surname = n[1];
+        }
     }
 }

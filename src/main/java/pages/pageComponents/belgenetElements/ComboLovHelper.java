@@ -452,6 +452,15 @@ public class ComboLovHelper extends BaseLibrary {
     }
 
     @Step("Get title items")
+    public ElementsCollection getSelectableItems() {
+        String locator = "li span[class*='ui-tree-selectable-node']";
+        $$(lovTreeList).get(0).shouldBe(visible);
+        $$(lovTree).last().shouldBe(visible);
+        Allure.addAttachment("items", $$(lovTree).last().$$(locator).texts().toString());
+        return $$(lovTree).last().$$(locator);
+    }
+
+    @Step("Get title items")
     public ElementsCollection getTitleItems() {
         String locator = "li span[class*='ui-tree-selectable-node'] " + lovItemTitle;
         $$(lovTreeList).get(0).shouldBe(visible);

@@ -25,7 +25,7 @@ public class GelenEvrakKayitPage extends MainPage {
     //region Elements
     SelenideElement pageTitle = $(By.cssSelector("#baseLayoutCenter .ui-dialog-title"));
     // Evrak Bilgileri Sekmesinde bulunanlar
-    SelenideElement btnUstYaziEkle = $(By.xpath("//input[@id='evrakBilgileriForm:ustYaziForm:ustYaziUpload_input']"));
+    SelenideElement btnUstYaziEkle = $(By.xpath("//span[text()='Üst Yazı Ekle']/../../label"));
     BelgenetElement txtEvrakBilgileriListKonuKodu = comboLov("[id$='konuKoduLov:LovText']");
     SelenideElement txtEvrakBilgileriListKonu = $("[id$='konuTextArea']");
     SelenideElement cmbEvrakBilgileriListEvrakTuru = $("[id$='evrakTuruCombo']");
@@ -889,6 +889,7 @@ public class GelenEvrakKayitPage extends MainPage {
     public String onIzlemePdfText() {
         String text = "";
         switchTo().frame(3);
+        sleep(1000);
         text = $(By.xpath("//div[@id='viewer']/div[@class='page']/div[@class='textLayer']/div[1]")).getText();
         System.out.println(text);
         switchTo().parentFrame();
@@ -1055,15 +1056,15 @@ public class GelenEvrakKayitPage extends MainPage {
     @Step("Ekrandaki alan kontrolleri")
     public GelenEvrakKayitPage alanKontrolleri() {
 
-        btnUstYaziEkle.shouldBe(Condition.exist);
-        lblUstyaziGoster.shouldBe(Condition.exist);
-        lblUstyaziGizle.shouldBe(Condition.exist);
-        btnTaramaHavuzundanEkle.shouldBe(Condition.exist);
-        btnTarayicidanEkle.shouldBe(Condition.exist);
-        btnTaramaArayuzundenEkle.shouldBe(Condition.exist);
-        btnTaramaServisindenEkle.shouldBe(Condition.exist);
+        btnUstYaziEkle.isDisplayed();
+        lblUstyaziGoster.isDisplayed();
+        lblUstyaziGizle.isDisplayed();
+        btnTaramaHavuzundanEkle.isDisplayed();
+        btnTarayicidanEkle.isDisplayed();
+        btnTaramaArayuzundenEkle.isDisplayed();
+        btnTaramaServisindenEkle.isDisplayed();
 
-        Allure.addAttachment(btnUstYaziEkle.getText(), "Ekran Kontrolü ok");
+        Allure.addAttachment(btnUstYaziEkle.text(), "Ekran Kontrolü ok");
         Allure.addAttachment(lblUstyaziGoster.text(), "Ekran Kontrolü ok");
         Allure.addAttachment(lblUstyaziGizle.text(), "Ekran Kontrolü ok");
         Allure.addAttachment(btnTaramaHavuzundanEkle.text(), "Ekran Kontrolü ok");

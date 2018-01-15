@@ -6,12 +6,18 @@ package pages.pageData.alanlar;
  * Açıklama:
  */
 public enum BilgiSecimTipi {
-    /*<option value="B" selected="selected">Birim</option>
-	<option value="K">Kullanıcı</option>
-	<option value="P">Dağıtım Planları</option>*/
-    Birim("Birim", "B"),
-    Kullanici("Kullanıcı", "K"),
-    DagitimPlanlari("Dağıtım Planları", "P");
+    /*<option value="B">Birim</option>
+     <option value="K">Kullanıcı</option>
+     <option value="G">Gerçek Kişi</option>
+     <option value="T">Tüzel Kişi</option>
+     <option value="D" selected="selected">Kurum</option>
+     <option value="P">Dağıtım Planları</option>*/
+    BIRIM("Birim", "B"),
+    KULLANICI("Kullanıcı", "K"),
+    GERCEK_KISI("Gerçek Kişi", "G"),
+    TUZEL_KISI("Tüzel Kişi", "T"),
+    KURUM("Kurum", "D"),
+    DAGITIM_PLANLARI("Dağıtım Planları", "P");
 
     private String optionValue;
     private String optionText;

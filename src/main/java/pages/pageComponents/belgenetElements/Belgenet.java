@@ -95,11 +95,19 @@ public class Belgenet extends Selenide {
     /**
      * Replacement for standard Selenide `$` method.
      *
-     * @param selector CSS selector
      * @return BelgenetElement - an "advanced" version of `SelenideElement` with more custom methods
      */
     public static BelgenetElement comboLov(WebElement parentElement, String cssLocator) {
         return ElementFinder.wrap(BelgenetElement.class, parentElement, By.cssSelector(cssLocator), 0);
+    }
+
+    /**
+     * Replacement for standard Selenide `$` method.
+     *
+     * @return BelgenetElement - an "advanced" version of `SelenideElement` with more custom methods
+     */
+    public static BelgenetElement comboLov(WebElement parentElement, By locator) {
+        return ElementFinder.wrap(BelgenetElement.class, parentElement, locator, 0);
     }
 
     public static BelgenetElement comboLov(String selector) {
@@ -108,6 +116,11 @@ public class Belgenet extends Selenide {
 
     public static BelgenetElement comboLov(By locator) {
         return ElementFinder.wrap(BelgenetElement.class, null, locator, 0);
+    }
+
+
+    public static BelgenetElement comboBox(WebElement parentElement, String selector) {
+        return ElementFinder.wrap(BelgenetElement.class, parentElement, By.cssSelector(selector), 0);
     }
 
     public static BelgenetElement comboBox(String selector) {
@@ -169,5 +182,7 @@ public class Belgenet extends Selenide {
 
 //        return;// $(elementLocator);
     }
+
+
 }
 

@@ -16,6 +16,8 @@ import org.testng.asserts.SoftAssert;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -28,6 +30,7 @@ import java.util.regex.Pattern;
 import static com.codeborne.selenide.Condition.exactValue;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
+import static java.lang.Thread.currentThread;
 import static org.apache.commons.io.FileUtils.deleteDirectory;
 import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfElementLocated;
 
@@ -386,9 +389,9 @@ public class BaseLibrary extends ElementsContainer {
     public void uploadFile(SelenideElement element, String pathToFile) {
         try {
             element.sendKeys(pathToFile);
-            log.info("Dosya yüklendi.");
+            log.info("Dosya yüklemeye başlandı.");
         } catch (Exception e) {
-            log.info("Error in attaching file.s : " + e);
+            log.info("Dosya yükleme başarısız. : " + e);
             throw new RuntimeException(e);
         }
     }
@@ -789,7 +792,7 @@ public class BaseLibrary extends ElementsContainer {
     }
 
     // İşlem penceresi kapatma onay - popup
-    @Step("Popup : İşlem penceresi kaydet: \"{secim}\" ")
+    @Step("Popup : İşlem penceresi kaydet: {secim}")
     public void islemPenceresiKaydetPopup(String secim) {
 
         SelenideElement islemKaydetPopup = $(By.id("saveOnCloseWindowConfirm"));
@@ -812,24 +815,25 @@ public class BaseLibrary extends ElementsContainer {
 
     //endregion
 
-    @Step("Popup İşlem Onayı:  \"{secim}\"")
+    @Step("Popup İşlem Onayı: {secim}")
     public void islemOnayi(String secim) {
 
         SelenideElement btnIslemOnayiEvet = $(By.id("baseConfirmationDialog:confirmButton"));
         SelenideElement btnIslemOnayiHayir = $(By.id("baseConfirmationDialog:baseConfirmationDialogCancelButton"));
+        btnIslemOnayiEvet.shouldBe(visible);
 
         switch (secim) {
             case "Evet":
-                btnIslemOnayiEvet.click();
+                clickJs(btnIslemOnayiEvet);
                 break;
             case "Hayır":
-                btnIslemOnayiHayir.click();
+                clickJs(btnIslemOnayiHayir);
                 break;
         }
     }
 
 
-    @Step("Popup Silme Onayı:  \"{secim}\"")
+    @Step("Popup Silme Onayı: {secim}")
     public void silmeOnayi(String secim) {
 
         SelenideElement btnSilmeOnayiEvet = $("[id$='ekSilEvetButton']");

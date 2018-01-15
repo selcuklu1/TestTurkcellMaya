@@ -16,7 +16,7 @@ import static com.codeborne.selenide.Selenide.*;
  */
 public class UstMenuPageHeader extends MainPage {
 
-    //SelenideElement pageWindow;
+    /*//SelenideElement pageWindow;
     @FindBy(xpath = "//ancestor::div[contains(@class,'windowDialog')]")
     public SelenideElement pageWindow;
 
@@ -24,22 +24,49 @@ public class UstMenuPageHeader extends MainPage {
     public SelenideElement closePageButton;
 
     @FindBy(css = "div[class~='ui-dialog-titlebar'] > span[class='ui-dialog-title']")
-    public SelenideElement pageTitle;
+    public SelenideElement pageTitle;*/
+    //span[id^=window] > div[id^=window][id$=Dialog]
+    //div[id^=window][id$=Dialog] a.ui-dialog-titlebar-close
+    //div[id^=window][id$=Dialog]>div.ui-dialog-titlebar>a.ui-dialog-titlebar-close
+    //div[id^=window][id$=Dialog]>div.ui-dialog-titlebar>.ui-dialog-title
+    //div[starts-with(@id,'window') and contains(@id,'Dialog')]/div[contains(@class,'ui-dialog-titlebar')]//span[contains(@class,'ui-dialog-title')]
+    //div[starts-with(@id,'window') and contains(@id,'Dialog') and div[contains(@class,'ui-dialog-titlebar') and span[text()='Evrak Oluştur']]]
+    //div[starts-with(@id,'window') and div[contains(@class,'ui-dialog-titlebar') and span[text()='Evrak Oluştur']]]
+    //div[starts-with(@id,'window') and div[span[text()='Evrak Oluştur']]]
 
+    private SelenideElement container;
+
+    public SelenideElement getContainer() {
+        if (super.getSelf() != null)
+            container = super.getSelf();
+        return container;
+    }
+
+    /*public UstMenuPageHeader() {
+        container = $("html");
+    }*/
+
+    public UstMenuPageHeader(SelenideElement container) {
+        this.container = container;
+    }
+
+    public SelenideElement getPageWindow() {
+        return getContainer().$x("ancestor::div[starts-with(@id,'window') and contains(@class,'windowDialog')]");
+    }
 
     public SelenideElement getPageCloseButton() {
-        return closePageButton;
+        return getPageWindow().$("div[class~='ui-dialog-titlebar'] a[class~='ui-dialog-titlebar-close']");
     }
 
     public SelenideElement getPageTitle() {
-        return pageTitle;
+        return getPageWindow().$("div[class~='ui-dialog-titlebar'] > span[class='ui-dialog-title']");
     }
 
-    public void close() {
-        closePageButton.click();
+    public void closePage() {
+        getPageCloseButton().click();
     }
 
-    @Step("İmzala butonu ara")
+    /*@Step("İmzala butonu ara")
     public SelenideElement imzalaButton() {
         return $x("//*[text()='İmzala']/ancestor::tbody[1]//button");
     }
@@ -95,5 +122,5 @@ public class UstMenuPageHeader extends MainPage {
             }
         }
         return this;
-    }
+    }*/
 }
