@@ -400,8 +400,8 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Otomatik onay akışı seç")
-        public BilgilerTab otomatikOnayAkisi() {
+        @Step("Otomatik Onay akışı tıklanır")
+        public BilgilerTab otomatikOnayAkisiSec(){
             btnOtomatikOnayAkisi.click();
             return this;
         }

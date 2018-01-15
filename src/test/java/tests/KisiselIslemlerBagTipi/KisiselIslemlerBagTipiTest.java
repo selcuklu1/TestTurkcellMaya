@@ -27,6 +27,7 @@ import static data.TestData.username2;
  * Class: "Kişisel İşlemler Bağ Tipi" konulu senaryoları içerir
  * Yazan: Can Şeker
  ****************************************************/
+
 @Epic("Kişisel İşlemler Bağ Tipi")
 public class KisiselIslemlerBagTipiTest extends BaseTest {
 
@@ -59,8 +60,10 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
 
         kullaniciYonetimiPage
                 .openPage()
-                .ara()
-                .kullaniciListesiGuncelle()
+                .ara();
+        String ad = kullaniciYonetimiPage.adCek();
+        kullaniciYonetimiPage
+                .kullaniciListesiGuncelle(ad)
                 .gorevliOlduguBirimlerGuncelle()
                 .popupKullaniciBirimAtamaBagTipiSec(bagTipi, "Bağ Tipi")
                 .popupKullaniciBirimAtamaKaydet();
@@ -74,7 +77,7 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
-                .otomatikOnayAkisi()
+                .otomatikOnayAkisiSec()
                 .otomatikOnayAkisiGeldigiGorme(ekranAdi, "Kullanıcı");
 
         vekaletVerPage
@@ -92,7 +95,7 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
 
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "2142: Bağ tipi vekaleten amir yardımcısı kontrolleri")
+    @Test(enabled = true, description = "TS2142: Bağ tipi vekaleten amir yardımcısı kontrolleri")
     public void TS2142() {
 
         String basariMesaji = "İşlem başarılıdır!";
@@ -110,9 +113,13 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
 
         kullaniciYonetimiPage
                 .openPage()
-                .ara()
-                .kullaniciListesiGuncelle()
-                .gorevliOlduguBirimlerGuncelle()
+                .ara();
+        String adCek = kullaniciYonetimiPage.adCek();
+                kullaniciYonetimiPage
+                .kullaniciListesiGuncelle(adCek);
+        String birim = kullaniciYonetimiPage.birimAdCek();
+                kullaniciYonetimiPage
+                .gorevliOlduguBirimlerGuncelle(birim)
                 .popupKullaniciBirimAtamaBagTipiSec(bagTipi, "Bağ Tipi")
                 .popupKullaniciBirimAtamaKaydet();
 
@@ -125,7 +132,7 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
-                .otomatikOnayAkisi()
+                .otomatikOnayAkisiSec()
                 .otomatikOnayAkisiGeldigiGorme(ekranAdi, "Kullanıcı")
                 .onayAkisiEkle()
                 .kullanicilarDoldur(ekranAdi)
@@ -172,7 +179,7 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "2168: Bağ tipi personel kontrolleri")
+    @Test(enabled = true, description = "TS2168: Bağ tipi personel kontrolleri")
     public void TS2168() {
 
         String basariMesaji = "İşlem başarılıdır!";
@@ -201,7 +208,7 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
-                .otomatikOnayAkisi()
+                .otomatikOnayAkisiSec()
                 .otomatikOnayAkisiGelmedigiGorme(ekranAdi, false);
 
         vekaletVerPage
