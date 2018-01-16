@@ -136,6 +136,26 @@ public class ImzaBekleyenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Pdf Önizleme butonuna tıklanır")
+    public ImzaBekleyenlerPage pdfOnizleme() {
+        SelenideElement btnPdfOnizleme = $x("//*[text()='PDF Önizleme']/ancestor::tbody[1]//button");
+        btnPdfOnizleme.click();
+        return this;
+    }
+    @Step("PDF içerik Kontrolü : \"{icerik}\" ")
+    public ImzaBekleyenlerPage geregiBilgiAlaniAdresPdfKontrol(String icerik) {
+
+        SelenideElement icerikPDF = $(By.xpath("//div[@id='viewer']/div[@class='page']//div[.='Ağ (Network) Uzman Yardımcısı V.']"));
+
+        System.out.println(icerikPDF.getText());
+
+        Assert.assertEquals(icerikPDF.getText().contains(icerik), true);
+
+        takeScreenshot();
+
+        return this;
+    }
+
     @Step("Dosya ekle")
     public ImzaBekleyenlerPage iadeEtDosyaEkle(String pathToFile) {
         uploadFile(btnDosyaEkle, pathToFile);

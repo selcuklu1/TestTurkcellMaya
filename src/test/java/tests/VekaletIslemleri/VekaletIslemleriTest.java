@@ -2,6 +2,7 @@ package tests.VekaletIslemleri;
 
 import com.codeborne.selenide.Condition;
 import common.BaseTest;
+import data.User;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
@@ -17,6 +18,7 @@ import pages.ustMenuPages.VekaletVerPage;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.switchTo;
 import static data.TestData.*;
 
 /****************************************************
@@ -51,6 +53,17 @@ public class VekaletIslemleriTest extends BaseTest {
     String gizlilikDerecesi = "Normal";
     String ivedilik = "Normal";
     String geregi = "Optiim Birim";
+    String vekaletBirimi = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
+
+
+    User optiim = new User("optiim", "123");
+    User yakyol = new User("yakyol", "123");
+    User mbozdemir = new User("mbozdemir", "123");
+    User ztekin = new User("ztekin", "123");
+    User usernameVV = new User("usernamevv", "123");
+    User usernameVA = new User("usernameva", "123");
+    String nameVV = "UsernameVV TEST";
+    String nameVA = "Usernameva TEST";
 
     @BeforeMethod
     public void loginBeforeTests() {
@@ -68,7 +81,7 @@ public class VekaletIslemleriTest extends BaseTest {
     @Test(enabled = true, priority = 0, description = "TS0025a : Onaya göndererek Vekalet Verme")
     public void TS0025a() throws InterruptedException {
 
-        login("test1", "123");
+        login(usernameVV);
 
         String basariMesaji = "İşlem başarılıdır!";
         String[] evrakNo = new String[2];
@@ -84,7 +97,7 @@ public class VekaletIslemleriTest extends BaseTest {
                 .openPage()
                 .veklatListesiTabAc()
                 .sorgula()
-                .vekaletListesiVekaletIptal(vekaletVeren);
+                .vekaletListesiVekaletIptal(nameVV);
 
         vekaletVerPage
                 .openPage();
@@ -108,9 +121,9 @@ public class VekaletIslemleriTest extends BaseTest {
         }
         String onayVerecekKullanici = "Zübeyde TEKİN";
         vekaletVerPage
-                .vekaletVerenDoldur(vekaletVeren)
+                .vekaletVerenDoldur(nameVV)
                 .devredilecekEvraklarKontrolu()
-                .vekaletAlanDoldur(vekaletAlan)
+                .vekaletAlanDoldur(nameVA)
                 .onayVerecekDoldur(onayVerecekKullanici)
                 .aciklamaDoldur(aciklama)
                 .devredilecekEvrakSec(evrakNo1)
@@ -164,18 +177,18 @@ public class VekaletIslemleriTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, priority = 3, description = "TS2208 : Onaya göndererek Vekalet Verme işleminde onayın kabul edilmesi")
+    @Test(enabled = true, priority = 2, description = "TS2208 : Onaya göndererek Vekalet Verme işleminde onayın kabul edilmesi")
     public void TS2208() throws InterruptedException {
 //        Allure.addAttachment("Test Datası", "Test Datası oluşturuluyor.");
         TS0025a();
 //        Allure.addAttachment("Test Datası", "Test Datası oluşturuldu.");
 
-        login(username2, password2);
+        login(ztekin);
 
 //        String aciklama = "onay 20180109134612 evrak";
         vekaletOnaylariPage
                 .openPage()
-                .tablodanOnaylanacakKayıtKontrolu(vekaletVeren, vekaletAlan, getSysDateForKis(), aciklama)
+                .tablodanOnaylanacakKayıtKontrolu(nameVV, nameVA, getSysDateForKis(), aciklama)
                 .tablodanOnaylanacakKayıtSec(aciklama)
                 .onayEvrakiKontrol()
                 .detay()
@@ -197,7 +210,7 @@ public class VekaletIslemleriTest extends BaseTest {
 
         logout();
 
-        login("test1", "123");
+        login(usernameVV);
 
 
         mainPage
@@ -206,27 +219,27 @@ public class VekaletIslemleriTest extends BaseTest {
 
         gelenEvraklarPage
                 .openPage()
-                .tabloOlmayanEvrakNoKontrol(evrakNo1)
-                .tabloEvrakNoKontrol(evrakNo2);
+                .tabloEvrakNoKontrol(evrakNo1, false)
+                .tabloEvrakNoKontrol(evrakNo2, true);
 
         logout();
 
-        login("optiimTest2", "123");
+        login(usernameVA);
 
         mainPage
                 .vekaletVarUyariPopUp();
 
         gelenEvraklarPage
                 .openPage()
-                .birimKontol("Vekalet " + vekaletVeren + " - " + geregi + " - " + getSysDateForKis() + " - " + getSysDateForKis())
+                .birimKontol("Vekalet " + nameVV + " - " + vekaletBirimi + " - " + getSysDateForKis() + " - " + getSysDateForKis())
                 .birimSec(Condition.text("Vekalet"))
                 .takeScreenshot();
         //                .islemMesaji().basariliOlmali(basariMesaji);
 
         gelenEvraklarPage
                 .openPage()
-                .tabloEvrakNoKontrol(evrakNo1)
-                .tabloOlmayanEvrakNoKontrol(evrakNo2);
+                .tabloEvrakNoKontrol(evrakNo1, true)
+                .tabloEvrakNoKontrol(evrakNo2, false);
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -236,8 +249,8 @@ public class VekaletIslemleriTest extends BaseTest {
     public void TS0015() throws InterruptedException {
 
         String kullaniciTitle = " [Ağ (Network) Uzman Yardımcısı]";
-        String konu = "konu " + getSysDateForKis();
-        login(username3, password3);
+        String konu = "TS0015 " + getSysDate();
+        login(yakyol);
 
         evrakOlusturPage
                 .openPage()
@@ -253,12 +266,12 @@ public class VekaletIslemleriTest extends BaseTest {
                 .onayAkisiEkle()
                 .kullaniciTabloKontrol()
                 .IlkKullaniciImzalamaVeyaParaflamaSec("PARAFLAMA")
-                .kullanicilarDoldurWithTitle(vekaletVeren, kullaniciTitle)
+                .kullanicilarDoldurWithTitle(nameVV, kullaniciTitle)
                 .vekeletAlanVerenTabloKontrolu()
-                .vekeletAlanVerenTabloVekaletAlanveyaVerenSec(vekaletAlan)
+                .vekeletAlanVerenTabloVekaletAlanveyaVerenSec(nameVA)
 //                .vekeletAlanVerenTabloKapat()
 //                .kullanicilarDoldur2("Optiim TEST2"," [Ağ (Network) Uzman Yardımcısı]")
-                .kullniciIsmineGoreImzaParafSec(vekaletAlan, tur)
+                .kullniciIsmineGoreImzaParafSec(nameVA, tur)
                 .kullan()
                 .onaAkisiTextKontol()
                 .onayAkisiKullanilanKullaniciKontrolEt("Yasemin");
@@ -282,7 +295,7 @@ public class VekaletIslemleriTest extends BaseTest {
         String evrakNo = parafladiklarimPage.evrakDetayiEvrakNoAl();
 
         logout();
-        login("test1", "123");
+        login(usernameVV);
 
         mainPage
                 .vekaletVarUyariPopUp();
@@ -293,7 +306,7 @@ public class VekaletIslemleriTest extends BaseTest {
 
         logout();
 
-        login("optiimtest2", "123");
+        login(usernameVA);
 
         mainPage
                 .vekaletVarUyariPopUp()
@@ -304,7 +317,12 @@ public class VekaletIslemleriTest extends BaseTest {
                 .openPage()
                 .evrakNoKontrolu(evrakNo)
                 .icerik()
-                .icerikKontrol("V.");
+                .pdfOnizleme();
+        switchTo().window(1);
+        imzaBekleyenlerPage
+                .geregiBilgiAlaniAdresPdfKontrol(icerik)
+                .closeNewWindow();
+        switchTo().window(1);
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -385,8 +403,8 @@ public class VekaletIslemleriTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true
-    //, dependsOnMethods = {"TS2208"}
-    , description = "TS0014 : Vekalet veren kullanıcıya evrak havalesi ve kontrolü")
+            //, dependsOnMethods = {"TS2208"}
+            , description = "TS0014 : Vekalet veren kullanıcıya evrak havalesi ve kontrolü")
     public void TS0014() throws InterruptedException {
 
         String kisiKurum = "Kurum";
