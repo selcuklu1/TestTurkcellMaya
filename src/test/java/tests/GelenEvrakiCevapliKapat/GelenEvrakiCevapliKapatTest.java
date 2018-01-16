@@ -255,6 +255,16 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
         String fileName = "Rapor_";
         String fileName2 = "Rapor_.xls";
 
+        System.out.println(filePath);
+        System.out.println(filePath);
+        System.out.println(filePath);
+        System.out.println(filePath);
+        System.out.println(filePath);
+        System.out.println(filePath);
+        System.out.println(filePath);
+        System.out.println(filePath);
+
+
         cevaplananEvrakRaporuPage
                 .openPage()
                 .birimDoldur(birim)

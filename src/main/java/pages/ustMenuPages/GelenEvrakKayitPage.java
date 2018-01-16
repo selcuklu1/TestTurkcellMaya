@@ -133,15 +133,15 @@ public class GelenEvrakKayitPage extends MainPage {
 
     SelenideElement ustYaziveHavaleYeriYokpopUp = $("[id='ustYaziveHavaleYeriYokConfirmDialog']");
     SelenideElement ustYaziYokEvet = $("[id='evetDugmesi']");
-    SelenideElement ustYaziYokpopUp = $("[id='ustYaziYokConfirmDialog']");
+    SelenideElement ustYaziYokpopUp = $("[id='ustYaziYokConfirmDialog'][class$='ui-overlay-visible']");
     SelenideElement popUpEvet = $("[id='evetDugmesiUstYaziHavaleYer']");
     SelenideElement mukerrerPopUpEvet = $("[id='evetButtonBenzerKaydet']");
-    SelenideElement mukerrerPopUp = $("[id='benzerEvrakKayitConfirmDialog']");
+    SelenideElement mukerrerPopUp = $("[id='benzerEvrakKayitConfirmDialog'][class$='ui-overlay-visible']");
     SelenideElement btnUstYaziDegistirmeHayır = $(By.id("evrakBilgileriForm:ustyaziDegistirmeButton"));
     SelenideElement btnUstYaziDegistirEvet = $(By.id("evrakBilgileriForm:ustyaziDegistirButton"));
     SelenideElement popUpUstYaziDegistirilme = $(By.id("evrakBilgileriForm:ustyaziDegistirisilMiDialog"));
     SelenideElement basariliPopUpKapat = $("[id='evrakKaydetBasariliDialogForm:vazgecButton']");
-    SelenideElement basariliPopUp = $("[id='evrakKaydetBasariliDialog']");
+    SelenideElement basariliPopUp = $("[id='evrakKaydetBasariliDialog'][class$='ui-overlay-visible']");
 
     SelenideElement btnGeldigiKisiEkle = $("[id^='evrakBilgileriForm:evrakBilgileriList'][id$='gercekKisiEkle']");
     SelenideElement txtTCKN = $(By.id("gercekKisiHizliKayitDialogForm:tcKimlikNoInput"));
@@ -792,22 +792,22 @@ public class GelenEvrakKayitPage extends MainPage {
         String text;
         Selenide.sleep(5000);
 
+        if (ustYaziYokpopUp.isDisplayed()) {
+            clickJs(ustYaziYokEvet);
+            Allure.addAttachment("Üst Yazı Seçmediniz PopUp'ı", "Üst Yazı gelmemiştir PopUp'ı kapatılır.");
+        }
         if (ustYaziveHavaleYeriYokpopUp.isDisplayed()) {
-            popUpEvet.click();
+            clickJs(popUpEvet);
             Allure.addAttachment("Üst Yazı ve Havale Yeri yok PopUp'ı", "Üst Yazı ve Havale Yeri yok PopUp'ı kapatılır.");
         }
         if (popUphavaleYeriSecmediniz.isDisplayed()) {
             String mesaj2 = "Havale yeri seçmediniz. Evrak kaydedildiğinde Kaydedilen Gelen Evraklar kutusuna düşecektir. İşleme devam etmek istiyor musunuz?";
             popUphavaleYeriSecmediniz.getText().equals(mesaj2);
-            btnHavaleYeriSecmedinizEvet.click();
+            clickJs(btnHavaleYeriSecmedinizEvet);
             Allure.addAttachment("Havale Yeri Seçmediniz PopUp'ı", mesaj2);
         }
-        if (ustYaziYokpopUp.isDisplayed()) {
-            ustYaziYokEvet.click();
-            Allure.addAttachment("Üst Yazı Seçmediniz PopUp'ı", "Üst Yazı gelmemiştir PopUp'ı kapatılır.");
-        }
         if (mukerrerPopUp.isDisplayed()) {
-            mukerrerPopUpEvet.click();
+            clickJs(mukerrerPopUpEvet);
             Allure.addAttachment("Mükerrer İşlem PopUp'ı", "Mükerrer İşlem PopUp'ı kapatılır.");
         }
         basariliPopUp.shouldBe(Condition.visible);
@@ -817,7 +817,7 @@ public class GelenEvrakKayitPage extends MainPage {
 
 
         String evrakNo = getIntegerInText(By.id("evrakKaydetBasariliDialog"));
-        basariliPopUpKapat.click();
+        clickJs(basariliPopUpKapat);
 
         return evrakNo;
     }
