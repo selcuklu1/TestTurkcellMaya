@@ -42,6 +42,7 @@ public class GelenEvraklarPage extends MainPage {
     SelenideElement treeHavaleYapKisi = $(By.id("mainPreviewForm:dagitimBilgileriKullaniciLov:LovText"));
     BelgenetElement treeHavaleYapKullaniciListesi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKisiListesiLov:LovText"));
     BelgenetElement treeHavaleYapOnaylanacakKisi = comboLov("[id^='mainPreviewForm:onaylayacakKisiLov:LovText']");
+    By treeHavaleYapOnaylanacakKisi2 = By.cssSelector("[id^='mainPreviewForm:onaylayacakKisiLov:LovText']");
     SelenideElement txtHavaleYapAciklama = $(By.id("mainPreviewForm:havaleAciklama"));
     SelenideElement btnHavaleYapDosyaEkle = $(By.id("mainPreviewForm:fileUploadHavaleEk_input"));
     SelenideElement txtHavaleYapIslemSuresi = $(By.id("mainPreviewForm:islemSuresiTarih_input"));
@@ -307,9 +308,18 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
-    @Step("Havale onaylanacak kisi alanını doldur \"{onaylayacakKisi}\" | \"{onaylanacakKisi2}\"")
+    @Step("Havale onaylanacak kisi alanını doldur \"{onaylanacakKisi}\" | \"{onaylanacakKisi2}\"")
     public GelenEvraklarPage havaleYapOnaylanacakKisiTreeDoldur(String onaylanacakKisi, String onaylanacakKisi2) {
         treeHavaleYapOnaylanacakKisi.selectLov(onaylanacakKisi);
+        return this;
+    }
+
+    @Step("Havale onaylanacak kisi alanını doldur onaylanacak kişi gelmediği görülür \"{onaylanacakKisi}\" | \"{onaylanacakKisi2}\"")
+    public GelenEvraklarPage havaleYapOnaylanacakKisiTreeDoldurGelmedigiGorme(String onaylanacakKisi, String onaylanacakKisi2,Boolean durum) {
+        $("[id$='onaylayacakKisiLov:treeButton']").click();
+        ElementsCollection treeLovs = $$("[id='mainPreviewForm:onaylayacakKisiLov:lovTree'] li");
+        boolean toplam = treeLovs.filterBy(Condition.text(onaylanacakKisi)).size()==0;
+        Assert.assertEquals(toplam,true);
         return this;
     }
 
