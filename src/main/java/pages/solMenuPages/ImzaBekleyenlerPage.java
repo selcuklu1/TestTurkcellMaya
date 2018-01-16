@@ -142,14 +142,18 @@ public class ImzaBekleyenlerPage extends MainPage {
         btnPdfOnizleme.click();
         return this;
     }
-    @Step("PDF içerik Kontrolü : \"{icerik}\" ")
-    public ImzaBekleyenlerPage geregiBilgiAlaniAdresPdfKontrol(String icerik) {
 
-        SelenideElement icerikPDF = $(By.xpath("//div[@id='viewer']/div[@class='page']//div[.='Ağ (Network) Uzman Yardımcısı V.']"));
+    @Step("PDF içerik Kontrolü : \"{icerik}\" , \"{shoulBeExist}\" ")
+    public ImzaBekleyenlerPage geregiBilgiAlaniAdresPdfKontrol(String icerik, boolean shoulBeExist) {
+
+        SelenideElement icerikPDF = $(".textLayer div:nth-of-type(2)");
 
         System.out.println(icerikPDF.getText());
 
-        Assert.assertEquals(icerikPDF.getText().contains(icerik), true);
+        if (shoulBeExist)
+            Assert.assertEquals(icerikPDF.getText().contains(icerik), true);
+        else
+            Assert.assertEquals(icerikPDF.getText().contains(icerik), false);
 
         takeScreenshot();
 
