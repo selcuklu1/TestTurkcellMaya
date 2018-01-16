@@ -1821,7 +1821,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Dosya ekle {description} : {pathPDF}")
+        @Step("Dosya ekle : {description} ")
         public EkleriTab dosyaEkle(String pathPDF, String description) {
 
             uploadFile(btnDosyaEkle, pathPDF);
@@ -1832,7 +1832,7 @@ public class EvrakOlusturPage extends MainPage {
         @Step("Dosya yüklenene kadar 60 dk bekle, 60 dktan fazla sürerse timeout hatası ver")
         public EkleriTab dosyaYukleneneKadarBekle() {
 
-            waitForLoadingJS(WebDriverRunner.getWebDriver(), 60);
+            waitForLoadingJS(WebDriverRunner.getWebDriver(), 3600);
 
             return this;
         }
