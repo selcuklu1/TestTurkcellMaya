@@ -1,23 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<<<<<<< HEAD
 <!--<suite thread-count="1" name="Test Suite" parallel="none" verbose="1">-->
 <!--<suite thread-count="5" name="Test Suite" parallel="classes" verbose="1">-->
-<<<<<<< HEAD
-<suite thread-count="1" name="Test Suite" parallel="methods" verbose="1">
-    <test name="All">
-        <packages>
-            <package name="tests.*"/>
-        </packages>
-=======
-<suite thread-count="1" name="Test Suite" parallel="true" verbose="1">
-=======
 
 
 <suite name="AAAAAA" parallel="classes" verbose="1">
 
     <!--thread-count="10"-->
->>>>>>> sezai
     <!--<listeners>-->
     <!--<listener class-name="listeners.TestListener"></listener>-->
     <!--</listeners>-->
@@ -25,14 +14,11 @@
     <!--<suite-file path="testSuite1.xml"></suite-file>-->
     <!--<suite-file path="testSuite2.xml"></suite-file>-->
     <!--</suite-files>-->
-    <test name="GercekKisiYonetimiTest">
+    <!--<test name="GercekKisiYonetimiTest">
         <classes>
-            <class name="GercekKisiYonetimi2.GercekKisiYonetimiTest2"/>
+            <class name="tests.GercekKisiYonetimi.GercekKisiYonetimiTest"/>
         </classes>
->>>>>>> 0e697a0c9707bc193b03c2fdc79ef98324d0ec51
     </test>
-<<<<<<< HEAD
-=======
     <test name="TuzelKisiYonetimiTest">
         <classes>
             <class name="tests.TuzelKisiYonetimi.TuzelKisiYonetimiTest"/>
@@ -40,10 +26,7 @@
     </test>-->
     <test name="All">
         <packages>
-            <package name="tests.BirimIcerikSablonu"/>
-            <package name="tests.EvrakNot"/>
-            <package name="tests.EvrakBeklemeyeAlma"/>
+            <package name="tests.*"/>
         </packages>
     </test>
->>>>>>> sezai
 </suite>
