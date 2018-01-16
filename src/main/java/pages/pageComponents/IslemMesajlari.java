@@ -143,7 +143,6 @@ public class IslemMesajlari extends BaseLibrary {
     }
 
     public enum MessageTitle {
-
         BASARILI("İşlem Başarılıdır"),
         UYARI("Uyarı"),
         DIKKAT("Dikkat");
@@ -161,7 +160,7 @@ public class IslemMesajlari extends BaseLibrary {
 
     public enum MessageBody {
 
-        BASARILI("İşlem Başarılıdır"),
+        BASARILI("İşlem başarılıdır"),
         UYARI("Uyarı"),
         DIKKAT("Dikkat");
 
