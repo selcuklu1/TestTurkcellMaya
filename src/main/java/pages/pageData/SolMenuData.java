@@ -4,13 +4,14 @@ public class SolMenuData {
 
     private static String groupIdPrefix = "leftMenuForm:leftMenu";
 
-    public enum IslemBekleyenEvraklar {
+    public enum IslemBekleyenEvraklar implements SolMenuDataInterface {
         GelenEvraklar("Gelen Evraklar"),
         ImzaBekleyenler("İmza Bekleyenler"),
         BeklemeyeAlinanlar("Beklemeye Alınanlar"),
         ParafBekleyenler("Paraf Bekleyenler"),
         BenimlePaylasilanlar("Benimle Paylaşılanlar"),
         KoordineBekleyenler("Koordine Bekleyenler"),
+        KontrolBekleyenler("Kontrol Bekleyenler"),
         YanParafBekleyenler("Yan Paraf Bekleyenler"),
         TakibimdekiEvraklar("Takibimdeki Evraklar"),
         TaslakEvraklar("Taslak Evraklar"),
@@ -34,7 +35,7 @@ public class SolMenuData {
         }
     }
 
-    public enum IslemYaptiklarim {
+    public enum IslemYaptiklarim implements SolMenuDataInterface {
         Imzaladiklarim("İmzaladıklarım"),
         Parafladiklarim("Parafladıklarım"),
         OnaySureciTamamlanmayanlar("Onay Süreci Tamamlanmayanlar"),
@@ -66,13 +67,13 @@ public class SolMenuData {
         }
     }
 
-    public enum BirimEvraklari {
+    public enum BirimEvraklari implements SolMenuDataInterface {
         HavaleOnayinaGelenler("Havale Onayına Gelenler"),
         HavaleOnayiVerdiklerim("Havale Onayı Verdiklerim"),
         HavaleOnayinaSunduklarim("Havale Onayına Sunduklarım"),
         KaydedilenGelenEvraklar("Kaydedilen Gelen Evraklar"),
         KaydedilenGidenEvraklar("Kaydedilen Giden Evraklar"),
-        PostalanacakEvraklar("Postalanacak Evraklar "),
+        PostalanacakEvraklar("Postalanacak Evraklar"),
         TopluPostaladiklarim("Toplu Postaladıklarım"),
         Postalananlar("Postalananlar"),
         KEPGelenkutusu("KEP Gelen Kutusu"),
@@ -80,11 +81,11 @@ public class SolMenuData {
         MedasileGonderilecekler("Medas ile Gönderilecekler"),
         KEPilePostalanacaklar("KEP ile Postalanacaklar"),
         TopluPostalanacakEvraklar("Toplu Postalanacak Evraklar"),
-        TeslimAlinmayiBekleyenler("Teslim Alınmayı Bekleyenler "),
-        TeslimAlinanlar("Teslim Alınanlar "),
+        TeslimAlinmayiBekleyenler("Teslim Alınmayı Bekleyenler"),
+        TeslimAlinanlar("Teslim Alınanlar"),
         AskidakiEvraklar("Askıdaki Evraklar"),
         BirimHavaleEdilenler("Birim Havale Edilenler"),
-        BirimeIadeEdilenler("Birime İade Edilenler "),
+        BirimeIadeEdilenler("Birime İade Edilenler"),
         PostaListesi("Posta Listesi"),
         EpostaKutusu("E-posta Kutusu");
 
@@ -105,13 +106,13 @@ public class SolMenuData {
         }
     }
 
-    public enum KapatmaIslemleri {
+    public enum KapatmaIslemleri implements SolMenuDataInterface {
         CevapliKapattiklarim("Cevaplı Kapattıklarım"),
-        ImzaBekleyenler("İmza Bekleyenler "),
+        ImzaBekleyenler("İmza Bekleyenler"),
         Imzaladiklarim("İmzaladıklarım"),
         Kapattiklarim("Kapattıklarım"),
         OnayaSunduklarim("Onaya Sunduklarım"),
-        ParafBekleyenler("Paraf Bekleyenler "),
+        ParafBekleyenler("Paraf Bekleyenler"),
         Parafladiklarim("Parafladıklarım"),
         SureliKapattiklarim("Süreli Kapattıklarım");
 
@@ -132,7 +133,7 @@ public class SolMenuData {
         }
     }
 
-    public enum Bildirimler {
+    public enum Bildirimler implements SolMenuDataInterface {
         Tebligler("Tebliğler"),
         Mesajlar("Mesajlar");
 
@@ -153,7 +154,7 @@ public class SolMenuData {
         }
     }
 
-    public enum ArsivIslemleri {
+    public enum ArsivIslemleri implements SolMenuDataInterface {
         FizikselArsiveKaldirilacaklar("Fiziksel Arşive Kaldırılacaklar"),
         FizikselArsivdekiler("Fiziksel Arşivdekiler"),
         FizikselArsivdenTalepEdilenler("Fiziksel Arşivden Talep Edilenler"),
@@ -176,7 +177,7 @@ public class SolMenuData {
         }
     }
 
-    public enum YoneticiIslemleri {
+    public enum YoneticiIslemleri implements SolMenuDataInterface {
 
         dummy("");
 
@@ -197,7 +198,7 @@ public class SolMenuData {
         }
     }
 
-    public enum KurulIslemleri {
+    public enum KurulIslemleri implements SolMenuDataInterface {
         KararIzleme("Karar İzleme"),
         GundemIzleme("Gündem İzleme");
 
@@ -216,6 +217,12 @@ public class SolMenuData {
         public String getMenuText() {
             return menuText;
         }
+    }
+
+    public interface SolMenuDataInterface {
+        public String getGroupId();
+
+        public String getMenuText();
     }
 }
 

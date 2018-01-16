@@ -3,10 +3,11 @@ package pages.ustMenuPages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import pages.MainPage;
-import pages.pageComponents.UstMenu;
+import pages.pageData.UstMenuData;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
@@ -26,10 +27,14 @@ public class PulYonetimiPage extends MainPage {
     SelenideElement btnAra = $(By.id("pulYonetimiListingForm:filterPanel:searchPulButton"));
     SelenideElement tblPulYonetimi = $(By.id("pulYonetimiListingForm:pulDataTable_data"));
     ElementsCollection tblPulYonetimi2 = $$("tbody[id$='pulYonetimiListingForm:pulDataTable_data'] tr[role=row]");
+    SelenideElement lblPostaTipi = $(By.xpath("//form[@id='pulYonetimiEditorForm']//tr[1]//label"));
+    SelenideElement lblGramaj = $(By.xpath("//form[@id='pulYonetimiEditorForm']//tr[2]//label"));
+    SelenideElement lblTutar = $(By.xpath("//form[@id='pulYonetimiEditorForm']//tr[3]//label"));
+    SelenideElement lblIndirimOrani = $(By.xpath("//form[@id='pulYonetimiEditorForm']//tr[5]//label"));
 
 
     public PulYonetimiPage openPage() {
-        new UstMenu().ustMenu("Pul Yönetimi");
+        ustMenu(UstMenuData.YonetimSayfalari.PulYonetimi);
         return this;
     }
 
@@ -37,6 +42,23 @@ public class PulYonetimiPage extends MainPage {
     public PulYonetimiPage yeniPulEkle() {
 //        btnAddNewPul.click();
         clickJs(btnAddNewPul);
+        return this;
+    }
+
+    @Step("Alan Kontrolleri")
+    public PulYonetimiPage alanKontrolleri() {
+
+        lblPostaTipi.isDisplayed();
+        lblGramaj.isDisplayed();
+        lblTutar.isDisplayed();
+        lblIndirimOrani.isDisplayed();
+        chkYurtDisi.isDisplayed();
+
+        Allure.addAttachment("label", lblPostaTipi.text());
+        Allure.addAttachment("label", lblGramaj.text());
+        Allure.addAttachment("label", lblTutar.text());
+        Allure.addAttachment("label", lblIndirimOrani.text());
+        Allure.addAttachment("Yurt Dişi checkBox", "Ok");
         return this;
     }
 
@@ -77,6 +99,7 @@ public class PulYonetimiPage extends MainPage {
         return this;
     }
 
+    @Step("İndirim oranı girilir")
     public PulYonetimiPage indirimOraniDoldur(String indirimOrani) {
         txtIndirimOrani.setValue(indirimOrani);
         return this;

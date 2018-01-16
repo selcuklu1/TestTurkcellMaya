@@ -3,9 +3,7 @@ package tests.YonetimHavuzuIslemleri;
 import common.BaseTest;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pages.ustMenuPages.EvrakOlusturPage;
-import pages.ustMenuPages.OlurYazisiOlusturPage;
-import pages.ustMenuPages.YonetimHavuzuYonetimiPage;
+import pages.ustMenuPages.*;
 
 import java.util.Random;
 
@@ -16,6 +14,8 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
     YonetimHavuzuYonetimiPage yonetimHavuzuYonetimiPage;
     OlurYazisiOlusturPage olurYazisiOlusturPage;
     OlurYazisiOlusturPage.BilgilerTab olurYazisiBilgilerTab;
+    BirimYonetimiPage birimYonetimiPage;
+    KullaniciYonetimiPage kullaniciYonetimiPage;
 
     @BeforeMethod
     public void loginBeforeTests() {
@@ -23,19 +23,41 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
         yonetimHavuzuYonetimiPage = new YonetimHavuzuYonetimiPage();
         olurYazisiOlusturPage = new OlurYazisiOlusturPage();
         olurYazisiBilgilerTab = new OlurYazisiOlusturPage().new BilgilerTab();
-        login();
+        birimYonetimiPage = new BirimYonetimiPage();
+        kullaniciYonetimiPage = new KullaniciYonetimiPage();
+        login("huser", "123");
     }
 
-    @Test(enabled = true, description = "TC0001 : Yönetim havuzunu pasife alma")
-    public void TC0001() {
+    @Test(enabled = true, description = "TS0001 : Yönetim havuzunu pasife alma")
+    public void TS0001() {
 
-        String pasifeAlinacakHavuzAdi = "Test-tec013045";
 
-        String[] kontrolEdilecekBirimler = new String[]{"Optiim Birim"};
-        String[] kontrolEdilecekKullanicilar = new String[]{"Yasin TELLİ"};
+        String yeniBirimAdi = birimYonetimiPage
+                .openPage()
+                .birimOlustur("YAZILIM GELİŞTİRME DİREKTÖRLÜĞ");
+
+        String yeniKullanici = kullaniciYonetimiPage
+                .openPage()
+                .kullaniciOlustur("YAZILIM", "Ağ (Network) Uzmanı");
+
+        String eklenecekYonetimHavuzuAdi = "havuz" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
+        String eklenecekBirim = yeniBirimAdi;
+        String eklenecekKullanici = yeniKullanici;
 
         yonetimHavuzuYonetimiPage
                 .openPage()
+                .yonetimHavuzuEkle(eklenecekYonetimHavuzuAdi)
+                .kullananBirimEkle(eklenecekBirim)
+                .kullaniciEkle(eklenecekKullanici)
+                .yonetimHavuzuKaydet();
+
+        String pasifeAlinacakHavuzAdi = eklenecekYonetimHavuzuAdi;
+
+
+        String[] kontrolEdilecekBirimler = new String[]{yeniBirimAdi};
+        String[] kontrolEdilecekKullanicilar = new String[]{yeniKullanici};
+
+        yonetimHavuzuYonetimiPage
                 .ara(null, pasifeAlinacakHavuzAdi, "Sadece Aktifler", true)
                 .yonetimHavuzuGuncelle(pasifeAlinacakHavuzAdi, false)
                 .yonetimHavuzuKontrol(pasifeAlinacakHavuzAdi, kontrolEdilecekBirimler, kontrolEdilecekKullanicilar)
@@ -45,21 +67,26 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
                 .openPage()
                 .bilgilerTabiAc()
                 .onayAkisiEkle()
-                .onayAkisiKullaniciKontrol("Optiim TEST", "Paraflama")
-                .onayAkisiTreeKullaniciKontrol("Veysel KIRAN", false);
+                .onayAkisiKullaniciKontrol("Huser TUMER", "Paraflama")
+                .onayAkisiTreeKullaniciKontrol(eklenecekKullanici, false);
 
 
     }
 
-    @Test(enabled = true, description = "TC0002 : Yeni yönetim havuzu kayıt")
-    public void TC0002() {
+    @Test(enabled = true, description = "TS0002 : Yeni yönetim havuzu kayıt")
+    public void TS0002() {
+
+        String yeniBirimAdi = birimYonetimiPage
+                .openPage()
+                .birimOlustur("YAZILIM GELİŞTİRME DİREKTÖRLÜĞ");
+
+        String yeniKullanici = kullaniciYonetimiPage
+                .openPage()
+                .kullaniciOlustur("YAZILIM", "Ağ (Network) Uzmanı");
 
         String eklenecekYonetimHavuzuAdi = "havuz" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
-        String eklenecekBirim = "Optiim Alt Birim";
-        String eklenecekKullanici = "Yasin TELLİ";
-
-
-
+        String eklenecekBirim = yeniBirimAdi;
+        String eklenecekKullanici = yeniKullanici;
 
         yonetimHavuzuYonetimiPage
                 .openPage()
@@ -69,21 +96,18 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
                 .yonetimHavuzuKaydet()
                 .ara(eklenecekBirim, eklenecekYonetimHavuzuAdi, null, true);
 
-
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
                 .onayAkisiEkle()
-                .onayAkisiKullaniciKontrol("Optiim TEST [Ağ (Network) Uzman Yardımcısı]", "Paraflama")
+                .onayAkisiKullaniciKontrol("Huser TUMER", "Paraflama")
                 .onayAkisiKullaniciEkle(eklenecekKullanici)
                 .onayAkisiKullaniciTipiSec(eklenecekKullanici, "İmzalama")
                 .onayAkisiKullan()
-                .onayAkisiKullanilanKullanilanKontrolEt("Optiim TEST-Paraflama / " + eklenecekKullanici + "-İmzalama");
-
+                .onayAkisiKullanilanKullaniciKontrolEt("Huser TUMER-Paraflama / " + eklenecekKullanici + "-İmzalama");
 
         logout();
         login("Ztekin", "123");
-
 
         evrakOlusturPage
                 .openPage()
@@ -95,25 +119,49 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
 
     }
 
-    @Test(enabled = true, description = "TC0003 : yönetim havuzunu güncelleme")
-    public void TC0009() {
+    @Test(enabled = true, description = "TS0003 : yönetim havuzunu güncelleme")
+    public void TS0009() {
 
-        String yonetimHavuzuAdi = "Test-tec013045";
-        String[] kontrolEdilecekBirimler = new String[]{"Optiim Birim"};
-        String[] kontrolEdilecekKullanicilar = new String[]{"Yasin TELLİ"};
-        String eklenecekAltBirim = "Optiim Alt Birim1";
-        String silinecekKullanici = "Yasin TELLİ";
-        String eklenecekKullanici = "Yasin TELLİ";
-        String yeniYonetimHavuzuAdi = "Test-tec01" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
 
-        String guncelKullanici = "Optiim TEST [Ağ (Network) Uzman Yardımcısı]";
-        String guncelKullanici2 = "Optiim TEST1 [Ağ (Network) Uzman Yardımcısı]";
+        String yeniBirimAdi = birimYonetimiPage
+                .openPage()
+                .birimOlustur("YAZILIM GELİŞTİRME DİREKTÖRLÜĞ");
+
+        String eklenecekAltBirim = birimYonetimiPage
+                .birimOlustur(yeniBirimAdi);
+
+        String yeniKullaniciAdi = "Kullanici" + (new Random().nextInt((900000 - 100000) + 1) + 100000);
+        String yeniKullaniciSifre = "123";
+
+        String yeniKullanici = kullaniciYonetimiPage
+                .openPage()
+                .kullaniciOlustur(yeniKullaniciAdi, yeniKullaniciSifre, "YAZILIM", "Ağ (Network) Uzmanı");
+
+        String eklenecekYonetimHavuzuAdi = "havuz" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
+
+        yonetimHavuzuYonetimiPage
+                .openPage()
+                .yonetimHavuzuEkle(eklenecekYonetimHavuzuAdi)
+                .kullananBirimEkle(yeniBirimAdi)
+                .kullaniciEkle(yeniKullanici)
+                .yonetimHavuzuKaydet()
+                .ara(yeniBirimAdi, eklenecekYonetimHavuzuAdi, null, true);
+
+
+        String yonetimHavuzuAdi = eklenecekYonetimHavuzuAdi;
+        String[] kontrolEdilecekBirimler = new String[]{yeniBirimAdi};
+        String[] kontrolEdilecekKullanicilar = new String[]{yeniKullanici};
+        String silinecekKullanici = yeniKullanici;
+        String eklenecekKullanici = yeniKullanici;
+        String yeniYonetimHavuzuAdi = "YeniAd" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
+
+        String guncelKullanici = "Huser TUMER";
+        String guncelKullanici2 = yeniKullanici;
 
         String basariMesaji = "İşlem başarılıdır!";
 
 
         yonetimHavuzuYonetimiPage
-                .openPage()
                 .ara(null, yonetimHavuzuAdi, null, true)
                 .yonetimHavuzuGuncelle(yonetimHavuzuAdi, false)
                 .yonetimHavuzuKontrol(yonetimHavuzuAdi, kontrolEdilecekBirimler, kontrolEdilecekKullanicilar)
@@ -139,7 +187,8 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
 
 
         logout();
-        login("test1", "123");
+        clearCookies();
+        login(yeniKullaniciAdi, yeniKullaniciSifre);
 
         evrakOlusturPage
                 .openPage()
@@ -147,8 +196,6 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
                 .onayAkisiEkle()
                 .onayAkisiKullaniciKontrol(guncelKullanici2, "Paraflama")
                 .onayAkisiTreeKullaniciKontrol(eklenecekKullanici, true);
-
-
 
     }
 }

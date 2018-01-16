@@ -14,6 +14,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.MainPage;
 import pages.solMenuPages.KepIlePostalanacaklarPage;
+import pages.solMenuPages.PostalanacakEvraklarPage;
 import pages.ustMenuPages.*;
 
 import static data.TestData.*;
@@ -27,6 +28,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
     BirimYonetimiPage birimYonetimiPage;
     GercekKisiYonetimPage gercekKisiYonetimPage;
     KepIlePostalanacaklarPage kepIlePostalanacaklarPage;
+    PostalanacakEvraklarPage postalanacakEvraklarPage;
     MainPage mainPage;
 
     @BeforeMethod
@@ -37,12 +39,14 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
         birimYonetimiPage = new BirimYonetimiPage();
         gercekKisiYonetimPage = new GercekKisiYonetimPage();
         kepIlePostalanacaklarPage = new KepIlePostalanacaklarPage();
+        postalanacakEvraklarPage = new PostalanacakEvraklarPage();
         mainPage = new MainPage();
     }
 
+    //TS
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "1610: KEP Hesap Menüsü - Tanımlanan KEP hesapları ile login işlemleri")
-    public void TC1610() throws InterruptedException {
+    @Test(enabled = true, description = "TS1610: KEP Hesap Menüsü - Tanımlanan KEP hesapları ile login işlemleri")
+    public void TS1610() {
 
         String basariMesaji = "İşlem başarılıdır!";
         String hataMesaji = "Bağlantı kurulamadı, girilen parola veya şifre yanlış !";
@@ -82,8 +86,8 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "1513b: Kurum Kep Hesabı Tanımlama ve Evrak Oluşturma Ekranından kontrolü")
-    public void TC1513b() throws InterruptedException {
+    @Test(enabled = true, description = "TS1513: Kurum Kep Hesabı Tanımlama ve Evrak Oluşturma Ekranından kontrolü")
+    public void TS1513B() throws InterruptedException {
 
         String popupKepAdresi = "turksat.kamu1@testkep.pttkep.gov.tr";
         String popupKepHizmetSaglayicisiSec = "Diğer";
@@ -95,7 +99,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
         kurumYonetimiPage
                 .openPage()
                 .ara()
-                .guncelle(  )
+                .guncelle()
                 .kepAdresiKullaniyorSec(true)
                 .kepAdresBilgileriArti()
                 .popupKepAdresiDoldur(popupKepAdresi)
@@ -109,15 +113,15 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
                 .openPage()
                 .bilgilerTabiAc()
                 .geregiSecimTipiSec(bilgiSecimTipi)
-                .geregiDoldur(getIdariBirimKodu);
+                .geregiDoldur(getIdariBirimKodu, "İdari Birim Kodu");
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "1513c: Gerçek Kişi Kep Hesabı Tanımlama ve Evrak Oluşturma Ekranından Kontrolü")
-    public void TC1513c() throws InterruptedException {
+    @Test(enabled = true, description = "TS1513: Gerçek Kişi Kep Hesabı Tanımlama ve Evrak Oluşturma Ekranından Kontrolü")
+    public void TS1513C() {
 
         String popupKepAdresi = "turksat.kamu1@testkep.pttkep.gov.tr";
-        String popupKepHizmetSaglayicisiSec = "P";
+        String popupKepHizmetSaglayicisiSec = "PTT KEP Servisi";
         String basariMesaji = "İşlem başarılıdır!";
         String bilgiSecimTipi = "Gerçek Kişi";
 
@@ -140,24 +144,25 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
                 .openPage()
                 .bilgilerTabiAc()
                 .geregiSecimTipiSec(bilgiSecimTipi)
-                .geregiDoldur(getIdariBirimKodu);
+                .geregiDoldur(getIdariBirimKodu, "İdari Birim Kodu");
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "1513d: Tüzel Kişi Kep Hesabı Tanımlama ve Evrak Oluşturma Ekranından Kontrolü")
-    public void TC1513d() throws InterruptedException {
+    @Test(enabled = true, description = "TS1513: Tüzel Kişi Kep Hesabı Tanımlama ve Evrak Oluşturma Ekranından Kontrolü")
+    public void TS1513D() {
 
         String popupKepAdresi = "turksat.kamu1@testkep.pttkep.gov.tr";
         String popupKepHizmetSaglayicisiSec = "PTT KEP Servisi";
         String basariMesaji = "İşlem başarılıdır!";
         String bilgiSecimTipi = "Tüzel Kişi";
+        String kullanici = "Büyük Küçük Harflerle Tüzel Kişi";
 
         login(username, password);
 
         tuzelKisiYonetimiPage
                 .openPage()
                 .ara()
-                .tuzelKisiGuncelle()
+                .tuzelKisiSecGuncele(kullanici)
                 .kepAdresiKullaniyorSec(true)
                 .kepAdresBilgileriEkle()
                 .kepAdresiDoldur(popupKepAdresi)
@@ -171,12 +176,12 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
                 .openPage()
                 .bilgilerTabiAc()
                 .geregiSecimTipiSec(bilgiSecimTipi)
-                .geregiDoldur(vergiNo);
+                .geregiDoldur(vergiNo, "Vergi No");
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "KEP Adresi Tanımlama işlemleri")
-    public void TC1520() throws InterruptedException {
+    @Test(enabled = true, description = "TS1520: KEP Adresi Tanımlama işlemleri")
+    public void TS1520() {
 
         String birim = "Yazılım";
         String birimTuru = "İç Birim";
@@ -215,6 +220,80 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
 
         kepIlePostalanacaklarPage
                 .gondericiKontrol(popupKepAdresi2);
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "KEP Adresi Tanımlama işlemleri")
+    public void TS2236() {
+
+        String basariMesaji = "İşlem başarılıdır!";
+        String uyariMesaj1 = "Gizlilik kleransınız evrakın gizlilik derecesini görüntülemek için yeterli değildir.";
+        String konuKodu = "Diğer";
+        String konuKoduRandom = "TS-2236-" + createRandomNumber(10);
+        String kaldirilicakKlasor = "Diğer";
+        String evrakTuru = "Resmi Yazışma";
+        String gizlilikDerecesi = "Normal";
+        String bilgi = "Kurum";
+        String imzalama = "İmzalama";
+        String editor = createRandomText(15);
+        String ivedilik = "Normal";
+        String gercekKisi = "Gerçek Kişi";
+        String tuzelKisi = "Tüzel Kişi";
+        String kurum = "Kurum";
+        String geregiGercekKisi = "Cansuu Denizz";
+        String geregiTuzelKisi = "OPTİİMc1";
+        String geregiKurum = "Adalet Bakanlığı";
+        String pathFile = getDocPath() + "Otomasyon.pdf";
+        String tarih = getSysDateForKis();
+
+        login(username4, password4);
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .konuKoduDoldur(konuKodu)
+                .konuDoldur(konuKoduRandom)
+                .evrakTuruSec(evrakTuru)
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .ivedilikSec(ivedilik)
+                .geregiSecimTipiSec(tuzelKisi)
+                .geregiDoldur(geregiTuzelKisi,"Tüzel kişi")
+                .geregiSecimTipiSec(gercekKisi)
+                .geregiDoldur(geregiGercekKisi,"Gerçek kişi")
+                .geregiSecimTipiSec(kurum)
+                .geregiDoldur(geregiKurum,"Kurum")
+                .gercekKisiPostaTipiAPSSec(geregiGercekKisi)
+                .onayAkisiEkle()
+                .onayAkisiEkleIlkImzalaSec("İmzalama")
+                .kullan()
+                .kaldiralacakKlasorlerSec(kaldirilicakKlasor);
+
+        evrakOlusturPage
+                .editorTabAc();
+
+        evrakOlusturPage
+                .ekleriTabAc()
+                .dosyaEkle(pathFile,"Dosya yolu")
+                .ekleriEkMetniDoldur(editor)
+                .ekleriEkle();
+
+        evrakOlusturPage
+                .editorTabAc()
+                .editorIcerikDoldur(editor)
+                .imzala()
+                .sImzasec()
+                .sImzaImzala()
+                .sayisalImzaEvetPopup();
+
+        postalanacakEvraklarPage
+                .openPage()
+                .evrakSec(konuKoduRandom,geregiGercekKisi,tarih)
+                .evrakPostala()
+                .evrakPostalaPostala(true);
+
+        login(username2, password2);
+        //TODO
+
     }
 
 }

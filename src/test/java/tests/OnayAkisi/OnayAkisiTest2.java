@@ -11,6 +11,8 @@ import pages.ustMenuPages.KararYazisiOlusturPage;
 import pages.ustMenuPages.OlurYazisiOlusturPage;
 import pages.ustMenuPages.OnayAkisYonetimiPage;
 
+import java.lang.reflect.Method;
+
 /****************************************************
  * Tarih: 2017-12-04
  * Proje: Türksat Functional Test Automation
@@ -26,8 +28,12 @@ public class OnayAkisiTest2 extends BaseTest {
     GelenEvraklarPage gelenEvraklarPage;
 
     @BeforeMethod
-    public void loginBeforeTests() {
+    public void beforeTests(Method method) {
+
+        //log.info(method.getName() + "Nolu test senaryosu başladı.");
+
         login();
+
         evrakOlusturPage = new EvrakOlusturPage();
         onayAkisYonetimiPage = new OnayAkisYonetimiPage();
         olurYazisiOlusturPage = new OlurYazisiOlusturPage();
@@ -36,11 +42,12 @@ public class OnayAkisiTest2 extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC2112PasifYapma: Onay Akışı Yönetimi - Aktif/Pasif Yapma ve Varsayılan Yapma")
-    public void TC2112PasifYapma() {
+    @Test(enabled = true, description = "TS2112a: Onay Akışı Yönetimi - Aktif/Pasif Yapma ve Varsayılan Yapma")
+    public void TS2112a() throws InterruptedException {
 
+        //Pasif yapma
         String onayAkisAdi = "Optiim";
-        String kullanici = "TC2112 OnayAkisi";
+        String kullanici = "TS2112 OnayAkisi";
         String basariMesaji = "İşlem başarılıdır!";
 
         //tests.Data kontrolu için yazıldı. Pasif ise aktif yapılır.
@@ -68,7 +75,7 @@ public class OnayAkisiTest2 extends BaseTest {
                 .durumKontrol("Sadece Aktifler")
                 .filtredeAdDoldur(kullanici)
                 .ara()
-               // .aktiflerTumListeKayitKontrolu()   Bu adımda tüm tabloyu kontrol ettiği için yavaşlatıyor otomasyonu. Çıkartılmalı.
+                .aktiflerTumListeKayitKontrolu()   //Bu adımda tüm tabloyu kontrol ettiği için yavaşlatıyor otomasyonu. Çıkartılmalı.
                 .adaGorePasifYap(kullanici)
                 .islemOnayi("Evet");
 
@@ -100,11 +107,12 @@ public class OnayAkisiTest2 extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC2112AktifYapma: Onay Akışı Yönetimi - Aktif/Pasif Yapma ve Varsayılan Yapma")
-    public void TC2112AktifYapma() {
+    @Test(enabled = true, description = "TS2112b: Onay Akışı Yönetimi - Aktif/Pasif Yapma ve Varsayılan Yapma")
+    public void TS2112b() {
 
+        //Aktif yapma
         String onayAkisAdi = "Optiim";
-        String kullanici = "TC2112 OnayAkisi";
+        String kullanici = "TS2112 OnayAkisi";
         String basariMesaji = "İşlem başarılıdır!";
 
         //tests.Data kontrolu için yazıldı. Pasif ise aktif yapılır.

@@ -8,7 +8,7 @@ import pages.ustMenuPages.YazismaKurallariYonetimiPage;
 
 public class YazismaKurallariYonetimiTest extends BaseTest {
 
-   YazismaKurallariYonetimiPage yazismaKurallariYonetimiPage;
+    YazismaKurallariYonetimiPage yazismaKurallariYonetimiPage;
 
     @BeforeMethod
     public void loginBeforeTests() {
@@ -16,8 +16,8 @@ public class YazismaKurallariYonetimiTest extends BaseTest {
         login();
     }
 
-    @Test(enabled = true, description = "TC01957_A : Yazışma Kuralı Ekle")
-    public void TC01957_A() {
+    @Test(enabled = true, description = "TS1957A : Yazışma Kuralı Ekle")
+    public void TS1957A() {
 
         String basariMesaj = "İşlem başarılıdır!";
         String birimAdi = "Diğer Birimler";
@@ -26,7 +26,7 @@ public class YazismaKurallariYonetimiTest extends BaseTest {
         Boolean sonImzaSeviyesi = false;
 
         yazismaKurallariYonetimiPage
-                .open()
+                .openPage()
                 .yazismaKurallariEkle()
                 .birimTipiSec(birimAdi)
                 .tiklaSinirsizYazilabilir(sinirsizYazilabilir)
@@ -38,45 +38,55 @@ public class YazismaKurallariYonetimiTest extends BaseTest {
 
     }
 
-    @Test(enabled = true, description = "TC01957_B : Yazışma Kuralı Sil")
-    public void TC01957_B() {
+    @Test(enabled = true, description = "TS1957B : Yazışma Kuralı Sil")
+    public void TS1957B() {
 
         String basariMesaj = "İşlem başarılıdır!";
         String birimAdi = "Belde Belediyesi";
 
         yazismaKurallariYonetimiPage
-                .open()
+                .openPage()
                 .yazismaKuraliSil(birimAdi)
                 .islemMesaji().basariliOlmali(basariMesaj);
 
     }
 
-    @Test(enabled = true, description = "TC01957_C : Yazışma Kuralı Güncelle")
-    public void TC01957_C() {
+    @Test(enabled = true, description = "TS1957C : Yazışma Kuralı Güncelle")
+    public void TS1957C() {
 
         String basariMesaj = "İşlem başarılıdır!";
-        String guncellenecekBirimadi = "Diğer Birimler";
-        String yeniBirimAdi = "Belde Belediyesi";
+        String birimAdi = "Diğer Birimler";
         Boolean sinirsizYazilabilir = true;
         Boolean vekaletSeviyesi = true;
         Boolean sonImzaSeviyesi = false;
 
         yazismaKurallariYonetimiPage
-                .open()
-                .yazismaKuraliGuncelle(guncellenecekBirimadi)
+                .openPage()
+                .yazismaKurallariEkle()
+                .birimTipiSec(birimAdi)
+                .tiklaSinirsizYazilabilir(sinirsizYazilabilir)
+                .tiklaVekaletSeviyesi(vekaletSeviyesi)
+                .tiklaSonImzaSeviyesi(sonImzaSeviyesi)
+                .grupBirimTipleriKaydet()
+                .yazismakurallariKontrolEt(birimAdi, true, sinirsizYazilabilir, vekaletSeviyesi, sonImzaSeviyesi)
+                .islemMesaji().basariliOlmali(basariMesaj);
+
+        String yeniBirimAdi = "Belde Belediyesi";
+        sinirsizYazilabilir = true;
+        vekaletSeviyesi = true;
+        sonImzaSeviyesi = false;
+
+        yazismaKurallariYonetimiPage
+                .yazismaKuraliGuncelle(birimAdi)
                 .birimTipiSec(yeniBirimAdi)
                 .tiklaSinirsizYazilabilir(sinirsizYazilabilir)
                 .tiklaVekaletSeviyesi(vekaletSeviyesi)
                 .tiklaSonImzaSeviyesi(sonImzaSeviyesi)
                 .grupBirimTipleriKaydet()
-                .yazismakurallariKontrolEt(guncellenecekBirimadi, true, sinirsizYazilabilir, vekaletSeviyesi, sonImzaSeviyesi)
+                .yazismakurallariKontrolEt(yeniBirimAdi, true, sinirsizYazilabilir, vekaletSeviyesi, sonImzaSeviyesi)
                 .islemMesaji().basariliOlmali(basariMesaj);
 
     }
-
-
-
-
 
 
 }

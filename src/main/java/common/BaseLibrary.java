@@ -1,20 +1,23 @@
 package common;
 
-import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.SelenideElement;
-import com.codeborne.selenide.WebDriverRunner;
+import com.codeborne.selenide.*;
+import data.TestData;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
 import org.openqa.selenium.*;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -27,26 +30,97 @@ import java.util.regex.Pattern;
 import static com.codeborne.selenide.Condition.exactValue;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
+import static java.lang.Thread.currentThread;
 import static org.apache.commons.io.FileUtils.deleteDirectory;
 import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfElementLocated;
 
-public class BaseLibrary {
+public class BaseLibrary extends ElementsContainer {
 
-    private int doWaitLoading = 0;
-    private boolean doNotWaitLoading = false;
-    public static String docPath = null;
-    public static String browserName = null;
+
     protected static final Logger log = Logger.getLogger(BaseLibrary.class.getName());
     protected static String winHandleBefore = null;
+    private static String docPath = null;
+    private static String browserName = null;
+    private String downoladPath = null;
+    private long waitForLoading = 20;
+    private int doWaitLoading = 0;
+    private boolean doNotWaitLoading = false;
 
-    //<editor-fold desc="Allure screenshooter">
-    @Attachment(value = "Page screenshot", type = "image/png")
-    public byte[] takeScreenshot() {
-        return ((TakesScreenshot) WebDriverRunner.getWebDriver()).getScreenshotAs(OutputType.BYTES);
+    public static void killProcess() {
+
+        Runtime rt = Runtime.getRuntime();
+        try {
+            rt.exec("taskkill /f /im " + "chrome.exe");
+            rt.exec("taskkill /f /im " + "chromedriver.exe");
+            rt.exec("taskkill /f /im " + "conhost.exe");
+            rt.exec("taskkill /f /im " + "firefox.exe");
+            rt.exec("taskkill /f /im " + "geckodriver.exe");
+            rt.exec("taskkill /f /im " + "iexplore.exe");
+            rt.exec("taskkill /f /im " + "iedriver.server");
+            rt.exec("taskkill /f /im " + "iedriver.server64");
+            //rt.exec("taskkill /f /im " + "WerFault");
+            //rt.exec("taskkill /f /im " + "AcroRd32");
+            //rt.exec("taskkill /f /im " + "Excel");
+        } catch (IOException e) {
+            System.out.println("Processler Kill Edilememdi!!!");
+        }
     }
     //</editor-fold>
 
     //<editor-fold desc="Page loading methods">
+
+    /**
+     * Türkçe harfleri inglizce harflere dönüştürüyor
+     *
+     * @param str
+     * @return
+     */
+    public static String clearTurkishChars(String str) {
+        String ret = str;
+        char[] turkishChars = new char[]{0x131, 0x130, 0xFC, 0xDC, 0xF6, 0xD6, 0x15F, 0x15E, 0xE7, 0xC7, 0x11F, 0x11E};
+        char[] englishChars = new char[]{'i', 'I', 'u', 'U', 'o', 'O', 's', 'S', 'c', 'C', 'g', 'G'};
+        for (int i = 0; i < turkishChars.length; i++) {
+            ret = ret.replaceAll(new String(new char[]{turkishChars[i]}), new String(new char[]{englishChars[i]}));
+        }
+        return ret;
+    }
+
+    public static String getPCUsername() {
+        String userName = System.getProperty("user.name");
+        return userName;
+    }
+
+    public void clearCookies() {
+        try {
+            Selenide.clearBrowserLocalStorage();
+            Selenide.clearBrowserCookies();
+        } catch (Exception e) {
+            log.info("Error clearBrowserLocalStorage and clearBrowserCookies: " + e.getMessage());
+        }
+    }
+
+    //<editor-fold desc="Allure screenshooter">
+    @Attachment(value = "Page screenshot", type = "image/png")
+    public byte[] takeScreenshot() {
+        byte[] bytes = new byte[]{};
+        try {
+            bytes = ((TakesScreenshot) WebDriverRunner.getWebDriver()).getScreenshotAs(OutputType.BYTES);
+        } catch (WebDriverException e) {
+            System.out.println("Error takeScreenshot:" + e.getMessage());
+        }
+        return bytes;
+    }
+
+    @Attachment(value = "Page screenshot", type = "image/png")
+    public byte[] takeScreenshot(WebDriver driver) {
+        byte[] bytes = new byte[]{};
+        try {
+            bytes = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+        } catch (WebDriverException e) {
+            System.out.println("Error takeScreenshot:" + e.getMessage());
+        }
+        return bytes;
+    }
 
     /**
      * Waiting to JS and jQuery ready state and object with class "loading" to disappear.
@@ -54,11 +128,11 @@ public class BaseLibrary {
      *
      * @param
      */
-    public void waitForJS() {
+    private void waitForJS() {
         try {
             new WebDriverWait(WebDriverRunner.getWebDriver(), Configuration.timeout / 1000, 50).
                     until((ExpectedCondition<Boolean>) driver -> {
-                        String readyState = (String) executeJavaScript("return document.readyState");
+                        String readyState = executeJavaScript("return document.readyState");
 //                        System.out.println("Internal ready state:" + readyState);
 //                        return readyState.equals("complete") || readyState.equals("interactive");
                         return !readyState.equals("loading");
@@ -90,7 +164,7 @@ public class BaseLibrary {
         }*/
     }
 
-    public void waitForJSreadyState() {
+    private void waitForJSreadyState() {
         Wait().until(new ExpectedCondition<Boolean>() {
             @Override
             public Boolean apply(WebDriver driver) {
@@ -99,9 +173,10 @@ public class BaseLibrary {
         });
     }
 
-    public void waitForLoadingToDisappear(WebDriver driver) {
+    private void waitForLoadingToDisappear(WebDriver driver) {
 //        driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
 
+        //Thread.sleep(3000);
         try {
 
             /*List<WebElement> loading = driver.findElements(By.className("loading"));
@@ -124,7 +199,7 @@ public class BaseLibrary {
 //        driver.manage().timeouts().implicitlyWait(Configuration.timeout, TimeUnit.MILLISECONDS);
     }
 
-    public void waitForLoadingToDisappear1(WebDriver driver) {
+    private void waitForLoadingToDisappear1(WebDriver driver) {
         try {
 
             //div[starts-with(@id,"bekleyiniz") and contains(@style, "display")]
@@ -146,17 +221,90 @@ public class BaseLibrary {
         }
     }
 
-    public void setDoNotWaitLoading(boolean doNotWaitLoading) {
+    private void setDoNotWaitLoading(boolean doNotWaitLoading) {
         this.doNotWaitLoading = doNotWaitLoading;
     }
 
-    public void waitForLoading(WebDriver driver) {
+    private void waitForLoading(WebDriver driver) throws InterruptedException {
         if (doNotWaitLoading)
             return;
         //waitForJS();
         waitForLoadingToDisappear(driver);
     }
     //</editor-fold>
+
+    private long getWaitForLoading() {
+        return waitForLoading;
+    }
+
+    public void setWaitForLoading(long seconds) {
+        this.waitForLoading = waitForLoading;
+    }
+
+    public void waitForLoadingJS(WebDriver driver, long timeoutSec) {
+        new WebDriverWait(driver, timeoutSec, 10).until(driver1 ->
+        {
+            JavascriptExecutor js = (JavascriptExecutor) driver1;
+            boolean isJsFinished = false;
+            try {
+                isJsFinished = (boolean) js.executeScript("return (document.readyState == \"complete\" || document.readyState == \"interactive\")");
+            } catch (Exception e) {
+                isJsFinished = true;
+                System.out.println("Load: isJsFinished error: " + e.getMessage());
+            }
+
+            //            boolean isAjaxFinished = (boolean) ((JavascriptExecutor) driver1).
+//                    executeScript("return jQuery.active == 0");
+
+            boolean isAjaxFinished = false;
+            try {
+                isAjaxFinished = (boolean) js.executeScript("var result = true; try { result = (typeof jQuery != 'undefined') ? jQuery.active == 0 : true } catch (e) {}; return result;");
+            } catch (Exception e) {
+                isAjaxFinished = true;
+                System.out.println("Load: isAjaxFinished error: " + e.getMessage());
+            }
+
+            boolean isLoaderHidden = false;
+            try {
+                isLoaderHidden = (boolean) js.executeScript("return document.querySelectorAll('div[id*=\"bekleyiniz\"][style*=\"visibility: visible\"]').length == 0");
+//                    executeScript("return $('.loading').is(':visible') == false");
+            } catch (Exception e) {
+                isLoaderHidden = true;
+                System.out.println("Load: isLoaderHidden error: " + e.getMessage());
+            }
+
+            return isJsFinished && isLoaderHidden && isAjaxFinished;
+        });
+    }
+
+    public void waitForLoadingJS(WebDriver driver) {
+//        long timeout = Configuration.timeout / 1000;
+        long timeout = getWaitForLoading();
+        waitForLoadingJS(driver, timeout);
+    }
+
+    public void maximazeBrowser() {
+        try {
+            if (Configuration.browserSize != null) {
+                try {
+                    String[] size = Configuration.browserSize.split("x");
+                    int width = Integer.parseInt(size[0]);
+                    int height = Integer.parseInt(size[1]);
+                    Dimension browserSize = new Dimension(width, height);
+                    WebDriverRunner.getWebDriver().manage().window().setSize(browserSize);
+                    System.out.println("custom maximize()");
+                } catch (NumberFormatException e) {
+                    WebDriverRunner.getWebDriver().manage().window().maximize();
+                    System.out.println("manage().window().maximize()");
+                }
+            } else {
+                WebDriverRunner.getWebDriver().manage().window().maximize();
+                System.out.println("manage().window().maximize()");
+            }
+        } catch (Exception e) {
+            System.out.println("SettingsListener maximize:" + e.getMessage());
+        }
+    }
 
     /**
      * Alan setValue, sendKeys doğru çalışmıyor ise bu metodu kullanılır.
@@ -167,27 +315,6 @@ public class BaseLibrary {
     public void setValueJS(SelenideElement element, String value) {
         executeJavaScript("arguments[0].value = arguments[1]", element, value);
     }
-
-    public static void killProcess() {
-
-        Runtime rt = Runtime.getRuntime();
-        try {
-            rt.exec("taskkill /f /im " + "chrome.exe");
-            rt.exec("taskkill /f /im " + "chromedriver.exe");
-            rt.exec("taskkill /f /im " + "conhost.exe");
-            rt.exec("taskkill /f /im " + "firefox.exe");
-            rt.exec("taskkill /f /im " + "geckodriver.exe");
-            rt.exec("taskkill /f /im " + "iexplore.exe");
-            rt.exec("taskkill /f /im " + "iedriver.server");
-            rt.exec("taskkill /f /im " + "iedriver.server64");
-            //rt.exec("taskkill /f /im " + "WerFault");
-            //rt.exec("taskkill /f /im " + "AcroRd32");
-            //rt.exec("taskkill /f /im " + "Excel");
-        } catch (IOException e) {
-            System.out.println("Processler Kill Edilememdi!!!");
-        }
-    }
-
 
     /**
      * get date from text in format 31.12.2017
@@ -226,22 +353,6 @@ public class BaseLibrary {
     }
 
     /**
-     * Türkçe harfleri inglizce harflere dönüştürüyor
-     *
-     * @param str
-     * @return
-     */
-    public static String clearTurkishChars(String str) {
-        String ret = str;
-        char[] turkishChars = new char[]{0x131, 0x130, 0xFC, 0xDC, 0xF6, 0xD6, 0x15F, 0x15E, 0xE7, 0xC7, 0x11F, 0x11E};
-        char[] englishChars = new char[]{'i', 'I', 'u', 'U', 'o', 'O', 's', 'S', 'c', 'C', 'g', 'G'};
-        for (int i = 0; i < turkishChars.length; i++) {
-            ret = ret.replaceAll(new String(new char[]{turkishChars[i]}), new String(new char[]{englishChars[i]}));
-        }
-        return ret;
-    }
-
-    /**
      * JavaSctipt ile click yapılır
      *
      * @param element
@@ -259,17 +370,6 @@ public class BaseLibrary {
         executeJavaScript("arguments[0].click();", element);
     }
 
-    //Dosya ekler
-    public void uploadFile(SelenideElement element, String pathToFile) {
-        try {
-            element.sendKeys(pathToFile);
-            log.info("Dosya yüklendi.");
-        } catch (Exception e) {
-            log.info("Error in attaching file.s : " + e);
-            throw new RuntimeException(e);
-        }
-    }
-
 //    private String closeAlertAndGetItsText() {
 //        try {
 //            Alert alert = driver.switchTo().alert();
@@ -284,6 +384,17 @@ public class BaseLibrary {
 //            acceptNextAlert = true;
 //        }
 //    }
+
+    //Dosya ekler
+    public void uploadFile(SelenideElement element, String pathToFile) {
+        try {
+            element.sendKeys(pathToFile);
+            log.info("Dosya yüklemeye başlandı.");
+        } catch (Exception e) {
+            log.info("Dosya yükleme başarısız. : " + e);
+            throw new RuntimeException(e);
+        }
+    }
 
     //Random numara üretir.
     public String createRandomNumber(int length) {
@@ -412,7 +523,7 @@ public class BaseLibrary {
     }
 
     //Bilgisayara indirilen dosyaları siler.
-    public boolean deleteFile(String pathToFile) throws IOException {
+    public boolean deleteFile(String pathToFile) {
         try {
             File file = new File(pathToFile);
 
@@ -556,7 +667,7 @@ public class BaseLibrary {
     }
 
     // Store the current window handle
-    public String windowHandleBefore() throws InterruptedException {
+    public String windowHandleBefore() {
         winHandleBefore = WebDriverRunner.getWebDriver().getWindowHandle();
         return winHandleBefore;
     }
@@ -582,7 +693,7 @@ public class BaseLibrary {
         WebDriverRunner.getWebDriver().close();
     }
 
-
+    //region Neden burada?
     public String cssSE(String element, String attribute, String startsWith, String endsWith) {
 
         if (element != "" || element == null) {
@@ -613,8 +724,9 @@ public class BaseLibrary {
         }
     }
 
-    public boolean findElementOnTableAllPages(SelenideElement element) {
-        SelenideElement next = $(("[class='ui-paginator-next ui-state-default ui-corner-all']"));
+    public boolean findElementOnTableAllPages(String form, SelenideElement element) {
+
+        SelenideElement next = $(("[id='" + form + "'] [class='ui-paginator-next ui-state-default ui-corner-all']"));
 
         boolean status = false;
         while (status == false) {
@@ -680,7 +792,7 @@ public class BaseLibrary {
     }
 
     // İşlem penceresi kapatma onay - popup
-    @Step("Popup : İşlem penceresi kaydet: \"{secim}\" ")
+    @Step("Popup : İşlem penceresi kaydet: {secim}")
     public void islemPenceresiKaydetPopup(String secim) {
 
         SelenideElement islemKaydetPopup = $(By.id("saveOnCloseWindowConfirm"));
@@ -701,46 +813,108 @@ public class BaseLibrary {
         }
     }
 
+    //endregion
 
-    @Step("Popup İşlem Onayı:  \"{secim}\"")
+    @Step("Popup İşlem Onayı: {secim}")
     public void islemOnayi(String secim) {
 
         SelenideElement btnIslemOnayiEvet = $(By.id("baseConfirmationDialog:confirmButton"));
         SelenideElement btnIslemOnayiHayir = $(By.id("baseConfirmationDialog:baseConfirmationDialogCancelButton"));
+        btnIslemOnayiEvet.shouldBe(visible);
 
         switch (secim) {
             case "Evet":
-                btnIslemOnayiEvet.click();
+                clickJs(btnIslemOnayiEvet);
                 break;
             case "Hayır":
-                btnIslemOnayiHayir.click();
+                clickJs(btnIslemOnayiHayir);
                 break;
         }
     }
 
-    public static String getOS() {
 
-        // Get Browser name and version.
-        Capabilities caps = ((RemoteWebDriver) WebDriverRunner.getWebDriver()).getCapabilities();
-        // String browserName = caps.getBrowserName();
-        // String browserVersion = caps.getVersion();
-        Platform operationSystem = caps.getPlatform();
-        System.out.println("Operation System: " + operationSystem.name());
+    @Step("Popup Ek Silme Onayı: {secim}")
+    public void ekSilmeOnayi(String secim) {
 
-        return operationSystem.name();
+        SelenideElement btnSilmeOnayiEvet = $("[id$='ekSilEvetButton']");
+        SelenideElement btnSilmeOnayiHayir = $("['ekSilHayirButton']");
+
+        switch (secim) {
+            case "Evet":
+                clickJs(btnSilmeOnayiEvet);
+                break;
+            case "Hayır":
+                clickJs(btnSilmeOnayiHayir);
+                break;
+        }
     }
 
-    public static String getBrowserName() {
 
-        // Get Browser name and version.
-        Capabilities caps = ((RemoteWebDriver) WebDriverRunner.getWebDriver()).getCapabilities();
-        browserName = caps.getBrowserName();
+    @Step("Popup İlişik Silme Onayı: {secim}")
+    public void ilisikSilmeOnayi(String secim) {
+
+        SelenideElement btnSilmeOnayiEvet = $("[id$='ilisikSilEvetButton']");
+        SelenideElement btnSilmeOnayiHayir = $("['ilisikSilHayirButton']");
+
+        switch (secim) {
+            case "Evet":
+                clickJs(btnSilmeOnayiEvet);
+                break;
+            case "Hayır":
+                clickJs(btnSilmeOnayiHayir);
+                break;
+        }
+    }
+
+    //Dosyanın bilgisayara inip inmediğini kontrol eder.
+    public boolean searchDownloadedFileWithName(String downloadPath, String fileName) {
+        boolean flag = false;
+        File dir = new File(downloadPath);
+        File[] dir_contents = dir.listFiles();
+        Pattern y = Pattern.compile("[^0-9]");
+        String s = null;
+        SoftAssert sa = new SoftAssert();
+
+        for (int i = 0; i < dir_contents.length; i++) {
+            String file = dir_contents[i].getName().toString();
+            s = "";
+            Matcher m = y.matcher(file);
+            while (m.find()) {
+                s = s + m.group();
+            }
+//            sa.assertEquals(s,fileName,"Klasör "+ dir_contents[i].getName().toString() +"indirilmiştir.");
+//            sa.assertNotEquals(s,fileName,"İstenilen dosya indirilmemiştir.");
+//            assert s.equals(fileName) : "Klasör "+ dir_contents[i].getName().toString() + "indirilmiştir.";
+//            assert s.equalsIgnoreCase(fileName) : "İstenilen dosya indirilmemiştir.";
+
+            if (s.contains(fileName)) {
+                System.out.println("dosya indirilmiştir.");
+                Allure.addAttachment(dir_contents[i].getName().toString(), "raporu indirilmiştir");
+                flag = true;
+                break;
+            } else
+                Allure.addAttachment("Rapor Sonucu", "İstenilen dosya indirilememiştir.");
+        }
+        return flag;
+    }
+
+
+    //region Capabilities
+    public String getOS() {
+        Capabilities caps = getCapabilities();
+        String platformName = caps.getCapability("platformName").toString();
+        System.out.println("Operation System: " + platformName);
+        return platformName;
+    }
+
+    public String getBrowserName() {
+        String browserName = getCapabilities().getBrowserName();
         System.out.println("Browser Name : " + browserName);
-
         return browserName;
     }
 
-    public static String setDocPath() {
+    @Deprecated
+    private String setDocPath() {
 
         // Get Browser name and version.
         Capabilities caps = ((RemoteWebDriver) WebDriverRunner.getWebDriver()).getCapabilities();
@@ -755,13 +929,82 @@ public class BaseLibrary {
             docPath = "C:\\TestAutomation\\BelgenetFTA\\documents\\";
         } else if (operationSystem.is(Platform.LINUX)) {
             //TODO: Linux pathi verilecek
-            docPath = "/selenium/";
+            docPath = System.getProperty("user.name") + "/BelgenetFTA/documents";
         } else if (operationSystem.is(Platform.MAC)) {
             //TODO: Mac pathi verilecek
-            docPath = "/selenium/";
+            docPath = System.getProperty("user.name") + "/BelgenetFTA/documents";
         }
         System.out.println("File path: " + docPath);
         return docPath;
     }
+
+    public String getDocPath() {
+        Capabilities caps = getCapabilities();
+        Platform operationSystem = caps.getPlatform();
+
+        String path = "";
+        if (operationSystem.is(Platform.WINDOWS) || operationSystem.is(Platform.XP))
+            path = TestData.docPathWindows;
+        else
+            path = TestData.docPathLinux;
+
+        log.info("Documents path: " + path);
+        return path;
+    }
+
+    public String getDownloadPath() {
+        Capabilities caps = getCapabilities();
+        Platform operationSystem = caps.getPlatform();
+        String path = "";
+        if (operationSystem.is(Platform.WINDOWS) || operationSystem.is(Platform.XP))
+            path = TestData.docDownloadPathWindows;
+        else
+            path = TestData.docDownloadPathLinux;
+
+        log.info("Downloads path: " + path);
+        return path;
+    }
+
+    /**
+     * Get Capabilities of EventFiringWebDriver
+     */
+    public Capabilities getCapabilities() {
+        //This 'if' handle case when LoggingWebDriver.driver is instanceof EventFiringWebDriver .
+        //In this case RemoteWebDriver is field within EventFiringWebDriver while EventFiringWebDriver don't support getting Capabilities
+        WebDriver driver = WebDriverRunner.getWebDriver();
+
+        if (driver instanceof EventFiringWebDriver
+                && ((EventFiringWebDriver) driver).getWrappedDriver() instanceof HasCapabilities) {
+            return ((HasCapabilities) ((EventFiringWebDriver) driver)
+                    .getWrappedDriver()).getCapabilities();
+        } else if (driver instanceof HasCapabilities) {
+            return ((HasCapabilities) driver).getCapabilities();
+        }
+        throw new UnsupportedOperationException(
+                "Underlying driver instance does not support capabilities");
+    }
+
+    public RemoteWebDriver getDriverAsRemoteWebDriver() {
+        //This 'if' handle case when LoggingWebDriver.driver is instanceof EventFiringWebDriver .
+        //In this case RemoteWebDriver is field within EventFiringWebDriver while EventFiringWebDriver don't support getting Capabilities
+        WebDriver driver = WebDriverRunner.getWebDriver();
+
+        if (driver instanceof EventFiringWebDriver
+                && ((EventFiringWebDriver) driver).getWrappedDriver() instanceof HasCapabilities) {
+            return (RemoteWebDriver) ((EventFiringWebDriver) driver)
+                    .getWrappedDriver();
+        } else if (driver instanceof HasCapabilities) {
+            return (RemoteWebDriver) driver;
+        }
+        throw new UnsupportedOperationException(
+                "Underlying driver instance does not support capabilities");
+    }
+
+    public int getRandomNumber(int startIndex, int endIndex) {
+        return (new Random().nextInt((endIndex - startIndex) + 1) + startIndex);
+    }
+
+    //endregion
+
 
 }

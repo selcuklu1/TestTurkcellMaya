@@ -3,6 +3,7 @@
 <<<<<<< HEAD
 <!--<suite thread-count="1" name="Test Suite" parallel="none" verbose="1">-->
 <!--<suite thread-count="5" name="Test Suite" parallel="classes" verbose="1">-->
+<<<<<<< HEAD
 <suite thread-count="1" name="Test Suite" parallel="methods" verbose="1">
     <test name="All">
         <packages>
@@ -10,6 +11,13 @@
         </packages>
 =======
 <suite thread-count="1" name="Test Suite" parallel="true" verbose="1">
+=======
+
+
+<suite name="AAAAAA" parallel="classes" verbose="1">
+
+    <!--thread-count="10"-->
+>>>>>>> sezai
     <!--<listeners>-->
     <!--<listener class-name="listeners.TestListener"></listener>-->
     <!--</listeners>-->
@@ -23,4 +31,19 @@
         </classes>
 >>>>>>> 0e697a0c9707bc193b03c2fdc79ef98324d0ec51
     </test>
+<<<<<<< HEAD
+=======
+    <test name="TuzelKisiYonetimiTest">
+        <classes>
+            <class name="tests.TuzelKisiYonetimi.TuzelKisiYonetimiTest"/>
+        </classes>
+    </test>-->
+    <test name="All">
+        <packages>
+            <package name="tests.BirimIcerikSablonu"/>
+            <package name="tests.EvrakNot"/>
+            <package name="tests.EvrakBeklemeyeAlma"/>
+        </packages>
+    </test>
+>>>>>>> sezai
 </suite>

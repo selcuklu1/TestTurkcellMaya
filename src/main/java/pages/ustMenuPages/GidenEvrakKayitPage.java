@@ -9,16 +9,18 @@ package pages.ustMenuPages;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.testng.Assert;
 import pages.MainPage;
-import pages.pageComponents.UstMenu;
 import pages.pageComponents.belgenetElements.BelgenetElement;
+import pages.pageData.UstMenuData;
 
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
-import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
+import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 public class GidenEvrakKayitPage extends MainPage {
 
@@ -65,8 +67,9 @@ public class GidenEvrakKayitPage extends MainPage {
     SelenideElement popUpEvrakDefterBasariliKapat = $(By.id("gidenEvrakDefterKaydiBasarili:vazgecButton"));
     //endregion
 
+    @Step("Giden Evrak Kayit sayfasını aç")
     public GidenEvrakKayitPage openPage() {
-        new UstMenu().ustMenu("Giden Evrak Kayıt");
+        ustMenu(UstMenuData.EvrakIslemleri.GidenEvrakKayit);
         return this;
     }
 
@@ -77,19 +80,20 @@ public class GidenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("Gereği seçim tipi alanında {value} seç")
+    @Step("Gereği seçim tipi alanında \"{kisiKurum}\" seç")
     public GidenEvrakKayitPage geregiSecimTipiSecByText(String kisiKurum) {
         cmbGeregiSecimTipi.selectOption(kisiKurum);
         return this;
     }
 
-    @Step("Gereği doldur")
-    public GidenEvrakKayitPage geregiDoldur(String geregiAdSoyad) {
 
-        cmbGeregi.selectLov(geregiAdSoyad);
+    @Step("Gereği {description} doldur: | {geregi}")
+    public GidenEvrakKayitPage geregiDoldur(String geregi, String description) {
 
-        System.out.println("title: " + cmbGeregi.lastSelectedLovTitleText());
-        System.out.println("detail: " + cmbGeregi.lastSelectedLovDetailText());
+        cmbGeregi.selectLov(geregi);
+
+        /*System.out.println("title: " + cmbGeregi.lastSelectedLovTitleText());
+        System.out.println("detail: " + cmbGeregi.lastSelectedLovDetailText());*/
         return this;
     }
 
@@ -98,14 +102,14 @@ public class GidenEvrakKayitPage extends MainPage {
 
         cmbGeregi.selectLov(geregiAdSoyad);
 
-        System.out.println("title: " + cmbGeregi.lastSelectedLovTitleText());
-        System.out.println("detail: " + cmbGeregi.lastSelectedLovDetailText());
+        /*System.out.println("title: " + cmbGeregi.lastSelectedLovTitleText());
+        System.out.println("detail: " + cmbGeregi.lastSelectedLovDetailText());*/
 
-        cmbGeregi.clearAllSelectedLov();
+        cmbGeregi.clearAllSelectedItems();
         return this;
     }
 
-    @Step("Kişinin Geregi alanında görüntülenmediği kontrolu")
+    @Step("Kişinin Geregi alanında görüntülenmeme kontrolu")
     public GidenEvrakKayitPage geregiAlanindaGoruntulenmemeKontrolu(String kisi) {
 
         boolean selectable = comboLov(cmbGeregiBy).isLovValueSelectable(kisi);
@@ -125,23 +129,23 @@ public class GidenEvrakKayitPage extends MainPage {
     public GidenEvrakKayitPage geregiAlanindaGoruntulenmeKontrolu(String adSoyad) {
 
         cmbGeregi.selectLov(adSoyad);
-        System.out.println("Gelen title:     " + cmbGeregi.lastSelectedLovTitleText());
+        /*System.out.println("Gelen title:     " + cmbGeregi.lastSelectedLovTitleText());
         System.out.println("Beklenen title:  " + adSoyad);
-        Assert.assertEquals(cmbGeregi.lastSelectedLovTitleText().contains(adSoyad), true);
-
+        Assert.assertEquals(cmbGeregi.lastSelectedLovTitleText().contains(adSoyad), true);*/
+        cmbGeregi.getSelectedTitles().last().shouldHave(text(adSoyad));
         return this;
     }
 
-    @Step("Bilgi seçim tipi alanında {value} seç")
-    public GidenEvrakKayitPage bilgiSecimTipiSec(String bilgi) {
+    @Step("Bilgi seçim tipi alanında \"{bilgiSecimTipi}\" seç")
+    public GidenEvrakKayitPage bilgiSecimTipiSec(String bilgiSecimTipi) {
         cmbBilgiSecimTipi.sendKeys(Keys.SHIFT);
-        cmbBilgiSecimTipi.selectOption(bilgi);
+        cmbBilgiSecimTipi.selectOption(bilgiSecimTipi);
         return this;
     }
 
-    @Step("Bilgi seçim tipi alanında {value} seç")
-    public GidenEvrakKayitPage bilgiSecimTipiSecByText(String bilgi) {
-        cmbBilgiSecimTipi.selectOption(bilgi);
+    @Step("Bilgi seçim tipi alanında \"{bilgiSecimTipi}\" seç")
+    public GidenEvrakKayitPage bilgiSecimTipiSecByText(String bilgiSecimTipi) {
+        cmbBilgiSecimTipi.selectOption(bilgiSecimTipi);
         return this;
     }
 
@@ -149,8 +153,8 @@ public class GidenEvrakKayitPage extends MainPage {
     public GidenEvrakKayitPage bilgiDoldur(String geregiAdSoyad) {
 
         cmbBilgi.selectLov(geregiAdSoyad);
-        System.out.println("title: " + cmbBilgi.lastSelectedLovTitleText());
-        System.out.println("detail: " + cmbBilgi.lastSelectedLovDetailText());
+        /*System.out.println("title: " + cmbBilgi.lastSelectedLovTitleText());
+        System.out.println("detail: " + cmbBilgi.lastSelectedLovDetailText());*/
 
         return this;
     }
@@ -159,15 +163,15 @@ public class GidenEvrakKayitPage extends MainPage {
     public GidenEvrakKayitPage bilgiDoldur(String geregiAdSoyad, Boolean clearAfter) {
 
         cmbBilgi.selectLov(geregiAdSoyad);
-        System.out.println("title: " + cmbBilgi.lastSelectedLovTitleText());
-        System.out.println("detail: " + cmbBilgi.lastSelectedLovDetailText());
+        /*System.out.println("title: " + cmbBilgi.lastSelectedLovTitleText());
+        System.out.println("detail: " + cmbBilgi.lastSelectedLovDetailText());*/
 
-        cmbBilgi.clearAllSelectedLov();
+        cmbBilgi.clearAllSelectedItems();
 
         return this;
     }
 
-    @Step("Kişinin Bilgi alanında görüntülenmediği kontrolu")
+    @Step("Kişinin Bilgi alanında görüntülenmeme kontrolu")
     public GidenEvrakKayitPage bilgiAlanindaGoruntulenmemeKontrolu(String kisi) {
 
         boolean selectable = comboLov(cmbBilgiBy).isLovValueSelectable(kisi);
@@ -183,10 +187,11 @@ public class GidenEvrakKayitPage extends MainPage {
 
         String adSoyad = ad + " " + soyad.toUpperCase();
         cmbBilgi.selectLov(adSoyad);
-        System.out.println("Gelen title:     " + cmbBilgi.lastSelectedLovTitleText());
-        System.out.println("Beklenen title:  " + adSoyad);
-        Assert.assertEquals(cmbBilgi.lastSelectedLovTitleText().contains(adSoyad), true);
+        /*System.out.println("Gelen title:     " + cmbBilgi.lastSelectedLovTitleText());
+        System.out.println("Beklenen title:  " + adSoyad);*/
+        /*Assert.assertEquals(cmbBilgi.lastSelectedLovTitleText().contains(adSoyad), true);*/
 
+        cmbBilgi.getSelectedTitles().last().shouldHave(text(adSoyad));
         return this;
     }
 
@@ -198,6 +203,7 @@ public class GidenEvrakKayitPage extends MainPage {
         return this;
     }
 
+    @Step("Seçilen gereği sil")
     public GidenEvrakKayitPage secilenGeregiSil() {
         btnGeregiDelete.shouldBe(Condition.visible);
         clickJs(btnGeregiDelete);
@@ -217,13 +223,19 @@ public class GidenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    public GidenEvrakKayitPage konuKoduDoldur(String konuKodu) throws InterruptedException {
+    public GidenEvrakKayitPage konuKoduDoldur(String konuKodu) {
         comboKonuKodu.selectLov(konuKodu);
         return this;
     }
-
+    @Step("Evrak Turu \"{evrakTuru}\" seçilir")
     public GidenEvrakKayitPage evrakTuruSec(String evrakTuru) {
         cmbEvrakBilgileriListEvrakTuru.selectOption(evrakTuru);
+        return this;
+    }
+    @Step("Evrak Turu alanında \"{icerik}\" olduğu görülür.")
+    public GidenEvrakKayitPage evrakTuruIcerikKontrolu(String icerik) {
+        boolean sonuc = cmbEvrakBilgileriListEvrakTuru.innerText().contains(icerik);
+        Assert.assertEquals(true,sonuc);
         return this;
     }
 
@@ -238,9 +250,17 @@ public class GidenEvrakKayitPage extends MainPage {
         dateTxtEvrakBilgileriListEvrakTarihi.sendKeys(evrakTarihi);
         return this;
     }
-
+    @Step("Gizlilik Derecesi alanında \"{gizlilikDerecesi}\" seçilir.")
     public GidenEvrakKayitPage gizlilikDerecesiSec(String gizlilikDerecesi) {
         cmbEvrakBilgileriListGizlilikDerecesi.selectOption(gizlilikDerecesi);
+        return this;
+    }
+    @Step("Gizlilik Derecesi içerik kontrol.")
+    public GidenEvrakKayitPage gizlilikDerecesiIcerikKontrol() {
+        String icerik  = cmbEvrakBilgileriListGizlilikDerecesi.innerText();
+        String text = clearHorizantalTabChars(icerik);
+        System.out.println(text);
+        Allure.addAttachment("İvedilik alanı",text);
         return this;
     }
 
@@ -250,13 +270,13 @@ public class GidenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    public GidenEvrakKayitPage evrakBilgileriUstYaziEkle(String path) throws InterruptedException {
+    public GidenEvrakKayitPage evrakBilgileriUstYaziEkle(String path) {
         uploadFile(ustYazi, path);
         //ustYaziUploadFile(path);
         return this;
     }
 
-    @Step("PDF Ust Yazi adi kontrol")
+    @Step("PDF Ust Yazi adi kontrol : \"{ustYaziAdi}\" ")
     public GidenEvrakKayitPage ustYaziPdfAdiKontrol(String ustYaziAdi) {
         String text = lblEklenenPdfUstYazi.text();
         System.out.println(text);
@@ -264,56 +284,75 @@ public class GidenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("İvedilik Seç")
+    @Step("İvedilik alanından \"{ivedilik}\" Seç")
     public GidenEvrakKayitPage ivedilikSec(String ivedilik) {
         cmbEvrakBilgileriListIvedilik.selectOption(ivedilik);
         return this;
     }
 
-    @Step("Miat doldur")
+    @Step("İvedilik alanı içerik kontrolü")
+    public GidenEvrakKayitPage ivedilikIcerikKontrol() {
+        String icerik = cmbEvrakBilgileriListIvedilik.innerText();
+        String text = clearHorizantalTabChars(icerik);
+        System.out.println(text);
+        Allure.addAttachment("İvedilik alanı",text);
+        return this;
+    }
+
+    public static String clearHorizantalTabChars(String str) {
+        String ret = str;
+        char[] horizantalTabChars = new char[]{0x9};
+        char[] newChars = new char[]{' ',' '};
+        for (int i = 0; i < horizantalTabChars.length; i++) {
+            ret = ret.replaceAll(new String(new char[]{horizantalTabChars[i]}), new String(new char[]{newChars[i]}));
+        }
+        return ret;
+    }
+
+    @Step("Miat alnına \"{miatTarihi}\" girilir")
     public GidenEvrakKayitPage miatDoldur(String miatTarihi) {
         dateTxtMiat.clear();
         dateTxtMiat.sendKeys(miatTarihi);
         return this;
     }
 
-    @Step("Kaldıralacak Klasör doldur")
-    public GidenEvrakKayitPage kaldiralacakKlasorDoldur(String kaldirlacakKlasor) throws InterruptedException {
-        comboKaldiralacakKlasörler.selectLov(kaldirlacakKlasor);
+    @Step("Kaldıralacak Klasör alanından \"{kaldirilacakKlasor}\" seçilir")
+    public GidenEvrakKayitPage kaldiralacakKlasorDoldur(String kaldirilacakKlasor) {
+        comboKaldiralacakKlasörler.selectLov(kaldirilacakKlasor);
         return this;
     }
 
     @Step("Evrak Ekleri filtre ac")
-    public GidenEvrakKayitPage ekBilgiFiltreAc() throws InterruptedException {
+    public GidenEvrakKayitPage ekBilgiFiltreAc() {
         clickJs(btnEvrakEkleri);
         return this;
     }
 
-    @Step("Fiziksel Ek metin doldur")
+    @Step("Fiziksel Ek metin alanınıa \"{evrakEkTabViewEkMetni}\" girilir")
     public GidenEvrakKayitPage evrakEkTabFizikselEkMetniDoldur(String evrakEkTabViewEkMetni) {
         txtEvrakFizikselEkTabViewEkMetni.sendKeys(evrakEkTabViewEkMetni);
         return this;
     }
 
-    @Step("Fiziksel Ek Ekle buton")
+    @Step("Fiziksel Ek Ekle buton tıkla")
     public GidenEvrakKayitPage fizikselEkTabViewAciklamaEkle() {
         btnEvrakFizikselEkEkle.click();
         return this;
     }
 
-    @Step("Fiziksel Ek Ekle buton")
-    public GidenEvrakKayitPage ekBilgiFizikselEkEkle() throws InterruptedException {
+    @Step("Fiziksel Ek Ekle buton tıkla")
+    public GidenEvrakKayitPage ekBilgiFizikselEkEkle() {
         clickJs(btnFizikselEkEkle);
         return this;
     }
 
     @Step("İlgi Ekleri filtre ac")
-    public GidenEvrakKayitPage ilgiEkleriFiltreAc() throws InterruptedException {
+    public GidenEvrakKayitPage ilgiEkleriFiltreAc() {
         clickJs(btnİlgiEkleri);
         return this;
     }
 
-    @Step("Metin açıklama doldur")
+    @Step("İlgi Ekleri Ek Metin alanına \"{evrakEkTabViewEkMetni}\" girilir")
     public GidenEvrakKayitPage ilgiEkleriMetinEkMetniDoldur(String evrakEkTabViewEkMetni) {
         txtIlgiEkleriMetinEkTabViewEkMetni.sendKeys(evrakEkTabViewEkMetni);
         return this;
@@ -326,26 +365,26 @@ public class GidenEvrakKayitPage extends MainPage {
     }
 
     @Step("Metin Ekle buton")
-    public GidenEvrakKayitPage ilgiEkleriMetinEkle() throws InterruptedException {
+    public GidenEvrakKayitPage ilgiEkleriMetinEkle() {
         clickJs(btnIlgiEkleriEkle);
         return this;
     }
 
     @Step("Kaydet buton")
-    public GidenEvrakKayitPage kaydet() throws InterruptedException {
+    public GidenEvrakKayitPage kaydet() {
         btnKaydet.click();
         return this;
     }
 
     @Step("Pop up kontrol")
-    public GidenEvrakKayitPage popUpkaydetEvet() throws InterruptedException {
+    public GidenEvrakKayitPage popUpkaydetEvet() {
         if (popUpKaydetEvet.isDisplayed())
             popUpKaydetEvet.click();
         return this;
     }
 
     @Step("Başarılı Pop up kontrol")
-    public String popUpBasariliKapat() throws InterruptedException {
+    public String popUpBasariliKapat() {
         popUpEvrakDefterBasarili.shouldBe(Condition.visible);
         String mesaj4 = "Evrak başarıyla kaydedilmiştir.";
         popUpEvrakDefterBasarili.getText().contains(mesaj4);
@@ -355,8 +394,8 @@ public class GidenEvrakKayitPage extends MainPage {
         return evrakNo;
     }
 
-    @Step("Konu doldur")
-    public GidenEvrakKayitPage konuDoldur(String konu){
+    @Step("Konu alnına \"{konu}\" girilir")
+    public GidenEvrakKayitPage konuDoldur(String konu) {
         $("[id$='konuTextArea']").setValue(konu);
         return this;
     }

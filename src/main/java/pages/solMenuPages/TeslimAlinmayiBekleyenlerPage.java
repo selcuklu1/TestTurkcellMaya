@@ -3,18 +3,17 @@ package pages.solMenuPages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
-import common.BaseLibrary;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
 
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
-import static com.codeborne.selenide.Selenide.sleep;
-import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
+import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Selenide.*;
+import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 public class TeslimAlinmayiBekleyenlerPage extends MainPage {
 
@@ -26,10 +25,10 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     SelenideElement tblRapor = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
     SelenideElement btnTeslimAlveHavaleYap = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:6:cmdbutton"));
     SelenideElement tblIlkEvrak = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
-    SelenideElement btnTeslimAlVeKapat = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:7:cmdbutton"));
+    ElementsCollection btnTeslimAlVeKapat = $$("[id='mainPreviewForm:onizlemeRightTab:onizlemeRightTab'] table td[class='buttonMenuContainerDefault']");
     BelgenetElement txtKaldirilacakKlasorler = comboLov(By.id("mainPreviewForm:klasorLov_id:LovText"));
     BelgenetElement txtKonuKodu = comboLov(By.id("mainPreviewForm:konuKoduLov:LovText"));
-    SelenideElement btnTeslimAlVeKapatTeslimAlVeKapat = $("[id='mainPreviewForm:evrakKapatFieldsetId'] button[id^='mainPreviewForm:j_']");
+    SelenideElement btnTeslimAlVeKapatTeslimAlVeKapat = $("[id='mainPreviewForm:evrakOnizlemeTab'] div[class='form-buttons kapatButtonDirekt'] button");
     ElementsCollection tblEvraklar = $$("[id^='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
     BelgenetElement txtHavaleYapKisi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKullaniciLov:LovText"));
     BelgenetElement txtHavaleYapKullaniciListesi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKisiListesiLov:LovText"));
@@ -42,12 +41,13 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
 
     @Step("Tablodan rapor seç")
     public TeslimAlinmayiBekleyenlerPage gizlilikRaporSec(String konu, String yer, String tarih, String no) {
-        SelenideElement evrak = filter().findRowsWith(Condition.text(konu))
-                .filterBy(Condition.text(yer))
-                .filterBy(Condition.text(tarih))
-                .filterBy(Condition.text(no))
+        SelenideElement evrak = filter().findRowsWith(text(konu), text(yer), text(tarih), text(no))
+//                .filterBy(text(yer))
+//                .filterBy(text(tarih))
+//                .filterBy(text(no))
                 .shouldHaveSize(1).first();
         evrak.click();
+        //evrak.click();
         return this;
     }
 
@@ -71,13 +71,67 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
 
     @Step("Teslim al ve kapat")
     public TeslimAlinmayiBekleyenlerPage teslimAlVeKapat() {
-        btnTeslimAlVeKapat.click();
+        btnTeslimAlVeKapat.filterBy(Condition.text("Teslim Al ve Kapat")).get(0).$("button").click();
         return this;
     }
 
     @Step("Evrak seçilir")
     public TeslimAlinmayiBekleyenlerPage evrakSec() {
         tblIlkEvrak.click();
+        return this;
+    }
+
+    @Step("Evrak no ile evrak seçilir : \"{evrakNo}\" ")
+    public TeslimAlinmayiBekleyenlerPage evrakNoIleEvrakSec(String evrakNo) {
+        tblEvraklar
+                .filterBy(Condition.text(evrakNo))
+                .first()
+                .click();
+        return this;
+    }
+
+    @Step("Evrak önizleme evrak kontrolü : \"{pdfText}\" ")
+    public TeslimAlinmayiBekleyenlerPage evrakOnizlemeEklenenUstYaziKontrolu(String pdfText) {
+        String text = "";
+        switchTo().frame(1);
+        sleep(1000);
+        text = $(By.xpath("//div[@id='viewer']/div[@class='page']/div[@class='textLayer']/div[1]")).getText();
+        text.equals(pdfText);
+        switchTo().parentFrame();
+        return this;
+    }
+
+    @Step("Evrak seçilir")
+    public TeslimAlinmayiBekleyenlerPage evrakSec(String konu, String yer, String tarih, String no) {
+        tblEvraklar.filterBy(text(konu))
+                .filterBy(text(yer))
+                .filterBy(text(tarih))
+                .filterBy(text(no)).get(0).click();
+        return this;
+    }
+
+    @Step("Evrak içerik göster")
+    public TeslimAlinmayiBekleyenlerPage evrakSecIcerikGoster(String konu, String yer, String tarih, String no) {
+        tblEvraklar.filterBy(text(konu))
+                .filterBy(text(yer))
+                .filterBy(text(tarih))
+                .filterBy(text(no)).get(0).$$("[id$='detayGosterButton']").first().click();
+        return this;
+    }
+
+    @Step("Evrak teslim al")
+    public TeslimAlinmayiBekleyenlerPage evrakSecTeslimAl(String konu, String yer, String tarih, String no, boolean secim){
+        tblEvraklar.filterBy(text(konu))
+                .filterBy(text(yer))
+                .filterBy(text(tarih))
+                .filterBy(text(no)).get(0).$$("[id$='teslimAlButton']").first().click();
+
+        if (secim == true) {
+            $(By.id("teslimAlEvetButton")).click();
+        } else {
+            $(By.id("teslimAlHayirButton")).click();
+        }
+
         return this;
     }
 
@@ -100,8 +154,11 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     }
 
     @Step("Tarihi doldur")
-    public TeslimAlinmayiBekleyenlerPage tarihiDoldur(String tarih) {
+    public TeslimAlinmayiBekleyenlerPage tarihiDoldur(String tarih, Keys... keys) {
         dateTxtTarih.sendKeys(tarih);
+        for (Keys k : keys) {
+            dateTxtTarih.sendKeys(keys);
+        }
         return this;
     }
 
@@ -118,24 +175,35 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     }
 
     @Step("Kisi doldur")
-    public TeslimAlinmayiBekleyenlerPage havaleYapKisiDoldur(String kisi){
+    public TeslimAlinmayiBekleyenlerPage havaleYapKisiDoldur(String kisi) {
         txtHavaleYapKisi.selectLov(kisi);
         return this;
     }
 
+    @Step("Kişi alanında \"{kisi}\" seçmeye dene")
+    public TeslimAlinmayiBekleyenlerPage havaleYapKisiKisiSecmeyeDene(String kisi) {
+        txtHavaleYapKisi.type(kisi).getTitleItems().filterBy(text(kisi)).first().click();
+        return this;
+    }
+
     @Step("Kullanıcı listesi doldur")
-    public TeslimAlinmayiBekleyenlerPage havaleYapKullaniciListesiDoldur(String kullaniciListesi){
+    public TeslimAlinmayiBekleyenlerPage havaleYapKullaniciListesiDoldur(String kullaniciListesi) {
         //txtHavaleYapKullaniciListesi.selectLov(kullaniciListesi);
         txtHavaleYapKullaniciListesi.selectLov(kullaniciListesi);
         return this;
     }
 
-    @Step("Tabloda evrak no kontrolü")
-    public TeslimAlinmayiBekleyenlerPage tabloKontrolu(String evrakNo)
-    {
-        int row = $$("tbody[id$='mainInboxForm:inboxDataTable_data'] tr[role=row] div[class=searchText]").filterBy(Condition.text(evrakNo)).size();
-        System.out.println(row);
-        Assert.assertEquals(row,1);
+    @Step("Kullanıcı listesinde \"{kisi}\" seçmeye dene")
+    public TeslimAlinmayiBekleyenlerPage havaleYapKullaniciListesiSecmeyeDene(String kisi) {
+        txtHavaleYapKullaniciListesi.type(kisi).getTitleItems().filterBy(text(kisi)).first().click();
+        return this;
+    }
+
+    @Step("Tabloda evrak no kontrolü : \"{evrakNo}\" ")
+    public TeslimAlinmayiBekleyenlerPage tabloKontrolu(String evrakNo) {
+        $$("tbody[id$='mainInboxForm:inboxDataTable_data'] tr[data-ri]")
+                .filterBy(text(evrakNo))
+                .shouldHaveSize(1);
         //log başarılı
         return this;
     }

@@ -4,7 +4,7 @@ import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import pages.MainPage;
-import pages.pageComponents.UstMenu;
+import pages.pageData.UstMenuData;
 
 import static com.codeborne.selenide.Selenide.$;
 
@@ -15,7 +15,7 @@ public class ErisimYonetimiPage extends MainPage {
 
     @Step("Erişim Yonetimi sayfası aç")
     public ErisimYonetimiPage openPage() {
-        ustMenu("Erişim Yönetimi");
+        ustMenu(UstMenuData.KlasorIslemleri.ErisimYonetimi);
         return this;
     }
 

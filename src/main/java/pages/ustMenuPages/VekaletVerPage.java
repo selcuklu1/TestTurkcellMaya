@@ -1,19 +1,16 @@
 package pages.ustMenuPages;
 
 import com.codeborne.selenide.*;
-import common.BaseLibrary;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import pages.MainPage;
-import pages.pageComponents.UstMenu;
 import pages.pageComponents.belgenetElements.BelgenetElement;
+import pages.pageData.UstMenuData;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
-import static pages.pageComponents.belgenetElements.BelgenetFramework.comboBox;
-import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
+import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 public class VekaletVerPage extends MainPage {
 
@@ -56,9 +53,10 @@ public class VekaletVerPage extends MainPage {
 //    BelgenetElement cmbDurum = comboBox (By.xpath("//table[@id='vekaletVerForm:vekaletLayout:vekaletSorgulaPanelGrid']//select"));
 
     SelenideElement cmbDurum = $(By.xpath("//table[@id='vekaletVerForm:vekaletLayout:vekaletSorgulaPanelGrid']//select"));
-    @Step("Vekalet Ver sayfası aç")
+
+    @Step("Vekalet Ver sayfasını aç")
     public VekaletVerPage openPage() {
-        new UstMenu().ustMenu("Vekalet Ver");
+        ustMenu(UstMenuData.AmirIslemleri.VekaletVer);
         return this;
     }
 
@@ -75,37 +73,39 @@ public class VekaletVerPage extends MainPage {
         return this;
     }
 
-    @Step("Vekalet veren alanını farklı doldur")
-    public VekaletVerPage vekaletVerenFarkliDoldur(String text) {
+    @Step("Vekalet veren alanını farklı doldur \"{vekaletVeren}\" ")
+    public VekaletVerPage vekaletVerenFarkliDoldur(String vekaletVeren) {
         btnVekalelVerenTemizle.click();
-        txtVekaletVerenCombolov.selectLov(text);
+        txtVekaletVerenCombolov.selectLov(vekaletVeren);
         return this;
     }
 
-    @Step("Onay verecek doldur")
-    public VekaletVerPage onayVerecekDoldur(String kullanici) {
-        txtOnaylayacakKisi.selectLov(kullanici);
+    @Step("Onay verecek kullanıcı doldur : \"{onayVerecekKullanici}\" ")
+    public VekaletVerPage onayVerecekDoldur(String onayVerecekKullanici) {
+        txtOnaylayacakKisi.selectLov(onayVerecekKullanici);
         return this;
     }
 
-    @Step("Vekalet veren alanını doldur")
-    public VekaletVerPage vekaletVerenDoldur(String text) {
-        txtVekaletVerenCombolov.selectLov(text);
+    @Step("Vekalet veren alanını doldur : \"{vekaletVeren}\" ")
+    public VekaletVerPage vekaletVerenDoldur(String vekaletVeren) {
+        txtVekaletVerenCombolov.selectLov(vekaletVeren);
         return this;
     }
 
-    @Step("Vekalet alan alanını doldur")
-    public VekaletVerPage vekaletAlanDoldur(String text) {
-        txtVekaletAlanCombolov.selectLov(text);
+    @Step("Vekalet alan alanını doldur : \"{vekaletAlan}\" ")
+    public VekaletVerPage vekaletAlanDoldur(String vekaletAlan) {
+        txtVekaletAlanCombolov.selectLov(vekaletAlan);
         return this;
     }
 
 
+    @Step("Uygula butonu")
     public VekaletVerPage uygula() {
         btnUygula.click();
         return this;
     }
 
+    @Step("Açıklama alanı doldur : \"{aciklama}\" ")
     public VekaletVerPage aciklamaDoldur(String aciklama) {
         txtAciklama.setValue(aciklama);
         return this;
@@ -136,19 +136,19 @@ public class VekaletVerPage extends MainPage {
         return this;
     }
 
-    @Step("Evrak Ekle butnu")
+    @Step("Evrak Ekle butonu")
     public VekaletVerPage evrakEkle() {
         clickJs(btnEvrakEkle);
         return this;
     }
 
-    @Step("Evrak arama doldur")
+    @Step("Evrak arama alanı doldur : \"{evrakNo}\" ")
     public VekaletVerPage evrakAramaDoldur(String evrakNo) {
         txtEvrakArama.sendKeys(evrakNo);
         return this;
     }
 
-    @Step("Tablo Kontrolü ve seçim")
+    @Step("Evrak no'ya göre tablo Kontrolü ve seçim : \"{evrakNo}\" ")
     public VekaletVerPage evrakAramaTabloKontrolveSecim(String evrakNo) {
         tblEvrakListesi
                 .filterBy(Condition.text(evrakNo)).shouldHaveSize(1)
@@ -164,7 +164,7 @@ public class VekaletVerPage extends MainPage {
         return this;
     }
 
-    @Step("Devredilecek Evrak seç")
+    @Step("Devredilecek Evrak no seç : \"{evrakNo}\" ")
     public VekaletVerPage devredilecekEvrakSec(String evrakNo) {
         tblDevredilecekEvrakklar
                 .filterBy(Condition.text(evrakNo)).first()
@@ -183,55 +183,66 @@ public class VekaletVerPage extends MainPage {
         tabVekaletListesi.click();
         return this;
     }
-    @Step("Yenş vekalet Tab aç")
+
+    @Step("Yeni vekalet Tab aç")
     public VekaletVerPage yeniVekaletTabAc() {
         tabYeniVekalet.click();
         return this;
     }
+
     @Step("Sorgula butonu")
     public VekaletVerPage sorgula() {
         btnSorgula.click();
         return this;
     }
 
-    @Step("Vekalet Listesi Tablo Kontrol")
-    public VekaletVerPage vekaletListesiTabloKontrol(int column, String retNedeni) {
-        boolean status = findElementOnTableByColumnInputInAllPages(tblVekaletListesi2, column, retNedeni).isDisplayed();
+    @Step("Vekalet Listesi statü tablo kontrolü : \"{statu}\" ")
+    public VekaletVerPage vekaletListesiTabloKontrol(int column, String statu) {
+        boolean status = findElementOnTableByColumnInputInAllPages(tblVekaletListesi2, column, statu).isDisplayed();
         Assert.assertEquals(status, true);
         return this;
     }
 
     @Step("Vekalet Listesi Tablo Kontrol")
     public VekaletVerPage vekaletListesiTabloKontrol() {
-       tblVekaletListesi.shouldHave(CollectionCondition.sizeGreaterThan(0));
-       return this;
+        tblVekaletListesi.shouldHave(CollectionCondition.sizeGreaterThan(0));
+        return this;
     }
 
-    @Step("Vekalet Listesi Tablo Kontrol")
+    @Step("Vekalet Listesi Tablo Kontrol : \"{vekaletveren}\" ")
     public VekaletVerPage vekaletListesiVekaletIptal(String vekaletveren) {
         Selenide.sleep(3000); // tablo yavaş geldiğinden sleep koyuldu.
         ElementsCollection rows = tblVekaletListesi
                 .filterBy(Condition.text(vekaletveren));
 
-        for (SelenideElement row:rows) {
+        for (SelenideElement row : rows) {
             row.$("textarea").sendKeys("İptal");
             row.$("button").click();
             SelenideElement popUp = $("[id='vekaletUyariDaialog']");
             popUp.shouldBe(Condition.visible);
             $(By.xpath("//div[@id= 'vekaletUyariDaialog']//button[span[text()='Evet']]")).click();
         }
+        vekaletIslemleriSayfasıKapat();
         return this;
     }
 
-    @Step("Vekalet Listesi bitiş tarihi doldur")
-    public VekaletVerPage vekaletListesiBitisTarihiDoldur(String text) {
-        dateTxtVekaletListesiBitisTarihi.setValue(text);
+
+    @Step("Vekalet İşlemleri sayfası kapat")
+    public VekaletVerPage vekaletIslemleriSayfasıKapat() {
+        $(By.xpath("//div[@id='window1Dialog']//span[@class='ui-icon ui-icon-closethick']")).click();
+        islemPenceresiKapatmaOnayiPopup("Kapat");
         return this;
     }
 
-    @Step("Vekalet Listesi bitiş tarihi doldur")
-    public VekaletVerPage vekaletListesiBaslangicTarihiDoldur(String text) {
-        dateTxtVekaletListesiBaslangicTarihi.setValue(text);
+    @Step("Vekalet Listesi bitiş tarihi doldur : \"{bitisTarihi}\" ")
+    public VekaletVerPage vekaletListesiBitisTarihiDoldur(String bitisTarihi) {
+        dateTxtVekaletListesiBitisTarihi.setValue(bitisTarihi);
+        return this;
+    }
+
+    @Step("Vekalet Listesi başlangıç tarihi doldur : \"{baslangiTarihi}\" ")
+    public VekaletVerPage vekaletListesiBaslangicTarihiDoldur(String baslangiTarihi) {
+        dateTxtVekaletListesiBaslangicTarihi.setValue(baslangiTarihi);
         return this;
     }
 
@@ -243,15 +254,15 @@ public class VekaletVerPage extends MainPage {
     }
 
     @Step("Vekalet var uyarı popup")
-    public VekaletVerPage vekaletVarUyarıPopUp() {
+    public VekaletVerPage vekaletVarUyariPopUp() {
         popUpAktifVekaletUyarı.exists();
         btnTamam.click();
         return this;
     }
 
-    @Step("Durum Seç")
-    public VekaletVerPage durumSec(String value) {
-        cmbDurum.selectOptionByValue(value);
+    @Step("Durum Seç : \"{durum}\" ")
+    public VekaletVerPage durumSec(String durum) {
+        cmbDurum.selectOptionByValue(durum);
         return this;
     }
 }

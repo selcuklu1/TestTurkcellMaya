@@ -7,10 +7,11 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
+import pages.pageData.UstMenuData;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
-import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
+import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 public class KlasorYonetimiPage extends MainPage {
 
@@ -29,11 +30,10 @@ public class KlasorYonetimiPage extends MainPage {
     SelenideElement btnKlasorEklemeKaydet = $(By.id("klasorYonetimiEditorForm:saveKlasorButton"));
 
     @Step("Klasör Yönetimi sayfası aç")
-    public KlasorYonetimiPage openPage(){
-        ustMenu("Klasör Yönetimi");
+    public KlasorYonetimiPage openPage() {
+        ustMenu(UstMenuData.KlasorIslemleri.KlasorYonetimi);
         return this;
     }
-
 
 
     @Step("Kaydet")
@@ -110,7 +110,7 @@ public class KlasorYonetimiPage extends MainPage {
     }
 
     @Step("Yeni")
-    public KlasorYonetimiPage yeni(){
+    public KlasorYonetimiPage yeni() {
         btnYeni.click();
         return this;
     }

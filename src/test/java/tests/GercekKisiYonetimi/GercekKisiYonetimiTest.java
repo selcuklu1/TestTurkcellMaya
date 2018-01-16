@@ -10,6 +10,8 @@ import pages.ustMenuPages.GelenEvrakKayitPage;
 import pages.ustMenuPages.GercekKisiYonetimPage;
 import pages.ustMenuPages.GidenEvrakKayitPage;
 
+import java.lang.reflect.Method;
+
 import static com.codeborne.selenide.Selenide.switchTo;
 
 /****************************************************
@@ -26,19 +28,23 @@ public class GercekKisiYonetimiTest extends BaseTest {
     GidenEvrakKayitPage gidenEvrakKayitPage;
 
     @BeforeMethod
-    public void loginBeforeTests() {
+    public void beforeTests(Method method) {
+
+        log.info(method.getName() + "Nolu test senaryosu başladı.");
+
         login();
         gercekKisiYonetimPage = new GercekKisiYonetimPage();
         evrakOlusturPage = new EvrakOlusturPage();
         gelenEvrakKayitPage = new GelenEvrakKayitPage();
         gidenEvrakKayitPage = new GidenEvrakKayitPage();
+
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC1516: Gerçek kişi tanımlama ve kontrolü")
-    public void TC1516() throws InterruptedException {
+    @Test(enabled = true, description = "TS1516: Gerçek kişi tanımlama ve kontrolü")
+    public void TS1516() throws InterruptedException {
 
-        String tcNO = createMernisTCKN();
+        String TCNO = createMernisTCKN();
         String ad = createRandomText(6);
         String soyad = createRandomText(6);
         String onEk = "Muh";
@@ -50,7 +56,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
         String eposta = "test@turksat.com.tr";
         String adSoyad = ad + " " + soyad;
         String hitap = "Sayın";
-        String postaTipi = "P";
+        String postaTipi = "Adi Posta";
         String bilgiSecimTipi = "Gerçek Kişi";
         String geregiSecimTipi = "Gerçek Kişi";
         String evrakBilgileriListKisiKurumTipi = "Gerçek Kişi";
@@ -60,7 +66,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
         gercekKisiYonetimPage
                 .openPage()
                 .yeniGercekKisiEkle()
-                .tcKimlikNoDoldur(tcNO)
+                .tcKimlikNoDoldur(TCNO)
                 .onEkDoldur(onEk)
                 .unvanDoldur(unvan)
                 .adDoldur(ad)
@@ -81,12 +87,12 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .openPage()
                 .bilgilerTabiAc()
                 .geregiSecimTipiSecByText(geregiSecimTipi)
-                .geregiDoldur(adSoyad)
+                .geregiDoldur(adSoyad, "Ad Soyad")
                 .gercekKisiGeregiAlaniKontrol(adSoyad, unvan, adres, postaTipi);
 
         evrakOlusturPage
                 .editorTabAc()
-                .hitapAlaniUnvanAdSoyadKontrol(hitap, onEk, ad, soyad);
+                .hitapAlanindaSayinOnAdAdSoyadKontrol(hitap, onEk, ad, soyad);
 
         evrakOlusturPage
                 .bilgilerTabiAc()
@@ -97,16 +103,16 @@ public class GercekKisiYonetimiTest extends BaseTest {
         gelenEvrakKayitPage
                 .openPage()
                 .kisiKurumSecByText(evrakBilgileriListKisiKurumTipi)
-                .geldigiGercekKisiDoldur(adSoyad);
+                .geldigiGercekKisiDoldur(adSoyad, "Ad Soyad");
 
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC1144: Gerçek kişi sorgulama")
-    public void TC1144() throws InterruptedException {
+    @Test(enabled = true, description = "TS1144: Gerçek kişi sorgulama")
+    public void TS1144() throws InterruptedException {
 
-        String tcNO = "91057625780";
-        String tc10 = "10";
+        String TCNO = "91057625780";
+        String TS10 = "10";
         String ad = "OptiimTest";
         String soyad = "TestOptiim";
 
@@ -114,31 +120,32 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .openPage()
                 //.ara()
                 //.filtreSorgulamaPaneliAc()
+                .defaultDurumComboKontrol("Sadece Aktifler")
                 .filtreSoyadDoldur(soyad)
                 .filtreDurumSec("AKTIFLER")
                 .ara()
-                .aktifKisiKayitKontrolu(tcNO, ad, soyad)
+                .aktifKisiKayitKontrolu(TCNO, ad, soyad)
 
                 .filtreSorgulamaPaneliAc()
                 .filtreAdDoldur(ad)
                 .filtreDurumSec("AKTIFLER")
                 .ara()
-                .aktifKisiKayitKontrolu(tcNO, ad, soyad)
+                .aktifKisiKayitKontrolu(TCNO, ad, soyad)
 
                 .filtreSorgulamaPaneliAc()
-                .filtreTCKimlikNoDoldur(tc10)
+                .filtreTCKimlikNoDoldur(TS10)
                 .filtreDurumSec("AKTIFLER")
                 .ara()
-                .tcNoKontrolu(tc10)
+                .tcNoKontrolu(TS10)
 
                 .filtreSorgulamaPaneliAc()
-                .filtreTCKimlikNoDoldur(tcNO)
+                .filtreTCKimlikNoDoldur(TCNO)
                 .filtreDurumSec("AKTIFLER")
                 .ara()
-                .aktifKisiKayitKontrolu(tcNO, ad, soyad)
+                .aktifKisiKayitKontrolu(TCNO, ad, soyad)
 
                 .filtreSorgulamaPaneliAc()
-                .filtreTCKimlikNoDoldur(tcNO)
+                .filtreTCKimlikNoDoldur(TCNO)
                 .filtreDurumSec("PASIFLER")
                 .ara()
                 .kayitBulunamadiKontrolu()
@@ -146,21 +153,21 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .filtreSorgulamaPaneliAc()
                 .filtreDurumSec("PASIFLER")
                 .ara()
-                .pasiflerKayitKontrolu();
+                .pasiflerTumListeKayitKontrolu();
 
-        String getTbleTC = gercekKisiYonetimPage.getTbleTCNO();
+        String getTbleTCNO = gercekKisiYonetimPage.getTbleTCNO();
 
         gercekKisiYonetimPage
                 .filtreSorgulamaPaneliAc()
                 .filtreDurumSec("PASIFLER")
-                .filtreTCKimlikNoDoldur(getTbleTC)
+                .filtreTCKimlikNoDoldur(getTbleTCNO)
                 .ara()
-                .tcNoKontrolu(getTbleTC);
+                .tcNoKontrolu(getTbleTCNO);
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC1135: Yeni gerçek kişi kayıtta alan kontrolleri")
-    public void TC1135() {
+    @Test(enabled = true, description = "TS1135: Yeni gerçek kişi kayıtta alan kontrolleri")
+    public void TS1135() {
 
         String ad = createRandomText(6);
         String soyad = createRandomText(6);
@@ -168,7 +175,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
         String duzgunPostaFormati = "optim@turksat.com.tr";
         String duzgunOlmayanKepAdresi = "tr6787";
         String duzgunKepAdresi = "turksat.kamu2@testkep.pttkep.gov.tr";
-        String kepHizmetSaglayici = "P";
+        String kepHizmetSaglayici = "PTT KEP Servisi";
         String kepMesaj1 = "Kep adresi boş bırakılamaz! Lütfen bir kep adresi ekleyiniz.";
         String ePostaMesaj = "Lütfen Türkçe karakter ve boşluk içermeyen, @ işareti ve nokta içeren geçerli bir e-mail giriniz!";
         String kepMesaj2 = "Girilen kep adresi geçersiz!";
@@ -214,7 +221,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .kepAdresiDoldur(duzgunKepAdresi)
                 .kepHizmetSaglayiciSec(kepHizmetSaglayici)
                 .kepAdresiKaydet();
-//                .islemMesaji().basariliOlmali(basariMesaji);
+//                .islemMesaji().basariliOlmali(basariMesaji); //kaydet tıklanmadığı için çıkmıyor.
 
         gercekKisiYonetimPage
                 .adDoldur(ad)
@@ -225,10 +232,10 @@ public class GercekKisiYonetimiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC1137: Gerçek Kişi Bilgisi Güncelleme ve kontrolleri")
-    public void TC1137() throws InterruptedException {
+    @Test(enabled = true, description = "TS1137: Gerçek Kişi Bilgisi Güncelleme ve kontrolleri")
+    public void TS1137() throws InterruptedException {
 
-        String tcNO = createMernisTCKN();
+        String TCNO = createMernisTCKN();
         String ad = createRandomText(6);
         String soyad = createRandomText(6);
         String onEk = "Muh";
@@ -240,21 +247,21 @@ public class GercekKisiYonetimiTest extends BaseTest {
         String eposta = "test@turksat.com.tr";
         String basariMesaji = "İşlem başarılıdır!";
 
-        String tcNO2 = createMernisTCKN();
+        String TCNO2 = createMernisTCKN();
         String ad2 = createRandomText(6);
         String soyad2 = createRandomText(6);
         String onEk2 = "Dr";
         String unvan2 = "Doktor";
         String duzgunKepAdresi = "turksat.kamu2@testkep.pttkep.gov.tr";
         String adSoyad2 = ad2 + " " + soyad2;
-        String postaTipi = "Z"; //Z=KEP
+        String postaTipi = "KEP"; //Z=KEP
         String hitap = "Sayın";
 
-        //tests.Data yaratmak için.
+        //Test Datası yaratmak için bu adımlar yazıldı.
         gercekKisiYonetimPage
                 .openPage()
                 .yeniGercekKisiEkle()
-                .tcKimlikNoDoldur(tcNO)
+                .tcKimlikNoDoldur(TCNO)
                 .onEkDoldur(onEk)
                 .unvanDoldur(unvan)
                 .adDoldur(ad)
@@ -273,12 +280,12 @@ public class GercekKisiYonetimiTest extends BaseTest {
 
         gercekKisiYonetimPage
                 .filtreAdDoldur(ad)
-                .filtreTCKimlikNoDoldur(tcNO)
+                .filtreTCKimlikNoDoldur(TCNO)
                 .ara()
-                .aktifKisiKayitKontrolu(tcNO, ad, soyad)
+                .aktifKisiKayitKontrolu(TCNO, ad, soyad)
 
                 .gercekKisiGuncelle()
-                .tcKimlikNoDoldur(tcNO2)
+                .tcKimlikNoDoldur(TCNO2)
                 .onEkDoldur(onEk2)
                 .unvanDoldur(unvan2)
                 .adDoldur(ad2)
@@ -298,25 +305,25 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .openPage()
                 .bilgilerTabiAc()
                 .geregiSecimTipiSecByText("Gerçek Kişi")
-                .geregiDoldur(adSoyad2)
+                .geregiDoldur(adSoyad2, "Ad Soyad")
                 .gercekKisiGeregiAlaniKontrol(adSoyad2, unvan2, adres, postaTipi);
 
         evrakOlusturPage
                 .editorTabAc()
-                .hitapAlaniUnvanAdSoyadKontrol(hitap, onEk2, ad2, soyad2);
+                .hitapAlanindaSayinOnAdAdSoyadKontrol(hitap, onEk2, ad2, soyad2);
 
         gelenEvrakKayitPage
                 .openPage()
                 .kisiKurumSecByText("Gerçek Kişi")
-                .geldigiGercekKisiDoldur(adSoyad2);
+                .geldigiGercekKisiDoldur(adSoyad2, "Ad Soyad");
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC1119: Gerçek Kişi iletişim bilgilerinin değiştirilmesi")
-    public void TC1119() throws InterruptedException {
+    @Test(enabled = true, description = "TS1119: Gerçek Kişi iletişim bilgilerinin değiştirilmesi")
+    public void TS1119() throws InterruptedException {
 
         String TCKN1 = "54548785445";
-        String ad = "TC1119";
+        String ad = "Ts1119";
         String soyad = "GerçekKişi";
         String TCKN2 = "69848836158"; //TCKN2 = "69848836158" kullanıcının adresi
         String adSoyad = ad + " " + soyad;
@@ -328,7 +335,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
         String ulke = "TÜRKİYE";
         String il = "İstanbul";
         String ilce = "Şişli";
-        String postaTipi = "P";
+        String postaTipi = "Adi Posta";
         String ePosta = createRandomText(5) + "@turksat.com.tr";
         String webAdres = "http://www.belgenet.com.tr/";
         String basariMesaji = "İşlem başarılıdır!";
@@ -363,16 +370,18 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .iletisimBilgisiEpostaDoldur(ePosta)
                 .iletisimBilgisiWebAdresiDoldur(webAdres)
                 .iletisimBilgisiKaydet()
-                .islemMesaji().basariliOlmali(basariMesaji);
+                .islemMesaji()
+                .basariliOlmali(basariMesaji);
 
         gercekKisiYonetimPage
-                .kaydet();
+                .kaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
 
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
                 .geregiSecimTipiSecByText("Gerçek Kişi")
-                .geregiDoldur(TCKN1)
+                .geregiDoldur(TCKN1, "TCKN")
                 .gercekKisiGeregiAlaniKontrol(adSoyad, unvan, adres, postaTipi)
 
                 .geregiAlaniGuncelle()
@@ -395,29 +404,25 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .bilgilerTabiAc()
                 .adresDagitimdaGorunsunSec(true)
                 .dagitimHitapDuzenlemeKaydet();
-        //.windowHandleBefore();
 
         evrakOlusturPage
                 .pdfOnIzleme();
         switchTo().window(1);
-        //  .switchToNewWindow();
 
         evrakOlusturPage
                 .pdfKontrol
                 .geregiBilgiAlaniAdresPdfKontrol(birinciKullaniciGeregiAdresi, getIkinciKullaniciAdres);
-        //.switchToDefaultWindow();
+
         closeNewWindow();
         switchTo().window(0);
-        //switchTo().defaultContent();
-
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "1132: Gerçek kişinin pasif yapılması ve ekranlardan kontrolü")
-    public void TC1132() throws InterruptedException {
+    @Test(enabled = true, description = "TS1132: Gerçek kişinin pasif yapılması ve ekranlardan kontrolü")
+    public void TS1132() throws InterruptedException {
 
-        String tcNO = "43534543543";
-        String ad = "TC1132";
+        String TCNO = "43534543543";
+        String ad = "Ts1132";
         String soyad = "GerçekKişi";
         String adSoyad = ad + " " + soyad;
 
@@ -428,7 +433,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .filtreDurumSec("TUMU")
                 .ara()
                 .gercekKisiPasifIseAktifYap()
-                .aktifKisiKayitKontrolu(tcNO, ad, soyad)
+                .aktifKisiKayitKontrolu(TCNO, ad, soyad)
 
                 .gercekKisiPasifYap()
                 .islemOnayi("Evet");
@@ -448,14 +453,14 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .filtreSoyadDoldur(soyad)
                 .filtreDurumSec("PASIFLER")
                 .ara()
-                .pasifKisiKayitKontrolu(tcNO, ad, soyad)
+                .pasifKisiKayitKontrolu(TCNO, ad, soyad)
 
                 .filtreSorgulamaPaneliAc()
                 .filtreAdDoldur(ad)
                 .filtreSoyadDoldur(soyad)
                 .filtreDurumSec("TUMU")
                 .ara()
-                .pasifKisiKayitKontrolu(tcNO, ad, soyad);
+                .pasifKisiKayitKontrolu(TCNO, ad, soyad);
 
         gelenEvrakKayitPage
                 .openPage()
@@ -481,11 +486,11 @@ public class GercekKisiYonetimiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "1458: Pasif yapılan gerçek kişinin aktif yapılması ve ekranlardan kontrolü")
-    public void TC1458() {
+    @Test(enabled = true, description = "TS1458: Pasif yapılan gerçek kişinin aktif yapılması ve ekranlardan kontrolü")
+    public void TS1458() throws InterruptedException {
 
         String TCKN = "21861197500";
-        String ad = "Tc1458";
+        String ad = "Ts1458";
         String soyad = "GerçekKişi";
         String adSoyad = ad + " " + soyad;
 

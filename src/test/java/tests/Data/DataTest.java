@@ -20,13 +20,12 @@ public class DataTest extends BaseTest {
 
     @BeforeMethod
     public void loginBeforeTests() {
-        login("ztekin", "123");
-        evrakOlustur = new EvrakOlusturPage();
+
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC2224: DATA-Teslim alınmayı bekleyenler, gelen kutusu ve postalanacaklar listesine gizlilik derecesi yüksek evrak düşürme")
-    public void TC2224() throws InterruptedException {
+    @Test(enabled = true, description = "TS2224: DATA-Teslim alınmayı bekleyenler, gelen kutusu ve postalanacaklar listesine gizlilik derecesi yüksek evrak düşürme")
+    public void TS2224() throws InterruptedException {
 
         String konu = "Kanunlar";
         String konuKodu = "Kanunlar";
@@ -42,6 +41,8 @@ public class DataTest extends BaseTest {
         String editorIcerik = "Bu bir deneme mesajıdır. Lütfen dikkate almayınız.";
         String basariMesaji = "İşlem başarılıdır!";
 
+        login("ztekin", "123");
+        evrakOlustur = new EvrakOlusturPage();
         evrakOlustur
                 .openPage()
                 .bilgilerTabiAc()
@@ -50,11 +51,11 @@ public class DataTest extends BaseTest {
                 .kaldirilacakKlasorler(kaldirilacakKlasorler)
                 .evrakDerecesiSec(evrakDerecesi)
                 .geregiSecimTipiSec(geregiSecimKurum)
-                .geregiDoldur(geregiKurum)
+                .geregiDoldur(geregiKurum, "Kurum")
                 .geregiSecimTipiSec(geregiSecimBirim)
-                .geregiDoldur(geregiBirim)
+                .geregiDoldur(geregiBirim, "Birim")
                 .geregiSecimTipiSec(geregiSecimKullanici)
-                .geregiDoldur(geregiKullanici)
+                .geregiDoldur(geregiKullanici, "Kullanıcı")
                 .onayAkisiEkle()
                 .akisAdimSec(akisAdim)
                 .onayAkisiKullan();
@@ -68,8 +69,8 @@ public class DataTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC2224: DATA-Teslim alınmayı bekleyenler, gelen kutusu ve postalanacaklar listesine gizlilik derecesi yüksek evrak düşürme")
-    public void TC2234() throws InterruptedException {
+    @Test(enabled = true, description = "TS2224: DATA-Teslim alınmayı bekleyenler, gelen kutusu ve postalanacaklar listesine gizlilik derecesi yüksek evrak düşürme")
+    public void TS2234() throws InterruptedException {
 
         String konuKodu = "Gelen-Giden Evrak";
         String evrakTuru = "Resmi Yazışma";
@@ -83,8 +84,10 @@ public class DataTest extends BaseTest {
         String kaldirilacakKlasorler = "KURUL KARARLARI";
         String editorIcerik = "Bu bir deneme mesajıdır. Lütfen dikkate almayınız.";
         String ekleriDosyaAciklama = "Açıklama";
-        String filePath = "C:\\Users\\TheKing\\Desktop\\s1.txt";
+        String filePath = System.getProperty("user.dir") + "/Documents/Otomasyon.pdf";//"C:\\Users\\TheKing\\Desktop\\s1.txt";
 
+        login("ztekin", "123");
+        evrakOlustur = new EvrakOlusturPage();
         evrakOlustur
                 .openPage()
                 .bilgilerTabiAc()
@@ -95,7 +98,7 @@ public class DataTest extends BaseTest {
                 .ivediSec(ivedilik)
                 .miatDoldur(miat)
                 .geregiSecimTipiSec(geregiSecimBirim)
-                .geregiDoldur(geregiBirim)
+                .geregiDoldur(geregiBirim, "Birim")
                 .onayAkisiEkle()
                 .akisAdimSec(akisAdim)
                 .onayAkisiKullan()
@@ -108,10 +111,9 @@ public class DataTest extends BaseTest {
         evrakOlustur
                 .ekleriTabAc()
                 .ekleriDosyaEkle(filePath)
-                .ekleriDosyaAciklamaDoldur(ekleriDosyaAciklama)
+                .ekleriEkMetniDoldur(ekleriDosyaAciklama)
                 .ekleriEkle()
                 .imzala()
                 .popupImzalaVeEvrakKapatma();
-
     }
 }

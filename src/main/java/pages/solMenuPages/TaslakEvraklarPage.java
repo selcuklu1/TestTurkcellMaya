@@ -9,9 +9,10 @@ import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
 
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
-import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
+import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 public class TaslakEvraklarPage extends MainPage {
 
@@ -44,22 +45,29 @@ public class TaslakEvraklarPage extends MainPage {
     SelenideElement btnEvrakNotlariModalKaydet = $(By.id("evrakKisiselNotDialogFormId:evrakKisiselNotKaydet"));
     SelenideElement btnEvrakNotlariModalIptal = $(By.id("evrakKisiselNotDialogFormId:evrakKisiselNotIptal"));
 
-    ElementsCollection tableEvraklar = $$("tbody[id='mainInboxForm:inboxDataTable_data'] tr[role='row']");
+    ElementsCollection tableEvraklar = $$("tbody[id='mainInboxForm:inboxDataTable_data'] tr[data-ri]");
     ElementsCollection tabEvrakOnizleme = $$("div[id='mainPreviewForm:evrakOnizlemeTab'] ul[role='tablist'] li");
     SelenideElement btnPaylasTab = $(By.xpath("//span[contains(@class, 'evrakPaylas')]/.."));
 
     SelenideElement btnPaylasBirim = $("div[id='mainPreviewForm:paylasTumuBoolean']");
 
     @Step("Taslak Evraklar sayfası aç")
-    public TaslakEvraklarPage openPage(){
+    public TaslakEvraklarPage openPage() {
+
         solMenu(SolMenuData.IslemBekleyenEvraklar.TaslakEvraklar);
+        String pageTitle = SolMenuData.IslemBekleyenEvraklar.TaslakEvraklar.getMenuText();
+        $("#mainInboxForm\\:inboxDataTable .ui-inbox-header-title")
+                .shouldHave(text(pageTitle));
+        System.out.println("Page: " + pageTitle);
         return this;
     }
+
     @Step("Evrak notları popup iptal")
     public TaslakEvraklarPage evrakNotlariModalIptalGonder() {
         btnEvrakNotlariModalIptal.click();
         return this;
     }
+
     @Step("Evrak notları popup kaydet")
     public TaslakEvraklarPage evrakNotlariModalKaydetGonder() {
         btnEvrakNotlariModalKaydet.click();
@@ -147,7 +155,7 @@ public class TaslakEvraklarPage extends MainPage {
     }
 
     public TaslakEvraklarPage paylasKisiDoldur(String[] kisiler) {
-        for(int i = 0; i < kisiler.length; i++){
+        for (int i = 0; i < kisiler.length; i++) {
             txtPaylasKisi.selectLov(kisiler[i]);
         }
         return this;
@@ -162,10 +170,19 @@ public class TaslakEvraklarPage extends MainPage {
     @Step("Evrak seç.")
     public TaslakEvraklarPage evrakSec(String konu, String gidecegiYer, String tarihSaat) {
         tableEvraklar
-                .filterBy(Condition.text("Konu: " + konu))
-                .filterBy(Condition.text("Gideceği Yer: " + gidecegiYer))
-                .filterBy(Condition.text(tarihSaat))
+                .filterBy(text("Konu: " + konu))
+                .filterBy(text("Gideceği Yer: " + gidecegiYer))
+                .filterBy(text(tarihSaat))
                 .get(0)
+                .click();
+        return this;
+    }
+
+    @Step("Evrak seç : {konu}")
+    public TaslakEvraklarPage evrakSecKonuyaGore(String konu) {
+        tableEvraklar
+                .filterBy(Condition.text(konu))
+                .first()
                 .click();
         return this;
     }
@@ -179,6 +196,14 @@ public class TaslakEvraklarPage extends MainPage {
     @Step("Birim butonuna tıkla")
     public TaslakEvraklarPage paylasBirimTikla() {
         btnPaylasBirim.click();
+        return this;
+    }
+
+    @Step("Evrak kontrolu")
+    public TaslakEvraklarPage evrakKontrolu(String konu) {
+
+        tableEvraklar
+                .filterBy(Condition.text("Konu: " + konu)).shouldHaveSize(1);
         return this;
     }
 

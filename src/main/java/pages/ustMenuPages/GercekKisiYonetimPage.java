@@ -7,12 +7,13 @@ import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
+import pages.pageData.UstMenuData;
 
-
-import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.Condition.exist;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
-import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
+import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 /****************************************************
  * Tarih: 2017-11-20
@@ -32,7 +33,7 @@ public class GercekKisiYonetimPage extends MainPage {
     SelenideElement filtreSorgulamaPanel = $("[id='gercekKisiYonetimiListingForm'] [id='gercekKisiYonetimiListingForm:filterPanel']");
     SelenideElement btnAra = $(By.id("gercekKisiYonetimiListingForm:filterPanel:searchGercekKisiButton"));
     SelenideElement btnGercekKisiGuncelle = $("[id^='gercekKisiYonetimiListingForm:gercekKisiDataTable'][id$='updateGercekKisiButton']");
-    SelenideElement btnGercekKisiPasiYap = $("[id^='gercekKisiYonetimiListingForm:gercekKisiDataTable'][id$='pasifEtGercekKisi']");
+    SelenideElement btnGercekKisiPasifYap = $("[id^='gercekKisiYonetimiListingForm:gercekKisiDataTable'][id$='pasifEtGercekKisi']");
     SelenideElement btnGercekKisiAktifYap = $("[id^='gercekKisiYonetimiListingForm:gercekKisiDataTable'][id$='aktifEtGercekKisi']");
 
     SelenideElement btnIslemOnayiEvet = $(By.id("baseConfirmationDialog:confirmButton"));
@@ -94,13 +95,13 @@ public class GercekKisiYonetimPage extends MainPage {
 
     @Step("Gerçek Kişi Yönetimi sayfasını aç")
     public GercekKisiYonetimPage openPage() {
-        ustMenu("Gerçek Kişi Yönetimi");
+        ustMenu(UstMenuData.TeskilatKisiTanimlari.GercekKisiYonetimi);
         $("#gercekKisiYonetimiListingForm").shouldBe(visible);
 
         return this;
     }
 
-    @Step("Gerçek Kişi Güncelle")
+    @Step("Gerçek kişi güncelle")
     public GercekKisiYonetimPage gercekKisiGuncelle() {
         btnGercekKisiGuncelle.click();
         return this;
@@ -156,32 +157,32 @@ public class GercekKisiYonetimPage extends MainPage {
     }
 
     @Step("Soyad doldur")
-    public GercekKisiYonetimPage soyadDoldur(String text) {
-        txtSoyad.setValue(text);
+    public GercekKisiYonetimPage soyadDoldur(String soyad) {
+        txtSoyad.setValue(soyad);
         return this;
     }
 
     @Step("Ad doldur")
-    public GercekKisiYonetimPage adDoldur(String text) {
-        txtAd.setValue(text);
+    public GercekKisiYonetimPage adDoldur(String ad) {
+        txtAd.setValue(ad);
         return this;
     }
 
     @Step("Ünvan doldur")
-    public GercekKisiYonetimPage unvanDoldur(String text) {
-        txtUnvan.setValue(text);
+    public GercekKisiYonetimPage unvanDoldur(String unvan) {
+        txtUnvan.setValue(unvan);
         return this;
     }
 
     @Step("Ön ek doldur")
-    public GercekKisiYonetimPage onEkDoldur(String text) {
-        txtOnEk.setValue(text);
+    public GercekKisiYonetimPage onEkDoldur(String onEk) {
+        txtOnEk.setValue(onEk);
         return this;
     }
 
-    @Step("TC doldur")
-    public GercekKisiYonetimPage tcKimlikNoDoldur(String text) {
-        txtTCKimlikNo.setValue(text);
+    @Step("TC kimlik numarası doldur")
+    public GercekKisiYonetimPage tcKimlikNoDoldur(String tcNo) {
+        txtTCKimlikNo.setValue(tcNo);
         return this;
     }
 
@@ -192,8 +193,16 @@ public class GercekKisiYonetimPage extends MainPage {
     }
 
     @Step("Filtrede durum seç")
-    public GercekKisiYonetimPage filtreDurumSec(String value) {
-        cmbFiltreDurum.selectOptionByValue(value);
+    public GercekKisiYonetimPage filtreDurumSec(String filtreDurumu) {
+        cmbFiltreDurum.selectOptionByValue(filtreDurumu);
+        return this;
+    }
+
+    @Step("Aktifler seçeneğinin default gelme kontrolu")
+    public GercekKisiYonetimPage defaultDurumComboKontrol(String durum) {
+
+        String defaultDurum = cmbFiltreDurum.getText();
+        Assert.assertEquals(cmbFiltreDurum.getText().contains(durum), true);
         return this;
     }
 
@@ -209,9 +218,9 @@ public class GercekKisiYonetimPage extends MainPage {
         return this;
     }
 
-    @Step("Filtrede TC kimlik no doldur")
-    public GercekKisiYonetimPage filtreTCKimlikNoDoldur(String text) {
-        txtFiltreTCKimlikNo.setValue(text);
+    @Step("Filtrede TC kimlik no alanına \"{tckn}\" girilir")
+    public GercekKisiYonetimPage filtreTCKimlikNoDoldur(String tckn) {
+        txtFiltreTCKimlikNo.setValue(tckn);
         return this;
     }
 
@@ -257,19 +266,19 @@ public class GercekKisiYonetimPage extends MainPage {
         return this;
     }
 
-    @Step("İl doldur")
+    @Step("İl seç")
     public GercekKisiYonetimPage iletisimBilgisiIlDoldur(String il) {
         txtIletisimBilgisiIl.selectLov(il);
         return this;
     }
 
-    @Step("İlçe doldur")
+    @Step("İlçe seç")
     public GercekKisiYonetimPage iletisimBilgisiIlceDoldur(String ilce) {
         txtIletisimBilgisiIlce.selectLov(ilce);
         return this;
     }
 
-    @Step("Ülke doldur")
+    @Step("Ülke seç")
     public GercekKisiYonetimPage iletisimBilgisiUlkeDoldur(String ulke) {
 
         if (btnUlkeDelete.isDisplayed() == false) {
@@ -285,7 +294,7 @@ public class GercekKisiYonetimPage extends MainPage {
         return this;
     }
 
-    @Step("Web Adresi doldur")
+    @Step("Web adresi doldur")
     public GercekKisiYonetimPage iletisimBilgisiWebAdresiDoldur(String webAdres) {
         txtIletisimBilgisiWebAdres.setValue(webAdres);
         return this;
@@ -324,7 +333,7 @@ public class GercekKisiYonetimPage extends MainPage {
 
     @Step("Kep hizmet sağlayıcı seç")
     public GercekKisiYonetimPage kepHizmetSaglayiciSec(String kepHizmetSaglayici) {
-        cmbKepHizmetSaglayici.selectOptionByValue(kepHizmetSaglayici);
+        cmbKepHizmetSaglayici.selectOption(kepHizmetSaglayici);
         return this;
     }
 
@@ -338,7 +347,7 @@ public class GercekKisiYonetimPage extends MainPage {
         return this;
     }
 
-    @Step("Aktif Kayit kontrolu")
+    @Step("Aktif kişi kayit kontrolu")
     public GercekKisiYonetimPage aktifKisiKayitKontrolu(String tcNO, String ad, String soyad) {
 
         tblGercekKisiDataTableData.shouldBe(visible);
@@ -371,6 +380,17 @@ public class GercekKisiYonetimPage extends MainPage {
         return this;
     }
 
+    @Step("Pasif gerçek kişi tüm liste kayıt kontrolu")
+    public GercekKisiYonetimPage pasiflerTumListeKayitKontrolu() throws InterruptedException {
+
+        String formGercekKisiYonetimi = "gercekKisiYonetimiListingForm";
+
+        btnGercekKisiAktifYap.shouldBe(visible);
+        boolean status = findElementOnTableAllPages(formGercekKisiYonetimi, btnGercekKisiPasifYap);
+        Assert.assertEquals(status, false);
+        return this;
+    }
+
     @Step("TC kimlik no alma")
     public String getTbleTCNO() {
         String getTC = tblTc.getText();
@@ -386,7 +406,7 @@ public class GercekKisiYonetimPage extends MainPage {
         return this;
     }
 
-    @Step("Pasif kayit kontrolu")
+    @Step("Pasif kayıt kontrolu")
     public GercekKisiYonetimPage pasifKisiKayitKontrolu(String tcNO, String ad, String soyad) {
 
         btnGercekKisiGuncelle.shouldBe(visible); //tablo biraz geç geliyor
@@ -402,13 +422,13 @@ public class GercekKisiYonetimPage extends MainPage {
         return this;
     }
 
-    @Step("Gerçek Kişi Aktif Yap")
+    @Step("Gerçek kişi aktif Yap")
     public GercekKisiYonetimPage gercekKisiAktifYap() {
         btnGercekKisiAktifYap.shouldBe(visible).click();
         return this;
     }
 
-    @Step("Gerçek Kişi Aktif Yap")
+    @Step("Gerçek kişi pasif ise aktif yap")
     public GercekKisiYonetimPage gercekKisiPasifIseAktifYap() {
 
         btnGercekKisiGuncelle.shouldBe(exist); //tablo biraz geç geliyor
@@ -420,26 +440,26 @@ public class GercekKisiYonetimPage extends MainPage {
         return this;
     }
 
-    @Step("Gerçek Kişi Pasif Yap")
+    @Step("Gerçek kişi aktif ise pasif yap")
     public GercekKisiYonetimPage gercekKisiAktifIsePasifYap() {
 
         btnGercekKisiGuncelle.shouldBe(exist); //tablo biraz geç geliyor
 
-        if (btnGercekKisiPasiYap.isDisplayed()) {
-            btnGercekKisiPasiYap.click();
+        if (btnGercekKisiPasifYap.isDisplayed()) {
+            btnGercekKisiPasifYap.click();
             btnIslemOnayiEvet.click();
         }
         return this;
     }
 
-    @Step("Gerçek Kişi Pasif Yap")
+    @Step("Gerçek kişi pasif yap")
     public GercekKisiYonetimPage gercekKisiPasifYap() {
 
-        btnGercekKisiPasiYap.click();
+        btnGercekKisiPasifYap.click();
         return this;
     }
 
-    @Step("Tabloda listelenen TCKN kontrolü")
+    @Step("Tabloda \"{tbNO}\" TCKN kontrolü")
     public GercekKisiYonetimPage tabloTCKNKontrol(String tcNO) {
         $(byText(tcNO)).shouldBe(Condition.visible);
 //        boolean statusTCNO = findElementOnTableByColumnInputInAllPages(tblGercekKisiDataTable, 1, tcNO).isDisplayed();

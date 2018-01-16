@@ -3,20 +3,17 @@ package pages.solMenuPages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
-import common.BaseLibrary;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
 
-import java.util.List;
-
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
-import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
+import static com.codeborne.selenide.Selenide.sleep;
+import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 
 public class ParafBekleyenlerPage extends MainPage {
@@ -28,6 +25,7 @@ public class ParafBekleyenlerPage extends MainPage {
     SelenideElement txtAciklama = $(By.id("mainPreviewForm:evrakPaylasAciklama"));
     SelenideElement btnPaylas = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:7:cmdbutton"));
     SelenideElement btnTreeKapat = $(By.id("mainPreviewForm:evrakPaylasKisiLov:lovTreePanelKapat"));
+    SelenideElement btnParafla = $("[id='mainPreviewForm:onizlemeRightTab:onizlemeRightTab'] td:nth-child(5) button");
 
     SelenideElement btnPaylasimdanGeriAl = $(By.xpath("//span[contains(@class, 'evrakGeriAl')]/.."));
     ElementsCollection tablePaylasimdanGeriAl = $$("div[id='mainPreviewForm:geriAlPaylasimDatatable'] tbody > tr[role='row']");
@@ -50,31 +48,37 @@ public class ParafBekleyenlerPage extends MainPage {
     ElementsCollection tblEvrak = $$("[id^='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
 
     BelgenetElement txtTakipListesiKullanicilar = comboLov(By.id("evrakTakibimeEkleDialogForm:takipListLov:LovText"));
-    SelenideElement btnTakipListesiKapat =$("[id^='evrakTakibimeEkleDialogForm:takipDialog'] span[class='ui-icon ui-icon-closethick']");
+    SelenideElement btnTakipListesiKapat = $("[id^='evrakTakibimeEkleDialogForm:takipDialog'] span[class='ui-icon ui-icon-closethick']");
+    ElementsCollection tableEvrakNotlari = $$(By.xpath("//th[contains(., 'Evrak Notları')]/../../../tbody/tr"));
 
-    @Step("Paylaştıklarım sayfası aç")
+    @Step("Paraf Bekleyenler sayfası aç")
     public ParafBekleyenlerPage openPage() {
         solMenu(SolMenuData.KapatmaIslemleri.ParafBekleyenler);
+        String pageTitle = SolMenuData.KapatmaIslemleri.ParafBekleyenler.getMenuText();
+        $("#mainInboxForm\\:inboxDataTable .ui-inbox-header-title")
+                .shouldHave(text(pageTitle));
+        System.out.println("Page: " + pageTitle);
         return this;
     }
 
     @Step("Kullancılar doldur")
-    public ParafBekleyenlerPage takipListesiKullanicilarDoldur(String kullanicilar){
+    public ParafBekleyenlerPage takipListesiKullanicilarDoldur(String kullanicilar) {
         txtTakipListesiKullanicilar.selectLov(kullanicilar);
         return this;
     }
 
     @Step("Tablodan rapor seç")
-    public ParafBekleyenlerPage gizlilikRaporSecTakipListesi(String konu, String yer, String tarih, String no) {SelenideElement evrak = filter().findRowsWith(Condition.text(konu))
-            .filterBy(Condition.text(yer))
-            .filterBy(Condition.text(tarih))
-            .filterBy(Condition.text(no))
-            .shouldHaveSize(1).first();
+    public ParafBekleyenlerPage gizlilikRaporSecTakipListesi(String konu, String yer, String tarih, String no) {
+        SelenideElement evrak = filter().findRowsWith(Condition.text(konu))
+                .filterBy(Condition.text(yer))
+                .filterBy(Condition.text(tarih))
+                .filterBy(Condition.text(no))
+                .shouldHaveSize(1).first();
         evrak.$$("button[id^='mainInboxForm:inboxDataTable:']").get(0).click();
         return this;
     }
 
-    public ParafBekleyenlerPage takipListeKapat(){
+    public ParafBekleyenlerPage takipListeKapat() {
         btnTakipListesiKapat.click();
         return this;
     }
@@ -96,16 +100,16 @@ public class ParafBekleyenlerPage extends MainPage {
         return this;
     }
 
+
+    //     // Yasin ÖZGÜL / Yasin TELLİ / Veysel KIRAN
+
+    // yeniler
+
     @Step("Paylaş tabına tıkla")
     public ParafBekleyenlerPage paylasTabTikla() {
         btnPaylasTab.click();
         return this;
     }
-
-
-    //     // Yasin ÖZGÜL / Yasin TELLİ / Veysel KIRAN
-
-    // yeniler
 
     @Step("Evrak seç ")
     public ParafBekleyenlerPage evrakSec(String paylasilanKullanici) {
@@ -116,7 +120,6 @@ public class ParafBekleyenlerPage extends MainPage {
         return this;
     }
 
-
     @Step("Evrak seç ")
     public ParafBekleyenlerPage evrakSec(String konu, String gidecegiYer, String gonderen, String tarih) {
         tablePaylastiklarim
@@ -125,6 +128,14 @@ public class ParafBekleyenlerPage extends MainPage {
                 .filterBy(Condition.text("Gönderen: " + gonderen))
                 .filterBy(Condition.text(tarih))
                 .first()
+                .click();
+        return this;
+    }
+
+    @Step("Evrak seç ")
+    public ParafBekleyenlerPage konuyaGoreEvrakSec(String konu) {
+        tablePaylastiklarim
+                .filterBy(Condition.text(konu)).first()
                 .click();
         return this;
     }
@@ -157,7 +168,6 @@ public class ParafBekleyenlerPage extends MainPage {
         return this;
     }
 
-
     // Paylaş tab fonsiyonlar
     @Step("Paylaşımı durdur")
     public ParafBekleyenlerPage paylasimiDurdur() {
@@ -175,7 +185,6 @@ public class ParafBekleyenlerPage extends MainPage {
             btnEvratNotEkle.shouldHave(Condition.attribute("aria-disabled", "true"));
         return this;
     }
-
 
     @Step("Paylaşımdan geri al tabına tıklandı. ")
     public ParafBekleyenlerPage paylasimdanGeriAlTabSec() {
@@ -216,16 +225,14 @@ public class ParafBekleyenlerPage extends MainPage {
         return this;
     }
 
-
     @Step("paylaş butonuna tıklandı. ")
     public ParafBekleyenlerPage paylas() {
         btnPaylas.click();
         return this;
     }
 
-
     @Step("Paylaş")
-    public ParafBekleyenlerPage paylasPaylas(){
+    public ParafBekleyenlerPage paylasPaylas() {
         btnPaylasPaylas.click();
         return this;
     }
@@ -251,11 +258,9 @@ public class ParafBekleyenlerPage extends MainPage {
 
     @Step("paylaşılan kişileri temizle ")
     public ParafBekleyenlerPage paylasilanKisileriTemizle() {
-        txtPaylasKisi.clearAllSelectedLov();
+        txtPaylasKisi.clearAllSelectedItems();
         return this;
     }
-
-    ElementsCollection tableEvrakNotlari = $$(By.xpath("//th[contains(., 'Evrak Notları')]/../../../tbody/tr"));
 
     @Step("Açıklama kontrol")
     public ParafBekleyenlerPage evrakNotuKontrol(String ekleyen, String tarih, String aciklama, Boolean shouldBeExist) {
@@ -305,11 +310,11 @@ public class ParafBekleyenlerPage extends MainPage {
         return pTarihi.substring(pTarihi.indexOf("Paylaşılma Tarihi:") + 19, pTarihi.indexOf("Paylaşılma Tarihi:") + 38);
     }
 
-
-
-
-
-
+    @Step("Parafla")
+    public ParafBekleyenlerPage parafla() {
+        btnParafla.click();
+        return this;
+    }
 
 
 }

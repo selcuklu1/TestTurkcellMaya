@@ -7,14 +7,21 @@ import org.openqa.selenium.WebElement;
 import static com.codeborne.selenide.WebDriverRunner.isIE;
 
 public abstract class BelgentCondition extends Condition {
-    public BelgentCondition(String name) {
-        super(name);
-    }
 
     public static final Condition required = new Condition("required") {
         @Override
         public boolean apply(WebElement element) {
             return element.getAttribute("class").contains("required");
+        }
+    };
+
+    /**
+     * Sonuç tabloda navigasyon buton disabled
+     */
+    public static final Condition isTableNavButtonDisabled = new Condition("isTableNavButtonDisabled") {
+        @Override
+        public boolean apply(WebElement element) {
+            return element.getAttribute("class").contains("ui-state-disabled");
         }
     };
 
@@ -25,6 +32,10 @@ public abstract class BelgentCondition extends Condition {
             return element.getAttribute("class").contains("cke_button_on");
         }
     };
+
+    public BelgentCondition(String name) {
+        super(name);
+    }
 
     /**
      * <p>Sample: <code>$("h1").shouldHave(exactText("Hello"))</code></p>

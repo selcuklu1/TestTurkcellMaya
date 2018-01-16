@@ -6,11 +6,13 @@ import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
+import pages.pageData.UstMenuData;
 
 import static com.codeborne.selenide.Condition.exactText;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
-import static pages.pageComponents.belgenetElements.BelgenetFramework.comboBox;
-import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
+import static pages.pageComponents.belgenetElements.Belgenet.comboBox;
+import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 /****************************************************
  * Tarih: 2017-12-22
@@ -27,13 +29,13 @@ public class SikKullanilanlarPage extends MainPage {
     BelgenetElement txtDagitimlarDagitimlar = comboLov(By.id("sikKullanilanForm:sikKullanilanDagitimLov_id:LovText"));
     SelenideElement btnDagitimlarKaydet = $(By.id("sikKullanilanForm:sikKullanilanDagitimButton"));
     SelenideElement btnDagitimlarKaldir = $(By.id("sikKullanilanForm:sikKullanilanDagitimKaldirButton"));
-    SelenideElement btnEkranKapat  = $(By.cssSelector("[id='window2Dialog'] span[class='ui-icon ui-icon-closethick']"));
+    SelenideElement btnEkranKapat = $(By.cssSelector("[id='window2Dialog'] span[class='ui-icon ui-icon-closethick']"));
 
     //</editor-fold>
 
     @Step("Sık Kullanılanlar sayfasını aç")
     public SikKullanilanlarPage openPage() {
-        ustMenu("Sık Kullanılanlar");
+        ustMenu(UstMenuData.KisiselIslemlerim.SikKullanilanlar);
         return this;
     }
 
@@ -45,6 +47,7 @@ public class SikKullanilanlarPage extends MainPage {
 
     @Step("Sık Kullanılan Dağıtımlar - Dağıtım Doldur")
     public SikKullanilanlarPage dagitimlarDoldur(String dagitim) {
+        txtDagitimlarDagitimlar.shouldBe(visible);
         txtDagitimlarDagitimlar.selectLov(dagitim);
 
         return this;
@@ -57,7 +60,8 @@ public class SikKullanilanlarPage extends MainPage {
         //comboLov("").titleItems().contains(exactText("Türksat Optiim"))
         //comboLov("").titleItems().filterBy(exactText("Türksat Optiim")).size() > 0
 
-        if (txtDagitimlarDagitimlar.selectedTitles().filterBy(exactText(dagitim)).size() > 0) {
+        txtDagitimlarDagitimlar.shouldBe(visible);
+        if (txtDagitimlarDagitimlar.getSelectedTitles().filterBy(exactText(dagitim)).size() > 0) {
             dagitimlarKaldir();
             ekraniKapat();
             openPage();
@@ -72,17 +76,20 @@ public class SikKullanilanlarPage extends MainPage {
         return this;
     }
 
+    @Step("Seçili dağıtımlar kaldır")
     public SikKullanilanlarPage dagitimlarKaldir() {
         btnDagitimlarKaldir.click();
         return this;
     }
 
+    @Step("Ekranı kapat")
     public SikKullanilanlarPage ekraniKapat() {
         btnEkranKapat.click();
         islemPenceresiKapatmaOnayiPopup("Kapat");
         return this;
     }
 
+    @Step("Dağıtımlar listesinde görüntülenmeme kontrolu")
     public SikKullanilanlarPage dagitimlarListesindeKisininGoruntulenmemeKontrolu(String kisi) {
 
         boolean selectable = comboLov(txtDagitimlarDagitimlarBy).isLovValueSelectable(kisi);

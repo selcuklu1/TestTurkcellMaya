@@ -3,7 +3,6 @@ package pages.solMenuPages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
-import com.codeborne.selenide.collections.ExactTexts;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
@@ -30,7 +29,7 @@ public class KaydedilenGidenEvraklarPage extends MainPage {
     SelenideElement chkKaydettiklerim = $("[id$='kaydettiklerimCheckbox']");
     SelenideElement btnIcerikGöster = $("[id$='detayGosterButton']");
     SelenideElement btnTamEkranGöster = $("[id$='tamEkranModuButton']");
-    ElementsCollection tblRapor = $$("tbody[id='mainInboxForm:inboxDataTable_data'] tr[role='row'] tbody tr:nth-child(4)");
+    ElementsCollection tblRapor = $$("tbody[id='mainInboxForm:inboxDataTable_data'] tr[data-ri]");
 
 
     @Step("Kaydedilen giden evraklar sayfası aç")
@@ -65,11 +64,18 @@ public class KaydedilenGidenEvraklarPage extends MainPage {
         return this;
     }
 
-    @Step("Tabloda evrak no kontrolu")
+    @Step("Tabloda evrak no kontrolu : \"{evrakNo}\" ")
     public KaydedilenGidenEvraklarPage tabloKontrolu(String evrakNo) {
         int row = tblRapor.filterBy(Condition.text(evrakNo)).size();
         System.out.println(row);
         Assert.assertEquals(row, 1);
+        return this;
+    }
+
+    @Step("Tabloda evrak no kontrolu : \"{konu}\" ")
+    public KaydedilenGidenEvraklarPage tabloKontrolKonuyaGore(String konu) {
+        tblRapor.filterBy(Condition.text(konu))
+                .shouldHaveSize(1);
         return this;
     }
 

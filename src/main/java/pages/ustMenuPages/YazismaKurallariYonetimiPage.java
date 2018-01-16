@@ -5,7 +5,7 @@ import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import pages.MainPage;
-import pages.pageComponents.UstMenu;
+import pages.pageData.UstMenuData;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
@@ -24,8 +24,8 @@ public class YazismaKurallariYonetimiPage extends MainPage {
     ElementsCollection tableYazismaKurallari = $$(By.id("grupBirimTipleriListingForm:grupBirimTipleriDataTable_data"));
     SelenideElement btnYazismaKuraliSilEvet = $(By.id("baseConfirmationDialog:confirmButton"));
 
-    public YazismaKurallariYonetimiPage open() {
-        new UstMenu().ustMenu("Yazışma Kuralları Yönetimi");
+    public YazismaKurallariYonetimiPage openPage() {
+        ustMenu(UstMenuData.YonetimSayfalari.YazismaKurallariYonetimi);
         return this;
     }
 
@@ -121,14 +121,13 @@ public class YazismaKurallariYonetimiPage extends MainPage {
     @Step("Yazışma Kuralları kontrol et")
     public YazismaKurallariYonetimiPage yazismakurallariKontrolEt(String birimTipi, boolean shouldBeExist, boolean sinirsizYazilabilir, boolean vekaletSeviyesi, boolean sonImzaSeviyesi) {
 
-        if(shouldBeExist == true)
-        {
+        if (shouldBeExist == true) {
             tableYazismaKurallari
                     .filterBy(text(birimTipi))
                     .get(0)
                     .shouldBe(exist);
 
-            if(sinirsizYazilabilir == true)
+            if (sinirsizYazilabilir == true)
                 tableYazismaKurallari
                         .filterBy(text(birimTipi))
                         .get(0)
@@ -141,7 +140,7 @@ public class YazismaKurallariYonetimiPage extends MainPage {
                         .$(By.xpath("./tr/td[2]//span"))
                         .shouldHave(cssClass("false"));
 
-            if(vekaletSeviyesi == true)
+            if (vekaletSeviyesi == true)
                 tableYazismaKurallari
                         .filterBy(text(birimTipi))
                         .get(0)
@@ -154,7 +153,7 @@ public class YazismaKurallariYonetimiPage extends MainPage {
                         .$(By.xpath("./tr/td[3]//span"))
                         .shouldHave(cssClass("false"));
 
-            if(sonImzaSeviyesi == true)
+            if (sonImzaSeviyesi == true)
                 tableYazismaKurallari
                         .filterBy(text(birimTipi))
                         .get(0)
@@ -166,9 +165,7 @@ public class YazismaKurallariYonetimiPage extends MainPage {
                         .get(0)
                         .$(By.xpath("./tr/td[4]//span"))
                         .shouldHave(cssClass("false"));
-        }
-        else
-        {
+        } else {
             tableYazismaKurallari
                     .filterBy(text(birimTipi))
                     .get(0)
@@ -180,7 +177,7 @@ public class YazismaKurallariYonetimiPage extends MainPage {
     }
 
     @Step("Yazışma Kuralı sil")
-    public YazismaKurallariYonetimiPage yazismaKuraliSil(String birimTipi){
+    public YazismaKurallariYonetimiPage yazismaKuraliSil(String birimTipi) {
         tableYazismaKurallari
                 .filterBy(text(birimTipi))
                 .get(0)
@@ -191,7 +188,7 @@ public class YazismaKurallariYonetimiPage extends MainPage {
     }
 
     @Step("Yazışma Kuralı Güncelle")
-    public YazismaKurallariYonetimiPage yazismaKuraliGuncelle(String birimTipi){
+    public YazismaKurallariYonetimiPage yazismaKuraliGuncelle(String birimTipi) {
         tableYazismaKurallari
                 .filterBy(text(birimTipi))
                 .get(0)
@@ -199,7 +196,6 @@ public class YazismaKurallariYonetimiPage extends MainPage {
                 .click();
         return this;
     }
-
 
 
 }

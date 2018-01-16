@@ -1,15 +1,14 @@
 package pages.solMenuPages;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
-import org.testng.Assert;
 import pages.MainPage;
 import pages.pageData.SolMenuData;
 
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
+import static com.codeborne.selenide.Selenide.*;
 
 /****************************************************
  * Tarih: 2017-12-22
@@ -21,7 +20,7 @@ public class BirimHavaleEdilenlerPage extends MainPage {
 
 
     SelenideElement f = $(By.xpath("//div[@id='mainInboxForm:inboxDataTable:filtersAccordion']//a[text()='Filtreler']/parent::h3"));
-    SelenideElement cmbTopluSecim  =$(By.id("mainInboxForm:inboxDataTable:j_idt666_button"));
+    SelenideElement cmbTopluSecim = $(By.id("mainInboxForm:inboxDataTable:j_idt666_button"));
     SelenideElement cmbFiltre = $(By.xpath("//select[starts-with(@id,'mainInboxForm:inboxDataTable:filtersAccordion:j_idt']"));
     SelenideElement txtSayfadaAra = $(By.xpath("//select[starts-with(@id,'mainInboxForm:inboxDataTable:filtersAccordion:j_idt']"));
     SelenideElement dateTxtBaslangicTarihi = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt389_input"));
@@ -29,7 +28,7 @@ public class BirimHavaleEdilenlerPage extends MainPage {
     SelenideElement btnIcerikGöster = $(By.id("mainInboxForm:inboxDataTable:0:detayGosterButton"));
     SelenideElement btnTamEkranGöster = $(By.id("mainInboxForm:inboxDataTable:0:tamEkranModuButton"));
     SelenideElement tblRapor = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
-    SelenideElement tblKaydedilenGelenEvraklar =$(By.id("mainInboxForm:inboxDataTable_data"));
+    ElementsCollection tblKaydedilenGelenEvraklar = $$("[id='mainInboxForm:inboxDataTable_data'] tr[data-ri]");
 
     @Step("Birim Havale Edilenler sayfası aç")
     public BirimHavaleEdilenlerPage openPage() {
@@ -73,13 +72,34 @@ public class BirimHavaleEdilenlerPage extends MainPage {
         tblRapor.click();
         return this;
     }
-    @Step("Tabloda evrak no kontrolü")
-    public BirimHavaleEdilenlerPage tabloKontrolu(String evrakNo)
-    {
-        int row = $$("tbody[id$='mainInboxForm:inboxDataTable_data'] tr[role=row] tbody").filterBy(Condition.text(evrakNo)).size();
-        System.out.println(row);
-        Assert.assertEquals(row,1);
-        //log başarılı
-        return  this;
+
+    @Step("Tabloda evrak no kontrolü : \"{evrakNo}\" ")
+    public BirimHavaleEdilenlerPage evrakNoIleTabloKontrolu(String evrakNo) {
+        tblKaydedilenGelenEvraklar
+                .filterBy(Condition.text(evrakNo))
+                .shouldHaveSize(1);
+        return this;
     }
+
+    @Step("Tabloda evrak no ile evrak seçme. \"{evrakNo}\" ")
+    public BirimHavaleEdilenlerPage evrakNoIleTablodanEvrakSecme(String evrakNo) {
+        tblKaydedilenGelenEvraklar
+                .filterBy(Condition.text(evrakNo))
+                .first()
+                .click();
+        return this;
+    }
+
+    @Step("Evrak önizleme evrak kontrolü : \"{pdfText}\" ")
+    public BirimHavaleEdilenlerPage evrakOnizlemeEklenenUstYaziKontrolu(String pdfText) {
+        String text = "";
+        switchTo().frame(1);
+        sleep(1000);
+        text = $(By.xpath("//div[@id='viewer']/div[@class='page']/div[@class='textLayer']/div[1]")).getText();
+        text.equals(pdfText);
+        switchTo().parentFrame();
+        return this;
+    }
+
+
 }

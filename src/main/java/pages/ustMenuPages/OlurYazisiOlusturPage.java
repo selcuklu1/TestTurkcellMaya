@@ -5,32 +5,29 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
-import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.TextEditor;
-import pages.pageComponents.UstMenu;
 import pages.pageComponents.belgenetElements.BelgenetElement;
+import pages.pageData.UstMenuData;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
-import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
+import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 public class OlurYazisiOlusturPage extends MainPage {
-
-    //region Tabs local variables
-    private BilgilerTab bilgilerTab = new BilgilerTab();
-    private EditorTab editorTab = new EditorTab();
-    //endregion
 
     SelenideElement tabBilgiler = $("button[id^='yeniOnayEvrakForm'] span[class$='kullaniciBilgileri']");
     //SelenideElement tabBilgiler = $("button .kullaniciBilgileri");
     SelenideElement tabEditor = $("button .editor");
+    //endregion
+    //region Tabs local variables
+    private BilgilerTab bilgilerTab = new BilgilerTab();
+    private EditorTab editorTab = new EditorTab();
 
     @Step("Olur Yazısı Oluştur sayfasını aç")
     public OlurYazisiOlusturPage openPage() {
-        new UstMenu().ustMenu("Olur Yazısı Oluştur");
-        $("#yeniOnayEvrakForm").shouldBe(visible);
+        ustMenu(UstMenuData.EvrakIslemleri.OlurYazisiOlustur);
         return this;
     }
 
@@ -38,6 +35,10 @@ public class OlurYazisiOlusturPage extends MainPage {
     @Step("Bilgiler tab aç")
     public BilgilerTab bilgilerTabiAc() {
         return bilgilerTab.open();
+    }
+
+    public EditorTab editorTabAc() {
+        return editorTab.open();
     }
 
     public class BilgilerTab extends MainPage {
@@ -134,17 +135,19 @@ public class OlurYazisiOlusturPage extends MainPage {
         }
 
 
-        @Step("Seçilen onay akışı detail kontrolu: \"{secim}\" ")
-        public BilgilerTab onayAkisiDetailKontrol(String secim) {
-            System.out.println("Gelen detail:     " + cmbOnayAkisi.lastSelectedLovDetailText());
-            Assert.assertEquals(cmbOnayAkisi.lastSelectedLovDetailText().contains(secim), true);
+        @Step("Seçilen onay akışı detail kontrolu: \"{onayAkisiDetail}\" ")
+        public BilgilerTab onayAkisiDetailKontrol(String onayAkisiDetail) {
+            /*System.out.println("Gelen detail:     " + cmbOnayAkisi.lastSelectedLovDetailText());
+            Assert.assertEquals(cmbOnayAkisi.lastSelectedLovDetailText().contains(onayAkisiDetail), true);*/
+            cmbOnayAkisi.getSelectedDetails().last().shouldHave(text(onayAkisiDetail));
             return this;
         }
 
-        @Step("Seçilen onay akışı title kontrolu: \"{secim}\" ")
-        public BilgilerTab onayAkisiTitleKontrol(String secim) {
-            System.out.println("Gelen detail:     " + cmbOnayAkisi.lastSelectedLovTitleText());
-            Assert.assertEquals(cmbOnayAkisi.lastSelectedLovTitleText().contains(secim), true);
+        @Step("Seçilen onay akışı title kontrolu: \"{onayAkisiTitle}\" ")
+        public BilgilerTab onayAkisiTitleKontrol(String onayAkisiTitle) {
+            /*System.out.println("Gelen detail:     " + cmbOnayAkisi.lastSelectedLovTitleText());
+            Assert.assertEquals(cmbOnayAkisi.lastSelectedLovTitleText().contains(onayAkisiTitle), true);*/
+            cmbOnayAkisi.getSelectedTitles().last().shouldHave(text(onayAkisiTitle));
             return this;
         }
 
@@ -152,11 +155,11 @@ public class OlurYazisiOlusturPage extends MainPage {
         public BilgilerTab onayAkisiAlanindaGoruntulenmemeKontrolu(String onayAkisi) {
 
             if (cmbOnayAkisi.isLovSelected() == true) {
-                cmbOnayAkisi.clearLastSelectedLov();
+                cmbOnayAkisi.clearLastSelectedItem();
             }
 
-            comboLov(cmbOnayAkisiBy).type(onayAkisi).titleItems().filterBy(exactText(onayAkisi)).shouldHaveSize(0);
-            comboLov(cmbOnayAkisiBy).closeLovTreePanel();
+            comboLov(cmbOnayAkisiBy).type(onayAkisi).getTitleItems().filterBy(exactText(onayAkisi)).shouldHaveSize(0);
+            comboLov(cmbOnayAkisiBy).closeTreePanel();
             System.out.println("MyCombolov alanında " + onayAkisi + ": Onay Akışın görüntülenmediği görülür.");
 
             return this;
@@ -169,6 +172,7 @@ public class OlurYazisiOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Kullaniciya kullanici tipi sec")
         public BilgilerTab kullaniciyaKullaniciTipiSec(String kullanici, String secimTipi) {
 
             trOnayAkisiEkleKullanicilar
@@ -190,16 +194,12 @@ public class OlurYazisiOlusturPage extends MainPage {
 
     }
 
-    public EditorTab editorTabAc() {
-        return editorTab.open();
-    }
-
     public class EditorTab extends MainPage {
+        private TextEditor editor = new TextEditor();
+
         public TextEditor getEditor() {
             return editor;
         }
-
-        private TextEditor editor = new TextEditor();
 
         private EditorTab open() {
             tabEditor.click();

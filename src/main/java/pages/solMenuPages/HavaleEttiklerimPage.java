@@ -9,15 +9,16 @@ import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
 
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
-import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
+import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 public class HavaleEttiklerimPage extends MainPage {
 
     //SelenideElement pageTitle = $(By.cssSelector("#window1Dialog .ui-dialog-title"));
     SelenideElement f = $(By.xpath("//div[@id='mainInboxForm:inboxDataTable:filtersAccordion']//a[text()='Filtreler']/parent::h3"));
-    SelenideElement cmbTopluSecim  =$(By.id("mainInboxForm:inboxDataTable:j_idt657_button"));
+    SelenideElement cmbTopluSecim = $(By.id("mainInboxForm:inboxDataTable:j_idt657_button"));
     SelenideElement cmbFiltre = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt3011_input"));
     SelenideElement txtSayfadaAra = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt353"));
     SelenideElement dateTxtBaslangicTarihi = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt378_input"));
@@ -30,6 +31,7 @@ public class HavaleEttiklerimPage extends MainPage {
     BelgenetElement txtHavaleYapKisi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKullaniciLov:LovText"));
     BelgenetElement txtHavaleYapKullaniciListesi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKisiListesiLov:LovText"));
     ElementsCollection tblEvraklar = $$("[id^='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
+
     @Step("Havale Ettiklerim sayfası aç")
     public HavaleEttiklerimPage openPage() {
         solMenu(SolMenuData.IslemYaptiklarim.HavaleEttiklerim);
@@ -44,10 +46,17 @@ public class HavaleEttiklerimPage extends MainPage {
 
     @Step("Kullanıcı listesi doldur")
     public HavaleEttiklerimPage havaleYapKullaniciListesiDoldur(String kullaniciListesi) {
-        //txtHavaleYapKullaniciListesi.selectLov(kullaniciListesi);
+//        txtHavaleYapKullaniciListesi.selectLov(kullaniciListesi);
         txtHavaleYapKullaniciListesi.selectLov(kullaniciListesi);
         return this;
     }
+
+    @Step("Kullanıcı listesinde \"{kisi}\" seçmeye dene")
+    public HavaleEttiklerimPage havaleYapKullaniciyiSecmeyeDene(String kisi) {
+        txtHavaleYapKullaniciListesi.type(kisi).getTitleItems().filterBy(text(kisi)).first().click();
+        return this;
+    }
+
 
     @Step("Filtrele alanını aç")
     public HavaleEttiklerimPage filtreleAc() {
@@ -95,9 +104,10 @@ public class HavaleEttiklerimPage extends MainPage {
         return this;
     }
 
-    @Step("Havale yap butonana bas")
-    public HavaleEttiklerimPage havaleYap() {
+    @Step("Havale Yap")
+    public HavaleEttiklerimPage havaleYap(){
         btnHavaleYap.click();
         return this;
     }
+
 }

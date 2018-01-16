@@ -5,6 +5,7 @@ package tests.KararYazisiOlusturma;
  * Class: "Karar Yazısı Oluşturma" konulu senaryoları içerir
  * Yazan: Can Şeker
  ****************************************************/
+
 import common.BaseTest;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Severity;
@@ -17,131 +18,133 @@ import pages.ustMenuPages.*;
 import static data.TestData.*;
 
 @Epic("Kep ile Postalama İşlemleri")
-public class KararYazisiOlusturmaTest extends BaseTest{
+public class KararYazisiOlusturmaTest extends BaseTest {
 
-        KararYazisiOlusturPage kararYazisiOlusturPage;
-        KararIzlemePage kararIzlemePage;
-        ImzaBekleyenlerPage imzaBekleyenlerPage;
-        KlasorYonetimiPage klasorYonetimiPage;
-        TeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage;
-        GelenEvraklarPage gelenEvraklarPage;
-        KurulIslemleriPage kurulIslemleriPage;
-        GundemIzlemePage gundemIzlemePage;
-        ErisimYonetimiPage erisimYonetimiPage;
-        ImzaladiklarimPage imzaladiklarimPage;
-        KlasorEvrakIslemleriPage klasorEvrakIslemleriPage;
-        GelenEvrakKayitPage gelenEvrakKayitPage;
-        @BeforeMethod
-        public void loginBeforeTests() {
-            kararYazisiOlusturPage = new KararYazisiOlusturPage();
-            kararIzlemePage = new KararIzlemePage();
-            imzaBekleyenlerPage = new ImzaBekleyenlerPage();
-            klasorYonetimiPage = new KlasorYonetimiPage();
-            teslimAlinmayiBekleyenlerPage = new TeslimAlinmayiBekleyenlerPage();
-            gelenEvraklarPage = new GelenEvraklarPage();
-            kurulIslemleriPage = new KurulIslemleriPage();
-            gundemIzlemePage = new GundemIzlemePage();
-            erisimYonetimiPage = new ErisimYonetimiPage();
-            imzaladiklarimPage = new ImzaladiklarimPage();
-            klasorEvrakIslemleriPage = new KlasorEvrakIslemleriPage();
-            gelenEvrakKayitPage = new GelenEvrakKayitPage();
-        }
+    KararYazisiOlusturPage kararYazisiOlusturPage;
+    KararIzlemePage kararIzlemePage;
+    ImzaBekleyenlerPage imzaBekleyenlerPage;
+    KlasorYonetimiPage klasorYonetimiPage;
+    TeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage;
+    GelenEvraklarPage gelenEvraklarPage;
+    KurulIslemleriPage kurulIslemleriPage;
+    GundemIzlemePage gundemIzlemePage;
+    ErisimYonetimiPage erisimYonetimiPage;
+    ImzaladiklarimPage imzaladiklarimPage;
+    KlasorEvrakIslemleriPage klasorEvrakIslemleriPage;
+    GelenEvrakKayitPage gelenEvrakKayitPage;
+    String klasorAdi = createRandomText(12);
+    String klasorKodu = createRandomNumber(10);
 
-        @Severity(SeverityLevel.CRITICAL)
-        @Test(enabled = true, description = "1488: Karar yazısında zorunlu alan kontrolleri")
-        public void TC1488() throws InterruptedException {
+    @BeforeMethod
+    public void loginBeforeTests() {
+        kararYazisiOlusturPage = new KararYazisiOlusturPage();
+        kararIzlemePage = new KararIzlemePage();
+        imzaBekleyenlerPage = new ImzaBekleyenlerPage();
+        klasorYonetimiPage = new KlasorYonetimiPage();
+        teslimAlinmayiBekleyenlerPage = new TeslimAlinmayiBekleyenlerPage();
+        gelenEvraklarPage = new GelenEvraklarPage();
+        kurulIslemleriPage = new KurulIslemleriPage();
+        gundemIzlemePage = new GundemIzlemePage();
+        erisimYonetimiPage = new ErisimYonetimiPage();
+        imzaladiklarimPage = new ImzaladiklarimPage();
+        klasorEvrakIslemleriPage = new KlasorEvrakIslemleriPage();
+        gelenEvrakKayitPage = new GelenEvrakKayitPage();
+    }
 
-            String uyariMesajYaziIcerik = "Yazı içeriği boş olamaz!";
-            String uyariMesajZorunlu = "Zorunlu alanları doldurunuz";
-            String konuKodu = "K/Frekans Yıllık Kullanım Ücreti";
-            String kaldirilicakKlasorler = "Diğer";
-            String toplantiNo = createRandomNumber(6);
-            String toplantiTarih = getSysDateForKis();
-            String kararNo = createRandomNumber(13);
-            String aciklama = "Deneme amaçlıdır";
-            String editorIcerik = "Deneme Can";
-            String kullanici = "Optiim";
-            String onayAkisi = "ZUZU_ONAY_AKİSİ_1";
-            String imzalama = "İmzalama";
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "1488: Karar yazısında zorunlu alan kontrolleri")
+    public void TS1488() {
 
-            login(username2, password2);
+        String uyariMesajYaziIcerik = "Yazı içeriği boş olamaz!";
+        String uyariMesajZorunlu = "Zorunlu alanları doldurunuz";
+        String konuKodu = "K/Frekans Yıllık Kullanım Ücreti";
+        String kaldirilicakKlasorler = "Diğer";
+        String toplantiNo = createRandomNumber(6);
+        String toplantiTarih = getSysDateForKis();
+        String kararNo = createRandomNumber(13);
+        String aciklama = "Deneme amaçlıdır";
+        String editorIcerik = "Deneme Can";
+        String kullanici = "Optiim";
+        String onayAkisi = "ZUZU_ONAY_AKİSİ_1";
+        String imzalama = "İmzalama";
 
-            kararYazisiOlusturPage
-                    .openPage()
-                    .bilgilerTabiAc()
-                    .konuKoduDoldur(konuKodu)
-                    .onayAkisiEkle()
-                    .kullan()
-                    .kaldirilacakKlasorlerDoldur(kaldirilicakKlasorler)
-                    .toplantiNoDoldur(toplantiNo)
-                    .toplantiTarihDoldur(toplantiTarih)
-                    .kararNoDoldur(kararNo)
-                    .kaydetveOnaySun()
-                    .aciklamaDoldur(aciklama)
-                    .gonder(true)
-                    .islemMesaji().beklenenMesaj(uyariMesajYaziIcerik);
+        login(username2, password2);
 
-            kararYazisiOlusturPage
-                    .editorTabAc()
-                    .editorIcerikDoldur(editorIcerik);
-            kararYazisiOlusturPage
-                    .bilgilerTabiAc()
-                    .kararNoDoldur("")
-                    .kaydetveOnaySun()
-                    .islemMesaji().beklenenMesaj(uyariMesajZorunlu)
-                    .beklenenMesaj(uyariMesajZorunlu);
+        kararYazisiOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .konuKoduDoldur(konuKodu)
+                .onayAkisiEkle()
+                .kullan()
+                .kaldirilacakKlasorlerDoldur(kaldirilicakKlasorler)
+                .toplantiNoDoldur(toplantiNo)
+                .toplantiTarihDoldur(toplantiTarih)
+                .kararNoDoldur(kararNo)
+                .kaydetveOnaySun()
+                .aciklamaDoldur(aciklama)
+                .gonder(true)
+                .islemMesaji().beklenenMesaj(uyariMesajYaziIcerik);
 
-            kararYazisiOlusturPage
-                    .bilgilerTabiAc()
-                    .kararNoDoldur(kararNo)
-                    .konuKoduTemizle()
-                    .kaydetveOnaySun()
-                    .islemMesaji().beklenenMesaj(uyariMesajZorunlu);
+        kararYazisiOlusturPage
+                .editorTabAc()
+                .editorIcerikDoldur(editorIcerik);
+        kararYazisiOlusturPage
+                .bilgilerTabiAc()
+                .kararNoDoldur("")
+                .kaydetveOnaySun()
+                .islemMesaji().uyariOlmali(uyariMesajZorunlu);
 
-            kararYazisiOlusturPage
-                    .bilgilerTabiAc()
-                    .konuKoduDoldur(konuKodu)
-                    .konuDoldur("")
-                    .kaydetveOnaySun()
-                    .islemMesaji().beklenenMesaj(uyariMesajZorunlu);
+        kararYazisiOlusturPage
+                .bilgilerTabiAc()
+                .kararNoDoldur(kararNo)
+                .konuKoduTemizle()
+                .kaydetveOnaySun()
+                .islemMesaji().uyariOlmali(uyariMesajZorunlu);
 
-            kararYazisiOlusturPage
-                    .bilgilerTabiAc()
-                    .kaldirilacakKlasorTemizle()
-                    .konuKoduDoldur(konuKodu)
-                    .kaydetveOnaySun()
-                    .islemMesaji().beklenenMesaj(uyariMesajZorunlu);
+        kararYazisiOlusturPage
+                .bilgilerTabiAc()
+                .konuKoduDoldur(konuKodu)
+                .konuDoldur("")
+                .kaydetveOnaySun()
+                .islemMesaji().uyariOlmali(uyariMesajZorunlu);
 
-            kararYazisiOlusturPage
-                    .bilgilerTabiAc()
-                    .kaldirilacakKlasorlerDoldur(kaldirilicakKlasorler)
-                    .toplantiNoDoldur("")
-                    .kaydetveOnaySun()
-                    .islemMesaji().beklenenMesaj(uyariMesajZorunlu);
+        kararYazisiOlusturPage
+                .bilgilerTabiAc()
+                .kaldirilacakKlasorTemizle()
+                .konuKoduDoldur(konuKodu)
+                .kaydetveOnaySun()
+                .islemMesaji().uyariOlmali(uyariMesajZorunlu);
 
-            kararYazisiOlusturPage
-                    .bilgilerTabiAc()
-                    .toplantiNoDoldur(toplantiNo)
-                    .onayAkisiTemizle()
-                    .kaydetveOnaySun()
-                    .islemMesaji().beklenenMesaj(uyariMesajZorunlu);
+        kararYazisiOlusturPage
+                .bilgilerTabiAc()
+                .kaldirilacakKlasorlerDoldur(kaldirilicakKlasorler)
+                .toplantiNoDoldur("")
+                .kaydetveOnaySun()
+                .islemMesaji().uyariOlmali(uyariMesajZorunlu);
 
-            kararYazisiOlusturPage
-                    .bilgilerTabiAc()
-                    .onayAkisiEkle()
-                    .kullanicilarDoldur(kullanici,"")
-                    .onayAkisiDoldur(onayAkisi)
-                    .imzalamaKontrol(imzalama);
-        }
+        kararYazisiOlusturPage
+                .bilgilerTabiAc()
+                .toplantiNoDoldur(toplantiNo)
+                .onayAkisiTemizle()
+                .kaydetveOnaySun()
+                .islemMesaji().uyariOlmali(uyariMesajZorunlu);
+
+        kararYazisiOlusturPage
+                .bilgilerTabiAc()
+                .onayAkisiEkle()
+                .kullanicilarDoldur(kullanici, "")
+                .onayAkisiDoldur(onayAkisi)
+                .imzalamaKontrol(imzalama);
+    }
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "2240: Teslim alınmayı bekleyenler listesinden Gündem klasörüne evrak kapatma")
-    public void TC2240() throws InterruptedException {
+    public void TS2240() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
         String kaldirilicakKlasor = "Gündem";
-        String konuKodu = "Usul ve Esaslar";
-        String konuKoduRandom = createRandomText(12);
+        String konuKodu = "Diğer";
+        String konuKoduRandom = "TS-2240_" + createRandomNumber(25);
         String evrakTarihi = getSysDateForKis();
         String kurum = "BÜYÜK HARFLERLE KURUM";
         String kullaniciAdi = "Yazılım Geliştirme Direktörlüğ";
@@ -159,7 +162,8 @@ public class KararYazisiOlusturmaTest extends BaseTest{
                 .havaleIslemleriBirimDoldur(kullaniciAdi)
                 .kaydet()
                 .evetDugmesi()
-                .yeniKayitButton();
+                .benzerKayit();
+             //   .yeniKayitButton();
         //TODO
 
 
@@ -195,7 +199,7 @@ public class KararYazisiOlusturmaTest extends BaseTest{
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "2239: Gündem yayınlama")
-    public void TC2239() throws InterruptedException {
+    public void TS2239() {
 
         String basariMesaji = "İşlem başarılıdır!";
         String kaldirilicakKlasor = "Gündem";
@@ -226,13 +230,13 @@ public class KararYazisiOlusturmaTest extends BaseTest{
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "1497: Karar Yazısı oluşturulması")
-    public void TC1497() throws InterruptedException {
+    public void TS1497() throws InterruptedException {
         String basariMesaji = "İşlem başarılıdır!";
         String konuKodu = "K/Frekans Yıllık Kullanım Ücreti";
         String kaldirilicakKlasorler = "Diğer";
         String toplantiNo = createRandomNumber(9);
-        String toplantiTarih =getSysDateForKis();
-        String miat =getSysDateForKis();
+        String toplantiTarih = getSysDateForKis();
+        String miat = getSysDateForKis();
         String kararNo = createRandomNumber(12);
         String editorIcerik = "Deneme Can";
         String kullanici = "Yasemin Çakıl AKYOL";
@@ -271,7 +275,7 @@ public class KararYazisiOlusturmaTest extends BaseTest{
         kararYazisiOlusturPage
                 .iliskiliEvraklarTabAc()
                 .sistemdeKayitliEvrakEkleTabAc()
-                .sistemdeKayitliEvrakEkleEvrakAramaDoldur("2")
+                .sistemdeKayitliEvrakEkleEvrakAramaDoldur("4")
                 .sistemdeKayitliEvrakEkleEvrakDokumanAra()
                 .sistemdeKayitliEvrakEkleArti()
                 .tercumeEkleTabAc()
@@ -288,11 +292,11 @@ public class KararYazisiOlusturmaTest extends BaseTest{
 
         kararIzlemePage
                 .openPage()
-                .evrakGeldigiGorme(toplantiNo,konuKodu,toplantiTarih);
+                .evrakGeldigiGorme(toplantiNo, konuKodu, toplantiTarih);
 
         imzaBekleyenlerPage
                 .openPage()
-                .evrakSec(kararNo,konuKodu)
+                .evrakSec(kararNo, konuKodu)
                 .imzala()
                 .sImzaSec()
                 .sImzaİmzala(true)
@@ -300,31 +304,31 @@ public class KararYazisiOlusturmaTest extends BaseTest{
 
         imzaladiklarimPage
                 .openPage()
-                .evrakGeldigiGorme(toplantiNo,konuKodu,toplantiTarih);
+                .evrakGeldigiGorme(toplantiNo, konuKodu, toplantiTarih);
 
         kararIzlemePage
                 .openPage()
                 .filtreler()
                 .evrakDurumuSec("Y")
                 .filtrele()
-                .evrakGeldigiGorme(toplantiNo,konuKodu,toplantiTarih);
+                .evrakGeldigiGorme(toplantiNo, konuKodu, toplantiTarih);
 
         klasorEvrakIslemleriPage
                 .openPage()
                 .klasorDoldur(kaldirilicakKlasorler)
                 .ara()
-                .evrakGeldigiGorme(toplantiNo,konuKodu);
+                .evrakGeldigiGorme(toplantiNo, konuKodu);
     }
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "2232: Karar izleme ekranının toplu onaya sunma")
-    public void TC2232() throws InterruptedException {
+    public void TS2232() {
 
         String basariMesaji = "İşlem başarılıdır!";
         String konuKodu = "Usul ve Esaslar";
         String kaldirilicakKlasorler = "Diğer";
         String toplantiNo = createRandomNumber(9);
-        String toplantiTarih =getSysDateForKis();
+        String toplantiTarih = getSysDateForKis();
         String kararNo = createRandomNumber(15);
         String editorIcerik = "Deneme Can";
         String kullanici = "Zübeyde TEKİN";
@@ -339,7 +343,7 @@ public class KararYazisiOlusturmaTest extends BaseTest{
                 .konuKoduDoldur(konuKodu)
                 .ivedilikSec(ivedilik)
                 .onayAkisiEkle()
-                .kullanicilarDoldur(kullanici,"")
+                .kullanicilarDoldur(kullanici, "")
                 .kullan()
                 .kaldirilacakKlasorlerDoldur(kaldirilicakKlasorler)
                 .toplantiNoDoldur(toplantiNo)
@@ -354,18 +358,17 @@ public class KararYazisiOlusturmaTest extends BaseTest{
 
         kararIzlemePage
                 .openPage()
-                .evrakSec(kararNo,konuKodu,toplantiTarih)
+                .evrakSec(kararNo, konuKodu, toplantiTarih)
                 .topluOnayaSun(true);
 
         imzaBekleyenlerPage
                 .openPage()
-                .dogruKonuVeNoKontrol(kararNo,konuKodu);
+                .dogruKonuVeNoKontrol(kararNo, konuKodu);
     }
-
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "1714: Karar yazsının iadesi")
-    public void TC1714() throws InterruptedException {
+    public void TS1714() {
 
         String basariMesaji = "İşlem başarılıdır!";
         String konuKodu = "Usul ve Esaslar";
@@ -435,11 +438,9 @@ public class KararYazisiOlusturmaTest extends BaseTest{
 
     }
 
-    String klasorAdi = createRandomText(12);
-    String klasorKodu = createRandomNumber(10);
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "2238: Gündem klasörü oluşturma")
-    public void TC2238() throws InterruptedException {
+    public void TS2238() {
 
         String basariMesaji = "İşlem başarılıdır!";
         String birim = "Yazılım Geliştirme Direktörlüğ";
@@ -486,12 +487,12 @@ public class KararYazisiOlusturmaTest extends BaseTest{
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "1715: Gelen evrak listesinden Gündem klasörüne evrak kapatma")
-    public void TC1715() throws InterruptedException {
+    public void TS1715() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
-        String konuKodu = "Usul ve Esaslar";
+        String konuKodu = "Diğer";
         String kaldirilicakKlasor = "Gündem";
-        String konuKoduRandom = createRandomText(12);
+        String konuKoduRandom = "TS-1715_" + createRandomNumber(25);
         String evrakTarihi = getSysDateForKis();
         String kurum = "BÜYÜK HARFLERLE KURUM";
         String kullaniciAdi = "Zübeyde Tekin";
@@ -500,20 +501,21 @@ public class KararYazisiOlusturmaTest extends BaseTest{
         gelenEvrakKayitPage
                 .openPage()
                 .konuKoduDoldur(konuKodu)
+                .konuDoldur(konuKoduRandom)
                 .evrakTarihiDoldur(evrakTarihi)
                 .geldigiKurumDoldurLovText(kurum)
                 .evrakSayiSagDoldur()
                 .havaleIslemleriKisiDoldur(kullaniciAdi)
                 .kaydet()
                 .evetDugmesi()
+                //  .benzerKayit()
                 .yeniKayitButton();
-
 
         gelenEvraklarPage
                 .openPage()
                 .evrakSec()
                 .evrakKapat()
-                .evrakKapatKaldirilacakKlasorlerDoldur(kaldirilicakKlasor)
+                .evrakKapatKaldirilacakKlasorlerDoldur(kaldirilicakKlasor, kaldirilicakKlasor)
                 .evrakKapatKonuKodu(konuKodu)
                 .evrakKapatEvrakKapat();
 

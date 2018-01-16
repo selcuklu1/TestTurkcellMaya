@@ -6,12 +6,12 @@ import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import pages.MainPage;
-import pages.pageComponents.UstMenu;
 import pages.pageComponents.belgenetElements.BelgenetElement;
+import pages.pageData.UstMenuData;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
-import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
+import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 /****************************************************
  * Tarih: 2017-12-22
@@ -38,7 +38,7 @@ public class EvrakAramaPage extends MainPage {
     ElementsCollection tblDetayliAramaTabListe = $$("[id='menuYonetimiTabView:detayliEvrakAramaForm:evrakAramaDataTable_data'] tr[role='row']");
 
     public EvrakAramaPage openPage() {
-        new UstMenu().ustMenu("Evrak Arama");
+        ustMenu(UstMenuData.EvrakIslemleri.EvrakArama);
         return this;
     }
 
@@ -59,6 +59,7 @@ public class EvrakAramaPage extends MainPage {
         cmbAramaKriteri.selectComboBox(aramaKriteriTxt);
         return this;
     }
+
     @Step("Arama Kriteri seç")
     public EvrakAramaPage aramaKriteriSecwithValue(String aramaKriteriValue) {
         cmbAramaKriteri.selectOptionByValue(aramaKriteriValue);
@@ -70,6 +71,7 @@ public class EvrakAramaPage extends MainPage {
         txtAramaKriteri.sendKeys(value);
         return this;
     }
+
     @Step("Arama Sayısı Kriteri Kontrol")
     public EvrakAramaPage aramaSayisiKriteriKontrol() {
         $(By.id("menuYonetimiTabView:hizliEvrakAramaForm:aramaCesitSelectOneMenuId_input")).shouldBe(Condition.visible);
@@ -89,7 +91,7 @@ public class EvrakAramaPage extends MainPage {
         return this;
     }
 
-    @Step("Tablodao detay butonuna tıkla")
+    @Step("Tabloda detay butonuna tıkla")
     public EvrakAramaPage tablodaDetayTikla(String evrakNo) {
         tblListe
                 .filterBy(Condition.text(evrakNo)).first()
@@ -122,26 +124,30 @@ public class EvrakAramaPage extends MainPage {
         cmbDetayliAranacagiYer.selectOption(aramaKriteri);
         return this;
     }
+
     @Step("Detay Tabı Arama Kriteri doldur")
-    public EvrakAramaPage detayTabAramaKriteriDoldur(String value){
+    public EvrakAramaPage detayTabAramaKriteriDoldur(String value) {
         txtDetayliAramaKriter.sendKeys(value);
         return this;
     }
+
     @Step("Detay Tabı Ara")
-    public EvrakAramaPage detayTabAra(){
+    public EvrakAramaPage detayTabAra() {
         btnDetaylıAra.click();
         return this;
     }
+
     @Step("Detaylı Arama Tabı Tablo kontrolü")
-    public EvrakAramaPage detayTabTablodaKontrolu(String evrakNo,String evrakTipi) {
+    public EvrakAramaPage detayTabTablodaKontrolu(String evrakNo, String evrakTipi) {
         tblDetayliAramaTabListe
                 .filterBy(Condition.text(evrakNo))
                 .filterBy(Condition.text(evrakTipi))
                 .shouldHaveSize(1);
         return this;
     }
+
     @Step("Detaylı Arama Tabı Tabloda detay butonuna tıkla")
-    public EvrakAramaPage detayTabTablodaDetayTikla(String evrakNo,String evrakTipi) {
+    public EvrakAramaPage detayTabTablodaDetayTikla(String evrakNo, String evrakTipi) {
         tblDetayliAramaTabListe
                 .filterBy(Condition.text(evrakNo))
                 .filterBy(Condition.text(evrakTipi)).first()

@@ -1,11 +1,10 @@
 package listeners;
 
-import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Attachment;
-import org.openqa.selenium.Dimension;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.testng.ITestResult;
 import org.testng.TestNG;
@@ -16,38 +15,40 @@ public class SettingsListener extends TestNG.ExitCodeListener {
     public void onTestStart(ITestResult result) {
         super.onTestStart(result);
         registerDriverEvenListener();
-        try {
-            if (Configuration.browserSize != null) {
-                try {
-                    String[] size = Configuration.browserSize.split("x");
-                    int width = Integer.parseInt(size[0]);
-                    int height = Integer.parseInt(size[1]);
-                    Dimension browserSize = new Dimension(width, height);
-                    WebDriverRunner.getWebDriver().manage().window().setSize(browserSize);
-                } catch (NumberFormatException e) {
-                    WebDriverRunner.getWebDriver().manage().window().maximize();
-                }
-            } else
-                WebDriverRunner.getWebDriver().manage().window().maximize();
-        } catch (Exception e) {
-        }
+        System.out.println("///////////////////////////////////////////////////////");
+        System.out.println("Test Started: " + result.getName());
+        System.out.println("///////////////////////////////////////////////////////");
     }
 
     @Override
     public void onTestFailure(ITestResult result) {
         super.onTestFailure(result);
-        takeScreenshotOnFail();
+        /*if (!WebDriverRunner.getWebDriver().toString().contains("(null)"))
+            takeScreenshotOnFail();
+        System.out.println("///////////////////////////////////////////////////////");
+        System.out.println("Test Failed: " + result.getName());
+        System.out.println("///////////////////////////////////////////////////////");*/
     }
 
     @Override
     public void onConfigurationFailure(ITestResult itr) {
         super.onConfigurationFailure(itr);
-        takeScreenshotOnFail();
+        /*if (!WebDriverRunner.getWebDriver().toString().contains("(null)"))
+            takeScreenshotOnFail();
+        System.out.println("///////////////////////////////////////////////////////");
+        System.out.println("Test Configuration Failed: " + itr.getName());
+        System.out.println("///////////////////////////////////////////////////////");*/
     }
 
-    @Attachment(value = "Fail screenshot", type = "image/png")
+    @Attachment(value = "Page screenshot", type = "image/png")
     public byte[] takeScreenshotOnFail() {
-        return ((TakesScreenshot) WebDriverRunner.getWebDriver()).getScreenshotAs(OutputType.BYTES);
+        byte[] bytes = new byte[]{};
+        try {
+            bytes = ((TakesScreenshot) WebDriverRunner.getWebDriver()).getScreenshotAs(OutputType.BYTES);
+        } catch (WebDriverException e) {
+            System.out.println("Error takeScreenshot:" + e.getMessage());
+        }
+        return bytes;
     }
 
     public void registerDriverEvenListener() {

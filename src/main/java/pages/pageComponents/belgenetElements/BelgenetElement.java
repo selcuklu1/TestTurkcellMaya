@@ -4,88 +4,220 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
 
-import java.util.List;
-
 public interface BelgenetElement extends SelenideElement {
 
     //region ComboLov
 
+    BelgenetElement comboLov(String selector);
+
+    BelgenetElement comboLov(By locator);
+
     /**
-     * Seçili ise temizler ve seçer. Mutlti select ise daha önce seçilmiş ise fail verir.
-     * @param value
-     * @return
+     * @see pages.pageComponents.belgenetElements.ComboLovHelper
+     */
+    BelgenetElement clearLastSelectedItem();
+
+    /**
+     * @see pages.pageComponents.belgenetElements.ComboLovHelper
+     */
+    BelgenetElement clearAllSelectedItems();
+
+    /**
      * @see pages.pageComponents.belgenetElements.ComboLovHelper
      */
     BelgenetElement selectLov(String value);
 
-    BelgenetElement clearLastSelectedLov();
-
-    BelgenetElement clearAllSelectedLov();
-
-    BelgenetElement lastSelectedLovTitle();
-
-    BelgenetElement lastSelectedLovDetail();
-
-    String lastSelectedLovTitleText();
-
-    String lastSelectedLovDetailText();
-
+    /**
+     * @see pages.pageComponents.belgenetElements.ComboLovHelper
+     */
     Boolean isLovSelected();
-
-    Boolean isLovValueSelectable(String value);
 
     /**
      * Click treeButton on comboLov
-     * @return
-     */
-    BelgenetElement openTree();
-
-    /**
      *
      * @return
      */
-//    BelgenetElement clearLov();
+    BelgenetElement openTreePanel();
+
+    /**
+     * @see pages.pageComponents.belgenetElements.ComboLovHelper
+     */
+    BelgenetElement closeTreePanel();
 
     /**
      * Type text to comboLov input
+     *
      * @param text
      * @return
      */
     BelgenetElement type(String text);
 
     /**
-     * "Sonuç bulunamamıştır" kontrolü, type ya da openTree sonrası kullanılır
+     * "Sonuç bulunamamıştır" kontrolü, type ya da openTreePanel sonrası kullanılır
+     *
      * @return
      */
     Boolean isEmpty();
 
     /**
+     * @see pages.pageComponents.belgenetElements.ComboLovHelper
+     */
+    Boolean isLovValueSelectable(String value);
+
+    /**
      * selectable title list
+     *
      * @return
      */
-    ElementsCollection titleItems();
+    ElementsCollection getSelectableItems();
+
+    /**
+     * selectable title list
+     *
+     * @return
+     */
+    ElementsCollection getTitleItems();
 
     /**
      * selectable detail list
+     *
      * @return
      */
-    ElementsCollection detailItems();
+    ElementsCollection getDetailItems();
 
-    BelgenetElement lastSelectedLov();
+    /**
+     * @see pages.pageComponents.belgenetElements.ComboLovHelper
+     */
+    ElementsCollection getSelectedTitles();
 
-    BelgenetElement closeLovTreePanel();
+    /**
+     * @see pages.pageComponents.belgenetElements.ComboLovHelper
+     */
+    ElementsCollection getSelectedDetails();
 
-    ElementsCollection selectedTitles();
-    ElementsCollection selectedDetails();
-    ElementsCollection allSelectedLov();
+    /**
+     * @see pages.pageComponents.belgenetElements.ComboLovHelper
+     */
+    ElementsCollection getSelectedItems();
 
     //endregion
 
     //region ComboBox
+    BelgenetElement comboBox(String selector);
+
+    BelgenetElement comboBox(By locator);
+
     BelgenetElement selectComboBox(String text, boolean... js);
 
     ElementsCollection getComboBoxValues();
     //BelgenetElement getComboBoxHtmlList();
+    //endregion
+
+
+    //region Selenide $ to BelgenetElements
+
+    /**
+     * ATTENTION! This method doesn't start any search yet!
+     * Same as {@link #find(String)}
+     *
+     * @see com.codeborne.selenide.commands.Find
+     */
+    BelgenetElement $(String cssSelector);
+
+    /**
+     * ATTENTION! This method doesn't start any search yet!
+     * Same as {@link #find(String, int)}
+     *
+     * @see com.codeborne.selenide.commands.Find
+     */
+    BelgenetElement $(String cssSelector, int index);
+
+    /**
+     * ATTENTION! This method doesn't start any search yet!
+     * Same as {@link #find(String)}
+     *
+     * @see com.codeborne.selenide.commands.Find
+     */
+    BelgenetElement $(By selector);
+
+    /**
+     * ATTENTION! This method doesn't start any search yet!
+     * Same as {@link #find(String, int)}
+     *
+     * @see com.codeborne.selenide.commands.Find
+     */
+    BelgenetElement $(By selector, int index);
+
+    /**
+     * <p>Locates the first matching element inside given element using xpath locator</p>
+     * ATTENTION! This method doesn't start any search yet!
+     * <p>Short form of {@code webElement.findElement(By.xpath(xpathLocator))}</p>
+     *
+     * @see com.codeborne.selenide.commands.FindByXpath
+     */
+    BelgenetElement $x(String xpath);
+
+    /**
+     * <p>Locates the Nth matching element inside given element using xpath locator</p>
+     * ATTENTION! This method doesn't start any search yet!
+     *
+     * @see com.codeborne.selenide.commands.FindByXpath
+     */
+    BelgenetElement $x(String xpath, int index);
+
+
+    /**
+     * <p>
+     * Short form of {@code webDriver.findElements(thisElement, By.cssSelector(cssSelector))}
+     * </p>
+     * ATTENTION! This method doesn't start any search yet!
+     * <p>
+     * For example, {@code $("#multirowTable").findAll("tr.active").shouldHave(size(2));}
+     * </p>
+     *
+     * @return list of elements inside given element matching given CSS selector
+     * @see com.codeborne.selenide.commands.FindAll
+     */
+    ElementsCollection findAll(String cssSelector);
+
+    /**
+     * <p>
+     * Short form of {@code webDriver.findElements(thisElement, selector)}
+     * </p>
+     * ATTENTION! This method doesn't start any search yet!
+     * <p>
+     * For example, {@code $("#multirowTable").findAll(By.className("active")).shouldHave(size(2));}
+     * </p>
+     *
+     * @return list of elements inside given element matching given criteria
+     * @see com.codeborne.selenide.commands.FindAll
+     */
+    ElementsCollection findAll(By selector);
+
+    /**
+     * ATTENTION! This method doesn't start any search yet!
+     * Same as {@link #findAll(String)}
+     */
+    ElementsCollection $$(String cssSelector);
+
+    /**
+     * Same as {@link #findAll(By)}
+     */
+    ElementsCollection $$(By selector);
+
+    /**
+     * <p>
+     * Short form of {@code webDriver.findElements(thisElement, By.xpath(xpath))}
+     * </p>
+     * ATTENTION! This method doesn't start any search yet!
+     * <p>
+     * For example, {@code $("#multirowTable").$$x("./input").shouldHave(size(2));}
+     * </p>
+     *
+     * @return list of elements inside given element matching given xpath locator
+     * @see com.codeborne.selenide.commands.FindAllByXpath
+     */
+    ElementsCollection $$x(String xpath);
     //endregion
 }
 

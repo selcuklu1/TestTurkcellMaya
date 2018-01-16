@@ -7,49 +7,144 @@ import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
-import org.testng.asserts.SoftAssert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
+import pages.pageData.UstMenuData;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
+import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
-import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
+import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 public class KaydedilenGelenEvrakPage extends MainPage {
 
+    SelenideElement chkAltBirim = $(By.id("birimeGelenEvrakRaporuForm:altBirimId_input"));
+    SelenideElement dateTxtEvrakTarihiBaslangic = $(By.id("birimeGelenEvrakRaporuForm:ilkTarihCalendar_input"));
+    SelenideElement dateTxtEvrakTarihiBitis = $(By.id("birimeGelenEvrakRaporuForm:sonTarihCalendar_input"));
     SelenideElement cmbGeldigiYer = $(By.id("birimeGelenEvrakRaporuForm:evrakAramaGeldigiYer_id"));
     BelgenetElement cmbBirim = comboLov(By.id("birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuBirimLovId:j_idt126"));
     SelenideElement txtEvrakKayitNo = $(By.id("birimeGelenEvrakRaporuForm:evrakNoId"));
     SelenideElement btnSorgula = $(By.id("birimeGelenEvrakRaporuForm:sorgulaButton"));
     SelenideElement btnRaporAlExcel = $("[id='birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable'] button:nth-child(4)");
     SelenideElement btnRaporAlPdf = $("[id='birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable'] button:nth-child(2)");
-    SelenideElement tblKaydedilenGelenEvrak = $(By.id("birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable_data"));
-    ElementsCollection tbldene = $$("[id='birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable_data'] tr[role='row']");
+    //    SelenideElement tblKaydedilenGelenEvrak = $(By.id("birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable_data"));
+    ElementsCollection tblKaydedilenGelenEvrak = $$("[id='birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable_data'] tr[role='row']");
+    BelgenetElement txtGeldigiBirim = comboLov(By.id("birimeGelenEvrakRaporuForm:geldigiBirimLov_id:LovText"));
+    BelgenetElement txtGeldigiKurum = comboLov(By.id("birimeGelenEvrakRaporuForm:geldigiKurumLov_idTeblig:LovText"));
 
+
+    @Step("Kaydedilen Gelen Evrak sayfasını aç")
     public KaydedilenGelenEvrakPage openPage() {
-        ustMenu("Raporlar", "Kaydedilen Gelen Evrak");
+        ustMenu(UstMenuData.Raporlar.KaydedilenGelenEvrak);
         return this;
     }
 
-    @Step("Birim alanı doldur")
+    @Step("Ekran Alan kontrolleri")
+    public KaydedilenGelenEvrakPage ekranAlanKontrolleri() {
+
+        SelenideElement lblBirim = $(By.xpath("//label[normalize-space(text())='Birim']"));
+        SelenideElement lblAltBirim = $(By.xpath("//label[normalize-space(text())='Alt Birim']"));
+        SelenideElement lblGeldigiYer = $(By.xpath("//label[normalize-space(text())='Geldiği Yer']"));
+        SelenideElement lblEvrakKonusu = $(By.xpath("//label[normalize-space(text())='Evrak Konusu']"));
+        SelenideElement lblEvrakKayitNo = $(By.xpath("//label[normalize-space(text())='Evrak Kayıt No']"));
+        SelenideElement lblEvrakSayisi = $(By.xpath("//label[normalize-space(text())='Evrak Sayısı']"));
+        SelenideElement lblEvrakTarihi = $(By.xpath("//label[normalize-space(text())='Evrak Tarihi']"));
+        SelenideElement lblEvrakKayitTarihi = $(By.xpath("//label[normalize-space(text())='Evrak Kayıt Tarihi']"));
+        SelenideElement lblKAydedenKullanici = $(By.xpath("//label[normalize-space(text())='Kaydeden Kullanıcı']"));
+
+        Allure.addAttachment(lblBirim.text(), "Ekran kontrolü ok");
+        Allure.addAttachment(lblAltBirim.text(), "Ekran kontrolü ok");
+        Allure.addAttachment(lblGeldigiYer.text(), "Ekran kontrolü ok");
+        Allure.addAttachment(lblEvrakKonusu.text(), "Ekran kontrolü ok");
+        Allure.addAttachment(lblEvrakKayitNo.text(), "Ekran kontrolü ok");
+        Allure.addAttachment(lblEvrakSayisi.text(), "Ekran kontrolü ok");
+        Allure.addAttachment(lblEvrakTarihi.text(), "Ekran kontrolü ok");
+        Allure.addAttachment(lblEvrakKayitTarihi.text(), "Ekran kontrolü ok");
+        Allure.addAttachment(lblKAydedenKullanici.text(), "Ekran kontrolü ok");
+
+        return this;
+    }
+
+    @Step("Birim alanı \"{birim}\" doldurulur")
     public KaydedilenGelenEvrakPage birimDoldur(String birim) {
         cmbBirim.selectLov(birim);
         return this;
     }
 
-    @Step("Geldiği yer seç")
-    public KaydedilenGelenEvrakPage geldigiYerSec(String geldigiYer) {
-        cmbGeldigiYer.selectOptionByValue(geldigiYer);
+    @Step("Birim alanı kontrolü")
+    public KaydedilenGelenEvrakPage birimKontrol() {
+        boolean kontrol = cmbBirim.is(Condition.empty);
+        Assert.assertEquals(kontrol, false, "Birim alanı dolu gelmiştir.");
+        Allure.addAttachment(cmbBirim.getText(), "Birim alanı dolu gelmiştir.");
         return this;
     }
 
-    @Step("Gelen Evrak no alanını doldur")
+    @Step("Alt Birim Seçimi : \"{shoulBeSelect}\" ")
+    public KaydedilenGelenEvrakPage altBirimSec(boolean shoulBeSelect) {
+        boolean statu = chkAltBirim.isSelected();
+        if (statu != shoulBeSelect)
+            $(By.id("birimeGelenEvrakRaporuForm:altBirimId")).click();
+        return this;
+    }
+
+    @Step("Evrak Tarihi alanı kontrolü")
+    public KaydedilenGelenEvrakPage evrakTarihiKontrol() throws ParseException {
+        boolean kontrolBaslangic = dateTxtEvrakTarihiBaslangic.is(Condition.empty);
+        boolean kontrolBitis = dateTxtEvrakTarihiBitis.is(Condition.empty);
+
+        String txt1 = dateTxtEvrakTarihiBitis.getValue();
+        String txt2 = dateTxtEvrakTarihiBaslangic.getValue();
+
+        Date date1 = new SimpleDateFormat("dd.MM.yyyy").parse(txt1);
+        Date date2 = new SimpleDateFormat("dd.MM.yyyy").parse(txt2);
+        long diff = Math.abs(date1.getTime() - date2.getTime());
+        long diffDays = diff / (24 * 60 * 60 * 1000);
+        String diffNum = new Long(diffDays).toString();
+        System.out.println(diffDays);
+
+
+        Assert.assertEquals(kontrolBaslangic, false, "Evrak Tarihi Başlangıç alanı dolu gelmiştir.");
+        Assert.assertEquals(kontrolBitis, false, "Evrak Tarihi Bitiş alanı dolu gelmiştir.");
+        Allure.addAttachment(dateTxtEvrakTarihiBaslangic.getValue(), "Evrak Tarihi Başlangıç alanı dolu gelmiştir.");
+        Allure.addAttachment(dateTxtEvrakTarihiBitis.getValue(), "Evrak Tarihi Bitiş alanı dolu gelmiştir.");
+        Allure.addAttachment("Tarih farkı : ", diffNum);
+
+        return this;
+    }
+
+    @Step("Evrak Tarihi başlangıç alanını \"{tarih}\" alanı kontrolü")
+    public KaydedilenGelenEvrakPage evrakTarihiBaslangicDoldur(String tarih) {
+        dateTxtEvrakTarihiBaslangic.clear();
+        dateTxtEvrakTarihiBaslangic.sendKeys(tarih);
+        return this;
+    }
+
+    @Step("Geldiği yer \"{geldigiYer}\" seçilir")
+    public KaydedilenGelenEvrakPage geldigiYerSec(String geldigiYer) {
+        cmbGeldigiYer.selectOption(geldigiYer);
+        return this;
+    }
+
+    @Step("Geldiği yer \"{geldigiBirim}\" seçilir")
+    public KaydedilenGelenEvrakPage geldigiBirimSec(String geldigiBirim) {
+        txtGeldigiBirim.selectLov(geldigiBirim);
+        return this;
+    }
+
+    @Step("Geldiği yer \"{geldigiKurum}\" seçilir")
+    public KaydedilenGelenEvrakPage geldigiKurumSec(String geldigiKurum) {
+        txtGeldigiKurum.selectLov(geldigiKurum);
+        return this;
+    }
+
+    @Step("Gelen Evrak no alanını \"{evrakNo}\" girilir")
     public KaydedilenGelenEvrakPage gelenEvrakNoDoldur(String evrakNo) {
+        txtEvrakKayitNo.clear();
         txtEvrakKayitNo.sendKeys(evrakNo);
         return this;
     }
@@ -60,56 +155,58 @@ public class KaydedilenGelenEvrakPage extends MainPage {
         return this;
     }
 
-    @Step("Rapor al Excel")
-    public KaydedilenGelenEvrakPage raporAlExcel() throws IOException, InterruptedException {
+    @Step("Tabloda evrak No kontrolü : \"{evrakNo}\" ")
+    public KaydedilenGelenEvrakPage tabloKontrouAll(String evrakNo, String evraNo2) {
+        ElementsCollection kisiselPages = $$("th[id='birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable_paginator_top'] > span[class='ui-paginator-pages'] >  span");
+        int size = 0;
+        int size2 = 0;
+        for (int i = 0; i < kisiselPages.size(); i++) {
+            kisiselPages.get(i).click();
 
-        deleteFile("C:\\Users\\Emre_Sencan\\Downloads\\","Rapor_");
+            size = tblKaydedilenGelenEvrak
+                    .filterBy(Condition.text(evrakNo))
+                    .size();
+            size2 = tblKaydedilenGelenEvrak
+                    .filterBy(Condition.text(evraNo2))
+                    .size();
+        }
+
+//        SelenideElement table= $(By.id("birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable"));
+//        boolean status = findElementOnTableByColumnInputInAllPages(table,2,evrakNo).isDisplayed();
+//        Assert.assertEquals(status, true);
+        if (size > 0 && size2 > 0)
+            Allure.addAttachment("Tablo Listesi : ", "Aranılan evraklar tabloda bulundu");
+        else
+            Allure.addAttachment("Tablo Listesi : ", "Aranılan evrak tabloda bulunamadı");
+        return this;
+    }
+
+
+    @Step("Rapor al Excel")
+    public KaydedilenGelenEvrakPage raporAlExcel() throws IOException {
+
+        deleteFile(getDownloadPath(), "Rapor_");
         btnRaporAlExcel.click();
-        Thread.sleep(4000);
-        searchDownloadedFileWithName("C:\\Users\\Emre_Sencan\\Downloads\\","Rapor_.xls");
+//        islemMesaji().basariliOlmali();
+//        Thread.sleep(8000);
+//        btnSorgula.click();
+//        islemMesaji().basariliOlmali();
+        searchDownloadedFileWithName(getDownloadPath(), "Rapor_.xls");
         return this;
     }
 
 
     //Dosyanın bilgisayara inip inmediğini kontrol eder.
-    public boolean searchDownloadedFileWithName(String downloadPath, String fileName) {
-        boolean flag = false;
-        File dir = new File(downloadPath);
-        File[] dir_contents = dir.listFiles();
-        Pattern y = Pattern.compile("[^0-9]");
-        String s = null;
-        SoftAssert sa = new SoftAssert();
 
-        for (int i = 0; i < dir_contents.length; i++) {
-            String file = dir_contents[i].getName().toString();
-            s="";
-            Matcher m = y.matcher(file);
-            while (m.find()) {
-                s =s+ m.group();
-            }
-//            sa.assertEquals(s,fileName,"Klasör "+ dir_contents[i].getName().toString() +"indirilmiştir.");
-//            sa.assertNotEquals(s,fileName,"İstenilen dosya indirilmemiştir.");
-//            assert s.equals(fileName) : "Klasör "+ dir_contents[i].getName().toString() + "indirilmiştir.";
-//            assert s.equalsIgnoreCase(fileName) : "İstenilen dosya indirilmemiştir.";
-
-            if (s.contains(fileName)) {
-                System.out.println("dosya indirilmiştir.");
-                Allure.addAttachment(dir_contents[i].getName().toString(),"raporu indirilmiştir");
-                flag = true;
-                break;
-            }
-            else
-                Allure.addAttachment("Rapor Sonucu", "İstenilen dosya indirilememiştir.");
-        }
-        return flag;
-    }
 
     @Step("Rapor al PDF")
-    public KaydedilenGelenEvrakPage raporAlPdf() throws IOException, InterruptedException {
-        deleteFile("C:\\Users\\Emre_Sencan\\Downloads\\","Rapor_");
+    public KaydedilenGelenEvrakPage raporAlPdf() throws IOException {
+        deleteFile(getDownloadPath(), "Rapor_");
         btnRaporAlPdf.click();
-        Thread.sleep(4000);
-        searchDownloadedFileWithName("C:\\Users\\Emre_Sencan\\Downloads\\", "Rapor_.pdf");
+//        Thread.sleep(8000);
+        islemMesaji().basariliOlmali();
+//        btnSorgula.click();
+        searchDownloadedFileWithName(getDownloadPath(), "Rapor_.pdf");
         return this;
     }
 
@@ -119,9 +216,10 @@ public class KaydedilenGelenEvrakPage extends MainPage {
         return this;
     }
 
+    @Step("Tablo kontrolu : \"{evrakNo}\" ")
     public KaydedilenGelenEvrakPage tabloKontrolu(String evrakNo) {
 //        WebElement columnId =  findElementOnTableByColumnInput(tblKaydedilenGelenEvrak,1,evrakNo);
-        tbldene.filterBy(Condition.text(evrakNo));
+        tblKaydedilenGelenEvrak.filterBy(Condition.text(evrakNo)).shouldHave(sizeGreaterThan(0));
         return this;
     }
 

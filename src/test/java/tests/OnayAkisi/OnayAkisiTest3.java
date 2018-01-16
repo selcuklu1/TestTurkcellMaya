@@ -18,6 +18,8 @@ import pages.ustMenuPages.KararYazisiOlusturPage;
 import pages.ustMenuPages.OlurYazisiOlusturPage;
 import pages.ustMenuPages.OnayAkisYonetimiPage;
 
+import java.lang.reflect.Method;
+
 public class OnayAkisiTest3 extends BaseTest {
 
     EvrakOlusturPage evrakOlusturPage;
@@ -27,7 +29,10 @@ public class OnayAkisiTest3 extends BaseTest {
     GelenEvraklarPage gelenEvraklarPage;
 
     @BeforeMethod
-    public void loginBeforeTests() {
+    public void beforeTests(Method method) {
+
+        log.info(method.getName() + "Nolu test senaryosu başladı.");
+
         login();
         evrakOlusturPage = new EvrakOlusturPage();
         onayAkisYonetimiPage = new OnayAkisYonetimiPage();
@@ -37,8 +42,8 @@ public class OnayAkisiTest3 extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC2113a: Onay Akıışı Yönetimi - Güncelleme")
-    public void TC2113a() {
+    @Test(enabled = true, description = "TS2113a: Onay Akıışı Yönetimi - Güncelleme")
+    public void TS2113a() {
 
         String onayAkisAdi = "Optiim";
         String eskiKullanici = "Bulut Toprak";
@@ -46,6 +51,7 @@ public class OnayAkisiTest3 extends BaseTest {
         String ikinciKullanici = "Zübeyde Tekin";
         String basariMesaji = "İşlem başarılıdır!";
 
+        //NOTE: Note:  Kullanılan data güncelleneceği için bir sonraki adımda test patlar. O yüzden data eski haline geti getiriliyor.
         //Test steplerinde yok ama data için eklendi. Kullanıcı eski haline güncellemek için.
         onayAkisYonetimiPage
                 .openPage()
@@ -87,8 +93,8 @@ public class OnayAkisiTest3 extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC2113b: Onay Akıışı Yönetimi - Güncelleme")
-    public void TC2113b() {
+    @Test(enabled = true, description = "TS2113b: Onay Akıışı Yönetimi - Güncelleme")
+    public void TS2113b() {
 
         String ad = "Alex de Souza";
         String kullanici = "Zübeyde Tekin";
@@ -114,8 +120,8 @@ public class OnayAkisiTest3 extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC2113c: Onay Akıışı Yönetimi - Güncelleme")
-    public void TC2113c() {
+    @Test(enabled = true, description = "TS2113c: Onay Akıışı Yönetimi - Güncelleme")
+    public void TS2113c() {
 
         String ad = "Daniel Guiza";
         String kullanici = "Mehmet BOZDEMİR";

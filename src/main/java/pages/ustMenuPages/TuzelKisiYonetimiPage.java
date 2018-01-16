@@ -1,5 +1,7 @@
 package pages.ustMenuPages;
 
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
@@ -7,10 +9,12 @@ import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
+import pages.pageData.UstMenuData;
 
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
-import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
+import static com.codeborne.selenide.Selenide.$$;
+import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 /****************************************************
  * Tarih: 2017-11-23
@@ -32,7 +36,7 @@ public class TuzelKisiYonetimiPage extends MainPage {
     SelenideElement txtFiltreDurum = $(By.id("tuzelKisiYonetimiListingForm:filterPanel:durumSelectBox"));
     SelenideElement btnIslemOnayiHayir = $(By.id("baseConfirmationDialog:baseConfirmationDialogCancelButton"));
     SelenideElement btnIslemOnayiEvet = $(By.id("baseConfirmationDialog:confirmButton"));
-
+    SelenideElement strPopupAktifEtmeMesaji = $("[id='baseConfirmationDialog:form'] [class='content']");
 
     //Tüzel kişi ekleme alanı
     SelenideElement cmbTuzelKisiTipi = $(By.id("tuzelKisiYonetimiEditorForm:tuzelKisiTipi"));
@@ -75,23 +79,23 @@ public class TuzelKisiYonetimiPage extends MainPage {
     SelenideElement btnTuzelKisiPasifYap = $(By.cssSelector("[id^='tuzelKisiYonetimiListingForm:tuzelKisiDataTable'][id$='pasifEtTuzelKisi']"));
     SelenideElement tblKayitBulunamadi = $(By.xpath("//*[@id=\"tuzelKisiYonetimiListingForm:tuzelKisiDataTable_data\"]/tr/td"));
     SelenideElement btnTuzelisiGuncelle = $("[id^='tuzelKisiYonetimiListingForm:tuzelKisiDataTable'][id$='updateTuzelKisiButton']");
-
+    ElementsCollection tblKisiler = $$("[id='tuzelKisiYonetimiListingForm:tuzelKisiDataTable'] tr[class^='ui-widget-content']");
     //</editor-fold>
 
     @Step("Tüzel Kişi Yönetimi sayfasını aç")
     public TuzelKisiYonetimiPage openPage() {
-        ustMenu("Tüzel Kişi Yönetimi");
+        ustMenu(UstMenuData.TeskilatKisiTanimlari.TuzelKisiYonetimi);
         $("#tuzelKisiYonetimiListingForm").shouldBe(visible);
         return this;
     }
 
-    @Step("Filtrede Vergi No doldur")
+    @Step("Filtrede vergi no doldur")
     public TuzelKisiYonetimiPage filtreVergiNoDoldur(String vergiNo) {
         txtFiltreVergiSGKNo.setValue(vergiNo);
         return this;
     }
 
-    @Step("Filtrede Ad doldur")
+    @Step("Filtrede ad doldur")
     public TuzelKisiYonetimiPage filtreAdDoldur(String ad) {
         txtFiltreAd.setValue(ad);
         return this;
@@ -108,9 +112,16 @@ public class TuzelKisiYonetimiPage extends MainPage {
         return this;
     }
 
+    @Step("Tüzel kişi güncelle")
+    public TuzelKisiYonetimiPage tuzelKisiSecGuncele(String kullanici) {
+        tblKisiler.filterBy(Condition.text(kullanici)).get(0)
+                .$$("[id^='tuzelKisiYonetimiListingForm:tuzelKisiDataTable'][id$='updateTuzelKisiButton']").get(0).click();
+        return this;
+    }
+
     @Step("Filtrede durum seç")
-    public TuzelKisiYonetimiPage filtreDurumSec(String secim) {
-        txtFiltreDurum.selectOptionByValue(secim);
+    public TuzelKisiYonetimiPage filtreDurumSec(String filtreDurumu) {
+        txtFiltreDurum.selectOptionByValue(filtreDurumu);
         return this;
     }
 
@@ -132,7 +143,7 @@ public class TuzelKisiYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("İletişim Bilgileri güncelle")
+    @Step("İletişim bilgileri güncelle")
     public TuzelKisiYonetimiPage iletisimBilgileriGuncelle() {
         btnIletisimBilgileriGuncelle.click();
         return this;
@@ -176,12 +187,12 @@ public class TuzelKisiYonetimiPage extends MainPage {
     }
 
     @Step("Tüzel kişi tipi seç")
-    public TuzelKisiYonetimiPage tuzelKisiTipiSec(String secim) {
-        cmbTuzelKisiTipi.selectOption(secim);
+    public TuzelKisiYonetimiPage tuzelKisiTipiSec(String tuzelKisiTipi) {
+        cmbTuzelKisiTipi.selectOption(tuzelKisiTipi);
         return this;
     }
 
-    @Step("Vergi No doldur")
+    @Step("Vergi no doldur")
     public TuzelKisiYonetimiPage vergiNoDoldur(String vergiNo) {
         txtVergiNo.setValue(vergiNo);
         return this;
@@ -193,7 +204,7 @@ public class TuzelKisiYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Kısa Ad doldur")
+    @Step("Kısa ad doldur")
     public TuzelKisiYonetimiPage kisaAdDoldur(String kisaAd) {
         txtTuzelKisiKisaAd.setValue(kisaAd);
         return this;
@@ -241,7 +252,7 @@ public class TuzelKisiYonetimiPage extends MainPage {
         if (btnUlkeDelete.isDisplayed() == false) {
             txtIletisimBilgisiUlke.selectLov(ulke);
         }
-        
+
         return this;
     }
 
@@ -332,41 +343,46 @@ public class TuzelKisiYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Aktif Tüzel kişi tüm liste kayıt kontrolu")
-    public TuzelKisiYonetimiPage aktiflerTumListeKayitKontrolu() {
+    @Step("Aktif tüzel kişi tüm liste kayıt kontrolu")
+    public TuzelKisiYonetimiPage aktiflerTumListeKayitKontrolu() throws InterruptedException {
 
+        String formTuzelKisiYonetimi = "tuzelKisiYonetimiListingForm";
         btnTuzelKisiPasifYap.shouldBe(visible);
 
-        boolean status = findElementOnTableAllPages(btnTuzelKisiAktifYap);
+        boolean status = findElementOnTableAllPages(formTuzelKisiYonetimi, btnTuzelKisiAktifYap);
         Assert.assertEquals(status, false);
         return this;
     }
 
-    @Step("Pasif Tüzel kişi tüm liste kayıt kontrolu")
-    public TuzelKisiYonetimiPage pasiflerTumListeKayitKontrolu() {
+    @Step("Pasif tüzel kişi tüm liste kayıt kontrolu")
+    public TuzelKisiYonetimiPage pasiflerTumListeKayitKontrolu() throws InterruptedException {
+
+        String formTuzelKisiYonetimi = "tuzelKisiYonetimiListingForm";
 
         btnTuzelKisiAktifYap.shouldBe(visible);
-        boolean status = findElementOnTableAllPages(btnTuzelKisiPasifYap);
+        boolean status = findElementOnTableAllPages(formTuzelKisiYonetimi, btnTuzelKisiPasifYap);
         Assert.assertEquals(status, false);
         return this;
     }
 
-    @Step("Tüzel Kişi Aktif Yap")
+    @Step("Tüzel kişi aktif yap")
     public TuzelKisiYonetimiPage tuzelKisiAktifYap() {
         btnTuzelKisiAktifYap.shouldBe(visible);
         btnTuzelKisiAktifYap.click();
         return this;
     }
 
-    @Step("Tüzel Kişi Pasif Yap")
+    @Step("Tüzel kişi pasif yap")
     public TuzelKisiYonetimiPage tuzelKisiPasifYap() {
         btnTuzelKisiPasifYap.shouldBe(visible);
         btnTuzelKisiPasifYap.click();
         return this;
     }
 
-    @Step("Tüzel Kişi Aktif Yap")
+    @Step("Tüzel kişi pasif ise aktif yap")
     public TuzelKisiYonetimiPage tuzelKisiPasifIseAktifYap() {
+
+        btnTuzelisiGuncelle.shouldBe(visible);
 
         if (btnTuzelKisiAktifYap.isDisplayed()) {
             btnTuzelKisiAktifYap.click();
@@ -376,12 +392,16 @@ public class TuzelKisiYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Tüzel Kişi Pasif Yap")
+    @Step("Tüzel kişi aktif ise pasif yap")
     public TuzelKisiYonetimiPage tuzelKisiAktifIsePasifYap() {
+
+        btnTuzelisiGuncelle.shouldBe(visible);
 
         if (btnTuzelKisiPasifYap.isDisplayed()) {
             btnTuzelKisiPasifYap.click();
             btnIslemOnayiEvet.click();
+            Allure.addAttachment("Tüzel kişi aktif olduğu için pasif yapıldı.", "");
+
         }
         return this;
     }
@@ -389,6 +409,27 @@ public class TuzelKisiYonetimiPage extends MainPage {
     @Step("Kayıt bulunamadı kontrolu")
     public TuzelKisiYonetimiPage kayitBulunamadiKontrolu() {
         Assert.assertEquals(tblKayitBulunamadi.getText().contains("Kayıt Bulunamamıştır"), true);
+        return this;
+    }
+
+    @Step("Kep Adresi Kullaniyor ve Kep Adres Bilgileri alan kontrolleri")
+    public TuzelKisiYonetimiPage kepAdresiAlanKontrolu() {
+
+        Assert.assertEquals(chkKepAdresiKullaniyor.isDisplayed(), true);
+        Assert.assertEquals(btnKepAdresBilgileriEkle.isDisplayed(), true);
+
+        return this;
+    }
+
+
+    @Step("Gelen popup mesaji kontrolu: {popupAktifEtmeMesaji}")
+    public TuzelKisiYonetimiPage popupTuzelKisiAktifEtmeKontrolu(String popupAktifEtmeMesaji) {
+
+        strPopupAktifEtmeMesaji.shouldBe(visible);
+
+        String getPopupMessage = strPopupAktifEtmeMesaji.text();
+
+        Assert.assertEquals(getPopupMessage.contains(popupAktifEtmeMesaji), true);
         return this;
     }
 }

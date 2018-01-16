@@ -1,16 +1,18 @@
 package pages.ustMenuPages;
 
-import com.codeborne.selenide.*;
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
+import pages.pageData.UstMenuData;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
-import static pages.pageComponents.belgenetElements.BelgenetFramework.comboLov;
+import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 public class BakimaAlPage extends MainPage {
 
@@ -50,12 +52,12 @@ public class BakimaAlPage extends MainPage {
 
     @Step("Bakıma al sayfası aç")
     public BakimaAlPage openPage() {
-        ustMenu("Bakıma Al");
+        ustMenu(UstMenuData.YonetimSayfalari.BakimaAl);
         return this;
     }
 
     @Step("{0}")
-    public BakimaAlPage bilgilendirmeMetniTikla(){
+    public BakimaAlPage bilgilendirmeMetniTikla() {
         spanBilgilendirmeMetni.click();
         return this;
     }
@@ -65,7 +67,7 @@ public class BakimaAlPage extends MainPage {
 
         btnBakimaAl.waitUntil(Condition.visible, 5000);
 
-        if(spanBilgilendirmeMetni.isDisplayed())
+        if (spanBilgilendirmeMetni.isDisplayed())
             spanBilgilendirmeMetni.click();
 
         txtBilgilendirmeMetni
@@ -123,8 +125,13 @@ public class BakimaAlPage extends MainPage {
 
     @Step("Kullanıcıları temizle.")
     public BakimaAlPage kullanicilarTemizle() {
-        if(txtKullanicilar.isDisplayed())
-            txtKullanicilar.clearAllSelectedLov();
+
+        ElementsCollection allClearButtons = $$("tbody[id='bakimaAlFormId:bakimaAlKullanicilarId:LovSecilenTable_data'] button[id^='bakimaAlFormId:bakimaAlKullanicilarId:LovSecilenTable']");
+        if (allClearButtons.size() > 0) {
+            for (int i = 0; i < allClearButtons.size(); i++) {
+                allClearButtons.get(i).click();
+            }
+        }
         return this;
     }
 

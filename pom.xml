@@ -12,7 +12,7 @@
         <dependency>
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-testng</artifactId>
-            <version>2.0-BETA19</version>
+            <version>2.0-BETA21</version>
         </dependency>
         <dependency>
             <groupId>com.codeborne</groupId>
@@ -23,7 +23,7 @@
         <dependency>
             <groupId>com.galenframework</groupId>
             <artifactId>galen-java-support</artifactId>
-            <version>2.3.5</version>
+            <version>2.3.6</version>
         </dependency>
 
         <!--<dependency>
@@ -55,13 +55,18 @@
             <version>RELEASE</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.apache.pdfbox/pdfbox -->
+        <dependency>
+            <groupId>org.apache.pdfbox</groupId>
+            <artifactId>pdfbox</artifactId>
+            <version>2.0.8</version>
+        </dependency>
+
     </dependencies>
     <properties>
         <aspectj.version>1.8.11</aspectj.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-
-
     <build>
         <plugins>
             <plugin>
@@ -79,11 +84,18 @@
                 <version>2.20.1</version>
                 <configuration>
                     <suiteXmlFiles>
-                        <suiteXmlFile>testng.xml</suiteXmlFile>
+                        <suiteXmlFile>${suiteXmlFile}</suiteXmlFile>
+                        <!--<suiteXmlFile>testng.xml</suiteXmlFile>-->
                     </suiteXmlFiles>
                     <argLine>
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
                     </argLine>
+                    <properties>
+                        <property>
+                            <name>listener</name>
+                            <value>listeners.RerunFailedTests</value>
+                        </property>
+                    </properties>
                     <!--<systemProperties>-->
                     <!--<property>-->
                     <!--<name>allure.results.directory</name>-->
@@ -119,6 +131,7 @@
                     <!--<value>/Users/Shared/Jenkins/Home/workspace/test/allure-results</value>-->
                     <!--</property>-->
                     <!--</systemProperties>-->
+
                 </configuration>
                 <dependencies>
                     <dependency>

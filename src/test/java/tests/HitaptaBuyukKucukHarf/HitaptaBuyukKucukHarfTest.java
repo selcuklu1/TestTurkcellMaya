@@ -25,8 +25,8 @@ public class HitaptaBuyukKucukHarfTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC2064: Tüzel kişi- Hitapta büyük/küçük harf kontrolü")
-    public void TC2064() throws InterruptedException {
+    @Test(enabled = true, description = "TS2064: Tüzel kişi- Hitapta büyük/küçük harf kontrolü")
+    public void TS2064() throws InterruptedException {
 
         String geregiSecimTipi = "Tüzel Kişi";
 
@@ -63,8 +63,8 @@ public class HitaptaBuyukKucukHarfTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC2156: Kurum- Hitapta büyük/küçük harf kontrolü")
-    public void TC2156() throws InterruptedException {
+    @Test(enabled = true, description = "TS2156: Kurum- Hitapta büyük/küçük harf kontrolü")
+    public void TS2156() throws InterruptedException {
 
         String geregiSecimTipi = "Kurum";
 
@@ -101,8 +101,8 @@ public class HitaptaBuyukKucukHarfTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC2157: Birim- Hitapta büyük/küçük harf kontrolü")
-    public void TC2157() throws InterruptedException {
+    @Test(enabled = true, description = "TS2157: Birim- Hitapta büyük/küçük harf kontrolü")
+    public void TS2157() throws InterruptedException {
 
         String geregiSecimTipi = "Birim";
 
@@ -138,12 +138,23 @@ public class HitaptaBuyukKucukHarfTest extends BaseTest {
 
     }
 
+    @Test(description = "TS2090: Dağıtım planına ve kullanıcıya hitap")
+    public void TS2090() throws Exception {
+
+        //Dağıtım planına ve kullanıcıya hitap
+
+
+        //sistemde kayıtlı dağıtım planı olmalı, dağıtım planının içeriğinde küçük harfli birim, büyük harfli kurum olmalı
+
+//        DAĞITIM YERLERİNE
+    }
+
     public void hitapKontrol(String geregiSecimTipi, String geregi, String beklenenHitap) throws InterruptedException {
 
         evrakOlustur
                 .bilgilerTabiAc()
                 .geregiSecimTipiSec(geregiSecimTipi)
-                .geregiDoldur(geregi);
+                .geregiDoldur(geregi, "");
 
         evrakOlustur
                 .editorTabAc()

@@ -11,6 +11,7 @@ import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
+import static com.codeborne.selenide.Selenide.sleep;
 
 
 public class BenimlePaylasilanlarPage extends MainPage {
@@ -26,6 +27,8 @@ public class BenimlePaylasilanlarPage extends MainPage {
     SelenideElement txtEvrakNotu = $(By.id("evrakKisiselNotDialogFormId:evrakKisiselNotAciklamaid"));
     SelenideElement btnEvrakNotuPanelIptal = $(By.id("evrakKisiselNotDialogFormId:evrakKisiselNotIptal"));
     SelenideElement btnEvrakNotuKaydet = $(By.id("evrakKisiselNotDialogFormId:paylasimNotKaydet"));
+    ElementsCollection birimSec = $$("[id='birimlerimMenusuContainer'] li a span");
+    ElementsCollection tableEvrakNotlari = $$(By.xpath("//th[contains(., 'Evrak Notları')]/../../../tbody/tr"));
 
     @Step("Benimle Paylaşılanlar sayfasını aç")
     public BenimlePaylasilanlarPage openPage() {
@@ -33,9 +36,15 @@ public class BenimlePaylasilanlarPage extends MainPage {
         return this;
     }
 
+    public BenimlePaylasilanlarPage birimSec(String birim) {
+        birimSec.filterBy(Condition.text(birim)).get(0).click();
+        sleep(3000);
+        return this;
+    }
+
     @Step("Durdurulmuş paylaşımlar checkbox seç")
     public BenimlePaylasilanlarPage durdurulmusPaylasimlarSec() {
-        if(chkDurdurulmusPaylasimlar.isDisplayed() == false)
+        if (chkDurdurulmusPaylasimlar.isDisplayed() == false)
             divFiltrelePanel.click();
 
         chkDurdurulmusPaylasimlar.click();
@@ -57,6 +66,14 @@ public class BenimlePaylasilanlarPage extends MainPage {
         return this;
     }
 
+    @Step("Evrak seç : {konu}")
+    public BenimlePaylasilanlarPage evrakSecKonuyaGore(String konu) {
+        tableBenimlePaylasilanlar
+                .filterBy(Condition.text(konu))
+                .first()
+                .click();
+        return this;
+    }
 
     @Step("Benimle paylaşılanlar tablosundan evrak seçildi")
     public BenimlePaylasilanlarPage evrakSec(String paylasan, String paylasilmaTarihi, String konu, String evrakNo) {
@@ -70,19 +87,31 @@ public class BenimlePaylasilanlarPage extends MainPage {
         return this;
     }
 
+    @Step("Benimle paylaşılanlar tablosundan evrak seçildi")
+    public BenimlePaylasilanlarPage evrakSec(String paylasan, String paylasilmaTarihi, String konu) {
+        tableBenimlePaylasilanlar
+                .filterBy(Condition.text("Paylaşan: " + paylasan))
+                .filterBy(Condition.text("Paylaşılma Tarihi: " + paylasilmaTarihi))
+                .filterBy(Condition.text("Konu: " + konu))
+                .get(0)
+                .click();
+        return this;
+    }
+
     @Step("\"{0}\" tabını seç")
     public BenimlePaylasilanlarPage evrakOnizlemeTabSec(String tabAdi) {
         tabsEvrakOnizleme
                 .filterBy(Condition.text(tabAdi))
                 .get(0)
-                .click();;
+                .click();
+        ;
         return this;
     }
 
     // Evrak notları fonksiyonları
     @Step("Evrak ekleme butonu aktif olmalı mı? : \"{0}\" ")
     public BenimlePaylasilanlarPage evrakNotEklemeButonuAktifOlmali(boolean aktifOlmali) {
-        if(aktifOlmali == true)
+        if (aktifOlmali == true)
             btnEvratNotEkle.shouldHave(Condition.attribute("aria-disabled", "false"));
         else
             btnEvratNotEkle.shouldHave(Condition.attribute("aria-disabled", "true"));
@@ -92,7 +121,7 @@ public class BenimlePaylasilanlarPage extends MainPage {
     @Step("Paylaşan: \"{paylasan}\" listede olmalımı?: \"{shouldBeExist}\"")
     public BenimlePaylasilanlarPage paylasilanlarKontrol(String paylasan, String konu, String paylasilmaTarihi, Boolean shouldBeExist) {
 
-        if(shouldBeExist == true){
+        if (shouldBeExist == true) {
             tableBenimlePaylasilanlar
                     .filterBy(Condition.text("Paylaşan: " + paylasan))
                     .filterBy(Condition.text("Konu: " + konu))
@@ -124,30 +153,30 @@ public class BenimlePaylasilanlarPage extends MainPage {
         return this;
     }
 
+    @Step("evrak notu eklendi: \"{0}\" ")
+    public BenimlePaylasilanlarPage evrakNotuGirVeSil(String evrakNotu) {
+        txtEvrakNotu.setValue(evrakNotu);
+        txtEvrakNotu.clear();
+        return this;
+    }
+
     @Step("Evrak notu ekleme panelinde iptal butonuna tıklandı.")
     public BenimlePaylasilanlarPage evrakNotuPanelIptalButonuTikla() {
         btnEvrakNotuPanelIptal.click();
         return this;
     }
 
-    ElementsCollection tableEvrakNotlari = $$(By.xpath("//th[contains(., 'Evrak Notları')]/../../../tbody/tr"));
-
     @Step("Açıklama kontrol")
     public BenimlePaylasilanlarPage evrakNotuKontrol(String ekleyen, String tarih, String aciklama) {
-        tableEvrakNotlari
+        boolean durum = tableEvrakNotlari
                 .filterBy(Condition.text(ekleyen))
                 .filterBy(Condition.text(tarih))
                 .filterBy(Condition.text(aciklama))
                 .get(0)
-                .shouldBe(Condition.exist);
+                .shouldBe(Condition.visible).exists();
+        Assert.assertEquals(durum,true);
         return this;
     }
-
-
-
-
-
-
 
 
 }
