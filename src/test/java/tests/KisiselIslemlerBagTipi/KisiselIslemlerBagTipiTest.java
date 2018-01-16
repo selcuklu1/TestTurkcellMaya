@@ -105,7 +105,7 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
         String gnMdV = "Gn.Md. V.";
         String genelMudur = "Genel Müdür V.";
         String kullanicilarTuru = "İmzalama";
-        String randomAd = createRandomNumber(7);
+        String randomAd = createRandomNumber(15);
 
         //Gelen evraklar alanında veri bulunmalı
 
@@ -188,13 +188,15 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
         String onayVerecek = "Zübeyde TEKİN";
 
         //Gelen evraklar alanında veri bulunmalı
-
         login("kbagtipi", password2);
 
         kullaniciYonetimiPage
                 .openPage()
-                .ara()
-                .kullaniciListesiGuncelle()
+                .ara();
+        String adCek = kullaniciYonetimiPage.adCek();
+        kullaniciYonetimiPage
+                .kullaniciListesiGuncelle(adCek);
+        kullaniciYonetimiPage
                 .gorevliOlduguBirimlerGuncelle()
                 .popupKullaniciBirimAtamaBagTipiSec(bagTipi, "Bağ Tipi")
                 .popupKullaniciBirimAtamaKaydet();
@@ -222,7 +224,7 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
                 .openPage()
                 .evrakSec()
                 .tabHavaleYap()
-                .havaleYapOnaylanacakKisiTreeDoldur(ekranAdi, "Onaylanacak kişi");
+                .havaleYapOnaylanacakKisiTreeDoldurGelmedigiGorme(ekranAdi, "Onaylanacak kişi",false);
     }
 
 }

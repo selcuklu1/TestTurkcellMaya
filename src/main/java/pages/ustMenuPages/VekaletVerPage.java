@@ -80,8 +80,8 @@ public class VekaletVerPage extends MainPage {
         return this;
     }
 
-    @Step("Onay verecek kullanıcı doldur : \"{onayVerecekKullanici}\" ")
-    public VekaletVerPage onayVerecekDoldur(String onayVerecekKullanici) {
+    @Step("Onay verecek alanına kullanıcı doldur : \"{onayVerecekKullanici}\" ")
+    public VekaletVerPage onayVerecekDoldur(String onayVerecekKullanici){
         txtOnaylayacakKisi.selectLov(onayVerecekKullanici);
         return this;
     }
