@@ -4,25 +4,25 @@
     #Head
         editorAntetBaslik:
             inside container  52px top
-            centered horizontally inside container 2px
+            centered horizontally inside container 0 to 5px
 
         kurumHeaderSatir1:
-            below editorAntetBaslik ~2px
+            below editorAntetBaslik 0 to 5px
             centered horizontally inside container
 
         kurumHeaderSatir2:
             height 100% of kurumHeaderSatir1/height
-            below kurumHeaderSatir1 ~2px
+            below kurumHeaderSatir1 0 to 5px
             centered horizontally inside container
 
         kurumHeaderSatir3:
             height 100% of kurumHeaderSatir2/height
-            below kurumHeaderSatir2 ~2px
+            below kurumHeaderSatir2 0 to 5px
             centered horizontally inside container
 
         birim:
             height 100% of kurumHeaderSatir3/height
-            below kurumHeaderSatir3 ~2px
+            below kurumHeaderSatir3 0 to 5px
             centered horizontally inside container
 
     #Sayi
