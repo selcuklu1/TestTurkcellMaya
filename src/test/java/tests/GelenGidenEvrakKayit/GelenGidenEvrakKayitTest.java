@@ -229,43 +229,43 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     @Test(enabled = false, priority = 7, description = "TS1401 : Kaydedilen Gelen Evrak raporu")
     public void TS1401() throws InterruptedException, IOException, ParseException {
 
-        String evrakNO321 = "6493";
-        String evrakNO328 = "6497";
+//        String evrakNO321 = "6493";
+//        String evrakNO328 = "6497";
 //        String evrakNo = evrakNO321;
 //        String evrakNo1 = evrakNO328;
 //        String remoteDownloadPath = getDownloadPath();
         String remoteDownloadPath = "C:\\Users\\optiim\\Downloads\\";
         System.out.println(remoteDownloadPath);
 
-//        String geldigiYer = "Kurum";
-//
-//        login(yakyol);
-//
-//// Testin öncesinde TS0321 ve TS0328 caselerinin çalışması gerekli..
-//
-//        kaydedilenGelenEvrakPage
-//                .openPage()
-//                .ekranAlanKontrolleri()
-//                .birimKontrol()
-//                .evrakTarihiKontrol()
-//                .altBirimSec(true)
-//                .sorgula()
-//                .gelenEvrakNoDoldur(evrakNO328)
-//                .sorgula()
-//                .tabloKontrolu(evrakNO328)
-//
-//                .gelenEvrakNoDoldur(evrakNO321)
-//                .sorgula()
-//                .tabloKontrolu(evrakNO321)
-//
-//                .geldigiYerSec(geldigiYer)
-//                .geldigiKurumSec("Esk Kurum 071216 2")
-//                .gelenEvrakNoDoldur(evrakNO321)
-//                .sorgula()
-//                .tabloKontrolu(evrakNO321);
-////                .islemMesaji().basariliOlmali(basariMesaji);
-//
-//        logout();
+        String geldigiYer = "Kurum";
+
+        login(yakyol);
+
+// Testin öncesinde TS0321 ve TS0328 caselerinin çalışması gerekli..
+
+        kaydedilenGelenEvrakPage
+                .openPage()
+                .ekranAlanKontrolleri()
+                .birimKontrol()
+                .evrakTarihiKontrol()
+                .altBirimSec(true)
+                .sorgula()
+                .gelenEvrakNoDoldur(evrakNO328)
+                .sorgula()
+                .tabloKontrolu(evrakNO328)
+
+                .gelenEvrakNoDoldur(evrakNO321)
+                .sorgula()
+                .tabloKontrolu(evrakNO321)
+
+                .geldigiYerSec(geldigiYer)
+                .geldigiKurumSec("Esk Kurum 071216 2")
+                .gelenEvrakNoDoldur(evrakNO321)
+                .sorgula()
+                .tabloKontrolu(evrakNO321);
+//                .islemMesaji().basariliOlmali(basariMesaji);
+
+        logout();
         login(mbozdemir);
 
         kaydedilenGelenEvrakPage

@@ -222,10 +222,9 @@ public class TopluPostaladiklarimPage extends MainPage {
         txtTutar.text().equals(tutar);
 
         Allure.addAttachment("Ekran Alan Kontrolü : ","  Seçilen posta listesinin adının doğru geldiği görülür.\n" +
-                                                                        "//Posta listesinin gönderildiği adresin posta kodunun doğru geldiği görülür.\n" +
-                                                                        "//Posta Tarihi ve Saatinin doğru geldiği görülür.\n" +
-                                                                        "//Posta gramajının doğru geldiği görülür.\n" +
-                                                                        "//Pul Yönetimi ekranında girilen tutarlara göre hesaplama işleminin yapıldığı PTT Tutarının doğru geldiği görülür.");
+                                                                        "- Posta Tarihinin geldiği görülür.\n" +
+                                                                        "- Posta gramajının doğru geldiği görülür.\n" +
+                                                                        "- Pul Yönetimi ekranında girilen tutarlara göre hesaplama işleminin yapıldığı PTT Tutarının doğru geldiği görülür.");
 
         return this;
     }
@@ -276,6 +275,7 @@ public class TopluPostaladiklarimPage extends MainPage {
         System.out.println(s.getText());
         CharSequence kisayolCTRLS = Keys.chord(Keys.CONTROL, "s");
         CharSequence kisayolENTER = Keys.chord(Keys.ENTER);
+        CharSequence paths = Keys.chord(Keys.valueOf("deneme.pdf"));
         s.sendKeys(kisayolCTRLS);
         s.sendKeys(Keys.ENTER);
 //        switchTo().window(2);
@@ -283,6 +283,7 @@ public class TopluPostaladiklarimPage extends MainPage {
         Robot robot = new Robot();  // Robot class throws AWT Exception
         sleep(2000); // Thread.sleep throws InterruptedException
         robot.keyPress(KeyEvent.VK_ENTER);
+        robot.keyPress(KeyEvent.);
 //        robot.
         s.sendKeys(kisayolENTER);
 
