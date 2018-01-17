@@ -196,6 +196,7 @@ public class KaydedilenGelenEvrakPage extends MainPage {
 //        Thread.sleep(8000);
 //        btnSorgula.click();
 //        islemMesaji().basariliOlmali();
+        sleep(3000);
         searchDownloadedFileWithName(remoteDownloadPath, "Rapor_.xls");
         return this;
     }
@@ -214,6 +215,7 @@ public class KaydedilenGelenEvrakPage extends MainPage {
 //        Thread.sleep(8000);
 
 //        btnSorgula.click();
+        sleep(3000);
         searchDownloadedFileWithName(remoteDownloadPath, "Rapor_.pdf");
         return this;
     }
