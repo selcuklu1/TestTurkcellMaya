@@ -153,7 +153,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .filtreSorgulamaPaneliAc()
                 .filtreDurumSec("PASIFLER")
                 .ara()
-                .pasiflerTumListeKayitKontrolu();
+                .pasiflerListesiKayitKontrolu();
 
         String getTbleTCNO = gercekKisiYonetimPage.getTbleTCNO();
 

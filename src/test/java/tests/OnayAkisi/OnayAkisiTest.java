@@ -526,7 +526,7 @@ public class OnayAkisiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TS1892b: Onay akışı kaydetmede alan kontrolleri")
+    @Test(enabled = false, description = "TS1892b: Onay akışı kaydetmede alan kontrolleri")
     public void TS1892b() {
 
         String onayAkisi = "OptiimTest" + getSysDate();
