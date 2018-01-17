@@ -510,7 +510,7 @@ public class VekaletIslemleriTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true
-            , dependsOnMethods = {"TS0012"}
+//            , dependsOnMethods = {"TS0012"}
             , description = "TS0011 : Vekalet alan kullanıcıya evrak havalesi ve kontrolü")
     public void TS0011() throws InterruptedException {
 
@@ -553,13 +553,13 @@ public class VekaletIslemleriTest extends BaseTest {
 //
 //        evrakNo = gelenEvraklarPage.tablodanEvrakNoAl(1);
 
-        gelenEvraklarPage
-                .evrakNoyaGoreEvrakSec(evrakNO11)
-                .havaleYap()
-                .havaleYapKisiTreeSec(nameVV)
-                .vekeletAlanVerenTabloVekaletAlanveyaVerenSec(nameVA)
-                .havaleYapGonder()
-                .islemMesaji().basariliOlmali(basariMesaji);
+//        gelenEvraklarPage
+//                .evrakNoyaGoreEvrakSec(evrakNO11)
+//                .havaleYap()
+//                .havaleYapKisiTreeSec(nameVV)
+//                .vekeletAlanVerenTabloVekaletAlanveyaVerenSec(nameVA)
+//                .havaleYapGonder()
+//                .islemMesaji().basariliOlmali(basariMesaji);
         logout();
         login(usernameVV);
 

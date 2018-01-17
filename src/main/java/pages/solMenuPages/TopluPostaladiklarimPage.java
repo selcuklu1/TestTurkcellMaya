@@ -1,16 +1,12 @@
 package pages.solMenuPages;
 
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.SelenideElement;
-import com.codeborne.selenide.WebDriverRunner;
+import com.codeborne.selenide.*;
+import com.codeborne.selenide.commands.PressEnter;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.apache.xmlbeans.impl.xb.xsdschema.All;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.Sleeper;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.galen.GalenControl;
@@ -18,6 +14,9 @@ import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageComponents.tabs.AltTabs;
 import pages.pageData.SolMenuData;
 
+import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.security.Key;
 import java.sql.Driver;
 
 import static com.codeborne.selenide.Condition.text;
@@ -249,7 +248,7 @@ public class TopluPostaladiklarimPage extends MainPage {
     }
 
     @Step("Evrak Listesi tablosunda Yazdır butonu tıklanır.")
-    public TopluPostaladiklarimPage evrakListesiYazdirPdfKontrol(String[] konu) {
+    public TopluPostaladiklarimPage evrakListesiYazdirPdfKontrol(String[] konu) throws AWTException {
         int size = tblEvrakListesi.size();
         for (int i = 0; i < size; i++) {
 
@@ -258,7 +257,9 @@ public class TopluPostaladiklarimPage extends MainPage {
                     .$x("//span[text() = 'Yazdır']/../../button").click();
             evrakDetayiPopUpKontrolü();
             evrakDetayiYazdır(konu[i]);
-            switchTo().window(1);
+
+
+
             pdfKontrol();
 //            closeNewWindow();
 //            switchTo().window(0);
@@ -268,14 +269,31 @@ public class TopluPostaladiklarimPage extends MainPage {
     }
 
     @Step("")
-    public TopluPostaladiklarimPage pdfKontrol() {
+    public TopluPostaladiklarimPage pdfKontrol() throws AWTException {
 
-        WebElement root1 = WebDriverRunner.getWebDriver().findElement(By.id("toolbar"));
+        WebDriver win = switchTo().window(1);
+        WebElement s = win.findElement(By.tagName("embed"));
+        System.out.println(s.getText());
+        CharSequence kisayolCTRLS = Keys.chord(Keys.CONTROL, "s");
+        CharSequence kisayolENTER = Keys.chord(Keys.ENTER);
+        s.sendKeys(kisayolCTRLS);
+        s.sendKeys(Keys.ENTER);
+//        switchTo().window(2);
+
+        Robot robot = new Robot();  // Robot class throws AWT Exception
+        sleep(2000); // Thread.sleep throws InterruptedException
+        robot.keyPress(KeyEvent.VK_ENTER);
+//        robot.
+        s.sendKeys(kisayolENTER);
+
+
+
+        WebElement root1 = WebDriverRunner.getWebDriver().findElement(By.tagName("div"));
 
         //Get shadow root element
         WebElement shadowRoot1 = expandRootElement(root1);
 
-        WebElement root2 = shadowRoot1.findElement(By.id("buttons"));
+        WebElement root2 = shadowRoot1.findElement(By.tagName("div"));
         WebElement shadowRoot2 = expandRootElement(root2);
 
         WebElement root3 = shadowRoot2.findElement(By.id("download"));
