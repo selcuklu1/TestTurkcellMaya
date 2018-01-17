@@ -84,8 +84,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .imzala()
                 .sImzasec()
                 .sImzaImzala()
-                .popupSimzaEvet()
-                .islemMesaji().basariliOlmali();
+                .popupSimzaEvet();
 
         topluPostalanacakEvraklarPage
                 .openPage()
@@ -275,8 +274,8 @@ public class TopluPostalamaTest extends BaseTest {
                 .gonderildigiKurumSec(gidecegiYer)
                 .listeOlustur()
                 .postaListesiSec(postaListesi)
-                .listeyeEkle();
-        //.islemMesaji().dikkatOlmali(dikkatMesaji);
+                .listeyeEkle()
+                .islemMesaji().dikkatOlmali(dikkatMesaji);
 
         topluPostalanacakEvraklarPage
                 .filtreGidecegiYer(evrak1GidecegiYer)
@@ -466,8 +465,8 @@ public class TopluPostalamaTest extends BaseTest {
                 .postaListesineAktar()
                 .tuzelKisiKontrolet(tuzelKisi)
                 .listeAdiDoldur(listeAdi)
-                .listeOlustur();
-        //.islemMesaji().dikkatOlmali("Bu Liste Adında posta listesi vardır. Yeni Liste Adı verin! ");
+                .listeOlustur()
+                .islemMesaji().dikkatOlmali("Bu Liste Adında posta listesi vardır. Yeni Liste Adı verin!");
 
         listeAdi = "TS01807-1-" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
 
@@ -635,8 +634,8 @@ public class TopluPostalamaTest extends BaseTest {
                 .postaListesineAktar()
                 .gerceklKisiKontrolet(gercekKisi)
                 .listeAdiDoldur(listeAdi)
-                .listeOlustur();
-        //.islemMesaji().dikkatOlmali("Bu Liste Adında posta listesi vardır. Yeni Liste Adı verin! ");
+                .listeOlustur()
+                .islemMesaji().dikkatOlmali("Bu Liste Adında posta listesi vardır. Yeni Liste Adı verin!");
 
         listeAdi = "TS01807-2-" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
 
@@ -721,8 +720,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .imzala()
                 .sImzasec()
                 .sImzaImzala()
-                .popupSimzaEvet()
-                .islemMesaji().basariliOlmali();
+                .popupSimzaEvet();
 
         String evrak1KayitTarihiSayi = "";
         String evrak1GidecegiYer = kurum2;
@@ -749,8 +747,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .imzala()
                 .sImzasec()
                 .sImzaImzala()
-                .sayisalImzaEvetPopup()
-                .islemMesaji().basariliOlmali();
+                .popupSimzaEvet();
 
         String listeAdi = "TS01807Liste-" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
 
@@ -796,8 +793,8 @@ public class TopluPostalamaTest extends BaseTest {
                 .postaListesineAktar()
                 .kurumKontrolet(kurum)
                 .listeAdiDoldur(listeAdi)
-                .listeOlustur();
-//                .islemMesaji().dikkatOlmali("Bu Liste Adında posta listesi vardır. Yeni Liste Adı verin! ");
+                .listeOlustur()
+                .islemMesaji().dikkatOlmali("Bu Liste Adında posta listesi vardır. Yeni Liste Adı verin!");
 
         listeAdi = "TS01805-1-" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
 
@@ -1491,8 +1488,7 @@ String tutar = "20.000";
                 .imzala()
                 .sImzasec()
                 .sImzaImzala()
-                .popupSimzaEvet()
-                .islemMesaji().basariliOlmali();
+                .popupSimzaEvet();
 
         topluPostalanacakEvraklarPage
                 .openPage()

@@ -1821,7 +1821,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Dosya ekle {description} : {pathPDF}")
+        @Step("Dosya ekle : {description} ")
         public EkleriTab dosyaEkle(String pathPDF, String description) {
 
             uploadFile(btnDosyaEkle, pathPDF);
@@ -1832,7 +1832,7 @@ public class EvrakOlusturPage extends MainPage {
         @Step("Dosya yüklenene kadar 60 dk bekle, 60 dktan fazla sürerse timeout hatası ver")
         public EkleriTab dosyaYukleneneKadarBekle() {
 
-            waitForLoadingJS(WebDriverRunner.getWebDriver(), 60);
+            waitForLoadingJS(WebDriverRunner.getWebDriver(), 3600);
 
             return this;
         }
@@ -2060,9 +2060,20 @@ public class EvrakOlusturPage extends MainPage {
     public class IlgileriTab extends MainPage {
 
         //İlgileri tabı - Dosya Ekle
-        SelenideElement txtIlgileriDosyaIlgiMetni = $(By.id("yeniGidenEvrakForm:ilgiIslemleriTabView:dosyaAciklama"));
-        SelenideElement btnIlgileriDosyaFileUpload = $(By.id("yeniGidenEvrakForm:ilgiIslemleriTabView:fileUploadButtonA_input"));
-        SelenideElement btnIlgileriDosyaEkle = $(By.id("yeniGidenEvrakForm:ilgiIslemleriTabView:dosyaEkleButton"));
+        SelenideElement txtIlgileriIlgiMetni = $(By.id("yeniGidenEvrakForm:ilgiIslemleriTabView:dosyaAciklama"));
+        SelenideElement btnIlgileriDosyaEkle = $(By.id("yeniGidenEvrakForm:ilgiIslemleriTabView:fileUploadButtonA_input"));
+        SelenideElement btnIlgileriEkle = $(By.id("yeniGidenEvrakForm:ilgiIslemleriTabView:dosyaEkleButton"));
+        SelenideElement btnIlgileriTaramaHavuzudanEkle = $(By.id("yeniGidenEvrakForm:ilgiIslemleriTabView:uploadFromTarananEvrakHavuzuIlgiA"));
+        SelenideElement cmbEvrakTuru = $(By.id("taramaHavuzuFormId:filterAccordionPanelId:tarananTuruId"));
+        SelenideElement btnTaramaHavuzuSorgula = $(By.id("taramaHavuzuFormId:filterAccordionPanelId:taramaHavuzuSorgulaButton"));
+        SelenideElement chkTaramaHavuzuDosya1 = $(By.id("taramaHavuzuFormId:taramaHavuzuDataTableId:0:selectionId"));
+        SelenideElement chkTaramaHavuzuDosya2 = $(By.id("taramaHavuzuFormId:taramaHavuzuDataTableId:1:selectionId"));
+        SelenideElement txtDosya1Aciklama = $("[id^='taramaHavuzuFormId:taramaHavuzuDataTableId:0:j_idt']");
+        SelenideElement txtDosya2Aciklama = $("[id^='taramaHavuzuFormId:taramaHavuzuDataTableId:1:j_idt']");
+
+        SelenideElement cmbTaramaTuru = $(By.id("taramaHavuzuFormId:taramaHavuzuDataTableId:0:tarananTuruId"));
+        SelenideElement btnTaramaHavuzuTamam = $(By.id("taramaHavuzuFormId:taramaHavuzuTamamButton"));
+        ElementsCollection trEklistesi= $$("tbody[id*='yeniGidenEvrakForm:ekListesiDataTable'] tr[role='row']");
 
         //İlgileri tabı - Metin Ekle
         SelenideElement txtIlgileriMetinIlgiMetni = $(By.id("yeniGidenEvrakForm:ilgiIslemleriTabView:aciklamaTextArea"));
@@ -2099,6 +2110,104 @@ public class EvrakOlusturPage extends MainPage {
             tabIlgileri.click();
             return this;
         }
+
+        @Step("İlgi Tab - Dosya Ekle")
+        public IlgileriTab ilgiDosyaEkle(String pathToFile) {
+            uploadFile(btnIlgileriDosyaEkle, pathToFile);
+            return this;
+        }
+
+        @Step("İlgi Tab - İlgi Metni")
+        public IlgileriTab ilgileriIlgiMetniDoldur(String ilgiMetni) {
+            txtIlgileriIlgiMetni.setValue(ilgiMetni);
+            return this;
+        }
+
+        @Step("İlgi Tab - Ekle")
+        public IlgileriTab ilgileriEkle() {
+            btnIlgileriEkle.click();
+            return this;
+        }
+
+        @Step("Tarama havuzundan ekle")
+        public IlgileriTab taramaHavuzundanEkle() {
+            btnIlgileriTaramaHavuzudanEkle.click();
+            return this;
+        }
+
+        @Step("Evrak türü seç")
+        public IlgileriTab evrakTuruSec(String turu) {
+            cmbEvrakTuru.selectOption(turu);
+            return this;
+        }
+
+        @Step("Tarama havuzu sorgula")
+        public IlgileriTab taramaHavuzuSorgula() {
+            btnTaramaHavuzuSorgula.click();
+            return this;
+        }
+
+        @Step("İlgi dosya seç")
+        public IlgileriTab birinciEvrakSec(boolean secim) {
+            chkTaramaHavuzuDosya1.setSelected(secim);
+            return this;
+        }
+
+        @Step("İlgi dosya seç")
+        public IlgileriTab ikinciEvrakSec(boolean secim) {
+            chkTaramaHavuzuDosya2.setSelected(secim);
+            return this;
+        }
+
+        @Step("İlgi metni doldur")
+        public IlgileriTab dosya1AciklamaDoldur(String ilisikMetni) {
+            txtDosya1Aciklama.setValue(ilisikMetni);
+            return this;
+        }
+
+        @Step("İlgi metni doldur")
+        public IlgileriTab dosya2AciklamaDoldur(String ilisikMetni) {
+            txtDosya2Aciklama.setValue(ilisikMetni);
+            return this;
+        }
+
+        @Step("Tarama havuzu tamam")
+        public IlgileriTab taramaHavuzuTamam() {
+            btnTaramaHavuzuTamam.shouldBe(visible);
+            clickJs(btnTaramaHavuzuTamam);
+            return this;
+        }
+
+        @Step("Dosya ekle : {description} ")
+        public IlgileriTab dosyaEkle(String pathPDF, String description) {
+
+            uploadFile(btnIlgileriDosyaEkle, pathPDF);
+
+            return this;
+        }
+
+
+        @Step("Ekranın alt kısmında listelenen ilgilerde eklerin geldiği kontrolu: {description}")
+        public IlgileriTab listelenenIlgilerdeDosyanınGeldigiKontrolu(String value, String description) {
+
+            trEklistesi
+                    .filterBy(text(value))
+                    .get(0)
+                    .shouldBe(exist);
+            return this;
+        }
+
+        @Step("Ekranın alt kısmında listelenen ilgilerde indir butonunun aktif geldiği kontrolu")
+        public IlgileriTab listelenenIlgilerdeIndırButonuKontrol(String dosyaAdi) {
+
+            trEklistesi
+                    .filterBy(text(dosyaAdi))
+                    .get(0)
+                    .$("[class='ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only tipTip'] [class$='ui-icon-disk']").shouldBe(visible);
+
+            return this;
+        }
+
 
         @Step("IlgileriTab Sisteme Kayitli Evrak Ekle")
         public IlgileriTab sistemeKayitliEvrakEkleTab() {
