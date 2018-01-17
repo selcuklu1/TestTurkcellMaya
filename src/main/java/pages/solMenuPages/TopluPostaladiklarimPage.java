@@ -283,7 +283,7 @@ public class TopluPostaladiklarimPage extends MainPage {
         Robot robot = new Robot();  // Robot class throws AWT Exception
         sleep(2000); // Thread.sleep throws InterruptedException
         robot.keyPress(KeyEvent.VK_ENTER);
-        robot.keyPress(KeyEvent.);
+
 //        robot.
         s.sendKeys(kisayolENTER);
 
