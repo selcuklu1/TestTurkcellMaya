@@ -234,7 +234,8 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 //        String evrakNo = evrakNO321;
 //        String evrakNo1 = evrakNO328;
 //        String downloadPath = getDownloadPath();
-        String downloadPath = "C:\\Users\\optiim\\Downloads";
+        String downloadPath = "C:\\Users\\optiim\\Downloads\\";
+        System.out.println(downloadPath);
 
 //        String geldigiYer = "Kurum";
 //
