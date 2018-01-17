@@ -60,10 +60,12 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
 
         kullaniciYonetimiPage
                 .openPage()
-                .ara();
+                .ara()
+                .kullaniciListesiGeldigiGorme();
         String ad = kullaniciYonetimiPage.adCek();
         kullaniciYonetimiPage
                 .kullaniciListesiGuncelle(ad)
+                .kullaniciBilgileriGeldigiGorme()
                 .gorevliOlduguBirimlerGuncelle()
                 .popupKullaniciBirimAtamaBagTipiSec(bagTipi, "Bağ Tipi")
                 .popupKullaniciBirimAtamaKaydet();
@@ -113,13 +115,16 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
 
         kullaniciYonetimiPage
                 .openPage()
-                .ara();
+                .ara()
+                .kullaniciListesiGeldigiGorme();
         String adCek = kullaniciYonetimiPage.adCek();
                 kullaniciYonetimiPage
-                .kullaniciListesiGuncelle(adCek);
+                .kullaniciListesiGuncelle(adCek)
+                .kullaniciBilgileriGeldigiGorme();
         String birim = kullaniciYonetimiPage.birimAdCek();
                 kullaniciYonetimiPage
                 .gorevliOlduguBirimlerGuncelle(birim)
+                .kullaniciBirimAtamaEkranıGorme()
                 .popupKullaniciBirimAtamaBagTipiSec(bagTipi, "Bağ Tipi")
                 .popupKullaniciBirimAtamaKaydet();
 
@@ -192,12 +197,17 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
 
         kullaniciYonetimiPage
                 .openPage()
-                .ara();
+                .filtreleyecekAlanGeldigiGorme()
+                .ara()
+                .kullaniciListesiGeldigiGorme();
+
         String adCek = kullaniciYonetimiPage.adCek();
         kullaniciYonetimiPage
-                .kullaniciListesiGuncelle(adCek);
+                .kullaniciListesiGuncelle(adCek)
+                .kullaniciBilgileriGeldigiGorme();
         kullaniciYonetimiPage
                 .gorevliOlduguBirimlerGuncelle()
+                .kullaniciBirimAtamaEkranıGorme()
                 .popupKullaniciBirimAtamaBagTipiSec(bagTipi, "Bağ Tipi")
                 .popupKullaniciBirimAtamaKaydet();
 

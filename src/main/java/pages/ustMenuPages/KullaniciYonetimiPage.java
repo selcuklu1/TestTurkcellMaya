@@ -7,6 +7,7 @@ import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.UstMenuData;
@@ -135,6 +136,15 @@ public class KullaniciYonetimiPage extends MainPage {
         return this;
     }
 
+    @Step("Kullanıcı birim atama ekranında bağ tipi combosunun geldiği görülür.")
+    public KullaniciYonetimiPage kullaniciBirimAtamaEkranıGorme(){
+        boolean durum = $$("[class='ui-dialog ui-widget ui-widget-content ui-corner-all ui-shadow kullaniciYonetimiEditorKullaniciBirimEditorDialog ui-draggable ui-overlay-visible']").size()==1;
+        boolean durum2 = $$(By.id("kullaniciBirimEditorForm:kullaniciBagTipiSelect")).size()==1;
+        Assert.assertEquals(durum,durum2);
+        takeScreenshot();
+        return this;
+    }
+
     @Step("\"{kullanici}\" Seçilen kullanıcıyı güncelle tıkla")
     public KullaniciYonetimiPage kullaniciListesiGuncelle() {
         clickJs(btnKullaniciListesiGuncelle);
@@ -145,6 +155,14 @@ public class KullaniciYonetimiPage extends MainPage {
     public KullaniciYonetimiPage kullaniciListesiGuncelle(String kullanici) {
         kullanici = $$("[id='kullaniciYonetimiListingForm:kullaniciDataTable_data'] tr[data-ri='0'] div").get(1).getText();
         clickJs(btnKullaniciListesiGuncelle);
+        return this;
+    }
+
+    @Step("Kullanıcı bilgilerinin ekranın sağında geldiği görülür.")
+    public KullaniciYonetimiPage kullaniciBilgileriGeldigiGorme(){
+        boolean durum = $$(By.id("kullaniciYonetimiEditorForm:kullaniciYonetimiKullaniciEditorPanel_content")).size()==1;
+        Assert.assertEquals(durum,true);
+        takeScreenshot();
         return this;
     }
 
@@ -210,10 +228,27 @@ public class KullaniciYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Ara tıklanır. Kullanıcıların TCKN, ad soyad ve birim bilgileri ile listelendiği görülür.")
+    @Step("Kullanıcı yönetimi ekranının kullanıcı filtreleyecek şekilde geldiği görülür.")
+    public KullaniciYonetimiPage filtreleyecekAlanGeldigiGorme(){
+    boolean durum = $$("[id='kullaniciYonetimiListingForm'] [class='ui-accordion-header ui-helper-reset ui-state-default ui-state-active ui-corner-top'] a").size()==1;
+    Assert.assertEquals(durum,true);
+    takeScreenshot();
+        return this;
+    }
+    
+    @Step("Ara tıklanır.")
     public KullaniciYonetimiPage ara() {
         btnAra.click();
         return this;
+    }
+
+    @Step("Kullanıcıların TCKN, ad soyad ve birim bilgileri ile listelendiği görülür.")
+    public KullaniciYonetimiPage kullaniciListesiGeldigiGorme(){
+    $("[id='kullaniciYonetimiListingForm:filterPanel'] a").click();
+    boolean durum = $$("[id='kullaniciYonetimiListingForm:kullaniciDataTable_data'] tr").size()==0;
+        Assert.assertEquals(durum,false);
+        takeScreenshot();
+    return this;
     }
 
     public String adCek(){

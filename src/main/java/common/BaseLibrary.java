@@ -34,7 +34,7 @@ import static java.lang.Thread.currentThread;
 import static org.apache.commons.io.FileUtils.deleteDirectory;
 import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfElementLocated;
 
-public class BaseLibrary extends ElementsContainer {
+public class BaseLibrary extends ElementsContainer{
 
 
     protected static final Logger log = Logger.getLogger(BaseLibrary.class.getName());

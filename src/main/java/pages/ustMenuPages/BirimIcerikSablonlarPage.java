@@ -1,6 +1,7 @@
 package pages.ustMenuPages;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Allure;
@@ -350,17 +351,17 @@ public class BirimIcerikSablonlarPage extends MainPage {
         btnEvrakOnizleme.click();
 
         WebDriver driver = switchTo().window("htmlToPdfServlet");
-//        sleep(5000);
+        sleep(5000);
         $(".textLayer").shouldBe(visible);
         for (Condition condition : conditions) {
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < Configuration.timeout/1000; i++) {
                 if (!$(".textLayer").text().isEmpty() || condition.equals(text("")))
                     break;
 
                 if (!driver.getTitle().equals("htmlToPdfServlet"))
                     driver = switchTo().window("htmlToPdfServlet");
 
-                System.out.println($(".textLayer").text());
+                System.out.println("Text empty: " + $(".textLayer").text());
                 sleep(1000);
             }
             Allure.addAttachment("Tekst kontrol", $(".textLayer").text());
@@ -389,10 +390,12 @@ public class BirimIcerikSablonlarPage extends MainPage {
     }
 
     @Step("Şablon bilgileri kontolü")
-    public BirimIcerikSablonlarPage sablonBilgileriKontrolu(String sablonAdi, String kullanilacakBirimi, String altBirimlerGorsunMu, String editorText){
+    public BirimIcerikSablonlarPage sablonBilgileriKontrolu(String sablonAdi, String kullanilacakBirimi, String altBirimlerGorsunMu, String editorText, String... evrakTipi){
         getTxtSablonAdi().shouldHave(value(sablonAdi));
         SelenideElement birim = getLovKullanilacakBirimler().getSelectedItems().filterBy(text(kullanilacakBirimi)).shouldHaveSize(1).first();
         birim.$("select").getSelectedOption().shouldHave(text(altBirimlerGorsunMu));
+        if (evrakTipi.length>0)
+            getSelEvrakTipi().getSelectedOption().shouldHave(text(evrakTipi[0]));
         getEditor().editorShouldHave(text(editorText));
         return this;
     }

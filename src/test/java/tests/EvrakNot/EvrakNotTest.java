@@ -284,8 +284,8 @@ public class EvrakNotTest extends BaseTest {
         evrakNot.notOlustur(user2.getFullname(), newNotesGenel.get(0)[0], newNotesGenel.get(0)[1]);
         String t = new TextEditor().type(newNotesGenel.get(0)[1]).getText();
         Assert.assertTrue(t.contains(newNotesGenel.get(0)[1]), "Evrakım metin alanında " + newNotesGenel.get(0)[1] + " olmalı");
-        imzaBekleyenlerPage.evrakKaydet().islemMesaji().basariliOlmali();
-        imzaBekleyenlerPage.evrakIadeEt("İade notu").islemMesaji().basariliOlmali();
+        imzaBekleyenlerPage.evrakPageButtons().evrakKaydet().islemMesaji().basariliOlmali();
+        imzaBekleyenlerPage.evrakPageButtons().evrakIadeEt("İade notu").islemMesaji().basariliOlmali();
 
         logout();
         ////clearCookies();
@@ -443,7 +443,7 @@ public class EvrakNotTest extends BaseTest {
                 .onayAkisiTitleKontrol("Yeni akış")
                 .onayAkisiDetailKontrol(user1.getFullname() + "-Paraflama / " + user2.getFullname() + "-İmzalama");
 //        page.kaydet();
-        page.evrakKaydet();
+        page.evrakPageButtons().evrakKaydet();
 //        $("#kaydeTSonfirmForm\\:kaydetEvetButton").click();
         page.islemMesaji().basariliOlmali();
         $x("//form[@id='yeniGidenEvrakForm']/ancestor::div[starts-with(@id,'window') and contains(@id,'Dialog')]/div[contains(@class,'ui-dialog-titlebar')]/a[contains(@class,'ui-dialog-titlebar-close')]").click();

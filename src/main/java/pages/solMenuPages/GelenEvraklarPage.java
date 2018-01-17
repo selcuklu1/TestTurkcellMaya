@@ -3,6 +3,7 @@ package pages.solMenuPages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
@@ -429,7 +430,7 @@ public class GelenEvraklarPage extends MainPage {
     }
 
     @Step("Havale Yap")
-    public GelenEvraklarPage havaleYap(){
+    public GelenEvraklarPage havaleYap() {
         btnHavaleYap.click();
         return this;
     }
@@ -562,6 +563,20 @@ public class GelenEvraklarPage extends MainPage {
                 .size();
         return size;
     }
+
+    @Step("Tabloda \"{evrakNo}\" evrak nolu kayıt kontrolü : \"{shoulBeExist}\"  ")
+    public GelenEvraklarPage tabloEvrakNoKontrol(String evrakNo, boolean shoulBeExist) {
+        if (shoulBeExist) {
+            tableEvraklar
+                    .filterBy(Condition.text(evrakNo))
+                    .shouldHaveSize(1);
+            Allure.addAttachment("Tablo kontolü", "Listede evrak no bulundu.");
+        } else
+            Allure.addAttachment("Tablo kontolü", "Listede evrak no bulunamadı.");
+
+            return this;
+    }
+
 
     @Step("Tabloda olmayan evrak no kontrolü : \"{evrakNo}\" ")
     public GelenEvraklarPage tabloOlmayanEvrakNoKontrol(String evrakNo) {
