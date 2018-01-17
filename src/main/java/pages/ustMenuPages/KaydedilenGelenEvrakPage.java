@@ -3,6 +3,7 @@ package pages.ustMenuPages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
@@ -187,6 +188,7 @@ public class KaydedilenGelenEvrakPage extends MainPage {
 
         deleteFile(downloadPath, "Rapor_");
         btnRaporAlExcel.click();
+        waitForLoadingJS(WebDriverRunner.getWebDriver(), 180);
 //        islemMesaji().basariliOlmali();
 //        Thread.sleep(8000);
 //        btnSorgula.click();
@@ -203,6 +205,7 @@ public class KaydedilenGelenEvrakPage extends MainPage {
     public KaydedilenGelenEvrakPage raporAlPdf(String downloadPath) throws IOException {
         deleteFile(getDownloadPath(), "Rapor_");
         btnRaporAlPdf.click();
+        waitForLoadingJS(WebDriverRunner.getWebDriver(), 180);
 //        Thread.sleep(8000);
         islemMesaji().basariliOlmali();
 //        btnSorgula.click();
