@@ -8,6 +8,7 @@ import pages.newPages.OlurYazisiOlusturPage;
 import pages.pageComponents.Filtreler;
 import pages.pageComponents.SearchFiltreleme;
 import pages.pageComponents.UstMenuPageHeader;
+import pages.pageComponents.belgenetElements.BelgentCondition;
 import pages.pageData.UstMenuData;
 
 import static com.codeborne.selenide.Condition.text;
@@ -52,7 +53,10 @@ public class SistemSabitleriPage extends MainPage {
 
     @Step("")
     public ElementsCollection aramaSonucuBul(String deger){
-        return propertyList.$$("div").filterBy(text(deger));
+        ElementsCollection col = propertyList.$$("div").filterBy(BelgentCondition.innerText(deger));
+        if (col.size() > 0)
+            col.size();
+        return propertyList.$$("div").filterBy(BelgentCondition.innerText(deger));
     }
 
 
