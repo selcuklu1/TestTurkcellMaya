@@ -510,7 +510,7 @@ public class VekaletIslemleriTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true
-//            , dependsOnMethods = {"TS0012"}
+            , dependsOnMethods = {"TS0012"}
             , description = "TS0011 : Vekalet alan kullanıcıya evrak havalesi ve kontrolü")
     public void TS0011() throws InterruptedException {
 
