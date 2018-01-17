@@ -10,7 +10,7 @@ import pages.pageComponents.belgenetElements.BelgenetElement;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 public class CevapYazPage extends MainPage {
@@ -22,7 +22,7 @@ public class CevapYazPage extends MainPage {
     SelenideElement cmbEmirTalimat = $(By.xpath("//*[@id='windowCevapEvrakForm:evrakBilgileriList:2:emirTalimatPanelGrid']/tbody/tr/td[3]/select"));
     SelenideElement cmbEvrakDili = $(By.id("windowCevapEvrakForm:evrakBilgileriList:3:evrakDili"));
     SelenideElement txtKonuKodu = $(By.id("windowCevapEvrakForm:evrakBilgileriList:4:konuKoduLov:LovText"));
-    SelenideElement txtKonu = $(By.id("windowCevapEvrakForm:evrakBilgileriList:5:konuTextArea"));
+    SelenideElement txtKonu = $("textarea[id^='windowCevapEvrakForm:evrakBilgileriList:'][id$=':konuTextArea']");
     SelenideElement cmbArsivKategorisi = $(By.id("windowCevapEvrakForm:evrakBilgileriList:7:j_idt35880"));
     SelenideElement cmbGizlilikDerecesi = $(By.xpath("//*[@id='windowCevapEvrakForm:evrakBilgileriList:9:guvenlikKodu']"));
     SelenideElement cmbIvedilik = $(By.id("windowCevapEvrakForm:evrakBilgileriList:10:ivedilik"));
@@ -135,6 +135,8 @@ public class CevapYazPage extends MainPage {
     SelenideElement btnEvetPopup = $(By.cssSelector("div[class*='ui-confirm-dialog'] button[id='kaydetEvetButton']"));
     SelenideElement btnHayirPopup = $(By.cssSelector("div[class*='ui-confirm-dialog'] button[id='kaydetHayirButton']"));
 
+    SelenideElement btnKaydet = $x("//span[contains(@class, 'kaydet')]/..");
+
     @Step("Sayfa açıldı mı kontrolü")
     public CevapYazPage sayfaAcilmali() {
         pageTitle.shouldBe(visible);
@@ -162,7 +164,7 @@ public class CevapYazPage extends MainPage {
     }
 
     public CevapYazPage konuDoldur(String konu) {
-        txtKonu.sendKeys(konu);
+        txtKonu.setValue(konu);
         return this;
     }
 
@@ -587,5 +589,17 @@ public class CevapYazPage extends MainPage {
         }
         return this;
 
+    }
+
+    @Step("Kaydet butonuna tıkla")
+    public CevapYazPage kaydet(){
+        btnKaydet.click();
+        return this;
+    }
+
+    @Step("Kayıt Popup alanında Evet butonuna tıkla.")
+    public CevapYazPage evrakKayitPopupEvet(){
+        $$(By.id("kaydetConfirmForm:kaydetEvetButton")).last().click();
+        return this;
     }
 }

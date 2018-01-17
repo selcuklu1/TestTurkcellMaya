@@ -6,17 +6,13 @@ import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
-import org.apache.xmlbeans.impl.xb.xsdschema.All;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.UstMenuData;
 
-import java.io.File;
-
 import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
@@ -286,10 +282,7 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("Üst yazi \"{path}\" ekle")
     public GelenEvrakKayitPage evrakBilgileriUstYaziEkle(String path) {
-        //uploadFile(ustYazi, path);
-        File file = new File(path);
-        ustYazi.uploadFile(file);
-        //ustYaziUploadFile(path);
+        uploadFile(ustYazi, path);
         return this;
     }
 
@@ -1202,6 +1195,12 @@ public class GelenEvrakKayitPage extends MainPage {
     @Step("Tarama Havuzu Tamam butonu ")
     public GelenEvrakKayitPage taramaHavuzuTamam() {
         clickJs(btnTaramaHavuzuTamam);
+        return this;
+    }
+    
+    @Step("Gelen Evrak Kayıt sayfasında Kaydet butonuna tıkladıktan sonra beliren panelde Evet butonuna tıkla.")
+    public GelenEvrakKayitPage gelenEvrakKayitKaydetEvet(){
+        popUpEvet.click();
         return this;
     }
 

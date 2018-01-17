@@ -1,9 +1,6 @@
 package pages.pageComponents.belgenetElements;
 
-import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.commands.Commands;
-import com.codeborne.selenide.commands.Find;
-import com.codeborne.selenide.impl.WebElementSource;
 
 public class BelgenetFramework {
 

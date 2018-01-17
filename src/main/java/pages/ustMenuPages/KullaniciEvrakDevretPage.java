@@ -4,7 +4,6 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
-import com.sun.javafx.scene.layout.region.Margins;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
@@ -65,6 +64,7 @@ public class KullaniciEvrakDevretPage extends MainPage {
     @Step("Panel aç: {panelAdi}")
     public KullaniciEvrakDevretPage panelAc(String panelAdi) {
         SelenideElement panelHeader = $x("//h3[.='" + panelAdi + "']");
+        panelHeader.waitUntil(visible, 30000);
         Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", panelHeader);
         panelHeader.click();
         return this;

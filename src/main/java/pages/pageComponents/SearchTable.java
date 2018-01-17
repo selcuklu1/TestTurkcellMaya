@@ -74,14 +74,20 @@ public class SearchTable {
         return parentElement.$("span[class~='ui-paginator-last']");
     }
 
-
-
     public ElementsCollection getColumnHeaders() {
         //ElementsCollection columnheaders = parentElement.$$("[id$='SearchTable'] th[role='columnheader']");
         ElementsCollection columnheaders = parentElement.$$("thead th[role='columnheader']");
         if (columnheaders.size() == 0)
             columnheaders = parentElement.$$("thead th");
         return columnheaders;
+    }
+
+    @Step("Kolonlari bul")
+    public SearchTable columnHeaderControl(Condition... conditions){
+        for (Condition condition:conditions) {
+            getColumnHeaders().filterBy(condition).shouldHave(sizeGreaterThan(0));
+        }
+        return this;
     }
 
     @Step("Kolon index'i ara")
@@ -294,16 +300,19 @@ public class SearchTable {
         return this;
     }
 
-    public ElementsCollection getColumns() {
+    @Step("Bulunan satırın kolonları bul")
+    public ElementsCollection getColumnValues() {
         return foundRow.$$(columnCssLocator);
     }
 
-    public SelenideElement getColumn(int columnIndex) {
+    @Step("{columnIndex} kolon bul")
+    public SelenideElement getColumnValue(int columnIndex) {
         //return foundRows.get((rowIndex.length > 0)? rowIndex[0]:0).$$("td[role=gridcell]").get(columnIndex);
         return foundRow.$$(columnCssLocator).get(columnIndex);
     }
 
-    public SelenideElement getColumn(String columnName) {
+    @Step("{columnName} isimli kolon bul")
+    public SelenideElement getColumnValue(String columnName) {
         if (columnIndex == -1)
             columnIndex = getColumnIndex(columnName);
         //return foundRows.get((rowIndex.length > 0)? rowIndex[0]:0).$$("td[role=gridcell]").get(columnIndex);
@@ -922,17 +931,17 @@ public class SearchTable {
     //endregion
 
     @Step("")
-    public ElementsCollection getColumns(SelenideElement row) {
+    public ElementsCollection getColumnValues(SelenideElement row) {
         return row.$$("td[role=gridcell]");
     }
 
     @Step("")
-    public SelenideElement getColumn(SelenideElement row, int columnIndex) {
+    public SelenideElement getColumnValue(SelenideElement row, int columnIndex) {
         return row.$$("td[role=gridcell]").get(columnIndex);
     }
 
     @Step("")
-    public SelenideElement getColumn(SelenideElement row, String columnName) {
+    public SelenideElement getColumnValue(SelenideElement row, String columnName) {
         int index = getColumnIndex(columnName);
         return row.$$("td[role=gridcell]").get(index - 1);
     }

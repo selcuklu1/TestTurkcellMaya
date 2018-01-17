@@ -541,6 +541,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .temizleSonrasiKontrol();
     }
 
+    //Sezai
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS0373: Cevap yazma işleminde evrakın onay akışından silinmesi")
     public void TS0373() throws InterruptedException {
@@ -635,7 +636,9 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
     }
 
 
-    @Test(enabled = true, description = "TS2188: Cevap evrakında birim içerik şablonu kullanma")
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS2188: Cevap evrakında kullanıcı şablonu kullanma")
     public void TS2188() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";

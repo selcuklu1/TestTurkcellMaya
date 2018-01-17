@@ -2,14 +2,13 @@ package tests.OlurYazisiIslemleri;
 
 import common.BaseTest;
 import data.User;
+import galen.GalenControl;
 import io.qameta.allure.Link;
 import io.qameta.allure.Step;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.MainPage;
-import pages.galen.GalenControl;
 import pages.newPages.OlurYazisiOlusturPage;
-import pages.pageComponents.SearchTable;
-import pages.pageComponents.SolMenu;
 import pages.pageComponents.tabs.AltTabs;
 import pages.pageComponents.tabs.BilgilerTab;
 import pages.pageData.SolMenuData;
@@ -17,14 +16,13 @@ import pages.pageData.alanlar.GeregiSecimTipi;
 import pages.pageData.alanlar.GizlilikDerecesi;
 import pages.pageData.alanlar.Ivedilik;
 import pages.pageData.alanlar.OnayKullaniciTipi;
-import pages.solMenuPages.ImzaBekleyenlerPage;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Map;
 
-import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Selenide.page;
+import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Selenide.sleep;
 
 /**
  * Yazan: Ilyas Bayraktar
@@ -50,7 +48,6 @@ public class OlurYazisiIslemleriTest extends BaseTest {
     String konuKoduSayi = "01-010.10-";
 
     //Teskilat Kisi tanimlari-->birim yönetimi ekranında birimin olur metni boş olmalı
-
     @Test(description = "TS0577: Olur yazısı oluşturulması ve gönderilmesi", enabled = true)
     //@Link(name = "Galen", type = "html", url = "file:///Users/ilyas/WorkspaceJava/Git/BelgenetFTA/galenReports/TS0577/report.html")
     @Link(name = "Galen", type = "html", url = "galenReports/TS0577/report.html")
@@ -126,7 +123,7 @@ public class OlurYazisiIslemleriTest extends BaseTest {
         altTabs = olurYazisiOlusturPage.iliskiliEvraklarTab().openTab().altTabs();
         altTabs.getDosyaEkleTab().shouldBe(visible);
         altTabs.sistemdeKayitliEvrakEkleTabiAc().evrakAraDoldur("a").dokumanAraTikla().islemMesaji().basariliOlmali();
-        String docSati = altTabs.getSistemdeKayitliEvrakListesi().findRows().shouldHaveSize(1).useFirstFoundRow().getColumn( "Sayı").text();
+        String docSati = altTabs.getSistemdeKayitliEvrakListesi().findRows().shouldHaveSize(1).useFirstFoundRow().getColumnValue( "Sayı").text();
         altTabs.getSistemdeKayitliEvrakListesi().foundRow().dokumanEkleTikla();
         olurYazisiOlusturPage.iliskiliEvraklarTab().getEkListesiTablosu().findRows(text(docSati)).shouldHaveSize(1);
 
@@ -141,6 +138,7 @@ public class OlurYazisiIslemleriTest extends BaseTest {
     private void editorTabGalen() throws IOException{
         //Editör Tab Galen kontroller
         olurYazisiOlusturPage.editorTab().openTab();
+        sleep(3000);
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("birim", user1.getBirimAdi());
         params.put("sayi", konuKoduSayi);
@@ -221,11 +219,37 @@ public class OlurYazisiIslemleriTest extends BaseTest {
     }
 
 
+    OlurYazisiOlusturPage olurYazisiOlusturPage2;
+    BilgilerTab bilgilerTab;
 
     @Test(description = "TS1488: Olur yazısında alan kontrolleri", enabled = false)
     public void TS1488() throws Exception {
         login(user1);
-        OlurYazisiOlusturPage olurYazisiOlusturPage = page(OlurYazisiOlusturPage.class);
-//        BilgilerTab bilgilerTab = olurYazisiOlusturPage.openPage().bilgileriTabiAc();
+        olurYazisiOlusturPage2 = new OlurYazisiOlusturPage().openPage();
+        bilgilerTab = olurYazisiOlusturPage2.bilgileriTab();
+
+        step2();
+        step3();
+
+    }
+
+    @Step("Gereği alanından içinde kurum dışı olan bir dağıtım planı seç")
+    public void step2(){
+        bilgilerTab.geregiSecimTipiSec(GeregiSecimTipi.DAGITIM_PLANLARI);
+        boolean empty = bilgilerTab.getGeregiCombolov().type("TS1488").isEmpty();
+        Assert.assertTrue(empty, "Dağıtım planının gelmediği görülür.");
+        bilgilerTab.getGeregiCombolov().closeTreePanel();
+    }
+
+    @Step("Editör ekranını boşken İmzala")
+    public void step3(){
+        bilgilerTab.konuKoduSec("010.01")
+                .konuDoldur("TS1488")
+                .kaldiralacakKlasorleriSec("Diğer")
+                .onayAkisiEkleButonaTikla()
+                .anlikOnayAkisKullanicininTipiSec(user1, OnayKullaniciTipi.IMZALAMA)
+                .kullanButonaTikla();
+        olurYazisiOlusturPage2.pageButtons().imzalaButonaTikla()
+                .islemMesaji().dikkatOlmali("Yazı içeriği boş olamaz");
     }
 }

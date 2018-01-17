@@ -1,21 +1,20 @@
 package pages.pageComponents;
 
-import com.codeborne.selenide.*;
-import io.qameta.allure.Allure;
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.MainPage;
-import pages.pageComponents.belgenetElements.BelgenetElement;
 
-import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Condition.enabled;
-import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.switchTo;
 import static pages.pageComponents.belgenetElements.Belgenet.$inFrame;
-import static pages.pageComponents.belgenetElements.Belgenet.comboBox;
 import static pages.pageComponents.belgenetElements.BelgentCondition.toolboxButtonOn;
 
 /**

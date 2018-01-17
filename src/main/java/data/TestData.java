@@ -28,6 +28,6 @@ public class TestData extends BaseLibrary {
     public static String docPathWindows = "C:\\TestAutomation\\BelgenetFTA\\documents\\";
     //public static String docDownloadPathWindows = "C:\\TestAutomation\\BelgenetFTA\\downloads";
     public static String docDownloadPathWindows = "C:\\Users\\" + getPCUsername() + "\\Downloads\\";
-    public static String docPathLinux = "/Users/ilyas/TestAutomation/BelgenetFTA/documents";
-    public static String docDownloadPathLinux = "/Users/ilyas/TestAutomation/downloads";
+    public static String docPathLinux = "documents";
+    public static String docDownloadPathLinux = "home/optiim/Downloads";
 }

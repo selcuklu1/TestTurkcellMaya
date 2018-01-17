@@ -7,11 +7,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.events.WebDriverEventListener;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.sql.Timestamp;
-
-import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
 
 public class DriverEventListener extends BaseLibrary implements WebDriverEventListener {
 

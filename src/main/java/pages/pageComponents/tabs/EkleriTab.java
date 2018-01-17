@@ -6,7 +6,6 @@ import pages.MainPage;
 import pages.pageComponents.SearchTable;
 
 import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.$;
 
 /**
  * Yazan: Ilyas Bayraktar

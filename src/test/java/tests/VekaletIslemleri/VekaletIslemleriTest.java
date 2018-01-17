@@ -19,7 +19,6 @@ import pages.ustMenuPages.VekaletVerPage;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.switchTo;
-import static data.TestData.*;
 
 /****************************************************
  * Tarih: 2017-12-22
@@ -553,13 +552,13 @@ public class VekaletIslemleriTest extends BaseTest {
 //
 //        evrakNo = gelenEvraklarPage.tablodanEvrakNoAl(1);
 
-        gelenEvraklarPage
-                .evrakNoyaGoreEvrakSec(evrakNO11)
-                .havaleYap()
-                .havaleYapKisiTreeSec(nameVV)
-                .vekeletAlanVerenTabloVekaletAlanveyaVerenSec(nameVA)
-                .havaleYapGonder()
-                .islemMesaji().basariliOlmali(basariMesaji);
+//        gelenEvraklarPage
+//                .evrakNoyaGoreEvrakSec(evrakNO11)
+//                .havaleYap()
+//                .havaleYapKisiTreeSec(nameVV)
+//                .vekeletAlanVerenTabloVekaletAlanveyaVerenSec(nameVA)
+//                .havaleYapGonder()
+//                .islemMesaji().basariliOlmali(basariMesaji);
         logout();
         login(usernameVV);
 

@@ -90,12 +90,12 @@
                     <argLine>
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
                     </argLine>
-                    <properties>
+                    <!--<properties>
                         <property>
                             <name>listener</name>
                             <value>listeners.RerunFailedTests</value>
                         </property>
-                    </properties>
+                    </properties>-->
                     <!--<systemProperties>-->
                     <!--<property>-->
                     <!--<name>allure.results.directory</name>-->

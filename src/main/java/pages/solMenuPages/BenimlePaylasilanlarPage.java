@@ -9,9 +9,7 @@ import org.testng.Assert;
 import pages.MainPage;
 import pages.pageData.SolMenuData;
 
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
-import static com.codeborne.selenide.Selenide.sleep;
+import static com.codeborne.selenide.Selenide.*;
 
 
 public class BenimlePaylasilanlarPage extends MainPage {
