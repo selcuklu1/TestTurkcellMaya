@@ -243,7 +243,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
         String geregiGercekKisi = "Cansuu Denizz";
         String geregiTuzelKisi = "OPTİİMc1";
         String geregiKurum = "Adalet Bakanlığı";
-        String pathFile = getDocPath() + "Otomasyon.pdf";
+        String pathFile = getUploadPath() + "Otomasyon.pdf";
         String tarih = getSysDateForKis();
 
         login(username4, password4);

@@ -4,6 +4,7 @@ import common.BaseTest;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Step;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.MainPage;
@@ -1006,6 +1007,7 @@ public class TopluPostalamaTest extends BaseTest {
     }
 
     // EXCELL KONTROLÜ YAPILACAK
+    @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS1676 : Toplu Postalama PTT Evrak Raporu (UC_POSTAYÖNETİMİ_005)")
     public void TS1676() {
 
@@ -1048,7 +1050,7 @@ public class TopluPostalamaTest extends BaseTest {
 
     }
 
-    // DÜZENLENECEK
+    // Yapıldı
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS1675 : Toplu Postaladıklarım İzleme / Alan Kontrolleri (UC_POSTAYÖNETİMİ_004)")
     public void TS1675() {
@@ -1975,12 +1977,12 @@ String tutar = "20.000";
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = false, description = "TC1816 : Toplu Postaladıklarım Güncelleme İşlemleri (UC_POSTAYÖNETİMİ_004)")
+    @Test(enabled = true, description = "TC1816 : Toplu Postaladıklarım Güncelleme İşlemleri (UC_POSTAYÖNETİMİ_004)")
     public void TC1816() {
 
 
         String[] konu = new String[]{
-                "TC1816 20180115150635", "TC1816 20180115150635100"
+                "TC1811 20180116141257", "TC1811 20180116141257100"
         };
 
         login("mbozdemir", "123");
@@ -2097,4 +2099,5 @@ String tutar = "20.000";
         //TODO
         //17.step
     }
+
 }
