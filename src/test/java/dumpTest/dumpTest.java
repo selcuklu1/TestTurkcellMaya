@@ -72,7 +72,7 @@ public class dumpTest extends BaseTest {
         String href = $("a[class='btn downloadpdf']").attr("href");
        /* $("a[class='btn downloadpdf']").click();
 
-        getDocPath();
+        getUploadPath();
         login();*/
 
 

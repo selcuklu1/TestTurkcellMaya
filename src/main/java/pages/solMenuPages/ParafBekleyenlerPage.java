@@ -53,7 +53,7 @@ public class ParafBekleyenlerPage extends MainPage {
 
     @Step("Paraf Bekleyenler sayfası aç")
     public ParafBekleyenlerPage openPage() {
-        solMenu(SolMenuData.KapatmaIslemleri.ParafBekleyenler);
+        solMenu(SolMenuData.IslemBekleyenEvraklar.ParafBekleyenler);
         String pageTitle = SolMenuData.IslemBekleyenEvraklar.ParafBekleyenler.getMenuText();
         $("#mainInboxForm\\:inboxDataTable .ui-inbox-header-title")
                 .shouldHave(text(pageTitle));
