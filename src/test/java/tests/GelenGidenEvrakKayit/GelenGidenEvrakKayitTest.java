@@ -233,6 +233,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 //        String evrakNO328 = "6391";
 //        String evrakNo = evrakNO321;
 //        String evrakNo1 = evrakNO328;
+        String downloadPath = getDownloadPath();
         String geldigiYer = "Kurum";
 
         login(yakyol);
@@ -272,7 +273,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 //                .tabloKontrolu(evrakNO321)
                 .tabloKontrouAll(evrakNO321, evrakNO328)
 //                .tabloKontrouAll(evrakNO328)
-                .raporAlExcel()
+                .raporAlExcel(downloadPath)
                 .waitForLoadingJS(WebDriverRunner.getWebDriver(), 180);
 
 //        kaydedilenGelenEvrakPage
