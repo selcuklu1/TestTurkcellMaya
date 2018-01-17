@@ -226,14 +226,14 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, priority = 7, description = "TS1401 : Kaydedilen Gelen Evrak raporu")
+    @Test(enabled = false, priority = 7, description = "TS1401 : Kaydedilen Gelen Evrak raporu")
     public void TS1401() throws InterruptedException, IOException, ParseException {
 
         String evrakNO321 = "6493";
         String evrakNO328 = "6497";
 //        String evrakNo = evrakNO321;
 //        String evrakNo1 = evrakNO328;
-//        String downloadPath = getDownloadPath();
+//        String remoteDownloadPath = getDownloadPath();
         String remoteDownloadPath = "C:\\Users\\optiim\\Downloads\\";
         System.out.println(remoteDownloadPath);
 

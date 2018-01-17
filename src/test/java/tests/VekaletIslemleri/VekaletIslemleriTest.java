@@ -553,13 +553,13 @@ public class VekaletIslemleriTest extends BaseTest {
 //
 //        evrakNo = gelenEvraklarPage.tablodanEvrakNoAl(1);
 
-        gelenEvraklarPage
-                .evrakNoyaGoreEvrakSec(evrakNO11)
-                .havaleYap()
-                .havaleYapKisiTreeSec(nameVV)
-                .vekeletAlanVerenTabloVekaletAlanveyaVerenSec(nameVA)
-                .havaleYapGonder()
-                .islemMesaji().basariliOlmali(basariMesaji);
+//        gelenEvraklarPage
+//                .evrakNoyaGoreEvrakSec(evrakNO11)
+//                .havaleYap()
+//                .havaleYapKisiTreeSec(nameVV)
+//                .vekeletAlanVerenTabloVekaletAlanveyaVerenSec(nameVA)
+//                .havaleYapGonder()
+//                .islemMesaji().basariliOlmali(basariMesaji);
         logout();
         login(usernameVV);
 
