@@ -72,7 +72,7 @@
     #Ilgi
         ilgiLabel:
             inside container 70px left
-            below hitap 24 to 28px
+            below hitap 24 to 30px
 
         ilgiDots:
             height 100% of ilgiLabel/height
@@ -103,8 +103,8 @@
 
     #Imzaci 1
         imzaci1MetinAlani:
-            inside container 92 to 98px right
-            below editor 24px
+            inside container 92 to 99px right
+            below editor 23 to 30px
 
         imzaci1Isim:
             width 100% of imzaci1MetinAlani/width
@@ -130,7 +130,7 @@
 
     #Imzaci 2
         imzaci2MetinAlani:
-            below olurYazisiTarih 12 to 15px
+            below olurYazisiTarih 12 to 16px
             centered horizontally on olurYazisiTarih
             centered horizontally inside container 2px
 
