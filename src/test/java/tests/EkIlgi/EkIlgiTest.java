@@ -35,7 +35,7 @@ public class EkIlgiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TS2199: Evrak oluşturmada Ek ekleme (50 MB üzeri dosya ekleme)")
+    @Test(enabled = false, description = "TS2199: Evrak oluşturmada Ek ekleme (50 MB üzeri dosya ekleme)")
     public void TS2199() {
 
 /*       pre. con.:
@@ -51,13 +51,13 @@ public class EkIlgiTest extends BaseTest {
         String dosyaAdiPPT = "TS2199.ppt";
         String dosyaAdiPPTX = "TS2199.pptx";
 
-        String pathPDF = getDocPath() + "TS2199.pdf";
-        String pathDOC = getDocPath() + "TS2199.doc";
-        String pathDOCX = getDocPath() + "TS2199.docx";
-        String pathXLS = getDocPath() + "TS2199.xls";
-        String pathXLSX = getDocPath() + "TS2199.xlsx";
-        String pathPPT = getDocPath() + "TS2199.ppt";
-        String pathPPTX = getDocPath() + "TS2199.pptx";
+        String pathPDF = getUploadPath() + "TS2199.pdf";
+        String pathDOC = getUploadPath() + "TS2199.doc";
+        String pathDOCX = getUploadPath() + "TS2199.docx";
+        String pathXLS = getUploadPath() + "TS2199.xls";
+        String pathXLSX = getUploadPath() + "TS2199.xlsx";
+        String pathPPT = getUploadPath() + "TS2199.ppt";
+        String pathPPTX = getUploadPath() + "TS2199.pptx";
 
         String ekMetniAciklama = " isimli dosya eklendi";
         String fizikselEkMetni = "Dosya eklendi " +getSysDate();
@@ -225,16 +225,16 @@ public class EkIlgiTest extends BaseTest {
         String ilisikDosya3Aciklama = "İlisik_Dosya3_"+getSysDate();
 
         String dosyaAdi3 = "TS2346_dosya3.pdf";
-        String pathDosya3 = getDocPath() + "TS2346_dosya3.pdf";
+        String pathDosya3 = getUploadPath() + "TS2346_dosya3.pdf";
 
 
         String ilisikDosya4Aciklama = "İlisik_Dosya4_"+getSysDate();
         String dosyaAdi4 = "TS2346_dosya4.pdf";
-        String pathDosya4 = getDocPath() + "TS2346_dosya4.pdf";
+        String pathDosya4 = getUploadPath() + "TS2346_dosya4.pdf";
 
         String ilisikDosya5Aciklama = "İlisik_Dosya5_"+getSysDate();
         String dosyaAdi5 = "TS2346_dosya5.pdf";
-        String pathDosya5 = getDocPath() + "TS2346_dosya5.pdf";
+        String pathDosya5 = getUploadPath() + "TS2346_dosya5.pdf";
 
         String basariMesaji = "İşlem başarılıdır!";
 
@@ -351,7 +351,7 @@ public class EkIlgiTest extends BaseTest {
         String fizikselEkAciklama = "Fiziksel_Ek_"+getSysDate();
 
         String dosyaAdi3 = "TS2348_dosya3.pdf";
-        String pathDosya3 = getDocPath() + "TS2348_dosya3.pdf";
+        String pathDosya3 = getUploadPath() + "TS2348_dosya3.pdf";
 
         String basariMesaji = "İşlem başarılıdır!";
 
@@ -464,5 +464,63 @@ public class EkIlgiTest extends BaseTest {
         taslakEvraklarPage
                 .openPage()
                 .evrakKontrolu(evrakKonusu);
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = false, description = "TS0956: Evrak oluşturmada ilgi ekleme")
+    public void TS0956() {
+
+        String evrakKonusu = "TS2348_EkIlgi_Senaryosu_"+getSysDate();
+
+        String ilgiDosya1Aciklama = "İlgi_Dosya1_"+getSysDate();
+        String ilgiDosya2Aciklama = "İlgi_Dosya2_"+getSysDate();
+        String ilgiDosya3Aciklama = "İlgi_Dosya3_"+getSysDate();
+
+        String dosyaAdi3 = "TS0956_dosya3.pdf";
+        String pathDosya3 = getUploadPath() + "TS0956_dosya3.pdf";
+
+        String basariMesaji = "İşlem başarılıdır!";
+        login(TestData.username4, TestData.password4); //mbozdemir
+
+        //Taslaklar listesinde kontrol için unique konu giriliyor.
+        evrakOlusturPage
+                .openPage();
+                //.bilgilerTabiAc()
+                //.konuDoldur(evrakKonusu);
+
+        evrakOlusturPage
+                .ilgileriTabAc()
+
+                //Dosya ekle tabı
+                //ilgi1
+                .ilgileriIlgiMetniDoldur(ilgiDosya1Aciklama)
+                .taramaHavuzundanEkle()
+                .evrakTuruSec("İlgi")
+                .taramaHavuzuSorgula()
+                .birinciEvrakSec(true)
+                .dosya1AciklamaDoldur(ilgiDosya1Aciklama)
+                .taramaHavuzuTamam()
+                .listelenenIlgilerdeDosyanınGeldigiKontrolu(ilgiDosya1Aciklama, "Açıklama")
+                .listelenenIlgilerdeIndırButonuKontrol(ilgiDosya1Aciklama)
+
+                //ilgi2
+                .ilgileriIlgiMetniDoldur(ilgiDosya2Aciklama)
+                .taramaHavuzundanEkle()
+                .evrakTuruSec("İlgi")
+                .taramaHavuzuSorgula()
+                .ikinciEvrakSec(true)
+                .dosya2AciklamaDoldur(ilgiDosya2Aciklama)
+                .taramaHavuzuTamam()
+                .listelenenIlgilerdeDosyanınGeldigiKontrolu(ilgiDosya2Aciklama, "Açıklama")
+                .listelenenIlgilerdeIndırButonuKontrol(ilgiDosya2Aciklama);
+
+/*                //ilgi3
+                .ilgileriIlgiMetniDoldur(ilgiDosya3Aciklama)
+                .dosyaEkle(pathDosya3, dosyaAdi3)
+                .dosyaYukleneneKadarBekle()
+                .ekleriEklenenDosyaAdiKontrol(dosyaAdi3)
+                .ekleriEkle()
+                .listelenenEklereDosyanınGeldigiKontrolu(dosyaAdi3, "Dosya Adı")
+                .listelenenEklerdeIndırButonuKontrol(dosyaAdi3)*/
     }
 }

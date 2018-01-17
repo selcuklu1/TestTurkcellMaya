@@ -35,7 +35,7 @@ public class TextEditor extends MainPage {
         this.container = container;
     }
 
-    private SelenideElement editor() {
+    public SelenideElement editor() {
         SelenideElement frame = container.$(".cke_wysiwyg_frame");
         new WebDriverWait(WebDriverRunner.getWebDriver(), Configuration.timeout / 1000, Configuration.pollingInterval)
                 .until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frame));

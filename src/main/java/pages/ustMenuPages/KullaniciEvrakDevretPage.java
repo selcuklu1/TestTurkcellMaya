@@ -156,7 +156,7 @@ public class KullaniciEvrakDevretPage extends MainPage {
         return this;
     }
 
-    @Step("")
+    @Step("Tabların kontrolleri")
     public KullaniciEvrakDevretPage tabloAlanKontrolleri() {
         String tabText = "";
 

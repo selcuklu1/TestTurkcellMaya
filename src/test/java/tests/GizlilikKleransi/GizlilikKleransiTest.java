@@ -225,6 +225,7 @@ public class GizlilikKleransiTest extends BaseTest {
                 .filtrelerdeAlaniDoldur("Bitiş Tarihi", evrakTarihi, Keys.ENTER);
         gelenEvraklarPage.gizlilikRaporSec(konuKodu, geldigiYer, evrakTarihi, no)
                 .havaleYap()
+                .havaleBilgilerininGirilecegiAlanlarınGeldigiGorme()
                 .havaleYapKisiDoldur(kisi)
                 .islemMesaji().beklenenMesaj(uyariMesaj1);
 
@@ -256,6 +257,7 @@ public class GizlilikKleransiTest extends BaseTest {
                 .filtrelerdeAlaniDoldur("Bitiş Tarihi", evrakTarihi, Keys.ENTER);
         gelenEvraklarPage.gizlilikRaporSec(konuKodu, geldigiYer, evrakTarihi, no)
                 .paylas()
+                .stepmethod()
                 .paylasKisiSec(kisi)
                 .paylasanAciklamaDoldur(aciklama)
                 .paylasIcPaylas()
@@ -434,11 +436,11 @@ public class GizlilikKleransiTest extends BaseTest {
                 .filter().filtrelerAc()
                 .filtrelerdeAlaniDoldur("Tarih", evrakTarihi, Keys.ENTER);
         teslimAlinmayiBekleyenlerPage.evrakSec(konuKoduRandom, kurum, evrakTarihi, evrakSayiSag)
-                .islemMesaji().beklenenMesaj(uyariMesaj1);
+                .islemMesaji().dikkatOlmali(uyariMesaj1);
 
         teslimAlinmayiBekleyenlerPage
                 .evrakSecIcerikGoster(konuKoduRandom, kurum, evrakTarihi, evrakSayiSag)
-                .islemMesaji().beklenenMesaj(uyariMesaj1);
+                .islemMesaji().dikkatOlmali(uyariMesaj1);
 
         teslimAlinmayiBekleyenlerPage
                 .evrakSecTeslimAl(konuKoduRandom, kurum, evrakTarihi, evrakSayiSag, true)
@@ -860,7 +862,7 @@ public class GizlilikKleransiTest extends BaseTest {
                 .bilgilerTabiAc()
                 .gizlilikDerecesiSec("Özel")
                 .kaydet()
-                .confirmDialog().button("Evet").click();
+                .confirmDialog().confirmEvetTikla();
         evrakOlusturPage
                 .bilgilerTabiAc()
                 .iadeEtbutonKontol()

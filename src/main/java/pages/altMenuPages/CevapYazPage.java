@@ -11,6 +11,8 @@ import pages.pageComponents.belgenetElements.BelgenetElement;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
+import static com.codeborne.selenide.Selenide.$x;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 public class CevapYazPage extends MainPage {
@@ -134,6 +136,8 @@ public class CevapYazPage extends MainPage {
     SelenideElement btnGonder = $(By.id("windowCevapEvrakForm:gonderButton"));
     SelenideElement btnEvetPopup = $(By.cssSelector("div[class*='ui-confirm-dialog'] button[id='kaydetEvetButton']"));
     SelenideElement btnHayirPopup = $(By.cssSelector("div[class*='ui-confirm-dialog'] button[id='kaydetHayirButton']"));
+
+    SelenideElement btnKaydet = $x("//span[contains(@class, 'kaydet')]/..");
 
     @Step("Sayfa açıldı mı kontrolü")
     public CevapYazPage sayfaAcilmali() {
@@ -587,5 +591,17 @@ public class CevapYazPage extends MainPage {
         }
         return this;
 
+    }
+
+    @Step("Kaydet butonuna tıkla")
+    public CevapYazPage kaydet(){
+        btnKaydet.click();
+        return this;
+    }
+
+    @Step("Kayıt Popup alanında Evet butonuna tıkla.")
+    public CevapYazPage evrakKayitPopupEvet(){
+        $$(By.id("kaydetConfirmForm:kaydetEvetButton")).last().click();
+        return this;
     }
 }

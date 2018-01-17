@@ -714,7 +714,8 @@ public class EvrakPaylasmaTest extends BaseTest {
         cevapYazPage
                 .konuDoldur(konu + "Cevap")
                 .kaldirilacakKlasorlerDoldur("Diğer")
-                .evrakKaydet();
+                .kaydet()
+                .evrakKayitPopupEvet();
 
         String evrakAciklamasi = "Cevap evrakını paylaşma NOT 1";
         String evrakiPaylasan = "Mehmet BOZDEMİR";

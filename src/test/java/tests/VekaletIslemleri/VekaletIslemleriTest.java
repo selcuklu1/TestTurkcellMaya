@@ -491,9 +491,8 @@ public class VekaletIslemleriTest extends BaseTest {
                 .vekeletAlanVerenTabloVekaletAlanveyaVerenSec(nameVV)
                 .kullanciListesiSec(kullanici)//ikinci gelen seçilmeli
                 .confirmDialog().dialogMessage().shouldHave(text(mesaj));
-        gelenEvraklarPage.confirmDialog().button("Evet").click();
-//        gelenEvraklarPage.islemMesaji().basariliOlmali(basariMesaji);
 
+        gelenEvraklarPage.confirmDialog().confirmEvetTikla();
         gelenEvraklarPage
                 .havaleYapGonder()
                 .islemMesaji().basariliOlmali(basariMesaji);

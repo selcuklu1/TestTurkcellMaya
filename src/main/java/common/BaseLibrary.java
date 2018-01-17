@@ -34,14 +34,14 @@ import static java.lang.Thread.currentThread;
 import static org.apache.commons.io.FileUtils.deleteDirectory;
 import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfElementLocated;
 
-public class BaseLibrary extends ElementsContainer {
+public class BaseLibrary extends ElementsContainer{
 
 
     protected static final Logger log = Logger.getLogger(BaseLibrary.class.getName());
     protected static String winHandleBefore = null;
-    private static String docPath = null;
+    protected static String uploadPath = null;
     private static String browserName = null;
-    private String downoladPath = null;
+    protected String downloadPath = null;
     private long waitForLoading = 20;
     private int doWaitLoading = 0;
     private boolean doNotWaitLoading = false;
@@ -924,45 +924,47 @@ public class BaseLibrary extends ElementsContainer {
         System.out.println("Operation System: " + operationSystem.name());
 
         if (operationSystem.is(Platform.WINDOWS)) {
-            docPath = "C:\\TestAutomation\\BelgenetFTA\\documents\\";
+            uploadPath = "C:\\TestAutomation\\BelgenetFTA\\documents\\";
         } else if (operationSystem.is(Platform.XP)) {
-            docPath = "C:\\TestAutomation\\BelgenetFTA\\documents\\";
+            uploadPath = "C:\\TestAutomation\\BelgenetFTA\\documents\\";
         } else if (operationSystem.is(Platform.LINUX)) {
             //TODO: Linux pathi verilecek
-            docPath = System.getProperty("user.name") + "/BelgenetFTA/documents";
+            uploadPath = System.getProperty("user.name") + "/BelgenetFTA/documents";
         } else if (operationSystem.is(Platform.MAC)) {
             //TODO: Mac pathi verilecek
-            docPath = System.getProperty("user.name") + "/BelgenetFTA/documents";
+            uploadPath = System.getProperty("user.name") + "/BelgenetFTA/documents";
         }
-        System.out.println("File path: " + docPath);
-        return docPath;
+        System.out.println("File path: " + uploadPath);
+        return uploadPath;
     }
 
-    public String getDocPath() {
+    public String getUploadPath() {
         Capabilities caps = getCapabilities();
         Platform operationSystem = caps.getPlatform();
 
-        String path = "";
+        //String uploadPath = "";
         if (operationSystem.is(Platform.WINDOWS) || operationSystem.is(Platform.XP))
-            path = TestData.docPathWindows;
+            uploadPath = TestData.docPathWindows;
         else
-            path = TestData.docPathLinux;
+            uploadPath = TestData.docPathLinux;
 
-        log.info("Documents path: " + path);
-        return path;
+        log.info("Upload file path: " + uploadPath);
+
+        return uploadPath;
     }
 
     public String getDownloadPath() {
         Capabilities caps = getCapabilities();
         Platform operationSystem = caps.getPlatform();
-        String path = "";
+        //String downloadPath = "";
         if (operationSystem.is(Platform.WINDOWS) || operationSystem.is(Platform.XP))
-            path = TestData.docDownloadPathWindows;
+            downloadPath = TestData.docDownloadPathWindows;
         else
-            path = TestData.docDownloadPathLinux;
+            downloadPath = TestData.docDownloadPathLinux;
 
-        log.info("Downloads path: " + path);
-        return path;
+        log.info("Downloads file path: " + downloadPath);
+
+        return downloadPath;
     }
 
     /**

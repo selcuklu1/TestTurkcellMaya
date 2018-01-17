@@ -1,5 +1,6 @@
 package tests.BirimIcerikSablonu;
 
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import common.BaseTest;
 import data.User;
@@ -22,6 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.Selenide.$;
 
 
 /**
@@ -42,6 +44,7 @@ public class BirimIcerikSablonuTest extends BaseTest {
 
     static String ALT_BIRIMLER_GORSUN = "ALT BİRİMLER GÖRSÜN";
     static String ALT_BIRIMLER_GORMESIN = "ALT BİRİMLER GÖRMESİN";
+    String evrakTipi = "Giden Evrak";
 
     String onizlemeText = "T.C.\nGENEL MÜDÜRLÜK MAKAMI\nBİLİŞİM HİZMETLERİ GENEL MÜDÜR YARDIMCISI\nYAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ\n";
 
@@ -152,7 +155,7 @@ public class BirimIcerikSablonuTest extends BaseTest {
                 .sablonAdiDoldur(sablonAdi1085)
                 .kullanilacakBirimiSec(user1.getBirimAdi(), exactText(user1.getBirimAdi()))
                 .altBirimlerGorsunMuSec(ALT_BIRIMLER_GORMESIN)
-                .evrakTipiSec("Giden Evrak");
+                .evrakTipiSec(evrakTipi);
 
         editorText1085 = birimIcerikSablonlarPage.getEditor()
                 .type(sablonAdi1085).type(Keys.ENTER)
@@ -165,7 +168,7 @@ public class BirimIcerikSablonuTest extends BaseTest {
                 .islemMesaji().basariliOlmali();
 
         birimIcerikSablonlarPage.detayButonaTikla(birimIcerikSablonlarPage.sablonuBul(sablonAdi1085));
-        birimIcerikSablonlarPage.sablonBilgileriKontrolu(sablonAdi1085, user1.getBirimAdi(), ALT_BIRIMLER_GORMESIN, editorText1085);
+        birimIcerikSablonlarPage.sablonBilgileriKontrolu(sablonAdi1085, user1.getBirimAdi(), ALT_BIRIMLER_GORMESIN, editorText1085, evrakTipi);
     }
 
     @Test(description = "TS1085: Alt Biriminde görünmemeli", dependsOnMethods = {"TS1085"}, enabled = true, priority = 6)
@@ -214,7 +217,7 @@ public class BirimIcerikSablonuTest extends BaseTest {
         String sablon = birimIcerikSablonlarPage.sablonAdiAl(0);
 
         birimIcerikSablonlarPage.detayButonaTikla(birimIcerikSablonlarPage.sablonuBul(sablonAdi1085))
-                .sablonBilgileriKontrolu(sablonAdi1085, user1.getBirimAdi(), ALT_BIRIMLER_GORMESIN, editorText1085)
+                .sablonBilgileriKontrolu(sablonAdi1085, user1.getBirimAdi(), ALT_BIRIMLER_GORMESIN, editorText1085, evrakTipi)
                 .sablonAdiDoldur(sablon)
                 .kaydet().islemMesaji().dikkatOlmali("Daha önce tanımlanmış şablon ismi ile aynı isimli şablon tanımlanamaz!");
 
@@ -454,7 +457,7 @@ public class BirimIcerikSablonuTest extends BaseTest {
                 .geregiSecimTipiSec("Birim")
                 .geregiSec("AFYON VALİLİĞİ")
                 .onayAkisiEkleButonaTikla()
-                .kullanicilariSec(user3.getFullname())
+                .anlikOnayAkisKullanicilariSec(user3.getFullname())
 //                .onayAkisiKullaniciTipiSec("user1 TEST [Ağ (Network) Uzman Yardımcısı]", "Paraflama")
                 .onayAkisiKullanicininTipiSec(user1.getFullname(), "Paraflama")
                 .onayAkisiKullanicininTipiSec(user3.getFullname(), "İmzalama")

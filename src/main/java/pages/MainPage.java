@@ -12,16 +12,26 @@ import org.testng.Assert;
 import pages.pageComponents.*;
 
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
+import static com.codeborne.selenide.Condition.enabled;
 import static com.codeborne.selenide.Condition.matchText;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
 
 public class MainPage extends BaseLibrary {
-    private SolMenu solMenu = new SolMenu();
-    private UstMenu ustMenu = new UstMenu();
-//    private IslemMesajlari islemMesajlari = new IslemMesajlari();
-//    private UserMenu userMenu = new UserMenu();
-//    private Filtreler filter = new Filtreler();
+    SelenideElement mainPageLeftContainer = $("#mainInboxForm");
+    SelenideElement mainPageLeftContainerDataTable = $("#mainInboxForm\\:inboxDataTable");
+
+    public SelenideElement getMainPageLeftContainer() {
+        return mainPageLeftContainer;
+    }
+
+    public SelenideElement getMainPageLeftContainerDataTable() {
+        return mainPageLeftContainerDataTable;
+    }
+
+    public SearchTable searchTable(){
+        return new SearchTable(mainPageLeftContainerDataTable);
+    }
 
     public Filtreler filter() {
         return new Filtreler();
@@ -33,6 +43,10 @@ public class MainPage extends BaseLibrary {
 
     public void solMenu(Enum solMenuData, boolean... useJS) {
         new SolMenu().openMenu(solMenuData, useJS);
+    }
+
+    public MainPage solMenu(Enum solMenuData) {
+        return new SolMenu().openMenu(solMenuData);
     }
 
     public IslemMesajlari islemMesaji() {
@@ -106,68 +120,6 @@ public class MainPage extends BaseLibrary {
         return this;
     }
 
-    public MainPage altMenuTooltipKontrol(String altMenuAd) {
-
-        String tooltip = "";
-        switch (altMenuAd) {
-            case "Evrak Oluştur":
-                $(By.id("topMenuForm2:ust:0:ust:0:ust:0:ust")).hover();
-                tooltip = $(By.id("tiptip_content")).innerText();
-                System.out.println(tooltip);
-                Assert.assertEquals(tooltip, "(Shift + E)");
-                break;
-            case "Giden Evrak Kayıt":
-                $(By.id("topMenuForm2:ust:0:ust:0:ust:2:ust")).hover();
-                tooltip = $(By.id("tiptip_content")).innerText();
-                System.out.println(tooltip);
-                Assert.assertEquals(tooltip, "(Shift + I)");
-                break;
-            case "Gelen Evrak Kayıt":
-                $(By.id("topMenuForm2:ust:0:ust:0:ust:3:ust")).hover();
-                tooltip = $(By.id("tiptip_content")).innerText();
-                System.out.println(tooltip);
-                Assert.assertEquals(tooltip, "(Shift + G)");
-                break;
-            case "Evrak Arama":
-                $(By.id("topMenuForm2:ust:0:ust:1:ust:1:ust")).hover();
-                tooltip = $(By.id("tiptip_content")).innerText();
-                System.out.println(tooltip);
-                Assert.assertEquals(tooltip, "(Shift + A)");
-                break;
-            case "Karar Yazısı Oluştur":
-                $(By.id("topMenuForm2:ust:0:ust:0:ust:4:ust")).hover();
-                tooltip = $(By.id("tiptip_content")).innerText();
-                System.out.println(tooltip);
-                Assert.assertEquals(tooltip, "(Shift + K)");
-                break;
-            case "Kullanıcı Yönetimi":
-                $(By.id("topMenuForm2:ust:3:ust:0:ust:1:ust")).hover();
-                tooltip = $(By.id("tiptip_content")).innerText();
-                System.out.println(tooltip);
-                Assert.assertEquals(tooltip, "(Shift + U)");
-                break;
-            case "Gelen Evrak Raporu":
-                $(By.id("topMenuForm2:ust:6:ust:0:ust:9:ust")).hover();
-                tooltip = $(By.id("tiptip_content")).innerText();
-                System.out.println(tooltip);
-                Assert.assertEquals(tooltip, "(Shift + N)");
-                break;
-            case "Personel ve Açık Evrak İstatistiği":
-                $(By.id("topMenuForm2:ust:6:ust:0:ust:10:ust")).hover();
-                tooltip = $(By.id("tiptip_content")).innerText();
-                System.out.println(tooltip);
-                Assert.assertEquals(tooltip, "(Shift + P)");
-                break;
-            case "Olur Yazısı Oluştur":
-                $(By.id("topMenuForm2:ust:0:ust:0:ust:1:ust")).hover();
-                tooltip = $(By.id("tiptip_content")).innerText();
-                System.out.println(tooltip);
-                Assert.assertEquals(tooltip, "(Shift + O)");
-                break;
-        }
-        return this;
-    }
-
     @Step("Vekalet var uyarı popup")
     public MainPage vekaletVarUyariPopUp() {
         SelenideElement popUpAktifVekaletUyarı = $(By.id("aktifVekaletinizVarUyariMesajiDialog"));
@@ -216,104 +168,50 @@ public class MainPage extends BaseLibrary {
         return $$("div[id^='window'][id$='Dialog'] > div[class~='ui-dialog-titlebar'] > span[class='ui-dialog-title']");
     }
 
-    /*@Step("\"{tabName}\" tabı aç")
-    public MainPage openTab1(SelenideElement page, String tabName) {
-        By locator = By.xpath("descendant::td[contains(@class,'tabMenuContainer')" +
-                " and descendant::span[contains(@class,'tabMenu')" +
-                " and text()='" + tabName + "']]//button");
-        page.$(locator).click();
-        return this;
-    }*/
+    public EvrakPageButtons evrakPageButtons () {
+        return new EvrakPageButtons();
+    }
+
+    @Step("Footer'da açılan sayfa butonu bul")
+    public SelenideElement getFooterPageButton(String pageTitle){
+        return $x("//div[@id='mainTaskBar']//div[@type='button']/span[contains(.,'" + pageTitle +"')]");
+    }
 
     @Step("Parafla")
     public MainPage parafla() {
-        SelenideElement paraflaButon = $x("//*[text()='Parafla']/ancestor::tbody[1]//button");
+        new EvrakPageButtons().evrakParafla();
+        /*SelenideElement paraflaButon = $x("//*[text()='Parafla']/ancestor::tbody[1]//button");
         paraflaButon.click();
         sImzalaRadioSec();
-        evrakImzaOnay();
+        evrakImzaOnay();*/
         return this;
-    }
-
-    @Step("İmzala butonu ara")
-    public SelenideElement imzalaButton() {
-        return $x("//*[text()='İmzala']/ancestor::tbody[1]//button");
     }
 
     @Step("İmzala butona tıkla")
     public MainPage imzalaButonaTikla() {
-        imzalaButton().click();
-        return this;
-    }
-
-    @Step("Parafla butonu ara")
-    public SelenideElement paraflaButton() {
-        return $x("//*[text()='Parafla']/ancestor::tbody[1]//button");
-    }
-
-    @Step("Parafla butona tıkla")
-    public MainPage paraflaButonaTikla() {
-        paraflaButton().click();
+        new EvrakPageButtons().imzalaButonaTikla();
+        //imzalaButton().click();
         return this;
     }
 
     @Step("Parafla")
     public MainPage evrakParafla() {
-        paraflaButonaTikla();
+        new EvrakPageButtons().evrakParafla();
+        /*paraflaButonaTikla();
         sImzalaRadioSec();
 //        clickJs($("#imzalaForm\\:imzalaRadio").find(By.tagName("input")));
-        evrakImzaOnay();
-        return this;
-    }
-    @Step("s-İmzla radio butonu ara")
-    public SelenideElement sImzalaRadio() {
-        return $("#imzalaForm\\:imzalaRadio .ui-radiobutton-box");
-    }
-
-    @Step("s-İmzla seç")
-    public MainPage sImzalaRadioSec() {
-        sImzalaRadio().shouldBe(visible).click();
+        evrakImzaOnay();*/
         return this;
     }
 
     @Step("İmzala")
     public MainPage evrakImzala() {
-        imzalaButonaTikla();
+        new EvrakPageButtons().evrakImzala();
+        /*imzalaButonaTikla();
         sImzalaRadioSec();
 //        clickJs($("#imzalaForm\\:imzalaRadio").find(By.tagName("input")));
-        evrakImzaOnay();
+        evrakImzaOnay();*/
         return this;
     }
-
-    @Step("Evrak imza onay")
-    public MainPage evrakImzaOnay() {
-        for (int i = 0; i < Configuration.timeout / 1000; i++) {
-            sleep(1000);
-            if ($("#imzalaForm\\:sayisalImzaConfirmDialogOpener").is(visible)) {
-                $("#imzalaForm\\:sayisalImzaConfirmDialogOpener").click();
-                clickJs($("#imzalaForm\\:sayisalImzaConfirmForm\\:sayisalImzaEvetButton"));
-                break;
-            } else {
-                $("#imzalaForm\\:imzalaButton").click();
-                break;
-            }
-        }
-        return this;
-    }
-
-    @Step("Iade et")
-    public MainPage evrakIadeEt(String iadeNotu) {
-        $("button .iadeEt").click();
-        $("#inboxItemInfoForm\\:notTextArea_id").setValue("İade notu");
-        $("#inboxItemInfoForm\\:iadeEtButton_id").click();
-        return this;
-    }
-
-    @Step("Kaydet")
-    public MainPage evrakKaydet() {
-        $("button .kaydet").click();
-        $$(By.id("kaydetConfirmForm:kaydetEvetButton")).last().click();
-        return this;
-    }
-
 
 }
