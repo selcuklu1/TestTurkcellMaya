@@ -429,9 +429,17 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
-    @Step("Havale Yap")
+    @Step("Havale Yap tıklanır")
     public GelenEvraklarPage havaleYap() {
         btnHavaleYap.click();
+        return this;
+    }
+
+    @Step("Havale bilgilerinin girileceği alanların geldiği görülür.")
+    public GelenEvraklarPage havaleBilgilerininGirilecegiAlanlarınGeldigiGorme(){
+    boolean durum = $$(By.id("mainPreviewForm:havaleDagitimLovPanel")).size()==1;
+    Assert.assertEquals(durum , true);
+    takeScreenshot();
         return this;
     }
 
@@ -513,6 +521,14 @@ public class GelenEvraklarPage extends MainPage {
 
     public GelenEvraklarPage paylas() {
         btnPaylas.click();
+        return this;
+    }
+
+    @Step("Kişi ve açıklama bilgilerinin girileceği alanların geldiği görülür.")
+    public GelenEvraklarPage stepmethod(){
+        boolean durum = $$(By.id("mainPreviewForm:evrakPaylasFieldsetId")).size()==1;
+        Assert.assertEquals(durum,true);
+        takeScreenshot();
         return this;
     }
 
