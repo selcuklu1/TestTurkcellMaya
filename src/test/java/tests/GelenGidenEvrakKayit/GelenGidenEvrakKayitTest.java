@@ -1,7 +1,6 @@
 package tests.GelenGidenEvrakKayit;
 
 import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.WebDriverRunner;
 import common.BaseTest;
 import data.User;
 import io.qameta.allure.Severity;

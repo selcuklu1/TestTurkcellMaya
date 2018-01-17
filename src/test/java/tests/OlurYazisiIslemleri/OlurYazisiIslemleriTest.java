@@ -2,12 +2,12 @@ package tests.OlurYazisiIslemleri;
 
 import common.BaseTest;
 import data.User;
+import galen.GalenControl;
 import io.qameta.allure.Link;
 import io.qameta.allure.Step;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.MainPage;
-import galen.GalenControl;
 import pages.newPages.OlurYazisiOlusturPage;
 import pages.pageComponents.tabs.AltTabs;
 import pages.pageComponents.tabs.BilgilerTab;
@@ -20,8 +20,8 @@ import pages.pageData.alanlar.OnayKullaniciTipi;
 import java.io.IOException;
 import java.util.HashMap;
 
-import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Selenide.page;
+import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.sleep;
 
 /**

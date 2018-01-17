@@ -16,7 +16,7 @@ import pages.pageData.alanlar.*;
 import java.util.Map;
 
 import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.$;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 /**

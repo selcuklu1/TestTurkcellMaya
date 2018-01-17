@@ -1,20 +1,20 @@
 package pages.solMenuPages;
 
-import com.codeborne.selenide.*;
-import com.codeborne.selenide.commands.PressEnter;
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
-import org.apache.xmlbeans.impl.xb.xsdschema.All;
 import org.openqa.selenium.*;
-import org.openqa.selenium.support.ui.Sleeper;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.security.Key;
-import java.sql.Driver;
+
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;

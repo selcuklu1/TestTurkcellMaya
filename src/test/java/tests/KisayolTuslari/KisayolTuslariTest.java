@@ -1,9 +1,7 @@
 package tests.KisayolTuslari;
 
-import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
-import com.codeborne.selenide.WebDriverRunner;
 import common.BaseTest;
 import data.User;
 import io.qameta.allure.Severity;
@@ -14,21 +12,16 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pages.MainPage;
 import pages.newPages.EvrakOlusturPage;
 import pages.newPages.OlurYazisiOlusturPage;
 import pages.pageComponents.EvrakPageButtons;
-import pages.pageComponents.TextEditor;
-import pages.pageComponents.UstMenu;
 import pages.pageComponents.tabs.BilgilerTab;
 import pages.pageComponents.tabs.EditorTab;
-import pages.pageData.UstMenuData;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$x;
 import static com.codeborne.selenide.Selenide.sleep;
 import static pages.pageData.UstMenuData.*;
 //import pages.ustMenuPages.EvrakOlusturPage;

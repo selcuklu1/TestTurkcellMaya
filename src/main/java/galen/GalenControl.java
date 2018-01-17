@@ -13,7 +13,10 @@ import org.openqa.selenium.Dimension;
 import org.testng.Assert;
 
 import java.io.*;
-import java.util.*;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Yazan: Ilyas Bayraktar

@@ -1,7 +1,5 @@
 package tests.HitaptaBuyukKucukHarf;
 
-import com.codeborne.selenide.CollectionCondition;
-import com.codeborne.selenide.Condition;
 import common.BaseTest;
 import data.User;
 import io.qameta.allure.Severity;

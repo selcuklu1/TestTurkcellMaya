@@ -4,8 +4,6 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import pages.MainPage;
-import pages.newPages.OlurYazisiOlusturPage;
-import pages.pageComponents.Filtreler;
 import pages.pageComponents.SearchFiltreleme;
 import pages.pageComponents.SearchTable;
 import pages.pageComponents.UstMenuPageHeader;
@@ -14,7 +12,6 @@ import pages.pageData.UstMenuData;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
 
 /**
  * Yazan: Ilyas Bayraktar
