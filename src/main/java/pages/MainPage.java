@@ -311,7 +311,7 @@ public class MainPage extends BaseLibrary {
     @Step("Kaydet")
     public MainPage evrakKaydet() {
         $("button .kaydet").click();
-        $("#kaydetConfirmForm\\:kaydetEvetButton").click();
+        $$(By.id("kaydetConfirmForm:kaydetEvetButton")).last().click();
         return this;
     }
 
