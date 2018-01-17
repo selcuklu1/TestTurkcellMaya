@@ -285,9 +285,9 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("Üst yazi \"{path}\" ekle")
     public GelenEvrakKayitPage evrakBilgileriUstYaziEkle(String path) {
-        //uploadFile(ustYazi, path);
-        File file = new File(path);
-        ustYazi.uploadFile(file);
+        uploadFile(ustYazi, path);
+        /*File file = new File(path);
+        ustYazi.uploadFile(file);*/
         //ustYaziUploadFile(path);
         return this;
     }
