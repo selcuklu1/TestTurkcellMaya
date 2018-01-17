@@ -1,8 +1,10 @@
 package tests.EvrakPaylasma;
 
+import com.codeborne.selenide.Condition;
 import common.BaseTest;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import pages.MainPage;
 import pages.altMenuPages.CevapYazPage;
 import pages.solMenuPages.*;
 import pages.ustMenuPages.EvrakOlusturPage;
@@ -30,6 +32,7 @@ public class EvrakPaylasmaTest extends BaseTest {
     GelenEvraklarPage gelenEvraklarPage;
     ImzaladiklarimPage imzaladiklarimPage;
     SistemLoglariPage sistemLoglariPage;
+    MainPage mainPage;
 
     @BeforeMethod
     public void loginBeforeTests() {
@@ -44,6 +47,7 @@ public class EvrakPaylasmaTest extends BaseTest {
         gelenEvraklarPage = new GelenEvraklarPage();
         imzaladiklarimPage = new ImzaladiklarimPage();
         sistemLoglariPage = new SistemLoglariPage();
+        mainPage = new MainPage();
     }
 
     @Test(enabled = true, description = "TS1881 : Evrak paylaşımını durdurma")
@@ -635,8 +639,10 @@ public class EvrakPaylasmaTest extends BaseTest {
 
         login(username3, password3);
 
+        mainPage
+                .birimSec(Condition.text(birim));
+
         benimlePaylasilanlarPage
-                .birimSec(birim)
                 .openPage()
                 .evrakSec(kisi, evrakTarihi, konuKoduRandom)
                 .evrakOnizlemeTabSec("Evrak Notları")
@@ -654,8 +660,9 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .evrakSec()
                 .paylasButonGelmedigiGorme("Paylaş");
 
-        benimlePaylasilanlarPage
-                .birimSec(anaBirim);
+        mainPage
+                .birimSec(Condition.text(anaBirim));
+
     }
 
     @Test(enabled = true, description = "TS2195 : Cevap evrakını paylaşma")

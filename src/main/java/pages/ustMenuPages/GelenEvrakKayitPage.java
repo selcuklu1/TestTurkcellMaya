@@ -34,6 +34,7 @@ public class GelenEvrakKayitPage extends MainPage {
     //SelenideElement cmbEvrakBilgileriListKisiKurum = $("[id$='kisiKurum']");
     //BelgenetElement cmbEvrakBilgileriListGeldigiKisi = comboLov(By.id("evrakBilgileriForm:evrakBilgileriList:9:geldigiGercekKisiLov:LovText"));
     BelgenetElement cmbGeldigiGercekKisi = comboLov("[id$='geldigiGercekKisiLov:LovText']");
+    BelgenetElement cmbGeldigiKisi = comboLov("[id$='geldigiKisiLov:LovText']");
     BelgenetElement cmbGeldigiTuzelKisi = comboLov("[id$='geldigiTuzelKisiLov:LovText']");
     By cmbGeldiğiGercekKisiBy = By.cssSelector("[id$='geldigiGercekKisiLov:LovText']");
     By cmbGeldiğiTuzelKisiBy = By.cssSelector("[id$='geldigiTuzelKisiLov:LovText']");
@@ -342,7 +343,18 @@ public class GelenEvrakKayitPage extends MainPage {
     @Step("Geldiği gerçek kişi alanı doldur: {geldigiKisi} | {description} ")
     public GelenEvrakKayitPage geldigiGercekKisiDoldur(String geldigiKisi, String description) {
 
-        cmbGeldigiGercekKisi.selectLov(geldigiKisi);
+        cmbGeldigiKisi.selectLov(geldigiKisi);
+
+        /*System.out.println("title: " + cmbGeldigiGercekKisi.lastSelectedLovTitleText());
+        System.out.println("detail: " + cmbGeldigiGercekKisi.lastSelectedLovDetailText());*/
+
+        return this;
+    }
+
+    @Step("Geldiği kullanıcı alanı doldur: {geldigiKisi} | {description} ")
+    public GelenEvrakKayitPage geldigiKullaniciDoldur(String kullanici, String description) {
+
+        cmbGeldigiGercekKisi.selectLov(kullanici);
 
         /*System.out.println("title: " + cmbGeldigiGercekKisi.lastSelectedLovTitleText());
         System.out.println("detail: " + cmbGeldigiGercekKisi.lastSelectedLovDetailText());*/
