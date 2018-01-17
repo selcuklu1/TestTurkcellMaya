@@ -1192,6 +1192,12 @@ public class GelenEvrakKayitPage extends MainPage {
         clickJs(btnTaramaHavuzuTamam);
         return this;
     }
+    
+    @Step("Gelen Evrak Kayıt sayfasında Kaydet butonuna tıkladıktan sonra beliren panelde Evet butonuna tıkla.")
+    public GelenEvrakKayitPage gelenEvrakKayitKaydetEvet(){
+        popUpEvet.click();
+        return this;
+    }
 
 
 }
