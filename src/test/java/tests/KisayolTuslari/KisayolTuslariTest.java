@@ -77,7 +77,7 @@ public class KisayolTuslariTest extends BaseTest {
         new EvrakOlusturPage().openPage();
 
         String sayfaAdi = EvrakIslemleri.GidenEvrakKayit.getName();
-        CharSequence kisayol = Keys.chord(Keys.LEFT_SHIFT, "ı");
+        CharSequence kisayol = Keys.chord(Keys.LEFT_SHIFT, "i");
 
         step1(sayfaAdi, kisayol);
         step2(sayfaAdi, kisayol);
