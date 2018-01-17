@@ -8,6 +8,7 @@ import com.galenframework.reports.HtmlReportBuilder;
 import com.galenframework.reports.model.LayoutReport;
 import common.BaseLibrary;
 import io.qameta.allure.Allure;
+import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
 import org.openqa.selenium.Dimension;
 import org.testng.Assert;
@@ -39,8 +40,10 @@ public class GalenControl extends BaseLibrary {
             Dimension browserSize = new Dimension(1280, 800);
             WebDriverRunner.getWebDriver().manage().window().setSize(browserSize);
 
+            waitForLoadingJS(WebDriverRunner.getWebDriver());
+
             new GalenPageDump(testName).dumpPage(WebDriverRunner.getWebDriver(),
-                    pageSpecPath + testName + "/" + testName + ".gspec",
+                    pageSpecPath + testName + "/" + testName + "_objects.spec",
                     dumpFolderPath);
 
             maximazeBrowser();
@@ -52,6 +55,7 @@ public class GalenControl extends BaseLibrary {
 
     @Step("\"{testName}\" görsel kontrol")
     public void galenLayoutControl(String testName) throws IOException {
+        Allure.addAttachment("Layout report link", "file:///Users/ilyas/WorkspaceJava/Git/BelgenetFTA/galenReports/TS0577/report.html");
 
         Dimension browserSize = new Dimension(1280, 800);
         WebDriverRunner.getWebDriver().manage().window().setSize(browserSize);
@@ -60,8 +64,49 @@ public class GalenControl extends BaseLibrary {
         // checkLayout function checks the layout and returns a LayoutReport
         // object
         LayoutReport layoutReport = Galen.checkLayout(WebDriverRunner.getWebDriver()
-                , pageSpecPath + testName + "/" + testName + ".gspec",
-                Arrays.asList("desktop"));
+                , pageSpecPath + testName + "/" + testName + "_controls.spec",
+                Arrays.asList());
+
+        // Create a tests list
+        List<GalenTestInfo> galenTests = new LinkedList<GalenTestInfo>();
+
+        // Create a GalenTestInfo object
+        GalenTestInfo galenTest = GalenTestInfo.fromString(testName + " layout");
+
+        // Get layoutReport and assign to test object
+        galenTest.getReport().layout(layoutReport, "Check " + testName + " layout");
+
+        // Add test object to the tests list
+        galenTests.add(galenTest);
+
+        // Create a htmlReportBuilder object
+        HtmlReportBuilder htmlReportBuilder = new HtmlReportBuilder();
+
+        // Create a report under /target folder based on tests list
+        htmlReportBuilder.build(galenTests, "galenReports/" + testName + "/");
+
+        // If layoutReport has errors Assert Fail
+        if (layoutReport.errors() > 0) {
+            //ExtentTestManager.getTest().log(LogStatus.FAIL, "Galen Layout test failed.");
+            Allure.addAttachment("Galen Layout test failed", String.valueOf(layoutReport.errors()));
+            System.out.println("Galen Layout test failed.");
+            Assert.fail("Layout test failed");
+        }
+
+        maximazeBrowser();
+    }
+
+    public void galenLayoutControl2(String testName) throws IOException {
+
+        Dimension browserSize = new Dimension(1280, 800);
+        WebDriverRunner.getWebDriver().manage().window().setSize(browserSize);
+
+        // Create a layoutReport object
+        // checkLayout function checks the layout and returns a LayoutReport
+        // object
+        LayoutReport layoutReport = Galen.checkLayout(WebDriverRunner.getWebDriver()
+                , pageSpecPath + testName + "/" + testName + ".spec",
+                Arrays.asList());
 
         // Create a tests list
         List<GalenTestInfo> galenTests = new LinkedList<GalenTestInfo>();
@@ -93,7 +138,7 @@ public class GalenControl extends BaseLibrary {
     }
 
     public void setTextValuesToGalenSpec(String testName, Map<String, String> params){
-        String filePath = pageSpecPath + testName + "/" + testName + "_temp.gspec";
+        String filePath = pageSpecPath + testName + "/" + testName + "_temp.spec";
         String specContent = getFileContent(filePath);
         for (Map.Entry<String,String> entry : params.entrySet()){
             specContent = specContent.replace("${" + entry.getKey() + "}", entry.getValue());
@@ -102,7 +147,7 @@ public class GalenControl extends BaseLibrary {
                     ", Value = " + entry.getValue());
         params.forEach((name,value)-> specContent.replace("${" + name + "}", value));*/
 
-        writeContentToFile(pageSpecPath + testName + "/"+ testName + ".gspec", specContent);
+        writeContentToFile(pageSpecPath + testName + "/"+ testName + "_objects.spec", specContent);
     }
 
     public void modifyFile(String filePath, String oldString, String newString) {

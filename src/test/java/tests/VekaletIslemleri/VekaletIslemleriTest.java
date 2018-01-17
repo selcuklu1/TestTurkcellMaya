@@ -470,7 +470,7 @@ public class VekaletIslemleriTest extends BaseTest {
                 .vekeletAlanVerenTabloVekaletAlanveyaVerenSec(vekaletVeren)
                 .kullanciListesiSecWithTitle(kullanici, title)//ikinci gelen seçilmeli
                 .confirmDialog().dialogMessage().shouldHave(text(mesaj));
-        gelenEvraklarPage.confirmDialog().button("Evet").click();
+        gelenEvraklarPage.confirmDialog().confirmEvetTikla();
         gelenEvraklarPage
                 .havaleYapGonder();
 //                .islemMesaji().basariliOlmali(basariMesaji);

@@ -6,6 +6,7 @@ import common.BaseLibrary;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import pages.MainPage;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -57,6 +58,25 @@ public class SolMenu extends BaseLibrary {
                 + "\nNavigationMenu metni: " + menuLink.getText());
     }
 
+    @Step("\"{solMenuData.groupText}\" -> \"{solMenuData.menuText}\" sol menu aç")
+    public MainPage openMenu(Enum solMenuData) {
+        String groupId;
+        String menuText;
+        try {
+            Method getGroupIdMethod = solMenuData.getClass().getMethod("getGroupId");
+            Method getMenuTextMethod = solMenuData.getClass().getMethod("getMenuText");
+            groupId = getGroupIdMethod.invoke(solMenuData).toString();
+            menuText = getMenuTextMethod.invoke(solMenuData).toString();
+
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
+            throw new RuntimeException("SolMenuData hatası: \n" + e.getMessage());
+        }
+
+        openMenu(groupId, menuText, true);
+
+        return new MainPage();
+    }
 
     //region Class init
     @Step("\"{menu.groupText}\" -> \"{menu.menuText}\" sol menu aç")

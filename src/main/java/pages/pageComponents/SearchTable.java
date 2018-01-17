@@ -5,8 +5,6 @@ import com.codeborne.selenide.impl.WebElementsCollectionWrapper;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NotFoundException;
-import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
@@ -243,6 +241,11 @@ public class SearchTable {
         boolean searchByColumn = (columnIndex > -1);
 
         ArrayList<WebElement> rows = new ArrayList<>();
+
+        //[data-ri] varsa o ana row.
+        if(parentElement.$$(rowCssLocator + "[data-ri]").size() > 0)
+            rowCssLocator = rowCssLocator + "[data-ri]";
+
         ElementsCollection collection = searchByColumn ? parentElement.$$(rowCssLocator + " " + columnCssLocator + ":nth-child(" + columnIndex + ")")
         :parentElement.$$(rowCssLocator);
 

@@ -26,6 +26,10 @@ public class EditorTab extends MainPage {
     final static String tabName = "Editör";
     protected SelenideElement page;
 
+    public EditorTab() {
+        this.page = $("html");
+    }
+
     public EditorTab(SelenideElement page) {
         this.page = page;
     }
