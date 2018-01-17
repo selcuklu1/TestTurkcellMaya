@@ -913,8 +913,8 @@ public class BaseLibrary extends ElementsContainer{
         return browserName;
     }
 
-    @Deprecated
-    private String setDocPath() {
+    //@Deprecated
+    public String setDocPath() {
 
         // Get Browser name and version.
         Capabilities caps = ((RemoteWebDriver) WebDriverRunner.getWebDriver()).getCapabilities();
