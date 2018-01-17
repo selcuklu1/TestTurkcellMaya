@@ -127,7 +127,7 @@ public class EvrakPageButtons extends MainPage {
     //region Kaydet ve Onaya Sun
     @Step("Kaydet ve Onaya Sun butonu bul")
     public SelenideElement getEvrakKaydetVeOnayaSun(){
-        return getButton("Kaydet ve Onaya Sun'");
+        return getButton("Kaydet ve Onaya Sun");
     }
 
     @Step("Kaydet ve Onaya Sun")
