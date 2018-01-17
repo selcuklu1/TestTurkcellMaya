@@ -20,6 +20,7 @@ import java.util.Date;
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
+import static com.codeborne.selenide.Selenide.sleep;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 public class KaydedilenGelenEvrakPage extends MainPage {
@@ -187,6 +188,7 @@ public class KaydedilenGelenEvrakPage extends MainPage {
     public KaydedilenGelenEvrakPage raporAlExcel(String remoteDownloadPath) throws IOException {
 
         deleteFile(remoteDownloadPath, "Rapor_");
+        sleep(3000);
         btnRaporAlExcel.click();
         islemMesaji().basariliOlmali();
         waitForLoadingJS(WebDriverRunner.getWebDriver(), 180);
@@ -205,6 +207,7 @@ public class KaydedilenGelenEvrakPage extends MainPage {
     @Step("Rapor al PDF")
     public KaydedilenGelenEvrakPage raporAlPdf(String remoteDownloadPath) throws IOException {
         deleteFile(remoteDownloadPath, "Rapor_");
+        sleep(3000);
         btnRaporAlPdf.click();
         islemMesaji().basariliOlmali();
         waitForLoadingJS(WebDriverRunner.getWebDriver(), 180);

@@ -744,6 +744,7 @@ public class BaseLibrary extends ElementsContainer{
     }
 
     //Bilgisayarda uzantısını verdiğiniz klasordeki dosyalardan gönderdiğiniz ismi içinde içeriyorsa o dosyayı siler.
+    @Step("Gönderilen klasöreki dosyayı siler. Path : \"{path}\" \n Filename : \"{fileName}\" ")
     public boolean deleteFile(String path, String fileName) throws IOException {
 
         boolean flag = false;
@@ -867,6 +868,7 @@ public class BaseLibrary extends ElementsContainer{
     }
 
     //Dosyanın bilgisayara inip inmediğini kontrol eder.
+    @Step("Gönderilen klaörede verilen dosyayı arama : Path :  \"{downloadPath}\" \n Filename : \"{fileName}\"  ")
     public boolean searchDownloadedFileWithName(String downloadPath, String fileName) {
         boolean flag = false;
         File dir = new File(downloadPath);

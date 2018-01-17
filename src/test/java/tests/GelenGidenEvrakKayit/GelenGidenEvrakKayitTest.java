@@ -233,7 +233,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         String evrakNO328 = "6497";
 //        String evrakNo = evrakNO321;
 //        String evrakNo1 = evrakNO328;
-//        String downloadPath = getDownloadPath();
+//        String remoteDownloadPath = getDownloadPath();
         String remoteDownloadPath = "C:\\Users\\optiim\\Downloads\\";
         System.out.println(remoteDownloadPath);
 
