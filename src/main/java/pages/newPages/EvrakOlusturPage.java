@@ -30,10 +30,14 @@ public class EvrakOlusturPage extends MainPage {
     public EvrakOlusturPage closePage(boolean save) {
         pageHeader().closePage();
         if (save)
-            confirmDialog().button("Evet").shouldBe(visible).click();
+            confirmDialog().confirmEvetTikla();
         else
-            confirmDialog().button("Hayır").shouldBe(visible).click();
+            confirmDialog().confirmHayirTikla();
         return this;
+    }
+
+    public SelenideElement getPage(){
+        return page;
     }
 
     public EvrakPageButtons pageButtons() {

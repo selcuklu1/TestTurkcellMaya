@@ -35,7 +35,7 @@ public class EkIlgiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TS2199: Evrak oluşturmada Ek ekleme (50 MB üzeri dosya ekleme)")
+    @Test(enabled = false, description = "TS2199: Evrak oluşturmada Ek ekleme (50 MB üzeri dosya ekleme)")
     public void TS2199() {
 
 /*       pre. con.:
@@ -464,5 +464,63 @@ public class EkIlgiTest extends BaseTest {
         taslakEvraklarPage
                 .openPage()
                 .evrakKontrolu(evrakKonusu);
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = false, description = "TS0956: Evrak oluşturmada ilgi ekleme")
+    public void TS0956() {
+
+        String evrakKonusu = "TS2348_EkIlgi_Senaryosu_"+getSysDate();
+
+        String ilgiDosya1Aciklama = "İlgi_Dosya1_"+getSysDate();
+        String ilgiDosya2Aciklama = "İlgi_Dosya2_"+getSysDate();
+        String ilgiDosya3Aciklama = "İlgi_Dosya3_"+getSysDate();
+
+        String dosyaAdi3 = "TS0956_dosya3.pdf";
+        String pathDosya3 = getDocPath() + "TS0956_dosya3.pdf";
+
+        String basariMesaji = "İşlem başarılıdır!";
+        login(TestData.username4, TestData.password4); //mbozdemir
+
+        //Taslaklar listesinde kontrol için unique konu giriliyor.
+        evrakOlusturPage
+                .openPage();
+                //.bilgilerTabiAc()
+                //.konuDoldur(evrakKonusu);
+
+        evrakOlusturPage
+                .ilgileriTabAc()
+
+                //Dosya ekle tabı
+                //ilgi1
+                .ilgileriIlgiMetniDoldur(ilgiDosya1Aciklama)
+                .taramaHavuzundanEkle()
+                .evrakTuruSec("İlgi")
+                .taramaHavuzuSorgula()
+                .birinciEvrakSec(true)
+                .dosya1AciklamaDoldur(ilgiDosya1Aciklama)
+                .taramaHavuzuTamam()
+                .listelenenIlgilerdeDosyanınGeldigiKontrolu(ilgiDosya1Aciklama, "Açıklama")
+                .listelenenIlgilerdeIndırButonuKontrol(ilgiDosya1Aciklama)
+
+                //ilgi2
+                .ilgileriIlgiMetniDoldur(ilgiDosya2Aciklama)
+                .taramaHavuzundanEkle()
+                .evrakTuruSec("İlgi")
+                .taramaHavuzuSorgula()
+                .ikinciEvrakSec(true)
+                .dosya2AciklamaDoldur(ilgiDosya2Aciklama)
+                .taramaHavuzuTamam()
+                .listelenenIlgilerdeDosyanınGeldigiKontrolu(ilgiDosya2Aciklama, "Açıklama")
+                .listelenenIlgilerdeIndırButonuKontrol(ilgiDosya2Aciklama);
+
+/*                //ilgi3
+                .ilgileriIlgiMetniDoldur(ilgiDosya3Aciklama)
+                .dosyaEkle(pathDosya3, dosyaAdi3)
+                .dosyaYukleneneKadarBekle()
+                .ekleriEklenenDosyaAdiKontrol(dosyaAdi3)
+                .ekleriEkle()
+                .listelenenEklereDosyanınGeldigiKontrolu(dosyaAdi3, "Dosya Adı")
+                .listelenenEklerdeIndırButonuKontrol(dosyaAdi3)*/
     }
 }

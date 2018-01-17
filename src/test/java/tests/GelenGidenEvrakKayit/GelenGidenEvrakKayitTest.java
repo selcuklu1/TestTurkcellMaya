@@ -84,9 +84,9 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, priority = 0, description = "TS0321: Üstyazı ek ve ilgi eklenerek gelen evrak kaydı")
     public void TS0321() throws InterruptedException {
-        String pathToFilePdf = getDocPath1() + "Otomasyon.pdf";
+        String pathToFilePdf = getDocPath() + "Otomasyon.pdf";
         String pdfName = "Otomasyon.pdf";
-        String pathToFileExcel = getDocPath1() + "test.xlsx";
+        String pathToFileExcel = getDocPath() + "test.xlsx";
         String excelName = "test.xlsx";
 
         login(mbozdemir);
@@ -138,7 +138,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
             , dependsOnMethods = {"TS0321"})
     public void TS2163() throws InterruptedException {
 
-        String pathToFilePdf = getDocPath1() + "Otomasyon.pdf";
+        String pathToFilePdf = getDocPath() + "Otomasyon.pdf";
         String evrakTuru = "Dilekçe";
         login(mbozdemir);
 //        String evrakNO321 = "5569";
@@ -187,7 +187,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
         String birim = "OPTİİM BİRİM";
         String details = "YGD";
-        String pathToFilePdf = getDocPath1() + "Otomasyon.pdf";
+        String pathToFilePdf = getDocPath() + "Otomasyon.pdf";
         String pdfName = "Otomasyon.pdf";
 
         login(mbozdemir);
@@ -321,8 +321,8 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
         String birim = "OPTİİM BİRİM11";
 
-        String pathToFileExcel = getDocPath1() + "test.xlsx";
-        String pathToFileEmail = getDocPath1() + "ekranGoruntuleri.msg";
+        String pathToFileExcel = getDocPath() + "test.xlsx";
+        String pathToFileEmail = getDocPath() + "ekranGoruntuleri.msg";
 
         login(optiim);
 //        String ustYaziAdi = "ustYazi.pdf";  // TestOtomasyon.msg ekini eklememe rağmen ustYazi.pdf  olarak ekrana geliyor.
@@ -377,8 +377,8 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         String birim = "OPTİİM BİRİM";
         String uyariMesajı = "Dosya büyüklüğü uygun değildir!!";
         String secim = "Hayır";
-        String pathToFilePdf = getDocPath1() + "Otomasyon.pdf";
-        String bigPdfPath = getDocPath1() + "emresencan.pdf";
+        String pathToFilePdf = getDocPath() + "Otomasyon.pdf";
+        String bigPdfPath = getDocPath() + "emresencan.pdf";
 
         login(optiim);
         gelenEvrakKayitPage
@@ -455,7 +455,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         String geregi = "OPTİİM BİRİM";
         String kaldirlacakKlasor = "ESK05";
         String bilgi = "TAŞRA TEŞKİLATI";
-        String pathToFilePdf = getDocPath1() + "Otomasyon.pdf";
+        String pathToFilePdf = getDocPath() + "Otomasyon.pdf";
         String pdfName = "Otomasyon.pdf";
 
         login(optiim);
@@ -514,7 +514,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         String evrakNO326 = "";
         String pdfText = "";
         String details = "YGD";
-        String pathToFilePdf = getDocPath1() + "Otomasyon.pdf";
+        String pathToFilePdf = getDocPath() + "Otomasyon.pdf";
         String pdfName = "Otomasyon.pdf";
 
         login(yakyol);

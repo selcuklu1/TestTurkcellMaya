@@ -1,5 +1,6 @@
 package pages.pageComponents;
 
+import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
@@ -35,14 +36,28 @@ public class ConfirmDialog extends BaseLibrary {
                 .filterBy(visible).first();
     }
 
-    public ElementsCollection buttons() {
+    public ElementsCollection getConfirmButtons() {
         return $$x("//div[contains(@class,'ui-confirm-dialog')]//button")
                 .filterBy(visible);
     }
 
     @Step("Onay dialog butonu")
-    public SelenideElement button(String name) {
+    public SelenideElement getConfirmButton(String name) {
         return $$x("//div[contains(@class,'ui-confirm-dialog')]//button[span[text()='" + name + "']]")
-                .filterBy(visible).last();
+                .filterBy(visible).shouldHave(CollectionCondition.sizeGreaterThan(0)).last();
     }
+
+    @Step("Evet butona tikla")
+    public ConfirmDialog confirmEvetTikla(){
+        getConfirmButton("Evet").shouldBe(visible).click();
+        return this;
+    }
+
+    @Step("Hayır butona tikla")
+    public ConfirmDialog confirmHayirTikla(){
+        getConfirmButton("Hayır").shouldBe(visible).click();
+        return this;
+    }
+
+
 }

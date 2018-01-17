@@ -862,7 +862,7 @@ public class GizlilikKleransiTest extends BaseTest {
                 .bilgilerTabiAc()
                 .gizlilikDerecesiSec("Özel")
                 .kaydet()
-                .confirmDialog().button("Evet").click();
+                .confirmDialog().confirmEvetTikla();
         evrakOlusturPage
                 .bilgilerTabiAc()
                 .iadeEtbutonKontol()

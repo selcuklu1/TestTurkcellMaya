@@ -93,18 +93,21 @@ public class IslemMesajlari extends BaseLibrary {
     }
 
     @Step("Başarılı mesajı gelmeli")
-    public void basariliOlmali(String... expectedMessage) {
+    public IslemMesajlari basariliOlmali(String... expectedMessage) {
         checkMessage(BASARILI.value(), expectedMessage);
+        return this;
     }
 
     @Step("Uyarı mesajı gelmeli")
-    public void uyariOlmali(String... expectedMessage) {
+    public IslemMesajlari uyariOlmali(String... expectedMessage) {
         checkMessage(UYARI.value(), expectedMessage);
+        return this;
     }
 
     @Step("Dikkat mesajı gelmeli")
-    public void dikkatOlmali(String... expectedMessage) {
+    public IslemMesajlari dikkatOlmali(String... expectedMessage) {
         checkMessage(DIKKAT.value(), expectedMessage);
+        return this;
     }
 
     @Step("İşlem mesaj tipi kontolü")
