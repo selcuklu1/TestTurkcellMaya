@@ -5,10 +5,12 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.testng.Assert;
 import pages.MainPage;
 import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
 
 public class PostalananlarPage extends MainPage {
@@ -131,6 +133,16 @@ public class PostalananlarPage extends MainPage {
     @Step("Postaladıklarım seç")
     public PostalananlarPage postaladiklarimSec() {
         tblEvrakSec.click();
+        return this;
+    }
+
+    @Step("")
+    public PostalananlarPage evrakGeldigiGorme(String konu, String gidecegiYer, String evrakTarihi){
+        boolean durum = tablePostalananlar.filterBy(Condition.text(konu))
+                .filterBy(Condition.text(gidecegiYer))
+                .filterBy(Condition.text(evrakTarihi)).get(0).shouldBe(visible).exists()==true;
+        Assert.assertEquals(durum,true);
+        takeScreenshot();
         return this;
     }
 

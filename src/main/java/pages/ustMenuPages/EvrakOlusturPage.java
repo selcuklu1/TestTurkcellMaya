@@ -1418,6 +1418,15 @@ public class EvrakOlusturPage extends MainPage {
 
         }
 
+        @Step("Şablonlar alanında \"{secim}\" seçilir")
+        public EditorTab onTanimliIcerikSablonuKullan(String secim){
+           clickJs($("[class='cke_button cke_button__sablon_sec cke_button_off']"));
+            $("[id$='windowCevapEvrakForm:icerikSablonListPanel'] div[class='ui-selectonemenu ui-widget ui-state-default ui-corner-all ui-helper-clearfix'] select").selectOption(secim);
+            ($$("[class='form-buttons'] button[id^='windowCevapEvrakForm'] span").filterBy(Condition.text("Uygula")).get(0)).parent().click();
+
+            return this;
+        }
+
         @Step("Editör İçerik Doldur")
         public EditorTab editorIcerikDoldur(String icerik) {
             try {
