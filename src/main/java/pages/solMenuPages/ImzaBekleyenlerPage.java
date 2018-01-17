@@ -67,6 +67,7 @@ public class ImzaBekleyenlerPage extends MainPage {
         btnSImzaImzala.click();
         if (secim == true) {
             btnSImzaImzalaEvet.pressEnter();
+            sleep(5000);
         } else {
             btnSImzaImzalaHayir.pressEnter();
         }

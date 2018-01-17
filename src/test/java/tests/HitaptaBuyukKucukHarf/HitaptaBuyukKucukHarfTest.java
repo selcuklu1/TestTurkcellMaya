@@ -1,11 +1,14 @@
 package tests.HitaptaBuyukKucukHarf;
 
+import com.codeborne.selenide.ElementsCollection;
 import common.BaseTest;
+import data.User;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.ustMenuPages.EvrakOlusturPage;
+import pages.ustMenuPages.SistemSabitleriPage;
 
 /****************************************************
  * Tarih: 2017-12-28
@@ -17,6 +20,7 @@ import pages.ustMenuPages.EvrakOlusturPage;
 public class HitaptaBuyukKucukHarfTest extends BaseTest {
 
     EvrakOlusturPage evrakOlustur;
+    User user1 = new User("user1", "123", "User1 TEST", "AnaBirim1", "Altyapı ve Sistem Yönetim Uzmanı");
 
     @BeforeMethod
     public void loginBeforeTests() {
@@ -138,7 +142,7 @@ public class HitaptaBuyukKucukHarfTest extends BaseTest {
 
     }
 
-    @Test(description = "TS2090: Dağıtım planına ve kullanıcıya hitap")
+    @Test(enabled = false, description = "TS2090: Dağıtım planına ve kullanıcıya hitap")
     public void TS2090() throws Exception {
 
         //Dağıtım planına ve kullanıcıya hitap
@@ -147,6 +151,14 @@ public class HitaptaBuyukKucukHarfTest extends BaseTest {
         //sistemde kayıtlı dağıtım planı olmalı, dağıtım planının içeriğinde küçük harfli birim, büyük harfli kurum olmalı
 
 //        DAĞITIM YERLERİNE
+
+        login(user1);
+        SistemSabitleriPage sistemSabitleriPage = new SistemSabitleriPage().openPage();
+        sistemSabitleriPage.sorgulamaVeFiltreleme()
+                .alanDoldur("Ad", "Dağıtım Planı Hitap")
+                .butonaTikla("Ara");
+        ElementsCollection c = sistemSabitleriPage.aramaSonucuBul("Dağıtım Planı Hitap");
+
     }
 
     public void hitapKontrol(String geregiSecimTipi, String geregi, String beklenenHitap) throws InterruptedException {

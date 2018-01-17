@@ -16,7 +16,6 @@ public class EvrakDetayiPage extends MainPage {
 
     SelenideElement pageTitle = $(By.xpath("//span[. = 'Evrak Detayı' and @class = 'ui-dialog-title']"));
     SelenideElement btnTebellugEt = $("button .tebellugEt");
-    SelenideElement btnPanelEvet = $(By.id("mainInboxForm:tebellugEtEvetButton"));
     SelenideElement btnPanelHayir = $(By.id("mainInboxForm:tebellugEtHayirButton"));
     SelenideElement dialogTabMenuRight = $(By.id("inboxItemInfoForm:dialogTabMenuRight:dialogTabMenuRight"));
     SelenideElement btnEvrakGoster = $(By.id("inboxItemInfoForm:dialogTabMenuRight:uiRepeat:4:cmdbutton"));
@@ -51,9 +50,9 @@ public class EvrakDetayiPage extends MainPage {
         btnTebellugEt.click();
 
         if (onay == true)
-            btnPanelEvet.click();
+            $$(By.id("mainInboxForm:tebellugEtEvetButton")).last().click();
         else
-            btnPanelEvet.click();
+            btnPanelHayir.click();
 
 
         return this;
@@ -94,7 +93,7 @@ public class EvrakDetayiPage extends MainPage {
         @Step("Teblig geçmişi kontrol et")
         public TebligGecmisiTab tebligGecmisiKontrol(String tebligEdenveTarih, String[] kullanicilar) {
 
-            $x("//span[contains(text(), 'Mehmet BOZDEMİR - (18.12.2017)')]").waitUntil(visible, 5000);
+            $x("//span[contains(text(), '"+tebligEdenveTarih+"')]").waitUntil(visible, 5000);
 
             SelenideElement currentRow = tableTebligGecmisi
                     .filterBy(Condition.text(tebligEdenveTarih))
