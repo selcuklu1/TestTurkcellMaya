@@ -329,8 +329,8 @@ public class BirimIcerikSablonlarPage extends MainPage {
 
     @Step("Var olan şablonun adını al")
     public String sablonAdiAl(int satir) {
-        return searchTable.findRows().shouldHave(sizeGreaterThan(0)).useFirstFoundRow().getColumn(1).text();
-//        return searchTable.getColumn(searchTable.getRows().shouldHave(sizeGreaterThan(0)).get(satir), 1).text();
+        return searchTable.findRows().shouldHave(sizeGreaterThan(0)).useFirstFoundRow().getColumnValue(1).text();
+//        return searchTable.getColumnValue(searchTable.getRows().shouldHave(sizeGreaterThan(0)).get(satir), 1).text();
     }
 
     @Step("Alt birimler görsün mü seç")

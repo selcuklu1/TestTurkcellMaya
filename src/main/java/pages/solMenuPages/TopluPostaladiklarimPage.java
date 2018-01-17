@@ -6,19 +6,13 @@ import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
-import org.apache.xmlbeans.impl.xb.xsdschema.All;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import pages.MainPage;
-import pages.galen.GalenControl;
 import pages.pageComponents.belgenetElements.BelgenetElement;
-import pages.pageComponents.tabs.AltTabs;
 import pages.pageData.SolMenuData;
-
-import java.sql.Driver;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;

@@ -1,6 +1,5 @@
 package tests.BirimIcerikSablonu;
 
-import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import common.BaseTest;
 import data.User;
@@ -459,8 +458,8 @@ public class BirimIcerikSablonuTest extends BaseTest {
                 .onayAkisiEkleButonaTikla()
                 .anlikOnayAkisKullanicilariSec(user3.getFullname())
 //                .onayAkisiKullaniciTipiSec("user1 TEST [Ağ (Network) Uzman Yardımcısı]", "Paraflama")
-                .onayAkisiKullanicininTipiSec(user1.getFullname(), "Paraflama")
-                .onayAkisiKullanicininTipiSec(user3.getFullname(), "İmzalama")
+                .anlikOnayAkisKullanicininTipiSec(user1.getFullname(), "Paraflama")
+                .anlikOnayAkisKullanicininTipiSec(user3.getFullname(), "İmzalama")
                 .kullanButonaTikla();
 //                .onayAkisiTitleKontrol("Yeni akış")
 //                .onayAkisiDetailKontrol(user1.getName() + "-Paraflama / " + user2.getName() + "-İmzalama");
