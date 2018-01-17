@@ -775,7 +775,7 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("Benzer Kayıt tıklanır")
     public GelenEvrakKayitPage benzerKayit() {
-        if ($$(("[id$='benzerKayitButton']")).get(0).shouldHave(visible).exists() == true) {
+        if ($$(("[id$='benzerKayitButton']")).size() == 1) {
             $("[id$='benzerKayitButton']").pressEnter();
         } else {
         }
@@ -1187,6 +1187,12 @@ public class GelenEvrakKayitPage extends MainPage {
     @Step("Tarama Havuzu Tamam butonu ")
     public GelenEvrakKayitPage taramaHavuzuTamam() {
         clickJs(btnTaramaHavuzuTamam);
+        return this;
+    }
+    
+    @Step("Gelen Evrak Kayıt sayfasında Kaydet butonuna tıkladıktan sonra beliren panelde Evet butonuna tıkla.")
+    public GelenEvrakKayitPage gelenEvrakKayitKaydetEvet(){
+        popUpEvet.click();
         return this;
     }
 

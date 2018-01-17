@@ -15,6 +15,7 @@ import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
+import static pages.pageComponents.belgenetElements.Belgenet.$x;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 public class GelenEvraklarPage extends MainPage {
@@ -61,10 +62,10 @@ public class GelenEvraklarPage extends MainPage {
 
     // Tebiğ Et Buttonu altı div
     SelenideElement btnTebligEt = $(By.xpath("//span[contains(@class, 'tebligEt')]/.."));
-    BelgenetElement txtTebligEtKisi = comboLov(By.id("mainPreviewForm:kullaniciLov_id:LovText"));
-    BelgenetElement txtTebligEtKullaniciListesi = comboLov(By.id("mainPreviewForm:kullaniciGrubuLov_id:LovText"));
-    SelenideElement txtTebligEtNot = $(By.id("mainPreviewForm:tebligNotu_id"));
-    SelenideElement btnTebligEtTebligEt = $(By.id("mainPreviewForm:tebligEtButton_id"));
+    BelgenetElement txtTebligEtKisi = comboLov(By.id("inboxItemInfoForm:kullaniciLov_id:LovText"));
+    BelgenetElement txtTebligEtKullaniciListesi = comboLov(By.id("inboxItemInfoForm:kullaniciGrubuLov_id:LovText"));
+    SelenideElement txtTebligEtNot = $(By.id("inboxItemInfoForm:tebligNotu_id"));
+    SelenideElement btnTebligEtTebligEt = $(By.id("inboxItemInfoForm:tebligEtButton_id"));
 
     // İade Et Buttonu altı div
     SelenideElement btnIadeEt = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:3:cmdbutton"));
@@ -72,7 +73,7 @@ public class GelenEvraklarPage extends MainPage {
     SelenideElement btnIadeEtDosyaEkle = $(By.id("mainPreviewForm:fileUploadIadeEk_input"));
     SelenideElement btnIadeEtIadeEt = $(By.id("mainPreviewForm:iadeEtButton_id"));
     // Cevap Yaz Buttonu
-    SelenideElement btnCevapYaz = $("button[id^='mainPreviewForm:onizlemeRightTab:uiRepeat'] span[class$='cevapYaz']");
+    SelenideElement btnCevapYaz = $x("//span[contains(@class, 'cevapYaz')]/..");
 
     //Evrak Kapat Buttonu div
     SelenideElement btnEvrakKapat = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:8:cmdbutton"));
@@ -216,6 +217,28 @@ public class GelenEvraklarPage extends MainPage {
     }
 
     @Step("Gelen Evraklar sayfasında evrakın geldiği kontrolu ve seçme")
+    public GelenEvraklarPage evrakIcerikGoster(String konu, String geldigiYer, String kayitTarihiSayi, String evrakTarihi, String no) {
+
+        System.out.println(konu);
+        System.out.println(geldigiYer);
+        System.out.println(kayitTarihiSayi);
+        System.out.println(evrakTarihi);
+        System.out.println(no);
+
+        tableEvraklar
+                .filterBy(text("Konu: " + konu))
+                .filterBy(text(geldigiYer))
+                .filterBy(text("Kayıt Tarihi / Sayı: " + kayitTarihiSayi))
+                .filterBy(text("Evrak Tarihi: " + evrakTarihi))
+                .filterBy(text("No: " + no))
+                .get(0)
+                .$("[id^='mainInboxForm:inboxDataTable'] [id$='detayGosterButton']").click();
+
+        $(By.id("mainPreviewForm:eastLayout")).waitUntil(Condition.visible, 5000);
+        return this;
+    }
+
+    @Step("Gelen Evraklar sayfasında evrakın geldiği kontrolu ve seçme")
     public GelenEvraklarPage evrakSec(String konu, String geldigiYer, String kayitTarihiSayi, String evrakTarihi, String no) {
 
         System.out.println(konu);
@@ -226,7 +249,7 @@ public class GelenEvraklarPage extends MainPage {
 
         tableEvraklar
                 .filterBy(text("Konu: " + konu))
-                .filterBy(text("Geldiği Yer: " + geldigiYer))
+                .filterBy(text(geldigiYer))
                 .filterBy(text("Kayıt Tarihi / Sayı: " + kayitTarihiSayi))
                 .filterBy(text("Evrak Tarihi: " + evrakTarihi))
                 .filterBy(text("No: " + no))
@@ -234,6 +257,26 @@ public class GelenEvraklarPage extends MainPage {
                 .$("[id^='mainInboxForm:inboxDataTable'] [id$='detayGosterButton']").click();
 
         $(By.id("mainPreviewForm:eastLayout")).waitUntil(Condition.visible, 5000);
+        return this;
+    }
+
+    @Step("Gelen Evraklar sayfasında evrakın geldiği kontrolu ve seçme")
+    public GelenEvraklarPage evrakiSec(String konu, String geldigiYer, String kayitTarihiSayi, String evrakTarihi, String no) {
+
+        System.out.println(konu);
+        System.out.println(geldigiYer);
+        System.out.println(kayitTarihiSayi);
+        System.out.println(evrakTarihi);
+        System.out.println(no);
+
+        tableEvraklar
+                .filterBy(text("Konu: " + konu))
+                .filterBy(text(geldigiYer))
+                .filterBy(text("Kayıt Tarihi / Sayı: " + kayitTarihiSayi))
+                .filterBy(text("Evrak Tarihi: " + evrakTarihi))
+                .filterBy(text("No: " + no))
+                .get(0)
+                .click();
         return this;
     }
 
