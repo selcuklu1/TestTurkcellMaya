@@ -234,8 +234,8 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 //        String evrakNo = evrakNO321;
 //        String evrakNo1 = evrakNO328;
 //        String downloadPath = getDownloadPath();
-        String downloadPath = "C:\\Users\\optiim\\Downloads\\";
-        System.out.println(downloadPath);
+        String remoteDownloadPath = "C:\\Users\\optiim\\Downloads\\";
+        System.out.println(remoteDownloadPath);
 
 //        String geldigiYer = "Kurum";
 //
@@ -276,7 +276,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 //                .tabloKontrolu(evrakNO321)
                 .tabloKontrouAll(evrakNO321, evrakNO328)
 //                .tabloKontrouAll(evrakNO328)
-                .raporAlExcel(downloadPath);
+                .raporAlExcel(remoteDownloadPath);
 //                .waitForLoadingJS(WebDriverRunner.getWebDriver(), 180);
 
 //        kaydedilenGelenEvrakPage
@@ -288,7 +288,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 //                .islemMesaji().basariliOlmali(basariMesaji);
 
         kaydedilenGelenEvrakPage
-                .raporAlPdf(downloadPath);
+                .raporAlPdf(remoteDownloadPath);
 //                .waitForLoadingJS(WebDriverRunner.getWebDriver(), 180);
     }
 
