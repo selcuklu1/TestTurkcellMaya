@@ -5,6 +5,7 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.testng.Assert;
 import pages.MainPage;
 import pages.pageData.SolMenuData;
 
@@ -22,7 +23,7 @@ public class KlasoreKaldirdiklarimPage extends MainPage {
 
     SelenideElement btnEvrakGoster = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:0:cmdbutton"));
     SelenideElement btnEvrakKopyala = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:1:cmdbutton"));
-    ElementsCollection tblKlasoreKaldirdiklarim = $$("[id='mainInboxForm:inboxDataTable_data'] tr[role='row']");
+    ElementsCollection tblKlasoreKaldirdiklarim = $$("[id='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
 
     @Step("Klasöre kaldırdıklarım sayfası aç")
     public KlasoreKaldirdiklarimPage openPage() {
@@ -76,6 +77,15 @@ public class KlasoreKaldirdiklarimPage extends MainPage {
     public KlasoreKaldirdiklarimPage evrakKopyala() {
         //click(evrakKopyalaButton);
         btnEvrakKopyala.click();
+        return this;
+    }
+    
+    @Step("Cevap yazılan evrağın listeye düştüğü görülür")
+    public KlasoreKaldirdiklarimPage cevapYazilanEvrakListeyeDustuguGorme(String konu){
+        boolean durum = tblKlasoreKaldirdiklarim
+                .filterBy(Condition.text(konu)).size()==0;
+
+        Assert.assertEquals(durum,false);
         return this;
     }
 

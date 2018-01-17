@@ -455,6 +455,12 @@ public class PostaListesiPage extends MainPage {
         return this;
     }
 
+
+    public String tutarAl() {
+            String tutar = txtTutar.getValue();
+            return tutar;
+    }
+
     @Step("İndirim Oranı alaninda \"{indirimOrani}\" değeri olmalı mı? : \"{shouldBeEquals}\" ")
     public PostaListesiPage indirimOraniKontrol(String indirimOrani, boolean shouldBeEquals) {
         txtIndirimOrani.text();

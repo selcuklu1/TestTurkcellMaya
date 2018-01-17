@@ -3,16 +3,22 @@ package pages.solMenuPages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.apache.xmlbeans.impl.xb.xsdschema.All;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.galen.GalenControl;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageComponents.tabs.AltTabs;
 import pages.pageData.SolMenuData;
+
+import java.sql.Driver;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
@@ -264,12 +270,24 @@ public class TopluPostaladiklarimPage extends MainPage {
     @Step("")
     public TopluPostaladiklarimPage pdfKontrol() {
 
-        new GalenControl().galenGenerateDump("TS1816");
-        String fileName = "Otomasyon.pdf";
-        String ekMetni = "QQQQQ";
+        WebElement root1 = WebDriverRunner.getWebDriver().findElement(By.id("toolbar"));
 
+        //Get shadow root element
+        WebElement shadowRoot1 = expandRootElement(root1);
+
+        WebElement root2 = shadowRoot1.findElement(By.id("buttons"));
+        WebElement shadowRoot2 = expandRootElement(root2);
+
+        WebElement root3 = shadowRoot2.findElement(By.id("download"));
+        WebElement shadowRoot3 = expandRootElement(root3);
+        shadowRoot3.click();
         return this;
 
+    }
+    public WebElement expandRootElement(WebElement element) {
+        WebElement ele = (WebElement) ((JavascriptExecutor)WebDriverRunner.getWebDriver())
+                .executeScript("return arguments[0].shadowRoot", element);
+        return ele;
     }
 
     @Step("Evrak Listesi tablosunda Yazdır butonu tıklanır.")

@@ -110,8 +110,8 @@ public class KaydedilenGelenEvrakPage extends MainPage {
 
         Assert.assertEquals(kontrolBaslangic, false, "Evrak Tarihi Başlangıç alanı dolu gelmiştir.");
         Assert.assertEquals(kontrolBitis, false, "Evrak Tarihi Bitiş alanı dolu gelmiştir.");
-        Allure.addAttachment(dateTxtEvrakTarihiBaslangic.getValue(),"Evrak Tarihi Başlangıç alanı dolu gelmiştir.");
-        Allure.addAttachment(dateTxtEvrakTarihiBitis.getValue(),"Evrak Tarihi Bitiş alanı dolu gelmiştir.");
+        Allure.addAttachment(dateTxtEvrakTarihiBaslangic.getValue(), "Evrak Tarihi Başlangıç alanı dolu gelmiştir.");
+        Allure.addAttachment(dateTxtEvrakTarihiBitis.getValue(), "Evrak Tarihi Bitiş alanı dolu gelmiştir.");
         Allure.addAttachment("Tarih farkı : ", diffNum);
 
         return this;
@@ -156,10 +156,28 @@ public class KaydedilenGelenEvrakPage extends MainPage {
     }
 
     @Step("Tabloda evrak No kontrolü : \"{evrakNo}\" ")
-    public KaydedilenGelenEvrakPage tabloKontrouAll(String evrakNo) {
-        SelenideElement table= $(By.id("birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable"));
-        boolean status = findElementOnTableByColumnInputInAllPages(table,2,evrakNo).isDisplayed();
-        Assert.assertEquals(status, true);
+    public KaydedilenGelenEvrakPage tabloKontrouAll(String evrakNo, String evraNo2) {
+        ElementsCollection kisiselPages = $$("th[id='birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable_paginator_top'] > span[class='ui-paginator-pages'] >  span");
+        int size = 0;
+        int size2 = 0;
+        for (int i = 0; i < kisiselPages.size(); i++) {
+            kisiselPages.get(i).click();
+
+            size = tblKaydedilenGelenEvrak
+                    .filterBy(Condition.text(evrakNo))
+                    .size();
+            size2 = tblKaydedilenGelenEvrak
+                    .filterBy(Condition.text(evraNo2))
+                    .size();
+        }
+
+//        SelenideElement table= $(By.id("birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable"));
+//        boolean status = findElementOnTableByColumnInputInAllPages(table,2,evrakNo).isDisplayed();
+//        Assert.assertEquals(status, true);
+        if (size > 0 && size2 > 0)
+            Allure.addAttachment("Tablo Listesi : ", "Aranılan evraklar tabloda bulundu");
+        else
+            Allure.addAttachment("Tablo Listesi : ", "Aranılan evrak tabloda bulunamadı");
         return this;
     }
 

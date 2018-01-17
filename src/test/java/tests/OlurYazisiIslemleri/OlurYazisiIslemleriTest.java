@@ -23,12 +23,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.value;
-import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.page;
-import static pages.pageComponents.belgenetElements.Belgenet.$;
-import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 /**
  * Yazan: Ilyas Bayraktar
@@ -226,7 +222,7 @@ public class OlurYazisiIslemleriTest extends BaseTest {
 
 
 
-    @Test(description = "TS1488: Olur yazısında alan kontrolleri", enabled = true)
+    @Test(description = "TS1488: Olur yazısında alan kontrolleri", enabled = false)
     public void TS1488() throws Exception {
         login(user1);
         OlurYazisiOlusturPage olurYazisiOlusturPage = page(OlurYazisiOlusturPage.class);

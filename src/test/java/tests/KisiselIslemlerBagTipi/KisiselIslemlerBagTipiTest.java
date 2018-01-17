@@ -27,6 +27,7 @@ import static data.TestData.username2;
  * Class: "Kişisel İşlemler Bağ Tipi" konulu senaryoları içerir
  * Yazan: Can Şeker
  ****************************************************/
+
 @Epic("Kişisel İşlemler Bağ Tipi")
 public class KisiselIslemlerBagTipiTest extends BaseTest {
 
@@ -46,7 +47,7 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "2141: Bağ tipi amir yardımcısı olması kontrolleri")
+    @Test(enabled = true, description = "TS2141: Bağ tipi amir yardımcısı olması kontrolleri")
     public void TS2141() {
 
         String basariMesaji = "İşlem başarılıdır!";
@@ -60,7 +61,11 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
         kullaniciYonetimiPage
                 .openPage()
                 .ara()
-                .kullaniciListesiGuncelle()
+                .kullaniciListesiGeldigiGorme();
+        String ad = kullaniciYonetimiPage.adCek();
+        kullaniciYonetimiPage
+                .kullaniciListesiGuncelle(ad)
+                .kullaniciBilgileriGeldigiGorme()
                 .gorevliOlduguBirimlerGuncelle()
                 .popupKullaniciBirimAtamaBagTipiSec(bagTipi, "Bağ Tipi")
                 .popupKullaniciBirimAtamaKaydet();
@@ -74,7 +79,7 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
-                .otomatikOnayAkisi()
+                .otomatikOnayAkisiSec()
                 .otomatikOnayAkisiGeldigiGorme(ekranAdi, "Kullanıcı");
 
         vekaletVerPage
@@ -92,7 +97,7 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
 
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "2142: Bağ tipi vekaleten amir yardımcısı kontrolleri")
+    @Test(enabled = true, description = "TS2142: Bağ tipi vekaleten amir yardımcısı kontrolleri")
     public void TS2142() {
 
         String basariMesaji = "İşlem başarılıdır!";
@@ -102,7 +107,7 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
         String gnMdV = "Gn.Md. V.";
         String genelMudur = "Genel Müdür V.";
         String kullanicilarTuru = "İmzalama";
-        String randomAd = createRandomNumber(7);
+        String randomAd = createRandomNumber(15);
 
         //Gelen evraklar alanında veri bulunmalı
 
@@ -111,8 +116,15 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
         kullaniciYonetimiPage
                 .openPage()
                 .ara()
-                .kullaniciListesiGuncelle()
-                .gorevliOlduguBirimlerGuncelle()
+                .kullaniciListesiGeldigiGorme();
+        String adCek = kullaniciYonetimiPage.adCek();
+                kullaniciYonetimiPage
+                .kullaniciListesiGuncelle(adCek)
+                .kullaniciBilgileriGeldigiGorme();
+        String birim = kullaniciYonetimiPage.birimAdCek();
+                kullaniciYonetimiPage
+                .gorevliOlduguBirimlerGuncelle(birim)
+                .kullaniciBirimAtamaEkranıGorme()
                 .popupKullaniciBirimAtamaBagTipiSec(bagTipi, "Bağ Tipi")
                 .popupKullaniciBirimAtamaKaydet();
 
@@ -125,7 +137,7 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
-                .otomatikOnayAkisi()
+                .otomatikOnayAkisiSec()
                 .otomatikOnayAkisiGeldigiGorme(ekranAdi, "Kullanıcı")
                 .onayAkisiEkle()
                 .kullanicilarDoldur(ekranAdi)
@@ -172,7 +184,7 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "2168: Bağ tipi personel kontrolleri")
+    @Test(enabled = true, description = "TS2168: Bağ tipi personel kontrolleri")
     public void TS2168() {
 
         String basariMesaji = "İşlem başarılıdır!";
@@ -181,14 +193,21 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
         String onayVerecek = "Zübeyde TEKİN";
 
         //Gelen evraklar alanında veri bulunmalı
-
         login("kbagtipi", password2);
 
         kullaniciYonetimiPage
                 .openPage()
+                .filtreleyecekAlanGeldigiGorme()
                 .ara()
-                .kullaniciListesiGuncelle()
+                .kullaniciListesiGeldigiGorme();
+
+        String adCek = kullaniciYonetimiPage.adCek();
+        kullaniciYonetimiPage
+                .kullaniciListesiGuncelle(adCek)
+                .kullaniciBilgileriGeldigiGorme();
+        kullaniciYonetimiPage
                 .gorevliOlduguBirimlerGuncelle()
+                .kullaniciBirimAtamaEkranıGorme()
                 .popupKullaniciBirimAtamaBagTipiSec(bagTipi, "Bağ Tipi")
                 .popupKullaniciBirimAtamaKaydet();
 
@@ -201,7 +220,7 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
-                .otomatikOnayAkisi()
+                .otomatikOnayAkisiSec()
                 .otomatikOnayAkisiGelmedigiGorme(ekranAdi, false);
 
         vekaletVerPage
@@ -215,7 +234,7 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
                 .openPage()
                 .evrakSec()
                 .tabHavaleYap()
-                .havaleYapOnaylanacakKisiTreeDoldur(ekranAdi, "Onaylanacak kişi");
+                .havaleYapOnaylanacakKisiTreeDoldurGelmedigiGorme(ekranAdi, "Onaylanacak kişi",false);
     }
 
 }

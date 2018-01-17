@@ -136,6 +136,30 @@ public class ImzaBekleyenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Pdf Önizleme butonuna tıklanır")
+    public ImzaBekleyenlerPage pdfOnizleme() {
+        SelenideElement btnPdfOnizleme = $x("//*[text()='PDF Önizleme']/ancestor::tbody[1]//button");
+        btnPdfOnizleme.click();
+        return this;
+    }
+
+    @Step("PDF içerik Kontrolü : \"{icerik}\" , \"{shoulBeExist}\" ")
+    public ImzaBekleyenlerPage geregiBilgiAlaniAdresPdfKontrol(String icerik, boolean shoulBeExist) {
+
+        SelenideElement icerikPDF = $(".textLayer div:nth-of-type(2)");
+
+        System.out.println(icerikPDF.getText());
+
+        if (shoulBeExist)
+            Assert.assertEquals(icerikPDF.getText().contains(icerik), true);
+        else
+            Assert.assertEquals(icerikPDF.getText().contains(icerik), false);
+
+        takeScreenshot();
+
+        return this;
+    }
+
     @Step("Dosya ekle")
     public ImzaBekleyenlerPage iadeEtDosyaEkle(String pathToFile) {
         uploadFile(btnDosyaEkle, pathToFile);
@@ -206,10 +230,21 @@ public class ImzaBekleyenlerPage extends MainPage {
     @Step("Evrak Seç")
     public ImzaBekleyenlerPage evrakSec(String konu, String gidecegiYer, String gonderen, String evrakNo) {
         tblImzaBekleyenler
-                .filterBy(text("Konu: " + konu))
-                .filterBy(text("Gideceği Yer: " + gidecegiYer))
-                .filterBy(text("Gönderen: " + gonderen))
+                .filterBy(text(konu))
+                .filterBy(text(gidecegiYer))
+                .filterBy(text(gonderen))
                 .filterBy(text(evrakNo))
+                .first()
+                .click();
+        return this;
+    }
+
+    @Step("Evrak Seç")
+    public ImzaBekleyenlerPage evrakSec(String konu, String gidecegiYer, String gonderen) {
+        tblImzaBekleyenler
+                .filterBy(text(konu))
+                .filterBy(text(gidecegiYer))
+                .filterBy(text(gonderen))
                 .first()
                 .click();
         return this;

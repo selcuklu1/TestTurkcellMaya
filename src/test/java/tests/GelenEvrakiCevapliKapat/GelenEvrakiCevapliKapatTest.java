@@ -69,6 +69,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
 
         String basariMesaji = "İşlem başarılıdır!";
         String konuKodu = "Diğer";
+        String kaldirilacakKlasor = "Diğer";
         String konuKoduRandom = "TS-930-" + createRandomNumber(10);
         String evrakTarihi = getSysDateForKis();
         String kurum = "BÜYÜK HARFLERLE KURUM";
@@ -92,7 +93,8 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .havaleIslemleriKisiDoldur(kisi)
                 .kaydet()
                 .evetDugmesi()
-                .yeniKayitButton();
+                .yeniKayitButton()
+                .benzerKayit();
         //TODO
 
         login(username2, password2);
@@ -110,12 +112,11 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .bilgilerTabiAc()
                 .konuKoduSec(konuKodu)
                 .kaldiralacakKlasorlerSec(konuKodu)
-                .onayAkisiEkle()
-                .onayAkisiEkleIlkImzalaSec2("İmzalama")
-                .onayAkisiKullan2();
+                .onayAkisiDoldur(onayAkisi);
 
         evrakOlusturPage
-                .cevapYazImzalama()
+                .kaydetOnayaSun2()
+                .kaydetOnayaSunAciklamaDoldur2(icerik)
                 .islemMesaji().basariliOlmali(basariMesaji);
 
         gelenEvraklarPage
@@ -127,13 +128,36 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
         kontrolBekleyenlerPage
                 .openPage()
                 .evrakSec(konuKodu, kurum, evrakTarihi)
-                .kontrolEt();
+                .kontrolEt()
+                .kontrolEtNotDoldur(icerik)
+                .kontrolEtGonder();
 
         login(username2, password2);
 
-        cevapladiklarimPage
-                .openPage();
+        imzaBekleyenlerPage
+                .openPage()
+                .evrakSec(konuKodu, kurum, evrakTarihi)
+                .imzala()
+                .sImzaSec()
+                .sImzaImzala(true)
+                .islemMesaji().basariliOlmali(basariMesaji);
 
+        cevapladiklarimPage
+                .openPage()
+                .tabloEvrakSec(konuKoduRandom,kurum,evrakTarihi)
+                .secilenEvrakEvrakGecmisi()
+                .evrakGecmisiEvrakKapandiIbaresiGorme();
+
+        klasoreKaldirdiklarimPage
+                .openPage()
+                .cevapYazilanEvrakListeyeDustuguGorme(konuKoduRandom);
+
+        klasorEvrakIslemleriPage
+                .openPage()
+                .klasorDoldur(kaldirilacakKlasor)
+                .ara();
+
+        login(username2, password2);
 
     }
 
@@ -230,6 +254,16 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
         String filePath = getDownloadPath();//"C:\\Users\\" + getPCUsername() + "\\Downloads\\";
         String fileName = "Rapor_";
         String fileName2 = "Rapor_.xls";
+
+        System.out.println(filePath);
+        System.out.println(filePath);
+        System.out.println(filePath);
+        System.out.println(filePath);
+        System.out.println(filePath);
+        System.out.println(filePath);
+        System.out.println(filePath);
+        System.out.println(filePath);
+
 
         cevaplananEvrakRaporuPage
                 .openPage()
@@ -512,7 +546,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "")
+    @Test(enabled = true, description = "TS2186 : Cevap evrakında form kullanma")
     public void TS2186() throws InterruptedException {
 
         String konuKodu = "010.01";

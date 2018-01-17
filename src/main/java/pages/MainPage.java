@@ -176,9 +176,8 @@ public class MainPage extends BaseLibrary {
     public SelenideElement getFooterPageButton(String pageTitle){
         return $x("//div[@id='mainTaskBar']//div[@type='button']/span[contains(.,'" + pageTitle +"')]");
     }
-    
+
     @Step("Parafla")
-    @Deprecated
     public MainPage parafla() {
         new EvrakPageButtons().evrakParafla();
         /*SelenideElement paraflaButon = $x("//*[text()='Parafla']/ancestor::tbody[1]//button");
@@ -189,7 +188,6 @@ public class MainPage extends BaseLibrary {
     }
 
     @Step("İmzala butona tıkla")
-    @Deprecated
     public MainPage imzalaButonaTikla() {
         new EvrakPageButtons().imzalaButonaTikla();
         //imzalaButton().click();
@@ -197,7 +195,6 @@ public class MainPage extends BaseLibrary {
     }
 
     @Step("Parafla")
-    @Deprecated
     public MainPage evrakParafla() {
         new EvrakPageButtons().evrakParafla();
         /*paraflaButonaTikla();
@@ -208,7 +205,6 @@ public class MainPage extends BaseLibrary {
     }
 
     @Step("İmzala")
-    @Deprecated
     public MainPage evrakImzala() {
         new EvrakPageButtons().evrakImzala();
         /*imzalaButonaTikla();
