@@ -778,7 +778,7 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("Benzer Kayıt tıklanır")
     public GelenEvrakKayitPage benzerKayit() {
-        if ($$(("[id$='benzerKayitButton']")).get(0).shouldHave(visible).exists() == true) {
+        if ($$(("[id$='benzerKayitButton']")).size() == 1) {
             $("[id$='benzerKayitButton']").pressEnter();
         } else {
         }
