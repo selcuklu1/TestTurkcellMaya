@@ -16,8 +16,6 @@ import org.testng.asserts.SoftAssert;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -30,7 +28,6 @@ import java.util.regex.Pattern;
 import static com.codeborne.selenide.Condition.exactValue;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
-import static java.lang.Thread.currentThread;
 import static org.apache.commons.io.FileUtils.deleteDirectory;
 import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfElementLocated;
 
@@ -41,7 +38,7 @@ public class BaseLibrary extends ElementsContainer{
     protected static String winHandleBefore = null;
     protected static String uploadPath = null;
     private static String browserName = null;
-    protected String downloadPath = null;
+    protected static String downloadPath = null;
     private long waitForLoading = 20;
     private int doWaitLoading = 0;
     private boolean doNotWaitLoading = false;
@@ -744,6 +741,7 @@ public class BaseLibrary extends ElementsContainer{
     }
 
     //Bilgisayarda uzantısını verdiğiniz klasordeki dosyalardan gönderdiğiniz ismi içinde içeriyorsa o dosyayı siler.
+    @Step("Gönderilen klasöreki dosyayı siler. Path : \"{path}\" \n Filename : \"{fileName}\" ")
     public boolean deleteFile(String path, String fileName) throws IOException {
 
         boolean flag = false;
@@ -867,6 +865,7 @@ public class BaseLibrary extends ElementsContainer{
     }
 
     //Dosyanın bilgisayara inip inmediğini kontrol eder.
+    @Step("Gönderilen klaörede verilen dosyayı arama : Path :  \"{downloadPath}\" \n Filename : \"{fileName}\"  ")
     public boolean searchDownloadedFileWithName(String downloadPath, String fileName) {
         boolean flag = false;
         File dir = new File(downloadPath);

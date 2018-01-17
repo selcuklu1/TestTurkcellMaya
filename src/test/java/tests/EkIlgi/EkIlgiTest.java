@@ -467,7 +467,7 @@ public class EkIlgiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = false, description = "TS0956: Evrak oluşturmada ilgi ekleme")
+    @Test(enabled = true, description = "TS0956: Evrak oluşturmada ilgi ekleme")
     public void TS0956() {
 
         String evrakKonusu = "TS2348_EkIlgi_Senaryosu_"+getSysDate();
@@ -475,6 +475,7 @@ public class EkIlgiTest extends BaseTest {
         String ilgiDosya1Aciklama = "İlgi_Dosya1_"+getSysDate();
         String ilgiDosya2Aciklama = "İlgi_Dosya2_"+getSysDate();
         String ilgiDosya3Aciklama = "İlgi_Dosya3_"+getSysDate();
+        String ilgiDosya4Aciklama = "İlgi_Dosya4_"+getSysDate();
 
         String dosyaAdi3 = "TS0956_dosya3.pdf";
         String pathDosya3 = getUploadPath() + "TS0956_dosya3.pdf";
@@ -512,15 +513,28 @@ public class EkIlgiTest extends BaseTest {
                 .dosya2AciklamaDoldur(ilgiDosya2Aciklama)
                 .taramaHavuzuTamam()
                 .listelenenIlgilerdeDosyanınGeldigiKontrolu(ilgiDosya2Aciklama, "Açıklama")
-                .listelenenIlgilerdeIndırButonuKontrol(ilgiDosya2Aciklama);
+                .listelenenIlgilerdeIndırButonuKontrol(ilgiDosya2Aciklama)
 
-/*                //ilgi3
+                //ilgi3
                 .ilgileriIlgiMetniDoldur(ilgiDosya3Aciklama)
                 .dosyaEkle(pathDosya3, dosyaAdi3)
                 .dosyaYukleneneKadarBekle()
                 .ekleriEklenenDosyaAdiKontrol(dosyaAdi3)
-                .ekleriEkle()
-                .listelenenEklereDosyanınGeldigiKontrolu(dosyaAdi3, "Dosya Adı")
-                .listelenenEklerdeIndırButonuKontrol(dosyaAdi3)*/
+                .ilgileriEkle()
+                .listelenenIlgilerdeDosyanınGeldigiKontrolu(dosyaAdi3, "Dosya Adı")
+                .listelenenIlgilerdeIndırButonuKontrol(dosyaAdi3)
+
+                .ilgileriMetinEkleTabAc()
+                .ilgileriMetinEkleIlgiMetniDoldur(ilgiDosya4Aciklama)
+                .ilgileriMetinEkleEkle()
+                .listelenenIlgilerdeDosyanınGeldigiKontrolu(ilgiDosya4Aciklama, "Dosya Adı")
+
+                .sistemdeKayitliEvrakEkleTabAc()
+                .sistemdeKayitliEvrakEkleAlanKontrolleri();
+/*
+                .evrakinAranacagiYerSec("İşlem Yaptıklarımda Ara")
+                .evrakAramaDoldur(evrakSayisi)
+                .dokumanAra()
+                .listelenenEvraklardaGelmemeKontrolu(evrakSayisi)*/
     }
 }

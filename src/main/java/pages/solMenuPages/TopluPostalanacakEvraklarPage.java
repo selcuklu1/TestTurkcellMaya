@@ -216,7 +216,7 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
         return this;
     }
 
-    @Step("Tarih aralığını seç. Başlangıç: {0} - Bitiş:")
+    @Step("Tarih aralığını seç. Başlangıç: \"{baslangicTarihi}\" - Bitiş: \"{bitisTarihi}\" ")
     public TopluPostalanacakEvraklarPage tarihAraligiSec(String baslangicTarihi, String bitisTarihi) {
 
         txtBaslangic.setValue(baslangicTarihi);

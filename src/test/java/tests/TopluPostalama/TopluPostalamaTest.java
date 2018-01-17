@@ -12,6 +12,7 @@ import pages.solMenuPages.*;
 import pages.ustMenuPages.EvrakOlusturPage;
 import pages.ustMenuPages.PttRaporuPage;
 
+import java.awt.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
@@ -1977,12 +1978,12 @@ String tutar = "20.000";
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TC1816 : Toplu Postaladıklarım Güncelleme İşlemleri (UC_POSTAYÖNETİMİ_004)")
-    public void TC1816() {
+    @Test(enabled = false, description = "TS1816 : Toplu Postaladıklarım Güncelleme İşlemleri (UC_POSTAYÖNETİMİ_004)")
+    public void TS1816() throws AWTException {
 
 
         String[] konu = new String[]{
-                "TC1811 20180116141257", "TC1811 20180116141257100"
+                "TC1811 20180117080734", "TC1811 20180117080734100"
         };
 
         login("mbozdemir", "123");

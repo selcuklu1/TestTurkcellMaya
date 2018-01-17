@@ -3,6 +3,7 @@ package pages.ustMenuPages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
@@ -19,6 +20,7 @@ import java.util.Date;
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
+import static com.codeborne.selenide.Selenide.sleep;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 public class KaydedilenGelenEvrakPage extends MainPage {
@@ -183,15 +185,19 @@ public class KaydedilenGelenEvrakPage extends MainPage {
 
 
     @Step("Rapor al Excel")
-    public KaydedilenGelenEvrakPage raporAlExcel(String downloadPath) throws IOException {
+    public KaydedilenGelenEvrakPage raporAlExcel(String remoteDownloadPath) throws IOException {
 
-        deleteFile(downloadPath, "Rapor_");
+        deleteFile(remoteDownloadPath, "Rapor_");
+        sleep(3000);
         btnRaporAlExcel.click();
+        islemMesaji().basariliOlmali();
+        waitForLoadingJS(WebDriverRunner.getWebDriver(), 180);
 //        islemMesaji().basariliOlmali();
 //        Thread.sleep(8000);
 //        btnSorgula.click();
 //        islemMesaji().basariliOlmali();
-        searchDownloadedFileWithName(getDownloadPath(), "Rapor_.xls");
+        sleep(3000);
+        searchDownloadedFileWithName(remoteDownloadPath, "Rapor_.xls");
         return this;
     }
 
@@ -200,13 +206,17 @@ public class KaydedilenGelenEvrakPage extends MainPage {
 
 
     @Step("Rapor al PDF")
-    public KaydedilenGelenEvrakPage raporAlPdf(String downloadPath) throws IOException {
-        deleteFile(getDownloadPath(), "Rapor_");
+    public KaydedilenGelenEvrakPage raporAlPdf(String remoteDownloadPath) throws IOException {
+        deleteFile(remoteDownloadPath, "Rapor_");
+        sleep(3000);
         btnRaporAlPdf.click();
-//        Thread.sleep(8000);
         islemMesaji().basariliOlmali();
+        waitForLoadingJS(WebDriverRunner.getWebDriver(), 180);
+//        Thread.sleep(8000);
+
 //        btnSorgula.click();
-        searchDownloadedFileWithName(getDownloadPath(), "Rapor_.pdf");
+        sleep(3000);
+        searchDownloadedFileWithName(remoteDownloadPath, "Rapor_.pdf");
         return this;
     }
 
