@@ -135,17 +135,16 @@
             centered horizontally inside container 2px
 
         imzaci2Isim:
-            width 100% of imzaci2MetinAlani/width
             aligned vertically all imzaci2MetinAlani
             below imzaci2MetinAlani 0px
-            centered horizontally inside container ~2px
+            centered horizontally inside container 2px
 
         imzaci2Gorev:
             width 100% of imzaci2MetinAlani/width
             width 100% of imzaci2Isim/width
             aligned vertically all imzaci2Isim
             below imzaci2Isim 0px
-            centered horizontally inside container ~2px
+            centered horizontally inside container 2px
 
     #Ek
         ekLabel:
