@@ -51,13 +51,13 @@ public class EkIlgiTest extends BaseTest {
         String dosyaAdiPPT = "TS2199.ppt";
         String dosyaAdiPPTX = "TS2199.pptx";
 
-        String pathPDF = getDocPath() + "TS2199.pdf";
-        String pathDOC = getDocPath() + "TS2199.doc";
-        String pathDOCX = getDocPath() + "TS2199.docx";
-        String pathXLS = getDocPath() + "TS2199.xls";
-        String pathXLSX = getDocPath() + "TS2199.xlsx";
-        String pathPPT = getDocPath() + "TS2199.ppt";
-        String pathPPTX = getDocPath() + "TS2199.pptx";
+        String pathPDF = getUploadPath() + "TS2199.pdf";
+        String pathDOC = getUploadPath() + "TS2199.doc";
+        String pathDOCX = getUploadPath() + "TS2199.docx";
+        String pathXLS = getUploadPath() + "TS2199.xls";
+        String pathXLSX = getUploadPath() + "TS2199.xlsx";
+        String pathPPT = getUploadPath() + "TS2199.ppt";
+        String pathPPTX = getUploadPath() + "TS2199.pptx";
 
         String ekMetniAciklama = " isimli dosya eklendi";
         String fizikselEkMetni = "Dosya eklendi " +getSysDate();
@@ -225,16 +225,16 @@ public class EkIlgiTest extends BaseTest {
         String ilisikDosya3Aciklama = "İlisik_Dosya3_"+getSysDate();
 
         String dosyaAdi3 = "TS2346_dosya3.pdf";
-        String pathDosya3 = getDocPath() + "TS2346_dosya3.pdf";
+        String pathDosya3 = getUploadPath() + "TS2346_dosya3.pdf";
 
 
         String ilisikDosya4Aciklama = "İlisik_Dosya4_"+getSysDate();
         String dosyaAdi4 = "TS2346_dosya4.pdf";
-        String pathDosya4 = getDocPath() + "TS2346_dosya4.pdf";
+        String pathDosya4 = getUploadPath() + "TS2346_dosya4.pdf";
 
         String ilisikDosya5Aciklama = "İlisik_Dosya5_"+getSysDate();
         String dosyaAdi5 = "TS2346_dosya5.pdf";
-        String pathDosya5 = getDocPath() + "TS2346_dosya5.pdf";
+        String pathDosya5 = getUploadPath() + "TS2346_dosya5.pdf";
 
         String basariMesaji = "İşlem başarılıdır!";
 
@@ -351,7 +351,7 @@ public class EkIlgiTest extends BaseTest {
         String fizikselEkAciklama = "Fiziksel_Ek_"+getSysDate();
 
         String dosyaAdi3 = "TS2348_dosya3.pdf";
-        String pathDosya3 = getDocPath() + "TS2348_dosya3.pdf";
+        String pathDosya3 = getUploadPath() + "TS2348_dosya3.pdf";
 
         String basariMesaji = "İşlem başarılıdır!";
 
@@ -477,7 +477,7 @@ public class EkIlgiTest extends BaseTest {
         String ilgiDosya3Aciklama = "İlgi_Dosya3_"+getSysDate();
 
         String dosyaAdi3 = "TS0956_dosya3.pdf";
-        String pathDosya3 = getDocPath() + "TS0956_dosya3.pdf";
+        String pathDosya3 = getUploadPath() + "TS0956_dosya3.pdf";
 
         String basariMesaji = "İşlem başarılıdır!";
         login(TestData.username4, TestData.password4); //mbozdemir
