@@ -183,9 +183,9 @@ public class KaydedilenGelenEvrakPage extends MainPage {
 
 
     @Step("Rapor al Excel")
-    public KaydedilenGelenEvrakPage raporAlExcel() throws IOException {
+    public KaydedilenGelenEvrakPage raporAlExcel(String downloadPath) throws IOException {
 
-        deleteFile(getDownloadPath(), "Rapor_");
+        deleteFile(downloadPath, "Rapor_");
         btnRaporAlExcel.click();
 //        islemMesaji().basariliOlmali();
 //        Thread.sleep(8000);
@@ -200,7 +200,7 @@ public class KaydedilenGelenEvrakPage extends MainPage {
 
 
     @Step("Rapor al PDF")
-    public KaydedilenGelenEvrakPage raporAlPdf() throws IOException {
+    public KaydedilenGelenEvrakPage raporAlPdf(String downloadPath) throws IOException {
         deleteFile(getDownloadPath(), "Rapor_");
         btnRaporAlPdf.click();
 //        Thread.sleep(8000);
