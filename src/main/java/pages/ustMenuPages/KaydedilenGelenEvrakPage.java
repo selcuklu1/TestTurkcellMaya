@@ -200,7 +200,7 @@ public class KaydedilenGelenEvrakPage extends MainPage {
 
 
     @Step("Rapor al PDF")
-    public KaydedilenGelenEvrakPage raporAlPdf() throws IOException {
+    public KaydedilenGelenEvrakPage raporAlPdf(String downloadPath) throws IOException {
         deleteFile(getDownloadPath(), "Rapor_");
         btnRaporAlPdf.click();
 //        Thread.sleep(8000);
