@@ -269,8 +269,6 @@ public class TebligTebellugTest extends BaseTest {
                 .tebligGecmisiTabAc()
                 .tebligGecmisiKontrol("Mehmet BOZDEMİR - ("+tarihBugun+")", tebligGecmisiKontrolEdilecekKullanicilar);
 
-        logout();
-
         login("huser2", "123");
 
         tebliglerPage
@@ -303,25 +301,69 @@ public class TebligTebellugTest extends BaseTest {
 
     @Test(enabled = true, description = "TS0936 : Tebliğ hatırlatma ve Mesaj kontrolü")
     public void TS0936() {
+
+        GelenEvrakKayitPage gelenEvrakKayitPage = new GelenEvrakKayitPage();
+        GelenEvraklarPage gelenEvraklarPage = new GelenEvraklarPage();
         TebligEttiklerimPage tebligEttiklerimPage = new TebligEttiklerimPage();
         MesajlarPage mesajlarPage = new MesajlarPage();
+        EvrakDetayiPage evrakDetayiPage = new EvrakDetayiPage();
+
+        String tarihBugun = "" + new SimpleDateFormat("dd.MM.yyyy").format(new Date());
+
+        String konuKodu = "Entegrasyon İşlemleri";
+        String evrakTuru = "Resmi Yazışma";
+        String evrakDili = "Türkçe";
+        String gizlilikDerecesi = "Hizmete Özel";
+        String ivedilik = "Normal";
+        String evrakGelisTipi = "Posta";
+        String randomNumber = "" + getRandomNumber(1000, 9999999);
+        String konu = "TS0936-" + randomNumber;
+        String geldigiYer = "Yenikurum1485";
+        String evrakTarihi = tarihBugun;
+
+        login("mbozdemir", "123");
+
+        gelenEvrakKayitPage
+                .openPage()
+                .konuKoduDoldur(konuKodu)
+                .konuDoldur(konu)
+                .evrakTuruSec(evrakTuru)
+                .evrakDiliSec(evrakDili)
+                .evrakTarihiDoldur(getSysDateForKis())
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .kisiKurumSec("Kurum")
+                .geldigiKurumDoldurLovText2(geldigiYer)
+                .evrakSayiSagDoldur(randomNumber)
+                .evrakGelisTipiSec(evrakGelisTipi)
+                .ivedilikSec(ivedilik)
+                .dagitimBilgileriKisiSec("Mehmet Bozdemir")
+                .kaydet();
+
+        String evrakNo = gelenEvrakKayitPage.popUps();
+        gelenEvrakKayitPage.islemMesaji().basariliOlmali();
+        String kayitTarihiSayi = tarihBugun + " / " + evrakNo;
 
 
-        String konu = "TS0936";
-        String evrakTarihi = "18.12.2017";
+        String tebligEdilecekKisi = "Huser2 TUMER2";
+        String tebligNot = "845 : Gelen Evrakın kullanıcı listesine detay ekrandan tebliğ edilmesi.";
 
-        String no = "123";
+        gelenEvraklarPage
+                .openPage()
+                .evrakIcerikGoster(konu, geldigiYer, kayitTarihiSayi, evrakTarihi, randomNumber)
+                .tebligEt()
+                .tebligEtKisiInputDoldur(tebligEdilecekKisi)
+                .tebligEtNotInputDoldur(tebligNot)
+                .tebligEtTebligEt();
+
+
         String tebligHatirlatNotu = "tebliğhatırlatma";
         String tebligEdenKullanici = "Mehmet BOZDEMİR";
         String basariMesaj = "İşlem başarılıdır!";
         String mesajKonu = "Tebliğ Hatırlatma";
 
-
-        login("mbozdemir", "123");
-
         tebligEttiklerimPage
                 .openPage()
-                .evrakSec(konu, "", evrakTarihi, no)
+                .evrakSec(konu, "", evrakTarihi, randomNumber)
                 .tebligHatirlatTabTikla()
                 .okunmamisTebligleriHatirlat(true)
                 .okunmusTebellugEdilmemisTebligleriHatirlat(true)
@@ -329,29 +371,93 @@ public class TebligTebellugTest extends BaseTest {
                 .tebligHatirlat()
                 .islemMesaji().basariliOlmali(basariMesaj);
 
-        logout();
-
-
-        login("optiimtest2", "123");
+        login("huser2", "123");
 
         mesajlarPage
                 .openPage()
                 .mesajSec(tebligEdenKullanici, mesajKonu, konu)
-                .mesajKontrol(mesajKonu, "18.12.2017", tebligHatirlatNotu);
+                .mesajKontrol(mesajKonu, tarihBugun, tebligHatirlatNotu);
 
     }
 
     @Test(enabled = true, description = "TS0847 : Tebliğlerin teker teker ve toplu silinmesi")
     public void TS0847() {
 
+        GelenEvrakKayitPage gelenEvrakKayitPage = new GelenEvrakKayitPage();
+        GelenEvraklarPage gelenEvraklarPage = new GelenEvraklarPage();
         TebliglerPage tebliglerPage = new TebliglerPage();
         TebellugEttiklerimPage tebellugEttiklerimPage = new TebellugEttiklerimPage();
 
-        String konu = "Kanunlar";
+        String tarihBugun = "" + new SimpleDateFormat("dd.MM.yyyy").format(new Date());
+
+        String konuKodu = "Entegrasyon İşlemleri";
+        String evrakTuru = "Resmi Yazışma";
+        String evrakDili = "Türkçe";
+        String gizlilikDerecesi = "Hizmete Özel";
+        String ivedilik = "Normal";
+        String evrakGelisTipi = "Posta";
+        String geldigiYer = "Yenikurum1485";
+        String evrakTarihi = tarihBugun;
+
+        String tebligEdilecekKisi = "Huser2 TUMER2";
+        //String tebligNot = "TS0847 : Tebliğlerin teker teker ve toplu silinmesi";
+
+
+        String[] evrakKonular = new String[4];
+        String[] evrakNolar = new String[4];
+        String[] evrakKayitSayilar = new String[4];
+        String[] nolar = new String[4];
+
+        String aciklama = "TS0847 aciklama";
+
+        for(int i = 0; i <= 3; i++){
+            login("mbozdemir", "123");
+
+            String randomNumber = "" + getRandomNumber(1000, 9999999);
+            String konu = "TS0847-" + randomNumber;
+
+            gelenEvrakKayitPage
+                    .openPage()
+                    .konuKoduDoldur(konuKodu)
+                    .konuDoldur(konu)
+                    .evrakTuruSec(evrakTuru)
+                    .evrakDiliSec(evrakDili)
+                    .evrakTarihiDoldur(getSysDateForKis())
+                    .gizlilikDerecesiSec(gizlilikDerecesi)
+                    .kisiKurumSec("Kurum")
+                    .geldigiKurumDoldurLovText2(geldigiYer)
+                    .evrakSayiSagDoldur(randomNumber)
+                    .evrakGelisTipiSec(evrakGelisTipi)
+                    .ivedilikSec(ivedilik)
+                    .dagitimBilgileriKisiSec("Mehmet Bozdemir")
+                    .kaydet();
+
+            String evrakNo = gelenEvrakKayitPage.popUps();
+            gelenEvrakKayitPage.islemMesaji().basariliOlmali();
+            String kayitTarihiSayi = tarihBugun + " / " + evrakNo;
+
+            evrakKonular[i] = konu;
+            evrakNolar[i] = evrakNo;
+            evrakKayitSayilar[i] = kayitTarihiSayi;
+            nolar[i] = randomNumber;
+
+            gelenEvraklarPage
+                    .openPage()
+                    .evrakIcerikGoster(konu, geldigiYer, kayitTarihiSayi, evrakTarihi, randomNumber)
+                    .tebligEt()
+                    .tebligEtKisiInputDoldur(tebligEdilecekKisi)
+                    .tebligEtNotInputDoldur(aciklama)
+                    .tebligEtTebligEt();
+
+            logout();
+
+        }
+
+        login("huser2", "123");
+
         String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞ";
         String evrakTipi = "Gelen Evrak";
-        String aciklama = "test7";
-        String tebligEdenKullanici = "Yasemin Çakıl AKYOL";
+        String tebligEdenKullanici = "Mehmet BOZDEMİR";
 
         String dikkatMesajiSecimsizSilme = "Tebliğ listesinden seçim yaptıktan sonra işlem yapılabilir!";
         String dikkatMesaji = "Tebellüğ edilmeden tebliğ silinemez!";
@@ -359,12 +465,12 @@ public class TebligTebellugTest extends BaseTest {
 
         tebliglerPage
                 .openPage()
-                .evrakSec(konu, birim, tebligEdenKullanici, evrakTipi, aciklama)
+                .evrakSec(evrakKonular[0], birim, tebligEdenKullanici, evrakTipi, aciklama)
                 .tebligSil()
                 .islemMesaji().dikkatOlmali(dikkatMesajiSecimsizSilme);
 
         tebliglerPage
-                .evrakTikSec(konu, birim, tebligEdenKullanici, evrakTipi, aciklama, true)
+                .evrakTikSec(evrakKonular[0], birim, tebligEdenKullanici, evrakTipi, aciklama, true)
                 .tebligSil()
                 .islemMesaji().dikkatOlmali(dikkatMesaji);
 
@@ -373,43 +479,41 @@ public class TebligTebellugTest extends BaseTest {
                 .islemMesaji().basariliOlmali(basariMesaj);
 
         tebliglerPage
-                .evrakTikSec(konu, birim, tebligEdenKullanici, evrakTipi, aciklama, true)
+                .evrakTikSec(evrakKonular[0], birim, tebligEdenKullanici, evrakTipi, aciklama, true)
                 .tebligSil()
                 .islemMesaji().basariliOlmali(basariMesaj);
 
+        tebliglerPage
+                .evrakKontrol(evrakKonular[0], birim, tebligEdenKullanici, evrakTipi, aciklama, false);
 
         tebliglerPage
-                .evrakKontrol(konu, birim, tebligEdenKullanici, evrakTipi, aciklama, false);
-
-
-        tebliglerPage
-                .evrakSec("Veri Toplama", birim, tebligEdenKullanici, evrakTipi, "test7")
+                .evrakSec(evrakKonular[1], birim, tebligEdenKullanici, evrakTipi, aciklama)
                 .tebellugEt(true)
                 .islemMesaji().basariliOlmali(basariMesaj);
 
         tebliglerPage
-                .evrakSec("Cihaz Takip İşlemleri", birim, tebligEdenKullanici, evrakTipi, "test7")
+                .evrakSec(evrakKonular[2], birim, tebligEdenKullanici, evrakTipi, aciklama)
                 .tebellugEt(true)
                 .islemMesaji().basariliOlmali(basariMesaj);
 
         tebliglerPage
-                .evrakSec("Şikayet ve Talepler", birim, tebligEdenKullanici, evrakTipi, "test7")
+                .evrakSec(evrakKonular[3], birim, tebligEdenKullanici, evrakTipi, aciklama)
                 .tebellugEt(true)
                 .islemMesaji().basariliOlmali(basariMesaj);
 
         tebliglerPage
-                .evrakTikSec("Veri Toplama", birim, tebligEdenKullanici, evrakTipi, "test7", true)
-                .evrakTikSec("Cihaz Takip İşlemleri", birim, tebligEdenKullanici, evrakTipi, "test7", true)
-                .evrakTikSec("Şikayet ve Talepler", birim, tebligEdenKullanici, evrakTipi, "test7", true)
+                .evrakTikSec(evrakKonular[1], birim, tebligEdenKullanici, evrakTipi, aciklama, true)
+                .evrakTikSec(evrakKonular[2], birim, tebligEdenKullanici, evrakTipi, aciklama, true)
+                .evrakTikSec(evrakKonular[3], birim, tebligEdenKullanici, evrakTipi, aciklama, true)
                 .tebligSil()
                 .islemMesaji().basariliOlmali(basariMesaj);
 
 
         tebellugEttiklerimPage
                 .openPage()
-                .evrakSec("Veri Toplama", "", "", "")
-                .evrakSec("Cihaz Takip İşlemleri", "", "", "")
-                .evrakSec("Şikayet ve Talepler", "", "", "");
+                .evrakSec(evrakKonular[1], "", tarihBugun, nolar[1])
+                .evrakSec(evrakKonular[2], "", tarihBugun, nolar[2])
+                .evrakSec(evrakKonular[3], "", tarihBugun, nolar[3]);
 
 
     }

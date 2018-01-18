@@ -96,7 +96,8 @@ public class TebliglerPage extends MainPage {
 
     @Step("Sil butonuna tıkla.")
     public TebliglerPage tebligSil() {
-        btnTebligSil.click();
+        $$(By.xpath("//div[@id='mainInboxForm:inboxDataTable:inboxIslemlerToolbar']//span[contains(@class, 'document-messageDelete')]")).last().click();
+        //btnTebligSil.click();
         return this;
     }
 
@@ -117,12 +118,10 @@ public class TebliglerPage extends MainPage {
     @Step("Tebelliğ Et butonuna tıkla.")
     public TebliglerPage tebellugEt(boolean onay) {
         btnTebellugEt.click();
-
         if (onay == true)
-            btnTebellugEvet.click();
+            $$(By.id("mainInboxForm:tebellugEtEvetButton")).last().click();
         else
-            btnTebellugHayir.click();
-
+            $$(By.id("mainInboxForm:tebellugEtHayirButton")).last().click();
         return this;
     }
 
