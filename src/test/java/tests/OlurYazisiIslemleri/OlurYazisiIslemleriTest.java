@@ -170,11 +170,13 @@ public class OlurYazisiIslemleriTest extends BaseTest {
         GalenControl galen = new GalenControl();
         galen.setTextValuesToGalenSpec("TS0577", params);
         galen.galenGenerateDump("TS0577");
+/*
 
         $x("//div[@id='yeniOnayEvrakForm:allPanels_content']//button[.='T.C.']").shouldBe(visible);
         $x("//div[@id='yeniOnayEvrakForm:allPanels_content']//span[.='GENEL MÜDÜRLÜK MAKAMI']").shouldBe(visible);
         $x("//div[@id='yeniOnayEvrakForm:allPanels_content']//span[.='BİLİŞİM HİZMETLERİ GENEL MÜDÜR YARDIMCISI']").shouldBe(visible);
         $x("//div[@id='yeniOnayEvrakForm:allPanels_content']//span[.='YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ']").shouldBe(visible);
+*/
 
         galen.galenLayoutControl("TS0577");
 
