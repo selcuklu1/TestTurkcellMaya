@@ -302,7 +302,6 @@ public class TebligTebellugTest extends BaseTest {
     @Test(enabled = true, description = "TS0936 : Tebliğ hatırlatma ve Mesaj kontrolü")
     public void TS0936() {
 
-
         GelenEvrakKayitPage gelenEvrakKayitPage = new GelenEvrakKayitPage();
         GelenEvraklarPage gelenEvraklarPage = new GelenEvraklarPage();
         TebligEttiklerimPage tebligEttiklerimPage = new TebligEttiklerimPage();
@@ -362,9 +361,6 @@ public class TebligTebellugTest extends BaseTest {
         String basariMesaj = "İşlem başarılıdır!";
         String mesajKonu = "Tebliğ Hatırlatma";
 
-
-        login("mbozdemir", "123");
-
         tebligEttiklerimPage
                 .openPage()
                 .evrakSec(konu, "", evrakTarihi, randomNumber)
@@ -374,9 +370,6 @@ public class TebligTebellugTest extends BaseTest {
                 .tebligHatirlatNotuGir(tebligHatirlatNotu)
                 .tebligHatirlat()
                 .islemMesaji().basariliOlmali(basariMesaj);
-
-        logout();
-
 
         login("huser2", "123");
 
