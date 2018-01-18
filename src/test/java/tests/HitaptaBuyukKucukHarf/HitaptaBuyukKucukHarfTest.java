@@ -1,11 +1,18 @@
 package tests.HitaptaBuyukKucukHarf;
 
 import common.BaseTest;
+import data.User;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import pages.pageComponents.SearchTable;
+import pages.pageData.alanlar.EvrakDili;
+import pages.pageData.alanlar.GeregiSecimTipi;
 import pages.ustMenuPages.EvrakOlusturPage;
+import pages.ustMenuPages.SistemSabitleriPage;
+
+import static com.codeborne.selenide.Condition.text;
 
 /****************************************************
  * Tarih: 2017-12-28
@@ -17,6 +24,7 @@ import pages.ustMenuPages.EvrakOlusturPage;
 public class HitaptaBuyukKucukHarfTest extends BaseTest {
 
     EvrakOlusturPage evrakOlustur;
+    User user1 = new User("user1", "123", "User1 TEST", "AnaBirim1", "Altyapı ve Sistem Yönetim Uzmanı");
 
     @BeforeMethod
     public void loginBeforeTests() {
@@ -138,15 +146,31 @@ public class HitaptaBuyukKucukHarfTest extends BaseTest {
 
     }
 
-    @Test(description = "TS2090: Dağıtım planına ve kullanıcıya hitap")
+    @Test(enabled = false, description = "TS2090: Dağıtım planına ve kullanıcıya hitap")
     public void TS2090() throws Exception {
-
         //Dağıtım planına ve kullanıcıya hitap
-
-
         //sistemde kayıtlı dağıtım planı olmalı, dağıtım planının içeriğinde küçük harfli birim, büyük harfli kurum olmalı
-
 //        DAĞITIM YERLERİNE
+//        login(user1);
+        String uygulanacakDeger;
+
+        SistemSabitleriPage sistemSabitleriPage = new SistemSabitleriPage().openPage();
+        sistemSabitleriPage.sorgulamaVeFiltreleme().alanDoldur("Ad", "Dağıtım Planı Hitap").butonaTikla("Ara");
+
+        sistemSabitleriPage.openSistemSabitleriTab("Genel İşlemler");
+        SearchTable searchTable = sistemSabitleriPage.getSistemSabitleriList("Genel İşlemler").findRows(text("Dağıtım Planı Hitap"));
+        uygulanacakDeger = searchTable.getColumnValue("Uygulanacak Değer").text();
+        searchTable.columnHeaderControl(text("Ad"),text("Uygulanacak Değer"),text("Aktif Değer"),text("Durum"),text("Açıklama"));
+
+        String konu = "TS2090_" + getSysDate();
+        pages.newPages.EvrakOlusturPage evrakOlusturPage = new pages.newPages.EvrakOlusturPage().openPage();
+        evrakOlusturPage.bilgileriTab()
+                .konuDoldur("010.10")
+                .konuDoldur(konu)
+                .evrakDiliSec(EvrakDili.Turkce)
+                .kaldiralacakKlasorleriSec("Diğer")
+                .geregiSecimTipiSec(GeregiSecimTipi.DAGITIM_PLANLARI);
+
     }
 
     public void hitapKontrol(String geregiSecimTipi, String geregi, String beklenenHitap) throws InterruptedException {

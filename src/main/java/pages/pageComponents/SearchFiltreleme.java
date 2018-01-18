@@ -87,6 +87,32 @@ public class SearchFiltreleme extends BaseLibrary {
         return elements;
     }
 
+    @Step("\"Sorgulama ve Filtreleme\"de \"{name}\"'butonu bul")
+    public SelenideElement getButton(String name) {
+        sorgulamaVeFiltrelemeyiGenislet();
+        return parentElement.$x("descendant::button[.='" + name + "']");
+    }
+
+
+    @Step("{alanLabel} alanı doldur")
+    public SearchFiltreleme alanDoldur(String alanLabel, String deger){
+        getFilterInput(alanLabel).setValue(deger);
+        return this;
+    }
+
+    @Step("{alanLabel} alanda sec")
+    public SearchFiltreleme alanSec(String alanLabel, String deger){
+        getFilterSelect(alanLabel).setValue(deger);
+        return this;
+    }
+
+    @Step("{buttonLabel} butona tikla")
+    public SearchFiltreleme butonaTikla(String buttonLabel){
+        getButton(buttonLabel).click();
+        return this;
+    }
+
+
 
 /*    @Step("\"Sorgulama ve Filtreleme\"de \"{name}\" alanı doldur")
     public SearchFiltreleme filtrelemeAlaniDoldur(String name, CharSequence... keysToSend) {

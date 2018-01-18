@@ -5,10 +5,8 @@ import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import pages.MainPage;
 
-import static com.codeborne.selenide.Condition.enabled;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$x;
 import static com.codeborne.selenide.Selenide.sleep;
 
 /**
@@ -129,7 +127,7 @@ public class EvrakPageButtons extends MainPage {
     //region Kaydet ve Onaya Sun
     @Step("Kaydet ve Onaya Sun butonu bul")
     public SelenideElement getEvrakKaydetVeOnayaSun(){
-        return getButton("Kaydet ve Onaya Sun'");
+        return getButton("Kaydet ve Onaya Sun");
     }
 
     @Step("Kaydet ve Onaya Sun")

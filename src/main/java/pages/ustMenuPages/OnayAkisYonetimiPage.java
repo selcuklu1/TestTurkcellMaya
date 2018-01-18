@@ -2,6 +2,7 @@ package pages.ustMenuPages;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
@@ -432,6 +433,12 @@ public class OnayAkisYonetimiPage extends MainPage {
     public OnayAkisYonetimiPage birimTikla() {
         btnBirim.shouldBe(visible);
         btnBirim.click();
+        return this;
+    }
+
+    //İşlem mesajındaki yazılar tam yüklenmiyor hata veriyor. O yüzden 1 sn bekleniyor.
+    public OnayAkisYonetimiPage islemMesajiBekle() {
+        Selenide.sleep(1000);
         return this;
     }
 }

@@ -6,7 +6,6 @@ import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
@@ -216,7 +215,7 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
         return this;
     }
 
-    @Step("Tarih aralığını seç. Başlangıç: {0} - Bitiş:")
+    @Step("Tarih aralığını seç. Başlangıç: \"{baslangicTarihi}\" - Bitiş: \"{bitisTarihi}\" ")
     public TopluPostalanacakEvraklarPage tarihAraligiSec(String baslangicTarihi, String bitisTarihi) {
 
         txtBaslangic.setValue(baslangicTarihi);

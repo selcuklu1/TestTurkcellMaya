@@ -1,7 +1,6 @@
 package tests.GelenGidenEvrakKayit;
 
 import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.WebDriverRunner;
 import common.BaseTest;
 import data.User;
 import io.qameta.allure.Severity;
@@ -226,13 +225,17 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, priority = 7, description = "TS1401 : Kaydedilen Gelen Evrak raporu")
+    @Test(enabled = false, priority = 7, description = "TS1401 : Kaydedilen Gelen Evrak raporu")
     public void TS1401() throws InterruptedException, IOException, ParseException {
 
-//        String evrakNO321 = "6387";
-//        String evrakNO328 = "6391";
+//        String evrakNO321 = "6493";
+//        String evrakNO328 = "6497";
 //        String evrakNo = evrakNO321;
 //        String evrakNo1 = evrakNO328;
+//        String remoteDownloadPath = getDownloadPath();
+        String remoteDownloadPath = "C:\\Users\\optiim\\Downloads\\";
+        System.out.println(remoteDownloadPath);
+
         String geldigiYer = "Kurum";
 
         login(yakyol);
@@ -272,8 +275,8 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 //                .tabloKontrolu(evrakNO321)
                 .tabloKontrouAll(evrakNO321, evrakNO328)
 //                .tabloKontrouAll(evrakNO328)
-                .raporAlExcel()
-                .waitForLoadingJS(WebDriverRunner.getWebDriver(), 180);
+                .raporAlExcel(remoteDownloadPath);
+//                .waitForLoadingJS(WebDriverRunner.getWebDriver(), 180);
 
 //        kaydedilenGelenEvrakPage
 //                .gelenEvrakNoDoldur(evrakNO328)
@@ -284,8 +287,8 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 //                .islemMesaji().basariliOlmali(basariMesaji);
 
         kaydedilenGelenEvrakPage
-                .raporAlPdf()
-                .waitForLoadingJS(WebDriverRunner.getWebDriver(), 180);
+                .raporAlPdf(remoteDownloadPath);
+//                .waitForLoadingJS(WebDriverRunner.getWebDriver(), 180);
     }
 
     @Severity(SeverityLevel.CRITICAL)

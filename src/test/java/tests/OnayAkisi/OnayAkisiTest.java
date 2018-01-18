@@ -440,6 +440,7 @@ public class OnayAkisiTest extends BaseTest {
         String defaultGelenKullanici2 = "Sezai ÇELİK";
         String birimDisiKullanici = "MEHMET BAYER";
         String olanBirOnayAkisi = "Sezai Çelik2";
+        String imzaciKullanici = "Zübeyde TEKİN";
         String dikkatMesaji = "Kullanıcı boş değer olamaz.";
         String dikkatMesaji2 = "Onay akışındaki kullanıcıların yapacağı işlemi seçiniz.";
         String dikkatMesaji3 = "Eklemek istediğiniz onay akışında imzacı bulunmuyor. Lütfen onay akışında en az bir imzacı seçiniz.";
@@ -452,7 +453,8 @@ public class OnayAkisiTest extends BaseTest {
                 .openPage()
                 .yeniOnayAkisiEkle()
                 .onayAkisiIslemleriAdDoldur(onayAkisi)
-                .kullaniciyaKullaniciTipiSec(defaultGelenKullanici, "IMZALAMA")
+                .onayAkisiIslemlerKullaniciDoldur(imzaciKullanici)
+                .kullaniciyaKullaniciTipiSec(imzaciKullanici, "IMZALAMA")
                 .onayAkisiIslemleriKaydet()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
@@ -462,9 +464,9 @@ public class OnayAkisiTest extends BaseTest {
                 .ara()
                 .guncelle()
 
-                .onayAkisiIslemleriKullaniciSil(defaultGelenKullanici)
+                .onayAkisiIslemleriKullaniciSil(imzaciKullanici)
                 .onayAkisiIslemleriKaydet()
-                .islemMesaji().dikkatOlmali(dikkatMesaji);
+                .islemMesaji().dikkatOlmali(dikkatMesaji3);
 
         onayAkisYonetimiPage
                 .kullanicilarAlanindaGoruntulenmemeKontrolu(birimDisiKullanici)
@@ -475,19 +477,19 @@ public class OnayAkisiTest extends BaseTest {
                 .islemMesaji().dikkatOlmali(dikkatMesaji2);
 
         onayAkisYonetimiPage
-                .onayAkisiIslemlerKullaniciDoldur(defaultGelenKullanici)
-                .kullaniciyaKullaniciTipiSec(defaultGelenKullanici, "PARAFLAMA")
+                .onayAkisiIslemlerKullaniciDoldur(imzaciKullanici)
+                .kullaniciyaKullaniciTipiSec(imzaciKullanici, "PARAFLAMA")
                 .onayAkisiIslemleriKullaniciSil(birimDisiKullanici)
                 .onayAkisiIslemleriKaydet()
                 .islemMesaji().dikkatOlmali(dikkatMesaji3);
 
         onayAkisYonetimiPage
-                .kullaniciyaKullaniciTipiSec(defaultGelenKullanici, "KONTROL")
+                .kullaniciyaKullaniciTipiSec(imzaciKullanici, "KONTROL")
                 .onayAkisiIslemleriKaydet()
                 .islemMesaji().dikkatOlmali(dikkatMesaji3);
 
         onayAkisYonetimiPage
-                .kullaniciyaKullaniciTipiSec(defaultGelenKullanici, "IMZALAMA")
+                .kullaniciyaKullaniciTipiSec(imzaciKullanici, "IMZALAMA")
                 .onayAkisiIslemleriAdSil()
                 .onayAkisiIslemleriKaydet()
                 .islemMesaji().uyariOlmali(dikkatMesaji4);
@@ -495,6 +497,7 @@ public class OnayAkisiTest extends BaseTest {
         onayAkisYonetimiPage
                 .onayAkisiIslemleriAdDoldur(olanBirOnayAkisi)
                 .onayAkisiIslemleriKaydet()
+                .islemMesajiBekle()
                 .islemMesaji().dikkatOlmali(dikkatMesaji5);
 
         //TODO: Farklı kullanıcı ile girilip ekrandan yaratmak yerine sql query ile db den data çekilmelidir.
@@ -523,7 +526,7 @@ public class OnayAkisiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TS1892b: Onay akışı kaydetmede alan kontrolleri")
+    @Test(enabled = false, description = "TS1892b: Onay akışı kaydetmede alan kontrolleri")
     public void TS1892b() {
 
         String onayAkisi = "OptiimTest" + getSysDate();
@@ -537,6 +540,7 @@ public class OnayAkisiTest extends BaseTest {
         String dikkatMesaji4 = "Zorunlu alanları doldurunuz";
         String dikkatMesaji5 = "Aynı isimde onay akışı bulunmaktadır. Aynı isimli birden fazla onay akışı kaydedemezsiniz.";
         String dikkatMesaji6 = "Son kullanıcı imzacı olmalıdır!";
+        String dikkatMesaji7 = "Onay akışındaki kullanıcıların yapacağı işlemi seçiniz.";
         String basariMesaji = "İşlem başarılıdır!";
 
         //Tüm dataları bozmamak için, kendi onay akışı yaratıp işlemleri onun üzerinden yapıyor.
@@ -544,25 +548,26 @@ public class OnayAkisiTest extends BaseTest {
                 .openPage()
                 .yeniOnayAkisiEkle()
                 .onayAkisiIslemleriAdDoldur(onayAkisi)
-                .onayAkisiKullaniciKontrol(defaultGelenKullanici, "PARAFLAMA")
+/*                .onayAkisiKullaniciKontrol(defaultGelenKullanici, "PARAFLAMA")
                 .kullaniciyaKullaniciTipiSec(defaultGelenKullanici, "IMZALAMA")
                 .onayAkisiIslemleriKaydet()
-                .islemMesaji().basariliOlmali(basariMesaji);
+                .islemMesaji().basariliOlmali(basariMesaji);*/
 
-        onayAkisYonetimiPage
+/*        onayAkisYonetimiPage
                 .filtreAc()
                 .filtredeAdDoldur(onayAkisi)
                 .ara()
-                .guncelle()
+                .guncelle()*/
 
-                .kullaniciyaKullaniciTipiSec(defaultGelenKullanici, "PARAFLAMA")
+                //.kullaniciyaKullaniciTipiSec(defaultGelenKullanici, "PARAFLAMA")
                 .kullanicilarAlanindaGoruntulenmemeKontrolu(birimDisiKullanici)
                 .onayAkisiIslemlerKullaniciAlaniniSil()
                 .birimTikla()
                 .onayAkisiIslemlerKullaniciDoldur(birimDisiKullanici)
-                .onayAkisiIslemleriKullaniciSil(birimDisiKullanici)
+                .onayAkisiIslemleriAdDoldur(onayAkisi)
+                //.onayAkisiIslemleriKullaniciSil(birimDisiKullanici)
                 .onayAkisiIslemleriKaydet()
-                .islemMesaji().dikkatOlmali(dikkatMesaji3);
+                .islemMesaji().dikkatOlmali(dikkatMesaji7);
 
         onayAkisYonetimiPage
                 .kullaniciyaKullaniciTipiSec(defaultGelenKullanici, "KONTROL")

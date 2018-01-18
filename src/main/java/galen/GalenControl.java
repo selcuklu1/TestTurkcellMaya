@@ -1,4 +1,4 @@
-package pages.galen;
+package galen;
 
 import com.codeborne.selenide.WebDriverRunner;
 import com.galenframework.api.Galen;
@@ -8,14 +8,15 @@ import com.galenframework.reports.HtmlReportBuilder;
 import com.galenframework.reports.model.LayoutReport;
 import common.BaseLibrary;
 import io.qameta.allure.Allure;
-import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
 import org.openqa.selenium.Dimension;
 import org.testng.Assert;
-import pages.pageData.alanlar.OnayKullaniciTipi;
 
 import java.io.*;
-import java.util.*;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Yazan: Ilyas Bayraktar
@@ -57,7 +58,7 @@ public class GalenControl extends BaseLibrary {
     public void galenLayoutControl(String testName) throws IOException {
         Allure.addAttachment("Layout report link", "file:///Users/ilyas/WorkspaceJava/Git/BelgenetFTA/galenReports/TS0577/report.html");
 
-        Dimension browserSize = new Dimension(1280, 800);
+        Dimension browserSize = new Dimension(1440, 900);
         WebDriverRunner.getWebDriver().manage().window().setSize(browserSize);
 
         // Create a layoutReport object

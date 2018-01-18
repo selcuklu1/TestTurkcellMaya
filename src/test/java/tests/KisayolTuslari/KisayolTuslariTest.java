@@ -1,9 +1,7 @@
 package tests.KisayolTuslari;
 
-import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
-import com.codeborne.selenide.WebDriverRunner;
 import common.BaseTest;
 import data.User;
 import io.qameta.allure.Severity;
@@ -14,20 +12,17 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pages.MainPage;
 import pages.newPages.EvrakOlusturPage;
 import pages.newPages.OlurYazisiOlusturPage;
 import pages.pageComponents.EvrakPageButtons;
-import pages.pageComponents.TextEditor;
-import pages.pageComponents.UstMenu;
 import pages.pageComponents.tabs.BilgilerTab;
 import pages.pageComponents.tabs.EditorTab;
-import pages.pageData.UstMenuData;
 
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$x;
+import static com.codeborne.selenide.Selenide.sleep;
 import static pages.pageData.UstMenuData.*;
 //import pages.ustMenuPages.EvrakOlusturPage;
 
@@ -82,7 +77,7 @@ public class KisayolTuslariTest extends BaseTest {
         new EvrakOlusturPage().openPage();
 
         String sayfaAdi = EvrakIslemleri.GidenEvrakKayit.getName();
-        CharSequence kisayol = Keys.chord(Keys.LEFT_SHIFT, "ı");
+        CharSequence kisayol = Keys.chord(Keys.LEFT_SHIFT, "i");
 
         step1(sayfaAdi, kisayol);
         step2(sayfaAdi, kisayol);
@@ -185,14 +180,14 @@ public class KisayolTuslariTest extends BaseTest {
         SelenideElement menuButtonElement = $(By.id(altMenuDialogId)).$(By.linkText(menuButon));
         SelenideElement tooltipElement = $(By.id("tiptip_content"));
 
-        if (menuButtonElement.is(Condition.not(Condition.visible)))
+        if (menuButtonElement.is(not(visible)))
             menuGrupButton.click();
 
         menuButtonElement.hover();
 
         String tooltip = $(By.id("tiptip_content")).innerText();
         System.out.println(tooltip);
-        tooltipElement.shouldHave(Condition.text(beklenenTooltip));
+        tooltipElement.shouldHave(text(beklenenTooltip));
         //Assert.assertEquals(tooltip, beklenenTooltip);
     }
 
@@ -200,6 +195,7 @@ public class KisayolTuslariTest extends BaseTest {
     public void step1(String sayfaAdi, CharSequence kisayol){
         new EditorTab().openTab().getEditor().editor().sendKeys(kisayol);
         Selenide.switchTo().window(0);
+        sleep(5000);
         Assert.assertFalse(mainPage.getFooterPageButton(sayfaAdi).exists(), sayfaAdi + " ekranının açılmadığı görülür");
     }
 
@@ -210,18 +206,21 @@ public class KisayolTuslariTest extends BaseTest {
         $("#print").sendKeys(kisayol);
         driver.close();
         Selenide.switchTo().window(0);
+        sleep(5000);
         Assert.assertFalse(mainPage.getFooterPageButton(sayfaAdi).exists(), sayfaAdi + " ekranının açılmadığı görülür");
     }
 
     @Step("Herhangi bir input alanını tıkla \"Shift+O\" kısayolunu tıkla. Olur Oluştur ekranının açılmadığı görülür")
     public void step3(String sayfaAdi, CharSequence kisayol){
         new BilgilerTab().openTab().getKonuKodu().sendKeys(kisayol);
+        sleep(5000);
         Assert.assertFalse(mainPage.getFooterPageButton(sayfaAdi).exists(), sayfaAdi + " ekranının açılmadığı görülür");
     }
 
     @Step("Editör, pdf veya input alanlarına focuslu olmadan \"Shift+O\" kısayolunu tıkla. Olur Oluştur ekranının AÇILDIĞI görülür")
     public void step4(String sayfaAdi, CharSequence kisayol){
         new BilgilerTab().getTabButton().sendKeys(kisayol);
+        sleep(5000);
         Assert.assertTrue(mainPage.getFooterPageButton(sayfaAdi).exists(), sayfaAdi + " ekranının açıldığı görülür");
     }
 
