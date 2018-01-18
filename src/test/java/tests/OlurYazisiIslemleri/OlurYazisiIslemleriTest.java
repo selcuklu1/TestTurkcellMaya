@@ -62,7 +62,7 @@ public class OlurYazisiIslemleriTest extends BaseTest {
     String konuKoduSayi = "01-010.10-";
 
     //Teskilat Kisi tanimlari-->birim yönetimi ekranında birimin olur metni boş olmalı
-    @Test(description = "TS0577: Olur yazısı oluşturulması ve gönderilmesi", enabled = false)
+    @Test(description = "TS0577: Olur yazısı oluşturulması ve gönderilmesi", enabled = true)
     //@Link(name = "Galen", type = "html", url = "file:///Users/ilyas/WorkspaceJava/Git/BelgenetFTA/galenReports/TS0577/report.html")
     @Link(name = "Galen", type = "html", url = "galenReports/TS0577/report.html")
     public void TS0577() throws Exception {
@@ -237,18 +237,18 @@ public class OlurYazisiIslemleriTest extends BaseTest {
     BilgilerTab bilgilerTab;
     EditorTab editorTab;
 
-    @Test(description = "TS1488: Olur yazısında alan kontrolleri", enabled = true)
+    @Test(description = "TS1488: Olur yazısında alan kontrolleri", enabled = false)
     public void TS1488() throws Exception {
         login(user1);
         olurYazisiOlusturPage2 = new OlurYazisiOlusturPage().openPage();
         bilgilerTab = olurYazisiOlusturPage2.bilgileriTab();
 
-        /*step2();
+        step2();
         step3();
         step4();
         step5();
         step6();
-        step7();*/
+        step7();
 
     }
 
