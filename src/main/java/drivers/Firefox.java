@@ -25,11 +25,11 @@ public class Firefox extends BaseTest implements WebDriverProvider {
 //        System.setProperty("webdriver.gecko.driver","/Users/ilyas/Documents/WebDrivers/geckodriver-v0.19.0");
 //        System.setProperty("webdriver.gecko.driver","/Users/ilyas/Documents/WebDrivers/geckodriver-v0.18.0");
         FirefoxProfile profile = new FirefoxProfile();
-        FirefoxOptions options = new FirefoxOptions()
-                .setProfile(profile)
-                .setAcceptInsecureCerts(true)
-                .addPreference("security.insecure_field_warning.contextual.enabled", false)
-                .setLogLevel(FirefoxDriverLogLevel.fromLevel(Level.OFF));
+        FirefoxOptions options = new FirefoxOptions();
+        options.setProfile(profile);
+                //.setAcceptInsecureCerts(true)
+                //.addPreference("security.insecure_field_warning.contextual.enabled", false)
+                //.setLogLevel(FirefoxDriverLogLevel.fromLevel(Level.OFF));
         options.addPreference("browser.download.folderList", 2);
         options.addPreference("browser.download.dir", TestData.docDownloadPathWindows);
 

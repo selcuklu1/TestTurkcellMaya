@@ -310,11 +310,11 @@ public class OlurYazisiIslemleriTest extends BaseTest {
     }
 
 
-    @BeforeMethod(alwaysRun = true)
+    /*@BeforeMethod(alwaysRun = true)
     public void setUp() {
         //Configuration.browser = "drivers.Firefox";
 
-        /*FirefoxOptions options = new FirefoxOptions()
+        FirefoxOptions options = new FirefoxOptions()
                 .setAcceptInsecureCerts(true)
                 .addPreference("security.insecure_field_warning.contextual.enabled", false)
                 .setLogLevel(FirefoxDriverLogLevel.fromLevel(Level.OFF));
@@ -327,6 +327,6 @@ public class OlurYazisiIslemleriTest extends BaseTest {
 
         WebDriverRunner.addListener(new DriverEventListener());
 //        WebDriverRunner.setWebDriver((new EventFiringWebDriver(WebDriverRunner.getWebDriver()).register(new DriverEventListener())));
-*/
-    }
+
+    }*/
 }
