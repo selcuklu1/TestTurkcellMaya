@@ -138,8 +138,10 @@ public class BaseTest extends BaseLibrary {
         System.out.println("STATUS: " + result);
         System.out.println("");
         System.out.println("DESCRIPTION: "+ testResult.getMethod().getDescription());
-        System.out.println("");
-        System.out.println("ERROR: " + testResult.getThrowable().getMessage());
+        if (testResult.getThrowable()!=null) {
+            System.out.println("");
+            System.out.println("ERROR: " + testResult.getThrowable().getMessage());
+        }
         //        System.out.println("Test Annotations: " + testResult.getMethod().getMethod().getDeclaredAnnotation(org.testng.annotations.Test.class).toString());
         System.out.println("///////////////////////////////////////////////////////");
         System.out.println("///////////////////////////////////////////////////////");
