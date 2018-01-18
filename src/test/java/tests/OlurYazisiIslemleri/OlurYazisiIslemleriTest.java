@@ -1,11 +1,23 @@
 package tests.OlurYazisiIslemleri;
 
+import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.WebDriverRunner;
 import common.BaseTest;
+import data.TestData;
 import data.User;
 import galen.GalenControl;
 import io.qameta.allure.Link;
 import io.qameta.allure.Step;
+import listeners.DriverEventListener;
+import org.openqa.selenium.Platform;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxDriverLogLevel;
+import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.MainPage;
 import pages.newPages.OlurYazisiOlusturPage;
@@ -20,6 +32,7 @@ import pages.pageData.alanlar.OnayKullaniciTipi;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.logging.Level;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
@@ -49,7 +62,7 @@ public class OlurYazisiIslemleriTest extends BaseTest {
     String konuKoduSayi = "01-010.10-";
 
     //Teskilat Kisi tanimlari-->birim yönetimi ekranında birimin olur metni boş olmalı
-    @Test(description = "TS0577: Olur yazısı oluşturulması ve gönderilmesi", enabled = true)
+    @Test(description = "TS0577: Olur yazısı oluşturulması ve gönderilmesi", enabled = false)
     //@Link(name = "Galen", type = "html", url = "file:///Users/ilyas/WorkspaceJava/Git/BelgenetFTA/galenReports/TS0577/report.html")
     @Link(name = "Galen", type = "html", url = "galenReports/TS0577/report.html")
     public void TS0577() throws Exception {
@@ -230,12 +243,12 @@ public class OlurYazisiIslemleriTest extends BaseTest {
         olurYazisiOlusturPage2 = new OlurYazisiOlusturPage().openPage();
         bilgilerTab = olurYazisiOlusturPage2.bilgileriTab();
 
-        step2();
+        /*step2();
         step3();
         step4();
         step5();
         step6();
-        step7();
+        step7();*/
 
     }
 
@@ -294,5 +307,26 @@ public class OlurYazisiIslemleriTest extends BaseTest {
         olurYazisiOlusturPage2.pageButtons().evrakKaydetVeOnayaSunTikla()
                 .islemMesaji().uyariOlmali("Zorunlu alanları doldurunuz");
         //Evrak konusu boş olamaz!
+    }
+
+
+    @BeforeMethod(alwaysRun = true)
+    public void setUp() {
+        //Configuration.browser = "drivers.Firefox";
+
+        /*FirefoxOptions options = new FirefoxOptions()
+                .setAcceptInsecureCerts(true)
+                .addPreference("security.insecure_field_warning.contextual.enabled", false)
+                .setLogLevel(FirefoxDriverLogLevel.fromLevel(Level.OFF));
+        options.addPreference("browser.download.folderList", 2);
+        options.addPreference("browser.download.dir", TestData.docDownloadPathLinux);
+        WebDriver driver = new EventFiringWebDriver(new FirefoxDriver(options)).register(new DriverEventListener());
+        WebDriverRunner.setWebDriver(driver);
+//        WebDriverRunner.setWebDriver(new FirefoxDriver(options));
+
+
+        WebDriverRunner.addListener(new DriverEventListener());
+//        WebDriverRunner.setWebDriver((new EventFiringWebDriver(WebDriverRunner.getWebDriver()).register(new DriverEventListener())));
+*/
     }
 }
