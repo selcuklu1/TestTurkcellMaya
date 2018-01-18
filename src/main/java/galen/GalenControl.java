@@ -13,10 +13,9 @@ import org.openqa.selenium.Dimension;
 import org.testng.Assert;
 
 import java.io.*;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
+import static com.codeborne.selenide.Selenide.sleep;
 
 /**
  * Yazan: Ilyas Bayraktar
@@ -37,10 +36,13 @@ public class GalenControl extends BaseLibrary {
      * "/src/test/resources/testName/dump" path
      */
     public void galenGenerateDump(String testName) {
+        Locale defaultLocal = Locale.getDefault();
+        //Locale turkishLocal = new Locale("tr", "TR");
+        Locale.setDefault(new Locale("en", "TR"));
         try {
-            Dimension browserSize = new Dimension(1280, 800);
-            WebDriverRunner.getWebDriver().manage().window().setSize(browserSize);
-
+            //Dimension browserSize = new Dimension(1280, 800);
+            //WebDriverRunner.getWebDriver().manage().window().setSize(browserSize);
+            sleep(5000);
             waitForLoadingJS(WebDriverRunner.getWebDriver());
 
             new GalenPageDump(testName).dumpPage(WebDriverRunner.getWebDriver(),
@@ -51,16 +53,25 @@ public class GalenControl extends BaseLibrary {
         } catch (IOException e) {
             e.printStackTrace();
             throw new RuntimeException("Galen dumpPage error: " + e.getMessage());
+        }finally {
+            Locale.setDefault(defaultLocal);
         }
     }
 
     @Step("\"{testName}\" görsel kontrol")
     public void galenLayoutControl(String testName) throws IOException {
-        Allure.addAttachment("Layout report link", "file:///Users/ilyas/WorkspaceJava/Git/BelgenetFTA/galenReports/TS0577/report.html");
 
-        Dimension browserSize = new Dimension(1440, 900);
-        WebDriverRunner.getWebDriver().manage().window().setSize(browserSize);
+        Locale defaultLocal = Locale.getDefault();
+        //Locale turkishLocal = new Locale("tr", "TR");
+        Locale.setDefault(new Locale("en", "TR"));
 
+
+        Allure.addAttachment("Layout report link", "galenReports/TS0577/report.html");
+
+        //Dimension browserSize = new Dimension(1440, 900);
+        //WebDriverRunner.getWebDriver().manage().window().setSize(browserSize);
+        sleep(5000);
+        waitForLoadingJS(WebDriverRunner.getWebDriver());
         // Create a layoutReport object
         // checkLayout function checks the layout and returns a LayoutReport
         // object
@@ -86,6 +97,7 @@ public class GalenControl extends BaseLibrary {
         // Create a report under /target folder based on tests list
         htmlReportBuilder.build(galenTests, "galenReports/" + testName + "/");
 
+        Locale.setDefault(defaultLocal);
         // If layoutReport has errors Assert Fail
         if (layoutReport.errors() > 0) {
             //ExtentTestManager.getTest().log(LogStatus.FAIL, "Galen Layout test failed.");
@@ -93,6 +105,7 @@ public class GalenControl extends BaseLibrary {
             System.out.println("Galen Layout test failed.");
             Assert.fail("Layout test failed");
         }
+
 
         maximazeBrowser();
     }
