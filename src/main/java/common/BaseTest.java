@@ -92,8 +92,13 @@ public class BaseTest extends BaseLibrary {
         Allure.addAttachment("Annotations", desc);
 
         System.out.println("///////////////////////////////////////////////////////");
-        System.out.println("Test Started: " + testName);
-        System.out.println("Test Annotations: " + test.getDeclaredAnnotation(org.testng.annotations.Test.class).toString());
+        System.out.println("///////////////////////////////////////////////////////");
+        System.out.println("TEST: " + testName);
+        System.out.println("");
+        System.out.println("STATUS: Started");
+        System.out.println("");
+        System.out.println("TEST ANNOTATIONS: " + test.getDeclaredAnnotation(org.testng.annotations.Test.class).toString());
+        System.out.println("///////////////////////////////////////////////////////");
         System.out.println("///////////////////////////////////////////////////////");
     }
 
@@ -127,8 +132,16 @@ public class BaseTest extends BaseLibrary {
             takeScreenshot();
 
         System.out.println("///////////////////////////////////////////////////////");
-        System.out.println("Test " + result + ": " + testResult.getMethod().getDescription());
-//        System.out.println("Test Annotations: " + testResult.getMethod().getMethod().getDeclaredAnnotation(org.testng.annotations.Test.class).toString());
+        System.out.println("///////////////////////////////////////////////////////");
+        System.out.println("TEST: " + testResult.getTestName());
+        System.out.println("");
+        System.out.println("STATUS: " + result);
+        System.out.println("");
+        System.out.println("DESCRIPTION: "+ testResult.getMethod().getDescription());
+        System.out.println("");
+        System.out.println("ERROR: " + testResult.getThrowable().getMessage());
+        //        System.out.println("Test Annotations: " + testResult.getMethod().getMethod().getDeclaredAnnotation(org.testng.annotations.Test.class).toString());
+        System.out.println("///////////////////////////////////////////////////////");
         System.out.println("///////////////////////////////////////////////////////");
 
         //Parallelde hatası vermemesi WebDriverRunner.closeWebDriver() eklendi.
