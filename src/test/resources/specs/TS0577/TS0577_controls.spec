@@ -62,7 +62,7 @@
 
         hitap:
             below hitapMetinAlani 0px
-            centered horizontally inside container 0 to 5px
+            centered horizontally inside container ~2px
 
     #Ilgi
         ilgiLabel:
