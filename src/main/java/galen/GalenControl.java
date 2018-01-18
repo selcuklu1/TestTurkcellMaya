@@ -40,8 +40,8 @@ public class GalenControl extends BaseLibrary {
         //Locale turkishLocal = new Locale("tr", "TR");
         Locale.setDefault(new Locale("en", "TR"));
         try {
-            //Dimension browserSize = new Dimension(1280, 800);
-            //WebDriverRunner.getWebDriver().manage().window().setSize(browserSize);
+            Dimension browserSize = new Dimension(1440, 900);
+            WebDriverRunner.getWebDriver().manage().window().setSize(browserSize);
             sleep(5000);
             waitForLoadingJS(WebDriverRunner.getWebDriver());
 
@@ -68,8 +68,8 @@ public class GalenControl extends BaseLibrary {
 
         Allure.addAttachment("Layout report link", "galenReports/TS0577/report.html");
 
-        //Dimension browserSize = new Dimension(1440, 900);
-        //WebDriverRunner.getWebDriver().manage().window().setSize(browserSize);
+        Dimension browserSize = new Dimension(1440, 900);
+        WebDriverRunner.getWebDriver().manage().window().setSize(browserSize);
         sleep(5000);
         waitForLoadingJS(WebDriverRunner.getWebDriver());
         // Create a layoutReport object
