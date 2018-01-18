@@ -37,6 +37,7 @@ import java.util.logging.Level;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Selenide.$x;
 import static com.codeborne.selenide.Selenide.sleep;
 
 /**
@@ -168,7 +169,13 @@ public class OlurYazisiIslemleriTest extends BaseTest {
         params.put("ek", "Ekleri Tab "+ konu);
         GalenControl galen = new GalenControl();
         galen.setTextValuesToGalenSpec("TS0577", params);
-        //galen.galenGenerateDump("TS0577");
+        galen.galenGenerateDump("TS0577");
+
+        $x("//div[@id='yeniOnayEvrakForm:allPanels_content']//button[.='T.C.']").shouldBe(visible);
+        $x("//div[@id='yeniOnayEvrakForm:allPanels_content']//span[.='GENEL MÜDÜRLÜK MAKAMI']").shouldBe(visible);
+        $x("//div[@id='yeniOnayEvrakForm:allPanels_content']//span[.='BİLİŞİM HİZMETLERİ GENEL MÜDÜR YARDIMCISI']").shouldBe(visible);
+        $x("//div[@id='yeniOnayEvrakForm:allPanels_content']//span[.='YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ']").shouldBe(visible);
+
         galen.galenLayoutControl("TS0577");
 
         olurYazisiOlusturPage.editorTab().getEditor().type("Editör tekst");
