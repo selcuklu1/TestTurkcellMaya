@@ -50,7 +50,7 @@ public class Firefox extends BaseTest implements WebDriverProvider {
                 .addPreference("security.insecure_field_warning.contextual.enabled", false)
                 .setLogLevel(FirefoxDriverLogLevel.fromLevel(Level.OFF));
         options.addPreference("browser.download.folderList", 2);
-        options.addPreference("browser.download.dir", TestData.docDownloadPathLinux);
+        //options.addPreference("browser.download.dir", TestData.docDownloadPathLinux);
 
 
 //        System.setProperty(FirefoxDriver.SystemProperty.DRIVER_USE_MARIONETTE,"false");
