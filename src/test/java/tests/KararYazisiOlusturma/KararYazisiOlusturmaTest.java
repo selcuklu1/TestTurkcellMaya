@@ -52,7 +52,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "1488: Karar yazısında zorunlu alan kontrolleri")
+    @Test(enabled = false, description = "1488: Karar yazısında zorunlu alan kontrolleri")
     public void TS1488() {
 
         String uyariMesajYaziIcerik = "Yazı içeriği boş olamaz!";
@@ -138,7 +138,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "2240: Teslim alınmayı bekleyenler listesinden Gündem klasörüne evrak kapatma")
+    @Test(enabled = false, description = "2240: Teslim alınmayı bekleyenler listesinden Gündem klasörüne evrak kapatma")
     public void TS2240() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
@@ -230,7 +230,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "1497: Karar Yazısı oluşturulması")
+    @Test(enabled = false, description = "1497: Karar Yazısı oluşturulması")
     public void TS1497() throws InterruptedException {
         String basariMesaji = "İşlem başarılıdır!";
         String konuKodu = "K/Frekans Yıllık Kullanım Ücreti";
@@ -322,7 +322,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "2232: Karar izleme ekranının toplu onaya sunma")
+    @Test(enabled = false, description = "2232: Karar izleme ekranının toplu onaya sunma")
     public void TS2232() {
 
         String basariMesaji = "İşlem başarılıdır!";
@@ -368,7 +368,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "1714: Karar yazsının iadesi")
+    @Test(enabled = false, description = "1714: Karar yazsının iadesi")
     public void TS1714() {
 
         String basariMesaji = "İşlem başarılıdır!";
@@ -440,7 +440,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "2238: Gündem klasörü oluşturma")
+    @Test(enabled = false, description = "2238: Gündem klasörü oluşturma")
     public void TS2238() {
 
         String basariMesaji = "İşlem başarılıdır!";
@@ -487,7 +487,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "1715: Gelen evrak listesinden Gündem klasörüne evrak kapatma")
+    @Test(enabled = false, description = "1715: Gelen evrak listesinden Gündem klasörüne evrak kapatma")
     public void TS1715() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";

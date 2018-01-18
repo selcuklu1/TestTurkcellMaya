@@ -133,7 +133,7 @@ public class BaseTest extends BaseLibrary {
 
         System.out.println("///////////////////////////////////////////////////////");
         System.out.println("///////////////////////////////////////////////////////");
-        System.out.println("TEST: " + testResult.getTestName());
+        System.out.println("TEST: " + testResult.getMethod().getMethodName());
         System.out.println("");
         System.out.println("STATUS: " + result);
         System.out.println("");
