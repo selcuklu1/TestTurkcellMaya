@@ -1,23 +1,28 @@
 package pages.solMenuPages;
 
 import com.codeborne.selenide.*;
-import com.codeborne.selenide.commands.PressEnter;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
-import org.apache.xmlbeans.impl.xb.xsdschema.All;
+import org.apache.pdfbox.cos.COSDocument;
+import org.apache.pdfbox.io.RandomAccessRead;
+import org.apache.pdfbox.pdfparser.PDFParser;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.text.PDFTextStripper;
+
 import org.openqa.selenium.*;
-import org.openqa.selenium.support.ui.Sleeper;
+
 import org.testng.Assert;
 import pages.MainPage;
-import pages.galen.GalenControl;
+
 import pages.pageComponents.belgenetElements.BelgenetElement;
-import pages.pageComponents.tabs.AltTabs;
+
 import pages.pageData.SolMenuData;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.security.Key;
-import java.sql.Driver;
+import java.io.File;
+import java.io.IOException;
+import java.io.RandomAccessFile;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
@@ -26,6 +31,7 @@ import static pages.pageComponents.belgenetElements.Belgenet.comboBox;
 
 
 public class TopluPostaladiklarimPage extends MainPage {
+    public PDFKontrol pdfKontrol = new PDFKontrol();
 
     SelenideElement filtrePanelHeader = $("div[id='mainInboxForm:inboxDataTable:filtersAccordion'] > h3");
     SelenideElement txtPostaListesiAdi = $(By.xpath("//label[normalize-space(text())='Posta Listesi Adı :']/ancestor::tr[@class='ui-widget-content']//input"));
@@ -212,7 +218,7 @@ public class TopluPostaladiklarimPage extends MainPage {
     }
 
     @Step("")
-    public TopluPostaladiklarimPage postaDetayiAlanKontrolleri(String postaListesi,String adres,String gramaj,String tutar){
+    public TopluPostaladiklarimPage postaDetayiAlanKontrolleri(String postaListesi, String adres, String gramaj, String tutar) {
 
         SelenideElement txtPostaDetayiPostaListesiAdi = $(By.xpath("//label[normalize-space(text())='Posta Listesi Adı :']//ancestor::tr//textarea"));
 
@@ -221,13 +227,14 @@ public class TopluPostaladiklarimPage extends MainPage {
         txtGramaj.text().equals(gramaj);
         txtTutar.text().equals(tutar);
 
-        Allure.addAttachment("Ekran Alan Kontrolü : ","  Seçilen posta listesinin adının doğru geldiği görülür.\n" +
-                                                                        "- Posta Tarihinin geldiği görülür.\n" +
-                                                                        "- Posta gramajının doğru geldiği görülür.\n" +
-                                                                        "- Pul Yönetimi ekranında girilen tutarlara göre hesaplama işleminin yapıldığı PTT Tutarının doğru geldiği görülür.");
+        Allure.addAttachment("Ekran Alan Kontrolü : ", "  Seçilen posta listesinin adının doğru geldiği görülür.\n" +
+                "- Posta Tarihinin geldiği görülür.\n" +
+                "- Posta gramajının doğru geldiği görülür.\n" +
+                "- Pul Yönetimi ekranında girilen tutarlara göre hesaplama işleminin yapıldığı PTT Tutarının doğru geldiği görülür.");
 
         return this;
     }
+
     @Step("Evrak Listesi tablosunda Yazdır butonu tıklanır.")
     public TopluPostaladiklarimPage evrakListesiYazdir(String[] konu) {
         int size = tblEvrakListesi.size();
@@ -246,10 +253,13 @@ public class TopluPostaladiklarimPage extends MainPage {
         return this;
     }
 
-    @Step("Evrak Listesi tablosunda Yazdır butonu tıklanır.")
-    public TopluPostaladiklarimPage evrakListesiYazdirPdfKontrol(String[] konu) throws AWTException {
+    @Step("Evrak Listesi tablosunda Yazdır butonu tıklanır ve PDF bilgisayara indirilir.")
+    public TopluPostaladiklarimPage evrakListesiYazdirPdfIndir(String[] konu, String[] evrakNo, String[] icerik) throws AWTException, IOException {
+        String remoteDownloadPath = getDownloadPath();
         int size = tblEvrakListesi.size();
-        for (int i = 0; i < size; i++) {
+        size = size - 1;
+        String pdfName = "";
+        for (int i = size; i >= 0; i--) {
 
             tblEvrakListesi
                     .get(i)
@@ -257,54 +267,102 @@ public class TopluPostaladiklarimPage extends MainPage {
             evrakDetayiPopUpKontrolü();
             evrakDetayiYazdır(konu[i]);
 
-
-
-            pdfKontrol();
-//            closeNewWindow();
-//            switchTo().window(0);
-//            $(By.xpath("//div[@id='mainPreviewForm:evrakDetayiViewDialog']//span[@class='ui-icon ui-icon-closethick']")).click();
+            pdfName = pdfIndir();
+            String pdfPath = remoteDownloadPath + pdfName;
+            sleep(3000);
+            pdfKontrol
+                    .PDFAlanKontrolleri(pdfPath, konu[i], evrakNo[i], icerik[i]);
+            closeNewWindow();
+            switchTo().window(0);
+            $(By.xpath("//div[@id='mainPreviewForm:evrakDetayiViewDialog']//span[@class='ui-icon ui-icon-closethick']")).click();
         }
         return this;
     }
 
-    @Step("")
-    public TopluPostaladiklarimPage pdfKontrol() throws AWTException {
+    @Step("Evrak Listesi tablosunda Orjinalini Yazdır butonu tıklanır ve PDF bilgisayara indirilir.")
+    public TopluPostaladiklarimPage evrakListesiOrjinaliYazdirPdfIndir(String[] konu, String[] evrakNo, String[] icerik) throws AWTException, IOException {
+        String remoteDownloadPath = getDownloadPath();
+        int size = tblEvrakListesi.size();
+        size = size - 1;
+        String pdfName = "";
+        for (int i = size; i >= 0; i--) {
 
+            tblEvrakListesi
+                    .get(i)
+                    .$x("//span[text() = 'Orjinalini Yazdır']/../../button").click();
+            evrakDetayiPopUpKontrolü();
+            evrakDetayiYazdır(konu[i]);
+            pdfName = pdfIndir();
+            String pdfPath = remoteDownloadPath + pdfName;
+            sleep(3000);
+            pdfKontrol
+                    .PDFAlanKontrolleri(pdfPath, konu[i], evrakNo[i], icerik[i]);
+            closeNewWindow();
+            switchTo().window(0);
+            $(By.xpath("//div[@id='mainPreviewForm:evrakDetayiViewDialog']//span[@class='ui-icon ui-icon-closethick']")).click();
+        }
+        return this;
+    }
+
+    @Step("Kontrol edilecek Pdf bilgisayara indirilir.")
+    public String pdfIndir() throws AWTException {
+
+        String pdfName = "";
         WebDriver win = switchTo().window(1);
-        WebElement s = win.findElement(By.tagName("embed"));
-        System.out.println(s.getText());
+        WebElement pdfPage = win.findElement(By.tagName("embed"));
+        takeScreenshot();
         CharSequence kisayolCTRLS = Keys.chord(Keys.CONTROL, "s");
-        CharSequence kisayolENTER = Keys.chord(Keys.ENTER);
-        CharSequence paths = Keys.chord(Keys.valueOf("deneme.pdf"));
-        s.sendKeys(kisayolCTRLS);
-        s.sendKeys(Keys.ENTER);
-//        switchTo().window(2);
+        pdfPage.sendKeys(kisayolCTRLS);
 
         Robot robot = new Robot();  // Robot class throws AWT Exception
         sleep(2000); // Thread.sleep throws InterruptedException
+        String name = createRandomNumber(4);
+        int num = Integer.parseInt(name);
+        int[] modArr = new int[4];
+        for (int i = 0; i < 4; i++) {
+            modArr[i] = num % 10;
+            num = num / 10;
+            System.out.println(modArr[i]);
+            pdfName = pdfName + modArr[i];
+            switch (modArr[i]) {
+                case 1:
+                    robot.keyPress(KeyEvent.VK_NUMPAD1);
+                    break;
+                case 2:
+                    robot.keyPress(KeyEvent.VK_NUMPAD2);
+                    break;
+                case 3:
+                    robot.keyPress(KeyEvent.VK_NUMPAD3);
+                    break;
+                case 4:
+                    robot.keyPress(KeyEvent.VK_NUMPAD4);
+                    break;
+                case 5:
+                    robot.keyPress(KeyEvent.VK_NUMPAD5);
+                    break;
+                case 6:
+                    robot.keyPress(KeyEvent.VK_NUMPAD6);
+                    break;
+                case 7:
+                    robot.keyPress(KeyEvent.VK_NUMPAD7);
+                    break;
+                case 8:
+                    robot.keyPress(KeyEvent.VK_NUMPAD8);
+                    break;
+                case 9:
+                    robot.keyPress(KeyEvent.VK_NUMPAD9);
+                    break;
+                case 0:
+                    robot.keyPress(KeyEvent.VK_NUMPAD0);
+            }
+        }
+        pdfName = pdfName + ".pdf";
         robot.keyPress(KeyEvent.VK_ENTER);
-
-//        robot.
-        s.sendKeys(kisayolENTER);
-
-
-
-        WebElement root1 = WebDriverRunner.getWebDriver().findElement(By.tagName("div"));
-
-        //Get shadow root element
-        WebElement shadowRoot1 = expandRootElement(root1);
-
-        WebElement root2 = shadowRoot1.findElement(By.tagName("div"));
-        WebElement shadowRoot2 = expandRootElement(root2);
-
-        WebElement root3 = shadowRoot2.findElement(By.id("download"));
-        WebElement shadowRoot3 = expandRootElement(root3);
-        shadowRoot3.click();
-        return this;
-
+        return pdfName;
     }
+
     public WebElement expandRootElement(WebElement element) {
-        WebElement ele = (WebElement) ((JavascriptExecutor)WebDriverRunner.getWebDriver())
+        WebElement ele = (WebElement) ((JavascriptExecutor) WebDriverRunner.getWebDriver())
                 .executeScript("return arguments[0].shadowRoot", element);
         return ele;
     }
@@ -518,5 +576,31 @@ public class TopluPostaladiklarimPage extends MainPage {
 
         return postaListesiAdi;
     }
+
+    public class PDFKontrol extends MainPage {
+
+        @Step("")
+        public PDFKontrol PDFAlanKontrolleri(String pdfPath, String konu, String evrakNo, String icerik) throws IOException {
+
+            PDDocument pd;
+            pd = PDDocument.load(new File(pdfPath));
+            System.out.println("Total pages: " + pd.getNumberOfPages());
+            PDFTextStripper pdf = new PDFTextStripper();
+            String pdfText = pdf.getText(pd);
+            System.out.println(pdfText);
+            System.out.println(pdf.getText(pd));
+
+            pdfText.contains(konu);
+            pdfText.contains(evrakNo);
+            pdfText.contains(konu);
+
+            Allure.addAttachment("PDF Kontrolü konu : ", konu);
+            Allure.addAttachment("PDF Kontrolü evrakNo : ", evrakNo);
+            Allure.addAttachment("PDF Kontrolü içerik : ", konu);
+
+            return this;
+        }
+    }
+
 }
 
