@@ -203,6 +203,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
 
         String basariMesaji = "İşlem başarılıdır!";
         String kaldirilicakKlasor = "Gündem";
+        String path = getDownloadPath();
 
         login(username3, password3);
 
@@ -216,7 +217,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
         gundemIzlemePage
                 .aralikliGundemOlustur()
                 .islemMesaji().basariliOlmali(basariMesaji);
-        String dosyaAdi = gundemIzlemePage.indirilenDosyaAd();
+        String dosyaAdi = gundemIzlemePage.indirilenDosyaAd(path);
 
         gundemIzlemePage
                 .wordDosyaKontrolEt(dosyaAdi)

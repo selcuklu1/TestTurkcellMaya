@@ -6,6 +6,7 @@ import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
@@ -77,6 +78,17 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     @Step("Evrak seçilir")
     public TeslimAlinmayiBekleyenlerPage evrakSec() {
         tblIlkEvrak.click();
+        return this;
+    }
+
+    @Step("Evrak geldiği görünür")
+    public TeslimAlinmayiBekleyenlerPage evrakGeldigiGorunur(String konuKodu, String tarih,String geldigiYer) {
+        boolean durum = tblEvraklar
+               .filterBy(Condition.text(konuKodu))
+                .filterBy(Condition.text(tarih))
+                .filterBy(Condition.text(geldigiYer)).size()==1;
+        Assert.assertEquals(durum,true);
+        takeScreenshot();
         return this;
     }
 
