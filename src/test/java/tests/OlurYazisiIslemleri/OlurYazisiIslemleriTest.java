@@ -10,6 +10,7 @@ import io.qameta.allure.Link;
 import io.qameta.allure.Step;
 import listeners.DriverEventListener;
 import org.openqa.selenium.Platform;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxDriverLogLevel;
@@ -167,8 +168,8 @@ public class OlurYazisiIslemleriTest extends BaseTest {
         params.put("ek", "Ekleri Tab "+ konu);
         GalenControl galen = new GalenControl();
         galen.setTextValuesToGalenSpec("TS0577", params);
-        galen.galenGenerateDump("TS0577");
-        //galen.galenLayoutControl("TS0577");
+        //galen.galenGenerateDump("TS0577");
+        galen.galenLayoutControl("TS0577");
 
         olurYazisiOlusturPage.editorTab().getEditor().type("Editör tekst");
     }
