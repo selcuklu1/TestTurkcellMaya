@@ -18,6 +18,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import static com.codeborne.selenide.Selenide.sleep;
+
 /**
  * Yazan: Ilyas Bayraktar
  * Tarih: 8.01.2018
@@ -38,9 +40,9 @@ public class GalenControl extends BaseLibrary {
      */
     public void galenGenerateDump(String testName) {
         try {
-            Dimension browserSize = new Dimension(1280, 800);
-            WebDriverRunner.getWebDriver().manage().window().setSize(browserSize);
-
+            //Dimension browserSize = new Dimension(1280, 800);
+            //WebDriverRunner.getWebDriver().manage().window().setSize(browserSize);
+            sleep(5000);
             waitForLoadingJS(WebDriverRunner.getWebDriver());
 
             new GalenPageDump(testName).dumpPage(WebDriverRunner.getWebDriver(),
@@ -56,11 +58,12 @@ public class GalenControl extends BaseLibrary {
 
     @Step("\"{testName}\" görsel kontrol")
     public void galenLayoutControl(String testName) throws IOException {
-        Allure.addAttachment("Layout report link", "file:///Users/ilyas/WorkspaceJava/Git/BelgenetFTA/galenReports/TS0577/report.html");
+        Allure.addAttachment("Layout report link", "galenReports/TS0577/report.html");
 
-        Dimension browserSize = new Dimension(1440, 900);
-        WebDriverRunner.getWebDriver().manage().window().setSize(browserSize);
-
+        //Dimension browserSize = new Dimension(1440, 900);
+        //WebDriverRunner.getWebDriver().manage().window().setSize(browserSize);
+        sleep(5000);
+        waitForLoadingJS(WebDriverRunner.getWebDriver());
         // Create a layoutReport object
         // checkLayout function checks the layout and returns a LayoutReport
         // object

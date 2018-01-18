@@ -18,6 +18,7 @@ import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetFramework;
 
 import java.lang.reflect.Method;
+import java.util.Locale;
 
 import static data.TestData.belgenetURL;
 import static io.qameta.allure.util.ResultsUtils.firstNonEmpty;
@@ -34,8 +35,8 @@ public class BaseTest extends BaseLibrary {
     @BeforeClass(alwaysRun = true)
     public void driverSetUp() {
 
-        /*Locale turkishLocal = new Locale("tr", "TR");
-        Locale.setDefault(turkishLocal);*/
+        Locale turkishLocal = new Locale("tr", "TR");
+        Locale.setDefault(turkishLocal);
 
         BelgenetFramework.setUp();
         WebDriverRunner.addListener(new DriverEventListener());

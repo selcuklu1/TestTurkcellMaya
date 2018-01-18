@@ -590,7 +590,7 @@ public class EvrakPaylasmaTest extends BaseTest {
         String basariMesaji = "İşlem başarılıdır!";
         String uyariMesaj1 = "Gizlilik kleransınız evrakın gizlilik derecesini görüntülemek için yeterli değildir.";
         String konuKodu = "Diğer";
-        String konuKoduRandom = "TS-1905-" + createRandomNumber(10);
+        String konu = "TS1905_" + getSysDate();//+ createRandomNumber(10);
         String evrakTarihi = getSysDateForKis();
         String kurum = "BÜYÜK HARFLERLE KURUM";
         String gizlilikDerecesi = "Gizli";
@@ -606,7 +606,7 @@ public class EvrakPaylasmaTest extends BaseTest {
         gelenEvrakKayitPage
                 .openPage()
                 .konuKoduDoldur(konuKodu)
-                .konuDoldur(konuKoduRandom)
+                .konuDoldur(konu)
                 .evrakTarihiDoldur(evrakTarihi)
                 .gizlilikDerecesiSec(gizlilikDerecesi)
                 .geldigiKurumDoldurLovText2(kurum)
@@ -621,7 +621,7 @@ public class EvrakPaylasmaTest extends BaseTest {
 
         gelenEvraklarPage
                 .openPage()
-                .evrakSec(konuKoduRandom, kurum, evrakTarihi, evrakSayiSag)
+                .evrakSec(konu, kurum, evrakTarihi, evrakSayiSag)
                 .paylas()
                 .paylasBirim()
                 .paylasKisiSecBirim(kisi2, birim)
@@ -631,7 +631,7 @@ public class EvrakPaylasmaTest extends BaseTest {
 
         paylastiklarimPage
                 .openPage()
-                .evrakSec(konuKoduRandom, evrakTarihi)
+                .evrakSec(konu, evrakTarihi)
                 .evrakNotlariTabAc()
                 .evrakNotlariAciklamaGorme(aciklama)
                 .paylasilanlarTabAc()
@@ -644,7 +644,7 @@ public class EvrakPaylasmaTest extends BaseTest {
 
         benimlePaylasilanlarPage
                 .openPage()
-                .evrakSec(kisi, evrakTarihi, konuKoduRandom)
+                .evrakSec(kisi, evrakTarihi, konu)
                 .evrakOnizlemeTabSec("Evrak Notları")
                 .evrakNotuEkle()
                 .evrakNotuGirVeKaydet(aciklama)
