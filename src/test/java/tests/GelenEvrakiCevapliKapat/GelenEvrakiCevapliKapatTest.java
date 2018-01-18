@@ -38,6 +38,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
     CevapladiklarimPage cevapladiklarimPage;
     KlasoreKaldirdiklarimPage klasoreKaldirdiklarimPage;
     KlasorEvrakIslemleriPage klasorEvrakIslemleriPage;
+    TeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage;
     PostalanacakEvraklarPage postalanacakEvraklarPage;
     PostalananlarPage postalananlarPage;
     ImzaBekleyenlerPage imzaBekleyenlerPage;
@@ -61,6 +62,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
         postalananlarPage = new PostalananlarPage();
         imzaBekleyenlerPage = new ImzaBekleyenlerPage();
         cevapYazPage = new CevapYazPage();
+        teslimAlinmayiBekleyenlerPage = new TeslimAlinmayiBekleyenlerPage();
         editor = new TextEditor();
     }
 
@@ -75,11 +77,13 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
         String kisiKurum = "Kullanıcı";
         String kullanici = "Can Şeker";
         String kurum = "BÜYÜK HARFLERLE KURUM";
-        String gizlilikDerecesi = "Gizli";
-        String evrakSayiSag = createRandomNumber(10);
+        String gizlilikDerecesi = "Normal";
+        String evrakSayiSag = createRandomNumber(15);
         String kisi = "Zübeyde Tekin";
         String icerik = createRandomText(15);
         String onayAkisi = "CanKontrol";
+        String geregi= "Optiim Birim";
+        String geldigiYer= "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
 
         //TODO Pre Condition Gelen Evraklar sayfası data oluşturmakta
         login(username2, password2);
@@ -104,7 +108,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
 
         gelenEvraklarPage
                 .openPage()
-                .evrakSec(konuKoduRandom, kurum, evrakTarihi, evrakSayiSag)
+                .evrakSec(konuKoduRandom, kullanici, evrakTarihi, evrakSayiSag)
                 .cevapYaz();
 
         evrakOlusturPage
@@ -114,7 +118,10 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
         evrakOlusturPage
                 .bilgilerTabiAc()
                 .konuKoduSec(konuKodu)
+                .konuDoldur(konuKoduRandom)
                 .kaldiralacakKlasorlerSec(konuKodu)
+                .secilenGeregiSil2()
+                .geregiDoldur2(geregi,"Birim")
                 .onayAkisiDoldur(onayAkisi);
 
         evrakOlusturPage
@@ -130,7 +137,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
 
         kontrolBekleyenlerPage
                 .openPage()
-                .evrakSec(konuKodu, kurum, evrakTarihi)
+                .evrakSec(konuKoduRandom, kisi, evrakTarihi)
                 .kontrolEt()
                 .kontrolEtNotDoldur(icerik)
                 .kontrolEtGonder();
@@ -139,7 +146,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
 
         imzaBekleyenlerPage
                 .openPage()
-                .evrakSec(konuKodu, kurum, evrakTarihi)
+                .evrakSec(konuKoduRandom, geregi, evrakTarihi)
                 .imzala()
                 .sImzaSec()
                 .sImzaImzala(true)
@@ -147,7 +154,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
 
         cevapladiklarimPage
                 .openPage()
-                .tabloEvrakSec(konuKoduRandom,kurum,evrakTarihi)
+                .tabloEvrakSec(konuKoduRandom,kullanici,evrakTarihi)
                 .secilenEvrakEvrakGecmisi()
                 .evrakGecmisiEvrakKapandiIbaresiGorme();
 
@@ -158,10 +165,14 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
         klasorEvrakIslemleriPage
                 .openPage()
                 .klasorDoldur(kaldirilacakKlasor)
+                .aramaKriteriDoldur(konuKoduRandom)
                 .ara();
 
-        login(username2, password2);
+        login(username, password);
 
+        teslimAlinmayiBekleyenlerPage
+                .openPage()
+                .evrakGeldigiGorunur(konuKoduRandom,evrakTarihi,geldigiYer);
     }
 
     @Test(enabled = true, description = "TS929: Dış kurumdan gelen evraka cevap yaz")
@@ -768,7 +779,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .evrakTarihiDoldur(evrakTarihi)
                 .gizlilikDerecesiSec(gizlilikDerecesi)
                 .kisiKurumSec(kisiKurum)
-                .geldigiGercekKisiDoldur(kisi2,"Tüzel kişi")
+                .geldigiGercekKisiDoldur(kisi2,"Gerçek kişi")
                 .evrakSayiSagDoldur(evrakSayiSag)
                 .havaleIslemleriKisiDoldur(kisi)
                 .kaydet()
