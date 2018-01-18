@@ -11,6 +11,7 @@ import pages.MainPage;
 import pages.newPages.OlurYazisiOlusturPage;
 import pages.pageComponents.tabs.AltTabs;
 import pages.pageComponents.tabs.BilgilerTab;
+import pages.pageComponents.tabs.EditorTab;
 import pages.pageData.SolMenuData;
 import pages.pageData.alanlar.GeregiSecimTipi;
 import pages.pageData.alanlar.GizlilikDerecesi;
@@ -221,8 +222,9 @@ public class OlurYazisiIslemleriTest extends BaseTest {
 
     OlurYazisiOlusturPage olurYazisiOlusturPage2;
     BilgilerTab bilgilerTab;
+    EditorTab editorTab;
 
-    @Test(description = "TS1488: Olur yazısında alan kontrolleri", enabled = false)
+    @Test(description = "TS1488: Olur yazısında alan kontrolleri", enabled = true)
     public void TS1488() throws Exception {
         login(user1);
         olurYazisiOlusturPage2 = new OlurYazisiOlusturPage().openPage();
@@ -230,6 +232,10 @@ public class OlurYazisiIslemleriTest extends BaseTest {
 
         step2();
         step3();
+        step4();
+        step5();
+        step6();
+        step7();
 
     }
 
@@ -241,7 +247,7 @@ public class OlurYazisiIslemleriTest extends BaseTest {
         bilgilerTab.getGeregiCombolov().closeTreePanel();
     }
 
-    @Step("Editör ekranını boşken İmzala")
+    @Step("Editör ekranını boş bırak - İmzala")
     public void step3(){
         bilgilerTab.konuKoduSec("010.01")
                 .konuDoldur("TS1488")
@@ -251,5 +257,42 @@ public class OlurYazisiIslemleriTest extends BaseTest {
                 .kullanButonaTikla();
         olurYazisiOlusturPage2.pageButtons().imzalaButonaTikla()
                 .islemMesaji().dikkatOlmali("Yazı içeriği boş olamaz");
+    }
+
+    @Step("Editör tabında içeriği doldur, Konu Kodu alanını boş bırak, - İmzala")
+    public void step4(){
+        editorTab = olurYazisiOlusturPage2.editorTab();
+        editorTab.openTab().getEditor().type("editör tekst");
+        bilgilerTab.openTab().konuKoduTemizle();
+        olurYazisiOlusturPage2.pageButtons().imzalaButonaTikla()
+                .islemMesaji().uyariOlmali("Zorunlu alanları doldurunuz");
+        //Evrak konusu boş olamaz!
+    }
+
+    @Step("Konu kodu alanını doldur ve Konu alanını boş bırak - İmzala")
+    public void step5(){
+        bilgilerTab.openTab().konuKoduSec("010.01")
+                .konuTemizle();
+        olurYazisiOlusturPage2.pageButtons().imzalaButonaTikla()
+                .islemMesaji().uyariOlmali("Zorunlu alanları doldurunuz");
+        //Evrak konusu boş olamaz!
+    }
+
+    @Step("Konu alanını doldur, Kaldırılacak klasörler alanını boş bırak - İmzala")
+    public void step6(){
+        bilgilerTab.openTab().konuDoldur("aaa")
+            .kaldiralacakKlasorleriTemizle();
+        olurYazisiOlusturPage2.pageButtons().imzalaButonaTikla()
+                .islemMesaji().uyariOlmali("Zorunlu alanları doldurunuz");
+        //Evrak konusu boş olamaz!
+    }
+
+    @Step("Kaldırılacak klasörler alanını doldur, Onay akışı alanını boş bırak - Kaydet ve onaya sun butonunu tıkla")
+    public void step7(){
+        bilgilerTab.openTab().kaldiralacakKlasorleriSec("Diğer")
+                .onayAkisiTemizle();
+        olurYazisiOlusturPage2.pageButtons().evrakKaydetVeOnayaSunTikla()
+                .islemMesaji().uyariOlmali("Zorunlu alanları doldurunuz");
+        //Evrak konusu boş olamaz!
     }
 }
