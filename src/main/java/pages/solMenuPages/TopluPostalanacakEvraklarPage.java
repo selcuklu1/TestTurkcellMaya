@@ -403,6 +403,19 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Tüm evrakları seç. ")
+    public TopluPostalanacakEvraklarPage konuyaGoreEvrakSec(String[] konu, boolean secim) {
+        Boolean isSelected = false;
+        int size = konu.length;
+        for (int i = size-1; i >0 ; i--) {
+            tableEvraklar
+                    .filterBy(Condition.text(konu[i]))
+                    .first()
+                    .$("div[class='ui-chkbox-box ui-widget ui-corner-all ui-state-default']").click();
+        }
+        return this;
+    }
+
 
     @Step("Evrak seç.")
     public TopluPostalanacakEvraklarPage evrakKontrol(String kayitTarihiSayi, String gidecegiYer, String konu, String hazirlayanBirim, String postTipi, boolean shouldBeExist) {
@@ -583,7 +596,7 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
     }
 
     @Step("Filtre Panelinde Gideceği Yer doldur: {gidecegiYer}")
-    public TopluPostalanacakEvraklarPage filtreGidecegiYer(String gidecegiYer){
+    public TopluPostalanacakEvraklarPage filtreGidecegiYer(String gidecegiYer) {
         txtFiltreGidecegiYer.setValue(gidecegiYer);
         txtFiltreGidecegiYer.pressEnter();
         return this;
