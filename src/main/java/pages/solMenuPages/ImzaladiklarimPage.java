@@ -63,6 +63,7 @@ public class ImzaladiklarimPage extends MainPage {
         tableKararIzlemeEvraklar.filterBy(text(toplantiNo))
                 .filterBy(text(konu)).filterBy(text(konu))
                 .filterBy(text(toplantiTarih)).filterBy(Condition.visible);
+        takeScreenshot();
         return this;
     }
 

@@ -89,6 +89,7 @@ public class ImzaBekleyenlerPage extends MainPage {
     public ImzaBekleyenlerPage dogruKonuVeNoKontrol(String toplantiNo, String konu) {
         tableKararIzlemeEvraklar
                 .filterBy(Condition.text(toplantiNo)).filterBy(Condition.text(konu)).get(0).shouldBe(visible);
+        takeScreenshot();
         return this;
 
     }
