@@ -248,8 +248,8 @@ public class KararYazisiOlusturPage extends MainPage {
         }
 
         @Step("Konu doldur")
-        public BilgilerTab konuDoldur(String konuKodu) {
-            txtKonu.setValue(konuKodu);
+        public BilgilerTab konuDoldur(String konu) {
+            txtKonu.setValue(konu);
             return this;
         }
 
@@ -260,7 +260,7 @@ public class KararYazisiOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Kullanıcılar doldur")
+        @Step("Kullanıcılar alanını doldur \"{kullanici}\" | \"{birim}\" ")
         public BilgilerTab kullanicilarDoldur(String kullanici, String birim) {
             txtKullanicilar.type(kullanici).getTitleItems().filterBy(text(birim)).first().click();
             txtKullanicilar.closeTreePanel();
@@ -380,6 +380,32 @@ public class KararYazisiOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Kaydet")
+        public EditorTab kaydet() {
+            btnKaydet.click();
+            return this;
+        }
+
+        
+        @Step("Evet tıklanır")
+        public EditorTab evrakiKaydetmekIsterMisinizEvet(){
+                btnEvet.pressEnter();
+            return this;
+        }
+
+        @Step("Hayır tıklanır")
+        public EditorTab evrakiKaydetmekIsterMisinizHayir(){
+            btnHayir.pressEnter();
+            return this;
+        }
+        
+        @Step("Evrakı kaydetmek istediğinize emin misiniz sorusunun geldiği görülür.")
+        public EditorTab evrakiKaydetmekIstediginizGeldigiGorme(){
+            boolean durum = $("[class='ui-confirm-dialog ui-dialog ui-widget ui-widget-content ui-corner-all ui-helper-hidden ui-shadow ui-overlay-visible']").shouldBe(visible).exists()==true;
+            Assert.assertEquals(durum,true);
+            takeScreenshot();
+            return this;
+        }
 
         @Step("Editör İçerik Doldur")
         public EditorTab editorIcerikDoldur(String icerik) {

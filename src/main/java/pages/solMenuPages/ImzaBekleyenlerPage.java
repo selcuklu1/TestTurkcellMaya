@@ -85,9 +85,8 @@ public class ImzaBekleyenlerPage extends MainPage {
         }
         return this;
     }
-
+    @Step("İmza bekleyenler sayfasında evrağın doğru konu ve no ile listelendiği görülür.")
     public ImzaBekleyenlerPage dogruKonuVeNoKontrol(String toplantiNo, String konu) {
-
         tableKararIzlemeEvraklar
                 .filterBy(Condition.text(toplantiNo)).filterBy(Condition.text(konu)).get(0).shouldBe(visible);
         return this;
