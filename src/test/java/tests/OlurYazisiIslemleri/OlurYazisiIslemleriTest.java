@@ -1,16 +1,30 @@
 package tests.OlurYazisiIslemleri;
 
+import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.WebDriverRunner;
 import common.BaseTest;
+import data.TestData;
 import data.User;
 import galen.GalenControl;
 import io.qameta.allure.Link;
 import io.qameta.allure.Step;
+import listeners.DriverEventListener;
+import org.openqa.selenium.Platform;
+import org.openqa.selenium.Point;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxDriverLogLevel;
+import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.MainPage;
 import pages.newPages.OlurYazisiOlusturPage;
 import pages.pageComponents.tabs.AltTabs;
 import pages.pageComponents.tabs.BilgilerTab;
+import pages.pageComponents.tabs.EditorTab;
 import pages.pageData.SolMenuData;
 import pages.pageData.alanlar.GeregiSecimTipi;
 import pages.pageData.alanlar.GizlilikDerecesi;
@@ -19,9 +33,11 @@ import pages.pageData.alanlar.OnayKullaniciTipi;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.logging.Level;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Selenide.$x;
 import static com.codeborne.selenide.Selenide.sleep;
 
 /**
@@ -153,7 +169,15 @@ public class OlurYazisiIslemleriTest extends BaseTest {
         params.put("ek", "Ekleri Tab "+ konu);
         GalenControl galen = new GalenControl();
         galen.setTextValuesToGalenSpec("TS0577", params);
-//        galen.galenGenerateDump("TS0577");
+        galen.galenGenerateDump("TS0577");
+/*
+
+        $x("//div[@id='yeniOnayEvrakForm:allPanels_content']//button[.='T.C.']").shouldBe(visible);
+        $x("//div[@id='yeniOnayEvrakForm:allPanels_content']//span[.='GENEL MÜDÜRLÜK MAKAMI']").shouldBe(visible);
+        $x("//div[@id='yeniOnayEvrakForm:allPanels_content']//span[.='BİLİŞİM HİZMETLERİ GENEL MÜDÜR YARDIMCISI']").shouldBe(visible);
+        $x("//div[@id='yeniOnayEvrakForm:allPanels_content']//span[.='YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ']").shouldBe(visible);
+*/
+
         galen.galenLayoutControl("TS0577");
 
         olurYazisiOlusturPage.editorTab().getEditor().type("Editör tekst");
@@ -221,6 +245,7 @@ public class OlurYazisiIslemleriTest extends BaseTest {
 
     OlurYazisiOlusturPage olurYazisiOlusturPage2;
     BilgilerTab bilgilerTab;
+    EditorTab editorTab;
 
     @Test(description = "TS1488: Olur yazısında alan kontrolleri", enabled = false)
     public void TS1488() throws Exception {
@@ -230,6 +255,10 @@ public class OlurYazisiIslemleriTest extends BaseTest {
 
         step2();
         step3();
+        step4();
+        step5();
+        step6();
+        step7();
 
     }
 
@@ -241,7 +270,7 @@ public class OlurYazisiIslemleriTest extends BaseTest {
         bilgilerTab.getGeregiCombolov().closeTreePanel();
     }
 
-    @Step("Editör ekranını boşken İmzala")
+    @Step("Editör ekranını boş bırak - İmzala")
     public void step3(){
         bilgilerTab.konuKoduSec("010.01")
                 .konuDoldur("TS1488")
@@ -252,4 +281,62 @@ public class OlurYazisiIslemleriTest extends BaseTest {
         olurYazisiOlusturPage2.pageButtons().imzalaButonaTikla()
                 .islemMesaji().dikkatOlmali("Yazı içeriği boş olamaz");
     }
+
+    @Step("Editör tabında içeriği doldur, Konu Kodu alanını boş bırak, - İmzala")
+    public void step4(){
+        editorTab = olurYazisiOlusturPage2.editorTab();
+        editorTab.openTab().getEditor().type("editör tekst");
+        bilgilerTab.openTab().konuKoduTemizle();
+        olurYazisiOlusturPage2.pageButtons().imzalaButonaTikla()
+                .islemMesaji().uyariOlmali("Zorunlu alanları doldurunuz");
+        //Evrak konusu boş olamaz!
+    }
+
+    @Step("Konu kodu alanını doldur ve Konu alanını boş bırak - İmzala")
+    public void step5(){
+        bilgilerTab.openTab().konuKoduSec("010.01")
+                .konuTemizle();
+        olurYazisiOlusturPage2.pageButtons().imzalaButonaTikla()
+                .islemMesaji().uyariOlmali("Zorunlu alanları doldurunuz");
+        //Evrak konusu boş olamaz!
+    }
+
+    @Step("Konu alanını doldur, Kaldırılacak klasörler alanını boş bırak - İmzala")
+    public void step6(){
+        bilgilerTab.openTab().konuDoldur("aaa")
+            .kaldiralacakKlasorleriTemizle();
+        olurYazisiOlusturPage2.pageButtons().imzalaButonaTikla()
+                .islemMesaji().uyariOlmali("Zorunlu alanları doldurunuz");
+        //Evrak konusu boş olamaz!
+    }
+
+    @Step("Kaldırılacak klasörler alanını doldur, Onay akışı alanını boş bırak - Kaydet ve onaya sun butonunu tıkla")
+    public void step7(){
+        bilgilerTab.openTab().kaldiralacakKlasorleriSec("Diğer")
+                .onayAkisiTemizle();
+        olurYazisiOlusturPage2.pageButtons().evrakKaydetVeOnayaSunTikla()
+                .islemMesaji().uyariOlmali("Zorunlu alanları doldurunuz");
+        //Evrak konusu boş olamaz!
+    }
+
+
+    /*@BeforeMethod(alwaysRun = true)
+    public void setUp() {
+        //Configuration.browser = "drivers.Firefox";
+
+        FirefoxOptions options = new FirefoxOptions()
+                .setAcceptInsecureCerts(true)
+                .addPreference("security.insecure_field_warning.contextual.enabled", false)
+                .setLogLevel(FirefoxDriverLogLevel.fromLevel(Level.OFF));
+        options.addPreference("browser.download.folderList", 2);
+        options.addPreference("browser.download.dir", TestData.docDownloadPathLinux);
+        WebDriver driver = new EventFiringWebDriver(new FirefoxDriver(options)).register(new DriverEventListener());
+        WebDriverRunner.setWebDriver(driver);
+//        WebDriverRunner.setWebDriver(new FirefoxDriver(options));
+
+
+        WebDriverRunner.addListener(new DriverEventListener());
+//        WebDriverRunner.setWebDriver((new EventFiringWebDriver(WebDriverRunner.getWebDriver()).register(new DriverEventListener())));
+
+    }*/
 }

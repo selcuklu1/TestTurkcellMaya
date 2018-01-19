@@ -18,6 +18,7 @@ import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetFramework;
 
 import java.lang.reflect.Method;
+import java.util.Locale;
 
 import static data.TestData.belgenetURL;
 import static io.qameta.allure.util.ResultsUtils.firstNonEmpty;
@@ -34,8 +35,8 @@ public class BaseTest extends BaseLibrary {
     @BeforeClass(alwaysRun = true)
     public void driverSetUp() {
 
-        /*Locale turkishLocal = new Locale("tr", "TR");
-        Locale.setDefault(turkishLocal);*/
+        Locale turkishLocal = new Locale("tr", "TR");
+        Locale.setDefault(turkishLocal);
 
         BelgenetFramework.setUp();
         WebDriverRunner.addListener(new DriverEventListener());
@@ -47,6 +48,7 @@ public class BaseTest extends BaseLibrary {
         Configuration.browser = (System.getProperty("browser") == null) ? "chrome" : System.getProperty("browser");
         Configuration.browserVersion = System.getProperty("node");
         Configuration.remote = System.getProperty("hub");
+        //Configuration.browser = (System.getProperty("browser").equals("firefox")) ? "drivers.Firefox" : Configuration.browser;
 
         Configuration.reportsFolder = "test-result/reports";
         Configuration.screenshots = false;
@@ -69,12 +71,12 @@ public class BaseTest extends BaseLibrary {
         // System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, "/dev/null");
 //      getBrowserName();
 
-        System.out.println("remote: " + Configuration.remote);
+        /*System.out.println("remote: " + Configuration.remote);
         System.out.println("browser: " + Configuration.browser);
         System.out.println("url: " + Configuration.baseUrl);
         System.out.println("Upload path: " + getUploadPath());
         System.out.println("Download path: " + getDownloadPath());
-        System.out.println("Selenide/Selenium driver has been set up.");
+        System.out.println("Selenide/Selenium driver has been set up.");*/
 
         AllureEnvironmentUtils.create();
     }
@@ -91,8 +93,13 @@ public class BaseTest extends BaseLibrary {
         Allure.addAttachment("Annotations", desc);
 
         System.out.println("///////////////////////////////////////////////////////");
-        System.out.println("Test Started: " + testName);
-        System.out.println("Test Annotations: " + test.getDeclaredAnnotation(org.testng.annotations.Test.class).toString());
+        System.out.println("///////////////////////////////////////////////////////");
+        System.out.println("TEST: " + testName);
+        System.out.println("");
+        System.out.println("STATUS: Started");
+        System.out.println("");
+        System.out.println("TEST ANNOTATIONS: " + test.getDeclaredAnnotation(org.testng.annotations.Test.class).toString());
+        System.out.println("///////////////////////////////////////////////////////");
         System.out.println("///////////////////////////////////////////////////////");
     }
 
@@ -126,8 +133,18 @@ public class BaseTest extends BaseLibrary {
             takeScreenshot();
 
         System.out.println("///////////////////////////////////////////////////////");
-        System.out.println("Test " + result + ": " + testResult.getMethod().getDescription());
-//        System.out.println("Test Annotations: " + testResult.getMethod().getMethod().getDeclaredAnnotation(org.testng.annotations.Test.class).toString());
+        System.out.println("///////////////////////////////////////////////////////");
+        System.out.println("TEST: " + testResult.getMethod().getMethodName());
+        System.out.println("");
+        System.out.println("STATUS: " + result);
+        System.out.println("");
+        System.out.println("DESCRIPTION: "+ testResult.getMethod().getDescription());
+        if (testResult.getThrowable()!=null) {
+            System.out.println("");
+            System.out.println("ERROR: " + testResult.getThrowable().getMessage());
+        }
+        //        System.out.println("Test Annotations: " + testResult.getMethod().getMethod().getDeclaredAnnotation(org.testng.annotations.Test.class).toString());
+        System.out.println("///////////////////////////////////////////////////////");
         System.out.println("///////////////////////////////////////////////////////");
 
         //Parallelde hatası vermemesi WebDriverRunner.closeWebDriver() eklendi.

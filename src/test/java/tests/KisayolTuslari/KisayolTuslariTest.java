@@ -159,6 +159,20 @@ public class KisayolTuslariTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS1952: Kısayol tuşları kullanarak Personel ve Açık Evrak İstatistiği ekranını açma")
+    public void TS1952j() throws InterruptedException {
+        new EvrakOlusturPage().openPage();
+
+        String sayfaAdi = Raporlar.PersonelveAcikEvrakIstatistigi.getName();
+        CharSequence kisayol = Keys.chord(Keys.LEFT_SHIFT, "p");
+
+        step1(sayfaAdi, kisayol);
+        step2(sayfaAdi, kisayol);
+        step3(sayfaAdi, kisayol);
+        step4(sayfaAdi, kisayol);
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
     @Test(description = "TS1955: Kısayol Tuşlarının Tooltipleri", enabled = true)
     public void TS1955() throws InterruptedException {
         ustMenuTooltip(EvrakIslemleri.EvrakOlustur.getGroupName(), EvrakIslemleri.EvrakOlustur.getName(), "(Shift + E)");

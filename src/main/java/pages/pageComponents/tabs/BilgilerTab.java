@@ -6,6 +6,7 @@ import com.codeborne.selenide.SelenideElement;
 import data.User;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.NotFoundException;
 import org.testng.Assert;
 import pages.MainPage;
@@ -119,6 +120,12 @@ public class BilgilerTab extends MainPage {
         getKonuTextarea().setValue(text);
         return this;
     }
+
+    @Step("Konu temizle")
+    public BilgilerTab konuTemizle(){
+        getKonuTextarea().clear();
+        return this;
+    }
     //endregion
 
     //******************************************************
@@ -132,6 +139,12 @@ public class BilgilerTab extends MainPage {
     @Step("Kaldırılacak Klasörleri seç")
     public BilgilerTab kaldiralacakKlasorleriSec(String text){
         getKaldiralacakKlasorlerCombolov().selectLov(text);
+        return this;
+    }
+
+    @Step("Kaldırılacak Klasörleri temizle")
+    public BilgilerTab kaldiralacakKlasorleriTemizle(){
+        getKaldiralacakKlasorlerCombolov().clearAllSelectedItems().sendKeys(Keys.TAB);
         return this;
     }
     //endregion

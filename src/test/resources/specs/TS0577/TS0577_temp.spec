@@ -1,8 +1,10 @@
 @objects
     container               css     div[id='yeniOnayEvrakForm:allPanels_content']
-    firstPageHeader         css     div[class=firstPageHeader]
+    #firstPageHeader         css     div[class=firstPageHeader]
+    footer                  css     div[id=editorFooter]
+    footerBorder            css     div[id=footerCenter]
 
-    editorAntetBaslik       xpath   //div[@id='yeniOnayEvrakForm:allPanels_content']//button[span[.='T.C.']]
+    editorAntetBaslik       xpath   //div[@id='yeniOnayEvrakForm:allPanels_content']//button[.='T.C.']
     kurumHeaderSatir1       xpath   //div[@id='yeniOnayEvrakForm:allPanels_content']//span[.='GENEL MÜDÜRLÜK MAKAMI']
     kurumHeaderSatir2       xpath   //div[@id='yeniOnayEvrakForm:allPanels_content']//span[.='BİLİŞİM HİZMETLERİ GENEL MÜDÜR YARDIMCISI']
     kurumHeaderSatir3       xpath   //div[@id='yeniOnayEvrakForm:allPanels_content']//span[.='YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ']
@@ -16,7 +18,7 @@
     konu                    xpath   //span[@id='yeniOnayEvrakForm:editorTarihKonuSayi']//tbody/tr[2]/td[.='${konu}']
 
     hitapMetinAlani         xpath   (//div[@id='yeniOnayEvrakForm:hitapInplace']/button)[1]
-    hitap                   xpath   //div[@id='yeniOnayEvrakForm:hitapInplace']//button[span[.='... Makamına']]
+    hitap                   xpath   //div[@id='yeniOnayEvrakForm:hitapInplace']//button[.='... Makamına']
 
     ilgiLabel               xpath   //div[@id='yeniOnayEvrakForm:allPanels_content']//td[normalize-space(.)='İlgi']
     ilgiDots                xpath   //div[@id='yeniOnayEvrakForm:allPanels_content']//td[normalize-space(.)='İlgi']/following-sibling::td[.=':']
@@ -24,6 +26,8 @@
     ilgi_b                  xpath   //div[@id='yeniOnayEvrakForm:ilgiOutPanel']/descendant-or-self::tr[contains(normalize-space(.),'${ilgi_b}')]
 
     editor                  css     .ui-edys-editor
+
+    imzaciPanel             css     div[id='yeniOnayEvrakForm:imzacilarPanel']
 
     imzaci1MetinAlani       xpath   (//table[contains(@id,'imzaciGridPanel')])[1]//tr[td/button[contains(@onclick,'imzaciAdinaInplaceDialog')]]
     imzaci1Isim             xpath   (//table[contains(@id,'imzaciGridPanel')])[1]//tr[td/span[normalize-space(.)='${imzaci1Isim}']]

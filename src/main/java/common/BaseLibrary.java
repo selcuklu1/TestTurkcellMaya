@@ -865,7 +865,6 @@ public class BaseLibrary extends ElementsContainer{
         return flag;
     }
 
-
     //region Capabilities
     public String getOS() {
         Capabilities caps = getCapabilities();
