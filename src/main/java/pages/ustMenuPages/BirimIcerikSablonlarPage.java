@@ -19,7 +19,7 @@ import pages.pageData.UstMenuData;
 
 import java.util.List;
 
-import static com.codeborne.selenide.CollectionCondition.*;
+import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
@@ -329,8 +329,8 @@ public class BirimIcerikSablonlarPage extends MainPage {
 
     @Step("Var olan şablonun adını al")
     public String sablonAdiAl(int satir) {
-        return searchTable.findRows().shouldHave(sizeGreaterThan(0)).useFirstFoundRow().getColumn(1).text();
-//        return searchTable.getColumn(searchTable.getRows().shouldHave(sizeGreaterThan(0)).get(satir), 1).text();
+        return searchTable.findRows().shouldHave(sizeGreaterThan(0)).useFirstFoundRow().getColumnValue(1).text();
+//        return searchTable.getColumnValue(searchTable.getRows().shouldHave(sizeGreaterThan(0)).get(satir), 1).text();
     }
 
     @Step("Alt birimler görsün mü seç")

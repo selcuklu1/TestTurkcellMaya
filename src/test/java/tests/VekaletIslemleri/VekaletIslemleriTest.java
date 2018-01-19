@@ -19,7 +19,6 @@ import pages.ustMenuPages.VekaletVerPage;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.switchTo;
-import static data.TestData.*;
 
 /****************************************************
  * Tarih: 2017-12-22

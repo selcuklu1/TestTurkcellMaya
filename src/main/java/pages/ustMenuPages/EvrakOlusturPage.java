@@ -318,6 +318,7 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement btnOnayIslemiGonder = $(By.id("windowCevapEvrakForm:gonderButton"));
         SelenideElement cmbGeregiTuzelKisi = $("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='geregiLov:LovText']");
         BelgenetElement cmbGeregi = comboLov("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='geregiLov:LovText']");
+        BelgenetElement cmbGeregi2 = comboLov("[id$='geregiLov:LovText']");
         BelgenetElement cmbGeregiPostaTipi = comboLov(By.id("yeniGidenEvrakForm:evrakBilgileriList:16:geregiLov:LovSecilenTable:0:selectOneMenu"));
         // select[id^='yeniGidenEvrakForm:evrakBilgileriList:16:geregiLov:LovSecilenTable:'][id$=':selectOneMenu']
         SelenideElement cmbPostaTipi = $("select[id^='yeniGidenEvrakForm:evrakBilgileriList:16:geregiLov:LovSecilenTable:'][id$=':selectOneMenu']");
@@ -788,6 +789,12 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Gereği {description} doldur: | {geregi}")
+        public BilgilerTab geregiDoldur2(String geregi, String description) {
+            cmbGeregi2.selectLov(geregi);
+            return this;
+        }
+
         @Step("Bilgileri tabında kişinin geregi alanında görüntülenmeme kontrolu")
         public BilgilerTab geregiAlanindaGoruntulenmemeKontrolu(String adSoyad) {
 
@@ -835,6 +842,14 @@ public class EvrakOlusturPage extends MainPage {
             Thread.sleep(1000);
             cmbGeregi.shouldBe(visible);
             cmbGeregi.clearLastSelectedItem();
+            return this;
+        }
+
+        @Step("Seçilen gereği sil")
+        public BilgilerTab secilenGeregiSil2() throws InterruptedException {
+            Thread.sleep(1000);
+            cmbGeregi2.shouldBe(visible);
+            cmbGeregi2.clearLastSelectedItem();
             return this;
         }
 
@@ -1416,6 +1431,15 @@ public class EvrakOlusturPage extends MainPage {
 
             return this;
 
+        }
+
+        @Step("Şablonlar alanında \"{secim}\" seçilir")
+        public EditorTab onTanimliIcerikSablonuKullan(String secim){
+           clickJs($("[class='cke_button cke_button__sablon_sec cke_button_off']"));
+            $("[id$='windowCevapEvrakForm:icerikSablonListPanel'] div[class='ui-selectonemenu ui-widget ui-state-default ui-corner-all ui-helper-clearfix'] select").selectOption(secim);
+            ($$("[class='form-buttons'] button[id^='windowCevapEvrakForm'] span").filterBy(Condition.text("Uygula")).get(0)).parent().click();
+
+            return this;
         }
 
         @Step("Editör İçerik Doldur")

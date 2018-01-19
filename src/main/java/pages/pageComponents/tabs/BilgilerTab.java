@@ -6,6 +6,7 @@ import com.codeborne.selenide.SelenideElement;
 import data.User;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.NotFoundException;
 import org.testng.Assert;
 import pages.MainPage;
@@ -16,7 +17,7 @@ import pages.pageData.alanlar.*;
 import java.util.Map;
 
 import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.$;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 /**
@@ -119,6 +120,12 @@ public class BilgilerTab extends MainPage {
         getKonuTextarea().setValue(text);
         return this;
     }
+
+    @Step("Konu temizle")
+    public BilgilerTab konuTemizle(){
+        getKonuTextarea().clear();
+        return this;
+    }
     //endregion
 
     //******************************************************
@@ -132,6 +139,12 @@ public class BilgilerTab extends MainPage {
     @Step("Kaldırılacak Klasörleri seç")
     public BilgilerTab kaldiralacakKlasorleriSec(String text){
         getKaldiralacakKlasorlerCombolov().selectLov(text);
+        return this;
+    }
+
+    @Step("Kaldırılacak Klasörleri temizle")
+    public BilgilerTab kaldiralacakKlasorleriTemizle(){
+        getKaldiralacakKlasorlerCombolov().clearAllSelectedItems().sendKeys(Keys.TAB);
         return this;
     }
     //endregion
@@ -412,6 +425,12 @@ public class BilgilerTab extends MainPage {
     @Step("Gereği alanı seç")
     public BilgilerTab geregiSec(String text){
         getGeregiCombolov().selectLov(text);
+        return this;
+    }
+
+    @Step("Gereği alanıda değeri seçilecek değer boş mu")
+    public BilgilerTab geregiDegerSecilemez(String text){
+        getGeregiCombolov().type(text).isEmpty();
         return this;
     }
 
@@ -749,13 +768,26 @@ public class BilgilerTab extends MainPage {
     }
 
     @Step("Anlık onay akışındaki kullanıcının tipi seç")
-    public BilgilerTab onayAkisiKullanicininTipiSec(String kullaniciAdi, String kullaniciTipi) {
+    public BilgilerTab anlikOnayAkisKullanicininTipiSec(String kullaniciAdi, String kullaniciTipi) {
         getAnlikOnayAkisKullanicilarCombolov().getSelectedItems()
                 .filterBy(text(kullaniciAdi))
                 .get(0)
                 .shouldBe(exist)
                 .$("select[id*='selectOneMenu']")
                 .selectOptionContainingText(kullaniciTipi);
+        return this;
+    }
+
+    @Step("Anlık onay akışındaki kullanıcının tipi seç")
+    public BilgilerTab anlikOnayAkisKullanicininTipiSec(User kullanici, OnayKullaniciTipi tipi) {
+        getAnlikOnayAkisKullanicilarCombolov().getSelectedItems()
+                .filterBy(text(kullanici.getFullname()))
+                .filterBy(text(kullanici.getGorev()))
+                .filterBy(text(kullanici.getBirimAdi()))
+                .get(0)
+                .shouldBe(exist)
+                .$("select[id*='selectOneMenu']")
+                .selectOptionContainingText(tipi.getOptionText());
         return this;
     }
 
@@ -857,7 +889,7 @@ public class BilgilerTab extends MainPage {
         String kendisi = getAnlikOnayAkisKullanicilarCombolov().getSelectedTitles().first().text();
         for (String[] kullanici:onayAkisKullaniciTipi) {
             if (kullanici[0].equals(kendisi))
-                onayAkisiKullanicininTipiSec(kullanici[0],kullanici[1]);
+                anlikOnayAkisKullanicininTipiSec(kullanici[0],kullanici[1]);
             else
                 anlikOnayAkisKullaniciVeTipiSec(kullanici[0],kullanici[1]);
         }

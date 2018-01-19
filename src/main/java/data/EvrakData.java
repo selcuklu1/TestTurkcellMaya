@@ -1,7 +1,5 @@
 package data;
 
-import org.testng.annotations.DataProvider;
-
 /**
  * Yazan: Ilyas Bayraktar
  * Tarih: 11.01.2018

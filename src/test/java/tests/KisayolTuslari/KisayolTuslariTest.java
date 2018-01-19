@@ -1,9 +1,7 @@
 package tests.KisayolTuslari;
 
-import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
-import com.codeborne.selenide.WebDriverRunner;
 import common.BaseTest;
 import data.User;
 import io.qameta.allure.Severity;
@@ -14,21 +12,16 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pages.MainPage;
 import pages.newPages.EvrakOlusturPage;
 import pages.newPages.OlurYazisiOlusturPage;
 import pages.pageComponents.EvrakPageButtons;
-import pages.pageComponents.TextEditor;
-import pages.pageComponents.UstMenu;
 import pages.pageComponents.tabs.BilgilerTab;
 import pages.pageComponents.tabs.EditorTab;
-import pages.pageData.UstMenuData;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$x;
 import static com.codeborne.selenide.Selenide.sleep;
 import static pages.pageData.UstMenuData.*;
 //import pages.ustMenuPages.EvrakOlusturPage;
@@ -84,7 +77,7 @@ public class KisayolTuslariTest extends BaseTest {
         new EvrakOlusturPage().openPage();
 
         String sayfaAdi = EvrakIslemleri.GidenEvrakKayit.getName();
-        CharSequence kisayol = Keys.chord(Keys.LEFT_SHIFT, "ı");
+        CharSequence kisayol = Keys.chord(Keys.LEFT_SHIFT, "i");
 
         step1(sayfaAdi, kisayol);
         step2(sayfaAdi, kisayol);
@@ -158,6 +151,20 @@ public class KisayolTuslariTest extends BaseTest {
 
         String sayfaAdi = EvrakIslemleri.KararYazisiOlustur.getName();
         CharSequence kisayol = Keys.chord(Keys.LEFT_SHIFT, "k");
+
+        step1(sayfaAdi, kisayol);
+        step2(sayfaAdi, kisayol);
+        step3(sayfaAdi, kisayol);
+        step4(sayfaAdi, kisayol);
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS1952: Kısayol tuşları kullanarak Personel ve Açık Evrak İstatistiği ekranını açma")
+    public void TS1952j() throws InterruptedException {
+        new EvrakOlusturPage().openPage();
+
+        String sayfaAdi = Raporlar.PersonelveAcikEvrakIstatistigi.getName();
+        CharSequence kisayol = Keys.chord(Keys.LEFT_SHIFT, "p");
 
         step1(sayfaAdi, kisayol);
         step2(sayfaAdi, kisayol);

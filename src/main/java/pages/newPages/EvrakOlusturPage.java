@@ -9,7 +9,6 @@ import pages.pageComponents.tabs.*;
 import pages.pageData.UstMenuData;
 
 import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.visible;
 import static pages.pageComponents.belgenetElements.Belgenet.$;
 
 /**

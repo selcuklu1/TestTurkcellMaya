@@ -7,11 +7,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.events.WebDriverEventListener;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.sql.Timestamp;
-
-import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
 
 public class DriverEventListener extends BaseLibrary implements WebDriverEventListener {
 
@@ -80,7 +77,7 @@ public class DriverEventListener extends BaseLibrary implements WebDriverEventLi
                 || by.equals(By.cssSelector(".lobibox-notify"))
                 ||*/
 
-        if (by.toString().contains("lobibox-notify")
+        if (by.toString().contains("lobibox")
                 || (element != null && element.toString().contains("lobibox")))
             return;
 
@@ -164,6 +161,10 @@ public class DriverEventListener extends BaseLibrary implements WebDriverEventLi
 
     public void beforeChangeValueOf(WebElement element, WebDriver driver, CharSequence[] keysToSend) {
         waitForLoadingJS(driver);
+        if (log) {
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            System.out.println(timestamp + "    Change value: " + keysToSend + "    element: " + element.toString());
+        }
     }
 
     public void afterChangeValueOf(WebElement element, WebDriver driver, CharSequence[] keysToSend) {
@@ -174,10 +175,17 @@ public class DriverEventListener extends BaseLibrary implements WebDriverEventLi
     }
 
     public void beforeScript(String script, WebDriver driver) {
-
+        if (log) {
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            System.out.println(timestamp + "    before script: " + script);
+        }
     }
 
     public void afterScript(String script, WebDriver driver) {
+        if (log) {
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            System.out.println(timestamp + "    after script: " + script);
+        }
     }
 
     public void onException(Throwable throwable, WebDriver driver) {

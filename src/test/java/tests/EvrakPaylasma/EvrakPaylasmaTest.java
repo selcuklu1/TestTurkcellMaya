@@ -1,10 +1,11 @@
 package tests.EvrakPaylasma;
 
+import com.codeborne.selenide.Condition;
 import common.BaseTest;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import pages.MainPage;
 import pages.altMenuPages.CevapYazPage;
-import pages.altMenuPages.EvrakDetayiPage;
 import pages.solMenuPages.*;
 import pages.ustMenuPages.EvrakOlusturPage;
 import pages.ustMenuPages.GelenEvrakKayitPage;
@@ -31,6 +32,7 @@ public class EvrakPaylasmaTest extends BaseTest {
     GelenEvraklarPage gelenEvraklarPage;
     ImzaladiklarimPage imzaladiklarimPage;
     SistemLoglariPage sistemLoglariPage;
+    MainPage mainPage;
 
     @BeforeMethod
     public void loginBeforeTests() {
@@ -45,6 +47,7 @@ public class EvrakPaylasmaTest extends BaseTest {
         gelenEvraklarPage = new GelenEvraklarPage();
         imzaladiklarimPage = new ImzaladiklarimPage();
         sistemLoglariPage = new SistemLoglariPage();
+        mainPage = new MainPage();
     }
 
     @Test(enabled = true, description = "TS1881 : Evrak paylaşımını durdurma")
@@ -587,7 +590,7 @@ public class EvrakPaylasmaTest extends BaseTest {
         String basariMesaji = "İşlem başarılıdır!";
         String uyariMesaj1 = "Gizlilik kleransınız evrakın gizlilik derecesini görüntülemek için yeterli değildir.";
         String konuKodu = "Diğer";
-        String konuKoduRandom = "TS-1905-" + createRandomNumber(10);
+        String konu = "TS1905_" + getSysDate();//+ createRandomNumber(10);
         String evrakTarihi = getSysDateForKis();
         String kurum = "BÜYÜK HARFLERLE KURUM";
         String gizlilikDerecesi = "Gizli";
@@ -603,7 +606,7 @@ public class EvrakPaylasmaTest extends BaseTest {
         gelenEvrakKayitPage
                 .openPage()
                 .konuKoduDoldur(konuKodu)
-                .konuDoldur(konuKoduRandom)
+                .konuDoldur(konu)
                 .evrakTarihiDoldur(evrakTarihi)
                 .gizlilikDerecesiSec(gizlilikDerecesi)
                 .geldigiKurumDoldurLovText2(kurum)
@@ -618,7 +621,7 @@ public class EvrakPaylasmaTest extends BaseTest {
 
         gelenEvraklarPage
                 .openPage()
-                .evrakSec(konuKoduRandom, kurum, evrakTarihi, evrakSayiSag)
+                .evrakSec(konu, kurum, evrakTarihi, evrakSayiSag)
                 .paylas()
                 .paylasBirim()
                 .paylasKisiSecBirim(kisi2, birim)
@@ -628,7 +631,7 @@ public class EvrakPaylasmaTest extends BaseTest {
 
         paylastiklarimPage
                 .openPage()
-                .evrakSec(konuKoduRandom, evrakTarihi)
+                .evrakSec(konu, evrakTarihi)
                 .evrakNotlariTabAc()
                 .evrakNotlariAciklamaGorme(aciklama)
                 .paylasilanlarTabAc()
@@ -636,10 +639,12 @@ public class EvrakPaylasmaTest extends BaseTest {
 
         login(username3, password3);
 
+        mainPage
+                .birimSec(Condition.text(birim));
+
         benimlePaylasilanlarPage
-                .birimSec(birim)
                 .openPage()
-                .evrakSec(kisi, evrakTarihi, konuKoduRandom)
+                .evrakSec(kisi, evrakTarihi, konu)
                 .evrakOnizlemeTabSec("Evrak Notları")
                 .evrakNotuEkle()
                 .evrakNotuGirVeKaydet(aciklama)
@@ -655,8 +660,9 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .evrakSec()
                 .paylasButonGelmedigiGorme("Paylaş");
 
-        benimlePaylasilanlarPage
-                .birimSec(anaBirim);
+        mainPage
+                .birimSec(Condition.text(anaBirim));
+
     }
 
     @Test(enabled = true, description = "TS2195 : Cevap evrakını paylaşma")
