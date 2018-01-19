@@ -201,7 +201,8 @@ public class GalenControl extends BaseLibrary {
                     ", Value = " + entry.getValue());
         params.forEach((name,value)-> specContent.replace("${" + name + "}", value));*/
 
-        writeContentToFile(pageSpecPath + testName + "/"+ testName + "_objects.gspec", specContent);
+            writeContentToFile(pageSpecPath + testName + "/"+ testName + "_objects.gspec", specContent);
+
     }
 
     public void modifyFile(String filePath, String oldString, String newString) {
@@ -303,7 +304,24 @@ public class GalenControl extends BaseLibrary {
 
     public void writeContentToFile(String filePath, String content) {
         //File file = new File(filePath);
-        FileWriter writer = null;
+
+        Writer out = null;
+        try {
+            out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filePath), "UTF-8"));
+            out.write(content);
+        } catch (IOException e) {
+            throw new RuntimeException(e.getMessage());
+        } finally {
+            if (out != null) {
+                try {
+                    out.close();
+                } catch (IOException e) {
+                    throw new RuntimeException(e.getMessage());
+                }
+            }
+        }
+
+        /*FileWriter writer = null;
         try
         {
             writer = new FileWriter(filePath);
@@ -323,7 +341,7 @@ public class GalenControl extends BaseLibrary {
             {
                 e.printStackTrace();
             }
-        }
+        }*/
     }
 
 }
