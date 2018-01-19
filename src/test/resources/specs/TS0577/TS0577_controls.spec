@@ -28,7 +28,7 @@
     #Sayi
         sayiLabel:
             inside container  71px left
-            below birim 26px
+            below birim ~26px
 
         sayiDots:
             aligned horizontally all sayiLabel
@@ -62,7 +62,7 @@
 
         hitap:
             below hitapMetinAlani ~2px
-            centered horizontally on hitapMetinAlani 2px
+            centered horizontally on hitapMetinAlani ~2px
 
     #Ilgi
         ilgiLabel:

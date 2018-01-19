@@ -21,7 +21,8 @@ public class LoginPage extends MainPage {
 //        clearCookies();
         WebDriverRunner.clearBrowserCache();
         Selenide.open("");
-        maximazeBrowser();
+        //maximazeBrowser();
+        WebDriverRunner.getWebDriver().manage().window().maximize();
         return this;
     }
 
