@@ -126,10 +126,9 @@ public class EvrakPostalamaTest extends BaseTest {
         EvrakOlusturPage.EditorTab editorTab = evrakOlusturPage.editorTabAc();
         editorTab.getEditor().type("TS2076");
         editorTab.imzala()
-                .popupSImzalaIslemleri()
-                .islemMesaji().basariliOlmali();
+                .popupSImzalaIslemleri();
 
-        postalananlarPage
+        postalanacakEvraklarPage
                 .openPage()
                 .filter().findRowsWith(Condition.text(konu))
                 .shouldHaveSize(0);
@@ -145,14 +144,15 @@ public class EvrakPostalamaTest extends BaseTest {
     @Test(enabled = true, description = "TS0520b : Postalanan evrak posta bilgilerinin içerik ekranından güncellenmesi ve rapordan kontrolü")
     public void TS0520b() throws InterruptedException {
         login("Mbozdemir", "123");
-        String konu = "Konu:";
+        String konu = "Konu: TS2235";
+
 
         postalananlarPage
                 .openPage();
 
-        Thread.sleep(2000);
-        postalananlarPage.tablodanSecim();
 
+        Thread.sleep(2000);
+        postalananlarPage.filter().findRowsWith(Condition.text(konu)).first().click();
         Thread.sleep(1000);
         postalananlarPage.postaDetayiTikla();
         postalananlarPage.btnGuncelle();
@@ -178,7 +178,7 @@ public class EvrakPostalamaTest extends BaseTest {
     @Test(enabled = true, description = "TS0520a : Postalanan evrak posta bilgilerinin önizleme ekranından güncellenmesi ve rapor üzerinde kontrolü")
     public void TS0520a() throws InterruptedException {
         login("Mbozdemir", "123");
-        String konu = "Konu: TS2235:";
+        String konu = "Konu: TS2235";
 
         postalananlarPage
                 .openPage();
