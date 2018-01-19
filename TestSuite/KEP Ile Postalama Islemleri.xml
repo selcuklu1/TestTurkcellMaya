@@ -4,7 +4,7 @@
     <!--By Can-->
     <test name="KEP İle Postalama İşlemleri Testleri">
         <packages>
-            <package name="tests.KEPIlePostalamaIslemleri"/>
+            <package name="tests.KepIlePostalamaIslemleri"/>
         </packages>
     </test>
 </suite>

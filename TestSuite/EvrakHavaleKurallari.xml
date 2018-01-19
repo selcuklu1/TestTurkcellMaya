@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite thread-count="1" name="Evrak Havale Kurallari" parallel="classes" verbose="1">
+    <!--By İlyas-->
+
+    <test name="Evrak HavaleKurallari Testleri">
+        <packages>
+            <package name="tests.EvrakHavaleKurallari"/>
+        </packages>
+    </test>
+</suite>
