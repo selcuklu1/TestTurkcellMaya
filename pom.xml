@@ -89,8 +89,8 @@
                     </suiteXmlFiles>
                     <argLine>
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+                        -Dfile.encoding="UTF-32BE"
                     </argLine>
-                    <argLine>-Dfile.encoding=UTF-8</argLine>
                     <!--<properties>
                         <property>
                             <name>listener</name>
