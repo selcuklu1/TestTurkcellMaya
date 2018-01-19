@@ -35,8 +35,10 @@ public class BaseTest extends BaseLibrary {
     @BeforeClass(alwaysRun = true)
     public void driverSetUp() {
 
+        System.out.println("Locale Default: " + Locale.getDefault());
         Locale turkishLocal = new Locale("tr", "TR");
-        Locale.setDefault(turkishLocal);
+        if (!Locale.getDefault().equals(turkishLocal))
+            Locale.setDefault(turkishLocal);
 
         BelgenetFramework.setUp();
         WebDriverRunner.addListener(new DriverEventListener());
