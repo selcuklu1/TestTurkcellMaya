@@ -157,9 +157,20 @@ public class GalenControl extends BaseLibrary {
     }
 
     public void setTextValuesToGalenSpec(String testName, Map<String, String> params){
+
+        Locale.setDefault(new Locale("en", "TR"));
+
         String filePath = pageSpecPath + testName + "/" + testName + "_temp.spec";
+        System.out.println("===================================================");
+        System.out.println("GALEN SPECS");
         String specContent = getFileContent(filePath);
+        System.out.println("===================================================");
+        System.out.println("CONTENT");
+        System.out.println(specContent);
+        System.out.println("===================================================");
+
         for (Map.Entry<String,String> entry : params.entrySet()){
+            System.out.println("VALUE: " + entry.getValue());
             specContent = specContent.replace("${" + entry.getKey() + "}", entry.getValue());
         }
             /*System.out.println("Key = " + entry.getKey() +
