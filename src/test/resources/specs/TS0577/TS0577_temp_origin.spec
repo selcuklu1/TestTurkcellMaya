@@ -1,13 +1,14 @@
 @objects
     container               css     div[id='yeniOnayEvrakForm:allPanels_content']
+    #firstPageHeader         css     div[class=firstPageHeader]
     footer                  css     div[id=editorFooter]
     footerBorder            css     div[id=footerCenter]
 
-    editorAntetBaslik       xpath   //button[.='T.C.']
-    kurumHeaderSatir1       xpath   //span[.='GENEL MÜDÜRLÜK MAKAMI']
-    kurumHeaderSatir2       xpath   //span[.='BİLİŞİM HİZMETLERİ GENEL MÜDÜR YARDIMCISI']
-    kurumHeaderSatir3       xpath   //span[.='YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ']
-    birim                   xpath   //span[.='${birim}']
+    editorAntetBaslik       xpath   //div[@id='yeniOnayEvrakForm:allPanels_content']//button[.='T.C.']
+    kurumHeaderSatir1       xpath   //div[@id='yeniOnayEvrakForm:allPanels_content']//span[.='GENEL MÜDÜRLÜK MAKAMI']
+    kurumHeaderSatir2       xpath   //div[@id='yeniOnayEvrakForm:allPanels_content']//span[.='BİLİŞİM HİZMETLERİ GENEL MÜDÜR YARDIMCISI']
+    kurumHeaderSatir3       xpath   //div[@id='yeniOnayEvrakForm:allPanels_content']//span[.='YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ']
+    birim                   xpath   //div[@id='yeniOnayEvrakForm:allPanels_content']//span[.='${birim}']
 
     sayiLabel               xpath   //span[@id='yeniOnayEvrakForm:editorTarihKonuSayi']//tbody/tr[1]/td[.='Sayı']
     sayiDots                xpath   //span[@id='yeniOnayEvrakForm:editorTarihKonuSayi']//tbody/tr[1]/td[.=':']
