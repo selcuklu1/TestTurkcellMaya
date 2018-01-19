@@ -37,9 +37,9 @@ public class GalenControl extends BaseLibrary {
      * "/src/test/resources/testName/dump" path
      */
     public void galenGenerateDump(String testName) {
-        Locale defaultLocal = Locale.getDefault();
+        //Locale defaultLocal = Locale.getDefault();
         //Locale turkishLocal = new Locale("tr", "TR");
-        Locale.setDefault(new Locale("en", "TR"));
+        //Locale.setDefault(new Locale("en", "TR"));
         try {
             /*Dimension browserSize = new Dimension(1440, 900);
             WebDriverRunner.getWebDriver().manage().window().setSize(browserSize);
@@ -56,7 +56,7 @@ public class GalenControl extends BaseLibrary {
             e.printStackTrace();
             throw new RuntimeException("Galen dumpPage error: " + e.getMessage());
         }finally {
-            Locale.setDefault(defaultLocal);
+            //Locale.setDefault(defaultLocal);
         }
     }
 
@@ -65,7 +65,7 @@ public class GalenControl extends BaseLibrary {
 
         Locale defaultLocal = Locale.getDefault();
         //Locale turkishLocal = new Locale("tr", "TR");
-        Locale.setDefault(new Locale("en", "TR"));
+        //Locale.setDefault(new Locale("en", "TR"));
 
 
         Allure.addAttachment("Layout report link", "galenReports/TS0577/report.html");

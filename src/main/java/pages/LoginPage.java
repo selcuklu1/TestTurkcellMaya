@@ -24,7 +24,7 @@ public class LoginPage extends MainPage {
         maximazeBrowser();
 
         System.out.println("================================");
-        System.out.println("Driver: " + WebDriverRunner.getWebDriver().toString());
+        System.out.println("Driver: " + getCapabilities().toString());
         System.out.println("================================");
         return this;
     }
