@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite thread-count="1" name="Data" parallel="classes" verbose="1">
+    <!--By Ilyas-->
+    <test name="Data Testleri">
+        <packages>
+            <package name="tests.Data"/>
+        </packages>
+    </test>
+</suite>
+

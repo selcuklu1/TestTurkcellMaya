@@ -79,8 +79,9 @@ public class GalenControl extends BaseLibrary {
         // checkLayout function checks the layout and returns a LayoutReport
         // object
         LayoutReport layoutReport = Galen.checkLayout(WebDriverRunner.getWebDriver()
-                , pageSpecPath + testName + "/" + testName + "_controls.spec",
-                Arrays.asList());
+                , pageSpecPath + testName + "/" + testName + "_controls.spec", Collections.emptyList()
+                );
+//        Arrays.asList()
 
         // Create a tests list
         List<GalenTestInfo> galenTests = new LinkedList<GalenTestInfo>();

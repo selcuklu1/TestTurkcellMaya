@@ -7,28 +7,28 @@
             centered horizontally inside container
 
         kurumHeaderSatir1:
-            below editorAntetBaslik 0px
+            below editorAntetBaslik ~2px
             centered horizontally inside container
 
         kurumHeaderSatir2:
             height 100% of kurumHeaderSatir1/height
-            below kurumHeaderSatir1 0px
+            below kurumHeaderSatir1 ~2px
             centered horizontally inside container
 
         kurumHeaderSatir3:
             height 100% of kurumHeaderSatir2/height
-            below kurumHeaderSatir2 0px
+            below kurumHeaderSatir2 ~2px
             centered horizontally inside container
 
         birim:
             height 100% of kurumHeaderSatir3/height
-            below kurumHeaderSatir3 0px
+            below kurumHeaderSatir3 ~2px
             centered horizontally inside container
 
     #Sayi
         sayiLabel:
             inside container  71px left
-            below birim 26px
+            below birim ~26px
 
         sayiDots:
             aligned horizontally all sayiLabel
@@ -58,16 +58,16 @@
     #Hitap
         hitapMetinAlani:
             below konu 40px
-            inside container 380px left
+            inside container ~380px left
 
         hitap:
-            below hitapMetinAlani 0px
-            centered horizontally inside container ~2px
+            below hitapMetinAlani ~2px
+            centered horizontally on hitapMetinAlani ~2px
 
     #Ilgi
         ilgiLabel:
             inside container 70px left
-            below hitap ~28px
+            below hitap 24 to 30px
 
         ilgiDots:
             height 100% of ilgiLabel/height
@@ -96,7 +96,7 @@
 
     #Imzaci 1
         imzaci1MetinAlani:
-            inside container  827 to 836px top, 90 to 100px right
+            inside container  814 to 836px top, 90 to 100px right
             #below editor 23 to 30px
 
         imzaci1Isim:
