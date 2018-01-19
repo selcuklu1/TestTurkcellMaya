@@ -22,6 +22,10 @@ public class LoginPage extends MainPage {
         WebDriverRunner.clearBrowserCache();
         Selenide.open("");
         maximazeBrowser();
+
+        System.out.println("================================");
+        System.out.println("Driver: " + WebDriverRunner.getWebDriver().toString());
+        System.out.println("================================");
         return this;
     }
 
