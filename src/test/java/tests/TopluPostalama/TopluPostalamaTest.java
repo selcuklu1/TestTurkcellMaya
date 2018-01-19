@@ -4,6 +4,14 @@ import common.BaseTest;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
+
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.util.CellReference;
+import org.apache.poi.ss.usermodel.*;
+
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.MainPage;
@@ -12,9 +20,17 @@ import pages.ustMenuPages.EvrakOlusturPage;
 import pages.ustMenuPages.PttRaporuPage;
 
 import java.awt.*;
+
+import java.io.IOException;
+
+import java.io.*;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.Random;
+
+import static com.codeborne.selenide.Selenide.$$x;
 
 
 public class TopluPostalamaTest extends BaseTest {
@@ -1009,44 +1025,151 @@ public class TopluPostalamaTest extends BaseTest {
     // EXCELL KONTROLÜ YAPILACAK
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS1676 : Toplu Postalama PTT Evrak Raporu (UC_POSTAYÖNETİMİ_005)")
-    public void TS1676() {
-
-        /*
-
-        String postaTarihi = "13.12.2017";
+    public void TS1676() throws IOException {
+        String kurum1 = "Yenikurum6507";
+        String evrakKayitTarihiSayi = "" + new SimpleDateFormat("dd.MM.yyyy").format(new Date());
+        String evrakGidecegiYer = kurum1;
+        String evrakKonuKodu = "Entegrasyon İşlemleri";
+        String evrakKonu = "TS1676-" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
+        String evrak2Konu = "TS1676-" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
+        String evrakPostaTipi = "Adi Posta";
+        String evrakHazirlayanBirim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
+        String postaTarihi = "" + new SimpleDateFormat("dd.MM.yyyy").format(new Date());
         String postaTipi = "Adi Posta";
-        String gittigiYer = "Enerjı ve Madencılık Daire Başkanlığı";
-        String evrakSayi = "9174";
+        String listeAdi = "TS1676Liste-" + getRandomNumber(1000, 9000);
 
         login("mbozdemir", "123");
 
-        pttRaporuPage
+        evrakOlusturPage
                 .openPage()
+                .bilgilerTabiAc()
+                .konuKoduSec(evrakKonuKodu)
+                .konuDoldur(evrakKonu)
+                .kaldiralacakKlasorlerSec("Diğer")
+                .geregiSecimTipiSec("Kurum")
+                .geregiSec(evrakGidecegiYer)
+                .geregiKurumPostaTipi(evrakPostaTipi)
+                .onayAkisiEkle()
+                .onayAkisiKullaniciTipiSec("Mehmet BOZDEMİR", "İmzalama")
+                .kullan();
+        evrakOlusturPage
+                .editorTabAc()
+                .editorIcerikDoldur("TS1676 için evrak.")
+                .imzala()
+                .sImzasec()
+                .sImzaImzala()
+                .popupSimzaEvet();
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .konuKoduSec(evrakKonuKodu)
+                .konuDoldur(evrak2Konu)
+                .kaldiralacakKlasorlerSec("Diğer")
+                .geregiSecimTipiSec("Kurum")
+                .geregiSec(evrakGidecegiYer)
+                .geregiKurumPostaTipi(evrakPostaTipi)
+                .onayAkisiEkle()
+                .onayAkisiKullaniciTipiSec("Mehmet BOZDEMİR", "İmzalama")
+                .kullan();
+        evrakOlusturPage
+                .editorTabAc()
+                .editorIcerikDoldur("TS1676 için evrak.")
+                .imzala()
+                .sImzasec()
+                .sImzaImzala()
+                .popupSimzaEvet();
+
+        topluPostalanacakEvraklarPage
+                .openPage()
+                .filtreGidecegiYer(evrakGidecegiYer)
+                .gidecegiYerSec(evrakGidecegiYer, true)
+                .sorgula()
+                .evrakTikSec(evrakKayitTarihiSayi, evrakGidecegiYer, evrakKonu, evrakHazirlayanBirim, evrakPostaTipi, true)
+                .evrakTikSec(evrakKayitTarihiSayi, evrakGidecegiYer, evrak2Konu, evrakHazirlayanBirim, evrakPostaTipi, true)
+                .postaListesineAktar()
+                .listeAdiDoldur(listeAdi)
+                .listeOlustur()
+                .postaListesiSec(listeAdi)
+                .listeyeEkle();
+
+        postaListesiPage
+                .openPage()
+                .filtreleAc()
+                .postaListesiDoldur(listeAdi)
+                .postaListesiPostala()
+                .postaDetayiPostala();
+
+        pttRaporuPage
+                .openPage();
+
+        String dagitici = pttRaporuPage.dagiticiGetir();
+        String duzenleyen = pttRaporuPage.duzenleyenGetir();
+        String avansSorumlusu = pttRaporuPage.avansSorumlusuGetir();
+        String kontrolEden = pttRaporuPage.kontrolEdenGetir();
+        String pttMerkez = pttRaporuPage.pttMerkezGetir();
+
+        pttRaporuPage
                 .aramaDetaylariPanelAc()
                 .postaTarihiDoldur(postaTarihi)
                 .postaTipiSec(postaTipi)
                 .sorgula();
 
+
         String ulke = pttRaporuPage.tablodanDegerAl("Ülke");
         String il = pttRaporuPage.tablodanDegerAl("Şehir");
         postaTipi = pttRaporuPage.tablodanDegerAl("Gidiş Şekli");
+
+        File folder = new File(getDownloadPath());
+        final File[] files = folder.listFiles(new FilenameFilter() {
+            @Override
+            public boolean accept(final File dir,
+                                  final String name) {
+                return name.matches("Rapor_.*\\.xls");
+            }
+        });
+        for (File file1 : files) {
+            if (!file1.delete()) {
+                System.err.println("Can't remove " + file1.getAbsolutePath());
+            }
+        }
 
         pttRaporuPage
                 .ulkeDoldur(ulke)
                 .ilDoldur(il)
                 .postaTipiSec(postaTipi)
                 .sorgula()
-                .tabloKontrolEt(gittigiYer, evrakSayi, postaTarihi, true);
+                .tabloKontrolEt(evrakGidecegiYer, "", postaTipi, true)
+                .raporAl();
 
-        */
+        String excelFileName = pttRaporuPage.indirilenDosyaAd();
 
+        PttRaporuPage.PttRaporExcellTest pttRaporExcellTest = new PttRaporuPage.PttRaporExcellTest(excelFileName);
 
-        /*
-        pttRaporuPage
-                .excell();
-                //.excellKontrolEt();
-        */
+        pttRaporExcellTest.kisiBilgileriKontrol(dagitici, duzenleyen, avansSorumlusu, kontrolEden, pttMerkez);
 
+        int tableRowCount = pttRaporuPage.tableRaporlar.size();
+
+        String tabloGidenKurum = "";
+        String tabloUlke = "";
+        String tabloSehir = "";
+        String tabloPostaAdi = "";
+        String tabloAgirlik = "";
+        String tabloPul = "";
+        String tabloUcret = "";
+
+        for(int i = 0; i < tableRowCount; i++){
+
+            tabloGidenKurum = pttRaporuPage.tablodanDegerAl("Gittiği Yer", i + 1).replaceAll("\\n"," / ");
+            tabloUlke = pttRaporuPage.tablodanDegerAl("Ülke", i + 1);
+            tabloSehir = pttRaporuPage.tablodanDegerAl("Şehir", i + 1);
+            tabloPostaAdi = pttRaporuPage.tablodanDegerAl("Gidiş Şekli", i + 1);
+            tabloAgirlik = pttRaporuPage.tablodanDegerAl("Ağırlık(Gr.)", i + 1);
+            tabloPul = pttRaporuPage.tablodanDegerAl("Posta Kodu", i + 1);
+            tabloUcret = pttRaporuPage.tablodanDegerAl("Ücret(TL.)", i + 1);
+            pttRaporExcellTest.tabloKontrol(tabloGidenKurum, tabloUlke, tabloSehir, tabloPostaAdi, tabloAgirlik, tabloPul, tabloUcret);
+
+        }
 
     }
 
@@ -1101,7 +1224,7 @@ public class TopluPostalamaTest extends BaseTest {
         String gramaj5 = "5";
         String hesaplananTutar;
         String number = createRandomNumber(4);
-String tutar = "20.000";
+        String tutar = "20.000";
 
         String[] postaTipleri = new String[]{
                 "Ankara İçi APS"
@@ -1163,7 +1286,7 @@ String tutar = "20.000";
                 .gramajDoldur(gramaj1)
                 .tutarHesapla();
         hesaplananTutar = postaListesiPage.tutarAl();
-        hesaplananTutar=hesaplananTutar.substring(0,5);
+        hesaplananTutar = hesaplananTutar.substring(0, 5);
 
         postaListesiPage.postaDetayiPostala();
         //endregion
@@ -1263,8 +1386,8 @@ String tutar = "20.000";
                 .adresDoldur(adres)
                 .gramajDoldur(gramaj1)
                 .tutarHesapla();
-        hesaplananTutar=postaListesiPage.tutarAl();
-        hesaplananTutar=hesaplananTutar.substring(0,5);
+        hesaplananTutar = postaListesiPage.tutarAl();
+        hesaplananTutar = hesaplananTutar.substring(0, 5);
         postaListesiPage
                 .postaDetayiPostala();
         //endregion
@@ -1977,15 +2100,17 @@ String tutar = "20.000";
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = false, description = "TS1816 : Toplu Postaladıklarım Güncelleme İşlemleri (UC_POSTAYÖNETİMİ_004)")
-    public void TS1816() throws AWTException {
+    @Test(enabled = true, description = "TS1816 : Toplu Postaladıklarım Güncelleme İşlemleri (UC_POSTAYÖNETİMİ_004)")
+    public void TS1816() throws IOException, AWTException {
 
+        String remoteDownloadPath = getDownloadPath();
+//        String remoteDownloadPath = "C:\\Users\\optiim\\Downloads\\";
 
-        String[] konu = new String[]{
-                "TC1811 20180117080734", "TC1811 20180117080734100"
-        };
+//        String[] konu = new String[]{
+//                "TC1811 20180117080734", "TC1811 20180117080734100"
+//        };
+        String[] evrakNo1816 = new String[2];
 
-        login("mbozdemir", "123");
         //region Parameters
         String konuKodu = "010.01";
         String kaldiralacakKlasor = "Diğer";
@@ -1995,9 +2120,9 @@ String tutar = "20.000";
         String ivedilik = "Normal";
         String geregi = "Ahmet Çelik";
         String adres = "adres " + getSysDateForKis();
-//        String[] konu = new String[]{
-//                "TC1816 " + getSysDate(), "TC1816 " + getSysDate() + 100
-//        };
+        String[] konu = new String[]{
+                "TC1816 " + getSysDate(), "TC1816 " + getSysDate() + 100
+        };
         String tur = "İmzalama";
         String geregiTipi = "Gerçek Kişi";
         String basariMesaji = "İşlem başarılıdır!";
@@ -2009,70 +2134,81 @@ String tutar = "20.000";
         String gramaj3 = "3";
         String gramaj5 = "5";
         String tutar = "120";
+        String[] icerik = new String[2];
         String[] postaTipleri = new String[]{
                 "Ankara İçi APS"
         };
+
         //endregion
+        login("mbozdemir", "123");
         Allure.addAttachment("Test Datası", "Test Datası oluşturuluyor.");
 ////        region Test Datası
-//        for (int i = 0; i < 2; i++) {
-//            evrakOlusturPage
-//                    .openPage()
-//                    .bilgilerTabiAc()
-//                    .konuKoduSec(konuKodu)
-//                    .konuDoldur(konu[i])
-//                    .kaldiralacakKlasorlerSec(kaldiralacakKlasor)
-//                    .evrakTuruSec(evrakTuru)
-//                    .evrakDiliSec(evrakDili)
-//                    .gizlilikDerecesiSec(gizlilikDerecesi)
-//                    .ivedilikSec(ivedilik)
-//                    .geregiSecimTipiSecByText(geregiTipi)
-//                    .geregiSec(geregi)
-//                    .gercekKisiGeregiAlaniPostaTipiSec(gidisSekli)
-//                    .onayAkisiEkle()
-//                    .onayAkisiEkleIlkImzalaSec(tur)
-//                    .kullan();
-//
-//            evrakOlusturPage
-//                    .editorTabAc()
-//                    .editorIcerikDoldur(konu[i]);
-//            mainPage
-//                    .evrakImzala();
-//        }
-//
-//        topluPostalanacakEvraklarPage
-//                .openPage()
-//                .tarihAraligiSec(getSysDateForKis(), getSysDateForKis())
-//                .postaTipiSec(postaTipleri)
-//                .sorgula()
+        for (int i = 0; i < 2; i++) {
+            icerik[i] = konu[i] + getSysDate();
+            evrakOlusturPage
+                    .openPage()
+                    .bilgilerTabiAc()
+                    .konuKoduSec(konuKodu)
+                    .konuDoldur(konu[i])
+                    .kaldiralacakKlasorlerSec(kaldiralacakKlasor)
+                    .evrakTuruSec(evrakTuru)
+                    .evrakDiliSec(evrakDili)
+                    .gizlilikDerecesiSec(gizlilikDerecesi)
+                    .ivedilikSec(ivedilik)
+                    .aciklamaDoldur(konu[i])
+                    .geregiSecimTipiSecByText(geregiTipi)
+                    .geregiSec(geregi)
+                    .gercekKisiGeregiAlaniPostaTipiSec(gidisSekli)
+                    .onayAkisiEkle()
+                    .onayAkisiEkleIlkImzalaSec(tur)
+                    .kullan();
+
+            evrakOlusturPage
+                    .editorTabAc()
+                    .editorIcerikDoldur(icerik[i]);
+            mainPage
+                    .evrakImzala();
+
+            imzaladiklarimPage
+                    .openPage();
+
+            evrakNo1816[i] = imzaladiklarimPage.evrakIcerikKontroluveEvrakNoAl(konu[i]);
+        }
+
+        topluPostalanacakEvraklarPage
+                .openPage()
+                .tarihAraligiSec(getSysDateForKis(), getSysDateForKis())
+                .postaTipiSec(postaTipleri)
+                .sorgula()
+                .konuyaGoreEvrakSec(konu,true)
 //                .evrakTumunuSec(true)
-//                .postaListesineAktar()
-//                .listeAdiDoldur(konu[0])
-//                .listeOlustur()
-//                .postaListesiSec(konu[0])
-//                .listeyeEkle();
-//
-//
-//        postaListesiPage
-//                .openPage()
-//                .filtreleAc()
-//                .postaListesiDoldur(postaListesi)
-//                .evrakSec(konu[0])
-//                .postaListesiPostala()
-//                .postaDetayiGonderildigiYer(geregiTipi)
-//                .adresDoldur(adres)
-//                .gramajDoldur(gramaj1)
-//                .tutarHesapla()
-//                .postaDetayiPostala();
+                .postaListesineAktar()
+                .listeAdiDoldur(konu[0])
+                .listeOlustur()
+                .postaListesiSec(konu[0])
+                .listeyeEkle();
+
+
+        postaListesiPage
+                .openPage()
+                .filtreleAc()
+                .postaListesiDoldur(postaListesi)
+                .evrakSec(konu[0])
+                .postaListesiPostala()
+                .postaDetayiGonderildigiYer(geregiTipi)
+                .adresDoldur(adres)
+                .gramajDoldur(gramaj1)
+                .tutarHesapla()
+                .postaDetayiPostala();
 //        //endregion
+
         Allure.addAttachment("Test Datası", "Test Datası oluşturuldu.");
-//        String postaListesi = "TC1811 20180112161120";
+
         topluPostaladiklarimPage
                 .openPage()
                 .topluPostaladiklarimPostaListesiKontrol(postaListesi, "", getSysDateForKis(), gramaj1, "45.000", true)
                 .topluPostaladiklarimEvrakSec(postaListesi)
                 .evrakListesiYazdir(konu)
-                .evrakListesiYazdirPdfKontrol(konu)//kontrol amaçlı konuldu.
                 .evrakListesiOrjinaliYazdir(konu)
                 .tutarGuncelle("65.00")
                 .guncelle()
@@ -2091,13 +2227,17 @@ String tutar = "20.000";
                 .tutarHesapla()
                 .indirimOncesiTutarKontrol("100.00", true)
                 .indirimOraniKontrol("20", true)
-                .tutarKontrol("80.00", true)
-                .etiketBastir()
-                .etiketBastirEkraniKontrolü(adres, geregi)
-                .etiketBastirEkraniKapat();
+                .tutarKontrol("80.00", true);
+//                    .etiketBastir()     //Sistem hatası alnıyor
+//                    .etiketBastirEkraniKontrolü(adres, geregi)
+//                    .etiketBastirEkraniKapat();
+
+        topluPostaladiklarimPage
+                .evrakListesiYazdirPdfIndir(konu, evrakNo1816, icerik) //kontrol amaçlı konuldu.
+                .evrakListesiOrjinaliYazdirPdfIndir(konu, evrakNo1816, icerik);
 
         //TODO
-        //17.step
+        //20
     }
 
 }

@@ -1,6 +1,6 @@
 @objects
     container               css     div[id='yeniOnayEvrakForm:allPanels_content']
-    firstPageHeader         css     div[class=firstPageHeader]
+    #firstPageHeader         css     div[class=firstPageHeader]
     footer                  css     div[id=editorFooter]
     footerBorder            css     div[id=footerCenter]
 
