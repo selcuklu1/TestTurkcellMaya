@@ -5,13 +5,6 @@ import io.qameta.allure.Allure;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.hssf.util.CellReference;
-import org.apache.poi.ss.usermodel.*;
-
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.MainPage;
@@ -27,10 +20,7 @@ import java.io.*;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.Random;
-
-import static com.codeborne.selenide.Selenide.$$x;
 
 
 public class TopluPostalamaTest extends BaseTest {
@@ -1158,9 +1148,9 @@ public class TopluPostalamaTest extends BaseTest {
         String tabloPul = "";
         String tabloUcret = "";
 
-        for(int i = 0; i < tableRowCount; i++){
+        for (int i = 0; i < tableRowCount; i++) {
 
-            tabloGidenKurum = pttRaporuPage.tablodanDegerAl("Gittiği Yer", i + 1).replaceAll("\\n"," / ");
+            tabloGidenKurum = pttRaporuPage.tablodanDegerAl("Gittiği Yer", i + 1).replaceAll("\\n", " / ");
             tabloUlke = pttRaporuPage.tablodanDegerAl("Ülke", i + 1);
             tabloSehir = pttRaporuPage.tablodanDegerAl("Şehir", i + 1);
             tabloPostaAdi = pttRaporuPage.tablodanDegerAl("Gidiş Şekli", i + 1);
@@ -2107,9 +2097,14 @@ public class TopluPostalamaTest extends BaseTest {
 //        String remoteDownloadPath = "C:\\Users\\optiim\\Downloads\\";
 
 //        String[] konu = new String[]{
-//                "TC1811 20180117080734", "TC1811 20180117080734100"
+//                "TC1816 1260147591083", "TC1816 20180119162943"
 //        };
+
+
         String[] evrakNo1816 = new String[2];
+        String[] sayi = new String[2];
+        String[] pdfSayi = new String[2];
+
 
         //region Parameters
         String konuKodu = "010.01";
@@ -2121,7 +2116,7 @@ public class TopluPostalamaTest extends BaseTest {
         String geregi = "Ahmet Çelik";
         String adres = "adres " + getSysDateForKis();
         String[] konu = new String[]{
-                "TC1816 " + getSysDate(), "TC1816 " + getSysDate() + 100
+                "TC1816 " + getSysDate(), "TC1816 " +createRandomNumber(12)
         };
         String tur = "İmzalama";
         String geregiTipi = "Gerçek Kişi";
@@ -2139,8 +2134,13 @@ public class TopluPostalamaTest extends BaseTest {
                 "Ankara İçi APS"
         };
 
+        System.out.println(konu[0]);
+        System.out.println(konu[1]);
+        System.out.println(postaListesi);
+
         //endregion
         login("mbozdemir", "123");
+
         Allure.addAttachment("Test Datası", "Test Datası oluşturuluyor.");
 ////        region Test Datası
         for (int i = 0; i < 2; i++) {
@@ -2166,6 +2166,10 @@ public class TopluPostalamaTest extends BaseTest {
             evrakOlusturPage
                     .editorTabAc()
                     .editorIcerikDoldur(icerik[i]);
+
+            sayi[i] = evrakOlusturPage.editorTabAc().editorSayiAl();
+
+
             mainPage
                     .evrakImzala();
 
@@ -2173,6 +2177,8 @@ public class TopluPostalamaTest extends BaseTest {
                     .openPage();
 
             evrakNo1816[i] = imzaladiklarimPage.evrakIcerikKontroluveEvrakNoAl(konu[i]);
+
+            pdfSayi[i] = sayi[i]+evrakNo1816[i];
         }
 
         topluPostalanacakEvraklarPage
@@ -2180,7 +2186,8 @@ public class TopluPostalamaTest extends BaseTest {
                 .tarihAraligiSec(getSysDateForKis(), getSysDateForKis())
                 .postaTipiSec(postaTipleri)
                 .sorgula()
-                .konuyaGoreEvrakSec(konu,true)
+                .evrakSec(konu[0], true)
+                .evrakSec(konu[1],true)
 //                .evrakTumunuSec(true)
                 .postaListesineAktar()
                 .listeAdiDoldur(konu[0])
@@ -2203,6 +2210,7 @@ public class TopluPostalamaTest extends BaseTest {
 //        //endregion
 
         Allure.addAttachment("Test Datası", "Test Datası oluşturuldu.");
+
 
         topluPostaladiklarimPage
                 .openPage()
@@ -2232,9 +2240,10 @@ public class TopluPostalamaTest extends BaseTest {
 //                    .etiketBastirEkraniKontrolü(adres, geregi)
 //                    .etiketBastirEkraniKapat();
 
+
         topluPostaladiklarimPage
-                .evrakListesiYazdirPdfIndir(konu, evrakNo1816, icerik) //kontrol amaçlı konuldu.
-                .evrakListesiOrjinaliYazdirPdfIndir(konu, evrakNo1816, icerik);
+                .evrakListesiYazdirPdfKontrolu(konu, evrakNo1816, icerik)
+                .evrakListesiOrjinaliYazdirPdfKontrolu(konu, evrakNo1816, icerik);
 
         //TODO
         //20
