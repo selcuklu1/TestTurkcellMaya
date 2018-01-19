@@ -10,6 +10,7 @@ import common.BaseLibrary;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.Point;
 import org.testng.Assert;
 
 import java.io.*;
@@ -40,8 +41,9 @@ public class GalenControl extends BaseLibrary {
         //Locale turkishLocal = new Locale("tr", "TR");
         Locale.setDefault(new Locale("en", "TR"));
         try {
-            //Dimension browserSize = new Dimension(1280, 800);
-            //WebDriverRunner.getWebDriver().manage().window().setSize(browserSize);
+            /*Dimension browserSize = new Dimension(1440, 900);
+            WebDriverRunner.getWebDriver().manage().window().setSize(browserSize);
+            WebDriverRunner.getWebDriver().manage().window().setPosition(new Point(0,0));*/
             sleep(5000);
             waitForLoadingJS(WebDriverRunner.getWebDriver());
 
@@ -68,8 +70,9 @@ public class GalenControl extends BaseLibrary {
 
         Allure.addAttachment("Layout report link", "galenReports/TS0577/report.html");
 
-        //Dimension browserSize = new Dimension(1440, 900);
-        //WebDriverRunner.getWebDriver().manage().window().setSize(browserSize);
+       /* Dimension browserSize = new Dimension(1440, 900);
+        WebDriverRunner.getWebDriver().manage().window().setSize(browserSize);
+        WebDriverRunner.getWebDriver().manage().window().setPosition(new Point(0,0));*/
         sleep(5000);
         waitForLoadingJS(WebDriverRunner.getWebDriver());
         // Create a layoutReport object

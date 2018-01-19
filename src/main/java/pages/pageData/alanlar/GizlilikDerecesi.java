@@ -12,7 +12,17 @@ public enum GizlilikDerecesi {
 	<option value="H">Hizmete Özel</option>
 	<option value="T">Tasnif Dışı</option>
 	<option value="N" selected="selected">Normal</option>*/
+    /*Nato gizli
+    Çok gizli
+    Gizli
+    Özel
+    Kişiye Özel
+    Hizmete özel
+    Tasnif dışı
+    Normal*/
 
+    NatoGizli("Nato Gizli", ""),
+    CokGizli("Çok Gizli", "C"),
     Gizli("Gizli", "G"),
     KisiyeOzel("Kişiye Özel", "K"),
     Ozel("Özel", "O"),
