@@ -184,7 +184,7 @@ public class GalenControl extends BaseLibrary {
 
         Locale.setDefault(new Locale("en", "TR"));
 
-        String filePath = pageSpecPath + testName + "/" + testName + "_temp.gspec";
+        String filePath = pageSpecPath + testName + "/" + testName + "_objects.gspec";
         System.out.println("===================================================");
         System.out.println("GALEN SPECS");
         String specContent = getFileContent(filePath);
@@ -201,7 +201,7 @@ public class GalenControl extends BaseLibrary {
                     ", Value = " + entry.getValue());
         params.forEach((name,value)-> specContent.replace("${" + name + "}", value));*/
 
-            writeContentToFile(pageSpecPath + testName + "/"+ testName + "_objects.gspec", specContent);
+            writeContentToFile(pageSpecPath + testName + "/"+ testName + "_temp.gspec", specContent);
 
     }
 
