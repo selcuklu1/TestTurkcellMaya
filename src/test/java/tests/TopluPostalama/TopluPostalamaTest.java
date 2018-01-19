@@ -18,10 +18,7 @@ import pages.ustMenuPages.EvrakOlusturPage;
 import pages.ustMenuPages.PttRaporuPage;
 
 import java.awt.*;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
@@ -1117,7 +1114,19 @@ public class TopluPostalamaTest extends BaseTest {
         String il = pttRaporuPage.tablodanDegerAl("Şehir");
         postaTipi = pttRaporuPage.tablodanDegerAl("Gidiş Şekli");
 
-        deleteFile("/Users/huseyintumer/Downloads/", "Rapor_");
+        File folder = new File(getDownloadPath());
+        final File[] files = folder.listFiles(new FilenameFilter() {
+            @Override
+            public boolean accept(final File dir,
+                                  final String name) {
+                return name.matches("Rapor_.*\\.xls");
+            }
+        });
+        for (File file1 : files) {
+            if (!file1.delete()) {
+                System.err.println("Can't remove " + file1.getAbsolutePath());
+            }
+        }
 
         pttRaporuPage
                 .ulkeDoldur(ulke)

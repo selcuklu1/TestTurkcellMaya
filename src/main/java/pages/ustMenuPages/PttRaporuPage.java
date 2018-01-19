@@ -343,7 +343,12 @@ public class PttRaporuPage extends MainPage {
 
     @Step("Ülke doldur: {ulke}")
     public PttRaporuPage ulkeDoldur(String ulke) {
-        txtUlke.selectLov(ulke);
+        //txtUlke.selectLov(ulke);
+        txtUlke.type(ulke)
+                .getTitleItems()
+                .filterBy(Condition.textCaseSensitive(ulke))
+                .first().click();
+        txtUlke.closeTreePanel();
         return this;
     }
 
@@ -397,7 +402,7 @@ public class PttRaporuPage extends MainPage {
             i++;
         }
 
-        File root = new File("/Users/huseyintumer/Downloads/");
+        File root = new File(getDownloadPath());
         FilenameFilter beginswithm = new FilenameFilter() {
             public boolean accept(File directory, String filename) {
                 return filename.matches("Rapor_.*\\.xls");
