@@ -12,6 +12,7 @@ import java.util.List;
 
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static com.codeborne.selenide.Selenide.sleep;
 import static pages.pageComponents.IslemMesajlari.MessageTitle.*;
@@ -51,7 +52,8 @@ public class IslemMesajlari extends BaseLibrary {
 
     //    @Step("Messaj bulunmalı")
     private SelenideElement getMessageBody() {
-        return $$(messageLocator).shouldHave(sizeGreaterThan(0)).filterBy(visible).last();
+        //return $$(messageLocator).shouldHave(sizeGreaterThan(0)).filterBy(visible).first();
+        return $(messageLocator);
     }
 
     private List<String> getMessageBodyList() {

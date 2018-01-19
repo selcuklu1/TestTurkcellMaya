@@ -21,22 +21,23 @@ public class Firefox extends BaseTest implements WebDriverProvider {
 //        ProfilesIni profilesIni = new ProfilesIni();
 //        FirefoxProfile profile = profilesIni.getProfile("default");
         //</editor-fold>
-
 //        System.setProperty("webdriver.gecko.driver","/Users/ilyas/Documents/WebDrivers/geckodriver-v0.19.0");
 //        System.setProperty("webdriver.gecko.driver","/Users/ilyas/Documents/WebDrivers/geckodriver-v0.18.0");
         FirefoxProfile profile = new FirefoxProfile();
         FirefoxOptions options = new FirefoxOptions();
-        options.setProfile(profile)
-                .setCapability("browserName", "firefox");
-        options.setAcceptInsecureCerts(true)
+        //options.setProfile(profile);
+                //.setCapability("browser.name", "firefox");
+        /*options.setAcceptInsecureCerts(true)
                 .addPreference("security.insecure_field_warning.contextual.enabled", false)
-                .setLogLevel(FirefoxDriverLogLevel.fromLevel(Level.OFF));
+                .setLogLevel(FirefoxDriverLogLevel.fromLevel(Level.OFF));*/
         options.addPreference("browser.download.folderList", 2);
         options.addPreference("browser.download.dir", TestData.docDownloadPathWindows);
-
-
+        options.setCapability("browserName", "firefox");
+        options.merge(capabilities);
 //        System.setProperty(FirefoxDriver.SystemProperty.DRIVER_USE_MARIONETTE,"false");
 //        System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE,"/dev/null");
+
+        //capabilities.setBrowserName("drivers.Firefox");
 
         return new FirefoxDriver(options);
     }

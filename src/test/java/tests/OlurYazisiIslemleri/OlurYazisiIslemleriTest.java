@@ -9,6 +9,7 @@ import galen.GalenControl;
 import io.qameta.allure.Link;
 import io.qameta.allure.Step;
 import listeners.DriverEventListener;
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
@@ -32,6 +33,8 @@ import pages.pageData.alanlar.Ivedilik;
 import pages.pageData.alanlar.OnayKullaniciTipi;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.logging.Level;
 
@@ -320,23 +323,34 @@ public class OlurYazisiIslemleriTest extends BaseTest {
     }
 
 
-    /*@BeforeMethod(alwaysRun = true)
+    @BeforeMethod(alwaysRun = true)
     public void setUp() {
-        //Configuration.browser = "drivers.Firefox";
+        //Configuration.browser = "drivers.Chrome";
 
-        FirefoxOptions options = new FirefoxOptions()
+        /*FirefoxOptions options = new FirefoxOptions()
                 .setAcceptInsecureCerts(true)
                 .addPreference("security.insecure_field_warning.contextual.enabled", false)
                 .setLogLevel(FirefoxDriverLogLevel.fromLevel(Level.OFF));
         options.addPreference("browser.download.folderList", 2);
-        options.addPreference("browser.download.dir", TestData.docDownloadPathLinux);
-        WebDriver driver = new EventFiringWebDriver(new FirefoxDriver(options)).register(new DriverEventListener());
-        WebDriverRunner.setWebDriver(driver);
+        options.addPreference("browser.download.dir", TestData.docDownloadPathWindows);
+        *//*Capabilities caps = getCapabilities();
+        caps.merge(options);*//*
+        try {
+            URL hub = new URL(Configuration.remote.toString());
+            RemoteWebDriver driver = new RemoteWebDriver(hub, options);
+            WebDriverRunner.setWebDriver(driver);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }*/
+
+
+        //WebDriver driver = new EventFiringWebDriver(new FirefoxDriver(options)).register(new DriverEventListener());
+
 //        WebDriverRunner.setWebDriver(new FirefoxDriver(options));
 
 
-        WebDriverRunner.addListener(new DriverEventListener());
+        //WebDriverRunner.addListener(new DriverEventListener());
 //        WebDriverRunner.setWebDriver((new EventFiringWebDriver(WebDriverRunner.getWebDriver()).register(new DriverEventListener())));
 
-    }*/
+    }
 }
