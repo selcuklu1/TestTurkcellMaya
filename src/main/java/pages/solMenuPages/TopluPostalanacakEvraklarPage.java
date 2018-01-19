@@ -407,11 +407,11 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
     public TopluPostalanacakEvraklarPage konuyaGoreEvrakSec(String[] konu, boolean secim) {
         Boolean isSelected = false;
         int size = konu.length;
-        for (int i = size-1; i >0 ; i--) {
+        for (int i = size-1; i >=0 ; i--) {
             tableEvraklar
                     .filterBy(Condition.text(konu[i]))
                     .first()
-                    .$("div[class='ui-chkbox-box ui-widget ui-corner-all ui-state-default']").click();
+                    .$("span[class='ui-chkbox-icon']").click();
         }
         return this;
     }

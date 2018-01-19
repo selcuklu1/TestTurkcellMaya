@@ -12,6 +12,7 @@ import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.UstMenuData;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -169,6 +170,7 @@ public class KaydedilenGelenEvrakPage extends MainPage {
             size2 = tblKaydedilenGelenEvrak
                     .filterBy(Condition.text(evraNo2))
                     .size();
+
         }
 
 //        SelenideElement table= $(By.id("birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable"));
@@ -187,7 +189,8 @@ public class KaydedilenGelenEvrakPage extends MainPage {
 
         deleteFile(remoteDownloadPath, "Rapor_");
         sleep(3000);
-        btnRaporAlExcel.click();
+        File file=$("[id='birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable'] button:nth-child(4)").download();
+//        btnRaporAlExcel.click();
         islemMesaji().basariliOlmali();
         waitForLoadingJS(WebDriverRunner.getWebDriver(), 180);
 //        islemMesaji().basariliOlmali();
