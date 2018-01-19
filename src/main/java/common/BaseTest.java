@@ -36,6 +36,8 @@ public class BaseTest extends BaseLibrary {
     @BeforeClass(alwaysRun = true)
     public void driverSetUp() {
         System.out.println("Default Charset=" + Charset.defaultCharset());
+        System.out.println(System.getProperty("java.specification.version"));
+        System.out.println(System.getProperty("java.runtime.version"));
         System.out.println("Locale Default: " + Locale.getDefault());
         Locale turkishLocal = new Locale("tr", "TR");
         if (!Locale.getDefault().equals(turkishLocal))
