@@ -44,8 +44,8 @@ public class GalenControl extends BaseLibrary {
             /*Dimension browserSize = new Dimension(1440, 900);
             WebDriverRunner.getWebDriver().manage().window().setSize(browserSize);
             WebDriverRunner.getWebDriver().manage().window().setPosition(new Point(0,0));*/
-            sleep(5000);
-            waitForLoadingJS(WebDriverRunner.getWebDriver());
+            //waitForLoadingJS(WebDriverRunner.getWebDriver());
+            sleep(10000);
 
             new GalenPageDump(testName).dumpPage(WebDriverRunner.getWebDriver(),
                     pageSpecPath + testName + "/" + testName + "_objects.spec",
@@ -73,14 +73,15 @@ public class GalenControl extends BaseLibrary {
        /* Dimension browserSize = new Dimension(1440, 900);
         WebDriverRunner.getWebDriver().manage().window().setSize(browserSize);
         WebDriverRunner.getWebDriver().manage().window().setPosition(new Point(0,0));*/
-        sleep(5000);
-        waitForLoadingJS(WebDriverRunner.getWebDriver());
+        sleep(10000);
+        //waitForLoadingJS(WebDriverRunner.getWebDriver());
         // Create a layoutReport object
         // checkLayout function checks the layout and returns a LayoutReport
         // object
         LayoutReport layoutReport = Galen.checkLayout(WebDriverRunner.getWebDriver()
-                , pageSpecPath + testName + "/" + testName + "_controls.spec",
-                Arrays.asList());
+                , pageSpecPath + testName + "/" + testName + "_controls.spec", Arrays.asList());
+        //Collections.emptyList());
+//
 
         // Create a tests list
         List<GalenTestInfo> galenTests = new LinkedList<GalenTestInfo>();

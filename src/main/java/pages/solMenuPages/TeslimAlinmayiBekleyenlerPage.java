@@ -75,6 +75,14 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         return this;
     }
 
+   @Step("Kapatma tipi, Konu kodu, Kaldırılacak klasörler, Not ve Onay akışı alanlarının geldiği görülür.")
+   public TeslimAlinmayiBekleyenlerPage teslimAlVeKapatAlanGeldigiGorme(){
+        boolean durum = $$("[id='mainPreviewForm:evrakKapatPanelGrid']").size()==1;
+        Assert.assertEquals(durum,true);
+        takeScreenshot();
+       return this;
+   }
+
     @Step("Evrak seçilir")
     public TeslimAlinmayiBekleyenlerPage evrakSec() {
         tblIlkEvrak.click();

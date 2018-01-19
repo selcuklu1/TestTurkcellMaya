@@ -91,8 +91,6 @@ public class TebligTebellugTest extends BaseTest {
                 .tebligGecmisiTabAc()
                 .tebligGecmisiKontrol("Mehmet BOZDEMİR - ("+tarihBugun+")", tebligGecmisiKontrolEdilecekKullanicilar);
 
-        logout();
-
         login("huser1", "123");
 
         tebliglerPage
@@ -179,8 +177,6 @@ public class TebligTebellugTest extends BaseTest {
         evrakDetayiPage
                 .tebligGecmisiTabAc()
                 .tebligGecmisiKontrol("Mehmet BOZDEMİR - ("+tarihBugun+")", tebligGecmisiKontrolEdilecekKullanicilar);
-
-        logout();
 
         login("huser2", "123");
 
@@ -285,7 +281,6 @@ public class TebligTebellugTest extends BaseTest {
                 .openPage()
                 .icreikGoster(konu, "", evrakTarihi, randomNumber);
 
-        logout();
         login("mbozdemir", "123");
 
         tebligEttiklerimPage

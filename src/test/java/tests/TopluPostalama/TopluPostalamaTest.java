@@ -1017,6 +1017,10 @@ public class TopluPostalamaTest extends BaseTest {
     @Test(enabled = true, description = "TS1676 : Toplu Postalama PTT Evrak Raporu (UC_POSTAYÖNETİMİ_005)")
     public void TS1676() throws IOException {
         String kurum1 = "Yenikurum6507";
+        String postaTarihi = "19.01.2018";
+        String postaTipi = "Adi Posta";
+        login("mbozdemir", "123");
+        /*
         String evrakKayitTarihiSayi = "" + new SimpleDateFormat("dd.MM.yyyy").format(new Date());
         String evrakGidecegiYer = kurum1;
         String evrakKonuKodu = "Entegrasyon İşlemleri";
@@ -1027,8 +1031,6 @@ public class TopluPostalamaTest extends BaseTest {
         String postaTarihi = "" + new SimpleDateFormat("dd.MM.yyyy").format(new Date());
         String postaTipi = "Adi Posta";
         String listeAdi = "TS1676Liste-" + getRandomNumber(1000, 9000);
-
-        login("mbozdemir", "123");
 
         evrakOlusturPage
                 .openPage()
@@ -1089,7 +1091,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .postaListesiDoldur(listeAdi)
                 .postaListesiPostala()
                 .postaDetayiPostala();
-
+        */
         pttRaporuPage
                 .openPage();
 
@@ -1104,7 +1106,6 @@ public class TopluPostalamaTest extends BaseTest {
                 .postaTarihiDoldur(postaTarihi)
                 .postaTipiSec(postaTipi)
                 .sorgula();
-
 
         String ulke = pttRaporuPage.tablodanDegerAl("Ülke");
         String il = pttRaporuPage.tablodanDegerAl("Şehir");
@@ -1129,7 +1130,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .ilDoldur(il)
                 .postaTipiSec(postaTipi)
                 .sorgula()
-                .tabloKontrolEt(evrakGidecegiYer, "", postaTipi, true)
+                .tabloKontrolEt(kurum1, "", postaTipi, true)
                 .raporAl();
 
         String excelFileName = pttRaporuPage.indirilenDosyaAd();

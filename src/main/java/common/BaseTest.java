@@ -48,7 +48,6 @@ public class BaseTest extends BaseLibrary {
         Configuration.browser = (System.getProperty("browser") == null) ? "firefox" : System.getProperty("browser");
         Configuration.browserVersion = System.getProperty("node");
         Configuration.remote = System.getProperty("hub");
-        //Configuration.browser = (System.getProperty("browser").equals("firefox")) ? "drivers.Firefox" : Configuration.browser;
 
         Configuration.reportsFolder = "test-result/reports";
         Configuration.screenshots = false;
