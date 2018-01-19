@@ -48,7 +48,7 @@ public class GalenControl extends BaseLibrary {
             sleep(10000);
 
             new GalenPageDump(testName).dumpPage(WebDriverRunner.getWebDriver(),
-                    pageSpecPath + testName + "/" + testName + "_objects.spec",
+                    pageSpecPath + testName + "/" + testName + "_objects.gspec",
                     dumpFolderPath);
 
             maximazeBrowser();
@@ -79,7 +79,7 @@ public class GalenControl extends BaseLibrary {
         // checkLayout function checks the layout and returns a LayoutReport
         // object
         LayoutReport layoutReport = Galen.checkLayout(WebDriverRunner.getWebDriver()
-                , pageSpecPath + testName + "/" + testName + "_controls.spec", Arrays.asList());
+                , pageSpecPath + testName + "/" + testName + "_controls.gspec", Arrays.asList());
         //Collections.emptyList());
 //
 
@@ -124,7 +124,7 @@ public class GalenControl extends BaseLibrary {
         // checkLayout function checks the layout and returns a LayoutReport
         // object
         LayoutReport layoutReport = Galen.checkLayout(WebDriverRunner.getWebDriver()
-                , pageSpecPath + testName + "/" + testName + ".spec",
+                , pageSpecPath + testName + "/" + testName + ".gspec",
                 Arrays.asList());
 
         // Create a tests list
@@ -160,7 +160,7 @@ public class GalenControl extends BaseLibrary {
 
         Locale.setDefault(new Locale("en", "TR"));
 
-        String filePath = pageSpecPath + testName + "/" + testName + "_temp.spec";
+        String filePath = pageSpecPath + testName + "/" + testName + "_temp.gspec";
         System.out.println("===================================================");
         System.out.println("GALEN SPECS");
         String specContent = getFileContent(filePath);
@@ -177,7 +177,31 @@ public class GalenControl extends BaseLibrary {
                     ", Value = " + entry.getValue());
         params.forEach((name,value)-> specContent.replace("${" + name + "}", value));*/
 
-        writeContentToFile(pageSpecPath + testName + "/"+ testName + "_objects.spec", specContent);
+        writeContentToFile(pageSpecPath + testName + "/"+ testName + "_objects.gspec", specContent);
+    }
+
+    public void setTextValuesToGalenSpec(String testName, String[][] params){
+
+        Locale.setDefault(new Locale("en", "TR"));
+
+        String filePath = pageSpecPath + testName + "/" + testName + "_temp.gspec";
+        System.out.println("===================================================");
+        System.out.println("GALEN SPECS");
+        String specContent = getFileContent(filePath);
+        System.out.println("===================================================");
+        System.out.println("CONTENT");
+        System.out.println(specContent);
+        System.out.println("===================================================");
+
+        for (String[] p : params){
+            System.out.println("VALUE: " + p[1]);
+            specContent = specContent.replace("${" + p[0] + "}", p[1]);
+        }
+            /*System.out.println("Key = " + entry.getKey() +
+                    ", Value = " + entry.getValue());
+        params.forEach((name,value)-> specContent.replace("${" + name + "}", value));*/
+
+        writeContentToFile(pageSpecPath + testName + "/"+ testName + "_objects.gspec", specContent);
     }
 
     public void modifyFile(String filePath, String oldString, String newString) {

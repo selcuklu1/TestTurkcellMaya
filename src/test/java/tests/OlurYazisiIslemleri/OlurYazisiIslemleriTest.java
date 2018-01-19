@@ -158,7 +158,7 @@ public class OlurYazisiIslemleriTest extends BaseTest {
         //Editör Tab Galen kontroller
         olurYazisiOlusturPage.editorTab().openTab();
         sleep(3000);
-        HashMap<String, String> params = new HashMap<String, String>();
+        /*HashMap<String, String> params = new HashMap<String, String>();
         params.put("birim", user1.getBirimAdi());
         params.put("sayi", konuKoduSayi);
         params.put("konu", konu);
@@ -169,7 +169,22 @@ public class OlurYazisiIslemleriTest extends BaseTest {
         params.put("imzaci1Gorev", user2.getGorev());
         params.put("imzaci2Isim", user3.getFullname());
         params.put("imzaci2Gorev", user3.getGorev());
-        params.put("ek", "Ekleri Tab "+ konu);
+        params.put("ek", "Ekleri Tab "+ konu);*/
+
+        String[][] params = new String[][]{
+                {"birim",user1.getBirimAdi()}
+                ,{"sayi",konuKoduSayi}
+                ,{"konu",konu}
+                ,{"ilgi_a", "İlgileri Tab "+ konu}
+                ,{"ilgi_b", "Metni Tab " + konu}
+                ,{"ilgi_b", "Metni Tab " + konu}
+                ,{"imzaci1Isim", user2.getFullname()}
+                ,{"imzaci1Gorev", user2.getGorev()}
+                ,{"imzaci2Isim", user3.getFullname()}
+                ,{"imzaci2Gorev", user3.getGorev()}
+                ,{"ek", "Ekleri Tab "+ konu}
+        };
+
         GalenControl galen = new GalenControl();
         galen.setTextValuesToGalenSpec("TS0577", params);
         galen.galenGenerateDump("TS0577");
