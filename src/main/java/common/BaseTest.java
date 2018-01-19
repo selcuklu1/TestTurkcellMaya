@@ -18,6 +18,7 @@ import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetFramework;
 
 import java.lang.reflect.Method;
+import java.nio.charset.Charset;
 import java.util.Locale;
 
 import static data.TestData.belgenetURL;
@@ -34,7 +35,7 @@ public class BaseTest extends BaseLibrary {
 
     @BeforeClass(alwaysRun = true)
     public void driverSetUp() {
-
+        System.out.println("Default Charset=" + Charset.defaultCharset());
         System.out.println("Locale Default: " + Locale.getDefault());
         Locale turkishLocal = new Locale("tr", "TR");
         if (!Locale.getDefault().equals(turkishLocal))
