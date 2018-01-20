@@ -35,6 +35,7 @@ public class BaseTest extends BaseLibrary {
 
     @BeforeClass(alwaysRun = true)
     public void driverSetUp() {
+        System.out.println(String.format("file.encoding: %s", System.getProperty("file.encoding")));
         System.out.println("Default Charset=" + Charset.defaultCharset());
         System.out.println(System.getProperty("java.specification.version"));
         System.out.println(System.getProperty("java.runtime.version"));
