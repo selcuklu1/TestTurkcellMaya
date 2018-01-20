@@ -1,5 +1,6 @@
 package tests.OlurYazisiIslemleri;
 
+import afu.org.checkerframework.checker.oigj.qual.O;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.WebDriverRunner;
 import common.BaseTest;
@@ -36,6 +37,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 
 import static com.codeborne.selenide.Condition.text;
@@ -157,8 +159,9 @@ public class OlurYazisiIslemleriTest extends BaseTest {
     private void editorTabGalen() throws IOException{
         //Editör Tab Galen kontroller
         olurYazisiOlusturPage.editorTab().openTab();
+
         sleep(3000);
-        /*HashMap<String, String> params = new HashMap<String, String>();
+        Map<String, Object> params = new HashMap<String, Object>();
         params.put("birim", user1.getBirimAdi());
         params.put("sayi", konuKoduSayi);
         params.put("konu", konu);
@@ -169,9 +172,9 @@ public class OlurYazisiIslemleriTest extends BaseTest {
         params.put("imzaci1Gorev", user2.getGorev());
         params.put("imzaci2Isim", user3.getFullname());
         params.put("imzaci2Gorev", user3.getGorev());
-        params.put("ek", "Ekleri Tab "+ konu);*/
+        params.put("ek", "Ekleri Tab "+ konu);
 
-        String[][] params = new String[][]{
+        /*String[][] params = new String[][]{
                 {"birim",user1.getBirimAdi()}
                 ,{"sayi",konuKoduSayi}
                 ,{"konu",konu}
@@ -183,11 +186,12 @@ public class OlurYazisiIslemleriTest extends BaseTest {
                 ,{"imzaci2Isim", user3.getFullname()}
                 ,{"imzaci2Gorev", user3.getGorev()}
                 ,{"ek", "Ekleri Tab "+ konu}
-        };
+        };*/
 
         GalenControl galen = new GalenControl();
-        galen.setTextValuesToGalenSpec("TS0577", params);
-        galen.galenGenerateDump("TS0577");
+
+        //galen.setTextValuesToGalenSpec("TS0577", params);
+        //galen.galenGenerateDump("TS0577");
 /*
 
         $x("//div[@id='yeniOnayEvrakForm:allPanels_content']//button[.='T.C.']").shouldBe(visible);
@@ -196,7 +200,8 @@ public class OlurYazisiIslemleriTest extends BaseTest {
         $x("//div[@id='yeniOnayEvrakForm:allPanels_content']//span[.='YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ']").shouldBe(visible);
 */
 
-        galen.galenLayoutControl("TS0577");
+        //galen.galenLayoutControl("TS0577");
+        galen.galenLayoutControl("TS0577", params);
 
         olurYazisiOlusturPage.editorTab().getEditor().type("Editör tekst");
     }
