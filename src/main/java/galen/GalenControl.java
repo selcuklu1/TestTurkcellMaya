@@ -1,138 +1,104 @@
 package galen;
 
-import com.codeborne.selenide.WebDriverRunner;
 import com.galenframework.api.Galen;
 import com.galenframework.api.GalenPageDump;
+import com.galenframework.config.GalenProperty;
 import com.galenframework.reports.GalenTestInfo;
 import com.galenframework.reports.HtmlReportBuilder;
 import com.galenframework.reports.model.LayoutReport;
 import com.galenframework.speclang2.pagespec.SectionFilter;
-import common.BaseLibrary;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
+import io.qameta.allure.model.Label;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 import org.testng.Assert;
 
-import java.io.*;
-import java.nio.file.Files;
-import java.util.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
-import static com.codeborne.selenide.Selenide.sleep;
+import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
+import static com.galenframework.config.GalenConfig.getConfig;
 
 /**
  * Yazan: Ilyas Bayraktar
  * Tarih: 8.01.2018
  * Açıklama:
  */
-public class GalenControl extends BaseLibrary {
+public class GalenControl {
 
-    private String pageSpecPath = "src/test/resources/specs/";
-    private String reportFolderPath = "galenReports/";
-    private String dumpFolderPath = "galenDumps/";
+    public static String specPath = "src/test/resources/galen";
+    //public static String specFileName;
+    public static String dumpFolderPath;
+    public static String reportPath = getConfig().getStringProperty(GalenProperty.TEST_JAVA_REPORT_OUTPUTFOLDER);
 
+    public GalenControl() {
+        getConfig().setProperty(GalenProperty.GALEN_BROWSER_PAGELEMENT_AREAFINDER,"NATIVE");
+        getConfig().setProperty(GalenProperty.GALEN_RANGE_APPROXIMATION,"5");
+        getConfig().setProperty(GalenProperty.GALEN_BROWSER_VIEWPORT_ADJUSTSIZE, "true");
+        getConfig().setProperty(GalenProperty.GALEN_LOG_LEVEL, "1");
+    }
 
+    public GalenControl generateDump(String testName, Map<String, Object> params, Dimension... pageDimension) {
+        /*Dimension browserSize = new Dimension(1440, 900);
+            WebDriverRunner.getWebDriver().manage().window().setSize(browserSize);
+            WebDriverRunner.getWebDriver().manage().window().setPosition(new Point(0,0));*/
 
-    @Step("")
-    public GalenControl mystepmethod() throws IOException {
-        String testName = "TS0577";
-        Map<String, Object> params = new HashMap<String, Object>();
-        params.put("birim", "AnaBirim1");
-        /*params.put("sayi", "bbbb");
-        params.put("konu", "vvvv");
-        params.put("ilgi_a", "İlgileri Tab ");
-        params.put("ilgi_b", "Metni Tab ");
-        params.put("ilgi_b", "Metni Tab ");
-        params.put("imzaci1Isim", "cccc");
-        params.put("imzaci1Gorev", "wdwd");
-        params.put("imzaci2Isim", "asas");
-        params.put("imzaci2Gorev", "asas");
-        params.put("ek", "Ekleri Tab ");*/
-
-        //parsePageSpec
-        List<String> list= new LinkedList<>();
-        list.add("all");
-        List<String> list1= new LinkedList<>();
-        SectionFilter sectionFilter = new SectionFilter(list, list1);
-
-        LayoutReport layoutReport = Galen.checkLayout(
-                WebDriverRunner.getWebDriver()
-        ,pageSpecPath + "TS0577/TS0577.gspec"
-        , sectionFilter
-                ,null
-        , params);
-        List<GalenTestInfo> galenTests = new LinkedList<GalenTestInfo>();
-
-        // Create a GalenTestInfo object
-        GalenTestInfo galenTest = GalenTestInfo.fromString(testName + " layout");
-
-        // Get layoutReport and assign to test object
-        galenTest.getReport().layout(layoutReport, "Check " + testName + " layout");
-
-        // Add test object to the tests list
-        galenTests.add(galenTest);
-
-        // Create a htmlReportBuilder object
-        HtmlReportBuilder htmlReportBuilder = new HtmlReportBuilder();
-
-        // Create a report under /target folder based on tests list
-        htmlReportBuilder.build(galenTests, "galenReports/" + testName + "/");
-
-        if (layoutReport.errors() > 0) {
-            //ExtentTestManager.getTest().log(LogStatus.FAIL, "Galen Layout test failed.");
-            Allure.addAttachment("Galen Layout test failed", String.valueOf(layoutReport.errors()));
-            System.out.println("Galen Layout test failed.");
+        Dimension currentDimension = getWebDriver().manage().window().getSize();
+        if (pageDimension.length > 0) {
+            getWebDriver().manage().window().setSize(pageDimension[0]);
+            getWebDriver().manage().window().setPosition(new Point(0,0));
         }
 
-        /*try {
-            String content;
-            File fileDir = new File(filePath);
+        try {
 
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(
-                            new FileInputStream(fileDir), "UTF8"));
+            String path = specPath + "/" + testName;
+            String specFileName = path + "/" + testName + ".gspec";
+            /*specPath += "/" + testName;
+            specFileName = specPath + "/" + testName + ".gspec";*/
+            dumpFolderPath = path + "/dump";
 
-            String str;
+            GalenPageDump galenPageDump = new GalenPageDump(testName);
+            galenPageDump.setJsVariables(params).dumpPage(getWebDriver(), specFileName, dumpFolderPath);
 
-            while ((str = in.readLine()) != null) {
-                System.out.println(str);
-                content = str + "\n";
-            }
-            in.close();
-
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (pageDimension.length > 0)
+                getWebDriver().manage().window().setSize(currentDimension);
         }
-        catch (UnsupportedEncodingException e)
-        {
-            System.out.println(e.getMessage());
-        }
-        catch (IOException e)
-        {
-            System.out.println(e.getMessage());
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-        }*/
-
         return this;
     }
 
-
     @Step("\"{testName}\" görsel kontrol")
-    public GalenControl galenLayoutControl(String testName, Map<String, Object> params) throws IOException {
-        Locale.setDefault(new Locale("en", "TR"));
+    public GalenControl layoutControl(String testName, Map<String, Object> params, Dimension... pageDimension) throws IOException {
+        String path = specPath + "/" + testName;
+        String specFileName = path + "/" + testName + ".gspec";
+
+        Allure.addLabels(new Label().withName("Layout"));
+        Allure.addAttachment("Layoun specs:",  new FileInputStream(new File(specFileName)));
+
+        Dimension currentDimension = getWebDriver().manage().window().getSize();
+        if (pageDimension.length > 0) {
+            getWebDriver().manage().window().setSize(pageDimension[0]);
+            getWebDriver().manage().window().setPosition(new Point(0,0));
+        }
 
         //parsePageSpec
         List<String> list= new LinkedList<>();
         list.add("all");
         SectionFilter sectionFilter = new SectionFilter(list, new LinkedList<>());
-
         LayoutReport layoutReport = Galen.checkLayout(
-                WebDriverRunner.getWebDriver()
-                ,pageSpecPath + testName + "/" + testName + ".gspec"
+                getWebDriver()
+                , specFileName
                 , sectionFilter
                 ,null
                 , params);
+
         List<GalenTestInfo> galenTests = new LinkedList<GalenTestInfo>();
 
         // Create a GalenTestInfo object
@@ -148,361 +114,13 @@ public class GalenControl extends BaseLibrary {
         HtmlReportBuilder htmlReportBuilder = new HtmlReportBuilder();
 
         // Create a report under /target folder based on tests list
-        htmlReportBuilder.build(galenTests, "galenReports/" + testName + "/");
+        htmlReportBuilder.build(galenTests, reportPath);
 
-        if (layoutReport.errors() > 0) {
-            //ExtentTestManager.getTest().log(LogStatus.FAIL, "Galen Layout test failed.");
-            Allure.addAttachment("Galen Layout test failed", String.valueOf(layoutReport.errors()));
-            System.out.println("Galen Layout test failed.");
-            Assert.assertTrue(false, "Layout başarılı");
-        }
+        Assert.assertTrue(layoutReport.errors() == 0, "Layout kontol: " + layoutReport.errors());
 
-        Locale.setDefault(new Locale("tr", "TR"));
-
-        /*try {
-            String content;
-            File fileDir = new File(filePath);
-
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(
-                            new FileInputStream(fileDir), "UTF8"));
-
-            String str;
-
-            while ((str = in.readLine()) != null) {
-                System.out.println(str);
-                content = str + "\n";
-            }
-            in.close();
-
-        }
-        catch (UnsupportedEncodingException e)
-        {
-            System.out.println(e.getMessage());
-        }
-        catch (IOException e)
-        {
-            System.out.println(e.getMessage());
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-        }*/
-
+        if (pageDimension.length > 0)
+            getWebDriver().manage().window().setSize(currentDimension);
         return this;
-    }
-
-    /**
-     * @param testName
-     * @see "/src/test/resources/testName/" path must be exist with
-     * "testName".gspec, dump path will be generated in
-     * "/src/test/resources/testName/dump" path
-     */
-    public void galenGenerateDump(String testName) {
-        Locale defaultLocal = Locale.getDefault();
-//        Locale turkishLocal = new Locale("tr", "TR");
-        Locale.setDefault(new Locale("en", "TR"));
-        try {
-            /*Dimension browserSize = new Dimension(1440, 900);
-            WebDriverRunner.getWebDriver().manage().window().setSize(browserSize);
-            WebDriverRunner.getWebDriver().manage().window().setPosition(new Point(0,0));*/
-            //waitForLoadingJS(WebDriverRunner.getWebDriver());
-            sleep(10000);
-
-            new GalenPageDump(testName).dumpPage(WebDriverRunner.getWebDriver(),
-                    pageSpecPath + testName + "/" + testName + "_temp.gspec",
-                    dumpFolderPath);
-
-            maximazeBrowser();
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Galen dumpPage error: " + e.getMessage());
-        }finally {
-            Locale.setDefault(defaultLocal);
-        }
-    }
-
-    @Step("\"{testName}\" görsel kontrol")
-    public void galenLayoutControl(String testName) throws IOException {
-
-        Locale defaultLocal = Locale.getDefault();
-        //Locale turkishLocal = new Locale("tr", "TR");
-        Locale.setDefault(new Locale("en", "TR"));
-
-
-        Allure.addAttachment("Layout report link", "galenReports/TS0577/report.html");
-
-       /* Dimension browserSize = new Dimension(1440, 900);
-        WebDriverRunner.getWebDriver().manage().window().setSize(browserSize);
-        WebDriverRunner.getWebDriver().manage().window().setPosition(new Point(0,0));*/
-        sleep(10000);
-        //waitForLoadingJS(WebDriverRunner.getWebDriver());
-        // Create a layoutReport object
-        // checkLayout function checks the layout and returns a LayoutReport
-        // object
-        LayoutReport layoutReport = Galen.checkLayout(WebDriverRunner.getWebDriver()
-                , pageSpecPath + testName + "/" + testName + "_controls.gspec", Arrays.asList());
-        //Collections.emptyList());
-
-        // Create a tests list
-        List<GalenTestInfo> galenTests = new LinkedList<GalenTestInfo>();
-
-        // Create a GalenTestInfo object
-        GalenTestInfo galenTest = GalenTestInfo.fromString(testName + " layout");
-
-        // Get layoutReport and assign to test object
-        galenTest.getReport().layout(layoutReport, "Check " + testName + " layout");
-
-        // Add test object to the tests list
-        galenTests.add(galenTest);
-
-        // Create a htmlReportBuilder object
-        HtmlReportBuilder htmlReportBuilder = new HtmlReportBuilder();
-
-        // Create a report under /target folder based on tests list
-        htmlReportBuilder.build(galenTests, "galenReports/" + testName + "/");
-
-        Locale.setDefault(defaultLocal);
-        // If layoutReport has errors Assert Fail
-        Locale.setDefault(defaultLocal);
-        if (layoutReport.errors() > 0) {
-            //ExtentTestManager.getTest().log(LogStatus.FAIL, "Galen Layout test failed.");
-            Allure.addAttachment("Galen Layout test failed", String.valueOf(layoutReport.errors()));
-            System.out.println("Galen Layout test failed.");
-            Assert.fail("Layout test failed");
-        }
-
-
-        maximazeBrowser();
-    }
-
-    public void galenLayoutControl2(String testName) throws IOException {
-
-        Dimension browserSize = new Dimension(1280, 800);
-        WebDriverRunner.getWebDriver().manage().window().setSize(browserSize);
-
-        // Create a layoutReport object
-        // checkLayout function checks the layout and returns a LayoutReport
-        // object
-        LayoutReport layoutReport = Galen.checkLayout(WebDriverRunner.getWebDriver()
-                , pageSpecPath + testName + "/" + testName + ".gspec",
-                Arrays.asList());
-
-        // Create a tests list
-        List<GalenTestInfo> galenTests = new LinkedList<GalenTestInfo>();
-
-        // Create a GalenTestInfo object
-        GalenTestInfo galenTest = GalenTestInfo.fromString(testName + " layout");
-
-        // Get layoutReport and assign to test object
-        galenTest.getReport().layout(layoutReport, "Check " + testName + " layout");
-
-        // Add test object to the tests list
-        galenTests.add(galenTest);
-
-        // Create a htmlReportBuilder object
-        HtmlReportBuilder htmlReportBuilder = new HtmlReportBuilder();
-
-        // Create a report under /target folder based on tests list
-        htmlReportBuilder.build(galenTests, "galenReports/" + testName + "/");
-
-        // If layoutReport has errors Assert Fail
-        if (layoutReport.errors() > 0) {
-            //ExtentTestManager.getTest().log(LogStatus.FAIL, "Galen Layout test failed.");
-            Allure.addAttachment("Galen Layout test failed", String.valueOf(layoutReport.errors()));
-            System.out.println("Galen Layout test failed.");
-            Assert.fail("Layout test failed");
-        }
-
-        maximazeBrowser();
-    }
-
-    public void setTextValuesToGalenSpec(String testName, Map<String, String> params){
-
-        Locale.setDefault(new Locale("en", "TR"));
-
-        String filePath = pageSpecPath + testName + "/" + testName + "_objects.gspec";
-        System.out.println("===================================================");
-        System.out.println("GALEN SPECS");
-        String specContent = getFileContent(filePath);
-        System.out.println("===================================================");
-        System.out.println("CONTENT");
-        System.out.println(specContent);
-        System.out.println("===================================================");
-
-        for (Map.Entry<String,String> entry : params.entrySet()){
-            System.out.println("VALUE: " + entry.getValue());
-            specContent = specContent.replace("${" + entry.getKey() + "}", entry.getValue());
-        }
-            /*System.out.println("Key = " + entry.getKey() +
-                    ", Value = " + entry.getValue());
-        params.forEach((name,value)-> specContent.replace("${" + name + "}", value));*/
-
-        writeContentToFile(pageSpecPath + testName + "/"+ testName + "_temp.gspec", specContent);
-    }
-
-    public void setTextValuesToGalenSpec(String testName, String[][] params){
-
-        Locale.setDefault(new Locale("en", "TR"));
-
-        String filePath = pageSpecPath + testName + "/" + testName + "_temp.gspec";
-        System.out.println("===================================================");
-        System.out.println("GALEN SPECS");
-        String specContent = getFileContent(filePath);
-        System.out.println("===================================================");
-        System.out.println("CONTENT");
-        System.out.println(specContent);
-        System.out.println("===================================================");
-
-        for (String[] p : params){
-            System.out.println("VALUE: " + p[1]);
-            specContent = specContent.replace("${" + p[0] + "}", p[1]);
-        }
-            /*System.out.println("Key = " + entry.getKey() +
-                    ", Value = " + entry.getValue());
-        params.forEach((name,value)-> specContent.replace("${" + name + "}", value));*/
-
-            writeContentToFile(pageSpecPath + testName + "/"+ testName + "_temp.gspec", specContent);
-
-    }
-
-    public void modifyFile(String filePath, String oldString, String newString) {
-        File fileToBeModified = new File(filePath);
-        String oldContent = "";
-        BufferedReader reader = null;
-        FileWriter writer = null;
-        try
-        {
-            reader = new BufferedReader(new FileReader(fileToBeModified));
-            //Reading all the lines of input text file into oldContent
-            String line = reader.readLine();
-            while (line != null)
-            {
-                oldContent = oldContent + line + System.lineSeparator();
-                line = reader.readLine();
-            }
-
-            //Replacing oldString with newString in the oldContent
-            String newContent = oldContent.replaceAll(oldString, newString);
-            //Rewriting the input text file with newContent
-            writer = new FileWriter(fileToBeModified);
-            writer.write(newContent);
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-        finally
-        {
-            try
-            {
-                //Closing the resources
-                reader.close();
-                writer.close();
-            }
-            catch (IOException e)
-            {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    public String getFileContent(String filePath) {
-        File file = new File(filePath);
-        String content = "";
-        BufferedReader reader = null;
-        try
-        {
-            reader = new BufferedReader(new FileReader(file));
-            String line = reader.readLine();
-            while (line != null)
-            {
-                content = content + line + System.lineSeparator();
-                line = reader.readLine();
-            }
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-        finally
-        {
-            try
-            {
-                reader.close();
-            }
-            catch (IOException e)
-            {
-                e.printStackTrace();
-            }
-        }
-        return content;
-    }
-
-    public void writeContentToFile_o(String filePath, String content) {
-        FileWriter writer = null;
-        try
-        {
-            writer = new FileWriter(filePath);
-            writer.write(content);
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-        finally
-        {
-            try
-            {
-                writer.close();
-            }
-            catch (IOException e)
-            {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    public void writeContentToFile(String filePath, String content) {
-        //File file = new File(filePath);
-
-        Writer out = null;
-        try {
-            out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filePath), "UTF-8"));
-            out.write(content);
-        } catch (IOException e) {
-            throw new RuntimeException(e.getMessage());
-        } finally {
-            if (out != null) {
-                try {
-                    out.close();
-                } catch (IOException e) {
-                    throw new RuntimeException(e.getMessage());
-                }
-            }
-        }
-
-        /*FileWriter writer = null;
-        try
-        {
-            writer = new FileWriter(filePath);
-            writer.write(content);
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-        finally
-        {
-            try
-            {
-                writer.close();
-            }
-            catch (IOException e)
-            {
-                e.printStackTrace();
-            }
-        }*/
     }
 
 }

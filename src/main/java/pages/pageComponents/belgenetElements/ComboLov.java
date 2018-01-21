@@ -29,12 +29,22 @@ class ComboLov {
         }
     }
 
-    class SelectLov implements Command<SelenideElement> {
+    /*class SelectLov implements Command<SelenideElement> {
         @Override
         public SelenideElement execute(SelenideElement proxy, WebElementSource locator, Object[] args) throws IOException {
             ComboLovHelper comboLovHelper = new ComboLovHelper();
             comboLovHelper.setLocators(proxy);
             By by = comboLovHelper.selectLov(args[0].toString());
+            return ElementFinder.wrap(BelgenetElement.class, null, by, 0);
+        }
+    }*/
+
+    class SelectLov implements Command<BelgenetElement> {
+        @Override
+        public BelgenetElement execute(SelenideElement proxy, WebElementSource locator, Object[] args) throws IOException {
+            ComboLovHelper comboLovHelper = new ComboLovHelper();
+            comboLovHelper.setLocators(proxy);
+            By by = comboLovHelper.selectLov((String[])args[0]);
             return ElementFinder.wrap(BelgenetElement.class, null, by, 0);
         }
     }

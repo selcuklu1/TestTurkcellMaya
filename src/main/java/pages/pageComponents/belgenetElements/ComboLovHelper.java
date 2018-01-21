@@ -11,6 +11,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.testng.Assert;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
@@ -38,6 +39,7 @@ public class ComboLovHelper extends BaseLibrary {
     private String lovItemDetail;
 
     private String lovSecilen;
+    private String lovSelectedItems;
     private String lovSecilenItemTitle;
     private String lovSecilenItemDetail;
     private String lovSecilenTemizleButton;
@@ -77,6 +79,7 @@ public class ComboLovHelper extends BaseLibrary {
         lovSecilen = id + (multiType ? "[id$='LovSecilenTable_data']" : "[id$='LovSecilen']");
 //        lovSecilen = id + "[id*='LovSecilen']";
 //        LovSecilenTable_data = id + "[id$='LovSecilenTable_data']";
+        lovSelectedItems = lovSecilen + " > tr[role='row']";
         lovSecilenItemTitle = lovSecilen + lovItemTitle;
         lovSecilenItemDetail = lovSecilen + lovItemDetail;
         lovSecilenTemizleButton = "button[onclick*='lovInputTextleriTemizle']";
@@ -144,8 +147,8 @@ public class ComboLovHelper extends BaseLibrary {
         return By.cssSelector(locator);
     }
 
-    //Depricated
     @Step("Get last selected title")
+    @Deprecated
     SelenideElement getLastSelectedItemTitle() {
         ElementsCollection selectedItems = getSelectedTitles();
         selectedItems = selectedItems.filterBy(visible);
@@ -154,8 +157,8 @@ public class ComboLovHelper extends BaseLibrary {
         return selectedItems.last();
     }
 
-    //Depricated
     @Step("Get last selected detail")
+    @Deprecated
     SelenideElement getLastSelectedItemDetail() {
         ElementsCollection selectedItems = getSelectedDetails();
         selectedItems = selectedItems.filterBy(visible);
@@ -228,7 +231,8 @@ public class ComboLovHelper extends BaseLibrary {
 
     //region selectLov metodları
     @Step("Select")
-    public By selectLov(String value) {
+    @Deprecated
+    public By selectLov_o(String value) {
 
         //executeJavaScript("arguments[0].scrollIntoView();", element);
         try {
@@ -318,6 +322,7 @@ public class ComboLovHelper extends BaseLibrary {
     }
 
     @Step("Single select type")
+    @Deprecated
     private void selectSingleType(String value) {
 //        String title, detail;
 
@@ -372,6 +377,7 @@ public class ComboLovHelper extends BaseLibrary {
     }
 
     @Step("Multi select type")
+    @Deprecated
     private void selectMultiType(String value) {
         long defaultTimeout;
         boolean isSelected = false;
@@ -478,4 +484,46 @@ public class ComboLovHelper extends BaseLibrary {
         return $$(lovTree).last().$$(locator);
     }
 
+    @Step("Select Lov")
+    public By selectLov(String... text){
+        String selectableItemsLocator = "li span[class*='ui-tree-selectable-node']";
+        ElementsCollection collection;
+
+        if (!$(lovText).isDisplayed() && $(lovInputTextleriTemizle).isDisplayed())
+            $(lovInputTextleriTemizle).click();
+
+        $(lovText).shouldBe(visible);
+
+        try {
+            $(lovText).sendKeys(Keys.SHIFT);
+        } catch (Exception ignored) { }
+
+
+        if ($(lovText).isEnabled() && text.length > 0)
+            $(lovText).setValue(text[0]);
+        else
+            $(treeButton).click();
+
+        collection = $$(lovTree).last().$$(selectableItemsLocator);
+        collection.shouldHave(sizeGreaterThan(0)).last().shouldBe(visible);
+        Allure.addAttachment("Selectable items " + collection.size(), collection.texts().toString());
+        Allure.addAttachment("Filter texts "+ text.length, Arrays.toString(text));
+
+        for (String aText : text) collection = collection.filterBy(matchText("\\b" + aText.trim() +"\\b"));
+
+        Allure.addAttachment("Filtered items " + collection.size(), collection.texts().toString());
+        Assert.assertTrue(collection.size() > 0, "Filtered selectable items should have size greater than 0");
+        Allure.addAttachment("First item will be selected", collection.first().text());
+        collection.first().click();
+
+        closeTreePanel();
+
+        SelenideElement selectedItem = multiType
+                ? $$(lovSelectedItems).last().shouldBe(visible)
+                : $$(lovSecilen).last().shouldBe(visible);
+        for (String t:text) Assert.assertTrue(selectedItem.text().contains(t), "Selected item should have text: " + t);
+        Allure.addAttachment("Selected item", $$(lovSecilen).last().text());
+
+        return By.cssSelector(lovText);
+    }
 }

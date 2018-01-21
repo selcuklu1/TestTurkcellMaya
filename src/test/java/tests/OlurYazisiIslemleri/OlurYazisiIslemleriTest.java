@@ -1,24 +1,10 @@
 package tests.OlurYazisiIslemleri;
 
-import afu.org.checkerframework.checker.oigj.qual.O;
-import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.WebDriverRunner;
 import common.BaseTest;
-import data.TestData;
 import data.User;
 import galen.GalenControl;
-import io.qameta.allure.Link;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
-import listeners.DriverEventListener;
-import org.openqa.selenium.Capabilities;
-import org.openqa.selenium.Platform;
-import org.openqa.selenium.Point;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxDriverLogLevel;
-import org.openqa.selenium.firefox.FirefoxOptions;
-import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -31,19 +17,16 @@ import pages.pageData.SolMenuData;
 import pages.pageData.alanlar.GeregiSecimTipi;
 import pages.pageData.alanlar.GizlilikDerecesi;
 import pages.pageData.alanlar.Ivedilik;
-import pages.pageData.alanlar.OnayKullaniciTipi;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.$x;
 import static com.codeborne.selenide.Selenide.sleep;
+import static pages.pageData.alanlar.OnayKullaniciTipi.IMZALAMA;
+import static pages.pageData.alanlar.OnayKullaniciTipi.PARAFLAMA;
 
 /**
  * Yazan: Ilyas Bayraktar
@@ -68,10 +51,11 @@ public class OlurYazisiIslemleriTest extends BaseTest {
     String konuKodu = "010.10";
     String konuKoduSayi = "01-010.10-";
 
+    //region TS0577
     //Teskilat Kisi tanimlari-->birim yönetimi ekranında birimin olur metni boş olmalı
-    @Test(description = "TS0577: Olur yazısı oluşturulması ve gönderilmesi", enabled = true)
     //@Link(name = "Galen", type = "html", url = "file:///Users/ilyas/WorkspaceJava/Git/BelgenetFTA/galenReports/TS0577/report.html")
-    @Link(name = "Galen", type = "html", url = "galenReports/TS0577/report.html")
+    //@Link(name = "Galen", type = "html", url = "galenReports/TS0577/report.html")
+    @Test(description = "TS0577: Olur yazısı oluşturulması ve gönderilmesi", enabled = true)
     public void TS0577() throws Exception {
 
         System.out.println("Konu: " + konu);
@@ -97,18 +81,18 @@ public class OlurYazisiIslemleriTest extends BaseTest {
         olurYazisiOlusturPage.bilgileriTab().openTab()
                 .konuKoduSec(konuKodu)
                 .konuDoldur(konu)
-                .gizlilikDerecesiSec(GizlilikDerecesi.Normal)
-                .ivedilikSec(Ivedilik.Normal)
+                .gizlilikDerecesiSec(GizlilikDerecesi.NORMAL)
+                .ivedilikSec(Ivedilik.NORMAL)
                 .geregiSecimTipiSec(GeregiSecimTipi.BIRIM)
                 .geregiSec(optiim.getBirimAdi())
                 .kaldiralacakKlasorleriSec("Diğer")
                 .onayAkisiTemizle()
                 .anlikOnayAkisKullanicilariTemizle()
                 .onayAkisiEkleButonaTikla()
-                .secilenAnlikOnayAkisKullanicilariKontrolEt(user1.getFullname(), OnayKullaniciTipi.PARAFLAMA)
+                .secilenAnlikOnayAkisKullanicilariKontrolEt(user1.getFullname(), PARAFLAMA)
                 .anlikOnayAkisKullanicilariTemizle()
-                .anlikOnayAkisKullaniciVeTipiSec(user2, OnayKullaniciTipi.IMZALAMA)
-                .anlikOnayAkisKullaniciVeTipiSec(user3, OnayKullaniciTipi.IMZALAMA)
+                .anlikOnayAkisKullaniciVeTipiSec(user2, IMZALAMA)
+                .anlikOnayAkisKullaniciVeTipiSec(user3, IMZALAMA)
                 .kullanButonaTikla();
     }
 
@@ -160,6 +144,22 @@ public class OlurYazisiIslemleriTest extends BaseTest {
         //Editör Tab Galen kontroller
         olurYazisiOlusturPage.editorTab().openTab();
 
+        Allure.addAttachment("Step7", ".... Makamına ifadesinin hitapta geldiği görülür.\n" +
+                "\n" +
+                "Metin alanının altında \n" +
+                "sağda ilk imzacının \n" +
+                "ortada OLUR ifadesi ile tarih alanının, \n" +
+                "ortada son imzacının geldiği görülür.\n" +
+                "\n" +
+                "Her imzacının üstünde ve hitap alanının üstünde metin girilecek alanın geldiği görülür.");
+
+        Allure.addAttachment("Step18", "Editör ekranının gereği alanında seçilen birimin adı ile hitabın geldiği görülür.\n" +
+                "\n" +
+                "sayı ve konu bilgilerinin\n" +
+                "\n" +
+                "altında ilginin a ve b olarak listelendiği \n" +
+                "sayfanın altında eklerin girildiği isimlerle listelendiği görülür.");
+
         sleep(3000);
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("birim", user1.getBirimAdi());
@@ -174,34 +174,9 @@ public class OlurYazisiIslemleriTest extends BaseTest {
         params.put("imzaci2Gorev", user3.getGorev());
         params.put("ek", "Ekleri Tab "+ konu);
 
-        /*String[][] params = new String[][]{
-                {"birim",user1.getBirimAdi()}
-                ,{"sayi",konuKoduSayi}
-                ,{"konu",konu}
-                ,{"ilgi_a", "İlgileri Tab "+ konu}
-                ,{"ilgi_b", "Metni Tab " + konu}
-                ,{"ilgi_b", "Metni Tab " + konu}
-                ,{"imzaci1Isim", user2.getFullname()}
-                ,{"imzaci1Gorev", user2.getGorev()}
-                ,{"imzaci2Isim", user3.getFullname()}
-                ,{"imzaci2Gorev", user3.getGorev()}
-                ,{"ek", "Ekleri Tab "+ konu}
-        };*/
-
         GalenControl galen = new GalenControl();
-
-        //galen.setTextValuesToGalenSpec("TS0577", params);
-        //galen.galenGenerateDump("TS0577");
-/*
-
-        $x("//div[@id='yeniOnayEvrakForm:allPanels_content']//button[.='T.C.']").shouldBe(visible);
-        $x("//div[@id='yeniOnayEvrakForm:allPanels_content']//span[.='GENEL MÜDÜRLÜK MAKAMI']").shouldBe(visible);
-        $x("//div[@id='yeniOnayEvrakForm:allPanels_content']//span[.='BİLİŞİM HİZMETLERİ GENEL MÜDÜR YARDIMCISI']").shouldBe(visible);
-        $x("//div[@id='yeniOnayEvrakForm:allPanels_content']//span[.='YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ']").shouldBe(visible);
-*/
-
-        //galen.galenLayoutControl("TS0577");
-        galen.galenLayoutControl("TS0577", params);
+        galen.generateDump("TS0577", params);
+        galen.layoutControl("TS0577", params);
 
         olurYazisiOlusturPage.editorTab().getEditor().type("Editör tekst");
     }
@@ -264,14 +239,15 @@ public class OlurYazisiIslemleriTest extends BaseTest {
         mainPage.solMenu(SolMenuData.BirimEvraklari.Postalananlar)
                 .searchTable().searchInAllPages(false).findRows(text(konu)).shouldHaveSize(0);
     }
+    //endregion
 
 
     OlurYazisiOlusturPage olurYazisiOlusturPage2;
     BilgilerTab bilgilerTab;
     EditorTab editorTab;
 
-    @Test(description = "TS1488: Olur yazısında alan kontrolleri", enabled = false)
-    public void TS1488() throws Exception {
+    @Test(description = "TS1488: Olur yazısında alan kontrolleri", enabled = true)
+    public void TS1488() {
         login(user1);
         olurYazisiOlusturPage2 = new OlurYazisiOlusturPage().openPage();
         bilgilerTab = olurYazisiOlusturPage2.bilgileriTab();
@@ -281,7 +257,21 @@ public class OlurYazisiIslemleriTest extends BaseTest {
         step4();
         step5();
         step6();
-        step7();
+        //step7();
+        //step7 da var kaldırılmalı
+        bilgilerTab.kaldiralacakKlasorleriSec("Diğer");
+        step8_12();
+
+        //Step13
+        bilgilerTab.ivedilikSec(Ivedilik.GUNLU)
+            .miatTemizle()
+                .evrakPageButtons().paraflaButonaTikla()
+                .islemMesaji().uyariOlmali("Zorunlu alanları doldurunuz");
+        bilgilerTab.miatDoldur(getSysDateForKis())
+                .bilgiTemizle()
+                .geregiTemizle();
+
+        olurYazisiOlusturPage2.editorTab().openTab();
 
     }
 
@@ -299,7 +289,7 @@ public class OlurYazisiIslemleriTest extends BaseTest {
                 .konuDoldur("TS1488")
                 .kaldiralacakKlasorleriSec("Diğer")
                 .onayAkisiEkleButonaTikla()
-                .anlikOnayAkisKullanicininTipiSec(user1, OnayKullaniciTipi.IMZALAMA)
+                .anlikOnayAkisKullanicininTipiSec(user1, IMZALAMA)
                 .kullanButonaTikla();
         olurYazisiOlusturPage2.pageButtons().imzalaButonaTikla()
                 .islemMesaji().dikkatOlmali("Yazı içeriği boş olamaz");
@@ -342,6 +332,24 @@ public class OlurYazisiIslemleriTest extends BaseTest {
         //Evrak konusu boş olamaz!
     }
 
+    @Step("İmzaci kontroller")
+    public OlurYazisiIslemleriTest step8_12(){
+        bilgilerTab
+                .onayAkisiTemizle()
+                .anlikOnayAkisKullanicilariTemizle()
+                .onayAkisiEkleButonaTikla()
+                .secilenAnlikOnayAkisKullanicilariKontrolEt(user1, PARAFLAMA)
+                .kullanButonaTikla()
+                .islemMesaji().dikkatOlmali("Eklemek istediğiniz onay akışında imzacı bulunmuyor. Lütfen onay akışında en az bir imzacı seçiniz.");
+        bilgilerTab.anlikOnayAkisKullaniciVeTipiSec(user2, IMZALAMA)
+                .anlikOnayAkisKullaniciVeTipiSec(user3, IMZALAMA)
+                .anlikOnayAkisKullaniciVeTipiSec(optiim, IMZALAMA)
+                .kullanButonaTikla()
+                .onayAkisiSecilenKullaniciKontrolEt(user2, IMZALAMA)
+                .onayAkisiSecilenKullaniciKontrolEt(user3, IMZALAMA)
+                .onayAkisiSecilenKullaniciKontrolEt(optiim, IMZALAMA);
+        return this;
+    }
 
     @BeforeMethod(alwaysRun = true)
     public void setUp() {
