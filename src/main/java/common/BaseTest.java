@@ -4,6 +4,7 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.WebDriverRunner;
+import data.TestData;
 import data.User;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
@@ -55,11 +56,9 @@ public class BaseTest extends BaseLibrary {
         Configuration.browser = (System.getProperty("browser") == null) ? "chrome" : System.getProperty("browser");
         Configuration.browserVersion = System.getProperty("node");
         Configuration.remote = System.getProperty("hub");
-
         Configuration.reportsFolder = "test-result/reports";
         Configuration.screenshots = false;
         Configuration.savePageSource = false;
-
         Configuration.collectionsTimeout = timeout * 1000;
         Configuration.timeout = timeout * 1000;
         setWaitForLoading(loadingTimeout);
