@@ -24,6 +24,7 @@ import java.util.regex.Pattern;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.executeJavaScript;
+import static java.util.regex.Pattern.CASE_INSENSITIVE;
 import static java.util.regex.Pattern.DOTALL;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
@@ -123,7 +124,7 @@ public class dumpTest extends BaseTest {
         /*boolean b = comboLov("input[id$='konuKoduLov:LovText']").selectLov("010","kanunlar").isLovSelected();
         comboLov("input[id$='eklenecekKlasorlerLov:LovText']").selectLov();
 */
-
+        Pattern.compile(".*" + "" + ".*", DOTALL).matcher("").matches();
         $("button[id$=onayAkisiEkle]").click();
 
         comboLov("input[id$='akisAdimLov:LovText']")

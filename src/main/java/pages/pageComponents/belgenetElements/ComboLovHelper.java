@@ -492,6 +492,7 @@ public class ComboLovHelper extends BaseLibrary {
         if (!$(lovText).isDisplayed() && $(lovInputTextleriTemizle).isDisplayed())
             $(lovInputTextleriTemizle).click();
 
+        //try used for disabled field with openTree button
         try {
             if ($(lovText).isDisplayed()) $(lovText).getWrappedElement().sendKeys(Keys.SHIFT);
         } catch (Exception ignored) { }
