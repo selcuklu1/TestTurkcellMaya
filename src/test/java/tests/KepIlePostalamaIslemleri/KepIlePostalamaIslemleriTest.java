@@ -55,7 +55,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
         String hataliParola = "123";
         String hataliSifre = "1";
 
-        login(username3, password3);
+        login(usernameYAKYOL, passwordYAKYOL);
 
         mainPage
                 .kepBaglantisi()
@@ -66,7 +66,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
                 .kepBaglantisiBaglan()
                 .islemMesaji().beklenenMesaj(hataMesaji);
 
-        login(username2, password2);
+        login(usernameZTEKIN, passwordZTEKIN);
 
         mainPage
                 .kepBaglantisi()
@@ -94,7 +94,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
         String basariMesaji = "İşlem başarılıdır!";
         String bilgiSecimTipi = "Kurum";
 
-        login(username2, password2);
+        login(usernameZTEKIN, passwordZTEKIN);
 
         kurumYonetimiPage
                 .openPage()
@@ -125,7 +125,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
         String basariMesaji = "İşlem başarılıdır!";
         String bilgiSecimTipi = "Gerçek Kişi";
 
-        login(username2, password2);
+        login(usernameZTEKIN, passwordZTEKIN);
 
         gercekKisiYonetimPage
                 .openPage()
@@ -157,7 +157,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
         String bilgiSecimTipi = "Tüzel Kişi";
         String kullanici = "Büyük Küçük Harflerle Tüzel Kişi";
 
-        login(username, password);
+        login(usernameOPTIIM, passwordOPTIIM);
 
         tuzelKisiYonetimiPage
                 .openPage()
@@ -192,7 +192,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
         String kepAdresi1 = "turksat.kamu" + createRandomNumber(10) + "@testkep.pttkep.gov.tr";
         String kepAdresi2 = "turksat.kamu" + createRandomNumber(10) + "@testkep.pttkep.gov.tr";
 
-        login(username2, password2);
+        login(usernameZTEKIN, passwordZTEKIN);
 
         birimYonetimiPage
                 .openPage()
@@ -246,7 +246,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
         String pathFile = getUploadPath() + "Otomasyon.pdf";
         String tarih = getSysDateForKis();
 
-        login(username4, password4);
+        login(usernameMBOZDEMIR, passwordMBOZDEMIR);
 
         evrakOlusturPage
                 .openPage()
@@ -291,7 +291,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
                 .evrakPostala()
                 .evrakPostalaPostala(true);
 
-        login(username2, password2);
+        login(usernameZTEKIN, passwordZTEKIN);
         //TODO
 
     }

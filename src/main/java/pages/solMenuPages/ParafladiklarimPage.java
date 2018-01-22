@@ -212,7 +212,7 @@ public class ParafladiklarimPage extends MainPage {
     }
 
     @Step("Parafladıklarım/İlgi Bilgieri tabını aç")
-    public ParafladiklarimPage tabIlgiBilgileri() {
+    public ParafladiklarimPage tabIlgiBilgileriAc() {
         tabIlgiBilgileri.click();
         return this;
     }
@@ -220,6 +220,24 @@ public class ParafladiklarimPage extends MainPage {
     @Step("Parafladıklarım/İlişik Bilgieri tabını aç")
     public ParafladiklarimPage tabIlisikBilgileriAc() {
         tabIlisikBilgileri.click();
+        return this;
+    }
+
+    @Step("Evrak önizleme/Evrak Ekleri Accordion kontrolu")
+    public ParafladiklarimPage evrakEkleriAccordionKontrol() {
+        Assert.assertEquals(accordionEvrakEkleri.isDisplayed(), true);
+        return this;
+    }
+
+    @Step("Evrak önizleme/İlgi Bilgileri Accordion kontrolu")
+    public ParafladiklarimPage ilgiBilgieriAccordionKontrol() {
+        Assert.assertEquals(accordionIlgiBilgileri.isDisplayed(), true);
+        return this;
+    }
+
+    @Step("Evrak önizleme/İlişik Bilgileri Accordion kontrolu")
+    public ParafladiklarimPage ilisikBilgieriAccordionKontrol() {
+        Assert.assertEquals(accordionIlisikBilgileri.isDisplayed(), true);
         return this;
     }
 }

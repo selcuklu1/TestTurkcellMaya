@@ -88,7 +88,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
         String geldigiYer= "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
 
         //TODO Pre Condition Gelen Evraklar sayfası data oluşturmakta
-        login(username2, password2);
+        login(usernameZTEKIN, passwordZTEKIN);
 
         gelenEvrakKayitPage
                 .openPage()
@@ -106,7 +106,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .benzerKayit();
         //TODO
 
-        login(username2, password2);
+        login(usernameZTEKIN, passwordZTEKIN);
 
         gelenEvraklarPage
                 .openPage()
@@ -144,7 +144,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .kontrolEtNotDoldur(icerik)
                 .kontrolEtGonder();
 
-        login(username2, password2);
+        login(usernameZTEKIN, passwordZTEKIN);
 
         imzaBekleyenlerPage
                 .openPage()
@@ -170,7 +170,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .aramaKriteriDoldur(konuKoduRandom)
                 .ara();
 
-        login(username, password);
+        login(usernameOPTIIM, passwordOPTIIM);
 
         teslimAlinmayiBekleyenlerPage
                 .openPage()
@@ -192,7 +192,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
         String icerik = createRandomText(15);
         String onayAkisi = "CanKontrol";
 
-        login(username2, password2);
+        login(usernameZTEKIN, passwordZTEKIN);
 
         gelenEvrakKayitPage
                 .openPage()
@@ -208,7 +208,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .yeniKayitButton()
                 .benzerKayit();
 
-        login(username2, password2);
+        login(usernameZTEKIN, passwordZTEKIN);
 
         gelenEvraklarPage
                 .openPage()
@@ -239,7 +239,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .kontrolEtNotDoldur(icerik)
                 .kontrolEtGonder();
 
-        login(username2, password2);
+        login(usernameZTEKIN, passwordZTEKIN);
 
         imzaBekleyenlerPage
                 .openPage()
@@ -296,7 +296,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
         String icerik = createRandomText(15);
         String onayAkisi = "CanKontrol";
 
-        login(username2, password2);
+        login(usernameZTEKIN, passwordZTEKIN);
 
         gelenEvrakKayitPage
                 .openPage()
@@ -313,7 +313,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .yeniKayitButton()
                 .benzerKayit();
 
-        login(username2, password2);
+        login(usernameZTEKIN, passwordZTEKIN);
 
         gelenEvraklarPage
                 .openPage()
@@ -344,7 +344,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .kontrolEtNotDoldur(icerik)
                 .kontrolEtGonder();
 
-        login(username2, password2);
+        login(usernameZTEKIN, passwordZTEKIN);
 
         imzaBekleyenlerPage
                 .openPage()
@@ -401,7 +401,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
         String icerik = createRandomText(15);
         String onayAkisi = "CanKontrol";
 
-        login(username2, password2);
+        login(usernameZTEKIN, passwordZTEKIN);
 
         gelenEvrakKayitPage
                 .openPage()
@@ -418,7 +418,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .yeniKayitButton()
                 .benzerKayit();
 
-        login(username2, password2);
+        login(usernameZTEKIN, passwordZTEKIN);
 
         gelenEvraklarPage
                 .openPage()
@@ -449,7 +449,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .kontrolEtNotDoldur(icerik)
                 .kontrolEtGonder();
 
-        login(username2, password2);
+        login(usernameZTEKIN, passwordZTEKIN);
 
         imzaBekleyenlerPage
                 .openPage()
@@ -593,7 +593,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
         gelenEvrakKayitPage
                 .islemMesaji().basariliOlmali(basariMesaji);
 
-        login(username, password);
+        login(usernameOPTIIM, passwordOPTIIM);
 
         gelenEvraklarPage
                 .openPage()
@@ -667,7 +667,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
         String icerik = createRandomText(15);
         String onayAkisi = "CanKontrol";
 
-        login(username2, password2);
+        login(usernameZTEKIN, passwordZTEKIN);
 
         gelenEvrakKayitPage
                 .openPage()
@@ -684,7 +684,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .yeniKayitButton()
                 .benzerKayit();
 
-        login(username2, password2);
+        login(usernameZTEKIN, passwordZTEKIN);
 
         gelenEvraklarPage
                 .openPage()
@@ -715,7 +715,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .kontrolEtNotDoldur(icerik)
                 .kontrolEtGonder();
 
-        login(username2, password2);
+        login(usernameZTEKIN, passwordZTEKIN);
 
         imzaBekleyenlerPage
                 .openPage()
@@ -772,7 +772,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
         String icerik = createRandomText(15);
         String onayAkisi = "CanKontrol";
 
-        login(username2, password2);
+        login(usernameZTEKIN, passwordZTEKIN);
 
         gelenEvrakKayitPage
                 .openPage()
@@ -789,7 +789,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .yeniKayitButton()
                 .benzerKayit();
 
-        login(username2, password2);
+        login(usernameZTEKIN, passwordZTEKIN);
 
         gelenEvraklarPage
                 .openPage()
@@ -820,7 +820,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .kontrolEtNotDoldur(icerik)
                 .kontrolEtGonder();
 
-        login(username2, password2);
+        login(usernameZTEKIN, passwordZTEKIN);
 
         imzaBekleyenlerPage
                 .openPage()
@@ -918,7 +918,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .islemMesaji().basariliOlmali(basariMesaji);
 
         logout();
-        login(username4, password4);
+        login(usernameMBOZDEMIR, passwordMBOZDEMIR);
 
         gelenEvraklarPage
                 .openPage()
@@ -953,7 +953,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .sImzaImzala(true);
 
         logout();
-        login(username4, password4);
+        login(usernameMBOZDEMIR, passwordMBOZDEMIR);
 
         gelenEvraklarPage
                 .openPage()

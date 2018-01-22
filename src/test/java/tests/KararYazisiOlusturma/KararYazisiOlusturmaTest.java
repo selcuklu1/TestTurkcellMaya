@@ -70,7 +70,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
         String onayAkisi = "canparafci";
         String imzalama = "İmzalama";
 
-        login(username2, password2);
+        login(usernameZTEKIN, passwordZTEKIN);
 
         kararYazisiOlusturPage
                 .openPage()
@@ -155,7 +155,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
         String kurum = "BÜYÜK HARFLERLE KURUM";
         String kullaniciAdi = "Yazılım Geliştirme Direktörlüğ";
 
-        login(username3, password3);
+        login(usernameYAKYOL, passwordYAKYOL);
 
         //TODO Bu alanda Pre Condition alanı olan teslim alınmayı bekleyenler alanına data oluşturmakta
         gelenEvrakKayitPage
@@ -212,7 +212,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
         String kaldirilicakKlasor = "Gündem";
         String path = getDownloadPath();
 
-        login(username3, password3);
+        login(usernameYAKYOL, passwordYAKYOL);
 
         gundemIzlemePage
                 .openPage()
@@ -255,7 +255,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
         String not = createRandomText(12);
         String birim = "Altyapı ve Sistem Yönetim Uzmanı";
 
-        login(username2, password2);
+        login(usernameZTEKIN, passwordZTEKIN);
 
         kararYazisiOlusturPage
                 .openPage()
@@ -346,7 +346,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
         String onayAkisi = "ZUZU_ONAY_AKİSİ_1";
         String ivedilik = "İvedi";
 
-        login(username2, password2);
+        login(usernameZTEKIN, passwordZTEKIN);
 
         kararYazisiOlusturPage
                 .openPage()
@@ -399,7 +399,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
         String filePath = getUploadPath()+"Otomasyon.pdf";
         String not = createRandomText(12);
         String birim = "Altyapı ve Sistem Yönetim Uzmanı";
-        login(username2, password2);
+        login(usernameZTEKIN, passwordZTEKIN);
 
         kararYazisiOlusturPage
                 .openPage()
@@ -430,7 +430,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
                 .islemMesaji().basariliOlmali(basariMesaji);
 
 
-        login(username3, password3);
+        login(usernameYAKYOL, passwordYAKYOL);
 
         imzaBekleyenlerPage
                 .openPage()
@@ -441,7 +441,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
                 .iadeEtIadeEt()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
-        login(username2, password2);
+        login(usernameZTEKIN, passwordZTEKIN);
 
         imzaBekleyenlerPage
                 .openPage()
@@ -465,7 +465,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
         String klasorTuru = "Gündem Klasörü";
         String ad = "Zübeyde";
 
-        login(username2, password2);
+        login(usernameZTEKIN, passwordZTEKIN);
 
         klasorYonetimiPage
                 .openPage()
@@ -513,7 +513,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
         String evrakTarihi = getSysDateForKis();
         String kurum = "BÜYÜK HARFLERLE KURUM";
         String kullaniciAdi = "Zübeyde Tekin";
-        login(username2, password2);
+        login(usernameZTEKIN, passwordZTEKIN);
 
         gelenEvrakKayitPage
                 .openPage()
