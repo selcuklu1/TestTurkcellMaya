@@ -33,10 +33,11 @@ public class PostalananlarPage extends MainPage {
     SelenideElement btnPostaDetayi = $x("//span[text() = 'Posta Detayı']/../../..//button");
     ElementsCollection tblEvraklar = $$("[id^='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
 
-    SelenideElement btnGuncelle = $(By.id("mainPreviewForm:j_idt18728:0:j_idt18764"));
-    SelenideElement txtPosta = $(By.id("mainPreviewForm:j_idt18803"));
-    SelenideElement txtAciklama = $(By.id("mainPreviewForm:j_idt18806"));
-    SelenideElement btnKaydet = $(By.id("mainPreviewForm:j_idt18809"));
+    SelenideElement btnGuncelle = $x("//*[@id='mainPreviewForm:postalananDataGrid']/tbody/tr/td/div/table/tbody/tr[2]/td[8]/div/button[1]");
+    SelenideElement btnTuzelKisiGuncelle = $x("//*[@id='mainPreviewForm:postalananDataGrid']/tbody/tr/td/div/table/tbody/tr[4]/td[8]/div/button[1]");
+    SelenideElement txtPosta = $x("//*[@id=\'mainPreviewForm:postaGuncellePanel\']/tbody/tr[2]/td[3]/input");
+    SelenideElement txtAciklama = $x("//*[@id=\'mainPreviewForm:postaGuncellePanel\']/tbody/tr[3]/td[3]/textarea");
+    SelenideElement btnKaydet = $x("//span[text() = 'Kaydet']");
     SelenideElement btnTarihGuncelle = $(By.id("mainPreviewForm:tebligatMazbatasiTarihiId_input"));
     ElementsCollection dlgPostaGuncelle = $$("table[id='mainPreviewForm:postaGuncellePanel']");
     SelenideElement btnKurdele = $(By.id("mainInboxForm:inboxDataTable:0:btnImzasiz"));
@@ -57,6 +58,7 @@ public class PostalananlarPage extends MainPage {
     SelenideElement tabIcerikEkleri = $(By.id("inboxItemInfoForm:dialogTabMenuLeft:uiRepeat:1:cmdbutton"));
     SelenideElement tabIcerikKapat = $x("//*[@id='windowItemInfoDialog']/div[1]/a[1]/span");
     SelenideElement tabIcerikKapatmaOnay = $(By.id("kapatButton"));
+    SelenideElement btnIcerikPostaDetayi = $x("//*[@id='inboxItemInfoForm:dialogTabMenuRight:uiRepeat:4:cmdbutton']/span[1]");
     //
     SelenideElement tuzelKisiGuncelle = $x("//*[@id='mainPreviewForm:postalananDataGrid']/tbody/tr/td/div/table/tbody/tr[4]/td[8]/div/button[1]");
     //
@@ -109,6 +111,11 @@ public class PostalananlarPage extends MainPage {
     @Step("Başlangıç tarihi doldur")
     public PostalananlarPage baslangicTarihiDoldur(String text) {
         dateBaslangicTarihi.setValue(text);
+        return this;
+    }
+    @Step("Icerik Detay Posta Detay Butonu")
+    public PostalananlarPage icerikDetayPostaDetayi() {
+        btnIcerikPostaDetayi.click();
         return this;
     }
 
@@ -262,6 +269,18 @@ public class PostalananlarPage extends MainPage {
         Thread.sleep(1000);
         return this;
     }
+    @Step("Filtrelenen postanın Icerik Goster butonuna tıkla")
+    public PostalananlarPage btnFiltrenenPostaIcerikGoster(String Konu) throws InterruptedException {
+        filter().findRowsWith(Condition.text(Konu)).first().click();
+        String idAtr ;
+        idAtr = filter().findRowsWith(Condition.text(Konu)).first().getAttribute("data-ri");
+        System.out.println(idAtr);
+        String IcerikId = "mainInboxForm:inboxDataTable:" + idAtr + ":detayGosterButton";
+        SelenideElement filteredIcerikGoster = $(By.id(IcerikId));
+        filteredIcerikGoster.click();
+        Thread.sleep(1000);
+        return this;
+    }
 
     @Step("Icerik içinde Ilgileri Tabına tıklama")
     public PostalananlarPage btnIcerikIlgileriTab() throws InterruptedException {
@@ -304,6 +323,12 @@ public class PostalananlarPage extends MainPage {
         return this;
     }
 
+    @Step("Tuzel Kisi Guncelle")
+    public PostalananlarPage btnTuzelKisiGuncelle () {
+        btnTuzelKisiGuncelle.click();
+        return this;
+
+    }
     @Step("Imza Dialog Ekranını göster")
     public PostalananlarPage mngImzaDialog() {
 
