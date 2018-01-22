@@ -18,6 +18,7 @@ import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetFramework;
 
 import java.lang.reflect.Method;
+import java.nio.charset.Charset;
 import java.util.Locale;
 
 import static data.TestData.belgenetURL;
@@ -34,9 +35,15 @@ public class BaseTest extends BaseLibrary {
 
     @BeforeClass(alwaysRun = true)
     public void driverSetUp() {
-
+        System.out.println("file.encoding: " + String.format("file.encoding: %s", System.getProperty("file.encoding")));
+        System.out.println("default charset=" + Charset.defaultCharset());
+        System.out.println("java.specification.version" + System.getProperty("java.specification.version"));
+        System.out.println("java.runtime.version" + System.getProperty("java.runtime.version"));
+        System.out.println("locale default: " + Locale.getDefault());
         Locale turkishLocal = new Locale("tr", "TR");
-        Locale.setDefault(turkishLocal);
+        if (!Locale.getDefault().equals(turkishLocal))
+            Locale.setDefault(turkishLocal);
+        System.out.println("locale: " + Locale.getDefault());
 
         BelgenetFramework.setUp();
         WebDriverRunner.addListener(new DriverEventListener());
@@ -45,7 +52,7 @@ public class BaseTest extends BaseLibrary {
         //Configuration.remote = "http://localhost:4444/wd/hub";
 
         Configuration.baseUrl = (System.getProperty("URL") == null) ? belgenetURL : System.getProperty("URL");
-        Configuration.browser = (System.getProperty("browser") == null) ? "firefox" : System.getProperty("browser");
+        Configuration.browser = (System.getProperty("browser") == null) ? "chrome" : System.getProperty("browser");
         Configuration.browserVersion = System.getProperty("node");
         Configuration.remote = System.getProperty("hub");
 

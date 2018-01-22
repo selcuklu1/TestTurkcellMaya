@@ -12,11 +12,11 @@ public enum Ivedilik {
 	<option value="C">Çok İvedi</option>
 	<option value="V">İvedi/Günlü</option>*/
 
-    Normal("Normal", "N"),
-    Gunlu("Günlü", "G"),
-    KisiyeOzel("İvedi", "I"),
-    Ozel("Çok İvedi", "C"),
-    HizmeteOzel("İvedi/Günlü", "V");
+    NORMAL("Normal", "N"),
+    GUNLU("Günlü", "G"),
+    IVEDI("İvedi", "I"),
+    COKI_VEDI("Çok İvedi", "C"),
+    IVEDI_GUNLU("İvedi/Günlü", "V");
 
     private String optionValue;
     private String optionText;

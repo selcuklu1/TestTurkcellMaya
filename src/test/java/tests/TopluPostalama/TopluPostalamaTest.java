@@ -5,7 +5,6 @@ import common.BaseTest;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
-
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.MainPage;
@@ -14,11 +13,9 @@ import pages.ustMenuPages.EvrakOlusturPage;
 import pages.ustMenuPages.PttRaporuPage;
 
 import java.awt.*;
-
+import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
-
-import java.io.*;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;

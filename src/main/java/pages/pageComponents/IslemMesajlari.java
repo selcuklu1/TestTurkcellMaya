@@ -12,9 +12,7 @@ import java.util.List;
 
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
-import static com.codeborne.selenide.Selenide.sleep;
+import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.IslemMesajlari.MessageTitle.*;
 
 public class IslemMesajlari extends BaseLibrary {
@@ -53,7 +51,7 @@ public class IslemMesajlari extends BaseLibrary {
     //    @Step("Messaj bulunmalı")
     private SelenideElement getMessageBody() {
         //return $$(messageLocator).shouldHave(sizeGreaterThan(0)).filterBy(visible).first();
-        return $(messageLocator);
+        return $(messageLocator).shouldBe(visible);
     }
 
     private List<String> getMessageBodyList() {
@@ -86,6 +84,7 @@ public class IslemMesajlari extends BaseLibrary {
     @Step("Messaj kontrolü")
     private void checkMessage(String messageTitle, String... expectedMessage) {
         SelenideElement message = getMessageBody();
+        System.out.println(message.text());
         takeScreenshot();
         checkTitle(message.$(titleLocator), messageTitle);
         if (expectedMessage.length > 0)
@@ -125,19 +124,19 @@ public class IslemMesajlari extends BaseLibrary {
     public boolean isBasarili() {
         //Not working?! boolean b = getMessageBody().$(titleLocator).has(exactText(BASARILI.value()));
         //takeScreenshot();
-        return getMessageBody().$(titleLocator).text().equals(BASARILI.value());
+        return getMessageBody().shouldBe(visible).$(titleLocator).text().equals(BASARILI.value());
     }
 
     public boolean isUyari() {
         /*boolean b = $(titleLocator).shouldBe(visible).has(exactText(UYARI.value()));
         takeScreenshot();*/
-        return getMessageBody().$(titleLocator).text().equals(UYARI.value());
+        return getMessageBody().shouldBe(visible).$(titleLocator).text().equals(UYARI.value());
     }
 
     public boolean isDikkat() {
         /*boolean b = $(titleLocator).shouldBe(visible).has(exactText(DIKKAT.value()));
         takeScreenshot();*/
-        return getMessageBody().$(titleLocator).text().equals(DIKKAT.value());
+        return getMessageBody().shouldBe(visible).$(titleLocator).text().equals(DIKKAT.value());
     }
 
     public void closeMessage() {
