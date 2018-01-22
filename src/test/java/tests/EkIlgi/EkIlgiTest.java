@@ -243,7 +243,7 @@ public class EkIlgiTest extends BaseTest {
 
         String basariMesaji = "İşlem başarılıdır!";
 
-        login(TestData.username4, TestData.password4); //mbozdemir
+        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR); //mbozdemir
 
         //en son taslaklar listesinde kontrol için uniquq konu giriliyor.
         evrakOlusturPage
@@ -360,7 +360,7 @@ public class EkIlgiTest extends BaseTest {
 
         String basariMesaji = "İşlem başarılıdır!";
 
-        login(TestData.username4, TestData.password4); //mbozdemir
+        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR); //mbozdemir
 
         //Taslaklar listesinde kontrol için unique konu giriliyor.
         evrakOlusturPage
@@ -488,7 +488,7 @@ public class EkIlgiTest extends BaseTest {
 
         String basariMesaji = "İşlem başarılıdır!";
 
-        login(TestData.username4, TestData.password4); //mbozdemir
+        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR); //mbozdemir
 
         //Taslaklar listesinde kontrol için unique konu giriliyor.
         evrakOlusturPage
@@ -644,7 +644,7 @@ public class EkIlgiTest extends BaseTest {
 
 
 
-        login(TestData.username4, TestData.password4); //mbozdemir
+        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR); //mbozdemir
 /*
 
         evrakOlusturPage
@@ -744,8 +744,13 @@ public class EkIlgiTest extends BaseTest {
                 .konuyaGoreEvrakKontrol("TS2025_EkIlgi_Senaryosu_20180122145731")
                 .konuyaGoreEvrakOnizlemedeAc("TS2025_EkIlgi_Senaryosu_20180122145731")
                 .tabKontrolleri()
-                .tabEvrakEkleriAc();
+                .tabEvrakEkleriAc()
+                .evrakEkleriAccordionKontrol()
+                .tabIlgiBilgileriAc()
+                .ilgiBilgieriAccordionKontrol()
+                .tabIlisikBilgileriAc()
+                .ilisikBilgieriAccordionKontrol();
 
-
+        login(TestData.usernameGSAHIN, TestData.passwordGSAHIN); //mbozdemir
     }
 }

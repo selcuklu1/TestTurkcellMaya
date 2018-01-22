@@ -15,8 +15,8 @@ import org.testng.annotations.Test;
 import pages.ustMenuPages.EvrakHavaleKurallariYonetimiPage;
 import pages.ustMenuPages.GelenEvrakKayitPage;
 
-import static data.TestData.password2;
-import static data.TestData.username2;
+import static data.TestData.passwordZTEKIN;
+import static data.TestData.usernameZTEKIN;
 
 /****************************************************
  * Tarih: 2017-12-27
@@ -47,7 +47,7 @@ public class EvrakHavaleKurallariTest extends BaseTest {
         String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
         String kisi = "Zübeyde Tekin";
         String birim2 = "BİLİŞİM HİZMETLERİ VE UYDU PAZARLAMA GENEL MÜDÜR";
-        login(username2, password2);
+        login(usernameZTEKIN, passwordZTEKIN);
         //TODO PRE Conditon bir kural bulunmalı
         evrakHavaleKurallariYonetimiPage
                 .openPage()
@@ -93,7 +93,7 @@ public class EvrakHavaleKurallariTest extends BaseTest {
         String kullanici = "Can Şeker";
         String aciklama = "Deneme amaçlıdır";
         String kurum = "BÜYÜK HARFLERLE KURUM";
-        login(username2, password2);
+        login(usernameZTEKIN, passwordZTEKIN);
         //TODO PRE Conditon bir kural bulunmalı
         evrakHavaleKurallariYonetimiPage
                 .openPage()
@@ -147,7 +147,7 @@ public class EvrakHavaleKurallariTest extends BaseTest {
         String kisi = "Zübeyde Tekin";
         String birim2 = "BİLİŞİM HİZMETLERİ VE UYDU PAZARLAMA GENEL MÜDÜR";
 
-        login("cseker", password2);
+        login("cseker", passwordZTEKIN);
         //TODO PRE Conditon bir kural bulunmalı
         evrakHavaleKurallariYonetimiPage
                 .openPage()
@@ -216,7 +216,7 @@ public class EvrakHavaleKurallariTest extends BaseTest {
         String geldigiYerKurum = "Kurum";
         String geldigiYerSeciniz = "Seçiniz";
 
-        login(username2, password2);
+        login(usernameZTEKIN, passwordZTEKIN);
 
         evrakHavaleKurallariYonetimiPage
                 .openPage()
@@ -266,7 +266,7 @@ public class EvrakHavaleKurallariTest extends BaseTest {
         String kisi = "Zübeyde Tekin";
         String birim2 = "BİLİŞİM HİZMETLERİ VE UYDU PAZARLAMA GENEL MÜDÜR";
 
-        login("cseker", password2);
+        login("cseker", passwordZTEKIN);
         //TODO PRE Conditon bir kural bulunmalı
         evrakHavaleKurallariYonetimiPage
                 .openPage()
@@ -330,7 +330,7 @@ public class EvrakHavaleKurallariTest extends BaseTest {
         String kisi = "Zübeyde Tekin";
         String birim2 = "BİLİŞİM HİZMETLERİ VE UYDU PAZARLAMA GENEL MÜDÜR";
         String kuralAdiGuncelle = kuralAdi + " Güncelle";
-        login("cseker", password2);
+        login("cseker", passwordZTEKIN);
         //TODO PRE Conditon bir kural bulunmalı
         evrakHavaleKurallariYonetimiPage
                 .openPage()
@@ -372,6 +372,7 @@ public class EvrakHavaleKurallariTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS2069: Evrak Havale Kuralları - Birim Kaydet - Güncelleme")
     public void TS2069d() throws InterruptedException {
+
         String basariMesaji = "İşlem başarılıdır!";
         String uyariMesaji = "Evrak Bilgilerine Tanımlanmış Otomatik Havale Kuralı Bulunamamıştır.";
         String kuralAdi = "TC-2069D_" + createRandomNumber(12);
@@ -385,7 +386,7 @@ public class EvrakHavaleKurallariTest extends BaseTest {
         String sadecePasifler = "Sadece Pasifler";
         String sadeceAktifler = "Sadece Aktifler";
 
-        login("cseker", password2);
+        login("cseker", passwordZTEKIN);
 
         //TODO PRE Conditon bir kural bulunmalı
         evrakHavaleKurallariYonetimiPage

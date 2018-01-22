@@ -21,6 +21,7 @@ public class KurumYonetimiPage extends MainPage {
     SelenideElement btnAra = $(By.id("kurumYonetimiListingForm:filterPanel:searchEntitiesButton"));
     SelenideElement cmbDurum = $(By.id("kurumYonetimiListingForm:filterPanel:durumSelectBox"));
     SelenideElement txtIdariBirimKimlikKodu = $(By.id("kurumYonetimiEditorForm:kurumEKodInput"));
+    SelenideElement txtIdariBirimKimlik = $(By.id("kurumYonetimiEditorForm:kurumAdiInput"));
     SelenideElement chkKaysisteYerAlmiyor = $(By.id("kurumYonetimiEditorForm:kaysisteVarMiCheckbox_input"));
     SelenideElement txtKurumAdi = $(By.id("kurumYonetimiEditorForm:kurumAdiInput"));
     SelenideElement chkPaketKullanim = $(By.id("kurumYonetimiEditorForm:paketKullanimCheckbox_input"));
@@ -90,7 +91,7 @@ public class KurumYonetimiPage extends MainPage {
 
     @Step("TC kimlik no alma")
     public String idariBirimKimlikKoduCek() {
-        String getIdariBirimKodu = txtIdariBirimKimlikKodu.getValue();
+        String getIdariBirimKodu = txtIdariBirimKimlik.getValue();
         return getIdariBirimKodu;
     }
 
