@@ -18,8 +18,8 @@ import pages.ustMenuPages.KullaniciYonetimiPage;
 import pages.ustMenuPages.OnayAkisYonetimiPage;
 import pages.ustMenuPages.VekaletVerPage;
 
-import static data.TestData.password2;
-import static data.TestData.username2;
+import static data.TestData.passwordZTEKIN;
+import static data.TestData.usernameZTEKIN;
 
 /****************************************************
  * Tarih: 2017-12-22
@@ -56,7 +56,7 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
 
         // Gelen evraklar alanında veri bulunmalı
 
-        login("kbagtipi", password2);
+        login("kbagtipi", passwordZTEKIN);
 
         kullaniciYonetimiPage
                 .openPage()
@@ -111,7 +111,7 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
 
         //Gelen evraklar alanında veri bulunmalı
 
-        login(username2, password2);
+        login(usernameZTEKIN, passwordZTEKIN);
 
         kullaniciYonetimiPage
                 .openPage()
@@ -193,7 +193,7 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
         String onayVerecek = "Zübeyde TEKİN";
 
         //Gelen evraklar alanında veri bulunmalı
-        login("kbagtipi", password2);
+        login("kbagtipi", passwordZTEKIN);
 
         kullaniciYonetimiPage
                 .openPage()

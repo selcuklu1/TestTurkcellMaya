@@ -601,7 +601,7 @@ public class EvrakPaylasmaTest extends BaseTest {
         String birim = "TEST HASAN BİRİMİ";
         String anaBirim = "Yazılım Geliştirme Direktörlüğ";
         //TODO Pre Condition Gelen Evraklar sayfası data oluşturmakta
-        login(username2, password2);
+        login(usernameZTEKIN, passwordZTEKIN);
 
         gelenEvrakKayitPage
                 .openPage()
@@ -617,7 +617,7 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .yeniKayitButton();
         //TODO
 
-        login(username2, password2);
+        login(usernameZTEKIN, passwordZTEKIN);
 
         gelenEvraklarPage
                 .openPage()
@@ -637,7 +637,7 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .paylasilanlarTabAc()
                 .paylasilanlarKullaniciGorme(kisi2);
 
-        login(username3, password3);
+        login(usernameYAKYOL, passwordYAKYOL);
 
         mainPage
                 .birimSec(Condition.text(birim));

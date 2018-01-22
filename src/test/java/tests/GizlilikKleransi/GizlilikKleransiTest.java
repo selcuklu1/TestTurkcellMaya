@@ -86,7 +86,7 @@ public class GizlilikKleransiTest extends BaseTest {
         String evrakGelisTipi = "Posta";
         String ivedilik = "İvedi";
 
-        login("gklerans", password2);
+        login("gklerans", passwordZTEKIN);
 
         gelenEvrakKayitPage
                 .openPage()
@@ -119,7 +119,7 @@ public class GizlilikKleransiTest extends BaseTest {
         String geldigiYer = "Gizlilik Kler";
         String evrakTarihi = "15.12.2017";
 
-        login("gklerans", password2);
+        login("gklerans", passwordZTEKIN);
 
         havaleEttiklerimPage
                 .openPage()
@@ -150,7 +150,7 @@ public class GizlilikKleransiTest extends BaseTest {
         String evrakTarihi = "15.12.2017";
         String no = "123";
 
-        login("gklerans", password2);
+        login("gklerans", passwordZTEKIN);
 
         teslimAlinmayiBekleyenlerPage
                 .openPage()
@@ -183,7 +183,7 @@ public class GizlilikKleransiTest extends BaseTest {
         String evrakTarihi = "15.12.2017";
         String no = "5096";
 
-        login("gklerans", password2);
+        login("gklerans", passwordZTEKIN);
 
         teslimAlinanlarPage
                 .openPage()
@@ -215,7 +215,7 @@ public class GizlilikKleransiTest extends BaseTest {
         String evrakTarihi = "15.12.2017";
         String no = "1";
 
-        login("gklerans", password2);
+        login("gklerans", passwordZTEKIN);
 
         gelenEvraklarPage
                 .openPage()
@@ -247,7 +247,7 @@ public class GizlilikKleransiTest extends BaseTest {
         String no2 = "0";
         String aciklama = "Deneme amaçlıdır";
 
-        login("gklerans", password2);
+        login("gklerans", passwordZTEKIN);
 
         gelenEvraklarPage
                 .openPage()
@@ -295,7 +295,7 @@ public class GizlilikKleransiTest extends BaseTest {
         String no2 = "0";
         String aciklama = "Deneme amaçlıdır";
 
-        login("gklerans", password2);
+        login("gklerans", passwordZTEKIN);
 
         parafladiklarimPage
                 .openPage()
@@ -336,7 +336,7 @@ public class GizlilikKleransiTest extends BaseTest {
         String evrakTarihi = "15.12.2017";
         String no = "123";
 
-        login("gklerans", password2);
+        login("gklerans", passwordZTEKIN);
 
         iadeEttiklerimPage
                 .openPage()
@@ -373,7 +373,7 @@ public class GizlilikKleransiTest extends BaseTest {
         String evrakTarihi = "15.12.2017";
         String no = "5107";
         String no2 = "0";
-        login("gklerans", password2);
+        login("gklerans", passwordZTEKIN);
 
         gelenEvraklarPage
                 .openPage()
@@ -414,7 +414,7 @@ public class GizlilikKleransiTest extends BaseTest {
         String evrakSayiSag = createRandomNumber(10);
 
         //TODO Pre Condition Teslim alınmayı bekleyenler sayfası data oluşturmakta
-        login("gklerans", password3);
+        login("gklerans", passwordYAKYOL);
         gelenEvrakKayitPage
                 .openPage()
                 .konuKoduDoldur(konuKodu)
@@ -429,7 +429,7 @@ public class GizlilikKleransiTest extends BaseTest {
                 .yeniKayitButton();
         //TODO
 
-        login("cseker", password3);
+        login("cseker", passwordYAKYOL);
 
         teslimAlinmayiBekleyenlerPage
                 .openPage()
@@ -467,7 +467,7 @@ public class GizlilikKleransiTest extends BaseTest {
         String editor = createRandomText(15);
 
         //TODO Pre Condition Postalanacak evraklar sayfası data oluşturmakta
-        login("gklerans", password3);
+        login("gklerans", passwordYAKYOL);
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
@@ -490,7 +490,7 @@ public class GizlilikKleransiTest extends BaseTest {
                 .sayisalImzaEvetPopup();
         //TODO
 
-        login("gklerans", password3);
+        login("gklerans", passwordYAKYOL);
 
         postalanacakEvraklarPage
                 .openPage()
@@ -759,7 +759,7 @@ public class GizlilikKleransiTest extends BaseTest {
         String ivedilik = "Normal";
         String geregi = "Esk Kurum 071216 2";
 
-        login(username4, password4);
+        login(usernameMBOZDEMIR, passwordMBOZDEMIR);
 
         String kullaniciTasnifDisi = "USERNAME23T TEST";
         String kullaniciOzel = "username24o";
@@ -816,7 +816,7 @@ public class GizlilikKleransiTest extends BaseTest {
         String kullaniciNormal = "USERNAME22N TEST";
         String mesaj = kullaniciNormal + " kullanıcısının gizlilik kleransı evrakı görüntülemek için yeterli değildir.";
 
-        login(username4, password4);
+        login(usernameMBOZDEMIR, passwordMBOZDEMIR);
 
         evrakOlusturPage
                 .openPage()
@@ -874,7 +874,7 @@ public class GizlilikKleransiTest extends BaseTest {
                 .islemMesaji().beklenenMesaj(basariMesaji);
 
         logout();
-        login(username4, password4);
+        login(usernameMBOZDEMIR, passwordMBOZDEMIR);
 
 
         parafBekleyenlerPage
@@ -905,7 +905,7 @@ public class GizlilikKleransiTest extends BaseTest {
         String mesaj2 = "DAGPLAN1 adlı Dağıtım Planınında gizlilik kleransı yetersiz kullanıcılar vardır: " + kullaniciTasnifDisi;
 
 
-        login(username4, password4);
+        login(usernameMBOZDEMIR, passwordMBOZDEMIR);
 
 
         evrakOlusturPage
@@ -967,7 +967,7 @@ public class GizlilikKleransiTest extends BaseTest {
         String mesaj = kullaniciTasnifDisi + " kullanıcısının gizlilik kleransı evrakı görüntülemek için yeterli değildir.";
         String mesaj2 = "DAGPLAN1 adlı Dağıtım Planınında gizlilik kleransı yetersiz kullanıcılar vardır: " + kullaniciTasnifDisi;
 
-        login(username4, password4);
+        login(usernameMBOZDEMIR, passwordMBOZDEMIR);
 
         //testte kullanılacak data oluşturuluyor.
         gelenEvrakKayitPage
@@ -1053,7 +1053,7 @@ public class GizlilikKleransiTest extends BaseTest {
 
         String mesaj = kullaniciTasnifDisi + " kullanıcısının gizlilik kleransı evrakı görüntülemek için yeterli değildir.";
 
-        login(username4, password4);
+        login(usernameMBOZDEMIR, passwordMBOZDEMIR);
 
         //testte kullanılacak data oluşturuluyor.
         gelenEvrakKayitPage
@@ -1124,7 +1124,7 @@ public class GizlilikKleransiTest extends BaseTest {
         String geldigiKurum = "Esk Kurum 071216 2";
         String aciklama = "Yetersiz Klerans";
 
-        login(username3, password3);
+        login(usernameYAKYOL, passwordYAKYOL);
 
         //testte kullanılacak data oluşturuluyor.
         gelenEvrakKayitPage
