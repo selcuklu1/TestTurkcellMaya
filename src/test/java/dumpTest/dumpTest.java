@@ -24,7 +24,6 @@ import java.util.regex.Pattern;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.executeJavaScript;
-import static java.util.regex.Pattern.CASE_INSENSITIVE;
 import static java.util.regex.Pattern.DOTALL;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
@@ -118,7 +117,7 @@ public class dumpTest extends BaseTest {
     }
 
     @Test(description = "", enabled = true)
-    public void selectLovTexts() throws Exception {
+    public void selectLovTexts() {
         login();
         OlurYazisiOlusturPage olurYazisiOlusturPage = new OlurYazisiOlusturPage().openPage();
         /*boolean b = comboLov("input[id$='konuKoduLov:LovText']").selectLov("010","kanunlar").isLovSelected();
@@ -168,7 +167,7 @@ public class dumpTest extends BaseTest {
 
 
     @Test(description = "", enabled = true)
-    public void aaa() throws Exception {
+    public void aaa() {
 
         String source1="Optiim TEST2 [Danışman]\n" +
                 "Optiim Alt Birim1\n" +
