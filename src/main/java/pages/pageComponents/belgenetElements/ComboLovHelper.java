@@ -492,12 +492,11 @@ public class ComboLovHelper extends BaseLibrary {
         if (!$(lovText).isDisplayed() && $(lovInputTextleriTemizle).isDisplayed())
             $(lovInputTextleriTemizle).click();
 
-        $(lovText).shouldBe(visible);
-
         try {
-            $(lovText).sendKeys(Keys.SHIFT);
+            if ($(lovText).isDisplayed()) $(lovText).getWrappedElement().sendKeys(Keys.SHIFT);
         } catch (Exception ignored) { }
 
+        $(lovText).shouldBe(visible);
 
         if ($(lovText).isEnabled() && text.length > 0)
             $(lovText).setValue(text[0]);
@@ -511,6 +510,7 @@ public class ComboLovHelper extends BaseLibrary {
 
         for (String t : text) {
             collection = collection.filterBy(text(t));
+            //regex vs türkçe karakterleri
             //collection = collection.filterBy(matchText("\\b(?i)" + t.trim() +"\\b"));
         }
 
