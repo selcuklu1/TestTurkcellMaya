@@ -117,13 +117,13 @@ public class dumpTest extends BaseTest {
     }
 
     @Test(description = "", enabled = true)
-    public void selectLovTexts() throws Exception {
+    public void selectLovTexts() {
         login();
         OlurYazisiOlusturPage olurYazisiOlusturPage = new OlurYazisiOlusturPage().openPage();
         /*boolean b = comboLov("input[id$='konuKoduLov:LovText']").selectLov("010","kanunlar").isLovSelected();
         comboLov("input[id$='eklenecekKlasorlerLov:LovText']").selectLov();
 */
-
+        Pattern.compile(".*" + "" + ".*", DOTALL).matcher("").matches();
         $("button[id$=onayAkisiEkle]").click();
 
         comboLov("input[id$='akisAdimLov:LovText']")
@@ -167,7 +167,7 @@ public class dumpTest extends BaseTest {
 
 
     @Test(description = "", enabled = true)
-    public void aaa() throws Exception {
+    public void aaa() {
 
         String source1="Optiim TEST2 [Danışman]\n" +
                 "Optiim Alt Birim1\n" +

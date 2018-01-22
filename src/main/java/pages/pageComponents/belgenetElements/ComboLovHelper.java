@@ -492,6 +492,7 @@ public class ComboLovHelper extends BaseLibrary {
         if (!$(lovText).isDisplayed() && $(lovInputTextleriTemizle).isDisplayed())
             $(lovInputTextleriTemizle).click();
 
+        //try used for disabled field with openTree button
         try {
             if ($(lovText).isDisplayed()) $(lovText).getWrappedElement().sendKeys(Keys.SHIFT);
         } catch (Exception ignored) { }
@@ -503,7 +504,7 @@ public class ComboLovHelper extends BaseLibrary {
         else
             $(treeButton).click();
 
-        collection = $$(lovTree).last().$$(selectableItemsLocator);
+        collection = $$(lovTree).last().shouldBe(visible).$$(selectableItemsLocator);
         collection.shouldHave(sizeGreaterThan(0)).last().shouldBe(visible);
         Allure.addAttachment("Selectable items " + collection.size(), collection.texts().toString());
         Allure.addAttachment("Filter texts "+ text.length, Arrays.toString(text));
