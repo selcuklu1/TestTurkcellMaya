@@ -47,7 +47,6 @@ public class MainPage extends BaseLibrary {
     }
 
     public IslemMesajlari islemMesaji() {
-//        return islemMesajlari;
         return new IslemMesajlari();
     }
 

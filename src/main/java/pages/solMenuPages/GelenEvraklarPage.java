@@ -508,6 +508,14 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Evrak kapatma alanında Kapatma tipi, Konu kodu, Kaldırılacak klasörler, Not, Onay akışı alanlarının geldiği görülür.")
+    public GelenEvraklarPage evrakKapatmaEkranGeldigiGorme(){
+        boolean durum = $$(By.id("mainPreviewForm:evrakKapatFieldsetId")).size()==1;
+        Assert.assertEquals(durum,true);
+        takeScreenshot();
+        return this;
+    }
+
     public GelenEvraklarPage evrakKapatKisiselKlasorlerSec(boolean secilen) {
         chkEvrakKapatKisiselKlasorler.setSelected(secilen);
         return this;

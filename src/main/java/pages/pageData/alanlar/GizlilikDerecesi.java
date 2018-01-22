@@ -21,14 +21,14 @@ public enum GizlilikDerecesi {
     Tasnif dışı
     Normal*/
 
-    NatoGizli("Nato Gizli", ""),
-    CokGizli("Çok Gizli", "C"),
-    Gizli("Gizli", "G"),
-    KisiyeOzel("Kişiye Özel", "K"),
-    Ozel("Özel", "O"),
-    HizmeteOzel("Hizmete Özel", "H"),
-    TasnifDisi("Tasnif Dışı", "T"),
-    Normal("Normal", "N");
+    NATO_GIZLI("Nato Gizli", ""),
+    COK_GIZLI("Çok Gizli", "C"),
+    GIZLI("Gizli", "G"),
+    KISIYE_OZEL("Kişiye Özel", "K"),
+    OZEL("Özel", "O"),
+    HIZMETE_OZEL("Hizmete Özel", "H"),
+    TASNIF_DISI("Tasnif Dışı", "T"),
+    NORMAL("Normal", "N");
 
     /*private String loactor = "select[id$='evrakDili']";
     private By by = By.cssSelector("select[id$='evrakDili']");*/

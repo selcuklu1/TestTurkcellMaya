@@ -12,8 +12,10 @@ import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.UstMenuData;
 
-import java.io.*;
-import java.util.ArrayList;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FilenameFilter;
+import java.io.IOException;
 
 import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
@@ -147,34 +149,16 @@ public class PttRaporuPage extends MainPage {
 
         }
 
+        @Step("Excelde Kişi Bilgilerinde Dağıtıcı: {_dagitici}, Düzenleyen: {_duzenleyen}, Avans Sorumlusu: {_avansSorumlusu}, Kontrol Eden: {_kontrolEden}, PTT Merkez: {_pttMerkez} bilgileri kontrol edildi.")
         public void kisiBilgileriKontrol(String _dagitici, String _duzenleyen, String _avansSorumlusu, String _kontrolEden, String _pttMerkez){
-            dagiticiKontrol(_dagitici);
-            duzenleyenKontrol(_duzenleyen);
-            avansSorumlusuKontrol(_avansSorumlusu);
-            kontrolEdenKontrol(_kontrolEden);
-            pttMerkezKontrol(_pttMerkez);
-        }
-
-        public void dagiticiKontrol(String _dagitici){
             Assert.assertEquals(dagitici, _dagitici);
-        }
-
-        public void duzenleyenKontrol(String _duzenleyen){
             Assert.assertEquals(duzenleyen, _duzenleyen);
-        }
-
-        public void avansSorumlusuKontrol(String _avansSorumlusu){
             Assert.assertEquals(avansSorumlusu, _avansSorumlusu);
-        }
-
-        public void kontrolEdenKontrol(String _kontrolEden){
             Assert.assertEquals(kontrolEden, _kontrolEden);
-        }
-
-        public void pttMerkezKontrol(String _pttMerkez){
             Assert.assertEquals(pttMerkez, _pttMerkez);
         }
 
+        @Step("Excelde Giden Kurum: {gidenKurum}, Ülke: {ulke}, Şehir: {sehir}, Posta Adı: {postaAdi}, Ağırlık: {agirlik}, Pul No: {pulNo}, Ücret: {ucretTL} bilgileri kontrol edildi.")
         public void tabloKontrol(String gidenKurum, String ulke, String sehir, String postaAdi, String agirlik, String pulNo, String ucretTL) {
             boolean rowFound = false;
             for(int i = 0; i < gidenKurumlar.length; i++){
@@ -220,7 +204,7 @@ public class PttRaporuPage extends MainPage {
         return this;
     }
 
-    @Step("Tablo kontrolü")
+    @Step("Tablo da Gittiği Yer: {gittigiYer}, Evrak Sayı: {evrakSayi}, Gidiş Şekli: {gidisSekli} verileri olmalı mı?: {shouldBeExist}")
     public PttRaporuPage tabloKontrolEt(String gittigiYer, String evrakSayi, String gidisSekli, boolean shouldBeExist) {
         if (shouldBeExist == true) {
 
@@ -275,7 +259,7 @@ public class PttRaporuPage extends MainPage {
         return this;
     }
 
-    @Step("Tablo kontrolü")
+    @Step("Tablodan {kolonAdi} değeri alındı.")
     public String tablodanDegerAl(String kolonAdi) {
 
         String returnValue = "";
@@ -293,7 +277,7 @@ public class PttRaporuPage extends MainPage {
         return returnValue;
     }
 
-    @Step("Tablo kontrolü")
+    @Step("Tablodan {satirNumarasi}. satırdan '{kolonAdi}' değeri alındı.")
     public String tablodanDegerAl(String kolonAdi, int satirNumarasi) {
 
         String returnValue = "";

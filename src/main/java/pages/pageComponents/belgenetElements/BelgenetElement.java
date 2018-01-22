@@ -23,9 +23,13 @@ public interface BelgenetElement extends SelenideElement {
     BelgenetElement clearAllSelectedItems();
 
     /**
+     * Search by text contains
+     * comboLov().selectLov("Optiim TEST, "Optiim Birim", "Danışman")
+     * select first filtered
+     * if empty first will be selected
      * @see pages.pageComponents.belgenetElements.ComboLovHelper
      */
-    BelgenetElement selectLov(String value);
+    BelgenetElement selectLov(String... text);
 
     /**
      * @see pages.pageComponents.belgenetElements.ComboLovHelper

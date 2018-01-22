@@ -1452,6 +1452,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+
         @Step("Editör İçerik Doldur")
         public EditorTab editorIcerikDoldur(String icerik) {
             try {
@@ -1466,6 +1467,12 @@ public class EvrakOlusturPage extends MainPage {
             //divEditor.find(By.tagName("iframe")).click();
             //divEditor.find(By.tagName("iframe")).getWrappedElement().sendKeys(icerik);
             return this;
+        }
+        @Step("Editör İçerik Doldur")
+        public String editorSayiAl () {
+            SelenideElement txtSayi= $(By.id("editorEvrakSayiAlani"));
+            String sayi = txtSayi.text();
+            return sayi;
         }
 
         @Step("İmzala")

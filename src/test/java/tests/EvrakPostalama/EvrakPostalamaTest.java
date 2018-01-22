@@ -158,8 +158,8 @@ public class EvrakPostalamaTest extends BaseTest {
         postalananlarPage.btnGuncelle();
         Thread.sleep(1000);
         postalananlarPage.btnTarihGuncelle("10.10.2017");
-        postalananlarPage.btnPostakoduGuncelle("121212");
-        postalananlarPage.txtAciklama("Bu bir açıklamadır");
+        postalananlarPage.btnPostakoduGuncelle("520");
+        postalananlarPage.txtAciklama("TS2520b");
         postalananlarPage = postalananlarPage.btnKaydet();
 
         String txt = postalananlarPage.evSay();
@@ -183,15 +183,17 @@ public class EvrakPostalamaTest extends BaseTest {
         postalananlarPage
                 .openPage();
 
-        Thread.sleep(2000);
-        postalananlarPage.filter().findRowsWith(Condition.text(konu)).first().click();
-        Thread.sleep(1000);
+      //  Thread.sleep(2000);
+       // postalananlarPage.filter().findRowsWith(Condition.text(konu)).first().click();
+        //Thread.sleep(1000);
 
-        postalananlarPage.postaDetayiTikla();
+        postalananlarPage.btnFiltrenenPostaIcerikGoster(konu);
         Thread.sleep(1000);
+        postalananlarPage.icerikDetayPostaDetayi();
+        postalananlarPage.btnTuzelKisiGuncelle();
         postalananlarPage.btnTarihGuncelle("10.10.2017");
-        postalananlarPage.btnPostakoduGuncelle("121212");
-        postalananlarPage.txtAciklama("Bu bir açıklamadır");
+        postalananlarPage.btnPostakoduGuncelle("520");
+        postalananlarPage.txtAciklama("TS520a");
         postalananlarPage = postalananlarPage.btnKaydet();
 
         String txt = postalananlarPage.evSay();

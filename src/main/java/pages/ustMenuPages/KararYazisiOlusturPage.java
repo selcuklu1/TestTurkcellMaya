@@ -1,5 +1,6 @@
 package pages.ustMenuPages;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Allure;
@@ -192,6 +193,7 @@ public class KararYazisiOlusturPage extends MainPage {
         public BilgilerTab imzalamaKontrol(String imzalama) {
 //            Assert.assertEquals(txtOnayAkisi.lastSelectedLovDetailText().contains(imzalama), true);
             txtOnayAkisi.getSelectedDetails().last().shouldHave(text(imzalama));
+            takeScreenshot();
             return this;
         }
 
@@ -248,8 +250,8 @@ public class KararYazisiOlusturPage extends MainPage {
         }
 
         @Step("Konu doldur")
-        public BilgilerTab konuDoldur(String konuKodu) {
-            txtKonu.setValue(konuKodu);
+        public BilgilerTab konuDoldur(String konu) {
+            txtKonu.setValue(konu);
             return this;
         }
 
@@ -260,10 +262,27 @@ public class KararYazisiOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Kullanıcılar doldur")
+        @Step("Güncel kullanıcının default geldiği görülür")
+        public BilgilerTab onayAkisiEkleKullaniciGeldigiGorme(){
+            boolean durum = $$("[id$='akisAdimLov:LovSecilenTable']").size() ==1;
+            Assert.assertEquals(durum,true);
+            takeScreenshot();
+            return this;
+        }
+
+        @Step("Kullanıcılar alanını doldur \"{kullanici}\" | \"{birim}\" ")
         public BilgilerTab kullanicilarDoldur(String kullanici, String birim) {
             txtKullanicilar.type(kullanici).getTitleItems().filterBy(text(birim)).first().click();
             txtKullanicilar.closeTreePanel();
+            return this;
+        }
+
+        @Step("Kullanıcının parafçı olarak seçilmediği görülür")
+        public BilgilerTab kullanicilarAlaniSecilenParafciSecilmedigiGorme(){
+            boolean durum =$$("[id^='yeniKararEvrakForm:evrakBilgileriList'][id$='kisAdimLov:LovSecilenTable_data']")
+                    .filterBy(Condition.text("Parafçı")).size()==0;
+            Assert.assertEquals(durum,true);
+            takeScreenshot();
             return this;
         }
 
@@ -380,6 +399,32 @@ public class KararYazisiOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Kaydet")
+        public EditorTab kaydet() {
+            btnKaydet.click();
+            return this;
+        }
+
+        
+        @Step("Evet tıklanır")
+        public EditorTab evrakiKaydetmekIsterMisinizEvet(){
+                btnEvet.pressEnter();
+            return this;
+        }
+
+        @Step("Hayır tıklanır")
+        public EditorTab evrakiKaydetmekIsterMisinizHayir(){
+            btnHayir.pressEnter();
+            return this;
+        }
+        
+        @Step("Evrakı kaydetmek istediğinize emin misiniz sorusunun geldiği görülür.")
+        public EditorTab evrakiKaydetmekIstediginizGeldigiGorme(){
+            boolean durum = $("[class='ui-confirm-dialog ui-dialog ui-widget ui-widget-content ui-corner-all ui-helper-hidden ui-shadow ui-overlay-visible']").shouldBe(visible).exists()==true;
+            Assert.assertEquals(durum,true);
+            takeScreenshot();
+            return this;
+        }
 
         @Step("Editör İçerik Doldur")
         public EditorTab editorIcerikDoldur(String icerik) {

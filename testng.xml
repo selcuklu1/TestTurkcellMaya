@@ -14,21 +14,22 @@
     <!--<suite-file path="testSuite1.xml"></suite-file>-->
     <!--<suite-file path="testSuite2.xml"></suite-file>-->
     <!--</suite-files>-->
-    <!--<test name="GercekKisiYonetimiTest">
+    <test name="GercekKisiYonetimiTest">
         <classes>
-            <class name="tests.GercekKisiYonetimi.GercekKisiYonetimiTest"/>
+            <class name="tests.EvrakPaylasma.EvrakPaylasmaTest"/>
+
         </classes>
     </test>
-    <test name="TuzelKisiYonetimiTest">
+    <!--<test name="TuzelKisiYonetimiTest">
         <classes>
             <class name="tests.TuzelKisiYonetimi.TuzelKisiYonetimiTest"/>
         </classes>
     </test>-->
-    <test name="All">
+    <!--<test name="All">
         <packages>
             <package name="tests.BirimIcerikSablonu"/>
             <package name="tests.EvrakNot"/>
             <package name="tests.EvrakBeklemeyeAlma"/>
         </packages>
-    </test>
+    </test>-->
 </suite>

@@ -428,7 +428,7 @@ public class BirimIcerikSablonuTest extends BaseTest {
                 "310.04"
                 , sablonAdi1082
                 , "Diğer"
-                , Ivedilik.Normal
+                , Ivedilik.NORMAL
                 , GeregiSecimTipi.BIRIM
                 , user1.getBirimAdi()
 //                , "optiimtekin"
@@ -449,7 +449,7 @@ public class BirimIcerikSablonuTest extends BaseTest {
                 .konuKoduSec("310.04")
                 .konuDoldur(konu)
                 .kaldiralacakKlasorleriSec("Diğer")
-                .ivedilikSec(Ivedilik.Normal)
+                .ivedilikSec(Ivedilik.NORMAL)
                 /*.bilgiSecimTipiSec("Kurum")
                 .bilgiSec("Başbakanlık")*/
                 .geregiSecimTipiSec("Birim")

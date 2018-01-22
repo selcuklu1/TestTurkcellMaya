@@ -58,6 +58,8 @@ public class KararYazisiOlusturmaTest extends BaseTest {
         String uyariMesajYaziIcerik = "Yazı içeriği boş olamaz!";
         String uyariMesajZorunlu = "Zorunlu alanları doldurunuz";
         String konuKodu = "K/Frekans Yıllık Kullanım Ücreti";
+        String konuKoduRandom = "TS-1488-"+createRandomNumber(15);
+        String ivedi = "İvedi";
         String kaldirilicakKlasorler = "Diğer";
         String toplantiNo = createRandomNumber(6);
         String toplantiTarih = getSysDateForKis();
@@ -65,7 +67,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
         String aciklama = "Deneme amaçlıdır";
         String editorIcerik = "Deneme Can";
         String kullanici = "Optiim";
-        String onayAkisi = "ZUZU_ONAY_AKİSİ_1";
+        String onayAkisi = "canparafci";
         String imzalama = "İmzalama";
 
         login(username2, password2);
@@ -74,7 +76,10 @@ public class KararYazisiOlusturmaTest extends BaseTest {
                 .openPage()
                 .bilgilerTabiAc()
                 .konuKoduDoldur(konuKodu)
+                .konuDoldur(konuKoduRandom)
+                .ivedilikSec(ivedi)
                 .onayAkisiEkle()
+                .onayAkisiEkleKullaniciGeldigiGorme()
                 .kullan()
                 .kaldirilacakKlasorlerDoldur(kaldirilicakKlasorler)
                 .toplantiNoDoldur(toplantiNo)
@@ -133,6 +138,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
                 .bilgilerTabiAc()
                 .onayAkisiEkle()
                 .kullanicilarDoldur(kullanici, "")
+                .kullanicilarAlaniSecilenParafciSecilmedigiGorme()
                 .onayAkisiDoldur(onayAkisi)
                 .imzalamaKontrol(imzalama);
     }
@@ -171,6 +177,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
                 .openPage()
                 .evrakSec()
                 .teslimAlVeKapat()
+                .teslimAlVeKapatAlanGeldigiGorme()
                 .kaldirilacakKlasorlerDoldur(kaldirilicakKlasor)
                 .konuKoduDoldur(konuKodu)
                 .teslimAlveKapatTeslimAlVeKapat();
@@ -230,10 +237,11 @@ public class KararYazisiOlusturmaTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "1497: Karar Yazısı oluşturulması")
+    @Test(enabled = true, description = "TS1497: Karar Yazısı oluşturulması")
     public void TS1497() throws InterruptedException {
         String basariMesaji = "İşlem başarılıdır!";
         String konuKodu = "K/Frekans Yıllık Kullanım Ücreti";
+        String konuKoduRandom = "TS-1497-"+createRandomNumber(15);
         String kaldirilicakKlasorler = "Diğer";
         String toplantiNo = createRandomNumber(9);
         String toplantiTarih = getSysDateForKis();
@@ -243,7 +251,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
         String kullanici = "Yasemin Çakıl AKYOL";
         String onayAkisi = "ZUZU_ONAY_AKİSİ_1";
         String ivedilik = "İvedi";
-        String filePath = "C:\\TestAutomation\\BelgenetFTA\\documents\\Otomasyon.pdf";
+        String filePath = getUploadPath() + "Otomasyon.pdf";
         String not = createRandomText(12);
         String birim = "Altyapı ve Sistem Yönetim Uzmanı";
 
@@ -253,6 +261,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
                 .openPage()
                 .bilgilerTabiAc()
                 .konuKoduDoldur(konuKodu)
+                .konuDoldur(konuKoduRandom)
                 .ivedilikSec(ivedilik)
                 .onayAkisiEkle()
                 .kullan()
@@ -293,11 +302,11 @@ public class KararYazisiOlusturmaTest extends BaseTest {
 
         kararIzlemePage
                 .openPage()
-                .evrakGeldigiGorme(toplantiNo, konuKodu, toplantiTarih);
+                .evrakGeldigiGorme(toplantiNo, konuKoduRandom, toplantiTarih);
 
         imzaBekleyenlerPage
                 .openPage()
-                .evrakSec(kararNo, konuKodu)
+                .evrakSec(kararNo, konuKoduRandom)
                 .imzala()
                 .sImzaSec()
                 .sImzaİmzala(true)
@@ -305,32 +314,33 @@ public class KararYazisiOlusturmaTest extends BaseTest {
 
         imzaladiklarimPage
                 .openPage()
-                .evrakGeldigiGorme(toplantiNo, konuKodu, toplantiTarih);
+                .evrakGeldigiGorme(toplantiNo, konuKoduRandom, toplantiTarih);
 
         kararIzlemePage
                 .openPage()
                 .filtreler()
                 .evrakDurumuSec("Y")
                 .filtrele()
-                .evrakGeldigiGorme(toplantiNo, konuKodu, toplantiTarih);
+                .evrakGeldigiGorme(toplantiNo, konuKoduRandom, toplantiTarih);
 
         klasorEvrakIslemleriPage
                 .openPage()
                 .klasorDoldur(kaldirilicakKlasorler)
                 .ara()
-                .evrakGeldigiGorme(toplantiNo, konuKodu);
+                .evrakGeldigiGorme(toplantiNo, konuKoduRandom);
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "2232: Karar izleme ekranının toplu onaya sunma")
+    @Test(enabled = true, description = "TS2232: Karar izleme ekranının toplu onaya sunma")
     public void TS2232() {
 
         String basariMesaji = "İşlem başarılıdır!";
         String konuKodu = "Usul ve Esaslar";
+        String konuKoduRandom = "TS-2232-"+createRandomNumber(15);
         String kaldirilicakKlasorler = "Diğer";
         String toplantiNo = createRandomNumber(9);
         String toplantiTarih = getSysDateForKis();
-        String kararNo = createRandomNumber(15);
+        String kararNo = createRandomNumber(13);
         String editorIcerik = "Deneme Can";
         String kullanici = "Zübeyde TEKİN";
         String onayAkisi = "ZUZU_ONAY_AKİSİ_1";
@@ -342,6 +352,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
                 .openPage()
                 .bilgilerTabiAc()
                 .konuKoduDoldur(konuKodu)
+                .konuDoldur(konuKoduRandom)
                 .ivedilikSec(ivedilik)
                 .onayAkisiEkle()
                 .kullanicilarDoldur(kullanici, "")
@@ -354,17 +365,19 @@ public class KararYazisiOlusturmaTest extends BaseTest {
         kararYazisiOlusturPage
                 .editorTabAc()
                 .editorIcerikDoldur(editorIcerik)
-                .kaydet(true)
+                .kaydet()
+                .evrakiKaydetmekIstediginizGeldigiGorme()
+                .evrakiKaydetmekIsterMisinizEvet()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
         kararIzlemePage
                 .openPage()
-                .evrakSec(kararNo, konuKodu, toplantiTarih)
+                .evrakSec(kararNo, konuKoduRandom, toplantiTarih)
                 .topluOnayaSun(true);
 
         imzaBekleyenlerPage
                 .openPage()
-                .dogruKonuVeNoKontrol(kararNo, konuKodu);
+                .dogruKonuVeNoKontrol(kararNo, konuKoduRandom);
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -373,6 +386,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
 
         String basariMesaji = "İşlem başarılıdır!";
         String konuKodu = "Usul ve Esaslar";
+        String konuKoduRandom = "TS-1714"+createRandomNumber(15);
         String kaldirilicakKlasorler = "Diğer";
         String toplantiNo = createRandomNumber(9);
         String toplantiTarih = getSysDateForKis();
@@ -382,7 +396,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
         String kullanici = "Yasemin Çakıl AKYOL";
         String onayAkisi = "ZUZU_ONAY_AKİSİ_1";
         String ivedilik = "İvedi";
-        String filePath = "C:\\TestAutomation\\BelgenetFTA\\documents\\Otomasyon.pdf";
+        String filePath = getUploadPath()+"Otomasyon.pdf";
         String not = createRandomText(12);
         String birim = "Altyapı ve Sistem Yönetim Uzmanı";
         login(username2, password2);
@@ -391,6 +405,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
                 .openPage()
                 .bilgilerTabiAc()
                 .konuKoduDoldur(konuKodu)
+                .konuDoldur(konuKoduRandom)
                 .ivedilikSec(ivedilik)
                 .onayAkisiEkle()
                 .kullanicilarDoldur(kullanici, birim)
@@ -419,7 +434,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
 
         imzaBekleyenlerPage
                 .openPage()
-                .evrakSec(kararNo, konuKodu)
+                .evrakSec(kararNo, konuKoduRandom)
                 .iadeEt()
                 .iadeEtDosyaEkle(filePath)
                 .notDoldur(not)
@@ -430,11 +445,11 @@ public class KararYazisiOlusturmaTest extends BaseTest {
 
         imzaBekleyenlerPage
                 .openPage()
-                .evrakOlmadigiGorme(kararNo, konuKodu, true);
+                .evrakOlmadigiGorme(kararNo, konuKoduRandom, true);
 
         kararIzlemePage
                 .openPage()
-                .ilkEvrakSec(kararNo, konuKodu)
+                .ilkEvrakSec(kararNo, konuKoduRandom)
                 .iadeBilgisiGorme(not);
 
     }
@@ -483,6 +498,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
                 .openPage()
                 .evrakSec()
                 .evrakKapat()
+                .evrakKapatmaEkranGeldigiGorme()
                 .evrakKapatKaldirilacakKlasorlerDoldur(klasorAdi);
     }
 
@@ -516,6 +532,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
                 .openPage()
                 .evrakSec()
                 .evrakKapat()
+                .evrakKapatmaEkranGeldigiGorme()
                 .evrakKapatKaldirilacakKlasorlerDoldur(kaldirilicakKlasor, kaldirilicakKlasor)
                 .evrakKapatKonuKodu(konuKodu)
                 .evrakKapatEvrakKapat();

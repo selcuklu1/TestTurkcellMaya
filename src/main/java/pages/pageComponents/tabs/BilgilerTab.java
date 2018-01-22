@@ -387,6 +387,12 @@ public class BilgilerTab extends MainPage {
         getBilgiCombolov().selectLov(text);
         return this;
     }
+
+    @Step("Bilgi alanı temizle")
+    public BilgilerTab bilgiTemizle(){
+        getBilgiCombolov().clearAllSelectedItems();
+        return this;
+    }
     //endregion
 
     //******************************************************
@@ -428,9 +434,15 @@ public class BilgilerTab extends MainPage {
         return this;
     }
 
+    @Step("Gereği alanı temizle")
+    public BilgilerTab geregiTemizle(){
+        getGeregiCombolov().clearAllSelectedItems();
+        return this;
+    }
+
     @Step("Gereği alanıda değeri seçilecek değer boş mu")
     public BilgilerTab geregiDegerSecilemez(String text){
-        getGeregiCombolov().type(text).isEmpty();
+        Assert.assertTrue(getGeregiCombolov().type(text).isEmpty());
         return this;
     }
 
@@ -492,6 +504,36 @@ public class BilgilerTab extends MainPage {
         return this;
     }
 
+    @Step("Onay Akışta seçilen kullanıcıyı kontrol")
+    public BilgilerTab onayAkisiSecilenKullaniciKontrolEt(String kullanici, String tipi){
+        Allure.addAttachment("Mevcut seçlen kullanicilar", getOnayAkisiCombolov().getSelectedItems().last().text());
+        getOnayAkisiCombolov().getSelectedItems().last().shouldHave(text(kullanici + "-" + tipi));
+        return this;
+    }
+
+    @Step("Onay Akışta seçilen kullanıcıyı kontrol")
+    public BilgilerTab onayAkisiSecilenKullaniciKontrolEt(User kullanici, String tipi){
+        Allure.addAttachment("Mevcut seçlen kullanicilar", getOnayAkisiCombolov().getSelectedItems().last().text());
+        getOnayAkisiCombolov().getSelectedItems().last().shouldHave(text(kullanici.getFullname() + "-" + tipi));
+        return this;
+    }
+
+    @Step("Onay Akışta seçilen kullanıcıyı kontrol")
+    public BilgilerTab onayAkisiSecilenKullaniciKontrolEt(User kullanici, OnayKullaniciTipi tipi){
+        Allure.addAttachment("Mevcut seçlen kullanicilar", getOnayAkisiCombolov().getSelectedItems().last().text());
+        getOnayAkisiCombolov().getSelectedItems().last().shouldHave(text(kullanici.getFullname() + "-" + tipi.getOptionText()));
+        return this;
+    }
+
+    @Step("Anlık onay seçilen Kullanıcıları kontrol et")
+    public BilgilerTab onayAkisiSecilenKullaniciKontrolEt(String[][] kullaniciTipi){
+        Allure.addAttachment("Seçlenmesi gereken kullanicilar", kullaniciTipi.toString());
+        Allure.addAttachment("Mevcut seçlen kullanicilar", getOnayAkisiCombolov().getSelectedItems().last().text());
+        for (String[] kullanici:kullaniciTipi) {
+            getOnayAkisiCombolov().getSelectedItems().last().shouldHave(text(kullanici[0] + "-" + kullanici[1]));
+        }
+        return this;
+    }
 
 
 
@@ -698,6 +740,15 @@ public class BilgilerTab extends MainPage {
     }
 
     @Step("Anlık onay seçilen Kullanıcıları kontrol et")
+    public BilgilerTab secilenAnlikOnayAkisKullanicilariKontrolEt(User kullanici, OnayKullaniciTipi tipi){
+        Allure.addAttachment("Seçlen olmalı kullanicilar", kullanici + " / " + tipi);
+        Allure.addAttachment("Mevcut seçlen kullanicilar", getAnlikOnayAkisKullanicilarCombolov().getSelectedItems().texts().toString());
+        getAnlikOnayAkisKullanicilarCombolov().getSelectedItems().filterBy(text(kullanici.getFullname())).shouldHaveSize(1)
+                .first().$("select").getSelectedOption().shouldHave(text(tipi.getOptionText()));
+        return this;
+    }
+
+    @Step("Anlık onay seçilen Kullanıcıları kontrol et")
     public BilgilerTab secilenAnlikOnayAkisKullanicilariKontrolEt(String[][] kullaniciTipi){
         Allure.addAttachment("Seçlen olmalı kullanicilar", kullaniciTipi.toString());
         Allure.addAttachment("Mevcut seçlen kullanicilar", getAnlikOnayAkisKullanicilarCombolov().getSelectedItems().texts().toString());
@@ -750,6 +801,7 @@ public class BilgilerTab extends MainPage {
                         .filterBy(text(kullanici.getGorev()))
                         .filterBy(text(kullanici.getBirimAdi()))
                 .first().click();
+        getAnlikOnayAkisKullanicilarCombolov().closeTreePanel();
 
         //getAnlikOnayAkisKullanicilarCombolov().selectLov(kullanici);
         getAnlikOnayAkisKullanicilarCombolov().getSelectedItems().last()
@@ -896,7 +948,6 @@ public class BilgilerTab extends MainPage {
         kullanButonaTikla();
         return this;
     }
-
 
     @Step("Alanları doldur")
     public BilgilerTab alanlariDoldur(String konuKodu, String konu, String kaldirilacakKlasorleri, Ivedilik ivedilik, GeregiSecimTipi geregiSecimTipi, String geregi) {

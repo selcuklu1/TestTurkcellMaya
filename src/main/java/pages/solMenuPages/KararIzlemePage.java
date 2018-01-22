@@ -76,6 +76,7 @@ public class KararIzlemePage extends MainPage {
         tableKararIzlemeEvraklar.filterBy(Condition.text(toplantiNo))
                 .filterBy(Condition.text(konu)).filterBy(Condition.text(konu))
                 .filterBy(Condition.text(toplantiTarih)).filterBy(Condition.visible);
+        takeScreenshot();
         return this;
     }
 
