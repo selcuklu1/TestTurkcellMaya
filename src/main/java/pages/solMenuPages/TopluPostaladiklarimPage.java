@@ -1,6 +1,7 @@
 package pages.solMenuPages;
 
 import com.codeborne.selenide.*;
+import galen.GalenControl;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.apache.pdfbox.cos.COSDocument;
@@ -36,6 +37,7 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.util.HashMap;
 
 
 import static com.codeborne.selenide.Condition.text;
@@ -253,7 +255,7 @@ public class TopluPostaladiklarimPage extends MainPage {
     public TopluPostaladiklarimPage evrakListesiYazdir(String[] konu) {
         sleep(1000);
         int size = $$("tbody[id='mainPreviewForm:dataTableId_data'] tr[data-ri]").size();
-        for (int i =0; i <size; i++) {
+        for (int i = 0; i < size; i++) {
 
 //            tblEvrakListesi
 ////            $$("tbody[id='mainPreviewForm:dataTableId_data'] tr[data-ri]")
@@ -327,7 +329,6 @@ public class TopluPostaladiklarimPage extends MainPage {
         }
         return this;
     }
-
 
 
     @Step("Kontrol edilecek Pdf bilgisayara indirilir.")
@@ -438,6 +439,7 @@ public class TopluPostaladiklarimPage extends MainPage {
                 .$("[id$='evrakDetayiViewDialogOrjYazdir']").click();
         return this;
     }
+
     @Step("Tutar alanına \"{tutar}\" girilir")
     public TopluPostaladiklarimPage tutarGuncelle(String tutar) {
         txtTutar.clear();
@@ -500,7 +502,7 @@ public class TopluPostaladiklarimPage extends MainPage {
 
     @Step("Etiket bastır butonuna tıkla.")
     public TopluPostaladiklarimPage etiketBastir() {
-        btnEtiketBastir.click();
+        clickJs(btnEtiketBastir);
         txtEtiketBastir.waitUntil(Condition.visible, 5000);
         return this;
     }
@@ -645,13 +647,29 @@ public class TopluPostaladiklarimPage extends MainPage {
         public PDFKontrol PDFAlanKontrolleriFF(String konu, String evrakNo, String icerik) throws IOException {
 
             SelenideElement konuAlaniPDF = $(By.xpath("//div[@id='viewer']/div[@class='page']//div[.='" + konu + "']"));
-            SelenideElement evrakNoAlaniPDF = $(By.xpath("//div[@id='viewer']/div[@class='page']//div[.='" + evrakNo + "']"));
+//            SelenideElement konuAlaniPDF = $("div[class='firefinder-match']");
+//            SelenideElement evrakNoAlaniPDF = $(By.xpath("//div[@id='viewer']/div[@class='page']//div[.='" + evrakNo + "']"));
+            SelenideElement evrakNoAlaniPDF = $(".textLayer > div:nth-child(5)");
             SelenideElement icerikAlaniPDF = $(By.xpath("//div[@id='viewer']/div[@class='page']//div[.='" + icerik + "']"));
             SelenideElement altAntetAdresAlaniPDF = $(By.xpath("//div[@id='viewer']/div[@class='page']//div[.='Ankara Üniversitesi Ankütek Teknopark E Blok Kat:1']"));
             SelenideElement altAntetTelefonAlaniPDF = $(By.xpath("//div[@id='viewer']/div[@class='page']//div[.='Tel: 0312 222 22 22']"));
             SelenideElement altAntetWebSitesiAlaniPDF = $(By.xpath("//div[@id='viewer']/div[@class='page']//div[.='Web: www.turksat.com.tr']"));
+//
+//            SelenideElement konuAlaniPDF1 = $x("//*[@id='viewer']/xhtml:div/xhtml:div[2]/xhtml:div[9]");
+//            SelenideElement evrakNoAlaniPDF1 = $x("//*[@id='viewer']/xhtml:div/xhtml:div[2]/xhtml:div[5]");
+//            SelenideElement icerikAlaniPDF1 = $(By.xpath("//*[@id='viewer']/xhtml:div/xhtml:div[2]/xhtml:div[11]"));
+//            SelenideElement altAntetAdresAlaniPDF1 = $(By.xpath("//*[@id='viewer']/xhtml:div/xhtml:div[2]/xhtml:div[16]"));
+//            SelenideElement altAntetTelefonAlaniPDF1 = $(By.xpath("//*[@id='viewer']/xhtml:div/xhtml:div[2]/xhtml:div[17]"));
+//            SelenideElement altAntetWebSitesiAlaniPDF1 = $(By.xpath("//*[@id='viewer']/xhtml:div/xhtml:div[2]/xhtml:div[18]"));
 
             String evraNoPDF = evrakNoAlaniPDF.getText();
+
+//            System.out.println("Gelen Sayı : " + evrakNoAlaniPDF1.getText());
+//            System.out.println("Gelen Konu : " + konuAlaniPDF1.getText());
+//            System.out.println("Gelen İcerik : " + icerikAlaniPDF1.getText());
+//            System.out.println("Gelen Alt Antet Adres : " + altAntetAdresAlaniPDF1.getText());
+//            System.out.println("Gelen Alt Antet Telefon : " + altAntetTelefonAlaniPDF1.getText());
+//            System.out.println("Gelen Alt Antet Web Sitesi : " + altAntetWebSitesiAlaniPDF1.getText());
 
             System.out.println("Beklenen Sayı : " + evrakNo);
             System.out.println("Gelen Sayı : " + evrakNoAlaniPDF.getText());
@@ -666,7 +684,7 @@ public class TopluPostaladiklarimPage extends MainPage {
             System.out.println("Beklenen Alt Antet Web Sitesi : " + "Web: www.turksat.com.tr");
             System.out.println("Gelen Alt Antet Web Sitesi : " + altAntetWebSitesiAlaniPDF.getText());
 
-            Assert.assertEquals(evrakNoAlaniPDF.getText().contains(evrakNo),true);
+            Assert.assertEquals(evrakNoAlaniPDF.getText().contains(evrakNo), true);
             Assert.assertEquals(konuAlaniPDF.getText(), konu);
             Assert.assertEquals(icerikAlaniPDF.getText(), icerik);
             Assert.assertEquals(altAntetAdresAlaniPDF.getText(), "Ankara Üniversitesi Ankütek Teknopark E Blok Kat:1");
@@ -683,6 +701,5 @@ public class TopluPostaladiklarimPage extends MainPage {
             return this;
         }
     }
-
 }
 

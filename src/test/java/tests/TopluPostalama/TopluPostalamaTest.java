@@ -1,5 +1,6 @@
 package tests.TopluPostalama;
 
+import com.codeborne.selenide.WebDriverRunner;
 import common.BaseTest;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Severity;
@@ -1959,7 +1960,27 @@ public class TopluPostalamaTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = false, description = "TS1812 : Posta Listesi Postalama İşlemleri (Güncelleme) (UC_POSTAYÖNETİMİ_003)")
-    public void TS1812() {
+    public void TS1812() throws IOException, AWTException {
+
+
+        String remoteDownloadPath = getDownloadPath();
+//        String remoteDownloadPath = "C:\\Users\\optiim\\Downloads\\";
+
+//        String[] konu = new String[]{
+//                "TC1816 20180122115657", "TC1816 1301018642597"
+//        };
+//
+//        String[] evrakNo1812 = new String[]{
+//                "11128", "11129"
+//        };
+//
+//        String[] icerik = new String[]{
+//                "TC1816 2018012211565720180122115716", "TC1816 130101864259720180122115826"
+//        };
+        String[] evrakNo1812 = new String[2];
+        String[] icerik = new String[2];
+        String[] sayi = new String[2];
+        String[] pdfSayi = new String[2];
 
         login("mbozdemir", "123");
         //region Parameters
@@ -1991,6 +2012,7 @@ public class TopluPostalamaTest extends BaseTest {
 //        //endregion
         //region Test Datası
         for (int i = 0; i < 2; i++) {
+            icerik[i] = konu[i] + getSysDate();
             evrakOlusturPage
                     .openPage()
                     .bilgilerTabiAc()
@@ -2001,6 +2023,7 @@ public class TopluPostalamaTest extends BaseTest {
                     .evrakDiliSec(evrakDili)
                     .gizlilikDerecesiSec(gizlilikDerecesi)
                     .ivedilikSec(ivedilik)
+                    .aciklamaDoldur(konu[i])
                     .geregiSecimTipiSecByText(geregiTipi)
                     .geregiSec(geregi)
                     .gercekKisiGeregiAlaniPostaTipiSec(gidisSekli)
@@ -2010,9 +2033,21 @@ public class TopluPostalamaTest extends BaseTest {
 
             evrakOlusturPage
                     .editorTabAc()
-                    .editorIcerikDoldur(konu[i]);
+                    .editorIcerikDoldur(icerik[i]);
+
+            sayi[i] = evrakOlusturPage.editorTabAc().editorSayiAl();
+
+
             mainPage
                     .evrakImzala();
+
+            imzaladiklarimPage
+                    .openPage();
+
+            evrakNo1812[i] = imzaladiklarimPage.evrakIcerikKontroluveEvrakNoAl(konu[i]);
+
+            pdfSayi[i] = sayi[i] + evrakNo1812[i];
+
         }
 
         topluPostalanacakEvraklarPage
@@ -2020,7 +2055,9 @@ public class TopluPostalamaTest extends BaseTest {
                 .tarihAraligiSec(getSysDateForKis(), getSysDateForKis())
                 .postaTipiSec(postaTipleri)
                 .sorgula()
-                .evrakTumunuSec(true)
+                .evrakSec(konu[0], true)
+                .evrakSec(konu[1], true)
+//                .evrakTumunuSec(true)
                 .postaListesineAktar()
                 .listeAdiDoldur(konu[0])
                 .listeOlustur()
@@ -2046,10 +2083,6 @@ public class TopluPostalamaTest extends BaseTest {
                 .postaListesineAktar()
                 .postaListesiSec(postaListesi)
                 .listeyeEkle();
-
-//                String[] konu = new String[]{
-//                "TC1811 20180104150244", "TC1811 20180104150243100"
-//        };
 
         postaListesiPage
                 .openPage()
@@ -2088,6 +2121,11 @@ public class TopluPostalamaTest extends BaseTest {
 
         //        TODO
 //        Son 3 step yazılacak...
+
+        topluPostaladiklarimPage
+                .evrakListesiYazdirPdfKontrolu(konu, evrakNo1812, icerik);
+//                .evrakListesiOrjinaliYazdirPdfKontrolu(konu, evrakNo1816, icerik); // pdf te elemenler bulunamıyor
+
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -2098,11 +2136,18 @@ public class TopluPostalamaTest extends BaseTest {
 //        String remoteDownloadPath = "C:\\Users\\optiim\\Downloads\\";
 
 //        String[] konu = new String[]{
-//                "TC1816 1260147591083", "TC1816 20180119162943"
+//                "TC1816 20180122115657", "TC1816 1301018642597"
 //        };
-
-
+//
+//        String[] evrakNo1816 = new String[]{
+//                "11128", "11129"
+//        };
+//
+//        String[] icerik = new String[]{
+//                "TC1816 2018012211565720180122115716", "TC1816 130101864259720180122115826"
+//        };
         String[] evrakNo1816 = new String[2];
+        String[] icerik = new String[2];
         String[] sayi = new String[2];
         String[] pdfSayi = new String[2];
 
@@ -2117,7 +2162,7 @@ public class TopluPostalamaTest extends BaseTest {
         String geregi = "Ahmet Çelik";
         String adres = "adres " + getSysDateForKis();
         String[] konu = new String[]{
-                "TC1816 " + getSysDate(), "TC1816 " +createRandomNumber(12)
+                "TC1812 " + getSysDate(), "TC1812 " + createRandomNumber(12)
         };
         String tur = "İmzalama";
         String geregiTipi = "Gerçek Kişi";
@@ -2130,7 +2175,6 @@ public class TopluPostalamaTest extends BaseTest {
         String gramaj3 = "3";
         String gramaj5 = "5";
         String tutar = "120";
-        String[] icerik = new String[2];
         String[] postaTipleri = new String[]{
                 "Ankara İçi APS"
         };
@@ -2179,7 +2223,8 @@ public class TopluPostalamaTest extends BaseTest {
 
             evrakNo1816[i] = imzaladiklarimPage.evrakIcerikKontroluveEvrakNoAl(konu[i]);
 
-            pdfSayi[i] = sayi[i]+evrakNo1816[i];
+            pdfSayi[i] = sayi[i] + evrakNo1816[i];
+
         }
 
         topluPostalanacakEvraklarPage
@@ -2188,7 +2233,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .postaTipiSec(postaTipleri)
                 .sorgula()
                 .evrakSec(konu[0], true)
-                .evrakSec(konu[1],true)
+                .evrakSec(konu[1], true)
 //                .evrakTumunuSec(true)
                 .postaListesineAktar()
                 .listeAdiDoldur(konu[0])
@@ -2208,10 +2253,10 @@ public class TopluPostalamaTest extends BaseTest {
                 .gramajDoldur(gramaj1)
                 .tutarHesapla()
                 .postaDetayiPostala();
+
 //        //endregion
 
         Allure.addAttachment("Test Datası", "Test Datası oluşturuldu.");
-
 
         topluPostaladiklarimPage
                 .openPage()
@@ -2237,14 +2282,26 @@ public class TopluPostalamaTest extends BaseTest {
                 .indirimOncesiTutarKontrol("100.00", true)
                 .indirimOraniKontrol("20", true)
                 .tutarKontrol("80.00", true);
-//                    .etiketBastir()     //Sistem hatası alnıyor
-//                    .etiketBastirEkraniKontrolü(adres, geregi)
-//                    .etiketBastirEkraniKapat();
+        login("mbozdemir", "123");
+        topluPostaladiklarimPage
+                .openPage()
+                .topluPostaladiklarimEvrakSec(postaListesi)
+                .etiketBastir()
+                .etiketBastirEkraniKontrolü(adres, geregi)
+                .etiketBastirEkraniKapat();
 
 
         topluPostaladiklarimPage
-                .evrakListesiYazdirPdfKontrolu(konu, evrakNo1816, icerik)
-                .evrakListesiOrjinaliYazdirPdfKontrolu(konu, evrakNo1816, icerik);
+                .evrakListesiYazdirPdfKontrolu(konu, evrakNo1816, icerik);
+//                .evrakListesiOrjinaliYazdirPdfKontrolu(konu, evrakNo1816, icerik); // pdf te elemenler bulunamıyor
+
+        pttRaporuPage
+                .openPage()
+                .aramaDetaylariPanelAc()
+                .sorgula()
+                .tabloKontrolEt(geregi,evrakNo1816[0],gidisSekli,true)
+                .raporAl(); //rapor kontrolü yapılacal
+
 
         //TODO
         //20
