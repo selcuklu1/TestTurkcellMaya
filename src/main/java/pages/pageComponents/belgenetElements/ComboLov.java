@@ -58,7 +58,7 @@ class ComboLov {
         }
     }
 
-    class LastSelectedLovTitle implements Command<SelenideElement> {
+    /*class LastSelectedLovTitle implements Command<SelenideElement> {
         @Override
         public SelenideElement execute(SelenideElement proxy, WebElementSource locator, Object[] args) throws IOException {
             ComboLovHelper comboLovHelper = new ComboLovHelper();
@@ -74,7 +74,7 @@ class ComboLov {
             comboLovHelper.setLocators(proxy);
             return comboLovHelper.getLastSelectedItemDetail();
         }
-    }
+    }*/
 
     class GetLastSelectedTitleText implements Command<String> {
         @Override

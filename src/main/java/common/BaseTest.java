@@ -35,14 +35,15 @@ public class BaseTest extends BaseLibrary {
 
     @BeforeClass(alwaysRun = true)
     public void driverSetUp() {
-        System.out.println(String.format("file.encoding: %s", System.getProperty("file.encoding")));
-        System.out.println("Default Charset=" + Charset.defaultCharset());
-        System.out.println(System.getProperty("java.specification.version"));
-        System.out.println(System.getProperty("java.runtime.version"));
-        System.out.println("Locale Default: " + Locale.getDefault());
+        System.out.println("file.encoding: " + String.format("file.encoding: %s", System.getProperty("file.encoding")));
+        System.out.println("default charset=" + Charset.defaultCharset());
+        System.out.println("java.specification.version" + System.getProperty("java.specification.version"));
+        System.out.println("java.runtime.version" + System.getProperty("java.runtime.version"));
+        System.out.println("locale default: " + Locale.getDefault());
         Locale turkishLocal = new Locale("tr", "TR");
         if (!Locale.getDefault().equals(turkishLocal))
             Locale.setDefault(turkishLocal);
+        System.out.println("locale: " + Locale.getDefault());
 
         BelgenetFramework.setUp();
         WebDriverRunner.addListener(new DriverEventListener());

@@ -509,7 +509,10 @@ public class ComboLovHelper extends BaseLibrary {
         Allure.addAttachment("Selectable items " + collection.size(), collection.texts().toString());
         Allure.addAttachment("Filter texts "+ text.length, Arrays.toString(text));
 
-        for (String aText : text) collection = collection.filterBy(matchText("\\b" + aText.trim() +"\\b"));
+        for (String t : text) {
+            collection = collection.filterBy(text(t));
+            //collection = collection.filterBy(matchText("\\b(?i)" + t.trim() +"\\b"));
+        }
 
         Allure.addAttachment("Filtered items " + collection.size(), collection.texts().toString());
         Assert.assertTrue(collection.size() > 0, "Filtered selectable items should have size greater than 0");
@@ -521,7 +524,7 @@ public class ComboLovHelper extends BaseLibrary {
         SelenideElement selectedItem = multiType
                 ? $$(lovSelectedItems).last().shouldBe(visible)
                 : $$(lovSecilen).last().shouldBe(visible);
-        for (String t:text) Assert.assertTrue(selectedItem.text().contains(t), "Selected item should have text: " + t);
+        for (String t:text) Assert.assertTrue(selectedItem.has(text(t)), "Selected item should have text: " + t);
         Allure.addAttachment("Selected item", $$(lovSecilen).last().text());
 
         return By.cssSelector(lovText);

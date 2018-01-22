@@ -120,14 +120,14 @@ public class dumpTest extends BaseTest {
     public void selectLovTexts() throws Exception {
         login();
         OlurYazisiOlusturPage olurYazisiOlusturPage = new OlurYazisiOlusturPage().openPage();
-        boolean b = comboLov("input[id$='konuKoduLov:LovText']").selectLov("010","Kanunlar").isLovSelected();
+        /*boolean b = comboLov("input[id$='konuKoduLov:LovText']").selectLov("010","kanunlar").isLovSelected();
         comboLov("input[id$='eklenecekKlasorlerLov:LovText']").selectLov();
-
+*/
 
         $("button[id$=onayAkisiEkle]").click();
 
         comboLov("input[id$='akisAdimLov:LovText']")
-                .selectLov("Zübeyde TEKİN", "Ankara İl Müdürü", "AD MÜDÜRLÜĞÜ", "YGD");
+                .selectLov("Zübeyde tekin", "Ankara İl Müdürü", "AD MÜDÜRLÜĞÜ", "YGD");
 
         comboLov("input[id$='akisAdimLov:LovText']")
                 .selectLov("Optiim TEST2");//, "Ağ (Network) Uzman Yardımcısı", "Optiim Birim", "YGD");
