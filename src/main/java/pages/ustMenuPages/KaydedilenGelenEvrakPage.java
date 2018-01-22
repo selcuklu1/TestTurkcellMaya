@@ -189,8 +189,8 @@ public class KaydedilenGelenEvrakPage extends MainPage {
 
         deleteFile(remoteDownloadPath, "Rapor_");
         sleep(3000);
-        File file=$("[id='birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable'] button:nth-child(4)").download();
-//        btnRaporAlExcel.click();
+//        File file=$("[id='birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable'] button:nth-child(4)").download();
+        btnRaporAlExcel.click();
         islemMesaji().basariliOlmali();
         waitForLoadingJS(WebDriverRunner.getWebDriver(), 180);
 //        islemMesaji().basariliOlmali();
