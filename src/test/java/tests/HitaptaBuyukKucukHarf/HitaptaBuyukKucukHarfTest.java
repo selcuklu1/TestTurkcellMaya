@@ -26,11 +26,9 @@ public class HitaptaBuyukKucukHarfTest extends BaseTest {
     EvrakOlusturPage evrakOlustur;
     User user1 = new User("user1", "123", "User1 TEST", "AnaBirim1", "Altyapı ve Sistem Yönetim Uzmanı");
 
-    @BeforeMethod
+    /*@BeforeMethod
     public void loginBeforeTests() {
-        login("ztekin", "123");
-        evrakOlustur = new EvrakOlusturPage();
-    }
+    }*/
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS2064: Tüzel kişi- Hitapta büyük/küçük harf kontrolü")
@@ -47,6 +45,8 @@ public class HitaptaBuyukKucukHarfTest extends BaseTest {
         String geregiBuyukKucuk = "Büyük Küçük Harflerle Tüzel Kişi";
         String beklenenBuyukKucukHitap = "BÜYÜK KÜÇÜK HARFLERLE TÜZEL KİŞİYE";
 
+        login("ztekin", "123");
+        evrakOlustur = new EvrakOlusturPage();
         evrakOlustur
                 .openPage();
 
@@ -84,7 +84,8 @@ public class HitaptaBuyukKucukHarfTest extends BaseTest {
 
         String geregiBuyukKucuk = "Büyük Küçük Harflerle Kurum";
         String beklenenBuyukKucukHitap = "Büyük Küçük Harflerle Kuruma";
-
+        login("ztekin", "123");
+        evrakOlustur = new EvrakOlusturPage();
         evrakOlustur
                 .openPage();
 
@@ -122,7 +123,8 @@ public class HitaptaBuyukKucukHarfTest extends BaseTest {
 
         String geregiBuyukKucuk = "Büyük Küçük Harflerle Birim";
         String beklenenBuyukKucukHitap = "Büyük Küçük Harflerle Birime";
-
+        login("ztekin", "123");
+        evrakOlustur = new EvrakOlusturPage();
         evrakOlustur
                 .openPage();
 
@@ -146,13 +148,15 @@ public class HitaptaBuyukKucukHarfTest extends BaseTest {
 
     }
 
-    @Test(enabled = false, description = "TS2090: Dağıtım planına ve kullanıcıya hitap")
+    @Test(enabled = true, description = "TS2090: Dağıtım planına ve kullanıcıya hitap")
     public void TS2090() throws Exception {
         //Dağıtım planına ve kullanıcıya hitap
         //sistemde kayıtlı dağıtım planı olmalı, dağıtım planının içeriğinde küçük harfli birim, büyük harfli kurum olmalı
 //        DAĞITIM YERLERİNE
 //        login(user1);
         String uygulanacakDeger;
+
+        login(user1);
 
         SistemSabitleriPage sistemSabitleriPage = new SistemSabitleriPage().openPage();
         sistemSabitleriPage.sorgulamaVeFiltreleme().alanDoldur("Ad", "Dağıtım Planı Hitap").butonaTikla("Ara");

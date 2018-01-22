@@ -47,7 +47,9 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
 
     @BeforeMethod
     public void loginBeforeTests() {
+
         login("ztekin", "123");
+
         cevaplananEvrakRaporuPage = new CevaplananEvrakRaporuPage();
         gelenEvrakKayitPage = new GelenEvrakKayitPage();
         gelenEvraklarPage = new GelenEvraklarPage();

@@ -831,38 +831,6 @@ public class BaseLibrary extends ElementsContainer{
     }
 
 
-    @Step("Popup Ek Silme Onayı: {secim}")
-    public void ekSilmeOnayi(String secim) {
-
-        SelenideElement btnSilmeOnayiEvet = $("[id$='ekSilEvetButton']");
-        SelenideElement btnSilmeOnayiHayir = $("['ekSilHayirButton']");
-
-        switch (secim) {
-            case "Evet":
-                clickJs(btnSilmeOnayiEvet);
-                break;
-            case "Hayır":
-                clickJs(btnSilmeOnayiHayir);
-                break;
-        }
-    }
-
-
-    @Step("Popup İlişik Silme Onayı: {secim}")
-    public void ilisikSilmeOnayi(String secim) {
-
-        SelenideElement btnSilmeOnayiEvet = $("[id$='ilisikSilEvetButton']");
-        SelenideElement btnSilmeOnayiHayir = $("['ilisikSilHayirButton']");
-
-        switch (secim) {
-            case "Evet":
-                clickJs(btnSilmeOnayiEvet);
-                break;
-            case "Hayır":
-                clickJs(btnSilmeOnayiHayir);
-                break;
-        }
-    }
 
     //Dosyanın bilgisayara inip inmediğini kontrol eder.
     @Step("Gönderilen klaörede verilen dosyayı arama : Path :  \"{downloadPath}\" \n Filename : \"{fileName}\"  ")

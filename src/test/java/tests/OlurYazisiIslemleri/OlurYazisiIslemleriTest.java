@@ -51,7 +51,33 @@ public class OlurYazisiIslemleriTest extends BaseTest {
     String konuKodu = "010.10";
     String konuKoduSayi = "01-010.10-";
 
-    //region TS0577
+
+    @BeforeMethod(alwaysRun = false)
+    public void setUp() {
+        //Configuration.browser = "drivers.Chrome";
+
+        /*FirefoxOptions options = new FirefoxOptions()
+                .setAcceptInsecureCerts(true)
+                .addPreference("security.insecure_field_warning.contextual.enabled", false)
+                .setLogLevel(FirefoxDriverLogLevel.fromLevel(Level.OFF));
+        options.addPreference("browser.download.folderList", 2);
+        options.addPreference("browser.download.dir", TestData.docDownloadPathWindows);
+        *//*Capabilities caps = getCapabilities();
+        caps.merge(options);*//*
+        try {
+            URL hub = new URL(Configuration.remote.toString());
+            RemoteWebDriver driver = new RemoteWebDriver(hub, options);
+            WebDriverRunner.setWebDriver(driver);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }*/
+
+        //WebDriver driver = new EventFiringWebDriver(new FirefoxDriver(options)).register(new DriverEventListener());
+//        WebDriverRunner.setWebDriver(new FirefoxDriver(options));
+        //WebDriverRunner.addListener(new DriverEventListener());
+//        WebDriverRunner.setWebDriver((new EventFiringWebDriver(WebDriverRunner.getWebDriver()).register(new DriverEventListener())));
+    }
+
     //Teskilat Kisi tanimlari-->birim yönetimi ekranında birimin olur metni boş olmalı
     //@Link(name = "Galen", type = "html", url = "file:///Users/ilyas/WorkspaceJava/Git/BelgenetFTA/galenReports/TS0577/report.html")
     //@Link(name = "Galen", type = "html", url = "galenReports/TS0577/report.html")
@@ -76,6 +102,120 @@ public class OlurYazisiIslemleriTest extends BaseTest {
         postaciKontolleri();
     }
 
+
+    OlurYazisiOlusturPage olurYazisiOlusturPage2;
+    BilgilerTab bilgilerTab;
+    EditorTab editorTab;
+
+    @Test(description = "TS1488: Olur yazısında alan kontrolleri", enabled = true)
+    public void TS1488() {
+        login(user1);
+        olurYazisiOlusturPage2 = new OlurYazisiOlusturPage().openPage();
+        bilgilerTab = olurYazisiOlusturPage2.bilgileriTab();
+
+        step2();
+        step3();
+        step4();
+        step5();
+        step6();
+        //step7();
+        //step7 da var kaldırılmalı
+        bilgilerTab.kaldiralacakKlasorleriSec("Diğer");
+        step8_12();
+
+        //Step13
+        bilgilerTab.ivedilikSec(Ivedilik.GUNLU)
+            .miatTemizle()
+                .evrakPageButtons().paraflaButonaTikla()
+                .islemMesaji().uyariOlmali("Zorunlu alanları doldurunuz");
+        bilgilerTab.miatDoldur(getSysDateForKis())
+                .bilgiTemizle()
+                .geregiTemizle();
+
+        olurYazisiOlusturPage2.editorTab().openTab();
+
+    }
+
+    //region TS1488 steps
+    @Step("Gereği alanından içinde kurum dışı olan bir dağıtım planı seç")
+    public void step2(){
+        bilgilerTab.geregiSecimTipiSec(GeregiSecimTipi.DAGITIM_PLANLARI);
+        boolean empty = bilgilerTab.getGeregiCombolov().type("TS1488").isEmpty();
+        Assert.assertTrue(empty, "Dağıtım planının gelmediği görülür.");
+        bilgilerTab.getGeregiCombolov().closeTreePanel();
+    }
+
+    @Step("Editör ekranını boş bırak - İmzala")
+    public void step3(){
+        bilgilerTab.konuKoduSec("010.01")
+                .konuDoldur("TS1488")
+                .kaldiralacakKlasorleriSec("Diğer")
+                .onayAkisiEkleButonaTikla()
+                .anlikOnayAkisKullanicininTipiSec(user1, IMZALAMA)
+                .kullanButonaTikla();
+        olurYazisiOlusturPage2.pageButtons().imzalaButonaTikla()
+                .islemMesaji().dikkatOlmali("Yazı içeriği boş olamaz");
+    }
+
+    @Step("Editör tabında içeriği doldur, Konu Kodu alanını boş bırak, - İmzala")
+    public void step4(){
+        editorTab = olurYazisiOlusturPage2.editorTab();
+        editorTab.openTab().getEditor().type("editör tekst");
+        bilgilerTab.openTab().konuKoduTemizle();
+        olurYazisiOlusturPage2.pageButtons().imzalaButonaTikla()
+                .islemMesaji().uyariOlmali("Zorunlu alanları doldurunuz");
+        //Evrak konusu boş olamaz!
+    }
+
+    @Step("Konu kodu alanını doldur ve Konu alanını boş bırak - İmzala")
+    public void step5(){
+        bilgilerTab.openTab().konuKoduSec("010.01")
+                .konuTemizle();
+        olurYazisiOlusturPage2.pageButtons().imzalaButonaTikla()
+                .islemMesaji().uyariOlmali("Zorunlu alanları doldurunuz");
+        //Evrak konusu boş olamaz!
+    }
+
+    @Step("Konu alanını doldur, Kaldırılacak klasörler alanını boş bırak - İmzala")
+    public void step6(){
+        bilgilerTab.openTab().konuDoldur("aaa")
+            .kaldiralacakKlasorleriTemizle();
+        olurYazisiOlusturPage2.pageButtons().imzalaButonaTikla()
+                .islemMesaji().uyariOlmali("Zorunlu alanları doldurunuz");
+        //Evrak konusu boş olamaz!
+    }
+
+    @Step("Kaldırılacak klasörler alanını doldur, Onay akışı alanını boş bırak - Kaydet ve onaya sun butonunu tıkla")
+    public void step7(){
+        bilgilerTab.openTab().kaldiralacakKlasorleriSec("Diğer")
+                .onayAkisiTemizle();
+        olurYazisiOlusturPage2.pageButtons().evrakKaydetVeOnayaSunTikla()
+                .islemMesaji().uyariOlmali("Zorunlu alanları doldurunuz");
+        //Evrak konusu boş olamaz!
+    }
+
+
+    @Step("İmzaci kontroller")
+    public OlurYazisiIslemleriTest step8_12(){
+        bilgilerTab
+                .onayAkisiTemizle()
+                .anlikOnayAkisKullanicilariTemizle()
+                .onayAkisiEkleButonaTikla()
+                .secilenAnlikOnayAkisKullanicilariKontrolEt(user1, PARAFLAMA)
+                .kullanButonaTikla()
+                .islemMesaji().dikkatOlmali("Eklemek istediğiniz onay akışında imzacı bulunmuyor. Lütfen onay akışında en az bir imzacı seçiniz.");
+        bilgilerTab.anlikOnayAkisKullaniciVeTipiSec(user2, IMZALAMA)
+                .anlikOnayAkisKullaniciVeTipiSec(user3, IMZALAMA)
+                .anlikOnayAkisKullaniciVeTipiSec(optiim, IMZALAMA)
+                .kullanButonaTikla()
+                .onayAkisiSecilenKullaniciKontrolEt(user2, IMZALAMA)
+                .onayAkisiSecilenKullaniciKontrolEt(user3, IMZALAMA)
+                .onayAkisiSecilenKullaniciKontrolEt(optiim, IMZALAMA);
+        return this;
+    }
+    //endregion
+
+    //region TS0577 steps
     @Step("Bilgileri sekmesinde alanları doldur")
     private void bilgileriTab(){
         olurYazisiOlusturPage.bilgileriTab().openTab()
@@ -240,145 +380,4 @@ public class OlurYazisiIslemleriTest extends BaseTest {
                 .searchTable().searchInAllPages(false).findRows(text(konu)).shouldHaveSize(0);
     }
     //endregion
-
-
-    OlurYazisiOlusturPage olurYazisiOlusturPage2;
-    BilgilerTab bilgilerTab;
-    EditorTab editorTab;
-
-    @Test(description = "TS1488: Olur yazısında alan kontrolleri", enabled = true)
-    public void TS1488() {
-        login(user1);
-        olurYazisiOlusturPage2 = new OlurYazisiOlusturPage().openPage();
-        bilgilerTab = olurYazisiOlusturPage2.bilgileriTab();
-
-        step2();
-        step3();
-        step4();
-        step5();
-        step6();
-        //step7();
-        //step7 da var kaldırılmalı
-        bilgilerTab.kaldiralacakKlasorleriSec("Diğer");
-        step8_12();
-
-        //Step13
-        bilgilerTab.ivedilikSec(Ivedilik.GUNLU)
-            .miatTemizle()
-                .evrakPageButtons().paraflaButonaTikla()
-                .islemMesaji().uyariOlmali("Zorunlu alanları doldurunuz");
-        bilgilerTab.miatDoldur(getSysDateForKis())
-                .bilgiTemizle()
-                .geregiTemizle();
-
-        olurYazisiOlusturPage2.editorTab().openTab();
-
-    }
-
-    @Step("Gereği alanından içinde kurum dışı olan bir dağıtım planı seç")
-    public void step2(){
-        bilgilerTab.geregiSecimTipiSec(GeregiSecimTipi.DAGITIM_PLANLARI);
-        boolean empty = bilgilerTab.getGeregiCombolov().type("TS1488").isEmpty();
-        Assert.assertTrue(empty, "Dağıtım planının gelmediği görülür.");
-        bilgilerTab.getGeregiCombolov().closeTreePanel();
-    }
-
-    @Step("Editör ekranını boş bırak - İmzala")
-    public void step3(){
-        bilgilerTab.konuKoduSec("010.01")
-                .konuDoldur("TS1488")
-                .kaldiralacakKlasorleriSec("Diğer")
-                .onayAkisiEkleButonaTikla()
-                .anlikOnayAkisKullanicininTipiSec(user1, IMZALAMA)
-                .kullanButonaTikla();
-        olurYazisiOlusturPage2.pageButtons().imzalaButonaTikla()
-                .islemMesaji().dikkatOlmali("Yazı içeriği boş olamaz");
-    }
-
-    @Step("Editör tabında içeriği doldur, Konu Kodu alanını boş bırak, - İmzala")
-    public void step4(){
-        editorTab = olurYazisiOlusturPage2.editorTab();
-        editorTab.openTab().getEditor().type("editör tekst");
-        bilgilerTab.openTab().konuKoduTemizle();
-        olurYazisiOlusturPage2.pageButtons().imzalaButonaTikla()
-                .islemMesaji().uyariOlmali("Zorunlu alanları doldurunuz");
-        //Evrak konusu boş olamaz!
-    }
-
-    @Step("Konu kodu alanını doldur ve Konu alanını boş bırak - İmzala")
-    public void step5(){
-        bilgilerTab.openTab().konuKoduSec("010.01")
-                .konuTemizle();
-        olurYazisiOlusturPage2.pageButtons().imzalaButonaTikla()
-                .islemMesaji().uyariOlmali("Zorunlu alanları doldurunuz");
-        //Evrak konusu boş olamaz!
-    }
-
-    @Step("Konu alanını doldur, Kaldırılacak klasörler alanını boş bırak - İmzala")
-    public void step6(){
-        bilgilerTab.openTab().konuDoldur("aaa")
-            .kaldiralacakKlasorleriTemizle();
-        olurYazisiOlusturPage2.pageButtons().imzalaButonaTikla()
-                .islemMesaji().uyariOlmali("Zorunlu alanları doldurunuz");
-        //Evrak konusu boş olamaz!
-    }
-
-    @Step("Kaldırılacak klasörler alanını doldur, Onay akışı alanını boş bırak - Kaydet ve onaya sun butonunu tıkla")
-    public void step7(){
-        bilgilerTab.openTab().kaldiralacakKlasorleriSec("Diğer")
-                .onayAkisiTemizle();
-        olurYazisiOlusturPage2.pageButtons().evrakKaydetVeOnayaSunTikla()
-                .islemMesaji().uyariOlmali("Zorunlu alanları doldurunuz");
-        //Evrak konusu boş olamaz!
-    }
-
-    @Step("İmzaci kontroller")
-    public OlurYazisiIslemleriTest step8_12(){
-        bilgilerTab
-                .onayAkisiTemizle()
-                .anlikOnayAkisKullanicilariTemizle()
-                .onayAkisiEkleButonaTikla()
-                .secilenAnlikOnayAkisKullanicilariKontrolEt(user1, PARAFLAMA)
-                .kullanButonaTikla()
-                .islemMesaji().dikkatOlmali("Eklemek istediğiniz onay akışında imzacı bulunmuyor. Lütfen onay akışında en az bir imzacı seçiniz.");
-        bilgilerTab.anlikOnayAkisKullaniciVeTipiSec(user2, IMZALAMA)
-                .anlikOnayAkisKullaniciVeTipiSec(user3, IMZALAMA)
-                .anlikOnayAkisKullaniciVeTipiSec(optiim, IMZALAMA)
-                .kullanButonaTikla()
-                .onayAkisiSecilenKullaniciKontrolEt(user2, IMZALAMA)
-                .onayAkisiSecilenKullaniciKontrolEt(user3, IMZALAMA)
-                .onayAkisiSecilenKullaniciKontrolEt(optiim, IMZALAMA);
-        return this;
-    }
-
-    @BeforeMethod(alwaysRun = true)
-    public void setUp() {
-        //Configuration.browser = "drivers.Chrome";
-
-        /*FirefoxOptions options = new FirefoxOptions()
-                .setAcceptInsecureCerts(true)
-                .addPreference("security.insecure_field_warning.contextual.enabled", false)
-                .setLogLevel(FirefoxDriverLogLevel.fromLevel(Level.OFF));
-        options.addPreference("browser.download.folderList", 2);
-        options.addPreference("browser.download.dir", TestData.docDownloadPathWindows);
-        *//*Capabilities caps = getCapabilities();
-        caps.merge(options);*//*
-        try {
-            URL hub = new URL(Configuration.remote.toString());
-            RemoteWebDriver driver = new RemoteWebDriver(hub, options);
-            WebDriverRunner.setWebDriver(driver);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }*/
-
-
-        //WebDriver driver = new EventFiringWebDriver(new FirefoxDriver(options)).register(new DriverEventListener());
-
-//        WebDriverRunner.setWebDriver(new FirefoxDriver(options));
-
-
-        //WebDriverRunner.addListener(new DriverEventListener());
-//        WebDriverRunner.setWebDriver((new EventFiringWebDriver(WebDriverRunner.getWebDriver()).register(new DriverEventListener())));
-
-    }
 }

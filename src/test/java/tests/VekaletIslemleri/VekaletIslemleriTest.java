@@ -365,8 +365,10 @@ public class VekaletIslemleriTest extends BaseTest {
 
         parafladiklarimPage
                 .openPage()
-                .konuyaGoreRaporSec(icerik)
-                .icerikIlkKayıt();
+                .konuyaGoreEvrakDetayiTikla(icerik);
+
+                //Buraya gerek yok artık.
+                // .icerikIlkKayıt();
 
 
         String evrakNo = parafladiklarimPage.evrakDetayiEvrakNoAl();
