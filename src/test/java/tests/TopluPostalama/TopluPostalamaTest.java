@@ -1956,7 +1956,7 @@ public class TopluPostalamaTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = false, description = "TS1812 : Posta Listesi Postalama İşlemleri (Güncelleme) (UC_POSTAYÖNETİMİ_003)")
+    @Test(enabled = true, description = "TS1812 : Posta Listesi Postalama İşlemleri (Güncelleme) (UC_POSTAYÖNETİMİ_003)")
     public void TS1812() throws IOException, AWTException {
 
 
@@ -1964,15 +1964,15 @@ public class TopluPostalamaTest extends BaseTest {
 //        String remoteDownloadPath = "C:\\Users\\optiim\\Downloads\\";
 
 //        String[] konu = new String[]{
-//                "TC1816 20180122115657", "TC1816 1301018642597"
+//                "TC1812 20180122151849", "TC1812 1618349520710"
 //        };
 //
 //        String[] evrakNo1812 = new String[]{
-//                "11128", "11129"
+//                "11174", "11175"
 //        };
 //
 //        String[] icerik = new String[]{
-//                "TC1816 2018012211565720180122115716", "TC1816 130101864259720180122115826"
+//                "TC1812 2018012215184920180122151849", "TC1812 161834952071020180122152015"
 //        };
         String[] evrakNo1812 = new String[2];
         String[] icerik = new String[2];
@@ -1990,7 +1990,7 @@ public class TopluPostalamaTest extends BaseTest {
         String geregi = "Sezai Çelik Holding";
         String adres = "adres " + getSysDateForKis();
         String[] konu = new String[]{
-                "TC1812 " + getSysDate(), "TC1812 " + getSysDate() + 100
+                "TC1812 " + getSysDate(), "TC1812 " +  createRandomNumber(12)
         };
         String tur = "İmzalama";
         String geregiTipi = "Tüzel Kişi";
@@ -2109,8 +2109,16 @@ public class TopluPostalamaTest extends BaseTest {
                 .tutarHesapla()
                 .indirimOncesiTutarKontrol("100.00", true)
                 .indirimOraniKontrol("20", true)
-                .tutarKontrol("80.00", true)
+                .tutarKontrol("80.00", true);
 
+                login("mbozdemir","123");
+        postaListesiPage
+                .openPage()
+                .filtreleAc()
+                .postaListesiDoldur(konu[0])
+//                .postaListesiDoldur(postaListesi)
+                .evrakSec(konu[0])
+                .postaListesiPostala()
                 .etiketBastir()
                 .etiketBastirEkraniKontrolü(adres, geregi)
                 .etiketBastirEkraniKapat()
@@ -2159,7 +2167,7 @@ public class TopluPostalamaTest extends BaseTest {
         String geregi = "Ahmet Çelik";
         String adres = "adres " + getSysDateForKis();
         String[] konu = new String[]{
-                "TC1812 " + getSysDate(), "TC1812 " + createRandomNumber(12)
+                "TC1816 " + getSysDate(), "TC1816 " + createRandomNumber(12)
         };
         String tur = "İmzalama";
         String geregiTipi = "Gerçek Kişi";

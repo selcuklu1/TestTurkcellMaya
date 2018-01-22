@@ -15,6 +15,7 @@ import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -831,37 +832,25 @@ public class BaseLibrary extends ElementsContainer{
     }
 
 
-    @Step("Popup Ek Silme Onayı: {secim}")
-    public void ekSilmeOnayi(String secim) {
 
-        SelenideElement btnSilmeOnayiEvet = $("[id$='ekSilEvetButton']");
-        SelenideElement btnSilmeOnayiHayir = $("['ekSilHayirButton']");
+    @Step("\"{filename}\" isimli dosya silindi")
+    public BaseLibrary deleteSpecificFile(String fileName){
 
-        switch (secim) {
-            case "Evet":
-                clickJs(btnSilmeOnayiEvet);
-                break;
-            case "Hayır":
-                clickJs(btnSilmeOnayiHayir);
-                break;
+        File folder = new File("C://users//" + System.getProperty("user.name") + "//Downloads//");
+        final File[] files = folder.listFiles(new FilenameFilter() {
+            @Override
+            public boolean accept(final File dir,
+                                  final String name) {
+                return name.matches("Rapor_.*\\.");
+            }
+        });
+        for (File file1 : files) {
+            if (!file1.delete()) {
+                System.err.println("Dosya silinemedi: " + file1.getAbsolutePath());
+            }
         }
-    }
 
-
-    @Step("Popup İlişik Silme Onayı: {secim}")
-    public void ilisikSilmeOnayi(String secim) {
-
-        SelenideElement btnSilmeOnayiEvet = $("[id$='ilisikSilEvetButton']");
-        SelenideElement btnSilmeOnayiHayir = $("['ilisikSilHayirButton']");
-
-        switch (secim) {
-            case "Evet":
-                clickJs(btnSilmeOnayiEvet);
-                break;
-            case "Hayır":
-                clickJs(btnSilmeOnayiHayir);
-                break;
-        }
+        return this;
     }
 
     //Dosyanın bilgisayara inip inmediğini kontrol eder.

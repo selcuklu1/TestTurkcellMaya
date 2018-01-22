@@ -5,6 +5,7 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
@@ -16,6 +17,7 @@ import static pages.pageData.SolMenuData.IslemYaptiklarim;
 
 public class ParafladiklarimPage extends MainPage {
 
+    ElementsCollection tblParafladiklarimEvraklar = $$("[id='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
     SelenideElement f = $(By.xpath("//div[@id='mainInboxForm:inboxDataTable:filtersAccordion']//a[text()='Filtreler']/parent::h3"));
     SelenideElement cmbFiltre = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt3011_input"));
     SelenideElement txtSayfadaAra = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt353"));
@@ -38,6 +40,15 @@ public class ParafladiklarimPage extends MainPage {
     SelenideElement btnPaylasPaylas = $(By.id("mainPreviewForm:paylasButtonId"));
     BelgenetElement txtPaylasKisi = comboLov(By.id("mainPreviewForm:evrakPaylasKisiLov:LovText"));
     SelenideElement txtPaylasAciklama = $(By.id("mainPreviewForm:evrakPaylasAciklama"));
+
+    //Önizleme
+    SelenideElement tabEvrakEkleri = $(By.xpath("//*[contains(text(),'Evrak Ekleri')]"));
+    SelenideElement tabIlgiBilgileri = $(By.xpath("//*[contains(text(),'İlgi Bilgileri')]"));
+    SelenideElement tabIlisikBilgileri = $(By.xpath("//*[contains(text(),'İlişik Bilgileri')]"));
+    SelenideElement accordionEvrakEkleri = $("[id^='mainPreviewForm:j_idt11363:accpnl:0'] [class='onizlemeFrame']");
+    SelenideElement accordionIlgiBilgileri = $("[id^='mainPreviewForm:j_idt11363:accpnlI:0'] [class='onizlemeFrame']");
+    SelenideElement accordionIlisikBilgileri = $("[id^='mainPreviewForm:j_idt11363:accpnlIlisik:0'] [class='onizlemeFrame']");
+
 
     @Step("Parafladıklarım sayfası aç")
     public ParafladiklarimPage openPage() {
@@ -114,11 +125,37 @@ public class ParafladiklarimPage extends MainPage {
         return this;
     }
 
-    @Step("Tablodan konuya göre rapor seç")
-    public ParafladiklarimPage konuyaGoreRaporSec(String konu) {
-        $$("[id='mainInboxForm:inboxDataTable_data'] tr[role='row']")
-                .filterBy(Condition.text(konu)).first()
-                .$("[id$='detayGosterButton']");
+    @Step("Parafladıklarım listesinden evrak seç")
+    public ParafladiklarimPage konuyaGoreEvrakDetayiTikla(String konu) {
+
+        tblParafladiklarimEvraklar
+                .filterBy(Condition.text(konu))
+                .get(0)
+                .$("[id$='detayGosterButton']").click();
+
+        return this;
+    }
+
+    @Step("Parafladıklarım listesinden evrak önizlemede aç")
+    public ParafladiklarimPage konuyaGoreEvrakOnizlemedeAc(String konu) {
+
+        tblParafladiklarimEvraklar
+                .filterBy(Condition.text(konu))
+                .get(0)
+                .$("[id$='evrakTable']").click();
+
+        return this;
+    }
+
+    @Step("Parafladıklarım listesinde evrak kontrolu")
+    public ParafladiklarimPage konuyaGoreEvrakKontrol(String konu) {
+
+        boolean durum = tblParafladiklarimEvraklar
+                .filterBy(Condition.text(konu))
+                .size() > 0;
+
+        Assert.assertEquals(durum, true);
+
         return this;
     }
 
@@ -156,5 +193,51 @@ public class ParafladiklarimPage extends MainPage {
     public String evrakDetayiEvrakNoAl() {
         String evrakNo = txtEvrakDetayiEvrakNo.text();
         return evrakNo;
+    }
+
+    @Step("Evrak Ek/İlgi/İlişikler tablarının geldiği kontrolu")
+    public ParafladiklarimPage tabKontrolleri() {
+
+        Assert.assertEquals(tabEvrakEkleri.isDisplayed(), true);
+        Assert.assertEquals(tabIlgiBilgileri.isDisplayed(), true);
+        Assert.assertEquals(tabIlisikBilgileri.isDisplayed(), true);
+
+        return this;
+    }
+
+    @Step("Parafladıklarım/Evrak Ekleri tabını aç")
+    public ParafladiklarimPage tabEvrakEkleriAc() {
+        tabEvrakEkleri.click();
+        return this;
+    }
+
+    @Step("Parafladıklarım/İlgi Bilgieri tabını aç")
+    public ParafladiklarimPage tabIlgiBilgileriAc() {
+        tabIlgiBilgileri.click();
+        return this;
+    }
+
+    @Step("Parafladıklarım/İlişik Bilgieri tabını aç")
+    public ParafladiklarimPage tabIlisikBilgileriAc() {
+        tabIlisikBilgileri.click();
+        return this;
+    }
+
+    @Step("Evrak önizleme/Evrak Ekleri Accordion kontrolu")
+    public ParafladiklarimPage evrakEkleriAccordionKontrol() {
+        Assert.assertEquals(accordionEvrakEkleri.isDisplayed(), true);
+        return this;
+    }
+
+    @Step("Evrak önizleme/İlgi Bilgileri Accordion kontrolu")
+    public ParafladiklarimPage ilgiBilgieriAccordionKontrol() {
+        Assert.assertEquals(accordionIlgiBilgileri.isDisplayed(), true);
+        return this;
+    }
+
+    @Step("Evrak önizleme/İlişik Bilgileri Accordion kontrolu")
+    public ParafladiklarimPage ilisikBilgieriAccordionKontrol() {
+        Assert.assertEquals(accordionIlisikBilgileri.isDisplayed(), true);
+        return this;
     }
 }

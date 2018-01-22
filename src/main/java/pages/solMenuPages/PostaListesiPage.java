@@ -30,7 +30,7 @@ public class PostaListesiPage extends MainPage {
     SelenideElement btnPostala = $(By.id("mainInboxForm:inboxDataTable:j_idt726"));
     SelenideElement tblIlkRow = $(By.xpath("//tbody[@id='mainInboxForm:inboxDataTable_data']/tr[@data-ri='0']"));
     BelgenetElement cmbGidisSekli = comboBox(By.id("mainPreviewForm:postaListesiPostaTipi_label"));
-    BelgenetElement cmbGonderildigiKurum = comboLov(By.id("mainPreviewForm:tpbeGonderildigiKurumLovId:LovSecilen"));
+    BelgenetElement cmbGonderildigiKurum = comboLov(By.id("mainPreviewForm:tpbeGonderildigiTuzelKisiLovId:LovSecilen"));
     BelgenetElement cmbGonderildigiYer = comboBox(By.id("mainPreviewForm:postaListesiYurticiYurtdisi_label"));
     SelenideElement txtGramaj = $(By.xpath("//*[@id='mainPreviewForm:eastLayout']//label[normalize-space(text())='Gramaj :']/../..//input"));//$(By.id("mainPreviewForm:j_idt2574"));
     SelenideElement btnHesapla = $x("//span[. = 'Tutar Hesapla']/..");
@@ -57,7 +57,7 @@ public class PostaListesiPage extends MainPage {
 
     SelenideElement txtPostaListesiAdi = $x("//label[normalize-space(text())='Posta Listesi Adı :']/../following-sibling::td//textarea");
     SelenideElement btnEtiketBastir = $x("//span[text() = 'Etiket Bastır']/../../button");
-    ElementsCollection tblEvrakDetayi = $$("[id='mainPreviewForm:dtEvrakUstVeri_data'] tr[role='row']");
+    ElementsCollection tblEvrakDetayi = $$("[id='mainPreviewForm:dtEvrakUstVeri_data'] tr[data-ri]");
     SelenideElement divGonderildigiKurm = $("div[id='mainPreviewForm:tpbeGonderildigiKurumLovId:LovSecilen'] div[id^='mainPreviewForm:tpbeGonderildigiKurumLovId']");
     SelenideElement lblGonderildigiYerCombo = $("label[id='mainPreviewForm:tpbeGidecegiYerSelectOneMenuId_label']");
     SelenideElement txtAdres = $(By.id("mainPreviewForm:gidecegiAdresId"));
@@ -495,11 +495,12 @@ public class PostaListesiPage extends MainPage {
     @Step("Evrak Listesi tablosunda Yazdır butonu tıklanır.")
     public PostaListesiPage evrakListesiYazdir(String[] konu) {
         int size = tableEvrakListesi.size();
-        for (int i = 0; i < size; i++) {
+        for (int i =size-1; i >=0; i--) {
 
             tableEvrakListesi
-                    .get(i)
-                    .$x("//span[text() = 'Yazdır']/../../button").click();
+                    .filterBy(Condition.text(konu[i]))
+                    .first()
+                    .$x("descendant::span[text() = 'Yazdır']/../../button").click();
             evrakDetayiPopUpKontrolü();
             evrakDetayiYazdır(konu[i]);
             switchTo().window(1);

@@ -343,7 +343,7 @@ public class GelenEvrakKayitPage extends MainPage {
     @Step("Geldiği gerçek kişi alanı doldur: {geldigiKisi} | {description} ")
     public GelenEvrakKayitPage geldigiGercekKisiDoldur(String geldigiKisi, String description) {
 
-        cmbGeldigiKisi.selectLov(geldigiKisi);
+        cmbGeldigiGercekKisi.selectLov(geldigiKisi);
 
         /*System.out.println("title: " + cmbGeldigiGercekKisi.lastSelectedLovTitleText());
         System.out.println("detail: " + cmbGeldigiGercekKisi.lastSelectedLovDetailText());*/
