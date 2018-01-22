@@ -372,6 +372,7 @@ public class EvrakHavaleKurallariTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS2069: Evrak Havale Kuralları - Birim Kaydet - Güncelleme")
     public void TS2069d() throws InterruptedException {
+
         String basariMesaji = "İşlem başarılıdır!";
         String uyariMesaji = "Evrak Bilgilerine Tanımlanmış Otomatik Havale Kuralı Bulunamamıştır.";
         String kuralAdi = "TC-2069D_" + createRandomNumber(12);

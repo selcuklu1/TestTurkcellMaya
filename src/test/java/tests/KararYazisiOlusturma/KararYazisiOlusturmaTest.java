@@ -52,7 +52,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "1488: Karar yazısında zorunlu alan kontrolleri")
+    @Test(enabled = true, description = "TS1488: Karar yazısında zorunlu alan kontrolleri")
     public void TS1488() {
 
         String uyariMesajYaziIcerik = "Yazı içeriği boş olamaz!";
@@ -144,7 +144,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "2240: Teslim alınmayı bekleyenler listesinden Gündem klasörüne evrak kapatma")
+    @Test(enabled = true, description = "TS2240: Teslim alınmayı bekleyenler listesinden Gündem klasörüne evrak kapatma")
     public void TS2240() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
@@ -205,7 +205,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "2239: Gündem yayınlama")
+    @Test(enabled = true, description = "TS2239: Gündem yayınlama")
     public void TS2239() {
 
         String basariMesaji = "İşlem başarılıdır!";
@@ -381,7 +381,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "1714: Karar yazsının iadesi")
+    @Test(enabled = true, description = "TS1714: Karar yazsının iadesi")
     public void TS1714() {
 
         String basariMesaji = "İşlem başarılıdır!";
@@ -455,7 +455,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "2238: Gündem klasörü oluşturma")
+    @Test(enabled = true, description = "TS2238: Gündem klasörü oluşturma")
     public void TS2238() {
 
         String basariMesaji = "İşlem başarılıdır!";
@@ -503,7 +503,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "1715: Gelen evrak listesinden Gündem klasörüne evrak kapatma")
+    @Test(enabled = true, description = "TS1715: Gelen evrak listesinden Gündem klasörüne evrak kapatma")
     public void TS1715() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
