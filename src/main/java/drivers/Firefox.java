@@ -14,8 +14,33 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import java.util.logging.Level;
 
 public class Firefox extends BaseTest implements WebDriverProvider {
+
     @Override
     public WebDriver createDriver(DesiredCapabilities capabilities) {
+        FirefoxProfile profile = new FirefoxProfile();
+        /*profile.setPreference("browser.download.folderList", 0);
+        //capabilities.setCapability("browser.download.dir", TestData.docDownloadPathWindows);
+        profile.setPreference("browser.helperApps.neverAsk.saveToDisk", "application/excel");
+        profile.setPreference("browser.helperApps.neverAsk.saveToDisk", "application/vnd.ms-excel");
+        profile.setPreference("browser.helperApps.neverAsk.saveToDisk", "application/x-excel");
+        profile.setPreference("browser.helperApps.neverAsk.saveToDisk", "application/x-msexcel");
+        capabilities.setCapability(FirefoxDriver.PROFILE, profile);*/
+        //return new FirefoxDriver(capabilities);
+        FirefoxOptions options = new FirefoxOptions();
+        options.addPreference("browser.download.folderList", 1);
+        options.addPreference("browser.helperApps.neverAsk.force", true);
+        options.addPreference("browser.download.manager.showWhenStarting",false);
+        options.addPreference("browser.helperApps.neverAsk.saveToDisk", "application/excel");
+        options.addPreference("browser.helperApps.neverAsk.saveToDisk", "application/vnd.ms-excel");
+        options.addPreference("browser.helperApps.neverAsk.saveToDisk", "application/x-excel");
+        options.addPreference("browser.helperApps.neverAsk.saveToDisk", "application/x-msexcel");
+        options.addPreference("browser.helperApps.neverAsk.saveToDisk", "application/pdf");
+        options.merge(capabilities);
+        options.setProfile(profile);
+        return new FirefoxDriver(options);
+    }
+
+    public WebDriver createDriver1(DesiredCapabilities capabilities) {
 
         //<editor-fold desc="ProdilesIni can be used to set "default" or pre created profile">
 //        ProfilesIni profilesIni = new ProfilesIni();
@@ -27,9 +52,9 @@ public class Firefox extends BaseTest implements WebDriverProvider {
         FirefoxOptions options = new FirefoxOptions();
         //options.setProfile(profile);
                 //.setCapability("browser.name", "firefox");
-        /*options.setAcceptInsecureCerts(true)
+        options.setAcceptInsecureCerts(true)
                 .addPreference("security.insecure_field_warning.contextual.enabled", false)
-                .setLogLevel(FirefoxDriverLogLevel.fromLevel(Level.OFF));*/
+                .setLogLevel(FirefoxDriverLogLevel.fromLevel(Level.OFF));
         options.addPreference("browser.download.folderList", 2);
         options.addPreference("browser.download.dir", TestData.docDownloadPathWindows);
         options.setCapability("browserName", "firefox");
@@ -41,7 +66,6 @@ public class Firefox extends BaseTest implements WebDriverProvider {
 
         return new FirefoxDriver(options);
     }
-
     public FirefoxOptions firePlatform(){
         DesiredCapabilities capabilities = DesiredCapabilities.firefox();
         capabilities.setPlatform(Platform.WINDOWS);

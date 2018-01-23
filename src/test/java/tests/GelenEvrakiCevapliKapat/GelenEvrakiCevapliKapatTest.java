@@ -280,8 +280,8 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .evrakGeldigiGorme(konuKodu,kurum,evrakTarihi);
     }
 
-    @Test(enabled = true, description = "TS931: Gerçek kişiden gelen evraka cevap yaz")
-    public void TS931() throws InterruptedException {
+    @Test(enabled = true, description = "TS0931: Gerçek kişiden gelen evraka cevap yaz")
+    public void TS0931() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
         String konuKodu = "Diğer";

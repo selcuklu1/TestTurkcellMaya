@@ -57,7 +57,7 @@ public class PostaListesiPage extends MainPage {
 
     SelenideElement txtPostaListesiAdi = $x("//label[normalize-space(text())='Posta Listesi Adı :']/../following-sibling::td//textarea");
     SelenideElement btnEtiketBastir = $x("//span[text() = 'Etiket Bastır']/../../button");
-    ElementsCollection tblEvrakDetayi = $$("[id='mainPreviewForm:dtEvrakUstVeri_data'] tr[role='row']");
+    ElementsCollection tblEvrakDetayi = $$("[id='mainPreviewForm:dtEvrakUstVeri_data'] tr[data-ri]");
     SelenideElement divGonderildigiKurm = $("div[id='mainPreviewForm:tpbeGonderildigiKurumLovId:LovSecilen'] div[id^='mainPreviewForm:tpbeGonderildigiKurumLovId']");
     SelenideElement lblGonderildigiYerCombo = $("label[id='mainPreviewForm:tpbeGidecegiYerSelectOneMenuId_label']");
     SelenideElement txtAdres = $(By.id("mainPreviewForm:gidecegiAdresId"));
@@ -495,11 +495,12 @@ public class PostaListesiPage extends MainPage {
     @Step("Evrak Listesi tablosunda Yazdır butonu tıklanır.")
     public PostaListesiPage evrakListesiYazdir(String[] konu) {
         int size = tableEvrakListesi.size();
-        for (int i = 0; i < size; i++) {
+        for (int i =size-1; i >=0; i--) {
 
             tableEvrakListesi
-                    .get(i)
-                    .$x("//span[text() = 'Yazdır']/../../button").click();
+                    .filterBy(Condition.text(konu[i]))
+                    .first()
+                    .$x("descendant::span[text() = 'Yazdır']/../../button").click();
             evrakDetayiPopUpKontrolü();
             evrakDetayiYazdır(konu[i]);
             switchTo().window(1);
