@@ -233,7 +233,12 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
 
     @Step("Kullanıcı doldur")
     public EvrakHavaleKurallariYonetimiPage geldigiYerKullaniciDoldur(String kullanici) {
-        txtGeldigiYerKullanici.selectLov(kullanici);
+
+        //İlk selectLov seçemiyor, sebeb araştırdık tek çözüm aşağıdaki gibi
+        txtGeldigiYerKullanici.type(kullanici).getSelectableItems().first().click();
+        txtGeldigiYerKullanici.closeTreePanel();
+        if (!txtGeldigiYerKullanici.isLovSelected())
+            txtGeldigiYerKullanici.selectLov(kullanici);
         return this;
     }
 
