@@ -458,7 +458,9 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         String miatTarihi = getSysDateForKis();
         String geregi = "OPTİİM BİRİM";
         String kaldirlacakKlasor = "ESK05";
-        String bilgi = "TAŞRA TEŞKİLATI";
+        String bilgi = "Ahmet Çelik";
+        String bilgiSecimTipi = "Gerçek Kişi";
+        String icerik = "Olur Yazısı";
         String pathToFilePdf = getUploadPath() + "Otomasyon.pdf";
         String pdfName = "Otomasyon.pdf";
 
@@ -470,14 +472,16 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .ustYaziPdfAdiKontrol(pdfName)
                 .islemMesaji().basariliOlmali();
 
+
+
         gidenEvrakKayitPage
                 .evrakTuruSec(evrakTuru)
                 .ivedilikSec(ivedilik)
                 .gizlilikDerecesiSec(gizlilikDerecesi)
                 .konuKoduDoldur(konuKodu)
-                .evrakTuruIcerikKontrolu("Resmi Yazışma")
-                .evrakTuruIcerikKontrolu("Olur Yazısı")
-                .evrakTuruSec("Olur Yazısı")
+                .evrakTuruIcerikKontrolu(evrakTuru)
+                .evrakTuruIcerikKontrolu(icerik)
+                .evrakTuruSec(icerik)
                 .ivedilikIcerikKontrol()
                 .gizlilikDerecesiIcerikKontrol()
                 .gizlilikDerecesiSec(gizlilikDerecesi)
@@ -486,7 +490,8 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .miatDoldur(miatTarihi)
                 .geregiDoldur(geregi, "Ad")
                 .kaldiralacakKlasorDoldur(kaldirlacakKlasor)
-                .bilgiDoldur(geregi)
+                .bilgiSecimTipiSecByText(bilgiSecimTipi)
+                .bilgiDoldur(bilgi)
                 .evrakTarihiDoldur(evrakTarihi)
                 .ekBilgiFiltreAc()
                 .ekBilgiFizikselEkEkle()

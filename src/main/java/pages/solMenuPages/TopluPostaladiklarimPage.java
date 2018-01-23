@@ -38,6 +38,7 @@ import java.io.File;
 import java.io.IOException;
 
 
+import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
@@ -537,6 +538,11 @@ public class TopluPostaladiklarimPage extends MainPage {
         return this;
     }
 
+    @Step("Tabloda evrak kontrolü yapılır. \"{konu}\" ")
+    public TopluPostaladiklarimPage topluPostaladiklarimEvrakKontrolu(String konu){
+        searchTable().searchInAllPages(true).findRows(text(konu)).getFoundRow().shouldBe(exist);
+        return this;
+    }
 
     @Step("İndirim Öncesi tutar alaninda \"{indirimOncesiTutar}\" değeri olmalı mı? : \"{shouldBeEquals}\" ")
     public TopluPostaladiklarimPage indirimOncesiTutarKontrol(String indirimOncesiTutar, boolean shouldBeEquals) {
