@@ -751,6 +751,6 @@ public class EkIlgiTest extends BaseTest {
                 .tabIlisikBilgileriAc()
                 .ilisikBilgieriAccordionKontrol();
 
-        login(TestData.optiim123.getUsername(), TestData.passwordGSAHIN); //mbozdemir
+        login(TestData.usernameGSAHIN, TestData.passwordGSAHIN); //mbozdemir
     }
 }
