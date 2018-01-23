@@ -40,7 +40,7 @@ public class HavaleEttiklerimPage extends MainPage {
 
     @Step("Kisi doldur")
     public HavaleEttiklerimPage havaleYapKisiDoldur(String kisi) {
-        txtHavaleYapKisi.type(kisi).getTitleItems().filterBy(text(kisi)).first().click();
+        txtHavaleYapKisi.type(kisi).getDetailItems().filterBy(Condition.text("BİLİŞİM HİZMETLERİ VE UYDU PAZARLAMA GENEL MÜDÜR")).first().click();
         return this;
     }
 
