@@ -510,9 +510,9 @@ public class ComboLovHelper extends BaseLibrary {
         Allure.addAttachment("Filter texts "+ text.length, Arrays.toString(text));
 
         for (String t : text) {
-            //collection = collection.filterBy(text(t));
+            collection = collection.filterBy(text(t));
             //regex vs türkçe karakterleri
-            collection = collection.filterBy(matchText("(?i)(?u)(?m)\\b" + t.trim().replaceAll("[\\<\\(\\[\\{\\\\\\^\\-\\=\\$\\!\\|\\]\\}\\)‌​\\?\\*\\+\\.\\>]", "\\\\$0") + "\\b"));
+            //collection = collection.filterBy(matchText("(?i)(?u)(?m)\\b" + t.trim().replaceAll("[\\<\\(\\[\\{\\\\\\^\\-\\=\\$\\!\\|\\]\\}\\)‌​\\?\\*\\+\\.\\>]", "\\\\$0") + "\\b"));
         }
 
         Allure.addAttachment("Filtered items " + collection.size(), collection.texts().toString());

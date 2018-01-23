@@ -39,7 +39,7 @@ public class LoginPage extends MainPage {
         return this;
     }
 
-    @Step("\"{usernameOPTIIM}\" kullanıcısı ile giriş yap")
+    @Step("\"{username}\" kullanıcısı ile giriş yap")
     public LoginPage login(String username, String password) {
         open();
         txtUsername.sendKeys(username);
