@@ -834,7 +834,7 @@ public class BaseLibrary extends ElementsContainer{
 
 
     @Step("\"{filename}\" isimli dosya silindi")
-    public BaseLibrary stepmethod(String fileName){
+    public BaseLibrary deleteSpecificFile(String fileName){
 
         File folder = new File("C://users//" + System.getProperty("user.name") + "//Downloads//");
         final File[] files = folder.listFiles(new FilenameFilter() {

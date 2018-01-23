@@ -8,6 +8,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.pageComponents.EvrakPageButtons;
 import pages.pageComponents.TextEditor;
+import pages.solMenuPages.ParafBekleyenlerPage;
 import pages.solMenuPages.ParafladiklarimPage;
 import pages.solMenuPages.TaslakEvraklarPage;
 import pages.ustMenuPages.EvrakOlusturPage;
@@ -27,6 +28,7 @@ public class EkIlgiTest extends BaseTest {
     TaslakEvraklarPage taslakEvraklarPage;
     EvrakPageButtons evrakPageButtons;
     ParafladiklarimPage parafladiklarimPage;
+    ParafBekleyenlerPage parafBekleyenlerPage;
 
     @BeforeMethod
     public void beforeTests(Method method) {
@@ -36,6 +38,7 @@ public class EkIlgiTest extends BaseTest {
         taslakEvraklarPage = new TaslakEvraklarPage();
         evrakPageButtons = new EvrakPageButtons();
         parafladiklarimPage = new ParafladiklarimPage();
+        parafBekleyenlerPage = new ParafBekleyenlerPage();
 
     }
 
@@ -645,7 +648,6 @@ public class EkIlgiTest extends BaseTest {
 
 
         login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR); //mbozdemir
-/*
 
         evrakOlusturPage
                 .openPage()
@@ -737,7 +739,6 @@ public class EkIlgiTest extends BaseTest {
         evrakOlusturPage
                 .kaydet(true)
                 .parafla();
-*/
 
         parafladiklarimPage
                 .openPage()
@@ -752,5 +753,17 @@ public class EkIlgiTest extends BaseTest {
                 .ilisikBilgieriAccordionKontrol();
 
         login(TestData.usernameGSAHIN, TestData.passwordGSAHIN); //mbozdemir
+
+        parafBekleyenlerPage
+                .openPage()
+                .konuyaGoreEvrakKontrol("TS2025_EkIlgi_Senaryosu_20180122145731")
+                .konuyaGoreEvrakOnizlemedeAc("TS2025_EkIlgi_Senaryosu_20180122145731")
+                .tabKontrolleri()
+                .tabEvrakEkleriAc()
+                .evrakEkleriAccordionKontrol()
+                .tabIlgiBilgileriAc()
+                .ilgiBilgileriAccordionKontrol()
+                .tabIlisikBilgileriAc()
+                .ilisikBilgileriAccordionKontrol();
     }
 }
