@@ -494,7 +494,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
     @Test(enabled = true, description = "TS1368: Cevaplanan Evrak Raporu")
     public void TS1368() throws IOException, InterruptedException {
 
-        String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞ";
+        String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
         String konuKodu = "Kanunlar";
         String ilkTarih = "17.11.2017";
         String sonTarih = "17.11.2017";

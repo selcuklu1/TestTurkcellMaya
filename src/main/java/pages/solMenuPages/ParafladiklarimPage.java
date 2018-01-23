@@ -45,9 +45,9 @@ public class ParafladiklarimPage extends MainPage {
     SelenideElement tabEvrakEkleri = $(By.xpath("//*[contains(text(),'Evrak Ekleri')]"));
     SelenideElement tabIlgiBilgileri = $(By.xpath("//*[contains(text(),'İlgi Bilgileri')]"));
     SelenideElement tabIlisikBilgileri = $(By.xpath("//*[contains(text(),'İlişik Bilgileri')]"));
-    SelenideElement accordionEvrakEkleri = $("[id^='mainPreviewForm:j_idt11363:accpnl:0'] [class='onizlemeFrame']");
-    SelenideElement accordionIlgiBilgileri = $("[id^='mainPreviewForm:j_idt11363:accpnlI:0'] [class='onizlemeFrame']");
-    SelenideElement accordionIlisikBilgileri = $("[id^='mainPreviewForm:j_idt11363:accpnlIlisik:0'] [class='onizlemeFrame']");
+    SelenideElement accordionEvrakEkleri = $("[id^='mainPreviewForm:j_idt'] [id*='accpnl:0'] [class='onizlemeFrame']");
+    SelenideElement accordionIlgiBilgileri = $("[id^='mainPreviewForm:j_idt'] [id*='accpnlI:0'] [class='onizlemeFrame']");
+    SelenideElement accordionIlisikBilgileri = $("[id^='mainPreviewForm:j_idt'] [id*='accpnlIlisik:0'] [class='onizlemeFrame']");
 
 
     @Step("Parafladıklarım sayfası aç")

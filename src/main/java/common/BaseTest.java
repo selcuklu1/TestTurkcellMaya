@@ -4,7 +4,6 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.WebDriverRunner;
-import data.TestData;
 import data.User;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
@@ -53,7 +52,7 @@ public class BaseTest extends BaseLibrary {
         //Configuration.remote = "http://localhost:4444/wd/hub";
 
         Configuration.baseUrl = (System.getProperty("URL") == null) ? belgenetURL : System.getProperty("URL");
-        Configuration.browser = (System.getProperty("browser") == null) ? "firefox" : System.getProperty("browser");
+        Configuration.browser = (System.getProperty("browser") == null) ? "chrome" : System.getProperty("browser");
         Configuration.browserVersion = System.getProperty("node");
         Configuration.remote = System.getProperty("hub");
         Configuration.reportsFolder = "test-result/reports";
@@ -63,7 +62,7 @@ public class BaseTest extends BaseLibrary {
         Configuration.timeout = timeout * 1000;
         setWaitForLoading(loadingTimeout);
         //Configuration.clickViaJs = true;
-        //Configuration.holdBrowserOpen = true;
+      //  Configuration.holdBrowserOpen = true;
         //Configuration.headless = false;
         Configuration.startMaximized = true;
         Configuration.pollingInterval = 100;
