@@ -34,7 +34,9 @@ public class PostaListesiPage extends MainPage {
     SelenideElement btnPostala = $(By.id("mainInboxForm:inboxDataTable:j_idt726"));
     SelenideElement tblIlkRow = $(By.xpath("//tbody[@id='mainInboxForm:inboxDataTable_data']/tr[@data-ri='0']"));
     BelgenetElement cmbGidisSekli = comboBox(By.id("mainPreviewForm:postaListesiPostaTipi_label"));
-    BelgenetElement cmbGonderildigiKurum = comboLov(By.id("mainPreviewForm:tpbeGonderildigiTuzelKisiLovId:LovSecilen"));
+    BelgenetElement cmbGonderildigiTuzelKisi = comboLov(By.id("mainPreviewForm:tpbeGonderildigiTuzelKisiLovId:LovSecilen"));
+    BelgenetElement cmbGonderildigiKurum = comboLov(By.id("mainPreviewForm:tpbeGonderildigiKurumLovId:LovSecilen"));
+
     BelgenetElement cmbGonderildigiYer = comboBox(By.id("mainPreviewForm:postaListesiYurticiYurtdisi_label"));
     SelenideElement txtGramaj = $(By.xpath("//*[@id='mainPreviewForm:eastLayout']//label[normalize-space(text())='Gramaj :']/../..//input"));//$(By.id("mainPreviewForm:j_idt2574"));
     SelenideElement btnHesapla = $x("//span[. = 'Tutar Hesapla']/..");
@@ -95,7 +97,7 @@ public class PostaListesiPage extends MainPage {
         return this;
     }
 
-    @Step("Posta Listesi kontrolü : \"{postaListesi}\" ")
+    @Step("Posta Listesi kontrolü : \"{postaListesi}\", \"{shouldBeExist}\" ")
     public PostaListesiPage postaListesiKontrol(String postaListesi, boolean shouldBeExist) {
         btnPostaListesiDropDown.click();
         txtPostaListesi.setValue(postaListesi);
@@ -136,6 +138,16 @@ public class PostaListesiPage extends MainPage {
     }
 
     @Step("Gonderildiği Yeri \"{gonderildigiYer}\" seç")
+    public PostaListesiPage gonderildigiTuzelKisiKontrolu(String gonderildigiYer, boolean shouldBeEquals) {
+        if (shouldBeEquals == true)
+            cmbGonderildigiTuzelKisi.getSelectedTitles().first().shouldBe(Condition.text(gonderildigiYer));
+        else
+            cmbGonderildigiTuzelKisi.getSelectedTitles().first().shouldNotHave(Condition.text(gonderildigiYer));
+        return this;
+    }
+
+
+    @Step("Gonderildiği Yeri \"{gonderildigiYer}\" seç")
     public PostaListesiPage gonderildigiKurumKontrolu(String gonderildigiYer, boolean shouldBeEquals) {
         if (shouldBeEquals == true)
             cmbGonderildigiKurum.getSelectedTitles().first().shouldBe(Condition.text(gonderildigiYer));
@@ -143,7 +155,6 @@ public class PostaListesiPage extends MainPage {
             cmbGonderildigiKurum.getSelectedTitles().first().shouldNotHave(Condition.text(gonderildigiYer));
         return this;
     }
-
     @Step("Gramaj alanını doldur : \"{gramaj}\" ")
     public PostaListesiPage gramajDoldur(String gramaj) {
         setValueJS(txtGramaj, gramaj);
@@ -541,7 +552,7 @@ public class PostaListesiPage extends MainPage {
         return this;
     }
 
-    @Step("Evrak Listesi tablosunda Yazdır butonu tıklanır ve PDF bilgisayara indirilir.")
+    @Step("Evrak Listesi tablosunda Yazdır butonu tıklanır.")
     public PostaListesiPage evrakListesiYazdirPdfKontrolu(String[] konu, String[] evrakNo, String[] icerik) throws AWTException, IOException {
         String remoteDownloadPath = getDownloadPath();
         int size = tableEvrakListesi.size();
@@ -570,7 +581,7 @@ public class PostaListesiPage extends MainPage {
         return this;
     }
 
-    @Step("Evrak Listesi tablosunda Orjinalini Yazdır butonu tıklanır ve PDF bilgisayara indirilir.")
+    @Step("Evrak Listesi tablosunda Orjinalini Yazdır butonu tıklanır.")
     public PostaListesiPage evrakListesiOrjinaliYazdirPdfKontrolu(String[] konu, String[] evrakNo, String[] icerik) throws AWTException, IOException {
         String remoteDownloadPath = getDownloadPath();
         int size = tableEvrakListesi.size();
