@@ -23,7 +23,7 @@ public interface BelgenetElement extends SelenideElement {
     BelgenetElement clearAllSelectedItems();
 
     /**
-     * Search by text contains
+     * Search by text exact words case insensitive
      * comboLov().selectLov("Optiim TEST, "Optiim Birim", "Danışman")
      * select first filtered
      * if empty first will be selected

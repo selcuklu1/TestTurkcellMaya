@@ -5,6 +5,7 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
@@ -18,7 +19,7 @@ import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 public class ParafBekleyenlerPage extends MainPage {
 
 
-    ElementsCollection tablePaylastiklarim = $$("[id='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
+    ElementsCollection tblParafBekleyenEvraklar = $$("[id='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
     SelenideElement btnPaylasTab = $(By.xpath("//span[contains(@class, 'evrakPaylas')]/.."));
     SelenideElement txtKisi = $(By.id("mainPreviewForm:evrakPaylasKisiLov:LovText"));
     SelenideElement txtAciklama = $(By.id("mainPreviewForm:evrakPaylasAciklama"));
@@ -49,6 +50,15 @@ public class ParafBekleyenlerPage extends MainPage {
     BelgenetElement txtTakipListesiKullanicilar = comboLov(By.id("evrakTakibimeEkleDialogForm:takipListLov:LovText"));
     SelenideElement btnTakipListesiKapat = $("[id^='evrakTakibimeEkleDialogForm:takipDialog'] span[class='ui-icon ui-icon-closethick']");
     ElementsCollection tableEvrakNotlari = $$(By.xpath("//th[contains(., 'Evrak Notları')]/../../../tbody/tr"));
+
+    //Önizleme
+    SelenideElement tabEvrakEkleri = $(By.xpath("//*[contains(text(),'Evrak Ekleri')]"));
+    SelenideElement tabIlgiBilgileri = $(By.xpath("//*[contains(text(),'İlgi Bilgileri')]"));
+    SelenideElement tabIlisikBilgileri = $(By.xpath("//*[contains(text(),'İlişik Bilgileri')]"));
+    SelenideElement accordionEvrakEkleri = $("[id^='mainPreviewForm:j_idt'] [id*='accpnl:0'] [class='onizlemeFrame']");
+    SelenideElement accordionIlgiBilgileri = $("[id^='mainPreviewForm:j_idt'] [id*='accpnlI:0'] [class='onizlemeFrame']");
+    SelenideElement accordionIlisikBilgileri = $("[id^='mainPreviewForm:j_idt'] [id*='accpnlIlisik:0'] [class='onizlemeFrame']");
+
 
     @Step("Paraf Bekleyenler sayfası aç")
     public ParafBekleyenlerPage openPage() {
@@ -95,7 +105,7 @@ public class ParafBekleyenlerPage extends MainPage {
 
     @Step("Satır seç")
     public ParafBekleyenlerPage satirSec(int satirIndex) {
-        tablePaylastiklarim.get(satirIndex).click();
+        tblParafBekleyenEvraklar.get(satirIndex).click();
         return this;
     }
 
@@ -112,7 +122,7 @@ public class ParafBekleyenlerPage extends MainPage {
 
     @Step("Evrak seç ")
     public ParafBekleyenlerPage evrakSec(String paylasilanKullanici) {
-        tablePaylastiklarim
+        tblParafBekleyenEvraklar
                 .filterBy(Condition.text("Paylaşılanlar: " + paylasilanKullanici))
                 .get(0)
                 .click();
@@ -121,7 +131,7 @@ public class ParafBekleyenlerPage extends MainPage {
 
     @Step("Evrak seç ")
     public ParafBekleyenlerPage evrakSec(String konu, String gidecegiYer, String gonderen, String tarih) {
-        tablePaylastiklarim
+        tblParafBekleyenEvraklar
                 .filterBy(Condition.text("Konu: " + konu))
                 .filterBy(Condition.text("Gideceği Yer: " + gidecegiYer))
                 .filterBy(Condition.text("Gönderen: " + gonderen))
@@ -133,7 +143,7 @@ public class ParafBekleyenlerPage extends MainPage {
 
     @Step("Evrak seç ")
     public ParafBekleyenlerPage konuyaGoreEvrakSec(String konu) {
-        tablePaylastiklarim
+        tblParafBekleyenEvraklar
                 .filterBy(Condition.text(konu)).first()
                 .click();
         return this;
@@ -148,7 +158,7 @@ public class ParafBekleyenlerPage extends MainPage {
 
         _paylasilanKullanicilar = _paylasilanKullanicilar.substring(0, _paylasilanKullanicilar.length() - 3);
 
-        tablePaylastiklarim
+        tblParafBekleyenEvraklar
                 .filterBy(Condition.text("Paylaşılanlar: " + _paylasilanKullanicilar))
                 .get(0)
                 .click();
@@ -162,7 +172,6 @@ public class ParafBekleyenlerPage extends MainPage {
                 .filterBy(Condition.text(tabAdi))
                 .get(0)
                 .click();
-        ;
 
         return this;
     }
@@ -298,7 +307,7 @@ public class ParafBekleyenlerPage extends MainPage {
     @Step("Açıklama kontrol")
     public String paylasilmaTarihiGetir(String konu, String evrakNo, String paylasilanKullanici) {
 
-        String pTarihi = tablePaylastiklarim
+        String pTarihi = tblParafBekleyenEvraklar
                 .filterBy(Condition.text("Evrak No: " + evrakNo))
                 .filterBy(Condition.text("Konu: " + konu))
                 .filterBy(Condition.text("Paylaşılanlar: " + paylasilanKullanici))
@@ -315,5 +324,72 @@ public class ParafBekleyenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Paraf Bekleyenler listesinde evrak kontrolu")
+    public ParafBekleyenlerPage konuyaGoreEvrakKontrol(String konu) {
 
+        boolean durum = tblParafBekleyenEvraklar
+                .filterBy(Condition.text(konu))
+                .size() > 0;
+
+        Assert.assertEquals(durum, true);
+
+        return this;
+    }
+
+    @Step("Parafladıklarım listesinden evrak önizlemede aç")
+    public ParafBekleyenlerPage konuyaGoreEvrakOnizlemedeAc(String konu) {
+
+        tblParafBekleyenEvraklar
+                .filterBy(Condition.text(konu))
+                .get(0)
+                .$("[id$='evrakTable']").click();
+
+        return this;
+    }
+
+    @Step("Evrak Ek/İlgi/İlişikler tablarının geldiği kontrolu")
+    public ParafBekleyenlerPage tabKontrolleri() {
+
+        Assert.assertEquals(tabEvrakEkleri.isDisplayed(), true);
+        Assert.assertEquals(tabIlgiBilgileri.isDisplayed(), true);
+        Assert.assertEquals(tabIlisikBilgileri.isDisplayed(), true);
+
+        return this;
+    }
+
+    @Step("Paraf Bekleyenler/Evrak Ekleri tabını aç")
+    public ParafBekleyenlerPage tabEvrakEkleriAc() {
+        tabEvrakEkleri.click();
+        return this;
+    }
+
+    @Step("Paraf Bekleyenler/İlgi Bilgileri tabını aç")
+    public ParafBekleyenlerPage tabIlgiBilgileriAc() {
+        tabIlgiBilgileri.click();
+        return this;
+    }
+
+    @Step("Paraf Bekleyenler/İlişik Bilgileri tabını aç")
+    public ParafBekleyenlerPage tabIlisikBilgileriAc() {
+        tabIlisikBilgileri.click();
+        return this;
+    }
+
+    @Step("Evrak önizleme/Evrak Ekleri Accordion kontrolu")
+    public ParafBekleyenlerPage evrakEkleriAccordionKontrol() {
+        Assert.assertEquals(accordionEvrakEkleri.isDisplayed(), true);
+        return this;
+    }
+
+    @Step("Evrak önizleme/İlgi Bilgileri Accordion kontrolu")
+    public ParafBekleyenlerPage ilgiBilgileriAccordionKontrol() {
+        Assert.assertEquals(accordionIlgiBilgileri.isDisplayed(), true);
+        return this;
+    }
+
+    @Step("Evrak önizleme/İlişik Bilgileri Accordion kontrolu")
+    public ParafBekleyenlerPage ilisikBilgileriAccordionKontrol() {
+        Assert.assertEquals(accordionIlisikBilgileri.isDisplayed(), true);
+        return this;
+    }
 }
