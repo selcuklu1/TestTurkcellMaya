@@ -233,7 +233,10 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
 
     @Step("Kullanıcı doldur")
     public EvrakHavaleKurallariYonetimiPage geldigiYerKullaniciDoldur(String kullanici) {
-        txtGeldigiYerKullanici.selectLov(kullanici);
+        //txtGeldigiYerKullanici.selectLov(kullanici);
+        txtGeldigiYerKullanici.type(kullanici).getTitleItems().filterBy(Condition.text(kullanici)).get(0).click();
+        //txtGeldigiYerKullanici.type(kullanici).getTitleItems().filterBy(Condition.text(kullanici)).get(0).click();
+        txtGeldigiYerKullanici.closeTreePanel();
         return this;
     }
 
