@@ -2137,20 +2137,24 @@ public class TopluPostalamaTest extends BaseTest {
     @Test(enabled = true, description = "TS1816 : Toplu Postaladıklarım Güncelleme İşlemleri (UC_POSTAYÖNETİMİ_004)")
     public void TS1816() throws IOException, AWTException {
 
-        String remoteDownloadPath = getDownloadPath();
+//        String remoteDownloadPath = getDownloadPath();
 //        String remoteDownloadPath = "C:\\Users\\optiim\\Downloads\\";
 
 //        String[] konu = new String[]{
-//                "TC1816 20180122115657", "TC1816 1301018642597"
+//                "TC1816 20180123105225", "TC1816 1719010452836"
 //        };
 //
 //        String[] evrakNo1816 = new String[]{
-//                "11128", "11129"
+//                "11207", "11208"
 //        };
 //
 //        String[] icerik = new String[]{
-//                "TC1816 2018012211565720180122115716", "TC1816 130101864259720180122115826"
+//                "TC1816 2018012310522520180123105243", "TC1816 171901045283620180123105353"
 //        };
+
+        String[] konu = new String[]{
+                "TC1816 " + getSysDate(), "TC1816 " + createRandomNumber(12)
+        };
         String[] evrakNo1816 = new String[2];
         String[] icerik = new String[2];
         String[] sayi = new String[2];
@@ -2166,9 +2170,6 @@ public class TopluPostalamaTest extends BaseTest {
         String ivedilik = "Normal";
         String geregi = "Ahmet Çelik";
         String adres = "adres " + getSysDateForKis();
-        String[] konu = new String[]{
-                "TC1816 " + getSysDate(), "TC1816 " + createRandomNumber(12)
-        };
         String tur = "İmzalama";
         String geregiTipi = "Gerçek Kişi";
         String basariMesaji = "İşlem başarılıdır!";
@@ -2288,6 +2289,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .indirimOraniKontrol("20", true)
                 .tutarKontrol("80.00", true);
         login("mbozdemir", "123");
+        maximazeBrowser();
         topluPostaladiklarimPage
                 .openPage()
                 .topluPostaladiklarimEvrakSec(postaListesi)
@@ -2297,19 +2299,17 @@ public class TopluPostalamaTest extends BaseTest {
 
 
         topluPostaladiklarimPage
-                .evrakListesiYazdirPdfKontrolu(konu, evrakNo1816, icerik);
-//                .evrakListesiOrjinaliYazdirPdfKontrolu(konu, evrakNo1816, icerik); // pdf te elemenler bulunamıyor
+                .evrakListesiYazdirPdfKontrolu(konu, evrakNo1816, icerik)
+                .evrakListesiOrjinaliYazdirPdfKontrolu(konu, evrakNo1816, icerik); // pdf te elemenler bulunamıyor
 
         pttRaporuPage
                 .openPage()
                 .aramaDetaylariPanelAc()
                 .sorgula()
                 .tabloKontrolEt(geregi,evrakNo1816[0],gidisSekli,true)
-                .raporAl(); //rapor kontrolü yapılacal
+                .tabloKontrolEt(geregi,evrakNo1816[1],gidisSekli,true);
+//                .raporAl(); //rapor kontrolü yapılacak
 
-
-        //TODO
-        //20
     }
 
 }
