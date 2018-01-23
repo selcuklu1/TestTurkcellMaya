@@ -135,7 +135,6 @@ public class dumpTest extends BaseTest {
                 .selectLov("OPTİİM test");//,"Optiim TEST [Ağ (Network) Uzman Yardımcısı]", "Optiim Birim", "YGD");
 
 
-
         comboLov("input[id$='eklenecekKlasorlerLov:LovText']").selectLov();
 
     }

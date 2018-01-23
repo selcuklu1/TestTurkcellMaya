@@ -251,20 +251,12 @@ public class TopluPostaladiklarimPage extends MainPage {
 
     @Step("Evrak Listesi tablosunda Yazdır butonu tıklanır.")
     public TopluPostaladiklarimPage evrakListesiYazdir(String[] konu) {
-        sleep(1000);
         int size = $$("tbody[id='mainPreviewForm:dataTableId_data'] tr[data-ri]").size();
         for (int i = 0; i < size; i++) {
-
-//            tblEvrakListesi
-////            $$("tbody[id='mainPreviewForm:dataTableId_data'] tr[data-ri]")
-//                    .filterBy(Condition.matchesText("TC1816 20180119144150"))
-//                    .first()
-//                    .$x("//span[text() = 'Yazdır']/../../button").click();
-
             $$("tbody[id='mainPreviewForm:dataTableId_data'] tr[data-ri]")
                     .filterBy(Condition.text(konu[i]))
                     .first()
-                    .$x("descendant::span[text() = 'Yazdır']/../../button").click();
+                    .$x("descendant::button[descendant::span[. = 'Yazdır']]").click();
             evrakDetayiPopUpKontrolü();
             evrakDetayiYazdır(konu[i]);
             switchTo().window(1);
@@ -286,7 +278,8 @@ public class TopluPostaladiklarimPage extends MainPage {
             tblEvrakListesi
                     .filterBy(Condition.text(konu[i]))
                     .first()
-                    .$x("descendant::span[text() = 'Yazdır']/../../button").click();
+                    .$x("descendant::button[descendant::span[. = 'Yazdır']]").pressEnter();
+
             evrakDetayiPopUpKontrolü();
             evrakDetayiYazdır(konu[i]);
 
@@ -314,9 +307,10 @@ public class TopluPostaladiklarimPage extends MainPage {
             tblEvrakListesi
                     .filterBy(Condition.text(konu[i]))
                     .first()
-                    .$x("descendant::span[text() = 'Orjinalini Yazdır']/../../button[2]").click();
+                    .$x("descendant::button[descendant::span[. = 'Orjinalini Yazdır']]").pressEnter();
             evrakDetayiPopUpKontrolü();
             evrakDetayiOrjinaliYazdır(konu[i]);
+            switchTo().window(1);
             sleep(3000);
             pdfKontrol
                     .PDFAlanKontrolleriFF(konu[i], evrakNo[i], icerik[i]);
@@ -392,22 +386,16 @@ public class TopluPostaladiklarimPage extends MainPage {
         return ele;
     }
 
-    @Step("Evrak Listesi tablosunda Yazdır butonu tıklanır.")
+    @Step("Evrak Listesi tablosunda Orjinalini Yazdır butonu tıklanır.")
     public TopluPostaladiklarimPage evrakListesiOrjinaliYazdir(String[] konu) {
-        sleep(1000);
         int size = $$("tbody[id='mainPreviewForm:dataTableId_data'] tr[data-ri]").size();
         for (int i = 0; i < size; i++) {
-//            tblEvrakListesi
-//                    .filterBy(Condition.text(konu[i]))
-//                    .first()
-//                    .$x("//span[text() = 'Orjinalini Yazdır']/../../button").click();
-
             $$("tbody[id='mainPreviewForm:dataTableId_data'] tr[data-ri]")
                     .filterBy(Condition.text(konu[i]))
                     .first()
-                    .$x("descendant::span[text() = 'Orjinalini Yazdır']/../../button").click();
+                    .$x("descendant::button[descendant::span[. = 'Orjinalini Yazdır']]").pressEnter();
             evrakDetayiPopUpKontrolü();
-            evrakDetayiYazdır(konu[i]);
+            evrakDetayiOrjinaliYazdır(konu[i]);
             switchTo().window(1);
             closeNewWindow();
             switchTo().window(0);
@@ -652,22 +640,8 @@ public class TopluPostaladiklarimPage extends MainPage {
             SelenideElement altAntetAdresAlaniPDF = $(By.xpath("//div[@id='viewer']/div[@class='page']//div[.='Ankara Üniversitesi Ankütek Teknopark E Blok Kat:1']"));
             SelenideElement altAntetTelefonAlaniPDF = $(By.xpath("//div[@id='viewer']/div[@class='page']//div[.='Tel: 0312 222 22 22']"));
             SelenideElement altAntetWebSitesiAlaniPDF = $(By.xpath("//div[@id='viewer']/div[@class='page']//div[.='Web: www.turksat.com.tr']"));
-//
-//            SelenideElement konuAlaniPDF1 = $x("//*[@id='viewer']/xhtml:div/xhtml:div[2]/xhtml:div[9]");
-//            SelenideElement evrakNoAlaniPDF1 = $x("//*[@id='viewer']/xhtml:div/xhtml:div[2]/xhtml:div[5]");
-//            SelenideElement icerikAlaniPDF1 = $(By.xpath("//*[@id='viewer']/xhtml:div/xhtml:div[2]/xhtml:div[11]"));
-//            SelenideElement altAntetAdresAlaniPDF1 = $(By.xpath("//*[@id='viewer']/xhtml:div/xhtml:div[2]/xhtml:div[16]"));
-//            SelenideElement altAntetTelefonAlaniPDF1 = $(By.xpath("//*[@id='viewer']/xhtml:div/xhtml:div[2]/xhtml:div[17]"));
-//            SelenideElement altAntetWebSitesiAlaniPDF1 = $(By.xpath("//*[@id='viewer']/xhtml:div/xhtml:div[2]/xhtml:div[18]"));
 
             String evraNoPDF = evrakNoAlaniPDF.getText();
-
-//            System.out.println("Gelen Sayı : " + evrakNoAlaniPDF1.getText());
-//            System.out.println("Gelen Konu : " + konuAlaniPDF1.getText());
-//            System.out.println("Gelen İcerik : " + icerikAlaniPDF1.getText());
-//            System.out.println("Gelen Alt Antet Adres : " + altAntetAdresAlaniPDF1.getText());
-//            System.out.println("Gelen Alt Antet Telefon : " + altAntetTelefonAlaniPDF1.getText());
-//            System.out.println("Gelen Alt Antet Web Sitesi : " + altAntetWebSitesiAlaniPDF1.getText());
 
             System.out.println("Beklenen Sayı : " + evrakNo);
             System.out.println("Gelen Sayı : " + evrakNoAlaniPDF.getText());
