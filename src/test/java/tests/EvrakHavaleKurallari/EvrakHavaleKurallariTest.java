@@ -135,9 +135,12 @@ public class EvrakHavaleKurallariTest extends BaseTest {
 
         //Test bittikten sonra datamızı siliyoruz. Bir sonraki koşumda hata almamamız için.
         evrakHavaleKurallariYonetimiPage
-                .openPage()
                 .ara()
                 .sil(kuralAdi2, "Konu")
+                .islemOnayiEvet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+        evrakHavaleKurallariYonetimiPage
+                .sil(kuralAdi, "Konu")
                 .islemOnayiEvet()
                 .islemMesaji().basariliOlmali(basariMesaji);
 

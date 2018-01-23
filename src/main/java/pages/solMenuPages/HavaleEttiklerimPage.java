@@ -44,6 +44,13 @@ public class HavaleEttiklerimPage extends MainPage {
         return this;
     }
 
+    @Step("Kişi listesinde \"{kisi}\" seçmeye dene")
+    public HavaleEttiklerimPage havaleYapKisiSecmeyeDene(String kisi) {
+        txtHavaleYapKisi.type(kisi).getTitleItems().filterBy(text(kisi)).first().click();
+        return this;
+    }
+
+
     @Step("Kullanıcı listesi doldur")
     public HavaleEttiklerimPage havaleYapKullaniciListesiDoldur(String kullaniciListesi) {
 //        txtHavaleYapKullaniciListesi.selectLov(kullaniciListesi);

@@ -130,7 +130,7 @@ public class GizlilikKleransiTest extends BaseTest {
                 .filtrelerdeAlaniDoldur("Bitiş Tarihi", evrakTarihi, Keys.ENTER);
         havaleEttiklerimPage.gizlilikRaporSec(konuKodu, geldigiYer, evrakTarihi)
                 .havaleYap()
-                .havaleYapKisiDoldur(kisi)
+                .havaleYapKisiSecmeyeDene(kisi)
                 .islemMesaji().dikkatOlmali(uyariMesaj1);
 
         havaleEttiklerimPage
