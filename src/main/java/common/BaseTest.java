@@ -28,6 +28,7 @@ import pages.LoginPage;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetFramework;
 
+import java.io.File;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Method;
 import java.net.URL;
@@ -272,15 +273,23 @@ public class BaseTest extends BaseLibrary {
             /*DesiredCapabilities capabilities = DesiredCapabilities.chrome();
             capabilities.setPlatform(Platform.WINDOWS);
             capabilities.setVersion("151");*/
+
             Map<String, Object> prefs = new HashMap<String, Object>();
-            prefs.put("download.default_directory", TestData.docPathWindows);
+            prefs.put("download.default_directory",  System.getProperty("user.dir")+ File.separator + "externalFiles" + File.separator + "downloadFiles");
             ChromeOptions options = new ChromeOptions();
+            options.setExperimentalOption("prefs", prefs);
+
+
+
+           /* Map<String, Object> prefs = new HashMap<String, Object>();
+            prefs.put("download.default_directory", TestData.docPathWindows);
+            ChromeOptions options = new ChromeOptions();*/
             options.setCapability(CapabilityType.PLATFORM_NAME, Platform.WINDOWS);
             options.setCapability(CapabilityType.BROWSER_VERSION, "151");
             options.addArguments("disable-infobars");
             options.setAcceptInsecureCerts(true);
             //options.setExperimentalOption("download.default_directory", downloadPath);
-            options.setExperimentalOption("prefs", prefs);
+//            options.setExperimentalOption("prefs", prefs);
 
             WebDriver driver = Configuration.remote == null ?
                     new EventFiringWebDriver(new ChromeDriver(options)).register(new DriverEventListener())
