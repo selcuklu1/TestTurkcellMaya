@@ -5,6 +5,7 @@ import data.User;
 import galen.GalenControl;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
+import org.openqa.selenium.Keys;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -39,7 +40,7 @@ public class OlurYazisiIslemleriTest extends BaseTest {
     User user2 = new User("user2", "123", "User2 TEST", "AnaBirim1", "Ağ (Network) Uzmanı");
     User user3 = new User("user3", "123", "User3 TEST", "AnaBirim1", "Ağ (Network) Uzmanı");
     User optiim = new User("optiim", "123", "Optiim TEST", "Optiim Birim", "Ağ (Network) Uzman Yardımcısı");
-    //User optiim = new User("ztekin", "123", "Zübeyde TEKİN", "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ", "BİLİŞİM HİZMETLERİ VE UYDU PAZARLAMA GENEL MÜDÜR");
+    User ztekin = new User("ztekin", "123", "Zübeyde TEKİN", "Optiim Birim", "Altyapı ve Sistem Yönetim Uzmanı");
 
     OlurYazisiOlusturPage olurYazisiOlusturPage;
     AltTabs altTabs;
@@ -118,9 +119,7 @@ public class OlurYazisiIslemleriTest extends BaseTest {
         step4();
         step5();
         step6();
-        //step7();
-        //step7 da var kaldırılmalı
-        bilgilerTab.kaldiralacakKlasorleriSec("Diğer");
+        step7();
         step8_12();
 
         //Step13
@@ -132,7 +131,8 @@ public class OlurYazisiIslemleriTest extends BaseTest {
                 .bilgiTemizle()
                 .geregiTemizle();
 
-        olurYazisiOlusturPage2.editorTab().openTab();
+        //ilk seferde tıklamasına rağmen açılmıyor sayfa, bu sebeb ile iki kere openTab kullanılıdı
+        olurYazisiOlusturPage2.editorTab().openTab(true);
 
     }
 
@@ -161,7 +161,8 @@ public class OlurYazisiIslemleriTest extends BaseTest {
     public void step4(){
         editorTab = olurYazisiOlusturPage2.editorTab();
         editorTab.openTab().getEditor().type("editör tekst");
-        bilgilerTab.openTab().konuKoduTemizle();
+        bilgilerTab.openTab().konuKoduTemizle()
+                    .konuDoldur("asdsad").getKonuKodu().sendKeys(Keys.TAB);
         olurYazisiOlusturPage2.pageButtons().imzalaButonaTikla()
                 .islemMesaji().uyariOlmali("Zorunlu alanları doldurunuz");
         //Evrak konusu boş olamaz!
@@ -189,6 +190,9 @@ public class OlurYazisiIslemleriTest extends BaseTest {
     public void step7(){
         bilgilerTab.openTab().kaldiralacakKlasorleriSec("Diğer")
                 .onayAkisiTemizle();
+        olurYazisiOlusturPage2.pageButtons()
+                .evrakPageButtons().evrakKaydet()
+                .islemMesaji().basariliOlmali();
         olurYazisiOlusturPage2.pageButtons().evrakKaydetVeOnayaSunTikla()
                 .islemMesaji().uyariOlmali("Zorunlu alanları doldurunuz");
         //Evrak konusu boş olamaz!
@@ -207,10 +211,12 @@ public class OlurYazisiIslemleriTest extends BaseTest {
         bilgilerTab.anlikOnayAkisKullaniciVeTipiSec(user2, IMZALAMA)
                 .anlikOnayAkisKullaniciVeTipiSec(user3, IMZALAMA)
                 .anlikOnayAkisKullaniciVeTipiSec(optiim, IMZALAMA)
+                .anlikOnayAkisKullaniciVeTipiSec(ztekin, IMZALAMA)
                 .kullanButonaTikla()
                 .onayAkisiSecilenKullaniciKontrolEt(user2, IMZALAMA)
                 .onayAkisiSecilenKullaniciKontrolEt(user3, IMZALAMA)
-                .onayAkisiSecilenKullaniciKontrolEt(optiim, IMZALAMA);
+                .onayAkisiSecilenKullaniciKontrolEt(optiim, IMZALAMA)
+                .onayAkisiSecilenKullaniciKontrolEt(ztekin, IMZALAMA);
         return this;
     }
     //endregion

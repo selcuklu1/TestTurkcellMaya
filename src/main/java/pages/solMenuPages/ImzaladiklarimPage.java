@@ -18,7 +18,7 @@ import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 public class ImzaladiklarimPage extends MainPage {
 
-    //SelenideElement tblImzaladiklarim = $(By.id("mainInboxForm:inboxDataTable_data"));
+    //SelenideElement tblImzaladiklarimEvraklar = $(By.id("mainInboxForm:inboxDataTable_data"));
     SelenideElement tabEvrakGecmisi = $(By.xpath("//*[text()[contains(.,'Evrak Geçmişi')]]"));
     SelenideElement btnIlkEvrak = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
     SelenideElement tabEvrakOnizleme = $(By.id("mainPreviewForm:evrakOnizlemeTab"));
@@ -31,7 +31,7 @@ public class ImzaladiklarimPage extends MainPage {
 
     SelenideElement txtBaslangicTarihi = $x("//label[normalize-space(text())='Başlangıç Tarihi :']/../../following-sibling::td//input");
     SelenideElement txtBitisTarihi = $x("//label[normalize-space(text())='Bitiş Tarihi :']/../../following-sibling::td//input");
-    ElementsCollection tblImzaladiklarim = $$("tbody[id='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
+    ElementsCollection tblImzaladiklarimEvraklar = $$("tbody[id='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
     SelenideElement btnGeriAl = $x("//span[contains(@class, 'evrakGeriAl')]/..");
     SelenideElement txtGeriAlAciklama = $(By.id("mainPreviewForm:evrakGeriAlInputTextareaId"));
     SelenideElement btnGeriAlOnay = $x("//div[@class='form-buttons']//span[. = 'Geri Al']/..");
@@ -39,6 +39,15 @@ public class ImzaladiklarimPage extends MainPage {
     SelenideElement filtrePanelHeader = $("div[id='mainInboxForm:inboxDataTable:filtersAccordion'] > h3");
 
     ElementsCollection evrakSecButonlar = $$("[id='mainPreviewForm:onizlemeRightTab:onizlemeRightTab'] td");
+
+
+    //Önizleme
+    SelenideElement tabEvrakEkleri = $(By.xpath("//*[contains(text(),'Evrak Ekleri')]"));
+    SelenideElement tabIlgiBilgileri = $(By.xpath("//*[contains(text(),'İlgi Bilgileri')]"));
+    SelenideElement tabIlisikBilgileri = $(By.xpath("//*[contains(text(),'İlişik Bilgileri')]"));
+    SelenideElement accordionEvrakEkleri = $("[id^='mainPreviewForm:j_idt'] [id*='accpnl:0'] [class='onizlemeFrame']");
+    SelenideElement accordionIlgiBilgileri = $("[id^='mainPreviewForm:j_idt'] [id*='accpnlI:0'] [class='onizlemeFrame']");
+    SelenideElement accordionIlisikBilgileri = $("[id^='mainPreviewForm:j_idt'] [id*='accpnlIlisik:0'] [class='onizlemeFrame']");
 
 
     @Step("Imzaladiklarim Sayfasini aç")
@@ -160,7 +169,7 @@ public class ImzaladiklarimPage extends MainPage {
         for (int i = 0; i < kisiselPages.size(); i++) {
             kisiselPages.get(i).click();
 
-            SelenideElement postaListesi = tblImzaladiklarim
+            SelenideElement postaListesi = tblImzaladiklarimEvraklar
                     .filterBy(text("Konu: " + konu))
                     .filterBy(text("Gideceği Yer: " + gidecegiYer))
                     .filterBy(text("Evrak Tarihi: " + evrakTarihi))
@@ -193,6 +202,75 @@ public class ImzaladiklarimPage extends MainPage {
     @Step("Filtre panelini aç")
     public ImzaladiklarimPage filtrePanelAc() {
         filtrePanelHeader.click();
+        return this;
+    }
+
+    @Step("İmzaladıklarım listesinden evrak önizlemede aç")
+    public ImzaladiklarimPage konuyaGoreEvrakOnizlemedeAc(String konu) {
+
+        tblImzaladiklarimEvraklar
+                .filterBy(Condition.text(konu))
+                .get(0)
+                .$("[id$='evrakTable']").click();
+
+        return this;
+    }
+
+    @Step("İmzaladıklarımlistesinde evrak kontrolu")
+    public ImzaladiklarimPage konuyaGoreEvrakKontrol(String konu) {
+
+        boolean durum = tblImzaladiklarimEvraklar
+                .filterBy(Condition.text(konu))
+                .size() > 0;
+
+        Assert.assertEquals(durum, true);
+
+        return this;
+    }
+
+    @Step("Evrak Ek/İlgi/İlişikler tablarının geldiği kontrolu")
+    public ImzaladiklarimPage tabKontrolleri() {
+
+        Assert.assertEquals(tabEvrakEkleri.isDisplayed(), true);
+        Assert.assertEquals(tabIlgiBilgileri.isDisplayed(), true);
+        Assert.assertEquals(tabIlisikBilgileri.isDisplayed(), true);
+
+        return this;
+    }
+
+    @Step("Parafladıklarım/Evrak Ekleri tabını aç")
+    public ImzaladiklarimPage tabEvrakEkleriAc() {
+        tabEvrakEkleri.click();
+        return this;
+    }
+
+    @Step("Parafladıklarım/İlgi Bilgieri tabını aç")
+    public ImzaladiklarimPage tabIlgiBilgileriAc() {
+        tabIlgiBilgileri.click();
+        return this;
+    }
+
+    @Step("Parafladıklarım/İlişik Bilgieri tabını aç")
+    public ImzaladiklarimPage tabIlisikBilgileriAc() {
+        tabIlisikBilgileri.click();
+        return this;
+    }
+
+    @Step("Evrak önizleme/Evrak Ekleri Accordion kontrolu")
+    public ImzaladiklarimPage evrakEkleriAccordionKontrol() {
+        Assert.assertEquals(accordionEvrakEkleri.isDisplayed(), true);
+        return this;
+    }
+
+    @Step("Evrak önizleme/İlgi Bilgileri Accordion kontrolu")
+    public ImzaladiklarimPage ilgiBilgieriAccordionKontrol() {
+        Assert.assertEquals(accordionIlgiBilgileri.isDisplayed(), true);
+        return this;
+    }
+
+    @Step("Evrak önizleme/İlişik Bilgileri Accordion kontrolu")
+    public ImzaladiklarimPage ilisikBilgieriAccordionKontrol() {
+        Assert.assertEquals(accordionIlisikBilgileri.isDisplayed(), true);
         return this;
     }
 }

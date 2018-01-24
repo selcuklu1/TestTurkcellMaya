@@ -215,7 +215,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         birimHavaleEdilenlerPage
                 .openPage()
                 .evrakNoIleTabloKontrolu(evrakNO328);
-        logout();
+//        logout();
         login(optiim);
 
         //TeslimAlınanBelgeler sayfasında yetkili bir kullanıcı ile giriş yapılacak.
@@ -264,7 +264,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .tabloKontrolu(evrakNO321);
 //                .islemMesaji().basariliOlmali(basariMesaji);
 
-        logout();
+//        logout();
         login(mbozdemir);
 
         kaydedilenGelenEvrakPage
@@ -568,7 +568,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .evrakNoIleTablodanEvrakSecme(evrakNO326)
                 .evrakOnizlemeEklenenUstYaziKontrolu(pdfText);
 
-        logout();
+//        logout();
         login(optiim);
         teslimAlinmayiBekleyenlerPage
                 .openPage()
