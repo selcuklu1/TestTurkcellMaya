@@ -280,7 +280,7 @@ public class BaseTest extends BaseLibrary {
             options.addArguments("disable-infobars");
             options.setAcceptInsecureCerts(true);
             //options.setExperimentalOption("download.default_directory", downloadPath);
-            //options.setExperimentalOption("prefs", prefs);
+            options.setExperimentalOption("prefs", prefs);
 
             WebDriver driver = Configuration.remote == null ?
                     new EventFiringWebDriver(new ChromeDriver(options)).register(new DriverEventListener())
