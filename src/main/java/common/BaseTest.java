@@ -28,12 +28,16 @@ import pages.LoginPage;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetFramework;
 
+import java.io.File;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
+import static com.codeborne.selenide.Selenide.$;
 import static data.TestData.belgenetURL;
 import static io.qameta.allure.util.ResultsUtils.firstNonEmpty;
 
@@ -86,6 +90,8 @@ public class BaseTest extends BaseLibrary {
 
         // System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, "/dev/null");
 //      getBrowserName();
+
+        //Configuration.remote = "http://localhost:4444/wd/hub";
 
         /*System.out.println("remote: " + Configuration.remote);
         System.out.println("browser: " + Configuration.browser);
@@ -205,8 +211,9 @@ public class BaseTest extends BaseLibrary {
      * @return downloadPath
      */
     public String useFirefoxWindows151(String testName) {
+        String downloadPath = TestData.docDownloadPathWindows + testName;
         try {
-            String downloadPath = TestData.docDownloadPathWindows + "\\" + testName;
+
             //Capabilities caps = getCapabilities();
             //caps.merge(options);
             FirefoxOptions options = new FirefoxOptions();
@@ -258,20 +265,23 @@ public class BaseTest extends BaseLibrary {
      * @return downloadPath
      */
     public String useChromeWindows151(String testName) {
+        String downloadPath = TestData.docDownloadPathWindows + testName;
+        //downloadPath = System.getProperty("user.dir")+ File.separator + "target" + File.separator + testName;
         try {
-            String downloadPath = TestData.docDownloadPathWindows + "\\" + testName;
             //Capabilities caps = getCapabilities();
             //caps.merge(options);
             /*DesiredCapabilities capabilities = DesiredCapabilities.chrome();
             capabilities.setPlatform(Platform.WINDOWS);
             capabilities.setVersion("151");*/
+
+            Map<String, Object> prefs = new HashMap<String, Object>();
+            prefs.put("download.default_directory",  downloadPath);
             ChromeOptions options = new ChromeOptions();
+            options.setExperimentalOption("prefs", prefs);
             options.setCapability(CapabilityType.PLATFORM_NAME, Platform.WINDOWS);
             options.setCapability(CapabilityType.BROWSER_VERSION, "151");
             options.addArguments("disable-infobars");
             options.setAcceptInsecureCerts(true);
-            options.setExperimentalOption("download.default_directory", downloadPath);
-
             WebDriver driver = Configuration.remote == null ?
                     new EventFiringWebDriver(new ChromeDriver(options)).register(new DriverEventListener())
                     : new EventFiringWebDriver(new RemoteWebDriver(new URL(Configuration.remote), options)).register(new DriverEventListener());

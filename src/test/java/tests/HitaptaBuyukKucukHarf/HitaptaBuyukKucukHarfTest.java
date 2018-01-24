@@ -1,6 +1,7 @@
 package tests.HitaptaBuyukKucukHarf;
 
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.WebDriverRunner;
 import common.BaseTest;
 import data.TestData;
@@ -57,7 +58,7 @@ public class HitaptaBuyukKucukHarfTest extends BaseTest {
 
     @BeforeMethod
     public void setUp() throws Exception {
-        useFirefox();
+//        useFirefox();
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -184,11 +185,14 @@ public class HitaptaBuyukKucukHarfTest extends BaseTest {
         //sistemde kayıtlı dağıtım planı olmalı, dağıtım planının içeriğinde küçük harfli birim, büyük harfli kurum olmalı
 //        DAĞITIM YERLERİNE
 //        login(user1);
+
+        String d = useFirefoxWindows151("TS2090");
+        System.out.println("Download path:" + d);
+
         String uygulanacakDeger;
         User user = optiim;
 
         login(user);
-
         SistemSabitleriPage sistemSabitleriPage = new SistemSabitleriPage().openPage();
         sistemSabitleriPage.sorgulamaVeFiltreleme().alanDoldur("Ad", "Dağıtım Planı Hitap").butonaTikla("Ara");
 
@@ -234,7 +238,7 @@ public class HitaptaBuyukKucukHarfTest extends BaseTest {
         login(ztekin);
         new SolMenu().openMenu(SolMenuData.BirimEvraklari.PostalanacakEvraklar);
         new MainPage().searchTable().findRows(text(konu)).getFoundRow().click();*/
-
+        Selenide.close();
 
     }
 
