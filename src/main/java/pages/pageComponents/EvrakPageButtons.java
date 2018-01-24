@@ -75,7 +75,7 @@ public class EvrakPageButtons extends MainPage {
 
     @Step("İmzala butona tıkla")
     public EvrakPageButtons imzalaButonaTikla() {
-        getImzalaButton().pressEnter();
+        getImzalaButton().shouldBe(visible).click();
         return this;
     }
 
@@ -132,7 +132,7 @@ public class EvrakPageButtons extends MainPage {
 
     @Step("Kaydet ve Onaya Sun")
     public EvrakPageButtons evrakKaydetVeOnayaSunTikla(){
-        getEvrakKaydetVeOnayaSun().click();
+        getEvrakKaydetVeOnayaSun().shouldBe(visible).click();
         return this;
     }
     //endregion
