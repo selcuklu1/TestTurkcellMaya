@@ -639,7 +639,7 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("Fiziksel Ek Tabı Açıklama Ekle")
     public GelenEvrakKayitPage fizikselEkTabViewAciklamaEkle() {
-        btnEvrakFizikselEkTabViewAciklamaEkle.click();
+       clickJs(btnEvrakFizikselEkTabViewAciklamaEkle);
         return this;
     }
 
