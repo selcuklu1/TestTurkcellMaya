@@ -833,7 +833,7 @@ public class BaseLibrary extends ElementsContainer{
 
 
 
-    @Step("\"{filename}\" isimli dosya silindi")
+    @Step("\"{fileName}\" isimli dosya silindi")
     public BaseLibrary deleteSpecificFile(String fileName){
 
         File folder = new File("C://users//" + System.getProperty("user.name") + "//Downloads//");
