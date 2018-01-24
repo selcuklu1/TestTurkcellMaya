@@ -233,8 +233,8 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 //        String evrakNo = evrakNO321;
 //        String evrakNo1 = evrakNO328;
 
-        //String remoteDownloadPath = useChromeWindows151("TS1401");//getDownloadPath();
-        String remoteDownloadPath = "C:\\Users\\optiim\\Downloads\\";
+        String remoteDownloadPath = useChromeWindows151("TS1401");//getDownloadPath();
+        //String remoteDownloadPath = "C:\\Users\\optiim\\Downloads\\";
         System.out.println(remoteDownloadPath);
 
         String geldigiYer = "Kurum";
