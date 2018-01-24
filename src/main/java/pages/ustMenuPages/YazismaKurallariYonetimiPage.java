@@ -1,6 +1,7 @@
 package pages.ustMenuPages;
 
 import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
@@ -21,7 +22,7 @@ public class YazismaKurallariYonetimiPage extends MainPage {
     SelenideElement chkVekaletSeviyesi = $(By.id("grupBirimTipleriEditorForm:grupTipiVekaletSeviyesiId"));
     SelenideElement chkSonImzaSeviyesi = $(By.id("grupBirimTipleriEditorForm:grupTipiSonImzaSeviyesiId"));
     SelenideElement btnGrupBirimTipleriKaydet = $(By.id("grupBirimTipleriEditorForm:grupTipiKaydet_id"));
-    ElementsCollection tableYazismaKurallari = $$(By.id("grupBirimTipleriListingForm:grupBirimTipleriDataTable_data"));
+    ElementsCollection tableYazismaKurallari = $$("tbody[id='grupBirimTipleriListingForm:grupBirimTipleriDataTable_data'] > tr[role='row']");
     SelenideElement btnYazismaKuraliSilEvet = $(By.id("baseConfirmationDialog:confirmButton"));
 
     public YazismaKurallariYonetimiPage openPage() {
@@ -31,12 +32,14 @@ public class YazismaKurallariYonetimiPage extends MainPage {
 
     @Step("Yeni Yazışma Kuralı Ekle")
     public YazismaKurallariYonetimiPage yazismaKurallariEkle() {
+        Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", btnGrupBirimTipiEkle);
         btnGrupBirimTipiEkle.click();
         return this;
     }
 
     @Step("Birim Tipi seç")
     public YazismaKurallariYonetimiPage birimTipiSec(String birimTipi) {
+        Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", txtBirimTipi);
 
         txtBirimTipi.setValue(birimTipi);
         listBirimTipleri
@@ -131,39 +134,39 @@ public class YazismaKurallariYonetimiPage extends MainPage {
                 tableYazismaKurallari
                         .filterBy(text(birimTipi))
                         .get(0)
-                        .$(By.xpath("./tr/td[2]//span"))
+                        .$(By.xpath("./td[2]//span"))
                         .shouldHave(cssClass("true"));
             else
                 tableYazismaKurallari
                         .filterBy(text(birimTipi))
                         .get(0)
-                        .$(By.xpath("./tr/td[2]//span"))
+                        .$(By.xpath("./td[2]//span"))
                         .shouldHave(cssClass("false"));
 
             if (vekaletSeviyesi == true)
                 tableYazismaKurallari
                         .filterBy(text(birimTipi))
                         .get(0)
-                        .$(By.xpath("./tr/td[3]//span"))
+                        .$(By.xpath("./td[3]//span"))
                         .shouldHave(cssClass("true"));
             else
                 tableYazismaKurallari
                         .filterBy(text(birimTipi))
                         .get(0)
-                        .$(By.xpath("./tr/td[3]//span"))
+                        .$(By.xpath("./td[3]//span"))
                         .shouldHave(cssClass("false"));
 
             if (sonImzaSeviyesi == true)
                 tableYazismaKurallari
                         .filterBy(text(birimTipi))
                         .get(0)
-                        .$(By.xpath("./tr/td[4]//span"))
+                        .$(By.xpath("./td[4]//span"))
                         .shouldHave(cssClass("true"));
             else
                 tableYazismaKurallari
                         .filterBy(text(birimTipi))
                         .get(0)
-                        .$(By.xpath("./tr/td[4]//span"))
+                        .$(By.xpath("./td[4]//span"))
                         .shouldHave(cssClass("false"));
         } else {
             tableYazismaKurallari
@@ -178,22 +181,48 @@ public class YazismaKurallariYonetimiPage extends MainPage {
 
     @Step("Yazışma Kuralı sil")
     public YazismaKurallariYonetimiPage yazismaKuraliSil(String birimTipi) {
-        tableYazismaKurallari
+        SelenideElement currentBtnItem = tableYazismaKurallari
                 .filterBy(text(birimTipi))
                 .get(0)
-                .$("button[id^='grupBirimTipleriListingForm:grupBirimTipleriDataTable:'][id$='grupBirimTipleriButton']")
-                .click();
+                .$("button[id^='grupBirimTipleriListingForm:grupBirimTipleriDataTable:'][id$='grupBirimTipleriButton']");
+
+        Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", currentBtnItem);
+
+        currentBtnItem.click();
+
         btnYazismaKuraliSilEvet.click();
+        return this;
+    }
+
+    @Step("Yazışma Kuralı: {birimTipi} var ise sil")
+    public YazismaKurallariYonetimiPage yazismaKuraliSilEgerVarsa(String birimTipi) {
+        SelenideElement currentBtnItem = tableYazismaKurallari
+                .filterBy(text(birimTipi))
+                .get(0)
+                .$("button[id^='grupBirimTipleriListingForm:grupBirimTipleriDataTable:'][id$='grupBirimTipleriButton']");
+
+        if(currentBtnItem.exists()){
+            Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", currentBtnItem);
+            currentBtnItem.click();
+            btnYazismaKuraliSilEvet.click();
+        }
+
+
         return this;
     }
 
     @Step("Yazışma Kuralı Güncelle")
     public YazismaKurallariYonetimiPage yazismaKuraliGuncelle(String birimTipi) {
-        tableYazismaKurallari
+
+        SelenideElement currentBtnItem = tableYazismaKurallari
                 .filterBy(text(birimTipi))
                 .get(0)
-                .$("button[id^='grupBirimTipleriListingForm:grupBirimTipleriDataTable:'][id$=':grupBirimTipleriGuncelle_id']")
-                .click();
+                .$("button[id^='grupBirimTipleriListingForm:grupBirimTipleriDataTable:'][id$=':grupBirimTipleriGuncelle_id']");
+
+        Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", currentBtnItem);
+
+        currentBtnItem.click();
+
         return this;
     }
 

@@ -13,7 +13,7 @@ import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 
 public class ImzaBekleyenlerPage extends MainPage {
-    ElementsCollection tableKararIzlemeEvraklar = $$("[id='mainInboxForm:inboxDataTable_data'] > tr[role='row']");// span[class='ui-chkbox-icon']");
+    ElementsCollection tblImzaBekleyenEvraklar = $$("[id='mainInboxForm:inboxDataTable_data'] > tr[role='row']");// span[class='ui-chkbox-icon']");
     SelenideElement btnIadeEt = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:4:cmdbutton"));
     SelenideElement btnDosyaEkle = $(By.xpath("//input[@id='mainPreviewForm:fileUploadIadeEk_input']"));
     SelenideElement txtNot = $(By.id("mainPreviewForm:notTextArea_id"));
@@ -87,7 +87,7 @@ public class ImzaBekleyenlerPage extends MainPage {
     }
     @Step("İmza bekleyenler sayfasında evrağın doğru konu ve no ile listelendiği görülür.")
     public ImzaBekleyenlerPage dogruKonuVeNoKontrol(String toplantiNo, String konu) {
-        tableKararIzlemeEvraklar
+        tblImzaBekleyenEvraklar
                 .filterBy(Condition.text(toplantiNo)).filterBy(Condition.text(konu)).get(0).shouldBe(visible);
         takeScreenshot();
         return this;
@@ -100,7 +100,7 @@ public class ImzaBekleyenlerPage extends MainPage {
             sleep(i);
             i++;
         }
-        tableKararIzlemeEvraklar.
+        tblImzaBekleyenEvraklar.
                 filterBy(Condition.text(toplantiNo))
                 .filterBy(Condition.text(konu))
                 .first().click();
@@ -109,20 +109,20 @@ public class ImzaBekleyenlerPage extends MainPage {
 
     @Step("Evrak olmadığı görünür")
     public ImzaBekleyenlerPage evrakOlmadigiGorme(String toplantiNo, String konu, boolean vardir) {
-        tableKararIzlemeEvraklar.filterBy(Condition.text(toplantiNo)).get(0).shouldBe(not(Condition.exist));
+        tblImzaBekleyenEvraklar.filterBy(Condition.text(toplantiNo)).get(0).shouldBe(not(Condition.exist));
         ;
         return this;
     }
 
     @Step("Evrak olmadığı görülür : \"{evrakNo}\" ")
     public ImzaBekleyenlerPage evrakOlmadigiGorme(String evrakNo) {
-        tableKararIzlemeEvraklar.filterBy(Condition.text(evrakNo)).shouldHaveSize(0);
+        tblImzaBekleyenEvraklar.filterBy(Condition.text(evrakNo)).shouldHaveSize(0);
         return this;
     }
 
     @Step("Evrak  kontrolü : \"{evrakNo}\" ")
     public ImzaBekleyenlerPage evrakNoKontrolu(String evrakNo) {
-        tableKararIzlemeEvraklar.filterBy(Condition.text(evrakNo)).shouldHaveSize(1);
+        tblImzaBekleyenEvraklar.filterBy(Condition.text(evrakNo)).shouldHaveSize(1);
         return this;
     }
 
@@ -207,25 +207,36 @@ public class ImzaBekleyenlerPage extends MainPage {
 
     @Step("Evrak konusuna göre İçerik tıklama : {konu} ")
     public ImzaBekleyenlerPage evrakKonusunaGoreIcerikTiklama(String konu) {
-        tableKararIzlemeEvraklar.filterBy(Condition.text(konu)).first()
+        tblImzaBekleyenEvraklar.filterBy(Condition.text(konu)).first()
                 .$("[id^='mainInboxForm:inboxDataTable'][id$='detayGosterButton']").click();
         return this;
     }
 
     @Step("Evrak konusuna göre İçerik tıklama : \"{konu}\" ")
     public ImzaBekleyenlerPage evrakKonusunaGoreKontrolVeTiklama(String konu) {
-        tableKararIzlemeEvraklar.filterBy(Condition.text(konu))
+        tblImzaBekleyenEvraklar.filterBy(Condition.text(konu))
                 .first()
                 .click();
         return this;
     }
 
-    @Step("Evrakın İmza Bekleyenler menüsünde olduğunu görme")
+    @Step("İmza Bekleyenler listesinde evrak kontrolu")
     public ImzaBekleyenlerPage evrakKonusunaGoreKontrol(String konu) {
-        boolean durum = tableKararIzlemeEvraklar
+        boolean durum = tblImzaBekleyenEvraklar
                 .filterBy(Condition.text(konu))
                 .size() > 0;
         Assert.assertEquals(durum, true);
+        return this;
+    }
+
+    @Step("İmza Bekleyenler listesinden evrak önizlemede aç")
+    public ImzaBekleyenlerPage konuyaGoreEvrakOnizlemedeAc(String konu) {
+
+        tblImzaBekleyenEvraklar
+                .filterBy(Condition.text(konu))
+                .get(0)
+                .$("[id$='evrakTable']").click();
+
         return this;
     }
 

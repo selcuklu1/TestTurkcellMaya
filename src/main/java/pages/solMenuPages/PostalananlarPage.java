@@ -247,7 +247,9 @@ public class PostalananlarPage extends MainPage {
 
     @Step("Imza Popup kapat")
     public PostalananlarPage btnImzaciPopupKapat() {
-        btnImzaciPopupKapat.click();
+            btnImzaciPopupKapat.exists();
+            btnImzaciPopupKapat.scrollTo();
+        clickJs(btnImzaciPopupKapat);
         return this;
     }
 
