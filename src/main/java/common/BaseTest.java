@@ -87,6 +87,8 @@ public class BaseTest extends BaseLibrary {
         // System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, "/dev/null");
 //      getBrowserName();
 
+        //Configuration.remote = "http://localhost:4444/wd/hub";
+
         /*System.out.println("remote: " + Configuration.remote);
         System.out.println("browser: " + Configuration.browser);
         System.out.println("url: " + Configuration.baseUrl);

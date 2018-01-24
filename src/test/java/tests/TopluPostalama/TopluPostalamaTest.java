@@ -1906,7 +1906,6 @@ public class TopluPostalamaTest extends BaseTest {
 //                "TC1812 2018012314155320180123141553", "TC1812 198641753210020180123141702"
 //        };
 
-        useFirefox();
         String[] konu = new String[]{
                 "TC1811 " + getSysDate(), "TC1811 " + createRandomNumber(12)
         };
@@ -2061,7 +2060,6 @@ public class TopluPostalamaTest extends BaseTest {
                 .openPage()
                 .topluPostaladiklarimEvrakKontrolu(konu[0]);
                 //.searchTable().searchInAllPages(true).findRows(text(konu[0])).getFoundRow().shouldBe(exist);
-        Selenide.close();
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -2259,7 +2257,6 @@ public class TopluPostalamaTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS1816 : Toplu Postaladıklarım Güncelleme İşlemleri (UC_POSTAYÖNETİMİ_004)")
     public void TS1816() throws IOException, AWTException {
-
         MainPage mainPage = new MainPage();
         TopluPostalanacakEvraklarPage topluPostalanacakEvraklarPage = new TopluPostalanacakEvraklarPage();
         PostaListesiPage postaListesiPage = new PostaListesiPage();
