@@ -101,7 +101,7 @@ public class EvrakPageButtons extends MainPage {
 
     @Step("Parafla butona tıkla")
     public EvrakPageButtons paraflaButonaTikla() {
-        getKoordineParaflaButton().click();
+        getParaflaButton().click();
         return this;
     }
 

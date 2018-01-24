@@ -30,6 +30,7 @@ public class EkIlgiTest extends BaseTest {
     KoordineParafladiklarimPage koordineParafladiklarimPage;
     ImzaBekleyenlerPage imzaBekleyenlerPage;
     ImzaladiklarimPage imzaladiklarimPage;
+    KoordineBekleyenlerPage koordineBekleyenlerPage;
 
     @BeforeMethod
     public void beforeTests(Method method) {
@@ -43,6 +44,7 @@ public class EkIlgiTest extends BaseTest {
         koordineParafladiklarimPage = new KoordineParafladiklarimPage();
         imzaBekleyenlerPage = new ImzaBekleyenlerPage();
         imzaladiklarimPage = new ImzaladiklarimPage();
+        koordineBekleyenlerPage = new KoordineBekleyenlerPage();
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -650,7 +652,7 @@ public class EkIlgiTest extends BaseTest {
 
 
 
-        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR); //mbozdemir
+/*        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR); //mbozdemir
 
         evrakOlusturPage
                 .openPage()
@@ -745,8 +747,8 @@ public class EkIlgiTest extends BaseTest {
 
         parafladiklarimPage
                 .openPage()
-                .konuyaGoreEvrakKontrol("TS2025_EkIlgi_Senaryosu_20180122145731")
-                .konuyaGoreEvrakOnizlemedeAc("TS2025_EkIlgi_Senaryosu_20180122145731")
+                .konuyaGoreEvrakKontrol(evrakKonusu)
+                .konuyaGoreEvrakOnizlemedeAc(evrakKonusu)
                 .tabKontrolleri()
                 .tabEvrakEkleriAc()
                 .evrakEkleriAccordionKontrol()
@@ -759,45 +761,45 @@ public class EkIlgiTest extends BaseTest {
 
         parafBekleyenlerPage
                 .openPage()
-                .konuyaGoreEvrakKontrol("TS2025_EkIlgi_Senaryosu_20180122145731")
-                .konuyaGoreEvrakOnizlemedeAc("TS2025_EkIlgi_Senaryosu_20180122145731");
-   /*           .tabKontrolleri()
+                .konuyaGoreEvrakKontrol(evrakKonusu)
+                .konuyaGoreEvrakOnizlemedeAc(evrakKonusu);
+   *//*           .tabKontrolleri()
                 .tabEvrakEkleriAc()
                 .evrakEkleriAccordionKontrol()
                 .tabIlgiBilgileriAc()
                 .ilgiBilgileriAccordionKontrol()
                 .tabIlisikBilgileriAc()
-                .ilisikBilgileriAccordionKontrol();*/
+                .ilisikBilgileriAccordionKontrol();*//*
 
         evrakOlusturPage
                 .parafla();
 
         parafladiklarimPage
                 .openPage()
-                .konuyaGoreEvrakKontrol("TS2025_EkIlgi_Senaryosu_20180122145731")
-                .konuyaGoreEvrakOnizlemedeAc("TS2025_EkIlgi_Senaryosu_20180122145731")
+                .konuyaGoreEvrakKontrol(evrakKonusu)
+                .konuyaGoreEvrakOnizlemedeAc(evrakKonusu)
                 .tabKontrolleri()
                 .tabEvrakEkleriAc()
                 .evrakEkleriAccordionKontrol()
                 .tabIlgiBilgileriAc()
                 .ilgiBilgieriAccordionKontrol()
                 .tabIlisikBilgileriAc()
-                .ilisikBilgieriAccordionKontrol();
+                .ilisikBilgieriAccordionKontrol();*/
 
-        login(TestData.usernameZTEKIN, TestData.passwordZTEKIN);
+/*        login(TestData.usernameZTEKIN, TestData.passwordZTEKIN);
 
-        parafBekleyenlerPage
+        koordineBekleyenlerPage
                 .openPage()
-                .konuyaGoreEvrakKontrol("TS2025_EkIlgi_Senaryosu_20180122145731")
-                .konuyaGoreEvrakOnizlemedeAc("TS2025_EkIlgi_Senaryosu_20180122145731");
+                .konuyaGoreEvrakKontrol("TS2025_EkIlgi_Senaryosu_20180124100302")
+                .konuyaGoreEvrakOnizlemedeAc("TS2025_EkIlgi_Senaryosu_20180124100302");
 
         evrakOlusturPage
                 .koordineParafla();
 
         koordineParafladiklarimPage
                 .openPage()
-                .konuyaGoreEvrakKontrol("TS2025_EkIlgi_Senaryosu_20180122145731")
-                .konuyaGoreEvrakOnizlemedeAc("TS2025_EkIlgi_Senaryosu_20180122145731")
+                .konuyaGoreEvrakKontrol("TS2025_EkIlgi_Senaryosu_20180124100302")
+                .konuyaGoreEvrakOnizlemedeAc("TS2025_EkIlgi_Senaryosu_20180124100302")
                 .tabKontrolleri()
                 .tabEvrakEkleriAc()
                 .evrakEkleriAccordionKontrol()
@@ -810,23 +812,23 @@ public class EkIlgiTest extends BaseTest {
 
         imzaBekleyenlerPage
                 .openPage()
-                .evrakKonusunaGoreKontrol("TS2025_EkIlgi_Senaryosu_20180122145731")
-                .konuyaGoreEvrakOnizlemedeAc("TS2025_EkIlgi_Senaryosu_20180122145731");
+                .evrakKonusunaGoreKontrol("TS2025_EkIlgi_Senaryosu_20180124100302")
+                .konuyaGoreEvrakOnizlemedeAc("TS2025_EkIlgi_Senaryosu_20180124100302");
 
         evrakOlusturPage
                 .evrakImzala();
 
         imzaladiklarimPage
                 .openPage()
-                .konuyaGoreEvrakKontrol("TS2025_EkIlgi_Senaryosu_20180122145731")
-                .konuyaGoreEvrakOnizlemedeAc("TS2025_EkIlgi_Senaryosu_20180122145731")
+                .konuyaGoreEvrakKontrol("TS2025_EkIlgi_Senaryosu_20180124100302")
+                .konuyaGoreEvrakOnizlemedeAc("TS2025_EkIlgi_Senaryosu_20180124100302")
                 .tabKontrolleri()
                 .tabEvrakEkleriAc()
                 .evrakEkleriAccordionKontrol()
                 .tabIlgiBilgileriAc()
                 .ilgiBilgieriAccordionKontrol()
                 .tabIlisikBilgileriAc()
-                .ilisikBilgieriAccordionKontrol();
+                .ilisikBilgieriAccordionKontrol();*/
 
     }
 }
