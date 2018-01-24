@@ -94,9 +94,20 @@ public class EvrakPageButtons extends MainPage {
         return getButton("Parafla");
     }
 
+    @Step("Koordine Parafla butonu bul")
+    public SelenideElement getKoordineParaflaButton() {
+        return getButton("Koordine Parafla");
+    }
+
     @Step("Parafla butona tıkla")
     public EvrakPageButtons paraflaButonaTikla() {
-        getParaflaButton().click();
+        getKoordineParaflaButton().click();
+        return this;
+    }
+
+    @Step("Koordine Parafla butona tıkla")
+    public EvrakPageButtons koordineParaflaButonaTikla() {
+        getKoordineParaflaButton().click();
         return this;
     }
 
@@ -107,6 +118,15 @@ public class EvrakPageButtons extends MainPage {
         evrakImzaOnay();
         return this;
     }
+
+    @Step("Koordine Parafla")
+    public EvrakPageButtons evrakKoordineParafla() {
+        koordineParaflaButonaTikla();
+        sImzalaRadioSec();
+        evrakImzaOnay();
+        return this;
+    }
+
     //endregion
 
     @Step("Iade et")

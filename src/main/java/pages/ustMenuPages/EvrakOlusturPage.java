@@ -403,6 +403,14 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Kullanıcılar alanında \"{kullanici}\" seç")
+        public BilgilerTab kullanicilarDoldurWithDetail(String kullanici, String detail) {
+
+            txtOnayAkisiKullanicilar.type(kullanici).getDetailItems().filterBy(text(detail)).first().click();
+
+            return this;
+        }
+
         @Step("Otomatik Onay akışı tıklanır")
         public BilgilerTab otomatikOnayAkisiSec() {
             btnOtomatikOnayAkisi.click();

@@ -8,9 +8,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.pageComponents.EvrakPageButtons;
 import pages.pageComponents.TextEditor;
-import pages.solMenuPages.ParafBekleyenlerPage;
-import pages.solMenuPages.ParafladiklarimPage;
-import pages.solMenuPages.TaslakEvraklarPage;
+import pages.solMenuPages.*;
 import pages.ustMenuPages.EvrakOlusturPage;
 
 import java.lang.reflect.Method;
@@ -29,6 +27,9 @@ public class EkIlgiTest extends BaseTest {
     EvrakPageButtons evrakPageButtons;
     ParafladiklarimPage parafladiklarimPage;
     ParafBekleyenlerPage parafBekleyenlerPage;
+    KoordineParafladiklarimPage koordineParafladiklarimPage;
+    ImzaBekleyenlerPage imzaBekleyenlerPage;
+    ImzaladiklarimPage imzaladiklarimPage;
 
     @BeforeMethod
     public void beforeTests(Method method) {
@@ -39,7 +40,9 @@ public class EkIlgiTest extends BaseTest {
         evrakPageButtons = new EvrakPageButtons();
         parafladiklarimPage = new ParafladiklarimPage();
         parafBekleyenlerPage = new ParafBekleyenlerPage();
-
+        koordineParafladiklarimPage = new KoordineParafladiklarimPage();
+        imzaBekleyenlerPage = new ImzaBekleyenlerPage();
+        imzaladiklarimPage = new ImzaladiklarimPage();
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -629,7 +632,7 @@ public class EkIlgiTest extends BaseTest {
         String kullaniciParaflama = "Gökçe ŞAHİN";
         String kullaniciKoordine = "Zübeyde TEKİN";
         String kullaniciImzalama = "Yasemin Çakıl AKYOL";
-
+        String kullaniciDetail = "BİLİŞİM HİZMETLERİ VE UYDU PAZARLAMA GENEL MÜDÜR Y";
         String ekleriEvrakSayisi = "6345202-010.01-11088";
         String ekleriAciklamaDosya1 = "Ekleri_Dosya1_"+getSysDate();
         String pathDosya1 = getUploadPath() + "TS2025_dosya1.jpeg";
@@ -662,14 +665,14 @@ public class EkIlgiTest extends BaseTest {
                 .geregiDoldur(kurum, "Kurum")
                 .onayAkisiEkle()
 
-                .kullanicilarDoldur(kullaniciParaflama)
+                .kullanicilarDoldurWithDetail(kullaniciParaflama, kullaniciDetail)
                 .kullaniciyaKullaniciTipiSec(kullaniciParaflama, "PARAFLAMA")
 
                 .koordineliSec(true)
-                .kullanicilarDoldur(kullaniciKoordine)
+                .kullanicilarDoldurWithDetail(kullaniciKoordine, kullaniciDetail)
 
                 .koordineliSec(true)
-                .kullanicilarDoldur(kullaniciImzalama)
+                .kullanicilarDoldurWithDetail(kullaniciImzalama, kullaniciDetail)
                 .kullaniciyaKullaniciTipiSec(kullaniciImzalama, "IMZALAMA")
 
                 .kullan();
@@ -726,7 +729,7 @@ public class EkIlgiTest extends BaseTest {
                 .iliskiliSitemdeEklenenDosyaAdiKontrol(dosyaAdi3)
                 .iliskiliEkle()
                 .ekEkleDusukDpiPopupOnayi("Evet")
-                .listelenenEvraklaraDosyanınGeldigiKontrolu(dosyaAdi3, "Dosya Adı")
+                .listelenenEvraklaraDosyanınGeldigiKontrolu(iliskiliAciklamaDosya3, "Dosya Adı")
 
                 .sistemdeKayitliEvrakEkleTabiniAc()
                 .evrakAranacakYerSec("Birim Evrakları Ara")
@@ -757,13 +760,73 @@ public class EkIlgiTest extends BaseTest {
         parafBekleyenlerPage
                 .openPage()
                 .konuyaGoreEvrakKontrol("TS2025_EkIlgi_Senaryosu_20180122145731")
-                .konuyaGoreEvrakOnizlemedeAc("TS2025_EkIlgi_Senaryosu_20180122145731")
-                .tabKontrolleri()
+                .konuyaGoreEvrakOnizlemedeAc("TS2025_EkIlgi_Senaryosu_20180122145731");
+   /*           .tabKontrolleri()
                 .tabEvrakEkleriAc()
                 .evrakEkleriAccordionKontrol()
                 .tabIlgiBilgileriAc()
                 .ilgiBilgileriAccordionKontrol()
                 .tabIlisikBilgileriAc()
-                .ilisikBilgileriAccordionKontrol();
+                .ilisikBilgileriAccordionKontrol();*/
+
+        evrakOlusturPage
+                .parafla();
+
+        parafladiklarimPage
+                .openPage()
+                .konuyaGoreEvrakKontrol("TS2025_EkIlgi_Senaryosu_20180122145731")
+                .konuyaGoreEvrakOnizlemedeAc("TS2025_EkIlgi_Senaryosu_20180122145731")
+                .tabKontrolleri()
+                .tabEvrakEkleriAc()
+                .evrakEkleriAccordionKontrol()
+                .tabIlgiBilgileriAc()
+                .ilgiBilgieriAccordionKontrol()
+                .tabIlisikBilgileriAc()
+                .ilisikBilgieriAccordionKontrol();
+
+        login(TestData.usernameZTEKIN, TestData.passwordZTEKIN);
+
+        parafBekleyenlerPage
+                .openPage()
+                .konuyaGoreEvrakKontrol("TS2025_EkIlgi_Senaryosu_20180122145731")
+                .konuyaGoreEvrakOnizlemedeAc("TS2025_EkIlgi_Senaryosu_20180122145731");
+
+        evrakOlusturPage
+                .koordineParafla();
+
+        koordineParafladiklarimPage
+                .openPage()
+                .konuyaGoreEvrakKontrol("TS2025_EkIlgi_Senaryosu_20180122145731")
+                .konuyaGoreEvrakOnizlemedeAc("TS2025_EkIlgi_Senaryosu_20180122145731")
+                .tabKontrolleri()
+                .tabEvrakEkleriAc()
+                .evrakEkleriAccordionKontrol()
+                .tabIlgiBilgileriAc()
+                .ilgiBilgieriAccordionKontrol()
+                .tabIlisikBilgileriAc()
+                .ilisikBilgieriAccordionKontrol();
+
+        login(TestData.usernameYAKYOL, TestData.passwordYAKYOL);
+
+        imzaBekleyenlerPage
+                .openPage()
+                .evrakKonusunaGoreKontrol("TS2025_EkIlgi_Senaryosu_20180122145731")
+                .konuyaGoreEvrakOnizlemedeAc("TS2025_EkIlgi_Senaryosu_20180122145731");
+
+        evrakOlusturPage
+                .evrakImzala();
+
+        imzaladiklarimPage
+                .openPage()
+                .konuyaGoreEvrakKontrol("TS2025_EkIlgi_Senaryosu_20180122145731")
+                .konuyaGoreEvrakOnizlemedeAc("TS2025_EkIlgi_Senaryosu_20180122145731")
+                .tabKontrolleri()
+                .tabEvrakEkleriAc()
+                .evrakEkleriAccordionKontrol()
+                .tabIlgiBilgileriAc()
+                .ilgiBilgieriAccordionKontrol()
+                .tabIlisikBilgileriAc()
+                .ilisikBilgieriAccordionKontrol();
+
     }
 }
