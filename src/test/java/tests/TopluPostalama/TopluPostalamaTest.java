@@ -137,8 +137,8 @@ public class TopluPostalamaTest extends BaseTest {
         int indirimOrani = 50;
         double indirimSonrasiTutarInt = tutarInt - (tutarInt * indirimOrani / 100);
 
-        String indirimOncesiTutar = String.format("%.2f", tutarInt);
-        String tutar = String.format("%.3f", indirimSonrasiTutarInt);
+        String indirimOncesiTutar = String.format("%.2f", tutarInt).replace(',', '.');
+        String tutar = String.format("%.3f", indirimSonrasiTutarInt).replace(',', '.');
 
 
         postaListesiPage
@@ -313,8 +313,8 @@ public class TopluPostalamaTest extends BaseTest {
         int indirimOrani = 50;
         double indirimSonrasiTutarInt = tutarInt - (tutarInt * indirimOrani / 100);
 
-        String indirimOncesiTutar = String.format("%.2f", tutarInt);
-        String tutar = String.format("%.3f", indirimSonrasiTutarInt);
+        String indirimOncesiTutar = String.format("%.2f", tutarInt).replace(',', '.');
+        String tutar = String.format("%.3f", indirimSonrasiTutarInt).replace(',', '.');
 
         postaListesiPage
                 .openPage()
@@ -493,8 +493,8 @@ public class TopluPostalamaTest extends BaseTest {
         int indirimOrani = 50;
         double indirimSonrasiTutarInt = tutarInt - (tutarInt * indirimOrani / 100);
 
-        String indirimOncesiTutar = String.format("%.2f", tutarInt);
-        String tutar = String.format("%.3f", indirimSonrasiTutarInt);
+        String indirimOncesiTutar = String.format("%.2f", tutarInt).replace(',', '.');
+        String tutar = String.format("%.3f", indirimSonrasiTutarInt).replace(',', '.');
 
         postaListesiPage
                 .openPage()
@@ -662,8 +662,8 @@ public class TopluPostalamaTest extends BaseTest {
         int indirimOrani = 50;
         double indirimSonrasiTutarInt = tutarInt - (tutarInt * indirimOrani / 100);
 
-        String indirimOncesiTutar = String.format("%.2f", tutarInt);
-        String tutar = String.format("%.3f", indirimSonrasiTutarInt);
+        String indirimOncesiTutar = String.format("%.2f", tutarInt).replace(',', '.');
+        String tutar = String.format("%.3f", indirimSonrasiTutarInt).replace(',', '.');
 
         postaListesiPage
                 .openPage()
@@ -821,8 +821,8 @@ public class TopluPostalamaTest extends BaseTest {
         int indirimOrani = 50;
         double indirimSonrasiTutarInt = tutarInt - (tutarInt * indirimOrani / 100);
 
-        String indirimOncesiTutar = String.format("%.2f", tutarInt);
-        String tutar = String.format("%.3f", indirimSonrasiTutarInt);
+        String indirimOncesiTutar = String.format("%.2f", tutarInt).replace(',', '.');
+        String tutar = String.format("%.3f", indirimSonrasiTutarInt).replace(',', '.');
 
         postaListesiPage
                 .openPage()
@@ -1413,7 +1413,7 @@ public class TopluPostalamaTest extends BaseTest {
         String evrakGidecegiYer = "Yenikurum6507(G)";
         String evrakHazirlayanBirim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞ";
         String evrakPostaTipi = "Adi Posta";
-        String evrakKonu = "TS1804-" + getRandomNumber(1000, 9000);
+        String evrakKonu = "TS2087-" + getRandomNumber(1000, 9000);
 
         login("mbozdemir", "123");
 
@@ -1431,12 +1431,12 @@ public class TopluPostalamaTest extends BaseTest {
                 .kullan();
         evrakOlusturPage
                 .editorTabAc()
-                .editorIcerikDoldur("TS1804 için evrak.")
+                .editorIcerikDoldur("TS2087 için evrak.")
                 .imzala()
                 .sImzasec()
                 .sImzaImzala()
                 .popupSimzaEvet();
-        String evrakKonu2 = "TS1804-" + getRandomNumber(1000, 9000);
+        String evrakKonu2 = "TS2087-" + getRandomNumber(1000, 9000);
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
@@ -1451,7 +1451,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .kullan();
         evrakOlusturPage
                 .editorTabAc()
-                .editorIcerikDoldur("TS1804 için ikinci evrak.")
+                .editorIcerikDoldur("TS2087 için ikinci evrak.")
                 .imzala()
                 .sImzasec()
                 .sImzaImzala()
@@ -1659,8 +1659,8 @@ public class TopluPostalamaTest extends BaseTest {
         int indirimOrani = 50;
         double indirimSonrasiTutarInt = tutarInt - (tutarInt * indirimOrani / 100);
 
-        String indirimOncesiTutar = String.format("%.2f", tutarInt);
-        String tutar = String.format("%.3f", indirimSonrasiTutarInt);
+        String indirimOncesiTutar = String.format("%.2f", tutarInt).replace(',', '.');
+        String tutar = String.format("%.3f", indirimSonrasiTutarInt).replace(',', '.');
 
         String gonderildigiYer = "Kurum";
 
@@ -1736,9 +1736,8 @@ public class TopluPostalamaTest extends BaseTest {
         int indirimOrani = 50;
         double indirimSonrasiTutarInt = tutarInt - (tutarInt * indirimOrani / 100);
 
-        String indirimOncesiTutar = String.format("%.2f", tutarInt);
-        String tutar = String.format("%.3f", indirimSonrasiTutarInt);
-
+        String indirimOncesiTutar = String.format("%.2f", tutarInt).replace(',', '.');
+        String tutar = String.format("%.3f", indirimSonrasiTutarInt).replace(',', '.');
 
         postaListesiPage
                 .openPage()
@@ -1807,8 +1806,8 @@ public class TopluPostalamaTest extends BaseTest {
         int indirimOrani = 50;
         double indirimSonrasiTutarInt = tutarInt - (tutarInt * indirimOrani / 100);
 
-        String indirimOncesiTutar = String.format("%.2f", tutarInt);
-        String tutar = String.format("%.3f", indirimSonrasiTutarInt);
+        String indirimOncesiTutar = String.format("%.2f", tutarInt).replace(',', '.');
+        String tutar = String.format("%.3f", indirimSonrasiTutarInt).replace(',', '.');
 
         int gramaj2 = 2499;
         double tutarInt2 = 250;

@@ -57,6 +57,7 @@ public class BakimaAlTest extends BaseTest {
                 .bakimaAl()
                 .bakimdaOlmali(true);
 
+
         loginPage
                 .loginBakim("test1", "123")
                 .islemMesaji().dikkatOlmali(girilecekBilgilendirmeMetni);
