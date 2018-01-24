@@ -9,9 +9,13 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import listeners.DriverEventListener;
 import org.openqa.selenium.Capabilities;
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
@@ -25,6 +29,7 @@ import pages.ustMenuPages.SistemSabitleriPage;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import static com.codeborne.selenide.Condition.readonly;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static pages.pageData.alanlar.GeregiSecimTipi.DAGITIM_PLANLARI;
@@ -49,6 +54,11 @@ public class HitaptaBuyukKucukHarfTest extends BaseTest {
     /*@BeforeMethod
     public void loginBeforeTests() {
     }*/
+
+    @BeforeMethod
+    public void setUp() throws Exception {
+        useFirefox();
+    }
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS2064: Tüzel kişi- Hitapta büyük/küçük harf kontrolü")
@@ -228,37 +238,6 @@ public class HitaptaBuyukKucukHarfTest extends BaseTest {
 
     }
 
-
-    @BeforeMethod
-    public void tsDriver() {
-        try {
-            //Capabilities caps = getCapabilities();
-            // caps.merge(options);
-            FirefoxOptions options = new FirefoxOptions();
-            options.setAcceptInsecureCerts(true)
-                    .addPreference("security.insecure_field_warning.contextual.enabled", false)
-                    .addPreference("browser.download.folderList", 2)
-                    .addPreference("browser.download.dir", TestData.docDownloadPathLinux);
-            /*options.addPreference("browser.helperApps.neverAsk.saveToDisk", "application/excel");
-            options.addPreference("browser.helperApps.neverAsk.saveToDisk", "application/vnd.ms-excel");
-            options.addPreference("browser.helperApps.neverAsk.saveToDisk", "application/x-excel");
-            options.addPreference("browser.helperApps.neverAsk.saveToDisk", "application/x-msexcel");
-            options.addPreference("browser.helperApps.neverAsk.saveToDisk", "application/pdf");*/
-            DesiredCapabilities capabilities = DesiredCapabilities.firefox();
-            options.merge(capabilities);
-            //caps.merge(options);
-            WebDriver driver;
-            if (Configuration.remote == null)
-                 driver = new EventFiringWebDriver(new FirefoxDriver(options))
-                        .register(new DriverEventListener());
-            else driver = new EventFiringWebDriver(new RemoteWebDriver(new URL(Configuration.remote), options))
-                    .register(new DriverEventListener());
-
-            WebDriverRunner.setWebDriver(driver);
-        } catch (Exception e) {
-            throw new RuntimeException("Invalid 'remote' parameter: " + Configuration.remote, e);
-        }
-    }
 
     public void hitapKontrol(String geregiSecimTipi, String geregi, String beklenenHitap) throws InterruptedException {
 

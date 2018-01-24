@@ -1,5 +1,6 @@
 package tests.TopluPostalama;
 
+import com.codeborne.selenide.Selenide;
 import common.BaseTest;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Severity;
@@ -1852,7 +1853,7 @@ public class TopluPostalamaTest extends BaseTest {
 //                "TC1812 2018012314155320180123141553", "TC1812 198641753210020180123141702"
 //        };
 
-
+        useFirefox();
         String[] konu = new String[]{
                 "TC1811 " + getSysDate(), "TC1811 " + createRandomNumber(12)
         };
@@ -2007,13 +2008,14 @@ public class TopluPostalamaTest extends BaseTest {
                 .openPage()
                 .topluPostaladiklarimEvrakKontrolu(konu[0]);
                 //.searchTable().searchInAllPages(true).findRows(text(konu[0])).getFoundRow().shouldBe(exist);
+        Selenide.close();
     }
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS1812 : Posta Listesi Postalama İşlemleri (Güncelleme) (UC_POSTAYÖNETİMİ_003)")
     public void TS1812() throws IOException, AWTException {
 
-
+        useFirefox();
         String remoteDownloadPath = getDownloadPath();
 //        String remoteDownloadPath = "C:\\Users\\optiim\\Downloads\\";
 
@@ -2193,12 +2195,13 @@ public class TopluPostalamaTest extends BaseTest {
                 .openPage()
                 .topluPostaladiklarimEvrakKontrolu(konu[0]);
 //                .searchTable().searchInAllPages(true).findRows(text(konu[0])).getFoundRow().shouldBe(exist);
+        Selenide.close();
     }
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS1816 : Toplu Postaladıklarım Güncelleme İşlemleri (UC_POSTAYÖNETİMİ_004)")
     public void TS1816() throws IOException, AWTException {
-
+        useFirefox();
 //        String remoteDownloadPath = getDownloadPath();
 //        String remoteDownloadPath = "C:\\Users\\optiim\\Downloads\\";
 
@@ -2372,6 +2375,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .tabloKontrolEt(geregi, evrakNo1816[1], gidisSekli, true);
 //                .raporAl(); //rapor kontrolü yapılacak
 
+        Selenide.close();
     }
 
 }
