@@ -138,18 +138,34 @@ public class KullaniciEvrakDevretPage extends MainPage {
         btnListele.shouldBe(visible);
         btnDevret.shouldNotBe(enabled);
 
-        Allure.addAttachment(tabGelenEvraklar.text(), "Ekran Kontrolü ok");
-        Allure.addAttachment(tabTaslakEvraklar.text(), "Ekran Kontrolü ok");
-        Allure.addAttachment(tabImzaBekleyenEvraklar.text(), "Ekran Kontrolü ok");
-        Allure.addAttachment(tabParafBekleyenEvraklar.text(), "Ekran Kontrolü ok");
-        Allure.addAttachment(tabKoordineBekleyenEvraklar.text(), "Ekran Kontrolü ok");
-        Allure.addAttachment(tabKontrolBekleyenEvraklar.text(), "Ekran Kontrolü ok");
-        Allure.addAttachment(tabHavaleOnayinaGelenEvraklar.text(), "Ekran Kontrolü ok");
-        Allure.addAttachment(tabTeslimAldiklarim.text(), "Ekran Kontrolü ok");
-        Allure.addAttachment(tabKapatmaImzasiBekleyenler.text(), "Ekran Kontrolü ok");
-        Allure.addAttachment(tabKapatmaParafiBekleyenler.text(), "Ekran Kontrolü ok");
-        Allure.addAttachment(btnListele.text(), "Ekran Kontrolü ok");
-        Allure.addAttachment(btnDevret.text(), "Ekran Kontrolü ok");
+        Allure.addAttachment("Kullanıcı Evrak Devret Ekranı açılır. Ekranda şu alanlar görüntülenir.\n","Devredecek Kişi alanı (\n" +
+                "Listele butonu (aktif)\n" +
+                "Devret Butonu (pasif)\n" +
+                "Gelen Evraklar\n" +
+                "Taslak Evraklar\n" +
+                "İmza Bekleyen Evraklar\n" +
+                "Paraf Bekleyen Evraklar\n" +
+                "Koordine Bekleyen Evraklar\n" +
+                "Kontrol Bekleyen Evraklar\n" +
+                "Havale Onayına Gelen Evraklar\n" +
+                "Teslim Aldıklarım\n" +
+                "Kapatma İmzası Bekleyenler\n" +
+                "Kapatma Parafı Bekleyenler");
+
+        takeScreenshot();
+
+//        Allure.addAttachment(tabGelenEvraklar.text(), "Ekran Kontrolü ok");
+//        Allure.addAttachment(tabTaslakEvraklar.text(), "Ekran Kontrolü ok");
+//        Allure.addAttachment(tabImzaBekleyenEvraklar.text(), "Ekran Kontrolü ok");
+//        Allure.addAttachment(tabParafBekleyenEvraklar.text(), "Ekran Kontrolü ok");
+//        Allure.addAttachment(tabKoordineBekleyenEvraklar.text(), "Ekran Kontrolü ok");
+//        Allure.addAttachment(tabKontrolBekleyenEvraklar.text(), "Ekran Kontrolü ok");
+//        Allure.addAttachment(tabHavaleOnayinaGelenEvraklar.text(), "Ekran Kontrolü ok");
+//        Allure.addAttachment(tabTeslimAldiklarim.text(), "Ekran Kontrolü ok");
+//        Allure.addAttachment(tabKapatmaImzasiBekleyenler.text(), "Ekran Kontrolü ok");
+//        Allure.addAttachment(tabKapatmaParafiBekleyenler.text(), "Ekran Kontrolü ok");
+//        Allure.addAttachment(btnListele.text(), "Ekran Kontrolü ok");
+//        Allure.addAttachment(btnDevret.text(), "Ekran Kontrolü ok");
 
 
         return this;
