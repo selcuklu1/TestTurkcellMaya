@@ -226,6 +226,8 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
 
     @Step("Posta tipi seç.")
     public TopluPostalanacakEvraklarPage postaTipiSec(String[] postaTipleri) {
+        Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", lblPostaTipiSeciniz);
+
         lblPostaTipiSeciniz.click();
         ElementsCollection currentListElement = $$(By.xpath("//label[.='Adi Posta']/../../../ul")).last().$$("li");
         for (int i = 0; i < postaTipleri.length; i++) {

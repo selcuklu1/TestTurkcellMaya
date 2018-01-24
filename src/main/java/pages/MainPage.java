@@ -183,6 +183,16 @@ public class MainPage extends BaseLibrary {
         return this;
     }
 
+    @Step("Koordine Parafla")
+    public MainPage koordineParafla() {
+        new EvrakPageButtons().evrakKoordineParafla();
+        /*SelenideElement paraflaButon = $x("//*[text()='Parafla']/ancestor::tbody[1]//button");
+        paraflaButon.click();
+        sImzalaRadioSec();
+        evrakImzaOnay();*/
+        return this;
+    }
+
     @Step("İmzala butona tıkla")
     public MainPage imzalaButonaTikla() {
         new EvrakPageButtons().imzalaButonaTikla();
