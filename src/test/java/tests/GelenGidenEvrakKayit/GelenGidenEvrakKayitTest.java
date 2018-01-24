@@ -228,13 +228,13 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     @Test(enabled = true, priority = 7, description = "TS1401 : Kaydedilen Gelen Evrak raporu")
     public void TS1401() throws InterruptedException, IOException, ParseException {
 //
-        String evrakNO321 = "6799";
-        String evrakNO328 = "6800";
+//        String evrakNO321 = "6692";
+//        String evrakNO328 = "6693";
 //        String evrakNo = evrakNO321;
 //        String evrakNo1 = evrakNO328;
 
-        String remoteDownloadPath = useChromeWindows151("TS1401");//getDownloadPath();
-        //String remoteDownloadPath = "C:\\Users\\optiim\\Downloads\\";
+        String remoteDownloadPath = getDownloadPath();
+//        String remoteDownloadPath = "C:\\Users\\optiim\\Downloads\\";
         System.out.println(remoteDownloadPath);
 
         String geldigiYer = "Kurum";
@@ -243,7 +243,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
 // Testin öncesinde TS0321 ve TS0328 caselerinin çalışması gerekli..
 
-        /*kaydedilenGelenEvrakPage
+        kaydedilenGelenEvrakPage
                 .openPage()
                 .ekranAlanKontrolleri()
                 .birimKontrol()
@@ -265,7 +265,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .tabloKontrolu(evrakNO321);
 //                .islemMesaji().basariliOlmali(basariMesaji);
 
-//        logout();*/
+//        logout();
         login(mbozdemir);
 
         kaydedilenGelenEvrakPage

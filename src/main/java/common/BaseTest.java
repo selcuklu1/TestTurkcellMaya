@@ -72,7 +72,7 @@ public class BaseTest extends BaseLibrary {
         Configuration.browserVersion = System.getProperty("node");
         Configuration.remote = System.getProperty("hub");
         Configuration.reportsFolder = "test-result/reports";
-        Configuration.screenshots = true;
+        Configuration.screenshots = false;
         Configuration.savePageSource = false;
         Configuration.collectionsTimeout = timeout * 1000;
         Configuration.timeout = timeout * 1000;
@@ -266,7 +266,7 @@ public class BaseTest extends BaseLibrary {
      */
     public String useChromeWindows151(String testName) {
         String downloadPath = TestData.docDownloadPathWindows + testName;
-        downloadPath = Configuration.reportsFolder + "/" + testName;
+        //downloadPath = System.getProperty("user.dir")+ File.separator + "target" + File.separator + testName;
         try {
             //Capabilities caps = getCapabilities();
             //caps.merge(options);
@@ -275,22 +275,13 @@ public class BaseTest extends BaseLibrary {
             capabilities.setVersion("151");*/
 
             Map<String, Object> prefs = new HashMap<String, Object>();
-            prefs.put("download.default_directory",  System.getProperty("user.dir")+ File.separator + "externalFiles" + File.separator + "downloadFiles");
+            prefs.put("download.default_directory",  downloadPath);
             ChromeOptions options = new ChromeOptions();
             options.setExperimentalOption("prefs", prefs);
-
-
-
-           /* Map<String, Object> prefs = new HashMap<String, Object>();
-            prefs.put("download.default_directory", TestData.docPathWindows);
-            ChromeOptions options = new ChromeOptions();*/
             options.setCapability(CapabilityType.PLATFORM_NAME, Platform.WINDOWS);
             options.setCapability(CapabilityType.BROWSER_VERSION, "151");
             options.addArguments("disable-infobars");
             options.setAcceptInsecureCerts(true);
-            //options.setExperimentalOption("download.default_directory", downloadPath);
-//            options.setExperimentalOption("prefs", prefs);
-
             WebDriver driver = Configuration.remote == null ?
                     new EventFiringWebDriver(new ChromeDriver(options)).register(new DriverEventListener())
                     : new EventFiringWebDriver(new RemoteWebDriver(new URL(Configuration.remote), options)).register(new DriverEventListener());
