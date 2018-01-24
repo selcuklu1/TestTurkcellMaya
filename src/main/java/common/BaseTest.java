@@ -207,8 +207,9 @@ public class BaseTest extends BaseLibrary {
      * @return downloadPath
      */
     public String useFirefoxWindows151(String testName) {
+        String downloadPath = TestData.docDownloadPathWindows + "\\" + testName;
         try {
-            String downloadPath = TestData.docDownloadPathWindows + "\\" + testName;
+
             //Capabilities caps = getCapabilities();
             //caps.merge(options);
             FirefoxOptions options = new FirefoxOptions();
