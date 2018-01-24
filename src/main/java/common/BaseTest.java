@@ -32,7 +32,9 @@ import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import static com.codeborne.selenide.Selenide.$;
 import static data.TestData.belgenetURL;
@@ -270,12 +272,15 @@ public class BaseTest extends BaseLibrary {
             /*DesiredCapabilities capabilities = DesiredCapabilities.chrome();
             capabilities.setPlatform(Platform.WINDOWS);
             capabilities.setVersion("151");*/
+            Map<String, Object> prefs = new HashMap<String, Object>();
+            prefs.put("download.default_directory", TestData.docPathWindows);
             ChromeOptions options = new ChromeOptions();
             options.setCapability(CapabilityType.PLATFORM_NAME, Platform.WINDOWS);
             options.setCapability(CapabilityType.BROWSER_VERSION, "151");
             options.addArguments("disable-infobars");
             options.setAcceptInsecureCerts(true);
-            options.setExperimentalOption("download.default_directory", downloadPath);
+            //options.setExperimentalOption("download.default_directory", downloadPath);
+            options.setExperimentalOption("prefs", prefs);
 
             WebDriver driver = Configuration.remote == null ?
                     new EventFiringWebDriver(new ChromeDriver(options)).register(new DriverEventListener())
