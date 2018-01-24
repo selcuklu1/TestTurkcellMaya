@@ -1,5 +1,7 @@
 package tests.TopluPostalama;
 
+import com.codeborne.selenide.Selenide;
+import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
 import common.BaseTest;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Severity;
@@ -25,31 +27,20 @@ import static com.codeborne.selenide.Condition.text;
 
 public class TopluPostalamaTest extends BaseTest {
 
-    MainPage mainPage;
-    TopluPostalanacakEvraklarPage topluPostalanacakEvraklarPage;
-    PostaListesiPage postaListesiPage;
-    PostalananlarPage postalananlarPage;
-    PttRaporuPage pttRaporuPage;
-    TopluPostaladiklarimPage topluPostaladiklarimPage;
-    ImzaladiklarimPage imzaladiklarimPage;
-    ImzaBekleyenlerPage imzaBekleyenlerPage;
-    EvrakOlusturPage evrakOlusturPage;
+
 
     @BeforeMethod
     public void loginBeforeTests() {
-        postalananlarPage = new PostalananlarPage();
-        topluPostalanacakEvraklarPage = new TopluPostalanacakEvraklarPage();
-        postaListesiPage = new PostaListesiPage();
-        pttRaporuPage = new PttRaporuPage();
-        topluPostaladiklarimPage = new TopluPostaladiklarimPage();
-        imzaladiklarimPage = new ImzaladiklarimPage();
-        imzaBekleyenlerPage = new ImzaBekleyenlerPage();
-        evrakOlusturPage = new EvrakOlusturPage();
-        mainPage = new MainPage();
+
     }
 
     @Test(enabled = true, description = "TS1804 : Toplu Postalanacak Evrakların Sorgulanması (UC_POSTAYÖNETİMİ_001)")
     public void TS1804() {
+
+        TopluPostalanacakEvraklarPage topluPostalanacakEvraklarPage = new TopluPostalanacakEvraklarPage();
+        PostaListesiPage postaListesiPage = new PostaListesiPage();
+        EvrakOlusturPage evrakOlusturPage = new EvrakOlusturPage();
+
 
         String[] gidecegiYerler = new String[]{
                 "Yenikurum6507",
@@ -185,6 +176,10 @@ public class TopluPostalamaTest extends BaseTest {
 
     @Test(enabled = true, description = "TS1808 : Posta Listesine Evrak Ekleme ve Çıkartma (UC_POSTAYÖNETİMİ_002)")
     public void TS1808() {
+
+        TopluPostalanacakEvraklarPage topluPostalanacakEvraklarPage = new TopluPostalanacakEvraklarPage();
+        PostaListesiPage postaListesiPage = new PostaListesiPage();
+        EvrakOlusturPage evrakOlusturPage = new EvrakOlusturPage();
 
         String[] gidecegiYerler = new String[]{
                 "Yenikurum6507",
@@ -346,6 +341,10 @@ public class TopluPostalamaTest extends BaseTest {
 
     @Test(enabled = true, description = "TS1807 : Posta Listesi Oluşturma- Tüzel Kişi Listesi (UC_POSTAYÖNETİMİ_002)")
     public void TS1807() {
+
+        TopluPostalanacakEvraklarPage topluPostalanacakEvraklarPage = new TopluPostalanacakEvraklarPage();
+        PostaListesiPage postaListesiPage = new PostaListesiPage();
+        EvrakOlusturPage evrakOlusturPage = new EvrakOlusturPage();
 
         String tuzelKisi1 = "TS01807-TK1";
         String tuzelKisi2 = "TS01807-TK2";
@@ -513,6 +512,10 @@ public class TopluPostalamaTest extends BaseTest {
 
     @Test(enabled = true, description = "TS1807A : Posta Listesi Oluşturma- Gerçek Kişi Listesi (UC_POSTAYÖNETİMİ_002)")
     public void TS1807A() {
+
+        TopluPostalanacakEvraklarPage topluPostalanacakEvraklarPage = new TopluPostalanacakEvraklarPage();
+        PostaListesiPage postaListesiPage = new PostaListesiPage();
+        EvrakOlusturPage evrakOlusturPage = new EvrakOlusturPage();
 
         String gercekKisi1 = "TS01807GKADD";
         String gercekKisi2 = "TS01807GKYAD";
@@ -684,6 +687,10 @@ public class TopluPostalamaTest extends BaseTest {
     @Test(enabled = true, description = "TS1805 : Posta Listesi Oluşturma- Kurum Listesi (UC_POSTAYÖNETİMİ_002)")
     public void TS1805() {
 
+        TopluPostalanacakEvraklarPage topluPostalanacakEvraklarPage = new TopluPostalanacakEvraklarPage();
+        PostaListesiPage postaListesiPage = new PostaListesiPage();
+        EvrakOlusturPage evrakOlusturPage = new EvrakOlusturPage();
+
         String kurum1 = "Yenikurum6507";
         String kurum2 = "Yenikurum4105";
 
@@ -843,6 +850,11 @@ public class TopluPostalamaTest extends BaseTest {
     @Test(enabled = true, description = "TS1815A : Toplu postalama PTT raporunda alan kontrolleri-daha önceden rapor alındı ise (UC_POSTAYÖNETİMİ_004)")
     public void TS1815A() {
 
+        TopluPostalanacakEvraklarPage topluPostalanacakEvraklarPage = new TopluPostalanacakEvraklarPage();
+        PostaListesiPage postaListesiPage = new PostaListesiPage();
+        EvrakOlusturPage evrakOlusturPage = new EvrakOlusturPage();
+        PttRaporuPage pttRaporuPage = new PttRaporuPage();
+
         String kurum1 = "Yenikurum6507";
 
         login("mbozdemir", "123");
@@ -912,6 +924,11 @@ public class TopluPostalamaTest extends BaseTest {
 
     @Test(enabled = true, description = "TS1815B : Toplu postalama PTT raporunda alan kontrolleri (UC_POSTAYÖNETİMİ_004)")
     public void TS1815B() {
+
+        TopluPostalanacakEvraklarPage topluPostalanacakEvraklarPage = new TopluPostalanacakEvraklarPage();
+        PostaListesiPage postaListesiPage = new PostaListesiPage();
+        PttRaporuPage pttRaporuPage = new PttRaporuPage();
+        EvrakOlusturPage evrakOlusturPage = new EvrakOlusturPage();
 
         String kurum1 = "Yenikurum6507";
 
@@ -1016,6 +1033,9 @@ public class TopluPostalamaTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS1676 : Toplu Postalama PTT Evrak Raporu (UC_POSTAYÖNETİMİ_005)")
     public void TS1676() throws IOException {
+
+        PttRaporuPage pttRaporuPage = new PttRaporuPage();
+
         String kurum1 = "Yenikurum6507";
         String postaTarihi = "19.01.2018";
         String postaTipi = "Adi Posta";
@@ -1133,7 +1153,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .tabloKontrolEt(kurum1, "", postaTipi, true)
                 .raporAl();
 
-        String excelFileName = pttRaporuPage.indirilenDosyaAd();
+         String excelFileName = pttRaporuPage.indirilenDosyaAd();
 
         PttRaporuPage.PttRaporExcellTest pttRaporExcellTest = new PttRaporuPage.PttRaporExcellTest(excelFileName);
 
@@ -1168,6 +1188,13 @@ public class TopluPostalamaTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS1675 : Toplu Postaladıklarım İzleme / Alan Kontrolleri (UC_POSTAYÖNETİMİ_004)")
     public void TS1675() {
+
+        MainPage mainPage = new MainPage();
+        TopluPostalanacakEvraklarPage topluPostalanacakEvraklarPage = new TopluPostalanacakEvraklarPage();
+        PostaListesiPage postaListesiPage = new PostaListesiPage();
+        TopluPostaladiklarimPage topluPostaladiklarimPage = new TopluPostaladiklarimPage();
+        ImzaladiklarimPage imzaladiklarimPage = new ImzaladiklarimPage();
+        EvrakOlusturPage evrakOlusturPage = new EvrakOlusturPage();
 
 //        String[] konu = new String[]{
 //                "TC1675 20180113152416", "TC1675 20180113152416100"
@@ -1403,6 +1430,14 @@ public class TopluPostalamaTest extends BaseTest {
     @Test(enabled = true, description = "TS2087 : Toplu postaladıklarım listesinden evrakın geri alınması")
     public void TS2087() {
 
+        TopluPostalanacakEvraklarPage topluPostalanacakEvraklarPage = new TopluPostalanacakEvraklarPage();
+        PostaListesiPage postaListesiPage = new PostaListesiPage();
+        PttRaporuPage pttRaporuPage = new PttRaporuPage();
+        TopluPostaladiklarimPage topluPostaladiklarimPage = new TopluPostaladiklarimPage();
+        ImzaladiklarimPage imzaladiklarimPage = new ImzaladiklarimPage();
+        ImzaBekleyenlerPage imzaBekleyenlerPage = new ImzaBekleyenlerPage();
+        EvrakOlusturPage evrakOlusturPage = new EvrakOlusturPage();
+
         String tarihBugun = "" + new SimpleDateFormat("dd.MM.yyyy").format(new Date());
         String listeAdi = "Liste" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
 
@@ -1572,6 +1607,11 @@ public class TopluPostalamaTest extends BaseTest {
     @Test(enabled = true, description = "TS1809 : Posta Listesi Görüntüleme (UC_POSTAYÖNETİMİ_003)")
     public void TS1809() {
 
+        TopluPostalanacakEvraklarPage topluPostalanacakEvraklarPage = new TopluPostalanacakEvraklarPage();
+        PostaListesiPage postaListesiPage = new PostaListesiPage();
+        TopluPostaladiklarimPage topluPostaladiklarimPage = new TopluPostaladiklarimPage();
+        EvrakOlusturPage evrakOlusturPage = new EvrakOlusturPage();
+
         String kurum1 = "Yenikurum6507";
 
 
@@ -1686,6 +1726,10 @@ public class TopluPostalamaTest extends BaseTest {
     @Test(enabled = true, description = "TS1817 : Tutar alanı kontrol edilir.")
     public void TS1817() {
 
+        TopluPostalanacakEvraklarPage topluPostalanacakEvraklarPage = new TopluPostalanacakEvraklarPage();
+        PostaListesiPage postaListesiPage = new PostaListesiPage();
+        EvrakOlusturPage evrakOlusturPage = new EvrakOlusturPage();
+
         String kurum1 = "Yenikurum6507";
 
         login("mbozdemir", "123");
@@ -1756,6 +1800,10 @@ public class TopluPostalamaTest extends BaseTest {
     @Test(enabled = true, description = "TS1818 : Posta Tutarı Hesaplama İşlemleri ve Güncelleme (UC_POSTAYÖNETİMİ_006)")
     public void TS1818() {
 
+        TopluPostalanacakEvraklarPage topluPostalanacakEvraklarPage = new TopluPostalanacakEvraklarPage();
+        PostaListesiPage postaListesiPage = new PostaListesiPage();
+        EvrakOlusturPage evrakOlusturPage = new EvrakOlusturPage();
+
         String kurum1 = "Yenikurum6507";
 
         login("mbozdemir", "123");
@@ -1814,8 +1862,8 @@ public class TopluPostalamaTest extends BaseTest {
         int indirimOrani2 = 5;
         double indirimSonrasiTutarInt2 = tutarInt2 - (tutarInt2 * indirimOrani2 / 100);
 
-        String indirimOncesiTutar2 = String.format("%.2f", tutarInt2);
-        String tutar2 = String.format("%.3f", indirimSonrasiTutarInt2);
+        String indirimOncesiTutar2 = String.format("%.2f", tutarInt2).replace(',', '.');
+        String tutar2 = String.format("%.3f", indirimSonrasiTutarInt2).replace(',', '.');
 
         postaListesiPage
                 .openPage()
@@ -1838,20 +1886,26 @@ public class TopluPostalamaTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS1811 : Posta Listesi Postalama İşlemleri (UC_POSTAYÖNETİMİ_003)")
     public void TS1811() throws IOException, AWTException {
-//        String remoteDownloadPath = "C:\\Users\\optiim\\Downloads\\";
+        MainPage mainPage = new MainPage();
+        TopluPostalanacakEvraklarPage topluPostalanacakEvraklarPage = new TopluPostalanacakEvraklarPage();
+        PostaListesiPage postaListesiPage = new PostaListesiPage();
+        TopluPostaladiklarimPage topluPostaladiklarimPage = new TopluPostaladiklarimPage();
+        ImzaladiklarimPage imzaladiklarimPage = new ImzaladiklarimPage();
+        EvrakOlusturPage evrakOlusturPage = new EvrakOlusturPage();
 
+//        String remoteDownloadPath = "C:\\Users\\optiim\\Downloads\\";
+//
 //        String[] konu = new String[]{
-//                "TC1812 20180123141553", "TC1812 1986417532100"
+//                "TC1811 20180124144919", "TC1811 1014910375286"
 //        };
 //
-//        String[] evrakNo1812 = new String[]{
-//                "11236", "11237"
+//        String[] evrakNo1811 = new String[]{
+//                "11413", "11414"
 //        };
 //
 //        String[] icerik = new String[]{
-//                "TC1812 2018012314155320180123141553", "TC1812 198641753210020180123141702"
+//                "TC1811 2018012414491920180124144945", "TC1811 101491037528620180124145105"
 //        };
-
 
         String[] konu = new String[]{
                 "TC1811 " + getSysDate(), "TC1811 " + createRandomNumber(12)
@@ -1886,8 +1940,10 @@ public class TopluPostalamaTest extends BaseTest {
                 "Ankara İçi APS"
         };
         //endregion
-        //region Test Datası
+//        region Test Datası
         for (int i = 0; i < 2; i++) {
+            System.out.println(konu[i]);
+            System.out.println(icerik[i]);
             icerik[i] = konu[i] + getSysDate();
             evrakOlusturPage
                     .openPage()
@@ -1921,6 +1977,7 @@ public class TopluPostalamaTest extends BaseTest {
                     .openPage();
 
             evrakNo1811[i] = imzaladiklarimPage.evrakIcerikKontroluveEvrakNoAl(konu[i]);
+            System.out.println(evrakNo1811[i]);
 
             pdfSayi[i] = sayi[i] + evrakNo1811[i];
 
@@ -2013,6 +2070,12 @@ public class TopluPostalamaTest extends BaseTest {
     @Test(enabled = true, description = "TS1812 : Posta Listesi Postalama İşlemleri (Güncelleme) (UC_POSTAYÖNETİMİ_003)")
     public void TS1812() throws IOException, AWTException {
 
+        MainPage mainPage = new MainPage();
+        TopluPostalanacakEvraklarPage topluPostalanacakEvraklarPage = new TopluPostalanacakEvraklarPage();
+        PostaListesiPage postaListesiPage = new PostaListesiPage();
+        TopluPostaladiklarimPage topluPostaladiklarimPage = new TopluPostaladiklarimPage();
+        ImzaladiklarimPage imzaladiklarimPage = new ImzaladiklarimPage();
+        EvrakOlusturPage evrakOlusturPage = new EvrakOlusturPage();
 
         String remoteDownloadPath = getDownloadPath();
 //        String remoteDownloadPath = "C:\\Users\\optiim\\Downloads\\";
@@ -2198,6 +2261,13 @@ public class TopluPostalamaTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS1816 : Toplu Postaladıklarım Güncelleme İşlemleri (UC_POSTAYÖNETİMİ_004)")
     public void TS1816() throws IOException, AWTException {
+        MainPage mainPage = new MainPage();
+        TopluPostalanacakEvraklarPage topluPostalanacakEvraklarPage = new TopluPostalanacakEvraklarPage();
+        PostaListesiPage postaListesiPage = new PostaListesiPage();
+        PttRaporuPage pttRaporuPage = new PttRaporuPage();
+        TopluPostaladiklarimPage topluPostaladiklarimPage = new TopluPostaladiklarimPage();
+        ImzaladiklarimPage imzaladiklarimPage = new ImzaladiklarimPage();
+        EvrakOlusturPage evrakOlusturPage = new EvrakOlusturPage();
 
 //        String remoteDownloadPath = getDownloadPath();
 //        String remoteDownloadPath = "C:\\Users\\optiim\\Downloads\\";

@@ -6,6 +6,7 @@ import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
+import org.apache.xmlbeans.impl.xb.xsdschema.All;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
@@ -199,15 +200,25 @@ public class PostaListesiPage extends MainPage {
         lblTutar.isDisplayed();
         lblGramaj.isDisplayed();
 
-        Allure.addAttachment("label", lblPostaListesiAdi.text());
-        Allure.addAttachment("label", lblBarkodNo.text());
-        Allure.addAttachment("label", lblGonderildigiYer.text());
-        Allure.addAttachment("label", lblGonderildigiKurum.text());
-        Allure.addAttachment("label", lblAdres.text());
-        Allure.addAttachment("label", lblGidisSekli.text());
-        Allure.addAttachment("label", lblGonderildigiYer2.text());
-        Allure.addAttachment("label", lblGramaj.text());
-        Allure.addAttachment("label", lblTutar.text());
+        Allure.addAttachment("Ekran Kontrolü","Posta listesi adı \n" +
+                "Barkod no\n" +
+                "Gönderildiği yer\n" +
+                "Gönderildiği kurum\n" +
+                "Adres\n" +
+                "Gidiş şekli\n" +
+                "Gönderildiği yer\n" +
+                "Gramaj\n" +
+                "Tutar alanlarının geldiği görülür.");
+
+//        Allure.addAttachment("label", lblPostaListesiAdi.text());
+//        Allure.addAttachment("label", lblBarkodNo.text());
+//        Allure.addAttachment("label", lblGonderildigiYer.text());
+//        Allure.addAttachment("label", lblGonderildigiKurum.text());
+//        Allure.addAttachment("label", lblAdres.text());
+//        Allure.addAttachment("label", lblGidisSekli.text());
+//        Allure.addAttachment("label", lblGonderildigiYer2.text());
+//        Allure.addAttachment("label", lblGramaj.text());
+//        Allure.addAttachment("label", lblTutar.text());
         return this;
     }
 
@@ -511,7 +522,7 @@ public class PostaListesiPage extends MainPage {
     public PostaListesiPage evrakListesiYazdir(String[] konu) {
         int size = tableEvrakListesi.size();
         for (int i = size - 1; i >= 0; i--) {
-
+            Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", tableEvrakListesi);
             tableEvrakListesi
                     .filterBy(Condition.text(konu[i]))
                     .first()
@@ -559,6 +570,7 @@ public class PostaListesiPage extends MainPage {
         size = size - 1;
         String pdfName = "";
         for (int i = size; i >= 0; i--) {
+            Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", tableEvrakListesi);
             tableEvrakListesi
                     .filterBy(Condition.text(konu[i]))
                     .first()
@@ -587,7 +599,7 @@ public class PostaListesiPage extends MainPage {
         int size = tableEvrakListesi.size();
         size = size - 1;
         for (int i = size; i >= 0; i--) {
-
+            Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", tableEvrakListesi);
             tableEvrakListesi
                     .filterBy(Condition.text(konu[i]))
                     .first()

@@ -215,7 +215,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         birimHavaleEdilenlerPage
                 .openPage()
                 .evrakNoIleTabloKontrolu(evrakNO328);
-        logout();
+//        logout();
         login(optiim);
 
         //TeslimAlınanBelgeler sayfasında yetkili bir kullanıcı ile giriş yapılacak.
@@ -232,6 +232,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 //        String evrakNO328 = "6693";
 //        String evrakNo = evrakNO321;
 //        String evrakNo1 = evrakNO328;
+
         String remoteDownloadPath = getDownloadPath();
 //        String remoteDownloadPath = "C:\\Users\\optiim\\Downloads\\";
         System.out.println(remoteDownloadPath);
@@ -264,7 +265,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .tabloKontrolu(evrakNO321);
 //                .islemMesaji().basariliOlmali(basariMesaji);
 
-        logout();
+//        logout();
         login(mbozdemir);
 
         kaydedilenGelenEvrakPage
@@ -568,7 +569,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .evrakNoIleTablodanEvrakSecme(evrakNO326)
                 .evrakOnizlemeEklenenUstYaziKontrolu(pdfText);
 
-        logout();
+//        logout();
         login(optiim);
         teslimAlinmayiBekleyenlerPage
                 .openPage()

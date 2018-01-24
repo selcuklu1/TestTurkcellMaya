@@ -282,6 +282,12 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
     }
 
     @Step("Listeye Ekle butonuna tıkla")
+    public TopluPostalanacakEvraklarPage postaListesiSec2(String postaListesi) {
+        BelgenetElement cmbPostaListesi = comboBox(By.id("mainPreviewForm:tpbeSelectOneMenuId"));
+        cmbPostaListesi.selectComboBox(postaListesi);
+        return this;
+    }
+    @Step("Listeye Ekle butonuna tıkla")
     public TopluPostalanacakEvraklarPage listeyeEkle() {
         btnListeyeEkle.click();
         return this;
@@ -363,14 +369,14 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
     public TopluPostalanacakEvraklarPage evrakSec(String konu, boolean secim) {
         Boolean isSelected = false;
 
-        SelenideElement currentRow = tableEvraklar
+        SelenideElement currentRow = $$("tbody[id='mainInboxForm:inboxDataTable_data'] > tr[data-ri]")
                 .filterBy(Condition.text(konu))
                 .first();
 
         Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", currentRow);
 
         SelenideElement currentRowCheckBox = currentRow.$(By.xpath(".//div[contains(@class, 'ui-chkbox ui-widget')]"));
-
+        Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", currentRowCheckBox);
         if (currentRowCheckBox.$(By.xpath(".//div[contains(@class, 'ui-state-active')]")).exists())
             isSelected = true;
 
@@ -381,8 +387,6 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
             if (isSelected == true)
                 currentRowCheckBox.click();
         }
-
-
         return this;
     }
 

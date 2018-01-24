@@ -1120,7 +1120,9 @@ public class EvrakOlusturPage extends MainPage {
         @Step("Kullan")
         public BilgilerTab kullan() {
 //            clickJs(btnKullan);
-            btnKullan.pressEnter();
+//            Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", btnKullan);
+//            btnKullan.pressEnter();
+            clickJs(btnKullan);
             return this;
         }
 
