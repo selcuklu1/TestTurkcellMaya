@@ -192,6 +192,7 @@ public class HitaptaBuyukKucukHarfTest extends BaseTest {
         String uygulanacakDeger;
         User user = optiim;
 
+        login(user);
         SistemSabitleriPage sistemSabitleriPage = new SistemSabitleriPage().openPage();
         sistemSabitleriPage.sorgulamaVeFiltreleme().alanDoldur("Ad", "Dağıtım Planı Hitap").butonaTikla("Ara");
 
