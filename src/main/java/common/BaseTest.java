@@ -4,10 +4,21 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.WebDriverRunner;
+import data.TestData;
 import data.User;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import listeners.DriverEventListener;
+import org.openqa.selenium.Platform;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.remote.CapabilityType;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -17,7 +28,9 @@ import pages.LoginPage;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetFramework;
 
+import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Method;
+import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.Locale;
 
@@ -184,4 +197,90 @@ public class BaseTest extends BaseLibrary {
     public void logout() {
         new MainPage().logout();
     }
+
+
+    /**
+     *
+     * @param testName
+     * @return downloadPath
+     */
+    public String useFirefoxWindows151(String testName) {
+        try {
+            String downloadPath = TestData.docDownloadPathWindows + "\\" + testName;
+            //Capabilities caps = getCapabilities();
+            //caps.merge(options);
+            FirefoxOptions options = new FirefoxOptions();
+            options.setAcceptInsecureCerts(true)
+                    .addPreference("security.insecure_field_warning.contextual.enabled", false)
+                    .addPreference("browser.download.folderList", 2)
+                    .addPreference("browser.download.dir", downloadPath);
+            /*options.addPreference("browser.helperApps.neverAsk.saveToDisk", "application/excel");
+            options.addPreference("browser.helperApps.neverAsk.saveToDisk", "application/vnd.ms-excel");
+            options.addPreference("browser.helperApps.neverAsk.saveToDisk", "application/x-excel");
+            options.addPreference("browser.helperApps.neverAsk.saveToDisk", "application/x-msexcel");
+            options.addPreference("browser.helperApps.neverAsk.saveToDisk", "application/pdf");*/
+            DesiredCapabilities capabilities = DesiredCapabilities.firefox();
+            capabilities.setVersion("151");
+            capabilities.setPlatform(Platform.WINDOWS);
+            options.merge(capabilities);
+            //caps.merge(options);
+
+            WebDriver driver = Configuration.remote == null ?
+                    new EventFiringWebDriver(new FirefoxDriver(options)).register(new DriverEventListener())
+                    : new EventFiringWebDriver(new RemoteWebDriver(new URL(Configuration.remote), options)).register(new DriverEventListener());
+
+            WebDriverRunner.setWebDriver(driver);
+        } catch (Exception e) {
+            throw new RuntimeException("Invalid 'remote' parameter: " + Configuration.remote, e);
+        }
+        return downloadPath;
+    }
+
+    public void useFirefox() {
+        try {
+            DesiredCapabilities capabilities = DesiredCapabilities.firefox();
+            capabilities.setAcceptInsecureCerts(true);
+            WebDriver driver = Configuration.remote == null ?
+                    new EventFiringWebDriver(new FirefoxDriver()).register(new DriverEventListener())
+                    : new EventFiringWebDriver(new RemoteWebDriver(new URL(Configuration.remote), capabilities)).register(new DriverEventListener());
+
+            WebDriverRunner.setWebDriver(driver);
+        } catch (Exception e) {
+            throw new RuntimeException("Invalid 'remote' parameter: " + Configuration.remote, e);
+        }
+
+        System.out.println("Browser: " + getCapabilities().getBrowserName());
+    }
+
+    /**
+     *
+     * @param testName
+     * @return downloadPath
+     */
+    public String useChromeWindows151(String testName) {
+        try {
+            String downloadPath = TestData.docDownloadPathWindows + "\\" + testName;
+            //Capabilities caps = getCapabilities();
+            //caps.merge(options);
+            /*DesiredCapabilities capabilities = DesiredCapabilities.chrome();
+            capabilities.setPlatform(Platform.WINDOWS);
+            capabilities.setVersion("151");*/
+            ChromeOptions options = new ChromeOptions();
+            options.setCapability(CapabilityType.PLATFORM_NAME, Platform.WINDOWS);
+            options.setCapability(CapabilityType.BROWSER_VERSION, "151");
+            options.addArguments("disable-infobars");
+            options.setAcceptInsecureCerts(true);
+            options.setExperimentalOption("download.default_directory", downloadPath);
+
+            WebDriver driver = Configuration.remote == null ?
+                    new EventFiringWebDriver(new ChromeDriver(options)).register(new DriverEventListener())
+                    : new EventFiringWebDriver(new RemoteWebDriver(new URL(Configuration.remote), options)).register(new DriverEventListener());
+
+            WebDriverRunner.setWebDriver(driver);
+        } catch (Exception e) {
+            throw new RuntimeException("Invalid 'remote' parameter: " + Configuration.remote, e);
+        }
+        return downloadPath;
+    }
+
 }
