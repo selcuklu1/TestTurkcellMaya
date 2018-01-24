@@ -2068,7 +2068,6 @@ public class TopluPostalamaTest extends BaseTest {
     @Test(enabled = true, description = "TS1812 : Posta Listesi Postalama İşlemleri (Güncelleme) (UC_POSTAYÖNETİMİ_003)")
     public void TS1812() throws IOException, AWTException {
 
-        useFirefox();
         MainPage mainPage = new MainPage();
         TopluPostalanacakEvraklarPage topluPostalanacakEvraklarPage = new TopluPostalanacakEvraklarPage();
         PostaListesiPage postaListesiPage = new PostaListesiPage();
@@ -2255,13 +2254,11 @@ public class TopluPostalamaTest extends BaseTest {
                 .openPage()
                 .topluPostaladiklarimEvrakKontrolu(konu[0]);
 //                .searchTable().searchInAllPages(true).findRows(text(konu[0])).getFoundRow().shouldBe(exist);
-        Selenide.close();
     }
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS1816 : Toplu Postaladıklarım Güncelleme İşlemleri (UC_POSTAYÖNETİMİ_004)")
     public void TS1816() throws IOException, AWTException {
-        useFirefox();
 
         MainPage mainPage = new MainPage();
         TopluPostalanacakEvraklarPage topluPostalanacakEvraklarPage = new TopluPostalanacakEvraklarPage();
@@ -2444,7 +2441,6 @@ public class TopluPostalamaTest extends BaseTest {
                 .tabloKontrolEt(geregi, evrakNo1816[1], gidisSekli, true);
 //                .raporAl(); //rapor kontrolü yapılacak
 
-        Selenide.close();
     }
 
 }
