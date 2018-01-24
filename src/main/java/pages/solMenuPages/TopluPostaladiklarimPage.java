@@ -268,7 +268,7 @@ public class TopluPostaladiklarimPage extends MainPage {
         return this;
     }
 
-    @Step("Evrak Listesi tablosunda Yazdır butonu tıklanır ve PDF bilgisayara indirilir.")
+    @Step("Evrak Listesi tablosunda Yazdır butonu tıklanır.")
     public TopluPostaladiklarimPage evrakListesiYazdirPdfKontrolu(String[] konu, String[] evrakNo, String[] icerik) throws AWTException, IOException {
         String remoteDownloadPath = getDownloadPath();
         int size = tblEvrakListesi.size();
@@ -298,7 +298,7 @@ public class TopluPostaladiklarimPage extends MainPage {
         return this;
     }
 
-    @Step("Evrak Listesi tablosunda Orjinalini Yazdır butonu tıklanır ve PDF bilgisayara indirilir.")
+    @Step("Evrak Listesi tablosunda Orjinalini Yazdır butonu tıklanır")
     public TopluPostaladiklarimPage evrakListesiOrjinaliYazdirPdfKontrolu(String[] konu, String[] evrakNo, String[] icerik) throws AWTException, IOException {
         String remoteDownloadPath = getDownloadPath();
         int size = tblEvrakListesi.size();
