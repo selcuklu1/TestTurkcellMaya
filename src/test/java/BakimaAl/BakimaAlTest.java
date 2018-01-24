@@ -57,13 +57,11 @@ public class BakimaAlTest extends BaseTest {
                 .bakimaAl()
                 .bakimdaOlmali(true);
 
-
         loginPage
                 .loginBakim("test1", "123")
                 .islemMesaji().dikkatOlmali(girilecekBilgilendirmeMetni);
 
     }
-
 
     @Test(enabled = true, description = "2109 : Bakım Modundan Çıkar")
     public void TC02109() {
