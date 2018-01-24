@@ -2,6 +2,7 @@ package pages.solMenuPages;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
@@ -9,7 +10,9 @@ import org.testng.Assert;
 import pages.MainPage;
 import pages.pageData.SolMenuData;
 
+import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 
@@ -27,10 +30,20 @@ public class KoordineParafladiklarimPage extends MainPage {
     SelenideElement tabEvrakEkleri = $(By.xpath("//*[contains(text(),'Evrak Ekleri')]"));
     SelenideElement tabIlgiBilgileri = $(By.xpath("//*[contains(text(),'İlgi Bilgileri')]"));
     SelenideElement tabIlisikBilgileri = $(By.xpath("//*[contains(text(),'İlişik Bilgileri')]"));
-    SelenideElement accordionEvrakEkleri = $("[id^='mainPreviewForm:j_idt'] [id*='accpnl:0'] [class='onizlemeFrame']");
-    SelenideElement accordionIlgiBilgileri = $("[id^='mainPreviewForm:j_idt'] [id*='accpnlI:0'] [class='onizlemeFrame']");
-    SelenideElement accordionIlisikBilgileri = $("[id^='mainPreviewForm:j_idt'] [id*='accpnlIlisik:0'] [class='onizlemeFrame']");
 
+    SelenideElement accordionEvrakEkleri1 = $("[id^='mainPreviewForm:j_idt'] [id$='accpnl'] [class*='ui-accordion-header']:nth-child(1)");
+    SelenideElement accordionEvrakEkleriOpen1 = $("[id^='mainPreviewForm:j_idt'] [id$='accpnl'] [class*='ui-state-active']:nth-child(1)");
+    SelenideElement accordionEvrakEkleri2 = $("[id^='mainPreviewForm:j_idt'] [id$='accpnl'] [class*='ui-accordion-header']:nth-child(3)");
+    SelenideElement accordionEvrakEkleriOpen2 = $("[id^='mainPreviewForm:j_idt'] [id$='accpnl'] [class*='ui-state-active']:nth-child(3)");
+
+    SelenideElement accordionIlgiBilgileri1 = $("[id^='mainPreviewForm:j_idt'] [id$='accpnlI'] [class*='ui-accordion-header']:nth-child(1)");
+    SelenideElement accordionIlgiBilgileriOpen1 = $("[id^='mainPreviewForm:j_idt'] [id$='accpnlI'] [class*='ui-state-active']:nth-child(1)");
+    SelenideElement accordionIlgiBilgileri2 = $("[id^='mainPreviewForm:j_idt'] [id$='accpnlI'] [class*='ui-accordion-header']:nth-child(3)");
+    SelenideElement accordionIlgiBilgileriOpen2 = $("[id^='mainPreviewForm:j_idt'] [id$='accpnlI'] [class*='ui-state-active']:nth-child(3)");
+
+    ElementsCollection tblOnIzlemeEkler = $$("[id*='ekListesiOnizlemeDataTable'] > tr[role='row']");
+    ElementsCollection tblOnIzlemeIlgiBilgileri = $$("[id*='ilgiListesiDataTable_data'] > tr[role='row']");
+    ElementsCollection tblOnIzlemeIlisikBilgileri = $$("[id*='ilisikListesiDataTable_data'] > tr[role='row']");
 
     @Step("Parafladıklarım sayfası aç")
     public KoordineParafladiklarimPage openPage() {
@@ -65,12 +78,17 @@ public class KoordineParafladiklarimPage extends MainPage {
         return this;
     }
 
-    @Step("Evrak Ek/İlgi/İlişikler tablarının geldiği kontrolu")
+    @Step("Koordine Parafladıklarım listesinde evrak kontrolü:  \"{konu}\" ")
+    public KoordineParafladiklarimPage konuyaGoreEvrakKontroluAllPages(String konu){
+        searchTable().searchInAllPages(true).findRows(text(konu)).getFoundRow().shouldBe(exist);
+        return this;
+    }
+
+    @Step("Evrak Ek/İlgi tablarının geldiği kontrolu")
     public KoordineParafladiklarimPage tabKontrolleri() {
 
         Assert.assertEquals(tabEvrakEkleri.isDisplayed(), true);
         Assert.assertEquals(tabIlgiBilgileri.isDisplayed(), true);
-        Assert.assertEquals(tabIlisikBilgileri.isDisplayed(), true);
 
         return this;
     }
@@ -95,19 +113,62 @@ public class KoordineParafladiklarimPage extends MainPage {
 
     @Step("Evrak önizleme/Evrak Ekleri Accordion kontrolu")
     public KoordineParafladiklarimPage evrakEkleriAccordionKontrol() {
-        Assert.assertEquals(accordionEvrakEkleri.isDisplayed(), true);
+
+        accordionEvrakEkleriOpen1.shouldBe(visible);
+        Assert.assertEquals(accordionEvrakEkleriOpen1.isDisplayed(), true);
+        accordionEvrakEkleri1.click();
+        Selenide.sleep(1000);
+        accordionEvrakEkleri2.click();
+        accordionEvrakEkleriOpen2.shouldBe(visible);
+        Assert.assertEquals(accordionEvrakEkleriOpen2.isDisplayed(), true);
+
         return this;
     }
 
     @Step("Evrak önizleme/İlgi Bilgileri Accordion kontrolu")
-    public KoordineParafladiklarimPage ilgiBilgieriAccordionKontrol() {
-        Assert.assertEquals(accordionIlgiBilgileri.isDisplayed(), true);
+    public KoordineParafladiklarimPage ilgiBilgileriAccordionKontrol() {
+
+        accordionIlgiBilgileriOpen1.shouldBe(visible);
+        Assert.assertEquals(accordionIlgiBilgileriOpen1.isDisplayed(), true);
+        accordionIlgiBilgileri1.click();
+        Selenide.sleep(1000);
+        accordionIlgiBilgileri2.click();
+        accordionIlgiBilgileriOpen2.shouldBe(visible);
+        Assert.assertEquals(accordionIlgiBilgileriOpen2.isDisplayed(), true);
         return this;
     }
 
-    @Step("Evrak önizleme/İlişik Bilgileri Accordion kontrolu")
-    public KoordineParafladiklarimPage ilisikBilgieriAccordionKontrol() {
-        Assert.assertEquals(accordionIlisikBilgileri.isDisplayed(), true);
+    @Step("Evrak Önizlemede ekleri detay butonu kontrolu")
+    public KoordineParafladiklarimPage evrakEklerindeDetayButonuKontrol(String ek1, String ek2) {
+
+        tblOnIzlemeEkler
+                .filterBy(Condition.text(ek1))
+                .get(0)
+                .$("[id*='detayButton']").shouldBe(visible);
+
+        tblOnIzlemeEkler
+                .filterBy(Condition.text(ek2))
+                .get(0)
+                .$("[id*='detayButton']").shouldBe(visible);
+
         return this;
     }
+
+    @Step("Evrak Önizlemede ilgi bilgileri detay butonu kontrolu")
+    public KoordineParafladiklarimPage ilgiBilgilerindeDetayButonuKontrol(String ilgiSayisi1, String ilgiSayisi2) {
+
+        tblOnIzlemeIlgiBilgileri
+                .filterBy(Condition.text(ilgiSayisi1))
+                .get(0)
+                .$("[id*='ilgiListesiDetayButton']").shouldBe(visible);
+
+        tblOnIzlemeIlgiBilgileri
+                .filterBy(Condition.text(ilgiSayisi2))
+                .get(0)
+                .$("[id*='ilgiListesiDetayButton']").shouldBe(visible);
+
+        return this;
+    }
+
+
 }
