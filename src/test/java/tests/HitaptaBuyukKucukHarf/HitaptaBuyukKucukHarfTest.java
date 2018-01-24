@@ -186,7 +186,9 @@ public class HitaptaBuyukKucukHarfTest extends BaseTest {
 //        DAĞITIM YERLERİNE
 //        login(user1);
 
-        useFirefoxWindows151("TS2090");
+        String d = useFirefoxWindows151("TS2090");
+        
+        System.out.println("Download path:" + d);
 
         String uygulanacakDeger;
         User user = optiim;
