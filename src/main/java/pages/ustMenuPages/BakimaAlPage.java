@@ -126,12 +126,7 @@ public class BakimaAlPage extends MainPage {
     @Step("Kullanıcıları temizle.")
     public BakimaAlPage kullanicilarTemizle() {
 
-        ElementsCollection allClearButtons = $$("tbody[id='bakimaAlFormId:bakimaAlKullanicilarId:LovSecilenTable_data'] button[id^='bakimaAlFormId:bakimaAlKullanicilarId:LovSecilenTable']");
-        if (allClearButtons.size() > 0) {
-            for (int i = 0; i < allClearButtons.size(); i++) {
-                allClearButtons.get(i).click();
-            }
-        }
+        txtKullanicilar.clearAllSelectedItems();
         return this;
     }
 

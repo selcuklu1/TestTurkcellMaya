@@ -49,5 +49,15 @@ public class LoginPage extends MainPage {
         return this;
     }
 
+    @Step("\"{username}\" kullanıcısı ile giriş yapmaya çalış. Bakımdan dolayı giriş yapamaz.")
+    public LoginPage loginBakim(String username, String password) {
+        open();
+
+        txtUsername.sendKeys(username);
+        txtPassword.sendKeys(password);
+        btnLogin.click();
+        return this;
+    }
+
 
 }

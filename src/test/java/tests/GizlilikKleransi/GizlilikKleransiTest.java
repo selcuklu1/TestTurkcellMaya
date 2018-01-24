@@ -111,6 +111,7 @@ public class GizlilikKleransiTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS1475: Havale ettiklerim listesinden havalede gizlilik derecesi kontrolü")
     public void TS1475A() throws InterruptedException {
+
         String uyariMesaj1 = "Havale etmek istediğiniz kullanıcı kleransı yetersizdir!!";
         String uyariMesaj2 = "Havale etmek istediğiniz kullanıcı grubundaki Mehmet Emin YÜCEANT, Mehmet Gökhan BAYSAN, Mehmet Koray BALCIOĞLU ın kleransı yetersizdir, kleransı yeterli olmayan kullanıcılara havale edilmeyecektir !!";
         String kisi = "Can Şeker";
@@ -129,8 +130,8 @@ public class GizlilikKleransiTest extends BaseTest {
                 .filtrelerdeAlaniDoldur("Bitiş Tarihi", evrakTarihi, Keys.ENTER);
         havaleEttiklerimPage.gizlilikRaporSec(konuKodu, geldigiYer, evrakTarihi)
                 .havaleYap()
-                .havaleYapKisiDoldur(kisi)
-                .islemMesaji().uyariOlmali(uyariMesaj1);
+                .havaleYapKisiSecmeyeDene(kisi)
+                .islemMesaji().dikkatOlmali(uyariMesaj1);
 
         havaleEttiklerimPage
                 .havaleYapKullaniciyiSecmeyeDene(kullaniciListesi)
