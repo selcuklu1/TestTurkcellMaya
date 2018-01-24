@@ -242,12 +242,14 @@ public class BaseTest extends BaseLibrary {
             capabilities.setAcceptInsecureCerts(true);
             WebDriver driver = Configuration.remote == null ?
                     new EventFiringWebDriver(new FirefoxDriver()).register(new DriverEventListener())
-                    : new EventFiringWebDriver(new RemoteWebDriver(new URL(Configuration.remote),capabilities)).register(new DriverEventListener());
+                    : new EventFiringWebDriver(new RemoteWebDriver(new URL(Configuration.remote), capabilities)).register(new DriverEventListener());
 
             WebDriverRunner.setWebDriver(driver);
         } catch (Exception e) {
             throw new RuntimeException("Invalid 'remote' parameter: " + Configuration.remote, e);
         }
+
+        System.out.println("Browser: " + getCapabilities().getBrowserName());
     }
 
     /**
