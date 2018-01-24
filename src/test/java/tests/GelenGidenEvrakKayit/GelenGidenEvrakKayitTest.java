@@ -112,7 +112,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .ekBilgiFiltreAc()
                 .evrakEkleriDosyaEkleme(pathToFileExcel)
                 .evrakEkleriDosyaEkleDosyaAdiKontrol(excelName)
-//                .ustYaziDegistirilmisPopUpKontrol(false)
+                .ustYaziDegistirilmisPopUpKontrol(false)
                 .evrakEkleriDosyaEkleEkMetinDoldur(ekMetni)
                 .evrakEkTabViewEkle()
                 .dosyaEkleTabTabloKontrolu("Ek-1")
@@ -347,7 +347,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .ivedilikSec(ivedilik)
                 .ekBilgiFiltreAc()
                 .evrakEkleriDosyaEkleme(pathToFileExcel)
-//                .ustYaziDegistirilmisPopUpKontrol(false)
+                .ustYaziDegistirilmisPopUpKontrol(false)
                 .evrakEkleriDosyaEkleEkMetinDoldur(ekMetni)
                 .evrakEkleriDosyaEkle()
                 .dosyaEkleTabTabloKontrolu("Ek-3") //Webservise  baglanılamadı hatası alnıyor.
