@@ -232,7 +232,8 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 //        String evrakNO328 = "6693";
 //        String evrakNo = evrakNO321;
 //        String evrakNo1 = evrakNO328;
-        String remoteDownloadPath = getDownloadPath();
+
+        String remoteDownloadPath = useChromeWindows151("TS1401");//getDownloadPath();
 //        String remoteDownloadPath = "C:\\Users\\optiim\\Downloads\\";
         System.out.println(remoteDownloadPath);
 

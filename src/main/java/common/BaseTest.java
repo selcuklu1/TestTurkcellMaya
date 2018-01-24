@@ -34,6 +34,7 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.Locale;
 
+import static com.codeborne.selenide.Selenide.$;
 import static data.TestData.belgenetURL;
 import static io.qameta.allure.util.ResultsUtils.firstNonEmpty;
 
@@ -68,7 +69,7 @@ public class BaseTest extends BaseLibrary {
         Configuration.browserVersion = System.getProperty("node");
         Configuration.remote = System.getProperty("hub");
         Configuration.reportsFolder = "test-result/reports";
-        Configuration.screenshots = false;
+        Configuration.screenshots = true;
         Configuration.savePageSource = false;
         Configuration.collectionsTimeout = timeout * 1000;
         Configuration.timeout = timeout * 1000;
@@ -207,7 +208,7 @@ public class BaseTest extends BaseLibrary {
      * @return downloadPath
      */
     public String useFirefoxWindows151(String testName) {
-        String downloadPath = TestData.docDownloadPathWindows + "\\" + testName;
+        String downloadPath = TestData.docDownloadPathWindows + testName;
         try {
 
             //Capabilities caps = getCapabilities();
@@ -261,8 +262,9 @@ public class BaseTest extends BaseLibrary {
      * @return downloadPath
      */
     public String useChromeWindows151(String testName) {
+        String downloadPath = TestData.docDownloadPathWindows + testName;
+        downloadPath = Configuration.reportsFolder + "/" + testName;
         try {
-            String downloadPath = TestData.docDownloadPathWindows + "\\" + testName;
             //Capabilities caps = getCapabilities();
             //caps.merge(options);
             /*DesiredCapabilities capabilities = DesiredCapabilities.chrome();
