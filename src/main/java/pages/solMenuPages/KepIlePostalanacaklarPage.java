@@ -19,6 +19,15 @@ public class KepIlePostalanacaklarPage extends MainPage {
     SelenideElement cmbGonderici = $(By.id("mainPreviewForm:dataTableId:0:fromKepAdresId"));
     ElementsCollection tblEvraklar = $$("[id='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
     SelenideElement btnEvrakPostalaPostala = $(By.id("mainPreviewForm:postalaButton_id"));
+
+    @Step("\"{konuKodu}\" adlı evrağın listelenmediği görülür.")
+    public KepIlePostalanacaklarPage evragınListelenmedigiGorme(String konuKodu){
+        boolean durum = tblEvraklar.filterBy(Condition.text(konuKodu)).size() == 0;
+        Assert.assertEquals(durum,true);
+        takeScreenshot();
+        return this;
+    }
+
     @Step("Kep ile Postalanacaklar sayfası aç")
     public KepIlePostalanacaklarPage openPage() {
         solMenu(SolMenuData.BirimEvraklari.KEPilePostalanacaklar);
@@ -48,7 +57,7 @@ public class KepIlePostalanacaklarPage extends MainPage {
     @Step("Belge elektronik imzalı değil! Evrakı postalamak üzeresiniz. Devam etmek istiyor musunuz? uyarısının geldiği görülür.")
     public KepIlePostalanacaklarPage belgeElektronikImzaliDegilUyariGeldigiGorme(){
         boolean durum = $$("[id^='mainPreviewForm:postalaDogrulaDialogForm']").filterBy(Condition.visible).size()==0;
-        Assert.assertEquals(durum,true);
+        Assert.assertEquals(durum,false);
         takeScreenshot();
         return this;
     }

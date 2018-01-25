@@ -221,13 +221,16 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
         kepIlePostalanacaklarPage
                 .gondericiKontrol(popupKepAdresi2);
     }
+    String konuKoduRandom = "TS-2236-" + createRandomNumber(10);
+    String tarih = getSysDateForKis();
+    String geregiTuzelKisi = "OPTİİMc1";
+    String basariMesaji = "İşlem başarılıdır!";
+    String geregiKurum = "Adalet Bakanlığı";
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS2236: KEP Adresi Tanımlama işlemleri")
     public void TS2236() {
-
         String konuKodu = "Diğer";
-        String konuKoduRandom = "TS-2236-" + createRandomNumber(10);
         String kaldirilicakKlasor = "Diğer";
         String evrakTuru = "Resmi Yazışma";
         String gizlilikDerecesi = "Normal";
@@ -237,10 +240,8 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
         String tuzelKisi = "Tüzel Kişi";
         String kurum = "Kurum";
         String geregiGercekKisi = "Cansuu Denizz";
-        String geregiTuzelKisi = "OPTİİMc1";
-        String geregiKurum = "Adalet Bakanlığı";
         String pathFile = getUploadPath() + "Otomasyon.pdf";
-        String tarih = getSysDateForKis();
+
 
         login(usernameMBOZDEMIR, passwordMBOZDEMIR);
 
@@ -298,43 +299,33 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TS1549: KEP posta tipindeki evrakın postalanacak evraklarda posta tipinin değiştirilmesi")
+    @Test(enabled = true,dependsOnMethods = {"TS2236"}, description = "TS1549: KEP posta tipindeki evrakın postalanacak evraklarda posta tipinin değiştirilmesi")
     public void TS1549() {
-
-        String konuKodu = "Diğer";
-        String konuKoduRandom = "TS-2236-" + createRandomNumber(10);
-        String kaldirilicakKlasor = "Diğer";
-        String evrakTuru = "Resmi Yazışma";
-        String gizlilikDerecesi = "Normal";
-        String editor = createRandomText(15);
-        String ivedilik = "Normal";
-        String gercekKisi = "Gerçek Kişi";
-        String tuzelKisi = "Tüzel Kişi";
-        String kurum = "Kurum";
-        String geregiGercekKisi = "Cansuu Denizz";
-        String geregiTuzelKisi = "OPTİİMc1";
-        String geregiKurum = "Adalet Bakanlığı";
-        String pathFile = getUploadPath() + "Otomasyon.pdf";
-        String tarih = getSysDateForKis();
-
-        //Pre Condition TS2236 koşulmalı önce
-        TS2236();
-        //
+        String uyariMesaj = "KEP ile postalama işlemi yapılmamış dağıtımlar bulunmaktadır! Lütfen KEP posta biriminiz ile görüşünüz.";
         login(usernameMBOZDEMIR, passwordMBOZDEMIR);
 
         postalanacakEvraklarPage
                 .openPage()
-                .evrakSec(konuKoduRandom,geregiGercekKisi,tarih)
-                .evrakPostala();
-
-        kepIlePostalanacaklarPage
-                .openPage()
-                .evrakSec(konuKoduRandom)
+                .evrakSec(konuKoduRandom,tarih,"")
                 .evrakPostala()
+                .dagitimSekliDegistirSec(geregiTuzelKisi,"Adi Posta","0")
+                .tuzelKisiPostaKoduVeAciklamaDoldur(geregiTuzelKisi,"1","fsd")
                 .evrakPostalaPostala()
                 .belgeElektronikImzaliDegilUyariGeldigiGorme()
                 .belgeElektronikImzaliDegilUyariEvet()
-                .kayitliEpostaAdresleriBaglantisiGeldigiGorme();
+                .islemMesaji().dikkatOlmali(uyariMesaj);
+
+        postalanacakEvraklarPage
+                .dagitimSekliDegistirSec(geregiKurum,"Adi Posta","2")
+                .evrakPostalaPostala()
+                .belgeElektronikImzaliDegilUyariGeldigiGorme()
+                .belgeElektronikImzaliDegilUyariEvet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+
+        kepIlePostalanacaklarPage
+                .openPage()
+                .evragınListelenmedigiGorme(konuKoduRandom);
 
     }
 
