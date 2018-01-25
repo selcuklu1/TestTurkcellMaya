@@ -296,6 +296,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
         kararYazisiOlusturPage
                 .editorTabAc()
                 .editorIcerikDoldur(not)
+
                 .kaydetveOnaySun()
                 .kaydetVeOnaySunAciklamaDoldur(not)
                 .gonder(true);

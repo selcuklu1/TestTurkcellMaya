@@ -433,6 +433,12 @@ public class KararYazisiOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("")
+        public EditorTab stepmethod(){
+
+            return this;
+        }
+
 
     }
 
