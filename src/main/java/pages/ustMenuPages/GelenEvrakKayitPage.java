@@ -219,6 +219,15 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
+    @Step("Otomatik havale seç")
+    public GelenEvrakKayitPage otomatikHavaleSec2(boolean durum) {
+            $("[id='evrakBilgileriForm:havaleDagitimLovPanel'] [class='ui-chkbox ui-widget'] input[type=checkbox]")
+                    .setSelected(durum);
+            sleep(3000);
+            $("[id='evrakBilgileriForm:havaleDagitimLovPanel'] [class='ui-chkbox ui-widget'] div[class*='ui-chkbox-box ui-widget ui-corner-all ui-state-default']").click();
+        return this;
+    }
+
     @Step("")
     public GelenEvrakKayitPage otomatikHavaleGeldigiGorme(String otomatikHavale) {
         ElementsCollection lblOtomoatikHavale = $$("[id='evrakBilgileriForm:havalePanel'] label[class='columnLabelFixSmallWidth']");
@@ -235,7 +244,7 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("Hava İşlemleri Kişi alanında \"{kisi}\" seç")
+    @Step("Havale İşlemleri Kişi alanında \"{kisi}\" seç")
     public GelenEvrakKayitPage havaleIslemleriKisiDoldur(String kisi) {
         txtHavaleIslemleriKisi.selectLov(kisi);
         return this;
@@ -351,10 +360,10 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("Geldiği kullanıcı alanı doldur: {geldigiKisi} | {description} ")
+    @Step("Geldiği kullanıcı alanı doldur: {kullanici} | {description} ")
     public GelenEvrakKayitPage geldigiKullaniciDoldur(String kullanici, String description) {
 
-        cmbGeldigiGercekKisi.selectLov(kullanici);
+        cmbGeldigiKisi.selectLov(kullanici);
 
         /*System.out.println("title: " + cmbGeldigiGercekKisi.lastSelectedLovTitleText());
         System.out.println("detail: " + cmbGeldigiGercekKisi.lastSelectedLovDetailText());*/

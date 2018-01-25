@@ -143,7 +143,7 @@ public class PostalananlarPage extends MainPage {
         return this;
     }
 
-    @Step("")
+    @Step("Evrak'ın \"{konu}\" adlı konu ile geldiği görünür. Geldiği yer:\"{gidecegiYer}\" Evrak tarihi:\"{evrakTarihi}\"")
     public PostalananlarPage evrakGeldigiGorme(String konu, String gidecegiYer, String evrakTarihi){
         boolean durum = tablePostalananlar.filterBy(Condition.text(konu))
                 .filterBy(Condition.text(gidecegiYer))

@@ -9,9 +9,10 @@ import org.testng.annotations.Test;
 import pages.altMenuPages.CevapYazPage;
 import pages.altMenuPages.EvrakDetayiPage;
 import pages.pageComponents.TextEditor;
+import pages.pageComponents.tabs.EditorTab;
 import pages.solMenuPages.*;
+import pages.newPages.EvrakOlusturPage;
 import pages.ustMenuPages.CevaplananEvrakRaporuPage;
-import pages.ustMenuPages.EvrakOlusturPage;
 import pages.ustMenuPages.GelenEvrakKayitPage;
 import pages.ustMenuPages.KlasorEvrakIslemleriPage;
 
@@ -31,7 +32,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
     CevaplananEvrakRaporuPage cevaplananEvrakRaporuPage;
     GelenEvrakKayitPage gelenEvrakKayitPage;
     GelenEvraklarPage gelenEvraklarPage;
-    EvrakOlusturPage evrakOlusturPage;
+    pages.ustMenuPages.EvrakOlusturPage evrakOlusturPage;
     EvrakDetayiPage evrakDetayiPage;
     CevapYazPage cevapYazPage;
     KontrolBekleyenlerPage kontrolBekleyenlerPage;
@@ -42,6 +43,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
     PostalanacakEvraklarPage postalanacakEvraklarPage;
     PostalananlarPage postalananlarPage;
     ImzaBekleyenlerPage imzaBekleyenlerPage;
+    EvrakOlusturPage evrakOlusturPage2;
     TextEditor editor;
 
 
@@ -53,7 +55,8 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
         cevaplananEvrakRaporuPage = new CevaplananEvrakRaporuPage();
         gelenEvrakKayitPage = new GelenEvrakKayitPage();
         gelenEvraklarPage = new GelenEvraklarPage();
-        evrakOlusturPage = new EvrakOlusturPage();
+        evrakOlusturPage = new pages.ustMenuPages.EvrakOlusturPage();
+        evrakOlusturPage2 = new EvrakOlusturPage();
         kontrolBekleyenlerPage = new KontrolBekleyenlerPage();
         cevapladiklarimPage = new CevapladiklarimPage();
         cevapladiklarimPage = new CevapladiklarimPage();
@@ -97,7 +100,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .evrakTarihiDoldur(evrakTarihi)
                 .gizlilikDerecesiSec(gizlilikDerecesi)
                 .kisiKurumSec(kisiKurum)
-                .geldigiGercekKisiDoldur(kullanici,"Kullanıcı")
+                .geldigiKullaniciDoldur(kullanici,"Kullanıcı")
                 .evrakSayiSagDoldur(evrakSayiSag)
                 .havaleIslemleriKisiDoldur(kisi)
                 .kaydet()
@@ -111,10 +114,12 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
         gelenEvraklarPage
                 .openPage()
                 .evrakSec(konuKoduRandom, kullanici, evrakTarihi, evrakSayiSag)
+                .ikonlarinGeldigiGorme()
                 .cevapYaz();
 
         evrakOlusturPage
                 .editorTabAc()
+                .ilgiSatırıKontrol(kullanici,evrakTarihi)
                 .editorIcerikDoldur(icerik);
 
         evrakOlusturPage
@@ -158,7 +163,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .openPage()
                 .tabloEvrakSec(konuKoduRandom,kullanici,evrakTarihi)
                 .secilenEvrakEvrakGecmisi()
-                .evrakGecmisiEvrakKapandiIbaresiGorme();
+                .evrakGecmisiEvrakKapandiIbaresiGorme(evrakTarihi,evrakSayiSag);
 
         klasoreKaldirdiklarimPage
                 .openPage()
@@ -257,7 +262,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .openPage()
                 .tabloEvrakSec(konuKoduRandom,kurum,evrakTarihi)
                 .secilenEvrakEvrakGecmisi()
-                .evrakGecmisiEvrakKapandiIbaresiGorme();
+                .evrakGecmisiEvrakKapandiIbaresiGorme(evrakTarihi,evrakSayiSag);
 
         klasoreKaldirdiklarimPage
                 .openPage()
@@ -286,7 +291,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
         String basariMesaji = "İşlem başarılıdır!";
         String konuKodu = "Diğer";
         String kaldirilacakKlasor = "Diğer";
-        String konuKoduRandom = "TS-931-" + createRandomNumber(10);
+        String konuKoduRandom = "TS-0931-" + createRandomNumber(10);
         String evrakTarihi = getSysDateForKis();
         String kisi2 = "Optiim";
         String gizlilikDerecesi = "Gizli";
@@ -318,10 +323,17 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
         gelenEvraklarPage
                 .openPage()
                 .evrakSec(konuKoduRandom, kisi2, evrakTarihi, evrakSayiSag)
+                .ikonlarinGeldigiGorme()
                 .cevapYaz();
 
         evrakOlusturPage
+                .bilgilerTabiAc()
+                .konuAlanıDoluGeldigiGorme(konuKoduRandom)
+                .geregiSeciliGeldigiGorme(kisi2);
+
+        evrakOlusturPage
                 .editorTabAc()
+                .ilgiSatırıKontrol(kisi2,evrakTarihi)
                 .editorIcerikDoldur(icerik);
 
         evrakOlusturPage
@@ -362,7 +374,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .openPage()
                 .tabloEvrakSec(konuKoduRandom,kisi2,evrakTarihi)
                 .secilenEvrakEvrakGecmisi()
-                .evrakGecmisiEvrakKapandiIbaresiGorme();
+                .evrakGecmisiEvrakKapandiIbaresiGorme(evrakTarihi,evrakSayiSag);
 
         klasoreKaldirdiklarimPage
                 .openPage()
@@ -391,7 +403,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
         String basariMesaji = "İşlem başarılıdır!";
         String konuKodu = "Diğer";
         String kaldirilacakKlasor = "Diğer";
-        String konuKoduRandom = "TS-932-" + createRandomNumber(10);
+        String konuKoduRandom = "TS-0932-" + createRandomNumber(10);
         String evrakTarihi = getSysDateForKis();
         String kisi2 = "Can Şeker";
         String gizlilikDerecesi = "Gizli";
@@ -423,10 +435,17 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
         gelenEvraklarPage
                 .openPage()
                 .evrakSec(konuKoduRandom, kisi2, evrakTarihi, evrakSayiSag)
+                .ikonlarinGeldigiGorme()
                 .cevapYaz();
 
         evrakOlusturPage
+                .bilgilerTabiAc()
+                .konuAlanıDoluGeldigiGorme(konuKoduRandom)
+                .geregiSeciliGeldigiGorme(kisi2);
+
+        evrakOlusturPage
                 .editorTabAc()
+                .ilgiSatırıKontrol(kisi2,evrakTarihi,evrakSayiSag)
                 .editorIcerikDoldur(icerik);
 
         evrakOlusturPage
@@ -438,7 +457,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
         evrakOlusturPage
                 .kaydetOnayaSun2()
                 .kaydetOnayaSunAciklamaDoldur2(icerik)
-                .islemMesaji().basariliOlmali(basariMesaji);
+                .islemMesaji().basariliOlmali(basariMesaji);////////////////////////////////////////
 
         login("test1", "123");
 
@@ -467,7 +486,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .openPage()
                 .tabloEvrakSec(konuKoduRandom,kisi2,evrakTarihi)
                 .secilenEvrakEvrakGecmisi()
-                .evrakGecmisiEvrakKapandiIbaresiGorme();
+                .evrakGecmisiEvrakKapandiIbaresiGorme(evrakTarihi,evrakSayiSag);
 
         klasoreKaldirdiklarimPage
                 .openPage()
@@ -657,7 +676,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
         String basariMesaji = "İşlem başarılıdır!";
         String konuKodu = "Diğer";
         String kaldirilacakKlasor = "Diğer";
-        String konuKoduRandom = "TS-2187-" + createRandomNumber(10);
+        String konuKoduRandom = "TS-2188-" + createRandomNumber(10);
         String evrakTarihi = getSysDateForKis();
         String kisi2 = "Optiim";
         String gizlilikDerecesi = "Gizli";
@@ -691,9 +710,10 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .evrakSec(konuKoduRandom, kisi2, evrakTarihi, evrakSayiSag)
                 .cevapYaz();
 
-        evrakOlusturPage
-                .editorTabAc()
-                .onTanimliIcerikSablonuKullan("TS2188 (K)");
+        EditorTab editorTab = evrakOlusturPage2.openPage().editorTab().openTab();
+        editorTab.getEditor().toolbarButton("Öntanımlı İçerik Şablonu Kullan", true);
+        editorTab.onTanimliSablonuSec("TS2188 (K)")
+                .onTanimliSablonuUygula();
 
         evrakOlusturPage
                 .bilgilerTabiAc()
@@ -733,7 +753,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .openPage()
                 .tabloEvrakSec(konuKoduRandom,kisi2,evrakTarihi)
                 .secilenEvrakEvrakGecmisi()
-                .evrakGecmisiEvrakKapandiIbaresiGorme();
+                .evrakGecmisiEvrakKapandiIbaresiGorme(evrakTarihi,evrakSayiSag);
 
         klasoreKaldirdiklarimPage
                 .openPage()
@@ -796,9 +816,10 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .evrakSec(konuKoduRandom, kisi2, evrakTarihi, evrakSayiSag)
                 .cevapYaz();
 
-        evrakOlusturPage
-                .editorTabAc()
-                .onTanimliIcerikSablonuKullan("A11 (B)");
+        EditorTab editorTab = evrakOlusturPage2.openPage().editorTab().openTab();
+        editorTab.getEditor().toolbarButton("Öntanımlı İçerik Şablonu Kullan", true);
+        editorTab.onTanimliSablonuSec("A11 (B)")
+        .onTanimliSablonuUygula();
 
         evrakOlusturPage
                 .bilgilerTabiAc()
@@ -838,7 +859,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .openPage()
                 .tabloEvrakSec(konuKoduRandom,kisi2,evrakTarihi)
                 .secilenEvrakEvrakGecmisi()
-                .evrakGecmisiEvrakKapandiIbaresiGorme();
+                .evrakGecmisiEvrakKapandiIbaresiGorme(evrakTarihi,evrakSayiSag);
 
         klasoreKaldirdiklarimPage
                 .openPage()
