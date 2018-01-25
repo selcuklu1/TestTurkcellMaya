@@ -100,7 +100,6 @@ public class GercekKisiYonetimPage extends MainPage {
     public GercekKisiYonetimPage openPage() {
         ustMenu(UstMenuData.TeskilatKisiTanimlari.GercekKisiYonetimi);
         $("#gercekKisiYonetimiListingForm").shouldBe(visible);
-
         return this;
     }
 
