@@ -226,6 +226,8 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
 
     @Step("Posta tipi seç.")
     public TopluPostalanacakEvraklarPage postaTipiSec(String[] postaTipleri) {
+        Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", lblPostaTipiSeciniz);
+
         lblPostaTipiSeciniz.click();
         ElementsCollection currentListElement = $$(By.xpath("//label[.='Adi Posta']/../../../ul")).last().$$("li");
         for (int i = 0; i < postaTipleri.length; i++) {
@@ -279,6 +281,12 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Listeye Ekle butonuna tıkla")
+    public TopluPostalanacakEvraklarPage postaListesiSec2(String postaListesi) {
+        BelgenetElement cmbPostaListesi = comboBox(By.id("mainPreviewForm:tpbeSelectOneMenuId"));
+        cmbPostaListesi.selectComboBox(postaListesi);
+        return this;
+    }
     @Step("Listeye Ekle butonuna tıkla")
     public TopluPostalanacakEvraklarPage listeyeEkle() {
         btnListeyeEkle.click();
@@ -361,14 +369,14 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
     public TopluPostalanacakEvraklarPage evrakSec(String konu, boolean secim) {
         Boolean isSelected = false;
 
-        SelenideElement currentRow = tableEvraklar
+        SelenideElement currentRow = $$("tbody[id='mainInboxForm:inboxDataTable_data'] > tr[data-ri]")
                 .filterBy(Condition.text(konu))
                 .first();
 
         Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", currentRow);
 
         SelenideElement currentRowCheckBox = currentRow.$(By.xpath(".//div[contains(@class, 'ui-chkbox ui-widget')]"));
-
+        Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", currentRowCheckBox);
         if (currentRowCheckBox.$(By.xpath(".//div[contains(@class, 'ui-state-active')]")).exists())
             isSelected = true;
 
@@ -379,8 +387,6 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
             if (isSelected == true)
                 currentRowCheckBox.click();
         }
-
-
         return this;
     }
 

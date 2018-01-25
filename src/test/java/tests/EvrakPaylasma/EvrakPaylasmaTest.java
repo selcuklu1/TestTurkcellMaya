@@ -99,7 +99,6 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .evrakNotEklemeButonuAktifOlmali(false);
 
 
-        logout();
         login("huser", "123");
 
         benimlePaylasilanlarPage
@@ -175,8 +174,6 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .evrakOnizlemeTabSec(tabPaylaşılanlar)
                 .paylasilanKontrolTumKullanıcılıar(paylasilacakKullanicilar, durumu);
 
-        logout();
-
         login("test1", "123");
 
         benimlePaylasilanlarPage
@@ -188,7 +185,6 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .evrakNotuGirVeSil(konu)
                 .evrakNotuGirVeKaydet(konu);
 
-        logout();
         login("mbozdemir", "123");
 
         paylastiklarimPage
@@ -274,15 +270,12 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .paylasimdanGeriAl(paylasimdanGeriAlanicaklar);
 
 
-        logout();
         login("ztekin", "123");
 
         benimlePaylasilanlarPage
                 .openPage()
                 .paylasilanlarKontrol(paylasan, evrakKonu, paylasilmaTarihi, false);
 
-
-        logout();
         login("optiim", "123");
 
         benimlePaylasilanlarPage
@@ -446,8 +439,6 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .paylasilanKontrol("Huser1 TUMER1", "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ", "Paylaşımda", "")
                 .paylasilanKontrol("Huser2 TUMER2", "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ", "Paylaşımda", "");
 
-        logout();
-
         login("huser1", "123");
 
         benimlePaylasilanlarPage
@@ -457,8 +448,6 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .evrakNotuKontrol(evrakiPaylasan, tarihBugun, evrakAciklamasi)
                 .evrakNotuEkle()
                 .evrakNotuGirVeKaydet(yeniEvrakPaylasimNotu);
-
-        logout();
 
         login("huser2", "123");
 
@@ -531,9 +520,7 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .kaydetOnayaSunGonder()
                 .kaydetOnayaSunGonderEvet();
 
-        logout();
         login("parafbekleyen01", "123");
-
 
         String evrakTarih = "";
         String basariMesaji = "İşlem başarılıdır!";
@@ -553,10 +540,7 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .paylasPaylas()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
-
-        logout();
-
-        login("HUSER", "123");
+        login("huser", "123");
 
         benimlePaylasilanlarPage
                 .openPage()
@@ -564,8 +548,6 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .evrakOnizlemeTabSec("Evrak Notları")
                 .evrakNotuEkle()
                 .evrakNotuGirVeKaydet(eklenenNot);
-
-        logout();
 
         login("parafbekleyen01", "123");
 
@@ -752,8 +734,6 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .paylasilanKontrol("Huser1 TUMER1", "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ", "Paylaşımda", "")
                 .paylasilanKontrol("Huser2 TUMER2", "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ", "Paylaşımda", "");
 
-        logout();
-
         login("huser1", "123");
 
         benimlePaylasilanlarPage
@@ -763,8 +743,6 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .evrakNotuKontrol(evrakiPaylasan, tarihBugun, evrakAciklamasi)
                 .evrakNotuEkle()
                 .evrakNotuGirVeKaydet(yeniEvrakPaylasimNotu);
-
-        logout();
 
         login("huser2", "123");
 
@@ -842,8 +820,6 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .paylasilanKontrol("Huser1 TUMER1", "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ", "Paylaşımda", "")
                 .paylasilanKontrol("Huser2 TUMER2", "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ", "Paylaşımda", "");
 
-        logout();
-
         login("huser1", "123");
 
         benimlePaylasilanlarPage
@@ -853,8 +829,6 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .evrakNotuKontrol(evrakiPaylasan, tarihBugun, evrakAciklamasi)
                 .evrakNotuEkle()
                 .evrakNotuGirVeKaydet(yeniEvrakPaylasimNotu);
-
-        logout();
 
         login("huser2", "123");
 
@@ -949,8 +923,6 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .paylasilanKontrol("Huser1 TUMER1", "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ", "Paylaşımda", "")
                 .paylasilanKontrol("Huser2 TUMER2", "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ", "Paylaşımda", "");
 
-        logout();
-
         login("huser1", "123");
 
         benimlePaylasilanlarPage
@@ -960,8 +932,6 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .evrakNotuKontrol(evrakiPaylasan, tarihBugun, evrakAciklamasi)
                 .evrakNotuEkle()
                 .evrakNotuGirVeKaydet(yeniEvrakPaylasimNotu);
-
-        logout();
 
         login("huser2", "123");
 
@@ -1068,8 +1038,6 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .paylasilanKontrol("Huser1 TUMER1", "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ", "Paylaşımda", "")
                 .paylasilanKontrol("Huser2 TUMER2", "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ", "Paylaşımda", "");
 
-        logout();
-
         login("huser1", "123");
 
         benimlePaylasilanlarPage
@@ -1079,8 +1047,6 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .evrakNotuKontrol(evrakiPaylasan, tarihBugun, evrakAciklamasi)
                 .evrakNotuEkle()
                 .evrakNotuGirVeKaydet(yeniEvrakPaylasimNotu);
-
-        logout();
 
         login("huser2", "123");
 
@@ -1182,8 +1148,6 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .paylasilanKontrol("Huser1 TUMER1", "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ", "Paylaşımda", "")
                 .paylasilanKontrol("Huser2 TUMER2", "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ", "Paylaşımda", "");
 
-        logout();
-
         login("huser1", "123");
 
         benimlePaylasilanlarPage
@@ -1193,8 +1157,6 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .evrakNotuKontrol(evrakiPaylasan, tarihBugun, evrakAciklamasi)
                 .evrakNotuEkle()
                 .evrakNotuGirVeKaydet(yeniEvrakPaylasimNotu);
-
-        logout();
 
         login("huser2", "123");
 
@@ -1297,8 +1259,6 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .paylasilanKontrol("Huser1 TUMER1", "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ", "Paylaşımda", "")
                 .paylasilanKontrol("Huser2 TUMER2", "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ", "Paylaşımda", "");
 
-        logout();
-
         login("huser1", "123");
 
         benimlePaylasilanlarPage
@@ -1308,8 +1268,6 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .evrakNotuKontrol(evrakiPaylasan, tarihBugun, evrakAciklamasi)
                 .evrakNotuEkle()
                 .evrakNotuGirVeKaydet(yeniEvrakPaylasimNotu);
-
-        logout();
 
         login("mbozdemir", "123");
 

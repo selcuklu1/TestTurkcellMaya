@@ -4,10 +4,21 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.WebDriverRunner;
+import data.TestData;
 import data.User;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import listeners.DriverEventListener;
+import org.openqa.selenium.Platform;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.remote.CapabilityType;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -17,10 +28,16 @@ import pages.LoginPage;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetFramework;
 
+import java.io.File;
+import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Method;
+import java.net.URL;
 import java.nio.charset.Charset;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
+import static com.codeborne.selenide.Selenide.$;
 import static data.TestData.belgenetURL;
 import static io.qameta.allure.util.ResultsUtils.firstNonEmpty;
 
@@ -48,11 +65,10 @@ public class BaseTest extends BaseLibrary {
         BelgenetFramework.setUp();
         WebDriverRunner.addListener(new DriverEventListener());
 
-        //Configuration.remote = "http://localhost:4444/wd/hub";
         //Configuration.remote = "http://10.101.20.151:4444/wd/hub";
 
         Configuration.baseUrl = (System.getProperty("URL") == null) ? belgenetURL : System.getProperty("URL");
-        Configuration.browser = (System.getProperty("browser") == null) ? "chrome" : System.getProperty("browser");
+        Configuration.browser = (System.getProperty("browser") == null) ? "firefox" : System.getProperty("browser");
         Configuration.browserVersion = System.getProperty("node");
         Configuration.remote = System.getProperty("hub");
         Configuration.reportsFolder = "test-result/reports";
@@ -74,6 +90,8 @@ public class BaseTest extends BaseLibrary {
 
         // System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, "/dev/null");
 //      getBrowserName();
+
+        //Configuration.remote = "http://localhost:4444/wd/hub";
 
         /*System.out.println("remote: " + Configuration.remote);
         System.out.println("browser: " + Configuration.browser);
@@ -185,4 +203,94 @@ public class BaseTest extends BaseLibrary {
     public void logout() {
         new MainPage().logout();
     }
+
+
+    /**
+     *
+     * @param testName
+     * @return downloadPath
+     */
+    public String useFirefoxWindows151(String testName) {
+        String downloadPath = TestData.docDownloadPathWindows + testName;
+        try {
+
+            //Capabilities caps = getCapabilities();
+            //caps.merge(options);
+            FirefoxOptions options = new FirefoxOptions();
+            options.setAcceptInsecureCerts(true)
+                    .addPreference("security.insecure_field_warning.contextual.enabled", false)
+                    .addPreference("browser.download.folderList", 2)
+                    .addPreference("browser.download.dir", downloadPath);
+            /*options.addPreference("browser.helperApps.neverAsk.saveToDisk", "application/excel");
+            options.addPreference("browser.helperApps.neverAsk.saveToDisk", "application/vnd.ms-excel");
+            options.addPreference("browser.helperApps.neverAsk.saveToDisk", "application/x-excel");
+            options.addPreference("browser.helperApps.neverAsk.saveToDisk", "application/x-msexcel");
+            options.addPreference("browser.helperApps.neverAsk.saveToDisk", "application/pdf");*/
+            DesiredCapabilities capabilities = DesiredCapabilities.firefox();
+            capabilities.setVersion("151");
+            capabilities.setPlatform(Platform.WINDOWS);
+            options.merge(capabilities);
+            //caps.merge(options);
+
+            WebDriver driver = Configuration.remote == null ?
+                    new EventFiringWebDriver(new FirefoxDriver(options)).register(new DriverEventListener())
+                    : new EventFiringWebDriver(new RemoteWebDriver(new URL(Configuration.remote), options)).register(new DriverEventListener());
+
+            WebDriverRunner.setWebDriver(driver);
+        } catch (Exception e) {
+            throw new RuntimeException("Invalid 'remote' parameter: " + Configuration.remote, e);
+        }
+        return downloadPath;
+    }
+
+    public void useFirefox() {
+        try {
+            DesiredCapabilities capabilities = DesiredCapabilities.firefox();
+            capabilities.setAcceptInsecureCerts(true);
+            WebDriver driver = Configuration.remote == null ?
+                    new EventFiringWebDriver(new FirefoxDriver()).register(new DriverEventListener())
+                    : new EventFiringWebDriver(new RemoteWebDriver(new URL(Configuration.remote), capabilities)).register(new DriverEventListener());
+
+            WebDriverRunner.setWebDriver(driver);
+        } catch (Exception e) {
+            throw new RuntimeException("Invalid 'remote' parameter: " + Configuration.remote, e);
+        }
+
+        System.out.println("Browser: " + getCapabilities().getBrowserName());
+    }
+
+    /**
+     *
+     * @param testName
+     * @return downloadPath
+     */
+    public String useChromeWindows151(String testName) {
+        String downloadPath = TestData.docDownloadPathWindows + testName;
+        //downloadPath = System.getProperty("user.dir")+ File.separator + "target" + File.separator + testName;
+        try {
+            //Capabilities caps = getCapabilities();
+            //caps.merge(options);
+            /*DesiredCapabilities capabilities = DesiredCapabilities.chrome();
+            capabilities.setPlatform(Platform.WINDOWS);
+            capabilities.setVersion("151");*/
+
+            Map<String, Object> prefs = new HashMap<String, Object>();
+            prefs.put("download.default_directory",  downloadPath);
+            ChromeOptions options = new ChromeOptions();
+            options.setExperimentalOption("prefs", prefs);
+            options.setCapability(CapabilityType.PLATFORM_NAME, Platform.WINDOWS);
+            options.setCapability(CapabilityType.BROWSER_VERSION, "151");
+            options.addArguments("disable-infobars");
+            options.setAcceptInsecureCerts(true);
+            WebDriver driver = Configuration.remote == null ?
+                    new EventFiringWebDriver(new ChromeDriver(options)).register(new DriverEventListener())
+                    : new EventFiringWebDriver(new RemoteWebDriver(new URL(Configuration.remote), options)).register(new DriverEventListener());
+
+            WebDriverRunner.setWebDriver(driver);
+        } catch (Exception e) {
+            throw new RuntimeException("Invalid 'remote' parameter: " + Configuration.remote, e);
+        }
+        return downloadPath;
+    }
+
 }

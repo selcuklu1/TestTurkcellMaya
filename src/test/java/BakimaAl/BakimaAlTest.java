@@ -50,21 +50,18 @@ public class BakimaAlTest extends BaseTest {
                 .bilgilendirmeMetniGir(iptalEdilecekBilgilendirmeMetni)
                 .bilgilendirmeMetniIptal()
                 .bilgilendirmeMetniKontrol(girilecekBilgilendirmeMetni)
-                //.kullanicilarTemizle()
+                .kullanicilarTemizle()
                 .kullaniciKontrol(pasifKullanici, false)
                 .kullaniciEkle("Optiim TEST")
                 .kullaniciEkle("Mehmet BOZDEMİR")
                 .bakimaAl()
                 .bakimdaOlmali(true);
 
-        logout();
-
         loginPage
-                .login("test1", "123")
+                .loginBakim("test1", "123")
                 .islemMesaji().dikkatOlmali(girilecekBilgilendirmeMetni);
 
     }
-
 
     @Test(enabled = true, description = "2109 : Bakım Modundan Çıkar")
     public void TC02109() {
@@ -81,7 +78,6 @@ public class BakimaAlTest extends BaseTest {
                 .secilenKullaniciKontrol(kontrolEdilecekKullanicilar)
                 .bakimdanCikar()
                 .bakimdaOlmali(false);
-        logout();
         login("ztekin", "123");
 
 

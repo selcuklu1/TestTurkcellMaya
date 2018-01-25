@@ -418,6 +418,14 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Kullanıcılar alanında \"{kullanici}\" seç")
+        public BilgilerTab kullanicilarDoldurWithDetail(String kullanici, String detail) {
+
+            txtOnayAkisiKullanicilar.type(kullanici).getDetailItems().filterBy(text(detail)).first().click();
+
+            return this;
+        }
+
         @Step("Otomatik Onay akışı tıklanır")
         public BilgilerTab otomatikOnayAkisiSec() {
             btnOtomatikOnayAkisi.click();
@@ -1127,7 +1135,9 @@ public class EvrakOlusturPage extends MainPage {
         @Step("Kullan")
         public BilgilerTab kullan() {
 //            clickJs(btnKullan);
-            btnKullan.pressEnter();
+//            Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", btnKullan);
+//            btnKullan.pressEnter();
+            clickJs(btnKullan);
             return this;
         }
 

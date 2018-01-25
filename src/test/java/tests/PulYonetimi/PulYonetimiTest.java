@@ -219,7 +219,7 @@ public class PulYonetimiTest extends BaseTest {
                 .evrakImzala();
         //endregion
 
-        logout();
+//        logout();
         login("mbozdemir", "123");
 
         // test başlangıcı

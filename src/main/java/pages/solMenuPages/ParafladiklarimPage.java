@@ -2,6 +2,7 @@ package pages.solMenuPages;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
@@ -9,7 +10,9 @@ import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
+import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
@@ -45,10 +48,25 @@ public class ParafladiklarimPage extends MainPage {
     SelenideElement tabEvrakEkleri = $(By.xpath("//*[contains(text(),'Evrak Ekleri')]"));
     SelenideElement tabIlgiBilgileri = $(By.xpath("//*[contains(text(),'İlgi Bilgileri')]"));
     SelenideElement tabIlisikBilgileri = $(By.xpath("//*[contains(text(),'İlişik Bilgileri')]"));
-    SelenideElement accordionEvrakEkleri = $("[id^='mainPreviewForm:j_idt'] [id*='accpnl:0'] [class='onizlemeFrame']");
-    SelenideElement accordionIlgiBilgileri = $("[id^='mainPreviewForm:j_idt'] [id*='accpnlI:0'] [class='onizlemeFrame']");
-    SelenideElement accordionIlisikBilgileri = $("[id^='mainPreviewForm:j_idt'] [id*='accpnlIlisik:0'] [class='onizlemeFrame']");
 
+    SelenideElement accordionEvrakEkleri1 = $("[id^='mainPreviewForm:j_idt'] [id$='accpnl'] [class*='ui-accordion-header']:nth-child(1)");
+    SelenideElement accordionEvrakEkleriOpen1 = $("[id^='mainPreviewForm:j_idt'] [id$='accpnl'] [class*='ui-state-active']:nth-child(1)");
+    SelenideElement accordionEvrakEkleri2 = $("[id^='mainPreviewForm:j_idt'] [id$='accpnl'] [class*='ui-accordion-header']:nth-child(3)");
+    SelenideElement accordionEvrakEkleriOpen2 = $("[id^='mainPreviewForm:j_idt'] [id$='accpnl'] [class*='ui-state-active']:nth-child(3)");
+
+    SelenideElement accordionIlgiBilgileri1 = $("[id^='mainPreviewForm:j_idt'] [id$='accpnlI'] [class*='ui-accordion-header']:nth-child(1)");
+    SelenideElement accordionIlgiBilgileriOpen1 = $("[id^='mainPreviewForm:j_idt'] [id$='accpnlI'] [class*='ui-state-active']:nth-child(1)");
+    SelenideElement accordionIlgiBilgileri2 = $("[id^='mainPreviewForm:j_idt'] [id$='accpnlI'] [class*='ui-accordion-header']:nth-child(3)");
+    SelenideElement accordionIlgiBilgileriOpen2 = $("[id^='mainPreviewForm:j_idt'] [id$='accpnlI'] [class*='ui-state-active']:nth-child(3)");
+
+    SelenideElement accordionIlisikBilgileri1 = $("[id^='mainPreviewForm:j_idt'] [id$='accpnlIlisik'] [class*='ui-accordion-header']:nth-child(1)");
+    SelenideElement accordionIlisikBilgileriOpen1 = $("[id^='mainPreviewForm:j_idt'] [id$='accpnlIlisik'] [class*='ui-state-active']:nth-child(1)");
+    SelenideElement accordionIlisikBilgileri2 = $("[id^='mainPreviewForm:j_idt'] [id$='accpnlIlisik'] [class*='ui-accordion-header']:nth-child(3)");
+    SelenideElement accordionIlisikBilgileriOpen2 = $("[id^='mainPreviewForm:j_idt'] [id$='accpnlIlisik'] [class*='ui-state-active']:nth-child(3)");
+
+    ElementsCollection tblOnIzlemeEkler = $$("[id*='ekListesiOnizlemeDataTable'] > tr[role='row']");
+    ElementsCollection tblOnIzlemeIlgiBilgileri = $$("[id*='ilgiListesiDataTable_data'] > tr[role='row']");
+    ElementsCollection tblOnIzlemeIlisikBilgileri = $$("[id*='ilisikListesiDataTable_data'] > tr[role='row']");
 
     @Step("Parafladıklarım sayfası aç")
     public ParafladiklarimPage openPage() {
@@ -159,6 +177,12 @@ public class ParafladiklarimPage extends MainPage {
         return this;
     }
 
+    @Step("Parafladıklarım listesinde evrak kontrolü:  \"{konu}\" ")
+    public ParafladiklarimPage konuyaGoreEvrakKontroluAllPages(String konu){
+        searchTable().searchInAllPages(true).findRows(text(konu)).getFoundRow().shouldBe(exist);
+        return this;
+    }
+
     @Step("Paylaş ikonuna  bas")
     public ParafladiklarimPage havaleYap() {
         btnIconPaylas.click();
@@ -205,6 +229,15 @@ public class ParafladiklarimPage extends MainPage {
         return this;
     }
 
+    @Step("Evrak Ek/İlgi tablarının geldiği kontrolu")
+    public ParafladiklarimPage tabKontrolleriWithoutIlisik() {
+
+        Assert.assertEquals(tabEvrakEkleri.isDisplayed(), true);
+        Assert.assertEquals(tabIlgiBilgileri.isDisplayed(), true);
+
+        return this;
+    }
+
     @Step("Parafladıklarım/Evrak Ekleri tabını aç")
     public ParafladiklarimPage tabEvrakEkleriAc() {
         tabEvrakEkleri.click();
@@ -225,19 +258,85 @@ public class ParafladiklarimPage extends MainPage {
 
     @Step("Evrak önizleme/Evrak Ekleri Accordion kontrolu")
     public ParafladiklarimPage evrakEkleriAccordionKontrol() {
-        Assert.assertEquals(accordionEvrakEkleri.isDisplayed(), true);
+
+        accordionEvrakEkleriOpen1.shouldBe(visible);
+        Assert.assertEquals(accordionEvrakEkleriOpen1.isDisplayed(), true);
+        accordionEvrakEkleri1.click();
+        Selenide.sleep(1000);
+        accordionEvrakEkleri2.click();
+        accordionEvrakEkleriOpen2.shouldBe(visible);
+        Assert.assertEquals(accordionEvrakEkleriOpen2.isDisplayed(), true);
+
         return this;
     }
 
     @Step("Evrak önizleme/İlgi Bilgileri Accordion kontrolu")
-    public ParafladiklarimPage ilgiBilgieriAccordionKontrol() {
-        Assert.assertEquals(accordionIlgiBilgileri.isDisplayed(), true);
+    public ParafladiklarimPage ilgiBilgileriAccordionKontrol() {
+
+        Assert.assertEquals(accordionIlgiBilgileriOpen1.isDisplayed(), true);
+        accordionIlgiBilgileri1.click();
+        Selenide.sleep(1000);
+        accordionIlgiBilgileri2.click();
+        Assert.assertEquals(accordionIlgiBilgileriOpen2.isDisplayed(), true);
         return this;
     }
 
     @Step("Evrak önizleme/İlişik Bilgileri Accordion kontrolu")
     public ParafladiklarimPage ilisikBilgieriAccordionKontrol() {
-        Assert.assertEquals(accordionIlisikBilgileri.isDisplayed(), true);
+
+        Assert.assertEquals(accordionIlisikBilgileriOpen1.isDisplayed(), true);
+        accordionIlisikBilgileri1.click();
+        Selenide.sleep(1000);
+        accordionIlisikBilgileri2.click();
+        Assert.assertEquals(accordionIlisikBilgileriOpen2.isDisplayed(), true);
+        return this;
+    }
+
+    @Step("Evrak Önizlemede ekleri detay butonu kontrolu")
+    public ParafladiklarimPage evrakEklerindeDetayButonuKontrol(String ek1, String ek2) {
+
+        tblOnIzlemeEkler
+                .filterBy(Condition.text(ek1))
+                .get(0)
+                .$("[id*='detayButton']").shouldBe(visible);
+
+        tblOnIzlemeEkler
+                .filterBy(Condition.text(ek2))
+                .get(0)
+                .$("[id*='detayButton']").shouldBe(visible);
+
+        return this;
+    }
+
+    @Step("Evrak Önizlemede ilgi bilgileri detay butonu kontrolu")
+    public ParafladiklarimPage ilgiBilgilerindeDetayButonuKontrol(String ilgiSayisi1, String ilgiSayisi2) {
+
+        tblOnIzlemeIlgiBilgileri
+                .filterBy(Condition.text(ilgiSayisi1))
+                .get(0)
+                .$("[id*='ilgiListesiDetayButton']").shouldBe(visible);
+
+        tblOnIzlemeIlgiBilgileri
+                .filterBy(Condition.text(ilgiSayisi2))
+                .get(0)
+                .$("[id*='ilgiListesiDetayButton']").shouldBe(visible);
+
+        return this;
+    }
+
+    @Step("Evrak Önizlemede ilişik bilgileri detay butonu kontrolu")
+    public ParafladiklarimPage ilisikBilgilerindeDetayButonuKontrol(String ilisikTuru1, String ilisikTuru) {
+
+        tblOnIzlemeIlisikBilgileri
+                .filterBy(Condition.text(ilisikTuru1))
+                .get(0)
+                .$("[id*='ilisikListesiDetayButton']").shouldBe(visible);
+
+        tblOnIzlemeIlisikBilgileri
+                .filterBy(Condition.text(ilisikTuru))
+                .get(0)
+                .$("[id*='ilisikListesiDetayButton']").shouldBe(visible);
+
         return this;
     }
 }

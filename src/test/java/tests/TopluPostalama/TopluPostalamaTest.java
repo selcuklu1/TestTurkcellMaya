@@ -1,6 +1,7 @@
 package tests.TopluPostalama;
 
-import com.codeborne.selenide.WebDriverRunner;
+import com.codeborne.selenide.Selenide;
+import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
 import common.BaseTest;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Severity;
@@ -20,34 +21,26 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
 
+import static com.codeborne.selenide.Condition.exist;
+import static com.codeborne.selenide.Condition.text;
+
 
 public class TopluPostalamaTest extends BaseTest {
 
-    MainPage mainPage;
-    TopluPostalanacakEvraklarPage topluPostalanacakEvraklarPage;
-    PostaListesiPage postaListesiPage;
-    PostalananlarPage postalananlarPage;
-    PttRaporuPage pttRaporuPage;
-    TopluPostaladiklarimPage topluPostaladiklarimPage;
-    ImzaladiklarimPage imzaladiklarimPage;
-    ImzaBekleyenlerPage imzaBekleyenlerPage;
-    EvrakOlusturPage evrakOlusturPage;
+
 
     @BeforeMethod
     public void loginBeforeTests() {
-        postalananlarPage = new PostalananlarPage();
-        topluPostalanacakEvraklarPage = new TopluPostalanacakEvraklarPage();
-        postaListesiPage = new PostaListesiPage();
-        pttRaporuPage = new PttRaporuPage();
-        topluPostaladiklarimPage = new TopluPostaladiklarimPage();
-        imzaladiklarimPage = new ImzaladiklarimPage();
-        imzaBekleyenlerPage = new ImzaBekleyenlerPage();
-        evrakOlusturPage = new EvrakOlusturPage();
-        mainPage = new MainPage();
+
     }
 
     @Test(enabled = true, description = "TS1804 : Toplu Postalanacak Evrakların Sorgulanması (UC_POSTAYÖNETİMİ_001)")
     public void TS1804() {
+
+        TopluPostalanacakEvraklarPage topluPostalanacakEvraklarPage = new TopluPostalanacakEvraklarPage();
+        PostaListesiPage postaListesiPage = new PostaListesiPage();
+        EvrakOlusturPage evrakOlusturPage = new EvrakOlusturPage();
+
 
         String[] gidecegiYerler = new String[]{
                 "Yenikurum6507",
@@ -135,8 +128,8 @@ public class TopluPostalamaTest extends BaseTest {
         int indirimOrani = 50;
         double indirimSonrasiTutarInt = tutarInt - (tutarInt * indirimOrani / 100);
 
-        String indirimOncesiTutar = String.format("%.2f", tutarInt);
-        String tutar = String.format("%.3f", indirimSonrasiTutarInt);
+        String indirimOncesiTutar = String.format("%.2f", tutarInt).replace(',', '.');
+        String tutar = String.format("%.3f", indirimSonrasiTutarInt).replace(',', '.');
 
 
         postaListesiPage
@@ -183,6 +176,10 @@ public class TopluPostalamaTest extends BaseTest {
 
     @Test(enabled = true, description = "TS1808 : Posta Listesine Evrak Ekleme ve Çıkartma (UC_POSTAYÖNETİMİ_002)")
     public void TS1808() {
+
+        TopluPostalanacakEvraklarPage topluPostalanacakEvraklarPage = new TopluPostalanacakEvraklarPage();
+        PostaListesiPage postaListesiPage = new PostaListesiPage();
+        EvrakOlusturPage evrakOlusturPage = new EvrakOlusturPage();
 
         String[] gidecegiYerler = new String[]{
                 "Yenikurum6507",
@@ -311,8 +308,8 @@ public class TopluPostalamaTest extends BaseTest {
         int indirimOrani = 50;
         double indirimSonrasiTutarInt = tutarInt - (tutarInt * indirimOrani / 100);
 
-        String indirimOncesiTutar = String.format("%.2f", tutarInt);
-        String tutar = String.format("%.3f", indirimSonrasiTutarInt);
+        String indirimOncesiTutar = String.format("%.2f", tutarInt).replace(',', '.');
+        String tutar = String.format("%.3f", indirimSonrasiTutarInt).replace(',', '.');
 
         postaListesiPage
                 .openPage()
@@ -344,6 +341,10 @@ public class TopluPostalamaTest extends BaseTest {
 
     @Test(enabled = true, description = "TS1807 : Posta Listesi Oluşturma- Tüzel Kişi Listesi (UC_POSTAYÖNETİMİ_002)")
     public void TS1807() {
+
+        TopluPostalanacakEvraklarPage topluPostalanacakEvraklarPage = new TopluPostalanacakEvraklarPage();
+        PostaListesiPage postaListesiPage = new PostaListesiPage();
+        EvrakOlusturPage evrakOlusturPage = new EvrakOlusturPage();
 
         String tuzelKisi1 = "TS01807-TK1";
         String tuzelKisi2 = "TS01807-TK2";
@@ -491,8 +492,8 @@ public class TopluPostalamaTest extends BaseTest {
         int indirimOrani = 50;
         double indirimSonrasiTutarInt = tutarInt - (tutarInt * indirimOrani / 100);
 
-        String indirimOncesiTutar = String.format("%.2f", tutarInt);
-        String tutar = String.format("%.3f", indirimSonrasiTutarInt);
+        String indirimOncesiTutar = String.format("%.2f", tutarInt).replace(',', '.');
+        String tutar = String.format("%.3f", indirimSonrasiTutarInt).replace(',', '.');
 
         postaListesiPage
                 .openPage()
@@ -511,6 +512,10 @@ public class TopluPostalamaTest extends BaseTest {
 
     @Test(enabled = true, description = "TS1807A : Posta Listesi Oluşturma- Gerçek Kişi Listesi (UC_POSTAYÖNETİMİ_002)")
     public void TS1807A() {
+
+        TopluPostalanacakEvraklarPage topluPostalanacakEvraklarPage = new TopluPostalanacakEvraklarPage();
+        PostaListesiPage postaListesiPage = new PostaListesiPage();
+        EvrakOlusturPage evrakOlusturPage = new EvrakOlusturPage();
 
         String gercekKisi1 = "TS01807GKADD";
         String gercekKisi2 = "TS01807GKYAD";
@@ -660,8 +665,8 @@ public class TopluPostalamaTest extends BaseTest {
         int indirimOrani = 50;
         double indirimSonrasiTutarInt = tutarInt - (tutarInt * indirimOrani / 100);
 
-        String indirimOncesiTutar = String.format("%.2f", tutarInt);
-        String tutar = String.format("%.3f", indirimSonrasiTutarInt);
+        String indirimOncesiTutar = String.format("%.2f", tutarInt).replace(',', '.');
+        String tutar = String.format("%.3f", indirimSonrasiTutarInt).replace(',', '.');
 
         postaListesiPage
                 .openPage()
@@ -681,6 +686,10 @@ public class TopluPostalamaTest extends BaseTest {
 
     @Test(enabled = true, description = "TS1805 : Posta Listesi Oluşturma- Kurum Listesi (UC_POSTAYÖNETİMİ_002)")
     public void TS1805() {
+
+        TopluPostalanacakEvraklarPage topluPostalanacakEvraklarPage = new TopluPostalanacakEvraklarPage();
+        PostaListesiPage postaListesiPage = new PostaListesiPage();
+        EvrakOlusturPage evrakOlusturPage = new EvrakOlusturPage();
 
         String kurum1 = "Yenikurum6507";
         String kurum2 = "Yenikurum4105";
@@ -819,8 +828,8 @@ public class TopluPostalamaTest extends BaseTest {
         int indirimOrani = 50;
         double indirimSonrasiTutarInt = tutarInt - (tutarInt * indirimOrani / 100);
 
-        String indirimOncesiTutar = String.format("%.2f", tutarInt);
-        String tutar = String.format("%.3f", indirimSonrasiTutarInt);
+        String indirimOncesiTutar = String.format("%.2f", tutarInt).replace(',', '.');
+        String tutar = String.format("%.3f", indirimSonrasiTutarInt).replace(',', '.');
 
         postaListesiPage
                 .openPage()
@@ -840,6 +849,11 @@ public class TopluPostalamaTest extends BaseTest {
 
     @Test(enabled = true, description = "TS1815A : Toplu postalama PTT raporunda alan kontrolleri-daha önceden rapor alındı ise (UC_POSTAYÖNETİMİ_004)")
     public void TS1815A() {
+
+        TopluPostalanacakEvraklarPage topluPostalanacakEvraklarPage = new TopluPostalanacakEvraklarPage();
+        PostaListesiPage postaListesiPage = new PostaListesiPage();
+        EvrakOlusturPage evrakOlusturPage = new EvrakOlusturPage();
+        PttRaporuPage pttRaporuPage = new PttRaporuPage();
 
         String kurum1 = "Yenikurum6507";
 
@@ -910,6 +924,11 @@ public class TopluPostalamaTest extends BaseTest {
 
     @Test(enabled = true, description = "TS1815B : Toplu postalama PTT raporunda alan kontrolleri (UC_POSTAYÖNETİMİ_004)")
     public void TS1815B() {
+
+        TopluPostalanacakEvraklarPage topluPostalanacakEvraklarPage = new TopluPostalanacakEvraklarPage();
+        PostaListesiPage postaListesiPage = new PostaListesiPage();
+        PttRaporuPage pttRaporuPage = new PttRaporuPage();
+        EvrakOlusturPage evrakOlusturPage = new EvrakOlusturPage();
 
         String kurum1 = "Yenikurum6507";
 
@@ -1014,6 +1033,9 @@ public class TopluPostalamaTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS1676 : Toplu Postalama PTT Evrak Raporu (UC_POSTAYÖNETİMİ_005)")
     public void TS1676() throws IOException {
+
+        PttRaporuPage pttRaporuPage = new PttRaporuPage();
+
         String kurum1 = "Yenikurum6507";
         String postaTarihi = "19.01.2018";
         String postaTipi = "Adi Posta";
@@ -1131,7 +1153,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .tabloKontrolEt(kurum1, "", postaTipi, true)
                 .raporAl();
 
-        String excelFileName = pttRaporuPage.indirilenDosyaAd();
+         String excelFileName = pttRaporuPage.indirilenDosyaAd();
 
         PttRaporuPage.PttRaporExcellTest pttRaporExcellTest = new PttRaporuPage.PttRaporExcellTest(excelFileName);
 
@@ -1166,6 +1188,13 @@ public class TopluPostalamaTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS1675 : Toplu Postaladıklarım İzleme / Alan Kontrolleri (UC_POSTAYÖNETİMİ_004)")
     public void TS1675() {
+
+        MainPage mainPage = new MainPage();
+        TopluPostalanacakEvraklarPage topluPostalanacakEvraklarPage = new TopluPostalanacakEvraklarPage();
+        PostaListesiPage postaListesiPage = new PostaListesiPage();
+        TopluPostaladiklarimPage topluPostaladiklarimPage = new TopluPostaladiklarimPage();
+        ImzaladiklarimPage imzaladiklarimPage = new ImzaladiklarimPage();
+        EvrakOlusturPage evrakOlusturPage = new EvrakOlusturPage();
 
 //        String[] konu = new String[]{
 //                "TC1675 20180113152416", "TC1675 20180113152416100"
@@ -1401,6 +1430,14 @@ public class TopluPostalamaTest extends BaseTest {
     @Test(enabled = true, description = "TS2087 : Toplu postaladıklarım listesinden evrakın geri alınması")
     public void TS2087() {
 
+        TopluPostalanacakEvraklarPage topluPostalanacakEvraklarPage = new TopluPostalanacakEvraklarPage();
+        PostaListesiPage postaListesiPage = new PostaListesiPage();
+        PttRaporuPage pttRaporuPage = new PttRaporuPage();
+        TopluPostaladiklarimPage topluPostaladiklarimPage = new TopluPostaladiklarimPage();
+        ImzaladiklarimPage imzaladiklarimPage = new ImzaladiklarimPage();
+        ImzaBekleyenlerPage imzaBekleyenlerPage = new ImzaBekleyenlerPage();
+        EvrakOlusturPage evrakOlusturPage = new EvrakOlusturPage();
+
         String tarihBugun = "" + new SimpleDateFormat("dd.MM.yyyy").format(new Date());
         String listeAdi = "Liste" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
 
@@ -1411,7 +1448,7 @@ public class TopluPostalamaTest extends BaseTest {
         String evrakGidecegiYer = "Yenikurum6507(G)";
         String evrakHazirlayanBirim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞ";
         String evrakPostaTipi = "Adi Posta";
-        String evrakKonu = "TS1804-" + getRandomNumber(1000, 9000);
+        String evrakKonu = "TS2087-" + getRandomNumber(1000, 9000);
 
         login("mbozdemir", "123");
 
@@ -1429,12 +1466,12 @@ public class TopluPostalamaTest extends BaseTest {
                 .kullan();
         evrakOlusturPage
                 .editorTabAc()
-                .editorIcerikDoldur("TS1804 için evrak.")
+                .editorIcerikDoldur("TS2087 için evrak.")
                 .imzala()
                 .sImzasec()
                 .sImzaImzala()
                 .popupSimzaEvet();
-        String evrakKonu2 = "TS1804-" + getRandomNumber(1000, 9000);
+        String evrakKonu2 = "TS2087-" + getRandomNumber(1000, 9000);
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
@@ -1449,7 +1486,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .kullan();
         evrakOlusturPage
                 .editorTabAc()
-                .editorIcerikDoldur("TS1804 için ikinci evrak.")
+                .editorIcerikDoldur("TS2087 için ikinci evrak.")
                 .imzala()
                 .sImzasec()
                 .sImzaImzala()
@@ -1570,6 +1607,11 @@ public class TopluPostalamaTest extends BaseTest {
     @Test(enabled = true, description = "TS1809 : Posta Listesi Görüntüleme (UC_POSTAYÖNETİMİ_003)")
     public void TS1809() {
 
+        TopluPostalanacakEvraklarPage topluPostalanacakEvraklarPage = new TopluPostalanacakEvraklarPage();
+        PostaListesiPage postaListesiPage = new PostaListesiPage();
+        TopluPostaladiklarimPage topluPostaladiklarimPage = new TopluPostaladiklarimPage();
+        EvrakOlusturPage evrakOlusturPage = new EvrakOlusturPage();
+
         String kurum1 = "Yenikurum6507";
 
 
@@ -1657,8 +1699,8 @@ public class TopluPostalamaTest extends BaseTest {
         int indirimOrani = 50;
         double indirimSonrasiTutarInt = tutarInt - (tutarInt * indirimOrani / 100);
 
-        String indirimOncesiTutar = String.format("%.2f", tutarInt);
-        String tutar = String.format("%.3f", indirimSonrasiTutarInt);
+        String indirimOncesiTutar = String.format("%.2f", tutarInt).replace(',', '.');
+        String tutar = String.format("%.3f", indirimSonrasiTutarInt).replace(',', '.');
 
         String gonderildigiYer = "Kurum";
 
@@ -1683,6 +1725,10 @@ public class TopluPostalamaTest extends BaseTest {
 
     @Test(enabled = true, description = "TS1817 : Tutar alanı kontrol edilir.")
     public void TS1817() {
+
+        TopluPostalanacakEvraklarPage topluPostalanacakEvraklarPage = new TopluPostalanacakEvraklarPage();
+        PostaListesiPage postaListesiPage = new PostaListesiPage();
+        EvrakOlusturPage evrakOlusturPage = new EvrakOlusturPage();
 
         String kurum1 = "Yenikurum6507";
 
@@ -1734,9 +1780,8 @@ public class TopluPostalamaTest extends BaseTest {
         int indirimOrani = 50;
         double indirimSonrasiTutarInt = tutarInt - (tutarInt * indirimOrani / 100);
 
-        String indirimOncesiTutar = String.format("%.2f", tutarInt);
-        String tutar = String.format("%.3f", indirimSonrasiTutarInt);
-
+        String indirimOncesiTutar = String.format("%.2f", tutarInt).replace(',', '.');
+        String tutar = String.format("%.3f", indirimSonrasiTutarInt).replace(',', '.');
 
         postaListesiPage
                 .openPage()
@@ -1754,6 +1799,10 @@ public class TopluPostalamaTest extends BaseTest {
 
     @Test(enabled = true, description = "TS1818 : Posta Tutarı Hesaplama İşlemleri ve Güncelleme (UC_POSTAYÖNETİMİ_006)")
     public void TS1818() {
+
+        TopluPostalanacakEvraklarPage topluPostalanacakEvraklarPage = new TopluPostalanacakEvraklarPage();
+        PostaListesiPage postaListesiPage = new PostaListesiPage();
+        EvrakOlusturPage evrakOlusturPage = new EvrakOlusturPage();
 
         String kurum1 = "Yenikurum6507";
 
@@ -1805,16 +1854,16 @@ public class TopluPostalamaTest extends BaseTest {
         int indirimOrani = 50;
         double indirimSonrasiTutarInt = tutarInt - (tutarInt * indirimOrani / 100);
 
-        String indirimOncesiTutar = String.format("%.2f", tutarInt);
-        String tutar = String.format("%.3f", indirimSonrasiTutarInt);
+        String indirimOncesiTutar = String.format("%.2f", tutarInt).replace(',', '.');
+        String tutar = String.format("%.3f", indirimSonrasiTutarInt).replace(',', '.');
 
         int gramaj2 = 2499;
         double tutarInt2 = 250;
         int indirimOrani2 = 5;
         double indirimSonrasiTutarInt2 = tutarInt2 - (tutarInt2 * indirimOrani2 / 100);
 
-        String indirimOncesiTutar2 = String.format("%.2f", tutarInt2);
-        String tutar2 = String.format("%.3f", indirimSonrasiTutarInt2);
+        String indirimOncesiTutar2 = String.format("%.2f", tutarInt2).replace(',', '.');
+        String tutar2 = String.format("%.3f", indirimSonrasiTutarInt2).replace(',', '.');
 
         postaListesiPage
                 .openPage()
@@ -1835,12 +1884,36 @@ public class TopluPostalamaTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = false, description = "TS1811 : Posta Listesi Postalama İşlemleri (UC_POSTAYÖNETİMİ_003)")
-    public void TS1811() {
+    @Test(enabled = true, description = "TS1811 : Posta Listesi Postalama İşlemleri (UC_POSTAYÖNETİMİ_003)")
+    public void TS1811() throws IOException, AWTException {
+        MainPage mainPage = new MainPage();
+        TopluPostalanacakEvraklarPage topluPostalanacakEvraklarPage = new TopluPostalanacakEvraklarPage();
+        PostaListesiPage postaListesiPage = new PostaListesiPage();
+        TopluPostaladiklarimPage topluPostaladiklarimPage = new TopluPostaladiklarimPage();
+        ImzaladiklarimPage imzaladiklarimPage = new ImzaladiklarimPage();
+        EvrakOlusturPage evrakOlusturPage = new EvrakOlusturPage();
 
+//        String remoteDownloadPath = "C:\\Users\\optiim\\Downloads\\";
+//
 //        String[] konu = new String[]{
-//                "TC1811 20180108121603", "TC1811 20180108120329100"
+//                "TC1811 20180124144919", "TC1811 1014910375286"
 //        };
+//
+//        String[] evrakNo1811 = new String[]{
+//                "11413", "11414"
+//        };
+//
+//        String[] icerik = new String[]{
+//                "TC1811 2018012414491920180124144945", "TC1811 101491037528620180124145105"
+//        };
+
+        String[] konu = new String[]{
+                "TC1811 " + getSysDate(), "TC1811 " + createRandomNumber(12)
+        };
+        String[] evrakNo1811 = new String[2];
+        String[] icerik = new String[2];
+        String[] sayi = new String[2];
+        String[] pdfSayi = new String[2];
 
         login("mbozdemir", "123");
         //region Parameters
@@ -1852,9 +1925,6 @@ public class TopluPostalamaTest extends BaseTest {
         String ivedilik = "Normal";
         String geregi = "Esk Kurum 071216 2";
         String adres = "adres " + getSysDateForKis();
-        String[] konu = new String[]{
-                "TC1811 " + getSysDate(), "TC1811 " + getSysDate() + 100
-        };
         String tur = "İmzalama";
         String geregiTipi = "Kurum";
         String basariMesaji = "İşlem başarılıdır!";
@@ -1870,8 +1940,11 @@ public class TopluPostalamaTest extends BaseTest {
                 "Ankara İçi APS"
         };
         //endregion
-        //region Test Datası
+//        region Test Datası
         for (int i = 0; i < 2; i++) {
+            System.out.println(konu[i]);
+            System.out.println(icerik[i]);
+            icerik[i] = konu[i] + getSysDate();
             evrakOlusturPage
                     .openPage()
                     .bilgilerTabiAc()
@@ -1882,6 +1955,7 @@ public class TopluPostalamaTest extends BaseTest {
                     .evrakDiliSec(evrakDili)
                     .gizlilikDerecesiSec(gizlilikDerecesi)
                     .ivedilikSec(ivedilik)
+                    .aciklamaDoldur(konu[i])
                     .geregiSecimTipiSecByText(geregiTipi)
                     .geregiSec(geregi)
                     .gercekKisiGeregiAlaniPostaTipiSec(gidisSekli)
@@ -1891,9 +1965,22 @@ public class TopluPostalamaTest extends BaseTest {
 
             evrakOlusturPage
                     .editorTabAc()
-                    .editorIcerikDoldur(konu[i]);
+                    .editorIcerikDoldur(icerik[i]);
+
+            sayi[i] = evrakOlusturPage.editorTabAc().editorSayiAl();
+
+
             mainPage
                     .evrakImzala();
+
+            imzaladiklarimPage
+                    .openPage();
+
+            evrakNo1811[i] = imzaladiklarimPage.evrakIcerikKontroluveEvrakNoAl(konu[i]);
+            System.out.println(evrakNo1811[i]);
+
+            pdfSayi[i] = sayi[i] + evrakNo1811[i];
+
         }
 
         topluPostalanacakEvraklarPage
@@ -1901,7 +1988,9 @@ public class TopluPostalamaTest extends BaseTest {
                 .tarihAraligiSec(getSysDateForKis(), getSysDateForKis())
                 .postaTipiSec(postaTipleri)
                 .sorgula()
-                .evrakTumunuSec(true)
+                .evrakSec(konu[0], true)
+                .evrakSec(konu[1], true)
+//                .evrakTumunuSec(true)
                 .postaListesineAktar()
                 .listeAdiDoldur(konu[0])
                 .listeOlustur()
@@ -1945,35 +2034,68 @@ public class TopluPostalamaTest extends BaseTest {
                 .tutarHesapla()
                 .indirimOncesiTutarKontrol("50.00", true)
                 .indirimOraniKontrol("10", true)
-                .tutarKontrol("45.000", true)
+                .tutarKontrol("45.000", true);
+
+
+        login("mbozdemir", "123");
+        maximazeBrowser();
+        postaListesiPage
+                .openPage()
+                .filtreleAc()
+                .postaListesiDoldur(konu[0])
+//                .postaListesiDoldur(postaListesi)
+                .evrakSec(konu[0])
+                .postaListesiPostala()
 
                 .etiketBastir()
                 .etiketBastirEkraniKontrolü(adres, geregi)
                 .etiketBastirEkraniKapat()
-                .evrakListesiYazdir(konu);
-//        TODO
-//        Son 3 step yazılacak...
+                .evrakListesiYazdir(konu)
+
+                .evrakListesiYazdirPdfKontrolu(konu, evrakNo1811, icerik)
+                .evrakListesiOrjinaliYazdirPdfKontrolu(konu, evrakNo1811, icerik)
+                .postaDetayiPostala();
+
+        postaListesiPage
+                .openPage()
+                .filtreleAc()
+                .postaListesiKontrol(konu[0], false);
+        topluPostaladiklarimPage
+                .openPage()
+                .topluPostaladiklarimEvrakKontrolu(konu[0]);
+                //.searchTable().searchInAllPages(true).findRows(text(konu[0])).getFoundRow().shouldBe(exist);
     }
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS1812 : Posta Listesi Postalama İşlemleri (Güncelleme) (UC_POSTAYÖNETİMİ_003)")
     public void TS1812() throws IOException, AWTException {
 
+        MainPage mainPage = new MainPage();
+        TopluPostalanacakEvraklarPage topluPostalanacakEvraklarPage = new TopluPostalanacakEvraklarPage();
+        PostaListesiPage postaListesiPage = new PostaListesiPage();
+        TopluPostaladiklarimPage topluPostaladiklarimPage = new TopluPostaladiklarimPage();
+        ImzaladiklarimPage imzaladiklarimPage = new ImzaladiklarimPage();
+        EvrakOlusturPage evrakOlusturPage = new EvrakOlusturPage();
 
         String remoteDownloadPath = getDownloadPath();
 //        String remoteDownloadPath = "C:\\Users\\optiim\\Downloads\\";
 
 //        String[] konu = new String[]{
-//                "TC1812 20180122151849", "TC1812 1618349520710"
+//                "TC1812 20180123141553", "TC1812 1986417532100"
 //        };
 //
 //        String[] evrakNo1812 = new String[]{
-//                "11174", "11175"
+//                "11236", "11237"
 //        };
 //
 //        String[] icerik = new String[]{
-//                "TC1812 2018012215184920180122151849", "TC1812 161834952071020180122152015"
+//                "TC1812 2018012314155320180123141553", "TC1812 198641753210020180123141702"
 //        };
+
+
+        String[] konu = new String[]{
+                "TC1812 " + getSysDate(), "TC1812 " + createRandomNumber(12)
+        };
         String[] evrakNo1812 = new String[2];
         String[] icerik = new String[2];
         String[] sayi = new String[2];
@@ -1989,9 +2111,7 @@ public class TopluPostalamaTest extends BaseTest {
         String ivedilik = "Normal";
         String geregi = "Sezai Çelik Holding";
         String adres = "adres " + getSysDateForKis();
-        String[] konu = new String[]{
-                "TC1812 " + getSysDate(), "TC1812 " +  createRandomNumber(12)
-        };
+
         String tur = "İmzalama";
         String geregiTipi = "Tüzel Kişi";
         String basariMesaji = "İşlem başarılıdır!";
@@ -2091,7 +2211,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .postaListesiAdiDegistirme(konu[1])
                 .postaListesiBarkodNoDoldur(createRandomNumber(5))
                 .gonderildigiYerKontrol(geregiTipi, true)
-                .gonderildigiKurumKontrolu(geregi, true)
+                .gonderildigiTuzelKisiKontrolu(geregi, true)
                 .postaDetayiGonderildigiYer(geregiTipi)
                 .adresDoldur(adres)
                 .gidisSekliSec("Kurye")
@@ -2111,7 +2231,8 @@ public class TopluPostalamaTest extends BaseTest {
                 .indirimOraniKontrol("20", true)
                 .tutarKontrol("80.00", true);
 
-                login("mbozdemir","123");
+        login("mbozdemir", "123");
+        maximazeBrowser();
         postaListesiPage
                 .openPage()
                 .filtreleAc()
@@ -2122,20 +2243,31 @@ public class TopluPostalamaTest extends BaseTest {
                 .etiketBastir()
                 .etiketBastirEkraniKontrolü(adres, geregi)
                 .etiketBastirEkraniKapat()
-                .evrakListesiYazdir(konu);
+                .evrakListesiYazdir(konu)
+                .evrakListesiYazdirPdfKontrolu(konu, evrakNo1812, icerik)
+                .evrakListesiOrjinaliYazdirPdfKontrolu(konu, evrakNo1812, icerik)
+                .postaDetayiPostala();
 
-        //        TODO
-//        Son 3 step yazılacak...
-
+        postaListesiPage
+                .openPage()
+                .filtreleAc()
+                .postaListesiKontrol(konu[0], false);
         topluPostaladiklarimPage
-                .evrakListesiYazdirPdfKontrolu(konu, evrakNo1812, icerik);
-//                .evrakListesiOrjinaliYazdirPdfKontrolu(konu, evrakNo1816, icerik); // pdf te elemenler bulunamıyor
-
+                .openPage()
+                .topluPostaladiklarimEvrakKontrolu(konu[0]);
+//                .searchTable().searchInAllPages(true).findRows(text(konu[0])).getFoundRow().shouldBe(exist);
     }
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS1816 : Toplu Postaladıklarım Güncelleme İşlemleri (UC_POSTAYÖNETİMİ_004)")
     public void TS1816() throws IOException, AWTException {
+        MainPage mainPage = new MainPage();
+        TopluPostalanacakEvraklarPage topluPostalanacakEvraklarPage = new TopluPostalanacakEvraklarPage();
+        PostaListesiPage postaListesiPage = new PostaListesiPage();
+        PttRaporuPage pttRaporuPage = new PttRaporuPage();
+        TopluPostaladiklarimPage topluPostaladiklarimPage = new TopluPostaladiklarimPage();
+        ImzaladiklarimPage imzaladiklarimPage = new ImzaladiklarimPage();
+        EvrakOlusturPage evrakOlusturPage = new EvrakOlusturPage();
 
 //        String remoteDownloadPath = getDownloadPath();
 //        String remoteDownloadPath = "C:\\Users\\optiim\\Downloads\\";
@@ -2306,8 +2438,8 @@ public class TopluPostalamaTest extends BaseTest {
                 .openPage()
                 .aramaDetaylariPanelAc()
                 .sorgula()
-                .tabloKontrolEt(geregi,evrakNo1816[0],gidisSekli,true)
-                .tabloKontrolEt(geregi,evrakNo1816[1],gidisSekli,true);
+                .tabloKontrolEt(geregi, evrakNo1816[0], gidisSekli, true)
+                .tabloKontrolEt(geregi, evrakNo1816[1], gidisSekli, true);
 //                .raporAl(); //rapor kontrolü yapılacak
 
     }

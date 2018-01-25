@@ -38,6 +38,7 @@ import java.io.File;
 import java.io.IOException;
 
 
+import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
@@ -267,7 +268,7 @@ public class TopluPostaladiklarimPage extends MainPage {
         return this;
     }
 
-    @Step("Evrak Listesi tablosunda Yazdır butonu tıklanır ve PDF bilgisayara indirilir.")
+    @Step("Evrak Listesi tablosunda Yazdır butonu tıklanır.")
     public TopluPostaladiklarimPage evrakListesiYazdirPdfKontrolu(String[] konu, String[] evrakNo, String[] icerik) throws AWTException, IOException {
         String remoteDownloadPath = getDownloadPath();
         int size = tblEvrakListesi.size();
@@ -297,7 +298,7 @@ public class TopluPostaladiklarimPage extends MainPage {
         return this;
     }
 
-    @Step("Evrak Listesi tablosunda Orjinalini Yazdır butonu tıklanır ve PDF bilgisayara indirilir.")
+    @Step("Evrak Listesi tablosunda Orjinalini Yazdır butonu tıklanır")
     public TopluPostaladiklarimPage evrakListesiOrjinaliYazdirPdfKontrolu(String[] konu, String[] evrakNo, String[] icerik) throws AWTException, IOException {
         String remoteDownloadPath = getDownloadPath();
         int size = tblEvrakListesi.size();
@@ -537,6 +538,11 @@ public class TopluPostaladiklarimPage extends MainPage {
         return this;
     }
 
+    @Step("Tabloda evrak kontrolü yapılır. \"{konu}\" ")
+    public TopluPostaladiklarimPage topluPostaladiklarimEvrakKontrolu(String konu){
+        searchTable().searchInAllPages(true).findRows(text(konu)).getFoundRow().shouldBe(exist);
+        return this;
+    }
 
     @Step("İndirim Öncesi tutar alaninda \"{indirimOncesiTutar}\" değeri olmalı mı? : \"{shouldBeEquals}\" ")
     public TopluPostaladiklarimPage indirimOncesiTutarKontrol(String indirimOncesiTutar, boolean shouldBeEquals) {
