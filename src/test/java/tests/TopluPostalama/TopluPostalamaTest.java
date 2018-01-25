@@ -1,7 +1,6 @@
 package tests.TopluPostalama;
 
-import com.codeborne.selenide.Selenide;
-import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
+
 import common.BaseTest;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Severity;
@@ -20,9 +19,6 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
-
-import static com.codeborne.selenide.Condition.exist;
-import static com.codeborne.selenide.Condition.text;
 
 
 public class TopluPostalamaTest extends BaseTest {
