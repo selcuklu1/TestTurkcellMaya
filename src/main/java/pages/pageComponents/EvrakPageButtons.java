@@ -75,7 +75,7 @@ public class EvrakPageButtons extends MainPage {
 
     @Step("İmzala butona tıkla")
     public EvrakPageButtons imzalaButonaTikla() {
-        getImzalaButton().shouldBe(visible).click();
+        getImzalaButton().shouldBe(visible).pressEnter();
         return this;
     }
 
