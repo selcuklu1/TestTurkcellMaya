@@ -56,10 +56,8 @@ public class BakimaAlTest extends BaseTest {
                 .bakimaAl()
                 .bakimdaOlmali(true);
 
-        logout();
-
         loginPage
-                .login("test1", "123")
+                .loginBakim("test1", "123")
                 .islemMesaji().dikkatOlmali(girilecekBilgilendirmeMetni);
 
     }
@@ -79,7 +77,6 @@ public class BakimaAlTest extends BaseTest {
                 .secilenKullaniciKontrol(kontrolEdilecekKullanicilar)
                 .bakimdanCikar()
                 .bakimdaOlmali(false);
-        logout();
         login("ztekin", "123");
 
     }

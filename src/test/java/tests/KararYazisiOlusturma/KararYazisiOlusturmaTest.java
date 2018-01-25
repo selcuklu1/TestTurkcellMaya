@@ -52,7 +52,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "1488: Karar yazısında zorunlu alan kontrolleri")
+    @Test(enabled = true, description = "TS1488: Karar yazısında zorunlu alan kontrolleri")
     public void TS1488() {
 
         String uyariMesajYaziIcerik = "Yazı içeriği boş olamaz!";
@@ -70,7 +70,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
         String onayAkisi = "canparafci";
         String imzalama = "İmzalama";
 
-        login(username2, password2);
+        login(usernameZTEKIN, passwordZTEKIN);
 
         kararYazisiOlusturPage
                 .openPage()
@@ -144,7 +144,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "2240: Teslim alınmayı bekleyenler listesinden Gündem klasörüne evrak kapatma")
+    @Test(enabled = true, description = "TS2240: Teslim alınmayı bekleyenler listesinden Gündem klasörüne evrak kapatma")
     public void TS2240() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
@@ -155,7 +155,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
         String kurum = "BÜYÜK HARFLERLE KURUM";
         String kullaniciAdi = "Yazılım Geliştirme Direktörlüğ";
 
-        login(username3, password3);
+        login(usernameYAKYOL, passwordYAKYOL);
 
         //TODO Bu alanda Pre Condition alanı olan teslim alınmayı bekleyenler alanına data oluşturmakta
         gelenEvrakKayitPage
@@ -205,14 +205,14 @@ public class KararYazisiOlusturmaTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "2239: Gündem yayınlama")
+    @Test(enabled = true, description = "TS2239: Gündem yayınlama")
     public void TS2239() {
 
         String basariMesaji = "İşlem başarılıdır!";
         String kaldirilicakKlasor = "Gündem";
         String path = getDownloadPath();
 
-        login(username3, password3);
+        login(usernameYAKYOL, passwordYAKYOL);
 
         gundemIzlemePage
                 .openPage()
@@ -255,7 +255,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
         String not = createRandomText(12);
         String birim = "Altyapı ve Sistem Yönetim Uzmanı";
 
-        login(username2, password2);
+        login(usernameZTEKIN, passwordZTEKIN);
 
         kararYazisiOlusturPage
                 .openPage()
@@ -346,7 +346,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
         String onayAkisi = "ZUZU_ONAY_AKİSİ_1";
         String ivedilik = "İvedi";
 
-        login(username2, password2);
+        login(usernameZTEKIN, passwordZTEKIN);
 
         kararYazisiOlusturPage
                 .openPage()
@@ -381,7 +381,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "1714: Karar yazsının iadesi")
+    @Test(enabled = true, description = "TS1714: Karar yazsının iadesi")
     public void TS1714() {
 
         String basariMesaji = "İşlem başarılıdır!";
@@ -399,7 +399,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
         String filePath = getUploadPath()+"Otomasyon.pdf";
         String not = createRandomText(12);
         String birim = "Altyapı ve Sistem Yönetim Uzmanı";
-        login(username2, password2);
+        login(usernameZTEKIN, passwordZTEKIN);
 
         kararYazisiOlusturPage
                 .openPage()
@@ -430,7 +430,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
                 .islemMesaji().basariliOlmali(basariMesaji);
 
 
-        login(username3, password3);
+        login(usernameYAKYOL, passwordYAKYOL);
 
         imzaBekleyenlerPage
                 .openPage()
@@ -441,7 +441,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
                 .iadeEtIadeEt()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
-        login(username2, password2);
+        login(usernameZTEKIN, passwordZTEKIN);
 
         imzaBekleyenlerPage
                 .openPage()
@@ -455,7 +455,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "2238: Gündem klasörü oluşturma")
+    @Test(enabled = true, description = "TS2238: Gündem klasörü oluşturma")
     public void TS2238() {
 
         String basariMesaji = "İşlem başarılıdır!";
@@ -465,7 +465,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
         String klasorTuru = "Gündem Klasörü";
         String ad = "Zübeyde";
 
-        login(username2, password2);
+        login(usernameZTEKIN, passwordZTEKIN);
 
         klasorYonetimiPage
                 .openPage()
@@ -503,7 +503,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "1715: Gelen evrak listesinden Gündem klasörüne evrak kapatma")
+    @Test(enabled = true, description = "TS1715: Gelen evrak listesinden Gündem klasörüne evrak kapatma")
     public void TS1715() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
@@ -513,7 +513,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
         String evrakTarihi = getSysDateForKis();
         String kurum = "BÜYÜK HARFLERLE KURUM";
         String kullaniciAdi = "Zübeyde Tekin";
-        login(username2, password2);
+        login(usernameZTEKIN, passwordZTEKIN);
 
         gelenEvrakKayitPage
                 .openPage()

@@ -120,21 +120,19 @@ public class dumpTest extends BaseTest {
     public void selectLovTexts() {
         login();
         OlurYazisiOlusturPage olurYazisiOlusturPage = new OlurYazisiOlusturPage().openPage();
-        /*boolean b = comboLov("input[id$='konuKoduLov:LovText']").selectLov("010","kanunlar").isLovSelected();
+        boolean b = comboLov("input[id$='konuKoduLov:LovText']").selectLov("010","kanunlar").isLovSelected();
         comboLov("input[id$='eklenecekKlasorlerLov:LovText']").selectLov();
-*/
-        Pattern.compile(".*" + "" + ".*", DOTALL).matcher("").matches();
+        //Pattern.compile(".*" + "" + ".*", DOTALL).matcher("").matches();
         $("button[id$=onayAkisiEkle]").click();
 
         comboLov("input[id$='akisAdimLov:LovText']")
-                .selectLov("Zübeyde tekin", "Ankara İl Müdürü", "AD MÜDÜRLÜĞÜ", "YGD");
+                .selectLov(" Zübeyde tekin", "ALtyapı", "OPtiİm BİRİM", "YGD");
 
         comboLov("input[id$='akisAdimLov:LovText']")
-                .selectLov("Optiim TEST2");//, "Ağ (Network) Uzman Yardımcısı", "Optiim Birim", "YGD");
+                .selectLov("OPtiİm TEST2", "Ağ (Network) Uzman Yardımcısı", "Optiim Birim", "YGD");
 
         comboLov("input[id$='akisAdimLov:LovText']")
-                .selectLov("Optiim TEST");//,"Optiim TEST [Ağ (Network) Uzman Yardımcısı]", "Optiim Birim", "YGD");
-
+                .selectLov("OPTİİM test");//,"Optiim TEST [Ağ (Network) Uzman Yardımcısı]", "Optiim Birim", "YGD");
 
 
         comboLov("input[id$='eklenecekKlasorlerLov:LovText']").selectLov();

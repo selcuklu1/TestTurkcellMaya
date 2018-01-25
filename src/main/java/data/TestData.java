@@ -14,17 +14,28 @@ public class TestData extends BaseLibrary {
 
     public static final String belgenetURL = "http://94.55.114.18:8889/edys-web/sistemeGiris.xhtml";
     //    public static final String belgenetURL = "http://10.101.20.153:8889/edys-web/sistemeGiris.xhtml";
-    //Default username
-    public static final String username = "optiim";
-    public static final String password = "123";
-    public static final String username2 = "ztekin";
-    public static final String password2 = "123";
-    public static final String username3 = "yakyol";
-    public static final String password3 = "123";
-    public static final String username4 = "mbozdemir";
-    public static final String password4 = "123";
-    public static final String username5 = "sezaicelik";
-    public static final String password45 = "123";
+
+    public static final User optiim = new User("optiim", "123", "Optiim TEST", "Optiim Birim");
+
+    //Default usernameOPTIIM
+    public static final String usernameOPTIIM = "optiim";
+    public static final String passwordOPTIIM = "123";
+
+    public static final String usernameZTEKIN = "ztekin";
+    public static final String passwordZTEKIN = "123";
+
+    public static final String usernameYAKYOL = "yakyol";
+    public static final String passwordYAKYOL = "123";
+
+    public static final String usernameMBOZDEMIR = "mbozdemir";
+    public static final String passwordMBOZDEMIR = "123";
+
+    public static final String usernamSEZAICELIK = "sezaicelik";
+    public static final String passwordSEZAICELIK  = "123";
+
+    public static final String usernameGSAHIN = "gsahin";
+    public static final String passwordGSAHIN = "123";
+
     public static String docPathWindows = "C:\\TestAutomation\\BelgenetFTA\\documents\\";
     //public static String docDownloadPathWindows = "C:\\TestAutomation\\BelgenetFTA\\downloads";
     public static String docDownloadPathWindows = "C:\\Users\\" + getPCUsername() + "\\Downloads\\";

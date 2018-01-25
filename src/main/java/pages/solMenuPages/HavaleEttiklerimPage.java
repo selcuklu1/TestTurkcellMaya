@@ -28,7 +28,7 @@ public class HavaleEttiklerimPage extends MainPage {
     SelenideElement btnTamEkranGöster = $(By.id("mainInboxForm:inboxDataTable:0:tamEkranModuButton"));
     SelenideElement tblRapor = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
     SelenideElement btnHavaleYap = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:6:cmdbutton"));
-    BelgenetElement txtHavaleYapKisi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKullaniciLov:LovText"));
+    BelgenetElement txtHavaleYapKisi = comboLov("dagitimBilgileriKullaniciLov:LovText");
     BelgenetElement txtHavaleYapKullaniciListesi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKisiListesiLov:LovText"));
     ElementsCollection tblEvraklar = $$("[id^='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
 
@@ -40,9 +40,16 @@ public class HavaleEttiklerimPage extends MainPage {
 
     @Step("Kisi doldur")
     public HavaleEttiklerimPage havaleYapKisiDoldur(String kisi) {
-        txtHavaleYapKisi.selectLov(kisi);
+        txtHavaleYapKisi.type(kisi).getDetailItems().filterBy(Condition.text("BİLİŞİM HİZMETLERİ VE UYDU PAZARLAMA GENEL MÜDÜR")).first().click();
         return this;
     }
+
+    @Step("Kişi listesinde \"{kisi}\" seçmeye dene")
+    public HavaleEttiklerimPage havaleYapKisiSecmeyeDene(String kisi) {
+        txtHavaleYapKisi.type(kisi).getTitleItems().filterBy(text(kisi)).first().click();
+        return this;
+    }
+
 
     @Step("Kullanıcı listesi doldur")
     public HavaleEttiklerimPage havaleYapKullaniciListesiDoldur(String kullaniciListesi) {

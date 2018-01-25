@@ -8,8 +8,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.pageComponents.EvrakPageButtons;
 import pages.pageComponents.TextEditor;
-import pages.solMenuPages.ParafladiklarimPage;
-import pages.solMenuPages.TaslakEvraklarPage;
+import pages.solMenuPages.*;
 import pages.ustMenuPages.EvrakOlusturPage;
 
 import java.lang.reflect.Method;
@@ -27,6 +26,13 @@ public class EkIlgiTest extends BaseTest {
     TaslakEvraklarPage taslakEvraklarPage;
     EvrakPageButtons evrakPageButtons;
     ParafladiklarimPage parafladiklarimPage;
+    ParafBekleyenlerPage parafBekleyenlerPage;
+    KoordineParafladiklarimPage koordineParafladiklarimPage;
+    ImzaBekleyenlerPage imzaBekleyenlerPage;
+    ImzaladiklarimPage imzaladiklarimPage;
+    KoordineBekleyenlerPage koordineBekleyenlerPage;
+    PostalanacakEvraklarPage postalanacakEvraklarPage;
+    TeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage;
 
     @BeforeMethod
     public void beforeTests(Method method) {
@@ -36,6 +42,13 @@ public class EkIlgiTest extends BaseTest {
         taslakEvraklarPage = new TaslakEvraklarPage();
         evrakPageButtons = new EvrakPageButtons();
         parafladiklarimPage = new ParafladiklarimPage();
+        parafBekleyenlerPage = new ParafBekleyenlerPage();
+        koordineParafladiklarimPage = new KoordineParafladiklarimPage();
+        imzaBekleyenlerPage = new ImzaBekleyenlerPage();
+        imzaladiklarimPage = new ImzaladiklarimPage();
+        koordineBekleyenlerPage = new KoordineBekleyenlerPage();
+        postalanacakEvraklarPage = new PostalanacakEvraklarPage();
+        teslimAlinmayiBekleyenlerPage = new TeslimAlinmayiBekleyenlerPage();
 
     }
 
@@ -65,14 +78,14 @@ public class EkIlgiTest extends BaseTest {
         String pathPPTX = getUploadPath() + "TS2199.pptx";
 
         String ekMetniAciklama = " isimli dosya eklendi";
-        String fizikselEkMetni = "Dosya eklendi " +getSysDate();
+        String fizikselEkMetni = "Dosya eklendi " + getSysDate();
 
         String evrakNo = "5408";
         String evrakSayisi = "1402683517-1012";
 
         String onayAkisi = "Ts2199 OnayAkisi";
         String kaldirilacakKlasorler = "ESK05";
-        String evrakKonusu = "TS2199_" +  getSysDate();
+        String evrakKonusu = "TS2199_" + getSysDate();
         String bilgi = "TS2199 Senaryosu";
         String geregi = "TS2199a Senaryosu";
         String basariMesaji = "İşlem başarılıdır!";
@@ -84,7 +97,7 @@ public class EkIlgiTest extends BaseTest {
                 .ekleriTabAc()
 
                 //TS2199.pdf
-                .ekleriEkMetniDoldur(dosyaAdiPDF + " " +ekMetniAciklama)
+                .ekleriEkMetniDoldur(dosyaAdiPDF + " " + ekMetniAciklama)
                 .dosyaEkle(pathPDF, "PDF")
                 .dosyaYukleneneKadarBekle()
                 .ekleriEklenenDosyaAdiKontrol(dosyaAdiPDF)
@@ -93,7 +106,7 @@ public class EkIlgiTest extends BaseTest {
                 .listelenenEklerdeIndırButonuKontrol(dosyaAdiPDF)
 
                 //TS2199.doc
-                .ekleriEkMetniDoldur(dosyaAdiDOC + " " +ekMetniAciklama)
+                .ekleriEkMetniDoldur(dosyaAdiDOC + " " + ekMetniAciklama)
                 .dosyaEkle(pathDOC, "DOC")
                 .dosyaYukleneneKadarBekle()
                 .ekleriEklenenDosyaAdiKontrol(dosyaAdiDOC)
@@ -102,7 +115,7 @@ public class EkIlgiTest extends BaseTest {
                 .listelenenEklerdeIndırButonuKontrol(dosyaAdiDOC)
 
                 //TS2199.docx
-                .ekleriEkMetniDoldur(dosyaAdiDOCX + " " +ekMetniAciklama)
+                .ekleriEkMetniDoldur(dosyaAdiDOCX + " " + ekMetniAciklama)
                 .dosyaEkle(pathDOCX, "DOCX")
                 .dosyaYukleneneKadarBekle()
                 .ekleriEklenenDosyaAdiKontrol(dosyaAdiDOCX)
@@ -111,7 +124,7 @@ public class EkIlgiTest extends BaseTest {
                 .listelenenEklerdeIndırButonuKontrol(dosyaAdiDOCX)
 
                 //TS2199.xls
-                .ekleriEkMetniDoldur(dosyaAdiXLS + " " +ekMetniAciklama)
+                .ekleriEkMetniDoldur(dosyaAdiXLS + " " + ekMetniAciklama)
                 .dosyaEkle(pathXLS, "XLS")
                 .dosyaYukleneneKadarBekle()
                 .ekleriEklenenDosyaAdiKontrol(dosyaAdiXLS)
@@ -120,7 +133,7 @@ public class EkIlgiTest extends BaseTest {
                 .listelenenEklerdeIndırButonuKontrol(dosyaAdiXLS)
 
                 //TS2199.xlsx
-                .ekleriEkMetniDoldur(dosyaAdiXLSX + " " +ekMetniAciklama)
+                .ekleriEkMetniDoldur(dosyaAdiXLSX + " " + ekMetniAciklama)
                 .dosyaEkle(pathXLSX, "XLSX")
                 .dosyaYukleneneKadarBekle()
                 .ekleriEklenenDosyaAdiKontrol(dosyaAdiXLSX)
@@ -129,7 +142,7 @@ public class EkIlgiTest extends BaseTest {
                 .listelenenEklerdeIndırButonuKontrol(dosyaAdiXLS)
 
                 //TS2199.ppt
-                .ekleriEkMetniDoldur(dosyaAdiPPT + " " +ekMetniAciklama)
+                .ekleriEkMetniDoldur(dosyaAdiPPT + " " + ekMetniAciklama)
                 .dosyaEkle(pathPPT, "PPT")
                 .dosyaYukleneneKadarBekle()
                 .ekleriEklenenDosyaAdiKontrol(dosyaAdiPPT)
@@ -138,7 +151,7 @@ public class EkIlgiTest extends BaseTest {
                 .listelenenEklerdeIndırButonuKontrol(dosyaAdiPPT)
 
                 //TS2199.pptx
-                .ekleriEkMetniDoldur(dosyaAdiPPTX + " " +ekMetniAciklama)
+                .ekleriEkMetniDoldur(dosyaAdiPPTX + " " + ekMetniAciklama)
                 .dosyaEkle(pathPPTX, "PPTX")
                 .dosyaYukleneneKadarBekle()
                 .ekleriEklenenDosyaAdiKontrol(dosyaAdiPPTX)
@@ -173,11 +186,11 @@ public class EkIlgiTest extends BaseTest {
                 .editordeEkKontrol(dosyaAdiPDF, "PDF")
                 .editordeEkKontrol(dosyaAdiDOC, "DOC")
                 .editordeEkKontrol(dosyaAdiDOCX, "DOCX")
-                .editordeEkKontrol(dosyaAdiXLS,"XLS")
-                .editordeEkKontrol(dosyaAdiXLSX,"XLSX")
-                .editordeEkKontrol(dosyaAdiPPT,"PPT")
-                .editordeEkKontrol(dosyaAdiPPTX,"PPTX")
-                .editordeEkKontrol(fizikselEkMetni,"Fiziksel Ek Metin Açıklama")
+                .editordeEkKontrol(dosyaAdiXLS, "XLS")
+                .editordeEkKontrol(dosyaAdiXLSX, "XLSX")
+                .editordeEkKontrol(dosyaAdiPPT, "PPT")
+                .editordeEkKontrol(dosyaAdiPPTX, "PPTX")
+                .editordeEkKontrol(fizikselEkMetni, "Fiziksel Ek Metin Açıklama")
                 .editordeEkKontrol(evrakSayisi, "Evrak Sayısı");
 
         evrakOlusturPage
@@ -222,28 +235,28 @@ public class EkIlgiTest extends BaseTest {
     public void TS2346() {
 
         String evrakSayisi = "6345202-044-10495";
-        String evrakKonusu = "TS2346_EkIlgi_Senaryosu_"+getSysDate();
+        String evrakKonusu = "TS2346_EkIlgi_Senaryosu_" + getSysDate();
 
 
-        String ilisikDosya1Aciklama = "İlisik_Dosya1_"+getSysDate();
-        String ilisikDosya2Aciklama = "İlisik_Dosya2_"+getSysDate();
-        String ilisikDosya3Aciklama = "İlisik_Dosya3_"+getSysDate();
+        String ilisikDosya1Aciklama = "İlisik_Dosya1_" + getSysDate();
+        String ilisikDosya2Aciklama = "İlisik_Dosya2_" + getSysDate();
+        String ilisikDosya3Aciklama = "İlisik_Dosya3_" + getSysDate();
 
         String dosyaAdi3 = "TS2346_dosya3.pdf";
         String pathDosya3 = getUploadPath() + "TS2346_dosya3.pdf";
 
 
-        String ilisikDosya4Aciklama = "İlisik_Dosya4_"+getSysDate();
+        String ilisikDosya4Aciklama = "İlisik_Dosya4_" + getSysDate();
         String dosyaAdi4 = "TS2346_dosya4.pdf";
         String pathDosya4 = getUploadPath() + "TS2346_dosya4.pdf";
 
-        String ilisikDosya5Aciklama = "İlisik_Dosya5_"+getSysDate();
+        String ilisikDosya5Aciklama = "İlisik_Dosya5_" + getSysDate();
         String dosyaAdi5 = "TS2346_dosya5.pdf";
         String pathDosya5 = getUploadPath() + "TS2346_dosya5.pdf";
 
         String basariMesaji = "İşlem başarılıdır!";
 
-        login(TestData.username4, TestData.password4); //mbozdemir
+        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR); //mbozdemir
 
         //en son taslaklar listesinde kontrol için uniquq konu giriliyor.
         evrakOlusturPage
@@ -348,19 +361,19 @@ public class EkIlgiTest extends BaseTest {
     public void TS2348() {
 
         String evrakSayisi = "6345202-150-1065";
-        String evrakKonusu = "TS2348_EkIlgi_Senaryosu_"+getSysDate();
+        String evrakKonusu = "TS2348_EkIlgi_Senaryosu_" + getSysDate();
 
-        String ekDosya1Aciklama = "Ek_Dosya1_"+getSysDate();
-        String ekDosya2Aciklama = "Ek_Dosya2_"+getSysDate();
-        String ekDosya3Aciklama = "Ek_Dosya3_"+getSysDate();
-        String fizikselEkAciklama = "Fiziksel_Ek_"+getSysDate();
+        String ekDosya1Aciklama = "Ek_Dosya1_" + getSysDate();
+        String ekDosya2Aciklama = "Ek_Dosya2_" + getSysDate();
+        String ekDosya3Aciklama = "Ek_Dosya3_" + getSysDate();
+        String fizikselEkAciklama = "Fiziksel_Ek_" + getSysDate();
 
         String dosyaAdi3 = "TS2348_dosya3.pdf";
         String pathDosya3 = getUploadPath() + "TS2348_dosya3.pdf";
 
         String basariMesaji = "İşlem başarılıdır!";
 
-        login(TestData.username4, TestData.password4); //mbozdemir
+        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR); //mbozdemir
 
         //Taslaklar listesinde kontrol için unique konu giriliyor.
         evrakOlusturPage
@@ -447,8 +460,8 @@ public class EkIlgiTest extends BaseTest {
         evrakOlusturPage
                 .editorTabAc()
                 .editordeEkKontrol(ekDosya1Aciklama, "Açıklama")
-                .editordeEkKontrol(ekDosya2Aciklama,"Açıklama")
-                .editordeEkKontrol(ekDosya3Aciklama,"Açıklama")
+                .editordeEkKontrol(ekDosya2Aciklama, "Açıklama")
+                .editordeEkKontrol(ekDosya3Aciklama, "Açıklama")
                 .editordeEkKontrol(fizikselEkAciklama, "Fiziksel Ek Açıklama")
                 .editordeEkKontrol(evrakSayisi, "Evrak Sayısı");
 
@@ -475,20 +488,20 @@ public class EkIlgiTest extends BaseTest {
     public void TS0956() {
 
         String evrakSayisi = "6345202-150-1065";
-        String evrakKonusu = "TS0956_EkIlgi_Senaryosu_"+getSysDate();
+        String evrakKonusu = "TS0956_EkIlgi_Senaryosu_" + getSysDate();
 
-        String ilgiDosya1Aciklama = "İlgi_Dosya1_"+getSysDate();
-        String ilgiDosya2Aciklama = "İlgi_Dosya2_"+getSysDate();
-        String ilgiDosya3Aciklama = "İlgi_Dosya3_"+getSysDate();
-        String ilgiDosya4Aciklama = "İlgi_Dosya4_"+getSysDate();
-        String ilgiDosya5YeniAciklama = "İlgi_Dosya5_"+getSysDate();
+        String ilgiDosya1Aciklama = "İlgi_Dosya1_" + getSysDate();
+        String ilgiDosya2Aciklama = "İlgi_Dosya2_" + getSysDate();
+        String ilgiDosya3Aciklama = "İlgi_Dosya3_" + getSysDate();
+        String ilgiDosya4Aciklama = "İlgi_Dosya4_" + getSysDate();
+        String ilgiDosya5YeniAciklama = "İlgi_Dosya5_" + getSysDate();
 
         String dosyaAdi3 = "TS0956_dosya3.pdf";
         String pathDosya3 = getUploadPath() + "TS0956_dosya3.pdf";
 
         String basariMesaji = "İşlem başarılıdır!";
 
-        login(TestData.username4, TestData.password4); //mbozdemir
+        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR); //mbozdemir
 
         //Taslaklar listesinde kontrol için unique konu giriliyor.
         evrakOlusturPage
@@ -618,7 +631,7 @@ public class EkIlgiTest extends BaseTest {
     public void TS2025() {
 
         String konuKodu = "605.01";
-        String evrakKonusu = "TS2025_EkIlgi_Senaryosu_"+getSysDate();
+        String evrakKonusu = "TS2025_EkIlgi_Senaryosu_" + getSysDate();
         String kaldirilacakKlasorler = "300.01.61";
         String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
         String kurum = "Baş Dramaturgluk";
@@ -626,26 +639,24 @@ public class EkIlgiTest extends BaseTest {
         String kullaniciParaflama = "Gökçe ŞAHİN";
         String kullaniciKoordine = "Zübeyde TEKİN";
         String kullaniciImzalama = "Yasemin Çakıl AKYOL";
-
+        String kullaniciDetail = "BİLİŞİM HİZMETLERİ VE UYDU PAZARLAMA GENEL MÜDÜR Y";
         String ekleriEvrakSayisi = "6345202-010.01-11088";
-        String ekleriAciklamaDosya1 = "Ekleri_Dosya1_"+getSysDate();
+        String ekleriAciklamaDosya1 = "Ekleri_Dosya1_" + getSysDate();
         String pathDosya1 = getUploadPath() + "TS2025_dosya1.jpeg";
         String dosyaAdi1 = "TS2025_dosya1.jpeg";
 
         String ilgileriEvrakSayisi = "6345202-010.01-11057";
-        String ilgileriAciklamaDosya2 = "İlgileri_Dosya2_"+getSysDate();
+        String ilgileriAciklamaDosya2 = "İlgileri_Dosya2_" + getSysDate();
         String pathDosya2 = getUploadPath() + "TS2025_dosya2.pdf";
         String dosyaAdi2 = "TS2025_dosya2.pdf";
 
         String iliskiliEvrakSayisi = "6345202-010.01-11121";
-        String iliskiliAciklamaDosya3 = "İlişkili_Dosya3_"+getSysDate();
+        String iliskiliAciklamaDosya3 = "İlişkili_Dosya3_" + getSysDate();
         String pathDosya3 = getUploadPath() + "TS2025_dosya3.jpg";
         String dosyaAdi3 = "TS2025_dosya3.jpg";
 
 
-
-        login(TestData.username4, TestData.password4); //mbozdemir
-/*
+        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR); //mbozdemir
 
         evrakOlusturPage
                 .openPage()
@@ -660,14 +671,14 @@ public class EkIlgiTest extends BaseTest {
                 .geregiDoldur(kurum, "Kurum")
                 .onayAkisiEkle()
 
-                .kullanicilarDoldur(kullaniciParaflama)
+                .kullanicilarDoldurWithDetail(kullaniciParaflama, kullaniciDetail)
                 .kullaniciyaKullaniciTipiSec(kullaniciParaflama, "PARAFLAMA")
 
                 .koordineliSec(true)
-                .kullanicilarDoldur(kullaniciKoordine)
+                .kullanicilarDoldurWithDetail(kullaniciKoordine, kullaniciDetail)
 
                 .koordineliSec(true)
-                .kullanicilarDoldur(kullaniciImzalama)
+                .kullanicilarDoldurWithDetail(kullaniciImzalama, kullaniciDetail)
                 .kullaniciyaKullaniciTipiSec(kullaniciImzalama, "IMZALAMA")
 
                 .kullan();
@@ -724,7 +735,7 @@ public class EkIlgiTest extends BaseTest {
                 .iliskiliSitemdeEklenenDosyaAdiKontrol(dosyaAdi3)
                 .iliskiliEkle()
                 .ekEkleDusukDpiPopupOnayi("Evet")
-                .listelenenEvraklaraDosyanınGeldigiKontrolu(dosyaAdi3, "Dosya Adı")
+                .listelenenEvraklaraDosyanınGeldigiKontrolu(iliskiliAciklamaDosya3, "Dosya Adı")
 
                 .sistemdeKayitliEvrakEkleTabiniAc()
                 .evrakAranacakYerSec("Birim Evrakları Ara")
@@ -737,15 +748,124 @@ public class EkIlgiTest extends BaseTest {
         evrakOlusturPage
                 .kaydet(true)
                 .parafla();
-*/
 
         parafladiklarimPage
                 .openPage()
-                .konuyaGoreEvrakKontrol("TS2025_EkIlgi_Senaryosu_20180122145731")
-                .konuyaGoreEvrakOnizlemedeAc("TS2025_EkIlgi_Senaryosu_20180122145731")
+                .konuyaGoreEvrakKontrol(evrakKonusu)
+                .konuyaGoreEvrakOnizlemedeAc(evrakKonusu)
                 .tabKontrolleri()
-                .tabEvrakEkleriAc();
+                .tabEvrakEkleriAc()
+                .evrakEkleriAccordionKontrol()
+                .evrakEklerindeDetayButonuKontrol("EK-1", "EK-2")
+                .tabIlgiBilgileriAc()
+                .ilgiBilgileriAccordionKontrol()
+                .ilgiBilgilerindeDetayButonuKontrol("a", "b")
+                .tabIlisikBilgileriAc()
+                .ilisikBilgieriAccordionKontrol()
+                .ilisikBilgilerindeDetayButonuKontrol("DOSYA", "EVRAK");
 
+        login(TestData.usernameGSAHIN, TestData.passwordGSAHIN); //mbozdemir
+
+        parafBekleyenlerPage
+                .openPage()
+                .konuyaGoreEvrakKontrol(evrakKonusu)
+                .konuyaGoreEvrakOnizlemedeAc(evrakKonusu);
+
+        evrakOlusturPage
+                .parafla();
+
+        parafladiklarimPage
+                .openPage()
+                .konuyaGoreEvrakKontrol(evrakKonusu)
+                .konuyaGoreEvrakOnizlemedeAc(evrakKonusu)
+                .tabKontrolleriWithoutIlisik()
+                .tabEvrakEkleriAc()
+                .evrakEkleriAccordionKontrol()
+                .evrakEklerindeDetayButonuKontrol("EK-1", "EK-2")
+                .tabIlgiBilgileriAc()
+                .ilgiBilgileriAccordionKontrol()
+                .ilgiBilgilerindeDetayButonuKontrol("a", "b");
+
+        login(TestData.usernameZTEKIN, TestData.passwordZTEKIN);
+
+        koordineBekleyenlerPage
+                .openPage()
+                .konuyaGoreEvrakKontrol(evrakKonusu)
+                .konuyaGoreEvrakOnizlemedeAc(evrakKonusu);
+
+        evrakOlusturPage
+                .koordineParafla();
+
+        koordineParafladiklarimPage
+                .openPage()
+                .konuyaGoreEvrakKontrol(evrakKonusu)
+                .konuyaGoreEvrakOnizlemedeAc(evrakKonusu)
+                .tabKontrolleri()
+                .tabEvrakEkleriAc()
+                .evrakEkleriAccordionKontrol()
+                .evrakEklerindeDetayButonuKontrol("EK-1", "EK-2")
+                .tabIlgiBilgileriAc()
+                .ilgiBilgileriAccordionKontrol()
+                .ilgiBilgilerindeDetayButonuKontrol("a", "b");
+
+
+        login(TestData.usernameYAKYOL, TestData.passwordYAKYOL);
+
+        imzaBekleyenlerPage
+                .openPage()
+                .evrakKonusunaGoreKontrol(evrakKonusu)
+                .konuyaGoreEvrakOnizlemedeAc(evrakKonusu);
+
+        evrakOlusturPage
+                .evrakImzala();
+
+        imzaladiklarimPage
+                .openPage()
+                .konuyaGoreEvrakKontrol(evrakKonusu)
+                .konuyaGoreEvrakOnizlemedeAc(evrakKonusu)
+                .tabKontrolleri()
+                .tabEvrakEkleriAc()
+                .evrakEkleriAccordionKontrol()
+                .evrakEklerindeDetayButonuKontrol("EK-1", "EK-2")
+                .tabIlgiBilgileriAc()
+                .ilgiBilgileriAccordionKontrol()
+                .ilgiBilgilerindeDetayButonuKontrol("a", "b")
+                .tabIlisikBilgileriAc()
+                .ilisikBilgileriAccordionKontrol()
+                .ilisikBilgilerindeDetayButonuKontrol("DOSYA", "EVRAK");
+
+        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
+
+        postalanacakEvraklarPage
+                .openPage()
+                .konuyaGoreEvrakKontrol(evrakKonusu)
+                .konuyaGoreEvrakOnizlemedeAc(evrakKonusu)
+                .tabKontrolleri()
+                .tabEvrakEkleriAc()
+                .evrakEkleriAccordionKontrol()
+                .evrakEklerindeDetayButonuKontrol("EK-1", "EK-2")
+                .tabIlgiBilgileriAc()
+                .ilgiBilgileriAccordionKontrol()
+                .ilgiBilgilerindeDetayButonuKontrol("a", "b")
+
+                .evrakPostala()
+                .dagitimSecTbl1("Adi Posta")
+                .evrakPostalaPostala(true);
+
+        login(TestData.usernameZTEKIN, TestData.passwordZTEKIN);
+
+        teslimAlinmayiBekleyenlerPage
+                .openPage()
+                .konuyaGoreEvrakKontroluAllPages(evrakKonusu)
+                .konuyaGoreEvrakOnizlemedeAc(evrakKonusu)
+                .tabKontrolleri()
+                .tabEvrakEkleriAc()
+                .evrakEkleriAccordionKontrol()
+                .evrakEklerindeDetayButonuKontrol("EK-1", "EK-2")
+
+                .tabIlgiBilgileriAc()
+                .ilgiBilgieriAccordionKontrol()
+                .ilgiBilgilerindeDetayButonuKontrol("a", "b");
 
     }
 }

@@ -187,7 +187,9 @@ public class KaydedilenGelenEvrakPage extends MainPage {
     @Step("Rapor al Excel")
     public KaydedilenGelenEvrakPage raporAlExcel(String remoteDownloadPath) throws IOException {
 
-        deleteFile(remoteDownloadPath, "Rapor_");
+//        deleteFile(remoteDownloadPath, "Rapor_");
+        deleteSpecificFile("Rapor_");
+
         sleep(3000);
 //        File file=$("[id='birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable'] button:nth-child(4)").download();
         btnRaporAlExcel.click();
@@ -208,7 +210,8 @@ public class KaydedilenGelenEvrakPage extends MainPage {
 
     @Step("Rapor al PDF")
     public KaydedilenGelenEvrakPage raporAlPdf(String remoteDownloadPath) throws IOException {
-        deleteFile(remoteDownloadPath, "Rapor_");
+//        deleteFile(remoteDownloadPath, "Rapor_");
+        deleteSpecificFile("Rapor_");
         sleep(3000);
         btnRaporAlPdf.click();
         islemMesaji().basariliOlmali();

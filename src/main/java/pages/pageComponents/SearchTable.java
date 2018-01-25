@@ -54,22 +54,22 @@ public class SearchTable {
         return getTableHeader().$("label");
     }
 
-    @Step("İlk sayfaya git butonu bul")
+    @Step("İlk sayfaya git butonu bulunur")
     public SelenideElement getFirstPageButton() {
         return parentElement.$("span[class~='ui-paginator-first']");
     }
 
-    @Step("Önceki sayfaya git butonu bul")
+    @Step("Önceki sayfaya git butonu bulunur")
     public SelenideElement getPrevPageButton() {
         return parentElement.$("span[class~='ui-paginator-prev']");
     }
 
-    @Step("Sonraki sayfaya git butonu bul")
+    @Step("Sonraki sayfaya git butonu bulunur")
     public SelenideElement getNextPageButton() {
         return parentElement.$("span[class~='ui-paginator-next']");
     }
 
-    @Step("Son sayfaya git butonu bul")
+    @Step("Son sayfaya git butonu bulunur")
     public SelenideElement getLastPageButton() {
         return parentElement.$("span[class~='ui-paginator-last']");
     }
@@ -82,7 +82,7 @@ public class SearchTable {
         return columnheaders;
     }
 
-    @Step("Kolonlari bul")
+    @Step("Kolonlar bulunur")
     public SearchTable columnHeaderControl(Condition... conditions){
         for (Condition condition:conditions) {
             getColumnHeaders().filterBy(condition).shouldHave(sizeGreaterThan(0));
@@ -90,7 +90,7 @@ public class SearchTable {
         return this;
     }
 
-    @Step("Kolon index'i ara")
+    @Step("Kolon index'i aranır")
     public int getColumnIndex(String columnName) {
         ElementsCollection columnheaders = getColumnHeaders();
         columnheaders.filterBy(exactText(columnName)).shouldHave(sizeGreaterThan(0));
@@ -110,7 +110,7 @@ public class SearchTable {
      * @param index start with 0
      * @return
      */
-    @Step("Kolonun ismi")
+    @Step("Kolonun ismi alınır")
     public String getColumnName(int index) {
         String name = getColumnHeaders().shouldHave(sizeGreaterThanOrEqual(index))
                 .get(index).text().trim();
@@ -213,33 +213,33 @@ public class SearchTable {
                 && parentElement.$$(rowCssLocator + " " + columnCssLocator).size() != 0;
     }
 
-    @Step("Arama ayarı: tüm sayfalarda ara")
+    @Step("Arama ayarı: tüm sayfalarda aranır")
     public SearchTable searchInAllPages(boolean searchInAllPages) {
         this.searchInAllPages = searchInAllPages;
         return this;
     }
 
-    @Step("Arama ayarı: sondan başla")
+    @Step("Arama ayarı: son sayfadan başlanır")
     public SearchTable searchStartFromLastPage(boolean searchStartFromLast){
         this.searchStartFromLast = searchStartFromLast;
         return this;
     }
 
-    @Step("Arama ayarı: kolon ismine göre ara")
+    @Step("Arama ayarı: kolon ismine göre aranır")
     public SearchTable searchByColumnName(String columnName){
         this.columnName = columnName;
         columnIndex = getColumnIndex(columnName);
         return this;
     }
 
-    @Step("Arama ayarı: kolon index'a göre ara")
+    @Step("Arama ayarı: kolon index'a göre aranır")
     public SearchTable searchByColumnIndex(int columnIndex){
         this.columnIndex = columnIndex;
         columnName = getColumnName(columnIndex);
         return this;
     }
 
-    @Step("Satırları ara")
+    @Step("Tablodaki satırlar aranır")
     public SearchTable findRows(Condition... conditions) {
         foundRow = null;
         foundRows = null;
@@ -300,18 +300,18 @@ public class SearchTable {
         return this;
     }
 
-    @Step("Bulunan satırın kolonları bul")
+    @Step("Satırdaki kolonlar bulunur")
     public ElementsCollection getColumnValues() {
         return foundRow.$$(columnCssLocator);
     }
 
-    @Step("{columnIndex} kolon bul")
+    @Step("{columnIndex} kolon bulunur")
     public SelenideElement getColumnValue(int columnIndex) {
         //return foundRows.get((rowIndex.length > 0)? rowIndex[0]:0).$$("td[role=gridcell]").get(columnIndex);
         return foundRow.$$(columnCssLocator).get(columnIndex);
     }
 
-    @Step("{columnName} isimli kolon bul")
+    @Step("{columnName} isimli kolon bulunur")
     public SelenideElement getColumnValue(String columnName) {
         if (columnIndex == -1)
             columnIndex = getColumnIndex(columnName);

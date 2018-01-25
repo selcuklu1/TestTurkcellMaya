@@ -64,7 +64,7 @@ public class KlasorEvrakIslemleriPage extends MainPage {
         return this;
     }
 
-
+    @Step("Klasör alanını doldur")
     public KlasorEvrakIslemleriPage klasorDoldur(String klasor) {
         txtKlasor.selectLov(klasor);
         return this;

@@ -128,10 +128,11 @@ public class EvrakPostalamaTest extends BaseTest {
         editorTab.imzala()
                 .popupSImzalaIslemleri();
 
+        Thread.sleep(2000);
         postalanacakEvraklarPage
                 .openPage()
                 .filter().findRowsWith(Condition.text(konu))
-                .shouldHaveSize(0);
+                .first().click();
 
         imzaladiklarimPage
                 .openPage()
@@ -428,7 +429,7 @@ public class EvrakPostalamaTest extends BaseTest {
 
 
         postalananlarPage
-                .btnIcerikGoster()
+                .btnFiltrenenPostaIcerikGoster(konu)
                 .btnIcerikEkleriTab()
                 .btnIcerikIlgileriTab()
                 .btnIcerikDetayKapat();

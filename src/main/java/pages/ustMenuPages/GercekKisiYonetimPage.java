@@ -470,7 +470,7 @@ public class GercekKisiYonetimPage extends MainPage {
         return this;
     }
 
-    @Step("Tabloda \"{tbNO}\" TCKN kontrolü")
+    @Step("Tabloda \"{tcNO}\" TCKN kontrolü")
     public GercekKisiYonetimPage tabloTCKNKontrol(String tcNO) {
         $(byText(tcNO)).shouldBe(Condition.visible);
 //        boolean statusTCNO = findElementOnTableByColumnInputInAllPages(tblGercekKisiDataTable, 1, tcNO).isDisplayed();

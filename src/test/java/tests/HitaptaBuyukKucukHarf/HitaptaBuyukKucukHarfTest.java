@@ -1,18 +1,42 @@
 package tests.HitaptaBuyukKucukHarf;
 
+import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.WebDriverRunner;
 import common.BaseTest;
+import data.TestData;
 import data.User;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
+import listeners.DriverEventListener;
+import org.openqa.selenium.Capabilities;
+import org.openqa.selenium.Platform;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.remote.CapabilityType;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.pageComponents.SearchTable;
 import pages.pageData.alanlar.EvrakDili;
-import pages.pageData.alanlar.GeregiSecimTipi;
 import pages.ustMenuPages.EvrakOlusturPage;
 import pages.ustMenuPages.SistemSabitleriPage;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import static com.codeborne.selenide.Condition.readonly;
 import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
+import static pages.pageData.alanlar.GeregiSecimTipi.DAGITIM_PLANLARI;
+import static pages.pageData.alanlar.GeregiSecimTipi.KULLANICI;
+import static pages.pageData.alanlar.OnayKullaniciTipi.IMZALAMA;
+import static pages.pageData.alanlar.OnayKullaniciTipi.PARAFLAMA;
 
 /****************************************************
  * Tarih: 2017-12-28
@@ -25,10 +49,17 @@ public class HitaptaBuyukKucukHarfTest extends BaseTest {
 
     EvrakOlusturPage evrakOlustur;
     User user1 = new User("user1", "123", "User1 TEST", "AnaBirim1", "Altyapı ve Sistem Yönetim Uzmanı");
+    User optiim = new User("optiim", "123", "Optiim TEST", "Optiim Birim");
+    User ztekin = new User("ztekin", "123", "Zübeyde TEKİN", "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ");
 
     /*@BeforeMethod
     public void loginBeforeTests() {
     }*/
+
+    @BeforeMethod
+    public void setUp() throws Exception {
+//        useFirefox();
+    }
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS2064: Tüzel kişi- Hitapta büyük/küçük harf kontrolü")
@@ -154,28 +185,63 @@ public class HitaptaBuyukKucukHarfTest extends BaseTest {
         //sistemde kayıtlı dağıtım planı olmalı, dağıtım planının içeriğinde küçük harfli birim, büyük harfli kurum olmalı
 //        DAĞITIM YERLERİNE
 //        login(user1);
+
+        String d = useFirefoxWindows151("TS2090");
+        System.out.println("Download path:" + d);
+
         String uygulanacakDeger;
+        User user = optiim;
 
-        login(user1);
-
+        login(user);
         SistemSabitleriPage sistemSabitleriPage = new SistemSabitleriPage().openPage();
         sistemSabitleriPage.sorgulamaVeFiltreleme().alanDoldur("Ad", "Dağıtım Planı Hitap").butonaTikla("Ara");
 
         sistemSabitleriPage.openSistemSabitleriTab("Genel İşlemler");
         SearchTable searchTable = sistemSabitleriPage.getSistemSabitleriList("Genel İşlemler").findRows(text("Dağıtım Planı Hitap"));
         uygulanacakDeger = searchTable.getColumnValue("Uygulanacak Değer").text();
-        searchTable.columnHeaderControl(text("Ad"),text("Uygulanacak Değer"),text("Aktif Değer"),text("Durum"),text("Açıklama"));
+        searchTable.columnHeaderControl(text("Ad"), text("Uygulanacak Değer"), text("Aktif Değer"), text("Durum"), text("Açıklama"));
 
         String konu = "TS2090_" + getSysDate();
         pages.newPages.EvrakOlusturPage evrakOlusturPage = new pages.newPages.EvrakOlusturPage().openPage();
         evrakOlusturPage.bilgileriTab()
-                .konuDoldur("010.10")
+                .konuKoduSec("010.10")
                 .konuDoldur(konu)
                 .evrakDiliSec(EvrakDili.Turkce)
                 .kaldiralacakKlasorleriSec("Diğer")
-                .geregiSecimTipiSec(GeregiSecimTipi.DAGITIM_PLANLARI);
+                .geregiSecimTipiSec(DAGITIM_PLANLARI)
+                .geregiSec("KÜÇÜK BİRİM BÜYÜK KURUM")
+                .geregiSecimTipiSec(KULLANICI)
+                .geregiSec("tekin")
+                .onayAkisiEkleButonaTikla()
+                .secilenAnlikOnayAkisKullanicilariKontrolEt(user, PARAFLAMA)
+                .anlikOnayAkisKullanicininTipiSec(user, IMZALAMA)
+                .kullanButonaTikla()
+                .evrakPageButtons().getImzalaButton().shouldBe(visible);
+        evrakOlusturPage.editorTab().openTab().getEditor().type("Editör tekst");
+        evrakOlusturPage.evrakPageButtons().evrakImzala();
+
+/*WebDriver.Window a; a.
+        com.codeborne.selenide.webdriver.DefaultDriverFactory defaultDriverFactory
+
+        FirefoxOptions options = new FirefoxOptions()
+                .setAcceptInsecureCerts(true)
+                .addPreference("security.insecure_field_warning.contextual.enabled", false)
+                .setLogLevel(FirefoxDriverLogLevel.fromLevel(Level.OFF));
+        options.addPreference("browser.download.folderList", 2);
+        options.addPreference("browser.download.dir", TestData.docDownloadPathWindows);
+        Capabilities caps = getCapabilities();
+        caps.merge(options);
+        Selenide.close();
+        WebDriver driver = new EventFiringWebDriver(new FirefoxDriver(options)).register(new DriverEventListener()) ;
+        WebDriverRunner.setWebDriver(driver);
+
+        login(ztekin);
+        new SolMenu().openMenu(SolMenuData.BirimEvraklari.PostalanacakEvraklar);
+        new MainPage().searchTable().findRows(text(konu)).getFoundRow().click();*/
+        Selenide.close();
 
     }
+
 
     public void hitapKontrol(String geregiSecimTipi, String geregi, String beklenenHitap) throws InterruptedException {
 

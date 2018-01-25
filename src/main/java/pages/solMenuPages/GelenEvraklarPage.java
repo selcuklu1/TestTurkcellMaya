@@ -216,6 +216,14 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Evrak göster, Havale yap, tebliğ et, iade et, cevap yaz, evrak kapat ikonlarının geldiği görülür.")
+    public GelenEvraklarPage ikonlarinGeldigiGorme(){
+        boolean durum = $$(By.id("mainPreviewForm:onizlemeRightTab:onizlemeRightTab")).size()==1;
+        Assert.assertEquals(durum , true);
+        takeScreenshot();
+        return this;
+    }
+
     @Step("Gelen Evraklar sayfasında evrakın geldiği kontrolu ve seçme")
     public GelenEvraklarPage evrakIcerikGoster(String konu, String geldigiYer, String kayitTarihiSayi, String evrakTarihi, String no) {
 
