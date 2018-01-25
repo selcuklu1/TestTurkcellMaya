@@ -144,6 +144,24 @@ public class PostalanacakEvraklarPage extends MainPage {
         btnEvrakPostala.click();
         return this;
     }
+    
+    @Step("\"{tuzelKisi}\" adlı tüzel kişiyi dağıtım planını \"{secilen}\" seçilir")
+    public PostalanacakEvraklarPage dagitimSekliDegistirSec(String tuzelKisi, String secilen,String secim){
+        $$("[id='mainPreviewForm:dataTableId_data'] > tr").filterBy(Condition.text(tuzelKisi))
+                .get(0).$$("[class='ui-helper-hidden-accessible']").get(0).parent().click();
+        $$("[id*='mainPreviewForm:dataTableId:"+secim+"'][id$='panel'] ul li").filterBy(Condition.text(secilen)).get(0).click();
+        return this;
+    }
+
+    @Step("")
+    public PostalanacakEvraklarPage tuzelKisiPostaKoduVeAciklamaDoldur(String tuzelKisi, String postaKodu,String aciklama){
+        $$("[id='mainPreviewForm:dataTableId_data'] > tr").filterBy(Condition.text(tuzelKisi))
+                .get(0).$$("input[type='text']").get(0).setValue(postaKodu);
+
+        $$("[id='mainPreviewForm:dataTableId_data'] > tr").filterBy(Condition.text(tuzelKisi))
+                .get(0).$$("textarea").get(0).setValue(aciklama);
+        return this;
+    }
 
     @Step("Postala")
     public PostalanacakEvraklarPage evrakPostalaPostala(boolean secim) {
@@ -153,6 +171,25 @@ public class PostalanacakEvraklarPage extends MainPage {
         } else {
             $(By.id("mainPreviewForm:postalaDogrulaDialogForm:hayirButton_id")).pressEnter();
         }
+        return this;
+    }
+    @Step("Postala")
+    public PostalanacakEvraklarPage evrakPostalaPostala() {
+        btnEvrakPostalaPostala.pressEnter();
+        return this;
+    }
+
+    @Step("Belge elektronik imzalı değil! Evrakı postalamak üzeresiniz. Devam etmek istiyor musunuz? uyarısının geldiği görülür.")
+    public PostalanacakEvraklarPage belgeElektronikImzaliDegilUyariGeldigiGorme(){
+        boolean durum = $$("[id^='mainPreviewForm:postalaDogrulaDialogForm']").filterBy(Condition.visible).size()==0;
+        Assert.assertEquals(durum,false);
+        takeScreenshot();
+        return this;
+    }
+
+    @Step("Evet seçilir")
+    public PostalanacakEvraklarPage belgeElektronikImzaliDegilUyariEvet(){
+        $("[id$='evetButton_id']").click();
         return this;
     }
 
