@@ -377,6 +377,33 @@ public class KararYazisiOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("İlgi alanının \"{ilgi}\" şeklinde geldiği görülür")
+        public EditorTab ilgiGeldigiGorme(String ilgi){
+            boolean durum =$$(By.id("yeniKararEvrakForm:allPanels_content"))
+            .filterBy(Condition.text(ilgi)).size()==1;
+            Assert.assertEquals(durum,true);
+            takeScreenshot();
+            return this;
+        }
+
+        @Step("Toplantı no, Toplantı tarihi, Karar no alanlarının bilgileri sekmesinde girildiği şekliyle geldiği görülür.")
+        public EditorTab editorNoAlanıGeldigiGorme(String toplantiNo, String toplantiTarih, String kararNo){
+            boolean durum =$$(By.id("yeniKararEvrakForm:allPanels_content"))
+                    .filterBy(Condition.text(toplantiNo))
+                    .filterBy(Condition.text(toplantiTarih))
+                    .filterBy(Condition.text(kararNo)).size()==1;
+            Assert.assertEquals(durum,true);
+            takeScreenshot();
+            return this;
+        }
+
+        @Step("Sayfanın alt sağında imzacının \"{imzaci}\" adla geldiği ")
+        public EditorTab imzaciGeldigiGorme(String imzaci){
+            boolean durum = $$(By.id("yeniKararEvrakForm:imzacilarPanel")).filterBy(Condition.text(imzaci)).size()==1;
+            Assert.assertEquals(durum,true);
+            return this;
+        }
+
         @Step("Gönder")
         public EditorTab gonder(boolean secim) {
             btnGonder.click();
@@ -434,7 +461,7 @@ public class KararYazisiOlusturPage extends MainPage {
         }
 
         @Step("")
-        public EditorTab stepmethod(){
+        public EditorTab editorNoAlanıGeldigiGorme(){
 
             return this;
         }
