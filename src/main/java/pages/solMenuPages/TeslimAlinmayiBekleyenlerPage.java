@@ -32,6 +32,7 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     ElementsCollection tblEvraklar = $$("[id^='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
     BelgenetElement txtHavaleYapKisi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKullaniciLov:LovText"));
     BelgenetElement txtHavaleYapKullaniciListesi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKisiListesiLov:LovText"));
+    ElementsCollection btnTeslimAl = $$("[id^='mainInboxForm:inboxDataTable:j_idt'] > [class$='document-delivery']");
 
     public TeslimAlinmayiBekleyenlerPage openPage() {
         solMenu(SolMenuData.BirimEvraklari.TeslimAlinmayiBekleyenler);
@@ -150,6 +151,29 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         } else {
             $(By.id("teslimAlHayirButton")).click();
         }
+
+        return this;
+    }
+
+    @Step("Evrak no ile teslim al")
+    public TeslimAlinmayiBekleyenlerPage evrakSecNoTeslimAl(String konu,boolean secim){
+        tblEvraklar.filterBy(text(konu)).get(0).$$("[id$='teslimAlButton']").first().click();
+
+        if (secim == true) {
+            $(By.id("teslimAlEvetButton")).click();
+        } else {
+            $(By.id("teslimAlHayirButton")).click();
+        }
+
+        return this;
+    }
+
+    @Step("Evrak Sec Checkbox ile")
+    public TeslimAlinmayiBekleyenlerPage evrakSecCheckBox(String konu1,String konu2,boolean secim){
+        tblEvraklar.filterBy(text(konu1)).get(0).$$("div[class^='ui-chkbox-box']").first().click();
+        tblEvraklar.filterBy(text(konu2)).get(0).$$("div[class^='ui-chkbox-box']").first().click();
+
+        btnTeslimAl.get(0).click();
 
         return this;
     }

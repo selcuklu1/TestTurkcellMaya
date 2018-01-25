@@ -1,9 +1,6 @@
 package pages.ustMenuPages;
 
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.*;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
@@ -139,6 +136,8 @@ public class GelenEvrakKayitPage extends MainPage {
     SelenideElement popUpUstYaziDegistirilme = $(By.id("evrakBilgileriForm:ustyaziDegistirisilMiDialog"));
     SelenideElement basariliPopUpKapat = $("[id='evrakKaydetBasariliDialogForm:vazgecButton']");
     SelenideElement basariliPopUp = $("[id='evrakKaydetBasariliDialog'][class$='ui-overlay-visible']");
+
+    ElementsCollection visibleEvrakBasarili = $$("[id='evrakKaydetBasariliDialog']");
 
     SelenideElement btnGeldigiKisiEkle = $("[id^='evrakBilgileriForm:evrakBilgileriList'][id$='gercekKisiEkle']");
     SelenideElement txtTCKN = $(By.id("gercekKisiHizliKayitDialogForm:tcKimlikNoInput"));
@@ -819,9 +818,40 @@ public class GelenEvrakKayitPage extends MainPage {
         String mesaj4 = "Evrak başarıyla kaydedilmiştir.";
         basariliPopUp.getText().contains(mesaj4);
         Allure.addAttachment("İşlem başarılı PopUp'ı", mesaj4);
-
-
         String evrakNo = getIntegerInText(By.id("evrakKaydetBasariliDialog"));
+        clickJs(basariliPopUpKapat);
+        return evrakNo;
+    }
+
+    @Step("PopUp kontrolleri v2")
+    public String popUpsv2() {
+        Selenide.sleep(5000);
+
+        if (ustYaziYokpopUp.isDisplayed()) {
+            clickJs(ustYaziYokEvet);
+            Allure.addAttachment("Üst Yazı Seçmediniz PopUp'ı", "Üst Yazı gelmemiştir PopUp'ı kapatılır.");
+        }
+        if (ustYaziveHavaleYeriYokpopUp.isDisplayed()) {
+            clickJs(popUpEvet);
+            Allure.addAttachment("Üst Yazı ve Havale Yeri yok PopUp'ı", "Üst Yazı ve Havale Yeri yok PopUp'ı kapatılır.");
+        }
+        if (popUphavaleYeriSecmediniz.isDisplayed()) {
+            String mesaj2 = "Havale yeri seçmediniz. Evrak kaydedildiğinde Kaydedilen Gelen Evraklar kutusuna düşecektir. İşleme devam etmek istiyor musunuz?";
+            popUphavaleYeriSecmediniz.getText().equals(mesaj2);
+            clickJs(btnHavaleYeriSecmedinizEvet);
+            Allure.addAttachment("Havale Yeri Seçmediniz PopUp'ı", mesaj2);
+        }
+        if (mukerrerPopUp.isDisplayed()) {
+            clickJs(mukerrerPopUpEvet);
+            Allure.addAttachment("Mükerrer İşlem PopUp'ı", "Mükerrer İşlem PopUp'ı kapatılır.");
+        }
+        basariliPopUp.shouldBe(Condition.visible);
+        String mesaj4 = "Evrak başarıyla kaydedilmiştir.";
+        basariliPopUp.getText().contains(mesaj4);
+        Allure.addAttachment("İşlem başarılı PopUp'ı", mesaj4);
+
+        SelenideElement vEvrakBasarili = visibleEvrakBasarili.filterBy(Condition.visible).get(0);
+        String evrakNo = getIntegerInText(vEvrakBasarili.getText());
         clickJs(basariliPopUpKapat);
 
         return evrakNo;
