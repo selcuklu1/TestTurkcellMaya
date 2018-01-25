@@ -521,7 +521,7 @@ public class PostaListesiPage extends MainPage {
     public PostaListesiPage evrakListesiYazdir(String[] konu) {
         int size = tableEvrakListesi.size();
         for (int i = size - 1; i >= 0; i--) {
-
+//            Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", tableEvrakListesi);
             tableEvrakListesi
                     .filterBy(Condition.text(konu[i]))
                     .first()
@@ -569,6 +569,7 @@ public class PostaListesiPage extends MainPage {
         size = size - 1;
         String pdfName = "";
         for (int i = size; i >= 0; i--) {
+//            Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", tableEvrakListesi);
             tableEvrakListesi
                     .filterBy(Condition.text(konu[i]))
                     .first()
@@ -597,7 +598,7 @@ public class PostaListesiPage extends MainPage {
         int size = tableEvrakListesi.size();
         size = size - 1;
         for (int i = size; i >= 0; i--) {
-
+//            Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", tableEvrakListesi);
             tableEvrakListesi
                     .filterBy(Condition.text(konu[i]))
                     .first()

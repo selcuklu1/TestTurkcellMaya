@@ -54,8 +54,8 @@ public class CevapladiklarimPage extends MainPage {
 
 
 
-    @Step("Evrak Geçmişinde geldiği görülür")
-    public CevapladiklarimPage evrakGecmisiEvrakKapandiIbaresiGorme(){
+    @Step("Evrak geçmişinde ”Evrak ... sayılı ve \"{evrakTarihi}\" tarihli yazı ile cevap yazılarak kapatılmıştır.” İbaresinin olduğu görülür.")
+    public CevapladiklarimPage evrakGecmisiEvrakKapandiIbaresiGorme(String evrakTarihi,String evrakSayi){
         boolean durum = tblEvrakGecmisi.filterBy(Condition.text("Evrak"))
                 .filterBy(Condition.text("tarihli yazı ile cevap yazılarak kapatılmıştır."))
                 .size() == 1;

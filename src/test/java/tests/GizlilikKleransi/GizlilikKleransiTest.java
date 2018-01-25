@@ -131,7 +131,7 @@ public class GizlilikKleransiTest extends BaseTest {
         havaleEttiklerimPage.gizlilikRaporSec(konuKodu, geldigiYer, evrakTarihi)
                 .havaleYap()
                 .havaleYapKisiSecmeyeDene(kisi)
-                .islemMesaji().dikkatOlmali(uyariMesaj1);
+                .islemMesaji().beklenenMesaj(uyariMesaj1);
 
         havaleEttiklerimPage
                 .havaleYapKullaniciyiSecmeyeDene(kullaniciListesi)

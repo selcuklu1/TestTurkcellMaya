@@ -32,8 +32,7 @@ public class KoordineBekleyenlerPage extends MainPage {
         return this;
     }
 
-
-    @Step("Paraf Bekleyenler listesinde evrak kontrolu")
+    @Step("Koordine Bekleyenler listesinde evrak kontrolu")
     public KoordineBekleyenlerPage konuyaGoreEvrakKontrol(String konu) {
 
         boolean durum = tblKoordineBekleyenEvraklar
@@ -45,7 +44,7 @@ public class KoordineBekleyenlerPage extends MainPage {
         return this;
     }
 
-    @Step("Parafladıklarım listesinden evrak önizlemede aç")
+    @Step("Koordine Bekleyenler listesinden evrak önizlemede aç")
     public KoordineBekleyenlerPage konuyaGoreEvrakOnizlemedeAc(String konu) {
 
         tblKoordineBekleyenEvraklar

@@ -36,7 +36,7 @@ public class EvrakOlusturPage extends MainPage {
     SelenideElement btnKaydet = $("button[id^='yeniGidenEvrakForm:rightTab:uiRepeat'] span[class$='kaydet']");
     SelenideElement btnKaydetOnayaSun = $("button[id^='yeniGidenEvrakForm:rightTab:uiRepeat'] span[class$='kaydetHavaleEt']");
     SelenideElement btnKaydetOnayaSun2 = $("div[class='ui-tabmenu ui-tabmenu-right'] span[class='ui-button-icon-left ui-icon kaydetHavaleEt']");
-    SelenideElement txtKaydetOnayaSunAciklama = $(By.id("windowCevapEvrakForm:onayIslemiAciklama"));
+    SelenideElement txtKaydetOnayaSunAciklama = $("[id$='onayIslemiAciklama']");
     SelenideElement btnPaylas = $("button[id^='yeniGidenEvrakForm:rightTab:uiRepeat'] span[class$='evrakPaylas']");
     SelenideElement btnEvrakOlusturKapat = $(By.xpath("//div[@id='window3Dialog']//a/span[@class='ui-icon ui-icon-closethick']"));
     SelenideElement btnEvrakOlusturKapatEvet = $(By.id("kapatKaydetEvetButton"));
@@ -112,7 +112,7 @@ public class EvrakOlusturPage extends MainPage {
     @Step("Kaydet ve onay sun")
     public EvrakOlusturPage kaydetOnayaSunAciklamaDoldur2(String aciklama) {
         txtKaydetOnayaSunAciklama.setValue(aciklama);
-        $(By.id("windowCevapEvrakForm:gonderButton")).click();
+        $("[id$='gonderButton'").click();
         $(By.id("kaydetEvetButton")).click();
         return this;
     }
@@ -369,6 +369,21 @@ public class EvrakOlusturPage extends MainPage {
             return divContainer.is(visible);
         }
 
+        @Step("Konu alanının seçilen evrak ile aynı şekilde dolu geldiği,")
+        public BilgilerTab konuAlanıDoluGeldigiGorme(String konu){
+            Assert.assertEquals(txtKonu.getValue(),konu);
+            takeScreenshot();
+            return this;
+        }
+
+        @Step("Gereği alanının \"{geregi}\" yazılı olacak şekilde olduğu görülür.")
+        public BilgilerTab geregiSeciliGeldigiGorme(String geregi){
+            boolean durum = $$("div[id$='geregiLov:lovSelectionPanel']").filterBy(Condition.text(geregi)).size()==1;
+            Assert.assertEquals(durum,true);
+            takeScreenshot();
+            return this;
+        }
+        
         @Step("Kullanıcılar alanında \"{value}\" seç")
         public BilgilerTab IlkKullaniciImzalamaVeyaParaflamaSec(String value) {
             cmbKullanicilarImza.selectOptionByValue(value);
@@ -1120,7 +1135,9 @@ public class EvrakOlusturPage extends MainPage {
         @Step("Kullan")
         public BilgilerTab kullan() {
 //            clickJs(btnKullan);
-            btnKullan.pressEnter();
+//            Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", btnKullan);
+//            btnKullan.pressEnter();
+            clickJs(btnKullan);
             return this;
         }
 
@@ -1390,7 +1407,7 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement btnBilgiSil = $(By.cssSelector("[id='yeniGidenEvrakForm:bilgiKurumLov:LovSecilenTable'] [class$='delete-icon']"));
         private TextEditor editor = new TextEditor();
         ElementsCollection trEditorEkLlistesi = $$("[id='yeniGidenEvrakForm:eklerPanell'] tr");
-        ElementsCollection trEditorIlgilistesi = $$("[id='yeniGidenEvrakForm:ilgiOutPanel'] tr");
+        ElementsCollection trEditorIlgilistesi = $$("[id$='ilgiOutPanel'] tr");
 
 
         public TextEditor getEditor() {
@@ -1688,6 +1705,27 @@ public class EvrakOlusturPage extends MainPage {
                     .get(0)
                     .shouldBe(exist);
 
+            return this;
+        }
+
+        @Step("Editörde ilgi satırının, seçilen evrakın \"{kullanici}\", \"{tarih}\" ve \"{evrakSayi}\" ile geldiği görülür.")
+        public EditorTab ilgiSatırıKontrol(String kullanici, String tarih, String evrakSayi){
+            boolean durum = trEditorIlgilistesi
+                    .filterBy(text(kullanici))
+                    .filterBy(text(tarih))
+                    .filterBy(text(evrakSayi)).size()==1;
+            Assert.assertEquals(durum,true);
+            takeScreenshot();
+            return this;
+        }
+
+        @Step("Editörde ilgi satırının, seçilen evrakın \"{kullanici}\" ve \"{tarih}\" ile geldiği görülür.")
+        public EditorTab ilgiSatırıKontrol(String kullanici, String tarih){
+            boolean durum = trEditorIlgilistesi
+                    .filterBy(text(kullanici))
+                    .filterBy(text(tarih)).size()==1;
+            Assert.assertEquals(durum,true);
+            takeScreenshot();
             return this;
         }
 

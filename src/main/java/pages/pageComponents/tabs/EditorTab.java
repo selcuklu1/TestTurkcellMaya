@@ -8,11 +8,13 @@ import io.qameta.allure.Step;
 import pages.MainPage;
 import pages.pageComponents.TextEditor;
 import pages.pageComponents.belgenetElements.BelgenetElement;
+import pages.ustMenuPages.EvrakOlusturPage;
 
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
 import static com.codeborne.selenide.Selenide.switchTo;
 import static pages.pageComponents.belgenetElements.Belgenet.comboBox;
 
@@ -49,7 +51,14 @@ public class EditorTab extends MainPage {
         return this;
     }
 
-    @Step("Ön tanımlı dialog bulunur")
+    @Step("Şablonlar alanında \"{secim}\" seçilir")
+    public EditorTab onTanimliIcerikSablonuKullan(String secim) {
+        $("[id$='windowCevapEvrakForm:icerikSablonListPanel'] div[class='ui-selectonemenu ui-widget ui-state-default ui-corner-all ui-helper-clearfix'] select").selectOption(secim);
+        ($$("[class='form-buttons'] button[id^='windowCevapEvrakForm'] span").filterBy(Condition.text("Uygula")).get(0)).parent().click();
+        return this;
+    }
+
+    @Step("Ön tanımlı dialog bul")
     public SelenideElement getOnTanimliDialog(){
         return page.$("div[id*='icerikSablonDialog']");
     }

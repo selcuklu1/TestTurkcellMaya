@@ -1,5 +1,6 @@
 package tests.TopluPostalama;
 
+
 import common.BaseTest;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Severity;
@@ -1148,7 +1149,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .tabloKontrolEt(kurum1, "", postaTipi, true)
                 .raporAl();
 
-        String excelFileName = pttRaporuPage.indirilenDosyaAd();
+         String excelFileName = pttRaporuPage.indirilenDosyaAd();
 
         PttRaporuPage.PttRaporExcellTest pttRaporExcellTest = new PttRaporuPage.PttRaporExcellTest(excelFileName);
 
@@ -1889,17 +1890,17 @@ public class TopluPostalamaTest extends BaseTest {
         EvrakOlusturPage evrakOlusturPage = new EvrakOlusturPage();
 
 //        String remoteDownloadPath = "C:\\Users\\optiim\\Downloads\\";
-
+//
 //        String[] konu = new String[]{
-//                "TC1812 20180123141553", "TC1812 1986417532100"
+//                "TC1811 20180124144919", "TC1811 1014910375286"
 //        };
 //
-//        String[] evrakNo1812 = new String[]{
-//                "11236", "11237"
+//        String[] evrakNo1811 = new String[]{
+//                "11413", "11414"
 //        };
 //
 //        String[] icerik = new String[]{
-//                "TC1812 2018012314155320180123141553", "TC1812 198641753210020180123141702"
+//                "TC1811 2018012414491920180124144945", "TC1811 101491037528620180124145105"
 //        };
 
         String[] konu = new String[]{
@@ -1935,8 +1936,10 @@ public class TopluPostalamaTest extends BaseTest {
                 "Ankara İçi APS"
         };
         //endregion
-        //region Test Datası
+//        region Test Datası
         for (int i = 0; i < 2; i++) {
+            System.out.println(konu[i]);
+            System.out.println(icerik[i]);
             icerik[i] = konu[i] + getSysDate();
             evrakOlusturPage
                     .openPage()
@@ -1970,6 +1973,7 @@ public class TopluPostalamaTest extends BaseTest {
                     .openPage();
 
             evrakNo1811[i] = imzaladiklarimPage.evrakIcerikKontroluveEvrakNoAl(konu[i]);
+            System.out.println(evrakNo1811[i]);
 
             pdfSayi[i] = sayi[i] + evrakNo1811[i];
 

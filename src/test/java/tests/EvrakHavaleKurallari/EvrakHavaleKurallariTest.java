@@ -139,6 +139,7 @@ public class EvrakHavaleKurallariTest extends BaseTest {
                 .sil(kuralAdi2, "Konu")
                 .islemOnayiEvet()
                 .islemMesaji().basariliOlmali(basariMesaji);
+
         evrakHavaleKurallariYonetimiPage
                 .sil(kuralAdi, "Konu")
                 .islemOnayiEvet()
@@ -476,7 +477,8 @@ public class EvrakHavaleKurallariTest extends BaseTest {
                 .openPage()
                 .konuKoduDoldur(konuKodu)
                 .evrakTuruSec(evrakTuru2)
-                .otomatikHavaleSec2()
+                .otomatikHavaleSec2(false)
+                .otomatikHavaleSec2(true)
                 .otomatikHavaleGeldigiGorme(kuralAdi2);
 
         //Test bittikten sonra datamızı siliyoruz. Bir sonraki koşumda hata almamamız için.
