@@ -555,6 +555,12 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
+    @Step("Dağıtım Bilgileri Kişi alanında \"{kisi}\" seçilir")
+    public GelenEvrakKayitPage dagitimBilgileriKisiSec2(String kisi) {
+        txtDagitimBilgileriKisiComboLov.type(kisi).getSelectableItems().filterBy(text(kisi)).first().click();
+        return this;
+    }
+
     @Step("Dağıtım Bilgileri Kullanıcı Listesi alanında \"{kullaniciListesi}\" seçilir")
     public GelenEvrakKayitPage dagitimBilgileriKullaniciListesiDoldur(String kullaniciListesi) {
 //        txtDagitimBilgileriKullaniciListesi.sendKeys(kullaniciListesi);
