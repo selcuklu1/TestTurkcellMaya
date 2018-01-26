@@ -1,9 +1,11 @@
 package pages.pageComponents.belgenetElements;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
 import common.BaseLibrary;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -26,7 +28,7 @@ class ComboBoxHelper extends BaseLibrary {
         if (js)
             jsClick(text);
         else
-            clickLikeUser(text);
+            click(text);
     }
 
     private void jsClick(String text) {
@@ -37,7 +39,9 @@ class ComboBoxHelper extends BaseLibrary {
         executeJavaScript("arguments[0].click()", li);
     }
 
-    private void clickLikeUser(String text) {
+    //ul.ui-selectonemenu-items
+
+    private void click(String text) {
         $(btnTrigger).click();
         $$(liLocator)
                 .filterBy(exactText(text))
