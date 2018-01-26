@@ -191,7 +191,8 @@ public class EvrakPostalamaTest extends BaseTest {
         postalananlarPage.btnFiltrenenPostaIcerikGoster(konu);
         Thread.sleep(1000);
         postalananlarPage.icerikDetayPostaDetayi();
-        postalananlarPage.btnTuzelKisiGuncelle();
+
+        postalananlarPage.btnIcerikPostaDetayTuzelKisiGnc();
         postalananlarPage.btnTarihGuncelle("10.10.2017");
         postalananlarPage.btnPostakoduGuncelle("520");
         postalananlarPage.txtAciklama("TS520a");
@@ -435,6 +436,7 @@ public class EvrakPostalamaTest extends BaseTest {
                 .btnIcerikDetayKapat();
 
         postalananlarPage
+                .btnFiltrenenPostaIcerikGoster(konu)
                 .postaDetayiTikla()
                 .evrakYazdir()
                 .etiketBastir();

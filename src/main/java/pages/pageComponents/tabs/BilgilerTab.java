@@ -76,28 +76,28 @@ public class BilgilerTab extends MainPage {
         return comboLov(getContainer(),"input[id$='konuKoduLov:LovText']");
     }
 
-    @Step("Konu Kodu seç")
+    @Step("Konu Kodu seçilir")
     public BilgilerTab konuKoduSec(String text){
         getKonuKodu().selectLov(text);
         getKonuKodu().closeTreePanel();
         return this;
     }
 
-    @Step("Konu Kodu doldur")
+    @Step("Konu Kodu doldurulur")
     public BilgilerTab konuKoduDoldurFilterByTitle(String text, Condition filter){
         getKonuKodu().type(text).getTitleItems().filterBy(filter).first().click();
         getKonuKodu().closeTreePanel();
         return this;
     }
 
-    @Step("Konu Kodu doldur")
+    @Step("Konu Kodu doldurulur")
     public BilgilerTab konuKoduDoldurFilterByDetail(String text, Condition filterBy){
         getKonuKodu().type(text).getDetailItems().filterBy(filterBy).first().click();
         getKonuKodu().closeTreePanel();
         return this;
     }
 
-    @Step("Konu Kodu alanı temizle")
+    @Step("Konu Kodu alanı temizlenir")
     public BilgilerTab konuKoduTemizle(){
         getKonuKodu().clearAllSelectedItems();
         return this;
@@ -113,7 +113,7 @@ public class BilgilerTab extends MainPage {
         return getContainer().$("textarea[id$='konuTextArea']");
     }
 
-    @Step("Konu doldur")
+    @Step("Konu doldurulur")
     public BilgilerTab konuDoldur(String text){
         /*konuTextarea.clear();
         konuTextarea.sendKeys(text);*/
@@ -121,7 +121,7 @@ public class BilgilerTab extends MainPage {
         return this;
     }
 
-    @Step("Konu temizle")
+    @Step("Konu temizlenir")
     public BilgilerTab konuTemizle(){
         getKonuTextarea().clear();
         return this;
@@ -136,13 +136,13 @@ public class BilgilerTab extends MainPage {
         return comboLov(getContainer(),"input[id$='eklenecekKlasorlerLov:LovText']");
     }
 
-    @Step("Kaldırılacak Klasörleri seç")
+    @Step("Kaldırılacak Klasörleri seçilir")
     public BilgilerTab kaldiralacakKlasorleriSec(String text){
         getKaldiralacakKlasorlerCombolov().selectLov(text);
         return this;
     }
 
-    @Step("Kaldırılacak Klasörleri temizle")
+    @Step("Kaldırılacak Klasörleri temizlenir")
     public BilgilerTab kaldiralacakKlasorleriTemizle(){
         getKaldiralacakKlasorlerCombolov().clearAllSelectedItems().sendKeys(Keys.TAB);
         return this;
@@ -159,13 +159,13 @@ public class BilgilerTab extends MainPage {
         return getContainer().$("input[id$='kayitTarih_input']");
     }
 
-    @Step("Kayit Tarihi doldur")
+    @Step("Kayit Tarihi doldurulur")
     public BilgilerTab kayitTarihiDoldur(String text){
         getKayitTarihi().setValue(text);
         return this;
     }
 
-    @Step("Kayit Tarihi değeri al")
+    @Step("Kayit Tarihi değeri alınır")
     public String kayitTarihiDegeriAl(){
         String text = getKayitTarihi().text();
         Allure.addAttachment("Değer", text);
@@ -183,13 +183,13 @@ public class BilgilerTab extends MainPage {
         return getContainer().$("select[id$='evrakDili']");
     }
 
-    @Step("Evrak Dili seç")
+    @Step("Evrak Dili seçilir")
     public BilgilerTab evrakDiliSec(String text){
         getEvrakDili().selectOption(text);
         return this;
     }
 
-    @Step("Evrak Dili seç")
+    @Step("Evrak Dili seçilir")
     public BilgilerTab evrakDiliSec(EvrakDili evrakDili){
         getEvrakDili().selectOption(evrakDili.getOptionText());
         return this;
@@ -206,13 +206,13 @@ public class BilgilerTab extends MainPage {
         return getContainer().$("select[id$=guvenlikKodu]");
     }
 
-    @Step("Gizlilik Derecesi seç")
+    @Step("Gizlilik Derecesi seçilir")
     public BilgilerTab gizlilikDerecesiSec(String text){
         getGizlilikDerecesi().selectOption(text);
         return this;
     }
 
-    /*@Step("Gizlilik Derecesi seç")
+    /*@Step("Gizlilik Derecesi seçilir")
     public BilgilerTab gizlilikDerecesiSec(Enum gizlilikDerecesi){
         if (!gizlilikDerecesi.getClass().equals(GizlilikDerecesi.class))
             throw new RuntimeException("Yanlış input enum. Olması gereken: " + GizlilikDerecesi.class.toString());
@@ -221,7 +221,7 @@ public class BilgilerTab extends MainPage {
         return this;
     }*/
 
-    @Step("Gizlilik Derecesi seç")
+    @Step("Gizlilik Derecesi seçilir")
     public BilgilerTab gizlilikDerecesiSec(GizlilikDerecesi gizlilikDerecesi){
         getGizlilikDerecesi().selectOption(gizlilikDerecesi.getOptionText());
         return this;
@@ -238,12 +238,12 @@ public class BilgilerTab extends MainPage {
         return getContainer().$$("table[id$='kanunKapsamTipiRadio'] input");
     }
 
-    @Step("Kanun Kapsam Tipi seç")
+    @Step("Kanun Kapsam Tipi seçilir")
     public BilgilerTab kanunKapsamTipiSec(String radioText){
         SelenideElement radio = getKanunKapsamTipiRadioButtons().first();
         radio.shouldBe(visible);
         switch (radioText) {
-            case "Normal":
+            case "Normalınır":
                 radio.selectRadio("N");
                 break;
             case "Bilgi Edinme Kanunu":
@@ -280,7 +280,7 @@ public class BilgilerTab extends MainPage {
         return getContainer().$("input[id$=evrakSayiEkMetniInputText]");
     }
 
-    @Step("Evrak Sayı Ek Metni doldur")
+    @Step("Evrak Sayı Ek Metni doldurulur")
     public BilgilerTab evrakSayiEkMetniDoldur(String text){
         getEvrakSayiEkMetni().setValue(text);
         return this;
@@ -297,13 +297,13 @@ public class BilgilerTab extends MainPage {
         return getContainer().$("select[id$=ivedilik]");
     }
 
-    @Step("İvedilik seç")
+    @Step("İvedilik seçilir")
     public BilgilerTab ivedilikSec(Ivedilik ivedilik){
         getIvedilik().selectOption(ivedilik.getOptionText());
         return this;
     }
 
-    @Step("İvedilik seç")
+    @Step("İvedilik seçilir")
     public BilgilerTab ivedilikSec(String text){
         getIvedilik().selectOption(text);
         return this;
@@ -326,13 +326,13 @@ public class BilgilerTab extends MainPage {
         return getContainer().$("button[id$=miatTarihTemizle]");
     }
 
-    @Step("Miat doldur")
+    @Step("Miat doldurulur")
     public BilgilerTab miatDoldur(String text){
         getMiatDateInput().setValue(text);
         return this;
     }
 
-    @Step("Miat temizle")
+    @Step("Miat temizlenir")
     public BilgilerTab miatTemizle(){
         getMiatTemizleButton().click();
         getMiatDateInput().shouldBe(empty);
@@ -350,7 +350,7 @@ public class BilgilerTab extends MainPage {
         return getContainer().$x("tr[@class='ui-datagrid-row' and descendant::label[normalize-space(text())='Açıklama']]//textarea");
     }
 
-    @Step("Açıklamayı doldur")
+    @Step("Açıklamayı doldurulur")
     public BilgilerTab aciklamaDoldur(String text){
         getAciklamaTextarea().setValue(text);
         return this;
@@ -367,7 +367,7 @@ public class BilgilerTab extends MainPage {
         return getContainer().$x("descendant::tr[@class='ui-datagrid-row' and descendant::label[normalize-space(text())='Bilgi Seçim Tipi']]//select");
     }
 
-    @Step("Bilgi Seçim Tipi seç")
+    @Step("Bilgi Seçim Tipi seçilir")
     public BilgilerTab bilgiSecimTipiSec(String text){
         getBilgiSecimTipiSelect().selectOption(text);
         return this;
@@ -382,13 +382,13 @@ public class BilgilerTab extends MainPage {
         return comboLov(getContainer(),"input[id$='bilgiLov:LovText']");
     }
 
-    @Step("Bilgi seç")
+    @Step("Bilgi seçilir")
     public BilgilerTab bilgiSec(String text) {
         getBilgiCombolov().selectLov(text);
         return this;
     }
 
-    @Step("Bilgi alanı temizle")
+    @Step("Bilgi alanı temizlenir")
     public BilgilerTab bilgiTemizle(){
         getBilgiCombolov().clearAllSelectedItems();
         return this;
@@ -405,13 +405,13 @@ public class BilgilerTab extends MainPage {
         return getContainer().$x("//tr[@class='ui-datagrid-row' and descendant::label[normalize-space(text())='Gereği Seçim Tipi']]//select");
     }
 
-    @Step("Gereği Seçim Tipi seç")
+    @Step("Gereği Seçim Tipi seçilir")
     public BilgilerTab geregiSecimTipiSec(String text){
         getGeregiSecimTipi().selectOption(text);
         return this;
     }
 
-    @Step("Gereği Seçim Tipi seç")
+    @Step("Gereği Seçim Tipi seçilir")
     public BilgilerTab geregiSecimTipiSec(GeregiSecimTipi geregiSecimTipi) {
         getGeregiSecimTipi().selectOption(geregiSecimTipi.getOptionText());
         return this;
@@ -428,13 +428,13 @@ public class BilgilerTab extends MainPage {
         return comboLov(getContainer(),"input[id$='geregiLov:LovText']");
     }
 
-    @Step("Gereği alanı seç")
+    @Step("Gereği alanı seçilir")
     public BilgilerTab geregiSec(String text){
         getGeregiCombolov().selectLov(text);
         return this;
     }
 
-    @Step("Gereği alanı temizle")
+    @Step("Gereği alanı temizlenir")
     public BilgilerTab geregiTemizle(){
         getGeregiCombolov().clearAllSelectedItems();
         return this;
@@ -458,7 +458,7 @@ public class BilgilerTab extends MainPage {
         return getContainer().$("div[id$=dagitimEkYapCheckBoxId]").find("input");
     }
 
-    @Step("Dağıtımı Ek Yap seç")
+    @Step("Dağıtımı Ek Yap seçilir")
     public BilgilerTab dagitimiEkYapSec(boolean setSelected){
         getDagitimiEkYapCheckbox().setSelected(setSelected);
         return this;
@@ -475,7 +475,7 @@ public class BilgilerTab extends MainPage {
         return comboLov(getContainer(),"table[id$='akisOlusturPanelGrid'] input[id$='akisLov:LovText']");
     }
 
-    @Step("Onay Akışı doldur")
+    @Step("Onay Akışı doldurulur")
     public BilgilerTab onayAkisiSec(String... texts){
         for (int i = 0; i < texts.length; i++) {
             getOnayAkisiCombolov().selectLov(texts[0]);
@@ -484,7 +484,7 @@ public class BilgilerTab extends MainPage {
         return this;
     }
 
-    @Step("Onay Akışı alanı temizle")
+    @Step("Onay Akışı alanı temizlenir")
     public BilgilerTab onayAkisiTemizle(){
         getOnayAkisiCombolov().clearAllSelectedItems();
         return this;
@@ -498,27 +498,27 @@ public class BilgilerTab extends MainPage {
         return getContainer().$("button[id$=onayAkisiEkle]");
     }
 
-    @Step("Onay Akışı Ekle butona tıkla")
+    @Step("Onay Akışı Ekle butona tıklanır")
     public BilgilerTab onayAkisiEkleButonaTikla(){
         getOnayAkisiEkleButton().click();
         return this;
     }
 
-    @Step("Onay Akışta seçilen kullanıcıyı kontrol")
+    @Step("Onay Akışta seçilen kullanıcıyı kontrol yapılır")
     public BilgilerTab onayAkisiSecilenKullaniciKontrolEt(String kullanici, String tipi){
         Allure.addAttachment("Mevcut seçlen kullanicilar", getOnayAkisiCombolov().getSelectedItems().last().text());
         getOnayAkisiCombolov().getSelectedItems().last().shouldHave(text(kullanici + "-" + tipi));
         return this;
     }
 
-    @Step("Onay Akışta seçilen kullanıcıyı kontrol")
+    @Step("Onay Akışta seçilen kullanıcıyı kontrol yapılır")
     public BilgilerTab onayAkisiSecilenKullaniciKontrolEt(User kullanici, String tipi){
         Allure.addAttachment("Mevcut seçlen kullanicilar", getOnayAkisiCombolov().getSelectedItems().last().text());
         getOnayAkisiCombolov().getSelectedItems().last().shouldHave(text(kullanici.getFullname() + "-" + tipi));
         return this;
     }
 
-    @Step("Onay Akışta seçilen kullanıcıyı kontrol")
+    @Step("Onay Akışta seçilen kullanıcıyı kontrol yapılır")
     public BilgilerTab onayAkisiSecilenKullaniciKontrolEt(User kullanici, OnayKullaniciTipi tipi){
         Allure.addAttachment("Mevcut seçlen kullanicilar", getOnayAkisiCombolov().getSelectedItems().last().text());
         getOnayAkisiCombolov().getSelectedItems().last().shouldHave(text(kullanici.getFullname() + "-" + tipi.getOptionText()));
@@ -552,7 +552,7 @@ public class BilgilerTab extends MainPage {
         return getContainer().$("div[id$=hiyerarsikAkisOlusturDialog]");
     }
 
-    @Step("Otomatik Onay Akışı Ekle butona tıkla")
+    @Step("Otomatik Onay Akışı Ekle butona tıklanır")
     public BilgilerTab otomatikOnayAkisiEkleButonaTikla(){
         getOtomatikOnayAkisiEkleButton().click();
         getOtomatikOnayAkisiIslemleriDialog().shouldBe(visible);
@@ -591,7 +591,7 @@ public class BilgilerTab extends MainPage {
                 //getRows().filterBy(cssClass("ui-state-active"));
     }
 
-    @Step("Otomatik Onay Akışında bul ve seç")
+    @Step("Otomatik Onay Akışında bul ve seçilir")
     public BilgilerTab otomatikOnayAkisindaBulVeSec(String secilecekIslem, Condition... conditions){
         otomatikOnayAkisiEkleButonaTikla();
         getOtomatikOnayAkisiIslemleriDialog().shouldBe(visible);
@@ -630,13 +630,13 @@ public class BilgilerTab extends MainPage {
         return getOtomatikOnayAkisiIslemleriListId().$$("tr[data-ri][data-rk] div[class~='ui-state-active']");
     }*/
 
-    @Step("Otomatik Onay Akışı İşlemlerinde tüm seçilenleri kaldır")
+    @Step("Otomatik Onay Akışı İşlemlerinde tüm seçilenleri kaldırılır")
     public BilgilerTab otomatikOnayAkisiIslemlerindeTumSecilenleriKaldir(){
         int count = otomatikOnayAkisiIslemlerindeTumSecilenleri().size();
         Allure.addAttachment("Seçilen sayısı", String.valueOf(count));
 
         while (otomatikOnayAkisiIslemlerindeTumSecilenleri().size() > 0){
-            Allure.addAttachment("Seçileni kaldır", otomatikOnayAkisiIslemlerindeTumSecilenleri().first().toString());
+            Allure.addAttachment("Seçileni kaldırılır", otomatikOnayAkisiIslemlerindeTumSecilenleri().first().toString());
             otomatikOnayAkisiIslemlerindeTumSecilenleri().first().click();
             otomatikOnayAkisiIslemlerindeTumSecilenleri().shouldHaveSize(--count);
         }
@@ -664,7 +664,7 @@ public class BilgilerTab extends MainPage {
         return rows;
     }*/
 
-    /*@Step("Otomatik Onay Akışında bul ve seç")
+    /*@Step("Otomatik Onay Akışında bul ve seçilir")
     public BilgilerTab otomatikOnayAkisindaBulVeSec(String secilecekIslem, String... searchTextFirstExact){
         otomatikOnayAkisiEkleButonaTikla();
         getOtomatikOnayAkisiIslemleriDialog().shouldBe(visible);
@@ -683,13 +683,13 @@ public class BilgilerTab extends MainPage {
         return this;
     }*/
 
-    @Step("Otomatik Onay Akışında işlem seç")
+    @Step("Otomatik Onay Akışında işlem seçilir")
     public BilgilerTab otomatikOnayAkisindaIslemiSec(SelenideElement row, String secilecekIslem){
         row.$("select").selectOption(secilecekIslem);
         return this;
     }
 
-    @Step("Otomatik Onay Akışı İşlemleri kullan tıkla")
+    @Step("Otomatik Onay Akışı İşlemleri kullan tıklanır")
     public BilgilerTab otomatikOnayAkisiIslemleriKullanTikla(){
         getOtomatikOnayAkisiIslemleriDialog().$("button[id$='hiyerarsikAkisOlusturForm:hiyerarsikAkisKullan']").click();
         return this;
@@ -714,7 +714,7 @@ public class BilgilerTab extends MainPage {
         return comboLov(getContainer(),"input[id$='akisAdimLov:LovText']");
     }
 
-    @Step("Anlık onay Kullanıcıları seç")
+    @Step("Anlık onay Kullanıcıları seçilir")
     public BilgilerTab anlikOnayAkisKullanicilariSec(String... texts){
         for (String text:texts)
             getAnlikOnayAkisKullanicilarCombolov().selectLov(text);
@@ -756,20 +756,20 @@ public class BilgilerTab extends MainPage {
         for (String[] kullanici:kullaniciTipi) {
             String k = getAnlikOnayAkisKullanicilarCombolov().getSelectedItems().filterBy(text(kullanici[0]))
                     .shouldHaveSize(1).first().$("select").getSelectedOption().text();
-            //Allure.addAttachment("Seçlen kullanici kontrol", kullanici[0] + "/" + kullanici[1]);
+            //Allure.addAttachment("Seçlen kullanici kontrol yapılır", kullanici[0] + "/" + kullanici[1]);
             Assert.assertEquals(k, kullanici[1], "Kullanici tipi");
         }
         return this;
     }
 
-   /* @Step("Onay akışı kullanıcıları seç")
+   /* @Step("Onay akışı kullanıcıları seçilir")
     public BilgilerTab onayAkisiKullanicilariSec(String... texts) {
         for (String text:texts)
             getAnlikOnayAkisKullanicilarCombolov().selectLov(text);
         return this;
     }*/
 
-    @Step("Anlık onay akışındaki kullanıcı ve tipi seç")
+    @Step("Anlık onay akışındaki kullanıcı ve tipi seçilir")
     public BilgilerTab anlikOnayAkisKullaniciVeTipiSec(String kullanici, String tipi) {
         anlikOnayAkisKullanicilarAlaninBirimTumuSec(true);
         getAnlikOnayAkisKullanicilarCombolov().selectLov(kullanici);
@@ -780,7 +780,7 @@ public class BilgilerTab extends MainPage {
         return this;
     }
 
-    @Step("Anlık onay akışındaki kullanıcı ve tipi seç")
+    @Step("Anlık onay akışındaki kullanıcı ve tipi seçilir")
     public BilgilerTab anlikOnayAkisKullaniciVeTipiSec(String kullanici, OnayKullaniciTipi tipi) {
         anlikOnayAkisKullanicilarAlaninBirimTumuSec(true);
         getAnlikOnayAkisKullanicilarCombolov().selectLov(kullanici);
@@ -791,7 +791,7 @@ public class BilgilerTab extends MainPage {
         return this;
     }
 
-    @Step("Anlık onay akışındaki kullanıcı ve tipi seç")
+    @Step("Anlık onay akışındaki kullanıcı ve tipi seçilir")
     public BilgilerTab anlikOnayAkisKullaniciVeTipiSec(User kullanici, OnayKullaniciTipi tipi) {
         anlikOnayAkisKullanicilarAlaninBirimTumuSec(true);
 
@@ -811,7 +811,7 @@ public class BilgilerTab extends MainPage {
         return this;
     }
 
-    @Step("Anlık onay akışı kullanıcıları temizle")
+    @Step("Anlık onay akışı kullanıcıları temizlenir")
     public BilgilerTab anlikOnayAkisKullanicilariTemizle() {
         //getAnlikOnayAkisKullanicilarCombolov().getSelectedItems().shouldHaveSize(1);
         if (getAnlikOnayAkisKullanicilarCombolov().exists())
@@ -819,7 +819,7 @@ public class BilgilerTab extends MainPage {
         return this;
     }
 
-    @Step("Anlık onay akışındaki kullanıcının tipi seç")
+    @Step("Anlık onay akışındaki kullanıcının tipi seçilir")
     public BilgilerTab anlikOnayAkisKullanicininTipiSec(String kullaniciAdi, String kullaniciTipi) {
         getAnlikOnayAkisKullanicilarCombolov().getSelectedItems()
                 .filterBy(text(kullaniciAdi))
@@ -830,7 +830,7 @@ public class BilgilerTab extends MainPage {
         return this;
     }
 
-    @Step("Anlık onay akışındaki kullanıcının tipi seç")
+    @Step("Anlık onay akışındaki kullanıcının tipi seçilir")
     public BilgilerTab anlikOnayAkisKullanicininTipiSec(User kullanici, OnayKullaniciTipi tipi) {
         getAnlikOnayAkisKullanicilarCombolov().getSelectedItems()
                 .filterBy(text(kullanici.getFullname()))
@@ -861,7 +861,7 @@ public class BilgilerTab extends MainPage {
         return $("button[id$='anlikAkisKullanButton']");
     }
 
-    @Step("Anlık onay akiş Kullan butona tıkla")
+    @Step("Anlık onay akiş Kullan butona tıklanır")
     public BilgilerTab kullanButonaTikla() {
         getKullanButton().pressEnter();
         return this;
@@ -897,7 +897,7 @@ public class BilgilerTab extends MainPage {
     Kullanıcılar
     */
 
-    @Step("Alanları doldur")
+    @Step("Alanları doldurulur")
     public BilgilerTab alanlariDoldur(String konuKodu, String konu, String kaldirilacakKlasorleri, Ivedilik ivedilik, GeregiSecimTipi geregiSecimTipi, String geregi, String onayAkis) {
         konuKoduSec(konuKodu);
         konuDoldur(konu);
@@ -910,7 +910,7 @@ public class BilgilerTab extends MainPage {
         return this;
     }
 
-    @Step("Alanları doldur")
+    @Step("Alanları doldurulur")
     public BilgilerTab alanlariDoldur(String konuKodu, String konu, String kaldirilacakKlasorleri, Ivedilik ivedilik, GeregiSecimTipi geregiSecimTipi, String geregi, Map<String,OnayKullaniciTipi> onayAkisKullanici) {
         konuKoduSec(konuKodu);
         konuDoldur(konu);
@@ -926,7 +926,7 @@ public class BilgilerTab extends MainPage {
         return this;
     }
 
-    @Step("Alanları doldur")
+    @Step("Alanları doldurulur")
     public BilgilerTab alanlariDoldur(String konuKodu, String konu, String kaldirilacakKlasorleri, Ivedilik ivedilik, GeregiSecimTipi geregiSecimTipi, String geregi, String[][] onayAkisKullaniciTipi) {
         konuKoduSec(konuKodu);
         konuDoldur(konu);
@@ -949,7 +949,7 @@ public class BilgilerTab extends MainPage {
         return this;
     }
 
-    @Step("Alanları doldur")
+    @Step("Alanları doldurulur")
     public BilgilerTab alanlariDoldur(String konuKodu, String konu, String kaldirilacakKlasorleri, Ivedilik ivedilik, GeregiSecimTipi geregiSecimTipi, String geregi) {
         konuKoduSec(konuKodu);
         konuDoldur(konu);

@@ -249,6 +249,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
         String kararNo = createRandomNumber(12);
         String editorIcerik = "Deneme Can";
         String kullanici = "Yasemin Çakıl AKYOL";
+        String kullanici2 = "Zübeyde Tekin";
         String onayAkisi = "ZUZU_ONAY_AKİSİ_1";
         String ivedilik = "İvedi";
         String filePath = getUploadPath() + "Otomasyon.pdf";
@@ -295,7 +296,11 @@ public class KararYazisiOlusturmaTest extends BaseTest {
 
         kararYazisiOlusturPage
                 .editorTabAc()
+                .editorNoAlanıGeldigiGorme(toplantiNo,toplantiTarih,kararNo)
+                .imzaciGeldigiGorme(kullanici2)
+                .ilgiGeldigiGorme(not)
                 .editorIcerikDoldur(not)
+
                 .kaydetveOnaySun()
                 .kaydetVeOnaySunAciklamaDoldur(not)
                 .gonder(true);

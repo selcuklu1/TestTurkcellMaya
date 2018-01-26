@@ -12,7 +12,6 @@ import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.UstMenuData;
 
-import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
