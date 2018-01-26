@@ -94,7 +94,9 @@ public class OlurYazisiIslemleriTest extends BaseTest {
         ekleriTab();
         ilgileriTab();
         iliskiliEvraklar();
+        olurYazisiOlusturPage.editorTab().openTab();
         editorTabGalen();
+        olurYazisiOlusturPage.editorTab().getEditor().type("Editör tekst");
         imzalaVeOnayaSun();
         hazirladiklarimMenudaGorunmeli();
         ilkImzaciImzala();
@@ -108,7 +110,7 @@ public class OlurYazisiIslemleriTest extends BaseTest {
     BilgilerTab bilgilerTab;
     EditorTab editorTab;
 
-    @Test(description = "TS1488: Olur yazısında alan kontrolleri", enabled = true)
+    @Test(description = "TS1488: Olur yazısında alan kontrolleri", enabled = false)
     public void TS1488() {
         login(user1);
         olurYazisiOlusturPage2 = new OlurYazisiOlusturPage().openPage();
@@ -258,12 +260,13 @@ public class OlurYazisiIslemleriTest extends BaseTest {
     private void ilgileriTab(){
         altTabs = olurYazisiOlusturPage.ilgileriTab().openTab().altTabs();
         altTabs.getSistemdeKayitliEvrakEkleTab();
-        altTabs.dosyaEkleTabiAc()
+        altTabs.getDosyaEkleTab();
+        /*altTabs.dosyaEkleTabiAc()
                 .dosyaEkle(doc)
                 .ilgiMetniDoldur("İlgileri Tab "+ konu)
                 .ekleButonaTikla();
         olurYazisiOlusturPage.ilgileriTab().getIlgliliListesiTablosu().findRows(text("İlgileri Tab "+ konu)).shouldHaveSize(1);
-
+        */
         altTabs.metinEkleTabiAc().ilgiMetniDoldur("Metni Tab " + konu).ekleButonaTikla();
         olurYazisiOlusturPage.ilgileriTab().getIlgliliListesiTablosu().findRows(text("Metni Tab " + konu)).shouldHaveSize(1);
     }
@@ -323,8 +326,6 @@ public class OlurYazisiIslemleriTest extends BaseTest {
         GalenControl galen = new GalenControl();
         galen.generateDump("TS0577", params);
         galen.layoutControl("TS0577", params);
-
-        olurYazisiOlusturPage.editorTab().getEditor().type("Editör tekst");
     }
 
     @Step("İmzala ve Onaya sun")
