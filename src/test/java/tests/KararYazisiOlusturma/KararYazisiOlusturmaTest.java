@@ -146,7 +146,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS2240: Teslim alınmayı bekleyenler listesinden Gündem klasörüne evrak kapatma")
     public void TS2240() throws InterruptedException {
-
+        String downloadPath = useChromeWindows151("TS2240");
         String basariMesaji = "İşlem başarılıdır!";
         String kaldirilicakKlasor = "Gündem";
         String konuKodu = "Diğer";
@@ -207,7 +207,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS2239: Gündem yayınlama")
     public void TS2239() {
-
+        String downloadPath = useChromeWindows151("TS2239");
         String basariMesaji = "İşlem başarılıdır!";
         String kaldirilicakKlasor = "Gündem";
         String path = getDownloadPath();
@@ -300,7 +300,6 @@ public class KararYazisiOlusturmaTest extends BaseTest {
                 .imzaciGeldigiGorme(kullanici2)
                 .ilgiGeldigiGorme(not)
                 .editorIcerikDoldur(not)
-
                 .kaydetveOnaySun()
                 .kaydetVeOnaySunAciklamaDoldur(not)
                 .gonder(true);
@@ -510,7 +509,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS1715: Gelen evrak listesinden Gündem klasörüne evrak kapatma")
     public void TS1715() throws InterruptedException {
-
+        String downloadPath = useChromeWindows151("TS1715");
         String basariMesaji = "İşlem başarılıdır!";
         String konuKodu = "Diğer";
         String kaldirilicakKlasor = "Gündem";
