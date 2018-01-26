@@ -1763,6 +1763,21 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement txtDosya2Aciklama = $("[id^='taramaHavuzuFormId:taramaHavuzuDataTableId:1:j_idt']");
         SelenideElement cmbTaramaTuru = $(By.id("taramaHavuzuFormId:taramaHavuzuDataTableId:0:tarananTuruId"));
 
+        SelenideElement chkDagitimYerleriEk1 = $("[id^='yeniGidenEvrakForm:ekListesiDataTable:0:j_idt'] [class='ui-selectcheckboxmenu-label ui-corner-all']");
+        SelenideElement chkDagitimYerleriKullaniciEk1 = $("[id^='yeniGidenEvrakForm:ekListesiDataTable:0:j_idt'] [class*='ui-selectcheckboxmenu-list-item ui-corner-all']:nth-child(3)");
+        SelenideElement chkDagitimYerleriKurumEk1 = $("[id^='yeniGidenEvrakForm:ekListesiDataTable:0:j_idt'] [class*='ui-selectcheckboxmenu-list-item ui-corner-all']:nth-child(2)");
+        SelenideElement chkDagitimYerleriBirimEk1 = $("[id^='yeniGidenEvrakForm:ekListesiDataTable:0:j_idt'] [class*='ui-selectcheckboxmenu-list-item ui-corner-all']:nth-child(1)");
+
+        SelenideElement chkDagitimYerleriEk2 = $("[id^='yeniGidenEvrakForm:ekListesiDataTable:1:j_idt'] [class='ui-selectcheckboxmenu-label ui-corner-all']");
+        SelenideElement chkDagitimYerleriKullaniciEk2 = $("[id^='yeniGidenEvrakForm:ekListesiDataTable:1:j_idt'] [class*='ui-selectcheckboxmenu-list-item ui-corner-all']:nth-child(3)");
+        SelenideElement chkDagitimYerleriKurumEk2 = $("[id^='yeniGidenEvrakForm:ekListesiDataTable:1:j_idt'] [class*='ui-selectcheckboxmenu-list-item ui-corner-all']:nth-child(2)");
+        SelenideElement chkDagitimYerleriBirimEk2 = $("[id^='yeniGidenEvrakForm:ekListesiDataTable:1:j_idt'] [class*='ui-selectcheckboxmenu-list-item ui-corner-all']:nth-child(1)");
+
+        SelenideElement chkDagitimYerleriEk3 = $("[id^='yeniGidenEvrakForm:ekListesiDataTable:2:j_idt'] [class='ui-selectcheckboxmenu-label ui-corner-all']");
+        SelenideElement chkDagitimYerleriKullaniciEk3 = $("[id^='yeniGidenEvrakForm:ekListesiDataTable:2:j_idt'] [class*='ui-selectcheckboxmenu-list-item ui-corner-all']:nth-child(3)");
+        SelenideElement chkDagitimYerleriKurumEk3 = $("[id^='yeniGidenEvrakForm:ekListesiDataTable:2:j_idt'] [class*='ui-selectcheckboxmenu-list-item ui-corner-all']:nth-child(2)");
+        SelenideElement chkDagitimYerleriBirimEk3 = $("[id^='yeniGidenEvrakForm:ekListesiDataTable:2:j_idt'] [class*='ui-selectcheckboxmenu-list-item ui-corner-all']:nth-child(1)");
+
 
         SelenideElement btnTaramaHavuzuTamam = $(By.id("taramaHavuzuFormId:taramaHavuzuTamamButton"));
         ElementsCollection trEklistesi = $$("tbody[id*='yeniGidenEvrakForm:ekListesiDataTable'] tr[role='row']");
@@ -2190,6 +2205,71 @@ public class EvrakOlusturPage extends MainPage {
                         break;
                 }
             }
+            return this;
+        }
+
+        @Step("Dağıtım yerleri aç - Ek1")
+        public EkleriTab dagitimYerleriAcEk1() {
+            chkDagitimYerleriEk1.click();
+            return this;
+        }
+
+        @Step("Dağıtım yerleri aç - Ek2")
+        public EkleriTab dagitimYerleriAcEk2() {
+            chkDagitimYerleriEk2.click();
+            return this;
+        }
+
+        @Step("Dağıtım yerleri aç - Ek3")
+        public EkleriTab dagitimYerleriAcEk3() {
+            chkDagitimYerleriEk3.click();
+            return this;
+        }
+
+        @Step("Dağıtım yerlerinde birim seç")
+        public EkleriTab dagitimYerlerindeBirimSec(boolean secim) {
+            chkDagitimYerleriBirimEk1.setSelected(secim);
+            return this;
+        }
+
+        @Step("Dağıtım yerlerinde kurum seç")
+        public EkleriTab dagitimYerlerindeKurumSec(boolean secim) {
+            chkDagitimYerleriKurumEk1.setSelected(secim);
+            return this;
+        }
+
+        @Step("Dağıtım yerlerinde kullanıcı seç")
+        public EkleriTab dagitimYerlerindeKullaniciSec(boolean secim) {
+            chkDagitimYerleriKullaniciEk1.setSelected(secim);
+            return this;
+        }
+
+        //3ü seçili geliyor sadece kullanıcı kaldırılıyor.
+        @Step("Dağıtım yerlerinde birim ve kurum seç, kullanıcı seçme")
+        public EkleriTab dagitimYerlerindeBirimVeKurumSecEk1() {
+
+            chkDagitimYerleriBirimEk1.setSelected(false);
+            chkDagitimYerleriKurumEk1.setSelected(false);
+            chkDagitimYerleriKullaniciEk1.setSelected(true);
+
+            return this;
+        }
+
+        @Step("Dağıtım yerlerinde birim, kurum ve kullanıcı seçimlerini kaldır")
+        public EkleriTab dagitimYerlerindeBirimKurumKullaniciKaldir() {
+            chkDagitimYerleriBirimEk2.setSelected(true);
+            chkDagitimYerleriKurumEk2.setSelected(true);
+            chkDagitimYerleriKullaniciEk2.setSelected(true);
+
+            return this;
+        }
+
+        @Step("Dağıtım yerlerinde birim ve kurum seçimlerini kaldır, kullanıcı seç")
+        public EkleriTab dagitimYerlerindeKullaniciSec() {
+            chkDagitimYerleriBirimEk3.setSelected(true);
+            chkDagitimYerleriKurumEk3.setSelected(true);
+            chkDagitimYerleriKullaniciEk3.setSelected(false);
+
             return this;
         }
     }
@@ -3078,6 +3158,34 @@ public class EvrakOlusturPage extends MainPage {
             Assert.assertEquals(PDFHitap.contains(beklenenPDFHitap), true);
             return this;
         }
+
+        @Step("Pdf EK-1 kontrolu")
+        public PDFKontrol PDFEk1Kontrolu(String ek1) {
+            String pdfEK1 = $(By.xpath("//*[@id='viewer']/div/div[2]/div[12]")).getText();
+            Assert.assertEquals(pdfEK1.contains(ek1), true);
+            return this;
+        }
+
+        @Step("Pdf EK-2 kontrolu")
+        public PDFKontrol PDFEk2Kontrolu(String ek2) {
+            String pdfEK1 = $(By.xpath("//*[@id='viewer']/div/div[2]/div[13]")).getText();
+            Assert.assertEquals(pdfEK1.contains(ek2), true);
+            return this;
+        }
+
+        @Step("Pdf EK-3 kontrolu")
+        public PDFKontrol PDFEk3Kontrolu(String ek3) {
+            String pdfEK1 = $(By.xpath("//*[@id='viewer']/div/div[2]/div[14]")).getText();
+            Assert.assertEquals(pdfEK1.contains(ek3), true);
+            return this;
+        }
+
+        @Step("Pdf EK-3 kontrolu")
+        public PDFKontrol eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim1(String dagitim, String ekler) {
+
+            return this;
+        }
+
     }
     //endregion
 }
