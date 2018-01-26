@@ -206,8 +206,10 @@ public class GundemIzlemePage extends MainPage {
             ex.printStackTrace();
         }
 
+        deleteFile(dosyaAdi);
 
-        File folder = new File("C://users//" + System.getProperty("user.name") + "//Downloads//");
+/*
+        File folder = new File(downloadPath);
         final File[] files = folder.listFiles(new FilenameFilter() {
             @Override
             public boolean accept(final File dir,
@@ -221,7 +223,7 @@ public class GundemIzlemePage extends MainPage {
             }
         }
 
-
+*/
         return this;
     }
 

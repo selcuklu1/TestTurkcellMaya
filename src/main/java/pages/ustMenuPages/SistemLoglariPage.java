@@ -95,6 +95,17 @@ public class SistemLoglariPage extends MainPage {
         return this;
     }
 
+    @Step("Sistem Raporu Tablosunda kontrol. Aksiyon: {aksiyon}, Kullanıcı: {kullanici}")
+    public SistemLoglariPage sistemRaporuGeldigiGorme(String aksiyon, String tarih, String kullanici) {
+        boolean durum = $$("[id='sistemLogRaporForm:sistemLogRaporDataTable'] tbody tr")
+                    .filterBy(text(aksiyon))
+                    .filterBy(text(tarih))
+                    .filterBy(text(kullanici)).size()==0;
+        Assert.assertEquals(durum,false);
+        takeScreenshot();
+        return this;
+    }
+
 
 }
 

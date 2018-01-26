@@ -781,12 +781,7 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("Yeni Kayıt tıklanır")
     public GelenEvrakKayitPage yeniKayitButton() {
-        //if($("[id='evrakKaydetBasariliDialogForm:yeniKayitButton']").shouldBe(visible).exists()==true){
-        //   $("[id='evrakKaydetBasariliDialogForm:yeniKayitButton']").pressEnter();
-        //}
-        //else {
-        //}
-
+           $("[id$='yeniKayitButton']").pressEnter();
         return this;
     }
 

@@ -182,13 +182,13 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .evrakGeldigiGorunur(konuKoduRandom,evrakTarihi,geldigiYer);
     }
 
-    @Test(enabled = true, description = "TS929: Dış kurumdan gelen evraka cevap yaz")
-    public void TS929() throws InterruptedException {
+    @Test(enabled = true, description = "TS0929: Dış kurumdan gelen evraka cevap yaz")
+    public void TS0929() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
         String konuKodu = "Diğer";
         String kaldirilacakKlasor = "Diğer";
-        String konuKoduRandom = "TS-929-" + createRandomNumber(10);
+        String konuKoduRandom = "TS-0929-" + createRandomNumber(10);
         String evrakTarihi = getSysDateForKis();
         String kurum = "BÜYÜK HARFLERLE KURUM";
         String gizlilikDerecesi = "Gizli";
@@ -210,18 +210,25 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .havaleIslemleriKisiDoldur(kisi)
                 .kaydet()
                 .evetDugmesi()
-                .yeniKayitButton()
-                .benzerKayit();
+                .yeniKayitButton();
+                //.benzerKayit();
 
         login(usernameZTEKIN, passwordZTEKIN);
 
         gelenEvraklarPage
                 .openPage()
                 .evrakSec(konuKoduRandom, kurum, evrakTarihi, evrakSayiSag)
-                .cevapYaz();
+                .cevapYaz()
+                .ikonlarinGeldigiGorme();
+
+        evrakOlusturPage
+                .bilgilerTabiAc()
+                .konuAlanıDoluGeldigiGorme(konuKoduRandom)
+                .geregiSeciliGeldigiGorme(kurum);
 
         evrakOlusturPage
                 .editorTabAc()
+                .ilgiSatırıKontrol(evrakSayiSag,evrakTarihi)
                 .editorIcerikDoldur(icerik);
 
         evrakOlusturPage
@@ -710,11 +717,10 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .evrakSec(konuKoduRandom, kisi2, evrakTarihi, evrakSayiSag)
                 .cevapYaz();
 
-        EditorTab editorTab = evrakOlusturPage2.openPage().editorTab().openTab();
+        EditorTab editorTab = cevapYazPage.editorTab().openTab();
         editorTab.getEditor().toolbarButton("Öntanımlı İçerik Şablonu Kullan", true);
         editorTab.onTanimliSablonuSec("TS2188 (K)")
                 .onTanimliSablonuUygula();
-
         evrakOlusturPage
                 .bilgilerTabiAc()
                 .konuKoduSec(konuKodu)
@@ -806,8 +812,8 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .havaleIslemleriKisiDoldur(kisi)
                 .kaydet()
                 .evetDugmesi()
-                .yeniKayitButton()
-                .benzerKayit();
+                .yeniKayitButton();
+//                .benzerKayit();
 
         login(usernameZTEKIN, passwordZTEKIN);
 
@@ -816,7 +822,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .evrakSec(konuKoduRandom, kisi2, evrakTarihi, evrakSayiSag)
                 .cevapYaz();
 
-        EditorTab editorTab = evrakOlusturPage2.openPage().editorTab().openTab();
+        EditorTab editorTab = cevapYazPage.editorTab().openTab();
         editorTab.getEditor().toolbarButton("Öntanımlı İçerik Şablonu Kullan", true);
         editorTab.onTanimliSablonuSec("A11 (B)")
         .onTanimliSablonuUygula();
