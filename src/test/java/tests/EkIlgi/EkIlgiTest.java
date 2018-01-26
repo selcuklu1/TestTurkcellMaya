@@ -636,6 +636,16 @@ public class EkIlgiTest extends BaseTest {
 
         String fizikselEkAciklama = "FizikselEk_Dosya2" + getSysDate();
 
+        String ilgileriAciklamaDosya2 = "İlgileri_Dosya2_" + getSysDate();
+        String pathDosya2 = getUploadPath() + "TS1493_dosya2.pdf";
+        String dosyaAdi2 = "TS1493_dosya2.pdf";
+
+        String ilgileriAciklamaDosya3 = "İlgileri_Dosya3_" + getSysDate();
+
+        String ilgileriEvrakSayisi = "6345202-010.01-11057";
+
+        String basariMesaji = "İşlem başarılıdır!";
+
         login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR); //mbozdemir
 
         evrakOlusturPage
@@ -706,11 +716,66 @@ public class EkIlgiTest extends BaseTest {
                 .PDFEk1Kontrolu(ekleriAciklamaDosya1)
                 .PDFEk2Kontrolu(fizikselEkAciklama)
                 .PDFEk3Kontrolu(evrakSayisi)
-                .eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim1(birim, "Ek-2 konulmadı, Ek-3 konulmadı");
+                .eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim1(birim, "Ek-2 konulmadı, Ek-3 konulmadı")
+                .eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim2(kurum, "Ek-2 konulmadı, Ek-3 konulmadı")
+                .eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim3(kurum, "Ek-1 konulmadı, Ek-3 konulmadı");
 
         closeNewWindow();
         switchTo().window(0);
 
+        evrakOlusturPage
+                .kaydet(true)
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        //İlgileri tabı
+        evrakOlusturPage
+                .ilgileriTabAc()
+
+                //dosya ekle
+                .ilgileriIlgiMetniDoldur(ilgileriAciklamaDosya2)
+                .dosyaEkle(pathDosya2, dosyaAdi2)
+                .dosyaYukleneneKadarBekle()
+                .ekleriEklenenDosyaAdiKontrol(dosyaAdi2)
+                .ilgileriEkle()
+                .listelenenIlgilerdeDosyanınGeldigiKontrolu(dosyaAdi2, "Dosya Adı")
+
+                //metin ekle
+                .ilgileriMetinEkleTabAc()
+                .ilgileriMetinEkleIlgiMetniDoldur(ilgileriAciklamaDosya3)
+                .ilgileriMetinEkleEkle()
+                .listelenenIlgilerdeDosyanınGeldigiKontrolu(ilgileriAciklamaDosya3, "Ilgi Metni")
+
+                //sistemde kayıtlı evrak ekle
+                .sistemdeKayitliEvrakEkleTabAc()
+                .evrakAranacakYerSec("Birim Evrakları Ara")
+                .evrakAramaDoldur(ilgileriEvrakSayisi)
+                .dokumanAra()
+                .listelenenEvraklardaKontrol(ilgileriEvrakSayisi)
+                .evrakEkEkle()
+                .listelenenIlgilerdeDosyanınGeldigiKontrolu(ilgileriEvrakSayisi, "Evrak Sayısı")
+
+                .ilgiEkListesindeDetayGoster(ilgileriEvrakSayisi)
+                .evrakDetayiKontrol()
+                .evrakDetayiSayfasınıKapat()
+                .islemPenceresiKapatmaOnayiPopup("Kapat");
+
+        evrakOlusturPage
+                .editorTabAc()
+                .editordeIlgiKontrol(ilgileriAciklamaDosya2, "Dosya Adı")
+                .editordeIlgiKontrol(ilgileriAciklamaDosya3, "Ilgi metni")
+                .editordeIlgiKontrol(ilgileriEvrakSayisi, "Evrak Sayısı");
+
+        evrakOlusturPage
+                .parafla();
+
+        login(TestData.usernameZTEKIN, TestData.passwordZTEKIN); //ztekin
+
+        imzaBekleyenlerPage
+                .openPage()
+                .evrakKonusunaGoreKontrol(evrakKonusu)
+                .konuyaGoreEvrakOnizlemedeAc(evrakKonusu);
+
+       //Todo: Defect çözüldükten sonra devam edilecek
     }
 
     @Severity(SeverityLevel.CRITICAL)
