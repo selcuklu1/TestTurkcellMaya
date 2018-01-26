@@ -387,7 +387,8 @@ public class GelenEvraklarPage extends MainPage {
 
     @Step("Havale Yap Kişi alanında \"{kisi}\" seçilir.")
     public GelenEvraklarPage havaleYapKisiTreeSec(String kisi) {
-        txtComboLovKisi.selectLov(kisi);
+        //txtComboLovKisi.selectLov(kisi);
+        txtComboLovKisi.type(kisi).getSelectableItems().filterBy(text(kisi)).first().click();
         return this;
     }
 
@@ -709,6 +710,12 @@ public class GelenEvraklarPage extends MainPage {
     @Step("Kullacici listesi seç : \"{kullanici}\" ")
     public GelenEvraklarPage kullanciListesiSec(String kullanici) {
         txtKullaniciListesi.selectLov(kullanici);
+        return this;
+    }
+
+    @Step("Kullacici listesi seç : \"{kullanici}\" ")
+    public GelenEvraklarPage kullanciListesiSec2(String kullanici) {
+        txtKullaniciListesi.type(kullanici).getSelectableItems().first().click();
         return this;
     }
 

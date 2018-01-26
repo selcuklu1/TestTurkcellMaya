@@ -543,7 +543,8 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Vekalet alan Ve Veren tablo kontrolü")
         public BilgilerTab vekeletAlanVerenTabloKontrolu() {
-            Assert.assertEquals(tblVekalet.isDisplayed(), true);
+            tblVekalet.shouldBe(visible);
+            //Assert.assertEquals(tblVekalet.isDisplayed(), true);
             return this;
         }
 
