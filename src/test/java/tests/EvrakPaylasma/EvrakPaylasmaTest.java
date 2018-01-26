@@ -628,6 +628,12 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .evrakNotuGirVeKaydet(aciklama)
                 .evrakNotuKontrol(kisi2,  "2018", aciklama);
 
+        sistemLoglariPage
+                .openPage()
+                .kullaniciSec(kisi2)
+                .sorgula()
+                .sistemRaporuGeldigiGorme("Paylaşım Notu Girme",evrakTarihi,kisi2);
+
         gelenEvraklarPage
                 .openPage()
                 .evrakSec()
