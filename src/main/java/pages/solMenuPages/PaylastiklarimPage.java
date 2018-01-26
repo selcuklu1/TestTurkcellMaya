@@ -114,9 +114,8 @@ public class PaylastiklarimPage extends MainPage {
         return this;
     }
 
-    @Step("Otomatik onay akışı kontrol")
+    @Step("Girilen açıklamanın geldiği görünür. \"{aciklama}\"")
     public PaylastiklarimPage evrakNotlariAciklamaGorme(String aciklama) {
-
         $$("[id='mainPreviewForm:evrakOnizlemeTab'] table tbody tr")
                 .filterBy(text(aciklama)).shouldHave(sizeGreaterThan(0)).get(0).click();
         return this;

@@ -2,6 +2,7 @@ package pages.pageComponents;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Step;
 import pages.MainPage;
 
@@ -36,13 +37,18 @@ public class EvrakPageButtons extends MainPage {
         return getContainer().$x("descendant::*[text()='" + text + "']/ancestor::tbody[1]//button");
     }
 
+
     @Step("s-İmzla radio butonu bul")
     public SelenideElement getSImzalaRadio() {
-        return getImzalaForm().$("#imzalaForm\\:imzalaRadio .ui-radiobutton-box");
+        return getEvrakImzalaDialog().$("#imzalaForm\\:imzalaRadio .ui-radiobutton-box");
     }
 
     @Step("s-İmzla seç")
     public EvrakPageButtons sImzalaRadioSec() {
+        if (islemMesaji().isUyari("Servise ulaşılamıyor!"))
+            islemMesaji().closeMessage();
+        else
+            throw new RuntimeException("İşlem Mesajı");
         getSImzalaRadio().shouldBe(visible).click();
         return this;
     }
@@ -69,6 +75,17 @@ public class EvrakPageButtons extends MainPage {
         return getButton("İmzala");
     }
 
+    @Step("Evrak İmzala pencerisi bulunur")
+    public SelenideElement getEvrakImzalaDialog(){
+        return $("#evrakImzalaDialog");
+    }
+
+    @Step("Evrak İmzala pencerisi kapat")
+    public EvrakPageButtons closeEvrakImzalaDialog(){
+        getEvrakImzalaDialog().$("a.ui-dialog-titlebar-close").click();
+        return this;
+    }
+
     public SelenideElement getImzalaForm(){
         return $("#imzalaForm");
     }
@@ -84,6 +101,7 @@ public class EvrakPageButtons extends MainPage {
         imzalaButonaTikla();
         sImzalaRadioSec();
         evrakImzaOnay();
+        //waitForLoadingJS(WebDriverRunner.getWebDriver());
         return this;
     }
     //endregion

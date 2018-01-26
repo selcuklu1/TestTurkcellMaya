@@ -78,10 +78,11 @@ public class ImzaladiklarimPage extends MainPage {
         return this;
     }
 
-    @Step("Paylaş buton gelmediği görme")
+    @Step("Paylaş butonu gelmediği görülür")
     public ImzaladiklarimPage paylasButonGelmedigiGorme(String buton) {
         boolean t = evrakSecButonlar.filterBy(text(buton)).size() == 0;
         Assert.assertEquals(t, true);
+        takeScreenshot();
         return this;
     }
 

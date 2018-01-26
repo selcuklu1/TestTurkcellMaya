@@ -1,11 +1,18 @@
 package tests.Data;
 
 import common.BaseTest;
+import data.User;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pages.ustMenuPages.EvrakOlusturPage;
+import pages.newPages.EvrakOlusturPage;
+import pages.pageComponents.tabs.AltTabs;
+import pages.pageData.alanlar.GeregiSecimTipi;
+import pages.pageData.alanlar.GizlilikDerecesi;
+import pages.pageData.alanlar.OnayKullaniciTipi;
+
+import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
 
 /****************************************************
  * Tarih: 2017-12-22
@@ -16,104 +23,104 @@ import pages.ustMenuPages.EvrakOlusturPage;
 
 public class DataTest extends BaseTest {
 
-    EvrakOlusturPage evrakOlustur;
+    EvrakOlusturPage page;
 
-    @BeforeMethod
-    public void loginBeforeTests() {
-
-    }
+    User user = new User("ztekin", "123", "Zübeyde TEKİN");
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS2224: DATA-Teslim alınmayı bekleyenler, gelen kutusu ve postalanacaklar listesine gizlilik derecesi yüksek evrak düşürme")
     public void TS2224() throws InterruptedException {
 
-        String konu = "Kanunlar";
+        String konu = "TS2224_" + getSysDate();
         String konuKodu = "Kanunlar";
         String kaldirilacakKlasorler = "KURUL KARARLARI";
-        String evrakDerecesi = "Gizli";
+        String evrakDerecesi = GizlilikDerecesi.GIZLI.getOptionText();
         String geregiSecimKurum = "Kurum";
         String geregiKurum = "Adalet Bakanlığı Döner Sermaye İşletmesi";
         String geregiSecimBirim = "Birim";
-        String geregiBirim = "AFYON VALİLİĞİ";
+        String geregiBirim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";//"AFYON VALİLİĞİ";
         String geregiSecimKullanici = "Kullanıcı";
         String geregiKullanici = "Ahmet SAVAŞ";
         String akisAdim = "İmzalama";
         String editorIcerik = "Bu bir deneme mesajıdır. Lütfen dikkate almayınız.";
         String basariMesaji = "İşlem başarılıdır!";
 
-        login("ztekin", "123");
-        evrakOlustur = new EvrakOlusturPage();
-        evrakOlustur
-                .openPage()
-                .bilgilerTabiAc()
+        login(user);
+        page = new EvrakOlusturPage().openPage();
+        page.bilgileriTab()
+                .konuKoduSec(konuKodu)
                 .konuDoldur(konu)
-                .konuKoduDoldur(konuKodu)
-                .kaldirilacakKlasorler(kaldirilacakKlasorler)
-                .evrakDerecesiSec(evrakDerecesi)
-                .geregiSecimTipiSec(geregiSecimKurum)
-                .geregiDoldur(geregiKurum, "Kurum")
-                .geregiSecimTipiSec(geregiSecimBirim)
-                .geregiDoldur(geregiBirim, "Birim")
-                .geregiSecimTipiSec(geregiSecimKullanici)
-                .geregiDoldur(geregiKullanici, "Kullanıcı")
-                .onayAkisiEkle()
-                .akisAdimSec(akisAdim)
-                .onayAkisiKullan();
-
-        evrakOlustur
-                .editorTabAc()
-                .editorIcerikDoldur(editorIcerik)
-                .imzala()
-                .popupSImzalaIslemleri() // Metodlara bölünecek.
-                .islemMesaji().basariliOlmali(basariMesaji);
+                .kaldiralacakKlasorleriSec(kaldirilacakKlasorler)
+                .gizlilikDerecesiSec(GizlilikDerecesi.GIZLI)
+                .geregiSecimTipiSec(GeregiSecimTipi.KURUM)
+                .geregiSec(geregiKurum)
+                .geregiSecimTipiSec(GeregiSecimTipi.BIRIM)
+                .geregiSec(geregiBirim)
+                .geregiSecimTipiSec(GeregiSecimTipi.KULLANICI)
+                .geregiSec(geregiKullanici)
+                .onayAkisiTemizle()
+                .anlikOnayAkisKullanicilariTemizle()
+                .onayAkisiEkleButonaTikla()
+                .secilenAnlikOnayAkisKullanicilariKontrolEt(user, OnayKullaniciTipi.PARAFLAMA)
+                .anlikOnayAkisKullanicininTipiSec(user, OnayKullaniciTipi.IMZALAMA)
+                .kullanButonaTikla();
+        page.editorTab().openTab()
+                .getEditor().type(editorIcerik);
+        page.pageButtons().evrakImzala().islemMesaji().basariliOlmali();
     }
+
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS2224: DATA-Teslim alınmayı bekleyenler, gelen kutusu ve postalanacaklar listesine gizlilik derecesi yüksek evrak düşürme")
     public void TS2234() throws InterruptedException {
 
         String konuKodu = "Gelen-Giden Evrak";
+        String konu = "TS2234_" + getSysDate();
         String evrakTuru = "Resmi Yazışma";
         String evrakDerecesi = "Hizmete Özel";
         String evrakSayiEkMetni = "A1";
         String ivedilik = "Günlü";
         String miat = getSysDateForKis();
         String geregiSecimBirim = "Birim";
-        String geregiBirim = "AFYON VALİLİĞİ";
+        String geregiBirim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";//"AFYON VALİLİĞİ";
         String akisAdim = "İmzalama";
         String kaldirilacakKlasorler = "KURUL KARARLARI";
         String editorIcerik = "Bu bir deneme mesajıdır. Lütfen dikkate almayınız.";
         String ekleriDosyaAciklama = "Açıklama";
-        String filePath = System.getProperty("user.dir") + "/Documents/Otomasyon.pdf";//"C:\\Users\\TheKing\\Desktop\\s1.txt";
+        String filePath = "documents/Otomasyon.pdf";
 
-        login("ztekin", "123");
-        evrakOlustur = new EvrakOlusturPage();
-        evrakOlustur
-                .openPage()
-                .bilgilerTabiAc()
-                .konuKoduDoldur(konuKodu)
+        login(user);
+        page = new EvrakOlusturPage().openPage();
+        page.bilgileriTab()
+                .konuKoduSec(konuKodu)
                 .evrakTuruSec(evrakTuru)
-                .evrakDerecesiSec(evrakDerecesi)
+                .gizlilikDerecesiSec(evrakDerecesi)
                 .evrakSayiEkMetniDoldur(evrakSayiEkMetni)
-                .ivediSec(ivedilik)
+                .ivedilikSec(ivedilik)
                 .miatDoldur(miat)
                 .geregiSecimTipiSec(geregiSecimBirim)
-                .geregiDoldur(geregiBirim, "Birim")
-                .onayAkisiEkle()
-                .akisAdimSec(akisAdim)
-                .onayAkisiKullan()
-                .kaldirilacakKlasorler(kaldirilacakKlasorler);
+                .geregiSec(geregiBirim)
+                .onayAkisiTemizle()
+                .anlikOnayAkisKullanicilariTemizle()
+                .onayAkisiEkleButonaTikla()
+                .secilenAnlikOnayAkisKullanicilariKontrolEt(user, OnayKullaniciTipi.PARAFLAMA)
+                .anlikOnayAkisKullanicininTipiSec(user, OnayKullaniciTipi.IMZALAMA)
+                .kullanButonaTikla()
+                .kaldiralacakKlasorleriSec(kaldirilacakKlasorler);
 
-        evrakOlustur
-                .editorTabAc()
-                .editorIcerikDoldur(editorIcerik);
+        page.editorTab().openTab().getEditor().type(editorIcerik);
 
-        evrakOlustur
-                .ekleriTabAc()
-                .ekleriDosyaEkle(filePath)
-                .ekleriEkMetniDoldur(ekleriDosyaAciklama)
-                .ekleriEkle()
-                .imzala()
-                .popupImzalaVeEvrakKapatma();
+        AltTabs altTabs = page.ekleriTab().openTab().altTabs();
+        altTabs.getFiziksetEkEkleTab().shouldBe(visible);
+        altTabs.getSistemdeKayitliEvrakEkleTab().shouldBe(visible);
+        altTabs.getWebAdresiniEkleTab().shouldBe(visible);
+        altTabs.dosyaEkleTabiAc()
+                .dosyaEkle(filePath)
+                .ekMetniDoldur("Ekleri Tab " + konu)
+                .ekleButonaTikla();
+        page.ekleriTab().getEkListesiTablosu().findRows(text("Ekleri Tab "+ konu)).shouldHaveSize(1);
+        page.pageButtons().imzalaButonaTikla().closeEvrakImzalaDialog();
+        page.closePage(false);
     }
+
 }

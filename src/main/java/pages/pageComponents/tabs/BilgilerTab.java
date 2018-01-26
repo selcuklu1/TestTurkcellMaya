@@ -130,6 +130,22 @@ public class BilgilerTab extends MainPage {
 
     //******************************************************
 
+    //region Evrak Türü
+//    SelenideElement konuTextarea = $("textarea[id$='konuTextArea']");
+
+    public SelenideElement getEvrakTuru(){
+        return getContainer().$("select[id$='evrakTuruCombo']");
+    }
+
+    @Step("Evrak Türü doldurulur")
+    public BilgilerTab evrakTuruSec(String text){
+        getEvrakTuru().selectOption(text);
+        return this;
+    }
+    //endregion
+
+    //******************************************************
+
     //region Kaldırılacak Klasörler
     @Step("Kaldırılacak Klasörler")
     public BelgenetElement getKaldiralacakKlasorlerCombolov(){

@@ -187,14 +187,15 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
-    @Step("Paylaş buton gelmediği görme")
+    @Step("Paylaş buton gelmediği görülür")
     public GelenEvraklarPage paylasButonGelmedigiGorme(String buton) {
         boolean t = evrakSecButonlar.filterBy(text(buton)).size() > 0;
         Assert.assertEquals(t, false, "kdkdkdkd");
+        takeScreenshot();
         return this;
     }
 
-    @Step("Gelen Evraklar sayfasında evrakın listeye düşmediği kontrolu")
+    @Step("Gelen Evraklar sayfasında evrakın listeye düşmediği görülür")
     public GelenEvraklarPage evrakGelmedigiGorme(String konu, String geldigiYer, String kayitTarihiSayi, String no) {
         boolean durum = tableEvraklar
                 .filterBy(text(konu))
@@ -202,6 +203,7 @@ public class GelenEvraklarPage extends MainPage {
                 .filterBy(text(kayitTarihiSayi))
                 .filterBy(text(no)).size() > 0;
         Assert.assertEquals(durum, false);
+        takeScreenshot();
         return this;
     }
 
@@ -396,14 +398,14 @@ public class GelenEvraklarPage extends MainPage {
         treeHavaleYapBirim.sendKeys(text);
         return this;
     }
-
+    @Step("Paylaş tıklanır")
     public GelenEvraklarPage paylasIcPaylas() {
         btnPaylasIcPaylas.click();
         return this;
     }
-
-    public GelenEvraklarPage paylasanAciklamaDoldur(String text) {
-        txtPaylasanAciklama.sendKeys(text);
+    @Step("Açıklama alanını \"{aciklama}\" ile doldurulur")
+    public GelenEvraklarPage paylasanAciklamaDoldur(String aciklama) {
+        txtPaylasanAciklama.sendKeys(aciklama);
         txtPaylasanAciklama.click();
         return this;
     }
