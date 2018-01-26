@@ -33,6 +33,7 @@ public class PostalananlarPage extends MainPage {
     SelenideElement btnPostaDetayi = $x("//span[text() = 'Posta Detayı']/../../..//button");
     ElementsCollection tblEvraklar = $$("[id^='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
 
+    SelenideElement btnIcerikPostaDetayiTuzelKisiGuncelle = $x("//*[@id='inboxItemInfoForm:postalananDataGrid']/tbody/tr/td/div/table/tbody/tr[4]/td[8]/div/button[1]");
     SelenideElement btnGuncelle = $x("//*[@id='mainPreviewForm:postalananDataGrid']/tbody/tr/td/div/table/tbody/tr[2]/td[8]/div/button[1]");
     SelenideElement btnTuzelKisiGuncelle = $x("//*[@id='mainPreviewForm:postalananDataGrid']/tbody/tr/td/div/table/tbody/tr[4]/td[8]/div/button[1]");
     SelenideElement txtPosta = $x("//*[@id=\'mainPreviewForm:postaGuncellePanel\']/tbody/tr[2]/td[3]/input");
@@ -323,6 +324,11 @@ public class PostalananlarPage extends MainPage {
 
         btnFiltreSpan.click();
         return this;
+    }
+    @Step("Icerik içindeki posta detayi butonu iç sayfa tuzek kisi guncelleme")
+    public PostalananlarPage btnIcerikPostaDetayTuzelKisiGnc () {
+            btnIcerikPostaDetayiTuzelKisiGuncelle.click();
+            return this;
     }
 
     @Step("Tuzel Kisi Guncelle")
