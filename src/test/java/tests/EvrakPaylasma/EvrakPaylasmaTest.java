@@ -575,12 +575,12 @@ public class EvrakPaylasmaTest extends BaseTest {
         String konu = "TS1905_" + getSysDate();//+ createRandomNumber(10);
         String evrakTarihi = getSysDateForKis();
         String kurum = "BÜYÜK HARFLERLE KURUM";
-        String gizlilikDerecesi = "Gizli";
+        String gizlilikDerecesi = "Normal";
         String evrakSayiSag = createRandomNumber(10);
         String kisi = "Zübeyde Tekin";
-        String kisi2 = "Yasemin Çakıl Akyol";
+        String kisi2 = "Ömer ÖZÜLKÜ";
         String aciklama = createRandomText(15);
-        String birim = "TEST HASAN BİRİMİ";
+        String birim = "BİLİŞİM HİZMETLERİ VE UYDU PAZARLAMA GENEL MÜDÜR";
         String anaBirim = "Yazılım Geliştirme Direktörlüğ";
         //TODO Pre Condition Gelen Evraklar sayfası data oluşturmakta
         login(usernameZTEKIN, passwordZTEKIN);
@@ -596,10 +596,9 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .havaleIslemleriKisiDoldur(kisi)
                 .kaydet()
                 .evetDugmesi()
-                .yeniKayitButton();
+                .yeniKayitButton()
+                .islemMesaji().basariliOlmali(basariMesaji);
         //TODO
-
-        login(usernameZTEKIN, passwordZTEKIN);
 
         gelenEvraklarPage
                 .openPage()
@@ -619,10 +618,7 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .paylasilanlarTabAc()
                 .paylasilanlarKullaniciGorme(kisi2);
 
-        login(usernameYAKYOL, passwordYAKYOL);
-
-        mainPage
-                .birimSec(Condition.text(birim));
+        login("oozulku", "123");
 
         benimlePaylasilanlarPage
                 .openPage()
@@ -641,9 +637,6 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .openPage()
                 .evrakSec()
                 .paylasButonGelmedigiGorme("Paylaş");
-
-        mainPage
-                .birimSec(Condition.text(anaBirim));
 
     }
 

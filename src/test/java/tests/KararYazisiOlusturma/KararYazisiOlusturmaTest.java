@@ -6,6 +6,7 @@ package tests.KararYazisiOlusturma;
  * Yazan: Can Şeker
  ****************************************************/
 
+import com.codeborne.selenide.Selenide;
 import common.BaseTest;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Severity;
@@ -192,8 +193,8 @@ public class KararYazisiOlusturmaTest extends BaseTest {
         gundemIzlemePage
                 .aralikliGundemOlustur()
                 .islemMesaji().basariliOlmali(basariMesaji);
-        String dosyaAdi = gundemIzlemePage.indirilenDosyaAd();
-
+        String dosyaAdi = gundemIzlemePage.indirilenDosyaAd(downloadPath);
+        System.out.println(dosyaAdi);
         gundemIzlemePage
                 .wordDosyaKontrolEt(dosyaAdi)
                 .yayimla();
@@ -202,6 +203,8 @@ public class KararYazisiOlusturmaTest extends BaseTest {
                 .openPage()
                 .kullaniciErisimTab()
                 .kullanıcıErisimAra();
+
+        Selenide.close();
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -224,7 +227,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
         gundemIzlemePage
                 .aralikliGundemOlustur()
                 .islemMesaji().basariliOlmali(basariMesaji);
-        String dosyaAdi = gundemIzlemePage.indirilenDosyaAd(path);
+        String dosyaAdi = gundemIzlemePage.indirilenDosyaAd(downloadPath);
 
         gundemIzlemePage
                 .wordDosyaKontrolEt(dosyaAdi)
@@ -234,6 +237,8 @@ public class KararYazisiOlusturmaTest extends BaseTest {
                 .openPage()
                 .kullaniciErisimTab()
                 .kullanıcıErisimAra();
+
+        Selenide.close();
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -551,7 +556,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
         gundemIzlemePage
                 .aralikliGundemOlustur()
                 .islemMesaji().basariliOlmali(basariMesaji);
-        String dosyaAdi = gundemIzlemePage.indirilenDosyaAd();
+        String dosyaAdi = gundemIzlemePage.indirilenDosyaAd(downloadPath);
 
         gundemIzlemePage
                 .wordDosyaKontrolEt(dosyaAdi)
@@ -562,6 +567,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
                 .kullaniciErisimTab()
                 .kullanıcıErisimAra();
 
+        Selenide.close();
     }
 
 

@@ -6,14 +6,23 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
+import pages.newPages.EvrakOlusturPage;
+import pages.pageComponents.EvrakPageButtons;
+import pages.pageComponents.UstMenuPageHeader;
 import pages.pageComponents.belgenetElements.BelgenetElement;
+import pages.pageComponents.tabs.BilgilerTab;
+import pages.pageComponents.tabs.EditorTab;
 
+import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
+import static pages.pageComponents.belgenetElements.Belgenet.$;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 public class CevapYazPage extends MainPage {
+
+    private SelenideElement page = $("#windowCevapEvrakDialog");
 
     SelenideElement pageTitle = $(By.xpath("//span[. = 'Cevap Yaz' and @class = 'ui-dialog-title']"));
 
@@ -137,6 +146,51 @@ public class CevapYazPage extends MainPage {
 
     SelenideElement btnKaydet = $x("//span[contains(@class, 'kaydet')]/..");
 
+    public EditorTab editorTab() {
+        return new EditorTab(page);
+    }
+
+
+    @Step("Sayfayı kapat")
+    public CevapYazPage closePage(boolean save) {
+        pageHeader().closePage();
+        if (save)
+            confirmDialog().confirmEvetTikla();
+        else
+            confirmDialog().confirmHayirTikla();
+        return this;
+    }
+
+    public SelenideElement getPage(){
+        return page;
+    }
+
+    public EvrakPageButtons pageButtons() {
+        return new EvrakPageButtons(page);
+    }
+
+    public BilgilerTab bilgileriTab() {
+        return new BilgilerTab(page);
+//        return bilgilerTab;
+    }
+
+    public UstMenuPageHeader pageHeader() {
+        return new UstMenuPageHeader(page);
+    }
+
+
+   /* @Step(tabName + " tabı açılır")
+    public EditorTab openTab(boolean... clickIfOpen) {
+        SelenideElement tab = page.$x("descendant::td[contains(@class,'tabMenuContainer') and descendant::span[contains(@class,'tabMenu') and text()='" + tabName + "']]");
+        if (clickIfOpen.length > 0 || !tab.attr("class").equals("tabMenuContainerSelected"))
+            tab.$("button").click();
+
+        page.$("[id$=allPanels_content]").shouldBe(visible);
+        page.$$("span.cke_toolbar a[id*=cke]").shouldHave(sizeGreaterThan(0));
+//        page.$$("#DOnayDivToolbar span.cke_toolbar a[id*=cke]").shouldHave(sizeGreaterThan(0));
+        return this;
+    }
+*/
     @Step("Sayfa açıldı mı kontrolü")
     public CevapYazPage sayfaAcilmali() {
         pageTitle.shouldBe(visible);
