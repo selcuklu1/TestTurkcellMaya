@@ -68,7 +68,7 @@ public class TebligTebellugTest extends BaseTest {
         gelenEvrakKayitPage.islemMesaji().basariliOlmali();
 
         String tebligEdilecekKullanicilistesi = "TS0845LISTE";
-        String tebligNot = "845 : Gelen Evrakın kullanıcı listesine detay ekrandan tebliğ edilmesi. Deneme 02";
+        String tebligNot = "TS0845 not";
 
         String[] tebligGecmisiKontrolEdilecekKullanicilar = new String[]{
                 "Huser1 TUMER1"
@@ -242,7 +242,7 @@ public class TebligTebellugTest extends BaseTest {
 
         String tebligEdilecekKisi = "Huser2 TUMER2";
 
-        String tebligNot = "845 : Gelen Evrakın kullanıcı listesine detay ekrandan tebliğ edilmesi.";
+        String tebligNot = "TS0067 not";
 
         String[] tebligGecmisiKontrolEdilecekKullanicilar = new String[]{
                 "Huser2 TUMER2"
