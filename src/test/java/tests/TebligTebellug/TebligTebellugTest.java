@@ -1,5 +1,6 @@
 package tests.TebligTebellug;
 
+import com.codeborne.selenide.Selenide;
 import common.BaseTest;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -444,8 +445,6 @@ public class TebligTebellugTest extends BaseTest {
                     .tebligEtNotInputDoldur(aciklama)
                     .tebligEtTebligEt();
 
-            logout();
-
         }
 
         login("huser2", "123");
@@ -502,7 +501,6 @@ public class TebligTebellugTest extends BaseTest {
                 .evrakTikSec(evrakKonular[3], birim, tebligEdenKullanici, evrakTipi, aciklama, true)
                 .tebligSil()
                 .islemMesaji().basariliOlmali(basariMesaj);
-
 
         tebellugEttiklerimPage
                 .openPage()
