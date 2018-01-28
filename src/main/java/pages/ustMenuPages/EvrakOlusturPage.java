@@ -620,7 +620,11 @@ public class EvrakOlusturPage extends MainPage {
         @Step("Bilgi alanında temizle ve \"{bilgi}\" seç")
         public BilgilerTab bilgiSec(String bilgi, Boolean clearAll) {
             txtBilgi.sendKeys(Keys.SHIFT);
-            txtBilgi.selectLov(bilgi);
+            txtBilgi
+                    .type(bilgi)
+                    .getTitleItems()
+                    .first()
+                    .click();
             txtBilgi.clearAllSelectedItems();
             return this;
         }

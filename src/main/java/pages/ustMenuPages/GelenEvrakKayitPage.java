@@ -460,7 +460,11 @@ public class GelenEvrakKayitPage extends MainPage {
     public GelenEvrakKayitPage geldigiKurumDoldurLovText(String geldigiKurum) {
         if (btnSecilenGeldigiKurumKaldir.isDisplayed())
             btnSecilenGeldigiKurumKaldir.click();
-        comboGeldigiKurum.selectLov(geldigiKurum);
+        comboGeldigiKurum
+                .type(geldigiKurum)
+                .getTitleItems()
+                .first()
+                .click();
         return this;
     }
 
