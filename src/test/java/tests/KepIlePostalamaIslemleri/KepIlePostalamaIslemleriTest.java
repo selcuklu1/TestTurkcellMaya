@@ -99,6 +99,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
         kurumYonetimiPage
                 .openPage()
                 .ara()
+                .kurumlarinListelendigiGorme()
                 .guncelle()
                 .kepAdresiKullaniyorSec(true)
                 .kepAdresBilgileriArti()

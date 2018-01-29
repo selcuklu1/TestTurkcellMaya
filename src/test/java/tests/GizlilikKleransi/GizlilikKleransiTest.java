@@ -130,7 +130,8 @@ public class GizlilikKleransiTest extends BaseTest {
                 .filtrelerdeAlaniDoldur("Bitiş Tarihi", evrakTarihi, Keys.ENTER);
         havaleEttiklerimPage.gizlilikRaporSec(konuKodu, geldigiYer, evrakTarihi)
                 .havaleYap()
-                .havaleYapKisiSecmeyeDene(kisi);
+                .havaleYapKisiSecmeyeDene(kisi)
+                .islemMesaji().dikkatOlmali(uyariMesaj1);
 
         havaleEttiklerimPage
                 .havaleYapKullaniciyiSecmeyeDene(kullaniciListesi)
@@ -227,11 +228,11 @@ public class GizlilikKleransiTest extends BaseTest {
                 .havaleYap()
                 .havaleBilgilerininGirilecegiAlanlarınGeldigiGorme()
                 .havaleYapKisiDoldur(kisi)
-                .islemMesaji().beklenenMesaj(uyariMesaj1);
+                .islemMesaji().dikkatOlmali(uyariMesaj1);
 
         gelenEvraklarPage
                 .havaleYapKullaniciyiSecmeyeDene(kullaniciListesi)
-                .islemMesaji().beklenenMesaj(uyariMesaj2);
+                .islemMesaji().dikkatOlmali(uyariMesaj2);
     }
 
     @Severity(SeverityLevel.CRITICAL)

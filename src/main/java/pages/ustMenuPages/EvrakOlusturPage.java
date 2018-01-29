@@ -154,11 +154,11 @@ public class EvrakOlusturPage extends MainPage {
     }
 
     public EvrakOlusturPage evrakOlusturPageKapat() {
-        //btnEvrakOlusturKapat.click();
 
-        $(By.xpath("//span[@class='ui-dialog-title' and text()='Evrak Oluştur']/..//span[@class='ui-icon ui-icon-closethick']")).click();
+        SelenideElement closeButton = $(By.xpath("//span[@class='ui-dialog-title' and text()='Evrak Oluştur']/..//span[@class='ui-icon ui-icon-closethick']"));
+        Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", closeButton);
+        closeButton.click();
         btnEvrakOlusturKapatEvet.click();
-//div[@id='window1Dialog']//span[@class='ui-icon ui-icon-closethick']
         return this;
     }
 
@@ -625,6 +625,7 @@ public class EvrakOlusturPage extends MainPage {
                     .getTitleItems()
                     .first()
                     .click();
+            txtBilgi.closeTreePanel();
             txtBilgi.clearAllSelectedItems();
             return this;
         }
@@ -665,7 +666,8 @@ public class EvrakOlusturPage extends MainPage {
                     .getTitleItems()
                     .first()
                     .click();
-            txtGeregi.clearLastSelectedItem();
+            txtGeregi.closeTreePanel();
+            txtGeregi.clearAllSelectedItems();
             return this;
         }
 
@@ -1077,7 +1079,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Onay akışı kullanıcı adı ve tipi kontrol et")
+        @Step("Onay akışı kullanıcı adı ve tipi kontrolu")
         public BilgilerTab onayAkisiKullaniciKontrol(String kullaniciAdi, String kullaniciTipi) {
             btnKullan.sendKeys(Keys.SHIFT);
             trOnayAkisiEkleKullanicilar

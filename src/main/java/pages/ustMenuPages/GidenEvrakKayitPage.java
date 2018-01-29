@@ -8,6 +8,7 @@
 package pages.ustMenuPages;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
@@ -27,9 +28,9 @@ public class GidenEvrakKayitPage extends MainPage {
     //region Elements
 
     // gidenEvrakDefterKaydiForm:evrakBilgileriList:11:j_idt14590
-    SelenideElement cmbGeregiSecimTipi = $(By.xpath("//select[starts-with(@id,'gidenEvrakDefterKaydiForm:evrakBilgileriList:11:j_idt')]"));
+    SelenideElement cmbGeregiSecimTipi = $(By.xpath("//form[@id='gidenEvrakDefterKaydiForm']//label[normalize-space(text())='Gereği Seçim Tipi']/ancestor::tr[@class='ui-datagrid-row']//select"));
     BelgenetElement cmbGeregi = comboLov("[id^='gidenEvrakDefterKaydiForm:evrakBilgileriList'][id$='geregiLov:LovText']");
-    SelenideElement cmbBilgiSecimTipi = $(By.xpath("//select[starts-with(@id,'gidenEvrakDefterKaydiForm:evrakBilgileriList:12:j_idt')]"));
+    SelenideElement cmbBilgiSecimTipi = $(By.xpath("//form[@id='gidenEvrakDefterKaydiForm']//label[normalize-space(text())='Bilgi Seçim Tipi']/ancestor::tr[@class='ui-datagrid-row']//select"));
     BelgenetElement cmbBilgi = comboLov("[id^='gidenEvrakDefterKaydiForm:evrakBilgileriList'][id$='bilgiLov:LovText']");
     By cmbGeregiBy = By.cssSelector("[id^='gidenEvrakDefterKaydiForm:evrakBilgileriList'][id$='geregiLov:LovText']");
     By cmbBilgiBy = By.cssSelector("[id^='gidenEvrakDefterKaydiForm:evrakBilgileriList'][id$='bilgiLov:LovText']");
@@ -100,10 +101,10 @@ public class GidenEvrakKayitPage extends MainPage {
     @Step("Gereği doldur")
     public GidenEvrakKayitPage geregiDoldur(String geregiAdSoyad, Boolean clearAfter) {
 
-        cmbGeregi.selectLov(geregiAdSoyad);
-
-        /*System.out.println("title: " + cmbGeregi.lastSelectedLovTitleText());
-        System.out.println("detail: " + cmbGeregi.lastSelectedLovDetailText());*/
+        cmbGeregi
+                .type(geregiAdSoyad)
+                .getTitleItems()
+                .first();
 
         cmbGeregi.clearAllSelectedItems();
         return this;
@@ -162,10 +163,10 @@ public class GidenEvrakKayitPage extends MainPage {
     @Step("Bilgi doldur")
     public GidenEvrakKayitPage bilgiDoldur(String geregiAdSoyad, Boolean clearAfter) {
 
-        cmbBilgi.selectLov(geregiAdSoyad);
-        /*System.out.println("title: " + cmbBilgi.lastSelectedLovTitleText());
-        System.out.println("detail: " + cmbBilgi.lastSelectedLovDetailText());*/
-
+        cmbBilgi
+                .type(geregiAdSoyad)
+                .getTitleItems()
+                .first();
         cmbBilgi.clearAllSelectedItems();
 
         return this;
@@ -214,6 +215,10 @@ public class GidenEvrakKayitPage extends MainPage {
     public GidenEvrakKayitPage panelKapat(Boolean kaydet) {
         $(By.xpath("//div[@id='mainTaskBar']//span[text()='[Giden Evrak Kayıt]']"))
                 .contextClick();
+
+        SelenideElement closeButton = $(By.xpath("//span[@class='ui-dialog-title' and text()='Giden Evrak Kayıt']/..//span[@class='ui-icon ui-icon-closethick']"));
+        Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", closeButton);
+        closeButton.click();
 
         if (kaydet)
             $(By.id("kapatKaydetEvetButton")).click();
