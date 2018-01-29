@@ -243,6 +243,7 @@ public class SearchTable {
     public SearchTable findRows(Condition... conditions) {
         foundRow = null;
         foundRows = null;
+        String rowCssLocator = this.rowCssLocator;
 
         boolean searchByColumn = (columnIndex > -1);
 

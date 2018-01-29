@@ -11,6 +11,7 @@ import org.openqa.selenium.NotFoundException;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.SearchTable;
+import pages.pageComponents.UstYazi;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.alanlar.*;
 
@@ -977,4 +978,8 @@ public class BilgilerTab extends MainPage {
         return this;
     }
 
+
+    public UstYazi getUstYazi(){
+        return new UstYazi(container);
+    }
 }

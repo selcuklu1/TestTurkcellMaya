@@ -30,8 +30,6 @@ public class OnayAkisiTest2 extends BaseTest {
     @BeforeMethod
     public void beforeTests(Method method) {
 
-        //log.info(method.getName() + "Nolu test senaryosu başladı.");
-
         login();
 
         evrakOlusturPage = new EvrakOlusturPage();
@@ -47,16 +45,20 @@ public class OnayAkisiTest2 extends BaseTest {
 
         //Pasif yapma
         String onayAkisAdi = "Optiim";
-        String kullanici = "TS2112 OnayAkisi";
+        String onayAkisi = "TS2112 OnayAkisi";
+        String kullaniciParafci = "Optiim TEST"; //PARAFLAMA
+        String kullaniciKontrolcu = "Mehmet BOZDEMİR"; //KONTROL
+        String kullaniciKoordineci = "Sezai ÇELİK"; //KOORDİNE
+        String kullaniciImzaci = "Zübeyde TEKİN"; //KOORDİNE
         String basariMesaji = "İşlem başarılıdır!";
 
         //tests.Data kontrolu için yazıldı. Pasif ise aktif yapılır.
         onayAkisYonetimiPage
                 .openPage()
-                .filtredeAdDoldur(kullanici)
+                .filtredeAdDoldur(onayAkisi)
                 .filtreDurumSec("TUMU")
                 .ara()
-                .onayAkisiPasifIseAktifYap(kullanici);
+                .onayAkisiPasifIseAktifYap(onayAkisi);
 
         onayAkisYonetimiPage
                 .ekraniKapat();
@@ -64,8 +66,10 @@ public class OnayAkisiTest2 extends BaseTest {
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
-                .onayAkisiDoldur(kullanici)
+                .onayAkisiDoldur(onayAkisi)
                 .onayAkisiDetailKontrol("Paraflama")
+                .onayAkisiDetailKontrol("Kontrol")
+                .onayAkisiDetailKontrol("Koordine")
                 .onayAkisiDetailKontrol("İmzalama");
 
         onayAkisYonetimiPage
@@ -73,10 +77,10 @@ public class OnayAkisiTest2 extends BaseTest {
 //                .filtreAc()
                 .birimKontrol(onayAkisAdi)
                 .durumKontrol("Sadece Aktifler")
-                .filtredeAdDoldur(kullanici)
+                .filtredeAdDoldur(onayAkisi)
                 .ara()
                 .aktiflerTumListeKayitKontrolu()   //Bu adımda tüm tabloyu kontrol ettiği için yavaşlatıyor otomasyonu. Çıkartılmalı.
-                .adaGorePasifYap(kullanici)
+                .adaGorePasifYap(onayAkisi)
                 .islemOnayi("Evet");
 
         onayAkisYonetimiPage
@@ -84,26 +88,26 @@ public class OnayAkisiTest2 extends BaseTest {
 
         onayAkisYonetimiPage
                 .filtreAc()
-                .filtredeAdDoldur(kullanici)
+                .filtredeAdDoldur(onayAkisi)
                 .filtreDurumSec("PASIFLER")
                 .ara()
-                .kayitGoruntulenmeKontrolu(kullanici);
+                .kayitGoruntulenmeKontrolu(onayAkisi);
 
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
                 .secilenOnayAkisiSil()
-                .onayAkisiAlanindaGoruntulenmemeKontrolu(kullanici);
+                .onayAkisiAlanindaGoruntulenmemeKontrolu(onayAkisi);
 
         olurYazisiOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
-                .onayAkisiAlanindaGoruntulenmemeKontrolu(kullanici);
+                .onayAkisiAlanindaGoruntulenmemeKontrolu(onayAkisi);
 
         kararYazisiOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
-                .onayAkisiAlanindaGoruntulenmemeKontrolu(kullanici);
+                .onayAkisiAlanindaGoruntulenmemeKontrolu(onayAkisi);
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -112,22 +116,26 @@ public class OnayAkisiTest2 extends BaseTest {
 
         //Aktif yapma
         String onayAkisAdi = "Optiim";
-        String kullanici = "TS2112 OnayAkisi";
+        String onayAkisi = "TS2112 OnayAkisi";
+        String kullaniciParafci = "Optiim TEST"; //PARAFLAMA
+        String kullaniciKontrolcu = "Mehmet BOZDEMİR"; //KONTROL
+        String kullaniciKoordineci = "Sezai ÇELİK"; //KOORDİNE
+        String kullaniciImzaci = "Zübeyde TEKİN"; //KOORDİNE
         String basariMesaji = "İşlem başarılıdır!";
 
         //tests.Data kontrolu için yazıldı. Pasif ise aktif yapılır.
         onayAkisYonetimiPage
                 .openPage()
-                .filtredeAdDoldur(kullanici)
+                .filtredeAdDoldur(onayAkisi)
                 .filtreDurumSec("TUMU")
                 .ara()
-                .onayAkisiAktifIsePasifYap(kullanici)
+                .onayAkisiAktifIsePasifYap(onayAkisi)
 
                 .filtreAc()
-                .filtredeAdDoldur(kullanici)
+                .filtredeAdDoldur(onayAkisi)
                 .filtreDurumSec("PASIFLER")
                 .ara()
-                .adaGoreAktifYap(kullanici)
+                .adaGoreAktifYap(onayAkisi)
                 .islemOnayi("Evet");
 
         onayAkisYonetimiPage
@@ -135,23 +143,27 @@ public class OnayAkisiTest2 extends BaseTest {
 
         onayAkisYonetimiPage
                 .filtreAc()
-                .filtredeAdDoldur(kullanici)
+                .filtredeAdDoldur(onayAkisi)
                 .filtreDurumSec("AKTIFLER")
                 .ara()
-                .kayitGoruntulenmeKontrolu(kullanici);
+                .kayitGoruntulenmeKontrolu(onayAkisi);
 
         olurYazisiOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
-                .onayAkisDoldur(kullanici)
+                .onayAkisDoldur(onayAkisi)
                 .onayAkisiDetailKontrol("Paraflama")
+                .onayAkisiDetailKontrol("Kontrol")
+                .onayAkisiDetailKontrol("Koordine")
                 .onayAkisiDetailKontrol("İmzalama");
 
         kararYazisiOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
-                .onayAkisiDoldur(kullanici)
+                .onayAkisiDoldur(onayAkisi)
                 .onayAkisiDetailKontrol("Paraflama")
+                .onayAkisiDetailKontrol("Kontrol")
+                .onayAkisiDetailKontrol("Koordine")
                 .onayAkisiDetailKontrol("İmzalama")
                 .ekraniKapat()
                 .islemPenceresiKaydetPopup("Hayır");

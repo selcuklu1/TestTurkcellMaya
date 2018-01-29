@@ -37,7 +37,7 @@ public class CevapladiklarimPage extends MainPage {
 
     @Step("Kullancılar doldur")
     public CevapladiklarimPage kullanicilarDoldur(String kullanicilar) {
-        txtKullanicilar.selectLov(kullanicilar);
+        txtKullanicilar.type(kullanicilar).getTitleItems().filterBy(Condition.text(kullanicilar)).first().click();
         return this;
     }
 
