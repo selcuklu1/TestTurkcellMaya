@@ -11,6 +11,7 @@ import org.openqa.selenium.NotFoundException;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.SearchTable;
+import pages.pageComponents.UstYazi;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.alanlar.*;
 
@@ -124,6 +125,22 @@ public class BilgilerTab extends MainPage {
     @Step("Konu temizlenir")
     public BilgilerTab konuTemizle(){
         getKonuTextarea().clear();
+        return this;
+    }
+    //endregion
+
+    //******************************************************
+
+    //region Evrak Türü
+//    SelenideElement konuTextarea = $("textarea[id$='konuTextArea']");
+
+    public SelenideElement getEvrakTuru(){
+        return getContainer().$("select[id$='evrakTuruCombo']");
+    }
+
+    @Step("Evrak Türü doldurulur")
+    public BilgilerTab evrakTuruSec(String text){
+        getEvrakTuru().selectOption(text);
         return this;
     }
     //endregion
@@ -961,4 +978,8 @@ public class BilgilerTab extends MainPage {
         return this;
     }
 
+
+    public UstYazi getUstYazi(){
+        return new UstYazi(container);
+    }
 }

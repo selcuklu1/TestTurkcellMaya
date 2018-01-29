@@ -16,6 +16,7 @@ import pages.MainPage;
 import pages.pageComponents.Filtreler;
 import pages.pageComponents.TextEditor;
 import pages.pageComponents.belgenetElements.BelgenetElement;
+import pages.pageComponents.tabs.EditorTab;
 import pages.solMenuPages.*;
 import pages.ustMenuPages.EvrakOlusturPage;
 import pages.ustMenuPages.KararYazisiOlusturPage;
@@ -41,6 +42,9 @@ import static pages.pageComponents.belgenetElements.Belgenet.comboBox;
  */
 @Feature("Evrak Not")
 public class EvrakNotTest extends BaseTest {
+
+    User optiim = new User("optiim", "123", "Optiim TEST", "Optiim Birim", "Optiim TEST [Ağ (Network) Uzman Yardımcısı]");
+
     //    data.User user1 = new data.User("user1", "123", "User1 TEST", "AnaBirim1");
     User user1 = new User("user1", "123", "User1 TEST", "AnaBirim1");
     //User user2 = new User("ztekin", "123", "Zübeyde TEKİN");
@@ -54,6 +58,8 @@ public class EvrakNotTest extends BaseTest {
     EvrakNot evrakNot = new EvrakNot();
     EvrakOnizleme.Notlari notlar = new EvrakOnizleme().new Notlari();
 
+    String[] notTipleri = {"Seçiniz", "Genel", "Kişisel"};
+
     String[][] newNotes = {{"Genel", "Açıklama1", "", ""}
             , {"Kişisel", "Açıklama2", "", ""}
             , {"Genel", "Açıklama3", "", ""}
@@ -62,10 +68,15 @@ public class EvrakNotTest extends BaseTest {
 
     private String createTextWith(int length) {
         String text = "";
-        for (int i = 0; i < length - 1; i++) {
-            text += "0";
+        for (int i = 0; i < length - (int) (Math.log10(length) + 1); i++) {
+            text += ".";
         }
-        text += "!";
+        text += String.valueOf(length);
+        /*String text = "";
+        for (int i = 0; i < length - 1; i++) {
+            text += ".";
+        }
+        text += "!";*/
         return text;
     }
 

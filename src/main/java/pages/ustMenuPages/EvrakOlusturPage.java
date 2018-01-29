@@ -620,7 +620,11 @@ public class EvrakOlusturPage extends MainPage {
         @Step("Bilgi alanında temizle ve \"{bilgi}\" seç")
         public BilgilerTab bilgiSec(String bilgi, Boolean clearAll) {
             txtBilgi.sendKeys(Keys.SHIFT);
-            txtBilgi.selectLov(bilgi);
+            txtBilgi
+                    .type(bilgi)
+                    .getTitleItems()
+                    .first()
+                    .click();
             txtBilgi.clearAllSelectedItems();
             return this;
         }
@@ -3180,12 +3184,47 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Pdf EK-3 kontrolu")
+        @Step("Pdf Dağıtımda eklerin gitmeyeceği yrler kontrolu: {dagitim}")
         public PDFKontrol eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim1(String dagitim, String ekler) {
-
+            String pdfDagitim1 = $(By.xpath("//*[@id='viewer']/div/div[2]/div[17]")).getText();
+            Assert.assertEquals(ekler.contains(ekler), true);
             return this;
         }
 
+        @Step("Pdf Dağıtımda eklerin gitmeyeceği yerler kontrolu: {dagitim}")
+        public PDFKontrol eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim2(String dagitim, String ekler) {
+            String pdfDagitim1 = $(By.xpath("//*[@id='viewer']/div/div[2]/div[18]")).getText();
+            Assert.assertEquals(ekler.contains(ekler), true);
+            return this;
+        }
+
+        @Step("Pdf Dağıtımda eklerin gitmeyeceği yerler kontrolu: {dagitim}")
+        public PDFKontrol eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim3(String dagitim, String ekler) {
+            String pdfDagitim1 = $(By.xpath("//*[@id='viewer']/div/div[2]/div[19]")).getText();
+            Assert.assertEquals(ekler.contains(ekler), true);
+            return this;
+        }
+
+        @Step("Pdf İlgi-1 kontrolu: {description}")
+        public PDFKontrol PDFIlgi1Kontrolu(String ilgi1, String description) {
+            String pdfEK1 = $(By.xpath("//*[@id='viewer']/div/div[2]/div[13]")).getText();
+            Assert.assertEquals(pdfEK1.contains(ilgi1), true);
+            return this;
+        }
+
+        @Step("Pdf İlgi-2 kontrolu: {description}")
+        public PDFKontrol PDFIlgi2Kontrolu(String ilgi2, String description) {
+            String pdfEK1 = $(By.xpath("//*[@id='viewer']/div/div[2]/div[15]")).getText();
+            Assert.assertEquals(pdfEK1.contains(ilgi2), true);
+            return this;
+        }
+
+        @Step("Pdf İlgi-3 kontrolu: {description}")
+        public PDFKontrol PDFIlgi3Kontrolu(String ilgi3, String description) {
+            String pdfEK1 = $(By.xpath("//*[@id='viewer']/div/div[2]/div[17]")).getText();
+            Assert.assertEquals(pdfEK1.contains(ilgi3), true);
+            return this;
+        }
     }
     //endregion
 }
