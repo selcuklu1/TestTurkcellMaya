@@ -28,8 +28,6 @@ import pages.LoginPage;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetFramework;
 
-import java.io.File;
-import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.nio.charset.Charset;
@@ -37,7 +35,6 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import static com.codeborne.selenide.Selenide.$;
 import static data.TestData.belgenetURL;
 import static io.qameta.allure.util.ResultsUtils.firstNonEmpty;
 
@@ -68,17 +65,17 @@ public class BaseTest extends BaseLibrary {
         //Configuration.remote = "http://10.101.20.151:4444/wd/hub";
 
         Configuration.baseUrl = (System.getProperty("URL") == null) ? belgenetURL : System.getProperty("URL");
-        Configuration.browser = (System.getProperty("browser") == null) ? "firefox" : System.getProperty("browser");
+        Configuration.browser = (System.getProperty("browser") == null) ? "chrome" : System.getProperty("browser");
         Configuration.browserVersion = System.getProperty("node");
         Configuration.remote = System.getProperty("hub");
         Configuration.reportsFolder = "test-result/reports";
-        Configuration.screenshots = false;
+        Configuration.screenshots = true;
         Configuration.savePageSource = false;
         Configuration.collectionsTimeout = timeout * 1000;
         Configuration.timeout = timeout * 1000;
         setWaitForLoading(loadingTimeout);
         //Configuration.clickViaJs = true;
-        //Configuration.holdBrowserOpen = true;
+        Configuration.holdBrowserOpen = true;
         //Configuration.headless = false;
         Configuration.startMaximized = true;
         Configuration.pollingInterval = 100;
@@ -211,25 +208,38 @@ public class BaseTest extends BaseLibrary {
      * @return downloadPath
      */
     public String useFirefoxWindows151(String testName) {
+        String neverAsk = "application/msword;" +
+                "application/vnd.ms-excel;" +
+                "application/vnd.openxmlformats-officedocument.wordprocessingml.document;" +
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;" +
+                "application/pdf";
+
         String downloadPath = TestData.docDownloadPathWindows + testName;
         try {
 
             //Capabilities caps = getCapabilities();
             //caps.merge(options);
+            /*FirefoxProfile profile = new FirefoxProfile();
+            profile.setPreference("browser.download.folderList", 2);
+            profile.setPreference("browser.download.dir", downloadPath);*/
+            //capabilities.setCapability("browser.download.dir", TestData.docDownloadPathWindows);
             FirefoxOptions options = new FirefoxOptions();
+            //options.setProfile(profile);
             options.setAcceptInsecureCerts(true)
                     .addPreference("security.insecure_field_warning.contextual.enabled", false)
                     .addPreference("browser.download.folderList", 2)
-                    .addPreference("browser.download.dir", downloadPath);
-            /*options.addPreference("browser.helperApps.neverAsk.saveToDisk", "application/excel");
-            options.addPreference("browser.helperApps.neverAsk.saveToDisk", "application/vnd.ms-excel");
-            options.addPreference("browser.helperApps.neverAsk.saveToDisk", "application/x-excel");
-            options.addPreference("browser.helperApps.neverAsk.saveToDisk", "application/x-msexcel");
-            options.addPreference("browser.helperApps.neverAsk.saveToDisk", "application/pdf");*/
-            DesiredCapabilities capabilities = DesiredCapabilities.firefox();
-            capabilities.setVersion("151");
-            capabilities.setPlatform(Platform.WINDOWS);
-            options.merge(capabilities);
+                    .addPreference("browser.download.dir", downloadPath)
+                    .addPreference("browser.helperApps.alwaysAsk.force", false)
+                    .addPreference("browser.download.manager.showWhenStarting",false)
+//                    .addPreference("browser.helperApps.neverAsk.saveToDisk", "application/vnd.ms-excel; text/xml;application/x-excel;application/x-msexcel;application/pdf");
+                    .addPreference("browser.helperApps.neverAsk.saveToDisk", neverAsk);
+            //options.addPreference("browser.helperApps.neverAsk.openFile", "true");
+            //options.addPreference("browser.helperApps.neverAsk.saveToDisk", "true");
+
+            /*DesiredCapabilities capabilities = DesiredCapabilities.firefox();
+            *//*capabilities.setVersion("151");
+            capabilities.setPlatform(Platform.WINDOWS);*//*
+            options.merge(capabilities);*/
             //caps.merge(options);
 
             WebDriver driver = Configuration.remote == null ?

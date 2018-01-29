@@ -160,7 +160,7 @@ public class EvrakPostalamaTest extends BaseTest {
         Thread.sleep(1000);
         postalananlarPage.btnTarihGuncelle("10.10.2017");
         postalananlarPage.btnPostakoduGuncelle("520");
-        postalananlarPage.txtAciklama("TS2520b");
+        postalananlarPage.txtAciklama("TS0520b");
         postalananlarPage = postalananlarPage.btnKaydet();
 
         String txt = postalananlarPage.evSay();
@@ -191,13 +191,14 @@ public class EvrakPostalamaTest extends BaseTest {
         postalananlarPage.btnFiltrenenPostaIcerikGoster(konu);
         Thread.sleep(1000);
         postalananlarPage.icerikDetayPostaDetayi();
-        postalananlarPage.btnTuzelKisiGuncelle();
-        postalananlarPage.btnTarihGuncelle("10.10.2017");
-        postalananlarPage.btnPostakoduGuncelle("520");
-        postalananlarPage.txtAciklama("TS520a");
-        postalananlarPage = postalananlarPage.btnKaydet();
 
-        String txt = postalananlarPage.evSay();
+        postalananlarPage.btnIcerikPostaDetayTuzelKisiGnc();
+        postalananlarPage.btnIcerikPDTuzelKisiTebTarGnc("01.01.2018");
+        postalananlarPage.btnIcerikPosDetTuzKisPosKodGnc("520");
+        postalananlarPage.btnIcerikPDTuzelKisiPosAcikGnc("TS520a");
+        postalananlarPage.btnIcerikPDPopupKaydet();
+
+        String txt = postalananlarPage.icerikEvrakSay();
         postalananEvrakRaporuPage
                 .openPage();
 
@@ -435,6 +436,7 @@ public class EvrakPostalamaTest extends BaseTest {
                 .btnIcerikDetayKapat();
 
         postalananlarPage
+                .btnFiltrenenPostaIcerikGoster(konu)
                 .postaDetayiTikla()
                 .evrakYazdir()
                 .etiketBastir();

@@ -46,7 +46,7 @@ public class HavaleEttiklerimPage extends MainPage {
 
     @Step("Kişi listesinde \"{kisi}\" seçmeye dene")
     public HavaleEttiklerimPage havaleYapKisiSecmeyeDene(String kisi) {
-        txtHavaleYapKisi.type(kisi).getTitleItems().filterBy(text(kisi)).first().click();
+        txtHavaleYapKisi.type(kisi).getSelectableItems().filterBy(text(kisi)).first().click();
         return this;
     }
 

@@ -196,7 +196,6 @@ public class EvrakNotTest extends BaseTest {
 
         login(user1);
         page.openPage().editorTabAc().getEditor().type("Editor Text");
-        page.editorTabAc();
         newNotes = evrakNot.notlariOlustur(newNotes);
         //takeScreenshot();
 

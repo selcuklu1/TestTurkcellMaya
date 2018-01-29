@@ -435,7 +435,8 @@ public class VekaletIslemleriTest extends BaseTest {
                 .evrakSayiSagDoldur()
                 .evrakGelisTipiSec(evrakGelisTipi)
                 .ivedilikSec(ivedilik)
-                .dagitimBilgileriKisiSec(nameVV)
+                //.dagitimBilgileriKisiSec(nameVV)
+                .dagitimBilgileriKisiSec2(nameVV)
                 .vekeletAlanVerenTabloVekaletAlanveyaVerenSec(nameVV)
                 .kaydet();
 
@@ -490,7 +491,7 @@ public class VekaletIslemleriTest extends BaseTest {
                 .havaleYap()
                 .havaleYapKisiTreeSec(nameVV)
                 .vekeletAlanVerenTabloVekaletAlanveyaVerenSec(nameVV)
-                .kullanciListesiSec(kullanici)//ikinci gelen seçilmeli
+                .kullanciListesiSec2(kullanici)//ikinci gelen seçilmeli
                 .confirmDialog().dialogMessage().shouldHave(text(mesaj));
 
         gelenEvraklarPage.confirmDialog().confirmEvetTikla();
@@ -541,7 +542,7 @@ public class VekaletIslemleriTest extends BaseTest {
                 .evrakSayiSagDoldur()
                 .evrakGelisTipiSec(evrakGelisTipi)
                 .ivedilikSec(ivedilik)
-                .dagitimBilgileriKisiSec(nameVV)
+                .dagitimBilgileriKisiSec2(nameVV)
                 .vekeletAlanVerenTabloVekaletAlanveyaVerenSec(nameVA)
                 .kaydet();
         String evrakNO11 = gelenEvrakKayitPage.popUps();

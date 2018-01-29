@@ -470,7 +470,11 @@ public class GelenEvrakKayitPage extends MainPage {
     public GelenEvrakKayitPage geldigiKurumDoldurLovText(String geldigiKurum) {
         if (btnSecilenGeldigiKurumKaldir.isDisplayed())
             btnSecilenGeldigiKurumKaldir.click();
-        comboGeldigiKurum.selectLov(geldigiKurum);
+        comboGeldigiKurum
+                .type(geldigiKurum)
+                .getTitleItems()
+                .first()
+                .click();
         return this;
     }
 
@@ -574,6 +578,12 @@ public class GelenEvrakKayitPage extends MainPage {
     @Step("Dağıtım Bilgileri Kişi alanında \"{kisi}\" seçilir")
     public GelenEvrakKayitPage dagitimBilgileriKisiSec(String kisi) {
         txtDagitimBilgileriKisiComboLov.selectLov(kisi);
+        return this;
+    }
+
+    @Step("Dağıtım Bilgileri Kişi alanında \"{kisi}\" seçilir")
+    public GelenEvrakKayitPage dagitimBilgileriKisiSec2(String kisi) {
+        txtDagitimBilgileriKisiComboLov.type(kisi).getSelectableItems().filterBy(text(kisi)).first().click();
         return this;
     }
 
@@ -797,12 +807,7 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("Yeni Kayıt tıklanır")
     public GelenEvrakKayitPage yeniKayitButton() {
-        //if($("[id='evrakKaydetBasariliDialogForm:yeniKayitButton']").shouldBe(visible).exists()==true){
-        //   $("[id='evrakKaydetBasariliDialogForm:yeniKayitButton']").pressEnter();
-        //}
-        //else {
-        //}
-
+           $("[id$='yeniKayitButton']").pressEnter();
         return this;
     }
 

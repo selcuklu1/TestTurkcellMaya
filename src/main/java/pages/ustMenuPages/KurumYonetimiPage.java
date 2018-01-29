@@ -56,12 +56,14 @@ public class KurumYonetimiPage extends MainPage {
     SelenideElement txtFaxNumarasi1 = $(By.id("kurumBilgileriEditorForm:fax1Input"));
     SelenideElement txtFaxNumarasi2 = $(By.id("kurumBilgileriEditorForm:fax2Input"));
     SelenideElement txtAdres = $(By.id("kurumBilgileriEditorForm:adresInput"));
+    //SelenideElement txtUlke = $(By.id("kurumBilgileriEditorForm:lovUlke:LovText"));
     BelgenetElement txtUlke = comboLov(By.id("kurumBilgileriEditorForm:lovUlke:LovText"));
     BelgenetElement txtIl = comboLov(By.id("kurumBilgileriEditorForm:lovIl:LovText"));
     BelgenetElement txtIlce = comboLov(By.id("kurumBilgileriEditorForm:lovIlce:LovText"));
     SelenideElement txtEPosta = $(By.id("kurumBilgileriEditorForm:ePostaInput"));
     SelenideElement txtWebAdresi = $(By.id("kurumBilgileriEditorForm:webAdresiInput"));
     SelenideElement btnIletisimBilgisiKaydet = $(By.id("kurumBilgileriEditorForm:saveIletisimBilgisiButton"));
+    ElementsCollection listUlkeler = $$("div[id='kurumBilgileriEditorForm:lovUlke:lovTree'] > ul > li");
 
     // Kep Adresi elementleri
     ElementsCollection tableKepAdresleri = $$("tbody[id='kurumYonetimiEditorForm:kepBilgileriDataTable_data'] tr[role='row']");
@@ -286,7 +288,12 @@ public class KurumYonetimiPage extends MainPage {
 
     @Step("Sorgulama panelinde kurum doldur.")
     public KurumYonetimiPage sorgulaKurumDoldur(String kurumAdi) {
-        txtKurum.selectLov(kurumAdi);
+        txtKurum.clearAllSelectedItems();
+        txtKurum
+                .type(kurumAdi)
+                .getTitleItems()
+                .first()
+                .click();
         return this;
     }
 
@@ -378,9 +385,21 @@ public class KurumYonetimiPage extends MainPage {
 
     @Step("Ülke doldur")
     public KurumYonetimiPage ulkeDoldur(String ulke) {
+
+        txtUlke.clearAllSelectedItems();
+        txtUlke.type(ulke)
+                .getTitleItems()
+                .filterBy(Condition.textCaseSensitive(ulke))
+                .first()
+                .click();
+        /*
         txtUlke.setValue(ulke);
-        txtUlke.getDetailItems().filterBy(Condition.text("TC")).first().click();
-        //txtUlke.selectLov(ulke);
+        listUlkeler
+                .filterBy(Condition.textCaseSensitive(ulke))
+                .first()
+                .click();
+        //txtUlke.getDetailItems().filterBy(Condition.text("TC")).first().click();
+        */
         return this;
     }
 

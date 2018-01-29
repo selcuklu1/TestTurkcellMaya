@@ -81,6 +81,15 @@ public class IslemMesajlari extends BaseLibrary {
         }
     }
 
+    private boolean checkMessageTextBoolean(SelenideElement element, String expectedMessage) {
+        for (int i = 0; i < 500; i++) {
+            if (!element.text().isEmpty())
+                break;
+            sleep(10);
+        }
+        return element.text().contains(expectedMessage);
+    }
+
     @Step("Messaj kontrolü")
     private void checkMessage(String messageTitle, String... expectedMessage) {
         SelenideElement message = getMessageBody();
@@ -124,20 +133,66 @@ public class IslemMesajlari extends BaseLibrary {
     public boolean isBasarili() {
         //Not working?! boolean b = getMessageBody().$(titleLocator).has(exactText(BASARILI.value()));
         //takeScreenshot();
-        return getMessageBody().shouldBe(visible).$(titleLocator).text().equals(BASARILI.value());
+        SelenideElement m = getMessageBody().shouldBe(visible);
+        System.out.println("İşlem Mesajı teksti: " + m.text());
+        return m.$(titleLocator).text().equals(BASARILI.value());
+    }
+
+    public boolean isBasarili(String... expectedMessage) {
+        SelenideElement message = getMessageBody();
+
+        System.out.println(message.text());
+        takeScreenshot();
+
+        if (expectedMessage.length == 0)
+            return message.$(titleLocator).text().equals(BASARILI.value());
+        else
+            return message.$(titleLocator).text().equals(BASARILI.value())
+                    && checkMessageTextBoolean(message.$(msgLocator), expectedMessage[0]);
     }
 
     public boolean isUyari() {
         /*boolean b = $(titleLocator).shouldBe(visible).has(exactText(UYARI.value()));
         takeScreenshot();*/
-        return getMessageBody().shouldBe(visible).$(titleLocator).text().equals(UYARI.value());
+        SelenideElement m = getMessageBody().shouldBe(visible);
+        System.out.println("İşlem Mesajı teksti: " + m.text());
+        return m.$(titleLocator).text().equals(UYARI.value());
+    }
+
+    public boolean isUyari(String... expectedMessage) {
+        SelenideElement message = getMessageBody();
+
+        System.out.println(message.text());
+        takeScreenshot();
+
+        if (expectedMessage.length == 0)
+            return message.$(titleLocator).text().equals(UYARI.value());
+        else
+            return message.$(titleLocator).text().equals(UYARI.value())
+                    && checkMessageTextBoolean(message.$(msgLocator), expectedMessage[0]);
     }
 
     public boolean isDikkat() {
         /*boolean b = $(titleLocator).shouldBe(visible).has(exactText(DIKKAT.value()));
         takeScreenshot();*/
-        return getMessageBody().shouldBe(visible).$(titleLocator).text().equals(DIKKAT.value());
+        SelenideElement m = getMessageBody().shouldBe(visible);
+        System.out.println("İşlem Mesajı teksti: " + m.text());
+        return m.$(titleLocator).text().equals(DIKKAT.value());
     }
+
+    public boolean isDikkat(String... expectedMessage) {
+        SelenideElement message = getMessageBody();
+
+        System.out.println(message.text());
+        takeScreenshot();
+
+        if (expectedMessage.length == 0)
+            return message.$(titleLocator).text().equals(DIKKAT.value());
+        else
+            return message.$(titleLocator).text().equals(DIKKAT.value())
+                    && checkMessageTextBoolean(message.$(msgLocator), expectedMessage[0]);
+    }
+
 
     public void closeMessage() {
         try {

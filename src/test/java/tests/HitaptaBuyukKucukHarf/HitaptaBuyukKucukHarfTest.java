@@ -1,40 +1,24 @@
 package tests.HitaptaBuyukKucukHarf;
 
-import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
 import common.BaseTest;
-import data.TestData;
 import data.User;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
-import listeners.DriverEventListener;
-import org.openqa.selenium.Capabilities;
-import org.openqa.selenium.Platform;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxOptions;
-import org.openqa.selenium.remote.CapabilityType;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.support.events.EventFiringWebDriver;
-import org.testng.annotations.BeforeMethod;
+import io.qameta.allure.*;
 import org.testng.annotations.Test;
+import pages.MainPage;
+import pages.newPages.EvrakOlusturPage;
 import pages.pageComponents.SearchTable;
+import pages.pageComponents.SolMenu;
+import pages.pageData.SolMenuData;
 import pages.pageData.alanlar.EvrakDili;
-import pages.ustMenuPages.EvrakOlusturPage;
+import pages.pageData.alanlar.GeregiSecimTipi;
 import pages.ustMenuPages.SistemSabitleriPage;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-
-import static com.codeborne.selenide.Condition.readonly;
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.visible;
-import static pages.pageData.alanlar.GeregiSecimTipi.DAGITIM_PLANLARI;
-import static pages.pageData.alanlar.GeregiSecimTipi.KULLANICI;
+import static com.codeborne.selenide.Condition.*;
+import static pages.pageData.alanlar.GeregiSecimTipi.*;
 import static pages.pageData.alanlar.OnayKullaniciTipi.IMZALAMA;
 import static pages.pageData.alanlar.OnayKullaniciTipi.PARAFLAMA;
 
@@ -44,7 +28,7 @@ import static pages.pageData.alanlar.OnayKullaniciTipi.PARAFLAMA;
  * Class: "Hitapta Büyük Küçük Harf" konulu senaryoları içerir
  * Yazan: Samed Solak
  ****************************************************/
-
+@Feature("Hitapta büyük/küçük harf")
 public class HitaptaBuyukKucukHarfTest extends BaseTest {
 
     EvrakOlusturPage evrakOlustur;
@@ -52,91 +36,49 @@ public class HitaptaBuyukKucukHarfTest extends BaseTest {
     User optiim = new User("optiim", "123", "Optiim TEST", "Optiim Birim");
     User ztekin = new User("ztekin", "123", "Zübeyde TEKİN", "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ");
 
-    /*@BeforeMethod
-    public void loginBeforeTests() {
-    }*/
-
-    @BeforeMethod
-    public void setUp() throws Exception {
-//        useFirefox();
-    }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TS2064: Tüzel kişi- Hitapta büyük/küçük harf kontrolü")
+    @Test(enabled = true, description = "TS2064: Tüzel kişi - Hitapta büyük/küçük harf kontrolü")
     public void TS2064() throws InterruptedException {
 
-        String geregiSecimTipi = "Tüzel Kişi";
+        String geregiSecimTipi = TUZEL_KISI.getOptionText();
+
+        login(ztekin);
+        evrakOlustur = new EvrakOlusturPage().openPage();
 
         String geregiHepsiBuyuk = "BÜYÜK HARFLERLE TÜZEL KİŞİ";
         String beklenenHepsiBuyukHitap = "BÜYÜK HARFLERLE TÜZEL KİŞİYE";
+        hitapKontrol(geregiSecimTipi, geregiHepsiBuyuk, beklenenHepsiBuyukHitap);
 
         String geregiHepsiKucuk = "hepsi küçük harflerle tüzel kişi";
         String beklenenHepsiKucukHitap = "HEPSİ KÜÇÜK HARFLERLE TÜZEL KİŞİYE";
+        hitapKontrol(geregiSecimTipi, geregiHepsiKucuk, beklenenHepsiKucukHitap);
 
         String geregiBuyukKucuk = "Büyük Küçük Harflerle Tüzel Kişi";
         String beklenenBuyukKucukHitap = "BÜYÜK KÜÇÜK HARFLERLE TÜZEL KİŞİYE";
-
-        login("ztekin", "123");
-        evrakOlustur = new EvrakOlusturPage();
-        evrakOlustur
-                .openPage();
-
-        hitapKontrol(geregiSecimTipi, geregiHepsiBuyuk, beklenenHepsiBuyukHitap);
-
-        evrakOlustur
-                .bilgilerTabiAc()
-                .geregiSonKayitSil();
-
-        hitapKontrol(geregiSecimTipi, geregiHepsiKucuk, beklenenHepsiKucukHitap);
-
-        evrakOlustur
-                .bilgilerTabiAc()
-                .geregiSonKayitSil();
-
         hitapKontrol(geregiSecimTipi, geregiBuyukKucuk, beklenenBuyukKucukHitap);
-
-        evrakOlustur
-                .bilgilerTabiAc()
-                .geregiSonKayitSil();
-
     }
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS2156: Kurum- Hitapta büyük/küçük harf kontrolü")
     public void TS2156() throws InterruptedException {
 
-        String geregiSecimTipi = "Kurum";
+        String geregiSecimTipi = KURUM.getOptionText();
+
+        login(ztekin);
+        evrakOlustur = new EvrakOlusturPage().openPage();
 
         String geregiHepsiBuyuk = "BÜYÜK HARFLERLE KURUM";
         String beklenenHepsiBuyukHitap = "BÜYÜK HARFLERLE KURUMA";
+        hitapKontrol(geregiSecimTipi, geregiHepsiBuyuk, beklenenHepsiBuyukHitap);
 
         String geregiHepsiKucuk = "hepsi küçük harflerle kurum";
         String beklenenHepsiKucukHitap = "hepsi küçük harflerle kuruma";
+        hitapKontrol(geregiSecimTipi, geregiHepsiKucuk, beklenenHepsiKucukHitap);
 
         String geregiBuyukKucuk = "Büyük Küçük Harflerle Kurum";
         String beklenenBuyukKucukHitap = "Büyük Küçük Harflerle Kuruma";
-        login("ztekin", "123");
-        evrakOlustur = new EvrakOlusturPage();
-        evrakOlustur
-                .openPage();
-
-        hitapKontrol(geregiSecimTipi, geregiHepsiBuyuk, beklenenHepsiBuyukHitap);
-
-        evrakOlustur
-                .bilgilerTabiAc()
-                .geregiSonKayitSil();
-
-        hitapKontrol(geregiSecimTipi, geregiHepsiKucuk, beklenenHepsiKucukHitap);
-
-        evrakOlustur
-                .bilgilerTabiAc()
-                .geregiSonKayitSil();
-
         hitapKontrol(geregiSecimTipi, geregiBuyukKucuk, beklenenBuyukKucukHitap);
-
-        evrakOlustur
-                .bilgilerTabiAc()
-                .geregiSonKayitSil();
 
     }
 
@@ -144,50 +86,31 @@ public class HitaptaBuyukKucukHarfTest extends BaseTest {
     @Test(enabled = true, description = "TS2157: Birim- Hitapta büyük/küçük harf kontrolü")
     public void TS2157() throws InterruptedException {
 
-        String geregiSecimTipi = "Birim";
+        String geregiSecimTipi = GeregiSecimTipi.BIRIM.getOptionText();
+
+        login(ztekin);
+        evrakOlustur = new EvrakOlusturPage().openPage();
 
         String geregiHepsiBuyuk = "BÜYÜK HARFLERLE BİRİM";
         String beklenenHepsiBuyukHitap = "BÜYÜK HARFLERLE BİRİME";
+        hitapKontrol(geregiSecimTipi, geregiHepsiBuyuk, beklenenHepsiBuyukHitap);
 
         String geregiHepsiKucuk = "hepsi küçük harflerle birim";
         String beklenenHepsiKucukHitap = "hepsi küçük harflerle birime";
+        hitapKontrol(geregiSecimTipi, geregiHepsiKucuk, beklenenHepsiKucukHitap);
 
         String geregiBuyukKucuk = "Büyük Küçük Harflerle Birim";
         String beklenenBuyukKucukHitap = "Büyük Küçük Harflerle Birime";
-        login("ztekin", "123");
-        evrakOlustur = new EvrakOlusturPage();
-        evrakOlustur
-                .openPage();
-
-        hitapKontrol(geregiSecimTipi, geregiHepsiBuyuk, beklenenHepsiBuyukHitap);
-
-        evrakOlustur
-                .bilgilerTabiAc()
-                .geregiSonKayitSil();
-
-        hitapKontrol(geregiSecimTipi, geregiHepsiKucuk, beklenenHepsiKucukHitap);
-
-        evrakOlustur
-                .bilgilerTabiAc()
-                .geregiSonKayitSil();
-
         hitapKontrol(geregiSecimTipi, geregiBuyukKucuk, beklenenBuyukKucukHitap);
-
-        evrakOlustur
-                .bilgilerTabiAc()
-                .geregiSonKayitSil();
-
     }
 
     @Test(enabled = true, description = "TS2090: Dağıtım planına ve kullanıcıya hitap")
     public void TS2090() throws Exception {
         //Dağıtım planına ve kullanıcıya hitap
         //sistemde kayıtlı dağıtım planı olmalı, dağıtım planının içeriğinde küçük harfli birim, büyük harfli kurum olmalı
-//        DAĞITIM YERLERİNE
-//        login(user1);
+        //DAĞITIM YERLERİNE
 
-        String d = useFirefoxWindows151("TS2090");
-        System.out.println("Download path:" + d);
+        useFirefox();
 
         String uygulanacakDeger;
         User user = optiim;
@@ -215,60 +138,117 @@ public class HitaptaBuyukKucukHarfTest extends BaseTest {
                 .onayAkisiEkleButonaTikla()
                 .secilenAnlikOnayAkisKullanicilariKontrolEt(user, PARAFLAMA)
                 .anlikOnayAkisKullanicininTipiSec(user, IMZALAMA)
-                .kullanButonaTikla()
-                .evrakPageButtons().getImzalaButton().shouldBe(visible);
+                .kullanButonaTikla();
+        evrakOlusturPage.pageButtons().getImzalaButton().shouldBe(visible);
         evrakOlusturPage.editorTab().openTab().getEditor().type("Editör tekst");
-        evrakOlusturPage.evrakPageButtons().evrakImzala();
+        evrakOlusturPage.pageButtons().evrakImzala();
 
-/*WebDriver.Window a; a.
-        com.codeborne.selenide.webdriver.DefaultDriverFactory defaultDriverFactory
+        step9_10(konu);
 
-        FirefoxOptions options = new FirefoxOptions()
-                .setAcceptInsecureCerts(true)
-                .addPreference("security.insecure_field_warning.contextual.enabled", false)
-                .setLogLevel(FirefoxDriverLogLevel.fromLevel(Level.OFF));
-        options.addPreference("browser.download.folderList", 2);
-        options.addPreference("browser.download.dir", TestData.docDownloadPathWindows);
-        Capabilities caps = getCapabilities();
-        caps.merge(options);
+        searchTable = new SearchTable(Selenide.$("#mainPreviewForm\\:dataTableId"));
+        SelenideElement row = gonderilenYer(uygulanacakDeger, searchTable);
+        postalanackYazdir(row);
+        detayYazdir(konu);
+        yazdirPdf();
+
+        row = gonderilenYer("Sayın " + ztekin.getFullname(), searchTable);
+        postalanackYazdir(row);
+        detayYazdir(konu);
+        Selenide.switchTo().window(1);
+        Selenide.$$x("//*[.='Sayın "+ ztekin.getFullname()+"']")
+                .shouldHaveSize(2).first().shouldBe(visible);
+        Allure.addAttachment("Hitap \"Sayın " + ztekin.getFullname() + "\" kontrolü", "");
+        takeScreenshot();
         Selenide.close();
-        WebDriver driver = new EventFiringWebDriver(new FirefoxDriver(options)).register(new DriverEventListener()) ;
-        WebDriverRunner.setWebDriver(driver);
+    }
 
+    @Step("Postalanacak Evraklarda evrağı bul ve seç")
+    private void step9_10(String konu) {
         login(ztekin);
         new SolMenu().openMenu(SolMenuData.BirimEvraklari.PostalanacakEvraklar);
-        new MainPage().searchTable().findRows(text(konu)).getFoundRow().click();*/
-        Selenide.close();
+        new MainPage().searchTable().findRows(text(konu)).getFoundRow().click();
+        Selenide.$("button .postala").click();
+    }
 
+    @Step("Postalanacak Yerler. Gönderilen Yer kontrolü")
+    private SelenideElement gonderilenYer(String gonderilenYer, SearchTable table) {
+        return table.findRows(textCaseSensitive(gonderilenYer)).getFoundRow().shouldBe(visible);
+    }
+
+    @Step("Postalanacak Yerler. Yazdır butona tıklanır")
+    public HitaptaBuyukKucukHarfTest postalanackYazdir(SelenideElement row){
+        row.$x("descendant::button[.='Yazdır']").shouldBe(visible).click();
+        return this;
+    }
+
+    @Step("Evrak Detayları. Yazdır butona tıklanır")
+    public HitaptaBuyukKucukHarfTest detayYazdir(String konu){
+        new SearchTable(Selenide.$("#postaDetayYazdirForm\\:dtPostaEvrakUstVeri"))
+                .findRows(text(konu))
+                .getFoundRow()
+                .$x("descendant::button[.='Yazdır']").click();
+        return this;
+    }
+
+    @Step("Yazdır ekranda Hitap kontrolü")
+    public HitaptaBuyukKucukHarfTest yazdirPdf(){
+        Selenide.switchTo().window(1);
+        ElementsCollection pages = Selenide.$$("#viewer .page");
+        Allure.addAttachment("Sayfa sayısı 2 kotrolu", String.valueOf(pages.size()));
+        pages.shouldHaveSize(2);
+
+        String birimHitap = "hepsi küçük harflerle birime";
+        SelenideElement e = Selenide.$x("//*[.='" + birimHitap + "']");
+        Allure.addAttachment("Hitap \"" + birimHitap + "\" kontrolü yapılacak", "");
+        e.shouldBe(visible);
+        String p = e.$x("ancestor::div[@class='page']").shouldBe(visible).attr("data-page-number");
+        Allure.addAttachment("Hitap \""+ birimHitap + "\" kontrolü "+p+" syafada bulundu", "");
+        Selenide.executeJavaScript("arguments[0].scrollIntoView();", e);
+        takeScreenshot();
+
+
+        int k = p.equals("1")? 2:1;
+        String kurumHitap = "BÜYÜK HARFLERLE KURUMA";
+        Allure.addAttachment("Hitap \""+ kurumHitap + "\" sayfa " + k + " bulunmalı", "");
+        e = Selenide.$$("#viewer .page").get(k).$x("//div[.='" + kurumHitap + "']").shouldBe(visible);
+        Selenide.executeJavaScript("arguments[0].scrollIntoView();", e);
+        takeScreenshot();
+
+        WebDriverRunner.getWebDriver().close();
+        Selenide.switchTo().window(0);
+        return this;
     }
 
 
-    public void hitapKontrol(String geregiSecimTipi, String geregi, String beklenenHitap) throws InterruptedException {
 
-        evrakOlustur
-                .bilgilerTabiAc()
+
+
+    @Step("\"{geregi}\" hitap kontolleri")
+    private void hitapKontrol(String geregiSecimTipi, String geregi, String beklenenGeregi){
+        evrakOlustur.bilgileriTab().openTab()
+                .bilgiTemizle().geregiTemizle()
                 .geregiSecimTipiSec(geregiSecimTipi)
-                .geregiDoldur(geregi, "");
-
-        evrakOlustur
-                .editorTabAc()
-                .editorHitapKontrol(beklenenHitap);
-
-        windowHandleBefore();
-
-        evrakOlustur
-                .pdfOnIzleme();
-
-        Thread.sleep(6000);
-        switchToNewWindow();
-
-        evrakOlustur
-                .pdfKontrol
-                .PDFHitapKontrol(beklenenHitap);
-
-        switchToDefaultWindow();
-
-        evrakOlustur
-                .bilgilerTabiAc();
+                .geregiSec(geregi);
+        hitapKontrolEditor(beklenenGeregi);
+        hitapKontrolPdfOnIzleme(beklenenGeregi);
     }
+
+    @Step("Editör tabında hitap konrolü yapılır")
+    private void hitapKontrolEditor(String beklenenHitap) {
+        evrakOlustur.editorTab().openTab()
+                .getHitapAlani().shouldHave(text(beklenenHitap));
+    }
+
+    @Step("Pdf Önizlemede hitap konrolü yapılır")
+    private void hitapKontrolPdfOnIzleme(String beklenenHitap) {
+        evrakOlustur.evrakPageButtons().pdfOnizlemeTikla();
+        Selenide.switchTo().window(1);
+        Selenide.sleep(6000);
+        Selenide.$x("//*[.='"+ beklenenHitap +"']").shouldBe(visible);
+        WebDriverRunner.getWebDriver().close();
+        Selenide.switchTo().window(0);
+    }
+
+
+
 }

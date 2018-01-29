@@ -39,7 +39,7 @@ public class EditorTab extends MainPage {
         return new TextEditor(page);
     }
 
-    @Step(tabName + " tabı aç")
+    @Step(tabName + " tabı açılır")
     public EditorTab openTab(boolean... clickIfOpen) {
         SelenideElement tab = page.$x("descendant::td[contains(@class,'tabMenuContainer') and descendant::span[contains(@class,'tabMenu') and text()='" + tabName + "']]");
         if (clickIfOpen.length > 0 || !tab.attr("class").equals("tabMenuContainerSelected"))
@@ -63,7 +63,7 @@ public class EditorTab extends MainPage {
         return page.$("div[id*='icerikSablonDialog']");
     }
 
-    @Step("Ön tanımlı şablonu bul ve seç")
+    @Step("Ön tanımlı şablonu bul ve seçilir")
     public EditorTab onTanimliSablonuSec(String sablonAdi) {
         //container.$("div[id*='icerikSablonDialog']").shouldBe(visible);
         BelgenetElement cmbSablon = comboBox(getOnTanimliDialog(),"label[id$='_label']");
@@ -82,7 +82,7 @@ public class EditorTab extends MainPage {
         return this;
     }
 
-    @Step("Editör teksti kontrol et")
+    @Step("Editör teksti kontrol edilir")
     public EditorTab onTanimliSablonuOnizlemeKontrol(Condition... conditions) {
         SelenideElement element = getOnTanimliDialog().$("[id$='onizlemeField']").shouldBe(visible);
 //        sleep(5000);
@@ -96,10 +96,22 @@ public class EditorTab extends MainPage {
         return this;
     }
 
-    @Step("Ön tanımlı şablonu uygula")
+    @Step("Ön tanımlı şablonu uygulanır")
     public EditorTab onTanimliSablonuUygula() {
         getOnTanimliDialog().$("button[type=submit]").click();
         //.$x("descenbutton/span[text()='Uygula']/..").click();
         return this;
     }
+
+    @Step("Editör alanı bulunur")
+    public SelenideElement getEditorArea(){
+        return page.$("div[id$='allPanels']");
+    }
+
+    @Step("Hitap alanı bulunur")
+    public SelenideElement getHitapAlani(){
+        return page.$("div[id$=hitapInplace]");
+    }
+
+
 }

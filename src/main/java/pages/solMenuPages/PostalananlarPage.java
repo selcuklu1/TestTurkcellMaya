@@ -33,6 +33,7 @@ public class PostalananlarPage extends MainPage {
     SelenideElement btnPostaDetayi = $x("//span[text() = 'Posta Detayı']/../../..//button");
     ElementsCollection tblEvraklar = $$("[id^='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
 
+    SelenideElement btnIcerikPostaDetayiTuzelKisiGuncelle = $x("//*[@id='inboxItemInfoForm:postalananDataGrid']/tbody/tr/td/div/table/tbody/tr[4]/td[8]/div/button[1]");
     SelenideElement btnGuncelle = $x("//*[@id='mainPreviewForm:postalananDataGrid']/tbody/tr/td/div/table/tbody/tr[2]/td[8]/div/button[1]");
     SelenideElement btnTuzelKisiGuncelle = $x("//*[@id='mainPreviewForm:postalananDataGrid']/tbody/tr/td/div/table/tbody/tr[4]/td[8]/div/button[1]");
     SelenideElement txtPosta = $x("//*[@id=\'mainPreviewForm:postaGuncellePanel\']/tbody/tr[2]/td[3]/input");
@@ -63,7 +64,11 @@ public class PostalananlarPage extends MainPage {
     SelenideElement tuzelKisiGuncelle = $x("//*[@id='mainPreviewForm:postalananDataGrid']/tbody/tr/td/div/table/tbody/tr[4]/td[8]/div/button[1]");
     //
     SelenideElement kullaniciGuncelle = $x("//*[@id='mainPreviewForm:postalananDataGrid']/tbody/tr/td/div/table/tbody/tr[5]/td[8]/div/button[1]");
-
+    SelenideElement btnIcerikPDTebligatTarihGnc = $x("//*[@id='inboxItemInfoForm:tebligatMazbatasiTarihiId_input']");
+    SelenideElement btnIcerikPDPostaAciklama = $x("//*[@id='inboxItemInfoForm:postaGuncellePanel']/tbody/tr[3]/td[3]/textarea");
+    SelenideElement btnIcerikPDPostaKodGnc = $x("//*[@id='inboxItemInfoForm:postaGuncellePanel']/tbody/tr[2]/td[3]/input");
+    SelenideElement btnIcerkPDGuncellemeKaydet = $x("//*[@id='inboxItemInfoForm:postaGuncelleDialog']/div[2]/div/div/button");
+    SelenideElement icerikEvrakSayisi = $x("//*[@id='inboxItemInfoForm:evrakDetayPanelGrid']/tbody/tr[3]/td[3]/label");
     //SelenideElement btnEtiketPopupKapat = $x("//*[@id='mainPreviewForm:showAppletContainer']/div/div[1]/a/span");
     //  SelenideElement btnDagitimYerDetayKapat = $x("//*[@id='mainPreviewForm:dagitimPlaniDetayViewDialog']/div[1]/a/span");
 
@@ -238,6 +243,10 @@ public class PostalananlarPage extends MainPage {
         return $x("//tbody/tr[3]/td[3]/label").getAttribute("outerText");
     }
 
+    @Step ("Postalanan Evrak Icerik icindeki Evrak Sayisi")
+    public String icerikEvrakSay() {
+            return $x("//*[@id='inboxItemInfoForm:evrakDetayPanelGrid']/tbody/tr[3]/td[3]/label").getAttribute("innerText");
+    }
     @Step("Kurdele Butonuna Tıkla")
     public PostalananlarPage btnKurdele() {
 
@@ -318,13 +327,39 @@ public class PostalananlarPage extends MainPage {
         return this;
     }
 
+    @Step("Icerik Posta Detay Tuzel Kisi Tebligat Tarih Guncelle")
+    public PostalananlarPage btnIcerikPDTuzelKisiTebTarGnc (String date) {
+            btnIcerikPDTebligatTarihGnc.setValue(date);
+            return this;
+    }
+
     @Step("Filtre sekmesini aç")
     public PostalananlarPage btnFiltreSpan() {
-
         btnFiltreSpan.click();
         return this;
     }
+    @Step("Icerik içindeki posta detayi butonu iç sayfa tuzek kisi guncelleme")
+    public PostalananlarPage btnIcerikPostaDetayTuzelKisiGnc () {
+            btnIcerikPostaDetayiTuzelKisiGuncelle.click();
+            return this;
+    }
+    @Step("Icerik içindeki posta detayi butonu iç sayfa tuzel kisi posta kodu guncelleme")
+    public PostalananlarPage btnIcerikPosDetTuzKisPosKodGnc (String postaKodu) {
+           btnIcerikPDPostaKodGnc.setValue(postaKodu);
+           return this;
 
+    }
+    @Step("Icerik içindeki posta detayi buton tuzel kisi posta açıklama güncelle")
+    public PostalananlarPage btnIcerikPDTuzelKisiPosAcikGnc (String aciklama) {
+            btnIcerikPDPostaAciklama.setValue(aciklama);
+            return this;
+
+    }
+    @Step("Icerik Posta Detay Pop up Guncelleme kaydet")
+    public PostalananlarPage btnIcerikPDPopupKaydet () {
+        btnIcerkPDGuncellemeKaydet.click();
+        return this;
+    }
     @Step("Tuzel Kisi Guncelle")
     public PostalananlarPage btnTuzelKisiGuncelle () {
         btnTuzelKisiGuncelle.click();

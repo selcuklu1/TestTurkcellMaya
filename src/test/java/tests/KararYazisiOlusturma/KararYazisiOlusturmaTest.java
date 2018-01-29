@@ -6,6 +6,7 @@ package tests.KararYazisiOlusturma;
  * Yazan: Can Şeker
  ****************************************************/
 
+import com.codeborne.selenide.Selenide;
 import common.BaseTest;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Severity;
@@ -146,7 +147,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS2240: Teslim alınmayı bekleyenler listesinden Gündem klasörüne evrak kapatma")
     public void TS2240() throws InterruptedException {
-
+        String downloadPath = useChromeWindows151("TS2240");
         String basariMesaji = "İşlem başarılıdır!";
         String kaldirilicakKlasor = "Gündem";
         String konuKodu = "Diğer";
@@ -192,8 +193,8 @@ public class KararYazisiOlusturmaTest extends BaseTest {
         gundemIzlemePage
                 .aralikliGundemOlustur()
                 .islemMesaji().basariliOlmali(basariMesaji);
-        String dosyaAdi = gundemIzlemePage.indirilenDosyaAd();
-
+        String dosyaAdi = gundemIzlemePage.indirilenDosyaAd(downloadPath);
+        System.out.println(dosyaAdi);
         gundemIzlemePage
                 .wordDosyaKontrolEt(dosyaAdi)
                 .yayimla();
@@ -202,12 +203,14 @@ public class KararYazisiOlusturmaTest extends BaseTest {
                 .openPage()
                 .kullaniciErisimTab()
                 .kullanıcıErisimAra();
+
+        Selenide.close();
     }
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS2239: Gündem yayınlama")
     public void TS2239() {
-
+        String downloadPath = useChromeWindows151("TS2239");
         String basariMesaji = "İşlem başarılıdır!";
         String kaldirilicakKlasor = "Gündem";
         String path = getDownloadPath();
@@ -224,7 +227,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
         gundemIzlemePage
                 .aralikliGundemOlustur()
                 .islemMesaji().basariliOlmali(basariMesaji);
-        String dosyaAdi = gundemIzlemePage.indirilenDosyaAd(path);
+        String dosyaAdi = gundemIzlemePage.indirilenDosyaAd(downloadPath);
 
         gundemIzlemePage
                 .wordDosyaKontrolEt(dosyaAdi)
@@ -234,6 +237,8 @@ public class KararYazisiOlusturmaTest extends BaseTest {
                 .openPage()
                 .kullaniciErisimTab()
                 .kullanıcıErisimAra();
+
+        Selenide.close();
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -249,6 +254,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
         String kararNo = createRandomNumber(12);
         String editorIcerik = "Deneme Can";
         String kullanici = "Yasemin Çakıl AKYOL";
+        String kullanici2 = "Zübeyde Tekin";
         String onayAkisi = "ZUZU_ONAY_AKİSİ_1";
         String ivedilik = "İvedi";
         String filePath = getUploadPath() + "Otomasyon.pdf";
@@ -295,6 +301,9 @@ public class KararYazisiOlusturmaTest extends BaseTest {
 
         kararYazisiOlusturPage
                 .editorTabAc()
+                .editorNoAlanıGeldigiGorme(toplantiNo,toplantiTarih,kararNo)
+                .imzaciGeldigiGorme(kullanici2)
+                .ilgiGeldigiGorme(not)
                 .editorIcerikDoldur(not)
                 .kaydetveOnaySun()
                 .kaydetVeOnaySunAciklamaDoldur(not)
@@ -505,7 +514,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS1715: Gelen evrak listesinden Gündem klasörüne evrak kapatma")
     public void TS1715() throws InterruptedException {
-
+        String downloadPath = useChromeWindows151("TS1715");
         String basariMesaji = "İşlem başarılıdır!";
         String konuKodu = "Diğer";
         String kaldirilicakKlasor = "Gündem";
@@ -547,7 +556,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
         gundemIzlemePage
                 .aralikliGundemOlustur()
                 .islemMesaji().basariliOlmali(basariMesaji);
-        String dosyaAdi = gundemIzlemePage.indirilenDosyaAd();
+        String dosyaAdi = gundemIzlemePage.indirilenDosyaAd(downloadPath);
 
         gundemIzlemePage
                 .wordDosyaKontrolEt(dosyaAdi)
@@ -558,6 +567,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
                 .kullaniciErisimTab()
                 .kullanıcıErisimAra();
 
+        Selenide.close();
     }
 
 

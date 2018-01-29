@@ -28,7 +28,9 @@ public class Firefox extends BaseTest implements WebDriverProvider {
         //return new FirefoxDriver(capabilities);
         FirefoxOptions options = new FirefoxOptions();
         options.addPreference("browser.download.folderList", 1);
-        options.addPreference("browser.helperApps.neverAsk.force", true);
+        options.addPreference("browser.helperApps.alwaysAsk.force", false);
+        options.addPreference("browser.helperApps.neverAsk.openFile", "true");
+        options.addPreference("browser.helperApps.neverAsk.saveToDisk", "true");
         options.addPreference("browser.download.manager.showWhenStarting",false);
         options.addPreference("browser.helperApps.neverAsk.saveToDisk", "application/excel");
         options.addPreference("browser.helperApps.neverAsk.saveToDisk", "application/vnd.ms-excel");
@@ -38,6 +40,9 @@ public class Firefox extends BaseTest implements WebDriverProvider {
         options.merge(capabilities);
         options.setProfile(profile);
         return new FirefoxDriver(options);
+
+        //application/vnd.ms-excel
+        //text/xml; charset=UTF-8
     }
 
     public WebDriver createDriver1(DesiredCapabilities capabilities) {
