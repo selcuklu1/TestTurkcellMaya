@@ -15,6 +15,7 @@ public class PostalananEvrakRaporuPage extends MainPage {
     SelenideElement btnPostaBaslangicTarihi = $(By.id("postalananEvrakRaporuForm:ilkTarihCalendar_input"));
     SelenideElement btnSorgula = $(By.id("postalananEvrakRaporuForm:sorgulaButton"));
     ElementsCollection tblSorgulamaSonuc = $$("tbody[id='postalananEvrakRaporuForm:postalananEvrakDataTable_data']");
+    SelenideElement sorguTablosu = $x("//*[@id='postalananEvrakRaporuForm:postalananEvrakDataTable_data']");
     SelenideElement btnIlkEvrakGecmisi = $(By.id("postalananEvrakRaporuForm:postalananEvrakDataTable:0:evrakGecmisiId"));
     SelenideElement btnEvrakGecmisiKapat = $x("//*[@id='postalananEvrakRaporHareketGecmisiForm:postalananEvrakRaporhareketGecmisiDataTableDialogId']/div[1]/a/span");
     SelenideElement btnEvrakGoster = $(By.id("postalananEvrakRaporuForm:postalananEvrakDataTable:0:evrakGosterButton"));
@@ -28,7 +29,8 @@ public class PostalananEvrakRaporuPage extends MainPage {
     SelenideElement etiketBastirPopupIlkSatir = $x("//*[@id='etiketBastirDaialog']/div[2]/form/center/table/tbody/tr[1]/td/input");
     SelenideElement etiketBastirPopupIlkKolon = $x("//*[@id='etiketBastirDaialog']/div[2]/form/center/table/tbody/tr[2]/td/input");
     SelenideElement etiketBastirPopupTamam = $x("//*[@id='etiketBastirDaialog']/div[2]/form/center/table/tbody/tr[3]/td/button");
-
+    SelenideElement btnPostayalanAltBirim = $x("//*[@id='postalananEvrakRaporuForm:altBirimDahilId']/div[2]/span");
+    SelenideElement btnPostaSahibiAltBirim = $x("//*[@id='postalananEvrakRaporuForm:altBirimSahibiDahilId']/div[2]/span");
     @Step("Postalanan Evrak Raporu sayfasını aç")
     public PostalananEvrakRaporuPage openPage() {
 
@@ -121,6 +123,31 @@ public class PostalananEvrakRaporuPage extends MainPage {
         etiketBastirPopupIlkSatir.setValue(satir);
         etiketBastirPopupIlkKolon.setValue(kolon);
         etiketBastirPopupTamam.click();
+        return this;
+    }
+
+    @Step("Postalayan Alt birimi dahil et")
+    public PostalananEvrakRaporuPage btnPostalayanAltBirim () {
+        btnPostayalanAltBirim.click();
+        return this;
+    }
+    @Step("Posta Sahibi Alt birimi dahil et")
+    public PostalananEvrakRaporuPage btnPostaSahibiAltbirim () {
+        btnPostaSahibiAltBirim.click();
+        return this;
+    }
+
+    @Step("Sorgulama sonucu gelen sonuçların evrak geçmiş, detay ve etiket bastır ekranlarının tek tek kontrolü")
+    public PostalananEvrakRaporuPage ekranSorgulananSonucKontrol() {
+        String SchildElementCount;
+        SchildElementCount = sorguTablosu.getAttribute("childElementCount");
+        int childElementCount = Integer.parseInt(SchildElementCount);
+        for (int i = 0 ; i < childElementCount ; i++) {
+            //*[@id="postalananEvrakRaporuForm:postalananEvrakDataTable:0:evrakGecmisiId"]/span[1]
+            String paramEvrakGecmisiID = "//*[@id='postalananEvrakRaporuForm:postalananEvrakDataTable:"+String.valueOf(i)+":evrakGecmisiId']/span[1]";
+            String paramEvrakDetayID = "//*[@id='postalananEvrakRaporuForm:postalananEvrakDataTable:"+String.valueOf(i)+":evrakGosterButton']/span[1]";
+
+        }
         return this;
     }
 }

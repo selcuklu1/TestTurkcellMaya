@@ -443,4 +443,18 @@ public class EvrakPostalamaTest extends BaseTest {
 
 
     }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true , description = "TS1434 : Postalanan Evrak Raporu Alan kontrolleri")
+    public void TS1434() throws InterruptedException {
+        login("mbozdemir" , "123");
+
+        postalananEvrakRaporuPage
+                .openPage()
+                .btnPostalayanAltBirim()
+                .btnPostaSahibiAltbirim()
+                .postaSorgulama();
+
+        Thread.sleep(4000);
+    }
 }
