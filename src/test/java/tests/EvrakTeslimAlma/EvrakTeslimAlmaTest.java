@@ -102,6 +102,72 @@ public class EvrakTeslimAlmaTest extends BaseTest {
                 .openPage()
                 .evrakSecNoTeslimAl(konu,true);
 
+
+        teslimAlinanlarPage
+                .openPage()
+                .evrakNoIleEvrakSec(konu)
+                .secilenEvrakEvrakGecmisi()
+                .evrakGecmisi(kisi,islemSureci);
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS2316: Teslim alınmayı bekleyenler listesinden bir evrakı teslim alma (içerikten)")
+    public void TS2316() throws InterruptedException {
+        String basariMesaji = "İşlem başarılıdır!";
+        String konuKodu = "120.05";
+        String konu = "TS-2316-" + getSysDate();
+        String evrakTuru = "Resmi Yazışma";
+        String evrakDili = "Türkçe";
+        String evrakTarihi = getSysDateForKis();
+        String gizlilikDerecesi = "Normal";
+        String kisiKurum = "Kurum";
+        String geldigiKurum = "Esk Kurum 071216 2";
+        String kisiGercek = "Gerçek Kişi";
+        String evrakGelisTipi = "Posta";
+        String ivedilik = "Normal";
+        String ekMetni = "test otomasyon" + getSysDateForKis();
+        String aciklama = "Test Otomasyon";
+        String evrakNO321;
+        String evrakNO328;
+        String kisi = "Zübeyde Tekin";
+        String islemSureci = "Evrak Teslim Alındı ";
+
+
+        String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
+        String details = "BİLİŞİM HİZMETLERİ VE UYDU PAZARLAMA GENEL MÜDÜR Y";
+
+        //Pre-requisites Gelen Evrak Oluşturma
+        gelenEvrakKayitPage
+                .openPage();
+
+        //Pre-requisites Evrak Oluşturma
+        gelenEvrakKayitPage
+                .konuKoduDoldur(konuKodu)
+                .konuDoldur(konu)
+                .evrakTuruSec(evrakTuru)
+                .evrakDiliSec(evrakDili)
+                .evrakTarihiDoldur(evrakTarihi)
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .kisiKurumSec(kisiKurum)
+                .geldigiKurumDoldurLovText(geldigiKurum)
+                .evrakSayiSagDoldur()
+                .evrakGelisTipiSec(evrakGelisTipi)
+                .ivedilikSec(ivedilik)
+                .dagitimBilgileriBirimDoldurWithDetails(birim, details)
+                .kaydet()
+                .popUps();
+
+
+        gelenEvrakKayitPage
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+
+        teslimAlinmayiBekleyenlerPage
+                .openPage()
+                .evrakSecIcerikGoster(konu,true)
+                .içeriktenEvrakTeslimAl()
+                .içeriktenEvrakEvet();
+
         teslimAlinanlarPage
                 .openPage()
                 .evrakNoIleEvrakSec(konu)

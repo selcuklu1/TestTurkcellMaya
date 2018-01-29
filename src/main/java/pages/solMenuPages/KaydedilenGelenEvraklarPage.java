@@ -47,6 +47,8 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
     SelenideElement txtEvrakBilgileriListMiat = $("[id$=miatCalendar_input");
     SelenideElement txtEvrakBilgileriListAciklama = $(By.id("inboxItemInfoForm:evrakBilgileriList:14:j_idt12226"));
 
+    ElementsCollection tblEvrakGecmisi = $$("[id$='hareketGecmisiDataTable_data'] > tr[role='row']");
+    ElementsCollection tblEvraklar = $$("[id^='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
 
     @Step("Kaydedilen gelen evraklar sayfası aç")
     public KaydedilenGelenEvraklarPage openPage() {
@@ -131,6 +133,12 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Evrak geçmişi alanına tıklanır")
+    public KaydedilenGelenEvraklarPage secilenEvrakEvrakGecmisi(){
+        $$("[id$='evrakOnizlemeTab'] ul li").filterBy(Condition.text("Evrak Geçmişi")).get(0).$("a").click();
+        return this;
+    }
+
 
     @Step("Tabloda konuya göre evrak kontrolu : {konu}")
     public KaydedilenGelenEvraklarPage tabloKonuyaGoreEvrakKontrolu(String konu) {
@@ -140,12 +148,30 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Evrak Geçmişi Kontrol")
+    public KaydedilenGelenEvraklarPage evrakGecmisi(String teslimAlinan,String islemSureci) {
+        boolean durum = tblEvrakGecmisi.filterBy(Condition.text(islemSureci)).filter(Condition.text(teslimAlinan)).size() == 1;
+        Assert.assertEquals(durum,true);
+        takeScreenshot();
+        return this;
+
+    }
+
     @Step("Tabloda konuya göre evrak İcerik tıklama : {konu}")
     public KaydedilenGelenEvraklarPage tabloKonuyaGoreIcerikSec(String konu) {
         tblKaydedilenGelenEvraklar
                 .filterBy(Condition.text(konu))
                 .first()
                 .$("[id$='detayGosterButton']").click();
+        return this;
+    }
+
+    @Step("Evrak no ile evrak seçilir : \"{evrakNo}\" ")
+    public KaydedilenGelenEvraklarPage evrakNoIleEvrakSec(String evrakNo) {
+        tblEvraklar
+                .filterBy(Condition.text(evrakNo))
+                .first()
+                .click();
         return this;
     }
 }

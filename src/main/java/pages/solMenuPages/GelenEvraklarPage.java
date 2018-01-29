@@ -128,7 +128,7 @@ public class GelenEvraklarPage extends MainPage {
 
     @Step("Kullancılar doldur")
     public GelenEvraklarPage takipListesiKullanicilarDoldur(String kullanicilar) {
-        txtTakipListesiKullanicilar.selectLov(kullanicilar);
+        txtTakipListesiKullanicilar.type(kullanicilar).getTitleItems().filterBy(Condition.text(kullanicilar)).first().click();
         return this;
     }
 
@@ -150,7 +150,7 @@ public class GelenEvraklarPage extends MainPage {
 
     @Step("Kisi doldur")
     public GelenEvraklarPage havaleYapKisiDoldur(String kisi) {
-        txtHavaleYapKisi.selectLov(kisi);
+        txtHavaleYapKisi.type(kisi).getTitleItems().filterBy(Condition.text(kisi)).first().click();
         return this;
     }
 
@@ -191,7 +191,7 @@ public class GelenEvraklarPage extends MainPage {
     @Step("Paylaş buton gelmediği görülür")
     public GelenEvraklarPage paylasButonGelmedigiGorme(String buton) {
         boolean t = evrakSecButonlar.filterBy(text(buton)).size() > 0;
-        Assert.assertEquals(t, false, "kdkdkdkd");
+        Assert.assertEquals(t, false);
         takeScreenshot();
         return this;
     }
@@ -205,6 +205,14 @@ public class GelenEvraklarPage extends MainPage {
                 .filterBy(text(no)).size() > 0;
         Assert.assertEquals(durum, false);
         takeScreenshot();
+        return this;
+    }
+
+    @Step("Gelen Evraklar sayfasında evrakın listeye düşmediği kontrolu")
+    public GelenEvraklarPage evrakNoGelmedigiGorme(String konu) {
+        boolean durum = tableEvraklar
+                .filterBy(text(konu)).size() > 0;
+        Assert.assertEquals(durum, false);
         return this;
     }
 
