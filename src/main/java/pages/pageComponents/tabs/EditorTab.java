@@ -5,17 +5,30 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
+import org.openqa.selenium.By;
+import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 import pages.MainPage;
+import pages.pageComponents.SearchTable;
 import pages.pageComponents.TextEditor;
+import pages.pageComponents.UstYazi;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.ustMenuPages.EvrakOlusturPage;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
-import static com.codeborne.selenide.Selenide.switchTo;
+import static com.codeborne.selenide.CollectionCondition.sizeGreaterThanOrEqual;
+import static com.codeborne.selenide.CollectionCondition.texts;
+import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.Condition.disappear;
+import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.sleep;
 import static pages.pageComponents.belgenetElements.Belgenet.comboBox;
 
 /**
@@ -113,5 +126,202 @@ public class EditorTab extends MainPage {
         return page.$("div[id$=hitapInplace]");
     }
 
+
+    @Step("Not Ekle butona basılır")
+    public EditorTab notEkleTikla(){
+        getEditor().toolbarButton("Not Ekle", true);
+        page.$("div[id*='notEkleDialog']").shouldBe(visible);
+        return this;
+    }
+
+
+    public EvrakNot getEvrakNot(){
+        return new EvrakNot();
+    }
+
+    public class EvrakNot {
+
+        private SelenideElement note;
+        private ElementsCollection notes;
+
+        private List<EvrakNot> createdNotes = new ArrayList<EvrakNot>();
+
+        public SelenideElement getNotesTable(){
+            return page.$("div[id$='evrakNotlariTableD1']");
+        }
+
+        public ElementsCollection getNoteDivs(){
+            return page.$$("div[id$='evrakNotlariTableD1']>div");
+        }
+
+        @Step("Not Ekle dialog bulunur")
+        public SelenideElement getNotEkleDialog(){
+            return page.$("div[id*='notEkleDialog']");
+        }
+
+        @Step("Not Ekle \"Açıklama\" alanı bulunur")
+        public SelenideElement getAciklamaAlani() {
+            return getNotEkleDialog().$("textarea");
+        }
+
+        @Step("Not Ekle \"Açıklama\" alanı doldurulur")
+        public EvrakNot aciklamaAlaniDoldur(String aciklama) {
+            getAciklamaAlani().setValue(aciklama);
+            getAciklamaAlani().shouldHave(value(aciklama));
+            return this;
+        }
+
+        @Step("Açıklama karakter sayısı maksimum {maxLength} olmalı")
+        public EvrakNot aciklamaKarakterSayisiKontrolu(int maxLength) {
+            SelenideElement counter = getNotEkleDialog().$("span[id$='D1NotEkleDialogCounter']");
+
+            counter.should(visible);
+            int leftCount = getNumber(counter.text());
+
+            SoftAssert sa = new SoftAssert();
+            sa.assertEquals(leftCount, maxLength, "Max karakter sayısı");
+
+            String text = "";
+            for (int i = 0; i < maxLength - (int) (Math.log10(maxLength) + 1); i++) {
+                text += ".";
+            }
+            aciklamaAlaniDoldur(text + String.valueOf(maxLength));
+
+            leftCount = getNumber(counter.text());
+            sa.assertEquals(leftCount, 0, "Kalan karakter sayısı");
+
+            getAciklamaAlani().sendKeys("*");
+            getAciklamaAlani().shouldNotHave(value("*"));
+
+            sa.assertAll();
+
+            getAciklamaAlani().clear();
+            getAciklamaAlani().shouldBe(empty);
+
+            return this;
+        }
+
+        @Step("Not Ekle \"Not Tipi\" alan bulunur")
+        public BelgenetElement getNotTipi(){
+            return comboBox(getNotEkleDialog(),"label[id$='evrakNotTipiD1_label']");
+        }
+
+        @Step("Not Ekle \"Not Tipi\" alan seçilir")
+        public EvrakNot notTipiSec(String value){
+            getNotTipi().selectComboBox(value);
+            getNotTipi().shouldHave(text(value));
+            return this;
+        }
+
+        @Step("Yeni Not tipi alanın değer kontrolleri")
+        public EvrakNot notTipiAlanDegerKontrol(String... values){
+            getNotTipi().getComboBoxValues().shouldHave(texts(values));
+            return this;
+        }
+
+        @Step("Not Ekle \"Kaydet\" butonu bulunur")
+        public SelenideElement getKaydetButton(){
+            return getNotEkleDialog().$x("descendant::button[.='Kaydet']");
+        }
+
+        @Step("Not Ekle \"Kaydet\" butona tıkla")
+        public EvrakNot kaydet() {
+            getKaydetButton().click();
+            return this;
+        }
+
+        public int getNumber(String text) {
+            Pattern p = Pattern.compile("\\d+");
+            Matcher m = p.matcher(text);
+            Assert.assertTrue(m.find(), "\"" + text + "\" tekst içinde numara bulunamadı");
+            int number = Integer.parseInt(m.group());
+            return number;
+        }
+
+        @Step("Yeni not oluşturulur, açıklama maksimum uzunluk ve not tipi değerleri kontrolleri")
+        public EvrakNot notOlustur(String olusturan, String notTipi, String aciklama, int maxLength, String[] notTipiValues) {
+
+            notEkleTikla();
+            aciklamaKarakterSayisiKontrolu(maxLength);
+            aciklamaAlaniDoldur(aciklama);
+
+            notTipiAlanDegerKontrol(notTipiValues);
+            notTipiSec(notTipi);
+            kaydet();
+            getNotEkleDialog().should(disappear);
+
+            String date = DateTimeFormatter.ofPattern("dd.MM.yyyy").format(LocalDateTime.now());
+            String time = DateTimeFormatter.ofPattern("HH").format(LocalDateTime.now());
+            //String time = DateTimeFormatter.ofPattern("HH:mm").format(LocalDateTime.now());
+            notuBul(text(olusturan), text(aciklama), text(date), text(time));
+            createdNotes.add(this);
+            return this;
+        }
+
+        @Step("Yeni not oluşturulur")
+        public EvrakNot notOlustur(String olusturan, String notTipi, String aciklama) {
+
+            notEkleTikla();
+            aciklamaAlaniDoldur(aciklama);
+
+            notTipiSec(notTipi);
+            kaydet();
+            getNotEkleDialog().should(disappear);
+
+            String date = DateTimeFormatter.ofPattern("dd.MM.yyyy").format(LocalDateTime.now());
+            String time = DateTimeFormatter.ofPattern("HH").format(LocalDateTime.now());
+            //String time = DateTimeFormatter.ofPattern("HH:mm").format(LocalDateTime.now());
+            notuBul(text(olusturan), text(aciklama), text(date), text(time));
+            createdNotes.add(this);
+            return this;
+        }
+
+        @Step("Notları ara")
+        public EvrakNot notlariAra(Condition... aramaConditions){
+            getNoteDivs().shouldHave(sizeGreaterThan(0)).last().shouldBe(visible);
+            notes = getNoteDivs();
+            for (Condition condition:aramaConditions)
+                notes = notes.filterBy(condition);
+            return this;
+        }
+
+        @Step("Not bulunur")
+        public EvrakNot notuBul(Condition... aramaConditions){
+            notlariAra(aramaConditions);
+            note = notes.shouldHave(sizeGreaterThan(0)).first().shouldBe(visible);
+            return this;
+        }
+
+        @Step("Not Sil butonu bulunur")
+        public SelenideElement getNoteSilButton() {
+            return $("button .noteClose");
+        }
+
+        @Step("Notu sil")
+        public EvrakNot notuSil(){
+            note.$("button .noteClose").click();
+            note.shouldNotBe(exist);
+            return this;
+        }
+
+        @Step("Postit şeklinde")
+        public EvrakNot isPostitStyle(){
+            String style = "position:relative; background:#fefabc; padding: 5px;  font-size: 10px; color: #000; width: 200px; margin-bottom:15px; box-shadow: 0px 4px 6px #333; -moz-box-shadow: 0px 4px 6px #333; -webkit-box-shadow: 0px 4px 6px #333;";
+            note.shouldHave(attribute("style", style));
+            return this;
+        }
+
+        public SelenideElement getNote(){
+            return note;
+        }
+
+        public ElementsCollection getNotes(){
+            return notes;
+        }
+
+        public List<EvrakNot> getCreatedNotes(){
+            return createdNotes;
+        }
+    }
 
 }

@@ -15,7 +15,7 @@ import static com.codeborne.selenide.Selenide.*;
 public class UstMenu extends BaseLibrary {
     private String altMenuDialogId;
 
-    @Step("\"{ustMenuData.groupName}\" -> \"{ustMenuData.name}\" üst menu aç")
+    @Step("\"{ustMenuData.groupName}\" -> \"{ustMenuData.name}\" üst menu açılır")
     public void openMenu(Enum ustMenuData, boolean... useJS) {
         String groupName = ((UstMenuData.UstMenuDataInterface) ustMenuData).getGroupName();
         String menuName = ((UstMenuData.UstMenuDataInterface) ustMenuData).getName();
