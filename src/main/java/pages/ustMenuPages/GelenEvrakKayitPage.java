@@ -90,6 +90,10 @@ public class GelenEvrakKayitPage extends MainPage {
     SelenideElement chkDagitimBilgileriEvragiOnayliKapat = $(By.id("evrakBilgileriForm:j_idt5629_input"));
     SelenideElement btnDagitimBilgileriEvragiKapatacakKisi = $(By.id("evrakBilgileriForm:evrakiKapatacakKisiLov:treeButton"));//todo:Evrakı Onaylı Kapat secili olmadan çıkmıyor
     BelgenetElement cmbHavaleIslemleriBirim = comboLov(By.id("evrakBilgileriForm:dagitimBilgileriBirimLov:LovText"));
+
+    SelenideElement birimSeç = $("select[id^='evrakBilgileriForm:dagitimBilgileriBirimLov:LovSecilenTable']");
+    BelgenetElement cmbHavaleIslemleriOnaylayacakKisi = comboLov(By.id("evrakBilgileriForm:onaylayacakKisiLov:LovText"));
+
     BelgenetElement cmbDagitimBilgileriKisi = comboLov(By.id("evrakBilgileriForm:dagitimBilgileriKullaniciLov:LovText"));
     BelgenetElement cmbDagitimBilgileriKullaniciListesi = comboLov(By.id("evrakBilgileriForm:dagitimBilgileriKisiListesiLov:LovText"));
     ElementsCollection tblVekaletVerenAlan = $$("[id='evrakBilgileriForm:kullaniciBirimSecenekleriHavaleIcin_data'] tr[role='row']");
@@ -120,6 +124,7 @@ public class GelenEvrakKayitPage extends MainPage {
 
     SelenideElement btnKaydet = $("[id='buttonPanelForm:kaydetButton']");
     SelenideElement popUphavaleYeriSecmediniz = $(By.id("havaleYeriSecmedinizConfirmDialog"));
+    SelenideElement popUphavaleOnayGonderilsinmi = $(By.id("havaleOnayinaGonderilsinmiConfirmDialog"));
     SelenideElement btnUstYaziveHavaleYeriSecmedinizEvet = $("[id='evetButtonBos']");
     SelenideElement btnUstYaziveHavaleYeriSecmedinizHayır = $(By.id("hayirButtonBos"));
     SelenideElement btnHavaleYeriSecmedinizHayır = $(By.id("hayirDugmesiUstYaziHavaleYer"));
@@ -129,6 +134,8 @@ public class GelenEvrakKayitPage extends MainPage {
     SelenideElement ustYaziYokEvet = $("[id='evetDugmesi']");
     SelenideElement ustYaziYokpopUp = $("[id='ustYaziYokConfirmDialog'][class$='ui-overlay-visible']");
     SelenideElement popUpEvet = $("[id='evetDugmesiUstYaziHavaleYer']");
+    SelenideElement popUpEvet2 = $("[id='evetButtonGonderilsinMi']");
+
     SelenideElement mukerrerPopUpEvet = $("[id='evetButtonBenzerKaydet']");
     SelenideElement mukerrerPopUp = $("[id='benzerEvrakKayitConfirmDialog'][class$='ui-overlay-visible']");
     SelenideElement btnUstYaziDegistirmeHayır = $(By.id("evrakBilgileriForm:ustyaziDegistirmeButton"));
@@ -192,6 +199,9 @@ public class GelenEvrakKayitPage extends MainPage {
     SelenideElement chkTaramaHavuzuIlkEvrak = $(By.id("taramaHavuzuFormId:taramaHavuzuDataTableId:0:selectionId"));
     SelenideElement cmbTaramaHavuzuIlkEvrakTur = $(By.id("taramaHavuzuFormId:taramaHavuzuDataTableId:0:tarananTuruId"));
     SelenideElement btnTaramaHavuzuTamam = $(By.id("taramaHavuzuFormId:taramaHavuzuTamamButton"));
+
+    //Evrak Havale Islemleri Form
+    SelenideElement btnHavaleIslemleri = $(By.id("evrakBilgileriForm:havalePanel_toggler"));
 
     @Step("Gelen Evrak Kayıt sayfasını aç")
     public GelenEvrakKayitPage openPage() {
@@ -540,6 +550,18 @@ public class GelenEvrakKayitPage extends MainPage {
     }
 
     @Step("Dağıtım Bilgileri Birim alanında \"{birim}\" seçilir")
+    public GelenEvrakKayitPage dagitimBilgileriBirimOpsiyon(String opsiyon) {
+        birimSeç.selectOptionByValue(opsiyon);
+        return this;
+    }
+
+    @Step("Dağıtım Bilgileri Onaylayacak Kisi alanında \"{onaylayan}\" seçilir")
+    public GelenEvrakKayitPage dagitimBilgileriOnaylayanWithDetails(String onaylayan,String details) {
+        cmbHavaleIslemleriOnaylayacakKisi.selectLov(onaylayan,details);
+        return this;
+    }
+
+    @Step("Dağıtım Bilgileri Birim alanında \"{birim}\" seçilir")
     public GelenEvrakKayitPage dagitimBilgileriBirimDoldur2(String birim) {
 //        txtDagitimBilgileriBirim.sendKeys(birim);
         cmbHavaleIslemleriBirim.selectLov(birim);
@@ -855,6 +877,13 @@ public class GelenEvrakKayitPage extends MainPage {
             popUphavaleYeriSecmediniz.getText().equals(mesaj2);
             clickJs(btnHavaleYeriSecmedinizEvet);
             Allure.addAttachment("Havale Yeri Seçmediniz PopUp'ı", mesaj2);
+        }
+
+        if (popUphavaleOnayGonderilsinmi.isDisplayed()) {
+            String mesaj3 = "Evrakı havale onayina göndermek istiyor musunuz?";
+            popUphavaleOnayGonderilsinmi.getText().equals(mesaj3);
+            clickJs(popUphavaleOnayGonderilsinmi);
+            Allure.addAttachment("Havale Onay Gonderilsin mi PopUp'ı", mesaj3);
         }
         if (mukerrerPopUp.isDisplayed()) {
             clickJs(mukerrerPopUpEvet);
@@ -1247,6 +1276,12 @@ public class GelenEvrakKayitPage extends MainPage {
     @Step("Gelen Evrak Kayıt sayfasında Kaydet butonuna tıkladıktan sonra beliren panelde Evet butonuna tıkla.")
     public GelenEvrakKayitPage gelenEvrakKayitKaydetEvet() {
         popUpEvet.click();
+        return this;
+    }
+
+    @Step("Gelen Evrak Kayıt sayfasında Kaydet butonuna tıkladıktan sonra beliren panelde Evet butonuna tıkla.")
+    public GelenEvrakKayitPage gelenEvrakKayitKaydetEvet2() {
+        popUpEvet2.click();
         return this;
     }
 

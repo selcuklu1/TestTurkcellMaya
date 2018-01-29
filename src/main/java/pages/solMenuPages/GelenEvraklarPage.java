@@ -208,6 +208,14 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Gelen Evraklar sayfasında evrakın listeye düşmediği kontrolu")
+    public GelenEvraklarPage evrakNoGelmedigiGorme(String konu) {
+        boolean durum = tableEvraklar
+                .filterBy(text(konu)).size() > 0;
+        Assert.assertEquals(durum, false);
+        return this;
+    }
+
     @Step("Evrak seç")
     public GelenEvraklarPage evrakSec(String konu, String geldigiYer, String kayitTarihiSayi, String no) {
         tableEvraklar
