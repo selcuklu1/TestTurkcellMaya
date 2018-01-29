@@ -471,5 +471,13 @@ public class EvrakPostalamaTest extends BaseTest {
                 .postaSorgulama();
         postalananEvrakRaporuPage.cmbpostaSeklisecimi("Dış giden")
                 .postaSorgulama();
+        postalananEvrakRaporuPage.cmbPostaTipisec("Adi Posta")
+                .postaSorgulama();
+        postalananEvrakRaporuPage.txtPostaAciklama("TS")
+                .postaSorgulama();
+        postalananEvrakRaporuPage.cmbPostalayanadi("Zübeyde TEKİN")
+                .postaSorgulama();
+        postalananEvrakRaporuPage.chkboxPostaladiklarim()
+                .postaSorgulama();
     }
 }
