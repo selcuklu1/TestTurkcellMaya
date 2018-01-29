@@ -191,7 +191,7 @@ public class GelenEvraklarPage extends MainPage {
     @Step("Paylaş buton gelmediği görülür")
     public GelenEvraklarPage paylasButonGelmedigiGorme(String buton) {
         boolean t = evrakSecButonlar.filterBy(text(buton)).size() > 0;
-        Assert.assertEquals(t, false, "kdkdkdkd");
+        Assert.assertEquals(t, false);
         takeScreenshot();
         return this;
     }
