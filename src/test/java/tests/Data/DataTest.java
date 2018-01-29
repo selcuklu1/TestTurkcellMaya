@@ -71,7 +71,7 @@ public class DataTest extends BaseTest {
 
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TS2224: DATA-Teslim alınmayı bekleyenler, gelen kutusu ve postalanacaklar listesine gizlilik derecesi yüksek evrak düşürme")
+    @Test(enabled = true, description = "TS2234: DATA-İmzala bekleyenler listesine evrak düşürülmesi")
     public void TS2234() throws InterruptedException {
 
         String konuKodu = "Gelen-Giden Evrak";
