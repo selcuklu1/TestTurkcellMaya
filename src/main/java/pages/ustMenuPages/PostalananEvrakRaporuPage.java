@@ -8,6 +8,8 @@ import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.UstMenuData;
+
+import static pages.pageComponents.belgenetElements.Belgenet.comboBox;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 import static com.codeborne.selenide.Selenide.*;
@@ -36,6 +38,9 @@ public class PostalananEvrakRaporuPage extends MainPage {
     SelenideElement btnPostaSahibiAltBirim = $x("//*[@id='postalananEvrakRaporuForm:altBirimSahibiDahilId']");
     SelenideElement fromEvrakRapor = $x("//*[@id='postalananEvrakRaporuForm']");
     BelgenetElement cmbEvrakSahibi = comboLov("input[id$='postalananEvrakRaporuForm:sahibiBirimLov_id:LovText']");
+    BelgenetElement cmbPostalananyer = comboLov("input[id$='postalananEvrakRaporuForm:postalananYerLov:LovText']");
+    BelgenetElement cmbPostaSekli = comboBox("select[id$='postalananEvrakRaporuForm:postaSekliId']");
+
     @Step("Postalanan Evrak Raporu sayfasını aç")
     public PostalananEvrakRaporuPage openPage() {
 
@@ -147,12 +152,12 @@ public class PostalananEvrakRaporuPage extends MainPage {
         return this;
     }
 
-    @Step("Evrak Sahibi Seçimi")
+    @Step("Evrak Sahibi Seçimi \"{evrakSahibi}\" ")
     public PostalananEvrakRaporuPage cmbEvrakSahibi(String evrakSahibi) {
         cmbEvrakSahibi.selectLov(evrakSahibi);
         return this;
     }
-    @Step("Evrak Sahibi ile sorgulama ve kontrol")
+    @Step("Evrak Sahibi \"{evrakSahibi}\" ile sorgulama ve kontrol ")
     public PostalananEvrakRaporuPage evrakSahibiKontrol (String evrakSahibi) {
         String SchildElementCount;
         SchildElementCount = sorguTablosu.getAttribute("childElementCount");
@@ -163,6 +168,30 @@ public class PostalananEvrakRaporuPage extends MainPage {
             String evraksahibicol = evSahibiColumn.getAttribute("innerText");
             Assert.assertEquals(evrakSahibi,evraksahibicol);
         }
+        return this;
+    }
+
+    @Step("Postalanan yer \"{postalananYer}\"seçimi")
+    public PostalananEvrakRaporuPage cmbPostalananYerSecimi (String postalananYer) {
+        cmbPostalananyer.selectLov(postalananYer);
+        return this;
+    }
+    @Step("Postalanan yer \"{postalananyer}\" ile sorgulama ve kontrol ")
+    public PostalananEvrakRaporuPage postalananyerKontrol (String postalananyer) {
+        String SchildElementCount;
+        SchildElementCount = sorguTablosu.getAttribute("childElementCount");
+        int childElemCount = Integer.parseInt(SchildElementCount);
+        for (int i = 0 ; i < childElemCount ; i++) {
+            String parampostalananyer = "//*[@id='postalananEvrakRaporuForm:postalananEvrakDataTable_data']/tr["+String.valueOf(i+1)+"]/td[6]/div";
+            SelenideElement postalananyerColumn = $x(parampostalananyer);
+            String postalananyercol = postalananyerColumn.getAttribute("innerText");
+            Assert.assertEquals(postalananyer,postalananyercol);
+        }
+        return this;
+    }
+    @Step("Posta sekli seçimi \"{postaSekli}\" ")
+    public PostalananEvrakRaporuPage cmbpostaSeklisecimi(String postaSekli) {
+        cmbPostaSekli.selectComboBox(postaSekli);
         return this;
     }
 
