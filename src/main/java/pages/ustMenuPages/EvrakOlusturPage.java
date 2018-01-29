@@ -154,11 +154,10 @@ public class EvrakOlusturPage extends MainPage {
     }
 
     public EvrakOlusturPage evrakOlusturPageKapat() {
-        $(By.xpath("//span[@class='ui-dialog-title' and text()='Evrak Oluştur']/..//span[@class='ui-icon ui-icon-closethick']"))
-                .sendKeys(Keys.SHIFT);
 
-        $(By.xpath("//span[@class='ui-dialog-title' and text()='Evrak Oluştur']/..//span[@class='ui-icon ui-icon-closethick']"))
-                .click();
+        SelenideElement closeButton = $(By.xpath("//span[@class='ui-dialog-title' and text()='Evrak Oluştur']/..//span[@class='ui-icon ui-icon-closethick']"));
+        Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", closeButton);
+        closeButton.click();
         btnEvrakOlusturKapatEvet.click();
         return this;
     }
@@ -668,7 +667,7 @@ public class EvrakOlusturPage extends MainPage {
                     .first()
                     .click();
             txtGeregi.closeTreePanel();
-            txtGeregi.clearLastSelectedItem();
+            txtGeregi.clearAllSelectedItems();
             return this;
         }
 

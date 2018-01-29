@@ -1,9 +1,6 @@
 package pages.ustMenuPages;
 
-import com.codeborne.selenide.CollectionCondition;
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.*;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -300,6 +297,7 @@ public class KurumYonetimiPage extends MainPage {
     @Step("Filtrele panelini aç")
     public KurumYonetimiPage filtrePanelAc() {
         $("div[id='kurumYonetimiListingForm:filterPanel'] > h3").click();
+        Selenide.sleep(1000);
         return this;
     }
 

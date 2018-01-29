@@ -361,8 +361,6 @@ public class KurumYonetimiTest extends BaseTest {
                 .geregiSecimTipiSec("Kurum")
                 .geregiSec(aktifIdariBirimKimlikKodu, true)
                 .geregiSec(aktifKurumAdi, true);
-        evrakOlusturPage
-                .evrakOlusturPageKapat();
 
         gelenEvrakKayitPage
                 .openPage()
@@ -398,9 +396,6 @@ public class KurumYonetimiTest extends BaseTest {
                 .bilgilerTabiAc()
                 .geregiSecimTipiSec("Kurum")
                 .geregiTreeKontrolEt(pasifYapilacakKurum, false);
-
-        evrakOlusturPage
-                .evrakOlusturPageKapat();
 
         gidenEvrakKayitPage
                 .openPage()
