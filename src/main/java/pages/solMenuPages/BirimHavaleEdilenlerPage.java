@@ -3,11 +3,13 @@ package pages.solMenuPages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import pages.MainPage;
 import pages.pageData.SolMenuData;
 
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.*;
 
 /****************************************************
@@ -29,6 +31,13 @@ public class BirimHavaleEdilenlerPage extends MainPage {
     SelenideElement btnTamEkranGöster = $(By.id("mainInboxForm:inboxDataTable:0:tamEkranModuButton"));
     SelenideElement tblRapor = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
     ElementsCollection tblKaydedilenGelenEvraklar = $$("[id='mainInboxForm:inboxDataTable_data'] tr[data-ri]");
+    ElementsCollection tblEvraklar = $$("[id^='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
+
+    SelenideElement havaleGeriAl = $(By.id("inboxItemInfoForm:dialogTabMenuRight:uiRepeat:4:cmdbutton"));
+    SelenideElement notAlanıDoldur = $(By.id("inboxItemInfoForm:evrakGeriAlInputTextareaId"));
+    SelenideElement btnGeriAl = $("[id^='inboxItemInfoForm:j_idt'][class$='ui-button-text-only']");
+
+
 
     @Step("Birim Havale Edilenler sayfası aç")
     public BirimHavaleEdilenlerPage openPage() {
@@ -90,6 +99,31 @@ public class BirimHavaleEdilenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Evrak no ile teslim al")
+    public BirimHavaleEdilenlerPage evrakSecIcerikGoster(String konu,boolean secim){
+        tblEvraklar.filterBy(text(konu)).get(0).$$("[id$='detayGosterButton']").first().click();
+        return this;
+    }
+
+    @Step("Havale edilen evrak geri alma")
+    public BirimHavaleEdilenlerPage havaleGeriAl() {
+        if(havaleGeriAl.isDisplayed())
+            havaleGeriAl.click();
+        return this;
+    }
+
+    @Step("Not Alanını Doldur")
+    public BirimHavaleEdilenlerPage notAlanınıDoldur(String not) {
+        notAlanıDoldur.setValue(not);
+        return this;
+    }
+
+    @Step("Geri Al Butonu tıkla")
+    public BirimHavaleEdilenlerPage geriAl() {
+        btnGeriAl.click();
+        return this;
+    }
+
     @Step("Evrak önizleme evrak kontrolü : \"{pdfText}\" ")
     public BirimHavaleEdilenlerPage evrakOnizlemeEklenenUstYaziKontrolu(String pdfText) {
         String text = "";
@@ -98,6 +132,18 @@ public class BirimHavaleEdilenlerPage extends MainPage {
         text = $(By.xpath("//div[@id='viewer']/div[@class='page']/div[@class='textLayer']/div[1]")).getText();
         text.equals(pdfText);
         switchTo().parentFrame();
+        return this;
+    }
+
+    @Step("Evrak no ile evrak seçilir, evrak bulunamaz: \"{evrakNo}\" ")
+    public BirimHavaleEdilenlerPage evrakBulunamadı(String evrakNo) {
+        if(tblEvraklar.filterBy(Condition.text(evrakNo)).isEmpty())
+        {
+            Allure.addAttachment(evrakNo ," Nolu evrak bulunamadı.");
+        }else{
+            Allure.addAttachment(evrakNo ," Nolu evrak bulundu.");
+        }
+
         return this;
     }
 

@@ -56,7 +56,8 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     ElementsCollection tblOnIzlemeEkler = $$("[id*='ekListesiOnizlemeDataTable'] > tr[role='row']");
     ElementsCollection tblOnIzlemeIlgiBilgileri = $$("[id*='ilgiListesiDataTable_data'] > tr[role='row']");
 
-
+    ElementsCollection tableEvraklar = $$("tbody[id='mainInboxForm:inboxDataTable_data'] > tr");
+    SelenideElement evrakTeslimAl = $("[id='inboxItemInfoForm:dialogTabMenuRight:uiRepeat:5:cmdbutton']");
 
     public TeslimAlinmayiBekleyenlerPage openPage() {
         solMenu(SolMenuData.BirimEvraklari.TeslimAlinmayiBekleyenler);
@@ -134,6 +135,14 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Teslim Alinmayi Bekleyenler  sayfasında evrakın listeye düşmediği kontrolu")
+    public TeslimAlinmayiBekleyenlerPage evrakNoGelmedigiGorme(String konu) {
+        boolean durum = tableEvraklar
+                .filterBy(text(konu)).size() > 0;
+        Assert.assertEquals(durum, false);
+        return this;
+    }
+
     @Step("Evrak önizleme evrak kontrolü : \"{pdfText}\" ")
     public TeslimAlinmayiBekleyenlerPage evrakOnizlemeEklenenUstYaziKontrolu(String pdfText) {
         String text = "";
@@ -191,6 +200,25 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
 
         return this;
     }
+
+    @Step("Evrak no ile teslim al")
+    public TeslimAlinmayiBekleyenlerPage evrakSecIcerikGoster(String konu,boolean secim){
+        tblEvraklar.filterBy(text(konu)).get(0).$$("[id$='detayGosterButton']").first().click();
+        return this;
+    }
+
+    @Step("İçerikten Evrak teslim al")
+    public TeslimAlinmayiBekleyenlerPage içeriktenEvrakTeslimAl(){
+        evrakTeslimAl.click();
+        return this;
+    }
+
+    @Step("İçerikten Evrak teslim Evet tıklama")
+    public TeslimAlinmayiBekleyenlerPage içeriktenEvrakEvet(){
+        $(By.id("teslimAlEvetButton")).click();
+        return this;
+    }
+
 
     @Step("Evrak Sec Checkbox ile")
     public TeslimAlinmayiBekleyenlerPage evrakSecCheckBox(String konu1,String konu2,boolean secim){
