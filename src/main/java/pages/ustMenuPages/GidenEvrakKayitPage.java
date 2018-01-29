@@ -27,9 +27,9 @@ public class GidenEvrakKayitPage extends MainPage {
     //region Elements
 
     // gidenEvrakDefterKaydiForm:evrakBilgileriList:11:j_idt14590
-    SelenideElement cmbGeregiSecimTipi = $(By.xpath("//select[starts-with(@id,'gidenEvrakDefterKaydiForm:evrakBilgileriList:11:j_idt')]"));
+    SelenideElement cmbGeregiSecimTipi = $(By.xpath("//form//label[normalize-space(text())='Gereği Seçim Tipi']/ancestor::tr[@class='ui-datagrid-row']//select"));
     BelgenetElement cmbGeregi = comboLov("[id^='gidenEvrakDefterKaydiForm:evrakBilgileriList'][id$='geregiLov:LovText']");
-    SelenideElement cmbBilgiSecimTipi = $(By.xpath("//select[starts-with(@id,'gidenEvrakDefterKaydiForm:evrakBilgileriList:12:j_idt')]"));
+    SelenideElement cmbBilgiSecimTipi = $(By.xpath("//form//label[normalize-space(text())='Bilgi Seçim Tipi']/ancestor::tr[@class='ui-datagrid-row']//select"));
     BelgenetElement cmbBilgi = comboLov("[id^='gidenEvrakDefterKaydiForm:evrakBilgileriList'][id$='bilgiLov:LovText']");
     By cmbGeregiBy = By.cssSelector("[id^='gidenEvrakDefterKaydiForm:evrakBilgileriList'][id$='geregiLov:LovText']");
     By cmbBilgiBy = By.cssSelector("[id^='gidenEvrakDefterKaydiForm:evrakBilgileriList'][id$='bilgiLov:LovText']");

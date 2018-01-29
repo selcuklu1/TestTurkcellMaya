@@ -286,7 +286,7 @@ public class KurumYonetimiTest extends BaseTest {
                 .ePostaDoldur(ePosta)
                 .iletisimBilgisiKaydet()
                 .kurumKaydet()
-                .islemMesaji().basariliOlmali(basariMesaji);
+                .islemMesaji().basariliOlmali();
 
         kurumYonetimiPage
                 .yeniKurumEkle()
@@ -303,12 +303,12 @@ public class KurumYonetimiTest extends BaseTest {
                 .ilDoldur(il)
                 .ePostaDoldur(ePosta)
                 .iletisimBilgisiKaydet()
-                .kurumKaydet()
-                .islemMesaji().basariliOlmali(basariMesaji);
+                .kurumKaydet();
+                //.islemMesaji().basariliOlmali();
 
         kurumYonetimiPage
                 .kurumHiyerarsisiniGuncelle()
-                .islemMesaji().basariliOlmali(basariMesaji);
+                .islemMesaji().basariliOlmali();
 
         kurumYonetimiPage
                 .durumSec("Sadece Aktifler")
@@ -364,7 +364,6 @@ public class KurumYonetimiTest extends BaseTest {
         evrakOlusturPage
                 .evrakOlusturPageKapat();
 
-
         gelenEvrakKayitPage
                 .openPage()
                 .kisiKurumSec("Kurum")
@@ -393,7 +392,6 @@ public class KurumYonetimiTest extends BaseTest {
                 .ara()
                 .kurumTableKontrol(pasifYapilacakKurum, "Sadece Pasifler", false)
                 .panelKapat();
-
 
         evrakOlusturPage
                 .openPage()

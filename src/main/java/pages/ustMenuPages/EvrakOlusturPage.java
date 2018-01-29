@@ -154,11 +154,12 @@ public class EvrakOlusturPage extends MainPage {
     }
 
     public EvrakOlusturPage evrakOlusturPageKapat() {
-        //btnEvrakOlusturKapat.click();
+        $(By.xpath("//span[@class='ui-dialog-title' and text()='Evrak Oluştur']/..//span[@class='ui-icon ui-icon-closethick']"))
+                .sendKeys(Keys.SHIFT);
 
-        $(By.xpath("//span[@class='ui-dialog-title' and text()='Evrak Oluştur']/..//span[@class='ui-icon ui-icon-closethick']")).click();
+        $(By.xpath("//span[@class='ui-dialog-title' and text()='Evrak Oluştur']/..//span[@class='ui-icon ui-icon-closethick']"))
+                .click();
         btnEvrakOlusturKapatEvet.click();
-//div[@id='window1Dialog']//span[@class='ui-icon ui-icon-closethick']
         return this;
     }
 
