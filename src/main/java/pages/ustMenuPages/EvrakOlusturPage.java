@@ -625,6 +625,7 @@ public class EvrakOlusturPage extends MainPage {
                     .getTitleItems()
                     .first()
                     .click();
+            txtBilgi.closeTreePanel();
             txtBilgi.clearAllSelectedItems();
             return this;
         }
@@ -665,6 +666,7 @@ public class EvrakOlusturPage extends MainPage {
                     .getTitleItems()
                     .first()
                     .click();
+            txtGeregi.closeTreePanel();
             txtGeregi.clearLastSelectedItem();
             return this;
         }
