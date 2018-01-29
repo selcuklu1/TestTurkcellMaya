@@ -12,6 +12,7 @@ import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.value;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
@@ -318,6 +319,8 @@ public class GelenEvraklarPage extends MainPage {
 
     public GelenEvraklarPage tebligEtNotInputDoldur(String text) {
         txtTebligEtNot.setValue(text);
+        txtTebligEtNot.shouldHave(value(text));
+        //txtTebligEtNot.val(text);
         return this;
     }
 
