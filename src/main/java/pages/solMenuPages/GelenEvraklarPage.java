@@ -318,7 +318,9 @@ public class GelenEvraklarPage extends MainPage {
     }
 
     public GelenEvraklarPage tebligEtNotInputDoldur(String text) {
-        txtTebligEtNot.setValue(text);
+        //txtTebligEtNot.setValue(text);
+        txtTebligEtNot.clear();
+        txtTebligEtNot.sendKeys(text);
         txtTebligEtNot.shouldHave(value(text));
         //txtTebligEtNot.val(text);
         return this;
