@@ -661,7 +661,10 @@ public class EvrakOlusturPage extends MainPage {
         @Step("Geregi alanında \"{geregi}\" seç")
         public BilgilerTab geregiSec(String geregi, Boolean clearAfterSelecion) {
             cmbGeregi.sendKeys(Keys.SHIFT);
-            txtGeregi.selectLov(geregi);
+            txtGeregi.type(geregi)
+                    .getTitleItems()
+                    .first()
+                    .click();
             txtGeregi.clearLastSelectedItem();
             return this;
         }
