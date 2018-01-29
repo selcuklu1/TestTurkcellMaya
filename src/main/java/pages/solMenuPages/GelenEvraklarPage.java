@@ -12,6 +12,7 @@ import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.value;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
@@ -207,6 +208,14 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Gelen Evraklar sayfasında evrakın listeye düşmediği kontrolu")
+    public GelenEvraklarPage evrakNoGelmedigiGorme(String konu) {
+        boolean durum = tableEvraklar
+                .filterBy(text(konu)).size() > 0;
+        Assert.assertEquals(durum, false);
+        return this;
+    }
+
     @Step("Evrak seç")
     public GelenEvraklarPage evrakSec(String konu, String geldigiYer, String kayitTarihiSayi, String no) {
         tableEvraklar
@@ -307,7 +316,7 @@ public class GelenEvraklarPage extends MainPage {
     }
 
     public GelenEvraklarPage iadeEtNotInputDoldur(String text) {
-        txtIadeEtNot.sendKeys(text);
+        txtIadeEtNot.setValue(text);
         return this;
     }
 
@@ -317,7 +326,11 @@ public class GelenEvraklarPage extends MainPage {
     }
 
     public GelenEvraklarPage tebligEtNotInputDoldur(String text) {
+        //txtTebligEtNot.setValue(text);
+        txtTebligEtNot.clear();
         txtTebligEtNot.sendKeys(text);
+        txtTebligEtNot.shouldHave(value(text));
+        //txtTebligEtNot.val(text);
         return this;
     }
 
@@ -348,7 +361,7 @@ public class GelenEvraklarPage extends MainPage {
     }
 
     public GelenEvraklarPage havaleYapIslemSuresiDoldur(String text) {
-        txtHavaleYapIslemSuresi.sendKeys(text);
+        txtHavaleYapIslemSuresi.setValue(text);
         return this;
     }
 
@@ -358,7 +371,7 @@ public class GelenEvraklarPage extends MainPage {
     }
 
     public GelenEvraklarPage havaleYapAciklamaDoldur(String text) {
-        txtHavaleYapAciklama.sendKeys(text);
+        txtHavaleYapAciklama.setValue(text);
         return this;
     }
 
@@ -383,7 +396,7 @@ public class GelenEvraklarPage extends MainPage {
     }
 
     public GelenEvraklarPage havaleYapKisiTreeDoldur(String text) {
-        treeHavaleYapKisi.sendKeys(text);
+        treeHavaleYapKisi.setValue(text);
         return this;
     }
 
@@ -395,7 +408,7 @@ public class GelenEvraklarPage extends MainPage {
     }
 
     public GelenEvraklarPage havaleYapBirimTreeDoldur(String text) {
-        treeHavaleYapBirim.sendKeys(text);
+        treeHavaleYapBirim.setValue(text);
         return this;
     }
     @Step("Paylaş tıklanır")
@@ -405,13 +418,13 @@ public class GelenEvraklarPage extends MainPage {
     }
     @Step("Açıklama alanını \"{aciklama}\" ile doldurulur")
     public GelenEvraklarPage paylasanAciklamaDoldur(String aciklama) {
-        txtPaylasanAciklama.sendKeys(aciklama);
+        txtPaylasanAciklama.setValue(aciklama);
         txtPaylasanAciklama.click();
         return this;
     }
 
     public GelenEvraklarPage paylasKisiDoldur(String text) {
-        txtPaylasKisi.sendKeys(text);
+        txtPaylasKisi.setValue(text);
         return this;
     }
 
@@ -434,7 +447,7 @@ public class GelenEvraklarPage extends MainPage {
     }
 
     public GelenEvraklarPage sayfadaAraDoldur(String text) {
-        txtSayfadaAra.sendKeys(text);
+        txtSayfadaAra.setValue(text);
         return this;
     }
 
@@ -444,17 +457,17 @@ public class GelenEvraklarPage extends MainPage {
     }
 
     public GelenEvraklarPage gidecegiYerTreeDoldur(String text) {
-        treeGidecegiYer.sendKeys(text);
+        treeGidecegiYer.setValue(text);
         return this;
     }
 
     public GelenEvraklarPage baslangicTarihDoldur(String text) {
-        dateTxtBaslangicTarih.sendKeys(text);
+        dateTxtBaslangicTarih.setValue(text);
         return this;
     }
 
     public GelenEvraklarPage bitisTarihDoldur(String text) {
-        dateTxtBitisTarihi.sendKeys(text);
+        dateTxtBitisTarihi.setValue(text);
         return this;
     }
 
@@ -543,7 +556,7 @@ public class GelenEvraklarPage extends MainPage {
     }
 
     public GelenEvraklarPage evrakKapatOnayAkisiDoldur(String text) {
-        txtEvrakKapatOnayAkisi.sendKeys(text);
+        txtEvrakKapatOnayAkisi.setValue(text);
         return this;
     }
 
@@ -553,7 +566,7 @@ public class GelenEvraklarPage extends MainPage {
     }
 
     public GelenEvraklarPage evrakKapatNotDoldur(String text) {
-        txtEvrakKapatNot.sendKeys(text);
+        txtEvrakKapatNot.setValue(text);
         return this;
     }
 

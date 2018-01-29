@@ -1,5 +1,6 @@
 package tests.TebligTebellug;
 
+import com.codeborne.selenide.Selenide;
 import common.BaseTest;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -68,7 +69,7 @@ public class TebligTebellugTest extends BaseTest {
         gelenEvrakKayitPage.islemMesaji().basariliOlmali();
 
         String tebligEdilecekKullanicilistesi = "TS0845LISTE";
-        String tebligNot = "845 : Gelen Evrakın kullanıcı listesine detay ekrandan tebliğ edilmesi. Deneme 02";
+        String tebligNot = "TS0845 not";
 
         String[] tebligGecmisiKontrolEdilecekKullanicilar = new String[]{
                 "Huser1 TUMER1"
@@ -242,7 +243,7 @@ public class TebligTebellugTest extends BaseTest {
 
         String tebligEdilecekKisi = "Huser2 TUMER2";
 
-        String tebligNot = "845 : Gelen Evrakın kullanıcı listesine detay ekrandan tebliğ edilmesi.";
+        String tebligNot = "TS0067 not";
 
         String[] tebligGecmisiKontrolEdilecekKullanicilar = new String[]{
                 "Huser2 TUMER2"
@@ -444,8 +445,6 @@ public class TebligTebellugTest extends BaseTest {
                     .tebligEtNotInputDoldur(aciklama)
                     .tebligEtTebligEt();
 
-            logout();
-
         }
 
         login("huser2", "123");
@@ -502,7 +501,6 @@ public class TebligTebellugTest extends BaseTest {
                 .evrakTikSec(evrakKonular[3], birim, tebligEdenKullanici, evrakTipi, aciklama, true)
                 .tebligSil()
                 .islemMesaji().basariliOlmali(basariMesaj);
-
 
         tebellugEttiklerimPage
                 .openPage()
