@@ -105,8 +105,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .havaleIslemleriKisiDoldur(kisi)
                 .kaydet()
                 .evetDugmesi()
-                .yeniKayitButton()
-                .benzerKayit();
+                .yeniKayitButton();
         //TODO
 
         login(usernameZTEKIN, passwordZTEKIN);
@@ -211,7 +210,6 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .kaydet()
                 .evetDugmesi()
                 .yeniKayitButton();
-                //.benzerKayit();
 
         login(usernameZTEKIN, passwordZTEKIN);
 
@@ -434,8 +432,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .havaleIslemleriKisiDoldur(kisi)
                 .kaydet()
                 .evetDugmesi()
-                .yeniKayitButton()
-                .benzerKayit();
+                .yeniKayitButton();
 
         login(usernameZTEKIN, passwordZTEKIN);
 
@@ -812,7 +809,6 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .kaydet()
                 .evetDugmesi()
                 .yeniKayitButton();
-//                .benzerKayit();
 
         login(usernameZTEKIN, passwordZTEKIN);
 

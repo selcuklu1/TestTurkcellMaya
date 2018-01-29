@@ -128,7 +128,7 @@ public class GelenEvraklarPage extends MainPage {
 
     @Step("Kullancılar doldur")
     public GelenEvraklarPage takipListesiKullanicilarDoldur(String kullanicilar) {
-        txtTakipListesiKullanicilar.selectLov(kullanicilar);
+        txtTakipListesiKullanicilar.type(kullanicilar).getTitleItems().filterBy(Condition.text(kullanicilar)).first().click();
         return this;
     }
 
@@ -150,7 +150,7 @@ public class GelenEvraklarPage extends MainPage {
 
     @Step("Kisi doldur")
     public GelenEvraklarPage havaleYapKisiDoldur(String kisi) {
-        txtHavaleYapKisi.selectLov(kisi);
+        txtHavaleYapKisi.type(kisi).getTitleItems().filterBy(Condition.text(kisi)).first().click();
         return this;
     }
 
