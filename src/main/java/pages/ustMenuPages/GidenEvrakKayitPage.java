@@ -8,6 +8,7 @@
 package pages.ustMenuPages;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
@@ -214,6 +215,10 @@ public class GidenEvrakKayitPage extends MainPage {
     public GidenEvrakKayitPage panelKapat(Boolean kaydet) {
         $(By.xpath("//div[@id='mainTaskBar']//span[text()='[Giden Evrak Kayıt]']"))
                 .contextClick();
+
+        SelenideElement closeButton = $(By.xpath("//span[@class='ui-dialog-title' and text()='Giden Evrak Kayıt']/..//span[@class='ui-icon ui-icon-closethick']"));
+        Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", closeButton);
+        closeButton.click();
 
         if (kaydet)
             $(By.id("kapatKaydetEvetButton")).click();
