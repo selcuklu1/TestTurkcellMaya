@@ -456,5 +456,20 @@ public class EvrakPostalamaTest extends BaseTest {
                 .postaSorgulama();
 
         Thread.sleep(4000);
+        postalananEvrakRaporuPage.ekranSorgulananSonucKontrol();
+
+        postalananEvrakRaporuPage.cmbEvrakSahibi("YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ")
+                .postaSorgulama();
+        Thread.sleep(1000);
+        postalananEvrakRaporuPage.evrakSahibiKontrol("YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ");
+
+        postalananEvrakRaporuPage.cmbPostalananYerSecimi("Optiim otomasyon")
+                .postaSorgulama();
+
+        postalananEvrakRaporuPage.postalananyerKontrol("Optiim otomasyon");
+        postalananEvrakRaporuPage.cmbpostaSeklisecimi("Iç giden")
+                .postaSorgulama();
+        postalananEvrakRaporuPage.cmbpostaSeklisecimi("Dış giden")
+                .postaSorgulama();
     }
 }
