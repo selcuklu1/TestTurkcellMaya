@@ -456,5 +456,11 @@ public class EvrakPostalamaTest extends BaseTest {
                 .postaSorgulama();
 
         Thread.sleep(4000);
+        postalananEvrakRaporuPage.ekranSorgulananSonucKontrol();
+
+        postalananEvrakRaporuPage.cmbEvrakSahibi("YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ")
+                .postaSorgulama();
+        Thread.sleep(1000);
+        postalananEvrakRaporuPage.evrakSahibiKontrol("YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ");
     }
 }
