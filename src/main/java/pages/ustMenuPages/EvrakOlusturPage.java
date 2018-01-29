@@ -1074,7 +1074,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Onay akışı kullanıcı adı ve tipi kontrol et")
+        @Step("Onay akışı kullanıcı adı ve tipi kontrolu")
         public BilgilerTab onayAkisiKullaniciKontrol(String kullaniciAdi, String kullaniciTipi) {
             btnKullan.sendKeys(Keys.SHIFT);
             trOnayAkisiEkleKullanicilar
