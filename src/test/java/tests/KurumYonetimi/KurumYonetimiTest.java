@@ -396,6 +396,8 @@ public class KurumYonetimiTest extends BaseTest {
                 .bilgilerTabiAc()
                 .geregiSecimTipiSec("Kurum")
                 .geregiTreeKontrolEt(pasifYapilacakKurum, false);
+        evrakOlusturPage
+                .evrakOlusturPageKapat();
 
         gidenEvrakKayitPage
                 .openPage()
