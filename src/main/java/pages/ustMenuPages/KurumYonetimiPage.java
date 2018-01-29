@@ -541,7 +541,9 @@ public class KurumYonetimiPage extends MainPage {
     @Step("Kurum panelinde kaydet butonuna tıklandı.")
     public KurumYonetimiPage kurumKaydet() {
         //btnKurumKaydet.doubleClick();
-        clickJs(btnKurumKaydet);
+        btnKurumKaydet.sendKeys(Keys.SHIFT);
+        btnKurumKaydet.click();
+        //clickJs(btnKurumKaydet);
         return this;
     }
 

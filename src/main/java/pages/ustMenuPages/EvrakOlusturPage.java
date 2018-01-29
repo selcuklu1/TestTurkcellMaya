@@ -154,11 +154,12 @@ public class EvrakOlusturPage extends MainPage {
     }
 
     public EvrakOlusturPage evrakOlusturPageKapat() {
-        //btnEvrakOlusturKapat.click();
+        $(By.xpath("//span[@class='ui-dialog-title' and text()='Evrak Oluştur']/..//span[@class='ui-icon ui-icon-closethick']"))
+                .sendKeys(Keys.SHIFT);
 
-        $(By.xpath("//span[@class='ui-dialog-title' and text()='Evrak Oluştur']/..//span[@class='ui-icon ui-icon-closethick']")).click();
+        $(By.xpath("//span[@class='ui-dialog-title' and text()='Evrak Oluştur']/..//span[@class='ui-icon ui-icon-closethick']"))
+                .click();
         btnEvrakOlusturKapatEvet.click();
-//div[@id='window1Dialog']//span[@class='ui-icon ui-icon-closethick']
         return this;
     }
 
@@ -625,6 +626,7 @@ public class EvrakOlusturPage extends MainPage {
                     .getTitleItems()
                     .first()
                     .click();
+            txtBilgi.closeTreePanel();
             txtBilgi.clearAllSelectedItems();
             return this;
         }
@@ -661,7 +663,11 @@ public class EvrakOlusturPage extends MainPage {
         @Step("Geregi alanında \"{geregi}\" seç")
         public BilgilerTab geregiSec(String geregi, Boolean clearAfterSelecion) {
             cmbGeregi.sendKeys(Keys.SHIFT);
-            txtGeregi.selectLov(geregi);
+            txtGeregi.type(geregi)
+                    .getTitleItems()
+                    .first()
+                    .click();
+            txtGeregi.closeTreePanel();
             txtGeregi.clearLastSelectedItem();
             return this;
         }
