@@ -263,9 +263,9 @@ public class KararYazisiOlusturPage extends MainPage {
         }
 
         @Step("Güncel kullanıcının default geldiği görülür")
-        public BilgilerTab onayAkisiEkleKullaniciGeldigiGorme(){
-            boolean durum = $$("[id$='akisAdimLov:LovSecilenTable']").size() ==1;
-            Assert.assertEquals(durum,true);
+        public BilgilerTab onayAkisiEkleKullaniciGeldigiGorme() {
+            boolean durum = $$("[id$='akisAdimLov:LovSecilenTable']").size() == 1;
+            Assert.assertEquals(durum, true);
             takeScreenshot();
             return this;
         }
@@ -278,10 +278,10 @@ public class KararYazisiOlusturPage extends MainPage {
         }
 
         @Step("Kullanıcının parafçı olarak seçilmediği görülür")
-        public BilgilerTab kullanicilarAlaniSecilenParafciSecilmedigiGorme(){
-            boolean durum =$$("[id^='yeniKararEvrakForm:evrakBilgileriList'][id$='kisAdimLov:LovSecilenTable_data']")
-                    .filterBy(Condition.text("Parafçı")).size()==0;
-            Assert.assertEquals(durum,true);
+        public BilgilerTab kullanicilarAlaniSecilenParafciSecilmedigiGorme() {
+            boolean durum = $$("[id^='yeniKararEvrakForm:evrakBilgileriList'][id$='kisAdimLov:LovSecilenTable_data']")
+                    .filterBy(Condition.text("Parafçı")).size() == 0;
+            Assert.assertEquals(durum, true);
             takeScreenshot();
             return this;
         }
@@ -340,7 +340,7 @@ public class KararYazisiOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Onay akışında güncel gelen kullanıcıyı kontrol et")
+        @Step("Onay akışında güncel gelen kullanıcıyı kontrolu")
         public BilgilerTab onayAkisiKullaniciKontrol(String kullaniciAdi) {
             trOnayAkisiEkleKullanicilar
                     .filterBy(text(kullaniciAdi))
@@ -378,29 +378,29 @@ public class KararYazisiOlusturPage extends MainPage {
         }
 
         @Step("İlgi alanının \"{ilgi}\" şeklinde geldiği görülür")
-        public EditorTab ilgiGeldigiGorme(String ilgi){
-            boolean durum =$$(By.id("yeniKararEvrakForm:allPanels_content"))
-            .filterBy(Condition.text(ilgi)).size()==1;
-            Assert.assertEquals(durum,true);
+        public EditorTab ilgiGeldigiGorme(String ilgi) {
+            boolean durum = $$(By.id("yeniKararEvrakForm:allPanels_content"))
+                    .filterBy(Condition.text(ilgi)).size() == 1;
+            Assert.assertEquals(durum, true);
             takeScreenshot();
             return this;
         }
 
         @Step("Toplantı no, Toplantı tarihi, Karar no alanlarının bilgileri sekmesinde girildiği şekliyle geldiği görülür.")
-        public EditorTab editorNoAlanıGeldigiGorme(String toplantiNo, String toplantiTarih, String kararNo){
-            boolean durum =$$(By.id("yeniKararEvrakForm:allPanels_content"))
+        public EditorTab editorNoAlanıGeldigiGorme(String toplantiNo, String toplantiTarih, String kararNo) {
+            boolean durum = $$(By.id("yeniKararEvrakForm:allPanels_content"))
                     .filterBy(Condition.text(toplantiNo))
                     .filterBy(Condition.text(toplantiTarih))
-                    .filterBy(Condition.text(kararNo)).size()==1;
-            Assert.assertEquals(durum,true);
+                    .filterBy(Condition.text(kararNo)).size() == 1;
+            Assert.assertEquals(durum, true);
             takeScreenshot();
             return this;
         }
 
         @Step("Sayfanın alt sağında imzacının \"{imzaci}\" adla geldiği ")
-        public EditorTab imzaciGeldigiGorme(String imzaci){
-            boolean durum = $$(By.id("yeniKararEvrakForm:imzacilarPanel")).filterBy(Condition.text(imzaci)).size()==1;
-            Assert.assertEquals(durum,true);
+        public EditorTab imzaciGeldigiGorme(String imzaci) {
+            boolean durum = $$(By.id("yeniKararEvrakForm:imzacilarPanel")).filterBy(Condition.text(imzaci)).size() == 1;
+            Assert.assertEquals(durum, true);
             return this;
         }
 
@@ -432,23 +432,23 @@ public class KararYazisiOlusturPage extends MainPage {
             return this;
         }
 
-        
+
         @Step("Evet tıklanır")
-        public EditorTab evrakiKaydetmekIsterMisinizEvet(){
-                btnEvet.pressEnter();
+        public EditorTab evrakiKaydetmekIsterMisinizEvet() {
+            btnEvet.pressEnter();
             return this;
         }
 
         @Step("Hayır tıklanır")
-        public EditorTab evrakiKaydetmekIsterMisinizHayir(){
+        public EditorTab evrakiKaydetmekIsterMisinizHayir() {
             btnHayir.pressEnter();
             return this;
         }
-        
+
         @Step("Evrakı kaydetmek istediğinize emin misiniz sorusunun geldiği görülür.")
-        public EditorTab evrakiKaydetmekIstediginizGeldigiGorme(){
-            boolean durum = $("[class='ui-confirm-dialog ui-dialog ui-widget ui-widget-content ui-corner-all ui-helper-hidden ui-shadow ui-overlay-visible']").shouldBe(visible).exists()==true;
-            Assert.assertEquals(durum,true);
+        public EditorTab evrakiKaydetmekIstediginizGeldigiGorme() {
+            boolean durum = $("[class='ui-confirm-dialog ui-dialog ui-widget ui-widget-content ui-corner-all ui-helper-hidden ui-shadow ui-overlay-visible']").shouldBe(visible).exists() == true;
+            Assert.assertEquals(durum, true);
             takeScreenshot();
             return this;
         }
@@ -461,7 +461,7 @@ public class KararYazisiOlusturPage extends MainPage {
         }
 
         @Step("")
-        public EditorTab editorNoAlanıGeldigiGorme(){
+        public EditorTab editorNoAlanıGeldigiGorme() {
 
             return this;
         }

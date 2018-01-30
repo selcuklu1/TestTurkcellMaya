@@ -185,8 +185,14 @@ public class OnayAkisYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Koordine checkboxını seç")
+    @Step("Koordineli seçeneğini seç")
     public OnayAkisYonetimiPage koordineliSec(boolean secim) {
+        chkKoordineli.setSelected(secim);
+        return this;
+    }
+
+    @Step("Koordineli seçimini kaldır")
+    public OnayAkisYonetimiPage koordineliSecimiKaldir(boolean secim) {
         chkKoordineli.setSelected(secim);
         return this;
     }
@@ -439,6 +445,30 @@ public class OnayAkisYonetimiPage extends MainPage {
     //İşlem mesajındaki yazılar tam yüklenmiyor hata veriyor. O yüzden 1 sn bekleniyor.
     public OnayAkisYonetimiPage islemMesajiBekle() {
         Selenide.sleep(1000);
+        return this;
+    }
+
+    @Step("Onay Akışı data resetleme")
+    public OnayAkisYonetimiPage onayAkisiDataResetleme(String yeniOnayAkisi, String eskiOnayAkisi, String basariMesaji) {
+
+        filtredeAdDoldur(eskiOnayAkisi);
+        ara();
+
+        if (tblOnayAkisListesi
+                .filterBy(text(eskiOnayAkisi)).size() == 1) {
+            tblOnayAkisListesi
+                    .filterBy(text(eskiOnayAkisi))
+                    .first()
+                    .shouldBe(exist)
+                    .$("[id$='updateRolButton']").click();
+
+            onayAkisiIslemleriAdDoldur(yeniOnayAkisi);
+            onayAkisiIslemleriKaydet();
+            islemMesaji().basariliOlmali(basariMesaji);
+        } else {
+            Allure.addAttachment("Data düzgün, resetleme yapılmadı.", "");
+        }
+
         return this;
     }
 }

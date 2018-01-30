@@ -196,16 +196,16 @@ public class EvrakHavaleKurallariTest extends BaseTest {
         //Test bittikten sonra datamızı siliyoruz. Bir sonraki koşumda hata almamamız için.
         evrakHavaleKurallariYonetimiPage
                 .openPage()
-                .filtreleKuralAdiDoldur(kuralAdi,"Kural adı")
+                .filtreleKuralAdiDoldur(kuralAdi, "Kural adı")
                 .ara()
-                .sil(kuralAdi,"Konu")
+                .sil(kuralAdi, "Konu")
                 .islemOnayiEvet()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
         evrakHavaleKurallariYonetimiPage
-                .filtreleKuralAdiDoldur(kuralAd,"Kural adı")
+                .filtreleKuralAdiDoldur(kuralAd, "Kural adı")
                 .ara()
-                .sil(kuralAd,"Konu")
+                .sil(kuralAd, "Konu")
                 .islemOnayiEvet()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
@@ -464,9 +464,9 @@ public class EvrakHavaleKurallariTest extends BaseTest {
                 .birimEkleBirimDoldur(birim)
                 .birimEkleAltBirimEkle(true);
 
-            String isim = evrakHavaleKurallariYonetimiPage.birimEkleAltBirimIlkAdCek();
+        String isim = evrakHavaleKurallariYonetimiPage.birimEkleAltBirimIlkAdCek();
 
-            evrakHavaleKurallariYonetimiPage
+        evrakHavaleKurallariYonetimiPage
                 .birimEkleEkle()
                 .yeniBirimSil(isim)
                 .islemOnayiEvet()
@@ -484,16 +484,16 @@ public class EvrakHavaleKurallariTest extends BaseTest {
         //Test bittikten sonra datamızı siliyoruz. Bir sonraki koşumda hata almamamız için.
         evrakHavaleKurallariYonetimiPage
                 .openPage()
-                .filtreleKuralAdiDoldur(kuralAdi,"Kural adı")
+                .filtreleKuralAdiDoldur(kuralAdi, "Kural adı")
                 .ara()
-                .sil(kuralAdi,"Konu")
+                .sil(kuralAdi, "Konu")
                 .islemOnayiEvet()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
         evrakHavaleKurallariYonetimiPage
-                .filtreleKuralAdiDoldur(kuralAdi2,"Kural adı")
+                .filtreleKuralAdiDoldur(kuralAdi2, "Kural adı")
                 .ara()
-                .sil(kuralAdi2,"Konu")
+                .sil(kuralAdi2, "Konu")
                 .islemOnayiEvet()
                 .islemMesaji().basariliOlmali(basariMesaji);
     }

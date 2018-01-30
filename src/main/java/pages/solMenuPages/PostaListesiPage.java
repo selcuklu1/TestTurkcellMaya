@@ -155,6 +155,7 @@ public class PostaListesiPage extends MainPage {
             cmbGonderildigiKurum.getSelectedTitles().first().shouldNotHave(Condition.text(gonderildigiYer));
         return this;
     }
+
     @Step("Gramaj alanını doldur : \"{gramaj}\" ")
     public PostaListesiPage gramajDoldur(String gramaj) {
         setValueJS(txtGramaj, gramaj);
@@ -199,7 +200,7 @@ public class PostaListesiPage extends MainPage {
         lblTutar.isDisplayed();
         lblGramaj.isDisplayed();
 
-        Allure.addAttachment("Ekran Kontrolü","Posta listesi adı \n" +
+        Allure.addAttachment("Ekran Kontrolü", "Posta listesi adı \n" +
                 "Barkod no\n" +
                 "Gönderildiği yer\n" +
                 "Gönderildiği kurum\n" +
@@ -569,7 +570,12 @@ public class PostaListesiPage extends MainPage {
         size = size - 1;
         String pdfName = "";
         for (int i = size; i >= 0; i--) {
-//            Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", tableEvrakListesi);
+
+//            SearchTable searchTable =  TopluPostaladiklarimPage.searchTable();
+//            searchTable.findRows(Condition.text(konu[i]))
+//                    .getFoundRow()
+//                    .$x("descendant::button[descendant::span[. = 'Yazdır']]").click();
+
             tableEvrakListesi
                     .filterBy(Condition.text(konu[i]))
                     .first()
@@ -599,10 +605,17 @@ public class PostaListesiPage extends MainPage {
         size = size - 1;
         for (int i = size; i >= 0; i--) {
 //            Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", tableEvrakListesi);
+//            SearchTable searchTable =  TopluPostaladiklarimPage.searchTable();
+//            searchTable.findRows(Condition.text(konu[i]))
+//                    .getFoundRow()
+//                    .$x("descendant::button[descendant::span[. = 'Orjinalini Yazdır']]").pressEnter();
+
+
             tableEvrakListesi
                     .filterBy(Condition.text(konu[i]))
                     .first()
                     .$x("descendant::button[descendant::span[. = 'Orjinalini Yazdır']]").pressEnter();
+
             evrakDetayiPopUpKontrolü();
             evrakDetayiOrjinaliYazdır(konu[i]);
             switchTo().window(1);

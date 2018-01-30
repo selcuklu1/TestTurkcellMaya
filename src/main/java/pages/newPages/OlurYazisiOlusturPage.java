@@ -20,29 +20,29 @@ public class OlurYazisiOlusturPage extends MainPage {
 
 //    private final static String pageLocator = "//*[@id='yeniOnayEvrakForm']/ancestor::div[contains(@class,'windowDialog')]";
 
+    public final UstMenuData.EvrakIslemleri pageTitle = UstMenuData.EvrakIslemleri.OlurYazisiOlustur;
     /*@FindBy(xpath = pageLocator)
         private UstMenuPageHeader ustMenuPageHeader;
 
         @FindBy(xpath = pageLocator)
         private BilgilerTab bilgilerTab;*/
     private SelenideElement page = $("#yeniOnayEvrakForm");
-    public final UstMenuData.EvrakIslemleri pageTitle = UstMenuData.EvrakIslemleri.OlurYazisiOlustur;
 
     public SelenideElement getPage() {
         return page;
     }
-    
+
     @Step("Onay İşlem Açıklama alanı bul")
-    public SelenideElement getOnayIslemAciklama(){
+    public SelenideElement getOnayIslemAciklama() {
         return page.$("textarea[id$=onayIslemiAciklama]");
     }
 
     @Step("Onay İşlem Açıklama alanı doldur")
-    public OlurYazisiOlusturPage onayIslemAciklamaDoldur(String aciklama){
+    public OlurYazisiOlusturPage onayIslemAciklamaDoldur(String aciklama) {
         page.$("textarea[id$=onayIslemiAciklama]").setValue(aciklama);
         return this;
     }
-    
+
 
     public OlurYazisiOlusturPage openPage() {
         ustMenu(pageTitle);

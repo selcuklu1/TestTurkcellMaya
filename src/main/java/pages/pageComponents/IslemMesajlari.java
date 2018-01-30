@@ -12,7 +12,8 @@ import java.util.List;
 
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.$$;
+import static com.codeborne.selenide.Selenide.sleep;
 import static pages.pageComponents.IslemMesajlari.MessageTitle.*;
 
 public class IslemMesajlari extends BaseLibrary {
@@ -28,12 +29,12 @@ public class IslemMesajlari extends BaseLibrary {
     private SelenideElement messageBody = $(".lobibox-notify-msg");
     private SelenideElement closeMessagePopup = $(".lobibox-close");*/
 
+    List<String> messages;
     private By messageLocator = By.cssSelector(".lobibox-notify");
     private By bodyLocator = By.cssSelector(".lobibox-notify-body");
     private By titleLocator = By.cssSelector(".lobibox-notify-title");
     private By msgLocator = By.cssSelector(".lobibox-notify-msg");
     private By closeButtonLocator = By.cssSelector(".lobibox-close");
-    List<String> messages;
 
 
     ///////////////////////////////////////////////////////////////////////////

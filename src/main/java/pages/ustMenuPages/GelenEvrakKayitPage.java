@@ -1,6 +1,9 @@
 package pages.ustMenuPages;
 
-import com.codeborne.selenide.*;
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
@@ -231,10 +234,10 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("Otomatik havale seç")
     public GelenEvrakKayitPage otomatikHavaleSec2(boolean durum) {
-            $("[id='evrakBilgileriForm:havaleDagitimLovPanel'] [class='ui-chkbox ui-widget'] input[type=checkbox]")
-                    .setSelected(durum);
-            sleep(3000);
-            $("[id='evrakBilgileriForm:havaleDagitimLovPanel'] [class='ui-chkbox ui-widget'] div[class*='ui-chkbox-box ui-widget ui-corner-all ui-state-default']").click();
+        $("[id='evrakBilgileriForm:havaleDagitimLovPanel'] [class='ui-chkbox ui-widget'] input[type=checkbox]")
+                .setSelected(durum);
+        sleep(3000);
+        $("[id='evrakBilgileriForm:havaleDagitimLovPanel'] [class='ui-chkbox ui-widget'] div[class*='ui-chkbox-box ui-widget ui-corner-all ui-state-default']").click();
         return this;
     }
 
@@ -556,8 +559,8 @@ public class GelenEvrakKayitPage extends MainPage {
     }
 
     @Step("Dağıtım Bilgileri Onaylayacak Kisi alanında \"{onaylayan}\" seçilir")
-    public GelenEvrakKayitPage dagitimBilgileriOnaylayanWithDetails(String onaylayan,String details) {
-        cmbHavaleIslemleriOnaylayacakKisi.selectLov(onaylayan,details);
+    public GelenEvrakKayitPage dagitimBilgileriOnaylayanWithDetails(String onaylayan, String details) {
+        cmbHavaleIslemleriOnaylayacakKisi.selectLov(onaylayan, details);
         return this;
     }
 
@@ -578,6 +581,17 @@ public class GelenEvrakKayitPage extends MainPage {
     @Step("Dağıtım Bilgileri Kişi alanında \"{kisi}\" seçilir")
     public GelenEvrakKayitPage dagitimBilgileriKisiSec(String kisi) {
         txtDagitimBilgileriKisiComboLov.selectLov(kisi);
+        return this;
+    }
+
+    @Step("Dağıtım Bilgileri Kişi alanında \"{kisi}\" seçilir")
+    public GelenEvrakKayitPage dagitimBilgileriKisiSec(String kisi, String title) {
+        if ($(By.xpath("//table[@id='evrakBilgileriForm:kisiLovContainer']//span[text()='Birim']")).isDisplayed())
+            $(By.xpath("//table[@id='evrakBilgileriForm:kisiLovContainer']//span[text()='Birim']")).click();
+
+        txtDagitimBilgileriKisiComboLov.type(kisi).getTitleItems()
+                .filterBy(Condition.exactText(kisi + title)).first().click();
+        txtDagitimBilgileriKisiComboLov.closeTreePanel();
         return this;
     }
 
@@ -807,7 +821,7 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("Yeni Kayıt tıklanır")
     public GelenEvrakKayitPage yeniKayitButton() {
-           $("[id$='yeniKayitButton']").pressEnter();
+        $("[id$='yeniKayitButton']").pressEnter();
         return this;
     }
 
@@ -1105,8 +1119,9 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("Panel kapat")
     public GelenEvrakKayitPage panelKapat(Boolean kaydet) {
-        $(By.xpath("//div[@id='mainTaskBar']//span[text()='[Gelen Evrak Kayıt]']"))
-                .contextClick();
+        SelenideElement closeButton = $(By.xpath("//span[@class='ui-dialog-title' and text()='Gelen Evrak Kayıt']/..//span[@class='ui-icon ui-icon-closethick']"));
+        Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", closeButton);
+        closeButton.click();
 
         if (kaydet)
             $(By.id("kapatKaydetEvetButton")).click();
@@ -1153,13 +1168,21 @@ public class GelenEvrakKayitPage extends MainPage {
         btnTaramaArayuzundenEkle.isDisplayed();
         btnTaramaServisindenEkle.isDisplayed();
 
-        Allure.addAttachment(btnUstYaziEkle.text(), "Ekran Kontrolü ok");
-        Allure.addAttachment(lblUstyaziGoster.text(), "Ekran Kontrolü ok");
-        Allure.addAttachment(lblUstyaziGizle.text(), "Ekran Kontrolü ok");
-        Allure.addAttachment(btnTaramaHavuzundanEkle.text(), "Ekran Kontrolü ok");
-        Allure.addAttachment(btnTarayicidanEkle.text(), "Ekran Kontrolü ok");
-        Allure.addAttachment(btnTaramaArayuzundenEkle.text(), "Ekran Kontrolü ok");
-        Allure.addAttachment(btnTaramaServisindenEkle.text(), "Ekran Kontrolü ok");
+        Allure.addAttachment("Ekran Kontrolü", "üst yazı ekle butonunun\n" +
+                "üst yazı göster\n" +
+                "üst yazı gizle seçeneklerinin\n" +
+                "tarama havuzundan ekle\n" +
+                "tarayıcıdan ekle\n" +
+                "tarama arayüzünden ekle\n" +
+                "tarama servisinden ekle butonlarının geldiği görülür.\n");
+        takeScreenshot();
+//        Allure.addAttachment(btnUstYaziEkle.text(), "Ekran Kontrolü ok");
+//        Allure.addAttachment(lblUstyaziGoster.text(), "Ekran Kontrolü ok");
+//        Allure.addAttachment(lblUstyaziGizle.text(), "Ekran Kontrolü ok");
+//        Allure.addAttachment(btnTaramaHavuzundanEkle.text(), "Ekran Kontrolü ok");
+//        Allure.addAttachment(btnTarayicidanEkle.text(), "Ekran Kontrolü ok");
+//        Allure.addAttachment(btnTaramaArayuzundenEkle.text(), "Ekran Kontrolü ok");
+//        Allure.addAttachment(btnTaramaServisindenEkle.text(), "Ekran Kontrolü ok");
 
         return this;
     }

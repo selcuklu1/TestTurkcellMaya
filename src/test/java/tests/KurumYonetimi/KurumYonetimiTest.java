@@ -281,12 +281,12 @@ public class KurumYonetimiTest extends BaseTest {
                 .mobilTelNoDoldur(mobilTelNo)
                 .telefonNoDoldur(telefonNo)
                 .adresDoldur(adres)
-                 .ulkeDoldur(ulke)
+                .ulkeDoldur(ulke)
                 .ilDoldur(il)
                 .ePostaDoldur(ePosta)
                 .iletisimBilgisiKaydet()
                 .kurumKaydet()
-                .islemMesaji().basariliOlmali(basariMesaji);
+                .islemMesaji().basariliOlmali();
 
         kurumYonetimiPage
                 .yeniKurumEkle()
@@ -303,12 +303,12 @@ public class KurumYonetimiTest extends BaseTest {
                 .ilDoldur(il)
                 .ePostaDoldur(ePosta)
                 .iletisimBilgisiKaydet()
-                .kurumKaydet()
-                .islemMesaji().basariliOlmali(basariMesaji);
+                .kurumKaydet();
+        //.islemMesaji().basariliOlmali();
 
         kurumYonetimiPage
                 .kurumHiyerarsisiniGuncelle()
-                .islemMesaji().basariliOlmali(basariMesaji);
+                .islemMesaji().basariliOlmali();
 
         kurumYonetimiPage
                 .durumSec("Sadece Aktifler")
@@ -361,9 +361,6 @@ public class KurumYonetimiTest extends BaseTest {
                 .geregiSecimTipiSec("Kurum")
                 .geregiSec(aktifIdariBirimKimlikKodu, true)
                 .geregiSec(aktifKurumAdi, true);
-        evrakOlusturPage
-                .evrakOlusturPageKapat();
-
 
         gelenEvrakKayitPage
                 .openPage()
@@ -394,13 +391,11 @@ public class KurumYonetimiTest extends BaseTest {
                 .kurumTableKontrol(pasifYapilacakKurum, "Sadece Pasifler", false)
                 .panelKapat();
 
-
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
                 .geregiSecimTipiSec("Kurum")
                 .geregiTreeKontrolEt(pasifYapilacakKurum, false);
-
         evrakOlusturPage
                 .evrakOlusturPageKapat();
 

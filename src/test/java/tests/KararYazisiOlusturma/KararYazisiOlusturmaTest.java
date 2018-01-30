@@ -59,7 +59,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
         String uyariMesajYaziIcerik = "Yazı içeriği boş olamaz!";
         String uyariMesajZorunlu = "Zorunlu alanları doldurunuz";
         String konuKodu = "K/Frekans Yıllık Kullanım Ücreti";
-        String konuKoduRandom = "TS-1488-"+createRandomNumber(15);
+        String konuKoduRandom = "TS-1488-" + createRandomNumber(15);
         String ivedi = "İvedi";
         String kaldirilicakKlasorler = "Diğer";
         String toplantiNo = createRandomNumber(6);
@@ -170,7 +170,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
                 .kaydet()
                 .evetDugmesi()
                 .benzerKayit();
-             //   .yeniKayitButton();
+        //   .yeniKayitButton();
         //TODO
 
 
@@ -246,7 +246,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
     public void TS1497() throws InterruptedException {
         String basariMesaji = "İşlem başarılıdır!";
         String konuKodu = "K/Frekans Yıllık Kullanım Ücreti";
-        String konuKoduRandom = "TS-1497-"+createRandomNumber(15);
+        String konuKoduRandom = "TS-1497-" + createRandomNumber(15);
         String kaldirilicakKlasorler = "Diğer";
         String toplantiNo = createRandomNumber(9);
         String toplantiTarih = getSysDateForKis();
@@ -301,7 +301,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
 
         kararYazisiOlusturPage
                 .editorTabAc()
-                .editorNoAlanıGeldigiGorme(toplantiNo,toplantiTarih,kararNo)
+                .editorNoAlanıGeldigiGorme(toplantiNo, toplantiTarih, kararNo)
                 .imzaciGeldigiGorme(kullanici2)
                 .ilgiGeldigiGorme(not)
                 .editorIcerikDoldur(not)
@@ -345,7 +345,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
 
         String basariMesaji = "İşlem başarılıdır!";
         String konuKodu = "Usul ve Esaslar";
-        String konuKoduRandom = "TS-2232-"+createRandomNumber(15);
+        String konuKoduRandom = "TS-2232-" + createRandomNumber(15);
         String kaldirilicakKlasorler = "Diğer";
         String toplantiNo = createRandomNumber(9);
         String toplantiTarih = getSysDateForKis();
@@ -395,7 +395,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
 
         String basariMesaji = "İşlem başarılıdır!";
         String konuKodu = "Usul ve Esaslar";
-        String konuKoduRandom = "TS-1714"+createRandomNumber(15);
+        String konuKoduRandom = "TS-1714" + createRandomNumber(15);
         String kaldirilicakKlasorler = "Diğer";
         String toplantiNo = createRandomNumber(9);
         String toplantiTarih = getSysDateForKis();
@@ -405,7 +405,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
         String kullanici = "Yasemin Çakıl AKYOL";
         String onayAkisi = "ZUZU_ONAY_AKİSİ_1";
         String ivedilik = "İvedi";
-        String filePath = getUploadPath()+"Otomasyon.pdf";
+        String filePath = getUploadPath() + "Otomasyon.pdf";
         String not = createRandomText(12);
         String birim = "Altyapı ve Sistem Yönetim Uzmanı";
         login(usernameZTEKIN, passwordZTEKIN);

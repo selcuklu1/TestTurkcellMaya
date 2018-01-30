@@ -137,10 +137,10 @@ public class KullaniciYonetimiPage extends MainPage {
     }
 
     @Step("Kullanıcı birim atama ekranında bağ tipi combosunun geldiği görülür.")
-    public KullaniciYonetimiPage kullaniciBirimAtamaEkranıGorme(){
-        boolean durum = $$("[class='ui-dialog ui-widget ui-widget-content ui-corner-all ui-shadow kullaniciYonetimiEditorKullaniciBirimEditorDialog ui-draggable ui-overlay-visible']").size()==1;
-        boolean durum2 = $$(By.id("kullaniciBirimEditorForm:kullaniciBagTipiSelect")).size()==1;
-        Assert.assertEquals(durum,durum2);
+    public KullaniciYonetimiPage kullaniciBirimAtamaEkranıGorme() {
+        boolean durum = $$("[class='ui-dialog ui-widget ui-widget-content ui-corner-all ui-shadow kullaniciYonetimiEditorKullaniciBirimEditorDialog ui-draggable ui-overlay-visible']").size() == 1;
+        boolean durum2 = $$(By.id("kullaniciBirimEditorForm:kullaniciBagTipiSelect")).size() == 1;
+        Assert.assertEquals(durum, durum2);
         takeScreenshot();
         return this;
     }
@@ -159,9 +159,9 @@ public class KullaniciYonetimiPage extends MainPage {
     }
 
     @Step("Kullanıcı bilgilerinin ekranın sağında geldiği görülür.")
-    public KullaniciYonetimiPage kullaniciBilgileriGeldigiGorme(){
-        boolean durum = $$(By.id("kullaniciYonetimiEditorForm:kullaniciYonetimiKullaniciEditorPanel_content")).size()==1;
-        Assert.assertEquals(durum,true);
+    public KullaniciYonetimiPage kullaniciBilgileriGeldigiGorme() {
+        boolean durum = $$(By.id("kullaniciYonetimiEditorForm:kullaniciYonetimiKullaniciEditorPanel_content")).size() == 1;
+        Assert.assertEquals(durum, true);
         takeScreenshot();
         return this;
     }
@@ -229,13 +229,13 @@ public class KullaniciYonetimiPage extends MainPage {
     }
 
     @Step("Kullanıcı yönetimi ekranının kullanıcı filtreleyecek şekilde geldiği görülür.")
-    public KullaniciYonetimiPage filtreleyecekAlanGeldigiGorme(){
-    boolean durum = $$("[id='kullaniciYonetimiListingForm'] [class='ui-accordion-header ui-helper-reset ui-state-default ui-state-active ui-corner-top'] a").size()==1;
-    Assert.assertEquals(durum,true);
-    takeScreenshot();
+    public KullaniciYonetimiPage filtreleyecekAlanGeldigiGorme() {
+        boolean durum = $$("[id='kullaniciYonetimiListingForm'] [class='ui-accordion-header ui-helper-reset ui-state-default ui-state-active ui-corner-top'] a").size() == 1;
+        Assert.assertEquals(durum, true);
+        takeScreenshot();
         return this;
     }
-    
+
     @Step("Ara tıklanır.")
     public KullaniciYonetimiPage ara() {
         btnAra.click();
@@ -243,21 +243,21 @@ public class KullaniciYonetimiPage extends MainPage {
     }
 
     @Step("Kullanıcıların TCKN, ad soyad ve birim bilgileri ile listelendiği görülür.")
-    public KullaniciYonetimiPage kullaniciListesiGeldigiGorme(){
-    $("[id='kullaniciYonetimiListingForm:filterPanel'] a").click();
-    boolean durum = $$("[id='kullaniciYonetimiListingForm:kullaniciDataTable_data'] tr").size()==0;
-        Assert.assertEquals(durum,false);
+    public KullaniciYonetimiPage kullaniciListesiGeldigiGorme() {
+        $("[id='kullaniciYonetimiListingForm:filterPanel'] a").click();
+        boolean durum = $$("[id='kullaniciYonetimiListingForm:kullaniciDataTable_data'] tr").size() == 0;
+        Assert.assertEquals(durum, false);
         takeScreenshot();
-    return this;
+        return this;
     }
 
-    public String adCek(){
-       String ad = $$("[id='kullaniciYonetimiListingForm:kullaniciDataTable_data'] tr[data-ri='0'] div").get(1).getText();
+    public String adCek() {
+        String ad = $$("[id='kullaniciYonetimiListingForm:kullaniciDataTable_data'] tr[data-ri='0'] div").get(1).getText();
         return ad;
     }
 
-    public String birimAdCek(){
-       String ad = $$("[id='kullaniciYonetimiEditorForm:kullaniciBirimDataTable_data'] span").get(0).getText();
+    public String birimAdCek() {
+        String ad = $$("[id='kullaniciYonetimiEditorForm:kullaniciBirimDataTable_data'] span").get(0).getText();
         return ad;
     }
 

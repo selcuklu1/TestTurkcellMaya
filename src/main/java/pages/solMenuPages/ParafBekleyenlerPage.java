@@ -72,7 +72,7 @@ public class ParafBekleyenlerPage extends MainPage {
 
     @Step("Kullancılar doldur")
     public ParafBekleyenlerPage takipListesiKullanicilarDoldur(String kullanicilar) {
-        txtTakipListesiKullanicilar.selectLov(kullanicilar);
+        txtTakipListesiKullanicilar.type(kullanicilar).getTitleItems().filterBy(Condition.text(kullanicilar)).first().click();
         return this;
     }
 

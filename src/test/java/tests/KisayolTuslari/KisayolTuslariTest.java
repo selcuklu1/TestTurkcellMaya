@@ -187,7 +187,7 @@ public class KisayolTuslariTest extends BaseTest {
     }
 
     @Step("{menuButon} menü tooltip {beklenenTooltip} olmalı")
-    private void ustMenuTooltip(String ustMenuGrup, String menuButon, String beklenenTooltip){
+    private void ustMenuTooltip(String ustMenuGrup, String menuButon, String beklenenTooltip) {
         SelenideElement menuGrupButton = $(By.xpath("//div[@id='layoutTopMenuContainer']//button[.='" + ustMenuGrup + "']"));
         String altMenuDialogId = (menuGrupButton.attr("id")).replace("ustMenuEleman", "altMenuDialog");
 
@@ -206,7 +206,7 @@ public class KisayolTuslariTest extends BaseTest {
     }
 
     @Step("Herhangi bir editör ekranını aç, editörü tıkla kısayolunu kullan. {sayfaAdi} ekranının açılmadığı görülür")
-    public void step1(String sayfaAdi, CharSequence kisayol){
+    public void step1(String sayfaAdi, CharSequence kisayol) {
         new EditorTab().openTab().getEditor().editor().sendKeys(kisayol);
         Selenide.switchTo().window(0);
         sleep(5000);
@@ -214,7 +214,7 @@ public class KisayolTuslariTest extends BaseTest {
     }
 
     @Step("Herhangi bir pdf ekranını aç, PDF i tıkla kısayolunu kullan. {sayfaAdi}  ekranının açılmadığı görülür")
-    public void step2(String sayfaAdi, CharSequence kisayol){
+    public void step2(String sayfaAdi, CharSequence kisayol) {
         new EvrakPageButtons().pdfOnizlemeTikla();
         WebDriver driver = Selenide.switchTo().window("htmlToPdfServlet");
         $("#print").sendKeys(kisayol);
@@ -225,20 +225,18 @@ public class KisayolTuslariTest extends BaseTest {
     }
 
     @Step("Herhangi bir input alanını tıkla  kısayolunu kullan. {sayfaAdi} ekranının açılmadığı görülür")
-    public void step3(String sayfaAdi, CharSequence kisayol){
+    public void step3(String sayfaAdi, CharSequence kisayol) {
         new BilgilerTab().openTab().getKonuKodu().sendKeys(kisayol);
         sleep(5000);
         Assert.assertFalse(mainPage.getFooterPageButton(sayfaAdi).exists(), sayfaAdi + " ekranının açılmadığı görülür");
     }
 
     @Step("Editör, pdf veya input alanlarına focuslu olmadan  kısayolunu kullan. {sayfaAdi} ekranının AÇILDIĞI görülür")
-    public void step4(String sayfaAdi, CharSequence kisayol){
+    public void step4(String sayfaAdi, CharSequence kisayol) {
         new BilgilerTab().getTabButton().sendKeys(kisayol);
         sleep(5000);
         Assert.assertTrue(mainPage.getFooterPageButton(sayfaAdi).exists(), sayfaAdi + " ekranının açıldığı görülür");
     }
 
 
-
-    
 }

@@ -118,11 +118,11 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
                 .ara()
                 .kullaniciListesiGeldigiGorme();
         String adCek = kullaniciYonetimiPage.adCek();
-                kullaniciYonetimiPage
+        kullaniciYonetimiPage
                 .kullaniciListesiGuncelle(adCek)
                 .kullaniciBilgileriGeldigiGorme();
         String birim = kullaniciYonetimiPage.birimAdCek();
-                kullaniciYonetimiPage
+        kullaniciYonetimiPage
                 .gorevliOlduguBirimlerGuncelle(birim)
                 .kullaniciBirimAtamaEkranıGorme()
                 .popupKullaniciBirimAtamaBagTipiSec(bagTipi, "Bağ Tipi")
@@ -234,7 +234,7 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
                 .openPage()
                 .evrakSec()
                 .tabHavaleYap()
-                .havaleYapOnaylanacakKisiTreeDoldurGelmedigiGorme(ekranAdi, "Onaylanacak kişi",false);
+                .havaleYapOnaylanacakKisiTreeDoldurGelmedigiGorme(ekranAdi, "Onaylanacak kişi", false);
     }
 
 }

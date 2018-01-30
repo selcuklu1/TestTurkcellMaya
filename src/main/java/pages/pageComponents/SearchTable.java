@@ -30,6 +30,13 @@ public class SearchTable {
 
     //region Class Initialization
     private final SelenideElement parentElement;
+    private SelenideElement foundRow;
+    private ElementsCollection foundRows;
+    private String columnName;
+    //endregion
+    private int columnIndex = -1;
+    private boolean searchInAllPages = false;
+    private boolean searchStartFromLast = false;
 
     public SearchTable(SelenideElement parentElement) {
         this.parentElement = parentElement;
@@ -42,7 +49,6 @@ public class SearchTable {
     public SearchTable(String parentElementCssLocator) {
         this.parentElement = $(By.cssSelector(parentElementCssLocator));
     }
-    //endregion
 
     @Step
     public SelenideElement getTableHeader() {
@@ -64,6 +70,8 @@ public class SearchTable {
         return parentElement.$("span[class~='ui-paginator-prev']");
     }
 
+    //region Buttons. On development...
+
     @Step("Sonraki sayfaya git butonu bulunur")
     public SelenideElement getNextPageButton() {
         return parentElement.$("span[class~='ui-paginator-next']");
@@ -83,8 +91,8 @@ public class SearchTable {
     }
 
     @Step("Kolonlar bulunur")
-    public SearchTable columnHeaderControl(Condition... conditions){
-        for (Condition condition:conditions) {
+    public SearchTable columnHeaderControl(Condition... conditions) {
+        for (Condition condition : conditions) {
             getColumnHeaders().filterBy(condition).shouldHave(sizeGreaterThan(0));
         }
         return this;
@@ -117,8 +125,9 @@ public class SearchTable {
         Allure.addAttachment("Kolon ismi", name);
         return name;
     }
-
-    //region Buttons. On development...
+    //Eposta Seçenekleri button .email-icon
+    //button .user-block-icon   User! Bloke Et
+    //Rapor Al  button .document-getReport
 
     //Güncelle button .update-icon  button[id*='update']
     @Step("Güncelle butona tıkla")
@@ -126,42 +135,47 @@ public class SearchTable {
         foundRow.$("button[id*='update']").shouldBe(visible, enabled).click();
         return this;
     }
+
     //Havale Kural Listesi - Kopyala button .formSablonKopyala    button[id*='copy']
     @Step("Kopyala butona tıkla")
     public SearchTable kopyalaTikla() {
         foundRow.$("button[id*='copy']").shouldBe(visible, enabled).click();
         return this;
     }
+
     //Aktif Yap     button .to-active-status-icon
     @Step("Aktif Yap butona tıkla")
     public SearchTable aktifYapTikla() {
         foundRow.$("button .to-active-status-icon").shouldBe(visible, enabled).click();
         return this;
     }
+
+
+    //endregion
+
     //Passif Yap button .to-passive-status-icon     button[id*='Pasif']
     @Step("Passif Yap butona tıkla")
     public SearchTable pasifYapTikla() {
         foundRow.$("button[id*='Pasif']").shouldBe(visible, enabled).click();
         return this;
     }
+
     //Sil button .delete-icon  button[id*='delete']
     @Step("Sil butona tıkla")
     public SearchTable silTikla() {
         foundRow.$("button[id*='delete']").shouldBe(visible, enabled).click();
         return this;
     }
+
     //Doküman ekle button .document-follow
     @Step("Doküman Ekle tıkla")
     public SearchTable dokumanEkleTikla() {
         foundRow.$("button .document-follow").shouldBe(visible, enabled).click();
         return this;
     }
-    //Eposta Seçenekleri button .email-icon
-    //button .user-block-icon   User! Bloke Et
-    //Rapor Al  button .document-getReport
 
     @Step("İçerik Göster butona tıklanır")
-    public SearchTable icerikGosterTikla(){
+    public SearchTable icerikGosterTikla() {
         foundRow.$("button[id$='detayGosterButton']").click();
         return this;
     }
@@ -177,18 +191,6 @@ public class SearchTable {
         getYeniKayitEkleButton().shouldBe(visible, enabled).click();
         return this;
     }
-
-
-    //endregion
-
-
-    private SelenideElement foundRow;
-    private ElementsCollection foundRows;
-    private String columnName;
-    private int columnIndex = -1;
-    private boolean searchInAllPages = false;
-    private boolean searchStartFromLast = false;
-
 
     public SearchTable foundRow() {
         /*if (foundRow == null)
@@ -226,20 +228,20 @@ public class SearchTable {
     }
 
     @Step("Arama ayarı: son sayfadan başlanır")
-    public SearchTable searchStartFromLastPage(boolean searchStartFromLast){
+    public SearchTable searchStartFromLastPage(boolean searchStartFromLast) {
         this.searchStartFromLast = searchStartFromLast;
         return this;
     }
 
     @Step("Arama ayarı: kolon ismine göre aranır")
-    public SearchTable searchByColumnName(String columnName){
+    public SearchTable searchByColumnName(String columnName) {
         this.columnName = columnName;
         columnIndex = getColumnIndex(columnName);
         return this;
     }
 
     @Step("Arama ayarı: kolon index'a göre aranır")
-    public SearchTable searchByColumnIndex(int columnIndex){
+    public SearchTable searchByColumnIndex(int columnIndex) {
         this.columnIndex = columnIndex;
         columnName = getColumnName(columnIndex);
         return this;
@@ -256,11 +258,11 @@ public class SearchTable {
         ArrayList<WebElement> rows = new ArrayList<>();
 
         //[data-ri] varsa o ana row.
-        if(parentElement.$$(rowCssLocator + "[data-ri]").size() > 0)
+        if (parentElement.$$(rowCssLocator + "[data-ri]").size() > 0)
             rowCssLocator = rowCssLocator + "[data-ri]";
 
         ElementsCollection collection = searchByColumn ? parentElement.$$(rowCssLocator + " " + columnCssLocator + ":nth-child(" + columnIndex + ")")
-        :parentElement.$$(rowCssLocator);
+                : parentElement.$$(rowCssLocator);
 
         SelenideElement pageNavigationButton = searchStartFromLast ? getLastPageButton() : getNextPageButton();
 
@@ -280,7 +282,7 @@ public class SearchTable {
         //If search by column get column rows
         if (searchByColumn) {
             for (SelenideElement column : collection)
-                rows.add(column.$x("ancestor::"+ rowXpathLocator +"[1]"));
+                rows.add(column.$x("ancestor::" + rowXpathLocator + "[1]"));
             collection = new ElementsCollection(new WebElementsCollectionWrapper(rows));
         }
 
@@ -290,19 +292,19 @@ public class SearchTable {
         return this;
     }
 
-    public SearchTable useFoundRow(int index){
+    public SearchTable useFoundRow(int index) {
         foundRow = foundRows.get(index);
         return this;
     }
 
-    public SearchTable useFirstFoundRow(){
+    public SearchTable useFirstFoundRow() {
         /*if (foundRows == null)
             throw new NotFoundException("Satırlar bulunamadı");*/
         foundRow = foundRows.first();
         return this;
     }
 
-    public SearchTable useLastFoundRow(){
+    public SearchTable useLastFoundRow() {
         foundRow = foundRows.last();
         return this;
     }
@@ -326,40 +328,40 @@ public class SearchTable {
         return foundRow.$$(columnCssLocator).get(columnIndex);
     }
 
-    public ElementsCollection rowsToElementsCollection(){
+    public ElementsCollection rowsToElementsCollection() {
         return foundRows;
     }
 
-    public SelenideElement rowToSelenideElement(){
+    public SelenideElement rowToSelenideElement() {
         return foundRow;
     }
 
-    public SearchTable should(Condition... condition){
+    public SearchTable should(Condition... condition) {
         foundRow.should(condition);
         return this;
     }
 
-    public SearchTable shouldHave(Condition... condition){
+    public SearchTable shouldHave(Condition... condition) {
         foundRow.shouldHave(condition);
         return this;
     }
 
-    public SearchTable shouldBe(Condition... condition){
+    public SearchTable shouldBe(Condition... condition) {
         foundRow.shouldBe(condition);
         return this;
     }
 
-    public SearchTable shouldNot(Condition... condition){
+    public SearchTable shouldNot(Condition... condition) {
         foundRow.shouldNot(condition);
         return this;
     }
 
-    public SearchTable shouldNotHave(Condition... condition){
+    public SearchTable shouldNotHave(Condition... condition) {
         foundRow.shouldNotHave(condition);
         return this;
     }
 
-    public SearchTable shouldNotBe(Condition... condition){
+    public SearchTable shouldNotBe(Condition... condition) {
         foundRow.shouldNotBe(condition);
         return this;
     }

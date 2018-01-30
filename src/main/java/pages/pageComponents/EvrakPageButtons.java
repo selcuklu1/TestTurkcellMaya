@@ -2,7 +2,6 @@ package pages.pageComponents;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;
-import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Step;
 import pages.MainPage;
 
@@ -33,7 +32,7 @@ public class EvrakPageButtons extends MainPage {
         return container;
     }
 
-    private SelenideElement getButton(String text){
+    private SelenideElement getButton(String text) {
         return getContainer().$x("descendant::*[text()='" + text + "']/ancestor::tbody[1]//button");
     }
 
@@ -77,17 +76,17 @@ public class EvrakPageButtons extends MainPage {
     }
 
     @Step("Evrak İmzala pencerisi bulunur")
-    public SelenideElement getEvrakImzalaDialog(){
+    public SelenideElement getEvrakImzalaDialog() {
         return $("#evrakImzalaDialog");
     }
 
     @Step("Evrak İmzala pencerisi kapat")
-    public EvrakPageButtons closeEvrakImzalaDialog(){
+    public EvrakPageButtons closeEvrakImzalaDialog() {
         getEvrakImzalaDialog().$("a.ui-dialog-titlebar-close").click();
         return this;
     }
 
-    public SelenideElement getImzalaForm(){
+    public SelenideElement getImzalaForm() {
         return $("#imzalaForm");
     }
 
@@ -175,12 +174,12 @@ public class EvrakPageButtons extends MainPage {
 
     //region Kaydet ve Onaya Sun
     @Step("Kaydet ve Onaya Sun butonu bul")
-    public SelenideElement getEvrakKaydetVeOnayaSun(){
+    public SelenideElement getEvrakKaydetVeOnayaSun() {
         return getButton("Kaydet ve Onaya Sun");
     }
 
     @Step("Kaydet ve Onaya Sun")
-    public EvrakPageButtons evrakKaydetVeOnayaSunTikla(){
+    public EvrakPageButtons evrakKaydetVeOnayaSunTikla() {
         getEvrakKaydetVeOnayaSun().shouldBe(visible).click();
         return this;
     }
@@ -188,12 +187,12 @@ public class EvrakPageButtons extends MainPage {
 
     //region Gönder
     @Step("Gönder butonu bul")
-    public SelenideElement getGonder(){
+    public SelenideElement getGonder() {
         return getContainer().$("button[id$='gonderButton']");
     }
 
     @Step("Gönder butona tıkla")
-    public EvrakPageButtons gonderTikla(){
+    public EvrakPageButtons gonderTikla() {
         getGonder().click();
         return this;
     }
@@ -201,18 +200,18 @@ public class EvrakPageButtons extends MainPage {
 
     //region Postala
     @Step("Postala butonu bul")
-    public SelenideElement getEvrakPostala(){
+    public SelenideElement getEvrakPostala() {
         return getButton("Parafla");
     }
 
     @Step("Postala butona tıkla")
-    public EvrakPageButtons postalaTikla(){
+    public EvrakPageButtons postalaTikla() {
         getEvrakPostala().click();
         return this;
     }
 
     @Step("Postala")
-    private EvrakPageButtons evrakPostala(){
+    private EvrakPageButtons evrakPostala() {
         postalaTikla();
         getContainer().$x("descendant::button[.='Postala']").click();
         confirmDialog().confirmEvetTikla();
@@ -222,12 +221,12 @@ public class EvrakPageButtons extends MainPage {
 
 
     @Step("PDF Önizleme butonu bul")
-    public SelenideElement getPdfOnizleme(){
+    public SelenideElement getPdfOnizleme() {
         return getButton("PDF Önizleme");
     }
 
     @Step("PDF Önizleme butonu tikla")
-    public EvrakPageButtons pdfOnizlemeTikla(){
+    public EvrakPageButtons pdfOnizlemeTikla() {
         getPdfOnizleme().click();
         return this;
     }

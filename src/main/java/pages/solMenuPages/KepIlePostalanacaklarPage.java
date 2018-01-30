@@ -21,9 +21,9 @@ public class KepIlePostalanacaklarPage extends MainPage {
     SelenideElement btnEvrakPostalaPostala = $(By.id("mainPreviewForm:postalaButton_id"));
 
     @Step("\"{konuKodu}\" adlı evrağın listelenmediği görülür.")
-    public KepIlePostalanacaklarPage evragınListelenmedigiGorme(String konuKodu){
+    public KepIlePostalanacaklarPage evragınListelenmedigiGorme(String konuKodu) {
         boolean durum = tblEvraklar.filterBy(Condition.text(konuKodu)).size() == 0;
-        Assert.assertEquals(durum,true);
+        Assert.assertEquals(durum, true);
         takeScreenshot();
         return this;
     }
@@ -49,29 +49,29 @@ public class KepIlePostalanacaklarPage extends MainPage {
     }
 
     @Step("Postala")
-    public KepIlePostalanacaklarPage evrakPostalaPostala(){
+    public KepIlePostalanacaklarPage evrakPostalaPostala() {
         btnEvrakPostalaPostala.click();
         return this;
     }
 
     @Step("Belge elektronik imzalı değil! Evrakı postalamak üzeresiniz. Devam etmek istiyor musunuz? uyarısının geldiği görülür.")
-    public KepIlePostalanacaklarPage belgeElektronikImzaliDegilUyariGeldigiGorme(){
-        boolean durum = $$("[id^='mainPreviewForm:postalaDogrulaDialogForm']").filterBy(Condition.visible).size()==0;
-        Assert.assertEquals(durum,false);
+    public KepIlePostalanacaklarPage belgeElektronikImzaliDegilUyariGeldigiGorme() {
+        boolean durum = $$("[id^='mainPreviewForm:postalaDogrulaDialogForm']").filterBy(Condition.visible).size() == 0;
+        Assert.assertEquals(durum, false);
         takeScreenshot();
         return this;
     }
 
     @Step("Evet seçilir")
-    public KepIlePostalanacaklarPage belgeElektronikImzaliDegilUyariEvet(){
+    public KepIlePostalanacaklarPage belgeElektronikImzaliDegilUyariEvet() {
         $("[id$='evetButton_id']").click();
         return this;
     }
 
     @Step("Kayıtlı e-posta adresleri bağlantı noktası ekranının geldiği görülür.")
-    public KepIlePostalanacaklarPage kayitliEpostaAdresleriBaglantisiGeldigiGorme(){
-        boolean durum =$$(By.id("kepLoginDialogId")).size() ==1;
-        Assert.assertEquals(durum,true);
+    public KepIlePostalanacaklarPage kayitliEpostaAdresleriBaglantisiGeldigiGorme() {
+        boolean durum = $$(By.id("kepLoginDialogId")).size() == 1;
+        Assert.assertEquals(durum, true);
         takeScreenshot();
         return this;
     }
@@ -83,7 +83,7 @@ public class KepIlePostalanacaklarPage extends MainPage {
     }
 
     @Step("Evrak seçilir")
-    public KepIlePostalanacaklarPage evrakSec(String konuKodu){
+    public KepIlePostalanacaklarPage evrakSec(String konuKodu) {
         tblEvraklar
                 .filterBy(Condition.text(konuKodu)).get(0).click();
         return this;

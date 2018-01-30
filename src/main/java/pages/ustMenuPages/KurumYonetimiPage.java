@@ -1,12 +1,10 @@
 package pages.ustMenuPages;
 
-import com.codeborne.selenide.CollectionCondition;
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.*;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.UstMenuData;
@@ -91,7 +89,6 @@ public class KurumYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("TC kimlik no alma")
     public String idariBirimKimlikKoduCek() {
         String getIdariBirimKodu = txtIdariBirimKimlik.getValue();
         return getIdariBirimKodu;
@@ -100,6 +97,12 @@ public class KurumYonetimiPage extends MainPage {
     @Step("Kaydet")
     public KurumYonetimiPage popupKaydet() {
         btnPopupKaydet.click();
+        return this;
+    }
+
+    @Step("")
+    public KurumYonetimiPage kepAdresBi() {
+
         return this;
     }
 
@@ -207,6 +210,14 @@ public class KurumYonetimiPage extends MainPage {
         return this;
     }
 
+    @Step("Kurumların listelendiği görülür")
+    public KurumYonetimiPage kurumlarinListelendigiGorme() {
+        boolean durum = $$(By.id("kurumYonetimiListingForm:kurumTreeTable")).size() == 1;
+        Assert.assertEquals(durum, true);
+        takeScreenshot();
+        return this;
+    }
+
     @Step("Kurumlar table kontrol et")
     public KurumYonetimiPage kurumTableKontrol(String kurumAdi, String durum, Boolean checkAll) {
 
@@ -300,6 +311,7 @@ public class KurumYonetimiPage extends MainPage {
     @Step("Filtrele panelini aç")
     public KurumYonetimiPage filtrePanelAc() {
         $("div[id='kurumYonetimiListingForm:filterPanel'] > h3").click();
+        Selenide.sleep(1000);
         return this;
     }
 
@@ -527,7 +539,9 @@ public class KurumYonetimiPage extends MainPage {
     @Step("Kurum panelinde kaydet butonuna tıklandı.")
     public KurumYonetimiPage kurumKaydet() {
         //btnKurumKaydet.doubleClick();
-        clickJs(btnKurumKaydet);
+        btnKurumKaydet.sendKeys(Keys.SHIFT);
+        btnKurumKaydet.click();
+        //clickJs(btnKurumKaydet);
         return this;
     }
 

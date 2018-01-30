@@ -28,7 +28,7 @@ public class HavaleEttiklerimPage extends MainPage {
     SelenideElement btnTamEkranGöster = $(By.id("mainInboxForm:inboxDataTable:0:tamEkranModuButton"));
     SelenideElement tblRapor = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
     SelenideElement btnHavaleYap = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:6:cmdbutton"));
-    BelgenetElement txtHavaleYapKisi = comboLov("dagitimBilgileriKullaniciLov:LovText");
+    BelgenetElement txtHavaleYapKisi = comboLov("[id$='dagitimBilgileriKullaniciLov:LovText']");
     BelgenetElement txtHavaleYapKullaniciListesi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKisiListesiLov:LovText"));
     ElementsCollection tblEvraklar = $$("[id^='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
 
@@ -46,7 +46,7 @@ public class HavaleEttiklerimPage extends MainPage {
 
     @Step("Kişi listesinde \"{kisi}\" seçmeye dene")
     public HavaleEttiklerimPage havaleYapKisiSecmeyeDene(String kisi) {
-        txtHavaleYapKisi.type(kisi).getSelectableItems().filterBy(text(kisi)).first().click();
+        txtHavaleYapKisi.type(kisi).getTitleItems().filterBy(Condition.text(kisi)).first().click();
         return this;
     }
 
@@ -112,7 +112,7 @@ public class HavaleEttiklerimPage extends MainPage {
     }
 
     @Step("Havale Yap")
-    public HavaleEttiklerimPage havaleYap(){
+    public HavaleEttiklerimPage havaleYap() {
         btnHavaleYap.click();
         return this;
     }

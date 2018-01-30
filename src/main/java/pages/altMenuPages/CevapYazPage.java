@@ -6,26 +6,22 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
-import pages.newPages.EvrakOlusturPage;
 import pages.pageComponents.EvrakPageButtons;
 import pages.pageComponents.UstMenuPageHeader;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageComponents.tabs.BilgilerTab;
 import pages.pageComponents.tabs.EditorTab;
 
-import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.$$;
+import static com.codeborne.selenide.Selenide.$x;
 import static pages.pageComponents.belgenetElements.Belgenet.$;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 public class CevapYazPage extends MainPage {
 
-    private SelenideElement page = $("#windowCevapEvrakDialog");
-
     SelenideElement pageTitle = $(By.xpath("//span[. = 'Cevap Yaz' and @class = 'ui-dialog-title']"));
-
     //Bilgileri sekmesinde bulunanlar
     SelenideElement cmbEvrakTuru = $(By.id("windowCevapEvrakForm:evrakBilgileriList:1:evrakTuruCombo"));
     SelenideElement cmbEmirTalimat = $(By.xpath("//*[@id='windowCevapEvrakForm:evrakBilgileriList:2:emirTalimatPanelGrid']/tbody/tr/td[3]/select"));
@@ -46,8 +42,6 @@ public class CevapYazPage extends MainPage {
     BelgenetElement cmbKaldiralacakKlasorler = comboLov("input[id$='eklenecekKlasorlerLov:LovText']");
     BelgenetElement cmbOnayAkisi = comboLov(By.cssSelector("[id^='windowCevapEvrakForm:evrakBilgileriList'][id$='akisLov:LovText']"));
     SelenideElement btnImzalaEkraniKapat = $("[id='evrakImzalaDialog'] [class$='closethick']");
-
-
     //Ekleri Sekmesi
     //Dosya Ekle alt sekmesi
     SelenideElement txtEvrakEkTabViewEkMetni = $(By.xpath("//*[@id='windowCevapEvrakForm:evrakEkTabView:dosyaAciklama']"));
@@ -55,20 +49,16 @@ public class CevapYazPage extends MainPage {
     SelenideElement btnEvrakEkTabViewDosyaEkle = $(By.id("windowCevapEvrakForm:evrakEkTabView:fileUploadButtonA_input"));
     SelenideElement btnEvrakEkTabViewEkle = $(By.id("windowCevapEvrakForm:evrakEkTabView:dosyaEkleButton"));
     SelenideElement btnEvrakEkTabViewTemizle = $(By.id("windowCevapEvrakForm:evrakEkTabView:dosyaTemizleButton"));
-
     //Fiziksel Ek Ekle alt sekmesi
     SelenideElement txtEvrakEkTabViewFizikselEkMetni = $(By.xpath("//*[@id='windowCevapEvrakForm:evrakEkTabView:aciklamaTextArea']"));
     SelenideElement cmbEvrakEkTabViewGuvenlikKoduAciklama = $(By.id("windowCevapEvrakForm:evrakEkTabView:guvenlikKoduAciklama"));
     SelenideElement btnEvrakEkTabViewFizikselEkEkle = $(By.id("windowCevapEvrakForm:evrakEkTabView:aciklamaEkleButton"));
-
-
     //Sistemde Kayıtlı Evrak Ekle
     SelenideElement dateTxtEvrakEkTabViewEvrakBaslamaTarih = $(By.id("windowCevapEvrakForm:evrakEkTabView:ekIslemleriEvrakTarihBasId_input"));
     SelenideElement dateTxtEvrakEkTabViewEvrakSonTarih = $(By.id("windowCevapEvrakForm:evrakEkTabView:ekIslemleriEvrakTarihSonId_input"));
     SelenideElement cmbEvrakEkTabViewEvrakinAranacagiYer = $(By.xpath("//*[@id='windowCevapEvrakForm:evrakEkTabView:ekIslemleriEvrakAramaAranacakYerId']"));
     SelenideElement btnEvrakEkTabViewDokumanAra = $(By.xpath("//*[@id='windowCevapEvrakForm:evrakEkTabView:dokumanAraButton']"));
     SelenideElement txtEvrakEkTabViewEvrakArama = $(By.xpath("//*[@id='windowCevapEvrakForm:evrakEkTabView:evrakAramaText']"));
-
     //Arşivde Kayıtlı Evrak Ekle alt sekmesi
     SelenideElement dateTxtEvrakEkTabViewArsivdeKayitliEvrakBaslamaTarih = $(By.id("windowCevapEvrakForm:evrakEkTabView:arsivdenEvrakAraEkEkleTarihBasId_input"));
     SelenideElement dateTxtEvrakEkTabViewArsivdeKayitliEvrakSonTarih = $(By.id("windowCevapEvrakForm:evrakEkTabView:arsivdenEvrakAraEkEkleTarihSonId_input"));
@@ -82,18 +72,15 @@ public class CevapYazPage extends MainPage {
     SelenideElement btnIlgiIslemleriTabViewDosyaEkle = $(By.id("windowCevapEvrakForm:ilgiIslemleriTabView:fileUploadButtonA_input"));
     SelenideElement btnIlgiIslemleriTabViewEkle = $(By.id("windowCevapEvrakForm:ilgiIslemleriTabView:dosyaEkleButton"));
     SelenideElement btnIlgiIslemleriTabViewTemizle = $(By.id("windowCevapEvrakForm:ilgiIslemleriTabView:ilgiDosyaTemizleButton"));
-
     //Metin Ekle alt sekmesi
     SelenideElement txtIlgiIslemleriTabViewMetinEkleIlgiMetni = $(By.xpath("//*[@id='windowCevapEvrakForm:ilgiIslemleriTabView:aciklamaTextArea']"));
     SelenideElement btnIlgiIslemleriTabViewAciklamaEkle = $(By.id("windowCevapEvrakForm:ilgiIslemleriTabView:aciklamaEkleButton"));
-
     //Sistemde Kayitli Evrak Ekle alt sekmesi
     SelenideElement dateTxtIlgiIslemleriTabViewIlgiIslemleriEvrakTarihBasId = $(By.id("windowCevapEvrakForm:ilgiIslemleriTabView:ilgiIslemleriEvrakTarihBasId_input"));
     SelenideElement dateTxtIlgiIslemleriTabViewIlgiIslemleriEvrakTarihSonId = $(By.id("windowCevapEvrakForm:ilgiIslemleriTabView:ilgiIslemleriEvrakTarihSonId_input"));
     SelenideElement cmbIlgiIslemleriTabViewIlgiIslemleriEvrakAramaAranacakYerId = $(By.xpath("//*[@id='windowCevapEvrakForm:ilgiIslemleriTabView:ilgiIslemleriEvrakAramaAranacakYerId']"));
     SelenideElement txtIlgiIslemleriTabViewEvrakArama = $(By.xpath("//*[@id='windowCevapEvrakForm:ilgiIslemleriTabView:evrakAramaText']"));
     SelenideElement btnIlgiIslemleriTabViewDokumanAra = $(By.xpath("//*[@id='windowCevapEvrakForm:ilgiIslemleriTabView:dokumanAraButton']"));
-
     //Arşivde Kayitli Evrak Ekle alt sekmesi
     SelenideElement dateTxtIlgiIslemleriTabViewarsivdenEvrakAraIlgiEkleTarihBasId = $(By.id("windowCevapEvrakForm:ilgiIslemleriTabView:arsivdenEvrakAraIlgiEkleTarihBasId_input"));
     SelenideElement dateTxtIlgiIslemleriTabViewarsivdenEvrakAraIlgiEkleTarihSonId = $(By.id("windowCevapEvrakForm:ilgiIslemleriTabView:arsivdenEvrakAraIlgiEkleTarihSonId_input"));
@@ -101,27 +88,23 @@ public class CevapYazPage extends MainPage {
     SelenideElement txtIlgiIslemleriTabViewKullanici = $(By.id("windowCevapEvrakForm:ilgiIslemleriTabView:kisiyeLov_id:LovText"));
     SelenideElement txtIlgiIslemleriTabViewEvrakSayi = $(By.id("windowCevapEvrakForm:ilgiIslemleriTabView:arsivdenIlgiEvrakAraSayiInputTextId"));
     SelenideElement btnIlgiIslemleriTabViewArsivdenIlgiEvrakAra = $(By.xpath("//*[@id='windowCevapEvrakForm:ilgiIslemleriTabView:arsivdenIlgiEvrakAraButtonId']"));
-
     //İlişkili Evraklar sekmesi
 //Dosya Ekle alt sekmesi
     SelenideElement txtIlisikIslemleriTabViewIlisikMetni = $(By.id("//*[@id='windowCevapEvrakForm:ilisikIslemleriTabView:dosyaAciklama']"));
     SelenideElement btnIlisikIslemleriTabViewDosyaEkle = $(By.id("windowCevapEvrakForm:ilisikIslemleriTabView:fileUploadButtonA_input"));
     SelenideElement btnIlisikIslemleriTabViewEkle = $(By.id("windowCevapEvrakForm:ilisikIslemleriTabView:ilisikEkleButton"));
     SelenideElement btnIlisikIslemleriTabViewTemizle = $(By.id("windowCevapEvrakForm:ilisikIslemleriTabView:ilisikTemizleButton"));
-
     //Sistemde Kayıtlı Evrak Ekle alt sekmesi
     SelenideElement dateTxtIlisikIslemleriTabViewIliskiliEvrakTarihBasId = $(By.id("windowCevapEvrakForm:ilisikIslemleriTabView:iliskiliEvrakTarihBasId_input"));
     SelenideElement dateTxtIlisikIslemleriTabViewIliskiliEvrakTarihSonId = $(By.id("windowCevapEvrakForm:ilisikIslemleriTabView:iliskiliEvrakTarihSonId_input"));
     SelenideElement cmbIlisikIslemleriTabViewEvrakınAranacagiYer = $(By.xpath("//*[@id='windowCevapEvrakForm:ilisikIslemleriTabView:iliskiliEvrakAramaAranacakYerId']"));
     SelenideElement txtIlisikIslemleriTabViewEvrakArama = $(By.xpath("//*[@id='windowCevapEvrakForm:ilisikIslemleriTabView:evrakAramaText']"));
     SelenideElement btnIlisikIslemleriTabViewDokumanAra = $(By.id("//*[@id='windowCevapEvrakForm:ilisikIslemleriTabView:dokumanAraButton']"));
-
     //Tercume Ekle alt sekmesi
     SelenideElement txtIlisikIslemleriTabViewTercumeAciklama = $(By.xpath("//*[@id='windowCevapEvrakForm:ilisikIslemleriTabView:tercumeAciklama']"));
     SelenideElement btnIlisikIslemleriTabViewTercumeDosyaEkle = $(By.id("windowCevapEvrakForm:ilisikIslemleriTabView:fileUploadButtonB_input"));
     SelenideElement btnIlisikIslemleriTabViewTercumeEkle = $(By.id("windowCevapEvrakForm:ilisikIslemleriTabView:tercumeEkleButton"));
     SelenideElement btnIlisikIslemleriTabViewTercumeTemizle = $(By.id("windowCevapEvrakForm:ilisikIslemleriTabView:tercumeTemizleButton"));
-
     //Arsivde Kayitli Evrak Ekle alt sekmesi
     SelenideElement dateTxtIlisikIslemleriTabViewArsivdenEvrakAraIlisikEkleTarihBasId = $(By.id("windowCevapEvrakForm:ilisikIslemleriTabView:arsivdenEvrakAraIlisikEkleTarihBasId_input"));
     SelenideElement dateTxtIlisikIslemleriTabViewArsivdenEvrakAraIlisikEkleTarihSonId = $(By.id("windowCevapEvrakForm:ilisikIslemleriTabView:arsivdenEvrakAraIlisikEkleTarihSonId_input"));
@@ -129,12 +112,9 @@ public class CevapYazPage extends MainPage {
     SelenideElement txtIlisikIslemleriTabViewKullanici = $(By.id("windowCevapEvrakForm:ilisikIslemleriTabView:kisiyeLov_id:LovText"));
     SelenideElement txtIlisikIslemleriTabViewEvrakSayi = $(By.id("windowCevapEvrakForm:ilisikIslemleriTabView:arsivdenIlisikEvrakAraSayiInputTextId"));
     SelenideElement btnIlisikIslemleriTabViewArsivdenIlisikEvrakAra = $(By.xpath("//*[@id='windowCevapEvrakForm:ilisikIslemleriTabView:arsivdenIlisikEvrakAraButtonId']"));
-
     //Editor
     SelenideElement btnEditor = $("[id^='windowCevapEvrakForm:j_idt'] [id$='uiRepeat:1:cmdbutton'] [class$='editor']");
     SelenideElement btnBilgiler = $("[id^='windowCevapEvrakForm:j_idt'] [id$='uiRepeat:0:cmdbutton'] [class$='kullaniciBilgileri']");
-
-
     SelenideElement editorIlgiKismi = $(By.id("windowCevapEvrakForm:ilgiOutPanel"));
     BelgenetElement cmbGeregi = comboLov("[id^='windowCevapEvrakForm:evrakBilgileriList'][id$='geregiLov:LovText']");
     BelgenetElement cmbGeregiDataTable = comboLov("[id^='windowCevapEvrakForm:evrakBilgileriList'][id$='geregiLov:LovSecilenTable_data']");
@@ -143,8 +123,8 @@ public class CevapYazPage extends MainPage {
     SelenideElement btnGonder = $(By.id("windowCevapEvrakForm:gonderButton"));
     SelenideElement btnEvetPopup = $(By.cssSelector("div[class*='ui-confirm-dialog'] button[id='kaydetEvetButton']"));
     SelenideElement btnHayirPopup = $(By.cssSelector("div[class*='ui-confirm-dialog'] button[id='kaydetHayirButton']"));
-
     SelenideElement btnKaydet = $x("//span[contains(@class, 'kaydet')]/..");
+    private SelenideElement page = $("#windowCevapEvrakDialog");
 
     public EditorTab editorTab() {
         return new EditorTab(page);
@@ -161,7 +141,7 @@ public class CevapYazPage extends MainPage {
         return this;
     }
 
-    public SelenideElement getPage(){
+    public SelenideElement getPage() {
         return page;
     }
 
@@ -179,18 +159,18 @@ public class CevapYazPage extends MainPage {
     }
 
 
-   /* @Step(tabName + " tabı açılır")
-    public EditorTab openTab(boolean... clickIfOpen) {
-        SelenideElement tab = page.$x("descendant::td[contains(@class,'tabMenuContainer') and descendant::span[contains(@class,'tabMenu') and text()='" + tabName + "']]");
-        if (clickIfOpen.length > 0 || !tab.attr("class").equals("tabMenuContainerSelected"))
-            tab.$("button").click();
+    /* @Step(tabName + " tabı açılır")
+     public EditorTab openTab(boolean... clickIfOpen) {
+         SelenideElement tab = page.$x("descendant::td[contains(@class,'tabMenuContainer') and descendant::span[contains(@class,'tabMenu') and text()='" + tabName + "']]");
+         if (clickIfOpen.length > 0 || !tab.attr("class").equals("tabMenuContainerSelected"))
+             tab.$("button").click();
 
-        page.$("[id$=allPanels_content]").shouldBe(visible);
-        page.$$("span.cke_toolbar a[id*=cke]").shouldHave(sizeGreaterThan(0));
-//        page.$$("#DOnayDivToolbar span.cke_toolbar a[id*=cke]").shouldHave(sizeGreaterThan(0));
-        return this;
-    }
-*/
+         page.$("[id$=allPanels_content]").shouldBe(visible);
+         page.$$("span.cke_toolbar a[id*=cke]").shouldHave(sizeGreaterThan(0));
+ //        page.$$("#DOnayDivToolbar span.cke_toolbar a[id*=cke]").shouldHave(sizeGreaterThan(0));
+         return this;
+     }
+ */
     @Step("Sayfa açıldı mı kontrolü")
     public CevapYazPage sayfaAcilmali() {
         pageTitle.shouldBe(visible);
@@ -646,13 +626,13 @@ public class CevapYazPage extends MainPage {
     }
 
     @Step("Kaydet butonuna tıkla")
-    public CevapYazPage kaydet(){
+    public CevapYazPage kaydet() {
         btnKaydet.click();
         return this;
     }
 
     @Step("Kayıt Popup alanında Evet butonuna tıkla.")
-    public CevapYazPage evrakKayitPopupEvet(){
+    public CevapYazPage evrakKayitPopupEvet() {
         $$(By.id("kaydetConfirmForm:kaydetEvetButton")).last().click();
         return this;
     }

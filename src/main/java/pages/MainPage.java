@@ -26,7 +26,7 @@ public class MainPage extends BaseLibrary {
         return mainPageLeftContainerDataTable;
     }
 
-    public SearchTable searchTable(){
+    public SearchTable searchTable() {
         return new SearchTable(mainPageLeftContainerDataTable);
     }
 
@@ -104,8 +104,8 @@ public class MainPage extends BaseLibrary {
             sleep(1000);
         }
     }
-    
-    public SelenideElement getIslemOnayDialog(){
+
+    public SelenideElement getIslemOnayDialog() {
         return $x("//div[@id='baseConfirmationDialog:dialog']");
     }
 
@@ -175,14 +175,14 @@ public class MainPage extends BaseLibrary {
         return $$("div[id^='window'][id$='Dialog'] > div[class~='ui-dialog-titlebar'] > span[class='ui-dialog-title']");
     }
 
-    public EvrakPageButtons evrakPageButtons () {
+    public EvrakPageButtons evrakPageButtons() {
         return new EvrakPageButtons();
         //return new EvrakPageButtons($("#mainPreviewForm"));
     }
 
     @Step("Footer'da açılan sayfa butonu bul")
-    public SelenideElement getFooterPageButton(String pageTitle){
-        return $x("//div[@id='mainTaskBar']//div[@type='button']/span[contains(.,'" + pageTitle +"')]");
+    public SelenideElement getFooterPageButton(String pageTitle) {
+        return $x("//div[@id='mainTaskBar']//div[@type='button']/span[contains(.,'" + pageTitle + "')]");
     }
 
     @Step("Parafla")

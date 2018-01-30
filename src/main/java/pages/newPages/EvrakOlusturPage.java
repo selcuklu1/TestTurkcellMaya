@@ -17,9 +17,8 @@ import static pages.pageComponents.belgenetElements.Belgenet.$;
  * Açıklama:
  */
 public class EvrakOlusturPage extends MainPage {
-    private SelenideElement page = $("#yeniGidenEvrakForm");
-
     public final UstMenuData.EvrakIslemleri pageTitle = UstMenuData.EvrakIslemleri.EvrakOlustur;
+    private SelenideElement page = $("#yeniGidenEvrakForm");
 
     public EvrakOlusturPage openPage() {
         ustMenu(pageTitle);
@@ -37,7 +36,7 @@ public class EvrakOlusturPage extends MainPage {
         return this;
     }
 
-    public SelenideElement getPage(){
+    public SelenideElement getPage() {
         return page;
     }
 

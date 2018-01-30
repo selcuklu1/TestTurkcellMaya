@@ -32,16 +32,13 @@ import static com.codeborne.selenide.Condition.*;
 @Feature("Birim İçerik Şablonu")
 public class BirimIcerikSablonuTest extends BaseTest {
 
-    String sablonAdi1082 = "TS1082_" + getSysDate();
-    String editorText1082;
-
-    String sablonAdi1085 = "TS1085_" + getSysDate();
-    String editorText1085;
-
-    String sablonAdi1079;
-
     static String ALT_BIRIMLER_GORSUN = "ALT BİRİMLER GÖRSÜN";
     static String ALT_BIRIMLER_GORMESIN = "ALT BİRİMLER GÖRMESİN";
+    String sablonAdi1082 = "TS1082_" + getSysDate();
+    String editorText1082;
+    String sablonAdi1085 = "TS1085_" + getSysDate();
+    String editorText1085;
+    String sablonAdi1079;
     String evrakTipi = "Giden Evrak";
 
     String onizlemeText = "T.C.\nGENEL MÜDÜRLÜK MAKAMI\nBİLİŞİM HİZMETLERİ GENEL MÜDÜR YARDIMCISI\nYAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ\n";
@@ -442,7 +439,6 @@ public class BirimIcerikSablonuTest extends BaseTest {
     }
 
 
-
     @Step("Evrak oluştur")
     public BirimIcerikSablonuTest olurYazisiOlustur(String konu) {
         olurYazisiOlusturPage.bilgileriTab().openTab()
@@ -487,6 +483,7 @@ public class BirimIcerikSablonuTest extends BaseTest {
 //                .onayAkisiDetailKontrol(user1.getName() + "-Paraflama / " + user2.getName() + "-İmzalama");
         return this;
     }
+
     @Test(description = "TS1082: Yeni şablon (Alt birimler görsün) Evrak Oluşturmada kullan"
             , dependsOnMethods = {"TS1082"}, enabled = false
             , priority = 7)

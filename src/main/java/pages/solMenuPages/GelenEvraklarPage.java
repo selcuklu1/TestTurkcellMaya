@@ -11,9 +11,7 @@ import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
 
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.value;
-import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static pages.pageComponents.belgenetElements.Belgenet.$x;
@@ -128,7 +126,7 @@ public class GelenEvraklarPage extends MainPage {
 
     @Step("Kullancılar doldur")
     public GelenEvraklarPage takipListesiKullanicilarDoldur(String kullanicilar) {
-        txtTakipListesiKullanicilar.selectLov(kullanicilar);
+        txtTakipListesiKullanicilar.type(kullanicilar).getTitleItems().filterBy(Condition.text(kullanicilar)).first().click();
         return this;
     }
 
@@ -150,7 +148,7 @@ public class GelenEvraklarPage extends MainPage {
 
     @Step("Kisi doldur")
     public GelenEvraklarPage havaleYapKisiDoldur(String kisi) {
-        txtHavaleYapKisi.selectLov(kisi);
+        txtHavaleYapKisi.type(kisi).getTitleItems().filterBy(Condition.text(kisi)).first().click();
         return this;
     }
 
@@ -191,7 +189,7 @@ public class GelenEvraklarPage extends MainPage {
     @Step("Paylaş buton gelmediği görülür")
     public GelenEvraklarPage paylasButonGelmedigiGorme(String buton) {
         boolean t = evrakSecButonlar.filterBy(text(buton)).size() > 0;
-        Assert.assertEquals(t, false, "kdkdkdkd");
+        Assert.assertEquals(t, false);
         takeScreenshot();
         return this;
     }
@@ -228,9 +226,24 @@ public class GelenEvraklarPage extends MainPage {
     }
 
     @Step("Evrak göster, Havale yap, tebliğ et, iade et, cevap yaz, evrak kapat ikonlarının geldiği görülür.")
-    public GelenEvraklarPage ikonlarinGeldigiGorme(){
-        boolean durum = $$(By.id("mainPreviewForm:onizlemeRightTab:onizlemeRightTab")).size()==1;
-        Assert.assertEquals(durum , true);
+    public GelenEvraklarPage ikonlarinGeldigiGorme() {
+        boolean durum = $$(By.id("mainPreviewForm:onizlemeRightTab:onizlemeRightTab")).size() == 1;
+        Assert.assertEquals(durum, true);
+        takeScreenshot();
+        return this;
+    }
+
+    @Step("Evrak önizleme ikon kontrolleri")
+    public GelenEvraklarPage evrakOnizlemeIkonlarinGeldigiGorme() {
+        $(By.xpath("//span[text()='Evrak Göster']/ancestor::tbody[1]//button")).isDisplayed();
+        $(By.xpath("//span[text()='Havale Yap']/ancestor::tbody[1]//button")).isDisplayed();
+        $(By.xpath("//span[text()='Tebliğ Et']/ancestor::tbody[1]//button")).isDisplayed();
+        $(By.xpath("//span[text()='İade Et']/ancestor::tbody[1]//button")).isDisplayed();
+        $(By.xpath("//span[text()='Cevap Yaz']/ancestor::tbody[1]//button")).isDisplayed();
+
+        Allure.addAttachment("İkon kontrolleri", "Evrak önizleme ekranında, \n" +
+                "Evrak göster, Havale yap, tebliğ et, iade et, cevap yaz, evrak kapat ikonlarının geldiği görülür.");
+
         takeScreenshot();
         return this;
     }
@@ -382,11 +395,11 @@ public class GelenEvraklarPage extends MainPage {
     }
 
     @Step("Havale onaylanacak kisi alanını doldur onaylanacak kişi gelmediği görülür \"{onaylanacakKisi}\" | \"{onaylanacakKisi2}\"")
-    public GelenEvraklarPage havaleYapOnaylanacakKisiTreeDoldurGelmedigiGorme(String onaylanacakKisi, String onaylanacakKisi2,Boolean durum) {
+    public GelenEvraklarPage havaleYapOnaylanacakKisiTreeDoldurGelmedigiGorme(String onaylanacakKisi, String onaylanacakKisi2, Boolean durum) {
         $("[id$='onaylayacakKisiLov:treeButton']").click();
         ElementsCollection treeLovs = $$("[id='mainPreviewForm:onaylayacakKisiLov:lovTree'] li");
-        boolean toplam = treeLovs.filterBy(Condition.text(onaylanacakKisi)).size()==0;
-        Assert.assertEquals(toplam,true);
+        boolean toplam = treeLovs.filterBy(Condition.text(onaylanacakKisi)).size() == 0;
+        Assert.assertEquals(toplam, true);
         return this;
     }
 
@@ -411,11 +424,13 @@ public class GelenEvraklarPage extends MainPage {
         treeHavaleYapBirim.setValue(text);
         return this;
     }
+
     @Step("Paylaş tıklanır")
     public GelenEvraklarPage paylasIcPaylas() {
         btnPaylasIcPaylas.click();
         return this;
     }
+
     @Step("Açıklama alanını \"{aciklama}\" ile doldurulur")
     public GelenEvraklarPage paylasanAciklamaDoldur(String aciklama) {
         txtPaylasanAciklama.setValue(aciklama);
@@ -503,10 +518,10 @@ public class GelenEvraklarPage extends MainPage {
     }
 
     @Step("Havale bilgilerinin girileceği alanların geldiği görülür.")
-    public GelenEvraklarPage havaleBilgilerininGirilecegiAlanlarınGeldigiGorme(){
-    boolean durum = $$(By.id("mainPreviewForm:havaleDagitimLovPanel")).size()==1;
-    Assert.assertEquals(durum , true);
-    takeScreenshot();
+    public GelenEvraklarPage havaleBilgilerininGirilecegiAlanlarınGeldigiGorme() {
+        boolean durum = $$(By.id("mainPreviewForm:havaleDagitimLovPanel")).size() == 1;
+        Assert.assertEquals(durum, true);
+        takeScreenshot();
         return this;
     }
 
@@ -533,10 +548,27 @@ public class GelenEvraklarPage extends MainPage {
     }
 
     @Step("Evrak kapatma alanında Kapatma tipi, Konu kodu, Kaldırılacak klasörler, Not, Onay akışı alanlarının geldiği görülür.")
-    public GelenEvraklarPage evrakKapatmaEkranGeldigiGorme(){
-        boolean durum = $$(By.id("mainPreviewForm:evrakKapatFieldsetId")).size()==1;
-        Assert.assertEquals(durum,true);
+    public GelenEvraklarPage evrakKapatmaEkranGeldigiGorme() {
+        boolean durum = $$(By.id("mainPreviewForm:evrakKapatFieldsetId")).size() == 1;
+        Assert.assertEquals(durum, true);
         takeScreenshot();
+        return this;
+    }
+
+    @Step("Konu alanının değeri \"{value}\" geldiği görülür.")
+    public GelenEvraklarPage konuAlanDegeriKontrolu(String value) {
+        SelenideElement konu = $("[id$='konuTextArea']");
+
+        konu.getValue().equals(value);
+        return this;
+    }
+
+    @Step("Gereği alanının değeri \"{value}\" geldiği görülür.")
+    public GelenEvraklarPage geregiAlanDegeriKontrolu(String value) {
+        ElementsCollection geregi = $$("tbody[id$='geregiLov:LovSecilenTable_data'] tr[data-ri]");
+
+        geregi.filterBy(Condition.text(value))
+                .shouldHaveSize(1);
         return this;
     }
 
@@ -600,9 +632,9 @@ public class GelenEvraklarPage extends MainPage {
     }
 
     @Step("Kişi ve açıklama bilgilerinin girileceği alanların geldiği görülür.")
-    public GelenEvraklarPage stepmethod(){
-        boolean durum = $$(By.id("mainPreviewForm:evrakPaylasFieldsetId")).size()==1;
-        Assert.assertEquals(durum,true);
+    public GelenEvraklarPage stepmethod() {
+        boolean durum = $$(By.id("mainPreviewForm:evrakPaylasFieldsetId")).size() == 1;
+        Assert.assertEquals(durum, true);
         takeScreenshot();
         return this;
     }
@@ -665,7 +697,7 @@ public class GelenEvraklarPage extends MainPage {
         } else
             Allure.addAttachment("Tablo kontolü", "Listede evrak no bulunamadı.");
 
-            return this;
+        return this;
     }
 
 
@@ -746,6 +778,24 @@ public class GelenEvraklarPage extends MainPage {
         $$("#leftMenuForm #birimlerimMenusuContainer a")
                 .filterBy(Condition.text(birim)).shouldHaveSize(1);
         return this;
+    }
+
+    @Step("Gelen evraklar tablosunda 1. satırdan {bilgi} bilgisi değerini getir.")
+    public String degerGetir(String bilgi) {
+        String deger = "";
+        SelenideElement ilkSatir = tableEvraklar2.first();
+        deger = ilkSatir.$x(".//td[@role='gridcell']/div[@class='searchText' and contains(., '" + bilgi + "')]").getText();
+
+        return deger.substring(bilgi.length() + 2, deger.length());
+    }
+
+    @Step("Gelen evraklar tablosunda {satir}. satırdan {bilgi} bilgisi değerini getir.")
+    public String degerGetir(int satir, String bilgi) {
+        String deger = "";
+        SelenideElement currentRow = tableEvraklar2.get(satir);
+        deger = currentRow.$x(".//td[@role='gridcell']/div[@class='searchText' and contains(., '" + bilgi + "')]").getText();
+
+        return deger.substring(bilgi.length() + 2, deger.length());
     }
 
 }
