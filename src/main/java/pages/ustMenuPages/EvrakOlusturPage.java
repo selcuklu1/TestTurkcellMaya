@@ -248,7 +248,7 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement cmbEvrakDili = $("select[id$=evrakDili]");
         SelenideElement cmbGizlilikDerecesi = $("select[id$=guvenlikKodu]");
         SelenideElement btnIletisimbilgileriOnayAkisiEkle = $("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='onayAkisiEkle']");
-        ElementsCollection cmbKullanicilarIlkImzalama = $$("[id='yeniGidenEvrakForm:evrakBilgileriList:18:anlikakisOlusturPanelGrid'] [id^='yeniGidenEvrakForm:evrakBilgileriList:'][id$='selectOneMenu']");
+        SelenideElement cmbKullanicilarIlkImzalama = $("[id='yeniGidenEvrakForm:evrakBilgileriList:18:anlikakisOlusturPanelGrid'] [id^='yeniGidenEvrakForm:evrakBilgileriList:'][id$='selectOneMenu']");
         SelenideElement cmbKullanicilarIlkImzalama2 = $(By.id("windowCevapEvrakForm:evrakBilgileriList:18:akisAdimLov:LovSecilenTable:0:selectOneMenu"));
         SelenideElement btnKullanicilarKullan = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:18:anlikAkisKullanButton"));
         //Kanun Kapsam Tipi
@@ -506,7 +506,7 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Onay Akışı imzalama seç")
         public BilgilerTab onayAkisiEkleIlkImzalaSec(String imzalama) {
-            cmbKullanicilarIlkImzalama.get(0).selectOption(imzalama);
+            cmbKullanicilarIlkImzalama.selectOption(imzalama);
             return this;
         }
 
@@ -1200,7 +1200,7 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Onay İşlemi acıklama doldur : {aciklama}")
         public BilgilerTab onayIslemiAciklamaDoldur(String aciklama) {
-            txtOnayIslemiAciklama.sendKeys(aciklama);
+            txtOnayIslemiAciklama.setValue(aciklama);
             return this;
         }
 

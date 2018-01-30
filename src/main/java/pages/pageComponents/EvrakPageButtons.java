@@ -96,7 +96,7 @@ public class EvrakPageButtons extends MainPage {
     }
 
     @Step("İmzala")
-    public EvrakPageButtons evrakImzala() {
+        public EvrakPageButtons evrakImzala() {
         imzalaButonaTikla();
         sImzalaRadioSec();
         evrakImzaOnay();

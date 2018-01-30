@@ -907,7 +907,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
         String dagitimBilgisiKisi = "Mehmet Bozdemir";
         String evrakTuru2 = "Form";
         String formSablonu = "Kopya Optiim form şablonu";
-        String onayAkisiListe = "DenemeListe";
+        String onayAkisiListe = "TC2186OnayAkışı";
 
         String mernisNo = createMernisTCKN();
 
@@ -964,17 +964,18 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .islemMesaji().beklenenMesaj(basariMesaji);
 
         //DenemeListesindeki kullnıcı veya kullanıcılarla giriş yapılır işlemdeki aksiyonlar alınır.
-        logout();
+//        logout();
         login("username24o", "123");
 
         imzaBekleyenlerPage
                 .openPage()
                 .evrakKonusunaGoreKontrolVeTiklama(konu)
+//                .evrakImzala()
                 .evrakOnizlemeImzala()
                 .sImzaSec()
                 .sImzaImzala(true);
 
-        logout();
+//        logout();
         login(usernameMBOZDEMIR, passwordMBOZDEMIR);
 
         gelenEvraklarPage
@@ -1011,7 +1012,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .filter().findRowsWith(Condition.text(konu))
                 .shouldHaveSize(1);
 
-        logout();
+//        logout();
         login("username24o", "123");
 
         postalanacakEvraklarPage
@@ -1019,6 +1020,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .evrakSecKonuyaGoreIcerikGoster(konu)
                 .evrakPostala()
                 .postala()
+                .popUpEvet()
                 .islemMesaji().beklenenMesaj(basariMesaji);
 
         postalananlarPage
