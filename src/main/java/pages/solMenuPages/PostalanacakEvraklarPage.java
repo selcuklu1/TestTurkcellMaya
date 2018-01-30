@@ -670,4 +670,16 @@ public class PostalanacakEvraklarPage extends MainPage {
         btnIcerikPostalamaEvet.click();
         return this;
     }
+    @Step("Secilen konu başlığı filtrele ve seçilen posta içerik göster")
+    public PostalanacakEvraklarPage btnFiltrenenPostaIcerikGoster(String Konu) throws InterruptedException {
+        filter().findRowsWith(Condition.text(Konu)).first().click();
+        String idAtr ;
+        idAtr = filter().findRowsWith(Condition.text(Konu)).first().getAttribute("data-ri");
+        System.out.println(idAtr);
+        String IcerikId = "mainInboxForm:inboxDataTable:" + idAtr + ":detayGosterButton";
+        SelenideElement filteredIcerikGoster = $(By.id(IcerikId));
+        filteredIcerikGoster.click();
+        Thread.sleep(1000);
+        return this;
+    }
 }

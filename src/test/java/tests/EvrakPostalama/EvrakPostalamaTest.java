@@ -484,13 +484,10 @@ public class EvrakPostalamaTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true , description = "TS0310 : İçerik ekranından evrakın postalanması")
     public void TS0310() throws InterruptedException {
-        login("Mbozdemir", "123");
+        login("mbozdemir", "123");
         String konu = "TS1685_";
         postalanacakEvraklarPage.openPage()
-                .filter().findRowsWith(Condition.text(konu)).first().click();
-
-        postalanacakEvraklarPage.icerikGoster()
-               .btnIcerikEvrakGoster();
+        .btnFiltrenenPostaIcerikGoster(konu);
 
         postalanacakEvraklarPage.btnDagitimGidisSekli("APS")
             .inputIcerikPstakod("0310");
