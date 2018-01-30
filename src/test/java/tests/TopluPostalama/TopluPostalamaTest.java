@@ -1,6 +1,7 @@
 package tests.TopluPostalama;
 
 
+import com.codeborne.selenide.Selenide;
 import common.BaseTest;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Severity;
@@ -1265,6 +1266,8 @@ public class TopluPostalamaTest extends BaseTest {
                     .onayAkisiEkleIlkImzalaSec(tur)
                     .kullan();
 
+            Selenide.sleep(1000);
+
             evrakOlusturPage
                     .editorTabAc()
                     .editorIcerikDoldur(konu[i]);
@@ -1281,7 +1284,9 @@ public class TopluPostalamaTest extends BaseTest {
                 .tarihAraligiSec(getSysDateForKis(), getSysDateForKis())
                 .postaTipiSec(postaTipleri)
                 .sorgula()
-                .evrakTumunuSec(true)
+                .evrakSec(konu[0], true)
+                .evrakSec(konu[1], true)
+//                .evrakTumunuSec(true)
                 .postaListesineAktar()
                 .listeAdiDoldur(konu[0])
                 .listeOlustur()
@@ -1383,7 +1388,8 @@ public class TopluPostalamaTest extends BaseTest {
                 .tarihAraligiSec(getSysDateForKis(), getSysDateForKis())
                 .postaTipiSec(postaTipleri)
                 .sorgula()
-                .evrakTumunuSec(true)
+                .evrakSec(konu2[0], true)
+                .evrakSec(konu2[1], true)
                 .postaListesineAktar()
                 .listeAdiDoldur(konu2[0])
                 .listeOlustur()
