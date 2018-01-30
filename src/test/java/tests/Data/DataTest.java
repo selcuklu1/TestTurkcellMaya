@@ -11,7 +11,7 @@ import pages.pageComponents.tabs.AltTabs;
 import pages.pageData.alanlar.GeregiSecimTipi;
 import pages.pageData.alanlar.GizlilikDerecesi;
 import pages.pageData.alanlar.OnayKullaniciTipi;
-import pages.solMenuPages.BirimIadeEdilenlerPage;
+//import pages.solMenuPages.BirimIadeEdilenlerPage;
 import pages.solMenuPages.TeslimAlinmayiBekleyenlerPage;
 import pages.ustMenuPages.GelenEvrakKayitPage;
 
@@ -32,7 +32,7 @@ public class DataTest extends BaseTest {
     User user = new User("ztekin", "123", "Zübeyde TEKİN");
     GelenEvrakKayitPage gelenEvrakKayitPage;
     TeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage;
-    BirimIadeEdilenlerPage birimIadeEdilenlerPage;
+    //BirimIadeEdilenlerPage birimIadeEdilenlerPage;
 
 
     @BeforeMethod
@@ -40,7 +40,7 @@ public class DataTest extends BaseTest {
         login("ztekin", "123");
         gelenEvrakKayitPage = new GelenEvrakKayitPage();
         teslimAlinmayiBekleyenlerPage = new TeslimAlinmayiBekleyenlerPage();
-        birimIadeEdilenlerPage = new BirimIadeEdilenlerPage();
+        //birimIadeEdilenlerPage = new BirimIadeEdilenlerPage();
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -209,9 +209,9 @@ public class DataTest extends BaseTest {
         teslimAlinmayiBekleyenlerPage
                 .birimDegistirme(birim);
 
-        birimIadeEdilenlerPage
-                .openPage()
-                .evrakNoIleEvrakSec(konu);
+        //birimIadeEdilenlerPage
+          //      .openPage()
+            //    .evrakNoIleEvrakSec(konu);
     }
 
 }

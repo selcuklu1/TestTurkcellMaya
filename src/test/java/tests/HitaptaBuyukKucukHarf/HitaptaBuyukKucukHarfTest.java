@@ -29,7 +29,9 @@ import static pages.pageData.alanlar.OnayKullaniciTipi.PARAFLAMA;
  * Yazan: Samed Solak
  ****************************************************/
 @Feature("Hitapta büyük/küçük harf")
+
 public class HitaptaBuyukKucukHarfTest extends BaseTest {
+
 
     EvrakOlusturPage evrakOlustur;
     User user1 = new User("user1", "123", "User1 TEST", "AnaBirim1", "Altyapı ve Sistem Yönetim Uzmanı");
@@ -246,6 +248,5 @@ public class HitaptaBuyukKucukHarfTest extends BaseTest {
         WebDriverRunner.getWebDriver().close();
         Selenide.switchTo().window(0);
     }
-
 
 }

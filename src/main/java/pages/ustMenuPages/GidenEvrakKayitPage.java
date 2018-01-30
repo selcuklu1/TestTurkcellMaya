@@ -20,7 +20,9 @@ import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.UstMenuData;
 
 import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 public class GidenEvrakKayitPage extends MainPage {
@@ -113,7 +115,10 @@ public class GidenEvrakKayitPage extends MainPage {
         cmbGeregi
                 .type(geregiAdSoyad)
                 .getTitleItems()
-                .first();
+                .first()
+                .click();
+
+        cmbGeregi.closeTreePanel();
 
         cmbGeregi.clearAllSelectedItems();
         return this;
@@ -175,7 +180,10 @@ public class GidenEvrakKayitPage extends MainPage {
         cmbBilgi
                 .type(geregiAdSoyad)
                 .getTitleItems()
-                .first();
+                .first()
+                .click();
+
+        cmbBilgi.closeTreePanel();
         cmbBilgi.clearAllSelectedItems();
 
         return this;
@@ -221,10 +229,9 @@ public class GidenEvrakKayitPage extends MainPage {
 
     @Step("Panel kapat")
     public GidenEvrakKayitPage panelKapat(Boolean kaydet) {
-        $(By.xpath("//div[@id='mainTaskBar']//span[text()='[Giden Evrak Kayıt]']"))
-                .contextClick();
+        //$(By.xpath("//div[@id='mainTaskBar']//span[text()='[Giden Evrak Kayıt]']")).contextClick();
 
-        SelenideElement closeButton = $(By.xpath("//span[@class='ui-dialog-title' and text()='Giden Evrak Kayıt']/..//span[@class='ui-icon ui-icon-closethick']"));
+        SelenideElement closeButton = $$(By.xpath("//span[@class='ui-dialog-title' and text()='Giden Evrak Kayıt']/..//span[@class='ui-icon ui-icon-closethick']")).last().waitUntil(visible, 5000);
         Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", closeButton);
         closeButton.click();
 

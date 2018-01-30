@@ -27,7 +27,7 @@ public class KurumYonetimiTest extends BaseTest {
     }
 
     @Test(enabled = true, description = "TS01459 : Kurum bilgisi güncelleme")
-    public void TS01459() {
+    public void TS1459() {
 
         String yeniKurumAdi1 = "Yenikurum" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
         String idariBirimKimlikKodu = (new Random().nextInt((900000 - 100000) + 1) + 100000) + "";
@@ -181,7 +181,7 @@ public class KurumYonetimiTest extends BaseTest {
     }
 
     @Test(enabled = true, description = "TS01109 : Kurum tanımlama ve kontrolü")
-    public void TS01109() {
+    public void TS1109() {
 
         String yeniKurumAdi = "Yenikurum" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
         String idariBirimKimlikKodu = (new Random().nextInt((900000 - 100000) + 1) + 100000) + "";
@@ -245,7 +245,7 @@ public class KurumYonetimiTest extends BaseTest {
     }
 
     @Test(enabled = true, description = "TS01108 : Kurum Sorgulama")
-    public void TS01108() {
+    public void TS1108() {
 
         String pasifYapilacakKurum = "PasifKurum" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
         String pasifYapilacakKurumIdariKimlikkodu = (new Random().nextInt((900000 - 100000) + 1) + 100000) + "";
@@ -303,8 +303,8 @@ public class KurumYonetimiTest extends BaseTest {
                 .ilDoldur(il)
                 .ePostaDoldur(ePosta)
                 .iletisimBilgisiKaydet()
-                .kurumKaydet();
-        //.islemMesaji().basariliOlmali();
+                .kurumKaydet()
+                .islemMesaji().basariliOlmali();
 
         kurumYonetimiPage
                 .kurumHiyerarsisiniGuncelle()
@@ -362,6 +362,9 @@ public class KurumYonetimiTest extends BaseTest {
                 .geregiSec(aktifIdariBirimKimlikKodu, true)
                 .geregiSec(aktifKurumAdi, true);
 
+        evrakOlusturPage
+                .evrakOlusturPageKapat();
+
         gelenEvrakKayitPage
                 .openPage()
                 .kisiKurumSec("Kurum")
@@ -378,7 +381,6 @@ public class KurumYonetimiTest extends BaseTest {
                 .bilgiDoldur(aktifIdariBirimKimlikKodu, true)
                 .bilgiDoldur(aktifKurumAdi, true)
                 .panelKapat(false);
-
 
         kurumYonetimiPage
                 .openPage()
@@ -420,7 +422,9 @@ public class KurumYonetimiTest extends BaseTest {
                 .durumSec("Sadece Pasifler")
                 .ara()
                 .kurumAktifYap(pasifYapilacakKurum);
+
         kurumYonetimiPage.yeniKurumEkle();
+
         kurumYonetimiPage
                 .filtrePanelAc()
                 .sorgulaKurumDoldur(pasifYapilacakKurum)
@@ -428,7 +432,6 @@ public class KurumYonetimiTest extends BaseTest {
                 .ara()
                 .kurumTableKontrol(pasifYapilacakKurum, "Sadece Aktifler", false)
                 .panelKapat();
-
 
         evrakOlusturPage
                 .openPage()

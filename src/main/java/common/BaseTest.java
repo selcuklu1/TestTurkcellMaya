@@ -76,17 +76,17 @@ public class BaseTest extends BaseLibrary {
         Configuration.savePageSource = false;
         Configuration.collectionsTimeout = timeout * 1000;
         Configuration.timeout = timeout * 1000;
-        setWaitForLoading(loadingTimeout);
+        Configuration.holdBrowserOpen = false;
         Configuration.startMaximized = true;
         Configuration.pollingInterval = 100;
         Configuration.collectionsPollingInterval = 100;
-        //Configuration.clickViaJs = true;
-        //Configuration.holdBrowserOpen = true;
         //Configuration.headless = false;
+        //Configuration.clickViaJs = true;
         //Configuration.closeBrowserTimeoutMs = 34000;
         //Configuration.openBrowserTimeoutMs = 34000;
         //Configuration.browserSize = "1024x600";
         //endregion
+        setWaitForLoading(loadingTimeout);
 
         /*if (Configuration.browser.equalsIgnoreCase("firefox")){
             String neverAsk = "application/msword," +
