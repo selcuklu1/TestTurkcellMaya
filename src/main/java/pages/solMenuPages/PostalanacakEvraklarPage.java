@@ -373,6 +373,11 @@ public class PostalanacakEvraklarPage extends MainPage {
         btnPostala.click();
         return this;
     }
+//    @Step("")
+    public PostalanacakEvraklarPage popUpEvet() {
+        $(By.id("mainPreviewForm:postalaDogrulaDialogForm:evetButton_id")).click();
+        return this;
+    }
     @Step("Postalanacak Evrak Postalama popup Evet seçmiş")
     public PostalanacakEvraklarPage dialogpostalaEvet() {
 

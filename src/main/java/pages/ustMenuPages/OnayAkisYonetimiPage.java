@@ -455,14 +455,14 @@ public class OnayAkisYonetimiPage extends MainPage {
         ara();
 
         if (tblOnayAkisListesi
-                .filterBy(text(yeniOnayAkisi)).size() == 1) {
+                .filterBy(text(eskiOnayAkisi)).size() == 1) {
             tblOnayAkisListesi
-                    .filterBy(text(yeniOnayAkisi))
+                    .filterBy(text(eskiOnayAkisi))
                     .first()
                     .shouldBe(exist)
                     .$("[id$='updateRolButton']").click();
 
-            onayAkisiIslemleriAdDoldur(eskiOnayAkisi);
+            onayAkisiIslemleriAdDoldur(yeniOnayAkisi);
             onayAkisiIslemleriKaydet();
             islemMesaji().basariliOlmali(basariMesaji);
         }
