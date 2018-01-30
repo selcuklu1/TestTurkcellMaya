@@ -519,7 +519,7 @@ public class TopluPostaladiklarimPage extends MainPage {
     }
 
     @Step("Tabloda evrak kontrolü yapılır. \"{konu}\" ")
-    public TopluPostaladiklarimPage topluPostaladiklarimEvrakKontrolu(String konu){
+    public TopluPostaladiklarimPage topluPostaladiklarimEvrakKontrolu(String konu) {
         searchTable().searchInAllPages(true).findRows(text(konu)).getFoundRow().shouldBe(exist);
         return this;
     }

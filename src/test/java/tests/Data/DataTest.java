@@ -32,7 +32,7 @@ public class DataTest extends BaseTest {
     User user = new User("ztekin", "123", "Zübeyde TEKİN");
     GelenEvrakKayitPage gelenEvrakKayitPage;
     TeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage;
-    BirimIadeEdilenlerPage birimIadeEdilenlerPage;
+    //BirimIadeEdilenlerPage birimIadeEdilenlerPage;
 
 
     @BeforeMethod
@@ -40,8 +40,9 @@ public class DataTest extends BaseTest {
         login("ztekin", "123");
         gelenEvrakKayitPage = new GelenEvrakKayitPage();
         teslimAlinmayiBekleyenlerPage = new TeslimAlinmayiBekleyenlerPage();
-        birimIadeEdilenlerPage = new BirimIadeEdilenlerPage();
+        //birimIadeEdilenlerPage = new BirimIadeEdilenlerPage();
     }
+
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS2224: DATA-Teslim alınmayı bekleyenler, gelen kutusu ve postalanacaklar listesine gizlilik derecesi yüksek evrak düşürme")
     public void TS2224() throws InterruptedException {
@@ -133,7 +134,7 @@ public class DataTest extends BaseTest {
                 .dosyaEkle(filePath)
                 .ekMetniDoldur("Ekleri Tab " + konu)
                 .ekleButonaTikla();
-        page.ekleriTab().getEkListesiTablosu().findRows(text("Ekleri Tab "+ konu)).shouldHaveSize(1);
+        page.ekleriTab().getEkListesiTablosu().findRows(text("Ekleri Tab " + konu)).shouldHaveSize(1);
         page.pageButtons().imzalaButonaTikla().closeEvrakImzalaDialog();
         page.closePage(false);
     }
@@ -155,7 +156,7 @@ public class DataTest extends BaseTest {
 
         String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
         String details = "BİLİŞİM HİZMETLERİ VE UYDU PAZARLAMA GENEL MÜDÜR Y";
-        String digerBirim ="Birim Deneme";
+        String digerBirim = "Birim Deneme";
         String digerDetails = "YGD";
 
         //Pre-requisites Gelen Evrak Oluşturma
@@ -188,7 +189,7 @@ public class DataTest extends BaseTest {
                 .openPage()
                 .evrakNoIleEvrakSec(konu)
                 .havaleYap()
-                .dagitimBilgileriBirimDoldurWithDetails(digerBirim,digerDetails)
+                .dagitimBilgileriBirimDoldurWithDetails(digerBirim, digerDetails)
                 .teslimAlGonder();
 
 
@@ -208,9 +209,9 @@ public class DataTest extends BaseTest {
         teslimAlinmayiBekleyenlerPage
                 .birimDegistirme(birim);
 
-        birimIadeEdilenlerPage
-                .openPage()
-                .evrakNoIleEvrakSec(konu);
+        //birimIadeEdilenlerPage
+          //      .openPage()
+            //    .evrakNoIleEvrakSec(konu);
     }
 
 }

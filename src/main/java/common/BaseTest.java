@@ -158,8 +158,8 @@ public class BaseTest extends BaseLibrary {
         System.out.println("");
         System.out.println("STATUS: " + result);
         System.out.println("");
-        System.out.println("DESCRIPTION: "+ testResult.getMethod().getDescription());
-        if (testResult.getThrowable()!=null) {
+        System.out.println("DESCRIPTION: " + testResult.getMethod().getDescription());
+        if (testResult.getThrowable() != null) {
             System.out.println("");
             System.out.println("ERROR: " + testResult.getThrowable().getMessage());
         }
@@ -204,7 +204,6 @@ public class BaseTest extends BaseLibrary {
 
 
     /**
-     *
      * @param testName
      * @return downloadPath
      */
@@ -231,14 +230,14 @@ public class BaseTest extends BaseLibrary {
                     .addPreference("browser.download.folderList", 2)
                     .addPreference("browser.download.dir", downloadPath)
                     .addPreference("browser.helperApps.alwaysAsk.force", false)
-                    .addPreference("browser.download.manager.showWhenStarting",false)
+                    .addPreference("browser.download.manager.showWhenStarting", false)
 //                    .addPreference("browser.helperApps.neverAsk.saveToDisk", "application/vnd.ms-excel; text/xml;application/x-excel;application/x-msexcel;application/pdf");
                     .addPreference("browser.helperApps.neverAsk.saveToDisk", neverAsk);
             //options.addPreference("browser.helperApps.neverAsk.openFile", "true");
             //options.addPreference("browser.helperApps.neverAsk.saveToDisk", "true");
 
             /*DesiredCapabilities capabilities = DesiredCapabilities.firefox();
-            *//*capabilities.setVersion("151");
+             *//*capabilities.setVersion("151");
             capabilities.setPlatform(Platform.WINDOWS);*//*
             options.merge(capabilities);*/
             //caps.merge(options);
@@ -271,7 +270,6 @@ public class BaseTest extends BaseLibrary {
     }
 
     /**
-     *
      * @param testName
      * @return downloadPath
      */
@@ -286,7 +284,7 @@ public class BaseTest extends BaseLibrary {
             capabilities.setVersion("151");*/
 
             Map<String, Object> prefs = new HashMap<String, Object>();
-            prefs.put("download.default_directory",  downloadPath);
+            prefs.put("download.default_directory", downloadPath);
             ChromeOptions options = new ChromeOptions();
             options.setExperimentalOption("prefs", prefs);
             options.setCapability(CapabilityType.PLATFORM_NAME, Platform.WINDOWS);

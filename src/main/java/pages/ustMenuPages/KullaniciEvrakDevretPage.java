@@ -39,6 +39,7 @@ public class KullaniciEvrakDevretPage extends MainPage {
         }
         return ret;
     }
+
     public static String clearHorizantalTabChars(String str) {
         String ret = str;
         char[] horizantalTabChars = new char[]{0x9};
@@ -138,7 +139,7 @@ public class KullaniciEvrakDevretPage extends MainPage {
         btnListele.shouldBe(visible);
         btnDevret.shouldNotBe(enabled);
 
-        Allure.addAttachment("Kullanıcı Evrak Devret Ekranı açılır. Ekranda şu alanlar görüntülenir.\n","Devredecek Kişi alanı (\n" +
+        Allure.addAttachment("Kullanıcı Evrak Devret Ekranı açılır. Ekranda şu alanlar görüntülenir.\n", "Devredecek Kişi alanı (\n" +
                 "Listele butonu (aktif)\n" +
                 "Devret Butonu (pasif)\n" +
                 "Gelen Evraklar\n" +
@@ -198,9 +199,9 @@ public class KullaniciEvrakDevretPage extends MainPage {
                             .$("button[id^='kullaniciEvrakDevretForm:evrakDevretAccordionPanelId:devir" + txt + ":" + j + ":j_idt'")
                             .shouldBe(Condition.visible);
                 }
-                Allure.addAttachment(tabText, tabText+" listesinde kayıt bulundu. Buton ve checkbox kontrolleri yapıldı.");
+                Allure.addAttachment(tabText, tabText + " listesinde kayıt bulundu. Buton ve checkbox kontrolleri yapıldı.");
             } else
-                Allure.addAttachment(tabText, tabText+" listesi boş.");
+                Allure.addAttachment(tabText, tabText + " listesi boş.");
         }
 
         SelenideElement tab = $x("//div[@id='kullaniciEvrakDevretForm:evrakDevretAccordionPanelId']/h3[1]/a");
@@ -223,10 +224,10 @@ public class KullaniciEvrakDevretPage extends MainPage {
         btnDevretTamam.shouldBe(visible);
         btnDevretIptal.shouldBe(visible);
 
-        Allure.addAttachment($(By.xpath("//label[normalize-space(text())='Devralacak Kişi']")).text(),"Ekran Kontrolü ok");
-        Allure.addAttachment($(By.xpath("//label[normalize-space(text())='Açıklama']")).text(),"Ekran Kontrolü ok");
-        Allure.addAttachment(btnDevretTamam.text(),"Ekran Kontrolü ok");
-        Allure.addAttachment(btnDevretIptal.text(),"Ekran Kontrolü ok");
+        Allure.addAttachment($(By.xpath("//label[normalize-space(text())='Devralacak Kişi']")).text(), "Ekran Kontrolü ok");
+        Allure.addAttachment($(By.xpath("//label[normalize-space(text())='Açıklama']")).text(), "Ekran Kontrolü ok");
+        Allure.addAttachment(btnDevretTamam.text(), "Ekran Kontrolü ok");
+        Allure.addAttachment(btnDevretIptal.text(), "Ekran Kontrolü ok");
 
         return this;
     }

@@ -37,7 +37,7 @@ public class GercekKisiYonetimPage extends MainPage {
     SelenideElement btnGercekKisiGuncelle = $("[id^='gercekKisiYonetimiListingForm:gercekKisiDataTable'][id$='updateGercekKisiButton']");
     SelenideElement btnGercekKisiPasifYap = $("[id^='gercekKisiYonetimiListingForm:gercekKisiDataTable'][id$='pasifEtGercekKisi']");
     SelenideElement btnGercekKisiAktifYap = $("[id^='gercekKisiYonetimiListingForm:gercekKisiDataTable'][id$='aktifEtGercekKisi']");
-    ElementsCollection tblGercekKisi= $$("tbody[id*='gercekKisiYonetimiListingForm:gercekKisiDataTable'] tr[role='row']");
+    ElementsCollection tblGercekKisi = $$("tbody[id*='gercekKisiYonetimiListingForm:gercekKisiDataTable'] tr[role='row']");
 
     SelenideElement btnIslemOnayiEvet = $(By.id("baseConfirmationDialog:confirmButton"));
     SelenideElement btnIslemOnayiHayir = $(By.id("baseConfirmationDialog:baseConfirmationDialogCancelButton"));

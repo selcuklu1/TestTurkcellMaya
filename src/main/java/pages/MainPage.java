@@ -26,7 +26,7 @@ public class MainPage extends BaseLibrary {
         return mainPageLeftContainerDataTable;
     }
 
-    public SearchTable searchTable(){
+    public SearchTable searchTable() {
         return new SearchTable(mainPageLeftContainerDataTable);
     }
 
@@ -97,7 +97,18 @@ public class MainPage extends BaseLibrary {
     public void logout() {
         $("button[id='topMenuForm:userMenuButton_button']").click();
         $("#topMenuForm\\:logOutButton").click();
+
+        for (int i = 0; i < 5; i++) {
+            if (getIslemOnayDialog().is(visible))
+                getIslemOnayDialog().$x("descendant::button[.='Evet']").click();
+            sleep(1000);
+        }
     }
+
+    public SelenideElement getIslemOnayDialog() {
+        return $x("//div[@id='baseConfirmationDialog:dialog']");
+    }
+
 
     public MainPage ustMenuEvrakIslemleriAc() {
         $(By.id("topMenuForm2:ust:0:ustMenuEleman")).click();
@@ -164,13 +175,14 @@ public class MainPage extends BaseLibrary {
         return $$("div[id^='window'][id$='Dialog'] > div[class~='ui-dialog-titlebar'] > span[class='ui-dialog-title']");
     }
 
-    public EvrakPageButtons evrakPageButtons () {
+    public EvrakPageButtons evrakPageButtons() {
         return new EvrakPageButtons();
+        //return new EvrakPageButtons($("#mainPreviewForm"));
     }
 
     @Step("Footer'da açılan sayfa butonu bul")
-    public SelenideElement getFooterPageButton(String pageTitle){
-        return $x("//div[@id='mainTaskBar']//div[@type='button']/span[contains(.,'" + pageTitle +"')]");
+    public SelenideElement getFooterPageButton(String pageTitle) {
+        return $x("//div[@id='mainTaskBar']//div[@type='button']/span[contains(.,'" + pageTitle + "')]");
     }
 
     @Step("Parafla")

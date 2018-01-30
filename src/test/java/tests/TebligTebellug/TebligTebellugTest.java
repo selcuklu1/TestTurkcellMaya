@@ -1,6 +1,5 @@
 package tests.TebligTebellug;
 
-import com.codeborne.selenide.Selenide;
 import common.BaseTest;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -90,7 +89,7 @@ public class TebligTebellugTest extends BaseTest {
 
         evrakDetayiPage
                 .tebligGecmisiTabAc()
-                .tebligGecmisiKontrol("Mehmet BOZDEMİR - ("+tarihBugun+")", tebligGecmisiKontrolEdilecekKullanicilar);
+                .tebligGecmisiKontrol("Mehmet BOZDEMİR - (" + tarihBugun + ")", tebligGecmisiKontrolEdilecekKullanicilar);
 
         login("huser1", "123");
 
@@ -177,7 +176,7 @@ public class TebligTebellugTest extends BaseTest {
 
         evrakDetayiPage
                 .tebligGecmisiTabAc()
-                .tebligGecmisiKontrol("Mehmet BOZDEMİR - ("+tarihBugun+")", tebligGecmisiKontrolEdilecekKullanicilar);
+                .tebligGecmisiKontrol("Mehmet BOZDEMİR - (" + tarihBugun + ")", tebligGecmisiKontrolEdilecekKullanicilar);
 
         login("huser2", "123");
 
@@ -266,7 +265,7 @@ public class TebligTebellugTest extends BaseTest {
 
         evrakDetayiPage
                 .tebligGecmisiTabAc()
-                .tebligGecmisiKontrol("Mehmet BOZDEMİR - ("+tarihBugun+")", tebligGecmisiKontrolEdilecekKullanicilar);
+                .tebligGecmisiKontrol("Mehmet BOZDEMİR - (" + tarihBugun + ")", tebligGecmisiKontrolEdilecekKullanicilar);
 
         login("huser2", "123");
 
@@ -292,7 +291,7 @@ public class TebligTebellugTest extends BaseTest {
 
         evrakDetayiPage
                 .tebligGecmisiTabAc()
-                .tebligGecmisiKontrol("Mehmet BOZDEMİR - ("+tarihBugun+")", tebligGecmisiKontrolEdilecekKullanicilar, new String[] { tarihBugun });
+                .tebligGecmisiKontrol("Mehmet BOZDEMİR - (" + tarihBugun + ")", tebligGecmisiKontrolEdilecekKullanicilar, new String[]{tarihBugun});
 
 
     }
@@ -408,7 +407,7 @@ public class TebligTebellugTest extends BaseTest {
 
         String aciklama = "TS0847 aciklama";
 
-        for(int i = 0; i <= 3; i++){
+        for (int i = 0; i <= 3; i++) {
             login("mbozdemir", "123");
 
             String randomNumber = "" + getRandomNumber(1000, 9999999);

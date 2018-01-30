@@ -1,22 +1,16 @@
 package tests.EvrakTeslimAlma;
 
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.Selenide;
 import common.BaseTest;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pages.altMenuPages.CevapYazPage;
-import pages.altMenuPages.EvrakDetayiPage;
-import pages.pageComponents.TextEditor;
-import pages.solMenuPages.*;
-import pages.ustMenuPages.*;
+import pages.solMenuPages.KaydedilenGelenEvraklarPage;
+import pages.solMenuPages.TeslimAlinanlarPage;
+import pages.solMenuPages.TeslimAlinmayiBekleyenlerPage;
+import pages.ustMenuPages.GelenEvrakKayitPage;
+import pages.ustMenuPages.SistemLoglariPage;
 
-import java.io.IOException;
-
-import static com.codeborne.selenide.Selenide.$;
-import static data.TestData.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -100,14 +94,14 @@ public class EvrakTeslimAlmaTest extends BaseTest {
 
         teslimAlinmayiBekleyenlerPage
                 .openPage()
-                .evrakSecNoTeslimAl(konu,true);
+                .evrakSecNoTeslimAl(konu, true);
 
 
         teslimAlinanlarPage
                 .openPage()
                 .evrakNoIleEvrakSec(konu)
                 .secilenEvrakEvrakGecmisi()
-                .evrakGecmisi(kisi,islemSureci);
+                .evrakGecmisi(kisi, islemSureci);
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -164,7 +158,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
 
         teslimAlinmayiBekleyenlerPage
                 .openPage()
-                .evrakSecIcerikGoster(konu,true)
+                .evrakSecIcerikGoster(konu, true)
                 .içeriktenEvrakTeslimAl()
                 .içeriktenEvrakEvet();
 
@@ -172,7 +166,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
                 .openPage()
                 .evrakNoIleEvrakSec(konu)
                 .secilenEvrakEvrakGecmisi()
-                .evrakGecmisi(kisi,islemSureci);
+                .evrakGecmisi(kisi, islemSureci);
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -232,7 +226,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
 
         teslimAlinmayiBekleyenlerPage
                 .openPage()
-                .evrakSecNoTeslimAl(konu,true);
+                .evrakSecNoTeslimAl(konu, true);
 
         String tarihSaatBugun = "" + new SimpleDateFormat("dd.MM.yyyy HH:mm").format(new Date());
         String kullanici = "Zübeyde Tekin";
@@ -328,18 +322,16 @@ public class EvrakTeslimAlmaTest extends BaseTest {
 
         teslimAlinmayiBekleyenlerPage
                 .openPage()
-                .evrakSecCheckBox(konu1,konu2,true);
+                .evrakSecCheckBox(konu1, konu2, true);
 
         teslimAlinanlarPage
                 .openPage()
                 .evrakNoIleEvrakSec(konu2)
                 .secilenEvrakEvrakGecmisi()
-                .evrakGecmisi(kisi,islemSureci);
+                .evrakGecmisi(kisi, islemSureci);
 
 
     }
-
-
 
 
 }

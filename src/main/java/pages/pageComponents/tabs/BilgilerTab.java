@@ -30,12 +30,7 @@ public class BilgilerTab extends MainPage {
 
     private final static String tabName = "Bilgileri";
     private SelenideElement container;
-
-    public SelenideElement getContainer() {
-        if (super.getSelf() != null)
-            container = super.getSelf();
-        return container;
-    }
+    private SearchTable searchTable;
 
     public BilgilerTab() {
         container = $("html");
@@ -45,13 +40,19 @@ public class BilgilerTab extends MainPage {
         this.container = container;
     }
 
+    public SelenideElement getContainer() {
+        if (super.getSelf() != null)
+            container = super.getSelf();
+        return container;
+    }
+
     public void shouldHave(String text) {
         getContainer().shouldHave(text(text));
     }
 
     //SelenideElement tab = $x("//td[contains(@class,'tabMenuContainer') and descendant::span[contains(@class,'tabMenu') and text()='"+ tabName +"']]//button");
     @Step(tabName + " tabı aç")
-    public BilgilerTab openTab(boolean... clickIfOpen){
+    public BilgilerTab openTab(boolean... clickIfOpen) {
         if (clickIfOpen.length > 0 || !getTabButtonTextElement().attr("class").equals("tabMenuContainerSelected"))
             getTabButton().click();
 
@@ -59,12 +60,8 @@ public class BilgilerTab extends MainPage {
     }
 
     @Step(tabName + " sekme butonu bul")
-    public SelenideElement getTabButton(){
+    public SelenideElement getTabButton() {
         return getTabButtonTextElement().$("button");
-    }
-
-    private SelenideElement getTabButtonTextElement(){
-        return getContainer().$x("descendant::td[contains(@class,'tabMenuContainer') and descendant::span[contains(@class,'tabMenu') and text()='"+ tabName +"']]");
     }
 
     //******************************************************
@@ -72,35 +69,33 @@ public class BilgilerTab extends MainPage {
     //region Konu Kodu
 //    BelgenetElement konuKoduCombolov = comboLov("input[id$='konuKoduLov:LovText']");
 
+    private SelenideElement getTabButtonTextElement() {
+        return getContainer().$x("descendant::td[contains(@class,'tabMenuContainer') and descendant::span[contains(@class,'tabMenu') and text()='" + tabName + "']]");
+    }
+
     @Step("Konu Kodu alan")
     public BelgenetElement getKonuKodu() {
-        return comboLov(getContainer(),"input[id$='konuKoduLov:LovText']");
+        return comboLov(getContainer(), "input[id$='konuKoduLov:LovText']");
     }
 
     @Step("Konu Kodu seçilir")
-    public BilgilerTab konuKoduSec(String text){
+    public BilgilerTab konuKoduSec(String text) {
         getKonuKodu().selectLov(text);
         getKonuKodu().closeTreePanel();
         return this;
     }
 
     @Step("Konu Kodu doldurulur")
-    public BilgilerTab konuKoduDoldurFilterByTitle(String text, Condition filter){
+    public BilgilerTab konuKoduDoldurFilterByTitle(String text, Condition filter) {
         getKonuKodu().type(text).getTitleItems().filterBy(filter).first().click();
         getKonuKodu().closeTreePanel();
         return this;
     }
 
     @Step("Konu Kodu doldurulur")
-    public BilgilerTab konuKoduDoldurFilterByDetail(String text, Condition filterBy){
+    public BilgilerTab konuKoduDoldurFilterByDetail(String text, Condition filterBy) {
         getKonuKodu().type(text).getDetailItems().filterBy(filterBy).first().click();
         getKonuKodu().closeTreePanel();
-        return this;
-    }
-
-    @Step("Konu Kodu alanı temizlenir")
-    public BilgilerTab konuKoduTemizle(){
-        getKonuKodu().clearAllSelectedItems();
         return this;
     }
     //endregion
@@ -110,21 +105,21 @@ public class BilgilerTab extends MainPage {
     //region Konu
 //    SelenideElement konuTextarea = $("textarea[id$='konuTextArea']");
 
-    public SelenideElement getKonuTextarea(){
+    @Step("Konu Kodu alanı temizlenir")
+    public BilgilerTab konuKoduTemizle() {
+        getKonuKodu().clearAllSelectedItems();
+        return this;
+    }
+
+    public SelenideElement getKonuTextarea() {
         return getContainer().$("textarea[id$='konuTextArea']");
     }
 
     @Step("Konu doldurulur")
-    public BilgilerTab konuDoldur(String text){
+    public BilgilerTab konuDoldur(String text) {
         /*konuTextarea.clear();
         konuTextarea.sendKeys(text);*/
         getKonuTextarea().setValue(text);
-        return this;
-    }
-
-    @Step("Konu temizlenir")
-    public BilgilerTab konuTemizle(){
-        getKonuTextarea().clear();
         return this;
     }
     //endregion
@@ -134,34 +129,34 @@ public class BilgilerTab extends MainPage {
     //region Evrak Türü
 //    SelenideElement konuTextarea = $("textarea[id$='konuTextArea']");
 
-    public SelenideElement getEvrakTuru(){
-        return getContainer().$("select[id$='evrakTuruCombo']");
+    @Step("Konu temizlenir")
+    public BilgilerTab konuTemizle() {
+        getKonuTextarea().clear();
+        return this;
     }
 
-    @Step("Evrak Türü doldurulur")
-    public BilgilerTab evrakTuruSec(String text){
-        getEvrakTuru().selectOption(text);
-        return this;
+    public SelenideElement getEvrakTuru() {
+        return getContainer().$("select[id$='evrakTuruCombo']");
     }
     //endregion
 
     //******************************************************
 
-    //region Kaldırılacak Klasörler
-    @Step("Kaldırılacak Klasörler")
-    public BelgenetElement getKaldiralacakKlasorlerCombolov(){
-        return comboLov(getContainer(),"input[id$='eklenecekKlasorlerLov:LovText']");
-    }
-
-    @Step("Kaldırılacak Klasörleri seçilir")
-    public BilgilerTab kaldiralacakKlasorleriSec(String text){
-        getKaldiralacakKlasorlerCombolov().selectLov(text);
+    @Step("Evrak Türü doldurulur")
+    public BilgilerTab evrakTuruSec(String text) {
+        getEvrakTuru().selectOption(text);
         return this;
     }
 
-    @Step("Kaldırılacak Klasörleri temizlenir")
-    public BilgilerTab kaldiralacakKlasorleriTemizle(){
-        getKaldiralacakKlasorlerCombolov().clearAllSelectedItems().sendKeys(Keys.TAB);
+    //region Kaldırılacak Klasörler
+    @Step("Kaldırılacak Klasörler")
+    public BelgenetElement getKaldiralacakKlasorlerCombolov() {
+        return comboLov(getContainer(), "input[id$='eklenecekKlasorlerLov:LovText']");
+    }
+
+    @Step("Kaldırılacak Klasörleri seçilir")
+    public BilgilerTab kaldiralacakKlasorleriSec(String text) {
+        getKaldiralacakKlasorlerCombolov().selectLov(text);
         return this;
     }
     //endregion
@@ -171,22 +166,21 @@ public class BilgilerTab extends MainPage {
     //region Kayıt Tarihi
     //SelenideElement kayitTarihiDateInput = $("input[id$='kayitTarih_input']");
 
+    @Step("Kaldırılacak Klasörleri temizlenir")
+    public BilgilerTab kaldiralacakKlasorleriTemizle() {
+        getKaldiralacakKlasorlerCombolov().clearAllSelectedItems().sendKeys(Keys.TAB);
+        return this;
+    }
+
     @Step("Kayit Tarihi")
-    public SelenideElement getKayitTarihi(){
+    public SelenideElement getKayitTarihi() {
         return getContainer().$("input[id$='kayitTarih_input']");
     }
 
     @Step("Kayit Tarihi doldurulur")
-    public BilgilerTab kayitTarihiDoldur(String text){
+    public BilgilerTab kayitTarihiDoldur(String text) {
         getKayitTarihi().setValue(text);
         return this;
-    }
-
-    @Step("Kayit Tarihi değeri alınır")
-    public String kayitTarihiDegeriAl(){
-        String text = getKayitTarihi().text();
-        Allure.addAttachment("Değer", text);
-        return text;
     }
     //endregion
 
@@ -195,20 +189,21 @@ public class BilgilerTab extends MainPage {
     //region Evrak Dili
     //SelenideElement evrakDiliSelect = $("select[id$='evrakDili']");
 
+    @Step("Kayit Tarihi değeri alınır")
+    public String kayitTarihiDegeriAl() {
+        String text = getKayitTarihi().text();
+        Allure.addAttachment("Değer", text);
+        return text;
+    }
+
     @Step("Evrak Dili")
-    public SelenideElement getEvrakDili(){
+    public SelenideElement getEvrakDili() {
         return getContainer().$("select[id$='evrakDili']");
     }
 
     @Step("Evrak Dili seçilir")
-    public BilgilerTab evrakDiliSec(String text){
+    public BilgilerTab evrakDiliSec(String text) {
         getEvrakDili().selectOption(text);
-        return this;
-    }
-
-    @Step("Evrak Dili seçilir")
-    public BilgilerTab evrakDiliSec(EvrakDili evrakDili){
-        getEvrakDili().selectOption(evrakDili.getOptionText());
         return this;
     }
     //endregion
@@ -218,15 +213,15 @@ public class BilgilerTab extends MainPage {
     //region Gizlilik Derecesi
     //SelenideElement gizlilikDerecesiSelect = $("select[id$=guvenlikKodu]");
 
-    @Step("Gizlilik Derecesi")
-    public SelenideElement getGizlilikDerecesi(){
-        return getContainer().$("select[id$=guvenlikKodu]");
+    @Step("Evrak Dili seçilir")
+    public BilgilerTab evrakDiliSec(EvrakDili evrakDili) {
+        getEvrakDili().selectOption(evrakDili.getOptionText());
+        return this;
     }
 
-    @Step("Gizlilik Derecesi seçilir")
-    public BilgilerTab gizlilikDerecesiSec(String text){
-        getGizlilikDerecesi().selectOption(text);
-        return this;
+    @Step("Gizlilik Derecesi")
+    public SelenideElement getGizlilikDerecesi() {
+        return getContainer().$("select[id$=guvenlikKodu]");
     }
 
     /*@Step("Gizlilik Derecesi seçilir")
@@ -239,8 +234,8 @@ public class BilgilerTab extends MainPage {
     }*/
 
     @Step("Gizlilik Derecesi seçilir")
-    public BilgilerTab gizlilikDerecesiSec(GizlilikDerecesi gizlilikDerecesi){
-        getGizlilikDerecesi().selectOption(gizlilikDerecesi.getOptionText());
+    public BilgilerTab gizlilikDerecesiSec(String text) {
+        getGizlilikDerecesi().selectOption(text);
         return this;
     }
     //endregion
@@ -250,13 +245,19 @@ public class BilgilerTab extends MainPage {
     //region Kanun Kapsam Tipi
     //ElementsCollection kanunKapsamTipiRadioButtons = $$("table[id$='kanunKapsamTipiRadio'] input");
 
+    @Step("Gizlilik Derecesi seçilir")
+    public BilgilerTab gizlilikDerecesiSec(GizlilikDerecesi gizlilikDerecesi) {
+        getGizlilikDerecesi().selectOption(gizlilikDerecesi.getOptionText());
+        return this;
+    }
+
     @Step("Kanun Kapsam Tipi radio")
-    public ElementsCollection getKanunKapsamTipiRadioButtons(){
+    public ElementsCollection getKanunKapsamTipiRadioButtons() {
         return getContainer().$$("table[id$='kanunKapsamTipiRadio'] input");
     }
 
     @Step("Kanun Kapsam Tipi seçilir")
-    public BilgilerTab kanunKapsamTipiSec(String radioText){
+    public BilgilerTab kanunKapsamTipiSec(String radioText) {
         SelenideElement radio = getKanunKapsamTipiRadioButtons().first();
         radio.shouldBe(visible);
         switch (radioText) {
@@ -274,17 +275,6 @@ public class BilgilerTab extends MainPage {
         }
         return this;
     }
-
-    @Step("Kanun Kapsam Tipi seçilen değeri")
-    public SelenideElement kanunKapsamTipiSecilenDeger(){
-        SelenideElement selectedRadio = getKanunKapsamTipiRadioButtons()
-                .filterBy(attribute("checked","true"))
-                .filterBy(visible)
-                .first();
-        String id = selectedRadio.attr("id");
-        Allure.addAttachment("Değer", $("label[for='" + id + "']").text());
-        return $("label[for='" + id + "']");
-    }
     //endregion
 
     //******************************************************
@@ -292,15 +282,20 @@ public class BilgilerTab extends MainPage {
     //region Evrak Sayı Ek Metni
     //SelenideElement evrakSayiEkMetniInput = $("input[id$=evrakSayiEkMetniInputText]");
 
-    @Step("Evrak Sayı Ek Metni")
-    public SelenideElement getEvrakSayiEkMetni(){
-        return getContainer().$("input[id$=evrakSayiEkMetniInputText]");
+    @Step("Kanun Kapsam Tipi seçilen değeri")
+    public SelenideElement kanunKapsamTipiSecilenDeger() {
+        SelenideElement selectedRadio = getKanunKapsamTipiRadioButtons()
+                .filterBy(attribute("checked", "true"))
+                .filterBy(visible)
+                .first();
+        String id = selectedRadio.attr("id");
+        Allure.addAttachment("Değer", $("label[for='" + id + "']").text());
+        return $("label[for='" + id + "']");
     }
 
-    @Step("Evrak Sayı Ek Metni doldurulur")
-    public BilgilerTab evrakSayiEkMetniDoldur(String text){
-        getEvrakSayiEkMetni().setValue(text);
-        return this;
+    @Step("Evrak Sayı Ek Metni")
+    public SelenideElement getEvrakSayiEkMetni() {
+        return getContainer().$("input[id$=evrakSayiEkMetniInputText]");
     }
     //endregion
 
@@ -309,20 +304,20 @@ public class BilgilerTab extends MainPage {
     //region İvedilik
     //SelenideElement ivedilikSelect = $("select[id$=ivedilik]");
 
+    @Step("Evrak Sayı Ek Metni doldurulur")
+    public BilgilerTab evrakSayiEkMetniDoldur(String text) {
+        getEvrakSayiEkMetni().setValue(text);
+        return this;
+    }
+
     @Step("İvedilik")
-    public SelenideElement getIvedilik(){
+    public SelenideElement getIvedilik() {
         return getContainer().$("select[id$=ivedilik]");
     }
 
     @Step("İvedilik seçilir")
-    public BilgilerTab ivedilikSec(Ivedilik ivedilik){
+    public BilgilerTab ivedilikSec(Ivedilik ivedilik) {
         getIvedilik().selectOption(ivedilik.getOptionText());
-        return this;
-    }
-
-    @Step("İvedilik seçilir")
-    public BilgilerTab ivedilikSec(String text){
-        getIvedilik().selectOption(text);
         return this;
     }
     //endregion
@@ -333,26 +328,25 @@ public class BilgilerTab extends MainPage {
     //SelenideElement miatDateInput = $("input[id$=miatCalendar_input]");
     //SelenideElement miatTemizleButton = $("button[id$=miatTarihTemizle]");
 
+    @Step("İvedilik seçilir")
+    public BilgilerTab ivedilikSec(String text) {
+        getIvedilik().selectOption(text);
+        return this;
+    }
+
     @Step("Miat")
-    public SelenideElement getMiatDateInput(){
+    public SelenideElement getMiatDateInput() {
         return getContainer().$("input[id$=miatCalendar_input]");
     }
 
     @Step("Miat Temizle buton")
-    public SelenideElement getMiatTemizleButton(){
+    public SelenideElement getMiatTemizleButton() {
         return getContainer().$("button[id$=miatTarihTemizle]");
     }
 
     @Step("Miat doldurulur")
-    public BilgilerTab miatDoldur(String text){
+    public BilgilerTab miatDoldur(String text) {
         getMiatDateInput().setValue(text);
-        return this;
-    }
-
-    @Step("Miat temizlenir")
-    public BilgilerTab miatTemizle(){
-        getMiatTemizleButton().click();
-        getMiatDateInput().shouldBe(empty);
         return this;
     }
     //endregion
@@ -362,15 +356,16 @@ public class BilgilerTab extends MainPage {
     //region Açıklama
     //SelenideElement aciklamaTextarea = $x("tr[@class='ui-datagrid-row' and descendant::label[normalize-space(text())='Açıklama']]//textarea");
 
-    @Step("Açıklama textarea")
-    public SelenideElement getAciklamaTextarea(){
-        return getContainer().$x("tr[@class='ui-datagrid-row' and descendant::label[normalize-space(text())='Açıklama']]//textarea");
+    @Step("Miat temizlenir")
+    public BilgilerTab miatTemizle() {
+        getMiatTemizleButton().click();
+        getMiatDateInput().shouldBe(empty);
+        return this;
     }
 
-    @Step("Açıklamayı doldurulur")
-    public BilgilerTab aciklamaDoldur(String text){
-        getAciklamaTextarea().setValue(text);
-        return this;
+    @Step("Açıklama textarea")
+    public SelenideElement getAciklamaTextarea() {
+        return getContainer().$x("tr[@class='ui-datagrid-row' and descendant::label[normalize-space(text())='Açıklama']]//textarea");
     }
     //endregion
 
@@ -379,13 +374,19 @@ public class BilgilerTab extends MainPage {
     //region Bilgi Seçim Tipi
     //SelenideElement bilgiSecimTipiSelect = $x("tr[@class='ui-datagrid-row' and descendant::label[normalize-space(text())='Bilgi Seçim Tip']]//select");
 
+    @Step("Açıklamayı doldurulur")
+    public BilgilerTab aciklamaDoldur(String text) {
+        getAciklamaTextarea().setValue(text);
+        return this;
+    }
+
     @Step("Bilgi Seçim Tipi select")
-    public SelenideElement getBilgiSecimTipiSelect(){
+    public SelenideElement getBilgiSecimTipiSelect() {
         return getContainer().$x("descendant::tr[@class='ui-datagrid-row' and descendant::label[normalize-space(text())='Bilgi Seçim Tipi']]//select");
     }
 
     @Step("Bilgi Seçim Tipi seçilir")
-    public BilgilerTab bilgiSecimTipiSec(String text){
+    public BilgilerTab bilgiSecimTipiSec(String text) {
         getBilgiSecimTipiSelect().selectOption(text);
         return this;
     }
@@ -393,21 +394,21 @@ public class BilgilerTab extends MainPage {
 
     //******************************************************
 
+    @Step("Bilgi Seçim Tipi seçilir")
+    public BilgilerTab bilgiSecimTipiSec(BilgiSecimTipi bilgiSecimTipi) {
+        getBilgiSecimTipiSelect().selectOption(bilgiSecimTipi.getOptionText());
+        return this;
+    }
+
     //region Bilgi
     @Step("Bilgi alan combolov")
     public BelgenetElement getBilgiCombolov() {
-        return comboLov(getContainer(),"input[id$='bilgiLov:LovText']");
+        return comboLov(getContainer(), "input[id$='bilgiLov:LovText']");
     }
 
     @Step("Bilgi seçilir")
     public BilgilerTab bilgiSec(String text) {
         getBilgiCombolov().selectLov(text);
-        return this;
-    }
-
-    @Step("Bilgi alanı temizlenir")
-    public BilgilerTab bilgiTemizle(){
-        getBilgiCombolov().clearAllSelectedItems();
         return this;
     }
     //endregion
@@ -417,20 +418,20 @@ public class BilgilerTab extends MainPage {
     //region Gereği Seçim Tipi
     //SelenideElement geregiSecimTipiSelect = $x("//tr[@class='ui-datagrid-row' and descendant::label[normalize-space(text())='Gereği Seçim Tipi']]//select");
 
+    @Step("Bilgi alanı temizlenir")
+    public BilgilerTab bilgiTemizle() {
+        getBilgiCombolov().clearAllSelectedItems();
+        return this;
+    }
+
     @Step("Gereği Seçim Tipi select")
     public SelenideElement getGeregiSecimTipi() {
         return getContainer().$x("//tr[@class='ui-datagrid-row' and descendant::label[normalize-space(text())='Gereği Seçim Tipi']]//select");
     }
 
     @Step("Gereği Seçim Tipi seçilir")
-    public BilgilerTab geregiSecimTipiSec(String text){
+    public BilgilerTab geregiSecimTipiSec(String text) {
         getGeregiSecimTipi().selectOption(text);
-        return this;
-    }
-
-    @Step("Gereği Seçim Tipi seçilir")
-    public BilgilerTab geregiSecimTipiSec(GeregiSecimTipi geregiSecimTipi) {
-        getGeregiSecimTipi().selectOption(geregiSecimTipi.getOptionText());
         return this;
     }
 
@@ -440,26 +441,26 @@ public class BilgilerTab extends MainPage {
 
     //region Gereği
 
+    @Step("Gereği Seçim Tipi seçilir")
+    public BilgilerTab geregiSecimTipiSec(GeregiSecimTipi geregiSecimTipi) {
+        getGeregiSecimTipi().selectOption(geregiSecimTipi.getOptionText());
+        return this;
+    }
+
     @Step("Gereği combolov")
-    public BelgenetElement getGeregiCombolov(){
-        return comboLov(getContainer(),"input[id$='geregiLov:LovText']");
+    public BelgenetElement getGeregiCombolov() {
+        return comboLov(getContainer(), "input[id$='geregiLov:LovText']");
     }
 
     @Step("Gereği alanı seçilir")
-    public BilgilerTab geregiSec(String text){
+    public BilgilerTab geregiSec(String text) {
         getGeregiCombolov().selectLov(text);
         return this;
     }
 
     @Step("Gereği alanı temizlenir")
-    public BilgilerTab geregiTemizle(){
+    public BilgilerTab geregiTemizle() {
         getGeregiCombolov().clearAllSelectedItems();
-        return this;
-    }
-
-    @Step("Gereği alanıda değeri seçilecek değer boş mu")
-    public BilgilerTab geregiDegerSecilemez(String text){
-        Assert.assertTrue(getGeregiCombolov().type(text).isEmpty());
         return this;
     }
 
@@ -470,15 +471,15 @@ public class BilgilerTab extends MainPage {
     //region Dağıtımı Ek Yap
     //SelenideElement dagitimiEkYapCheckbox = $("div[id$=dagitimEkYapCheckBoxId]").find("input");
 
-    @Step("Dağıtımı Ek Yap checkbox")
-    public SelenideElement getDagitimiEkYapCheckbox(){
-        return getContainer().$("div[id$=dagitimEkYapCheckBoxId]").find("input");
+    @Step("Gereği alanıda değeri seçilecek değer boş mu")
+    public BilgilerTab geregiDegerSecilemez(String text) {
+        Assert.assertTrue(getGeregiCombolov().type(text).isEmpty());
+        return this;
     }
 
-    @Step("Dağıtımı Ek Yap seçilir")
-    public BilgilerTab dagitimiEkYapSec(boolean setSelected){
-        getDagitimiEkYapCheckbox().setSelected(setSelected);
-        return this;
+    @Step("Dağıtımı Ek Yap checkbox")
+    public SelenideElement getDagitimiEkYapCheckbox() {
+        return getContainer().$("div[id$=dagitimEkYapCheckBoxId]").find("input");
     }
     //endregion
 
@@ -487,13 +488,19 @@ public class BilgilerTab extends MainPage {
     //region Onay Akışı
     //BelgenetElement onayAkisiCombolov = comboLov("table[id$='akisOlusturPanelGrid'] input[id$='akisLov:LovText']");
 
+    @Step("Dağıtımı Ek Yap seçilir")
+    public BilgilerTab dagitimiEkYapSec(boolean setSelected) {
+        getDagitimiEkYapCheckbox().setSelected(setSelected);
+        return this;
+    }
+
     @Step("Onay Akışı combolov")
-    public BelgenetElement getOnayAkisiCombolov(){
-        return comboLov(getContainer(),"table[id$='akisOlusturPanelGrid'] input[id$='akisLov:LovText']");
+    public BelgenetElement getOnayAkisiCombolov() {
+        return comboLov(getContainer(), "table[id$='akisOlusturPanelGrid'] input[id$='akisLov:LovText']");
     }
 
     @Step("Onay Akışı doldurulur")
-    public BilgilerTab onayAkisiSec(String... texts){
+    public BilgilerTab onayAkisiSec(String... texts) {
         for (int i = 0; i < texts.length; i++) {
             getOnayAkisiCombolov().selectLov(texts[0]);
         }
@@ -501,14 +508,14 @@ public class BilgilerTab extends MainPage {
         return this;
     }
 
+    //Onay Akışı Ekle
+    //SelenideElement onayAkisiEkleButton = $("button[id$=onayAkisiEkle]");
+
     @Step("Onay Akışı alanı temizlenir")
-    public BilgilerTab onayAkisiTemizle(){
+    public BilgilerTab onayAkisiTemizle() {
         getOnayAkisiCombolov().clearAllSelectedItems();
         return this;
     }
-
-    //Onay Akışı Ekle
-    //SelenideElement onayAkisiEkleButton = $("button[id$=onayAkisiEkle]");
 
     @Step("Onay Akışı Ekle button")
     public SelenideElement getOnayAkisiEkleButton() {
@@ -516,49 +523,48 @@ public class BilgilerTab extends MainPage {
     }
 
     @Step("Onay Akışı Ekle butona tıklanır")
-    public BilgilerTab onayAkisiEkleButonaTikla(){
+    public BilgilerTab onayAkisiEkleButonaTikla() {
         getOnayAkisiEkleButton().click();
         return this;
     }
 
     @Step("Onay Akışta seçilen kullanıcıyı kontrol yapılır")
-    public BilgilerTab onayAkisiSecilenKullaniciKontrolEt(String kullanici, String tipi){
+    public BilgilerTab onayAkisiSecilenKullaniciKontrolEt(String kullanici, String tipi) {
         Allure.addAttachment("Mevcut seçlen kullanicilar", getOnayAkisiCombolov().getSelectedItems().last().text());
         getOnayAkisiCombolov().getSelectedItems().last().shouldHave(text(kullanici + "-" + tipi));
         return this;
     }
 
     @Step("Onay Akışta seçilen kullanıcıyı kontrol yapılır")
-    public BilgilerTab onayAkisiSecilenKullaniciKontrolEt(User kullanici, String tipi){
+    public BilgilerTab onayAkisiSecilenKullaniciKontrolEt(User kullanici, String tipi) {
         Allure.addAttachment("Mevcut seçlen kullanicilar", getOnayAkisiCombolov().getSelectedItems().last().text());
         getOnayAkisiCombolov().getSelectedItems().last().shouldHave(text(kullanici.getFullname() + "-" + tipi));
         return this;
     }
 
     @Step("Onay Akışta seçilen kullanıcıyı kontrol yapılır")
-    public BilgilerTab onayAkisiSecilenKullaniciKontrolEt(User kullanici, OnayKullaniciTipi tipi){
+    public BilgilerTab onayAkisiSecilenKullaniciKontrolEt(User kullanici, OnayKullaniciTipi tipi) {
         Allure.addAttachment("Mevcut seçlen kullanicilar", getOnayAkisiCombolov().getSelectedItems().last().text());
         getOnayAkisiCombolov().getSelectedItems().last().shouldHave(text(kullanici.getFullname() + "-" + tipi.getOptionText()));
         return this;
     }
 
+
+    //Otomatik Onay Akışı Ekle
+    //SelenideElement otomatikOnayAkisiEkleButton = $("button[id$=otomatikOnayAkisiEkle]");
+
     @Step("Anlık onay seçilen Kullanıcıları kontrol et")
-    public BilgilerTab onayAkisiSecilenKullaniciKontrolEt(String[][] kullaniciTipi){
+    public BilgilerTab onayAkisiSecilenKullaniciKontrolEt(String[][] kullaniciTipi) {
         Allure.addAttachment("Seçlenmesi gereken kullanicilar", kullaniciTipi.toString());
         Allure.addAttachment("Mevcut seçlen kullanicilar", getOnayAkisiCombolov().getSelectedItems().last().text());
-        for (String[] kullanici:kullaniciTipi) {
+        for (String[] kullanici : kullaniciTipi) {
             getOnayAkisiCombolov().getSelectedItems().last().shouldHave(text(kullanici[0] + "-" + kullanici[1]));
         }
         return this;
     }
 
-
-
-    //Otomatik Onay Akışı Ekle
-    //SelenideElement otomatikOnayAkisiEkleButton = $("button[id$=otomatikOnayAkisiEkle]");
-
     @Step("Otomatik Onay Akışı Ekle button")
-    public SelenideElement getOtomatikOnayAkisiEkleButton(){
+    public SelenideElement getOtomatikOnayAkisiEkleButton() {
         return getContainer().$("button[id$=otomatikOnayAkisiEkle]");
     }
 
@@ -570,7 +576,7 @@ public class BilgilerTab extends MainPage {
     }
 
     @Step("Otomatik Onay Akışı Ekle butona tıklanır")
-    public BilgilerTab otomatikOnayAkisiEkleButonaTikla(){
+    public BilgilerTab otomatikOnayAkisiEkleButonaTikla() {
         getOtomatikOnayAkisiEkleButton().click();
         getOtomatikOnayAkisiIslemleriDialog().shouldBe(visible);
         searchTable = new SearchTable(getOtomatikOnayAkisiIslemleriListId());
@@ -597,25 +603,24 @@ public class BilgilerTab extends MainPage {
         return getContainer().$("div[id$='hiyerarsikAkisOlusturForm:otomatikAkisKullaniciBirimListId']");
     }
 
-    private SearchTable searchTable;
     @Step("Otomatik Onay Akışı İşlemleri table")
-    public SearchTable getOtomatikOnayAkisiIslemleriTable(){
+    public SearchTable getOtomatikOnayAkisiIslemleriTable() {
         return searchTable;
     }
 
-    ElementsCollection otomatikOnayAkisiIslemlerindeTumSecilenleri(){
+    ElementsCollection otomatikOnayAkisiIslemlerindeTumSecilenleri() {
         return searchTable.findRows().getFoundRows().filterBy(cssClass("ui-state-active"));
-                //getRows().filterBy(cssClass("ui-state-active"));
+        //getRows().filterBy(cssClass("ui-state-active"));
     }
 
     @Step("Otomatik Onay Akışında bul ve seçilir")
-    public BilgilerTab otomatikOnayAkisindaBulVeSec(String secilecekIslem, Condition... conditions){
+    public BilgilerTab otomatikOnayAkisindaBulVeSec(String secilecekIslem, Condition... conditions) {
         otomatikOnayAkisiEkleButonaTikla();
         getOtomatikOnayAkisiIslemleriDialog().shouldBe(visible);
         getOtomatikOnayAkisiIslemleriDialogTitle().shouldHave(text("Otomatik Onay Akışı İşlemleri"));
 
         SelenideElement row = searchTable.findRows(conditions).useFirstFoundRow().getFoundRow();
-                //findRowByText(searchText);
+        //findRowByText(searchText);
 
         if (row.attr("class").contains("ui-state-active"))
             Allure.addAttachment("Seçiliydi", row.toString());
@@ -635,6 +640,7 @@ public class BilgilerTab extends MainPage {
 
     /**
      * Return list of columns
+     *
      * @param
      * @return
      */
@@ -646,13 +652,12 @@ public class BilgilerTab extends MainPage {
     /*ElementsCollection otomatikOnayAkisiIslemlerindeTumSecilenleri(){
         return getOtomatikOnayAkisiIslemleriListId().$$("tr[data-ri][data-rk] div[class~='ui-state-active']");
     }*/
-
     @Step("Otomatik Onay Akışı İşlemlerinde tüm seçilenleri kaldırılır")
-    public BilgilerTab otomatikOnayAkisiIslemlerindeTumSecilenleriKaldir(){
+    public BilgilerTab otomatikOnayAkisiIslemlerindeTumSecilenleriKaldir() {
         int count = otomatikOnayAkisiIslemlerindeTumSecilenleri().size();
         Allure.addAttachment("Seçilen sayısı", String.valueOf(count));
 
-        while (otomatikOnayAkisiIslemlerindeTumSecilenleri().size() > 0){
+        while (otomatikOnayAkisiIslemlerindeTumSecilenleri().size() > 0) {
             Allure.addAttachment("Seçileni kaldırılır", otomatikOnayAkisiIslemlerindeTumSecilenleri().first().toString());
             otomatikOnayAkisiIslemlerindeTumSecilenleri().first().click();
             otomatikOnayAkisiIslemlerindeTumSecilenleri().shouldHaveSize(--count);
@@ -701,19 +706,19 @@ public class BilgilerTab extends MainPage {
     }*/
 
     @Step("Otomatik Onay Akışında işlem seçilir")
-    public BilgilerTab otomatikOnayAkisindaIslemiSec(SelenideElement row, String secilecekIslem){
+    public BilgilerTab otomatikOnayAkisindaIslemiSec(SelenideElement row, String secilecekIslem) {
         row.$("select").selectOption(secilecekIslem);
         return this;
     }
 
     @Step("Otomatik Onay Akışı İşlemleri kullan tıklanır")
-    public BilgilerTab otomatikOnayAkisiIslemleriKullanTikla(){
+    public BilgilerTab otomatikOnayAkisiIslemleriKullanTikla() {
         getOtomatikOnayAkisiIslemleriDialog().$("button[id$='hiyerarsikAkisOlusturForm:hiyerarsikAkisKullan']").click();
         return this;
     }
 
     @Step("Otomatik Onay Akışı İşlemleri penceriyi kapat")
-    public BilgilerTab otomatikOnayAkisiIslemleriDialogKapat(){
+    public BilgilerTab otomatikOnayAkisiIslemleriDialogKapat() {
         getOtomatikOnayAkisiIslemleriDialogClose().click();
         return this;
     }
@@ -727,28 +732,28 @@ public class BilgilerTab extends MainPage {
     //BelgenetElement kullanicilarCombolov = comboLov("input[id$='akisAdimLov:LovText']");
 
     @Step("Anlık onay Kullanıcılar alan combolov")
-    public BelgenetElement getAnlikOnayAkisKullanicilarCombolov(){
-        return comboLov(getContainer(),"input[id$='akisAdimLov:LovText']");
+    public BelgenetElement getAnlikOnayAkisKullanicilarCombolov() {
+        return comboLov(getContainer(), "input[id$='akisAdimLov:LovText']");
     }
 
     @Step("Anlık onay Kullanıcıları seçilir")
-    public BilgilerTab anlikOnayAkisKullanicilariSec(String... texts){
-        for (String text:texts)
+    public BilgilerTab anlikOnayAkisKullanicilariSec(String... texts) {
+        for (String text : texts)
             getAnlikOnayAkisKullanicilarCombolov().selectLov(text);
         return this;
     }
 
     @Step("Anlık onay seçilen Kullanıcıları kontrol et")
-    public BilgilerTab secilenAnlikOnayAkisKullanicilariKontrolEt(String kullanici, String tipi){
+    public BilgilerTab secilenAnlikOnayAkisKullanicilariKontrolEt(String kullanici, String tipi) {
         Allure.addAttachment("Seçlen olmalı kullanicilar", kullanici + " / " + tipi);
         Allure.addAttachment("Mevcut seçlen kullanicilar", getAnlikOnayAkisKullanicilarCombolov().getSelectedItems().texts().toString());
         getAnlikOnayAkisKullanicilarCombolov().getSelectedItems().filterBy(text(kullanici)).shouldHaveSize(1)
-                 .first().$("select").getSelectedOption().shouldHave(text(tipi));
+                .first().$("select").getSelectedOption().shouldHave(text(tipi));
         return this;
     }
 
     @Step("Anlık onay seçilen Kullanıcıları kontrol et")
-    public BilgilerTab secilenAnlikOnayAkisKullanicilariKontrolEt(String kullanici, OnayKullaniciTipi tipi){
+    public BilgilerTab secilenAnlikOnayAkisKullanicilariKontrolEt(String kullanici, OnayKullaniciTipi tipi) {
         Allure.addAttachment("Seçlen olmalı kullanicilar", kullanici + " / " + tipi);
         Allure.addAttachment("Mevcut seçlen kullanicilar", getAnlikOnayAkisKullanicilarCombolov().getSelectedItems().texts().toString());
         getAnlikOnayAkisKullanicilarCombolov().getSelectedItems().filterBy(text(kullanici)).shouldHaveSize(1)
@@ -757,7 +762,7 @@ public class BilgilerTab extends MainPage {
     }
 
     @Step("Anlık onay seçilen Kullanıcıları kontrol et")
-    public BilgilerTab secilenAnlikOnayAkisKullanicilariKontrolEt(User kullanici, OnayKullaniciTipi tipi){
+    public BilgilerTab secilenAnlikOnayAkisKullanicilariKontrolEt(User kullanici, OnayKullaniciTipi tipi) {
         Allure.addAttachment("Seçlen olmalı kullanicilar", kullanici + " / " + tipi);
         Allure.addAttachment("Mevcut seçlen kullanicilar", getAnlikOnayAkisKullanicilarCombolov().getSelectedItems().texts().toString());
         getAnlikOnayAkisKullanicilarCombolov().getSelectedItems().filterBy(text(kullanici.getFullname())).shouldHaveSize(1)
@@ -766,11 +771,11 @@ public class BilgilerTab extends MainPage {
     }
 
     @Step("Anlık onay seçilen Kullanıcıları kontrol et")
-    public BilgilerTab secilenAnlikOnayAkisKullanicilariKontrolEt(String[][] kullaniciTipi){
+    public BilgilerTab secilenAnlikOnayAkisKullanicilariKontrolEt(String[][] kullaniciTipi) {
         Allure.addAttachment("Seçlen olmalı kullanicilar", kullaniciTipi.toString());
         Allure.addAttachment("Mevcut seçlen kullanicilar", getAnlikOnayAkisKullanicilarCombolov().getSelectedItems().texts().toString());
 
-        for (String[] kullanici:kullaniciTipi) {
+        for (String[] kullanici : kullaniciTipi) {
             String k = getAnlikOnayAkisKullanicilarCombolov().getSelectedItems().filterBy(text(kullanici[0]))
                     .shouldHaveSize(1).first().$("select").getSelectedOption().text();
             //Allure.addAttachment("Seçlen kullanici kontrol yapılır", kullanici[0] + "/" + kullanici[1]);
@@ -788,7 +793,7 @@ public class BilgilerTab extends MainPage {
 
     @Step("Anlık onay akışındaki kullanıcı ve tipi seçilir")
     public BilgilerTab anlikOnayAkisKullaniciVeTipiSec(String kullanici, String tipi) {
-        anlikOnayAkisKullanicilarAlaninBirimTumuSec(true);
+        //anlikOnayAkisKullanicilarAlaninBirimTumuSec(true);
         getAnlikOnayAkisKullanicilarCombolov().selectLov(kullanici);
         getAnlikOnayAkisKullanicilarCombolov().getSelectedItems().last()
                 .shouldBe(exist)
@@ -799,7 +804,7 @@ public class BilgilerTab extends MainPage {
 
     @Step("Anlık onay akışındaki kullanıcı ve tipi seçilir")
     public BilgilerTab anlikOnayAkisKullaniciVeTipiSec(String kullanici, OnayKullaniciTipi tipi) {
-        anlikOnayAkisKullanicilarAlaninBirimTumuSec(true);
+        //anlikOnayAkisKullanicilarAlaninBirimTumuSec(true);
         getAnlikOnayAkisKullanicilarCombolov().selectLov(kullanici);
         getAnlikOnayAkisKullanicilarCombolov().getSelectedItems().last()
                 .shouldBe(exist)
@@ -814,9 +819,9 @@ public class BilgilerTab extends MainPage {
 
         getAnlikOnayAkisKullanicilarCombolov()
                 .type(kullanici.getFullname())
-                    .getSelectableItems()
-                        .filterBy(text(kullanici.getGorev()))
-                        .filterBy(text(kullanici.getBirimAdi()))
+                .getSelectableItems()
+                .filterBy(text(kullanici.getGorev()))
+                .filterBy(text(kullanici.getBirimAdi()))
                 .first().click();
         getAnlikOnayAkisKullanicilarCombolov().closeTreePanel();
 
@@ -862,19 +867,19 @@ public class BilgilerTab extends MainPage {
 
     //table[contains(@id,'anlikakisOlusturPanelGrid')]//div[@type='button']/input[@type='checkbox']
     @Step("Anlık onay akışı kullanıcıları alanın Birim/Tümü sec")
-    public BilgilerTab anlikOnayAkisKullanicilarAlaninBirimTumuSec(boolean tumu){
+    public BilgilerTab anlikOnayAkisKullanicilarAlaninBirimTumuSec(boolean tumu) {
         SelenideElement button = container.$("[id$='anlikakisOlusturPanelGrid'] div[type='button'] input[type='checkbox']");
         if (tumu != button.isSelected())
             clickJs(button);
         return this;
     }
 
-    SelenideElement koordineliCheckbox(){
+    SelenideElement koordineliCheckbox() {
         return $("input[id$='koordineliBooleanCheckbox_input']");
     }
 
     @Step("Anlık onay Kullan buton")
-    public SelenideElement getKullanButton(){
+    public SelenideElement getKullanButton() {
         return $("button[id$='anlikAkisKullanButton']");
     }
 
@@ -928,7 +933,7 @@ public class BilgilerTab extends MainPage {
     }
 
     @Step("Alanları doldurulur")
-    public BilgilerTab alanlariDoldur(String konuKodu, String konu, String kaldirilacakKlasorleri, Ivedilik ivedilik, GeregiSecimTipi geregiSecimTipi, String geregi, Map<String,OnayKullaniciTipi> onayAkisKullanici) {
+    public BilgilerTab alanlariDoldur(String konuKodu, String konu, String kaldirilacakKlasorleri, Ivedilik ivedilik, GeregiSecimTipi geregiSecimTipi, String geregi, Map<String, OnayKullaniciTipi> onayAkisKullanici) {
         konuKoduSec(konuKodu);
         konuDoldur(konu);
         kaldiralacakKlasorleriSec(kaldirilacakKlasorleri);
@@ -938,7 +943,7 @@ public class BilgilerTab extends MainPage {
         onayAkisiTemizle();
         onayAkisiEkleButonaTikla();
         //anlikOnayAkisKullanicilariTemizle();
-        onayAkisKullanici.forEach((k,t)-> anlikOnayAkisKullaniciVeTipiSec(k,t.getOptionText()));
+        onayAkisKullanici.forEach((k, t) -> anlikOnayAkisKullaniciVeTipiSec(k, t.getOptionText()));
         kullanButonaTikla();
         return this;
     }
@@ -956,11 +961,11 @@ public class BilgilerTab extends MainPage {
         anlikOnayAkisKullanicilarAlaninBirimTumuSec(true);
         //anlikOnayAkisKullanicilariTemizle();
         String kendisi = getAnlikOnayAkisKullanicilarCombolov().getSelectedTitles().first().text();
-        for (String[] kullanici:onayAkisKullaniciTipi) {
+        for (String[] kullanici : onayAkisKullaniciTipi) {
             if (kullanici[0].equals(kendisi))
-                anlikOnayAkisKullanicininTipiSec(kullanici[0],kullanici[1]);
+                anlikOnayAkisKullanicininTipiSec(kullanici[0], kullanici[1]);
             else
-                anlikOnayAkisKullaniciVeTipiSec(kullanici[0],kullanici[1]);
+                anlikOnayAkisKullaniciVeTipiSec(kullanici[0], kullanici[1]);
         }
         kullanButonaTikla();
         return this;
@@ -979,7 +984,7 @@ public class BilgilerTab extends MainPage {
     }
 
 
-    public UstYazi getUstYazi(){
+    public UstYazi getUstYazi() {
         return new UstYazi(container);
     }
 }

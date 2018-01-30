@@ -134,7 +134,7 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
     }
 
     @Step("Evrak geçmişi alanına tıklanır")
-    public KaydedilenGelenEvraklarPage secilenEvrakEvrakGecmisi(){
+    public KaydedilenGelenEvraklarPage secilenEvrakEvrakGecmisi() {
         $$("[id$='evrakOnizlemeTab'] ul li").filterBy(Condition.text("Evrak Geçmişi")).get(0).$("a").click();
         return this;
     }
@@ -149,9 +149,9 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
     }
 
     @Step("Evrak Geçmişi Kontrol")
-    public KaydedilenGelenEvraklarPage evrakGecmisi(String teslimAlinan,String islemSureci) {
+    public KaydedilenGelenEvraklarPage evrakGecmisi(String teslimAlinan, String islemSureci) {
         boolean durum = tblEvrakGecmisi.filterBy(Condition.text(islemSureci)).filter(Condition.text(teslimAlinan)).size() == 1;
-        Assert.assertEquals(durum,true);
+        Assert.assertEquals(durum, true);
         takeScreenshot();
         return this;
 

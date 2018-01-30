@@ -10,7 +10,6 @@ import org.testng.Assert;
 import pages.MainPage;
 
 import static com.codeborne.selenide.Condition.attribute;
-import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
 
@@ -85,7 +84,7 @@ public class EvrakDetayiPage extends MainPage {
     }
 
     @Step("Tebellüğ Butonu kontrolü")
-    public EvrakDetayiPage tebellugButonuKontrolEt(){
+    public EvrakDetayiPage tebellugButonuKontrolEt() {
         btnTebellugEt.shouldBe(visible);
         return this;
     }
@@ -109,7 +108,7 @@ public class EvrakDetayiPage extends MainPage {
         @Step("Teblig geçmişi kontrol et")
         public TebligGecmisiTab tebligGecmisiKontrol(String tebligEdenveTarih, String[] kullanicilar) {
 
-            $x("//span[contains(text(), '"+tebligEdenveTarih+"')]").waitUntil(visible, 5000);
+            $x("//span[contains(text(), '" + tebligEdenveTarih + "')]").waitUntil(visible, 5000);
 
             SelenideElement currentRow = tableTebligGecmisi
                     .filterBy(Condition.text(tebligEdenveTarih))

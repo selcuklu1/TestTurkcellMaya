@@ -465,12 +465,10 @@ public class OnayAkisYonetimiPage extends MainPage {
             onayAkisiIslemleriAdDoldur(yeniOnayAkisi);
             onayAkisiIslemleriKaydet();
             islemMesaji().basariliOlmali(basariMesaji);
-        }
-        else
-        {
+        } else {
             Allure.addAttachment("Data düzgün, resetleme yapılmadı.", "");
         }
 
-            return this;
+        return this;
     }
 }

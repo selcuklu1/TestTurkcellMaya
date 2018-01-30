@@ -201,7 +201,7 @@ public class YazismaKurallariYonetimiPage extends MainPage {
                 .get(0)
                 .$("button[id^='grupBirimTipleriListingForm:grupBirimTipleriDataTable:'][id$='grupBirimTipleriButton']");
 
-        if(currentBtnItem.exists()){
+        if (currentBtnItem.exists()) {
             Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", currentBtnItem);
             currentBtnItem.click();
             btnYazismaKuraliSilEvet.click();

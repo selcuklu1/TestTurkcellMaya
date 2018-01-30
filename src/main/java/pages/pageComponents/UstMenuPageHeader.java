@@ -30,18 +30,18 @@ public class UstMenuPageHeader extends MainPage {
 
     private SelenideElement container;
 
-    public SelenideElement getContainer() {
-        if (super.getSelf() != null)
-            container = super.getSelf();
-        return container;
+    public UstMenuPageHeader(SelenideElement container) {
+        this.container = container;
     }
 
     /*public UstMenuPageHeader() {
         container = $("html");
     }*/
 
-    public UstMenuPageHeader(SelenideElement container) {
-        this.container = container;
+    public SelenideElement getContainer() {
+        if (super.getSelf() != null)
+            container = super.getSelf();
+        return container;
     }
 
     public SelenideElement getPageWindow() {

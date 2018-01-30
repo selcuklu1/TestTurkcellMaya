@@ -370,20 +370,20 @@ public class EvrakOlusturPage extends MainPage {
         }
 
         @Step("Konu alanının seçilen evrak ile aynı şekilde dolu geldiği,")
-        public BilgilerTab konuAlanıDoluGeldigiGorme(String konu){
-            Assert.assertEquals(txtKonu.getValue(),konu);
+        public BilgilerTab konuAlanıDoluGeldigiGorme(String konu) {
+            Assert.assertEquals(txtKonu.getValue(), konu);
             takeScreenshot();
             return this;
         }
 
         @Step("Gereği alanının \"{geregi}\" yazılı olacak şekilde olduğu görülür.")
-        public BilgilerTab geregiSeciliGeldigiGorme(String geregi){
-            boolean durum = $$("div[id$='geregiLov:lovSelectionPanel']").filterBy(Condition.text(geregi)).size()==1;
-            Assert.assertEquals(durum,true);
+        public BilgilerTab geregiSeciliGeldigiGorme(String geregi) {
+            boolean durum = $$("div[id$='geregiLov:lovSelectionPanel']").filterBy(Condition.text(geregi)).size() == 1;
+            Assert.assertEquals(durum, true);
             takeScreenshot();
             return this;
         }
-        
+
         @Step("Kullanıcılar alanında \"{value}\" seç")
         public BilgilerTab IlkKullaniciImzalamaVeyaParaflamaSec(String value) {
             cmbKullanicilarImza.selectOptionByValue(value);
@@ -1415,10 +1415,9 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement btnSImzaImzala2 = $(By.id("imzalaForm:imzalaButton"));
         SelenideElement btnGeregiSil = $(By.cssSelector("[id='yeniGidenEvrakForm:geregiKurumLov:LovSecilenTable'] [class$='delete-icon']"));
         SelenideElement btnBilgiSil = $(By.cssSelector("[id='yeniGidenEvrakForm:bilgiKurumLov:LovSecilenTable'] [class$='delete-icon']"));
-        private TextEditor editor = new TextEditor();
         ElementsCollection trEditorEkLlistesi = $$("[id='yeniGidenEvrakForm:eklerPanell'] tr");
         ElementsCollection trEditorIlgilistesi = $$("[id$='ilgiOutPanel'] tr");
-
+        private TextEditor editor = new TextEditor();
 
         public TextEditor getEditor() {
             return editor;
@@ -1503,9 +1502,10 @@ public class EvrakOlusturPage extends MainPage {
             //divEditor.find(By.tagName("iframe")).getWrappedElement().sendKeys(icerik);
             return this;
         }
+
         @Step("Editör İçerik Doldur")
-        public String editorSayiAl () {
-            SelenideElement txtSayi= $(By.id("editorEvrakSayiAlani"));
+        public String editorSayiAl() {
+            SelenideElement txtSayi = $(By.id("editorEvrakSayiAlani"));
             String sayi = txtSayi.text();
             return sayi;
         }
@@ -1719,22 +1719,22 @@ public class EvrakOlusturPage extends MainPage {
         }
 
         @Step("Editörde ilgi satırının, seçilen evrakın \"{kullanici}\", \"{tarih}\" ve \"{evrakSayi}\" ile geldiği görülür.")
-        public EditorTab ilgiSatırıKontrol(String kullanici, String tarih, String evrakSayi){
+        public EditorTab ilgiSatırıKontrol(String kullanici, String tarih, String evrakSayi) {
             boolean durum = trEditorIlgilistesi
                     .filterBy(text(kullanici))
                     .filterBy(text(tarih))
-                    .filterBy(text(evrakSayi)).size()==1;
-            Assert.assertEquals(durum,true);
+                    .filterBy(text(evrakSayi)).size() == 1;
+            Assert.assertEquals(durum, true);
             takeScreenshot();
             return this;
         }
 
         @Step("Editörde ilgi satırının, seçilen evrakın \"{kullanici}\" ve \"{tarih}\" ile geldiği görülür.")
-        public EditorTab ilgiSatırıKontrol(String kullanici, String tarih){
+        public EditorTab ilgiSatırıKontrol(String kullanici, String tarih) {
             boolean durum = trEditorIlgilistesi
                     .filterBy(text(kullanici))
-                    .filterBy(text(tarih)).size()==1;
-            Assert.assertEquals(durum,true);
+                    .filterBy(text(tarih)).size() == 1;
+            Assert.assertEquals(durum, true);
             takeScreenshot();
             return this;
         }
@@ -2313,7 +2313,6 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement lblDosyaAdi = $(By.id("yeniGidenEvrakForm:ilgiIslemleriTabView:dosyaAdi"));
         SelenideElement chkTaramaHavuzuTarihBaslangic = $(By.id("taramaHavuzuFormId:filterAccordionPanelId:taramaHavuzuIlkTarihCalendar_input"));
         SelenideElement chkTaramaHavuzuTarihBitis = $(By.id("taramaHavuzuFormId:filterAccordionPanelId:taramaHavuzuSonTarihCalendar_input"));
-
 
 
         SelenideElement lblIlgiListesiAciklama1 = $("[id^='yeniGidenEvrakForm:ilgiListesiDataTable:0'] [class$='ui-inplace-display']");

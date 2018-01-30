@@ -155,7 +155,7 @@ public class HitaptaBuyukKucukHarfTest extends BaseTest {
         postalanackYazdir(row);
         detayYazdir(konu);
         Selenide.switchTo().window(1);
-        Selenide.$$x("//*[.='Sayın "+ ztekin.getFullname()+"']")
+        Selenide.$$x("//*[.='Sayın " + ztekin.getFullname() + "']")
                 .shouldHaveSize(2).first().shouldBe(visible);
         Allure.addAttachment("Hitap \"Sayın " + ztekin.getFullname() + "\" kontrolü", "");
         takeScreenshot();
@@ -176,22 +176,22 @@ public class HitaptaBuyukKucukHarfTest extends BaseTest {
     }
 
     @Step("Postalanacak Yerler. Yazdır butona tıklanır")
-    public HitaptaBuyukKucukHarfTest postalanackYazdir(SelenideElement row){
+    public HitaptaBuyukKucukHarfTest postalanackYazdir(SelenideElement row) {
         row.$x("descendant::button[.='Yazdır']").shouldBe(visible).click();
         return this;
     }
 
     @Step("Evrak Detayları. Yazdır butona tıklanır")
-    public HitaptaBuyukKucukHarfTest detayYazdir(String konu){
-            new SearchTable(Selenide.$("#postaDetayYazdirForm\\:dtPostaEvrakUstVeri"))
-                    .findRows(text(konu))
-                    .getFoundRow()
-                    .$x("descendant::button[.='Yazdır']").click();
+    public HitaptaBuyukKucukHarfTest detayYazdir(String konu) {
+        new SearchTable(Selenide.$("#postaDetayYazdirForm\\:dtPostaEvrakUstVeri"))
+                .findRows(text(konu))
+                .getFoundRow()
+                .$x("descendant::button[.='Yazdır']").click();
         return this;
     }
 
     @Step("Yazdır ekranda Hitap kontrolü")
-    public HitaptaBuyukKucukHarfTest yazdirPdf(){
+    public HitaptaBuyukKucukHarfTest yazdirPdf() {
         Selenide.switchTo().window(1);
         ElementsCollection pages = Selenide.$$("#viewer .page");
         Allure.addAttachment("Sayfa sayısı 2 kotrolu", String.valueOf(pages.size()));
@@ -202,14 +202,15 @@ public class HitaptaBuyukKucukHarfTest extends BaseTest {
         Allure.addAttachment("Hitap \"" + birimHitap + "\" kontrolü yapılacak", "");
         e.shouldBe(visible);
         String p = e.$x("ancestor::div[@class='page']").shouldBe(visible).attr("data-page-number");
-        Allure.addAttachment("Hitap \""+ birimHitap + "\" kontrolü "+p+" syafada bulundu", "");
-        Selenide.executeJavaScript("arguments[0].scrollIntoView();", e);
+        Allure.addAttachment("Hitap \"" + birimHitap + "\" kontrolü " + p + " syafada bulundu", "");
+        e.scrollIntoView(true);
+        //Selenide.executeJavaScript("arguments[0].scrollIntoView();", e);
         takeScreenshot();
 
 
-        int k = p.equals("1")? 2:1;
+        int k = p.equals("1") ? 2 : 1;
         String kurumHitap = "BÜYÜK HARFLERLE KURUMA";
-        Allure.addAttachment("Hitap \""+ kurumHitap + "\" sayfa " + k + " bulunmalı", "");
+        Allure.addAttachment("Hitap \"" + kurumHitap + "\" sayfa " + k + " bulunmalı", "");
         e = Selenide.$$("#viewer .page").get(k).$x("//div[.='" + kurumHitap + "']").shouldBe(visible);
         Selenide.executeJavaScript("arguments[0].scrollIntoView();", e);
         takeScreenshot();
@@ -220,11 +221,8 @@ public class HitaptaBuyukKucukHarfTest extends BaseTest {
     }
 
 
-
-
-
     @Step("\"{geregi}\" hitap kontolleri")
-    private void hitapKontrol(String geregiSecimTipi, String geregi, String beklenenGeregi){
+    private void hitapKontrol(String geregiSecimTipi, String geregi, String beklenenGeregi) {
         evrakOlustur.bilgileriTab().openTab()
                 .bilgiTemizle().geregiTemizle()
                 .geregiSecimTipiSec(geregiSecimTipi)
@@ -244,11 +242,10 @@ public class HitaptaBuyukKucukHarfTest extends BaseTest {
         evrakOlustur.evrakPageButtons().pdfOnizlemeTikla();
         Selenide.switchTo().window(1);
         Selenide.sleep(6000);
-        Selenide.$x("//*[.='"+ beklenenHitap +"']").shouldBe(visible);
+        Selenide.$x("//*[.='" + beklenenHitap + "']").shouldBe(visible);
         WebDriverRunner.getWebDriver().close();
         Selenide.switchTo().window(0);
     }
-
 
 
 }

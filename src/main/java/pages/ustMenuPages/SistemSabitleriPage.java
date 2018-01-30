@@ -22,6 +22,7 @@ public class SistemSabitleriPage extends MainPage {
     SelenideElement page = $("#constantPropertiesListingForm");
     SelenideElement filter = $("#constantPropertiesListingForm\\:accordionId");
     SelenideElement propertyList = $("#constantPropertiesListingForm\\:constantPropertiesList");
+    SearchFiltreleme searchFiltreleme = new SearchFiltreleme(filter);
 
     public UstMenuPageHeader pageHeader() {
         return new UstMenuPageHeader(page);
@@ -40,28 +41,27 @@ public class SistemSabitleriPage extends MainPage {
     }
 
     @Step("Sistem Sabitleri sayfayı bul")
-    public SelenideElement getPage(){
+    public SelenideElement getPage() {
         return page;
     }
 
-    SearchFiltreleme searchFiltreleme = new SearchFiltreleme(filter);
     @Step("Sorgulama ve Filtreleme")
-    public SearchFiltreleme sorgulamaVeFiltreleme(){
+    public SearchFiltreleme sorgulamaVeFiltreleme() {
         return searchFiltreleme;
     }
 
     @Step("Tüm sekmeleri bul")
-    public ElementsCollection getSistemSabitleriTabs(){
+    public ElementsCollection getSistemSabitleriTabs() {
         return page.$$("tbody[id='constantPropertiesListingForm:constantPropertiesList_data']>tr");
     }
 
     @Step("{tabName} sekmeyi bul")
-    public SelenideElement getSistemSabitleriTab(String tabName){
-        return page.$x("(descendant::h3[.='"+ tabName +"'])[1]");
+    public SelenideElement getSistemSabitleriTab(String tabName) {
+        return page.$x("(descendant::h3[.='" + tabName + "'])[1]");
     }
 
     @Step("{tabName} sekmeyi aç")
-    public SistemSabitleriPage openSistemSabitleriTab(String tabName){
+    public SistemSabitleriPage openSistemSabitleriTab(String tabName) {
         SelenideElement tab = getSistemSabitleriTab(tabName);
         if (tab.attr("aria-expanded").equalsIgnoreCase("false"))
             tab.click();
@@ -69,29 +69,29 @@ public class SistemSabitleriPage extends MainPage {
     }
 
     @Step("{tabName} sekmenin Sistem Sabitleri Listesini bul")
-    public SearchTable getSistemSabitleriList(String tabName){
+    public SearchTable getSistemSabitleriList(String tabName) {
         return new SearchTable(getSistemSabitleriTab(tabName).$x("ancestor::tr[@data-ri]//ancestor::tr[1]//div[contains(@id,'constantPropertiesDataTable')]"));
     }
 
 
     @Step("Arama sonucu bul")
-    private ElementsCollection aramaSonucuBul(String propertyName){
+    private ElementsCollection aramaSonucuBul(String propertyName) {
         ElementsCollection col = propertyList.$$("div").filterBy(BelgentCondition.innerText(propertyName));
         if (col.size() > 0 &&
                 col.first().$x("ancestor::div/h3").attr("aria-expanded").equalsIgnoreCase("false"))
-                col.first().$x("ancestor::div/h3").click();
+            col.first().$x("ancestor::div/h3").click();
 
         return propertyList.$$("div").filterBy(BelgentCondition.innerText(propertyName));
     }
 
     @Step("Arama sonucu bul")
-    public SearchTable getPropertyTable(String propertyName){
+    public SearchTable getPropertyTable(String propertyName) {
         SelenideElement table = aramaSonucuBul(propertyName).first().$x("ancestor::table[1]");
         return new SearchTable(table);
     }
 
     @Step("Arama sonucu bul")
-    public SelenideElement getPropertyRow(String propertyName){
+    public SelenideElement getPropertyRow(String propertyName) {
         return aramaSonucuBul(propertyName).first().$x("ancestor::tr[@data-ri][1]");
     }
 

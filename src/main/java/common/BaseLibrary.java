@@ -30,7 +30,6 @@ import static com.codeborne.selenide.Condition.exactValue;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
 import static org.apache.commons.io.FileUtils.deleteDirectory;
-import static org.openqa.selenium.support.ui.ExpectedConditions.elementSelectionStateToBe;
 import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfElementLocated;
 
 public class BaseLibrary extends ElementsContainer {
@@ -39,8 +38,8 @@ public class BaseLibrary extends ElementsContainer {
     protected static final Logger log = Logger.getLogger(BaseLibrary.class.getName());
     protected static String winHandleBefore = null;
     protected static String uploadPath = null;
-    private static String browserName = null;
     protected static String downloadPath = null;
+    private static String browserName = null;
     private long waitForLoading = 20;
     private int doWaitLoading = 0;
     private boolean doNotWaitLoading = false;

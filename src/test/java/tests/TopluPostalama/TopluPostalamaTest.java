@@ -25,7 +25,6 @@ import java.util.Random;
 public class TopluPostalamaTest extends BaseTest {
 
 
-
     @BeforeMethod
     public void loginBeforeTests() {
 
@@ -1150,7 +1149,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .tabloKontrolEt(kurum1, "", postaTipi, true)
                 .raporAl();
 
-         String excelFileName = pttRaporuPage.indirilenDosyaAd();
+        String excelFileName = pttRaporuPage.indirilenDosyaAd();
 
         PttRaporuPage.PttRaporExcellTest pttRaporExcellTest = new PttRaporuPage.PttRaporExcellTest(excelFileName);
 
@@ -2067,7 +2066,7 @@ public class TopluPostalamaTest extends BaseTest {
         topluPostaladiklarimPage
                 .openPage()
                 .topluPostaladiklarimEvrakKontrolu(konu[0]);
-                //.searchTable().searchInAllPages(true).findRows(text(konu[0])).getFoundRow().shouldBe(exist);
+        //.searchTable().searchInAllPages(true).findRows(text(konu[0])).getFoundRow().shouldBe(exist);
     }
 
     @Severity(SeverityLevel.CRITICAL)

@@ -184,8 +184,8 @@ public class EvrakPostalamaTest extends BaseTest {
         postalananlarPage
                 .openPage();
 
-      //  Thread.sleep(2000);
-       // postalananlarPage.filter().findRowsWith(Condition.text(konu)).first().click();
+        //  Thread.sleep(2000);
+        // postalananlarPage.filter().findRowsWith(Condition.text(konu)).first().click();
         //Thread.sleep(1000);
 
         postalananlarPage.btnFiltrenenPostaIcerikGoster(konu);
@@ -445,9 +445,9 @@ public class EvrakPostalamaTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true , description = "TS1434 : Postalanan Evrak Raporu Alan kontrolleri")
+    @Test(enabled = true, description = "TS1434 : Postalanan Evrak Raporu Alan kontrolleri")
     public void TS1434() throws InterruptedException {
-        login("mbozdemir" , "123");
+        login("mbozdemir", "123");
 
         postalananEvrakRaporuPage
                 .openPage()
@@ -482,15 +482,15 @@ public class EvrakPostalamaTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true , description = "TS0310 : İçerik ekranından evrakın postalanması")
+    @Test(enabled = true, description = "TS0310 : İçerik ekranından evrakın postalanması")
     public void TS0310() throws InterruptedException {
         login("mbozdemir", "123");
         String konu = "TS1685_";
         postalanacakEvraklarPage.openPage()
-        .btnFiltrenenPostaIcerikGoster(konu);
+                .btnFiltrenenPostaIcerikGoster(konu);
 
         postalanacakEvraklarPage.btnDagitimGidisSekli("APS")
-            .inputIcerikPstakod("0310");
+                .inputIcerikPstakod("0310");
         postalanacakEvraklarPage.btnDagitimGidisSekli("KEP");
         postalanacakEvraklarPage
                 .btnIcerikPostaYazdir();
@@ -505,6 +505,6 @@ public class EvrakPostalamaTest extends BaseTest {
 
         postalanacakEvraklarPage
                 .btnIcerikEvrakPostalama();
-               // .btnIcerikPostalamaEvet();
+        // .btnIcerikPostalamaEvet();
     }
 }
