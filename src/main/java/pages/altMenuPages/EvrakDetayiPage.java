@@ -173,7 +173,13 @@ public class EvrakDetayiPage extends MainPage {
             return this;
         }
 
-
+        @Step("")
+        public HareketGecmisiTab tabloKontol(String text) {
+            tblHareketGecmisi
+                    .filterBy(Condition.text(text))
+                    .shouldHaveSize(1);
+            return this;
+        }
 
     }
 
