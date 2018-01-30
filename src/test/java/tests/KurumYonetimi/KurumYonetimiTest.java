@@ -372,6 +372,9 @@ public class KurumYonetimiTest extends BaseTest {
                 .geldigiKurumDoldurLovText(aktifKurumAdi)
                 .panelKapat(false);
 
+        logout();
+        login("mbozdemir", "123");
+
         gidenEvrakKayitPage
                 .openPage()
                 .geregiSecimTipiSec("Kurum")
