@@ -565,7 +565,7 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
-    @Step("Konu alanının değeri \"{value}\" geldiği görülür.")
+    @Step("Gereği alanının değeri \"{value}\" geldiği görülür.")
     public GelenEvraklarPage geregiAlanDegeriKontrolu(String value) {
         ElementsCollection geregi = $$("tbody[id$='geregiLov:LovSecilenTable_data'] tr[data-ri]");
 
