@@ -87,17 +87,7 @@ public class GelenGidenEvrakKayitHavaleTest extends BaseTest {
 //      String onaylayacakKisi = "Can ŞEKER";
       String onaylayacakKisi = "Mehmet BOZDEMİR";
       String onayKisiDetails = "BİLİŞİM HİZMETLERİ VE UYDU PAZARLAMA GENEL MÜDÜR Y";
-
-//    String ekMetni = "test otomasyon" + getSysDateForKis();
-//    String aciklama = "Test Otomasyon";
-
-//    String pathToFilePdf = getUploadPath() + "Otomasyon.pdf";
-//    String pdfName = "Otomasyon.pdf";
-//    String pathToFileExcel = getUploadPath() + "test.xlsx";
-//    String excelName = "test.xlsx";
-//    String pathToFileEmail = getUploadPath() + "ekranGoruntuleri.msg";
-//    String ustYaziAdiMail = "ekranGoruntuleri.msg";
-//    String bigPdfPath = getUploadPath() + "emresencan.pdf";
+      
 
     String basariMesaji = "İşlem başarılıdır!";
 

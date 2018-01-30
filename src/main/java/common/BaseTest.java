@@ -67,6 +67,7 @@ public class BaseTest extends BaseLibrary {
         Configuration.baseUrl = (System.getProperty("URL") == null) ? belgenetURL : System.getProperty("URL");
         Configuration.browser = (System.getProperty("browser") == null) ? "firefox" : System.getProperty("browser");
         Configuration.browserVersion = System.getProperty("node");
+        Configuration.driverManagerEnabled = false;
         Configuration.remote = System.getProperty("hub");
         Configuration.reportsFolder = "test-result/reports";
         Configuration.screenshots = true;

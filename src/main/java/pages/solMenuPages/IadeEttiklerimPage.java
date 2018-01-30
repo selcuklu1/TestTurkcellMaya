@@ -26,7 +26,7 @@ public class IadeEttiklerimPage extends MainPage {
 
     @Step("Kullancılar doldur")
     public IadeEttiklerimPage kullanicilarDoldur(String kullanicilar) {
-        txtKullanicilar.selectLov(kullanicilar);
+        txtKullanicilar.type(kullanicilar).getTitleItems().filterBy(Condition.text(kullanicilar)).first().click();
         return this;
     }
 

@@ -443,4 +443,41 @@ public class EvrakPostalamaTest extends BaseTest {
 
 
     }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true , description = "TS1434 : Postalanan Evrak Raporu Alan kontrolleri")
+    public void TS1434() throws InterruptedException {
+        login("mbozdemir" , "123");
+
+        postalananEvrakRaporuPage
+                .openPage()
+                .btnPostalayanAltBirim()
+                .btnPostaSahibiAltbirim()
+                .postaSorgulama();
+
+        Thread.sleep(4000);
+        postalananEvrakRaporuPage.ekranSorgulananSonucKontrol();
+
+        postalananEvrakRaporuPage.cmbEvrakSahibi("YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ")
+                .postaSorgulama();
+        Thread.sleep(1000);
+        postalananEvrakRaporuPage.evrakSahibiKontrol("YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ");
+
+        postalananEvrakRaporuPage.cmbPostalananYerSecimi("Optiim otomasyon")
+                .postaSorgulama();
+
+        postalananEvrakRaporuPage.postalananyerKontrol("Optiim otomasyon");
+        postalananEvrakRaporuPage.cmbpostaSeklisecimi("Iç giden")
+                .postaSorgulama();
+        postalananEvrakRaporuPage.cmbpostaSeklisecimi("Dış giden")
+                .postaSorgulama();
+        postalananEvrakRaporuPage.cmbPostaTipisec("Adi Posta")
+                .postaSorgulama();
+        postalananEvrakRaporuPage.txtPostaAciklama("TS")
+                .postaSorgulama();
+        postalananEvrakRaporuPage.cmbPostalayanadi("Zübeyde TEKİN")
+                .postaSorgulama();
+        postalananEvrakRaporuPage.chkboxPostaladiklarim()
+                .postaSorgulama();
+    }
 }

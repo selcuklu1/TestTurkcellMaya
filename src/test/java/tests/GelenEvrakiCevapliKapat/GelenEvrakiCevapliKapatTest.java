@@ -105,8 +105,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .havaleIslemleriKisiDoldur(kisi)
                 .kaydet()
                 .evetDugmesi()
-                .yeniKayitButton()
-                .benzerKayit();
+                .yeniKayitButton();
         //TODO
 
         login(usernameZTEKIN, passwordZTEKIN);
@@ -211,7 +210,6 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .kaydet()
                 .evetDugmesi()
                 .yeniKayitButton();
-                //.benzerKayit();
 
         login(usernameZTEKIN, passwordZTEKIN);
 
@@ -434,8 +432,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .havaleIslemleriKisiDoldur(kisi)
                 .kaydet()
                 .evetDugmesi()
-                .yeniKayitButton()
-                .benzerKayit();
+                .yeniKayitButton();
 
         login(usernameZTEKIN, passwordZTEKIN);
 
@@ -686,7 +683,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
         String konuKoduRandom = "TS-2188-" + createRandomNumber(10);
         String evrakTarihi = getSysDateForKis();
         String kisi2 = "Optiim";
-        String gizlilikDerecesi = "Gizli";
+        String gizlilikDerecesi = "Normal";
         String evrakSayiSag = createRandomNumber(10);
         String kisi = "Zübeyde Tekin";
         String kisiKurum = "Gerçek Kişi";
@@ -707,8 +704,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .havaleIslemleriKisiDoldur(kisi)
                 .kaydet()
                 .evetDugmesi()
-                .yeniKayitButton()
-                .benzerKayit();
+                .yeniKayitButton();
 
         login(usernameZTEKIN, passwordZTEKIN);
 
@@ -791,7 +787,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
         String konuKoduRandom = "TS-2187-" + createRandomNumber(10);
         String evrakTarihi = getSysDateForKis();
         String kisi2 = "Optiim";
-        String gizlilikDerecesi = "Gizli";
+        String gizlilikDerecesi = "Normal";
         String evrakSayiSag = createRandomNumber(10);
         String kisi = "Zübeyde Tekin";
         String kisiKurum = "Gerçek Kişi";
@@ -813,7 +809,6 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .kaydet()
                 .evetDugmesi()
                 .yeniKayitButton();
-//                .benzerKayit();
 
         login(usernameZTEKIN, passwordZTEKIN);
 

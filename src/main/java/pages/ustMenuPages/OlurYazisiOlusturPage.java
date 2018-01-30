@@ -78,7 +78,7 @@ public class OlurYazisiOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Onay akışında güncel gelen kullanıcıyı kontrol et")
+        @Step("Onay akışında güncel gelen kullanıcıyı kontrolu")
         public BilgilerTab onayAkisiKullaniciKontrol(String kullaniciAdi, String kullaniciTipi) {
             trOnayAkisiEkleKullanicilar
                     .filterBy(text(kullaniciAdi))
@@ -89,7 +89,7 @@ public class OlurYazisiOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Onay akışı kullanıcı adı ve koordine tipi kontrol et")
+        @Step("Onay akışı kullanıcı adı ve koordine tipi kontrolu")
         public BilgilerTab onayAkisiKullaniciKoordineKontrol(String kullaniciAdi, String kullaniciTipi) {
 
             trOnayAkisiEkleKullanicilar

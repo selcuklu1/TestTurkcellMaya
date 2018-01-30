@@ -340,7 +340,7 @@ public class KararYazisiOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Onay akışında güncel gelen kullanıcıyı kontrol et")
+        @Step("Onay akışında güncel gelen kullanıcıyı kontrolu")
         public BilgilerTab onayAkisiKullaniciKontrol(String kullaniciAdi) {
             trOnayAkisiEkleKullanicilar
                     .filterBy(text(kullaniciAdi))
