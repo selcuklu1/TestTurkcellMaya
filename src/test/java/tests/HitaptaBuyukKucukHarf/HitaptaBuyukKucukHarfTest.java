@@ -32,7 +32,7 @@ import static pages.pageData.alanlar.OnayKullaniciTipi.PARAFLAMA;
 
 public class HitaptaBuyukKucukHarfTest extends BaseTest {
 
-    /*
+
     EvrakOlusturPage evrakOlustur;
     User user1 = new User("user1", "123", "User1 TEST", "AnaBirim1", "Altyapı ve Sistem Yönetim Uzmanı");
     User optiim = new User("optiim", "123", "Optiim TEST", "Optiim Birim");
@@ -248,6 +248,5 @@ public class HitaptaBuyukKucukHarfTest extends BaseTest {
         WebDriverRunner.getWebDriver().close();
         Selenide.switchTo().window(0);
     }
-*/
 
 }
