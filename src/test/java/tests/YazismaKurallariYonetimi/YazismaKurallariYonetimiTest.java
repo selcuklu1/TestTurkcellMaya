@@ -76,7 +76,7 @@ public class YazismaKurallariYonetimiTest extends BaseTest {
                 .tiklaSonImzaSeviyesi(sonImzaSeviyesi)
                 .grupBirimTipleriKaydet()
                 .yazismakurallariKontrolEt(birimAdi, true, sinirsizYazilabilir, vekaletSeviyesi, sonImzaSeviyesi)
-                .islemMesaji().basariliOlmali(basariMesaj);
+                .islemMesaji().basariliOlmali();
 
         yazismaKurallariYonetimiPage
                 .yazismaKuraliGuncelle(birimAdi)
@@ -86,7 +86,7 @@ public class YazismaKurallariYonetimiTest extends BaseTest {
                 .tiklaSonImzaSeviyesi(sonImzaSeviyesi)
                 .grupBirimTipleriKaydet()
                 .yazismakurallariKontrolEt(yeniBirimAdi, true, sinirsizYazilabilir, vekaletSeviyesi, sonImzaSeviyesi)
-                .islemMesaji().basariliOlmali(basariMesaj);
+                .islemMesaji().basariliOlmali();
 
     }
 

@@ -303,8 +303,8 @@ public class KurumYonetimiTest extends BaseTest {
                 .ilDoldur(il)
                 .ePostaDoldur(ePosta)
                 .iletisimBilgisiKaydet()
-                .kurumKaydet();
-        //.islemMesaji().basariliOlmali();
+                .kurumKaydet()
+                .islemMesaji().basariliOlmali();
 
         kurumYonetimiPage
                 .kurumHiyerarsisiniGuncelle()
