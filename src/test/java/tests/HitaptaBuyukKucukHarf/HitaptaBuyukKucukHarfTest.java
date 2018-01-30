@@ -203,7 +203,8 @@ public class HitaptaBuyukKucukHarfTest extends BaseTest {
         e.shouldBe(visible);
         String p = e.$x("ancestor::div[@class='page']").shouldBe(visible).attr("data-page-number");
         Allure.addAttachment("Hitap \""+ birimHitap + "\" kontrolü "+p+" syafada bulundu", "");
-        Selenide.executeJavaScript("arguments[0].scrollIntoView();", e);
+        e.scrollIntoView(true);
+        //Selenide.executeJavaScript("arguments[0].scrollIntoView();", e);
         takeScreenshot();
 
 

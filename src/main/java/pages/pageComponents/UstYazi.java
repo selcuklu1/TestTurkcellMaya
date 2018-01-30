@@ -251,12 +251,12 @@ public class UstYazi extends MainPage {
             searchTable = new SearchTable(container.$("div[id$='kisiselNotEkleDataTableId'] table"));
         }
 
-        @Step("Yeni evrak ekle butonu bulunur")
+        @Step("Yeni evrak not ekle butonu bulunur")
         public SelenideElement getYeniNotEkleButton(){
             return container.$("button[id$='kisiselNotEkleDataTableId:kisiselNotEkleId']");
         }
 
-        @Step("Yeni evrak ekle butonu bulunur")
+        @Step("Yeni evrak not ekle")
         public EvrakNot yeniNotEkle(){
             getYeniNotEkleButton().sendKeys("\n");
             getYeniNotEkleButton().click(1, 1);
@@ -399,20 +399,36 @@ public class UstYazi extends MainPage {
             return this;
         }
 
-        @Step("Not Güncelle butonu bulunur")
+        @Step("Not Güncelle butonu aranır")
         public SelenideElement getNoteGuncelleButton() {
-            return $("button span[class~='update-icon']");
+            return note.$("button span[class~='update-icon']");
         }
 
-        @Step("Not Sil butonu bulunur")
+        @Step("Not Sil butonu aranır")
         public SelenideElement getNoteSilButton() {
-            return $("button span[class~='delete-icon']");
+            return note.$("button span[class~='delete-icon']");
         }
 
         @Step("Notu sil")
         public EvrakNot notuSil(){
-            note.$("button span[class~='delete-icon']").click();
+            getNoteSilButton().click();
             note.shouldNotBe(exist);
+            return this;
+        }
+
+        @Step("Notu güncelle")
+        public EvrakNot notuGuncelle(String aciklama){
+            getNoteGuncelleButton().click();
+            getAciklamaAlani().clear();
+            aciklamaAlaniDoldur(aciklama);
+            kaydet();
+            return this;
+        }
+
+        @Step("Postit şeklinde")
+        public EvrakNot postitStyle(){
+            String style = "position:relative; background:#fefabc; padding: 5px;  font-size: 10px; color: #000; width: 200px; margin-bottom:15px; box-shadow: 0px 4px 6px #333; -moz-box-shadow: 0px 4px 6px #333; -webkit-box-shadow: 0px 4px 6px #333;";
+            note.shouldHave(attribute("style", style));
             return this;
         }
 

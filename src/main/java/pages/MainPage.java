@@ -97,7 +97,18 @@ public class MainPage extends BaseLibrary {
     public void logout() {
         $("button[id='topMenuForm:userMenuButton_button']").click();
         $("#topMenuForm\\:logOutButton").click();
+
+        for (int i = 0; i < 5; i++) {
+            if (getIslemOnayDialog().is(visible))
+                getIslemOnayDialog().$x("descendant::button[.='Evet']").click();
+            sleep(1000);
+        }
     }
+    
+    public SelenideElement getIslemOnayDialog(){
+        return $x("//div[@id='baseConfirmationDialog:dialog']");
+    }
+
 
     public MainPage ustMenuEvrakIslemleriAc() {
         $(By.id("topMenuForm2:ust:0:ustMenuEleman")).click();
@@ -166,6 +177,7 @@ public class MainPage extends BaseLibrary {
 
     public EvrakPageButtons evrakPageButtons () {
         return new EvrakPageButtons();
+        //return new EvrakPageButtons($("#mainPreviewForm"));
     }
 
     @Step("Footer'da açılan sayfa butonu bul")

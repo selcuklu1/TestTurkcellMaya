@@ -389,6 +389,12 @@ public class BilgilerTab extends MainPage {
         getBilgiSecimTipiSelect().selectOption(text);
         return this;
     }
+
+    @Step("Bilgi Seçim Tipi seçilir")
+    public BilgilerTab bilgiSecimTipiSec(BilgiSecimTipi bilgiSecimTipi){
+        getBilgiSecimTipiSelect().selectOption(bilgiSecimTipi.getOptionText());
+        return this;
+    }
     //endregion
 
     //******************************************************
@@ -788,7 +794,7 @@ public class BilgilerTab extends MainPage {
 
     @Step("Anlık onay akışındaki kullanıcı ve tipi seçilir")
     public BilgilerTab anlikOnayAkisKullaniciVeTipiSec(String kullanici, String tipi) {
-        anlikOnayAkisKullanicilarAlaninBirimTumuSec(true);
+        //anlikOnayAkisKullanicilarAlaninBirimTumuSec(true);
         getAnlikOnayAkisKullanicilarCombolov().selectLov(kullanici);
         getAnlikOnayAkisKullanicilarCombolov().getSelectedItems().last()
                 .shouldBe(exist)
@@ -799,7 +805,7 @@ public class BilgilerTab extends MainPage {
 
     @Step("Anlık onay akışındaki kullanıcı ve tipi seçilir")
     public BilgilerTab anlikOnayAkisKullaniciVeTipiSec(String kullanici, OnayKullaniciTipi tipi) {
-        anlikOnayAkisKullanicilarAlaninBirimTumuSec(true);
+        //anlikOnayAkisKullanicilarAlaninBirimTumuSec(true);
         getAnlikOnayAkisKullanicilarCombolov().selectLov(kullanici);
         getAnlikOnayAkisKullanicilarCombolov().getSelectedItems().last()
                 .shouldBe(exist)

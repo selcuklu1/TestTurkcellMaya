@@ -26,6 +26,7 @@ public class OlurYazisiOlusturPage extends MainPage {
         @FindBy(xpath = pageLocator)
         private BilgilerTab bilgilerTab;*/
     private SelenideElement page = $("#yeniOnayEvrakForm");
+    public final UstMenuData.EvrakIslemleri pageTitle = UstMenuData.EvrakIslemleri.OlurYazisiOlustur;
 
     public SelenideElement getPage() {
         return page;
@@ -44,8 +45,8 @@ public class OlurYazisiOlusturPage extends MainPage {
     
 
     public OlurYazisiOlusturPage openPage() {
-        ustMenu(UstMenuData.EvrakIslemleri.OlurYazisiOlustur);
-        pageHeader().getPageTitle().shouldHave(text(UstMenuData.EvrakIslemleri.OlurYazisiOlustur.getName()));
+        ustMenu(pageTitle);
+        pageHeader().getPageTitle().shouldHave(text(pageTitle.getName()));
         return this;
     }
 

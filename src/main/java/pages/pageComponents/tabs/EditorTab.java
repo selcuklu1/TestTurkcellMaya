@@ -147,11 +147,11 @@ public class EditorTab extends MainPage {
         private List<EvrakNot> createdNotes = new ArrayList<EvrakNot>();
 
         public SelenideElement getNotesTable(){
-            return page.$("div[id$='evrakNotlariTableD1']");
+            return page.$("div[id*='evrakNotlariTable']");
         }
 
         public ElementsCollection getNoteDivs(){
-            return page.$$("div[id$='evrakNotlariTableD1']>div");
+            return page.$$("div[id*='evrakNotlariTable']>div");
         }
 
         @Step("Not Ekle dialog bulunur")
@@ -173,7 +173,7 @@ public class EditorTab extends MainPage {
 
         @Step("Açıklama karakter sayısı maksimum {maxLength} olmalı")
         public EvrakNot aciklamaKarakterSayisiKontrolu(int maxLength) {
-            SelenideElement counter = getNotEkleDialog().$("span[id$='D1NotEkleDialogCounter']");
+            SelenideElement counter = getNotEkleDialog().$("span[id*='DialogCounter']");
 
             counter.should(visible);
             int leftCount = getNumber(counter.text());
@@ -203,7 +203,8 @@ public class EditorTab extends MainPage {
 
         @Step("Not Ekle \"Not Tipi\" alan bulunur")
         public BelgenetElement getNotTipi(){
-            return comboBox(getNotEkleDialog(),"label[id$='evrakNotTipiD1_label']");
+//            return comboBox(getNotEkleDialog(),"label[id$='evrakNotTipiD1_label']");
+            return comboBox(getNotEkleDialog(),"label[class~='ui-selectonemenu-label']");
         }
 
         @Step("Not Ekle \"Not Tipi\" alan seçilir")
@@ -259,6 +260,26 @@ public class EditorTab extends MainPage {
         }
 
         @Step("Yeni not oluşturulur")
+        public EvrakNot notOlustur(String olusturan, String notTipi, String aciklama, String[] notTipiValues) {
+
+            notEkleTikla();
+            aciklamaAlaniDoldur(aciklama);
+
+            notTipiAlanDegerKontrol(notTipiValues);
+            notTipiSec(notTipi);
+            kaydet();
+            getNotEkleDialog().should(disappear);
+
+            String date = DateTimeFormatter.ofPattern("dd.MM.yyyy").format(LocalDateTime.now());
+            String time = DateTimeFormatter.ofPattern("HH").format(LocalDateTime.now());
+            //String time = DateTimeFormatter.ofPattern("HH:mm").format(LocalDateTime.now());
+            notuBul(text(olusturan), text(aciklama), text(date), text(time));
+            createdNotes.add(this);
+            return this;
+        }
+
+
+        @Step("Yeni not oluşturulur")
         public EvrakNot notOlustur(String olusturan, String notTipi, String aciklama) {
 
             notEkleTikla();
@@ -305,8 +326,8 @@ public class EditorTab extends MainPage {
         }
 
         @Step("Postit şeklinde")
-        public EvrakNot isPostitStyle(){
-            String style = "position:relative; background:#fefabc; padding: 5px;  font-size: 10px; color: #000; width: 200px; margin-bottom:15px; box-shadow: 0px 4px 6px #333; -moz-box-shadow: 0px 4px 6px #333; -webkit-box-shadow: 0px 4px 6px #333;";
+        public EvrakNot postitStyle(){
+            String style = "position: relative; background: rgb(254, 250, 188); padding: 5px; font-size: 10px; color: rgb(0, 0, 0); width: 200px; margin-bottom: 15px; box-shadow: rgb(51, 51, 51) 0px 4px 6px;";
             note.shouldHave(attribute("style", style));
             return this;
         }

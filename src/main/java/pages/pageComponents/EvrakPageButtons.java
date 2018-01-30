@@ -45,10 +45,11 @@ public class EvrakPageButtons extends MainPage {
 
     @Step("s-İmzla seç")
     public EvrakPageButtons sImzalaRadioSec() {
-        if (islemMesaji().isUyari("Servise ulaşılamıyor!"))
-            islemMesaji().closeMessage();
-        else
-            throw new RuntimeException("İşlem Mesajı");
+        /*if (islemMesaji().getMessageTitles().size() > 0)
+            if (islemMesaji().isUyari("Servise ulaşılamıyor!"))
+                islemMesaji().closeMessage();
+            else
+                throw new RuntimeException("İşlem Mesajı");*/
         getSImzalaRadio().shouldBe(visible).click();
         return this;
     }
@@ -100,8 +101,17 @@ public class EvrakPageButtons extends MainPage {
     public EvrakPageButtons evrakImzala() {
         imzalaButonaTikla();
         sImzalaRadioSec();
+        /*for (int i = 0; i < 5; i++) {
+            if (islemMesaji().getMessageTitles().size() > 0)
+                takeScreenshot();
+            if (islemMesaji().isUyari("Servise ulaşılamıyor!"))
+                islemMesaji().closeMessage();
+            else
+                break;
+            sleep(1000);
+            //throw new RuntimeException("İşlem Mesajı");
+        }*/
         evrakImzaOnay();
-        //waitForLoadingJS(WebDriverRunner.getWebDriver());
         return this;
     }
     //endregion
@@ -149,7 +159,8 @@ public class EvrakPageButtons extends MainPage {
 
     @Step("Iade et")
     public EvrakPageButtons evrakIadeEt(String iadeNotu) {
-        getContainer().$("button .iadeEt").click();
+        getContainer().$x("descendant::td[@class='buttonMenuContainerDefault' and descendant::span[.='İade Et']]//button").click();
+        //getContainer().$("button .iadeEt").click();
         $("#inboxItemInfoForm\\:notTextArea_id").setValue("İade notu");
         $("#inboxItemInfoForm\\:iadeEtButton_id").click();
         return this;

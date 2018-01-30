@@ -160,6 +160,12 @@ public class SearchTable {
     //button .user-block-icon   User! Bloke Et
     //Rapor Al  button .document-getReport
 
+    @Step("İçerik Göster butona tıklanır")
+    public SearchTable icerikGosterTikla(){
+        foundRow.$("button[id$='detayGosterButton']").click();
+        return this;
+    }
+
     @Step
     public SelenideElement getYeniKayitEkleButton() {
 //        return parentElement.$x("descendant::button[span[contains(@class,'add-icon')]]");

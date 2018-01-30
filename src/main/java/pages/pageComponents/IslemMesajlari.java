@@ -51,7 +51,8 @@ public class IslemMesajlari extends BaseLibrary {
     //    @Step("Messaj bulunmalı")
     private SelenideElement getMessageBody() {
         //return $$(messageLocator).shouldHave(sizeGreaterThan(0)).filterBy(visible).first();
-        return $(messageLocator).shouldBe(visible);
+        return $$(messageLocator).shouldHave(sizeGreaterThan(0)).filterBy(visible).last();
+        //return $(messageLocator).shouldBe(visible);
     }
 
     private List<String> getMessageBodyList() {
