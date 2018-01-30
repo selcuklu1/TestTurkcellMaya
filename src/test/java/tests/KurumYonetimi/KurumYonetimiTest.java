@@ -372,9 +372,6 @@ public class KurumYonetimiTest extends BaseTest {
                 .geldigiKurumDoldurLovText(aktifKurumAdi)
                 .panelKapat(false);
 
-        logout();
-        login("mbozdemir", "123");
-
         gidenEvrakKayitPage
                 .openPage()
                 .geregiSecimTipiSec("Kurum")
@@ -384,7 +381,6 @@ public class KurumYonetimiTest extends BaseTest {
                 .bilgiDoldur(aktifIdariBirimKimlikKodu, true)
                 .bilgiDoldur(aktifKurumAdi, true)
                 .panelKapat(false);
-
 
         kurumYonetimiPage
                 .openPage()
@@ -426,7 +422,9 @@ public class KurumYonetimiTest extends BaseTest {
                 .durumSec("Sadece Pasifler")
                 .ara()
                 .kurumAktifYap(pasifYapilacakKurum);
+
         kurumYonetimiPage.yeniKurumEkle();
+
         kurumYonetimiPage
                 .filtrePanelAc()
                 .sorgulaKurumDoldur(pasifYapilacakKurum)
@@ -434,7 +432,6 @@ public class KurumYonetimiTest extends BaseTest {
                 .ara()
                 .kurumTableKontrol(pasifYapilacakKurum, "Sadece Aktifler", false)
                 .panelKapat();
-
 
         evrakOlusturPage
                 .openPage()

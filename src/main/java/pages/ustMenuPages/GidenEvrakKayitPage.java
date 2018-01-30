@@ -115,7 +115,10 @@ public class GidenEvrakKayitPage extends MainPage {
         cmbGeregi
                 .type(geregiAdSoyad)
                 .getTitleItems()
-                .first();
+                .first()
+                .click();
+
+        cmbGeregi.closeTreePanel();
 
         cmbGeregi.clearAllSelectedItems();
         return this;
@@ -177,9 +180,10 @@ public class GidenEvrakKayitPage extends MainPage {
         cmbBilgi
                 .type(geregiAdSoyad)
                 .getTitleItems()
-                .first();
-        cmbBilgi
-                .closeTreePanel();
+                .first()
+                .click();
+
+        cmbBilgi.closeTreePanel();
         cmbBilgi.clearAllSelectedItems();
 
         return this;
