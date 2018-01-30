@@ -11,9 +11,7 @@ import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
 
-import static com.codeborne.selenide.Condition.exist;
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.Belgenet.comboBox;
 
@@ -72,6 +70,18 @@ public class PostalanacakEvraklarPage extends MainPage {
     SelenideElement lblTutar = $("[id='mainPreviewForm:tutarDialogId'] table:nth-child(3) tbody td:nth-child(2) label");
     SelenideElement popUP = $(By.id("mainPreviewForm:tutarDialogId"));
     SelenideElement cmbDagitimSekli = $("[id^='mainPreviewForm:dataTableId:0:j_idt'] [class*='ui-selectonemenu'] Select");
+    SelenideElement btnIcerikEvrakGoster = $x("//*[@id='inboxItemInfoForm:dialogTabMenuRight:uiRepeat:4:cmdbutton']");
+    SelenideElement btnComboEvrakGidisSekli = $x("//*[@id='inboxItemInfoForm:dataTableId']/table/tbody/tr/td[3]/div/div/div/table/tbody/tr[3]/td/div");
+    SelenideElement btnIcerikPostaKod = $x("//*[@id='inboxItemInfoForm:dataTableId']/table/tbody/tr/td[4]/div/div/div/table/tbody/tr[1]/td[2]/input");
+    SelenideElement btnIcerikPostaAciklama = $x("//*[@id='inboxItemInfoForm:dataTableId']/table/tbody/tr/td[4]/div/div/div/table/tbody/tr[2]/td[2]/textarea");
+    SelenideElement btnIcerikPostaYazdir = $x("//*[@id='inboxItemInfoForm:dataTableId_data']/tr/td[5]/div/table/tbody/tr[1]/td/button");
+    SelenideElement btnIcerikEtiketBastir = $x("//*[@id='inboxItemInfoForm:dataTableId_data']/tr/td[5]/div/table/tbody/tr[3]/td/button");
+    SelenideElement btnIcerikPopupYazdir = $x("//*[@id='postaDetayYazdirForm:dtPostaEvrakUstVeri:0:evrakDetayiViewDialogYazdir']");
+    SelenideElement btnIcerikPopupKapat = $x("//*[@id='postaDetayYazdirForm:dlgPostaDetayYazdir']/div[1]/a/span");
+    SelenideElement btnIcerikEtiketAciklama = $x("//*[@id='inboxItemInfoForm:etiketMetinIDPostIslm']");
+    SelenideElement btnEtiketpopupkapat = $x("//*[@id='inboxItemInfoForm:showAppletContainer']/div/div[1]/a/span");
+    SelenideElement btnIcerikPostalama = $x("//*[@id='inboxItemInfoForm:postalaButton_id']");
+    SelenideElement btnIcerikPostalamaEvet = $x("//*[@id='inboxItemInfoForm:postalaDogrulaDialogForm:evetButton_id']");
 
     //Önizleme
 
@@ -121,6 +131,19 @@ public class PostalanacakEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Evrak içerik Evrak Göster butonu")
+    public PostalanacakEvraklarPage btnIcerikEvrakGoster() {
+        btnIcerikEvrakGoster.click();
+        return this;
+    }
+
+    @Step("Dağıtım Gidis Şekli seçimi \"{postaSekli}\" ")
+    public PostalanacakEvraklarPage btnDagitimGidisSekli(String postaSekli) {
+        btnComboEvrakGidisSekli.selectOptionContainingText(postaSekli);
+        return this;
+
+    }
+
     @Step("Evrak içerik göster : \"{konu}\" ")
     public PostalanacakEvraklarPage evrakSecKonuyaGoreIcerikGoster(String konu) {
         tblEvraklar.filterBy(Condition.text(konu))
@@ -144,17 +167,17 @@ public class PostalanacakEvraklarPage extends MainPage {
         btnEvrakPostala.click();
         return this;
     }
-    
+
     @Step("\"{tuzelKisi}\" adlı tüzel kişiyi dağıtım planını \"{secilen}\" seçilir")
-    public PostalanacakEvraklarPage dagitimSekliDegistirSec(String tuzelKisi, String secilen,String secim){
+    public PostalanacakEvraklarPage dagitimSekliDegistirSec(String tuzelKisi, String secilen, String secim) {
         $$("[id='mainPreviewForm:dataTableId_data'] > tr").filterBy(Condition.text(tuzelKisi))
                 .get(0).$$("[class='ui-helper-hidden-accessible']").get(0).parent().click();
-        $$("[id*='mainPreviewForm:dataTableId:"+secim+"'][id$='panel'] ul li").filterBy(Condition.text(secilen)).get(0).click();
+        $$("[id*='mainPreviewForm:dataTableId:" + secim + "'][id$='panel'] ul li").filterBy(Condition.text(secilen)).get(0).click();
         return this;
     }
 
     @Step("")
-    public PostalanacakEvraklarPage tuzelKisiPostaKoduVeAciklamaDoldur(String tuzelKisi, String postaKodu,String aciklama){
+    public PostalanacakEvraklarPage tuzelKisiPostaKoduVeAciklamaDoldur(String tuzelKisi, String postaKodu, String aciklama) {
         $$("[id='mainPreviewForm:dataTableId_data'] > tr").filterBy(Condition.text(tuzelKisi))
                 .get(0).$$("input[type='text']").get(0).setValue(postaKodu);
 
@@ -173,6 +196,7 @@ public class PostalanacakEvraklarPage extends MainPage {
         }
         return this;
     }
+
     @Step("Postala")
     public PostalanacakEvraklarPage evrakPostalaPostala() {
         btnEvrakPostalaPostala.pressEnter();
@@ -180,15 +204,15 @@ public class PostalanacakEvraklarPage extends MainPage {
     }
 
     @Step("Belge elektronik imzalı değil! Evrakı postalamak üzeresiniz. Devam etmek istiyor musunuz? uyarısının geldiği görülür.")
-    public PostalanacakEvraklarPage belgeElektronikImzaliDegilUyariGeldigiGorme(){
-        boolean durum = $$("[id^='mainPreviewForm:postalaDogrulaDialogForm']").filterBy(Condition.visible).size()==0;
-        Assert.assertEquals(durum,false);
+    public PostalanacakEvraklarPage belgeElektronikImzaliDegilUyariGeldigiGorme() {
+        boolean durum = $$("[id^='mainPreviewForm:postalaDogrulaDialogForm']").filterBy(Condition.visible).size() == 0;
+        Assert.assertEquals(durum, false);
         takeScreenshot();
         return this;
     }
 
     @Step("Evet seçilir")
-    public PostalanacakEvraklarPage belgeElektronikImzaliDegilUyariEvet(){
+    public PostalanacakEvraklarPage belgeElektronikImzaliDegilUyariEvet() {
         $("[id$='evetButton_id']").click();
         return this;
     }
@@ -304,6 +328,7 @@ public class PostalanacakEvraklarPage extends MainPage {
         return this;
 
     }
+
     @Step("Postalancak Evrak Orjinal Yazdır")
     public PostalanacakEvraklarPage postalanacakEvrakOrjYaz() throws InterruptedException {
 
@@ -315,18 +340,21 @@ public class PostalanacakEvraklarPage extends MainPage {
         popupPostaYazdirmaKapat();
         return this;
     }
+
     @Step("Postalancak Eposta")
     public PostalanacakEvraklarPage postalacanakEposta(String eposta) {
 
         epostaTxt.setValue(eposta);
         return this;
     }
+
     @Step("Postalancak Postalama Açıklama")
     public PostalanacakEvraklarPage postalamaAciklama(String text) {
 
         epostaAciklama.setValue(text);
         return this;
     }
+
     @Step("Postalancak popup Posta yazdırma kapat")
     public PostalanacakEvraklarPage popupPostaYazdirmaKapat() throws InterruptedException {
 
@@ -335,6 +363,7 @@ public class PostalanacakEvraklarPage extends MainPage {
 
         return this;
     }
+
     @Step("Popup postalanacak Evrak Yazdır")
     public PostalanacakEvraklarPage popupPostalanacakEvrakYazdir() throws InterruptedException {
         btnPopupYazdir.click();
@@ -343,56 +372,72 @@ public class PostalanacakEvraklarPage extends MainPage {
 
         return this;
     }
+
     @Step("Postalanacak evrak Postala")
     public PostalanacakEvraklarPage postala() {
 
         btnPostala.click();
         return this;
     }
+
+    //    @Step("")
+    public PostalanacakEvraklarPage popUpEvet() {
+        $(By.id("mainPreviewForm:postalaDogrulaDialogForm:evetButton_id")).click();
+        return this;
+    }
+
     @Step("Postalanacak Evrak Postalama popup Evet seçmiş")
     public PostalanacakEvraklarPage dialogpostalaEvet() {
 
         btnDialogEvet.click();
         return this;
     }
+
     @Step("Postalanacak Evrak Dağitim Detayi")
     public PostalanacakEvraklarPage dagitimDetay() {
         btnDagitimYerDetay.click();
         return this;
     }
+
     @Step("Postalanacak Evrak içerik Göster")
     public PostalanacakEvraklarPage icerikGoster() {
         btnIcerikGoster.click();
         return this;
     }
+
     @Step("Postalanacak Evrak içerik ilgileri tab")
     public PostalanacakEvraklarPage icerikIlgileriTab() {
         tabIcerikIlgileri.click();
         return this;
     }
+
     @Step("Postalanacak Evrak içerik Ekleri tab")
     public PostalanacakEvraklarPage icerikEkleriTab() {
         tabIcerikEkleri.click();
         return this;
     }
+
     @Step("Postalanacak Evrak içerik detay pencere kapatma")
     public PostalanacakEvraklarPage icerikPencereKapatma() {
         tabIcerikKapat.click();
         tabIcerikKapatmaOnay.click();
         return this;
     }
+
     @Step("Postalanacak Evrak tüzel kişi posta kodu")
     public PostalanacakEvraklarPage tuzelKisiPostaKod(String postakod) {
         tuzelKisiPostaKodu.setValue(postakod);
         return this;
 
     }
+
     @Step("Postalanacak Evrak tüzel kişi posta açıklama")
     public PostalanacakEvraklarPage tuzelKisiPostaAciklama(String aciklama) {
 
         tuzelKisiPostaAciklama.setValue(aciklama);
         return this;
     }
+
     @Step("Postalanacak Evrak birim posta kodu")
     public PostalanacakEvraklarPage birimPostaKod(String postakod) {
         birimPostaKodu.setValue(postakod);
@@ -404,28 +449,33 @@ public class PostalanacakEvraklarPage extends MainPage {
         birimPostaAciklama.setValue(aciklama);
         return this;
     }
+
     @Step("Postalanacak Evrak kullanıcı posta kodu")
     public PostalanacakEvraklarPage ilkPostaPostaKod(String postakod) {
         ilkPostaPostaKodu.setValue(postakod);
         return this;
     }
+
     @Step("Postalanacak Evrak kullanıcı posta açıklama")
     public PostalanacakEvraklarPage ilkPostaAciklama(String aciklama) {
 
         ilkPostaAciklama.setValue(aciklama);
         return this;
     }
+
     @Step("Postalanacak Evrak etiket yazdir")
     public PostalanacakEvraklarPage etiketYazdir() throws InterruptedException {
         btnEtiketYazdir.click();
         Thread.sleep(1000);
         return this;
     }
+
     @Step("Postalanacak Evrak etiket yazdir popup kapat")
     public PostalanacakEvraklarPage etiketYazdirPopupKapat() {
         btnEtiketPopupKapat.click();
         return this;
     }
+
     @Step("Postalanacak Evrak dağıtım detay kapat")
     public PostalanacakEvraklarPage dagitimDetayKapat() {
 
@@ -488,7 +538,7 @@ public class PostalanacakEvraklarPage extends MainPage {
     }
 
     @Step("Postalanacak Evraklar listesinde evrak kontrolü:  \"{konu}\" ")
-    public PostalanacakEvraklarPage konuyaGoreEvrakKontroluAllPages(String konu){
+    public PostalanacakEvraklarPage konuyaGoreEvrakKontroluAllPages(String konu) {
         searchTable().searchInAllPages(true).findRows(text(konu)).getFoundRow().shouldBe(exist);
         return this;
     }
@@ -587,6 +637,80 @@ public class PostalanacakEvraklarPage extends MainPage {
                 .get(0)
                 .$("[id*='ilgiListesiDetayButton']").shouldBe(visible);
 
+        return this;
+    }
+
+    @Step("Icerik Posta Kod alani")
+    public PostalanacakEvraklarPage inputIcerikPstakod(String postaKod) {
+        btnIcerikPostaKod.setValue(postaKod);
+        return this;
+    }
+
+    @Step("Icerik Posta Aciklama alani")
+    public PostalanacakEvraklarPage inputIcerikPostaAciklama(String postaAciklama) {
+        btnIcerikPostaAciklama.setValue(postaAciklama);
+        return this;
+    }
+
+    @Step("Icerik Posta Yazdir butonu")
+    public PostalanacakEvraklarPage btnIcerikPostaYazdir() {
+        btnIcerikPostaYazdir.click();
+        return this;
+    }
+
+    @Step("Icerik Posta Yazdır popup Yazdir butonu")
+    public PostalanacakEvraklarPage btnPopupPostaYazdirma() {
+        btnIcerikPopupYazdir.click();
+        return this;
+    }
+
+    @Step("Icerik Posta Yazdır popup kapat")
+    public PostalanacakEvraklarPage btnYazdirPopupKapat() {
+        btnIcerikPopupKapat.click();
+        return this;
+    }
+
+    @Step("Icerik Etiket Bastir butonu")
+    public PostalanacakEvraklarPage btnIcerikEtiketBastir() {
+        btnIcerikEtiketBastir.click();
+        return this;
+    }
+
+    @Step("Icerik Etiket popup Aciklama kontrol")
+    public PostalanacakEvraklarPage txtPopupEtiketAciklama() {
+        String etiketAciklama = btnIcerikEtiketAciklama.getAttribute("innerText");
+        System.out.println(etiketAciklama);
+        return this;
+    }
+
+    @Step("Icerik Etiket popup Kapatma")
+    public PostalanacakEvraklarPage btnEtiketpopupkapat() {
+        btnEtiketpopupkapat.click();
+        return this;
+    }
+
+    @Step("Icerik Evrak Postalama butonu")
+    public PostalanacakEvraklarPage btnIcerikEvrakPostalama() {
+        btnIcerikPostalama.click();
+        return this;
+    }
+
+    @Step("Icerik Evrak Postalama Evet butonu")
+    public PostalanacakEvraklarPage btnIcerikPostalamaEvet() {
+        btnIcerikPostalamaEvet.click();
+        return this;
+    }
+
+    @Step("Secilen konu başlığı filtrele ve seçilen posta içerik göster")
+    public PostalanacakEvraklarPage btnFiltrenenPostaIcerikGoster(String Konu) throws InterruptedException {
+        filter().findRowsWith(Condition.text(Konu)).first().click();
+        String idAtr;
+        idAtr = filter().findRowsWith(Condition.text(Konu)).first().getAttribute("data-ri");
+        System.out.println(idAtr);
+        String IcerikId = "mainInboxForm:inboxDataTable:" + idAtr + ":detayGosterButton";
+        SelenideElement filteredIcerikGoster = $(By.id(IcerikId));
+        filteredIcerikGoster.click();
+        Thread.sleep(1000);
         return this;
     }
 }

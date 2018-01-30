@@ -30,6 +30,11 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
     KepIlePostalanacaklarPage kepIlePostalanacaklarPage;
     PostalanacakEvraklarPage postalanacakEvraklarPage;
     MainPage mainPage;
+    String konuKoduRandom = "TS-2236-" + createRandomNumber(10);
+    String tarih = getSysDateForKis();
+    String geregiTuzelKisi = "OPTİİMc1";
+    String basariMesaji = "İşlem başarılıdır!";
+    String geregiKurum = "Adalet Bakanlığı";
 
     @BeforeMethod
     public void loginBeforeTests() {
@@ -222,11 +227,6 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
         kepIlePostalanacaklarPage
                 .gondericiKontrol(popupKepAdresi2);
     }
-    String konuKoduRandom = "TS-2236-" + createRandomNumber(10);
-    String tarih = getSysDateForKis();
-    String geregiTuzelKisi = "OPTİİMc1";
-    String basariMesaji = "İşlem başarılıdır!";
-    String geregiKurum = "Adalet Bakanlığı";
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS2236: KEP Adresi Tanımlama işlemleri")
@@ -255,11 +255,11 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
                 .gizlilikDerecesiSec(gizlilikDerecesi)
                 .ivedilikSec(ivedilik)
                 .geregiSecimTipiSec(tuzelKisi)
-                .geregiDoldur(geregiTuzelKisi,"Tüzel kişi")
+                .geregiDoldur(geregiTuzelKisi, "Tüzel kişi")
                 .geregiSecimTipiSec(gercekKisi)
-                .geregiDoldur(geregiGercekKisi,"Gerçek kişi")
+                .geregiDoldur(geregiGercekKisi, "Gerçek kişi")
                 .geregiSecimTipiSec(kurum)
-                .geregiDoldur(geregiKurum,"Kurum")
+                .geregiDoldur(geregiKurum, "Kurum")
                 .gercekKisiPostaTipiAPSSec(geregiGercekKisi)
                 .onayAkisiEkle()
                 .onayAkisiEkleIlkImzalaSec("İmzalama")
@@ -271,7 +271,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
 
         evrakOlusturPage
                 .ekleriTabAc()
-                .dosyaEkle(pathFile,"Dosya yolu")
+                .dosyaEkle(pathFile, "Dosya yolu")
                 .ekleriEkMetniDoldur(editor)
                 .ekleriEkle();
 
@@ -285,7 +285,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
 
         postalanacakEvraklarPage
                 .openPage()
-                .evrakSec(konuKoduRandom,geregiGercekKisi,tarih)
+                .evrakSec(konuKoduRandom, geregiGercekKisi, tarih)
                 .evrakPostala();
 
         kepIlePostalanacaklarPage
@@ -300,24 +300,24 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true,dependsOnMethods = {"TS2236"}, description = "TS1549: KEP posta tipindeki evrakın postalanacak evraklarda posta tipinin değiştirilmesi")
+    @Test(enabled = true, dependsOnMethods = {"TS2236"}, description = "TS1549: KEP posta tipindeki evrakın postalanacak evraklarda posta tipinin değiştirilmesi")
     public void TS1549() {
         String uyariMesaj = "KEP ile postalama işlemi yapılmamış dağıtımlar bulunmaktadır! Lütfen KEP posta biriminiz ile görüşünüz.";
         login(usernameMBOZDEMIR, passwordMBOZDEMIR);
 
         postalanacakEvraklarPage
                 .openPage()
-                .evrakSec(konuKoduRandom,tarih,"")
+                .evrakSec(konuKoduRandom, tarih, "")
                 .evrakPostala()
-                .dagitimSekliDegistirSec(geregiTuzelKisi,"Adi Posta","0")
-                .tuzelKisiPostaKoduVeAciklamaDoldur(geregiTuzelKisi,"1","fsd")
+                .dagitimSekliDegistirSec(geregiTuzelKisi, "Adi Posta", "0")
+                .tuzelKisiPostaKoduVeAciklamaDoldur(geregiTuzelKisi, "1", "fsd")
                 .evrakPostalaPostala()
                 .belgeElektronikImzaliDegilUyariGeldigiGorme()
                 .belgeElektronikImzaliDegilUyariEvet()
                 .islemMesaji().dikkatOlmali(uyariMesaj);
 
         postalanacakEvraklarPage
-                .dagitimSekliDegistirSec(geregiKurum,"Adi Posta","2")
+                .dagitimSekliDegistirSec(geregiKurum, "Adi Posta", "2")
                 .evrakPostalaPostala()
                 .belgeElektronikImzaliDegilUyariGeldigiGorme()
                 .belgeElektronikImzaliDegilUyariEvet()

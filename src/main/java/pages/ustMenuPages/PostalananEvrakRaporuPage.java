@@ -9,10 +9,9 @@ import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.UstMenuData;
 
+import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.Belgenet.comboBox;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
-
-import static com.codeborne.selenide.Selenide.*;
 
 public class PostalananEvrakRaporuPage extends MainPage {
 
@@ -100,21 +99,25 @@ public class PostalananEvrakRaporuPage extends MainPage {
         btnEvrakDialogKapat.click();
         return this;
     }
+
     @Step("Posta açıklama alanı doldur\"{postaAciklama}\"")
-    public PostalananEvrakRaporuPage txtPostaAciklama (String postaAciklama) {
-    txtPostaAciklama.setValue(postaAciklama);
-    return this;
+    public PostalananEvrakRaporuPage txtPostaAciklama(String postaAciklama) {
+        txtPostaAciklama.setValue(postaAciklama);
+        return this;
     }
+
     @Step("Postalayan adi doldur\"{postalayanAdi}\"")
     public PostalananEvrakRaporuPage cmbPostalayanadi(String postalayanAdi) {
         cmbPostalayanAdi.selectLov(postalayanAdi);
         return this;
     }
+
     @Step("Postaladiklarim checkbox")
-    public PostalananEvrakRaporuPage chkboxPostaladiklarim () {
+    public PostalananEvrakRaporuPage chkboxPostaladiklarim() {
         btnPostaladiklarimcheck.click();
         return this;
     }
+
     @Step("Etiket Bastir")
     public PostalananEvrakRaporuPage etiketBastir() {
         btnEtiketBastir.click();
@@ -155,17 +158,19 @@ public class PostalananEvrakRaporuPage extends MainPage {
     }
 
     @Step("Postalayan Alt birimi dahil et")
-    public PostalananEvrakRaporuPage btnPostalayanAltBirim () {
+    public PostalananEvrakRaporuPage btnPostalayanAltBirim() {
         btnPostayalanAltBirim.click();
         return this;
     }
+
     @Step("Posta Sahibi Alt birimi dahil et")
-    public PostalananEvrakRaporuPage btnPostaSahibiAltbirim () {
+    public PostalananEvrakRaporuPage btnPostaSahibiAltbirim() {
         btnPostaSahibiAltBirim.click();
         return this;
     }
+
     @Step("Postalanan Evrak rapor sayfası form tıklama")
-    public PostalananEvrakRaporuPage evrakRaporForm () {
+    public PostalananEvrakRaporuPage evrakRaporForm() {
         fromEvrakRapor.click();
         return this;
     }
@@ -175,61 +180,65 @@ public class PostalananEvrakRaporuPage extends MainPage {
         cmbEvrakSahibi.selectLov(evrakSahibi);
         return this;
     }
+
     @Step("Evrak Sahibi \"{evrakSahibi}\" ile sorgulama ve kontrol ")
-    public PostalananEvrakRaporuPage evrakSahibiKontrol (String evrakSahibi) {
+    public PostalananEvrakRaporuPage evrakSahibiKontrol(String evrakSahibi) {
         String SchildElementCount;
         SchildElementCount = sorguTablosu.getAttribute("childElementCount");
         int childElemCount = Integer.parseInt(SchildElementCount);
-        for (int i = 0 ; i < childElemCount ; i++) {
-            String paramEvrakSahibi = "//*[@id='postalananEvrakRaporuForm:postalananEvrakDataTable_data']/tr["+String.valueOf(i+1)+"]/td[7]/div";
+        for (int i = 0; i < childElemCount; i++) {
+            String paramEvrakSahibi = "//*[@id='postalananEvrakRaporuForm:postalananEvrakDataTable_data']/tr[" + String.valueOf(i + 1) + "]/td[7]/div";
             SelenideElement evSahibiColumn = $x(paramEvrakSahibi);
             String evraksahibicol = evSahibiColumn.getAttribute("innerText");
-            Assert.assertEquals(evrakSahibi,evraksahibicol);
+            Assert.assertEquals(evrakSahibi, evraksahibicol);
         }
         return this;
     }
 
     @Step("Postalanan yer \"{postalananYer}\"seçimi")
-    public PostalananEvrakRaporuPage cmbPostalananYerSecimi (String postalananYer) {
+    public PostalananEvrakRaporuPage cmbPostalananYerSecimi(String postalananYer) {
         cmbPostalananyer.selectLov(postalananYer);
         return this;
     }
+
     @Step("Postalanan yer \"{postalananyer}\" ile sorgulama ve kontrol ")
-    public PostalananEvrakRaporuPage postalananyerKontrol (String postalananyer) {
+    public PostalananEvrakRaporuPage postalananyerKontrol(String postalananyer) {
         String SchildElementCount;
         SchildElementCount = sorguTablosu.getAttribute("childElementCount");
         int childElemCount = Integer.parseInt(SchildElementCount);
-        for (int i = 0 ; i < childElemCount ; i++) {
-            String parampostalananyer = "//*[@id='postalananEvrakRaporuForm:postalananEvrakDataTable_data']/tr["+String.valueOf(i+1)+"]/td[6]/div";
+        for (int i = 0; i < childElemCount; i++) {
+            String parampostalananyer = "//*[@id='postalananEvrakRaporuForm:postalananEvrakDataTable_data']/tr[" + String.valueOf(i + 1) + "]/td[6]/div";
             SelenideElement postalananyerColumn = $x(parampostalananyer);
             String postalananyercol = postalananyerColumn.getAttribute("innerText");
-            Assert.assertEquals(postalananyer,postalananyercol);
+            Assert.assertEquals(postalananyer, postalananyercol);
         }
         return this;
     }
+
     @Step("Posta sekli seçimi \"{postaSekli}\" ")
     public PostalananEvrakRaporuPage cmbpostaSeklisecimi(String postaSekli) {
         cmbPostaSekli.selectComboBox(postaSekli);
         return this;
     }
+
     @Step("Posta tipi seçimi \"{postaTipi}\" ")
-    public PostalananEvrakRaporuPage cmbPostaTipisec (String postaTipi) {
+    public PostalananEvrakRaporuPage cmbPostaTipisec(String postaTipi) {
         cmbPostaTipi.selectComboBox(postaTipi);
         return this;
 
     }
 
     @Step("Sorgulama sonucu gelen sonuçların evrak geçmiş, detay ve etiket bastır ekranlarının tek tek kontrolü")
-    public PostalananEvrakRaporuPage ekranSorgulananSonucKontrol() throws InterruptedException{
+    public PostalananEvrakRaporuPage ekranSorgulananSonucKontrol() throws InterruptedException {
         String SchildElementCount;
         SchildElementCount = sorguTablosu.getAttribute("childElementCount");
         int childElementCount = Integer.parseInt(SchildElementCount);
-        for (int i = 0 ; i < childElementCount ; i++) {
+        for (int i = 0; i < childElementCount; i++) {
 
             //*[@id="postalananEvrakRaporuForm:postalananEvrakDataTable:0:evrakGecmisiId"]/span[1]
-            String paramEvrakGecmisiID = "//*[@id='postalananEvrakRaporuForm:postalananEvrakDataTable:"+String.valueOf(i)+":evrakGecmisiId']/span[1]";
-            String paramEvrakDetayID = "//*[@id='postalananEvrakRaporuForm:postalananEvrakDataTable:"+String.valueOf(i)+":evrakGosterButton']/span[1]";
-            String paramEvrakEtiketBastir = "//*[@id='postalananEvrakRaporuForm:postalananEvrakDataTable_data']/tr["+String.valueOf(i+1)+"]/td[16]/div/button";
+            String paramEvrakGecmisiID = "//*[@id='postalananEvrakRaporuForm:postalananEvrakDataTable:" + String.valueOf(i) + ":evrakGecmisiId']/span[1]";
+            String paramEvrakDetayID = "//*[@id='postalananEvrakRaporuForm:postalananEvrakDataTable:" + String.valueOf(i) + ":evrakGosterButton']/span[1]";
+            String paramEvrakEtiketBastir = "//*[@id='postalananEvrakRaporuForm:postalananEvrakDataTable_data']/tr[" + String.valueOf(i + 1) + "]/td[16]/div/button";
 
             SelenideElement EvrakGecmisiID = $x(paramEvrakGecmisiID);
             SelenideElement EvrakDetayID = $x(paramEvrakDetayID);

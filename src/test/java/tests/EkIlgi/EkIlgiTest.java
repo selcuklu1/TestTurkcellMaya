@@ -273,6 +273,8 @@ public class EkIlgiTest extends BaseTest {
                 //ilisik dosya1
                 .ilisikMetniDoldur(ilisikDosya1Aciklama)
                 .taramaHavuzundanEkle()
+                .evrakTarihBaslangicDoldur("01.01.2017")
+                .evrakTarihBitisDoldur("01.12.2018")
                 .evrakTuruSec("İlişik")
                 .taramaHavuzuSorgula()
                 .birinciEvrakSec(true)
@@ -285,6 +287,8 @@ public class EkIlgiTest extends BaseTest {
                 //ilisik dosya2
                 .ilisikMetniDoldur(ilisikDosya2Aciklama)
                 .taramaHavuzundanEkle()
+                .evrakTarihBaslangicDoldur("01.01.2017")
+                .evrakTarihBitisDoldur("01.12.2018")
                 .evrakTuruSec("İlişik")
                 .taramaHavuzuSorgula()
                 .ikinciEvrakSec(true)
@@ -390,6 +394,8 @@ public class EkIlgiTest extends BaseTest {
                 //ek1
                 .ekleriEkMetniDoldur(ekDosya1Aciklama)
                 .taramaHavuzundanEkle()
+                .evrakTarihBaslangicDoldur("01.01.2017")
+                .evrakTarihBitisDoldur("01.12.2018")
                 .evrakTuruSec("Ek")
                 .taramaHavuzuSorgula()
                 .birinciEvrakSec(true)
@@ -401,6 +407,8 @@ public class EkIlgiTest extends BaseTest {
                 //ek2
                 .ekleriEkMetniDoldur(ekDosya2Aciklama)
                 .taramaHavuzundanEkle()
+                .evrakTarihBaslangicDoldur("01.01.2017")
+                .evrakTarihBitisDoldur("01.12.2018")
                 .evrakTuruSec("Ek")
                 .taramaHavuzuSorgula()
                 .ikinciEvrakSec(true)
@@ -518,6 +526,8 @@ public class EkIlgiTest extends BaseTest {
                 //ilgi1
                 .ilgileriIlgiMetniDoldur(ilgiDosya1Aciklama)
                 .taramaHavuzundanEkle()
+                .evrakTarihBaslangicDoldur("01.01.2017")
+                .evrakTarihBitisDoldur("01.12.2018")
                 .evrakTuruSec("İlgi")
                 .taramaHavuzuSorgula()
                 .birinciEvrakSec(true)
@@ -529,6 +539,8 @@ public class EkIlgiTest extends BaseTest {
                 //ilgi2
                 .ilgileriIlgiMetniDoldur(ilgiDosya2Aciklama)
                 .taramaHavuzundanEkle()
+                .evrakTarihBaslangicDoldur("01.01.2017")
+                .evrakTarihBitisDoldur("01.12.2018")
                 .evrakTuruSec("İlgi")
                 .taramaHavuzuSorgula()
                 .ikinciEvrakSec(true)
@@ -775,7 +787,7 @@ public class EkIlgiTest extends BaseTest {
                 .evrakKonusunaGoreKontrol(evrakKonusu)
                 .konuyaGoreEvrakOnizlemedeAc(evrakKonusu);
 
-       //Todo: Defect çözüldükten sonra devam edilecek
+        //Todo: Defect çözüldükten sonra devam edilecek
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -808,6 +820,7 @@ public class EkIlgiTest extends BaseTest {
         String pathDosya3 = getUploadPath() + "TS2025_dosya3.jpg";
         String dosyaAdi3 = "TS2025_dosya3.jpg";
 
+        String basariMesaji = "İşlem başarılıdır!";
 
         login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR); //mbozdemir
 
@@ -900,6 +913,9 @@ public class EkIlgiTest extends BaseTest {
 
         evrakOlusturPage
                 .kaydet(true)
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        evrakPageButtons
                 .parafla();
 
         parafladiklarimPage

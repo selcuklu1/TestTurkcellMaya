@@ -241,7 +241,7 @@ public class BirimIcerikSablonlarPage extends MainPage {
 
 
     @Step("Birim Şablonlarında şablonu bul")
-    public SelenideElement sablonuBul(String sablonAdi){
+    public SelenideElement sablonuBul(String sablonAdi) {
         return searchTable.searchStartFromLastPage(true).findRows(text(sablonAdi)).shouldHaveSize(1).useFirstFoundRow().getFoundRow();
                 /*.findRowsInAllPagesByTextFromLast(sablonAdi)
                 .shouldHaveSize(1)
@@ -285,7 +285,7 @@ public class BirimIcerikSablonlarPage extends MainPage {
             btnSil.click();
             $("#sablonSilDialog button").click();
             boolean b = islemMesaji().isBasarili();
-            if(!b)
+            if (!b)
                 i++;
         }
     }
@@ -354,7 +354,7 @@ public class BirimIcerikSablonlarPage extends MainPage {
         sleep(5000);
         $(".textLayer").shouldBe(visible);
         for (Condition condition : conditions) {
-            for (int i = 0; i < Configuration.timeout/1000; i++) {
+            for (int i = 0; i < Configuration.timeout / 1000; i++) {
                 if (!$(".textLayer").text().isEmpty() || condition.equals(text("")))
                     break;
 
@@ -390,11 +390,11 @@ public class BirimIcerikSablonlarPage extends MainPage {
     }
 
     @Step("Şablon bilgileri kontolü")
-    public BirimIcerikSablonlarPage sablonBilgileriKontrolu(String sablonAdi, String kullanilacakBirimi, String altBirimlerGorsunMu, String editorText, String... evrakTipi){
+    public BirimIcerikSablonlarPage sablonBilgileriKontrolu(String sablonAdi, String kullanilacakBirimi, String altBirimlerGorsunMu, String editorText, String... evrakTipi) {
         getTxtSablonAdi().shouldHave(value(sablonAdi));
         SelenideElement birim = getLovKullanilacakBirimler().getSelectedItems().filterBy(text(kullanilacakBirimi)).shouldHaveSize(1).first();
         birim.$("select").getSelectedOption().shouldHave(text(altBirimlerGorsunMu));
-        if (evrakTipi.length>0)
+        if (evrakTipi.length > 0)
             getSelEvrakTipi().getSelectedOption().shouldHave(text(evrakTipi[0]));
         getEditor().editorShouldHave(text(editorText));
         return this;

@@ -22,11 +22,11 @@ import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 public class PttRaporuPage extends MainPage {
 
+    public ElementsCollection tableRaporlar = $$("tbody[id='pttRaporuForm:havaleEvrakRaporOutputTab_data'] > tr[role='row']");
     SelenideElement divAramaDetaylar = $x("//h3[. = 'Arama Detayları']");
     SelenideElement txtPostaTarihi = $("span[id$='postaTarihi'] > input");
     BelgenetElement txtUlke = comboLov("input[id$=':lovUlkePttRapor:LovText']");
     BelgenetElement txtIl = comboLov("input[id$=':lovIlPttRapor:LovText']");
-    public ElementsCollection tableRaporlar = $$("tbody[id='pttRaporuForm:havaleEvrakRaporOutputTab_data'] > tr[role='row']");
     SelenideElement btnSorgula = $("button[id$=':sorgulaButton']");
     SelenideElement cmbPostaTipi = $("select[id$=':postaTipiMenuPttRapor']");
     SelenideElement txtDagitici = $x("//form[@id='pttRaporuForm']//label[normalize-space(text())='Dağıtıcı']/ancestor::tr//input");
@@ -36,143 +36,6 @@ public class PttRaporuPage extends MainPage {
     SelenideElement txtPttMerkez = $x("//form[@id='pttRaporuForm']//label[normalize-space(text())='Ptt Merkez']/ancestor::tr//input");
     ElementsCollection tableColumns = $$("div[id='pttRaporuForm:havaleEvrakRaporOutputTab'] > table > thead > tr[role='row'] > th");
     SelenideElement btnTumSonuclariRaporla = $x("//div[@id='pttRaporuForm:havaleEvrakRaporOutputTab']//button[1]");
-
-    public static class PttRaporExcellTest{
-
-        public String dagitici;
-        public String duzenleyen;
-        public String avansSorumlusu;
-        public String kontrolEden;
-        public String pttMerkez;
-
-        public String[] gidenKurumlar;
-        public String[] ulkeler;
-        public String[] sehirler;
-        public String[] postaAdlari;
-        public String[] agirliklar;
-        public String[] pulNolar;
-        public String[] ucretTLler;
-
-        public PttRaporExcellTest(String excelFilepath) throws IOException {
-
-            //String excelFileName = "/Users/huseyintumer/Downloads/Rapor_1516259983559.xls";
-
-            FileInputStream fis = new FileInputStream(excelFilepath);
-            Workbook wb = new HSSFWorkbook(fis);
-            Sheet sheet = wb.getSheetAt(0);
-            int temp = -1;
-            for (Row row : sheet) {
-                Cell cell = row.getCell(0);
-                if (cell.getRichStringCellValue().getString().trim().contains("Yukarda dökümü yapılan")) {
-                    temp = row.getRowNum();
-                }
-            }
-
-            FormulaEvaluator evaluator = wb.getCreationHelper().createFormulaEvaluator();
-
-            gidenKurumlar = new String[temp - 2];
-            ulkeler = new String[temp - 2];
-            sehirler = new String[temp - 2];
-            postaAdlari = new String[temp - 2];
-            agirliklar = new String[temp - 2];
-            pulNolar = new String[temp - 2];
-            ucretTLler = new String[temp - 2];
-
-            String gidenKurum, ulke, sehir, postaAdi, agirlik, pulNo, ucretTL;
-
-            for(int i = 2; i < temp; i++){
-
-                CellReference cellB = new CellReference("B" + i);
-                CellReference cellC = new CellReference("C" + i);
-                CellReference cellD = new CellReference("D" + i);
-                CellReference cellE = new CellReference("E" + i);
-                CellReference cellF = new CellReference("F" + i);
-                CellReference cellG = new CellReference("G" + i);
-                CellReference cellH = new CellReference("H" + i);
-
-                gidenKurum = evaluator.evaluate(sheet.getRow(cellB.getRow()).getCell(cellB.getCol())).getStringValue();
-                ulke = evaluator.evaluate(sheet.getRow(cellC.getRow()).getCell(cellC.getCol())).getStringValue();
-                sehir = evaluator.evaluate(sheet.getRow(cellD.getRow()).getCell(cellD.getCol())).getStringValue();
-                postaAdi = evaluator.evaluate(sheet.getRow(cellE.getRow()).getCell(cellE.getCol())).getStringValue();
-                agirlik = evaluator.evaluate(sheet.getRow(cellF.getRow()).getCell(cellF.getCol())).getStringValue();
-                pulNo = evaluator.evaluate(sheet.getRow(cellG.getRow()).getCell(cellG.getCol())).getStringValue();
-                ucretTL = evaluator.evaluate(sheet.getRow(cellH.getRow()).getCell(cellH.getCol())).getStringValue();
-
-                gidenKurumlar[i - 2] = gidenKurum;
-                ulkeler[i - 2] = ulke;
-                sehirler[i - 2] = sehir;
-                postaAdlari[i - 2] = postaAdi;
-                agirliklar[i - 2] = agirlik;
-                pulNolar[i - 2] = pulNo;
-                ucretTLler[i - 2] = ucretTL;
-
-                System.out.println("----------------------------\n");
-                System.out.println("Giden Kurum : " + gidenKurum);
-                System.out.println("Ülke : " + ulke);
-                System.out.println("Şehir : " + sehir);
-                System.out.println("Posta Adı: " + postaAdi);
-                System.out.println("Ağırlık : " + agirlik);
-                System.out.println("Pul No : " + pulNo);
-                System.out.println("Ücret TL : " + ucretTL);
-                System.out.println("----------------------------\n");
-
-            }
-
-            temp = -1;
-            for (Row row : sheet) {
-                Cell cell = row.getCell(0);
-                if (cell.getRichStringCellValue().getString().trim().contains("Dağıtıcı")) {
-                    temp = row.getRowNum();
-                }
-            }
-            int rowNumber = temp + 2;
-
-            CellReference cellA = new CellReference("A" + rowNumber);
-            CellReference cellB = new CellReference("B" + rowNumber);
-            CellReference cellC = new CellReference("C" + rowNumber);
-            CellReference cellD = new CellReference("D" + rowNumber);
-            CellReference cellE = new CellReference("E" + rowNumber);
-
-            dagitici = evaluator.evaluate(sheet.getRow(cellA.getRow()).getCell(cellA.getCol())).getStringValue();
-            duzenleyen = evaluator.evaluate(sheet.getRow(cellB.getRow()).getCell(cellB.getCol())).getStringValue();
-            avansSorumlusu = evaluator.evaluate(sheet.getRow(cellC.getRow()).getCell(cellC.getCol())).getStringValue();
-            kontrolEden = evaluator.evaluate(sheet.getRow(cellD.getRow()).getCell(cellD.getCol())).getStringValue();
-            pttMerkez = evaluator.evaluate(sheet.getRow(cellE.getRow()).getCell(cellE.getCol())).getStringValue();
-
-            System.out.println("----------------------------\n");
-            System.out.println("Dağıtıcı: " + dagitici);
-            System.out.println("Düzenleyen: " + duzenleyen);
-            System.out.println("Avans Sorumlusu: " + avansSorumlusu);
-            System.out.println("Kontrol Eden: " + kontrolEden);
-            System.out.println("PTT Merkez: " + pttMerkez);
-            System.out.println("----------------------------\n");
-
-        }
-
-        @Step("Excelde Kişi Bilgilerinde Dağıtıcı: {_dagitici}, Düzenleyen: {_duzenleyen}, Avans Sorumlusu: {_avansSorumlusu}, Kontrol Eden: {_kontrolEden}, PTT Merkez: {_pttMerkez} bilgileri kontrol edildi.")
-        public void kisiBilgileriKontrol(String _dagitici, String _duzenleyen, String _avansSorumlusu, String _kontrolEden, String _pttMerkez){
-            Assert.assertEquals(dagitici, _dagitici);
-            Assert.assertEquals(duzenleyen, _duzenleyen);
-            Assert.assertEquals(avansSorumlusu, _avansSorumlusu);
-            Assert.assertEquals(kontrolEden, _kontrolEden);
-            Assert.assertEquals(pttMerkez, _pttMerkez);
-        }
-
-        @Step("Excelde Giden Kurum: {gidenKurum}, Ülke: {ulke}, Şehir: {sehir}, Posta Adı: {postaAdi}, Ağırlık: {agirlik}, Pul No: {pulNo}, Ücret: {ucretTL} bilgileri kontrol edildi.")
-        public void tabloKontrol(String gidenKurum, String ulke, String sehir, String postaAdi, String agirlik, String pulNo, String ucretTL) {
-            boolean rowFound = false;
-            for(int i = 0; i < gidenKurumlar.length; i++){
-                if(gidenKurumlar[i].equals(gidenKurum) && ulkeler[i].equals(ulke) && sehirler[i].equals(sehir) && postaAdlari[i].equals(postaAdi)&& agirliklar[i].equals(agirlik) && pulNolar[i].equals(pulNo) && ucretTLler[i].equals(ucretTL))
-                {
-                    rowFound = true;
-                    break;
-                }
-            }
-            Assert.assertEquals(rowFound, true);
-        }
-
-
-    }
 
     @Step("Ptt Raporu sayfasını aç")
     public PttRaporuPage openPage() {
@@ -290,7 +153,7 @@ public class PttRaporuPage extends MainPage {
             }
         }
 
-        returnValue = $x("//tbody[@id='pttRaporuForm:havaleEvrakRaporOutputTab_data']/tr[@role='row']["+satirNumarasi+"]/td[" + columnIndex + "]").getText();
+        returnValue = $x("//tbody[@id='pttRaporuForm:havaleEvrakRaporOutputTab_data']/tr[@role='row'][" + satirNumarasi + "]/td[" + columnIndex + "]").getText();
 
         return returnValue;
     }
@@ -349,33 +212,33 @@ public class PttRaporuPage extends MainPage {
     }
 
     @Step("Rapor al butonuna tıkla. ")
-    public PttRaporuPage raporAl(){
+    public PttRaporuPage raporAl() {
         $$x("//button[contains(@id, 'pttRaporuForm:havaleEvrakRaporOutputTab')]").first().click();
         return this;
     }
 
     @Step("Dağıtıcı Değerini döndür.")
-    public String dagiticiGetir(){
+    public String dagiticiGetir() {
         return txtDagitici.getValue();
     }
 
     @Step("Düzenleyen Değerini döndür.")
-    public String duzenleyenGetir(){
+    public String duzenleyenGetir() {
         return txtDuzenleyen.getValue();
     }
 
     @Step("Avans Sorumlusu Değerini döndür.")
-    public String avansSorumlusuGetir(){
+    public String avansSorumlusuGetir() {
         return txtAvansSorumlusu.getValue();
     }
 
     @Step("Kontrol Eden Değerini döndür.")
-    public String kontrolEdenGetir(){
+    public String kontrolEdenGetir() {
         return txtKontrolEden.getValue();
     }
 
     @Step("PTT Merkez Değerini döndür.")
-    public String pttMerkezGetir(){
+    public String pttMerkezGetir() {
         return txtPttMerkez.getValue();
     }
 
@@ -401,6 +264,142 @@ public class PttRaporuPage extends MainPage {
         String filePath = files[0].getPath();
 
         return filePath;
+    }
+
+    public static class PttRaporExcellTest {
+
+        public String dagitici;
+        public String duzenleyen;
+        public String avansSorumlusu;
+        public String kontrolEden;
+        public String pttMerkez;
+
+        public String[] gidenKurumlar;
+        public String[] ulkeler;
+        public String[] sehirler;
+        public String[] postaAdlari;
+        public String[] agirliklar;
+        public String[] pulNolar;
+        public String[] ucretTLler;
+
+        public PttRaporExcellTest(String excelFilepath) throws IOException {
+
+            //String excelFileName = "/Users/huseyintumer/Downloads/Rapor_1516259983559.xls";
+
+            FileInputStream fis = new FileInputStream(excelFilepath);
+            Workbook wb = new HSSFWorkbook(fis);
+            Sheet sheet = wb.getSheetAt(0);
+            int temp = -1;
+            for (Row row : sheet) {
+                Cell cell = row.getCell(0);
+                if (cell.getRichStringCellValue().getString().trim().contains("Yukarda dökümü yapılan")) {
+                    temp = row.getRowNum();
+                }
+            }
+
+            FormulaEvaluator evaluator = wb.getCreationHelper().createFormulaEvaluator();
+
+            gidenKurumlar = new String[temp - 2];
+            ulkeler = new String[temp - 2];
+            sehirler = new String[temp - 2];
+            postaAdlari = new String[temp - 2];
+            agirliklar = new String[temp - 2];
+            pulNolar = new String[temp - 2];
+            ucretTLler = new String[temp - 2];
+
+            String gidenKurum, ulke, sehir, postaAdi, agirlik, pulNo, ucretTL;
+
+            for (int i = 2; i < temp; i++) {
+
+                CellReference cellB = new CellReference("B" + i);
+                CellReference cellC = new CellReference("C" + i);
+                CellReference cellD = new CellReference("D" + i);
+                CellReference cellE = new CellReference("E" + i);
+                CellReference cellF = new CellReference("F" + i);
+                CellReference cellG = new CellReference("G" + i);
+                CellReference cellH = new CellReference("H" + i);
+
+                gidenKurum = evaluator.evaluate(sheet.getRow(cellB.getRow()).getCell(cellB.getCol())).getStringValue();
+                ulke = evaluator.evaluate(sheet.getRow(cellC.getRow()).getCell(cellC.getCol())).getStringValue();
+                sehir = evaluator.evaluate(sheet.getRow(cellD.getRow()).getCell(cellD.getCol())).getStringValue();
+                postaAdi = evaluator.evaluate(sheet.getRow(cellE.getRow()).getCell(cellE.getCol())).getStringValue();
+                agirlik = evaluator.evaluate(sheet.getRow(cellF.getRow()).getCell(cellF.getCol())).getStringValue();
+                pulNo = evaluator.evaluate(sheet.getRow(cellG.getRow()).getCell(cellG.getCol())).getStringValue();
+                ucretTL = evaluator.evaluate(sheet.getRow(cellH.getRow()).getCell(cellH.getCol())).getStringValue();
+
+                gidenKurumlar[i - 2] = gidenKurum;
+                ulkeler[i - 2] = ulke;
+                sehirler[i - 2] = sehir;
+                postaAdlari[i - 2] = postaAdi;
+                agirliklar[i - 2] = agirlik;
+                pulNolar[i - 2] = pulNo;
+                ucretTLler[i - 2] = ucretTL;
+
+                System.out.println("----------------------------\n");
+                System.out.println("Giden Kurum : " + gidenKurum);
+                System.out.println("Ülke : " + ulke);
+                System.out.println("Şehir : " + sehir);
+                System.out.println("Posta Adı: " + postaAdi);
+                System.out.println("Ağırlık : " + agirlik);
+                System.out.println("Pul No : " + pulNo);
+                System.out.println("Ücret TL : " + ucretTL);
+                System.out.println("----------------------------\n");
+
+            }
+
+            temp = -1;
+            for (Row row : sheet) {
+                Cell cell = row.getCell(0);
+                if (cell.getRichStringCellValue().getString().trim().contains("Dağıtıcı")) {
+                    temp = row.getRowNum();
+                }
+            }
+            int rowNumber = temp + 2;
+
+            CellReference cellA = new CellReference("A" + rowNumber);
+            CellReference cellB = new CellReference("B" + rowNumber);
+            CellReference cellC = new CellReference("C" + rowNumber);
+            CellReference cellD = new CellReference("D" + rowNumber);
+            CellReference cellE = new CellReference("E" + rowNumber);
+
+            dagitici = evaluator.evaluate(sheet.getRow(cellA.getRow()).getCell(cellA.getCol())).getStringValue();
+            duzenleyen = evaluator.evaluate(sheet.getRow(cellB.getRow()).getCell(cellB.getCol())).getStringValue();
+            avansSorumlusu = evaluator.evaluate(sheet.getRow(cellC.getRow()).getCell(cellC.getCol())).getStringValue();
+            kontrolEden = evaluator.evaluate(sheet.getRow(cellD.getRow()).getCell(cellD.getCol())).getStringValue();
+            pttMerkez = evaluator.evaluate(sheet.getRow(cellE.getRow()).getCell(cellE.getCol())).getStringValue();
+
+            System.out.println("----------------------------\n");
+            System.out.println("Dağıtıcı: " + dagitici);
+            System.out.println("Düzenleyen: " + duzenleyen);
+            System.out.println("Avans Sorumlusu: " + avansSorumlusu);
+            System.out.println("Kontrol Eden: " + kontrolEden);
+            System.out.println("PTT Merkez: " + pttMerkez);
+            System.out.println("----------------------------\n");
+
+        }
+
+        @Step("Excelde Kişi Bilgilerinde Dağıtıcı: {_dagitici}, Düzenleyen: {_duzenleyen}, Avans Sorumlusu: {_avansSorumlusu}, Kontrol Eden: {_kontrolEden}, PTT Merkez: {_pttMerkez} bilgileri kontrol edildi.")
+        public void kisiBilgileriKontrol(String _dagitici, String _duzenleyen, String _avansSorumlusu, String _kontrolEden, String _pttMerkez) {
+            Assert.assertEquals(dagitici, _dagitici);
+            Assert.assertEquals(duzenleyen, _duzenleyen);
+            Assert.assertEquals(avansSorumlusu, _avansSorumlusu);
+            Assert.assertEquals(kontrolEden, _kontrolEden);
+            Assert.assertEquals(pttMerkez, _pttMerkez);
+        }
+
+        @Step("Excelde Giden Kurum: {gidenKurum}, Ülke: {ulke}, Şehir: {sehir}, Posta Adı: {postaAdi}, Ağırlık: {agirlik}, Pul No: {pulNo}, Ücret: {ucretTL} bilgileri kontrol edildi.")
+        public void tabloKontrol(String gidenKurum, String ulke, String sehir, String postaAdi, String agirlik, String pulNo, String ucretTL) {
+            boolean rowFound = false;
+            for (int i = 0; i < gidenKurumlar.length; i++) {
+                if (gidenKurumlar[i].equals(gidenKurum) && ulkeler[i].equals(ulke) && sehirler[i].equals(sehir) && postaAdlari[i].equals(postaAdi) && agirliklar[i].equals(agirlik) && pulNolar[i].equals(pulNo) && ucretTLler[i].equals(ucretTL)) {
+                    rowFound = true;
+                    break;
+                }
+            }
+            Assert.assertEquals(rowFound, true);
+        }
+
+
     }
 
 

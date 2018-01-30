@@ -10,9 +10,7 @@ import org.testng.Assert;
 import pages.MainPage;
 import pages.pageData.SolMenuData;
 
-import static com.codeborne.selenide.Condition.exist;
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 
@@ -79,7 +77,7 @@ public class KoordineParafladiklarimPage extends MainPage {
     }
 
     @Step("Koordine Parafladıklarım listesinde evrak kontrolü:  \"{konu}\" ")
-    public KoordineParafladiklarimPage konuyaGoreEvrakKontroluAllPages(String konu){
+    public KoordineParafladiklarimPage konuyaGoreEvrakKontroluAllPages(String konu) {
         searchTable().searchInAllPages(true).findRows(text(konu)).getFoundRow().shouldBe(exist);
         return this;
     }

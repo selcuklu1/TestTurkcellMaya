@@ -79,13 +79,13 @@ public class KlasoreKaldirdiklarimPage extends MainPage {
         btnEvrakKopyala.click();
         return this;
     }
-    
-    @Step("Cevap yazılan evrağın listeye düştüğü görülür")
-    public KlasoreKaldirdiklarimPage cevapYazilanEvrakListeyeDustuguGorme(String konu){
-        boolean durum = tblKlasoreKaldirdiklarim
-                .filterBy(Condition.text(konu)).size()==0;
 
-        Assert.assertEquals(durum,false);
+    @Step("Cevap yazılan evrağın listeye düştüğü görülür")
+    public KlasoreKaldirdiklarimPage cevapYazilanEvrakListeyeDustuguGorme(String konu) {
+        boolean durum = tblKlasoreKaldirdiklarim
+                .filterBy(Condition.text(konu)).size() == 0;
+
+        Assert.assertEquals(durum, false);
         return this;
     }
 

@@ -16,6 +16,7 @@ public class KontrolBekleyenlerPage extends MainPage {
     SelenideElement bntKontrolEt = $("[id='mainPreviewForm:onizlemeRightTab:onizlemeRightTab'] td[class='buttonMenuContainerDefault'] span[class='ui-button-icon-left ui-icon kontrol']");
     SelenideElement txtKontrolEtNot = $("[id$='paraflaPanelGrid'] textarea");
     SelenideElement btnKontrolEtGonder = $("[id$='imzalaButton']");
+
     @Step("Kontrol bekleyenler sayfası aç")
     public KontrolBekleyenlerPage openPage() {
         solMenu(SolMenuData.IslemBekleyenEvraklar.KontrolBekleyenler);
@@ -33,13 +34,13 @@ public class KontrolBekleyenlerPage extends MainPage {
     }
 
     @Step("Kontrol et not alanını \"{not}\" doldur")
-    public KontrolBekleyenlerPage kontrolEtNotDoldur(String not){
+    public KontrolBekleyenlerPage kontrolEtNotDoldur(String not) {
         txtKontrolEtNot.setValue(not);
         return this;
     }
 
     @Step("Gönder tıklanır")
-    public KontrolBekleyenlerPage kontrolEtGonder(){
+    public KontrolBekleyenlerPage kontrolEtGonder() {
         btnKontrolEtGonder.click();
         return this;
     }

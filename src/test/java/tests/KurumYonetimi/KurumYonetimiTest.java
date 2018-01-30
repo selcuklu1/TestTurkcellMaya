@@ -281,7 +281,7 @@ public class KurumYonetimiTest extends BaseTest {
                 .mobilTelNoDoldur(mobilTelNo)
                 .telefonNoDoldur(telefonNo)
                 .adresDoldur(adres)
-                 .ulkeDoldur(ulke)
+                .ulkeDoldur(ulke)
                 .ilDoldur(il)
                 .ePostaDoldur(ePosta)
                 .iletisimBilgisiKaydet()
@@ -303,8 +303,8 @@ public class KurumYonetimiTest extends BaseTest {
                 .ilDoldur(il)
                 .ePostaDoldur(ePosta)
                 .iletisimBilgisiKaydet()
-                .kurumKaydet();
-                //.islemMesaji().basariliOlmali();
+                .kurumKaydet()
+                .islemMesaji().basariliOlmali();
 
         kurumYonetimiPage
                 .kurumHiyerarsisiniGuncelle()
@@ -361,6 +361,9 @@ public class KurumYonetimiTest extends BaseTest {
                 .geregiSecimTipiSec("Kurum")
                 .geregiSec(aktifIdariBirimKimlikKodu, true)
                 .geregiSec(aktifKurumAdi, true);
+
+        evrakOlusturPage
+                .evrakOlusturPageKapat();
 
         gelenEvrakKayitPage
                 .openPage()

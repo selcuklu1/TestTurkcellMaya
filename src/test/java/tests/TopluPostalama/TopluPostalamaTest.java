@@ -1,6 +1,7 @@
 package tests.TopluPostalama;
 
 
+import com.codeborne.selenide.Selenide;
 import common.BaseTest;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Severity;
@@ -22,7 +23,6 @@ import java.util.Random;
 
 
 public class TopluPostalamaTest extends BaseTest {
-
 
 
     @BeforeMethod
@@ -1149,7 +1149,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .tabloKontrolEt(kurum1, "", postaTipi, true)
                 .raporAl();
 
-         String excelFileName = pttRaporuPage.indirilenDosyaAd();
+        String excelFileName = pttRaporuPage.indirilenDosyaAd();
 
         PttRaporuPage.PttRaporExcellTest pttRaporExcellTest = new PttRaporuPage.PttRaporExcellTest(excelFileName);
 
@@ -1216,12 +1216,12 @@ public class TopluPostalamaTest extends BaseTest {
         String adres = "adres " + getSysDateForKis();
 
         String[] konu = new String[]{
-                "TC1675 " + getSysDate(), "1675 " + getSysDate() + 100
+                "TC1675 " + getSysDate(), "1675 " + createRandomNumber(9)
         };
         String[] evrakNo1675 = new String[2];
 
         String[] konu2 = new String[]{
-                "TC1811 " + getSysDate(), "TC1811 " + getSysDate() + 100
+                "TC1811 " + getSysDate(), "TC1811 " + createRandomNumber(9)
         };
 
 
@@ -1265,6 +1265,8 @@ public class TopluPostalamaTest extends BaseTest {
                     .onayAkisiEkleIlkImzalaSec(tur)
                     .kullan();
 
+            Selenide.sleep(1000);
+
             evrakOlusturPage
                     .editorTabAc()
                     .editorIcerikDoldur(konu[i]);
@@ -1281,7 +1283,9 @@ public class TopluPostalamaTest extends BaseTest {
                 .tarihAraligiSec(getSysDateForKis(), getSysDateForKis())
                 .postaTipiSec(postaTipleri)
                 .sorgula()
-                .evrakTumunuSec(true)
+                .evrakSec(konu[0], true)
+                .evrakSec(konu[1], true)
+//                .evrakTumunuSec(true)
                 .postaListesineAktar()
                 .listeAdiDoldur(konu[0])
                 .listeOlustur()
@@ -1383,7 +1387,8 @@ public class TopluPostalamaTest extends BaseTest {
                 .tarihAraligiSec(getSysDateForKis(), getSysDateForKis())
                 .postaTipiSec(postaTipleri)
                 .sorgula()
-                .evrakTumunuSec(true)
+                .evrakSec(konu2[0], true)
+                .evrakSec(konu2[1], true)
                 .postaListesineAktar()
                 .listeAdiDoldur(konu2[0])
                 .listeOlustur()
@@ -1911,6 +1916,8 @@ public class TopluPostalamaTest extends BaseTest {
         String[] sayi = new String[2];
         String[] pdfSayi = new String[2];
 
+//        useFirefox();
+//        maximazeBrowser();
         login("mbozdemir", "123");
         //region Parameters
         String konuKodu = "010.01";
@@ -2059,7 +2066,7 @@ public class TopluPostalamaTest extends BaseTest {
         topluPostaladiklarimPage
                 .openPage()
                 .topluPostaladiklarimEvrakKontrolu(konu[0]);
-                //.searchTable().searchInAllPages(true).findRows(text(konu[0])).getFoundRow().shouldBe(exist);
+        //.searchTable().searchInAllPages(true).findRows(text(konu[0])).getFoundRow().shouldBe(exist);
     }
 
     @Severity(SeverityLevel.CRITICAL)

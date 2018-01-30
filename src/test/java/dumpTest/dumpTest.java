@@ -120,7 +120,7 @@ public class dumpTest extends BaseTest {
     public void selectLovTexts() {
         login();
         OlurYazisiOlusturPage olurYazisiOlusturPage = new OlurYazisiOlusturPage().openPage();
-        boolean b = comboLov("input[id$='konuKoduLov:LovText']").selectLov("010","kanunlar").isLovSelected();
+        boolean b = comboLov("input[id$='konuKoduLov:LovText']").selectLov("010", "kanunlar").isLovSelected();
         comboLov("input[id$='eklenecekKlasorlerLov:LovText']").selectLov();
         //Pattern.compile(".*" + "" + ".*", DOTALL).matcher("").matches();
         $("button[id$=onayAkisiEkle]").click();
@@ -163,31 +163,30 @@ public class dumpTest extends BaseTest {
     }
 
 
-
     @Test(description = "", enabled = true)
     public void aaa() {
 
-        String source1="Optiim TEST2 [Danışman]\n" +
+        String source1 = "Optiim TEST2 [Danışman]\n" +
                 "Optiim Alt Birim1\n" +
                 "Optiim Birim";
-        String source2="Optiim TEST2 [Ağ (Network) Uzman Yardımcısı]\n" +
+        String source2 = "Optiim TEST2 [Ağ (Network) Uzman Yardımcısı]\n" +
                 "Optiim Birim\n" +
                 "YGD";
-        String source3="Optiim TEST [Ağ (Network) Uzman Yardımcısı]\n" +
+        String source3 = "Optiim TEST [Ağ (Network) Uzman Yardımcısı]\n" +
                 "Optiim Birim\n" +
                 "YGD";
         String subterm_1 = "Optiim TEST";
 
-        System.out.println(isContain(source1,subterm_1));
-        System.out.println(isContain(source2,subterm_1));
-        System.out.println(isContain(source3,subterm_1));
+        System.out.println(isContain(source1, subterm_1));
+        System.out.println(isContain(source2, subterm_1));
+        System.out.println(isContain(source3, subterm_1));
 
     }
 
-    private boolean isContain(String source, String subItem){
-        String pattern = "\\b"+subItem+"\\b";
-        Pattern p=Pattern.compile(pattern);
-        Matcher m=p.matcher(source);
+    private boolean isContain(String source, String subItem) {
+        String pattern = "\\b" + subItem + "\\b";
+        Pattern p = Pattern.compile(pattern);
+        Matcher m = p.matcher(source);
         return m.find();
     }
 

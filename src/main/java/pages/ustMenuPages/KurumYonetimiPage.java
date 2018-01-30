@@ -101,11 +101,11 @@ public class KurumYonetimiPage extends MainPage {
     }
 
     @Step("")
-    public KurumYonetimiPage kepAdresBi(){
-    
+    public KurumYonetimiPage kepAdresBi() {
+
         return this;
     }
-    
+
     @Step("Kep hizmet sağlayıcısı seç")
     public KurumYonetimiPage popupKepHizmetSaglayicisiSec(String value) throws InterruptedException {
         cmbPopupKepHizmetSaglayicisi.selectOption(value);
@@ -211,13 +211,13 @@ public class KurumYonetimiPage extends MainPage {
     }
 
     @Step("Kurumların listelendiği görülür")
-    public KurumYonetimiPage kurumlarinListelendigiGorme(){
-        boolean durum = $$(By.id("kurumYonetimiListingForm:kurumTreeTable")).size()==1;
-        Assert.assertEquals(durum,true);
+    public KurumYonetimiPage kurumlarinListelendigiGorme() {
+        boolean durum = $$(By.id("kurumYonetimiListingForm:kurumTreeTable")).size() == 1;
+        Assert.assertEquals(durum, true);
         takeScreenshot();
         return this;
     }
-    
+
     @Step("Kurumlar table kontrol et")
     public KurumYonetimiPage kurumTableKontrol(String kurumAdi, String durum, Boolean checkAll) {
 

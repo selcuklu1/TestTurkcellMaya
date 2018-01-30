@@ -287,6 +287,7 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
         cmbPostaListesi.selectComboBox(postaListesi);
         return this;
     }
+
     @Step("Listeye Ekle butonuna tıkla")
     public TopluPostalanacakEvraklarPage listeyeEkle() {
         btnListeyeEkle.click();
@@ -409,11 +410,11 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
         return this;
     }
 
-    @Step("Tüm evrakları seç. ")
+    @Step("Konuya göre evraklar seçilir. ")
     public TopluPostalanacakEvraklarPage konuyaGoreEvrakSec(String[] konu, boolean secim) {
         Boolean isSelected = false;
         int size = konu.length;
-        for (int i = size-1; i >=0 ; i--) {
+        for (int i = size - 1; i >= 0; i--) {
             tableEvraklar
                     .filterBy(Condition.text(konu[i]))
                     .first()
