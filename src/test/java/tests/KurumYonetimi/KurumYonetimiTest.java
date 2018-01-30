@@ -362,6 +362,9 @@ public class KurumYonetimiTest extends BaseTest {
                 .geregiSec(aktifIdariBirimKimlikKodu, true)
                 .geregiSec(aktifKurumAdi, true);
 
+        evrakOlusturPage
+                .evrakOlusturPageKapat();
+
         gelenEvrakKayitPage
                 .openPage()
                 .kisiKurumSec("Kurum")
