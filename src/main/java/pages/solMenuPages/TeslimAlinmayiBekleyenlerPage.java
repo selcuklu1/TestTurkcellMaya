@@ -59,6 +59,13 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     ElementsCollection tableEvraklar = $$("tbody[id='mainInboxForm:inboxDataTable_data'] > tr");
     SelenideElement evrakTeslimAl = $("[id='inboxItemInfoForm:dialogTabMenuRight:uiRepeat:5:cmdbutton']");
 
+    BelgenetElement cmbHavaleIslemleriBirim = comboLov(By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovText"));
+    SelenideElement teslimAlGönder = $("[id='mainPreviewForm:btnTeslimAlGonder']");
+    ElementsCollection birimDegistirme = $$("a[id^='leftMenuForm:edysMenuItem'] span[class='ui-menuitem-text']");
+
+    SelenideElement btnIadeEt = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:4:cmdbutton"));
+    SelenideElement btnIadeEtIadeEt = $(By.id("mainPreviewForm:iadeEtButton_id"));
+
     public TeslimAlinmayiBekleyenlerPage openPage() {
         solMenu(SolMenuData.BirimEvraklari.TeslimAlinmayiBekleyenler);
 //        ustMenu("Teslim Alınmayı Bekleyenler");
@@ -421,6 +428,38 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
                 .get(0)
                 .$("[id*='ilgiListesiDetayButton']").shouldBe(visible);
 
+        return this;
+    }
+
+    @Step("Dağıtım Bilgileri Birim alanında \"{birim}\" seçilir")
+    public TeslimAlinmayiBekleyenlerPage dagitimBilgileriBirimDoldurWithDetails(String birim, String details) {
+        cmbHavaleIslemleriBirim.type(birim).getDetailItems()
+                .filterBy(Condition.exactText(details)).first().click();
+        cmbHavaleIslemleriBirim.closeTreePanel();
+        return this;
+    }
+
+    @Step("Birim Degisikligi Sonrası Teslim Al Gönder butonuna tıklama")
+    public TeslimAlinmayiBekleyenlerPage teslimAlGonder() {
+        teslimAlGönder.click();
+        return this;
+    }
+
+    @Step("")
+    public TeslimAlinmayiBekleyenlerPage birimDegistirme(String digerDetails) {
+        birimDegistirme.filterBy(Condition.text(digerDetails)).get(0).click();
+        return this;
+    }
+
+    @Step("Teslim Alınan Evrakın Iade Edilmesi")
+    public TeslimAlinmayiBekleyenlerPage btnIadeEt() {
+        btnIadeEt.click();
+        return this;
+    }
+
+    @Step("Teslim Alınan Evrakın Iade Edilmesi ve Iade Et Tıklanması")
+    public TeslimAlinmayiBekleyenlerPage btnIadeEtIadeEt() {
+        btnIadeEtIadeEt.click();
         return this;
     }
 

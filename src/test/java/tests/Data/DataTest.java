@@ -4,12 +4,16 @@ import common.BaseTest;
 import data.User;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.newPages.EvrakOlusturPage;
 import pages.pageComponents.tabs.AltTabs;
 import pages.pageData.alanlar.GeregiSecimTipi;
 import pages.pageData.alanlar.GizlilikDerecesi;
 import pages.pageData.alanlar.OnayKullaniciTipi;
+import pages.solMenuPages.BirimIadeEdilenlerPage;
+import pages.solMenuPages.TeslimAlinmayiBekleyenlerPage;
+import pages.ustMenuPages.GelenEvrakKayitPage;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
@@ -26,7 +30,18 @@ public class DataTest extends BaseTest {
     EvrakOlusturPage page;
 
     User user = new User("ztekin", "123", "Zübeyde TEKİN");
+    GelenEvrakKayitPage gelenEvrakKayitPage;
+    TeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage;
+    BirimIadeEdilenlerPage birimIadeEdilenlerPage;
 
+
+    @BeforeMethod
+    public void loginBeforeTests() {
+        login("ztekin", "123");
+        gelenEvrakKayitPage = new GelenEvrakKayitPage();
+        teslimAlinmayiBekleyenlerPage = new TeslimAlinmayiBekleyenlerPage();
+        birimIadeEdilenlerPage = new BirimIadeEdilenlerPage();
+    }
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS2224: DATA-Teslim alınmayı bekleyenler, gelen kutusu ve postalanacaklar listesine gizlilik derecesi yüksek evrak düşürme")
     public void TS2224() throws InterruptedException {
@@ -121,6 +136,81 @@ public class DataTest extends BaseTest {
         page.ekleriTab().getEkListesiTablosu().findRows(text("Ekleri Tab "+ konu)).shouldHaveSize(1);
         page.pageButtons().imzalaButonaTikla().closeEvrakImzalaDialog();
         page.closePage(false);
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS2322: DATA-Birime iade edilenler listesine evrak düşürme")
+    public void TS2322() throws InterruptedException {
+        String basariMesaji = "İşlem başarılıdır!";
+        String konuKodu = "120.05";
+        String konu = "TS-2322-" + getSysDate();
+        String evrakTuru = "Resmi Yazışma";
+        String evrakDili = "Türkçe";
+        String evrakTarihi = getSysDateForKis();
+        String gizlilikDerecesi = "Normal";
+        String kisiKurum = "Kurum";
+        String geldigiKurum = "Esk Kurum 071216 2";
+        String evrakGelisTipi = "Posta";
+        String ivedilik = "Normal";
+
+        String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
+        String details = "BİLİŞİM HİZMETLERİ VE UYDU PAZARLAMA GENEL MÜDÜR Y";
+        String digerBirim ="Birim Deneme";
+        String digerDetails = "YGD";
+
+        //Pre-requisites Gelen Evrak Oluşturma
+        gelenEvrakKayitPage
+                .openPage();
+
+        //Pre-requisites Evrak Oluşturma
+        gelenEvrakKayitPage
+                .konuKoduDoldur(konuKodu)
+                .konuDoldur(konu)
+                .evrakTuruSec(evrakTuru)
+                .evrakDiliSec(evrakDili)
+                .evrakTarihiDoldur(evrakTarihi)
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .kisiKurumSec(kisiKurum)
+                .geldigiKurumDoldurLovText(geldigiKurum)
+                .evrakSayiSagDoldur()
+                .evrakGelisTipiSec(evrakGelisTipi)
+                .ivedilikSec(ivedilik)
+                .dagitimBilgileriBirimDoldurWithDetails(birim, details)
+                .kaydet()
+                .popUps();
+
+
+        gelenEvrakKayitPage
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+
+        teslimAlinmayiBekleyenlerPage
+                .openPage()
+                .evrakNoIleEvrakSec(konu)
+                .havaleYap()
+                .dagitimBilgileriBirimDoldurWithDetails(digerBirim,digerDetails)
+                .teslimAlGonder();
+
+
+        teslimAlinmayiBekleyenlerPage
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        teslimAlinmayiBekleyenlerPage
+                .birimDegistirme(digerBirim);
+
+        teslimAlinmayiBekleyenlerPage
+                .openPage()
+                .evrakNoIleEvrakSec(konu)
+                .btnIadeEt()
+                .btnIadeEtIadeEt()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        teslimAlinmayiBekleyenlerPage
+                .birimDegistirme(birim);
+
+        birimIadeEdilenlerPage
+                .openPage()
+                .evrakNoIleEvrakSec(konu);
     }
 
 }

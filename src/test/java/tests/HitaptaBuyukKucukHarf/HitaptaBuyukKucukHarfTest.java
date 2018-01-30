@@ -183,10 +183,10 @@ public class HitaptaBuyukKucukHarfTest extends BaseTest {
 
     @Step("Evrak Detayları. Yazdır butona tıklanır")
     public HitaptaBuyukKucukHarfTest detayYazdir(String konu){
-        new SearchTable(Selenide.$("#postaDetayYazdirForm\\:dtPostaEvrakUstVeri"))
-                .findRows(text(konu))
-                .getFoundRow()
-                .$x("descendant::button[.='Yazdır']").click();
+            new SearchTable(Selenide.$("#postaDetayYazdirForm\\:dtPostaEvrakUstVeri"))
+                    .findRows(text(konu))
+                    .getFoundRow()
+                    .$x("descendant::button[.='Yazdır']").click();
         return this;
     }
 

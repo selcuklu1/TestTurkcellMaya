@@ -409,7 +409,7 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
         return this;
     }
 
-    @Step("Tüm evrakları seç. ")
+    @Step("Konuya göre evraklar seçilir. ")
     public TopluPostalanacakEvraklarPage konuyaGoreEvrakSec(String[] konu, boolean secim) {
         Boolean isSelected = false;
         int size = konu.length;

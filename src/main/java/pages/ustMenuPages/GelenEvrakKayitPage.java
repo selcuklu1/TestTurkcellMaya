@@ -582,6 +582,17 @@ public class GelenEvrakKayitPage extends MainPage {
     }
 
     @Step("Dağıtım Bilgileri Kişi alanında \"{kisi}\" seçilir")
+    public GelenEvrakKayitPage dagitimBilgileriKisiSec(String kisi,String title) {
+        if($(By.xpath("//table[@id='evrakBilgileriForm:kisiLovContainer']//span[text()='Birim']")).isDisplayed())
+            $(By.xpath("//table[@id='evrakBilgileriForm:kisiLovContainer']//span[text()='Birim']")).click();
+
+        txtDagitimBilgileriKisiComboLov.type(kisi).getTitleItems()
+                .filterBy(Condition.exactText(kisi + title)).first().click();
+        txtDagitimBilgileriKisiComboLov.closeTreePanel();
+        return this;
+    }
+
+    @Step("Dağıtım Bilgileri Kişi alanında \"{kisi}\" seçilir")
     public GelenEvrakKayitPage dagitimBilgileriKisiSec2(String kisi) {
         txtDagitimBilgileriKisiComboLov.type(kisi).getSelectableItems().filterBy(text(kisi)).first().click();
         return this;
@@ -1154,13 +1165,21 @@ public class GelenEvrakKayitPage extends MainPage {
         btnTaramaArayuzundenEkle.isDisplayed();
         btnTaramaServisindenEkle.isDisplayed();
 
-        Allure.addAttachment(btnUstYaziEkle.text(), "Ekran Kontrolü ok");
-        Allure.addAttachment(lblUstyaziGoster.text(), "Ekran Kontrolü ok");
-        Allure.addAttachment(lblUstyaziGizle.text(), "Ekran Kontrolü ok");
-        Allure.addAttachment(btnTaramaHavuzundanEkle.text(), "Ekran Kontrolü ok");
-        Allure.addAttachment(btnTarayicidanEkle.text(), "Ekran Kontrolü ok");
-        Allure.addAttachment(btnTaramaArayuzundenEkle.text(), "Ekran Kontrolü ok");
-        Allure.addAttachment(btnTaramaServisindenEkle.text(), "Ekran Kontrolü ok");
+        Allure.addAttachment("Ekran Kontrolü", "üst yazı ekle butonunun\n" +
+                "üst yazı göster\n" +
+                "üst yazı gizle seçeneklerinin\n" +
+                "tarama havuzundan ekle\n" +
+                "tarayıcıdan ekle\n" +
+                "tarama arayüzünden ekle\n" +
+                "tarama servisinden ekle butonlarının geldiği görülür.\n");
+        takeScreenshot();
+//        Allure.addAttachment(btnUstYaziEkle.text(), "Ekran Kontrolü ok");
+//        Allure.addAttachment(lblUstyaziGoster.text(), "Ekran Kontrolü ok");
+//        Allure.addAttachment(lblUstyaziGizle.text(), "Ekran Kontrolü ok");
+//        Allure.addAttachment(btnTaramaHavuzundanEkle.text(), "Ekran Kontrolü ok");
+//        Allure.addAttachment(btnTarayicidanEkle.text(), "Ekran Kontrolü ok");
+//        Allure.addAttachment(btnTaramaArayuzundenEkle.text(), "Ekran Kontrolü ok");
+//        Allure.addAttachment(btnTaramaServisindenEkle.text(), "Ekran Kontrolü ok");
 
         return this;
     }

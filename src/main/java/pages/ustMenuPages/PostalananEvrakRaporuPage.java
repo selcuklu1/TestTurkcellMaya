@@ -40,6 +40,10 @@ public class PostalananEvrakRaporuPage extends MainPage {
     BelgenetElement cmbEvrakSahibi = comboLov("input[id$='postalananEvrakRaporuForm:sahibiBirimLov_id:LovText']");
     BelgenetElement cmbPostalananyer = comboLov("input[id$='postalananEvrakRaporuForm:postalananYerLov:LovText']");
     BelgenetElement cmbPostaSekli = comboBox("select[id$='postalananEvrakRaporuForm:postaSekliId']");
+    BelgenetElement cmbPostaTipi = comboBox("select[id$='postalananEvrakRaporuForm:postaTipiMenu']");
+    SelenideElement txtPostaAciklama = $x("//*[@id='postalananEvrakRaporuForm:aciklamaText']");
+    BelgenetElement cmbPostalayanAdi = comboLov("input[id$='postalananEvrakRaporuForm:postalayanKullaniciLov:LovText']");
+    SelenideElement btnPostaladiklarimcheck = $x("//*[@id='postalananEvrakRaporuForm:postaladiklarimCheckbox']");
 
     @Step("Postalanan Evrak Raporu sayfasını aç")
     public PostalananEvrakRaporuPage openPage() {
@@ -96,7 +100,21 @@ public class PostalananEvrakRaporuPage extends MainPage {
         btnEvrakDialogKapat.click();
         return this;
     }
-
+    @Step("Posta açıklama alanı doldur\"{postaAciklama}\"")
+    public PostalananEvrakRaporuPage txtPostaAciklama (String postaAciklama) {
+    txtPostaAciklama.setValue(postaAciklama);
+    return this;
+    }
+    @Step("Postalayan adi doldur\"{postalayanAdi}\"")
+    public PostalananEvrakRaporuPage cmbPostalayanadi(String postalayanAdi) {
+        cmbPostalayanAdi.selectLov(postalayanAdi);
+        return this;
+    }
+    @Step("Postaladiklarim checkbox")
+    public PostalananEvrakRaporuPage chkboxPostaladiklarim () {
+        btnPostaladiklarimcheck.click();
+        return this;
+    }
     @Step("Etiket Bastir")
     public PostalananEvrakRaporuPage etiketBastir() {
         btnEtiketBastir.click();
@@ -193,6 +211,12 @@ public class PostalananEvrakRaporuPage extends MainPage {
     public PostalananEvrakRaporuPage cmbpostaSeklisecimi(String postaSekli) {
         cmbPostaSekli.selectComboBox(postaSekli);
         return this;
+    }
+    @Step("Posta tipi seçimi \"{postaTipi}\" ")
+    public PostalananEvrakRaporuPage cmbPostaTipisec (String postaTipi) {
+        cmbPostaTipi.selectComboBox(postaTipi);
+        return this;
+
     }
 
     @Step("Sorgulama sonucu gelen sonuçların evrak geçmiş, detay ve etiket bastır ekranlarının tek tek kontrolü")
