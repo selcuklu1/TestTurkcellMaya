@@ -527,6 +527,7 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Tebliğ Et butonuna tıkla")
     public GelenEvraklarPage tebligEt() {
         btnTebligEt.click();
         return this;

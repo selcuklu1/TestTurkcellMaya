@@ -151,7 +151,7 @@ public class TebliglerPage extends MainPage {
         return this;
     }
 
-    @Step("{0}")
+    @Step("Tebellüğ Et butonu kontrolü.")
     public TebliglerPage tebellugEtButonuKontrolEt(){
         btnTebellugEt.shouldBe(Condition.visible);
         return this;
