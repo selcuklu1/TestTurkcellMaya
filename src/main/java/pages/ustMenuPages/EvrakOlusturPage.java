@@ -1760,7 +1760,9 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement btnEkleriDosyaTemizle = $(By.id("yeniGidenEvrakForm:evrakEkTabView:dosyaTemizleButton"));
         SelenideElement chkEkListesiniEkYap = $(By.id("yeniGidenEvrakForm:j_idt30306"));
         SelenideElement btnDosyaEkle = $(By.id("yeniGidenEvrakForm:evrakEkTabView:fileUploadButtonA_input"));
-        ;
+        SelenideElement chkTaramaHavuzuTarihBaslangic = $(By.id("taramaHavuzuFormId:filterAccordionPanelId:taramaHavuzuIlkTarihCalendar_input"));
+        SelenideElement chkTaramaHavuzuTarihBitis = $(By.id("taramaHavuzuFormId:filterAccordionPanelId:taramaHavuzuSonTarihCalendar_input"));
+
         SelenideElement lblDosyaAdi = $(By.id("yeniGidenEvrakForm:evrakEkTabView:dosyaAdi"));
         ElementsCollection trEkLlistesi = $$("tbody[id*='yeniGidenEvrakForm:ekListesiDataTable'] tr[role='row']");
         SelenideElement btnEkleriEvraklarTaramaHavuzudanEkle = $(By.id("yeniGidenEvrakForm:evrakEkTabView:uploadFromTarananEvrakHavuzuEkA"));
@@ -2181,6 +2183,18 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Evrak tarih aralığı - başlangıç")
+        public EkleriTab evrakTarihBaslangicDoldur(String tarihBaslangic) {
+            chkTaramaHavuzuTarihBaslangic.setValue(tarihBaslangic);
+            return this;
+        }
+
+        @Step("Evrak tarih aralığı - bitiş")
+        public EkleriTab evrakTarihBitisDoldur(String tarihBitis) {
+            chkTaramaHavuzuTarihBitis.setValue(tarihBitis);
+            return this;
+        }
+
         @Step("Popup Ek Silme Onay - Kaydı silmek istediğinize emin misiniz? : {secim}")
         public void ekSilmeOnayi(String secim) {
 
@@ -2297,6 +2311,10 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement txtDosya1Aciklama = $("[id^='taramaHavuzuFormId:taramaHavuzuDataTableId:0:j_idt']");
         SelenideElement txtDosya2Aciklama = $("[id^='taramaHavuzuFormId:taramaHavuzuDataTableId:1:j_idt']");
         SelenideElement lblDosyaAdi = $(By.id("yeniGidenEvrakForm:ilgiIslemleriTabView:dosyaAdi"));
+        SelenideElement chkTaramaHavuzuTarihBaslangic = $(By.id("taramaHavuzuFormId:filterAccordionPanelId:taramaHavuzuIlkTarihCalendar_input"));
+        SelenideElement chkTaramaHavuzuTarihBitis = $(By.id("taramaHavuzuFormId:filterAccordionPanelId:taramaHavuzuSonTarihCalendar_input"));
+
+
 
         SelenideElement lblIlgiListesiAciklama1 = $("[id^='yeniGidenEvrakForm:ilgiListesiDataTable:0'] [class$='ui-inplace-display']");
         SelenideElement txtIlgiListesiAciklama1 = $("[id^='yeniGidenEvrakForm:ilgiListesiDataTable:0'] [class*='ui-inputtextarea']");
@@ -2370,6 +2388,18 @@ public class EvrakOlusturPage extends MainPage {
         @Step("Tarama havuzundan ekle")
         public IlgileriTab taramaHavuzundanEkle() {
             btnIlgileriTaramaHavuzudanEkle.click();
+            return this;
+        }
+
+        @Step("Evrak tarih aralığı - başlangıç")
+        public IlgileriTab evrakTarihBaslangicDoldur(String tarihBaslangic) {
+            chkTaramaHavuzuTarihBaslangic.setValue(tarihBaslangic);
+            return this;
+        }
+
+        @Step("Evrak tarih aralığı - bitiş")
+        public IlgileriTab evrakTarihBitisDoldur(String tarihBitis) {
+            chkTaramaHavuzuTarihBitis.setValue(tarihBitis);
             return this;
         }
 
@@ -2679,6 +2709,8 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement txtDosya2Aciklama = $("[id^='taramaHavuzuFormId:taramaHavuzuDataTableId:1:j_idt']");
         SelenideElement cmbTaramaTuru = $(By.id("taramaHavuzuFormId:taramaHavuzuDataTableId:0:tarananTuruId"));
         SelenideElement cmbEvrakTuru = $(By.id("taramaHavuzuFormId:filterAccordionPanelId:tarananTuruId"));
+        SelenideElement chkTaramaHavuzuTarihBaslangic = $(By.id("taramaHavuzuFormId:filterAccordionPanelId:taramaHavuzuIlkTarihCalendar_input"));
+        SelenideElement chkTaramaHavuzuTarihBitis = $(By.id("taramaHavuzuFormId:filterAccordionPanelId:taramaHavuzuSonTarihCalendar_input"));
 
         SelenideElement btnTaramaHavuzuTamam = $(By.id("taramaHavuzuFormId:taramaHavuzuTamamButton"));
         ;
@@ -2978,6 +3010,17 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Evrak tarih aralığı - başlangıç")
+        public IliskiliEvraklarTab evrakTarihBaslangicDoldur(String tarihBaslangic) {
+            chkTaramaHavuzuTarihBaslangic.setValue(tarihBaslangic);
+            return this;
+        }
+
+        @Step("Evrak tarih aralığı - bitiş")
+        public IliskiliEvraklarTab evrakTarihBitisDoldur(String tarihBitis) {
+            chkTaramaHavuzuTarihBitis.setValue(tarihBitis);
+            return this;
+        }
 
         @Step("Popup İlişik Silme Onay - Kaydı silmek istediğinize emin misiniz? : {secim}")
         public void ilisikSilmeOnayi(String secim) {
