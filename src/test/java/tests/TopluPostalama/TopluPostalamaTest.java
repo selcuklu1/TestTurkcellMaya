@@ -1911,6 +1911,8 @@ public class TopluPostalamaTest extends BaseTest {
         String[] sayi = new String[2];
         String[] pdfSayi = new String[2];
 
+//        useFirefox();
+//        maximazeBrowser();
         login("mbozdemir", "123");
         //region Parameters
         String konuKodu = "010.01";

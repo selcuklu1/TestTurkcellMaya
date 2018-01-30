@@ -1160,7 +1160,7 @@ public class GelenEvrakKayitPage extends MainPage {
                 "tarayıcıdan ekle\n" +
                 "tarama arayüzünden ekle\n" +
                 "tarama servisinden ekle butonlarının geldiği görülür.\n");
-
+        takeScreenshot();
 //        Allure.addAttachment(btnUstYaziEkle.text(), "Ekran Kontrolü ok");
 //        Allure.addAttachment(lblUstyaziGoster.text(), "Ekran Kontrolü ok");
 //        Allure.addAttachment(lblUstyaziGizle.text(), "Ekran Kontrolü ok");
