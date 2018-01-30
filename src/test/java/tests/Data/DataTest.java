@@ -11,7 +11,7 @@ import pages.pageComponents.tabs.AltTabs;
 import pages.pageData.alanlar.GeregiSecimTipi;
 import pages.pageData.alanlar.GizlilikDerecesi;
 import pages.pageData.alanlar.OnayKullaniciTipi;
-import pages.solMenuPages.BirimIadeEdilenlerPage;
+//import pages.solMenuPages.BirimIadeEdilenlerPage;
 import pages.solMenuPages.TeslimAlinmayiBekleyenlerPage;
 import pages.ustMenuPages.GelenEvrakKayitPage;
 
