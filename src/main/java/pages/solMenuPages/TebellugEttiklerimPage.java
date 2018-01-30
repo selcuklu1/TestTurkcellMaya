@@ -20,7 +20,7 @@ public class TebellugEttiklerimPage extends MainPage {
         return this;
     }
 
-    @Step("Evrak seç.")
+    @Step("Tebelliüğ Ettiklerimden {konu} konulu evrakı seç.")
     public TebellugEttiklerimPage evrakSec(String konu, String gidecegiYer, String evrakTarihi, String no) {
 
         tableTebellugEttiklerim
@@ -36,7 +36,7 @@ public class TebellugEttiklerimPage extends MainPage {
 
     // document-detail
 
-    @Step("İçerik göster butonuna tıkla.")
+    @Step("{konu} konulu evrakta içerik göster butonuna tıkla.")
     public TebellugEttiklerimPage icreikGoster(String konu, String gidecegiYer, String evrakTarihi, String no) {
 
         tableTebellugEttiklerim

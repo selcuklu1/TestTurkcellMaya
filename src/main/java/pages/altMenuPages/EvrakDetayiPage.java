@@ -9,6 +9,8 @@ import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
 
+import static com.codeborne.selenide.Condition.attribute;
+import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
 
@@ -25,6 +27,8 @@ public class EvrakDetayiPage extends MainPage {
     SelenideElement btnCevapYaz = $("[id^='inboxItemInfoForm:dialogTabMenuRight:uiRepeat'] [class$='cevapYaz']");
     SelenideElement btnEvrakKapat = $("[id^='inboxItemInfoForm:dialogTabMenuRight:uiRepeat'] [class$='evrakKapat']");
     SelenideElement divContainer = $("#evrakBilgileriContainerDiv");
+    SelenideElement spanBilgileri = $x("//span[. = 'Bilgileri']");
+
     private HareketGecmisiTab hareketGecmisiTab = new HareketGecmisiTab();
 
     @Step("Sayfa açıldı mı kontrolü")
@@ -77,6 +81,18 @@ public class EvrakDetayiPage extends MainPage {
     public EvrakDetayiPage cevapYaz() {
         btnCevapYaz.shouldBe(visible);
         btnCevapYaz.click();
+        return this;
+    }
+
+    @Step("Tebellüğ Butonu kontrolü")
+    public EvrakDetayiPage tebellugButonuKontrolEt(){
+        btnTebellugEt.shouldBe(visible);
+        return this;
+    }
+
+    @Step("Evrak Bilgileri tabı açıldı.")
+    public EvrakDetayiPage evrakBilgileriTabAktifKontrolEt() {
+        spanBilgileri.shouldHave(attribute("class", "tabMenuTextSelected")).shouldBe(visible);
         return this;
     }
 
@@ -157,13 +173,8 @@ public class EvrakDetayiPage extends MainPage {
             return this;
         }
 
-        @Step("")
-        public HareketGecmisiTab tabloKontol(String text) {
-            tblHareketGecmisi
-                    .filterBy(Condition.text(text))
-                    .shouldHaveSize(1);
-            return this;
-        }
+
 
     }
+
 }

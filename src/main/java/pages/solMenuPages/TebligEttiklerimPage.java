@@ -45,7 +45,7 @@ public class TebligEttiklerimPage extends MainPage {
 
     // document-detail
 
-    @Step("İçerik göster butonuna tıkla.")
+    @Step("{konu} konulu evrak Tebliğ Ettiklerim listesi kontrolü. Eğer evrak Tebliğ Ettiklerim lsitesinde ise içerik göster butonuna tıkla.")
     public TebligEttiklerimPage icreikGoster(String konu, String gidecegiYer, String evrakTarihi, String no) {
 
         tableTebligEttiklerim
@@ -55,8 +55,8 @@ public class TebligEttiklerimPage extends MainPage {
                 .filterBy(Condition.text("No: " + no))
                 .first()
                 .find(By.xpath(".//span[contains(@class, 'document-detail')]"))
+                .shouldBe(Condition.visible)
                 .click();
-
         return this;
     }
 

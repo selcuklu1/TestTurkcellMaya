@@ -185,10 +185,12 @@ public class TebligTebellugTest extends BaseTest {
                 .openPage()
                 .tebliglerMenuKirmiziKontrolu()
                 .evrakSec(konu, birim, tebligEden, evrakTipi, tebligNot)
+                .tebellugEtButonuKontrolEt()
                 .icerikGoster(konu, birim, tebligEden, evrakTipi, tebligNot);
 
         evrakDetayiPage
-                .sayfaAcilmali();
+                .evrakBilgileriTabAktifKontrolEt()
+                .tebellugButonuKontrolEt();
 
     }
 
