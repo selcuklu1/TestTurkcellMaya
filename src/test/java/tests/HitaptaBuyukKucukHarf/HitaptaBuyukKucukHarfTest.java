@@ -29,6 +29,7 @@ import static pages.pageData.alanlar.OnayKullaniciTipi.PARAFLAMA;
  * Yazan: Samed Solak
  ****************************************************/
 @Feature("Hitapta büyük/küçük harf")
+
 public class HitaptaBuyukKucukHarfTest extends BaseTest {
 
     EvrakOlusturPage evrakOlustur;
