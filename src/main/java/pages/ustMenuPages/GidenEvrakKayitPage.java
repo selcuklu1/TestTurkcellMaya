@@ -221,8 +221,7 @@ public class GidenEvrakKayitPage extends MainPage {
 
     @Step("Panel kapat")
     public GidenEvrakKayitPage panelKapat(Boolean kaydet) {
-        $(By.xpath("//div[@id='mainTaskBar']//span[text()='[Giden Evrak Kayıt]']"))
-                .contextClick();
+        //$(By.xpath("//div[@id='mainTaskBar']//span[text()='[Giden Evrak Kayıt]']")).contextClick();
 
         SelenideElement closeButton = $(By.xpath("//span[@class='ui-dialog-title' and text()='Giden Evrak Kayıt']/..//span[@class='ui-icon ui-icon-closethick']"));
         Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", closeButton);
