@@ -30,9 +30,10 @@ import static com.codeborne.selenide.Condition.exactValue;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
 import static org.apache.commons.io.FileUtils.deleteDirectory;
+import static org.openqa.selenium.support.ui.ExpectedConditions.elementSelectionStateToBe;
 import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfElementLocated;
 
-public class BaseLibrary extends ElementsContainer{
+public class BaseLibrary extends ElementsContainer {
 
 
     protected static final Logger log = Logger.getLogger(BaseLibrary.class.getName());
@@ -702,7 +703,7 @@ public class BaseLibrary extends ElementsContainer{
 
     }
 
-    @Step("[\"{0}\"] alanının değeri [\"{0}\"] olmalı.")
+    @Step("\"{element}\" alanının değeri \"{value}\" olmalı.")
     public void alanDegeriKontrolEt(SelenideElement element, String value, boolean shouldHaveValue, boolean exactText) {
         if (shouldHaveValue == true) {
             if (exactText == true)
@@ -721,6 +722,7 @@ public class BaseLibrary extends ElementsContainer{
             }
         }
     }
+
 
     public boolean findElementOnTableAllPages(String form, SelenideElement element) {
 
@@ -832,9 +834,8 @@ public class BaseLibrary extends ElementsContainer{
     }
 
 
-
     @Step("\"{fileName}\" isimli dosya silindi")
-    public BaseLibrary deleteSpecificFile(String fileName){
+    public BaseLibrary deleteSpecificFile(String fileName) {
 
         File folder = new File("C://users//" + System.getProperty("user.name") + "//Downloads//");
         final File[] files = folder.listFiles(new FilenameFilter() {

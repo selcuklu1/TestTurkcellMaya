@@ -1217,12 +1217,12 @@ public class TopluPostalamaTest extends BaseTest {
         String adres = "adres " + getSysDateForKis();
 
         String[] konu = new String[]{
-                "TC1675 " + getSysDate(), "1675 " + getSysDate() + 100
+                "TC1675 " + getSysDate(), "1675 " + createRandomNumber(9)
         };
         String[] evrakNo1675 = new String[2];
 
         String[] konu2 = new String[]{
-                "TC1811 " + getSysDate(), "TC1811 " + getSysDate() + 100
+                "TC1811 " + getSysDate(), "TC1811 " + createRandomNumber(9)
         };
 
 
