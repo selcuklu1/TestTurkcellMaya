@@ -2,7 +2,6 @@ package pages.pageComponents;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;
-import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Step;
 import pages.MainPage;
 
@@ -45,10 +44,10 @@ public class EvrakPageButtons extends MainPage {
 
     @Step("s-İmzla seç")
     public EvrakPageButtons sImzalaRadioSec() {
-        if (islemMesaji().isUyari("Servise ulaşılamıyor!"))
+/*        if (islemMesaji().isUyari("Servise ulaşılamıyor!"))
             islemMesaji().closeMessage();
         else
-            throw new RuntimeException("İşlem Mesajı");
+            throw new RuntimeException("İşlem Mesajı");*/
         getSImzalaRadio().shouldBe(visible).click();
         return this;
     }
