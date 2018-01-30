@@ -480,4 +480,34 @@ public class EvrakPostalamaTest extends BaseTest {
         postalananEvrakRaporuPage.chkboxPostaladiklarim()
                 .postaSorgulama();
     }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true , description = "TS0310 : İçerik ekranından evrakın postalanması")
+    public void TS0310() throws InterruptedException {
+        login("Mbozdemir", "123");
+        String konu = "TS1685_";
+        postalanacakEvraklarPage.openPage()
+                .filter().findRowsWith(Condition.text(konu)).first().click();
+
+        postalanacakEvraklarPage.icerikGoster()
+               .btnIcerikEvrakGoster();
+
+        postalanacakEvraklarPage.btnDagitimGidisSekli("APS")
+            .inputIcerikPstakod("0310");
+        postalanacakEvraklarPage.btnDagitimGidisSekli("KEP");
+        postalanacakEvraklarPage
+                .btnIcerikPostaYazdir();
+        postalanacakEvraklarPage
+                .btnPopupPostaYazdirma()
+                .btnYazdirPopupKapat();
+
+        postalanacakEvraklarPage
+                .btnIcerikEtiketBastir()
+                .txtPopupEtiketAciklama()
+                .btnEtiketpopupkapat();
+
+        postalanacakEvraklarPage
+                .btnIcerikEvrakPostalama();
+               // .btnIcerikPostalamaEvet();
+    }
 }
