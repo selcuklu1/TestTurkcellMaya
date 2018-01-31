@@ -99,6 +99,17 @@ public class PostaListesiPage extends MainPage {
         return this;
     }
 
+    @Step("Posta Listesi doldur : \"{postaListesi}\" ")
+    public String postaListesiIlkKayitAl() {
+        SelenideElement panelAc = $(By.xpath("//span[@class='ui-button-icon-primary ui-icon ui-icon-triangle-1-s']/.."));
+        panelAc.click();
+        SelenideElement panel = $("[id='mainInboxForm:inboxDataTable:filtersAccordion:postaListesiAdi_panel'] li:nth-child(1)" );
+//        BelgenetElement txtPostaListesi = comboBox(By.id("mainInboxForm:inboxDataTable:filtersAccordion:postaListesiAdi_input"));
+        String postaListesi = panel.text();
+
+        return postaListesi;
+    }
+
     @Step("Posta Listesi kontrolü : \"{postaListesi}\", \"{shouldBeExist}\" ")
     public PostaListesiPage postaListesiKontrol(String postaListesi, boolean shouldBeExist) {
         btnPostaListesiDropDown.click();

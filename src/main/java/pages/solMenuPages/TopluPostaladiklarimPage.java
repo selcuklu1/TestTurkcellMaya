@@ -177,11 +177,13 @@ public class TopluPostaladiklarimPage extends MainPage {
 
             if (postaListesi.isDisplayed() && postaListesi.exists()) {
                 elementFound = true;
-                Allure.addAttachment("Posta Listesi Adı: ", postaListesiAdi);
-                Allure.addAttachment("Posta Kodu: ", postaKodu);
-                Allure.addAttachment("Posta Tarihi: ", postaTarihi);
-                Allure.addAttachment("Posta Gramajı: ", postaGramaji);
-                Allure.addAttachment("PTT Tutarı: ", pttTutari + " TL");
+                Allure.addAttachment("Ekran Alan Kontrolleri", "Posta Listesi Adı: '" + postaListesiAdi + "\n'" +
+                        "Posta Kodu: , '" + postaKodu + "'\n" +
+                        "Posta Kodu: ,'" + postaKodu + "'\n" +
+                        "Posta Tarihi: , '" + postaTarihi + "'\n" +
+                        "Posta Gramajı: , '" + postaGramaji + "'\n" +
+                        "PTT Tutarı: , '" + pttTutari + " TL " + "bilgileri ile listelendiği görülür.");
+                takeScreenshot();
                 break;
             }
         }
@@ -519,7 +521,7 @@ public class TopluPostaladiklarimPage extends MainPage {
     }
 
     @Step("Tabloda evrak kontrolü yapılır. \"{konu}\" ")
-    public TopluPostaladiklarimPage topluPostaladiklarimEvrakKontrolu(String konu){
+    public TopluPostaladiklarimPage topluPostaladiklarimEvrakKontrolu(String konu) {
         searchTable().searchInAllPages(true).findRows(text(konu)).getFoundRow().shouldBe(exist);
         return this;
     }
