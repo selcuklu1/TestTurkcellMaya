@@ -543,6 +543,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .ilkTarihDoldur(ilkTarih)
                 .sonTarihDoldur(sonTarih)
                 .sorgula()
+                .cevaplananEvrakAlanKontrolleri()
                 .cevaplananEvrakKayitKontrolu(
                         evrakTarihi,
                         evrakKayitTarihi,
