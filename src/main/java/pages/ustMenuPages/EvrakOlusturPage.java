@@ -882,9 +882,7 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Seçilen gereği sil")
         public BilgilerTab secilenGeregiSil2() throws InterruptedException {
-            Thread.sleep(1000);
-            cmbGeregi2.shouldBe(visible);
-            cmbGeregi2.clearLastSelectedItem();
+            $$("[id$='geregiLov:LovSecilenTable_data'] button[class$='button-icon-borderless']").get(0).click();
             return this;
         }
 
