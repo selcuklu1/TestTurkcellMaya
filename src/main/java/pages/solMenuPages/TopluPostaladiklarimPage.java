@@ -1,10 +1,7 @@
 package pages.solMenuPages;
 
 
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.SelenideElement;
-import com.codeborne.selenide.WebDriverRunner;
+import com.codeborne.selenide.*;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -234,7 +231,9 @@ public class TopluPostaladiklarimPage extends MainPage {
 
     @Step("Evrak Listesi tablosunda Yazdır butonu tıklanır.")
     public TopluPostaladiklarimPage evrakListesiYazdir(String[] konu) {
+        ElementsCollection table = $$("tbody[id='mainPreviewForm:dataTableId_data'] tr[data-ri]");
         int size = $$("tbody[id='mainPreviewForm:dataTableId_data'] tr[data-ri]").size();
+        Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", table);
         for (int i = 0; i < size; i++) {
             $$("tbody[id='mainPreviewForm:dataTableId_data'] tr[data-ri]")
                     .filterBy(Condition.text(konu[i]))
