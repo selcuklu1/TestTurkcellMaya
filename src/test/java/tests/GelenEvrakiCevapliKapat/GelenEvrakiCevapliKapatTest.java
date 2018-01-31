@@ -320,8 +320,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .havaleIslemleriKisiDoldur(kisi)
                 .kaydet()
                 .evetDugmesi()
-                .yeniKayitButton()
-                .benzerKayit();
+                .yeniKayitButton();
 
         login(usernameZTEKIN, passwordZTEKIN);
 
