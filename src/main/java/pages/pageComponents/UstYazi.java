@@ -9,23 +9,18 @@ import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
-import pages.pageComponents.tabs.EditorTab;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.jar.JarEntry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.CollectionCondition.texts;
 import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
 import static pages.pageComponents.belgenetElements.Belgenet.comboBox;
 
 /**
@@ -36,27 +31,21 @@ import static pages.pageComponents.belgenetElements.Belgenet.comboBox;
 public class UstYazi extends MainPage {
 
     private SelenideElement notDialog = $("#evrakKisiselNotDialogFormId");
+    private SelenideElement container;
+
+    public UstYazi(SelenideElement container) {
+        this.container = container;
+        //searchTable = new SearchTable(container.$("div[id$='kisiselNotEkleDataTableId'] table"));
+    }
+
+    public UstYazi() {
+        this.container = $("html");
+        //searchTable = new SearchTable(container.$("div[id$='kisiselNotEkleDataTableId'] table"));
+    }
 
     @Step("\"Üst yazıyı görüntülemek için tıklayınız.\" link bulunur")
-    public SelenideElement getUstYaziLink(){
+    public SelenideElement getUstYaziLink() {
         return container.$("a[id$='ustYaziLinkButtonSag']");
-    }
-
-    @Step("Üst yazıyı görüntüle")
-    public UstYazi ustYaziGoruntule() {
-        getUstYaziLink().shouldBe(visible).click();
-        return this;
-    }
-
-    @Step("Evrak Notları tab bulunur")
-    public SelenideElement getEvrakNotlariTab(){
-        return container.$(By.linkText("Evrak Notları"));
-    }
-
-    @Step("Evrak Notlari tab açılır")
-    public EvrakNot evrakNotlariTabiAc() {
-        getEvrakNotlariTab().shouldBe(visible).click();
-        return new EvrakNot(container);
     }
 /*
     //@Step("Evrak Notlari listesi bulunur")
@@ -210,20 +199,25 @@ public class UstYazi extends MainPage {
         return $("button span[class~='delete-icon']");
     }*/
 
-    private SelenideElement container;
+    @Step("Üst yazıyı görüntüle")
+    public UstYazi ustYaziGoruntule() {
+        getUstYaziLink().shouldBe(visible).click();
+        return this;
+    }
     //private SearchTable searchTable;
 
-    public UstYazi(SelenideElement container) {
-        this.container = container;
-        //searchTable = new SearchTable(container.$("div[id$='kisiselNotEkleDataTableId'] table"));
+    @Step("Evrak Notları tab bulunur")
+    public SelenideElement getEvrakNotlariTab() {
+        return container.$(By.linkText("Evrak Notları"));
     }
 
-    public UstYazi() {
-        this.container = $("html");
-        //searchTable = new SearchTable(container.$("div[id$='kisiselNotEkleDataTableId'] table"));
+    @Step("Evrak Notlari tab açılır")
+    public EvrakNot evrakNotlariTabiAc() {
+        getEvrakNotlariTab().shouldBe(visible).click();
+        return new EvrakNot(container);
     }
 
-    public SelenideElement getContainer(){
+    public SelenideElement getContainer() {
         return container;
     }
 
@@ -237,10 +231,6 @@ public class UstYazi extends MainPage {
 
         private List<EvrakNot> createdNotes = new ArrayList<EvrakNot>();
 
-        public SearchTable getEvrakNotlariTable(){
-            return searchTable;
-        }
-
         public EvrakNot() {
             this.container = $("html");
             //searchTable = new SearchTable(container.$("div[id$='kisiselNotEkleDataTableId'] table"));
@@ -251,20 +241,24 @@ public class UstYazi extends MainPage {
             searchTable = new SearchTable(container.$("div[id$='kisiselNotEkleDataTableId'] table"));
         }
 
-        @Step("Yeni evrak ekle butonu bulunur")
-        public SelenideElement getYeniNotEkleButton(){
+        public SearchTable getEvrakNotlariTable() {
+            return searchTable;
+        }
+
+        @Step("Yeni evrak not ekle butonu bulunur")
+        public SelenideElement getYeniNotEkleButton() {
             return container.$("button[id$='kisiselNotEkleDataTableId:kisiselNotEkleId']");
         }
 
-        @Step("Yeni evrak ekle butonu bulunur")
-        public EvrakNot yeniNotEkle(){
+        @Step("Yeni evrak not ekle")
+        public EvrakNot yeniNotEkle() {
             getYeniNotEkleButton().sendKeys("\n");
             getYeniNotEkleButton().click(1, 1);
             return this;
         }
 
         @Step("Not Ekle dialog bulunur")
-        public SelenideElement getNotEkleDialog(){
+        public SelenideElement getNotEkleDialog() {
             return $("div[id='evrakKisiselNotDialogFormId:evrakKisiselNotDialogId']");
         }
 
@@ -311,25 +305,25 @@ public class UstYazi extends MainPage {
         }
 
         @Step("Not Ekle \"Not Tipi\" alan bulunur")
-        public BelgenetElement getNotTipi(){
-            return comboBox(getNotEkleDialog(),"label[id='evrakKisiselNotDialogFormId:evrakNotTipi_label']");
+        public BelgenetElement getNotTipi() {
+            return comboBox(getNotEkleDialog(), "label[id='evrakKisiselNotDialogFormId:evrakNotTipi_label']");
         }
 
         @Step("Not Ekle \"Not Tipi\" alan seçilir")
-        public EvrakNot notTipiSec(String value){
+        public EvrakNot notTipiSec(String value) {
             getNotTipi().selectComboBox(value);
             getNotTipi().shouldHave(text(value));
             return this;
         }
 
         @Step("Yeni Not tipi alanın değer kontrolleri")
-        public EvrakNot notTipiAlanDegerKontrol(String... values){
+        public EvrakNot notTipiAlanDegerKontrol(String... values) {
             getNotTipi().getComboBoxValues().shouldHave(texts(values));
             return this;
         }
 
         @Step("Not Ekle \"Kaydet\" butonu bulunur")
-        public SelenideElement getKaydetButton(){
+        public SelenideElement getKaydetButton() {
             return getNotEkleDialog().$("button[id='evrakKisiselNotDialogFormId:evrakKisiselNotKaydet']");
 //            notDialog.$("button[id='evrakKisiselNotDialogFormId:evrakKisiselNotKaydet']");
         }
@@ -387,44 +381,60 @@ public class UstYazi extends MainPage {
         }
 
         @Step("Notları ara")
-        public EvrakNot notlariAra(Condition... aramaConditions){
+        public EvrakNot notlariAra(Condition... aramaConditions) {
             notes = getEvrakNotlariTable().findRows(aramaConditions).getFoundRows();
             return this;
         }
 
         @Step("Not bulunur")
-        public EvrakNot notuBul(Condition... aramaConditions){
+        public EvrakNot notuBul(Condition... aramaConditions) {
             notlariAra(aramaConditions);
             note = notes.shouldHave(sizeGreaterThan(0)).first().shouldBe(visible);
             return this;
         }
 
-        @Step("Not Güncelle butonu bulunur")
+        @Step("Not Güncelle butonu aranır")
         public SelenideElement getNoteGuncelleButton() {
-            return $("button span[class~='update-icon']");
+            return note.$("button span[class~='update-icon']");
         }
 
-        @Step("Not Sil butonu bulunur")
+        @Step("Not Sil butonu aranır")
         public SelenideElement getNoteSilButton() {
-            return $("button span[class~='delete-icon']");
+            return note.$("button span[class~='delete-icon']");
         }
 
         @Step("Notu sil")
-        public EvrakNot notuSil(){
-            note.$("button span[class~='delete-icon']").click();
+        public EvrakNot notuSil() {
+            getNoteSilButton().click();
             note.shouldNotBe(exist);
             return this;
         }
 
-        public SelenideElement getNote(){
+        @Step("Notu güncelle")
+        public EvrakNot notuGuncelle(String aciklama) {
+            getNoteGuncelleButton().click();
+            getAciklamaAlani().clear();
+            aciklamaAlaniDoldur(aciklama);
+            kaydet();
+            return this;
+        }
+
+        @Step("Postit şeklinde")
+        public EvrakNot postitStyle() {
+            String style = "position:relative; background:#fefabc; padding: 5px;  font-size: 10px; color: #000; width: 200px; margin-bottom:15px; box-shadow: 0px 4px 6px #333; -moz-box-shadow: 0px 4px 6px #333; -webkit-box-shadow: 0px 4px 6px #333;";
+            note.shouldHave(attribute("style", style));
+            return this;
+        }
+
+        public SelenideElement getNote() {
             return note;
         }
 
-        public ElementsCollection getNotes(){
+        public ElementsCollection getNotes() {
             return notes;
         }
 
-        public List<EvrakNot> getCreatedNotes(){
+        public List<EvrakNot> getCreatedNotes() {
             return createdNotes;
         }
     }

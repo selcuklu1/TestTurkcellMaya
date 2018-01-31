@@ -48,13 +48,13 @@ public class ConfirmDialog extends BaseLibrary {
     }
 
     @Step("Evet butona tikla")
-    public ConfirmDialog confirmEvetTikla(){
+    public ConfirmDialog confirmEvetTikla() {
         getConfirmButton("Evet").shouldBe(visible).click();
         return this;
     }
 
     @Step("Hayır butona tikla")
-    public ConfirmDialog confirmHayirTikla(){
+    public ConfirmDialog confirmHayirTikla() {
         getConfirmButton("Hayır").shouldBe(visible).click();
         return this;
     }

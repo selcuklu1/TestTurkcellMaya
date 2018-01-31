@@ -8,17 +8,16 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.altMenuPages.CevapYazPage;
 import pages.altMenuPages.EvrakDetayiPage;
+import pages.newPages.EvrakOlusturPage;
 import pages.pageComponents.TextEditor;
 import pages.pageComponents.tabs.EditorTab;
 import pages.solMenuPages.*;
-import pages.newPages.EvrakOlusturPage;
 import pages.ustMenuPages.CevaplananEvrakRaporuPage;
 import pages.ustMenuPages.GelenEvrakKayitPage;
 import pages.ustMenuPages.KlasorEvrakIslemleriPage;
 
 import java.io.IOException;
 
-import static com.codeborne.selenide.Selenide.$;
 import static data.TestData.*;
 
 /****************************************************

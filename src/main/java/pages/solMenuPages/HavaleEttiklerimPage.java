@@ -112,7 +112,7 @@ public class HavaleEttiklerimPage extends MainPage {
     }
 
     @Step("Havale Yap")
-    public HavaleEttiklerimPage havaleYap(){
+    public HavaleEttiklerimPage havaleYap() {
         btnHavaleYap.click();
         return this;
     }

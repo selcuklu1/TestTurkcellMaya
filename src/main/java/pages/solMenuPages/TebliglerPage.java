@@ -74,7 +74,7 @@ public class TebliglerPage extends MainPage {
         return this;
     }
 
-    @Step("Tebliğler menüsü kırmızı mı?")
+    @Step("Tebliğler menü yazısı kırmızı renk kontrolü.")
     public TebliglerPage tebliglerMenuKirmiziKontrolu() {
         menuTebligler.shouldHave(Condition.cssClass("ui-menuitem-unread"));
         return this;
@@ -115,7 +115,7 @@ public class TebliglerPage extends MainPage {
         return this;
     }
 
-    @Step("Tebelliğ Et butonuna tıkla.")
+    @Step("Tebellüğ Et butonuna tıkla.")
     public TebliglerPage tebellugEt(boolean onay) {
         btnTebellugEt.click();
         if (onay == true)
@@ -148,6 +148,11 @@ public class TebliglerPage extends MainPage {
                     .first()
                     .shouldNotBe(Condition.visible);
         }
+        return this;
+    }
+
+    public TebliglerPage tebellugEtButonuKontrolEt() {
+        btnTebellugEt.shouldBe(Condition.visible);
         return this;
     }
 

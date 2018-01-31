@@ -118,6 +118,7 @@ public class PostalananlarPage extends MainPage {
         dateBaslangicTarihi.setValue(text);
         return this;
     }
+
     @Step("Icerik Detay Posta Detay Butonu")
     public PostalananlarPage icerikDetayPostaDetayi() {
         btnIcerikPostaDetayi.click();
@@ -149,11 +150,11 @@ public class PostalananlarPage extends MainPage {
     }
 
     @Step("Evrak'ın \"{konu}\" adlı konu ile geldiği görünür. Geldiği yer:\"{gidecegiYer}\" Evrak tarihi:\"{evrakTarihi}\"")
-    public PostalananlarPage evrakGeldigiGorme(String konu, String gidecegiYer, String evrakTarihi){
+    public PostalananlarPage evrakGeldigiGorme(String konu, String gidecegiYer, String evrakTarihi) {
         boolean durum = tablePostalananlar.filterBy(Condition.text(konu))
                 .filterBy(Condition.text(gidecegiYer))
-                .filterBy(Condition.text(evrakTarihi)).get(0).shouldBe(visible).exists()==true;
-        Assert.assertEquals(durum,true);
+                .filterBy(Condition.text(evrakTarihi)).get(0).shouldBe(visible).exists() == true;
+        Assert.assertEquals(durum, true);
         takeScreenshot();
         return this;
     }
@@ -238,15 +239,16 @@ public class PostalananlarPage extends MainPage {
     /**
      * @return
      */
-        @Step("Postalanan Evrak Sayisi")
-        public String evSay() {
+    @Step("Postalanan Evrak Sayisi")
+    public String evSay() {
         return $x("//tbody/tr[3]/td[3]/label").getAttribute("outerText");
     }
 
-    @Step ("Postalanan Evrak Icerik icindeki Evrak Sayisi")
+    @Step("Postalanan Evrak Icerik icindeki Evrak Sayisi")
     public String icerikEvrakSay() {
-            return $x("//*[@id='inboxItemInfoForm:evrakDetayPanelGrid']/tbody/tr[3]/td[3]/label").getAttribute("innerText");
+        return $x("//*[@id='inboxItemInfoForm:evrakDetayPanelGrid']/tbody/tr[3]/td[3]/label").getAttribute("innerText");
     }
+
     @Step("Kurdele Butonuna Tıkla")
     public PostalananlarPage btnKurdele() {
 
@@ -256,8 +258,8 @@ public class PostalananlarPage extends MainPage {
 
     @Step("Imza Popup kapat")
     public PostalananlarPage btnImzaciPopupKapat() {
-            btnImzaciPopupKapat.exists();
-            btnImzaciPopupKapat.scrollTo();
+        btnImzaciPopupKapat.exists();
+        btnImzaciPopupKapat.scrollTo();
         clickJs(btnImzaciPopupKapat);
         return this;
     }
@@ -280,10 +282,11 @@ public class PostalananlarPage extends MainPage {
         Thread.sleep(1000);
         return this;
     }
+
     @Step("Filtrelenen postanın Icerik Goster butonuna tıkla")
     public PostalananlarPage btnFiltrenenPostaIcerikGoster(String Konu) throws InterruptedException {
         filter().findRowsWith(Condition.text(Konu)).first().click();
-        String idAtr ;
+        String idAtr;
         idAtr = filter().findRowsWith(Condition.text(Konu)).first().getAttribute("data-ri");
         System.out.println(idAtr);
         String IcerikId = "mainInboxForm:inboxDataTable:" + idAtr + ":detayGosterButton";
@@ -328,9 +331,9 @@ public class PostalananlarPage extends MainPage {
     }
 
     @Step("Icerik Posta Detay Tuzel Kisi Tebligat Tarih Guncelle")
-    public PostalananlarPage btnIcerikPDTuzelKisiTebTarGnc (String date) {
-            btnIcerikPDTebligatTarihGnc.setValue(date);
-            return this;
+    public PostalananlarPage btnIcerikPDTuzelKisiTebTarGnc(String date) {
+        btnIcerikPDTebligatTarihGnc.setValue(date);
+        return this;
     }
 
     @Step("Filtre sekmesini aç")
@@ -338,34 +341,40 @@ public class PostalananlarPage extends MainPage {
         btnFiltreSpan.click();
         return this;
     }
+
     @Step("Icerik içindeki posta detayi butonu iç sayfa tuzek kisi guncelleme")
-    public PostalananlarPage btnIcerikPostaDetayTuzelKisiGnc () {
-            btnIcerikPostaDetayiTuzelKisiGuncelle.click();
-            return this;
+    public PostalananlarPage btnIcerikPostaDetayTuzelKisiGnc() {
+        btnIcerikPostaDetayiTuzelKisiGuncelle.click();
+        return this;
     }
+
     @Step("Icerik içindeki posta detayi butonu iç sayfa tuzel kisi posta kodu guncelleme")
-    public PostalananlarPage btnIcerikPosDetTuzKisPosKodGnc (String postaKodu) {
-           btnIcerikPDPostaKodGnc.setValue(postaKodu);
-           return this;
+    public PostalananlarPage btnIcerikPosDetTuzKisPosKodGnc(String postaKodu) {
+        btnIcerikPDPostaKodGnc.setValue(postaKodu);
+        return this;
 
     }
+
     @Step("Icerik içindeki posta detayi buton tuzel kisi posta açıklama güncelle")
-    public PostalananlarPage btnIcerikPDTuzelKisiPosAcikGnc (String aciklama) {
-            btnIcerikPDPostaAciklama.setValue(aciklama);
-            return this;
+    public PostalananlarPage btnIcerikPDTuzelKisiPosAcikGnc(String aciklama) {
+        btnIcerikPDPostaAciklama.setValue(aciklama);
+        return this;
 
     }
+
     @Step("Icerik Posta Detay Pop up Guncelleme kaydet")
-    public PostalananlarPage btnIcerikPDPopupKaydet () {
+    public PostalananlarPage btnIcerikPDPopupKaydet() {
         btnIcerkPDGuncellemeKaydet.click();
         return this;
     }
+
     @Step("Tuzel Kisi Guncelle")
-    public PostalananlarPage btnTuzelKisiGuncelle () {
+    public PostalananlarPage btnTuzelKisiGuncelle() {
         btnTuzelKisiGuncelle.click();
         return this;
 
     }
+
     @Step("Imza Dialog Ekranını göster")
     public PostalananlarPage mngImzaDialog() {
 
@@ -393,6 +402,7 @@ public class PostalananlarPage extends MainPage {
         tuzelKisiGuncelle.click();
         return this;
     }
+
     @Step("Kullanıcı Guncelle")
     public PostalananlarPage kullaniciGuncelle() {
 

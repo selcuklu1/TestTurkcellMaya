@@ -11,9 +11,7 @@ import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
 
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.value;
-import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static pages.pageComponents.belgenetElements.Belgenet.$x;
@@ -527,6 +525,7 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Tebliğ Et butonuna tıkla")
     public GelenEvraklarPage tebligEt() {
         btnTebligEt.click();
         return this;
@@ -780,6 +779,24 @@ public class GelenEvraklarPage extends MainPage {
         $$("#leftMenuForm #birimlerimMenusuContainer a")
                 .filterBy(Condition.text(birim)).shouldHaveSize(1);
         return this;
+    }
+
+    @Step("Gelen evraklar tablosunda 1. satırdan {bilgi} bilgisi değerini getir.")
+    public String degerGetir(String bilgi) {
+        String deger = "";
+        SelenideElement ilkSatir = tableEvraklar2.first();
+        deger = ilkSatir.$x(".//td[@role='gridcell']/div[@class='searchText' and contains(., '" + bilgi + "')]").getText();
+
+        return deger.substring(bilgi.length() + 2, deger.length());
+    }
+
+    @Step("Gelen evraklar tablosunda {satir}. satırdan {bilgi} bilgisi değerini getir.")
+    public String degerGetir(int satir, String bilgi) {
+        String deger = "";
+        SelenideElement currentRow = tableEvraklar2.get(satir);
+        deger = currentRow.$x(".//td[@role='gridcell']/div[@class='searchText' and contains(., '" + bilgi + "')]").getText();
+
+        return deger.substring(bilgi.length() + 2, deger.length());
     }
 
 }

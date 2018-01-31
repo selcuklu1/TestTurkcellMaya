@@ -16,18 +16,18 @@ import static pages.pageComponents.belgenetElements.Belgenet.$;
  * Tarih: 25.12.2017
  * Açıklama:
  */
-public class EvrakOlusturPage extends MainPage {
-    public final UstMenuData.EvrakIslemleri pageTitle = UstMenuData.EvrakIslemleri.EvrakOlustur;
-    private SelenideElement page = $("#yeniGidenEvrakForm");
+public class KararYazisiOlusturPage extends MainPage {
+    public final UstMenuData.EvrakIslemleri pageTitle = UstMenuData.EvrakIslemleri.KararYazisiOlustur;
+    private SelenideElement page = $("#yeniKararEvrakForm");
 
-    public EvrakOlusturPage openPage() {
+    public KararYazisiOlusturPage openPage() {
         ustMenu(pageTitle);
         pageHeader().getPageTitle().shouldHave(text(pageTitle.getName()));
         return this;
     }
 
     @Step("Sayfayı kapat")
-    public EvrakOlusturPage closePage(boolean save) {
+    public KararYazisiOlusturPage closePage(boolean save) {
         pageHeader().closePage();
         if (save)
             confirmDialog().confirmEvetTikla();

@@ -18,12 +18,14 @@ public class User {
         this.username = username;
         this.password = password;
     }
+
     public User(String username, String password, String fullname) {
         this.username = username;
         this.password = password;
         this.fullname = fullname;
         splitFullname(fullname);
     }
+
     public User(String username, String password, String fullname, String birimAdi) {
         this.username = username;
         this.password = password;
@@ -31,6 +33,7 @@ public class User {
         this.birimAdi = birimAdi;
         splitFullname(fullname);
     }
+
     public User(String username, String password, String fullname, String birimAdi, String gorev) {
         this.username = username;
         this.password = password;
@@ -41,6 +44,7 @@ public class User {
         splitFullname(fullname);
 
     }
+
     public User(String username, String password, String fullname, String birimAdi, String gorev, String name, String surname) {
         this.username = username;
         this.password = password;
@@ -80,8 +84,8 @@ public class User {
     }
 
 
-    private void splitFullname(String fullname){
-        if (!fullname.isEmpty()){
+    private void splitFullname(String fullname) {
+        if (!fullname.isEmpty()) {
             String[] n = fullname.split(" ", 2);
             this.name = n[0];
             this.surname = n[1];

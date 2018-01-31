@@ -24,9 +24,6 @@ import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
  */
 public class AltTabs extends MainPage {
 
-    protected SelenideElement container;
-    protected SelenideElement tab;
-
     private final static String dosyaEkleTabName = "Dosya Ekle";
     private final static String fizikselEkEkleTabName = "Fiziksel Ek Ekle";
     private final static String sistemdeKayitliEvrakEkleTabName = "Sistemde Kayıtlı Evrak Ekle";
@@ -34,7 +31,8 @@ public class AltTabs extends MainPage {
     private final static String arsivdeKayitliEvrakEkleTabName = "Arşivde Kayıtlı Evrak Ekle";
     private final static String metinEkleTabName = "Metin Ekle";
     private final static String tercumeEkleTabName = "Tercüme Ekle";
-
+    protected SelenideElement container;
+    protected SelenideElement tab;
     SearchTable sistemdeKayitliEvrakListesiDataTable;
     SearchTable arsivdenEvrakAraListesiDataTable;
 
@@ -43,30 +41,37 @@ public class AltTabs extends MainPage {
         this.container = container;
     }
 
-    private BelgenetElement findBelgenetElement(String labelText, String parentTag, String targetTag, int index){
-        return comboLov(tab, By.xpath("(descendant::"+ parentTag +"[descendant::label[normalize-space(.)='"+labelText+"']]//"+ targetTag +")[" + index + "]"));
+    private BelgenetElement findBelgenetElement(String labelText, String parentTag, String targetTag, int index) {
+        return comboLov(tab, By.xpath("(descendant::" + parentTag + "[descendant::label[normalize-space(.)='" + labelText + "']]//" + targetTag + ")[" + index + "]"));
         //return pages.pageComponents.belgenetElements.Belgenet.$(By.xpath("(descendant::"+ parentTag +"[descendant::label[normalize-space(.)='"+labelText+"']])[" + index + "]"));
     }
-    private SelenideElement findElement(String labelText, String parentTag, String targetTag, int index){
-        return tab.$x("(descendant::"+ parentTag +"[descendant::label[normalize-space(.)='"+labelText+"']]//"+ targetTag +")[" + index + "]");
+
+    private SelenideElement findElement(String labelText, String parentTag, String targetTag, int index) {
+        return tab.$x("(descendant::" + parentTag + "[descendant::label[normalize-space(.)='" + labelText + "']]//" + targetTag + ")[" + index + "]");
     }
-    public BelgenetElement inputComboLov(String label, int... index){
-        return findBelgenetElement(label, "table", "input", ((index.length > 0)?index[0]:1));
+
+    public BelgenetElement inputComboLov(String label, int... index) {
+        return findBelgenetElement(label, "table", "input", ((index.length > 0) ? index[0] : 1));
     }
-    public SelenideElement input(String label, int... index){
-        return findElement(label, "table", "input", ((index.length > 0)?index[0]:1));
+
+    public SelenideElement input(String label, int... index) {
+        return findElement(label, "table", "input", ((index.length > 0) ? index[0] : 1));
     }
-    public SelenideElement inputButton(String label, int... index){
-        return findElement(label, "table", "button", ((index.length > 0)?index[0]:1));
+
+    public SelenideElement inputButton(String label, int... index) {
+        return findElement(label, "table", "button", ((index.length > 0) ? index[0] : 1));
     }
-    public SelenideElement textarea(String label, int... index){
-        return findElement(label, "table", "textarea", ((index.length > 0)?index[0]:1));
+
+    public SelenideElement textarea(String label, int... index) {
+        return findElement(label, "table", "textarea", ((index.length > 0) ? index[0] : 1));
     }
-    public SelenideElement select(String label, int... index){
-        return findElement(label, "table", "select", ((index.length > 0)?index[0]:1));
+
+    public SelenideElement select(String label, int... index) {
+        return findElement(label, "table", "select", ((index.length > 0) ? index[0] : 1));
     }
-    public SelenideElement button(String name, int... index){
-        return tab.$x("(descendant::button[descendant::span[normalize-space(.)='"+name+"']])[" + ((index.length > 0)?index[0]:1) + "]");
+
+    public SelenideElement button(String name, int... index) {
+        return tab.$x("(descendant::button[descendant::span[normalize-space(.)='" + name + "']])[" + ((index.length > 0) ? index[0] : 1) + "]");
     }
 
 
@@ -76,6 +81,7 @@ public class AltTabs extends MainPage {
         tab = container.$("div[id$='dosyaEkleTab']");
         return this;
     }
+
     @Step(dosyaEkleTabName + " tabı bul")
     public SelenideElement getDosyaEkleTab() {
         return container.$(byLinkText(dosyaEkleTabName));
@@ -87,6 +93,7 @@ public class AltTabs extends MainPage {
         tab = container.$("div[id$='tercumeEvragiEkleTab']");
         return this;
     }
+
     @Step(tercumeEkleTabName + " tabı bul")
     public SelenideElement getTercumeEkleTab() {
         return container.$(byLinkText(tercumeEkleTabName));
@@ -98,6 +105,7 @@ public class AltTabs extends MainPage {
         tab = container.$("div[id$='aciklamaEkleTab']");
         return this;
     }
+
     @Step(metinEkleTabName + " tabı bul")
     public SelenideElement getMetinEkleTab() {
         return container.$(byLinkText(metinEkleTabName));
@@ -110,6 +118,7 @@ public class AltTabs extends MainPage {
         arsivdenEvrakAraListesiDataTable = new SearchTable($("div[id$='arsivdenEvrakAraListesiDataTable']"));
         return this;
     }
+
     @Step(arsivdeKayitliEvrakEkleTabName + " tabı bul")
     public SelenideElement getArsivdeKayitliEvrakEkleTab() {
         return container.$(byLinkText(arsivdeKayitliEvrakEkleTabName));
@@ -121,6 +130,7 @@ public class AltTabs extends MainPage {
         tab = container.$("div[id$='webAdresindenEkEkle']");
         return this;
     }
+
     @Step(webAdresiniEkleTabName + " tabı bul")
     public SelenideElement getWebAdresiniEkleTab() {
         return container.$(byLinkText(webAdresiniEkleTabName));
@@ -133,6 +143,7 @@ public class AltTabs extends MainPage {
         sistemdeKayitliEvrakListesiDataTable = new SearchTable(tab.$("div[id$='sistemdeKayitliEvrakListesiDataTable']"));
         return this;
     }
+
     @Step(sistemdeKayitliEvrakEkleTabName + " tabı bul")
     public SelenideElement getSistemdeKayitliEvrakEkleTab() {
         return container.$(byLinkText(sistemdeKayitliEvrakEkleTabName));
@@ -144,18 +155,18 @@ public class AltTabs extends MainPage {
         tab = container.$("div[id$='aciklamaEkleTab']");
         return this;
     }
+
     @Step(fizikselEkEkleTabName + " tabı bul")
     public SelenideElement getFiziksetEkEkleTab() {
         return container.$(byLinkText(fizikselEkEkleTabName));
     }
 
 
-
-
     @Step("Ek Metni bul")
     public SelenideElement getEkMetniTextarea() {
         return textarea("Ek Metni");
     }
+
     @Step("Ek Metni doldur")
     public AltTabs ekMetniDoldur(String text) {
         getEkMetniTextarea().setValue(text);
@@ -166,6 +177,7 @@ public class AltTabs extends MainPage {
     public SelenideElement getTaramaHavuzundanEkleButton() {
         return button("Tarama Havuzundan Ekle");
     }
+
     @Step("Tarama Havuzundan Ekle butona tıkla")
     public AltTabs taramaHavuzundanEkleTikla() {
         getTaramaHavuzundanEkleButton().shouldBe(visible, enabled).click();
@@ -176,6 +188,7 @@ public class AltTabs extends MainPage {
     public SelenideElement getTarayicidanEkleButton() {
         return button("Tarayıcıdan Ekle");
     }
+
     @Step("Tarayıcıdan Ekle butona tıkla")
     public AltTabs tarayicidanEkleTikla() {
         getTarayicidanEkleButton().shouldBe(visible, enabled).click();
@@ -183,9 +196,10 @@ public class AltTabs extends MainPage {
     }
 
     @Step("Dosya Ekle butonu bul")
-    public SelenideElement getDosyaEkleButton(){
+    public SelenideElement getDosyaEkleButton() {
         return tab.$x("descendant::label[span[normalize-space(.)='Dosya Ekle']]/input");
     }
+
     @Step("Dosya Ekle alanda dosyayı seç")
     public AltTabs dosyaEkle(String filePath) {
         File file = new File(filePath);
@@ -193,6 +207,7 @@ public class AltTabs extends MainPage {
         tab.shouldHave(text(file.getName()));
         return this;
     }
+
     @Step("Dosya Ekle alanda dosyayı seç")
     public AltTabs dosyaEkleFromClasspath(String filePath) {
         getDosyaEkleButton().uploadFromClasspath(filePath);
@@ -204,6 +219,7 @@ public class AltTabs extends MainPage {
     public SelenideElement getEkleButton() {
         return button("Ekle");
     }
+
     @Step("Dosya Ekle butona tıkla")
     public AltTabs ekleButonaTikla() {
         getEkleButton().click();
@@ -214,6 +230,7 @@ public class AltTabs extends MainPage {
     public SelenideElement getKonuInput() {
         return input("Konu");
     }
+
     @Step("Konu alanı doldur")
     public AltTabs konuDoldur(String text) {
         getKonuInput().setValue(text);
@@ -224,6 +241,7 @@ public class AltTabs extends MainPage {
     public BelgenetElement getKullaniciCombolov() {
         return inputComboLov("Kullanıcı");
     }
+
     @Step("Konu alanı doldur")
     public AltTabs kullaniciSec(String value, Condition... filterBy) {
         if (filterBy.length > 0) {
@@ -242,6 +260,7 @@ public class AltTabs extends MainPage {
     public SelenideElement getEvrakSayiInput() {
         return input("Evrak Sayı");
     }
+
     @Step("Evrak Sayı alanı doldur")
     public AltTabs evrakSayiDoldur(String text) {
         getEvrakSayiInput().setValue(text);
@@ -252,6 +271,7 @@ public class AltTabs extends MainPage {
     public SelenideElement getDokumanAraButton() {
         return button("Doküman Ara");
     }
+
     @Step("Doküman Ara butona tıkla")
     public AltTabs dokumanAraTikla() {
         getDokumanAraButton().click();
@@ -267,6 +287,7 @@ public class AltTabs extends MainPage {
     public SelenideElement getIlisikMetniTextarea() {
         return textarea("İlişik Metni");
     }
+
     @Step("İlişik Metni doldur")
     public AltTabs ilisikMetniDoldur(String text) {
         getIlisikMetniTextarea().setValue(text);
@@ -277,6 +298,7 @@ public class AltTabs extends MainPage {
     public SelenideElement getIlgiMetniTextarea() {
         return textarea("İlgi Metni");
     }
+
     @Step("İlgi Metni doldur")
     public AltTabs ilgiMetniDoldur(String text) {
         getIlgiMetniTextarea().setValue(text);
@@ -287,15 +309,18 @@ public class AltTabs extends MainPage {
     public SelenideElement getWebAdresiInput() {
         return input("Web Adresi");
     }
+
     @Step("Web Adresi alanı doldur")
     public AltTabs webAdresiAlan(String text) {
         getWebAdresiInput().setValue(text);
         return this;
     }
+
     @Step("Web Adresi Ekle butonu bul")
     public SelenideElement getWebAdresiEkleButton() {
         return inputButton("Ekle");
     }
+
     @Step("Web Adresi Ekle butona tıkla")
     public AltTabs webAdresiEkleTikla() {
         getWebAdresiEkleButton().click();
@@ -306,6 +331,7 @@ public class AltTabs extends MainPage {
     public SelenideElement getEvrakTarihiBasInput() {
         return input("Evrak Tarihi", 0);
     }
+
     @Step("Evrak Tarihi başlangiç gir")
     public AltTabs evrakTarihiBasGir(String tarih) {
         getEvrakTarihiBasInput().setValue(tarih);
@@ -316,6 +342,7 @@ public class AltTabs extends MainPage {
     public SelenideElement getEvrakTarihiSonInput() {
         return input("Evrak Tarihi", 1);
     }
+
     @Step("Evrak Tarihi başlangiç tarihi gir")
     public AltTabs evrakTarihiSonGir(String tarih) {
         getEvrakTarihiSonInput().setValue(tarih);
@@ -326,6 +353,7 @@ public class AltTabs extends MainPage {
     public SelenideElement getEvrakinAranacagiYerSelect() {
         return input("Evrakın Aranacağı Yer");
     }
+
     @Step("Evrakın Aranacağı Yeri seç")
     public AltTabs evrakinAranacagiYeriSec(String text) {
         getEvrakinAranacagiYerSelect().selectOption(text);
@@ -336,6 +364,7 @@ public class AltTabs extends MainPage {
     public SelenideElement getEvrakAramaInput() {
         return input("Evrak Arama");
     }
+
     @Step("Evrak Arama alanı doldur")
     public AltTabs evrakAraDoldur(String text) {
         getEvrakAramaInput().setValue(text);
@@ -351,6 +380,7 @@ public class AltTabs extends MainPage {
     public SelenideElement getFizikselEkMetniTextarea() {
         return input("Fiziksel Ek Metni");
     }
+
     @Step("Ek Metni doldur")
     public AltTabs fizikselEkMetniDoldur(String text) {
         getFizikselEkMetniTextarea().setValue(text);

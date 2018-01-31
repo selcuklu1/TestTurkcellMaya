@@ -20,7 +20,9 @@ import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.UstMenuData;
 
 import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 public class GidenEvrakKayitPage extends MainPage {
@@ -68,6 +70,16 @@ public class GidenEvrakKayitPage extends MainPage {
     SelenideElement popUpEvrakDefterBasariliKapat = $(By.id("gidenEvrakDefterKaydiBasarili:vazgecButton"));
     //endregion
 
+    public static String clearHorizantalTabChars(String str) {
+        String ret = str;
+        char[] horizantalTabChars = new char[]{0x9};
+        char[] newChars = new char[]{' ', ' '};
+        for (int i = 0; i < horizantalTabChars.length; i++) {
+            ret = ret.replaceAll(new String(new char[]{horizantalTabChars[i]}), new String(new char[]{newChars[i]}));
+        }
+        return ret;
+    }
+
     @Step("Giden Evrak Kayit sayfasını aç")
     public GidenEvrakKayitPage openPage() {
         ustMenu(UstMenuData.EvrakIslemleri.GidenEvrakKayit);
@@ -87,7 +99,6 @@ public class GidenEvrakKayitPage extends MainPage {
         return this;
     }
 
-
     @Step("Gereği {description} doldur: | {geregi}")
     public GidenEvrakKayitPage geregiDoldur(String geregi, String description) {
 
@@ -104,7 +115,10 @@ public class GidenEvrakKayitPage extends MainPage {
         cmbGeregi
                 .type(geregiAdSoyad)
                 .getTitleItems()
-                .first();
+                .first()
+                .click();
+
+        cmbGeregi.closeTreePanel();
 
         cmbGeregi.clearAllSelectedItems();
         return this;
@@ -166,7 +180,10 @@ public class GidenEvrakKayitPage extends MainPage {
         cmbBilgi
                 .type(geregiAdSoyad)
                 .getTitleItems()
-                .first();
+                .first()
+                .click();
+
+        cmbBilgi.closeTreePanel();
         cmbBilgi.clearAllSelectedItems();
 
         return this;
@@ -196,7 +213,6 @@ public class GidenEvrakKayitPage extends MainPage {
         return this;
     }
 
-
     @Step("Kurumun Geregi alanında görüntüleme kontrolu")
     public GidenEvrakKayitPage bilgiAlanindaDegerKontrolu(String aranacakDeger, Boolean shouldBeExist) {
 
@@ -213,10 +229,9 @@ public class GidenEvrakKayitPage extends MainPage {
 
     @Step("Panel kapat")
     public GidenEvrakKayitPage panelKapat(Boolean kaydet) {
-        $(By.xpath("//div[@id='mainTaskBar']//span[text()='[Giden Evrak Kayıt]']"))
-                .contextClick();
+        //$(By.xpath("//div[@id='mainTaskBar']//span[text()='[Giden Evrak Kayıt]']")).contextClick();
 
-        SelenideElement closeButton = $(By.xpath("//span[@class='ui-dialog-title' and text()='Giden Evrak Kayıt']/..//span[@class='ui-icon ui-icon-closethick']"));
+        SelenideElement closeButton = $$(By.xpath("//span[@class='ui-dialog-title' and text()='Giden Evrak Kayıt']/..//span[@class='ui-icon ui-icon-closethick']")).last().waitUntil(visible, 5000);
         Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", closeButton);
         closeButton.click();
 
@@ -232,15 +247,17 @@ public class GidenEvrakKayitPage extends MainPage {
         comboKonuKodu.selectLov(konuKodu);
         return this;
     }
+
     @Step("Evrak Turu \"{evrakTuru}\" seçilir")
     public GidenEvrakKayitPage evrakTuruSec(String evrakTuru) {
         cmbEvrakBilgileriListEvrakTuru.selectOption(evrakTuru);
         return this;
     }
+
     @Step("Evrak Turu alanında \"{icerik}\" olduğu görülür.")
     public GidenEvrakKayitPage evrakTuruIcerikKontrolu(String icerik) {
         boolean sonuc = cmbEvrakBilgileriListEvrakTuru.innerText().contains(icerik);
-        Assert.assertEquals(true,sonuc);
+        Assert.assertEquals(true, sonuc);
         return this;
     }
 
@@ -255,17 +272,19 @@ public class GidenEvrakKayitPage extends MainPage {
         dateTxtEvrakBilgileriListEvrakTarihi.sendKeys(evrakTarihi);
         return this;
     }
+
     @Step("Gizlilik Derecesi alanında \"{gizlilikDerecesi}\" seçilir.")
     public GidenEvrakKayitPage gizlilikDerecesiSec(String gizlilikDerecesi) {
         cmbEvrakBilgileriListGizlilikDerecesi.selectOption(gizlilikDerecesi);
         return this;
     }
+
     @Step("Gizlilik Derecesi içerik kontrol.")
     public GidenEvrakKayitPage gizlilikDerecesiIcerikKontrol() {
-        String icerik  = cmbEvrakBilgileriListGizlilikDerecesi.innerText();
+        String icerik = cmbEvrakBilgileriListGizlilikDerecesi.innerText();
         String text = clearHorizantalTabChars(icerik);
         System.out.println(text);
-        Allure.addAttachment("İvedilik alanı",text);
+        Allure.addAttachment("İvedilik alanı", text);
         return this;
     }
 
@@ -300,18 +319,8 @@ public class GidenEvrakKayitPage extends MainPage {
         String icerik = cmbEvrakBilgileriListIvedilik.innerText();
         String text = clearHorizantalTabChars(icerik);
         System.out.println(text);
-        Allure.addAttachment("İvedilik alanı",text);
+        Allure.addAttachment("İvedilik alanı", text);
         return this;
-    }
-
-    public static String clearHorizantalTabChars(String str) {
-        String ret = str;
-        char[] horizantalTabChars = new char[]{0x9};
-        char[] newChars = new char[]{' ',' '};
-        for (int i = 0; i < horizantalTabChars.length; i++) {
-            ret = ret.replaceAll(new String(new char[]{horizantalTabChars[i]}), new String(new char[]{newChars[i]}));
-        }
-        return ret;
     }
 
     @Step("Miat alnına \"{miatTarihi}\" girilir")

@@ -27,6 +27,7 @@ public interface BelgenetElement extends SelenideElement {
      * comboLov().selectLov("Optiim TEST, "Optiim Birim", "Danışman")
      * select first filtered
      * if empty first will be selected
+     *
      * @see pages.pageComponents.belgenetElements.ComboLovHelper
      */
     BelgenetElement selectLov(String... text);

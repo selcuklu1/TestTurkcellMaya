@@ -5,15 +5,11 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
-import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 import pages.MainPage;
-import pages.pageComponents.SearchTable;
 import pages.pageComponents.TextEditor;
-import pages.pageComponents.UstYazi;
 import pages.pageComponents.belgenetElements.BelgenetElement;
-import pages.ustMenuPages.EvrakOlusturPage;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -23,12 +19,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
-import static com.codeborne.selenide.CollectionCondition.sizeGreaterThanOrEqual;
 import static com.codeborne.selenide.CollectionCondition.texts;
 import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Condition.disappear;
 import static com.codeborne.selenide.Selenide.*;
-import static com.codeborne.selenide.Selenide.sleep;
 import static pages.pageComponents.belgenetElements.Belgenet.comboBox;
 
 /**
@@ -72,14 +65,14 @@ public class EditorTab extends MainPage {
     }
 
     @Step("Ön tanımlı dialog bul")
-    public SelenideElement getOnTanimliDialog(){
+    public SelenideElement getOnTanimliDialog() {
         return page.$("div[id*='icerikSablonDialog']");
     }
 
     @Step("Ön tanımlı şablonu bul ve seçilir")
     public EditorTab onTanimliSablonuSec(String sablonAdi) {
         //container.$("div[id*='icerikSablonDialog']").shouldBe(visible);
-        BelgenetElement cmbSablon = comboBox(getOnTanimliDialog(),"label[id$='_label']");
+        BelgenetElement cmbSablon = comboBox(getOnTanimliDialog(), "label[id$='_label']");
         cmbSablon.shouldBe(visible);
         cmbSablon.selectComboBox(sablonAdi);
         return this;
@@ -87,7 +80,7 @@ public class EditorTab extends MainPage {
 
     @Step("Ön tanımlı şablonun gelmediği görülür")
     public EditorTab onTanimliSablonuOlmadigi(String sablonAdi) {
-        BelgenetElement cmbSablon = comboBox(getOnTanimliDialog(),"label[id$='_label']");
+        BelgenetElement cmbSablon = comboBox(getOnTanimliDialog(), "label[id$='_label']");
         cmbSablon.shouldBe(visible);
         ElementsCollection s = cmbSablon.getComboBoxValues();
         s.filterBy(text(sablonAdi)).shouldHaveSize(0);
@@ -102,7 +95,7 @@ public class EditorTab extends MainPage {
 //        switchTo().frame($("[id='yeniGidenEvrakForm:onizlemeField'] iframe"));
         switchTo().frame($(element.$("iframe")));
         //String actualText = $("body").text();
-        for (Condition condition:conditions) {
+        for (Condition condition : conditions) {
             $("body").shouldBe(visible).shouldHave(condition);
         }
         switchTo().defaultContent();
@@ -117,25 +110,25 @@ public class EditorTab extends MainPage {
     }
 
     @Step("Editör alanı bulunur")
-    public SelenideElement getEditorArea(){
+    public SelenideElement getEditorArea() {
         return page.$("div[id$='allPanels']");
     }
 
     @Step("Hitap alanı bulunur")
-    public SelenideElement getHitapAlani(){
+    public SelenideElement getHitapAlani() {
         return page.$("div[id$=hitapInplace]");
     }
 
 
     @Step("Not Ekle butona basılır")
-    public EditorTab notEkleTikla(){
+    public EditorTab notEkleTikla() {
         getEditor().toolbarButton("Not Ekle", true);
         page.$("div[id*='notEkleDialog']").shouldBe(visible);
         return this;
     }
 
 
-    public EvrakNot getEvrakNot(){
+    public EvrakNot getEvrakNot() {
         return new EvrakNot();
     }
 
@@ -146,16 +139,16 @@ public class EditorTab extends MainPage {
 
         private List<EvrakNot> createdNotes = new ArrayList<EvrakNot>();
 
-        public SelenideElement getNotesTable(){
-            return page.$("div[id$='evrakNotlariTableD1']");
+        public SelenideElement getNotesTable() {
+            return page.$("div[id*='evrakNotlariTable']");
         }
 
-        public ElementsCollection getNoteDivs(){
-            return page.$$("div[id$='evrakNotlariTableD1']>div");
+        public ElementsCollection getNoteDivs() {
+            return page.$$("div[id*='evrakNotlariTable']>div");
         }
 
         @Step("Not Ekle dialog bulunur")
-        public SelenideElement getNotEkleDialog(){
+        public SelenideElement getNotEkleDialog() {
             return page.$("div[id*='notEkleDialog']");
         }
 
@@ -173,7 +166,7 @@ public class EditorTab extends MainPage {
 
         @Step("Açıklama karakter sayısı maksimum {maxLength} olmalı")
         public EvrakNot aciklamaKarakterSayisiKontrolu(int maxLength) {
-            SelenideElement counter = getNotEkleDialog().$("span[id$='D1NotEkleDialogCounter']");
+            SelenideElement counter = getNotEkleDialog().$("span[id*='DialogCounter']");
 
             counter.should(visible);
             int leftCount = getNumber(counter.text());
@@ -202,25 +195,26 @@ public class EditorTab extends MainPage {
         }
 
         @Step("Not Ekle \"Not Tipi\" alan bulunur")
-        public BelgenetElement getNotTipi(){
-            return comboBox(getNotEkleDialog(),"label[id$='evrakNotTipiD1_label']");
+        public BelgenetElement getNotTipi() {
+//            return comboBox(getNotEkleDialog(),"label[id$='evrakNotTipiD1_label']");
+            return comboBox(getNotEkleDialog(), "label[class~='ui-selectonemenu-label']");
         }
 
         @Step("Not Ekle \"Not Tipi\" alan seçilir")
-        public EvrakNot notTipiSec(String value){
+        public EvrakNot notTipiSec(String value) {
             getNotTipi().selectComboBox(value);
             getNotTipi().shouldHave(text(value));
             return this;
         }
 
         @Step("Yeni Not tipi alanın değer kontrolleri")
-        public EvrakNot notTipiAlanDegerKontrol(String... values){
+        public EvrakNot notTipiAlanDegerKontrol(String... values) {
             getNotTipi().getComboBoxValues().shouldHave(texts(values));
             return this;
         }
 
         @Step("Not Ekle \"Kaydet\" butonu bulunur")
-        public SelenideElement getKaydetButton(){
+        public SelenideElement getKaydetButton() {
             return getNotEkleDialog().$x("descendant::button[.='Kaydet']");
         }
 
@@ -259,6 +253,26 @@ public class EditorTab extends MainPage {
         }
 
         @Step("Yeni not oluşturulur")
+        public EvrakNot notOlustur(String olusturan, String notTipi, String aciklama, String[] notTipiValues) {
+
+            notEkleTikla();
+            aciklamaAlaniDoldur(aciklama);
+
+            notTipiAlanDegerKontrol(notTipiValues);
+            notTipiSec(notTipi);
+            kaydet();
+            getNotEkleDialog().should(disappear);
+
+            String date = DateTimeFormatter.ofPattern("dd.MM.yyyy").format(LocalDateTime.now());
+            String time = DateTimeFormatter.ofPattern("HH").format(LocalDateTime.now());
+            //String time = DateTimeFormatter.ofPattern("HH:mm").format(LocalDateTime.now());
+            notuBul(text(olusturan), text(aciklama), text(date), text(time));
+            createdNotes.add(this);
+            return this;
+        }
+
+
+        @Step("Yeni not oluşturulur")
         public EvrakNot notOlustur(String olusturan, String notTipi, String aciklama) {
 
             notEkleTikla();
@@ -277,16 +291,16 @@ public class EditorTab extends MainPage {
         }
 
         @Step("Notları ara")
-        public EvrakNot notlariAra(Condition... aramaConditions){
+        public EvrakNot notlariAra(Condition... aramaConditions) {
             getNoteDivs().shouldHave(sizeGreaterThan(0)).last().shouldBe(visible);
             notes = getNoteDivs();
-            for (Condition condition:aramaConditions)
+            for (Condition condition : aramaConditions)
                 notes = notes.filterBy(condition);
             return this;
         }
 
         @Step("Not bulunur")
-        public EvrakNot notuBul(Condition... aramaConditions){
+        public EvrakNot notuBul(Condition... aramaConditions) {
             notlariAra(aramaConditions);
             note = notes.shouldHave(sizeGreaterThan(0)).first().shouldBe(visible);
             return this;
@@ -298,28 +312,28 @@ public class EditorTab extends MainPage {
         }
 
         @Step("Notu sil")
-        public EvrakNot notuSil(){
+        public EvrakNot notuSil() {
             note.$("button .noteClose").click();
             note.shouldNotBe(exist);
             return this;
         }
 
         @Step("Postit şeklinde")
-        public EvrakNot isPostitStyle(){
-            String style = "position:relative; background:#fefabc; padding: 5px;  font-size: 10px; color: #000; width: 200px; margin-bottom:15px; box-shadow: 0px 4px 6px #333; -moz-box-shadow: 0px 4px 6px #333; -webkit-box-shadow: 0px 4px 6px #333;";
+        public EvrakNot postitStyle() {
+            String style = "position: relative; background: rgb(254, 250, 188); padding: 5px; font-size: 10px; color: rgb(0, 0, 0); width: 200px; margin-bottom: 15px; box-shadow: rgb(51, 51, 51) 0px 4px 6px;";
             note.shouldHave(attribute("style", style));
             return this;
         }
 
-        public SelenideElement getNote(){
+        public SelenideElement getNote() {
             return note;
         }
 
-        public ElementsCollection getNotes(){
+        public ElementsCollection getNotes() {
             return notes;
         }
 
-        public List<EvrakNot> getCreatedNotes(){
+        public List<EvrakNot> getCreatedNotes() {
             return createdNotes;
         }
     }

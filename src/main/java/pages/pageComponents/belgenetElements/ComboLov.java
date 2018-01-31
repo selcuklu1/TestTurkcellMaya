@@ -44,7 +44,7 @@ class ComboLov {
         public BelgenetElement execute(SelenideElement proxy, WebElementSource locator, Object[] args) throws IOException {
             ComboLovHelper comboLovHelper = new ComboLovHelper();
             comboLovHelper.setLocators(proxy);
-            By by = comboLovHelper.selectLov((String[])args[0]);
+            By by = comboLovHelper.selectLov((String[]) args[0]);
             return ElementFinder.wrap(BelgenetElement.class, null, by, 0);
         }
     }

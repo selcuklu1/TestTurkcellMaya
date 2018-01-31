@@ -172,7 +172,7 @@ public class VekaletIslemleriTest extends BaseTest {
 
         gelenEvraklarPage
                 .openPage()
-                .tabloEvrakNoKontrol(evrakNo1,true);
+                .tabloEvrakNoKontrol(evrakNo1, true);
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -319,7 +319,7 @@ public class VekaletIslemleriTest extends BaseTest {
                 .pdfOnizleme();
         switchTo().window(1);
         imzaBekleyenlerPage
-                .geregiBilgiAlaniAdresPdfKontrol("V.",true)
+                .geregiBilgiAlaniAdresPdfKontrol("V.", true)
                 .closeNewWindow();
         switchTo().window(0);
     }
@@ -367,8 +367,8 @@ public class VekaletIslemleriTest extends BaseTest {
                 .openPage()
                 .konuyaGoreEvrakDetayiTikla(icerik);
 
-                //Buraya gerek yok artık.
-                // .icerikIlkKayıt();
+        //Buraya gerek yok artık.
+        // .icerikIlkKayıt();
 
 
         String evrakNo = parafladiklarimPage.evrakDetayiEvrakNoAl();
@@ -398,7 +398,7 @@ public class VekaletIslemleriTest extends BaseTest {
                 .pdfOnizleme();
         switchTo().window(1);
         imzaBekleyenlerPage
-                .geregiBilgiAlaniAdresPdfKontrol("V.",false)
+                .geregiBilgiAlaniAdresPdfKontrol("V.", false)
                 .closeNewWindow();
         switchTo().window(0);
     }
@@ -450,7 +450,7 @@ public class VekaletIslemleriTest extends BaseTest {
 
         gelenEvraklarPage
                 .openPage()
-                .tabloEvrakNoKontrol(gelenEvrakNo,true);
+                .tabloEvrakNoKontrol(gelenEvrakNo, true);
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -506,7 +506,7 @@ public class VekaletIslemleriTest extends BaseTest {
 
         gelenEvraklarPage
                 .openPage()
-                .tabloEvrakNoKontrol(evrakNO2212,true);
+                .tabloEvrakNoKontrol(evrakNO2212, true);
 
     }
 
@@ -570,7 +570,7 @@ public class VekaletIslemleriTest extends BaseTest {
 
         gelenEvraklarPage
                 .openPage()
-                .tabloEvrakNoKontrol(evrakNO11,false);
+                .tabloEvrakNoKontrol(evrakNO11, false);
 
         logout();
         login(usernameVA);
@@ -582,6 +582,6 @@ public class VekaletIslemleriTest extends BaseTest {
 
         gelenEvraklarPage
                 .openPage()
-                .tabloEvrakNoKontrol(evrakNO11,true);
+                .tabloEvrakNoKontrol(evrakNO11, true);
     }
 }
