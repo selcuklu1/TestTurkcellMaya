@@ -1920,7 +1920,8 @@ public class TopluPostalamaTest extends BaseTest {
         String[] sayi = new String[2];
         String[] pdfSayi = new String[2];
 
-        useFirefox();
+//        useFirefox();
+        useFirefoxWindows151("TS1811");
         maximazeBrowser();
         login("mbozdemir", "123");
         //region Parameters
