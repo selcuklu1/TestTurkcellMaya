@@ -319,7 +319,7 @@ public class PostaListesiPage extends MainPage {
 
     @Step("Evrak önizleme kontrolü")
     public PostaListesiPage evrakOnizlemeKontrolu() {
-        $(By.id("mainPreviewForm:eastLayout")).shouldBe(Condition.visible);
+        $(By.id("mainPreviewForm:evrakOnizlemeTab")).shouldBe(Condition.visible);
         return this;
     }
 

@@ -2010,8 +2010,9 @@ public class TopluPostalamaTest extends BaseTest {
 //                .postaListesiInboxKontrolu()
                 .postaListesiKontrol("TC1811 20180129165718",false)
                 .postaListesiDoldur(postaListesi)
-                .evrakSec(konu[0])
-//                .evrakOnizlemeKontrolu()
+                .evrakSec(getSysDateForKis(),geregi,konu[0],"YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ",gidisSekli)
+//                .evrakSec(konu[0])
+                .evrakOnizlemeKontrolu()
                 .konuyaGorePostaListesindenCikart(konu[1]);
 
         topluPostalanacakEvraklarPage
