@@ -9,6 +9,7 @@ import data.User;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import listeners.DriverEventListener;
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -49,14 +50,15 @@ public class BaseTest extends BaseLibrary {
 
     @BeforeClass(alwaysRun = true)
     public void driverSetUp() {
+
         System.out.println("file.encoding: " + String.format("file.encoding: %s", System.getProperty("file.encoding")));
         System.out.println("default charset=" + Charset.defaultCharset());
         System.out.println("java.specification.version" + System.getProperty("java.specification.version"));
         System.out.println("java.runtime.version" + System.getProperty("java.runtime.version"));
         System.out.println("locale default: " + Locale.getDefault());
+
         Locale turkishLocal = new Locale("tr", "TR");
-        if (!Locale.getDefault().equals(turkishLocal))
-            Locale.setDefault(turkishLocal);
+        if (!Locale.getDefault().equals(turkishLocal)) Locale.setDefault(turkishLocal);
         System.out.println("locale: " + Locale.getDefault());
 
         BelgenetFramework.setUp();
@@ -65,7 +67,7 @@ public class BaseTest extends BaseLibrary {
         //Configuration.remote = "http://10.101.20.151:4444/wd/hub";
 
         Configuration.baseUrl = (System.getProperty("URL") == null) ? belgenetURL : System.getProperty("URL");
-        Configuration.browser = (System.getProperty("browser") == null) ? "chrome" : System.getProperty("browser");
+        Configuration.browser = (System.getProperty("browser") == null) ? "firefox" : System.getProperty("browser");
         Configuration.browserVersion = System.getProperty("node");
         Configuration.driverManagerEnabled = false;
         Configuration.remote = System.getProperty("hub");
@@ -74,23 +76,37 @@ public class BaseTest extends BaseLibrary {
         Configuration.savePageSource = false;
         Configuration.collectionsTimeout = timeout * 1000;
         Configuration.timeout = timeout * 1000;
-        setWaitForLoading(loadingTimeout);
-        //Configuration.clickViaJs = true;
-        Configuration.holdBrowserOpen = true;
-        //Configuration.headless = false;
+        Configuration.holdBrowserOpen = false;
         Configuration.startMaximized = true;
         Configuration.pollingInterval = 100;
         Configuration.collectionsPollingInterval = 100;
+        //Configuration.headless = false;
+        //Configuration.clickViaJs = true;
         //Configuration.closeBrowserTimeoutMs = 34000;
         //Configuration.openBrowserTimeoutMs = 34000;
         //Configuration.browserSize = "1024x600";
         //endregion
+        setWaitForLoading(loadingTimeout);
 
-        // System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, "/dev/null");
-//      getBrowserName();
+        /*if (Configuration.browser.equalsIgnoreCase("firefox")){
+            String neverAsk = "application/msword," +
+                    "application/vnd.ms-excel," +
+                    "application/vnd.openxmlformats-officedocument.wordprocessingml.document," +
+                    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet," +
+                    "application/pdf";
+            FirefoxOptions options = new FirefoxOptions()
+                    .addPreference("browser.helperApps.alwaysAsk.force", false)
+                    .addPreference("browser.download.manager.showWhenStarting", false)
+                    .addPreference("browser.helperApps.neverAsk.saveToDisk", neverAsk);
+            Configuration.browserCapabilities = new DesiredCapabilities();
+            Configuration.browserCapabilities.merge(options);
+            //Configuration.browserCapabilities.setCapability("browser.helperApps.alwaysAsk.force", false);
+            //Configuration.browserCapabilities.setCapability("browser.helperApps.neverAsk.saveToDisk", neverAsk);
+        }*/
 
-        //Configuration.remote = "http://localhost:4444/wd/hub";
 
+        //System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, "/dev/null");
+        //getBrowserName();
         /*System.out.println("remote: " + Configuration.remote);
         System.out.println("browser: " + Configuration.browser);
         System.out.println("url: " + Configuration.baseUrl);
