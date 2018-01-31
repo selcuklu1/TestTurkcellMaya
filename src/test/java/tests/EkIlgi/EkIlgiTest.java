@@ -947,13 +947,16 @@ public class EkIlgiTest extends BaseTest {
                 .openPage()
                 .konuyaGoreEvrakKontrol(evrakKonusu)
                 .konuyaGoreEvrakOnizlemedeAc(evrakKonusu)
-                .tabKontrolleriWithoutIlisik()
+                .tabKontrolleri()
                 .tabEvrakEkleriAc()
                 .evrakEkleriAccordionKontrol()
                 .evrakEklerindeDetayButonuKontrol("EK-1", "EK-2")
                 .tabIlgiBilgileriAc()
                 .ilgiBilgileriAccordionKontrol()
-                .ilgiBilgilerindeDetayButonuKontrol("a", "b");
+                .ilgiBilgilerindeDetayButonuKontrol("a", "b")
+                .tabIlisikBilgileriAc()
+                .ilisikBilgieriAccordionKontrol()
+                .ilisikBilgilerindeDetayButonuKontrol("DOSYA", "EVRAK");
 
         login(TestData.usernameZTEKIN, TestData.passwordZTEKIN);
 
