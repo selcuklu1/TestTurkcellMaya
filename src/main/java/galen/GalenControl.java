@@ -37,8 +37,8 @@ public class GalenControl {
     public static String reportPath = getConfig().getStringProperty(GalenProperty.TEST_JAVA_REPORT_OUTPUTFOLDER);
 
     public GalenControl() {
-        getConfig().setProperty(GalenProperty.GALEN_BROWSER_PAGELEMENT_AREAFINDER,"NATIVE");
-        getConfig().setProperty(GalenProperty.GALEN_RANGE_APPROXIMATION,"5");
+        getConfig().setProperty(GalenProperty.GALEN_BROWSER_PAGELEMENT_AREAFINDER, "NATIVE");
+        getConfig().setProperty(GalenProperty.GALEN_RANGE_APPROXIMATION, "5");
         getConfig().setProperty(GalenProperty.GALEN_BROWSER_VIEWPORT_ADJUSTSIZE, "true");
         getConfig().setProperty(GalenProperty.GALEN_LOG_LEVEL, "1");
     }
@@ -51,7 +51,7 @@ public class GalenControl {
         Dimension currentDimension = getWebDriver().manage().window().getSize();
         if (pageDimension.length > 0) {
             getWebDriver().manage().window().setSize(pageDimension[0]);
-            getWebDriver().manage().window().setPosition(new Point(0,0));
+            getWebDriver().manage().window().setPosition(new Point(0, 0));
         }
 
         try {
@@ -80,23 +80,23 @@ public class GalenControl {
         String specFileName = path + "/" + testName + ".gspec";
 
         Allure.addLabels(new Label().withName("Layout"));
-        Allure.addAttachment("Layoun specs:",  new FileInputStream(new File(specFileName)));
+        Allure.addAttachment("Layoun specs:", new FileInputStream(new File(specFileName)));
 
         Dimension currentDimension = getWebDriver().manage().window().getSize();
         if (pageDimension.length > 0) {
             getWebDriver().manage().window().setSize(pageDimension[0]);
-            getWebDriver().manage().window().setPosition(new Point(0,0));
+            getWebDriver().manage().window().setPosition(new Point(0, 0));
         }
 
         //parsePageSpec
-        List<String> list= new LinkedList<>();
+        List<String> list = new LinkedList<>();
         list.add("all");
         SectionFilter sectionFilter = new SectionFilter(list, new LinkedList<>());
         LayoutReport layoutReport = Galen.checkLayout(
                 getWebDriver()
                 , specFileName
                 , sectionFilter
-                ,null
+                , null
                 , params);
 
         List<GalenTestInfo> galenTests = new LinkedList<GalenTestInfo>();

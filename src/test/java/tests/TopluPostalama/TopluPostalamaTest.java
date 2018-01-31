@@ -25,7 +25,6 @@ import java.util.Random;
 public class TopluPostalamaTest extends BaseTest {
 
 
-
     @BeforeMethod
     public void loginBeforeTests() {
 
@@ -1150,7 +1149,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .tabloKontrolEt(kurum1, "", postaTipi, true)
                 .raporAl();
 
-         String excelFileName = pttRaporuPage.indirilenDosyaAd();
+        String excelFileName = pttRaporuPage.indirilenDosyaAd();
 
         PttRaporuPage.PttRaporExcellTest pttRaporExcellTest = new PttRaporuPage.PttRaporExcellTest(excelFileName);
 
@@ -1217,12 +1216,12 @@ public class TopluPostalamaTest extends BaseTest {
         String adres = "adres " + getSysDateForKis();
 
         String[] konu = new String[]{
-                "TC1675 " + getSysDate(), "1675 " + getSysDate() + 100
+                "TC1675 " + getSysDate(), "1675 " + createRandomNumber(9)
         };
         String[] evrakNo1675 = new String[2];
 
         String[] konu2 = new String[]{
-                "TC1811 " + getSysDate(), "TC1811 " + getSysDate() + 100
+                "TC1811 " + getSysDate(), "TC1811 " + createRandomNumber(9)
         };
 
 
@@ -1240,7 +1239,7 @@ public class TopluPostalamaTest extends BaseTest {
         String hesaplananTutar;
         String number = createRandomNumber(4);
         String tutar = "20.000";
-
+        String posta_listesi2;
         String[] postaTipleri = new String[]{
                 "Ankara İçi APS"
         };
@@ -1293,10 +1292,12 @@ public class TopluPostalamaTest extends BaseTest {
                 .postaListesiSec(konu[0])
                 .listeyeEkle();
 
-
         postaListesiPage
                 .openPage()
-                .filtreleAc()
+                .filtreleAc();
+        posta_listesi2 = postaListesiPage.postaListesiIlkKayitAl();
+
+        postaListesiPage
                 .postaListesiDoldur(postaListesi)
                 .evrakSec(konu[0])
                 .postaListesiPostala()
@@ -1311,6 +1312,7 @@ public class TopluPostalamaTest extends BaseTest {
         //endregion
         Allure.addAttachment("Test Datası", "Test Datası oluşturuldu.");
 //        String postaListesi = "TC1811 20180112161120";
+
         topluPostaladiklarimPage
                 .openPage()
                 .topluPostaladiklarimTabloKontrolu()
@@ -1321,9 +1323,9 @@ public class TopluPostalamaTest extends BaseTest {
                 .topluPostaladiklarimTabloKontrolu(postaListesi)
 
                 .temizle()
-                .postaListesiAdiDoldur("Posta Listesi")
+                .postaListesiAdiDoldur(posta_listesi2)
                 .filtrele()
-                .topluPostaladiklarimTabloKontrolu("Posta Listesi")
+                .topluPostaladiklarimTabloKontrolu(posta_listesi2)
                 .temizle()
 
                 .evrakSayisiDoldur(evrakNo1675[0])
@@ -1342,11 +1344,11 @@ public class TopluPostalamaTest extends BaseTest {
                 .topluPostaladiklarimTabloKontrolu(postaListesi)
                 .temizle()
 
-                .postaListesiAdiDoldur("Posta Listesi")
+                .postaListesiAdiDoldur(posta_listesi2)
                 .evrakSayisiDoldur(number)
                 .postaTarihiDoldur(getSysDateForKis())
                 .filtrele()
-                .topluPostaladiklarimTabloKontrolu("Posta Listesi")
+                .topluPostaladiklarimTabloKontrolu(posta_listesi2)
                 .temizle()
 
                 .postaListesiAdiDoldur(postaListesi)
@@ -2067,7 +2069,7 @@ public class TopluPostalamaTest extends BaseTest {
         topluPostaladiklarimPage
                 .openPage()
                 .topluPostaladiklarimEvrakKontrolu(konu[0]);
-                //.searchTable().searchInAllPages(true).findRows(text(konu[0])).getFoundRow().shouldBe(exist);
+        //.searchTable().searchInAllPages(true).findRows(text(konu[0])).getFoundRow().shouldBe(exist);
     }
 
     @Severity(SeverityLevel.CRITICAL)

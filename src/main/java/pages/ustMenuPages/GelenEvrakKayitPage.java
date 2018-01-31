@@ -1,6 +1,9 @@
 package pages.ustMenuPages;
 
-import com.codeborne.selenide.*;
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
@@ -231,10 +234,10 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("Otomatik havale seç")
     public GelenEvrakKayitPage otomatikHavaleSec2(boolean durum) {
-            $("[id='evrakBilgileriForm:havaleDagitimLovPanel'] [class='ui-chkbox ui-widget'] input[type=checkbox]")
-                    .setSelected(durum);
-            sleep(3000);
-            $("[id='evrakBilgileriForm:havaleDagitimLovPanel'] [class='ui-chkbox ui-widget'] div[class*='ui-chkbox-box ui-widget ui-corner-all ui-state-default']").click();
+        $("[id='evrakBilgileriForm:havaleDagitimLovPanel'] [class='ui-chkbox ui-widget'] input[type=checkbox]")
+                .setSelected(durum);
+        sleep(3000);
+        $("[id='evrakBilgileriForm:havaleDagitimLovPanel'] [class='ui-chkbox ui-widget'] div[class*='ui-chkbox-box ui-widget ui-corner-all ui-state-default']").click();
         return this;
     }
 
@@ -556,8 +559,8 @@ public class GelenEvrakKayitPage extends MainPage {
     }
 
     @Step("Dağıtım Bilgileri Onaylayacak Kisi alanında \"{onaylayan}\" seçilir")
-    public GelenEvrakKayitPage dagitimBilgileriOnaylayanWithDetails(String onaylayan,String details) {
-        cmbHavaleIslemleriOnaylayacakKisi.selectLov(onaylayan,details);
+    public GelenEvrakKayitPage dagitimBilgileriOnaylayanWithDetails(String onaylayan, String details) {
+        cmbHavaleIslemleriOnaylayacakKisi.selectLov(onaylayan, details);
         return this;
     }
 
@@ -578,6 +581,17 @@ public class GelenEvrakKayitPage extends MainPage {
     @Step("Dağıtım Bilgileri Kişi alanında \"{kisi}\" seçilir")
     public GelenEvrakKayitPage dagitimBilgileriKisiSec(String kisi) {
         txtDagitimBilgileriKisiComboLov.selectLov(kisi);
+        return this;
+    }
+
+    @Step("Dağıtım Bilgileri Kişi alanında \"{kisi}\" seçilir")
+    public GelenEvrakKayitPage dagitimBilgileriKisiSec(String kisi, String title) {
+        if ($(By.xpath("//table[@id='evrakBilgileriForm:kisiLovContainer']//span[text()='Birim']")).isDisplayed())
+            $(By.xpath("//table[@id='evrakBilgileriForm:kisiLovContainer']//span[text()='Birim']")).click();
+
+        txtDagitimBilgileriKisiComboLov.type(kisi).getTitleItems()
+                .filterBy(Condition.exactText(kisi + title)).first().click();
+        txtDagitimBilgileriKisiComboLov.closeTreePanel();
         return this;
     }
 
@@ -807,7 +821,7 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("Yeni Kayıt tıklanır")
     public GelenEvrakKayitPage yeniKayitButton() {
-           $("[id$='yeniKayitButton']").pressEnter();
+        $("[id$='yeniKayitButton']").pressEnter();
         return this;
     }
 

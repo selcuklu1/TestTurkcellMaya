@@ -12,9 +12,7 @@ import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
 
-import static com.codeborne.selenide.Condition.exist;
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
@@ -108,13 +106,13 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         return this;
     }
 
-   @Step("Kapatma tipi, Konu kodu, Kaldırılacak klasörler, Not ve Onay akışı alanlarının geldiği görülür.")
-   public TeslimAlinmayiBekleyenlerPage teslimAlVeKapatAlanGeldigiGorme(){
-        boolean durum = $$("[id='mainPreviewForm:evrakKapatPanelGrid']").size()==1;
-        Assert.assertEquals(durum,true);
+    @Step("Kapatma tipi, Konu kodu, Kaldırılacak klasörler, Not ve Onay akışı alanlarının geldiği görülür.")
+    public TeslimAlinmayiBekleyenlerPage teslimAlVeKapatAlanGeldigiGorme() {
+        boolean durum = $$("[id='mainPreviewForm:evrakKapatPanelGrid']").size() == 1;
+        Assert.assertEquals(durum, true);
         takeScreenshot();
-       return this;
-   }
+        return this;
+    }
 
     @Step("Evrak seçilir")
     public TeslimAlinmayiBekleyenlerPage evrakSec() {
@@ -123,12 +121,12 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     }
 
     @Step("Evrak geldiği görünür")
-    public TeslimAlinmayiBekleyenlerPage evrakGeldigiGorunur(String konuKodu, String tarih,String geldigiYer) {
+    public TeslimAlinmayiBekleyenlerPage evrakGeldigiGorunur(String konuKodu, String tarih, String geldigiYer) {
         boolean durum = tblEvraklar
-               .filterBy(Condition.text(konuKodu))
+                .filterBy(Condition.text(konuKodu))
                 .filterBy(Condition.text(tarih))
-                .filterBy(Condition.text(geldigiYer)).size()==1;
-        Assert.assertEquals(durum,true);
+                .filterBy(Condition.text(geldigiYer)).size() == 1;
+        Assert.assertEquals(durum, true);
         takeScreenshot();
         return this;
     }
@@ -180,7 +178,7 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     }
 
     @Step("Evrak teslim al")
-    public TeslimAlinmayiBekleyenlerPage evrakSecTeslimAl(String konu, String yer, String tarih, String no, boolean secim){
+    public TeslimAlinmayiBekleyenlerPage evrakSecTeslimAl(String konu, String yer, String tarih, String no, boolean secim) {
         tblEvraklar.filterBy(text(konu))
                 .filterBy(text(yer))
                 .filterBy(text(tarih))
@@ -196,7 +194,7 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     }
 
     @Step("Evrak no ile teslim al")
-    public TeslimAlinmayiBekleyenlerPage evrakSecNoTeslimAl(String konu,boolean secim){
+    public TeslimAlinmayiBekleyenlerPage evrakSecNoTeslimAl(String konu, boolean secim) {
         tblEvraklar.filterBy(text(konu)).get(0).$$("[id$='teslimAlButton']").first().click();
 
         if (secim == true) {
@@ -209,26 +207,26 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     }
 
     @Step("Evrak no ile teslim al")
-    public TeslimAlinmayiBekleyenlerPage evrakSecIcerikGoster(String konu,boolean secim){
+    public TeslimAlinmayiBekleyenlerPage evrakSecIcerikGoster(String konu, boolean secim) {
         tblEvraklar.filterBy(text(konu)).get(0).$$("[id$='detayGosterButton']").first().click();
         return this;
     }
 
     @Step("İçerikten Evrak teslim al")
-    public TeslimAlinmayiBekleyenlerPage içeriktenEvrakTeslimAl(){
+    public TeslimAlinmayiBekleyenlerPage içeriktenEvrakTeslimAl() {
         evrakTeslimAl.click();
         return this;
     }
 
     @Step("İçerikten Evrak teslim Evet tıklama")
-    public TeslimAlinmayiBekleyenlerPage içeriktenEvrakEvet(){
+    public TeslimAlinmayiBekleyenlerPage içeriktenEvrakEvet() {
         $(By.id("teslimAlEvetButton")).click();
         return this;
     }
 
 
     @Step("Evrak Sec Checkbox ile")
-    public TeslimAlinmayiBekleyenlerPage evrakSecCheckBox(String konu1,String konu2,boolean secim){
+    public TeslimAlinmayiBekleyenlerPage evrakSecCheckBox(String konu1, String konu2, boolean secim) {
         tblEvraklar.filterBy(text(konu1)).get(0).$$("div[class^='ui-chkbox-box']").first().click();
         tblEvraklar.filterBy(text(konu2)).get(0).$$("div[class^='ui-chkbox-box']").first().click();
 
@@ -311,7 +309,7 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     }
 
     @Step("Teslim Alınmayı Bekleyenler listesinde evrak kontrolü:  \"{konu}\" ")
-    public TeslimAlinmayiBekleyenlerPage konuyaGoreEvrakKontroluAllPages(String konu){
+    public TeslimAlinmayiBekleyenlerPage konuyaGoreEvrakKontroluAllPages(String konu) {
         searchTable().searchInAllPages(true).findRows(text(konu)).getFoundRow().shouldBe(exist);
         return this;
     }
@@ -391,7 +389,7 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     @Step("Evrak Önizlemede detay butonu kontrolu")
     public TeslimAlinmayiBekleyenlerPage detayButonKontrol(String ekSayisi) {
 
-      tblOnIzlemeEkler
+        tblOnIzlemeEkler
                 .filterBy(Condition.text(ekSayisi))
                 .get(0)
                 .$("[id*='detayButton']").shouldBe(visible);

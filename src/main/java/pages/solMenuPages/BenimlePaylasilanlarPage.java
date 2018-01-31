@@ -172,7 +172,7 @@ public class BenimlePaylasilanlarPage extends MainPage {
                 .filterBy(Condition.text(aciklama))
                 .get(0)
                 .shouldBe(Condition.visible).exists();
-        Assert.assertEquals(durum,true);
+        Assert.assertEquals(durum, true);
         return this;
     }
 

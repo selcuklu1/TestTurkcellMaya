@@ -38,7 +38,6 @@ public class BirimHavaleEdilenlerPage extends MainPage {
     SelenideElement btnGeriAl = $("[id^='inboxItemInfoForm:j_idt'][class$='ui-button-text-only']");
 
 
-
     @Step("Birim Havale Edilenler sayfası aç")
     public BirimHavaleEdilenlerPage openPage() {
         solMenu(SolMenuData.BirimEvraklari.BirimHavaleEdilenler);
@@ -100,14 +99,14 @@ public class BirimHavaleEdilenlerPage extends MainPage {
     }
 
     @Step("Evrak no ile teslim al")
-    public BirimHavaleEdilenlerPage evrakSecIcerikGoster(String konu,boolean secim){
+    public BirimHavaleEdilenlerPage evrakSecIcerikGoster(String konu, boolean secim) {
         tblEvraklar.filterBy(text(konu)).get(0).$$("[id$='detayGosterButton']").first().click();
         return this;
     }
 
     @Step("Havale edilen evrak geri alma")
     public BirimHavaleEdilenlerPage havaleGeriAl() {
-        if(havaleGeriAl.isDisplayed())
+        if (havaleGeriAl.isDisplayed())
             havaleGeriAl.click();
         return this;
     }
@@ -137,11 +136,10 @@ public class BirimHavaleEdilenlerPage extends MainPage {
 
     @Step("Evrak no ile evrak seçilir, evrak bulunamaz: \"{evrakNo}\" ")
     public BirimHavaleEdilenlerPage evrakBulunamadı(String evrakNo) {
-        if(tblEvraklar.filterBy(Condition.text(evrakNo)).isEmpty())
-        {
-            Allure.addAttachment(evrakNo ," Nolu evrak bulunamadı.");
-        }else{
-            Allure.addAttachment(evrakNo ," Nolu evrak bulundu.");
+        if (tblEvraklar.filterBy(Condition.text(evrakNo)).isEmpty()) {
+            Allure.addAttachment(evrakNo, " Nolu evrak bulunamadı.");
+        } else {
+            Allure.addAttachment(evrakNo, " Nolu evrak bulundu.");
         }
 
         return this;

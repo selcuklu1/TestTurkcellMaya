@@ -31,7 +31,7 @@ public class Firefox extends BaseTest implements WebDriverProvider {
         options.addPreference("browser.helperApps.alwaysAsk.force", false);
         options.addPreference("browser.helperApps.neverAsk.openFile", "true");
         options.addPreference("browser.helperApps.neverAsk.saveToDisk", "true");
-        options.addPreference("browser.download.manager.showWhenStarting",false);
+        options.addPreference("browser.download.manager.showWhenStarting", false);
         options.addPreference("browser.helperApps.neverAsk.saveToDisk", "application/excel");
         options.addPreference("browser.helperApps.neverAsk.saveToDisk", "application/vnd.ms-excel");
         options.addPreference("browser.helperApps.neverAsk.saveToDisk", "application/x-excel");
@@ -56,7 +56,7 @@ public class Firefox extends BaseTest implements WebDriverProvider {
         FirefoxProfile profile = new FirefoxProfile();
         FirefoxOptions options = new FirefoxOptions();
         //options.setProfile(profile);
-                //.setCapability("browser.name", "firefox");
+        //.setCapability("browser.name", "firefox");
         options.setAcceptInsecureCerts(true)
                 .addPreference("security.insecure_field_warning.contextual.enabled", false)
                 .setLogLevel(FirefoxDriverLogLevel.fromLevel(Level.OFF));
@@ -71,7 +71,8 @@ public class Firefox extends BaseTest implements WebDriverProvider {
 
         return new FirefoxDriver(options);
     }
-    public FirefoxOptions firePlatform(){
+
+    public FirefoxOptions firePlatform() {
         DesiredCapabilities capabilities = DesiredCapabilities.firefox();
         capabilities.setPlatform(Platform.WINDOWS);
 
@@ -87,7 +88,7 @@ public class Firefox extends BaseTest implements WebDriverProvider {
         return options;
     }
 
-    public FirefoxOptions fire(){
+    public FirefoxOptions fire() {
         //<editor-fold desc="ProdilesIni can be used to set "default" or pre created profile">
 //        ProfilesIni profilesIni = new ProfilesIni();
 //        FirefoxProfile profile = profilesIni.getProfile("default");

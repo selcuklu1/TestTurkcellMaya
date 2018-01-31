@@ -34,26 +34,6 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     User optiim = new User("optiim", "123");
     User yakyol = new User("yakyol", "123");
     User mbozdemir = new User("mbozdemir", "123");
-
-
-    @BeforeMethod
-    public void loginBeforeTests() {
-        gelenEvrakKayitPage = new GelenEvrakKayitPage();
-        teslimAlinmayiBekleyenlerPage = new TeslimAlinmayiBekleyenlerPage();
-        kaydedilenGelenEvrakPage = new KaydedilenGelenEvrakPage();
-        kaydedilenGelenEvraklarPage = new KaydedilenGelenEvraklarPage();
-        birimHavaleEdilenlerPage = new BirimHavaleEdilenlerPage();
-        gercekKisiYonetimPage = new GercekKisiYonetimPage();
-        gidenEvrakKayitPage = new GidenEvrakKayitPage();
-        kaydedilenGidenEvraklarPage = new KaydedilenGidenEvraklarPage();
-
-//        login("ztekin", "123");
-    }
-
-    public String getDocPath1() {
-        return "C:\\TestAutomation\\BelgenetFTA\\documents\\";
-    }
-
     String evrakNO321;
     String evrakNO328;
     String konuKodu = "010.01";
@@ -69,6 +49,21 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     String ivedilik = "Normal";
     String ekMetni = "test otomasyon" + getSysDateForKis();
     String aciklama = "Test Otomasyon";
+    String basariMesaji = "İşlem başarılıdır!";
+
+    @BeforeMethod
+    public void loginBeforeTests() {
+        gelenEvrakKayitPage = new GelenEvrakKayitPage();
+        teslimAlinmayiBekleyenlerPage = new TeslimAlinmayiBekleyenlerPage();
+        kaydedilenGelenEvrakPage = new KaydedilenGelenEvrakPage();
+        kaydedilenGelenEvraklarPage = new KaydedilenGelenEvraklarPage();
+        birimHavaleEdilenlerPage = new BirimHavaleEdilenlerPage();
+        gercekKisiYonetimPage = new GercekKisiYonetimPage();
+        gidenEvrakKayitPage = new GidenEvrakKayitPage();
+        kaydedilenGidenEvraklarPage = new KaydedilenGidenEvraklarPage();
+
+//        login("ztekin", "123");
+    }
 
 //    String pathToFilePdf = getUploadPath() + "Otomasyon.pdf";
 //    String pdfName = "Otomasyon.pdf";
@@ -78,7 +73,9 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 //    String ustYaziAdiMail = "ekranGoruntuleri.msg";
 //    String bigPdfPath = getUploadPath() + "emresencan.pdf";
 
-    String basariMesaji = "İşlem başarılıdır!";
+    public String getDocPath1() {
+        return "C:\\TestAutomation\\BelgenetFTA\\documents\\";
+    }
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, priority = 0, description = "TS0321: Üstyazı ek ve ilgi eklenerek gelen evrak kaydı")
@@ -472,7 +469,6 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .evrakBilgileriUstYaziEkle(pathToFilePdf)
                 .ustYaziPdfAdiKontrol(pdfName)
                 .islemMesaji().basariliOlmali();
-
 
 
         gidenEvrakKayitPage
