@@ -156,7 +156,7 @@ public class TopluPostaladiklarimPage extends MainPage {
         return this;
     }
 
-    @Step("Posta Listesi seç")
+    @Step("Posta listesi alan kontolleri")
     public TopluPostaladiklarimPage postaListesiKontrol(String postaListesiAdi, String postaKodu, String postaTarihi, String postaGramaji, String pttTutari, boolean shouldBeExist) {
 
 
@@ -174,16 +174,16 @@ public class TopluPostaladiklarimPage extends MainPage {
                     .filterBy(text("Posta Gramajı: " + postaGramaji))
                     .filterBy(text("PTT Tutarı: " + pttTutari + " TL"))
                     .first();
+            takeScreenshot();
 
             if (postaListesi.isDisplayed() && postaListesi.exists()) {
                 elementFound = true;
-                Allure.addAttachment("Ekran Alan Kontrolleri", "Posta Listesi Adı: '" + postaListesiAdi + "\n'" +
-                        "Posta Kodu: , '" + postaKodu + "'\n" +
-                        "Posta Kodu: ,'" + postaKodu + "'\n" +
-                        "Posta Tarihi: , '" + postaTarihi + "'\n" +
-                        "Posta Gramajı: , '" + postaGramaji + "'\n" +
-                        "PTT Tutarı: , '" + pttTutari + " TL " + "bilgileri ile listelendiği görülür.");
-                takeScreenshot();
+                Allure.addAttachment("Ekran Alan Kontrolleri", "Posta Listesi Adı: '" + postaListesiAdi + "'\n" +
+                        "Posta Kodu: '" + postaKodu + "'\n" +
+                        "Posta Tarihi: '" + postaTarihi + "'\n" +
+                        "Posta Gramajı: '" + postaGramaji + "'\n" +
+                        "PTT Tutarı: '" + pttTutari + " TL " + "bilgileri ile listelendiği görülür.");
+
                 break;
             }
         }
