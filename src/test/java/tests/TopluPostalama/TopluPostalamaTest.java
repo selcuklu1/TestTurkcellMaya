@@ -2007,6 +2007,8 @@ public class TopluPostalamaTest extends BaseTest {
         postaListesiPage
                 .openPage()
                 .filtreleAc()
+//                .postaListesiInboxKontrolu()
+                .postaListesiKontrol("TC1811 20180129165718",false)
                 .postaListesiDoldur(postaListesi)
                 .evrakSec(konu[0])
 //                .evrakOnizlemeKontrolu()
