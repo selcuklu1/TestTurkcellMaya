@@ -633,7 +633,7 @@ public class GelenEvraklarPage extends MainPage {
     }
 
     @Step("Kişi ve açıklama bilgilerinin girileceği alanların geldiği görülür.")
-    public GelenEvraklarPage stepmethod() {
+    public GelenEvraklarPage kisiVeAciklamaAlaniGeldigiGorme() {
         boolean durum = $$(By.id("mainPreviewForm:evrakPaylasFieldsetId")).size() == 1;
         Assert.assertEquals(durum, true);
         takeScreenshot();
