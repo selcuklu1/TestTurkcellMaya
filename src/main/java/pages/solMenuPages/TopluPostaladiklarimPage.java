@@ -233,7 +233,7 @@ public class TopluPostaladiklarimPage extends MainPage {
     public TopluPostaladiklarimPage evrakListesiYazdir(String[] konu) {
         ElementsCollection table = $$("tbody[id='mainPreviewForm:dataTableId_data'] tr[data-ri]");
         int size = $$("tbody[id='mainPreviewForm:dataTableId_data'] tr[data-ri]").size();
-        Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", table);
+//        Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", table);
         for (int i = 0; i < size; i++) {
             $$("tbody[id='mainPreviewForm:dataTableId_data'] tr[data-ri]")
                     .filterBy(Condition.text(konu[i]))
