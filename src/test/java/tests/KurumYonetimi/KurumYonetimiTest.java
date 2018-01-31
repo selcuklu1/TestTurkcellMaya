@@ -36,7 +36,6 @@ public class KurumYonetimiTest extends BaseTest {
 
         String kontrolEdilecekGeregiDetay = "";
 
-        // İletişim bilgileri güncelleme
         String mobilTelNo = "5444444444";
         String telefonNo = "5444444445";
         String adres = "yeni adersim";
@@ -44,7 +43,6 @@ public class KurumYonetimiTest extends BaseTest {
         String il = "İSTANBUL";
         String ePosta = "xxx@xxx.com";
         String kepAdresi = "xxx@turksat.com.tr";
-        String basariMesaji = "İşlem başarılıdır!";
 
         login("mbozdemir", "123");
         kurumYonetimiPage
@@ -69,7 +67,7 @@ public class KurumYonetimiTest extends BaseTest {
                 .popupKepAdresiDoldur(kepAdresi)
                 .popupKaydet()
                 .kurumKaydet()
-                .islemMesaji().basariliOlmali(basariMesaji);
+                .islemMesaji().basariliOlmali();
 
 
         String guncellenecekKurumAdi = yeniKurumAdi1;
@@ -81,7 +79,6 @@ public class KurumYonetimiTest extends BaseTest {
         String ilce = "Avcılar";
         String webAdresi = "example.com";
 
-        // Kep adresi güncelleme
         String guncellenecekKepAdresi = kepAdresi;
         String yeniKepadresi = "hihihaha2223@kepadresim.com";
         String kepHizmetSaglayicisi = "KEPKUR";
@@ -105,26 +102,26 @@ public class KurumYonetimiTest extends BaseTest {
                 .faxNumarasi1Doldur(faxNumarasi1)
                 .faxNumarasi2Doldur(faxNumarasi2)
                 .adresDoldur(adres)
-//              .ulkeDoldur(ulke)
+               .ulkeDoldur(ulke)
                 .ilDoldur(il)
                 .ilceDoldur(ilce)
                 .ePostaDoldur(ePosta)
                 .webAdresiDoldur(webAdresi)
                 .iletisimBilgisiKaydet()
-                .islemMesaji().basariliOlmali(basariMesaji);
+                .islemMesaji().basariliOlmali();
         kurumYonetimiPage
                 .kepAdresiGuncelle(guncellenecekKepAdresi, null)
                 .kepAdresiDoldur(yeniKepadresi)
                 .kepHizmetSaglayiciSec(kepHizmetSaglayicisi)
                 .kepAdresiBilgileriKaydet()
-                .islemMesaji().basariliOlmali(basariMesaji);
+                .islemMesaji().basariliOlmali();
         kurumYonetimiPage
                 .kepAdresiKontrol(yeniKepadresi, 0, true)
                 .kurumKaydet()
-                .islemMesaji().basariliOlmali(basariMesaji);
+                .islemMesaji().basariliOlmali();
         kurumYonetimiPage
                 .kurumHiyerarsisiniGuncelle()
-                .islemMesaji().basariliOlmali(basariMesaji);
+                .islemMesaji().basariliOlmali();
         kurumYonetimiPage
                 .filtrePanelAc()
                 .sorgulaKurumDoldur(yeniKurumAdi)
@@ -168,7 +165,7 @@ public class KurumYonetimiTest extends BaseTest {
                 .kurumGuncelle(yeniKurumAdi)
                 .kepAdresiKullaniyorSec(false)
                 .kurumKaydet()
-                .islemMesaji().basariliOlmali(basariMesaji);
+                .islemMesaji().basariliOlmali();
         kurumYonetimiPage.panelKapat();
 
         evrakOlusturPage
@@ -190,7 +187,6 @@ public class KurumYonetimiTest extends BaseTest {
 
         String kontrolEdilecekGeregiDetay = "";
 
-        // İletişim bilgileri güncelleme
         String mobilTelNo = "5444444444";
         String telefonNo = "5444444445";
         String adres = "yeni adersim";
@@ -214,7 +210,7 @@ public class KurumYonetimiTest extends BaseTest {
                 .mobilTelNoDoldur(mobilTelNo)
                 .telefonNoDoldur(telefonNo)
                 .adresDoldur(adres)
-                //.ulkeDoldur(ulke)
+                .ulkeDoldur(ulke)
                 .ilDoldur(il)
                 .ePostaDoldur(ePosta)
                 .iletisimBilgisiKaydet()
@@ -261,7 +257,6 @@ public class KurumYonetimiTest extends BaseTest {
         String ulke = "TÜRKİYE";
         String il = "İSTANBUL";
         String ePosta = "xxx@xxx.com";
-        String basariMesaji = "İşlem başarılıdır!";
 
         String pasifKurumadi = "Maliye Bakanlığı";
         String pasifIdariBirimKimlikKodu = "24316011";
