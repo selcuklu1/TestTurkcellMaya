@@ -823,6 +823,14 @@ public class EvrakOlusturPage extends MainPage {
             cmbGeregi.selectLov(geregi);
             return this;
         }
+        
+        @Step("Seçimde posta tipinin otomatik KEP geldiği ve kullanıcının değiştirebildiği görülür")
+        public BilgilerTab geregiAlaniKEPSeciliGeldigiGorme(){
+        boolean durum = $("[id$='geregiLov:LovSecilenTable_data'] select").getSelectedText().equals("KEP");
+        Assert.assertEquals(durum,true);
+        takeScreenshot();
+        return this;
+        }
 
         @Step("Gereği {description} doldur: | {geregi}")
         public BilgilerTab geregiDoldur2(String geregi, String description) {
@@ -895,6 +903,17 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Her dağıtım yerinin posta tipinin default KEP olarak geldiği görülür.")
+        public BilgilerTab kepOlarakGeldikleriGorme(String kisi1,String kisi2, String kisi3){
+        boolean durum1 = $$("[id$='geregiLov:LovSecilenTable_data'] > tr").filterBy(Condition.text(kisi1)).get(0).$("select").getSelectedText().equals("KEP");
+            boolean durum2 = $$("[id$='geregiLov:LovSecilenTable_data'] > tr").filterBy(Condition.text(kisi1)).get(0).$("select").getSelectedText().equals("KEP");
+            boolean durum3=  $$("[id$='geregiLov:LovSecilenTable_data'] > tr").filterBy(Condition.text(kisi1)).get(0).$("select").getSelectedText().equals("KEP");
+            Assert.assertEquals(durum1,durum2);
+            Assert.assertEquals(durum2,durum3);
+            takeScreenshot();
+            return this;
+        }
+        
         @Step("Onay Akışı Ekle")
         public BilgilerTab onayAkisiEkle() {
             clickJs(btnOnayAkisiEkle);
@@ -1437,6 +1456,13 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Metin alanın geldiği görünür")
+        public EditorTab metinAlaninGeldigiGorme(){
+            boolean durum = $$(By.id("yeniGidenEvrakForm:allPanels_content")).size()==1;
+            Assert.assertEquals(durum,true);
+            return this;
+        }
+
         @Step("İmzacı alanı \"{kullanici}\" olarak gelmeli")
         public EditorTab imzacılarGnMdVKontrol(String kullanici) {
             Assert.assertEquals(kullanici, divImzacılarGnMdV.getText());
@@ -1852,7 +1878,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Ekleri Tab - Ek Metni")
+        @Step("Ekleri Tab - Ek Metni alanını doldur: {aciklama}")
         public EkleriTab ekleriEkMetniDoldur(String aciklama) {
             txtEkleriDosyaAciklama.setValue(aciklama);
             return this;
@@ -1948,9 +1974,7 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Dosya ekle : {description} ")
         public EkleriTab dosyaEkle(String pathPDF, String description) {
-
             uploadFile(btnDosyaEkle, pathPDF);
-
             return this;
         }
 

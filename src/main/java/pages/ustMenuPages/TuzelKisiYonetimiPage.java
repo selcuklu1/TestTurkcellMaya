@@ -164,7 +164,7 @@ public class TuzelKisiYonetimiPage extends MainPage {
 
     @Step("Kep adres bilgileri ekle")
     public TuzelKisiYonetimiPage kepAdresBilgileriEkle() {
-        btnKepAdresBilgileriEkle.click();
+        btnKepAdresBilgileriEkle.pressEnter();
         return this;
     }
 
@@ -183,6 +183,21 @@ public class TuzelKisiYonetimiPage extends MainPage {
     @Step("Ara")
     public TuzelKisiYonetimiPage ara() {
         btnAra.click();
+        return this;
+    }
+
+    @Step("Tüzel Kişi kayıtlarının tabloda listelendiği görülür")
+    public TuzelKisiYonetimiPage tuzelKisilerinListelendigiGorme() {
+        boolean durum = $$(By.id("tuzelKisiYonetimiListingForm:tuzelKisiDataTable_data")).size() == 1;
+        Assert.assertEquals(durum, true);
+        takeScreenshot();
+        return this;
+    }
+
+    @Step("Eklenen yeni kayıt listede görüntülenir: {kep}")
+    public TuzelKisiYonetimiPage kepAdresBilgileriKayitListedeGeldigiGorulur(String kep) {
+        boolean durum =$("[id='gercekKisiYonetimiEditorForm:kepBilgileriDataTable']").shouldBe(Condition.text(kep)).shouldBe(Condition.visible).exists()==true;
+        Assert.assertEquals(durum,true);
         return this;
     }
 
