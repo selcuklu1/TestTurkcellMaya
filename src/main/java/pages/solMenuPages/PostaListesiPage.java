@@ -309,11 +309,10 @@ public class PostaListesiPage extends MainPage {
     @Step("Konuye göre evrak seç. \"{konu}\" ")
     public PostaListesiPage evrakSec(String konu) {
 
-        tableEvraklar
+       SelenideElement tablo =  $$("tbody[id='mainInboxForm:inboxDataTable_data'] > tr[data-ri]")
                 .filterBy(Condition.text(konu))
-                .first()
-                .click();
-
+                .first();
+       tablo.click();
         return this;
     }
 

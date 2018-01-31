@@ -2280,23 +2280,23 @@ public class TopluPostalamaTest extends BaseTest {
 //        String remoteDownloadPath = getDownloadPath();
 //        String remoteDownloadPath = "C:\\Users\\optiim\\Downloads\\";
 
-//        String[] konu = new String[]{
-//                "TC1816 20180123105225", "TC1816 1719010452836"
-//        };
-//
-//        String[] evrakNo1816 = new String[]{
-//                "11207", "11208"
-//        };
-//
-//        String[] icerik = new String[]{
-//                "TC1816 2018012310522520180123105243", "TC1816 171901045283620180123105353"
-//        };
-
         String[] konu = new String[]{
-                "TC1816 " + getSysDate(), "TC1816 " + createRandomNumber(12)
+                "TC1816 20180131133509", "TC1816 1472869503101"
         };
-        String[] evrakNo1816 = new String[2];
-        String[] icerik = new String[2];
+
+        String[] evrakNo1816 = new String[]{
+                "11872", "11873"
+        };
+
+        String[] icerik = new String[]{
+                "TC1816 2018013113350920180131133553", "TC1816 147286950310120180131133707"
+        };
+
+//        String[] konu = new String[]{
+//                "TC1816 " + getSysDate(), "TC1816 " + createRandomNumber(12)
+//        };
+//        String[] evrakNo1816 = new String[2];
+//        String[] icerik = new String[2];
         String[] sayi = new String[2];
         String[] pdfSayi = new String[2];
 
@@ -2334,58 +2334,58 @@ public class TopluPostalamaTest extends BaseTest {
 
         Allure.addAttachment("Test Datası", "Test Datası oluşturuluyor.");
 ////        region Test Datası
-        for (int i = 0; i < 2; i++) {
-            icerik[i] = konu[i] + getSysDate();
-            evrakOlusturPage
-                    .openPage()
-                    .bilgilerTabiAc()
-                    .konuKoduSec(konuKodu)
-                    .konuDoldur(konu[i])
-                    .kaldiralacakKlasorlerSec(kaldiralacakKlasor)
-                    .evrakTuruSec(evrakTuru)
-                    .evrakDiliSec(evrakDili)
-                    .gizlilikDerecesiSec(gizlilikDerecesi)
-                    .ivedilikSec(ivedilik)
-                    .aciklamaDoldur(konu[i])
-                    .geregiSecimTipiSecByText(geregiTipi)
-                    .geregiSec(geregi)
-                    .gercekKisiGeregiAlaniPostaTipiSec(gidisSekli)
-                    .onayAkisiEkle()
-                    .onayAkisiEkleIlkImzalaSec(tur)
-                    .kullan();
-
-            evrakOlusturPage
-                    .editorTabAc()
-                    .editorIcerikDoldur(icerik[i]);
-
-            sayi[i] = evrakOlusturPage.editorTabAc().editorSayiAl();
-
-
-            mainPage
-                    .evrakImzala();
-
-            imzaladiklarimPage
-                    .openPage();
-
-            evrakNo1816[i] = imzaladiklarimPage.evrakIcerikKontroluveEvrakNoAl(konu[i]);
-
-            pdfSayi[i] = sayi[i] + evrakNo1816[i];
-
-        }
-
-        topluPostalanacakEvraklarPage
-                .openPage()
-                .tarihAraligiSec(getSysDateForKis(), getSysDateForKis())
-                .postaTipiSec(postaTipleri)
-                .sorgula()
-                .evrakSec(konu[0], true)
-                .evrakSec(konu[1], true)
-//                .evrakTumunuSec(true)
-                .postaListesineAktar()
-                .listeAdiDoldur(konu[0])
-                .listeOlustur()
-                .postaListesiSec(konu[0])
-                .listeyeEkle();
+//        for (int i = 0; i < 2; i++) {
+//            icerik[i] = konu[i] + getSysDate();
+//            evrakOlusturPage
+//                    .openPage()
+//                    .bilgilerTabiAc()
+//                    .konuKoduSec(konuKodu)
+//                    .konuDoldur(konu[i])
+//                    .kaldiralacakKlasorlerSec(kaldiralacakKlasor)
+//                    .evrakTuruSec(evrakTuru)
+//                    .evrakDiliSec(evrakDili)
+//                    .gizlilikDerecesiSec(gizlilikDerecesi)
+//                    .ivedilikSec(ivedilik)
+//                    .aciklamaDoldur(konu[i])
+//                    .geregiSecimTipiSecByText(geregiTipi)
+//                    .geregiSec(geregi)
+//                    .gercekKisiGeregiAlaniPostaTipiSec(gidisSekli)
+//                    .onayAkisiEkle()
+//                    .onayAkisiEkleIlkImzalaSec(tur)
+//                    .kullan();
+//
+//            evrakOlusturPage
+//                    .editorTabAc()
+//                    .editorIcerikDoldur(icerik[i]);
+//
+//            sayi[i] = evrakOlusturPage.editorTabAc().editorSayiAl();
+//
+//
+//            mainPage
+//                    .evrakImzala();
+//
+//            imzaladiklarimPage
+//                    .openPage();
+//
+//            evrakNo1816[i] = imzaladiklarimPage.evrakIcerikKontroluveEvrakNoAl(konu[i]);
+//
+//            pdfSayi[i] = sayi[i] + evrakNo1816[i];
+//
+//        }
+//
+//        topluPostalanacakEvraklarPage
+//                .openPage()
+//                .tarihAraligiSec(getSysDateForKis(), getSysDateForKis())
+//                .postaTipiSec(postaTipleri)
+//                .sorgula()
+//                .evrakSec(konu[0], true)
+//                .evrakSec(konu[1], true)
+////                .evrakTumunuSec(true)
+//                .postaListesineAktar()
+//                .listeAdiDoldur(konu[0])
+//                .listeOlustur()
+//                .postaListesiSec(konu[0])
+//                .listeyeEkle();
 
 
         postaListesiPage
