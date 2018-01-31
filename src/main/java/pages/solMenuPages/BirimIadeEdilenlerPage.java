@@ -17,7 +17,7 @@ public class BirimIadeEdilenlerPage extends MainPage {
         return this;
     }
 
-    @Step("Evrak no ile evrak seçilir : \"{evrakNo}\" ")
+    @Step("Evrak numara ile evrak seçilir : \"{evrakNo}\" ")
     public BirimIadeEdilenlerPage evrakNoIleEvrakSec(String evrakNo) {
         tblEvraklar
                 .filterBy(Condition.text(evrakNo))

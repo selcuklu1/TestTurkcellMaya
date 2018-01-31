@@ -10,9 +10,7 @@ import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
-import static com.codeborne.selenide.Condition.exist;
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
@@ -178,7 +176,7 @@ public class ParafladiklarimPage extends MainPage {
     }
 
     @Step("Parafladıklarım listesinde evrak kontrolü:  \"{konu}\" ")
-    public ParafladiklarimPage konuyaGoreEvrakKontroluAllPages(String konu){
+    public ParafladiklarimPage konuyaGoreEvrakKontroluAllPages(String konu) {
         searchTable().searchInAllPages(true).findRows(text(konu)).getFoundRow().shouldBe(exist);
         return this;
     }

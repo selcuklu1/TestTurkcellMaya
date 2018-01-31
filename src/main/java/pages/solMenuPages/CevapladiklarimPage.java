@@ -53,19 +53,18 @@ public class CevapladiklarimPage extends MainPage {
     }
 
 
-
     @Step("Evrak geçmişinde ”Evrak ... sayılı ve \"{evrakTarihi}\" tarihli yazı ile cevap yazılarak kapatılmıştır.” İbaresinin olduğu görülür.")
-    public CevapladiklarimPage evrakGecmisiEvrakKapandiIbaresiGorme(String evrakTarihi,String evrakSayi){
+    public CevapladiklarimPage evrakGecmisiEvrakKapandiIbaresiGorme(String evrakTarihi, String evrakSayi) {
         boolean durum = tblEvrakGecmisi.filterBy(Condition.text("Evrak"))
                 .filterBy(Condition.text("tarihli yazı ile cevap yazılarak kapatılmıştır."))
                 .size() == 1;
 
-        Assert.assertEquals(durum,true);
+        Assert.assertEquals(durum, true);
         return this;
     }
-    
+
     @Step("Evrak seçilir")
-    public CevapladiklarimPage tabloEvrakSec(String konu, String yer, String tarih){
+    public CevapladiklarimPage tabloEvrakSec(String konu, String yer, String tarih) {
         tblEvrak.filterBy(Condition.text(konu))
                 .filterBy(Condition.text(yer))
                 .filterBy(Condition.text(tarih)).get(0).click();
@@ -73,7 +72,7 @@ public class CevapladiklarimPage extends MainPage {
     }
 
     @Step("Evrak geçmişi alanına tıklanır")
-    public CevapladiklarimPage secilenEvrakEvrakGecmisi(){
+    public CevapladiklarimPage secilenEvrakEvrakGecmisi() {
         $$("[id$='evrakOnizlemeTab'] ul li").filterBy(Condition.text("Evrak Geçmişi")).get(0).$("a").click();
         return this;
     }

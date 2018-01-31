@@ -86,13 +86,13 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
     }
 
     @Step("Pasif Yap")
-    public EvrakHavaleKurallariYonetimiPage ilkPasifYap(){
+    public EvrakHavaleKurallariYonetimiPage ilkPasifYap() {
         clickJs(btnIlkPasifYap);
         return this;
     }
 
     @Step("Aktif Yap")
-    public EvrakHavaleKurallariYonetimiPage ilkAktifYap(){
+    public EvrakHavaleKurallariYonetimiPage ilkAktifYap() {
         clickJs(btnIlkAktifYap);
         return this;
     }
@@ -123,7 +123,7 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
 
     public String birimEkleAltBirimIlkAdCek() {
         String altBirim = chkBirimEkleAltBirimIlkAd.get(1).$("div[class='ui-dt-c']").getText();
-            return altBirim;
+        return altBirim;
     }
 
     @Step("Birim alanında alt birim seçeneği seçilir")
@@ -356,13 +356,14 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
         btnAra.click();
         return this;
     }
+
     @Step("")
-    public EvrakHavaleKurallariYonetimiPage pasifYapilanKullaniciGuncelle(String kuralAdi){
+    public EvrakHavaleKurallariYonetimiPage pasifYapilanKullaniciGuncelle(String kuralAdi) {
 
-        if ($("[id='havaleKuralYonetimiListingForm:havaleKuralDataTable_paginator_top'] [class='ui-paginator-last ui-state-default ui-corner-all']").exists()==true)
-        $("[id='havaleKuralYonetimiListingForm:havaleKuralDataTable_paginator_top'] [class='ui-paginator-last ui-state-default ui-corner-all']").pressEnter();
+        if ($("[id='havaleKuralYonetimiListingForm:havaleKuralDataTable_paginator_top'] [class='ui-paginator-last ui-state-default ui-corner-all']").exists() == true)
+            $("[id='havaleKuralYonetimiListingForm:havaleKuralDataTable_paginator_top'] [class='ui-paginator-last ui-state-default ui-corner-all']").pressEnter();
 
-    tblEvraklar.filterBy(Condition.text(kuralAdi)).get(0).$("[id$='updateHavaleKuralButton']").click();
+        tblEvraklar.filterBy(Condition.text(kuralAdi)).get(0).$("[id$='updateHavaleKuralButton']").click();
         return this;
     }
 

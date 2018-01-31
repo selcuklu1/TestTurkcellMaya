@@ -12,7 +12,6 @@ import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
@@ -131,15 +130,15 @@ public class TeslimAlinanlarPage extends MainPage {
     }
 
     @Step("Evrak geçmişi alanına tıklanır")
-    public TeslimAlinanlarPage secilenEvrakEvrakGecmisi(){
+    public TeslimAlinanlarPage secilenEvrakEvrakGecmisi() {
         $$("[id$='evrakOnizlemeTab'] ul li").filterBy(Condition.text("Evrak Geçmişi")).get(0).$("a").click();
         return this;
     }
 
     @Step("Evrak Geçmişi Kontrol")
-    public TeslimAlinanlarPage evrakGecmisi(String teslimAlinan,String islemSureci) {
+    public TeslimAlinanlarPage evrakGecmisi(String teslimAlinan, String islemSureci) {
         boolean durum = tblEvrakGecmisi.filterBy(Condition.text(islemSureci)).filter(Condition.text(teslimAlinan)).size() == 1;
-        Assert.assertEquals(durum,true);
+        Assert.assertEquals(durum, true);
         takeScreenshot();
         return this;
 

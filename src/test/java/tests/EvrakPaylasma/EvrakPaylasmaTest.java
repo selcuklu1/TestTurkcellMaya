@@ -1,6 +1,5 @@
 package tests.EvrakPaylasma;
 
-import com.codeborne.selenide.Condition;
 import common.BaseTest;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -17,7 +16,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
 
-import static data.TestData.*;
+import static data.TestData.passwordZTEKIN;
+import static data.TestData.usernameZTEKIN;
 
 
 public class EvrakPaylasmaTest extends BaseTest {
@@ -626,13 +626,13 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .evrakOnizlemeTabSec("Evrak Notları")
                 .evrakNotuEkle()
                 .evrakNotuGirVeKaydet(aciklama)
-                .evrakNotuKontrol(kisi2,  "2018", aciklama);
+                .evrakNotuKontrol(kisi2, "2018", aciklama);
 
         sistemLoglariPage
                 .openPage()
                 .kullaniciSec(kisi2)
                 .sorgula()
-                .sistemRaporuGeldigiGorme("Paylaşım Notu Girme",evrakTarihi,kisi2);
+                .sistemRaporuGeldigiGorme("Paylaşım Notu Girme", evrakTarihi, kisi2);
 
         gelenEvraklarPage
                 .openPage()

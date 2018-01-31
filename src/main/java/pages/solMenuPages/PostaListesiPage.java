@@ -9,14 +9,12 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
-import pages.pageComponents.SearchTable;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
 
 import java.awt.*;
 import java.io.IOException;
 
-import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.Belgenet.comboBox;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
@@ -97,6 +95,17 @@ public class PostaListesiPage extends MainPage {
         Selenide.sleep(2000);
         txtPostaListesi.pressEnter();
         return this;
+    }
+
+    @Step("Posta Listesi doldur : \"{postaListesi}\" ")
+    public String postaListesiIlkKayitAl() {
+        SelenideElement panelAc = $(By.xpath("//span[@class='ui-button-icon-primary ui-icon ui-icon-triangle-1-s']/.."));
+        panelAc.click();
+        SelenideElement panel = $("[id='mainInboxForm:inboxDataTable:filtersAccordion:postaListesiAdi_panel'] li:nth-child(1)" );
+//        BelgenetElement txtPostaListesi = comboBox(By.id("mainInboxForm:inboxDataTable:filtersAccordion:postaListesiAdi_input"));
+        String postaListesi = panel.text();
+
+        return postaListesi;
     }
 
     @Step("Posta Listesi kontrolü : \"{postaListesi}\", \"{shouldBeExist}\" ")

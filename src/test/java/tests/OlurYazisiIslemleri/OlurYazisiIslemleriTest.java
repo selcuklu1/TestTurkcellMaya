@@ -51,7 +51,9 @@ public class OlurYazisiIslemleriTest extends BaseTest {
     //konuKodu dokümanda görünen değeri "01-010.10-" konuKodu değiştirince sayi değiştirmeye unutma!(?dönüştürme metodu?)
     String konuKodu = "010.10";
     String konuKoduSayi = "01-010.10-";
-
+    OlurYazisiOlusturPage olurYazisiOlusturPage2;
+    BilgilerTab bilgilerTab;
+    EditorTab editorTab;
 
     @BeforeMethod(alwaysRun = false)
     public void setUp() {
@@ -105,11 +107,6 @@ public class OlurYazisiIslemleriTest extends BaseTest {
         postaciKontolleri();
     }
 
-
-    OlurYazisiOlusturPage olurYazisiOlusturPage2;
-    BilgilerTab bilgilerTab;
-    EditorTab editorTab;
-
     @Test(description = "TS1488: Olur yazısında alan kontrolleri", enabled = false)
     public void TS1488() {
         login(user1);
@@ -126,7 +123,7 @@ public class OlurYazisiIslemleriTest extends BaseTest {
 
         //Step13
         bilgilerTab.ivedilikSec(Ivedilik.GUNLU)
-            .miatTemizle()
+                .miatTemizle()
                 .evrakPageButtons().paraflaButonaTikla()
                 .islemMesaji().uyariOlmali("Zorunlu alanları doldurunuz");
         bilgilerTab.miatDoldur(getSysDateForKis())
@@ -140,7 +137,7 @@ public class OlurYazisiIslemleriTest extends BaseTest {
 
     //region TS1488 steps
     @Step("Gereği alanından içinde kurum dışı olan bir dağıtım planı seç")
-    public void step2(){
+    public void step2() {
         bilgilerTab.geregiSecimTipiSec(GeregiSecimTipi.DAGITIM_PLANLARI);
         boolean empty = bilgilerTab.getGeregiCombolov().type("TS1488").isEmpty();
         Assert.assertTrue(empty, "Dağıtım planının gelmediği görülür.");
@@ -148,7 +145,7 @@ public class OlurYazisiIslemleriTest extends BaseTest {
     }
 
     @Step("Editör ekranını boş bırak - İmzala")
-    public void step3(){
+    public void step3() {
         bilgilerTab.konuKoduSec("010.01")
                 .konuDoldur("TS1488")
                 .kaldiralacakKlasorleriSec("Diğer")
@@ -160,18 +157,18 @@ public class OlurYazisiIslemleriTest extends BaseTest {
     }
 
     @Step("Editör tabında içeriği doldur, Konu Kodu alanını boş bırak, - İmzala")
-    public void step4(){
+    public void step4() {
         editorTab = olurYazisiOlusturPage2.editorTab();
         editorTab.openTab().getEditor().type("editör tekst");
         bilgilerTab.openTab().konuKoduTemizle()
-                    .konuDoldur("asdsad").getKonuKodu().sendKeys(Keys.TAB);
+                .konuDoldur("asdsad").getKonuKodu().sendKeys(Keys.TAB);
         olurYazisiOlusturPage2.pageButtons().imzalaButonaTikla()
                 .islemMesaji().uyariOlmali("Zorunlu alanları doldurunuz");
         //Evrak konusu boş olamaz!
     }
 
     @Step("Konu kodu alanını doldur ve Konu alanını boş bırak - İmzala")
-    public void step5(){
+    public void step5() {
         bilgilerTab.openTab().konuKoduSec("010.01")
                 .konuTemizle();
         olurYazisiOlusturPage2.pageButtons().imzalaButonaTikla()
@@ -180,16 +177,16 @@ public class OlurYazisiIslemleriTest extends BaseTest {
     }
 
     @Step("Konu alanını doldur, Kaldırılacak klasörler alanını boş bırak - İmzala")
-    public void step6(){
+    public void step6() {
         bilgilerTab.openTab().konuDoldur("aaa")
-            .kaldiralacakKlasorleriTemizle();
+                .kaldiralacakKlasorleriTemizle();
         olurYazisiOlusturPage2.pageButtons().imzalaButonaTikla()
                 .islemMesaji().uyariOlmali("Zorunlu alanları doldurunuz");
         //Evrak konusu boş olamaz!
     }
 
     @Step("Kaldırılacak klasörler alanını doldur, Onay akışı alanını boş bırak - Kaydet ve onaya sun butonunu tıkla")
-    public void step7(){
+    public void step7() {
         bilgilerTab.openTab().kaldiralacakKlasorleriSec("Diğer")
                 .onayAkisiTemizle();
         olurYazisiOlusturPage2.pageButtons()
@@ -202,7 +199,7 @@ public class OlurYazisiIslemleriTest extends BaseTest {
 
 
     @Step("İmzaci kontroller")
-    public OlurYazisiIslemleriTest step8_12(){
+    public OlurYazisiIslemleriTest step8_12() {
         bilgilerTab
                 .onayAkisiTemizle()
                 .anlikOnayAkisKullanicilariTemizle()
@@ -225,7 +222,7 @@ public class OlurYazisiIslemleriTest extends BaseTest {
 
     //region TS0577 steps
     @Step("Bilgileri sekmesinde alanları doldur")
-    private void bilgileriTab(){
+    private void bilgileriTab() {
         olurYazisiOlusturPage.bilgileriTab().openTab()
                 .konuKoduSec(konuKodu)
                 .konuDoldur(konu)
@@ -245,19 +242,19 @@ public class OlurYazisiIslemleriTest extends BaseTest {
     }
 
     @Step("Ekleri sekmesinde ekleme ve kontrolleri")
-    private void ekleriTab(){
+    private void ekleriTab() {
         altTabs.getFiziksetEkEkleTab().shouldBe(visible);
         altTabs.getSistemdeKayitliEvrakEkleTab().shouldBe(visible);
         altTabs.getWebAdresiniEkleTab().shouldBe(visible);
         altTabs.dosyaEkleTabiAc()
                 .dosyaEkle(doc)
-                .ekMetniDoldur("Ekleri Tab "+ konu)
+                .ekMetniDoldur("Ekleri Tab " + konu)
                 .ekleButonaTikla();
-        olurYazisiOlusturPage.ekleriTab().getEkListesiTablosu().findRows(text("Ekleri Tab "+ konu)).shouldHaveSize(1);
+        olurYazisiOlusturPage.ekleriTab().getEkListesiTablosu().findRows(text("Ekleri Tab " + konu)).shouldHaveSize(1);
     }
 
     @Step("İlgileri sekmesinde ekleme ve kontrolleri")
-    private void ilgileriTab(){
+    private void ilgileriTab() {
         altTabs = olurYazisiOlusturPage.ilgileriTab().openTab().altTabs();
         altTabs.getSistemdeKayitliEvrakEkleTab();
         altTabs.getDosyaEkleTab();
@@ -277,19 +274,19 @@ public class OlurYazisiIslemleriTest extends BaseTest {
         altTabs = olurYazisiOlusturPage.iliskiliEvraklarTab().openTab().altTabs();
         altTabs.getDosyaEkleTab().shouldBe(visible);
         altTabs.sistemdeKayitliEvrakEkleTabiAc().evrakAraDoldur("a").dokumanAraTikla().islemMesaji().basariliOlmali();
-        String docSati = altTabs.getSistemdeKayitliEvrakListesi().findRows().shouldHaveSize(1).useFirstFoundRow().getColumnValue( "Sayı").text();
+        String docSati = altTabs.getSistemdeKayitliEvrakListesi().findRows().shouldHaveSize(1).useFirstFoundRow().getColumnValue("Sayı").text();
         altTabs.getSistemdeKayitliEvrakListesi().foundRow().dokumanEkleTikla();
         olurYazisiOlusturPage.iliskiliEvraklarTab().getEkListesiTablosu().findRows(text(docSati)).shouldHaveSize(1);
 
         altTabs.tercumeEkleTabiAc()
                 .dosyaEkle(doc)
-                .ilisikMetniDoldur("Tercüme Tab "+ konu)
+                .ilisikMetniDoldur("Tercüme Tab " + konu)
                 .ekleButonaTikla();
-        olurYazisiOlusturPage.iliskiliEvraklarTab().getEkListesiTablosu().findRows(text("Tercüme Tab "+ konu)).shouldHaveSize(1);
+        olurYazisiOlusturPage.iliskiliEvraklarTab().getEkListesiTablosu().findRows(text("Tercüme Tab " + konu)).shouldHaveSize(1);
     }
 
     @Step("Editör tabında alanların layout kontorlü")
-    private void editorTabGalen() throws IOException{
+    private void editorTabGalen() throws IOException {
         //Editör Tab Galen kontroller
         olurYazisiOlusturPage.editorTab().openTab();
 
@@ -314,14 +311,14 @@ public class OlurYazisiIslemleriTest extends BaseTest {
         params.put("birim", user1.getBirimAdi());
         params.put("sayi", konuKoduSayi);
         params.put("konu", konu);
-        params.put("ilgi_a", "İlgileri Tab "+ konu);
+        params.put("ilgi_a", "İlgileri Tab " + konu);
         params.put("ilgi_b", "Metni Tab " + konu);
         params.put("ilgi_b", "Metni Tab " + konu);
         params.put("imzaci1Isim", user2.getFullname());
         params.put("imzaci1Gorev", user2.getGorev());
         params.put("imzaci2Isim", user3.getFullname());
         params.put("imzaci2Gorev", user3.getGorev());
-        params.put("ek", "Ekleri Tab "+ konu);
+        params.put("ek", "Ekleri Tab " + konu);
 
         GalenControl galen = new GalenControl();
         galen.generateDump("TS0577", params);
@@ -329,7 +326,7 @@ public class OlurYazisiIslemleriTest extends BaseTest {
     }
 
     @Step("İmzala ve Onaya sun")
-    private void imzalaVeOnayaSun(){
+    private void imzalaVeOnayaSun() {
         //imzala
         olurYazisiOlusturPage.pageButtons().evrakKaydetVeOnayaSunTikla();
         olurYazisiOlusturPage.getPage().shouldHave(text("1. İmzalama " + user2.getFullname()));
@@ -341,14 +338,14 @@ public class OlurYazisiIslemleriTest extends BaseTest {
     }
 
     @Step("Hazırladıklarım sayfada gideceği yer kontrolü")
-    private void hazirladiklarimMenudaGorunmeli(){
+    private void hazirladiklarimMenudaGorunmeli() {
         //21	Sol menü > İşlem yaptıklarım > Hazırladıklarım menüsünü aç	Olur yazısının gideceği yer doğru olarak listelendiği görülür.
         mainPage = olurYazisiOlusturPage.solMenu(SolMenuData.IslemYaptiklarim.Hazirladiklarim);
-        mainPage.searchTable().findRows(text(konu), text("Gideceği Yer: "+ optiim.getBirimAdi())).shouldHaveSize(1);
+        mainPage.searchTable().findRows(text(konu), text("Gideceği Yer: " + optiim.getBirimAdi())).shouldHaveSize(1);
     }
 
     @Step("İlk imzaci ile imzala ve kontrol et")
-    private void ilkImzaciImzala(){
+    private void ilkImzaciImzala() {
         login(user2);
         mainPage.solMenu(SolMenuData.IslemBekleyenEvraklar.ImzaBekleyenler)
                 .searchTable()
@@ -359,7 +356,7 @@ public class OlurYazisiIslemleriTest extends BaseTest {
     }
 
     @Step("İkinci imzaci ile imzala ve kontrol et")
-    private void ikinciImzaciImzala(){
+    private void ikinciImzaciImzala() {
         login(user3);
         mainPage.solMenu(SolMenuData.IslemBekleyenEvraklar.ImzaBekleyenler)
                 .searchTable().findRows(text(konu)).shouldHaveSize(1).getFoundRow().click();
@@ -368,7 +365,7 @@ public class OlurYazisiIslemleriTest extends BaseTest {
     }
 
     @Step("Gereği alanında seçilen birimde Teslim Alınmayı Bekleyenler sayfada listenmeli")
-    private void geregiBirimKullanici(){
+    private void geregiBirimKullanici() {
         //"Gereği alanında seçilken birimden bir kullanıcı ile sisteme login ol
         //Sol menü > birim evrakları > Teslim alınmayı bekleyenler listesini aç"
         login(optiim);
@@ -377,7 +374,7 @@ public class OlurYazisiIslemleriTest extends BaseTest {
     }
 
     @Step("Evrakın hazırlandığı birimin postacıda listelenmediği görülür")
-    private void postaciKontolleri(){
+    private void postaciKontolleri() {
         //"Evrakın hazırlandığı birimin postacı biriminden bir kullanıcı ile login ol
         //Sol menü > Birim evrakları > Postalanacaklar/Postalananlar evraklar menüsünü tıkla"	Olur yazısının !!!listelenmediği!!! görülür.
         login(user1);

@@ -485,7 +485,7 @@ public class ComboLovHelper extends BaseLibrary {
     }
 
     @Step("Select Lov")
-    public By selectLov(String... text){
+    public By selectLov(String... text) {
         String selectableItemsLocator = "li span[class*='ui-tree-selectable-node']";
         ElementsCollection collection;
 
@@ -495,7 +495,8 @@ public class ComboLovHelper extends BaseLibrary {
         //try used for disabled field with openTree button
         try {
             if ($(lovText).isDisplayed()) $(lovText).getWrappedElement().sendKeys(Keys.SHIFT);
-        } catch (Exception ignored) { }
+        } catch (Exception ignored) {
+        }
 
         $(lovText).shouldBe(visible);
 
@@ -507,7 +508,7 @@ public class ComboLovHelper extends BaseLibrary {
         collection = $$(lovTree).last().shouldBe(visible).$$(selectableItemsLocator);
         collection.shouldHave(sizeGreaterThan(0)).last().shouldBe(visible);
         Allure.addAttachment("Selectable items " + collection.size(), collection.texts().toString());
-        Allure.addAttachment("Filter texts "+ text.length, Arrays.toString(text));
+        Allure.addAttachment("Filter texts " + text.length, Arrays.toString(text));
 
         for (String t : text) {
             collection = collection.filterBy(text(t));
@@ -525,7 +526,7 @@ public class ComboLovHelper extends BaseLibrary {
         SelenideElement selectedItem = multiType
                 ? $$(lovSelectedItems).last().shouldBe(visible)
                 : $$(lovSecilen).last().shouldBe(visible);
-        for (String t:text) Assert.assertTrue(selectedItem.has(text(t)), "Selected item should have text: " + t);
+        for (String t : text) Assert.assertTrue(selectedItem.has(text(t)), "Selected item should have text: " + t);
         Allure.addAttachment("Selected item", $$(lovSecilen).last().text());
 
         return By.cssSelector(lovText);

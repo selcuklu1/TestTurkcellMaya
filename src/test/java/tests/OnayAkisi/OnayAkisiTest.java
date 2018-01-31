@@ -633,7 +633,7 @@ public class OnayAkisiTest extends BaseTest {
         login("optiim", "123");*/
 
         onayAkisYonetimiPage
-               // .openPage()
+                // .openPage()
                 //.filtredeAdDoldur(onayAkisi)
                 //.ara()
                 //.guncelle()
