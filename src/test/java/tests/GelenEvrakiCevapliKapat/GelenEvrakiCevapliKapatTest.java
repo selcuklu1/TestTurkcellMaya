@@ -70,8 +70,8 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
         editor = new TextEditor();
     }
 
-    @Test(enabled = true, description = "TS930: Kurum içi gelen evraka cevap yaz")
-    public void TS930() throws InterruptedException {
+    @Test(enabled = true, description = "TS0930: Kurum içi gelen evraka cevap yaz")
+    public void TS0930() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
         String konuKodu = "Diğer";
@@ -319,8 +319,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .havaleIslemleriKisiDoldur(kisi)
                 .kaydet()
                 .evetDugmesi()
-                .yeniKayitButton()
-                .benzerKayit();
+                .yeniKayitButton();
 
         login(usernameZTEKIN, passwordZTEKIN);
 
@@ -401,8 +400,8 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .evrakGeldigiGorme(konuKodu, kisi2, evrakTarihi);
     }
 
-    @Test(enabled = true, description = "TS932: Tüzel kişiden gelen evraka cevap yaz")
-    public void TS932() throws InterruptedException {
+    @Test(enabled = true, description = "TS0932: Tüzel kişiden gelen evraka cevap yaz")
+    public void TS0932() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
         String konuKodu = "Diğer";
@@ -542,6 +541,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .ilkTarihDoldur(ilkTarih)
                 .sonTarihDoldur(sonTarih)
                 .sorgula()
+                .cevaplananEvrakAlanKontrolleri()
                 .cevaplananEvrakKayitKontrolu(
                         evrakTarihi,
                         evrakKayitTarihi,

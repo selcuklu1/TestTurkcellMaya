@@ -1,6 +1,7 @@
 package pages.ustMenuPages;
 
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
@@ -39,6 +40,23 @@ public class CevaplananEvrakRaporuPage extends MainPage {
     SelenideElement btnEvrakDetayi = $(By.id("cevaplananEvrakRaporuForm:cevaplananEvrakRaporOutputTab:0:evrakGosterButton"));
     SelenideElement btnSayfayiRaporla = $(By.xpath("//div[@id='cevaplananEvrakRaporuForm:cevaplananEvrakRaporOutputTab']/table[@role='grid']//th[@class='ui-datatable-header ui-widget-header']/button[2]"));
     SelenideElement btnTumSayfayiRaporla = $(By.xpath("//div[@id='cevaplananEvrakRaporuForm:cevaplananEvrakRaporOutputTab']/table[@role='grid']//th[@class='ui-datatable-header ui-widget-header']/button[1]"));
+
+    SelenideElement tblEvrakTarihi = $(By.xpath("//*[@id='cevaplananEvrakRaporuForm:cevaplananEvrakRaporOutputTab_data']/tr/td[1]"));
+    SelenideElement tblEvrakKayitTarihi = $(By.xpath("//*[@id='cevaplananEvrakRaporuForm:cevaplananEvrakRaporOutputTab_data']/tr/td[2]"));
+    SelenideElement tblEvrakSayisi = $(By.xpath("//*[@id='cevaplananEvrakRaporuForm:cevaplananEvrakRaporOutputTab_data']/tr/td[3]"));
+    SelenideElement tblKonu = $(By.xpath("//*[@id='cevaplananEvrakRaporuForm:cevaplananEvrakRaporOutputTab_data']/tr/td[4]"));
+    SelenideElement tblCevaplananEvrakKonuKodu = $(By.xpath("//*[@id='cevaplananEvrakRaporuForm:cevaplananEvrakRaporOutputTab_data']/tr/td[5]"));
+    SelenideElement tblCevaplananEvrakKonu = $(By.xpath("//*[@id='cevaplananEvrakRaporuForm:cevaplananEvrakRaporOutputTab_data']/tr/td[6]"));
+    SelenideElement tblCevaplananEvrakSayisi = $(By.xpath("//*[@id='cevaplananEvrakRaporuForm:cevaplananEvrakRaporOutputTab_data']/tr/td[7]"));
+    SelenideElement tblCevaplananEvrakIlkParafTarihi = $(By.xpath("//*[@id='cevaplananEvrakRaporuForm:cevaplananEvrakRaporOutputTab_data']/tr/td[8]"));
+    SelenideElement tblCevaplananEvrakIlkParafKullanici = $(By.xpath("//*[@id='cevaplananEvrakRaporuForm:cevaplananEvrakRaporOutputTab_data']/tr/td[9]"));
+    SelenideElement tblCevaplananEvrakIlkParafBirimi = $(By.xpath("//*[@id='cevaplananEvrakRaporuForm:cevaplananEvrakRaporOutputTab_data']/tr/td[10]"));
+    SelenideElement tblCevaplananEvrakTarihi = $(By.xpath("//*[@id='cevaplananEvrakRaporuForm:cevaplananEvrakRaporOutputTab_data']/tr/td[11]"));
+    SelenideElement tblEvrakGecmisi = $(By.xpath("//*[@id='cevaplananEvrakRaporuForm:cevaplananEvrakRaporOutputTab_data']/tr/td[12]"));
+    SelenideElement tblDetay = $(By.xpath("//*[@id='cevaplananEvrakRaporuForm:cevaplananEvrakRaporOutputTab_data']/tr/td[13]"));
+
+
+
 
     @Step("Cevaplanan Evrak Raporu sayfasını aç")
     public CevaplananEvrakRaporuPage openPage() {
@@ -130,6 +148,52 @@ public class CevaplananEvrakRaporuPage extends MainPage {
         return this;
     }
 
+    @Step("Cevaplanan evrak alan kontrolleri")
+    public CevaplananEvrakRaporuPage cevaplananEvrakAlanKontrolleri() {
+
+        Assert.assertEquals(tblEvrakTarihi.isDisplayed(), true);
+        Allure.addAttachment("Evrak Tarihi alan kontrolu başaralı.", "");
+
+        Assert.assertEquals(tblEvrakKayitTarihi.isDisplayed(), true);
+        Allure.addAttachment("Evrak Kayıt Tarihi alan kontrolu başaralı.", "");
+
+        Assert.assertEquals(tblEvrakSayisi.isDisplayed(), true);
+        Allure.addAttachment("Evrak Sayısı alan kontrolu başaralı.", "");
+
+        Assert.assertEquals(tblKonu.isDisplayed(), true);
+        Allure.addAttachment("Konu alan kontrolu başaralı.", "");
+
+        Assert.assertEquals(tblCevaplananEvrakKonuKodu.isDisplayed(), true);
+        Allure.addAttachment("Cevaplanan Evrak Konu Kodu alan kontrolu başaralı.", "");
+
+        Assert.assertEquals(tblCevaplananEvrakKonu.isDisplayed(), true);
+        Allure.addAttachment("Cevaplanan Evrak Konu alan kontrolu başaralı.", "");
+
+        Assert.assertEquals(tblCevaplananEvrakSayisi.isDisplayed(), true);
+        Allure.addAttachment("Cevaplanan Evrak Sayısı alan kontrolu başaralı.", "");
+
+        Assert.assertEquals(tblCevaplananEvrakIlkParafTarihi.isDisplayed(), true);
+        Allure.addAttachment("Cevaplanan Evrak İlk Paraf Tarihi alan kontrolu başaralı.", "");
+
+        Assert.assertEquals(tblCevaplananEvrakIlkParafKullanici.isDisplayed(), true);
+        Allure.addAttachment("Cevaplanan Evrak İlk Paraf Kullanıcı alan kontrolu başaralı.", "");
+
+        Assert.assertEquals(tblCevaplananEvrakIlkParafBirimi.isDisplayed(), true);
+        Allure.addAttachment("Cevaplanan Evrak İlk Paraf Birimi alan kontrolu başaralı.", "");
+
+        Assert.assertEquals(tblCevaplananEvrakTarihi.isDisplayed(), true);
+        Allure.addAttachment("Cevaplanan Evrak Tarihi alan kontrolu başaralı.", "");
+
+        Assert.assertEquals(tblEvrakGecmisi.isDisplayed(), true);
+        Allure.addAttachment("Evrak Geçmişi alan kontrolu başaralı.", "");
+
+        Assert.assertEquals(tblDetay.isDisplayed(), true);
+        Allure.addAttachment("Detay alan kontrolu başaralı.", "");
+
+
+        return this;
+    }
+
     @Step("Cevaplanan evrak detay, geçmiş kayit kontrolu")
     public CevaplananEvrakRaporuPage cevaplananEvrakGecmisiVeDetayKontrolu() {
 
@@ -154,4 +218,6 @@ public class CevaplananEvrakRaporuPage extends MainPage {
         Assert.assertEquals(status, true);
         return this;
     }
+
+
 }
