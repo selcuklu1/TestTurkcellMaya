@@ -1052,7 +1052,7 @@ public class GizlilikKleransiTest extends BaseTest {
         String evrakDili = "Türkçe";
         String gizlilikDerecesi = "Hizmete Özel";
         String ivedilik = "Normal";
-        String birim = "AFYON VALİLİĞİ";
+        String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
         String kullaniciOzel = "USERNAME24O TEST";
         String kullaniciTasnifDisi = "USERNAME23T TEST";
 
