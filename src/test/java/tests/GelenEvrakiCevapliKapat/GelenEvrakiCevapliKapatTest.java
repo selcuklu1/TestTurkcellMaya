@@ -698,7 +698,7 @@ BirimHavaleEdilenlerPage birimHavaleEdilenlerPage;
                 .evrakTarihiDoldur(evrakTarihi)
                 .gizlilikDerecesiSec(gizlilikDerecesi)
                 .kisiKurumSec(kisiKurum)
-                .geldigiGercekKisiDoldur(kisi2, "Tüzel kişi")
+                .geldigiGercekKisiDoldur(kisi2, "Geçek kişi")
                 .evrakSayiSagDoldur(evrakSayiSag)
                 .havaleIslemleriKisiDoldur(kisi)
                 .kaydet()
@@ -710,7 +710,16 @@ BirimHavaleEdilenlerPage birimHavaleEdilenlerPage;
         gelenEvraklarPage
                 .openPage()
                 .evrakSec(konuKoduRandom, kisi2, evrakTarihi, evrakSayiSag)
+                .ikonlarinGeldigiGorme()
                 .cevapYaz();
+
+        evrakOlusturPage
+                .bilgilerTabiAc()
+                .konuAlanıDoluGeldigiGorme(konuKoduRandom)
+                .geregiSeciliGeldigiGorme(kisi2);
+        evrakOlusturPage
+                .editorTabAc()
+                .ilgiSatırıKontrol(kisi2, evrakTarihi);
 
         EditorTab editorTab = cevapYazPage.editorTab().openTab();
         editorTab.getEditor().toolbarButton("Öntanımlı İçerik Şablonu Kullan", true);
@@ -814,7 +823,16 @@ BirimHavaleEdilenlerPage birimHavaleEdilenlerPage;
         gelenEvraklarPage
                 .openPage()
                 .evrakSec(konuKoduRandom, kisi2, evrakTarihi, evrakSayiSag)
+                .ikonlarinGeldigiGorme()
                 .cevapYaz();
+
+        evrakOlusturPage
+                .bilgilerTabiAc()
+                .konuAlanıDoluGeldigiGorme(konuKoduRandom)
+                .geregiSeciliGeldigiGorme(kisi2);
+        evrakOlusturPage
+                .editorTabAc()
+                .ilgiSatırıKontrol(kisi2, evrakTarihi);
 
         EditorTab editorTab = cevapYazPage.editorTab().openTab();
         editorTab.getEditor().toolbarButton("Öntanımlı İçerik Şablonu Kullan", true);
