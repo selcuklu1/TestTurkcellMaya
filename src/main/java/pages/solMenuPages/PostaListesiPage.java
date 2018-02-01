@@ -6,6 +6,7 @@ import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.xmlbeans.impl.xb.xsdschema.All;
 import org.openqa.selenium.By;
 import org.testng.Assert;
@@ -60,6 +61,7 @@ public class PostaListesiPage extends MainPage {
     SelenideElement divFiltrePanelBaslik = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion"));
     ElementsCollection tableEvraklar = $$("tbody[id='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
     SelenideElement btnPostaListesiDropDown = $("span[id='mainInboxForm:inboxDataTable:filtersAccordion:postaListesiAdi'] > button");
+
     ElementsCollection listPostaListesi = $$("div[id='mainInboxForm:inboxDataTable:filtersAccordion:postaListesiAdi_panel'] > ul > li");
 
     SelenideElement txtPostaListesiAdi = $x("//label[normalize-space(text())='Posta Listesi Adı :']/../following-sibling::td//textarea");
@@ -146,9 +148,25 @@ public class PostaListesiPage extends MainPage {
         return this;
     }
 
+    ElementsCollection listGidisSekli = $$("div[id='mainPreviewForm:postaListesiPostaTipi_panel'] > ul > li");
+
     @Step("Gidis Sekli \"{gidisSekli}\" seç")
     public PostaListesiPage gidisSekliSec(String gidisSekli) {
-        cmbGidisSekli.selectComboBox(gidisSekli);
+
+
+        lblGidisSekliCmb.click();
+
+        SelenideElement currentItem = listGidisSekli
+                .filterBy(Condition.exactText(gidisSekli))
+                .first();
+
+        Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", currentItem);
+
+        currentItem.click();
+
+
+
+        //cmbGidisSekli.selectComboBox(gidisSekli, true);
         return this;
     }
 
@@ -183,7 +201,13 @@ public class PostaListesiPage extends MainPage {
         return this;
     }
 
-    @Step("Etiket hesapla Tıkla")
+    @Step("Gramaj alanı numerik kontrolü ")
+    public PostaListesiPage gramajNumerikKontrol() {
+        Assert.assertEquals(StringUtils.isNumeric(txtGramaj.getValue()), true);
+        return this;
+    }
+
+    @Step("Tutar Hesapla butonuna tıkla.")
     public PostaListesiPage tutarHesapla() {
         clickJs(btnHesapla);
         return this;
@@ -309,18 +333,17 @@ public class PostaListesiPage extends MainPage {
     @Step("Konuye göre evrak seç. \"{konu}\" ")
     public PostaListesiPage evrakSec(String konu) {
 
-        tableEvraklar
+       SelenideElement tablo =  $$("tbody[id='mainInboxForm:inboxDataTable_data'] > tr[data-ri]")
                 .filterBy(Condition.text(konu))
-                .first()
-                .click();
-
+                .first();
+       tablo.click();
         return this;
     }
 
 
     @Step("Evrak önizleme kontrolü")
     public PostaListesiPage evrakOnizlemeKontrolu() {
-        $(By.id("mainPreviewForm:eastLayout")).shouldBe(Condition.visible);
+        $(By.id("mainPreviewForm:evrakOnizlemeTab")).shouldBe(Condition.visible);
         return this;
     }
 
@@ -475,11 +498,17 @@ public class PostaListesiPage extends MainPage {
 
 
     @Step("İndirim Öncesi tutar alaninda \"{indirimOncesiTutar}\" değeri olmalı mı? : \"{shouldBeEquals}\" ")
-    public PostaListesiPage indirimOncesiTutarKontrol(String indirimOncesiTutar, boolean shouldBeEquals) {
-        if (shouldBeEquals == true)
-            lblIndirimOncesiTutar.shouldHave(Condition.text(indirimOncesiTutar + " TL"));
+    public PostaListesiPage indirimOncesiTutarKontrol(String indirimOncesiTutar) {
+        if(lblIndirimOncesiTutar.getText().contains(indirimOncesiTutar))
+            Assert.assertEquals(true, true);
         else
-            lblIndirimOncesiTutar.shouldNotHave(Condition.text(indirimOncesiTutar + " TL"));
+            Assert.assertEquals(true, false);
+        return this;
+    }
+
+    @Step("{0}")
+    public PostaListesiPage indirimOrani(){
+
         return this;
     }
 
@@ -493,12 +522,14 @@ public class PostaListesiPage extends MainPage {
     }
 
 
-    @Step("Tutar alaninda \"{tutar}\" değeri olmalı mı? : \"{shouldBeEquals}\" ")
-    public PostaListesiPage tutarKontrol(String tutar, boolean shouldBeEquals) {
-        if (shouldBeEquals == true)
-            txtTutar.shouldHave(Condition.value(tutar));
+    @Step("İndirim sonrası tutar alaninda \"{tutar}\" değeri olmalı mı? : \"{shouldBeEquals}\" ")
+    public PostaListesiPage tutarKontrol(String tutar) {
+
+        if(txtTutar.getValue().contains(tutar))
+            Assert.assertEquals(true, true);
         else
-            txtTutar.shouldNotHave(Condition.value(tutar));
+            Assert.assertEquals(true, false);
+
         return this;
     }
 
@@ -523,6 +554,7 @@ public class PostaListesiPage extends MainPage {
         Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", btnEtiketBastir);
         btnEtiketBastir.pressEnter();
         txtEtiketBastir.waitUntil(Condition.visible, 5000);
+        Allure.addDescription("Etiket Bastır ekranı kontrolü.");
         return this;
     }
 

@@ -2,6 +2,7 @@ package pages.ustMenuPages;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
@@ -65,6 +66,7 @@ public class BakimaAlPage extends MainPage {
     @Step("Bilgilendirme metnine \"{bilgilendirmeMetni}\" değerini gir.")
     public BakimaAlPage bilgilendirmeMetniGir(String bilgilendirmeMetni) {
 
+        Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", btnBakimaAl);
         btnBakimaAl.waitUntil(Condition.visible, 5000);
 
         if (spanBilgilendirmeMetni.isDisplayed())
@@ -106,7 +108,6 @@ public class BakimaAlPage extends MainPage {
     @Step("{kullaniciAdi} kullanicisini ekle")
     public BakimaAlPage kullaniciKontrol(String kullaniciAdi, boolean shouldBeSelectable) {
 
-
         boolean isUserSelectable = txtKullanicilar.isLovValueSelectable(kullaniciAdi);
 
         if (shouldBeSelectable == true)
@@ -130,7 +131,7 @@ public class BakimaAlPage extends MainPage {
         return this;
     }
 
-    @Step("Bakıma alındı mı? Kontrol et.")
+    @Step("Uyarı mesajı ve Bakımdan Çıkar butonu kontrolü.")
     public BakimaAlPage bakimdaOlmali(boolean bakimdaOlmalimi) {
         if (bakimdaOlmalimi == true) {
             blinkUyari.shouldBe(Condition.visible);
@@ -157,6 +158,25 @@ public class BakimaAlPage extends MainPage {
         return this;
     }
 
+
+    @Step("Sisteme girebilecek kullanıcıların Ad, Soyad ve Görev kontrolü")
+    public BakimaAlPage sistemeGirebilecekKullanicilarBilgiKontrolEt(){
+
+        for(int i = 0; i <= tableSecilenKullanicilar.size(); i ++){
+            tableSecilenKullanicilar.get(0).$("span[class='lovItemTitle']").shouldBe(Condition.visible);
+            tableSecilenKullanicilar.get(0).$("span[class='lovItemDetail']").shouldBe(Condition.visible);
+        }
+
+        return this;
+    }
+
+    @Step("Uyarı kaybolmalı ve Bakımdan Çıkar butonu değişmeli.")
+    public BakimaAlPage bakimdanCikarKontrol() {
+        btnBakimdanCikar.shouldNotBe(Condition.visible);
+        btnBakimaAl.shouldBe(Condition.visible);
+        blinkUyari.shouldNotBe(Condition.visible);
+        return this;
+    }
     // Sistem 06.12.2017 14:19:32 tarihinde bakım moduna alınmıştır. Sisteme aşağıda tanımlanan kullanıcılar giriş yapabilecektir.
     // bakimaAlFormId:bakimModundanCikar
 
