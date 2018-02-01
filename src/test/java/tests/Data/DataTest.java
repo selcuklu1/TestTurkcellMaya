@@ -12,6 +12,7 @@ import pages.pageData.alanlar.GeregiSecimTipi;
 import pages.pageData.alanlar.GizlilikDerecesi;
 import pages.pageData.alanlar.OnayKullaniciTipi;
 //import pages.solMenuPages.BirimIadeEdilenlerPage;
+import pages.solMenuPages.BirimIadeEdilenlerPage;
 import pages.solMenuPages.TeslimAlinmayiBekleyenlerPage;
 import pages.ustMenuPages.GelenEvrakKayitPage;
 
@@ -32,7 +33,7 @@ public class DataTest extends BaseTest {
     User user = new User("ztekin", "123", "Zübeyde TEKİN");
     GelenEvrakKayitPage gelenEvrakKayitPage;
     TeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage;
-    //BirimIadeEdilenlerPage birimIadeEdilenlerPage;
+    BirimIadeEdilenlerPage birimIadeEdilenlerPage;
 
     @BeforeMethod
     public void loginBeforeTests() {
@@ -207,9 +208,9 @@ public class DataTest extends BaseTest {
         teslimAlinmayiBekleyenlerPage
                 .birimDegistirme(birim);
 
-        //birimIadeEdilenlerPage
-          //      .openPage()
-            //    .evrakNoIleEvrakSec(konu);
+        new BirimIadeEdilenlerPage()
+                .openPage()
+                .evrakNoIleEvrakSec(konu);
     }
 
     @Test(description = "DATA-Kullanıcıya ve Birime evrak havalesi", enabled = true)
