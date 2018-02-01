@@ -35,7 +35,8 @@ public class YazismaKurallariYonetimiTest extends BaseTest {
                 .tiklaVekaletSeviyesi(vekaletSeviyesi)
                 .tiklaSonImzaSeviyesi(sonImzaSeviyesi)
                 .grupBirimTipleriKaydet()
-                .islemMesaji().basariliOlmali(basariMesaj)
+                .islemMesaji().basariliOlmali(basariMesaj);
+        yazismaKurallariYonetimiPage
                 .yazismakurallariKontrolEt(birimAdi, true, sinirsizYazilabilir, vekaletSeviyesi, sonImzaSeviyesi);
 
     }
