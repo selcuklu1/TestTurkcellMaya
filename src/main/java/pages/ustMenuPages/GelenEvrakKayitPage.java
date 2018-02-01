@@ -12,6 +12,8 @@ import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.UstMenuData;
 
+import java.io.File;
+
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
@@ -305,6 +307,12 @@ public class GelenEvrakKayitPage extends MainPage {
     @Step("Üst yazi \"{path}\" ekle")
     public GelenEvrakKayitPage evrakBilgileriUstYaziEkle(String path) {
         uploadFile(ustYazi, path);
+        return this;
+    }
+
+    @Step("Üst yazi \"{path}\" ekle")
+    public GelenEvrakKayitPage ustYaziEkle(String path) {
+        ustYazi.uploadFile(new File(path));
         return this;
     }
 
@@ -981,9 +989,10 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("PDF Ust Yazi adi kontrol : \"{ustYaziAdi}\" ")
     public GelenEvrakKayitPage ustYaziPdfAdiKontrol(String ustYaziAdi) {
-        String text = lblEklenenPdfUstYazi.text();
+        lblEklenenPdfUstYazi.shouldHave(text(ustYaziAdi));
+       /* String text = lblEklenenPdfUstYazi.text();
         System.out.println(text);
-        Assert.assertEquals(text.contains(ustYaziAdi), true);
+        Assert.assertEquals(text.contains(ustYaziAdi), true);*/
         return this;
     }
 
