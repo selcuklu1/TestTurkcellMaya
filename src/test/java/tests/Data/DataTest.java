@@ -7,15 +7,20 @@ import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.newPages.EvrakOlusturPage;
+import pages.pageComponents.EvrakPageButtons;
 import pages.pageComponents.tabs.AltTabs;
 import pages.pageData.alanlar.GeregiSecimTipi;
 import pages.pageData.alanlar.GizlilikDerecesi;
+import pages.pageData.alanlar.Ivedilik;
 import pages.pageData.alanlar.OnayKullaniciTipi;
 //import pages.solMenuPages.BirimIadeEdilenlerPage;
 import pages.solMenuPages.BirimIadeEdilenlerPage;
+import pages.solMenuPages.ImzaBekleyenlerPage;
+import pages.solMenuPages.PostalanacakEvraklarPage;
 import pages.solMenuPages.TeslimAlinmayiBekleyenlerPage;
 import pages.ustMenuPages.GelenEvrakKayitPage;
 
+import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 
@@ -28,9 +33,9 @@ import static com.codeborne.selenide.Condition.visible;
 
 public class DataTest extends BaseTest {
 
-    EvrakOlusturPage page;
-
-    User user = new User("ztekin", "123", "Zübeyde TEKİN");
+    User user1 = new User("ztekin", "123", "Zübeyde TEKİN");
+    User user2 = new User("user1", "123", "User1 TEST", "AnaBirim1");
+    User user3 = new User("user5", "123", "User5 TEST", "AnaBirim1");
     GelenEvrakKayitPage gelenEvrakKayitPage;
     TeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage;
     BirimIadeEdilenlerPage birimIadeEdilenlerPage;
@@ -61,8 +66,8 @@ public class DataTest extends BaseTest {
         String editorIcerik = "Bu bir deneme mesajıdır. Lütfen dikkate almayınız.";
         String basariMesaji = "İşlem başarılıdır!";
 
-        login(user);
-        page = new EvrakOlusturPage().openPage();
+        login(user1);
+        EvrakOlusturPage page = new EvrakOlusturPage().openPage();
         page.bilgileriTab()
                 .konuKoduSec(konuKodu)
                 .konuDoldur(konu)
@@ -77,8 +82,8 @@ public class DataTest extends BaseTest {
                 .onayAkisiTemizle()
                 .anlikOnayAkisKullanicilariTemizle()
                 .onayAkisiEkleButonaTikla()
-                .secilenAnlikOnayAkisKullanicilariKontrolEt(user, OnayKullaniciTipi.PARAFLAMA)
-                .anlikOnayAkisKullanicininTipiSec(user, OnayKullaniciTipi.IMZALAMA)
+                .secilenAnlikOnayAkisKullanicilariKontrolEt(user1, OnayKullaniciTipi.PARAFLAMA)
+                .anlikOnayAkisKullanicininTipiSec(user1, OnayKullaniciTipi.IMZALAMA)
                 .kullanButonaTikla();
         page.editorTab().openTab()
                 .getEditor().type(editorIcerik);
@@ -104,8 +109,8 @@ public class DataTest extends BaseTest {
         String ekleriDosyaAciklama = "Açıklama";
         String filePath = "documents/Otomasyon.pdf";
 
-        login(user);
-        page = new EvrakOlusturPage().openPage();
+        login(user1);
+        EvrakOlusturPage page = new EvrakOlusturPage().openPage();
         page.bilgileriTab()
                 .konuKoduSec(konuKodu)
                 .evrakTuruSec(evrakTuru)
@@ -118,8 +123,8 @@ public class DataTest extends BaseTest {
                 .onayAkisiTemizle()
                 .anlikOnayAkisKullanicilariTemizle()
                 .onayAkisiEkleButonaTikla()
-                .secilenAnlikOnayAkisKullanicilariKontrolEt(user, OnayKullaniciTipi.PARAFLAMA)
-                .anlikOnayAkisKullanicininTipiSec(user, OnayKullaniciTipi.IMZALAMA)
+                .secilenAnlikOnayAkisKullanicilariKontrolEt(user1, OnayKullaniciTipi.PARAFLAMA)
+                .anlikOnayAkisKullanicininTipiSec(user1, OnayKullaniciTipi.IMZALAMA)
                 .kullanButonaTikla()
                 .kaldiralacakKlasorleriSec(kaldirilacakKlasorler);
 
@@ -213,11 +218,11 @@ public class DataTest extends BaseTest {
                 .evrakNoIleEvrakSec(konu);
     }
 
-    @Test(description = "DATA-Kullanıcıya ve Birime evrak havalesi", enabled = true)
+    @Test(description = "TS2330: DATA-Kullanıcıya ve Birime evrak havalesi", enabled = true)
     public void TS2330() throws Exception {
         String evrakSayi = getSysDate();
         String konu = "TS2330_" + getSysDate();
-        login(user);
+        login(user1);
         GelenEvrakKayitPage page = new GelenEvrakKayitPage().openPage();
         page.ustYaziEkle("documents/pdf.pdf").islemMesaji().basariliOlmali();
         page.ustYaziPdfAdiKontrol("pdf.pdf")
@@ -238,5 +243,35 @@ public class DataTest extends BaseTest {
         String evrakNo = page.popUps();
         //String kayitTarihiSayi = getSysDateForKis() + " / " + evrakNo;
         page.islemMesaji().basariliOlmali();
+    }
+
+    @Test(description = "TS2326: DATA-Postalanacak evraklar listesine evrak düşürme", enabled = true)
+    public void TS2326() {
+        String konu = "TS2326" + getSysDate();
+        login(user2);
+        EvrakOlusturPage page = new EvrakOlusturPage().openPage();
+        page.bilgileriTab()
+                .konuKoduSec("010.01")
+                .konuDoldur(konu)
+                .evrakTuruSec("Resmi Yazışma")
+                .gizlilikDerecesiSec(GizlilikDerecesi.HIZMETE_OZEL)
+                .ivedilikSec(Ivedilik.GUNLU)
+                .miatDoldur(getSysDateForKis())
+                .geregiSecimTipiSec(GeregiSecimTipi.KURUM)
+                .geregiSec("Başbakanlık")
+                .onayAkisiEkleButonaTikla()
+                .secilenAnlikOnayAkisKullanicilariKontrolEt(user2, OnayKullaniciTipi.PARAFLAMA)
+                .anlikOnayAkisKullaniciVeTipiSec(user3, OnayKullaniciTipi.IMZALAMA)
+                .kullanButonaTikla()
+                .kaldiralacakKlasorleriSec("Diğer");
+        page.editorTab().openTab()
+                .getEditor().type("Editör tekst");
+        page.pageButtons().parafla().islemMesaji().basariliOlmali();
+
+        login(user3);
+        new ImzaBekleyenlerPage().openPage().searchTable().findRows(text(konu)).getFoundRow().click();
+        new EvrakPageButtons().evrakImzala().islemMesaji().basariliOlmali();
+        new PostalanacakEvraklarPage().openPage().searchTable().findRows(text(konu)).getFoundRow().should(exist);
+
     }
 }
