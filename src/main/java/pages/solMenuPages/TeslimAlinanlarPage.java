@@ -36,6 +36,16 @@ public class TeslimAlinanlarPage extends MainPage {
         return this;
     }
 
+    @Step("Evrakın listelendiği görülür.")
+    public TeslimAlinanlarPage evrakGeldigiGorme(String konu, String yer, String tarih){
+        boolean durum = tblEvraklar.filterBy(Condition.text(konu))
+                .filterBy(Condition.text(yer))
+                .filterBy(Condition.text(tarih)).size() ==1;
+        Assert.assertEquals(durum,true);
+        takeScreenshot();
+        return this;
+    }
+
     @Step("Tablodan rapor seç")
     public TeslimAlinanlarPage gizlilikRaporSec(String konu, String yer, String tarih, String no) {
         SelenideElement evrak = filter().findRowsWith(Condition.text(konu))

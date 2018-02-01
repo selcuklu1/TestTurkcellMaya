@@ -167,6 +167,23 @@ public class PostalanacakEvraklarPage extends MainPage {
         btnEvrakPostala.click();
         return this;
     }
+    
+    @Step("Posta tiplerinin doğru olarak listelendiği görülür")
+    public PostalanacakEvraklarPage postaTipleriListelendigiGorme(){
+        boolean durum = $$(By.id("mainPreviewForm:dataTableId_data")).size()==1;
+        Assert.assertEquals(durum,true);
+        takeScreenshot();
+        return this;
+    }
+    
+    @Step("{alan} - {kisi} : {gidisSekli} gönderici ve alıcı kep adreslerinin geldiği görülür.")
+    public PostalanacakEvraklarPage postalanacakYerlerAlanGoreSecimGeldigiGorme(String alan,String kisi, String gidisSekli){
+    boolean durum = $$("[id='mainPreviewForm:dataTableId_data'] > tr[role='row']").filterBy(Condition.text(kisi))
+            .filterBy(Condition.text(gidisSekli)).size()==1;
+    Assert.assertEquals(durum,true);
+    takeScreenshot();
+        return this;
+    }
 
     @Step("\"{tuzelKisi}\" adlı tüzel kişiyi dağıtım planını \"{secilen}\" seçilir")
     public PostalanacakEvraklarPage dagitimSekliDegistirSec(String tuzelKisi, String secilen, String secim) {

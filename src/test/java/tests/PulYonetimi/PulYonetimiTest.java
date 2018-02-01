@@ -160,24 +160,24 @@ public class PulYonetimiTest extends BaseTest {
 
                 .gramajDoldur(gramaj1)
                 .tutarHesapla()
-                .indirimOncesiTutarKontrol("50.00", true)
+                .indirimOncesiTutarKontrol("50.00")
                 .indirimOraniKontrol("10", true)
-                .tutarKontrol("45.00", true)
+                .tutarKontrol("45.00")
 
                 .indirimOraniDoldur(indirimOrani)
-                .tutarKontrol("40.00", true)
+                .tutarKontrol("40.00")
 
                 .gramajDoldur(gramaj3)
                 .tutarHesapla()
-                .indirimOncesiTutarKontrol("100.00", true)
+                .indirimOncesiTutarKontrol("100.00")
                 .indirimOraniKontrol("20", true)
-                .tutarKontrol("80.00", true)
+                .tutarKontrol("80.00")
 
                 .gramajDoldur(gramaj5)
                 .tutarHesapla()
-                .indirimOncesiTutarKontrol("100.00", true)
+                .indirimOncesiTutarKontrol("100.00")
                 .indirimOraniKontrol("0", true)
-                .tutarKontrol("100.00", true)
+                .tutarKontrol("100.00")
 
                 .tutarDoldur(tutar)
                 .postaDetayiPostala()

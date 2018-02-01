@@ -24,6 +24,7 @@ public class BirimIadeEdilenlerPage extends MainPage {
         solMenu(SolMenuData.BirimEvraklari.BirimeIadeEdilenler);
         return this;
     }
+
     @Step("Evrak numara ile evrak seçilir : \"{evrakNo}\" ")
     public BirimIadeEdilenlerPage evrakNoIleEvrakSec(String evrakNo) {
         tblEvraklar

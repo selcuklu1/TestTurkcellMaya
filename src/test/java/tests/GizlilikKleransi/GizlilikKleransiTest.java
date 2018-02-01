@@ -258,7 +258,7 @@ public class GizlilikKleransiTest extends BaseTest {
                 .filtrelerdeAlaniDoldur("Bitiş Tarihi", evrakTarihi, Keys.ENTER);
         gelenEvraklarPage.gizlilikRaporSec(konuKodu, geldigiYer, evrakTarihi, no)
                 .paylas()
-                .stepmethod()
+                .kisiVeAciklamaAlaniGeldigiGorme()
                 .paylasKisiSec(kisi)
                 .paylasanAciklamaDoldur(aciklama)
                 .paylasIcPaylas()
@@ -446,6 +446,14 @@ public class GizlilikKleransiTest extends BaseTest {
         teslimAlinmayiBekleyenlerPage
                 .evrakSecTeslimAl(konuKoduRandom, kurum, evrakTarihi, evrakSayiSag, true)
                 .islemMesaji().basariliOlmali(basariMesaji);
+
+        teslimAlinanlarPage
+                .openPage()
+                .evrakGeldigiGorme(konuKoduRandom,kurum,evrakTarihi)
+                .evrakSec(konuKoduRandom,kurum,evrakTarihi,evrakSayiSag)
+                .islemMesaji().dikkatOlmali(uyariMesaj1);
+
+
 
     }
 
@@ -1044,7 +1052,7 @@ public class GizlilikKleransiTest extends BaseTest {
         String evrakDili = "Türkçe";
         String gizlilikDerecesi = "Hizmete Özel";
         String ivedilik = "Normal";
-        String birim = "AFYON VALİLİĞİ";
+        String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
         String kullaniciOzel = "USERNAME24O TEST";
         String kullaniciTasnifDisi = "USERNAME23T TEST";
 

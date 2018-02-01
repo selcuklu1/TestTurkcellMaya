@@ -1,6 +1,7 @@
 package BakimaAl;
 
 import common.BaseTest;
+import io.qameta.allure.Allure;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.LoginPage;
@@ -24,7 +25,6 @@ public class BakimaAlTest extends BaseTest {
 
         String bilgilendirmeMetni500Karakter = "";
         String bilgilendirmeMetni600Karakter = "";
-        String girilecekBilgilendirmeMetni = "Bu bir deneme bilgilendirme metnidir.";
         String iptalEdilecekBilgilendirmeMetni = "İptal edilecek bilgilendirme metni.";
 
         String pasifKullanici = "pasifkullanici";
@@ -36,12 +36,14 @@ public class BakimaAlTest extends BaseTest {
         for (int i = 0; i < 600; i++) {
             bilgilendirmeMetni600Karakter += "x";
         }
+        String girilecekBilgilendirmeMetni = "Bu bir deneme bilgilendirme metnidir.";
 
 
         bakimaAlPage
                 .openPage()
                 .bilgilendirmeMetniGir(bilgilendirmeMetni500Karakter)
                 .bilgilendirmeMetni500KarakterKontrolu()
+                .bilgilendirmeMetniKaydet()
                 .bilgilendirmeMetniGir(bilgilendirmeMetni600Karakter)
                 .bilgilendirmeMetni500KarakterKontrolu()
                 .bilgilendirmeMetniGir(girilecekBilgilendirmeMetni)
@@ -54,8 +56,11 @@ public class BakimaAlTest extends BaseTest {
                 .kullaniciKontrol(pasifKullanici, false)
                 .kullaniciEkle("Optiim TEST")
                 .kullaniciEkle("Mehmet BOZDEMİR")
+                .kullaniciEkle("Huser TUMER")
                 .bakimaAl()
                 .bakimdaOlmali(true);
+
+        logout();
 
         loginPage
                 .loginBakim("test1", "123")
@@ -69,7 +74,8 @@ public class BakimaAlTest extends BaseTest {
         String bilgilendirmeMetni = "Bu bir deneme bilgilendirme metnidir.";
         String[] kontrolEdilecekKullanicilar = new String[]{
                 "Optiim TEST-Ağ (Network) Uzman Yardımcısı",
-                "Mehmet BOZDEMİR-Ağ (Network) Uzman Yardımcısı"
+                "Mehmet BOZDEMİR-Ağ (Network) Uzman Yardımcısı",
+                "Huser TUMER-Ağ (Network) Uzman Yardımcısı"
         };
         bakimaAlPage
                 .openPage()
@@ -77,8 +83,9 @@ public class BakimaAlTest extends BaseTest {
                 .bilgilendirmeMetniKontrol(bilgilendirmeMetni)
                 .secilenKullaniciKontrol(kontrolEdilecekKullanicilar)
                 .bakimdanCikar()
-                .bakimdaOlmali(false);
+                .bakimdanCikarKontrol();
         login("ztekin", "123");
+        Allure.addDescription("Sisteme giriş yapıldı.");
 
 
     }

@@ -92,7 +92,7 @@ public class IslemMesajlari extends BaseLibrary {
         return element.text().contains(expectedMessage);
     }
 
-    @Step("Messaj kontrolü")
+    @Step("Mesaj kontrolü")
     private void checkMessage(String messageTitle, String... expectedMessage) {
         SelenideElement message = getMessageBody();
         System.out.println(message.text());
