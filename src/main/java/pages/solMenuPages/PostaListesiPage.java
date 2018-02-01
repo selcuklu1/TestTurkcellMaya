@@ -7,6 +7,7 @@ import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.xmlbeans.impl.xb.xsdschema.All;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
@@ -96,6 +97,26 @@ public class PostaListesiPage extends MainPage {
         txtPostaListesi.setValue(postaListesi);
         Selenide.sleep(2000);
         txtPostaListesi.pressEnter();
+        return this;
+    }
+
+    @Step("Posta Listesi doldur : \"{postaListesi}\" ")
+    public String postaListesiIlkKayitAl() {
+        SelenideElement panelAc = $(By.xpath("//span[@class='ui-button-icon-primary ui-icon ui-icon-triangle-1-s']/.."));
+        panelAc.click();
+        SelenideElement panel = $("[id='mainInboxForm:inboxDataTable:filtersAccordion:postaListesiAdi_panel'] li:nth-child(1)");
+//        BelgenetElement txtPostaListesi = comboBox(By.id("mainInboxForm:inboxDataTable:filtersAccordion:postaListesiAdi_input"));
+        String postaListesi = panel.text();
+
+        return postaListesi;
+    }
+
+    @Step("Posta Listesi inbox kontrolü")
+    public PostaListesiPage postaListesiInboxKontrolu() {
+        boolean statu = false;
+        boolean x = txtPostaListesi.getValue().isEmpty();
+        Assert.assertEquals(x, statu);
+        Allure.addAttachment("Inbox kontrolü : ","Liste seçimi öncesi inbox boş olduğu görülür.");
         return this;
     }
 
@@ -312,18 +333,17 @@ public class PostaListesiPage extends MainPage {
     @Step("Konuye göre evrak seç. \"{konu}\" ")
     public PostaListesiPage evrakSec(String konu) {
 
-        tableEvraklar
+       SelenideElement tablo =  $$("tbody[id='mainInboxForm:inboxDataTable_data'] > tr[data-ri]")
                 .filterBy(Condition.text(konu))
-                .first()
-                .click();
-
+                .first();
+       tablo.click();
         return this;
     }
 
 
     @Step("Evrak önizleme kontrolü")
     public PostaListesiPage evrakOnizlemeKontrolu() {
-        $(By.id("mainPreviewForm:eastLayout")).shouldBe(Condition.visible);
+        $(By.id("mainPreviewForm:evrakOnizlemeTab")).shouldBe(Condition.visible);
         return this;
     }
 
@@ -531,7 +551,8 @@ public class PostaListesiPage extends MainPage {
 
     @Step("Etiket bastır butonuna tıkla.")
     public PostaListesiPage etiketBastir() {
-        btnEtiketBastir.click();
+        Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", btnEtiketBastir);
+        btnEtiketBastir.pressEnter();
         txtEtiketBastir.waitUntil(Condition.visible, 5000);
         Allure.addDescription("Etiket Bastır ekranı kontrolü.");
         return this;
@@ -554,8 +575,8 @@ public class PostaListesiPage extends MainPage {
     @Step("Evrak Listesi tablosunda Yazdır butonu tıklanır.")
     public PostaListesiPage evrakListesiYazdir(String[] konu) {
         int size = tableEvrakListesi.size();
+//        Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", tableEvrakListesi);
         for (int i = size - 1; i >= 0; i--) {
-//            Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", tableEvrakListesi);
             tableEvrakListesi
                     .filterBy(Condition.text(konu[i]))
                     .first()
@@ -590,6 +611,7 @@ public class PostaListesiPage extends MainPage {
 
     @Step("Evrak Detayı Yazdır butonu")
     public PostaListesiPage evrakDetayiOrjinaliYazdır(String konu) {
+
         tblEvrakDetayi.filterBy(Condition.text(konu))
                 .first()
                 .$("[id$='evrakDetayiViewDialogOrjYazdir']").click();
@@ -602,6 +624,7 @@ public class PostaListesiPage extends MainPage {
         int size = tableEvrakListesi.size();
         size = size - 1;
         String pdfName = "";
+//        Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", tableEvrakListesi);
         for (int i = size; i >= 0; i--) {
 
 //            SearchTable searchTable =  TopluPostaladiklarimPage.searchTable();
@@ -634,6 +657,7 @@ public class PostaListesiPage extends MainPage {
     @Step("Evrak Listesi tablosunda Orjinalini Yazdır butonu tıklanır.")
     public PostaListesiPage evrakListesiOrjinaliYazdirPdfKontrolu(String[] konu, String[] evrakNo, String[] icerik) throws AWTException, IOException {
         String remoteDownloadPath = getDownloadPath();
+//        Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", tableEvrakListesi);
         int size = tableEvrakListesi.size();
         size = size - 1;
         for (int i = size; i >= 0; i--) {
