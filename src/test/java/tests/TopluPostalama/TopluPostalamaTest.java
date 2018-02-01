@@ -124,8 +124,8 @@ public class TopluPostalamaTest extends BaseTest {
         int indirimOrani = 50;
         double indirimSonrasiTutarInt = tutarInt - (tutarInt * indirimOrani / 100);
 
-        String indirimOncesiTutar = String.format("%.2f", tutarInt).replace(',', '.');
-        String tutar = String.format("%.3f", indirimSonrasiTutarInt).replace(',', '.');
+        String indirimOncesiTutar = ("" + tutarInt).replace(',', '.');
+        String tutar = ("" + indirimSonrasiTutarInt).replace(',', '.');
 
 
         postaListesiPage
@@ -136,8 +136,8 @@ public class TopluPostalamaTest extends BaseTest {
                 .gidisSekliSec("Adi Posta")
                 .gramajDoldur(gramaj + "")
                 .tutarHesapla()
-                .indirimOncesiTutarKontrol(indirimOncesiTutar, true)
-                .tutarKontrol(tutar, true)
+                .indirimOncesiTutarKontrol(indirimOncesiTutar)
+                .tutarKontrol(tutar)
                 .evrakListesiKontrol(evrakGidecegiYer, evrakKonu);
 
         topluPostalanacakEvraklarPage
@@ -304,8 +304,9 @@ public class TopluPostalamaTest extends BaseTest {
         int indirimOrani = 50;
         double indirimSonrasiTutarInt = tutarInt - (tutarInt * indirimOrani / 100);
 
-        String indirimOncesiTutar = String.format("%.2f", tutarInt).replace(',', '.');
-        String tutar = String.format("%.3f", indirimSonrasiTutarInt).replace(',', '.');
+        String indirimOncesiTutar = ("" + tutarInt).replace(',', '.');
+        String tutar = ("" + indirimSonrasiTutarInt).replace(',', '.');
+
 
         postaListesiPage
                 .openPage()
@@ -315,8 +316,8 @@ public class TopluPostalamaTest extends BaseTest {
                 .gidisSekliSec("Adi Posta")
                 .gramajDoldur(gramaj + "")
                 .tutarHesapla()
-                .indirimOncesiTutarKontrol(indirimOncesiTutar, true)
-                .tutarKontrol(tutar, true)
+                .indirimOncesiTutarKontrol(indirimOncesiTutar)
+                .tutarKontrol(tutar)
                 .evrakKontrol(evrak1KayitTarihiSayi, evrak1GidecegiYer, evrak1Konu, evrak1HazirlayanBirim, evrak1PostaTipi, true)
                 .evrakKontrol(evrak2KayitTarihiSayi, evrak2GidecegiYer, evrak2Konu, evrak2HazirlayanBirim, evrak2PostaTipi, true)
                 .postaListesiPostala()
@@ -488,8 +489,9 @@ public class TopluPostalamaTest extends BaseTest {
         int indirimOrani = 50;
         double indirimSonrasiTutarInt = tutarInt - (tutarInt * indirimOrani / 100);
 
-        String indirimOncesiTutar = String.format("%.2f", tutarInt).replace(',', '.');
-        String tutar = String.format("%.3f", indirimSonrasiTutarInt).replace(',', '.');
+        String indirimOncesiTutar = ("" + tutarInt).replace(',', '.');
+        String tutar = ("" + indirimSonrasiTutarInt).replace(',', '.');
+
 
         postaListesiPage
                 .openPage()
@@ -501,8 +503,8 @@ public class TopluPostalamaTest extends BaseTest {
                 .gidisSekliSec("Adi Posta")
                 .gramajDoldur(gramaj + "")
                 .tutarHesapla()
-                .indirimOncesiTutarKontrol(indirimOncesiTutar, true)
-                .tutarKontrol(tutar, true)
+                .indirimOncesiTutarKontrol(indirimOncesiTutar)
+                .tutarKontrol(tutar)
                 .evrakListesiKontrol(evrakGidecegiYer, evrakKonu);
     }
 
@@ -661,8 +663,9 @@ public class TopluPostalamaTest extends BaseTest {
         int indirimOrani = 50;
         double indirimSonrasiTutarInt = tutarInt - (tutarInt * indirimOrani / 100);
 
-        String indirimOncesiTutar = String.format("%.2f", tutarInt).replace(',', '.');
-        String tutar = String.format("%.3f", indirimSonrasiTutarInt).replace(',', '.');
+        String indirimOncesiTutar = ("" + tutarInt).replace(',', '.');
+        String tutar = ("" + indirimSonrasiTutarInt).replace(',', '.');
+
 
         postaListesiPage
                 .openPage()
@@ -674,8 +677,8 @@ public class TopluPostalamaTest extends BaseTest {
                 .gidisSekliSec("Adi Posta")
                 .gramajDoldur(gramaj + "")
                 .tutarHesapla()
-                .indirimOncesiTutarKontrol(indirimOncesiTutar, true)
-                .tutarKontrol(tutar, true)
+                .indirimOncesiTutarKontrol(indirimOncesiTutar)
+                .tutarKontrol(tutar)
                 .evrakListesiKontrol(evrakGidecegiYer, evrakKonu);
 
     }
@@ -824,8 +827,9 @@ public class TopluPostalamaTest extends BaseTest {
         int indirimOrani = 50;
         double indirimSonrasiTutarInt = tutarInt - (tutarInt * indirimOrani / 100);
 
-        String indirimOncesiTutar = String.format("%.2f", tutarInt).replace(',', '.');
-        String tutar = String.format("%.3f", indirimSonrasiTutarInt).replace(',', '.');
+        String indirimOncesiTutar = ("" + tutarInt).replace(',', '.');
+        String tutar = ("" + indirimSonrasiTutarInt).replace(',', '.');
+
 
         postaListesiPage
                 .openPage()
@@ -837,8 +841,8 @@ public class TopluPostalamaTest extends BaseTest {
                 .gidisSekliSec("Adi Posta")
                 .gramajDoldur(gramaj + "")
                 .tutarHesapla()
-                .indirimOncesiTutarKontrol(indirimOncesiTutar, true)
-                .tutarKontrol(tutar, true)
+                .indirimOncesiTutarKontrol(indirimOncesiTutar)
+                .tutarKontrol(tutar)
                 .evrakListesiKontrol(evrakGidecegiYer, evrakKonu);
 
     }
@@ -851,10 +855,10 @@ public class TopluPostalamaTest extends BaseTest {
         EvrakOlusturPage evrakOlusturPage = new EvrakOlusturPage();
         PttRaporuPage pttRaporuPage = new PttRaporuPage();
 
-        String kurum1 = "Yenikurum6507";
 
         login("mbozdemir", "123");
-
+        /*
+        String kurum1 = "Yenikurum6507";
         String evrakKayitTarihiSayi = "" + new SimpleDateFormat("dd.MM.yyyy").format(new Date());
         String evrakGidecegiYer = kurum1;
         String evrakKonuKodu = "Entegrasyon İşlemleri";
@@ -907,14 +911,23 @@ public class TopluPostalamaTest extends BaseTest {
         String postaTipi = "Adi Posta";
         String gittigiYer = kurum1;
         String evrakSayi = "";
+        */
 
         pttRaporuPage
                 .openPage()
                 .aramaDetaylariPanelAc()
-                .postaTarihiDoldur(postaTarihi)
-                .postaTipiSec(postaTipi)
+                .ulkeDoldur("TÜRKİYE")
+                .ilDoldur("İSTANBUL")
+                .postaTarihiDoldur("12.01.2018")
+                .postaTipiSec("Adi Posta")
                 .sorgula()
-                .tabloKontrolEt(gittigiYer, evrakSayi, postaTipi, true);
+                .tabloKontrol()
+                .ulkeDoldur("")
+                .ilDoldur("")
+                .postaTarihiDoldur("13.01.2018")
+                .postaTipiSec("Ankara İçi APS")
+                .sorgula()
+                .tabloKontrol();
 
     }
 
@@ -926,10 +939,11 @@ public class TopluPostalamaTest extends BaseTest {
         PttRaporuPage pttRaporuPage = new PttRaporuPage();
         EvrakOlusturPage evrakOlusturPage = new EvrakOlusturPage();
 
-        String kurum1 = "Yenikurum6507";
 
         login("mbozdemir", "123");
 
+        /*
+        String kurum1 = "Yenikurum6507";
         String evrakKayitTarihiSayi = "" + new SimpleDateFormat("dd.MM.yyyy").format(new Date());
         String evrakGidecegiYer = kurum1;
         String evrakKonuKodu = "Entegrasyon İşlemleri";
@@ -983,46 +997,46 @@ public class TopluPostalamaTest extends BaseTest {
         String gittigiYer = kurum1;
         String evrakSayi = "";
 
-        String uyariMesaji = "Zorunlu alanları doldurunuz";
+
 
         login("mbozdemir", "123");
-
+        */
+        String uyariMesaji = "Zorunlu alanları doldurunuz";
+        String postaTarihi = "12.01.2018";
         pttRaporuPage
                 .openPage()
                 .dagiticiDoldur("")
                 .aramaDetaylariPanelAc()
-                .postaTarihiDoldur(postaTarihi)
                 .sorgula()
                 .islemMesaji().uyariOlmali(uyariMesaji);
 
         pttRaporuPage
                 .dagiticiDoldur("a")
                 .duzenleyenDoldur("")
-                .postaTarihiDoldur(postaTarihi)
                 .sorgula()
                 .islemMesaji().uyariOlmali(uyariMesaji);
 
         pttRaporuPage
                 .duzenleyenDoldur("a")
                 .avansSorumlusuDoldur("")
-                .postaTarihiDoldur(postaTarihi)
                 .sorgula()
                 .islemMesaji().uyariOlmali(uyariMesaji);
 
         pttRaporuPage
                 .avansSorumlusuDoldur("a")
                 .kontrolEdenDoldur("")
-                .postaTarihiDoldur(postaTarihi)
                 .sorgula()
                 .islemMesaji().uyariOlmali(uyariMesaji);
 
         pttRaporuPage
                 .kontrolEdenDoldur("a")
                 .pttMerkezDoldur("")
-                .postaTarihiDoldur(postaTarihi)
                 .sorgula()
                 .islemMesaji().uyariOlmali(uyariMesaji);
 
+        pttRaporuPage
+                .postaTarihiDefaultDegerKontrol()
+                .aramaDetaylariPanelAc();
     }
 
     // EXCELL KONTROLÜ YAPILACAK
@@ -1615,7 +1629,6 @@ public class TopluPostalamaTest extends BaseTest {
 
         String kurum1 = "Yenikurum6507";
 
-
         login("mbozdemir", "123");
 
         String evrakKayitTarihiSayi = "";
@@ -1701,7 +1714,7 @@ public class TopluPostalamaTest extends BaseTest {
         double indirimSonrasiTutarInt = tutarInt - (tutarInt * indirimOrani / 100);
 
         String indirimOncesiTutar = String.format("%.2f", tutarInt).replace(',', '.');
-        String tutar = String.format("%.3f", indirimSonrasiTutarInt).replace(',', '.');
+        String tutar = String.format("%.2f", indirimSonrasiTutarInt).replace(',', '.');
 
         String gonderildigiYer = "Kurum";
 
@@ -1717,8 +1730,8 @@ public class TopluPostalamaTest extends BaseTest {
                 .gidisSekliSec("Adi Posta")
                 .gramajDoldur(gramaj + "")
                 .tutarHesapla()
-                .indirimOncesiTutarKontrol(indirimOncesiTutar, true)
-                .tutarKontrol(tutar, true)
+                .indirimOncesiTutarKontrol(indirimOncesiTutar)
+                .tutarKontrol(tutar)
                 .etiketBastir();
 
 
@@ -1778,11 +1791,11 @@ public class TopluPostalamaTest extends BaseTest {
 
         int gramaj = 1999;
         double tutarInt = 200;
-        int indirimOrani = 50;
+        int indirimOrani = 60;
         double indirimSonrasiTutarInt = tutarInt - (tutarInt * indirimOrani / 100);
 
         String indirimOncesiTutar = String.format("%.2f", tutarInt).replace(',', '.');
-        String tutar = String.format("%.3f", indirimSonrasiTutarInt).replace(',', '.');
+        String tutar = String.format("%.2f", indirimSonrasiTutarInt).replace(',', '.');
 
         postaListesiPage
                 .openPage()
@@ -1791,10 +1804,12 @@ public class TopluPostalamaTest extends BaseTest {
                 .postaListesiPostala()
                 .gidisSekliSec("Adi Posta")
                 .gramajDoldur(gramaj + "")
+                .gramajNumerikKontrol()
                 .tutarHesapla()
-                .indirimOncesiTutarKontrol(indirimOncesiTutar, true)
-                .tutarKontrol(tutar, true);
-
+                .indirimOraniDoldur(indirimOrani + "")
+                .indirimOncesiTutarKontrol(indirimOncesiTutar)
+                .tutarKontrol(tutar)
+                .tutarDoldur(500 + "");
 
     }
 
@@ -1813,7 +1828,7 @@ public class TopluPostalamaTest extends BaseTest {
         String evrakGidecegiYer = kurum1;
         String evrakKonuKodu = "Entegrasyon İşlemleri";
         String evrakKonu = "TS1818-" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
-        String evrakPostaTipi = "Adi Posta";
+        String evrakPostaTipi = "İadeli APS";
         String evrakHazirlayanBirim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
 
         String listeAdi = "TS1818Liste-" + getRandomNumber(1000, 9000);
@@ -1826,6 +1841,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .kaldiralacakKlasorlerSec("Diğer")
                 .geregiSecimTipiSec("Kurum")
                 .geregiSec(evrakGidecegiYer)
+                .geregiTipiSec(evrakGidecegiYer, evrakPostaTipi)
                 .geregiKurumPostaTipi(evrakPostaTipi)
                 .onayAkisiEkle()
                 .onayAkisiKullaniciTipiSec("Mehmet BOZDEMİR [Antalya İl Müdürü]", "İmzalama")
@@ -1833,6 +1849,7 @@ public class TopluPostalamaTest extends BaseTest {
         evrakOlusturPage
                 .editorTabAc()
                 .editorIcerikDoldur("TS1818 için evrak.")
+                .editorIcerikDoldur("TS1818 için evrak. Yeni satır")
                 .imzala()
                 .sImzasec()
                 .sImzaImzala()
@@ -1855,33 +1872,36 @@ public class TopluPostalamaTest extends BaseTest {
         int indirimOrani = 50;
         double indirimSonrasiTutarInt = tutarInt - (tutarInt * indirimOrani / 100);
 
-        String indirimOncesiTutar = String.format("%.2f", tutarInt).replace(',', '.');
-        String tutar = String.format("%.3f", indirimSonrasiTutarInt).replace(',', '.');
+        String indirimOncesiTutar = (""+ tutarInt).replace(',', '.');
+        String tutar = ("" + indirimSonrasiTutarInt).replace(',', '.');
 
         int gramaj2 = 2499;
         double tutarInt2 = 250;
         int indirimOrani2 = 5;
         double indirimSonrasiTutarInt2 = tutarInt2 - (tutarInt2 * indirimOrani2 / 100);
 
-        String indirimOncesiTutar2 = String.format("%.2f", tutarInt2).replace(',', '.');
-        String tutar2 = String.format("%.3f", indirimSonrasiTutarInt2).replace(',', '.');
+        String indirimOncesiTutar2 = ("" + tutarInt2).replace(',', '.');
+        String tutar2 = ("" + indirimSonrasiTutarInt2).replace(',', '.');
+
 
         postaListesiPage
                 .openPage()
                 .filtreleAc()
                 .postaListesiDoldur(listeAdi)
                 .postaListesiPostala()
-                .gidisSekliSec("Adi Posta")
+                .gidisSekliSec(evrakPostaTipi)
                 .gramajDoldur(gramaj + "")
+                .gramajNumerikKontrol()
                 .tutarHesapla()
-                .indirimOncesiTutarKontrol(indirimOncesiTutar, true)
+                .indirimOncesiTutarKontrol(indirimOncesiTutar)
                 .indirimOraniKontrol(indirimOrani + "", true)
-                .tutarKontrol(tutar, true)
+                .tutarKontrol(tutar)
                 .gramajDoldur(gramaj2 + "")
+                .gramajNumerikKontrol()
                 .tutarHesapla()
-                .indirimOncesiTutarKontrol(indirimOncesiTutar2, true)
+                .indirimOncesiTutarKontrol(indirimOncesiTutar2)
                 .indirimOraniKontrol(indirimOrani2 + "", true)
-                .tutarKontrol(tutar2, true);
+                .tutarKontrol(tutar2);
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -2035,9 +2055,9 @@ public class TopluPostalamaTest extends BaseTest {
 
                 .gramajDoldur(gramaj1)
                 .tutarHesapla()
-                .indirimOncesiTutarKontrol("50.00", true)
+                .indirimOncesiTutarKontrol("50.00")
                 .indirimOraniKontrol("10", true)
-                .tutarKontrol("45.000", true);
+                .tutarKontrol("45.000");
 
 
         login("mbozdemir", "123");
@@ -2224,15 +2244,15 @@ public class TopluPostalamaTest extends BaseTest {
 
                 .gramajDoldur(gramaj1)
                 .tutarHesapla()
-                .indirimOncesiTutarKontrol("50.00", true)
+                .indirimOncesiTutarKontrol("50.00")
                 .indirimOraniKontrol("10", true)
-                .tutarKontrol("45.000", true)
+                .tutarKontrol("45.000")
 
                 .gramajDoldur(gramaj3)
                 .tutarHesapla()
-                .indirimOncesiTutarKontrol("100.00", true)
+                .indirimOncesiTutarKontrol("100.00")
                 .indirimOraniKontrol("20", true)
-                .tutarKontrol("80.00", true);
+                .tutarKontrol("80.00");
 
         login("mbozdemir", "123");
         maximazeBrowser();
