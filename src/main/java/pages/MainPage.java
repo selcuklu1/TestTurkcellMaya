@@ -7,6 +7,7 @@ import common.BaseLibrary;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.testng.Assert;
 import pages.pageComponents.*;
 
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
@@ -63,12 +64,21 @@ public class MainPage extends BaseLibrary {
         return this;
     }
 
+    @Step("Kullanıcı Adı ve TC Kimlik No alanlarında kullanıcının verileri görüntülenir")
+    public MainPage kullaniciAdiVeTCKimlikNoLoginOlunanKullaniciGeldigiGorme(){
+        Boolean durum1 =  $("[id$='kullaniciAdi']").shouldBe(visible).exists()==true;
+        Boolean durum2 =  $("[id$='tcKimlikNo']").shouldBe(visible).exists()==true;
+        Assert.assertEquals(durum1,durum2);
+        takeScreenshot();
+        return this;
+    }
+    
     public MainPage kepAdresBaglantisiBaglan2() {
         $("[id='kepForm:kayitliKepDataTable:1:j_idt235']").click();
         return this;
     }
 
-    @Step("Kullanıcı adı ve Tc Kimlik no kontrol et")
+    @Step("Kullanıcı adı ve Tc Kimlik no alanlarındaki bilgileri değiştirilir - Değiştirilemez olduğu görülür")
     public MainPage kullaniciAdiTcKimlikNoKontol() {
         $(By.id("kepLogin2FormId:kullaniciAdi")).shouldBe(Condition.disabled);
         $(By.id("kepLogin2FormId:tcKimlikNo")).shouldBe(Condition.disabled);

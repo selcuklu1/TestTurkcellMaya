@@ -1553,6 +1553,14 @@ public class EvrakOlusturPage extends MainPage {
             //clickJs(btnImzala);
             return this;
         }
+        
+        @Step("İmza popupının geldiği görülür.")
+        public EditorTab imzaPopupGeldigiGorme(){
+              boolean durum = $$("[id='evrakImzalaDialog']").size()==1;
+              Assert.assertEquals(durum,true);
+              takeScreenshot();
+            return this;
+        }
 
         @Step("İmzala")
         public EditorTab cevapYazEditörimzala() {
@@ -1563,7 +1571,15 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("İmzala")
         public EditorTab sImzaImzala() {
-            clickJs(btnSimzaImzala);
+            btnSimzaImzala.pressEnter();
+            return this;
+        }
+
+        @Step("Sayılsal imza atılacağı ile ilgili uyarının geldiği görülür.")
+        public EditorTab stepmethod(){
+            boolean durum = $$("[id='imzalaForm:sayisalImzaConfirmForm:sayisalImzaEvetButton']").size()==1;
+            Assert.assertEquals(durum,true);
+            takeScreenshot();
             return this;
         }
 
@@ -1703,6 +1719,7 @@ public class EvrakOlusturPage extends MainPage {
         public EditorTab sayisalImzaEvetPopup() {
             $$(By.id("imzalaForm:sayisalImzaConfirmForm:sayisalImzaEvetButton")).last().click();
             //btnSayısalImzeEvet.click();
+            sleep(7000);
             return this;
         }
 
@@ -1998,6 +2015,14 @@ public class EvrakOlusturPage extends MainPage {
         public EkleriTab tablodaIlgiEkleKontrolu() {
             tblEkListesi
                     .shouldHaveSize(1);
+            return this;
+        }
+
+        @Step("Dosya ekle, Fiziksel ek ekle, Sistemde kayıtlı evrak ekle, Web adresini ekle alanlarının geldiği görülür")
+        public EkleriTab ekleriTablariGeldigiGorme(){
+        boolean durum = $$("[id='yeniGidenEvrakForm:evrakEkTabView']").size()==1;
+        Assert.assertEquals(durum,true);
+        takeScreenshot();
             return this;
         }
 
