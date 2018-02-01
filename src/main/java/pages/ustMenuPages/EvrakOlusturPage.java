@@ -1854,6 +1854,11 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement btnEvrakEkEkle = $(By.id("yeniGidenEvrakForm:evrakEkTabView:sistemdeKayitliEvrakListesiDataTable:0:ekEkleButton1"));
         ElementsCollection trEvraklarTumListe = $$("tbody[id*='yeniGidenEvrakForm:ekListesiDataTable_data'] tr[role='row']");
 
+        //Web Adresini Ekle Tab
+        SelenideElement btnEkleriWebAdresiniEkle = $("a[href='#yeniGidenEvrakForm:evrakEkTabView:webAdresindenEkEkle']");
+        //Arşivde Kayıtlı Ekle Tab
+        SelenideElement btnEkleriArsivdeEkleTab = $("a[href='#yeniGidenEvrakForm:evrakEkTabView:arsivdenEkEkleTabId']");
+
 
         //İlişkili Evraklar tab - Sistemde kayıtlı evrak ekle
 
@@ -1883,6 +1888,16 @@ public class EvrakOlusturPage extends MainPage {
         @Step("Ekleri/Sistemde Kayıtlı Evrak Ekle Tab - Açma")
         public EkleriTab sistemdeKayitliEvrakEkleTabiniAc() {
             btnSistemdeKayitliEvrakTab.click();
+            return this;
+        }
+        @Step("Ekleri/Web Adresi Ekle Tab - Açma")
+        public EkleriTab webAdresiEkleTabiniAc() {
+            btnEkleriWebAdresiniEkle.click();
+            return this;
+        }
+        @Step("Ekleri/Arşivde Kayıtlı Evrak Ekle Tab - Açma")
+        public EkleriTab arsivdeKayitliEvrakEkleTabiniAc() {
+            btnEkleriArsivdeEkleTab.click();
             return this;
         }
 
