@@ -48,7 +48,30 @@ public class TuzelKisiYonetimiPage extends MainPage {
     SelenideElement btnPopupEvet = $(By.id("duplicateTuzelKisiKayitEvet"));
 
     //İletişim Bilgileri
+    SelenideElement txtTVLogo = $(By.id("tuzelKisiYonetimiEditorForm:tvLogoInput"));
+    SelenideElement txtRadyoLogo = $(By.id("tuzelKisiYonetimiEditorForm:radyoLogoInput"));
+    SelenideElement cmbKarasalTV = $(By.id("tuzelKisiYonetimiEditorForm:karasalTvId"));
+    SelenideElement cmbKarasalRadyo = $(By.id("tuzelKisiYonetimiEditorForm:karasalRadyoId"));
+    SelenideElement cmbKabloTV = $(By.id("tuzelKisiYonetimiEditorForm:kabloTvId"));
+    SelenideElement cmbKabloRadyo = $(By.id("tuzelKisiYonetimiEditorForm:kabloRadyoId"));
+    SelenideElement chkKarasalTVYayinda = $(By.id("tuzelKisiYonetimiEditorForm:karasalTvYayindaId"));
+    SelenideElement chkKarasalRadyoYayinda = $(By.id("tuzelKisiYonetimiEditorForm:karasalRadyoYayindaId"));
+    SelenideElement chkUyduTVYayinda = $(By.id("tuzelKisiYonetimiEditorForm:uyduTvYayindaId"));
+    SelenideElement chkUyduRadyoYayinda = $(By.id("tuzelKisiYonetimiEditorForm:uyduRadyoYayindaId"));
+    SelenideElement chkKabloTVYayinda = $(By.id("tuzelKisiYonetimiEditorForm:kabloTvYayindaId"));
+    SelenideElement chkKabloRadyoYayinda = $(By.id("tuzelKisiYonetimiEditorForm:kabloRadyoYayindaId"));
+    SelenideElement chkIstegeBagliTV = $(By.id("tuzelKisiYonetimiEditorForm:istegeBagliTvId"));
+    SelenideElement chkUyduTV = $(By.id("tuzelKisiYonetimiEditorForm:uyduTvId"));
+    SelenideElement chkUyduRadyo = $(By.id("tuzelKisiYonetimiEditorForm:uyduRadyoId"));
+    SelenideElement chkIstegeBagliRadyo = $(By.id("tuzelKisiYonetimiEditorForm:istegeBagliRadyoId"));
+    SelenideElement chkPlatformIsletmecisi = $(By.id("tuzelKisiYonetimiEditorForm:platformIsletmecisiId"));
+    SelenideElement chkAltyapiIsletmecisi = $(By.id("tuzelKisiYonetimiEditorForm:altyapiIsletmecisiId"));
+    SelenideElement chkLisansIptal = $(By.id("tuzelKisiYonetimiEditorForm:lisansIptalId"));
+
+
+    //Medya şirketi
     SelenideElement btnYeniIletisimEkle = $(By.id("tuzelKisiYonetimiEditorForm:iletisimBilgileriDataTable:addNewIletisimBilgisiButton"));
+
 
     //Yeni İletişim Bilgisi
     SelenideElement txtIletisimBilgisiAdres = $(By.id("tuzelKisiBilgileriEditorForm:adresInput"));
@@ -446,6 +469,72 @@ public class TuzelKisiYonetimiPage extends MainPage {
 
         Assert.assertEquals(getPopupMessage.contains(popupAktifEtmeMesaji), true);
         return this;
+    }
+
+    @Step("Medya Şirketi alan kontrolleri")
+    public TuzelKisiYonetimiPage medyaSirketiAlanKontrolleri() {
+
+        Assert.assertEquals(txtTVLogo.isDisplayed(), true);
+        Allure.addAttachment("TV Logo alan kontrolu başaralı.", "");
+
+        Assert.assertEquals(txtRadyoLogo.isDisplayed(), true);
+        Allure.addAttachment("Radyo Logo alan kontrolu başaralı.", "");
+
+        Assert.assertEquals(cmbKarasalTV.isDisplayed(), true);
+        Allure.addAttachment("Karasal TV alan kontrolu başaralı.", "");
+
+        Assert.assertEquals(cmbKarasalRadyo.isDisplayed(), true);
+        Allure.addAttachment("Karasal Radyo alan kontrolu başaralı.", "");
+
+        Assert.assertEquals(cmbKabloTV.isDisplayed(), true);
+        Allure.addAttachment("Kablo TV alan kontrolu başaralı.", "");
+
+        Assert.assertEquals(cmbKabloRadyo.isDisplayed(), true);
+        Allure.addAttachment("Kablo Radyo alan kontrolu başaralı.", "");
+
+        Assert.assertEquals(chkKarasalTVYayinda.isDisplayed(), true);
+        Allure.addAttachment("Karasal TV Yayında alan kontrolu başaralı.", "");
+
+        Assert.assertEquals(chkKarasalRadyoYayinda.isDisplayed(), true);
+        Allure.addAttachment("Karasal Radyo Yayında alan kontrolu başaralı.", "");
+
+        Assert.assertEquals(chkUyduTVYayinda.isDisplayed(), true);
+        Allure.addAttachment("Uydu Tv Yayında alan kontrolu başaralı.", "");
+
+        Assert.assertEquals(chkUyduRadyoYayinda.isDisplayed(), true);
+        Allure.addAttachment("Uydu Radyo Yayında alan kontrolu başaralı.", "");
+
+        Assert.assertEquals(chkKabloTVYayinda.isDisplayed(), true);
+        Allure.addAttachment("Kablo Tv Yayınd alan kontrolu başaralı.", "");
+
+        Assert.assertEquals(chkKabloRadyoYayinda.isDisplayed(), true);
+        Allure.addAttachment("Kablo Radyo Yayında alan kontrolu başaralı.", "");
+
+        Assert.assertEquals(chkIstegeBagliTV.isDisplayed(), true);
+        Allure.addAttachment("İsteğe Bağlı Tv alan kontrolu başaralı.", "");
+
+        Assert.assertEquals(chkUyduTV.isDisplayed(), true);
+        Allure.addAttachment("Uydu Tv alan kontrolu başaralı.", "");
+
+        Assert.assertEquals(chkUyduRadyo.isDisplayed(), true);
+        Allure.addAttachment("Uydu Radyo alan kontrolu başaralı.", "");
+
+        Assert.assertEquals(chkIstegeBagliTV.isDisplayed(), true);
+        Allure.addAttachment("İsteğe Bağlı TV alan kontrolu başaralı.", "");
+
+        Assert.assertEquals(chkIstegeBagliRadyo.isDisplayed(), true);
+        Allure.addAttachment("İsteğe Bağlı Radyo alan kontrolu başaralı.", "");
+
+        Assert.assertEquals(chkPlatformIsletmecisi.isDisplayed(), true);
+        Allure.addAttachment("Platform İşletmecisi alan kontrolu başaralı.", "");
+
+        Assert.assertEquals(chkAltyapiIsletmecisi.isDisplayed(), true);
+        Allure.addAttachment("Altyapı İşletmecisi alan kontrolu başaralı.", "");
+
+        Assert.assertEquals(chkLisansIptal.isDisplayed(), true);
+        Allure.addAttachment("Lisans İptal alan kontrolu başaralı.", "");
+        return this;
+
     }
 }
 

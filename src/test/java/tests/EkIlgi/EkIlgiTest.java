@@ -366,7 +366,9 @@ public class EkIlgiTest extends BaseTest {
     @Test(enabled = true, description = "TS2348: Evrak oluşturmada ek iliştirme")
     public void TS2348() {
 
-        String evrakSayisi = "6345202-150-1065";
+        String evrakSayisi1 = "6345202-150-1065";
+        String evrakSayisi2 = "6345202-010.01-11789";
+
         String evrakKonusu = "TS2348_EkIlgi_Senaryosu_" + getSysDate();
 
         String ekDosya1Aciklama = "Ek_Dosya1_" + getSysDate();
@@ -436,18 +438,38 @@ public class EkIlgiTest extends BaseTest {
                 .sistemdeKayitliEvrakEkleAlanKontrolleri()
 
                 .evrakAranacakYerSec("İşlem Yaptıklarımda Ara")
-                .evrakAramaDoldur(evrakSayisi)
+                .evrakAramaDoldur(evrakSayisi1)
                 .dokumanAra()
-                .listelenenEvraklardaGelmemeKontrolu(evrakSayisi)
+                .listelenenEvraklardaGelmemeKontrolu(evrakSayisi1)
 
                 .evrakAranacakYerSec("Birim Evrakları Ara")
-                .evrakAramaDoldur(evrakSayisi)
+                .evrakAramaDoldur(evrakSayisi1)
                 .dokumanAra()
-                .listelenenEvraklardaKontrol(evrakSayisi)
+                .listelenenEvraklardaKontrol(evrakSayisi1)
                 .evrakEkEkle()
-                .listelenenEklereDosyanınGeldigiKontrolu(evrakSayisi, "Evrak Sayısı")
+                .listelenenEklereDosyanınGeldigiKontrolu(evrakSayisi1, "Evrak Sayısı1")
 
-                .ekListesindeDetayGoster(evrakSayisi)
+                .ekListesindeDetayGoster(evrakSayisi1)
+                .evrakDetayiKontrol()
+                .evrakDetayiSayfasınıKapat()
+                .islemPenceresiKapatmaOnayiPopup("Kapat");
+
+        evrakOlusturPage
+                .ekleriTabAc()
+
+                .evrakAranacakYerSec("İşlem Yaptıklarımda Ara")
+                .evrakAramaDoldur(evrakSayisi2)
+                .dokumanAra()
+                .listelenenEvraklardaGelmemeKontrolu(evrakSayisi2)
+
+                .evrakAranacakYerSec("Birim Evrakları Ara")
+                .evrakAramaDoldur(evrakSayisi2)
+                .dokumanAra()
+                .listelenenEvraklardaKontrol(evrakSayisi2)
+                .evrakEkEkle()
+                .listelenenEklereDosyanınGeldigiKontrolu(evrakSayisi2, "Evrak Sayısı2")
+
+                .ekListesindeDetayGoster(evrakSayisi2)
                 .evrakDetayiKontrol()
                 .evrakDetayiSayfasınıKapat()
                 .islemPenceresiKapatmaOnayiPopup("Kapat");
@@ -473,7 +495,8 @@ public class EkIlgiTest extends BaseTest {
                 .editordeEkKontrol(ekDosya2Aciklama, "Açıklama")
                 .editordeEkKontrol(ekDosya3Aciklama, "Açıklama")
                 .editordeEkKontrol(fizikselEkAciklama, "Fiziksel Ek Açıklama")
-                .editordeEkKontrol(evrakSayisi, "Evrak Sayısı");
+                .editordeEkKontrol(evrakSayisi1, "Evrak Sayısı1")
+                .editordeEkKontrol(evrakSayisi2, "Evrak Sayısı2");
 
         evrakOlusturPage
                 .ekleriTabAc()

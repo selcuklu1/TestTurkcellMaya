@@ -15,6 +15,7 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import pages.MainPage;
 import pages.solMenuPages.ImzaladiklarimPage;
 import pages.solMenuPages.PostalanacakEvraklarPage;
 import pages.solMenuPages.PostalananlarPage;
@@ -222,8 +223,16 @@ public class EvrakPostalamaTest extends BaseTest {
                 .konuKoduSec("YAZILIM GEL")
                 .konuDoldur(konu)
                 .kaldirilacakKlasorler("Diğer")
+                .gizlilikDerecesiSec("Normal")
 //                .kaldirilacakKlasorler("B1K1")
                 .evrakTuruSec("Resmi Yazışma")
+                .ivedilikSec("Normal")
+                .geregiSecimTipiSec("Tüzel Kişi")
+                .geregiDoldur("Optiim İş", "Ad")
+                .geregiKurumPostaTipi("E-Posta")
+                .geregiSecimTipiSec("Kurum")
+                .geregiDoldur("Başbakanlık", "Kurum")
+                .geregiKurumPostaTipi("E-Posta")
                 .onayAkisiKullanicilariTemizle()
                 .onayAkisiEkle()
                 .onayAkisiKullaniciTipiSec("Mehmet BOZDEMİR", "İmzalama")
@@ -231,20 +240,27 @@ public class EvrakPostalamaTest extends BaseTest {
                 .onayAkisiKullan();
 
         evrakOlusturPage
+                .ekleriTabAc()
+                .webAdresiEkleTabiniAc()
+                .arsivdeKayitliEvrakEkleTabiniAc()
+                .sistemdeKayitliEvrakEkleTabiniAc()
+                .fizikselEkEkleTabiniAc()
+                .fizikselEkMetniDoldur("TS1685 Ek")
+                .fizikselEkMetniEkle();
+      /*  evrakOlusturPage
                 .ilgileriTabAc()
                 .sistemeKayitliEvrakEkleTab()
                 .sistemeKayitliEvrakAra("yazı")
                 .sistemeKayitliDokumanArama()
-                .tablodaBulunanEvrakiEkle();
+                .tablodaBulunanEvrakiEkle(); */
 
-        evrakOlusturPage
-                .islemMesaji().basariliOlmali("İşlem başarılıdır!");
+//        evrakOlusturPage
+  //              .islemMesaji().basariliOlmali("İşlem başarılıdır!");
 
 
         evrakOlusturPage
                 .editorTabAc()
                 .editorIcerikDoldur(konu)
-                .editorEvrakGeregiSec("YAZILIM GELİ")
                 .imzala()
                 .popupSImzalaIslemleri();
 
@@ -254,10 +270,16 @@ public class EvrakPostalamaTest extends BaseTest {
         postalanacakEvraklarPage
                 .openPage()
                 .filter().findRowsWith(Condition.text(konu)).shouldHaveSize(1).first().click();
+        postalanacakEvraklarPage
+                .btnFizikselEkIkonKontrol();
 
-        postalanacakEvraklarPage.evrakPostala()
-                .gidisSekli("Evrak Servisi Elden")
-                .postala();
+        postalanacakEvraklarPage
+                .evrakPostala()
+                .KntrlEvrakFizikselEkYaziSayTar()
+                .postala()
+                .dialogpostalaEvet();
+
+        postalanacakEvraklarPage.islemMesaji().isBasarili();
     }
 
     @Severity(SeverityLevel.CRITICAL)

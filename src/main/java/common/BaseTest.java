@@ -9,7 +9,6 @@ import data.User;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import listeners.DriverEventListener;
-import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -202,6 +201,10 @@ public class BaseTest extends BaseLibrary {
         if (!user.getBirimAdi().isEmpty() && user.getBirimAdi() != null)
             loginPage.birimSec(Condition.text(user.getBirimAdi()));
     }
+
+    @Step("Test Numarası : {testid} {status} ")
+    public void testStatus(String testid, String status)
+    {}
 
     @Step("Login")
     public void login() {

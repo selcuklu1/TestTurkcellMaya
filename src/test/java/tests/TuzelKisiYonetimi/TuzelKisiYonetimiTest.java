@@ -601,4 +601,33 @@ public class TuzelKisiYonetimiTest extends BaseTest {
                 .bilgiSecimTipiSecByText("Tüzel Kişi")
                 .bilgiAlanindaGoruntulenmeKontrolu(ad, soyad);
     }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS2246: Medya şirketi tipinde tüzel kişi ekleme")
+    public void TS2246() {
+
+        String vergiNo = createRandomNumber(10);
+        String kisaAd = createRandomText(7);
+        String ad = kisaAd + " Medya Şirketi";
+        String tuzelKisiTipi = "MEDYA ŞİRKETİ";
+        String adres = "Gültepe Mahallesi";
+        String ulke = "TÜRKİYE";
+        String il = "İstanbul";
+        String ilce = "Kağıthane";
+        String eposta = kisaAd + "medyasirketi@turksat.com.tr";
+        String basariMesaji = "İşlem başarılıdır!";
+
+        tuzelKisiYonetimiPage
+                .openPage()
+                .yeniTuzelKisiEkle()
+                .tuzelKisiTipiSec(tuzelKisiTipi)
+                .medyaSirketiAlanKontrolleri()
+                .adDoldur(ad)
+                .kisaAdDoldur(kisaAd);
+
+
+        // .tuzelKisiKaydet()
+              //  .islemMesaji().basariliOlmali(basariMesaji);
+
+    }
 }

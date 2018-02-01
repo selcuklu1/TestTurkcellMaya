@@ -63,6 +63,8 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
 
     SelenideElement btnIadeEt = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:4:cmdbutton"));
     SelenideElement btnIadeEtIadeEt = $(By.id("mainPreviewForm:iadeEtButton_id"));
+    ElementsCollection tblEvrakGecmisi = $$("[id$='hareketGecmisiDataTable_data'] > tr[role='row']");
+
 
     public TeslimAlinmayiBekleyenlerPage openPage() {
         solMenu(SolMenuData.BirimEvraklari.TeslimAlinmayiBekleyenler);
@@ -233,6 +235,21 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         btnTeslimAl.get(0).click();
 
         return this;
+    }
+
+    @Step("Evrak geçmişi alanına tıklanır")
+    public TeslimAlinmayiBekleyenlerPage secilenEvrakEvrakGecmisi() {
+        $$("[id$='evrakOnizlemeTab'] ul li").filterBy(Condition.text("Evrak Geçmişi")).get(0).$("a").click();
+        return this;
+    }
+
+    @Step("Evrak Geçmişi Kontrol")
+    public TeslimAlinmayiBekleyenlerPage evrakGecmisi(String teslimAlinan, String islemSureci) {
+        boolean durum = tblEvrakGecmisi.filterBy(Condition.text(islemSureci)).filter(Condition.text(teslimAlinan)).size() == 1;
+        Assert.assertEquals(durum, true);
+        takeScreenshot();
+        return this;
+
     }
 
     @Step("Filtrele alanını aç")
