@@ -19,6 +19,8 @@ public class BirimIadeEdilenlerPage extends MainPage {
     ElementsCollection tblEvraklar = $$("[id^='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
     SelenideElement teslimAlButton = $("[id$='teslimAlButton']");
     ElementsCollection tableEvraklar = $$("tbody[id='mainInboxForm:inboxDataTable_data'] > tr");
+    SelenideElement onizlemeTeslimAl = $("[id='mainPreviewForm:onizlemeRightTab:uiRepeat:4:cmdbutton']");
+
 
     public BirimIadeEdilenlerPage openPage() {
         solMenu(SolMenuData.BirimEvraklari.BirimeIadeEdilenler);
@@ -51,6 +53,20 @@ public class BirimIadeEdilenlerPage extends MainPage {
         }
 
         return this;
+    }
+
+    @Step("Evrak tıklanır ve listelendiği görülür")
+    public BirimIadeEdilenlerPage evrakSec(String konu) {
+        tblEvraklar.filterBy(text(konu)).get(0).click();
+        return this;
+    }
+
+    @Step("Önizleme ekranından Teslim Al butonuna basılır ve Evrakı teslim almak istediğinize emin misiniz? uyarısı Evet ile onaylanır")
+    public BirimIadeEdilenlerPage evrakOnizlemeTeslimAl()
+    {
+        onizlemeTeslimAl.click();
+         $(By.id("teslimAlEvetButton")).click();
+         return this;
     }
 
     @Step("Birime Iade Edilenler sayfasında evrakın listede olmadığının kontrolu")
