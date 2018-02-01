@@ -105,19 +105,22 @@ public class ComboLovHelper extends BaseLibrary {
 //        return ElementFinder.wrap(BelgenetElement.class, null, By.cssSelector(lovText), 0);
     }
 
-    @Step("Clear last selected items")
+    @Step("Clear last selected item")
     BelgenetElement clearLastSelectedItem() {
-        SelenideElement b = $$(lovInputTextleriTemizle).last().shouldBe(visible);
-        int count = $$(lovInputTextleriTemizle).size();
-        b.click();
-        if (b.is(visible))
-            // $$(lovInputTextleriTemizle).last().click();   Firefox browserda aşağı inmeme sorunundan dolayı commentlendi.
-            clickJs($$(lovInputTextleriTemizle).last());
+        ElementsCollection items = $$(lovSelectedItems).filterBy(visible);
+        int size = items.size();
+        if (size == 0){
+            Allure.addAttachment("No item to clear", String.valueOf(size));
+            return (BelgenetElement) element;
+        }
 
-        $$(lovInputTextleriTemizle).filter(visible).shouldHaveSize(count - 1);
+        SelenideElement lastItem = items.last();
+        Allure.addAttachment("Remove last selected item", lastItem.text());
+        clickJs(lastItem.$(lovSecilenTemizleButton));
 
+        //lastItem.shouldNotBe(exist);
+        $$(lovSelectedItems).filterBy(visible).shouldHaveSize(size - 1);
         return (BelgenetElement) element;
-//        return ElementFinder.wrap(BelgenetElement.class, null, By.cssSelector(lovText), 0);
     }
 
     @Step("Clear all selected items")

@@ -34,7 +34,6 @@ public class DataTest extends BaseTest {
     TeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage;
     //BirimIadeEdilenlerPage birimIadeEdilenlerPage;
 
-
     @BeforeMethod
     public void loginBeforeTests() {
         login("ztekin", "123");
@@ -84,7 +83,6 @@ public class DataTest extends BaseTest {
                 .getEditor().type(editorIcerik);
         page.pageButtons().evrakImzala().islemMesaji().basariliOlmali();
     }
-
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS2234: DATA-İmzala bekleyenler listesine evrak düşürülmesi")
@@ -214,4 +212,8 @@ public class DataTest extends BaseTest {
             //    .evrakNoIleEvrakSec(konu);
     }
 
+    @Test(description = "DATA-Kullanıcıya ve Birime evrak havalesi", enabled = true)
+    public void TS2330() throws Exception {
+
+    }
 }

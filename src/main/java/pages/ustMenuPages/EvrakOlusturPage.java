@@ -638,6 +638,18 @@ public class EvrakOlusturPage extends MainPage {
             cmbGeregi.closeTreePanel();
             return this;
         }
+        ElementsCollection tableGeregiSecilenler = $$("tbody[id$='geregiLov:LovSecilenTable_data'] > tr");
+        @Step("Geregi alanında \"{geregi}\" için {geregiTipi} seç")
+        public BilgilerTab geregiTipiSec(String geregi, String geregiTipi) {
+
+            tableGeregiSecilenler
+                    .filterBy(text(geregi))
+                    .first()
+                    .$("select[id$='selectOneMenu']")
+                    .selectOption(geregiTipi);
+
+            return this;
+        }
 
         @Step("Geregi alanında Tüzel Kişi olarak \"{tuzelkisi}\" seç")
         public BilgilerTab geregiTuzelKisiSec(String tuzelkisi) {
@@ -1536,7 +1548,9 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("İmzala")
         public EditorTab imzala() {
+            Selenide.sleep(2000);
             btnImzala.click();
+            //clickJs(btnImzala);
             return this;
         }
 

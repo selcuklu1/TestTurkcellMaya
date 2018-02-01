@@ -626,7 +626,7 @@ public class GelenEvraklarPage extends MainPage {
         cmbEvrakKapatKapatmaTipi.selectOption(value);
         return this;
     }
-
+    @Step("Paylaş tıkalanır")
     public GelenEvraklarPage paylas() {
         btnPaylas.click();
         return this;
