@@ -626,6 +626,7 @@ public class GelenEvraklarPage extends MainPage {
         cmbEvrakKapatKapatmaTipi.selectOption(value);
         return this;
     }
+
     @Step("Paylaş tıkalanır")
     public GelenEvraklarPage paylas() {
         btnPaylas.click();
@@ -701,6 +702,41 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Tabloda \"{evrakNo}\" evrak nolu kayıt seçilir. ")
+    public GelenEvraklarPage tabloEvrakNoSec(String evrakNo) {
+
+        tableEvraklar
+                .filterBy(Condition.text(evrakNo))
+                .first()
+                .click();
+        return this;
+    }
+
+    @Step("Evrak Önizleme geldiği görülür. ")
+    public GelenEvraklarPage evrakOnizlemeKontrolu(String evrakNo) {
+        SelenideElement evrakOnizleme = $(By.id("mainPreviewForm:evrakOnizlemeTab"));
+        evrakOnizleme.isDisplayed();
+        return this;
+    }
+
+    @Step("Evrak Önizleme \"{btnText}\" buton geldiği görülür.")
+    public GelenEvraklarPage evrakOnizlemeButonKontrolu(String btnText) {
+        SelenideElement btnEvrakOnizleme = $(By.xpath("//span[text()='" + btnText + "']/../../..//button"));
+        btnEvrakOnizleme.isDisplayed();
+        return this;
+    }
+    @Step("Evrak Önizleme \"{btnText}\" buton tıklanır.")
+    public GelenEvraklarPage evrakOnizlemeButonTikla(String btnText) {
+        SelenideElement btnEvrakOnizleme = $(By.xpath("//span[text()='" + btnText + "']/../../..//button"));
+        btnEvrakOnizleme.click();
+        return this;
+    }
+    @Step("Evrak Önizleme iade edilecek kullanıcı kontrolü")
+    public GelenEvraklarPage evrakOnizlemeIadeEdilecekKullanici() {
+        SelenideElement lblEvrakOnizlemeIadeEdilecekKullanici = $(By.xpath("//label[normalize-space(text())='İade Edilecek Kullanıcı']//ancestor::tr//td[3]//label"));
+        Allure.addAttachment("İade Edilecek Kullanıcı : ",lblEvrakOnizlemeIadeEdilecekKullanici.text());
+        return this;
+    }
 
     @Step("Tabloda olmayan evrak no kontrolü : \"{evrakNo}\" ")
     public GelenEvraklarPage tabloOlmayanEvrakNoKontrol(String evrakNo) {
