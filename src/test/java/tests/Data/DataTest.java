@@ -236,7 +236,7 @@ public class DataTest extends BaseTest {
                 .kaydet();
 
         String evrakNo = page.popUps();
-        String kayitTarihiSayi = getSysDateForKis() + " / " + evrakNo;
+        //String kayitTarihiSayi = getSysDateForKis() + " / " + evrakNo;
         page.islemMesaji().basariliOlmali();
     }
 }
