@@ -35,8 +35,8 @@ public class YazismaKurallariYonetimiTest extends BaseTest {
                 .tiklaVekaletSeviyesi(vekaletSeviyesi)
                 .tiklaSonImzaSeviyesi(sonImzaSeviyesi)
                 .grupBirimTipleriKaydet()
-                .yazismakurallariKontrolEt(birimAdi, true, sinirsizYazilabilir, vekaletSeviyesi, sonImzaSeviyesi)
-                .islemMesaji().basariliOlmali(basariMesaj);
+                .islemMesaji().basariliOlmali(basariMesaj)
+                .yazismakurallariKontrolEt(birimAdi, true, sinirsizYazilabilir, vekaletSeviyesi, sonImzaSeviyesi);
 
     }
 
@@ -60,8 +60,8 @@ public class YazismaKurallariYonetimiTest extends BaseTest {
         String birimAdi = "Yürütme Organları";
         String basariMesaj = "İşlem başarılıdır!";
         String yeniBirimAdi = "testgkc";
-        boolean sinirsizYazilabilir = true;
-        boolean vekaletSeviyesi = true;
+        boolean sinirsizYazilabilir = false;
+        boolean vekaletSeviyesi = false;
         boolean sonImzaSeviyesi = false;
 
         login("mbozdemir", "123");
@@ -76,9 +76,13 @@ public class YazismaKurallariYonetimiTest extends BaseTest {
                 .tiklaSonImzaSeviyesi(sonImzaSeviyesi)
                 .grupBirimTipleriKaydet()
                 .islemMesaji().basariliOlmali();
+
         yazismaKurallariYonetimiPage
                 .yazismakurallariKontrolEt(birimAdi, true, sinirsizYazilabilir, vekaletSeviyesi, sonImzaSeviyesi);
 
+        sinirsizYazilabilir = true;
+        vekaletSeviyesi = true;
+        sonImzaSeviyesi = true;
         yazismaKurallariYonetimiPage
                 .yazismaKuraliGuncelle(birimAdi)
                 .birimTipiSec(yeniBirimAdi)
