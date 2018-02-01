@@ -44,7 +44,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
     ImzaBekleyenlerPage imzaBekleyenlerPage;
     EvrakOlusturPage evrakOlusturPage2;
     TextEditor editor;
-
+BirimHavaleEdilenlerPage birimHavaleEdilenlerPage;
 
     @BeforeMethod
     public void loginBeforeTests() {
@@ -68,6 +68,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
         cevapYazPage = new CevapYazPage();
         teslimAlinmayiBekleyenlerPage = new TeslimAlinmayiBekleyenlerPage();
         editor = new TextEditor();
+        birimHavaleEdilenlerPage = new BirimHavaleEdilenlerPage();
     }
 
     @Test(enabled = true, description = "TS0930: Kurum içi gelen evraka cevap yaz")
@@ -920,7 +921,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
         String tur = "IMZALAMA";
         String kaldirilacakKlasor = "Diğer";
         String kladirilacakKlasorTitle = "[Klasör] 000";
-        String dagitimBilgisiKisi = "ZÜBEYDE TEKİN";
+        String dagitimBilgisiKisi = "Mehmet Bozdemir";
 //        String dagitimBilgisiKisi = "Yasemin Akyol";
         String evrakTuru2 = "Form";
         String formSablonu = "Kopya Optiim form şablonu";
@@ -928,8 +929,8 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
         String kullaniciTitle = " [Ağ (Network) Uzman Yardımcısı]";
 
         String mernisNo = createMernisTCKN();
-
-        login(usernameMBOZDEMIR, passwordMBOZDEMIR);
+        login(usernameZTEKIN, passwordZTEKIN);
+//        login(usernameMBOZDEMIR, passwordMBOZDEMIR);
 
         gelenEvrakKayitPage
                 .openPage()
@@ -960,7 +961,8 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .islemMesaji().basariliOlmali(basariMesaji);
 
         logout();
-        login(usernameZTEKIN, passwordZTEKIN);
+        login(usernameMBOZDEMIR, passwordMBOZDEMIR);
+//        login(usernameZTEKIN, passwordZTEKIN);
 
 
         gelenEvraklarPage
@@ -971,7 +973,6 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .konuAlanDegeriKontrolu(konu)
                 .geregiAlanDegeriKontrolu(mernisNo);
 
-        //TODO: Emre bu kontrolu libraryde yazsak bile pageden yazıp libraryden çağıralım. Testin içi daha temiz durur. id'ler testte olmamalı.
         //Örnek: alanDegeriKontrolEt(konu, true, true);
 
 //        alanDegeriKontrolEt($("[id$='konuTextArea']"), konu, true, true);
@@ -992,7 +993,12 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
 
         //DenemeListesindeki kullnıcı veya kullanıcılarla giriş yapılır işlemdeki aksiyonlar alınır.
 //        logout();
-        login("username24o", "123");
+//        login("username24o", "123");
+
+//        birimHavaleEdilenlerPage
+//                .openPage()
+//                .evrakSecIcerikGoster(konu,true)
+//                .
 
         imzaBekleyenlerPage
                 .openPage()
@@ -1003,7 +1009,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .sImzaImzala(true);
 
 //        logout();
-        login(usernameZTEKIN, passwordZTEKIN);
+//        login(usernameZTEKIN, passwordZTEKIN);
 
         gelenEvraklarPage
                 .openPage()
@@ -1040,7 +1046,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .shouldHaveSize(1);
 
 //        logout();
-        login("username24o", "123");
+//        login("username24o", "123");
 
         postalanacakEvraklarPage
                 .openPage()

@@ -12,6 +12,7 @@ import pages.pageData.alanlar.GeregiSecimTipi;
 import pages.pageData.alanlar.GizlilikDerecesi;
 import pages.pageData.alanlar.OnayKullaniciTipi;
 //import pages.solMenuPages.BirimIadeEdilenlerPage;
+import pages.solMenuPages.BirimIadeEdilenlerPage;
 import pages.solMenuPages.TeslimAlinmayiBekleyenlerPage;
 import pages.ustMenuPages.GelenEvrakKayitPage;
 
@@ -32,7 +33,7 @@ public class DataTest extends BaseTest {
     User user = new User("ztekin", "123", "Zübeyde TEKİN");
     GelenEvrakKayitPage gelenEvrakKayitPage;
     TeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage;
-    //BirimIadeEdilenlerPage birimIadeEdilenlerPage;
+    BirimIadeEdilenlerPage birimIadeEdilenlerPage;
 
     @BeforeMethod
     public void loginBeforeTests() {
@@ -207,13 +208,35 @@ public class DataTest extends BaseTest {
         teslimAlinmayiBekleyenlerPage
                 .birimDegistirme(birim);
 
-        //birimIadeEdilenlerPage
-          //      .openPage()
-            //    .evrakNoIleEvrakSec(konu);
+        new BirimIadeEdilenlerPage()
+                .openPage()
+                .evrakNoIleEvrakSec(konu);
     }
 
     @Test(description = "DATA-Kullanıcıya ve Birime evrak havalesi", enabled = true)
     public void TS2330() throws Exception {
+        String evrakSayi = getSysDate();
+        String konu = "TS2330_" + getSysDate();
+        login(user);
+        GelenEvrakKayitPage page = new GelenEvrakKayitPage().openPage();
+        page.ustYaziEkle("documents/pdf.pdf").islemMesaji().basariliOlmali();
+        page.ustYaziPdfAdiKontrol("pdf.pdf")
+                .konuKoduDoldur("010.01")
+                .konuDoldur(konu)
+                .evrakTuruSec("Resmi Yazışma")
+                .evrakTarihiDoldur(getSysDateForKis())
+                .gizlilikDerecesiSec("Normal")
+                .kisiKurumSec("Kurum")
+                .geldigiKurumDoldurLovText2("Başbakanlık")
+                .evrakSayiSagDoldur(evrakSayi)
+                .evrakGelisTipiSec("Posta")
+                .ivedilikSec("Normal")
+                .havaleIslemleriBirimDoldur("Optiim Birim")
+                .havaleIslemleriKisiDoldur("Optiim TEST")
+                .kaydet();
 
+        String evrakNo = page.popUps();
+        //String kayitTarihiSayi = getSysDateForKis() + " / " + evrakNo;
+        page.islemMesaji().basariliOlmali();
     }
 }
