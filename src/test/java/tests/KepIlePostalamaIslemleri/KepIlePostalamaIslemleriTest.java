@@ -66,6 +66,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
         mainPage
                 .kepBaglantisi()
                 .kepAdresBaglantisiBaglan1()
+                .kullaniciAdiVeTCKimlikNoLoginOlunanKullaniciGeldigiGorme()
                 .kullaniciAdiTcKimlikNoKontol()
                 .parolaDoldur(parola)
                 .sifreDoldur(sifre)
@@ -77,6 +78,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
         mainPage
                 .kepBaglantisi()
                 .kepAdresBaglantisiBaglan1()
+                .kullaniciAdiVeTCKimlikNoLoginOlunanKullaniciGeldigiGorme()
                 .kullaniciAdiTcKimlikNoKontol()
                 .parolaDoldur(parola)
                 .sifreDoldur(sifre)
@@ -289,6 +291,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
 
         evrakOlusturPage
                 .ekleriTabAc()
+                .ekleriTablariGeldigiGorme()
                 .dosyaEkle(pathFile, "Dosya yolu")
                 .ekleriEkMetniDoldur(editor)
                 .ekleriEkle();
@@ -297,19 +300,27 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
                 .editorTabAc()
                 .editorIcerikDoldur(editor)
                 .imzala()
+                .imzaPopupGeldigiGorme()
                 .sImzasec()
                 .sImzaImzala()
-                .sayisalImzaEvetPopup();
+                .sayisalImzaEvetPopup()
+                .islemMesaji().basariliOlmali(basariMesaji);
 
         postalanacakEvraklarPage
                 .openPage()
                 .evrakSec(konuKoduRandom, geregiGercekKisi, tarih)
-                .evrakPostala();
+                .evrakPostala()
+                .postalanacakYerlerAlanGoreSecimGeldigiGorme("Tüzel Kişi",geregiTuzelKisi,"KEP")
+                .postalanacakYerlerAlanGoreSecimGeldigiGorme("Gercek Kişi",geregiGercekKisi,"APS")
+                .postalanacakYerlerAlanGoreSecimGeldigiGorme("Kurum",geregiKurum,"KEP");
 
         kepIlePostalanacaklarPage
                 .openPage()
                 .evrakSec(konuKoduRandom)
                 .evrakPostala()
+                .postalanacakYerlerAlanGoreSecimGeldigiGorme("Tüzel Kişi",geregiTuzelKisi,"KEP")
+                .postalanacakYerlerAlanGoreSecimGeldigiGorme("Kurum",geregiKurum,"KEP")
+                .postalanacakYerlerAlanGoreSecimListelenmedigiGorme("Gercek Kişi",geregiGercekKisi,"APS")
                 .evrakPostalaPostala()
                 .belgeElektronikImzaliDegilUyariGeldigiGorme()
                 .belgeElektronikImzaliDegilUyariEvet()
