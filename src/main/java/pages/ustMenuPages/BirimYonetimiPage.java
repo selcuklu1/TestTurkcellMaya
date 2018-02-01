@@ -6,6 +6,7 @@ import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.UstMenuData;
@@ -115,9 +116,17 @@ public class BirimYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Güncelle")
-    public BirimYonetimiPage tableDuzenle() {
+    @Step("İlk birimin güncelle butonu tıklanır")
+    public BirimYonetimiPage ilkBirimGuncelle() {
         btnTableDuzenle.click();
+        return this;
+    }
+
+    @Step("Sağ alanda Birim Güncelleme ekranı geldiği görülür")
+    public BirimYonetimiPage sagAlandaGuncellemeEkranGeldigiGorme(){
+    boolean durum = $$(By.id("birimYonetimiEditorForm:birimYonetimiEditorPanel_header")).size()==1;
+        Assert.assertEquals(durum,true);
+        takeScreenshot();
         return this;
     }
 

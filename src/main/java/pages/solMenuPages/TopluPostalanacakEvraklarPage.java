@@ -249,7 +249,8 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
 
 
         }
-        $x("//tbody").click();
+        lblPostaTipiSeciniz.click();
+//        $x("//tbody").click();
 
         return this;
     }

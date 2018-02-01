@@ -434,8 +434,8 @@ public class TuzelKisiYonetimiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TS1132: Tüzel kişinin pasif yapılması ve kontrolü")
-    public void TS1132() throws InterruptedException {
+    @Test(enabled = true, description = "TS1132b: Tüzel kişinin pasif yapılması ve kontrolü")
+    public void TS1132b() throws InterruptedException {
 
         String vergiNo = "34378564433";
         String ad = "Ts1132 TüzelKişi";
@@ -521,8 +521,8 @@ public class TuzelKisiYonetimiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TS1458: Pasif yapılan tüzel kişinin aktif yapılması ve kontrolü")
-    public void TS1458() throws InterruptedException {
+    @Test(enabled = true, description = "TS1458b: Pasif yapılan tüzel kişinin aktif yapılması ve kontrolü")
+    public void TS1458b() throws InterruptedException {
 
         String vergiNo = "55665732323";
         String ad = "Ts1458";

@@ -1,10 +1,7 @@
 package pages.solMenuPages;
 
 
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.SelenideElement;
-import com.codeborne.selenide.WebDriverRunner;
+import com.codeborne.selenide.*;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -156,7 +153,7 @@ public class TopluPostaladiklarimPage extends MainPage {
         return this;
     }
 
-    @Step("Posta Listesi seç")
+    @Step("Posta listesi alan kontolleri")
     public TopluPostaladiklarimPage postaListesiKontrol(String postaListesiAdi, String postaKodu, String postaTarihi, String postaGramaji, String pttTutari, boolean shouldBeExist) {
 
 
@@ -174,14 +171,16 @@ public class TopluPostaladiklarimPage extends MainPage {
                     .filterBy(text("Posta Gramajı: " + postaGramaji))
                     .filterBy(text("PTT Tutarı: " + pttTutari + " TL"))
                     .first();
+            takeScreenshot();
 
             if (postaListesi.isDisplayed() && postaListesi.exists()) {
                 elementFound = true;
-                Allure.addAttachment("Posta Listesi Adı: ", postaListesiAdi);
-                Allure.addAttachment("Posta Kodu: ", postaKodu);
-                Allure.addAttachment("Posta Tarihi: ", postaTarihi);
-                Allure.addAttachment("Posta Gramajı: ", postaGramaji);
-                Allure.addAttachment("PTT Tutarı: ", pttTutari + " TL");
+                Allure.addAttachment("Ekran Alan Kontrolleri", "Posta Listesi Adı: '" + postaListesiAdi + "'\n" +
+                        "Posta Kodu: '" + postaKodu + "'\n" +
+                        "Posta Tarihi: '" + postaTarihi + "'\n" +
+                        "Posta Gramajı: '" + postaGramaji + "'\n" +
+                        "PTT Tutarı: '" + pttTutari + " TL " + "bilgileri ile listelendiği görülür.");
+
                 break;
             }
         }
@@ -232,7 +231,9 @@ public class TopluPostaladiklarimPage extends MainPage {
 
     @Step("Evrak Listesi tablosunda Yazdır butonu tıklanır.")
     public TopluPostaladiklarimPage evrakListesiYazdir(String[] konu) {
+        ElementsCollection table = $$("tbody[id='mainPreviewForm:dataTableId_data'] tr[data-ri]");
         int size = $$("tbody[id='mainPreviewForm:dataTableId_data'] tr[data-ri]").size();
+//        Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", table);
         for (int i = 0; i < size; i++) {
             $$("tbody[id='mainPreviewForm:dataTableId_data'] tr[data-ri]")
                     .filterBy(Condition.text(konu[i]))

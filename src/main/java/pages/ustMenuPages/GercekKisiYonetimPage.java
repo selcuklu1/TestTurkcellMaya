@@ -194,6 +194,14 @@ public class GercekKisiYonetimPage extends MainPage {
         return this;
     }
 
+    @Step("Gerçek Kişi kayıtlarının tabloda listelendiği görülür")
+    public GercekKisiYonetimPage gercekKisilerinListelendigiGorme() {
+        boolean durum = $$(By.id("gercekKisiYonetimiListingForm:gercekKisiDataTable_data")).size() == 1;
+        Assert.assertEquals(durum, true);
+        takeScreenshot();
+        return this;
+    }
+
     @Step("Filtrede durum seç")
     public GercekKisiYonetimPage filtreDurumSec(String filtreDurumu) {
         cmbFiltreDurum.selectOptionByValue(filtreDurumu);
@@ -325,6 +333,14 @@ public class GercekKisiYonetimPage extends MainPage {
         btnKepAdresiKaydet.click();
         return this;
     }
+
+    @Step("Eklenen yeni kayıt listede görüntülenir: {kep}")
+    public GercekKisiYonetimPage kepAdresBilgileriKayitListedeGeldigiGorulur(String kep) {
+        boolean durum =$("[id='kurumYonetimiEditorForm:kepBilgileriDataTable']").shouldBe(Condition.text(kep)).shouldBe(Condition.visible).exists()==true;
+        Assert.assertEquals(durum,true);
+        return this;
+    }
+
 
     @Step("Kep adresi doldur")
     public GercekKisiYonetimPage kepAdresiDoldur(String kepAdres) {

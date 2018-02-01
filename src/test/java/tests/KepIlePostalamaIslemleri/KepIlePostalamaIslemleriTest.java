@@ -35,6 +35,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
     String geregiTuzelKisi = "OPTİİMc1";
     String basariMesaji = "İşlem başarılıdır!";
     String geregiKurum = "Adalet Bakanlığı";
+    String geregiGercekKisi = "Cansuu Denizz";
 
     @BeforeMethod
     public void loginBeforeTests() {
@@ -113,13 +114,17 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
                 .popupKaydet()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
+        kurumYonetimiPage
+                .kepAdresBilgileriKayitListedeGeldigiGorulur(popupKepAdresi);
+
         String getIdariBirimKodu = kurumYonetimiPage.idariBirimKimlikKoduCek();
 
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
                 .geregiSecimTipiSec(bilgiSecimTipi)
-                .geregiDoldur(getIdariBirimKodu, "İdari Birim Kodu");
+                .geregiDoldur(getIdariBirimKodu, "İdari Birim Kodu")
+                .geregiAlaniKEPSeciliGeldigiGorme();
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -135,7 +140,9 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
 
         gercekKisiYonetimPage
                 .openPage()
+                .filtreTCKimlikNoDoldur("69848836150")
                 .ara()
+                .gercekKisilerinListelendigiGorme()
                 .gercekKisiGuncelle()
                 .kepAdresiKullaniyor(true)
                 .kepAdresBilgileriEkle()
@@ -144,13 +151,17 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
                 .kepAdresiKaydet()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
+        kurumYonetimiPage
+                .kepAdresBilgileriKayitListedeGeldigiGorulur(popupKepAdresi);
+
         String getIdariBirimKodu = gercekKisiYonetimPage.getTbleTCNO();
 
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
                 .geregiSecimTipiSec(bilgiSecimTipi)
-                .geregiDoldur(getIdariBirimKodu, "İdari Birim Kodu");
+                .geregiDoldur(getIdariBirimKodu, "İdari Birim Kodu")
+                .geregiAlaniKEPSeciliGeldigiGorme();
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -161,14 +172,16 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
         String popupKepHizmetSaglayicisiSec = "PTT KEP Servisi";
         String basariMesaji = "İşlem başarılıdır!";
         String bilgiSecimTipi = "Tüzel Kişi";
-        String kullanici = "Büyük Küçük Harflerle Tüzel Kişi";
+        String kullanici = "OPTİİMc1";
 
         login(usernameOPTIIM, passwordOPTIIM);
 
         tuzelKisiYonetimiPage
                 .openPage()
+                .filtreVergiNoDoldur("12300000000")
                 .ara()
-                .tuzelKisiSecGuncele(kullanici)
+                .tuzelKisilerinListelendigiGorme()
+                .tuzelKisiSecGuncele("OPTİİMc1")
                 .kepAdresiKullaniyorSec(true)
                 .kepAdresBilgileriEkle()
                 .kepAdresiDoldur(popupKepAdresi)
@@ -176,13 +189,17 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
                 .kepAdresiKaydet()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
+        kurumYonetimiPage
+                .kepAdresBilgileriKayitListedeGeldigiGorulur(popupKepAdresi);
+
         String vergiNo = tuzelKisiYonetimiPage.vergiNoCek();
 
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
                 .geregiSecimTipiSec(bilgiSecimTipi)
-                .geregiDoldur(vergiNo, "Vergi No");
+                .geregiDoldur(vergiNo, "Vergi No")
+                .geregiAlaniKEPSeciliGeldigiGorme();
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -205,7 +222,8 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
                 .birimDoldur(birim)
                 .birimTuruSec(birimTuru)
                 .ara()
-                .tableDuzenle()
+                .ilkBirimGuncelle()
+                .sagAlandaGuncellemeEkranGeldigiGorme()
                 .yeniKepAdresBilgileriEkle()
                 .popupKepAdresiDoldur(kepAdresi1)
                 .popupHizmetSaglayicisiSec(popupKepHizmetSaglayicisiSec)
@@ -240,9 +258,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
         String gercekKisi = "Gerçek Kişi";
         String tuzelKisi = "Tüzel Kişi";
         String kurum = "Kurum";
-        String geregiGercekKisi = "Cansuu Denizz";
         String pathFile = getUploadPath() + "Otomasyon.pdf";
-
 
         login(usernameMBOZDEMIR, passwordMBOZDEMIR);
 
@@ -260,6 +276,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
                 .geregiDoldur(geregiGercekKisi, "Gerçek kişi")
                 .geregiSecimTipiSec(kurum)
                 .geregiDoldur(geregiKurum, "Kurum")
+                .kepOlarakGeldikleriGorme(geregiGercekKisi,geregiTuzelKisi,geregiKurum)
                 .gercekKisiPostaTipiAPSSec(geregiGercekKisi)
                 .onayAkisiEkle()
                 .onayAkisiEkleIlkImzalaSec("İmzalama")
@@ -267,7 +284,8 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
                 .kaldiralacakKlasorlerSec(kaldirilicakKlasor);
 
         evrakOlusturPage
-                .editorTabAc();
+                .editorTabAc()
+                .metinAlaninGeldigiGorme();
 
         evrakOlusturPage
                 .ekleriTabAc()
@@ -309,6 +327,9 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
                 .openPage()
                 .evrakSec(konuKoduRandom, tarih, "")
                 .evrakPostala()
+                .postalanacakYerlerAlanGoreSecimGeldigiGorme("Tüzel Kişi",geregiTuzelKisi,"KEP")
+                .postalanacakYerlerAlanGoreSecimGeldigiGorme("Gercek Kişi",geregiGercekKisi,"APS")
+                .postalanacakYerlerAlanGoreSecimGeldigiGorme("Kurum",geregiKurum,"KEP")
                 .dagitimSekliDegistirSec(geregiTuzelKisi, "Adi Posta", "0")
                 .tuzelKisiPostaKoduVeAciklamaDoldur(geregiTuzelKisi, "1", "fsd")
                 .evrakPostalaPostala()

@@ -3,6 +3,7 @@ package pages.ustMenuPages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.CellReference;
@@ -16,6 +17,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
@@ -191,17 +194,28 @@ public class PttRaporuPage extends MainPage {
     @Step("Ülke doldur: {ulke}")
     public PttRaporuPage ulkeDoldur(String ulke) {
         //txtUlke.selectLov(ulke);
-        txtUlke.type(ulke)
-                .getTitleItems()
-                .filterBy(Condition.textCaseSensitive(ulke))
-                .first().click();
-        txtUlke.closeTreePanel();
+        if(ulke == ""){
+            txtUlke.clearAllSelectedItems();
+        } else {
+            txtUlke.clearAllSelectedItems();
+            txtUlke.type(ulke)
+                    .getTitleItems()
+                    .filterBy(Condition.textCaseSensitive(ulke))
+                    .first().click();
+            txtUlke.closeTreePanel();
+        }
         return this;
     }
 
     @Step("İl doldur: {il}")
     public PttRaporuPage ilDoldur(String il) {
-        txtIl.selectLov(il);
+        if(il == "")
+            txtIl.clearAllSelectedItems();
+        else{
+            txtIl.clearAllSelectedItems();
+            txtIl.selectLov(il);
+
+        }
         return this;
     }
 
@@ -217,27 +231,27 @@ public class PttRaporuPage extends MainPage {
         return this;
     }
 
-    @Step("Dağıtıcı Değerini döndür.")
+    @Step("Dağıtıcı Değerini getir.")
     public String dagiticiGetir() {
         return txtDagitici.getValue();
     }
 
-    @Step("Düzenleyen Değerini döndür.")
+    @Step("Düzenleyen Değerini getir.")
     public String duzenleyenGetir() {
         return txtDuzenleyen.getValue();
     }
 
-    @Step("Avans Sorumlusu Değerini döndür.")
+    @Step("Avans Sorumlusu Değerini getir.")
     public String avansSorumlusuGetir() {
         return txtAvansSorumlusu.getValue();
     }
 
-    @Step("Kontrol Eden Değerini döndür.")
+    @Step("Kontrol Eden Değerini getir.")
     public String kontrolEdenGetir() {
         return txtKontrolEden.getValue();
     }
 
-    @Step("PTT Merkez Değerini döndür.")
+    @Step("PTT Merkez Değerini getir.")
     public String pttMerkezGetir() {
         return txtPttMerkez.getValue();
     }
@@ -266,7 +280,21 @@ public class PttRaporuPage extends MainPage {
         return filePath;
     }
 
-    public static class PttRaporExcellTest {
+    @Step("Tablo verilerini kontrol et")
+    public PttRaporuPage tabloKontrol(){
+        int tabloSatirSayisi = tableRaporlar.size();
+        Allure.addDescription("Tabloda" + tabloSatirSayisi + " adet kayıt var.");
+        return this;
+    }
+
+    @Step("Posta Tarihi alanı için güncel tarih kontrolü")
+    public PttRaporuPage postaTarihiDefaultDegerKontrol(){
+        String tarihBugun = "" + new SimpleDateFormat("dd.MM.yyyy").format(new Date());
+        txtPostaTarihi.shouldHave(Condition.value(tarihBugun));
+        return this;
+    }
+
+    public static class PttRaporExcellTest{
 
         public String dagitici;
         public String duzenleyen;
@@ -282,9 +310,9 @@ public class PttRaporuPage extends MainPage {
         public String[] pulNolar;
         public String[] ucretTLler;
 
+
         public PttRaporExcellTest(String excelFilepath) throws IOException {
 
-            //String excelFileName = "/Users/huseyintumer/Downloads/Rapor_1516259983559.xls";
 
             FileInputStream fis = new FileInputStream(excelFilepath);
             Workbook wb = new HSSFWorkbook(fis);
