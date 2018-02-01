@@ -5,6 +5,7 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.UstMenuData;
@@ -145,7 +146,7 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Evrak türü seç")
+    @Step("Evrak türü Genelge seçilir")
     public EvrakHavaleKurallariYonetimiPage evrakTuruSecGenelge() {
         cmbEvrakTuru.get(0).click();
         cmbEvrakTuruGenelge.get(2).click();
@@ -153,7 +154,7 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Evrak türü seç")
+    @Step("Evrak türü Beyanname seçilir")
     public EvrakHavaleKurallariYonetimiPage evrakTuruSecBeyanname() {
         cmbEvrakTuru.get(0).click();
         cmbEvrakTuruGenelge.get(3).click();
@@ -161,7 +162,7 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Evrak türü seç")
+    @Step("Evrak türü Dilekçe seçilir")
     public EvrakHavaleKurallariYonetimiPage evrakTuruSecDilekce() {
         cmbEvrakTuru.get(0).click();
         cmbEvrakTuruGenelge.get(1).click();
@@ -169,8 +170,8 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Evrak türü seç")
-    public EvrakHavaleKurallariYonetimiPage evrakTuruSec(int i) {
+    @Step("Evrak türü {turu} seçilir")
+    public EvrakHavaleKurallariYonetimiPage evrakTuruSec(int i,String turu) {
         cmbEvrakTuru.get(0).click();
         cmbEvrakTuruGenelge.get(i).click();
         cmbEvrakTuru.get(0).click();
@@ -183,15 +184,11 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Evrak dili seç")
+    @Step("Evrak dili Türkçe seçilir")
     public EvrakHavaleKurallariYonetimiPage evrakDiliTurkceSec() {
-        cmbEvrakTuru.get(1).click();
-        $$("[class='ui-selectcheckboxmenu-panel ui-widget-content ui-corner-all ui-helper-hidden'] div[class='ui-chkbox-box ui-widget ui-corner-all ui-state-default ui-state-active']").get(1).click();
-        $$("[class='ui-selectcheckboxmenu-panel ui-widget-content ui-corner-all ui-helper-hidden'] div[class='ui-chkbox-box ui-widget ui-corner-all ui-state-default']").get(5).click();
-        $$("[class='ui-selectcheckboxmenu-item ui-selectcheckboxmenu-list-item ui-corner-all'] label").filterBy(Condition.text("Türkçe"))
-                .get(0).$$("ui-chkbox-box ui-widget ui-corner-all ui-state-default").get(0).click();
-        //cmbEvrakTuruGenelge.get(0).click();
-        cmbEvrakTuru.get(1).click();
+       boolean durum =$$(By.id("havaleKuralYonetimiEditorForm:selectedEvrakDiliListId"))
+               .filterBy(Condition.text("Türkçe")).size()==1;
+       if (durum==true){}
         return this;
     }
 
@@ -345,6 +342,14 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
     }
 
 
+    @Step("Havale kuralını silmek istediğinize emin misiniz? - uyarı verdiği görülür")
+    public EvrakHavaleKurallariYonetimiPage havaleKuraliniSilmekIstediginizeEminMisinizGeldigiGorme(){
+    boolean durum = $$("[id='baseConfirmationDialog:dialog']").size()==1;
+    Assert.assertEquals(durum,true);
+    takeScreenshot();
+        return this;
+    }
+    
     @Step("İslem onayı evet")
     public EvrakHavaleKurallariYonetimiPage islemOnayiEvet() {
         btnIslemOnayiEvet.pressEnter();
@@ -354,6 +359,14 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
     @Step("Ara")
     public EvrakHavaleKurallariYonetimiPage ara() {
         btnAra.click();
+        return this;
+    }
+
+    @Step("Kayıtlı bütün kuralların listelendiği görülür.")
+    public EvrakHavaleKurallariYonetimiPage havaleKurallariListesiGorme(){
+        boolean durum =$$("[id='havaleKuralYonetimiListingForm:havaleKuralDataTable_data'] >tr").size() > 0;
+        Assert.assertEquals(durum,true);
+        takeScreenshot();
         return this;
     }
 

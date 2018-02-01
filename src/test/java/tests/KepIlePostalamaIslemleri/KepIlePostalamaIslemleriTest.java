@@ -97,7 +97,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
     @Test(enabled = true, description = "TS1513: Kurum Kep Hesabı Tanımlama ve Evrak Oluşturma Ekranından kontrolü")
     public void TS1513B() throws InterruptedException {
 
-        String popupKepAdresi = "turksat.kamu1@testkep.pttkep.gov.tr";
+        String popupKepAdresi = "turksat.kamu"+createRandomNumber(10)+"@testkep.pttkep.gov.tr";
         String popupKepHizmetSaglayicisiSec = "Diğer";
         String basariMesaji = "İşlem başarılıdır!";
         String bilgiSecimTipi = "Kurum";
@@ -133,7 +133,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
     @Test(enabled = true, description = "TS1513: Gerçek Kişi Kep Hesabı Tanımlama ve Evrak Oluşturma Ekranından Kontrolü")
     public void TS1513C() {
 
-        String popupKepAdresi = "turksat.kamu1@testkep.pttkep.gov.tr";
+        String popupKepAdresi = "turksat.kamu"+createRandomNumber(10)+"@testkep.pttkep.gov.tr";
         String popupKepHizmetSaglayicisiSec = "PTT KEP Servisi";
         String basariMesaji = "İşlem başarılıdır!";
         String bilgiSecimTipi = "Gerçek Kişi";
