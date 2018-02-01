@@ -202,6 +202,10 @@ public class BaseTest extends BaseLibrary {
             loginPage.birimSec(Condition.text(user.getBirimAdi()));
     }
 
+    @Step("Test Numarası : {testid} {status} ")
+    public void testStatus(String testid, String status)
+    {}
+
     @Step("Login")
     public void login() {
         new LoginPage().login();

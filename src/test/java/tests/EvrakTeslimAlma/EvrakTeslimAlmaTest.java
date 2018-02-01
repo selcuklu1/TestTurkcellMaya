@@ -5,6 +5,7 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import pages.solMenuPages.BirimIadeEdilenlerPage;
 import pages.solMenuPages.KaydedilenGelenEvraklarPage;
 import pages.solMenuPages.TeslimAlinanlarPage;
 import pages.solMenuPages.TeslimAlinmayiBekleyenlerPage;
@@ -26,6 +27,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
     TeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage;
     GelenEvrakKayitPage gelenEvrakKayitPage;
     TeslimAlinanlarPage teslimAlinanlarPage;
+    BirimIadeEdilenlerPage birimIadeEdilenlerPage;
 
     SistemLoglariPage sistemLoglariPage;
 
@@ -37,6 +39,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
         gelenEvrakKayitPage = new GelenEvrakKayitPage();
         kaydedilenGelenEvraklarPage = new KaydedilenGelenEvraklarPage();
         teslimAlinanlarPage = new TeslimAlinanlarPage();
+        birimIadeEdilenlerPage = new BirimIadeEdilenlerPage();
         sistemLoglariPage = new SistemLoglariPage();
     }
 
@@ -327,6 +330,82 @@ public class EvrakTeslimAlmaTest extends BaseTest {
         teslimAlinanlarPage
                 .openPage()
                 .evrakNoIleEvrakSec(konu2)
+                .secilenEvrakEvrakGecmisi()
+                .evrakGecmisi(kisi, islemSureci);
+
+
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS2315: Birime iade edilenler listesinden evrak teslim alma (listeden)")
+    public void TS2315() throws InterruptedException {
+        String testid= "TS-2315";
+        String state =" nolu test başladı:";
+        String basariMesaji = "İşlem başarılıdır!";
+        String konuKodu = "120.05";
+        String konu = "TS-2315-" + getSysDate();
+        String evrakTuru = "Resmi Yazışma";
+        String evrakDili = "Türkçe";
+        String evrakTarihi = getSysDateForKis();
+        String gizlilikDerecesi = "Normal";
+        String kisiKurum = "Kurum";
+        String geldigiKurum = "Esk Kurum 071216 2";
+        String evrakGelisTipi = "Posta";
+        String ivedilik = "Normal";
+
+        String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
+        String details = "BİLİŞİM HİZMETLERİ VE UYDU PAZARLAMA GENEL MÜDÜR Y";
+
+        String kisi = "Zübeyde Tekin";
+        String islemSureci = "Evrak Teslim Alındı ";
+
+
+        testStatus(testid,"PreCondition Evrak Oluşturma");
+        gelenEvrakKayitPage
+                .openPage();
+
+        //Pre-requisites Evrak Oluşturma
+        gelenEvrakKayitPage
+                .konuKoduDoldur(konuKodu)
+                .konuDoldur(konu)
+                .evrakTuruSec(evrakTuru)
+                .evrakDiliSec(evrakDili)
+                .evrakTarihiDoldur(evrakTarihi)
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .kisiKurumSec(kisiKurum)
+                .geldigiKurumDoldurLovText(geldigiKurum)
+                .evrakSayiSagDoldur()
+                .evrakGelisTipiSec(evrakGelisTipi)
+                .ivedilikSec(ivedilik)
+                .dagitimBilgileriBirimDoldurWithDetails(birim, details)
+                .kaydet()
+                .popUps();
+
+
+        gelenEvrakKayitPage
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        testStatus(testid,"PreCondition Evrak Iade Et");
+        teslimAlinmayiBekleyenlerPage
+                .openPage()
+                .evrakNoIleEvrakSec(konu)
+                .btnIadeEt()
+                .btnIadeEtIadeEt()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+
+
+        testStatus(testid,"Test Başladı");
+        birimIadeEdilenlerPage
+                .openPage()
+                .evrakTeslimAlButtonKontrol()
+                .evrakSecNoTeslimAl(konu,true)
+                .evrakNoGelmedigiGorme(konu)
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        teslimAlinanlarPage
+                .openPage()
+                .evrakNoIleEvrakSec(konu)
                 .secilenEvrakEvrakGecmisi()
                 .evrakGecmisi(kisi, islemSureci);
 
