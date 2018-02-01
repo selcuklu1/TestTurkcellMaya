@@ -214,7 +214,7 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("Otomatik havale seç")
+    @Step("Otomatik havale seçilir")
     public GelenEvrakKayitPage otomatikHavaleSec() {
         if (chkOtomatikHavale.size() == 1) {
             chkOtomatikHavale.get(0).click();
@@ -251,10 +251,11 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("Otomatik havale seç \"{otomatikHavale}\" ")
+    @Step("Açılan popup da Otomatik havale seçilir: \"{otomatikHavale}\" ")
     public GelenEvrakKayitPage popupOtomatikHavaleSec(String otomatikHavale) {
         sleep(3000);
         cmbPopupOtomatikHavale.selectOption(otomatikHavale);
+        takeScreenshot();
         $("[class='ui-dialog ui-widget ui-widget-content ui-corner-all ui-shadow havaleKuralSecimiDialog ui-draggable ui-overlay-visible'] [class='ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all']").click();
         return this;
     }

@@ -20,6 +20,7 @@ public class BirimIadeEdilenlerPage extends MainPage {
     SelenideElement teslimAlButton = $("[id$='teslimAlButton']");
     ElementsCollection tableEvraklar = $$("tbody[id='mainInboxForm:inboxDataTable_data'] > tr");
     SelenideElement onizlemeTeslimAl = $("[id='mainPreviewForm:onizlemeRightTab:uiRepeat:4:cmdbutton']");
+    ElementsCollection btnTeslimAl = $$("[id^='mainInboxForm:inboxDataTable:j_idt'] > [class$='document-delivery']");
 
 
     public BirimIadeEdilenlerPage openPage() {
@@ -55,7 +56,7 @@ public class BirimIadeEdilenlerPage extends MainPage {
         return this;
     }
 
-    @Step("Evrak tıklanır ve listelendiği görülür")
+    @Step("Evrak tıklanır ve listelendiği görülür {konu}")
     public BirimIadeEdilenlerPage evrakSec(String konu) {
         tblEvraklar.filterBy(text(konu)).get(0).click();
         return this;
@@ -68,6 +69,18 @@ public class BirimIadeEdilenlerPage extends MainPage {
          $(By.id("teslimAlEvetButton")).click();
          return this;
     }
+
+    @Step("Evrak Sec Checkbox ile ve Teslim Al")
+    public BirimIadeEdilenlerPage evrakSecCheckBox(String konu1, String konu2, boolean secim) {
+        tblEvraklar.filterBy(text(konu1)).get(0).$$("div[class^='ui-chkbox-box']").first().click();
+        tblEvraklar.filterBy(text(konu2)).get(0).$$("div[class^='ui-chkbox-box']").first().click();
+
+        takeScreenshot();
+        btnTeslimAl.get(0).click();
+
+        return this;
+    }
+
 
     @Step("Birime Iade Edilenler sayfasında evrakın listede olmadığının kontrolu")
     public BirimIadeEdilenlerPage evrakNoGelmedigiGorme(String konu) {
