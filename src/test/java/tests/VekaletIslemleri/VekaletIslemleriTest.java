@@ -584,4 +584,55 @@ public class VekaletIslemleriTest extends BaseTest {
                 .openPage()
                 .tabloEvrakNoKontrol(evrakNO11, true);
     }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = false
+            , dependsOnMethods = {"TS2208"}
+            , description = "TS2288 : Vekalet alan kullanıcıya havale gelen evrak iadesi ve kontrolü")
+    public void TS2288() throws InterruptedException {
+        login(usernameVA);
+        mainPage
+                .vekaletVarUyariPopUp()
+                .birimSec(Condition.text("Vekalet"));
+
+        gelenEvraklarPage
+                .openPage()
+                .tabloEvrakNoKontrol(evrakNo1,true)
+                .tabloEvrakNoSec(evrakNo1)
+                .evrakOnizlemeButonKontrolu("İade Et")
+                .evrakOnizlemeButonTikla("İade Et")
+                .evrakOnizlemeIadeEdilecekKullanici()
+                .iadeEtNotInputDoldur("TS2288 Vekalet İade")
+                .iadeEtIadeEt()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        logout();
+        login(usernameVV);
+        mainPage
+                .vekaletVarUyariPopUp();
+
+        gelenEvraklarPage
+                .openPage()
+                .tabloEvrakNoKontrol(evrakNo1,true);
+    }
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS2203 : Vekalet veren kullanıcının havale onayında seçilmesi")
+    public void TS2203() throws InterruptedException{
+        String kullaniciTitle = " [Ağ (Network) Uzman Yardımcısı]";
+        login(mbozdemir);
+        gelenEvrakKayitPage
+                .openPage()
+                .dagitimBilgileriOnaylayacakKisiPanel()
+                .dagitimBilgileriOnaylayacakKisiKontrolü(nameVA,kullaniciTitle)
+                .dagitimBilgileriOnaylayacakKisiKontrolü(nameVV,kullaniciTitle)
+//                .dagitimBilgileriOnaylayanKisiSec(nameVV)
+                .dagitimBilgileriOnaylayanKisiSecWithTitle(nameVV,kullaniciTitle)
+                .popUpKullaniciSecimKontrulu()
+                .popUpKullaniciSecimi(nameVA)
+                .dagitimBilgileriOnaylayacakKisiAlaniKontrolü(nameVA,kullaniciTitle,nameVV);
+
+
+//                .dagitimBilgileriOnaylayanWithDetails()
+
+    }
 }
