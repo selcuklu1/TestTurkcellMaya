@@ -413,7 +413,7 @@ public class OnayAkisYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Onay akışı kullanıcı adı ve tipi kontrol et")
+    @Step("Onay akışı kullanıcı adı ve tipi kontrolu")
     public OnayAkisYonetimiPage onayAkisiKullaniciKontrol(String kullaniciAdi, String kullaniciTipi) {
 
         trOnayAkisiEkleKullanicilar
@@ -468,6 +468,18 @@ public class OnayAkisYonetimiPage extends MainPage {
         } else {
             Allure.addAttachment("Data düzgün, resetleme yapılmadı.", "");
         }
+
+        return this;
+    }
+
+    @Step("Onay Akışı alan kontrolleri")
+    public OnayAkisYonetimiPage onayAkisiAlanKontrolleri() {
+
+        Assert.assertEquals(chkKoordineli.isDisplayed(), true);
+        Allure.addAttachment("Koordineli alan kontrolu başaralı.", "");
+
+        Assert.assertEquals(btnBirim.isDisplayed(), true);
+        Allure.addAttachment("Birim alan kontrolu başaralı.", "");
 
         return this;
     }

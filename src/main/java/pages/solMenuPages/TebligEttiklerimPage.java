@@ -3,7 +3,9 @@ package pages.solMenuPages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
+import io.qameta.allure.testng.AllureTestNg;
 import org.openqa.selenium.By;
 import pages.MainPage;
 import pages.pageData.SolMenuData;
@@ -109,9 +111,44 @@ public class TebligEttiklerimPage extends MainPage {
         return this;
     }
 
+    SelenideElement btnTebligHatirlatVazgec = $(By.id("mainPreviewForm:tebligHatirlatVazgecButton"));
+
+    @Step("Tebliğ hatırlat ekranında Vazgeç butonunun geldiği kontrolü.")
+    public TebligEttiklerimPage tebligHatirlatVazgecButonKontrolu(){
+        btnTebligHatirlatVazgec.shouldBe(Condition.visible);
+        return this;
+    }
+
     @Step("Tebliğ Hatırlat butonuna tıkla.")
     public TebligEttiklerimPage tebligHatirlat() {
         btnTebligHatirlat.click();
+        return this;
+    }
+
+    @Step("Tebliğ Hatırlat ekranında Birim, Ad Soyad, Tebellüğ Tarihi, Okundu bilgilerinin geldiği tablo görülür.")
+    public TebligEttiklerimPage tebligHatirlatTabloKontrol(){
+        $("div[id='mainPreviewForm:tebligDataTable'] table").shouldBe(Condition.visible);
+        return this;
+    }
+
+    ElementsCollection tableTebligHatirlatEvrakBilgileri = $$("div[id='mainPreviewForm:evrakOnizlemeTab'] > table[class='formTable'] > tbody > tr");
+    @Step("Tebliğ Hatırlat ekranında bilgi kontrolü")
+    public TebligEttiklerimPage tebligHatirlatBilgiKontrol(){
+
+        for(int i = 0; i < tableTebligHatirlatEvrakBilgileri.size(); i++){
+
+            String raporAciklama = tableTebligHatirlatEvrakBilgileri
+                    .get(i)
+                    .$x("./td[1]")
+                    .getText() + " : " + tableTebligHatirlatEvrakBilgileri
+                    .get(i)
+                    .$x("./td[3]")
+                    .getText();
+            Allure.addDescription(raporAciklama);
+
+        }
+
+
         return this;
     }
 

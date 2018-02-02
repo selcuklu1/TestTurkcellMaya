@@ -933,6 +933,13 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Güncel kullanıcının default paraflama aksiyonu ile geldiği görülür.")
+        public BilgilerTab onayAkisiParaflamaGeldigiGorme(){
+            boolean durum = $("[id*='akisAdimLov:LovSecilenTable'][id$='selectOneMenu']").getSelectedText().equals("Paraflama");
+            Assert.assertEquals(durum,true);
+            return this;
+        }
+
         @Step("Gereği alanı güncelle")
         public BilgilerTab geregiAlaniGuncelle() {
             btnGeregiLovSecilemUpdate.click();
@@ -1553,6 +1560,14 @@ public class EvrakOlusturPage extends MainPage {
             //clickJs(btnImzala);
             return this;
         }
+        
+        @Step("İmza popupının geldiği görülür.")
+        public EditorTab imzaPopupGeldigiGorme(){
+              boolean durum = $$("[id='evrakImzalaDialog']").size()==1;
+              Assert.assertEquals(durum,true);
+              takeScreenshot();
+            return this;
+        }
 
         @Step("İmzala")
         public EditorTab cevapYazEditörimzala() {
@@ -1563,7 +1578,15 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("İmzala")
         public EditorTab sImzaImzala() {
-            clickJs(btnSimzaImzala);
+            btnSimzaImzala.pressEnter();
+            return this;
+        }
+
+        @Step("Sayılsal imza atılacağı ile ilgili uyarının geldiği görülür.")
+        public EditorTab stepmethod(){
+            boolean durum = $$("[id='imzalaForm:sayisalImzaConfirmForm:sayisalImzaEvetButton']").size()==1;
+            Assert.assertEquals(durum,true);
+            takeScreenshot();
             return this;
         }
 
@@ -1667,14 +1690,21 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Gereği alani doldur")
-        public EditorTab geregiDoldur(String text) {
-            cmbGeregi.selectLov(text);
+        @Step("Gereği {description} doldur: | {geregi}")
+        public EditorTab geregiDoldur(String geregi, String description) {
+            Selenide.sleep(2000);
+            cmbGeregi.selectLov(geregi);
             return this;
         }
 
-        @Step("Bilgi alani doldur")
-        public EditorTab bilgiDoldur(String bilgi) {
+        @Step("Gereği {description} doldur: | {geregi}")
+        public EditorTab geregiVergiNoDoldur(String geregi, String description) {
+            cmbGeregi.type(geregi).getDetailItems().filterBy(text(geregi)).first().click();
+            return this;
+        }
+
+        @Step("Bilgi {description} doldur: | {bilgi}")
+        public EditorTab bilgiDoldur(String bilgi, String description) {
             cmbBilgi.selectLov(bilgi);
             return this;
         }
@@ -1703,11 +1733,13 @@ public class EvrakOlusturPage extends MainPage {
         public EditorTab sayisalImzaEvetPopup() {
             $$(By.id("imzalaForm:sayisalImzaConfirmForm:sayisalImzaEvetButton")).last().click();
             //btnSayısalImzeEvet.click();
+            sleep(7000);
             return this;
         }
 
         @Step("Gereği alanı temizle")
         public EditorTab secilenGeregiSil() {
+            cmbGeregi.shouldBe(visible);
             cmbGeregi.clearLastSelectedItem();
             return this;
         }
@@ -1786,6 +1818,8 @@ public class EvrakOlusturPage extends MainPage {
             Assert.assertEquals(a == 0, true);
             return this;
         }
+
+
     }
 
     public class EkleriTab extends MainPage {
@@ -1998,6 +2032,14 @@ public class EvrakOlusturPage extends MainPage {
         public EkleriTab tablodaIlgiEkleKontrolu() {
             tblEkListesi
                     .shouldHaveSize(1);
+            return this;
+        }
+
+        @Step("Dosya ekle, Fiziksel ek ekle, Sistemde kayıtlı evrak ekle, Web adresini ekle alanlarının geldiği görülür")
+        public EkleriTab ekleriTablariGeldigiGorme(){
+        boolean durum = $$("[id='yeniGidenEvrakForm:evrakEkTabView']").size()==1;
+        Assert.assertEquals(durum,true);
+        takeScreenshot();
             return this;
         }
 

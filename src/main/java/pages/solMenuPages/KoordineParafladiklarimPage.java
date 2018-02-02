@@ -39,6 +39,11 @@ public class KoordineParafladiklarimPage extends MainPage {
     SelenideElement accordionIlgiBilgileri2 = $("[id^='mainPreviewForm:j_idt'] [id$='accpnlI'] [class*='ui-accordion-header']:nth-child(3)");
     SelenideElement accordionIlgiBilgileriOpen2 = $("[id^='mainPreviewForm:j_idt'] [id$='accpnlI'] [class*='ui-state-active']:nth-child(3)");
 
+    SelenideElement accordionIlisikBilgileri1 = $("[id^='mainPreviewForm:j_idt'] [id$='accpnlIlisik'] [class*='ui-accordion-header']:nth-child(1)");
+    SelenideElement accordionIlisikBilgileriOpen1 = $("[id^='mainPreviewForm:j_idt'] [id$='accpnlIlisik'] [class*='ui-state-active']:nth-child(1)");
+    SelenideElement accordionIlisikBilgileri2 = $("[id^='mainPreviewForm:j_idt'] [id$='accpnlIlisik'] [class*='ui-accordion-header']:nth-child(3)");
+    SelenideElement accordionIlisikBilgileriOpen2 = $("[id^='mainPreviewForm:j_idt'] [id$='accpnlIlisik'] [class*='ui-state-active']:nth-child(3)");
+
     ElementsCollection tblOnIzlemeEkler = $$("[id*='ekListesiOnizlemeDataTable'] > tr[role='row']");
     ElementsCollection tblOnIzlemeIlgiBilgileri = $$("[id*='ilgiListesiDataTable_data'] > tr[role='row']");
     ElementsCollection tblOnIzlemeIlisikBilgileri = $$("[id*='ilisikListesiDataTable_data'] > tr[role='row']");
@@ -82,11 +87,12 @@ public class KoordineParafladiklarimPage extends MainPage {
         return this;
     }
 
-    @Step("Evrak Ek/İlgi tablarının geldiği kontrolu")
+    @Step("Evrak Ek/İlgi/İlişikler tablarının geldiği kontrolu")
     public KoordineParafladiklarimPage tabKontrolleri() {
 
         Assert.assertEquals(tabEvrakEkleri.isDisplayed(), true);
         Assert.assertEquals(tabIlgiBilgileri.isDisplayed(), true);
+        Assert.assertEquals(tabIlisikBilgileri.isDisplayed(), true);
 
         return this;
     }
@@ -165,6 +171,33 @@ public class KoordineParafladiklarimPage extends MainPage {
                 .get(0)
                 .$("[id*='ilgiListesiDetayButton']").shouldBe(visible);
 
+        return this;
+    }
+
+    @Step("Evrak Önizlemede ilişik bilgileri detay butonu kontrolu")
+    public KoordineParafladiklarimPage ilisikBilgilerindeDetayButonuKontrol(String ilisikTuru1, String ilisikTuru) {
+
+        tblOnIzlemeIlisikBilgileri
+                .filterBy(Condition.text(ilisikTuru1))
+                .get(0)
+                .$("[id*='ilisikListesiDetayButton']").shouldBe(visible);
+
+        tblOnIzlemeIlisikBilgileri
+                .filterBy(Condition.text(ilisikTuru))
+                .get(0)
+                .$("[id*='ilisikListesiDetayButton']").shouldBe(visible);
+
+        return this;
+    }
+
+    @Step("Evrak önizleme/İlişik Bilgileri Accordion kontrolu")
+    public KoordineParafladiklarimPage ilisikBilgieriAccordionKontrol() {
+
+        Assert.assertEquals(accordionIlisikBilgileriOpen1.isDisplayed(), true);
+        accordionIlisikBilgileri1.click();
+        Selenide.sleep(1000);
+        accordionIlisikBilgileri2.click();
+        Assert.assertEquals(accordionIlisikBilgileriOpen2.isDisplayed(), true);
         return this;
     }
 

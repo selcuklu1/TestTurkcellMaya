@@ -2,7 +2,9 @@ package pages.pageComponents.belgenetElements;
 
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.impl.ElementFinder;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 public interface BelgenetElement extends SelenideElement {
 
@@ -223,6 +225,11 @@ public interface BelgenetElement extends SelenideElement {
      * @see com.codeborne.selenide.commands.FindAllByXpath
      */
     ElementsCollection $$x(String xpath);
+
+    static BelgenetElement $(WebElement parentElement, String cssLocator) {
+        return ElementFinder.wrap(BelgenetElement.class, parentElement, By.cssSelector(cssLocator), 0);
+
+    }
     //endregion
 }
 

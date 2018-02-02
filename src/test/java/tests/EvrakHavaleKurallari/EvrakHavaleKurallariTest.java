@@ -66,7 +66,9 @@ public class EvrakHavaleKurallariTest extends BaseTest {
 
         evrakHavaleKurallariYonetimiPage
                 .ara()
+                .havaleKurallariListesiGorme()
                 .sil(kuralAdi, "Konu")
+                .havaleKuraliniSilmekIstediginizeEminMisinizGeldigiGorme()
                 .islemOnayiEvet()
                 .islemMesaji().basariliOlmali(basariMesaji);
         gelenEvrakKayitPage
@@ -94,6 +96,7 @@ public class EvrakHavaleKurallariTest extends BaseTest {
         String aciklama = "Deneme amaçlıdır";
         String kurum = "BÜYÜK HARFLERLE KURUM";
         login(usernameZTEKIN, passwordZTEKIN);
+
         //TODO PRE Conditon bir kural bulunmalı
         evrakHavaleKurallariYonetimiPage
                 .openPage()
@@ -111,7 +114,7 @@ public class EvrakHavaleKurallariTest extends BaseTest {
                 .yeniKural()
                 .kuralAdiDoldur(kuralAdi)
                 .evrakTuruSecDilekce()
-//                .evrakDiliTurkceSec()
+                .evrakDiliTurkceSec()
                 .konuKoduDoldur(konu)
                 .kuralinTanimliOlduguBirimlerYeni()
                 .birimEkleBirimDoldur(birim)
@@ -132,19 +135,6 @@ public class EvrakHavaleKurallariTest extends BaseTest {
                 .kuralAdiDoldur(kuralAdi2)
                 .kuralEklemeKaydet()
                 .islemMesaji().basariliOlmali(basariMesaji);
-
-        //Test bittikten sonra datamızı siliyoruz. Bir sonraki koşumda hata almamamız için.
-        evrakHavaleKurallariYonetimiPage
-                .ara()
-                .sil(kuralAdi2, "Konu")
-                .islemOnayiEvet()
-                .islemMesaji().basariliOlmali(basariMesaji);
-
-        evrakHavaleKurallariYonetimiPage
-                .sil(kuralAdi, "Konu")
-                .islemOnayiEvet()
-                .islemMesaji().basariliOlmali(basariMesaji);
-
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -152,7 +142,7 @@ public class EvrakHavaleKurallariTest extends BaseTest {
     public void TS2070a() throws InterruptedException {
         String basariMesaji = "İşlem başarılıdır!";
         String uyariMesaji = "Evrak Bilgilerine Tanımlanmış Otomatik Havale Kuralı Bulunamamıştır.";
-        String kuralAdi = "TC-2070_" + createRandomNumber(12);
+        String kuralAdi = "TS-2070_" + createRandomNumber(12);
         String konuKodu = "Diğer";
         String evrakTuru = "Beyanname";
         String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
@@ -178,6 +168,7 @@ public class EvrakHavaleKurallariTest extends BaseTest {
 
         evrakHavaleKurallariYonetimiPage
                 .ara()
+                .havaleKurallariListesiGorme()
                 .kopyala(kuralAdi, "Konu");
 
         String kuralAd = evrakHavaleKurallariYonetimiPage.kuralAdiCek();
@@ -283,7 +274,7 @@ public class EvrakHavaleKurallariTest extends BaseTest {
         evrakHavaleKurallariYonetimiPage
                 .openPage()
                 .yeniKural()
-                .evrakTuruSec(5)
+                .evrakTuruSec(5,"Diğer")
                 .kuralinTanimliOlduguBirimlerYeni()
                 .birimEkleBirimDoldur(birim)
                 .birimEkleEkle()
@@ -297,15 +288,17 @@ public class EvrakHavaleKurallariTest extends BaseTest {
 
         evrakHavaleKurallariYonetimiPage
                 .ara()
+                .havaleKurallariListesiGorme()
                 .pasifYap(kuralAdi, "Konu")
-                .islemOnayiEvet();
+                .islemOnayiEvet()
+                .islemMesaji().basariliOlmali(basariMesaji);
 
         gelenEvrakKayitPage
                 .openPage()
                 .konuKoduDoldur(konuKodu)
                 .evrakTuruSec(evrakTuru)
                 .otomatikHavaleSec()
-                .islemMesaji().beklenenMesaj(uyariMesaji);
+                .islemMesaji().dikkatOlmali(uyariMesaji);
 
         evrakHavaleKurallariYonetimiPage
                 .openPage()
@@ -347,7 +340,7 @@ public class EvrakHavaleKurallariTest extends BaseTest {
         evrakHavaleKurallariYonetimiPage
                 .openPage()
                 .yeniKural()
-                .evrakTuruSec(4)
+                .evrakTuruSec(4,"Tebrik,Davetiye vb.")
                 .kuralinTanimliOlduguBirimlerYeni()
                 .birimEkleBirimDoldur(birim)
                 .birimEkleEkle()
@@ -361,9 +354,11 @@ public class EvrakHavaleKurallariTest extends BaseTest {
 
         evrakHavaleKurallariYonetimiPage
                 .ara()
+                .havaleKurallariListesiGorme()
                 .havaleKurallariListesiGuncelle(kuralAdi, "Konu")
                 .kuralAdiDoldur(kuralAdiGuncelle)
-                .kuralEklemeKaydet();
+                .kuralEklemeKaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
 
         gelenEvrakKayitPage
                 .openPage()
@@ -398,13 +393,13 @@ public class EvrakHavaleKurallariTest extends BaseTest {
         String sadecePasifler = "Sadece Pasifler";
         String sadeceAktifler = "Sadece Aktifler";
 
-        login("cseker", passwordZTEKIN);
+        login("cseker", "123");
 
         //TODO PRE Conditon bir kural bulunmalı
         evrakHavaleKurallariYonetimiPage
                 .openPage()
                 .yeniKural()
-                .evrakTuruSec(0)
+                .evrakTuruSec(0,"Resmi Yazı")
                 .kuralinTanimliOlduguBirimlerYeni()
                 .birimEkleBirimDoldur(birim)
                 .birimEkleEkle()
@@ -421,7 +416,9 @@ public class EvrakHavaleKurallariTest extends BaseTest {
 
         evrakHavaleKurallariYonetimiPage
                 .ara()
-                .havaleKurallariListesiGuncelle(kuralAdi, "")
+                .havaleKurallariListesiGorme()
+                .havaleKurallariListesiGuncelle(kuralAdi, "Kural adı")
+                .kuralGuncellemeEkraniGeldigiGorme()
                 .ilkPasifYap()
                 .islemOnayiEvet();
 
@@ -440,7 +437,9 @@ public class EvrakHavaleKurallariTest extends BaseTest {
         evrakHavaleKurallariYonetimiPage
                 .openPage()
                 .ara()
+                .havaleKurallariListesiGorme()
                 .pasifYapilanKullaniciGuncelle(kuralAdi)
+                .kuralGuncellemeEkraniGeldigiGorme()
                 .kuralinTanimliOlduguBirimlerSec(sadecePasifler)
                 .ilkAktifYap()
                 .islemOnayiEvet()
@@ -457,7 +456,7 @@ public class EvrakHavaleKurallariTest extends BaseTest {
         evrakHavaleKurallariYonetimiPage
                 .openPage()
                 .yeniKural()
-                .evrakTuruSec(4)
+                .evrakTuruSec(4,"Tebrik,Davetiye vb.")
                 .kimeHavaleEdilecekKisiDoldur(kisi, birim2)
                 .kuralinTanimliOlduguBirimlerYeni()
                 .birimEkleAltBirimlerDahil(true)
@@ -468,7 +467,9 @@ public class EvrakHavaleKurallariTest extends BaseTest {
 
         evrakHavaleKurallariYonetimiPage
                 .birimEkleEkle()
+                .secilenBirimVeAltBirimlerinAtandigiGorulur(isim)
                 .yeniBirimSil(isim)
+                .birimIliskisiniSilmekIstemisinizUyariGeldigiGorme()
                 .islemOnayiEvet()
                 .kuralAdiDoldur(kuralAdi2)
                 .kuralEklemeKaydet();
@@ -478,7 +479,6 @@ public class EvrakHavaleKurallariTest extends BaseTest {
                 .konuKoduDoldur(konuKodu)
                 .evrakTuruSec(evrakTuru2)
                 .otomatikHavaleSec2(false)
-                .otomatikHavaleSec2(true)
                 .otomatikHavaleGeldigiGorme(kuralAdi2);
 
         //Test bittikten sonra datamızı siliyoruz. Bir sonraki koşumda hata almamamız için.
