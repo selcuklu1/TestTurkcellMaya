@@ -217,7 +217,7 @@ public class PaylastiklarimPage extends MainPage {
     }
 
     // Paylaş tab fonsiyonlar
-    @Step("Paylaşımı durdur")
+    @Step("Paylaşımı durdur ve onayla")
     public PaylastiklarimPage paylasimiDurdur() {
         btnPaylasimiDurdur.click();
         $$("div[id='mainInboxForm:paylasmaDurdurulsunMuDialog'] button[id='mainInboxForm:paylasmaDurdurEvetButton']").last().click();

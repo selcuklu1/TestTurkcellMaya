@@ -921,7 +921,7 @@ BirimHavaleEdilenlerPage birimHavaleEdilenlerPage;
         String tur = "IMZALAMA";
         String kaldirilacakKlasor = "Diğer";
         String kladirilacakKlasorTitle = "[Klasör] 000";
-        String dagitimBilgisiKisi = "Mehmet Bozdemir";
+        String dagitimBilgisiKisi = "Zübeyde Tekin";
 //        String dagitimBilgisiKisi = "Yasemin Akyol";
         String evrakTuru2 = "Form";
         String formSablonu = "Kopya Optiim form şablonu";
@@ -929,8 +929,8 @@ BirimHavaleEdilenlerPage birimHavaleEdilenlerPage;
         String kullaniciTitle = " [Ağ (Network) Uzman Yardımcısı]";
 
         String mernisNo = createMernisTCKN();
-        login(usernameZTEKIN, passwordZTEKIN);
-//        login(usernameMBOZDEMIR, passwordMBOZDEMIR);
+//        login(usernameZTEKIN, passwordZTEKIN);
+        login(usernameMBOZDEMIR, passwordMBOZDEMIR);
 
         gelenEvrakKayitPage
                 .openPage()
@@ -961,8 +961,8 @@ BirimHavaleEdilenlerPage birimHavaleEdilenlerPage;
                 .islemMesaji().basariliOlmali(basariMesaji);
 
         logout();
-        login(usernameMBOZDEMIR, passwordMBOZDEMIR);
-//        login(usernameZTEKIN, passwordZTEKIN);
+//        login(usernameMBOZDEMIR, passwordMBOZDEMIR);
+        login(usernameZTEKIN, passwordZTEKIN);
 
 
         gelenEvraklarPage
@@ -993,7 +993,7 @@ BirimHavaleEdilenlerPage birimHavaleEdilenlerPage;
 
         //DenemeListesindeki kullnıcı veya kullanıcılarla giriş yapılır işlemdeki aksiyonlar alınır.
 //        logout();
-//        login("username24o", "123");
+        login("username24o", "123");
 
 //        birimHavaleEdilenlerPage
 //                .openPage()
@@ -1008,8 +1008,8 @@ BirimHavaleEdilenlerPage birimHavaleEdilenlerPage;
                 .sImzaSec()
                 .sImzaImzala(true);
 
-//        logout();
-//        login(usernameZTEKIN, passwordZTEKIN);
+        logout();
+        login(usernameZTEKIN, passwordZTEKIN);
 
         gelenEvraklarPage
                 .openPage()
@@ -1046,7 +1046,7 @@ BirimHavaleEdilenlerPage birimHavaleEdilenlerPage;
                 .shouldHaveSize(1);
 
 //        logout();
-//        login("username24o", "123");
+        login("username24o", "123");
 
         postalanacakEvraklarPage
                 .openPage()
