@@ -103,6 +103,7 @@ public class EvrakPaylasmaTest extends BaseTest {
 
         benimlePaylasilanlarPage
                 .openPage()
+                .evrakKontrol(paylasan, tarihBugun, evrakKonu, false)
                 .durdurulmusPaylasimlarSec()
                 .filtrele()
                 .evrakSec(paylasan)
@@ -160,6 +161,7 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .openPage()
                 .evrakSecKonuyaGore(konu)
                 .evrakOnizlemeTabSec(tabPaylaşılanlar)
+                .paylasilanKontrol(paylasilanKullanici, "", "Paylaşımda", "")
                 .paylasTabTikla()
                 .paylasKisiSec(paylasilacakKullanicilar)
                 .paylasimAciklamaYaz(paylasanKisiNotAciklamasi)
@@ -180,9 +182,12 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .openPage()
                 .evrakSecKonuyaGore(konu)
                 .evrakOnizlemeTabSec("Evrak Notları")
+                .evrakNotuSilinmemeliKontrolet(paylasanKisi, tarihBugun, paylasanKisiNotAciklamasi)
                 .evrakNotuKontrol(paylasanKisi, tarihBugun, paylasanKisiNotAciklamasi)
                 .evrakNotuEkle()
-                .evrakNotuGirVeSil(konu)
+                .evrakNotuGirVeKaydet(konu)
+                .evrakNotuSil("Optiim TEST1", tarihBugun, konu)
+                .evrakNotuEkle()
                 .evrakNotuGirVeKaydet(konu);
 
         login("mbozdemir", "123");
@@ -209,7 +214,7 @@ public class EvrakPaylasmaTest extends BaseTest {
         String aksiyon = "Evrak Paylaş - Paylaş";
         String aciklama = "mbozdemir kullanıcısı " + baslangicTarihi;
 
-        //         String tarihBugun = "" + new SimpleDateFormat("dd.MM.yyyy").format(new Date());
+        // String tarihBugun = "" + new SimpleDateFormat("dd.MM.yyyy").format(new Date());
 
         sistemLoglariPage
                 .openPage()

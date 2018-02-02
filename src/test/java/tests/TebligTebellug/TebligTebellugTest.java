@@ -362,11 +362,14 @@ public class TebligTebellugTest extends BaseTest {
                 .openPage()
                 .evrakSec(konu, "", evrakTarihi, randomNumber)
                 .tebligHatirlatTabTikla()
+                .tebligHatirlatBilgiKontrol()
+                .tebligHatirlatTabloKontrol()
                 .okunmamisTebligleriHatirlat(true)
                 .okunmusTebellugEdilmemisTebligleriHatirlat(true)
                 .tebligHatirlatNotuGir(tebligHatirlatNotu)
+                .tebligHatirlatVazgecButonKontrolu()
                 .tebligHatirlat()
-                .islemMesaji().basariliOlmali(basariMesaj);
+                .islemMesaji().basariliOlmali();
 
         login("huser2", "123");
 
