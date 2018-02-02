@@ -94,7 +94,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TS1513: Kurum Kep Hesabı Tanımlama ve Evrak Oluşturma Ekranından kontrolü")
+    @Test(enabled = true, description = "TS1513B: Kurum Kep Hesabı Tanımlama ve Evrak Oluşturma Ekranından kontrolü")
     public void TS1513B() throws InterruptedException {
 
         String popupKepAdresi = "turksat.kamu"+createRandomNumber(10)+"@testkep.pttkep.gov.tr";
@@ -130,7 +130,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TS1513: Gerçek Kişi Kep Hesabı Tanımlama ve Evrak Oluşturma Ekranından Kontrolü")
+    @Test(enabled = true, description = "TS1513C: Gerçek Kişi Kep Hesabı Tanımlama ve Evrak Oluşturma Ekranından Kontrolü")
     public void TS1513C() {
 
         String popupKepAdresi = "turksat.kamu"+createRandomNumber(10)+"@testkep.pttkep.gov.tr";
@@ -167,7 +167,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TS1513: Tüzel Kişi Kep Hesabı Tanımlama ve Evrak Oluşturma Ekranından Kontrolü")
+    @Test(enabled = true, description = "TS1513D: Tüzel Kişi Kep Hesabı Tanımlama ve Evrak Oluşturma Ekranından Kontrolü")
     public void TS1513D() {
 
         String popupKepAdresi = "turksat.kamu1@testkep.pttkep.gov.tr";
