@@ -82,11 +82,12 @@ public class KoordineParafladiklarimPage extends MainPage {
         return this;
     }
 
-    @Step("Evrak Ek/İlgi tablarının geldiği kontrolu")
+    @Step("Evrak Ek/İlgi/İlişikler tablarının geldiği kontrolu")
     public KoordineParafladiklarimPage tabKontrolleri() {
 
         Assert.assertEquals(tabEvrakEkleri.isDisplayed(), true);
         Assert.assertEquals(tabIlgiBilgileri.isDisplayed(), true);
+        Assert.assertEquals(tabIlisikBilgileri.isDisplayed(), true);
 
         return this;
     }

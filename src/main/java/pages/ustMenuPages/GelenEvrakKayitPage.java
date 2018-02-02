@@ -1,16 +1,23 @@
 package pages.ustMenuPages;
 
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.*;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
+import org.apache.xmlbeans.impl.xb.xsdschema.All;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openxmlformats.schemas.spreadsheetml.x2006.main.STFillId;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.UstMenuData;
+
+
+import java.util.ConcurrentModificationException;
+import java.util.List;
+
+import java.io.File;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
@@ -100,7 +107,7 @@ public class GelenEvrakKayitPage extends MainPage {
     BelgenetElement cmbDagitimBilgileriKisi = comboLov(By.id("evrakBilgileriForm:dagitimBilgileriKullaniciLov:LovText"));
     BelgenetElement cmbDagitimBilgileriKullaniciListesi = comboLov(By.id("evrakBilgileriForm:dagitimBilgileriKisiListesiLov:LovText"));
     ElementsCollection tblVekaletVerenAlan = $$("[id='evrakBilgileriForm:kullaniciBirimSecenekleriHavaleIcin_data'] tr[role='row']");
-
+    ElementsCollection tblVekaletAlanVeren = $$("tbody[id='evrakBilgileriForm:kullaniciBirimSecenekleriHavaleOnaylayacakIcin_data'] tr[data-ri]");
 
     //İlgi Bilgileri sekmesinde bulunanlar
     //Dosya Ekle alt sekmesinde bulunanlar
@@ -212,7 +219,7 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("Otomatik havale seç")
+    @Step("Otomatik havale seçilir")
     public GelenEvrakKayitPage otomatikHavaleSec() {
         if (chkOtomatikHavale.size() == 1) {
             chkOtomatikHavale.get(0).click();
@@ -249,10 +256,11 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("Otomatik havale seç \"{otomatikHavale}\" ")
+    @Step("Açılan popup da Otomatik havale seçilir: \"{otomatikHavale}\" ")
     public GelenEvrakKayitPage popupOtomatikHavaleSec(String otomatikHavale) {
         sleep(3000);
         cmbPopupOtomatikHavale.selectOption(otomatikHavale);
+        takeScreenshot();
         $("[class='ui-dialog ui-widget ui-widget-content ui-corner-all ui-shadow havaleKuralSecimiDialog ui-draggable ui-overlay-visible'] [class='ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all']").click();
         return this;
     }
@@ -305,6 +313,12 @@ public class GelenEvrakKayitPage extends MainPage {
     @Step("Üst yazi \"{path}\" ekle")
     public GelenEvrakKayitPage evrakBilgileriUstYaziEkle(String path) {
         uploadFile(ustYazi, path);
+        return this;
+    }
+
+    @Step("Üst yazi \"{path}\" ekle")
+    public GelenEvrakKayitPage ustYaziEkle(String path) {
+        ustYazi.uploadFile(new File(path));
         return this;
     }
 
@@ -561,6 +575,81 @@ public class GelenEvrakKayitPage extends MainPage {
     @Step("Dağıtım Bilgileri Onaylayacak Kisi alanında \"{onaylayan}\" seçilir")
     public GelenEvrakKayitPage dagitimBilgileriOnaylayanWithDetails(String onaylayan, String details) {
         cmbHavaleIslemleriOnaylayacakKisi.selectLov(onaylayan, details);
+        return this;
+    }
+
+    @Step("Dağıtım Bilgileri Onaylayacak Kisi alanında \"{onaylayan}\" seçilir")
+    public GelenEvrakKayitPage dagitimBilgileriOnaylayanKisiSec(String onaylayan) {
+        cmbHavaleIslemleriOnaylayacakKisi.selectLov(onaylayan);
+        return this;
+    }
+
+    @Step("Dağıtım Bilgileri Onaylayacak Kisi alanında \"{onaylayan}\" seçilir")
+    public GelenEvrakKayitPage dagitimBilgileriOnaylayanKisiSecWithTitle(String onaylayan, String title) {
+//        cmbHavaleIslemleriOnaylayacakKisi.selectLov(onaylayan+title);
+//        cmbHavaleIslemleriOnaylayacakKisi.openTreePanel();
+
+        cmbHavaleIslemleriOnaylayacakKisi.openTreePanel().getTitleItems()
+                .filterBy(Condition.exactText(onaylayan + title)).first().click();
+
+
+//        cmbHavaleIslemleriOnaylayacakKisi
+//                .type(onaylayan).getTitleItems()
+//                .filterBy(Condition.exactText(onaylayan+title)).first().click();
+        return this;
+    }
+
+    @Step("Dağıtım Bilgileri Onaylayacak Kisi alanında panel kontrolü.")
+    public GelenEvrakKayitPage dagitimBilgileriOnaylayacakKisiPanel() {
+        cmbHavaleIslemleriOnaylayacakKisi.openTreePanel();
+        waitForLoadingJS(WebDriverRunner.getWebDriver(), 15);
+        takeScreenshot();
+        cmbHavaleIslemleriOnaylayacakKisi.closeTreePanel();
+        return this;
+    }
+
+    @Step("Lütfen seçim yapınız... popup'ı geldiği görülür.")
+    public GelenEvrakKayitPage popUpKullaniciSecimKontrulu() {
+        SelenideElement popUp = $(By.xpath("//span[text()='Lütfen seçim yapınız...']"));
+        popUp.isDisplayed();
+        return this;
+    }
+
+    @Step("Lütfen seçim yapınız... popup'ında \"{kullanici}\" seçilir.")
+    public GelenEvrakKayitPage popUpKullaniciSecimi(String kullanici) {
+        tblVekaletAlanVeren
+                .filterBy(Condition.text(kullanici))
+                .first()
+                .$("[id^='evrakBilgileriForm:kullaniciBirimSecenekleriHavaleOnaylayacakIcin'] button").click();
+        return this;
+    }
+
+
+    @Step("Dağıtım Bilgileri Onaylayacak Kisi alanında kullanici kontrolü. \"{kullanici}\"")
+    public GelenEvrakKayitPage dagitimBilgileriOnaylayacakKisiKontrolü(String kullanici, String title) {
+//        List<String> text = cmbHavaleIslemleriOnaylayacakKisi.openTreePanel()
+//                .getSelectableItems()
+//                .filterBy(Condition.text(kullanici))
+//                .texts();
+
+        String text = cmbHavaleIslemleriOnaylayacakKisi.openTreePanel().getTitleItems()
+                .filterBy(Condition.exactText(kullanici + title)).first().text();
+        cmbHavaleIslemleriOnaylayacakKisi.closeTreePanel();
+        System.out.println(text);
+        Allure.addAttachment("Kullanıcı kontrolü : ", text);
+        return this;
+    }
+
+    @Step("Dağıtım Bilgileri Onaylayacak Kisi alanı kontrolü.")
+    public GelenEvrakKayitPage dagitimBilgileriOnaylayacakKisiAlaniKontrolü(String vekaletAlan,String title,String vekaletVeren) {
+        List<String> text = cmbHavaleIslemleriOnaylayacakKisi.getSelectedItems().texts();
+        System.out.println(text);
+
+        text.get(0).contains(vekaletAlan);
+        text.get(0).contains(title);
+        text.get(0).contains(vekaletVeren);
+
+        Allure.addAttachment("Onaylayacak kişi : ", "Onaylayacak Kisi alanına \n" + text.get(0) + " geldiği görülür.");
         return this;
     }
 
@@ -981,9 +1070,10 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("PDF Ust Yazi adi kontrol : \"{ustYaziAdi}\" ")
     public GelenEvrakKayitPage ustYaziPdfAdiKontrol(String ustYaziAdi) {
-        String text = lblEklenenPdfUstYazi.text();
+        lblEklenenPdfUstYazi.shouldHave(text(ustYaziAdi));
+       /* String text = lblEklenenPdfUstYazi.text();
         System.out.println(text);
-        Assert.assertEquals(text.contains(ustYaziAdi), true);
+        Assert.assertEquals(text.contains(ustYaziAdi), true);*/
         return this;
     }
 

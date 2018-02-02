@@ -121,7 +121,7 @@ public class PaylastiklarimPage extends MainPage {
         return this;
     }
 
-    @Step("Paylaşılanlar kullanıcı görme")
+    @Step("Evrakın paylaşıldığı kullanıcıların listelendiği ve durumlarının paylaşımda olarak geldiği görülür.")
     public PaylastiklarimPage paylasilanlarKullaniciGorme(String kisi) {
 
         $$("[id='mainPreviewForm:evrakOnizlemeTab'] div[class='ui-datatable ui-widget'] table tbody tr")

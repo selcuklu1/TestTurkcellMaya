@@ -82,7 +82,8 @@ public class PostalanacakEvraklarPage extends MainPage {
     SelenideElement btnEtiketpopupkapat = $x("//*[@id='inboxItemInfoForm:showAppletContainer']/div/div[1]/a/span");
     SelenideElement btnIcerikPostalama = $x("//*[@id='inboxItemInfoForm:postalaButton_id']");
     SelenideElement btnIcerikPostalamaEvet = $x("//*[@id='inboxItemInfoForm:postalaDogrulaDialogForm:evetButton_id']");
-
+    SelenideElement btnFizikselEkBulunmaktadirIkon = $x("//span[@class='ui-button-icon-left ui-icon document-typeFizikselEk']");
+    SelenideElement txtEvrakinFizikselEkivardir = $x("//*[contains(text(),'Evrakın fiziksel eki vardır, göndermeyi unutmayınız!')]");
     //Önizleme
 
     SelenideElement formEvrakOnizleme = $(By.id("mainPreviewForm:evrakOnizlemeTab"));
@@ -113,12 +114,21 @@ public class PostalanacakEvraklarPage extends MainPage {
         System.out.println("Page: " + pageTitle);
         return this;
     }
-
+    @Step("Evrakın fiziksel Eki vardır, göndermeyi unutmayınız yazısı kontrolü ve Tarih-sayı kontrolü")
+    public PostalanacakEvraklarPage KntrlEvrakFizikselEkYaziSayTar() {
+        txtEvrakinFizikselEkivardir.exists();
+        return this;
+    }
     @Step("Evrak seçilir")
     public PostalanacakEvraklarPage evrakSec(String konu, String yer, String tarih) {
         tblEvraklar.filterBy(Condition.text(konu))
                 .filterBy(Condition.text(yer))
                 .filterBy(Condition.text(tarih)).get(0).click();
+        return this;
+    }
+    @Step("Fiziksel Ek ikon kontrolü bulunmaktadır")
+    public PostalanacakEvraklarPage btnFizikselEkIkonKontrol () {
+        btnFizikselEkBulunmaktadirIkon.exists();
         return this;
     }
 

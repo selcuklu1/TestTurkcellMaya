@@ -386,7 +386,7 @@ public class BaseLibrary extends ElementsContainer {
     //Dosya ekler
     public void uploadFile(SelenideElement element, String pathToFile) {
         try {
-            element.sendKeys(pathToFile);
+            element.toWebElement().sendKeys(pathToFile);
             log.info("Dosya yüklemeye başlandı.");
         } catch (Exception e) {
             log.info("Dosya yükleme başarısız. : " + e);

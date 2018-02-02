@@ -319,7 +319,7 @@ public class OnayAkisiTest extends BaseTest {
         //Optiim TEST7, Optiim TEST6 ya
         //TODO: Vekalet tarihi db den sql query ile çekilmelidir.
         String onayAkisi = "Sezai Çelik" + getSysDate();
-        String deaultKullanici = "Optiim TEST";
+        String defaultKullanici = "Optiim TEST";
         String vekaletVeren = "Optiim TEST6";
         String vekaletAlan = "Optiim TEST7";
         String vekaletTarihi = "Vekalet: 13.12.2017/04.12.2018";
@@ -328,7 +328,8 @@ public class OnayAkisiTest extends BaseTest {
         onayAkisYonetimiPage
                 .openPage()
                 .yeniOnayAkisiEkle()
-                .onayAkisiKullaniciKontrol(deaultKullanici, "PARAFLAMA")
+                .onayAkisiAlanKontrolleri()
+                .onayAkisiKullaniciKontrol(defaultKullanici, "PARAFLAMA")
                 .onayAkisiIslemleriAdDoldur(onayAkisi)
                 .onayAkisiIslemlerIstenilenDetaildeKullaniciDoldur(vekaletAlan)
                 .kullaniciyaKullaniciTipiSec(vekaletAlan, "IMZALAMA")
@@ -350,7 +351,7 @@ public class OnayAkisiTest extends BaseTest {
                 .bilgilerTabiAc()
                 .onayAkisiDoldur(onayAkisi)
                 .onayAkisiGuncelle()
-                .onayAkisiKullaniciKontrol(deaultKullanici, "PARAFLAMA")
+                .onayAkisiKullaniciKontrol(defaultKullanici, "PARAFLAMA")
                 .onayAkisiKullaniciKontrol(vekaletAlan, "IMZALAMA");
 
         olurYazisiOlusturPage
@@ -358,7 +359,7 @@ public class OnayAkisiTest extends BaseTest {
                 .bilgilerTabiAc()
                 .onayAkisDoldur(onayAkisi)
                 .onayAkisiGuncelle()
-                .onayAkisiKullaniciKontrol(deaultKullanici, "PARAFLAMA")
+                .onayAkisiKullaniciKontrol(defaultKullanici, "PARAFLAMA")
                 .onayAkisiKullaniciKontrol(vekaletAlan, "IMZALAMA");
 
         kararYazisiOlusturPage
@@ -366,7 +367,7 @@ public class OnayAkisiTest extends BaseTest {
                 .bilgilerTabiAc()
                 .onayAkisiDoldur(onayAkisi)
                 .onayAkisiGuncelle()
-                .onayAkisiKullaniciKontrol(deaultKullanici)
+                .onayAkisiKullaniciKontrol(defaultKullanici)
                 .onayAkisiKullaniciKontrol(vekaletAlan);
     }
 
@@ -378,7 +379,7 @@ public class OnayAkisiTest extends BaseTest {
         //Optiim TEST7, Optiim TEST6 ya
         //TODO: Vekalet tarihi db den sql query ile çekilmelidir.
         String onayAkisi = "Sezai Çelik" + getSysDate();
-        String deaultKullanici = "Optiim TEST";
+        String defaultKullanici = "Optiim TEST";
         String vekaletVeren = "Optiim TEST6";
         String vekaletAlan = "Optiim TEST7";
         String vekaletTarihi = "Vekalet: 13.12.2017/04.12.2018";
@@ -387,7 +388,8 @@ public class OnayAkisiTest extends BaseTest {
         onayAkisYonetimiPage
                 .openPage()
                 .yeniOnayAkisiEkle()
-                .onayAkisiKullaniciKontrol(deaultKullanici, "PARAFLAMA")
+                .onayAkisiAlanKontrolleri()
+                .onayAkisiKullaniciKontrol(defaultKullanici, "PARAFLAMA")
                 .onayAkisiIslemleriAdDoldur(onayAkisi)
                 .onayAkisiIslemlerKullaniciDoldur(vekaletVeren)
                 .kullaniciyaKullaniciTipiSec(vekaletAlan, "IMZALAMA")
@@ -410,7 +412,7 @@ public class OnayAkisiTest extends BaseTest {
                 .bilgilerTabiAc()
                 .onayAkisiDoldur(onayAkisi)
                 .onayAkisiGuncelle()
-                .onayAkisiKullaniciKontrol(deaultKullanici, "PARAFLAMA")
+                .onayAkisiKullaniciKontrol(defaultKullanici, "PARAFLAMA")
                 .onayAkisiKullaniciKontrol(vekaletAlan, "IMZALAMA");
 
         olurYazisiOlusturPage
@@ -418,7 +420,7 @@ public class OnayAkisiTest extends BaseTest {
                 .bilgilerTabiAc()
                 .onayAkisDoldur(onayAkisi)
                 .onayAkisiGuncelle()
-                .onayAkisiKullaniciKontrol(deaultKullanici, "PARAFLAMA")
+                .onayAkisiKullaniciKontrol(defaultKullanici, "PARAFLAMA")
                 .onayAkisiKullaniciKontrol(vekaletAlan, "IMZALAMA");
 
         kararYazisiOlusturPage
@@ -426,7 +428,7 @@ public class OnayAkisiTest extends BaseTest {
                 .bilgilerTabiAc()
                 .onayAkisiDoldur(onayAkisi)
                 .onayAkisiGuncelle()
-                .onayAkisiKullaniciKontrol(deaultKullanici)
+                .onayAkisiKullaniciKontrol(defaultKullanici)
                 .onayAkisiKullaniciKontrol(vekaletAlan);
     }
 
@@ -692,7 +694,8 @@ public class OnayAkisiTest extends BaseTest {
                 .onayAkisiKullaniciKontrol(defaultGelenKullanici, "PARAFLAMA")
                 .onayAkisiKullaniciKontrol(kullanici2, "KONTROL")
                 .onayAkisiKullaniciKoordineKontrol(kullanici4, "Koordine")
-                .onayAkisiKullaniciKontrol(kullanici3, "IMZALAMA");
+                .onayAkisiKullaniciKontrol(kullanici3, "IMZALAMA")
+                .onayAkisiKullaniciKontrol(kullanici5, "IMZALAMA");
 
         olurYazisiOlusturPage
                 .openPage()
@@ -702,7 +705,8 @@ public class OnayAkisiTest extends BaseTest {
                 .onayAkisiKullaniciKontrol(defaultGelenKullanici, "PARAFLAMA")
                 .onayAkisiKullaniciKontrol(kullanici2, "KONTROL")
                 .onayAkisiKullaniciKoordineKontrol(kullanici4, "Koordine")
-                .onayAkisiKullaniciKontrol(kullanici3, "IMZALAMA");
+                .onayAkisiKullaniciKontrol(kullanici3, "IMZALAMA")
+                .onayAkisiKullaniciKontrol(kullanici5, "IMZALAMA");
 
         kararYazisiOlusturPage
                 .openPage()
@@ -712,7 +716,8 @@ public class OnayAkisiTest extends BaseTest {
                 .onayAkisiKullaniciKontrol(defaultGelenKullanici)
                 .onayAkisiKullaniciKontrol(kullanici2)
                 .onayAkisiKullaniciKontrol(kullanici4)
-                .onayAkisiKullaniciKontrol(kullanici3);
+                .onayAkisiKullaniciKontrol(kullanici3)
+                .onayAkisiKullaniciKontrol(kullanici5);
 
     }
 

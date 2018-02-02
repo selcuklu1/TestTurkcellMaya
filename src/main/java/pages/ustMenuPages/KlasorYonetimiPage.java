@@ -74,7 +74,7 @@ public class KlasorYonetimiPage extends MainPage {
     }
 
     @Step("")
-    public KlasorYonetimiPage stepmethod() {
+    public KlasorYonetimiPage kullaniciAdiVeTCKimlikNoLoginOlunanKullaniciGeldigiGorme() {
 
         return this;
     }

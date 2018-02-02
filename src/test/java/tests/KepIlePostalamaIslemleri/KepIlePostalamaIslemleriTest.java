@@ -66,6 +66,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
         mainPage
                 .kepBaglantisi()
                 .kepAdresBaglantisiBaglan1()
+                .kullaniciAdiVeTCKimlikNoLoginOlunanKullaniciGeldigiGorme()
                 .kullaniciAdiTcKimlikNoKontol()
                 .parolaDoldur(parola)
                 .sifreDoldur(sifre)
@@ -77,6 +78,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
         mainPage
                 .kepBaglantisi()
                 .kepAdresBaglantisiBaglan1()
+                .kullaniciAdiVeTCKimlikNoLoginOlunanKullaniciGeldigiGorme()
                 .kullaniciAdiTcKimlikNoKontol()
                 .parolaDoldur(parola)
                 .sifreDoldur(sifre)
@@ -95,7 +97,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
     @Test(enabled = true, description = "TS1513: Kurum Kep Hesabı Tanımlama ve Evrak Oluşturma Ekranından kontrolü")
     public void TS1513B() throws InterruptedException {
 
-        String popupKepAdresi = "turksat.kamu1@testkep.pttkep.gov.tr";
+        String popupKepAdresi = "turksat.kamu"+createRandomNumber(10)+"@testkep.pttkep.gov.tr";
         String popupKepHizmetSaglayicisiSec = "Diğer";
         String basariMesaji = "İşlem başarılıdır!";
         String bilgiSecimTipi = "Kurum";
@@ -131,7 +133,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
     @Test(enabled = true, description = "TS1513: Gerçek Kişi Kep Hesabı Tanımlama ve Evrak Oluşturma Ekranından Kontrolü")
     public void TS1513C() {
 
-        String popupKepAdresi = "turksat.kamu1@testkep.pttkep.gov.tr";
+        String popupKepAdresi = "turksat.kamu"+createRandomNumber(10)+"@testkep.pttkep.gov.tr";
         String popupKepHizmetSaglayicisiSec = "PTT KEP Servisi";
         String basariMesaji = "İşlem başarılıdır!";
         String bilgiSecimTipi = "Gerçek Kişi";
@@ -289,6 +291,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
 
         evrakOlusturPage
                 .ekleriTabAc()
+                .ekleriTablariGeldigiGorme()
                 .dosyaEkle(pathFile, "Dosya yolu")
                 .ekleriEkMetniDoldur(editor)
                 .ekleriEkle();
@@ -297,19 +300,27 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
                 .editorTabAc()
                 .editorIcerikDoldur(editor)
                 .imzala()
+                .imzaPopupGeldigiGorme()
                 .sImzasec()
                 .sImzaImzala()
-                .sayisalImzaEvetPopup();
+                .sayisalImzaEvetPopup()
+                .islemMesaji().basariliOlmali(basariMesaji);
 
         postalanacakEvraklarPage
                 .openPage()
                 .evrakSec(konuKoduRandom, geregiGercekKisi, tarih)
-                .evrakPostala();
+                .evrakPostala()
+                .postalanacakYerlerAlanGoreSecimGeldigiGorme("Tüzel Kişi",geregiTuzelKisi,"KEP")
+                .postalanacakYerlerAlanGoreSecimGeldigiGorme("Gercek Kişi",geregiGercekKisi,"APS")
+                .postalanacakYerlerAlanGoreSecimGeldigiGorme("Kurum",geregiKurum,"KEP");
 
         kepIlePostalanacaklarPage
                 .openPage()
                 .evrakSec(konuKoduRandom)
                 .evrakPostala()
+                .postalanacakYerlerAlanGoreSecimGeldigiGorme("Tüzel Kişi",geregiTuzelKisi,"KEP")
+                .postalanacakYerlerAlanGoreSecimGeldigiGorme("Kurum",geregiKurum,"KEP")
+                .postalanacakYerlerAlanGoreSecimListelenmedigiGorme("Gercek Kişi",geregiGercekKisi,"APS")
                 .evrakPostalaPostala()
                 .belgeElektronikImzaliDegilUyariGeldigiGorme()
                 .belgeElektronikImzaliDegilUyariEvet()

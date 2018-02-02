@@ -5,6 +5,7 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import pages.solMenuPages.BirimIadeEdilenlerPage;
 import pages.solMenuPages.KaydedilenGelenEvraklarPage;
 import pages.solMenuPages.TeslimAlinanlarPage;
 import pages.solMenuPages.TeslimAlinmayiBekleyenlerPage;
@@ -26,6 +27,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
     TeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage;
     GelenEvrakKayitPage gelenEvrakKayitPage;
     TeslimAlinanlarPage teslimAlinanlarPage;
+    BirimIadeEdilenlerPage birimIadeEdilenlerPage;
 
     SistemLoglariPage sistemLoglariPage;
 
@@ -37,6 +39,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
         gelenEvrakKayitPage = new GelenEvrakKayitPage();
         kaydedilenGelenEvraklarPage = new KaydedilenGelenEvraklarPage();
         teslimAlinanlarPage = new TeslimAlinanlarPage();
+        birimIadeEdilenlerPage = new BirimIadeEdilenlerPage();
         sistemLoglariPage = new SistemLoglariPage();
     }
 
@@ -333,5 +336,266 @@ public class EvrakTeslimAlmaTest extends BaseTest {
 
     }
 
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS2315: Birime iade edilenler listesinden evrak teslim alma (listeden)")
+    public void TS2315() throws InterruptedException {
+        String testid= "TS-2315";
+        String state =" nolu test başladı:";
+        String basariMesaji = "İşlem başarılıdır!";
+        String konuKodu = "120.05";
+        String konu = "TS-2315-" + getSysDate();
+        String evrakTuru = "Resmi Yazışma";
+        String evrakDili = "Türkçe";
+        String evrakTarihi = getSysDateForKis();
+        String gizlilikDerecesi = "Normal";
+        String kisiKurum = "Kurum";
+        String geldigiKurum = "Esk Kurum 071216 2";
+        String evrakGelisTipi = "Posta";
+        String ivedilik = "Normal";
+
+        String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
+        String details = "BİLİŞİM HİZMETLERİ VE UYDU PAZARLAMA GENEL MÜDÜR Y";
+
+        String kisi = "Zübeyde Tekin";
+        String islemSureci = "Evrak Teslim Alındı ";
+
+
+        testStatus(testid,"PreCondition Evrak Oluşturma");
+        gelenEvrakKayitPage
+                .openPage();
+
+        //Pre-requisites Evrak Oluşturma
+        gelenEvrakKayitPage
+                .konuKoduDoldur(konuKodu)
+                .konuDoldur(konu)
+                .evrakTuruSec(evrakTuru)
+                .evrakDiliSec(evrakDili)
+                .evrakTarihiDoldur(evrakTarihi)
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .kisiKurumSec(kisiKurum)
+                .geldigiKurumDoldurLovText(geldigiKurum)
+                .evrakSayiSagDoldur()
+                .evrakGelisTipiSec(evrakGelisTipi)
+                .ivedilikSec(ivedilik)
+                .dagitimBilgileriBirimDoldurWithDetails(birim, details)
+                .kaydet()
+                .popUps();
+
+
+        gelenEvrakKayitPage
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        testStatus(testid,"PreCondition Evrak Iade Et");
+        teslimAlinmayiBekleyenlerPage
+                .openPage()
+                .evrakNoIleEvrakSec(konu)
+                .btnIadeEt()
+                .btnIadeEtIadeEt()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+
+
+        testStatus(testid,"Test Başladı");
+        birimIadeEdilenlerPage
+                .openPage()
+                .evrakTeslimAlButtonKontrol()
+                .evrakSecNoTeslimAl(konu,true)
+                .evrakNoGelmedigiGorme(konu)
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        teslimAlinanlarPage
+                .openPage()
+                .evrakNoIleEvrakSec(konu)
+                .secilenEvrakEvrakGecmisi()
+                .evrakGecmisi(kisi, islemSureci);
+
+
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS2317: Birime iade edilenler listesinden evrak teslim alma (önizlemeden)")
+    public void TS2317() throws InterruptedException {
+        String testid= "TS-2317";
+        String state =" nolu test başladı:";
+        String basariMesaji = "İşlem başarılıdır!";
+        String konuKodu = "120.05";
+        String konu = "TS-2317-" + getSysDate();
+        String evrakTuru = "Resmi Yazışma";
+        String evrakDili = "Türkçe";
+        String evrakTarihi = getSysDateForKis();
+        String gizlilikDerecesi = "Normal";
+        String kisiKurum = "Kurum";
+        String geldigiKurum = "Esk Kurum 071216 2";
+        String evrakGelisTipi = "Posta";
+        String ivedilik = "Normal";
+
+        String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
+        String details = "BİLİŞİM HİZMETLERİ VE UYDU PAZARLAMA GENEL MÜDÜR Y";
+
+        String kisi = "Zübeyde Tekin";
+        String islemSureci = "Evrak Teslim Alındı ";
+
+
+        testStatus(testid,"PreCondition Evrak Oluşturma");
+        gelenEvrakKayitPage
+                .openPage();
+
+        gelenEvrakKayitPage
+                .konuKoduDoldur(konuKodu)
+                .konuDoldur(konu)
+                .evrakTuruSec(evrakTuru)
+                .evrakDiliSec(evrakDili)
+                .evrakTarihiDoldur(evrakTarihi)
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .kisiKurumSec(kisiKurum)
+                .geldigiKurumDoldurLovText(geldigiKurum)
+                .evrakSayiSagDoldur()
+                .evrakGelisTipiSec(evrakGelisTipi)
+                .ivedilikSec(ivedilik)
+                .dagitimBilgileriBirimDoldurWithDetails(birim, details)
+                .kaydet()
+                .popUps();
+
+
+        gelenEvrakKayitPage
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        testStatus(testid,"PreCondition Evrak Iade Et");
+        teslimAlinmayiBekleyenlerPage
+                .openPage()
+                .evrakNoIleEvrakSec(konu)
+                .btnIadeEt()
+                .btnIadeEtIadeEt()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+
+
+        testStatus(testid,"Test Başladı");
+        birimIadeEdilenlerPage
+                .openPage()
+                .evrakSec(konu)
+                .evrakOnizlemeTeslimAl()
+                .evrakNoGelmedigiGorme(konu)
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        teslimAlinanlarPage
+                .openPage()
+                .evrakNoIleEvrakSec(konu)
+                .secilenEvrakEvrakGecmisi()
+                .evrakGecmisi(kisi, islemSureci);
+
+
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS2320: Birime iade edilenler listesinden evrak teslim alma (toplu)")
+    public void TS2320() throws InterruptedException {
+        String testid= "TS-2320";
+        String state =" nolu test başladı:";
+        String basariMesaji = "İşlem başarılıdır!";
+        String konuKodu = "120.05";
+        String konu1 = "TS-2320-" + getSysDate();
+        String evrakTuru = "Resmi Yazışma";
+        String evrakDili = "Türkçe";
+        String evrakTarihi = getSysDateForKis();
+        String gizlilikDerecesi = "Normal";
+        String kisiKurum = "Kurum";
+        String geldigiKurum = "Esk Kurum 071216 2";
+        String evrakGelisTipi = "Posta";
+        String ivedilik = "Normal";
+
+        String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
+        String details = "BİLİŞİM HİZMETLERİ VE UYDU PAZARLAMA GENEL MÜDÜR Y";
+
+        String kisi = "Zübeyde Tekin";
+        String islemSureci = "Evrak Teslim Alındı ";
+
+
+        testStatus(testid,"PreCondition Evrak Oluşturma");
+        gelenEvrakKayitPage
+                .openPage();
+
+        gelenEvrakKayitPage
+                .konuKoduDoldur(konuKodu)
+                .konuDoldur(konu1)
+                .evrakTuruSec(evrakTuru)
+                .evrakDiliSec(evrakDili)
+                .evrakTarihiDoldur(evrakTarihi)
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .kisiKurumSec(kisiKurum)
+                .geldigiKurumDoldurLovText(geldigiKurum)
+                .evrakSayiSagDoldur()
+                .evrakGelisTipiSec(evrakGelisTipi)
+                .ivedilikSec(ivedilik)
+                .dagitimBilgileriBirimDoldurWithDetails(birim, details)
+                .kaydet()
+                .popUpsv2();
+
+
+        gelenEvrakKayitPage
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        String konu2 = "TS-2320-" + getSysDate();
+
+        testStatus(testid,"PreCondition 2. Evrak Oluşturma");
+        gelenEvrakKayitPage
+                .openPage();
+
+        //Pre-requisites Gelen Evrak Oluşturma 2. dosya
+        gelenEvrakKayitPage
+                .konuKoduDoldur(konuKodu)
+                .konuDoldur(konu2)
+                .evrakTuruSec(evrakTuru)
+                .evrakDiliSec(evrakDili)
+                .evrakTarihiDoldur(evrakTarihi)
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .kisiKurumSec(kisiKurum)
+                .geldigiKurumDoldurLovText(geldigiKurum)
+                .evrakSayiSagDoldur()
+                .evrakGelisTipiSec(evrakGelisTipi)
+                .ivedilikSec(ivedilik)
+                .dagitimBilgileriBirimDoldurWithDetails(birim, details)
+                .kaydet()
+                .popUpsv2();
+
+
+        gelenEvrakKayitPage
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+
+        testStatus(testid,"PreCondition 1. Evrak Iade Et");
+        teslimAlinmayiBekleyenlerPage
+                .openPage()
+                .evrakNoIleEvrakSec(konu1)
+                .btnIadeEt()
+                .btnIadeEtIadeEt()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        testStatus(testid,"PreCondition 2. Evrak Iade Et");
+        teslimAlinmayiBekleyenlerPage
+                .openPage()
+                .evrakNoIleEvrakSec(konu2)
+                .btnIadeEt()
+                .btnIadeEtIadeEt()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+
+        testStatus(testid,"Test Başladı");
+        birimIadeEdilenlerPage
+                .openPage()
+                .evrakSec(konu1)
+                .evrakSec(konu2)
+                .evrakSecCheckBox(konu1,konu2,true)
+                .evrakNoGelmedigiGorme(konu1)
+                .evrakNoGelmedigiGorme(konu2)
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        teslimAlinanlarPage
+                .openPage()
+                .evrakNoIleEvrakSec(konu1)
+                .evrakNoIleEvrakSec(konu2)
+                .secilenEvrakEvrakGecmisi()
+                .evrakGecmisi(kisi, islemSureci);
+    }
 
 }

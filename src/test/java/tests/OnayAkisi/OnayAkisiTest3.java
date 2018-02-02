@@ -102,6 +102,7 @@ public class OnayAkisiTest3 extends BaseTest {
     @Test(enabled = true, description = "TS2113b: Onay Akıışı Yönetimi - Güncelleme")
     public void TS2113b() {
 
+        String onayAkisAdi = "Optiim";
         String onayAkisi = "TS2113b OnayAkışı";
 
         String kullaniciParafci = "Optiim TEST"; //PARAFLAMA
@@ -114,6 +115,8 @@ public class OnayAkisiTest3 extends BaseTest {
         onayAkisYonetimiPage
                 .openPage()
                 .filtreAc()
+                .birimKontrol(onayAkisAdi)
+                .durumKontrol("Sadece Aktifler")
                 .filtredeAdDoldur(onayAkisi)
                 .ara()
                 .guncelle()
@@ -137,8 +140,7 @@ public class OnayAkisiTest3 extends BaseTest {
     @Test(enabled = true, description = "TS2113c: Onay Akışı Yönetimi - Güncelleme")
     public void TS2113c() {
 
-        String ad = "Daniel Guiza";
-        String kullanici = "Mehmet BOZDEMİR";
+        String onayAkisAdi = "Optiim";
 
         String onayAkisi = "TS2113c OnayAkışı";
 
@@ -154,8 +156,11 @@ public class OnayAkisiTest3 extends BaseTest {
         onayAkisYonetimiPage
                 .openPage()
                 .filtreAc()
+                .birimKontrol(onayAkisAdi)
+                .durumKontrol("Sadece Aktifler")
                 .filtredeAdDoldur(onayAkisi)
                 .ara()
+                .kayitGoruntulenmeKontrolu(onayAkisi)
                 .guncelle()
                 .kontrolcuYoksaEkle(kullaniciKontrolcu)
                 .kontrolcuSil()
