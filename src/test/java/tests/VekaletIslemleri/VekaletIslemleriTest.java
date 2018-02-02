@@ -656,8 +656,8 @@ public class VekaletIslemleriTest extends BaseTest {
 
     }
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true
-//            ,dependsOnMethods = {"TS2208"}
+    @Test(enabled = false
+            ,dependsOnMethods = {"TS2208"}
             ,description = "TS2204 : Vekalet Alan Kullanıcın Evrak Kapatma Onayında Seçilmesi")
     public void TS2204() throws InterruptedException{
         String kullaniciTitle = " [Ağ (Network) Uzman Yardımcısı]";
