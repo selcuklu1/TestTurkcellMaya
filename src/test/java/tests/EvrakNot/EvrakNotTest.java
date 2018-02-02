@@ -276,8 +276,7 @@ public class EvrakNotTest extends BaseTest {
     }
 
     @Description("TS2160: Not İzleme - Evrak Notunun Paraf bekleneler, Parafladıklarım, İmza Bekleyenler ve İmzaladıklarım ekranlarında izlenmesi")
-    @Test(dependsOnMethods = {"TS2155"}, enabled = true)
-    //description = "TS2160: Not İzleme - Evrak Notunun Paraf bekleneler, Parafladıklarım, İmza Bekleyenler ve İmzaladıklarım ekranlarında izlenmesi"
+    @Test(dependsOnMethods = {"TS2155"}, enabled = true, description = "TS2160: Not İzleme - Evrak Notunun Paraf bekleneler, Parafladıklarım, İmza Bekleyenler ve İmzaladıklarım ekranlarında izlenmesi")
     public void TS2160() {
         /*User user1 = optiim;
         User user2 = ztekin;*/
@@ -425,8 +424,7 @@ public class EvrakNotTest extends BaseTest {
     }
 
     @Description("TS2162: Not İzleme - Evrak Notunun Postalanacak Evraklar ve Postananlar ekranlarında izlenmesi")
-    @Test(enabled = true, dependsOnMethods = {"TS2160"})
-    //description = "TS2162: Not İzleme - Evrak Notunun Postalanacak Evraklar ve Postananlar ekranlarında izlenmesi"
+    @Test(enabled = true, dependsOnMethods = {"TS2160"}, description = "TS2162: Not İzleme - Evrak Notunun Postalanacak Evraklar ve Postananlar ekranlarında izlenmesi")
     public void TS2162() throws Exception {
         /*User user1 = optiim;
         User user2 = ztekin;*/

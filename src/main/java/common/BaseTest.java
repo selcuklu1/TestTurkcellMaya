@@ -285,7 +285,7 @@ public class BaseTest extends BaseLibrary {
             throw new RuntimeException("Invalid 'remote' parameter: " + Configuration.remote, e);
         }
 
-        System.out.println("Browser: " + getCapabilities().getBrowserName());
+        //System.out.println("Browser: " + getCapabilities().getBrowserName());
     }
 
     /**
