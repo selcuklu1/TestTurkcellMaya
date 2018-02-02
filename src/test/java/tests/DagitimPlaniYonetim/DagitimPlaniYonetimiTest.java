@@ -20,7 +20,7 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
 
         DagitimPlaniYonetimiPage page = new DagitimPlaniYonetimiPage().openPage();
         page.yeni();
-        
+
 
     }
 }

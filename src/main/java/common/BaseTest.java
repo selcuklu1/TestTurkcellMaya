@@ -47,6 +47,8 @@ public class BaseTest extends BaseLibrary {
     static final int timeout = 30;
     static final int loadingTimeout = 30;
 
+    public Locale turkishLocal;
+
     @BeforeClass(alwaysRun = true)
     public void driverSetUp() {
 
@@ -56,7 +58,7 @@ public class BaseTest extends BaseLibrary {
         System.out.println("java.runtime.version" + System.getProperty("java.runtime.version"));
         System.out.println("locale default: " + Locale.getDefault());
 
-        Locale turkishLocal = new Locale("tr", "TR");
+        turkishLocal = new Locale("tr", "TR");
         if (!Locale.getDefault().equals(turkishLocal)) Locale.setDefault(turkishLocal);
         System.out.println("locale: " + Locale.getDefault());
 
