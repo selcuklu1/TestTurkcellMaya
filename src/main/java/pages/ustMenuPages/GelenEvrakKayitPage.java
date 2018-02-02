@@ -241,12 +241,11 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("Otomatik havale seç")
+    @Step("Otomatik havale seçilir")
     public GelenEvrakKayitPage otomatikHavaleSec2(boolean durum) {
-        $("[id='evrakBilgileriForm:havaleDagitimLovPanel'] [class='ui-chkbox ui-widget'] input[type=checkbox]")
-                .setSelected(durum);
+        clickJs($("[id='evrakBilgileriForm:havaleDagitimLovPanel'] [class^='ui-chkbox-box ui-widget ui-corner-all ui-state-default']"));
         sleep(3000);
-        $("[id='evrakBilgileriForm:havaleDagitimLovPanel'] [class='ui-chkbox ui-widget'] div[class*='ui-chkbox-box ui-widget ui-corner-all ui-state-default']").click();
+        clickJs($("[id='evrakBilgileriForm:havaleDagitimLovPanel'] [class^='ui-chkbox-box ui-widget ui-corner-all ui-state-default']"));
         return this;
     }
 

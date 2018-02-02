@@ -1,12 +1,14 @@
 package pages.pageComponents;
 
-import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.*;
 import common.BaseLibrary;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NotFoundException;
+import pages.pageComponents.belgenetElements.Belgenet;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
+import static com.codeborne.selenide.CollectionCondition.*;
 import static com.codeborne.selenide.Condition.*;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
@@ -17,7 +19,7 @@ import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
  */
 public class SearchFiltreleme extends BaseLibrary {
 
-
+    //Selenide.$("#formSablonYonetimiListingForm").$$("label.columnLabel,input").indexOf(Selenide.$$("label.columnLabel").filterBy(exactText("Form Adı")).first())
     private SelenideElement parentElement;
 
     public SearchFiltreleme(SelenideElement parentElement) {
@@ -25,9 +27,9 @@ public class SearchFiltreleme extends BaseLibrary {
     }
 
     @Step("\"Sorgulama ve Filtreleme\"yi genişlet")
-    public SearchFiltreleme sorgulamaVeFiltrelemeyiGenislet() {
-        SelenideElement element = parentElement.$("h3");
-        if (element.attr("aria-expanded").equalsIgnoreCase("false"))
+    public SearchFiltreleme sorgulamaVeFiltrelemeyiGenislet(boolean... genislet) {
+        SelenideElement element = parentElement.$("h3[role=tab]");
+        if (!element.attr("aria-expanded").equalsIgnoreCase(String.valueOf(genislet.length>0?genislet[0]:"true")))
             element.find("a").click();
         return this;
     }

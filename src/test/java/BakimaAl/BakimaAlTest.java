@@ -23,29 +23,19 @@ public class BakimaAlTest extends BaseTest {
     @Test(enabled = true, description = "2108 : Bakım Moduna Alma ve alan kontrolleri")
     public void TC02108() {
 
-        String bilgilendirmeMetni500Karakter = "";
-        String bilgilendirmeMetni600Karakter = "";
+
         String iptalEdilecekBilgilendirmeMetni = "İptal edilecek bilgilendirme metni.";
-
         String pasifKullanici = "pasifkullanici";
-
-
-        for (int i = 0; i < 500; i++) {
-            bilgilendirmeMetni500Karakter += "x";
-        }
-        for (int i = 0; i < 600; i++) {
-            bilgilendirmeMetni600Karakter += "x";
-        }
         String girilecekBilgilendirmeMetni = "Bu bir deneme bilgilendirme metnidir.";
 
 
         bakimaAlPage
                 .openPage()
-                .bilgilendirmeMetniGir(bilgilendirmeMetni500Karakter)
+                .bilgilendirmeMetniGir(500)
                 .bilgilendirmeMetni500KarakterKontrolu()
                 .bilgilendirmeMetniKaydet()
-                .bilgilendirmeMetniGir(bilgilendirmeMetni600Karakter)
-                .bilgilendirmeMetni500KarakterKontrolu()
+                .bilgilendirmeMetniGir(600)
+                .bilgilendirmeMetni500denfazlaKarakterKontrolu()
                 .bilgilendirmeMetniGir(girilecekBilgilendirmeMetni)
                 .bilgilendirmeMetniKaydet()
                 .bilgilendirmeMetniKontrol(girilecekBilgilendirmeMetni)
@@ -56,7 +46,6 @@ public class BakimaAlTest extends BaseTest {
                 .kullaniciKontrol(pasifKullanici, false)
                 .kullaniciEkle("Optiim TEST")
                 .kullaniciEkle("Mehmet BOZDEMİR")
-                .kullaniciEkle("Huser TUMER")
                 .bakimaAl()
                 .bakimdaOlmali(true);
 
@@ -75,17 +64,17 @@ public class BakimaAlTest extends BaseTest {
         String[] kontrolEdilecekKullanicilar = new String[]{
                 "Optiim TEST-Ağ (Network) Uzman Yardımcısı",
                 "Mehmet BOZDEMİR-Ağ (Network) Uzman Yardımcısı",
-                "Huser TUMER-Ağ (Network) Uzman Yardımcısı"
         };
         bakimaAlPage
                 .openPage()
                 .bakimdaOlmali(true)
+                .bilgilendirmeMetni500KarakterKontrolu()
+                .bilgilendirmeMetniIptal()
                 .bilgilendirmeMetniKontrol(bilgilendirmeMetni)
                 .secilenKullaniciKontrol(kontrolEdilecekKullanicilar)
                 .bakimdanCikar()
                 .bakimdanCikarKontrol();
         login("ztekin", "123");
-        Allure.addDescription("Sisteme giriş yapıldı.");
 
 
     }
