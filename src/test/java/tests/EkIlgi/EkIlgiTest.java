@@ -1005,8 +1005,7 @@ public class EkIlgiTest extends BaseTest {
                 .tabIlisikBilgileriAc()
                 .ilisikBilgieriAccordionKontrol()
                 .ilisikBilgilerindeDetayButonuKontrol("DOSYA", "EVRAK");
-
-
+        
         login(TestData.usernameYAKYOL, TestData.passwordYAKYOL);
 
         imzaBekleyenlerPage
