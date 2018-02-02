@@ -1683,14 +1683,21 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Gereği alani doldur")
-        public EditorTab geregiDoldur(String text) {
-            cmbGeregi.selectLov(text);
+        @Step("Gereği {description} doldur: | {geregi}")
+        public EditorTab geregiDoldur(String geregi, String description) {
+            Selenide.sleep(2000);
+            cmbGeregi.selectLov(geregi);
             return this;
         }
 
-        @Step("Bilgi alani doldur")
-        public EditorTab bilgiDoldur(String bilgi) {
+        @Step("Gereği {description} doldur: | {geregi}")
+        public EditorTab geregiVergiNoDoldur(String geregi, String description) {
+            cmbGeregi.type(geregi).getDetailItems().filterBy(text(geregi)).first().click();
+            return this;
+        }
+
+        @Step("Bilgi {description} doldur: | {bilgi}")
+        public EditorTab bilgiDoldur(String bilgi, String description) {
             cmbBilgi.selectLov(bilgi);
             return this;
         }
@@ -1725,6 +1732,7 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Gereği alanı temizle")
         public EditorTab secilenGeregiSil() {
+            cmbGeregi.shouldBe(visible);
             cmbGeregi.clearLastSelectedItem();
             return this;
         }
@@ -1803,6 +1811,8 @@ public class EvrakOlusturPage extends MainPage {
             Assert.assertEquals(a == 0, true);
             return this;
         }
+
+
     }
 
     public class EkleriTab extends MainPage {
