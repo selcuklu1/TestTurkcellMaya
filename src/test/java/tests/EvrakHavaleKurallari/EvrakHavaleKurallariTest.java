@@ -417,7 +417,8 @@ public class EvrakHavaleKurallariTest extends BaseTest {
         evrakHavaleKurallariYonetimiPage
                 .ara()
                 .havaleKurallariListesiGorme()
-                .havaleKurallariListesiGuncelle(kuralAdi, "")
+                .havaleKurallariListesiGuncelle(kuralAdi, "Kural adı")
+                .kuralGuncellemeEkraniGeldigiGorme()
                 .ilkPasifYap()
                 .islemOnayiEvet();
 
@@ -436,7 +437,9 @@ public class EvrakHavaleKurallariTest extends BaseTest {
         evrakHavaleKurallariYonetimiPage
                 .openPage()
                 .ara()
+                .havaleKurallariListesiGorme()
                 .pasifYapilanKullaniciGuncelle(kuralAdi)
+                .kuralGuncellemeEkraniGeldigiGorme()
                 .kuralinTanimliOlduguBirimlerSec(sadecePasifler)
                 .ilkAktifYap()
                 .islemOnayiEvet()
@@ -453,7 +456,7 @@ public class EvrakHavaleKurallariTest extends BaseTest {
         evrakHavaleKurallariYonetimiPage
                 .openPage()
                 .yeniKural()
-                .evrakTuruSec(4,"")
+                .evrakTuruSec(4,"Tebrik,Davetiye vb.")
                 .kimeHavaleEdilecekKisiDoldur(kisi, birim2)
                 .kuralinTanimliOlduguBirimlerYeni()
                 .birimEkleAltBirimlerDahil(true)
@@ -464,7 +467,9 @@ public class EvrakHavaleKurallariTest extends BaseTest {
 
         evrakHavaleKurallariYonetimiPage
                 .birimEkleEkle()
+                .secilenBirimVeAltBirimlerinAtandigiGorulur(isim)
                 .yeniBirimSil(isim)
+                .birimIliskisiniSilmekIstemisinizUyariGeldigiGorme()
                 .islemOnayiEvet()
                 .kuralAdiDoldur(kuralAdi2)
                 .kuralEklemeKaydet();
@@ -474,7 +479,6 @@ public class EvrakHavaleKurallariTest extends BaseTest {
                 .konuKoduDoldur(konuKodu)
                 .evrakTuruSec(evrakTuru2)
                 .otomatikHavaleSec2(false)
-                .otomatikHavaleSec2(true)
                 .otomatikHavaleGeldigiGorme(kuralAdi2);
 
         //Test bittikten sonra datamızı siliyoruz. Bir sonraki koşumda hata almamamız için.
