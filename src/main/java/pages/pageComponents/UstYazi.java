@@ -12,8 +12,10 @@ import pages.pageComponents.belgenetElements.BelgenetElement;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -355,8 +357,13 @@ public class UstYazi extends MainPage {
             getNotEkleDialog().should(disappear);
 
             String date = DateTimeFormatter.ofPattern("dd.MM.yyyy").format(LocalDateTime.now());
-            String time = DateTimeFormatter.ofPattern("HH").format(LocalDateTime.now());
+            String time = "";//DateTimeFormatter.ofPattern("HH").format(LocalDateTime.now());
             //String time = DateTimeFormatter.ofPattern("HH:mm").format(LocalDateTime.now());
+            System.out.println("Time ofLocalizedTime: " + DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT));
+            System.out.println("Time1: " + DateTimeFormatter.ofPattern("HH:mm", new Locale("tr", "TR")).format(LocalDateTime.now()));
+            System.out.println("Time2: " + DateTimeFormatter.ofPattern("HH:mm").format(LocalDateTime.now()));
+            System.out.println("Time3: " + System.currentTimeMillis());
+
             notuBul(text(olusturan), text(notTipi), text(aciklama), text(date), text(time));
             createdNotes.add(this);
             return this;

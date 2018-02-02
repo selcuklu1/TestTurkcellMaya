@@ -933,6 +933,13 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Güncel kullanıcının default paraflama aksiyonu ile geldiği görülür.")
+        public BilgilerTab onayAkisiParaflamaGeldigiGorme(){
+            boolean durum = $("[id*='akisAdimLov:LovSecilenTable'][id$='selectOneMenu']").getSelectedText().equals("Paraflama");
+            Assert.assertEquals(durum,true);
+            return this;
+        }
+
         @Step("Gereği alanı güncelle")
         public BilgilerTab geregiAlaniGuncelle() {
             btnGeregiLovSecilemUpdate.click();
