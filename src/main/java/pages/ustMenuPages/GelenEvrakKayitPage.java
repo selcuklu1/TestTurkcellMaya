@@ -218,10 +218,12 @@ public class GelenEvrakKayitPage extends MainPage {
     public GelenEvrakKayitPage otomatikHavaleSec() {
         if (chkOtomatikHavale.size() == 1) {
             chkOtomatikHavale.get(0).click();
+            takeScreenshot();
         } else {
             $("[id='evrakBilgileriForm:havaleDagitimLovPanel'] [class='ui-chkbox-box ui-widget ui-corner-all ui-state-default ui-state-active']").click();
             //$("[id='evrakBilgileriForm:havaleDagitimLovPanel'] [class='ui-chkbox ui-widget'] input[type='checkbox']").setSelected(false);
             sleep(1000);
+            takeScreenshot();
             chkOtomatikHavale.get(0).click();
         }
         return this;
@@ -243,7 +245,7 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("")
+    @Step("Otomatik havalenin geldiği görünür :{otomatikHavale}")
     public GelenEvrakKayitPage otomatikHavaleGeldigiGorme(String otomatikHavale) {
         ElementsCollection lblOtomoatikHavale = $$("[id='evrakBilgileriForm:havalePanel'] label[class='columnLabelFixSmallWidth']");
         boolean durum = lblOtomoatikHavale.filterBy(Condition.text(otomatikHavale)).size() == 1;

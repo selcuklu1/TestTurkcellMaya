@@ -340,7 +340,7 @@ public class EvrakHavaleKurallariTest extends BaseTest {
         evrakHavaleKurallariYonetimiPage
                 .openPage()
                 .yeniKural()
-                .evrakTuruSec(4,"")
+                .evrakTuruSec(4,"Tebrik,Davetiye vb.")
                 .kuralinTanimliOlduguBirimlerYeni()
                 .birimEkleBirimDoldur(birim)
                 .birimEkleEkle()
@@ -354,9 +354,11 @@ public class EvrakHavaleKurallariTest extends BaseTest {
 
         evrakHavaleKurallariYonetimiPage
                 .ara()
+                .havaleKurallariListesiGorme()
                 .havaleKurallariListesiGuncelle(kuralAdi, "Konu")
                 .kuralAdiDoldur(kuralAdiGuncelle)
-                .kuralEklemeKaydet();
+                .kuralEklemeKaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
 
         gelenEvrakKayitPage
                 .openPage()
@@ -391,13 +393,13 @@ public class EvrakHavaleKurallariTest extends BaseTest {
         String sadecePasifler = "Sadece Pasifler";
         String sadeceAktifler = "Sadece Aktifler";
 
-        login("cseker", passwordZTEKIN);
+        login("cseker", "123");
 
         //TODO PRE Conditon bir kural bulunmalı
         evrakHavaleKurallariYonetimiPage
                 .openPage()
                 .yeniKural()
-                .evrakTuruSec(0,"")
+                .evrakTuruSec(0,"Resmi Yazı")
                 .kuralinTanimliOlduguBirimlerYeni()
                 .birimEkleBirimDoldur(birim)
                 .birimEkleEkle()
@@ -414,6 +416,7 @@ public class EvrakHavaleKurallariTest extends BaseTest {
 
         evrakHavaleKurallariYonetimiPage
                 .ara()
+                .havaleKurallariListesiGorme()
                 .havaleKurallariListesiGuncelle(kuralAdi, "")
                 .ilkPasifYap()
                 .islemOnayiEvet();
