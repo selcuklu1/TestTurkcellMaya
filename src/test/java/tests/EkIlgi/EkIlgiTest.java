@@ -1001,9 +1001,11 @@ public class EkIlgiTest extends BaseTest {
                 .evrakEklerindeDetayButonuKontrol("EK-1", "EK-2")
                 .tabIlgiBilgileriAc()
                 .ilgiBilgileriAccordionKontrol()
-                .ilgiBilgilerindeDetayButonuKontrol("a", "b");
-
-
+                .ilgiBilgilerindeDetayButonuKontrol("a", "b")
+                .tabIlisikBilgileriAc()
+                .ilisikBilgieriAccordionKontrol()
+                .ilisikBilgilerindeDetayButonuKontrol("DOSYA", "EVRAK");
+        
         login(TestData.usernameYAKYOL, TestData.passwordYAKYOL);
 
         imzaBekleyenlerPage

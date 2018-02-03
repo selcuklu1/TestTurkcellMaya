@@ -536,5 +536,47 @@ public class TuzelKisiYonetimiPage extends MainPage {
         return this;
 
     }
+
+    @Step("Karasal TV seç")
+    public TuzelKisiYonetimiPage karasalTVSec(String karasalTV) {
+        cmbKarasalTV.selectOption(karasalTV);
+        return this;
+    }
+
+    @Step("Karasal Radyo seç")
+    public TuzelKisiYonetimiPage karasalRadyoSec(String karasalRadyo) {
+        cmbKarasalRadyo.selectOption(karasalRadyo);
+        return this;
+    }
+
+    @Step("Karasal TV Yayında seç")
+    public TuzelKisiYonetimiPage karasalTVYayindaSec(boolean secim) {
+        chkKarasalTVYayinda.setSelected(secim);
+        return this;
+    }
+
+    @Step("Kablo TV seç")
+    public TuzelKisiYonetimiPage kabloTVSec(String kabloTV) {
+        cmbKabloTV.selectOption(kabloTV);
+        return this;
+    }
+
+    @Step("Kablo TV Yayında seç")
+    public TuzelKisiYonetimiPage kabloTVYayindaSec(boolean secim) {
+        chkKabloTVYayinda.setSelected(secim);
+        return this;
+    }
+
+    @Step("İsteğe Bağlı TV seç")
+    public TuzelKisiYonetimiPage istegeBagliTvSec(boolean secim) {
+        chkIstegeBagliTV.setSelected(secim);
+        return this;
+    }
+
+    @Step("Platform İşletmecisi seç")
+    public TuzelKisiYonetimiPage platformIsletmecisiSe(boolean secim) {
+        chkPlatformIsletmecisi.setSelected(secim);
+        return this;
+    }
 }
 

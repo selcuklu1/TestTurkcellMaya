@@ -2,14 +2,19 @@ package pages.solMenuPages;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.interactions.SendKeysAction;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
+
+import java.util.List;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
@@ -84,8 +89,9 @@ public class GelenEvraklarPage extends MainPage {
     SelenideElement btnEvrakKapatKapatmaOnayinaSun = $(By.id("mainPreviewForm:kapatmaOnayinaSunButtonDirektId"));
     ElementsCollection btnEvrakKapatEvrakKapat = $$("[id='mainPreviewForm:evrakOnizlemeTab'] [class='form-buttons kapatButtonDirekt'] button");
     SelenideElement chkEvrakKapatKisiselKlasorler = $(By.id("mainPreviewForm:kisiselKlasorlerimiGetirCheckboxId_input"));
-
-
+SelenideElement btnOnayAkisi = $("[id='mainPreviewForm:evrakKapatOnayAkisPanelGrid'] td:nth-child(4) button");
+BelgenetElement txtKullanicalar = comboLov(By.id("mainPreviewForm:akisAdimLov_id:LovText"));
+ElementsCollection tblVekaletAlanVeren = $$("tbody[id='mainPreviewForm:mainPreviewFormKullaniciBirimSeceneklerAkis_data'] tr[data-ri]");
     //Paylaş Button altı div
     SelenideElement btnPaylas = $(By.xpath("//button/span[contains(@class, 'evrakPaylas')]"));
     SelenideElement txtPaylasKisi = $(By.id("mainPreviewForm:evrakPaylasKisiLov:LovText"));
@@ -735,6 +741,54 @@ public class GelenEvraklarPage extends MainPage {
     public GelenEvraklarPage evrakOnizlemeIadeEdilecekKullanici() {
         SelenideElement lblEvrakOnizlemeIadeEdilecekKullanici = $(By.xpath("//label[normalize-space(text())='İade Edilecek Kullanıcı']//ancestor::tr//td[3]//label"));
         Allure.addAttachment("İade Edilecek Kullanıcı : ",lblEvrakOnizlemeIadeEdilecekKullanici.text());
+        return this;
+    }
+
+    @Step("Evrak Kapama Onay Akışı butonuna tıklanır.")
+    public GelenEvraklarPage evrakKapamaOnayAkisiTikla() {
+//        Selenide.executeJavaScript("arguments[1].scrollIntoView(true);", btnOnayAkisi);
+//        txtEvrakKapatOnayAkisi.sendKeys(Keys.TAB);
+        clickJs(btnOnayAkisi);
+        return this;
+    }
+    @Step("Onay Akışı İşlemleri alanında Kullanıcılar alanında \"{kullanici}\" seçilir.")
+    public GelenEvraklarPage evrakKapamaKullaniciSec(String kullanici) {
+        txtKullanicalar.selectLov(kullanici);
+        return this;
+    }
+
+    @Step("Onay Akışı İşlemleri alanında Kullanıcılar alanında \"{kullanici}\" seçilir.")
+    public GelenEvraklarPage evrakKapamaKullaniciSecWithTitle(String kullanici,String title) {
+        txtKullanicalar.type(kullanici).getTitleItems()
+                .filterBy(Condition.exactText(kullanici + title)).first().click();
+        return this;
+    }
+    @Step("Lütfen seçim yapınız... popup'ı geldiği görülür.")
+    public GelenEvraklarPage popUpKullaniciSecimKontrulu() {
+        SelenideElement popUp = $(By.xpath("//span[text()='Lütfen seçim yapınız...']"));
+        popUp.isDisplayed();
+        return this;
+    }
+
+    @Step("Lütfen seçim yapınız... popup'ında \"{kullanici}\" seçilir.")
+    public GelenEvraklarPage popUpKullaniciSecimi(String kullanici) {
+        tblVekaletAlanVeren
+                .filterBy(Condition.text(kullanici))
+                .first()
+                .$("button[id^='mainPreviewForm:mainPreviewFormKullaniciBirimSeceneklerAkis:'] ").click();
+        return this;
+    }
+
+    @Step("Evrak Kapama Kullanıcılar alanı kontrolü.")
+    public GelenEvraklarPage evrakKapamaKullanicilarAlaniKontrolü(String vekaletAlan,String title,String vekaletVeren) {
+        List<String> text = txtKullanicalar.getSelectedItems().texts();
+        System.out.println(text);
+
+        text.get(0).contains(vekaletAlan);
+        text.get(0).contains(title);
+        text.get(0).contains(vekaletVeren);
+takeScreenshot();
+//        Allure.addAttachment("Onaylayacak kişi : ", "Onaylayacak Kisi alanına \n" + text.get(0) + " geldiği görülür.");
         return this;
     }
 

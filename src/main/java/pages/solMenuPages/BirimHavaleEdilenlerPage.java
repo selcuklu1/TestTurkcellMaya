@@ -37,6 +37,12 @@ public class BirimHavaleEdilenlerPage extends MainPage {
     SelenideElement notAlanıDoldur = $(By.id("inboxItemInfoForm:evrakGeriAlInputTextareaId"));
     SelenideElement btnGeriAl = $("[id^='inboxItemInfoForm:j_idt'][class$='ui-button-text-only']");
 
+    SelenideElement evrakOnizlemeKontrol = $(By.id("mainPreviewForm:eastLayout"));
+
+    //Birim
+    ElementsCollection birimEvrakEkleri = $$("a[href^='#mainPreviewForm']");
+    ElementsCollection birimEvrakEkleriKontrol = $$("div[id$='ekListesiOnizlemeDataTable'] tr[data-ri]");
+    ElementsCollection ilgiBilgileriEkleriKontrol = $$("div[id$='ilgiListesiDataTable'] tr[data-ri]");
 
     @Step("Birim Havale Edilenler sayfası aç")
     public BirimHavaleEdilenlerPage openPage() {
@@ -142,6 +148,34 @@ public class BirimHavaleEdilenlerPage extends MainPage {
             Allure.addAttachment(evrakNo, " Nolu evrak bulundu.");
         }
 
+        return this;
+    }
+
+    @Step("Evrak Onizleme Kontrolu")
+    public BirimHavaleEdilenlerPage evrakOnizlemeKontrol() {
+        if(evrakOnizlemeKontrol.isDisplayed())
+            Allure.addAttachment("Evrak Önizleme Ekranı", "açılmıştır");
+        return this;
+    }
+
+    @Step("Birim Evrak Ekleri Tıklama")
+    public BirimHavaleEdilenlerPage birimEvrakEkleri(String select) {
+        birimEvrakEkleri.filterBy(Condition.text(select)).get(0).click();
+        return this;
+    }
+
+    @Step("Birim Evrak Ekleri Kontrol")
+    public BirimHavaleEdilenlerPage birimEvrakEkleriKontrol(String ek1,String ek2,String ek3) {
+        birimEvrakEkleriKontrol.filterBy(Condition.text(ek1)).shouldHaveSize(1);
+        birimEvrakEkleriKontrol.filterBy(Condition.text(ek2)).shouldHaveSize(1);
+        birimEvrakEkleriKontrol.filterBy(Condition.text(ek3)).shouldHaveSize(1);
+        return this;
+    }
+
+    @Step("Birim Ilgi Bilgileri Kontrol")
+    public BirimHavaleEdilenlerPage birimIlgiBilgileriEvrakEkleriKontrol(String ek1,String ek2) {
+        boolean durum1 = ilgiBilgileriEkleriKontrol.filterBy(Condition.text(ek1)).size() > 0;
+        boolean durum2 = ilgiBilgileriEkleriKontrol.filterBy(Condition.text(ek2)).size() > 0;
         return this;
     }
 

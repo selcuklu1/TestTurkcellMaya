@@ -71,7 +71,9 @@ public class PostalanacakEvraklarPage extends MainPage {
     SelenideElement popUP = $(By.id("mainPreviewForm:tutarDialogId"));
     SelenideElement cmbDagitimSekli = $("[id^='mainPreviewForm:dataTableId:0:j_idt'] [class*='ui-selectonemenu'] Select");
     SelenideElement btnIcerikEvrakGoster = $x("//*[@id='inboxItemInfoForm:dialogTabMenuRight:uiRepeat:4:cmdbutton']");
-    SelenideElement btnComboEvrakGidisSekli = $x("//*[@id='inboxItemInfoForm:dataTableId']/table/tbody/tr/td[3]/div/div/div/table/tbody/tr[3]/td/div");
+    SelenideElement btnComboEvrakGidisSekli = $x("//*[@id='inboxItemInfoForm:dataTableId_data']/tr[1]/td[3]/div/div/div/table/tbody/tr[3]/td/div/div[1]/select");
+
+
     SelenideElement btnIcerikPostaKod = $x("//*[@id='inboxItemInfoForm:dataTableId']/table/tbody/tr/td[4]/div/div/div/table/tbody/tr[1]/td[2]/input");
     SelenideElement btnIcerikPostaAciklama = $x("//*[@id='inboxItemInfoForm:dataTableId']/table/tbody/tr/td[4]/div/div/div/table/tbody/tr[2]/td[2]/textarea");
     SelenideElement btnIcerikPostaYazdir = $x("//*[@id='inboxItemInfoForm:dataTableId_data']/tr/td[5]/div/table/tbody/tr[1]/td/button");
@@ -84,6 +86,7 @@ public class PostalanacakEvraklarPage extends MainPage {
     SelenideElement btnIcerikPostalamaEvet = $x("//*[@id='inboxItemInfoForm:postalaDogrulaDialogForm:evetButton_id']");
     SelenideElement btnFizikselEkBulunmaktadirIkon = $x("//span[@class='ui-button-icon-left ui-icon document-typeFizikselEk']");
     SelenideElement txtEvrakinFizikselEkivardir = $x("//*[contains(text(),'Evrakın fiziksel eki vardır, göndermeyi unutmayınız!')]");
+    SelenideElement btnIcerikEvrakPostala = $x("//*[@id='inboxItemInfoForm:dialogTabMenuRight:uiRepeat:4:cmdbutton']");
     //Önizleme
 
     SelenideElement formEvrakOnizleme = $(By.id("mainPreviewForm:evrakOnizlemeTab"));
@@ -141,6 +144,11 @@ public class PostalanacakEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Evrak içerik içindeki Evrak Postala butonu")
+    public PostalanacakEvraklarPage btnEvrakIcerikEvrakPostala() {
+        btnIcerikEvrakPostala.click();
+        return this;
+    }
     @Step("Evrak içerik Evrak Göster butonu")
     public PostalanacakEvraklarPage btnIcerikEvrakGoster() {
         btnIcerikEvrakGoster.click();
@@ -149,6 +157,8 @@ public class PostalanacakEvraklarPage extends MainPage {
 
     @Step("Dağıtım Gidis Şekli seçimi \"{postaSekli}\" ")
     public PostalanacakEvraklarPage btnDagitimGidisSekli(String postaSekli) {
+       String selectedTxt = btnComboEvrakGidisSekli.getSelectedText();
+       System.out.println(selectedTxt);
         btnComboEvrakGidisSekli.selectOptionContainingText(postaSekli);
         return this;
 

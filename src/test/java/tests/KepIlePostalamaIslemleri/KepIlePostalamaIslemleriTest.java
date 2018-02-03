@@ -90,7 +90,15 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
                 .parolaDoldur(hataliParola)
                 .sifreDoldur(hataliSifre)
                 .kepBaglantisiBaglan()
-                .islemMesaji().beklenenMesaj(hataMesaji);
+                .islemMesaji().dikkatOlmali(hataMesaji);
+
+        mainPage
+                .kepAdresleriBaglan("turksat.kamu1@testkep.pttkep.gov.tr")
+                .parolaDoldur(parola)
+                .sifreDoldur(sifre)
+                .kepBaglantisiBaglan()
+                .islemMesaji().basariliOlmali(basariMesaji);
+        login(usernameZTEKIN, passwordZTEKIN);
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -281,6 +289,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
                 .kepOlarakGeldikleriGorme(geregiGercekKisi,geregiTuzelKisi,geregiKurum)
                 .gercekKisiPostaTipiAPSSec(geregiGercekKisi)
                 .onayAkisiEkle()
+                .onayAkisiParaflamaGeldigiGorme()
                 .onayAkisiEkleIlkImzalaSec("İmzalama")
                 .kullan()
                 .kaldiralacakKlasorlerSec(kaldirilicakKlasor);
