@@ -21,14 +21,9 @@ public class GelenGidenEvrakKayitHavaleTest extends BaseTest {
     TeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage;
     HavaleOnayınaGelenlerPage havaleOnayınaGelenlerPage;
     BirimHavaleEdilenlerPage birimHavaleEdilenlerPage;
-    //    KaydedilenGelenEvrakPage kaydedilenGelenEvrakPage;
     KaydedilenGelenEvraklarPage kaydedilenGelenEvraklarPage;
     GelenEvraklarPage gelenEvraklarPage;
-//      HavaleEttiklerimPage havaleEttiklerimPage;
 
-    //    GercekKisiYonetimPage gercekKisiYonetimPage;
-//    GidenEvrakKayitPage gidenEvrakKayitPage;
-//    KaydedilenGidenEvraklarPage kaydedilenGidenEvraklarPage;
 //
 //    User optiim = new User("optiim", "123");
     User yakyol = new User("yakyol", "123");
@@ -236,6 +231,130 @@ public class GelenGidenEvrakKayitHavaleTest extends BaseTest {
                 .openPage()
                 .evrakNoGelmedigiGorme(prereqKonu);
 
+    }
+
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, priority = 0, description = "TS407: Ek ve ilgisi olan gelen evrakın havalesi")
+    public void TS407() throws InterruptedException {
+        String testid= "TS-407";
+        konu = "TS-407-" + getSysDate();
+        String pathToFilePdf = getUploadPath() + "Otomasyon.pdf";
+        String pdfName = "Otomasyon.pdf";
+        String pathToFileExcel = getUploadPath() + "test.xlsx";
+        String excelName = "test.xlsx";
+        String ekMetni = "test otomasyon" + getSysDateForKis();
+        String fileName ="test.txt";
+        String pathToFileText = getUploadPath() + "test.txt";
+
+        testStatus(testid,"Test Başladı");
+//        gelenEvrakKayitPage
+//                .openPage()
+//                .evrakBilgileriUstYaziEkle(pathToFilePdf)
+//                .ustYaziPdfAdiKontrol(pdfName)
+//                .islemMesaji().basariliOlmali();
+
+        gelenEvrakKayitPage
+                .openPage()
+                .konuKoduDoldur(konuKodu)
+                .konuDoldur(konu)
+                .evrakTuruSec(evrakTuru)
+                .evrakTarihiDoldur(evrakTarihi)
+                .evrakDiliSec(evrakDili)
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .kisiKurumSec(kisiKurum)
+                .geldigiKurumDoldurLovText(geldigiKurum)
+                .evrakSayiSagDoldur()
+                .evrakGelisTipiSec(evrakGelisTipi)
+                .ivedilikSec(ivedilik)
+
+                .havaleAlanKontrolleri()
+//                .havaleIslemleriKisiDoldur(kisi)
+////                .dagitimBilgileriOnaylayanWithDetails(onaylayacakKisi, onayKisiDetails)
+                .dagitimBilgileriBirimDoldurWithDetails(birim, details)
+
+                .ekBilgiFiltreAc()
+                .evrakEkleriDosyaEkleme(pathToFileText)
+                .evrakEkleriDosyaEkleDosyaAdiKontrol(fileName)
+                .evrakEkleriDosyaEkleEkMetinDoldur(ekMetni)
+                .evrakEkTabViewEkle()
+                .dosyaEkleTabTabloKontrolu("Ek-1")
+
+                .ekBilgiFizikselEkEkle()
+                .evrakEkTabFizikselEkMetniDoldur(ekMetni)
+                .fizikselEkTabViewAciklamaEkle()
+                .dosyaEkleTabTabloKontrolu("Ek-2")
+
+                 .sistemdeKayitliEvrakEkle()
+                 //        evrak tarihi
+                 //        evrakın aranacağı yer
+                 //        evrak arama alanlarının geldiği görülür
+                 .evrakEkTabEvrakAramaDoldur("1")
+                 .dokumanAraButton()
+                 .islemMesaji().basariliOlmali(basariMesaji);
+
+        gelenEvrakKayitPage
+                .ekEkleButton1()
+                .dosyaEkleTabTabloKontrolu("Ek-3")
+
+
+//                .evrakEkleriDosyaEkleme(fileName)
+
+                .ilgiliBilgiFiltreAc()
+//        dosya ekle
+//        metin ekle
+//        sistemde kayıttlı evrak ekle
+//        arşivde kayıtlı evrak ekle alanlarının geldiği görülür.
+                .ilgiIslemleriTabDosyaEkle()
+                .ilgiBilgileriDosyaEkleme(pathToFileText)
+                .ilgiBilgileriDosyaEkleDosyaAdiKontrol(fileName)
+                .ilgiBilgileriDosyaEkleEkMetinDoldur(ekMetni)
+                .ilgiBilgileriTabViewEkle()
+                .ilgiBilgileridosyaEkleTabloKontrolu("a")
+
+
+
+                .ilgiBilgileriSistemdeKayitliEvrakEkle()
+                //        evrak tarihi
+                //        evrakın aranacağı yer
+                //        evrak arama alanlarının geldiği görülür
+                .ilgiBilgileriSistemdeKayitliEvrakEkleArama("1")
+                .ilgiBilgileridokumanAraButton();
+
+        gelenEvrakKayitPage
+                .ilgiBilgileriEkEkleButton1()
+                .ilgiBilgileridosyaEkleTabloKontrolu("b")
+
+                .kaydet()
+                .popUpsv2();
+
+        gelenEvrakKayitPage
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        birimHavaleEdilenlerPage
+                .openPage()
+//        Geldiği yer
+//        Konu
+//        Gideceği yer
+//        Evrak tarihi / no alanlarının doğru biçimde olacak şekilde evrakın listelendiği görülür.
+
+                .evrakNoIleTablodanEvrakSecme(konu)
+                .evrakOnizlemeKontrol()
+                .birimEvrakEkleri("Evrak Ekleri")
+                .birimEvrakEkleriKontrol("EK-1","EK-2","EK-3")
+                .birimEvrakEkleri("İlgi Bilgileri")
+                .birimIlgiBilgileriEvrakEkleriKontrol("a","b");
+
+                login(mbozdemir);
+
+        teslimAlinmayiBekleyenlerPage
+                .openPage()
+                .evrakNoIleEvrakSec(konu)
+                .evrakOnizlemeKontrol()
+                .teslimEvrakEkleri("Evrak Ekleri")
+                .teslimEvrakEkleriKontrol("EK-1","EK-2","EK-3")
+                .teslimEvrakEkleri("İlgi Bilgileri")
+                .teslimIlgiBilgileriEvrakEkleriKontrol("a","b");
     }
 
 }
