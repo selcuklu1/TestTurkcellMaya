@@ -164,13 +164,13 @@ public class BenimlePaylasilanlarPage extends MainPage {
         return this;
     }
 
-    @Step("Açıklama kontrol")
+    @Step("Evrak Notu kontrolü.")
     public BenimlePaylasilanlarPage evrakNotuKontrol(String ekleyen, String tarih, String aciklama) {
         boolean durum = tableEvrakNotlari
                 .filterBy(Condition.text(ekleyen))
                 .filterBy(Condition.text(tarih))
                 .filterBy(Condition.text(aciklama))
-                .get(0)
+                .first()
                 .shouldBe(Condition.visible).exists();
         Assert.assertEquals(durum, true);
         return this;
@@ -191,7 +191,7 @@ public class BenimlePaylasilanlarPage extends MainPage {
         return this;
     }
 
-    @Step("Evrak notu sil")
+    @Step("Evrak notu sil ve kontrol et. Evrak notu silinmeli.")
     public BenimlePaylasilanlarPage evrakNotuSil(String ekleyen, String tarih, String aciklama) {
 
         tableEvrakNotlari
@@ -201,6 +201,14 @@ public class BenimlePaylasilanlarPage extends MainPage {
                 .first()
                 .$("span[class*='delete-icon']")
                 .click();
+
+        tableEvrakNotlari
+                .filterBy(Condition.text(ekleyen))
+                .filterBy(Condition.text(tarih))
+                .filterBy(Condition.text(aciklama))
+                .first()
+                .$("span[class*='delete-icon']")
+                .shouldNotBe(Condition.visible);
 
         return this;
     }

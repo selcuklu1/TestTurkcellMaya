@@ -10,6 +10,7 @@ import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
@@ -45,7 +46,7 @@ public class TaslakEvraklarPage extends MainPage {
     SelenideElement btnEvrakNotlariModalKaydet = $(By.id("evrakKisiselNotDialogFormId:evrakKisiselNotKaydet"));
     SelenideElement btnEvrakNotlariModalIptal = $(By.id("evrakKisiselNotDialogFormId:evrakKisiselNotIptal"));
 
-    ElementsCollection tableEvraklar = $$("tbody[id='mainInboxForm:inboxDataTable_data'] tr[data-ri]");
+    ElementsCollection tableEvraklar = $$("tbody[id='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
     ElementsCollection tabEvrakOnizleme = $$("div[id='mainPreviewForm:evrakOnizlemeTab'] ul[role='tablist'] li");
     SelenideElement btnPaylasTab = $(By.xpath("//span[contains(@class, 'evrakPaylas')]/.."));
 
@@ -139,6 +140,7 @@ public class TaslakEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Paylaş butonuna tıkla.")
     public TaslakEvraklarPage paylasPaylasGonder() {
         btnPaylasPaylas.click();
         return this;
@@ -149,7 +151,14 @@ public class TaslakEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Kişi alanını doldur.")
     public TaslakEvraklarPage paylasKisiDoldur(String kisi) {
+        txtPaylasKisi.selectLov(kisi);
+        return this;
+    }
+
+    @Step("Kişi alanını boşalt.")
+    public TaslakEvraklarPage paylasKisiBosalt(String kisi) {
         txtPaylasKisi.selectLov(kisi);
         return this;
     }
@@ -187,7 +196,7 @@ public class TaslakEvraklarPage extends MainPage {
         return this;
     }
 
-    @Step("Paylaş tab tıkla")
+    @Step("Paylaş tabına tıkla")
     public TaslakEvraklarPage paylasTabTikla() {
         btnPaylasTab.click();
         return this;

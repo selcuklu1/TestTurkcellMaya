@@ -33,7 +33,6 @@ public class MesajlarPage extends MainPage {
                 .filterBy(Condition.text(mesaj))
                 .first()
                 .click();
-
         return this;
     }
 
