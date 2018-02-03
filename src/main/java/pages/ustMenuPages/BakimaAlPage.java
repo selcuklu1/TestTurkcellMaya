@@ -27,13 +27,25 @@ public class BakimaAlPage extends MainPage {
     SelenideElement blinkUyari = $(By.xpath("//blink[starts-with(.,'Sistem') and contains(.,'tarihinde bakım moduna alınmıştır. Sisteme aşağıda tanımlanan kullanıcılar giriş yapabilecektir.')]"));
     ElementsCollection tableSecilenKullanicilar = $$("tbody[id='bakimaAlFormId:bakimaAlKullanicilarId:LovSecilenTable_data'] > tr[role='row']");
 
-    @Step("Bilgilendirme metni 500 karakteri geçiyor mu?")
+    @Step("Bilgilendirme metni 500 karakter kontrolü.")
     public BakimaAlPage bilgilendirmeMetni500KarakterKontrolu() {
         if (spanBilgilendirmeMetni.isDisplayed())
             spanBilgilendirmeMetni.click();
         txtBilgilendirmeMetni.shouldBe(Condition.visible);
         boolean isSmallerThan500 = false;
         if (txtBilgilendirmeMetni.getValue().length() <= 500)
+            isSmallerThan500 = true;
+        Assert.assertTrue(isSmallerThan500);
+        return this;
+    }
+
+    @Step("Bilgilendirme metni 500 den fazla karakter girilememelidir.")
+    public BakimaAlPage bilgilendirmeMetni500denfazlaKarakterKontrolu() {
+        if (spanBilgilendirmeMetni.isDisplayed())
+            spanBilgilendirmeMetni.click();
+        txtBilgilendirmeMetni.shouldBe(Condition.visible);
+        boolean isSmallerThan500 = false;
+        if (txtBilgilendirmeMetni.getValue().length() <= 510)
             isSmallerThan500 = true;
         Assert.assertTrue(isSmallerThan500);
         return this;
@@ -63,7 +75,7 @@ public class BakimaAlPage extends MainPage {
         return this;
     }
 
-    @Step("Bilgilendirme metnine \"{bilgilendirmeMetni}\" değerini gir.")
+    @Step("Bilgilendirme metnine \"{bilgilendirmeMetni}\" karkateri değer gir.")
     public BakimaAlPage bilgilendirmeMetniGir(String bilgilendirmeMetni) {
 
         Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", btnBakimaAl);
@@ -72,9 +84,30 @@ public class BakimaAlPage extends MainPage {
         if (spanBilgilendirmeMetni.isDisplayed())
             spanBilgilendirmeMetni.click();
 
+
         txtBilgilendirmeMetni
-                .shouldBe(Condition.visible)
                 .setValue(bilgilendirmeMetni);
+
+        return this;
+    }
+
+    @Step("Bilgilendirme metnine \"{karakterSayisi}\" karakter değer gir.")
+    public BakimaAlPage bilgilendirmeMetniGir(int karakterSayisi) {
+
+        Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", btnBakimaAl);
+        btnBakimaAl.waitUntil(Condition.visible, 5000);
+
+        if (spanBilgilendirmeMetni.isDisplayed())
+            spanBilgilendirmeMetni.click();
+
+
+        String girilecekDeger = "";
+        for (int i = 0; i < karakterSayisi; i++) {
+            girilecekDeger += "x";
+        }
+
+        txtBilgilendirmeMetni
+                .setValue(girilecekDeger);
 
         return this;
     }

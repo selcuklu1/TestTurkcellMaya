@@ -232,7 +232,7 @@ public class EvrakPostalamaTest extends BaseTest {
                 .geregiKurumPostaTipi("E-Posta")
                 .geregiSecimTipiSec("Kurum")
                 .geregiDoldur("Başbakanlık", "Kurum")
-                .geregiKurumPostaTipi("E-Posta")
+                .geregiKurumPostaTipi("APS")
                 .onayAkisiKullanicilariTemizle()
                 .onayAkisiEkle()
                 .onayAkisiKullaniciTipiSec("Mehmet BOZDEMİR", "İmzalama")
@@ -510,10 +510,9 @@ public class EvrakPostalamaTest extends BaseTest {
         String konu = "TS1685_";
         postalanacakEvraklarPage.openPage()
                 .btnFiltrenenPostaIcerikGoster(konu);
-
-        postalanacakEvraklarPage.btnDagitimGidisSekli("APS")
+        postalanacakEvraklarPage.btnEvrakIcerikEvrakPostala();
+        postalanacakEvraklarPage.btnDagitimGidisSekli("Adi Posta")
                 .inputIcerikPstakod("0310");
-        postalanacakEvraklarPage.btnDagitimGidisSekli("KEP");
         postalanacakEvraklarPage
                 .btnIcerikPostaYazdir();
         postalanacakEvraklarPage
@@ -526,7 +525,17 @@ public class EvrakPostalamaTest extends BaseTest {
                 .btnEtiketpopupkapat();
 
         postalanacakEvraklarPage
-                .btnIcerikEvrakPostalama();
-        // .btnIcerikPostalamaEvet();
+                .btnIcerikEvrakPostalama()
+         .btnIcerikPostalamaEvet();
+
+        postalananlarPage.openPage();
+        postalananlarPage.filter().findRowsWith(Condition.text(konu)).first().click();
+        postalananlarPage.postaDetayiTikla();
+        postalananlarPage.evSay();
+        postalananlarPage.evrakYazdir();
+        postalananlarPage.etiketBastir();
+        postalananlarPage.btnPopupEtiketBastirKapat();
+
+
     }
 }
