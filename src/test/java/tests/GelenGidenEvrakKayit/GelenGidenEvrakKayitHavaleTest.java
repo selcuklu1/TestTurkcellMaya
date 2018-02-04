@@ -376,4 +376,89 @@ public class GelenGidenEvrakKayitHavaleTest extends BaseTest {
                 .teslimIlgiBilgileriEvrakEkleriKontrol("a","b");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, priority = 0, description = "TS435: Havale onayı bekleyen evrakın geri çekilmesi ve tekrar havalesi (detay ekranından)")
+    public void TS435() throws InterruptedException {
+        String testid= "TS-435";
+        konu = "TS-435-" + getSysDate();
+        String pathToFilePdf = getUploadPath() + "Otomasyon.pdf";
+        String pdfName = "Otomasyon.pdf";
+        String pathToFileExcel = getUploadPath() + "test.xlsx";
+        String excelName = "test.xlsx";
+
+        testStatus(testid,"Test Başladı");
+        gelenEvrakKayitPage
+                .openPage()
+                .evrakBilgileriUstYaziEkle(pathToFilePdf)
+                .ustYaziPdfAdiKontrol(pdfName)
+                .islemMesaji().basariliOlmali();
+
+        gelenEvrakKayitPage
+                .konuKoduDoldur(konuKodu)
+                .konuDoldur(konu)
+                .evrakTuruSec(evrakTuru)
+                .evrakDiliSec(evrakDili)
+                .evrakTarihiDoldur(evrakTarihi)
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .kisiKurumSec(kisiKurum)
+                .geldigiKurumDoldurLovText(geldigiKurum)
+                .evrakSayiSagDoldur()
+                .evrakGelisTipiSec(evrakGelisTipi)
+                .ivedilikSec(ivedilik)
+
+                .havaleIslemleriKisiDoldur(kisi)
+                .havaleAlanKontrolleri()
+                .dagitimBilgileriOnaylayanWithDetails(onaylayacakKisi, onayKisiDetails)
+                .dagitimBilgileriBirimDoldurWithDetails(birim, details)
+
+                .kaydet()
+                .gelenEvrakKayitKaydetEvet2()
+                .popUpsv2();
+
+        login(mbozdemir);
+
+        havaleOnayınaGelenlerPage
+                .openPage()
+                .evrakNoIleEvrakSec(konu)
+//                .evrakSecIcerikGoster(konu, true)
+                .havaleOnay()
+//        Seçilen havale yerinin doğru geldiği
+//        onayla ve onayı reddet seçeneklerinin geldiği görülür
+                .notAlanınıDoldur(konu)
+                .onayıReddet()
+                .onayıReddetEvet()
+
+                .islemMesaji().basariliOlmali();
+
+        login(ztekin);
+        kaydedilenGelenEvraklarPage
+                .openPage()
+                //iade edilmiştir butonu kontrolü yapılabilir
+                .tabloEvrakNoileEvrakKontrolu(konu)
+                .evrakNoIleEvrakSec(konu)
+                .evrakOnizlemeKontrol()
+                .onizlemeHavaleYap()
+                .dagitimBilgileriOnaylayanWithDetails(onaylayacakKisi, onayKisiDetails)
+                .dagitimBilgileriBirimDoldurWithDetails(birim, details)
+                .havaleOnayinaGonder()
+                .islemMesaji().basariliOlmali();
+
+
+        login(mbozdemir);
+        havaleOnayınaGelenlerPage
+                .openPage()
+                .evrakNoIleEvrakSec(konu)
+                .havaleOnay()
+//        Seçilen havale yerinin doğru geldiği
+//        onayla ve onayı reddet seçeneklerinin geldiği görülür
+                .onizlemeOnayla()
+                .onayıOnaylaEvet()
+                .islemMesaji().basariliOlmali();
+
+        login(ztekin);
+        teslimAlinmayiBekleyenlerPage
+                .openPage()
+                .evrakNoIleEvrakSec(konu);
+    }
+
 }
