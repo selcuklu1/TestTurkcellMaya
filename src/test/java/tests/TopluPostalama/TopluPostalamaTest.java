@@ -80,10 +80,35 @@ public class TopluPostalamaTest extends BaseTest {
                 .sImzaImzala()
                 .popupSimzaEvet();
 
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .konuKoduSec("Entegrasyon İşlemleri")
+                .konuDoldur(evrakKonu + "KEP")
+                .kaldiralacakKlasorlerSec("Diğer")
+                .geregiSecimTipiSec("Kurum")
+                .geregiSec(evrakGidecegiYer)
+                .geregiKurumPostaTipi("KEP")
+                .onayAkisiEkle()
+                .onayAkisiKullaniciTipiSec("Mehmet BOZDEMİR [Antalya İl Müdürü]", "İmzalama")
+                .kullan();
+        evrakOlusturPage
+                .editorTabAc()
+                .editorIcerikDoldur("TS1804 için evrak.")
+                .imzala()
+                .sImzasec()
+                .sImzaImzala()
+                .popupSimzaEvet();
+
         topluPostalanacakEvraklarPage
                 .openPage()
                 .gidecegiYerListesiAlfabetikSiraKontrolu()
                 .dagitimYeriAdetKontrol()
+                .gidecegiYerSec(gidecegiYerler, true)
+                .sorgula()
+                .kepPostaSekliKontrol()
+                .pagingOzelligi()
                 .tarihAraligiSec(baslangicTarihi, bitisTarihi)
                 .gidecegiYerSec(gidecegiYerler, true, true)
                 .postaTipiSec(new String[]{

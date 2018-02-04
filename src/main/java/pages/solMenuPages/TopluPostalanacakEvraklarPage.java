@@ -625,10 +625,7 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
         for(int i = 0; i < tableGidecegiYer.size(); i++){
             tableGidecegiYer
                     .get(i)
-                    .shouldHave(Condition.text("("));
-            tableGidecegiYer
-                    .get(i)
-                    .shouldHave(Condition.text(")"));
+                    .shouldHave(Condition.text("-"));
         }
         return this;
     }
