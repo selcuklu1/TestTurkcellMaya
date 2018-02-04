@@ -478,29 +478,48 @@ public class EvrakPostalamaTest extends BaseTest {
                 .postaSorgulama();
 
         Thread.sleep(4000);
-        postalananEvrakRaporuPage.ekranSorgulananSonucKontrol();
+       // postalananEvrakRaporuPage.ekranSorgulananSonucKontrol();
 
         postalananEvrakRaporuPage.cmbEvrakSahibi("YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ")
                 .postaSorgulama();
         Thread.sleep(1000);
         postalananEvrakRaporuPage.evrakSahibiKontrol("YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ");
 
-        postalananEvrakRaporuPage.cmbPostalananYerSecimi("Optiim otomasyon")
+        postalananEvrakRaporuPage.cmbClearEvrakSahibi();
+        postalananEvrakRaporuPage.cmbPostalananYerSecimi("OptiimTest TestOptiim")
                 .postaSorgulama();
 
-        postalananEvrakRaporuPage.postalananyerKontrol("Optiim otomasyon");
-        postalananEvrakRaporuPage.cmbpostaSeklisecimi("Iç giden")
+        String expected = "OptiimTestTestOptiim";
+        postalananEvrakRaporuPage.postalananyerKontrol(expected);
+        postalananEvrakRaporuPage.cmbPostalananYerSecimiTemizle();
+
+        postalananEvrakRaporuPage.cmbpostaSeklisecimi("İç Giden")
                 .postaSorgulama();
-        postalananEvrakRaporuPage.cmbpostaSeklisecimi("Dış giden")
+        postalananEvrakRaporuPage.cmbpostaSeklisecimi("Dış Giden")
                 .postaSorgulama();
+        postalananEvrakRaporuPage.cmbpostaSeklisecimi("Seçiniz");
         postalananEvrakRaporuPage.cmbPostaTipisec("Adi Posta")
                 .postaSorgulama();
+        postalananEvrakRaporuPage.cmbPostaTipisec("Seçiniz");
         postalananEvrakRaporuPage.txtPostaAciklama("TS")
                 .postaSorgulama();
+        postalananEvrakRaporuPage.clearPostaAciklamaAlani();
         postalananEvrakRaporuPage.cmbPostalayanadi("Zübeyde TEKİN")
                 .postaSorgulama();
+        postalananEvrakRaporuPage.cmbClearPostalayanAdi();
         postalananEvrakRaporuPage.chkboxPostaladiklarim()
                 .postaSorgulama();
+        postalananEvrakRaporuPage
+                .cmbEvrakSahibi("YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ")
+                .cmbPostalananYerSecimi("OptiimTest TestOptiim")
+                .cmbpostaSeklisecimi("İç Giden")
+                .cmbPostaTipisec("Adi Posta")
+                .cmbPostalayanadi("Zübeyde TEKİN")
+                .postaSorgulama();
+        postalananEvrakRaporuPage.ekranSorgulananSonucKontrol();
+        postalananEvrakRaporuPage.evrakRaporForm();
+        
+
     }
 
     @Severity(SeverityLevel.CRITICAL)
