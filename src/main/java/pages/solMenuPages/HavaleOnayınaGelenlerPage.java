@@ -21,13 +21,17 @@ import static com.codeborne.selenide.Selenide.$$;
 
 public class HavaleOnayınaGelenlerPage extends MainPage {
     ElementsCollection tblEvraklar = $$("[id^='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
-    SelenideElement btnHavaleOnay = $("button[id^='inboxItemInfoForm:dialogTabMenuRight:uiRepeat:4:cmdbutton']");
-    SelenideElement notAlanıDoldur = $(By.id("inboxItemInfoForm:notTextArea_id"));
-    SelenideElement onayıReddet = $(By.id("inboxItemInfoForm:reddetButton_id"));
+    SelenideElement btnHavaleOnay = $("button[id^='mainPreviewForm:onizlemeRightTab:uiRepeat:4:cmdbutton']");
+    SelenideElement notAlanıDoldur = $(By.id("mainPreviewForm:notTextArea_id"));
+    SelenideElement onayıReddet = $(By.id("mainPreviewForm:reddetButton_id"));
+    SelenideElement onizlemeOnayla = $(By.id("mainPreviewForm:onaylaButton_id"));
+
     //      SelenideElement onayıReddetEvet = $(By.id("inboxItemInfoForm:reddetEvetButton_id"));
 //      SelenideElement onayıReddetEvet = $("button[id='inboxItemInfoForm:reddetEvetButton_id']");
 //      SelenideElement btnHavaleOnayReddet = $(By.id("inboxItemInfoForm:reddetEvetButton_id"));
-    ElementsCollection btnHavaleOnayReddet = $$("[id$='inboxItemInfoForm:reddetEvetButton_id']");
+    ElementsCollection btnHavaleOnayReddet = $$("[id$='mainPreviewForm:reddetEvetButton_id']");
+    ElementsCollection btnHavaleOnayEvet = $$("[id$='mainPreviewForm:evetButton_id']");
+
 //    SelenideElement f = $(By.xpath("//div[@id='mainInboxForm:inboxDataTable:filtersAccordion']//a[text()='Filtreler']/parent::h3"));
 //    SelenideElement cmbTopluSecim = $(By.id("mainInboxForm:inboxDataTable:j_idt666_button"));
 //    SelenideElement cmbFiltre = $(By.xpath("//select[starts-with(@id,'mainInboxForm:inboxDataTable:filtersAccordion:j_idt']"));
@@ -78,11 +82,25 @@ public class HavaleOnayınaGelenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Onizleme Havale Onay")
+    public HavaleOnayınaGelenlerPage onizlemeOnayla() {
+        onizlemeOnayla.click();
+        return this;
+    }
+
     // TODO: Her dönen butonu click yapma
     // 2 tane Evet buttonu dönüyor ve aralarında fark yok
     @Step("Havale Onay Reddet Evet")
     public HavaleOnayınaGelenlerPage onayıReddetEvet() {
         btnHavaleOnayReddet.last().click();
+        return this;
+    }
+
+    // TODO: Her dönen butonu click yapma
+    // 2 tane Evet buttonu dönüyor ve aralarında fark yok
+    @Step("Havale Onay Reddet Evet")
+    public HavaleOnayınaGelenlerPage onayıOnaylaEvet() {
+        btnHavaleOnayEvet.last().click();
         return this;
     }
 
