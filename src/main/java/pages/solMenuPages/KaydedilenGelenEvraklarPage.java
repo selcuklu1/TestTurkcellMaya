@@ -3,6 +3,7 @@ package pages.solMenuPages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
@@ -49,6 +50,11 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
 
     ElementsCollection tblEvrakGecmisi = $$("[id$='hareketGecmisiDataTable_data'] > tr[role='row']");
     ElementsCollection tblEvraklar = $$("[id^='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
+    SelenideElement evrakOnizlemeKontrol = $(By.id("mainPreviewForm:eastLayout"));
+    SelenideElement onizlemeHavaleYap = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:4:cmdbutton"));
+    BelgenetElement cmbHavaleIslemleriOnaylayacakKisi = comboLov(By.id("mainPreviewForm:onaylayacakKisiLov:LovText"));
+    BelgenetElement cmbHavaleIslemleriBirim = comboLov(By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovText"));
+    SelenideElement btnHavaleOnayinaGonder = $("[id^='mainPreviewForm:j_idt'] [class^='ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only havaleIslemleriGonder']");
 
     @Step("Kaydedilen gelen evraklar sayfası aç")
     public KaydedilenGelenEvraklarPage openPage() {
@@ -138,6 +144,40 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
         $$("[id$='evrakOnizlemeTab'] ul li").filterBy(Condition.text("Evrak Geçmişi")).get(0).$("a").click();
         return this;
     }
+
+    @Step("Evrak Onizleme Kontrolu")
+    public KaydedilenGelenEvraklarPage evrakOnizlemeKontrol() {
+        if(evrakOnizlemeKontrol.isDisplayed())
+            Allure.addAttachment("Evrak Önizleme Ekranı", "açılmıştır");
+        return this;
+    }
+
+    @Step("Onizleme Evrak Havale Yap Butonu Tıklandı")
+    public KaydedilenGelenEvraklarPage onizlemeHavaleYap() {
+        onizlemeHavaleYap.click();
+        return this;
+    }
+
+    @Step("Dağıtım Bilgileri Onaylayacak Kisi alanında \"{onaylayan}\" seçilir")
+    public KaydedilenGelenEvraklarPage dagitimBilgileriOnaylayanWithDetails(String onaylayan, String details) {
+        cmbHavaleIslemleriOnaylayacakKisi.selectLov(onaylayan, details);
+        return this;
+    }
+
+    @Step("Dağıtım Bilgileri Birim alanında \"{birim}\" seçilir")
+    public KaydedilenGelenEvraklarPage dagitimBilgileriBirimDoldurWithDetails(String birim, String details) {
+        cmbHavaleIslemleriBirim.type(birim).getDetailItems()
+                .filterBy(Condition.exactText(details)).first().click();
+        cmbHavaleIslemleriBirim.closeTreePanel();
+        return this;
+    }
+
+    @Step("Havale Onayına Gönder")
+    public KaydedilenGelenEvraklarPage havaleOnayinaGonder() {
+        btnHavaleOnayinaGonder.click();
+        return this;
+    }
+
 
 
     @Step("Tabloda konuya göre evrak kontrolu : {konu}")

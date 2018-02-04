@@ -49,6 +49,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS2314: Evrak Teslim Alma")
     public void TS2314() throws InterruptedException {
+        String testid= "TS-2314";
         String basariMesaji = "İşlem başarılıdır!";
         String konuKodu = "120.05";
         String konu = "TS-2314-" + getSysDate();
@@ -72,6 +73,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
         String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
         String details = "BİLİŞİM HİZMETLERİ VE UYDU PAZARLAMA GENEL MÜDÜR Y";
 
+        testStatus(testid,"PreCondition Evrak Oluşturma");
         //Pre-requisites Gelen Evrak Oluşturma
         gelenEvrakKayitPage
                 .openPage();
@@ -98,6 +100,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
                 .islemMesaji().basariliOlmali(basariMesaji);
 
 
+        testStatus(testid,"Test Başladı");
         teslimAlinmayiBekleyenlerPage
                 .openPage()
                 .evrakSecNoTeslimAl(konu, true);
@@ -113,6 +116,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS2316: Teslim alınmayı bekleyenler listesinden bir evrakı teslim alma (içerikten)")
     public void TS2316() throws InterruptedException {
+        String testid= "TS-2316";
         String basariMesaji = "İşlem başarılıdır!";
         String konuKodu = "120.05";
         String konu = "TS-2316-" + getSysDate();
@@ -136,6 +140,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
         String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
         String details = "BİLİŞİM HİZMETLERİ VE UYDU PAZARLAMA GENEL MÜDÜR Y";
 
+        testStatus(testid,"PreCondition Evrak Oluşturma");
         //Pre-requisites Gelen Evrak Oluşturma
         gelenEvrakKayitPage
                 .openPage();
@@ -161,7 +166,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
         gelenEvrakKayitPage
                 .islemMesaji().basariliOlmali(basariMesaji);
 
-
+        testStatus(testid,"Test Başladı");
         teslimAlinmayiBekleyenlerPage
                 .openPage()
                 .evrakSecIcerikGoster(konu, true)
@@ -178,6 +183,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS2318: Evrak Teslim Alma - Sistem Loglari Sorgu")
     public void TS2318() throws InterruptedException {
+        String testid= "TS-2318";
         String basariMesaji = "İşlem başarılıdır!";
         String konuKodu = "120.05";
         String konu = "TS-2318-" + getSysDate();
@@ -203,7 +209,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
 
         String aksiyon = "Kaydedilen Gelen Evraklar - Teslim Al";
 
-
+        testStatus(testid,"PreCondition Evrak Oluşturma");
         //Pre-requisites Gelen Evrak Oluşturma
         gelenEvrakKayitPage
                 .openPage();
@@ -238,8 +244,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
         String kullanici = "Zübeyde Tekin";
         String aciklama = "ztekin kullanıcısı, " + tarihSaatBugun;
 
-        System.out.println(tarihSaatBugun + " " + aciklama + kullanici.toUpperCase());
-
+        testStatus(testid,"Test Başladı");
         sistemLoglariPage
                 .openPage()
                 .aksiyonSec(aksiyon)
@@ -250,6 +255,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS2319: Ayni Anda 2 Evrak Teslim Alma")
     public void TS2319() throws InterruptedException {
+        String testid= "TS-2319";
         String basariMesaji = "İşlem başarılıdır!";
         String konuKodu = "120.05";
         String konu1 = "TS-2319-" + getSysDate();
@@ -273,7 +279,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
         String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
         String details = "BİLİŞİM HİZMETLERİ VE UYDU PAZARLAMA GENEL MÜDÜR Y";
 
-
+        testStatus(testid,"PreCondition 1. Evrak Oluşturma");
         //Pre-requisites Gelen Evrak Oluşturma 1. dosya
         gelenEvrakKayitPage
                 .openPage();
@@ -301,6 +307,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
 
         String konu2 = "TS-2319-" + getSysDate();
 
+        testStatus(testid,"PreCondition 2. Evrak Oluşturma");
         //Pre-requisites Gelen Evrak Oluşturma 2. dosya
         gelenEvrakKayitPage
                 .openPage();
@@ -325,7 +332,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
         gelenEvrakKayitPage
                 .islemMesaji().basariliOlmali(basariMesaji);
 
-
+        testStatus(testid,"Test Başladı");
         teslimAlinmayiBekleyenlerPage
                 .openPage()
                 .evrakSecCheckBox(konu1, konu2, true);
@@ -343,7 +350,6 @@ public class EvrakTeslimAlmaTest extends BaseTest {
     @Test(enabled = true, description = "TS2315: Birime iade edilenler listesinden evrak teslim alma (listeden)")
     public void TS2315() throws InterruptedException {
         String testid= "TS-2315";
-        String state =" nolu test başladı:";
         String basariMesaji = "İşlem başarılıdır!";
         String konuKodu = "120.05";
         String konu = "TS-2315-" + getSysDate();
@@ -419,7 +425,6 @@ public class EvrakTeslimAlmaTest extends BaseTest {
     @Test(enabled = true, description = "TS2317: Birime iade edilenler listesinden evrak teslim alma (önizlemeden)")
     public void TS2317() throws InterruptedException {
         String testid= "TS-2317";
-        String state =" nolu test başladı:";
         String basariMesaji = "İşlem başarılıdır!";
         String konuKodu = "120.05";
         String konu = "TS-2317-" + getSysDate();
@@ -494,7 +499,6 @@ public class EvrakTeslimAlmaTest extends BaseTest {
     @Test(enabled = true, description = "TS2320: Birime iade edilenler listesinden evrak teslim alma (toplu)")
     public void TS2320() throws InterruptedException {
         String testid= "TS-2320";
-        String state =" nolu test başladı:";
         String basariMesaji = "İşlem başarılıdır!";
         String konuKodu = "120.05";
         String konu1 = "TS-2320-" + getSysDate();
@@ -605,7 +609,6 @@ public class EvrakTeslimAlmaTest extends BaseTest {
     @Test(enabled = true, description = "TS2321: Teslim alınan evrakın gelen evrak zimmet raporundan kontrolü")
     public void TS2321() throws InterruptedException {
         String testid= "TS-2321";
-        String state =" nolu test başladı:";
         String basariMesaji = "İşlem başarılıdır!";
         String konuKodu = "120.05";
         String konu1 = "TS-2321-" + getSysDate();
@@ -690,7 +693,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
                 .openPage()
                 .evrakNoIleEvrakSec(konu2)
                 .btnIadeEt()
-               .btnIadeEtIadeEt()
+                .btnIadeEtIadeEt()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
 

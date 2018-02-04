@@ -4,6 +4,7 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -65,6 +66,10 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     SelenideElement btnIadeEtIadeEt = $(By.id("mainPreviewForm:iadeEtButton_id"));
     ElementsCollection tblEvrakGecmisi = $$("[id$='hareketGecmisiDataTable_data'] > tr[role='row']");
 
+    SelenideElement evrakOnizlemeKontrol = $(By.id("mainPreviewForm:eastLayout"));
+    ElementsCollection ilgiBilgileriEkleriKontrol = $$("div[id$='ilgiListesiDataTable'] tr[data-ri]");
+    ElementsCollection teslimEvrakEkleri = $$("a[href^='#mainPreviewForm']");
+    ElementsCollection teslimEvrakEkleriKontrol = $$("div[id$='ekListesiOnizlemeDataTable'] tr[data-ri]");
 
     public TeslimAlinmayiBekleyenlerPage openPage() {
         solMenu(SolMenuData.BirimEvraklari.TeslimAlinmayiBekleyenler);
@@ -141,6 +146,36 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
                 .click();
         return this;
     }
+
+    @Step("Evrak Onizleme Kontrolu")
+    public TeslimAlinmayiBekleyenlerPage evrakOnizlemeKontrol() {
+        if(evrakOnizlemeKontrol.isDisplayed())
+            Allure.addAttachment("Evrak Önizleme Ekranı", "açılmıştır");
+        return this;
+    }
+
+    @Step("Teslim Alınmayı Bekleyenler Evrak Ekleri Tıklama")
+    public TeslimAlinmayiBekleyenlerPage teslimEvrakEkleri(String select) {
+        teslimEvrakEkleri.filterBy(Condition.text(select)).get(0).click();
+        return this;
+    }
+
+    @Step("Teslim Alınmayı Bekleyenler Ilgi Bilgileri Kontrol")
+    public TeslimAlinmayiBekleyenlerPage teslimIlgiBilgileriEvrakEkleriKontrol(String ek1,String ek2) {
+
+        boolean durum1 = ilgiBilgileriEkleriKontrol.filterBy(Condition.text(ek1)).size() > 0;
+        boolean durum2 = ilgiBilgileriEkleriKontrol.filterBy(Condition.text(ek2)).size() > 0;
+        return this;
+    }
+
+    @Step("Teslim Alınmayı Bekleyenler Evrak Ekleri Kontrol")
+    public TeslimAlinmayiBekleyenlerPage teslimEvrakEkleriKontrol(String ek1,String ek2,String ek3) {
+        teslimEvrakEkleriKontrol.filterBy(Condition.text(ek1)).shouldHaveSize(1);
+        teslimEvrakEkleriKontrol.filterBy(Condition.text(ek2)).shouldHaveSize(1);
+        teslimEvrakEkleriKontrol.filterBy(Condition.text(ek3)).shouldHaveSize(1);
+        return this;
+    }
+
 
     @Step("Teslim Alinmayi Bekleyenler  sayfasında evrakın listeye düşmediği kontrolu")
     public TeslimAlinmayiBekleyenlerPage evrakNoGelmedigiGorme(String konu) {

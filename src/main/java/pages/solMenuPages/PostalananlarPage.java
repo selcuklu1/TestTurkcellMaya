@@ -69,7 +69,7 @@ public class PostalananlarPage extends MainPage {
     SelenideElement btnIcerikPDPostaKodGnc = $x("//*[@id='inboxItemInfoForm:postaGuncellePanel']/tbody/tr[2]/td[3]/input");
     SelenideElement btnIcerkPDGuncellemeKaydet = $x("//*[@id='inboxItemInfoForm:postaGuncelleDialog']/div[2]/div/div/button");
     SelenideElement icerikEvrakSayisi = $x("//*[@id='inboxItemInfoForm:evrakDetayPanelGrid']/tbody/tr[3]/td[3]/label");
-    //SelenideElement btnEtiketPopupKapat = $x("//*[@id='mainPreviewForm:showAppletContainer']/div/div[1]/a/span");
+    SelenideElement btnEtiketPopupKapat = $x("//*[@id='mainPreviewForm:showAppletContainer']/div/div[1]/a/span");
     //  SelenideElement btnDagitimYerDetayKapat = $x("//*[@id='mainPreviewForm:dagitimPlaniDetayViewDialog']/div[1]/a/span");
 
 
@@ -146,6 +146,12 @@ public class PostalananlarPage extends MainPage {
     @Step("Postaladıklarım seç")
     public PostalananlarPage postaladiklarimSec() {
         tblEvrakSec.click();
+        return this;
+    }
+
+    @Step("Etiket Bastir Popup Kapat")
+    public PostalananlarPage btnPopupEtiketBastirKapat() {
+        btnEtiketPopupKapat.click();
         return this;
     }
 
@@ -239,7 +245,7 @@ public class PostalananlarPage extends MainPage {
     /**
      * @return
      */
-    @Step("Postalanan Evrak Sayisi")
+    @Step("Postalanan Evrak Sayisi ve kontrolü")
     public String evSay() {
         return $x("//tbody/tr[3]/td[3]/label").getAttribute("outerText");
     }
@@ -389,7 +395,7 @@ public class PostalananlarPage extends MainPage {
         return this;
     }
 
-    @Step("Etiket Bastir")
+    @Step("Etiket Bastir ve kontrol")
     public PostalananlarPage etiketBastir() {
 
         postalananEvrakEtiketYazdir.click();
