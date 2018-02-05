@@ -80,9 +80,35 @@ public class TopluPostalamaTest extends BaseTest {
                 .sImzaImzala()
                 .popupSimzaEvet();
 
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .konuKoduSec("Entegrasyon İşlemleri")
+                .konuDoldur(evrakKonu + "KEP")
+                .kaldiralacakKlasorlerSec("Diğer")
+                .geregiSecimTipiSec("Kurum")
+                .geregiSec(evrakGidecegiYer)
+                .geregiKurumPostaTipi("KEP")
+                .onayAkisiEkle()
+                .onayAkisiKullaniciTipiSec("Mehmet BOZDEMİR [Antalya İl Müdürü]", "İmzalama")
+                .kullan();
+        evrakOlusturPage
+                .editorTabAc()
+                .editorIcerikDoldur("TS1804 için evrak.")
+                .imzala()
+                .sImzasec()
+                .sImzaImzala()
+                .popupSimzaEvet();
+
         topluPostalanacakEvraklarPage
                 .openPage()
                 .gidecegiYerListesiAlfabetikSiraKontrolu()
+                .dagitimYeriAdetKontrol()
+                .gidecegiYerSec(gidecegiYerler, true)
+                .sorgula()
+                .kepPostaSekliKontrol()
+                .pagingOzelligi()
                 .tarihAraligiSec(baslangicTarihi, bitisTarihi)
                 .gidecegiYerSec(gidecegiYerler, true, true)
                 .postaTipiSec(new String[]{
@@ -1205,18 +1231,6 @@ public class TopluPostalamaTest extends BaseTest {
         TopluPostaladiklarimPage topluPostaladiklarimPage = new TopluPostaladiklarimPage();
         ImzaladiklarimPage imzaladiklarimPage = new ImzaladiklarimPage();
         EvrakOlusturPage evrakOlusturPage = new EvrakOlusturPage();
-
-//        String[] konu = new String[]{
-//                "TC1675 20180113152416", "TC1675 20180113152416100"
-//        };
-//
-
-//        String[] konu2 = new String[]{
-//                "TC1811 20180115115312", "TC1811 20180115115312100"
-//        };
-//                String[] evrakNo1675 = new String[]{
-//                "10538", "10537"
-//        };
 
         login("mbozdemir", "123");
         //region Parameters
