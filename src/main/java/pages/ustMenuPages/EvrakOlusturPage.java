@@ -1809,6 +1809,11 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Editörde eklenen dağıtım tipi ve posta kontrol")
+        public EditorTab editordeGeregiPostaKontrol () {
+            cmbGeregi.getSelectableItems();
+            return this;
+        }
 
         @Step("Editorde eklenen ilgi kontrolu: {description}")
         public EditorTab editordeIlgiKontrol(String ilgi, String description) {
