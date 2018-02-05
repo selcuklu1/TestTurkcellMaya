@@ -51,17 +51,23 @@ public class EvrakPostalamaTest extends BaseTest {
     public void TS0308() throws InterruptedException {
         login("Mbozdemir", "123");
         String konu = "TS0308_" + getSysDate();
+
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
+                .bilgilerTabAlanKontrolleri()
                 .konuKoduSec("YAZILIM GEL")
                 .konuDoldur(konu)
-                .kaldirilacakKlasorler("Diğer")
+                .evrakTuruSec("Resmi Yazışma")
+                .gizlilikDerecesiSec("Normal")
+                .ivedilikSec("Normal")
+                .geregiSec("Optiim Birim")
+//                .kaldirilacakKlasorler("Diğer")
+//                .kaldirilacakKlasorler("B1K1")
                 .bilgialaniKontrol()
                 .gizlilikDerecesiSec("Normal")
 //                .kaldirilacakKlasorler("B1K1")
                 .ivedilikSec("Normal")
-//                .kaldirilacakKlasorler("B1K1")
                 .evrakTuruSec("Resmi Yazışma")
                 .geregiSecimTipiSec("Kullanıcı")
                 .geregiSec("Optiim TEST")
