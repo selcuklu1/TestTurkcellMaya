@@ -54,8 +54,16 @@ public class EvrakPostalamaTest extends BaseTest {
                 .konuKoduSec("YAZILIM GEL")
                 .konuDoldur(konu)
                 .kaldirilacakKlasorler("Diğer")
+                .bilgialaniKontrol()
+                .gizlilikDerecesiSec("Normal")
+//                .kaldirilacakKlasorler("B1K1")
+                .ivedilikSec("Normal")
 //                .kaldirilacakKlasorler("B1K1")
                 .evrakTuruSec("Resmi Yazışma")
+                .geregiSecimTipiSec("Kullanıcı")
+                .geregiSec("Optiim TEST")
+                .geregiSecimTipiSec("Dağıtım Planları")
+                .geregiSec("TSK DAĞITIM PLANI")
                 .onayAkisiKullanicilariTemizle()
                 .onayAkisiEkle()
                 .onayAkisiKullaniciTipiSec("Mehmet BOZDEMİR", "İmzalama")
@@ -69,14 +77,28 @@ public class EvrakPostalamaTest extends BaseTest {
                 .sistemeKayitliDokumanArama()
                 .tablodaBulunanEvrakiEkle();
 
+
         evrakOlusturPage
                 .islemMesaji().basariliOlmali("İşlem başarılıdır!");
 
+        evrakOlusturPage.ekleriTabAc()
+                .ekleriTablariGeldigiGorme()
+                .ekleriEkMetniDoldur("TS0308_PDF")
+                .ekleriDosyaEkle("C:\\TestAutomation\\BelgenetFTA\\documents\\TS0308PDF.pdf")
+                .ekleriEkle()
+                .fizikselEkEkleTabiniAc()
+                .sistemdeKayitliEvrakEkleTabiniAc()
+                .arsivdeKayitliEvrakEkleTabiniAc()
+                .webAdresiEkleTabiniAc();
 
+        evrakOlusturPage
+                .editorTabAc()
+                .editorSayiAl();
         evrakOlusturPage
                 .editorTabAc()
                 .editorIcerikDoldur("TS0308")
                 .editorEvrakGeregiSec("YAZILIM GELİ")
+                .editordeEkKontrol("TS0308PDF","Ek kontrol")
                 .imzala()
                 .popupSImzalaIslemleri();
 
@@ -95,6 +117,7 @@ public class EvrakPostalamaTest extends BaseTest {
                 .popupPostalanacakEvrakYazdir()
                 .popupPostaYazdirmaKapat()
                 .postalanacakEvrakOrjYaz()
+                .pdfEvrakYazismaKuralkontrol()
                 .gramajDoldur("111111")
                 .hesapla()
                 .postala();
@@ -320,6 +343,9 @@ public class EvrakPostalamaTest extends BaseTest {
                 .konuKoduSec("YAZILIM GEL")
                 .konuDoldur(konu)
                 .kaldirilacakKlasorler("Diğer")
+                .gizlilikDerecesiSec("Normal")
+//                .kaldirilacakKlasorler("B1K1")
+                .ivedilikSec("Normal")
 //                .kaldirilacakKlasorler("B1K1")
                 .evrakTuruSec("Resmi Yazışma")
                 .geregiSecimTipiSec("Gerçek Kişi")

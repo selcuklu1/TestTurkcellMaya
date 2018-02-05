@@ -951,6 +951,11 @@ public class EvrakOlusturPage extends MainPage {
             btnBilgiLovSecilemUpdate.click();
             return this;
         }
+        @Step("Bilgi alanı kontrol")
+        public BilgilerTab bilgialaniKontrol() {
+            txtBilgi.click();
+            return this;
+        }
 
         @Step("Adres hitapta görünsün")
         public BilgilerTab adresHitaptaGorunsunSec(boolean secim) {
