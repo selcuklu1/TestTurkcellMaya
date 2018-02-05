@@ -238,6 +238,8 @@ public class KurumYonetimiTest extends BaseTest {
                 .geregiSecimTipiSec("Kurum")
                 .geregiSec(yeniKurumAdi)
                 .geregiSecilenKontrol(yeniKurumAdi, kontrolEdilecekGeregiDetay, "Adi Posta");
+
+        
     }
 
     @Test(enabled = true, description = "TS01108 : Kurum Sorgulama")

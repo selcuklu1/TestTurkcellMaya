@@ -42,6 +42,7 @@ public class EvrakPostalamaTest extends BaseTest {
         postalananEvrakRaporuPage = new PostalananEvrakRaporuPage();
     }
 
+
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS0308: Evrak Postalama")
     public void TS0308() throws InterruptedException {
@@ -427,6 +428,7 @@ public class EvrakPostalamaTest extends BaseTest {
                 .filter().findRowsWith(Condition.text(konu)).first().click();
 
         postalanacakEvraklarPage.evrakPostala()
+
                 .tuzelKisiPostaKod("309")
                 .tuzelKisiPostaAciklama("TS0309")
                 .birimPostaKod("309")
@@ -436,6 +438,7 @@ public class EvrakPostalamaTest extends BaseTest {
                 .gidisSekli("Adi Posta")
                 .ilkPostaPostaKod("309")
                 .ilkPostaAciklama("TS0309")
+                .cmbYurticidisi("Yurt Dışı")
                 .gramajDoldur("15")
                 .hesapla()
                 .etiketYazdir()
@@ -461,9 +464,8 @@ public class EvrakPostalamaTest extends BaseTest {
                 .btnFiltrenenPostaIcerikGoster(konu)
                 .postaDetayiTikla()
                 .evrakYazdir()
+                .popupYazpdfkontrolveKapatma()
                 .etiketBastir();
-
-
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -518,7 +520,7 @@ public class EvrakPostalamaTest extends BaseTest {
                 .postaSorgulama();
         postalananEvrakRaporuPage.ekranSorgulananSonucKontrol();
         postalananEvrakRaporuPage.evrakRaporForm();
-        
+
 
     }
 
