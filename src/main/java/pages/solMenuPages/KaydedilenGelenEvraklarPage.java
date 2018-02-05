@@ -12,6 +12,7 @@ import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
@@ -55,6 +56,7 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
     BelgenetElement cmbHavaleIslemleriOnaylayacakKisi = comboLov(By.id("mainPreviewForm:onaylayacakKisiLov:LovText"));
     BelgenetElement cmbHavaleIslemleriBirim = comboLov(By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovText"));
     SelenideElement btnHavaleOnayinaGonder = $("[id^='mainPreviewForm:j_idt'] [class^='ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only havaleIslemleriGonder']");
+    SelenideElement btnGonder = $("[id^='mainPreviewForm:j_idt'] [class^='ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only havaleGonderButonClass']");
 
     //otomatik havale checkboxı
     SelenideElement otomatikHavaleCheckbox = $("[id='mainPreviewForm:havaleDagitimLovPanel'] [class='ui-chkbox-box ui-widget ui-corner-all ui-state-default']");
@@ -62,11 +64,13 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
     SelenideElement kisiKontrol = $(By.id("mainPreviewForm:dagitimBilgileriKullaniciLov:LovText"));
     SelenideElement kullanıcıListeKontrol = $(By.id("mainPreviewForm:dagitimBilgileriKisiListesiLov:LovText"));
     SelenideElement aciklamaKontrol = $(By.id("mainPreviewForm:havaleAciklama"));
-    SelenideElement dosyaEkleKontrol = $(By.id("mainPreviewForm:fileUploadHavaleEk_input"));
+    SelenideElement dosyaEkleKontrol = $(By.id("mainPreviewForm:fileUploadHavaleEk"));
     SelenideElement islemSureKontrol = $(By.id("mainPreviewForm:islemSuresiTarih_input"));
 
     BelgenetElement txtHavaleIslemleriKisi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKullaniciLov:LovText"));
     SelenideElement txtEvrakBilgileriAciklama = $(By.id("mainPreviewForm:havaleAciklama"));
+    SelenideElement dagitimBilgileriKisiOpsiyon = $("select[id^='mainPreviewForm:dagitimBilgileriKullaniciLov:LovSecilenTable']");
+    SelenideElement dosyaPath = $(By.xpath("//input[@id='mainPreviewForm:fileUploadHavaleEk_input']"));
 
     @Step("Kaydedilen gelen evraklar sayfası aç")
     public KaydedilenGelenEvraklarPage openPage() {
@@ -254,6 +258,12 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Havale İşlemleminde Dosya Ekle")
+    public KaydedilenGelenEvraklarPage dosyaEkle() {
+        dosyaEkleKontrol.click();
+        return this;
+    }
+
     @Step("Havale İşlemleri Kişi alanında \"{kisi}\" seç")
     public KaydedilenGelenEvraklarPage havaleIslemleriKisiDoldur(String kisi) {
         txtHavaleIslemleriKisi.selectLov(kisi);
@@ -263,6 +273,35 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
     @Step("Havale İşlemleri Açıklama Alanını Doldur")
     public KaydedilenGelenEvraklarPage aciklamaAlaniDoldur(String aciklama) {
         txtEvrakBilgileriAciklama.sendKeys(aciklama);
+        return this;
+    }
+
+    @Step("Dağıtım Bilgileri Birim alanında \"{birim}\" seçilir")
+    public KaydedilenGelenEvraklarPage dagitimBilgileriKisiOpsiyon(String opsiyon) {
+        dagitimBilgileriKisiOpsiyon.selectOptionByValue(opsiyon);
+        return this;
+    }
+
+    @Step("Evrak Ekleri Dosya Ekleme : \"{pathToFile}\" ")
+    public KaydedilenGelenEvraklarPage havaleDosyaEkle(String pathToFile) throws InterruptedException {
+        uploadFile(dosyaPath, pathToFile);
+        Thread.sleep(4000);
+//        WebDriverRunner.getWebDriver()
+//                .findElement(dosyaPath)
+//                .sendKeys(pathToFile);
+        return this;
+    }
+
+
+    @Step("Havale dosya ekleme adi kontrol : \"{dosyaAdi}\" ")
+    public KaydedilenGelenEvraklarPage havaleDosyaEkleDosyaAdiKontrol(String dosyaAdi) {
+        $(byText(dosyaAdi)).shouldBe(Condition.visible);
+        return this;
+    }
+
+    @Step("Kaydedilen Gelen Evrak Gönder")
+    public KaydedilenGelenEvraklarPage buttonGonder() {
+        btnGonder.click();
         return this;
     }
 }
