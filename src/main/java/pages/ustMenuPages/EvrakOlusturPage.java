@@ -397,6 +397,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+
         @Step("Kullanıcılar alanı doldur")
         public BilgilerTab kullanicilarDoldur(String kullanici) {
             txtOnayAkisiKullanicilar.selectLov(kullanici);
@@ -952,6 +953,11 @@ public class EvrakOlusturPage extends MainPage {
         @Step("Bilgi alanı güncelle")
         public BilgilerTab bilgiAlaniGuncelle() {
             btnBilgiLovSecilemUpdate.click();
+            return this;
+        }
+        @Step("Bilgi alanı kontrol")
+        public BilgilerTab bilgialaniKontrol() {
+            txtBilgi.click();
             return this;
         }
 

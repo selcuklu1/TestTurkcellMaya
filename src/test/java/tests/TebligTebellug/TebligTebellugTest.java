@@ -95,7 +95,7 @@ public class TebligTebellugTest extends BaseTest {
 
         tebliglerPage
                 .openPage()
-                .tebliglerMenuKirmiziKontrolu()
+                .tebliglerMenuKirmiziKontrolu(true)
                 .evrakSec(konu, birim, tebligEden, evrakTipi, tebligNot)
                 .icerikGoster(konu, birim, tebligEden, evrakTipi, tebligNot);
 
@@ -182,7 +182,7 @@ public class TebligTebellugTest extends BaseTest {
 
         tebliglerPage
                 .openPage()
-                .tebliglerMenuKirmiziKontrolu()
+                .tebliglerMenuKirmiziKontrolu(true)
                 .evrakSec(konu, birim, tebligEden, evrakTipi, tebligNot)
                 .tebellugEtButonuKontrolEt()
                 .icerikGoster(konu, birim, tebligEden, evrakTipi, tebligNot);
@@ -271,7 +271,7 @@ public class TebligTebellugTest extends BaseTest {
 
         tebliglerPage
                 .openPage()
-                .tebliglerMenuKirmiziKontrolu()
+                .tebliglerMenuKirmiziKontrolu(true)
                 .evrakSec(konu, birim, tebligEden, evrakTipi, tebligNot)
                 .icerikGoster(konu, birim, tebligEden, evrakTipi, tebligNot);
 

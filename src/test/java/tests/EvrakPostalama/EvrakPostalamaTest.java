@@ -22,6 +22,9 @@ import pages.solMenuPages.PostalananlarPage;
 import pages.ustMenuPages.EvrakOlusturPage;
 import pages.ustMenuPages.PostalananEvrakRaporuPage;
 
+import static com.codeborne.selenide.Selenide.close;
+import static com.codeborne.selenide.Selenide.switchTo;
+
 public class EvrakPostalamaTest extends BaseTest {
 
     EvrakOlusturPage evrakOlusturPage;
@@ -52,6 +55,7 @@ public class EvrakPostalamaTest extends BaseTest {
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
+                .bilgilerTabAlanKontrolleri()
                 .konuKoduSec("YAZILIM GEL")
                 .konuDoldur(konu)
                 .evrakTuruSec("Resmi Yazışma")
@@ -60,6 +64,15 @@ public class EvrakPostalamaTest extends BaseTest {
                 .geregiSec("Optiim Birim")
 //                .kaldirilacakKlasorler("Diğer")
 //                .kaldirilacakKlasorler("B1K1")
+                .bilgialaniKontrol()
+                .gizlilikDerecesiSec("Normal")
+//                .kaldirilacakKlasorler("B1K1")
+                .ivedilikSec("Normal")
+                .evrakTuruSec("Resmi Yazışma")
+                .geregiSecimTipiSec("Kullanıcı")
+                .geregiSec("Optiim TEST")
+                .geregiSecimTipiSec("Dağıtım Planları")
+                .geregiSec("TSK DAĞITIM PLANI")
                 .onayAkisiKullanicilariTemizle()
                 .onayAkisiEkle()
                 .onayAkisiKullaniciTipiSec("Mehmet BOZDEMİR", "İmzalama")
@@ -73,14 +86,31 @@ public class EvrakPostalamaTest extends BaseTest {
                 .sistemeKayitliDokumanArama()
                 .tablodaBulunanEvrakiEkle();
 
+
         evrakOlusturPage
                 .islemMesaji().basariliOlmali("İşlem başarılıdır!");
 
+        evrakOlusturPage.ekleriTabAc()
+                .ekleriTablariGeldigiGorme()
+                .ekleriEkMetniDoldur("TS0308_PDF")
+                .ekleriDosyaEkle("C:\\TestAutomation\\BelgenetFTA\\documents\\TS0308PDF.pdf")
+                .ekleriEkle()
+                .ekleriEkMetniDoldur("TS0308PDF")
+                .ekleriDosyaEkle("C:\\TestAutomation\\BelgenetFTA\\documents\\TS0308PDF.pdf")
+                .ekleriEkle()
+                .fizikselEkEkleTabiniAc()
+                .sistemdeKayitliEvrakEkleTabiniAc()
+                .arsivdeKayitliEvrakEkleTabiniAc()
+                .webAdresiEkleTabiniAc();
 
+        evrakOlusturPage
+                .editorTabAc()
+                .editorSayiAl();
         evrakOlusturPage
                 .editorTabAc()
                 .editorIcerikDoldur("TS0308")
                 .editorEvrakGeregiSec("YAZILIM GELİ")
+                .editordeEkKontrol("TS0308_PDF","Ek kontrol")
                 .imzala()
                 .popupSImzalaIslemleri();
 
@@ -97,14 +127,36 @@ public class EvrakPostalamaTest extends BaseTest {
                 .postalamaAciklama("Test")
                 .postalanacakEvrakYaz()
                 .popupPostalanacakEvrakYazdir()
-                .popupPostaYazdirmaKapat()
+                .popupPostaYazdirmaKapat();
+        switchTo().window(1);
+        closeNewWindow();
+
+        switchTo().window(0);
+        postalanacakEvraklarPage
                 .postalanacakEvrakOrjYaz()
+                .pdfEvrakYazismaKuralkontrol()
                 .gramajDoldur("111111")
                 .hesapla()
-                .postala();
+                .postala()
+                .dialogpostalaEvet();
 
+        switchTo().window(1);
+        closeNewWindow();
+        switchTo().window(0);
+        
+        postalananlarPage.openPage();
+        postalananlarPage.filter().findRowsWith(Condition.text(konu)).shouldHaveSize(1).first().click();
+        postalananlarPage.postaDetayiTikla()
+                .evSay();
+        postalananlarPage
+                .postalananyerlerKontrol()
+                .popupYazpdfkontrolveKapatma();
 
-        Selenide.close();
+        postalananlarPage.etiketBastir()
+                .btnPopupEtiketBastirKapat();
+        postalananlarPage.btnEvrakEkleri()
+                .btnEyazismaPaket();
+
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -324,6 +376,9 @@ public class EvrakPostalamaTest extends BaseTest {
                 .konuKoduSec("YAZILIM GEL")
                 .konuDoldur(konu)
                 .kaldirilacakKlasorler("Diğer")
+                .gizlilikDerecesiSec("Normal")
+//                .kaldirilacakKlasorler("B1K1")
+                .ivedilikSec("Normal")
 //                .kaldirilacakKlasorler("B1K1")
                 .evrakTuruSec("Resmi Yazışma")
                 .geregiSecimTipiSec("Gerçek Kişi")

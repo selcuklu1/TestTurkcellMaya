@@ -32,6 +32,8 @@ public class PostalananlarPage extends MainPage {
     ElementsCollection tablePostalananlar = $$("tbody[id='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
     SelenideElement btnPostaDetayi = $x("//span[text() = 'Posta Detayı']/../../..//button");
     ElementsCollection tblEvraklar = $$("[id^='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
+    SelenideElement tblPostalananYerler = $x("//*[@id='mainPreviewForm:postalananDataGrid']");
+
 
     SelenideElement btnIcerikPostaDetayiTuzelKisiGuncelle = $x("//*[@id='inboxItemInfoForm:postalananDataGrid']/tbody/tr/td/div/table/tbody/tr[4]/td[8]/div/button[1]");
     SelenideElement btnGuncelle = $x("//*[@id='mainPreviewForm:postalananDataGrid']/tbody/tr/td/div/table/tbody/tr[2]/td[8]/div/button[1]");
@@ -72,6 +74,8 @@ public class PostalananlarPage extends MainPage {
     SelenideElement icerikEvrakSayisi = $x("//*[@id='inboxItemInfoForm:evrakDetayPanelGrid']/tbody/tr[3]/td[3]/label");
     SelenideElement btnEtiketPopupKapat = $x("//*[@id='mainPreviewForm:showAppletContainer']/div/div[1]/a/span");
     //  SelenideElement btnDagitimYerDetayKapat = $x("//*[@id='mainPreviewForm:dagitimPlaniDetayViewDialog']/div[1]/a/span");
+    SelenideElement btnEvrakEkleri = $("//a[text() = 'Evrak Ekleri']");
+    SelenideElement btnEvrakEyazismaPaket = $("//a[text() = 'E-Yazışma Paketi']");
 
 
     @Step("Postalananlar sayfası aç")
@@ -85,6 +89,17 @@ public class PostalananlarPage extends MainPage {
         return this;
     }
 
+    @Step("Postalanan Evrak içi Evrak Ekleri seçimi ve kontrol")
+    public PostalananlarPage btnEvrakEkleri () {
+        btnEvrakEkleri.click();
+        return this;
+    }
+
+    @Step("Postalanan Evrak içi E-yazışma paketi içerik kontrol")
+    public PostalananlarPage btnEyazismaPaket () {
+        btnEvrakEyazismaPaket.click();
+        return this;
+    }
     @Step("Evrak seçilir")
     public PostalananlarPage evrakSec(String konu, String yer, String tarih) {
         tblEvraklar.filterBy(Condition.text(konu))
@@ -105,6 +120,13 @@ public class PostalananlarPage extends MainPage {
     @Step("Filtrele Seç")
     public PostalananlarPage filtreSec(String text) {
         cmbFiltre.selectOption(text);
+        return this;
+    }
+
+    @Step("Postalanan yerler tablosu içerik ve kontrolleri")
+    public PostalananlarPage postalananyerlerKontrol () {
+        String kontrl = tblPostalananYerler.getAttribute("innerText");
+        System.out.println(kontrl);
         return this;
     }
 
@@ -246,7 +268,7 @@ public class PostalananlarPage extends MainPage {
     /**
      * @return
      */
-    @Step("Postalanan Evrak Sayisi ve kontrolü")
+    @Step("Postalanan Evrak Detayları , Sayisi ve kontrolü")
     public String evSay() {
         return $x("//tbody/tr[3]/td[3]/label").getAttribute("outerText");
     }
