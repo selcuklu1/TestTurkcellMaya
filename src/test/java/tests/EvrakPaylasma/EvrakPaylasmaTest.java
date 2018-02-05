@@ -670,8 +670,6 @@ public class EvrakPaylasmaTest extends BaseTest {
         String geldigiYer = "Yenikurum1485";
         String evrakTarihi = tarihBugun;
 
-        login("mbozdemir", "123");
-
         gelenEvrakKayitPage
                 .openPage()
                 .konuKoduDoldur(konuKodu)

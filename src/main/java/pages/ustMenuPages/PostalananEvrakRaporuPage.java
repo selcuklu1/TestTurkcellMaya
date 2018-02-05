@@ -69,9 +69,11 @@ public class PostalananEvrakRaporuPage extends MainPage {
         return this;
     }
 
-    @Step("Çıkan sonuçları kontrol et")
+    @Step("Çıkan sonuçları kontrol et, gelen sonucu object olarak alımı ve alt değerlerin kontrolü")
     public PostalananEvrakRaporuPage sonucKarsilastirma() {
         tblSorgulamaSonuc.get(0);
+        String innertext = tblSorgulamaSonuc.get(0).getAttribute("innerText");
+        System.out.println(innertext);
         return this;
     }
 
