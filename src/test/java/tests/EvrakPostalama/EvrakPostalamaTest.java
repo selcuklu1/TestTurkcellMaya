@@ -42,6 +42,7 @@ public class EvrakPostalamaTest extends BaseTest {
         postalananEvrakRaporuPage = new PostalananEvrakRaporuPage();
     }
 
+
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS0308: Evrak Postalama")
     public void TS0308() throws InterruptedException {
@@ -232,7 +233,7 @@ public class EvrakPostalamaTest extends BaseTest {
                 .geregiKurumPostaTipi("E-Posta")
                 .geregiSecimTipiSec("Kurum")
                 .geregiDoldur("Başbakanlık", "Kurum")
-                .geregiKurumPostaTipi("E-Posta")
+                .geregiKurumPostaTipi("APS")
                 .onayAkisiKullanicilariTemizle()
                 .onayAkisiEkle()
                 .onayAkisiKullaniciTipiSec("Mehmet BOZDEMİR", "İmzalama")
@@ -427,6 +428,7 @@ public class EvrakPostalamaTest extends BaseTest {
                 .filter().findRowsWith(Condition.text(konu)).first().click();
 
         postalanacakEvraklarPage.evrakPostala()
+
                 .tuzelKisiPostaKod("309")
                 .tuzelKisiPostaAciklama("TS0309")
                 .birimPostaKod("309")
@@ -436,6 +438,7 @@ public class EvrakPostalamaTest extends BaseTest {
                 .gidisSekli("Adi Posta")
                 .ilkPostaPostaKod("309")
                 .ilkPostaAciklama("TS0309")
+                .cmbYurticidisi("Yurt Dışı")
                 .gramajDoldur("15")
                 .hesapla()
                 .etiketYazdir()
@@ -461,9 +464,8 @@ public class EvrakPostalamaTest extends BaseTest {
                 .btnFiltrenenPostaIcerikGoster(konu)
                 .postaDetayiTikla()
                 .evrakYazdir()
+                .popupYazpdfkontrolveKapatma()
                 .etiketBastir();
-
-
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -478,29 +480,48 @@ public class EvrakPostalamaTest extends BaseTest {
                 .postaSorgulama();
 
         Thread.sleep(4000);
-        postalananEvrakRaporuPage.ekranSorgulananSonucKontrol();
+       // postalananEvrakRaporuPage.ekranSorgulananSonucKontrol();
 
         postalananEvrakRaporuPage.cmbEvrakSahibi("YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ")
                 .postaSorgulama();
         Thread.sleep(1000);
         postalananEvrakRaporuPage.evrakSahibiKontrol("YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ");
 
-        postalananEvrakRaporuPage.cmbPostalananYerSecimi("Optiim otomasyon")
+        postalananEvrakRaporuPage.cmbClearEvrakSahibi();
+        postalananEvrakRaporuPage.cmbPostalananYerSecimi("OptiimTest TestOptiim")
                 .postaSorgulama();
 
-        postalananEvrakRaporuPage.postalananyerKontrol("Optiim otomasyon");
-        postalananEvrakRaporuPage.cmbpostaSeklisecimi("Iç giden")
+        String expected = "OptiimTestTestOptiim";
+        postalananEvrakRaporuPage.postalananyerKontrol(expected);
+        postalananEvrakRaporuPage.cmbPostalananYerSecimiTemizle();
+
+        postalananEvrakRaporuPage.cmbpostaSeklisecimi("İç Giden")
                 .postaSorgulama();
-        postalananEvrakRaporuPage.cmbpostaSeklisecimi("Dış giden")
+        postalananEvrakRaporuPage.cmbpostaSeklisecimi("Dış Giden")
                 .postaSorgulama();
+        postalananEvrakRaporuPage.cmbpostaSeklisecimi("Seçiniz");
         postalananEvrakRaporuPage.cmbPostaTipisec("Adi Posta")
                 .postaSorgulama();
+        postalananEvrakRaporuPage.cmbPostaTipisec("Seçiniz");
         postalananEvrakRaporuPage.txtPostaAciklama("TS")
                 .postaSorgulama();
+        postalananEvrakRaporuPage.clearPostaAciklamaAlani();
         postalananEvrakRaporuPage.cmbPostalayanadi("Zübeyde TEKİN")
                 .postaSorgulama();
+        postalananEvrakRaporuPage.cmbClearPostalayanAdi();
         postalananEvrakRaporuPage.chkboxPostaladiklarim()
                 .postaSorgulama();
+        postalananEvrakRaporuPage
+                .cmbEvrakSahibi("YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ")
+                .cmbPostalananYerSecimi("OptiimTest TestOptiim")
+                .cmbpostaSeklisecimi("İç Giden")
+                .cmbPostaTipisec("Adi Posta")
+                .cmbPostalayanadi("Zübeyde TEKİN")
+                .postaSorgulama();
+        postalananEvrakRaporuPage.ekranSorgulananSonucKontrol();
+        postalananEvrakRaporuPage.evrakRaporForm();
+
+
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -510,10 +531,9 @@ public class EvrakPostalamaTest extends BaseTest {
         String konu = "TS1685_";
         postalanacakEvraklarPage.openPage()
                 .btnFiltrenenPostaIcerikGoster(konu);
-
-        postalanacakEvraklarPage.btnDagitimGidisSekli("APS")
+        postalanacakEvraklarPage.btnEvrakIcerikEvrakPostala();
+        postalanacakEvraklarPage.btnDagitimGidisSekli("Adi Posta")
                 .inputIcerikPstakod("0310");
-        postalanacakEvraklarPage.btnDagitimGidisSekli("KEP");
         postalanacakEvraklarPage
                 .btnIcerikPostaYazdir();
         postalanacakEvraklarPage
@@ -526,7 +546,17 @@ public class EvrakPostalamaTest extends BaseTest {
                 .btnEtiketpopupkapat();
 
         postalanacakEvraklarPage
-                .btnIcerikEvrakPostalama();
-        // .btnIcerikPostalamaEvet();
+                .btnIcerikEvrakPostalama()
+         .btnIcerikPostalamaEvet();
+
+        postalananlarPage.openPage();
+        postalananlarPage.filter().findRowsWith(Condition.text(konu)).first().click();
+        postalananlarPage.postaDetayiTikla();
+        postalananlarPage.evSay();
+        postalananlarPage.evrakYazdir();
+        postalananlarPage.etiketBastir();
+        postalananlarPage.btnPopupEtiketBastirKapat();
+
+
     }
 }

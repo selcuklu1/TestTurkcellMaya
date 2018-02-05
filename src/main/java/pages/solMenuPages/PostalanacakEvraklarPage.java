@@ -71,7 +71,11 @@ public class PostalanacakEvraklarPage extends MainPage {
     SelenideElement popUP = $(By.id("mainPreviewForm:tutarDialogId"));
     SelenideElement cmbDagitimSekli = $("[id^='mainPreviewForm:dataTableId:0:j_idt'] [class*='ui-selectonemenu'] Select");
     SelenideElement btnIcerikEvrakGoster = $x("//*[@id='inboxItemInfoForm:dialogTabMenuRight:uiRepeat:4:cmdbutton']");
-    SelenideElement btnComboEvrakGidisSekli = $x("//*[@id='inboxItemInfoForm:dataTableId']/table/tbody/tr/td[3]/div/div/div/table/tbody/tr[3]/td/div");
+    SelenideElement btnComboEvrakGidisSekli = $x("//*[@id='inboxItemInfoForm:dataTableId_data']/tr[1]/td[3]/div/div/div/table/tbody/tr[3]/td/div/div[1]/select");
+    SelenideElement txtEvrakKonuKontrol = $x("//*[@id='mainPreviewForm:evrakDetayPanelGrid']/tbody/tr[1]/td[3]/label");
+    SelenideElement tblPostalanacakYerler = $x("//*[@id='mainPreviewForm:dataTableId_data']");
+    SelenideElement slctYurtIciyurtdisi = $x("//*[@id='mainPreviewForm:dataTableId:0:yurtIciDisiId']");
+
     SelenideElement btnIcerikPostaKod = $x("//*[@id='inboxItemInfoForm:dataTableId']/table/tbody/tr/td[4]/div/div/div/table/tbody/tr[1]/td[2]/input");
     SelenideElement btnIcerikPostaAciklama = $x("//*[@id='inboxItemInfoForm:dataTableId']/table/tbody/tr/td[4]/div/div/div/table/tbody/tr[2]/td[2]/textarea");
     SelenideElement btnIcerikPostaYazdir = $x("//*[@id='inboxItemInfoForm:dataTableId_data']/tr/td[5]/div/table/tbody/tr[1]/td/button");
@@ -84,6 +88,7 @@ public class PostalanacakEvraklarPage extends MainPage {
     SelenideElement btnIcerikPostalamaEvet = $x("//*[@id='inboxItemInfoForm:postalaDogrulaDialogForm:evetButton_id']");
     SelenideElement btnFizikselEkBulunmaktadirIkon = $x("//span[@class='ui-button-icon-left ui-icon document-typeFizikselEk']");
     SelenideElement txtEvrakinFizikselEkivardir = $x("//*[contains(text(),'Evrakın fiziksel eki vardır, göndermeyi unutmayınız!')]");
+    SelenideElement btnIcerikEvrakPostala = $x("//*[@id='inboxItemInfoForm:dialogTabMenuRight:uiRepeat:4:cmdbutton']");
     //Önizleme
 
     SelenideElement formEvrakOnizleme = $(By.id("mainPreviewForm:evrakOnizlemeTab"));
@@ -141,6 +146,11 @@ public class PostalanacakEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Evrak içerik içindeki Evrak Postala butonu")
+    public PostalanacakEvraklarPage btnEvrakIcerikEvrakPostala() {
+        btnIcerikEvrakPostala.click();
+        return this;
+    }
     @Step("Evrak içerik Evrak Göster butonu")
     public PostalanacakEvraklarPage btnIcerikEvrakGoster() {
         btnIcerikEvrakGoster.click();
@@ -149,9 +159,16 @@ public class PostalanacakEvraklarPage extends MainPage {
 
     @Step("Dağıtım Gidis Şekli seçimi \"{postaSekli}\" ")
     public PostalanacakEvraklarPage btnDagitimGidisSekli(String postaSekli) {
+       String selectedTxt = btnComboEvrakGidisSekli.getSelectedText();
+       System.out.println(selectedTxt);
         btnComboEvrakGidisSekli.selectOptionContainingText(postaSekli);
         return this;
 
+    }
+    @Step("Yurt içi yurt dışı seçimi \"{yurticdis}\" ")
+    public PostalanacakEvraklarPage cmbYurticidisi(String yurt) {
+        slctYurtIciyurtdisi.selectOption(yurt);
+        return this;
     }
 
     @Step("Evrak içerik göster : \"{konu}\" ")
@@ -162,6 +179,7 @@ public class PostalanacakEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Evrak Secim ve Icerik Kapatma")
     public PostalanacakEvraklarPage evrakSecIcerikKapat(boolean secim) {
         btnEvrakDetayKapat.get(0).click();
         if (secim == true) {
@@ -172,6 +190,20 @@ public class PostalanacakEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Evrak Detayları kontrol")
+    public PostalanacakEvraklarPage txtevrakDetayKontrol () {
+        txtEvrakKonuKontrol.getSelectedText();
+        return this;
+    }
+    @Step("Evrak Detay Postalanan yerler kontrolü - Tablodan kontröl")
+    public PostalanacakEvraklarPage tblDetayPostalananYerlerKontrol () {
+        tblPostalanacakYerler.getAttribute("childElementCount");
+        String kntrltxt = tblPostalanacakYerler.getAttribute("innerText");
+        if (kntrltxt == null ) {
+            System.out.println("Postalanacak Yerler Boş gelmiştir");
+        }
+        return this;
+    }
     @Step("Evrak Postala")
     public PostalanacakEvraklarPage evrakPostala() {
         btnEvrakPostala.click();

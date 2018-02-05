@@ -21,23 +21,18 @@ import static com.codeborne.selenide.Selenide.$$;
 
 public class HavaleOnayınaGelenlerPage extends MainPage {
     ElementsCollection tblEvraklar = $$("[id^='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
-    SelenideElement btnHavaleOnay = $("button[id^='inboxItemInfoForm:dialogTabMenuRight:uiRepeat:4:cmdbutton']");
-    SelenideElement notAlanıDoldur = $(By.id("inboxItemInfoForm:notTextArea_id"));
-    SelenideElement onayıReddet = $(By.id("inboxItemInfoForm:reddetButton_id"));
+    SelenideElement btnHavaleOnay = $("button[id^='mainPreviewForm:onizlemeRightTab:uiRepeat:4:cmdbutton']");
+    SelenideElement notAlanıDoldur = $(By.id("mainPreviewForm:notTextArea_id"));
+    SelenideElement onayıReddet = $(By.id("mainPreviewForm:reddetButton_id"));
+    SelenideElement onizlemeOnayla = $(By.id("mainPreviewForm:onaylaButton_id"));
+
     //      SelenideElement onayıReddetEvet = $(By.id("inboxItemInfoForm:reddetEvetButton_id"));
 //      SelenideElement onayıReddetEvet = $("button[id='inboxItemInfoForm:reddetEvetButton_id']");
 //      SelenideElement btnHavaleOnayReddet = $(By.id("inboxItemInfoForm:reddetEvetButton_id"));
-    ElementsCollection btnHavaleOnayReddet = $$("[id$='inboxItemInfoForm:reddetEvetButton_id']");
-//    SelenideElement f = $(By.xpath("//div[@id='mainInboxForm:inboxDataTable:filtersAccordion']//a[text()='Filtreler']/parent::h3"));
-//    SelenideElement cmbTopluSecim = $(By.id("mainInboxForm:inboxDataTable:j_idt666_button"));
-//    SelenideElement cmbFiltre = $(By.xpath("//select[starts-with(@id,'mainInboxForm:inboxDataTable:filtersAccordion:j_idt']"));
-//    SelenideElement txtSayfadaAra = $(By.xpath("//select[starts-with(@id,'mainInboxForm:inboxDataTable:filtersAccordion:j_idt']"));
-//    SelenideElement dateTxtBaslangicTarihi = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt389_input"));
-//    SelenideElement dateTxtBitisTarihi = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt394_input"));
-//    SelenideElement btnIcerikGöster = $(By.id("mainInboxForm:inboxDataTable:0:detayGosterButton"));
-//    SelenideElement btnTamEkranGöster = $(By.id("mainInboxForm:inboxDataTable:0:tamEkranModuButton"));
-//    SelenideElement tblRapor = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
-//    ElementsCollection tblKaydedilenGelenEvraklar = $$("[id='mainInboxForm:inboxDataTable_data'] tr[data-ri]");
+    ElementsCollection btnHavaleOnayReddet = $$("[id$='mainPreviewForm:reddetEvetButton_id']");
+    ElementsCollection btnHavaleOnayEvet = $$("[id$='mainPreviewForm:evetButton_id']");
+    ElementsCollection btnOnayla = $$("[id^='mainInboxForm:inboxDataTable:j_idt'] > [class$='document-accept']");
+
 
     @Step("Birim Havale Onayına Gelenler sayfası aç")
     public HavaleOnayınaGelenlerPage openPage() {
@@ -51,6 +46,15 @@ public class HavaleOnayınaGelenlerPage extends MainPage {
                 .filterBy(Condition.text(evrakNo))
                 .first()
                 .click();
+        return this;
+    }
+
+    @Step("Evrak Sec Checkbox ile")
+    public HavaleOnayınaGelenlerPage evrakSecCheckBox(String konu1,boolean secim) {
+        tblEvraklar.filterBy(text(konu1)).get(0).$$("div[class^='ui-chkbox-box']").first().click();
+
+        btnOnayla.get(0).click();
+
         return this;
     }
 
@@ -78,11 +82,25 @@ public class HavaleOnayınaGelenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Onizleme Havale Onay")
+    public HavaleOnayınaGelenlerPage onizlemeOnayla() {
+        onizlemeOnayla.click();
+        return this;
+    }
+
     // TODO: Her dönen butonu click yapma
     // 2 tane Evet buttonu dönüyor ve aralarında fark yok
     @Step("Havale Onay Reddet Evet")
     public HavaleOnayınaGelenlerPage onayıReddetEvet() {
         btnHavaleOnayReddet.last().click();
+        return this;
+    }
+
+    // TODO: Her dönen butonu click yapma
+    // 2 tane Evet buttonu dönüyor ve aralarında fark yok
+    @Step("Havale Onay Reddet Evet")
+    public HavaleOnayınaGelenlerPage onayıOnaylaEvet() {
+        btnHavaleOnayEvet.last().click();
         return this;
     }
 

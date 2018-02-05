@@ -663,6 +663,6 @@ public class TuzelKisiYonetimiTest extends BaseTest {
                 .secilenGeregiSil()
                 .geregiVergiNoDoldur(vergiNo, "Vergi Kimlik No");
 
-
     }
+
 }

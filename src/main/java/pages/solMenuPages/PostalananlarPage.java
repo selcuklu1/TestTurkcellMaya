@@ -61,6 +61,7 @@ public class PostalananlarPage extends MainPage {
     SelenideElement tabIcerikKapatmaOnay = $(By.id("kapatButton"));
     SelenideElement btnIcerikPostaDetayi = $x("//*[@id='inboxItemInfoForm:dialogTabMenuRight:uiRepeat:4:cmdbutton']/span[1]");
     //
+    SelenideElement popupEvrakYazdirma = $x("//*[@id='postaDetayYazdirForm:dtPostaEvrakUstVeri:0:evrakDetayiViewDialogYazdir']");
     SelenideElement tuzelKisiGuncelle = $x("//*[@id='mainPreviewForm:postalananDataGrid']/tbody/tr/td/div/table/tbody/tr[4]/td[8]/div/button[1]");
     //
     SelenideElement kullaniciGuncelle = $x("//*[@id='mainPreviewForm:postalananDataGrid']/tbody/tr/td/div/table/tbody/tr[5]/td[8]/div/button[1]");
@@ -69,7 +70,7 @@ public class PostalananlarPage extends MainPage {
     SelenideElement btnIcerikPDPostaKodGnc = $x("//*[@id='inboxItemInfoForm:postaGuncellePanel']/tbody/tr[2]/td[3]/input");
     SelenideElement btnIcerkPDGuncellemeKaydet = $x("//*[@id='inboxItemInfoForm:postaGuncelleDialog']/div[2]/div/div/button");
     SelenideElement icerikEvrakSayisi = $x("//*[@id='inboxItemInfoForm:evrakDetayPanelGrid']/tbody/tr[3]/td[3]/label");
-    //SelenideElement btnEtiketPopupKapat = $x("//*[@id='mainPreviewForm:showAppletContainer']/div/div[1]/a/span");
+    SelenideElement btnEtiketPopupKapat = $x("//*[@id='mainPreviewForm:showAppletContainer']/div/div[1]/a/span");
     //  SelenideElement btnDagitimYerDetayKapat = $x("//*[@id='mainPreviewForm:dagitimPlaniDetayViewDialog']/div[1]/a/span");
 
 
@@ -146,6 +147,12 @@ public class PostalananlarPage extends MainPage {
     @Step("Postaladıklarım seç")
     public PostalananlarPage postaladiklarimSec() {
         tblEvrakSec.click();
+        return this;
+    }
+
+    @Step("Etiket Bastir Popup Kapat")
+    public PostalananlarPage btnPopupEtiketBastirKapat() {
+        btnEtiketPopupKapat.click();
         return this;
     }
 
@@ -239,7 +246,7 @@ public class PostalananlarPage extends MainPage {
     /**
      * @return
      */
-    @Step("Postalanan Evrak Sayisi")
+    @Step("Postalanan Evrak Sayisi ve kontrolü")
     public String evSay() {
         return $x("//tbody/tr[3]/td[3]/label").getAttribute("outerText");
     }
@@ -283,7 +290,7 @@ public class PostalananlarPage extends MainPage {
         return this;
     }
 
-    @Step("Filtrelenen postanın Icerik Goster butonuna tıkla")
+    @Step("\"{Konu}\" Kontrol değerlerine göre postaları filtrele, Filtrelenen postanın Icerik Goster butonuna tıkla ")
     public PostalananlarPage btnFiltrenenPostaIcerikGoster(String Konu) throws InterruptedException {
         filter().findRowsWith(Condition.text(Konu)).first().click();
         String idAtr;
@@ -296,14 +303,14 @@ public class PostalananlarPage extends MainPage {
         return this;
     }
 
-    @Step("Icerik içinde Ilgileri Tabına tıklama")
+    @Step("Icerik içinde Ilgileri Tabına tıklama ve kontrol (kontrol için 500ms delay bulunmakta)")
     public PostalananlarPage btnIcerikIlgileriTab() throws InterruptedException {
         btnIlgileriIcerik.click();
         Thread.sleep(500);
         return this;
     }
 
-    @Step("Icerik içinde Ekleri Tabına tıklama")
+    @Step("Icerik içinde Ekleri Tabına tıklama ve kontrolü")
     public PostalananlarPage btnIcerikEkleriTab() {
         btnEkleriIcerik.click();
         return this;
@@ -330,7 +337,7 @@ public class PostalananlarPage extends MainPage {
         return this;
     }
 
-    @Step("Icerik Posta Detay Tuzel Kisi Tebligat Tarih Guncelle")
+    @Step("Icerik Posta Detay Tuzel Kisi Tebligat Tarih kontrol ve Guncelle \"{date}\"")
     public PostalananlarPage btnIcerikPDTuzelKisiTebTarGnc(String date) {
         btnIcerikPDTebligatTarihGnc.setValue(date);
         return this;
@@ -342,20 +349,20 @@ public class PostalananlarPage extends MainPage {
         return this;
     }
 
-    @Step("Icerik içindeki posta detayi butonu iç sayfa tuzek kisi guncelleme")
+    @Step("Icerik içindeki posta detayi butonu ,Postalanan yerler kontrülü ve iç sayfa tüzel kisi guncelleme")
     public PostalananlarPage btnIcerikPostaDetayTuzelKisiGnc() {
         btnIcerikPostaDetayiTuzelKisiGuncelle.click();
         return this;
     }
 
-    @Step("Icerik içindeki posta detayi butonu iç sayfa tuzel kisi posta kodu guncelleme")
+    @Step("Icerik içindeki posta detayi butonu iç sayfa tuzel kisi posta kodu kontrol ve guncelleme \"{postaKodu}\"")
     public PostalananlarPage btnIcerikPosDetTuzKisPosKodGnc(String postaKodu) {
         btnIcerikPDPostaKodGnc.setValue(postaKodu);
         return this;
 
     }
 
-    @Step("Icerik içindeki posta detayi buton tuzel kisi posta açıklama güncelle")
+    @Step("Icerik içindeki posta detayi buton tuzel kisi posta açıklama kontrol ve güncelle \"{aciklama}\"")
     public PostalananlarPage btnIcerikPDTuzelKisiPosAcikGnc(String aciklama) {
         btnIcerikPDPostaAciklama.setValue(aciklama);
         return this;
@@ -389,7 +396,18 @@ public class PostalananlarPage extends MainPage {
         return this;
     }
 
-    @Step("Etiket Bastir")
+    @Step("Evrak Yazdır Popup içi Pdf yazdırma ve kontrol ve popup kapatma")
+    public PostalananlarPage popupYazpdfkontrolveKapatma () {
+        popupEvrakYazdirma.click();
+        SelenideElement ustyazi = $x("//*[@id='postaDetayYazdirForm:dtPostaEvrakUstVeri_data']/tr/td[2]/div");
+        String pdf = ustyazi.getAttribute("innerText");
+        System.out.println(pdf);
+        SelenideElement popupkapat = $x("//*[@id='postaDetayYazdirForm:dlgPostaDetayYazdir']/div[1]/a/span");
+        popupkapat.click();
+        return this;
+
+    }
+    @Step("Etiket Bastir ve kontrol")
     public PostalananlarPage etiketBastir() {
 
         postalananEvrakEtiketYazdir.click();
