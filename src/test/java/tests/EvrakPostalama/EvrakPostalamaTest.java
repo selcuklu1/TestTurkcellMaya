@@ -89,6 +89,9 @@ public class EvrakPostalamaTest extends BaseTest {
                 .ekleriEkMetniDoldur("TS0308_PDF")
                 .ekleriDosyaEkle("C:\\TestAutomation\\BelgenetFTA\\documents\\TS0308PDF.pdf")
                 .ekleriEkle()
+                .ekleriEkMetniDoldur("TS0308PDF")
+                .ekleriDosyaEkle("C:\\TestAutomation\\BelgenetFTA\\documents\\TS0308PDF.pdf")
+                .ekleriEkle()
                 .fizikselEkEkleTabiniAc()
                 .sistemdeKayitliEvrakEkleTabiniAc()
                 .arsivdeKayitliEvrakEkleTabiniAc()
@@ -101,7 +104,7 @@ public class EvrakPostalamaTest extends BaseTest {
                 .editorTabAc()
                 .editorIcerikDoldur("TS0308")
                 .editorEvrakGeregiSec("YAZILIM GELİ")
-                .editordeEkKontrol("TS0308PDF","Ek kontrol")
+                .editordeEkKontrol("TS0308_PDF","Ek kontrol")
                 .imzala()
                 .popupSImzalaIslemleri();
 
@@ -134,7 +137,7 @@ public class EvrakPostalamaTest extends BaseTest {
         switchTo().window(1);
         closeNewWindow();
         switchTo().window(0);
-        
+
         postalananlarPage.openPage();
         postalananlarPage.filter().findRowsWith(Condition.text(konu)).shouldHaveSize(1).first().click();
         postalananlarPage.postaDetayiTikla()
@@ -240,7 +243,8 @@ public class EvrakPostalamaTest extends BaseTest {
         postalananlarPage.btnFiltrenenPostaIcerikGoster(konu);
         Thread.sleep(1000);
         postalananlarPage.icerikDetayPostaDetayi();
-
+        postalananlarPage.postalananyerlerKontrol();
+        
         postalananlarPage.btnIcerikPostaDetayTuzelKisiGnc();
         postalananlarPage.btnIcerikPDTuzelKisiTebTarGnc("01.01.2018");
         postalananlarPage.btnIcerikPosDetTuzKisPosKodGnc("520");
