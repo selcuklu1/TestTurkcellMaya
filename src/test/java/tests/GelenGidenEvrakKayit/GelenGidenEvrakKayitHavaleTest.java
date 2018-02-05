@@ -23,6 +23,7 @@ public class GelenGidenEvrakKayitHavaleTest extends BaseTest {
     BirimHavaleEdilenlerPage birimHavaleEdilenlerPage;
     KaydedilenGelenEvraklarPage kaydedilenGelenEvraklarPage;
     GelenEvraklarPage gelenEvraklarPage;
+    HavaleOnayiVerdiklerimPage havaleOnayiVerdiklerim;
 
 //    User optiim = new User("optiim", "123");
     User yakyol = new User("yakyol", "123");
@@ -54,6 +55,7 @@ public class GelenGidenEvrakKayitHavaleTest extends BaseTest {
         birimHavaleEdilenlerPage = new BirimHavaleEdilenlerPage();
         kaydedilenGelenEvraklarPage = new KaydedilenGelenEvraklarPage();
         gelenEvraklarPage = new GelenEvraklarPage();
+        havaleOnayiVerdiklerim = new HavaleOnayiVerdiklerimPage();
     }
 
     public String getDocPath1() {
@@ -459,6 +461,153 @@ public class GelenGidenEvrakKayitHavaleTest extends BaseTest {
         teslimAlinmayiBekleyenlerPage
                 .openPage()
                 .evrakNoIleEvrakSec(konu);
+    }
+
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, priority = 0, description = "TS1582: Evrakın Onaylı havale edilmesi ve güncellenerek onaylanması")
+    public void TS1582() throws InterruptedException {
+        String testid= "TS-1582";
+        konu = "TS-1582-" + getSysDate();
+        String pathToFilePdf = getUploadPath() + "Otomasyon.pdf";
+        String pdfName = "Otomasyon.pdf";
+        String pathToFileExcel = getUploadPath() + "test.xlsx";
+        String excelName = "test.xlsx";
+        String islemSureci = "Evrak havale edildi";
+
+        testStatus(testid,"Test Başladı");
+        gelenEvrakKayitPage
+                .openPage()
+                .evrakBilgileriUstYaziEkle(pathToFilePdf)
+                .ustYaziPdfAdiKontrol(pdfName)
+                .islemMesaji().basariliOlmali();
+
+        gelenEvrakKayitPage
+                .konuKoduDoldur(konuKodu)
+                .konuDoldur(konu)
+                .evrakTuruSec(evrakTuru)
+                .evrakDiliSec(evrakDili)
+                .evrakTarihiDoldur(evrakTarihi)
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .kisiKurumSec(kisiKurum)
+                .geldigiKurumDoldurLovText(geldigiKurum)
+                .evrakSayiSagDoldur()
+                .evrakGelisTipiSec(evrakGelisTipi)
+                .ivedilikSec(ivedilik)
+
+                .havaleIslemleriKisiDoldur(kisi)
+                .havaleAlanKontrolleri()
+                .dagitimBilgileriOnaylayanWithDetails(onaylayacakKisi, onayKisiDetails)
+                .dagitimBilgileriBirimDoldurWithDetails(birim, details)
+
+                .kaydet()
+                .gelenEvrakKayitKaydetEvet2()
+                .popUpsv2();
+
+        login(mbozdemir);
+
+        havaleOnayınaGelenlerPage
+                .openPage()
+                .evrakNoIleEvrakSec(konu)
+                //Gelen Evrak Kayıt Havale-1582 de hata gözüküyor. Adım 19 ve 20 birbiri ile çelişiyor.
+                //19. adım doğru ise 23. adımdan devam ediyor. 20. adım doğru ise 21. adımdan devam ediyor ama 19. adım iptal oluyor.
+                //19. adım baz alınarak test implemente edildi.
+                .evrakSecCheckBox(konu,true)
+                .islemMesaji().basariliOlmali();
+
+        havaleOnayiVerdiklerim
+                .openPage()
+                .evrakNoIleEvrakSec(konu)
+                .secilenEvrakEvrakGecmisi()
+                .evrakGecmisi(birim, islemSureci);
+
+        login(ztekin);
+
+        birimHavaleEdilenlerPage
+                .openPage()
+                .evrakNoIleTabloKontrolu(konu);
+
+        login(mbozdemir);
+
+        teslimAlinmayiBekleyenlerPage
+                .openPage()
+                .evrakNoIleEvrakSec(konu);
+
+
+
+
+
+
+
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, priority = 0, description = "TS405: Havaleden geri alınan evrakın tekrar havalesi\n")
+    public void TS405() throws InterruptedException {
+        String testid= "TS-405";
+        String islemSureci = "Evrak geri alındı ";
+        konu = "TS-405-" + getSysDate();
+        String pathToFilePdf = getUploadPath() + "Otomasyon.pdf";
+        String pdfName = "Otomasyon.pdf";
+
+        testStatus(testid,"PreCondition Evrak Oluşturma");
+        gelenEvrakKayitPage
+                .openPage()
+                .evrakBilgileriUstYaziEkle(pathToFilePdf)
+                .ustYaziPdfAdiKontrol(pdfName)
+                .islemMesaji().basariliOlmali();
+
+        gelenEvrakKayitPage
+                .konuKoduDoldur(konuKodu)
+                .konuDoldur(konu)
+                .evrakTuruSec(evrakTuru)
+                .evrakDiliSec(evrakDili)
+                .evrakTarihiDoldur(evrakTarihi)
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .kisiKurumSec(kisiKurum)
+                .geldigiKurumDoldurLovText(geldigiKurum)
+                .evrakSayiSagDoldur()
+                .evrakGelisTipiSec(evrakGelisTipi)
+                .ivedilikSec(ivedilik)
+                .havaleIslemleriKisiDoldur(kisi)
+                .havaleAlanKontrolleri()
+                .dagitimBilgileriBirimDoldurWithDetails(birim, details)
+                .dagitimBilgileriBirimOpsiyon("B")
+                .dagitimBilgileriKullaniciListesiDoldur("OPTİİM")
+                .dagitimBilgileriBirimOpsiyon("S")
+                .dagitimBilgileriBirimOpsiyon("G")
+                .kaydet()
+                .popUps();
+
+        login(mbozdemir);
+        birimHavaleEdilenlerPage
+                .openPage()
+                .evrakNoIleTablodanEvrakSecme(konu)
+                .evrakSecIcerikGoster(konu, true)
+                .havaleGeriAl()
+                .notAlanınıDoldur(konu)
+                .geriAl()
+                .islemMesaji().basariliOlmali();
+
+        testStatus(testid,"Test Başladı");
+        kaydedilenGelenEvraklarPage
+                .openPage()
+                .evrakNoIleEvrakSec(konu)
+                .evrakOnizlemeKontrol()
+                .onizlemeHavaleYap()
+                .havaleAlanKontrolleri()
+                .havaleIslemleriKisiDoldur(kisi)
+                //geregi icin gonder degisikligi
+                .aciklamaAlaniDoldur(konu)
+                //dosya ekle adımı
+                .havaleOnayinaGonder()
+                .islemMesaji().basariliOlmali();
+
+        login(ztekin);
+        gelenEvraklarPage
+                .openPage();
+                //rest
+
     }
 
 }
