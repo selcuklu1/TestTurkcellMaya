@@ -71,8 +71,8 @@ public class EvrakDevretTest extends BaseTest{
                 .ekranTabKontrolleri()
                 .devredecekKisiSec("Yasemin Çakıl")
                 .listele()
-                .tabloAlanKontrolleri()
-                .tab
+                .tabloAlanKontrolleri();
+
 
 
 
