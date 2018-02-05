@@ -396,6 +396,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+
         @Step("Kullanıcılar alanı doldur")
         public BilgilerTab kullanicilarDoldur(String kullanici) {
             txtOnayAkisiKullanicilar.selectLov(kullanici);

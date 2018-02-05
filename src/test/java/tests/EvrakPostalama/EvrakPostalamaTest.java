@@ -22,6 +22,9 @@ import pages.solMenuPages.PostalananlarPage;
 import pages.ustMenuPages.EvrakOlusturPage;
 import pages.ustMenuPages.PostalananEvrakRaporuPage;
 
+import static com.codeborne.selenide.Selenide.close;
+import static com.codeborne.selenide.Selenide.switchTo;
+
 public class EvrakPostalamaTest extends BaseTest {
 
     EvrakOlusturPage evrakOlusturPage;
@@ -115,15 +118,36 @@ public class EvrakPostalamaTest extends BaseTest {
                 .postalamaAciklama("Test")
                 .postalanacakEvrakYaz()
                 .popupPostalanacakEvrakYazdir()
-                .popupPostaYazdirmaKapat()
+                .popupPostaYazdirmaKapat();
+        switchTo().window(1);
+        closeNewWindow();
+
+        switchTo().window(0);
+        postalanacakEvraklarPage
                 .postalanacakEvrakOrjYaz()
                 .pdfEvrakYazismaKuralkontrol()
                 .gramajDoldur("111111")
                 .hesapla()
-                .postala();
+                .postala()
+                .dialogpostalaEvet();
 
+        switchTo().window(1);
+        closeNewWindow();
+        switchTo().window(0);
+        
+        postalananlarPage.openPage();
+        postalananlarPage.filter().findRowsWith(Condition.text(konu)).shouldHaveSize(1).first().click();
+        postalananlarPage.postaDetayiTikla()
+                .evSay();
+        postalananlarPage
+                .postalananyerlerKontrol()
+                .popupYazpdfkontrolveKapatma();
 
-        Selenide.close();
+        postalananlarPage.etiketBastir()
+                .btnPopupEtiketBastirKapat();
+        postalananlarPage.btnEvrakEkleri()
+                .btnEyazismaPaket();
+
     }
 
     @Severity(SeverityLevel.CRITICAL)
