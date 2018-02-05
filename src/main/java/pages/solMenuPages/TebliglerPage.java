@@ -74,9 +74,12 @@ public class TebliglerPage extends MainPage {
         return this;
     }
 
-    @Step("Tebliğler menü yazısı kırmızı renk kontrolü.")
-    public TebliglerPage tebliglerMenuKirmiziKontrolu() {
-        menuTebligler.shouldHave(Condition.cssClass("ui-menuitem-unread"));
+    @Step("Tebliğler menü yazısı kırmızı renk olmalı mı? {kirmiziOlmalimi}")
+    public TebliglerPage tebliglerMenuKirmiziKontrolu(boolean kirmiziOlmalimi) {
+        if(kirmiziOlmalimi == true)
+            menuTebligler.shouldHave(Condition.cssClass("ui-menuitem-unread"));
+        else
+            menuTebligler.shouldNotHave(Condition.cssClass("ui-menuitem-unread"));
         return this;
     }
 

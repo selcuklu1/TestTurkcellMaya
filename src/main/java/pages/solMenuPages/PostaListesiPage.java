@@ -200,6 +200,15 @@ public class PostaListesiPage extends MainPage {
         setValueJS(txtGramaj, gramaj);
         return this;
     }
+    @Step("Gramaj alanını doldur : \"{gramaj}\",\"{shouldBe}\" ")
+    public PostaListesiPage gramajDoldur(String gramaj,boolean shouldBe) {
+        if(shouldBe)
+            setValueJS(txtGramaj, gramaj);
+        else
+            txtGramaj.sendKeys(gramaj);
+
+        return this;
+    }
 
     @Step("Gramaj alanı numerik kontrolü ")
     public PostaListesiPage gramajNumerikKontrol() {
@@ -343,7 +352,7 @@ public class PostaListesiPage extends MainPage {
 
     @Step("Evrak önizleme kontrolü")
     public PostaListesiPage evrakOnizlemeKontrolu() {
-        $(By.id("mainPreviewForm:evrakOnizlemeTab")).shouldBe(Condition.visible);
+        $(By.xpath("//div[text()='Evrak Önizleme']")).shouldBe(Condition.visible);
         return this;
     }
 
