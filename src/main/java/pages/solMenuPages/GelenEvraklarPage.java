@@ -361,6 +361,7 @@ ElementsCollection tblVekaletAlanVeren = $$("tbody[id='mainPreviewForm:mainPrevi
         return this;
     }
 
+    @Step("Tebliğ Et kişi alanında kişi seç: {kisi}")
     public GelenEvraklarPage tebligEtKisiInputDoldur(String kisi) {
         txtTebligEtKisi.selectLov(kisi);
         return this;
