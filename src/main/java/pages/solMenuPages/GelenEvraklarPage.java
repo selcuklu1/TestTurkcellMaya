@@ -339,11 +339,13 @@ ElementsCollection tblVekaletAlanVeren = $$("tbody[id='mainPreviewForm:mainPrevi
         return this;
     }
 
+    @Step("Tebliğ Et ekranında Tebliğ Et butonuna tıklanır.")
     public GelenEvraklarPage tebligEtTebligEt() {
         btnTebligEtTebligEt.click();
         return this;
     }
 
+    @Step("Tebliğ et ekranında not alanını doldur.")
     public GelenEvraklarPage tebligEtNotInputDoldur(String text) {
         //txtTebligEtNot.setValue(text);
         txtTebligEtNot.clear();
@@ -353,6 +355,7 @@ ElementsCollection tblVekaletAlanVeren = $$("tbody[id='mainPreviewForm:mainPrevi
         return this;
     }
 
+    @Step("Tebliğ Et ekranında kullanıcı listesi alanını doldur: {kullaniciListesi}")
     public GelenEvraklarPage tebligEtKullaniciListesiDoldur(String kullaniciListesi) {
         txtTebligEtKullaniciListesi.selectLov(kullaniciListesi);
         return this;
