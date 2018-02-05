@@ -1,9 +1,6 @@
 package pages.ustMenuPages;
 
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.*;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
@@ -77,7 +74,8 @@ public class KullaniciEvrakDevretPage extends MainPage {
     @Step("Listele butonuna tıkla.")
     public KullaniciEvrakDevretPage listele() {
         btnListele.click();
-        $("div[id='bekleyinizStatusDialog']").waitUntil(not(visible), 120000);
+        waitForLoadingJS(WebDriverRunner.getWebDriver(), 120000);
+//        $("div[id='bekleyinizStatusDialog']").waitUntil(not(visible),120000);
         return this;
     }
 
@@ -215,6 +213,23 @@ public class KullaniciEvrakDevretPage extends MainPage {
     @Step("Tablo Evrak Seçimi : {konu}")
     public KullaniciEvrakDevretPage tabloEvrakSecimi(String konu) {
         tblGelenEvraklar
+                .filterBy(text(konu)).first()
+                .$("div[class='ui-chkbox-box ui-widget ui-corner-all ui-state-default']").click();
+        return this;
+    }
+
+    @Step("Tablo Evrak Seçimi : {konu}")
+    public KullaniciEvrakDevretPage tabloEvrakSecimi(String tabName, String konu) {
+
+        SelenideElement tab = $x("//a[text()='" + tabName + "']");
+        String tabText = tabName.replaceAll("\\s+", "");
+        tabText = clearTurkishChars(tabText);
+        System.out.println(tabText);
+
+        Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", tab);
+        tab.click();
+        ElementsCollection tblTab = $$("[id='kullaniciEvrakDevretForm:evrakDevretAccordionPanelId:devir" + tabText + "_data'] tr[data-ri]");
+        tblTab
                 .filterBy(text(konu)).first()
                 .$("div[class='ui-chkbox-box ui-widget ui-corner-all ui-state-default']").click();
         return this;
