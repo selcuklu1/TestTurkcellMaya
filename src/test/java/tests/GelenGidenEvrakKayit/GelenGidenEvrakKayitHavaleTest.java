@@ -549,6 +549,8 @@ public class GelenGidenEvrakKayitHavaleTest extends BaseTest {
         konu = "TS-405-" + getSysDate();
         String pathToFilePdf = getUploadPath() + "Otomasyon.pdf";
         String pdfName = "Otomasyon.pdf";
+        String fileName ="test.txt";
+        String pathToFileText = getUploadPath() + "test.txt";
 
         testStatus(testid,"PreCondition Evrak Oluşturma");
         gelenEvrakKayitPage
@@ -571,6 +573,7 @@ public class GelenGidenEvrakKayitHavaleTest extends BaseTest {
                 .ivedilikSec(ivedilik)
                 .havaleIslemleriKisiDoldur(kisi)
                 .havaleAlanKontrolleri()
+//                .dagitimBilgileriOnaylayanWithDetails(onaylayacakKisi, onayKisiDetails)
                 .dagitimBilgileriBirimDoldurWithDetails(birim, details)
                 .dagitimBilgileriBirimOpsiyon("B")
                 .dagitimBilgileriKullaniciListesiDoldur("OPTİİM")
@@ -579,7 +582,8 @@ public class GelenGidenEvrakKayitHavaleTest extends BaseTest {
                 .kaydet()
                 .popUps();
 
-        login(mbozdemir);
+
+        login(ztekin);
         birimHavaleEdilenlerPage
                 .openPage()
                 .evrakNoIleTablodanEvrakSecme(konu)
@@ -596,17 +600,20 @@ public class GelenGidenEvrakKayitHavaleTest extends BaseTest {
                 .evrakOnizlemeKontrol()
                 .onizlemeHavaleYap()
                 .havaleAlanKontrolleri()
+//                .dagitimBilgileriOnaylayanWithDetails(onaylayacakKisi, onayKisiDetails)
                 .havaleIslemleriKisiDoldur(kisi)
-                //geregi icin gonder degisikligi
+                .dagitimBilgileriKisiOpsiyon("B")
                 .aciklamaAlaniDoldur(konu)
-                //dosya ekle adımı
-                .havaleOnayinaGonder()
+                .dosyaEkle()
+                .havaleDosyaEkle(pathToFileText)
+                .havaleDosyaEkleDosyaAdiKontrol(fileName)
+                .buttonGonder()
                 .islemMesaji().basariliOlmali();
 
         login(ztekin);
         gelenEvraklarPage
-                .openPage();
-                //rest
+                .openPage()
+                .tabloEvrakNoSec(konu);
 
     }
 
