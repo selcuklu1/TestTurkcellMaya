@@ -1924,6 +1924,7 @@ public class TopluPostalamaTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS1811 : Posta Listesi Postalama İşlemleri (UC_POSTAYÖNETİMİ_003)")
     public void TS1811() throws IOException, AWTException {
+        useFirefox();
         MainPage mainPage = new MainPage();
         TopluPostalanacakEvraklarPage topluPostalanacakEvraklarPage = new TopluPostalanacakEvraklarPage();
         PostaListesiPage postaListesiPage = new PostaListesiPage();
@@ -2114,7 +2115,7 @@ public class TopluPostalamaTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS1812 : Posta Listesi Postalama İşlemleri (Güncelleme) (UC_POSTAYÖNETİMİ_003)")
     public void TS1812() throws IOException, AWTException {
-
+        useFirefox();
         MainPage mainPage = new MainPage();
         TopluPostalanacakEvraklarPage topluPostalanacakEvraklarPage = new TopluPostalanacakEvraklarPage();
         PostaListesiPage postaListesiPage = new PostaListesiPage();
@@ -2146,6 +2147,8 @@ public class TopluPostalamaTest extends BaseTest {
         String[] sayi = new String[2];
         String[] pdfSayi = new String[2];
 
+
+
         login("mbozdemir", "123");
         //region Parameters
         String konuKodu = "010.01";
@@ -2171,6 +2174,7 @@ public class TopluPostalamaTest extends BaseTest {
         String[] postaTipleri = new String[]{
                 "Ankara İçi APS"
         };
+        String evrakHazirlayanBirim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞ";
 //        //endregion
         //region Test Datası
         for (int i = 0; i < 2; i++) {
@@ -2231,8 +2235,12 @@ public class TopluPostalamaTest extends BaseTest {
                 .openPage()
                 .filtreleAc()
                 .postaListesiDoldur(postaListesi)
+                .evrakKontrol(getSysDateForKis(),geregi,konu[0],evrakHazirlayanBirim,postaTipleri[0],true)
+                .evrakKontrol(getSysDateForKis(),geregi,konu[1],evrakHazirlayanBirim,postaTipleri[0],true)
                 .evrakSec(konu[0])
-//                .evrakOnizlemeKontrolu()
+                .evrakOnizlemeKontrolu()
+                .evrakSec(konu[1])
+                .evrakOnizlemeKontrolu()
                 .konuyaGorePostaListesindenCikart(konu[1]);
 
         topluPostalanacakEvraklarPage
@@ -2262,7 +2270,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .gidisSekliSec("Kurye")
                 .gidisSekliSec("Ankara İçi APS")
                 .gonderildigiYerSec("Yurt İçi")
-                .gramajDoldur("deneme")
+                .gramajDoldur("deneme",false)
 
                 .gramajDoldur(gramaj1)
                 .tutarHesapla()
@@ -2306,6 +2314,7 @@ public class TopluPostalamaTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS1816 : Toplu Postaladıklarım Güncelleme İşlemleri (UC_POSTAYÖNETİMİ_004)")
     public void TS1816() throws IOException, AWTException {
+        useFirefox();
         MainPage mainPage = new MainPage();
         TopluPostalanacakEvraklarPage topluPostalanacakEvraklarPage = new TopluPostalanacakEvraklarPage();
         PostaListesiPage postaListesiPage = new PostaListesiPage();
