@@ -200,7 +200,7 @@ public class PostaListesiPage extends MainPage {
         setValueJS(txtGramaj, gramaj);
         return this;
     }
-    @Step("Gramaj alanını doldur : \"{gramaj}\",\"{shoulBe}\" ")
+    @Step("Gramaj alanını doldur : \"{gramaj}\",\"{shouldBe}\" ")
     public PostaListesiPage gramajDoldur(String gramaj,boolean shouldBe) {
         if(shouldBe)
             setValueJS(txtGramaj, gramaj);
