@@ -290,7 +290,7 @@ public class PostalananlarPage extends MainPage {
         return this;
     }
 
-    @Step("Filtrelenen postanın Icerik Goster butonuna tıkla")
+    @Step("\"{Konu}\" Kontrol değerlerine göre postaları filtrele, Filtrelenen postanın Icerik Goster butonuna tıkla ")
     public PostalananlarPage btnFiltrenenPostaIcerikGoster(String Konu) throws InterruptedException {
         filter().findRowsWith(Condition.text(Konu)).first().click();
         String idAtr;
@@ -337,7 +337,7 @@ public class PostalananlarPage extends MainPage {
         return this;
     }
 
-    @Step("Icerik Posta Detay Tuzel Kisi Tebligat Tarih Guncelle")
+    @Step("Icerik Posta Detay Tuzel Kisi Tebligat Tarih kontrol ve Guncelle \"{date}\"")
     public PostalananlarPage btnIcerikPDTuzelKisiTebTarGnc(String date) {
         btnIcerikPDTebligatTarihGnc.setValue(date);
         return this;
@@ -349,20 +349,20 @@ public class PostalananlarPage extends MainPage {
         return this;
     }
 
-    @Step("Icerik içindeki posta detayi butonu iç sayfa tuzek kisi guncelleme")
+    @Step("Icerik içindeki posta detayi butonu ,Postalanan yerler kontrülü ve iç sayfa tüzel kisi guncelleme")
     public PostalananlarPage btnIcerikPostaDetayTuzelKisiGnc() {
         btnIcerikPostaDetayiTuzelKisiGuncelle.click();
         return this;
     }
 
-    @Step("Icerik içindeki posta detayi butonu iç sayfa tuzel kisi posta kodu guncelleme")
+    @Step("Icerik içindeki posta detayi butonu iç sayfa tuzel kisi posta kodu kontrol ve guncelleme \"{postaKodu}\"")
     public PostalananlarPage btnIcerikPosDetTuzKisPosKodGnc(String postaKodu) {
         btnIcerikPDPostaKodGnc.setValue(postaKodu);
         return this;
 
     }
 
-    @Step("Icerik içindeki posta detayi buton tuzel kisi posta açıklama güncelle")
+    @Step("Icerik içindeki posta detayi buton tuzel kisi posta açıklama kontrol ve güncelle \"{aciklama}\"")
     public PostalananlarPage btnIcerikPDTuzelKisiPosAcikGnc(String aciklama) {
         btnIcerikPDPostaAciklama.setValue(aciklama);
         return this;
