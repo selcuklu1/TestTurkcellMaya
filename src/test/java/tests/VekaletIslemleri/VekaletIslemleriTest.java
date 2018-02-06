@@ -660,8 +660,10 @@ public class VekaletIslemleriTest extends BaseTest {
             ,dependsOnMethods = {"TS2208"}
             ,description = "TS2204 : Vekalet Alan Kullanıcın Evrak Kapatma Onayında Seçilmesi")
     public void TS2204() throws InterruptedException{
-        String kullaniciTitle = " [Ağ (Network) Uzman Yardımcısı]";
+
 login(mbozdemir);
+        String kullaniciTitle = " [Ağ (Network) Uzman Yardımcısı]";
+        String title = "Ağ (Network) Uzman Yardımcısı";
         gelenEvraklarPage
                 .openPage()
                 .evrakSec()
@@ -673,7 +675,7 @@ login(mbozdemir);
                 .evrakKapamaKullaniciSecWithTitle(nameVV,kullaniciTitle)
                 .popUpKullaniciSecimKontrulu()
                 .popUpKullaniciSecimi(nameVA)
-                .evrakKapamaKullanicilarAlaniKontrolü(nameVA,kullaniciTitle,nameVV);
+                .evrakKapamaKullanicilarAlaniKontrolü(nameVA, title,nameVV);
 
     }
 }

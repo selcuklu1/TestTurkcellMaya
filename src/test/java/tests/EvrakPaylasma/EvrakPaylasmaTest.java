@@ -298,9 +298,6 @@ public class EvrakPaylasmaTest extends BaseTest {
         String kullaniciAdi = "Mehmet BOZDEMİR [Antalya İl Müdürü]";
         String paylasilacakUser = "Huser TUMER";
 
-        String paylasan = "Mehmet BOZDEMİR";
-        String basariMesaji = "İşlem başarılıdır!";
-
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
@@ -317,8 +314,31 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .openPage()
                 .evrakSec(evrakkonu, "", tarihBugun)
                 .paylasTabTikla()
+                .paylasPaylasGonder()
+                .islemMesaji().dikkatOlmali("Evrakın paylaşılacağı Kullanıcıyı seçiniz!");
+
+        taslakEvraklarPage
                 .paylasKisiDoldur(paylasilacakUser)
-                .paylasanAciklamaDoldur("TS1876 case i için evrak oluşturuldu ve paylaşıldı.")
+                .paylasanAciklamaDoldur("")
+                .paylasPaylasGonder()
+                .islemMesaji().dikkatOlmali("Açıklama girilmesi zorunludur!");
+
+        taslakEvraklarPage
+                .paylasilanKisileriTemizle()
+                .paylasanAciklamaDoldur("yeni açkılmala")
+                .paylasPaylasGonder()
+                .islemMesaji().dikkatOlmali("Evrakın paylaşılacağı Kullanıcıyı seçiniz!");
+
+        taslakEvraklarPage
+                .paylasKisiDoldur(paylasilacakUser)
+                .paylasilanKisileriTemizle()
+                .paylasanAciklamaDoldur("yeni açkılmala")
+                .paylasPaylasGonder()
+                .islemMesaji().dikkatOlmali("Evrakın paylaşılacağı Kullanıcıyı seçiniz!");
+
+        taslakEvraklarPage
+                .paylasKisiDoldur(paylasilacakUser)
+                .paylasanAciklamaDoldur("TS1876")
                 .paylasPaylasGonder()
                 .islemMesaji().basariliOlmali();
 

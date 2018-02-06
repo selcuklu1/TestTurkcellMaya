@@ -96,7 +96,7 @@ public class BenimlePaylasilanlarPage extends MainPage {
         return this;
     }
 
-    @Step("\"{0}\" tabını seç")
+    @Step("\"{tabAdi}\" tabını seç")
     public BenimlePaylasilanlarPage evrakOnizlemeTabSec(String tabAdi) {
         tabsEvrakOnizleme
                 .filterBy(Condition.text(tabAdi))

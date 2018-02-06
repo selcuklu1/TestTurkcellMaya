@@ -165,7 +165,7 @@ public class ParafBekleyenlerPage extends MainPage {
         return this;
     }
 
-    @Step("\"{0}\" tabını seç")
+    @Step("\"{tabAdi}\" tabını seç")
     public ParafBekleyenlerPage evrakOnizlemeTabSec(String tabAdi) {
 
         tabEvrakOnizleme

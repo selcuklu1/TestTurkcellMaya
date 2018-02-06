@@ -23,7 +23,7 @@ public class ImzaladiklarimPage extends MainPage {
     SelenideElement btnIlkEvrak = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
     SelenideElement tabEvrakOnizleme = $(By.id("mainPreviewForm:evrakOnizlemeTab"));
     ElementsCollection tableKararIzlemeEvraklar = $$("[id='mainInboxForm:inboxDataTable_data'] tr[role='row']");// span[class='ui-chkbox-icon']");
-    ElementsCollection tblImzalananEvraklar = $$("[id='mainInboxForm:inboxDataTable_data'] tr[role='row'] table");
+    ElementsCollection tblImzalananEvraklar = $$("[id='mainInboxForm:inboxDataTable_data'] tr[data-ri]");
     SelenideElement txtEvrakDetayiEvrakNo = $("[id^='inboxItemInfoForm:evrakBilgileriList'][id$='evrakNoPanelGrid'] td:nth-child(3) div");
     SelenideElement btnGidecegiYer = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:gidecegiYerFilterOpenDialogButton"));
     BelgenetElement txtGidecegiYer = comboLov(By.id("inboxFiltreDialogForm:gidecegiYerFilterLovId:LovText"));
@@ -108,10 +108,12 @@ public class ImzaladiklarimPage extends MainPage {
         return this;
     }
 
-    @Step("Evrak Geçmişi tab")
+    @Step("Evrak Geçmişi tab ve evrak geçmişi kontrolleri")
     public ImzaladiklarimPage evrakGecmisi() {
 
         tabEvrakGecmisi.shouldBe(visible).click();
+        String gecmis = tabEvrakGecmisi.getAttribute("innerText");
+        System.out.println(gecmis);
         return this;
 
     }
@@ -122,29 +124,22 @@ public class ImzaladiklarimPage extends MainPage {
         return this;
     }
 
-    @Step("")
-    public String evrakIcerikKontroluveEvrakNoAl(String icerik) {
-        int size = tblImzalananEvraklar.size();
+    @Step("Konuya göre 'İçerik' tıklama. \"{konu}\" ")
+    public String evrakIcerikKontroluveEvrakNoAl(String konu) {
+        $$("[id='mainInboxForm:inboxDataTable_data'] tr[data-ri]")
+                .filterBy(Condition.text(konu))
+                .first()
+                .$("[id$='detayGosterButton']").click();
+
         String evrakNo = "";
-        boolean flag = false;
-
-        for (int i = 0; i < size; i++) {
-            $(By.id("mainInboxForm:inboxDataTable:" + i + ":detayGosterButton")).click();
-            evrakNo = evrakDetayiEvrakNoAl();
-            String icerikTxt = $("[id='inboxItemInfoForm:evrakBilgileriList_content'] tr:nth-child(13) tr textarea").text();
-            if (icerik.equals(icerikTxt)) {
-                flag = true;
-                break;
-            }
-            $(By.xpath("//div[@id='windowItemInfoDialog']//span[@class='ui-icon ui-icon-closethick']")).click();
-            islemPenceresiKapatmaOnayiPopup("Kapat");
-
-        }
-        Assert.assertEquals(flag, true, "Evrak listelenmiştir");
+        evrakNo = evrakDetayiEvrakNoAl();
+        System.out.println(evrakNo);
+        $(By.xpath("//div[@id='windowItemInfoDialog']//span[@class='ui-icon ui-icon-closethick']")).click();
+        islemPenceresiKapatmaOnayiPopup("Kapat");
         return evrakNo;
     }
 
-    @Step("Evrak No al")
+    @Step("Evrak Detay Ekranı Evrak No al")
     public String evrakDetayiEvrakNoAl() {
         String evrakNo = txtEvrakDetayiEvrakNo.text();
         return evrakNo;
@@ -233,7 +228,7 @@ public class ImzaladiklarimPage extends MainPage {
         return this;
     }
 
-    @Step("İmzaladıklarımlistesinde evrak kontrolu")
+    @Step("İmzaladıklarım listesinde evrak kontrolu")
     public ImzaladiklarimPage konuyaGoreEvrakKontrol(String konu) {
 
         boolean durum = tblImzaladiklarimEvraklar
@@ -241,6 +236,18 @@ public class ImzaladiklarimPage extends MainPage {
                 .size() > 0;
 
         Assert.assertEquals(durum, true);
+
+        return this;
+    }
+
+    @Step("Konuya göre içerik tıklama")
+    public ImzaladiklarimPage konuyaGoreIcerikTiklama(String konu) {
+
+        tblImzaladiklarimEvraklar
+                .filterBy(Condition.text(konu))
+                .first()
+                .$("[id^='detayGosterButton']").click();
+
 
         return this;
     }
@@ -374,6 +381,46 @@ public class ImzaladiklarimPage extends MainPage {
                 .get(0)
                 .$("[id*='ilisikListesiDetayButton']").shouldBe(visible);
 
+        return this;
+    }
+
+    BelgenetElement txtKullaniciListesi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKisiListesiLov:LovText"));
+    ElementsCollection tblTakipListesi = $$("tbody[id='evrakTakibimeEkleDialogForm:takipListLov:LovSecilenTable_data'] > tr[role='row']");
+    SelenideElement btnTakipListesiKapat = $("div[id='evrakTakibimeEkleDialogForm:takipDialog'] span[class*='ui-icon-closethick']");
+
+    @Step("{konu} konulu evrak üzerinde Takip Listesi butonuna tıkla.")
+    public ImzaladiklarimPage takipListesiAc(String konu) {
+        tblImzaladiklarimEvraklar
+                .filterBy(text(konu))
+                .first()
+                .$x(".//span[contains(@class,'ui-button-icon-left ui-icon document-addFollow')]/..")
+                .click();
+        return this;
+    }
+
+    @Step("Takip Listesinde {adiSoyadi} kullanıcısının ve {birim} birim bilgisinin olduğu görülür.")
+    public ImzaladiklarimPage takipListesiKontrol(String adiSoyadi, String birim){
+        tblTakipListesi.filterBy(text(adiSoyadi)).filterBy(text(birim)).first().shouldBe(visible);
+        return this;
+    }
+
+    @Step("Kullacici listesinde \"{kullanici}\" kullanıcısını seç.")
+    public ImzaladiklarimPage kullaniciListesiSec(String kullanici) {
+        txtKullaniciListesi.selectLov(kullanici);
+        return this;
+    }
+
+    @Step("Takip Listesi ekranında bulunan (X) \"Sayfayı Kapatma\" butonuna basılır. Takip listesi ekranın kapatıldığı görülür.")
+    public ImzaladiklarimPage takipListesiKapat(){
+        btnTakipListesiKapat.click();
+        txtKullaniciListesi.shouldNotBe(visible);
+        return this;
+    }
+
+    BelgenetElement txtTakipListesiKullanicilar = comboLov(By.id("evrakTakibimeEkleDialogForm:takipListLov:LovText"));
+    @Step("Takip listesinde {kullanicilar} kullanıcısını seç")
+    public ImzaladiklarimPage takipListesiKullanicilarDoldur(String kullanicilar) {
+        txtTakipListesiKullanicilar.type(kullanicilar).getTitleItems().filterBy(Condition.text(kullanicilar)).first().click();
         return this;
     }
 }

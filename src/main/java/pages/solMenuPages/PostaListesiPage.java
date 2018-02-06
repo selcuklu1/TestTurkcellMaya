@@ -200,6 +200,15 @@ public class PostaListesiPage extends MainPage {
         setValueJS(txtGramaj, gramaj);
         return this;
     }
+    @Step("Gramaj alanını doldur : \"{gramaj}\",\"{shouldBe}\" ")
+    public PostaListesiPage gramajDoldur(String gramaj,boolean shouldBe) {
+        if(shouldBe)
+            setValueJS(txtGramaj, gramaj);
+        else
+            txtGramaj.sendKeys(gramaj);
+
+        return this;
+    }
 
     @Step("Gramaj alanı numerik kontrolü ")
     public PostaListesiPage gramajNumerikKontrol() {
@@ -343,7 +352,7 @@ public class PostaListesiPage extends MainPage {
 
     @Step("Evrak önizleme kontrolü")
     public PostaListesiPage evrakOnizlemeKontrolu() {
-        $(By.id("mainPreviewForm:evrakOnizlemeTab")).shouldBe(Condition.visible);
+        Assert.assertEquals($(By.xpath("//div[text()='Evrak Önizleme']")).is(Condition.visible),true);
         return this;
     }
 
@@ -560,8 +569,8 @@ public class PostaListesiPage extends MainPage {
 
     @Step("Etiket bastır ekranında Gideceği Yer ve Adres kontrolü")
     public PostaListesiPage etiketBastirEkraniKontrolü(String adres, String konu) {
-        txtEtiketBastir.text().contains(konu);
-        txtEtiketBastir.text().contains(adres);
+        Assert.assertEquals(txtEtiketBastir.text().contains(konu),true);
+        Assert.assertEquals(txtEtiketBastir.text().contains(adres),true);
         return this;
     }
 
