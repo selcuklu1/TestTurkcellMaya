@@ -42,10 +42,18 @@ public class EvrakOlusturPage extends MainPage {
     SelenideElement btnEvrakOlusturKapat = $(By.xpath("//div[@id='window3Dialog']//a/span[@class='ui-icon ui-icon-closethick']"));
     SelenideElement btnEvrakOlusturKapatEvet = $(By.id("kapatKaydetEvetButton"));
     SelenideElement divBilgileri = $(By.id("evrakBilgileriContainerDiv"));
-    SelenideElement labelIlkIslemTipi = $(By.xpath("//form[@id='yeniGidenEvrakForm']/table[1]//label[@class='columnLabelFixWidth']"));
-    SelenideElement labelIkinciIslemTipi = $(By.xpath("//form[@id='yeniGidenEvrakForm']/table[2]//label[@class='columnLabelFixWidth']"));
-    SelenideElement labelIlkKullanici = $(By.xpath("//form[@id='yeniGidenEvrakForm']/table[1]//label[@class='columnLabelFix']"));
-    SelenideElement labelIkinciKullanici = $(By.xpath("//form[@id='yeniGidenEvrakForm']/table[2]//label[@class='columnLabelFix']"));
+
+    SelenideElement label1IslemTipi = $(By.xpath("//form[@id='yeniGidenEvrakForm']/table[1]//label[@class='columnLabelFixWidth']"));
+    SelenideElement label2IslemTipi = $(By.xpath("//form[@id='yeniGidenEvrakForm']/table[2]//label[@class='columnLabelFixWidth']"));
+    SelenideElement label3IslemTipi = $(By.xpath("//form[@id='yeniGidenEvrakForm']/table[3]//label[@class='columnLabelFixWidth']"));
+    SelenideElement label4IslemTipi = $(By.xpath("//form[@id='yeniGidenEvrakForm']/table[4]//label[@class='columnLabelFixWidth']"));
+
+    SelenideElement label1Kullanici = $(By.xpath("//form[@id='yeniGidenEvrakForm']/table[1]//label[@class='columnLabelFix']"));
+    SelenideElement label2Kullanici = $(By.xpath("//form[@id='yeniGidenEvrakForm']/table[2]//label[@class='columnLabelFix']"));
+    SelenideElement label3Kullanici = $(By.xpath("//form[@id='yeniGidenEvrakForm']/table[3]//label[@class='columnLabelFix']"));
+    SelenideElement label4Kullanici = $(By.xpath("//form[@id='yeniGidenEvrakForm']/table[4]//label[@class='columnLabelFix']"));
+
+
     ElementsCollection tblVekaletVerenAlan = $$("[id='yeniGidenEvrakForm:kullaniciBirimSecenekleri_data'] tr[role='row']");
     SelenideElement btnKaydetEvet = $(By.id("kaydetConfirmForm:kaydetEvetButton"));
     SelenideElement btnKaydetHayir = $(By.id("kaydetConfirmForm:kaydetHayirButton"));
@@ -178,14 +186,31 @@ public class EvrakOlusturPage extends MainPage {
         return this;
     }
 
-    @Step("Kullanıcı işlem ve sıra kontrolu")
-    public EvrakOlusturPage kullaniciIslemVeSiraKontrolu(String kullanici1, String islemTipi1, String kullanici2, String islemTipi2) {
+    @Step("1.Sıradaki işlem ve kullanıcı kontrolu")
+    public EvrakOlusturPage kullaniciIslemVe1SiraKontrolu(String kullanici1, String islemTipi1) {
+        Assert.assertEquals(label1IslemTipi.getText(), "1. " + islemTipi1);
+        Assert.assertEquals(label1Kullanici.getText(), kullanici1);
+        return this;
+    }
 
-        Assert.assertEquals(labelIlkIslemTipi.getText(), "1. " + islemTipi1);
-        Assert.assertEquals(labelIkinciIslemTipi.getText(), "2. " + islemTipi2);
-        Assert.assertEquals(labelIlkKullanici.getText(), kullanici1);
-        Assert.assertEquals(labelIkinciKullanici.getText(), kullanici2);
+    @Step("2.Sıradaki işlem ve kullanıcı kontrolu")
+    public EvrakOlusturPage kullaniciIslemVe2SiraKontrolu(String kullanici2, String islemTipi2) {
+        Assert.assertEquals(label2IslemTipi.getText(), "2. " + islemTipi2);
+        Assert.assertEquals(label2Kullanici.getText(), kullanici2);
+        return this;
+    }
 
+    @Step("3.Sıradaki işlem ve kullanıcı kontrolu")
+    public EvrakOlusturPage kullaniciIslemVe3SiraKontrolu(String kullanici3, String islemTipi3) {
+        Assert.assertEquals(label3IslemTipi.getText(), "3. " + islemTipi3);
+        Assert.assertEquals(label3Kullanici.getText(), kullanici3);
+        return this;
+    }
+
+    @Step("4.Sıradaki işlem ve kullanıcı kontrolu")
+    public EvrakOlusturPage kullaniciIslemVe4SiraKontrolu(String kullanici4, String islemTipi4) {
+        Assert.assertEquals(label4IslemTipi.getText(), "4. " + islemTipi4);
+        Assert.assertEquals(label4Kullanici.getText(), kullanici4);
         return this;
     }
 
@@ -356,6 +381,10 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement btnKaydet = $(By.xpath("//span[text()='Kaydet']/ancestor::tbody[1]//button"));
 
         SelenideElement aKendimiEkle = $("a[id$=':kendimiEkleCommand']");
+        SelenideElement btnVekaletKaydet = $("[id^='yeniGidenEvrakForm:j_idt'] [class*='ui-button-text-only tipTip button-icon-borderless']");
+
+        SelenideElement btnOtomatikAkisKullan = $("[id$='hiyerarsikAkisOlusturForm:hiyerarsikAkisKullan']");
+        ElementsCollection trOtomatikOnayAkisiEkleKullanicilar = $$("tbody[id*='yeniGidenEvrakForm:hiyerarsikAkisOlusturForm:otomatikAkisKullaniciBirimListId_data'] tr[role='row']");
 
         //endregion
 
@@ -429,7 +458,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Otomatik Onay akışı tıklanır")
+        @Step("Otomatik Onay akışı tıkla")
         public BilgilerTab otomatikOnayAkisiSec() {
             btnOtomatikOnayAkisi.click();
             return this;
@@ -956,6 +985,7 @@ public class EvrakOlusturPage extends MainPage {
             btnBilgiLovSecilemUpdate.click();
             return this;
         }
+
         @Step("Bilgi alanı kontrol")
         public BilgilerTab bilgialaniKontrol() {
             txtBilgi.click();
@@ -1065,6 +1095,24 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Onay akışı doldur")
+        public BilgilerTab onayAkisiDoldurWithoutKontrol(String onay) {
+            if (cmbOnayAkisi.isLovSelected() == true) {
+                cmbOnayAkisi.clearAllSelectedItems();
+            }
+            cmbOnayAkisi.type(onay).getDetailItems().first().click();
+            return this;
+        }
+
+        @Step("Seçilen akışta vekaleti bulunan kişiler bulunmaktadır. Lütfen evrakın akışında kullanılacak kişileri seçiniz.")
+        public BilgilerTab vekaletKaydet() {
+
+            if (btnVekaletKaydet.isDisplayed()) {
+                btnVekaletKaydet.click();
+            }
+            return this;
+        }
+
         @Step("Onay akışı doldurma ve görüntüleme kontrolu")
         public BilgilerTab onayAkisiDoldur2(String onay) {
             cmbOnayAkisi2.selectLov(onay);
@@ -1143,6 +1191,44 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Otomatik Hiyerarşik Onay Akışı kullanıcı adı ve tipi kontrolu: {description}")
+        public BilgilerTab otomatikOnayAkisiKullaniciKontrol(String kullaniciAdi, String kullaniciTipi, String description) {
+            btnOtomatikAkisKullan.sendKeys(Keys.SHIFT);
+            trOtomatikOnayAkisiEkleKullanicilar
+                    .filterBy(text(kullaniciAdi))
+                    .get(0)
+                    .shouldBe(exist)
+                    .$("select[name*='hiyerarsikAkisOlusturForm:otomatikAkisKullaniciBirimListId']")
+                    .shouldHave(value(kullaniciTipi));
+            return this;
+        }
+
+        @Step("Her kullanıcının yanında işaretlenmek üzere checbox bulunması kontrolu {description}")
+        public BilgilerTab otomatikOnayAkisiKullaniciyaGoreCheckBoxKontrolu(String kullaniciAdi, String description) {
+            btnOtomatikAkisKullan.sendKeys(Keys.SHIFT);
+            trOtomatikOnayAkisiEkleKullanicilar
+                    .filterBy(text(kullaniciAdi))
+                    .get(0)
+                    .shouldBe(exist)
+                    .$("[class='ui-chkbox ui-widget']")
+                    .shouldBe(visible);
+
+            return this;
+        }
+
+        @Step("Listelenen kullanıcılardan seçim yap: {description}")
+        public BilgilerTab otomatikOnayAkisiKullaniciSec(String kullaniciAdi, Boolean secim, String description) {
+            btnOtomatikAkisKullan.sendKeys(Keys.SHIFT);
+            trOtomatikOnayAkisiEkleKullanicilar
+                    .filterBy(text(kullaniciAdi))
+                    .get(0)
+                    .shouldBe(exist)
+                    .$("[class='ui-chkbox ui-widget']")
+                    .setSelected(secim);
+
+            return this;
+        }
+
         @Step("Onay akışı kullanıcı adı ve koordine tipi kontrol et")
         public BilgilerTab onayAkisiKullaniciKoordineKontrol(String kullaniciAdi, String kullaniciTipi) {
 
@@ -1200,6 +1286,12 @@ public class EvrakOlusturPage extends MainPage {
 //            Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", btnKullan);
 //            btnKullan.pressEnter();
             clickJs(btnKullan);
+            return this;
+        }
+
+        @Step("Otomatik Onay AKışı Kullan")
+        public BilgilerTab otomatikOnayAkisiKullan() {
+            clickJs(btnOtomatikAkisKullan);
             return this;
         }
 
@@ -1830,7 +1922,7 @@ public class EvrakOlusturPage extends MainPage {
         }
 
         @Step("Editörde eklenen dağıtım tipi ve posta kontrol")
-        public EditorTab editordeGeregiPostaKontrol () {
+        public EditorTab editordeGeregiPostaKontrol() {
             cmbGeregi.getSelectableItems();
             return this;
         }
