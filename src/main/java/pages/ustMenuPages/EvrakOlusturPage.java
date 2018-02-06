@@ -638,6 +638,13 @@ public class EvrakOlusturPage extends MainPage {
             cmbGeregi.closeTreePanel();
             return this;
         }
+        
+        @Step("Seçilen gereği Dağıtım Hitap Düzenle tıklanır")
+        public BilgilerTab secilenGeregiDagitimHitapGuncelleme(){
+        $("[id$='geregiLov:LovSecilenTable_data'] button [class='ui-button-icon-left ui-icon update-icon']").click();
+            return this;
+        }
+        
         ElementsCollection tableGeregiSecilenler = $$("tbody[id$='geregiLov:LovSecilenTable_data'] > tr");
         @Step("Geregi alanında \"{geregi}\" için {geregiTipi} seç")
         public BilgilerTab geregiTipiSec(String geregi, String geregiTipi) {
