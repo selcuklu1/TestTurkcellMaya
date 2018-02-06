@@ -411,4 +411,11 @@ public class ImzaladiklarimPage extends MainPage {
         txtKullaniciListesi.shouldNotBe(visible);
         return this;
     }
+
+    BelgenetElement txtTakipListesiKullanicilar = comboLov(By.id("evrakTakibimeEkleDialogForm:takipListLov:LovText"));
+    @Step("Takip listesinde {kullanicilar} kullanıcısını seç")
+    public ImzaladiklarimPage takipListesiKullanicilarDoldur(String kullanicilar) {
+        txtTakipListesiKullanicilar.type(kullanicilar).getTitleItems().filterBy(Condition.text(kullanicilar)).first().click();
+        return this;
+    }
 }

@@ -927,6 +927,13 @@ takeScreenshot();
         return this;
     }
 
+    @Step("Takip Listesi ekranında bulunan (X) \"Sayfayı Kapatma\" butonuna basılır. Takip listesi ekranın kapatıldığı görülür.")
+    public GelenEvraklarPage takipListesiKapat(){
+        btnTakipListesiKapat.click();
+        txtKullaniciListesi.shouldNotBe(visible);
+        return this;
+    }
+
 
     // //span[contains(@class,'ui-button-icon-left ui-icon document-addFollow')]/..
 

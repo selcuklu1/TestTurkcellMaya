@@ -146,6 +146,7 @@ public class TaslakEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Açıklama alanını doldur.: {text}")
     public TaslakEvraklarPage paylasanAciklamaDoldur(String text) {
         txtPaylasanAciklama.setValue(text);
         return this;
@@ -213,6 +214,12 @@ public class TaslakEvraklarPage extends MainPage {
 
         tableEvraklar
                 .filterBy(Condition.text("Konu: " + konu)).shouldHaveSize(1);
+        return this;
+    }
+
+    @Step("Kişi alanını boşalt.")
+    public TaslakEvraklarPage paylasilanKisileriTemizle() {
+        txtPaylasKisi.clearAllSelectedItems();
         return this;
     }
 

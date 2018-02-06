@@ -41,11 +41,14 @@ public class TakibeEvrakEklemeTest extends BaseTest {
 
         Allure.addAttachment("Pre Condition evrak oluşturma", "başlatıldı.");
 
-        String gelenEvrakKonu = "";
+        String gelenEvrakKonu = "TS2073-20180206145142";
         String imzaladiklarimEvrakKonu = "";
         String postalanacakEvrakKonu = "";
         String randomNumber2 = "";
         String kapattiklarimEvrakKonu = "";
+
+
+        /*
 
         // Gelen evrak kayıt oluşturma>>>
 
@@ -152,19 +155,21 @@ public class TakibeEvrakEklemeTest extends BaseTest {
         // Postalanacak evrak oluşturma <<<
 
         Allure.addAttachment("Pre Condition evrak oluşturma", "bitti.");
+        */
 
         gelenEvraklarPage
                 .openPage()
                 .takipListesiAc(gelenEvrakKonu)
                 .takipListesiKontrol(kullaniciAdiSoyadi, kullaniciBirim)
-                .kullaniciListesiSec(secilecekKullaniciAdiSoyadi)
-                .takipListesiKontrol(secilecekKullaniciAdiSoyadi, secilecekKullaniciBirim);
+                .takipListesiKullanicilarDoldur(secilecekKullaniciAdiSoyadi)
+                .takipListesiKontrol(secilecekKullaniciAdiSoyadi, secilecekKullaniciBirim)
+                .takipListesiKapat();
 
         imzaladiklarimPage
                 .openPage()
                 .takipListesiAc(imzaladiklarimEvrakKonu)
                 .takipListesiKontrol(kullaniciAdiSoyadi, kullaniciBirim)
-                .kullaniciListesiSec(secilecekKullaniciAdiSoyadi)
+                .takipListesiKullanicilarDoldur(secilecekKullaniciAdiSoyadi)
                 .takipListesiKontrol(secilecekKullaniciAdiSoyadi, secilecekKullaniciBirim)
                 .takipListesiKapat();
 
