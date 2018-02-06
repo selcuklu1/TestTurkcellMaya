@@ -141,7 +141,7 @@ public class EvrakPostalamaTest extends BaseTest {
         switchTo().window(1);
         closeNewWindow();
         switchTo().window(0);
-        
+
         postalananlarPage.openPage();
         postalananlarPage.filter().findRowsWith(Condition.text(konu)).shouldHaveSize(1).first().click();
         postalananlarPage.postaDetayiTikla()
@@ -173,9 +173,11 @@ public class EvrakPostalamaTest extends BaseTest {
                 .evrakTuruSec("Resmi Yazışma")
                 .geregiSecimTipiSec("Kurum")
                 .geregiDoldur("Başbakanlık", "")
+
                 .geregiKurumPostaTipi("Evrak Servisi Elden")
                 .gizlilikDerecesiSec("Normal")
                 .ivedilikSec("Normal")
+
                 .onayAkisiKullanicilariTemizle()
                 .onayAkisiEkle()
                 .onayAkisiKullaniciTipiSec("Mehmet BOZDEMİR", "İmzalama")
@@ -201,8 +203,8 @@ public class EvrakPostalamaTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TS0520b : Postalanan evrak posta bilgilerinin içerik ekranından güncellenmesi ve rapordan kontrolü")
-    public void TS0520b() throws InterruptedException {
+    @Test(enabled = true, description = "TS0520a : Postalanan evrak posta bilgilerinin içerik ekranından güncellenmesi ve rapordan kontrolü")
+    public void TS0520a() throws InterruptedException {
         login("Mbozdemir", "123");
         String konu = "Konu: TS2235";
 
@@ -210,16 +212,18 @@ public class EvrakPostalamaTest extends BaseTest {
         postalananlarPage
                 .openPage();
 
-
         Thread.sleep(2000);
         postalananlarPage.filter().findRowsWith(Condition.text(konu)).first().click();
         Thread.sleep(1000);
         postalananlarPage.postaDetayiTikla();
+        postalananlarPage.postalananyerlerKontrol();
         postalananlarPage.btnGuncelle();
         Thread.sleep(1000);
         postalananlarPage.btnTarihGuncelle("10.10.2017");
         postalananlarPage.btnPostakoduGuncelle("520");
-        postalananlarPage.txtAciklama("TS0520b");
+        postalananlarPage.txtAciklama("TS0520a");
+        postalananlarPage.btnTuzelKisiGuncelle();
+
         postalananlarPage = postalananlarPage.btnKaydet();
 
         String txt = postalananlarPage.evSay();
@@ -235,8 +239,8 @@ public class EvrakPostalamaTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TS0520a : Postalanan evrak posta bilgilerinin önizleme ekranından güncellenmesi ve rapor üzerinde kontrolü")
-    public void TS0520a() throws InterruptedException {
+    @Test(enabled = true, description = "TS0520b : Postalanan evrak posta bilgilerinin önizleme ekranından güncellenmesi ve rapor üzerinde kontrolü")
+    public void TS0520b() throws InterruptedException {
         login("Mbozdemir", "123");
         String konu = "Konu: TS2235";
 
@@ -250,11 +254,12 @@ public class EvrakPostalamaTest extends BaseTest {
         postalananlarPage.btnFiltrenenPostaIcerikGoster(konu);
         Thread.sleep(1000);
         postalananlarPage.icerikDetayPostaDetayi();
-
+        postalananlarPage.postalananyerlerKontrol();
+        
         postalananlarPage.btnIcerikPostaDetayTuzelKisiGnc();
         postalananlarPage.btnIcerikPDTuzelKisiTebTarGnc("01.01.2018");
         postalananlarPage.btnIcerikPosDetTuzKisPosKodGnc("520");
-        postalananlarPage.btnIcerikPDTuzelKisiPosAcikGnc("TS520a");
+        postalananlarPage.btnIcerikPDTuzelKisiPosAcikGnc("TS520b");
         postalananlarPage.btnIcerikPDPopupKaydet();
 
         String txt = postalananlarPage.icerikEvrakSay();
@@ -406,11 +411,26 @@ public class EvrakPostalamaTest extends BaseTest {
                 .onayAkisiKullan();
 
         evrakOlusturPage
+                .ekleriTabAc()
+                .ekleriTablariGeldigiGorme()
+                .ekleriEkMetniDoldur("TS2235_PDF")
+                .ekleriDosyaEkle("C:\\TestAutomation\\BelgenetFTA\\documents\\TS2235PDF.pdf")
+                .ekleriEkle()
+                .ekleriEkMetniDoldur("TS2235PDF")
+                .ekleriDosyaEkle("C:\\TestAutomation\\BelgenetFTA\\documents\\TS2235PDF.pdf")
+                .ekleriEkle()
+                .webAdresiEkleTabiniAc()
+                .fizikselEkEkleTabiniAc()
+                .sistemdeKayitliEvrakEkleTabiniAc();
+
+
+        evrakOlusturPage
                 .ilgileriTabAc()
                 .sistemeKayitliEvrakEkleTab()
                 .sistemeKayitliEvrakAra("yazı")
                 .sistemeKayitliDokumanArama()
                 .tablodaBulunanEvrakiEkle();
+
 
         evrakOlusturPage
                 .islemMesaji().basariliOlmali("İşlem başarılıdır!");
@@ -419,6 +439,7 @@ public class EvrakPostalamaTest extends BaseTest {
         evrakOlusturPage
                 .editorTabAc()
                 .editorIcerikDoldur(konu)
+                .editordeEkKontrol("TS2235PDF" , "Ek kontrolleri")
                 .imzala()
                 .popupSImzalaIslemleri();
 

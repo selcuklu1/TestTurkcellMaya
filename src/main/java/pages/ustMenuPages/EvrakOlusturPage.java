@@ -288,6 +288,7 @@ public class EvrakOlusturPage extends MainPage {
         ElementsCollection cmbKullanicilarImzaSec2 = $$("[id^='yeniGidenEvrakForm:evrakBilgileriList:18:akisAdimLov:LovSecilenTable'][id$='selectOneMenu']");
         SelenideElement cmbKullanicilarImza = $("[id^='yeniGidenEvrakForm:evrakBilgileriList:18:akisAdimLov:LovSecilenTable'][id$='selectOneMenu']");
         SelenideElement btnOnayAkisGuncelle = $(By.cssSelector("[id^='yeniGidenEvrakForm:evrakBilgileriList:18:akisLov:j_idt'] [class$='update-icon']"));
+        SelenideElement btnOnayAkisSil = $(By.cssSelector("[id^='yeniGidenEvrakForm:evrakBilgileriList:18:akisLov:j_idt'] [class$='delete-icon']"));
         //BelgenetElement cmbOnayAkisi = comboLov(By.cssSelector("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='akisLov:LovText']"));
         BelgenetElement cmbOnayAkisi2 = comboLov(By.id("windowCevapEvrakForm:evrakBilgileriList:18:akisLov:LovText"));
         SelenideElement btnOnayAkisiEkle2 = $(By.id("windowCevapEvrakForm:evrakBilgileriList:18:onayAkisiEkle"));
@@ -1052,6 +1053,12 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Onay akışı temizle")
+        public BilgilerTab onayAkisiTemizle() {
+            cmbOnayAkisi.click();
+            return this;
+        }
+
         @Step("Onay akışı doldurma ve görüntüleme kontrolu")
         public BilgilerTab onayAkisiDoldur(String onay) {
             cmbOnayAkisi.selectLov(onay);
@@ -1074,7 +1081,7 @@ public class EvrakOlusturPage extends MainPage {
         public BilgilerTab secilenOnayAkisiSil() {
 
             if (cmbOnayAkisi.isLovSelected()) {
-                cmbOnayAkisi.clearLastSelectedItem();
+                cmbOnayAkisi.clearAllSelectedItems();
             }
 
             return this;
@@ -1426,6 +1433,14 @@ public class EvrakOlusturPage extends MainPage {
         @Step("Koordineli seç")
         public BilgilerTab koordineliSec(boolean secim) {
             chkKoordineli.setSelected(secim);
+            return this;
+        }
+
+        @Step("Onay akışı alanının dolduğu görülür kontrolu")
+        public BilgilerTab onayAkisiDoluGeldigiKontrolu() {
+
+            Assert.assertEquals(btnOnayAkisGuncelle.isDisplayed(), true);
+            Assert.assertEquals(btnOnayAkisSil.isDisplayed(), true);
             return this;
         }
 
@@ -1809,6 +1824,11 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Editörde eklenen dağıtım tipi ve posta kontrol")
+        public EditorTab editordeGeregiPostaKontrol () {
+            cmbGeregi.getSelectableItems();
+            return this;
+        }
 
         @Step("Editorde eklenen ilgi kontrolu: {description}")
         public EditorTab editordeIlgiKontrol(String ilgi, String description) {
