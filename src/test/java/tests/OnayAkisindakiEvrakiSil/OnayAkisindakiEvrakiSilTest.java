@@ -10,10 +10,8 @@ import pages.altMenuPages.EvrakDetayiPage;
 import pages.pageComponents.TextEditor;
 import pages.solMenuPages.GelenEvraklarPage;
 import pages.solMenuPages.ImzaBekleyenlerPage;
-import pages.ustMenuPages.EvrakOlusturPage;
-import pages.ustMenuPages.KararYazisiOlusturPage;
-import pages.ustMenuPages.OlurYazisiOlusturPage;
-import pages.ustMenuPages.OnayAkisYonetimiPage;
+import pages.solMenuPages.ParafBekleyenlerPage;
+import pages.ustMenuPages.*;
 
 import java.lang.reflect.Method;
 
@@ -33,6 +31,9 @@ public class OnayAkisindakiEvrakiSilTest extends BaseTest{
     ImzaBekleyenlerPage imzaBekleyenlerPage;
     TextEditor editor;
     EvrakDetayiPage evrakDetayiPage;
+    ParafBekleyenlerPage parafBekleyenlerPage;
+    IptalEdilenEvraklarRaporuPage iptalEdilenEvraklarRaporuPage;
+
 
     @BeforeMethod
     public void beforeTests(Method method) {
@@ -47,6 +48,8 @@ public class OnayAkisindakiEvrakiSilTest extends BaseTest{
         imzaBekleyenlerPage = new ImzaBekleyenlerPage();
         editor = new TextEditor();
         evrakDetayiPage = new EvrakDetayiPage();
+        parafBekleyenlerPage = new ParafBekleyenlerPage();
+        iptalEdilenEvraklarRaporuPage = new IptalEdilenEvraklarRaporuPage();
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -106,7 +109,7 @@ public class OnayAkisindakiEvrakiSilTest extends BaseTest{
                 .evrakKonusunaGoreKontrol(evrakKonusu)
                 .konuyaGoreEvrakOnizlemedeAc(evrakKonusu)
                 .evrakOnizlemeKontrol()
-                .silButonuKontrolu()
+                .silButonuGelmedigiKontrolu()
                 .evrakKonusunaGoreIcerikTiklama(evrakKonusu);
 
         evrakDetayiPage
@@ -125,7 +128,7 @@ public class OnayAkisindakiEvrakiSilTest extends BaseTest{
                 .evrakKonusunaGoreKontrol(evrakKonusu)
                 .konuyaGoreEvrakOnizlemedeAc(evrakKonusu)
                 .evrakOnizlemeKontrol()
-                .silButonuKontrolu()
+                .silButonuGelmedigiKontrolu()
                 .evrakKonusunaGoreIcerikTiklama(evrakKonusu);
 
         evrakDetayiPage
@@ -146,7 +149,10 @@ public class OnayAkisindakiEvrakiSilTest extends BaseTest{
         String onayAkisiDefaultKullanici = "Optiim TEST";
         String kullanici2 = "Sezai ÇELİK";
         String kullanici3 = "Mehmet BOZDEMİR";
-
+        String basariMesaji = "İşlem başarılıdır!";
+        String uyariMesaji = "Zorunlu alanları doldurunuz";
+        String ilkTarih = getSysDateForKis();
+        String sonTarih = getSysDateForKis();
 
         evrakOlusturPage
                 .openPage()
@@ -168,6 +174,52 @@ public class OnayAkisindakiEvrakiSilTest extends BaseTest{
                 .kullan()
                 .onayAkisiDoluGeldigiKontrolu();
 
+        evrakOlusturPage
+                .editorTabAc();
 
+        editor
+                .type("TS0102 nolu senaryonun testi için bir editör metni girildi.");
+
+        evrakOlusturPage
+                .editorTabAc()
+                .metinAlaninGeldigiGorme()
+                .editorHitapKontrol("BAŞBAKANLIĞa")
+                .editordeImzaciKontrol(kullanici3)
+                .geregiAlaniKontrolu(kurum)
+                .editordeKonuKontrol(evrakKonusu);
+
+        evrakOlusturPage
+                .parafla()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        login(TestData.usernameSEZAICELIK, TestData.passwordSEZAICELIK); //sezaiceik
+
+        parafBekleyenlerPage
+                .openPage()
+                .konuyaGoreEvrakKontrol(evrakKonusu)
+                .konuyaGoreEvrakOnizlemedeAc(evrakKonusu)
+                .evrakOnizlemeKontrol()
+                .silButonuKontrolu()
+                .sil()
+                .evrakOnizlemedeSil()
+                .islemMesaji().uyariOlmali(uyariMesaji);
+
+        parafBekleyenlerPage
+                .evrakSilNotuDoldur(evrakKonusu + "Konulu evrak silinecek")
+                .evrakOnizlemedeSil()
+                .silmeOnayiEvrakSilPopup("Evet");
+
+        iptalEdilenEvraklarRaporuPage
+                .openPage()
+                .sayfaAcilmali()
+                .ilkTarihDoldur(ilkTarih)
+                .sonTarihDoldur(sonTarih)
+                .belgeDurumuSec("Tamamı")
+                .sorgula()
+                .konuyaGoreEvrakKontrol(evrakKonusu)
+                .konuyaGoreEvrakDetayiTikla(evrakKonusu);
+
+        evrakDetayiPage
+                .sayfaAcilmasiKontrolu();
     }
 }

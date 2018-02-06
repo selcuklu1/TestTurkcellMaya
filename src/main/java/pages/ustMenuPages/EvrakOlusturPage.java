@@ -1501,6 +1501,10 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement btnBilgiSil = $(By.cssSelector("[id='yeniGidenEvrakForm:bilgiKurumLov:LovSecilenTable'] [class$='delete-icon']"));
         ElementsCollection trEditorEkLlistesi = $$("[id='yeniGidenEvrakForm:eklerPanell'] tr");
         ElementsCollection trEditorIlgilistesi = $$("[id$='ilgiOutPanel'] tr");
+        SelenideElement lblImzaci = $(" [id^='yeniGidenEvrakForm'][id*='imzaciGridPanel'] > tbody > tr:nth-child(4) > td > span");
+        SelenideElement lblKonu = $(By.xpath("//*[@id='yeniGidenEvrakForm:editorTarihKonuSayi']/table/tbody/tr[3]/td[4]"));
+
+
         private TextEditor editor = new TextEditor();
 
         public TextEditor getEditor() {
@@ -1716,6 +1720,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Editör ekranında hitap kontrolu: {beklenenEditorHitap}")
         public EditorTab editorHitapKontrol(String beklenenEditorHitap) {
             String editorHitap = $(By.xpath("//*[@id='yeniGidenEvrakForm:hitapInplace']/span")).getText();
             Assert.assertEquals(editorHitap.contains(beklenenEditorHitap), true);
@@ -1788,13 +1793,13 @@ public class EvrakOlusturPage extends MainPage {
         @Step("Gereği alanı temizle")
         public EditorTab secilenGeregiSil() {
             cmbGeregi.shouldBe(visible);
-            cmbGeregi.clearLastSelectedItem();
+            cmbGeregi.clearAllSelectedItems();
             return this;
         }
 
         @Step("Seçilen bilgi sil")
         public EditorTab secilenBilgiSil() {
-            cmbBilgi.clearLastSelectedItem();
+            cmbBilgi.clearAllSelectedItems();
             return this;
         }
 
@@ -1872,7 +1877,32 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Editorde imzaci kontrolu: {imzaci}")
+        public EditorTab editordeImzaciKontrol(String imzaci) {
 
+            String editorImzaci = lblImzaci.getText();
+            Assert.assertEquals(editorImzaci.contains(imzaci), true);
+
+            return this;
+        }
+
+        @Step("Editorde gereği alani kontrolu: {kurum}")
+        public EditorTab geregiAlaniKontrolu(String kurum) {
+
+            boolean status = cmbGeregi.isLovSelected();
+            Assert.assertEquals(status, true);
+
+            return this;
+        }
+
+        @Step("Editorde konu kontrolu: {konu}")
+        public EditorTab editordeKonuKontrol(String konu) {
+
+            String editorKonu = lblKonu.getText();
+            Assert.assertEquals(editorKonu.contains(konu), true);
+
+            return this;
+        }
     }
 
     public class EkleriTab extends MainPage {

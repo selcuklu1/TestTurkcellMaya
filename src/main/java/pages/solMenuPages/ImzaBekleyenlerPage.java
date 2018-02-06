@@ -298,7 +298,7 @@ public class ImzaBekleyenlerPage extends MainPage {
     }
 
     @Step("Sil butonunun gelmediği kontrolu")
-    public ImzaBekleyenlerPage silButonuKontrolu() {
+    public ImzaBekleyenlerPage silButonuGelmedigiKontrolu() {
 
         Assert.assertEquals(btnEvrakSil.isDisplayed(), false);
 
