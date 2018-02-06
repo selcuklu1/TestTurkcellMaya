@@ -376,4 +376,37 @@ public class ImzaladiklarimPage extends MainPage {
 
         return this;
     }
+
+    BelgenetElement txtKullaniciListesi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKisiListesiLov:LovText"));
+    ElementsCollection tblTakipListesi = $$("tbody[id='evrakTakibimeEkleDialogForm:takipListLov:LovSecilenTable_data'] > tr[role='row']");
+    SelenideElement btnTakipListesiKapat = $("div[id='evrakTakibimeEkleDialogForm:takipDialog'] span[class*='ui-icon-closethick']");
+
+    @Step("{konu} konulu evrak üzerinde Takip Listesi butonuna tıkla.")
+    public ImzaladiklarimPage takipListesiAc(String konu) {
+        tblImzaladiklarimEvraklar
+                .filterBy(text(konu))
+                .first()
+                .$x(".//span[contains(@class,'ui-button-icon-left ui-icon document-addFollow')]/..")
+                .click();
+        return this;
+    }
+
+    @Step("Takip Listesinde {adiSoyadi} kullanıcısının ve {birim} birim bilgisinin olduğu görülür.")
+    public ImzaladiklarimPage takipListesiKontrol(String adiSoyadi, String birim){
+        tblTakipListesi.filterBy(text(adiSoyadi)).filterBy(text(birim)).first().shouldBe(visible);
+        return this;
+    }
+
+    @Step("Kullacici listesinde \"{kullanici}\" kullanıcısını seç.")
+    public ImzaladiklarimPage kullaniciListesiSec(String kullanici) {
+        txtKullaniciListesi.selectLov(kullanici);
+        return this;
+    }
+
+    @Step("Takip Listesi ekranında bulunan (X) \"Sayfayı Kapatma\" butonuna basılır. Takip listesi ekranın kapatıldığı görülür.")
+    public ImzaladiklarimPage takipListesiKapat(){
+        btnTakipListesiKapat.click();
+        txtKullaniciListesi.shouldNotBe(visible);
+        return this;
+    }
 }
