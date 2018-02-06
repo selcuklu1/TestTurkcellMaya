@@ -4,6 +4,7 @@ import com.codeborne.selenide.*;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.UstMenuData;
@@ -127,18 +128,20 @@ public class KullaniciEvrakDevretPage extends MainPage {
 
     @Step("Ekran Alan kontrolleri")
     public KullaniciEvrakDevretPage ekranTabKontrolleri() {
-        SelenideElement tabGelenEvraklar = $x("//h3[.='Gelen Evraklar']").shouldBe(visible);
-        SelenideElement tabTaslakEvraklar = $x("//h3[.='Taslak Evraklar']").shouldBe(visible);
-        SelenideElement tabImzaBekleyenEvraklar = $x("//h3[.='İmza Bekleyen Evraklar']").shouldBe(visible);
-        SelenideElement tabParafBekleyenEvraklar = $x("//h3[.='Paraf Bekleyen Evraklar']").shouldBe(visible);
-        SelenideElement tabKoordineBekleyenEvraklar = $x("//h3[.='Koordine Bekleyen Evraklar']").shouldBe(visible);
-        SelenideElement tabKontrolBekleyenEvraklar = $x("//h3[.='Kontrol Bekleyen Evraklar']").shouldBe(visible);
-        SelenideElement tabHavaleOnayinaGelenEvraklar = $x("//h3[.='Havale Onayına Gelen Evraklar']").shouldBe(visible);
-        SelenideElement tabTeslimAldiklarim = $x("//h3[.='Teslim Aldıklarım']").shouldBe(visible);
-        SelenideElement tabKapatmaImzasiBekleyenler = $x("//h3[.='Kapatma İmzasi Bekleyenler']").shouldBe(visible);
-        SelenideElement tabKapatmaParafiBekleyenler = $x("//h3[.='Kapatma Parafı Bekleyenler']").shouldBe(visible);
-        btnListele.shouldBe(visible);
-        btnDevret.shouldNotBe(enabled);
+        Assert.assertEquals($x("//h3[.='Gelen Evraklar']").isDisplayed(), true);
+        Assert.assertEquals($x("//h3[.='Taslak Evraklar']").isDisplayed(),true);
+        Assert.assertEquals($x("//h3[.='İmza Bekleyen Evraklar']").isDisplayed(), true);
+        Assert.assertEquals($x("//h3[.='Paraf Bekleyen Evraklar']").isDisplayed(), true);
+        Assert.assertEquals($x("//h3[.='Koordine Bekleyen Evraklar']").isDisplayed(), true);
+        Assert.assertEquals($x("//h3[.='Kontrol Bekleyen Evraklar']").isDisplayed(), true);
+        Assert.assertEquals($x("//h3[.='Havale Onayına Gelen Evraklar']").isDisplayed(), true);
+        Assert.assertEquals($x("//h3[.='Teslim Aldıklarım']").isDisplayed(), true);
+        Assert.assertEquals($x("//h3[.='Kapatma İmzasi Bekleyenler']").isDisplayed(), true);
+        Assert.assertEquals($x("//h3[.='Kapatma Parafı Bekleyenler']").isDisplayed(), true);
+        Assert.assertEquals(btnListele.isDisplayed(), true);
+        Assert.assertEquals(btnDevret.is(disabled), true);
+//        btnListele.shouldBe(visible);
+//        btnDevret.shouldNotBe(enabled);
 
         Allure.addAttachment("Kullanıcı Evrak Devret Ekranı açılır. Ekranda şu alanlar görüntülenir.\n", "Devredecek Kişi alanı (\n" +
                 "Listele butonu (aktif)\n" +
@@ -222,12 +225,13 @@ public class KullaniciEvrakDevretPage extends MainPage {
     public KullaniciEvrakDevretPage tabloEvrakSecimi(String tabName, String konu) {
 
         SelenideElement tab = $x("//a[text()='" + tabName + "']");
+        tab.click();
         String tabText = tabName.replaceAll("\\s+", "");
         tabText = clearTurkishChars(tabText);
         System.out.println(tabText);
 
-        Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", tab);
-        tab.click();
+//        Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", tab);
+
         ElementsCollection tblTab = $$("[id='kullaniciEvrakDevretForm:evrakDevretAccordionPanelId:devir" + tabText + "_data'] tr[data-ri]");
         tblTab
                 .filterBy(text(konu)).first()
@@ -262,6 +266,32 @@ public class KullaniciEvrakDevretPage extends MainPage {
                 .filterBy(text(konu))
                 .filterBy(text(aciklama))
                 .shouldHaveSize(1);
+        return this;
+    }
+
+    @Step("Devredilen Evrak tablo kontrolü : \"{konu}\" , \"{shouldBeExist}\" ")
+    public KullaniciEvrakDevretPage tabloEvrakKontrolu(String konu, boolean shouldBeExist) {
+
+        String tabText = "";
+
+        for (int i = 1; i < 11; i++) {
+            SelenideElement tab = $x("//div[@id='kullaniciEvrakDevretForm:evrakDevretAccordionPanelId']/h3[" + i + "]/a");
+            tabText = tab.text();
+            tabText = tabText.replaceAll("\\s+", "");
+
+            String txt = clearTurkishChars(tabText);
+            System.out.println(txt);
+            tab.click();
+            ElementsCollection tblTab = $$("[id='kullaniciEvrakDevretForm:evrakDevretAccordionPanelId:devir" + txt + "_data'] tr[data-ri]");
+            int size = tblTab.size();
+            if (size > 0) {
+                if (!shouldBeExist)
+                    tblTab.filterBy(Condition.text(konu)).shouldHaveSize(0);
+                else
+                    Allure.addAttachment("Evrak Kontrolü", "Evrak devredilememiştir.");
+            }
+        }
+
         return this;
     }
 

@@ -1014,6 +1014,15 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
+    @Step("Benzer Kayıt tıklanır")
+    public GelenEvrakKayitPage benzerKaydet() {
+        if ($$(("[id='evetButtonBenzerKaydet']")).size() == 1) {
+            $("[id='evetButtonBenzerKaydet']").pressEnter();
+        } else {
+        }
+        return this;
+    }
+
     @Step("PopUp kontrolleri")
     public String popUps() {
 //        popUp.shouldHave(Condition.visible);  pop up kontrolu
@@ -1046,6 +1055,39 @@ public class GelenEvrakKayitPage extends MainPage {
         String evrakNo = getIntegerInText(By.id("evrakKaydetBasariliDialog"));
         clickJs(basariliPopUpKapat);
         return evrakNo;
+    }
+
+    @Step("PopUp kontrolleri")
+    public GelenEvrakKayitPage popUps(boolean evrakNotAlma) {
+//        popUp.shouldHave(Condition.visible);  pop up kontrolu
+
+        String text;
+        Selenide.sleep(5000);
+
+        if (ustYaziYokpopUp.isDisplayed()) {
+            clickJs(ustYaziYokEvet);
+            Allure.addAttachment("Üst Yazı Seçmediniz PopUp'ı", "Üst Yazı gelmemiştir PopUp'ı kapatılır.");
+        }
+        if (ustYaziveHavaleYeriYokpopUp.isDisplayed()) {
+            clickJs(popUpEvet);
+            Allure.addAttachment("Üst Yazı ve Havale Yeri yok PopUp'ı", "Üst Yazı ve Havale Yeri yok PopUp'ı kapatılır.");
+        }
+        if (popUphavaleYeriSecmediniz.isDisplayed()) {
+            String mesaj2 = "Havale yeri seçmediniz. Evrak kaydedildiğinde Kaydedilen Gelen Evraklar kutusuna düşecektir. İşleme devam etmek istiyor musunuz?";
+            popUphavaleYeriSecmediniz.getText().equals(mesaj2);
+            clickJs(btnHavaleYeriSecmedinizEvet);
+            Allure.addAttachment("Havale Yeri Seçmediniz PopUp'ı", mesaj2);
+        }
+        if (mukerrerPopUp.isDisplayed()) {
+            clickJs(mukerrerPopUpEvet);
+            Allure.addAttachment("Mükerrer İşlem PopUp'ı", "Mükerrer İşlem PopUp'ı kapatılır.");
+        }
+        basariliPopUp.shouldBe(Condition.visible);
+        String mesaj4 = "Evrak başarıyla kaydedilmiştir.";
+        basariliPopUp.getText().contains(mesaj4);
+        Allure.addAttachment("İşlem başarılı PopUp'ı", mesaj4);
+        clickJs(basariliPopUpKapat);
+        return this;
     }
 
     @Step("PopUp kontrolleri v2")

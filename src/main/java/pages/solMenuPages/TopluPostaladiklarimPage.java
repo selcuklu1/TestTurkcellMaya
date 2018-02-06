@@ -60,7 +60,7 @@ public class TopluPostaladiklarimPage extends MainPage {
 
     @Step("Toplu Postaladıklarım tablo kontrolü")
     public TopluPostaladiklarimPage topluPostaladiklarimTabloKontrolu() {
-        tabloEvrakListesi.isDisplayed();
+        Assert.assertEquals(tabloEvrakListesi.isDisplayed(),true);
         Allure.addAttachment("Tablo Listesi : ", "Ekran Kontrolü ok");
         return this;
     }
@@ -216,10 +216,10 @@ public class TopluPostaladiklarimPage extends MainPage {
 
         SelenideElement txtPostaDetayiPostaListesiAdi = $(By.xpath("//label[normalize-space(text())='Posta Listesi Adı :']//ancestor::tr//textarea"));
 
-        txtPostaListesiAdi.text().equals(postaListesi);
-        txtAdres.text().equals(adres);
-        txtGramaj.text().equals(gramaj);
-        txtTutar.text().equals(tutar);
+        Assert.assertEquals(txtPostaListesiAdi.getValue().equals(postaListesi),true);
+        Assert.assertEquals(txtAdres.text().equals(adres),true);
+        Assert.assertEquals(txtGramaj.getValue().equals(gramaj),true);
+        Assert.assertEquals(txtTutar.getValue().equals(tutar),true);
 
         Allure.addAttachment("Ekran Alan Kontrolü : ", "  Seçilen posta listesinin adının doğru geldiği görülür.\n" +
                 "- Posta Tarihinin geldiği görülür.\n" +
@@ -507,8 +507,8 @@ public class TopluPostaladiklarimPage extends MainPage {
     }
 
     public TopluPostaladiklarimPage etiketBastirEkraniKontrolü(String adres, String konu) {
-        txtEtiketBastir.text().contains(konu);
-        txtEtiketBastir.text().contains(adres);
+        Assert.assertEquals(txtEtiketBastir.text().contains(konu),true);
+        Assert.assertEquals(txtEtiketBastir.text().contains(adres),true);
         return this;
     }
 

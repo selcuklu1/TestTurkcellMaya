@@ -34,7 +34,7 @@ public class EvrakDetayiPage extends MainPage {
 
     @Step("Sayfa açıldı mı kontrolü")
     public EvrakDetayiPage sayfaAcilmali() {
-        pageTitle.shouldBe(visible);
+        Assert.assertEquals(pageTitle.is(visible),true);
         return this;
     }
 

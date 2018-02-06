@@ -472,10 +472,17 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Kullanıcı kontrolü")
         public BilgilerTab kullaniciTabloKontrol() {
-            tblKullanıcılar.isDisplayed();
+            Assert.assertEquals(tblKullanıcılar.isDisplayed(),true);
             return this;
         }
+        @Step("Kullnici ismine göre imzalama veya paraflama kontrolu : \"{value}\" ")
+        public BilgilerTab kullniciIsmineGoreImzaParafKontrol(String kullanici, String value) {
 
+            tblKullanıcılar2.filterBy(Condition.text(kullanici))
+                    .filterBy(Condition.text(value))
+                    .shouldHaveSize(1);
+            return this;
+        }
         @Step("Kullnici ismine göre imzalama veya paraflama seç")
         public BilgilerTab kullniciIsmineGoreImzaParafSec(String kullanici, String value) {
 
@@ -671,6 +678,11 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Seçilen gereği Dağıtım Hitap Düzenle tıklanır")
+        public BilgilerTab secilenGeregiDagitimHitapGuncelleme(){
+        $("[id$='geregiLov:LovSecilenTable_data'] button [class='ui-button-icon-left ui-icon update-icon']").click();
+            return this;
+        }
         ElementsCollection tableGeregiSecilenler = $$("tbody[id$='geregiLov:LovSecilenTable_data'] > tr");
 
         @Step("Geregi alanında \"{geregi}\" için {geregiTipi} seç")
@@ -1179,7 +1191,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Onay akışı kullanıcı adı ve tipi kontrolu")
+        @Step("Onay akışı kullanıcı adı ve tipi kontrolu: \"{kullaniciAdi}\", \"{kullaniciTipi}\" ")
         public BilgilerTab onayAkisiKullaniciKontrol(String kullaniciAdi, String kullaniciTipi) {
             btnKullan.sendKeys(Keys.SHIFT);
             trOnayAkisiEkleKullanicilar

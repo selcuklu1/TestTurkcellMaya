@@ -28,6 +28,12 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     SelenideElement btnTeslimAlveHavaleYap = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:6:cmdbutton"));
     SelenideElement tblIlkEvrak = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
     ElementsCollection btnTeslimAlVeKapat = $$("[id='mainPreviewForm:onizlemeRightTab:onizlemeRightTab'] table td[class='buttonMenuContainerDefault']");
+    SelenideElement btnTeslimAlVeKapat2 = $("[class='ui-button-icon-left ui-icon teslimAlHavale']");
+    BelgenetElement txtTeslimAlVeHavaleEtBirim = comboLov(By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovText"));
+    BelgenetElement txtEvrakDetayTeslimAlVeHavaleEtBirim = comboLov(By.id("inboxItemInfoForm:dagitimBilgileriBirimLov:LovText"));
+    BelgenetElement txtEvrakDetayTeslimAlVeHavaleEtKisi = comboLov(By.id("inboxItemInfoForm:dagitimBilgileriKullaniciLov:LovText"));
+    SelenideElement btnTeslimAlVeHavaleEtTeslimAlVeGonder = $("[id$='btnTeslimAlGonder']");
+    SelenideElement btnEvrakDetayTeslimAlVeHavaleEtTeslimAlVeGonder = $(By.id("inboxItemInfoForm:btnTeslimAlGonder"));
     BelgenetElement txtKaldirilacakKlasorler = comboLov(By.id("mainPreviewForm:klasorLov_id:LovText"));
     BelgenetElement txtKonuKodu = comboLov(By.id("mainPreviewForm:konuKoduLov:LovText"));
     SelenideElement btnTeslimAlVeKapatTeslimAlVeKapat = $("[id='mainPreviewForm:evrakOnizlemeTab'] div[class='form-buttons kapatButtonDirekt'] button");
@@ -71,6 +77,8 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     ElementsCollection teslimEvrakEkleri = $$("a[href^='#mainPreviewForm']");
     ElementsCollection teslimEvrakEkleriKontrol = $$("div[id$='ekListesiOnizlemeDataTable'] tr[data-ri]");
 
+    BelgenetElement txtSecilenlerOnaylayacakKisi = comboLov(By.id("mainPreviewForm:onaylayacakKisiLov:LovText"));
+
     public TeslimAlinmayiBekleyenlerPage openPage() {
         solMenu(SolMenuData.BirimEvraklari.TeslimAlinmayiBekleyenler);
 //        ustMenu("Teslim Alınmayı Bekleyenler");
@@ -113,6 +121,43 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Birim alanını doldur: {birimAd} - {birim} ")
+    public TeslimAlinmayiBekleyenlerPage teslimAlVeHavaleEtBirimDoldur(String birimAd, String birim) {
+        txtTeslimAlVeHavaleEtBirim.type(birimAd).getDetailItems().filterBy(Condition.text(birim)).first().click();
+        return this;
+    }
+
+    @Step("Birim alanını doldur: {birimAd} - {birim} ")
+    public TeslimAlinmayiBekleyenlerPage evrakDetayTeslimAlVeHavaleEtBirimDoldur(String birimAd, String birim) {
+        txtEvrakDetayTeslimAlVeHavaleEtBirim.type(birimAd).getDetailItems().filterBy(Condition.text(birim)).first().click();
+        return this;
+    }
+
+    @Step("Birim alanını doldur: {birimAd} - {birim} ")
+    public TeslimAlinmayiBekleyenlerPage evrakDetayTeslimAlVeHavaleEtKisiDoldur(String birimAd, String birim) {
+        txtEvrakDetayTeslimAlVeHavaleEtKisi.type(birimAd).getDetailItems().filterBy(Condition.text(birim)).first().click();
+        return this;
+    }
+
+    @Step("Gereği için gönder ifadesi bilgi için gönder olarak değiştir")
+    public TeslimAlinmayiBekleyenlerPage evrakDetayTeslimAlVeHavaleEtSecilenBirimBilgiSec() {
+        $(By.id("inboxItemInfoForm:dagitimBilgileriBirimLov:LovSecilenTable:0:selectOneMenu")).selectOption("BİLGİ İÇİN GÖNDER");
+        return this;
+    }
+
+    @Step("Teslim Al Gönder tıklanır")
+    public TeslimAlinmayiBekleyenlerPage teslimAlveHavaleEtTeslimAlGonder(){
+        btnTeslimAlVeHavaleEtTeslimAlVeGonder.click();
+        return this;
+    }
+
+    @Step("Teslim Al Gönder tıklanır")
+    public TeslimAlinmayiBekleyenlerPage evrakDetayTeslimAlveHavaleEtTeslimAlGonder(){
+        btnEvrakDetayTeslimAlVeHavaleEtTeslimAlVeGonder.pressEnter();
+        return this;
+    }
+
+
     @Step("Kapatma tipi, Konu kodu, Kaldırılacak klasörler, Not ve Onay akışı alanlarının geldiği görülür.")
     public TeslimAlinmayiBekleyenlerPage teslimAlVeKapatAlanGeldigiGorme() {
         boolean durum = $$("[id='mainPreviewForm:evrakKapatPanelGrid']").size() == 1;
@@ -138,12 +183,49 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Teslim Al ve Havale Et")
+    public TeslimAlinmayiBekleyenlerPage teslimAlVeHavaleEt(){
+        btnTeslimAlVeKapat2.click();
+        return this;
+    }
+
+    @Step("Seçilenleri teslim al ve havale et")
+    public TeslimAlinmayiBekleyenlerPage secilenTeslimAlVeHavaleEt(){
+        $("button[class='ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only tipTip button-icon-borderless'] [class='ui-button-icon-left ui-icon document-delivery-publish']").click();
+        return this;
+    }
+    
+    @Step("Onaylayacak Kişi alanını doldur: {onaylayacakKisi}")
+    public TeslimAlinmayiBekleyenlerPage secilenOnaylayacakKisiDoldur(String onaylayacakKisi){
+        txtSecilenlerOnaylayacakKisi.selectLov(onaylayacakKisi);
+        return this;
+    }
+    
+    @Step("")
+    public TeslimAlinmayiBekleyenlerPage secilenHavaleOnayinaGonder(){
+        $$("[id='mainPreviewForm:eastLayout'] span button").filterBy(Condition.text("Havale Onayına Gönder")).first().click();
+        return this;
+    }
+    
     @Step("Evrak no ile evrak seçilir : \"{evrakNo}\" ")
     public TeslimAlinmayiBekleyenlerPage evrakNoIleEvrakSec(String evrakNo) {
         tblEvraklar
                 .filterBy(Condition.text(evrakNo))
                 .first()
                 .click();
+        return this;
+    }
+    @Step("Evrak no ile evrak içerik göster seçilir : \"{evrakNo}\" ")
+    public TeslimAlinmayiBekleyenlerPage evrakNoIleEvrakIcerikGosterSec(String evrakNo) {
+        tblEvraklar
+                .filterBy(Condition.text(evrakNo)).get(0).$$("[id$='detayGosterButton']").first().click();
+        return this;
+    }
+
+    @Step("Evrak no ile evrak checkbox seçilir : \"{evrakNo}\" ")
+    public TeslimAlinmayiBekleyenlerPage evrakNoIleEvrakCheckboxSec(String evrakNo) {
+        tblEvraklar
+                .filterBy(Condition.text(evrakNo)).get(0).$$("[class='ui-chkbox-box ui-widget ui-corner-all ui-state-default']").first().click();
         return this;
     }
 
@@ -177,7 +259,7 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     }
 
 
-    @Step("Teslim Alinmayi Bekleyenler  sayfasında evrakın listeye düşmediği kontrolu")
+    @Step("Teslim Alinmayi Bekleyenler sayfasında evrakın listeye düşmediği kontrolu")
     public TeslimAlinmayiBekleyenlerPage evrakNoGelmedigiGorme(String konu) {
         boolean durum = tableEvraklar
                 .filterBy(text(konu)).size() > 0;
