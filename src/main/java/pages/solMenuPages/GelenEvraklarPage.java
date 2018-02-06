@@ -3,6 +3,7 @@ package pages.solMenuPages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.collections.SizeGreaterThan;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
@@ -77,13 +78,14 @@ public class GelenEvraklarPage extends MainPage {
     SelenideElement btnCevapYaz = $x("//span[contains(@class, 'cevapYaz')]/..");
 
     //Evrak Kapat Buttonu div
-    SelenideElement btnEvrakKapat = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:8:cmdbutton"));
+    SelenideElement btnEvrakKapat = $x("//span[contains(@class, 'evrakKapat')]/..");
     BelgenetElement txtEvrakKapatKonuKodu = comboLov(By.id("mainPreviewForm:konuKoduLov:LovText"));
     SelenideElement cmbEvrakKapatKapatmaTipi = $(By.id("mainPreviewForm:kapatmaTipiOneMenu_id"));
     BelgenetElement txtEvrakKapatKaldirilacakKlasorler = comboLov(By.id("mainPreviewForm:klasorLov_id:LovText"));
     SelenideElement txtEvrakKapatNot = $(By.id("mainPreviewForm:notTextArea_id"));
     SelenideElement txtEvrakKapatOnayAkisi = $(By.id("mainPreviewForm:akisLov_id:LovText"));
     SelenideElement btnEvrakKapatKapatmaOnayinaSun = $(By.id("mainPreviewForm:kapatmaOnayinaSunButtonDirektId"));
+    SelenideElement btnEvrakKapatKapat2 = $x("//div[contains(@class, 'kapatButtonDirekt')]//span[contains(., 'Evrak Kapat')]/..");
     ElementsCollection btnEvrakKapatEvrakKapat = $$("[id='mainPreviewForm:evrakOnizlemeTab'] [class='form-buttons kapatButtonDirekt'] button");
     SelenideElement chkEvrakKapatKisiselKlasorler = $(By.id("mainPreviewForm:kisiselKlasorlerimiGetirCheckboxId_input"));
     SelenideElement btnOnayAkisi = $("[id='mainPreviewForm:evrakKapatOnayAkisPanelGrid'] td:nth-child(4) button");
@@ -106,6 +108,8 @@ public class GelenEvraklarPage extends MainPage {
     SelenideElement btnTakipListesiKapat = $("[id^='evrakTakibimeEkleDialogForm:takipDialog'] span[class='ui-icon ui-icon-closethick']");
     ElementsCollection evrakSecButonlar = $$("[id='mainPreviewForm:onizlemeRightTab:onizlemeRightTab'] td");
 
+    SelenideElement btnEvrakKapatUyariEvet = $(By.id("mainPreviewForm:tebellugEvrakEvetButton_id"));
+
     @Step("Gelen Evraklar Sayfasını aç")
     public GelenEvraklarPage openPage() {
         solMenu(SolMenuData.IslemBekleyenEvraklar.GelenEvraklar);
@@ -127,7 +131,7 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
-    @Step("Kullancılar doldur")
+    @Step("Takip listesinde {kullanicilar} kullanıcısını seç")
     public GelenEvraklarPage takipListesiKullanicilarDoldur(String kullanicilar) {
         txtTakipListesiKullanicilar.type(kullanicilar).getTitleItems().filterBy(Condition.text(kullanicilar)).first().click();
         return this;
@@ -367,6 +371,12 @@ public class GelenEvraklarPage extends MainPage {
     @Step("Tebliğ Et ekranında kullanıcı listesi alanını doldur: {kullaniciListesi}")
     public GelenEvraklarPage tebligEtKullaniciListesiDoldur(String kullaniciListesi) {
         txtTebligEtKullaniciListesi.selectLov(kullaniciListesi);
+        return this;
+    }
+
+    @Step("Kullanıcı listesini temizle")
+    public GelenEvraklarPage tebligEtKullaniciListesiTemizle() {
+        txtTebligEtKullaniciListesi.clearAllSelectedItems();
         return this;
     }
 
@@ -862,8 +872,14 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
-    @Step("Kullacici listesi seç : \"{kullanici}\" ")
+    @Step("Kullacici listesinde \"{kullanici}\" kullanıcısını seç.")
     public GelenEvraklarPage kullanciListesiSec(String kullanici) {
+        txtKullaniciListesi.selectLov(kullanici);
+        return this;
+    }
+
+    @Step("Kullacici listesinde \"{kullanici}\" kullanıcısını seç.")
+    public GelenEvraklarPage kullaniciListesiSec(String kullanici) {
         txtKullaniciListesi.selectLov(kullanici);
         return this;
     }
@@ -905,5 +921,42 @@ public class GelenEvraklarPage extends MainPage {
 
         return deger.substring(bilgi.length() + 2, deger.length());
     }
+
+    // FAZ 2
+
+    ElementsCollection tblTakipListesi = $$("tbody[id='evrakTakibimeEkleDialogForm:takipListLov:LovSecilenTable_data'] > tr[role='row']");
+    @Step("{konu} konulu evrak üzerinde Takip Listesi butonuna tıkla.")
+    public GelenEvraklarPage takipListesiAc(String konu) {
+        tableEvraklar
+                .filterBy(text(konu))
+                .first()
+                .$x(".//span[contains(@class,'ui-button-icon-left ui-icon document-addFollow')]/..")
+                .click();
+        return this;
+    }
+
+    @Step("Takip Listesinde {adiSoyadi} kullanıcısının ve {birim} birim bilgisinin olduğu görülür.")
+    public GelenEvraklarPage takipListesiKontrol(String adiSoyadi, String birim){
+        tblTakipListesi.filterBy(text(adiSoyadi)).filterBy(text(birim)).first().shouldBe(visible);
+        return this;
+    }
+
+    @Step("Evrak Kapatma panelinde evrak kapat butonuna tıkla.")
+    public GelenEvraklarPage evrakiKapat(){
+        btnEvrakKapatKapat2.click();
+        if(btnEvrakKapatUyariEvet.isDisplayed())
+            btnEvrakKapatUyariEvet.waitUntil(visible, 50000).click();
+        return this;
+    }
+
+    @Step("Takip Listesi ekranında bulunan (X) \"Sayfayı Kapatma\" butonuna basılır. Takip listesi ekranın kapatıldığı görülür.")
+    public GelenEvraklarPage takipListesiKapat(){
+        btnTakipListesiKapat.click();
+        txtKullaniciListesi.shouldNotBe(visible);
+        return this;
+    }
+
+
+    // //span[contains(@class,'ui-button-icon-left ui-icon document-addFollow')]/..
 
 }

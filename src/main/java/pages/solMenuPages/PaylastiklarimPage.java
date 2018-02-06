@@ -192,7 +192,7 @@ public class PaylastiklarimPage extends MainPage {
 
     }
 
-    @Step("\"{0}\" tabını seç")
+    @Step("\"{tabAdi}\" tabını seç")
     public PaylastiklarimPage evrakOnizlemeTabSec(String tabAdi) {
 
         tabEvrakOnizleme
@@ -204,7 +204,7 @@ public class PaylastiklarimPage extends MainPage {
         return this;
     }
 
-    @Step("\"{0}\" tabını seç")
+    @Step("\"{tabAdi}\" tabını seç")
     public PaylastiklarimPage paylasilanlarTabSec(String tabAdi) {
 
         tabEvrakOnizleme
