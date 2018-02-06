@@ -86,9 +86,9 @@ public class GelenEvraklarPage extends MainPage {
     SelenideElement btnEvrakKapatKapatmaOnayinaSun = $(By.id("mainPreviewForm:kapatmaOnayinaSunButtonDirektId"));
     ElementsCollection btnEvrakKapatEvrakKapat = $$("[id='mainPreviewForm:evrakOnizlemeTab'] [class='form-buttons kapatButtonDirekt'] button");
     SelenideElement chkEvrakKapatKisiselKlasorler = $(By.id("mainPreviewForm:kisiselKlasorlerimiGetirCheckboxId_input"));
-SelenideElement btnOnayAkisi = $("[id='mainPreviewForm:evrakKapatOnayAkisPanelGrid'] td:nth-child(4) button");
-BelgenetElement txtKullanicalar = comboLov(By.id("mainPreviewForm:akisAdimLov_id:LovText"));
-ElementsCollection tblVekaletAlanVeren = $$("tbody[id='mainPreviewForm:mainPreviewFormKullaniciBirimSeceneklerAkis_data'] tr[data-ri]");
+    SelenideElement btnOnayAkisi = $("[id='mainPreviewForm:evrakKapatOnayAkisPanelGrid'] td:nth-child(4) button");
+    BelgenetElement txtKullanicalar = comboLov(By.id("mainPreviewForm:akisAdimLov_id:LovText"));
+    ElementsCollection tblVekaletAlanVeren = $$("tbody[id='mainPreviewForm:mainPreviewFormKullaniciBirimSeceneklerAkis_data'] tr[data-ri]");
     //Paylaş Button altı div
     SelenideElement btnPaylas = $(By.xpath("//button/span[contains(@class, 'evrakPaylas')]"));
     SelenideElement txtPaylasKisi = $(By.id("mainPreviewForm:evrakPaylasKisiLov:LovText"));
@@ -267,6 +267,18 @@ ElementsCollection tblVekaletAlanVeren = $$("tbody[id='mainPreviewForm:mainPrevi
                 .filterBy(text("Evrak Tarihi: " + evrakTarihi))
                 .filterBy(text("No: " + no))
                 .get(0)
+                .$("[id^='mainInboxForm:inboxDataTable'] [id$='detayGosterButton']").click();
+
+        $(By.id("mainPreviewForm:eastLayout")).waitUntil(Condition.visible, 5000);
+        return this;
+    }
+
+    @Step("Gelen Evraklar sayfasında evrakın geldiği kontrolu ve seçme")
+    public GelenEvraklarPage konuyaGoreEvrakIcerikGoster(String konu) {
+
+        tableEvraklar
+                .filterBy(text("Konu: " + konu))
+                .first()
                 .$("[id^='mainInboxForm:inboxDataTable'] [id$='detayGosterButton']").click();
 
         $(By.id("mainPreviewForm:eastLayout")).waitUntil(Condition.visible, 5000);
@@ -729,19 +741,21 @@ ElementsCollection tblVekaletAlanVeren = $$("tbody[id='mainPreviewForm:mainPrevi
     @Step("Evrak Önizleme \"{btnText}\" buton geldiği görülür.")
     public GelenEvraklarPage evrakOnizlemeButonKontrolu(String btnText) {
         SelenideElement btnEvrakOnizleme = $(By.xpath("//span[text()='" + btnText + "']/../../..//button"));
-        Assert.assertEquals(btnEvrakOnizleme.isDisplayed(),true);
+        Assert.assertEquals(btnEvrakOnizleme.isDisplayed(), true);
         return this;
     }
+
     @Step("Evrak Önizleme \"{btnText}\" buton tıklanır.")
     public GelenEvraklarPage evrakOnizlemeButonTikla(String btnText) {
         SelenideElement btnEvrakOnizleme = $(By.xpath("//span[text()='" + btnText + "']/../../..//button"));
         btnEvrakOnizleme.click();
         return this;
     }
+
     @Step("Evrak Önizleme iade edilecek kullanıcı kontrolü")
     public GelenEvraklarPage evrakOnizlemeIadeEdilecekKullanici() {
         SelenideElement lblEvrakOnizlemeIadeEdilecekKullanici = $(By.xpath("//label[normalize-space(text())='İade Edilecek Kullanıcı']//ancestor::tr//td[3]//label"));
-        Allure.addAttachment("İade Edilecek Kullanıcı : ",lblEvrakOnizlemeIadeEdilecekKullanici.text());
+        Allure.addAttachment("İade Edilecek Kullanıcı : ", lblEvrakOnizlemeIadeEdilecekKullanici.text());
         return this;
     }
 
@@ -752,6 +766,7 @@ ElementsCollection tblVekaletAlanVeren = $$("tbody[id='mainPreviewForm:mainPrevi
         clickJs(btnOnayAkisi);
         return this;
     }
+
     @Step("Onay Akışı İşlemleri alanında Kullanıcılar alanında \"{kullanici}\" seçilir.")
     public GelenEvraklarPage evrakKapamaKullaniciSec(String kullanici) {
         txtKullanicalar.selectLov(kullanici);
@@ -759,11 +774,12 @@ ElementsCollection tblVekaletAlanVeren = $$("tbody[id='mainPreviewForm:mainPrevi
     }
 
     @Step("Onay Akışı İşlemleri alanında Kullanıcılar alanında \"{kullanici}\" seçilir.")
-    public GelenEvraklarPage evrakKapamaKullaniciSecWithTitle(String kullanici,String title) {
+    public GelenEvraklarPage evrakKapamaKullaniciSecWithTitle(String kullanici, String title) {
         txtKullanicalar.type(kullanici).getTitleItems()
                 .filterBy(Condition.exactText(kullanici + title)).first().click();
         return this;
     }
+
     @Step("Lütfen seçim yapınız... popup'ı geldiği görülür.")
     public GelenEvraklarPage popUpKullaniciSecimKontrulu() {
         SelenideElement popUp = $(By.xpath("//span[text()='Lütfen seçim yapınız...']"));
@@ -781,14 +797,14 @@ ElementsCollection tblVekaletAlanVeren = $$("tbody[id='mainPreviewForm:mainPrevi
     }
 
     @Step("Evrak Kapama Kullanıcılar alanı kontrolü.")
-    public GelenEvraklarPage evrakKapamaKullanicilarAlaniKontrolü(String vekaletAlan,String title,String vekaletVeren) {
+    public GelenEvraklarPage evrakKapamaKullanicilarAlaniKontrolü(String vekaletAlan, String title, String vekaletVeren) {
         List<String> text = txtKullanicalar.getSelectedItems().texts();
         System.out.println(text);
 
-        Assert.assertEquals(text.get(0).contains(vekaletAlan),true);
-        Assert.assertEquals(text.get(0).contains(title),true);
-        Assert.assertEquals(text.get(0).contains(vekaletVeren),true);
-takeScreenshot();
+        Assert.assertEquals(text.get(0).contains(vekaletAlan), true);
+        Assert.assertEquals(text.get(0).contains(title), true);
+        Assert.assertEquals(text.get(0).contains(vekaletVeren), true);
+        takeScreenshot();
 //        Allure.addAttachment("Onaylayacak kişi : ", "Onaylayacak Kisi alanına \n" + text.get(0) + " geldiği görülür.");
         return this;
     }

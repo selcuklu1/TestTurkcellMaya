@@ -7,6 +7,8 @@ import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Step;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import pages.altMenuPages.EvrakDetayiPage;
+import pages.solMenuPages.GelenEvraklarPage;
 import pages.solMenuPages.ImzaBekleyenlerPage;
 import pages.ustMenuPages.EvrakOlusturPage;
 import pages.ustMenuPages.KullaniciEvrakDevretPage;
@@ -24,6 +26,8 @@ public class EvrakDevretTest extends BaseTest {
     KullaniciEvrakDevretPage kullaniciEvrakDevretPage;
     EvrakOlusturPage evrakOlusturPage;
     ImzaBekleyenlerPage imzaBekleyenlerPage;
+    GelenEvraklarPage gelenEvraklarPage;
+    EvrakDetayiPage evrakDetayiPage;
 
     User mbozdemir = new User("mbozdemir", "123");
     User username22n = new User("username22n", "123");
@@ -47,6 +51,8 @@ public class EvrakDevretTest extends BaseTest {
         kullaniciEvrakDevretPage = new KullaniciEvrakDevretPage();
         imzaBekleyenlerPage = new ImzaBekleyenlerPage();
         evrakOlusturPage = new EvrakOlusturPage();
+        gelenEvraklarPage = new GelenEvraklarPage();
+        evrakDetayiPage = new EvrakDetayiPage();
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -76,6 +82,22 @@ public class EvrakDevretTest extends BaseTest {
         imzaBekleyenlerPage
                 .openPage()
                 .evrakKonusunaGoreKontrol(konu);
+
+        //9. adım ve sonrası yazılacak
+
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true
+            ,dependsOnMethods = {"TS2178"}
+            , description = "TS2179 : Devredilen evrakların devralan kullanıcıda hareket/evrak geçmişinin kontrolü")
+    public void TS2179() throws InterruptedException {
+        login(username22n);
+        gelenEvraklarPage
+                .openPage()
+                .konuyaGoreEvrakIcerikGoster(konu);
+        evrakDetayiPage
+                .sayfaAcilmali();
 
     }
 

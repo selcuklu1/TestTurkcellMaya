@@ -446,7 +446,14 @@ public class EvrakOlusturPage extends MainPage {
             Assert.assertEquals(tblKullanıcılar.isDisplayed(),true);
             return this;
         }
+        @Step("Kullnici ismine göre imzalama veya paraflama kontrolu : \"{value}\" ")
+        public BilgilerTab kullniciIsmineGoreImzaParafKontrol(String kullanici, String value) {
 
+            tblKullanıcılar2.filterBy(Condition.text(kullanici))
+                    .filterBy(Condition.text(value))
+                    .shouldHaveSize(1);
+            return this;
+        }
         @Step("Kullnici ismine göre imzalama veya paraflama seç")
         public BilgilerTab kullniciIsmineGoreImzaParafSec(String kullanici, String value) {
 
@@ -1131,7 +1138,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Onay akışı kullanıcı adı ve tipi kontrolu")
+        @Step("Onay akışı kullanıcı adı ve tipi kontrolu: \"{kullaniciAdi}\", \"{kullaniciTipi}\" ")
         public BilgilerTab onayAkisiKullaniciKontrol(String kullaniciAdi, String kullaniciTipi) {
             btnKullan.sendKeys(Keys.SHIFT);
             trOnayAkisiEkleKullanicilar
