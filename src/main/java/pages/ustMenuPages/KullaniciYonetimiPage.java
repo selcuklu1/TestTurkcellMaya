@@ -5,6 +5,7 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
@@ -18,9 +19,7 @@ import java.util.Random;
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
-import static com.codeborne.selenide.Selenide.sleep;
+import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 public class KullaniciYonetimiPage extends MainPage {
@@ -137,6 +136,8 @@ public class KullaniciYonetimiPage extends MainPage {
 
     @Step("Birim kolonununda \"{birim}\" içeren satırda güncelle butonu tıklanır")
     public KullaniciYonetimiPage gorevliOlduguBirimlerGuncelle(String birim) {
+//        Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", tblKullaniciBirim);
+
         tblKullaniciBirim
                 .filterBy(Condition.text(birim))
                 .first()
@@ -158,19 +159,33 @@ public class KullaniciYonetimiPage extends MainPage {
 
     @Step("Vekalati olan kullanıcının Kullanıcı Birim Atama Ekran kontrolü.")
     public KullaniciYonetimiPage VekaletBirimiKullaniciBirimAtamaEkranKontrolu() {
-        txtKullaniciBirimAtamaBirim.shouldNotBe(Condition.empty);
+
+        Assert.assertEquals(txtKullaniciBirimAtamaBirim.is(Condition.empty),false);
+//        Assert.assertEquals(txtKullaniciBirimAtamaBirim.is(Condition.disabled),true);
+        Assert.assertEquals(txtGorev.is(Condition.empty),false);
+        Assert.assertEquals(txtGorev.is(Condition.disabled),true);
+        Assert.assertEquals(txtBaslangicTarihi.is(Condition.empty),false);
+        Assert.assertEquals(txtBaslangicTarihi.is(Condition.disabled),true);
+        Assert.assertEquals(txtBitisTarihi.is(Condition.empty),false);
+        Assert.assertEquals(txtBitisTarihi.is(Condition.disabled),true);
+        Assert.assertEquals(cmbPopupKullaniciBirimAtamaBagTipi.is(Condition.empty),false);
+        Assert.assertEquals(cmbPopupKullaniciBirimAtamaBagTipi.is(Condition.disabled),true);
+        Assert.assertEquals(cmbKullaniciBirimAtamaGizlilikDerecesi.is(Condition.enabled),true);
+        Assert.assertEquals(btnKullaniciBirimAtamaKaydet.isDisplayed(),true);
+        Assert.assertEquals(btnKullaniciBirimAtamaIptal.isDisplayed(),true);
+
 //        txtKullaniciBirimAtamaBirim.shouldBe(Condition.disabled);
-        txtGorev.shouldNotBe(Condition.empty);
-        txtGorev.shouldBe(Condition.disabled);
-        txtBaslangicTarihi.shouldNotBe(Condition.empty);
-        txtBaslangicTarihi.shouldBe(Condition.disabled);
-        txtBitisTarihi.shouldNotBe(Condition.empty);
-        txtBitisTarihi.shouldBe(Condition.disabled);
-        cmbPopupKullaniciBirimAtamaBagTipi.shouldNotBe(Condition.empty);
-        cmbPopupKullaniciBirimAtamaBagTipi.shouldBe(Condition.disabled);
-        cmbKullaniciBirimAtamaGizlilikDerecesi.shouldBe(Condition.enabled);
-        btnKullaniciBirimAtamaKaydet.isDisplayed();
-        btnKullaniciBirimAtamaIptal.isDisplayed();
+//        txtGorev.shouldNotBe(Condition.empty);
+//        txtGorev.shouldBe(Condition.disabled);
+//        txtBaslangicTarihi.shouldNotBe(Condition.empty);
+//        txtBaslangicTarihi.shouldBe(Condition.disabled);
+//        txtBitisTarihi.shouldNotBe(Condition.empty);
+//        txtBitisTarihi.shouldBe(Condition.disabled);
+//        cmbPopupKullaniciBirimAtamaBagTipi.shouldNotBe(Condition.empty);
+//        cmbPopupKullaniciBirimAtamaBagTipi.shouldBe(Condition.disabled);
+//        cmbKullaniciBirimAtamaGizlilikDerecesi.shouldBe(Condition.enabled);
+//        btnKullaniciBirimAtamaKaydet.isDisplayed();
+//        btnKullaniciBirimAtamaIptal.isDisplayed();
 
         takeScreenshot();
         Allure.addAttachment("Kullanıcı Birim Atama ekranı : ", "Birim, Görev, Başlangıç Tarihi, Bitiş Tarihi, Bağ tipi alanlarının dolu ve değiştirilemez olduğu, Gizlilik derecesinin değiştirilebilir olduğu ve kaydet , iptal butonlarının geldiği görülür.");
@@ -295,7 +310,7 @@ public class KullaniciYonetimiPage extends MainPage {
 
     @Step("Birim Kontrolü")
     public KullaniciYonetimiPage tabloBirimKontrol() {
-        tblKolonBirim.exists();
+        Assert.assertEquals(tblKolonBirim.exists(),true);
         return this;
     }
 

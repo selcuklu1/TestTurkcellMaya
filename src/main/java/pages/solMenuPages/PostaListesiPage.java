@@ -352,7 +352,7 @@ public class PostaListesiPage extends MainPage {
 
     @Step("Evrak önizleme kontrolü")
     public PostaListesiPage evrakOnizlemeKontrolu() {
-        $(By.xpath("//div[text()='Evrak Önizleme']")).shouldBe(Condition.visible);
+        Assert.assertEquals($(By.xpath("//div[text()='Evrak Önizleme']")).is(Condition.visible),true);
         return this;
     }
 
@@ -569,8 +569,8 @@ public class PostaListesiPage extends MainPage {
 
     @Step("Etiket bastır ekranında Gideceği Yer ve Adres kontrolü")
     public PostaListesiPage etiketBastirEkraniKontrolü(String adres, String konu) {
-        txtEtiketBastir.text().contains(konu);
-        txtEtiketBastir.text().contains(adres);
+        Assert.assertEquals(txtEtiketBastir.text().contains(konu),true);
+        Assert.assertEquals(txtEtiketBastir.text().contains(adres),true);
         return this;
     }
 

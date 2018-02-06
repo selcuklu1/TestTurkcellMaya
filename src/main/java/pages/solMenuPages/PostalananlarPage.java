@@ -187,6 +187,16 @@ public class PostalananlarPage extends MainPage {
         takeScreenshot();
         return this;
     }
+    @Step("Evrakların listelendiği görülür.")
+    public PostalananlarPage tabloEvrakGeldigiGorme() {
+        tablePostalananlar.filterBy(Condition.text("Konu:"))
+                .filterBy(Condition.text("Gideceği Yer:"))
+                .filterBy(Condition.text("Evrak Tarihi:"));
+
+        takeScreenshot();
+        return this;
+    }
+
 
     @Step("Evrak seç.")
     public PostalananlarPage evrakSec(String konu, String gidecegiYer, String evrakTarihi, String no) {

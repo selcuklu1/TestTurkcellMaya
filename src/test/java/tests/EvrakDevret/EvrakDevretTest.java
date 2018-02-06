@@ -7,6 +7,7 @@ import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Step;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import pages.solMenuPages.ImzaBekleyenlerPage;
 import pages.ustMenuPages.EvrakOlusturPage;
 import pages.ustMenuPages.KullaniciEvrakDevretPage;
 
@@ -18,16 +19,17 @@ import pages.ustMenuPages.KullaniciEvrakDevretPage;
  * Yazan: Emre Sencan
  ****************************************************/
 
-public class EvrakDevretTest extends BaseTest{
+public class EvrakDevretTest extends BaseTest {
 
     KullaniciEvrakDevretPage kullaniciEvrakDevretPage;
     EvrakOlusturPage evrakOlusturPage;
+    ImzaBekleyenlerPage imzaBekleyenlerPage;
 
     User mbozdemir = new User("mbozdemir", "123");
-    User username21g = new User("username21g", "123");
+    User username22n = new User("username22n", "123");
 
-    String konu = "TS2178 20180205135705";
-    //        String konu = "TS2178 " + getSysDate();
+    //    String konu = "TS2178 20180205135705";
+    String konu = "TS2178 " + getSysDate();
     String tur = "IMZALAMA";
     String icerik = "Test Otomasyon " + getSysDate();
     String konuKodu = "010.01";
@@ -38,10 +40,12 @@ public class EvrakDevretTest extends BaseTest{
     String ivedilik = "Normal";
     String geregi = "Optiim Birim";
     String kullaniciNormal = "USERNAME22N TEST";
+    String basariMesaji = "İşlem başarılıdır!";
 
     @BeforeMethod
     public void loginBeforeTests() {
         kullaniciEvrakDevretPage = new KullaniciEvrakDevretPage();
+        imzaBekleyenlerPage = new ImzaBekleyenlerPage();
         evrakOlusturPage = new EvrakOlusturPage();
     }
 
@@ -49,13 +53,13 @@ public class EvrakDevretTest extends BaseTest{
     @Test(enabled = true, description = "TS2178 : İlgisi olan İşlem Bekleyen Cevap Evrakı Devretme ve Sonrasında Devralandan Silinmesi ve İlginin Kontrolü")
     public void TS2178() throws InterruptedException {
 
-        login(username21g);
+        login(mbozdemir);
         evrakOlustur();
 
         kullaniciEvrakDevretPage
                 .openPage()
                 .ekranTabKontrolleri()
-                .devredecekKisiSec("Mehmet Bozdemir")
+                .devredecekKisiSec("username21g")
                 .listele()
                 .tabloAlanKontrolleri()
                 .tabloEvrakSecimi("İmza Bekleyen Evraklar", konu)
@@ -64,14 +68,20 @@ public class EvrakDevretTest extends BaseTest{
                 .devralacakKisiSec(kullaniciNormal)
                 .aciklamaDoldur(icerik)
                 .devretTamam()
-                .popUpDevredilemeyenEvraklarKontrol();
+                .islemMesaji().basariliOlmali(basariMesaji);
+        kullaniciEvrakDevretPage
+                .tabloEvrakKontrolu(konu, false);
 
-
-
+        login(username22n);
+        imzaBekleyenlerPage
+                .openPage()
+                .evrakKonusunaGoreKontrol(konu);
 
     }
+
     @Step("Test datası oluşturuldu.")
     private void evrakOlustur() {
+        String imzacı = "username21g";
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
@@ -84,13 +94,14 @@ public class EvrakDevretTest extends BaseTest{
                 .ivedilikSec(ivedilik)
                 .geregiSec(geregi)
                 .onayAkisiEkle()
-                .kullaniciTabloKontrol()
-                .IlkKullaniciImzalamaVeyaParaflamaSec(tur)
+                .kullanicilarDoldur(imzacı)
+                .kullniciIsmineGoreImzaParafSec(imzacı, tur)
                 .kullan();
 
         evrakOlusturPage
                 .editorTabAc()
                 .editorIcerikDoldur(icerik)
-                .evrakImzala();
+                .evrakParafla();
+
     }
 }

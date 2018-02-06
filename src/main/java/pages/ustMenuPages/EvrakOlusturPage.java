@@ -442,7 +442,7 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Kullanıcı kontrolü")
         public BilgilerTab kullaniciTabloKontrol() {
-            tblKullanıcılar.isDisplayed();
+            Assert.assertEquals(tblKullanıcılar.isDisplayed(),true);
             return this;
         }
 

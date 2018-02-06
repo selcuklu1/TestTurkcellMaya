@@ -732,7 +732,7 @@ ElementsCollection tblVekaletAlanVeren = $$("tbody[id='mainPreviewForm:mainPrevi
     @Step("Evrak Önizleme \"{btnText}\" buton geldiği görülür.")
     public GelenEvraklarPage evrakOnizlemeButonKontrolu(String btnText) {
         SelenideElement btnEvrakOnizleme = $(By.xpath("//span[text()='" + btnText + "']/../../..//button"));
-        btnEvrakOnizleme.isDisplayed();
+        Assert.assertEquals(btnEvrakOnizleme.isDisplayed(),true);
         return this;
     }
     @Step("Evrak Önizleme \"{btnText}\" buton tıklanır.")
@@ -788,9 +788,9 @@ ElementsCollection tblVekaletAlanVeren = $$("tbody[id='mainPreviewForm:mainPrevi
         List<String> text = txtKullanicalar.getSelectedItems().texts();
         System.out.println(text);
 
-        text.get(0).contains(vekaletAlan);
-        text.get(0).contains(title);
-        text.get(0).contains(vekaletVeren);
+        Assert.assertEquals(text.get(0).contains(vekaletAlan),true);
+        Assert.assertEquals(text.get(0).contains(title),true);
+        Assert.assertEquals(text.get(0).contains(vekaletVeren),true);
 takeScreenshot();
 //        Allure.addAttachment("Onaylayacak kişi : ", "Onaylayacak Kisi alanına \n" + text.get(0) + " geldiği görülür.");
         return this;
