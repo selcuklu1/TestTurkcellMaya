@@ -258,8 +258,8 @@ public class TebligTebellugTest extends BaseTest {
                 .evrakIcerikGoster(konu, geldigiYer, kayitTarihiSayi, evrakTarihi, randomNumber)
                 .tebligEt()
                 .tebligEtKisiInputDoldur(tebligEdilecekKisi)
-                .tebligEtKullaniciListesiTemizle()
                 .tebligEtKullaniciListesiDoldur("TS0845LISTE")
+                .tebligEtKullaniciListesiTemizle()
                 .tebligEtNotInputDoldur(tebligNot)
                 .tebligEtTebligEt();
 
