@@ -108,10 +108,12 @@ public class ImzaladiklarimPage extends MainPage {
         return this;
     }
 
-    @Step("Evrak Geçmişi tab")
+    @Step("Evrak Geçmişi tab ve evrak geçmişi kontrolleri")
     public ImzaladiklarimPage evrakGecmisi() {
 
         tabEvrakGecmisi.shouldBe(visible).click();
+        String gecmis = tabEvrakGecmisi.getAttribute("innerText");
+        System.out.println(gecmis);
         return this;
 
     }

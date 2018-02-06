@@ -400,6 +400,11 @@ public class PostalanacakEvraklarPage extends MainPage {
         popupPostaYazdirmaKapat();
         return this;
     }
+    @Step("PDF - Evrak sayısı - Yazışma Kuralları kontrol")
+    public PostalanacakEvraklarPage pdfEvrakYazismaKuralkontrol() {
+        postalanacakEvrakOrijinalYazdir.getSelectedText();
+        return this;
+    }
 
     @Step("Postalancak Eposta")
     public PostalanacakEvraklarPage postalacanakEposta(String eposta) {

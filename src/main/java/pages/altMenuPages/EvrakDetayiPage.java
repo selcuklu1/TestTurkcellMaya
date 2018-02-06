@@ -25,8 +25,10 @@ public class EvrakDetayiPage extends MainPage {
     SelenideElement btnIadeEt = $("[id^='inboxItemInfoForm:dialogTabMenuRight:uiRepeat'] [class$='iadeEt']");
     SelenideElement btnCevapYaz = $("[id^='inboxItemInfoForm:dialogTabMenuRight:uiRepeat'] [class$='cevapYaz']");
     SelenideElement btnEvrakKapat = $("[id^='inboxItemInfoForm:dialogTabMenuRight:uiRepeat'] [class$='evrakKapat']");
+    SelenideElement btnSil = $("[id^='inboxItemInfoForm:dialogTabMenuRight:uiRepeat'] [class$='sil']");
     SelenideElement divContainer = $("#evrakBilgileriContainerDiv");
     SelenideElement spanBilgileri = $x("//span[. = 'Bilgileri']");
+    SelenideElement tabEditor = $("button .editor");
 
     private HareketGecmisiTab hareketGecmisiTab = new HareketGecmisiTab();
 
@@ -92,6 +94,22 @@ public class EvrakDetayiPage extends MainPage {
     @Step("Evrak Bilgileri tabı açıldı.")
     public EvrakDetayiPage evrakBilgileriTabAktifKontrolEt() {
         spanBilgileri.shouldHave(attribute("class", "tabMenuTextSelected")).shouldBe(visible);
+        return this;
+    }
+
+    @Step("Sil butonunun gelmediği kontrolu")
+    public EvrakDetayiPage silButonuKontrolu() {
+
+        Assert.assertEquals(btnSil.isDisplayed(), false);
+
+        return this;
+    }
+
+    @Step("Editör tabı ekranında açıldığı kontrolu")
+    public EvrakDetayiPage editorTabKontrolu() {
+
+        Assert.assertEquals(tabEditor.isDisplayed(), true);
+
         return this;
     }
 

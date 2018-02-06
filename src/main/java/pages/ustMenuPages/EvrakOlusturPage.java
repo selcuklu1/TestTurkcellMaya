@@ -1,6 +1,7 @@
 package pages.ustMenuPages;
 
 import com.codeborne.selenide.*;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -287,6 +288,7 @@ public class EvrakOlusturPage extends MainPage {
         ElementsCollection cmbKullanicilarImzaSec2 = $$("[id^='yeniGidenEvrakForm:evrakBilgileriList:18:akisAdimLov:LovSecilenTable'][id$='selectOneMenu']");
         SelenideElement cmbKullanicilarImza = $("[id^='yeniGidenEvrakForm:evrakBilgileriList:18:akisAdimLov:LovSecilenTable'][id$='selectOneMenu']");
         SelenideElement btnOnayAkisGuncelle = $(By.cssSelector("[id^='yeniGidenEvrakForm:evrakBilgileriList:18:akisLov:j_idt'] [class$='update-icon']"));
+        SelenideElement btnOnayAkisSil = $(By.cssSelector("[id^='yeniGidenEvrakForm:evrakBilgileriList:18:akisLov:j_idt'] [class$='delete-icon']"));
         //BelgenetElement cmbOnayAkisi = comboLov(By.cssSelector("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='akisLov:LovText']"));
         BelgenetElement cmbOnayAkisi2 = comboLov(By.id("windowCevapEvrakForm:evrakBilgileriList:18:akisLov:LovText"));
         SelenideElement btnOnayAkisiEkle2 = $(By.id("windowCevapEvrakForm:evrakBilgileriList:18:onayAkisiEkle"));
@@ -395,6 +397,7 @@ public class EvrakOlusturPage extends MainPage {
             cmbKullanicilarImzaSec2.get(1).selectOption(value);
             return this;
         }
+
 
         @Step("Kullanıcılar alanı doldur")
         public BilgilerTab kullanicilarDoldur(String kullanici) {
@@ -638,7 +641,9 @@ public class EvrakOlusturPage extends MainPage {
             cmbGeregi.closeTreePanel();
             return this;
         }
+
         ElementsCollection tableGeregiSecilenler = $$("tbody[id$='geregiLov:LovSecilenTable_data'] > tr");
+
         @Step("Geregi alanında \"{geregi}\" için {geregiTipi} seç")
         public BilgilerTab geregiTipiSec(String geregi, String geregiTipi) {
 
@@ -835,13 +840,13 @@ public class EvrakOlusturPage extends MainPage {
             cmbGeregi.selectLov(geregi);
             return this;
         }
-        
+
         @Step("Seçimde posta tipinin otomatik KEP geldiği ve kullanıcının değiştirebildiği görülür")
-        public BilgilerTab geregiAlaniKEPSeciliGeldigiGorme(){
-        boolean durum = $("[id$='geregiLov:LovSecilenTable_data'] select").getSelectedText().equals("KEP");
-        Assert.assertEquals(durum,true);
-        takeScreenshot();
-        return this;
+        public BilgilerTab geregiAlaniKEPSeciliGeldigiGorme() {
+            boolean durum = $("[id$='geregiLov:LovSecilenTable_data'] select").getSelectedText().equals("KEP");
+            Assert.assertEquals(durum, true);
+            takeScreenshot();
+            return this;
         }
 
         @Step("Gereği {description} doldur: | {geregi}")
@@ -916,16 +921,16 @@ public class EvrakOlusturPage extends MainPage {
         }
 
         @Step("Her dağıtım yerinin posta tipinin default KEP olarak geldiği görülür.")
-        public BilgilerTab kepOlarakGeldikleriGorme(String kisi1,String kisi2, String kisi3){
-        boolean durum1 = $$("[id$='geregiLov:LovSecilenTable_data'] > tr").filterBy(Condition.text(kisi1)).get(0).$("select").getSelectedText().equals("KEP");
+        public BilgilerTab kepOlarakGeldikleriGorme(String kisi1, String kisi2, String kisi3) {
+            boolean durum1 = $$("[id$='geregiLov:LovSecilenTable_data'] > tr").filterBy(Condition.text(kisi1)).get(0).$("select").getSelectedText().equals("KEP");
             boolean durum2 = $$("[id$='geregiLov:LovSecilenTable_data'] > tr").filterBy(Condition.text(kisi1)).get(0).$("select").getSelectedText().equals("KEP");
-            boolean durum3=  $$("[id$='geregiLov:LovSecilenTable_data'] > tr").filterBy(Condition.text(kisi1)).get(0).$("select").getSelectedText().equals("KEP");
-            Assert.assertEquals(durum1,durum2);
-            Assert.assertEquals(durum2,durum3);
+            boolean durum3 = $$("[id$='geregiLov:LovSecilenTable_data'] > tr").filterBy(Condition.text(kisi1)).get(0).$("select").getSelectedText().equals("KEP");
+            Assert.assertEquals(durum1, durum2);
+            Assert.assertEquals(durum2, durum3);
             takeScreenshot();
             return this;
         }
-        
+
         @Step("Onay Akışı Ekle")
         public BilgilerTab onayAkisiEkle() {
             clickJs(btnOnayAkisiEkle);
@@ -934,9 +939,9 @@ public class EvrakOlusturPage extends MainPage {
         }
 
         @Step("Güncel kullanıcının default paraflama aksiyonu ile geldiği görülür.")
-        public BilgilerTab onayAkisiParaflamaGeldigiGorme(){
+        public BilgilerTab onayAkisiParaflamaGeldigiGorme() {
             boolean durum = $("[id*='akisAdimLov:LovSecilenTable'][id$='selectOneMenu']").getSelectedText().equals("Paraflama");
-            Assert.assertEquals(durum,true);
+            Assert.assertEquals(durum, true);
             return this;
         }
 
@@ -949,6 +954,11 @@ public class EvrakOlusturPage extends MainPage {
         @Step("Bilgi alanı güncelle")
         public BilgilerTab bilgiAlaniGuncelle() {
             btnBilgiLovSecilemUpdate.click();
+            return this;
+        }
+        @Step("Bilgi alanı kontrol")
+        public BilgilerTab bilgialaniKontrol() {
+            txtBilgi.click();
             return this;
         }
 
@@ -1043,6 +1053,12 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Onay akışı temizle")
+        public BilgilerTab onayAkisiTemizle() {
+            cmbOnayAkisi.click();
+            return this;
+        }
+
         @Step("Onay akışı doldurma ve görüntüleme kontrolu")
         public BilgilerTab onayAkisiDoldur(String onay) {
             cmbOnayAkisi.selectLov(onay);
@@ -1065,7 +1081,7 @@ public class EvrakOlusturPage extends MainPage {
         public BilgilerTab secilenOnayAkisiSil() {
 
             if (cmbOnayAkisi.isLovSelected()) {
-                cmbOnayAkisi.clearLastSelectedItem();
+                cmbOnayAkisi.clearAllSelectedItems();
             }
 
             return this;
@@ -1420,6 +1436,38 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Onay akışı alanının dolduğu görülür kontrolu")
+        public BilgilerTab onayAkisiDoluGeldigiKontrolu() {
+
+            Assert.assertEquals(btnOnayAkisGuncelle.isDisplayed(), true);
+            Assert.assertEquals(btnOnayAkisSil.isDisplayed(), true);
+            return this;
+        }
+
+        @Step("Bilgiler Tabı alan kontrolleri")
+        public BilgilerTab bilgilerTabAlanKontrolleri() {
+            txtKonuKodu.isDisplayed();
+            txtKonu.isDisplayed();
+            cmbEvrakTuru.isDisplayed();
+            cmbGizlilikDerecesi.isDisplayed();
+            cmbIvedik.isDisplayed();
+            txtBilgi.isDisplayed();
+            cmbGeregi.isDisplayed();
+            cmbOnayAkisi.isDisplayed();
+            txtKaldiralacakKlasorler.isDisplayed();
+
+            Allure.addAttachment("Bilgiler Tab Kontrolü", "Konu kodu,\n" +
+                    "Konu, \n" +
+                    "Evrak türü\n" +
+                    "Gizlilik derecesi,\n" +
+                    "İvedilik (veya Aciliyet)\n" +
+                    "Bilgi,\n" +
+                    "Gereği,\n" +
+                    "Onay Akışı alanlarının olduğu ekranın geldiği görülür.\n" +
+                    "Kaldırılacak Klasör alanlarının geldiği görülür.");
+
+            return this;
+        }
 
         //endregion
 
@@ -1476,9 +1524,9 @@ public class EvrakOlusturPage extends MainPage {
         }
 
         @Step("Metin alanın geldiği görünür")
-        public EditorTab metinAlaninGeldigiGorme(){
-            boolean durum = $$(By.id("yeniGidenEvrakForm:allPanels_content")).size()==1;
-            Assert.assertEquals(durum,true);
+        public EditorTab metinAlaninGeldigiGorme() {
+            boolean durum = $$(By.id("yeniGidenEvrakForm:allPanels_content")).size() == 1;
+            Assert.assertEquals(durum, true);
             return this;
         }
 
@@ -1560,12 +1608,12 @@ public class EvrakOlusturPage extends MainPage {
             //clickJs(btnImzala);
             return this;
         }
-        
+
         @Step("İmza popupının geldiği görülür.")
-        public EditorTab imzaPopupGeldigiGorme(){
-              boolean durum = $$("[id='evrakImzalaDialog']").size()==1;
-              Assert.assertEquals(durum,true);
-              takeScreenshot();
+        public EditorTab imzaPopupGeldigiGorme() {
+            boolean durum = $$("[id='evrakImzalaDialog']").size() == 1;
+            Assert.assertEquals(durum, true);
+            takeScreenshot();
             return this;
         }
 
@@ -1583,9 +1631,9 @@ public class EvrakOlusturPage extends MainPage {
         }
 
         @Step("Sayılsal imza atılacağı ile ilgili uyarının geldiği görülür.")
-        public EditorTab stepmethod(){
-            boolean durum = $$("[id='imzalaForm:sayisalImzaConfirmForm:sayisalImzaEvetButton']").size()==1;
-            Assert.assertEquals(durum,true);
+        public EditorTab stepmethod() {
+            boolean durum = $$("[id='imzalaForm:sayisalImzaConfirmForm:sayisalImzaEvetButton']").size() == 1;
+            Assert.assertEquals(durum, true);
             takeScreenshot();
             return this;
         }
@@ -1776,6 +1824,11 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Editörde eklenen dağıtım tipi ve posta kontrol")
+        public EditorTab editordeGeregiPostaKontrol () {
+            cmbGeregi.getSelectableItems();
+            return this;
+        }
 
         @Step("Editorde eklenen ilgi kontrolu: {description}")
         public EditorTab editordeIlgiKontrol(String ilgi, String description) {
@@ -1924,11 +1977,13 @@ public class EvrakOlusturPage extends MainPage {
             btnSistemdeKayitliEvrakTab.click();
             return this;
         }
+
         @Step("Ekleri/Web Adresi Ekle Tab - Açma")
         public EkleriTab webAdresiEkleTabiniAc() {
             btnEkleriWebAdresiniEkle.click();
             return this;
         }
+
         @Step("Ekleri/Arşivde Kayıtlı Evrak Ekle Tab - Açma")
         public EkleriTab arsivdeKayitliEvrakEkleTabiniAc() {
             btnEkleriArsivdeEkleTab.click();
@@ -2036,10 +2091,10 @@ public class EvrakOlusturPage extends MainPage {
         }
 
         @Step("Dosya ekle, Fiziksel ek ekle, Sistemde kayıtlı evrak ekle, Web adresini ekle alanlarının geldiği görülür")
-        public EkleriTab ekleriTablariGeldigiGorme(){
-        boolean durum = $$("[id='yeniGidenEvrakForm:evrakEkTabView']").size()==1;
-        Assert.assertEquals(durum,true);
-        takeScreenshot();
+        public EkleriTab ekleriTablariGeldigiGorme() {
+            boolean durum = $$("[id='yeniGidenEvrakForm:evrakEkTabView']").size() == 1;
+            Assert.assertEquals(durum, true);
+            takeScreenshot();
             return this;
         }
 
