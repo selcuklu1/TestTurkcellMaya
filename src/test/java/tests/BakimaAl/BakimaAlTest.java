@@ -22,10 +22,14 @@ public class BakimaAlTest extends BaseTest {
     @Test(enabled = true, description = "2108 : Bakım Moduna Alma ve alan kontrolleri")
     public void TS02108() {
 
-        String girilecekBilgilendirmeMetni = "Bu bir deneme bilgilendirme metnidir.";
+        String girilecekBilgilendirmeMetni = "";
         String iptalEdilecekBilgilendirmeMetni = "İptal edilecek bilgilendirme metni.";
 
         String pasifKullanici = "PASIF KULLANICI";
+
+        for(int i = 0; i < 500; i ++){
+            girilecekBilgilendirmeMetni += "x";
+        }
 
         bakimaAlPage
                 .openPage()
@@ -41,8 +45,9 @@ public class BakimaAlTest extends BaseTest {
                 .bilgilendirmeMetniKontrol(girilecekBilgilendirmeMetni)
                 .kullanicilarTemizle()
                 .kullaniciKontrol(pasifKullanici, false)
-                .kullaniciEkle("Optiim TEST")
                 .kullaniciEkle("Mehmet BOZDEMİR")
+                .kullaniciEkle("Optiim TEST")
+                .kullaniciEkle("Huser3 TUMER3")
                 .bakimaAl()
                 .bakimdaOlmali();
 

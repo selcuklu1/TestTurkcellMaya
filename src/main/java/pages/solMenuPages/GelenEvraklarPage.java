@@ -922,7 +922,8 @@ takeScreenshot();
     @Step("Evrak Kapatma panelinde evrak kapat butonuna tıkla.")
     public GelenEvraklarPage evrakiKapat(){
         btnEvrakKapatKapat2.click();
-        btnEvrakKapatUyariEvet.click();
+        if(btnEvrakKapatUyariEvet.isDisplayed())
+            btnEvrakKapatUyariEvet.waitUntil(visible, 50000).click();
         return this;
     }
 

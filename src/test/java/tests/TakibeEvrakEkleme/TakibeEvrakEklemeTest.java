@@ -1,6 +1,7 @@
 package tests.TakibeEvrakEkleme;
 
 import common.BaseTest;
+import io.qameta.allure.Allure;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.altMenuPages.EvrakDetayiPage;
@@ -38,11 +39,19 @@ public class TakibeEvrakEklemeTest extends BaseTest {
         String secilecekKullaniciAdiSoyadi = "Huser2 TUMER2";
         String secilecekKullaniciBirim = "YGD";
 
+        Allure.addAttachment("Pre Condition evrak oluşturma", "başlatıldı.");
+
+        String gelenEvrakKonu = "";
+        String imzaladiklarimEvrakKonu = "";
+        String postalanacakEvrakKonu = "";
+        String randomNumber2 = "";
+        String kapattiklarimEvrakKonu = "";
+
         // Gelen evrak kayıt oluşturma>>>
 
-        /*
         String randomNumber = "" + getSysDate();
-        String gelenEvrakKonu = "TS2073-" + randomNumber;
+        gelenEvrakKonu = "TS2073-" + randomNumber;
+
         gelenEvrakKayitPage
                 .openPage()
                 .konuKoduDoldur("Entegrasyon İşlemleri")
@@ -58,47 +67,49 @@ public class TakibeEvrakEklemeTest extends BaseTest {
                 .ivedilikSec("Normal")
                 .dagitimBilgileriKisiSec("Mehmet Bozdemir")
                 .kaydet()
-                .popUps();
-        */
+                .popUps(true);
+
         // Gelen evrak kayıt oluşturma <<<
+
+
+        // kapattıklarım >>
+
+        randomNumber2 = "" + getSysDate();
+        kapattiklarimEvrakKonu = "TS2073-" + randomNumber2;
+        gelenEvrakKayitPage
+                .openPage()
+                .konuKoduDoldur("Entegrasyon İşlemleri")
+                .konuDoldur(kapattiklarimEvrakKonu)
+                .evrakTuruSec("Resmi Yazışma")
+                .evrakDiliSec("Türkçe")
+                .evrakTarihiDoldur(getSysDateForKis())
+                .gizlilikDerecesiSec("Hizmete Özel")
+                .kisiKurumSec("Kurum")
+                .geldigiKurumDoldurLovText2("Yenikurum1485")
+                .evrakSayiSagDoldur(randomNumber2)
+                .evrakGelisTipiSec("Posta")
+                .ivedilikSec("Normal")
+                .dagitimBilgileriKisiSec("Mehmet Bozdemir")
+                .kaydet()
+                .popUps(true);
+
+        gelenEvraklarPage
+                .openPage()
+                .evrakSec(kapattiklarimEvrakKonu, "", "", "")
+                .evrakKapat()
+                .evrakKapatKaldirilacakKlasorlerDoldur("Diğer")
+                .evrakiKapat();
+        // kapattımlarım <<
 
 
         // İmzaladıklarım sayfasına evrak gönderme >>>
 
-        String imzaladiklarimEvrakKonu = "TS2073-" + getSysDate();
-        evrakOlusturPage
-                .openPage()
-                .bilgilerTabiAc()
-                .konuKoduDoldur("Entegrasyon İşlemleri")
-                .konuDoldur(imzaladiklarimEvrakKonu)
-                .kaldiralacakKlasorlerSec("Diğer")
-                .evrakTuruSec("Resmi Yazışma")
-                .evrakDiliSec("Türkçe")
-                .gizlilikDerecesiSec("Normal")
-                .ivedilikSec("Normal")
-                .geregiSecimTipiSecByText("Kurum")
-                .geregiSec("Yenikurum1485")
-                .gercekKisiGeregiAlaniPostaTipiSec("Adi Posta")
-                .aciklamaDoldur(imzaladiklarimEvrakKonu)
-                .onayAkisiEkle()
-                .onayAkisiEkleIlkImzalaSec("İmzalama")
-                .kullan();
-        evrakOlusturPage
-                .editorTabAc()
-                .editorIcerikDoldur("deneme içerik");
-        evrakOlusturPage
-                .evrakImzala();
-
-        // İmzaladıklarım sayfasına evrak gönderme <<<
-
-        // Postalanacak evrak oluşturma >>>
-
-        String postalanacakEvrakKonu = "TS2073-" + getSysDate();
+        imzaladiklarimEvrakKonu = "TS2073-" + getSysDate();
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
                 .konuKoduSec("YAZILIM GEL")
-                .konuDoldur(postalanacakEvrakKonu)
+                .konuDoldur(imzaladiklarimEvrakKonu)
                 .kaldirilacakKlasorler("Diğer")
                 .evrakTuruSec("Resmi Yazışma")
                 .geregiSecimTipiSec("Kurum")
@@ -114,40 +125,37 @@ public class TakibeEvrakEklemeTest extends BaseTest {
                 .popupSImzalaIslemleri();
         Thread.sleep(2000);
 
+        // İmzaladıklarım sayfasına evrak gönderme <<<
+
+        // Postalanacak evrak oluşturma >>>
+
+        postalanacakEvrakKonu = "TS2073-" + getSysDate();
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .konuKoduSec("YAZILIM GEL")
+                .konuDoldur(postalanacakEvrakKonu)
+                .kaldirilacakKlasorler("Diğer")
+                .evrakTuruSec("Resmi Yazışma")
+                .geregiSecimTipiSec("Kurum")
+                .geregiDoldur("Yenikurum1485", "")
+                .geregiKurumPostaTipi("Evrak Servisi Elden")
+                .onayAkisiKullanicilariTemizle()
+                .onayAkisiEkle()
+                .onayAkisiKullaniciTipiSec("Mehmet BOZDEMİR", "İmzalama")
+                .onayAkisiKullan();
+        EvrakOlusturPage.EditorTab editorTab1 = evrakOlusturPage.editorTabAc();
+        editorTab1.getEditor().type("TS2073");
+        editorTab1.imzala()
+                .popupSImzalaIslemleri();
+
         // Postalanacak evrak oluşturma <<<
 
-        // kapattıklarım >>
-
-        String randomNumber2 = "" + getSysDate();
-        String kapattiklarimEvrakKonu = "TS2073-" + randomNumber2;
-        gelenEvrakKayitPage
-                .openPage()
-                .konuKoduDoldur("Entegrasyon İşlemleri")
-                .konuDoldur(kapattiklarimEvrakKonu)
-                .evrakTuruSec("Resmi Yazışma")
-                .evrakDiliSec("Türkçe")
-                .evrakTarihiDoldur(getSysDateForKis())
-                .gizlilikDerecesiSec("Hizmete Özel")
-                .kisiKurumSec("Kurum")
-                .geldigiKurumDoldurLovText2("Yenikurum1485")
-                .evrakSayiSagDoldur(kapattiklarimEvrakKonu)
-                .evrakGelisTipiSec("Posta")
-                .ivedilikSec("Normal")
-                .dagitimBilgileriKisiSec("Mehmet Bozdemir")
-                .kaydet()
-                .popUps();
+        Allure.addAttachment("Pre Condition evrak oluşturma", "bitti.");
 
         gelenEvraklarPage
                 .openPage()
-                .evrakSec(kapattiklarimEvrakKonu, "", "", "")
-                .evrakKapat()
-                .evrakKapatKaldirilacakKlasorlerDoldur("Diğer")
-                .evrakiKapat();
-        // kapattımlarım <<
-
-        gelenEvraklarPage
-                .openPage()
-                .takipListesiAc("")
+                .takipListesiAc(gelenEvrakKonu)
                 .takipListesiKontrol(kullaniciAdiSoyadi, kullaniciBirim)
                 .kullaniciListesiSec(secilecekKullaniciAdiSoyadi)
                 .takipListesiKontrol(secilecekKullaniciAdiSoyadi, secilecekKullaniciBirim);
@@ -166,7 +174,6 @@ public class TakibeEvrakEklemeTest extends BaseTest {
                 .takipListesiKontrol(kullaniciAdiSoyadi, kullaniciBirim)
                 .takipListesiKapat();
 
-
         kapattiklarimPage
                 .openPage()
                 .takipListesiAc(kapattiklarimEvrakKonu)
@@ -175,7 +182,7 @@ public class TakibeEvrakEklemeTest extends BaseTest {
 
         takibimdekiEvraklarPage
                 .openPage()
-                .evrakKontrol("")
+                .evrakKontrol(gelenEvrakKonu)
                 .evrakKontrol(imzaladiklarimEvrakKonu)
                 .evrakKontrol(postalanacakEvrakKonu)
                 .evrakKontrol(kapattiklarimEvrakKonu);
@@ -184,7 +191,7 @@ public class TakibeEvrakEklemeTest extends BaseTest {
 
         takibimdekiEvraklarPage
                 .openPage()
-                .evrakKontrol("")
+                .evrakKontrol(gelenEvrakKonu)
                 .evrakKontrol(imzaladiklarimEvrakKonu);
 
     }
