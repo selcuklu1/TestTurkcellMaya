@@ -4,14 +4,9 @@ import common.BaseTest;
 import io.qameta.allure.Allure;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pages.altMenuPages.EvrakDetayiPage;
-import pages.pageData.SolMenuData;
 import pages.solMenuPages.*;
 import pages.ustMenuPages.EvrakOlusturPage;
 import pages.ustMenuPages.GelenEvrakKayitPage;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 
 public class TakibeEvrakEklemeTest extends BaseTest {

@@ -5,7 +5,6 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
-import io.qameta.allure.testng.AllureTestNg;
 import org.openqa.selenium.By;
 import pages.MainPage;
 import pages.pageData.SolMenuData;

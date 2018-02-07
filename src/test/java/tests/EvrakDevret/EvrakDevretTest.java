@@ -53,7 +53,8 @@ public class EvrakDevretTest extends BaseTest {
     String nameDA = "Username22N TEST";
     String nameDE = "Username21G TEST";
     String kullaniciTitle = " [Ağ (Network) Uzman Yardımcısı]";
-    String remoteDownloadPath = getDownloadPath();
+    String remoteDownloadPath;
+
 
     @BeforeMethod
     public void loginBeforeTests() {
@@ -73,6 +74,7 @@ public class EvrakDevretTest extends BaseTest {
         evrakOlustur();
         logout();
         login(username21g);
+        remoteDownloadPath = useChromeWindows151("TS2178");
 
         kullaniciEvrakDevretPage
                 .openPage()
