@@ -1014,6 +1014,15 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
+    @Step("Benzer Kayıt tıklanır")
+    public GelenEvrakKayitPage benzerKaydet() {
+        if ($$(("[id='evetButtonBenzerKaydet']")).size() == 1) {
+            $("[id='evetButtonBenzerKaydet']").pressEnter();
+        } else {
+        }
+        return this;
+    }
+
     @Step("PopUp kontrolleri")
     public String popUps() {
 //        popUp.shouldHave(Condition.visible);  pop up kontrolu

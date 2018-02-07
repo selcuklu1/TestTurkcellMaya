@@ -120,6 +120,13 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Evrak geldiği görünür: Konu kodu:{konuKodu}")
+    public GelenEvraklarPage evrakGeldigiGorme(String konuKodu){
+        boolean durum = tblEvrak.filterBy(Condition.text(konuKodu)).size()==1;
+        Assert.assertEquals(durum,true);
+        return this;
+    }
+
     @Step("Tablodan rapor seç")
     public GelenEvraklarPage gizlilikRaporSecTakibeEkle(String konu, String yer, String tarih, String no) {
         SelenideElement evrak = filter().findRowsWith(text(konu))

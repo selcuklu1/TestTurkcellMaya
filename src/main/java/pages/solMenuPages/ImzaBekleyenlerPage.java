@@ -20,7 +20,7 @@ public class ImzaBekleyenlerPage extends MainPage {
     SelenideElement btnIadeEtIadeEt = $(By.id("mainPreviewForm:iadeEtButton_id"));
     SelenideElement btnImzala = $(By.xpath("//span[contains(@class, 'imzala')]/.."));
     SelenideElement btnEvrakOnizlemeImzala = $("[id='mainPreviewForm:onizlemeRightTab:onizlemeRightTab'] td:nth-child(5) button");
-    SelenideElement rdbSImaza = $("[id='imzalaForm:imzalaRadio'] [class='ui-radiobutton-box ui-widget ui-corner-all ui-radiobutton-relative ui-state-default']");
+    SelenideElement rdbSImaza = $("div[id='imzalaForm:imzalaRadio'] > div[class*='ui-radiobutton-box']");
     SelenideElement btnSImzaImzala = $(By.id("imzalaForm:sayisalImzaConfirmDialogOpener"));
     SelenideElement btnSImzaImzalaEvet = $(By.id("imzalaForm:sayisalImzaConfirmForm:sayisalImzaEvetButton"));
     SelenideElement btnSImzaImzalaHayir = $(By.id("imzalaForm:sayisalImzaConfirmForm:sayisalImzaHayirButton"));
@@ -298,7 +298,7 @@ public class ImzaBekleyenlerPage extends MainPage {
     }
 
     @Step("Sil butonunun gelmediği kontrolu")
-    public ImzaBekleyenlerPage silButonuKontrolu() {
+    public ImzaBekleyenlerPage silButonuGelmedigiKontrolu() {
 
         Assert.assertEquals(btnEvrakSil.isDisplayed(), false);
 

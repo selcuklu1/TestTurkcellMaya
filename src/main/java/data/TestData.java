@@ -30,11 +30,14 @@ public class TestData extends BaseLibrary {
     public static final String usernameMBOZDEMIR = "mbozdemir";
     public static final String passwordMBOZDEMIR = "123";
 
-    public static final String usernamSEZAICELIK = "sezaicelik";
+    public static final String usernameSEZAICELIK = "sezaicelik";
     public static final String passwordSEZAICELIK = "123";
 
     public static final String usernameGSAHIN = "gsahin";
     public static final String passwordGSAHIN = "123";
+
+    public static final String usernameOPTIIMTEST76 = "optiimtest6";
+    public static final String passwordPTIIMTEST76 = "123";
 
     public static String docPathWindows = "C:\\TestAutomation\\BelgenetFTA\\documents\\";
     //public static String docDownloadPathWindows = "C:\\TestAutomation\\BelgenetFTA\\downloads";

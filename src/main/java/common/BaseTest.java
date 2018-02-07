@@ -52,6 +52,7 @@ public class BaseTest extends BaseLibrary {
     @BeforeClass(alwaysRun = true)
     public void driverSetUp() {
 
+        log.info("Setup started");
         System.out.println("file.encoding: " + String.format("file.encoding: %s", System.getProperty("file.encoding")));
         System.out.println("default charset=" + Charset.defaultCharset());
         System.out.println("java.specification.version" + System.getProperty("java.specification.version"));
@@ -77,7 +78,7 @@ public class BaseTest extends BaseLibrary {
         Configuration.savePageSource = false;
         Configuration.collectionsTimeout = timeout * 1000;
         Configuration.timeout = timeout * 1000;
-        Configuration.holdBrowserOpen = true;
+        Configuration.holdBrowserOpen = false;
         Configuration.startMaximized = true;
         Configuration.pollingInterval = 100;
         Configuration.collectionsPollingInterval = 100;

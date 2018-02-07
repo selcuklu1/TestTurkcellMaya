@@ -112,6 +112,13 @@ public class EvrakDetayiPage extends MainPage {
         return this;
     }
 
+    @Step("\"Evrak Detayı\" ekranının görüntülendiği görülür")
+    public EvrakDetayiPage sayfaAcilmasiKontrolu() {
+        pageTitle.shouldBe(visible);
+        return this;
+    }
+
+
     public class TebligGecmisiTab extends MainPage {
 
         SelenideElement tabTebligGecmisi = $(By.xpath("//span[. = 'Tebliğ Geçmişi']/../../..//button"));
