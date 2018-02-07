@@ -95,7 +95,7 @@ public class TebligTebellugTest extends BaseTest {
 
         tebliglerPage
                 .openPage()
-                .tebliglerMenuKirmiziKontrolu()
+                .tebliglerMenuKirmiziKontrolu(true)
                 .evrakSec(konu, birim, tebligEden, evrakTipi, tebligNot)
                 .icerikGoster(konu, birim, tebligEden, evrakTipi, tebligNot);
 
@@ -166,6 +166,8 @@ public class TebligTebellugTest extends BaseTest {
                 .openPage()
                 .evrakIcerikGoster(konu, geldigiYer, kayitTarihiSayi, evrakTarihi, randomNumber)
                 .tebligEt()
+                .tebligEtKullaniciListesiDoldur("TS0845LISTE")
+                .tebligEtKullaniciListesiTemizle()
                 .tebligEtKisiInputDoldur(tebligEdilecekKisi)
                 .tebligEtNotInputDoldur(tebligNot)
                 .tebligEtTebligEt();
@@ -182,7 +184,7 @@ public class TebligTebellugTest extends BaseTest {
 
         tebliglerPage
                 .openPage()
-                .tebliglerMenuKirmiziKontrolu()
+                .tebliglerMenuKirmiziKontrolu(true)
                 .evrakSec(konu, birim, tebligEden, evrakTipi, tebligNot)
                 .tebellugEtButonuKontrolEt()
                 .icerikGoster(konu, birim, tebligEden, evrakTipi, tebligNot);
@@ -256,6 +258,8 @@ public class TebligTebellugTest extends BaseTest {
                 .evrakIcerikGoster(konu, geldigiYer, kayitTarihiSayi, evrakTarihi, randomNumber)
                 .tebligEt()
                 .tebligEtKisiInputDoldur(tebligEdilecekKisi)
+                .tebligEtKullaniciListesiDoldur("TS0845LISTE")
+                .tebligEtKullaniciListesiTemizle()
                 .tebligEtNotInputDoldur(tebligNot)
                 .tebligEtTebligEt();
 
@@ -271,7 +275,7 @@ public class TebligTebellugTest extends BaseTest {
 
         tebliglerPage
                 .openPage()
-                .tebliglerMenuKirmiziKontrolu()
+                .tebliglerMenuKirmiziKontrolu(true)
                 .evrakSec(konu, birim, tebligEden, evrakTipi, tebligNot)
                 .icerikGoster(konu, birim, tebligEden, evrakTipi, tebligNot);
 

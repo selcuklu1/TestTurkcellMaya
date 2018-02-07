@@ -20,6 +20,7 @@ import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 public class KararYazisiOlusturPage extends MainPage {
 
     public PDFKontrol pdfKontrol = new PDFKontrol();
+
     //region Elements
     SelenideElement tabBilgiler = $("button[id^='yeniKararEvrakForm'] span[class$='kullaniciBilgileri']");
     //SelenideElement tabBilgiler = $("button .kullaniciBilgileri");
@@ -29,6 +30,7 @@ public class KararYazisiOlusturPage extends MainPage {
     SelenideElement tabIliskiliEvraklar = $("button .kullaniciIliskileri");
     SelenideElement tabEvrakNotlari = $("button .evrakNot");
     //endregion
+
     SelenideElement tabEvrakDogrulama = $("button .evrakDogrulamaAktarimIslemleri");
     SelenideElement btnPDFOnizleme = $("button[id^='yeniGidenEvrakForm:rightTab:uiRepeat'] span[class$='pdfOnIzleme']");
     SelenideElement btnKaydet = $(By.id("yeniKararEvrakForm:kararEvrakRightTab:uiRepeat:1:cmdbutton"));
@@ -39,6 +41,18 @@ public class KararYazisiOlusturPage extends MainPage {
     SelenideElement btnGonder = $(By.id("yeniKararEvrakForm:gonderButton"));
     SelenideElement btnEvet = $(By.id("kaydetConfirmForm:kaydetEvetButton"));
     SelenideElement btnHayir = $(By.id("kaydetConfirmForm:kaydetHayirButton"));
+
+    SelenideElement labelIlkIslemTipi = $(By.xpath("//form[@id='yeniKararEvrakForm']/table[1]//label[@class='columnLabelFixWidth']"));
+    SelenideElement labelIkinciIslemTipi = $(By.xpath("//form[@id='yeniKararEvrakForm']/table[2]//label[@class='columnLabelFixWidth']"));
+    SelenideElement labelIlkKullanici = $(By.xpath("//form[@id='yeniKararEvrakForm']/table[1]//label[@class='columnLabelFix']"));
+    SelenideElement labelIkinciKullanici = $(By.xpath("//form[@id='yeniKararEvrakForm']/table[2]//label[@class='columnLabelFix']"));
+
+    SelenideElement txtImzaAciklama = $(By.id("yeniKararEvrakForm:onayIslemiAciklama"));
+    SelenideElement btnImzaGonder = $(By.id("yeniKararEvrakForm:gonderButton"));
+
+    SelenideElement btnKaydetEvet = $(By.id("kaydetEvetButton"));
+    SelenideElement btnKaydetHayir = $(By.id("kaydetHayirButton"));
+
     //region Tabs local variables
     private BilgilerTab bilgilerTab = new BilgilerTab();
     private EkleriTab ekleriTab = new EkleriTab();
@@ -80,6 +94,40 @@ public class KararYazisiOlusturPage extends MainPage {
         return evrakNotlariTab.open();
     }
 
+    @Step("Kaydet ve onay sun")
+    public KararYazisiOlusturPage kaydetveOnaySun() {
+        btnKaydetOnayaSun.click();
+        return this;
+    }
+
+    @Step("Açıklama Gir")
+    public KararYazisiOlusturPage imzaAciklamaDoldur(String aciklama) {
+        txtImzaAciklama.setValue(aciklama);
+        return this;
+    }
+
+    @Step("Gönder")
+    public KararYazisiOlusturPage imzaGonder(boolean save) {
+        btnImzaGonder.click();
+        if (save)
+            btnKaydetEvet.click();
+        else
+            btnKaydetHayir.click();
+        return this;
+    }
+
+
+    @Step("Kullanıcı işlem ve sıra kontrolu")
+    public KararYazisiOlusturPage kullaniciIslemVeSiraKontrolu(String kullanici1, String islemTipi1, String kullanici2, String islemTipi2) {
+
+        Assert.assertEquals(labelIlkIslemTipi.getText(), "1. " + islemTipi1);
+        Assert.assertEquals(labelIkinciIslemTipi.getText(), "2. " + islemTipi2);
+        Assert.assertEquals(labelIlkKullanici.getText(), kullanici1);
+        Assert.assertEquals(labelIkinciKullanici.getText(), kullanici2);
+
+        return this;
+    }
+
     public class BilgilerTab extends MainPage {
 
         SelenideElement divContainer = $("[id='yeniKararEvrakForm' ] [id='evrakBilgileriContainerDiv']");
@@ -113,6 +161,7 @@ public class KararYazisiOlusturPage extends MainPage {
         BelgenetElement cmbOnayAkisi = comboLov(By.cssSelector("[id^='yeniKararEvrakForm:evrakBilgileriList'][id$='akisLov:LovText']"));
         SelenideElement btnOnayAkisGuncelle = $(By.cssSelector("[id^='yeniKararEvrakForm:evrakBilgileriList:6:akisLov:j_idt'] [class$='update-icon']"));
         ElementsCollection trOnayAkisiEkleKullanicilar = $$("tbody[id*='akisAdimLov:LovSecilenTable_data'] tr[role='row']");
+        SelenideElement btnVekaletKaydet = $("[id^='yeniKararEvrakForm:j_idt'] [class*='ui-button-text-only tipTip button-icon-borderless']");
 
         //endregion
 
@@ -209,6 +258,24 @@ public class KararYazisiOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Onay akışı doldur")
+        public BilgilerTab onayAkisiDoldurWithoutKontrol(String onay) {
+            if (cmbOnayAkisi.isLovSelected() == true) {
+                cmbOnayAkisi.clearAllSelectedItems();
+            }
+            cmbOnayAkisi.type(onay).getDetailItems().first().click();
+            return this;
+        }
+
+        @Step("Seçilen akışta vekaleti bulunan kişiler bulunmaktadır. Lütfen evrakın akışında kullanılacak kişileri seçiniz.")
+        public BilgilerTab vekaletKaydet() {
+
+            if(btnVekaletKaydet.isDisplayed()) {
+                btnVekaletKaydet.click(); }
+            return this;
+        }
+
+
         @Step("Seçilen onay akışı detail kontrolu: \"{onayAkisiDetail}\" ")
         public BilgilerTab onayAkisiDetailKontrol(String onayAkisiDetail) {
 //            System.out.println("Gelen detail:     " + cmbOnayAkisi.lastSelectedLovDetailText());
@@ -277,6 +344,12 @@ public class KararYazisiOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Kullanıcılar alanı doldur")
+        public BilgilerTab kullanicilarDoldur(String kullanici) {
+            txtKullanicilar.selectLov(kullanici);
+            return this;
+        }
+
         @Step("Kullanıcının parafçı olarak seçilmediği görülür")
         public BilgilerTab kullanicilarAlaniSecilenParafciSecilmedigiGorme() {
             boolean durum = $$("[id^='yeniKararEvrakForm:evrakBilgileriList'][id$='kisAdimLov:LovSecilenTable_data']")
@@ -323,7 +396,7 @@ public class KararYazisiOlusturPage extends MainPage {
         public BilgilerTab onayAkisiAlanindaGoruntulenmemeKontrolu(String onayAkisi) {
 
             if (cmbOnayAkisi.isLovSelected() == true) {
-                cmbOnayAkisi.clearLastSelectedItem();
+                cmbOnayAkisi.clearAllSelectedItems();
             }
 
             comboLov(cmbOnayAkisiBy).type(onayAkisi).getTitleItems().filterBy(exactText(onayAkisi)).shouldHaveSize(0);
@@ -635,6 +708,35 @@ public class KararYazisiOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Pdfte Toplantı No kontrolu: {toplantiNo}")
+        public PDFKontrol toplantiNoKontrol(String toplantiNo) {
+            String pdfToplantiNo = $(By.xpath("//*[@id='yeniKararEvrakForm:allPanels_content']/table/tbody/tr[1]/td[4]")).getText();
+            Assert.assertEquals(pdfToplantiNo.contains(toplantiNo), true);
+            return this;
+        }
+
+        @Step("Pdfte Toplantı Tarihi kontrolu: {toplantiTarihi}")
+        public PDFKontrol toplantiTarihiKontrol(String toplantiTarihi) {
+            String pdfToplantiTarihi = $(By.xpath("//*[@id='yeniKararEvrakForm:allPanels_content']/table/tbody/tr[2]/td[4]")).getText();
+            Assert.assertEquals(pdfToplantiTarihi.contains(toplantiTarihi), true);
+            return this;
+        }
+
+        @Step("Pdfte Karar No kontrolu: {kararNo}")
+        public PDFKontrol kararNoKontrol(String kararNo) {
+            String pdfKararNo = $(By.xpath("//*[@id='yeniKararEvrakForm:allPanels_content']/table/tbody/tr[3]/td[4]")).getText();
+            Assert.assertEquals(pdfKararNo.contains(kararNo), true);
+            return this;
+        }
+
+        @Step("Pdfte İmzacilar kontrolu: {imzaci}")
+        public PDFKontrol imzacilarKontrol(String imzaci) {
+
+            String pdfImzaci = $(By.xpath("//*[@id='yeniKararEvrakForm:allPanels'] //tr[normalize-space(.)='" + imzaci + "']")).getText();
+            Assert.assertEquals(pdfImzaci.contains(imzaci), true);
+
+            return this;
+        }
     }
     //endregion
 

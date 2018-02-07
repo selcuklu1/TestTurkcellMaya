@@ -119,7 +119,7 @@ public class YonetimHavuzuIslemleriTest extends BaseTest {
 
     }
 
-    @Test(enabled = true, description = "TS0003 : yönetim havuzunu güncelleme")
+    @Test(enabled = true, description = "TS0009 : yönetim havuzunu güncelleme")
     public void TS0009() {
 
 

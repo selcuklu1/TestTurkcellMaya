@@ -10,7 +10,6 @@ import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.UstMenuData;
 
 import static com.codeborne.selenide.Selenide.*;
-import static pages.pageComponents.belgenetElements.Belgenet.comboBox;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 public class PostalananEvrakRaporuPage extends MainPage {
@@ -38,8 +37,8 @@ public class PostalananEvrakRaporuPage extends MainPage {
     SelenideElement fromEvrakRapor = $x("//*[@id='postalananEvrakRaporuForm']");
     BelgenetElement cmbEvrakSahibi = comboLov("input[id$='postalananEvrakRaporuForm:sahibiBirimLov_id:LovText']");
     BelgenetElement cmbPostalananyer = comboLov("input[id$='postalananEvrakRaporuForm:postalananYerLov:LovText']");
-    BelgenetElement cmbPostaSekli = comboBox("select[id$='postalananEvrakRaporuForm:postaSekliId']");
-    BelgenetElement cmbPostaTipi = comboBox("select[id$='postalananEvrakRaporuForm:postaTipiMenu']");
+    SelenideElement cmbPostaSekli = $x("//*[@id='postalananEvrakRaporuForm:postaSekliId']");
+    SelenideElement cmbPostaTipi = $x("//*[@id='postalananEvrakRaporuForm:postaTipiMenu']");
     SelenideElement txtPostaAciklama = $x("//*[@id='postalananEvrakRaporuForm:aciklamaText']");
     BelgenetElement cmbPostalayanAdi = comboLov("input[id$='postalananEvrakRaporuForm:postalayanKullaniciLov:LovText']");
     SelenideElement btnPostaladiklarimcheck = $x("//*[@id='postalananEvrakRaporuForm:postaladiklarimCheckbox']");
@@ -69,9 +68,11 @@ public class PostalananEvrakRaporuPage extends MainPage {
         return this;
     }
 
-    @Step("Çıkan sonuçları kontrol et")
+    @Step("Çıkan sonuçları kontrol et, gelen sonucu object olarak alımı ve alt değerlerin kontrolü")
     public PostalananEvrakRaporuPage sonucKarsilastirma() {
         tblSorgulamaSonuc.get(0);
+        String innertext = tblSorgulamaSonuc.get(0).getAttribute("innerText");
+        System.out.println(innertext);
         return this;
     }
 
@@ -105,10 +106,20 @@ public class PostalananEvrakRaporuPage extends MainPage {
         txtPostaAciklama.setValue(postaAciklama);
         return this;
     }
+    @Step("Posta açıklama alanı temizle")
+    public PostalananEvrakRaporuPage clearPostaAciklamaAlani () {
+        txtPostaAciklama.clear();
+        return this;
+    }
 
     @Step("Postalayan adi doldur\"{postalayanAdi}\"")
     public PostalananEvrakRaporuPage cmbPostalayanadi(String postalayanAdi) {
         cmbPostalayanAdi.selectLov(postalayanAdi);
+        return this;
+    }
+    @Step("Postalayan adi alanını temizle")
+    public PostalananEvrakRaporuPage cmbClearPostalayanAdi () {
+        cmbPostalayanAdi.clearAllSelectedItems();
         return this;
     }
 
@@ -194,10 +205,20 @@ public class PostalananEvrakRaporuPage extends MainPage {
         }
         return this;
     }
+     @Step("Evrak Sahibi Seçimi Temizleme")
+     public PostalananEvrakRaporuPage cmbClearEvrakSahibi () {
+        cmbEvrakSahibi.clearAllSelectedItems();
+        return this;
+     }
 
     @Step("Postalanan yer \"{postalananYer}\"seçimi")
     public PostalananEvrakRaporuPage cmbPostalananYerSecimi(String postalananYer) {
         cmbPostalananyer.selectLov(postalananYer);
+        return this;
+    }
+    @Step("Postalanan yer seçimini temizleme")
+    public PostalananEvrakRaporuPage cmbPostalananYerSecimiTemizle () {
+        cmbPostalananyer.clearAllSelectedItems();
         return this;
     }
 
@@ -210,25 +231,31 @@ public class PostalananEvrakRaporuPage extends MainPage {
             String parampostalananyer = "//*[@id='postalananEvrakRaporuForm:postalananEvrakDataTable_data']/tr[" + String.valueOf(i + 1) + "]/td[6]/div";
             SelenideElement postalananyerColumn = $x(parampostalananyer);
             String postalananyercol = postalananyerColumn.getAttribute("innerText");
-            Assert.assertEquals(postalananyer, postalananyercol);
+            postalananyercol = postalananyercol.replaceAll("\\s+","");
+
+            Assert.assertEquals(postalananyercol ,postalananyer);
+
         }
         return this;
     }
 
     @Step("Posta sekli seçimi \"{postaSekli}\" ")
     public PostalananEvrakRaporuPage cmbpostaSeklisecimi(String postaSekli) {
-        cmbPostaSekli.selectComboBox(postaSekli);
+        cmbPostaSekli.selectOption(postaSekli);
         return this;
     }
 
     @Step("Posta tipi seçimi \"{postaTipi}\" ")
     public PostalananEvrakRaporuPage cmbPostaTipisec(String postaTipi) {
-        cmbPostaTipi.selectComboBox(postaTipi);
+        cmbPostaTipi.selectOption(postaTipi);
         return this;
 
     }
 
-    @Step("Sorgulama sonucu gelen sonuçların evrak geçmiş, detay ve etiket bastır ekranlarının tek tek kontrolü")
+    /*
+    Kod Dinamik olarak gelen sonuç sayısına ve tipine göre locator değişimi ve kontrolünü yapar
+     */
+    @Step("Sorgulama sonucu gelen sonuçların hepsinin evrak geçmiş, detay ve etiket bastır buton ve ekranlarının tek tek kontrolü")
     public PostalananEvrakRaporuPage ekranSorgulananSonucKontrol() throws InterruptedException {
         String SchildElementCount;
         SchildElementCount = sorguTablosu.getAttribute("childElementCount");

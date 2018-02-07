@@ -197,7 +197,7 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
         return this;
     }
 
-    @Step("Gideceği yer listesinde alfabetik kontrol")
+    @Step("Dağıtım yerlerinin alfabetik olarak sıralı geldiği görülür.")
     public TopluPostalanacakEvraklarPage gidecegiYerListesiAlfabetikSiraKontrolu() {
 
         String[] gidecegiYerList = new String[tableGidecegiYer.size()];
@@ -607,6 +607,34 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
     public TopluPostalanacakEvraklarPage filtreGidecegiYer(String gidecegiYer) {
         txtFiltreGidecegiYer.setValue(gidecegiYer);
         txtFiltreGidecegiYer.pressEnter();
+        return this;
+    }
+
+    @Step("Posta Şekli \"Kep\" olan ve Kep ile gönderilecek olan evrakların bu ekranda listelenmediği görülür.")
+    public TopluPostalanacakEvraklarPage kepPostaSekliKontrol(){
+        for(int i = 0; i < tableEvraklar.size(); i++){
+            tableEvraklar
+                    .get(i)
+                    .shouldNotHave(Condition.text("Posta Şekli: KEP"));
+        }
+        return this;
+    }
+
+    @Step("Dağıtım yerinin yanında ,o dağıtım yerine kaç adet evrak gönderileceği bilgisinin olduğu görülür. ")
+    public TopluPostalanacakEvraklarPage dagitimYeriAdetKontrol(){
+        for(int i = 0; i < tableGidecegiYer.size(); i++){
+            tableGidecegiYer
+                    .get(i)
+                    .shouldHave(Condition.text("-"));
+        }
+        return this;
+    }
+
+    @Step("Listenin paging özelliği olduğu görülür.")
+    public TopluPostalanacakEvraklarPage pagingOzelligi(){
+        $$("th[id='mainInboxForm:inboxDataTable_paginator_top'] > span[class='ui-paginator-pages'] > span")
+                .get(0)
+                .shouldBe(Condition.visible);
         return this;
     }
 

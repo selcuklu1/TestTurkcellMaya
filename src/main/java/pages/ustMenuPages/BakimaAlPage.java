@@ -27,13 +27,37 @@ public class BakimaAlPage extends MainPage {
     SelenideElement blinkUyari = $(By.xpath("//blink[starts-with(.,'Sistem') and contains(.,'tarihinde bakım moduna alınmıştır. Sisteme aşağıda tanımlanan kullanıcılar giriş yapabilecektir.')]"));
     ElementsCollection tableSecilenKullanicilar = $$("tbody[id='bakimaAlFormId:bakimaAlKullanicilarId:LovSecilenTable_data'] > tr[role='row']");
 
-    @Step("Bilgilendirme metni 500 karakteri geçiyor mu?")
+    @Step("500 karaterlik yazının girilebildiği görülür.")
     public BakimaAlPage bilgilendirmeMetni500KarakterKontrolu() {
         if (spanBilgilendirmeMetni.isDisplayed())
             spanBilgilendirmeMetni.click();
         txtBilgilendirmeMetni.shouldBe(Condition.visible);
         boolean isSmallerThan500 = false;
         if (txtBilgilendirmeMetni.getValue().length() <= 500)
+            isSmallerThan500 = true;
+        Assert.assertTrue(isSmallerThan500);
+        return this;
+    }
+
+    @Step("500 karakterden fazla karakter girilemediği görülür.")
+    public BakimaAlPage bilgilendirmeMetniMaxKarakterKontrolu() {
+        if (spanBilgilendirmeMetni.isDisplayed())
+            spanBilgilendirmeMetni.click();
+        txtBilgilendirmeMetni.shouldBe(Condition.visible);
+        boolean isSmallerThan500 = false;
+        if (txtBilgilendirmeMetni.getValue().length() <= 500)
+            isSmallerThan500 = true;
+        Assert.assertTrue(isSmallerThan500);
+        return this;
+    }
+
+    @Step("Bilgilendirme metni 500 den fazla karakter girilememelidir.")
+    public BakimaAlPage bilgilendirmeMetni500denfazlaKarakterKontrolu() {
+        if (spanBilgilendirmeMetni.isDisplayed())
+            spanBilgilendirmeMetni.click();
+        txtBilgilendirmeMetni.shouldBe(Condition.visible);
+        boolean isSmallerThan500 = false;
+        if (txtBilgilendirmeMetni.getValue().length() <= 510)
             isSmallerThan500 = true;
         Assert.assertTrue(isSmallerThan500);
         return this;
@@ -63,7 +87,7 @@ public class BakimaAlPage extends MainPage {
         return this;
     }
 
-    @Step("Bilgilendirme metnine \"{bilgilendirmeMetni}\" değerini gir.")
+    @Step("Bilgilendirme metni alanına \"{bilgilendirmeMetni}\" değerini gir.")
     public BakimaAlPage bilgilendirmeMetniGir(String bilgilendirmeMetni) {
 
         Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", btnBakimaAl);
@@ -72,9 +96,30 @@ public class BakimaAlPage extends MainPage {
         if (spanBilgilendirmeMetni.isDisplayed())
             spanBilgilendirmeMetni.click();
 
+
         txtBilgilendirmeMetni
-                .shouldBe(Condition.visible)
                 .setValue(bilgilendirmeMetni);
+
+        return this;
+    }
+
+    @Step("Bilgilendirme metni alanına \"{karakterSayisi}\" karakterlik yazı girilir.")
+    public BakimaAlPage bilgilendirmeMetniGir(int karakterSayisi) {
+
+        Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", btnBakimaAl);
+        btnBakimaAl.waitUntil(Condition.visible, 5000);
+
+        if (spanBilgilendirmeMetni.isDisplayed())
+            spanBilgilendirmeMetni.click();
+
+
+        String girilecekDeger = "";
+        for (int i = 0; i < karakterSayisi; i++) {
+            girilecekDeger += "x";
+        }
+
+        txtBilgilendirmeMetni
+                .setValue(girilecekDeger);
 
         return this;
     }
@@ -99,13 +144,13 @@ public class BakimaAlPage extends MainPage {
         return this;
     }
 
-    @Step("{kullaniciAdi} kullanicisini ekle")
+    @Step("{kullaniciAdi} kullanicisini listeye ekle")
     public BakimaAlPage kullaniciEkle(String kullaniciAdi) {
         txtKullanicilar.selectLov(kullaniciAdi);
         return this;
     }
 
-    @Step("{kullaniciAdi} kullanicisini ekle")
+    @Step("{kullaniciAdi} kullanıcısı listelenmeli mi?: {shouldBeSelectable}")
     public BakimaAlPage kullaniciKontrol(String kullaniciAdi, boolean shouldBeSelectable) {
 
         boolean isUserSelectable = txtKullanicilar.isLovValueSelectable(kullaniciAdi);
@@ -131,15 +176,18 @@ public class BakimaAlPage extends MainPage {
         return this;
     }
 
-    @Step("Uyarı mesajı ve Bakımdan Çıkar butonu kontrolü.")
-    public BakimaAlPage bakimdaOlmali(boolean bakimdaOlmalimi) {
-        if (bakimdaOlmalimi == true) {
+    @Step("\"Bakım Modu\" buton adı \"Bakımdan Çıkar\" olarak değişitiği, \"Sistem ......... tarihinde bakım moduna alınmıştır.Sisteme aşağıda tanımlanan kullanıcılar giriş yapabilecektir.\" Uyarısı verdiği ve bakım moduna geçildiği görülür.")
+    public BakimaAlPage bakimdaOlmali() {
             blinkUyari.shouldBe(Condition.visible);
             btnBakimdanCikar.shouldBe(Condition.visible);
-        } else {
+
+        return this;
+    }
+
+    @Step("\"Sistem ......... tarihinde bakım moduna alınmıştır. Sisteme aşağıda tanımlanan kullanıcılar giriş yapabilecektir.\" Uyarısının kaybolduğu ve \"Bakım Modundan Çıkar\" butonunun \"Bakım Modun\" butonuna çevrildiği görülür.")
+    public BakimaAlPage bakimdaOlmamali() {
             blinkUyari.shouldNotBe(Condition.visible);
             btnBakimaAl.shouldBe(Condition.visible);
-        }
         return this;
     }
 

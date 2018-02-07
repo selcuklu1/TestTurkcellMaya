@@ -78,6 +78,13 @@ public class MainPage extends BaseLibrary {
         return this;
     }
 
+    @Step("{kep} kep olan bağlan tıklanır")
+    public MainPage kepAdresleriBaglan(String kep){
+        $$("[id='kepForm:kayitliKepDataTable_data'] tr").filterBy(Condition.text(kep))
+                .get(0).$("button").click();
+        return this;
+    }
+
     @Step("Kullanıcı adı ve Tc Kimlik no alanlarındaki bilgileri değiştirilir - Değiştirilemez olduğu görülür")
     public MainPage kullaniciAdiTcKimlikNoKontol() {
         $(By.id("kepLogin2FormId:kullaniciAdi")).shouldBe(Condition.disabled);

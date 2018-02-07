@@ -57,6 +57,9 @@ public class OnayAkisYonetimiPage extends MainPage {
     private BelgenetElement txtOnayAkisiIslemleriKullanicilar = comboLov("[id='onayAkisiYonetimiEditorForm:onayAkisiYonetimiKullaniciBirimLov:LovText']");
     private SelenideElement btnOnayAkisiIslemleriKaydet = $(By.id("onayAkisiYonetimiEditorForm:onayAkisiYonetimiEditorKaydetId"));
     private SelenideElement txtOnayAkisiIslemleriAd = $(By.id("onayAkisiYonetimiEditorForm:onayAkisiYonetimiAkisAdiInput"));
+    private SelenideElement chkVekilCheckbox = $(By.id("onayAkisiYonetimiEditorForm:onayAkisiYonetimiKullaniciBirimDataTable:1:onayAkisiYonetimiVekilBooleanCheckbox"));
+
+
 
     @Step("Onay akışı sayfası aç")
     public OnayAkisYonetimiPage openPage() {
@@ -103,6 +106,13 @@ public class OnayAkisYonetimiPage extends MainPage {
         //selectLov(kullanici);
         return this;
     }
+
+    @Step("Vekalet checkbox tikini kaldır")
+    public OnayAkisYonetimiPage vekilCheckboxSec(boolean secim) {
+        chkVekilCheckbox.setSelected(secim);
+        return this;
+    }
+
 
     @Step("Onay akışı işlemleri kullanıcılar alanında yazılan kullanıcıyı sil")
     public OnayAkisYonetimiPage onayAkisiIslemlerKullaniciAlaniniSil() {
@@ -400,7 +410,7 @@ public class OnayAkisYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Kullanıcıya kullanıcı tipi seçme")
+    @Step("Kullanıcıya kullanıcı tipi seç")
     public OnayAkisYonetimiPage kullaniciyaKullaniciTipiSec(String kullanici, String secimTipi) {
 
         trOnayAkisiEkleKullanicilar
@@ -422,6 +432,46 @@ public class OnayAkisYonetimiPage extends MainPage {
                 .shouldBe(exist)
                 .$("select[id*='onayAkisiYonetimiIslemTipi']")
                 .shouldHave(value(kullaniciTipi));
+
+        return this;
+    }
+
+
+    @Step("Onay akışı vekalet tarihi kontrolu")
+    public OnayAkisYonetimiPage onayAkisiVekaletTarihiKontrol(String vekaletTarihi) {
+
+        trOnayAkisiEkleKullanicilar
+                .filterBy(text(vekaletTarihi))
+                .get(0)
+                .shouldBe(exist);
+
+        return this;
+    }
+
+
+    @Step("Onay akışı vekil kullanıcı adı ve tipi kontrolu")
+    public OnayAkisYonetimiPage onayAkisiVekilKullaniciKontrol(String vekilKullaniciAdi, String vekilKullaniciTipi) {
+
+        trOnayAkisiEkleKullanicilar
+                .filterBy(text(vekilKullaniciAdi))
+                .get(0)
+                .shouldBe(exist)
+                .$("select[id*='onayAkisiYonetimiIslemTipi']")
+                .shouldHave(value(vekilKullaniciTipi));
+
+        return this;
+    }
+
+
+    @Step("Onay akışı asil kullanıcı adı ve tipi kontrolu")
+    public OnayAkisYonetimiPage onayAkisiAsilKullaniciKontrol(String asilkullaniciAdi, String asilkullaniciTipi) {
+
+        trOnayAkisiEkleKullanicilar
+                .filterBy(text(asilkullaniciAdi))
+                .get(0)
+                .shouldBe(exist)
+                .$("select[id*='onayAkisiYonetimiIslemTipi']")
+                .shouldHave(value(asilkullaniciTipi));
 
         return this;
     }

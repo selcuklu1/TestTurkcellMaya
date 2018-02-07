@@ -3,10 +3,8 @@ package pages.ustMenuPages;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import pages.MainPage;
 import pages.pageComponents.DagitimHitapDuzenle;
-import pages.pageComponents.SearchFiltreleme;
 import pages.pageComponents.SearchTable;
 import pages.pageComponents.UstMenuPageHeader;
 import pages.pageComponents.belgenetElements.BelgenetElement;
@@ -16,7 +14,7 @@ import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$x;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
-import static pages.pageData.UstMenuData.*;
+import static pages.pageData.UstMenuData.YonetimSayfalari;
 
 /**
  * Yazan: Ilyas Bayraktar

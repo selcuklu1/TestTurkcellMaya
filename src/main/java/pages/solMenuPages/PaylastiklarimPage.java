@@ -192,7 +192,7 @@ public class PaylastiklarimPage extends MainPage {
 
     }
 
-    @Step("\"{0}\" tabını seç")
+    @Step("\"{tabAdi}\" tabını seç")
     public PaylastiklarimPage evrakOnizlemeTabSec(String tabAdi) {
 
         tabEvrakOnizleme
@@ -204,7 +204,7 @@ public class PaylastiklarimPage extends MainPage {
         return this;
     }
 
-    @Step("\"{0}\" tabını seç")
+    @Step("\"{tabAdi}\" tabını seç")
     public PaylastiklarimPage paylasilanlarTabSec(String tabAdi) {
 
         tabEvrakOnizleme
@@ -273,13 +273,13 @@ public class PaylastiklarimPage extends MainPage {
         return this;
     }
 
-    @Step("paylaş butonuna tıklandı. ")
+    @Step("Paylaş butonuna tıkla. ")
     public PaylastiklarimPage paylas() {
         btnPaylas.click();
         return this;
     }
 
-    @Step("Paylaşılacak kişi seç: {0} ")
+    @Step("Paylaşılacak kişi seç: {kisiAdi} ")
     public PaylastiklarimPage paylasKisiSec(String kisiAdi) {
         txtPaylasKisi.selectLov(kisiAdi);
         return this;
@@ -292,7 +292,7 @@ public class PaylastiklarimPage extends MainPage {
         return this;
     }
 
-    @Step("Paylaşma tabında açıklama girildi : \"{0}\"")
+    @Step("Açıklama alanını doldur.")
     public PaylastiklarimPage paylasimAciklamaYaz(String aciklama) {
         txtPaylasAciklama.setValue(aciklama);
         return this;
@@ -304,7 +304,7 @@ public class PaylastiklarimPage extends MainPage {
         return this;
     }
 
-    @Step("paylaşılan kişileri temizle ")
+    @Step("Kişi alanını boşalt.")
     public PaylastiklarimPage paylasilanKisileriTemizle() {
         txtPaylasKisi.clearAllSelectedItems();
         return this;
@@ -321,7 +321,7 @@ public class PaylastiklarimPage extends MainPage {
         return this;
     }
 
-    @Step("Açıklama kontrol")
+    @Step("Evrak {kullanici} kullanıcısı ile paylaşıldı.")
     public PaylastiklarimPage paylasilanKontrol(String kullanici, String birim, String paylasimDurumu, String geriAlinmaTarihi) {
         tablePaylasilanlar
                 .filterBy(Condition.text(kullanici))
@@ -333,7 +333,7 @@ public class PaylastiklarimPage extends MainPage {
         return this;
     }
 
-    @Step("Açıklama kontrol")
+    @Step("Evrakın paylaşıldığı kullanıcılar kontrolü.")
     public PaylastiklarimPage paylasilanKontrolTumKullanıcılıar(String[] kullanici, String paylasimDurumu) {
         for (int i = 0; i < kullanici.length; i++)
             tablePaylasilanlar

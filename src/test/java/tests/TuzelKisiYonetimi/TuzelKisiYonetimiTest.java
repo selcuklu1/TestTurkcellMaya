@@ -582,10 +582,10 @@ public class TuzelKisiYonetimiTest extends BaseTest {
 
         evrakOlusturPage
                 .editorTabAc()
-                .bilgiDoldur(tamAd)
+                .bilgiDoldur(tamAd, "Ad")
                 .secilenBilgiSil()
                 .geregVeBilgiAlanindanSil()
-                .geregiDoldur(tamAd);
+                .geregiDoldur(tamAd, "Ad");
 
         gelenEvrakKayitPage
                 .openPage()
@@ -612,9 +612,12 @@ public class TuzelKisiYonetimiTest extends BaseTest {
         String tuzelKisiTipi = "MEDYA ŞİRKETİ";
         String adres = "Gültepe Mahallesi";
         String ulke = "TÜRKİYE";
-        String il = "İstanbul";
-        String ilce = "Kağıthane";
+        String il = "İst";
+        String ilce = "Kağ";
         String eposta = kisaAd + "medyasirketi@turksat.com.tr";
+        String webAdres = "www." + kisaAd + "medyasirketi.com";
+        String telNo = "5391111111";
+        String faksNo = "2121111111";
         String basariMesaji = "İşlem başarılıdır!";
 
         tuzelKisiYonetimiPage
@@ -622,12 +625,44 @@ public class TuzelKisiYonetimiTest extends BaseTest {
                 .yeniTuzelKisiEkle()
                 .tuzelKisiTipiSec(tuzelKisiTipi)
                 .medyaSirketiAlanKontrolleri()
+                .vergiNoDoldur(vergiNo)
                 .adDoldur(ad)
-                .kisaAdDoldur(kisaAd);
+                .kisaAdDoldur(kisaAd)
 
+                .karasalTVSec("T1")
+                .karasalTVYayindaSec(true)
+                .kabloTVSec("TEK")
+                .kabloTVYayindaSec(true)
+                .istegeBagliTvSec(true)
+                .platformIsletmecisiSe(true)
 
-        // .tuzelKisiKaydet()
-              //  .islemMesaji().basariliOlmali(basariMesaji);
+                .yeniIletisimEkle()
+
+                .mobilTelNoDoldur(telNo)
+                .telNoDoldur(telNo)
+                .faks1NoDoldur(faksNo)
+                .faks2NoDoldur(faksNo)
+                .adresDoldur(adres)
+                .ulkeSec(ulke)
+
+                .ilSec(il)
+                .ilceSec(ilce)
+                .ePostaDoldur(eposta)
+                .webAdresDoldur(webAdres)
+                .iletisimBilgisiKaydet()
+
+                .tuzelKisiKaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        evrakOlusturPage
+                .openPage()
+                .editorTabAc()
+                .geregiDoldur(ad,"Ad")
+                .secilenGeregiSil()
+                .geregiDoldur(kisaAd, "Kısa Ad")
+                .secilenGeregiSil()
+                .geregiVergiNoDoldur(vergiNo, "Vergi Kimlik No");
 
     }
+
 }

@@ -22,27 +22,21 @@ public class BakimaAlTest extends BaseTest {
     @Test(enabled = true, description = "2108 : Bakım Moduna Alma ve alan kontrolleri")
     public void TS02108() {
 
-        String bilgilendirmeMetni500Karakter = "";
-        String bilgilendirmeMetni600Karakter = "";
-        String girilecekBilgilendirmeMetni = "Bu bir deneme bilgilendirme metnidir.";
+        String girilecekBilgilendirmeMetni = "";
         String iptalEdilecekBilgilendirmeMetni = "İptal edilecek bilgilendirme metni.";
 
         String pasifKullanici = "PASIF KULLANICI";
 
-
-        for (int i = 0; i < 500; i++) {
-            bilgilendirmeMetni500Karakter += "x";
-        }
-        for (int i = 0; i < 600; i++) {
-            bilgilendirmeMetni600Karakter += "x";
+        for(int i = 0; i < 500; i ++){
+            girilecekBilgilendirmeMetni += "x";
         }
 
         bakimaAlPage
                 .openPage()
-                .bilgilendirmeMetniGir(bilgilendirmeMetni500Karakter)
+                .bilgilendirmeMetniGir(500)
                 .bilgilendirmeMetni500KarakterKontrolu()
-                .bilgilendirmeMetniGir(bilgilendirmeMetni600Karakter)
-                .bilgilendirmeMetni500KarakterKontrolu()
+                .bilgilendirmeMetniGir(600)
+                .bilgilendirmeMetniMaxKarakterKontrolu()
                 .bilgilendirmeMetniGir(girilecekBilgilendirmeMetni)
                 .bilgilendirmeMetniKaydet()
                 .bilgilendirmeMetniKontrol(girilecekBilgilendirmeMetni)
@@ -51,10 +45,13 @@ public class BakimaAlTest extends BaseTest {
                 .bilgilendirmeMetniKontrol(girilecekBilgilendirmeMetni)
                 .kullanicilarTemizle()
                 .kullaniciKontrol(pasifKullanici, false)
-                .kullaniciEkle("Optiim TEST")
                 .kullaniciEkle("Mehmet BOZDEMİR")
+                .kullaniciEkle("Optiim TEST")
+                .kullaniciEkle("Huser3 TUMER3")
                 .bakimaAl()
-                .bakimdaOlmali(true);
+                .bakimdaOlmali();
+
+        logout();
 
         loginPage
                 .loginBakim("test1", "123")
@@ -65,18 +62,11 @@ public class BakimaAlTest extends BaseTest {
     @Test(enabled = true, description = "2109 : Bakım Modundan Çıkar")
     public void TS02109() {
 
-        String bilgilendirmeMetni = "Bu bir deneme bilgilendirme metnidir.";
-        String[] kontrolEdilecekKullanicilar = new String[]{
-                "Optiim TEST-Ağ (Network) Uzman Yardımcısı",
-                "Mehmet BOZDEMİR-Ağ (Network) Uzman Yardımcısı"
-        };
         bakimaAlPage
                 .openPage()
-                .bakimdaOlmali(true)
-                .bilgilendirmeMetniKontrol(bilgilendirmeMetni)
-                .secilenKullaniciKontrol(kontrolEdilecekKullanicilar)
+                .bakimdaOlmali()
                 .bakimdanCikar()
-                .bakimdaOlmali(false);
+                .bakimdaOlmamali();
         login("ztekin", "123");
 
     }

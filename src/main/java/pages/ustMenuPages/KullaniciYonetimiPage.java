@@ -5,6 +5,7 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
@@ -38,14 +39,15 @@ public class KullaniciYonetimiPage extends MainPage {
     SelenideElement chkGorevSuresiDolanlar = $(By.id("kullaniciYonetimiListingForm:filterPanel:gorevSuresiDolanlarCheckbox"));
     SelenideElement chkBirimiOlmayanlar = $(By.id("kullaniciYonetimiListingForm:filterPanel:birimiOlmayanlarCheckbox"));
     SelenideElement chkAltBirimiOlmayanlar = $(By.id("kullaniciYonetimiListingForm:filterPanel:altBirimlerDahilCheckbox"));
-    SelenideElement tblKolonBirim = $(By.xpath("//*[@id='kullaniciYonetimiListingForm:kullaniciDataTable:j_idt10843']/div"));
+    SelenideElement tblKolonBirim = $(By.xpath("//div[@id='kullaniciYonetimiListingForm:kullaniciDataTable']//span[text()='Birim']"));
     SelenideElement btnKullaniciListesiGuncelle2 = $("[id^='kullaniciYonetimiListingForm:kullaniciDataTable'][id$='updateKullaniciButton']");
     SelenideElement tblGorevliOlduguBirimler = $(By.id("kullaniciYonetimiEditorForm:kullaniciBirimDataTable"));
     SelenideElement btnGorevliOlduguBirimlerGuncelle2 = $("[id^='kullaniciYonetimiEditorForm:kullaniciBirimDataTable][id$='updateKullaniciBirimButton']");
     SelenideElement cmbKullaniciBirimAtamaGizlilikDerecesi = $(By.id("kullaniciBirimEditorForm:kullaniciGuvenlikKoduSelect"));
+    SelenideElement btnKullaniciBirimAtamaIptal =$(By.id("kullaniciBirimEditorForm:cancelSaveKullaniciBirimButton"));
     SelenideElement btnKullaniciBirimAtamaKaydet = $(By.id("kullaniciBirimEditorForm:saveKullaniciBirimButton"));
-
-
+    ElementsCollection tblKullaniciListesi = $$("tbody[id='kullaniciYonetimiListingForm:kullaniciDataTable_data'] tr[data-ri]");
+    SelenideElement txtKullaniciBirimAtamaBirim = $(By.xpath("//form[@id='kullaniciBirimEditorForm']//table//tbody//tr//td//div"));
     // Kullanıcı Listesi
     SelenideElement btnKullaniciListesiGuncelle = $("[id$='kullaniciYonetimiListingForm:kullaniciDataTable_data'] tr [id$='kullaniciYonetimiListingForm:kullaniciDataTable:0:updateKullaniciButton']");
 
@@ -66,7 +68,7 @@ public class KullaniciYonetimiPage extends MainPage {
     SelenideElement txtUnvan = $(By.id("kullaniciYonetimiEditorForm:unvanAutoComplete_input"));
     SelenideElement txtEkranAdi = $(By.id("kullaniciYonetimiEditorForm:ekranAdiInput"));
 
-    ElementsCollection tblKullaniciBirim = $$("[id='kullaniciYonetimiEditorForm:kullaniciBirimDataTable_data'] tr[role=row][data-ri]");
+    ElementsCollection tblKullaniciBirim = $$("[id='kullaniciYonetimiEditorForm:kullaniciBirimDataTable_data'] tr[data-ri]");
 
 
     //
@@ -89,6 +91,8 @@ public class KullaniciYonetimiPage extends MainPage {
     SelenideElement txtGorev = $(By.id("kullaniciBirimEditorForm:unvanAutoComplete_input"));
     BelgenetElement txtRol = comboLov(By.id("kullaniciRolEkleEditorForm:rolEkleLovRolList:LovText"));
     SelenideElement btnRolKaydet = $(By.id("kullaniciRolEkleEditorForm:saveKullaniciRolEkleButton"));
+    SelenideElement txtBaslangicTarihi = $(By.id("kullaniciBirimEditorForm:gorevBaslangicTarihiCalendar_input"));
+    SelenideElement txtBitisTarihi = $(By.id("kullaniciBirimEditorForm:gorevBitisTarihiCalendar_input"));
 
     @Step("Birim alanında \"{0}\" sec")
     public KullaniciYonetimiPage birimSec(String text) {
@@ -130,11 +134,19 @@ public class KullaniciYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("\"{birim}\" adlı birimi güncelle")
+    @Step("Birim kolonununda \"{birim}\" içeren satırda güncelle butonu tıklanır")
     public KullaniciYonetimiPage gorevliOlduguBirimlerGuncelle(String birim) {
-        clickJs(btnGorevliOlduguBirimlerGuncelle);
+//        Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", tblKullaniciBirim);
+
+        tblKullaniciBirim
+                .filterBy(Condition.text(birim))
+                .first()
+                .$("[id^='kullaniciYonetimiEditorForm:kullaniciBirimDataTable:'][id$=':updateKullaniciBirimButton']").click();
+
+//        clickJs(btnGorevliOlduguBirimlerGuncelle);
         return this;
     }
+
 
     @Step("Kullanıcı birim atama ekranında bağ tipi combosunun geldiği görülür.")
     public KullaniciYonetimiPage kullaniciBirimAtamaEkranıGorme() {
@@ -142,6 +154,41 @@ public class KullaniciYonetimiPage extends MainPage {
         boolean durum2 = $$(By.id("kullaniciBirimEditorForm:kullaniciBagTipiSelect")).size() == 1;
         Assert.assertEquals(durum, durum2);
         takeScreenshot();
+        return this;
+    }
+
+    @Step("Vekalati olan kullanıcının Kullanıcı Birim Atama Ekran kontrolü.")
+    public KullaniciYonetimiPage VekaletBirimiKullaniciBirimAtamaEkranKontrolu() {
+
+        Assert.assertEquals(txtKullaniciBirimAtamaBirim.is(Condition.empty),false);
+//        Assert.assertEquals(txtKullaniciBirimAtamaBirim.is(Condition.disabled),true);
+        Assert.assertEquals(txtGorev.is(Condition.empty),false);
+        Assert.assertEquals(txtGorev.is(Condition.disabled),true);
+        Assert.assertEquals(txtBaslangicTarihi.is(Condition.empty),false);
+        Assert.assertEquals(txtBaslangicTarihi.is(Condition.disabled),true);
+        Assert.assertEquals(txtBitisTarihi.is(Condition.empty),false);
+        Assert.assertEquals(txtBitisTarihi.is(Condition.disabled),true);
+        Assert.assertEquals(cmbPopupKullaniciBirimAtamaBagTipi.is(Condition.empty),false);
+        Assert.assertEquals(cmbPopupKullaniciBirimAtamaBagTipi.is(Condition.disabled),true);
+        Assert.assertEquals(cmbKullaniciBirimAtamaGizlilikDerecesi.is(Condition.enabled),true);
+        Assert.assertEquals(btnKullaniciBirimAtamaKaydet.isDisplayed(),true);
+        Assert.assertEquals(btnKullaniciBirimAtamaIptal.isDisplayed(),true);
+
+//        txtKullaniciBirimAtamaBirim.shouldBe(Condition.disabled);
+//        txtGorev.shouldNotBe(Condition.empty);
+//        txtGorev.shouldBe(Condition.disabled);
+//        txtBaslangicTarihi.shouldNotBe(Condition.empty);
+//        txtBaslangicTarihi.shouldBe(Condition.disabled);
+//        txtBitisTarihi.shouldNotBe(Condition.empty);
+//        txtBitisTarihi.shouldBe(Condition.disabled);
+//        cmbPopupKullaniciBirimAtamaBagTipi.shouldNotBe(Condition.empty);
+//        cmbPopupKullaniciBirimAtamaBagTipi.shouldBe(Condition.disabled);
+//        cmbKullaniciBirimAtamaGizlilikDerecesi.shouldBe(Condition.enabled);
+//        btnKullaniciBirimAtamaKaydet.isDisplayed();
+//        btnKullaniciBirimAtamaIptal.isDisplayed();
+
+        takeScreenshot();
+        Allure.addAttachment("Kullanıcı Birim Atama ekranı : ", "Birim, Görev, Başlangıç Tarihi, Bitiş Tarihi, Bağ tipi alanlarının dolu ve değiştirilemez olduğu, Gizlilik derecesinin değiştirilebilir olduğu ve kaydet , iptal butonlarının geldiği görülür.");
         return this;
     }
 
@@ -263,7 +310,7 @@ public class KullaniciYonetimiPage extends MainPage {
 
     @Step("Birim Kontrolü")
     public KullaniciYonetimiPage tabloBirimKontrol() {
-        tblKolonBirim.exists();
+        Assert.assertEquals(tblKolonBirim.exists(),true);
         return this;
     }
 
@@ -283,6 +330,17 @@ public class KullaniciYonetimiPage extends MainPage {
         tblGorevliOlduguBirimler.exists();
         return this;
     }
+
+    @Step("Gorevli oldugu birim kontrolü : \"{birim}\" ")
+    public KullaniciYonetimiPage gorevliOlduguBirimlerKontol(String birim) {
+        tblGorevliOlduguBirimler.shouldBe(visible);
+        tblGorevliOlduguBirimler.$("label").shouldHave(text("Görevli Olduğu Birimler"));
+        tblKullaniciBirim.shouldHave(sizeGreaterThan(0));
+        tblKullaniciBirim.filterBy(Condition.text(birim));
+        tblGorevliOlduguBirimler.exists();
+        return this;
+    }
+
 
     //    @Step("Görevli olduğu birim guncelle")
 //    public KullaniciYonetimiPage gorevliOlduguBirimGuncelle2 () {
@@ -394,5 +452,12 @@ public class KullaniciYonetimiPage extends MainPage {
         String ekranAdi = txtEkranAdi.getValue();
         btnKullaniciGuncelleKaydet.click();
         return ekranAdi;
+    }
+
+    @Step("Kullanıcı Listesi tablo kontrolü")
+    public KullaniciYonetimiPage kullaniciListesiTabloKontrolu() {
+        tblKullaniciListesi
+                .shouldHaveSize(1);
+        return this;
     }
 }

@@ -14,6 +14,7 @@ import pages.solMenuPages.ParafladiklarimPage;
 import pages.solMenuPages.VekaletOnaylariPage;
 import pages.ustMenuPages.EvrakOlusturPage;
 import pages.ustMenuPages.GelenEvrakKayitPage;
+import pages.ustMenuPages.KullaniciYonetimiPage;
 import pages.ustMenuPages.VekaletVerPage;
 
 import static com.codeborne.selenide.Condition.text;
@@ -35,6 +36,7 @@ public class VekaletIslemleriTest extends BaseTest {
     ImzaBekleyenlerPage imzaBekleyenlerPage;
     ParafladiklarimPage parafladiklarimPage;
     GelenEvrakKayitPage gelenEvrakKayitPage;
+    KullaniciYonetimiPage kullaniciYonetimiPage;
 
     String aciklama = "";
     String redNedeni = "";
@@ -74,6 +76,7 @@ public class VekaletIslemleriTest extends BaseTest {
         parafladiklarimPage = new ParafladiklarimPage();
         mainPage = new MainPage();
         gelenEvrakKayitPage = new GelenEvrakKayitPage();
+        kullaniciYonetimiPage = new KullaniciYonetimiPage();
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -597,7 +600,7 @@ public class VekaletIslemleriTest extends BaseTest {
 
         gelenEvraklarPage
                 .openPage()
-                .tabloEvrakNoKontrol(evrakNo1,true)
+                .tabloEvrakNoKontrol(evrakNo1, true)
                 .tabloEvrakNoSec(evrakNo1)
                 .evrakOnizlemeButonKontrolu("İade Et")
                 .evrakOnizlemeButonTikla("İade Et")
@@ -613,26 +616,65 @@ public class VekaletIslemleriTest extends BaseTest {
 
         gelenEvraklarPage
                 .openPage()
-                .tabloEvrakNoKontrol(evrakNo1,true);
+                .tabloEvrakNoKontrol(evrakNo1, true);
     }
+
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TS2203 : Vekalet veren kullanıcının havale onayında seçilmesi")
-    public void TS2203() throws InterruptedException{
+    @Test(enabled = false
+            , dependsOnMethods = {"TS2208"}
+            , description = "TS2203 : Vekalet veren kullanıcının havale onayında seçilmesi")
+    public void TS2203() throws InterruptedException {
         String kullaniciTitle = " [Ağ (Network) Uzman Yardımcısı]";
         login(mbozdemir);
         gelenEvrakKayitPage
                 .openPage()
                 .dagitimBilgileriOnaylayacakKisiPanel()
-                .dagitimBilgileriOnaylayacakKisiKontrolü(nameVA,kullaniciTitle)
-                .dagitimBilgileriOnaylayacakKisiKontrolü(nameVV,kullaniciTitle)
-//                .dagitimBilgileriOnaylayanKisiSec(nameVV)
-                .dagitimBilgileriOnaylayanKisiSecWithTitle(nameVV,kullaniciTitle)
+                .dagitimBilgileriOnaylayacakKisiKontrolü(nameVA, kullaniciTitle)
+                .dagitimBilgileriOnaylayacakKisiKontrolü(nameVV, kullaniciTitle)
+                .dagitimBilgileriOnaylayanKisiSecWithTitle(nameVV, kullaniciTitle)
                 .popUpKullaniciSecimKontrulu()
                 .popUpKullaniciSecimi(nameVA)
-                .dagitimBilgileriOnaylayacakKisiAlaniKontrolü(nameVA,kullaniciTitle,nameVV);
+                .dagitimBilgileriOnaylayacakKisiAlaniKontrolü(nameVA, kullaniciTitle, nameVV);
 
+    }
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = false
+            ,dependsOnMethods = {"TS2208"}
+            , description = "TS2210 : Kullanıcı yönetimi ekranında vekalet kontrolü")
+    public void TS2210() throws InterruptedException{
+        login(mbozdemir);
+        kullaniciYonetimiPage
+                .openPage()
+                .kullaniciAdiDoldur("usernameva")
+                .ara()
+                .kullaniciListesiTabloKontrolu()
+                .kullaniciListesiGuncelleButonuTikla()
+                .gorevliOlduguBirimlerKontol("Vekalet")
+                .gorevliOlduguBirimlerGuncelle("Vekalet")
+                .VekaletBirimiKullaniciBirimAtamaEkranKontrolu();
 
-//                .dagitimBilgileriOnaylayanWithDetails()
+    }
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = false
+            ,dependsOnMethods = {"TS2208"}
+            ,description = "TS2204 : Vekalet Alan Kullanıcın Evrak Kapatma Onayında Seçilmesi")
+    public void TS2204() throws InterruptedException{
+
+login(mbozdemir);
+        String kullaniciTitle = " [Ağ (Network) Uzman Yardımcısı]";
+        String title = "Ağ (Network) Uzman Yardımcısı";
+        gelenEvraklarPage
+                .openPage()
+                .evrakSec()
+//                .tabloEvrakNoKontrol(sayi, true)
+//                .tabloEvrakNoSec(sayi)
+                .evrakOnizlemeButonKontrolu("Evrak Kapat")
+                .evrakOnizlemeButonTikla("Evrak Kapat")
+                .evrakKapamaOnayAkisiTikla()
+                .evrakKapamaKullaniciSecWithTitle(nameVV,kullaniciTitle)
+                .popUpKullaniciSecimKontrulu()
+                .popUpKullaniciSecimi(nameVA)
+                .evrakKapamaKullanicilarAlaniKontrolü(nameVA, title,nameVV);
 
     }
 }
