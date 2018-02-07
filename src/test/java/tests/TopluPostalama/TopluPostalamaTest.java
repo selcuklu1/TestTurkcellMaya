@@ -340,6 +340,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .postaListesiDoldur(postaListesi)
                 .postaListesiPostala()
                 .gidisSekliSec("Adi Posta")
+                .gonderildigiKurumAlanKontrolu()
                 .gramajDoldur(gramaj + "")
                 .tutarHesapla()
                 .indirimOncesiTutarKontrol(indirimOncesiTutar)
@@ -788,7 +789,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .sImzaImzala()
                 .popupSimzaEvet();
 
-        String listeAdi = "TS01807Liste-" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
+        String listeAdi = "TS01805Liste-" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
 
         topluPostalanacakEvraklarPage
                 .openPage()
@@ -941,7 +942,13 @@ public class TopluPostalamaTest extends BaseTest {
 
         pttRaporuPage
                 .openPage()
+                .dagiticiDoldur("a")
+                .duzenleyenDoldur("a")
+                .avansSorumlusuDoldur("a")
+                .kontrolEdenDoldur("a")
+                .pttMerkezDoldur("a")
                 .aramaDetaylariPanelAc()
+                .postaTarihiDefaultDegerKontrol()
                 .ulkeDoldur("TÜRKİYE")
                 .ilDoldur("İSTANBUL")
                 .postaTarihiDoldur("12.01.2018")
@@ -953,7 +960,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .postaTarihiDoldur("13.01.2018")
                 .postaTipiSec("Ankara İçi APS")
                 .sorgula()
-                .tabloKontrol();
+                .tabloKontrolEt("Ahmet Çelik", "10532-10533-10534-10535-10536-10537-10538", "Ankara İçi APS", true);
 
     }
 
@@ -1032,6 +1039,10 @@ public class TopluPostalamaTest extends BaseTest {
         pttRaporuPage
                 .openPage()
                 .dagiticiDoldur("")
+                .duzenleyenDoldur("a")
+                .avansSorumlusuDoldur("a")
+                .kontrolEdenDoldur("a")
+                .pttMerkezDoldur("a")
                 .aramaDetaylariPanelAc()
                 .sorgula()
                 .islemMesaji().uyariOlmali(uyariMesaji);
@@ -1039,26 +1050,47 @@ public class TopluPostalamaTest extends BaseTest {
         pttRaporuPage
                 .dagiticiDoldur("a")
                 .duzenleyenDoldur("")
+                .avansSorumlusuDoldur("a")
+                .kontrolEdenDoldur("a")
+                .pttMerkezDoldur("a")
+                .aramaDetaylariPanelAc()
+                .postaTarihiDoldur("13.01.2018")
                 .sorgula()
                 .islemMesaji().uyariOlmali(uyariMesaji);
 
         pttRaporuPage
+                .dagiticiDoldur("a")
                 .duzenleyenDoldur("a")
                 .avansSorumlusuDoldur("")
+                .kontrolEdenDoldur("a")
+                .pttMerkezDoldur("a")
+                .aramaDetaylariPanelAc()
+                .postaTarihiDoldur("13.01.2018")
                 .sorgula()
                 .islemMesaji().uyariOlmali(uyariMesaji);
 
         pttRaporuPage
+                .dagiticiDoldur("a")
+                .duzenleyenDoldur("a")
                 .avansSorumlusuDoldur("a")
                 .kontrolEdenDoldur("")
+                .pttMerkezDoldur("a")
+                .aramaDetaylariPanelAc()
+                .postaTarihiDoldur("13.01.2018")
                 .sorgula()
                 .islemMesaji().uyariOlmali(uyariMesaji);
 
         pttRaporuPage
+                .dagiticiDoldur("a")
+                .duzenleyenDoldur("a")
+                .avansSorumlusuDoldur("a")
                 .kontrolEdenDoldur("a")
                 .pttMerkezDoldur("")
+                .aramaDetaylariPanelAc()
+                .postaTarihiDoldur("13.01.2018")
                 .sorgula()
                 .islemMesaji().uyariOlmali(uyariMesaji);
+
 
         pttRaporuPage
                 .postaTarihiDefaultDegerKontrol()

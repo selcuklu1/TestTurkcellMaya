@@ -195,6 +195,12 @@ public class PostaListesiPage extends MainPage {
         return this;
     }
 
+    @Step("Gonderildiği Kurum alanının geldiği görülür.")
+    public PostaListesiPage gonderildigiKurumAlanKontrolu() {
+            cmbGonderildigiKurum.shouldBe(Condition.visible);
+        return this;
+    }
+
     @Step("Gramaj alanını doldur : \"{gramaj}\" ")
     public PostaListesiPage gramajDoldur(String gramaj) {
         setValueJS(txtGramaj, gramaj);
