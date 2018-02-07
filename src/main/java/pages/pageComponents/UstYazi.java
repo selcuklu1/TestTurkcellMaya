@@ -400,26 +400,32 @@ public class UstYazi extends MainPage {
             return this;
         }
 
-        @Step("Not Güncelle butonu aranır")
-        public SelenideElement getNoteGuncelleButton() {
+        @Step("Not Güncelle butonu: {stepDescription}")
+        public SelenideElement getNoteGuncelleButton(String stepDescription) {
             return note.$("button span[class~='update-icon']");
         }
 
-        @Step("Not Sil butonu aranır")
-        public SelenideElement getNoteSilButton() {
+        @Step("Not Sil butonu: {stepDescription}")
+        public SelenideElement getNoteSilButton(String stepDescription) {
             return note.$("button span[class~='delete-icon']");
         }
 
-        @Step("Notu sil")
+        @Step("Not Sil butonu: {condition}")
+        public EvrakNot noteSilButton(Condition condition) {
+            note.$("button span[class~='delete-icon']").should(condition);
+            return this;
+        }
+
+        @Step("Notu sil ve olmadığı kontrol et")
         public EvrakNot notuSil() {
-            getNoteSilButton().click();
+            getNoteSilButton("").click();
             note.shouldNotBe(exist);
             return this;
         }
 
         @Step("Notu güncelle")
         public EvrakNot notuGuncelle(String aciklama) {
-            getNoteGuncelleButton().click();
+            getNoteGuncelleButton("").click();
             getAciklamaAlani().clear();
             aciklamaAlaniDoldur(aciklama);
             kaydet();
