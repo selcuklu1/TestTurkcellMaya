@@ -1530,7 +1530,6 @@ public class TopluPostalamaTest extends BaseTest {
         String gorunmeyecekEvrakSayi = topluPostalanacakEvraklarPage.evrakSayiGetir(evrakKayitTarihiSayi, evrakGidecegiYer, evrakKonu, evrakHazirlayanBirim, evrakPostaTipi);
         String gorunecekEvrakSayi = topluPostalanacakEvraklarPage.evrakSayiGetir(evrakKayitTarihiSayi, evrakGidecegiYer, evrakKonu2, evrakHazirlayanBirim, evrakPostaTipi);
 
-        //String evrakSayi =
         topluPostalanacakEvraklarPage
                 .evrakSec(evrakKayitTarihiSayi, evrakGidecegiYer, evrakKonu, evrakHazirlayanBirim, evrakPostaTipi)
                 .evrakTikSec(evrakKayitTarihiSayi, evrakGidecegiYer, evrakKonu, evrakHazirlayanBirim, evrakPostaTipi, true)
