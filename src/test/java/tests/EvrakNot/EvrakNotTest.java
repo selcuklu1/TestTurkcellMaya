@@ -6,7 +6,6 @@ import data.User;
 import io.qameta.allure.Description;
 import io.qameta.allure.Step;
 import org.testng.annotations.Test;
-import pages.altMenuPages.EvrakDetayiPage;
 import pages.newPages.EvrakOlusturPage;
 import pages.newPages.KararYazisiOlusturPage;
 import pages.newPages.OlurYazisiOlusturPage;
@@ -253,17 +252,17 @@ public class EvrakNotTest extends BaseTest {
 
         UstYazi.EvrakNot ustYazi = new UstYazi().evrakNotlariTabiAc();
         UstYazi.EvrakNot n = ustYazi.notuBul(text(user1.getFullname()), text(user1.getGorev()), text(notTipi1), text(aciklama1), text(date1), text(time1));
-        n.getNoteGuncelleButton().shouldBe(visible);
-        n.getNoteSilButton().shouldBe(visible);
+        n.getNoteGuncelleButton("bulunmalı").shouldBe(visible);
+        n.getNoteSilButton("bulunmalı").shouldBe(visible);
         n = ustYazi.notuBul(text(user1.getFullname()), text(user1.getGorev()), text(notTipi2), text(aciklama2), text(date2), text(time2));
-        n.getNoteGuncelleButton().shouldBe(visible);
-        n.getNoteSilButton().shouldBe(visible);
+        n.getNoteGuncelleButton("bulunmalı").shouldBe(visible);
+        n.getNoteSilButton("bulunmalı").shouldBe(visible);
         n = ustYazi.notuBul(text(user1.getFullname()), text(user1.getGorev()), text(notTipi3), text(aciklama3), text(date3), text(time3));
-        n.getNoteGuncelleButton().shouldBe(visible);
-        n.getNoteSilButton().shouldBe(visible);
+        n.getNoteGuncelleButton("bulunmalı").shouldBe(visible);
+        n.getNoteSilButton("bulunmalı").shouldBe(visible);
         n = ustYazi.notuBul(text(user1.getFullname()), text(user1.getGorev()), text(notTipi4), text(aciklama4), text(date4), text(time4));
-        n.getNoteGuncelleButton().shouldBe(visible);
-        n.getNoteSilButton().shouldBe(visible);
+        n.getNoteGuncelleButton("bulunmalı").shouldBe(visible);
+        n.getNoteSilButton("bulunmalı").shouldBe(visible);
 
         searchTable.foundRow().icerikGosterTikla();
         EditorTab.EvrakNot evrakNot = new EditorTab().getEvrakNot();
@@ -289,77 +288,107 @@ public class EvrakNotTest extends BaseTest {
         taslakEvraklarPage.searchTable().findRows(text(konu)).getFoundRow().click();
         taslakEvraklarPage.evrakPageButtons().evrakParafla().islemMesaji().basariliOlmali();
 
-        SearchTable searchTable = new ParafladiklarimPage().openPage().searchTable();
-        searchTable.findRows(text(konu)).getFoundRow().click();
-        new EvrakOnizleme().getEvrakNotlari()
-                .notuKontrolEt(user1, notTipi4, aciklama4, date4, time4, kurumLogo)
-                .sonrakiNot()
-                .notuKontrolEt(user1, notTipi3, aciklama3, date3, time3, kurumLogo)
-                .sonrakiNot()
-                .notuKontrolEt(user1, notTipi2, aciklama2, date2, time2, kurumLogo)
-                .sonrakiNot()
-                .notuKontrolEt(user1, notTipi1, aciklama1, date1, time1, kurumLogo)
-                .evrakNotlariDialoguKapat();
+        parafladiklarimPage();
+        logout();
+        ////////////////////////////////////////////////////////////
 
-        UstYazi.EvrakNot ustYazi = new UstYazi().evrakNotlariTabiAc();
-        UstYazi.EvrakNot n = ustYazi.notuBul(text(user1.getFullname()), text(user1.getGorev()), text(notTipi1), text(aciklama1), text(date1), text(time1));
-        n.getNoteGuncelleButton().shouldBe(visible);
-        n.getNoteSilButton().shouldBe(visible);
-        n = ustYazi.notuBul(text(user1.getFullname()), text(user1.getGorev()), text(notTipi2), text(aciklama2), text(date2), text(time2));
-        n.getNoteGuncelleButton().shouldBe(visible);
-        n.getNoteSilButton().shouldBe(visible);
-        n = ustYazi.notuBul(text(user1.getFullname()), text(user1.getGorev()), text(notTipi3), text(aciklama3), text(date3), text(time3));
-        n.getNoteGuncelleButton().shouldBe(visible);
-        n.getNoteSilButton().shouldBe(visible);
-        n = ustYazi.notuBul(text(user1.getFullname()), text(user1.getGorev()), text(notTipi4), text(aciklama4), text(date4), text(time4));
-        n.getNoteGuncelleButton().shouldBe(visible);
-        n.getNoteSilButton().shouldBe(visible);
+        login(user2);
+        imzaBekleyenlerPage();
+        logout();
+
+        /////////////////////////////////////////////////
+
+        login(user1);
+        parafBekleyenlerPage();
+        logout();
+
+        /////////////////////////////////////////////////
+
+        login(user2);
+        imzaBekleyenlerPage2();
+    }
 
 
+    SearchTable searchTable;
+    UstYazi.EvrakNot ustYazi;
+    EditorTab.EvrakNot evrakNot;
+
+    //region Parafladiklarim
+    @Step("Evrak Detay")
+    private void parafladiklarimIcerikNotlari() {
         //10. Bilgisi bulunan Taslak evrakın "İçerik Göster" butonun basılır.	Editör tabının açık geldiği, 4 adet notun Post-it görünümde (Notu sil butonu, Notu hazırlayan (kişi adı,soyadı ve görev bilgisi), İşlem tarihi, İşlem saati, Not açıklaması) geldiği görülür.
         // Editör tabının gelmiyor. Evrak Not tabı var.
         searchTable.foundRow().icerikGosterTikla();
         ustYazi = new pages.newPages.EvrakDetayiPage().evrakNotlariTabiAc().evrakNotlari();
-        n = ustYazi.notuBul(text(user1.getFullname()), text(user1.getGorev()), text(notTipi1), text(aciklama1), text(date1), text(time1));
-        n.getNoteGuncelleButton().shouldBe(visible);
-        n.getNoteSilButton().shouldBe(visible);
-        n = ustYazi.notuBul(text(user1.getFullname()), text(user1.getGorev()), text(notTipi2), text(aciklama2), text(date2), text(time2));
-        n.getNoteGuncelleButton().shouldBe(visible);
-        n.getNoteSilButton().shouldBe(visible);
-        n = ustYazi.notuBul(text(user1.getFullname()), text(user1.getGorev()), text(notTipi3), text(aciklama3), text(date3), text(time3));
-        n.getNoteGuncelleButton().shouldBe(visible);
-        n.getNoteSilButton().shouldBe(visible);
-        n = ustYazi.notuBul(text(user1.getFullname()), text(user1.getGorev()), text(notTipi4), text(aciklama4), text(date4), text(time4));
-        n.getNoteGuncelleButton().shouldBe(visible);
-        n.getNoteSilButton().shouldBe(visible);
+        ustYazi.notuBul(text(user1.getFullname()), text(user1.getGorev()), text(notTipi1), text(aciklama1), text(date1), text(time1));
+        ustYazi.getNoteGuncelleButton("bulunmalı").shouldBe(visible);
+        ustYazi.getNoteSilButton("bulunmalı").shouldBe(visible);
+        //n.noteSilButton(visible);
+        ustYazi.notuBul(text(user1.getFullname()), text(user1.getGorev()), text(notTipi2), text(aciklama2), text(date2), text(time2));
+        ustYazi.getNoteGuncelleButton("bulunmalı").shouldBe(visible);
+        ustYazi.getNoteSilButton("bulunmalı").shouldBe(visible);
+        ustYazi.notuBul(text(user1.getFullname()), text(user1.getGorev()), text(notTipi3), text(aciklama3), text(date3), text(time3));
+        ustYazi.getNoteGuncelleButton("bulunmalı").shouldBe(visible);
+        ustYazi.getNoteSilButton("bulunmalı").shouldBe(visible);
+        ustYazi.notuBul(text(user1.getFullname()), text(user1.getGorev()), text(notTipi4), text(aciklama4), text(date4), text(time4));
+        ustYazi.getNoteGuncelleButton("bulunmalı").shouldBe(visible);
+        ustYazi.getNoteSilButton("bulunmalı").shouldBe(visible);
+        takeScreenshot();
         /*evrakNot = new EditorTab().getEvrakNot();
         evrakNot.notuBul(text(optiim.getFullname()), text(optiim.getGorev()), text(aciklama1), text(date1), text(time1)).postitStyle().getNoteSilButton().shouldBe(visible);
         evrakNot.notuBul(text(optiim.getFullname()), text(optiim.getGorev()), text(aciklama2), text(date2), text(time2)).postitStyle().getNoteSilButton().shouldBe(visible);
         evrakNot.notuBul(text(optiim.getFullname()), text(optiim.getGorev()), text(aciklama3), text(date3), text(time3)).postitStyle().getNoteSilButton().shouldBe(visible);
         evrakNot.notuBul(text(optiim.getFullname()), text(optiim.getGorev()), text(aciklama4), text(date4), text(time4)).postitStyle().getNoteSilButton().shouldBe(visible);*/
-        logout();
-        ////////////////////////////////////////////////////////////
-
-        login(user2);
-        ImzaBekleyenlerPage imzaBekleyenlerPage = new ImzaBekleyenlerPage().openPage();
-        searchTable = imzaBekleyenlerPage.searchTable();
-        searchTable.findRows(text(konu)).getFoundRow().click();
-
-        new EvrakOnizleme().new EvrakNotlari().evrakNotlariTabiAc()
+    }
+    @Step("Onzileme Notları Sekmesi")
+    private void parafladiklarimEvrakNotlariTab() {
+        ustYazi = new UstYazi().evrakNotlariTabiAc();
+        ustYazi.notuBul(text(user1.getFullname()), text(user1.getGorev()), text(notTipi1), text(aciklama1), text(date1), text(time1));
+        ustYazi.getNoteGuncelleButton("bulunmalı").shouldBe(visible);
+        ustYazi.getNoteSilButton("bulunmalı").shouldBe(visible);
+        ustYazi.notuBul(text(user1.getFullname()), text(user1.getGorev()), text(notTipi2), text(aciklama2), text(date2), text(time2));
+        ustYazi.getNoteGuncelleButton("bulunmalı").shouldBe(visible);
+        ustYazi.getNoteSilButton("bulunmalı").shouldBe(visible);
+        ustYazi.notuBul(text(user1.getFullname()), text(user1.getGorev()), text(notTipi3), text(aciklama3), text(date3), text(time3));
+        ustYazi.getNoteGuncelleButton("bulunmalı").shouldBe(visible);
+        ustYazi.getNoteSilButton("bulunmalı").shouldBe(visible);
+        ustYazi.notuBul(text(user1.getFullname()), text(user1.getGorev()), text(notTipi4), text(aciklama4), text(date4), text(time4));
+        ustYazi.getNoteGuncelleButton("bulunmalı").shouldBe(visible);
+        ustYazi.getNoteSilButton("bulunmalı").shouldBe(visible);
+        takeScreenshot();
+    }
+    @Step("Evrak Önizleme")
+    private void parafladiklarimOnizlemeNotlari() {
+        new EvrakOnizleme().getEvrakNotlari()
+                .notuKontrolEt(user1, notTipi4, aciklama4, date4, time4, kurumLogo)
+                .notSilButonEnabled()
+                .sonrakiNot()
                 .notuKontrolEt(user1, notTipi3, aciklama3, date3, time3, kurumLogo)
+                .notSilButonEnabled()
+                .sonrakiNot()
+                .notuKontrolEt(user1, notTipi2, aciklama2, date2, time2, kurumLogo)
+                .notSilButonEnabled()
                 .sonrakiNot()
                 .notuKontrolEt(user1, notTipi1, aciklama1, date1, time1, kurumLogo)
+                .notSilButonEnabled()
+                .sonrakiNotIsDisabled()
                 .evrakNotlariDialoguKapat();
+        takeScreenshot();
+    }
+    @Step("Parafladıklarım")
+    private void parafladiklarimPage() {
+        searchTable = new ParafladiklarimPage().openPage().searchTable();
+        searchTable.findRows(text(konu)).getFoundRow().click();
 
-        ustYazi = new UstYazi().evrakNotlariTabiAc();
-        ustYazi.getYeniNotEkleButton().shouldBe(visible);
-        n = ustYazi.notuBul(text(user1.getFullname()), text(user1.getGorev()), text(notTipi1), text(aciklama1), text(date1), text(time1));
-        guncelleButtonBulmamamli(n);
-        silButtonBulmamamli(n);
-        n = ustYazi.notuBul(text(user1.getFullname()), text(user1.getGorev()), text(notTipi3), text(aciklama3), text(date3), text(time3));
-        guncelleButtonBulmamamli(n);
-        silButtonBulmamamli(n);
+        parafladiklarimOnizlemeNotlari();
+        parafladiklarimEvrakNotlariTab();
+        parafladiklarimIcerikNotlari();
+    }
+    //endregion
 
+    //region imzaBekleyenler
+    @Step("Evrak Detay")
+    private void imzaBekleyenlerIcerikNotlari() {
         searchTable.foundRow().icerikGosterTikla();
         evrakNot = new EditorTab().getEvrakNot();
         evrakNot.notuBul(text(user1.getFullname()), text(user1.getGorev()), text(aciklama1), text(date1), text(time1)).postitStyle().getNoteSilButton().shouldNotBe(visible);
@@ -367,20 +396,84 @@ public class EvrakNotTest extends BaseTest {
         evrakNot.notOlustur(user2.getName(), notTipi5, aciklama5);
         date5 = getDateFromText(evrakNot.getNote().text());
         time5 = getTimeFromText(evrakNot.getNote().text());
+        takeScreenshot();
+    }
+    @Step("Onzileme Notları Sekmesi")
+    private void imzaBekleyenlerEvrakNotlariTab() {
+        ustYazi = new UstYazi().evrakNotlariTabiAc();
+        ustYazi.getYeniNotEkleButton().shouldBe(visible);
+        ustYazi.notuBul(text(user1.getFullname()), text(user1.getGorev()), text(notTipi1), text(aciklama1), text(date1), text(time1));
+        guncelleButtonBulmamamli(ustYazi);
+        silButtonBulmamamli(ustYazi);
+        ustYazi.notuBul(text(user1.getFullname()), text(user1.getGorev()), text(notTipi3), text(aciklama3), text(date3), text(time3));
+        guncelleButtonBulmamamli(ustYazi);
+        silButtonBulmamamli(ustYazi);
+        takeScreenshot();
+    }
+    @Step("Evrak Önizleme")
+    private void imzaBekleyenlerOnizlemeNotlari() {
+        new EvrakOnizleme().new EvrakNotlari()
+                .notuKontrolEt(user1, notTipi3, aciklama3, date3, time3, kurumLogo)
+                .sonrakiNot()
+                .notSilButonIsDisabled()
+                .notuKontrolEt(user1, notTipi1, aciklama1, date1, time1, kurumLogo)
+                .notSilButonIsDisabled()
+                .sonrakiNotIsDisabled()
+                .evrakNotlariDialoguKapat();
+        takeScreenshot();
+    }
+    @Step("İmza Bekleyenler")
+    private void imzaBekleyenlerPage() {
+        ImzaBekleyenlerPage imzaBekleyenlerPage = new ImzaBekleyenlerPage().openPage();
+        searchTable = imzaBekleyenlerPage.searchTable();
+        searchTable.findRows(text(konu)).getFoundRow().click();
+
+        imzaBekleyenlerOnizlemeNotlari();
+        imzaBekleyenlerEvrakNotlariTab();
+        imzaBekleyenlerIcerikNotlari();
 
         imzaBekleyenlerPage.evrakPageButtons().evrakKaydet().islemMesaji().basariliOlmali();
         imzaBekleyenlerPage.evrakPageButtons().evrakIadeEt("İade notu").islemMesaji().basariliOlmali();
-        logout();
+    }
+    //endregion
 
-        /////////////////////////////////////////////////
-
-        login(user1);
-        ParafBekleyenlerPage parafBekleyenlerPage = new ParafBekleyenlerPage().openPage();
-        searchTable = parafBekleyenlerPage.searchTable();
-        searchTable.findRows(text(konu)).getFoundRow().click();
+    // region parafBekleyenler
+    @Step("Evrak Detay")
+    private void parafBekleyenlerIcerikNotlari() {
+        ustYazi.notuBul(text(user1.getFullname()), text(user1.getGorev()), text(notTipi1), text(aciklama1), text(date1), text(time1))
+                .notuSil();
+        ustYazi.notuBul(text(user1.getFullname()), text(user1.getGorev()), text(notTipi3), text(aciklama3), text(date3), text(time3))
+                .notuGuncelle(aciklama3 + " guncellenen");
+        aciklama3 = aciklama3 + " guncellenen";
+        ustYazi.notuBul(text(user1.getFullname()), text(user1.getGorev()), text(notTipi3), text(aciklama3), text(date3), text(time3));
+        takeScreenshot();
+    }
+    @Step("Onzileme Notları Sekmesi")
+    private void parafBekleyenlerEvrakNotlariTab() {
+        ustYazi = new UstYazi().evrakNotlariTabiAc();
+        ustYazi.getYeniNotEkleButton().shouldBe(visible);
+        ustYazi.notuBul(text(user1.getFullname()), text(user1.getGorev()), text(notTipi1), text(aciklama1), text(date1), text(time1));
+        ustYazi.getNoteGuncelleButton("bulunmalı").shouldBe(visible);
+        ustYazi.getNoteSilButton("bulunmalı").shouldBe(visible);
+        /*n = ustYazi.notuBul(text(user1.getFullname()), text(user1.getGorev()), text(notTipi2), text(aciklama2), text(date2), text(time2));
+        n.getNoteGuncelleButton().shouldBe(visible);
+        n.getNoteSilButton().shouldBe(visible);*/
+        ustYazi.notuBul(text(user1.getFullname()), text(user1.getGorev()), text(notTipi3), text(aciklama3), text(date3), text(time3));
+        ustYazi.getNoteGuncelleButton("bulunmalı").shouldBe(visible);
+        ustYazi.getNoteSilButton("bulunmalı").shouldBe(visible);
+        /*n = ustYazi.notuBul(text(user1.getFullname()), text(user1.getGorev()), text(notTipi4), text(aciklama4), text(date4), text(time4));
+        n.getNoteGuncelleButton().shouldBe(visible);
+        n.getNoteSilButton().shouldBe(visible);*/
+        ustYazi.notuBul(text(user2.getFullname()), text(user2.getGorev()), text(notTipi5), text(aciklama5), text(date5), text(time5));
+        guncelleButtonBulmamamli(ustYazi);
+        silButtonBulmamamli(ustYazi);
+        takeScreenshot();
+    }
+    @Step("Evrak Önizleme")
+    private void parafBekleyenlerOnizlemeNotlari() {
         new EvrakOnizleme().new EvrakNotlari()
                 .notuKontrolEt(user2, notTipi5, aciklama5, date5, time5, kurumLogo)
-                .notSilButonDisabled()
+                .notSilButonIsDisabled()
                 .sonrakiNot()
                 /*.notuKontrolEt(user1, notTipi4, aciklama4, date4, time4, kurumLogo)
                 .notSilButonEnabled()
@@ -393,48 +486,47 @@ public class EvrakNotTest extends BaseTest {
                 .sonrakiNot()*/
                 .notuKontrolEt(user1, notTipi1, aciklama1, date1, time1, kurumLogo)
                 .notSilButonEnabled()
+                .sonrakiNotIsDisabled()
                 .evrakNotlariDialoguKapat();
-
-        ustYazi = new UstYazi().evrakNotlariTabiAc();
-        ustYazi.getYeniNotEkleButton().shouldBe(visible);
-        n = ustYazi.notuBul(text(user1.getFullname()), text(user1.getGorev()), text(notTipi1), text(aciklama1), text(date1), text(time1));
-        n.getNoteGuncelleButton().shouldBe(visible);
-        n.getNoteSilButton().shouldBe(visible);
-        /*n = ustYazi.notuBul(text(user1.getFullname()), text(user1.getGorev()), text(notTipi2), text(aciklama2), text(date2), text(time2));
-        n.getNoteGuncelleButton().shouldBe(visible);
-        n.getNoteSilButton().shouldBe(visible);*/
-        n = ustYazi.notuBul(text(user1.getFullname()), text(user1.getGorev()), text(notTipi3), text(aciklama3), text(date3), text(time3));
-        n.getNoteGuncelleButton().shouldBe(visible);
-        n.getNoteSilButton().shouldBe(visible);
-        /*n = ustYazi.notuBul(text(user1.getFullname()), text(user1.getGorev()), text(notTipi4), text(aciklama4), text(date4), text(time4));
-        n.getNoteGuncelleButton().shouldBe(visible);
-        n.getNoteSilButton().shouldBe(visible);*/
-        n = ustYazi.notuBul(text(user2.getFullname()), text(user2.getGorev()), text(notTipi5), text(aciklama5), text(date5), text(time5));
-        guncelleButtonBulmamamli(n);
-        silButtonBulmamamli(n);
-
-        ustYazi.notuBul(text(user1.getFullname()), text(user1.getGorev()), text(notTipi1), text(aciklama1), text(date1), text(time1))
-                .notuSil();
-        ustYazi.notuBul(text(user1.getFullname()), text(user1.getGorev()), text(notTipi3), text(aciklama3), text(date3), text(time3))
-                .notuGuncelle(aciklama3 + " guncellenen");
-        aciklama3 = aciklama3 + " guncellenen";
-        ustYazi.notuBul(text(user1.getFullname()), text(user1.getGorev()), text(notTipi3), text(aciklama3), text(date3), text(time3));
-        parafBekleyenlerPage.evrakPageButtons().evrakParafla().islemMesaji().basariliOlmali();
-        logout();
-
-        /////////////////////////////////////////////////
-
-        login(user2);
-        searchTable = imzaBekleyenlerPage.openPage().searchTable();
+        takeScreenshot();
+    }
+    @Step("Paraf Bekleyenler")
+    private void parafBekleyenlerPage() {
+        ParafBekleyenlerPage parafBekleyenlerPage = new ParafBekleyenlerPage().openPage();
+        searchTable = parafBekleyenlerPage.searchTable();
         searchTable.findRows(text(konu)).getFoundRow().click();
 
+        parafBekleyenlerOnizlemeNotlari();
+        parafBekleyenlerEvrakNotlariTab();
+        parafBekleyenlerIcerikNotlari();
+
+        parafBekleyenlerPage.evrakPageButtons().evrakParafla().islemMesaji().basariliOlmali();
+    }
+    //endregion
+
+    //region imzaBekleyenler2
+    @Step("Evrak Önizleme")
+    private void imzaBekleyenlerOnizlemeNotlari2() {
         new EvrakOnizleme().new EvrakNotlari()
                 .notuKontrolEt(user2, notTipi5, aciklama5, date5, time5, kurumLogo)
                 .sonrakiNot()
                 .notuKontrolEt(user1, notTipi3, aciklama3, date3, time3, kurumLogo)
+                .sonrakiNotIsDisabled()
                 .evrakNotlariDialoguKapat();
+        takeScreenshot();
+    }
+    @Step("İmza Bekleyenler")
+    private void imzaBekleyenlerPage2() {
+        ImzaBekleyenlerPage imzaBekleyenlerPage = new ImzaBekleyenlerPage().openPage();
+        searchTable = imzaBekleyenlerPage.openPage().searchTable();
+        searchTable.findRows(text(konu)).getFoundRow().click();
+
+        imzaBekleyenlerOnizlemeNotlari2();
+
         imzaBekleyenlerPage.evrakPageButtons().evrakImzala().islemMesaji().basariliOlmali();
     }
+    //endregion
+
 
     @Description("TS2162: Not İzleme - Evrak Notunun Postalanacak Evraklar ve Postananlar ekranlarında izlenmesi")
     @Test(enabled = true, dependsOnMethods = {"TS2160"}, description = "TS2162: Not İzleme - Evrak Notunun Postalanacak Evraklar ve Postananlar ekranlarında izlenmesi")
@@ -529,13 +621,13 @@ public class EvrakNotTest extends BaseTest {
 
     @Step("Güncelle butonu bulunmadığı görülür")
     EvrakNotTest guncelleButtonBulmamamli(UstYazi.EvrakNot not) {
-        not.getNoteGuncelleButton().shouldNotBe(visible);
+        not.getNoteGuncelleButton("bulunmadığı görülür").shouldNotBe(visible);
         return this;
     }
 
-    @Step("Güncelle butonu bulunmadığı görülür")
+    @Step("Silme butonu bulunmadığı görülür")
     EvrakNotTest silButtonBulmamamli(UstYazi.EvrakNot not) {
-        not.getNoteSilButton().shouldNotBe(visible);
+        not.getNoteSilButton("bulunmadığı görülür").shouldNotBe(visible);
         return this;
     }
 }
