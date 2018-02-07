@@ -61,7 +61,7 @@ public class EvrakPostalamaTest extends BaseTest {
                 .evrakTuruSec("Resmi Yazışma")
                 .gizlilikDerecesiSec("Normal")
                 .ivedilikSec("Normal")
-//                .kaldirilacakKlasorler("Diğer")
+                  .kaldirilacakKlasorler("Diğer")
 //                .kaldirilacakKlasorler("B1K1")
                 .bilgialaniKontrol()
                 .gizlilikDerecesiSec("Normal")
@@ -126,6 +126,7 @@ public class EvrakPostalamaTest extends BaseTest {
                 .postalanacakEvrakYaz()
                 .popupPostalanacakEvrakYazdir()
                 .popupPostaYazdirmaKapat();
+
         switchTo().window(1);
         closeNewWindow();
 
@@ -133,14 +134,13 @@ public class EvrakPostalamaTest extends BaseTest {
         postalanacakEvraklarPage
                 .postalanacakEvrakOrjYaz()
                 .pdfEvrakYazismaKuralkontrol()
+                .popupEvrOrjYazKapat()
                 .gramajDoldur("111111")
                 .hesapla()
                 .postala()
                 .dialogpostalaEvet();
 
-        switchTo().window(1);
-        closeNewWindow();
-        switchTo().window(0);
+
 
         postalananlarPage.openPage();
         postalananlarPage.filter().findRowsWith(Condition.text(konu)).shouldHaveSize(1).first().click();
@@ -526,7 +526,12 @@ public class EvrakPostalamaTest extends BaseTest {
                 .etiketYazdir()
                 .etiketYazdirPopupKapat()
                 .postalanacakEvrakYaz()
-                .popupPostalanacakEvrakYazdir()
+                .popupPostalanacakEvrakYazdir();
+        switchTo().window(1);
+        closeNewWindow();
+
+        switchTo().window(0);
+        postalanacakEvraklarPage
                 .popupPostaYazdirmaKapat()
                 .postala()
                 .dialogpostalaEvet();
@@ -546,7 +551,12 @@ public class EvrakPostalamaTest extends BaseTest {
                 .btnFiltrenenPostaIcerikGoster(konu)
                 .postaDetayiTikla()
                 .evrakYazdir()
-                .popupYazpdfkontrolveKapatma()
+                .popupYazpdfkontrolveKapatma();
+        switchTo().window(1);
+        closeNewWindow();
+
+        switchTo().window(0);
+        postalananlarPage
                 .etiketBastir();
     }
 

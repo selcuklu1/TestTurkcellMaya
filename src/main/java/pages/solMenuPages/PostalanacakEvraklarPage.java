@@ -395,14 +395,23 @@ public class PostalanacakEvraklarPage extends MainPage {
         postalanacakEvrakOrijinalYazdir.click();
         btnPopupOrjYazdir.click();
         Thread.sleep(2000);
-        Selenide.switchTo();
 
-        popupPostaYazdirmaKapat();
         return this;
     }
     @Step("PDF - Evrak sayısı - Yazışma Kuralları kontrol")
     public PostalanacakEvraklarPage pdfEvrakYazismaKuralkontrol() {
-        postalanacakEvrakOrijinalYazdir.getSelectedText();
+        switchTo().window(1);
+        SelenideElement pdftab = $x("//*[@id='plugin']");
+        String ktrl = pdftab.getValue();
+        System.out.println(ktrl);
+        return this;
+    }
+    @Step("Postalanacak Evrak Orjinal Yazdırma popup Kapatma")
+    public PostalanacakEvraklarPage popupEvrOrjYazKapat() throws InterruptedException {
+
+        closeNewWindow();
+        switchTo().window(0);
+        popupPostaYazdirmaKapat();
         return this;
     }
 
@@ -428,12 +437,16 @@ public class PostalanacakEvraklarPage extends MainPage {
 
         return this;
     }
+    @Step("Postalanacan Evrak orjinal popup Kapatma")
+    public PostalanacakEvraklarPage popupOrjYazPostaKapatma () {
+        SelenideElement btnkp = $x("//*[@id='postaDetayYazdirForm:dlgPostaDetayYazdir']/div[1]/a/span");
+        return this;
+    }
 
     @Step("Popup postalanacak Evrak Yazdır")
     public PostalanacakEvraklarPage popupPostalanacakEvrakYazdir() throws InterruptedException {
         btnPopupYazdir.click();
         Thread.sleep(2000);
-        Selenide.switchTo();
 
         return this;
     }
