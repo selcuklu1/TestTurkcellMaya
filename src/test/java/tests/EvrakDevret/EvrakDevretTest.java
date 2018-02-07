@@ -87,21 +87,21 @@ public class EvrakDevretTest extends BaseTest {
                 .aciklamaDoldur(icerik)
                 .devretTamam()
                 .islemMesaji().basariliOlmali(basariMesaji);
-//        kullaniciEvrakDevretPage
-//                .tabloEvrakKontrolu(konu, false);
-//
-//        login(username22n);
-//
-//        taslakEvraklarPage
-//                .openPage()
-//                .evrakKontrolu(konu,true)
-//                .evrakSecKonuyaGore(konu)
-//                .evrakOnizlemeveEkiKontrolu(icerik)
-//                .evrakOnizlemeButonTikla("Sil")
-//                .silAciklamaInputDolduur("Silme işlemi")
-//                .silSilGonder()
-//                .silmeOnayıPopUpEvet()
-//                .evrakKontrolu(konu,false);
+        kullaniciEvrakDevretPage
+                .tabloEvrakKontrolu(konu, false);
+
+        login(username22n);
+
+        taslakEvraklarPage
+                .openPage()
+                .evrakKontrolu(konu,true)
+                .evrakSecKonuyaGore(konu)
+                .evrakOnizlemeveEkiKontrolu(icerik)
+                .evrakOnizlemeButonTikla("Sil")
+                .silAciklamaInputDolduur("Silme işlemi")
+                .silSilGonder()
+                .silmeOnayıPopUpEvet()
+                .evrakKontrolu(konu,false);
 
         //gelen kutusu kontrolü ?
     }
