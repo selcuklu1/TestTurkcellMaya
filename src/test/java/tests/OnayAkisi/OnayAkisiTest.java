@@ -245,7 +245,7 @@ public class OnayAkisiTest extends BaseTest {
                 .otomatikOnayAkisiKullaniciKontrol(parafciKullanici1, "PARAFLAMA", "Parafçı Kullanıcı1")
                 .otomatikOnayAkisiKullaniciKontrol(parafciKullanici2, "PARAFLAMA", "Parafçı Kullanıcı2")
                 .otomatikOnayAkisiKullaniciKontrol(imzaciKullanici, "IMZALAMA", "İmzaci Kullanıcı")
-//TODO: imzacida hata verior
+
                 .otomatikOnayAkisiKullaniciyaGoreCheckBoxKontrolu(asilKullanici, "Asil Kullanıcı")
                 .otomatikOnayAkisiKullaniciyaGoreCheckBoxKontrolu(parafciKullanici1, "Parafçı Kullanıcı1")
                 .otomatikOnayAkisiKullaniciyaGoreCheckBoxKontrolu(parafciKullanici2, "Parafçı Kullanıcı2")
@@ -263,16 +263,16 @@ public class OnayAkisiTest extends BaseTest {
                 .onayAkisiKullaniciKontrol(vekilKullanici, "PARAFLAMA")
                 .onayAkisiKullaniciKontrol(imzaciKullanici, "IMZALAMA")
 
-                .kaldiralacakKlasorlerSec(kaldirilacakKlasorler)
+                //.kaldiralacakKlasorlerSec(kaldirilacakKlasorler)
                 .konuKoduDoldur("040");
 
         evrakOlusturPage
                 .kaydetOnayaSun()
 
                 .kullaniciIslemVe1SiraKontrolu(vekilKullanici, "Paraflama")
-                .kullaniciIslemVe2SiraKontrolu(parafciKullanici1, "Parafçı Kullanıcı1")
-                .kullaniciIslemVe2SiraKontrolu(parafciKullanici2, "Parafçı Kullanıcı2")
-                .kullaniciIslemVe2SiraKontrolu(imzaciKullanici, "İmzaci Kullanıcı");
+                .kullaniciIslemVe2SiraKontrolu(parafciKullanici1, "Paraflama")
+                .kullaniciIslemVe3SiraKontrolu(parafciKullanici2, "Paraflama")
+                .kullaniciIslemVe4SiraKontrolu(imzaciKullanici, "İmzalama");
     }
 
     @Severity(SeverityLevel.CRITICAL)
