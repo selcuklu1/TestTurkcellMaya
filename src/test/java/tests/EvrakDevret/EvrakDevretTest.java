@@ -10,6 +10,7 @@ import org.testng.annotations.Test;
 import pages.altMenuPages.EvrakDetayiPage;
 import pages.solMenuPages.GelenEvraklarPage;
 import pages.solMenuPages.ImzaBekleyenlerPage;
+import pages.solMenuPages.TaslakEvraklarPage;
 import pages.ustMenuPages.EvrakOlusturPage;
 import pages.ustMenuPages.KullaniciEvrakDevretPage;
 
@@ -28,6 +29,7 @@ public class EvrakDevretTest extends BaseTest {
     ImzaBekleyenlerPage imzaBekleyenlerPage;
     GelenEvraklarPage gelenEvraklarPage;
     EvrakDetayiPage evrakDetayiPage;
+    TaslakEvraklarPage taslakEvraklarPage;
 
     User mbozdemir = new User("mbozdemir", "123");
     User username22n = new User("username22n", "123");
@@ -53,6 +55,7 @@ public class EvrakDevretTest extends BaseTest {
         evrakOlusturPage = new EvrakOlusturPage();
         gelenEvraklarPage = new GelenEvraklarPage();
         evrakDetayiPage = new EvrakDetayiPage();
+        taslakEvraklarPage = new TaslakEvraklarPage();
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -79,12 +82,19 @@ public class EvrakDevretTest extends BaseTest {
                 .tabloEvrakKontrolu(konu, false);
 
         login(username22n);
-        imzaBekleyenlerPage
+
+        taslakEvraklarPage
                 .openPage()
-                .evrakKonusunaGoreKontrol(konu);
+                .evrakKontrolu(konu,true)
+                .evrakSecKonuyaGore(konu)
+                .evrakOnizlemeveEkiKontrolu(icerik)
+                .evrakOnizlemeButonTikla("Sil")
+                .silAciklamaInputDolduur("Silme işlemi")
+                .silSilGonder()
+                .silmeOnayıPopUpEvet()
+                .evrakKontrolu(konu,false);
 
-        //9. adım ve sonrası yazılacak
-
+        //gelen kutusu kontrolü ?
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -93,14 +103,21 @@ public class EvrakDevretTest extends BaseTest {
             , description = "TS2179 : Devredilen evrakların devralan kullanıcıda hareket/evrak geçmişinin kontrolü")
     public void TS2179() throws InterruptedException {
         login(username22n);
-        gelenEvraklarPage
+        taslakEvraklarPage
                 .openPage()
                 .konuyaGoreEvrakIcerikGoster(konu);
         evrakDetayiPage
                 .sayfaAcilmali();
 
+
+        //1. adımda gelen evraklara evrak düşmedi...
     }
 
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS0574 : Devredilen evrakların devredilen kullanıcıda kontrol edilmesi")
+    public void TS0574() throws InterruptedException{
+
+    }
     @Step("Test datası oluşturuldu.")
     private void evrakOlustur() {
         String imzacı = "username21g";

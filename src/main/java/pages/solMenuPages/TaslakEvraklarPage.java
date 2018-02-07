@@ -5,6 +5,7 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
@@ -27,8 +28,9 @@ public class TaslakEvraklarPage extends MainPage {
 
     //Sil Button alt div
     SelenideElement btnSil = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:2:cmdbutton"));
-    SelenideElement txtSilAciklama = $(By.id("mainPreviewForm:j_idt14773"));
-    SelenideElement btnSilSil = $(By.id("mainPreviewForm:j_idt14775"));
+    SelenideElement txtSilAciklama = $("[id='mainPreviewForm:evrakSilPanelGrid'] td:nth-child(3) textarea");
+    SelenideElement btnSilSil = $(By.xpath("//span[text()='Sil']/../../button"));
+    SelenideElement btnPopSilEvet = $(By.id("mainPreviewForm:evrakSilEvetButton"));
 
     SelenideElement btnEvrakKopyala = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:3:cmdbutton"));
 
@@ -120,11 +122,26 @@ public class TaslakEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Sil butonuna basılır.")
     public TaslakEvraklarPage silSilGonder() {
         btnSilSil.click();
         return this;
     }
 
+    @Step("Sil Onayı popupı kapatılır")
+    public TaslakEvraklarPage silmeOnayıPopUpEvet() {
+        btnPopSilEvet.click();
+        return this;
+    }
+
+    @Step("Evrak Önizleme \"{btnText}\" buton tıklanır.")
+    public TaslakEvraklarPage evrakOnizlemeButonTikla(String btnText) {
+        SelenideElement btnEvrakOnizleme = $(By.xpath("//span[text()='" + btnText + "']/../../..//button"));
+        btnEvrakOnizleme.click();
+        return this;
+    }
+
+    @Step("Not alanı doldurulur. \"{text}\" ")
     public TaslakEvraklarPage silAciklamaInputDolduur(String text) {
         txtSilAciklama.setValue(text);
         return this;
@@ -197,6 +214,13 @@ public class TaslakEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Evrak Önizleme Ekranı ve evrak eki açıldığı görülür.")
+    public TaslakEvraklarPage evrakOnizlemeveEkiKontrolu(String icerik) {
+        Assert.assertEquals($(By.xpath("//div[text()='Evrak Önizleme']")).isDisplayed(), true);
+//        Assert.assertEquals($(By.xpath("//div[text()='" + icerik + "']")).isDisplayed(), true);
+        return this;
+    }
+
     @Step("Paylaş tabına tıkla")
     public TaslakEvraklarPage paylasTabTikla() {
         btnPaylasTab.click();
@@ -209,11 +233,36 @@ public class TaslakEvraklarPage extends MainPage {
         return this;
     }
 
-    @Step("Evrak kontrolu")
+    @Step("Evrak kontrolu : \"{konu}\" ")
     public TaslakEvraklarPage evrakKontrolu(String konu) {
 
         tableEvraklar
                 .filterBy(Condition.text("Konu: " + konu)).shouldHaveSize(1);
+        return this;
+    }
+
+    @Step("Evrak kontrolu : \"{konu}\" , \"{shouldBeExist}\" ")
+    public TaslakEvraklarPage evrakKontrolu(String konu,boolean shouldBeExist) {
+        if(shouldBeExist) {
+            tableEvraklar
+                    .filterBy(Condition.text("Konu: " + konu)).shouldHaveSize(1);
+        }
+        else {
+            tableEvraklar
+                    .filterBy(Condition.text("Konu: " + konu)).shouldHaveSize(0);
+        }
+        return this;
+    }
+
+    @Step("Gelen Evraklar sayfasında evrakın geldiği kontrolu ve seçme")
+    public TaslakEvraklarPage konuyaGoreEvrakIcerikGoster(String konu) {
+
+        tableEvraklar
+                .filterBy(text("Konu: " + konu))
+                .first()
+                .$("[id^='mainInboxForm:inboxDataTable'] [id$='detayGosterButton']").click();
+
+        $(By.id("mainPreviewForm:eastLayout")).waitUntil(Condition.visible, 5000);
         return this;
     }
 
