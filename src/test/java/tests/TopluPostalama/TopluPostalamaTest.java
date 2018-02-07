@@ -1032,15 +1032,18 @@ public class TopluPostalamaTest extends BaseTest {
         login("mbozdemir", "123");
         */
         String uyariMesaji = "Zorunlu alanları doldurunuz";
-        String postaTarihi = "12.01.2018";
         pttRaporuPage
                 .openPage()
+                .aramaDetaylariPanelAc()
+                .postaTarihiDefaultDegerKontrol()
+                .postaTipiSec("Adi Posta")
+                .ulkeDoldur("TÜRKİYE")
+                .ilDoldur("İstanbul")
                 .dagiticiDoldur("")
                 .duzenleyenDoldur("a")
                 .avansSorumlusuDoldur("a")
                 .kontrolEdenDoldur("a")
                 .pttMerkezDoldur("a")
-                .aramaDetaylariPanelAc()
                 .sorgula()
                 .islemMesaji().uyariOlmali(uyariMesaji);
 
@@ -1050,7 +1053,6 @@ public class TopluPostalamaTest extends BaseTest {
                 .avansSorumlusuDoldur("a")
                 .kontrolEdenDoldur("a")
                 .pttMerkezDoldur("a")
-                .aramaDetaylariPanelAc()
                 .postaTarihiDoldur("13.01.2018")
                 .sorgula()
                 .islemMesaji().uyariOlmali(uyariMesaji);
@@ -1061,7 +1063,6 @@ public class TopluPostalamaTest extends BaseTest {
                 .avansSorumlusuDoldur("")
                 .kontrolEdenDoldur("a")
                 .pttMerkezDoldur("a")
-                .aramaDetaylariPanelAc()
                 .postaTarihiDoldur("13.01.2018")
                 .sorgula()
                 .islemMesaji().uyariOlmali(uyariMesaji);
@@ -1072,7 +1073,6 @@ public class TopluPostalamaTest extends BaseTest {
                 .avansSorumlusuDoldur("a")
                 .kontrolEdenDoldur("")
                 .pttMerkezDoldur("a")
-                .aramaDetaylariPanelAc()
                 .postaTarihiDoldur("13.01.2018")
                 .sorgula()
                 .islemMesaji().uyariOlmali(uyariMesaji);
@@ -1083,15 +1083,9 @@ public class TopluPostalamaTest extends BaseTest {
                 .avansSorumlusuDoldur("a")
                 .kontrolEdenDoldur("a")
                 .pttMerkezDoldur("")
-                .aramaDetaylariPanelAc()
                 .postaTarihiDoldur("13.01.2018")
                 .sorgula()
                 .islemMesaji().uyariOlmali(uyariMesaji);
-
-
-        pttRaporuPage
-                .postaTarihiDefaultDegerKontrol()
-                .aramaDetaylariPanelAc();
     }
 
     // EXCELL KONTROLÜ YAPILACAK
