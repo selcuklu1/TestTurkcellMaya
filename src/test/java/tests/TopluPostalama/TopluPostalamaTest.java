@@ -2108,6 +2108,8 @@ public class TopluPostalamaTest extends BaseTest {
         topluPostaladiklarimPage
                 .openPage()
                 .topluPostaladiklarimEvrakKontrolu(konu[0]);
+
+        Selenide.close();
         //.searchTable().searchInAllPages(true).findRows(text(konu[0])).getFoundRow().shouldBe(exist);
     }
 
@@ -2307,6 +2309,8 @@ public class TopluPostalamaTest extends BaseTest {
         topluPostaladiklarimPage
                 .openPage()
                 .topluPostaladiklarimEvrakKontrolu(konu[0]);
+
+        Selenide.close();
 //                .searchTable().searchInAllPages(true).findRows(text(konu[0])).getFoundRow().shouldBe(exist);
     }
 
@@ -2494,7 +2498,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .tabloKontrolEt(geregi, evrakNo1816[0], gidisSekli, true)
                 .tabloKontrolEt(geregi, evrakNo1816[1], gidisSekli, true);
 //                .raporAl(); //rapor kontrolü yapılacak
-
+        Selenide.close();
     }
 
 }
