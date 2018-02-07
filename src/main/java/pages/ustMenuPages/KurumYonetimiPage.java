@@ -1,6 +1,7 @@
 package pages.ustMenuPages;
 
 import com.codeborne.selenide.*;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -82,6 +83,9 @@ public class KurumYonetimiPage extends MainPage {
     By selectorBtnChangeStatu = By.cssSelector("button[id$='changeKurumStatusButton']");
     SelenideElement btnPasifYapEvet = $(By.id("baseConfirmationDialog:confirmButton"));
     SelenideElement btnKepAdresiBilgisiEkle = $(By.id("kurumYonetimiEditorForm:kepBilgileriDataTable:addNewKepAdresiButton"));
+    SelenideElement txtKisaAdi = $(By.id("kurumYonetimiEditorForm:kurumKisaAdInput"));
+    SelenideElement chkTsk = $(By.id("kurumYonetimiEditorForm:tskCheckbox"));
+    SelenideElement divKepAdresiBilgileri = $(By.id("kurumYonetimiEditorForm:kepBilgileriDataTable"));
 
     @Step("Kurum Yönetimi sayfası aç")
     public KurumYonetimiPage openPage() {
@@ -181,7 +185,7 @@ public class KurumYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Kurum adı doldur")
+    @Step("Kurum adı doldur: {text}")
     public KurumYonetimiPage kurumAdiDoldur(String text) {
         txtKurumAdi.setValue(text);
         return this;
@@ -619,7 +623,7 @@ public class KurumYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("{0} kurumu pasif edildi.")
+    @Step("{kurumAdi} kurumu pasif edildi.")
     public KurumYonetimiPage kurumAktifYap(String kurumAdi) {
 
         ElementsCollection pages = $$("td[id='kurumYonetimiListingForm:pasifKurumlarDataTable_paginator_bottom'] > span[class='ui-paginator-pages'] >  span");
@@ -645,6 +649,31 @@ public class KurumYonetimiPage extends MainPage {
     @Step("Kep Adresi Bilgisi Ekle butonuna tıkla.")
     public KurumYonetimiPage kepAdresiBilgisiEkle() {
         btnKepAdresiBilgisiEkle.click();
+        return this;
+    }
+
+    @Step("Alan kontrolleri yapıldı.")
+    public KurumYonetimiPage alanKontrolu() {
+
+        chkKepAdresiKullaniyor.shouldBe(Condition.visible);
+        txtKisaAdi.shouldBe(Condition.visible);
+        chkPaketKullanim.shouldBe(Condition.visible);
+        chkKepAdresiKullaniyor.shouldBe(Condition.visible);
+        chkTsk.shouldBe(Condition.visible);
+
+        Allure.addAttachment("Kurum Ekleme ekranında kontrol.", "Kep Adresi Kullanıyor \n" +
+                "Kısa Adı\n" +
+                "Paket Kullanım\n" +
+                "Kep Adresi Kullanıyor\n" +
+                "TSK\n" +
+                "Tutar alanlarının geldiği görülür.");
+
+        return this;
+    }
+
+    @Step("Kısa Adı alanını doldur: {kisaAd}")
+    public KurumYonetimiPage kisaAdiDoldur(String kisaAd){
+        txtKisaAdi.setValue(kisaAd);
         return this;
     }
 

@@ -377,7 +377,19 @@ public class GelenEvraklarPage extends MainPage {
 
     @Step("Tebliğ Et ekranında kullanıcı listesi alanını doldur: {kullaniciListesi}")
     public GelenEvraklarPage tebligEtKullaniciListesiDoldur(String kullaniciListesi) {
-        txtTebligEtKullaniciListesi.selectLov(kullaniciListesi);
+
+        txtTebligEtKullaniciListesi
+                .waitUntil(visible, 10000);
+
+        txtTebligEtKullaniciListesi
+                .type(kullaniciListesi)
+                .getTitleItems()
+                .filterBy(text(kullaniciListesi))
+                .first()
+                .click();
+
+        txtTebligEtKullaniciListesi
+                .closeTreePanel();
         return this;
     }
 
@@ -389,7 +401,24 @@ public class GelenEvraklarPage extends MainPage {
 
     @Step("Tebliğ Et kişi alanında kişi seç: {kisi}")
     public GelenEvraklarPage tebligEtKisiInputDoldur(String kisi) {
-        txtTebligEtKisi.selectLov(kisi);
+        txtTebligEtKisi
+                .waitUntil(visible, 10000);
+
+        txtTebligEtKisi
+                .type(kisi)
+                .getTitleItems()
+                .filter(text(kisi))
+                .first()
+                .click();
+
+        txtTebligEtKisi
+                .closeTreePanel();
+        return this;
+    }
+
+    @Step("Tebliğ Et kişi alanını temizle.")
+    public GelenEvraklarPage tebligEtKisiTemizle(){
+        txtTebligEtKisi.clearAllSelectedItems();
         return this;
     }
 

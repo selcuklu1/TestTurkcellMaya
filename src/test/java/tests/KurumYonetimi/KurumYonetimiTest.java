@@ -182,8 +182,9 @@ public class KurumYonetimiTest extends BaseTest {
 
         String yeniKurumAdi = "Yenikurum" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
         String idariBirimKimlikKodu = (new Random().nextInt((900000 - 100000) + 1) + 100000) + "";
+        String yeniKurumKisaAdi = "KISA"+ yeniKurumAdi;
         String ustKurum = "Maliye Bakanlığı";
-        String hitap = "yeniHitap";
+        String hitap = "Hitap" + yeniKurumAdi;
 
         String kontrolEdilecekGeregiDetay = "";
 
@@ -199,7 +200,9 @@ public class KurumYonetimiTest extends BaseTest {
         kurumYonetimiPage
                 .openPage()
                 .yeniKurumEkle()
+                .alanKontrolu()
                 .ozelHitapSec(true)
+                .kisaAdiDoldur(yeniKurumKisaAdi)
                 .hitapDoldur(hitap)
                 .kurumAdiDoldur(yeniKurumAdi)
                 .idariBirimKimlikKoduDoldur(idariBirimKimlikKodu)
@@ -237,8 +240,13 @@ public class KurumYonetimiTest extends BaseTest {
                 .bilgilerTabiAc()
                 .geregiSecimTipiSec("Kurum")
                 .geregiSec(yeniKurumAdi)
-                .geregiSecilenKontrol(yeniKurumAdi, kontrolEdilecekGeregiDetay, "Adi Posta");
+                .geregiSecilenKontrol(yeniKurumAdi, kontrolEdilecekGeregiDetay, "Adi Posta")
+                .geregiTemizle()
+                .geregiAlanindaKurumKisaAdSec(yeniKurumKisaAdi, yeniKurumAdi);
 
+        evrakOlusturPage
+                .editorTabAc()
+                .hitapKontrol(hitap);
 
     }
 
