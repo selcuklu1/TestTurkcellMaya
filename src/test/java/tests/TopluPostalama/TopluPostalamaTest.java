@@ -1496,10 +1496,13 @@ public class TopluPostalamaTest extends BaseTest {
                 .onayAkisiEkle()
                 .onayAkisiKullaniciTipiSec("Mehmet BOZDEMİR [Antalya İl Müdürü]", "İmzalama")
                 .kullan();
-        EvrakOlusturPage.EditorTab editorTab1 = evrakOlusturPage.editorTabAc();
-        editorTab1.getEditor().type("TS2073");
-        editorTab1.imzala()
-                .popupSImzalaIslemleri();
+        evrakOlusturPage
+                .editorTabAc()
+                .editorIcerikDoldur("TS2087 için evrak.")
+                .imzala()
+                .sImzasec()
+                .sImzaImzala()
+                .popupSimzaEvet();
         String evrakKonu2 = "TS2087-" + getRandomNumber(1000, 9000);
         evrakOlusturPage
                 .openPage()
@@ -1511,12 +1514,15 @@ public class TopluPostalamaTest extends BaseTest {
                 .geregiSec(gidecegiYer)
                 .geregiKurumPostaTipi(evrakPostaTipi)
                 .onayAkisiEkle()
-                .onayAkisiKullaniciTipiSec("Mehmet BOZDEMİR", "İmzalama")
+                .onayAkisiKullaniciTipiSec("Mehmet BOZDEMİR [Antalya İl Müdürü]", "İmzalama")
                 .kullan();
-        EvrakOlusturPage.EditorTab editorTab2 = evrakOlusturPage.editorTabAc();
-        editorTab2.getEditor().type("TS2073");
-        editorTab2.imzala()
-                .popupSImzalaIslemleri();
+        evrakOlusturPage
+                .editorTabAc()
+                .editorIcerikDoldur("TS2087 için evrak.")
+                .imzala()
+                .sImzasec()
+                .sImzaImzala()
+                .popupSimzaEvet();
 
         topluPostalanacakEvraklarPage
                 .openPage()
@@ -1618,6 +1624,9 @@ public class TopluPostalamaTest extends BaseTest {
                 .evrakSec(evrakKayitTarihiSayi, gidecegiYer, evrakKonu, hazirlayanBirim, postaTipi)
                 .postaListesiPostala()
                 .postaDetayiPostala();
+
+        //postaGramaji = "0";
+        //pttTutari = "0.00";
 
         topluPostaladiklarimPage
                 .openPage()
