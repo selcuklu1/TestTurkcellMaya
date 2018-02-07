@@ -65,7 +65,7 @@ public class PostaListesiPage extends MainPage {
 
     SelenideElement txtPostaListesiAdi = $x("//label[normalize-space(text())='Posta Listesi Adı :']/../following-sibling::td//textarea");
 
-    SelenideElement txtBarkodNo = $x("//label[normalize-space(text())='Barkod No :']/../following-sibling::td//input");
+    SelenideElement txtBarkodNo = $x("//label[normalize-space(text())='Barkod No :']/../following-sibling::td//inpıt");
     SelenideElement btnEtiketBastir = $x("//span[text() = 'Etiket Bastır']/../../button");
     ElementsCollection tblEvrakDetayi = $$("[id='mainPreviewForm:dtEvrakUstVeri_data'] tr[data-ri]");
     SelenideElement divGonderildigiKurm = $("div[id='mainPreviewForm:tpbeGonderildigiKurumLovId:LovSecilen'] div[id^='mainPreviewForm:tpbeGonderildigiKurumLovId']");

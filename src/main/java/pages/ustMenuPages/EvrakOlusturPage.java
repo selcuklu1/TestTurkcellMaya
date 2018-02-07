@@ -1511,6 +1511,12 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Gereği alanını temizle.")
+        public BilgilerTab geregiTemizle(){
+            cmbGeregi.clearAllSelectedItems();
+            return this;
+        }
+
         @Step("Gereği son kayıt sil")
         public BilgilerTab geregiSonKayitSil() {
             cmbGeregi.clearLastSelectedItem();

@@ -393,6 +393,12 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Tebliğ Et kişi alanını temizle.")
+    public GelenEvraklarPage tebligEtKisiTemizle(){
+        txtTebligEtKisi.clearAllSelectedItems();
+        return this;
+    }
+
     public GelenEvraklarPage havaleYapHavaleOnayinaGonder() {
         btnHavaleYapHavaleOnayinaGonder.click();
         return this;
