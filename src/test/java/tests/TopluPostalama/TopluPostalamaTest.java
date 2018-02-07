@@ -159,6 +159,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .filtreleAc()
                 .postaListesiDoldur(listeAdi)
                 .postaListesiPostala()
+                .alanKontrolu()
                 .gidisSekliSec("Adi Posta")
                 .gramajDoldur(gramaj + "")
                 .tutarHesapla()
@@ -339,8 +340,8 @@ public class TopluPostalamaTest extends BaseTest {
                 .filtreleAc()
                 .postaListesiDoldur(postaListesi)
                 .postaListesiPostala()
+                .alanKontrolu()
                 .gidisSekliSec("Adi Posta")
-                .gonderildigiKurumAlanKontrolu()
                 .gramajDoldur(gramaj + "")
                 .tutarHesapla()
                 .indirimOncesiTutarKontrol(indirimOncesiTutar)
@@ -527,6 +528,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .evrakSec(evrakKayitTarihiSayi, evrakGidecegiYer, evrakKonu, evrakHazirlayanBirim, evrakPostaTipi)
                 .evrakSec(evrak1KayitTarihiSayi, evrak1GidecegiYer, evrak1Konu, evrak1HazirlayanBirim, evrak1PostaTipi)
                 .postaListesiPostala()
+                .alanKontrolu()
                 .gidisSekliSec("Adi Posta")
                 .gramajDoldur(gramaj + "")
                 .tutarHesapla()
@@ -701,6 +703,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .evrakSec(evrakKayitTarihiSayi, evrakGidecegiYer, evrakKonu, evrakHazirlayanBirim, evrakPostaTipi)
                 .evrakSec(evrak1KayitTarihiSayi, evrak1GidecegiYer, evrak1Konu, evrak1HazirlayanBirim, evrak1PostaTipi)
                 .postaListesiPostala()
+                .alanKontrolu()
                 .gidisSekliSec("Adi Posta")
                 .gramajDoldur(gramaj + "")
                 .tutarHesapla()
@@ -865,6 +868,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .evrakSec(evrakKayitTarihiSayi, evrakGidecegiYer, evrakKonu, evrakHazirlayanBirim, evrakPostaTipi)
                 .evrakSec(evrak1KayitTarihiSayi, evrak1GidecegiYer, evrak1Konu, evrak1HazirlayanBirim, evrak1PostaTipi)
                 .postaListesiPostala()
+                .alanKontrolu()
                 .gidisSekliSec("Adi Posta")
                 .gramajDoldur(gramaj + "")
                 .tutarHesapla()
@@ -1771,6 +1775,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .filtreleAc()
                 .postaListesiDoldur(listeAdi)
                 .postaListesiPostala()
+                .alanKontrolu()
                 .postaListesiAdiKontrol(listeAdi, true)
                 .gonderildigiYerKontrol(gonderildigiYer, true)
                 .gonderildigiKurumKontro(evrakGidecegiYer, true)
@@ -1781,8 +1786,6 @@ public class TopluPostalamaTest extends BaseTest {
                 .indirimOncesiTutarKontrol(indirimOncesiTutar)
                 .tutarKontrol(tutar)
                 .etiketBastir();
-
-
     }
 
     @Test(enabled = true, description = "TS1817 : Tutar alanı kontrol edilir.")

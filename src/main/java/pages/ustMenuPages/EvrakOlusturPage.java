@@ -1916,6 +1916,7 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Simza seç")
         public EditorTab sImzasec() {
+            radibtnSimza.waitUntil(visible, 200000);
             radibtnSimza.click();
 //            radibtnSimza.selectRadio("I");
 
