@@ -209,13 +209,7 @@ public class TopluPostalamaTest extends BaseTest {
                 "Yenikurum4105"
         };
 
-        String[] postaTipleri = new String[]{
-                "Adi Posta"
-        };
-
-
-        String tarihBugun = "" + new SimpleDateFormat("dd.MM.yyyy").format(new Date());
-
+        String postaTipleri = "Adi Posta";
         String gidecegiYer = "Yenikurum6507";
         String evrakPostaTipi = "Adi Posta";
         String evrakKonu = "TS01808-" + getRandomNumber(1000, 9000);
@@ -295,6 +289,9 @@ public class TopluPostalamaTest extends BaseTest {
                 .postaTipiSec(postaTipleri)
                 .sorgula()
                 .postaListesineAktar()
+                .listeyeEkle()
+                .islemMesaji().dikkatOlmali("Posta Listesine eklenecek evrak seçiniz!");
+        topluPostalanacakEvraklarPage
                 .listeAdiDoldur(postaListesi)
                 .gonderildigiKurumSec(gidecegiYer)
                 .listeOlustur()
@@ -428,9 +425,7 @@ public class TopluPostalamaTest extends BaseTest {
                 tuzelKisi1
         };
 
-        String[] postaTipleri = new String[]{
-                "Adi Posta"
-        };
+        String postaTipleri = "Adi Posta";
 
         String tuzelKisi = tuzelKisi1;
 
@@ -460,8 +455,9 @@ public class TopluPostalamaTest extends BaseTest {
                 .gidecegiYerSec(gidecegiYerler, true, true)
                 .postaTipiSec(postaTipleri)
                 .sorgula()
-                .postaListesineAktar();
-        // UYARI MESAJI GELMELİ !!!!!!!!!!!! <<<<<<<<<<<<<<<<<<
+                .postaListesineAktar()
+                .listeyeEkle()
+                .islemMesaji().uyariOlmali("Posta Listesine eklenecek evrak seçiniz!");
 
 
         topluPostalanacakEvraklarPage
@@ -602,9 +598,7 @@ public class TopluPostalamaTest extends BaseTest {
                 gercekKisi2
         };
 
-        String[] postaTipleri = new String[]{
-                "Adi Posta"
-        };
+        String postaTipleri = "Adi Posta";
 
         String gercekKisi = "TS01807GKADD";
 
@@ -636,8 +630,9 @@ public class TopluPostalamaTest extends BaseTest {
                 .gidecegiYerSec(gidecegiYerler, true, true)
                 .postaTipiSec(postaTipleri)
                 .sorgula()
-                .postaListesineAktar();
-        // UYARI MESAJI GELMELİ !!!!!!!!!!!! <<<<<<<<<<<<<<<<<<
+                .postaListesineAktar()
+                .listeyeEkle()
+                .islemMesaji().uyariOlmali("Posta Listesine eklenecek evrak seçiniz!");
 
         topluPostalanacakEvraklarPage
                 .evrakTikSec(evrakKayitTarihiSayi, evrakGidecegiYer, evrakKonu, evrakHazirlayanBirim, evrakPostaTipi, true)
@@ -727,10 +722,7 @@ public class TopluPostalamaTest extends BaseTest {
                 kurum1
         };
 
-        String[] postaTipleri = new String[]{
-                "Adi Posta"
-        };
-
+        String postaTipleri = "Adi Posta";
         String kurum = kurum1;
 
         String baslangicTarihi = "01.12.2015";
@@ -801,8 +793,9 @@ public class TopluPostalamaTest extends BaseTest {
                 .gidecegiYerSec(gidecegiYerler, true, true)
                 .postaTipiSec(postaTipleri)
                 .sorgula()
-                .postaListesineAktar();
-        // UYARI MESAJI GELMELİ !!!!!!!!!!!! <<<<<<<<<<<<<<<<<<
+                .postaListesineAktar()
+                .listeyeEkle()
+                .islemMesaji().uyariOlmali("Posta Listesine eklenecek evrak seçiniz!");
 
         topluPostalanacakEvraklarPage
                 .evrakTikSec(evrakKayitTarihiSayi, evrakGidecegiYer, evrakKonu, evrakHazirlayanBirim, evrakPostaTipi, true)

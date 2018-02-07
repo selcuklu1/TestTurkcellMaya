@@ -224,6 +224,32 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Posta tipi alanından {postaTipi} seç.")
+    public TopluPostalanacakEvraklarPage postaTipiSec(String postaTipi) {
+        Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", lblPostaTipiSeciniz);
+
+        lblPostaTipiSeciniz.click();
+        ElementsCollection currentListElement = $$(By.xpath("//label[.='Adi Posta']/../../../ul")).last().$$("li");
+
+        SelenideElement currentRow = currentListElement
+                .filterBy(Condition.text(postaTipi))
+                .first();
+
+        SelenideElement chkBox = currentRow.$("div[class='ui-chkbox ui-widget']");
+
+        boolean isSelected = false;
+        if (chkBox.$(By.xpath("./div[contains(@class, 'ui-state-active')]")).exists())
+            isSelected = true;
+
+        if (isSelected == false) {
+            Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", chkBox);
+            chkBox.click();
+        }
+
+        lblPostaTipiSeciniz.click();
+        return this;
+    }
+
     @Step("Posta tipi seç.")
     public TopluPostalanacakEvraklarPage postaTipiSec(String[] postaTipleri) {
         Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", lblPostaTipiSeciniz);
