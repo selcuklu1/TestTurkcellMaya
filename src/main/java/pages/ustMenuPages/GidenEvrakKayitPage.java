@@ -189,6 +189,13 @@ public class GidenEvrakKayitPage extends MainPage {
         return this;
     }
 
+    @Step("Bilgi temizle")
+    public GidenEvrakKayitPage bilgiTemizle() {
+        cmbBilgi.clearAllSelectedItems();
+
+        return this;
+    }
+
     @Step("Kişinin Bilgi alanında görüntülenmeme kontrolu")
     public GidenEvrakKayitPage bilgiAlanindaGoruntulenmemeKontrolu(String kisi) {
 

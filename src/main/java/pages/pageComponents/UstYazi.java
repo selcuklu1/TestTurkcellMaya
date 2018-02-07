@@ -357,12 +357,12 @@ public class UstYazi extends MainPage {
             getNotEkleDialog().should(disappear);
 
             String date = DateTimeFormatter.ofPattern("dd.MM.yyyy").format(LocalDateTime.now());
-            String time = "";//DateTimeFormatter.ofPattern("HH").format(LocalDateTime.now());
+            String time = DateTimeFormatter.ofPattern("HH").format(LocalDateTime.now());
             //String time = DateTimeFormatter.ofPattern("HH:mm").format(LocalDateTime.now());
-            System.out.println("Time ofLocalizedTime: " + DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT));
+           /* System.out.println("Time ofLocalizedTime: " + DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT));
             System.out.println("Time1: " + DateTimeFormatter.ofPattern("HH:mm", new Locale("tr", "TR")).format(LocalDateTime.now()));
             System.out.println("Time2: " + DateTimeFormatter.ofPattern("HH:mm").format(LocalDateTime.now()));
-            System.out.println("Time3: " + System.currentTimeMillis());
+            System.out.println("Time3: " + System.currentTimeMillis());*/
 
             notuBul(text(olusturan), text(notTipi), text(aciklama), text(date), text(time));
             createdNotes.add(this);

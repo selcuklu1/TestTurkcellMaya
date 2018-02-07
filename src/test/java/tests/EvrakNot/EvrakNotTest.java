@@ -6,6 +6,7 @@ import data.User;
 import io.qameta.allure.Description;
 import io.qameta.allure.Step;
 import org.testng.annotations.Test;
+import pages.altMenuPages.EvrakDetayiPage;
 import pages.newPages.EvrakOlusturPage;
 import pages.newPages.KararYazisiOlusturPage;
 import pages.newPages.OlurYazisiOlusturPage;
@@ -232,7 +233,7 @@ public class EvrakNotTest extends BaseTest {
                 .onayAkisiSecilenKullaniciKontrolEt(user1, OnayKullaniciTipi.PARAFLAMA)
                 .onayAkisiSecilenKullaniciKontrolEt(user2, OnayKullaniciTipi.IMZALAMA);
         page.pageButtons().evrakKaydet();
-        page.closePage(false);
+        page.closePage(true);
 
         //------------------------------------
         TaslakEvraklarPage taslakEvraklarPage = new TaslakEvraklarPage().openPage();
@@ -271,7 +272,7 @@ public class EvrakNotTest extends BaseTest {
         evrakNot.notuBul(text(user1.getFullname()), text(user1.getGorev()), text(aciklama3), text(date3), text(time3)).postitStyle().getNoteSilButton().shouldBe(visible);
         evrakNot.notuBul(text(user1.getFullname()), text(user1.getGorev()), text(aciklama4), text(date4), text(time4)).postitStyle().getNoteSilButton().shouldBe(visible);
 
-        taslakEvraklarPage.evrakPageButtons().evrakParafla().islemMesaji().basariliOlmali();
+        //taslakEvraklarPage.evrakPageButtons().evrakParafla().islemMesaji().basariliOlmali();
         logout();
     }
 
@@ -281,8 +282,9 @@ public class EvrakNotTest extends BaseTest {
         /*User user1 = optiim;
         User user2 = ztekin;*/
 
+        EditorTab.EvrakNot evrakNot;// = new EditorTab().getEvrakNot();
         System.out.println("Konu: " + konu);
-        /*login(user1);
+        login(user1);
         TaslakEvraklarPage taslakEvraklarPage = new TaslakEvraklarPage().openPage();
         taslakEvraklarPage.searchTable().findRows(text(konu)).getFoundRow().click();
         taslakEvraklarPage.evrakPageButtons().evrakParafla().islemMesaji().basariliOlmali();
@@ -313,23 +315,34 @@ public class EvrakNotTest extends BaseTest {
         n.getNoteGuncelleButton().shouldBe(visible);
         n.getNoteSilButton().shouldBe(visible);
 
-        EditorTab.EvrakNot evrakNot = new EditorTab().getEvrakNot();
+
         //10. Bilgisi bulunan Taslak evrakın "İçerik Göster" butonun basılır.	Editör tabının açık geldiği, 4 adet notun Post-it görünümde (Notu sil butonu, Notu hazırlayan (kişi adı,soyadı ve görev bilgisi), İşlem tarihi, İşlem saati, Not açıklaması) geldiği görülür.
-        //Editör tabının açık GELMİYOR
-        *//*
+        // Editör tabının gelmiyor. Evrak Not tabı var.
         searchTable.foundRow().icerikGosterTikla();
-        EditorTab.EvrakNot evrakNot = new EditorTab().getEvrakNot();
+        ustYazi = new pages.newPages.EvrakDetayiPage().evrakNotlariTabiAc().evrakNotlari();
+        n = ustYazi.notuBul(text(user1.getFullname()), text(user1.getGorev()), text(notTipi1), text(aciklama1), text(date1), text(time1));
+        n.getNoteGuncelleButton().shouldBe(visible);
+        n.getNoteSilButton().shouldBe(visible);
+        n = ustYazi.notuBul(text(user1.getFullname()), text(user1.getGorev()), text(notTipi2), text(aciklama2), text(date2), text(time2));
+        n.getNoteGuncelleButton().shouldBe(visible);
+        n.getNoteSilButton().shouldBe(visible);
+        n = ustYazi.notuBul(text(user1.getFullname()), text(user1.getGorev()), text(notTipi3), text(aciklama3), text(date3), text(time3));
+        n.getNoteGuncelleButton().shouldBe(visible);
+        n.getNoteSilButton().shouldBe(visible);
+        n = ustYazi.notuBul(text(user1.getFullname()), text(user1.getGorev()), text(notTipi4), text(aciklama4), text(date4), text(time4));
+        n.getNoteGuncelleButton().shouldBe(visible);
+        n.getNoteSilButton().shouldBe(visible);
+        /*evrakNot = new EditorTab().getEvrakNot();
         evrakNot.notuBul(text(optiim.getFullname()), text(optiim.getGorev()), text(aciklama1), text(date1), text(time1)).postitStyle().getNoteSilButton().shouldBe(visible);
         evrakNot.notuBul(text(optiim.getFullname()), text(optiim.getGorev()), text(aciklama2), text(date2), text(time2)).postitStyle().getNoteSilButton().shouldBe(visible);
         evrakNot.notuBul(text(optiim.getFullname()), text(optiim.getGorev()), text(aciklama3), text(date3), text(time3)).postitStyle().getNoteSilButton().shouldBe(visible);
-        evrakNot.notuBul(text(optiim.getFullname()), text(optiim.getGorev()), text(aciklama4), text(date4), text(time4)).postitStyle().getNoteSilButton().shouldBe(visible);
-        *//*
+        evrakNot.notuBul(text(optiim.getFullname()), text(optiim.getGorev()), text(aciklama4), text(date4), text(time4)).postitStyle().getNoteSilButton().shouldBe(visible);*/
         logout();
-        ////////////////////////////////////////////////////////////*/
+        ////////////////////////////////////////////////////////////
 
         login(user2);
         ImzaBekleyenlerPage imzaBekleyenlerPage = new ImzaBekleyenlerPage().openPage();
-        SearchTable searchTable = imzaBekleyenlerPage.searchTable();
+        searchTable = imzaBekleyenlerPage.searchTable();
         searchTable.findRows(text(konu)).getFoundRow().click();
 
         new EvrakOnizleme().new EvrakNotlari().evrakNotlariTabiAc()
@@ -338,9 +351,9 @@ public class EvrakNotTest extends BaseTest {
                 .notuKontrolEt(user1, notTipi1, aciklama1, date1, time1, kurumLogo)
                 .evrakNotlariDialoguKapat();
 
-        UstYazi.EvrakNot ustYazi = new UstYazi().evrakNotlariTabiAc();
+        ustYazi = new UstYazi().evrakNotlariTabiAc();
         ustYazi.getYeniNotEkleButton().shouldBe(visible);
-        UstYazi.EvrakNot n = ustYazi.notuBul(text(user1.getFullname()), text(user1.getGorev()), text(notTipi1), text(aciklama1), text(date1), text(time1));
+        n = ustYazi.notuBul(text(user1.getFullname()), text(user1.getGorev()), text(notTipi1), text(aciklama1), text(date1), text(time1));
         guncelleButtonBulmamamli(n);
         silButtonBulmamamli(n);
         n = ustYazi.notuBul(text(user1.getFullname()), text(user1.getGorev()), text(notTipi3), text(aciklama3), text(date3), text(time3));
@@ -348,7 +361,7 @@ public class EvrakNotTest extends BaseTest {
         silButtonBulmamamli(n);
 
         searchTable.foundRow().icerikGosterTikla();
-        EditorTab.EvrakNot evrakNot = new EditorTab().getEvrakNot();
+        evrakNot = new EditorTab().getEvrakNot();
         evrakNot.notuBul(text(user1.getFullname()), text(user1.getGorev()), text(aciklama1), text(date1), text(time1)).postitStyle().getNoteSilButton().shouldNotBe(visible);
         evrakNot.notuBul(text(user1.getFullname()), text(user1.getGorev()), text(aciklama3), text(date3), text(time3)).postitStyle().getNoteSilButton().shouldNotBe(visible);
         evrakNot.notOlustur(user2.getName(), notTipi5, aciklama5);

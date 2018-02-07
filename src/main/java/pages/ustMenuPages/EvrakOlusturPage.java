@@ -1602,6 +1602,19 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Otomatik onay akışı vekil kullanıcı kaldır: {description}")
+        public BilgilerTab otomatikOnayAkisiVekilKullaniciKaldir(String vekilKullanici, boolean secim, String description) {
+
+            trOtomatikOnayAkisiEkleKullanicilar
+                    .filterBy(matchText("(?i)(?u)(?m)\\b" + vekilKullanici.trim().replaceAll("[\\<\\(\\[\\{\\\\\\^\\-\\=\\$\\!\\|\\]\\}\\)‌​\\?\\*\\+\\.\\>]", "\\\\$0") + "\\b"))
+                    .get(0)
+                    .shouldBe(exist)
+                    .$("[class='ui-chkbox-icon ui-icon ui-icon-check']")
+                    .setSelected(secim);
+
+            return this;
+        }
+
         //endregion
 
     }
