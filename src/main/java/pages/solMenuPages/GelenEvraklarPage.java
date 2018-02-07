@@ -141,6 +141,7 @@ public class GelenEvraklarPage extends MainPage {
     @Step("Takip listesinde {kullanicilar} kullanıcısını seç")
     public GelenEvraklarPage takipListesiKullanicilarDoldur(String kullanicilar) {
         txtTakipListesiKullanicilar.type(kullanicilar).getTitleItems().filterBy(Condition.text(kullanicilar)).first().click();
+        txtTakipListesiKullanicilar.closeTreePanel();
         return this;
     }
 

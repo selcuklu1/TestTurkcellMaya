@@ -394,6 +394,7 @@ public class ImzaladiklarimPage extends MainPage {
                 .filterBy(text(konu))
                 .first()
                 .$x(".//span[contains(@class,'ui-button-icon-left ui-icon document-addFollow')]/..")
+                .waitUntil(visible, 3000)
                 .click();
         return this;
     }
@@ -421,6 +422,7 @@ public class ImzaladiklarimPage extends MainPage {
     @Step("Takip listesinde {kullanicilar} kullanıcısını seç")
     public ImzaladiklarimPage takipListesiKullanicilarDoldur(String kullanicilar) {
         txtTakipListesiKullanicilar.type(kullanicilar).getTitleItems().filterBy(Condition.text(kullanicilar)).first().click();
+        txtTakipListesiKullanicilar.closeTreePanel();
         return this;
     }
 }
