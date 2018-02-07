@@ -190,7 +190,7 @@ public class UstMenuData {
 
     public enum Raporlar implements UstMenuDataInterface {
         EvrakBeklemeSuresiRaporu("Evrak Bekleme Süresi Raporu"),
-        IptalEdilenEvraklarRaporu("İptal Edilen Evraklar Raporu"),
+        IptalEdilenEvraklarRaporu("İptal Edilen Evraklar Raporu\t"),
         VekaletRaporu("Vekalet Raporu"),
         HavaleEdilenEvrakRaporu("Havale Edilen Evrak Raporu"),
         BelgeDogrulama("Belge Doğrulama"),

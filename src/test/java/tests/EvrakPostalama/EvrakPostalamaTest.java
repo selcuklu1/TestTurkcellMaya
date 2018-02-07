@@ -61,14 +61,12 @@ public class EvrakPostalamaTest extends BaseTest {
                 .evrakTuruSec("Resmi Yazışma")
                 .gizlilikDerecesiSec("Normal")
                 .ivedilikSec("Normal")
-                .geregiSec("Optiim Birim")
 //                .kaldirilacakKlasorler("Diğer")
 //                .kaldirilacakKlasorler("B1K1")
                 .bilgialaniKontrol()
                 .gizlilikDerecesiSec("Normal")
 //                .kaldirilacakKlasorler("B1K1")
                 .ivedilikSec("Normal")
-                .evrakTuruSec("Resmi Yazışma")
                 .geregiSecimTipiSec("Kullanıcı")
                 .geregiSec("Optiim TEST")
                 .geregiSecimTipiSec("Dağıtım Planları")
@@ -167,6 +165,7 @@ public class EvrakPostalamaTest extends BaseTest {
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
+                .bilgilerTabAlanKontrolleri()
                 .konuKoduSec("YAZILIM GEL")
                 .konuDoldur(konu)
                 //  .kaldirilacakKlasorler("B1K1")
@@ -174,7 +173,11 @@ public class EvrakPostalamaTest extends BaseTest {
                 .evrakTuruSec("Resmi Yazışma")
                 .geregiSecimTipiSec("Kurum")
                 .geregiDoldur("Başbakanlık", "")
-                .geregiKurumPostaTipi("Adi Posta")
+
+                .geregiKurumPostaTipi("Evrak Servisi Elden")
+                .gizlilikDerecesiSec("Normal")
+                .ivedilikSec("Normal")
+
                 .onayAkisiKullanicilariTemizle()
                 .onayAkisiEkle()
                 .onayAkisiKullaniciTipiSec("Mehmet BOZDEMİR", "İmzalama")
@@ -349,7 +352,8 @@ public class EvrakPostalamaTest extends BaseTest {
         String konu = "TS1685_" + getSysDate();
 
         postalananlarPage.openPage();
-        postalananlarPage.btnKurdele()
+        postalananlarPage.tabloEvrakGeldigiGorme()
+                .btnKurdele()
                 .mngImzaDialog()
                 .btnImzaciPopupKapat()
                 .btnTamEkran()

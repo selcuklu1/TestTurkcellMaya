@@ -34,7 +34,7 @@ public class EvrakDetayiPage extends MainPage {
 
     @Step("Sayfa açıldı mı kontrolü")
     public EvrakDetayiPage sayfaAcilmali() {
-        pageTitle.shouldBe(visible);
+        Assert.assertEquals(pageTitle.is(visible),true);
         return this;
     }
 
@@ -112,6 +112,13 @@ public class EvrakDetayiPage extends MainPage {
 
         return this;
     }
+
+    @Step("\"Evrak Detayı\" ekranının görüntülendiği görülür")
+    public EvrakDetayiPage sayfaAcilmasiKontrolu() {
+        pageTitle.shouldBe(visible);
+        return this;
+    }
+
 
     public class TebligGecmisiTab extends MainPage {
 

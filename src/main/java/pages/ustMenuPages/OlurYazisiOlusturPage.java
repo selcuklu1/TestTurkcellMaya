@@ -57,6 +57,7 @@ public class OlurYazisiOlusturPage extends MainPage {
         SelenideElement cmbSelectOneMenu = $(By.id("yeniOnayEvrakForm:evrakBilgileriList:14:akisAdimLov:LovSecilenTable:0:selectOneMenu"));
         SelenideElement btnOnayAkisGuncelle = $(By.cssSelector("[id^='yeniOnayEvrakForm:evrakBilgileriList:14:akisLov:j_idt'] [class$='update-icon']"));
         SelenideElement btnKullan = $("[id^='yeniOnayEvrakForm:evrakBilgileriList'][id$='anlikAkisKullanButton']");
+        SelenideElement btnVekaletKaydet = $("[id^='yeniOnayEvrakForm:j_idt'] [class*='ui-button-text-only tipTip button-icon-borderless']");
 
         //endregion
 
@@ -124,6 +125,23 @@ public class OlurYazisiOlusturPage extends MainPage {
         @Step("Onay akışı doldurma ve görüntüleme kontrolu")
         public BilgilerTab onayAkisDoldur(String kullanici) {
             cmbOnayAkisi.selectLov(kullanici);
+            return this;
+        }
+
+        @Step("Onay akışı doldur")
+        public BilgilerTab onayAkisiDoldurWithoutKontrol(String onay) {
+            if (cmbOnayAkisi.isLovSelected() == true) {
+                cmbOnayAkisi.clearAllSelectedItems();
+            }
+            cmbOnayAkisi.type(onay).getDetailItems().first().click();
+            return this;
+        }
+
+        @Step("Seçilen akışta vekaleti bulunan kişiler bulunmaktadır. Lütfen evrakın akışında kullanılacak kişileri seçiniz.")
+        public BilgilerTab vekaletKaydet() {
+
+            if(btnVekaletKaydet.isDisplayed()) {
+                btnVekaletKaydet.click(); }
             return this;
         }
 

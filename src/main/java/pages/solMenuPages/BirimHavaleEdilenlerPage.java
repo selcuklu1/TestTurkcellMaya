@@ -35,8 +35,9 @@ public class BirimHavaleEdilenlerPage extends MainPage {
 
     SelenideElement havaleGeriAl = $(By.id("inboxItemInfoForm:dialogTabMenuRight:uiRepeat:4:cmdbutton"));
     SelenideElement notAlanıDoldur = $(By.id("inboxItemInfoForm:evrakGeriAlInputTextareaId"));
-    SelenideElement btnGeriAl = $("[id^='inboxItemInfoForm:j_idt'][class$='ui-button-text-only']");
-
+    SelenideElement btnGeriAl = $("[class='ui-button-icon-left ui-icon evrakGeriAl']");
+    SelenideElement btnGeriAlGeriAl = $("[id='mainPreviewForm:evrakOnizlemeTab'] button");
+    SelenideElement tctGeriAlNot = $("[id$='evrakGeriAlInputTextareaId']");
     SelenideElement evrakOnizlemeKontrol = $(By.id("mainPreviewForm:eastLayout"));
 
     //Birim
@@ -126,6 +127,18 @@ public class BirimHavaleEdilenlerPage extends MainPage {
     @Step("Geri Al Butonu tıkla")
     public BirimHavaleEdilenlerPage geriAl() {
         btnGeriAl.click();
+        return this;
+    }
+
+    @Step("Geri al tıklanır")
+    public BirimHavaleEdilenlerPage geriAlGeriAl(){
+        btnGeriAlGeriAl.click();
+        return this;
+    }
+
+    @Step("Not alanını doldur: {not}")
+    public BirimHavaleEdilenlerPage geriAlNotAlaniniDoldur(String not){
+        tctGeriAlNot.setValue(not);
         return this;
     }
 

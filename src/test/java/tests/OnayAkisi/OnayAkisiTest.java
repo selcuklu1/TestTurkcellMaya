@@ -1,6 +1,7 @@
 package tests.OnayAkisi;
 
 import common.BaseTest;
+import data.TestData;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
@@ -30,9 +31,6 @@ public class OnayAkisiTest extends BaseTest {
     @BeforeMethod
     public void beforeTests(Method method) {
 
-        //log.info(method.getName() + "Nolu test senaryosu başladı.");
-
-        login();
         evrakOlusturPage = new EvrakOlusturPage();
         onayAkisYonetimiPage = new OnayAkisYonetimiPage();
         olurYazisiOlusturPage = new OlurYazisiOlusturPage();
@@ -48,6 +46,8 @@ public class OnayAkisiTest extends BaseTest {
         String kullanici1 = "Mehmet BOZDEMİR";
         String kullanici2 = "Zübeyde TEKİN";
         String kaldirilacakKlasorler = "ESK05";
+
+        login(TestData.usernameOPTIIM, TestData.passwordOPTIIM);
 
         evrakOlusturPage
                 .openPage()
@@ -70,7 +70,8 @@ public class OnayAkisiTest extends BaseTest {
 
         evrakOlusturPage
                 .kaydetOnayaSun()
-                .kullaniciIslemVeSiraKontrolu(kullanici1, "Paraflama", kullanici2, "İmzalama");
+                .kullaniciIslemVe1SiraKontrolu(kullanici1, "Paraflama")
+                .kullaniciIslemVe2SiraKontrolu(kullanici2, "İmzalama");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -79,6 +80,8 @@ public class OnayAkisiTest extends BaseTest {
 
         String kullanici = "TS1897 OnayAkisi";
         String basariMesaji = "İşlem başarılıdır!";
+
+        login(TestData.usernameOPTIIM, TestData.passwordOPTIIM);
 
         //tests.Data kontrolu için yazıldı. Pasif ise aktif yapılır.
         onayAkisYonetimiPage
@@ -143,6 +146,8 @@ public class OnayAkisiTest extends BaseTest {
         String kullanici = "TS1897 OnayAkisi";
         String basariMesaji = "İşlem başarılıdır!";
 
+        login(TestData.usernameOPTIIM, TestData.passwordOPTIIM);
+
         //tests.Data kontrolu için yazıldı. Pasif ise aktif yapılır.
         onayAkisYonetimiPage
                 .openPage()
@@ -186,6 +191,8 @@ public class OnayAkisiTest extends BaseTest {
         String vekaletVeren = "Optiim TEST6";
         String kaldirilacakKlasorler = "ESK05";
 
+        login(TestData.usernameOPTIIM, TestData.passwordOPTIIM);
+
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
@@ -200,7 +207,8 @@ public class OnayAkisiTest extends BaseTest {
 
         evrakOlusturPage
                 .kaydetOnayaSun()
-                .kullaniciIslemVeSiraKontrolu(vekaletAlan, "Paraflama", kullanici2, "İmzalama");
+                .kullaniciIslemVe1SiraKontrolu(vekaletAlan, "Paraflama")
+                .kullaniciIslemVe2SiraKontrolu(kullanici2, "İmzalama");
 
     }
 
@@ -209,27 +217,62 @@ public class OnayAkisiTest extends BaseTest {
     public void TS1901b() {
 
         //Optiim TEST7, Optiim TEST6 ya
-        String onayAkisi = "Vekaletli Kullanici";
-        String vekaletAlan = "Optiim TEST7";
-        String kullaniciImzaci = "Zübeyde TEKİN";
-        String vekaletVeren = "Optiim TEST6";
+
+        String asilKullanici = "Optiim TEST6";
+        String vekilKullanici = "Optiim TEST7";
+        String parafciKullanici1 = "Zübeyde TEKİN";;
+        String parafciKullanici2 = "Mehmet BOZDEMİR";
+        String imzaciKullanici = "Optiim TEST";
         String kaldirilacakKlasorler = "ESK05";
+
+        login(TestData.usernameOPTIIMTEST76, TestData.passwordPTIIMTEST76); //optiimtest6 123
 
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
-                .onayAkisiDoldur(onayAkisi)
+                //.onayAkisiDoldur(onayAkisi)
+                //.onayAkisiGuncelle()
+                //.onayAkisiKullaniciKontrol(vekaletAlan, "PARAFLAMA")
+                //.onayAkisiKullaniciKontrol(kullaniciImzaci, "IMZALAMA")
+                //.onayAkisiVekaletKontrol(vekaletVeren)
+                //.kullaniciyaKullaniciTipiSec(kullaniciImzaci, "IMZALAMA")
+                //.onayAkisiKullan()
+
+                .otomatikOnayAkisiSec()
+
+                .otomatikOnayAkisiKullaniciKontrol(asilKullanici, "PARAFLAMA", "Asil Kullanıcı")
+                .otomatikOnayAkisiKullaniciKontrol(vekilKullanici, "PARAFLAMA", "Vekil Kullanıcı")
+                .otomatikOnayAkisiKullaniciKontrol(parafciKullanici1, "PARAFLAMA", "Parafçı Kullanıcı1")
+                .otomatikOnayAkisiKullaniciKontrol(parafciKullanici2, "PARAFLAMA", "Parafçı Kullanıcı2")
+                .otomatikOnayAkisiKullaniciKontrol(imzaciKullanici, "IMZALAMA", "İmzaci Kullanıcı")
+//TODO: imzacida hata verior
+                .otomatikOnayAkisiKullaniciyaGoreCheckBoxKontrolu(asilKullanici, "Asil Kullanıcı")
+                .otomatikOnayAkisiKullaniciyaGoreCheckBoxKontrolu(parafciKullanici1, "Parafçı Kullanıcı1")
+                .otomatikOnayAkisiKullaniciyaGoreCheckBoxKontrolu(parafciKullanici2, "Parafçı Kullanıcı2")
+                .otomatikOnayAkisiKullaniciyaGoreCheckBoxKontrolu(imzaciKullanici, "İmzaci Kullanıcı")
+
+                .otomatikOnayAkisiKullaniciSec(parafciKullanici1, true, "Parafçı Kullanıcı1")
+                .otomatikOnayAkisiKullaniciSec(parafciKullanici2, true, "Parafçı Kullanıcı2")
+                .otomatikOnayAkisiKullaniciSec(imzaciKullanici, true, "İmzaci Kullanıcı")
+
+                .otomatikOnayAkisiKullan()
                 .onayAkisiGuncelle()
-                .onayAkisiKullaniciKontrol(vekaletAlan, "PARAFLAMA")
-                .onayAkisiKullaniciKontrol(kullaniciImzaci, "IMZALAMA")
-                .onayAkisiVekaletKontrol(vekaletVeren)
-                .kullaniciyaKullaniciTipiSec(kullaniciImzaci, "IMZALAMA")
-                .onayAkisiKullan()
-                .kaldiralacakKlasorlerSec(kaldirilacakKlasorler);
+
+                .onayAkisiKullaniciKontrol(parafciKullanici1, "PARAFLAMA")
+                .onayAkisiKullaniciKontrol(parafciKullanici2, "PARAFLAMA")
+                .onayAkisiKullaniciKontrol(vekilKullanici, "PARAFLAMA")
+                .onayAkisiKullaniciKontrol(imzaciKullanici, "IMZALAMA")
+
+                .kaldiralacakKlasorlerSec(kaldirilacakKlasorler)
+                .konuKoduDoldur("040");
 
         evrakOlusturPage
                 .kaydetOnayaSun()
-                .kullaniciIslemVeSiraKontrolu(vekaletAlan, "Paraflama", kullaniciImzaci, "İmzalama");
+
+                .kullaniciIslemVe1SiraKontrolu(vekilKullanici, "Paraflama")
+                .kullaniciIslemVe2SiraKontrolu(parafciKullanici1, "Parafçı Kullanıcı1")
+                .kullaniciIslemVe2SiraKontrolu(parafciKullanici2, "Parafçı Kullanıcı2")
+                .kullaniciIslemVe2SiraKontrolu(imzaciKullanici, "İmzaci Kullanıcı");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -242,6 +285,8 @@ public class OnayAkisiTest extends BaseTest {
         String eklenenKullanici2 = "Mehmet BOZDEMİR";
         String ayniBirimliKullanici = "Optiim TEST4";
         String basariMesaji = "İşlem başarılıdır!";
+
+        login(TestData.usernameOPTIIM, TestData.passwordOPTIIM);
 
         //tests.Data kontrolu için yazıldı. Pasif ise aktif yapılır.
         onayAkisYonetimiPage
@@ -320,10 +365,12 @@ public class OnayAkisiTest extends BaseTest {
         //TODO: Vekalet tarihi db den sql query ile çekilmelidir.
         String onayAkisi = "Sezai Çelik" + getSysDate();
         String defaultKullanici = "Optiim TEST";
-        String vekaletVeren = "Optiim TEST6";
-        String vekaletAlan = "Optiim TEST7";
+        String asilKullanici = "Optiim TEST6"; //vekaletVeren
+        String vekilKullanici = "Optiim TEST7"; //vekalet alan
         String vekaletTarihi = "Vekalet: 13.12.2017/04.12.2018";
         String basariMesaji = "İşlem başarılıdır!";
+
+        login(TestData.usernameOPTIIM, TestData.passwordOPTIIM);
 
         onayAkisYonetimiPage
                 .openPage()
@@ -331,11 +378,12 @@ public class OnayAkisiTest extends BaseTest {
                 .onayAkisiAlanKontrolleri()
                 .onayAkisiKullaniciKontrol(defaultKullanici, "PARAFLAMA")
                 .onayAkisiIslemleriAdDoldur(onayAkisi)
-                .onayAkisiIslemlerIstenilenDetaildeKullaniciDoldur(vekaletAlan)
-                .kullaniciyaKullaniciTipiSec(vekaletAlan, "IMZALAMA")
-                .onayAkisiKullaniciKontrol(vekaletAlan, "IMZALAMA")
-                .onayAkisiKullaniciKontrol(vekaletVeren, "IMZALAMA")
-                .onayAkisiKullaniciKontrol(vekaletTarihi, "IMZALAMA")
+                .onayAkisiIslemlerKullaniciDoldur(asilKullanici)
+                .vekilCheckboxSec(true)
+                .kullaniciyaKullaniciTipiSec(asilKullanici, "IMZALAMA")
+                .onayAkisiVekilKullaniciKontrol(vekilKullanici, "IMZALAMA")
+                .onayAkisiAsilKullaniciKontrol(asilKullanici, "IMZALAMA")
+                .onayAkisiVekaletTarihiKontrol(vekaletTarihi)
                 .onayAkisiIslemleriKaydet()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
@@ -349,26 +397,29 @@ public class OnayAkisiTest extends BaseTest {
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
-                .onayAkisiDoldur(onayAkisi)
+                .onayAkisiDoldurWithoutKontrol(onayAkisi)
+                .vekaletKaydet()
                 .onayAkisiGuncelle()
                 .onayAkisiKullaniciKontrol(defaultKullanici, "PARAFLAMA")
-                .onayAkisiKullaniciKontrol(vekaletAlan, "IMZALAMA");
+                .onayAkisiKullaniciKontrol(asilKullanici, "IMZALAMA");
 
         olurYazisiOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
-                .onayAkisDoldur(onayAkisi)
+                .onayAkisiDoldurWithoutKontrol(onayAkisi)
+                .vekaletKaydet()
                 .onayAkisiGuncelle()
                 .onayAkisiKullaniciKontrol(defaultKullanici, "PARAFLAMA")
-                .onayAkisiKullaniciKontrol(vekaletAlan, "IMZALAMA");
+                .onayAkisiKullaniciKontrol(asilKullanici, "IMZALAMA");
 
         kararYazisiOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
-                .onayAkisiDoldur(onayAkisi)
+                .onayAkisiDoldurWithoutKontrol(onayAkisi)
+                .vekaletKaydet()
                 .onayAkisiGuncelle()
                 .onayAkisiKullaniciKontrol(defaultKullanici)
-                .onayAkisiKullaniciKontrol(vekaletAlan);
+                .onayAkisiKullaniciKontrol(asilKullanici);
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -384,6 +435,8 @@ public class OnayAkisiTest extends BaseTest {
         String vekaletAlan = "Optiim TEST7";
         String vekaletTarihi = "Vekalet: 13.12.2017/04.12.2018";
         String basariMesaji = "İşlem başarılıdır!";
+
+        login(TestData.usernameOPTIIM, TestData.passwordOPTIIM);
 
         onayAkisYonetimiPage
                 .openPage()
@@ -463,6 +516,8 @@ public class OnayAkisiTest extends BaseTest {
                 .kullaniciyaKullaniciTipiSec(imzaciKullanici, "IMZALAMA")
                 .onayAkisiIslemleriKaydet()
                 .islemMesaji().basariliOlmali(basariMesaji);*/
+
+        login(TestData.usernameOPTIIM, TestData.passwordOPTIIM);
 
 //Onay akışı güncellenip onun üzerinden devam ediliyor. Test başında ve sonunda kontrol edilip data resetleniyor.
         onayAkisYonetimiPage
@@ -560,6 +615,8 @@ public class OnayAkisiTest extends BaseTest {
         String dikkatMesaji6 = "Son kullanıcı imzacı olmalıdır!";
         String dikkatMesaji7 = "Onay akışındaki kullanıcıların yapacağı işlemi seçiniz.";
         String basariMesaji = "İşlem başarılıdır!";
+
+        login(TestData.usernameOPTIIM, TestData.passwordOPTIIM);
 
         //Onay akışı güncellenip onun üzerinden devam ediliyor. Test başında ve sonunda kontrol edilip data resetleniyor.
         onayAkisYonetimiPage
@@ -662,6 +719,8 @@ public class OnayAkisiTest extends BaseTest {
         String dikkatMesaji1 = "Onay akışındaki kullanıcıların yapacağı işlemi seçiniz.";
         String basariMesaji = "İşlem başarılıdır!";
 
+        login(TestData.usernameOPTIIM, TestData.passwordOPTIIM);
+
         onayAkisYonetimiPage
                 .openPage()
                 .yeniOnayAkisiEkle()
@@ -731,6 +790,8 @@ public class OnayAkisiTest extends BaseTest {
         String kullanici3 = "Sezai ÇELİK"; //kontrolcu
         String kullanici4 = "Mehmet BOZDEMİR"; //imzacı
         String eklenecekYeniKullanici = "Çelik SEZAİ";
+
+        login(TestData.usernameOPTIIM, TestData.passwordOPTIIM);
 
         evrakOlusturPage
                 .openPage()
