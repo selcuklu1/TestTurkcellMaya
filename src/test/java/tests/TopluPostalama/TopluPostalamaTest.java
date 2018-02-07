@@ -1460,7 +1460,7 @@ public class TopluPostalamaTest extends BaseTest {
     }
 
     @Test(enabled = true, description = "TS2087 : Toplu postaladıklarım listesinden evrakın geri alınması")
-    public void TS2087() {
+    public void TS2087() throws InterruptedException {
 
         TopluPostalanacakEvraklarPage topluPostalanacakEvraklarPage = new TopluPostalanacakEvraklarPage();
         PostaListesiPage postaListesiPage = new PostaListesiPage();
@@ -1516,13 +1516,10 @@ public class TopluPostalamaTest extends BaseTest {
                 .onayAkisiEkle()
                 .onayAkisiKullaniciTipiSec("Mehmet BOZDEMİR [Antalya İl Müdürü]", "İmzalama")
                 .kullan();
-        evrakOlusturPage
-                .editorTabAc()
-                .editorIcerikDoldur("TS2087 için ikinci evrak.")
-                .imzala()
-                .sImzasec()
-                .sImzaImzala()
-                .popupSimzaEvet();
+        EvrakOlusturPage.EditorTab editorTab1 = evrakOlusturPage.editorTabAc();
+        editorTab1.getEditor().type("TS2073");
+        editorTab1.imzala()
+                .popupSImzalaIslemleri();
 
         topluPostalanacakEvraklarPage
                 .openPage()
