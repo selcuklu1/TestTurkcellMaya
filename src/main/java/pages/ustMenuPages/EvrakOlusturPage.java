@@ -680,6 +680,19 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Geregi alanında \"{kisAd}\" kısa adı girilir, {kurum} kurumu geldiği görülür ve seçilir.")
+        public BilgilerTab geregiAlanindaKurumKisaAdSec(String kisAd, String kurum) {
+            txtGeregi
+                    .type(kisAd)
+                    .getTitleItems()
+                    .filterBy(text(kurum))
+                    .first()
+                    .shouldBe(visible)
+                    .click();
+            txtGeregi.closeTreePanel();
+            return this;
+        }
+
         @Step("Seçilen gereği Dağıtım Hitap Düzenle tıklanır")
         public BilgilerTab secilenGeregiDagitimHitapGuncelleme() {
             $("[id$='geregiLov:LovSecilenTable_data'] button [class='ui-button-icon-left ui-icon update-icon']").click();

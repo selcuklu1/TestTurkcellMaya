@@ -184,7 +184,7 @@ public class KurumYonetimiTest extends BaseTest {
         String idariBirimKimlikKodu = (new Random().nextInt((900000 - 100000) + 1) + 100000) + "";
         String yeniKurumKisaAdi = "KISA"+ yeniKurumAdi;
         String ustKurum = "Maliye Bakanlığı";
-        String hitap = "yeniHitap";
+        String hitap = "Hitap" + yeniKurumAdi;
 
         String kontrolEdilecekGeregiDetay = "";
 
@@ -241,11 +241,12 @@ public class KurumYonetimiTest extends BaseTest {
                 .geregiSecimTipiSec("Kurum")
                 .geregiSec(yeniKurumAdi)
                 .geregiSecilenKontrol(yeniKurumAdi, kontrolEdilecekGeregiDetay, "Adi Posta")
-                .geregiTemizle();
+                .geregiTemizle()
+                .geregiAlanindaKurumKisaAdSec(yeniKurumKisaAdi, yeniKurumAdi);
 
-
-
-
+        evrakOlusturPage
+                .editorTabAc()
+                .hitapKontrol(hitap);
 
     }
 
