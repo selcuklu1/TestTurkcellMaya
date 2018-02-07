@@ -3,6 +3,7 @@ package pages.solMenuPages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
@@ -14,6 +15,7 @@ import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
+import static com.codeborne.selenide.Selenide.sleep;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 public class TaslakEvraklarPage extends MainPage {
@@ -53,6 +55,8 @@ public class TaslakEvraklarPage extends MainPage {
     SelenideElement btnPaylasTab = $(By.xpath("//span[contains(@class, 'evrakPaylas')]/.."));
 
     SelenideElement btnPaylasBirim = $("div[id='mainPreviewForm:paylasTumuBoolean']");
+    ElementsCollection tblHareketGecmisi = $$("tbody[id$='hareketGecmisiDataTable_data'] > tr[role='row']");
+    SelenideElement btnRaporAlExcel = $("[id$='hareketGecmisiDataTable:evrakGecmisiExport']");
 
     @Step("Taslak Evraklar sayfası aç")
     public TaslakEvraklarPage openPage() {
@@ -214,6 +218,35 @@ public class TaslakEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Hareket Geçmişi açıklama kontrolü :\n \"{text}\" ")
+    public TaslakEvraklarPage tabloKontol(String text) {
+        tblHareketGecmisi
+                .filterBy(Condition.text(text))
+                .shouldHaveSize(1);
+        return this;
+    }
+
+
+    @Step("Rapor al Excel")
+    public TaslakEvraklarPage raporAl(String remoteDownloadPath) {
+        deleteSpecificFile("Rapor_");
+
+        sleep(3000);
+
+        btnRaporAlExcel.click();
+        islemMesaji().basariliOlmali();
+        waitForLoadingJS(WebDriverRunner.getWebDriver(), 180);
+        sleep(3000);
+        searchDownloadedFileWithName(remoteDownloadPath, "Rapor_.xls");
+
+        return this;
+    }
+
+    @Step("Evrak Geçmişi tıklanır.")
+    public TaslakEvraklarPage evrakGecmisiTikla() {
+   $(By.xpath("//a[text()='Evrak Geçmişi']")).click();
+        return this;
+    }
     @Step("Evrak Önizleme Ekranı ve evrak eki açıldığı görülür.")
     public TaslakEvraklarPage evrakOnizlemeveEkiKontrolu(String icerik) {
         Assert.assertEquals($(By.xpath("//div[text()='Evrak Önizleme']")).isDisplayed(), true);

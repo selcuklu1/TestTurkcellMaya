@@ -33,6 +33,8 @@ public class EvrakDevretTest extends BaseTest {
 
     User mbozdemir = new User("mbozdemir", "123");
     User username22n = new User("username22n", "123");
+    User username21g = new User("username21g", "123");
+
 
     //    String konu = "TS2178 20180205135705";
     String konu = "TS2178 " + getSysDate();
@@ -47,6 +49,11 @@ public class EvrakDevretTest extends BaseTest {
     String geregi = "Optiim Birim";
     String kullaniciNormal = "USERNAME22N TEST";
     String basariMesaji = "İşlem başarılıdır!";
+    String tabName = "İmza Bekleyen Evraklar";
+    String nameDA = "Username22N TEST";
+    String nameDE = "Username21G TEST";
+    String kullaniciTitle = " [Ağ (Network) Uzman Yardımcısı]";
+    String remoteDownloadPath = getDownloadPath();
 
     @BeforeMethod
     public void loginBeforeTests() {
@@ -64,6 +71,8 @@ public class EvrakDevretTest extends BaseTest {
 
         login(mbozdemir);
         evrakOlustur();
+        logout();
+        login(username21g);
 
         kullaniciEvrakDevretPage
                 .openPage()
@@ -71,43 +80,55 @@ public class EvrakDevretTest extends BaseTest {
                 .devredecekKisiSec("username21g")
                 .listele()
                 .tabloAlanKontrolleri()
-                .tabloEvrakSecimi("İmza Bekleyen Evraklar", konu)
+                .tabloEvrakSecimi(tabName, konu)
                 .devret()
                 .devralacakKisiAlanKontolu()
                 .devralacakKisiSec(kullaniciNormal)
                 .aciklamaDoldur(icerik)
                 .devretTamam()
                 .islemMesaji().basariliOlmali(basariMesaji);
-        kullaniciEvrakDevretPage
-                .tabloEvrakKontrolu(konu, false);
-
-        login(username22n);
-
-        taslakEvraklarPage
-                .openPage()
-                .evrakKontrolu(konu,true)
-                .evrakSecKonuyaGore(konu)
-                .evrakOnizlemeveEkiKontrolu(icerik)
-                .evrakOnizlemeButonTikla("Sil")
-                .silAciklamaInputDolduur("Silme işlemi")
-                .silSilGonder()
-                .silmeOnayıPopUpEvet()
-                .evrakKontrolu(konu,false);
+//        kullaniciEvrakDevretPage
+//                .tabloEvrakKontrolu(konu, false);
+//
+//        login(username22n);
+//
+//        taslakEvraklarPage
+//                .openPage()
+//                .evrakKontrolu(konu,true)
+//                .evrakSecKonuyaGore(konu)
+//                .evrakOnizlemeveEkiKontrolu(icerik)
+//                .evrakOnizlemeButonTikla("Sil")
+//                .silAciklamaInputDolduur("Silme işlemi")
+//                .silSilGonder()
+//                .silmeOnayıPopUpEvet()
+//                .evrakKontrolu(konu,false);
 
         //gelen kutusu kontrolü ?
     }
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true
-            ,dependsOnMethods = {"TS2178"}
+            , dependsOnMethods = {"TS2178"}
             , description = "TS2179 : Devredilen evrakların devralan kullanıcıda hareket/evrak geçmişinin kontrolü")
     public void TS2179() throws InterruptedException {
         login(username22n);
+
+        String mesaj = nameDE + kullaniciTitle + " ait evrak " + nameDA + kullaniciTitle + " adlı kişiye " + nameDE + kullaniciTitle
+                + " tarafından İmza Bekleyenler menüsünden devredilmiştir. / " + icerik;
         taslakEvraklarPage
                 .openPage()
                 .konuyaGoreEvrakIcerikGoster(konu);
         evrakDetayiPage
-                .sayfaAcilmali();
+                .sayfaAcilmali()
+//                .evrakBilgileriTabAktifKontrolEt()
+                .hareketGecmisiTabAc()
+                .tabloKontol(mesaj)
+                .raporAl(remoteDownloadPath)
+                .evrakDetayiKapat();
+        taslakEvraklarPage
+                .openPage()
+                .evrakSecKonuyaGore(konu)
+                .tabloKontol(mesaj);
 
 
         //1. adımda gelen evraklara evrak düşmedi...
@@ -115,9 +136,10 @@ public class EvrakDevretTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS0574 : Devredilen evrakların devredilen kullanıcıda kontrol edilmesi")
-    public void TS0574() throws InterruptedException{
+    public void TS0574() throws InterruptedException {
 
     }
+
     @Step("Test datası oluşturuldu.")
     private void evrakOlustur() {
         String imzacı = "username21g";
