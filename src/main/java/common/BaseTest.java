@@ -99,8 +99,10 @@ public class BaseTest extends BaseLibrary {
                     .addPreference("browser.helperApps.alwaysAsk.force", false)
                     .addPreference("browser.download.manager.showWhenStarting", false)
                     .addPreference("browser.helperApps.neverAsk.saveToDisk", neverAsk);
+            //Configuration.browserCapabilities = DesiredCapabilities.firefox();
             Configuration.browserCapabilities = new DesiredCapabilities();
-            Configuration.browserCapabilities.merge(options);
+            Configuration.browserCapabilities.setCapability(FirefoxOptions.FIREFOX_OPTIONS, options);
+            //Configuration.browserCapabilities.merge(options);
             //Configuration.browserCapabilities.setCapability("browser.helperApps.alwaysAsk.force", false);
             //Configuration.browserCapabilities.setCapability("browser.helperApps.neverAsk.saveToDisk", neverAsk);
         }*/
