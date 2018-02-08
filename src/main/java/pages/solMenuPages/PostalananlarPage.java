@@ -322,7 +322,7 @@ public class PostalananlarPage extends MainPage {
         return this;
     }
 
-    @Step("\"{Konu}\" Kontrol değerlerine göre postaları filtrele, tarih ve no kontrol, Filtrelenen postanın Icerik Goster butonuna tıkla ")
+    @Step("\"{Konu}\" Kontrol değerlerine göre postaları filtrele, tarih ve no kontrol, İç süret ve Dış süret Filtrelenen postanın Icerik Goster butonuna tıkla ")
     public PostalananlarPage btnFiltrenenPostaIcerikGoster(String Konu) throws InterruptedException {
         filter().findRowsWith(Condition.text(Konu)).first().click();
         String idAtr;
@@ -333,6 +333,8 @@ public class PostalananlarPage extends MainPage {
         String TarihId = "//*[@id='mainInboxForm:inboxDataTable:"+idAtr +":evrakTable']/tbody/tr[1]/td[3]";
         SelenideElement filteredTarihId = $x(TarihId);
         filteredTarihId.getAttribute("innerText");
+        SelenideElement icSuret = $x("//a[text() = 'İç Suret']");
+        SelenideElement disSuret = $x("//a[text() = 'Dış Suret']");
         filteredIcerikGoster.click();
         Thread.sleep(1000);
         return this;

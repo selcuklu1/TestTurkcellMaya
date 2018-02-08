@@ -252,6 +252,7 @@ public class EvrakPostalamaTest extends BaseTest {
         postalananlarPage.btnFiltrenenPostaIcerikGoster(konu);
         Thread.sleep(1000);
         postalananlarPage.icerikDetayPostaDetayi();
+        String txt = postalananlarPage.icerikEvrakSay();
         postalananlarPage.postalananyerlerKontrol();
         
         postalananlarPage.btnIcerikPostaDetayTuzelKisiGnc();
@@ -260,7 +261,6 @@ public class EvrakPostalamaTest extends BaseTest {
         postalananlarPage.btnIcerikPDTuzelKisiPosAcikGnc("TS520b");
         postalananlarPage.btnIcerikPDPopupKaydet();
 
-        String txt = postalananlarPage.icerikEvrakSay();
         postalananEvrakRaporuPage
                 .openPage();
 
@@ -477,10 +477,14 @@ public class EvrakPostalamaTest extends BaseTest {
                 .evrakPostala()
                 .postalanacakEvrakYaz()
                 .popupPostalanacakEvrakYazdir()
+                .pdfEvrakYazismaKuralkontrol();
+
+        closeNewWindow();
+        switchTo().window(0);
+
+        postalanacakEvraklarPage
                 .popupPostaYazdirmaKapat()
                 .dagitimDetay();
-
-        Selenide.close();
 
 
     }
@@ -578,7 +582,7 @@ public class EvrakPostalamaTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS1434 : Postalanan Evrak Raporu Alan kontrolleri")
-    public void TS1434() throws InterruptedException {
+    public void TS1434() throws InterruptedException    {
         login("mbozdemir", "123");
 
         postalananEvrakRaporuPage
@@ -588,7 +592,7 @@ public class EvrakPostalamaTest extends BaseTest {
                 .postaSorgulama();
 
         Thread.sleep(4000);
-       // postalananEvrakRaporuPage.ekranSorgulananSonucKontrol();
+        postalananEvrakRaporuPage.ekranSorgulananSonucKontrol();
 
         postalananEvrakRaporuPage.cmbEvrakSahibi("YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ")
                 .postaSorgulama();
