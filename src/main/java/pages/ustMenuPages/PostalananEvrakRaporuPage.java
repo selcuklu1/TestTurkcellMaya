@@ -68,7 +68,7 @@ public class PostalananEvrakRaporuPage extends MainPage {
         return this;
     }
 
-    @Step("Çıkan sonuçları kontrol et, gelen sonucu object olarak alımı ve alt değerlerin kontrolü")
+    @Step("Posta açıklama alanının güncel hali ile geldiği görülür")
     public PostalananEvrakRaporuPage sonucKarsilastirma() {
         tblSorgulamaSonuc.get(0);
         String innertext = tblSorgulamaSonuc.get(0).getAttribute("innerText");

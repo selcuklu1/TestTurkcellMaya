@@ -32,15 +32,15 @@ public class PostalananlarPage extends MainPage {
 
     //ElementsCollection  tblPostalananlartbl =  $$("tbody[id='mainInboxForm:inboxDataTable_data']");
     //Hüseyin
-    ElementsCollection tablePostalananlar = $$("tbody[id='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
+    ElementsCollection tablePostalananlar = $$("[id='mainInboxForm:inboxDataTable_data'] > tr");
     SelenideElement btnPostaDetayi = $x("//span[text() = 'Posta Detayı']/../../..//button");
     ElementsCollection tblEvraklar = $$("[id^='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
     SelenideElement tblPostalananYerler = $x("//*[@id='mainPreviewForm:postalananDataGrid']");
 
 
-    SelenideElement btnIcerikPostaDetayiTuzelKisiGuncelle = $x("//*[@id='inboxItemInfoForm:postalananDataGrid']/tbody/tr/td/div/table/tbody/tr[4]/td[8]/div/button[1]");
-    SelenideElement btnGuncelle = $x("//*[@id='mainPreviewForm:postalananDataGrid']/tbody/tr/td/div/table/tbody/tr[2]/td[8]/div/button[1]");
-    SelenideElement btnTuzelKisiGuncelle = $x("//*[@id='mainPreviewForm:postalananDataGrid']/tbody/tr/td/div/table/tbody/tr[4]/td[8]/div/button[1]");
+    SelenideElement btnIcerikPostaDetayiTuzelKisiGuncelle = $("[id='inboxItemInfoForm:postalananDataGrid'] span[class='ui-button-icon-left ui-icon update-icon']");
+    SelenideElement btnGuncelle = $("[id='mainPreviewForm:postalananDataGrid'] span[class='ui-button-icon-left ui-icon update-icon']");
+    SelenideElement btnTuzelKisiGuncelle = $("[id='mainPreviewForm:postaGuncelleDialog'] button[id^='mainPreviewForm']");
     SelenideElement txtPosta = $x("//*[@id=\'mainPreviewForm:postaGuncellePanel\']/tbody/tr[2]/td[3]/input");
     SelenideElement txtAciklama = $x("//*[@id=\'mainPreviewForm:postaGuncellePanel\']/tbody/tr[3]/td[3]/textarea");
     SelenideElement btnKaydet = $x("//span[text() = 'Kaydet']");
@@ -106,18 +106,29 @@ public class PostalananlarPage extends MainPage {
 
     @Step("Evrak seçilir")
     public PostalananlarPage evrakSec(String konu, String yer, String tarih) {
-        tblEvraklar.filterBy(Condition.text(konu))
+        $$("[id^='mainInboxForm:inboxDataTable_data'] > tr").filterBy(Condition.text(konu))
                 .filterBy(Condition.text(yer))
                 .filterBy(Condition.text(tarih)).get(0).click();
+        return this;
+    }
+    @Step("Evrak seçilir")
+    public PostalananlarPage evrakSec(String konu) {
+        $$("[id^='mainInboxForm:inboxDataTable_data'] > tr").filterBy(Condition.text(konu)).get(0).click();
         return this;
     }
 
     @Step("Evrak içerik göster")
     public PostalananlarPage evrakSecIcerikGoster(String konu, String yer, String tarih) {
-        tblEvraklar.filterBy(Condition.text(konu))
-                .filterBy(Condition.text(yer))
-                .filterBy(Condition.text(tarih))
+        $$("[id^='mainInboxForm:inboxDataTable_data'] > tr[role='row']").filterBy(Condition.text(konu))
                 .get(0).$$("[id$='detayGosterButton']").first().click();
+        return this;
+    }
+
+    @Step("Sağ üstte Posta Detayı ikonunun geldiği görülür.")
+    public PostalananlarPage postaDetayGeldigiGorme(){
+        boolean durum = $$("[class='ui-button-icon-left ui-icon postala']").size()==1;
+        Assert.assertEquals(durum,true);
+        takeScreenshot();
         return this;
     }
 
@@ -131,6 +142,22 @@ public class PostalananlarPage extends MainPage {
     public PostalananlarPage postalananyerlerKontrol() {
         String kontrl = tblPostalananYerler.getAttribute("innerText");
         System.out.println(kontrl);
+        return this;
+    }
+
+    @Step("Gönderilen yerlerin listelendiği görülür")
+    public PostalananlarPage gonderilenyerlerKontrol () {
+        boolean durum = $$("[id$='postalananDataGrid']").size()>0;
+        Assert.assertEquals(durum,true);
+        takeScreenshot();
+        return this;
+    }
+
+    @Step("Tüzel kişi ve kullanıcı satırının açıklama alanının dolu ve doğru geldiği görülür.")
+    public PostalananlarPage tuzelKisiVeAciklamaAlanlarDoluGeldigiGorme(String kisi,String aciklama){
+        boolean durum = $$("[id$='postalananDataGrid']").size()==1;
+        boolean durum2 = $$("[id$='postalananDataGrid']").filterBy(Condition.text(kisi)).size()==1;
+        Assert.assertEquals(durum,durum2);
         return this;
     }
 
@@ -226,14 +253,11 @@ public class PostalananlarPage extends MainPage {
 
     @Step("Evrak'ın \"{konu}\" adlı konu ile geldiği görünür. Geldiği yer:\"{gidecegiYer}\" Evrak tarihi:\"{evrakTarihi}\"")
     public PostalananlarPage evrakGeldigiGorme(String konu, String gidecegiYer, String evrakTarihi) {
-        boolean durum = tablePostalananlar.filterBy(Condition.text(konu))
-                .filterBy(Condition.text(gidecegiYer))
-                .filterBy(Condition.text(evrakTarihi)).get(0).shouldBe(visible).exists() == true;
+        boolean durum = $$("[id='mainInboxForm:inboxDataTable_data'] > tr").filterBy(Condition.text(konu)).size()==1;
         Assert.assertEquals(durum, true);
         takeScreenshot();
         return this;
     }
-
     @Step("Evrakların listelendiği görülür.")
     public PostalananlarPage tabloEvrakGeldigiGorme() {
         tablePostalananlar.filterBy(Condition.text("Konu:"))
@@ -278,7 +302,6 @@ public class PostalananlarPage extends MainPage {
 
     @Step("GonderimGuncelleme")
     public PostalananlarPage btnGuncelle() {
-
         btnGuncelle.click();
         return this;
     }
