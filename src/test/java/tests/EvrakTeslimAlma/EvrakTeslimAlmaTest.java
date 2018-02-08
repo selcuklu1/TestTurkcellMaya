@@ -1,14 +1,12 @@
 package tests.EvrakTeslimAlma;
 
 import common.BaseTest;
+import data.User;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pages.solMenuPages.BirimIadeEdilenlerPage;
-import pages.solMenuPages.KaydedilenGelenEvraklarPage;
-import pages.solMenuPages.TeslimAlinanlarPage;
-import pages.solMenuPages.TeslimAlinmayiBekleyenlerPage;
+import pages.solMenuPages.*;
 import pages.ustMenuPages.GelenEvrakKayitPage;
 import pages.ustMenuPages.GelenEvrakZimmetRaporuPage;
 import pages.ustMenuPages.SistemLoglariPage;
@@ -30,9 +28,9 @@ public class EvrakTeslimAlmaTest extends BaseTest {
     TeslimAlinanlarPage teslimAlinanlarPage;
     BirimIadeEdilenlerPage birimIadeEdilenlerPage;
     GelenEvrakZimmetRaporuPage gelenEvrakZimmetRaporu;
+    BirimHavaleEdilenlerPage birimHavaleEdilenlerPage;
 
     SistemLoglariPage sistemLoglariPage;
-
 
     @BeforeMethod
     public void loginBeforeTests() {
@@ -44,6 +42,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
         birimIadeEdilenlerPage = new BirimIadeEdilenlerPage();
         sistemLoglariPage = new SistemLoglariPage();
         gelenEvrakZimmetRaporu = new GelenEvrakZimmetRaporuPage();
+        birimHavaleEdilenlerPage = new BirimHavaleEdilenlerPage();
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -730,5 +729,4 @@ public class EvrakTeslimAlmaTest extends BaseTest {
                 .evrakEtiketButtonTıklama(konu1)
                 .evrakEtiketKontrolu();
     }
-
 }

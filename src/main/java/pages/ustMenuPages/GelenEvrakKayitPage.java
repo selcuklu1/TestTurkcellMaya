@@ -245,6 +245,8 @@ public class GelenEvrakKayitPage extends MainPage {
     //Evrak Havale Islemleri Form
     SelenideElement btnHavaleIslemleri = $(By.id("evrakBilgileriForm:havalePanel_toggler"));
 
+    ElementsCollection tblEvraklar = $$("[id^='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
+
     @Step("Gelen Evrak Kayıt sayfasını aç")
     public GelenEvrakKayitPage openPage() {
         ustMenu(UstMenuData.EvrakIslemleri.GelenEvrakKayit);
@@ -1546,5 +1548,13 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
+    @Step("Evrak no ile evrak seçilir : \"{evrakNo}\" ")
+    public GelenEvrakKayitPage evrakNoIleEvrakSec(String evrakNo) {
+        tblEvraklar
+                .filterBy(Condition.text(evrakNo))
+                .first()
+                .click();
+        return this;
+    }
 
 }
