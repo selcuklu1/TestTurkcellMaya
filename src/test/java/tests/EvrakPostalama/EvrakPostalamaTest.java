@@ -182,7 +182,6 @@ public class EvrakPostalamaTest extends BaseTest {
                 .bilgilerTabAlanKontrolleri()
                 .konuKoduSec("Yazılım Geliştirme")
                 .konuDoldur(evrakKonusu)
-                //  .kaldirilacakKlasorler("B1K1")
                 .evrakTuruSec("Resmi Yazışma")
                 .geregiSecimTipiSec("Kurum")
                 .geregiDoldur("Avrupa Birliği Bakanlığı", "Kurum")
@@ -209,7 +208,6 @@ public class EvrakPostalamaTest extends BaseTest {
                 .imzala()
                 .popupSImzalaIslemleri();
 
-
         postalananlarPage
              .islemMesaji().basariliOlmali("İşlem başarılıdır!");
 
@@ -225,11 +223,6 @@ public class EvrakPostalamaTest extends BaseTest {
         postalananlarPage
                 .openPage()
                 .konuyaGoreEvrakGelmemeKontrolu(evrakKonusu);
-                //.t2076PostaArama("TS2076");
-
-     //   postalanacakEvraklarPage
-       //         .openPage()
-         //       .btnFiltrenenPostaIcerikGoster("TS2076");
 
         login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
 
@@ -239,7 +232,6 @@ public class EvrakPostalamaTest extends BaseTest {
                 .konuyaGoreEvrakOnizlemedeAc(evrakKonusu)
                 .evrakGecmisi()
                 .evrakGecmisiWith("Evrak kurum içi otomatik postalandı.");
-
     }
 
 
