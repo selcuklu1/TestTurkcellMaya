@@ -359,7 +359,7 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         return this;
     }
 
-    @Step("Evrak no ile teslim al")
+    @Step("Evrak no ile içerik göster")
     public TeslimAlinmayiBekleyenlerPage evrakSecIcerikGoster(String konu, boolean secim) {
         tblEvraklar.filterBy(text(konu)).get(0).$$("[id$='detayGosterButton']").first().click();
         return this;
@@ -371,14 +371,14 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         return this;
     }
 
-    @Step("İçerikten Evrak teslim Evet tıklama")
+    @Step("İçerikten Evrak teslim Alma : Evrakı teslim almak istediğinize emin misiniz? uyarı kontrolü")
     public TeslimAlinmayiBekleyenlerPage içeriktenEvrakEvet() {
         $(By.id("teslimAlEvetButton")).click();
         return this;
     }
 
 
-    @Step("Evrak Sec Checkbox ile")
+    @Step("Evrak Sec Checkbox ile ve Teslim Al")
     public TeslimAlinmayiBekleyenlerPage evrakSecCheckBox(String konu1, String konu2, boolean secim) {
         tblEvraklar.filterBy(text(konu1)).get(0).$$("div[class^='ui-chkbox-box']").first().click();
         tblEvraklar.filterBy(text(konu2)).get(0).$$("div[class^='ui-chkbox-box']").first().click();

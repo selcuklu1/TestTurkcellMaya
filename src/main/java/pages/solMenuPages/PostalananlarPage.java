@@ -4,15 +4,12 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
-import javafx.geometry.Pos;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.pageData.SolMenuData;
 
-import static com.codeborne.selenide.Condition.exist;
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 
 public class PostalananlarPage extends MainPage {
@@ -29,6 +26,10 @@ public class PostalananlarPage extends MainPage {
     SelenideElement tblPostalananlartbl = $(By.id("mainInboxForm:inboxDataTable_data"));
     SelenideElement btnRadioPostaladiklarim = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:postaladiklarimCheckbox"));
     SelenideElement tblEvrakDetayPanel = $(By.id("mainPreviewForm:evrakDetayPanelGrid"));
+
+    SelenideElement btnIcDısEvrakIkonu = $("[id^='mainInboxForm:inboxDataTable:0:j_idt'] [class$='document-typeIcDisBelgeNiteliksiz']");
+
+
     //ElementsCollection  tblPostalananlartbl =  $$("tbody[id='mainInboxForm:inboxDataTable_data']");
     //Hüseyin
     ElementsCollection tablePostalananlar = $$("tbody[id='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
@@ -244,7 +245,7 @@ public class PostalananlarPage extends MainPage {
     }
 
 
-    @Step("Evrak seç.")
+    @Step("Evrak seç")
     public PostalananlarPage evrakSec(String konu, String gidecegiYer, String evrakTarihi, String no) {
 
         tablePostalananlar
@@ -420,7 +421,7 @@ public class PostalananlarPage extends MainPage {
         return this;
     }
 
-    @Step("Filtereden Postaladıklarımı işaretle")
+    @Step("Filtereden Postaladıklarım checkini işaretle")
     public PostalananlarPage btnFiltrePostaladiklarim() {
 
         btnRadioPostaladiklarim.click();
@@ -429,7 +430,6 @@ public class PostalananlarPage extends MainPage {
 
     @Step("Filtreden başlangıç tarihi girişi")
     public PostalananlarPage btnFiltreBaslangicTarihi(String date) {
-
         btnFiltreBaslangicTarihi.setValue(date);
         return this;
     }
@@ -538,7 +538,7 @@ public class PostalananlarPage extends MainPage {
     @Step("Tek imzacısının doğru olarak geldiği görülür")
     public PostalananlarPage tekImzaciKontrol(String imzaci) {
 
-        ElementsCollection trParafImzaAkisListesi = $$("[id='mainInboxForm:imzaListesiDataTable_data'] td");
+        ElementsCollection trParafImzaAkisListesi = $$("[id='mainInboxForm:imzaListesiDataTable_data'] tr");
 
         trParafImzaAkisListesi
                 .filterBy(text(imzaci))
@@ -548,9 +548,24 @@ public class PostalananlarPage extends MainPage {
         return this;
     }
 
-    @Step("Solda dış suret ve iç suret tab kontrolu")
-    public PostalananlarPage solDisSuretIcSuretTabKontrolu() {
+    @Step("Sağda evrak ekleri, ilgi bilgileri, evrak geçmişi, evrak notları tablarının geldiği kontrolu")
+    public PostalananlarPage sagTabKontrol() {
 
+        SelenideElement tavEvrakEkleri = $(By.xpath("//a[text()='Evrak Ekleri']"));
+        SelenideElement tavEvrakGeçmişi = $(By.xpath("//a[text()='Evrak Geçmişi']"));
+        SelenideElement tavEvrakNotlari = $(By.xpath("//a[text()='Evrak Notları']"));
+
+        Assert.assertEquals(tavEvrakEkleri.isDisplayed(), true, "Evrak Ekleri");
+        Assert.assertEquals(tavEvrakGeçmişi.isDisplayed(), true, "Evrak Geçmişi");
+        Assert.assertEquals(tavEvrakNotlari.isDisplayed(), true, "Evrak Notları");
+
+        return this;
+    }
+
+    @Step("İç-dış evrak ikonu kontrolu")
+    public PostalananlarPage icDisEvrakIkonuKontrolu() {
+
+       Assert.assertEquals(btnIcDısEvrakIkonu.isDisplayed(), true);
         return this;
     }
 
@@ -566,4 +581,5 @@ public class PostalananlarPage extends MainPage {
 
         return this;
         }
+
 }

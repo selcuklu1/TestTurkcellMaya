@@ -130,21 +130,17 @@ public class EvrakTeslimAlmaTest extends BaseTest {
         String ivedilik = "Normal";
         String ekMetni = "test otomasyon" + getSysDateForKis();
         String aciklama = "Test Otomasyon";
-        String evrakNO321;
-        String evrakNO328;
         String kisi = "Zübeyde Tekin";
         String islemSureci = "Evrak Teslim Alındı ";
 
 
         String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
-        String details = "BİLİŞİM HİZMETLERİ VE UYDU PAZARLAMA GENEL MÜDÜR Y";
+        String details = "BHUPGMY";
 
         testStatus(testid,"PreCondition Evrak Oluşturma");
-        //Pre-requisites Gelen Evrak Oluşturma
         gelenEvrakKayitPage
                 .openPage();
 
-        //Pre-requisites Evrak Oluşturma
         gelenEvrakKayitPage
                 .konuKoduDoldur(konuKodu)
                 .konuDoldur(konu)
@@ -297,7 +293,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TS2319: Ayni Anda 2 Evrak Teslim Alma")
+    @Test(enabled = true, description = "TS2319: Teslim alınmayı bekleyenler listesinden evrak teslim alma (toplu)")
     public void TS2319() throws InterruptedException {
         String testid= "TS-2319";
         String basariMesaji = "İşlem başarılıdır!";
@@ -314,21 +310,16 @@ public class EvrakTeslimAlmaTest extends BaseTest {
         String ivedilik = "Normal";
         String ekMetni = "test otomasyon" + getSysDateForKis();
         //String aciklama1 = "Test Otomasyon";
-        String evrakNO321;
-        String evrakNO328;
         String kisi = "Zübeyde Tekin";
         String islemSureci = "Evrak Teslim Alındı ";
 
-
         String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
-        String details = "BİLİŞİM HİZMETLERİ VE UYDU PAZARLAMA GENEL MÜDÜR Y";
+        String details = "BHUPGMY";
 
         testStatus(testid,"PreCondition 1. Evrak Oluşturma");
-        //Pre-requisites Gelen Evrak Oluşturma 1. dosya
         gelenEvrakKayitPage
                 .openPage();
 
-        //Pre-requisites Evrak Oluşturma
         gelenEvrakKayitPage
                 .konuKoduDoldur(konuKodu)
                 .konuDoldur(konu1)
@@ -352,11 +343,9 @@ public class EvrakTeslimAlmaTest extends BaseTest {
         String konu2 = "TS-2319-" + getSysDate();
 
         testStatus(testid,"PreCondition 2. Evrak Oluşturma");
-        //Pre-requisites Gelen Evrak Oluşturma 2. dosya
         gelenEvrakKayitPage
                 .openPage();
 
-        //Pre-requisites Evrak Oluşturma
         gelenEvrakKayitPage
                 .konuKoduDoldur(konuKodu)
                 .konuDoldur(konu2)
@@ -379,15 +368,15 @@ public class EvrakTeslimAlmaTest extends BaseTest {
         testStatus(testid,"Test Başladı");
         teslimAlinmayiBekleyenlerPage
                 .openPage()
-                .evrakSecCheckBox(konu1, konu2, true);
+                .evrakSecCheckBox(konu1, konu2, true)
+                .islemMesaji().basariliOlmali(basariMesaji);
 
         teslimAlinanlarPage
                 .openPage()
+                .evrakNoIleEvrakSec(konu1)
                 .evrakNoIleEvrakSec(konu2)
                 .secilenEvrakEvrakGecmisi()
                 .evrakGecmisi(kisi, islemSureci);
-
-
     }
 
     @Severity(SeverityLevel.CRITICAL)
