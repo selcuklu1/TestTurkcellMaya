@@ -4,7 +4,11 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import io.qameta.allure.Allure;
+import io.qameta.allure.AllureUtils;
 import io.qameta.allure.Step;
+import org.apache.xmlbeans.impl.xb.xsdschema.All;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
@@ -127,11 +131,13 @@ public class PostalanacakEvraklarPage extends MainPage {
         System.out.println("Page: " + pageTitle);
         return this;
     }
+
     @Step("Evrakın fiziksel Eki vardır, göndermeyi unutmayınız yazısı kontrolü ve Tarih-sayı kontrolü")
     public PostalanacakEvraklarPage KntrlEvrakFizikselEkYaziSayTar() {
         txtEvrakinFizikselEkivardir.exists();
         return this;
     }
+
     @Step("Evrak seçilir")
     public PostalanacakEvraklarPage evrakSec(String konu, String yer, String tarih) {
         tblEvraklar.filterBy(Condition.text(konu))
@@ -139,8 +145,11 @@ public class PostalanacakEvraklarPage extends MainPage {
                 .filterBy(Condition.text(tarih)).get(0).click();
         return this;
     }
+
+
     @Step("Fiziksel Ek ikon kontrolu")
     public PostalanacakEvraklarPage btnFizikselEkIkonKontrol () {
+
         btnFizikselEkBulunmaktadirIkon.exists();
         return this;
     }
@@ -159,6 +168,7 @@ public class PostalanacakEvraklarPage extends MainPage {
         btnIcerikEvrakPostala.click();
         return this;
     }
+
     @Step("Evrak içerik Evrak Göster butonu")
     public PostalanacakEvraklarPage btnIcerikEvrakGoster() {
         btnIcerikEvrakGoster.click();
@@ -167,12 +177,13 @@ public class PostalanacakEvraklarPage extends MainPage {
 
     @Step("Dağıtım Gidis Şekli seçimi \"{postaSekli}\" ")
     public PostalanacakEvraklarPage btnDagitimGidisSekli(String postaSekli) {
-       String selectedTxt = btnComboEvrakGidisSekli.getSelectedText();
-       System.out.println(selectedTxt);
+        String selectedTxt = btnComboEvrakGidisSekli.getSelectedText();
+        System.out.println(selectedTxt);
         btnComboEvrakGidisSekli.selectOptionContainingText(postaSekli);
         return this;
 
     }
+
     @Step("Yurt içi yurt dışı seçimi \"{yurticdis}\" ")
     public PostalanacakEvraklarPage cmbYurticidisi(String yurt) {
         slctYurtIciyurtdisi.selectOption(yurt);
@@ -199,39 +210,74 @@ public class PostalanacakEvraklarPage extends MainPage {
     }
 
     @Step("Evrak Detayları kontrol")
-    public PostalanacakEvraklarPage txtevrakDetayKontrol () {
+    public PostalanacakEvraklarPage txtevrakDetayKontrol() {
         txtEvrakKonuKontrol.getSelectedText();
         return this;
     }
+
     @Step("Evrak Detay Postalanan yerler kontrolü - Tablodan kontröl")
-    public PostalanacakEvraklarPage tblDetayPostalananYerlerKontrol () {
+    public PostalanacakEvraklarPage tblDetayPostalananYerlerKontrol() {
         tblPostalanacakYerler.getAttribute("childElementCount");
         String kntrltxt = tblPostalanacakYerler.getAttribute("innerText");
-        if (kntrltxt == null ) {
+        if (kntrltxt == null) {
             System.out.println("Postalanacak Yerler Boş gelmiştir");
         }
         return this;
     }
+
     @Step("Evrak Postala")
     public PostalanacakEvraklarPage evrakPostala() {
         btnEvrakPostala.click();
         return this;
     }
-    
+
+    @Step("")
+    public PostalanacakEvraklarPage alanKontrolleri(String konu,String[] title,String[] gonderildigYerler) {
+        SelenideElement evrakDetaylariKonu = $("table[id='mainPreviewForm:evrakDetayPanelGrid'] tr:nth-child(1) td:nth-child(3) label");
+        SelenideElement evrakDetaylariTarih = $("table[id='mainPreviewForm:evrakDetayPanelGrid'] tr:nth-child(4) td:nth-child(3) label");
+        SelenideElement evrakDetaylariGonderen = $("table[id='mainPreviewForm:evrakDetayPanelGrid'] tr:nth-child(2) td:nth-child(3) label");
+
+        ElementsCollection tblPostalanacakYerler = $$("tbody[id='mainPreviewForm:dataTableId_data'] tr[data-ri]");
+
+        Assert.assertEquals(evrakDetaylariKonu.text().contains(konu),true);
+        Assert.assertEquals(evrakDetaylariTarih.text().equals(getSysDateForKis()),true);
+        Assert.assertEquals(evrakDetaylariGonderen.text().equals("YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ"),true);
+
+        Allure.addAttachment("Evrak Detayları", "Evrak Detayları alanı kontrol edilmiştir.");
+
+        for (int i =0 ; i<tblPostalanacakYerler.size();i++){
+
+            tblPostalanacakYerler
+                    .filterBy(Condition.text(title[i]))
+                    .filterBy(Condition.text(gonderildigYerler[i]))
+                    .shouldHaveSize(1);
+            Allure.addAttachment("Postalanacak Yerler - Gönderim Şekli", title[i]+" - "+gonderildigYerler[i]);
+
+        }
+
+
+
+
+
+
+
+        return this;
+    }
+
     @Step("Posta tiplerinin doğru olarak listelendiği görülür")
-    public PostalanacakEvraklarPage postaTipleriListelendigiGorme(){
-        boolean durum = $$(By.id("mainPreviewForm:dataTableId_data")).size()==1;
-        Assert.assertEquals(durum,true);
+    public PostalanacakEvraklarPage postaTipleriListelendigiGorme() {
+        boolean durum = $$(By.id("mainPreviewForm:dataTableId_data")).size() == 1;
+        Assert.assertEquals(durum, true);
         takeScreenshot();
         return this;
     }
-    
+
     @Step("{alan} - {kisi} : {gidisSekli} gönderici ve alıcı kep adreslerinin geldiği görülür.")
-    public PostalanacakEvraklarPage postalanacakYerlerAlanGoreSecimGeldigiGorme(String alan,String kisi, String gidisSekli){
-    boolean durum = $$("[id='mainPreviewForm:dataTableId_data'] > tr[role='row']").filterBy(Condition.text(kisi))
-            .filterBy(Condition.text(gidisSekli)).size()==1;
-    Assert.assertEquals(durum,true);
-    takeScreenshot();
+    public PostalanacakEvraklarPage postalanacakYerlerAlanGoreSecimGeldigiGorme(String alan, String kisi, String gidisSekli) {
+        boolean durum = $$("[id='mainPreviewForm:dataTableId_data'] > tr[role='row']").filterBy(Condition.text(kisi))
+                .filterBy(Condition.text(gidisSekli)).size() == 1;
+        Assert.assertEquals(durum, true);
+        takeScreenshot();
         return this;
     }
 
@@ -405,6 +451,7 @@ public class PostalanacakEvraklarPage extends MainPage {
 
         return this;
     }
+
     @Step("PDF - Evrak sayısı - Yazışma Kuralları kontrol")
     public PostalanacakEvraklarPage pdfEvrakYazismaKuralkontrol() {
         switchTo().window(1);
@@ -413,6 +460,7 @@ public class PostalanacakEvraklarPage extends MainPage {
         System.out.println(ktrl);
         return this;
     }
+
     @Step("Postalanacak Evrak Orjinal Yazdırma popup Kapatma")
     public PostalanacakEvraklarPage popupEvrOrjYazKapat() throws InterruptedException {
 
@@ -444,8 +492,9 @@ public class PostalanacakEvraklarPage extends MainPage {
 
         return this;
     }
+
     @Step("Postalanacan Evrak orjinal popup Kapatma")
-    public PostalanacakEvraklarPage popupOrjYazPostaKapatma () {
+    public PostalanacakEvraklarPage popupOrjYazPostaKapatma() {
         SelenideElement btnkp = $x("//*[@id='postaDetayYazdirForm:dlgPostaDetayYazdir']/div[1]/a/span");
         return this;
     }
@@ -823,13 +872,13 @@ public class PostalanacakEvraklarPage extends MainPage {
     }
 
     @Step("Takip Listesinde {adiSoyadi} kullanıcısının ve {birim} birim bilgisinin olduğu görülür.")
-    public PostalanacakEvraklarPage takipListesiKontrol(String adiSoyadi, String birim){
+    public PostalanacakEvraklarPage takipListesiKontrol(String adiSoyadi, String birim) {
         tblTakipListesi.filterBy(text(adiSoyadi)).filterBy(text(birim)).first().shouldBe(visible);
         return this;
     }
 
     @Step("Takip Listesi ekranında bulunan (X) \"Sayfayı Kapatma\" butonuna basılır. Takip listesi ekranın kapatıldığı görülür.")
-    public PostalanacakEvraklarPage takipListesiKapat(){
+    public PostalanacakEvraklarPage takipListesiKapat() {
         btnTakipListesiKapat.click();
         txtKullaniciListesi.shouldNotBe(visible);
         return this;
@@ -851,4 +900,7 @@ public class PostalanacakEvraklarPage extends MainPage {
 
         return this;
     }
-}
+
+
+    }
+

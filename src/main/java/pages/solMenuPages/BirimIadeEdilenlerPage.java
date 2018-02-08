@@ -17,7 +17,6 @@ import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
-
 /****************************************************
  * Proje: Türksat Functional Test Automation
  * Class: "BirimIadeEdilenlerPage" konulu senaryoları içerir
@@ -31,6 +30,7 @@ public class BirimIadeEdilenlerPage extends MainPage {
     ElementsCollection tableEvraklar = $$("tbody[id='mainInboxForm:inboxDataTable_data'] > tr");
     SelenideElement onizlemeTeslimAl = $("[id='mainPreviewForm:onizlemeRightTab:uiRepeat:4:cmdbutton']");
     ElementsCollection btnTeslimAl = $$("[id^='mainInboxForm:inboxDataTable:j_idt'] > [class$='document-delivery']");
+    BelgenetElement txtOnaylanacakKisi = comboLov(By.id("mainPreviewForm:onaylayacakKisiLov:LovText"));
     SelenideElement içeriktenEvrakTeslimAlHavaleEt = $("[id='inboxItemInfoForm:dialogTabMenuRight:uiRepeat:5:cmdbutton']");
     BelgenetElement cmbHavaleIslemleriBirim = comboLov(By.id("inboxItemInfoForm:dagitimBilgileriBirimLov:LovText"));
     SelenideElement dosyaEkleKontrol = $(By.id("inboxItemInfoForm:fileUploadTeslimAlHavaleEk"));
@@ -88,6 +88,24 @@ public class BirimIadeEdilenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Teslim Al ve Havale Et")
+    public BirimIadeEdilenlerPage teslimAlVeHavaleEt(){
+        $("[class='ui-button-icon-left ui-icon teslimAlHavale']").click();
+        return this;
+    }
+
+    @Step("Onaylayacak Kişi doldur: {onaylanacakKisi} - {birim}")
+    public BirimIadeEdilenlerPage onaylanacakKisiDoldur(String onaylanacakKisi,String birim){
+        txtOnaylanacakKisi.selectLov(onaylanacakKisi,birim);
+        return this;
+    }
+    
+    @Step("")
+    public BirimIadeEdilenlerPage havaleOnayinaGonder(){
+        $$("[id='mainPreviewForm:evrakOnizlemeTab'] button").filterBy(Condition.text("Havale Onayına Gönder")).first().click();
+        return this;
+    }
+
     @Step("Önizleme ekranından Teslim Al butonuna basılır ve Evrakı teslim almak istediğinize emin misiniz? uyarısı Evet ile onaylanır")
     public BirimIadeEdilenlerPage evrakOnizlemeTeslimAl()
     {
@@ -112,7 +130,7 @@ public class BirimIadeEdilenlerPage extends MainPage {
     public BirimIadeEdilenlerPage evrakNoGelmedigiGorme(String konu) {
         boolean durum = tableEvraklar
                 .filterBy(text(konu)).size() > 0;
-        Assert.assertEquals(durum, false);
+        Assert.assertEquals(durum, false,"Evrak Bulunamamıştır");
         return this;
     }
 
@@ -201,12 +219,6 @@ public class BirimIadeEdilenlerPage extends MainPage {
     @Step("Dağıtım Bilgileri Onaylayacak Kisi alanında \"{onaylayan}\" seçilir")
     public BirimIadeEdilenlerPage dagitimBilgileriOnaylayanWithDetails(String onaylayan, String details) {
         cmbHavaleIslemleriOnaylayacakKisi.selectLov(onaylayan, details);
-        return this;
-    }
-
-    @Step("Evrak Önizleme Havale Onayına Gönder")
-    public BirimIadeEdilenlerPage havaleOnayinaGonder() {
-        havaleOnayinaGonder.filterBy(Condition.text("Havale Onayına Gönder")).last().click();
         return this;
     }
 

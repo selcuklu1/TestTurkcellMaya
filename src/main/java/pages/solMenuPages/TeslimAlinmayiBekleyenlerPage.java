@@ -436,7 +436,7 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         return this;
     }
 
-    @Step("Telim Al ve Havale Yap butonana bas")
+    @Step("Telim Al ve Havale Yap")
     public TeslimAlinmayiBekleyenlerPage havaleYap() {
         btnTeslimAlveHavaleYap.click();
         return this;
@@ -611,20 +611,20 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         return this;
     }
 
-    @Step("")
+    @Step("Kullanıcının Yeni Birimi \"{digerDetails}\" seçilir")
     public TeslimAlinmayiBekleyenlerPage birimDegistirme(String digerDetails) {
         birimDegistirme.filterBy(Condition.text(digerDetails)).get(0).click();
         return this;
     }
 
     @Step("Teslim Alınan Evrakın Iade Edilmesi")
-    public TeslimAlinmayiBekleyenlerPage btnIadeEt() {
+    public TeslimAlinmayiBekleyenlerPage iadeEt() {
         btnIadeEt.click();
         return this;
     }
 
     @Step("Teslim Alınan Evrakın Iade Edilmesi ve Iade Et Tıklanması")
-    public TeslimAlinmayiBekleyenlerPage btnIadeEtIadeEt() {
+    public TeslimAlinmayiBekleyenlerPage iadeEtIadeEt() {
         btnIadeEtIadeEt.click();
         return this;
     }
