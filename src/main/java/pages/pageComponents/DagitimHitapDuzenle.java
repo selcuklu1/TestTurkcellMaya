@@ -199,4 +199,9 @@ public class DagitimHitapDuzenle {
         return container.$("table[id$='hitapOnizlemeGrid']");
     }
 
+    @Step("Kayıtlı Hitap: {stepDescription}")
+    public SelenideElement getKayitliHitap(String stepDescription){
+        return container.$x("descendant::span[.='Kayıtlı Hitap']/ancestor::table[1]");
+    }
+
 }

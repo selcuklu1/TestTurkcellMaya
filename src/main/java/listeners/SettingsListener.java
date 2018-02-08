@@ -7,10 +7,10 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.testng.ITestResult;
-import org.testng.TestNG;
+import org.testng.reporters.ExitCodeListener;
 
 
-public class SettingsListener extends TestNG.ExitCodeListener {
+public class SettingsListener extends ExitCodeListener {
 
     @Override
     public void onTestStart(ITestResult result) {

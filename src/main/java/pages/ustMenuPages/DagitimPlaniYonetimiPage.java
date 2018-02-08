@@ -201,7 +201,7 @@ public class DagitimPlaniYonetimiPage extends MainPage {
     }
 
     @Step("\"Dağıtım Elemanları\" tipi \"{text}\" seçilir")
-    public DagitimPlaniYonetimiPage dagitimElemanlariSelecSec(String text){
+    public DagitimPlaniYonetimiPage dagitimElemanlariSelectSec(String text){
         getDagitimElemanlariSelect().selectOption(text);
         return this;
     }
