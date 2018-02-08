@@ -15,6 +15,7 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import pages.pageComponents.IslemMesajlari;
 import pages.solMenuPages.ImzaladiklarimPage;
 import pages.solMenuPages.PostalanacakEvraklarPage;
 import pages.solMenuPages.PostalananlarPage;
@@ -130,6 +131,7 @@ public class EvrakPostalamaTest extends BaseTest {
 
         switchTo().window(0);
         postalanacakEvraklarPage
+
                 .postalanacakEvrakOrjYaz()
                 .pdfEvrakYazismaKuralkontrol()
                 .popupEvrOrjYazKapat()
@@ -146,12 +148,15 @@ public class EvrakPostalamaTest extends BaseTest {
                 .evSay();
         postalananlarPage
                 .postalananyerlerKontrol()
+                .dagitimPlanYazdir()
+                .yazdirpopupYazdirButonktrl();
+        postalananlarPage.islemMesaji().isDikkat("Önce üst yazı yazdırılmalıdır ");
+        postalananlarPage
                 .popupYazpdfkontrolveKapatma();
+        postalananlarPage
+                .eklerYazdirPopupbtn()
+                .popupkapatma();
 
-        postalananlarPage.etiketBastir()
-                .btnPopupEtiketBastirKapat();
-        postalananlarPage.btnEvrakEkleri()
-                .btnEyazismaPaket();
 
     }
 
@@ -373,6 +378,7 @@ public class EvrakPostalamaTest extends BaseTest {
                 .mngImzaDialog()
                 .btnImzaciPopupKapat()
                 .btnTamEkran()
+                .icDisSuretKtrl()
                 .btnTamEkranKapat()
                 .btnIcerikGoster();
 

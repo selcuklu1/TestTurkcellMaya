@@ -129,10 +129,41 @@ public class PostalananlarPage extends MainPage {
         System.out.println(kontrl);
         return this;
     }
+    @Step("Postalanan Evrak Orjinalini Yazdır")
+    public PostalananlarPage evrakOrjinaliniYazdir () {
+        SelenideElement postalananEvrakOrjYazdir = $x("//button[span[text()='Yazdır']]");
+            postalananEvrakOrjYazdir.click();
+            return this;
+    }
 
     @Step("Sayfada ara doldur")
     public PostalananlarPage sayfadaAraDoldur(String text) {
         txtSayfadaAra.setValue(text);
+        return this;
+    }
+    @Step("Dağıtım planı Yazdır")
+    public PostalananlarPage dagitimPlanYazdir () {
+        postalananEvrakYazdir.click();
+        return this;
+    }
+    @Step("Yazdır popup içinde Üstyazı ve Ekleri yazdir kontrolü")
+    public PostalananlarPage yazdirpopupYazdirButonktrl () {
+        SelenideElement evrakEkleri = $x("//*[@id='postaDetayYazdirForm:dtPostaEvrakEk_data']");
+        evrakEkleri.exists();
+        SelenideElement evrakYazdirButonktrl = $x("//span[text()='Yazdır']");
+        evrakYazdirButonktrl.exists();
+
+        return this;
+    }
+    @Step("Ekleri Yazdirma butonu , PDF'leri açma ve kontröl")
+    public PostalananlarPage eklerYazdirPopupbtn () {
+        SelenideElement evrakYazdirButonktrl = $x("//span[text()='Yazdır']");
+        evrakYazdirButonktrl.click();
+        switchTo().window(1);
+        SelenideElement ickKtrl = $x("//*[@id='plugin']");
+        ickKtrl.exists();
+        closeNewWindow();
+        switchTo().window(0);
         return this;
     }
 
@@ -334,12 +365,24 @@ public class PostalananlarPage extends MainPage {
         SelenideElement filteredTarihId = $x(TarihId);
         filteredTarihId.getAttribute("innerText");
         SelenideElement icSuret = $x("//a[text() = 'İç Suret']");
+        icSuret.exists();
         SelenideElement disSuret = $x("//a[text() = 'Dış Suret']");
+        disSuret.exists();
         filteredIcerikGoster.click();
         Thread.sleep(1000);
         return this;
     }
+    @Step("İç ve Dış Suret - PDF kontrol")
+    public PostalananlarPage icDisSuretKtrl() {
+        SelenideElement icSuret = $x("//a[text() = 'İç Suret']");
+        SelenideElement disSuret = $x("//a[text() = 'Dış Suret']");
+        SelenideElement Pdfktrl = $x("//a[text() = 'EK-1    TS2235_PDF']");
+        icSuret.exists();
+        disSuret.exists();
+        Pdfktrl.exists();
+        return this;
 
+    }
     @Step("Icerik içinde Ilgileri Tabına tıklama ve kontrol (kontrol için 500ms delay bulunmakta)")
     public PostalananlarPage btnIcerikIlgileriTab() throws InterruptedException {
         btnIlgileriIcerik.click();
@@ -433,16 +476,24 @@ public class PostalananlarPage extends MainPage {
         return this;
     }
 
-    @Step("Evrak Yazdır Popup içi Pdf yazdırma ve kontrol ve popup kapatma")
+    @Step("Evrak Yazdır Popup içi Üst Veri Pdf yazdırma, kırmızı alan içerik kontrolü")
     public PostalananlarPage popupYazpdfkontrolveKapatma () {
         popupEvrakYazdirma.click();
+        switchTo().window(1);
+
         SelenideElement ustyazi = $x("//*[@id='postaDetayYazdirForm:dtPostaEvrakUstVeri_data']/tr/td[2]/div");
         String pdf = ustyazi.getAttribute("innerText");
         System.out.println(pdf);
+        closeNewWindow();
+        switchTo().window(0);
+        return this;
+
+    }
+    @Step("Evrak yazdırma popup kapatma")
+    public PostalananlarPage popupkapatma () {
         SelenideElement popupkapat = $x("//*[@id='postaDetayYazdirForm:dlgPostaDetayYazdir']/div[1]/a/span");
         popupkapat.click();
         return this;
-
     }
     @Step("Etiket Bastir ve kontrol")
     public PostalananlarPage etiketBastir() {
