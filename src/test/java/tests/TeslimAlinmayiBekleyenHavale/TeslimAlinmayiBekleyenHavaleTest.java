@@ -13,10 +13,7 @@ import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Step;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pages.solMenuPages.BirimHavaleEdilenlerPage;
-import pages.solMenuPages.GelenEvraklarPage;
-import pages.solMenuPages.HaveleOnayinaSunduklarimPage;
-import pages.solMenuPages.TeslimAlinmayiBekleyenlerPage;
+import pages.solMenuPages.*;
 import pages.ustMenuPages.GelenEvrakKayitPage;
 
 import static data.TestData.*;
@@ -36,6 +33,9 @@ public class TeslimAlinmayiBekleyenHavaleTest extends BaseTest {
     BirimHavaleEdilenlerPage birimHavaleEdilenlerPage;
     GelenEvraklarPage gelenEvraklarPage;
     HaveleOnayinaSunduklarimPage haveleOnayinaSunduklarimPage;
+    BirimIadeEdilenlerPage birimIadeEdilenlerPage;
+    HavaleOnayınaGelenlerPage havaleOnayınaGelenlerPage;
+    HavaleOnayiVerdiklerimPage havaleOnayiVerdiklerimPage;
 
     @BeforeMethod
     public void loginBeforeTests() {
@@ -44,6 +44,9 @@ public class TeslimAlinmayiBekleyenHavaleTest extends BaseTest {
         birimHavaleEdilenlerPage = new BirimHavaleEdilenlerPage();
         gelenEvraklarPage = new GelenEvraklarPage();
         haveleOnayinaSunduklarimPage = new HaveleOnayinaSunduklarimPage();
+        birimIadeEdilenlerPage = new BirimIadeEdilenlerPage();
+        havaleOnayınaGelenlerPage = new HavaleOnayınaGelenlerPage();
+        havaleOnayiVerdiklerimPage = new HavaleOnayiVerdiklerimPage();
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -288,49 +291,61 @@ public class TeslimAlinmayiBekleyenHavaleTest extends BaseTest {
                 .evrakGeldigiGorme(konuKoduRandomTS2294);
     }
 
+    String konuKoduRandomTS2300 = "TC-2300_" + createRandomNumber(15);
+
+    @Step("Havale onayına gelenler sayfasına evrak düşürmektedir.")
+    public void TS2300PreCondition() {
+
+        login(usernameZTEKIN, passwordZTEKIN);
+
+        //TODO Bu alanda Pre Condition alanı olan teslim alınmayı bekleyenler alanına data oluşturmakta
+        //1.Teslim Alınmayı Bekleyenler
+        gelenEvrakKayitPage
+                .openPage()
+                .konuKoduDoldur(konuKodu)
+                .konuDoldur(konuKoduRandomTS2300)
+                .evrakTarihiDoldur(evrakTarihi)
+                .geldigiKurumDoldurLovText(kurum)
+                .evrakSayiSagDoldur(evrakSayiSag)
+                .havaleIslemleriBirimDoldur(kullaniciAdi)
+                .kaydet()
+                .evetDugmesi()
+                .yeniKayitButton();
+        teslimAlinmayiBekleyenlerPage
+                .openPage()
+                .evrakNoIleEvrakSec(konuKoduRandomTS2300)
+                .iadeEt()
+                .iadeEtIadeEt();
+        birimIadeEdilenlerPage
+                .openPage()
+                .evrakSec(konuKoduRandomTS2300)
+                .teslimAlVeHavaleEt()
+                .onaylanacakKisiDoldur("Mehmet Bozdemir","YGD")
+                .havaleOnayinaGonder();
+    }
+
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS2300: Evrakın Onaylı havale edilmesi ve güncellenerek onaylanması")
     public void TS2300() {
-        String konuKodu = "010.01";
-        String evrakTuru = "Resmi Yazışma";
-        String evrakDili = "Türkçe";
-        String evrakTarihi = getSysDateForKis();
-        String gizlilikDerecesi = "Normal";
-        String kisiKurum = "Kurum";
-        String geldigiKurum = "Esk Kurum 071216 2";
-        String evrakGelisTipi = "Posta";
-        String ivedilik = "Normal";
-        String kisi = "Zübeyde Tekin";
-        String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
-        String details = "BİLİŞİM HİZMETLERİ VE UYDU PAZARLAMA GENEL MÜDÜR Y";
-        String testid= "TS-405";
-        String konu = "TS-405-" + getSysDate();
-        String pathToFilePdf = getUploadPath() + "Otomasyon.pdf";
-        String pdfName = "Otomasyon.pdf";
 
-        login(usernameYAKYOL,passwordYAKYOL);
+        TS2300PreCondition();
+        login(usernameMBOZDEMIR,passwordMBOZDEMIR);
 
-        gelenEvrakKayitPage
+        havaleOnayınaGelenlerPage
                 .openPage()
-                .evrakBilgileriUstYaziEkle(pathToFilePdf)
-                .ustYaziPdfAdiKontrol(pdfName)
-                .islemMesaji().basariliOlmali();
+                .evrakNoIleEvrakSec(konuKoduRandomTS2300)
+                .havaleOnayi()
+                .havaleOnayiBirimDoldur("YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ")
+                .havaleOnayinaBirimGeregiIcinBilgiIcinSec()
+                .havaleOnayiKisiDoldur("Mehmet Bozdemir","YGD")
+                .havaleOnayiOnayla()
+                .havaleyiOnaylamakUzersinizUyariGeldigiGorme()
+                .havaleyiOnaylamakUzeresinizEvet()
+                .islemMesaji().basariliOlmali(basariMesaji);
 
-        gelenEvrakKayitPage
-                .konuKoduDoldur(konuKodu)
-                .konuDoldur(konu)
-                .evrakTuruSec(evrakTuru)
-                .evrakDiliSec(evrakDili)
-                .evrakTarihiDoldur(evrakTarihi)
-                .gizlilikDerecesiSec(gizlilikDerecesi)
-                .kisiKurumSec(kisiKurum)
-                .geldigiKurumDoldurLovText(geldigiKurum)
-                .evrakSayiSagDoldur()
-                .evrakGelisTipiSec(evrakGelisTipi)
-                .ivedilikSec(ivedilik)
-                .havaleIslemleriKisiDoldur(kisi)
-                .kaydet()
-                .popUps();
+        havaleOnayiVerdiklerimPage
+                .openPage()
+                .evrakGeldigiGorme(konuKoduRandomTS2300);
     }
 
 
