@@ -26,6 +26,7 @@ public class HavaleOnayınaGelenlerPage extends MainPage {
     ElementsCollection tblEvraklar = $$("[id^='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
     SelenideElement btnHavaleOnay = $("button[id^='mainPreviewForm:onizlemeRightTab:uiRepeat:4:cmdbutton']");
     SelenideElement btnHavaleOnayiOnayla = $(By.id("mainPreviewForm:onaylaButton_id"));
+    SelenideElement icerikHavaleOnay = $("button[id='inboxItemInfoForm:dialogTabMenuRight:uiRepeat:4:cmdbutton']");
     SelenideElement notAlanıDoldur = $(By.id("mainPreviewForm:notTextArea_id"));
     SelenideElement onayıReddet = $(By.id("mainPreviewForm:reddetButton_id"));
     SelenideElement onizlemeOnayla = $(By.id("mainPreviewForm:onaylaButton_id"));
@@ -39,6 +40,10 @@ public class HavaleOnayınaGelenlerPage extends MainPage {
     ElementsCollection btnHavaleOnayEvet = $$("[id$='mainPreviewForm:evetButton_id']");
     ElementsCollection btnOnayla = $$("[id^='mainInboxForm:inboxDataTable:j_idt'] > [class$='document-accept']");
 
+    BelgenetElement cmbHavaleIslemleriBirim = comboLov(By.id("inboxItemInfoForm:dagitimBilgileriBirimLov_id:LovText"));
+
+    SelenideElement dagitimOnayla = $(By.id("inboxItemInfoForm:onaylaButton_id"));
+    ElementsCollection dagitimOnaylaEvet = $$("[id='inboxItemInfoForm:evetButton_id']");
 
     @Step("Birim Havale Onayına Gelenler sayfası aç")
     public HavaleOnayınaGelenlerPage openPage() {
@@ -116,8 +121,14 @@ public class HavaleOnayınaGelenlerPage extends MainPage {
 
 
     @Step("Evet tıklanır")
-    public HavaleOnayınaGelenlerPage havaleyiOnaylamakUzeresinizEvet(){
+    public HavaleOnayınaGelenlerPage havaleyiOnaylamakUzeresinizEvet() {
         $(By.id("mainPreviewForm:evetButton_id")).pressEnter();
+    return this;
+    }
+
+    @Step("Evrak İçerikten Havale butonunu tıkla")
+    public HavaleOnayınaGelenlerPage icerikHavaleOnay() {
+        icerikHavaleOnay.click();
         return this;
     }
 
@@ -152,6 +163,27 @@ public class HavaleOnayınaGelenlerPage extends MainPage {
     @Step("Havale Onay Reddet Evet")
     public HavaleOnayınaGelenlerPage onayıOnaylaEvet() {
         btnHavaleOnayEvet.last().click();
+        return this;
+    }
+
+    @Step("Dağıtım Bilgileri Birim alanında \"{birim}\" seçilir")
+    public HavaleOnayınaGelenlerPage dagitimBilgileriBirimDoldur2(String birim) {
+        cmbHavaleIslemleriBirim.selectLov(birim);
+        cmbHavaleIslemleriBirim.closeTreePanel();
+        return this;
+    }
+
+    @Step("Dagitim Onayla")
+    public HavaleOnayınaGelenlerPage dagitimOnayla() {
+        dagitimOnayla.click();
+        return this;
+    }
+
+
+    @Step("Dagitim Onayla Evet")
+    public HavaleOnayınaGelenlerPage dagitimOnaylaEvet() {
+        System.out.println("dagitimonaylasize" + dagitimOnaylaEvet.size());
+        dagitimOnaylaEvet.last().click();
         return this;
     }
 
