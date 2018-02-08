@@ -55,5 +55,5 @@ public class HavaleOnayinaSunduklarimPage extends MainPage{
         Assert.assertEquals(durum, true);
         return this;
     }
-    
+
 }
