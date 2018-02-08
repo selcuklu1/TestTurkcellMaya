@@ -25,6 +25,7 @@ import static com.codeborne.selenide.CollectionCondition.texts;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.Belgenet.comboBox;
+import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 /**
  * Yazan: Ilyas Bayraktar
@@ -56,6 +57,44 @@ public class EditorTab extends MainPage {
         page.$("[id$=allPanels_content]").shouldBe(visible);
         page.$$("span.cke_toolbar a[id*=cke]").shouldHave(sizeGreaterThan(0));
 //        page.$$("#DOnayDivToolbar span.cke_toolbar a[id*=cke]").shouldHave(sizeGreaterThan(0));
+        return this;
+    }
+
+    @Step("Gereği alan aranır")
+    public BelgenetElement getGeregiCombolov(){
+        return comboLov(page, "[id$='geregiKurumLov:LovText']");
+    }
+
+    @Step("Gereği alan aranır")
+    public BelgenetElement getBilgiCombolov(){
+        return comboLov(page, "[id$='bilgiKurumLov:LovText']");
+    }
+
+    @Step("\"{fieldName}\" alanı doldur")
+    public EditorTab select(String fieldName, String value){
+        BelgenetElement element;
+        if (fieldName.equalsIgnoreCase("Gereği"))
+            element = getGeregiCombolov();
+        else if (fieldName.equalsIgnoreCase("Bilgi"))
+            element = getBilgiCombolov();
+        else
+            throw new RuntimeException(fieldName + " kodda tanımlı değil");
+
+        element.selectLov(value);
+        return this;
+    }
+
+    @Step("\"{fieldName}\" alanı temizle")
+    public EditorTab clear(String fieldName){
+        BelgenetElement element;
+        if (fieldName.equalsIgnoreCase("Gereği"))
+            element = getGeregiCombolov();
+        else if (fieldName.equalsIgnoreCase("Bilgi"))
+            element = getBilgiCombolov();
+        else
+            throw new RuntimeException(fieldName + " kodda tanımlı değil");
+
+        element.clearAllSelectedItems();
         return this;
     }
 
@@ -247,12 +286,11 @@ public class EditorTab extends MainPage {
             getNotEkleDialog().should(disappear);
 
             String date = DateTimeFormatter.ofPattern("dd.MM.yyyy").format(LocalDateTime.now());
-            String time = "";
-                    //DateTimeFormatter.ofPattern("HH").format(LocalDateTime.now());
-            System.out.println("Time ofLocalizedTime: " + DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT));
+            String time = DateTimeFormatter.ofPattern("HH").format(LocalDateTime.now());
+           /* System.out.println("Time ofLocalizedTime: " + DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT));
             System.out.println("Time1: " + DateTimeFormatter.ofPattern("HH:mm", new Locale("tr", "TR")).format(LocalDateTime.now()));
             System.out.println("Time2: " + DateTimeFormatter.ofPattern("HH:mm").format(LocalDateTime.now()));
-            System.out.println("Time3: " + System.currentTimeMillis());
+            System.out.println("Time3: " + System.currentTimeMillis());*/
 
             //String time = DateTimeFormatter.ofPattern("HH:mm").format(LocalDateTime.now());
             notuBul(text(olusturan), text(aciklama), text(date), text(time));
@@ -328,8 +366,25 @@ public class EditorTab extends MainPage {
 
         @Step("Postit şeklinde")
         public EvrakNot postitStyle() {
-            String style = "position: relative; background: rgb(254, 250, 188); padding: 5px; font-size: 10px; color: rgb(0, 0, 0); width: 200px; margin-bottom: 15px; box-shadow: rgb(51, 51, 51) 0px 4px 6px;";
-            note.shouldHave(attribute("style", style));
+            //String styleChrome = "position: relative; background: rgb(254, 250, 188); padding: 5px; font-size: 10px; color: rgb(0, 0, 0); width: 200px; margin-bottom: 15px; box-shadow: rgb(51, 51, 51) 0px 4px 6px;";
+            //String styleFirefox = "position:relative; background:rgb(254, 250, 188); padding: 5px;  font-size: 10px; color: #000; width: 200px; margin-bottom:15px; box-shadow: 0px 4px 6px #333; -moz-box-shadow: 0px 4px 6px #333; -webkit-box-shadow: 0px 4px 6px #333;"
+            //note.shouldHave(attribute("style", style));
+            Assert.assertTrue(note.getCssValue("position").equals("relative")
+                    , "Style position shoul have value \"relative\" but actual value is \"" +note.getCssValue("position")+"\"");
+//            Assert.assertTrue(note.getCssValue("background").equals("rgb(254, 250, 188) none repeat scroll 0% 0% / auto padding-box border-box")
+//                    , "Style background should have value \"rgb(254, 250, 188) none repeat scroll 0% 0% / auto padding-box border-box\" but actual value is \"" +note.getCssValue("position")+"\"");
+//            Assert.assertTrue(note.getCssValue("padding").equals("5px")
+//                    , "Style padding should have value \"5px\" but actual value is \"" +note.getCssValue("padding")+"\"");
+            Assert.assertTrue(note.getCssValue("font-size").equals("10px")
+                    , "Style font-size should have value \"10px\" but actual value is \"" +note.getCssValue("font-size")+"\"");
+            Assert.assertTrue(note.getCssValue("color").contains("0, 0, 0")
+                    , "Style color should have value \"rgb(0, 0, 0, 1)\" but actual value is \"" +note.getCssValue("color")+"\"");
+            Assert.assertTrue(note.getCssValue("width").equals("200px")
+                    , "Style width should have value \"200px\" but actual value is \"" +note.getCssValue("width")+"\"");
+            Assert.assertTrue(note.getCssValue("margin-bottom").equals("15px")
+                    , "Style margin-bottom should have value \"15px\" but actual value is \"" +note.getCssValue("margin-bottom")+"\"");
+            Assert.assertTrue(note.getCssValue("box-shadow").contains("rgb(51, 51, 51) 0px 4px 6px 0px")
+                    , "Style box-shadow should have value \"rgb(51, 51, 51) 0px 4px 6px 0px\" but actual value is \"" +note.getCssValue("box-shadow")+"\"");
             return this;
         }
 

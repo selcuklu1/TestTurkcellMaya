@@ -274,4 +274,6 @@ public class DataTest extends BaseTest {
         new PostalanacakEvraklarPage().openPage().searchTable().findRows(text(konu)).getFoundRow().should(exist);
 
     }
+
+
 }

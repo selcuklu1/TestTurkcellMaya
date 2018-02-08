@@ -1,10 +1,12 @@
 package pages.pageComponents;
 
 import com.codeborne.selenide.CollectionCondition;
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
 import io.qameta.allure.Step;
+import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$$;
@@ -20,19 +22,27 @@ public class ConfirmDialog extends BaseLibrary {
     //"//div[contains(@class,'ui-confirm-dialog') and contains(@id,'Confirm')]"
     //$$("div[class~='ui-confirm-dialog'][class~='ui-dialog'][id*=Confirm]")
 
-    public ElementsCollection dialogs() {
-        return $$("div[class~='ui-confirm-dialog'][class~='ui-dialog']");
+    String dialogsLocator = "div.ui-confirm-dialog.ui-dialog,div.ui-dialog.confirmDialog";
+    //By dialogsLocator = By.cssSelector("div.ui-dialog");
+
+    private ElementsCollection dialogs() {
+        //return $$("div[class~='ui-confirm-dialog'][class~='ui-dialog']");
+        return $$(dialogsLocator);
+    }
+
+    public SelenideElement getDialog() {
+        return dialogs().filterBy(visible).first();
     }
 
     @Step("Onay dialog başlığı")
     public SelenideElement dialogTitle() {
-        return $$("div[class~='ui-confirm-dialog'][class~='ui-dialog'] span.ui-dialog-title")
+        return $$(dialogsLocator + " span.ui-dialog-title")
                 .filterBy(visible).first();
     }
 
     @Step("Onay dialog messaji")
     public SelenideElement dialogMessage() {
-        return $$("div[class~='ui-confirm-dialog'][class~='ui-dialog'] .ui-dialog-content p")
+        return $$(dialogsLocator + " .ui-dialog-content p")
                 .filterBy(visible).first();
     }
 
@@ -43,8 +53,9 @@ public class ConfirmDialog extends BaseLibrary {
 
     @Step("Onay dialog butonu")
     public SelenideElement getConfirmButton(String name) {
-        return $$x("//div[contains(@class,'ui-confirm-dialog')]//button[span[text()='" + name + "']]")
-                .filterBy(visible).shouldHave(CollectionCondition.sizeGreaterThan(0)).last();
+        /*return $$x("//div[contains(@class,'ui-confirm-dialog')]//button[span[text()='" + name + "']]")
+                .filterBy(visible).shouldHave(CollectionCondition.sizeGreaterThan(0)).last();*/
+        return getDialog().$x("descendant::button[span[text()='" + name + "']]");
     }
 
     @Step("Evet butona tikla")
@@ -59,5 +70,20 @@ public class ConfirmDialog extends BaseLibrary {
         return this;
     }
 
+    @Step("Onay dialog butonu")
+    public ConfirmDialog buttonClick(String name) {
+        getDialog().$x("descendant::button[span[text()='" + name + "']]").click();
+        /*$$x("//div[contains(@class,'ui-confirm-dialog')]//button[span[text()='" + name + "']]")
+                .filterBy(visible).shouldHave(CollectionCondition.sizeGreaterThan(0)).last().click();*/
+        return this;
+    }
+
+    @Step("Onya mesaj kontrol edilir")
+    public ConfirmDialog onayMesajKontrolu(Condition... conditions){
+        for (Condition condition:conditions) {
+            getDialog().shouldHave(condition);
+        }
+        return this;
+    }
 
 }

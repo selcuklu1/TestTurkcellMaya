@@ -181,7 +181,7 @@ public class OnayAkisiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TS1901a: Son imza seviyesi kısıtlı ise hiyerarşik onay akışı kullanma (yazışma kuralları yönetimi)")
+    @Test(enabled = false, description = "TS1901a: Son imza seviyesi kısıtlı ise hiyerarşik onay akışı kullanma (yazışma kuralları yönetimi)")
     public void TS1901a() {
 
         //Optiim TEST7, Optiim TEST6 ya
@@ -254,13 +254,13 @@ public class OnayAkisiTest extends BaseTest {
                 .otomatikOnayAkisiKullaniciSec(parafciKullanici1, true, "Parafçı Kullanıcı1")
                 .otomatikOnayAkisiKullaniciSec(parafciKullanici2, true, "Parafçı Kullanıcı2")
                 .otomatikOnayAkisiKullaniciSec(imzaciKullanici, true, "İmzaci Kullanıcı")
+                .otomatikOnayAkisiVekilKullaniciKaldir(vekilKullanici, true, "Vekil Kullanıcı")
 
                 .otomatikOnayAkisiKullan()
                 .onayAkisiGuncelle()
 
                 .onayAkisiKullaniciKontrol(parafciKullanici1, "PARAFLAMA")
                 .onayAkisiKullaniciKontrol(parafciKullanici2, "PARAFLAMA")
-                .onayAkisiKullaniciKontrol(vekilKullanici, "PARAFLAMA")
                 .onayAkisiKullaniciKontrol(imzaciKullanici, "IMZALAMA")
 
                 //.kaldiralacakKlasorlerSec(kaldirilacakKlasorler)
@@ -269,10 +269,9 @@ public class OnayAkisiTest extends BaseTest {
         evrakOlusturPage
                 .kaydetOnayaSun()
 
-                .kullaniciIslemVe1SiraKontrolu(vekilKullanici, "Paraflama")
-                .kullaniciIslemVe2SiraKontrolu(parafciKullanici1, "Paraflama")
-                .kullaniciIslemVe3SiraKontrolu(parafciKullanici2, "Paraflama")
-                .kullaniciIslemVe4SiraKontrolu(imzaciKullanici, "İmzalama");
+                .kullaniciIslemVe1SiraKontrolu(parafciKullanici1, "Paraflama")
+                .kullaniciIslemVe2SiraKontrolu(parafciKullanici2, "Paraflama")
+                .kullaniciIslemVe3SiraKontrolu(imzaciKullanici, "İmzalama");
     }
 
     @Severity(SeverityLevel.CRITICAL)

@@ -8,6 +8,7 @@ import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
 
+import static com.codeborne.selenide.Condition.cssClass;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
@@ -200,6 +201,7 @@ public class EvrakOnizleme extends MainPage {
 //                closeDialog.click();
 //                closeDialog.pressEnter();
             clickJs(closeDialog);
+            closeDialog.shouldNotBe(visible);
             return this;
         }
 
@@ -235,6 +237,12 @@ public class EvrakOnizleme extends MainPage {
             return this;
         }
 
+        @Step("Sonraki nota geç buton disabled olmalı")
+        public EvrakNotlari sonrakiNotIsDisabled() {
+            next.shouldHave(cssClass("ui-state-disabled"));
+            return this;
+        }
+
         public SelenideElement getSonrakiButton() {
             return next;
         }
@@ -247,6 +255,12 @@ public class EvrakOnizleme extends MainPage {
             return src;
         }
 
+        /*@Step("Güncelle butonu enabled olmalı")
+        public EvrakNotlari notGuncelleButonEnabled() {
+            note.$("#evrakOnizlemeNotlariDatatableId_data button").shouldBe(Condition.enabled);
+            return this;
+        }*/
+
         @Step("Sil butonu enabled olmalı")
         public EvrakNotlari notSilButonEnabled() {
             note.$("#evrakOnizlemeNotlariDatatableId_data button").shouldBe(Condition.enabled);
@@ -254,7 +268,7 @@ public class EvrakOnizleme extends MainPage {
         }
 
         @Step("Sil butonu disabled olmalı")
-        public EvrakNotlari notSilButonDisabled() {
+        public EvrakNotlari notSilButonIsDisabled() {
             note.$("#evrakOnizlemeNotlariDatatableId_data button").shouldBe(Condition.disabled);
             return this;
         }

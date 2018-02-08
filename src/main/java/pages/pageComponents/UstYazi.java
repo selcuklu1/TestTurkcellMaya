@@ -357,12 +357,12 @@ public class UstYazi extends MainPage {
             getNotEkleDialog().should(disappear);
 
             String date = DateTimeFormatter.ofPattern("dd.MM.yyyy").format(LocalDateTime.now());
-            String time = "";//DateTimeFormatter.ofPattern("HH").format(LocalDateTime.now());
+            String time = DateTimeFormatter.ofPattern("HH").format(LocalDateTime.now());
             //String time = DateTimeFormatter.ofPattern("HH:mm").format(LocalDateTime.now());
-            System.out.println("Time ofLocalizedTime: " + DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT));
+           /* System.out.println("Time ofLocalizedTime: " + DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT));
             System.out.println("Time1: " + DateTimeFormatter.ofPattern("HH:mm", new Locale("tr", "TR")).format(LocalDateTime.now()));
             System.out.println("Time2: " + DateTimeFormatter.ofPattern("HH:mm").format(LocalDateTime.now()));
-            System.out.println("Time3: " + System.currentTimeMillis());
+            System.out.println("Time3: " + System.currentTimeMillis());*/
 
             notuBul(text(olusturan), text(notTipi), text(aciklama), text(date), text(time));
             createdNotes.add(this);
@@ -400,26 +400,32 @@ public class UstYazi extends MainPage {
             return this;
         }
 
-        @Step("Not Güncelle butonu aranır")
-        public SelenideElement getNoteGuncelleButton() {
+        @Step("Not Güncelle butonu: {stepDescription}")
+        public SelenideElement getNoteGuncelleButton(String stepDescription) {
             return note.$("button span[class~='update-icon']");
         }
 
-        @Step("Not Sil butonu aranır")
-        public SelenideElement getNoteSilButton() {
+        @Step("Not Sil butonu: {stepDescription}")
+        public SelenideElement getNoteSilButton(String stepDescription) {
             return note.$("button span[class~='delete-icon']");
         }
 
-        @Step("Notu sil")
+        @Step("Not Sil butonu: {condition}")
+        public EvrakNot noteSilButton(Condition condition) {
+            note.$("button span[class~='delete-icon']").should(condition);
+            return this;
+        }
+
+        @Step("Notu sil ve olmadığı kontrol et")
         public EvrakNot notuSil() {
-            getNoteSilButton().click();
+            getNoteSilButton("").click();
             note.shouldNotBe(exist);
             return this;
         }
 
         @Step("Notu güncelle")
         public EvrakNot notuGuncelle(String aciklama) {
-            getNoteGuncelleButton().click();
+            getNoteGuncelleButton("").click();
             getAciklamaAlani().clear();
             aciklamaAlaniDoldur(aciklama);
             kaydet();
