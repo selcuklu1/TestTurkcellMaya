@@ -542,7 +542,7 @@ public class GelenEvrakKayitPage extends MainPage {
     }
     
     @Step("Evrak Sayı değer kontrolü: {evrakSayi} olmalı.")
-    public GelenEvrakKayitPage solEvrakSayi(String evrakSayi){
+    public GelenEvrakKayitPage solEvrakSayiKontrol(String evrakSayi){
         txtEvrakBilgileriListEvrakSayiTextAreaSol.shouldHave(value(evrakSayi));
         return this;
     }
