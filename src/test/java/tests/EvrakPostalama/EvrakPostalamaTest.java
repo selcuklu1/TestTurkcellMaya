@@ -290,6 +290,7 @@ public class EvrakPostalamaTest extends BaseTest {
         postalananlarPage
                 .openPage()
                 .evrakGeldigiGorme(konuKoduRandomTS520, tuzelKisi,evrakTarihi)
+                .icDisEvrakIkonuKontrolu()
                 .evrakSec(konuKoduRandomTS520)
                 .postaDetayGeldigiGorme()
                 .postaDetayiTikla();
@@ -327,6 +328,7 @@ public class EvrakPostalamaTest extends BaseTest {
         postalananlarPage
                 .openPage()
                 .evrakGeldigiGorme(konuKoduRandomTS520, tuzelKisi,evrakTarihi)
+                .icDisEvrakIkonuKontrolu()
                 .evrakSecIcerikGoster(konuKoduRandomTS520, tuzelKisi,evrakTarihi)
                 .postaDetayGeldigiGorme();
         postalananlarPage.icerikDetayPostaDetayi();
