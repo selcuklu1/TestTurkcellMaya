@@ -436,7 +436,7 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         return this;
     }
 
-    @Step("Telim Al ve Havale Yap butonana bas")
+    @Step("Telim Al ve Havale Yap")
     public TeslimAlinmayiBekleyenlerPage havaleYap() {
         btnTeslimAlveHavaleYap.click();
         return this;
@@ -611,7 +611,7 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         return this;
     }
 
-    @Step("")
+    @Step("Kullanıcının Yeni Birimi \"{digerDetails}\" seçilir")
     public TeslimAlinmayiBekleyenlerPage birimDegistirme(String digerDetails) {
         birimDegistirme.filterBy(Condition.text(digerDetails)).get(0).click();
         return this;

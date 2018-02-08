@@ -185,7 +185,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
         String testid= "TS-2318";
         String basariMesaji = "İşlem başarılıdır!";
         String konuKodu = "120.05";
-        String konu = "TS-2318-" + getSysDate();
+        String konu1 = "TS-2318-" + getSysDate();
         String evrakTuru = "Resmi Yazışma";
         String evrakDili = "Türkçe";
         String evrakTarihi = getSysDateForKis();
@@ -197,8 +197,6 @@ public class EvrakTeslimAlmaTest extends BaseTest {
         String ivedilik = "Normal";
         String ekMetni = "test otomasyon" + getSysDateForKis();
         //String aciklama1 = "Test Otomasyon";
-        String evrakNO321;
-        String evrakNO328;
         String kisi = "Zübeyde Tekin";
         String islemSureci = "Evrak Teslim Alındı ";
 
@@ -208,15 +206,41 @@ public class EvrakTeslimAlmaTest extends BaseTest {
 
         String aksiyon = "Kaydedilen Gelen Evraklar - Teslim Al";
 
+//        testStatus(testid,"PreCondition Evrak Oluşturma");
+//        gelenEvrakKayitPage
+//                .openPage();
+//
+//        gelenEvrakKayitPage
+//                .konuKoduDoldur(konuKodu)
+//                .konuDoldur(konu)
+//                .evrakTuruSec(evrakTuru)
+//                .evrakDiliSec(evrakDili)
+//                .evrakTarihiDoldur(evrakTarihi)
+//                .gizlilikDerecesiSec(gizlilikDerecesi)
+//                .kisiKurumSec(kisiKurum)
+//                .geldigiKurumDoldurLovText(geldigiKurum)
+//                .evrakSayiSagDoldur()
+//                .evrakGelisTipiSec(evrakGelisTipi)
+//                .ivedilikSec(ivedilik)
+//                .dagitimBilgileriBirimDoldurWithDetails(birim, details)
+//                .kaydet()
+//                .popUps();
+//
+//
+//        gelenEvrakKayitPage
+//                .islemMesaji().basariliOlmali(basariMesaji);
+//
+//
+//        teslimAlinmayiBekleyenlerPage
+//                .openPage()
+//                .evrakSecNoTeslimAl(konu, true);
         testStatus(testid,"PreCondition Evrak Oluşturma");
-        //Pre-requisites Gelen Evrak Oluşturma
         gelenEvrakKayitPage
                 .openPage();
 
-        //Pre-requisites Evrak Oluşturma
         gelenEvrakKayitPage
                 .konuKoduDoldur(konuKodu)
-                .konuDoldur(konu)
+                .konuDoldur(konu1)
                 .evrakTuruSec(evrakTuru)
                 .evrakDiliSec(evrakDili)
                 .evrakTarihiDoldur(evrakTarihi)
@@ -228,22 +252,77 @@ public class EvrakTeslimAlmaTest extends BaseTest {
                 .ivedilikSec(ivedilik)
                 .dagitimBilgileriBirimDoldurWithDetails(birim, details)
                 .kaydet()
-                .popUps();
+                .popUpsv2();
+
+
+        gelenEvrakKayitPage
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        String konu2 = "TS-2318-" + getSysDate();
+
+        testStatus(testid,"PreCondition 2. Evrak Oluşturma");
+        gelenEvrakKayitPage
+                .openPage();
+
+        gelenEvrakKayitPage
+                .konuKoduDoldur(konuKodu)
+                .konuDoldur(konu2)
+                .evrakTuruSec(evrakTuru)
+                .evrakDiliSec(evrakDili)
+                .evrakTarihiDoldur(evrakTarihi)
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .kisiKurumSec(kisiKurum)
+                .geldigiKurumDoldurLovText(geldigiKurum)
+                .evrakSayiSagDoldur()
+                .evrakGelisTipiSec(evrakGelisTipi)
+                .ivedilikSec(ivedilik)
+                .dagitimBilgileriBirimDoldurWithDetails(birim, details)
+                .kaydet()
+                .popUpsv2();
 
 
         gelenEvrakKayitPage
                 .islemMesaji().basariliOlmali(basariMesaji);
 
 
+        testStatus(testid,"PreCondition 1. Evrak Iade Et");
         teslimAlinmayiBekleyenlerPage
                 .openPage()
-                .evrakSecNoTeslimAl(konu, true);
+                .evrakNoIleEvrakSec(konu1)
+                .btnIadeEt()
+                .btnIadeEtIadeEt()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        testStatus(testid,"PreCondition 2. Evrak Iade Et");
+        teslimAlinmayiBekleyenlerPage
+                .openPage()
+                .evrakNoIleEvrakSec(konu2)
+                .btnIadeEt()
+                .btnIadeEtIadeEt()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+
+        testStatus(testid,"Test Başladı");
+        birimIadeEdilenlerPage
+                .openPage()
+                .evrakSec(konu1)
+                .evrakSec(konu2)
+                .evrakSecCheckBox(konu1,konu2,true)
+                .evrakNoGelmedigiGorme(konu1)
+                .evrakNoGelmedigiGorme(konu2)
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        teslimAlinanlarPage
+                .openPage()
+                .evrakNoIleEvrakSec(konu1)
+                .evrakNoIleEvrakSec(konu2)
+                .secilenEvrakEvrakGecmisi()
+                .evrakGecmisi(kisi, islemSureci);
 
         String tarihSaatBugun = "" + new SimpleDateFormat("dd.MM.yyyy HH:mm").format(new Date());
         String kullanici = "Zübeyde Tekin";
         String aciklama = "ztekin kullanıcısı, " + tarihSaatBugun;
 
-        testStatus(testid,"Test Başladı");
         sistemLoglariPage
                 .openPage()
                 .aksiyonSec(aksiyon)
@@ -511,13 +590,12 @@ public class EvrakTeslimAlmaTest extends BaseTest {
         String ivedilik = "Normal";
 
         String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
-        String details = "BİLİŞİM HİZMETLERİ VE UYDU PAZARLAMA GENEL MÜDÜR Y";
+        String details = "BHUPGMY";
 
         String kisi = "Zübeyde Tekin";
         String islemSureci = "Evrak Teslim Alındı ";
 
-
-        testStatus(testid,"PreCondition Evrak Oluşturma");
+        testStatus(testid,"PreCondition 1. Evrak Oluşturma");
         gelenEvrakKayitPage
                 .openPage();
 
@@ -547,7 +625,6 @@ public class EvrakTeslimAlmaTest extends BaseTest {
         gelenEvrakKayitPage
                 .openPage();
 
-        //Pre-requisites Gelen Evrak Oluşturma 2. dosya
         gelenEvrakKayitPage
                 .konuKoduDoldur(konuKodu)
                 .konuDoldur(konu2)

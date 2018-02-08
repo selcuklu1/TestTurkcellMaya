@@ -112,7 +112,7 @@ public class BirimIadeEdilenlerPage extends MainPage {
     public BirimIadeEdilenlerPage evrakNoGelmedigiGorme(String konu) {
         boolean durum = tableEvraklar
                 .filterBy(text(konu)).size() > 0;
-        Assert.assertEquals(durum, false);
+        Assert.assertEquals(durum, false,"Evrak Bulunamamıştır");
         return this;
     }
 

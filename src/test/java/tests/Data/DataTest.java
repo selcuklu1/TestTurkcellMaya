@@ -41,7 +41,7 @@ public class DataTest extends BaseTest {
         login("ztekin", "123");
         gelenEvrakKayitPage = new GelenEvrakKayitPage();
         teslimAlinmayiBekleyenlerPage = new TeslimAlinmayiBekleyenlerPage();
-        //birimIadeEdilenlerPage = new BirimIadeEdilenlerPage();
+        birimIadeEdilenlerPage = new BirimIadeEdilenlerPage();
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -142,6 +142,7 @@ public class DataTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS2322: DATA-Birime iade edilenler listesine evrak düşürme")
     public void TS2322() throws InterruptedException {
+        String testid= "TS-2322";
         String basariMesaji = "İşlem başarılıdır!";
         String konuKodu = "120.05";
         String konu = "TS-2322-" + getSysDate();
@@ -155,15 +156,14 @@ public class DataTest extends BaseTest {
         String ivedilik = "Normal";
 
         String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
-        String details = "BİLİŞİM HİZMETLERİ VE UYDU PAZARLAMA GENEL MÜDÜR Y";
+        String details = "BHUPGMY";
         String digerBirim = "Birim Deneme";
         String digerDetails = "YGD";
 
-        //Pre-requisites Gelen Evrak Oluşturma
+        testStatus(testid,"PreCondition Evrak Oluşturma");
         gelenEvrakKayitPage
                 .openPage();
 
-        //Pre-requisites Evrak Oluşturma
         gelenEvrakKayitPage
                 .konuKoduDoldur(konuKodu)
                 .konuDoldur(konu)
@@ -184,10 +184,11 @@ public class DataTest extends BaseTest {
         gelenEvrakKayitPage
                 .islemMesaji().basariliOlmali(basariMesaji);
 
-
+        testStatus(testid,"Test Başladı");
         teslimAlinmayiBekleyenlerPage
                 .openPage()
                 .evrakNoIleEvrakSec(konu)
+                .evrakOnizlemeKontrol()
                 .havaleYap()
                 .dagitimBilgileriBirimDoldurWithDetails(digerBirim, digerDetails)
                 .teslimAlGonder();
@@ -209,7 +210,8 @@ public class DataTest extends BaseTest {
         teslimAlinmayiBekleyenlerPage
                 .birimDegistirme(birim);
 
-        new BirimIadeEdilenlerPage()
+
+        birimIadeEdilenlerPage
                 .openPage()
                 .evrakNoIleEvrakSec(konu);
     }
