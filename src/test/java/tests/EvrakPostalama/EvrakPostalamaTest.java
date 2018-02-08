@@ -111,8 +111,10 @@ public class EvrakPostalamaTest extends BaseTest {
                 .popupSImzalaIslemleri();
 
 
-        Thread.sleep(4000);
+        Thread.sleep(1500);
 
+        evrakOlusturPage.islemMesaji().isBasarili();
+        Thread.sleep(2000);
         postalanacakEvraklarPage
                 .openPage()
                 .filter().findRowsWith(Condition.text(konu)).shouldHaveSize(1).first().click();
@@ -193,11 +195,17 @@ public class EvrakPostalamaTest extends BaseTest {
         editorTab.imzala()
                 .popupSImzalaIslemleri();
 
-        Thread.sleep(2000);
+        Thread.sleep(500);
+        evrakOlusturPage.islemMesaji().isBasarili();
+        postalananlarPage
+                .birimLogin("gsahin" , "123");
+
+        postalananlarPage.t2076PostaArama("TS2076");
+
         postalanacakEvraklarPage
                 .openPage()
-                .filter().findRowsWith(Condition.text(konu))
-                .first().click();
+                .btnFiltrenenPostaIcerikGoster("TS2076");
+
 
         imzaladiklarimPage
                 .openPage()
