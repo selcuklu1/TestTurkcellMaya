@@ -62,8 +62,10 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
     }
 
 
-    @Step("Gideceği yer alanından {0} seç")
+    @Step("Gideceği yer alanından {gidecegiYer} seç")
     public TopluPostalanacakEvraklarPage gidecegiYerSec(String gidecegiYer, boolean secim) {
+
+        filtreGidecegiYer(gidecegiYer);
 
         Boolean isSelected = false;
 
@@ -215,12 +217,10 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
         return this;
     }
 
-    @Step("Tarih aralığını seç. Başlangıç: \"{baslangicTarihi}\" - Bitiş: \"{bitisTarihi}\" ")
+    @Step("Tarih aralığını seç. Başlangıç: {baslangicTarihi} - Bitiş: {bitisTarihi} ")
     public TopluPostalanacakEvraklarPage tarihAraligiSec(String baslangicTarihi, String bitisTarihi) {
-
         txtBaslangic.setValue(baslangicTarihi);
         txtBitis.setValue(bitisTarihi);
-
         return this;
     }
 
@@ -606,7 +606,7 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
         return this;
     }
 
-    @Step("Gönderildiği gerçek kişi seç: {gercekKkisi}")
+    @Step("Gönderildiği gerçek kişi seç: {gercekKisi}")
     public TopluPostalanacakEvraklarPage gonderildigiGercekKisiSec(String gercekKisi) {
         txtGonderildigiGercekKisi.selectLov(gercekKisi);
         return this;

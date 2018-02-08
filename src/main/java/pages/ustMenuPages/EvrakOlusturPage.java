@@ -3,6 +3,7 @@ package pages.ustMenuPages;
 import com.codeborne.selenide.*;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
+import org.apache.poi.hssf.record.FontRecord;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.testng.Assert;
@@ -297,6 +298,7 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement cmbGeregiSecimTipi = $x("//form[@id='yeniGidenEvrakForm']//label[normalize-space(text())='Gereği Seçim Tipi']/ancestor::tr[@class='ui-datagrid-row']//select");
         BelgenetElement txtGeregi = comboLov("input[id$='geregiLov:LovText']");
         SelenideElement btnGeregiTree = $("button[id$='geregiLov:treeButton']");
+        ElementsCollection trGeregi = $$("tbody[id*='yeniGidenEvrakForm:evrakBilgileriList:16:geregiLov:LovSecilenTable_data'] tr[role='row']");
 
         SelenideElement chkDagitimiEkYap = $("input[id$='dagitimEkYapCheckBoxId_input']");
 
@@ -385,6 +387,9 @@ public class EvrakOlusturPage extends MainPage {
 
         SelenideElement btnOtomatikAkisKullan = $("[id$='hiyerarsikAkisOlusturForm:hiyerarsikAkisKullan']");
         ElementsCollection trOtomatikOnayAkisiEkleKullanicilar = $$("tbody[id*='yeniGidenEvrakForm:hiyerarsikAkisOlusturForm:otomatikAkisKullaniciBirimListId_data'] tr[role='row']");
+
+        SelenideElement txtEvrakTarihi = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:7:kayitTarih_input"));
+
 
         //endregion
 
@@ -898,6 +903,52 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        public String[] geregiTitleAl() {
+            String[] title;
+
+            ElementsCollection tablo = $$("tbody[id='yeniGidenEvrakForm:evrakBilgileriList:16:geregiLov:LovSecilenTable_data'] tr[data-ri]");
+            title = new String[tablo.size()];
+            for (int i = 0; i < tablo.size(); i++) {
+                String text = cmbGeregi.getSelectedTitles().get(i).getText();
+                System.out.println(text);
+                if (text.equals("50 BİRİMLİK TEST DENEME DAĞITIM PLANI"))
+                    title[i] = "DAĞITIM YERLERİNE";
+                if(text.equals("Optiim TEST [Ağ (Network) Uzman Yardımcısı]"))
+                    title[i] = "Optiim TEST";
+                if(text.equals("Başbakanlık"))
+                    title[i] = "BAŞBAKANLIĞa";
+                else
+                    title[i] = text;
+            }
+
+            return title;
+        }
+
+        public String[] geregiGonderimSekliAl() {
+            String[] gonderimSekli;
+
+            ElementsCollection tablo = $$("tbody[id='yeniGidenEvrakForm:evrakBilgileriList:16:geregiLov:LovSecilenTable_data'] tr[data-ri]");
+            gonderimSekli = new String[tablo.size()];
+            for (int i = 0; i < tablo.size(); i++) {
+                String text = cmbGeregi.getSelectedTitles().get(i).getText();
+                System.out.println(text);
+                if (text.equals("50 BİRİMLİK TEST DENEME DAĞITIM PLANI"))
+                    gonderimSekli[i] = "Detaya tıkla";
+                else {
+                    if (cmbGeregi.getSelectedItems().get(i).text().contains("Otomatik İç Dağıtım")) {
+                        gonderimSekli[i] = "Elektronik Gönderilmiştir";
+                    } else {
+                        String x = cmbGeregi.getSelectedItems().filterBy(text(text)).shouldHaveSize(1).first().$("select").getText();
+                        System.out.println(x);
+                        gonderimSekli[i] = x;
+                    }
+                }
+
+            }
+
+            return gonderimSekli;
+        }
+
         @Step("Seçimde posta tipinin otomatik KEP geldiği ve kullanıcının değiştirebildiği görülür")
         public BilgilerTab geregiAlaniKEPSeciliGeldigiGorme() {
             boolean durum = $("[id$='geregiLov:LovSecilenTable_data'] select").getSelectedText().equals("KEP");
@@ -1279,7 +1330,6 @@ public class EvrakOlusturPage extends MainPage {
                     .setSelected(secim);
 
 
-
             return this;
         }
 
@@ -1462,7 +1512,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Tüzel Kişi gereği alanı kontrolu")
+        @Step("Tüzel Kişi gereği alanı Vergi no - Posta tipi kontrolu")
         public BilgilerTab tuzelKisiGeregiAlaniVergiNoPostaTipiKontrol(String vergiNo2, String postaTipi) {
 
             /*System.out.println("Gelen detail:    " + cmbGeregi.lastSelectedLovDetailText());
@@ -1473,6 +1523,22 @@ public class EvrakOlusturPage extends MainPage {
             cmbGeregi.getSelectedDetails().last().shouldHave(text("Vergi No: " + vergiNo2));
 //            Assert.assertEquals(cmbGeregi.lastSelectedLovDetailText().contains("Vergi No: " + vergiNo2), true);
             Assert.assertEquals(cmbPostaTipi.getText().contains(postaTipi), true);
+
+            return this;
+        }
+
+        @Step("Kurum gereği alanı Vergi no - Posta tipi kontrolu")
+        public BilgilerTab kurumGeregiAlaniKurumPostaTipiKontrol(String kurum, String postaTipi) {
+
+           // cmbGeregi.getSelectedDetails().last().shouldHave(text("Kurum: " + kurum));
+            //Assert.assertEquals(cmbPostaTipi.getText().contains(postaTipi), true);
+
+            trGeregi
+                    .filterBy(text(kurum))
+                    .get(0)
+                    .shouldBe(exist)
+                    .$("select[id*='selectOneMenu']")
+                    .selectOptionContainingText(postaTipi);
 
             return this;
         }
@@ -1525,7 +1591,7 @@ public class EvrakOlusturPage extends MainPage {
         }
 
         @Step("Gereği alanını temizle.")
-        public BilgilerTab geregiTemizle(){
+        public BilgilerTab geregiTemizle() {
             cmbGeregi.clearAllSelectedItems();
             return this;
         }
@@ -1598,15 +1664,16 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Bilgiler Tabı alan kontrolleri")
         public BilgilerTab bilgilerTabAlanKontrolleri() {
-            txtKonuKodu.isDisplayed();
-            txtKonu.isDisplayed();
-            cmbEvrakTuru.isDisplayed();
-            cmbGizlilikDerecesi.isDisplayed();
-            cmbIvedik.isDisplayed();
-            txtBilgi.isDisplayed();
-            cmbGeregi.isDisplayed();
-            cmbOnayAkisi.isDisplayed();
-            txtKaldiralacakKlasorler.isDisplayed();
+
+            Assert.assertEquals( txtKonuKodu.isDisplayed(), true);
+            Assert.assertEquals( txtKonu.isDisplayed(), true);
+            Assert.assertEquals( cmbEvrakTuru.isDisplayed(), true);
+            Assert.assertEquals( cmbGizlilikDerecesi.isDisplayed(), true);
+            Assert.assertEquals( cmbIvedik.isDisplayed(), true);
+            Assert.assertEquals( txtBilgi.isDisplayed(), true);
+            Assert.assertEquals( cmbGeregi.isDisplayed(), true);
+            Assert.assertEquals( cmbOnayAkisi.isDisplayed(), true);
+            Assert.assertEquals( txtKaldiralacakKlasorler.isDisplayed(), true);
 
             Allure.addAttachment("Bilgiler Tab Kontrolü", "Konu kodu,\n" +
                     "Konu, \n" +
@@ -1632,6 +1699,12 @@ public class EvrakOlusturPage extends MainPage {
                     .setSelected(secim);
 
             return this;
+        }
+
+        @Step("Evrak Tarihi al")
+        public String evrakTarihiAl() {
+            String evrakTarihi = txtEvrakTarihi.getValue();
+            return evrakTarihi;
         }
 
         //endregion
@@ -1937,8 +2010,6 @@ public class EvrakOlusturPage extends MainPage {
         public EditorTab sImzasec() {
             radibtnSimza.waitUntil(visible, 200000);
             radibtnSimza.click();
-//            radibtnSimza.selectRadio("I");
-
             return this;
         }
 
@@ -2177,6 +2248,22 @@ public class EvrakOlusturPage extends MainPage {
         @Step("Ekleri/Web Adresi Ekle Tab - Açma")
         public EkleriTab webAdresiEkleTabiniAc() {
             btnEkleriWebAdresiniEkle.click();
+            return this;
+        }
+
+        @Step("Ekleri tabında tab kontrolleri")
+        public EkleriTab ekleriTabKontrolu() {
+
+            Assert.assertEquals(btnEkleriDosyaEkle.isDisplayed(), true, "Dosya Ekle");
+            Assert.assertEquals(btnEkleriWebAdresiniEkle.isDisplayed(), true, "Web Adresi Ekle");
+            Assert.assertEquals(btnSistemdeKayitliEvrakTab.isDisplayed(), true, "Sistemde Kayıtlı Evrak Ekle");
+            Assert.assertEquals(btnEkleriFizikselEkEkleTab.isDisplayed(), true, "Fiziksel Ek Ekle");
+
+            Allure.addAttachment("Ekleri Tab", "Dosya Ekle tabı kontrolu başarılı");
+            Allure.addAttachment("Ekleri Tab", "Web Adresi Ekle tabı kontrolu başarılı");
+            Allure.addAttachment("Ekleri Tab", "Sistemde Kayıtlı Evrak Ekle tabı kontrolu başarılı");
+            Allure.addAttachment("Ekleri Tab", "Fiziksel Ek Ekle tabı kontrolu başarılı");
+
             return this;
         }
 

@@ -457,7 +457,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .sorgula()
                 .postaListesineAktar()
                 .listeyeEkle()
-                .islemMesaji().uyariOlmali("Posta Listesine eklenecek evrak seçiniz!");
+                .islemMesaji().dikkatOlmali("Posta Listesine eklenecek evrak seçiniz!");
 
 
         topluPostalanacakEvraklarPage
@@ -533,7 +533,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .evrakListesiKontrol(evrakGidecegiYer, evrakKonu);
     }
 
-    @Test(enabled = true, description = "TS1807A : Posta Listesi Oluşturma- Gerçek Kişi Listesi (UC_POSTAYÖNETİMİ_002)")
+    @Test(enabled = true, description = "TS1807 : Posta Listesi Oluşturma- Gerçek Kişi Listesi (UC_POSTAYÖNETİMİ_002)")
     public void TS1807A() {
 
         TopluPostalanacakEvraklarPage topluPostalanacakEvraklarPage = new TopluPostalanacakEvraklarPage();
@@ -632,7 +632,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .sorgula()
                 .postaListesineAktar()
                 .listeyeEkle()
-                .islemMesaji().uyariOlmali("Posta Listesine eklenecek evrak seçiniz!");
+                .islemMesaji().dikkatOlmali("Posta Listesine eklenecek evrak seçiniz!");
 
         topluPostalanacakEvraklarPage
                 .evrakTikSec(evrakKayitTarihiSayi, evrakGidecegiYer, evrakKonu, evrakHazirlayanBirim, evrakPostaTipi, true)
@@ -718,9 +718,7 @@ public class TopluPostalamaTest extends BaseTest {
         String kurum1 = "Yenikurum6507";
         String kurum2 = "Yenikurum4105";
 
-        String[] gidecegiYerler = new String[]{
-                kurum1
-        };
+        String gidecegiYerler = kurum1;
 
         String postaTipleri = "Adi Posta";
         String kurum = kurum1;
@@ -774,7 +772,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .geregiSec(evrak1GidecegiYer)
                 .geregiKurumPostaTipi(evrakPostaTipi)
                 .onayAkisiEkle()
-                .onayAkisiKullaniciTipiSec("Mehmet BOZDEMİR [Antalya İl Müdürü]", "İmzalama")
+                .onayAkisiKullaniciTipiSec("Mehmet BOZDEMİR", "İmzalama")
                 .kullan();
         evrakOlusturPage
                 .editorTabAc()
@@ -790,12 +788,12 @@ public class TopluPostalamaTest extends BaseTest {
                 .openPage()
                 .gidecegiYerListesiAlfabetikSiraKontrolu()
                 .tarihAraligiSec(baslangicTarihi, bitisTarihi)
-                .gidecegiYerSec(gidecegiYerler, true, true)
+                .gidecegiYerSec(gidecegiYerler, true)
                 .postaTipiSec(postaTipleri)
                 .sorgula()
                 .postaListesineAktar()
                 .listeyeEkle()
-                .islemMesaji().uyariOlmali("Posta Listesine eklenecek evrak seçiniz!");
+                .islemMesaji().dikkatOlmali("Posta Listesine eklenecek evrak seçiniz!");
 
         topluPostalanacakEvraklarPage
                 .evrakTikSec(evrakKayitTarihiSayi, evrakGidecegiYer, evrakKonu, evrakHazirlayanBirim, evrakPostaTipi, true)
@@ -812,16 +810,14 @@ public class TopluPostalamaTest extends BaseTest {
                 .openPage();
 
 
-        gidecegiYerler = new String[]{
-                kurum1,
-                kurum2
-        };
+
 
         topluPostalanacakEvraklarPage
                 .openPage()
                 .gidecegiYerListesiAlfabetikSiraKontrolu()
                 .tarihAraligiSec(baslangicTarihi, bitisTarihi)
-                .gidecegiYerSec(gidecegiYerler, true, true)
+                .gidecegiYerSec(kurum1, true)
+                .gidecegiYerSec(kurum2, true)
                 .postaTipiSec(postaTipleri)
                 .sorgula()
                 .evrakTikSec(evrakKayitTarihiSayi, evrakGidecegiYer, evrakKonu, evrakHazirlayanBirim, evrakPostaTipi, true)
@@ -852,7 +848,6 @@ public class TopluPostalamaTest extends BaseTest {
 
         String indirimOncesiTutar = ("" + tutarInt).replace(',', '.');
         String tutar = ("" + indirimSonrasiTutarInt).replace(',', '.');
-
 
         postaListesiPage
                 .openPage()
@@ -1032,15 +1027,18 @@ public class TopluPostalamaTest extends BaseTest {
         login("mbozdemir", "123");
         */
         String uyariMesaji = "Zorunlu alanları doldurunuz";
-        String postaTarihi = "12.01.2018";
         pttRaporuPage
                 .openPage()
+                .aramaDetaylariPanelAc()
+                .postaTarihiDefaultDegerKontrol()
+                .postaTipiSec("Adi Posta")
+                .ulkeDoldur("TÜRKİYE")
+                .ilDoldur("İstanbul")
                 .dagiticiDoldur("")
                 .duzenleyenDoldur("a")
                 .avansSorumlusuDoldur("a")
                 .kontrolEdenDoldur("a")
                 .pttMerkezDoldur("a")
-                .aramaDetaylariPanelAc()
                 .sorgula()
                 .islemMesaji().uyariOlmali(uyariMesaji);
 
@@ -1050,7 +1048,6 @@ public class TopluPostalamaTest extends BaseTest {
                 .avansSorumlusuDoldur("a")
                 .kontrolEdenDoldur("a")
                 .pttMerkezDoldur("a")
-                .aramaDetaylariPanelAc()
                 .postaTarihiDoldur("13.01.2018")
                 .sorgula()
                 .islemMesaji().uyariOlmali(uyariMesaji);
@@ -1061,7 +1058,6 @@ public class TopluPostalamaTest extends BaseTest {
                 .avansSorumlusuDoldur("")
                 .kontrolEdenDoldur("a")
                 .pttMerkezDoldur("a")
-                .aramaDetaylariPanelAc()
                 .postaTarihiDoldur("13.01.2018")
                 .sorgula()
                 .islemMesaji().uyariOlmali(uyariMesaji);
@@ -1072,7 +1068,6 @@ public class TopluPostalamaTest extends BaseTest {
                 .avansSorumlusuDoldur("a")
                 .kontrolEdenDoldur("")
                 .pttMerkezDoldur("a")
-                .aramaDetaylariPanelAc()
                 .postaTarihiDoldur("13.01.2018")
                 .sorgula()
                 .islemMesaji().uyariOlmali(uyariMesaji);
@@ -1083,15 +1078,9 @@ public class TopluPostalamaTest extends BaseTest {
                 .avansSorumlusuDoldur("a")
                 .kontrolEdenDoldur("a")
                 .pttMerkezDoldur("")
-                .aramaDetaylariPanelAc()
                 .postaTarihiDoldur("13.01.2018")
                 .sorgula()
                 .islemMesaji().uyariOlmali(uyariMesaji);
-
-
-        pttRaporuPage
-                .postaTarihiDefaultDegerKontrol()
-                .aramaDetaylariPanelAc();
     }
 
     // EXCELL KONTROLÜ YAPILACAK

@@ -565,7 +565,7 @@ public class GizlilikKleransiTest extends BaseTest {
         String kaldiralacakKlasor = "gündem";
         String evrakTuru = "Resmi Yazışma";
         String evrakDili = "Türkçe";
-        String gizlilikDerecesi = "Tasnif Dışı";
+        String gizlilikDerecesi = "Gizli";
         String ivedilik = "Normal";
         String geregi = "Optiim Birim";
 

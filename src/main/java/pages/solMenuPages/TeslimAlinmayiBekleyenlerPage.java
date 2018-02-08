@@ -30,6 +30,8 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     ElementsCollection btnTeslimAlVeKapat = $$("[id='mainPreviewForm:onizlemeRightTab:onizlemeRightTab'] table td[class='buttonMenuContainerDefault']");
     SelenideElement btnTeslimAlVeKapat2 = $("[class='ui-button-icon-left ui-icon teslimAlHavale']");
     BelgenetElement txtTeslimAlVeHavaleEtBirim = comboLov(By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovText"));
+    BelgenetElement txtTeslimAlVeHavaleEtKullaniciListesi= comboLov(By.id("mainPreviewForm:dagitimBilgileriKisiListesiLov:LovText"));
+    BelgenetElement txtTeslimAlVeHavaleEtKisi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKullaniciLov:LovText"));
     BelgenetElement txtEvrakDetayTeslimAlVeHavaleEtBirim = comboLov(By.id("inboxItemInfoForm:dagitimBilgileriBirimLov:LovText"));
     BelgenetElement txtEvrakDetayTeslimAlVeHavaleEtKisi = comboLov(By.id("inboxItemInfoForm:dagitimBilgileriKullaniciLov:LovText"));
     SelenideElement btnTeslimAlVeHavaleEtTeslimAlVeGonder = $("[id$='btnTeslimAlGonder']");
@@ -124,6 +126,38 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     @Step("Birim alanını doldur: {birimAd} - {birim} ")
     public TeslimAlinmayiBekleyenlerPage teslimAlVeHavaleEtBirimDoldur(String birimAd, String birim) {
         txtTeslimAlVeHavaleEtBirim.type(birimAd).getDetailItems().filterBy(Condition.text(birim)).first().click();
+        return this;
+    }
+
+    @Step("Birim alanını doldur: {birimAd} - {birim} ")
+    public TeslimAlinmayiBekleyenlerPage teslimAlVeHavaleEtKullaniciListesiDoldur(String kullaniciListesi, String birim) {
+        txtHavaleYapKullaniciListesi.type(kullaniciListesi).getTitleItems().filterBy(Condition.text(kullaniciListesi)).first().click();
+        txtHavaleYapKullaniciListesi.type(kullaniciListesi).getTitleItems().filterBy(Condition.text(kullaniciListesi)).first().click();
+        return this;
+    }
+
+    @Step("Gereği için gönder ifadesi koordinasyon için gönder olarak değiştir")
+    public TeslimAlinmayiBekleyenlerPage kullaniciListesiGeregiIcinGonderKordinasyonIcinGonderDegistir(){
+        $("[id='mainPreviewForm:dagitimBilgileriKisiListesiLov:LovSecilenTable:0:selectOneMenu']").selectOption("KOORDİNASYON İÇİN GÖNDER");
+        return this;
+    }
+
+    @Step("")
+    public TeslimAlinmayiBekleyenlerPage teslimAlVeGonder(){
+        $(By.id("mainPreviewForm:btnTeslimAlGonder")).click();
+        return this;
+    }
+
+    @Step("Kişi alanını doldur: {kisiAd} - {birim} ")
+    public TeslimAlinmayiBekleyenlerPage teslimAlVeHavaleEtKisiDoldur(String kisiAd, String birim) {
+        txtTeslimAlVeHavaleEtKisi.type(kisiAd).getDetailItems().filterBy(Condition.text(birim)).first().click();
+        txtTeslimAlVeHavaleEtKisi.type(kisiAd).getSelectableItems().filterBy(Condition.text(birim)).first().click();
+        return this;
+    }
+    
+    @Step("Gereği için gönder ifadesi bilgi için gönder olarak değiştir")
+    public TeslimAlinmayiBekleyenlerPage kisiGeregiIcinGonderBilgiIcinGonderDegistir(){
+    $("[id='mainPreviewForm:dagitimBilgileriKullaniciLov:LovSecilenTable_data'] select").selectOption("BİLGİ İÇİN GÖNDER");
         return this;
     }
 
@@ -584,13 +618,13 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     }
 
     @Step("Teslim Alınan Evrakın Iade Edilmesi")
-    public TeslimAlinmayiBekleyenlerPage btnIadeEt() {
+    public TeslimAlinmayiBekleyenlerPage iadeEt() {
         btnIadeEt.click();
         return this;
     }
 
     @Step("Teslim Alınan Evrakın Iade Edilmesi ve Iade Et Tıklanması")
-    public TeslimAlinmayiBekleyenlerPage btnIadeEtIadeEt() {
+    public TeslimAlinmayiBekleyenlerPage iadeEtIadeEt() {
         btnIadeEtIadeEt.click();
         return this;
     }

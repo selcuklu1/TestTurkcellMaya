@@ -13,6 +13,7 @@ import java.io.File;
 import java.util.List;
 
 import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.value;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
@@ -237,6 +238,8 @@ public class GelenEvrakKayitPage extends MainPage {
 
     //Evrak Havale Islemleri Form
     SelenideElement btnHavaleIslemleri = $(By.id("evrakBilgileriForm:havalePanel_toggler"));
+
+    ElementsCollection tblEvraklar = $$("[id^='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
 
     @Step("Gelen Evrak Kayıt sayfasını aç")
     public GelenEvrakKayitPage openPage() {
@@ -535,6 +538,12 @@ public class GelenEvrakKayitPage extends MainPage {
                 .getTitleItems()
                 .first()
                 .click();
+        return this;
+    }
+    
+    @Step("Evrak Sayı değer kontrolü: {evrakSayi} olmalı.")
+    public GelenEvrakKayitPage solEvrakSayiKontrol(String evrakSayi){
+        txtEvrakBilgileriListEvrakSayiTextAreaSol.shouldHave(value(evrakSayi));
         return this;
     }
 
@@ -1581,5 +1590,13 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
+    @Step("Evrak no ile evrak seçilir : \"{evrakNo}\" ")
+    public GelenEvrakKayitPage evrakNoIleEvrakSec(String evrakNo) {
+        tblEvraklar
+                .filterBy(Condition.text(evrakNo))
+                .first()
+                .click();
+        return this;
+    }
 
 }
