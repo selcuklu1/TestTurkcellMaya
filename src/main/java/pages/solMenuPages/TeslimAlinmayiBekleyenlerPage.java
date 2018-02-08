@@ -618,13 +618,13 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     }
 
     @Step("Teslim Alınan Evrakın Iade Edilmesi")
-    public TeslimAlinmayiBekleyenlerPage btnIadeEt() {
+    public TeslimAlinmayiBekleyenlerPage iadeEt() {
         btnIadeEt.click();
         return this;
     }
 
     @Step("Teslim Alınan Evrakın Iade Edilmesi ve Iade Et Tıklanması")
-    public TeslimAlinmayiBekleyenlerPage btnIadeEtIadeEt() {
+    public TeslimAlinmayiBekleyenlerPage iadeEtIadeEt() {
         btnIadeEtIadeEt.click();
         return this;
     }

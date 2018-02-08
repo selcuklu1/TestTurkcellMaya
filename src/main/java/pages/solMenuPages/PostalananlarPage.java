@@ -156,9 +156,15 @@ public class PostalananlarPage extends MainPage {
 
         return this;
     }
+    @Step("Ekleri Yazdırma butonu tıklama")
+    public PostalananlarPage btnEkleriPopupiciYazdir () {
+        SelenideElement evrakYazdirButonktrl = $x("//*[@id='postaDetayYazdirForm:dtPostaEvrakEk_data']/tr[1]/td[7]/div/button");
+        evrakYazdirButonktrl.click();
+        return this;
+    }
     @Step("Ekleri Yazdirma butonu , PDF'leri açma ve kontröl")
     public PostalananlarPage eklerYazdirPopupbtn () {
-        SelenideElement evrakYazdirButonktrl = $x("//span[text()='Yazdır']");
+        SelenideElement evrakYazdirButonktrl = $x("//*[@id='postaDetayYazdirForm:dtPostaEvrakEk_data']/tr[1]/td[7]/div/button");
         evrakYazdirButonktrl.click();
         switchTo().window(1);
         SelenideElement ickKtrl = $x("//*[@id='plugin']");
@@ -481,12 +487,12 @@ public class PostalananlarPage extends MainPage {
     public PostalananlarPage popupYazpdfkontrolveKapatma () {
         popupEvrakYazdirma.click();
         switchTo().window(1);
-
+        closeNewWindow();
+        switchTo().window(0);
         SelenideElement ustyazi = $x("//*[@id='postaDetayYazdirForm:dtPostaEvrakUstVeri_data']/tr/td[2]/div");
         String pdf = ustyazi.getAttribute("innerText");
         System.out.println(pdf);
-        closeNewWindow();
-        switchTo().window(0);
+
         return this;
 
     }

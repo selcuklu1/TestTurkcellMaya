@@ -89,8 +89,8 @@ public class BirimeIadeEdilenlerdenHavaleTest extends BaseTest {
         teslimAlinmayiBekleyenlerPage
                 .openPage()
                 .evrakNoIleEvrakSec(konu)
-                .btnIadeEt()
-                .btnIadeEtIadeEt()
+                .iadeEt()
+                .iadeEtIadeEt()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
         testStatus(testid,"Test Başladı");
@@ -174,8 +174,8 @@ public class BirimeIadeEdilenlerdenHavaleTest extends BaseTest {
         teslimAlinmayiBekleyenlerPage
                 .openPage()
                 .evrakNoIleEvrakSec(konu)
-                .btnIadeEt()
-                .btnIadeEtIadeEt()
+                .iadeEt()
+                .iadeEtIadeEt()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
         testStatus(testid,"Test Başladı");

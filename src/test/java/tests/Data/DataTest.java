@@ -203,8 +203,8 @@ public class DataTest extends BaseTest {
         teslimAlinmayiBekleyenlerPage
                 .openPage()
                 .evrakNoIleEvrakSec(konu)
-                .btnIadeEt()
-                .btnIadeEtIadeEt()
+                .iadeEt()
+                .iadeEtIadeEt()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
         teslimAlinmayiBekleyenlerPage
