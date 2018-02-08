@@ -13,13 +13,12 @@ import pages.pageData.alanlar.GeregiSecimTipi;
 import pages.pageData.alanlar.GizlilikDerecesi;
 import pages.pageData.alanlar.Ivedilik;
 import pages.pageData.alanlar.OnayKullaniciTipi;
-//import pages.solMenuPages.BirimIadeEdilenlerPage;
 import pages.solMenuPages.*;
 import pages.ustMenuPages.GelenEvrakKayitPage;
 
-import static com.codeborne.selenide.Condition.exist;
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Condition.*;
+
+//import pages.solMenuPages.BirimIadeEdilenlerPage;
 
 /****************************************************
  * Tarih: 2017-12-22
@@ -275,4 +274,6 @@ public class DataTest extends BaseTest {
         new PostalanacakEvraklarPage().openPage().searchTable().findRows(text(konu)).getFoundRow().should(exist);
 
     }
+
+
 }

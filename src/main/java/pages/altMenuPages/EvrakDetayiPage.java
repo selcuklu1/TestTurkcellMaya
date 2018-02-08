@@ -1,9 +1,6 @@
 package pages.altMenuPages;
 
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.*;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
@@ -29,12 +26,13 @@ public class EvrakDetayiPage extends MainPage {
     SelenideElement divContainer = $("#evrakBilgileriContainerDiv");
     SelenideElement spanBilgileri = $x("//span[. = 'Bilgileri']");
     SelenideElement tabEditor = $("button .editor");
+    ElementsCollection tblHareketGecmisi = $$("tbody[id$='hareketGecmisiDataTable_data'] > tr[role='row']");
 
     private HareketGecmisiTab hareketGecmisiTab = new HareketGecmisiTab();
 
     @Step("Sayfa açıldı mı kontrolü")
     public EvrakDetayiPage sayfaAcilmali() {
-        Assert.assertEquals(pageTitle.is(visible),true);
+        Assert.assertEquals(pageTitle.is(visible), true);
         return this;
     }
 
@@ -191,19 +189,57 @@ public class EvrakDetayiPage extends MainPage {
 
         SelenideElement tabHareketGecmisi = $("button .kullaniciGecmisi");
         ElementsCollection tblHareketGecmisi = $$("tbody[id='inboxItemInfoForm:hareketGecmisiDataTable_data'] > tr[role='row']");
+        SelenideElement btnRaporAlExcel = $(By.id("inboxItemInfoForm:hareketGecmisiDataTable:evrakGecmisiExport"));
+        SelenideElement txtBaslangicTarihi = $(By.id("inboxItemInfoForm:hareketGecmisiDataTable:hareketGecmisiBegin_input"));
+        SelenideElement txtBitisTarihi = $(By.id("inboxItemInfoForm:hareketGecmisiDataTable:hareketGecmisiEnd_input"));
 
         private HareketGecmisiTab open() {
             tabHareketGecmisi.click();
             return this;
         }
 
-        @Step("")
+        @Step("Hareket Geçmişi açıklama kontrolü :\n \"{text}\" ")
         public HareketGecmisiTab tabloKontol(String text) {
             tblHareketGecmisi
                     .filterBy(Condition.text(text))
                     .shouldHaveSize(1);
             return this;
         }
+
+        @Step("Rapor al Excel")
+        public HareketGecmisiTab raporAl(String remoteDownloadPath) {
+            deleteSpecificFile("Rapor_");
+
+            sleep(3000);
+
+            btnRaporAlExcel.click();
+            islemMesaji().basariliOlmali();
+            waitForLoadingJS(WebDriverRunner.getWebDriver(), 180);
+            sleep(3000);
+            searchDownloadedFileWithName(remoteDownloadPath, "Rapor_.xls");
+
+            return this;
+        }
+
+        @Step("Evrak Arama ekranı kapat")
+        public HareketGecmisiTab evrakDetayiKapat() {
+            $(By.xpath("//div[@id='windowReadOnlyEvrakDialog']//span[@class='ui-icon ui-icon-closethick']")).click();
+            islemPenceresiKapatmaOnayiPopup("Kapat");
+            return this;
+        }
+
+
+
+        @Step("Hareket Geçmişi tablo kolon isimleri kontrolü.")
+        public HareketGecmisiTab tabloKolonIsımleriKontol(String text) {
+            Assert.assertEquals($(By.xpath("//span[text()='Gönderen']")).isDisplayed(), true);
+            Assert.assertEquals($(By.xpath("//span[text()='Teslim Alan']")).isDisplayed(), true);
+            Assert.assertEquals($(By.xpath("//span[text()='İşlem Süreci']")).isDisplayed(), true);
+            Assert.assertEquals($(By.xpath("//span[normalize-space(text())='İşlem Tarihi'] ")).isDisplayed(), true);
+            Assert.assertEquals($(By.xpath("//span[text()='Açıklama']")).isDisplayed(), true);
+            return this;
+        }
+
 
     }
 

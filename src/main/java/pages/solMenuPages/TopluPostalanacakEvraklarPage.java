@@ -62,7 +62,7 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
     }
 
 
-    @Step("Gideceği yer alanından {0} seç")
+    @Step("Gideceği yer alanından {gidecegiYer} seç")
     public TopluPostalanacakEvraklarPage gidecegiYerSec(String gidecegiYer, boolean secim) {
 
         Boolean isSelected = false;
@@ -215,12 +215,36 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
         return this;
     }
 
-    @Step("Tarih aralığını seç. Başlangıç: \"{baslangicTarihi}\" - Bitiş: \"{bitisTarihi}\" ")
+    @Step("Tarih aralığını seç. Başlangıç: {baslangicTarihi} - Bitiş: {bitisTarihi} ")
     public TopluPostalanacakEvraklarPage tarihAraligiSec(String baslangicTarihi, String bitisTarihi) {
-
         txtBaslangic.setValue(baslangicTarihi);
         txtBitis.setValue(bitisTarihi);
+        return this;
+    }
 
+    @Step("Posta tipi alanından {postaTipi} seç.")
+    public TopluPostalanacakEvraklarPage postaTipiSec(String postaTipi) {
+        Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", lblPostaTipiSeciniz);
+
+        lblPostaTipiSeciniz.click();
+        ElementsCollection currentListElement = $$(By.xpath("//label[.='Adi Posta']/../../../ul")).last().$$("li");
+
+        SelenideElement currentRow = currentListElement
+                .filterBy(Condition.text(postaTipi))
+                .first();
+
+        SelenideElement chkBox = currentRow.$("div[class='ui-chkbox ui-widget']");
+
+        boolean isSelected = false;
+        if (chkBox.$(By.xpath("./div[contains(@class, 'ui-state-active')]")).exists())
+            isSelected = true;
+
+        if (isSelected == false) {
+            Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", chkBox);
+            chkBox.click();
+        }
+
+        lblPostaTipiSeciniz.click();
         return this;
     }
 

@@ -12,11 +12,7 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pages.solMenuPages.GelenEvraklarPage;
 import pages.ustMenuPages.EvrakOlusturPage;
-import pages.ustMenuPages.KullaniciYonetimiPage;
-import pages.ustMenuPages.OnayAkisYonetimiPage;
-import pages.ustMenuPages.VekaletVerPage;
 
 import static data.TestData.passwordZTEKIN;
 import static data.TestData.usernameZTEKIN;

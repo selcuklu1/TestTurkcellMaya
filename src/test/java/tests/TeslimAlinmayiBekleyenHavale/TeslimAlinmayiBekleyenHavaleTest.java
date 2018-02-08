@@ -11,9 +11,13 @@ import io.qameta.allure.Epic;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Step;
-import org.testng.annotations.*;
-import pages.solMenuPages.*;
-import pages.ustMenuPages.*;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+import pages.solMenuPages.BirimHavaleEdilenlerPage;
+import pages.solMenuPages.GelenEvraklarPage;
+import pages.solMenuPages.HaveleOnayinaSunduklarimPage;
+import pages.solMenuPages.TeslimAlinmayiBekleyenlerPage;
+import pages.ustMenuPages.GelenEvrakKayitPage;
 
 import static data.TestData.*;
 

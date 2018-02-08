@@ -513,11 +513,17 @@ public class ComboLovHelper extends BaseLibrary {
         Allure.addAttachment("Selectable items " + collection.size(), collection.texts().toString());
         Allure.addAttachment("Filter texts " + text.length, Arrays.toString(text));
 
+        //ElementsCollection collection1 = collection;
         for (String t : text) {
             collection = collection.filterBy(text(t));
             //regex vs türkçe karakterleri
-            //collection = collection.filterBy(matchText("(?i)(?u)(?m)\\b" + t.trim().replaceAll("[\\<\\(\\[\\{\\\\\\^\\-\\=\\$\\!\\|\\]\\}\\)‌​\\?\\*\\+\\.\\>]", "\\\\$0") + "\\b"));
+            //collection1 = collection1.filterBy(matchText("(?i)(?u)(?m)\\b" + t.trim().replaceAll("[\\<\\(\\[\\{\\\\\\^\\-\\=\\$\\!\\|\\]\\}\\)‌​\\?\\*\\+\\.\\>]", "\\\\$0") + "\\b"));
         }
+        /*if (collection1.size() == 0)
+            for (String t : text)
+                collection = collection.filterBy(text(t));
+        else
+            collection = collection1;*/
 
         Allure.addAttachment("Filtered items " + collection.size(), collection.texts().toString());
         Assert.assertTrue(collection.size() > 0, "Filtered selectable items should have size greater than 0");

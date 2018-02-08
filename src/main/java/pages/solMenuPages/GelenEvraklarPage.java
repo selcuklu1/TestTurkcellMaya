@@ -3,7 +3,6 @@ package pages.solMenuPages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
-import com.codeborne.selenide.collections.SizeGreaterThan;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
@@ -141,6 +140,7 @@ public class GelenEvraklarPage extends MainPage {
     @Step("Takip listesinde {kullanicilar} kullanıcısını seç")
     public GelenEvraklarPage takipListesiKullanicilarDoldur(String kullanicilar) {
         txtTakipListesiKullanicilar.type(kullanicilar).getTitleItems().filterBy(Condition.text(kullanicilar)).first().click();
+        txtTakipListesiKullanicilar.closeTreePanel();
         return this;
     }
 
@@ -377,7 +377,19 @@ public class GelenEvraklarPage extends MainPage {
 
     @Step("Tebliğ Et ekranında kullanıcı listesi alanını doldur: {kullaniciListesi}")
     public GelenEvraklarPage tebligEtKullaniciListesiDoldur(String kullaniciListesi) {
-        txtTebligEtKullaniciListesi.selectLov(kullaniciListesi);
+
+        txtTebligEtKullaniciListesi
+                .waitUntil(visible, 10000);
+
+        txtTebligEtKullaniciListesi
+                .type(kullaniciListesi)
+                .getTitleItems()
+                .filterBy(text(kullaniciListesi))
+                .first()
+                .click();
+
+        txtTebligEtKullaniciListesi
+                .closeTreePanel();
         return this;
     }
 
@@ -389,7 +401,24 @@ public class GelenEvraklarPage extends MainPage {
 
     @Step("Tebliğ Et kişi alanında kişi seç: {kisi}")
     public GelenEvraklarPage tebligEtKisiInputDoldur(String kisi) {
-        txtTebligEtKisi.selectLov(kisi);
+        txtTebligEtKisi
+                .waitUntil(visible, 10000);
+
+        txtTebligEtKisi
+                .type(kisi)
+                .getTitleItems()
+                .filter(text(kisi))
+                .first()
+                .click();
+
+        txtTebligEtKisi
+                .closeTreePanel();
+        return this;
+    }
+
+    @Step("Tebliğ Et kişi alanını temizle.")
+    public GelenEvraklarPage tebligEtKisiTemizle(){
+        txtTebligEtKisi.clearAllSelectedItems();
         return this;
     }
 

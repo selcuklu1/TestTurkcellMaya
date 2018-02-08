@@ -472,9 +472,10 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Kullanıcı kontrolü")
         public BilgilerTab kullaniciTabloKontrol() {
-            Assert.assertEquals(tblKullanıcılar.isDisplayed(),true);
+            Assert.assertEquals(tblKullanıcılar.isDisplayed(), true);
             return this;
         }
+
         @Step("Kullnici ismine göre imzalama veya paraflama kontrolu : \"{value}\" ")
         public BilgilerTab kullniciIsmineGoreImzaParafKontrol(String kullanici, String value) {
 
@@ -483,6 +484,7 @@ public class EvrakOlusturPage extends MainPage {
                     .shouldHaveSize(1);
             return this;
         }
+
         @Step("Kullnici ismine göre imzalama veya paraflama seç")
         public BilgilerTab kullniciIsmineGoreImzaParafSec(String kullanici, String value) {
 
@@ -678,11 +680,25 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Seçilen gereği Dağıtım Hitap Düzenle tıklanır")
-        public BilgilerTab secilenGeregiDagitimHitapGuncelleme(){
-        $("[id$='geregiLov:LovSecilenTable_data'] button [class='ui-button-icon-left ui-icon update-icon']").click();
+        @Step("Geregi alanında \"{kisAd}\" kısa adı girilir, {kurum} kurumu geldiği görülür ve seçilir.")
+        public BilgilerTab geregiAlanindaKurumKisaAdSec(String kisAd, String kurum) {
+            txtGeregi
+                    .type(kisAd)
+                    .getTitleItems()
+                    .filterBy(text(kurum))
+                    .first()
+                    .shouldBe(visible)
+                    .click();
+            txtGeregi.closeTreePanel();
             return this;
         }
+
+        @Step("Seçilen gereği Dağıtım Hitap Düzenle tıklanır")
+        public BilgilerTab secilenGeregiDagitimHitapGuncelleme() {
+            $("[id$='geregiLov:LovSecilenTable_data'] button [class='ui-button-icon-left ui-icon update-icon']").click();
+            return this;
+        }
+
         ElementsCollection tableGeregiSecilenler = $$("tbody[id$='geregiLov:LovSecilenTable_data'] > tr");
 
         @Step("Geregi alanında \"{geregi}\" için {geregiTipi} seç")
@@ -1194,24 +1210,41 @@ public class EvrakOlusturPage extends MainPage {
         @Step("Onay akışı kullanıcı adı ve tipi kontrolu: \"{kullaniciAdi}\", \"{kullaniciTipi}\" ")
         public BilgilerTab onayAkisiKullaniciKontrol(String kullaniciAdi, String kullaniciTipi) {
             btnKullan.sendKeys(Keys.SHIFT);
-            trOnayAkisiEkleKullanicilar
+/*            trOnayAkisiEkleKullanicilar
                     .filterBy(text(kullaniciAdi))
                     .get(0)
                     .shouldBe(exist)
                     .$("select[id*='selectOneMenu']")
+                    .shouldHave(value(kullaniciTipi));*/
+
+            trOnayAkisiEkleKullanicilar
+                    .filterBy(matchText("(?i)(?u)(?m)\\b" + kullaniciAdi.trim().replaceAll("[\\<\\(\\[\\{\\\\\\^\\-\\=\\$\\!\\|\\]\\}\\)‌​\\?\\*\\+\\.\\>]", "\\\\$0") + "\\b"))
+                    .get(0)
+                    .shouldBe(exist)
+                    .$("select[id*='selectOneMenu']")
                     .shouldHave(value(kullaniciTipi));
+
             return this;
         }
 
         @Step("Otomatik Hiyerarşik Onay Akışı kullanıcı adı ve tipi kontrolu: {description}")
         public BilgilerTab otomatikOnayAkisiKullaniciKontrol(String kullaniciAdi, String kullaniciTipi, String description) {
             btnOtomatikAkisKullan.sendKeys(Keys.SHIFT);
-            trOtomatikOnayAkisiEkleKullanicilar
+/*            trOtomatikOnayAkisiEkleKullanicilar
                     .filterBy(text(kullaniciAdi))
                     .get(0)
                     .shouldBe(exist)
                     .$("select[name*='hiyerarsikAkisOlusturForm:otomatikAkisKullaniciBirimListId']")
+                    .shouldHave(value(kullaniciTipi));*/
+
+            trOtomatikOnayAkisiEkleKullanicilar
+                    .filterBy(matchText("(?i)(?u)(?m)\\b" + kullaniciAdi.trim().replaceAll("[\\<\\(\\[\\{\\\\\\^\\-\\=\\$\\!\\|\\]\\}\\)‌​\\?\\*\\+\\.\\>]", "\\\\$0") + "\\b"))
+                    .get(0)
+                    .shouldBe(exist)
+                    .$("select[name*='hiyerarsikAkisOlusturForm:otomatikAkisKullaniciBirimListId']")
                     .shouldHave(value(kullaniciTipi));
+
+
             return this;
         }
 
@@ -1231,12 +1264,21 @@ public class EvrakOlusturPage extends MainPage {
         @Step("Listelenen kullanıcılardan seçim yap: {description}")
         public BilgilerTab otomatikOnayAkisiKullaniciSec(String kullaniciAdi, Boolean secim, String description) {
             btnOtomatikAkisKullan.sendKeys(Keys.SHIFT);
-            trOtomatikOnayAkisiEkleKullanicilar
+/*            trOtomatikOnayAkisiEkleKullanicilar
                     .filterBy(text(kullaniciAdi))
                     .get(0)
                     .shouldBe(exist)
                     .$("[class='ui-chkbox ui-widget']")
+                    .setSelected(secim);*/
+
+            trOtomatikOnayAkisiEkleKullanicilar
+                    .filterBy(matchText("(?i)(?u)(?m)\\b" + kullaniciAdi.trim().replaceAll("[\\<\\(\\[\\{\\\\\\^\\-\\=\\$\\!\\|\\]\\}\\)‌​\\?\\*\\+\\.\\>]", "\\\\$0") + "\\b"))
+                    .get(0)
+                    .shouldBe(exist)
+                    .$("[class='ui-chkbox ui-widget']")
                     .setSelected(secim);
+
+
 
             return this;
         }
@@ -1482,6 +1524,12 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Gereği alanını temizle.")
+        public BilgilerTab geregiTemizle(){
+            cmbGeregi.clearAllSelectedItems();
+            return this;
+        }
+
         @Step("Gereği son kayıt sil")
         public BilgilerTab geregiSonKayitSil() {
             cmbGeregi.clearLastSelectedItem();
@@ -1573,6 +1621,19 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Otomatik onay akışı vekil kullanıcı kaldır: {description}")
+        public BilgilerTab otomatikOnayAkisiVekilKullaniciKaldir(String vekilKullanici, boolean secim, String description) {
+
+            trOtomatikOnayAkisiEkleKullanicilar
+                    .filterBy(matchText("(?i)(?u)(?m)\\b" + vekilKullanici.trim().replaceAll("[\\<\\(\\[\\{\\\\\\^\\-\\=\\$\\!\\|\\]\\}\\)‌​\\?\\*\\+\\.\\>]", "\\\\$0") + "\\b"))
+                    .get(0)
+                    .shouldBe(exist)
+                    .$("[class='ui-chkbox-icon ui-icon ui-icon-check']")
+                    .setSelected(secim);
+
+            return this;
+        }
+
         //endregion
 
     }
@@ -1596,7 +1657,7 @@ public class EvrakOlusturPage extends MainPage {
         BelgenetElement cmbGeregi = comboLov(By.id("yeniGidenEvrakForm:geregiKurumLov:LovText"));
         BelgenetElement cmbBilgi = comboLov(By.id("yeniGidenEvrakForm:bilgiKurumLov:LovText"));
         SelenideElement btnParafla = $x("//*[text()='Parafla']/ancestor::tbody[1]//button");
-        SelenideElement radibtnSimza = $("[id='imzalaForm:imzaPanelGrid'] div[id='imzalaForm:imzalaRadio']  div:nth-child(2)");
+        SelenideElement radibtnSimza = $("div[id='imzalaForm:imzalaRadio'] > div[class*='ui-radiobutton-box']");
         SelenideElement btnEvrakImzala = $(By.xpath("//buton[starts-with(@id,'imzalaForm:jsfImzaForm:j_idt')]"));
         SelenideElement btnSimzaImzala = $(By.id("imzalaForm:sayisalImzaConfirmDialogOpener"));
         SelenideElement btnSayısalImzeEvet = $(By.id("imzalaForm:sayisalImzaConfirmForm:sayisalImzaEvetButton"));
@@ -1874,6 +1935,7 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Simza seç")
         public EditorTab sImzasec() {
+            radibtnSimza.waitUntil(visible, 200000);
             radibtnSimza.click();
 //            radibtnSimza.selectRadio("I");
 

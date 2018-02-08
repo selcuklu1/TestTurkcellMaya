@@ -15,14 +15,12 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pages.MainPage;
 import pages.solMenuPages.ImzaladiklarimPage;
 import pages.solMenuPages.PostalanacakEvraklarPage;
 import pages.solMenuPages.PostalananlarPage;
 import pages.ustMenuPages.EvrakOlusturPage;
 import pages.ustMenuPages.PostalananEvrakRaporuPage;
 
-import static com.codeborne.selenide.Selenide.close;
 import static com.codeborne.selenide.Selenide.switchTo;
 
 public class EvrakPostalamaTest extends BaseTest {
@@ -61,7 +59,7 @@ public class EvrakPostalamaTest extends BaseTest {
                 .evrakTuruSec("Resmi Yazışma")
                 .gizlilikDerecesiSec("Normal")
                 .ivedilikSec("Normal")
-//                .kaldirilacakKlasorler("Diğer")
+                  .kaldirilacakKlasorler("Diğer")
 //                .kaldirilacakKlasorler("B1K1")
                 .bilgialaniKontrol()
                 .gizlilikDerecesiSec("Normal")
@@ -126,6 +124,7 @@ public class EvrakPostalamaTest extends BaseTest {
                 .postalanacakEvrakYaz()
                 .popupPostalanacakEvrakYazdir()
                 .popupPostaYazdirmaKapat();
+
         switchTo().window(1);
         closeNewWindow();
 
@@ -133,14 +132,13 @@ public class EvrakPostalamaTest extends BaseTest {
         postalanacakEvraklarPage
                 .postalanacakEvrakOrjYaz()
                 .pdfEvrakYazismaKuralkontrol()
+                .popupEvrOrjYazKapat()
                 .gramajDoldur("111111")
                 .hesapla()
                 .postala()
                 .dialogpostalaEvet();
 
-        switchTo().window(1);
-        closeNewWindow();
-        switchTo().window(0);
+
 
         postalananlarPage.openPage();
         postalananlarPage.filter().findRowsWith(Condition.text(konu)).shouldHaveSize(1).first().click();
@@ -526,7 +524,12 @@ public class EvrakPostalamaTest extends BaseTest {
                 .etiketYazdir()
                 .etiketYazdirPopupKapat()
                 .postalanacakEvrakYaz()
-                .popupPostalanacakEvrakYazdir()
+                .popupPostalanacakEvrakYazdir();
+        switchTo().window(1);
+        closeNewWindow();
+
+        switchTo().window(0);
+        postalanacakEvraklarPage
                 .popupPostaYazdirmaKapat()
                 .postala()
                 .dialogpostalaEvet();
@@ -546,7 +549,12 @@ public class EvrakPostalamaTest extends BaseTest {
                 .btnFiltrenenPostaIcerikGoster(konu)
                 .postaDetayiTikla()
                 .evrakYazdir()
-                .popupYazpdfkontrolveKapatma()
+                .popupYazpdfkontrolveKapatma();
+        switchTo().window(1);
+        closeNewWindow();
+
+        switchTo().window(0);
+        postalananlarPage
                 .etiketBastir();
     }
 

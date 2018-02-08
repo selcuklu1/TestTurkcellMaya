@@ -7,7 +7,6 @@ import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.xmlbeans.impl.xb.xsdschema.All;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
@@ -65,6 +64,8 @@ public class PostaListesiPage extends MainPage {
     ElementsCollection listPostaListesi = $$("div[id='mainInboxForm:inboxDataTable:filtersAccordion:postaListesiAdi_panel'] > ul > li");
 
     SelenideElement txtPostaListesiAdi = $x("//label[normalize-space(text())='Posta Listesi Adı :']/../following-sibling::td//textarea");
+
+    SelenideElement txtBarkodNo = $x("//label[normalize-space(text())='Barkod No :']/../following-sibling::td//inpıt");
     SelenideElement btnEtiketBastir = $x("//span[text() = 'Etiket Bastır']/../../button");
     ElementsCollection tblEvrakDetayi = $$("[id='mainPreviewForm:dtEvrakUstVeri_data'] tr[data-ri]");
     SelenideElement divGonderildigiKurm = $("div[id='mainPreviewForm:tpbeGonderildigiKurumLovId:LovSecilen'] div[id^='mainPreviewForm:tpbeGonderildigiKurumLovId']");
@@ -192,6 +193,12 @@ public class PostaListesiPage extends MainPage {
             cmbGonderildigiKurum.getSelectedTitles().first().shouldBe(Condition.text(gonderildigiYer));
         else
             cmbGonderildigiKurum.getSelectedTitles().first().shouldNotHave(Condition.text(gonderildigiYer));
+        return this;
+    }
+
+    @Step("Gonderildiği Kurum alanının geldiği görülür.")
+    public PostaListesiPage gonderildigiKurumAlanKontrolu() {
+            cmbGonderildigiKurum.shouldBe(Condition.visible);
         return this;
     }
 
