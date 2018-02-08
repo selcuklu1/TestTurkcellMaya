@@ -4,11 +4,8 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import io.qameta.allure.Allure;
-import io.qameta.allure.AllureUtils;
 import io.qameta.allure.Step;
-import org.apache.xmlbeans.impl.xb.xsdschema.All;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
@@ -897,6 +894,18 @@ public class PostalanacakEvraklarPage extends MainPage {
     public PostalanacakEvraklarPage evrakOnizlemeFizilselEkMesajiKontrolu(String fizikselEkMesaji) {
 
         Assert.assertEquals($(By.xpath("//label[normalize-space(text())='"+fizikselEkMesaji+"']")).isDisplayed(), true);
+
+        return this;
+    }
+
+    @Step("Postalanacak Evraklar listesinde evrakın listelenmediği kontrolu")
+    public PostalanacakEvraklarPage konuyaGoreEvrakGelmemeKontrolu(String konu) {
+
+        boolean durum = tblEvraklar
+                .filterBy(Condition.text(konu))
+                .size() == 0;
+
+        Assert.assertEquals(durum, true);
 
         return this;
     }

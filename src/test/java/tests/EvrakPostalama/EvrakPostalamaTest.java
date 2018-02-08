@@ -9,6 +9,7 @@ package tests.EvrakPostalama;
 
 import com.codeborne.selenide.Condition;
 import common.BaseTest;
+import data.TestData;
 import data.User;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
@@ -169,52 +170,74 @@ public class EvrakPostalamaTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS2076: Evrak Postalama işlemleri")
     public void TS2076() throws InterruptedException {
+
         login("Mbozdemir", "123");
-        String konu = "TS2076_" + getSysDate();
+
+        String evrakKonusu = "TS2076_" + getSysDate();
+
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
                 .bilgilerTabAlanKontrolleri()
                 .konuKoduSec("Yazılım Geliştirme")
-                .konuDoldur(konu)
+                .konuDoldur(evrakKonusu)
                 //  .kaldirilacakKlasorler("B1K1")
-                .kaldirilacakKlasorler("Diğer")
                 .evrakTuruSec("Resmi Yazışma")
                 .geregiSecimTipiSec("Kurum")
                 .geregiDoldur("Avrupa Birliği Bakanlığı", "Kurum")
-                .kurumGeregiAlaniKurumPostaTipiKontrol("Başbakanlık", "Adi Posta")
+                .kurumGeregiAlaniKurumPostaTipiKontrol("Avrupa Birliği Bakanlığı", "Adi Posta")
 
-                .geregiKurumPostaTipi("Evrak Servisi Elden")
+                .geregiKurumPostaTipi("Birim Elden")
                 .gizlilikDerecesiSec("Normal")
                 .ivedilikSec("Normal")
 
                 .onayAkisiKullanicilariTemizle()
                 .onayAkisiEkle()
+                .onayAkisiKullaniciKontrol("Mehmet BOZDEMİR", "PARAFLAMA")
                 .onayAkisiKullaniciTipiSec("Mehmet BOZDEMİR", "İmzalama")
-                //    .onayAkisiKullaniciTipiSec(user1.getName(), "İmzalama")
-                .onayAkisiKullan();
+                .onayAkisiKullan()
+
+        .kaldirilacakKlasorler("000");
 
         EvrakOlusturPage.EditorTab editorTab = evrakOlusturPage.editorTabAc();
-        editorTab.getEditor().type("TS2076");
-        editorTab.imzala()
+        editorTab
+                .getEditor()
+                .type("TS2076 senaryosu");
+
+        editorTab
+                .imzala()
                 .popupSImzalaIslemleri();
 
-        Thread.sleep(500);
-        evrakOlusturPage.islemMesaji().isBasarili();
-        postalananlarPage
-                .birimLogin("gsahin" , "123");
 
-        postalananlarPage.t2076PostaArama("TS2076");
+        postalananlarPage
+             .islemMesaji().basariliOlmali("İşlem başarılıdır!");
+
+       // postalananlarPage
+         //       .birimLogin("gsahin" , "123");
+
+        login(TestData.usernameZTEKIN, TestData.passwordZTEKIN);
 
         postalanacakEvraklarPage
                 .openPage()
-                .btnFiltrenenPostaIcerikGoster("TS2076");
+                .konuyaGoreEvrakGelmemeKontrolu(evrakKonusu);
 
+        postalananlarPage
+                .openPage()
+                .konuyaGoreEvrakGelmemeKontrolu(evrakKonusu);
+                //.t2076PostaArama("TS2076");
+
+     //   postalanacakEvraklarPage
+       //         .openPage()
+         //       .btnFiltrenenPostaIcerikGoster("TS2076");
+
+        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
 
         imzaladiklarimPage
                 .openPage()
-                .dokumaniSec(konu)
-                .evrakGecmisi();
+                .konuyaGoreEvrakKontrol(evrakKonusu)
+                .konuyaGoreEvrakOnizlemedeAc(evrakKonusu)
+                .evrakGecmisi()
+                .evrakGecmisiWith("Evrak kurum içi otomatik postalandı.");
 
     }
 

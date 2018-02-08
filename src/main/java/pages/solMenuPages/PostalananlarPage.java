@@ -582,4 +582,15 @@ public class PostalananlarPage extends MainPage {
         return this;
         }
 
+    @Step("Postalananlar Evraklar listesinde evrakın listelenmediği kontrolu")
+    public PostalananlarPage konuyaGoreEvrakGelmemeKontrolu(String konu) {
+
+        boolean durum = tblEvraklar
+                .filterBy(Condition.text(konu))
+                .size() == 0;
+
+        Assert.assertEquals(durum, true);
+
+        return this;
+    }
 }
