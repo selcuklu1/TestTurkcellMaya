@@ -333,9 +333,9 @@ public class EvrakPostalamaTest extends BaseTest {
         evrakOlusturPage
                 .ekleriTabAc()
                 .ekleriTabKontrolu()
-                .webAdresiEkleTabiniAc()
-                .arsivdeKayitliEvrakEkleTabiniAc()
-                .sistemdeKayitliEvrakEkleTabiniAc()
+               //.webAdresiEkleTabiniAc()
+                //.arsivdeKayitliEvrakEkleTabiniAc()
+                //.sistemdeKayitliEvrakEkleTabiniAc()
                 .fizikselEkEkleTabiniAc()
                 .fizikselEkMetniDoldur(fizikselEkMetni)
                 .fizikselEkMetniEkle()
