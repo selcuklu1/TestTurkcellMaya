@@ -14,7 +14,6 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pages.pageComponents.IslemMesajlari;
 import pages.solMenuPages.ImzaladiklarimPage;
 import pages.solMenuPages.PostalanacakEvraklarPage;
 import pages.solMenuPages.PostalananlarPage;
@@ -115,8 +114,10 @@ public class EvrakPostalamaTest extends BaseTest {
                 .popupSImzalaIslemleri();
 
 
-        Thread.sleep(4000);
+        Thread.sleep(1500);
 
+        evrakOlusturPage.islemMesaji().isBasarili();
+        Thread.sleep(2000);
         postalanacakEvraklarPage
                 .openPage()
                 .filter().findRowsWith(Condition.text(konu)).shouldHaveSize(1).first().click();
@@ -174,13 +175,14 @@ public class EvrakPostalamaTest extends BaseTest {
                 .openPage()
                 .bilgilerTabiAc()
                 .bilgilerTabAlanKontrolleri()
-                .konuKoduSec("YAZILIM GEL")
+                .konuKoduSec("Yazılım Geliştirme")
                 .konuDoldur(konu)
                 //  .kaldirilacakKlasorler("B1K1")
                 .kaldirilacakKlasorler("Diğer")
                 .evrakTuruSec("Resmi Yazışma")
                 .geregiSecimTipiSec("Kurum")
-                .geregiDoldur("Başbakanlık", "")
+                .geregiDoldur("Avrupa Birliği Bakanlığı", "Kurum")
+                .kurumGeregiAlaniKurumPostaTipiKontrol("Başbakanlık", "Adi Posta")
 
                 .geregiKurumPostaTipi("Evrak Servisi Elden")
                 .gizlilikDerecesiSec("Normal")
@@ -197,11 +199,17 @@ public class EvrakPostalamaTest extends BaseTest {
         editorTab.imzala()
                 .popupSImzalaIslemleri();
 
-        Thread.sleep(2000);
+        Thread.sleep(500);
+        evrakOlusturPage.islemMesaji().isBasarili();
+        postalananlarPage
+                .birimLogin("gsahin" , "123");
+
+        postalananlarPage.t2076PostaArama("TS2076");
+
         postalanacakEvraklarPage
                 .openPage()
-                .filter().findRowsWith(Condition.text(konu))
-                .first().click();
+                .btnFiltrenenPostaIcerikGoster("TS2076");
+
 
         imzaladiklarimPage
                 .openPage()
@@ -249,6 +257,7 @@ public class EvrakPostalamaTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS0520b : Postalanan evrak posta bilgilerinin önizleme ekranından güncellenmesi ve rapor üzerinde kontrolü")
     public void TS0520b() throws InterruptedException {
+
         login("Mbozdemir", "123");
         String konu = "Konu: TS2235";
 
@@ -379,14 +388,17 @@ public class EvrakPostalamaTest extends BaseTest {
         String konu = "TS1685_" + getSysDate();
         String imzaci ="Mehmet BOZDEMİR";
 
-        postalananlarPage.openPage();
-        postalananlarPage.tabloEvrakGeldigiGorme()
+        postalananlarPage
+                .openPage()
+                .tabloEvrakGeldigiGorme()
+                .icDisEvrakIkonuKontrolu()
                 .btnKurdele()
                 .tekImzaciKontrol(imzaci)
                 .mngImzaDialog()
                 .btnImzaciPopupKapat()
                 .btnTamEkran()
                 .icDisSuretKtrl()
+                .sagTabKontrol()
                 .btnTamEkranKapat()
                 .btnIcerikGoster();
 
@@ -398,7 +410,8 @@ public class EvrakPostalamaTest extends BaseTest {
         postalananlarPage
                 .btnFiltreSpan()
                 .btnFiltreBaslangicTarihi(getSysDateForKis())
-                .btnFiltrePostaladiklarim();
+                .btnFiltrePostaladiklarim()
+                .tabloEvrakGeldigiGorme();
 
     }
 

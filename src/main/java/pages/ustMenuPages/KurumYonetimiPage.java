@@ -340,7 +340,7 @@ public class KurumYonetimiPage extends MainPage {
     }
 
     // Hüseyin Methods
-    @Step("{0} kurumunu güncelle")
+    @Step("{kurumAdi} kurumunu güncelle")
     public KurumYonetimiPage kurumGuncelle(String kurumAdi) {
         tableKurumListesi
                 .filterBy(Condition.text(kurumAdi))
@@ -350,7 +350,7 @@ public class KurumYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("{0} kurumunu seç")
+    @Step("{ustKurum} kurumunu seç")
     public KurumYonetimiPage ustKurumSec(String ustKurum) {
         if (divSecilenUstKurum.exists())
             btnSecilenKurumListedenCikar.exists();
@@ -610,7 +610,7 @@ public class KurumYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("{0} kurumu pasif edildi.")
+    @Step("{kurumAdi} kurumu pasif edildi.")
     public KurumYonetimiPage kurumPasifYap(String kurumAdi) {
 
         tableKurumListesi
@@ -658,7 +658,6 @@ public class KurumYonetimiPage extends MainPage {
         chkKepAdresiKullaniyor.shouldBe(Condition.visible);
         txtKisaAdi.shouldBe(Condition.visible);
         chkPaketKullanim.shouldBe(Condition.visible);
-        chkKepAdresiKullaniyor.shouldBe(Condition.visible);
         chkTsk.shouldBe(Condition.visible);
         chkKaysisteYerAlmiyor.shouldBe(Condition.visible);
         divKepAdresiBilgileri.shouldBe(Condition.visible);
@@ -667,7 +666,6 @@ public class KurumYonetimiPage extends MainPage {
                 "Kaysiste yer almıyor\n" +
                 "Kısa Adı\n" +
                 "Paket Kullanım\n" +
-                "Kep Adresi Kullanıyor\n" +
                 "TSK\n" +
                 "KEP adresi bilgileri alanlarının geldiği görülür."
         );
