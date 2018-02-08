@@ -1,17 +1,20 @@
 package pages.solMenuPages;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
+import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
+import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 public class BirimIadeEdilenlerPage extends MainPage {
 
@@ -20,6 +23,7 @@ public class BirimIadeEdilenlerPage extends MainPage {
     ElementsCollection tableEvraklar = $$("tbody[id='mainInboxForm:inboxDataTable_data'] > tr");
     SelenideElement onizlemeTeslimAl = $("[id='mainPreviewForm:onizlemeRightTab:uiRepeat:4:cmdbutton']");
     ElementsCollection btnTeslimAl = $$("[id^='mainInboxForm:inboxDataTable:j_idt'] > [class$='document-delivery']");
+    BelgenetElement txtOnaylanacakKisi = comboLov(By.id("mainPreviewForm:onaylayacakKisiLov:LovText"));
 
 
     public BirimIadeEdilenlerPage openPage() {
@@ -58,6 +62,24 @@ public class BirimIadeEdilenlerPage extends MainPage {
     @Step("Evrak tıklanır ve listelendiği görülür {konu}")
     public BirimIadeEdilenlerPage evrakSec(String konu) {
         tblEvraklar.filterBy(text(konu)).get(0).click();
+        return this;
+    }
+
+    @Step("Teslim Al ve Havale Et")
+    public BirimIadeEdilenlerPage teslimAlVeHavaleEt(){
+        $("[class='ui-button-icon-left ui-icon teslimAlHavale']").click();
+        return this;
+    }
+
+    @Step("Onaylayacak Kişi doldur: {onaylanacakKisi} - {birim}")
+    public BirimIadeEdilenlerPage onaylanacakKisiDoldur(String onaylanacakKisi,String birim){
+        txtOnaylanacakKisi.selectLov(onaylanacakKisi,birim);
+        return this;
+    }
+    
+    @Step("")
+    public BirimIadeEdilenlerPage havaleOnayinaGonder(){
+        $$("[id='mainPreviewForm:evrakOnizlemeTab'] button").filterBy(Condition.text("Havale Onayına Gönder")).first().click();
         return this;
     }
 

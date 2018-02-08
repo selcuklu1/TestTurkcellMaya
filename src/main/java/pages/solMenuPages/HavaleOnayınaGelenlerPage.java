@@ -5,12 +5,15 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.testng.Assert;
 import pages.MainPage;
+import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
+import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 /****************************************************
  * Tarih: 2018-01-26
@@ -22,9 +25,12 @@ import static com.codeborne.selenide.Selenide.$$;
 public class HavaleOnayınaGelenlerPage extends MainPage {
     ElementsCollection tblEvraklar = $$("[id^='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
     SelenideElement btnHavaleOnay = $("button[id^='mainPreviewForm:onizlemeRightTab:uiRepeat:4:cmdbutton']");
+    SelenideElement btnHavaleOnayiOnayla = $(By.id("mainPreviewForm:onaylaButton_id"));
     SelenideElement notAlanıDoldur = $(By.id("mainPreviewForm:notTextArea_id"));
     SelenideElement onayıReddet = $(By.id("mainPreviewForm:reddetButton_id"));
     SelenideElement onizlemeOnayla = $(By.id("mainPreviewForm:onaylaButton_id"));
+    BelgenetElement txtHavaleOnayiBirim = comboLov(By.id("mainPreviewForm:dagitimBilgileriBirimLov_id:LovText"));
+    BelgenetElement txtHavaleOnayiKisi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKullaniciLov_id:LovText"));
 
     //      SelenideElement onayıReddetEvet = $(By.id("inboxItemInfoForm:reddetEvetButton_id"));
 //      SelenideElement onayıReddetEvet = $("button[id='inboxItemInfoForm:reddetEvetButton_id']");
@@ -49,6 +55,30 @@ public class HavaleOnayınaGelenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Havale Onayı")
+    public HavaleOnayınaGelenlerPage havaleOnayi(){
+        $("[class='ui-button-icon-left ui-icon havaleOnay']").click();
+        return this;
+    }
+
+    @Step("Birim alanını doldur: {birim}")
+    public HavaleOnayınaGelenlerPage havaleOnayiBirimDoldur(String birim){
+        txtHavaleOnayiBirim.selectLov(birim);
+        return this;
+    }
+
+    @Step("Birim alanında seçileni Bilgi için gönder")
+    public HavaleOnayınaGelenlerPage havaleOnayinaBirimGeregiIcinBilgiIcinSec(){
+        $(By.id("mainPreviewForm:dagitimBilgileriBirimLov_id:LovSecilenTable:0:selectOneMenu")).selectOption("BİLGİ İÇİN GÖNDER");
+        return this;
+    }
+
+    @Step("Kişi alanını doldur: {kisi}")
+    public HavaleOnayınaGelenlerPage havaleOnayiKisiDoldur(String kisi,String birim){
+        txtHavaleOnayiKisi.selectLov(kisi,birim);
+        return this;
+    }
+
     @Step("Evrak Sec Checkbox ile")
     public HavaleOnayınaGelenlerPage evrakSecCheckBox(String konu1,boolean secim) {
         tblEvraklar.filterBy(text(konu1)).get(0).$$("div[class^='ui-chkbox-box']").first().click();
@@ -67,6 +97,27 @@ public class HavaleOnayınaGelenlerPage extends MainPage {
     @Step("Havale butonunu tıkla")
     public HavaleOnayınaGelenlerPage havaleOnay() {
         btnHavaleOnay.click();
+        return this;
+    }
+
+    @Step("Havale butonunu tıkla")
+    public HavaleOnayınaGelenlerPage havaleOnayiOnayla() {
+        btnHavaleOnayiOnayla.pressEnter();
+        return this;
+    }
+    
+    @Step("Havaleyi onaylamak üzeresiniz. Kabul ediyor musunuz? Evet / Hayır uyarısını geldiği görülür.")
+    public HavaleOnayınaGelenlerPage havaleyiOnaylamakUzersinizUyariGeldigiGorme(){
+        boolean durum = $$(By.id("mainPreviewForm:evetButton_id")).size()>0;
+        Assert.assertEquals(durum,true);
+        takeScreenshot();
+        return this;
+    }
+
+
+    @Step("Evet tıklanır")
+    public HavaleOnayınaGelenlerPage havaleyiOnaylamakUzeresinizEvet(){
+        $(By.id("mainPreviewForm:evetButton_id")).pressEnter();
         return this;
     }
 

@@ -398,8 +398,8 @@ public class EvrakTeslimAlmaTest extends BaseTest {
         teslimAlinmayiBekleyenlerPage
                 .openPage()
                 .evrakNoIleEvrakSec(konu)
-                .btnIadeEt()
-                .btnIadeEtIadeEt()
+                .iadeEt()
+                .iadeEtIadeEt()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
 
@@ -472,8 +472,8 @@ public class EvrakTeslimAlmaTest extends BaseTest {
         teslimAlinmayiBekleyenlerPage
                 .openPage()
                 .evrakNoIleEvrakSec(konu)
-                .btnIadeEt()
-                .btnIadeEtIadeEt()
+                .iadeEt()
+                .iadeEtIadeEt()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
 
@@ -574,16 +574,16 @@ public class EvrakTeslimAlmaTest extends BaseTest {
         teslimAlinmayiBekleyenlerPage
                 .openPage()
                 .evrakNoIleEvrakSec(konu1)
-                .btnIadeEt()
-                .btnIadeEtIadeEt()
+                .iadeEt()
+                .iadeEtIadeEt()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
         testStatus(testid,"PreCondition 2. Evrak Iade Et");
         teslimAlinmayiBekleyenlerPage
                 .openPage()
                 .evrakNoIleEvrakSec(konu2)
-                .btnIadeEt()
-                .btnIadeEtIadeEt()
+                .iadeEt()
+                .iadeEtIadeEt()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
 
@@ -684,16 +684,16 @@ public class EvrakTeslimAlmaTest extends BaseTest {
         teslimAlinmayiBekleyenlerPage
                 .openPage()
                 .evrakNoIleEvrakSec(konu1)
-                .btnIadeEt()
-                .btnIadeEtIadeEt()
+                .iadeEt()
+                .iadeEtIadeEt()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
         testStatus(testid,"PreCondition 2. Evrak Iade Et");
         teslimAlinmayiBekleyenlerPage
                 .openPage()
                 .evrakNoIleEvrakSec(konu2)
-                .btnIadeEt()
-                .btnIadeEtIadeEt()
+                .iadeEt()
+                .iadeEtIadeEt()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
 

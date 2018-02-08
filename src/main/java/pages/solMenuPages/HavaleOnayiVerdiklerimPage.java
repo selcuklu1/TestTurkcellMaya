@@ -35,6 +35,12 @@ public class HavaleOnayiVerdiklerimPage extends MainPage{
         return this;
     }
 
+    @Step("Evrak geldiği görünür.")
+    public HavaleOnayiVerdiklerimPage evrakGeldigiGorme(String evrakNo){
+        tblEvraklar.filterBy(Condition.text(evrakNo)).shouldHaveSize(1);
+        return this;
+    }
+
     @Step("Evrak geçmişi alanına tıklanır")
     public HavaleOnayiVerdiklerimPage secilenEvrakEvrakGecmisi() {
         $$("[id$='evrakOnizlemeTab'] ul li").filterBy(Condition.text("Evrak Geçmişi")).get(0).$("a").click();
