@@ -1,5 +1,6 @@
 package pages.pageComponents.tabs;
 
+import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
@@ -14,12 +15,15 @@ import pages.pageComponents.SearchTable;
 import pages.pageComponents.UstYazi;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.alanlar.*;
+import pages.ustMenuPages.EvrakOlusturPage;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static com.codeborne.selenide.CollectionCondition.*;
 import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.Condition.empty;
 import static com.codeborne.selenide.Selenide.$;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
@@ -437,17 +441,16 @@ public class BilgilerTab extends MainPage {
         return this;
     }
 
-    //endregion
-
-    //******************************************************
-
-    //region Gereği
-
     @Step("Gereği Seçim Tipi seçilir")
     public BilgilerTab geregiSecimTipiSec(GeregiSecimTipi geregiSecimTipi) {
         getGeregiSecimTipi().selectOption(geregiSecimTipi.getOptionText());
         return this;
     }
+    //endregion
+
+    //******************************************************
+
+    //region Gereği
 
     @Step("Gereği combolov")
     public BelgenetElement getGeregiCombolov() {
@@ -463,6 +466,36 @@ public class BilgilerTab extends MainPage {
     @Step("Gereği alanı temizlenir")
     public BilgilerTab geregiTemizle() {
         getGeregiCombolov().clearAllSelectedItems();
+        return this;
+    }
+
+    @Step("\"{secilenGeregi}\" seçilen gereğinin posta tipi: {stepDescription}")
+    public SelenideElement getSecilenGeregiPostaTipi(String stepDescription, String... secilenGeregi){
+        ElementsCollection collection = getGeregiCombolov().getSelectedItems().shouldHave(sizeGreaterThan(0));
+        for (String v:secilenGeregi) {
+            collection = collection.filterBy(text(v));
+        }
+        return collection.shouldHave(sizeGreaterThan(0)).first().$("select").shouldBe(visible);
+    }
+
+    @Step("Geregi posta tipi {posta} seçilir")
+    public BilgilerTab geregiPostaTipiSec(String postaTipi) {
+        getGeregiCombolov().getSelectedItems().last().$("select").selectOption(postaTipi);
+        return this;
+    }
+
+    @Step("Geregi Tipi {geregiSecimTipi.optionText}, gereği {deger} seçilir")
+    public BilgilerTab geregiSec(GeregiSecimTipi geregiSecimTipi, String deger) {
+        getGeregiSecimTipi().selectOption(geregiSecimTipi.getOptionText());
+        getGeregiCombolov().selectLov(deger);
+        return this;
+    }
+
+    @Step("Geregi Tipi {geregiSecimTipi.optionText}, gereği {deger} ve posta tipi {postaTipi} seçilir")
+    public BilgilerTab geregiSec(GeregiSecimTipi geregiSecimTipi, String deger, String postaTipi) {
+        getGeregiSecimTipi().selectOption(geregiSecimTipi.getOptionText());
+        getGeregiCombolov().selectLov(deger);
+        getGeregiCombolov().getSelectedItems().last().scrollIntoView(true).$("select").selectOption(postaTipi);
         return this;
     }
 

@@ -52,7 +52,9 @@ public class KurumYonetimiTest extends BaseTest {
                 .hitapDoldur(hitap)
                 .kurumAdiDoldur(yeniKurumAdi1)
                 .idariBirimKimlikKoduDoldur(idariBirimKimlikKodu)
-                .ustKurumSec(ustKurum);
+                .ustKurumSec(ustKurum)
+                .kaysisteYerAlmiyorSec(true)
+                .kaysisteYerAlmiyorSec(false);
 
         kurumYonetimiPage
                 .yeniIletisimBilgisiEkle()
