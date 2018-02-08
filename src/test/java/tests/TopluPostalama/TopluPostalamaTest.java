@@ -774,7 +774,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .geregiSec(evrak1GidecegiYer)
                 .geregiKurumPostaTipi(evrakPostaTipi)
                 .onayAkisiEkle()
-                .onayAkisiKullaniciTipiSec("Mehmet BOZDEMİR [Antalya İl Müdürü]", "İmzalama")
+                .onayAkisiKullaniciTipiSec("Mehmet BOZDEMİR", "İmzalama")
                 .kullan();
         evrakOlusturPage
                 .editorTabAc()
