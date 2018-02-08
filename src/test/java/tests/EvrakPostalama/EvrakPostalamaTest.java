@@ -275,13 +275,21 @@ public class EvrakPostalamaTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS1685 : Fiziksel eki olan iç yazışmaların postaya düşürülmesi")
     public void TS1685() throws InterruptedException {
+
         login("Mbozdemir", "123");
         String konu = "TS1685_" + getSysDate();
+        String tuzelKisiVergiNo = "1122007720";
+        String kurum = "Başbakanlık";
+        String fizikselEkMetni = "TS1685 Ek metni";
+        String basariMesaji = "İşlem başarılıdır!";
+        String dagitimSatiriMesaj = "KEP posta birimine gönderildi.";
+        String fizikselEkMesaji = "Evrakın fiziksel eki vardır, göndermeyi unutmayınız!";
 
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
-                .konuKoduSec("YAZILIM GEL")
+                .bilgilerTabAlanKontrolleri()
+                .konuKoduSec("Yazılım Geliştirme")
                 .konuDoldur(konu)
                 .kaldirilacakKlasorler("Diğer")
                 .gizlilikDerecesiSec("Normal")
@@ -289,25 +297,31 @@ public class EvrakPostalamaTest extends BaseTest {
                 .evrakTuruSec("Resmi Yazışma")
                 .ivedilikSec("Normal")
                 .geregiSecimTipiSec("Tüzel Kişi")
-                .geregiDoldur("Optiim İş", "Ad")
-                .geregiKurumPostaTipi("E-Posta")
+                .geregiDoldur("Optiim İş Çözümleri AŞ", "Tüzel Kişi Adı")
+                .tuzelKisiGeregiAlaniVergiNoPostaTipiKontrol(tuzelKisiVergiNo, "KEP")
+                //.geregiKurumPostaTipi("E-Posta")
                 .geregiSecimTipiSec("Kurum")
-                .geregiDoldur("Başbakanlık", "Kurum")
-                .geregiKurumPostaTipi("APS")
+                .geregiDoldur("Başbakanlık", "Kurum Adı")
+                //.geregiKurumPostaTipi("APS")
+                .kurumGeregiAlaniKurumPostaTipiKontrol(kurum, "KEP")
                 .onayAkisiKullanicilariTemizle()
                 .onayAkisiEkle()
                 .onayAkisiKullaniciTipiSec("Mehmet BOZDEMİR", "İmzalama")
 //                .onayAkisiKullaniciTipiSec(user1.getName(), "İmzalama")
                 .onayAkisiKullan();
 
+        String evrakTarihi = evrakOlusturPage.bilgilerTabiAc().evrakTarihiAl();
+
         evrakOlusturPage
                 .ekleriTabAc()
-                .webAdresiEkleTabiniAc()
-                .arsivdeKayitliEvrakEkleTabiniAc()
-                .sistemdeKayitliEvrakEkleTabiniAc()
+                .ekleriTabKontrolu()
+               //.webAdresiEkleTabiniAc()
+                //.arsivdeKayitliEvrakEkleTabiniAc()
+                //.sistemdeKayitliEvrakEkleTabiniAc()
                 .fizikselEkEkleTabiniAc()
-                .fizikselEkMetniDoldur("TS1685 Ek")
-                .fizikselEkMetniEkle();
+                .fizikselEkMetniDoldur(fizikselEkMetni)
+                .fizikselEkMetniEkle()
+                .listelenenEklerdeKontrol(fizikselEkMetni, "Fiziksel Ek Metni");
       /*  evrakOlusturPage
                 .ilgileriTabAc()
                 .sistemeKayitliEvrakEkleTab()
@@ -323,24 +337,28 @@ public class EvrakPostalamaTest extends BaseTest {
                 .editorTabAc()
                 .editorIcerikDoldur(konu)
                 .imzala()
-                .popupSImzalaIslemleri();
-
-
-        Thread.sleep(4000);
+                .popupSImzalaIslemleri()
+                .islemMesaji().basariliOlmali(basariMesaji);
 
         postalanacakEvraklarPage
                 .openPage()
-                .filter().findRowsWith(Condition.text(konu)).shouldHaveSize(1).first().click();
+                .konuyaGoreEvrakKontroluAllPages(konu)
+                .konuyaGoreEvrakKontrol(konu, evrakTarihi)
+                .konuyaGoreEvrakOnizlemedeAc(konu);
+                //.filter().findRowsWith(Condition.text(konu)).shouldHaveSize(1).first().click();
+
         postalanacakEvraklarPage
                 .btnFizikselEkIkonKontrol();
 
         postalanacakEvraklarPage
                 .evrakPostala()
-                .KntrlEvrakFizikselEkYaziSayTar()
-                .postala()
-                .dialogpostalaEvet();
+              //  .KntrlEvrakFizikselEkYaziSayTar()
+                .evrakOnizlemeDagitimSatiriKontrol(dagitimSatiriMesaj)
+                .evrakOnizlemeFizilselEkMesajiKontrolu(fizikselEkMesaji);
+                //.postala()
+                //.dialogpostalaEvet();
 
-        postalanacakEvraklarPage.islemMesaji().isBasarili();
+        //postalanacakEvraklarPage.islemMesaji().isBasarili();
     }
 
     @Severity(SeverityLevel.CRITICAL)
