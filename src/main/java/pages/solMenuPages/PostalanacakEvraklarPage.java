@@ -121,7 +121,9 @@ public class PostalanacakEvraklarPage extends MainPage {
 
     ElementsCollection trEvrakOnizlemePostalanacakYerler = $$("tbody[id*='mainPreviewForm:dataTableId_data'] tr[data-ri]");
     ElementsCollection tabloPostalanacakYerler = $$("tbody[id='mainPreviewForm:dataTableId_data'] tr[data-ri]");
-
+    ElementsCollection tblEvrakDetaylariUstVeriler = $$("tbody[id='postaDetayYazdirForm:dtPostaEvrakUstVeri_data'] tr[data-ri]");
+    ElementsCollection tblEvrakDetaylariEvrakinEkleri = $$("tbody[id='postaDetayYazdirForm:dtPostaEvrakEk_data'] tr[data-ri]");
+    SelenideElement txtEtiketBastir = $(By.id("mainPreviewForm:etiketMetinIDPostIslm"));
 
     @Step("Postalanacak Evraklar sayfası aç")
     public PostalanacakEvraklarPage openPage() {
@@ -238,7 +240,7 @@ public class PostalanacakEvraklarPage extends MainPage {
         tabloPostalanacakYerler
                 .filterBy(Condition.text("DAĞITIM YERLERİNE"))
                 .first()
-                .$("//span[text()='Detay']").click();
+                .$(By.xpath("//span[text()='Detay']")).click();
         return this;
     }
 
@@ -253,27 +255,79 @@ public class PostalanacakEvraklarPage extends MainPage {
         $(By.xpath("//div[@id='windowReadOnlyEvrakDialog']//span[@class='ui-icon ui-icon-closethick']")).click();
         return this;
     }
+    @Step("Evrak Detayları ekranı kapat")
+    public PostalanacakEvraklarPage evrakDetaylariEkranKapat() {
+        $(By.xpath("//div[@id='postaDetayYazdirForm:dlgPostaDetayYazdir']//span[@class='ui-icon ui-icon-closethick']")).click();
+        return this;
+    }
 
-    @Step("Dağıtım Planı İçeriği ekranı kapat")
-    public PostalanacakEvraklarPage dagitimPlaniGidisSekliDoldur(String gidisSekli) {
-        $("tbody[id='mainPreviewForm:dagitimPlaniDetay_data'] tr:nth-child(1) td:nth-child(3) select").selectOption(gidisSekli);
+    @Step("Postalanacak Yerler gidiş şekli \"{gidisSekli}\" seçilir. ")
+    public PostalanacakEvraklarPage postalanacakYerlerGidisSekliDoldur(String gidisSekli) {
+        SelenideElement dagitimPlaniGonderildigiYer = $("tbody[id='mainPreviewForm:dataTableId_data'] tr:nth-child(1) td:nth-child(3) select");
+        dagitimPlaniGonderildigiYer.selectOption(gidisSekli);
         return this;
     }
 
     @Step("Tutar kontrolü")
     public PostalanacakEvraklarPage dagitimPlaniTutarKontrol(String tutar) {
-        Assert.assertEquals($("tbody[id='mainPreviewForm:dagitimPlaniDetay_data'] tr:nth-child(1) td:nth-child(3) tr:nth-child(5) input").text().equals(tutar),true);
+        Assert.assertEquals($("tbody[id='mainPreviewForm:dagitimPlaniDetay_data'] tr:nth-child(5) input").getValue().equals(tutar), true);
         return this;
     }
 
     @Step("Kaydet butonuna tıklanır")
     public PostalanacakEvraklarPage dagitimPlaniKaydetl() {
-        $(By.id("mainPreviewForm:dagitimPlaniDetayKaydetViewDialog")).click();
+        SelenideElement btnDagitimPlaniKaydet= $(By.id("mainPreviewForm:dagitimPlaniDetayKaydetViewDialog"));
+        clickJs(btnDagitimPlaniKaydet);
         return this;
     }
+
     @Step("Evrak Detayları pop up kontrolü")
     public PostalanacakEvraklarPage evrakDetaylariPopUpKontrol() {
-        Assert.assertEquals($(By.xpath("//span[text()='Evrak Detayları']")).isDisplayed(),true);
+        Assert.assertEquals($(By.xpath("//span[text()='Evrak Detayları']")).isDisplayed(), true);
+        return this;
+    }
+
+    @Step("Evrak Detayları pop up Üst Veriler Yazdır butonu kontrolü")
+    public PostalanacakEvraklarPage evrakDetaylariUstVerilerYazdirButonKontrol(String konu) {
+
+        boolean sonuc = tblEvrakDetaylariUstVeriler
+                .filterBy(text(konu))
+                .first()
+                .$("button").isDisplayed();
+        Assert.assertEquals(sonuc, true);
+        return this;
+    }
+
+    @Step("Evrak Detayları pop up Üst Veriler Yazdır tıklanır")
+    public PostalanacakEvraklarPage evrakDetaylariUstVerilerYazdirButonTikla(String konu) {
+        tblEvrakDetaylariUstVeriler
+                .filterBy(text(konu))
+                .first()
+                .$("button").click();
+        return this;
+    }
+
+
+    @Step("Pdf kontrolü Yapılır.")
+    public PostalanacakEvraklarPage pdfKontrol() {
+        switchTo().window(1);
+
+        sleep(3000);
+takeScreenshot();
+
+        closeNewWindow();
+        switchTo().window(0);
+        return this;
+    }
+
+    @Step("Evrak Detayları pop up Evrak Ekleri Yazdır butonu kontrolü")
+    public PostalanacakEvraklarPage evrakDetaylarieEvrakEkleriYazdirButonKontrol(String ek) {
+
+        boolean sonuc = tblEvrakDetaylariEvrakinEkleri
+                .filterBy(text(ek))
+                .first()
+                .$("button").isDisplayed();
+        Assert.assertEquals(sonuc, true);
         return this;
     }
 
@@ -286,10 +340,13 @@ public class PostalanacakEvraklarPage extends MainPage {
     @Step("Dağıtım Planı İçeriği Ayrıtı Doldur.")
     public PostalanacakEvraklarPage dagitimPlaniIlkAyrintiDoldur(String postaKodu, String aciklama, String gonderildigiYer, String gramaj) {
 
-        $("tbody[id='mainPreviewForm:dagitimPlaniDetay_data'] tr:nth-child(1) td:nth-child(3) td:nth-child(2) input").sendKeys(postaKodu);
-        $("tbody[id='mainPreviewForm:dagitimPlaniDetay_data'] tr:nth-child(1) td:nth-child(2) textarea").sendKeys(aciklama);
-        $("tbody[id='mainPreviewForm:dagitimPlaniDetay_data'] tr:nth-child(1) td:nth-child(3) tr:nth-child(3) select").selectOption(gonderildigiYer);
-        setValueJS($("tbody[id='mainPreviewForm:dagitimPlaniDetay_data'] tr:nth-child(1) td:nth-child(3) tr:nth-child(4) input"), gramaj);
+        SelenideElement dagitimPlaniPostaKodu = $("tbody[id='mainPreviewForm:dagitimPlaniDetay_data'] tr:nth-child(1) input");
+        dagitimPlaniPostaKodu.setValue(postaKodu);
+        SelenideElement dagitimPlaniAciklama = $("tbody[id='mainPreviewForm:dagitimPlaniDetay_data'] tr:nth-child(2) textarea");
+        dagitimPlaniAciklama.setValue(aciklama);
+        SelenideElement dagitimPlaniGonderildigiYer = $("tbody[id='mainPreviewForm:dagitimPlaniDetay_data'] tr:nth-child(1) td:nth-child(3) tr:nth-child(3) select");
+        dagitimPlaniGonderildigiYer.selectOption(gonderildigiYer);
+        setValueJS($("tbody[id='mainPreviewForm:dagitimPlaniDetay_data'] tr:nth-child(4) input"), gramaj);
 
         return this;
     }
@@ -297,7 +354,8 @@ public class PostalanacakEvraklarPage extends MainPage {
     @Step("Dağıtım Planı İçeriği Gramaj Hesapla")
     public PostalanacakEvraklarPage dagitimPlaniIlkGramajHesapla() {
 
-        $("tbody[id='mainPreviewForm:dagitimPlaniDetay_data'] tr:nth-child(1) td:nth-child(3) tr:nth-child(4) button").click();
+        SelenideElement btnHesapla = $("tbody[id='mainPreviewForm:dagitimPlaniDetay_data'] tr:nth-child(4) button");
+        clickJs(btnHesapla);
         return this;
     }
 
@@ -584,7 +642,7 @@ public class PostalanacakEvraklarPage extends MainPage {
         return this;
     }
 
-    @Step("Postalanacak Evrak Postalama popup Evet seçmiş")
+    @Step("Postalanacak Evrak Postalama popup kapat.")
     public PostalanacakEvraklarPage dialogpostalaEvet() {
 
         btnDialogEvet.click();
@@ -668,6 +726,12 @@ public class PostalanacakEvraklarPage extends MainPage {
         return this;
     }
 
+    public PostalanacakEvraklarPage etiketBastirEkraniKontrolü(String tarih, String gonderilenYer) {
+        Assert.assertEquals(txtEtiketBastir.text().contains(tarih),true);
+        Assert.assertEquals(txtEtiketBastir.text().contains(gonderilenYer),true);
+        return this;
+    }
+
     @Step("Postalanacak Evrak etiket yazdir popup kapat")
     public PostalanacakEvraklarPage etiketYazdirPopupKapat() {
         btnEtiketPopupKapat.click();
@@ -707,16 +771,15 @@ public class PostalanacakEvraklarPage extends MainPage {
             lblTutar.shouldNotHave(Condition.text(tutar));
         return this;
     }
-    @Step("PopUp Tutar alaninda \"{tutar}\" değeri olmalı mı? : \"{shouldBeEquals}\" ")
-    public String popUpTutarAl() {
 
-        String tutar =    lblTutar.getText();
+    public String popUpTutarAl() {
+        String tutar = lblTutar.getText();
         return tutar;
     }
 
     @Step("Popup kontrolü")
     public PostalanacakEvraklarPage popUpKontrol() {
-        Assert.assertEquals(popUP.isDisplayed(),true);
+        Assert.assertEquals(popUP.isDisplayed(), true);
         return this;
     }
 

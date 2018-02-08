@@ -913,9 +913,9 @@ public class EvrakOlusturPage extends MainPage {
                 System.out.println(text);
                 if (text.equals("50 BİRİMLİK TEST DENEME DAĞITIM PLANI"))
                     title[i] = "DAĞITIM YERLERİNE";
-                if(text.equals("Optiim TEST [Ağ (Network) Uzman Yardımcısı]"))
+                else if(text.equals("Optiim TEST [Ağ (Network) Uzman Yardımcısı]"))
                     title[i] = "Optiim TEST";
-                if(text.equals("Başbakanlık"))
+                else if(text.equals("Başbakanlık"))
                     title[i] = "BAŞBAKANLIĞa";
                 else
                     title[i] = text;

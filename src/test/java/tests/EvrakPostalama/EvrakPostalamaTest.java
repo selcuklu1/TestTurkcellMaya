@@ -33,6 +33,7 @@ public class EvrakPostalamaTest extends BaseTest {
     String konu = "TS2235_" + getSysDate();
     String[] title = new String[5];
     String[] gonderimSekli = new String[5];
+    String konu309 = "";
 
     User user1 = new User("user1", "123", "User1 TEST");
 
@@ -406,6 +407,8 @@ public class EvrakPostalamaTest extends BaseTest {
     public void TS2235() throws InterruptedException {
         login("Mbozdemir", "123");
         String konu = "TS2235_" + getSysDate();
+        konu309 = konu;
+
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
@@ -542,77 +545,59 @@ public class EvrakPostalamaTest extends BaseTest {
             , description = "TS0309 : Önizleme ekranından ek ilgi ve ilişiği olan evrakın postalanması")
     public void TS0309() throws InterruptedException {
         login("Mbozdemir", "123");
-        String konu = "TS2235_";
+        String konu = konu309;
+        String basariMesaji = "İşlem başarılıdır!";
+//        String title = "OptiimTest TestOptiim";
+        String tarih = getSysDateForKis();
         postalanacakEvraklarPage
                 .openPage()
                 .filter().findRowsWith(Condition.text(konu)).first().click();
 
         postalanacakEvraklarPage.evrakPostala()
                 .alanKontrolleri(konu,title,gonderimSekli)
+//                .postalanacakYerlerGidisSekliDoldur("Adi Posta")
                 .detayTikla()
 //                .dagitimPlaniIcerigiEkraniKapat()
-                .dagitimPlaniGidisSekliDoldur("Adi Posta")
                 .dagitimPlaniIlkAyrintiDoldur("309","TS0309","Yurt Dışı","15")
                 .dagitimPlaniIlkGramajHesapla()
                 .popUpKontrol();
                 String tutar =postalanacakEvraklarPage.popUpTutarAl();
+        String[] spltTutar = tutar.split(" ");
+                System.out.println(spltTutar[0]);
 
         postalanacakEvraklarPage
                 .popUpTamam()
-                .dagitimPlaniTutarKontrol(tutar)
+                .dagitimPlaniTutarKontrol(spltTutar[0])
                 .dagitimPlaniKaydetl()
                 .postalanacakYerleryazdir()
                 .evrakDetaylariPopUpKontrol()
-
-//8den devam et
-
-//                .tuzelKisiPostaKod("309")
-//                .tuzelKisiPostaAciklama("TS0309")
-//                .birimPostaKod("309")
-//                .birimPostaAciklama("TS0309")
-//                .dagitimDetay()
-//                .dagitimDetayKapat()
-//                .gidisSekli("Adi Posta")
-//                .ilkPostaPostaKod("309")
-//                .ilkPostaAciklama("TS0309")
-//                .cmbYurticidisi("Yurt Dışı")
-//                .gramajDoldur("15")
-//                .hesapla()
+                .evrakDetaylariUstVerilerYazdirButonKontrol(konu)
+                .evrakDetaylarieEvrakEkleriYazdirButonKontrol("Ek-1")
+                .evrakDetaylarieEvrakEkleriYazdirButonKontrol("Ek-2")
+                .evrakDetaylariUstVerilerYazdirButonTikla(konu)
+                .pdfKontrol()
+                .evrakDetaylariEkranKapat()
                 .etiketYazdir()
+                .etiketBastirEkraniKontrolü(tarih,title[0])
                 .etiketYazdirPopupKapat()
-                .postalanacakEvrakYaz()
-                .popupPostalanacakEvrakYazdir();
-        switchTo().window(1);
-        closeNewWindow();
-
-        switchTo().window(0);
-        postalanacakEvraklarPage
-                .popupPostaYazdirmaKapat()
                 .postala()
-                .dialogpostalaEvet();
+                .dialogpostalaEvet()
+                .islemMesaji().basariliOlmali(basariMesaji);
 
         postalananlarPage
                 .openPage()
-                .filter().findRowsWith(Condition.text(konu)).first().click();
-
-
-        postalananlarPage
-                .btnFiltrenenPostaIcerikGoster(konu)
-                .btnIcerikEkleriTab()
-                .btnIcerikIlgileriTab()
-                .btnIcerikDetayKapat();
-
-        postalananlarPage
-                .btnFiltrenenPostaIcerikGoster(konu)
+                .evrakGeldigiGorme(konu,title[0],tarih)
+                .evrakSec(konu,tarih,title[0])
+                .evrakOnizlemeButonKontrol("Posta Detayı")
+//                .evrakOnizlemeEvrakEkKontrolu()
+                .btnEvrakEkleri()
+                .evrakEkleriKontrol("Ek-1")
+                .evrakEkleriKontrol("Ek-2")
                 .postaDetayiTikla()
-                .evrakYazdir()
-                .popupYazpdfkontrolveKapatma();
-        switchTo().window(1);
-        closeNewWindow();
-
-        switchTo().window(0);
-        postalananlarPage
-                .etiketBastir();
+                .postaDetayiPostalananYerlerKontrolu(title[1],"309","TS0309")
+                .postaDetayiPostalananYerlerYazdir(title[1],"309","TS0309")
+                .evrakDetaylariUstVerilerYazdirButonTikla(konu)
+                .pdfKontrol();
     }
 
     @Severity(SeverityLevel.CRITICAL)

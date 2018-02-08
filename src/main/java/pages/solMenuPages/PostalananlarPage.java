@@ -75,8 +75,9 @@ public class PostalananlarPage extends MainPage {
     SelenideElement icerikEvrakSayisi = $x("//*[@id='inboxItemInfoForm:evrakDetayPanelGrid']/tbody/tr[3]/td[3]/label");
     SelenideElement btnEtiketPopupKapat = $x("//*[@id='mainPreviewForm:showAppletContainer']/div/div[1]/a/span");
     //  SelenideElement btnDagitimYerDetayKapat = $x("//*[@id='mainPreviewForm:dagitimPlaniDetayViewDialog']/div[1]/a/span");
-    SelenideElement btnEvrakEkleri = $("//a[text() = 'Evrak Ekleri']");
+    SelenideElement btnEvrakEkleri = $(By.xpath("//a[text() = 'Evrak Ekleri']"));
     SelenideElement btnEvrakEyazismaPaket = $("//a[text() = 'E-Yazışma Paketi']");
+    ElementsCollection tblEvrakDetaylariUstVeriler = $$("tbody[id='postaDetayYazdirForm:dtPostaEvrakUstVeri_data'] tr[data-ri]");
 
 
     @Step("Postalananlar sayfası aç")
@@ -96,6 +97,58 @@ public class PostalananlarPage extends MainPage {
         return this;
     }
 
+    @Step("Postalanan Evrak içi Evrak Ekleri kontrolü : \"{ek}\" ")
+    public PostalananlarPage evrakEkleriKontrol (String ek) {
+        ElementsCollection tblEvrakEkleri = $$("tbody[id^='mainPreviewForm:'][id$=':ekListesiOnizlemeDataTable_data'] tr[data-ri]");
+        tblEvrakEkleri
+                .filterBy(Condition.text(ek))
+                .shouldHaveSize(1);
+        return this;
+    }
+
+    @Step("Posta Detayi Postalanan Evrak Posta Detayi kontrolü.")
+    public PostalananlarPage postaDetayiPostalananYerlerKontrolu (String gonderilenYer,String postaKodu,String aciklama) {
+        ElementsCollection tblPostaDetayiPostalananYerler= $$("tbody[id^='mainPreviewForm:'][id$='_data'] tr[data-ri]");
+        tblPostaDetayiPostalananYerler
+                .filterBy(Condition.text(gonderilenYer))
+                .filterBy(Condition.text(postaKodu))
+                .filterBy(Condition.text(aciklama))
+                .shouldHaveSize(1);
+        return this;
+    }
+    @Step("Posta Detayi Postalanan Evrak Posta Detayi Yazdır butonu tıklanır.")
+    public PostalananlarPage postaDetayiPostalananYerlerYazdir(String gonderilenYer,String postaKodu,String aciklama) {
+        ElementsCollection tblPostaDetayiPostalananYerler= $$("tbody[id^='mainPreviewForm:'][id$='_data'] tr[data-ri]");
+        tblPostaDetayiPostalananYerler
+                .filterBy(Condition.text(gonderilenYer))
+                .filterBy(Condition.text(postaKodu))
+                .filterBy(Condition.text(aciklama))
+                .first()
+                .$(By.xpath("//span[text()='Yazdır']/../../button[2]")).click();
+        return this;
+    }
+
+    @Step("Evrak Detayları pop up Üst Veriler Yazdır tıklanır")
+    public PostalananlarPage evrakDetaylariUstVerilerYazdirButonTikla(String konu) {
+        tblEvrakDetaylariUstVeriler
+                .filterBy(text(konu))
+                .first()
+                .$("button").click();
+        return this;
+    }
+
+    @Step("Pdf kontrolü Yapılır.")
+    public PostalananlarPage pdfKontrol() {
+        switchTo().window(1);
+
+        sleep(3000);
+        takeScreenshot();
+
+        closeNewWindow();
+        switchTo().window(0);
+        return this;
+    }
+
     @Step("Postalanan Evrak içi E-yazışma paketi içerik kontrol")
     public PostalananlarPage btnEyazismaPaket () {
         btnEvrakEyazismaPaket.click();
@@ -106,6 +159,19 @@ public class PostalananlarPage extends MainPage {
         tblEvraklar.filterBy(Condition.text(konu))
                 .filterBy(Condition.text(yer))
                 .filterBy(Condition.text(tarih)).get(0).click();
+        return this;
+    }
+
+    @Step("Evrak Önizleme \"{btnText}\" buton kontrolü.")
+    public PostalananlarPage evrakOnizlemeButonKontrol(String btnText) {
+        SelenideElement btnEvrakOnizleme = $(By.xpath("//span[text()='" + btnText + "']/../../..//button"));
+        Assert.assertEquals(btnEvrakOnizleme.isDisplayed(),true);
+        return this;
+    }
+    @Step("Evrak Önizleme Evrak Ek kontrolü.")
+    public PostalananlarPage evrakOnizlemeEvrakEkKontrolu() {
+        SelenideElement btnEvrakEk = $(By.xpath("//div[@class='textLayer']"));
+        Assert.assertEquals(btnEvrakEk.isDisplayed(),true);
         return this;
     }
 
