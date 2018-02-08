@@ -14,7 +14,6 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pages.pageComponents.IslemMesajlari;
 import pages.solMenuPages.ImzaladiklarimPage;
 import pages.solMenuPages.PostalanacakEvraklarPage;
 import pages.solMenuPages.PostalananlarPage;
@@ -373,14 +372,17 @@ public class EvrakPostalamaTest extends BaseTest {
         String konu = "TS1685_" + getSysDate();
         String imzaci ="Mehmet BOZDEMİR";
 
-        postalananlarPage.openPage();
-        postalananlarPage.tabloEvrakGeldigiGorme()
+        postalananlarPage
+                .openPage()
+                .tabloEvrakGeldigiGorme()
+                .icDisEvrakIkonuKontrolu()
                 .btnKurdele()
                 .tekImzaciKontrol(imzaci)
                 .mngImzaDialog()
                 .btnImzaciPopupKapat()
                 .btnTamEkran()
                 .icDisSuretKtrl()
+                .sagTabKontrol()
                 .btnTamEkranKapat()
                 .btnIcerikGoster();
 
@@ -392,7 +394,8 @@ public class EvrakPostalamaTest extends BaseTest {
         postalananlarPage
                 .btnFiltreSpan()
                 .btnFiltreBaslangicTarihi(getSysDateForKis())
-                .btnFiltrePostaladiklarim();
+                .btnFiltrePostaladiklarim()
+                .tabloEvrakGeldigiGorme();
 
     }
 
