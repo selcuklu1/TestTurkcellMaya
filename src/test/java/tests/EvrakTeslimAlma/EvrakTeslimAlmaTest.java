@@ -180,7 +180,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TS2318: Evrak Teslim Alma - Sistem Loglari Sorgu")
+    @Test(enabled = true, description = "TS2318: Evrak teslim alma işleminin loglardan kontrolü")
     public void TS2318() throws InterruptedException {
         String testid= "TS-2318";
         String basariMesaji = "İşlem başarılıdır!";
@@ -202,38 +202,10 @@ public class EvrakTeslimAlmaTest extends BaseTest {
 
 
         String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
-        String details = "BİLİŞİM HİZMETLERİ VE UYDU PAZARLAMA GENEL MÜDÜR Y";
+        String details = "BHUPGMY";
 
         String aksiyon = "Kaydedilen Gelen Evraklar - Teslim Al";
 
-//        testStatus(testid,"PreCondition Evrak Oluşturma");
-//        gelenEvrakKayitPage
-//                .openPage();
-//
-//        gelenEvrakKayitPage
-//                .konuKoduDoldur(konuKodu)
-//                .konuDoldur(konu)
-//                .evrakTuruSec(evrakTuru)
-//                .evrakDiliSec(evrakDili)
-//                .evrakTarihiDoldur(evrakTarihi)
-//                .gizlilikDerecesiSec(gizlilikDerecesi)
-//                .kisiKurumSec(kisiKurum)
-//                .geldigiKurumDoldurLovText(geldigiKurum)
-//                .evrakSayiSagDoldur()
-//                .evrakGelisTipiSec(evrakGelisTipi)
-//                .ivedilikSec(ivedilik)
-//                .dagitimBilgileriBirimDoldurWithDetails(birim, details)
-//                .kaydet()
-//                .popUps();
-//
-//
-//        gelenEvrakKayitPage
-//                .islemMesaji().basariliOlmali(basariMesaji);
-//
-//
-//        teslimAlinmayiBekleyenlerPage
-//                .openPage()
-//                .evrakSecNoTeslimAl(konu, true);
         testStatus(testid,"PreCondition Evrak Oluşturma");
         gelenEvrakKayitPage
                 .openPage();
@@ -302,7 +274,6 @@ public class EvrakTeslimAlmaTest extends BaseTest {
                 .islemMesaji().basariliOlmali(basariMesaji);
 
 
-        testStatus(testid,"Test Başladı");
         birimIadeEdilenlerPage
                 .openPage()
                 .evrakSec(konu1)
@@ -312,17 +283,12 @@ public class EvrakTeslimAlmaTest extends BaseTest {
                 .evrakNoGelmedigiGorme(konu2)
                 .islemMesaji().basariliOlmali(basariMesaji);
 
-        teslimAlinanlarPage
-                .openPage()
-                .evrakNoIleEvrakSec(konu1)
-                .evrakNoIleEvrakSec(konu2)
-                .secilenEvrakEvrakGecmisi()
-                .evrakGecmisi(kisi, islemSureci);
 
         String tarihSaatBugun = "" + new SimpleDateFormat("dd.MM.yyyy HH:mm").format(new Date());
         String kullanici = "Zübeyde Tekin";
         String aciklama = "ztekin kullanıcısı, " + tarihSaatBugun;
 
+        //TODO: Bu adim test senaryosunda net degildir. Netlesmesi durumunda test case update edilecektir. Bu hali ile test fail etmektedir.
         sistemLoglariPage
                 .openPage()
                 .aksiyonSec(aksiyon)
