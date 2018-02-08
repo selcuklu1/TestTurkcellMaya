@@ -9,6 +9,7 @@ import org.testng.Assert;
 import pages.MainPage;
 import pages.pageData.SolMenuData;
 
+import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
@@ -465,5 +466,22 @@ public class PostalananlarPage extends MainPage {
         return this;
     }
 
+    @Step("Tek imzacısının doğru olarak geldiği görülür")
+    public PostalananlarPage tekImzaciKontrol(String imzaci) {
 
+        ElementsCollection trParafImzaAkisListesi = $$("[id='mainInboxForm:imzaListesiDataTable_data'] td");
+
+        trParafImzaAkisListesi
+                .filterBy(text(imzaci))
+                .filterBy(text("İmza"))
+                .get(0)
+                .shouldBe(exist);
+        return this;
+    }
+
+    @Step("Solda dış suret ve iç suret tab kontrolu")
+    public PostalananlarPage solDisSuretIcSuretTabKontrolu() {
+
+        return this;
+    }
 }
