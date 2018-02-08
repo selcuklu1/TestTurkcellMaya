@@ -149,7 +149,9 @@ public class EvrakPostalamaTest extends BaseTest {
         postalananlarPage
                 .postalananyerlerKontrol()
                 .dagitimPlanYazdir()
-                .yazdirpopupYazdirButonktrl();
+                .yazdirpopupYazdirButonktrl()
+                .btnEkleriPopupiciYazdir();
+
         postalananlarPage.islemMesaji().isDikkat("Önce üst yazı yazdırılmalıdır ");
         postalananlarPage
                 .popupYazpdfkontrolveKapatma();
