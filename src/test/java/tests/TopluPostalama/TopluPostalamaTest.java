@@ -533,7 +533,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .evrakListesiKontrol(evrakGidecegiYer, evrakKonu);
     }
 
-    @Test(enabled = true, description = "TS1807A : Posta Listesi Oluşturma- Gerçek Kişi Listesi (UC_POSTAYÖNETİMİ_002)")
+    @Test(enabled = true, description = "TS1807 : Posta Listesi Oluşturma- Gerçek Kişi Listesi (UC_POSTAYÖNETİMİ_002)")
     public void TS1807A() {
 
         TopluPostalanacakEvraklarPage topluPostalanacakEvraklarPage = new TopluPostalanacakEvraklarPage();

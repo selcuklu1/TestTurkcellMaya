@@ -46,7 +46,7 @@ public class PttRaporuPage extends MainPage {
         return this;
     }
 
-    @Step("Posta tarihi gir: {postaTarihi}")
+    @Step("Posta tarihi gir : {postaTarihi}")
     public PttRaporuPage postaTarihiDoldur(String postaTarihi) {
         txtPostaTarihi.setValue(postaTarihi);
         return this;
