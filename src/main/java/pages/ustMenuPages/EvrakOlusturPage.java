@@ -1937,8 +1937,6 @@ public class EvrakOlusturPage extends MainPage {
         public EditorTab sImzasec() {
             radibtnSimza.waitUntil(visible, 200000);
             radibtnSimza.click();
-//            radibtnSimza.selectRadio("I");
-
             return this;
         }
 

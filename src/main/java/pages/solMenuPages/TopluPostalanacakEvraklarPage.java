@@ -65,6 +65,8 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
     @Step("Gideceği yer alanından {gidecegiYer} seç")
     public TopluPostalanacakEvraklarPage gidecegiYerSec(String gidecegiYer, boolean secim) {
 
+        filtreGidecegiYer(gidecegiYer);
+
         Boolean isSelected = false;
 
         SelenideElement currentRow = tableGidecegiYer
