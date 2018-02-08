@@ -3,6 +3,7 @@ package pages.ustMenuPages;
 import com.codeborne.selenide.*;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
+import org.apache.poi.hssf.record.FontRecord;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.testng.Assert;
@@ -898,6 +899,52 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        public String[] geregiTitleAl() {
+            String[] title;
+
+            ElementsCollection tablo = $$("tbody[id='yeniGidenEvrakForm:evrakBilgileriList:16:geregiLov:LovSecilenTable_data'] tr[data-ri]");
+            title = new String[tablo.size()];
+            for (int i = 0; i < tablo.size(); i++) {
+                String text = cmbGeregi.getSelectedTitles().get(i).getText();
+                System.out.println(text);
+                if (text.equals("50 BİRİMLİK TEST DENEME DAĞITIM PLANI"))
+                    title[i] = "DAĞITIM YERLERİNE";
+                if(text.equals("Optiim TEST [Ağ (Network) Uzman Yardımcısı]"))
+                    title[i] = "Optiim TEST";
+                if(text.equals("Başbakanlık"))
+                    title[i] = "BAŞBAKANLIĞa";
+                else
+                    title[i] = text;
+            }
+
+            return title;
+        }
+
+        public String[] geregiGonderimSekliAl() {
+            String[] gonderimSekli;
+
+            ElementsCollection tablo = $$("tbody[id='yeniGidenEvrakForm:evrakBilgileriList:16:geregiLov:LovSecilenTable_data'] tr[data-ri]");
+            gonderimSekli = new String[tablo.size()];
+            for (int i = 0; i < tablo.size(); i++) {
+                String text = cmbGeregi.getSelectedTitles().get(i).getText();
+                System.out.println(text);
+                if (text.equals("50 BİRİMLİK TEST DENEME DAĞITIM PLANI"))
+                    gonderimSekli[i] = "Detaya tıkla";
+                else {
+                    if (cmbGeregi.getSelectedItems().get(i).text().contains("Otomatik İç Dağıtım")) {
+                        gonderimSekli[i] = "Elektronik Gönderilmiştir";
+                    } else {
+                        String x = cmbGeregi.getSelectedItems().filterBy(text(text)).shouldHaveSize(1).first().$("select").getText();
+                        System.out.println(x);
+                        gonderimSekli[i] = x;
+                    }
+                }
+
+            }
+
+            return gonderimSekli;
+        }
+
         @Step("Seçimde posta tipinin otomatik KEP geldiği ve kullanıcının değiştirebildiği görülür")
         public BilgilerTab geregiAlaniKEPSeciliGeldigiGorme() {
             boolean durum = $("[id$='geregiLov:LovSecilenTable_data'] select").getSelectedText().equals("KEP");
@@ -1279,7 +1326,6 @@ public class EvrakOlusturPage extends MainPage {
                     .setSelected(secim);
 
 
-
             return this;
         }
 
@@ -1525,7 +1571,7 @@ public class EvrakOlusturPage extends MainPage {
         }
 
         @Step("Gereği alanını temizle.")
-        public BilgilerTab geregiTemizle(){
+        public BilgilerTab geregiTemizle() {
             cmbGeregi.clearAllSelectedItems();
             return this;
         }
