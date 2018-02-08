@@ -932,7 +932,7 @@ public class EvrakOlusturPage extends MainPage {
             for (int i = 0; i < tablo.size(); i++) {
                 String text = cmbGeregi.getSelectedTitles().get(i).getText();
                 System.out.println(text);
-                if (text.equals("50 BİRİMLİK TEST DENEME DAĞITIM PLANI"))
+                if (text.equals("OPTİİM DAĞITIM 1"))
                     gonderimSekli[i] = "Detaya tıkla";
                 else {
                     if (cmbGeregi.getSelectedItems().get(i).text().contains("Otomatik İç Dağıtım")) {

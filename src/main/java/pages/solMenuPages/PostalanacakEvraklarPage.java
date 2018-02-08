@@ -268,8 +268,8 @@ public class PostalanacakEvraklarPage extends MainPage {
     }
 
     @Step("Postalanacak Yerler gidiş şekli \"{gidisSekli}\" seçilir. ")
-    public PostalanacakEvraklarPage postalanacakYerlerGidisSekliDoldur(String gidisSekli) {
-        SelenideElement dagitimPlaniGonderildigiYer = $("tbody[id='mainPreviewForm:dataTableId_data'] tr:nth-child(1) td:nth-child(3) select");
+    public PostalanacakEvraklarPage dagitimPlaniGidisSekliDoldur(String gidisSekli) {
+        SelenideElement dagitimPlaniGonderildigiYer = $("tbody[id='mainPreviewForm:dagitimPlaniDetay_data'] tr:nth-child(1) td:nth-child(2) select");
         dagitimPlaniGonderildigiYer.selectOption(gidisSekli);
         return this;
     }

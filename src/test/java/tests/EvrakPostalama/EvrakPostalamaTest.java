@@ -7,7 +7,6 @@ package tests.EvrakPostalama;
  * Class: "Evrak Postalama" konulu senaryoları içerir
  ****************************************************/
 
-import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import common.BaseTest;
@@ -22,9 +21,7 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import pages.newPages.EvrakDetayiPage;
 import pages.pageComponents.EvrakOnizleme;
-import pages.pageComponents.IslemMesajlari;
 import pages.pageComponents.tabs.AltTabs;
 import pages.pageData.alanlar.GeregiSecimTipi;
 import pages.pageData.alanlar.GizlilikDerecesi;
@@ -540,6 +537,7 @@ public class EvrakPostalamaTest extends BaseTest {
                 .geregiSec(KULLANICI, dagitimPlanElemanlari.get(KULLANICI).toString())
                 .geregiSec(KURUM,dagitimPlanElemanlari.get(KURUM).toString(), "Adi Posta");
 
+
         /*evrakOlusturPage2.bilgileriTab().geregiSec(GERCEK_KISI, "OptiimTest")
                 .getSecilenGeregiPostaTipi("Değeri \"Adi Posta\" ve değiştirilebilir modda olmalı", "OptiimTest")
                 .shouldBe(enabled).getSelectedOption().shouldHave(text("Adi Posta"));
@@ -775,7 +773,7 @@ public class EvrakPostalamaTest extends BaseTest {
 
         postalanacakEvraklarPage.evrakPostala()
                 .alanKontrolleri(konu,title,gonderimSekli)
-//                .postalanacakYerlerGidisSekliDoldur("Adi Posta")
+                .dagitimPlaniGidisSekliDoldur("Adi Posta")
                 .detayTikla()
 //                .dagitimPlaniIcerigiEkraniKapat()
                 .dagitimPlaniIlkAyrintiDoldur("309","TS0309","Yurt Dışı","15")
