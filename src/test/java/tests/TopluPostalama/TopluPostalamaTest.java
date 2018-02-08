@@ -457,7 +457,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .sorgula()
                 .postaListesineAktar()
                 .listeyeEkle()
-                .islemMesaji().uyariOlmali("Posta Listesine eklenecek evrak seçiniz!");
+                .islemMesaji().dikkatOlmali("Posta Listesine eklenecek evrak seçiniz!");
 
 
         topluPostalanacakEvraklarPage
@@ -632,7 +632,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .sorgula()
                 .postaListesineAktar()
                 .listeyeEkle()
-                .islemMesaji().uyariOlmali("Posta Listesine eklenecek evrak seçiniz!");
+                .islemMesaji().dikkatOlmali("Posta Listesine eklenecek evrak seçiniz!");
 
         topluPostalanacakEvraklarPage
                 .evrakTikSec(evrakKayitTarihiSayi, evrakGidecegiYer, evrakKonu, evrakHazirlayanBirim, evrakPostaTipi, true)
@@ -795,7 +795,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .sorgula()
                 .postaListesineAktar()
                 .listeyeEkle()
-                .islemMesaji().uyariOlmali("Posta Listesine eklenecek evrak seçiniz!");
+                .islemMesaji().dikkatOlmali("Posta Listesine eklenecek evrak seçiniz!");
 
         topluPostalanacakEvraklarPage
                 .evrakTikSec(evrakKayitTarihiSayi, evrakGidecegiYer, evrakKonu, evrakHazirlayanBirim, evrakPostaTipi, true)
