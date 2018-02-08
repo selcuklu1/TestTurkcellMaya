@@ -225,7 +225,7 @@ public class PaylastiklarimPage extends MainPage {
     }
 
     // Evrak notları fonksiyonları
-    @Step("Evrak ekleme butonu aktif olmalı mı? : \"{0}\" ")
+    @Step("Evrak ekleme butonu aktif olmalı mı? : \"{aktifOlmali}\" ")
     public PaylastiklarimPage evrakNotEklemeButonuAktifOlmali(boolean aktifOlmali) {
         if (aktifOlmali == true)
             btnEvratNotEkle.shouldHave(Condition.attribute("aria-disabled", "false"));
