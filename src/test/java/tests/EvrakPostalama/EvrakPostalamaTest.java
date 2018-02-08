@@ -31,6 +31,10 @@ public class EvrakPostalamaTest extends BaseTest {
     ImzaladiklarimPage imzaladiklarimPage;
     PostalananEvrakRaporuPage postalananEvrakRaporuPage;
 
+    String konu = "TS2235_" + getSysDate();
+    String[] title = new String[5];
+    String[] gonderimSekli = new String[5];
+
     User user1 = new User("user1", "123", "User1 TEST");
 
     @BeforeMethod
@@ -111,8 +115,10 @@ public class EvrakPostalamaTest extends BaseTest {
                 .popupSImzalaIslemleri();
 
 
-        Thread.sleep(4000);
+        Thread.sleep(1500);
 
+        evrakOlusturPage.islemMesaji().isBasarili();
+        Thread.sleep(2000);
         postalanacakEvraklarPage
                 .openPage()
                 .filter().findRowsWith(Condition.text(konu)).shouldHaveSize(1).first().click();
@@ -170,13 +176,14 @@ public class EvrakPostalamaTest extends BaseTest {
                 .openPage()
                 .bilgilerTabiAc()
                 .bilgilerTabAlanKontrolleri()
-                .konuKoduSec("YAZILIM GEL")
+                .konuKoduSec("Yazılım Geliştirme")
                 .konuDoldur(konu)
                 //  .kaldirilacakKlasorler("B1K1")
                 .kaldirilacakKlasorler("Diğer")
                 .evrakTuruSec("Resmi Yazışma")
                 .geregiSecimTipiSec("Kurum")
-                .geregiDoldur("Başbakanlık", "")
+                .geregiDoldur("Avrupa Birliği Bakanlığı", "Kurum")
+                .kurumGeregiAlaniKurumPostaTipiKontrol("Başbakanlık", "Adi Posta")
 
                 .geregiKurumPostaTipi("Evrak Servisi Elden")
                 .gizlilikDerecesiSec("Normal")
@@ -193,11 +200,17 @@ public class EvrakPostalamaTest extends BaseTest {
         editorTab.imzala()
                 .popupSImzalaIslemleri();
 
-        Thread.sleep(2000);
+        Thread.sleep(500);
+        evrakOlusturPage.islemMesaji().isBasarili();
+        postalananlarPage
+                .birimLogin("gsahin" , "123");
+
+        postalananlarPage.t2076PostaArama("TS2076");
+
         postalanacakEvraklarPage
                 .openPage()
-                .filter().findRowsWith(Condition.text(konu))
-                .first().click();
+                .btnFiltrenenPostaIcerikGoster("TS2076");
+
 
         imzaladiklarimPage
                 .openPage()
@@ -291,6 +304,7 @@ public class EvrakPostalamaTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS0520b : Postalanan evrak posta bilgilerinin içerik ekranından güncellenmesi ve rapordan kontrolü")
     public void TS0520b() throws InterruptedException {
+
         login("Mbozdemir", "123");
 
         TS0520aPreCondition();
@@ -419,14 +433,17 @@ public class EvrakPostalamaTest extends BaseTest {
         String konu = "TS1685_" + getSysDate();
         String imzaci ="Mehmet BOZDEMİR";
 
-        postalananlarPage.openPage();
-        postalananlarPage.tabloEvrakGeldigiGorme()
+        postalananlarPage
+                .openPage()
+                .tabloEvrakGeldigiGorme()
+                .icDisEvrakIkonuKontrolu()
                 .btnKurdele()
                 .tekImzaciKontrol(imzaci)
                 .mngImzaDialog()
                 .btnImzaciPopupKapat()
                 .btnTamEkran()
                 .icDisSuretKtrl()
+                .sagTabKontrol()
                 .btnTamEkranKapat()
                 .btnIcerikGoster();
 
@@ -438,7 +455,8 @@ public class EvrakPostalamaTest extends BaseTest {
         postalananlarPage
                 .btnFiltreSpan()
                 .btnFiltreBaslangicTarihi(getSysDateForKis())
-                .btnFiltrePostaladiklarim();
+                .btnFiltrePostaladiklarim()
+                .tabloEvrakGeldigiGorme();
 
     }
 
@@ -479,6 +497,9 @@ public class EvrakPostalamaTest extends BaseTest {
                 .onayAkisiKullaniciTipiSec("Mehmet BOZDEMİR", "İmzalama")
 //                .onayAkisiKullaniciTipiSec(user1.getName(), "İmzalama")
                 .onayAkisiKullan();
+        title = evrakOlusturPage.bilgilerTabiAc().geregiTitleAl();
+        gonderimSekli = evrakOlusturPage.bilgilerTabiAc().geregiGonderimSekliAl();
+
 
         evrakOlusturPage
                 .ekleriTabAc()
@@ -575,7 +596,9 @@ public class EvrakPostalamaTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TS0309 : Önizleme ekranından ek ilgi ve ilişiği olan evrakın postalanması")
+    @Test(enabled = true
+            ,dependsOnMethods = {"TS2235"}
+            , description = "TS0309 : Önizleme ekranından ek ilgi ve ilişiği olan evrakın postalanması")
     public void TS0309() throws InterruptedException {
         login("Mbozdemir", "123");
         String konu = "TS2235_";
@@ -584,7 +607,7 @@ public class EvrakPostalamaTest extends BaseTest {
                 .filter().findRowsWith(Condition.text(konu)).first().click();
 
         postalanacakEvraklarPage.evrakPostala()
-
+                .alanKontrolleri(konu,title,gonderimSekli)
                 .tuzelKisiPostaKod("309")
                 .tuzelKisiPostaAciklama("TS0309")
                 .birimPostaKod("309")
@@ -714,6 +737,8 @@ public class EvrakPostalamaTest extends BaseTest {
         postalanacakEvraklarPage
                 .btnIcerikEvrakPostalama()
          .btnIcerikPostalamaEvet();
+
+        postalanacakEvraklarPage.islemMesaji().isBasarili();
 
         postalananlarPage.openPage();
         postalananlarPage.filter().findRowsWith(Condition.text(konu)).first().click();
