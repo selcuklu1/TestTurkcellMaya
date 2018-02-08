@@ -718,9 +718,7 @@ public class TopluPostalamaTest extends BaseTest {
         String kurum1 = "Yenikurum6507";
         String kurum2 = "Yenikurum4105";
 
-        String[] gidecegiYerler = new String[]{
-                kurum1
-        };
+        String gidecegiYerler = kurum1;
 
         String postaTipleri = "Adi Posta";
         String kurum = kurum1;
@@ -790,7 +788,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .openPage()
                 .gidecegiYerListesiAlfabetikSiraKontrolu()
                 .tarihAraligiSec(baslangicTarihi, bitisTarihi)
-                .gidecegiYerSec(gidecegiYerler, true, true)
+                .gidecegiYerSec(gidecegiYerler, true)
                 .postaTipiSec(postaTipleri)
                 .sorgula()
                 .postaListesineAktar()
@@ -812,16 +810,14 @@ public class TopluPostalamaTest extends BaseTest {
                 .openPage();
 
 
-        gidecegiYerler = new String[]{
-                kurum1,
-                kurum2
-        };
+
 
         topluPostalanacakEvraklarPage
                 .openPage()
                 .gidecegiYerListesiAlfabetikSiraKontrolu()
                 .tarihAraligiSec(baslangicTarihi, bitisTarihi)
-                .gidecegiYerSec(gidecegiYerler, true, true)
+                .gidecegiYerSec(kurum1, true)
+                .gidecegiYerSec(kurum2, true)
                 .postaTipiSec(postaTipleri)
                 .sorgula()
                 .evrakTikSec(evrakKayitTarihiSayi, evrakGidecegiYer, evrakKonu, evrakHazirlayanBirim, evrakPostaTipi, true)
@@ -852,7 +848,6 @@ public class TopluPostalamaTest extends BaseTest {
 
         String indirimOncesiTutar = ("" + tutarInt).replace(',', '.');
         String tutar = ("" + indirimSonrasiTutarInt).replace(',', '.');
-
 
         postaListesiPage
                 .openPage()
