@@ -14,7 +14,6 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pages.pageComponents.IslemMesajlari;
 import pages.solMenuPages.ImzaladiklarimPage;
 import pages.solMenuPages.PostalanacakEvraklarPage;
 import pages.solMenuPages.PostalananlarPage;
@@ -550,18 +549,35 @@ public class EvrakPostalamaTest extends BaseTest {
 
         postalanacakEvraklarPage.evrakPostala()
                 .alanKontrolleri(konu,title,gonderimSekli)
-                .tuzelKisiPostaKod("309")
-                .tuzelKisiPostaAciklama("TS0309")
-                .birimPostaKod("309")
-                .birimPostaAciklama("TS0309")
-                .dagitimDetay()
-                .dagitimDetayKapat()
-                .gidisSekli("Adi Posta")
-                .ilkPostaPostaKod("309")
-                .ilkPostaAciklama("TS0309")
-                .cmbYurticidisi("Yurt Dışı")
-                .gramajDoldur("15")
-                .hesapla()
+                .detayTikla()
+//                .dagitimPlaniIcerigiEkraniKapat()
+                .dagitimPlaniGidisSekliDoldur("Adi Posta")
+                .dagitimPlaniIlkAyrintiDoldur("309","TS0309","Yurt Dışı","15")
+                .dagitimPlaniIlkGramajHesapla()
+                .popUpKontrol();
+                String tutar =postalanacakEvraklarPage.popUpTutarAl();
+
+        postalanacakEvraklarPage
+                .popUpTamam()
+                .dagitimPlaniTutarKontrol(tutar)
+                .dagitimPlaniKaydetl()
+                .postalanacakYerleryazdir()
+                .evrakDetaylariPopUpKontrol()
+
+//8den devam et
+
+//                .tuzelKisiPostaKod("309")
+//                .tuzelKisiPostaAciklama("TS0309")
+//                .birimPostaKod("309")
+//                .birimPostaAciklama("TS0309")
+//                .dagitimDetay()
+//                .dagitimDetayKapat()
+//                .gidisSekli("Adi Posta")
+//                .ilkPostaPostaKod("309")
+//                .ilkPostaAciklama("TS0309")
+//                .cmbYurticidisi("Yurt Dışı")
+//                .gramajDoldur("15")
+//                .hesapla()
                 .etiketYazdir()
                 .etiketYazdirPopupKapat()
                 .postalanacakEvrakYaz()

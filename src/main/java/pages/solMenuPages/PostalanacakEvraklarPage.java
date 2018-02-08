@@ -120,6 +120,7 @@ public class PostalanacakEvraklarPage extends MainPage {
     SelenideElement btnTakipListesiKapat = $("div[id='evrakTakibimeEkleDialogForm:takipDialog'] span[class*='ui-icon-closethick']");
 
     ElementsCollection trEvrakOnizlemePostalanacakYerler = $$("tbody[id*='mainPreviewForm:dataTableId_data'] tr[data-ri]");
+    ElementsCollection tabloPostalanacakYerler = $$("tbody[id='mainPreviewForm:dataTableId_data'] tr[data-ri]");
 
 
     @Step("Postalanacak Evraklar sayfası aç")
@@ -148,7 +149,7 @@ public class PostalanacakEvraklarPage extends MainPage {
 
 
     @Step("Fiziksel Ek ikon kontrolu")
-    public PostalanacakEvraklarPage btnFizikselEkIkonKontrol () {
+    public PostalanacakEvraklarPage btnFizikselEkIkonKontrol() {
 
         btnFizikselEkBulunmaktadirIkon.exists();
         return this;
@@ -231,34 +232,97 @@ public class PostalanacakEvraklarPage extends MainPage {
         return this;
     }
 
-    @Step("")
-    public PostalanacakEvraklarPage alanKontrolleri(String konu,String[] title,String[] gonderildigYerler) {
+
+    @Step("Detay butonuna tıklanır")
+    public PostalanacakEvraklarPage detayTikla() {
+        tabloPostalanacakYerler
+                .filterBy(Condition.text("DAĞITIM YERLERİNE"))
+                .first()
+                .$("//span[text()='Detay']").click();
+        return this;
+    }
+
+    @Step("Dağıtım Planı İçeriği ekranı kontrolü yapılır.")
+    public PostalanacakEvraklarPage detayEkraniKontrol() {
+        Assert.assertEquals($(By.xpath("//span[text()='Dağıtım Planı İçeriği']")).isDisplayed(), true);
+        return this;
+    }
+
+    @Step("Dağıtım Planı İçeriği ekranı kapat")
+    public PostalanacakEvraklarPage dagitimPlaniIcerigiEkraniKapat() {
+        $(By.xpath("//div[@id='windowReadOnlyEvrakDialog']//span[@class='ui-icon ui-icon-closethick']")).click();
+        return this;
+    }
+
+    @Step("Dağıtım Planı İçeriği ekranı kapat")
+    public PostalanacakEvraklarPage dagitimPlaniGidisSekliDoldur(String gidisSekli) {
+        $("tbody[id='mainPreviewForm:dagitimPlaniDetay_data'] tr:nth-child(1) td:nth-child(3) select").selectOption(gidisSekli);
+        return this;
+    }
+
+    @Step("Tutar kontrolü")
+    public PostalanacakEvraklarPage dagitimPlaniTutarKontrol(String tutar) {
+        Assert.assertEquals($("tbody[id='mainPreviewForm:dagitimPlaniDetay_data'] tr:nth-child(1) td:nth-child(3) tr:nth-child(5) input").text().equals(tutar),true);
+        return this;
+    }
+
+    @Step("Kaydet butonuna tıklanır")
+    public PostalanacakEvraklarPage dagitimPlaniKaydetl() {
+        $(By.id("mainPreviewForm:dagitimPlaniDetayKaydetViewDialog")).click();
+        return this;
+    }
+    @Step("Evrak Detayları pop up kontrolü")
+    public PostalanacakEvraklarPage evrakDetaylariPopUpKontrol() {
+        Assert.assertEquals($(By.xpath("//span[text()='Evrak Detayları']")).isDisplayed(),true);
+        return this;
+    }
+
+    @Step("Yazdır butonuna tıklanır")
+    public PostalanacakEvraklarPage postalanacakYerleryazdir() {
+        $("tbody[id='mainPreviewForm:dataTableId_data'] tr:nth-child(1) td:nth-child(5) button:nth-child(1)").click();
+        return this;
+    }
+
+    @Step("Dağıtım Planı İçeriği Ayrıtı Doldur.")
+    public PostalanacakEvraklarPage dagitimPlaniIlkAyrintiDoldur(String postaKodu, String aciklama, String gonderildigiYer, String gramaj) {
+
+        $("tbody[id='mainPreviewForm:dagitimPlaniDetay_data'] tr:nth-child(1) td:nth-child(3) td:nth-child(2) input").sendKeys(postaKodu);
+        $("tbody[id='mainPreviewForm:dagitimPlaniDetay_data'] tr:nth-child(1) td:nth-child(2) textarea").sendKeys(aciklama);
+        $("tbody[id='mainPreviewForm:dagitimPlaniDetay_data'] tr:nth-child(1) td:nth-child(3) tr:nth-child(3) select").selectOption(gonderildigiYer);
+        setValueJS($("tbody[id='mainPreviewForm:dagitimPlaniDetay_data'] tr:nth-child(1) td:nth-child(3) tr:nth-child(4) input"), gramaj);
+
+        return this;
+    }
+
+    @Step("Dağıtım Planı İçeriği Gramaj Hesapla")
+    public PostalanacakEvraklarPage dagitimPlaniIlkGramajHesapla() {
+
+        $("tbody[id='mainPreviewForm:dagitimPlaniDetay_data'] tr:nth-child(1) td:nth-child(3) tr:nth-child(4) button").click();
+        return this;
+    }
+
+    @Step("Ekran Alan Kontrolleri")
+    public PostalanacakEvraklarPage alanKontrolleri(String konu, String[] title, String[] gonderildigYerler) {
         SelenideElement evrakDetaylariKonu = $("table[id='mainPreviewForm:evrakDetayPanelGrid'] tr:nth-child(1) td:nth-child(3) label");
         SelenideElement evrakDetaylariTarih = $("table[id='mainPreviewForm:evrakDetayPanelGrid'] tr:nth-child(4) td:nth-child(3) label");
         SelenideElement evrakDetaylariGonderen = $("table[id='mainPreviewForm:evrakDetayPanelGrid'] tr:nth-child(2) td:nth-child(3) label");
 
-        ElementsCollection tblPostalanacakYerler = $$("tbody[id='mainPreviewForm:dataTableId_data'] tr[data-ri]");
 
-        Assert.assertEquals(evrakDetaylariKonu.text().contains(konu),true);
-        Assert.assertEquals(evrakDetaylariTarih.text().equals(getSysDateForKis()),true);
-        Assert.assertEquals(evrakDetaylariGonderen.text().equals("YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ"),true);
+        Assert.assertEquals(evrakDetaylariKonu.text().contains(konu), true);
+        Assert.assertEquals(evrakDetaylariTarih.text().equals(getSysDateForKis()), true);
+        Assert.assertEquals(evrakDetaylariGonderen.text().equals("YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ"), true);
 
         Allure.addAttachment("Evrak Detayları", "Evrak Detayları alanı kontrol edilmiştir.");
 
-        for (int i =0 ; i<tblPostalanacakYerler.size();i++){
+        for (int i = 0; i < tabloPostalanacakYerler.size(); i++) {
 
-            tblPostalanacakYerler
+            tabloPostalanacakYerler
                     .filterBy(Condition.text(title[i]))
                     .filterBy(Condition.text(gonderildigYerler[i]))
                     .shouldHaveSize(1);
-            Allure.addAttachment("Postalanacak Yerler - Gönderim Şekli", title[i]+" - "+gonderildigYerler[i]);
+            Allure.addAttachment("Postalanacak Yerler - Gönderim Şekli", title[i] + " - " + gonderildigYerler[i]);
 
         }
-
-
-
-
-
 
 
         return this;
@@ -643,10 +707,16 @@ public class PostalanacakEvraklarPage extends MainPage {
             lblTutar.shouldNotHave(Condition.text(tutar));
         return this;
     }
+    @Step("PopUp Tutar alaninda \"{tutar}\" değeri olmalı mı? : \"{shouldBeEquals}\" ")
+    public String popUpTutarAl() {
+
+        String tutar =    lblTutar.getText();
+        return tutar;
+    }
 
     @Step("Popup kontrolü")
     public PostalanacakEvraklarPage popUpKontrol() {
-        popUP.shouldBe(Condition.visible);
+        Assert.assertEquals(popUP.isDisplayed(),true);
         return this;
     }
 
@@ -887,7 +957,7 @@ public class PostalanacakEvraklarPage extends MainPage {
     @Step("Dağıtım satırlarında  \"Elektronik gönderilmiştir\" ifadesinin geldiği görülür kontrolu")
     public PostalanacakEvraklarPage evrakOnizlemeDagitimSatiriKontrol(String dagitimSatiriMesaj) {
 
-        String dagitimSatiri = $(By.xpath("//*[@id='mainPreviewForm:postalanacakDataGrid'] //tr[normalize-space(.)='"+dagitimSatiriMesaj+"']")).getText();
+        String dagitimSatiri = $(By.xpath("//*[@id='mainPreviewForm:postalanacakDataGrid'] //tr[normalize-space(.)='" + dagitimSatiriMesaj + "']")).getText();
         Assert.assertEquals(dagitimSatiri.contains(dagitimSatiriMesaj), true);
         return this;
     }
@@ -896,7 +966,7 @@ public class PostalanacakEvraklarPage extends MainPage {
     @Step("Ekranın altında \"Evrakın fiziksel eki olduğu için postaya düşürülmüştür, göndermeyi unutmayınız!\" mesajının geldiği kontrolu")
     public PostalanacakEvraklarPage evrakOnizlemeFizilselEkMesajiKontrolu(String fizikselEkMesaji) {
 
-        Assert.assertEquals($(By.xpath("//label[normalize-space(text())='"+fizikselEkMesaji+"']")).isDisplayed(), true);
+        Assert.assertEquals($(By.xpath("//label[normalize-space(text())='" + fizikselEkMesaji + "']")).isDisplayed(), true);
 
         return this;
     }
