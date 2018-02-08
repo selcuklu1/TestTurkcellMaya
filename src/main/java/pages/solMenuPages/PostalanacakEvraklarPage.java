@@ -179,7 +179,12 @@ public class PostalanacakEvraklarPage extends MainPage {
     public PostalanacakEvraklarPage btnDagitimGidisSekli(String postaSekli) {
         String selectedTxt = btnComboEvrakGidisSekli.getSelectedText();
         System.out.println(selectedTxt);
-        btnComboEvrakGidisSekli.selectOptionContainingText(postaSekli);
+        System.out.println(postaSekli);
+        btnComboEvrakGidisSekli.selectOption(postaSekli);
+        if (postaSekli == "Adi Posta") {
+            btnComboEvrakGidisSekli.selectOption(0);
+
+        }
         return this;
 
     }
@@ -808,6 +813,9 @@ public class PostalanacakEvraklarPage extends MainPage {
     @Step("Icerik Posta Yazdır popup Yazdir butonu")
     public PostalanacakEvraklarPage btnPopupPostaYazdirma() {
         btnIcerikPopupYazdir.click();
+        switchTo().window(1);
+        closeNewWindow();
+        switchTo().window(0);
         return this;
     }
 

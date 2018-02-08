@@ -688,6 +688,8 @@ public class EvrakPostalamaTest extends BaseTest {
                 .btnIcerikEvrakPostalama()
          .btnIcerikPostalamaEvet();
 
+        postalanacakEvraklarPage.islemMesaji().isBasarili();
+
         postalananlarPage.openPage();
         postalananlarPage.filter().findRowsWith(Condition.text(konu)).first().click();
         postalananlarPage.postaDetayiTikla();
