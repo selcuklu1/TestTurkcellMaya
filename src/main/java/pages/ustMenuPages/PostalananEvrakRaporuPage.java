@@ -260,7 +260,28 @@ public class PostalananEvrakRaporuPage extends MainPage {
         String SchildElementCount;
         SchildElementCount = sorguTablosu.getAttribute("childElementCount");
         int childElementCount = Integer.parseInt(SchildElementCount);
-        for (int i = 0; i < childElementCount; i++) {
+        System.out.println(childElementCount);
+        int i = 0;
+        String paramEvrakGecmisiID = "//*[@id='postalananEvrakRaporuForm:postalananEvrakDataTable:" + String.valueOf(i) + ":evrakGecmisiId']/span[1]";
+        String paramEvrakDetayID = "//*[@id='postalananEvrakRaporuForm:postalananEvrakDataTable:" + String.valueOf(i) + ":evrakGosterButton']/span[1]";
+        String paramEvrakEtiketBastir = "//*[@id='postalananEvrakRaporuForm:postalananEvrakDataTable_data']/tr[" + String.valueOf(i + 1) + "]/td[16]/div/button";
+
+        SelenideElement EvrakGecmisiID = $x(paramEvrakGecmisiID);
+        SelenideElement EvrakDetayID = $x(paramEvrakDetayID);
+        SelenideElement EvrakEtiketBastir = $x(paramEvrakEtiketBastir);
+
+        EvrakGecmisiID.click();
+        Thread.sleep(1000);
+        evrakGecmisiKapat();
+        Thread.sleep(1000);
+        EvrakDetayID.click();
+        Thread.sleep(1000);
+        evrakIcerikKapat();
+        Thread.sleep(1000);
+        EvrakEtiketBastir.click();
+        Thread.sleep(1000);
+        etiketBastirPopupKapat();
+       /* for (int i = 0; i < childElementCount; i++) {
 
             //*[@id="postalananEvrakRaporuForm:postalananEvrakDataTable:0:evrakGecmisiId"]/span[1]
             String paramEvrakGecmisiID = "//*[@id='postalananEvrakRaporuForm:postalananEvrakDataTable:" + String.valueOf(i) + ":evrakGecmisiId']/span[1]";
@@ -282,7 +303,7 @@ public class PostalananEvrakRaporuPage extends MainPage {
             EvrakEtiketBastir.click();
             Thread.sleep(1000);
             etiketBastirPopupKapat();
-        }
+        }*/
         return this;
     }
 }
