@@ -8,7 +8,6 @@ package tests.EvrakPostalama;
  ****************************************************/
 
 import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.Selenide;
 import common.BaseTest;
 import data.User;
 import io.qameta.allure.Severity;
@@ -371,12 +370,15 @@ public class EvrakPostalamaTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS0312 : postalama işlemi sonrası postalananlar listesinin kontrolü")
     public void TS0312() throws InterruptedException {
+
         login("Mbozdemir", "123");
         String konu = "TS1685_" + getSysDate();
+        String imzaci ="Mehmet BOZDEMİR";
 
         postalananlarPage.openPage();
         postalananlarPage.tabloEvrakGeldigiGorme()
                 .btnKurdele()
+                .tekImzaciKontrol(imzaci)
                 .mngImzaDialog()
                 .btnImzaciPopupKapat()
                 .btnTamEkran()
