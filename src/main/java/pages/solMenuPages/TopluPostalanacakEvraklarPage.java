@@ -606,7 +606,7 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
         return this;
     }
 
-    @Step("Gönderildiği gerçek kişi seç: {gercekKkisi}")
+    @Step("Gönderildiği gerçek kişi seç: {gercekKisi}")
     public TopluPostalanacakEvraklarPage gonderildigiGercekKisiSec(String gercekKisi) {
         txtGonderildigiGercekKisi.selectLov(gercekKisi);
         return this;

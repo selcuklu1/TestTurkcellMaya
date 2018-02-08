@@ -115,6 +115,13 @@ public class PostalanacakEvraklarPage extends MainPage {
     ElementsCollection tblOnIzlemeIlgiBilgileri = $$("[id*='ilgiListesiDataTable_data'] > tr[role='row']");
     ElementsCollection tblOnIzlemeIlisikBilgileri = $$("[id*='ilisikListesiDataTable_data'] > tr[role='row']");
 
+    BelgenetElement txtKullaniciListesi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKisiListesiLov:LovText"));
+    ElementsCollection tblTakipListesi = $$("tbody[id='evrakTakibimeEkleDialogForm:takipListLov:LovSecilenTable_data'] > tr[role='row']");
+    SelenideElement btnTakipListesiKapat = $("div[id='evrakTakibimeEkleDialogForm:takipDialog'] span[class*='ui-icon-closethick']");
+
+    ElementsCollection trEvrakOnizlemePostalanacakYerler = $$("tbody[id*='mainPreviewForm:dataTableId_data'] tr[data-ri]");
+
+
     @Step("Postalanacak Evraklar sayfası aç")
     public PostalanacakEvraklarPage openPage() {
         solMenu(SolMenuData.BirimEvraklari.PostalanacakEvraklar);
@@ -139,8 +146,10 @@ public class PostalanacakEvraklarPage extends MainPage {
         return this;
     }
 
-    @Step("Fiziksel Ek ikon kontrolü bulunmaktadır")
-    public PostalanacakEvraklarPage btnFizikselEkIkonKontrol() {
+
+    @Step("Fiziksel Ek ikon kontrolu")
+    public PostalanacakEvraklarPage btnFizikselEkIkonKontrol () {
+
         btnFizikselEkBulunmaktadirIkon.exists();
         return this;
     }
@@ -662,6 +671,19 @@ public class PostalanacakEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Postalanacak Evraklar listesinde evrak tarihi kontrolu")
+    public PostalanacakEvraklarPage konuyaGoreEvrakKontrol(String konu, String tarih) {
+
+        boolean durum = tblEvraklar
+                .filterBy(Condition.text(konu))
+                .filterBy(Condition.text(tarih))
+                .size() > 0;
+
+        Assert.assertEquals(durum, true);
+
+        return this;
+    }
+
     @Step("Postalanacak Evraklar listesinde evrak kontrolü:  \"{konu}\" ")
     public PostalanacakEvraklarPage konuyaGoreEvrakKontroluAllPages(String konu) {
         searchTable().searchInAllPages(true).findRows(text(konu)).getFoundRow().shouldBe(exist);
@@ -839,10 +861,6 @@ public class PostalanacakEvraklarPage extends MainPage {
         return this;
     }
 
-    BelgenetElement txtKullaniciListesi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKisiListesiLov:LovText"));
-    ElementsCollection tblTakipListesi = $$("tbody[id='evrakTakibimeEkleDialogForm:takipListLov:LovSecilenTable_data'] > tr[role='row']");
-    SelenideElement btnTakipListesiKapat = $("div[id='evrakTakibimeEkleDialogForm:takipDialog'] span[class*='ui-icon-closethick']");
-
     @Step("{konu} konulu evrak üzerinde Takip Listesi butonuna tıkla.")
     public PostalanacakEvraklarPage takipListesiAc(String konu) {
         tblEvraklar
@@ -863,6 +881,23 @@ public class PostalanacakEvraklarPage extends MainPage {
     public PostalanacakEvraklarPage takipListesiKapat() {
         btnTakipListesiKapat.click();
         txtKullaniciListesi.shouldNotBe(visible);
+        return this;
+    }
+
+    @Step("Dağıtım satırlarında  \"Elektronik gönderilmiştir\" ifadesinin geldiği görülür kontrolu")
+    public PostalanacakEvraklarPage evrakOnizlemeDagitimSatiriKontrol(String dagitimSatiriMesaj) {
+
+        String dagitimSatiri = $(By.xpath("//*[@id='mainPreviewForm:postalanacakDataGrid'] //tr[normalize-space(.)='"+dagitimSatiriMesaj+"']")).getText();
+        Assert.assertEquals(dagitimSatiri.contains(dagitimSatiriMesaj), true);
+        return this;
+    }
+
+
+    @Step("Ekranın altında \"Evrakın fiziksel eki olduğu için postaya düşürülmüştür, göndermeyi unutmayınız!\" mesajının geldiği kontrolu")
+    public PostalanacakEvraklarPage evrakOnizlemeFizilselEkMesajiKontrolu(String fizikselEkMesaji) {
+
+        Assert.assertEquals($(By.xpath("//label[normalize-space(text())='"+fizikselEkMesaji+"']")).isDisplayed(), true);
+
         return this;
     }
 }
