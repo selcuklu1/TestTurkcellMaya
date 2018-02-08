@@ -161,8 +161,8 @@ public class TeslimAlinmayiBekleyenHavaleTest extends BaseTest {
 
     String basariMesaji = "İşlem başarılıdır!";
     String konuKodu = "Diğer";
-    String konuKoduRandom = "TC-2285_" + createRandomNumber(15);
-    String randomKonuKodu2 = createRandomNumber(15)+"-TS-2285";
+    String konuKoduRandomTS2285 = "TC-2285_" + createRandomNumber(15);
+    String randomKonuKodu2TS2285 = createRandomNumber(15)+"-TS-2285";
     String evrakSayiSag =  createRandomNumber(10);
     String evrakTarihi = getSysDateForKis();
     String kurum = "BÜYÜK HARFLERLE KURUM";
@@ -178,7 +178,7 @@ public class TeslimAlinmayiBekleyenHavaleTest extends BaseTest {
         gelenEvrakKayitPage
                 .openPage()
                 .konuKoduDoldur(konuKodu)
-                .konuDoldur(konuKoduRandom)
+                .konuDoldur(konuKoduRandomTS2285)
                 .evrakTarihiDoldur(evrakTarihi)
                 .geldigiKurumDoldurLovText(kurum)
                 .evrakSayiSagDoldur(evrakSayiSag)
@@ -190,7 +190,7 @@ public class TeslimAlinmayiBekleyenHavaleTest extends BaseTest {
         //2.Teslim Alınmayı Bekleyenler
         gelenEvrakKayitPage
                 .konuKoduDoldur(konuKodu)
-                .konuDoldur(randomKonuKodu2)
+                .konuDoldur(randomKonuKodu2TS2285)
                 .evrakTarihiDoldur(evrakTarihi)
                 .geldigiKurumDoldurLovText(kurum)
                 .evrakSayiSagDoldur(evrakSayiSag)
@@ -208,8 +208,8 @@ public class TeslimAlinmayiBekleyenHavaleTest extends BaseTest {
         TS2285PreCondition();
         teslimAlinmayiBekleyenlerPage
                 .openPage()
-                .evrakNoIleEvrakCheckboxSec(konuKoduRandom)
-                .evrakNoIleEvrakCheckboxSec(randomKonuKodu2)
+                .evrakNoIleEvrakCheckboxSec(konuKoduRandomTS2285)
+                .evrakNoIleEvrakCheckboxSec(randomKonuKodu2TS2285)
                 .secilenTeslimAlVeHavaleEt()
                 .secilenOnaylayacakKisiDoldur("Can Şeker")
                 .secilenHavaleOnayinaGonder()
@@ -217,9 +217,119 @@ public class TeslimAlinmayiBekleyenHavaleTest extends BaseTest {
 
         haveleOnayinaSunduklarimPage
                 .openPage()
-                .evrakNoIleEvrakIcerikGosterSec(konuKoduRandom)
+                .evrakNoIleEvrakIcerikGosterSec(konuKoduRandomTS2285)
                 .icerikGosterHavaleBilgisi()
                 .birimVeKisiBilgilerinBosOlarakGeldigiGorme();
     }
+
+    String konuKoduRandomTS2294 = "TC-2294_" + createRandomNumber(15);
+
+    @Step("Teslim alınmayı bekleyenler alanına evrak düşürmekte")
+    public void TS2294PreCondition() {
+
+        login(usernameZTEKIN, passwordZTEKIN);
+
+        //TODO Bu alanda Pre Condition alanı olan teslim alınmayı bekleyenler alanına data oluşturmakta
+        //1.Teslim Alınmayı Bekleyenler
+        gelenEvrakKayitPage
+                .openPage()
+                .konuKoduDoldur(konuKodu)
+                .konuDoldur(konuKoduRandomTS2294)
+                .evrakTarihiDoldur(evrakTarihi)
+                .geldigiKurumDoldurLovText(kurum)
+                .evrakSayiSagDoldur(evrakSayiSag)
+                .havaleIslemleriBirimDoldur(kullaniciAdi)
+                .kaydet()
+                .evetDugmesi()
+                .yeniKayitButton();
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS2294: Havale yeri Birim, Kişi, Kullanıcı Listesi seçilerek evrakın havale edilmesi")
+    public void TS2294() {
+
+        TS2294PreCondition();
+        teslimAlinmayiBekleyenlerPage
+                .openPage()
+                .evrakNoIleEvrakSec(konuKoduRandomTS2294)
+                .teslimAlVeHavaleEt()
+                .teslimAlVeHavaleEtBirimDoldur("YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ","")
+                .teslimAlVeHavaleEtKisiDoldur("Mehmet BOZDEMİR","YGD")
+                .kisiGeregiIcinGonderBilgiIcinGonderDegistir()
+                .teslimAlVeHavaleEtKullaniciListesiDoldur("TS2994","TS2994")
+                .kullaniciListesiGeregiIcinGonderKordinasyonIcinGonderDegistir()
+                .teslimAlVeGonder()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        birimHavaleEdilenlerPage
+                .openPage()
+                .evrakNoIleTabloKontrolu(konuKoduRandomTS2294);
+
+        login(usernameYAKYOL,passwordYAKYOL);
+
+        teslimAlinmayiBekleyenlerPage
+                .openPage()
+                .evrakGeldigiGorunur(konuKoduRandomTS2294,evrakTarihi,kurum);
+
+        login(usernameMBOZDEMIR,passwordMBOZDEMIR);
+
+        gelenEvraklarPage
+                .openPage()
+                .evrakGeldigiGorme(konuKoduRandomTS2294);
+
+        login(usernameYAKYOL,passwordYAKYOL);
+
+        gelenEvraklarPage
+                .openPage()
+                .evrakGeldigiGorme(konuKoduRandomTS2294);
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS2300: Evrakın Onaylı havale edilmesi ve güncellenerek onaylanması")
+    public void TS2300() {
+        String konuKodu = "010.01";
+        String evrakTuru = "Resmi Yazışma";
+        String evrakDili = "Türkçe";
+        String evrakTarihi = getSysDateForKis();
+        String gizlilikDerecesi = "Normal";
+        String kisiKurum = "Kurum";
+        String geldigiKurum = "Esk Kurum 071216 2";
+        String evrakGelisTipi = "Posta";
+        String ivedilik = "Normal";
+        String kisi = "Zübeyde Tekin";
+        String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
+        String details = "BİLİŞİM HİZMETLERİ VE UYDU PAZARLAMA GENEL MÜDÜR Y";
+        String testid= "TS-405";
+        String konu = "TS-405-" + getSysDate();
+        String pathToFilePdf = getUploadPath() + "Otomasyon.pdf";
+        String pdfName = "Otomasyon.pdf";
+
+        login(usernameYAKYOL,passwordYAKYOL);
+
+        gelenEvrakKayitPage
+                .openPage()
+                .evrakBilgileriUstYaziEkle(pathToFilePdf)
+                .ustYaziPdfAdiKontrol(pdfName)
+                .islemMesaji().basariliOlmali();
+
+        gelenEvrakKayitPage
+                .konuKoduDoldur(konuKodu)
+                .konuDoldur(konu)
+                .evrakTuruSec(evrakTuru)
+                .evrakDiliSec(evrakDili)
+                .evrakTarihiDoldur(evrakTarihi)
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .kisiKurumSec(kisiKurum)
+                .geldigiKurumDoldurLovText(geldigiKurum)
+                .evrakSayiSagDoldur()
+                .evrakGelisTipiSec(evrakGelisTipi)
+                .ivedilikSec(ivedilik)
+                .havaleIslemleriKisiDoldur(kisi)
+                .kaydet()
+                .popUps();
+    }
+
+
+
 
 }
