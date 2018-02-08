@@ -449,10 +449,9 @@ public class GizlilikKleransiTest extends BaseTest {
 
         teslimAlinanlarPage
                 .openPage()
-                .evrakGeldigiGorme(konuKoduRandom,kurum,evrakTarihi)
-                .evrakSec(konuKoduRandom,kurum,evrakTarihi,evrakSayiSag)
+                .evrakGeldigiGorme(konuKoduRandom, kurum, evrakTarihi)
+                .evrakSec(konuKoduRandom, kurum, evrakTarihi, evrakSayiSag)
                 .islemMesaji().dikkatOlmali(uyariMesaj1);
-
 
 
     }
@@ -557,37 +556,41 @@ public class GizlilikKleransiTest extends BaseTest {
     public void TS1938() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
+        String konu = "TS1938 " + getSysDate();
         String tur = "IMZALAMA";
+        String tur2 = "PARAFLAMA";
         String icerik = "TS1938() " + getSysDate();
         String konuKodu = "010.01";
-        String kaldiralacakKlasor = "TestBaris";
+//        String kaldiralacakKlasor = "TestBaris";
+        String kaldiralacakKlasor = "gündem";
         String evrakTuru = "Resmi Yazışma";
         String evrakDili = "Türkçe";
-        String gizlilikDerecesi = "Gizli";
+        String gizlilikDerecesi = "Tasnif Dışı";
         String ivedilik = "Normal";
         String geregi = "Optiim Birim";
 
-        login("gsahin", "123");
+        login("username23t", "123");
 
-        kullaniciYonetimiPage
-                .openPage()
-                .kullaniciAdiDoldur("Gsahin")
-                .ara()
-                .tabloBirimKontrol()
-                .kullaniciListesiGuncelleButonuTikla()
-                .gorevliOlduguBirimlerKontol()
-                .gorevliOlduguBirimGuncelle()
-                .kullaniciBirimAtamaGizlilikDerecesiSec(gizlilikDerecesi)
-                .kullaniciBirimAtamaKaydetTikla()
-                .kullaniciGuncellemeKaydet()
-                .islemMesaji().basariliOlmali(basariMesaji);
-
-        logout();
-        login("gsahin", "123");
+//        kullaniciYonetimiPage
+//                .openPage()
+//                .kullaniciAdiDoldur("Gsahin")
+//                .ara()
+//                .tabloBirimKontrol()
+//                .kullaniciListesiGuncelleButonuTikla()
+//                .gorevliOlduguBirimlerKontol()
+//                .gorevliOlduguBirimGuncelle()
+//                .kullaniciBirimAtamaGizlilikDerecesiSec(gizlilikDerecesi)
+//                .kullaniciBirimAtamaKaydetTikla()
+//                .kullaniciGuncellemeKaydet()
+//                .islemMesaji().basariliOlmali(basariMesaji);
+//
+//        logout();
+//        login("gsahin", "123");
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
                 .konuKoduSec(konuKodu)
+                .konuDoldur(konu)
                 .kaldiralacakKlasorlerSec(kaldiralacakKlasor)
                 .evrakTuruSec(evrakTuru)
                 .evrakDiliSec(evrakDili)
@@ -597,7 +600,9 @@ public class GizlilikKleransiTest extends BaseTest {
                 .geregiSec(geregi)
                 .onayAkisiEkle()
                 .kullaniciTabloKontrol()
+                .kullniciIsmineGoreImzaParafKontrol("username23t",tur2)
                 .IlkKullaniciImzalamaVeyaParaflamaSec(tur)
+                .onayAkisiKullaniciKontrol("username23t", tur)
                 .kullan();
 
         evrakOlusturPage
@@ -609,10 +614,10 @@ public class GizlilikKleransiTest extends BaseTest {
                 .sayisalImzaEvetPopup()*/
                 .islemMesaji().basariliOlmali();
 
-
-        evrakNo = imzaladiklarimPage
+        imzaladiklarimPage
                 .openPage()
-                .evrakIcerikKontroluveEvrakNoAl(icerik);
+                .konuyaGoreEvrakKontrol(konu)
+                .evrakIcerikKontroluveEvrakNoAl(konu);
     }
 
     @Severity(SeverityLevel.CRITICAL)

@@ -192,7 +192,7 @@ public class PaylastiklarimPage extends MainPage {
 
     }
 
-    @Step("\"{0}\" tabını seç")
+    @Step("\"{tabAdi}\" tabını seç")
     public PaylastiklarimPage evrakOnizlemeTabSec(String tabAdi) {
 
         tabEvrakOnizleme
@@ -204,7 +204,7 @@ public class PaylastiklarimPage extends MainPage {
         return this;
     }
 
-    @Step("\"{0}\" tabını seç")
+    @Step("\"{tabAdi}\" tabını seç")
     public PaylastiklarimPage paylasilanlarTabSec(String tabAdi) {
 
         tabEvrakOnizleme
@@ -225,7 +225,7 @@ public class PaylastiklarimPage extends MainPage {
     }
 
     // Evrak notları fonksiyonları
-    @Step("Evrak ekleme butonu aktif olmalı mı? : \"{0}\" ")
+    @Step("Evrak ekleme butonu aktif olmalı mı? : \"{aktifOlmali}\" ")
     public PaylastiklarimPage evrakNotEklemeButonuAktifOlmali(boolean aktifOlmali) {
         if (aktifOlmali == true)
             btnEvratNotEkle.shouldHave(Condition.attribute("aria-disabled", "false"));

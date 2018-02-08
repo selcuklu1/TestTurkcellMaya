@@ -46,7 +46,7 @@ public class PttRaporuPage extends MainPage {
         return this;
     }
 
-    @Step("Posta tarihi gir: {postTarihi}")
+    @Step("Posta tarihi gir : {postaTarihi}")
     public PttRaporuPage postaTarihiDoldur(String postaTarihi) {
         txtPostaTarihi.setValue(postaTarihi);
         return this;
@@ -287,7 +287,7 @@ public class PttRaporuPage extends MainPage {
         return this;
     }
 
-    @Step("Posta Tarihi alanı için güncel tarih kontrolü")
+    @Step("Posta tarihi alanında default günün tarihinin geldiği görülür.")
     public PttRaporuPage postaTarihiDefaultDegerKontrol(){
         String tarihBugun = "" + new SimpleDateFormat("dd.MM.yyyy").format(new Date());
         txtPostaTarihi.shouldHave(Condition.value(tarihBugun));

@@ -96,7 +96,7 @@ public class BenimlePaylasilanlarPage extends MainPage {
         return this;
     }
 
-    @Step("\"{0}\" tabını seç")
+    @Step("\"{tabAdi}\" tabını seç")
     public BenimlePaylasilanlarPage evrakOnizlemeTabSec(String tabAdi) {
         tabsEvrakOnizleme
                 .filterBy(Condition.text(tabAdi))
@@ -213,7 +213,7 @@ public class BenimlePaylasilanlarPage extends MainPage {
         return this;
     }
 
-    @Step("Evrak Listede olmalı mı? : {shouldBeVisible}")
+    @Step("{konu} konulu Evrak Listede olmalı mı? : {shouldBeVisible}")
     public BenimlePaylasilanlarPage evrakKontrol(String paylasan, String paylasilmaTarihi, String konu, boolean shouldBeVisible) {
         if(shouldBeVisible == true) {
 

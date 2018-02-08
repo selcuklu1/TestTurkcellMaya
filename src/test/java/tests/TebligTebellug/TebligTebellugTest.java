@@ -78,6 +78,8 @@ public class TebligTebellugTest extends BaseTest {
                 .openPage()
                 .evrakIcerikGoster(konu, geldigiYer, kayitTarihiSayi, evrakTarihi, "")
                 .tebligEt()
+                .tebligEtKisiInputDoldur("Huser3 TUMER3")
+                .tebligEtKisiTemizle()
                 .tebligEtKullaniciListesiDoldur(tebligEdilecekKullanicilistesi)
                 .tebligEtNotInputDoldur(tebligNot)
                 .tebligEtTebligEt();
@@ -105,7 +107,7 @@ public class TebligTebellugTest extends BaseTest {
 
     }
 
-    @Test(enabled = true, description = "TS0845A : Gelen Evrakın Önizleme ekranından kullanıcıya tebliğ edilmesi")
+    @Test(enabled = true, description = "TS0845 : Gelen Evrakın Önizleme ekranından kullanıcıya tebliğ edilmesi")
     public void TS0845A() {
         GelenEvrakKayitPage gelenEvrakKayitPage = new GelenEvrakKayitPage();
         TebligEttiklerimPage tebligEttiklerimPage = new TebligEttiklerimPage();
@@ -166,6 +168,8 @@ public class TebligTebellugTest extends BaseTest {
                 .openPage()
                 .evrakIcerikGoster(konu, geldigiYer, kayitTarihiSayi, evrakTarihi, randomNumber)
                 .tebligEt()
+                .tebligEtKullaniciListesiDoldur("TS0845LISTE")
+                .tebligEtKullaniciListesiTemizle()
                 .tebligEtKisiInputDoldur(tebligEdilecekKisi)
                 .tebligEtNotInputDoldur(tebligNot)
                 .tebligEtTebligEt();
@@ -256,6 +260,8 @@ public class TebligTebellugTest extends BaseTest {
                 .evrakIcerikGoster(konu, geldigiYer, kayitTarihiSayi, evrakTarihi, randomNumber)
                 .tebligEt()
                 .tebligEtKisiInputDoldur(tebligEdilecekKisi)
+                .tebligEtKullaniciListesiDoldur("TS0845LISTE")
+                .tebligEtKullaniciListesiTemizle()
                 .tebligEtNotInputDoldur(tebligNot)
                 .tebligEtTebligEt();
 

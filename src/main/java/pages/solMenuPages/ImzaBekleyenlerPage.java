@@ -20,7 +20,7 @@ public class ImzaBekleyenlerPage extends MainPage {
     SelenideElement btnIadeEtIadeEt = $(By.id("mainPreviewForm:iadeEtButton_id"));
     SelenideElement btnImzala = $(By.xpath("//span[contains(@class, 'imzala')]/.."));
     SelenideElement btnEvrakOnizlemeImzala = $("[id='mainPreviewForm:onizlemeRightTab:onizlemeRightTab'] td:nth-child(5) button");
-    SelenideElement rdbSImaza = $("[id='imzalaForm:imzalaRadio'] [class='ui-radiobutton-box ui-widget ui-corner-all ui-radiobutton-relative ui-state-default']");
+    SelenideElement rdbSImaza = $("div[id='imzalaForm:imzalaRadio'] > div[class*='ui-radiobutton-box']");
     SelenideElement btnSImzaImzala = $(By.id("imzalaForm:sayisalImzaConfirmDialogOpener"));
     SelenideElement btnSImzaImzalaEvet = $(By.id("imzalaForm:sayisalImzaConfirmForm:sayisalImzaEvetButton"));
     SelenideElement btnSImzaImzalaHayir = $(By.id("imzalaForm:sayisalImzaConfirmForm:sayisalImzaHayirButton"));
@@ -30,9 +30,10 @@ public class ImzaBekleyenlerPage extends MainPage {
     ElementsCollection tblImzaBekleyenler = $$("tbody[id='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
     SelenideElement btnEvrakSil = $("[id^='mainPreviewForm:onizlemeRightTab:uiRepeat'] [class$='evrakSil']");
     SelenideElement btnSil = $("[id^='mainPreviewForm:j_idt'] [class$='ui-button-text']");
-
-
     SelenideElement txtEvrakSilmeNotu = $(By.xpath("/html//table[@id='mainPreviewForm:evrakSilPanelGrid']/tbody//table[@class='gridForm']//textarea[@role='textbox']"));
+    SelenideElement evrakOnIzleme = $("[id^='mainPreviewForm:j_idt'] [class='ui-tabs-panel ui-widget-content ui-corner-bottom']");
+
+
 
     @Step("İmza bekleyenler sayfası aç")
     public ImzaBekleyenlerPage openPage() {
@@ -286,5 +287,21 @@ public class ImzaBekleyenlerPage extends MainPage {
                 break;
         }
 
+    }
+
+    @Step("Evrak önizleme ekranı kontrolu")
+    public ImzaBekleyenlerPage evrakOnizlemeKontrol() {
+
+        Assert.assertEquals(evrakOnIzleme.isDisplayed(), true);
+
+        return this;
+    }
+
+    @Step("Sil butonunun gelmediği kontrolu")
+    public ImzaBekleyenlerPage silButonuGelmedigiKontrolu() {
+
+        Assert.assertEquals(btnEvrakSil.isDisplayed(), false);
+
+        return this;
     }
 }

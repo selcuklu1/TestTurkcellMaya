@@ -14,6 +14,7 @@ import pages.pageData.SolMenuData;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.Belgenet.comboBox;
+import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 public class PostalanacakEvraklarPage extends MainPage {
 
@@ -394,14 +395,23 @@ public class PostalanacakEvraklarPage extends MainPage {
         postalanacakEvrakOrijinalYazdir.click();
         btnPopupOrjYazdir.click();
         Thread.sleep(2000);
-        Selenide.switchTo();
 
-        popupPostaYazdirmaKapat();
         return this;
     }
     @Step("PDF - Evrak sayısı - Yazışma Kuralları kontrol")
     public PostalanacakEvraklarPage pdfEvrakYazismaKuralkontrol() {
-        postalanacakEvrakOrijinalYazdir.getSelectedText();
+        switchTo().window(1);
+        SelenideElement pdftab = $x("//*[@id='plugin']");
+        String ktrl = pdftab.getValue();
+        System.out.println(ktrl);
+        return this;
+    }
+    @Step("Postalanacak Evrak Orjinal Yazdırma popup Kapatma")
+    public PostalanacakEvraklarPage popupEvrOrjYazKapat() throws InterruptedException {
+
+        closeNewWindow();
+        switchTo().window(0);
+        popupPostaYazdirmaKapat();
         return this;
     }
 
@@ -427,12 +437,16 @@ public class PostalanacakEvraklarPage extends MainPage {
 
         return this;
     }
+    @Step("Postalanacan Evrak orjinal popup Kapatma")
+    public PostalanacakEvraklarPage popupOrjYazPostaKapatma () {
+        SelenideElement btnkp = $x("//*[@id='postaDetayYazdirForm:dlgPostaDetayYazdir']/div[1]/a/span");
+        return this;
+    }
 
     @Step("Popup postalanacak Evrak Yazdır")
     public PostalanacakEvraklarPage popupPostalanacakEvrakYazdir() throws InterruptedException {
         btnPopupYazdir.click();
         Thread.sleep(2000);
-        Selenide.switchTo();
 
         return this;
     }
@@ -775,6 +789,33 @@ public class PostalanacakEvraklarPage extends MainPage {
         SelenideElement filteredIcerikGoster = $(By.id(IcerikId));
         filteredIcerikGoster.click();
         Thread.sleep(1000);
+        return this;
+    }
+
+    BelgenetElement txtKullaniciListesi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKisiListesiLov:LovText"));
+    ElementsCollection tblTakipListesi = $$("tbody[id='evrakTakibimeEkleDialogForm:takipListLov:LovSecilenTable_data'] > tr[role='row']");
+    SelenideElement btnTakipListesiKapat = $("div[id='evrakTakibimeEkleDialogForm:takipDialog'] span[class*='ui-icon-closethick']");
+
+    @Step("{konu} konulu evrak üzerinde Takip Listesi butonuna tıkla.")
+    public PostalanacakEvraklarPage takipListesiAc(String konu) {
+        tblEvraklar
+                .filterBy(text(konu))
+                .first()
+                .$x(".//span[contains(@class,'ui-button-icon-left ui-icon document-addFollow')]/..")
+                .click();
+        return this;
+    }
+
+    @Step("Takip Listesinde {adiSoyadi} kullanıcısının ve {birim} birim bilgisinin olduğu görülür.")
+    public PostalanacakEvraklarPage takipListesiKontrol(String adiSoyadi, String birim){
+        tblTakipListesi.filterBy(text(adiSoyadi)).filterBy(text(birim)).first().shouldBe(visible);
+        return this;
+    }
+
+    @Step("Takip Listesi ekranında bulunan (X) \"Sayfayı Kapatma\" butonuna basılır. Takip listesi ekranın kapatıldığı görülür.")
+    public PostalanacakEvraklarPage takipListesiKapat(){
+        btnTakipListesiKapat.click();
+        txtKullaniciListesi.shouldNotBe(visible);
         return this;
     }
 }

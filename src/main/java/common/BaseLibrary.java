@@ -791,6 +791,22 @@ public class BaseLibrary extends ElementsContainer {
 
     }
 
+    @Step("Silme Onayı: Kaydı silmek istediğinize emin misiniz?: {secim}")
+    public void silmeOnayiEvrakSilPopup(String secim) {
+
+        SelenideElement btnEvet = $(By.id("mainPreviewForm:evrakSilEvetButton"));
+        SelenideElement btnHayir = $(By.id("mainPreviewForm:evrakSilHayirButton"));
+
+            switch (secim) {
+                case "Evet":
+                    btnEvet.click();
+                    break;
+                case "Hayır":
+                    btnHayir.click();
+                    break;
+            }
+    }
+
     // İşlem penceresi kapatma onay - popup
     @Step("Popup : İşlem penceresi kaydet: {secim}")
     public void islemPenceresiKaydetPopup(String secim) {

@@ -59,6 +59,12 @@ public class ParafBekleyenlerPage extends MainPage {
     SelenideElement accordionIlgiBilgileri = $("[id^='mainPreviewForm:j_idt'] [id*='accpnlI:0'] [class='onizlemeFrame']");
     SelenideElement accordionIlisikBilgileri = $("[id^='mainPreviewForm:j_idt'] [id*='accpnlIlisik:0'] [class='onizlemeFrame']");
 
+    SelenideElement evrakOnIzleme = $("[id^='mainPreviewForm:j_idt'] [class='ui-tabs-panel ui-widget-content ui-corner-bottom']");
+    SelenideElement btnEvrakSil = $("[id^='mainPreviewForm:onizlemeRightTab:uiRepeat'] [class$='evrakSil']");
+    SelenideElement btnEvrakOnizlemdeSil = $("[id^='mainPreviewForm:j_idt'] [class$='ui-button-text']");
+    SelenideElement txtEvrakOnizlemdeSilNotu = $("[id^='mainPreviewForm:j_idt'][class^='ui-inputfield ui-inputtextarea']");
+
+
 
     @Step("Paraf Bekleyenler sayfası aç")
     public ParafBekleyenlerPage openPage() {
@@ -165,7 +171,7 @@ public class ParafBekleyenlerPage extends MainPage {
         return this;
     }
 
-    @Step("\"{0}\" tabını seç")
+    @Step("\"{tabAdi}\" tabını seç")
     public ParafBekleyenlerPage evrakOnizlemeTabSec(String tabAdi) {
 
         tabEvrakOnizleme
@@ -390,6 +396,41 @@ public class ParafBekleyenlerPage extends MainPage {
     @Step("Evrak önizleme/İlişik Bilgileri Accordion kontrolu")
     public ParafBekleyenlerPage ilisikBilgileriAccordionKontrol() {
         Assert.assertEquals(accordionIlisikBilgileri.isDisplayed(), true);
+        return this;
+    }
+
+    @Step("Evrak önizleme ekranı kontrolu")
+    public ParafBekleyenlerPage evrakOnizlemeKontrol() {
+
+        Assert.assertEquals(evrakOnIzleme.isDisplayed(), true);
+
+        return this;
+    }
+
+
+    @Step("Sil butonu kontrolu")
+    public ParafBekleyenlerPage silButonuKontrolu() {
+
+        Assert.assertEquals(btnEvrakSil.isDisplayed(), true);
+
+        return this;
+    }
+
+    @Step("Sil")
+    public ParafBekleyenlerPage sil() {
+        btnEvrakSil.click();
+        return this;
+    }
+
+    @Step("Evrak Önizlemde Sil")
+    public ParafBekleyenlerPage evrakOnizlemedeSil() {
+        btnEvrakOnizlemdeSil.click();
+        return this;
+    }
+
+    @Step("Evrak Önizlemde Silme Notu Doldur")
+    public ParafBekleyenlerPage evrakSilNotuDoldur(String not) {
+         txtEvrakOnizlemdeSilNotu.setValue(not);
         return this;
     }
 }

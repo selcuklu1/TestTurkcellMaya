@@ -15,6 +15,8 @@ import pages.pageComponents.UstYazi;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.alanlar.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import static com.codeborne.selenide.Condition.*;
@@ -817,11 +819,17 @@ public class BilgilerTab extends MainPage {
     public BilgilerTab anlikOnayAkisKullaniciVeTipiSec(User kullanici, OnayKullaniciTipi tipi) {
         anlikOnayAkisKullanicilarAlaninBirimTumuSec(true);
 
+       /* getAnlikOnayAkisKullanicilarCombolov().selectLov(
+                kullanici.getFullname()
+        , kullanici.getGorev()
+        , kullanici.getBirimKisaAdi().isEmpty()?kullanici.getBirimAdi():kullanici.getBirimKisaAdi());*/
+
         getAnlikOnayAkisKullanicilarCombolov()
                 .type(kullanici.getFullname())
                 .getSelectableItems()
+                .filterBy(text(kullanici.getFullname()))
                 .filterBy(text(kullanici.getGorev()))
-                .filterBy(text(kullanici.getBirimAdi()))
+                .filterBy(text(kullanici.getBirimKisaAdi().isEmpty()?kullanici.getBirimAdi():kullanici.getBirimKisaAdi()))
                 .first().click();
         getAnlikOnayAkisKullanicilarCombolov().closeTreePanel();
 

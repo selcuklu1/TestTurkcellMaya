@@ -70,8 +70,6 @@ public class SearchTable {
         return parentElement.$("span[class~='ui-paginator-prev']");
     }
 
-    //region Buttons. On development...
-
     @Step("Sonraki sayfaya git butonu bulunur")
     public SelenideElement getNextPageButton() {
         return parentElement.$("span[class~='ui-paginator-next']");
@@ -81,6 +79,22 @@ public class SearchTable {
     public SelenideElement getLastPageButton() {
         return parentElement.$("span[class~='ui-paginator-last']");
     }
+
+
+    @Step("İlk sayfaya git")
+    public SearchTable goToFirstPage(){
+        if (getFirstPageButton().is(not(isTableNavButtonDisabled)))
+            getFirstPageButton().click();
+        return this;
+    }
+
+    @Step("Son sayfaya git")
+    public SearchTable goToLastPage(){
+        if (getLastPageButton().is(not(isTableNavButtonDisabled)))
+            getLastPageButton().click();
+        return this;
+    }
+
 
     public ElementsCollection getColumnHeaders() {
         //ElementsCollection columnheaders = parentElement.$$("[id$='SearchTable'] th[role='columnheader']");
@@ -109,9 +123,9 @@ public class SearchTable {
             else
                 i++;
         }
-        Assert.assertTrue(i <= columnheaders.size(), "\"" + columnName + "\" isimli kolon bulunmalı");
+        Assert.assertTrue(i < columnheaders.size(), "\"" + columnName + "\" isimli kolon bulunmalı");
         Allure.addAttachment("Kolon index", String.valueOf(i));
-        return i;
+        return ++i;
     }
 
     /**
@@ -125,6 +139,8 @@ public class SearchTable {
         Allure.addAttachment("Kolon ismi", name);
         return name;
     }
+
+    //region Buttons. On development...
     //Eposta Seçenekleri button .email-icon
     //button .user-block-icon   User! Bloke Et
     //Rapor Al  button .document-getReport
@@ -149,9 +165,6 @@ public class SearchTable {
         foundRow.$("button .to-active-status-icon").shouldBe(visible, enabled).click();
         return this;
     }
-
-
-    //endregion
 
     //Passif Yap button .to-passive-status-icon     button[id*='Pasif']
     @Step("Passif Yap butona tıkla")
@@ -191,6 +204,8 @@ public class SearchTable {
         getYeniKayitEkleButton().shouldBe(visible, enabled).click();
         return this;
     }
+
+    //endregion
 
     public SearchTable foundRow() {
         /*if (foundRow == null)
@@ -253,7 +268,7 @@ public class SearchTable {
         foundRows = null;
         String rowCssLocator = this.rowCssLocator;
 
-        boolean searchByColumn = (columnIndex > -1);
+        boolean searchByColumn = (columnIndex > 0);
 
         ArrayList<WebElement> rows = new ArrayList<>();
 
@@ -261,13 +276,16 @@ public class SearchTable {
         if (parentElement.$$(rowCssLocator + "[data-ri]").size() > 0)
             rowCssLocator = rowCssLocator + "[data-ri]";
 
-        ElementsCollection collection = searchByColumn ? parentElement.$$(rowCssLocator + " " + columnCssLocator + ":nth-child(" + columnIndex + ")")
+        ElementsCollection collection = searchByColumn ?
+                parentElement.$$(rowCssLocator + " " + columnCssLocator + ":nth-child(" + columnIndex + ")")
                 : parentElement.$$(rowCssLocator);
 
         SelenideElement pageNavigationButton = searchStartFromLast ? getLastPageButton() : getNextPageButton();
 
         if (searchStartFromLast && pageNavigationButton.exists() && pageNavigationButton.is(not(isTableNavButtonDisabled)))
             pageNavigationButton.click();
+        else if (pageNavigationButton.exists() && getFirstPageButton().is(not(isTableNavButtonDisabled)))
+            getFirstPageButton().click();
 
         while (true) {
             for (Condition condition : conditions)
