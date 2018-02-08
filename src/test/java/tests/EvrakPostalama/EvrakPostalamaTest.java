@@ -242,6 +242,7 @@ public class EvrakPostalamaTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS0520b : Postalanan evrak posta bilgilerinin önizleme ekranından güncellenmesi ve rapor üzerinde kontrolü")
     public void TS0520b() throws InterruptedException {
+
         login("Mbozdemir", "123");
         String konu = "Konu: TS2235";
 
