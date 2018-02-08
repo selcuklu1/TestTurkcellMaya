@@ -60,22 +60,22 @@ public class SearchTable {
         return getTableHeader().$("label");
     }
 
-    @Step("İlk sayfaya git butonu bulunur")
+    @Step("İlk sayfaya git butonu aranır")
     public SelenideElement getFirstPageButton() {
         return parentElement.$("span[class~='ui-paginator-first']");
     }
 
-    @Step("Önceki sayfaya git butonu bulunur")
+    @Step("Önceki sayfaya git butonu aranır")
     public SelenideElement getPrevPageButton() {
         return parentElement.$("span[class~='ui-paginator-prev']");
     }
 
-    @Step("Sonraki sayfaya git butonu bulunur")
+    @Step("Sonraki sayfaya git butonu aranır")
     public SelenideElement getNextPageButton() {
         return parentElement.$("span[class~='ui-paginator-next']");
     }
 
-    @Step("Son sayfaya git butonu bulunur")
+    @Step("Son sayfaya git butonu aranır")
     public SelenideElement getLastPageButton() {
         return parentElement.$("span[class~='ui-paginator-last']");
     }
@@ -354,46 +354,55 @@ public class SearchTable {
         return foundRow;
     }
 
+    @Step("Bulunan satır kontrolü {condition}")
     public SearchTable should(Condition... condition) {
         foundRow.should(condition);
         return this;
     }
 
+    @Step("Bulunan satır kontrolü {condition}")
     public SearchTable shouldHave(Condition... condition) {
         foundRow.shouldHave(condition);
         return this;
     }
 
+    @Step("Bulunan satır kontrolü {condition}")
     public SearchTable shouldBe(Condition... condition) {
         foundRow.shouldBe(condition);
         return this;
     }
 
+    @Step("Bulunan satır kontrolü {condition}")
     public SearchTable shouldNot(Condition... condition) {
         foundRow.shouldNot(condition);
         return this;
     }
 
+    @Step("Bulunan satır kontrolü {condition}")
     public SearchTable shouldNotHave(Condition... condition) {
         foundRow.shouldNotHave(condition);
         return this;
     }
 
+    @Step("Bulunan satır kontrolü {condition}")
     public SearchTable shouldNotBe(Condition... condition) {
         foundRow.shouldNotBe(condition);
         return this;
     }
 
+    @Step("Bulunan satır kontrolü")
     public SearchTable shouldHaveSize(int expectedSize) {
         foundRows.shouldHave(CollectionCondition.size(expectedSize));
         return this;
     }
 
+    @Step("Bulunan satır kontrolü {conditions}")
     public SearchTable shouldBe(CollectionCondition... conditions) {
         foundRows.shouldBe(conditions);
         return this;
     }
 
+    @Step("Bulunan satır kontrolü {conditions}")
     public SearchTable shouldHave(CollectionCondition... conditions) {
         foundRows.shouldHave(conditions);
         return this;

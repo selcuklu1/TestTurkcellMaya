@@ -387,4 +387,5 @@ public class AltTabs extends MainPage {
         return this;
     }
 
+
 }
