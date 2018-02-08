@@ -4,11 +4,8 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import io.qameta.allure.Allure;
-import io.qameta.allure.AllureUtils;
 import io.qameta.allure.Step;
-import org.apache.xmlbeans.impl.xb.xsdschema.All;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
@@ -145,8 +142,12 @@ public class PostalanacakEvraklarPage extends MainPage {
                 .filterBy(Condition.text(tarih)).get(0).click();
         return this;
     }
-
-
+    @Step("Evrak seçilir")
+    public PostalanacakEvraklarPage evrakSec(String konu) {
+        tblEvraklar.filterBy(Condition.text(konu)).get(0).click();
+        return this;
+    }
+    
     @Step("Fiziksel Ek ikon kontrolu")
     public PostalanacakEvraklarPage btnFizikselEkIkonKontrol () {
 
@@ -179,7 +180,12 @@ public class PostalanacakEvraklarPage extends MainPage {
     public PostalanacakEvraklarPage btnDagitimGidisSekli(String postaSekli) {
         String selectedTxt = btnComboEvrakGidisSekli.getSelectedText();
         System.out.println(selectedTxt);
-        btnComboEvrakGidisSekli.selectOptionContainingText(postaSekli);
+        System.out.println(postaSekli);
+        btnComboEvrakGidisSekli.selectOption(postaSekli);
+        if (postaSekli == "Adi Posta") {
+            btnComboEvrakGidisSekli.selectOption(0);
+
+        }
         return this;
 
     }
@@ -808,6 +814,9 @@ public class PostalanacakEvraklarPage extends MainPage {
     @Step("Icerik Posta Yazdır popup Yazdir butonu")
     public PostalanacakEvraklarPage btnPopupPostaYazdirma() {
         btnIcerikPopupYazdir.click();
+        switchTo().window(1);
+        closeNewWindow();
+        switchTo().window(0);
         return this;
     }
 
@@ -900,4 +909,19 @@ public class PostalanacakEvraklarPage extends MainPage {
 
         return this;
     }
-}
+
+    @Step("Postalanacak Evraklar listesinde evrakın listelenmediği kontrolu")
+    public PostalanacakEvraklarPage konuyaGoreEvrakGelmemeKontrolu(String konu) {
+
+        boolean durum = tblEvraklar
+                .filterBy(Condition.text(konu))
+                .size() == 0;
+
+        Assert.assertEquals(durum, true);
+
+        return this;
+    }
+
+
+    }
+
