@@ -374,7 +374,7 @@ takeScreenshot();
 
         Assert.assertEquals(evrakDetaylariKonu.text().contains(konu), true);
         Assert.assertEquals(evrakDetaylariTarih.text().equals(getSysDateForKis()), true);
-        Assert.assertEquals(evrakDetaylariGonderen.text().equals("YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ"), true);
+        Assert.assertEquals(evrakDetaylariGonderen.text().equals("AnaBirim1"), true);
 
         Allure.addAttachment("Evrak Detayları", "Evrak Detayları alanı kontrol edilmiştir.");
 

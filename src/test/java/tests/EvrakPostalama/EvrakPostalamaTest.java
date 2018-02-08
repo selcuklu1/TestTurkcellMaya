@@ -537,7 +537,8 @@ public class EvrakPostalamaTest extends BaseTest {
                 .geregiSec(KULLANICI, dagitimPlanElemanlari.get(KULLANICI).toString())
                 .geregiSec(KURUM,dagitimPlanElemanlari.get(KURUM).toString(), "Adi Posta");
 
-
+        title = evrakOlusturPage.bilgilerTabiAc().geregiTitleAl();
+        gonderimSekli = evrakOlusturPage.bilgilerTabiAc().geregiGonderimSekliAl();
         /*evrakOlusturPage2.bilgileriTab().geregiSec(GERCEK_KISI, "OptiimTest")
                 .getSecilenGeregiPostaTipi("Değeri \"Adi Posta\" ve değiştirilebilir modda olmalı", "OptiimTest")
                 .shouldBe(enabled).getSelectedOption().shouldHave(text("Adi Posta"));
@@ -762,8 +763,12 @@ public class EvrakPostalamaTest extends BaseTest {
             ,dependsOnMethods = {"TS2235"}
             , description = "TS0309 : Önizleme ekranından ek ilgi ve ilişiği olan evrakın postalanması")
     public void TS0309() throws InterruptedException {
-        login("Mbozdemir", "123");
-        String konu = konu309;
+        login("user1", "123");
+//        String konu = konu309;
+        String aciklama = "TS0309 aciklama";
+        String postaKodu = "34640";
+        String gonderildigiYer = "Yurt Dışı";
+        String gramaj = "15";
         String basariMesaji = "İşlem başarılıdır!";
 //        String title = "OptiimTest TestOptiim";
         String tarih = getSysDateForKis();
@@ -773,10 +778,10 @@ public class EvrakPostalamaTest extends BaseTest {
 
         postalanacakEvraklarPage.evrakPostala()
                 .alanKontrolleri(konu,title,gonderimSekli)
-                .dagitimPlaniGidisSekliDoldur("Adi Posta")
                 .detayTikla()
+                .dagitimPlaniGidisSekliDoldur("Adi Posta")
 //                .dagitimPlaniIcerigiEkraniKapat()
-                .dagitimPlaniIlkAyrintiDoldur("309","TS0309","Yurt Dışı","15")
+                .dagitimPlaniIlkAyrintiDoldur(postaKodu, aciklama, gonderildigiYer, gramaj)
                 .dagitimPlaniIlkGramajHesapla()
                 .popUpKontrol();
                 String tutar =postalanacakEvraklarPage.popUpTutarAl();
@@ -790,13 +795,13 @@ public class EvrakPostalamaTest extends BaseTest {
                 .postalanacakYerleryazdir()
                 .evrakDetaylariPopUpKontrol()
                 .evrakDetaylariUstVerilerYazdirButonKontrol(konu)
-                .evrakDetaylarieEvrakEkleriYazdirButonKontrol("Ek-1")
-                .evrakDetaylarieEvrakEkleriYazdirButonKontrol("Ek-2")
+                .evrakDetaylarieEvrakEkleriYazdirButonKontrol(ekleri)
+//                .evrakDetaylarieEvrakEkleriYazdirButonKontrol("Ek-2")
                 .evrakDetaylariUstVerilerYazdirButonTikla(konu)
                 .pdfKontrol()
                 .evrakDetaylariEkranKapat()
                 .etiketYazdir()
-                .etiketBastirEkraniKontrolü(tarih,title[0])
+//                .etiketBastirEkraniKontrolü(tarih,title[0])
                 .etiketYazdirPopupKapat()
                 .postala()
                 .dialogpostalaEvet()
@@ -809,19 +814,16 @@ public class EvrakPostalamaTest extends BaseTest {
                 .evrakOnizlemeButonKontrol("Posta Detayı")
 //                .evrakOnizlemeEvrakEkKontrolu()
                 .btnEvrakEkleri()
-                .evrakEkleriKontrol("Ek-1")
-                .evrakEkleriKontrol("Ek-2");
-        postalananlarPage
-                .btnFiltrenenPostaIcerikGoster(konu)
-//                .btnIcerikEkleriTab()
-                .btnIcerikIlgileriTab()
-                .btnIcerikDetayKapat();
+                .evrakEkleriKontrol(ekleri)
+//                .evrakEkleriKontrol("Ek-2");
+        .btnIlgiBilgileri()
+        .ilgiBilgileriKontrol(metni);
 
         postalananlarPage
                 .evrakSec(konu,tarih,title[0])
                 .postaDetayiTikla()
-                .postaDetayiPostalananYerlerKontrolu(title[1],"309","TS0309")
-                .postaDetayiPostalananYerlerYazdir(title[1],"309","TS0309")
+                .postaDetayiPostalananYerlerKontrolu(title[1], postaKodu, aciklama)
+                .postaDetayiPostalananYerlerYazdir(title[1], postaKodu, aciklama)
                 .evrakDetaylariUstVerilerYazdirButonTikla(konu)
                 .pdfKontrol();
     }

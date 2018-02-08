@@ -78,6 +78,8 @@ public class PostalananlarPage extends MainPage {
     SelenideElement btnEtiketPopupKapat = $x("//*[@id='mainPreviewForm:showAppletContainer']/div/div[1]/a/span");
     //  SelenideElement btnDagitimYerDetayKapat = $x("//*[@id='mainPreviewForm:dagitimPlaniDetayViewDialog']/div[1]/a/span");
     SelenideElement btnEvrakEkleri = $(By.xpath("//a[text() = 'Evrak Ekleri']"));
+    SelenideElement btnIlgiBilgileri = $(By.xpath("//a[text() = 'İlgi Bilgileri']"));
+
     SelenideElement btnEvrakEyazismaPaket = $("//a[text() = 'E-Yazışma Paketi']");
     ElementsCollection tblEvrakDetaylariUstVeriler = $$("tbody[id='postaDetayYazdirForm:dtPostaEvrakUstVeri_data'] tr[data-ri]");
 
@@ -93,9 +95,14 @@ public class PostalananlarPage extends MainPage {
         return this;
     }
 
-    @Step("Postalanan Evrak içi Evrak Ekleri seçimi ve kontrol")
+    @Step("Postalanan Evrak içi Evrak Ekleri tıklanır.")
     public PostalananlarPage btnEvrakEkleri() {
         btnEvrakEkleri.click();
+        return this;
+    }
+    @Step("Postalanan Evrak içi İlgi Bilgileri tıklanır.")
+    public PostalananlarPage btnIlgiBilgileri() {
+        btnIlgiBilgileri.click();
         return this;
     }
 
@@ -104,6 +111,14 @@ public class PostalananlarPage extends MainPage {
         ElementsCollection tblEvrakEkleri = $$("tbody[id^='mainPreviewForm:'][id$=':ekListesiOnizlemeDataTable_data'] tr[data-ri]");
         tblEvrakEkleri
                 .filterBy(Condition.text(ek))
+                .shouldHaveSize(1);
+        return this;
+    }
+    @Step("Postalanan Evrak içi İlgi Bilgileri kontrolü : \"{ilgi}\" ")
+    public PostalananlarPage ilgiBilgileriKontrol (String ilgi) {
+        ElementsCollection tblIlgiBilgileri = $$("tbody[id^='mainPreviewForm:'][id$=':ilgiListesiDataTable_data'] tr[data-ri]");
+        tblIlgiBilgileri
+                .filterBy(Condition.text(ilgi))
                 .shouldHaveSize(1);
         return this;
     }
