@@ -386,8 +386,6 @@ takeScreenshot();
             Allure.addAttachment("Postalanacak Yerler - Gönderim Şekli", title[i] + " - " + gonderildigYerler[i]);
 
         }
-
-
         return this;
     }
 
@@ -731,9 +729,10 @@ takeScreenshot();
         return this;
     }
 
-    public PostalanacakEvraklarPage etiketBastirEkraniKontrolü(String tarih, String gonderilenYer) {
-        Assert.assertEquals(txtEtiketBastir.text().contains(tarih),true);
-        Assert.assertEquals(txtEtiketBastir.text().contains(gonderilenYer),true);
+    public PostalanacakEvraklarPage etiketBastirEkraniKontrolü(String tarih, String gonderilenYer, String evrakNo) {
+        txtEtiketBastir.shouldHave(text(tarih), text(gonderilenYer),text(evrakNo));
+        //Assert.assertEquals(txtEtiketBastir.text().contains(tarih),true);
+        //Assert.assertEquals(txtEtiketBastir.text().contains(gonderilenYer),true, gonderilenYer);
         return this;
     }
 
