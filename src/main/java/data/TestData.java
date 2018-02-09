@@ -12,7 +12,12 @@ public class TestData extends BaseLibrary {
 
     // Mevcut Belgenet - external IP
 
-    public static final String belgenetURL = "http://94.55.114.18:8889/edys-web/sistemeGiris.xhtml";
+    //bizim ortam
+    //public static final String belgenetURL = "http://94.55.114.18:8889/edys-web/sistemeGiris.xhtml";
+
+    //yeni ortam
+    //10.101.20.153:8880
+    public static final String belgenetURL = "http://10.101.25.145:8889/edys-web/sistemeGiris.xhtml ";
     //    public static final String belgenetURL = "http://10.101.20.153:8889/edys-web/sistemeGiris.xhtml";
 
     public static final User optiim = new User("optiim", "123", "Optiim TEST", "Optiim Birim");
