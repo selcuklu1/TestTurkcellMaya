@@ -3,7 +3,6 @@ package pages.ustMenuPages;
 import com.codeborne.selenide.*;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
-import org.apache.poi.hssf.record.FontRecord;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.testng.Assert;
@@ -2390,7 +2389,7 @@ public class EvrakOlusturPage extends MainPage {
         @Step("Dosya yüklenene kadar 60 dk bekle, 60 dktan fazla sürerse timeout hatası ver")
         public EkleriTab dosyaYukleneneKadarBekle() {
 
-            waitForLoadingJS(WebDriverRunner.getWebDriver(), 3600);
+            waitForLoadingJS(WebDriverRunner.getWebDriver(), 36000);
 
             return this;
         }
