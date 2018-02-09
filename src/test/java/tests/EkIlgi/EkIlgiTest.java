@@ -808,7 +808,8 @@ public class EkIlgiTest extends BaseTest {
         imzaBekleyenlerPage
                 .openPage()
                 .evrakKonusunaGoreKontrol(evrakKonusu)
-                .konuyaGoreEvrakOnizlemedeAc(evrakKonusu);
+                .konuyaGoreEvrakOnizlemedeAc(evrakKonusu)
+                .evrakEkleriTabAc();
 
         //Todo: Defect çözüldükten sonra devam edilecek
     }
@@ -826,7 +827,9 @@ public class EkIlgiTest extends BaseTest {
         String kullaniciParaflama = "Gökçe ŞAHİN";
         String kullaniciKoordine = "Zübeyde TEKİN";
         String kullaniciImzalama = "Yasemin Çakıl AKYOL";
-        String kullaniciDetail = "BİLİŞİM HİZMETLERİ VE UYDU PAZARLAMA GENEL MÜDÜR Y";
+        //String kullaniciDetail = "BİLİŞİM HİZMETLERİ VE UYDU PAZARLAMA GENEL MÜDÜR Y";
+        String kullaniciDetail = "YGD BHUPGMY";
+
         String ekleriEvrakSayisi = "6345202-010.01-11088";
 
         String ekleriAciklamaDosya1 = "Ekleri_Dosya1_" + getSysDate();

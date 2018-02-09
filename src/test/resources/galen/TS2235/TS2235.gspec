@@ -1,7 +1,9 @@
 @objects
     container               css     div[id='yeniGidenEvrakForm:allPanels_content']
 
-    birim                   xpath   //div[@id='yeniGidenEvrakForm:allPanels_content']//span[.='${birim}']/..
+    editorAntetBaslik       xpath   //div[@id='yeniGidenEvrakForm:allPanels_content']//button[span='T.C.']
+
+    #birim                   xpath   //div[@id='yeniGidenEvrakForm:allPanels_content']//span[.='${birim}']/..
 
     sayiLabel               xpath   //span[@id='yeniGidenEvrakForm:editorTarihKonuSayi']//tbody/tr[1]/td[.='Sayı']
     sayiDots                xpath   //span[@id='yeniGidenEvrakForm:editorTarihKonuSayi']//tbody/tr[1]/td[.=':']
@@ -26,7 +28,7 @@
     @on *
     #Sayi
         sayiLabel:
-            below birim
+            below editorAntetBaslik
 
         sayiDots:
             right-of sayiLabel

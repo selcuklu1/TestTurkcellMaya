@@ -10,9 +10,7 @@ import pages.pageComponents.belgenetElements.BelgenetElement;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.byText;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$x;
-import static com.codeborne.selenide.Selenide.switchTo;
+import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.Belgenet.comboBox;
 
 /**
@@ -45,23 +43,196 @@ public class EvrakOnizleme extends MainPage {
     }
 
 
+    public class DagitimPlaniIcerigi extends MainPage {
+        SelenideElement dagitimPlaniDetayViewDialog = $(By.id("mainPreviewForm:dagitimPlaniDetayViewDialog"));
+        SelenideElement dagitimPlaniDetay = $(By.id("mainPreviewForm:dagitimPlaniDetay"));
+        SearchTable searchTable = new SearchTable(dagitimPlaniDetay);
+
+        SelenideElement kaydet = $(By.id("mainPreviewForm:dagitimPlaniDetayKaydetViewDialog"));
+
+        @Step("Kaydet")
+        public DagitimPlaniIcerigi kaydet(){
+            kaydet.click();
+            return this;
+        }
+
+        @Step("Dağıtım Planı İçeriği listesi")
+        public SearchTable getDagitimPlaniDetayDataTable(){
+            return searchTable;
+        }
+
+        @Step("Gidiş Şekli {stepDescription}")
+        public BelgenetElement getGidisSekli(String stepDescription) {
+            return comboBox(searchTable.getFoundRow(), ".ui-selectonemenu-label");
+        }
+
+        @Step("Postalanacak Yerler listesinde ara")
+        public DagitimPlaniIcerigi postalanacakYerlerdeAra(Condition... aramaKriterleri) {
+            searchTable.findRows(aramaKriterleri).shouldHave(CollectionCondition.sizeGreaterThan(0)).getFoundRows().first();
+            return this;
+        }
+
+        @Step("Gidiş Şekli seç")
+        public DagitimPlaniIcerigi gidisSekliSec(String dagitimSekli) {
+            getGidisSekli("aranır").selectComboBox(dagitimSekli);
+            return this;
+        }
+
+        @Step("Detay buton {stepDescription}")
+        public SelenideElement getDetayButtonInFoundRow(String stepDescription){
+            return searchTable.getFoundRow().$x("descendant::button[span[.='Detay']]");
+        }
+
+        //region Ayrıntı alanlar
+        @Step("Ayrıntıda Gönderici seç")
+        public DagitimPlaniIcerigi gondericiSec(String gonderici) {
+            searchTable.getFoundRow().$("select[id$='fromKepAdresId']").selectOption(gonderici);
+            return this;
+        }
+
+        @Step("Ayrıntıda Alıcı seç")
+        public DagitimPlaniIcerigi aliciSec(String alici) {
+            searchTable.getFoundRow().$("select[id$='toKepAdresId']").selectOption(alici);
+            return this;
+        }
+
+        @Step("Ayrıntıda e-posta gir")
+        public DagitimPlaniIcerigi epostaGir(String eposta) {
+            getAyrintiAlanInput("e-posta").setValue(eposta);
+            return this;
+        }
+
+        @Step("Ayrıntıda Açıklama doldur")
+        public DagitimPlaniIcerigi aciklamaGir(String aciklama) {
+            getAyrintiAlanTextarea("Açıklama").setValue(aciklama);
+            return this;
+        }
+
+        @Step("Ayrıntıda Gönderildiği Yer seç")
+        public DagitimPlaniIcerigi gonderildigiYerSec(String gonderildigiYer) {
+            getAyrintiAlanSelect("Gönderildiği Yer").selectOption(gonderildigiYer);
+            return this;
+        }
+
+        @Step("Ayrıntıda Gramaj gir")
+        public DagitimPlaniIcerigi grammajGir(String grammaj) {
+            executeJavaScript("arguments[0].value = arguments[1]", getAyrintiAlanInput("Gramaj"), grammaj);
+            //getAyrintiAlanInput("Gramaj").setValue(grammaj);
+            return this;
+        }
+
+        @Step("Ayrıntıda Gramaj Hesapla")
+        public DagitimPlaniIcerigi grammajHesapla() {
+            getAyrintiAlanButton("Gramaj").click();
+            return this;
+        }
+
+        @Step("Tutar dialog tamam butona basılır")
+        public DagitimPlaniIcerigi tutarDialogTamamTikla(){
+            $(By.id("mainPreviewForm:tutarDialogButtonId")).click();
+            return this;
+        }
+
+        @Step("Ayrıntıda Tutar gir")
+        public DagitimPlaniIcerigi tutarGir(String tutar) {
+            getAyrintiAlanInput("Tutar").setValue(tutar);
+            return this;
+        }
+
+        @Step("Ayrıntıda Tutar alanı kontrol et")
+        public DagitimPlaniIcerigi tutarKonrolEt(String tutar) {
+            getAyrintiAlanInput("Tutar").shouldHave(value(tutar));
+            return this;
+        }
+
+        @Step("{label} alan doldur")
+        public DagitimPlaniIcerigi ayrintiAlanDoldur(String label, String value) {
+            getAyrintiAlanInput(label).setValue(value);
+            return this;
+        }
+
+        public SelenideElement getAyrintiAlan(String label) {
+            return searchTable.getFoundRow().$x("descendant::tr[td[1]/label[contains(.,'" + label + "')]]");
+        }
+
+        public SelenideElement getAyrintiAlanInput(String label, int... index) {
+            return getAyrintiAlan(label).$("input:nth-child(" + (index.length > 0 ? index[0] : 1) + ")");
+        }
+
+        public SelenideElement getAyrintiAlanTextarea(String label, int... index) {
+            return getAyrintiAlan(label).$("textarea:nth-child(" + (index.length > 0 ? index[0] : 1) + ")");
+        }
+
+        public SelenideElement getAyrintiAlanSelect(String label, int... index) {
+            return getAyrintiAlan(label).$("select:nth-child(" + (index.length > 0 ? index[0] : 1) + ")");
+        }
+
+        public SelenideElement getAyrintiAlanButton(String label, int... index) {
+            return getAyrintiAlan(label).$("button:nth-child(" + (index.length > 0 ? index[0] : 1) + ")");
+        }
+        //endregion
+
+        //Yazdır
+        SelenideElement yazdirEvrakDetayForm = $("#postaDetayYazdirForm");
+        SelenideElement yazdirEvrakDetayClose = $("#postaDetayYazdirForm a.ui-dialog-titlebar-close");
+        SearchTable yazdirUstVeriler = new SearchTable($(By.id("postaDetayYazdirForm:dtPostaEvrakUstVeri")));
+        SearchTable yazdirEvrakinEkleri = new SearchTable($(By.id("postaDetayYazdirForm:evrakEkListesi")));
+
+        @Step("Yazdır - penceriyi kapa")
+        public DagitimPlaniIcerigi yazdirClose(){
+            yazdirEvrakDetayClose.click();
+            return this;
+        }
+
+        @Step("Yazdır")
+        public DagitimPlaniIcerigi yazdir() {
+            searchTable.getFoundRow().$x("descendant::button[.='Yazdır']").click();
+            return this;
+        }
+
+        @Step("Yazdır - Üst Veriler listesi")
+        public SearchTable getYazdirUstVerilerListesi(){
+            return yazdirUstVeriler;
+        }
+
+        @Step("Yazdır - Evrakın ekleri listesi")
+        public SearchTable getYazdirEvrakinEkleriListesi(){
+            return yazdirEvrakinEkleri;
+        }
+
+        @Step("Üst Veriler - Yazdır butonu: {stepDescription}")
+        public SelenideElement getUstVerilerYazdirButton(String stepDescription) {
+            return yazdirUstVeriler.getFoundRow().$x("descendant::button[.='Yazdır']");
+        }
+
+        @Step("Evrakın ekleri - Yazdır butonu: {stepDescription}")
+        public SelenideElement getEvrakinEkleriYazdirButton(String stepDescription) {
+            return yazdirUstVeriler.getFoundRow().$x("descendant::button[.='Yazdır']");
+        }
 
 
+        @Step("Orjinalini Yazdır")
+        public DagitimPlaniIcerigi orjinaliniYazdir() {
+            searchTable.getFoundRow().$x("descendant::button[.='Orjinalini Yazdır']").click();
+            return this;
+        }
 
-    SelenideElement dagitimPlaniDetayViewDialog = $(By.id("mainPreviewForm:dagitimPlaniDetayViewDialog"));
-    SelenideElement dagitimPlaniDetay = $(By.id("mainPreviewForm:dagitimPlaniDetay"));
-    SearchTable dagitimPlaniDetayDataTable = new SearchTable(dagitimPlaniDetay);
+        @Step("Etiket Bastır")
+        public DagitimPlaniIcerigi etiketBastir() {
+            searchTable.getFoundRow().$x("descendant::button[.='Etiket Bastır']").click();
+            return this;
+        }
 
-    @Step("Dağıtım Planı İçeriği listesi")
-    public SearchTable getDagitimPlaniDetayDataTable(){
-        return dagitimPlaniDetayDataTable;
+        @Step("Doğrulama Uyarı")
+        public DagitimPlaniIcerigi dogrulamaUyari(String text, boolean evet) {
+            $(byText(text)).shouldBe(visible);
+            if (evet)
+                $(By.id("mainPreviewForm:postalaDogrulaDialogForm:evetButton_id")).click();
+            else
+                $(By.id("mainPreviewForm:postalaDogrulaDialogForm:hayirButton_id")).click();
+            return this;
+        }
     }
-
-    @Step("Gidiş Şekli {stepDescription}")
-    public BelgenetElement getGidisSekli(String stepDescription) {
-        return comboBox(dagitimPlaniDetayDataTable.getFoundRow(), ".ui-selectonemenu-label");
-    }
-
 
     public class EvrakPostala extends MainPage {
         SelenideElement container = $(By.id("mainPreviewForm:evrakOnizlemeTab"));
@@ -128,7 +299,7 @@ public class EvrakOnizleme extends MainPage {
             return this;
         }
 
-        @Step("Ayrıntıda Gönderildiği Yer doldur")
+        @Step("Ayrıntıda Gönderildiği Yer seç")
         public EvrakPostala gonderildigiYerSec(String gonderildigiYer) {
             getAyrintiAlanSelect("Gönderildiği Yer").selectOption(gonderildigiYer);
             return this;
@@ -136,7 +307,8 @@ public class EvrakOnizleme extends MainPage {
 
         @Step("Ayrıntıda Gramaj gir")
         public EvrakPostala grammajGir(String grammaj) {
-            getAyrintiAlanInput("Gramaj").setValue(grammaj);
+            executeJavaScript("arguments[0].value = arguments[1]", getAyrintiAlanInput("Gramaj"), grammaj);
+            //getAyrintiAlanInput("Gramaj").setValue(grammaj);
             return this;
         }
 
@@ -149,6 +321,12 @@ public class EvrakOnizleme extends MainPage {
         @Step("Ayrıntıda Tutar gir")
         public EvrakPostala tutarGir(String tutar) {
             getAyrintiAlanInput("Tutar").setValue(tutar);
+            return this;
+        }
+
+        @Step("{label} alan doldur")
+        public EvrakPostala ayrintiAlanDoldur(String label, String value) {
+            getAyrintiAlanInput(label).setValue(value);
             return this;
         }
 
@@ -210,7 +388,6 @@ public class EvrakOnizleme extends MainPage {
         public SelenideElement getEvrakinEkleriYazdirButton(String stepDescription) {
             return yazdirUstVeriler.getFoundRow().$x("descendant::button[.='Yazdır']");
         }
-
 
 
         @Step("Orjinalini Yazdır")

@@ -300,7 +300,7 @@ public class BaseLibrary extends ElementsContainer {
                 System.out.println("manage().window().maximize()");
             }
         } catch (Exception e) {
-            System.out.println("SettingsListener maximize:" + e.getMessage());
+            System.out.println("ResultListener maximize:" + e.getMessage());
         }
     }
 

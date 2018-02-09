@@ -7,6 +7,7 @@ package tests.EvrakPostalama;
  * Class: "Evrak Postalama" konulu senaryoları içerir
  ****************************************************/
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import common.BaseTest;
@@ -21,7 +22,9 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import pages.newPages.EvrakDetayiPage;
 import pages.pageComponents.EvrakOnizleme;
+import pages.pageComponents.IslemMesajlari;
 import pages.pageComponents.tabs.AltTabs;
 import pages.pageData.alanlar.GeregiSecimTipi;
 import pages.pageData.alanlar.GizlilikDerecesi;
@@ -57,10 +60,12 @@ public class EvrakPostalamaTest extends BaseTest {
     EvrakOnizleme.EvrakPostala evrakPostala;
 
 
-    User user1 = new User("user1", "123", "User1 TEST", "AnaBirim1");
+    //User user1 = new User("user1", "123", "User1 TEST", "AnaBirim1");
+    User user1 = new User("mbozdemir", "123", "Mehmet BOZDEMİR", "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ/YGD");
     String konu = "TS2235_" + getSysDate();
     String konuKodu1 = "010.10";
-    String konuKoduSayi = "01-010.10-";
+    String konuKoduSayi = "6345202-010.10-";
+    //String konuKoduSayi = "01-010.10-";
     String metni = "Metni Tab " + konu;
     String ekleri = "Ekleri Tab " + konu;
     String doc = "documents/Otomasyon.pdf";
@@ -71,8 +76,7 @@ public class EvrakPostalamaTest extends BaseTest {
     String konu309 = "";
 
     @BeforeMethod
-    public void loginBeforeTest() {
-
+    public void beforeTestStart() {
         evrakOlusturPage = new EvrakOlusturPage();
         postalanacakEvraklarPage = new PostalanacakEvraklarPage();
         postalananlarPage = new PostalananlarPage();
@@ -268,8 +272,6 @@ public class EvrakPostalamaTest extends BaseTest {
 
 
     String konuKoduRandomTS520 = "TS0520A-"+createRandomNumber(15);
-    String konuKoduRandomTS520b = "TS0520B-"+createRandomNumber(15);
-
     String konuKodu = "Diğer";
     String kaldirilacakKlasor = "Diğer";
     String gizlilikDerecesi = "Normal";
@@ -280,7 +282,7 @@ public class EvrakPostalamaTest extends BaseTest {
     String evrakTarihi = getSysDate();
 
     @Step("Postalananlar sayfasına evrak oluşturmakta")
-    public void TS0520aPreCondition(String konukod) {
+    public void TS0520aPreCondition() {
         login("Mbozdemir", "123");
 
         //TODO Pre Condition Postalanacak evraklar sayfası data oluşturmakta
@@ -288,7 +290,7 @@ public class EvrakPostalamaTest extends BaseTest {
                 .openPage()
                 .bilgilerTabiAc()
                 .konuKoduDoldur(konuKodu)
-                .konuDoldur(konukod)
+                .konuDoldur(konuKoduRandomTS520)
                 .kaldiralacakKlasorlerSec(kaldirilacakKlasor)
                 .gizlilikDerecesiSec(gizlilikDerecesi)
                 .aciklamaDoldur(editor)
@@ -308,7 +310,7 @@ public class EvrakPostalamaTest extends BaseTest {
 
         postalanacakEvraklarPage
                 .openPage()
-                .evrakSec(konukod)
+                .evrakSec(konuKoduRandomTS520)
                 .evrakPostala()
                 .evrakPostalaPostala(true);
         //TODO*/
@@ -319,7 +321,7 @@ public class EvrakPostalamaTest extends BaseTest {
     @Test(enabled = true, description = "TS0520a : Postalanan evrak posta bilgilerinin önizleme ekranından güncellenmesi ve rapor üzerinde kontrolü")
     public void TS0520a() throws InterruptedException {
 
-        TS0520aPreCondition(konuKoduRandomTS520);
+        TS0520aPreCondition();
 
         postalananlarPage
                 .openPage()
@@ -356,18 +358,18 @@ public class EvrakPostalamaTest extends BaseTest {
 
         login("Mbozdemir", "123");
 
-        TS0520aPreCondition(konuKoduRandomTS520b);
+        TS0520aPreCondition();
 
         postalananlarPage
                 .openPage()
-                .evrakGeldigiGorme(konuKoduRandomTS520b, tuzelKisi,evrakTarihi)
-                .evrakSecIcerikGoster(konuKoduRandomTS520b, tuzelKisi,evrakTarihi)
+                .evrakGeldigiGorme(konuKoduRandomTS520, tuzelKisi,evrakTarihi)
+                .evrakSecIcerikGoster(konuKoduRandomTS520, tuzelKisi,evrakTarihi)
                 .postaDetayGeldigiGorme();
         postalananlarPage.icerikDetayPostaDetayi();
         String txt = postalananlarPage.icerikEvrakSay();
         postalananlarPage.gonderilenyerlerKontrol()
                 .tuzelKisiVeAciklamaAlanlarDoluGeldigiGorme("Can Şeker",editor);
-        
+
         postalananlarPage.btnIcerikPostaDetayTuzelKisiGnc();
         postalananlarPage.btnIcerikPDTuzelKisiTebTarGnc("01.01.2018");
         postalananlarPage.btnIcerikPosDetTuzKisPosKodGnc("520");
@@ -512,7 +514,8 @@ public class EvrakPostalamaTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS2235 : Ek ilgi ilişiği olan evrakı postaya düşürme")
     public void TS2235() throws Exception {
-        User user1 = new User("user1","123", "User1 TEST", "AnaBirim1");
+        System.out.println("Konu: " + konu);
+
         login(user1);
         dagitimPlanElemanlari = new LinkedHashMap<GeregiSecimTipi, String>();
         dagitimPlanElemanlari.put(GERCEK_KISI, "OptiimTEST");
@@ -539,8 +542,6 @@ public class EvrakPostalamaTest extends BaseTest {
                 .geregiSec(KULLANICI, dagitimPlanElemanlari.get(KULLANICI).toString())
                 .geregiSec(KURUM,dagitimPlanElemanlari.get(KURUM).toString(), "Adi Posta");
 
-        title = evrakOlusturPage.bilgilerTabiAc().geregiTitleAl();
-        gonderimSekli = evrakOlusturPage.bilgilerTabiAc().geregiGonderimSekliAl();
         /*evrakOlusturPage2.bilgileriTab().geregiSec(GERCEK_KISI, "OptiimTest")
                 .getSecilenGeregiPostaTipi("Değeri \"Adi Posta\" ve değiştirilebilir modda olmalı", "OptiimTest")
                 .shouldBe(enabled).getSelectedOption().shouldHave(text("Adi Posta"));
@@ -611,10 +612,11 @@ public class EvrakPostalamaTest extends BaseTest {
 
         gidisSekliKontrol(DAGITIM_PLANLARI.getOptionText(), "DAĞITIM YERLERİNE", "Detaya tıkla");
         evrakPostala.getDetayButtonInFoundRow("buton bulunur").shouldBe(visible).click();
-        evrakOnizleme.getDagitimPlaniDetayDataTable().findRows(text("Başbakanlık")).shouldBe(visible);
-        evrakOnizleme.getGidisSekli("Adi Posta olmalı").shouldHave(exactText("Adi Posta"));
-        evrakOnizleme.getDagitimPlaniDetayDataTable().findRows(text("Cumhurbaşkanlığı")).shouldBe(visible);
-        evrakOnizleme.getGidisSekli("Adi Posta olmalı").shouldHave(exactText("Adi Posta"));
+        EvrakOnizleme.DagitimPlaniIcerigi dagitimPlaniIcerigi = evrakOnizleme.new DagitimPlaniIcerigi();
+        dagitimPlaniIcerigi.getDagitimPlaniDetayDataTable().findRows(text("Başbakanlık")).shouldBe(visible);
+        dagitimPlaniIcerigi.getGidisSekli("Adi Posta olmalı").shouldHave(exactText("Adi Posta"));
+        dagitimPlaniIcerigi.getDagitimPlaniDetayDataTable().findRows(text("Cumhurbaşkanlığı")).shouldBe(visible);
+        dagitimPlaniIcerigi.getGidisSekli("Adi Posta olmalı").shouldHave(exactText("Adi Posta"));
 
         /*login("Mbozdemir", "123");
         String konu = "TS2235_" + getSysDate();
@@ -718,17 +720,6 @@ public class EvrakPostalamaTest extends BaseTest {
 
     }
 
-    @Step("{dagitimTipi} gidiş şekli kontrolü")
-    private void gidisSekliKontrol(String dagitimTipi, String dagitimElemani, String gidisSekli) {
-        evrakPostala.postalanacakYerlerdeAra(text(dagitimElemani));
-        if (evrakPostala.getGidisSekli("").exists())
-            evrakPostala.getGidisSekli(gidisSekli + " olmalı").shouldHave(exactText(gidisSekli));
-        else
-            evrakPostala.getPostalanacakListesi().shouldHave(text(gidisSekli));
-    }
-
-
-
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS0802 : Postalanan Evrak Raporu")
     public void TS0802() {
@@ -736,82 +727,122 @@ public class EvrakPostalamaTest extends BaseTest {
 //Download control should be added. But working now.
         postalananEvrakRaporuPage
                 .openPage()
-                .chkboxPostaladiklarim()
-                .evrakSayisi("6345202-310.01.01-12356")
+                .evrakSayisi("6345202")
                 .postaAramaBaslangicTarihi("01.12.2017 00:00")
                 .postaSorgulama()
-                .sonucKarsilastirma()
-                .agirliktutarktrl()
-                .evrakSayiGecmisDetaybtnktrl();
-
+                .sonucKarsilastirma();
 
         postalananEvrakRaporuPage
                 .ilkEvrakGecmisi()
                 .evrakGecmisiKapat();
         postalananEvrakRaporuPage
                 .evrakIcerikGoster()
-                .chkEvrakNobtn()
                 .evrakIcerikKapat();
         postalananEvrakRaporuPage
                 .etiketBastir();
         postalananEvrakRaporuPage
-                .txtktrlEtiketIcerik()
                 .etiketBastirPopupKapat();
         postalananEvrakRaporuPage
                 .btnExcel()
-                .ktrlDosyaindirme()
                 .btnPdf()
-                .ktrlDosyaindirme()
                 .btnEtiket();
-        postalananEvrakRaporuPage.islemMesaji().isBasarili();
         postalananEvrakRaporuPage
                 .popupEtiketBastirma("3", "3");
 
-        postalananEvrakRaporuPage.islemMesaji().isBasarili();
-        postalananEvrakRaporuPage.ktrlDosyaindirme();
     }
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true
-            ,dependsOnMethods = {"TS2235"}
+            , dependsOnMethods = {"TS2235"}
             , description = "TS0309 : Önizleme ekranından ek ilgi ve ilişiği olan evrakın postalanması")
     public void TS0309() throws InterruptedException {
-        login("user1", "123");
-//        String konu = konu309;
-        String aciklama = "TS0309 aciklama";
-        String postaKodu = "34640";
-        String gonderildigiYer = "Yurt Dışı";
-        String gramaj = "15";
+        login(user1);
+        //login("Mbozdemir", "123");
+        //String konu = "TS2235_20180209022613";
+        //String konu = konu309;
         String basariMesaji = "İşlem başarılıdır!";
+//        String title = "OptiimTest TestOptiim";
         String tarih = getSysDateForKis();
         postalanacakEvraklarPage
                 .openPage()
                 .filter().findRowsWith(text(konu)).first().click();
+        String evrakNo = postalanacakEvraklarPage.filter().findRowsWith(text(konu)).first().text().split("No:")[1];
+        evrakNo = evrakNo.split("Miat")[0].trim();
 
-        postalanacakEvraklarPage.evrakPostala()
-                .alanKontrolleri(konu,title,gonderimSekli)
-                .detayTikla()
-                .dagitimPlaniGidisSekliDoldur("Adi Posta")
+        title[0] = dagitimPlanElemanlari.get(GERCEK_KISI).toString();
+        /*dagitimPlanElemanlari = new LinkedHashMap<GeregiSecimTipi, String>();
+        dagitimPlanElemanlari.put(GERCEK_KISI, "OptiimTEST");
+        dagitimPlanElemanlari.put(DAGITIM_PLANLARI, "OPTİİM DAĞITIM 1");
+        dagitimPlanElemanlari.put(BIRIM, "ARAŞTIRMA-GELİŞTİRME ALTTTT");
+        dagitimPlanElemanlari.put(TUZEL_KISI, "Türksat Optiim");
+        dagitimPlanElemanlari.put(KULLANICI, "Optiim Test");
+        dagitimPlanElemanlari.put(KURUM, "Başbakan");*/
+
+        //postalanacakEvraklarPage.evrakPostala()
+          //      .alanKontrolleri(konu,title,gonderimSekli)
+        //postalanacakEvraklarPage.postalanacakYerlerGidisSekliDoldur("Adi Posta")
+        EvrakOnizleme evrakOnizleme = new EvrakOnizleme();
+        evrakPostala = evrakOnizleme.evrakPostala();
+        gidisSekliKontrol(DAGITIM_PLANLARI.getOptionText(), "DAĞITIM YERLERİNE", "Detaya tıkla");
+        gidisSekliKontrol(BIRIM.getOptionText(), dagitimPlanElemanlari.get(BIRIM).toString(), "Elektronik Gönderilmiştir");
+        gidisSekliKontrol(KULLANICI.getOptionText(), dagitimPlanElemanlari.get(KULLANICI).toString(), "Elektronik Gönderilmiştir");
+        gidisSekliKontrol(TUZEL_KISI.getOptionText(), dagitimPlanElemanlari.get(TUZEL_KISI).toString(), "Adi Posta");
+        gidisSekliKontrol(KURUM.getOptionText(), dagitimPlanElemanlari.get(KURUM).toString(), "Adi Posta");
+        gidisSekliKontrol(GERCEK_KISI.getOptionText(), dagitimPlanElemanlari.get(GERCEK_KISI).toString(), "APS");
+
+        evrakPostala.postalanacakYerlerdeAra(text(dagitimPlanElemanlari.get(BIRIM).toString()))
+                .ayrintiAlanDoldur("Posta Kodu", "1111")
+                .aciklamaGir(BIRIM.getOptionText() + " açıklama")
+                .postalanacakYerlerdeAra(text(dagitimPlanElemanlari.get(TUZEL_KISI).toString()))
+                .ayrintiAlanDoldur("Posta Kodu", "1112")
+                .aciklamaGir(TUZEL_KISI.getOptionText() + " açıklama");
+
+        evrakPostala.postalanacakYerlerdeAra(text("DAĞITIM YERLERİNE"))
+                .getDetayButtonInFoundRow("buton bulunur").shouldBe(visible).click();
+        EvrakOnizleme.DagitimPlaniIcerigi dagitimPlaniIcerigi = evrakOnizleme.new DagitimPlaniIcerigi();
+        dagitimPlaniIcerigi.postalanacakYerlerdeAra(text("Başbakanlık"))
+                .gidisSekliSec("Adi Posta")
+                .ayrintiAlanDoldur("Posta Kodu", "309")
+                .gonderildigiYerSec("Yurt İçi")
+                .aciklamaGir("Başbakanlık açıklama")
+                .grammajGir("15")
+                .grammajHesapla()
+                .tutarDialogTamamTikla()
+                .tutarKonrolEt("100.000")
+                .kaydet();
+        evrakPostala.yazdir();
+        evrakPostala.getYazdirUstVerilerListesi().findRows(text(konu)).shouldHaveSize(1).getFoundRow().shouldBe(visible);
+        evrakPostala.getUstVerilerYazdirButton(konu + " satırda bulunmalı").shouldBe(visible);
+        evrakPostala.getYazdirEvrakinEkleriListesi().findRows(text(ekleri)).shouldHaveSize(1).getFoundRow().shouldBe(visible);
+        evrakPostala.getEvrakinEkleriYazdirButton(ekleri + " satırda bulunur ve tıklanır").shouldBe(visible).click();
+        postalanacakEvraklarPage.pdfKontrol();
+        evrakPostala.yazdirClose();
+
+
+
+        /*postalanacakEvraklarPage.detayTikla()
 //                .dagitimPlaniIcerigiEkraniKapat()
-                .dagitimPlaniIlkAyrintiDoldur(postaKodu, aciklama, gonderildigiYer, gramaj)
+                .dagitimPlaniIlkAyrintiDoldur("309","TS0309","Yurt Dışı","15")
                 .dagitimPlaniIlkGramajHesapla()
                 .popUpKontrol();
-                String tutar =postalanacakEvraklarPage.popUpTutarAl();
+        String tutar =postalanacakEvraklarPage.popUpTutarAl();
         String[] spltTutar = tutar.split(" ");
-        
-        postalanacakEvraklarPage
+        System.out.println(spltTutar[0]);*/
+
+        /*postalanacakEvraklarPage
                 .popUpTamam()
                 .dagitimPlaniTutarKontrol(spltTutar[0])
                 .dagitimPlaniKaydetl()
                 .postalanacakYerleryazdir()
                 .evrakDetaylariPopUpKontrol()
                 .evrakDetaylariUstVerilerYazdirButonKontrol(konu)
-                .evrakDetaylarieEvrakEkleriYazdirButonKontrol(ekleri)
+                .evrakDetaylarieEvrakEkleriYazdirButonKontrol("Ek-1")
+                //.evrakDetaylarieEvrakEkleriYazdirButonKontrol("Ek-2")
                 .evrakDetaylariUstVerilerYazdirButonTikla(konu)
                 .pdfKontrol()
-                .evrakDetaylariEkranKapat()
-                .etiketYazdir()
-//                .etiketBastirEkraniKontrolü(tarih,title[0])  //etiket bastır popupı acılmıyor....
+                .evrakDetaylariEkranKapat()*/
+        postalanacakEvraklarPage.etiketYazdir()
+                .etiketBastirEkraniKontrolü(tarih, title[0], evrakNo)
                 .etiketYazdirPopupKapat()
                 .postala()
                 .dialogpostalaEvet()
@@ -824,17 +855,22 @@ public class EvrakPostalamaTest extends BaseTest {
                 .evrakOnizlemeButonKontrol("Posta Detayı")
 //                .evrakOnizlemeEvrakEkKontrolu()
                 .btnEvrakEkleri()
-                .evrakEkleriKontrol(ekleri)
-        .btnIlgiBilgileri()
-        .ilgiBilgileriKontrol(metni);
+                .evrakEkleriKontrol("Ek-1");
+                //.evrakEkleriKontrol("Ek-2");
+        postalananlarPage
+                .btnFiltrenenPostaIcerikGoster(konu)
+//                .btnIcerikEkleriTab()
+                .btnIcerikIlgileriTab()
+                .btnIcerikDetayKapat();
 
         postalananlarPage
                 .evrakSec(konu,tarih,title[0])
                 .postaDetayiTikla()
-                .postaDetayiPostalananYerlerKontrolu(title[1], postaKodu, aciklama)
-                .postaDetayiPostalananYerlerYazdir(title[1], postaKodu, aciklama)
+                .postaDetayiPostalananYerlerKontrolu("DAĞITIM YERLERİNE","309","Başbakanlık açıklama")
+                .postaDetayiPostalananYerlerYazdir("DAĞITIM YERLERİNE","309","Başbakanlık açıklama")
                 .evrakDetaylariUstVerilerYazdirButonTikla(konu)
                 .pdfKontrol();
+
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -893,83 +929,15 @@ public class EvrakPostalamaTest extends BaseTest {
 
     }
 
-    String konuKoduRandomTS310 = "TS0310A-"+createRandomNumber(15);
-
-    @Step("TS0310 PreCondition")
-    public void TS0310Precondition() throws InterruptedException  {
-        login("Mbozdemir", "123");
-        String konu = konuKoduRandomTS310;
-        String tuzelKisiVergiNo = "1122007720";
-        String kurum = "Başbakanlık";
-        String fizikselEkMetni = "TS1685 Ek metni";
-        String basariMesaji = "İşlem başarılıdır!";
-
-        evrakOlusturPage
-                .openPage()
-                .bilgilerTabiAc()
-                .bilgilerTabAlanKontrolleri()
-                .konuKoduSec("Yazılım Geliştirme")
-                .konuDoldur(konu)
-                .kaldirilacakKlasorler("Diğer")
-                .gizlilikDerecesiSec("Normal")
-//                .kaldirilacakKlasorler("B1K1")
-                .evrakTuruSec("Resmi Yazışma")
-                .ivedilikSec("Normal")
-                .geregiSecimTipiSec("Tüzel Kişi")
-                .geregiDoldur("Optiim İş Çözümleri AŞ", "Tüzel Kişi Adı")
-                .geregiKurumPostaTipi("Adi Posta")
-                //.geregiKurumPostaTipi("E-Posta")
-                .geregiSecimTipiSec("Kurum")
-                .geregiDoldur("Başbakanlık", "Kurum Adı")
-                //.geregiKurumPostaTipi("APS")
-                .geregiKurumPostaTipi("Adi Posta")
-                .onayAkisiKullanicilariTemizle()
-                .onayAkisiEkle()
-                .onayAkisiKullaniciTipiSec("Mehmet BOZDEMİR", "İmzalama")
-//                .onayAkisiKullaniciTipiSec(user1.getName(), "İmzalama")
-                .onayAkisiKullan();
-
-        String evrakTarihi = evrakOlusturPage.bilgilerTabiAc().evrakTarihiAl();
-
-        evrakOlusturPage
-                .ekleriTabAc()
-                .ekleriTabKontrolu()
-                //.webAdresiEkleTabiniAc()
-                //.arsivdeKayitliEvrakEkleTabiniAc()
-                //.sistemdeKayitliEvrakEkleTabiniAc()
-                .fizikselEkEkleTabiniAc()
-                .fizikselEkMetniDoldur(fizikselEkMetni)
-                .fizikselEkMetniEkle()
-                .listelenenEklerdeKontrol(fizikselEkMetni, "Fiziksel Ek Metni");
-      /*  evrakOlusturPage
-                .ilgileriTabAc()
-                .sistemeKayitliEvrakEkleTab()
-                .sistemeKayitliEvrakAra("yazı")
-                .sistemeKayitliDokumanArama()
-                .tablodaBulunanEvrakiEkle(); */
-
-//        evrakOlusturPage
-        //              .islemMesaji().basariliOlmali("İşlem başarılıdır!");
-
-
-        evrakOlusturPage
-                .editorTabAc()
-                .editorIcerikDoldur(konu)
-                .imzala()
-                .popupSImzalaIslemleri()
-                .islemMesaji().basariliOlmali(basariMesaji);
-    }
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS0310 : İçerik ekranından evrakın postalanması")
     public void TS0310() throws InterruptedException {
         login("mbozdemir", "123");
-
-        TS0310Precondition();
-
-
+        String konu = "TS1685_";
         postalanacakEvraklarPage.openPage()
-                .btnFiltrenenPostaIcerikGoster(konuKoduRandomTS310);
-        postalanacakEvraklarPage.btnEvrakIcerikEvrakPostala()
+                .btnFiltrenenPostaIcerikGoster(konu);
+        postalanacakEvraklarPage.btnEvrakIcerikEvrakPostala();
+        postalanacakEvraklarPage.btnDagitimGidisSekli("Adi Posta")
                 .inputIcerikPstakod("0310");
         postalanacakEvraklarPage
                 .btnIcerikPostaYazdir();
@@ -989,7 +957,7 @@ public class EvrakPostalamaTest extends BaseTest {
         postalanacakEvraklarPage.islemMesaji().isBasarili();
 
         postalananlarPage.openPage();
-        postalananlarPage.filter().findRowsWith(text(konuKoduRandomTS310)).first().click();
+        postalananlarPage.filter().findRowsWith(text(konu)).first().click();
         postalananlarPage.postaDetayiTikla();
         postalananlarPage.evSay();
         postalananlarPage.evrakYazdir();
@@ -1052,7 +1020,7 @@ public class EvrakPostalamaTest extends BaseTest {
         evrakOlusturPage2.editorTab().openTab().getEditor().type("Editör tekst");
 
         Map<String, Object> params = new HashMap<String, Object>();
-        params.put("birim", user1.getBirimAdi());
+        //params.put("birim", user1.getBirimAdi());
         params.put("sayi", konuKoduSayi);
         params.put("konu", konu);
         params.put("ilgi", metni);
@@ -1061,5 +1029,15 @@ public class EvrakPostalamaTest extends BaseTest {
         GalenControl galen = new GalenControl();
         galen.generateDump("TS2235", params);
         galen.layoutControl("TS2235", params);
+    }
+
+
+    @Step("{dagitimTipi} gidiş şekli kontrolü")
+    private void gidisSekliKontrol(String dagitimTipi, String dagitimElemani, String gidisSekli) {
+        evrakPostala.postalanacakYerlerdeAra(text(dagitimElemani));
+        if (evrakPostala.getGidisSekli("").exists())
+            evrakPostala.getGidisSekli(gidisSekli + " olmalı").shouldHave(exactText(gidisSekli));
+        else
+            evrakPostala.getPostalanacakListesi().shouldHave(text(gidisSekli));
     }
 }

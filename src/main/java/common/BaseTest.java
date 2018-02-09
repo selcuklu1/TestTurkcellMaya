@@ -9,6 +9,7 @@ import data.User;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import listeners.DriverEventListener;
+import listeners.ResultListener;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -20,10 +21,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.testng.ITestResult;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.*;
 import pages.LoginPage;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetFramework;
@@ -39,7 +37,7 @@ import static data.TestData.belgenetURL;
 import static io.qameta.allure.util.ResultsUtils.firstNonEmpty;
 
 //BrowserPerTest.class
-//@Listeners({SettingsListener.class})
+@Listeners({ResultListener.class})
 //@Listeners({RerunFailedTests.class})
 public class BaseTest extends BaseLibrary {
 
@@ -169,8 +167,8 @@ public class BaseTest extends BaseLibrary {
                 break;
         }
 
-        if (testResult.getStatus() == ITestResult.FAILURE)
-            takeScreenshot();
+        /*if (testResult.getStatus() == ITestResult.FAILURE)
+            takeScreenshot();*/
 
         System.out.println("///////////////////////////////////////////////////////");
         System.out.println("///////////////////////////////////////////////////////");
