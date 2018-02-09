@@ -74,7 +74,7 @@ public class EvrakDevretTest extends BaseTest {
         evrakOlustur();
         logout();
         login(username21g);
-        remoteDownloadPath = useChromeWindows151("TS2178");
+
 
         kullaniciEvrakDevretPage
                 .openPage()
@@ -114,7 +114,7 @@ public class EvrakDevretTest extends BaseTest {
             , description = "TS2179 : Devredilen evrakların devralan kullanıcıda hareket/evrak geçmişinin kontrolü")
     public void TS2179() throws InterruptedException {
         login(username22n);
-
+        remoteDownloadPath = useChromeWindows151("TS2179");
         String mesaj = nameDE + kullaniciTitle + " ait evrak " + nameDA + kullaniciTitle + " adlı kişiye " + nameDE + kullaniciTitle
                 + " tarafından İmza Bekleyenler menüsünden devredilmiştir. / " + icerik;
         taslakEvraklarPage
