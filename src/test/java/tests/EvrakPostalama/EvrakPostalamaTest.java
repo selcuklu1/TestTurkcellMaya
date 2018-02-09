@@ -268,6 +268,8 @@ public class EvrakPostalamaTest extends BaseTest {
 
 
     String konuKoduRandomTS520 = "TS0520A-"+createRandomNumber(15);
+    String konuKoduRandomTS520b = "TS0520B-"+createRandomNumber(15);
+
     String konuKodu = "Diğer";
     String kaldirilacakKlasor = "Diğer";
     String gizlilikDerecesi = "Normal";
@@ -278,7 +280,7 @@ public class EvrakPostalamaTest extends BaseTest {
     String evrakTarihi = getSysDate();
 
     @Step("Postalananlar sayfasına evrak oluşturmakta")
-    public void TS0520aPreCondition() {
+    public void TS0520aPreCondition(String konukod) {
         login("Mbozdemir", "123");
 
         //TODO Pre Condition Postalanacak evraklar sayfası data oluşturmakta
@@ -286,7 +288,7 @@ public class EvrakPostalamaTest extends BaseTest {
                 .openPage()
                 .bilgilerTabiAc()
                 .konuKoduDoldur(konuKodu)
-                .konuDoldur(konuKoduRandomTS520)
+                .konuDoldur(konukod)
                 .kaldiralacakKlasorlerSec(kaldirilacakKlasor)
                 .gizlilikDerecesiSec(gizlilikDerecesi)
                 .aciklamaDoldur(editor)
@@ -306,7 +308,7 @@ public class EvrakPostalamaTest extends BaseTest {
 
         postalanacakEvraklarPage
                 .openPage()
-                .evrakSec(konuKoduRandomTS520)
+                .evrakSec(konukod)
                 .evrakPostala()
                 .evrakPostalaPostala(true);
         //TODO*/
@@ -317,7 +319,7 @@ public class EvrakPostalamaTest extends BaseTest {
     @Test(enabled = true, description = "TS0520a : Postalanan evrak posta bilgilerinin önizleme ekranından güncellenmesi ve rapor üzerinde kontrolü")
     public void TS0520a() throws InterruptedException {
 
-        TS0520aPreCondition();
+        TS0520aPreCondition(konuKoduRandomTS520);
 
         postalananlarPage
                 .openPage()
@@ -354,12 +356,12 @@ public class EvrakPostalamaTest extends BaseTest {
 
         login("Mbozdemir", "123");
 
-        TS0520aPreCondition();
+        TS0520aPreCondition(konuKoduRandomTS520b);
 
         postalananlarPage
                 .openPage()
-                .evrakGeldigiGorme(konuKoduRandomTS520, tuzelKisi,evrakTarihi)
-                .evrakSecIcerikGoster(konuKoduRandomTS520, tuzelKisi,evrakTarihi)
+                .evrakGeldigiGorme(konuKoduRandomTS520b, tuzelKisi,evrakTarihi)
+                .evrakSecIcerikGoster(konuKoduRandomTS520b, tuzelKisi,evrakTarihi)
                 .postaDetayGeldigiGorme();
         postalananlarPage.icerikDetayPostaDetayi();
         String txt = postalananlarPage.icerikEvrakSay();
@@ -734,28 +736,39 @@ public class EvrakPostalamaTest extends BaseTest {
 //Download control should be added. But working now.
         postalananEvrakRaporuPage
                 .openPage()
-                .evrakSayisi("6345202")
+                .chkboxPostaladiklarim()
+                .evrakSayisi("6345202-310.01.01-12356")
                 .postaAramaBaslangicTarihi("01.12.2017 00:00")
                 .postaSorgulama()
-                .sonucKarsilastirma();
+                .sonucKarsilastirma()
+                .agirliktutarktrl()
+                .evrakSayiGecmisDetaybtnktrl();
+
 
         postalananEvrakRaporuPage
                 .ilkEvrakGecmisi()
                 .evrakGecmisiKapat();
         postalananEvrakRaporuPage
                 .evrakIcerikGoster()
+                .chkEvrakNobtn()
                 .evrakIcerikKapat();
         postalananEvrakRaporuPage
                 .etiketBastir();
         postalananEvrakRaporuPage
+                .txtktrlEtiketIcerik()
                 .etiketBastirPopupKapat();
         postalananEvrakRaporuPage
                 .btnExcel()
+                .ktrlDosyaindirme()
                 .btnPdf()
+                .ktrlDosyaindirme()
                 .btnEtiket();
+        postalananEvrakRaporuPage.islemMesaji().isBasarili();
         postalananEvrakRaporuPage
                 .popupEtiketBastirma("3", "3");
 
+        postalananEvrakRaporuPage.islemMesaji().isBasarili();
+        postalananEvrakRaporuPage.ktrlDosyaindirme();
     }
 
     @Severity(SeverityLevel.CRITICAL)

@@ -958,6 +958,7 @@ takeScreenshot();
         return this;
     }
 
+
     @Step("Icerik Etiket Bastir butonu")
     public PostalanacakEvraklarPage btnIcerikEtiketBastir() {
         btnIcerikEtiketBastir.click();
