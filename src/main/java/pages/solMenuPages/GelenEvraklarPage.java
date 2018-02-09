@@ -126,6 +126,7 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
+
     @Step("Tablodan rapor seç")
     public GelenEvraklarPage gizlilikRaporSecTakibeEkle(String konu, String yer, String tarih, String no) {
         SelenideElement evrak = filter().findRowsWith(text(konu))
