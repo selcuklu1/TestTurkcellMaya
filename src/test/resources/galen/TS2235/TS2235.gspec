@@ -1,0 +1,63 @@
+@objects
+    container               css     div[id='yeniGidenEvrakForm:allPanels_content']
+
+    birim                   xpath   //div[@id='yeniGidenEvrakForm:allPanels_content']//span[.='${birim}']/..
+
+    sayiLabel               xpath   //span[@id='yeniGidenEvrakForm:editorTarihKonuSayi']//tbody/tr[1]/td[.='Sayı']
+    sayiDots                xpath   //span[@id='yeniGidenEvrakForm:editorTarihKonuSayi']//tbody/tr[1]/td[.=':']
+    sayi                    xpath   //span[@id='yeniGidenEvrakForm:editorTarihKonuSayi']//tbody/tr[1]/td[.='${sayi}']
+    konuLabel               xpath   //span[@id='yeniGidenEvrakForm:editorTarihKonuSayi']//tbody/tr[2]/td[.='Konu']
+    konuDots                xpath   //span[@id='yeniGidenEvrakForm:editorTarihKonuSayi']//tbody/tr[2]/td[.=':']
+    konu                    xpath   //span[@id='yeniGidenEvrakForm:editorTarihKonuSayi']//tbody/tr[2]/td[.='${konu}']
+
+    ilgiLabel               xpath   //div[@id='yeniGidenEvrakForm:allPanels_content']//td[normalize-space(.)='İlgi']
+    ilgiDots                xpath   //div[@id='yeniGidenEvrakForm:allPanels_content']//td[normalize-space(.)='İlgi']/following-sibling::td[.=':']
+    ilgi                    xpath   //div[@id='yeniGidenEvrakForm:ilgiOutPanel']/descendant-or-self::tr[contains(normalize-space(.),'${ilgi}')]
+
+    editor                  css     .ui-edys-editor
+
+    ekLabel                 xpath   //div[@id='yeniGidenEvrakForm:allPanels_content']//td[normalize-space(.)='Ek :']
+    ek                      xpath   //div[@id='yeniGidenEvrakForm:allPanels_content']//span[.='${ek}']
+
+    footer                  css     div[id=editorFooter]
+    footerBorder            css     div[id=footerCenter]
+
+= Documant =
+    @on *
+    #Sayi
+        sayiLabel:
+            below birim
+
+        sayiDots:
+            right-of sayiLabel
+
+        sayi:
+            right-of sayiDots
+
+    #Konu
+        konuLabel:
+            below sayiLabel
+
+        konuDots:
+            right-of konuLabel
+
+        konu:
+            right-of konuDots
+
+    #Ilgi
+        ilgiLabel:
+            below konuLabel
+
+        ilgiDots:
+            right-of ilgiLabel
+
+        ilgi:
+            right-of ilgiDots
+
+    #Ek
+        ekLabel:
+            below editor
+            below ilgi
+
+        ek:
+            right-of ekLabel

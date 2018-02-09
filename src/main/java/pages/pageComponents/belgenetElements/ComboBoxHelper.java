@@ -66,13 +66,19 @@ class ComboBoxHelper extends BaseLibrary {
     }
 
     private void setLocators(SelenideElement proxy) {
-        //region Get id without _label. This id is parent Div element id
+        //Get id without _label. This id is parent Div element id
         String id = proxy.attr("id");
-        id = id.substring(0, id.lastIndexOf("_label"));
-        //endregion
+        if (id.contains("_label"))
+            id = id.substring(0, id.lastIndexOf("_label"));
 
-        By label = By.id(id + "_lable");
-        btnTrigger = By.cssSelector("[id='" + id + "']  div[class*='ui-selectonemenu-trigger']");
+        btnTrigger = proxy.has(cssClass("ui-selectonemenu-trigger"))
+                ? By.cssSelector("[id='" + id + "'] .ui-selectonemenu-trigger")
+                : By.cssSelector("[id='" + id + "'] .ui-selectcheckboxmenu-trigger");
+       /* if (proxy.has(cssClass("ui-selectonemenu-trigger")))
+            btnTrigger = By.cssSelector("[id='" + id + "'] .ui-selectonemenu-trigger");
+        else
+            btnTrigger = By.cssSelector("[id='" + id + "'] .ui-selectcheckboxmenu-trigger");*/
+
         panelXpath = "//*[@id='" + id + "_panel']";
         liLocator = By.cssSelector("[id='" + id + "_panel'] li");
         ulLocator = By.cssSelector("[id='" + id + "_panel'] ul");
