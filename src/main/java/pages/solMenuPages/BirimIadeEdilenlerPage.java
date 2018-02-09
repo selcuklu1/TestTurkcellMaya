@@ -82,7 +82,7 @@ public class BirimIadeEdilenlerPage extends MainPage {
         return this;
     }
 
-    @Step("Teslim Al button kontrolü")
+    @Step("Teslim Al button kontrolü ")
     public BirimIadeEdilenlerPage evrakTeslimAlButtonKontrol() {
         teslimAlButton.should(visible);
         return this;
