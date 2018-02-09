@@ -770,7 +770,6 @@ public class EvrakPostalamaTest extends BaseTest {
         String gonderildigiYer = "Yurt Dışı";
         String gramaj = "15";
         String basariMesaji = "İşlem başarılıdır!";
-//        String title = "OptiimTest TestOptiim";
         String tarih = getSysDateForKis();
         postalanacakEvraklarPage
                 .openPage()
@@ -786,8 +785,7 @@ public class EvrakPostalamaTest extends BaseTest {
                 .popUpKontrol();
                 String tutar =postalanacakEvraklarPage.popUpTutarAl();
         String[] spltTutar = tutar.split(" ");
-                System.out.println(spltTutar[0]);
-
+        
         postalanacakEvraklarPage
                 .popUpTamam()
                 .dagitimPlaniTutarKontrol(spltTutar[0])
@@ -796,12 +794,11 @@ public class EvrakPostalamaTest extends BaseTest {
                 .evrakDetaylariPopUpKontrol()
                 .evrakDetaylariUstVerilerYazdirButonKontrol(konu)
                 .evrakDetaylarieEvrakEkleriYazdirButonKontrol(ekleri)
-//                .evrakDetaylarieEvrakEkleriYazdirButonKontrol("Ek-2")
                 .evrakDetaylariUstVerilerYazdirButonTikla(konu)
                 .pdfKontrol()
                 .evrakDetaylariEkranKapat()
                 .etiketYazdir()
-//                .etiketBastirEkraniKontrolü(tarih,title[0])
+//                .etiketBastirEkraniKontrolü(tarih,title[0])  //etiket bastır popupı acılmıyor....
                 .etiketYazdirPopupKapat()
                 .postala()
                 .dialogpostalaEvet()
@@ -815,7 +812,6 @@ public class EvrakPostalamaTest extends BaseTest {
 //                .evrakOnizlemeEvrakEkKontrolu()
                 .btnEvrakEkleri()
                 .evrakEkleriKontrol(ekleri)
-//                .evrakEkleriKontrol("Ek-2");
         .btnIlgiBilgileri()
         .ilgiBilgileriKontrol(metni);
 
