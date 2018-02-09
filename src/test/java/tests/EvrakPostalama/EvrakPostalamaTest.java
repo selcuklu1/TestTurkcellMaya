@@ -76,8 +76,7 @@ public class EvrakPostalamaTest extends BaseTest {
     String konu309 = "";
 
     @BeforeMethod
-    public void loginBeforeTest() {
-
+    public void beforeTestStart() {
         evrakOlusturPage = new EvrakOlusturPage();
         postalanacakEvraklarPage = new PostalanacakEvraklarPage();
         postalananlarPage = new PostalananlarPage();
@@ -516,6 +515,7 @@ public class EvrakPostalamaTest extends BaseTest {
     @Test(enabled = true, description = "TS2235 : Ek ilgi ilişiği olan evrakı postaya düşürme")
     public void TS2235() throws Exception {
         System.out.println("Konu: " + konu);
+
         login(user1);
         dagitimPlanElemanlari = new LinkedHashMap<GeregiSecimTipi, String>();
         dagitimPlanElemanlari.put(GERCEK_KISI, "OptiimTEST");
