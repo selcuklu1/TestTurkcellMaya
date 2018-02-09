@@ -884,15 +884,83 @@ public class EvrakPostalamaTest extends BaseTest {
 
     }
 
+    String konuKoduRandomTS310 = "TS0310A-"+createRandomNumber(15);
+
+    @Step("TS0310 PreCondition")
+    public void TS0310Precondition() throws InterruptedException  {
+        login("Mbozdemir", "123");
+        String konu = konuKoduRandomTS310;
+        String tuzelKisiVergiNo = "1122007720";
+        String kurum = "Başbakanlık";
+        String fizikselEkMetni = "TS1685 Ek metni";
+        String basariMesaji = "İşlem başarılıdır!";
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .bilgilerTabAlanKontrolleri()
+                .konuKoduSec("Yazılım Geliştirme")
+                .konuDoldur(konu)
+                .kaldirilacakKlasorler("Diğer")
+                .gizlilikDerecesiSec("Normal")
+//                .kaldirilacakKlasorler("B1K1")
+                .evrakTuruSec("Resmi Yazışma")
+                .ivedilikSec("Normal")
+                .geregiSecimTipiSec("Tüzel Kişi")
+                .geregiDoldur("Optiim İş Çözümleri AŞ", "Tüzel Kişi Adı")
+                .geregiKurumPostaTipi("Adi Posta")
+                //.geregiKurumPostaTipi("E-Posta")
+                .geregiSecimTipiSec("Kurum")
+                .geregiDoldur("Başbakanlık", "Kurum Adı")
+                //.geregiKurumPostaTipi("APS")
+                .geregiKurumPostaTipi("Adi Posta")
+                .onayAkisiKullanicilariTemizle()
+                .onayAkisiEkle()
+                .onayAkisiKullaniciTipiSec("Mehmet BOZDEMİR", "İmzalama")
+//                .onayAkisiKullaniciTipiSec(user1.getName(), "İmzalama")
+                .onayAkisiKullan();
+
+        String evrakTarihi = evrakOlusturPage.bilgilerTabiAc().evrakTarihiAl();
+
+        evrakOlusturPage
+                .ekleriTabAc()
+                .ekleriTabKontrolu()
+                //.webAdresiEkleTabiniAc()
+                //.arsivdeKayitliEvrakEkleTabiniAc()
+                //.sistemdeKayitliEvrakEkleTabiniAc()
+                .fizikselEkEkleTabiniAc()
+                .fizikselEkMetniDoldur(fizikselEkMetni)
+                .fizikselEkMetniEkle()
+                .listelenenEklerdeKontrol(fizikselEkMetni, "Fiziksel Ek Metni");
+      /*  evrakOlusturPage
+                .ilgileriTabAc()
+                .sistemeKayitliEvrakEkleTab()
+                .sistemeKayitliEvrakAra("yazı")
+                .sistemeKayitliDokumanArama()
+                .tablodaBulunanEvrakiEkle(); */
+
+//        evrakOlusturPage
+        //              .islemMesaji().basariliOlmali("İşlem başarılıdır!");
+
+
+        evrakOlusturPage
+                .editorTabAc()
+                .editorIcerikDoldur(konu)
+                .imzala()
+                .popupSImzalaIslemleri()
+                .islemMesaji().basariliOlmali(basariMesaji);
+    }
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS0310 : İçerik ekranından evrakın postalanması")
     public void TS0310() throws InterruptedException {
         login("mbozdemir", "123");
-        String konu = "TS1685_";
+
+        TS0310Precondition();
+
+
         postalanacakEvraklarPage.openPage()
-                .btnFiltrenenPostaIcerikGoster(konu);
-        postalanacakEvraklarPage.btnEvrakIcerikEvrakPostala();
-        postalanacakEvraklarPage.btnDagitimGidisSekli("Adi Posta")
+                .btnFiltrenenPostaIcerikGoster(konuKoduRandomTS310);
+        postalanacakEvraklarPage.btnEvrakIcerikEvrakPostala()
                 .inputIcerikPstakod("0310");
         postalanacakEvraklarPage
                 .btnIcerikPostaYazdir();
@@ -912,7 +980,7 @@ public class EvrakPostalamaTest extends BaseTest {
         postalanacakEvraklarPage.islemMesaji().isBasarili();
 
         postalananlarPage.openPage();
-        postalananlarPage.filter().findRowsWith(text(konu)).first().click();
+        postalananlarPage.filter().findRowsWith(text(konuKoduRandomTS310)).first().click();
         postalananlarPage.postaDetayiTikla();
         postalananlarPage.evSay();
         postalananlarPage.evrakYazdir();
