@@ -12,12 +12,7 @@ public class TestData extends BaseLibrary {
 
     // Mevcut Belgenet - external IP
 
-    //bizim ortam
-    //public static final String belgenetURL = "http://94.55.114.18:8889/edys-web/sistemeGiris.xhtml";
-
-    //yeni ortam
-    //10.101.20.153:8880
-    public static final String belgenetURL = "http://10.101.25.145:8889/edys-web/sistemeGiris.xhtml ";
+    public static final String belgenetURL = "http://94.55.114.18:8889/edys-web/sistemeGiris.xhtml";
     //    public static final String belgenetURL = "http://10.101.20.153:8889/edys-web/sistemeGiris.xhtml";
 
     public static final User optiim = new User("optiim", "123", "Optiim TEST", "Optiim Birim");
@@ -40,9 +35,6 @@ public class TestData extends BaseLibrary {
 
     public static final String usernameGSAHIN = "gsahin";
     public static final String passwordGSAHIN = "123";
-
-    public static final String usernameOPTIIMTEST76 = "optiimtest6";
-    public static final String passwordPTIIMTEST76 = "123";
 
     public static String docPathWindows = "C:\\TestAutomation\\BelgenetFTA\\documents\\";
     //public static String docDownloadPathWindows = "C:\\TestAutomation\\BelgenetFTA\\downloads";
