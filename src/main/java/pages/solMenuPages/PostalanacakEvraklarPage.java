@@ -73,7 +73,7 @@ public class PostalanacakEvraklarPage extends MainPage {
     SelenideElement popUP = $(By.id("mainPreviewForm:tutarDialogId"));
     SelenideElement cmbDagitimSekli = $("[id^='mainPreviewForm:dataTableId:0:j_idt'] [class*='ui-selectonemenu'] Select");
     SelenideElement btnIcerikEvrakGoster = $x("//*[@id='inboxItemInfoForm:dialogTabMenuRight:uiRepeat:4:cmdbutton']");
-    SelenideElement btnComboEvrakGidisSekli = $x("//*[@id='inboxItemInfoForm:dataTableId_data']/tr[1]/td[3]/div/div/div/table/tbody/tr[3]/td/div/div[1]/select");
+    SelenideElement btnComboEvrakGidisSekli = $x("//*[@id='inboxItemInfoForm:dataTableId_data']/tr[2]/td[3]/div/div/div/table/tbody/tr[3]/td/div/div[1]/select");
     SelenideElement txtEvrakKonuKontrol = $x("//*[@id='mainPreviewForm:evrakDetayPanelGrid']/tbody/tr[1]/td[3]/label");
     SelenideElement tblPostalanacakYerler = $x("//*[@id='mainPreviewForm:dataTableId_data']");
     SelenideElement slctYurtIciyurtdisi = $x("//*[@id='mainPreviewForm:dataTableId:0:yurtIciDisiId']");
@@ -186,8 +186,7 @@ public class PostalanacakEvraklarPage extends MainPage {
         System.out.println(postaSekli);
         btnComboEvrakGidisSekli.selectOption(postaSekli);
         if (postaSekli == "Adi Posta") {
-            btnComboEvrakGidisSekli.selectOption(0);
-
+           btnComboEvrakGidisSekli.selectOption(1);
         }
         return this;
 
@@ -958,6 +957,7 @@ takeScreenshot();
         btnIcerikPopupKapat.click();
         return this;
     }
+
 
     @Step("Icerik Etiket Bastir butonu")
     public PostalanacakEvraklarPage btnIcerikEtiketBastir() {

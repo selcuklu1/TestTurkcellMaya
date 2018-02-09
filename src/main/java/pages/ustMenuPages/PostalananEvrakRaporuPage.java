@@ -75,7 +75,35 @@ public class PostalananEvrakRaporuPage extends MainPage {
         System.out.println(innertext);
         return this;
     }
+    @Step("Ağırlık ve Tutar kontrolü")
+    public PostalananEvrakRaporuPage agirliktutarktrl () {
+        SelenideElement tblagirlik = $x("//*[@id='postalananEvrakRaporuForm:postalananEvrakDataTable_data']/tr[1]/td[11]/div");
+        SelenideElement tbltutar = $x("//*[@id='postalananEvrakRaporuForm:postalananEvrakDataTable_data']/tr[1]/td[12]/div");
+        tblagirlik.getText();
+        tbltutar.getText();
+        return this;
+    }
+    @Step("Sorgulama sonucu gelen postalanan evrak sayısı kadar Postalanan yer - gecmiş detay - etiket buton kontrolü")
+    public PostalananEvrakRaporuPage evrakSayiGecmisDetaybtnktrl () {
+        String SchildElementCount;
+        SchildElementCount = sorguTablosu.getAttribute("childElementCount");
+        int childElementCount = Integer.parseInt(SchildElementCount);
+        System.out.println(childElementCount);
 
+        for (int i = 0; i < childElementCount; i++) {
+
+            //*[@id="postalananEvrakRaporuForm:postalananEvrakDataTable:0:evrakGecmisiId"]/span[1]
+            String paramEvrakGecmisiID = "//*[@id='postalananEvrakRaporuForm:postalananEvrakDataTable:" + String.valueOf(i) + ":evrakGecmisiId']/span[1]";
+            String paramEvrakDetayID = "//*[@id='postalananEvrakRaporuForm:postalananEvrakDataTable:" + String.valueOf(i) + ":evrakGosterButton']/span[1]";
+            String paramEvrakEtiketBastir = "//*[@id='postalananEvrakRaporuForm:postalananEvrakDataTable_data']/tr[" + String.valueOf(i + 1) + "]/td[16]/div/button";
+
+            SelenideElement EvrakGecmisiID = $x(paramEvrakGecmisiID);
+            SelenideElement EvrakDetayID = $x(paramEvrakDetayID);
+            SelenideElement EvrakEtiketBastir = $x(paramEvrakEtiketBastir);
+
+        }
+        return this;
+    }
     @Step("Evrak Geçmişi butonuna tıkla")
     public PostalananEvrakRaporuPage ilkEvrakGecmisi() {
         btnIlkEvrakGecmisi.click();
@@ -91,6 +119,12 @@ public class PostalananEvrakRaporuPage extends MainPage {
     @Step("Evrak İçerik Gösterimi")
     public PostalananEvrakRaporuPage evrakIcerikGoster() {
         btnEvrakGoster.click();
+        return this;
+    }
+    @Step("Icerik Evrak No kontrol")
+    public PostalananEvrakRaporuPage chkEvrakNobtn() {
+        SelenideElement EvrkNoBtn = $x("//*[@id='windowReadOnlyForm:evrakBilgileriList:0:evrakNoPanelGrid']/tbody/tr/td[3]/div");
+        EvrkNoBtn.exists();
         return this;
     }
 
@@ -154,6 +188,12 @@ public class PostalananEvrakRaporuPage extends MainPage {
         return this;
     }
 
+    @Step("Dosyanın indirilme kontrolü")
+    public PostalananEvrakRaporuPage ktrlDosyaindirme () {
+        String downloadpath =  getDownloadPath();
+        System.out.println(downloadpath);
+        return this;
+    }
     @Step("Etiket butonuna tıkla")
     public PostalananEvrakRaporuPage btnEtiket() {
         btnEtiketYazdir.click();
@@ -197,12 +237,12 @@ public class PostalananEvrakRaporuPage extends MainPage {
         String SchildElementCount;
         SchildElementCount = sorguTablosu.getAttribute("childElementCount");
         int childElemCount = Integer.parseInt(SchildElementCount);
-        for (int i = 0; i < childElemCount; i++) {
-            String paramEvrakSahibi = "//*[@id='postalananEvrakRaporuForm:postalananEvrakDataTable_data']/tr[" + String.valueOf(i + 1) + "]/td[7]/div";
+         int i = 1;
+            String paramEvrakSahibi = "//*[@id='postalananEvrakRaporuForm:postalananEvrakDataTable_data']/tr[" + String.valueOf(1) + "]/td[7]/div";
             SelenideElement evSahibiColumn = $x(paramEvrakSahibi);
             String evraksahibicol = evSahibiColumn.getAttribute("innerText");
             Assert.assertEquals(evrakSahibi, evraksahibicol);
-        }
+
         return this;
     }
      @Step("Evrak Sahibi Seçimi Temizleme")
@@ -250,6 +290,16 @@ public class PostalananEvrakRaporuPage extends MainPage {
         cmbPostaTipi.selectOption(postaTipi);
         return this;
 
+    }
+
+    @Step("Etiket İçerik tarih ve yer kontrol")
+    public PostalananEvrakRaporuPage txtktrlEtiketIcerik () {
+
+        SelenideElement txtktrl = $x("//*[@id='postalananEvrakRaporuForm:etiketMetinID']");
+        txtktrl.exists();
+        txtktrl.getText();
+        System.out.println(txtktrl.getText());
+        return this;
     }
 
     /*
