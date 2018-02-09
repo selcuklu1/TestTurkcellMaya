@@ -17,6 +17,7 @@ import pages.solMenuPages.ImzaBekleyenlerPage;
 import pages.ustMenuPages.DagitimPlaniYonetimiPage;
 import pages.ustMenuPages.GidenEvrakKayitPage;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -340,83 +341,66 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
 
         DagitimHitapDuzenle dagitimHitapDuzenle;
         String dagitimElemanlariTipi, dagitimElemanlari;
-
+        String evraktaGorunecekHitap;
+        String kayitliHitap;
+/*
         //Kullanıcı
         dagitimElemanlariTipi = "Kullanıcı";
         dagitimElemanlari = user.getFullname();
-        page.dagitimElemanlariSelecSec(dagitimElemanlariTipi).dagitimElemanlariCombolovSec(dagitimElemanlari);
-        page.getDagitimElemanlariCombolovDagitimHitapDuzenlemeButton().shouldBe(visible);
-        page.getDagitimElemanlariCombolovListedenCikartButton().shouldBe(visible);
-        page.ekle();
-        page.kaydetGuncelleDataTable.findRows(text(dagitimElemanlariTipi), text(dagitimElemanlari));
-        page.getSilButton().shouldBe(visible);
+        dagitimElemanlari(dagitimElemanlariTipi, dagitimElemanlari);
         dagitimHitapDuzenle = page.guncelleTikla();
         String ek = "NA";
-        dagitimHitapDuzenle.getEkOfInput("\"" + dagitimElemanlariTipi + "\" alanın ek \""+ek+"\" ile güncelle", value(dagitimElemanlari)).setValue(ek);
-        dagitimHitapDuzenle.getEvraktaGorunecekHitap("Görünecek Hitap \""+ dagitimElemanlari + ek +"\" olmalı").shouldHave(text(dagitimElemanlari + ek));
+        evraktaGorunecekHitap = String.format("Sayın %s%s", user.getFullname(), ek);
+        kayitliHitap = "Sayın " + user.getFullname();
+        dagitimHitapDuzenle.getEkOfInput(String.format("\"%s\" alanın ek \"%s\" ile güncelle",dagitimElemanlariTipi,ek), value(dagitimElemanlari)).setValue(ek);
+        dagitimHitapDuzenle.getEvraktaGorunecekHitap(String.format("Görünecek Hitap \"%s%s\" olmalı", dagitimElemanlari,ek)).shouldHave(text(dagitimElemanlari + ek));
         dagitimHitapDuzenle.getKaydetButton("tıklanır").click();
 
         //Birim
         dagitimElemanlariTipi = "Birim";
         dagitimElemanlari = user.getBirimAdi();
-        page.dagitimElemanlariSelecSec(dagitimElemanlariTipi).dagitimElemanlariCombolovSec(dagitimElemanlari);
-        page.getDagitimElemanlariCombolovDagitimHitapDuzenlemeButton().shouldBe(visible);
-        page.getDagitimElemanlariCombolovListedenCikartButton().shouldBe(visible);
-        page.ekle();
-        page.kaydetGuncelleDataTable.findRows(text(dagitimElemanlariTipi), text(dagitimElemanlari));
-        page.getSilButton().shouldBe(visible);
+        dagitimElemanlari(dagitimElemanlariTipi, dagitimElemanlari);
         dagitimHitapDuzenle = page.guncelleTikla();
-        String birimOzelHitap = "BirimÖzelHitap";
+        evraktaGorunecekHitap = "BirimÖzelHitap";
+        kayitliHitap = user.getBirimAdi() + "E";
         clickJs(dagitimHitapDuzenle.getOzelHitapCheckbox());
-        dagitimHitapDuzenle.getHitapTextarea().setValue(birimOzelHitap);
-        dagitimHitapDuzenle.getEvraktaGorunecekHitap("Görünecek Hitap \""+ birimOzelHitap +"\" olmalı").shouldHave(text(birimOzelHitap));
+        dagitimHitapDuzenle.getHitapTextarea().setValue(evraktaGorunecekHitap);
+        dagitimHitapDuzenle.getEvraktaGorunecekHitap("Görünecek Hitap \""+ evraktaGorunecekHitap +"\" olmalı").shouldHave(text(evraktaGorunecekHitap));
         dagitimHitapDuzenle.getKaydetButton("tıklanır").click();
 
         //Kurum
         dagitimElemanlariTipi = "Kurum";
         dagitimElemanlari = "Başbakanlık";
-        page.dagitimElemanlariSelecSec(dagitimElemanlariTipi).dagitimElemanlariCombolovSec(dagitimElemanlari);
-        page.getDagitimElemanlariCombolovDagitimHitapDuzenlemeButton().shouldBe(visible);
-        page.getDagitimElemanlariCombolovListedenCikartButton().shouldBe(visible);
-        page.ekle();
-        page.kaydetGuncelleDataTable.findRows(text(dagitimElemanlariTipi),text(dagitimElemanlari));
-        page.getSilButton().shouldBe(visible);
-        page.getGuncelleButton().shouldBe(visible);
+        dagitimElemanlari(dagitimElemanlariTipi, dagitimElemanlari);
 
         //Tüzel Kişi
         dagitimElemanlariTipi = "Tüzel Kişi";
         dagitimElemanlari = "Türksat Optiim";
-        page.dagitimElemanlariSelecSec(dagitimElemanlariTipi).dagitimElemanlariCombolovSec(dagitimElemanlari);
-        page.getDagitimElemanlariCombolovDagitimHitapDuzenlemeButton().shouldBe(visible);
-        page.getDagitimElemanlariCombolovListedenCikartButton().shouldBe(visible);
-        page.ekle();
-        page.kaydetGuncelleDataTable.findRows(text(dagitimElemanlariTipi), text(dagitimElemanlari));
-        page.getSilButton().shouldBe(visible);
+        dagitimElemanlari(dagitimElemanlariTipi, dagitimElemanlari);
         dagitimHitapDuzenle = page.guncelleTikla();
-        String tuzelOzelHitap = "TüzelÖzelHitap";
+        evraktaGorunecekHitap = "TüzelÖzelHitap";
+        kayitliHitap = dagitimElemanlari.toUpperCase() + "E";
         clickJs(dagitimHitapDuzenle.getOzelHitapCheckbox());
-        dagitimHitapDuzenle.getHitapTextarea().setValue(tuzelOzelHitap);
-        dagitimHitapDuzenle.getEvraktaGorunecekHitap("Görünecek Hitap \""+ tuzelOzelHitap +"\" olmalı").shouldHave(text(tuzelOzelHitap));
-        dagitimHitapDuzenle.getKaydetButton("tıklanır").click();
+        dagitimHitapDuzenle.getHitapTextarea().setValue(evraktaGorunecekHitap);
+        dagitimHitapDuzenle.getEvraktaGorunecekHitap("Görünecek Hitap \""+ evraktaGorunecekHitap +"\" olmalı").shouldHave(text(evraktaGorunecekHitap));
+        dagitimHitapDuzenle.getKaydetButton("tıklanır").click();*/
 
         //Gerçek Kişi
         dagitimElemanlariTipi = "Gerçek Kişi";
-        dagitimElemanlari = "Zübeyde TEKİN";
-        page.dagitimElemanlariSelecSec(dagitimElemanlariTipi).dagitimElemanlariCombolovSec(dagitimElemanlari);
-        page.getDagitimElemanlariCombolovDagitimHitapDuzenlemeButton().shouldBe(visible);
-        page.getDagitimElemanlariCombolovListedenCikartButton().shouldBe(visible);
-        page.ekle();
-        page.kaydetGuncelleDataTable.findRows(text(dagitimElemanlariTipi), text("Zübeyde"));
-        page.getSilButton().shouldBe(visible);
+        dagitimElemanlari = "Zübeyde";// TEKİN";
+        dagitimElemanlari(dagitimElemanlariTipi, dagitimElemanlari);
         dagitimHitapDuzenle = page.guncelleTikla();
         String adres = "HitapAdres";
+        evraktaGorunecekHitap = String.format("Sayın %s \n %s", "Zübeyde TEKİN", adres);
+        kayitliHitap = "Sayın " + "Zübeyde TEKİN";
         dagitimHitapDuzenle.getAdresTextarea().setValue(adres);
         clickJs(dagitimHitapDuzenle.getAdresHitaptaGorunsunCheckbox());
-        dagitimHitapDuzenle.getEvraktaGorunecekHitap("Görünecek Hitap \""+ adres +"\" olmalı").shouldHave(text(adres));
+        dagitimHitapDuzenle.getEvraktaGorunecekHitap("Görünecek Hitap \""+ evraktaGorunecekHitap +"\" olmalı").shouldHave(text(evraktaGorunecekHitap));
         clickJs(dagitimHitapDuzenle.getAdresHitaptaGorunsunCheckbox());
+        dagitimHitapDuzenle.getEvraktaGorunecekHitap("Görünecek Hitap \""+ kayitliHitap +"\" bulunmamalı").shouldHave(text(kayitliHitap));
         dagitimHitapDuzenle.getEvraktaGorunecekHitap("Görünecek Hitap \""+ adres +"\" bulunmamalı").shouldNotHave(text(adres));
         clickJs(dagitimHitapDuzenle.getAdresHitaptaGorunsunCheckbox());
-        dagitimHitapDuzenle.getEvraktaGorunecekHitap("Görünecek Hitap \""+ adres +"\" olmalı").shouldHave(text(adres));
+        dagitimHitapDuzenle.getEvraktaGorunecekHitap("Görünecek Hitap \""+ evraktaGorunecekHitap +"\" olmalı").shouldHave(text(evraktaGorunecekHitap));
         dagitimHitapDuzenle.getKaydetButton("tıklanır").click();
 
         /*DagitimHitapDuzenle screen;
@@ -511,7 +495,7 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
 
     @Step("\"{dagitimElemanlariTipi}\" eklenir")
     void dagitimElemanlari(String dagitimElemanlariTipi, String dagitimElemanlari) {
-        page.dagitimElemanlariSelecSec(dagitimElemanlariTipi)
+        page.dagitimElemanlariSelectSec(dagitimElemanlariTipi)
                 .dagitimElemanlariCombolovSec(dagitimElemanlari);
         page.getDagitimElemanlariCombolovDagitimHitapDuzenlemeButton().shouldBe(visible);
         page.getDagitimElemanlariCombolovListedenCikartButton().shouldBe(visible);
@@ -530,7 +514,7 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
 
     @Step("\"{dagitimElemanlariTipi}\" eklenir")
     DagitimHitapDuzenle dagitimElemanlariVeGuncelle(String dagitimElemanlariTipi, String dagitimElemanlari) {
-        page.dagitimElemanlariSelecSec(dagitimElemanlariTipi).dagitimElemanlariCombolovSec(dagitimElemanlari);
+        page.dagitimElemanlariSelectSec(dagitimElemanlariTipi).dagitimElemanlariCombolovSec(dagitimElemanlari);
         page.getDagitimElemanlariCombolovDagitimHitapDuzenlemeButton().shouldBe(visible);
         page.getDagitimElemanlariCombolovListedenCikartButton().shouldBe(visible);
         page.ekle();

@@ -123,6 +123,16 @@ public class Belgenet extends Selenide {
         return ElementFinder.wrap(BelgenetElement.class, parentElement, By.cssSelector(selector), 0);
     }
 
+    /**
+     * Replacement for standard Selenide `$` method.
+     *
+     * @return BelgenetElement - an "advanced" version of `SelenideElement` with more custom methods
+     */
+    public static BelgenetElement comboBox(WebElement parentElement, By locator) {
+        return ElementFinder.wrap(BelgenetElement.class, parentElement, locator, 0);
+    }
+
+
     public static BelgenetElement comboBox(String selector) {
         return ElementFinder.wrap(BelgenetElement.class, null, By.cssSelector(selector), 0);
     }

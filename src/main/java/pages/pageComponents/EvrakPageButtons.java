@@ -49,7 +49,9 @@ public class EvrakPageButtons extends MainPage {
                 islemMesaji().closeMessage();
             else
                 throw new RuntimeException("İşlem Mesajı");*/
-        getSImzalaRadio().shouldBe(visible).click();
+        getSImzalaRadio().waitUntil(visible, Configuration.timeout + 20000).click();
+        //getSImzalaRadio().shouldBe(visible).click();
+        //clickJs(getEvrakImzalaDialog().find("#imzalaForm\\:imzalaRadio input"));
         return this;
     }
 

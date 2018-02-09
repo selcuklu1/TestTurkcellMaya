@@ -256,8 +256,8 @@ public class OlurYazisiIslemleriTest extends BaseTest {
     @Step("İlgileri sekmesinde ekleme ve kontrolleri")
     private void ilgileriTab() {
         altTabs = olurYazisiOlusturPage.ilgileriTab().openTab().altTabs();
-        altTabs.getSistemdeKayitliEvrakEkleTab();
-        altTabs.getDosyaEkleTab();
+        altTabs.getSistemdeKayitliEvrakEkleTab().shouldBe(visible);
+        altTabs.getDosyaEkleTab().shouldBe(visible);
         /*altTabs.dosyaEkleTabiAc()
                 .dosyaEkle(doc)
                 .ilgiMetniDoldur("İlgileri Tab "+ konu)

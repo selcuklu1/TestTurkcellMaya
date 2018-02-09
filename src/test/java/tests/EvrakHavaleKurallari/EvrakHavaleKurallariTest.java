@@ -89,7 +89,7 @@ public class EvrakHavaleKurallariTest extends BaseTest {
         String kuralAdi2 = "TC-2068_2_" + createRandomNumber(12);
         String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
         String kisi = "Zübeyde Tekin";
-        String birim2 = "BİLİŞİM HİZMETLERİ VE UYDU PAZARLAMA GENEL MÜDÜR";
+        String birim2 = "YGD";
         String konu = "K/Frekans Yıllık Kullanım Ücreti";
         String kullaniciListesi = "Can";
         String kullanici = "Can Şeker";
