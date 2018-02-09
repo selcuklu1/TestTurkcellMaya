@@ -150,7 +150,7 @@ public class PostalanacakEvraklarPage extends MainPage {
         tblEvraklar.filterBy(Condition.text(konu)).get(0).click();
         return this;
     }
-    
+
     @Step("Fiziksel Ek ikon kontrolu")
     public PostalanacakEvraklarPage btnFizikselEkIkonKontrol() {
 

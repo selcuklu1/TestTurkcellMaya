@@ -571,18 +571,18 @@ public class GizlilikKleransiTest extends BaseTest {
 
         login("username23t", "123");
 
-//        kullaniciYonetimiPage
-//                .openPage()
-//                .kullaniciAdiDoldur("Gsahin")
-//                .ara()
-//                .tabloBirimKontrol()
-//                .kullaniciListesiGuncelleButonuTikla()
-//                .gorevliOlduguBirimlerKontol()
-//                .gorevliOlduguBirimGuncelle()
-//                .kullaniciBirimAtamaGizlilikDerecesiSec(gizlilikDerecesi)
-//                .kullaniciBirimAtamaKaydetTikla()
-//                .kullaniciGuncellemeKaydet()
-//                .islemMesaji().basariliOlmali(basariMesaji);
+        kullaniciYonetimiPage
+                .openPage()
+                .kullaniciAdiDoldur("username23t")
+                .ara()
+                .tabloBirimKontrol()
+                .kullaniciListesiGuncelleButonuTikla()
+                .gorevliOlduguBirimlerKontol()
+                .gorevliOlduguBirimGuncelle()
+                .kullaniciBirimAtamaGizlilikDerecesiSec("Tasnif Dışı")
+                .kullaniciBirimAtamaKaydetTikla()
+                .kullaniciGuncellemeKaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
 //
 //        logout();
 //        login("gsahin", "123");
