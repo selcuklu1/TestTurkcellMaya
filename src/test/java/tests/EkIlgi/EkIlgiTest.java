@@ -808,7 +808,8 @@ public class EkIlgiTest extends BaseTest {
         imzaBekleyenlerPage
                 .openPage()
                 .evrakKonusunaGoreKontrol(evrakKonusu)
-                .konuyaGoreEvrakOnizlemedeAc(evrakKonusu);
+                .konuyaGoreEvrakOnizlemedeAc(evrakKonusu)
+                .evrakEkleriTabAc();
 
         //Todo: Defect çözüldükten sonra devam edilecek
     }
