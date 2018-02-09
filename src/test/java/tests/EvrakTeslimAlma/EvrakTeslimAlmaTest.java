@@ -274,7 +274,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
                 .openPage()
                 .evrakSec(konu1)
                 .evrakSec(konu2)
-                .evrakSecCheckBox(konu1,konu2,true)
+                .evrakSecToplu(konu1,konu2,true)
                 .evrakNoGelmedigiGorme(konu1)
                 .evrakNoGelmedigiGorme(konu2)
                 .islemMesaji().basariliOlmali(basariMesaji);
@@ -368,7 +368,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
         testStatus(testid,"Test Başladı");
         teslimAlinmayiBekleyenlerPage
                 .openPage()
-                .evrakSecCheckBox(konu1, konu2, true)
+                .evrakSecToplu(konu1, konu2, true)
                 .islemMesaji().basariliOlmali(basariMesaji);
 
         teslimAlinanlarPage
@@ -623,7 +623,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
                 .openPage()
                 .evrakSec(konu1)
                 .evrakSec(konu2)
-                .evrakSecCheckBox(konu1,konu2,true)
+                .evrakSecToplu(konu1,konu2,true)
                 .evrakNoGelmedigiGorme(konu1)
                 .evrakNoGelmedigiGorme(konu2)
                 .islemMesaji().basariliOlmali(basariMesaji);
@@ -732,7 +732,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
                 .openPage()
                 .evrakSec(konu1)
                 .evrakSec(konu2)
-                .evrakSecCheckBox(konu1,konu2,true)
+                .evrakSecToplu(konu1,konu2,true)
                 .evrakNoGelmedigiGorme(konu1)
                 .evrakNoGelmedigiGorme(konu2)
                 .islemMesaji().basariliOlmali(basariMesaji);
