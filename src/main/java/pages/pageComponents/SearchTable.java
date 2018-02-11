@@ -85,14 +85,14 @@ public class SearchTable extends BaseLibrary {
 
     @Step("İlk sayfaya git")
     public SearchTable goToFirstPage(){
-        if (getFirstPageButton().is(not(isTableNavButtonDisabled)))
+        if (getFirstPageButton().exists() && getFirstPageButton().is(not(isTableNavButtonDisabled)))
             getFirstPageButton().click();
         return this;
     }
 
     @Step("Son sayfaya git")
     public SearchTable goToLastPage(){
-        if (getLastPageButton().is(not(isTableNavButtonDisabled)))
+        if (getLastPageButton().exists() && getLastPageButton().is(not(isTableNavButtonDisabled)))
             getLastPageButton().click();
         return this;
     }
@@ -278,25 +278,25 @@ public class SearchTable extends BaseLibrary {
         if (parentElement.$$(rowCssLocator + "[data-ri]").size() > 0)
             rowCssLocator = rowCssLocator + "[data-ri]";
 
-        ElementsCollection collection = searchByColumn ?
-                parentElement.$$(rowCssLocator + " " + columnCssLocator + ":nth-child(" + columnIndex + ")")
-                : parentElement.$$(rowCssLocator);
+        if (searchStartFromLast)
+            goToLastPage();
+        else
+            goToFirstPage();
 
         SelenideElement pageNavigationButton = searchStartFromLast ? getPrevPageButton() : getNextPageButton();
 
-        if (searchStartFromLast && getLastPageButton().exists() && getLastPageButton().is(not(isTableNavButtonDisabled)))
-            getLastPageButton().click();
-        else if (pageNavigationButton.exists() && getFirstPageButton().is(not(isTableNavButtonDisabled)))
-            getFirstPageButton().click();
+        ElementsCollection collection = searchByColumn ?
+                parentElement.$$(rowCssLocator + " " + columnCssLocator + ":nth-child(" + columnIndex + ")")
+                : parentElement.$$(rowCssLocator);
 
         while (true) {
             for (Condition condition : conditions)
                 collection = collection.filterBy(condition);
 
+            takeScreenshot();
             if (collection.size() > 0 || !searchInAllPages || pageNavigationButton.is(isTableNavButtonDisabled))
                 break;
 
-            takeScreenshot();
             pageNavigationButton.click();
         }
 
