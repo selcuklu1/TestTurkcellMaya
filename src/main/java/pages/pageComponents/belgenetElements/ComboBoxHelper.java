@@ -71,7 +71,7 @@ class ComboBoxHelper extends BaseLibrary {
         if (id.contains("_label"))
             id = id.substring(0, id.lastIndexOf("_label"));
 
-        btnTrigger = proxy.has(cssClass("ui-selectonemenu"))
+        btnTrigger = proxy.attr("class").contains("ui-selectonemenu")
                 ? By.cssSelector("[id='" + id + "'] .ui-selectonemenu-trigger")
                 : By.cssSelector("[id='" + id + "'] .ui-selectcheckboxmenu-trigger");
        /* if (proxy.has(cssClass("ui-selectonemenu-trigger")))
