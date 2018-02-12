@@ -22,11 +22,16 @@ public class EvrakDetayiPage extends MainPage {
     SelenideElement btnIadeEt = $("[id^='inboxItemInfoForm:dialogTabMenuRight:uiRepeat'] [class$='iadeEt']");
     SelenideElement btnCevapYaz = $("[id^='inboxItemInfoForm:dialogTabMenuRight:uiRepeat'] [class$='cevapYaz']");
     SelenideElement btnEvrakKapat = $("[id^='inboxItemInfoForm:dialogTabMenuRight:uiRepeat'] [class$='evrakKapat']");
-    SelenideElement btnSil = $("[id^='inboxItemInfoForm:dialogTabMenuRight:uiRepeat'] [class$='sil']");
+    SelenideElement btnSil = $("[id^='inboxItemInfoForm:dialogTabMenuRight:uiRepeat'] [class$='evrakSil']");
     SelenideElement divContainer = $("#evrakBilgileriContainerDiv");
     SelenideElement spanBilgileri = $x("//span[. = 'Bilgileri']");
     SelenideElement tabEditor = $("button .editor");
     ElementsCollection tblHareketGecmisi = $$("tbody[id$='hareketGecmisiDataTable_data'] > tr[role='row']");
+    SelenideElement txtSilmeNotu = $("[id^='inboxItemInfoForm:j_idt'] [class*=' ui-inputtextarea']");
+    SelenideElement btnEvrakNotSil = $("[class='form-buttons'] [id^='inboxItemInfoForm:j_idt']");
+
+
+
 
     private HareketGecmisiTab hareketGecmisiTab = new HareketGecmisiTab();
 
@@ -96,9 +101,41 @@ public class EvrakDetayiPage extends MainPage {
     }
 
     @Step("Sil butonunun gelmediği kontrolu")
-    public EvrakDetayiPage silButonuKontrolu() {
+    public EvrakDetayiPage silButonunGelmedigiKontrolu() {
 
         Assert.assertEquals(btnSil.isDisplayed(), false);
+
+        return this;
+    }
+
+    @Step("Sil butonunun geldiği kontrolu")
+    public EvrakDetayiPage silButonununGeldigiKontrolu() {
+
+        Assert.assertEquals(btnSil.isDisplayed(), true);
+
+        return this;
+    }
+
+    @Step("Evrak Sil")
+    public EvrakDetayiPage evrakSil() {
+
+        btnSil.click();
+
+        return this;
+    }
+
+    @Step("Evrak Silme Notu Gir")
+    public EvrakDetayiPage evrakSilmeNotuDoldur(String not) {
+
+       txtSilmeNotu.setValue(not);
+
+        return this;
+    }
+
+    @Step("Evrak Notu Sonrası Sil")
+    public EvrakDetayiPage evrakSilmeNotuSonrasiSil() {
+
+       btnEvrakNotSil.click();
 
         return this;
     }
@@ -117,6 +154,22 @@ public class EvrakDetayiPage extends MainPage {
         return this;
     }
 
+    @Step("Silme Onayı: Kaydı silmek istediğinize emin misiniz?: {secim}")
+    public EvrakDetayiPage evrakSilPopup(String secim) {
+
+        SelenideElement btnEvet = $(By.id("inboxItemInfoForm:evrakSilEvetButton"));
+        SelenideElement btnHayir = $(By.id("inboxItemInfoForm:evrakSilHayirButton"));
+
+        switch (secim) {
+            case "Evet":
+                btnEvet.click();
+                break;
+            case "Hayır":
+                btnHayir.click();
+                break;
+        }
+        return this;
+    }
 
     public class TebligGecmisiTab extends MainPage {
 
