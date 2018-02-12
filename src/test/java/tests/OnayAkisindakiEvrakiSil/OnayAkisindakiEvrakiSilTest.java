@@ -157,6 +157,7 @@ public class OnayAkisindakiEvrakiSilTest extends BaseTest{
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
+                .bilgilerTabTumAlanKontrolleri()
                 .konuKoduDoldur(konuKodu)
                 .konuDoldur(evrakKonusu)
                 .kaldiralacakKlasorlerSec(kaldirilacakKlasor)
@@ -243,6 +244,7 @@ public class OnayAkisindakiEvrakiSilTest extends BaseTest{
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
+                .bilgilerTabTumAlanKontrolleri()
                 .konuKoduDoldur(konuKodu)
                 .konuDoldur(evrakKonusu)
                 .kaldiralacakKlasorlerSec(kaldirilacakKlasor)
