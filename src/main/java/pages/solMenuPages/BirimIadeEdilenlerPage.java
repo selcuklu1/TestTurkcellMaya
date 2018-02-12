@@ -30,6 +30,9 @@ public class BirimIadeEdilenlerPage extends MainPage {
     ElementsCollection tableEvraklar = $$("tbody[id='mainInboxForm:inboxDataTable_data'] > tr");
     SelenideElement onizlemeTeslimAl = $("[id='mainPreviewForm:onizlemeRightTab:uiRepeat:4:cmdbutton']");
     ElementsCollection btnTeslimAl = $$("[id^='mainInboxForm:inboxDataTable:j_idt'] > [class$='document-delivery']");
+    ElementsCollection btnTeslimAlHavaleEt = $$("[id^='mainInboxForm:inboxDataTable:j_idt'] > [class$='document-delivery-publish']");
+
+    SelenideElement teslimAlveHavaleEt = $("[id='mainInboxForm:inboxDataTable:0:teslimAlVeHavaleEtButton']");
     BelgenetElement txtOnaylanacakKisi = comboLov(By.id("mainPreviewForm:onaylayacakKisiLov:LovText"));
     SelenideElement içeriktenEvrakTeslimAlHavaleEt = $("[id='inboxItemInfoForm:dialogTabMenuRight:uiRepeat:5:cmdbutton']");
     BelgenetElement cmbHavaleIslemleriBirim = comboLov(By.id("inboxItemInfoForm:dagitimBilgileriBirimLov:LovText"));
@@ -47,7 +50,23 @@ public class BirimIadeEdilenlerPage extends MainPage {
     BelgenetElement txtHavaleIslemleriKisi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKullaniciLov:LovText"));
     BelgenetElement cmbHavaleIslemleriOnaylayacakKisi = comboLov(By.id("mainPreviewForm:onaylayacakKisiLov:LovText"));
 
+    BelgenetElement txtHavaleIslemleriKisiListesi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKisiListesiLov:LovText"));
     ElementsCollection havaleOnayinaGonder = $$("[id^='mainPreviewForm:j_idt']");
+
+    //Kontroller
+    SelenideElement onaylayacakKisi = $("[id='mainPreviewForm:onaylayacakKisiLov:LovText']");
+    SelenideElement birimKontrol = $(By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovText"));
+    SelenideElement kisiKontrol = $(By.id("mainPreviewForm:dagitimBilgileriKullaniciLov:LovText"));
+    SelenideElement kullanıcıListeKontrol = $(By.id("mainPreviewForm:dagitimBilgileriKisiListesiLov:LovText"));
+    SelenideElement aciklamaKontrol = $(By.id("mainPreviewForm:aciklamaInputText"));
+
+    SelenideElement dosyaEkleKontrol2 = $(By.id("mainPreviewForm:fileUploadTeslimAlHavaleEk"));
+//    SelenideElement islemSureKontrol = $(By.id("mainPreviewForm:islemSuresiTarih_input"));
+
+    BelgenetElement havaleIslemleriBirim = comboLov(By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovText"));
+
+    SelenideElement birimTopluTeslimAlGonder = $(By.id("mainPreviewForm:btnTopluTeslimAlGonder"));
+    SelenideElement birimTeslimAlGonder = $(By.id("mainPreviewForm:btnTeslimAlGonder"));
 
     public BirimIadeEdilenlerPage openPage() {
         solMenu(SolMenuData.BirimEvraklari.BirimeIadeEdilenler);
@@ -63,7 +82,7 @@ public class BirimIadeEdilenlerPage extends MainPage {
         return this;
     }
 
-    @Step("Teslim Al button kontrolü")
+    @Step("Teslim Al button kontrolü ")
     public BirimIadeEdilenlerPage evrakTeslimAlButtonKontrol() {
         teslimAlButton.should(visible);
         return this;
@@ -114,14 +133,32 @@ public class BirimIadeEdilenlerPage extends MainPage {
          return this;
     }
 
-    @Step("Evrak Sec Checkbox ile ve Teslim Al")
-    public BirimIadeEdilenlerPage evrakSecCheckBox(String konu1, String konu2, boolean secim) {
+    @Step("Evrak Sec Toplu ve Teslim Al")
+    public BirimIadeEdilenlerPage evrakSecToplu(String konu1, String konu2, boolean secim) {
         tblEvraklar.filterBy(text(konu1)).get(0).$$("div[class^='ui-chkbox-box']").first().click();
         tblEvraklar.filterBy(text(konu2)).get(0).$$("div[class^='ui-chkbox-box']").first().click();
 
         takeScreenshot();
         btnTeslimAl.get(0).click();
 
+        return this;
+    }
+
+    @Step("Toplu Evrak Sec 3 tane ve Teslim Al Havale Et")
+    public BirimIadeEdilenlerPage evrakSecToplu2(String konu1, String konu2,String konu3, boolean secim) {
+        tblEvraklar.filterBy(text(konu1)).get(0).$$("div[class^='ui-chkbox-box']").first().click();
+        tblEvraklar.filterBy(text(konu2)).get(0).$$("div[class^='ui-chkbox-box']").first().click();
+        tblEvraklar.filterBy(text(konu3)).get(0).$$("div[class^='ui-chkbox-box']").first().click();
+
+        takeScreenshot();
+        btnTeslimAlHavaleEt.get(0).click();
+
+        return this;
+    }
+
+    @Step("Evrak Teslim Al Havale Et")
+    public BirimIadeEdilenlerPage evrakTeslimAlHavaletEt() {
+        teslimAlveHavaleEt.click();
         return this;
     }
 
@@ -216,10 +253,72 @@ public class BirimIadeEdilenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Havale İşlemleri Kişi alanında \"{kisi}\" seç")
+    public BirimIadeEdilenlerPage havaleIslemleriKisiDetails(String kisi,String details) {
+        txtHavaleIslemleriKisi.selectLov(kisi,details);
+        return this;
+    }
+
+    @Step("Havale İşlemleri Kişi Listesi alanında \"{kisi}\" seç")
+    public BirimIadeEdilenlerPage havaleKisiListesi(String kisiliste) {
+        txtHavaleIslemleriKisiListesi.selectLov(kisiliste);
+        return this;
+    }
+
     @Step("Dağıtım Bilgileri Onaylayacak Kisi alanında \"{onaylayan}\" seçilir")
     public BirimIadeEdilenlerPage dagitimBilgileriOnaylayanWithDetails(String onaylayan, String details) {
         cmbHavaleIslemleriOnaylayacakKisi.selectLov(onaylayan, details);
         return this;
     }
+
+    @Step("Havale İşlemleri Alanındaki Kontroller")
+    public BirimIadeEdilenlerPage havaleAlanKontrolleri() {
+        String text = "";
+        if(onaylayacakKisi.isDisplayed()) {
+            text += "Onaylayacak Kisi,";
+        }
+        if(birimKontrol.isDisplayed()) {
+            text += "Birim Kontrol,";
+        }
+        if(kisiKontrol.isDisplayed()) {
+            text += "Kisi Kontrol, ";
+        }
+        if(kullanıcıListeKontrol.isDisplayed()) {
+            text += "Kullanıcı Liste,";
+        }
+        if(aciklamaKontrol.isDisplayed()) {
+            text += "Aciklama,";
+        }
+        if(dosyaEkleKontrol2.isDisplayed()) {
+            text += "Dosya Ekle";
+        }
+//        if(islemSureKontrol.isDisplayed()) {
+//            text += "İslem Sure alanları gösterilmektedir.";
+//        }
+        Allure.addAttachment("Alan Kontrolleri : ", text);
+        return this;
+    }
+
+    @Step("Dağıtım Bilgileri Birim alanında \"{birim}\" seçilir")
+    public BirimIadeEdilenlerPage dagitimBilgileriBirimDoldurWithDetails(String birim, String details) {
+//        havaleIslemleriBirim.type(birim).getDetailItems()
+//                .filterBy(Condition.exactText(details)).first().click();
+//        havaleIslemleriBirim.closeTreePanel();
+        havaleIslemleriBirim.selectLov(birim,details);
+        return this;
+    }
+
+    @Step("Birim Toplu Havale Alanında Teslim Al Gonder")
+    public BirimIadeEdilenlerPage birimTopluTeslimAlGonder() {
+        birimTopluTeslimAlGonder.click();
+        return this;
+    }
+
+    @Step("Birim Toplu Havale Alanında Teslim Al Gonder")
+    public BirimIadeEdilenlerPage birimTeslimAlGonder() {
+        birimTeslimAlGonder.click();
+        return this;
+    }
+
 
 }

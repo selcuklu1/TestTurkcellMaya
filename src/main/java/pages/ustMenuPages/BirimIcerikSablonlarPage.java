@@ -17,6 +17,7 @@ import pages.pageComponents.TextEditor;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.UstMenuData;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
@@ -242,7 +243,10 @@ public class BirimIcerikSablonlarPage extends MainPage {
 
     @Step("Birim Şablonlarında şablonu bul")
     public SelenideElement sablonuBul(String sablonAdi) {
-        return searchTable.searchStartFromLastPage(true).findRows(text(sablonAdi)).shouldHaveSize(1).useFirstFoundRow().getFoundRow();
+        return searchTable
+                .searchInAllPages(true)
+                .searchStartFromLastPage(true)
+                .findRows(text(sablonAdi)).shouldHaveSize(1).useFirstFoundRow().getFoundRow();
                 /*.findRowsInAllPagesByTextFromLast(sablonAdi)
                 .shouldHaveSize(1)
                 .first();*/
@@ -329,7 +333,8 @@ public class BirimIcerikSablonlarPage extends MainPage {
 
     @Step("Var olan şablonun adını al")
     public String sablonAdiAl(int satir) {
-        return searchTable.findRows().shouldHave(sizeGreaterThan(0)).useFirstFoundRow().getColumnValue(1).text();
+        return searchTable.searchInAllPages(false).searchStartFromLastPage(false)
+                .findRows().shouldHave(sizeGreaterThan(0)).useFirstFoundRow().getColumnValue(1).text();
 //        return searchTable.getColumnValue(searchTable.getRows().shouldHave(sizeGreaterThan(0)).get(satir), 1).text();
     }
 
@@ -351,7 +356,13 @@ public class BirimIcerikSablonlarPage extends MainPage {
         btnEvrakOnizleme.click();
 
         WebDriver driver = switchTo().window("htmlToPdfServlet");
-        sleep(5000);
+        $(".textLayer").shouldBe(exist, visible);
+        for (Condition condition : conditions) {
+            System.out.println(new Timestamp(System.currentTimeMillis()) + "   pdfonizleme text: " + $(".textLayer").text());
+            $(".textLayer").shouldHave(condition);
+        }
+
+        /*sleep(5000);
         $(".textLayer").shouldBe(visible);
         for (Condition condition : conditions) {
             for (int i = 0; i < Configuration.timeout / 1000; i++) {
@@ -366,7 +377,7 @@ public class BirimIcerikSablonlarPage extends MainPage {
             }
             Allure.addAttachment("Tekst kontrol", $(".textLayer").text());
             $(".textLayer").shouldHave(condition);
-        }
+        }*/
         takeScreenshot();
         driver.close();
         switchTo().window(0);

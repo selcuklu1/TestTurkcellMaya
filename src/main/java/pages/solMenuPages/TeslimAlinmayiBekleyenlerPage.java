@@ -256,7 +256,7 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         return this;
     }
 
-    @Step("Evrak no ile evrak checkbox seçilir : \"{evrakNo}\" ")
+    @Step("Evrak no ile evrak Checkbox seçilir : \"{evrakNo}\" ")
     public TeslimAlinmayiBekleyenlerPage evrakNoIleEvrakCheckboxSec(String evrakNo) {
         tblEvraklar
                 .filterBy(Condition.text(evrakNo)).get(0).$$("[class='ui-chkbox-box ui-widget ui-corner-all ui-state-default']").first().click();
@@ -346,7 +346,7 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         return this;
     }
 
-    @Step("Evrak no ile teslim al")
+    @Step("Evrak no ile teslim al Uyarı: Evrakı teslim almak istediğinize emin misiniz?\n Evet seçeneği seçilir")
     public TeslimAlinmayiBekleyenlerPage evrakSecNoTeslimAl(String konu, boolean secim) {
         tblEvraklar.filterBy(text(konu)).get(0).$$("[id$='teslimAlButton']").first().click();
 
@@ -378,8 +378,8 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     }
 
 
-    @Step("Evrak Sec Checkbox ile ve Teslim Al")
-    public TeslimAlinmayiBekleyenlerPage evrakSecCheckBox(String konu1, String konu2, boolean secim) {
+    @Step("Evrak Sec Toplu ve Teslim Al")
+    public TeslimAlinmayiBekleyenlerPage evrakSecToplu(String konu1, String konu2, boolean secim) {
         tblEvraklar.filterBy(text(konu1)).get(0).$$("div[class^='ui-chkbox-box']").first().click();
         tblEvraklar.filterBy(text(konu2)).get(0).$$("div[class^='ui-chkbox-box']").first().click();
 

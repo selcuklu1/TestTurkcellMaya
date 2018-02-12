@@ -293,7 +293,7 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
 
     @Step("Birim doldur")
     public EvrakHavaleKurallariYonetimiPage kimeHavaleEdilecekBirimDoldur(String birim) {
-        txtKimeHavaleEdilecekBirim.selectLov(birim);
+        txtKimeHavaleEdilecekBirim.type(birim).getTitleItems().filterBy(Condition.text(birim)).first().click();
         return this;
     }
 
