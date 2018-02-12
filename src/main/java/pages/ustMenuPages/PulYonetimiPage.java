@@ -6,6 +6,7 @@ import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.testng.Assert;
 import pages.MainPage;
 import pages.pageData.UstMenuData;
 
@@ -48,17 +49,17 @@ public class PulYonetimiPage extends MainPage {
     @Step("Alan Kontrolleri")
     public PulYonetimiPage alanKontrolleri() {
 
-        lblPostaTipi.isDisplayed();
-        lblGramaj.isDisplayed();
-        lblTutar.isDisplayed();
-        lblIndirimOrani.isDisplayed();
-        chkYurtDisi.isDisplayed();
+        Assert.assertEquals(lblPostaTipi.isDisplayed(), true, "Posta Tipi");
+        Assert.assertEquals(lblGramaj.isDisplayed(), true, "Gramaj");
+        Assert.assertEquals(lblIndirimOrani.isDisplayed(), true, "İndirim Oranı");
+        Assert.assertEquals(chkYurtDisi.isDisplayed(), true, "Yurt Dışı");
 
         Allure.addAttachment("label", lblPostaTipi.text());
         Allure.addAttachment("label", lblGramaj.text());
         Allure.addAttachment("label", lblTutar.text());
         Allure.addAttachment("label", lblIndirimOrani.text());
         Allure.addAttachment("Yurt Dişi checkBox", "Ok");
+
         return this;
     }
 

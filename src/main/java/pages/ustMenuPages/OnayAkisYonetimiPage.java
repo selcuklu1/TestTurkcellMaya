@@ -73,7 +73,7 @@ public class OnayAkisYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Onay Akışı işlemler kaydet")
+    @Step("Onay Akışı işlemler ara")
     public OnayAkisYonetimiPage ara() {
         btnAra.click();
         return this;
@@ -530,6 +530,8 @@ public class OnayAkisYonetimiPage extends MainPage {
 
         Assert.assertEquals(btnBirim.isDisplayed(), true);
         Allure.addAttachment("Birim alan kontrolu başaralı.", "");
+
+        takeScreenshot();
 
         return this;
     }
