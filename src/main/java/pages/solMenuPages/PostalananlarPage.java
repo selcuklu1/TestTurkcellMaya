@@ -2,12 +2,16 @@ package pages.solMenuPages;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.pageData.SolMenuData;
+
+import java.io.BufferedOutputStream;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
@@ -255,9 +259,12 @@ public class PostalananlarPage extends MainPage {
         return this;
     }
 
-    @Step("Dağıtım planı Yazdır")
+    @Step("Dağıtım planı Yazdır, ÜstVeri ve Ekler için yazdır butonu kontrolleri")
     public PostalananlarPage dagitimPlanYazdir() {
         postalananEvrakYazdir.click();
+        $x("//*[@id='postaDetayYazdirForm:dtPostaEvrakUstVeri:0:evrakDetayiViewDialogYazdir']").exists();
+        $x("//*[@id='postaDetayYazdirForm:dtPostaEvrakEk_data']/tr[1]/td[7]/div/button").exists();
+        $x("//*[@id='postaDetayYazdirForm:dtPostaEvrakEk_data']/tr[2]/td[7]/div/button").exists();
         return this;
     }
 
@@ -278,13 +285,21 @@ public class PostalananlarPage extends MainPage {
         return this;
     }
 
-    @Step("Ekleri Yazdirma butonu , PDF'leri açma ve kontröl")
-    public PostalananlarPage eklerYazdirPopupbtn() {
+    @Step("Ekleri Yazdirma butonu , Ekleri kontrolü ,  PDF'leri açma ve kontröl")
+    public PostalananlarPage eklerYazdirPopupbtn(String ek1, String ek2) {
         SelenideElement evrakYazdirButonktrl = $x("//*[@id='postaDetayYazdirForm:dtPostaEvrakEk_data']/tr[1]/td[7]/div/button");
         evrakYazdirButonktrl.click();
         switchTo().window(1);
         SelenideElement ickKtrl = $x("//*[@id='plugin']");
         ickKtrl.exists();
+        takeScreenshot();
+        ickKtrl.sendKeys(Keys.PAGE_DOWN);
+        ickKtrl.sendKeys(Keys.PAGE_DOWN);
+        takeScreenshot();
+        ickKtrl.sendKeys(Keys.CONTROL, "a");
+        ickKtrl.sendKeys(Keys.CONTROL, "c");
+        ickKtrl.sendKeys(Keys.CONTROL, "v");
+        BufferedOutputStream.class.toString();
         closeNewWindow();
         switchTo().window(0);
         return this;
@@ -597,10 +612,18 @@ public class PostalananlarPage extends MainPage {
         return this;
     }
 
-    @Step("Evrak Yazdır Popup içi Üst Veri Pdf yazdırma, kırmızı alan içerik kontrolü")
+    @Step("Evrak Yazdır Popup içi Üst Veri Pdf yazdırma,Yazışma kontrolü ve kırmızı alan içerik kontrolü, Ekran görüntüsü ve text output alma")
     public PostalananlarPage popupYazpdfkontrolveKapatma() {
         popupEvrakYazdirma.click();
         switchTo().window(1);
+        SelenideElement pdftab = $x("//*[@id='plugin']");
+        takeScreenshot();
+        pdftab.sendKeys(Keys.PAGE_DOWN);
+        pdftab.sendKeys(Keys.PAGE_DOWN);
+        takeScreenshot();
+        pdftab.sendKeys(Keys.CONTROL, "a");
+        pdftab.sendKeys(Keys.CONTROL, "c");
+        pdftab.sendKeys(Keys.CONTROL, "v");
         closeNewWindow();
         switchTo().window(0);
         SelenideElement ustyazi = $x("//*[@id='postaDetayYazdirForm:dtPostaEvrakUstVeri_data']/tr/td[2]/div");

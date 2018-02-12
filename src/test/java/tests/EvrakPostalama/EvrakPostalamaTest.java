@@ -87,7 +87,7 @@ public class EvrakPostalamaTest extends BaseTest {
 
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TS0308: Evrak Postalama")
+    @Test(enabled = true, description = "TS0308: Postalama ekranınlarında pdf'in yapısal kontrolü")
     public void TS0308() throws InterruptedException {
         login("Mbozdemir", "123");
         String konu = "TS0308_" + getSysDate();
@@ -191,8 +191,11 @@ public class EvrakPostalamaTest extends BaseTest {
         postalanacakEvraklarPage
 
                 .postalanacakEvrakOrjYaz()
+                .popupOrjYazYazdirButonKonrolleri()
                 .pdfEvrakYazismaKuralkontrol()
+                .PDFEibareVeKırmızıYazıktrl()
                 .popupEvrOrjYazKapat()
+                .dagitimplanyazdir()
                 .gramajDoldur("111111")
                 .hesapla()
                 .postala()
@@ -214,7 +217,7 @@ public class EvrakPostalamaTest extends BaseTest {
         postalananlarPage
                 .popupYazpdfkontrolveKapatma();
         postalananlarPage
-                .eklerYazdirPopupbtn()
+                .eklerYazdirPopupbtn("TS0308_PDF","TS0308PDF")
                 .popupkapatma();
 
 
