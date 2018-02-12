@@ -4,6 +4,7 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
@@ -54,6 +55,12 @@ public class TaslakEvraklarPage extends MainPage {
     SelenideElement btnPaylasBirim = $("div[id='mainPreviewForm:paylasTumuBoolean']");
     ElementsCollection tblHareketGecmisi = $$("tbody[id$='hareketGecmisiDataTable_data'] > tr[role='row']");
     SelenideElement btnRaporAlExcel = $("[id$='hareketGecmisiDataTable:evrakGecmisiExport']");
+
+    SelenideElement tblKolonGonderen = $(By.xpath("//span[text()='Gönderen']"));
+    SelenideElement tblKolonTeslimAlan = $(By.xpath("//span[text()='Teslim Alan']"));
+    SelenideElement tblKolonIslemSureci = $(By.xpath("//span[text()='İşlem Süreci']"));
+    SelenideElement tblKolonIslemTarihi = $(By.xpath("//span[normalize-space(text())='İşlem Tarihi']"));
+    SelenideElement tblKolonAciklama = $(By.xpath("//span[text()='Açıklama']"));
 
     @Step("Taslak Evraklar sayfası aç")
     public TaslakEvraklarPage openPage() {
@@ -220,6 +227,19 @@ public class TaslakEvraklarPage extends MainPage {
         tblHareketGecmisi
                 .filterBy(Condition.text(text))
                 .shouldHaveSize(1);
+
+        Assert.assertEquals(tblKolonGonderen.isDisplayed(),true);
+        Assert.assertEquals(tblKolonTeslimAlan.isDisplayed(),true);
+        Assert.assertEquals(tblKolonIslemSureci.isDisplayed(),true);
+        Assert.assertEquals(tblKolonIslemTarihi.isDisplayed(),true);
+        Assert.assertEquals(tblKolonAciklama.isDisplayed(),true);
+
+        Allure.addAttachment("Tablo kontolü","Aşağıdaki kolonların listelendiği görülür. \n Gönderen\n" +
+                "Teslim Alan\n" +
+                "İşlem Süreci\n" +
+                "İşlem Tarihi\n" +
+                "Açıklama");
+
         return this;
     }
 

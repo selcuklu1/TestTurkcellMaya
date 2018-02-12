@@ -1,7 +1,9 @@
 package pages.altMenuPages;
 
 import com.codeborne.selenide.*;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
+import org.apache.commons.collections4.list.AbstractLinkedList;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
@@ -192,6 +194,11 @@ public class EvrakDetayiPage extends MainPage {
         SelenideElement btnRaporAlExcel = $(By.id("inboxItemInfoForm:hareketGecmisiDataTable:evrakGecmisiExport"));
         SelenideElement txtBaslangicTarihi = $(By.id("inboxItemInfoForm:hareketGecmisiDataTable:hareketGecmisiBegin_input"));
         SelenideElement txtBitisTarihi = $(By.id("inboxItemInfoForm:hareketGecmisiDataTable:hareketGecmisiEnd_input"));
+        SelenideElement tblKolonGonderen = $(By.xpath("//span[text()='Gönderen']"));
+        SelenideElement tblKolonTeslimAlan = $(By.xpath("//span[text()='Teslim Alan']"));
+        SelenideElement tblKolonIslemSureci = $(By.xpath("//span[text()='İşlem Süreci']"));
+        SelenideElement tblKolonIslemTarihi = $(By.xpath("//span[normalize-space(text())='İşlem Tarihi']"));
+        SelenideElement tblKolonAciklama = $(By.xpath("//span[text()='Açıklama']"));
 
         private HareketGecmisiTab open() {
             tabHareketGecmisi.click();
@@ -203,6 +210,18 @@ public class EvrakDetayiPage extends MainPage {
             tblHareketGecmisi
                     .filterBy(Condition.text(text))
                     .shouldHaveSize(1);
+
+            Assert.assertEquals(tblKolonGonderen.isDisplayed(),true);
+            Assert.assertEquals(tblKolonTeslimAlan.isDisplayed(),true);
+            Assert.assertEquals(tblKolonIslemSureci.isDisplayed(),true);
+            Assert.assertEquals(tblKolonIslemTarihi.isDisplayed(),true);
+            Assert.assertEquals(tblKolonAciklama.isDisplayed(),true);
+
+            Allure.addAttachment("Tablo kontolü","Aşağıdaki kolonların listelendiği görülür. \n Gönderen\n" +
+                    "Teslim Alan\n" +
+                    "İşlem Süreci\n" +
+                    "İşlem Tarihi\n" +
+                    "Açıklama");
             return this;
         }
 

@@ -75,7 +75,7 @@ public class EvrakDevretTest extends BaseTest {
         logout();
         login(username21g);
 
-
+System.out.println(konu);
         kullaniciEvrakDevretPage
                 .openPage()
                 .ekranTabKontrolleri()
@@ -110,13 +110,19 @@ public class EvrakDevretTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true
-            , dependsOnMethods = {"TS2178"}
+//            , dependsOnMethods = {"TS2178"}
             , description = "TS2179 : Devredilen evrakların devralan kullanıcıda hareket/evrak geçmişinin kontrolü")
     public void TS2179() throws InterruptedException {
-        login(username22n);
         remoteDownloadPath = useChromeWindows151("TS2179");
+        login(mbozdemir);
+
+        System.out.println(remoteDownloadPath);
         String mesaj = nameDE + kullaniciTitle + " ait evrak " + nameDA + kullaniciTitle + " adlı kişiye " + nameDE + kullaniciTitle
                 + " tarafından İmza Bekleyenler menüsünden devredilmiştir. / " + icerik;
+
+        evrakDevret();
+
+        login(username22n);
         taslakEvraklarPage
                 .openPage()
                 .konuyaGoreEvrakIcerikGoster(konu);
@@ -136,10 +142,32 @@ public class EvrakDevretTest extends BaseTest {
         //1. adımda gelen evraklara evrak düşmedi...
     }
 
+
+
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS0574 : Devredilen evrakların devredilen kullanıcıda kontrol edilmesi")
     public void TS0574() throws InterruptedException {
 
+    }
+
+    @Step("Test datası oluşturuldu.")
+    private void evrakDevret() {
+
+        evrakOlustur();
+        login(username21g);
+
+        kullaniciEvrakDevretPage
+                .openPage()
+                .ekranTabKontrolleri()
+                .devredecekKisiSec("username21g")
+                .listele()
+                .tabloEvrakSecimi(tabName, konu)
+                .devret()
+                .devralacakKisiAlanKontolu()
+                .devralacakKisiSec(kullaniciNormal)
+                .aciklamaDoldur(icerik)
+                .devretTamam()
+                .islemMesaji().basariliOlmali(basariMesaji);
     }
 
     @Step("Test datası oluşturuldu.")
