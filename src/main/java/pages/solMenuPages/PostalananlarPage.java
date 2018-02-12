@@ -311,6 +311,12 @@ public class PostalananlarPage extends MainPage {
         return this;
     }
 
+    @Step("Dikkat -  Önce üst yazı yazdırılmalıdır kontrülü")
+    public PostalananlarPage ktrlonceustyazi() {
+        islemMesaji().isDikkat("Önce üst yazı yazdırılmalıdır ");
+        return this;
+
+    }
     @Step("Icerik Detay Posta Detay Butonu")
     public PostalananlarPage icerikDetayPostaDetayi() {
         btnIcerikPostaDetayi.click();
