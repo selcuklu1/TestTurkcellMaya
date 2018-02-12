@@ -85,6 +85,17 @@ public class TextEditor extends MainPage {
         return this;
     }
 
+    @Step("Editore içerik silinir.")
+    public TextEditor clear() {
+        //sleep(3000);
+        SelenideElement editor = editor();
+        editor.shouldHave(attribute("contenteditable","true"));
+        editor.shouldBe(visible, enabled);
+        editor.clear();
+        switchTo().defaultContent();
+        return this;
+    }
+
     @Step("\"{butonIsmi}\" toolbar butonun etkin durumu değiştir: \"{etkinDurumu}\" yap")
     public TextEditor toolbarButton(String butonIsmi, boolean etkinDurumu) {
         //class="cke_button_disabled" aria-disabled="true"

@@ -304,7 +304,7 @@ public class TaslakEvraklarPage extends MainPage {
         return this;
     }
 
-    @Step("Gelen Evraklar sayfasında evrakın geldiği kontrolu ve seçme")
+    @Step("Taslak Evraklar sayfasında evrakın geldiği kontrolu ve içerik tıklanır.")
     public TaslakEvraklarPage konuyaGoreEvrakIcerikGoster(String konu) {
 
         tableEvraklar

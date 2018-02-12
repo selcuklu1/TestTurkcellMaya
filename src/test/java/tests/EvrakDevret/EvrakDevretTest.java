@@ -53,6 +53,7 @@ public class EvrakDevretTest extends BaseTest {
     String nameDA = "Username22N TEST";
     String nameDE = "Username21G TEST";
     String kullaniciTitle = " [Ağ (Network) Uzman Yardımcısı]";
+    String devredecekKisi = "username21g";
     String remoteDownloadPath;
 
 
@@ -75,11 +76,14 @@ public class EvrakDevretTest extends BaseTest {
         logout();
         login(username21g);
 
-System.out.println(konu);
+        String btnSilName = "Sil";
+        String aciklamaSil = "Silme işlemi";
+
+        System.out.println(konu);
         kullaniciEvrakDevretPage
                 .openPage()
                 .ekranTabKontrolleri()
-                .devredecekKisiSec("username21g")
+                .devredecekKisiSec(devredecekKisi)
                 .listele()
                 .tabloAlanKontrolleri()
                 .tabloEvrakSecimi(tabName, konu)
@@ -96,14 +100,14 @@ System.out.println(konu);
 
         taslakEvraklarPage
                 .openPage()
-                .evrakKontrolu(konu,true)
+                .evrakKontrolu(konu, true)
                 .evrakSecKonuyaGore(konu)
                 .evrakOnizlemeveEkiKontrolu(icerik)
-                .evrakOnizlemeButonTikla("Sil")
-                .silAciklamaInputDolduur("Silme işlemi")
+                .evrakOnizlemeButonTikla(btnSilName)
+                .silAciklamaInputDolduur(aciklamaSil)
                 .silSilGonder()
                 .silmeOnayıPopUpEvet()
-                .evrakKontrolu(konu,false);
+                .evrakKontrolu(konu, false);
 
         //gelen kutusu kontrolü ?
     }
@@ -136,17 +140,52 @@ System.out.println(konu);
         taslakEvraklarPage
                 .openPage()
                 .evrakSecKonuyaGore(konu)
-                .tabloKontol(mesaj);
+                .evrakGecmisiTikla()
+                .tabloKontol(mesaj)
+                .raporAl(remoteDownloadPath);
 
 
-        //1. adımda gelen evraklara evrak düşmedi...
+        //Evrak Gelen Evraklara düşmediğinden Taslak Evraklara göre yazıldı. Cevap bekleniyor.....
     }
 
 
-
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TS0574 : Devredilen evrakların devredilen kullanıcıda kontrol edilmesi")
-    public void TS0574() throws InterruptedException {
+    @Test(enabled = true, description = "TS0517 : Devredilen evrakların devredilen kullanıcıda kontrol edilmesi")
+    public void TS0517() throws InterruptedException {
+
+        login(mbozdemir);
+
+        String aciklama = "Onay akışı güncelledi.";
+        String btnName = "Kaydet ve Onaya Sun";
+        String onayAkisi = "TC0574";
+        String icerikGuncelle = "İçerik değiştirildi.";
+        String tabEditörName = "Editör";
+
+        System.out.println(remoteDownloadPath);
+        evrakDevret();
+
+        login(username22n);
+        taslakEvraklarPage
+                .openPage()
+                .konuyaGoreEvrakIcerikGoster(konu);
+
+        evrakDetayiPage
+                .sayfaAcilmali()
+                .evrakDetayEkraniTabSeçimKontrolu(tabEditörName)
+                .editorTaAc()
+                .editorIcerikDoldur(icerikGuncelle);
+
+        evrakDetayiPage
+                .bilgileriTabAc()
+                .onayAkişGuncelle(onayAkisi);
+
+        evrakDetayiPage
+                .btnTikla(btnName)
+                .kaydetVeOnayaSunAciklama(aciklama)
+                .gonder()
+                .kaydetVeOnayaSunUyariPopUpEvet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
 
     }
 
@@ -156,10 +195,11 @@ System.out.println(konu);
         evrakOlustur();
         login(username21g);
 
+
         kullaniciEvrakDevretPage
                 .openPage()
                 .ekranTabKontrolleri()
-                .devredecekKisiSec("username21g")
+                .devredecekKisiSec(devredecekKisi)
                 .listele()
                 .tabloEvrakSecimi(tabName, konu)
                 .devret()
