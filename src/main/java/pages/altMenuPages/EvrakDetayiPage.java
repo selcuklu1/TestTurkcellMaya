@@ -1,14 +1,22 @@
 package pages.altMenuPages;
 
 import com.codeborne.selenide.*;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
+import org.apache.commons.collections4.list.AbstractLinkedList;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
+import pages.pageComponents.TextEditor;
+import pages.pageComponents.belgenetElements.BelgenetElement;
+import pages.pageComponents.tabs.BilgilerTab;
+import pages.pageComponents.tabs.EditorTab;
+import pages.ustMenuPages.EvrakOlusturPage;
 
 import static com.codeborne.selenide.Condition.attribute;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
+import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 public class EvrakDetayiPage extends MainPage {
 
@@ -27,18 +35,33 @@ public class EvrakDetayiPage extends MainPage {
     SelenideElement spanBilgileri = $x("//span[. = 'Bilgileri']");
     SelenideElement tabEditor = $("button .editor");
     ElementsCollection tblHareketGecmisi = $$("tbody[id$='hareketGecmisiDataTable_data'] > tr[role='row']");
+
+    SelenideElement txtAciklama = $(By.id("inboxItemInfoForm:onayIslemiAciklama"));
+    SelenideElement btnGonder = $(By.id("inboxItemInfoForm:gonderButton"));
+
     SelenideElement txtSilmeNotu = $("[id^='inboxItemInfoForm:j_idt'] [class*=' ui-inputtextarea']");
     SelenideElement btnEvrakNotSil = $("[class='form-buttons'] [id^='inboxItemInfoForm:j_idt']");
 
 
-
-
     private HareketGecmisiTab hareketGecmisiTab = new HareketGecmisiTab();
+    private EditorTab editorTab = new EditorTab();
+    private BilgileriTab bilgileriTab = new BilgileriTab();
 
-    @Step("Sayfa açıldı mı kontrolü")
+    @Step("Sayfa geldiği kontrol edilir.")
     public EvrakDetayiPage sayfaAcilmali() {
         Assert.assertEquals(pageTitle.is(visible), true);
         return this;
+    }
+
+
+    @Step("Editör tab aç")
+    public EditorTab editorTaAc() {
+        return editorTab.open();
+    }
+
+    @Step("Bilgiler tab aç")
+    public BilgileriTab bilgileriTabAc() {
+        return bilgileriTab.open();
     }
 
     @Step("Hareket Geçmisi tab aç")
@@ -63,6 +86,32 @@ public class EvrakDetayiPage extends MainPage {
             btnPanelHayir.click();
 
 
+        return this;
+    }
+
+    @Step("\"{text}\" butonu tıklanır.")
+    public EvrakDetayiPage btnTikla(String text) {
+        SelenideElement btn = $(By.xpath("descendant::*[text()='" + text + "']/ancestor::tbody[1]//button"));
+        btn.click();
+        return this;
+    }
+
+    @Step("Açıklama girilir.")
+    public EvrakDetayiPage kaydetVeOnayaSunAciklama(String aciklama) {
+        txtAciklama.sendKeys(aciklama);
+        return this;
+    }
+
+    @Step("Gönder butonu tıklanır.")
+    public EvrakDetayiPage gonder() {
+        btnGonder.click();
+        return this;
+    }
+
+    @Step("Kaydet Ve Onaya Sun Uyari PopUp kapatılır.")
+    public EvrakDetayiPage kaydetVeOnayaSunUyariPopUpEvet() {
+        SelenideElement btnEvet = $(By.id("kaydetEvetButton"));
+        btnEvet.click();
         return this;
     }
 
@@ -100,6 +149,30 @@ public class EvrakDetayiPage extends MainPage {
         return this;
     }
 
+    @Step("Evrak Detay ekranı \"{text}\" tabı açık.")
+    public EvrakDetayiPage evrakDetayEkraniTabSeçimKontrolu(String text) {
+        $x("//span[. = '" + text + "']").shouldHave(attribute("class", "tabMenuTextSelected")).shouldBe(visible);
+        return this;
+    }
+
+
+    @Step("Silme Onayı: Kaydı silmek istediğinize emin misiniz?: {secim}")
+    public EvrakDetayiPage evrakSilPopup(String secim) {
+
+        SelenideElement btnEvet = $(By.id("inboxItemInfoForm:evrakSilEvetButton"));
+        SelenideElement btnHayir = $(By.id("inboxItemInfoForm:evrakSilHayirButton"));
+
+        switch (secim) {
+            case "Evet":
+                btnEvet.click();
+                break;
+            case "Hayır":
+                btnHayir.click();
+                break;
+        }
+        return this;
+    }
+
     @Step("Sil butonunun gelmediği kontrolu")
     public EvrakDetayiPage silButonunGelmedigiKontrolu() {
 
@@ -127,7 +200,7 @@ public class EvrakDetayiPage extends MainPage {
     @Step("Evrak Silme Notu Gir")
     public EvrakDetayiPage evrakSilmeNotuDoldur(String not) {
 
-       txtSilmeNotu.setValue(not);
+        txtSilmeNotu.setValue(not);
 
         return this;
     }
@@ -135,7 +208,7 @@ public class EvrakDetayiPage extends MainPage {
     @Step("Evrak Notu Sonrası Sil")
     public EvrakDetayiPage evrakSilmeNotuSonrasiSil() {
 
-       btnEvrakNotSil.click();
+        btnEvrakNotSil.click();
 
         return this;
     }
@@ -154,22 +227,34 @@ public class EvrakDetayiPage extends MainPage {
         return this;
     }
 
-    @Step("Silme Onayı: Kaydı silmek istediğinize emin misiniz?: {secim}")
-    public EvrakDetayiPage evrakSilPopup(String secim) {
+    public class EditorTab extends MainPage {
 
-        SelenideElement btnEvet = $(By.id("inboxItemInfoForm:evrakSilEvetButton"));
-        SelenideElement btnHayir = $(By.id("inboxItemInfoForm:evrakSilHayirButton"));
+        SelenideElement tabEditor = $(By.xpath("//span[. = 'Editör']/../../..//button"));
 
-        switch (secim) {
-            case "Evet":
-                btnEvet.click();
-                break;
-            case "Hayır":
-                btnHayir.click();
-                break;
+        private EditorTab open() {
+            tabEditor.click();
+            return this;
         }
-        return this;
+
+
+        @Step("Editör İçerik Doldur")
+        public EditorTab editorIcerikDoldur(String icerik) {
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            TextEditor editor = new TextEditor();
+            editor.clear();
+            editor.type(icerik);
+
+            //divEditor.find(By.tagName("iframe")).click();
+            //divEditor.find(By.tagName("iframe")).getWrappedElement().sendKeys(icerik);
+            return this;
+        }
     }
+
 
     public class TebligGecmisiTab extends MainPage {
 
@@ -238,6 +323,24 @@ public class EvrakDetayiPage extends MainPage {
 
     }
 
+
+    public class BilgileriTab extends MainPage {
+
+        SelenideElement tabBilgileri = $(By.xpath("//span[. = 'Bilgileri']/../../..//button"));
+        BelgenetElement txtOnayAkisi = comboLov("[id^='inboxItemInfoForm:evrakBilgileriList:'][id$=':akisLov:LovText']");
+
+        private BilgileriTab open() {
+            tabBilgileri.click();
+            return this;
+        }
+
+        @Step("Seçili Onay Akışı güncellendi.")
+        public BilgileriTab onayAkişGuncelle(String onayAkisi) {
+            txtOnayAkisi.clearAllSelectedItems();
+            txtOnayAkisi.selectLov(onayAkisi);
+            return this;
+        }
+    }
     public class HareketGecmisiTab extends MainPage {
 
         SelenideElement tabHareketGecmisi = $("button .kullaniciGecmisi");
@@ -245,6 +348,11 @@ public class EvrakDetayiPage extends MainPage {
         SelenideElement btnRaporAlExcel = $(By.id("inboxItemInfoForm:hareketGecmisiDataTable:evrakGecmisiExport"));
         SelenideElement txtBaslangicTarihi = $(By.id("inboxItemInfoForm:hareketGecmisiDataTable:hareketGecmisiBegin_input"));
         SelenideElement txtBitisTarihi = $(By.id("inboxItemInfoForm:hareketGecmisiDataTable:hareketGecmisiEnd_input"));
+        SelenideElement tblKolonGonderen = $(By.xpath("//span[text()='Gönderen']"));
+        SelenideElement tblKolonTeslimAlan = $(By.xpath("//span[text()='Teslim Alan']"));
+        SelenideElement tblKolonIslemSureci = $(By.xpath("//span[text()='İşlem Süreci']"));
+        SelenideElement tblKolonIslemTarihi = $(By.xpath("//span[normalize-space(text())='İşlem Tarihi']"));
+        SelenideElement tblKolonAciklama = $(By.xpath("//span[text()='Açıklama']"));
 
         private HareketGecmisiTab open() {
             tabHareketGecmisi.click();
@@ -256,6 +364,18 @@ public class EvrakDetayiPage extends MainPage {
             tblHareketGecmisi
                     .filterBy(Condition.text(text))
                     .shouldHaveSize(1);
+
+            Assert.assertEquals(tblKolonGonderen.isDisplayed(), true);
+            Assert.assertEquals(tblKolonTeslimAlan.isDisplayed(), true);
+            Assert.assertEquals(tblKolonIslemSureci.isDisplayed(), true);
+            Assert.assertEquals(tblKolonIslemTarihi.isDisplayed(), true);
+            Assert.assertEquals(tblKolonAciklama.isDisplayed(), true);
+
+            Allure.addAttachment("Tablo kontolü", "Aşağıdaki kolonların listelendiği görülür. \n Gönderen\n" +
+                    "Teslim Alan\n" +
+                    "İşlem Süreci\n" +
+                    "İşlem Tarihi\n" +
+                    "Açıklama");
             return this;
         }
 
@@ -276,11 +396,10 @@ public class EvrakDetayiPage extends MainPage {
 
         @Step("Evrak Arama ekranı kapat")
         public HareketGecmisiTab evrakDetayiKapat() {
-            $(By.xpath("//div[@id='windowReadOnlyEvrakDialog']//span[@class='ui-icon ui-icon-closethick']")).click();
+            $(By.xpath("//div[@id='windowItemInfoDialog']//span[@class='ui-icon ui-icon-closethick']")).click();
             islemPenceresiKapatmaOnayiPopup("Kapat");
             return this;
         }
-
 
 
         @Step("Hareket Geçmişi tablo kolon isimleri kontrolü.")
