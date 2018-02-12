@@ -534,7 +534,6 @@ public class KararYazisiOlusturmaTest extends BaseTest {
                 .havaleIslemleriKisiDoldur(kullaniciAdi)
                 .kaydet()
                 .evetDugmesi()
-                .benzerKayit()
                 .yeniKayitButton();
 
         gelenEvraklarPage
