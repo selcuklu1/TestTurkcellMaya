@@ -115,7 +115,7 @@ public class OnayAkisindakiEvrakiSilTest extends BaseTest{
         evrakDetayiPage
                 .sayfaAcilmali()
                 .editorTabKontrolu()
-                .silButonuKontrolu();
+                .silButonunGelmedigiKontrolu();
 
         evrakOlusturPage
                 .evrakImzala()
@@ -134,7 +134,7 @@ public class OnayAkisindakiEvrakiSilTest extends BaseTest{
         evrakDetayiPage
                 .sayfaAcilmali()
                 .editorTabKontrolu()
-                .silButonuKontrolu();
+                .silButonunGelmedigiKontrolu();
 
     }
 
@@ -221,5 +221,96 @@ public class OnayAkisindakiEvrakiSilTest extends BaseTest{
 
         evrakDetayiPage
                 .sayfaAcilmasiKontrolu();
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS0103: Parafa Gelen Evrakın Detay Ekranından Silinmesi ve Kontrolü")
+    public void TS0103() {
+
+        String evrakKonusu = "TS0103_Senaryosu_" + getSysDate();
+        String konuKodu = "399";
+        String kaldirilacakKlasor = "ESK05";
+        String kurum = "Başbakanlık";
+        String onayAkisiDefaultKullanici = "Optiim TEST";
+        String kullanici2 = "Sezai ÇELİK";
+        String kullanici3 = "Mehmet BOZDEMİR";
+        String basariMesaji = "İşlem başarılıdır!";
+        String uyariMesaji = "Zorunlu alanları doldurunuz";
+        String ilkTarih = getSysDateForKis();
+        String sonTarih = getSysDateForKis();
+        String evrakSilmeNotu = "TS0103 nolu evrak sil";
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .konuKoduDoldur(konuKodu)
+                .konuDoldur(evrakKonusu)
+                .kaldiralacakKlasorlerSec(kaldirilacakKlasor)
+                .gizlilikDerecesiSec("Normal")
+                .ivedilikSec("İvedi")
+                .geregiSecimTipiSecByText("Kurum")
+                .geregiDoldur(kurum, "Kurum")
+                .secilenOnayAkisiSil()
+                .onayAkisiEkle()
+                .onayAkisiKullaniciKontrol(onayAkisiDefaultKullanici, "PARAFLAMA")
+                .onayAkisiKullaniciEkle(kullanici2)
+                .onayAkisiKullaniciTipiSec(kullanici2, "Paraflama")
+                .onayAkisiKullaniciEkle(kullanici3)
+                .onayAkisiKullaniciTipiSec(kullanici3, "İmzalama")
+                .kullan()
+                .onayAkisiDoluGeldigiKontrolu();
+
+        evrakOlusturPage
+                .editorTabAc();
+
+        editor
+                .type("TS0103 nolu senaryonun testi için bir editör metni girildi.");
+
+        evrakOlusturPage
+                .editorTabAc()
+                .metinAlaninGeldigiGorme()
+                .editorHitapKontrol("BAŞBAKANLIĞa")
+                .editordeImzaciKontrol(kullanici3)
+                .geregiAlaniKontrolu(kurum)
+                .editordeKonuKontrol(evrakKonusu);
+
+        evrakOlusturPage
+                .parafla()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        login(TestData.usernameSEZAICELIK, TestData.passwordSEZAICELIK); //sezaiceik
+
+        parafBekleyenlerPage
+                .openPage()
+                .konuyaGoreEvrakKontrol(evrakKonusu)
+                .konuyaGoreEvrakDetayGoster(evrakKonusu);
+
+        evrakDetayiPage
+                .editorTabKontrolu()
+                .sayfaAcilmasiKontrolu()
+                .silButonununGeldigiKontrolu()
+                .evrakSil()
+                .evrakSilmeNotuSonrasiSil()
+                .islemMesaji().uyariOlmali(uyariMesaji);
+
+        evrakDetayiPage
+                .evrakSilmeNotuDoldur(evrakSilmeNotu)
+                .evrakSilmeNotuSonrasiSil()
+                .evrakSilPopup("Evet")
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        iptalEdilenEvraklarRaporuPage
+                .openPage()
+                .sayfaAcilmali()
+                .ilkTarihDoldur(ilkTarih)
+                .sonTarihDoldur(sonTarih)
+                .belgeDurumuSec("Belge olmamış evraklar")
+                .sorgula()
+                .konuyaGoreEvrakKontrol(evrakKonusu)
+                .konuyaGoreEvrakDetayiTikla(evrakKonusu);
+
+        evrakDetayiPage
+                .sayfaAcilmasiKontrolu();
+
     }
 }

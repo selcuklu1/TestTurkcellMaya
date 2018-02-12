@@ -52,10 +52,12 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
     ElementsCollection tblEvrakGecmisi = $$("[id$='hareketGecmisiDataTable_data'] > tr[role='row']");
     ElementsCollection tblEvraklar = $$("[id^='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
     SelenideElement evrakOnizlemeKontrol = $(By.id("mainPreviewForm:eastLayout"));
+    SelenideElement icerikHavaleYap = $(By.id("inboxItemInfoForm:dialogTabMenuRight:uiRepeat:5:cmdbutton"));
     SelenideElement onizlemeHavaleYap = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:4:cmdbutton"));
     BelgenetElement cmbHavaleIslemleriOnaylayacakKisi = comboLov(By.id("mainPreviewForm:onaylayacakKisiLov:LovText"));
     BelgenetElement cmbHavaleIslemleriBirim = comboLov(By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovText"));
     SelenideElement btnHavaleOnayinaGonder = $("[id^='mainPreviewForm:j_idt'] [class^='ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only havaleIslemleriGonder']");
+    SelenideElement icerikHavaleOnayinaGonder = $("[id^='inboxItemInfoForm:j_idt'] [class^='ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only havaleGonderButonClass']");
     SelenideElement btnGonder = $("[id^='mainPreviewForm:j_idt'] [class^='ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only havaleGonderButonClass']");
 
     //otomatik havale checkboxı
@@ -68,6 +70,7 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
     SelenideElement islemSureKontrol = $(By.id("mainPreviewForm:islemSuresiTarih_input"));
 
     BelgenetElement txtHavaleIslemleriKisi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKullaniciLov:LovText"));
+    BelgenetElement icerikHavaleIslemleriKisi = comboLov(By.id("inboxItemInfoForm:dagitimBilgileriKullaniciLov:LovText"));
     SelenideElement txtEvrakBilgileriAciklama = $(By.id("mainPreviewForm:havaleAciklama"));
     SelenideElement dagitimBilgileriKisiOpsiyon = $("select[id^='mainPreviewForm:dagitimBilgileriKullaniciLov:LovSecilenTable']");
     SelenideElement dosyaPath = $(By.xpath("//input[@id='mainPreviewForm:fileUploadHavaleEk_input']"));
@@ -138,7 +141,6 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
 
     @Step("Tabloda evrak noya göre İçerik tıklama : \"{evrakNo}\" ")
     public KaydedilenGelenEvraklarPage tabloEvrakNoileIcerikSec(String evrakNo) throws InterruptedException {
-
         Thread.sleep(2000);
         tblKaydedilenGelenEvraklar
                 .filterBy(Condition.text(evrakNo))
@@ -174,6 +176,12 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("İçerik Evrak Havale Yap Butonu Tıklandı")
+    public KaydedilenGelenEvraklarPage icerikHavaleYap() {
+        icerikHavaleYap.click();
+        return this;
+    }
+
     @Step("Dağıtım Bilgileri Onaylayacak Kisi alanında \"{onaylayan}\" seçilir")
     public KaydedilenGelenEvraklarPage dagitimBilgileriOnaylayanWithDetails(String onaylayan, String details) {
         cmbHavaleIslemleriOnaylayacakKisi.selectLov(onaylayan, details);
@@ -191,6 +199,12 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
     @Step("Havale Onayına Gönder")
     public KaydedilenGelenEvraklarPage havaleOnayinaGonder() {
         btnHavaleOnayinaGonder.click();
+        return this;
+    }
+
+    @Step("İçerikten Havale Onayına Gönder")
+    public KaydedilenGelenEvraklarPage icerikHavaleOnayinaGonder() {
+        icerikHavaleOnayinaGonder.click();
         return this;
     }
 
@@ -267,6 +281,18 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
     @Step("Havale İşlemleri Kişi alanında \"{kisi}\" seç")
     public KaydedilenGelenEvraklarPage havaleIslemleriKisiDoldur(String kisi) {
         txtHavaleIslemleriKisi.selectLov(kisi);
+        return this;
+    }
+
+    @Step("İçerik Havale İşlemleri Kişi alanında \"{kisi}\" seç")
+    public KaydedilenGelenEvraklarPage icerikHavaleIslemleriKisiDoldur(String kisi) {
+        icerikHavaleIslemleriKisi.selectLov(kisi);
+        return this;
+    }
+
+    @Step("İçerik Havale İşlemleri Kişi alanında \"{kisi}\" seç")
+    public KaydedilenGelenEvraklarPage icerikHavaleIslemleriKisiDoldur(String kisi,String details) {
+        icerikHavaleIslemleriKisi.selectLov(kisi,details);
         return this;
     }
 
