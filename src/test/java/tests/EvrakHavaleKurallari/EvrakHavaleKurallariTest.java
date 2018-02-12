@@ -15,6 +15,7 @@ import org.testng.annotations.Test;
 import pages.ustMenuPages.EvrakHavaleKurallariYonetimiPage;
 import pages.ustMenuPages.GelenEvrakKayitPage;
 
+import static com.codeborne.selenide.Selenide.sleep;
 import static data.TestData.passwordZTEKIN;
 import static data.TestData.usernameZTEKIN;
 
@@ -46,7 +47,7 @@ public class EvrakHavaleKurallariTest extends BaseTest {
         String evrakTuru = "Genelge";
         String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
         String kisi = "Zübeyde Tekin";
-        String birim2 = "BİLİŞİM HİZMETLERİ VE UYDU PAZARLAMA GENEL MÜDÜR";
+        String birim2 = "YGD";
         login(usernameZTEKIN, passwordZTEKIN);
         //TODO PRE Conditon bir kural bulunmalı
         evrakHavaleKurallariYonetimiPage
@@ -120,11 +121,11 @@ public class EvrakHavaleKurallariTest extends BaseTest {
                 .birimEkleBirimDoldur(birim)
                 .birimEkleEkle()
                 .kuralAdiDoldur(kuralAdi)
-                .geldigiYerBirimDoldur(birim2)
+                .geldigiYerBirimDoldur(birim)
                 .geldigiYerKullaniciDoldur(kullanici)
                 .geldigiYerKurumDoldur(kurum)
                 .geldigiYerGercekKisiDoldur(kisi)
-                .kimeHavaleEdilecekBirimDoldur(birim2)
+                .kimeHavaleEdilecekBirimDoldur(birim)
                 .kimeHavaleEdilecekKisiDoldur(kisi, birim2)
                 .kimeHavaleEdilecekKullaniciListesiDoldur(kullaniciListesi)
                 .kimeHavaleEdilecekAciklamaDoldur(aciklama)
@@ -147,7 +148,7 @@ public class EvrakHavaleKurallariTest extends BaseTest {
         String evrakTuru = "Beyanname";
         String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
         String kisi = "Zübeyde Tekin";
-        String birim2 = "BİLİŞİM HİZMETLERİ VE UYDU PAZARLAMA GENEL MÜDÜR";
+        String birim2 = "YGD";
 
         login("cseker", passwordZTEKIN);
         //TODO PRE Conditon bir kural bulunmalı
@@ -267,7 +268,7 @@ public class EvrakHavaleKurallariTest extends BaseTest {
         String evrakTuru = "Diğer";
         String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
         String kisi = "Zübeyde Tekin";
-        String birim2 = "BİLİŞİM HİZMETLERİ VE UYDU PAZARLAMA GENEL MÜDÜR";
+        String birim2 = "YGD";
 
         login("cseker", passwordZTEKIN);
         //TODO PRE Conditon bir kural bulunmalı
@@ -333,7 +334,7 @@ public class EvrakHavaleKurallariTest extends BaseTest {
         String evrakTuru = "Tebrik,Davetiye vb.";
         String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
         String kisi = "Zübeyde Tekin";
-        String birim2 = "BİLİŞİM HİZMETLERİ VE UYDU PAZARLAMA GENEL MÜDÜR";
+        String birim2 = "YGD";
         String kuralAdiGuncelle = kuralAdi + " Güncelle";
         login("cseker", passwordZTEKIN);
         //TODO PRE Conditon bir kural bulunmalı
@@ -388,8 +389,9 @@ public class EvrakHavaleKurallariTest extends BaseTest {
         String evrakTuru = "Resmi Yazışma";
         String evrakTuru2 = "Tebrik,Davetiye vb.";
         String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
+        String birim1 = "TESİSLER ALTYAPI VE SOSYAL HİZMETLER DİREKTÖRLÜĞÜ";
         String kisi = "Zübeyde Tekin";
-        String birim2 = "BİLİŞİM HİZMETLERİ VE UYDU PAZARLAMA GENEL MÜDÜR";
+        String birim2 = "YGD";
         String sadecePasifler = "Sadece Pasifler";
         String sadeceAktifler = "Sadece Aktifler";
 
@@ -404,7 +406,7 @@ public class EvrakHavaleKurallariTest extends BaseTest {
                 .birimEkleBirimDoldur(birim)
                 .birimEkleEkle()
                 .kuralinTanimliOlduguBirimlerYeni()
-                .birimEkleBirimDoldur(birim2)
+                .birimEkleBirimDoldur(birim1)
                 .birimEkleEkle()
                 .kuralAdiDoldur(kuralAdi)
                 .kimeHavaleEdilecekKisiDoldur(kisi, birim2)
@@ -421,6 +423,8 @@ public class EvrakHavaleKurallariTest extends BaseTest {
                 .kuralGuncellemeEkraniGeldigiGorme()
                 .ilkPasifYap()
                 .islemOnayiEvet();
+
+        sleep(10000);
 
         evrakHavaleKurallariYonetimiPage
                 .kuralinTanimliOlduguBirimlerSec(sadecePasifler)
