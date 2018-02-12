@@ -7,7 +7,6 @@ package tests.EvrakPostalama;
  * Class: "Evrak Postalama" konulu senaryoları içerir
  ****************************************************/
 
-import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import common.BaseTest;
@@ -17,14 +16,10 @@ import galen.GalenControl;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Step;
-
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
-import pages.newPages.EvrakDetayiPage;
 import pages.pageComponents.EvrakOnizleme;
-import pages.pageComponents.IslemMesajlari;
 import pages.pageComponents.tabs.AltTabs;
 import pages.pageData.alanlar.GeregiSecimTipi;
 import pages.pageData.alanlar.GizlilikDerecesi;
@@ -86,7 +81,7 @@ public class EvrakPostalamaTest extends BaseTest {
 
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TS0308: Evrak Postalama")
+    @Test(enabled = true, description = "TS0308: Postalama ekranınlarında pdf'in yapısal kontrolü")
     public void TS0308() throws InterruptedException {
         login("Mbozdemir", "123");
         String konu = "TS0308_" + getSysDate();
@@ -921,7 +916,7 @@ public class EvrakPostalamaTest extends BaseTest {
                 .cmbPostalananYerSecimi("OptiimTest TestOptiim")
                 .cmbpostaSeklisecimi("İç Giden")
                 .cmbPostaTipisec("Adi Posta")
-                .cmbPostalayanadi("Zübeyde TEKİN")
+                //.cmbPostalayanadi("Zübeyde TEKİN")
                 .postaSorgulama();
         postalananEvrakRaporuPage.ekranSorgulananSonucKontrol();
         postalananEvrakRaporuPage.evrakRaporForm();
