@@ -641,9 +641,13 @@ takeScreenshot();
         btnPopupYazdir.click();
         switchTo().window(1);
         SelenideElement pdftab = $x("//*[@id='plugin']");
+        refresh();
+        Thread.sleep(1000);
+
         takeScreenshot();
         pdftab.sendKeys(Keys.PAGE_DOWN);
         pdftab.sendKeys(Keys.PAGE_DOWN);
+        Thread.sleep(1000);
         takeScreenshot();
         pdftab.sendKeys(Keys.CONTROL, "a");
         pdftab.sendKeys(Keys.CONTROL, "c");
