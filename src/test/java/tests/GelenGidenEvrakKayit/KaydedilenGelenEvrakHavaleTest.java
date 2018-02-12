@@ -18,7 +18,7 @@ import pages.ustMenuPages.GelenEvrakKayitPage;
 
 public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
     GelenEvrakKayitPage gelenEvrakKayitPage;
-//    TeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage;
+    TeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage;
 //    HavaleOnayınaGelenlerPage havaleOnayınaGelenlerPage;
     BirimHavaleEdilenlerPage birimHavaleEdilenlerPage;
     KaydedilenGelenEvraklarPage kaydedilenGelenEvraklarPage;
@@ -49,7 +49,7 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
     public void loginBeforeTests() {
         login("ztekin", "123");
         gelenEvrakKayitPage = new GelenEvrakKayitPage();
-//        teslimAlinmayiBekleyenlerPage = new TeslimAlinmayiBekleyenlerPage();
+        teslimAlinmayiBekleyenlerPage = new TeslimAlinmayiBekleyenlerPage();
 //        havaleOnayınaGelenlerPage = new HavaleOnayınaGelenlerPage();
         birimHavaleEdilenlerPage = new BirimHavaleEdilenlerPage();
         kaydedilenGelenEvraklarPage = new KaydedilenGelenEvraklarPage();
@@ -57,19 +57,15 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
 //        havaleOnayiVerdiklerim = new HavaleOnayiVerdiklerimPage();
     }
 
-    public String getDocPath1() {
-        return "C:\\TestAutomation\\BelgenetFTA\\documents\\";
-    }
+//    public String getDocPath1() {
+//        return "C:\\TestAutomation\\BelgenetFTA\\documents\\";
+//    }
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, priority = 0, description = "TS422: Kişi seçilerek evrak havale etme (detay ekranından)")
     public void TS422() throws InterruptedException {
         String testid= "TS-422";
         konu = "TS-422-" + getSysDate();
-//        String pathToFilePdf = getUploadPath() + "Otomasyon.pdf";
-//        String pdfName = "Otomasyon.pdf";
-//        String pathToFileExcel = getUploadPath() + "test.xlsx";
-//        String excelName = "test.xlsx";
 
         testStatus(testid,"PreCondition Evrak Oluşturma");
 
@@ -111,4 +107,69 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
     }
 
 
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, priority = 0, description = "TS430: Kişiye havale edilen evrakın geri çekilmesi (önizleme ekranından)")
+    public void TS430() throws InterruptedException {
+        String testid= "TS-430";
+        konu = "TS-430-" + getSysDate();
+
+        testStatus(testid,"PreCondition Evrak Oluşturma");
+
+        gelenEvrakKayitPage
+                .openPage()
+                .konuKoduDoldur(konuKodu)
+                .konuDoldur(konu)
+                .evrakTuruSec(evrakTuru)
+                .evrakDiliSec(evrakDili)
+                .evrakTarihiDoldur(evrakTarihi)
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .kisiKurumSec(kisiKurum)
+                .geldigiKurumDoldurLovText(geldigiKurum)
+                .evrakSayiSagDoldur()
+                .evrakGelisTipiSec(evrakGelisTipi)
+                .ivedilikSec(ivedilik)
+                .kaydet()
+                .popUpsv2();
+
+        kaydedilenGelenEvraklarPage
+                .openPage()
+                .evrakNoIleEvrakSec(konu)
+                .tabloEvrakNoileIcerikSec(konu)
+                .icerikHavaleYap()
+                .icerikHavaleIslemleriKisiDoldur(onaylayacakKisi,onayKisiDetails)
+                .icerikHavaleOnayinaGonder()
+                .islemMesaji().basariliOlmali();
+
+        testStatus(testid,"Test Başladı");
+        birimHavaleEdilenlerPage
+                .openPage()
+                .evrakNoIleTablodanEvrakSecme(konu)
+                .onizlemeHavaleGeriAl()
+                .onizlemeNotAlanınıDoldur(konu)
+                .onizlemeGeriAl()
+                .islemMesaji().basariliOlmali();
+
+        // TODO: 4 nolu step cevap bekliyor : "Destek Gerektiren Senaryolar"
+
+        kaydedilenGelenEvraklarPage
+                .openPage()
+                .evrakNoIleEvrakSec(konu)
+                .evrakOnizlemeKontrol()
+                .onizlemeHavaleYap()
+                .havaleAlanKontrolleri()
+                .dagitimBilgileriBirimDoldurWithDetails(birim, details)
+                .buttonGonder()
+                .islemMesaji().basariliOlmali();
+
+        birimHavaleEdilenlerPage
+                .openPage()
+                .evrakNoIleTablodanEvrakSecme(konu);
+
+        login(mbozdemir);
+
+        teslimAlinmayiBekleyenlerPage
+                .openPage()
+                .evrakNoIleEvrakSec(konu);
+    }
+    
 }
