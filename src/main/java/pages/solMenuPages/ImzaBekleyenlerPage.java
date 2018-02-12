@@ -32,7 +32,7 @@ public class ImzaBekleyenlerPage extends MainPage {
     SelenideElement btnSil = $("[id^='mainPreviewForm:j_idt'] [class$='ui-button-text']");
     SelenideElement txtEvrakSilmeNotu = $(By.xpath("/html//table[@id='mainPreviewForm:evrakSilPanelGrid']/tbody//table[@class='gridForm']//textarea[@role='textbox']"));
     SelenideElement evrakOnIzleme = $("[id^='mainPreviewForm:j_idt'] [class='ui-tabs-panel ui-widget-content ui-corner-bottom']");
-
+    SelenideElement tabEvrakEkleri = $(By.xpath("//a[text()='Evrak Ekleri']"));
 
 
     @Step("İmza bekleyenler sayfası aç")
@@ -302,6 +302,12 @@ public class ImzaBekleyenlerPage extends MainPage {
 
         Assert.assertEquals(btnEvrakSil.isDisplayed(), false);
 
+        return this;
+    }
+
+    @Step("Evrak ekleri tabını aç")
+    public ImzaBekleyenlerPage evrakEkleriTabAc() {
+        tabEvrakEkleri.click();
         return this;
     }
 }

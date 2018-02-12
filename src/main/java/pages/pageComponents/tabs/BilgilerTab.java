@@ -897,8 +897,8 @@ public class BilgilerTab extends MainPage {
     public BilgilerTab anlikOnayAkisKullanicininTipiSec(User kullanici, OnayKullaniciTipi tipi) {
         getAnlikOnayAkisKullanicilarCombolov().getSelectedItems()
                 .filterBy(text(kullanici.getFullname()))
-                .filterBy(text(kullanici.getGorev()))
-                .filterBy(text(kullanici.getBirimAdi()))
+                /*.filterBy(text(kullanici.getGorev()))
+                .filterBy(text(kullanici.getBirimAdi()))*/
                 .get(0)
                 .shouldBe(exist)
                 .$("select[id*='selectOneMenu']")
