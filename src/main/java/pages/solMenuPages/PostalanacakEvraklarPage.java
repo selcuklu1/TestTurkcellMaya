@@ -7,6 +7,7 @@ import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
@@ -121,6 +122,11 @@ public class PostalanacakEvraklarPage extends MainPage {
     ElementsCollection tblEvrakDetaylariUstVeriler = $$("tbody[id='postaDetayYazdirForm:dtPostaEvrakUstVeri_data'] tr[data-ri]");
     ElementsCollection tblEvrakDetaylariEvrakinEkleri = $$("tbody[id='postaDetayYazdirForm:dtPostaEvrakEk_data'] tr[data-ri]");
     SelenideElement txtEtiketBastir = $(By.id("mainPreviewForm:etiketMetinIDPostIslm"));
+
+
+    SelenideElement btnPopUpUstVeriOrjYaz = $x("//*[@id='postaDetayYazdirForm:dtPostaEvrakUstVeri:0:evrakDetayiViewDialogOrjYazdir']");
+    SelenideElement btnEkleriOrjYazbtn1 = $x("//*[@id='postaDetayYazdirForm:dtPostaEvrakEk_data']/tr[1]/td[7]/div/button");
+    SelenideElement btnEkleriOrjYazbtn2 = $x("//*[@id='postaDetayYazdirForm:dtPostaEvrakEk_data']/tr[2]/td[7]/div/button");
 
     @Step("Postalanacak Evraklar sayfası aç")
     public PostalanacakEvraklarPage openPage() {
@@ -577,21 +583,83 @@ takeScreenshot();
         return this;
     }
 
+    @Step("Orijinal Evrak yazdır popup : Üst veri yazdır butonu ve Ekleri için yazdır butonları kontrolü")
+    public PostalanacakEvraklarPage popupOrjYazYazdirButonKonrolleri() {
+        btnPopUpUstVeriOrjYaz.exists();
+        btnEkleriOrjYazbtn1.exists();
+        btnEkleriOrjYazbtn2.exists();
+        return this;
+    }
+
+    @Step("Popup Ustveri Orijinal Yazdır Butonu")
+    public PostalanacakEvraklarPage popopUstveriOrjYazdir() {
+        SelenideElement sayiyaz = $x("//*[@id='postaDetayYazdirForm:dtPostaEvrakUstVeri_data']/tr/td[3]/div");
+        String sayi = sayiyaz.getAttribute("innerText");
+        System.out.println(sayi);
+        btnPopUpUstVeriOrjYaz.click();
+        return this;
+    }
+
+    @Step("UstVeri Orijinal E-Ibaresi - Kırmızı Yazı Kontrolü , Screenshot ve output text olarak yazdırma")
+    public PostalanacakEvraklarPage PDFEibareVeKırmızıYazıktrl () throws InterruptedException {
+        postalanacakEvrakOrjYaz();
+        switchTo().window(1);
+        SelenideElement pdftab = $x("//*[@id='plugin']");
+        pdftab.sendKeys(Keys.CONTROL, "a");
+        pdftab.sendKeys(Keys.CONTROL, "c");
+        pdftab.sendKeys(Keys.CONTROL, "v");
+        sleep(1000);
+        takeScreenshot();
+        closeNewWindow();
+        switchTo().window(0);
+        return this;
+    }
+
     @Step("PDF - Evrak sayısı - Yazışma Kuralları kontrol")
     public PostalanacakEvraklarPage pdfEvrakYazismaKuralkontrol() {
         switchTo().window(1);
         SelenideElement pdftab = $x("//*[@id='plugin']");
         String ktrl = pdftab.getValue();
         System.out.println(ktrl);
+        closeNewWindow();
+        switchTo().window(0);
         return this;
     }
 
     @Step("Postalanacak Evrak Orjinal Yazdırma popup Kapatma")
     public PostalanacakEvraklarPage popupEvrOrjYazKapat() throws InterruptedException {
 
+        popupPostaYazdirmaKapat();
+        return this;
+    }
+
+    @Step("Dağıtım Planı yazdır butonu , PDF içi sayfa sayısı kontrolü , Hitap kontrolü ve yazışma kuralı karşılaştırma , Güvenlik kodu yazdirma , Ekran görüntüsü alma ")
+    public PostalanacakEvraklarPage dagitimplanyazdir() throws InterruptedException {
+        $x("//*[@id='mainPreviewForm:dataTableId_data']/tr[2]/td[5]/div/table/tbody/tr[1]/td/button").click();
+        SelenideElement sayiyaz = $x("//*[@id='postaDetayYazdirForm:dtPostaEvrakUstVeri_data']/tr/td[3]/div");
+        String sayi = sayiyaz.getAttribute("innerText");
+        btnPopupYazdir.click();
+        switchTo().window(1);
+        SelenideElement pdftab = $x("//*[@id='plugin']");
+        refresh();
+        Thread.sleep(1000);
+
+        takeScreenshot();
+        pdftab.sendKeys(Keys.PAGE_DOWN);
+        pdftab.sendKeys(Keys.PAGE_DOWN);
+        Thread.sleep(1000);
+        takeScreenshot();
+        pdftab.sendKeys(Keys.CONTROL, "a");
+        pdftab.sendKeys(Keys.CONTROL, "c");
+        pdftab.sendKeys(Keys.CONTROL, "v");
         closeNewWindow();
         switchTo().window(0);
         popupPostaYazdirmaKapat();
+       // $x("//div[@id='postaDetayYazdirForm:dlgPostaDetayYazdir']//a[span[@class='ui-icon ui-icon-closethick']]").click();
+        //btnDagitimYerDetay.click();
+        //SelenideElement dgtmdetayTablo = $x("//*[@id='mainPreviewForm:dagitimPlaniDetay_data']");
+        //String dgmdty = dgtmdetayTablo.getAttribute("innerText");
+        //System.out.println(dgmdty);
         return this;
     }
 
