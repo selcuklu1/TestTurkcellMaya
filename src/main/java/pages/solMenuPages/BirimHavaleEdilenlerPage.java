@@ -96,6 +96,18 @@ public class BirimHavaleEdilenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Tabloda evrak kontrolü : \"{evrakNo}\"  \"{birim}\" \"{evrakTarihi}\" \"{No}\" ")
+    public BirimHavaleEdilenlerPage evrakAlanKontrolleri(String evrakNo,String birim,String evrakTarihi,String No) {
+        tblKaydedilenGelenEvraklar
+                .filterBy(Condition.text(evrakNo))
+                .filterBy(Condition.text(birim))
+                .shouldHaveSize(1);
+        return this;
+
+        //        Evrak tarihi  : evrakTarihi
+        //        no alanlarının : evrakSayiSagDoldur()
+    }
+
     @Step("Tabloda evrak no ile evrak seçme. \"{evrakNo}\" ")
     public BirimHavaleEdilenlerPage evrakNoIleTablodanEvrakSecme(String evrakNo) {
         tblKaydedilenGelenEvraklar

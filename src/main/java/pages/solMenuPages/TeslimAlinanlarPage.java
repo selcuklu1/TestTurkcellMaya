@@ -3,6 +3,7 @@ package pages.solMenuPages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -139,6 +140,15 @@ public class TeslimAlinanlarPage extends MainPage {
         return this;
     }
 
+    @Step("Evrak adedi kontrol: \"{evrakNo}\" ")
+    public TeslimAlinanlarPage evrakAdediKontrol(String evrakNo) {
+        int dosyaAdedi = tblEvraklar
+                .filterBy(Condition.text(evrakNo))
+                .size();
+        Allure.addAttachment(evrakNo,Integer.valueOf(dosyaAdedi).toString());
+        return this;
+    }
+
     @Step("Evrak geçmişi alanına tıklanır")
     public TeslimAlinanlarPage secilenEvrakEvrakGecmisi() {
         $$("[id$='evrakOnizlemeTab'] ul li").filterBy(Condition.text("Evrak Geçmişi")).get(0).$("a").click();
@@ -151,6 +161,14 @@ public class TeslimAlinanlarPage extends MainPage {
         Assert.assertEquals(durum, true);
         takeScreenshot();
         return this;
+    }
 
+    @Step("Evrak Geçmişi Kontrol: \"{teslimAlinan}\" \"{islemSureci}\" \"{tarih}\"")
+    public TeslimAlinanlarPage evrakGecmisi(String teslimAlinan, String islemSureci,String tarih) {
+        boolean durum = tblEvrakGecmisi.filterBy(Condition.text(islemSureci)).filter(Condition.text(teslimAlinan))
+                .filterBy(Condition.text(tarih)).size() == 1;
+        Assert.assertEquals(durum, true);
+        takeScreenshot();
+        return this;
     }
 }

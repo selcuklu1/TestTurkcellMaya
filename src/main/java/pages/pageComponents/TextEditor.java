@@ -10,9 +10,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.MainPage;
 
-import static com.codeborne.selenide.Condition.enabled;
-import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.sleep;
 import static com.codeborne.selenide.Selenide.switchTo;
 import static pages.pageComponents.belgenetElements.Belgenet.$inFrame;
 import static pages.pageComponents.belgenetElements.BelgentCondition.toolboxButtonOn;
@@ -76,7 +76,9 @@ public class TextEditor extends MainPage {
 
     @Step("Editore yaz")
     public TextEditor type(CharSequence... keysToSend) {
+        //sleep(3000);
         SelenideElement editor = editor();
+        editor.shouldHave(attribute("contenteditable","true"));
         editor.shouldBe(visible, enabled);
         editor.sendKeys(keysToSend);
         switchTo().defaultContent();
@@ -85,10 +87,10 @@ public class TextEditor extends MainPage {
 
     @Step("\"{butonIsmi}\" toolbar butonun etkin durumu değiştir: \"{etkinDurumu}\" yap")
     public TextEditor toolbarButton(String butonIsmi, boolean etkinDurumu) {
-
+        //class="cke_button_disabled" aria-disabled="true"
         SelenideElement button = container.$x("descendant::a[span[contains(@class,'cke_button_label') and normalize-space(text())='" + butonIsmi + "']]");
         button.shouldBe(visible, enabled);
-
+        button.shouldNotHave(cssClass("cke_button_disabled"));
         if (button.is(toolboxButtonOn) != etkinDurumu)
             button.click();
 
@@ -97,9 +99,11 @@ public class TextEditor extends MainPage {
 
     @Step("\"{name}\" toolbar alanda \"{value}\" seç")
     public TextEditor toolbarCombo(String name, String value) {
-        SelenideElement combo = container.$x("descendant::span[span[contains(@class,'cke_combo_label') and normalize-space(text())='" + name + "']]/a/span[@class='cke_combo_open']");
-        combo.shouldBe(visible, enabled);
-        clickJs(combo);
+        SelenideElement combo = container
+                .$x("descendant::span[span[contains(@class,'cke_combo_label') and normalize-space(text())='" + name + "']]")
+                .shouldNotHave(cssClass("cke_combo_disabled"));
+
+        clickJs(combo.$("a span.cke_combo_open").shouldBe(visible, enabled));
 
         By iframeLocator = By.cssSelector("iframe[class='cke_panel_frame']");
         SelenideElement element = $inFrame(".cke_panel_block a[title='" + value + "']", iframeLocator);

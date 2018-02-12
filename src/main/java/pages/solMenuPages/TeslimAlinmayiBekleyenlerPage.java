@@ -346,7 +346,7 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         return this;
     }
 
-    @Step("Evrak no ile teslim al")
+    @Step("Evrak no ile teslim al Uyarı: Evrakı teslim almak istediğinize emin misiniz?\n Evet seçeneği seçilir")
     public TeslimAlinmayiBekleyenlerPage evrakSecNoTeslimAl(String konu, boolean secim) {
         tblEvraklar.filterBy(text(konu)).get(0).$$("[id$='teslimAlButton']").first().click();
 

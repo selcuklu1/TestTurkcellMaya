@@ -31,6 +31,8 @@ public class BirimIadeEdilenlerPage extends MainPage {
     SelenideElement onizlemeTeslimAl = $("[id='mainPreviewForm:onizlemeRightTab:uiRepeat:4:cmdbutton']");
     ElementsCollection btnTeslimAl = $$("[id^='mainInboxForm:inboxDataTable:j_idt'] > [class$='document-delivery']");
     ElementsCollection btnTeslimAlHavaleEt = $$("[id^='mainInboxForm:inboxDataTable:j_idt'] > [class$='document-delivery-publish']");
+
+    SelenideElement teslimAlveHavaleEt = $("[id='mainInboxForm:inboxDataTable:0:teslimAlVeHavaleEtButton']");
     BelgenetElement txtOnaylanacakKisi = comboLov(By.id("mainPreviewForm:onaylayacakKisiLov:LovText"));
     SelenideElement içeriktenEvrakTeslimAlHavaleEt = $("[id='inboxItemInfoForm:dialogTabMenuRight:uiRepeat:5:cmdbutton']");
     BelgenetElement cmbHavaleIslemleriBirim = comboLov(By.id("inboxItemInfoForm:dagitimBilgileriBirimLov:LovText"));
@@ -63,6 +65,9 @@ public class BirimIadeEdilenlerPage extends MainPage {
 
     BelgenetElement havaleIslemleriBirim = comboLov(By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovText"));
 
+    SelenideElement birimTopluTeslimAlGonder = $(By.id("mainPreviewForm:btnTopluTeslimAlGonder"));
+    SelenideElement birimTeslimAlGonder = $(By.id("mainPreviewForm:btnTeslimAlGonder"));
+
     public BirimIadeEdilenlerPage openPage() {
         solMenu(SolMenuData.BirimEvraklari.BirimeIadeEdilenler);
         return this;
@@ -77,7 +82,7 @@ public class BirimIadeEdilenlerPage extends MainPage {
         return this;
     }
 
-    @Step("Teslim Al button kontrolü")
+    @Step("Teslim Al button kontrolü ")
     public BirimIadeEdilenlerPage evrakTeslimAlButtonKontrol() {
         teslimAlButton.should(visible);
         return this;
@@ -148,6 +153,12 @@ public class BirimIadeEdilenlerPage extends MainPage {
         takeScreenshot();
         btnTeslimAlHavaleEt.get(0).click();
 
+        return this;
+    }
+
+    @Step("Evrak Teslim Al Havale Et")
+    public BirimIadeEdilenlerPage evrakTeslimAlHavaletEt() {
+        teslimAlveHavaleEt.click();
         return this;
     }
 
@@ -249,8 +260,8 @@ public class BirimIadeEdilenlerPage extends MainPage {
     }
 
     @Step("Havale İşlemleri Kişi Listesi alanında \"{kisi}\" seç")
-    public BirimIadeEdilenlerPage havaleKisiListesiDetails(String kisi,String details) {
-        txtHavaleIslemleriKisiListesi.selectLov(kisi,details);
+    public BirimIadeEdilenlerPage havaleKisiListesi(String kisiliste) {
+        txtHavaleIslemleriKisiListesi.selectLov(kisiliste);
         return this;
     }
 
@@ -290,10 +301,24 @@ public class BirimIadeEdilenlerPage extends MainPage {
 
     @Step("Dağıtım Bilgileri Birim alanında \"{birim}\" seçilir")
     public BirimIadeEdilenlerPage dagitimBilgileriBirimDoldurWithDetails(String birim, String details) {
-        havaleIslemleriBirim.type(birim).getDetailItems()
-                .filterBy(Condition.exactText(details)).first().click();
-        havaleIslemleriBirim.closeTreePanel();
+//        havaleIslemleriBirim.type(birim).getDetailItems()
+//                .filterBy(Condition.exactText(details)).first().click();
+//        havaleIslemleriBirim.closeTreePanel();
+        havaleIslemleriBirim.selectLov(birim,details);
         return this;
     }
+
+    @Step("Birim Toplu Havale Alanında Teslim Al Gonder")
+    public BirimIadeEdilenlerPage birimTopluTeslimAlGonder() {
+        birimTopluTeslimAlGonder.click();
+        return this;
+    }
+
+    @Step("Birim Toplu Havale Alanında Teslim Al Gonder")
+    public BirimIadeEdilenlerPage birimTeslimAlGonder() {
+        birimTeslimAlGonder.click();
+        return this;
+    }
+
 
 }

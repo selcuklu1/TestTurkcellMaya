@@ -17,7 +17,7 @@ public class GelenEvrakZimmetRaporuPage extends MainPage{
     SelenideElement zimmetRaporTablo = $(By.id("gelenEvrakZimmetRaporuYonetimiTabView:gelenEvrakZimmetRaporuTab1Form:gelenEvrakDataTableTab1_data"));
     SelenideElement popupKapatma = $("[class='ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all ui-state-hover']");
     SelenideElement konuKontrolu = $(By.id("windowReadOnlyForm:evrakBilgileriList:3:konuTextArea"));
-    SelenideElement evrakEtiket = $(By.id("etiketMetinID"));
+    SelenideElement evrakEtiket = $("[id$='etiketMetinID']");
     SelenideElement islemKapat = $(By.id("kapatButton"));
 
 
@@ -27,7 +27,7 @@ public class GelenEvrakZimmetRaporuPage extends MainPage{
         return this;
     }
 
-    @Step("Sorgula")
+    @Step("Gelen Evrak Zimmet Raporu Sorgula")
     public GelenEvrakZimmetRaporuPage sorgula() {
         sorgula.click();
         return this;
@@ -66,7 +66,7 @@ public class GelenEvrakZimmetRaporuPage extends MainPage{
         ElementsCollection tr = $$("[id='gelenEvrakZimmetRaporuYonetimiTabView:gelenEvrakZimmetRaporuTab1Form:gelenEvrakDataTableTab1'] tbody tr").filterBy(text(konu));
         if(tr.size() > 0)
         {
-            tr.get(0).$$("td [id^='gelenEvrakZimmetRaporuYonetimiTabView:gelenEvrakZimmetRaporuTab1Form:gelenEvrakDataTableTab1:0:j_idt']").get(0).click();
+            tr.get(0).$$("td [id*='j_idt']").get(0).click();
         }
         return this;
     }
