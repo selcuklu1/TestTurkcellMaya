@@ -23,7 +23,7 @@ public class SistemLoglariPage extends MainPage {
     BelgenetElement txtAksiyon = comboLov(By.id("sistemLogRaporForm:aksiyonLovId:LovText"));
     SelenideElement btnSorgula = $(By.id("sistemLogRaporForm:sorgulaButton"));
     ElementsCollection tableSistemLoglari = $$("tbody[id='sistemLogRaporForm:sistemLogRaporDataTable_data'] > tr[role='row']");
-
+    ElementsCollection sistemRaporuTablePages = $$("td[id='sistemLogRaporForm:sistemLogRaporDataTable_paginator_bottom'] > span[class='ui-paginator-pages'] >  span");
     @Step("Sistem logları sayfasını aç")
     public SistemLoglariPage openPage() {
         ustMenu(UstMenuData.Raporlar.SistemLoglari);
@@ -69,7 +69,7 @@ public class SistemLoglariPage extends MainPage {
 
     @Step("Sistem Raporu Tablosunda kontrol. Aksiyon: {aksiyon}, Kullanıcı: {kullanici}, Açıklama: {aciklama}, Log olmalı: {shouldBeExist}")
     public SistemLoglariPage sistemRaporuKontrol(String aksiyon, String tarih, String kullanici, String aciklama, boolean shouldBeExist) {
-        ElementsCollection sistemRaporuTablePages = $$("td[id='sistemLogRaporForm:sistemLogRaporDataTable_paginator_bottom'] > span[class='ui-paginator-pages'] >  span");
+//        ElementsCollection sistemRaporuTablePages = $$("td[id='sistemLogRaporForm:sistemLogRaporDataTable_paginator_bottom'] > span[class='ui-paginator-pages'] >  span");
 
         boolean elementFound = false;
 
