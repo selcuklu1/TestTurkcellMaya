@@ -91,6 +91,7 @@ public class EvrakPostalamaTest extends BaseTest {
     public void TS0308() throws InterruptedException {
         login("Mbozdemir", "123");
         String konu = "TS0308_" + getSysDate();
+        String metin308 = "Metni" + konu;
 
         evrakOlusturPage
                 .openPage()
@@ -116,6 +117,9 @@ public class EvrakPostalamaTest extends BaseTest {
                 .onayAkisiKullaniciTipiSec("Mehmet BOZDEMİR", "İmzalama")
 //                .onayAkisiKullaniciTipiSec(user1.getName(), "İmzalama")
                 .onayAkisiKullan();
+        evrakOlusturPage2 = new pages.newPages.EvrakOlusturPage();
+
+        ilgileriTab();
 
         evrakOlusturPage
                 .ilgileriTabAc()
@@ -141,6 +145,7 @@ public class EvrakPostalamaTest extends BaseTest {
                 .arsivdeKayitliEvrakEkleTabiniAc()
                 .webAdresiEkleTabiniAc();
 
+
         evrakOlusturPage
                 .editorTabAc()
                 .editorSayiAl();
@@ -157,9 +162,19 @@ public class EvrakPostalamaTest extends BaseTest {
 
         evrakOlusturPage.islemMesaji().isBasarili();
         Thread.sleep(2000);
-        postalanacakEvraklarPage
+
+                postalanacakEvraklarPage
                 .openPage()
                 .filter().findRowsWith(text(konu)).shouldHaveSize(1).first().click();
+
+                postalanacakEvraklarPage.tabEvrakEkleriAc()
+                        .evrakEklerindeDetayButonuKontrol("TS0308_PDF","TS0308PDF" );
+
+                postalanacakEvraklarPage.tabIlgiBilgileriAc();
+                EvrakOnizleme evrakOnizleme = new EvrakOnizleme();
+
+        evrakOnizleme.new IlgiBilgileri().openTab().getDataTable().findRows(text(metni)).shouldHaveSize(1);
+
 
         postalanacakEvraklarPage.evrakPostala()
                 .gidisSekli("E-Posta")
