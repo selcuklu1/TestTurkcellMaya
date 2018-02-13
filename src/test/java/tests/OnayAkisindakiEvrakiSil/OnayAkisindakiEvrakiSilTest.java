@@ -354,19 +354,19 @@ public class OnayAkisindakiEvrakiSilTest extends BaseTest{
                 .kullan()
                 .onayAkisiDoluGeldigiKontrolu();
 
-        evrakOlusturPage
+        olurYazisiOlusturPage
                 .editorTabAc();
 
         editor
                 .type("TS0133 nolu senaryonun testi için bir editör metni girildi.");
 
-        evrakOlusturPage
+        olurYazisiOlusturPage
                 .editorTabAc()
                 .metinAlaninGeldigiGorme()
-                .editorHitapKontrol("... Makamına")  // kurum seçilmediği için
-                .editordeImzaciKontrol(kullanici3)
-                .geregiAlaniKontrolu(kurum)
-                .editordeKonuKontrol(evrakKonusu);
+                .editorHitapKontrol("... Makamına");  // kurum seçilmediği için
+                //.editordeImzaciKontrol(kullanici3)
+                //.geregiAlaniKontrolu(kurum)
+                //.editordeKonuKontrol(evrakKonusu);
 
         evrakOlusturPage
                 .parafla()

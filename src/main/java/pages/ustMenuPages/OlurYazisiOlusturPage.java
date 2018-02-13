@@ -385,6 +385,20 @@ public class OlurYazisiOlusturPage extends MainPage {
             return this;
 
         }
+
+        @Step("Metin alanın geldiği görünür")
+        public EditorTab metinAlaninGeldigiGorme() {
+            boolean durum = $$(By.id("yeniOnayEvrakForm:allPanels_content")).size() == 1;
+            Assert.assertEquals(durum, true);
+            return this;
+        }
+
+        @Step("Editör ekranında hitap kontrolu: {beklenenEditorHitap}")
+        public EditorTab editorHitapKontrol(String beklenenEditorHitap) {
+            String editorHitap = $(By.xpath("//*[@id='yeniOnayEvrakForm:hitapInplace']/span")).getText();
+            Assert.assertEquals(editorHitap.contains(beklenenEditorHitap), true);
+            return this;
+        }
     }
 
 }

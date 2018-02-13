@@ -394,8 +394,7 @@ public class EvrakOlusturPage extends MainPage {
 
         private BilgilerTab open() {
             if (divContainer.is(not(visible)))
-                tabBilgiler.click();
-
+                clickJs(tabBilgiler);
             //divContainer.shouldBe(visible);
             return this;
         }
