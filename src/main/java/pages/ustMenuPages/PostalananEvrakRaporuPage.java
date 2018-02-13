@@ -225,6 +225,11 @@ public class PostalananEvrakRaporuPage extends MainPage {
         fromEvrakRapor.click();
         return this;
     }
+    @Step("Rapor al işlemi başarılıdır kontrülü")
+    public PostalananEvrakRaporuPage raporalbasarilidir () {
+        islemMesaji().isBasarili();
+        return this;
+    }
 
     @Step("Evrak Sahibi Seçimi \"{evrakSahibi}\" ")
     public PostalananEvrakRaporuPage cmbEvrakSahibi(String evrakSahibi) {
@@ -355,5 +360,11 @@ public class PostalananEvrakRaporuPage extends MainPage {
             etiketBastirPopupKapat();
         }*/
         return this;
+    }
+
+    @Step("Excel ve Tablo karşılaştırma")
+    public PostalananEvrakRaporuPage excelTabloKars() {
+
+        
     }
 }

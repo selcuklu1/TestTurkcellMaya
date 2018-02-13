@@ -1,17 +1,35 @@
 package pages.solMenuPages;
 
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.*;
+import com.codeborne.selenide.impl.WebDriverContainer;
 import io.qameta.allure.Allure;
+import io.qameta.allure.AllureResultsWriter;
+import io.qameta.allure.AllureUtils;
 import io.qameta.allure.Step;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.text.PDFTextStripper;
+import org.apache.poi.EmptyFileException;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
+
+import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.security.Key;
+import java.sql.Driver;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
@@ -583,11 +601,14 @@ takeScreenshot();
         return this;
     }
 
-    @Step("Orijinal Evrak yazdır popup : Üst veri yazdır butonu ve Ekleri için yazdır butonları kontrolü")
+    @Step("Orijinal Evrak yazdır butonu ve popup : Üst veri yazdır butonu ve Ekleri için yazdır butonları kontrolü")
     public PostalanacakEvraklarPage popupOrjYazYazdirButonKonrolleri() {
-        btnPopUpUstVeriOrjYaz.exists();
-        btnEkleriOrjYazbtn1.exists();
-        btnEkleriOrjYazbtn2.exists();
+        postalanacakEvrakOrijinalYazdir.click();
+
+        Assert.assertEquals( true , btnPopUpUstVeriOrjYaz.exists());
+        Assert.assertEquals( true , btnEkleriOrjYazbtn1.exists());
+        Assert.assertEquals( true ,  btnEkleriOrjYazbtn2.exists());
+
         return this;
     }
 
@@ -600,26 +621,85 @@ takeScreenshot();
         return this;
     }
 
-    @Step("UstVeri Orijinal E-Ibaresi - Kırmızı Yazı Kontrolü , Screenshot ve output text olarak yazdırma")
+    @Step("UstVeri Orijinal E-Ibaresi ve Kırmızı Yazı kontrolü, Screenshot ve output text olarak yazdırma")
     public PostalanacakEvraklarPage PDFEibareVeKırmızıYazıktrl () throws InterruptedException {
         postalanacakEvrakOrjYaz();
         switchTo().window(1);
         SelenideElement pdftab = $x("//*[@id='plugin']");
+        String bckColr = pdftab.getCssValue("color");
+
+        System.out.println(bckColr);
+
         pdftab.sendKeys(Keys.CONTROL, "a");
+        Thread.sleep(500);
+        pdftab.sendKeys(Keys.SPACE);
         pdftab.sendKeys(Keys.CONTROL, "c");
-        pdftab.sendKeys(Keys.CONTROL, "v");
+
+        //pdftab.sendKeys(Keys.CONTROL, "V");
         sleep(1000);
+        String result = "";
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        Transferable contents = clipboard.getContents(null);
+        boolean hasTransferableText =
+                (contents != null) &&
+                        contents.isDataFlavorSupported(DataFlavor.stringFlavor)
+                ;
+        if ( hasTransferableText ) {
+            try {
+                result = (String)contents.getTransferData(DataFlavor.stringFlavor);
+            }
+            catch (UnsupportedFlavorException ex){
+                //highly unlikely since we are using a standard DataFlavor
+                System.out.println(ex);
+                ex.printStackTrace();
+            }
+            catch (IOException ex) {
+                System.out.println(ex);
+                ex.printStackTrace();
+            }
+        }
+        System.out.println(result);
+        Allure.addAttachment("PDF", result);
+
         takeScreenshot();
+
+        return this;
+    }
+    @Step("Kırmızı Yazı kontrolü")
+    public PostalanacakEvraklarPage PDFkirmiziyaziktrl() {
+
         closeNewWindow();
         switchTo().window(0);
         return this;
     }
 
+    @Step("PDF Okuma")
+    public String pdfokuma(String strURL)  throws EmptyFileException, IOException {
+        URL url = new URL(strURL);
+        InputStream is = url.openStream();
+        BufferedInputStream fileToParse = new BufferedInputStream(is);
+        PDDocument document = null;
+        String output;
+        try {
+            document = PDDocument.load(fileToParse);
+            output = new PDFTextStripper().getText(document);
+            System.out.println(output);
+        } finally {
+            if (document != null) {
+                document.close();
+            }
+            fileToParse.close();
+            is.close();
+        }
+        return output;
+    }
     @Step("PDF - Evrak sayısı - Yazışma Kuralları kontrol")
-    public PostalanacakEvraklarPage pdfEvrakYazismaKuralkontrol() {
+    public PostalanacakEvraklarPage pdfEvrakYazismaKuralkontrol() throws IOException {
         switchTo().window(1);
-        SelenideElement pdftab = $x("//*[@id='plugin']");
-        String ktrl = pdftab.getValue();
+
+        SelenideElement pdftab1 = $x("//*[@id='plugin']");
+
+        String ktrl = pdftab1.getValue();
         System.out.println(ktrl);
         closeNewWindow();
         switchTo().window(0);
@@ -633,28 +713,15 @@ takeScreenshot();
         return this;
     }
 
-    @Step("Dağıtım Planı yazdır butonu , PDF içi sayfa sayısı kontrolü , Hitap kontrolü ve yazışma kuralı karşılaştırma , Güvenlik kodu yazdirma , Ekran görüntüsü alma ")
+    @Step("Dağıtım Planı yazdır butonu ")
     public PostalanacakEvraklarPage dagitimplanyazdir() throws InterruptedException {
         $x("//*[@id='mainPreviewForm:dataTableId_data']/tr[2]/td[5]/div/table/tbody/tr[1]/td/button").click();
         SelenideElement sayiyaz = $x("//*[@id='postaDetayYazdirForm:dtPostaEvrakUstVeri_data']/tr/td[3]/div");
         String sayi = sayiyaz.getAttribute("innerText");
-        btnPopupYazdir.click();
-        switchTo().window(1);
-        SelenideElement pdftab = $x("//*[@id='plugin']");
-        refresh();
-        Thread.sleep(1000);
+        System.out.println(sayi);
 
-        takeScreenshot();
-        pdftab.sendKeys(Keys.PAGE_DOWN);
-        pdftab.sendKeys(Keys.PAGE_DOWN);
-        Thread.sleep(1000);
-        takeScreenshot();
-        pdftab.sendKeys(Keys.CONTROL, "a");
-        pdftab.sendKeys(Keys.CONTROL, "c");
-        pdftab.sendKeys(Keys.CONTROL, "v");
-        closeNewWindow();
-        switchTo().window(0);
-        popupPostaYazdirmaKapat();
+        btnPopupYazdir.click();
+
        // $x("//div[@id='postaDetayYazdirForm:dlgPostaDetayYazdir']//a[span[@class='ui-icon ui-icon-closethick']]").click();
         //btnDagitimYerDetay.click();
         //SelenideElement dgtmdetayTablo = $x("//*[@id='mainPreviewForm:dagitimPlaniDetay_data']");
@@ -662,7 +729,54 @@ takeScreenshot();
         //System.out.println(dgmdty);
         return this;
     }
+    @Step(" PDF içi sayfa sayısı kontrolü , Hitap kontrolü ve yazışma kuralı karşılaştırma , Güvenlik kodu yazdirma , Ekran görüntüsü alma ")
+    public PostalanacakEvraklarPage dgmpdfhitapguvenktrl () throws InterruptedException {
+        switchTo().window(1);
+        SelenideElement pdftab = $x("//*[@id='plugin']");
+        refresh();
+        Thread.sleep(2000);
 
+        takeScreenshot();
+        pdftab.sendKeys(Keys.PAGE_DOWN);
+        pdftab.sendKeys(Keys.PAGE_DOWN);
+        Thread.sleep(2000);
+        takeScreenshot();
+        pdftab.sendKeys("bar");
+
+        pdftab.sendKeys(Keys.CONTROL, "a" );
+        pdftab.sendKeys(Keys.SPACE);
+        pdftab.sendKeys(Keys.CONTROL,"C");
+
+        String result = "";
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        Transferable contents = clipboard.getContents(null);
+        boolean hasTransferableText =
+                (contents != null) &&
+                        contents.isDataFlavorSupported(DataFlavor.stringFlavor)
+                ;
+        if ( hasTransferableText ) {
+            try {
+                result = (String)contents.getTransferData(DataFlavor.stringFlavor);
+            }
+            catch (UnsupportedFlavorException ex){
+                //highly unlikely since we are using a standard DataFlavor
+                System.out.println(ex);
+                ex.printStackTrace();
+            }
+            catch (IOException ex) {
+                System.out.println(ex);
+                ex.printStackTrace();
+            }
+        }
+        System.out.println(result);
+        Allure.addAttachment("PDF", result);
+
+        closeNewWindow();
+        switchTo().window(0);
+        popupPostaYazdirmaKapat();
+        return this;
+
+    }
     @Step("Postalancak Eposta")
     public PostalanacakEvraklarPage postalacanakEposta(String eposta) {
 
@@ -1047,6 +1161,9 @@ takeScreenshot();
 
     @Step("Icerik Evrak Postalama butonu")
     public PostalanacakEvraklarPage btnIcerikEvrakPostalama() {
+        $x("//*[@id='windowItemInfoDialog']").sendKeys(Keys.CONTROL, Keys.DOWN);
+        $x("//*[@id='windowItemInfoDialog']").sendKeys(Keys.CONTROL, Keys.DOWN);
+
         btnIcerikPostalama.click();
         return this;
     }
