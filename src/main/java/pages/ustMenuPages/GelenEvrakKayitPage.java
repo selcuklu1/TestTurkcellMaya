@@ -1579,6 +1579,7 @@ public class GelenEvrakKayitPage extends MainPage {
             text += "İslem Sure alanları gösterilmektedir.";
         }
         Allure.addAttachment("Alan Kontrolleri : ", text);
+        takeScreenshot();
         return this;
     }
 

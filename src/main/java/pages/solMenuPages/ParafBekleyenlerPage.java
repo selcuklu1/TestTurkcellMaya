@@ -18,7 +18,6 @@ import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 public class ParafBekleyenlerPage extends MainPage {
 
-
     ElementsCollection tblParafBekleyenEvraklar = $$("[id='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
     SelenideElement btnPaylasTab = $(By.xpath("//span[contains(@class, 'evrakPaylas')]/.."));
     SelenideElement txtKisi = $(By.id("mainPreviewForm:evrakPaylasKisiLov:LovText"));
@@ -353,6 +352,17 @@ public class ParafBekleyenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Parafladıklarım listesinden evrak detay göster")
+    public ParafBekleyenlerPage konuyaGoreEvrakDetayGoster(String konu) {
+
+        tblParafBekleyenEvraklar
+                .filterBy(Condition.text(konu))
+                .get(0)
+                .$("[id$='detayGosterButton']").click();
+
+        return this;
+    }
+
     @Step("Evrak Ek/İlgi/İlişikler tablarının geldiği kontrolu")
     public ParafBekleyenlerPage tabKontrolleri() {
 
@@ -430,7 +440,9 @@ public class ParafBekleyenlerPage extends MainPage {
 
     @Step("Evrak Önizlemde Silme Notu Doldur")
     public ParafBekleyenlerPage evrakSilNotuDoldur(String not) {
-         txtEvrakOnizlemdeSilNotu.setValue(not);
+        txtEvrakOnizlemdeSilNotu.setValue(not);
         return this;
     }
+
+
 }

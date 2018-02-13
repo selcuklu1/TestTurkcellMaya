@@ -2,6 +2,7 @@ package pages.ustMenuPages;
 
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
@@ -19,7 +20,10 @@ public class GelenEvrakZimmetRaporuPage extends MainPage{
     SelenideElement konuKontrolu = $(By.id("windowReadOnlyForm:evrakBilgileriList:3:konuTextArea"));
     SelenideElement evrakEtiket = $("[id$='etiketMetinID']");
     SelenideElement islemKapat = $(By.id("kapatButton"));
-
+    ElementsCollection zimmetEvrakListele = $$("[id='gelenEvrakZimmetRaporuYonetimiTabView:gelenEvrakZimmetRaporuTab1Form:gelenEvrakDataTableTab1'] tbody tr");
+    ElementsCollection hareketGecmisi = $$("[id='zimmetRaporHareketGecmisiForm:hareketGecmisiDataTableId_data']");
+    ElementsCollection pencereListesi1 = $$("[class='ui-dialog-titlebar ui-widget-header ui-helper-clearfix ui-corner-top']");
+    ElementsCollection pencereListesi2 = $$("[class='ui-dialog-titlebar ui-widget-header ui-helper-clearfix ui-corner-top']");
 
     @Step("GelenEvrakZimmetRaporu sayfasını aç")
     public GelenEvrakZimmetRaporuPage openPage() {
@@ -35,15 +39,16 @@ public class GelenEvrakZimmetRaporuPage extends MainPage{
 
     @Step("Gelen Evrak Zimmet Raporu Tablosunda kontrol. Evrak1: {konu1}, Evrak2: {konu2}")
     public GelenEvrakZimmetRaporuPage rapordaEvraklarıListele(String konu1, String konu2) {
-        boolean durum = $$("[id='gelenEvrakZimmetRaporuYonetimiTabView:gelenEvrakZimmetRaporuTab1Form:gelenEvrakDataTableTab1'] tbody tr")
-                .filterBy(text(konu1)).size() == 0;
+//        boolean durum = $$("[id='gelenEvrakZimmetRaporuYonetimiTabView:gelenEvrakZimmetRaporuTab1Form:gelenEvrakDataTableTab1'] tbody tr")
+        boolean durum = zimmetEvrakListele.filterBy(text(konu1)).size() == 0;
         Assert.assertEquals(durum, false);
         return this;
     }
 
     @Step("Gelen Evrak Zimmet Raporu Tablosunda Evrak Geçmiş Buton Tıklama: {konu}")
     public GelenEvrakZimmetRaporuPage evrakGecmisiButtonTıklama(String konu) {
-        ElementsCollection tr = $$("[id='gelenEvrakZimmetRaporuYonetimiTabView:gelenEvrakZimmetRaporuTab1Form:gelenEvrakDataTableTab1'] tbody tr").filterBy(text(konu));
+//        ElementsCollection tr = $$("[id='gelenEvrakZimmetRaporuYonetimiTabView:gelenEvrakZimmetRaporuTab1Form:gelenEvrakDataTableTab1'] tbody tr").filterBy(text(konu));
+        ElementsCollection tr = zimmetEvrakListele.filterBy(text(konu));
         if(tr.size() > 0)
         {
             tr.get(0).$$("td [id$='evrakGecmisiId']").get(0).click();
@@ -53,7 +58,8 @@ public class GelenEvrakZimmetRaporuPage extends MainPage{
 
     @Step("Gelen Evrak Zimmet Raporu Tablosunda Evrak Detay Buton Tıklama: {konu}")
     public GelenEvrakZimmetRaporuPage evrakDetayButtonTıklama(String konu) {
-        ElementsCollection tr = $$("[id='gelenEvrakZimmetRaporuYonetimiTabView:gelenEvrakZimmetRaporuTab1Form:gelenEvrakDataTableTab1'] tbody tr").filterBy(text(konu));
+//        ElementsCollection tr = $$("[id='gelenEvrakZimmetRaporuYonetimiTabView:gelenEvrakZimmetRaporuTab1Form:gelenEvrakDataTableTab1'] tbody tr").filterBy(text(konu));
+        ElementsCollection tr = zimmetEvrakListele.filterBy(text(konu));
         if(tr.size() > 0)
         {
             tr.get(0).$$("td [id$='evrakGosterButtonTab1']").get(0).click();
@@ -63,7 +69,8 @@ public class GelenEvrakZimmetRaporuPage extends MainPage{
 
     @Step("Gelen Evrak Zimmet Raporu Tablosunda Evrak Etiket Buton Tıklama: {konu}")
     public GelenEvrakZimmetRaporuPage evrakEtiketButtonTıklama(String konu) {
-        ElementsCollection tr = $$("[id='gelenEvrakZimmetRaporuYonetimiTabView:gelenEvrakZimmetRaporuTab1Form:gelenEvrakDataTableTab1'] tbody tr").filterBy(text(konu));
+//        ElementsCollection tr = $$("[id='gelenEvrakZimmetRaporuYonetimiTabView:gelenEvrakZimmetRaporuTab1Form:gelenEvrakDataTableTab1'] tbody tr").filterBy(text(konu));
+        ElementsCollection tr = zimmetEvrakListele.filterBy(text(konu));
         if(tr.size() > 0)
         {
             tr.get(0).$$("td [id*='j_idt']").get(0).click();
@@ -75,7 +82,8 @@ public class GelenEvrakZimmetRaporuPage extends MainPage{
 
     @Step("Gelen Evrak Zimmet Raporu Tablosunda Evrak Geçmiş Kontrolü: Evrak: {konu}, Kullanıcı: {kullanıcı}, IslemSureci: {islemSureci}")
     public GelenEvrakZimmetRaporuPage evrakGecmisiKontrolu(String konu,String kullanıcı,String islemSureci) {
-        boolean durumKonu1 = $$("[id='zimmetRaporHareketGecmisiForm:hareketGecmisiDataTableId_data']")
+//        boolean durumKonu1 = $$("[id='zimmetRaporHareketGecmisiForm:hareketGecmisiDataTableId_data']")
+        boolean durumKonu1 = hareketGecmisi
                 .filterBy(text(kullanıcı))
                 .filterBy(text(islemSureci)).size() == 0;
         Assert.assertEquals(durumKonu1, false);
@@ -94,6 +102,7 @@ public class GelenEvrakZimmetRaporuPage extends MainPage{
     public GelenEvrakZimmetRaporuPage evrakEtiketKontrolu() {
         boolean durum = evrakEtiket.isDisplayed();
         Assert.assertEquals(durum, true);
+        Allure.addAttachment("Evrak Etiket", "Bulunmaktadır");
         return this;
     }
 
@@ -101,14 +110,16 @@ public class GelenEvrakZimmetRaporuPage extends MainPage{
 
     @Step("Popup Kapatma")
     public GelenEvrakZimmetRaporuPage popupKapatma() {
-        ElementsCollection tr =$$("[class='ui-dialog-titlebar ui-widget-header ui-helper-clearfix ui-corner-top']").filterBy(text("Evrak Geçmişi"));
+//        ElementsCollection tr =$$("[class='ui-dialog-titlebar ui-widget-header ui-helper-clearfix ui-corner-top']").filterBy(text("Evrak Geçmişi"));
+        ElementsCollection tr = pencereListesi1.filterBy(text("Evrak Geçmişi"));
         tr.get(0).$("[href]").click();
         return this;
     }
 
     @Step("Evrak Kapatma")
     public GelenEvrakZimmetRaporuPage evrakKapatma() {
-        ElementsCollection tr =$$("[class='ui-dialog-titlebar ui-widget-header ui-helper-clearfix ui-corner-top']").filterBy(text("Evrak Detayı"));
+//        ElementsCollection tr =$$("[class='ui-dialog-titlebar ui-widget-header ui-helper-clearfix ui-corner-top']").filterBy(text("Evrak Detayı"));
+        ElementsCollection tr = pencereListesi2.filterBy(text("Evrak Detayı"));
         tr.get(0).$("[href]").click();
         islemKapat.click();
         return this;

@@ -198,6 +198,10 @@ public class EvrakTeslimAlmaTest extends BaseTest {
 
         String aksiyon = "Kaydedilen Gelen Evraklar - Teslim Al";
 
+        String tarihSaatBugun = "" + new SimpleDateFormat("dd.MM.yyyy HH:mm").format(new Date());
+        String kullanici = "Zübeyde Tekin";
+        String aciklama = "ztekin kullanıcısı, " + tarihSaatBugun;
+
         testStatus(testid,"PreCondition Evrak Oluşturma");
         gelenEvrakKayitPage
                 .openPage();
@@ -275,10 +279,6 @@ public class EvrakTeslimAlmaTest extends BaseTest {
                 .evrakNoGelmedigiGorme(konu2)
                 .islemMesaji().basariliOlmali(basariMesaji);
 
-
-        String tarihSaatBugun = "" + new SimpleDateFormat("dd.MM.yyyy HH:mm").format(new Date());
-        String kullanici = "Zübeyde Tekin";
-        String aciklama = "ztekin kullanıcısı, " + tarihSaatBugun;
 
         //TODO: Bu adim test senaryosunda net degildir. Netlesmesi durumunda test case update edilecektir. Bu hali ile test fail etmektedir.
         sistemLoglariPage
@@ -736,7 +736,6 @@ public class EvrakTeslimAlmaTest extends BaseTest {
 
         testStatus(testid,"Test Başladı");
         String kullanici = "Zübeyde TEKİN";
-
 
         gelenEvrakZimmetRaporu
                 .openPage()
