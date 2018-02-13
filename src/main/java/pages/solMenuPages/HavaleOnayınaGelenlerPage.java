@@ -45,6 +45,8 @@ public class HavaleOnayınaGelenlerPage extends MainPage {
     SelenideElement dagitimOnayla = $(By.id("inboxItemInfoForm:onaylaButton_id"));
     ElementsCollection dagitimOnaylaEvet = $$("[id='inboxItemInfoForm:evetButton_id']");
 
+    SelenideElement birimSeç = $("select[id='mainPreviewForm:dagitimBilgileriBirimLov_id:LovSecilenTable:0:selectOneMenu']");
+
     @Step("Birim Havale Onayına Gelenler sayfası aç")
     public HavaleOnayınaGelenlerPage openPage() {
         solMenu(SolMenuData.BirimEvraklari.HavaleOnayinaGelenler);
@@ -75,6 +77,22 @@ public class HavaleOnayınaGelenlerPage extends MainPage {
     @Step("Birim alanında seçileni Bilgi için gönder")
     public HavaleOnayınaGelenlerPage havaleOnayinaBirimGeregiIcinBilgiIcinSec(){
         $(By.id("mainPreviewForm:dagitimBilgileriBirimLov_id:LovSecilenTable:0:selectOneMenu")).selectOption("BİLGİ İÇİN GÖNDER");
+        return this;
+    }
+
+    @Step("Dağıtım Bilgileri Birim alanında \"{opsiyon}\" seçilir")
+    public HavaleOnayınaGelenlerPage dagitimBilgileriBirimOpsiyon(String opsiyon) {
+        String gerek = "GEREĞİ İÇİN GÖNDER";
+        String bilgi = "BİLGİ İÇİN GÖNDER";
+        String koordinasyon = "KOORDİNASYON İÇİN GÖNDER";
+
+        if(opsiyon.equals(gerek))
+          birimSeç.selectOptionByValue("G");
+        else if(opsiyon.equals(bilgi))
+          birimSeç.selectOptionByValue("B");
+        else if(opsiyon.equals(koordinasyon))
+         birimSeç.selectOptionByValue("K");
+
         return this;
     }
 

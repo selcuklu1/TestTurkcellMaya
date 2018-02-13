@@ -136,7 +136,6 @@ public class GelenGidenEvrakKayitHavaleTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, priority = 0, description = "TS2171: Gelen evrak kaydederken havale edilen evrakın geri alınması\n")
-//    @Test(enabled = true, priority = 0, description = "TS2171: Gelen evrak kaydederken havale edilen evrakın geri alınması\n"	)
     public void TS2171() throws InterruptedException {
         String testid= "TS-2171";
         String islemSureci = "Evrak geri alındı ";

@@ -394,8 +394,7 @@ public class EvrakOlusturPage extends MainPage {
 
         private BilgilerTab open() {
             if (divContainer.is(not(visible)))
-                tabBilgiler.click();
-
+                clickJs(tabBilgiler);
             //divContainer.shouldBe(visible);
             return this;
         }
@@ -1687,7 +1686,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Bilgiler Tabı tüm alan kontrolleri")
+        @Step("Evrak Oluştur - Bilgiler Tabı tüm alan kontrolleri")
         public BilgilerTab bilgilerTabTumAlanKontrolleri() {
 
             if (cmbKonuKodu.isLovSelected()) {
@@ -1749,6 +1748,8 @@ public class EvrakOlusturPage extends MainPage {
             }
             Assert.assertEquals( cmbOnayAkisi.isDisplayed(), true, "Onay Akışı");
             Allure.addAttachment("Onay Akışı alanı kontrolu başarılı", "");
+
+            takeScreenshot();
 
             return this;
         }
