@@ -68,8 +68,8 @@ public class EvrakDevretTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TS2178 : İlgisi olan İşlem Bekleyen Cevap Evrakı Devretme ve Sonrasında Devralandan Silinmesi ve İlginin Kontrolü")
-    public void TS2178() throws InterruptedException {
+    @Test(enabled = true, description = "TS2178a : İlgisi olan İşlem Bekleyen Cevap Evrakı Devretme ve Sonrasında Devralandan Silinmesi ve İlginin Kontrolü")
+    public void TS2178a() throws InterruptedException {
 
         login(mbozdemir);
         evrakOlustur();
@@ -188,6 +188,38 @@ public class EvrakDevretTest extends BaseTest {
 
 
     }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS2178b : Havale Onayına Gelen evrakın devredilmesi")
+    public void TS2178b() throws InterruptedException{
+
+        login(mbozdemir);
+        evrakOlustur();
+        logout();
+        login(username21g);
+
+        String tabName = "Havale Onayına Gelen";
+
+        String btnSilName = "Sil";
+        String aciklamaSil = "Silme işlemi";
+
+        System.out.println(konu);
+        kullaniciEvrakDevretPage
+                .openPage()
+                .ekranTabKontrolleri()
+                .devredecekKisiSec(devredecekKisi)
+                .listele()
+                .tabloAlanKontrolleri()
+                .tabloEvrakSecimi(tabName, konu)
+                .devret()
+                .devralacakKisiAlanKontolu()
+                .devralacakKisiSec(kullaniciNormal)
+                .aciklamaDoldur(icerik)
+                .devretTamam()
+                .islemMesaji().basariliOlmali(basariMesaji);
+    }
+
+
 
     @Step("Test datası oluşturuldu.")
     private void evrakDevret() {
