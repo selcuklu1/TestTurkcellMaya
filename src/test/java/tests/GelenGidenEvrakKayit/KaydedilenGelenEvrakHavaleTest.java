@@ -171,5 +171,5 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .openPage()
                 .evrakNoIleEvrakSec(konu);
     }
-    
+
 }
