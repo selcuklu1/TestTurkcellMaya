@@ -1687,7 +1687,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Bilgiler Tabı tüm alan kontrolleri")
+        @Step("Evrak Oluştur - Bilgiler Tabı tüm alan kontrolleri")
         public BilgilerTab bilgilerTabTumAlanKontrolleri() {
 
             if (cmbKonuKodu.isLovSelected()) {
