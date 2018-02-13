@@ -19,14 +19,15 @@ import pages.ustMenuPages.GelenEvrakKayitPage;
 public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
     GelenEvrakKayitPage gelenEvrakKayitPage;
     TeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage;
-//    HavaleOnayınaGelenlerPage havaleOnayınaGelenlerPage;
+    HavaleOnayınaGelenlerPage havaleOnayınaGelenlerPage;
     BirimHavaleEdilenlerPage birimHavaleEdilenlerPage;
     KaydedilenGelenEvraklarPage kaydedilenGelenEvraklarPage;
     GelenEvraklarPage gelenEvraklarPage;
-//    HavaleOnayiVerdiklerimPage havaleOnayiVerdiklerim;
+    HavaleOnayiVerdiklerimPage havaleOnayiVerdiklerim;
 
 //    User yakyol = new User("yakyol", "123");
     User mbozdemir = new User("mbozdemir", "123");
+    User ztekin = new User("ztekin" , "123");
 //    User ztekin = new User("ztekin", "123");
     String konuKodu = "010.01";
     String konu = "";
@@ -47,14 +48,14 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
 
     @BeforeMethod
     public void loginBeforeTests() {
-        login("ztekin", "123");
+        login(ztekin);
         gelenEvrakKayitPage = new GelenEvrakKayitPage();
         teslimAlinmayiBekleyenlerPage = new TeslimAlinmayiBekleyenlerPage();
-//        havaleOnayınaGelenlerPage = new HavaleOnayınaGelenlerPage();
+        havaleOnayınaGelenlerPage = new HavaleOnayınaGelenlerPage();
         birimHavaleEdilenlerPage = new BirimHavaleEdilenlerPage();
         kaydedilenGelenEvraklarPage = new KaydedilenGelenEvraklarPage();
         gelenEvraklarPage = new GelenEvraklarPage();
-//        havaleOnayiVerdiklerim = new HavaleOnayiVerdiklerimPage();
+        havaleOnayiVerdiklerim = new HavaleOnayiVerdiklerimPage();
     }
 
 //    public String getDocPath1() {
@@ -172,4 +173,109 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .evrakNoIleEvrakSec(konu);
     }
 
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, priority = 0, description = "TS2286: Havaleden geri çekilen evrakın onaylı havale edilmesi (önizleme ekranından)")
+    public void TS2286() throws InterruptedException {
+        String testid= "TS-2286";
+        konu = "TS-2286-" + getSysDate();
+        String gerek = "GEREĞİ İÇİN GÖNDER";
+        String bilgi = "BİLGİ İÇİN GÖNDER";
+        String koordinasyon = "KOORDİNASYON İÇİN GÖNDER";
+
+        testStatus(testid,"PreCondition Evrak Oluşturma");
+
+        gelenEvrakKayitPage
+                .openPage()
+                .konuKoduDoldur(konuKodu)
+                .konuDoldur(konu)
+                .evrakTuruSec(evrakTuru)
+                .evrakDiliSec(evrakDili)
+                .evrakTarihiDoldur(evrakTarihi)
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .kisiKurumSec(kisiKurum)
+                .geldigiKurumDoldurLovText(geldigiKurum)
+                .evrakSayiSagDoldur()
+                .evrakGelisTipiSec(evrakGelisTipi)
+                .ivedilikSec(ivedilik)
+                .kaydet()
+                .popUpsv2();
+
+        kaydedilenGelenEvraklarPage
+                .openPage()
+                .evrakNoIleEvrakSec(konu)
+                .tabloEvrakNoileIcerikSec(konu)
+                .icerikHavaleYap()
+                .icerikHavaleIslemleriKisiDoldur(onaylayacakKisi,onayKisiDetails)
+                .icerikHavaleOnayinaGonder()
+                .islemMesaji().basariliOlmali();
+
+        birimHavaleEdilenlerPage
+                .openPage()
+                .evrakNoIleTablodanEvrakSecme(konu)
+                .onizlemeHavaleGeriAl()
+                .onizlemeNotAlanınıDoldur(konu)
+                .onizlemeGeriAl()
+                .islemMesaji().basariliOlmali();
+
+        testStatus(testid,"Test Başladı");
+//        login(mbozdemir);
+
+        kaydedilenGelenEvraklarPage
+                .openPage()
+                .tabloEvrakNoileIcerikSec(konu)
+                .icerikHavaleYap()
+                .icerikHavaleAlanKontrolleri()
+                .icerikDagitimBilgileriOnaylayanWithDetails(onaylayacakKisi, onayKisiDetails)
+                .icerikDagitimBilgileriBirimDoldurWithDetails(birim, details)
+                .kaydet()
+                .evrakDetayiKaydetPopUpClose()
+                //TODO : 6. test adımından sonra yeni bir adım eklenmeli. Aksi takdirde havaleOnayınaGelenlerPage sayfasına ulaşmaz.
+                .icerikHavaleOnayinaGonder2();
+
+        login(mbozdemir);
+
+        havaleOnayınaGelenlerPage
+                .openPage()
+                .evrakNoIleEvrakSec(konu)
+                .havaleOnay()
+                //TODO : Havale alanında seçilen kişinin geldiği görülür.
+                .havaleOnayiBirimDoldur(birim)
+                .dagitimBilgileriBirimOpsiyon(bilgi)
+                .havaleOnayiOnayla()
+                .havaleyiOnaylamakUzersinizUyariGeldigiGorme()
+                .havaleyiOnaylamakUzeresinizEvet()
+                .islemMesaji().basariliOlmali();
+
+        havaleOnayiVerdiklerim
+                .openPage()
+                .evrakNoIleEvrakSec(konu);
+
+        login(ztekin);
+
+        birimHavaleEdilenlerPage
+                .openPage()
+                .evrakNoIleTabloKontrolu(konu);
+
+
+
+
+
+
+//                .evrakOnizlemeKontrol()
+//                .onizlemeHavaleYap()
+//                .havaleAlanKontrolleri()
+//                .dagitimBilgileriBirimDoldurWithDetails(birim, details)
+//                .buttonGonder()
+//                .islemMesaji().basariliOlmali();
+//
+//        birimHavaleEdilenlerPage
+//                .openPage()
+//                .evrakNoIleTablodanEvrakSecme(konu);
+//
+//        login(mbozdemir);
+//
+//        teslimAlinmayiBekleyenlerPage
+//                .openPage()
+//                .evrakNoIleEvrakSec(konu);
+    }
 }
