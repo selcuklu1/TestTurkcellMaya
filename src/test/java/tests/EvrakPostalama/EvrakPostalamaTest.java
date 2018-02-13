@@ -959,10 +959,9 @@ public class EvrakPostalamaTest extends BaseTest {
                 .cmbPostalananYerSecimi("OptiimTest TestOptiim")
                 .cmbpostaSeklisecimi("İç Giden")
                 .cmbPostaTipisec("Adi Posta")
-<<<<<<< HEAD
-=======
+
                 //.cmbPostalayanadi("Zübeyde TEKİN")
->>>>>>> 481ba577b0a0deb8480d46a1c5262a3a536de1a4
+
                 .postaSorgulama();
         postalananEvrakRaporuPage.ekranSorgulananSonucKontrol();
         postalananEvrakRaporuPage.evrakRaporForm()

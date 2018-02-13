@@ -365,6 +365,6 @@ public class PostalananEvrakRaporuPage extends MainPage {
     @Step("Excel ve Tablo karşılaştırma")
     public PostalananEvrakRaporuPage excelTabloKars() {
 
-        
+return this;
     }
 }
