@@ -384,20 +384,19 @@ public class PostalananEvrakRaporuPage extends MainPage {
         return this;
     }
 
-    @Step("Sayfayı Raporla Excel")
+    @Step("Sayfayı Raporla Excel butonu tıklama ve indirme")
     public PostalananEvrakRaporuPage sayfayiraporlaexcel() {
 
         sayfayiraporla.click();
         return this;
     }
     @Step("Excel ve Tablo karşılaştırma")
-    public PostalananEvrakRaporuPage excelTabloKars() throws IOException {
+    public PostalananEvrakRaporuPage excelTabloKars(String filepath) throws IOException {
 
     boolean flag;
-        getDownloadPath();
-        File dir = new File( getDownloadPath());
+        File dir = new File( filepath);
         File[] dir_contents = dir.listFiles();
-        String fileName = getDownloadPath() ;
+        String fileName = filepath ;
         System.out.println(fileName);
         Pattern p = Pattern.compile( "Rapor_" +"[0-9]+" +".xls");
       //  Matcher m = p.matcher(fileName);
@@ -410,7 +409,7 @@ public class PostalananEvrakRaporuPage extends MainPage {
 
             System.out.println(m.group() + " " + m.start() + " " + m.end());
             s = m.group();
-            fileName = getDownloadPath() + s;
+            fileName = filepath + s;
         } }
 
 
