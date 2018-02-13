@@ -8,11 +8,11 @@ import io.qameta.allure.Step;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.altMenuPages.EvrakDetayiPage;
-import pages.solMenuPages.GelenEvraklarPage;
-import pages.solMenuPages.ImzaBekleyenlerPage;
-import pages.solMenuPages.TaslakEvraklarPage;
+import pages.solMenuPages.*;
 import pages.ustMenuPages.EvrakOlusturPage;
+import pages.ustMenuPages.GelenEvrakKayitPage;
 import pages.ustMenuPages.KullaniciEvrakDevretPage;
+import tests.BirimeIade.BirimeIadeEdilenlerdenHavaleTest;
 
 
 /****************************************************
@@ -30,6 +30,9 @@ public class EvrakDevretTest extends BaseTest {
     GelenEvraklarPage gelenEvraklarPage;
     EvrakDetayiPage evrakDetayiPage;
     TaslakEvraklarPage taslakEvraklarPage;
+    GelenEvrakKayitPage gelenEvrakKayitPage;
+    TeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage;
+    BirimIadeEdilenlerPage birimIadeEdilenlerPage;
 
     User mbozdemir = new User("mbozdemir", "123");
     User username22n = new User("username22n", "123");
@@ -37,7 +40,7 @@ public class EvrakDevretTest extends BaseTest {
 
 
     //    String konu = "TS2178 20180205135705";
-    String konu = "TS2178 " + getSysDate();
+    String konu = "Evrak Devret " + getSysDate();
     String tur = "IMZALAMA";
     String icerik = "Test Otomasyon " + getSysDate();
     String konuKodu = "010.01";
@@ -65,6 +68,9 @@ public class EvrakDevretTest extends BaseTest {
         gelenEvraklarPage = new GelenEvraklarPage();
         evrakDetayiPage = new EvrakDetayiPage();
         taslakEvraklarPage = new TaslakEvraklarPage();
+        gelenEvrakKayitPage = new GelenEvrakKayitPage();
+        teslimAlinmayiBekleyenlerPage = new TeslimAlinmayiBekleyenlerPage();
+        birimIadeEdilenlerPage = new BirimIadeEdilenlerPage();
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -194,14 +200,11 @@ public class EvrakDevretTest extends BaseTest {
     public void TS2178b() throws InterruptedException{
 
         login(mbozdemir);
-        evrakOlustur();
+        havaleOnayı();
         logout();
         login(username21g);
 
-        String tabName = "Havale Onayına Gelen";
-
-        String btnSilName = "Sil";
-        String aciklamaSil = "Silme işlemi";
+        String tabName = "Havale Onayına Gelen Evraklar";
 
         System.out.println(konu);
         kullaniciEvrakDevretPage
@@ -217,8 +220,48 @@ public class EvrakDevretTest extends BaseTest {
                 .aciklamaDoldur(icerik)
                 .devretTamam()
                 .islemMesaji().basariliOlmali(basariMesaji);
+
+        logout();
+        login(username22n);
+
+        gelenEvraklarPage
+                .openPage()
+                .tabloKonuyaGoreEvrakKontrol(konu,true);
     }
 
+    private void havaleOnayı() {
+//        String konuKoduRandomTS2178b = "TC2178" + createRandomNumber(15);
+
+        String basariMesaji = "İşlem başarılıdır!";
+        String konuKodu = "Diğer";
+        String evrakSayiSag =  createRandomNumber(10);
+        String evrakTarihi = getSysDateForKis();
+        String kurum = "BÜYÜK HARFLERLE KURUM";
+        String kullaniciAdi = "Yazılım Geliştirme Direktörlüğ";
+
+        gelenEvrakKayitPage
+                .openPage()
+                .konuKoduDoldur(konuKodu)
+                .konuDoldur(konu)
+                .evrakTarihiDoldur(evrakTarihi)
+                .geldigiKurumDoldurLovText(kurum)
+                .evrakSayiSagDoldur(evrakSayiSag)
+                .havaleIslemleriBirimDoldur(kullaniciAdi)
+                .kaydet()
+                .evetDugmesi()
+                .yeniKayitButton();
+        teslimAlinmayiBekleyenlerPage
+                .openPage()
+                .evrakNoIleEvrakSec(konu)
+                .iadeEt()
+                .iadeEtIadeEt();
+        birimIadeEdilenlerPage
+                .openPage()
+                .evrakSec(konu)
+                .teslimAlVeHavaleEt()
+                .onaylanacakKisiDoldur("Username21g Test","YGD")
+                .havaleOnayinaGonder();
+    }
 
 
     @Step("Test datası oluşturuldu.")
