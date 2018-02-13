@@ -229,6 +229,68 @@ public class EvrakDevretTest extends BaseTest {
                 .tabloKonuyaGoreEvrakKontrol(konu,true);
     }
 
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS0516 : İlgisi olan gelen evrakın devredilmesi.")
+    public void TS0516() throws InterruptedException{
+
+        login(mbozdemir);
+        gelenEvrak();
+        logout();
+        login(username21g);
+
+        String tabName = "Gelen Evraklar";
+
+        System.out.println(konu);
+        kullaniciEvrakDevretPage
+                .openPage()
+                .ekranTabKontrolleri()
+                .devredecekKisiSec(devredecekKisi)
+                .listele()
+                .tabloAlanKontrolleri()
+                .tabloEvrakSecimi(tabName, konu)
+                .devret()
+                .devralacakKisiAlanKontolu()
+                .devralacakKisiSec(kullaniciNormal)
+                .aciklamaDoldur(icerik)
+                .devretTamam()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        logout();
+        login(username22n);
+
+        gelenEvraklarPage
+                .openPage()
+                .tabloKonuyaGoreEvrakKontrol(konu,true);
+
+    }
+
+    @Step("Test datası oluşturuldu.")
+    private void gelenEvrak() throws InterruptedException {
+        String basariMesaji = "İşlem başarılıdır!";
+        String konuKodu = "Diğer";
+        String evrakSayiSag =  createRandomNumber(10);
+        String evrakTarihi = getSysDateForKis();
+        String kurum = "BÜYÜK HARFLERLE KURUM";
+        String pathToFileText = getUploadPath() + "test.txt";
+
+
+        gelenEvrakKayitPage
+                .openPage()
+                .konuKoduDoldur(konuKodu)
+                .konuDoldur(konu)
+                .evrakTarihiDoldur(evrakTarihi)
+                .geldigiKurumDoldurLovText(kurum)
+                .evrakSayiSagDoldur(evrakSayiSag)
+                .havaleIslemleriKisiDoldur("Username21g")
+                .ilgiliBilgiFiltreAc()
+                .ilgiBilgileriDosyaEkleme(pathToFileText)
+                .ilgiBilgileriDosyaEkleEkMetinDoldur(icerik)
+                .ilgiBilgileriTabViewEkle()
+                .kaydet()
+                .popUps();
+    }
+
+    @Step("Test datası oluşturuldu.")
     private void havaleOnayı() {
 //        String konuKoduRandomTS2178b = "TC2178" + createRandomNumber(15);
 
@@ -262,7 +324,6 @@ public class EvrakDevretTest extends BaseTest {
                 .onaylanacakKisiDoldur("Username21g Test","YGD")
                 .havaleOnayinaGonder();
     }
-
 
     @Step("Test datası oluşturuldu.")
     private void evrakDevret() {
