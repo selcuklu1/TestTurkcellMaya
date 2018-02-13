@@ -1750,6 +1750,8 @@ public class EvrakOlusturPage extends MainPage {
             Assert.assertEquals( cmbOnayAkisi.isDisplayed(), true, "Onay Akışı");
             Allure.addAttachment("Onay Akışı alanı kontrolu başarılı", "");
 
+            takeScreenshot();
+
             return this;
         }
 

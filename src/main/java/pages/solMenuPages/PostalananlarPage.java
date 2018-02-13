@@ -4,14 +4,23 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
+import org.apache.xmlbeans.impl.xb.xsdschema.All;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.pageData.SolMenuData;
 
+import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.BufferedOutputStream;
+import java.io.IOException;
+import java.security.Key;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
@@ -286,7 +295,7 @@ public class PostalananlarPage extends MainPage {
     }
 
     @Step("Ekleri Yazdirma butonu , Ekleri kontrolü ,  PDF'leri açma ve kontröl")
-    public PostalananlarPage eklerYazdirPopupbtn(String ek1, String ek2) {
+    public PostalananlarPage eklerYazdirPopupbtn(String ek1, String ek2) throws InterruptedException {
         SelenideElement evrakYazdirButonktrl = $x("//*[@id='postaDetayYazdirForm:dtPostaEvrakEk_data']/tr[1]/td[7]/div/button");
         evrakYazdirButonktrl.click();
         switchTo().window(1);
@@ -297,9 +306,32 @@ public class PostalananlarPage extends MainPage {
         ickKtrl.sendKeys(Keys.PAGE_DOWN);
         takeScreenshot();
         ickKtrl.sendKeys(Keys.CONTROL, "a");
+        Thread.sleep(500);
+        ickKtrl.sendKeys(Keys.SPACE);
         ickKtrl.sendKeys(Keys.CONTROL, "c");
-        ickKtrl.sendKeys(Keys.CONTROL, "v");
-        BufferedOutputStream.class.toString();
+
+        String result = "";
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        Transferable contents = clipboard.getContents(null);
+        boolean hasTransferableText =
+                (contents != null) &&
+                        contents.isDataFlavorSupported(DataFlavor.stringFlavor)
+                ;
+        if ( hasTransferableText ) {
+            try {
+                result = (String)contents.getTransferData(DataFlavor.stringFlavor);
+            }
+            catch (UnsupportedFlavorException ex){
+                //highly unlikely since we are using a standard DataFlavor
+                System.out.println(ex);
+                ex.printStackTrace();
+            }
+            catch (IOException ex) {
+                System.out.println(ex);
+                ex.printStackTrace();
+            }
+        }
+        System.out.println(result);
         closeNewWindow();
         switchTo().window(0);
         return this;
@@ -619,7 +651,7 @@ public class PostalananlarPage extends MainPage {
     }
 
     @Step("Evrak Yazdır Popup içi Üst Veri Pdf yazdırma,Yazışma kontrolü ve kırmızı alan içerik kontrolü, Ekran görüntüsü ve text output alma")
-    public PostalananlarPage popupYazpdfkontrolveKapatma() {
+    public PostalananlarPage popupYazpdfkontrolveKapatma() throws InterruptedException {
         popupEvrakYazdirma.click();
         switchTo().window(1);
         SelenideElement pdftab = $x("//*[@id='plugin']");
@@ -628,10 +660,37 @@ public class PostalananlarPage extends MainPage {
         pdftab.sendKeys(Keys.PAGE_DOWN);
         takeScreenshot();
         pdftab.sendKeys(Keys.CONTROL, "a");
+        Thread.sleep(500);
+        pdftab.sendKeys(Keys.SPACE);
         pdftab.sendKeys(Keys.CONTROL, "c");
-        pdftab.sendKeys(Keys.CONTROL, "v");
+
+        String result = "";
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        Transferable contents = clipboard.getContents(null);
+        boolean hasTransferableText =
+                (contents != null) &&
+                        contents.isDataFlavorSupported(DataFlavor.stringFlavor)
+                ;
+        if ( hasTransferableText ) {
+            try {
+                result = (String)contents.getTransferData(DataFlavor.stringFlavor);
+            }
+            catch (UnsupportedFlavorException ex){
+                //highly unlikely since we are using a standard DataFlavor
+                System.out.println(ex);
+                ex.printStackTrace();
+            }
+            catch (IOException ex) {
+                System.out.println(ex);
+                ex.printStackTrace();
+            }
+        }
+
+        System.out.println(result);
+        Allure.addAttachment("PDF", result);
         closeNewWindow();
         switchTo().window(0);
+
         SelenideElement ustyazi = $x("//*[@id='postaDetayYazdirForm:dtPostaEvrakUstVeri_data']/tr/td[2]/div");
         String pdf = ustyazi.getAttribute("innerText");
         System.out.println(pdf);
