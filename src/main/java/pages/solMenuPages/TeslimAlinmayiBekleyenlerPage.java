@@ -217,6 +217,15 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Evrak geldiği görünür")
+    public TeslimAlinmayiBekleyenlerPage evrakGeldigiGorunur(String konuKodu) {
+        boolean durum = tblEvraklar
+                .filterBy(Condition.text(konuKodu)).size() == 1;
+        Assert.assertEquals(durum, true);
+        takeScreenshot();
+        return this;
+    }
+
     @Step("Teslim Al ve Havale Et")
     public TeslimAlinmayiBekleyenlerPage teslimAlVeHavaleEt(){
         btnTeslimAlVeKapat2.click();
