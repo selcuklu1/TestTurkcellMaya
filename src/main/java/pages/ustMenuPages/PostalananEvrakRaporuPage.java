@@ -1,13 +1,34 @@
 package pages.ustMenuPages;
 
 import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
 import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.UstMenuData;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Iterator;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
@@ -35,6 +56,7 @@ public class PostalananEvrakRaporuPage extends MainPage {
     SelenideElement btnPostayalanAltBirim = $x("//*[@id='postalananEvrakRaporuForm:altBirimDahilId']");
     SelenideElement btnPostaSahibiAltBirim = $x("//*[@id='postalananEvrakRaporuForm:altBirimSahibiDahilId']");
     SelenideElement fromEvrakRapor = $x("//*[@id='postalananEvrakRaporuForm']");
+    SelenideElement sayfayiraporla = $x("//*[@id='postalananEvrakRaporuForm:postalananEvrakDataTable']/table/thead/tr[1]/th/button[5]");
     BelgenetElement cmbEvrakSahibi = comboLov("input[id$='postalananEvrakRaporuForm:sahibiBirimLov_id:LovText']");
     BelgenetElement cmbPostalananyer = comboLov("input[id$='postalananEvrakRaporuForm:postalananYerLov:LovText']");
     SelenideElement cmbPostaSekli = $x("//*[@id='postalananEvrakRaporuForm:postaSekliId']");
@@ -362,9 +384,90 @@ public class PostalananEvrakRaporuPage extends MainPage {
         return this;
     }
 
-    @Step("Excel ve Tablo karşılaştırma")
-    public PostalananEvrakRaporuPage excelTabloKars() {
+    @Step("Sayfayı Raporla Excel")
+    public PostalananEvrakRaporuPage sayfayiraporlaexcel() {
 
-return this;
+        sayfayiraporla.click();
+        return this;
+    }
+    @Step("Excel ve Tablo karşılaştırma")
+    public PostalananEvrakRaporuPage excelTabloKars() throws IOException {
+
+    boolean flag;
+        getDownloadPath();
+        File dir = new File( getDownloadPath());
+        File[] dir_contents = dir.listFiles();
+        String fileName = getDownloadPath() ;
+        System.out.println(fileName);
+        Pattern p = Pattern.compile( "Rapor_" +"[0-9]+" +".xls");
+      //  Matcher m = p.matcher(fileName);
+        String s = null;
+        for (int i = 0; i < dir_contents.length; i++) {
+            String file = dir_contents[i].getName().toString();
+            s = "";
+            Matcher m = p.matcher(file);
+            while (m.find()) {
+
+            System.out.println(m.group() + " " + m.start() + " " + m.end());
+            s = m.group();
+            fileName = getDownloadPath() + s;
+        } }
+
+
+        InputStream ExcelFileToRead = new FileInputStream(fileName);
+        HSSFWorkbook wb = new HSSFWorkbook(ExcelFileToRead);
+
+        HSSFWorkbook test = new HSSFWorkbook();
+
+        HSSFSheet sheet = wb.getSheetAt(0);
+        HSSFRow row;
+        HSSFCell cell;
+
+        Iterator rows = sheet.rowIterator();
+
+        while (rows.hasNext())
+        {
+            row=(HSSFRow) rows.next();
+            Iterator cells = row.cellIterator();
+
+
+            while (cells.hasNext())
+            {
+                cell=(HSSFCell  ) cells.next();
+
+                if (cell.getCellType() == XSSFCell.CELL_TYPE_STRING)
+                {
+                    System.out.print(cell.getStringCellValue()+" ");
+                    Allure.addAttachment("Cell", cell.getStringCellValue()+"");
+                }
+                else if(cell.getCellType() == HSSFCell.CELL_TYPE_NUMERIC)
+                {
+                    System.out.print(cell.getNumericCellValue()+" ");
+                    Allure.addAttachment("Cell", cell.getStringCellValue()+"");
+
+                }
+                else
+                {
+                    //U Can Handel Boolean, Formula, Errors
+                }
+            }
+            System.out.println();
+        }
+
+        String SchildElementCount;
+        SchildElementCount = sorguTablosu.getAttribute("childElementCount");
+        int childElemCount = Integer.parseInt(SchildElementCount);
+        for (int i = 0; i < childElemCount; i++) {
+            for ( int j = 1 ; j<4 ; j++) {
+
+
+            String postano = "//*[@id='postalananEvrakRaporuForm:postalananEvrakDataTable_data']/tr[" + String.valueOf(i + 1) + "]/td["+String.valueOf(j)+"]/div";
+            SelenideElement postalananyerColumn = $x(postano);
+            String postanocol = postalananyerColumn.getAttribute("innerText");
+            System.out.println(postanocol+" ");
+            Allure.addAttachment("Tablo" , postanocol+ " ");
+            }
+        }
+        return this;
     }
 }

@@ -913,7 +913,7 @@ public class EvrakPostalamaTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS1434 : Postalanan Evrak Raporu Alan kontrolleri")
-    public void TS1434() throws InterruptedException    {
+    public void TS1434() throws InterruptedException, IOException {
         login("mbozdemir", "123");
 
         postalananEvrakRaporuPage
@@ -931,9 +931,10 @@ public class EvrakPostalamaTest extends BaseTest {
         postalananEvrakRaporuPage.evrakSahibiKontrol("YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ");
 
         postalananEvrakRaporuPage.cmbClearEvrakSahibi();
+        postalananEvrakRaporuPage.postaAramaBaslangicTarihi("08.02.2018 00:00");
         postalananEvrakRaporuPage.cmbPostalananYerSecimi("OptiimTest TestOptiim")
                 .postaSorgulama();
-
+        Thread.sleep(5000);
         String expected = "OptiimTestTestOptiim";
         postalananEvrakRaporuPage.postalananyerKontrol(expected);
         postalananEvrakRaporuPage.cmbPostalananYerSecimiTemizle();
@@ -954,22 +955,24 @@ public class EvrakPostalamaTest extends BaseTest {
         postalananEvrakRaporuPage.cmbClearPostalayanAdi();
         postalananEvrakRaporuPage.chkboxPostaladiklarim()
                 .postaSorgulama();
+
+
         postalananEvrakRaporuPage
                 .cmbEvrakSahibi("YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ")
                 .cmbPostalananYerSecimi("OptiimTest TestOptiim")
-                .cmbpostaSeklisecimi("İç Giden")
+                .cmbpostaSeklisecimi("Dış Giden")
                 .cmbPostaTipisec("Adi Posta")
+                .postaAramaBaslangicTarihi("08.02.2018 00:00")
 
-                //.cmbPostalayanadi("Zübeyde TEKİN")
+        //.cmbPostalayanadi("Zübeyde TEKİN")
 
                 .postaSorgulama();
         postalananEvrakRaporuPage.ekranSorgulananSonucKontrol();
         postalananEvrakRaporuPage.evrakRaporForm()
+                .sayfayiraporlaexcel()
                 .raporalbasarilidir();
-
-
-
-
+        postalananEvrakRaporuPage.excelTabloKars();
+        
     }
 
     @Step("TS0310 için data oluşturma")
