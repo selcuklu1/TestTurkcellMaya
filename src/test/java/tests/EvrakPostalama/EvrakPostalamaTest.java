@@ -7,8 +7,8 @@ package tests.EvrakPostalama;
  * Class: "Evrak Postalama" konulu senaryoları içerir
  ****************************************************/
 
-import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import common.BaseTest;
 import data.TestData;
@@ -17,14 +17,10 @@ import galen.GalenControl;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Step;
-
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
-import pages.newPages.EvrakDetayiPage;
 import pages.pageComponents.EvrakOnizleme;
-import pages.pageComponents.IslemMesajlari;
 import pages.pageComponents.tabs.AltTabs;
 import pages.pageData.alanlar.GeregiSecimTipi;
 import pages.pageData.alanlar.GizlilikDerecesi;
@@ -85,10 +81,34 @@ public class EvrakPostalamaTest extends BaseTest {
         postalananEvrakRaporuPage = new PostalananEvrakRaporuPage();
     }
 
+  /*  public void TestDeneme () throws InterruptedException, IOException {
+        login("Mbozdemir","123");
+        konu = "TS0308";
+        postalanacakEvraklarPage
+                .openPage()
+                .filter().findRowsWith(text(konu)).first().click();
+
+        postalanacakEvraklarPage.evrakPostala()
+
+                .popupOrjYazYazdirButonKonrolleri()
+                .popupEvrOrjYazKapat()
+                .PDFEibareVeKırmızıYazıktrl()
+                .pdfEvrakYazismaKuralkontrol()
+                .popupEvrOrjYazKapat()
+                .dagitimplanyazdir()
+                .dgmpdfhitapguvenktrl ()
+                .gramajDoldur("111111")
+                .hesapla()
+                .postala()
+                .dialogpostalaEvet();
+
+
+    }
+*/
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TS0308: Evrak Postalama")
-    public void TS0308() throws InterruptedException {
+    @Test(enabled = true, description = "TS0308: Postalama ekranınlarında pdf'in yapısal kontrolü")
+    public void TS0308() throws InterruptedException, IOException {
         login("Mbozdemir", "123");
         String konu = "TS0308_" + getSysDate();
         String metin308 = "Metni" + konu;
@@ -189,15 +209,17 @@ public class EvrakPostalamaTest extends BaseTest {
 
         switchTo().window(0);
         postalanacakEvraklarPage
-
-                .postalanacakEvrakOrjYaz()
+                .popupOrjYazYazdirButonKonrolleri()
+                .popupEvrOrjYazKapat()
+                .PDFEibareVeKırmızıYazıktrl()
                 .pdfEvrakYazismaKuralkontrol()
                 .popupEvrOrjYazKapat()
+                .dagitimplanyazdir()
+                .dgmpdfhitapguvenktrl ()
                 .gramajDoldur("111111")
                 .hesapla()
                 .postala()
                 .dialogpostalaEvet();
-
 
 
         postalananlarPage.openPage();
@@ -210,11 +232,11 @@ public class EvrakPostalamaTest extends BaseTest {
                 .yazdirpopupYazdirButonktrl()
                 .btnEkleriPopupiciYazdir();
 
-        postalananlarPage.islemMesaji().isDikkat("Önce üst yazı yazdırılmalıdır ");
+        postalananlarPage.ktrlonceustyazi();
         postalananlarPage
                 .popupYazpdfkontrolveKapatma();
         postalananlarPage
-                .eklerYazdirPopupbtn()
+                .eklerYazdirPopupbtn("TS0308_PDF","TS0308PDF")
                 .popupkapatma();
 
 
@@ -891,7 +913,7 @@ public class EvrakPostalamaTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS1434 : Postalanan Evrak Raporu Alan kontrolleri")
-    public void TS1434() throws InterruptedException    {
+    public void TS1434() throws InterruptedException, IOException {
         login("mbozdemir", "123");
 
         postalananEvrakRaporuPage
@@ -909,9 +931,10 @@ public class EvrakPostalamaTest extends BaseTest {
         postalananEvrakRaporuPage.evrakSahibiKontrol("YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ");
 
         postalananEvrakRaporuPage.cmbClearEvrakSahibi();
+        postalananEvrakRaporuPage.postaAramaBaslangicTarihi("08.02.2018 00:00");
         postalananEvrakRaporuPage.cmbPostalananYerSecimi("OptiimTest TestOptiim")
                 .postaSorgulama();
-
+        Thread.sleep(5000);
         String expected = "OptiimTestTestOptiim";
         postalananEvrakRaporuPage.postalananyerKontrol(expected);
         postalananEvrakRaporuPage.cmbPostalananYerSecimiTemizle();
@@ -932,30 +955,124 @@ public class EvrakPostalamaTest extends BaseTest {
         postalananEvrakRaporuPage.cmbClearPostalayanAdi();
         postalananEvrakRaporuPage.chkboxPostaladiklarim()
                 .postaSorgulama();
+
+
         postalananEvrakRaporuPage
                 .cmbEvrakSahibi("YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ")
                 .cmbPostalananYerSecimi("OptiimTest TestOptiim")
-                .cmbpostaSeklisecimi("İç Giden")
+                .cmbpostaSeklisecimi("Dış Giden")
                 .cmbPostaTipisec("Adi Posta")
-                .cmbPostalayanadi("Zübeyde TEKİN")
+                .postaAramaBaslangicTarihi("08.02.2018 00:00")
+
+        //.cmbPostalayanadi("Zübeyde TEKİN")
+
                 .postaSorgulama();
         postalananEvrakRaporuPage.ekranSorgulananSonucKontrol();
-        postalananEvrakRaporuPage.evrakRaporForm();
+        postalananEvrakRaporuPage.evrakRaporForm()
+                .sayfayiraporlaexcel()
+                .raporalbasarilidir();
+        postalananEvrakRaporuPage.excelTabloKars();
+        
+    }
 
+    @Step("TS0310 için data oluşturma")
+    public void TS0310Pre() throws InterruptedException  {
+
+        login("Mbozdemir", "123");
+        konu1685 = "TS1685_" + getSysDate();
+        String tuzelKisiVergiNo = "1122007720";
+        String kurum = "Başbakanlık";
+        String fizikselEkMetni = "TS1685 Ek metni";
+        String basariMesaji = "İşlem başarılıdır!";
+        String dagitimSatiriMesaj = "KEP posta birimine gönderildi.";
+        String fizikselEkMesaji = "Evrakın fiziksel eki vardır, göndermeyi unutmayınız!";
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .bilgilerTabAlanKontrolleri()
+                .konuKoduSec("Yazılım Geliştirme")
+                .konuDoldur(konu1685)
+                .kaldirilacakKlasorler("Diğer")
+                .gizlilikDerecesiSec("Normal")
+//                .kaldirilacakKlasorler("B1K1")
+                .evrakTuruSec("Resmi Yazışma")
+                .ivedilikSec("Normal")
+                .geregiSecimTipiSec("Tüzel Kişi")
+                .geregiDoldur("Optiim İş Çözümleri AŞ", "Tüzel Kişi Adı")
+                .geregiKurumPostaTipi("APS")
+                //.geregiKurumPostaTipi("E-Posta")
+                .geregiSecimTipiSec("Kurum")
+                .geregiDoldur("Başbakanlık", "Kurum Adı")
+                //.geregiKurumPostaTipi("APS")
+                .kurumGeregiAlaniKurumPostaTipiKontrol(kurum, "KEP")
+                .onayAkisiKullanicilariTemizle()
+                .onayAkisiEkle()
+                .onayAkisiKullaniciTipiSec("Mehmet BOZDEMİR", "İmzalama")
+//                .onayAkisiKullaniciTipiSec(user1.getName(), "İmzalama")
+                .onayAkisiKullan();
+
+        String evrakTarihi = evrakOlusturPage.bilgilerTabiAc().evrakTarihiAl();
+
+        evrakOlusturPage
+                .ekleriTabAc()
+                .ekleriTabKontrolu()
+                //.webAdresiEkleTabiniAc()
+                //.arsivdeKayitliEvrakEkleTabiniAc()
+                //.sistemdeKayitliEvrakEkleTabiniAc()
+                .fizikselEkEkleTabiniAc()
+                .fizikselEkMetniDoldur(fizikselEkMetni)
+                .fizikselEkMetniEkle()
+                .listelenenEklerdeKontrol(fizikselEkMetni, "Fiziksel Ek Metni");
+      /*  evrakOlusturPage
+                .ilgileriTabAc()
+                .sistemeKayitliEvrakEkleTab()
+                .sistemeKayitliEvrakAra("yazı")
+                .sistemeKayitliDokumanArama()
+                .tablodaBulunanEvrakiEkle(); */
+
+//        evrakOlusturPage
+        //              .islemMesaji().basariliOlmali("İşlem başarılıdır!");
+
+
+        evrakOlusturPage
+                .editorTabAc()
+                .editorIcerikDoldur(konu1685)
+                .imzala()
+                .popupSImzalaIslemleri()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        postalanacakEvraklarPage
+                .openPage()
+                .konuyaGoreEvrakKontroluAllPages(konu1685)
+                .konuyaGoreEvrakKontrol(konu1685, evrakTarihi)
+                .konuyaGoreEvrakOnizlemedeAc(konu1685);
+        //.filter().findRowsWith(Condition.text(konu)).shouldHaveSize(1).first().click();
+
+        postalanacakEvraklarPage
+                .btnFizikselEkIkonKontrol();
+
+        postalanacakEvraklarPage
+                .evrakPostala()
+                //  .KntrlEvrakFizikselEkYaziSayTar()
+                .evrakOnizlemeDagitimSatiriKontrol(dagitimSatiriMesaj)
+                .evrakOnizlemeFizilselEkMesajiKontrolu(fizikselEkMesaji);
+        //.postala()
+        //.dialogpostalaEvet();
 
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TS0310 : İçerik ekranından evrakın postalanması"
-    ,dependsOnMethods = {"TS1685"})
+    @Test(enabled = true, description = "TS0310 : İçerik ekranından evrakın postalanması")
     public void TS0310() throws InterruptedException {
-        login("mbozdemir", "123");
-        //String konu = "TS1685_";
+        TS0310Pre();
+
         postalanacakEvraklarPage.openPage()
                 .btnFiltrenenPostaIcerikGoster(konu1685);
         postalanacakEvraklarPage.btnEvrakIcerikEvrakPostala();
-        postalanacakEvraklarPage.btnDagitimGidisSekli("Adi Posta")
-                .inputIcerikPstakod("0310");
+        postalanacakEvraklarPage
+                .inputIcerikPstakod("0310")
+                .inputIcerikPostaAciklama("TS0310 Aciklama");
         postalanacakEvraklarPage
                 .btnIcerikPostaYazdir();
         postalanacakEvraklarPage
@@ -966,6 +1083,7 @@ public class EvrakPostalamaTest extends BaseTest {
                 .btnIcerikEtiketBastir()
                 .txtPopupEtiketAciklama()
                 .btnEtiketpopupkapat();
+
 
         postalanacakEvraklarPage
                 .btnIcerikEvrakPostalama()
