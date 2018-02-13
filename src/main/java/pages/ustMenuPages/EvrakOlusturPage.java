@@ -264,7 +264,7 @@ public class EvrakOlusturPage extends MainPage {
         //label[normalize-space(text())='Konu Kodu']/../..//input
 
         BelgenetElement txtcomboLovForm = comboLov("[id$='formSablonuId:LovText']");
-        BelgenetElement cmlKonuKodu = comboLov("input[id$='konuKoduLov:LovText']");
+        BelgenetElement cmbKonuKodu = comboLov("input[id$='konuKoduLov:LovText']");
         SelenideElement btnKonuKoduTree = $("button[id$='konuKoduLov:treeButton']");
         SelenideElement txtKonu = $("textarea[id$='konuTextArea']");
         BelgenetElement cmbKaldiralacakKlasorler = comboLov("input[id$='eklenecekKlasorlerLov:LovText']");
@@ -470,7 +470,7 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Konu Kodu alanında \"{konuKodu}\" seç")
         public BilgilerTab konuKoduSec(String konuKodu) {
-            cmlKonuKodu.selectLov(konuKodu);
+            cmbKonuKodu.selectLov(konuKodu);
             return this;
         }
 
@@ -501,7 +501,7 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Konu Kodu alanı zorunluluk kontrol")
         public boolean konuKoduZorunlukKontrol(boolean zorunlu) {
-            return cmlKonuKodu.is(required);
+            return cmbKonuKodu.is(required);
         }
 
         @Step("Konu alanında {konu} seç")
@@ -1142,7 +1142,7 @@ public class EvrakOlusturPage extends MainPage {
 
 
         public BelgenetElement getKonuKodu() {
-            return cmlKonuKodu;
+            return cmbKonuKodu;
         }
 
         public SelenideElement getKonu() {
@@ -1683,6 +1683,74 @@ public class EvrakOlusturPage extends MainPage {
                     "Gereği,\n" +
                     "Onay Akışı alanlarının olduğu ekranın geldiği görülür.\n" +
                     "Kaldırılacak Klasör alanlarının geldiği görülür.");
+
+            return this;
+        }
+
+        @Step("Bilgiler Tabı tüm alan kontrolleri")
+        public BilgilerTab bilgilerTabTumAlanKontrolleri() {
+
+            if (cmbKonuKodu.isLovSelected()) {
+                cmbKonuKodu.clearAllSelectedItems();
+            }
+            Assert.assertEquals( txtKonuKodu.isDisplayed(), true, "Konu kodu");
+            Allure.addAttachment("Konu kodu alanı kontrolu başarılı", "");
+
+            Assert.assertEquals( txtKonu.isDisplayed(), true, "Konu");
+            Allure.addAttachment("Konu alanı kontrolu başarılı", "");
+
+            if (cmbKaldiralacakKlasorler.isLovSelected()) {
+                cmbKaldiralacakKlasorler.clearAllSelectedItems();
+            }
+            Assert.assertEquals( txtKaldiralacakKlasorler.isDisplayed(), true, "Kaldıralacak Klasörler");
+            Allure.addAttachment("Kaldıralacak Klasörler alanı kontrolu başarılı", "");
+
+            Assert.assertEquals( cmbEvrakTuru.isDisplayed(), true, "Evrak Türü");
+            Allure.addAttachment("Evrak Türü alanı kontrolu başarılı", "");
+
+            Assert.assertEquals( dateKayitTarihi.isDisplayed(), true, "Kayit tarihi");
+            Allure.addAttachment("Kayit tarihi alanı kontrolu başarılı", "");
+
+            Assert.assertEquals( cmbEvrakDili.isDisplayed(), true, "Evrak Dili");
+            Allure.addAttachment("Evrak Dili alanı kontrolu başarılı", "");
+
+            Assert.assertEquals( cmbGizlilikDerecesi.isDisplayed(), true, "Gizlilik derecesi ");
+            Allure.addAttachment("Gizlilik derecesi alanı kontrolu başarılı", "");
+
+            Assert.assertEquals( rdbKanunKapsamTipiNormal.isDisplayed(), true, "Kanun Kapsam Tipi");
+            Allure.addAttachment("Kanun Kapsam Tipi alanı kontrolu başarılı", "");
+
+            Assert.assertEquals( txtEvrakSayiEkMetni.isDisplayed(), true, "Evrak Sayi Ek Metni");
+            Allure.addAttachment("Evrak Sayi Ek Metni alanı kontrolu başarılı", "");
+
+            Assert.assertEquals( cmbIvedik.isDisplayed(), true, "İvedik alanı");
+            Allure.addAttachment("İvedik alanı kontrolu başarılı", "");
+
+            Assert.assertEquals( dateMiat.isDisplayed(), true, "Miat alanı");
+            Allure.addAttachment("Miat alanı kontrolu başarılı", "");
+
+            Assert.assertEquals( cmbBilgiSecimTipi.isDisplayed(), true, "ilgi Seçim Tipi ");
+            Allure.addAttachment("ilgi Seçim Tipi Balanı kontrolu başarılı", "");
+
+            Assert.assertEquals( txtBilgi.isDisplayed(), true, "Bilgi alanı");
+            Allure.addAttachment("Bilgi alanı kontrolu başarılı", "");
+
+            Assert.assertEquals( cmbGeregiSecimTipi.isDisplayed(), true, "Gereği Seçim Tipi ");
+            Allure.addAttachment("Gereği Seçim Tipi alanı kontrolu başarılı", "");
+
+            Assert.assertEquals( cmbGeregi.isDisplayed(), true, "Gereği kodu ");
+            Allure.addAttachment("Gereği kodu alanı kontrolu başarılı", "");
+
+            Assert.assertEquals( chkDagitimiEkYap.isDisplayed(), true, "Dagitimi Ek Yap");
+            Allure.addAttachment("Dagitimi Ek Yap alanı kontrolu başarılı", "");
+
+            if (cmbOnayAkisi.isLovSelected()) {
+                cmbOnayAkisi.clearAllSelectedItems();
+            }
+            Assert.assertEquals( cmbOnayAkisi.isDisplayed(), true, "Onay Akışı");
+            Allure.addAttachment("Onay Akışı alanı kontrolu başarılı", "");
+
+            takeScreenshot();
 
             return this;
         }
