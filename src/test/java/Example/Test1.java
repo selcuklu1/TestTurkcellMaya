@@ -25,7 +25,7 @@ public class Test1 {
         DesiredCapabilities cap = DesiredCapabilities.firefox();
 
         driver = new RemoteWebDriver(new URL(Node), cap);
-
+         System.out.println("Alkan");
 //        driver = new FirefoxDriver();
         driver.get("https://www.google.com.tr/");
     }
