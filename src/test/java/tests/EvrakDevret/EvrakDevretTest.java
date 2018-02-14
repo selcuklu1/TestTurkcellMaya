@@ -52,6 +52,8 @@ public class EvrakDevretTest extends BaseTest {
     String geregi = "Optiim Birim";
     String kullaniciNormal = "USERNAME22N TEST";
     String basariMesaji = "İşlem başarılıdır!";
+    String uyariMesaji = "Zorunlu alanları doldurunuz";
+    String dikkatMesaji = "Evrak seçilmemiştir!";
     String tabName = "İmza Bekleyen Evraklar";
     String nameDA = "Username22N TEST";
     String nameDE = "Username21G TEST";
@@ -261,6 +263,29 @@ public class EvrakDevretTest extends BaseTest {
         gelenEvraklarPage
                 .openPage()
                 .tabloKonuyaGoreEvrakKontrol(konu,true);
+
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS2183 : Evrak devretmede alan kontrolleri")
+    public void TS2183() throws InterruptedException{
+
+        login(username21g);
+
+        kullaniciEvrakDevretPage
+                .openPage()
+                .ekranTabKontrolleri()
+                .listele()
+                .islemMesaji().uyariOlmali(uyariMesaji);
+        kullaniciEvrakDevretPage
+                .devredecekKisiSec(devredecekKisi)
+                .listele()
+                .tabloAlanKontrolleri()
+                .devret()
+                .islemMesaji().dikkatOlmali(dikkatMesaji);
+
+//        kullaniciEvrakDevretPage
+
 
     }
 
