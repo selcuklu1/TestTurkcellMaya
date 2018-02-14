@@ -226,6 +226,7 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .icerikHavaleYap()
                 .icerikHavaleAlanKontrolleri()
                 .icerikDagitimBilgileriOnaylayanWithDetails(onaylayacakKisi, onayKisiDetails)
+                .icerikHavaleIslemleriKisiDoldur(kisi)
                 .icerikDagitimBilgileriBirimDoldurWithDetails(birim, details)
                 .kaydet()
                 .evrakDetayiKaydetPopUpClose()
