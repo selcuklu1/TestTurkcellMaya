@@ -60,6 +60,14 @@ public class HavaleOnayınaGelenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Evrak no ile evrağın gelmediği görülür: \"{evrakNo}\" ")
+    public HavaleOnayınaGelenlerPage evrakNoIleEvrakGelmedigiGorme(String evrakNo) {
+        boolean durum = tblEvraklar
+                .filterBy(Condition.text(evrakNo)).size()>0;
+        Assert.assertEquals(durum,false);
+        return this;
+    }
+
     @Step("Havale Onayı")
     public HavaleOnayınaGelenlerPage havaleOnayi(){
         $("[class='ui-button-icon-left ui-icon havaleOnay']").click();

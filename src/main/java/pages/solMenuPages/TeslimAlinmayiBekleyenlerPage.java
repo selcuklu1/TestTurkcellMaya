@@ -73,7 +73,7 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     SelenideElement btnIadeEt = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:4:cmdbutton"));
     SelenideElement btnIadeEtIadeEt = $(By.id("mainPreviewForm:iadeEtButton_id"));
     ElementsCollection tblEvrakGecmisi = $$("[id$='hareketGecmisiDataTable_data'] > tr[role='row']");
-
+    SelenideElement txtNot = $(By.id("mainPreviewForm:notTextArea_id"));
     SelenideElement evrakOnizlemeKontrol = $(By.id("mainPreviewForm:eastLayout"));
     ElementsCollection ilgiBilgileriEkleriKontrol = $$("div[id$='ilgiListesiDataTable'] tr[data-ri]");
     ElementsCollection teslimEvrakEkleri = $$("a[href^='#mainPreviewForm']");
@@ -629,6 +629,12 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     @Step("Teslim Alınan Evrakın Iade Edilmesi")
     public TeslimAlinmayiBekleyenlerPage iadeEt() {
         btnIadeEt.click();
+        return this;
+    }
+
+    @Step("Not alanını doldur: {not}")
+    public TeslimAlinmayiBekleyenlerPage iadeEtNotDoldur(String not){
+        txtNot.setValue(not);
         return this;
     }
 
