@@ -127,9 +127,11 @@ public class EvrakDevretTest extends BaseTest {
         evrakDevret();
 
         login(username22n);
+
         taslakEvraklarPage
                 .openPage()
                 .konuyaGoreEvrakIcerikGoster(konu);
+
         evrakDetayiPage
                 .sayfaAcilmali()
 //                .evrakBilgileriTabAktifKontrolEt()
@@ -137,6 +139,7 @@ public class EvrakDevretTest extends BaseTest {
                 .tabloKontol(mesaj)
                 .raporAl(remoteDownloadPath)
                 .evrakDetayiKapat();
+
         taslakEvraklarPage
                 .openPage()
                 .evrakSecKonuyaGore(konu)
@@ -165,6 +168,7 @@ public class EvrakDevretTest extends BaseTest {
         evrakDevret();
 
         login(username22n);
+
         taslakEvraklarPage
                 .openPage()
                 .konuyaGoreEvrakIcerikGoster(konu);
