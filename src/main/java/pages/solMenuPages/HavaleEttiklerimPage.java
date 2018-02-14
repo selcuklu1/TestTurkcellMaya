@@ -133,6 +133,7 @@ public class HavaleEttiklerimPage extends MainPage {
 
     @Step("Onaylayacak Kişi alanında {onaylayacakKisi} seçilir")
     public HavaleEttiklerimPage icerikGosterHavaleYapOnaylayacakKisiDoldur(String onaylayacakKisi, String birim){
+        txtIcerikGosterHavaleYapOnaylayacakKisi.openTreePanel().closeTreePanel();
         txtIcerikGosterHavaleYapOnaylayacakKisi.selectLov(onaylayacakKisi,birim);
         return this;
     }

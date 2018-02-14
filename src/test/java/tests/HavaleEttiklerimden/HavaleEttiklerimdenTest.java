@@ -25,7 +25,7 @@ import static data.TestData.*;
  * Yazan: Can Şeker
  ****************************************************/
 
-@Epic("Teslim Aldıklarım Havale")
+@Epic("Havale Ettiklerim")
 public class HavaleEttiklerimdenTest extends BaseTest {
 
     GelenEvrakKayitPage gelenEvrakKayitPage;
