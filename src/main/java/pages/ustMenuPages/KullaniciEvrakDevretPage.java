@@ -129,7 +129,7 @@ public class KullaniciEvrakDevretPage extends MainPage {
     @Step("Ekran Alan kontrolleri")
     public KullaniciEvrakDevretPage ekranTabKontrolleri() {
         Assert.assertEquals($x("//h3[.='Gelen Evraklar']").isDisplayed(), true);
-        Assert.assertEquals($x("//h3[.='Taslak Evraklar']").isDisplayed(),true);
+        Assert.assertEquals($x("//h3[.='Taslak Evraklar']").isDisplayed(), true);
         Assert.assertEquals($x("//h3[.='İmza Bekleyen Evraklar']").isDisplayed(), true);
         Assert.assertEquals($x("//h3[.='Paraf Bekleyen Evraklar']").isDisplayed(), true);
         Assert.assertEquals($x("//h3[.='Koordine Bekleyen Evraklar']").isDisplayed(), true);
@@ -223,16 +223,25 @@ public class KullaniciEvrakDevretPage extends MainPage {
 
     @Step("Tablo Evrak Seçimi : {konu}")
     public KullaniciEvrakDevretPage tabloEvrakSecimi(String tabName, String konu) {
-
+        ElementsCollection tblTab;
         SelenideElement tab = $x("//a[text()='" + tabName + "']");
-        tab.click();
+        String kontrol = $x("//a[text()='" + tabName + "']/../../h3").getAttribute("aria-expanded");
+        System.out.println(kontrol);
+        if (kontrol.equals("false"))
+            tab.click();
         String tabText = tabName.replaceAll("\\s+", "");
         tabText = clearTurkishChars(tabText);
         System.out.println(tabText);
 
 //        Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", tab);
+        if (tabText.equals("GelenEvraklar")) {
+            tabText = "devredilebilecekEvrakListesi";
+            tblTab = $$("[id='kullaniciEvrakDevretForm:evrakDevretAccordionPanelId:" + tabText + "_data'] tr[data-ri]");
 
-        ElementsCollection tblTab = $$("[id='kullaniciEvrakDevretForm:evrakDevretAccordionPanelId:devir" + tabText + "_data'] tr[data-ri]");
+        } else {
+            tblTab = $$("[id='kullaniciEvrakDevretForm:evrakDevretAccordionPanelId:devir" + tabText + "_data'] tr[data-ri]");
+
+        }
         tblTab
                 .filterBy(text(konu)).first()
                 .$("div[class='ui-chkbox-box ui-widget ui-corner-all ui-state-default']").click();
