@@ -108,3 +108,4 @@
 [0213/135731.182:ERROR:prune_crash_reports.cc(34)] PruneCrashReportDatabase: Failed to get pending reports
 [0213/140415.069:ERROR:prune_crash_reports.cc(34)] PruneCrashReportDatabase: Failed to get pending reports
 [0213/140800.245:ERROR:prune_crash_reports.cc(34)] PruneCrashReportDatabase: Failed to get pending reports
+[0213/221740.280:ERROR:prune_crash_reports.cc(34)] PruneCrashReportDatabase: Failed to get pending reports
