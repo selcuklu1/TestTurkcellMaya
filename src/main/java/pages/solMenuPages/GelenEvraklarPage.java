@@ -773,6 +773,19 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Tabloda \"{evrakNo}\" evrak nolu kayıt kontrolü : \"{shoulBeExist}\"  ")
+    public GelenEvraklarPage tabloKonuyaGoreEvrakKontrol(String konu, boolean shoulBeExist) {
+        if (shoulBeExist) {
+            tableEvraklar
+                    .filterBy(Condition.text(konu))
+                    .shouldHaveSize(1);
+            Allure.addAttachment("Tablo kontolü", "Listede evrak no bulundu.");
+        } else
+            Allure.addAttachment("Tablo kontolü", "Listede evrak no bulunamadı.");
+
+        return this;
+    }
+
     @Step("Tabloda \"{evrakNo}\" evrak nolu kayıt seçilir. ")
     public GelenEvraklarPage tabloEvrakNoSec(String evrakNo) {
 

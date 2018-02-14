@@ -327,17 +327,20 @@ public class TeslimAlinmayiBekleyenHavaleTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS2300: Evrakın Onaylı havale edilmesi ve güncellenerek onaylanması")
     public void TS2300() {
+        String kisi = "Mehmet Bozdemir";
+        String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
 
         TS2300PreCondition();
+
         login(usernameMBOZDEMIR,passwordMBOZDEMIR);
 
         havaleOnayınaGelenlerPage
                 .openPage()
                 .evrakNoIleEvrakSec(konuKoduRandomTS2300)
                 .havaleOnayi()
-                .havaleOnayiBirimDoldur("YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ")
+                .havaleOnayiBirimDoldur(birim)
                 .havaleOnayinaBirimGeregiIcinBilgiIcinSec()
-                .havaleOnayiKisiDoldur("Mehmet Bozdemir","YGD")
+                .havaleOnayiKisiDoldur(kisi,"YGD")
                 .havaleOnayiOnayla()
                 .havaleyiOnaylamakUzersinizUyariGeldigiGorme()
                 .havaleyiOnaylamakUzeresinizEvet()
@@ -345,7 +348,21 @@ public class TeslimAlinmayiBekleyenHavaleTest extends BaseTest {
 
         havaleOnayiVerdiklerimPage
                 .openPage()
-                .evrakGeldigiGorme(konuKoduRandomTS2300);
+                .evrakGeldigiGorme(konuKoduRandomTS2300)
+                .evrakNoIleEvrakSec(konuKoduRandomTS2300)
+                .evrakSecEvrakGecmisiSec()
+                .evrakGecimisiGeregiVeBilgiGeldigiGorme("Gereği",kisi,"Bilgi",birim);
+
+        login(usernameMBOZDEMIR,passwordMBOZDEMIR);
+
+        birimHavaleEdilenlerPage
+                .openPage()
+                .evrakNoIleEvragıGeldigiGorme(konuKoduRandomTS2300);
+
+        login(usernameYAKYOL,passwordYAKYOL);
+        teslimAlinmayiBekleyenlerPage
+                .openPage()
+                .evrakGeldigiGorunur(konuKoduRandomTS2300);
     }
 
 

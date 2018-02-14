@@ -1,7 +1,6 @@
 package tests.EvrakTeslimAlma;
 
 import common.BaseTest;
-import data.User;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;

@@ -315,4 +315,71 @@ public class OnayAkisindakiEvrakiSilTest extends BaseTest{
                 .sayfaAcilmasiKontrolu();
 
     }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS0133: Postalanmayı Bekleyen Evrakın Geri Alınarak Silinmesi ve Kontrolü")
+    public void TS0133() {
+
+        String evrakKonusu = "TS0133_Senaryosu_" + getSysDate();
+        String konuKodu = "399";
+        String kaldirilacakKlasor = "ESK05";
+        String kurum = "Başbakanlık";
+        String kullanici = "Sezai Çelik";
+        String onayAkisiDefaultKullanici = "Optiim TEST";
+        String kullanici2 = "Sezai ÇELİK";
+        String kullanici3 = "Mehmet BOZDEMİR";
+        String basariMesaji = "İşlem başarılıdır!";
+        String uyariMesaji = "Zorunlu alanları doldurunuz";
+        String ilkTarih = getSysDateForKis();
+        String sonTarih = getSysDateForKis();
+        String evrakSilmeNotu = "TS0103 nolu evrak sil";
+
+        olurYazisiOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .bilgilerTabTumAlanKontrolleri()
+                .konuKoduDoldur(konuKodu)
+                .konuDoldur(evrakKonusu)
+                .kaldiralacakKlasorlerSec(kaldirilacakKlasor)
+                .gizlilikDerecesiSec("Normal")
+                .ivedilikSec("İvedi")
+                .geregiSecimTipiSecByText("Kullanıcı")
+                .geregiDoldur(kullanici3, "Kullanıcı")
+
+                .secilenOnayAkisiSil()
+                .onayAkisiEkle()
+                .onayAkisiKullaniciKontrol(onayAkisiDefaultKullanici, "PARAFLAMA")
+                .onayAkisiKullaniciEkle(kullanici2)
+                .onayAkisiKullaniciTipiSec(kullanici2, "İmzalama")
+                .kullan()
+                .onayAkisiDoluGeldigiKontrolu();
+
+        olurYazisiOlusturPage
+                .editorTabAc();
+
+        editor
+                .type("TS0133 nolu senaryonun testi için bir editör metni girildi.");
+
+        olurYazisiOlusturPage
+                .editorTabAc()
+                .metinAlaninGeldigiGorme()
+                .editorHitapKontrol("... Makamına")  // kurum seçilmediği için
+                .editordeImzaciKontrol(kullanici3);
+              //  .geregiAlaniKontrolu(kurum)
+               // .editordeKonuKontrol(evrakKonusu);
+
+        //TODO: HATALAR VAR. ÇÖZÜLÜNCE DEVAM EDİLECEK.
+        evrakOlusturPage
+                .parafla()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        login(TestData.usernameSEZAICELIK, TestData.passwordSEZAICELIK); //sezaiceik
+
+        imzaBekleyenlerPage
+                .openPage()
+                .evrakKonusunaGoreKontrol(evrakKonusu)
+                .konuyaGoreEvrakOnizlemedeAc(evrakKonusu)
+                .evrakOnizlemeKontrol()
+                .evrakImzala();
+    }
 }
