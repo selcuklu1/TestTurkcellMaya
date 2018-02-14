@@ -233,7 +233,6 @@ public class KullaniciEvrakDevretPage extends MainPage {
         tabText = clearTurkishChars(tabText);
         System.out.println(tabText);
 
-//        Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", tab);
         if (tabText.equals("GelenEvraklar")) {
             tabText = "devredilebilecekEvrakListesi";
             tblTab = $$("[id='kullaniciEvrakDevretForm:evrakDevretAccordionPanelId:" + tabText + "_data'] tr[data-ri]");
@@ -250,10 +249,10 @@ public class KullaniciEvrakDevretPage extends MainPage {
 
     @Step("Devralacak popup alan kontrolleri")
     public KullaniciEvrakDevretPage devralacakKisiAlanKontolu() {
-        txtDevralacakKisi.shouldBe(visible);
-        txtAciklama.shouldBe(visible);
-        btnDevretTamam.shouldBe(visible);
-        btnDevretIptal.shouldBe(visible);
+        Assert.assertEquals(txtDevralacakKisi.shouldBe(visible),true,"Devrelecak kişi texti visible.");
+        Assert.assertEquals(txtAciklama.shouldBe(visible),true,"Açıklama texti visible.");
+        Assert.assertEquals(btnDevretTamam.shouldBe(visible),true,"Devret Tamam butonu visible.");
+        Assert.assertEquals(btnDevretIptal.shouldBe(visible),true,"Devret Iptal butonu visible.");
 
         Allure.addAttachment($(By.xpath("//label[normalize-space(text())='Devralacak Kişi']")).text(), "Ekran Kontrolü ok");
         Allure.addAttachment($(By.xpath("//label[normalize-space(text())='Açıklama']")).text(), "Ekran Kontrolü ok");
