@@ -363,11 +363,12 @@ public class OnayAkisindakiEvrakiSilTest extends BaseTest{
         olurYazisiOlusturPage
                 .editorTabAc()
                 .metinAlaninGeldigiGorme()
-                .editorHitapKontrol("... Makamına");  // kurum seçilmediği için
-                //.editordeImzaciKontrol(kullanici3)
-                //.geregiAlaniKontrolu(kurum)
-                //.editordeKonuKontrol(evrakKonusu);
+                .editorHitapKontrol("... Makamına")  // kurum seçilmediği için
+                .editordeImzaciKontrol(kullanici3);
+              //  .geregiAlaniKontrolu(kurum)
+               // .editordeKonuKontrol(evrakKonusu);
 
+        //TODO: HATALAR VAR. ÇÖZÜLÜNCE DEVAM EDİLECEK.
         evrakOlusturPage
                 .parafla()
                 .islemMesaji().basariliOlmali(basariMesaji);

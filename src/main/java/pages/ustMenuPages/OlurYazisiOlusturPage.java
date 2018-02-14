@@ -374,6 +374,9 @@ public class OlurYazisiOlusturPage extends MainPage {
     }
 
     public class EditorTab extends MainPage {
+
+        SelenideElement lblImzaci = $("[id^='yeniOnayEvrakForm'][id*='imzaciGridPanel'] > tbody > tr:nth-child(6) > td > span");
+
         private TextEditor editor = new TextEditor();
 
         public TextEditor getEditor() {
@@ -395,10 +398,20 @@ public class OlurYazisiOlusturPage extends MainPage {
 
         @Step("Editör ekranında hitap kontrolu: {beklenenEditorHitap}")
         public EditorTab editorHitapKontrol(String beklenenEditorHitap) {
-            String editorHitap = $(By.xpath("//*[@id='yeniOnayEvrakForm:hitapInplace']/span")).getText();
+            String editorHitap = $(By.xpath("//*[@id='yeniOnayEvrakForm:hitapInplace']")).getText();
             Assert.assertEquals(editorHitap.contains(beklenenEditorHitap), true);
             return this;
         }
+
+        @Step("Editorde imzaci kontrolu: {imzaci}")
+        public EditorTab editordeImzaciKontrol(String imzaci) {
+
+            String editorImzaci = lblImzaci.getText();
+            Assert.assertEquals(editorImzaci.contains(imzaci), true);
+
+            return this;
+        }
+
     }
 
 }

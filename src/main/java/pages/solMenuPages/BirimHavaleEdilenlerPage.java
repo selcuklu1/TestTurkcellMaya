@@ -6,6 +6,7 @@ import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.testng.Assert;
 import pages.MainPage;
 import pages.pageData.SolMenuData;
 
@@ -53,6 +54,14 @@ public class BirimHavaleEdilenlerPage extends MainPage {
     @Step("Birim Havale Edilenler sayfası aç")
     public BirimHavaleEdilenlerPage openPage() {
         solMenu(SolMenuData.BirimEvraklari.BirimHavaleEdilenler);
+        return this;
+    }
+
+    @Step("Evrakın liselendiği görülür")
+    public BirimHavaleEdilenlerPage evrakNoIleEvragıGeldigiGorme(String evrakNo){
+    boolean durum = tblEvraklar.filterBy(Condition.text(evrakNo)).size()>0;
+        Assert.assertEquals(durum,true);
+        takeScreenshot();
         return this;
     }
 
