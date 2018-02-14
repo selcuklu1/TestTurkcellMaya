@@ -30,9 +30,8 @@ public class GercekKisiYonetimiTest extends BaseTest {
     @BeforeMethod
     public void beforeTests(Method method) {
 
-        log.info(method.getName() + "Nolu test senaryosu başladı.");
-
         login();
+
         gercekKisiYonetimPage = new GercekKisiYonetimPage();
         evrakOlusturPage = new EvrakOlusturPage();
         gelenEvrakKayitPage = new GelenEvrakKayitPage();

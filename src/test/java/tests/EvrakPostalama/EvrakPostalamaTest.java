@@ -971,8 +971,8 @@ public class EvrakPostalamaTest extends BaseTest {
         postalananEvrakRaporuPage.evrakRaporForm()
                 .sayfayiraporlaexcel()
                 .raporalbasarilidir();
-        String downloadpath = useChromeWindows151("TS1434");
-
+      //  String downloadpath = useChromeWindows151("TS1434");
+        String downloadpath = getDownloadPath();
             System.out.println(downloadpath);
         postalananEvrakRaporuPage.excelTabloKars(downloadpath);
 

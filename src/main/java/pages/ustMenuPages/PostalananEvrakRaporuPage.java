@@ -388,11 +388,12 @@ public class PostalananEvrakRaporuPage extends MainPage {
     public PostalananEvrakRaporuPage sayfayiraporlaexcel() {
 
         sayfayiraporla.click();
+
         return this;
     }
     @Step("Excel ve Tablo karşılaştırma")
-    public PostalananEvrakRaporuPage excelTabloKars(String filepath) throws IOException {
-
+    public PostalananEvrakRaporuPage excelTabloKars(String filepath) throws IOException, InterruptedException {
+        Thread.sleep(1000);
     boolean flag;
         File dir = new File( filepath);
         File[] dir_contents = dir.listFiles();
