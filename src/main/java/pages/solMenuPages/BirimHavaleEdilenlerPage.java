@@ -10,6 +10,8 @@ import org.testng.Assert;
 import pages.MainPage;
 import pages.pageData.SolMenuData;
 
+import javax.xml.bind.Element;
+
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.*;
 
@@ -39,7 +41,8 @@ public class BirimHavaleEdilenlerPage extends MainPage {
 
     SelenideElement notAlanıDoldur = $(By.id("inboxItemInfoForm:evrakGeriAlInputTextareaId"));
     SelenideElement onizlemeNotAlanıDoldur = $(By.id("mainPreviewForm:evrakGeriAlInputTextareaId"));
-    SelenideElement btnGeriAl = $("[class='ui-button-icon-left ui-icon evrakGeriAl']");
+//    SelenideElement btnGeriAl = $("[class='ui-button-icon-left ui-icon evrakGeriAl']");
+    SelenideElement btnGeriAl = $("button[id^='inboxItemInfoForm:j_idt']");
     SelenideElement onizlemeGeriAl = $("[id^='mainPreviewForm:j_idt']");
 
     SelenideElement btnGeriAlGeriAl = $("[id='mainPreviewForm:evrakOnizlemeTab'] button");
@@ -51,9 +54,18 @@ public class BirimHavaleEdilenlerPage extends MainPage {
     ElementsCollection birimEvrakEkleriKontrol = $$("div[id$='ekListesiOnizlemeDataTable'] tr[data-ri]");
     ElementsCollection ilgiBilgileriEkleriKontrol = $$("div[id$='ilgiListesiDataTable'] tr[data-ri]");
 
+    SelenideElement lblSayfa = $("[class='ui-inbox-header-title']");
+
     @Step("Birim Havale Edilenler sayfası aç")
     public BirimHavaleEdilenlerPage openPage() {
         solMenu(SolMenuData.BirimEvraklari.BirimHavaleEdilenler);
+        return this;
+    }
+
+    @Step("Orta alanda \"{sayfa}\" ekranı açılır\n")
+    public BirimHavaleEdilenlerPage sayfaKontrol(String sayfa) {
+        Assert.assertEquals(lblSayfa.getText().equals(sayfa),true,sayfa);
+        Allure.addAttachment(sayfa,"açılmaktadır");
         return this;
     }
 
@@ -110,17 +122,23 @@ public class BirimHavaleEdilenlerPage extends MainPage {
         return this;
     }
 
-    @Step("Tabloda evrak kontrolü : \"{evrakNo}\"  \"{birim}\" \"{evrakTarihi}\" \"{No}\" ")
-    public BirimHavaleEdilenlerPage evrakAlanKontrolleri(String evrakNo,String birim,String evrakTarihi,String No) {
+    @Step("Tabloda evrak kontrolü : \"{konu}\"  \"{geldigiKurum}\" \"{birim}\" \"{evrakTarihi}\" \"{evrakNo}\" ")
+    public BirimHavaleEdilenlerPage evrakAlanKontrolleri(String konu,String geldigiKurum, String birim,String evrakTarihi,String evrakNo) {
+        System.out.println("evrakNo:" +konu + " geldigiKurum" + geldigiKurum + " birim" + birim +" evrakTarihi" + evrakTarihi + " evrakkayitno" + evrakNo);
         tblKaydedilenGelenEvraklar
-                .filterBy(Condition.text(evrakNo))
+                .filterBy(Condition.text(konu))
                 .filterBy(Condition.text(birim))
+                .filterBy(Condition.text(geldigiKurum))
+                .filterBy(Condition.text(evrakTarihi))
+                .filterBy(Condition.text(evrakNo))
                 .shouldHaveSize(1);
+        Allure.addAttachment("Konu" ,konu);
+        Allure.addAttachment("Birim" ,birim);
+        Allure.addAttachment("EvrakTarihi" ,evrakTarihi);
+        Allure.addAttachment("GeldigiKurum" ,geldigiKurum);
+        Allure.addAttachment("EvrakNo" ,evrakNo);
         return this;
-
-        //        Evrak tarihi  : evrakTarihi
-        //        no alanlarının : evrakSayiSagDoldur()
-    }
+        }
 
     @Step("Tabloda evrak no ile evrak seçme. \"{evrakNo}\" ")
     public BirimHavaleEdilenlerPage evrakNoIleTablodanEvrakSecme(String evrakNo) {

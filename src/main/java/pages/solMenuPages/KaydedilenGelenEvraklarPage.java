@@ -115,9 +115,31 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
     BelgenetElement icerikHavaleIslemleriBirim = comboLov(By.id("inboxItemInfoForm:dagitimBilgileriBirimLov:LovText"));
 
     SelenideElement btnEvrakDetayiKaydetUyarisi = $(By.id("kaydetConfirmForm:kaydetEvetButton"));
+
+    SelenideElement lblSayfa = $("[class='ui-inbox-header-title']");
+    ElementsCollection btnTopluHavale = $$("[id^='mainInboxForm:inboxDataTable:j_idt'] > [class$='document-charge']");
+
     @Step("Kaydedilen gelen evraklar sayfası aç")
     public KaydedilenGelenEvraklarPage openPage() {
         solMenu(SolMenuData.BirimEvraklari.KaydedilenGelenEvraklar);
+        return this;
+    }
+
+    @Step("Orta alanda \"{sayfa}\" ekranı açılır\n")
+    public KaydedilenGelenEvraklarPage sayfaKontrol(String sayfa) {
+        Assert.assertEquals(lblSayfa.getText().equals(sayfa),true,sayfa);
+        Allure.addAttachment(sayfa,"açılmaktadır");
+        return this;
+    }
+
+
+    @Step("Evrak Sec Toplu ve Toplu Havale Yap")
+    public KaydedilenGelenEvraklarPage evraklariSecTopluHavaleYap(String konu1, String konu2, boolean secim) {
+        tblEvraklar.filterBy(text(konu1)).get(0).$$("div[class^='ui-chkbox-box']").first().click();
+        tblEvraklar.filterBy(text(konu2)).get(0).$$("div[class^='ui-chkbox-box']").first().click();
+
+        btnTopluHavale.get(0).click();
+
         return this;
     }
 
@@ -310,26 +332,41 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
         String text = "";
         if(otomatikHavaleCheckbox.isDisplayed()) {
             text += "Otomatik Havale Checkbox,";
+            Assert.assertEquals(otomatikHavaleCheckbox.isDisplayed(),true,"Otomatik Havale Checkbox Alanı Görüntülendi");
+            Allure.addAttachment("Otomatik Havale Checkbox Alanı Görüntülendi : ","");
         }
         if(birimKontrol.isDisplayed()) {
             text += "Birim Kontrol,";
+            Assert.assertEquals(birimKontrol.isDisplayed(),true,"Birim Alanı Görüntülendi");
+            Allure.addAttachment("Birim Kontrol Alanı Görüntülendi : ","");
         }
         if(kisiKontrol.isDisplayed()) {
             text += "Kisi Kontrol, ";
+            Assert.assertEquals(kisiKontrol.isDisplayed(),true,"Kisi Alanı Görüntülendi");
+            Allure.addAttachment("Kisi Alanı Görüntülendi : ","");
         }
         if(kullanıcıListeKontrol.isDisplayed()) {
             text += "Kullanıcı Liste,";
+            Assert.assertEquals(kullanıcıListeKontrol.isDisplayed(),true,"Kullanıcı Liste Alanı Görüntülendi");
+            Allure.addAttachment("Kullanıcı Liste Alanı Görüntülendi : ","");
         }
         if(aciklamaKontrol.isDisplayed()) {
             text += "Aciklama,";
+            Assert.assertEquals(aciklamaKontrol.isDisplayed(),true,"Aciklama Alanı Görüntülendi");
+            Allure.addAttachment("Aciklama Alanı Görüntülendi : ","");
         }
         if(dosyaEkleKontrol.isDisplayed()) {
             text += "Dosya Ekle,";
+            Assert.assertEquals(dosyaEkleKontrol.isDisplayed(),true,"Dosya Ekle Alanı Görüntülendi");
+            Allure.addAttachment("Dosya Ekle Alanı Görüntülendi : ","");
         }
         if(islemSureKontrol.isDisplayed()) {
             text += "İslem Sure alanları gösterilmektedir.";
+            Assert.assertEquals(islemSureKontrol.isDisplayed(),true,"İşlem Süre Alanı Görüntülendi");
+            Allure.addAttachment("İslem Sure Alanı Görüntülendi : ","");
         }
         Allure.addAttachment("Alan Kontrolleri : ", text);
+        takeScreenshot();
         return this;
     }
 
@@ -338,24 +375,38 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
         String text = "";
         if(icerikOtomatikHavaleCheckbox.isDisplayed()) {
             text += "Otomatik Havale Checkbox,";
+            Assert.assertEquals(icerikOtomatikHavaleCheckbox.isDisplayed(),true,"Otomatik Havale Checkbox Alanı Görüntülendi");
+            Allure.addAttachment("Otomatik Havale Checkbox Alanı Görüntülendi : ","");
         }
         if(icerikBirimKontrol.isDisplayed()) {
             text += "Birim Kontrol,";
+            Assert.assertEquals(icerikBirimKontrol.isDisplayed(),true,"Birim Alanı Görüntülendi");
+            Allure.addAttachment("Birim Kontrol Alanı Görüntülendi : ","");
         }
         if(icerikKisiKontrol.isDisplayed()) {
             text += "Kisi Kontrol, ";
+            Assert.assertEquals(icerikKisiKontrol.isDisplayed(),true,"Kisi Alanı Görüntülendi");
+            Allure.addAttachment("Kisi Alanı Görüntülendi : ","");
         }
         if(icerikKullanıcıListeKontrol.isDisplayed()) {
             text += "Kullanıcı Liste,";
+            Assert.assertEquals(icerikKullanıcıListeKontrol.isDisplayed(),true,"Kullanıcı Liste Alanı Görüntülendi");
+            Allure.addAttachment("Kullanıcı Liste Alanı Görüntülendi : ","");
         }
         if(icerikAciklamaKontrol.isDisplayed()) {
             text += "Aciklama,";
+            Assert.assertEquals(icerikAciklamaKontrol.isDisplayed(),true,"Aciklama Alanı Görüntülendi");
+            Allure.addAttachment("Aciklama Alanı Görüntülendi : ","");
         }
         if(icerikDosyaEkleKontrol.isDisplayed()) {
             text += "Dosya Ekle,";
+            Assert.assertEquals(icerikDosyaEkleKontrol.isDisplayed(),true,"Dosya Ekle Alanı Görüntülendi");
+            Allure.addAttachment("Dosya Ekle Alanı Görüntülendi : ","");
         }
         if(icerikIslemSureKontrol.isDisplayed()) {
             text += "İslem Sure alanları gösterilmektedir.";
+            Assert.assertEquals(icerikIslemSureKontrol.isDisplayed(),true,"İşlem Süre Alanı Görüntülendi");
+            Allure.addAttachment("İslem Sure Alanı Görüntülendi : ","");
         }
         Allure.addAttachment("Alan Kontrolleri : ", text);
         return this;
@@ -391,9 +442,20 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
         return this;
     }
 
-    @Step("Dağıtım Bilgileri Birim alanında \"{birim}\" seçilir")
+    @Step("Dağıtım Bilgileri Birim alanında \"{opsiyon}\" seçilir")
     public KaydedilenGelenEvraklarPage dagitimBilgileriKisiOpsiyon(String opsiyon) {
-        dagitimBilgileriKisiOpsiyon.selectOptionByValue(opsiyon);
+//        dagitimBilgileriKisiOpsiyon.selectOptionByValue(opsiyon);
+        String gerek = "GEREĞİ İÇİN GÖNDER";
+        String bilgi = "BİLGİ İÇİN GÖNDER";
+        String koordinasyon = "KOORDİNASYON İÇİN GÖNDER";
+
+        if(opsiyon.equals(gerek))
+            dagitimBilgileriKisiOpsiyon.selectOptionByValue("G");
+        else if(opsiyon.equals(bilgi))
+            dagitimBilgileriKisiOpsiyon.selectOptionByValue("B");
+        else if(opsiyon.equals(koordinasyon))
+            dagitimBilgileriKisiOpsiyon.selectOptionByValue("S");
+
         return this;
     }
 

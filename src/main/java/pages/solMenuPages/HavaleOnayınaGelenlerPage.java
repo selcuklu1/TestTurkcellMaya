@@ -28,7 +28,9 @@ public class HavaleOnayınaGelenlerPage extends MainPage {
     SelenideElement btnHavaleOnayiOnayla = $(By.id("mainPreviewForm:onaylaButton_id"));
     SelenideElement icerikHavaleOnay = $("button[id='inboxItemInfoForm:dialogTabMenuRight:uiRepeat:4:cmdbutton']");
     SelenideElement notAlanıDoldur = $(By.id("mainPreviewForm:notTextArea_id"));
+    SelenideElement icerikNotAlanıDoldur = $(By.id("inboxItemInfoForm:notTextArea_id"));
     SelenideElement onayıReddet = $(By.id("mainPreviewForm:reddetButton_id"));
+    SelenideElement icerikOnayıReddet = $(By.id("inboxItemInfoForm:reddetButton_id"));
     SelenideElement onizlemeOnayla = $(By.id("mainPreviewForm:onaylaButton_id"));
     BelgenetElement txtHavaleOnayiBirim = comboLov(By.id("mainPreviewForm:dagitimBilgileriBirimLov_id:LovText"));
     BelgenetElement txtHavaleOnayiKisi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKullaniciLov_id:LovText"));
@@ -37,6 +39,7 @@ public class HavaleOnayınaGelenlerPage extends MainPage {
 //      SelenideElement onayıReddetEvet = $("button[id='inboxItemInfoForm:reddetEvetButton_id']");
 //      SelenideElement btnHavaleOnayReddet = $(By.id("inboxItemInfoForm:reddetEvetButton_id"));
     ElementsCollection btnHavaleOnayReddet = $$("[id$='mainPreviewForm:reddetEvetButton_id']");
+    ElementsCollection btnIcerikHavaleOnayReddet = $$("[id$='inboxItemInfoForm:reddetEvetButton_id']");
     ElementsCollection btnHavaleOnayEvet = $$("[id$='mainPreviewForm:evetButton_id']");
     ElementsCollection btnOnayla = $$("[id^='mainInboxForm:inboxDataTable:j_idt'] > [class$='document-accept']");
 
@@ -164,9 +167,21 @@ public class HavaleOnayınaGelenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Not Alanını Doldur")
+    public HavaleOnayınaGelenlerPage icerikNotAlanınıDoldur(String not) {
+        icerikNotAlanıDoldur.setValue(not);
+        return this;
+    }
+
     @Step("Havale Onay Reddet")
     public HavaleOnayınaGelenlerPage onayıReddet() {
         onayıReddet.click();
+        return this;
+    }
+
+    @Step("Havale Onay Reddet")
+    public HavaleOnayınaGelenlerPage icerikOnayıReddet() {
+        icerikOnayıReddet.click();
         return this;
     }
 
@@ -181,6 +196,14 @@ public class HavaleOnayınaGelenlerPage extends MainPage {
     @Step("Havale Onay Reddet Evet")
     public HavaleOnayınaGelenlerPage onayıReddetEvet() {
         btnHavaleOnayReddet.last().click();
+        return this;
+    }
+
+    // TODO: Her dönen butonu click yapma
+    // 2 tane Evet buttonu dönüyor ve aralarında fark yok
+    @Step("Havale Onay Reddet Evet")
+    public HavaleOnayınaGelenlerPage icerikOnayıReddetEvet() {
+        btnIcerikHavaleOnayReddet.last().click();
         return this;
     }
 
