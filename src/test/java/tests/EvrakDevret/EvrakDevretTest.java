@@ -288,7 +288,23 @@ public class EvrakDevretTest extends BaseTest {
                 .devret()
                 .islemMesaji().dikkatOlmali(dikkatMesaji);
 
-//        kullaniciEvrakDevretPage
+        //TODO 6. step yazılacak...
+
+        kullaniciEvrakDevretPage
+                .devret()
+                .devretTamam()
+                .islemMesaji().uyariOlmali(uyariMesaji);
+
+        kullaniciEvrakDevretPage
+                .devralacakKisiSec(kullaniciNormal)
+                .devretTamam()
+                .islemMesaji().uyariOlmali(uyariMesaji);
+
+        kullaniciEvrakDevretPage
+                .aciklamaDoldur(icerik)
+                .devretTamam()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
 
 
     }
