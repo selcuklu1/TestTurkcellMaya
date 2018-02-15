@@ -292,16 +292,19 @@ public class EvrakDevretTest extends BaseTest {
 
         kullaniciEvrakDevretPage
                 .devret()
+                .devralacakKisiAlanKontolu()
+                .aciklamaDoldur(icerik)
                 .devretTamam()
                 .islemMesaji().uyariOlmali(uyariMesaji);
 
         kullaniciEvrakDevretPage
                 .devralacakKisiSec(kullaniciNormal)
+                .aciklamaTemizle()
                 .devretTamam()
                 .islemMesaji().uyariOlmali(uyariMesaji);
 
         kullaniciEvrakDevretPage
-                .aciklamaDoldur(icerik)
+                .aciklamaDoldur(createRandomText(255))
                 .devretTamam()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
