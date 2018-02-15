@@ -15,6 +15,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.solMenuPages.*;
 import pages.ustMenuPages.GelenEvrakKayitPage;
+import pages.ustMenuPages.SistemLoglariPage;
 
 import static data.TestData.*;
 
@@ -30,11 +31,13 @@ public class HavaleEttiklerimdenTest extends BaseTest {
 
     GelenEvrakKayitPage gelenEvrakKayitPage;
     HavaleEttiklerimPage havaleEttiklerimPage;
+    SistemLoglariPage sistemLoglariPage;
 
     @BeforeMethod
     public void loginBeforeTests() {
         havaleEttiklerimPage = new HavaleEttiklerimPage();
         gelenEvrakKayitPage = new GelenEvrakKayitPage();
+        sistemLoglariPage = new SistemLoglariPage();
     }
 
     String basariMesaji = "İşlem başarılıdır!";
@@ -44,6 +47,7 @@ public class HavaleEttiklerimdenTest extends BaseTest {
     String kurum = "BÜYÜK HARFLERLE KURUM";
     String birim = "Yazılım Geliştirme Direktörlüğ";
     String kisi = "Mehmet Bozdemir";
+    String kisi2 = "Zübeyde Tekin";
     String birim2 = "YGD";
     String not = createRandomText(15);
     String konuKoduRandomTS2302 = "TC-2302_" + createRandomNumber(15);
@@ -78,6 +82,41 @@ public class HavaleEttiklerimdenTest extends BaseTest {
                 .havaleYap()
                 .icerikGosterHavaleYapKullaniciListesiDoldur("TS1590")
                 .icerikGosterHavaleyapKullaniciListesiGeregiIcınBilgiIcinDegistir()
-                .icerikGosterHavaleYapOnaylayacakKisiDoldur(kisi,birim2);
+                .icerikGosterHavaleYapOnaylayacakKisiDoldur(kisi,birim2)
+                .icerikGosterHavaleYapHavaleOnayinaGonder()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        havaleEttiklerimPage
+                .openPage()
+                .evrakNoIleEvrakSec(konuKoduRandomTS2302)
+                .evrakGecmisiSec()
+                .evrakGecmisiKisiVeMesajKontrol("Evrak onaya sunuldu",kisi2)
+                .evrakGecmisiKisiVeMesajKontrol("Evrak havale onayı bekliyor",kisi);
+
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS2305: Havale onayına sunma işleminin sistem loglarından kontrolü")
+    public void TS2305() {
+
+        TS2302();
+
+        havaleEttiklerimPage
+                .openPage()
+                .evrakNoIleEvrakIcerikGoster(konuKoduRandomTS2302)
+                .havaleYap()
+                .icerikGosterHavaleYapKullaniciListesiDoldur("TS1590")
+                .icerikGosterHavaleyapKullaniciListesiGeregiIcınBilgiIcinDegistir()
+                .icerikGosterHavaleYapOnaylayacakKisiDoldur(kisi,birim2)
+                .icerikGosterHavaleYapHavaleOnayinaGonder()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        havaleEttiklerimPage
+                .openPage()
+                .evrakNoIleEvrakSec(konuKoduRandomTS2302)
+                .evrakGecmisiSec()
+                .evrakGecmisiKisiVeMesajKontrol("Evrak onaya sunuldu",kisi2)
+                .evrakGecmisiKisiVeMesajKontrol("Evrak havale onayı bekliyor",kisi);
+
     }
 }
