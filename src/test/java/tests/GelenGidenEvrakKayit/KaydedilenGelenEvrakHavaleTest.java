@@ -72,6 +72,8 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
     public void TS422() throws InterruptedException {
         String testid= "TS-422";
         konu = "TS-422-" + getSysDate();
+        String sayfa1 = "Kaydedilen Gelen Evraklar";
+        String sayfa2 = "Birim Havale Edilenler";
 
         testStatus(testid,"PreCondition Evrak Oluşturma");
 
@@ -94,18 +96,23 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
         testStatus(testid,"Test Başladı");
         kaydedilenGelenEvraklarPage
                 .openPage()
+                .sayfaKontrol(sayfa1)
                 .evrakNoIleEvrakSec(konu)
                 .tabloEvrakNoileIcerikSec(konu)
+                .ekranKontrolEvrakDetayi()
                 .icerikHavaleYap()
+                .icerikHavaleAlanKontrolleri()
                 .icerikHavaleIslemleriKisiDoldur(onaylayacakKisi,onayKisiDetails)
+                .eklenenIcerikKisiKontrolu(onaylayacakKisi)
                 .icerikHavaleOnayinaGonder()
                 .islemMesaji().basariliOlmali();
 
         birimHavaleEdilenlerPage
                 .openPage()
+                .sayfaKontrol(sayfa2)
                 .evrakNoIleTabloKontrolu(konu);
 
-        login(mbozdemir);
+        login(TestData.usernameMBOZDEMIR,TestData.passwordMBOZDEMIR);
 
         gelenEvraklarPage
                 .openPage()
@@ -119,8 +126,8 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
         String testid= "TS-430";
         konu = "TS-430-" + getSysDate();
         String sayfa1 = "Birim Havale Edilenler";
-        testStatus(testid,"PreCondition Evrak Oluşturma");
 
+        testStatus(testid,"PreCondition Evrak Oluşturma");
         gelenEvrakKayitPage
                 .openPage()
                 .konuKoduDoldur(konuKodu)
@@ -151,6 +158,7 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .openPage()
                 .sayfaKontrol(sayfa1)
                 .evrakNoIleTablodanEvrakSecme(konu)
+                .onizlemeHavaleGeriAlKontrol()
                 .onizlemeHavaleGeriAl()
                 .onizlemeNotAlanınıDoldur(konu)
                 .onizlemeGeriAl()
@@ -162,17 +170,24 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .openPage()
                 .evrakNoIleEvrakSec(konu)
                 .evrakOnizlemeKontrol()
+                .onizlemeHavaleButtonKontrol()
                 .onizlemeHavaleYap()
                 .havaleAlanKontrolleri()
+                .ekranKontrol()
                 .dagitimBilgileriBirimDoldurWithDetails(birim, details)
+                .eklenenBirimKontrolu(birim)
                 .buttonGonder()
                 .islemMesaji().basariliOlmali();
+
+        kaydedilenGelenEvraklarPage
+                .openPage()
+                .tabloEvrakNoileEvrakGelmediKontrolu(konu);
 
         birimHavaleEdilenlerPage
                 .openPage()
                 .evrakNoIleTablodanEvrakSecme(konu);
 
-        login(mbozdemir);
+        login(TestData.usernameMBOZDEMIR,TestData.passwordMBOZDEMIR);
 
         teslimAlinmayiBekleyenlerPage
                 .openPage()
@@ -229,25 +244,37 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
         kaydedilenGelenEvraklarPage
                 .openPage()
                 .tabloEvrakNoileIcerikSec(konu)
+                .ekranKontrolEvrakDetayi()
                 .icerikHavaleYap()
                 .icerikHavaleAlanKontrolleri()
-                .icerikDagitimBilgileriOnaylayanWithDetails(onaylayacakKisi, onayKisiDetails)
-                .icerikHavaleIslemleriKisiDoldur(kisi)
                 .icerikDagitimBilgileriBirimDoldurWithDetails(birim, details)
+                .eklenenIcerikBirimKontrolu(birim)
+                .icerikHavaleIslemleriKisiDoldur(kisi)
+                .eklenenIcerikKisiKontrolu(kisi)
+                .icerikDagitimBilgileriOnaylayanWithDetails(onaylayacakKisi, onayKisiDetails)
+                .eklenenIcerikOnaylayanKontrolu(onaylayacakKisi)
+//                .icerikDagitimBilgileriOnaylayanWithDetails(onaylayacakKisi, onayKisiDetails)
+//                .icerikHavaleIslemleriKisiDoldur(kisi)
+//                .icerikDagitimBilgileriBirimDoldurWithDetails(birim, details)
                 .kaydet()
                 .evrakDetayiKaydetPopUpClose()
                 //TODO : 6. test adımından sonra yeni bir adım eklenmeli. Aksi takdirde havaleOnayınaGelenlerPage sayfasına ulaşmaz.
-                .icerikHavaleOnayinaGonder2();
+                .icerikHavaleOnayinaGonder2()
+                .islemMesaji().basariliOlmali();
 
-        login(mbozdemir);
+        login(TestData.usernameMBOZDEMIR,TestData.passwordMBOZDEMIR);
 
         havaleOnayınaGelenlerPage
                 .openPage()
                 .evrakNoIleEvrakSec(konu)
+                .havaleOnayIkonKontrolu()
                 .havaleOnay()
-                //TODO : Havale alanında seçilen kişinin geldiği görülür.
+                .eklenenKisiKontrolu(kisi)
                 .havaleOnayiBirimDoldur(birim)
+                .eklenenBirimKontrolu(birim)
                 .dagitimBilgileriBirimOpsiyon(bilgi)
+                .eklenenBirimKontrolu(birim)
+                .eklenenBirimOpsiyonKontrolu(bilgi)
                 .havaleOnayiOnayla()
                 .havaleyiOnaylamakUzersinizUyariGeldigiGorme()
                 .havaleyiOnaylamakUzeresinizEvet()
@@ -257,7 +284,11 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .openPage()
                 .evrakNoIleEvrakSec(konu);
 
-        login(ztekin);
+        login(TestData.usernameZTEKIN,TestData.passwordZTEKIN);
+
+        teslimAlinmayiBekleyenlerPage
+                .openPage()
+                .evrakNoIleEvrakSec(konu);
 
         birimHavaleEdilenlerPage
                 .openPage()
