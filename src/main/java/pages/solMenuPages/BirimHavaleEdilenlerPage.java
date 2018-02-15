@@ -54,9 +54,18 @@ public class BirimHavaleEdilenlerPage extends MainPage {
     ElementsCollection birimEvrakEkleriKontrol = $$("div[id$='ekListesiOnizlemeDataTable'] tr[data-ri]");
     ElementsCollection ilgiBilgileriEkleriKontrol = $$("div[id$='ilgiListesiDataTable'] tr[data-ri]");
 
+    SelenideElement lblSayfa = $("[class='ui-inbox-header-title']");
+
     @Step("Birim Havale Edilenler sayfası aç")
     public BirimHavaleEdilenlerPage openPage() {
         solMenu(SolMenuData.BirimEvraklari.BirimHavaleEdilenler);
+        return this;
+    }
+
+    @Step("Orta alanda \"{sayfa}\" ekranı açılır\n")
+    public BirimHavaleEdilenlerPage sayfaKontrol(String sayfa) {
+        Assert.assertEquals(lblSayfa.getText().equals(sayfa),true,sayfa);
+        Allure.addAttachment(sayfa,"açılmaktadır");
         return this;
     }
 

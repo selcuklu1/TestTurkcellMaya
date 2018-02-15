@@ -115,9 +115,31 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
     BelgenetElement icerikHavaleIslemleriBirim = comboLov(By.id("inboxItemInfoForm:dagitimBilgileriBirimLov:LovText"));
 
     SelenideElement btnEvrakDetayiKaydetUyarisi = $(By.id("kaydetConfirmForm:kaydetEvetButton"));
+
+    SelenideElement lblSayfa = $("[class='ui-inbox-header-title']");
+    ElementsCollection btnTopluHavale = $$("[id^='mainInboxForm:inboxDataTable:j_idt'] > [class$='document-charge']");
+
     @Step("Kaydedilen gelen evraklar sayfası aç")
     public KaydedilenGelenEvraklarPage openPage() {
         solMenu(SolMenuData.BirimEvraklari.KaydedilenGelenEvraklar);
+        return this;
+    }
+
+    @Step("Orta alanda \"{sayfa}\" ekranı açılır\n")
+    public KaydedilenGelenEvraklarPage sayfaKontrol(String sayfa) {
+        Assert.assertEquals(lblSayfa.getText().equals(sayfa),true,sayfa);
+        Allure.addAttachment(sayfa,"açılmaktadır");
+        return this;
+    }
+
+
+    @Step("Evrak Sec Toplu ve Toplu Havale Yap")
+    public KaydedilenGelenEvraklarPage evraklariSecTopluHavaleYap(String konu1, String konu2, boolean secim) {
+        tblEvraklar.filterBy(text(konu1)).get(0).$$("div[class^='ui-chkbox-box']").first().click();
+        tblEvraklar.filterBy(text(konu2)).get(0).$$("div[class^='ui-chkbox-box']").first().click();
+
+        btnTopluHavale.get(0).click();
+
         return this;
     }
 
@@ -320,7 +342,7 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
         }
         if(kisiKontrol.isDisplayed()) {
             text += "Kisi Kontrol, ";
-            Assert.assertEquals(birimKontrol.isDisplayed(),true,"Kisi Alanı Görüntülendi");
+            Assert.assertEquals(kisiKontrol.isDisplayed(),true,"Kisi Alanı Görüntülendi");
             Allure.addAttachment("Kisi Alanı Görüntülendi : ","");
         }
         if(kullanıcıListeKontrol.isDisplayed()) {
