@@ -37,7 +37,7 @@ public class BirimHavaleEdilenlerPage extends MainPage {
     ElementsCollection tblEvraklar = $$("[id^='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
 
     SelenideElement havaleGeriAl = $(By.id("inboxItemInfoForm:dialogTabMenuRight:uiRepeat:4:cmdbutton"));
-    SelenideElement onizlemeHavaleGeriAl = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:4:cmdbutton"));
+    SelenideElement btnOnizlemeHavaleGeriAl = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:4:cmdbutton"));
 
     SelenideElement notAlanıDoldur = $(By.id("inboxItemInfoForm:evrakGeriAlInputTextareaId"));
     SelenideElement onizlemeNotAlanıDoldur = $(By.id("mainPreviewForm:evrakGeriAlInputTextareaId"));
@@ -55,7 +55,6 @@ public class BirimHavaleEdilenlerPage extends MainPage {
     ElementsCollection ilgiBilgileriEkleriKontrol = $$("div[id$='ilgiListesiDataTable'] tr[data-ri]");
 
     SelenideElement lblSayfa = $("[class='ui-inbox-header-title']");
-
     @Step("Birim Havale Edilenler sayfası aç")
     public BirimHavaleEdilenlerPage openPage() {
         solMenu(SolMenuData.BirimEvraklari.BirimHavaleEdilenler);
@@ -164,8 +163,15 @@ public class BirimHavaleEdilenlerPage extends MainPage {
 
     @Step("Havale edilen evrak geri alma")
     public BirimHavaleEdilenlerPage onizlemeHavaleGeriAl() {
-        if (onizlemeHavaleGeriAl.isDisplayed())
-            onizlemeHavaleGeriAl.click();
+        if (btnOnizlemeHavaleGeriAl.isDisplayed())
+            btnOnizlemeHavaleGeriAl.click();
+        return this;
+    }
+
+    @Step("Havale edilen evrak geri alma button kontrol")
+    public BirimHavaleEdilenlerPage onizlemeHavaleGeriAlKontrol() {
+        Assert.assertEquals(btnOnizlemeHavaleGeriAl.isDisplayed(),true,"Havale Geri Al Kontrol");
+        Allure.addAttachment("Havale Geri Al Kontrol" , "");
         return this;
     }
 
