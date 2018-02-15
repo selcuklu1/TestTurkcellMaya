@@ -170,7 +170,9 @@ public class TeslimAlinanlarPage extends MainPage {
 
     @Step("Birim alanında {birim} adlı birim seçilir")
     public TeslimAlinanlarPage havaleYapBirimDoldur(String birim) {
-        txtHavaleYapBirim.type(birim).getTitleItems().filterBy(text(birim)).first().click();
+        txtHavaleYapBirim.openTreePanel().closeTreePanel();
+        txtHavaleYapBirim.selectLov(birim);
+        //txtHavaleYapBirim.type(birim).getTitleItems().filterBy(text(birim)).first().click();
         return this;
     }
 

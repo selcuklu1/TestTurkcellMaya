@@ -95,7 +95,7 @@ public class TeslimAldiklarimHavaleTest extends BaseTest {
                 .openPage()
                 .evrakNoIleEvrakSec(konuKoduRandomTS1597)
                 .havaleYap()
-                //.havaleYapKullaniciListesiSecmeyeDene("TS1590")
+                .havaleYapKullaniciListesiSecmeyeDene("TS1590")
                 .havaleYapBirimDoldur("YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ")
                 .havaleYapGonder()
                 .islemMesaji().basariliOlmali(basariMesaji);
@@ -110,7 +110,7 @@ public class TeslimAldiklarimHavaleTest extends BaseTest {
                 .openPage()
                 .evrakGeldigiGorunur(konuKoduRandomTS1597);
 
-        login(usernameMBOZDEMIR,usernameMBOZDEMIR);
+        login(usernameMBOZDEMIR,passwordMBOZDEMIR);
 
         teslimAlinmayiBekleyenlerPage
                 .openPage()
