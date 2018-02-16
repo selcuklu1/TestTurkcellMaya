@@ -74,9 +74,11 @@ public class OlurYazisiOlusturPage extends MainPage {
         SelenideElement cmbIvedik = $("select[id$='ivedilik']");
         SelenideElement dateMiat = $("input[id$='miatCalendar_input']");
         SelenideElement cmbBilgiSecimTipi = $x("//form[@id='yeniOnayEvrakForm']//label[normalize-space(text())='Bilgi Seçim Tipi']/ancestor::tr[@class='ui-datagrid-row']//select");
-        BelgenetElement txtBilgi = comboLov("input[id$='bilgiLov:LovText']");
+        BelgenetElement cmbBilgi = comboLov("input[id$='bilgiLov:LovText']");
+        By cmbBilgiBy = By.cssSelector("[id^='yeniOnayEvrakForm:evrakBilgileriList'][id$='bilgiLov:LovText']");
         SelenideElement cmbGeregiSecimTipi = $x("//form[@id='yeniOnayEvrakForm']//label[normalize-space(text())='Gereği Seçim Tipi']/ancestor::tr[@class='ui-datagrid-row']//select");
         BelgenetElement cmbGeregi = comboLov("[id^='yeniOnayEvrakForm:evrakBilgileriList'][id$='geregiLov:LovText']");
+        By cmbGeregiBy = By.cssSelector("[id^='yeniOnayEvrakForm:evrakBilgileriList'][id$='geregiLov:LovText']");
         SelenideElement btnOnayAkisSil = $(By.cssSelector("[id^='yeniOnayEvrakForm:evrakBilgileriList:14:akisLov:j_idt'] [class$='delete-icon']"));
 
         //endregion
@@ -135,7 +137,7 @@ public class OlurYazisiOlusturPage extends MainPage {
             Assert.assertEquals( cmbBilgiSecimTipi.isDisplayed(), true, "ilgi Seçim Tipi ");
             Allure.addAttachment("ilgi Seçim Tipi Balanı kontrolu başarılı", "");
 
-            Assert.assertEquals( txtBilgi.isDisplayed(), true, "Bilgi alanı");
+            Assert.assertEquals( cmbBilgi.isDisplayed(), true, "Bilgi alanı");
             Allure.addAttachment("Bilgi alanı kontrolu başarılı", "");
 
             Assert.assertEquals( cmbGeregiSecimTipi.isDisplayed(), true, "Gereği Seçim Tipi ");
@@ -263,6 +265,13 @@ public class OlurYazisiOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Bilgi Seçim Tipi alanında \"{bilgiSecimTipi}\" seç")
+        public BilgilerTab bilgiSecimTipiSecByText(String bilgiSecimTipi) {
+            cmbBilgiSecimTipi.shouldBe(visible);
+            cmbBilgiSecimTipi.selectOption(bilgiSecimTipi);
+            return this;
+        }
+
         @Step("Seçien onay akışını sil")
         public BilgilerTab secilenOnayAkisiSil() {
 
@@ -369,6 +378,31 @@ public class OlurYazisiOlusturPage extends MainPage {
             clickJs(btnKullan);
             return this;
         }
+
+        @Step("Gereği alanında Birimin geldiği ve seçilemediği kontrolu - {description} : {birim}")
+        public BilgilerTab geregiAlanindaBiriminGeldigiSecilemedigiKontrolu(String birim, String description) {
+
+            int  gorunurSecilemezBirimSize = comboLov(cmbGeregiBy).type(birim).getSelectableItems().size();
+            Assert.assertEquals(gorunurSecilemezBirimSize==0, true, "Birimin geldiği ve seçilemediği görülür: " + birim);
+            comboLov(cmbGeregiBy).closeTreePanel();
+            System.out.println("Birimin geldiği ve seçilemediği görülür: " + birim);
+            Allure.addAttachment("Birimin geldiği ve seçilemediği görülür: " + birim, "");
+
+            return this;
+        }
+
+        @Step("Birim alanında Birimin geldiği ve seçilemediği kontrolu - {description} : {birim}")
+        public BilgilerTab bilgiAlanindaBiriminGeldigiSecilemedigiKontrolu(String birim, String description) {
+
+            int  gorunurSecilemezBirimSize = comboLov(cmbBilgiBy).type(birim).getSelectableItems().size();
+            Assert.assertEquals(gorunurSecilemezBirimSize==0, true, "Birimin geldiği ve seçilemediği görülür: " + birim);
+            comboLov(cmbBilgiBy).closeTreePanel();
+            System.out.println("Birimin geldiği ve seçilemediği görülür: " + birim);
+            Allure.addAttachment("Birimin geldiği ve seçilemediği görülür: " + birim, "");
+
+            return this;
+        }
+
 
 
     }

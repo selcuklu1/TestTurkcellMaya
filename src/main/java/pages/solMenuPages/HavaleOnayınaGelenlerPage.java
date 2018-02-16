@@ -3,6 +3,7 @@ package pages.solMenuPages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
@@ -49,6 +50,10 @@ public class HavaleOnayınaGelenlerPage extends MainPage {
     ElementsCollection dagitimOnaylaEvet = $$("[id='inboxItemInfoForm:evetButton_id']");
 
     SelenideElement birimSeç = $("select[id='mainPreviewForm:dagitimBilgileriBirimLov_id:LovSecilenTable:0:selectOneMenu']");
+    SelenideElement txtEklenenKisi = $("div[id^='mainPreviewForm:dagitimBilgileriKullaniciLov_id:LovSecilenTable:0:j_idt']");
+    SelenideElement txtEklenenBirim = $("div[id^='mainPreviewForm:dagitimBilgileriBirimLov_id:LovSecilenTable:0:j_idt']");
+    SelenideElement txtEklenenBirimOpsiyon = $("select[id='mainPreviewForm:dagitimBilgileriBirimLov_id:LovSecilenTable:0:selectOneMenu']");
+
 
     @Step("Birim Havale Onayına Gelenler sayfası aç")
     public HavaleOnayınaGelenlerPage openPage() {
@@ -131,6 +136,34 @@ public class HavaleOnayınaGelenlerPage extends MainPage {
     @Step("Havale butonunu tıkla")
     public HavaleOnayınaGelenlerPage havaleOnay() {
         btnHavaleOnay.click();
+        return this;
+    }
+
+    @Step("Havale Onay İkon Kontrolu tıkla")
+    public HavaleOnayınaGelenlerPage havaleOnayIkonKontrolu() {
+        Assert.assertEquals(btnHavaleOnay.isDisplayed(),true,"Havale Onay Ikon Kontrolu");
+        Allure.addAttachment("Havale Onay Ikon Kontrolu","");
+        return this;
+    }
+
+    @Step("Havale İşlemleri Kişi alanında eklenen \"{kisi}\" kontrolü")
+    public HavaleOnayınaGelenlerPage eklenenKisiKontrolu(String kisi) {
+        Assert.assertEquals(txtEklenenKisi.isDisplayed(),true,"Kisi Eklendi");
+        Allure.addAttachment("Kisi Eklendi:" , kisi);
+        return this;
+    }
+
+    @Step("Havale İşlemleri Kişi alanında eklenen \"{birim}\" kontrolü")
+    public HavaleOnayınaGelenlerPage eklenenBirimKontrolu(String birim) {
+        Assert.assertEquals(txtEklenenBirim.isDisplayed(),true,"Birim Eklendi");
+        Allure.addAttachment("Birim Eklendi:" , birim);
+        return this;
+    }
+
+    @Step("Havale İşlemleri Kişi alanında eklenen \"{opsiyon}\" kontrolü")
+    public HavaleOnayınaGelenlerPage eklenenBirimOpsiyonKontrolu(String opsiyon) {
+        Assert.assertEquals(txtEklenenBirimOpsiyon.getSelectedOption().text().equals(opsiyon),true,"Opsiyon Seçildi");
+        Allure.addAttachment("Opsiyon Seçildi:" , opsiyon);
         return this;
     }
 

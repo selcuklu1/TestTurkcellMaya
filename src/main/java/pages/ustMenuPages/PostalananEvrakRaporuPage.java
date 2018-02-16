@@ -393,7 +393,7 @@ public class PostalananEvrakRaporuPage extends MainPage {
     }
     @Step("Excel ve Tablo karşılaştırma")
     public PostalananEvrakRaporuPage excelTabloKars(String filepath) throws IOException, InterruptedException {
-        Thread.sleep(1000);
+        Thread.sleep(3000);
     boolean flag;
         File dir = new File( filepath);
         File[] dir_contents = dir.listFiles();
@@ -468,6 +468,13 @@ public class PostalananEvrakRaporuPage extends MainPage {
             Allure.addAttachment("Tablo" , postanocol+ " ");
             }
         }
+        return this;
+    }
+
+    @Step("Sorgulama parametresine göre sonuç kontrolü \"{kontrol}\" ")
+    public PostalananEvrakRaporuPage sorgulamasonucKontrol (String kontrol) {
+        int resultsize = tblSorgulamaSonuc.size();
+
         return this;
     }
 }

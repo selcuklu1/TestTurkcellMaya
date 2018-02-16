@@ -1773,6 +1773,30 @@ public class EvrakOlusturPage extends MainPage {
             return evrakTarihi;
         }
 
+        @Step("Gereği alanında Birimin geldiği ve seçilemediği kontrolu - {description} : {birim}")
+        public BilgilerTab geregiAlanindaBiriminGeldigiSecilemedigiKontrolu(String birim, String description) {
+
+            int  gorunurSecilemezBirimSize = comboLov(cmbGeregiBy).type(birim).getSelectableItems().size();
+            Assert.assertEquals(gorunurSecilemezBirimSize==0, true, "Birimin geldiği ve seçilemediği görülür: " + birim);
+            comboLov(cmbGeregiBy).closeTreePanel();
+            System.out.println("Birimin geldiği ve seçilemediği görülür: " + birim);
+            Allure.addAttachment("Birimin geldiği ve seçilemediği görülür: " + birim, "");
+
+            return this;
+        }
+
+        @Step("Birim alanında Birimin geldiği ve seçilemediği kontrolu - {description} : {birim}")
+        public BilgilerTab bilgiAlanindaBiriminGeldigiSecilemedigiKontrolu(String birim, String description) {
+
+            int  gorunurSecilemezBirimSize = comboLov(cmbBilgiBy).type(birim).getSelectableItems().size();
+            Assert.assertEquals(gorunurSecilemezBirimSize==0, true, "Birimin geldiği ve seçilemediği görülür: " + birim);
+            comboLov(cmbBilgiBy).closeTreePanel();
+            System.out.println("Birimin geldiği ve seçilemediği görülür: " + birim);
+            Allure.addAttachment("Birimin geldiği ve seçilemediği görülür: " + birim, "");
+
+            return this;
+        }
+
         //endregion
 
     }

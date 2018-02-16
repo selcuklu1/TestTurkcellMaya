@@ -48,6 +48,9 @@ public class GelenEvrakKayitPage extends MainPage {
     SelenideElement dateTxtEvrakBilgileriListPostalanmaTarihi = $(By.id("evrakBilgileriForm:evrakBilgileriList:18:postalanmaTarihi_input"));
     BelgenetElement comboKonuKodu = comboLov("[id$='konuKoduLov:LovText']");
     BelgenetElement comboGeldigiKurum = comboLov("[id$='geldigiKurumLov:LovText']");
+    BelgenetElement cmbGeldigiBirim = comboLov("[id$='geldigiBirimLov:LovText']");
+    By cmbGeldigiBirimBy = By.cssSelector("[id$='geldigiBirimLov:LovText']");
+
     SelenideElement txtKonuKoduTemizle = $("[id='evrakBilgileriForm:evrakBilgileriList:1:konuKoduLov:LovSecilen'] button");
     // Evrak Ekleri sekmesinde bulunanlar
     // Dosya ekle alt sekmesinde bulunanlar
@@ -1626,6 +1629,39 @@ public class GelenEvrakKayitPage extends MainPage {
                 .filterBy(Condition.text(evrakNo))
                 .first()
                 .click();
+        return this;
+    }
+
+    @Step("Tabloda evrak no kontrolü : \"{evrakNo}\" ")
+    public GelenEvrakKayitPage evrakNoIleTabloKontrolu(String evrakNo) {
+        tblEvraklar
+                .filterBy(Condition.text(evrakNo))
+                .shouldHaveSize(1);
+        return this;
+    }
+
+
+    @Step("Geldiği birim alanında \"{geldigiBirim}\" seç ")
+    public GelenEvrakKayitPage geldigiBirimDoldur(String geldigiBirim) {
+        cmbGeldigiBirim.selectLov(geldigiBirim);
+        return this;
+    }
+
+    @Step("Evrak no alanının, birim kaydederken girilen idari birim kimlik no ile dolduğu görülür")
+    public GelenEvrakKayitPage evrakSayisiKontrolu(String idariBirimKimlikKodu) {
+        Assert.assertEquals(txtEvrakBilgileriListEvrakSayiTextAreaSol.getValue().contains(idariBirimKimlikKodu), true, "Evrak Sayı - İdari Kimlik No");
+        return this;
+    }
+
+    @Step("Gereği alanında Birimin geldiği ve seçilemediği kontrolu - {description} : {birim}")
+    public GelenEvrakKayitPage geregiAlanindaBiriminGeldigiSecilemedigiKontrolu(String birim, String description) {
+
+        int  gorunurSecilemezBirimSize = comboLov(cmbGeldigiBirimBy).type(birim).getSelectableItems().size();
+        Assert.assertEquals(gorunurSecilemezBirimSize==0, true, "Birimin geldiği ve seçilemediği görülür: " + birim);
+        comboLov(cmbGeldigiBirimBy).closeTreePanel();
+        System.out.println("Birimin geldiği ve seçilemediği görülür: " + birim);
+        Allure.addAttachment("Birimin geldiği ve seçilemediği görülür: " + birim, "");
+
         return this;
     }
 

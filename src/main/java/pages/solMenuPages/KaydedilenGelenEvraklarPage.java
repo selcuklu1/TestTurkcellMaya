@@ -54,7 +54,7 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
     ElementsCollection tblEvraklar = $$("[id^='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
     SelenideElement evrakOnizlemeKontrol = $(By.id("mainPreviewForm:eastLayout"));
     SelenideElement icerikHavaleYap = $(By.id("inboxItemInfoForm:dialogTabMenuRight:uiRepeat:5:cmdbutton"));
-    SelenideElement onizlemeHavaleYap = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:4:cmdbutton"));
+    SelenideElement btnOnizlemeHavaleYap = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:4:cmdbutton"));
     BelgenetElement cmbHavaleIslemleriOnaylayacakKisi = comboLov(By.id("mainPreviewForm:onaylayacakKisiLov:LovText"));
     BelgenetElement cmbHavaleIslemleriBirim = comboLov(By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovText"));
     SelenideElement btnHavaleOnayinaGonder = $("[id^='mainPreviewForm:j_idt'] [class^='ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only havaleIslemleriGonder']");
@@ -118,7 +118,16 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
 
     SelenideElement lblSayfa = $("[class='ui-inbox-header-title']");
     ElementsCollection btnTopluHavale = $$("[id^='mainInboxForm:inboxDataTable:j_idt'] > [class$='document-charge']");
+    SelenideElement tabHavale = $("[id='mainPreviewForm:evrakOnizlemeTab']");
 
+    SelenideElement tabEvrakDetayi = $("[id='inboxItemInfoForm']");
+
+    SelenideElement txtEklenenBirim = $("div[id^='mainPreviewForm:dagitimBilgileriBirimLov:LovSecilenTable:0:j_idt']");
+    SelenideElement txtIcerikEklenenBirim = $("div[id^='inboxItemInfoForm:dagitimBilgileriBirimLov:LovSecilenTable:0:j_idt']");
+    SelenideElement txtIcerikEklenenKisi = $("div[id^='inboxItemInfoForm:dagitimBilgileriKullaniciLov:LovSecilenTable:0:j_idt']");
+    SelenideElement txtEklenenKisi = $("div[id^='mainPreviewForm:dagitimBilgileriKullaniciLov:LovSecilenTable:0:j_idt']");
+    SelenideElement txtIcerikOnaylayanKisi = $("div[id^='inboxItemInfoForm:onaylayacakKisiLov:j_idt'][class='lovItemTitle']");
+    SelenideElement txtOnaylayanKisi = $("div[id^='mainPreviewForm:onaylayacakKisiLov:LovSecilen']");
     @Step("Kaydedilen gelen evraklar sayfası aç")
     public KaydedilenGelenEvraklarPage openPage() {
         solMenu(SolMenuData.BirimEvraklari.KaydedilenGelenEvraklar);
@@ -234,7 +243,14 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
 
     @Step("Onizleme Evrak Havale Yap Butonu Tıklandı")
     public KaydedilenGelenEvraklarPage onizlemeHavaleYap() {
-        onizlemeHavaleYap.click();
+        btnOnizlemeHavaleYap.click();
+        return this;
+    }
+
+    @Step("Onizleme Evrak Havale Yap Butonu Tıklandı")
+    public KaydedilenGelenEvraklarPage onizlemeHavaleButtonKontrol() {
+        Assert.assertEquals(btnOnizlemeHavaleYap.isDisplayed(),true,"Evrak Havale Yap butonu bulunmaktadır");
+        Allure.addAttachment("Evrak Havale Yap butonu bulunmaktadır","");
         return this;
     }
 
@@ -264,6 +280,51 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
         cmbHavaleIslemleriBirim.selectLov(birim,details);
         return this;
     }
+
+    @Step("Havale İşlemleri Birim alanında eklenen \"{birim}\" kontrolü")
+    public KaydedilenGelenEvraklarPage eklenenBirimKontrolu(String birim) {
+        Assert.assertEquals(txtEklenenBirim.isDisplayed(),true,"Birim Eklendi");
+        Allure.addAttachment("Birim Eklendi:" , birim);
+        return this;
+    }
+
+
+    @Step("Havale İşlemleri Birim alanında eklenen \"{birim}\" kontrolü")
+    public KaydedilenGelenEvraklarPage eklenenIcerikBirimKontrolu(String birim) {
+        Assert.assertEquals(txtIcerikEklenenBirim.isDisplayed(),true,"Birim Eklendi");
+        Allure.addAttachment("Birim Eklendi:" , birim);
+        return this;
+    }
+
+
+    @Step("Havale İşlemleri Kisi alanında eklenen \"{kisi}\" kontrolü")
+    public KaydedilenGelenEvraklarPage eklenenKisiKontrolu(String kisi) {
+        Assert.assertEquals(txtEklenenKisi.isDisplayed(),true,"Kisi Eklendi");
+        Allure.addAttachment("Kisi Eklendi:" , kisi);
+        return this;
+    }
+
+    @Step("Havale İşlemleri Kisi alanında eklenen \"{kisi}\" kontrolü")
+    public KaydedilenGelenEvraklarPage eklenenIcerikKisiKontrolu(String kisi) {
+        Assert.assertEquals(txtIcerikEklenenKisi.isDisplayed(),true,"Kisi Eklendi");
+        Allure.addAttachment("Kisi Eklendi:" , kisi);
+        return this;
+    }
+
+    @Step("Havale İşlemleri Onaylayan alanında eklenen \"{kisi}\" kontrolü")
+    public KaydedilenGelenEvraklarPage eklenenIcerikOnaylayanKontrolu(String kisi) {
+        Assert.assertEquals(txtIcerikOnaylayanKisi.isDisplayed(),true,"Onaylayan Kisi Eklendi");
+        Allure.addAttachment("Onaylayan Kisi Eklendi:" , kisi);
+        return this;
+    }
+
+    @Step("Havale İşlemleri Onaylayan alanında eklenen \"{kisi}\" kontrolü")
+    public KaydedilenGelenEvraklarPage eklenenOnaylayanKontrolu(String kisi) {
+        Assert.assertEquals(txtOnaylayanKisi.isDisplayed(),true,"Onaylayan Kisi Eklendi");
+        Allure.addAttachment("Onaylayan Kisi Eklendi:" , kisi);
+        return this;
+    }
+
 
     @Step("Dağıtım Bilgileri Birim alanında \"{birim}\" seçilir")
     public KaydedilenGelenEvraklarPage icerikDagitimBilgileriBirimDoldurWithDetails(String birim, String details) {
@@ -326,6 +387,16 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
                 .click();
         return this;
     }
+
+    @Step("Evrak listede gözükmemektedir : \"{evrakNo}\" ")
+    public KaydedilenGelenEvraklarPage tabloEvrakNoileEvrakGelmediKontrolu(String evrakNo) {
+        boolean durum = tblEvraklar.filterBy(Condition.text(evrakNo)).size()==0;
+        Assert.assertEquals(durum,true,"Evrak Listelenmemektedir");
+        Allure.addAttachment("Evrak Listelenmemektedir", evrakNo);
+        return this;
+    }
+
+
 
     @Step("Havale İşlemleri Alanındaki Kontroller")
     public KaydedilenGelenEvraklarPage havaleAlanKontrolleri() {
@@ -535,5 +606,19 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
         clickJs(basariliPopUpKapat);
 
         return evrakNo;
+    }
+
+    @Step("Havale Etme ekranı açılır\n")
+    public KaydedilenGelenEvraklarPage ekranKontrol() {
+        Assert.assertEquals(tabHavale.isDisplayed(),true,"Havale Etme sayfası");
+        Allure.addAttachment("Havale Etme sayfası","açılmaktadır");
+        return this;
+    }
+
+    @Step("Ekran Detay ekranı açılır\n")
+    public KaydedilenGelenEvraklarPage ekranKontrolEvrakDetayi() {
+        Assert.assertEquals(tabEvrakDetayi.isDisplayed(),true,"Evrak Detay sayfası");
+        Allure.addAttachment("Evrak Detay sayfası","açılmaktadır");
+        return this;
     }
 }

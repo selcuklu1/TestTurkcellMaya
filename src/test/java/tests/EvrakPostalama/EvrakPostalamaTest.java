@@ -941,20 +941,30 @@ public class EvrakPostalamaTest extends BaseTest {
 
         postalananEvrakRaporuPage.cmbpostaSeklisecimi("İç Giden")
                 .postaSorgulama();
+        postalananEvrakRaporuPage.sorgulamasonucKontrol("İç Giden");
         postalananEvrakRaporuPage.cmbpostaSeklisecimi("Dış Giden")
                 .postaSorgulama();
+        postalananEvrakRaporuPage.sorgulamasonucKontrol("Dış Giden");
+
         postalananEvrakRaporuPage.cmbpostaSeklisecimi("Seçiniz");
         postalananEvrakRaporuPage.cmbPostaTipisec("Adi Posta")
                 .postaSorgulama();
+        postalananEvrakRaporuPage.sorgulamasonucKontrol("Adi Posta");
+
         postalananEvrakRaporuPage.cmbPostaTipisec("Seçiniz");
         postalananEvrakRaporuPage.txtPostaAciklama("TS")
                 .postaSorgulama();
+        postalananEvrakRaporuPage.sorgulamasonucKontrol("TS");
+
         postalananEvrakRaporuPage.clearPostaAciklamaAlani();
         postalananEvrakRaporuPage.cmbPostalayanadi("Zübeyde TEKİN")
                 .postaSorgulama();
+        postalananEvrakRaporuPage.sorgulamasonucKontrol("Zübeyde TEKİN");
+
         postalananEvrakRaporuPage.cmbClearPostalayanAdi();
         postalananEvrakRaporuPage.chkboxPostaladiklarim()
                 .postaSorgulama();
+        postalananEvrakRaporuPage.sorgulamasonucKontrol("Postaladiklarim");
 
 
         postalananEvrakRaporuPage
