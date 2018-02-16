@@ -682,14 +682,18 @@ public class KurumYonetimiPage extends MainPage {
         chkTsk.shouldBe(Condition.visible);
         chkKaysisteYerAlmiyor.shouldBe(Condition.visible);
         divKepAdresiBilgileri.shouldBe(Condition.visible);
+        chkOzelHitap.shouldBe(Condition.visible);
 
         Allure.addAttachment("Kurum Ekleme ekranında kontrol.", "Kep Adresi Kullanıyor \n" +
                 "Kaysiste yer almıyor\n" +
                 "Kısa Adı\n" +
                 "Paket Kullanım\n" +
                 "TSK\n" +
+                "Özel Hitap\n" +
                 "KEP adresi bilgileri alanlarının geldiği görülür."
         );
+
+        takeScreenshot();
 
         return this;
     }
