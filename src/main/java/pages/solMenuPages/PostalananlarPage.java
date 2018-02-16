@@ -310,6 +310,9 @@ public class PostalananlarPage extends MainPage {
         ickKtrl.sendKeys(Keys.CONTROL, "a");
         Thread.sleep(500);
         ickKtrl.sendKeys(Keys.CONTROL, "c");
+        ickKtrl.sendKeys(Keys.CONTROL, "a");
+        ickKtrl.sendKeys(Keys.CONTROL, "c");
+
         String result = "";
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
         Transferable contents = clipboard.getContents(null);

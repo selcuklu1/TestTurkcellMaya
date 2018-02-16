@@ -633,6 +633,8 @@ takeScreenshot();
         pdftab.sendKeys(Keys.CONTROL, "a");
         Thread.sleep(500);
         pdftab.sendKeys(Keys.CONTROL, "c");
+        pdftab.sendKeys(Keys.CONTROL, "a");
+        pdftab.sendKeys(Keys.CONTROL, "c");
 
         //pdftab.sendKeys(Keys.CONTROL, "V");
         sleep(1000);
