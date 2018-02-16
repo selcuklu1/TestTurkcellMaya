@@ -112,6 +112,11 @@ public class KullaniciEvrakDevretPage extends MainPage {
         txtAciklama.setValue(aciklama);
         return this;
     }
+    @Step("Açıklama alanı temizlenir.")
+    public KullaniciEvrakDevretPage aciklamaTemizle() {
+        txtAciklama.clear();
+        return this;
+    }
 
     @Step("Devret butonuna tıkla")
     public KullaniciEvrakDevretPage devret() {
@@ -258,6 +263,8 @@ public class KullaniciEvrakDevretPage extends MainPage {
         Allure.addAttachment($(By.xpath("//label[normalize-space(text())='Açıklama']")).text(), "Ekran Kontrolü ok");
         Allure.addAttachment(btnDevretTamam.text(), "Ekran Kontrolü ok");
         Allure.addAttachment(btnDevretIptal.text(), "Ekran Kontrolü ok");
+
+        takeScreenshot();
 
         return this;
     }
