@@ -119,4 +119,12 @@ public class BirimYonetimiTest extends BaseTest {
                 .bilgiAlanindaBiriminGeldigiSecilemedigiKontrolu(birimAdi, "Birim Adı")
                 .bilgiAlanindaBiriminGeldigiSecilemedigiKontrolu(idariBirimKimlikKodu, "İdari Birim Kodu ");
     }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS2336: Birimin olur metnini güncelleme")
+    public void TS2336() {
+
+        String birimAdi = "TS2336 Birim";
+
+    }
 }
