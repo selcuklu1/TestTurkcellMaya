@@ -305,9 +305,12 @@ public class PostalananlarPage extends MainPage {
         ickKtrl.sendKeys(Keys.PAGE_DOWN);
         ickKtrl.sendKeys(Keys.PAGE_DOWN);
         takeScreenshot();
+        ickKtrl.sendKeys(Keys.SPACE);
+
         ickKtrl.sendKeys(Keys.CONTROL, "a");
         Thread.sleep(500);
-        ickKtrl.sendKeys(Keys.SPACE);
+        ickKtrl.sendKeys(Keys.CONTROL, "c");
+        ickKtrl.sendKeys(Keys.CONTROL, "a");
         ickKtrl.sendKeys(Keys.CONTROL, "c");
 
         String result = "";

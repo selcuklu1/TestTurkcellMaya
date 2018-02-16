@@ -1,5 +1,6 @@
 package pages.pageComponents;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
@@ -8,6 +9,7 @@ import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
+import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
@@ -16,12 +18,18 @@ public class TopluEvrakOnizleme extends MainPage {
     SelenideElement txtBirim = $("[id='mainPreviewForm:dagitimBilgileriBirimLov:LovText']");
 //    SelenideElement txtKisi = $("[id='mainPreviewForm:dagitimBilgileriKullaniciLov:LovText']");
     SelenideElement txtAciklama = $("[id='mainPreviewForm:havaleAciklama']");
-    SelenideElement btnDosyaEkle = $("[id='mainPreviewForm:fileUploadHavaleEk_input']");
+    SelenideElement btnDosyaEkle = $("[id='mainPreviewForm:fileUploadHavaleEk']");
     SelenideElement txtKullaniciListesi = $("[id='mainPreviewForm:dagitimBilgileriKisiListesiLov:LovText']");
     SelenideElement txtOnaylayacakKisi = $("[id='mainPreviewForm:onaylayacakKisiLov:LovText']");
     BelgenetElement txtKisi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKullaniciLov:LovText"));
     SelenideElement txtEklenenKisi = $("div[id^='mainPreviewForm:dagitimBilgileriKullaniciLov:LovSecilenTable:0:j_idt']");
     SelenideElement btnGonder = $("[class$='havaleGonderButonClass']");
+    BelgenetElement txtHavaleIslemleriKisiListesi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKisiListesiLov:LovText"));
+    SelenideElement txtHavaleIslemleriKisiListesiKontrol = $("[id='mainPreviewForm:dagitimBilgileriKisiListesiLov:LovSecilenTable:0:selectOneMenu']");
+
+    SelenideElement txtEklenenKisiListesiOpsiyon = $("[id='mainPreviewForm:dagitimBilgileriKisiListesiLov:LovSecilenTable:0:selectOneMenu']");
+    SelenideElement dosyaPath = $(By.xpath("//input[@id='mainPreviewForm:fileUploadHavaleEk_input']"));
+    SelenideElement btnkullaniciGrupDetayEvet = $("[id='mainPreviewForm:kendinedeGonderilsinViewDialogYes']");
 
 
     @Step("Toplu Havale Etme ekranı açılır\n")
@@ -86,6 +94,60 @@ public class TopluEvrakOnizleme extends MainPage {
     @Step("Gönder Butonu Tıklandı")
     public TopluEvrakOnizleme gonder() {
         btnGonder.click();
+        return this;
+    }
+
+
+    @Step("Havale İşlemleri Kişi Listesi alanında \"{kisiliste}\" seç")
+    public TopluEvrakOnizleme havaleKisiListesi(String kisiliste) {
+        txtHavaleIslemleriKisiListesi.selectLov(kisiliste);
+        return this;
+    }
+
+    @Step("Kullanıcı Listesinde login olunan kullanıcının bulunması durumunda Evet ile Onaylama")
+    public TopluEvrakOnizleme kullaniciGrupDetayEvet() {
+        btnkullaniciGrupDetayEvet.click();
+        return this;
+    }
+
+    @Step("Havale İşlemleri Kişi Listesi Kontrol \"{kisiliste}\" seç")
+    public TopluEvrakOnizleme havaleKisiListesiKontrolu(String kisiliste) {
+        Assert.assertEquals(txtHavaleIslemleriKisiListesiKontrol.isDisplayed(),true,"Kisi Listesi Eklendi");
+        Allure.addAttachment("Kisi Listesi Eklendi" , "");
+        return this;
+    }
+
+    @Step("Havale İşlemleri Kişi alanında eklenen \"{opsiyon}\" kontrolü")
+    public TopluEvrakOnizleme eklenenKisiListesiOpsiyonKontrolu(String opsiyon) {
+        Assert.assertEquals(txtEklenenKisiListesiOpsiyon.getSelectedOption().text().equals(opsiyon),true,"Opsiyon Seçildi");
+        Allure.addAttachment("Opsiyon Seçildi:" , opsiyon);
+        return this;
+    }
+    @Step("Açıklama alanına \"{konu}\" girilir")
+    public TopluEvrakOnizleme aciklamaDoldur(String konu) {
+        txtAciklama.setValue(konu);
+        return this;
+    }
+
+    @Step("Havale İşlemleminde Dosya Ekle")
+    public TopluEvrakOnizleme dosyaEkle() {
+        btnDosyaEkle.click();
+        return this;
+    }
+
+    @Step("Evrak Ekleri Dosya Ekleme : \"{pathToFile}\" ")
+    public TopluEvrakOnizleme havaleDosyaEkle(String pathToFile) throws InterruptedException {
+        uploadFile(dosyaPath, pathToFile);
+        Thread.sleep(4000);
+//        WebDriverRunner.getWebDriver()
+//                .findElement(dosyaPath)
+//                .sendKeys(pathToFile);
+        return this;
+    }
+
+    @Step("Havale dosya ekleme adi kontrol : \"{dosyaAdi}\" ")
+    public TopluEvrakOnizleme havaleDosyaEkleDosyaAdiKontrol(String dosyaAdi) {
+        $(byText(dosyaAdi)).shouldBe(Condition.visible);
         return this;
     }
 

@@ -96,27 +96,13 @@ public class HavaleEttiklerimdenTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TS2305: Havale onayına sunma işleminin sistem loglarından kontrolü")
-    public void TS2305() {
+    @Test(enabled = true, description = "TS2312: Onaya sunulan havalenin onaylanması")
+    public void TS2312() {
 
         TS2302();
 
-        havaleEttiklerimPage
-                .openPage()
-                .evrakNoIleEvrakIcerikGoster(konuKoduRandomTS2302)
-                .havaleYap()
-                .icerikGosterHavaleYapKullaniciListesiDoldur("TS1590")
-                .icerikGosterHavaleyapKullaniciListesiGeregiIcınBilgiIcinDegistir()
-                .icerikGosterHavaleYapOnaylayacakKisiDoldur(kisi,birim2)
-                .icerikGosterHavaleYapHavaleOnayinaGonder()
-                .islemMesaji().basariliOlmali(basariMesaji);
 
-        havaleEttiklerimPage
-                .openPage()
-                .evrakNoIleEvrakSec(konuKoduRandomTS2302)
-                .evrakGecmisiSec()
-                .evrakGecmisiKisiVeMesajKontrol("Evrak onaya sunuldu",kisi2)
-                .evrakGecmisiKisiVeMesajKontrol("Evrak havale onayı bekliyor",kisi);
 
+        
     }
 }

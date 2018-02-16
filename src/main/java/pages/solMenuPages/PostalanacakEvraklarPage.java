@@ -629,10 +629,11 @@ takeScreenshot();
         String bckColr = pdftab.getCssValue("color");
 
         System.out.println(bckColr);
-
+        pdftab.sendKeys(Keys.SPACE);
         pdftab.sendKeys(Keys.CONTROL, "a");
         Thread.sleep(500);
-        pdftab.sendKeys(Keys.SPACE);
+        pdftab.sendKeys(Keys.CONTROL, "c");
+        pdftab.sendKeys(Keys.CONTROL, "a");
         pdftab.sendKeys(Keys.CONTROL, "c");
 
         //pdftab.sendKeys(Keys.CONTROL, "V");
