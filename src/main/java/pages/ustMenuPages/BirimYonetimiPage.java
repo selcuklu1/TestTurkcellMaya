@@ -15,6 +15,7 @@ import pages.pageData.UstMenuData;
 
 import java.util.Random;
 
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
@@ -63,7 +64,8 @@ public class BirimYonetimiPage extends MainPage {
     SelenideElement txtSagUstLogoGenislik = $(By.xpath("//label[normalize-space(text())='Sağ Üst Logo Genişlik']"));
 
     BelgenetElement txtBirim = comboLov("[id$='birimLov:LovText']");
-    SelenideElement btnTableDuzenle = $(By.id("birimYonetimiListingForm:birimTreeTable:0:updateBirimButton"));
+    SelenideElement btnAktiflerIlkGuncelle = $(By.id("birimYonetimiListingForm:birimTreeTable:0:updateBirimButton"));
+    SelenideElement btnPasiflerIlkGuncelle = $(By.id("birimYonetimiListingForm:pasifBirimlerDataTable:0:updateBirimButton"));
     SelenideElement btnYeniKepAdresBilgileriEkle = $(By.id("birimYonetimiEditorForm:kepBilgileriDataTable:addNewKepAdresiButton"));
 
     SelenideElement txtPopupKepAdresi = $(By.id("kepAdresBilgiEditorForm:kepAdresiInputTextId"));
@@ -75,6 +77,11 @@ public class BirimYonetimiPage extends MainPage {
     BelgenetElement cmbKepPostaBirimi = comboLov(By.id("birimYonetimiEditorForm:kepPostaBirimiLov:LovText"));
     SelenideElement txtAntentBilgisi = $(By.id("birimYonetimiEditorForm:antetBilgisiInput"));
     ElementsCollection tblBirimYonetimiListesi = $$("[id='birimYonetimiListingForm:birimTreeTable'] > table > tbody > tr");// span[class='ui-chkbox-icon']");
+    SelenideElement btnPasifYap = $("[id$='updateBirimStatusButton'] [class$='to-passive-status-icon']");
+    SelenideElement btnAktifYap = $("[id$='updateBirimStatusButton'] [class$='to-active-status-icon']");
+    SelenideElement chkDisBirimBos = $("[id='birimYonetimiEditorForm:disBirimCheckbox'] [class$='ui-state-default']");
+    SelenideElement chkDisBirimDolu = $("[id='birimYonetimiEditorForm:disBirimCheckbox'] [class$='ui-state-disabled']");
+    SelenideElement filtreSorgulamaPanel = $("[id='birimYonetimiFilterForm'] [id='birimYonetimiFilterForm:accordionPanel']");
 
 
     // Hüseyin TÜMER
@@ -127,9 +134,15 @@ public class BirimYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("İlk birimin güncelle butonu tıklanır")
-    public BirimYonetimiPage ilkBirimGuncelle() {
-        btnTableDuzenle.click();
+    @Step("Aktiflerde ilk birimin güncelle butonu tıklanır")
+    public BirimYonetimiPage aktiflerIlkBirimGuncelle() {
+        btnAktiflerIlkGuncelle.click();
+        return this;
+    }
+
+    @Step("Pasiflerde ilk birimin güncelle butonu tıklanır")
+    public BirimYonetimiPage pasiflerIlkBirimGuncelle() {
+        btnPasiflerIlkGuncelle.click();
         return this;
     }
 
@@ -507,4 +520,48 @@ public class BirimYonetimiPage extends MainPage {
 
         return this;
     }
+
+    @Step("Pasif yap butonunun aktif olarak geldiği kontrolu")
+    public BirimYonetimiPage pasifYapButonuKontrolu() {
+
+        Assert.assertEquals( btnPasifYap.isDisplayed(), true, "Pasif Yap kontrolu");
+        Allure.addAttachment("Pasif Yap butonu kontrolu başarılı", "");
+
+        return this;
+    }
+
+    @Step("Aktif yap butonunun aktif olarak geldiği")
+    public BirimYonetimiPage aktifYapButonuKontrolu() {
+
+        Assert.assertEquals( btnAktifYap.isDisplayed(), true, "Aktif Yap kontrolu");
+        Allure.addAttachment("Pasif Yap butonu kontrolu başarılı", "");
+
+        return this;
+    }
+
+    @Step("Dış birim check boxının boş olduğu kontrolu")
+    public BirimYonetimiPage disBirimChkBoxBosOlduguKontrolu() {
+
+        Assert.assertEquals( chkDisBirimBos.isDisplayed(), true, "Dış birim check boxının boş olduğu kontrolu");
+        Allure.addAttachment("Dış birim check boxının boş olduğu kontrolu", "");
+
+        return this;
+    }
+
+    @Step(" Dış birim check boxının işaretli olduğu kontrolu")
+    public BirimYonetimiPage disBirimChkBoxDoluOlduguKontrolu() {
+
+        Assert.assertEquals( chkDisBirimDolu.isDisplayed(), true, "Dış birim check boxının işaretli olduğu kontrolu");
+        Allure.addAttachment("Dış birim check boxının işaretli olduğu kontrolu", "");
+
+        return this;
+    }
+
+    @Step("Filtre sorgulama paneli aç")
+    public BirimYonetimiPage filtreSorgulamaPaneliAc() {
+
+        filtreSorgulamaPanel.shouldBe(visible).click();
+        return this;
+    }
+
 }
