@@ -253,9 +253,6 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .eklenenIcerikKisiKontrolu(kisi)
                 .icerikDagitimBilgileriOnaylayanWithDetails(onaylayacakKisi, onayKisiDetails)
                 .eklenenIcerikOnaylayanKontrolu(onaylayacakKisi)
-//                .icerikDagitimBilgileriOnaylayanWithDetails(onaylayacakKisi, onayKisiDetails)
-//                .icerikHavaleIslemleriKisiDoldur(kisi)
-//                .icerikDagitimBilgileriBirimDoldurWithDetails(birim, details)
                 .kaydet()
                 .evrakDetayiKaydetPopUpClose()
                 //TODO : 6. test adımından sonra yeni bir adım eklenmeli. Aksi takdirde havaleOnayınaGelenlerPage sayfasına ulaşmaz.
@@ -391,6 +388,124 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
         birimHavaleEdilenlerPage
                 .openPage()
                 .sayfaKontrol(sayfa2)
+                .evrakNoIleTabloKontrolu(konu1)
+                .evrakNoIleTabloKontrolu(konu2);
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, priority = 0, description = "TS1585: Toplu evrak havale - kullanıcı listesine")
+    public void TS1585() throws InterruptedException {
+        String testid= "TS-1585";
+        String konu1 = "TS-1585-" + getSysDate();
+        String sayfa1 = "Kaydedilen Gelen Evraklar";
+        String sayfa2 = "Birim Havale Edilenler";
+        String kullanici = "TS2994";
+        String kullaniciDetails = "Ts2994";
+        String gerek = "GEREĞİ İÇİN GÖNDER";
+        String pathToFileText = getUploadPath() + "test.txt";
+        String fileName ="test.txt";
+
+        testStatus(testid,"PreCondition 1. Evrak Oluşturma");
+        gelenEvrakKayitPage
+                .openPage()
+                .konuKoduDoldur(konuKodu)
+                .konuDoldur(konu1)
+                .evrakTuruSec(evrakTuru)
+                .evrakDiliSec(evrakDili)
+                .evrakTarihiDoldur(evrakTarihi)
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .kisiKurumSec(kisiKurum)
+                .geldigiKurumDoldurLovText(geldigiKurum)
+                .evrakSayiSagDoldur()
+                .evrakGelisTipiSec(evrakGelisTipi)
+                .ivedilikSec(ivedilik)
+                .kaydet()
+                .popUpsv2();
+
+//        kaydedilenGelenEvraklarPage
+//                .openPage()
+//                .evrakNoIleEvrakSec(konu1)
+//                .tabloEvrakNoileIcerikSec(konu1)
+//                .icerikHavaleYap()
+//                .icerikHavaleIslemleriKisiDoldur(onaylayacakKisi,onayKisiDetails)
+//                .icerikHavaleOnayinaGonder()
+//                .islemMesaji().basariliOlmali();
+//
+//        birimHavaleEdilenlerPage
+//                .openPage()
+//                .evrakNoIleTablodanEvrakSecme(konu1)
+//                .onizlemeHavaleGeriAl()
+//                .onizlemeNotAlanınıDoldur(konu1)
+//                .onizlemeGeriAl()
+//                .islemMesaji().basariliOlmali();
+
+        testStatus(testid,"PreCondition 2. Evrak Oluşturma");
+        String konu2 = "TS-1585-" + getSysDate();
+
+        login(TestData.usernameZTEKIN, TestData.passwordZTEKIN);
+        gelenEvrakKayitPage
+                .openPage()
+                .konuKoduDoldur(konuKodu)
+                .konuDoldur(konu2)
+                .evrakTuruSec(evrakTuru)
+                .evrakDiliSec(evrakDili)
+                .evrakTarihiDoldur(evrakTarihi)
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .kisiKurumSec(kisiKurum)
+                .geldigiKurumDoldurLovText(geldigiKurum)
+                .evrakSayiSagDoldur()
+                .evrakGelisTipiSec(evrakGelisTipi)
+                .ivedilikSec(ivedilik)
+                .kaydet()
+                .popUpsv2();
+
+//        kaydedilenGelenEvraklarPage
+//                .openPage()
+//                .evrakNoIleEvrakSec(konu2)
+//                .tabloEvrakNoileIcerikSec(konu2)
+//                .icerikHavaleYap()
+//                .icerikHavaleIslemleriKisiDoldur(onaylayacakKisi,onayKisiDetails)
+//                .icerikHavaleOnayinaGonder()
+//                .islemMesaji().basariliOlmali();
+//
+//        birimHavaleEdilenlerPage
+//                .openPage()
+//                .evrakNoIleTablodanEvrakSecme(konu2)
+//                .onizlemeHavaleGeriAl()
+//                .onizlemeNotAlanınıDoldur(konu2)
+//                .onizlemeGeriAl()
+//                .islemMesaji().basariliOlmali();
+
+        testStatus(testid,"Test Başladı");
+        kaydedilenGelenEvraklarPage
+                .openPage()
+                .sayfaKontrol(sayfa1)
+                .evraklariSecTopluHavaleYap(konu1, konu2, true);
+                //checkbox ların checked edildigi kontrolu
+
+        topluEvrakOnizleme
+                .ekranKontrol()
+                .havaleAlanKontrolleri()
+                .havaleKisiListesi(kullanici)
+                .kullaniciGrupDetayEvet()
+                .havaleKisiListesiKontrolu(kullanici)
+                .eklenenKisiListesiOpsiyonKontrolu(gerek)
+                .aciklamaDoldur(konu1+" " +konu2)
+                .dosyaEkle()
+                .havaleDosyaEkle(pathToFileText)
+                .havaleDosyaEkleDosyaAdiKontrol(fileName)
+                .gonder()
+                .islemMesaji().basariliOlmali();
+
+        birimHavaleEdilenlerPage
+                .openPage()
+                .sayfaKontrol(sayfa2)
+                .evrakNoIleTabloKontrolu(konu1)
+                .evrakNoIleTabloKontrolu(konu2);
+
+        login(TestData.usernameMBOZDEMIR,TestData.passwordMBOZDEMIR);
+        gelenEvrakKayitPage
+                .openPage()
                 .evrakNoIleTabloKontrolu(konu1)
                 .evrakNoIleTabloKontrolu(konu2);
     }

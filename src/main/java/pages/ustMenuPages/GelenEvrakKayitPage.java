@@ -1629,4 +1629,12 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
+    @Step("Tabloda evrak no kontrolü : \"{evrakNo}\" ")
+    public GelenEvrakKayitPage evrakNoIleTabloKontrolu(String evrakNo) {
+        tblEvraklar
+                .filterBy(Condition.text(evrakNo))
+                .shouldHaveSize(1);
+        return this;
+    }
+
 }

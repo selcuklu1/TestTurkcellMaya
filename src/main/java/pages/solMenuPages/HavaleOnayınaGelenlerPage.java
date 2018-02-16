@@ -162,7 +162,6 @@ public class HavaleOnayınaGelenlerPage extends MainPage {
 
     @Step("Havale İşlemleri Kişi alanında eklenen \"{opsiyon}\" kontrolü")
     public HavaleOnayınaGelenlerPage eklenenBirimOpsiyonKontrolu(String opsiyon) {
-        System.out.println("opsiyon" + txtEklenenBirimOpsiyon.getSelectedOption().text());
         Assert.assertEquals(txtEklenenBirimOpsiyon.getSelectedOption().text().equals(opsiyon),true,"Opsiyon Seçildi");
         Allure.addAttachment("Opsiyon Seçildi:" , opsiyon);
         return this;
