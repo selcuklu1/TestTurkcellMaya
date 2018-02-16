@@ -470,4 +470,11 @@ public class PostalananEvrakRaporuPage extends MainPage {
         }
         return this;
     }
+
+    @Step("Sorgulama parametresine göre sonuç kontrolü \"{kontrol}\" ")
+    public PostalananEvrakRaporuPage sorgulamasonucKontrol (String kontrol) {
+        int resultsize = tblSorgulamaSonuc.size();
+
+        return this;
+    }
 }
