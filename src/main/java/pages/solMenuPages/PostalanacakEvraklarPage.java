@@ -1146,7 +1146,12 @@ takeScreenshot();
         return this;
     }
 
-
+    @Step("Icerik Evrak Postalama içi PAGE DOWN")
+    public PostalanacakEvraklarPage icerikEvPostPageDown () {
+        SelenideElement icerikPage = $x("//*[@id='inboxItemInfoForm:postalamaFieldsPanel']");
+        icerikPage.scrollIntoView(false);
+        return this;
+    }
     @Step("Icerik Etiket Bastir butonu")
     public PostalanacakEvraklarPage btnIcerikEtiketBastir() {
         btnIcerikEtiketBastir.click();

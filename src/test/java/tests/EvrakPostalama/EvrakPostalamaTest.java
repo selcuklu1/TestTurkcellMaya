@@ -1098,8 +1098,8 @@ public class EvrakPostalamaTest extends BaseTest {
                 .txtPopupEtiketAciklama()
                 .btnEtiketpopupkapat();
 
-
         postalanacakEvraklarPage
+                .icerikEvPostPageDown()
                 .btnIcerikEvrakPostalama()
          .btnIcerikPostalamaEvet();
 
