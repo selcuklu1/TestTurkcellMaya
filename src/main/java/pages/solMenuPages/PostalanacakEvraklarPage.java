@@ -110,6 +110,8 @@ public class PostalanacakEvraklarPage extends MainPage {
     SelenideElement btnFizikselEkBulunmaktadirIkon = $x("//span[@class='ui-button-icon-left ui-icon document-typeFizikselEk']");
     SelenideElement txtEvrakinFizikselEkivardir = $x("//*[contains(text(),'Evrakın fiziksel eki vardır, göndermeyi unutmayınız!')]");
     SelenideElement btnIcerikEvrakPostala = $x("//*[@id='inboxItemInfoForm:dialogTabMenuRight:uiRepeat:4:cmdbutton']");
+    SelenideElement ktrlIcerikEvrakPostalaEvSayisi = $x("//*[@id='inboxItemInfoForm:evrakDetayPanelGrid']/tbody/tr[3]/td[3]/label");
+
     //Önizleme
 
     SelenideElement formEvrakOnizleme = $(By.id("mainPreviewForm:evrakOnizlemeTab"));
@@ -694,6 +696,10 @@ takeScreenshot();
         }
         return output;
     }
+    @Step("Icerik Evrak Postala Sayfasindan Evrak Sayisi çekme")
+    public String icEvrakPosEvSay() {
+        return ktrlIcerikEvrakPostalaEvSayisi.getAttribute("outerText");
+    }
     @Step("PDF - Evrak sayısı - Yazışma Kuralları kontrol")
     public PostalanacakEvraklarPage pdfEvrakYazismaKuralkontrol() throws IOException {
         switchTo().window(1);
@@ -1125,7 +1131,7 @@ takeScreenshot();
         return this;
     }
 
-    @Step("Icerik Posta Yazdır popup Yazdir butonu")
+    @Step("Icerik Posta Yazdır popup Yazdir butonu - PDF Geldiği görülür")
     public PostalanacakEvraklarPage btnPopupPostaYazdirma() {
         btnIcerikPopupYazdir.click();
         switchTo().window(1);
@@ -1147,10 +1153,10 @@ takeScreenshot();
         return this;
     }
 
-    @Step("Icerik Etiket popup Aciklama kontrol")
+    @Step("Icerik Etiket popup Aciklama kontrol: Tarih no ve Gönderilen yer")
     public PostalanacakEvraklarPage txtPopupEtiketAciklama() {
         String etiketAciklama = btnIcerikEtiketAciklama.getAttribute("innerText");
-        System.out.println(etiketAciklama);
+        Allure.addAttachment("Etiket Icerik", etiketAciklama);
         return this;
     }
 

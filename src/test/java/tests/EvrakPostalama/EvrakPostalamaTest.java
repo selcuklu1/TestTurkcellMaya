@@ -1086,6 +1086,7 @@ public class EvrakPostalamaTest extends BaseTest {
         postalanacakEvraklarPage
                 .inputIcerikPstakod("0310")
                 .inputIcerikPostaAciklama("TS0310 Aciklama");
+        String evsayisi = postalanacakEvraklarPage.icEvrakPosEvSay();
         postalanacakEvraklarPage
                 .btnIcerikPostaYazdir();
         postalanacakEvraklarPage
@@ -1104,12 +1105,15 @@ public class EvrakPostalamaTest extends BaseTest {
 
         postalanacakEvraklarPage.islemMesaji().isBasarili();
 
-        postalananlarPage.openPage();
-        postalananlarPage.filter().findRowsWith(text(konu1685)).first().click();
-        postalananlarPage.postaDetayiTikla();
-        postalananlarPage.evSay();
-        postalananlarPage.evrakYazdir();
-        postalananlarPage.etiketBastir();
+        postalananlarPage.openPage()
+                .tabloEvrakGeldigiGorme();
+        postalananlarPage.filtretablodankonuileEvrakSeç(konu1685)
+        .postaDetayiTikla();
+        postalananlarPage.evSayisiKontrol(evsayisi);
+        postalananlarPage.evrakYazdir()
+                .popupEvrakyazpdfackapat();
+        postalananlarPage.etiketBastir()
+                .etiketIcerikText();
         postalananlarPage.btnPopupEtiketBastirKapat();
 
 
