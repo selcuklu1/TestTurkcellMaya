@@ -997,7 +997,7 @@ public class EvrakPostalamaTest extends BaseTest {
         String kurum = "Başbakanlık";
         String fizikselEkMetni = "TS1685 Ek metni";
         String basariMesaji = "İşlem başarılıdır!";
-        String dagitimSatiriMesaj = "KEP posta birimine gönderildi.";
+
         String fizikselEkMesaji = "Evrakın fiziksel eki vardır, göndermeyi unutmayınız!";
 
         evrakOlusturPage
@@ -1018,7 +1018,7 @@ public class EvrakPostalamaTest extends BaseTest {
                 .geregiSecimTipiSec("Kurum")
                 .geregiDoldur("Başbakanlık", "Kurum Adı")
                 //.geregiKurumPostaTipi("APS")
-                .kurumGeregiAlaniKurumPostaTipiKontrol(kurum, "KEP")
+                .kurumGeregiAlaniKurumPostaTipiKontrol(kurum, "Evrak Servisi Elden")
                 .onayAkisiKullanicilariTemizle()
                 .onayAkisiEkle()
                 .onayAkisiKullaniciTipiSec("Mehmet BOZDEMİR", "İmzalama")
