@@ -189,7 +189,7 @@ public class KurumYonetimiTest extends BaseTest {
 
         String yeniKurumAdi = "Yenikurum" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
         String idariBirimKimlikKodu = (new Random().nextInt((900000 - 100000) + 1) + 100000) + "";
-        String yeniKurumKisaAdi = "KISA"+ yeniKurumAdi;
+        String yeniKurumKisaAdi = "KISA" + yeniKurumAdi;
         String ustKurum = "Maliye Bakanlığı";
         String hitap = "Hitap" + yeniKurumAdi;
 
@@ -489,7 +489,7 @@ public class KurumYonetimiTest extends BaseTest {
         String ePostaYanlisFormat = "TS2245turksat.com.tr";
         String kepAdresiYanlisFormat = "TS2245turksat.com.tr";
 
-       login(TestData.usernameOPTIIM, TestData.passwordOPTIIM);
+        login(TestData.usernameOPTIIM, TestData.passwordOPTIIM);
 
         kurumYonetimiPage
                 .openPage()

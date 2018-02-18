@@ -51,6 +51,9 @@ public class EvrakNotTest extends BaseTest {
     String notTipi5 = "Genel", aciklama5 = "Açıklama5";
     String date1 = "", date2 = "", date3 = "", date4 = "", date5 = "";
     String time1 = "", time2 = "", time3 = "", time4 = "", time5 = "";
+    SearchTable searchTable;
+    UstYazi.EvrakNot ustYazi;
+    EditorTab.EvrakNot evrakNot;
 
     private String createTextWith(int length) {
         String text = "";
@@ -308,11 +311,6 @@ public class EvrakNotTest extends BaseTest {
         imzaBekleyenlerPage2();
     }
 
-
-    SearchTable searchTable;
-    UstYazi.EvrakNot ustYazi;
-    EditorTab.EvrakNot evrakNot;
-
     //region Parafladiklarim
     @Step("Evrak Detay")
     private void parafladiklarimIcerikNotlari() {
@@ -340,6 +338,7 @@ public class EvrakNotTest extends BaseTest {
         evrakNot.notuBul(text(optiim.getFullname()), text(optiim.getGorev()), text(aciklama3), text(date3), text(time3)).postitStyle().getNoteSilButton().shouldBe(visible);
         evrakNot.notuBul(text(optiim.getFullname()), text(optiim.getGorev()), text(aciklama4), text(date4), text(time4)).postitStyle().getNoteSilButton().shouldBe(visible);*/
     }
+
     @Step("Onzileme Notları Sekmesi")
     private void parafladiklarimEvrakNotlariTab() {
         ustYazi = new UstYazi().evrakNotlariTabiAc();
@@ -357,6 +356,7 @@ public class EvrakNotTest extends BaseTest {
         ustYazi.getNoteSilButton("bulunmalı").shouldBe(visible);
         takeScreenshot();
     }
+
     @Step("Evrak Önizleme")
     private void parafladiklarimOnizlemeNotlari() {
         new EvrakOnizleme().getEvrakNotlari()
@@ -375,6 +375,7 @@ public class EvrakNotTest extends BaseTest {
                 .evrakNotlariDialoguKapat();
         takeScreenshot();
     }
+
     @Step("Parafladıklarım")
     private void parafladiklarimPage() {
         searchTable = new ParafladiklarimPage().openPage().searchTable();
@@ -398,6 +399,7 @@ public class EvrakNotTest extends BaseTest {
         time5 = getTimeFromText(evrakNot.getNote().text());
         takeScreenshot();
     }
+
     @Step("Onzileme Notları Sekmesi")
     private void imzaBekleyenlerEvrakNotlariTab() {
         ustYazi = new UstYazi().evrakNotlariTabiAc();
@@ -410,6 +412,7 @@ public class EvrakNotTest extends BaseTest {
         silButtonBulmamamli(ustYazi);
         takeScreenshot();
     }
+
     @Step("Evrak Önizleme")
     private void imzaBekleyenlerOnizlemeNotlari() {
         new EvrakOnizleme().new EvrakNotlari()
@@ -422,6 +425,7 @@ public class EvrakNotTest extends BaseTest {
                 .evrakNotlariDialoguKapat();
         takeScreenshot();
     }
+
     @Step("İmza Bekleyenler")
     private void imzaBekleyenlerPage() {
         ImzaBekleyenlerPage imzaBekleyenlerPage = new ImzaBekleyenlerPage().openPage();
@@ -448,6 +452,7 @@ public class EvrakNotTest extends BaseTest {
         ustYazi.notuBul(text(user1.getFullname()), text(user1.getGorev()), text(notTipi3), text(aciklama3), text(date3), text(time3));
         takeScreenshot();
     }
+
     @Step("Onzileme Notları Sekmesi")
     private void parafBekleyenlerEvrakNotlariTab() {
         ustYazi = new UstYazi().evrakNotlariTabiAc();
@@ -469,6 +474,7 @@ public class EvrakNotTest extends BaseTest {
         silButtonBulmamamli(ustYazi);
         takeScreenshot();
     }
+
     @Step("Evrak Önizleme")
     private void parafBekleyenlerOnizlemeNotlari() {
         new EvrakOnizleme().new EvrakNotlari()
@@ -490,6 +496,7 @@ public class EvrakNotTest extends BaseTest {
                 .evrakNotlariDialoguKapat();
         takeScreenshot();
     }
+
     @Step("Paraf Bekleyenler")
     private void parafBekleyenlerPage() {
         ParafBekleyenlerPage parafBekleyenlerPage = new ParafBekleyenlerPage().openPage();
@@ -515,6 +522,7 @@ public class EvrakNotTest extends BaseTest {
                 .evrakNotlariDialoguKapat();
         takeScreenshot();
     }
+
     @Step("İmza Bekleyenler")
     private void imzaBekleyenlerPage2() {
         ImzaBekleyenlerPage imzaBekleyenlerPage = new ImzaBekleyenlerPage().openPage();

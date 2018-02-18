@@ -27,7 +27,7 @@ public class BakimaAlTest extends BaseTest {
 
         String pasifKullanici = "PASIF KULLANICI";
 
-        for(int i = 0; i < 500; i ++){
+        for (int i = 0; i < 500; i++) {
             girilecekBilgilendirmeMetni += "x";
         }
 

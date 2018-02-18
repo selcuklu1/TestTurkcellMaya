@@ -42,25 +42,25 @@ public class HavaleEttiklerimPage extends MainPage {
     }
 
     @Step("{evrakNo} adlı evrakın içerik göster tıklanır")
-    public HavaleEttiklerimPage evrakNoIleEvrakIcerikGoster(String evrakNo){
+    public HavaleEttiklerimPage evrakNoIleEvrakIcerikGoster(String evrakNo) {
         tblEvraklar.filterBy(Condition.text(evrakNo)).first().$("[id$='detayGosterButton']").click();
         return this;
     }
 
     @Step("{evrakNo} adlı evrak tıklanır")
-    public HavaleEttiklerimPage evrakNoIleEvrakSec(String evrakNo){
+    public HavaleEttiklerimPage evrakNoIleEvrakSec(String evrakNo) {
         tblEvraklar.filterBy(Condition.text(evrakNo)).first().click();
         return this;
     }
 
     @Step("Evrak Geçmişi tıklanır")
-    public HavaleEttiklerimPage evrakGecmisiSec(){
+    public HavaleEttiklerimPage evrakGecmisiSec() {
         $$("[id='mainPreviewForm:evrakOnizlemeTab'] ul li").filterBy(Condition.text("Evrak Geçmişi")).first().click();
         return this;
     }
 
     @Step("")
-    public HavaleEttiklerimPage evrakGecmisiKisiVeMesajKontrol(String mesaj, String kisi){
+    public HavaleEttiklerimPage evrakGecmisiKisiVeMesajKontrol(String mesaj, String kisi) {
         $$("[id$='hareketGecmisiDataTable_data'] > tr").filterBy(Condition.text(mesaj))
                 .filterBy(Condition.text(kisi)).first().shouldHave(visible);
         return this;
@@ -146,26 +146,26 @@ public class HavaleEttiklerimPage extends MainPage {
     }
 
     @Step("Kullanıcı Listesi alanını doldur: {kullaniciListesi}")
-    public HavaleEttiklerimPage icerikGosterHavaleYapKullaniciListesiDoldur(String kullaniciListesi){
+    public HavaleEttiklerimPage icerikGosterHavaleYapKullaniciListesiDoldur(String kullaniciListesi) {
         txtIcerikGosterHavaleYapKullaniciListesi.selectLov(kullaniciListesi);
         return this;
     }
 
     @Step("Onaylayacak Kişi alanında {onaylayacakKisi} seçilir")
-    public HavaleEttiklerimPage icerikGosterHavaleYapOnaylayacakKisiDoldur(String onaylayacakKisi, String birim){
+    public HavaleEttiklerimPage icerikGosterHavaleYapOnaylayacakKisiDoldur(String onaylayacakKisi, String birim) {
         txtIcerikGosterHavaleYapOnaylayacakKisi.openTreePanel().closeTreePanel();
-        txtIcerikGosterHavaleYapOnaylayacakKisi.selectLov(onaylayacakKisi,birim);
+        txtIcerikGosterHavaleYapOnaylayacakKisi.selectLov(onaylayacakKisi, birim);
         return this;
     }
 
     @Step("Havale Onayına Gönder")
-    public HavaleEttiklerimPage icerikGosterHavaleYapHavaleOnayinaGonder(){
+    public HavaleEttiklerimPage icerikGosterHavaleYapHavaleOnayinaGonder() {
         $$("[id='inboxItemInfoForm'] button").filterBy(Condition.text("Havale Onayına Gönder")).first().click();
         return this;
     }
-    
+
     @Step("Kullanıcı Listesi alanınında seçileni Gereği ifadesini bilgi için gönder olarak değiştir")
-    public HavaleEttiklerimPage icerikGosterHavaleyapKullaniciListesiGeregiIcınBilgiIcinDegistir(){
+    public HavaleEttiklerimPage icerikGosterHavaleyapKullaniciListesiGeregiIcınBilgiIcinDegistir() {
         $("[id='inboxItemInfoForm:dagitimBilgileriKisiListesiLov:LovSecilenTable_data'] select").selectOption("BİLGİ İÇİN GÖNDER");
         return this;
     }

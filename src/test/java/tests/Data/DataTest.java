@@ -142,7 +142,7 @@ public class DataTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS2322: DATA-Birime iade edilenler listesine evrak düşürme")
     public void TS2322() throws InterruptedException {
-        String testid= "TS-2322";
+        String testid = "TS-2322";
         String basariMesaji = "İşlem başarılıdır!";
         String konuKodu = "120.05";
         String konu = "TS-2322-" + getSysDate();
@@ -160,7 +160,7 @@ public class DataTest extends BaseTest {
         String digerBirim = "Birim Deneme";
         String digerDetails = "YGD";
 
-        testStatus(testid,"PreCondition Evrak Oluşturma");
+        testStatus(testid, "PreCondition Evrak Oluşturma");
         gelenEvrakKayitPage
                 .openPage();
 
@@ -184,7 +184,7 @@ public class DataTest extends BaseTest {
         gelenEvrakKayitPage
                 .islemMesaji().basariliOlmali(basariMesaji);
 
-        testStatus(testid,"Test Başladı");
+        testStatus(testid, "Test Başladı");
         teslimAlinmayiBekleyenlerPage
                 .openPage()
                 .evrakNoIleEvrakSec(konu)

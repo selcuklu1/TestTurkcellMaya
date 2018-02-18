@@ -1,1 +1,1541 @@
-[{"testClass":"Bakima Al Test","test":"TS02108","description":"Bakım Moduna Alma ve alan kontrolleri","methodsDependsOn":[]},{"testClass":"Bakima Al Test","test":"TS02109","description":"Bakım Modundan Çıkar","methodsDependsOn":[]},{"testClass":"Birim İçerik Şablonu","test":"TS1082","description":"Yeni şablon oluştur (Alt birimler görsün)","methodsDependsOn":[]},{"testClass":"Birim İçerik Şablonu","test":"TS1082_kontrol","description":"Şablonu evrak oluşturmada kullan","methodsDependsOn":["TS1082"]},{"testClass":"Birim İçerik Şablonu","test":"TS1084","description":"Alan aktif durum kontrolleri","methodsDependsOn":[]},{"testClass":"Birim İçerik Şablonu","test":"TS1085","description":"Yeni şablon oluştur (Alt birimler görmesin)","methodsDependsOn":[]},{"testClass":"Birim İçerik Şablonu","test":"TS1079","description":"Şablon güncelleme kontrolleri","methodsDependsOn":["TS1085"]},{"testClass":"Birim İçerik Şablonu","test":"TS1085_kontrolAltbirim","description":"Alt Biriminde görünmemeli","methodsDependsOn":["TS1085"]},{"testClass":"Birim İçerik Şablonu","test":"TS1085_kontrol_birim","description":"yaratılan biriminde seçilebilir olmalı ve Olur Yazisi Olustur sayfada görünmemeli","methodsDependsOn":["TS1085"]},{"testClass":"Birim İçerik Şablonu","test":"TS1089","description":"Şablonun Güncellenmesi","methodsDependsOn":["TS1082"]},{"testClass":"Birim İçerik Şablonu","test":"sablonSil","description":"Şablonu sil","methodsDependsOn":["TS1079","TS1085"]},{"testClass":"Birime Iade Edilenlerden Havale Test","test":"TS1587","description":"Birim seçilerek evrak havale etme (detay ekranından)","methodsDependsOn":[]},{"testClass":"Birime Iade Edilenlerden Havale Test","test":"TS1588","description":"Kişi seçilerek evrak havalesini onaya sunma (önizleme ekranından)","methodsDependsOn":[]},{"testClass":"Birime Iade Edilenlerden Havale Test","test":"TS1590","description":"Kullanıcı listesi seçilerek evrak havale etme (listeden)","methodsDependsOn":[]},{"testClass":"Birime Iade Edilenlerden Havale Test","test":"TS463","description":"Birime İade Edilenler listesinden Toplu evrak havale edilmesi","methodsDependsOn":[]},{"testClass":"Dagitim Hitap Guncelleme Test","test":"TS2123","description":"Birim hitabına NE NA eki eklenmesi","methodsDependsOn":[]},{"testClass":"Dağıtım Planı Yönetimi","test":"TS1279","description":"Pasif / Aktif Yapma","methodsDependsOn":[]},{"testClass":"Dağıtım Planı Yönetimi","test":"TS1280","description":"Yeni Kayıt İşlemi","methodsDependsOn":[]},{"testClass":"Dağıtım Planı Yönetimi","test":"TS1476","description":"Adı Alanının Güncellenmesi","methodsDependsOn":[]},{"testClass":"Dağıtım Planı Yönetimi","test":"TS1478","description":"Kopyalama","methodsDependsOn":[]},{"testClass":"Dağıtım Planı Yönetimi","test":"TS2260","description":"Sorgulama ve Filtreleme","methodsDependsOn":[]},{"testClass":"Dağıtım Planı Yönetimi","test":"TS2270","description":"Dağıtım Hitap Düzenleme","methodsDependsOn":[]},{"testClass":"Dağıtım Planı Yönetimi","test":"TS2271","description":"Hitabın oluşturulan evrak üzerinde kontrolü","methodsDependsOn":[]},{"testClass":"Dağıtım Planı Yönetimi","test":"TS2296","description":"Dağıtım Planı Kaydet/Güncelle Ekranı Alan Kontrolleri","methodsDependsOn":[]},{"testClass":"Dağıtım Planı Yönetimi","test":"TS2323","description":"Yeni Dağıtım Planı Kayıt (Ekranlardan Kontrolü)","methodsDependsOn":["TS1280"]},{"testClass":"Dağıtım Planı Yönetimi","test":"TS2324","description":"Kullanıldığı Birim Alanının Güncellenmesi","methodsDependsOn":[]},{"testClass":"Data Test","test":"TS2224","description":"DATA-Teslim alınmayı bekleyenler","methodsDependsOn":[]},{"testClass":"Data Test","test":"TS2234","description":"DATA-İmzala bekleyenler listesine evrak düşürülmesi","methodsDependsOn":[]},{"testClass":"Data Test","test":"TS2322","description":"DATA-Birime iade edilenler listesine evrak düşürme","methodsDependsOn":[]},{"testClass":"Data Test","test":"TS2326","description":"DATA-Postalanacak evraklar listesine evrak düşürme","methodsDependsOn":[]},{"testClass":"Data Test","test":"TS2330","description":"DATA-Kullanıcıya ve Birime evrak havalesi","methodsDependsOn":[]},{"testClass":"Ek Ilgi Test","test":"TS0956","description":"Evrak oluşturmada ilgi ekleme","methodsDependsOn":[]},{"testClass":"Ek Ilgi Test","test":"TS1493","description":"Farklı dağıtım yerlerine (Kişi-Birim) gönderilen eklerin kontrolü","methodsDependsOn":[]},{"testClass":"Ek Ilgi Test","test":"TS2025","description":"Evrak önizlemede Evrak Ek/İlgi/İlişikler tablarında sistemden eklenen evrakların da gösterilmesi (akordeon pdf önizleme)","methodsDependsOn":[]},{"testClass":"Ek Ilgi Test","test":"TS2199","description":"Evrak oluşturmada Ek ekleme (50 MB üzeri dosya ekleme)","methodsDependsOn":[]},{"testClass":"Ek Ilgi Test","test":"TS2346","description":"Evrak oluşturmada ilişkili evrak ekleme","methodsDependsOn":[]},{"testClass":"Ek Ilgi Test","test":"TS2348","description":"Evrak oluşturmada ek iliştirme","methodsDependsOn":[]},{"testClass":"Evrak Devret Test","test":"TS0574","description":"Devredilen evrakların devredilen kullanıcıda kontrol edilmesi","methodsDependsOn":[]},{"testClass":"Evrak Devret Test","test":"TS2178","description":"İlgisi olan İşlem Bekleyen Cevap Evrakı Devretme ve Sonrasında Devralandan Silinmesi ve İlginin Kontrolü","methodsDependsOn":[]},{"testClass":"Evrak Devret Test","test":"TS2179","description":"Devredilen evrakların devralan kullanıcıda hareket/evrak geçmişinin kontrolü","methodsDependsOn":["TS2178"]},{"testClass":"Evrak Havale Kurallari Test","test":"TS2068","description":"Evrak Havale Kuralları - Yeni Kural Ekleme","methodsDependsOn":[]},{"testClass":"Evrak Havale Kurallari Test","test":"TS2069a","description":"Evrak Havale Kuralları - Kural Silme","methodsDependsOn":[]},{"testClass":"Evrak Havale Kurallari Test","test":"TS2069b","description":"Evrak Havale Kuralları Sorgulama ve Filtreleme","methodsDependsOn":[]},{"testClass":"Evrak Havale Kurallari Test","test":"TS2069c","description":"Evrak Havale Kuralları - Kuralları aktif / pasif yapma","methodsDependsOn":[]},{"testClass":"Evrak Havale Kurallari Test","test":"TS2069d","description":"Evrak Havale Kuralları - Birim Kaydet - Güncelleme","methodsDependsOn":[]},{"testClass":"Evrak Havale Kurallari Test","test":"TS2070a","description":"Evrak Havale Kuralları - Kural Kopyalama","methodsDependsOn":[]},{"testClass":"Evrak Havale Kurallari Test","test":"TS2070b","description":"Evrak Havale Kuralları - Kural Güncelleme","methodsDependsOn":[]},{"testClass":"Evrak Not Test","test":"TS2091","description":"Not Oluşturma - Evrak Oluşturma da Kişisel ve Genel Not oluşturma","methodsDependsOn":[]},{"testClass":"Evrak Not Test","test":"TS2092","description":"Not Oluşturma - Olur/Takrir Yazısı Oluşturma da Kişisel ve Genel Not oluşturma","methodsDependsOn":[]},{"testClass":"Evrak Not Test","test":"TS2093","description":"Not Oluşturma - Karar Yazısı Oluşturma da Kişisel ve Genel Not oluşturma","methodsDependsOn":[]},{"testClass":"Evrak Not Test","test":"TS2155","description":"Not İzleme - Evrak Notunun Taslak evraklarda izlenmesi","methodsDependsOn":[]},{"testClass":"Evrak Not Test","test":"TS2160","description":"Not İzleme - Evrak Notunun Paraf bekleneler; Parafladıklarım; İmza Bekleyenler ve İmzaladıklarım ekranlarında izlenmesi","methodsDependsOn":["TS2155"]},{"testClass":"Evrak Not Test","test":"TS2162","description":"Not İzleme - Evrak Notunun Postalanacak Evraklar ve Postananlar ekranlarında izlenmesi","methodsDependsOn":["TS2160","TS2155"]},{"testClass":"Evrak Paylasma Test","test":"TS1876","description":"Evrakı paylaşmada alan kontrolleri","methodsDependsOn":[]},{"testClass":"Evrak Paylasma Test","test":"TS1876A","description":"Taslak Evrakı kullanıcı ile paylaşma (Tümü aksiyonu ile)","methodsDependsOn":[]},{"testClass":"Evrak Paylasma Test","test":"TS1876B","description":"İşlem bekleyen Evrakı kullanıcılarla paylaşma","methodsDependsOn":[]},{"testClass":"Evrak Paylasma Test","test":"TS1877","description":"Paylaşılan evrakın geri alınması","methodsDependsOn":[]},{"testClass":"Evrak Paylasma Test","test":"TS1881","description":"Evrak paylaşımını durdurma","methodsDependsOn":[]},{"testClass":"Evrak Paylasma Test","test":"TS1882","description":"Paylaştıklarım listesinden evrak paylaşma","methodsDependsOn":[]},{"testClass":"Evrak Paylasma Test","test":"TS1904","description":"Evrak paylaşmada not kontrolü","methodsDependsOn":[]},{"testClass":"Evrak Paylasma Test","test":"TS1905","description":"Evrak paylaşma yetkisi olmayan kullanıcıda evrak paylaşma kontrolü","methodsDependsOn":[]},{"testClass":"Evrak Paylasma Test","test":"TS2192","description":"İçeriğinde form olan evrakı paylaşma","methodsDependsOn":[]},{"testClass":"Evrak Paylasma Test","test":"TS2193","description":"İçeriğinde birim içerik şablonu olan evrakı paylaşma","methodsDependsOn":[]},{"testClass":"Evrak Paylasma Test","test":"TS2194","description":"İçeriğinde kişisel şablon olan evrakı paylaşma","methodsDependsOn":[]},{"testClass":"Evrak Paylasma Test","test":"TS2195","description":"Cevap evrakını paylaşma","methodsDependsOn":[]},{"testClass":"Evrak Paylasma Test","test":"TS2197","description":"Devredilen evrakı paylaşma","methodsDependsOn":[]},{"testClass":"Evrak Postalama Test","test":"TS0308","description":"Evrak Postalama","methodsDependsOn":[]},{"testClass":"Evrak Postalama Test","test":"TS0312","description":"postalama işlemi sonrası postalananlar listesinin kontrolü","methodsDependsOn":[]},{"testClass":"Evrak Postalama Test","test":"TS0520a","description":"Postalanan evrak posta bilgilerinin önizleme ekranından güncellenmesi ve rapor üzerinde kontrolü","methodsDependsOn":[]},{"testClass":"Evrak Postalama Test","test":"TS0520b","description":"Postalanan evrak posta bilgilerinin içerik ekranından güncellenmesi ve rapordan kontrolü","methodsDependsOn":[]},{"testClass":"Evrak Postalama Test","test":"TS0802","description":"Postalanan Evrak Raporu","methodsDependsOn":[]},{"testClass":"Evrak Postalama Test","test":"TS1434","description":"Postalanan Evrak Raporu Alan kontrolleri","methodsDependsOn":[]},{"testClass":"Evrak Postalama Test","test":"TS1685","description":"Fiziksel eki olan iç yazışmaların postaya düşürülmesi","methodsDependsOn":[]},{"testClass":"Evrak Postalama Test","test":"TS0310","description":"İçerik ekranından evrakın postalanması","methodsDependsOn":["TS1685"]},{"testClass":"Evrak Postalama Test","test":"TS2076","description":"Evrak Postalama işlemleri","methodsDependsOn":[]},{"testClass":"Evrak Postalama Test","test":"TS2235","description":"Ek ilgi ilişiği olan evrakı postaya düşürme","methodsDependsOn":[]},{"testClass":"Evrak Postalama Test","test":"TS0309","description":"Önizleme ekranından ek ilgi ve ilişiği olan evrakın postalanması","methodsDependsOn":["TS2235"]},{"testClass":"Evrak Teslim Alma Test","test":"TS2314","description":"Teslim alınmayı bekleyenler listesinden bir evrakı teslim alma (listeden)","methodsDependsOn":[]},{"testClass":"Evrak Teslim Alma Test","test":"TS2315","description":"Birime iade edilenler listesinden evrak teslim alma (listeden)","methodsDependsOn":[]},{"testClass":"Evrak Teslim Alma Test","test":"TS2316","description":"Teslim alınmayı bekleyenler listesinden bir evrakı teslim alma (içerikten)","methodsDependsOn":[]},{"testClass":"Evrak Teslim Alma Test","test":"TS2317","description":"Birime iade edilenler listesinden evrak teslim alma (önizlemeden)","methodsDependsOn":[]},{"testClass":"Evrak Teslim Alma Test","test":"TS2318","description":"Evrak teslim alma işleminin loglardan kontrolü","methodsDependsOn":[]},{"testClass":"Evrak Teslim Alma Test","test":"TS2319","description":"Teslim alınmayı bekleyenler listesinden evrak teslim alma (toplu)","methodsDependsOn":[]},{"testClass":"Evrak Teslim Alma Test","test":"TS2320","description":"Birime iade edilenler listesinden evrak teslim alma (toplu)","methodsDependsOn":[]},{"testClass":"Evrak Teslim Alma Test","test":"TS2321","description":"Teslim alınan evrakın gelen evrak zimmet raporundan kontrolü","methodsDependsOn":[]},{"testClass":"Gelen Evraki Cevapli Kapat Test","test":"TS0373","description":"Cevap yazma işleminde evrakın onay akışından silinmesi","methodsDependsOn":[]},{"testClass":"Gelen Evraki Cevapli Kapat Test","test":"TS0929","description":"Dış kurumdan gelen evraka cevap yaz","methodsDependsOn":[]},{"testClass":"Gelen Evraki Cevapli Kapat Test","test":"TS0930","description":"Kurum içi gelen evraka cevap yaz","methodsDependsOn":[]},{"testClass":"Gelen Evraki Cevapli Kapat Test","test":"TS0931","description":"Gerçek kişiden gelen evraka cevap yaz","methodsDependsOn":[]},{"testClass":"Gelen Evraki Cevapli Kapat Test","test":"TS0932","description":"Tüzel kişiden gelen evraka cevap yaz","methodsDependsOn":[]},{"testClass":"Gelen Evraki Cevapli Kapat Test","test":"TS1368","description":"Cevaplanan Evrak Raporu","methodsDependsOn":[]},{"testClass":"Gelen Evraki Cevapli Kapat Test","test":"TS2186","description":"Cevap evrakında form kullanma","methodsDependsOn":[]},{"testClass":"Gelen Evraki Cevapli Kapat Test","test":"TS2187","description":"Cevap evrakında birim içerik şablonu kullanma","methodsDependsOn":[]},{"testClass":"Gelen Evraki Cevapli Kapat Test","test":"TS2188","description":"Cevap evrakında kullanıcı şablonu kullanma","methodsDependsOn":[]},{"testClass":"Gelen Giden Evrak Kayit Havale Test","test":"TS1582","description":"Evrakın Onaylı havale edilmesi ve güncellenerek onaylanması","methodsDependsOn":[]},{"testClass":"Gelen Giden Evrak Kayit Havale Test","test":"TS2171","description":"Gelen evrak kaydederken havale edilen evrakın geri alınması","methodsDependsOn":[]},{"testClass":"Gelen Giden Evrak Kayit Havale Test","test":"TS2172","description":"Evrakın Onaylı havale edilmesi ve onayın reddedilmesi (içerikten)","methodsDependsOn":[]},{"testClass":"Gelen Giden Evrak Kayit Havale Test","test":"TS397","description":"Havale yeri Birim; Kişi; Kullanıcı Listesi seçilerek evrakın havale edilmesi","methodsDependsOn":[]},{"testClass":"Gelen Giden Evrak Kayit Havale Test","test":"TS405","description":"Havaleden geri alınan evrakın tekrar havalesi","methodsDependsOn":[]},{"testClass":"Gelen Giden Evrak Kayit Havale Test","test":"TS407","description":"Ek ve ilgisi olan gelen evrakın havalesi","methodsDependsOn":[]},{"testClass":"Gelen Giden Evrak Kayit Havale Test","test":"TS435","description":"Havale onayı bekleyen evrakın geri çekilmesi ve tekrar havalesi (detay ekranından)","methodsDependsOn":[]},{"testClass":"Gelen Giden Evrak Kayit Test","test":"TS0321","description":"Üstyazı ek ve ilgi eklenerek gelen evrak kaydı","methodsDependsOn":[]},{"testClass":"Gelen Giden Evrak Kayit Test","test":"TS0322","description":"Gelen evrak kayıtta alan kontrolleri","methodsDependsOn":[]},{"testClass":"Gelen Giden Evrak Kayit Test","test":"TS0326","description":"Gelen evrakın tarama havuzundan evrak eklenerek kaydedilmesi","methodsDependsOn":[]},{"testClass":"Gelen Giden Evrak Kayit Test","test":"TS0328","description":"Gelen evrak kayıt ekranından havale","methodsDependsOn":["TS0321"]},{"testClass":"Gelen Giden Evrak Kayit Test","test":"TS0394","description":"Gelen maillerin evrak olarak sisteme dahil edilmesi","methodsDependsOn":[]},{"testClass":"Gelen Giden Evrak Kayit Test","test":"TS1136","description":"Gelen evrak kaydederken yeni gerçek ve tüzel kişi tanımlama","methodsDependsOn":[]},{"testClass":"Gelen Giden Evrak Kayit Test","test":"TS1340","description":"Giden evrak kaydı","methodsDependsOn":[]},{"testClass":"Gelen Giden Evrak Kayit Test","test":"TS1401","description":"Kaydedilen Gelen Evrak raporu","methodsDependsOn":[]},{"testClass":"Gelen Giden Evrak Kayit Test","test":"TS2163","description":"Kaydedilen gelen evrakın güncellenmesi","methodsDependsOn":["TS0321"]},{"testClass":"Gercek Kisi Yonetimi Test","test":"TS1119","description":"Gerçek Kişi iletişim bilgilerinin değiştirilmesi","methodsDependsOn":[]},{"testClass":"Gercek Kisi Yonetimi Test","test":"TS1132a","description":"Gerçek kişinin pasif yapılması ve ekranlardan kontrolü","methodsDependsOn":[]},{"testClass":"Gercek Kisi Yonetimi Test","test":"TS1135","description":"Yeni gerçek kişi kayıtta alan kontrolleri","methodsDependsOn":[]},{"testClass":"Gercek Kisi Yonetimi Test","test":"TS1137","description":"Gerçek Kişi Bilgisi Güncelleme ve kontrolleri","methodsDependsOn":[]},{"testClass":"Gercek Kisi Yonetimi Test","test":"TS1144","description":"Gerçek kişi sorgulama","methodsDependsOn":[]},{"testClass":"Gercek Kisi Yonetimi Test","test":"TS1458a","description":"Pasif yapılan gerçek kişinin aktif yapılması ve ekranlardan kontrolü","methodsDependsOn":[]},{"testClass":"Gercek Kisi Yonetimi Test","test":"TS1516","description":"Gerçek kişi tanımlama ve kontrolü","methodsDependsOn":[]},{"testClass":"Gizlilik Kleransi Test","test":"TS0272","description":"Teslim almayı bekleyenler listesinden havale ederken gizlilik kontrolü","methodsDependsOn":[]},{"testClass":"Gizlilik Kleransi Test","test":"TS1471","description":"Kullanıcı gizlilik derecesi değiştirme","methodsDependsOn":[]},{"testClass":"Gizlilik Kleransi Test","test":"TS1472","description":"Dağıtımda gizlilik derecesi kontrolü","methodsDependsOn":[]},{"testClass":"Gizlilik Kleransi Test","test":"TS1473","description":"Onay akışında gizlilik derecesi kontrolü","methodsDependsOn":[]},{"testClass":"Gizlilik Kleransi Test","test":"TS1474","description":"Havale ettiklerim listesinden havalede gizlilik derecesi kontrolü","methodsDependsOn":[]},{"testClass":"Gizlilik Kleransi Test","test":"TS1475A","description":"Havale ettiklerim listesinden havalede gizlilik derecesi kontrolü","methodsDependsOn":[]},{"testClass":"Gizlilik Kleransi Test","test":"TS1475B","description":"Gelen evrak listesinden havalede gizlilik derecesi kontrolü","methodsDependsOn":[]},{"testClass":"Gizlilik Kleransi Test","test":"TS1938","description":"Yüksek kleranslı evrak oluşturma","methodsDependsOn":[]},{"testClass":"Gizlilik Kleransi Test","test":"TS2131","description":"İşlem bekleyen evraklardan evrak paylaşırken gizlilik kontrolü","methodsDependsOn":[]},{"testClass":"Gizlilik Kleransi Test","test":"TS2132","description":"İşlem yaptıklarım listesinden evrak paylaşırken gizlilik kontrolü","methodsDependsOn":[]},{"testClass":"Gizlilik Kleransi Test","test":"TS2134","description":"İşlem bekleyen evraklardan takibe eklerken gizlilik kontrolü","methodsDependsOn":[]},{"testClass":"Gizlilik Kleransi Test","test":"TS2135","description":"İşlem yaptıklarım listesinden evrak takibe eklerken gizlilik kontrolü","methodsDependsOn":[]},{"testClass":"Gizlilik Kleransi Test","test":"TS2138","description":"Genel evrak raporunda gizlilik kleransı kontrolü (evrakta izi olmayan kullanıcı ile)","methodsDependsOn":[]},{"testClass":"Gizlilik Kleransi Test","test":"TS2139","description":"Evrak aramada gizlilik kleransı kontrolü (evrakta izi olmayan kullanıcı ile)","methodsDependsOn":["TS1938"]},{"testClass":"Gizlilik Kleransi Test","test":"TS2140","description":"Evrak aramada gizlilik kleransı kontrolü (evrakta izi olan kullanıcı ile)","methodsDependsOn":["TS1938"]},{"testClass":"Gizlilik Kleransi Test","test":"TS2181","description":"Gizlilik kleransı yeterli olmayan kullanıcıya evrak devrediemelmesi","methodsDependsOn":[]},{"testClass":"Gizlilik Kleransi Test","test":"TS2189","description":"Onay akışında gizlilik klerans kontrolü (Cevap)","methodsDependsOn":[]},{"testClass":"Gizlilik Kleransi Test","test":"TS2190","description":"Dağıtımda gizlilik klerans kontrolü (Cevap)","methodsDependsOn":[]},{"testClass":"Gizlilik Kleransi Test","test":"TS2191","description":"Akışta gizlilik kleransı değiştirilen evrakın dağıtım yeri kontrolü","methodsDependsOn":[]},{"testClass":"Gizlilik Kleransi Test","test":"TS2223","description":"Teslim aldıklarım listesinden havalede gizlilik klerans kontrolü","methodsDependsOn":[]},{"testClass":"Gizlilik Kleransi Test","test":"TS2225","description":"Posta işleminde gizlilik klerans kontrolü (evrakta izi olan kullanıcı ile)","methodsDependsOn":[]},{"testClass":"Gizlilik Kleransi Test","test":"TS2226","description":"Genel evrak raporunda gizlilik klerans kontrolü (evrakta izi olan kullanıcı ile)","methodsDependsOn":["TS1938"]},{"testClass":"Gizlilik Kleransi Test","test":"TS2227","description":"Teslim alınmayı bekleyenler ve teslim alınanlar listesinde gizlilik klerans kontrolü (evrakta izi olmayan kullanıcı ile)","methodsDependsOn":[]},{"testClass":"Hitapta büyük/küçük harf","test":"TS2064","description":"Tüzel kişi - Hitapta büyük/küçük harf kontrolü","methodsDependsOn":[]},{"testClass":"Hitapta büyük/küçük harf","test":"TS2090","description":"Dağıtım planına ve kullanıcıya hitap","methodsDependsOn":[]},{"testClass":"Hitapta büyük/küçük harf","test":"TS2156","description":"Kurum- Hitapta büyük/küçük harf kontrolü","methodsDependsOn":[]},{"testClass":"Hitapta büyük/küçük harf","test":"TS2157","description":"Birim- Hitapta büyük/küçük harf kontrolü","methodsDependsOn":[]},{"testClass":"Karar Yazisi Olusturma Test","test":"TS1488","description":"Karar yazısında zorunlu alan kontrolleri","methodsDependsOn":[]},{"testClass":"Karar Yazisi Olusturma Test","test":"TS1497","description":"Karar Yazısı oluşturulması","methodsDependsOn":[]},{"testClass":"Karar Yazisi Olusturma Test","test":"TS1714","description":"Karar yazsının iadesi","methodsDependsOn":[]},{"testClass":"Karar Yazisi Olusturma Test","test":"TS1715","description":"Gelen evrak listesinden Gündem klasörüne evrak kapatma","methodsDependsOn":[]},{"testClass":"Karar Yazisi Olusturma Test","test":"TS2232","description":"Karar izleme ekranının toplu onaya sunma","methodsDependsOn":[]},{"testClass":"Karar Yazisi Olusturma Test","test":"TS2238","description":"Gündem klasörü oluşturma","methodsDependsOn":[]},{"testClass":"Karar Yazisi Olusturma Test","test":"TS2239","description":"Gündem yayınlama","methodsDependsOn":[]},{"testClass":"Karar Yazisi Olusturma Test","test":"TS2240","description":"Teslim alınmayı bekleyenler listesinden Gündem klasörüne evrak kapatma","methodsDependsOn":[]},{"testClass":"Kep Ile Postalama Islemleri Test","test":"TS1513B","description":"Kurum Kep Hesabı Tanımlama ve Evrak Oluşturma Ekranından kontrolü","methodsDependsOn":[]},{"testClass":"Kep Ile Postalama Islemleri Test","test":"TS1513C","description":"Gerçek Kişi Kep Hesabı Tanımlama ve Evrak Oluşturma Ekranından Kontrolü","methodsDependsOn":[]},{"testClass":"Kep Ile Postalama Islemleri Test","test":"TS1513D","description":"Tüzel Kişi Kep Hesabı Tanımlama ve Evrak Oluşturma Ekranından Kontrolü","methodsDependsOn":[]},{"testClass":"Kep Ile Postalama Islemleri Test","test":"TS1520","description":"KEP Adresi Tanımlama işlemleri","methodsDependsOn":[]},{"testClass":"Kep Ile Postalama Islemleri Test","test":"TS1610","description":"KEP Hesap Menüsü - Tanımlanan KEP hesapları ile login işlemleri","methodsDependsOn":[]},{"testClass":"Kep Ile Postalama Islemleri Test","test":"TS2236","description":"KEP Adresi Tanımlama işlemleri","methodsDependsOn":[]},{"testClass":"Kep Ile Postalama Islemleri Test","test":"TS1549","description":"KEP posta tipindeki evrakın postalanacak evraklarda posta tipinin değiştirilmesi","methodsDependsOn":["TS2236"]},{"testClass":"Kisayol Tuslari Test","test":"TS1952a","description":"Kısayol tuşları kullanarak Olur Oluştur ekranını açma","methodsDependsOn":[]},{"testClass":"Kisayol Tuslari Test","test":"TS1952b","description":"Kısayol tuşları kullanarak Kullanıcı Yönetimi ekranını açma","methodsDependsOn":[]},{"testClass":"Kisayol Tuslari Test","test":"TS1952c","description":"Kısayol tuşları kullanarak Giden Evrak Kayıt ekranını açma","methodsDependsOn":[]},{"testClass":"Kisayol Tuslari Test","test":"TS1952e","description":"Kısayol tuşları kullanarak Evrak Oluştur ekranını açma","methodsDependsOn":[]},{"testClass":"Kisayol Tuslari Test","test":"TS1952f","description":"Kısayol tuşları kullanarak Evrak Arama ekranını açma","methodsDependsOn":[]},{"testClass":"Kisayol Tuslari Test","test":"TS1952g","description":"Kısayol tuşları kullanarak Genel Evrak Raporu ekranını açma","methodsDependsOn":[]},{"testClass":"Kisayol Tuslari Test","test":"TS1952h","description":"Kısayol tuşları kullanarak Gelen Evrak Kayıt ekranını açma","methodsDependsOn":[]},{"testClass":"Kisayol Tuslari Test","test":"TS1952i","description":"Kısayol tuşları kullanarak Karar Yazısı Oluştur ekranını açma","methodsDependsOn":[]},{"testClass":"Kisayol Tuslari Test","test":"TS1952j","description":"Kısayol tuşları kullanarak Personel ve Açık Evrak İstatistiği ekranını açma","methodsDependsOn":[]},{"testClass":"Kisayol Tuslari Test","test":"TS1955","description":"Kısayol Tuşlarının Tooltipleri","methodsDependsOn":[]},{"testClass":"Kisisel Islemler Bag Tipi Test","test":"TS2141","description":"Bağ tipi amir yardımcısı olması kontrolleri","methodsDependsOn":[]},{"testClass":"Kisisel Islemler Bag Tipi Test","test":"TS2142","description":"Bağ tipi vekaleten amir yardımcısı kontrolleri","methodsDependsOn":[]},{"testClass":"Kisisel Islemler Bag Tipi Test","test":"TS2168","description":"Bağ tipi personel kontrolleri","methodsDependsOn":[]},{"testClass":"Kurum Yonetimi Test","test":"TS1108","description":"Kurum Sorgulama","methodsDependsOn":[]},{"testClass":"Kurum Yonetimi Test","test":"TS1109","description":"Kurum tanımlama ve kontrolü","methodsDependsOn":[]},{"testClass":"Kurum Yonetimi Test","test":"TS1459","description":"Kurum bilgisi güncelleme","methodsDependsOn":[]},{"testClass":"Olur Yazisi Islemleri Test","test":"TS0577","description":"Olur yazısı oluşturulması ve gönderilmesi","methodsDependsOn":[]},{"testClass":"Onay Akisi Test","test":"TS1892a","description":"Onay akışı güncellemede alan kontrolleri","methodsDependsOn":[]},{"testClass":"Onay Akisi Test","test":"TS1892b","description":"Onay akışı kaydetmede alan kontrolleri","methodsDependsOn":[]},{"testClass":"Onay Akisi Test","test":"TS1895a","description":"Vekaleti olan kullanıcıyı onay akışına ekleme","methodsDependsOn":[]},{"testClass":"Onay Akisi Test","test":"TS1895b","description":"Vekaleti olan kullanıcının vekilini onay akışına ekleme","methodsDependsOn":[]},{"testClass":"Onay Akisi Test","test":"TS1896","description":"Onay akışı güncelleme","methodsDependsOn":[]},{"testClass":"Onay Akisi Test","test":"TS1897a","description":"Varsayılan onay akışının pasif edilmesi","methodsDependsOn":[]},{"testClass":"Onay Akisi Test","test":"TS1897b","description":"Onay akışı varsayılan yapma","methodsDependsOn":[]},{"testClass":"Onay Akisi Test","test":"TS1900","description":"Evrak oluşturma ekranından kayıtlı onay akışı güncelleme","methodsDependsOn":[]},{"testClass":"Onay Akisi Test","test":"TS1901b","description":"Otomatik Onay akışı kullanma – Vekaletli","methodsDependsOn":[]},{"testClass":"Onay Akisi Test","test":"TS2110","description":"Onay Akışı Yönetimi - Yeni Onay Akışı Oluşturma ve evrak üzerinde kontrolü","methodsDependsOn":[]},{"testClass":"Onay Akisi Test","test":"TS2111","description":"Onay Akışı Yönetimi - Kayıtlı Onay Akışını kullanım sırasında anlık değiştirme","methodsDependsOn":[]},{"testClass":"Onay Akisi Test 2","test":"TS2112a","description":"Onay Akışı Yönetimi - Aktif/Pasif Yapma ve Varsayılan Yapma","methodsDependsOn":[]},{"testClass":"Onay Akisi Test 2","test":"TS2112b","description":"Onay Akışı Yönetimi - Aktif/Pasif Yapma ve Varsayılan Yapma","methodsDependsOn":[]},{"testClass":"Onay Akisi Test 3","test":"TS2113a","description":"Onay Akışı Yönetimi - Güncelleme","methodsDependsOn":[]},{"testClass":"Onay Akisi Test 3","test":"TS2113b","description":"Onay Akıışı Yönetimi - Güncelleme","methodsDependsOn":[]},{"testClass":"Onay Akisi Test 3","test":"TS2113c","description":"Onay Akışı Yönetimi - Güncelleme","methodsDependsOn":[]},{"testClass":"Onay Akisindaki Evraki Sil Test","test":"TS0102","description":"Parafa Gelen Evrakın Ön İzleme Ekranından Silinmesi ve Kontrolü","methodsDependsOn":[]},{"testClass":"Onay Akisindaki Evraki Sil Test","test":"TS0983","description":"İmzacıdaki Karar Yazısının Silinememesi","methodsDependsOn":[]},{"testClass":"Pul Yonetimi Test","test":"TS1732","description":"Pul Yönetimi ekranından yeni tanımlama yapma","methodsDependsOn":[]},{"testClass":"Pul Yonetimi Test","test":"TS2214","description":"Pul yönetimi ekranındaki tanımın postalanacaklar listesinde kontrolü","methodsDependsOn":[]},{"testClass":"Pul Yonetimi Test","test":"TS2215","description":"Pul yönetimi ekranındaki tanımın posta listesinde kontrolü","methodsDependsOn":[]},{"testClass":"Evrakı Beklemeye Alma","test":"TS2095a","description":"Evrakı beklemeye alma ve imzalama","methodsDependsOn":[]},{"testClass":"Evrakı Beklemeye Alma","test":"TS2095b","description":"Paraf; Gelen; Postalanacak bekleyen evarklarda Beklemeye Al butonun gelmediği görülür","methodsDependsOn":[]},{"testClass":"Takibe Evrak Ekleme Test","test":"TS2073","description":"Takibe Evrak Ekle","methodsDependsOn":[]},{"testClass":"Teblig Tebellug Test","test":"TS0067","description":"Tebliğe gelen evrakın tebellüğ edilmesi ve tebliğ eden kullanıcıdan kontrolü","methodsDependsOn":[]},{"testClass":"Teblig Tebellug Test","test":"TS0845","description":"Gelen Evrakın kullanıcı listesine detay ekrandan tebliğ edilmesi.","methodsDependsOn":[]},{"testClass":"Teblig Tebellug Test","test":"TS0845A","description":"Gelen Evrakın Önizleme ekranından kullanıcıya tebliğ edilmesi","methodsDependsOn":[]},{"testClass":"Teblig Tebellug Test","test":"TS0847","description":"Tebliğlerin teker teker ve toplu silinmesi","methodsDependsOn":[]},{"testClass":"Teblig Tebellug Test","test":"TS0936","description":"Tebliğ hatırlatma ve Mesaj kontrolü","methodsDependsOn":[]},{"testClass":"Teslim Alinmayi Bekleyen Havale Test","test":"TS0443","description":"Birime Evrak Havale (önizleme ekranından) ve Havaleyi Geri Alma","methodsDependsOn":[]},{"testClass":"Teslim Alinmayi Bekleyen Havale Test","test":"TS0453","description":"Gereği için birim bilgi için kişi seçilerek evrak havale etme (içerik ekranından)","methodsDependsOn":[]},{"testClass":"Teslim Alinmayi Bekleyen Havale Test","test":"TS2285","description":"Kişi seçimi yapmadan toplu havaleyi onaya sunma","methodsDependsOn":[]},{"testClass":"Teslim Alinmayi Bekleyen Havale Test","test":"TS2294","description":"Havale yeri Birim; Kişi; Kullanıcı Listesi seçilerek evrakın havale edilmesi","methodsDependsOn":[]},{"testClass":"Teslim Alinmayi Bekleyen Havale Test","test":"TS2300","description":"Evrakın Onaylı havale edilmesi ve güncellenerek onaylanması","methodsDependsOn":[]},{"testClass":"Toplu Postalama Test","test":"TS1675","description":"Toplu Postaladıklarım İzleme / Alan Kontrolleri (UC_POSTAYÖNETİMİ_004)","methodsDependsOn":[]},{"testClass":"Toplu Postalama Test","test":"TS1676","description":"Toplu Postalama PTT Evrak Raporu (UC_POSTAYÖNETİMİ_005)","methodsDependsOn":[]},{"testClass":"Toplu Postalama Test","test":"TS1804","description":"Toplu Postalanacak Evrakların Sorgulanması (UC_POSTAYÖNETİMİ_001)","methodsDependsOn":[]},{"testClass":"Toplu Postalama Test","test":"TS1805","description":"Posta Listesi Oluşturma- Kurum Listesi (UC_POSTAYÖNETİMİ_002)","methodsDependsOn":[]},{"testClass":"Toplu Postalama Test","test":"TS1807","description":"Posta Listesi Oluşturma- Tüzel Kişi Listesi (UC_POSTAYÖNETİMİ_002)","methodsDependsOn":[]},{"testClass":"Toplu Postalama Test","test":"TS1807A","description":"Posta Listesi Oluşturma- Gerçek Kişi Listesi (UC_POSTAYÖNETİMİ_002)","methodsDependsOn":[]},{"testClass":"Toplu Postalama Test","test":"TS1808","description":"Posta Listesine Evrak Ekleme ve Çıkartma (UC_POSTAYÖNETİMİ_002)","methodsDependsOn":[]},{"testClass":"Toplu Postalama Test","test":"TS1809","description":"Posta Listesi Görüntüleme (UC_POSTAYÖNETİMİ_003)","methodsDependsOn":[]},{"testClass":"Toplu Postalama Test","test":"TS1811","description":"Posta Listesi Postalama İşlemleri (UC_POSTAYÖNETİMİ_003)","methodsDependsOn":[]},{"testClass":"Toplu Postalama Test","test":"TS1812","description":"Posta Listesi Postalama İşlemleri (Güncelleme) (UC_POSTAYÖNETİMİ_003)","methodsDependsOn":[]},{"testClass":"Toplu Postalama Test","test":"TS1815A","description":"Toplu postalama PTT raporunda alan kontrolleri-daha önceden rapor alındı ise (UC_POSTAYÖNETİMİ_004)","methodsDependsOn":[]},{"testClass":"Toplu Postalama Test","test":"TS1815B","description":"Toplu postalama PTT raporunda alan kontrolleri (UC_POSTAYÖNETİMİ_004)","methodsDependsOn":[]},{"testClass":"Toplu Postalama Test","test":"TS1816","description":"Toplu Postaladıklarım Güncelleme İşlemleri (UC_POSTAYÖNETİMİ_004)","methodsDependsOn":[]},{"testClass":"Toplu Postalama Test","test":"TS1817","description":"Tutar alanı kontrol edilir.","methodsDependsOn":[]},{"testClass":"Toplu Postalama Test","test":"TS1818","description":"Posta Tutarı Hesaplama İşlemleri ve Güncelleme (UC_POSTAYÖNETİMİ_006)","methodsDependsOn":[]},{"testClass":"Toplu Postalama Test","test":"TS2087","description":"Toplu postaladıklarım listesinden evrakın geri alınması","methodsDependsOn":[]},{"testClass":"Tuzel Kisi Yonetimi Test","test":"TS1124","description":"Yeni tüzel kişi kayıt ve ekranlardan kontrolleri","methodsDependsOn":[]},{"testClass":"Tuzel Kisi Yonetimi Test","test":"TS1126","description":"Tüzel Kişi Bilgisi Güncelleme ve kontrolleri","methodsDependsOn":[]},{"testClass":"Tuzel Kisi Yonetimi Test","test":"TS1132b","description":"Tüzel kişinin pasif yapılması ve kontrolü","methodsDependsOn":[]},{"testClass":"Tuzel Kisi Yonetimi Test","test":"TS1133","description":"Tüzel kişi sorgulama","methodsDependsOn":[]},{"testClass":"Tuzel Kisi Yonetimi Test","test":"TS1458b","description":"Pasif yapılan tüzel kişinin aktif yapılması ve kontrolü","methodsDependsOn":[]},{"testClass":"Tuzel Kisi Yonetimi Test","test":"TS1460","description":"Yeni tüzel kişi kayıtta alan kontrolleri","methodsDependsOn":[]},{"testClass":"Tuzel Kisi Yonetimi Test","test":"TS2241","description":"Tüzel kişinin iletişim bilgisinin değiştirilmesi","methodsDependsOn":[]},{"testClass":"Tuzel Kisi Yonetimi Test","test":"TS2246","description":"Medya şirketi tipinde tüzel kişi ekleme","methodsDependsOn":[]},{"testClass":"Vekalet Islemleri Test","test":"TS0025a","description":"Onaya göndererek Vekalet Verme","methodsDependsOn":[]},{"testClass":"Vekalet Islemleri Test","test":"TS0025b","description":"Onaya göndererek Vekalet Verme işleminde onayın Red edilmesi","methodsDependsOn":["TS0025a"]},{"testClass":"Vekalet Islemleri Test","test":"TS2208","description":"Onaya göndererek Vekalet Verme işleminde onayın kabul edilmesi","methodsDependsOn":[]},{"testClass":"Vekalet Islemleri Test","test":"TS0012","description":"vekaleti veren kullanıcının onay akışında seçilmesi (kendisi)","methodsDependsOn":["TS2208"]},{"testClass":"Vekalet Islemleri Test","test":"TS0011","description":"Vekalet alan kullanıcıya evrak havalesi ve kontrolü","methodsDependsOn":["TS0012","TS2208"]},{"testClass":"Vekalet Islemleri Test","test":"TS0014","description":"Vekalet veren kullanıcıya evrak havalesi ve kontrolü","methodsDependsOn":["TS2208"]},{"testClass":"Vekalet Islemleri Test","test":"TS0015","description":"Vekaleti alan kullanıcının onay akışında seçilmesi(vekaleten)","methodsDependsOn":["TS2208"]},{"testClass":"Vekalet Islemleri Test","test":"TS2212","description":"Vekalet veren kullanıcının bulunduğu kullanıcı listesine evrak havalesi ve kontrolü","methodsDependsOn":["TS2208"]},{"testClass":"Yazisma Kurallari Yonetimi Test","test":"TS1957A","description":"Yazışma Kuralı Ekle","methodsDependsOn":[]},{"testClass":"Yazisma Kurallari Yonetimi Test","test":"TS1957B","description":"Yazışma Kuralı Sil","methodsDependsOn":[]},{"testClass":"Yazisma Kurallari Yonetimi Test","test":"TS1957C","description":"Yazışma Kuralı Güncelle","methodsDependsOn":[]},{"testClass":"Yonetim Havuzu Islemleri Test","test":"TS0001","description":"Yönetim havuzunu pasife alma","methodsDependsOn":[]},{"testClass":"Yonetim Havuzu Islemleri Test","test":"TS0002","description":"Yeni yönetim havuzu kayıt","methodsDependsOn":[]},{"testClass":"Yonetim Havuzu Islemleri Test","test":"TS0009","description":"yönetim havuzunu güncelleme","methodsDependsOn":[]}]
+[
+  {
+    "testClass": "Bakima Al Test",
+    "test": "TS02108",
+    "description": "Bakım Moduna Alma ve alan kontrolleri",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Bakima Al Test",
+    "test": "TS02109",
+    "description": "Bakım Modundan Çıkar",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Birim İçerik Şablonu",
+    "test": "TS1082",
+    "description": "Yeni şablon oluştur (Alt birimler görsün)",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Birim İçerik Şablonu",
+    "test": "TS1082_kontrol",
+    "description": "Şablonu evrak oluşturmada kullan",
+    "methodsDependsOn": [
+      "TS1082"
+    ]
+  },
+  {
+    "testClass": "Birim İçerik Şablonu",
+    "test": "TS1084",
+    "description": "Alan aktif durum kontrolleri",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Birim İçerik Şablonu",
+    "test": "TS1085",
+    "description": "Yeni şablon oluştur (Alt birimler görmesin)",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Birim İçerik Şablonu",
+    "test": "TS1079",
+    "description": "Şablon güncelleme kontrolleri",
+    "methodsDependsOn": [
+      "TS1085"
+    ]
+  },
+  {
+    "testClass": "Birim İçerik Şablonu",
+    "test": "TS1085_kontrolAltbirim",
+    "description": "Alt Biriminde görünmemeli",
+    "methodsDependsOn": [
+      "TS1085"
+    ]
+  },
+  {
+    "testClass": "Birim İçerik Şablonu",
+    "test": "TS1085_kontrol_birim",
+    "description": "yaratılan biriminde seçilebilir olmalı ve Olur Yazisi Olustur sayfada görünmemeli",
+    "methodsDependsOn": [
+      "TS1085"
+    ]
+  },
+  {
+    "testClass": "Birim İçerik Şablonu",
+    "test": "TS1089",
+    "description": "Şablonun Güncellenmesi",
+    "methodsDependsOn": [
+      "TS1082"
+    ]
+  },
+  {
+    "testClass": "Birim İçerik Şablonu",
+    "test": "sablonSil",
+    "description": "Şablonu sil",
+    "methodsDependsOn": [
+      "TS1079",
+      "TS1085"
+    ]
+  },
+  {
+    "testClass": "Birime Iade Edilenlerden Havale Test",
+    "test": "TS1587",
+    "description": "Birim seçilerek evrak havale etme (detay ekranından)",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Birime Iade Edilenlerden Havale Test",
+    "test": "TS1588",
+    "description": "Kişi seçilerek evrak havalesini onaya sunma (önizleme ekranından)",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Birime Iade Edilenlerden Havale Test",
+    "test": "TS1590",
+    "description": "Kullanıcı listesi seçilerek evrak havale etme (listeden)",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Birime Iade Edilenlerden Havale Test",
+    "test": "TS463",
+    "description": "Birime İade Edilenler listesinden Toplu evrak havale edilmesi",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Dagitim Hitap Guncelleme Test",
+    "test": "TS2123",
+    "description": "Birim hitabına NE NA eki eklenmesi",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Dağıtım Planı Yönetimi",
+    "test": "TS1279",
+    "description": "Pasif / Aktif Yapma",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Dağıtım Planı Yönetimi",
+    "test": "TS1280",
+    "description": "Yeni Kayıt İşlemi",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Dağıtım Planı Yönetimi",
+    "test": "TS1476",
+    "description": "Adı Alanının Güncellenmesi",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Dağıtım Planı Yönetimi",
+    "test": "TS1478",
+    "description": "Kopyalama",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Dağıtım Planı Yönetimi",
+    "test": "TS2260",
+    "description": "Sorgulama ve Filtreleme",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Dağıtım Planı Yönetimi",
+    "test": "TS2270",
+    "description": "Dağıtım Hitap Düzenleme",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Dağıtım Planı Yönetimi",
+    "test": "TS2271",
+    "description": "Hitabın oluşturulan evrak üzerinde kontrolü",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Dağıtım Planı Yönetimi",
+    "test": "TS2296",
+    "description": "Dağıtım Planı Kaydet/Güncelle Ekranı Alan Kontrolleri",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Dağıtım Planı Yönetimi",
+    "test": "TS2323",
+    "description": "Yeni Dağıtım Planı Kayıt (Ekranlardan Kontrolü)",
+    "methodsDependsOn": [
+      "TS1280"
+    ]
+  },
+  {
+    "testClass": "Dağıtım Planı Yönetimi",
+    "test": "TS2324",
+    "description": "Kullanıldığı Birim Alanının Güncellenmesi",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Data Test",
+    "test": "TS2224",
+    "description": "DATA-Teslim alınmayı bekleyenler",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Data Test",
+    "test": "TS2234",
+    "description": "DATA-İmzala bekleyenler listesine evrak düşürülmesi",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Data Test",
+    "test": "TS2322",
+    "description": "DATA-Birime iade edilenler listesine evrak düşürme",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Data Test",
+    "test": "TS2326",
+    "description": "DATA-Postalanacak evraklar listesine evrak düşürme",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Data Test",
+    "test": "TS2330",
+    "description": "DATA-Kullanıcıya ve Birime evrak havalesi",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Ek Ilgi Test",
+    "test": "TS0956",
+    "description": "Evrak oluşturmada ilgi ekleme",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Ek Ilgi Test",
+    "test": "TS1493",
+    "description": "Farklı dağıtım yerlerine (Kişi-Birim) gönderilen eklerin kontrolü",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Ek Ilgi Test",
+    "test": "TS2025",
+    "description": "Evrak önizlemede Evrak Ek/İlgi/İlişikler tablarında sistemden eklenen evrakların da gösterilmesi (akordeon pdf önizleme)",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Ek Ilgi Test",
+    "test": "TS2199",
+    "description": "Evrak oluşturmada Ek ekleme (50 MB üzeri dosya ekleme)",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Ek Ilgi Test",
+    "test": "TS2346",
+    "description": "Evrak oluşturmada ilişkili evrak ekleme",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Ek Ilgi Test",
+    "test": "TS2348",
+    "description": "Evrak oluşturmada ek iliştirme",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Evrak Devret Test",
+    "test": "TS0574",
+    "description": "Devredilen evrakların devredilen kullanıcıda kontrol edilmesi",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Evrak Devret Test",
+    "test": "TS2178",
+    "description": "İlgisi olan İşlem Bekleyen Cevap Evrakı Devretme ve Sonrasında Devralandan Silinmesi ve İlginin Kontrolü",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Evrak Devret Test",
+    "test": "TS2179",
+    "description": "Devredilen evrakların devralan kullanıcıda hareket/evrak geçmişinin kontrolü",
+    "methodsDependsOn": [
+      "TS2178"
+    ]
+  },
+  {
+    "testClass": "Evrak Havale Kurallari Test",
+    "test": "TS2068",
+    "description": "Evrak Havale Kuralları - Yeni Kural Ekleme",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Evrak Havale Kurallari Test",
+    "test": "TS2069a",
+    "description": "Evrak Havale Kuralları - Kural Silme",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Evrak Havale Kurallari Test",
+    "test": "TS2069b",
+    "description": "Evrak Havale Kuralları Sorgulama ve Filtreleme",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Evrak Havale Kurallari Test",
+    "test": "TS2069c",
+    "description": "Evrak Havale Kuralları - Kuralları aktif / pasif yapma",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Evrak Havale Kurallari Test",
+    "test": "TS2069d",
+    "description": "Evrak Havale Kuralları - Birim Kaydet - Güncelleme",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Evrak Havale Kurallari Test",
+    "test": "TS2070a",
+    "description": "Evrak Havale Kuralları - Kural Kopyalama",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Evrak Havale Kurallari Test",
+    "test": "TS2070b",
+    "description": "Evrak Havale Kuralları - Kural Güncelleme",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Evrak Not Test",
+    "test": "TS2091",
+    "description": "Not Oluşturma - Evrak Oluşturma da Kişisel ve Genel Not oluşturma",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Evrak Not Test",
+    "test": "TS2092",
+    "description": "Not Oluşturma - Olur/Takrir Yazısı Oluşturma da Kişisel ve Genel Not oluşturma",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Evrak Not Test",
+    "test": "TS2093",
+    "description": "Not Oluşturma - Karar Yazısı Oluşturma da Kişisel ve Genel Not oluşturma",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Evrak Not Test",
+    "test": "TS2155",
+    "description": "Not İzleme - Evrak Notunun Taslak evraklarda izlenmesi",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Evrak Not Test",
+    "test": "TS2160",
+    "description": "Not İzleme - Evrak Notunun Paraf bekleneler; Parafladıklarım; İmza Bekleyenler ve İmzaladıklarım ekranlarında izlenmesi",
+    "methodsDependsOn": [
+      "TS2155"
+    ]
+  },
+  {
+    "testClass": "Evrak Not Test",
+    "test": "TS2162",
+    "description": "Not İzleme - Evrak Notunun Postalanacak Evraklar ve Postananlar ekranlarında izlenmesi",
+    "methodsDependsOn": [
+      "TS2160",
+      "TS2155"
+    ]
+  },
+  {
+    "testClass": "Evrak Paylasma Test",
+    "test": "TS1876",
+    "description": "Evrakı paylaşmada alan kontrolleri",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Evrak Paylasma Test",
+    "test": "TS1876A",
+    "description": "Taslak Evrakı kullanıcı ile paylaşma (Tümü aksiyonu ile)",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Evrak Paylasma Test",
+    "test": "TS1876B",
+    "description": "İşlem bekleyen Evrakı kullanıcılarla paylaşma",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Evrak Paylasma Test",
+    "test": "TS1877",
+    "description": "Paylaşılan evrakın geri alınması",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Evrak Paylasma Test",
+    "test": "TS1881",
+    "description": "Evrak paylaşımını durdurma",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Evrak Paylasma Test",
+    "test": "TS1882",
+    "description": "Paylaştıklarım listesinden evrak paylaşma",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Evrak Paylasma Test",
+    "test": "TS1904",
+    "description": "Evrak paylaşmada not kontrolü",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Evrak Paylasma Test",
+    "test": "TS1905",
+    "description": "Evrak paylaşma yetkisi olmayan kullanıcıda evrak paylaşma kontrolü",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Evrak Paylasma Test",
+    "test": "TS2192",
+    "description": "İçeriğinde form olan evrakı paylaşma",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Evrak Paylasma Test",
+    "test": "TS2193",
+    "description": "İçeriğinde birim içerik şablonu olan evrakı paylaşma",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Evrak Paylasma Test",
+    "test": "TS2194",
+    "description": "İçeriğinde kişisel şablon olan evrakı paylaşma",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Evrak Paylasma Test",
+    "test": "TS2195",
+    "description": "Cevap evrakını paylaşma",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Evrak Paylasma Test",
+    "test": "TS2197",
+    "description": "Devredilen evrakı paylaşma",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Evrak Postalama Test",
+    "test": "TS0308",
+    "description": "Evrak Postalama",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Evrak Postalama Test",
+    "test": "TS0312",
+    "description": "postalama işlemi sonrası postalananlar listesinin kontrolü",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Evrak Postalama Test",
+    "test": "TS0520a",
+    "description": "Postalanan evrak posta bilgilerinin önizleme ekranından güncellenmesi ve rapor üzerinde kontrolü",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Evrak Postalama Test",
+    "test": "TS0520b",
+    "description": "Postalanan evrak posta bilgilerinin içerik ekranından güncellenmesi ve rapordan kontrolü",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Evrak Postalama Test",
+    "test": "TS0802",
+    "description": "Postalanan Evrak Raporu",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Evrak Postalama Test",
+    "test": "TS1434",
+    "description": "Postalanan Evrak Raporu Alan kontrolleri",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Evrak Postalama Test",
+    "test": "TS1685",
+    "description": "Fiziksel eki olan iç yazışmaların postaya düşürülmesi",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Evrak Postalama Test",
+    "test": "TS0310",
+    "description": "İçerik ekranından evrakın postalanması",
+    "methodsDependsOn": [
+      "TS1685"
+    ]
+  },
+  {
+    "testClass": "Evrak Postalama Test",
+    "test": "TS2076",
+    "description": "Evrak Postalama işlemleri",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Evrak Postalama Test",
+    "test": "TS2235",
+    "description": "Ek ilgi ilişiği olan evrakı postaya düşürme",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Evrak Postalama Test",
+    "test": "TS0309",
+    "description": "Önizleme ekranından ek ilgi ve ilişiği olan evrakın postalanması",
+    "methodsDependsOn": [
+      "TS2235"
+    ]
+  },
+  {
+    "testClass": "Evrak Teslim Alma Test",
+    "test": "TS2314",
+    "description": "Teslim alınmayı bekleyenler listesinden bir evrakı teslim alma (listeden)",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Evrak Teslim Alma Test",
+    "test": "TS2315",
+    "description": "Birime iade edilenler listesinden evrak teslim alma (listeden)",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Evrak Teslim Alma Test",
+    "test": "TS2316",
+    "description": "Teslim alınmayı bekleyenler listesinden bir evrakı teslim alma (içerikten)",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Evrak Teslim Alma Test",
+    "test": "TS2317",
+    "description": "Birime iade edilenler listesinden evrak teslim alma (önizlemeden)",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Evrak Teslim Alma Test",
+    "test": "TS2318",
+    "description": "Evrak teslim alma işleminin loglardan kontrolü",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Evrak Teslim Alma Test",
+    "test": "TS2319",
+    "description": "Teslim alınmayı bekleyenler listesinden evrak teslim alma (toplu)",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Evrak Teslim Alma Test",
+    "test": "TS2320",
+    "description": "Birime iade edilenler listesinden evrak teslim alma (toplu)",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Evrak Teslim Alma Test",
+    "test": "TS2321",
+    "description": "Teslim alınan evrakın gelen evrak zimmet raporundan kontrolü",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Gelen Evraki Cevapli Kapat Test",
+    "test": "TS0373",
+    "description": "Cevap yazma işleminde evrakın onay akışından silinmesi",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Gelen Evraki Cevapli Kapat Test",
+    "test": "TS0929",
+    "description": "Dış kurumdan gelen evraka cevap yaz",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Gelen Evraki Cevapli Kapat Test",
+    "test": "TS0930",
+    "description": "Kurum içi gelen evraka cevap yaz",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Gelen Evraki Cevapli Kapat Test",
+    "test": "TS0931",
+    "description": "Gerçek kişiden gelen evraka cevap yaz",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Gelen Evraki Cevapli Kapat Test",
+    "test": "TS0932",
+    "description": "Tüzel kişiden gelen evraka cevap yaz",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Gelen Evraki Cevapli Kapat Test",
+    "test": "TS1368",
+    "description": "Cevaplanan Evrak Raporu",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Gelen Evraki Cevapli Kapat Test",
+    "test": "TS2186",
+    "description": "Cevap evrakında form kullanma",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Gelen Evraki Cevapli Kapat Test",
+    "test": "TS2187",
+    "description": "Cevap evrakında birim içerik şablonu kullanma",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Gelen Evraki Cevapli Kapat Test",
+    "test": "TS2188",
+    "description": "Cevap evrakında kullanıcı şablonu kullanma",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Gelen Giden Evrak Kayit Havale Test",
+    "test": "TS1582",
+    "description": "Evrakın Onaylı havale edilmesi ve güncellenerek onaylanması",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Gelen Giden Evrak Kayit Havale Test",
+    "test": "TS2171",
+    "description": "Gelen evrak kaydederken havale edilen evrakın geri alınması",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Gelen Giden Evrak Kayit Havale Test",
+    "test": "TS2172",
+    "description": "Evrakın Onaylı havale edilmesi ve onayın reddedilmesi (içerikten)",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Gelen Giden Evrak Kayit Havale Test",
+    "test": "TS397",
+    "description": "Havale yeri Birim; Kişi; Kullanıcı Listesi seçilerek evrakın havale edilmesi",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Gelen Giden Evrak Kayit Havale Test",
+    "test": "TS405",
+    "description": "Havaleden geri alınan evrakın tekrar havalesi",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Gelen Giden Evrak Kayit Havale Test",
+    "test": "TS407",
+    "description": "Ek ve ilgisi olan gelen evrakın havalesi",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Gelen Giden Evrak Kayit Havale Test",
+    "test": "TS435",
+    "description": "Havale onayı bekleyen evrakın geri çekilmesi ve tekrar havalesi (detay ekranından)",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Gelen Giden Evrak Kayit Test",
+    "test": "TS0321",
+    "description": "Üstyazı ek ve ilgi eklenerek gelen evrak kaydı",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Gelen Giden Evrak Kayit Test",
+    "test": "TS0322",
+    "description": "Gelen evrak kayıtta alan kontrolleri",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Gelen Giden Evrak Kayit Test",
+    "test": "TS0326",
+    "description": "Gelen evrakın tarama havuzundan evrak eklenerek kaydedilmesi",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Gelen Giden Evrak Kayit Test",
+    "test": "TS0328",
+    "description": "Gelen evrak kayıt ekranından havale",
+    "methodsDependsOn": [
+      "TS0321"
+    ]
+  },
+  {
+    "testClass": "Gelen Giden Evrak Kayit Test",
+    "test": "TS0394",
+    "description": "Gelen maillerin evrak olarak sisteme dahil edilmesi",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Gelen Giden Evrak Kayit Test",
+    "test": "TS1136",
+    "description": "Gelen evrak kaydederken yeni gerçek ve tüzel kişi tanımlama",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Gelen Giden Evrak Kayit Test",
+    "test": "TS1340",
+    "description": "Giden evrak kaydı",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Gelen Giden Evrak Kayit Test",
+    "test": "TS1401",
+    "description": "Kaydedilen Gelen Evrak raporu",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Gelen Giden Evrak Kayit Test",
+    "test": "TS2163",
+    "description": "Kaydedilen gelen evrakın güncellenmesi",
+    "methodsDependsOn": [
+      "TS0321"
+    ]
+  },
+  {
+    "testClass": "Gercek Kisi Yonetimi Test",
+    "test": "TS1119",
+    "description": "Gerçek Kişi iletişim bilgilerinin değiştirilmesi",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Gercek Kisi Yonetimi Test",
+    "test": "TS1132a",
+    "description": "Gerçek kişinin pasif yapılması ve ekranlardan kontrolü",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Gercek Kisi Yonetimi Test",
+    "test": "TS1135",
+    "description": "Yeni gerçek kişi kayıtta alan kontrolleri",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Gercek Kisi Yonetimi Test",
+    "test": "TS1137",
+    "description": "Gerçek Kişi Bilgisi Güncelleme ve kontrolleri",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Gercek Kisi Yonetimi Test",
+    "test": "TS1144",
+    "description": "Gerçek kişi sorgulama",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Gercek Kisi Yonetimi Test",
+    "test": "TS1458a",
+    "description": "Pasif yapılan gerçek kişinin aktif yapılması ve ekranlardan kontrolü",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Gercek Kisi Yonetimi Test",
+    "test": "TS1516",
+    "description": "Gerçek kişi tanımlama ve kontrolü",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Gizlilik Kleransi Test",
+    "test": "TS0272",
+    "description": "Teslim almayı bekleyenler listesinden havale ederken gizlilik kontrolü",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Gizlilik Kleransi Test",
+    "test": "TS1471",
+    "description": "Kullanıcı gizlilik derecesi değiştirme",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Gizlilik Kleransi Test",
+    "test": "TS1472",
+    "description": "Dağıtımda gizlilik derecesi kontrolü",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Gizlilik Kleransi Test",
+    "test": "TS1473",
+    "description": "Onay akışında gizlilik derecesi kontrolü",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Gizlilik Kleransi Test",
+    "test": "TS1474",
+    "description": "Havale ettiklerim listesinden havalede gizlilik derecesi kontrolü",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Gizlilik Kleransi Test",
+    "test": "TS1475A",
+    "description": "Havale ettiklerim listesinden havalede gizlilik derecesi kontrolü",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Gizlilik Kleransi Test",
+    "test": "TS1475B",
+    "description": "Gelen evrak listesinden havalede gizlilik derecesi kontrolü",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Gizlilik Kleransi Test",
+    "test": "TS1938",
+    "description": "Yüksek kleranslı evrak oluşturma",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Gizlilik Kleransi Test",
+    "test": "TS2131",
+    "description": "İşlem bekleyen evraklardan evrak paylaşırken gizlilik kontrolü",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Gizlilik Kleransi Test",
+    "test": "TS2132",
+    "description": "İşlem yaptıklarım listesinden evrak paylaşırken gizlilik kontrolü",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Gizlilik Kleransi Test",
+    "test": "TS2134",
+    "description": "İşlem bekleyen evraklardan takibe eklerken gizlilik kontrolü",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Gizlilik Kleransi Test",
+    "test": "TS2135",
+    "description": "İşlem yaptıklarım listesinden evrak takibe eklerken gizlilik kontrolü",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Gizlilik Kleransi Test",
+    "test": "TS2138",
+    "description": "Genel evrak raporunda gizlilik kleransı kontrolü (evrakta izi olmayan kullanıcı ile)",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Gizlilik Kleransi Test",
+    "test": "TS2139",
+    "description": "Evrak aramada gizlilik kleransı kontrolü (evrakta izi olmayan kullanıcı ile)",
+    "methodsDependsOn": [
+      "TS1938"
+    ]
+  },
+  {
+    "testClass": "Gizlilik Kleransi Test",
+    "test": "TS2140",
+    "description": "Evrak aramada gizlilik kleransı kontrolü (evrakta izi olan kullanıcı ile)",
+    "methodsDependsOn": [
+      "TS1938"
+    ]
+  },
+  {
+    "testClass": "Gizlilik Kleransi Test",
+    "test": "TS2181",
+    "description": "Gizlilik kleransı yeterli olmayan kullanıcıya evrak devrediemelmesi",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Gizlilik Kleransi Test",
+    "test": "TS2189",
+    "description": "Onay akışında gizlilik klerans kontrolü (Cevap)",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Gizlilik Kleransi Test",
+    "test": "TS2190",
+    "description": "Dağıtımda gizlilik klerans kontrolü (Cevap)",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Gizlilik Kleransi Test",
+    "test": "TS2191",
+    "description": "Akışta gizlilik kleransı değiştirilen evrakın dağıtım yeri kontrolü",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Gizlilik Kleransi Test",
+    "test": "TS2223",
+    "description": "Teslim aldıklarım listesinden havalede gizlilik klerans kontrolü",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Gizlilik Kleransi Test",
+    "test": "TS2225",
+    "description": "Posta işleminde gizlilik klerans kontrolü (evrakta izi olan kullanıcı ile)",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Gizlilik Kleransi Test",
+    "test": "TS2226",
+    "description": "Genel evrak raporunda gizlilik klerans kontrolü (evrakta izi olan kullanıcı ile)",
+    "methodsDependsOn": [
+      "TS1938"
+    ]
+  },
+  {
+    "testClass": "Gizlilik Kleransi Test",
+    "test": "TS2227",
+    "description": "Teslim alınmayı bekleyenler ve teslim alınanlar listesinde gizlilik klerans kontrolü (evrakta izi olmayan kullanıcı ile)",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Hitapta büyük/küçük harf",
+    "test": "TS2064",
+    "description": "Tüzel kişi - Hitapta büyük/küçük harf kontrolü",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Hitapta büyük/küçük harf",
+    "test": "TS2090",
+    "description": "Dağıtım planına ve kullanıcıya hitap",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Hitapta büyük/küçük harf",
+    "test": "TS2156",
+    "description": "Kurum- Hitapta büyük/küçük harf kontrolü",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Hitapta büyük/küçük harf",
+    "test": "TS2157",
+    "description": "Birim- Hitapta büyük/küçük harf kontrolü",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Karar Yazisi Olusturma Test",
+    "test": "TS1488",
+    "description": "Karar yazısında zorunlu alan kontrolleri",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Karar Yazisi Olusturma Test",
+    "test": "TS1497",
+    "description": "Karar Yazısı oluşturulması",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Karar Yazisi Olusturma Test",
+    "test": "TS1714",
+    "description": "Karar yazsının iadesi",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Karar Yazisi Olusturma Test",
+    "test": "TS1715",
+    "description": "Gelen evrak listesinden Gündem klasörüne evrak kapatma",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Karar Yazisi Olusturma Test",
+    "test": "TS2232",
+    "description": "Karar izleme ekranının toplu onaya sunma",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Karar Yazisi Olusturma Test",
+    "test": "TS2238",
+    "description": "Gündem klasörü oluşturma",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Karar Yazisi Olusturma Test",
+    "test": "TS2239",
+    "description": "Gündem yayınlama",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Karar Yazisi Olusturma Test",
+    "test": "TS2240",
+    "description": "Teslim alınmayı bekleyenler listesinden Gündem klasörüne evrak kapatma",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Kep Ile Postalama Islemleri Test",
+    "test": "TS1513B",
+    "description": "Kurum Kep Hesabı Tanımlama ve Evrak Oluşturma Ekranından kontrolü",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Kep Ile Postalama Islemleri Test",
+    "test": "TS1513C",
+    "description": "Gerçek Kişi Kep Hesabı Tanımlama ve Evrak Oluşturma Ekranından Kontrolü",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Kep Ile Postalama Islemleri Test",
+    "test": "TS1513D",
+    "description": "Tüzel Kişi Kep Hesabı Tanımlama ve Evrak Oluşturma Ekranından Kontrolü",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Kep Ile Postalama Islemleri Test",
+    "test": "TS1520",
+    "description": "KEP Adresi Tanımlama işlemleri",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Kep Ile Postalama Islemleri Test",
+    "test": "TS1610",
+    "description": "KEP Hesap Menüsü - Tanımlanan KEP hesapları ile login işlemleri",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Kep Ile Postalama Islemleri Test",
+    "test": "TS2236",
+    "description": "KEP Adresi Tanımlama işlemleri",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Kep Ile Postalama Islemleri Test",
+    "test": "TS1549",
+    "description": "KEP posta tipindeki evrakın postalanacak evraklarda posta tipinin değiştirilmesi",
+    "methodsDependsOn": [
+      "TS2236"
+    ]
+  },
+  {
+    "testClass": "Kisayol Tuslari Test",
+    "test": "TS1952a",
+    "description": "Kısayol tuşları kullanarak Olur Oluştur ekranını açma",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Kisayol Tuslari Test",
+    "test": "TS1952b",
+    "description": "Kısayol tuşları kullanarak Kullanıcı Yönetimi ekranını açma",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Kisayol Tuslari Test",
+    "test": "TS1952c",
+    "description": "Kısayol tuşları kullanarak Giden Evrak Kayıt ekranını açma",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Kisayol Tuslari Test",
+    "test": "TS1952e",
+    "description": "Kısayol tuşları kullanarak Evrak Oluştur ekranını açma",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Kisayol Tuslari Test",
+    "test": "TS1952f",
+    "description": "Kısayol tuşları kullanarak Evrak Arama ekranını açma",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Kisayol Tuslari Test",
+    "test": "TS1952g",
+    "description": "Kısayol tuşları kullanarak Genel Evrak Raporu ekranını açma",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Kisayol Tuslari Test",
+    "test": "TS1952h",
+    "description": "Kısayol tuşları kullanarak Gelen Evrak Kayıt ekranını açma",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Kisayol Tuslari Test",
+    "test": "TS1952i",
+    "description": "Kısayol tuşları kullanarak Karar Yazısı Oluştur ekranını açma",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Kisayol Tuslari Test",
+    "test": "TS1952j",
+    "description": "Kısayol tuşları kullanarak Personel ve Açık Evrak İstatistiği ekranını açma",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Kisayol Tuslari Test",
+    "test": "TS1955",
+    "description": "Kısayol Tuşlarının Tooltipleri",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Kisisel Islemler Bag Tipi Test",
+    "test": "TS2141",
+    "description": "Bağ tipi amir yardımcısı olması kontrolleri",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Kisisel Islemler Bag Tipi Test",
+    "test": "TS2142",
+    "description": "Bağ tipi vekaleten amir yardımcısı kontrolleri",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Kisisel Islemler Bag Tipi Test",
+    "test": "TS2168",
+    "description": "Bağ tipi personel kontrolleri",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Kurum Yonetimi Test",
+    "test": "TS1108",
+    "description": "Kurum Sorgulama",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Kurum Yonetimi Test",
+    "test": "TS1109",
+    "description": "Kurum tanımlama ve kontrolü",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Kurum Yonetimi Test",
+    "test": "TS1459",
+    "description": "Kurum bilgisi güncelleme",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Olur Yazisi Islemleri Test",
+    "test": "TS0577",
+    "description": "Olur yazısı oluşturulması ve gönderilmesi",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Onay Akisi Test",
+    "test": "TS1892a",
+    "description": "Onay akışı güncellemede alan kontrolleri",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Onay Akisi Test",
+    "test": "TS1892b",
+    "description": "Onay akışı kaydetmede alan kontrolleri",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Onay Akisi Test",
+    "test": "TS1895a",
+    "description": "Vekaleti olan kullanıcıyı onay akışına ekleme",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Onay Akisi Test",
+    "test": "TS1895b",
+    "description": "Vekaleti olan kullanıcının vekilini onay akışına ekleme",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Onay Akisi Test",
+    "test": "TS1896",
+    "description": "Onay akışı güncelleme",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Onay Akisi Test",
+    "test": "TS1897a",
+    "description": "Varsayılan onay akışının pasif edilmesi",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Onay Akisi Test",
+    "test": "TS1897b",
+    "description": "Onay akışı varsayılan yapma",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Onay Akisi Test",
+    "test": "TS1900",
+    "description": "Evrak oluşturma ekranından kayıtlı onay akışı güncelleme",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Onay Akisi Test",
+    "test": "TS1901b",
+    "description": "Otomatik Onay akışı kullanma – Vekaletli",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Onay Akisi Test",
+    "test": "TS2110",
+    "description": "Onay Akışı Yönetimi - Yeni Onay Akışı Oluşturma ve evrak üzerinde kontrolü",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Onay Akisi Test",
+    "test": "TS2111",
+    "description": "Onay Akışı Yönetimi - Kayıtlı Onay Akışını kullanım sırasında anlık değiştirme",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Onay Akisi Test 2",
+    "test": "TS2112a",
+    "description": "Onay Akışı Yönetimi - Aktif/Pasif Yapma ve Varsayılan Yapma",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Onay Akisi Test 2",
+    "test": "TS2112b",
+    "description": "Onay Akışı Yönetimi - Aktif/Pasif Yapma ve Varsayılan Yapma",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Onay Akisi Test 3",
+    "test": "TS2113a",
+    "description": "Onay Akışı Yönetimi - Güncelleme",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Onay Akisi Test 3",
+    "test": "TS2113b",
+    "description": "Onay Akıışı Yönetimi - Güncelleme",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Onay Akisi Test 3",
+    "test": "TS2113c",
+    "description": "Onay Akışı Yönetimi - Güncelleme",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Onay Akisindaki Evraki Sil Test",
+    "test": "TS0102",
+    "description": "Parafa Gelen Evrakın Ön İzleme Ekranından Silinmesi ve Kontrolü",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Onay Akisindaki Evraki Sil Test",
+    "test": "TS0983",
+    "description": "İmzacıdaki Karar Yazısının Silinememesi",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Pul Yonetimi Test",
+    "test": "TS1732",
+    "description": "Pul Yönetimi ekranından yeni tanımlama yapma",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Pul Yonetimi Test",
+    "test": "TS2214",
+    "description": "Pul yönetimi ekranındaki tanımın postalanacaklar listesinde kontrolü",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Pul Yonetimi Test",
+    "test": "TS2215",
+    "description": "Pul yönetimi ekranındaki tanımın posta listesinde kontrolü",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Evrakı Beklemeye Alma",
+    "test": "TS2095a",
+    "description": "Evrakı beklemeye alma ve imzalama",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Evrakı Beklemeye Alma",
+    "test": "TS2095b",
+    "description": "Paraf; Gelen; Postalanacak bekleyen evarklarda Beklemeye Al butonun gelmediği görülür",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Takibe Evrak Ekleme Test",
+    "test": "TS2073",
+    "description": "Takibe Evrak Ekle",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Teblig Tebellug Test",
+    "test": "TS0067",
+    "description": "Tebliğe gelen evrakın tebellüğ edilmesi ve tebliğ eden kullanıcıdan kontrolü",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Teblig Tebellug Test",
+    "test": "TS0845",
+    "description": "Gelen Evrakın kullanıcı listesine detay ekrandan tebliğ edilmesi.",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Teblig Tebellug Test",
+    "test": "TS0845A",
+    "description": "Gelen Evrakın Önizleme ekranından kullanıcıya tebliğ edilmesi",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Teblig Tebellug Test",
+    "test": "TS0847",
+    "description": "Tebliğlerin teker teker ve toplu silinmesi",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Teblig Tebellug Test",
+    "test": "TS0936",
+    "description": "Tebliğ hatırlatma ve Mesaj kontrolü",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Teslim Alinmayi Bekleyen Havale Test",
+    "test": "TS0443",
+    "description": "Birime Evrak Havale (önizleme ekranından) ve Havaleyi Geri Alma",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Teslim Alinmayi Bekleyen Havale Test",
+    "test": "TS0453",
+    "description": "Gereği için birim bilgi için kişi seçilerek evrak havale etme (içerik ekranından)",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Teslim Alinmayi Bekleyen Havale Test",
+    "test": "TS2285",
+    "description": "Kişi seçimi yapmadan toplu havaleyi onaya sunma",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Teslim Alinmayi Bekleyen Havale Test",
+    "test": "TS2294",
+    "description": "Havale yeri Birim; Kişi; Kullanıcı Listesi seçilerek evrakın havale edilmesi",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Teslim Alinmayi Bekleyen Havale Test",
+    "test": "TS2300",
+    "description": "Evrakın Onaylı havale edilmesi ve güncellenerek onaylanması",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Toplu Postalama Test",
+    "test": "TS1675",
+    "description": "Toplu Postaladıklarım İzleme / Alan Kontrolleri (UC_POSTAYÖNETİMİ_004)",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Toplu Postalama Test",
+    "test": "TS1676",
+    "description": "Toplu Postalama PTT Evrak Raporu (UC_POSTAYÖNETİMİ_005)",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Toplu Postalama Test",
+    "test": "TS1804",
+    "description": "Toplu Postalanacak Evrakların Sorgulanması (UC_POSTAYÖNETİMİ_001)",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Toplu Postalama Test",
+    "test": "TS1805",
+    "description": "Posta Listesi Oluşturma- Kurum Listesi (UC_POSTAYÖNETİMİ_002)",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Toplu Postalama Test",
+    "test": "TS1807",
+    "description": "Posta Listesi Oluşturma- Tüzel Kişi Listesi (UC_POSTAYÖNETİMİ_002)",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Toplu Postalama Test",
+    "test": "TS1807A",
+    "description": "Posta Listesi Oluşturma- Gerçek Kişi Listesi (UC_POSTAYÖNETİMİ_002)",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Toplu Postalama Test",
+    "test": "TS1808",
+    "description": "Posta Listesine Evrak Ekleme ve Çıkartma (UC_POSTAYÖNETİMİ_002)",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Toplu Postalama Test",
+    "test": "TS1809",
+    "description": "Posta Listesi Görüntüleme (UC_POSTAYÖNETİMİ_003)",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Toplu Postalama Test",
+    "test": "TS1811",
+    "description": "Posta Listesi Postalama İşlemleri (UC_POSTAYÖNETİMİ_003)",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Toplu Postalama Test",
+    "test": "TS1812",
+    "description": "Posta Listesi Postalama İşlemleri (Güncelleme) (UC_POSTAYÖNETİMİ_003)",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Toplu Postalama Test",
+    "test": "TS1815A",
+    "description": "Toplu postalama PTT raporunda alan kontrolleri-daha önceden rapor alındı ise (UC_POSTAYÖNETİMİ_004)",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Toplu Postalama Test",
+    "test": "TS1815B",
+    "description": "Toplu postalama PTT raporunda alan kontrolleri (UC_POSTAYÖNETİMİ_004)",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Toplu Postalama Test",
+    "test": "TS1816",
+    "description": "Toplu Postaladıklarım Güncelleme İşlemleri (UC_POSTAYÖNETİMİ_004)",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Toplu Postalama Test",
+    "test": "TS1817",
+    "description": "Tutar alanı kontrol edilir.",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Toplu Postalama Test",
+    "test": "TS1818",
+    "description": "Posta Tutarı Hesaplama İşlemleri ve Güncelleme (UC_POSTAYÖNETİMİ_006)",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Toplu Postalama Test",
+    "test": "TS2087",
+    "description": "Toplu postaladıklarım listesinden evrakın geri alınması",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Tuzel Kisi Yonetimi Test",
+    "test": "TS1124",
+    "description": "Yeni tüzel kişi kayıt ve ekranlardan kontrolleri",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Tuzel Kisi Yonetimi Test",
+    "test": "TS1126",
+    "description": "Tüzel Kişi Bilgisi Güncelleme ve kontrolleri",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Tuzel Kisi Yonetimi Test",
+    "test": "TS1132b",
+    "description": "Tüzel kişinin pasif yapılması ve kontrolü",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Tuzel Kisi Yonetimi Test",
+    "test": "TS1133",
+    "description": "Tüzel kişi sorgulama",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Tuzel Kisi Yonetimi Test",
+    "test": "TS1458b",
+    "description": "Pasif yapılan tüzel kişinin aktif yapılması ve kontrolü",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Tuzel Kisi Yonetimi Test",
+    "test": "TS1460",
+    "description": "Yeni tüzel kişi kayıtta alan kontrolleri",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Tuzel Kisi Yonetimi Test",
+    "test": "TS2241",
+    "description": "Tüzel kişinin iletişim bilgisinin değiştirilmesi",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Tuzel Kisi Yonetimi Test",
+    "test": "TS2246",
+    "description": "Medya şirketi tipinde tüzel kişi ekleme",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Vekalet Islemleri Test",
+    "test": "TS0025a",
+    "description": "Onaya göndererek Vekalet Verme",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Vekalet Islemleri Test",
+    "test": "TS0025b",
+    "description": "Onaya göndererek Vekalet Verme işleminde onayın Red edilmesi",
+    "methodsDependsOn": [
+      "TS0025a"
+    ]
+  },
+  {
+    "testClass": "Vekalet Islemleri Test",
+    "test": "TS2208",
+    "description": "Onaya göndererek Vekalet Verme işleminde onayın kabul edilmesi",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Vekalet Islemleri Test",
+    "test": "TS0012",
+    "description": "vekaleti veren kullanıcının onay akışında seçilmesi (kendisi)",
+    "methodsDependsOn": [
+      "TS2208"
+    ]
+  },
+  {
+    "testClass": "Vekalet Islemleri Test",
+    "test": "TS0011",
+    "description": "Vekalet alan kullanıcıya evrak havalesi ve kontrolü",
+    "methodsDependsOn": [
+      "TS0012",
+      "TS2208"
+    ]
+  },
+  {
+    "testClass": "Vekalet Islemleri Test",
+    "test": "TS0014",
+    "description": "Vekalet veren kullanıcıya evrak havalesi ve kontrolü",
+    "methodsDependsOn": [
+      "TS2208"
+    ]
+  },
+  {
+    "testClass": "Vekalet Islemleri Test",
+    "test": "TS0015",
+    "description": "Vekaleti alan kullanıcının onay akışında seçilmesi(vekaleten)",
+    "methodsDependsOn": [
+      "TS2208"
+    ]
+  },
+  {
+    "testClass": "Vekalet Islemleri Test",
+    "test": "TS2212",
+    "description": "Vekalet veren kullanıcının bulunduğu kullanıcı listesine evrak havalesi ve kontrolü",
+    "methodsDependsOn": [
+      "TS2208"
+    ]
+  },
+  {
+    "testClass": "Yazisma Kurallari Yonetimi Test",
+    "test": "TS1957A",
+    "description": "Yazışma Kuralı Ekle",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Yazisma Kurallari Yonetimi Test",
+    "test": "TS1957B",
+    "description": "Yazışma Kuralı Sil",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Yazisma Kurallari Yonetimi Test",
+    "test": "TS1957C",
+    "description": "Yazışma Kuralı Güncelle",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Yonetim Havuzu Islemleri Test",
+    "test": "TS0001",
+    "description": "Yönetim havuzunu pasife alma",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Yonetim Havuzu Islemleri Test",
+    "test": "TS0002",
+    "description": "Yeni yönetim havuzu kayıt",
+    "methodsDependsOn": []
+  },
+  {
+    "testClass": "Yonetim Havuzu Islemleri Test",
+    "test": "TS0009",
+    "description": "yönetim havuzunu güncelleme",
+    "methodsDependsOn": []
+  }
+]

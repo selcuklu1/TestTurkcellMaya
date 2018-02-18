@@ -29,17 +29,17 @@ public class HaveleOnayinaSunduklarimPage extends MainPage {
     }
 
     @Step("Havale bilgisi tıklanır")
-    public HaveleOnayinaSunduklarimPage icerikGosterHavaleBilgisi(){
-    $("[class='ui-button-icon-left ui-icon havaleBilgisi']").click();
+    public HaveleOnayinaSunduklarimPage icerikGosterHavaleBilgisi() {
+        $("[class='ui-button-icon-left ui-icon havaleBilgisi']").click();
         return this;
     }
-    
+
     @Step("Birim ve kişi bilgilerinin boş olarak geldiği görülür.")
-    public HaveleOnayinaSunduklarimPage birimVeKisiBilgilerinBosOlarakGeldigiGorme(){
-        boolean durum = $(By.id("inboxItemInfoForm:dagitimBilgileriBirimLov_id:LovText")).getValue()=="";
-        boolean durum1 = $(By.id("inboxItemInfoForm:dagitimBilgileriKullaniciLov_id:LovText")).getValue()=="";
-        Assert.assertEquals(durum,durum1);
+    public HaveleOnayinaSunduklarimPage birimVeKisiBilgilerinBosOlarakGeldigiGorme() {
+        boolean durum = $(By.id("inboxItemInfoForm:dagitimBilgileriBirimLov_id:LovText")).getValue() == "";
+        boolean durum1 = $(By.id("inboxItemInfoForm:dagitimBilgileriKullaniciLov_id:LovText")).getValue() == "";
+        Assert.assertEquals(durum, durum1);
         return this;
     }
-    
+
 }

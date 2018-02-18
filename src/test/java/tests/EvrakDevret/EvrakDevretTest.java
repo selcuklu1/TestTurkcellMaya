@@ -12,7 +12,6 @@ import pages.solMenuPages.*;
 import pages.ustMenuPages.EvrakOlusturPage;
 import pages.ustMenuPages.GelenEvrakKayitPage;
 import pages.ustMenuPages.KullaniciEvrakDevretPage;
-import tests.BirimeIade.BirimeIadeEdilenlerdenHavaleTest;
 
 
 /****************************************************
@@ -203,7 +202,7 @@ public class EvrakDevretTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS2178b : Havale Onayına Gelen evrakın devredilmesi")
-    public void TS2178b() throws InterruptedException{
+    public void TS2178b() throws InterruptedException {
 
         login(mbozdemir);
         havaleOnayı();
@@ -232,12 +231,12 @@ public class EvrakDevretTest extends BaseTest {
 
         gelenEvraklarPage
                 .openPage()
-                .tabloKonuyaGoreEvrakKontrol(konu,true);
+                .tabloKonuyaGoreEvrakKontrol(konu, true);
     }
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS0516 : İlgisi olan gelen evrakın devredilmesi.")
-    public void TS0516() throws InterruptedException{
+    public void TS0516() throws InterruptedException {
 
         login(mbozdemir);
         gelenEvrak();
@@ -266,13 +265,13 @@ public class EvrakDevretTest extends BaseTest {
 
         gelenEvraklarPage
                 .openPage()
-                .tabloKonuyaGoreEvrakKontrol(konu,true);
+                .tabloKonuyaGoreEvrakKontrol(konu, true);
 
     }
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS2183 : Evrak devretmede alan kontrolleri")
-    public void TS2183() throws InterruptedException{
+    public void TS2183() throws InterruptedException {
 
         login(username21g);
 
@@ -309,14 +308,13 @@ public class EvrakDevretTest extends BaseTest {
                 .islemMesaji().basariliOlmali(basariMesaji);
 
 
-
     }
 
     @Step("Test datası oluşturuldu.")
     private void gelenEvrak() throws InterruptedException {
         String basariMesaji = "İşlem başarılıdır!";
         String konuKodu = "Diğer";
-        String evrakSayiSag =  createRandomNumber(10);
+        String evrakSayiSag = createRandomNumber(10);
         String evrakTarihi = getSysDateForKis();
         String kurum = "BÜYÜK HARFLERLE KURUM";
         String pathToFileText = getUploadPath() + "test.txt";
@@ -344,7 +342,7 @@ public class EvrakDevretTest extends BaseTest {
 
         String basariMesaji = "İşlem başarılıdır!";
         String konuKodu = "Diğer";
-        String evrakSayiSag =  createRandomNumber(10);
+        String evrakSayiSag = createRandomNumber(10);
         String evrakTarihi = getSysDateForKis();
         String kurum = "BÜYÜK HARFLERLE KURUM";
         String kullaniciAdi = "Yazılım Geliştirme Direktörlüğ";
@@ -369,7 +367,7 @@ public class EvrakDevretTest extends BaseTest {
                 .openPage()
                 .evrakSec(konu)
                 .teslimAlVeHavaleEt()
-                .onaylanacakKisiDoldur("Username21g Test","YGD")
+                .onaylanacakKisiDoldur("Username21g Test", "YGD")
                 .havaleOnayinaGonder();
     }
 

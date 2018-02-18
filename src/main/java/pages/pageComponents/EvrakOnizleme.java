@@ -1,6 +1,9 @@
 package pages.pageComponents;
 
-import com.codeborne.selenide.*;
+import com.codeborne.selenide.CollectionCondition;
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selectors;
+import com.codeborne.selenide.SelenideElement;
 import data.User;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
@@ -49,15 +52,20 @@ public class EvrakOnizleme extends MainPage {
         SearchTable searchTable = new SearchTable(dagitimPlaniDetay);
 
         SelenideElement kaydet = $(By.id("mainPreviewForm:dagitimPlaniDetayKaydetViewDialog"));
+        //Yazdır
+        SelenideElement yazdirEvrakDetayForm = $("#postaDetayYazdirForm");
+        SelenideElement yazdirEvrakDetayClose = $("#postaDetayYazdirForm a.ui-dialog-titlebar-close");
+        SearchTable yazdirUstVeriler = new SearchTable($(By.id("postaDetayYazdirForm:dtPostaEvrakUstVeri")));
+        SearchTable yazdirEvrakinEkleri = new SearchTable($(By.id("postaDetayYazdirForm:evrakEkListesi")));
 
         @Step("Kaydet")
-        public DagitimPlaniIcerigi kaydet(){
+        public DagitimPlaniIcerigi kaydet() {
             kaydet.click();
             return this;
         }
 
         @Step("Dağıtım Planı İçeriği listesi")
-        public SearchTable getDagitimPlaniDetayDataTable(){
+        public SearchTable getDagitimPlaniDetayDataTable() {
             return searchTable;
         }
 
@@ -79,7 +87,7 @@ public class EvrakOnizleme extends MainPage {
         }
 
         @Step("Detay buton {stepDescription}")
-        public SelenideElement getDetayButtonInFoundRow(String stepDescription){
+        public SelenideElement getDetayButtonInFoundRow(String stepDescription) {
             return searchTable.getFoundRow().$x("descendant::button[span[.='Detay']]");
         }
 
@@ -128,7 +136,7 @@ public class EvrakOnizleme extends MainPage {
         }
 
         @Step("Tutar dialog tamam butona basılır")
-        public DagitimPlaniIcerigi tutarDialogTamamTikla(){
+        public DagitimPlaniIcerigi tutarDialogTamamTikla() {
             $(By.id("mainPreviewForm:tutarDialogButtonId")).click();
             return this;
         }
@@ -154,6 +162,7 @@ public class EvrakOnizleme extends MainPage {
         public SelenideElement getAyrintiAlan(String label) {
             return searchTable.getFoundRow().$x("descendant::tr[td[1]/label[contains(.,'" + label + "')]]");
         }
+        //endregion
 
         public SelenideElement getAyrintiAlanInput(String label, int... index) {
             return getAyrintiAlan(label).$("input:nth-child(" + (index.length > 0 ? index[0] : 1) + ")");
@@ -170,16 +179,9 @@ public class EvrakOnizleme extends MainPage {
         public SelenideElement getAyrintiAlanButton(String label, int... index) {
             return getAyrintiAlan(label).$("button:nth-child(" + (index.length > 0 ? index[0] : 1) + ")");
         }
-        //endregion
-
-        //Yazdır
-        SelenideElement yazdirEvrakDetayForm = $("#postaDetayYazdirForm");
-        SelenideElement yazdirEvrakDetayClose = $("#postaDetayYazdirForm a.ui-dialog-titlebar-close");
-        SearchTable yazdirUstVeriler = new SearchTable($(By.id("postaDetayYazdirForm:dtPostaEvrakUstVeri")));
-        SearchTable yazdirEvrakinEkleri = new SearchTable($(By.id("postaDetayYazdirForm:evrakEkListesi")));
 
         @Step("Yazdır - penceriyi kapa")
-        public DagitimPlaniIcerigi yazdirClose(){
+        public DagitimPlaniIcerigi yazdirClose() {
             yazdirEvrakDetayClose.click();
             return this;
         }
@@ -191,12 +193,12 @@ public class EvrakOnizleme extends MainPage {
         }
 
         @Step("Yazdır - Üst Veriler listesi")
-        public SearchTable getYazdirUstVerilerListesi(){
+        public SearchTable getYazdirUstVerilerListesi() {
             return yazdirUstVeriler;
         }
 
         @Step("Yazdır - Evrakın ekleri listesi")
-        public SearchTable getYazdirEvrakinEkleriListesi(){
+        public SearchTable getYazdirEvrakinEkleriListesi() {
             return yazdirEvrakinEkleri;
         }
 
@@ -245,6 +247,11 @@ public class EvrakOnizleme extends MainPage {
         SelenideElement postalaButton = $(By.id("mainPreviewForm:postalaButton_id"));
 
         SearchTable searchTable = new SearchTable(postalanacakDataTable);
+        //Yazdır
+        SelenideElement yazdirEvrakDetayForm = $("#postaDetayYazdirForm");
+        SelenideElement yazdirEvrakDetayClose = $("#postaDetayYazdirForm a.ui-dialog-titlebar-close");
+        SearchTable yazdirUstVeriler = new SearchTable($(By.id("postaDetayYazdirForm:dtPostaEvrakUstVeri")));
+        SearchTable yazdirEvrakinEkleri = new SearchTable($(By.id("postaDetayYazdirForm:evrakEkListesi")));
 
         @Step("Postalancak Yerler listesi")
         public SearchTable getPostalanacakListesi() {
@@ -270,7 +277,7 @@ public class EvrakOnizleme extends MainPage {
         }
 
         @Step("Detay buton {stepDescription}")
-        public SelenideElement getDetayButtonInFoundRow(String stepDescription){
+        public SelenideElement getDetayButtonInFoundRow(String stepDescription) {
             return searchTable.getFoundRow().$x("descendant::button[span[.='Detay']]");
         }
 
@@ -333,6 +340,7 @@ public class EvrakOnizleme extends MainPage {
         public SelenideElement getAyrintiAlan(String label) {
             return searchTable.getFoundRow().$x("descendant::tr[td[1]/label[contains(.,'" + label + "')]]");
         }
+        //endregion
 
         public SelenideElement getAyrintiAlanInput(String label, int... index) {
             return getAyrintiAlan(label).$("input:nth-child(" + (index.length > 0 ? index[0] : 1) + ")");
@@ -349,16 +357,9 @@ public class EvrakOnizleme extends MainPage {
         public SelenideElement getAyrintiAlanButton(String label, int... index) {
             return getAyrintiAlan(label).$("button:nth-child(" + (index.length > 0 ? index[0] : 1) + ")");
         }
-        //endregion
-
-        //Yazdır
-        SelenideElement yazdirEvrakDetayForm = $("#postaDetayYazdirForm");
-        SelenideElement yazdirEvrakDetayClose = $("#postaDetayYazdirForm a.ui-dialog-titlebar-close");
-        SearchTable yazdirUstVeriler = new SearchTable($(By.id("postaDetayYazdirForm:dtPostaEvrakUstVeri")));
-        SearchTable yazdirEvrakinEkleri = new SearchTable($(By.id("postaDetayYazdirForm:evrakEkListesi")));
 
         @Step("Yazdır - penceriyi kapa")
-        public EvrakPostala yazdirClose(){
+        public EvrakPostala yazdirClose() {
             yazdirEvrakDetayClose.click();
             return this;
         }
@@ -370,12 +371,12 @@ public class EvrakOnizleme extends MainPage {
         }
 
         @Step("Yazdır - Üst Veriler listesi")
-        public SearchTable getYazdirUstVerilerListesi(){
+        public SearchTable getYazdirUstVerilerListesi() {
             return yazdirUstVeriler;
         }
 
         @Step("Yazdır - Evrakın ekleri listesi")
-        public SearchTable getYazdirEvrakinEkleriListesi(){
+        public SearchTable getYazdirEvrakinEkleriListesi() {
             return yazdirEvrakinEkleri;
         }
 
@@ -539,45 +540,44 @@ public class EvrakOnizleme extends MainPage {
         private final String tabName = "Evrak Ekleri";
 
         SearchTable searchTable = new SearchTable(container.$("[id$='ekListesiOnizlemeDataTable']"));
+        //Bitmedi, birden fazla doc eklenince kontrol edilmeli
+        String evrakDivId;
 
         @Step(tabName + " tabı aranır {stepDescription}")
-        public SelenideElement getTab(String stepDescription){
-            return $x("//div[@id='mainPreviewForm:evrakOnizlemeTab']//a[.='"+tabName+"']");
+        public SelenideElement getTab(String stepDescription) {
+            return $x("//div[@id='mainPreviewForm:evrakOnizlemeTab']//a[.='" + tabName + "']");
         }
 
         @Step(tabName + " tabı açılır")
-        public EvrakEkleri openTab(){
+        public EvrakEkleri openTab() {
             getTab("").shouldBe(visible).click();
             //container.$("[id$='ekListesiOnizlemeDataTable']").shouldBe(visible);
             return this;
         }
 
         @Step(tabName + " ek listesi aranır")
-        public SearchTable getDataTable(){
+        public SearchTable getDataTable() {
             return searchTable;
         }
 
-        //Bitmedi, birden fazla doc eklenince kontrol edilmeli
-        String evrakDivId;
-
-        public SelenideElement getEvrakDiv(){
+        public SelenideElement getEvrakDiv() {
             evrakDivId = container.$("div[id$=accpnl]").attr("id");
             return container.$("div[id$=accpnl]");
         }
 
-        public EvrakEkleri getEvrakTitle(){
+        public EvrakEkleri getEvrakTitle() {
             return this;
         }
 
-        public SelenideElement getEvrakFrame(){
+        public SelenideElement getEvrakFrame() {
             return getEvrakDiv().$("iframe.onizlemeFrame");
         }
 
         @Step("Evrak tekst içeriği kontrolü")
-        public EvrakEkleri evrakTextControl(String...texts){
+        public EvrakEkleri evrakTextControl(String... texts) {
             switchTo().frame(getEvrakFrame());
 
-            for (String text:texts) {
+            for (String text : texts) {
                 $(".textLayer").$(Selectors.byText(text)).should(exist);
             }
 
@@ -586,7 +586,7 @@ public class EvrakOnizleme extends MainPage {
         }
 
         @Step("Sayisal filigran bulunmalı")
-        public EvrakEkleri checkIfSayisalFiligranExist(){
+        public EvrakEkleri checkIfSayisalFiligranExist() {
             switchTo().frame(getEvrakFrame());
             $("div.textLayer").$$("div").filterBy(matchText("\\d+ - \\d+ - \\d+ - \\d+ - \\d+")).shouldHaveSize(1);
             switchTo().window(0);
@@ -594,13 +594,13 @@ public class EvrakOnizleme extends MainPage {
         }
 
         @Step("Filigran sayı al")
-        public int getFiligramSayi(){
+        public int getFiligramSayi() {
             switchTo().frame(getEvrakFrame());
             int sayi = Integer.valueOf(
                     $("div.textLayer").$$("div")
                             .filterBy(matchText("\\d+ - \\d+ - \\d+ - \\d+ - \\d+"))
                             .shouldHaveSize(1).first().text()
-                    .split("-")[0].trim()
+                            .split("-")[0].trim()
             );
 
             switchTo().frame(0);
@@ -614,12 +614,12 @@ public class EvrakOnizleme extends MainPage {
         private final String tabName = "ilişkili Evraklar";
 
         @Step(tabName + " tabı aranır {stepDescription}")
-        public SelenideElement getTab(String stepDescription){
-            return $x("//div[@id='mainPreviewForm:evrakOnizlemeTab']//a[.='"+tabName+"']");
+        public SelenideElement getTab(String stepDescription) {
+            return $x("//div[@id='mainPreviewForm:evrakOnizlemeTab']//a[.='" + tabName + "']");
         }
 
         @Step(tabName + " tabı açılır")
-        public IliskiliEvraklar openTab(){
+        public IliskiliEvraklar openTab() {
             getTab("").shouldBe(visible).click();
             //container.$("[id$='ekListesiOnizlemeDataTable']").shouldBe(visible);
             return this;
@@ -631,45 +631,44 @@ public class EvrakOnizleme extends MainPage {
         private final String tabName = "İlgi Bilgileri";
 
         SearchTable searchTable = new SearchTable(container.$("[id$='ilgiListesiDataTable']"));
+        //Bitmedi, birden fazla doc eklenince kontrol edilmeli
+        String evrakDivId;
 
         @Step(tabName + " tabı aranır {stepDescription}")
-        public SelenideElement getTab(String stepDescription){
-            return $x("//div[@id='mainPreviewForm:evrakOnizlemeTab']//a[.='"+tabName+"']");
+        public SelenideElement getTab(String stepDescription) {
+            return $x("//div[@id='mainPreviewForm:evrakOnizlemeTab']//a[.='" + tabName + "']");
         }
 
         @Step(tabName + " tabı açılır")
-        public IlgiBilgileri openTab(){
+        public IlgiBilgileri openTab() {
             getTab("").shouldBe(visible).click();
             //container.$("[id$='ekListesiOnizlemeDataTable']").shouldBe(visible);
             return this;
         }
 
         @Step(tabName + " ek listesi aranır")
-        public SearchTable getDataTable(){
+        public SearchTable getDataTable() {
             return searchTable;
         }
 
-        //Bitmedi, birden fazla doc eklenince kontrol edilmeli
-        String evrakDivId;
-
-        public SelenideElement getEvrakDiv(){
+        public SelenideElement getEvrakDiv() {
             evrakDivId = container.$("div[id$=accpnl]").attr("id");
             return container.$("div[id$=accpnl]");
         }
 
-        public IlgiBilgileri getEvrakTitle(){
+        public IlgiBilgileri getEvrakTitle() {
             return this;
         }
 
-        public SelenideElement getEvrakFrame(){
+        public SelenideElement getEvrakFrame() {
             return getEvrakDiv().$("iframe.onizlemeFrame");
         }
 
         @Step("Evrak tekst içeriği kontrolü")
-        public IlgiBilgileri evrakTextControl(String...texts){
+        public IlgiBilgileri evrakTextControl(String... texts) {
             switchTo().frame(getEvrakFrame());
 
-            for (String text:texts) {
+            for (String text : texts) {
                 $(".textLayer").$(Selectors.byText(text)).should(exist);
             }
 
@@ -678,7 +677,7 @@ public class EvrakOnizleme extends MainPage {
         }
 
         @Step("Sayisal filigran bulunmalı")
-        public IlgiBilgileri checkIfSayisalFiligranExist(){
+        public IlgiBilgileri checkIfSayisalFiligranExist() {
             switchTo().frame(getEvrakFrame());
             $("div.textLayer").$$("div").filterBy(matchText("\\d+ - \\d+ - \\d+ - \\d+ - \\d+")).shouldHaveSize(1);
             switchTo().frame(0);
@@ -686,7 +685,7 @@ public class EvrakOnizleme extends MainPage {
         }
 
         @Step("Filigran sayı al")
-        public int getFiligramSayi(){
+        public int getFiligramSayi() {
             switchTo().frame(getEvrakFrame());
             int sayi = Integer.valueOf(
                     $("div.textLayer").$$("div")
@@ -717,7 +716,7 @@ public class EvrakOnizleme extends MainPage {
         }
 
         @Step("")
-        public SearchTable postalananYerleriListesi(){
+        public SearchTable postalananYerleriListesi() {
             return searchTable;
         }
 
@@ -749,7 +748,7 @@ public class EvrakOnizleme extends MainPage {
         SearchTable evrakinEkleriListesi = new SearchTable($(By.id("postaDetayYazdirForm:evrakEkListesi")));
 
         @Step("Evrak Detayları kapa")
-        public EvrakDetaylari close(){
+        public EvrakDetaylari close() {
             yazdirEvrakDetayClose.click();
             return this;
         }
@@ -767,7 +766,7 @@ public class EvrakOnizleme extends MainPage {
         }
 
         @Step("Üst Veriler listesi")
-        public SearchTable getYazdirUstVerilerListesi(){
+        public SearchTable getYazdirUstVerilerListesi() {
             return ustVerilerListesi;
         }
 
@@ -778,7 +777,7 @@ public class EvrakOnizleme extends MainPage {
         }
 
         @Step("Evrakın Ekleri listesi")
-        public SearchTable getYazdirEvrakinEkleriListesi(){
+        public SearchTable getYazdirEvrakinEkleriListesi() {
             return evrakinEkleriListesi;
         }
 

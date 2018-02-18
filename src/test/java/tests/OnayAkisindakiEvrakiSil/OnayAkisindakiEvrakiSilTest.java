@@ -21,7 +21,7 @@ import java.lang.reflect.Method;
  * Class: "Onay akışındaki evraki sil" konulu senaryoları içerir
  * Yazan: Sezai Çelik 
  ****************************************************/
-public class OnayAkisindakiEvrakiSilTest extends BaseTest{
+public class OnayAkisindakiEvrakiSilTest extends BaseTest {
 
     EvrakOlusturPage evrakOlusturPage;
     OnayAkisYonetimiPage onayAkisYonetimiPage;
@@ -365,8 +365,8 @@ public class OnayAkisindakiEvrakiSilTest extends BaseTest{
                 .metinAlaninGeldigiGorme()
                 .editorHitapKontrol("... Makamına")  // kurum seçilmediği için
                 .editordeImzaciKontrol(kullanici3);
-              //  .geregiAlaniKontrolu(kurum)
-               // .editordeKonuKontrol(evrakKonusu);
+        //  .geregiAlaniKontrolu(kurum)
+        // .editordeKonuKontrol(evrakKonusu);
 
         //TODO: HATALAR VAR. ÇÖZÜLÜNCE DEVAM EDİLECEK.
         evrakOlusturPage

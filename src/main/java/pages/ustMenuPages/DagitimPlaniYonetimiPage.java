@@ -30,7 +30,9 @@ public class DagitimPlaniYonetimiPage extends MainPage {
     public By copyButtonLocator = By.cssSelector("button[id$='dagitimPlaniKopyala_id']");
     public By toPassiveButtonLocator = By.xpath("descendant::button[span[contains(@class,'to-passive-status-icon')]]");
     public By toActiveButtonLocator = By.xpath("descendant::button[span[contains(@class,'to-active-status-icon')]]");
-
+    //public SearchFiltreleme searchFiltreleme = new SearchFiltreleme(page);
+    public SearchTable sorgulamaDataTable = new SearchTable($(By.id("dagitimPlaniListingForm:dagitimPlaniDataTable")));
+    public SearchTable dagitimPlaniDataTable = new SearchTable($(By.id("dagitimPlaniEditorForm:dagitimPlaniDataTable")));
     //region Sorgulama ve Filtreleme
     SelenideElement listingForm = $("#dagitimPlaniListingForm");
     SelenideElement filterPanel = $(By.id("dagitimPlaniListingForm:filterPanel"));
@@ -39,60 +41,72 @@ public class DagitimPlaniYonetimiPage extends MainPage {
     SelenideElement durumSelect = $(By.id("dagitimPlaniListingForm:filterPanel:durumSelectBox"));
     SelenideElement araButton = $(By.id("dagitimPlaniListingForm:filterPanel:dagitimPlaniAra_id"));
     SelenideElement yeniButton = $(By.id("dagitimPlaniListingForm:dagitimPlaniDataTable:dagitimPlaniYeniKayit_id"));
-    //public SearchFiltreleme searchFiltreleme = new SearchFiltreleme(page);
-    public SearchTable sorgulamaDataTable = new SearchTable($(By.id("dagitimPlaniListingForm:dagitimPlaniDataTable")));
+    //region Dağıtım Planı Kaydet/Güncelle
+    SelenideElement editorForm = $("#dagitimPlaniEditorForm");
+    SelenideElement editorFormHeader = $(By.id("dagitimPlaniEditorForm:dagitimPlaniEditorPanel_header"));
+    SelenideElement adiInput = $(By.id("dagitimPlaniEditorForm:dagitimPlaniAd_id"));
+    SelenideElement aciklamaTextarea = $(By.id("dagitimPlaniEditorForm:dagitimPlaniAciklama_id"));
+    BelgenetElement kullanildigiBirimCombolov = comboLov(By.id("dagitimPlaniEditorForm:birimLov_id:LovText"));
+    SelenideElement altBirimlerGorsunInput = $(By.id("dagitimPlaniEditorForm:dagitimPlaniAltBirim_id_input"));
+    SelenideElement dagitimElemanlariSection = $("fieldset#dagitimPlaniEditorForm\\:fldStDagitimPlanElemsOutput");
+    SelenideElement dagitimElemanlariSelect = $("fieldset#dagitimPlaniEditorForm\\:fldStDagitimPlanElemsOutput select");
+    //dagitimElemanlariSelect değere göre dagitimElemanlariCombolov id değişiyor
+    BelgenetElement dagitimElemanlariCombolov = comboLov("fieldset#dagitimPlaniEditorForm\\:fldStDagitimPlanElemsOutput [id$='LovText']");
+    SelenideElement ekleButton = $(By.id("dagitimPlaniEditorForm:dagitimPlaniEkleButton"));
+    SelenideElement kaydetButton = $(By.id("dagitimPlaniEditorForm:dagitimPlaniKaydet_id"));
 
     @Step("Sorgulama ve Filtrelemeyi genişlet")
     public DagitimPlaniYonetimiPage sorgulamayiGenislet(boolean... genislet) {
         SelenideElement element = listingForm.$("h3[role=tab]");
-        if (!element.attr("aria-expanded").equalsIgnoreCase(String.valueOf(genislet.length>0?genislet[0]:"true")))
+        if (!element.attr("aria-expanded").equalsIgnoreCase(String.valueOf(genislet.length > 0 ? genislet[0] : "true")))
             element.find("a").click();
         return this;
     }
+    //endregion
 
     @Step("Sorgulama ve Filtrelemede \"Ad\" alan bulunur")
-    public SelenideElement getSorgulamadaAd(){
+    public SelenideElement getSorgulamadaAd() {
         return adInput;
     }
 
     @Step("Sorgulama ve Filtrelemede \"Ad\" alana \"{text}\" girilir")
-    public DagitimPlaniYonetimiPage sorgulamadaAdGir(String text){
+    public DagitimPlaniYonetimiPage sorgulamadaAdGir(String text) {
         sorgulamayiGenislet();
         getSorgulamadaAd().setValue(text);
         return this;
     }
 
     @Step("Sorgulama ve Filtrelemede \"Durum\" alan bulunur")
-    public SelenideElement getSorgulamadaDurum(){
+    public SelenideElement getSorgulamadaDurum() {
         return durumSelect;
     }
 
     @Step("Sorgulama ve Filtrelemede \"Durum\" alanda \"{text}\" seçilir")
-    public DagitimPlaniYonetimiPage sorgulamadaDurumSec(String text){
+    public DagitimPlaniYonetimiPage sorgulamadaDurumSec(String text) {
         sorgulamayiGenislet();
         getSorgulamadaDurum().selectOption(text);
         return this;
     }
 
     @Step("Sorgulama ve Filtrelemede \"Ara\" buton bulunur")
-    public SelenideElement getAraButton(){
+    public SelenideElement getAraButton() {
         return araButton;
     }
 
     @Step("Sorgulama ve Filtrelemede \"Ara\" butona tıklanır")
-    public DagitimPlaniYonetimiPage ara(){
+    public DagitimPlaniYonetimiPage ara() {
         sorgulamayiGenislet();
         getAraButton().click();
         return this;
     }
 
     @Step("Sorgulama ve Filtrelemede \"Yeni\" buton bulunur")
-    public SelenideElement getYeniButton(){
+    public SelenideElement getYeniButton() {
         return yeniButton;
     }
 
     @Step("Sorgulama ve Filtrelemede \"Yeni\" butona tıklanır")
-    public DagitimPlaniYonetimiPage yeni(){
+    public DagitimPlaniYonetimiPage yeni() {
         getYeniButton().pressEnter();
         return this;
     }
@@ -120,110 +134,93 @@ public class DagitimPlaniYonetimiPage extends MainPage {
         sorgulamaDataTable.getFoundRow().$(toActiveButtonLocator).click();
         return this;
     }
-    //endregion
 
-    //region Dağıtım Planı Kaydet/Güncelle
-    SelenideElement editorForm = $("#dagitimPlaniEditorForm");
-    SelenideElement editorFormHeader = $(By.id("dagitimPlaniEditorForm:dagitimPlaniEditorPanel_header"));
-    SelenideElement adiInput = $(By.id("dagitimPlaniEditorForm:dagitimPlaniAd_id"));
-    SelenideElement aciklamaTextarea = $(By.id("dagitimPlaniEditorForm:dagitimPlaniAciklama_id"));
-    BelgenetElement kullanildigiBirimCombolov = comboLov(By.id("dagitimPlaniEditorForm:birimLov_id:LovText"));
-    SelenideElement altBirimlerGorsunInput = $(By.id("dagitimPlaniEditorForm:dagitimPlaniAltBirim_id_input"));
-    SelenideElement dagitimElemanlariSection = $("fieldset#dagitimPlaniEditorForm\\:fldStDagitimPlanElemsOutput");
-    SelenideElement dagitimElemanlariSelect = $("fieldset#dagitimPlaniEditorForm\\:fldStDagitimPlanElemsOutput select");
-    //dagitimElemanlariSelect değere göre dagitimElemanlariCombolov id değişiyor
-    BelgenetElement dagitimElemanlariCombolov = comboLov("fieldset#dagitimPlaniEditorForm\\:fldStDagitimPlanElemsOutput [id$='LovText']");
-    SelenideElement ekleButton = $(By.id("dagitimPlaniEditorForm:dagitimPlaniEkleButton"));
-    SelenideElement kaydetButton = $(By.id("dagitimPlaniEditorForm:dagitimPlaniKaydet_id"));
-
-    public SearchTable dagitimPlaniDataTable = new SearchTable($(By.id("dagitimPlaniEditorForm:dagitimPlaniDataTable")));
-    
     @Step("Dağıtım Planı Kaydet/Güncelle title bulunur")
-    public SelenideElement getKaydetGuncelleHeader(){
+    public SelenideElement getKaydetGuncelleHeader() {
         return editorFormHeader;
     }
 
     //Dağıtım Planı Kaydet/Güncellede
     @Step("\"Adı\" alan bulunur")
-    public SelenideElement getAdi(){
+    public SelenideElement getAdi() {
         return adiInput;
     }
 
     @Step("\"Adı\" alana \"{text}\" girilir")
-    public DagitimPlaniYonetimiPage adiGir(String text){
+    public DagitimPlaniYonetimiPage adiGir(String text) {
         getAdi().setValue(text);
         return this;
     }
 
     @Step("\"Açıklama\" alan bulunur")
-    public SelenideElement getAciklama(){
+    public SelenideElement getAciklama() {
         return aciklamaTextarea;
     }
 
     @Step("\"Açıklama\" alana \"{text}\" girilir")
-    public DagitimPlaniYonetimiPage aciklamaGir(String text){
+    public DagitimPlaniYonetimiPage aciklamaGir(String text) {
         getAciklama().setValue(text);
         return this;
     }
 
     @Step("\"Kullanıldığı Birim\" alan bulunur")
-    public BelgenetElement getKullanildigiBirim(){
+    public BelgenetElement getKullanildigiBirim() {
         return kullanildigiBirimCombolov;
     }
 
     @Step("\"Kullanıldığı Birim\" alanda \"{text}\" seçilir")
-    public DagitimPlaniYonetimiPage kullanildigiBirimSec(String... text){
+    public DagitimPlaniYonetimiPage kullanildigiBirimSec(String... text) {
         getKullanildigiBirim().selectLov(text);
         return this;
     }
 
     @Step("\"Kullanıldığı Birim\" alanı temizle")
-    public DagitimPlaniYonetimiPage kullanildigiBirimTemizle(){
+    public DagitimPlaniYonetimiPage kullanildigiBirimTemizle() {
         getKullanildigiBirim().clearAllSelectedItems();
         return this;
     }
 
     //@Step("Dağıtım Planı Kaydet/Güncellede \"Alt Birimler Görsün\" alan bulunur")
-    public SelenideElement getAltBirimlerGorsun(){
+    public SelenideElement getAltBirimlerGorsun() {
         return altBirimlerGorsunInput;
     }
 
     @Step("\"Alt Birimler Görsün\" alanı \"{enable}\" yapilir")
-    public DagitimPlaniYonetimiPage altBirimlerGorsunSec(boolean enable){
+    public DagitimPlaniYonetimiPage altBirimlerGorsunSec(boolean enable) {
         if (enable != getAltBirimlerGorsun().toWebElement().isSelected())
             clickJs(getAltBirimlerGorsun().toWebElement());
         return this;
     }
 
     @Step("\"Dağıtım Elemanları\"'da tipi alan bulunur")
-    public SelenideElement getDagitimElemanlariSelect(){
+    public SelenideElement getDagitimElemanlariSelect() {
         return dagitimElemanlariSelect;
     }
 
     @Step("\"Dağıtım Elemanları\" tipi \"{text}\" seçilir")
-    public DagitimPlaniYonetimiPage dagitimElemanlariTipiSec(String text){
+    public DagitimPlaniYonetimiPage dagitimElemanlariTipiSec(String text) {
         getDagitimElemanlariSelect().selectOption(text);
         return this;
     }
 
     @Step("\"Dağıtım Elemanları\" Lov alan bulunur")
-    public BelgenetElement getDagitimElemanlariCombolov(){
+    public BelgenetElement getDagitimElemanlariCombolov() {
         return dagitimElemanlariCombolov;
     }
 
     @Step("\"Dağıtım Elemanları\"da \"{text}\" seçilir")
-    public DagitimPlaniYonetimiPage dagitimElemanlariSec(String text){
+    public DagitimPlaniYonetimiPage dagitimElemanlariSec(String text) {
         getDagitimElemanlariCombolov().selectLov(text);
         return this;
     }
 
     @Step("Dağıtım Planı \"Ekle\" buton bulunur")
-    public SelenideElement getEkleButton(){
+    public SelenideElement getEkleButton() {
         return ekleButton;
     }
 
     @Step("Dağıtım Planı \"Ekle\" butona tıklanır")
-    public DagitimPlaniYonetimiPage ekle(Condition... checkInListConditions){
+    public DagitimPlaniYonetimiPage ekle(Condition... checkInListConditions) {
         getEkleButton().pressEnter();
         if (checkInListConditions.length > 0)
             dagitimPlaniDataTable.findRows(checkInListConditions).shouldHaveSize(1);
@@ -231,22 +228,22 @@ public class DagitimPlaniYonetimiPage extends MainPage {
     }
 
     @Step("Dağıtım Planı \"Kaydet\" buton bulunur")
-    public SelenideElement getKaydetButton(){
+    public SelenideElement getKaydetButton() {
         return kaydetButton;
     }
 
     @Step("Dağıtım Planı \"Kaydet\" butona tıklanır")
-    public DagitimPlaniYonetimiPage kaydet(){
+    public DagitimPlaniYonetimiPage kaydet() {
         getKaydetButton().pressEnter();
         return this;
     }
 
-    public SearchTable getDagitimPlaniListesi(){
+    public SearchTable getDagitimPlaniListesi() {
         return dagitimPlaniDataTable;
     }
 
     @Step("Dağıtım Plani listesinde aranır")
-    public DagitimPlaniYonetimiPage dagitimPlaniListesindeAra(Condition...conditions){
+    public DagitimPlaniYonetimiPage dagitimPlaniListesindeAra(Condition... conditions) {
         dagitimPlaniDataTable.findRows(conditions);
         return this;
     }
@@ -275,12 +272,12 @@ public class DagitimPlaniYonetimiPage extends MainPage {
 
     @Step("Listeden Çıkart buton bulunur")
     public SelenideElement getDagitimElemanlariCombolovListedenCikartButton(int... index) {
-        return dagitimElemanlariCombolov.getSelectedItems().get(index.length>0?index[0]:0).$(deleteButtonLocator);
+        return dagitimElemanlariCombolov.getSelectedItems().get(index.length > 0 ? index[0] : 0).$(deleteButtonLocator);
     }
 
     @Step("Dağıtım Hitap Düzenleme buton bulunur")
     public SelenideElement getDagitimElemanlariCombolovDagitimHitapDuzenlemeButton(int... index) {
-        return dagitimElemanlariCombolov.getSelectedItems().get(index.length>0?index[0]:0).$(updteButtonLocator);
+        return dagitimElemanlariCombolov.getSelectedItems().get(index.length > 0 ? index[0] : 0).$(updteButtonLocator);
     }
     //endregion
 
@@ -302,13 +299,13 @@ public class DagitimPlaniYonetimiPage extends MainPage {
     }
 
     @Step("\"{adi}\" dağıtım planı bul ve güncelle butona tıkla")
-    public DagitimPlaniYonetimiPage bulVeGuncelleTikla(String adi){
+    public DagitimPlaniYonetimiPage bulVeGuncelleTikla(String adi) {
         sorgulamadaDurumSec("Sadece Aktifler")
                 .sorgulamadaAdGir(adi)
                 .ara()
                 .sorgulamaDataTable.findRows(text(adi)).shouldHave(sizeGreaterThan(0));
         sorgulamaDataTableGuncelleButonaTikla()
-            .getAdi().shouldHave(exactValue(adi));
+                .getAdi().shouldHave(exactValue(adi));
         return this;
     }
 
@@ -316,11 +313,11 @@ public class DagitimPlaniYonetimiPage extends MainPage {
     @Step("\"{dagitimElemanlariTipi}\" dağıtım elemanı eklenir")
     public DagitimPlaniYonetimiPage dagitimElemanlariEkle(String dagitimElemanlariTipi, String dagitimElemanlari) {
         dagitimElemanlariTipiSec(dagitimElemanlariTipi)
-           .dagitimElemanlariSec(dagitimElemanlari);
+                .dagitimElemanlariSec(dagitimElemanlari);
         getDagitimElemanlariCombolovDagitimHitapDuzenlemeButton().shouldBe(visible);
         getDagitimElemanlariCombolovListedenCikartButton().shouldBe(visible);
         ekle();
-        dagitimPlaniDataTable.findRows(text(dagitimElemanlariTipi),text(dagitimElemanlari)).shouldHaveSize(1);
+        dagitimPlaniDataTable.findRows(text(dagitimElemanlariTipi), text(dagitimElemanlari)).shouldHaveSize(1);
         getSilButton().shouldBe(visible);
         getGuncelleButton().shouldBe(visible);
         return this;
@@ -352,7 +349,7 @@ public class DagitimPlaniYonetimiPage extends MainPage {
 
 
     @Step("Dağıtım Planı oluştur")
-    public DagitimPlaniYonetimiPage dagitimPlaniOlustur(String planAdi, String aciklama, String kullanildigiBirim, boolean altBirimlerGorsun, String dagitimElemanlariTipi, String dagitimElemanlari){
+    public DagitimPlaniYonetimiPage dagitimPlaniOlustur(String planAdi, String aciklama, String kullanildigiBirim, boolean altBirimlerGorsun, String dagitimElemanlariTipi, String dagitimElemanlari) {
         yeni();
         adiGir(planAdi);
         aciklamaGir(aciklama);

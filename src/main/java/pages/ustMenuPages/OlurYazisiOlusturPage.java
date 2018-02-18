@@ -13,9 +13,7 @@ import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.UstMenuData;
 
 import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
-import static com.codeborne.selenide.Selenide.$x;
+import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 public class OlurYazisiOlusturPage extends MainPage {
@@ -101,55 +99,55 @@ public class OlurYazisiOlusturPage extends MainPage {
             if (cmbKonuKodu.isLovSelected()) {
                 cmbKonuKodu.clearAllSelectedItems();
             }
-            Assert.assertEquals( txtKonuKodu.isDisplayed(), true, "Konu kodu");
+            Assert.assertEquals(txtKonuKodu.isDisplayed(), true, "Konu kodu");
             Allure.addAttachment("Konu kodu alanı kontrolu başarılı", "");
 
-            Assert.assertEquals( txtKonu.isDisplayed(), true, "Konu");
+            Assert.assertEquals(txtKonu.isDisplayed(), true, "Konu");
             Allure.addAttachment("Konu alanı kontrolu başarılı", "");
 
             if (cmbKaldiralacakKlasorler.isLovSelected()) {
                 cmbKaldiralacakKlasorler.clearAllSelectedItems();
             }
-            Assert.assertEquals( cmbKaldiralacakKlasorler.isDisplayed(), true, "Kaldıralacak Klasörler");
+            Assert.assertEquals(cmbKaldiralacakKlasorler.isDisplayed(), true, "Kaldıralacak Klasörler");
             Allure.addAttachment("Kaldıralacak Klasörler alanı kontrolu başarılı", "");
 
-            Assert.assertEquals( dateKayitTarihi.isDisplayed(), true, "Kayit tarihi");
+            Assert.assertEquals(dateKayitTarihi.isDisplayed(), true, "Kayit tarihi");
             Allure.addAttachment("Kayit tarihi alanı kontrolu başarılı", "");
 
-            Assert.assertEquals( cmbEvrakDili.isDisplayed(), true, "Evrak Dili");
+            Assert.assertEquals(cmbEvrakDili.isDisplayed(), true, "Evrak Dili");
             Allure.addAttachment("Evrak Dili alanı kontrolu başarılı", "");
 
-            Assert.assertEquals( cmbGizlilikDerecesi.isDisplayed(), true, "Gizlilik derecesi ");
+            Assert.assertEquals(cmbGizlilikDerecesi.isDisplayed(), true, "Gizlilik derecesi ");
             Allure.addAttachment("Gizlilik derecesi alanı kontrolu başarılı", "");
 
-            Assert.assertEquals( rdbKanunKapsamTipiNormal.isDisplayed(), true, "Kanun Kapsam Tipi");
+            Assert.assertEquals(rdbKanunKapsamTipiNormal.isDisplayed(), true, "Kanun Kapsam Tipi");
             Allure.addAttachment("Kanun Kapsam Tipi alanı kontrolu başarılı", "");
 
-            Assert.assertEquals( txtEvrakSayiEkMetni.isDisplayed(), true, "Evrak Sayi Ek Metni");
+            Assert.assertEquals(txtEvrakSayiEkMetni.isDisplayed(), true, "Evrak Sayi Ek Metni");
             Allure.addAttachment("Evrak Sayi Ek Metni alanı kontrolu başarılı", "");
 
-            Assert.assertEquals( cmbIvedik.isDisplayed(), true, "İvedik alanı");
+            Assert.assertEquals(cmbIvedik.isDisplayed(), true, "İvedik alanı");
             Allure.addAttachment("İvedik alanı kontrolu başarılı", "");
 
-            Assert.assertEquals( dateMiat.isDisplayed(), true, "Miat alanı");
+            Assert.assertEquals(dateMiat.isDisplayed(), true, "Miat alanı");
             Allure.addAttachment("Miat alanı kontrolu başarılı", "");
 
-            Assert.assertEquals( cmbBilgiSecimTipi.isDisplayed(), true, "ilgi Seçim Tipi ");
+            Assert.assertEquals(cmbBilgiSecimTipi.isDisplayed(), true, "ilgi Seçim Tipi ");
             Allure.addAttachment("ilgi Seçim Tipi Balanı kontrolu başarılı", "");
 
-            Assert.assertEquals( cmbBilgi.isDisplayed(), true, "Bilgi alanı");
+            Assert.assertEquals(cmbBilgi.isDisplayed(), true, "Bilgi alanı");
             Allure.addAttachment("Bilgi alanı kontrolu başarılı", "");
 
-            Assert.assertEquals( cmbGeregiSecimTipi.isDisplayed(), true, "Gereği Seçim Tipi ");
+            Assert.assertEquals(cmbGeregiSecimTipi.isDisplayed(), true, "Gereği Seçim Tipi ");
             Allure.addAttachment("Gereği Seçim Tipi alanı kontrolu başarılı", "");
 
-            Assert.assertEquals( cmbGeregi.isDisplayed(), true, "Gereği kodu ");
+            Assert.assertEquals(cmbGeregi.isDisplayed(), true, "Gereği kodu ");
             Allure.addAttachment("Gereği kodu alanı kontrolu başarılı", "");
 
             if (cmbOnayAkisi.isLovSelected()) {
                 cmbOnayAkisi.clearAllSelectedItems();
             }
-            Assert.assertEquals( cmbOnayAkisi.isDisplayed(), true, "Onay Akışı");
+            Assert.assertEquals(cmbOnayAkisi.isDisplayed(), true, "Onay Akışı");
             Allure.addAttachment("Onay Akışı alanı kontrolu başarılı", "");
 
             takeScreenshot();
@@ -310,8 +308,9 @@ public class OlurYazisiOlusturPage extends MainPage {
         @Step("Seçilen akışta vekaleti bulunan kişiler bulunmaktadır. Lütfen evrakın akışında kullanılacak kişileri seçiniz.")
         public BilgilerTab vekaletKaydet() {
 
-            if(btnVekaletKaydet.isDisplayed()) {
-                btnVekaletKaydet.click(); }
+            if (btnVekaletKaydet.isDisplayed()) {
+                btnVekaletKaydet.click();
+            }
             return this;
         }
 
@@ -382,8 +381,8 @@ public class OlurYazisiOlusturPage extends MainPage {
         @Step("Gereği alanında Birimin geldiği ve seçilemediği kontrolu - {description} : {birim}")
         public BilgilerTab geregiAlanindaBiriminGeldigiSecilemedigiKontrolu(String birim, String description) {
 
-            int  gorunurSecilemezBirimSize = comboLov(cmbGeregiBy).type(birim).getSelectableItems().size();
-            Assert.assertEquals(gorunurSecilemezBirimSize==0, true, "Birimin geldiği ve seçilemediği görülür: " + birim);
+            int gorunurSecilemezBirimSize = comboLov(cmbGeregiBy).type(birim).getSelectableItems().size();
+            Assert.assertEquals(gorunurSecilemezBirimSize == 0, true, "Birimin geldiği ve seçilemediği görülür: " + birim);
             comboLov(cmbGeregiBy).closeTreePanel();
             System.out.println("Birimin geldiği ve seçilemediği görülür: " + birim);
             Allure.addAttachment("Birimin geldiği ve seçilemediği görülür: " + birim, "");
@@ -394,15 +393,14 @@ public class OlurYazisiOlusturPage extends MainPage {
         @Step("Birim alanında Birimin geldiği ve seçilemediği kontrolu - {description} : {birim}")
         public BilgilerTab bilgiAlanindaBiriminGeldigiSecilemedigiKontrolu(String birim, String description) {
 
-            int  gorunurSecilemezBirimSize = comboLov(cmbBilgiBy).type(birim).getSelectableItems().size();
-            Assert.assertEquals(gorunurSecilemezBirimSize==0, true, "Birimin geldiği ve seçilemediği görülür: " + birim);
+            int gorunurSecilemezBirimSize = comboLov(cmbBilgiBy).type(birim).getSelectableItems().size();
+            Assert.assertEquals(gorunurSecilemezBirimSize == 0, true, "Birimin geldiği ve seçilemediği görülür: " + birim);
             comboLov(cmbBilgiBy).closeTreePanel();
             System.out.println("Birimin geldiği ve seçilemediği görülür: " + birim);
             Allure.addAttachment("Birimin geldiği ve seçilemediği görülür: " + birim, "");
 
             return this;
         }
-
 
 
     }

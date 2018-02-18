@@ -1,7 +1,6 @@
 package pages.pageComponents;
 
 import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
 import common.BaseLibrary;
@@ -13,9 +12,7 @@ import org.testng.Assert;
 import java.util.List;
 
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
-import static com.codeborne.selenide.Condition.cssClass;
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$$;
 import static com.codeborne.selenide.Selenide.sleep;
 import static pages.pageComponents.IslemMesajlari.MessageTitle.*;
@@ -128,7 +125,7 @@ public class IslemMesajlari extends BaseLibrary {
     }
 
     @Step("Uyarı messajı kontrolü")
-    public IslemMesajlari warningMessage(){
+    public IslemMesajlari warningMessage() {
         SelenideElement element = getMessageBody();
         element.shouldBe(visible);
         takeScreenshot();
@@ -137,13 +134,13 @@ public class IslemMesajlari extends BaseLibrary {
         System.out.println("Warining message type: " + element.has(cssClass("lobibox-notify-warning")));
         System.out.println("Message title: " + element.$(titleLocator).text());
         System.out.println("Message text: " + element.$(msgLocator).text());
-        Assert.assertTrue(element.has(cssClass("lobibox-notify-warning")),"Warning message olmalı");
+        Assert.assertTrue(element.has(cssClass("lobibox-notify-warning")), "Warning message olmalı");
         closeMessage();
         return this;
     }
 
     @Step("Uyarı messajı kontrolü")
-    public IslemMesajlari warningMessage(String message){
+    public IslemMesajlari warningMessage(String message) {
         SelenideElement element = getMessageBody();
         element.shouldBe(visible);
         takeScreenshot();
@@ -160,7 +157,7 @@ public class IslemMesajlari extends BaseLibrary {
     }
 
     @Step("Uyarı messajı kontrolü")
-    public IslemMesajlari warningMessage(String title, String message){
+    public IslemMesajlari warningMessage(String title, String message) {
         SelenideElement element = getMessageBody();
         element.shouldBe(visible);
         takeScreenshot();

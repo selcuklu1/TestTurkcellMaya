@@ -13,11 +13,12 @@ import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Step;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pages.solMenuPages.*;
+import pages.solMenuPages.HavaleEttiklerimPage;
 import pages.ustMenuPages.GelenEvrakKayitPage;
 import pages.ustMenuPages.SistemLoglariPage;
 
-import static data.TestData.*;
+import static data.TestData.passwordZTEKIN;
+import static data.TestData.usernameZTEKIN;
 
 /****************************************************
  * Tarih: 2018-02-12
@@ -32,17 +33,9 @@ public class HavaleEttiklerimdenTest extends BaseTest {
     GelenEvrakKayitPage gelenEvrakKayitPage;
     HavaleEttiklerimPage havaleEttiklerimPage;
     SistemLoglariPage sistemLoglariPage;
-
-    @BeforeMethod
-    public void loginBeforeTests() {
-        havaleEttiklerimPage = new HavaleEttiklerimPage();
-        gelenEvrakKayitPage = new GelenEvrakKayitPage();
-        sistemLoglariPage = new SistemLoglariPage();
-    }
-
     String basariMesaji = "İşlem başarılıdır!";
     String konuKodu = "Diğer";
-    String evrakSayiSag =  createRandomNumber(10);
+    String evrakSayiSag = createRandomNumber(10);
     String evrakTarihi = getSysDateForKis();
     String kurum = "BÜYÜK HARFLERLE KURUM";
     String birim = "Yazılım Geliştirme Direktörlüğ";
@@ -51,6 +44,13 @@ public class HavaleEttiklerimdenTest extends BaseTest {
     String birim2 = "YGD";
     String not = createRandomText(15);
     String konuKoduRandomTS2302 = "TC-2302_" + createRandomNumber(15);
+
+    @BeforeMethod
+    public void loginBeforeTests() {
+        havaleEttiklerimPage = new HavaleEttiklerimPage();
+        gelenEvrakKayitPage = new GelenEvrakKayitPage();
+        sistemLoglariPage = new SistemLoglariPage();
+    }
 
     @Step("Havale Ettiklerim sayfasına evrak düşürmektedir.")
     public void TS2302PreCondition() {
@@ -82,7 +82,7 @@ public class HavaleEttiklerimdenTest extends BaseTest {
                 .havaleYap()
                 .icerikGosterHavaleYapKullaniciListesiDoldur("TS1590")
                 .icerikGosterHavaleyapKullaniciListesiGeregiIcınBilgiIcinDegistir()
-                .icerikGosterHavaleYapOnaylayacakKisiDoldur(kisi,birim2)
+                .icerikGosterHavaleYapOnaylayacakKisiDoldur(kisi, birim2)
                 .icerikGosterHavaleYapHavaleOnayinaGonder()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
@@ -90,8 +90,8 @@ public class HavaleEttiklerimdenTest extends BaseTest {
                 .openPage()
                 .evrakNoIleEvrakSec(konuKoduRandomTS2302)
                 .evrakGecmisiSec()
-                .evrakGecmisiKisiVeMesajKontrol("Evrak onaya sunuldu",kisi2)
-                .evrakGecmisiKisiVeMesajKontrol("Evrak havale onayı bekliyor",kisi);
+                .evrakGecmisiKisiVeMesajKontrol("Evrak onaya sunuldu", kisi2)
+                .evrakGecmisiKisiVeMesajKontrol("Evrak havale onayı bekliyor", kisi);
 
     }
 
@@ -102,7 +102,5 @@ public class HavaleEttiklerimdenTest extends BaseTest {
         TS2302();
 
 
-
-        
     }
 }

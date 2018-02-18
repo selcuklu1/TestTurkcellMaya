@@ -38,7 +38,6 @@
             <version>3.8.1</version>
         </dependency>-->
 
-
         <!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml -->
         <dependency>
             <groupId>org.apache.poi</groupId>
@@ -116,7 +115,7 @@
                     </suiteXmlFiles>
                     <argLine>
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
-                        <!-- -Dfile.encoding="UTF-32BE"-->
+                        <!-- -Dfile.encoding="UTF-8"-->
                     </argLine>
                     <!--<argLine>-Dfile.encoding=UTF-8</argLine>-->
                     <!--<properties>
@@ -125,42 +124,19 @@
                             <value>listeners.RerunFailedTests</value>
                         </property>
                     </properties>-->
-                    <!--<systemProperties>-->
-                    <!--<property>-->
-                    <!--<name>allure.results.directory</name>-->
-                    <!--<value>${project.build.directory}/allure-results</value>-->
-                    <!--&lt;!&ndash;<value>test-result/allure-xml</value>&ndash;&gt;-->
-                    <!--</property>-->
-                    <!--</systemProperties>-->
-                    <!--<systemProperties>-->
-                    <!--<property>-->
-                    <!--<name>allure.results.directory</name>-->
-                    <!--<value>/Users/Shared/Jenkins/Home/workspace/test/allure-results</value>-->
-                    <!--</property>-->
-                    <!--<property>-->
-                    <!--<name>allure.results.directory</name>-->
-                    <!--<value>${project.build.directory}/allure-results</value>-->
-                    <!--&lt;!&ndash;<value>test-result/allure-xml</value>&ndash;&gt;-->
-                    <!--</property>-->
-                    <!--</systemProperties>-->
-                    <!--<systemProperties>-->
-                    <!--<property>-->
-                    <!--<name>allure.results.directory</name>-->
-                    <!--<value>/Users/Shared/Jenkins/Home/workspace/test/allure-results</value>-->
-                    <!--</property>-->
-                    <!--<property>-->
-                    <!--<name>allure.results.directory</name>-->
-                    <!--<value>${project.build.directory}/allure-results</value>-->
-                    <!--&lt;!&ndash;<value>test-result/allure-xml</value>&ndash;&gt;-->
-                    <!--</property>-->
-                    <!--</systemProperties>-->
-                    <!--<systemProperties>-->
-                    <!--<property>-->
-                    <!--<name>allure.results.directory</name>-->
-                    <!--<value>/Users/Shared/Jenkins/Home/workspace/test/allure-results</value>-->
-                    <!--</property>-->
-                    <!--</systemProperties>-->
-
+                    <!--<systemProperties>
+                        <property>
+                            <name>allure.results.directory</name>
+                            <value>${project.build.directory}/allure-results</value>
+                            <value>/Users/Shared/Jenkins/Home/workspace/test/allure-results</value>
+                            &lt;!&ndash;<value>test-result/allure-xml</value>&ndash;&gt;
+                        </property>
+                        <property>
+                            <name>allure.results.directory</name>
+                            <value>${project.build.directory}/allure-results</value>
+                            &lt;!&ndash;<value>test-result/allure-xml</value>&ndash;&gt;
+                        </property>
+                    </systemProperties>-->
                 </configuration>
                 <dependencies>
                     <dependency>

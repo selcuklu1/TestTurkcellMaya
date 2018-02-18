@@ -44,7 +44,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
     ImzaBekleyenlerPage imzaBekleyenlerPage;
     EvrakOlusturPage evrakOlusturPage2;
     TextEditor editor;
-BirimHavaleEdilenlerPage birimHavaleEdilenlerPage;
+    BirimHavaleEdilenlerPage birimHavaleEdilenlerPage;
 
     @BeforeMethod
     public void loginBeforeTests() {

@@ -1,6 +1,5 @@
 package pages.pageComponents;
 
-import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
@@ -12,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static com.codeborne.selenide.CollectionCondition.*;
+import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
 
@@ -21,7 +20,7 @@ import static com.codeborne.selenide.Selenide.$;
  * Tarih: 5.02.2018
  * Açıklama:
  */
-public class DagitimHitapDuzenle extends MainPage{
+public class DagitimHitapDuzenle extends MainPage {
 
     SelenideElement page;
     SelenideElement container;
@@ -39,19 +38,19 @@ public class DagitimHitapDuzenle extends MainPage{
         dagitimPlaniDetayDataTable = new SearchTable(container.$("div[id$='dagitimPlaniDetayDataTableId']"));
     }
 
-    public SelenideElement getTitle(){
+    public SelenideElement getTitle() {
         return container.$(".ui-dialog-title");
     }
 
-    public SelenideElement getHitapDuzenlePanel(){
+    public SelenideElement getHitapDuzenlePanel() {
         return container.$("div[id$='pnlHitapDuzenle']");
     }
 
-    public SelenideElement getTableByInputValueText(Condition... conditions){
+    public SelenideElement getTableByInputValueText(Condition... conditions) {
         ElementsCollection collection = container.$$x("descendant::input")
                 .shouldHave(sizeGreaterThan(0)).filterBy(visible);
 
-        for (Condition condition:conditions) {
+        for (Condition condition : conditions) {
             collection = collection.filterBy(condition);
         }
         return collection.first().shouldBe(visible).$x("ancestor::table[1]");
@@ -74,17 +73,17 @@ public class DagitimHitapDuzenle extends MainPage{
     }*/
 
     @Step("\"Checkbox\": {stepDescription}")
-    public SelenideElement getCheckboxOfInput(String stepDescription, Condition condition){
+    public SelenideElement getCheckboxOfInput(String stepDescription, Condition condition) {
         return getTableByInputValueText(condition).$x("descendant::input[1]");
     }
 
     @Step("\"Input\": {stepDescription}")
-    public SelenideElement getInput(String stepDescription, Condition condition, int index){
+    public SelenideElement getInput(String stepDescription, Condition condition, int index) {
         return getTableByInputValueText(condition).$x("descendant::input[" + index + "]");
     }
 
     @Step("\"Ek\": {stepDescription}")
-    public SelenideElement getEkOfInput(String stepDescription, Condition condition){
+    public SelenideElement getEkOfInput(String stepDescription, Condition condition) {
         return getTableByInputValueText(condition).$x("descendant::input[last()]");
     }
 
@@ -104,80 +103,80 @@ public class DagitimHitapDuzenle extends MainPage{
     }*/
 
     @Step("\"BÜYÜK HARF\" butonu aranır")
-    public SelenideElement getBuyukHarfButton(){
+    public SelenideElement getBuyukHarfButton() {
         return container.$x("descendant::button[.='BÜYÜK HARF']");
     }
 
     @Step("\"küçük harf\" butonu aranır")
-    public SelenideElement getKucukHarfButton(){
+    public SelenideElement getKucukHarfButton() {
         return container.$x("descendant::button[.='küçük harf']");
     }
 
     @Step("\"İlk Harfleri Büyük\" butonu aranır")
-    public SelenideElement getIlkHarfleriBuyukButton(){
+    public SelenideElement getIlkHarfleriBuyukButton() {
         return container.$x("descendant::button[.='İlk Harfleri Büyük']");
     }
 
     @Step("\"Hitap\" alanı aranır")
-    public SelenideElement getHitapTextarea(){
+    public SelenideElement getHitapTextarea() {
         //return container.$x("descendant::input[3]");
         return container.$x("descendant::tr[td/label[normalize-space(.)='Hitap']]//textarea");
     }
 
     @Step("\"Özel Hitap\" alanı aranır")
-    public SelenideElement getOzelHitapCheckbox(){
+    public SelenideElement getOzelHitapCheckbox() {
         //return container.$x("descendant::input[3]");
         return container.$x("descendant::tr[td/label[normalize-space(.)='Özel Hitap']]//input");
     }
 
     @Step("\"Özel Hitap\" alanın değeri {secilir} seçilir")
-    public DagitimHitapDuzenle ozelHitapSec(boolean secilir){
+    public DagitimHitapDuzenle ozelHitapSec(boolean secilir) {
         checkboxSelect(getOzelHitapCheckbox(), secilir);
         return this;
     }
 
     @Step("\"Adres Hitapta Görünsün\" alanın değeri {secilir} seçilir")
-    public DagitimHitapDuzenle adresHitaptaGorunsunSec(boolean secilir){
+    public DagitimHitapDuzenle adresHitaptaGorunsunSec(boolean secilir) {
         checkboxSelect(getAdresHitaptaGorunsunCheckbox(), secilir);
         return this;
     }
 
     @Step("\"Adres Hitapta Görünsün\" alanı aranır")
-    public SelenideElement getAdresHitaptaGorunsunCheckbox(){
+    public SelenideElement getAdresHitaptaGorunsunCheckbox() {
         return container.$x("descendant::tr[td/label[normalize-space(.)='Adres Hitapta Görünsün']]//input");
     }
 
     @Step("\"Adres Dağıtımda Görünsün\" alanı aranır")
-    public SelenideElement getAdresDagitimdaGorunsunCheckbox(){
+    public SelenideElement getAdresDagitimdaGorunsunCheckbox() {
         return container.$x("descendant::tr[td/label[normalize-space(.)='Adres Dağıtımda Görünsün']]//input");
     }
 
     @Step("\"Adres\" alanı aranır")
-    public SelenideElement getAdresTextarea(){
+    public SelenideElement getAdresTextarea() {
         //return container.$x("descendant::input[3]");
         return container.$x("descendant::tr[td/label[normalize-space(.)='Adres']]//textarea");
     }
 
     @Step("\"Dağıtım Metni\" alanı aranır")
-    public SelenideElement getDagitimMetniTextarea(){
+    public SelenideElement getDagitimMetniTextarea() {
         //return container.$x("descendant::input[3]");
         return container.$x("descendant::tr[td/label[normalize-space(.)='Dağıtım Metni']]//textarea");
     }
 
     @Step("\"Kaydet\" butonu: {stepDescription}")
-    public SelenideElement getKaydetButton(String stepDescription){
+    public SelenideElement getKaydetButton(String stepDescription) {
         return container.$x("descendant::button[.='Kaydet']");
     }
 
     @Step("Kaydet")
-    public DagitimHitapDuzenle kaydet(){
+    public DagitimHitapDuzenle kaydet() {
         getKaydetButton("").shouldBe(visible).click();
         container.should(disappear);
         return this;
     }
 
     @Step("\"İptal\" butonu aranır")
-    public SelenideElement getIptalButton(){
+    public SelenideElement getIptalButton() {
         return container.$x("descendant::button[.='İptal']");
     }
 
@@ -186,7 +185,7 @@ public class DagitimHitapDuzenle extends MainPage{
     }*/
 
     @Step("Dağıtım Planı Detay sırası kontrolü")
-    public DagitimHitapDuzenle dagitimPlaniDetaySirasiKontrolu(Map<String, String> dagitimPlanElemanlari){
+    public DagitimHitapDuzenle dagitimPlaniDetaySirasiKontrolu(Map<String, String> dagitimPlanElemanlari) {
         //ElementsCollection rows = getDagitimPlaniDetayRows();
         ElementsCollection rows = dagitimPlaniDetayDataTable.findRows().getFoundRows();
 
@@ -200,22 +199,22 @@ public class DagitimHitapDuzenle extends MainPage{
     }
 
     @Step("Checkbox aranır")
-    public SelenideElement getDagitimPlaniDetayCheckbox(){
+    public SelenideElement getDagitimPlaniDetayCheckbox() {
         return dagitimPlaniDetayDataTable.getFoundRow().$("input");
     }
 
     @Step("")
-    public String getDagitimPlaniDetayText(){
+    public String getDagitimPlaniDetayText() {
         return dagitimPlaniDetayDataTable.getFoundRow().text();
     }
 
     @Step("Evrakta Görünecek Hitap: {stepDescription}")
-    public SelenideElement getEvraktaGorunecekHitap(String stepDescription){
+    public SelenideElement getEvraktaGorunecekHitap(String stepDescription) {
         return container.$("table[id$='hitapOnizlemeGrid']");
     }
 
     @Step("Kayıtlı Hitap: {stepDescription}")
-    public SelenideElement getKayitliHitap(String stepDescription){
+    public SelenideElement getKayitliHitap(String stepDescription) {
         return container.$x("descendant::span[.='Kayıtlı Hitap']/ancestor::table[1]");
     }
 
@@ -223,7 +222,7 @@ public class DagitimHitapDuzenle extends MainPage{
     public DagitimHitapDuzenle adresSec(String adres, String evraktaGorunecekHitap) {
         getAdresTextarea().setValue(adres);
         adresHitaptaGorunsunSec(true);
-        getEvraktaGorunecekHitap("Görünecek Hitap \""+ evraktaGorunecekHitap +"\" olmalı").shouldHave(text(evraktaGorunecekHitap));
+        getEvraktaGorunecekHitap("Görünecek Hitap \"" + evraktaGorunecekHitap + "\" olmalı").shouldHave(text(evraktaGorunecekHitap));
         kaydet();
         return this;
     }
@@ -232,7 +231,7 @@ public class DagitimHitapDuzenle extends MainPage{
     public DagitimHitapDuzenle ozelHitapGirilir(String ozelHitap) {
         ozelHitapSec(true);
         getHitapTextarea().setValue(ozelHitap);
-        getEvraktaGorunecekHitap("Görünecek Hitap \""+ ozelHitap +"\" olmalı").shouldHave(text(ozelHitap));
+        getEvraktaGorunecekHitap("Görünecek Hitap \"" + ozelHitap + "\" olmalı").shouldHave(text(ozelHitap));
         //getKaydetButton("tıklanır").click();
         kaydet();
         return this;
@@ -241,8 +240,8 @@ public class DagitimHitapDuzenle extends MainPage{
     @Step("{dagitimElemanlariTipi} dağıtım elemanı eklenir ve ek güncellir")
     public DagitimHitapDuzenle ekGuncelle(String dagitimElemanlari, String ek, String evraktaGorunecekHitap) {
         //dagitimHitapDuzenle.getEkOfInput(String.format("\"%s\" alanın ek \"%s\" ile güncelle",dagitimElemanlariTipi,ek), value(dagitimElemanlari)).setValue(ek);
-        getEkOfInput(dagitimElemanlari + " alanın eki " + ek + " yap" ,value(dagitimElemanlari)).setValue(ek);
-        getEvraktaGorunecekHitap(String.format("Görünecek Hitap \"%s%s\" olmalı", dagitimElemanlari,ek)).shouldHave(text(evraktaGorunecekHitap));
+        getEkOfInput(dagitimElemanlari + " alanın eki " + ek + " yap", value(dagitimElemanlari)).setValue(ek);
+        getEvraktaGorunecekHitap(String.format("Görünecek Hitap \"%s%s\" olmalı", dagitimElemanlari, ek)).shouldHave(text(evraktaGorunecekHitap));
         //getKaydetButton("tıklanır").click();
         kaydet();
         return this;

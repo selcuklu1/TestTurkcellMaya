@@ -483,7 +483,7 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
         //Step 6
         page.aciklamaGir("TS2296 açıklama");
         dagitimPlanElemanlari.forEach((k, v) -> {
-                    page.dagitimElemanlariTipiSec(k)
+            page.dagitimElemanlariTipiSec(k)
                     .ekle().islemMesaji().warningMessage(k + messageDagitimElemanBos);
         });
 

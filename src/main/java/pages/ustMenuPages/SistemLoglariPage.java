@@ -24,6 +24,7 @@ public class SistemLoglariPage extends MainPage {
     SelenideElement btnSorgula = $(By.id("sistemLogRaporForm:sorgulaButton"));
     ElementsCollection tableSistemLoglari = $$("tbody[id='sistemLogRaporForm:sistemLogRaporDataTable_data'] > tr[role='row']");
     ElementsCollection sistemRaporuTablePages = $$("td[id='sistemLogRaporForm:sistemLogRaporDataTable_paginator_bottom'] > span[class='ui-paginator-pages'] >  span");
+
     @Step("Sistem logları sayfasını aç")
     public SistemLoglariPage openPage() {
         ustMenu(UstMenuData.Raporlar.SistemLoglari);

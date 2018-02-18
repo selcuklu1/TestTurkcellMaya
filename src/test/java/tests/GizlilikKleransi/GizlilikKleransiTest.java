@@ -600,7 +600,7 @@ public class GizlilikKleransiTest extends BaseTest {
                 .geregiSec(geregi)
                 .onayAkisiEkle()
                 .kullaniciTabloKontrol()
-                .kullniciIsmineGoreImzaParafKontrol("username23t",tur2)
+                .kullniciIsmineGoreImzaParafKontrol("username23t", tur2)
                 .IlkKullaniciImzalamaVeyaParaflamaSec(tur)
                 .onayAkisiKullaniciKontrol("username23t", tur)
                 .kullan();

@@ -12,7 +12,6 @@ import pages.MainPage;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.sleep;
 import static com.codeborne.selenide.Selenide.switchTo;
 import static pages.pageComponents.belgenetElements.Belgenet.$inFrame;
 import static pages.pageComponents.belgenetElements.BelgentCondition.toolboxButtonOn;
@@ -78,7 +77,7 @@ public class TextEditor extends MainPage {
     public TextEditor type(CharSequence... keysToSend) {
         //sleep(3000);
         SelenideElement editor = editor();
-        editor.shouldHave(attribute("contenteditable","true"));
+        editor.shouldHave(attribute("contenteditable", "true"));
         editor.shouldBe(visible, enabled);
         editor.sendKeys(keysToSend);
         switchTo().defaultContent();
@@ -89,7 +88,7 @@ public class TextEditor extends MainPage {
     public TextEditor clear() {
         //sleep(3000);
         SelenideElement editor = editor();
-        editor.shouldHave(attribute("contenteditable","true"));
+        editor.shouldHave(attribute("contenteditable", "true"));
         editor.shouldBe(visible, enabled);
         editor.clear();
         switchTo().defaultContent();

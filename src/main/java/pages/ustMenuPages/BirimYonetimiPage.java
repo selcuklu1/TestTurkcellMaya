@@ -147,9 +147,9 @@ public class BirimYonetimiPage extends MainPage {
     }
 
     @Step("Sağ alanda Birim Güncelleme ekranı geldiği görülür")
-    public BirimYonetimiPage sagAlandaGuncellemeEkranGeldigiGorme(){
-    boolean durum = $$(By.id("birimYonetimiEditorForm:birimYonetimiEditorPanel_header")).size()==1;
-        Assert.assertEquals(durum,true);
+    public BirimYonetimiPage sagAlandaGuncellemeEkranGeldigiGorme() {
+        boolean durum = $$(By.id("birimYonetimiEditorForm:birimYonetimiEditorPanel_header")).size() == 1;
+        Assert.assertEquals(durum, true);
         takeScreenshot();
         return this;
     }
@@ -446,64 +446,64 @@ public class BirimYonetimiPage extends MainPage {
     @Step("Birim Yönetimi alan kontrolleri")
     public BirimYonetimiPage birimYonetimiAlanKontrolleri() {
 
-        Assert.assertEquals( chkDisBirim.isDisplayed(), true, "Dış Birim");
+        Assert.assertEquals(chkDisBirim.isDisplayed(), true, "Dış Birim");
         Allure.addAttachment("Dış Birim alanı kontrolu başarılı", "");
 
-        Assert.assertEquals( chkOzelHitap.isDisplayed(), true, "Özel Hitap");
+        Assert.assertEquals(chkOzelHitap.isDisplayed(), true, "Özel Hitap");
         Allure.addAttachment("Özel Hitap alanı kontrolu başarılı", "");
 
-        Assert.assertEquals( txtKarargahKisaltmasi.isDisplayed(), true, "Karargah Kısaltması");
+        Assert.assertEquals(txtKarargahKisaltmasi.isDisplayed(), true, "Karargah Kısaltması");
         Allure.addAttachment("Karargah Kısaltması alanı kontrolu başarılı", "");
 
-        Assert.assertEquals( treeBagliBirim.isDisplayed(), true, "Bağlı Birim");
+        Assert.assertEquals(treeBagliBirim.isDisplayed(), true, "Bağlı Birim");
         Allure.addAttachment("Bağlı Birim alanı kontrolu başarılı", "");
 
-        Assert.assertEquals( treeFizikiArsivBirimi.isDisplayed(), true, "Fizik Arşiv Birimi");
+        Assert.assertEquals(treeFizikiArsivBirimi.isDisplayed(), true, "Fizik Arşiv Birimi");
         Allure.addAttachment("Fizik Arşiv Birimi alanı kontrolu başarılı", "");
 
-        Assert.assertEquals( chkArsivBirimi.isDisplayed(), true, "Arşiv Birimi");
+        Assert.assertEquals(chkArsivBirimi.isDisplayed(), true, "Arşiv Birimi");
         Allure.addAttachment("Arşiv Birimi alanı kontrolu başarılı", "");
 
-        Assert.assertEquals( chkGenelEvrak.isDisplayed(), true, "Genel Evrak");
+        Assert.assertEquals(chkGenelEvrak.isDisplayed(), true, "Genel Evrak");
         Allure.addAttachment("Genel Evrak alanı kontrolu başarılı", "");
 
-        Assert.assertEquals( txtOlurMetni.isDisplayed(), true, "Olur Metni");
+        Assert.assertEquals(txtOlurMetni.isDisplayed(), true, "Olur Metni");
         Allure.addAttachment("Olur Metni alanı kontrolu başarılı", "");
 
-        Assert.assertEquals( txtAciklama.isDisplayed(), true, "Açıklama");
+        Assert.assertEquals(txtAciklama.isDisplayed(), true, "Açıklama");
         Allure.addAttachment("Açıklama alanı kontrolu başarılı", "");
 
-        Assert.assertEquals( chkKepAdresiKullaniyor.isDisplayed(), true, "Kep Adresi Kullanılıyor");
+        Assert.assertEquals(chkKepAdresiKullaniyor.isDisplayed(), true, "Kep Adresi Kullanılıyor");
         Allure.addAttachment("Kep Adresi Kullanılıyor alanı kontrolu başarılı", "");
 
-        Assert.assertEquals( chkSDPnaGoreBirimKlasorleriniOlustur.isDisplayed(), true, "SDPna Göre Birim Klasörlerini Oluştur");
+        Assert.assertEquals(chkSDPnaGoreBirimKlasorleriniOlustur.isDisplayed(), true, "SDPna Göre Birim Klasörlerini Oluştur");
         Allure.addAttachment("SDPna Göre Birim Klasörlerini Oluştur alanı kontrolu başarılı", "");
 
-        Assert.assertEquals( chkYetkiDevriVar.isDisplayed(), true, "Yetki Devri Var");
+        Assert.assertEquals(chkYetkiDevriVar.isDisplayed(), true, "Yetki Devri Var");
         Allure.addAttachment("Yetki Devri Var alanı kontrolu başarılı", "");
 
-        Assert.assertEquals( txtSagUstLogoBoy.isDisplayed(), true, "Sağ Üst Logo Boy");
+        Assert.assertEquals(txtSagUstLogoBoy.isDisplayed(), true, "Sağ Üst Logo Boy");
         Allure.addAttachment("Sağ Üst Logo Boy alanı kontrolu başarılı", "");
 
-        Assert.assertEquals( txtSolUstLogoBoy.isDisplayed(), true, "Sol Üst Logo Boy");
+        Assert.assertEquals(txtSolUstLogoBoy.isDisplayed(), true, "Sol Üst Logo Boy");
         Allure.addAttachment("Sol Üst Logo Boy alanı kontrolu başarılı", "");
 
-        Assert.assertEquals( btnSolUstLogoEkle.isDisplayed(), true, "Sol Üst Logo Ekle");
+        Assert.assertEquals(btnSolUstLogoEkle.isDisplayed(), true, "Sol Üst Logo Ekle");
         Allure.addAttachment("Sol Üst Logo Ekle alanı kontrolu başarılı", "");
 
-        Assert.assertEquals( btnSagUstLogoEkle.isDisplayed(), true, "Sağ Üst Logo Ekle");
+        Assert.assertEquals(btnSagUstLogoEkle.isDisplayed(), true, "Sağ Üst Logo Ekle");
         Allure.addAttachment("Sağ Üst Logo Ekle alanı kontrolu başarılı", "");
 
-        Assert.assertEquals( txtSagUstLogoGenislik.isDisplayed(), true, "Sağ Üst Logo Genişlik");
+        Assert.assertEquals(txtSagUstLogoGenislik.isDisplayed(), true, "Sağ Üst Logo Genişlik");
         Allure.addAttachment("Sağ Üst Logo Genişlik alanı kontrolu başarılı", "");
 
-        Assert.assertEquals( txtSolUstGenislik.isDisplayed(), true, "Sol Üst Logo Genişlik");
+        Assert.assertEquals(txtSolUstGenislik.isDisplayed(), true, "Sol Üst Logo Genişlik");
         Allure.addAttachment("Sol Üst Logo Genişlik alanı kontrolu başarılı", "");
 
-        Assert.assertEquals( btnBirimAmiriEkle.isDisplayed(), true, "Birim Amiri");
+        Assert.assertEquals(btnBirimAmiriEkle.isDisplayed(), true, "Birim Amiri");
         Allure.addAttachment("Birim Amiri alanı kontrolu başarılı", "");
 
-        Assert.assertEquals( btnYeniKepAdresBilgileriEkle.isDisplayed(), true, "Kep Adres Bilgiler");
+        Assert.assertEquals(btnYeniKepAdresBilgileriEkle.isDisplayed(), true, "Kep Adres Bilgiler");
         Allure.addAttachment("Kep Adres Bilgileri alanı kontrolu başarılı", "");
 
         takeScreenshot();
@@ -524,7 +524,7 @@ public class BirimYonetimiPage extends MainPage {
     @Step("Pasif yap butonunun aktif olarak geldiği kontrolu")
     public BirimYonetimiPage pasifYapButonuKontrolu() {
 
-        Assert.assertEquals( btnPasifYap.isDisplayed(), true, "Pasif Yap kontrolu");
+        Assert.assertEquals(btnPasifYap.isDisplayed(), true, "Pasif Yap kontrolu");
         Allure.addAttachment("Pasif Yap butonu kontrolu başarılı", "");
 
         return this;
@@ -533,7 +533,7 @@ public class BirimYonetimiPage extends MainPage {
     @Step("Aktif yap butonunun aktif olarak geldiği")
     public BirimYonetimiPage aktifYapButonuKontrolu() {
 
-        Assert.assertEquals( btnAktifYap.isDisplayed(), true, "Aktif Yap kontrolu");
+        Assert.assertEquals(btnAktifYap.isDisplayed(), true, "Aktif Yap kontrolu");
         Allure.addAttachment("Pasif Yap butonu kontrolu başarılı", "");
 
         return this;
@@ -542,7 +542,7 @@ public class BirimYonetimiPage extends MainPage {
     @Step("Dış birim check boxının boş olduğu kontrolu")
     public BirimYonetimiPage disBirimChkBoxBosOlduguKontrolu() {
 
-        Assert.assertEquals( chkDisBirimBos.isDisplayed(), true, "Dış birim check boxının boş olduğu kontrolu");
+        Assert.assertEquals(chkDisBirimBos.isDisplayed(), true, "Dış birim check boxının boş olduğu kontrolu");
         Allure.addAttachment("Dış birim check boxının boş olduğu kontrolu", "");
 
         return this;
@@ -551,7 +551,7 @@ public class BirimYonetimiPage extends MainPage {
     @Step(" Dış birim check boxının işaretli olduğu kontrolu")
     public BirimYonetimiPage disBirimChkBoxDoluOlduguKontrolu() {
 
-        Assert.assertEquals( chkDisBirimDolu.isDisplayed(), true, "Dış birim check boxının işaretli olduğu kontrolu");
+        Assert.assertEquals(chkDisBirimDolu.isDisplayed(), true, "Dış birim check boxının işaretli olduğu kontrolu");
         Allure.addAttachment("Dış birim check boxının işaretli olduğu kontrolu", "");
 
         return this;

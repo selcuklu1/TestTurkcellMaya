@@ -8,7 +8,6 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
-import pages.MainPage;
 
 import java.util.ArrayList;
 
@@ -84,14 +83,14 @@ public class SearchTable extends BaseLibrary {
 
 
     @Step("İlk sayfaya git")
-    public SearchTable goToFirstPage(){
+    public SearchTable goToFirstPage() {
         if (getFirstPageButton().exists() && getFirstPageButton().is(not(isTableNavButtonDisabled)))
             getFirstPageButton().click();
         return this;
     }
 
     @Step("Son sayfaya git")
-    public SearchTable goToLastPage(){
+    public SearchTable goToLastPage() {
         if (getLastPageButton().exists() && getLastPageButton().is(not(isTableNavButtonDisabled)))
             getLastPageButton().click();
         return this;

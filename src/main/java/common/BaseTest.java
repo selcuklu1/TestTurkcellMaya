@@ -78,7 +78,7 @@ public class BaseTest extends BaseLibrary {
         Configuration.savePageSource = false;
         Configuration.collectionsTimeout = timeout * 1000;
         Configuration.timeout = timeout * 1000;
-        Configuration.holdBrowserOpen = Configuration.remote == null ? true:false;
+        Configuration.holdBrowserOpen = Configuration.remote == null ? true : false;
         Configuration.startMaximized = true;
         Configuration.pollingInterval = 100;
         Configuration.collectionsPollingInterval = 100;
@@ -208,8 +208,8 @@ public class BaseTest extends BaseLibrary {
     }
 
     @Step("Test Numarası : {testid} {status} ")
-    public void testStatus(String testid, String status)
-    {}
+    public void testStatus(String testid, String status) {
+    }
 
     @Step("Login")
     public void login() {

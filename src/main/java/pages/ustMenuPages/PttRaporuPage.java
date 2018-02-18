@@ -194,7 +194,7 @@ public class PttRaporuPage extends MainPage {
     @Step("Ülke doldur: {ulke}")
     public PttRaporuPage ulkeDoldur(String ulke) {
         //txtUlke.selectLov(ulke);
-        if(ulke == ""){
+        if (ulke == "") {
             txtUlke.clearAllSelectedItems();
         } else {
             txtUlke.clearAllSelectedItems();
@@ -209,9 +209,9 @@ public class PttRaporuPage extends MainPage {
 
     @Step("İl doldur: {il}")
     public PttRaporuPage ilDoldur(String il) {
-        if(il == "")
+        if (il == "")
             txtIl.clearAllSelectedItems();
-        else{
+        else {
             txtIl.clearAllSelectedItems();
             txtIl.selectLov(il);
 
@@ -281,20 +281,20 @@ public class PttRaporuPage extends MainPage {
     }
 
     @Step("Tablo verilerini kontrol et")
-    public PttRaporuPage tabloKontrol(){
+    public PttRaporuPage tabloKontrol() {
         int tabloSatirSayisi = tableRaporlar.size();
         Allure.addDescription("Tabloda" + tabloSatirSayisi + " adet kayıt var.");
         return this;
     }
 
     @Step("Posta tarihi alanında default günün tarihinin geldiği görülür.")
-    public PttRaporuPage postaTarihiDefaultDegerKontrol(){
+    public PttRaporuPage postaTarihiDefaultDegerKontrol() {
         String tarihBugun = "" + new SimpleDateFormat("dd.MM.yyyy").format(new Date());
         txtPostaTarihi.shouldHave(Condition.value(tarihBugun));
         return this;
     }
 
-    public static class PttRaporExcellTest{
+    public static class PttRaporExcellTest {
 
         public String dagitici;
         public String duzenleyen;

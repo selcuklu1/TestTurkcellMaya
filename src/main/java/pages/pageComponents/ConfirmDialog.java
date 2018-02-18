@@ -1,12 +1,10 @@
 package pages.pageComponents;
 
-import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
 import io.qameta.allure.Step;
-import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$$;
@@ -79,8 +77,8 @@ public class ConfirmDialog extends BaseLibrary {
     }
 
     @Step("Onya mesaj kontrol edilir")
-    public ConfirmDialog onayMesajKontrolu(Condition... conditions){
-        for (Condition condition:conditions) {
+    public ConfirmDialog onayMesajKontrolu(Condition... conditions) {
+        for (Condition condition : conditions) {
             getDialog().shouldHave(condition);
         }
         return this;

@@ -13,7 +13,7 @@ import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 
-public class GelenEvrakZimmetRaporuPage extends MainPage{
+public class GelenEvrakZimmetRaporuPage extends MainPage {
     SelenideElement sorgula = $(By.id("gelenEvrakZimmetRaporuYonetimiTabView:gelenEvrakZimmetRaporuTab1Form:sorgulaButtonTab1"));
     SelenideElement zimmetRaporTablo = $(By.id("gelenEvrakZimmetRaporuYonetimiTabView:gelenEvrakZimmetRaporuTab1Form:gelenEvrakDataTableTab1_data"));
     SelenideElement popupKapatma = $("[class='ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all ui-state-hover']");
@@ -49,8 +49,7 @@ public class GelenEvrakZimmetRaporuPage extends MainPage{
     public GelenEvrakZimmetRaporuPage evrakGecmisiButtonTıklama(String konu) {
 //        ElementsCollection tr = $$("[id='gelenEvrakZimmetRaporuYonetimiTabView:gelenEvrakZimmetRaporuTab1Form:gelenEvrakDataTableTab1'] tbody tr").filterBy(text(konu));
         ElementsCollection tr = zimmetEvrakListele.filterBy(text(konu));
-        if(tr.size() > 0)
-        {
+        if (tr.size() > 0) {
             tr.get(0).$$("td [id$='evrakGecmisiId']").get(0).click();
         }
         return this;
@@ -60,8 +59,7 @@ public class GelenEvrakZimmetRaporuPage extends MainPage{
     public GelenEvrakZimmetRaporuPage evrakDetayButtonTıklama(String konu) {
 //        ElementsCollection tr = $$("[id='gelenEvrakZimmetRaporuYonetimiTabView:gelenEvrakZimmetRaporuTab1Form:gelenEvrakDataTableTab1'] tbody tr").filterBy(text(konu));
         ElementsCollection tr = zimmetEvrakListele.filterBy(text(konu));
-        if(tr.size() > 0)
-        {
+        if (tr.size() > 0) {
             tr.get(0).$$("td [id$='evrakGosterButtonTab1']").get(0).click();
         }
         return this;
@@ -71,17 +69,15 @@ public class GelenEvrakZimmetRaporuPage extends MainPage{
     public GelenEvrakZimmetRaporuPage evrakEtiketButtonTıklama(String konu) {
 //        ElementsCollection tr = $$("[id='gelenEvrakZimmetRaporuYonetimiTabView:gelenEvrakZimmetRaporuTab1Form:gelenEvrakDataTableTab1'] tbody tr").filterBy(text(konu));
         ElementsCollection tr = zimmetEvrakListele.filterBy(text(konu));
-        if(tr.size() > 0)
-        {
+        if (tr.size() > 0) {
             tr.get(0).$$("td [id*='j_idt']").get(0).click();
         }
         return this;
     }
 
 
-
     @Step("Gelen Evrak Zimmet Raporu Tablosunda Evrak Geçmiş Kontrolü: Evrak: {konu}, Kullanıcı: {kullanıcı}, IslemSureci: {islemSureci}")
-    public GelenEvrakZimmetRaporuPage evrakGecmisiKontrolu(String konu,String kullanıcı,String islemSureci) {
+    public GelenEvrakZimmetRaporuPage evrakGecmisiKontrolu(String konu, String kullanıcı, String islemSureci) {
 //        boolean durumKonu1 = $$("[id='zimmetRaporHareketGecmisiForm:hareketGecmisiDataTableId_data']")
         boolean durumKonu1 = hareketGecmisi
                 .filterBy(text(kullanıcı))
@@ -105,7 +101,6 @@ public class GelenEvrakZimmetRaporuPage extends MainPage{
         Allure.addAttachment("Evrak Etiket", "Bulunmaktadır");
         return this;
     }
-
 
 
     @Step("Popup Kapatma")

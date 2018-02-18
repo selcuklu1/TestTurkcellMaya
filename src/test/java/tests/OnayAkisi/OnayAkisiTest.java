@@ -220,7 +220,8 @@ public class OnayAkisiTest extends BaseTest {
 
         String asilKullanici = "Optiim TEST6";
         String vekilKullanici = "Optiim TEST7";
-        String parafciKullanici1 = "Zübeyde TEKİN";;
+        String parafciKullanici1 = "Zübeyde TEKİN";
+        ;
         String parafciKullanici2 = "Mehmet BOZDEMİR";
         String imzaciKullanici = "Optiim TEST";
         String kaldirilacakKlasorler = "ESK05";

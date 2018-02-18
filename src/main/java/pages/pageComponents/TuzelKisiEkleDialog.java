@@ -6,7 +6,6 @@ import org.openqa.selenium.WebElement;
 import pages.MainPage;
 
 import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$x;
 
 /**
  * Yazan: Ilyas Bayraktar
@@ -43,7 +42,6 @@ public class TuzelKisiEkleDialog extends MainPage {
     SelenideElement platformIsletmecisiCheckbox = $(By.id("dagPlanTuzelKisiEkleForm:platformIsletmecisiId"));
     SelenideElement altyapiIsletmecisiCheckbox = $(By.id("dagPlanTuzelKisiEkleForm:altyapiIsletmecisiId"));
     SelenideElement lisansIptalCheckbox = $(By.id("dagPlanTuzelKisiEkleForm:lisansIptalId"));
-
 
 
 }

@@ -382,8 +382,8 @@ public class BaseLibrary extends ElementsContainer {
     /**
      * if input not visible, otherwise use selenide setselected
      */
-    public void checkboxSelect(SelenideElement element, boolean setSelected){
-        element = element.getTagName().equalsIgnoreCase("input")? element:element.$("input");
+    public void checkboxSelect(SelenideElement element, boolean setSelected) {
+        element = element.getTagName().equalsIgnoreCase("input") ? element : element.$("input");
         if (element.isSelected() ^ setSelected) {
             if (element.getAttribute("readonly") != null)
                 throw new InvalidStateException("Cannot change value of readonly element");
@@ -821,14 +821,14 @@ public class BaseLibrary extends ElementsContainer {
         SelenideElement btnEvet = $(By.id("mainPreviewForm:evrakSilEvetButton"));
         SelenideElement btnHayir = $(By.id("mainPreviewForm:evrakSilHayirButton"));
 
-            switch (secim) {
-                case "Evet":
-                    btnEvet.click();
-                    break;
-                case "Hayır":
-                    btnHayir.click();
-                    break;
-            }
+        switch (secim) {
+            case "Evet":
+                btnEvet.click();
+                break;
+            case "Hayır":
+                btnHayir.click();
+                break;
+        }
     }
 
     // İşlem penceresi kapatma onay - popup

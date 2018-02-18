@@ -1,11 +1,12 @@
 package pages.pageComponents;
 
-import com.codeborne.selenide.*;
+import com.codeborne.selenide.CollectionCondition;
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
-import static com.codeborne.selenide.Selenide.switchTo;
+import static com.codeborne.selenide.Selenide.*;
 
 /**
  * Yazan: Ilyas Bayraktar
@@ -30,56 +31,56 @@ public class PDFOnizleme {
     }
 
     @Step("")
-    public PDFOnizleme setScale100(){
+    public PDFOnizleme setScale100() {
         scaleSelect.selectOption("100%");
         return this;
     }
 
     @Step("")
-    public ElementsCollection getPages(){
+    public ElementsCollection getPages() {
         return pages;
     }
 
     @Step("")
-    public SelenideElement getPage(){
+    public SelenideElement getPage() {
         return pages.first();
     }
 
     @Step("")
-    public SelenideElement getPage(int pageNumber){
+    public SelenideElement getPage(int pageNumber) {
         return pages.get(pageNumber);
     }
 
     @Step("")
-    public SelenideElement getElement(int pageNumber, Condition... conditions){
+    public SelenideElement getElement(int pageNumber, Condition... conditions) {
         ElementsCollection div = getPage(pageNumber).$$(".textLayer div");
-        for (Condition condition:conditions) {
+        for (Condition condition : conditions) {
             div = div.filterBy(condition);
         }
         return div.shouldHave(CollectionCondition.sizeGreaterThan(0)).first();
     }
 
     @Step("PDF Önizleme tekst kontrolü")
-    public PDFOnizleme checkText(int pageNumber, Condition... conditions){
+    public PDFOnizleme checkText(int pageNumber, Condition... conditions) {
         SelenideElement page = getPage(pageNumber);
-        for (Condition condition:conditions) {
+        for (Condition condition : conditions) {
             page = page.shouldHave(condition);
         }
         return this;
     }
 
     @Step("PDF Önizleme tekst kontrolü")
-    public PDFOnizleme checkText(Condition... conditions){
+    public PDFOnizleme checkText(Condition... conditions) {
         SelenideElement page = getPage(0);
-        for (Condition condition:conditions) {
+        for (Condition condition : conditions) {
             page.shouldHave(condition);
         }
         return this;
     }
 
     @Step("PDF Önizleme tekst kontrolü")
-    public PDFOnizleme checkTextInAllPages(Condition... conditions){
-        for (Condition condition:conditions) {
+    public PDFOnizleme checkTextInAllPages(Condition... conditions) {
+        for (Condition condition : conditions) {
             viewer.shouldHave(condition);
         }
         return this;
