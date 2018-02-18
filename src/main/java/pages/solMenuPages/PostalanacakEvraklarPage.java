@@ -9,10 +9,7 @@ import io.qameta.allure.Step;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.apache.poi.EmptyFileException;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Capabilities;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import pages.MainPage;
@@ -1148,7 +1145,8 @@ takeScreenshot();
 
     @Step("Icerik Evrak Postalama içi page zoom out")
     public PostalanacakEvraklarPage icerikEvPostPageDown () {
-        Selenide.zoom(0.75);
+
+        Selenide.executeJavaScript("scroll(0,350);");
         return this;
     }
     @Step("Icerik Etiket Bastir butonu")
