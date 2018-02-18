@@ -10,6 +10,7 @@ import org.testng.annotations.Test;
 import pages.pageComponents.TopluEvrakOnizleme;
 import pages.solMenuPages.*;
 import pages.ustMenuPages.GelenEvrakKayitPage;
+import pages.ustMenuPages.HavaleEdilenEvrakRaporuPage;
 
 /****************************************************
  * Tarih: 2018-02-12
@@ -27,6 +28,7 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
     GelenEvraklarPage gelenEvraklarPage;
     HavaleOnayiVerdiklerimPage havaleOnayiVerdiklerim;
     TopluEvrakOnizleme topluEvrakOnizleme;
+    HavaleEdilenEvrakRaporuPage havaleEdilenEvrakRaporuPage;
 
 //    User yakyol = new User("yakyol", "123");
     User mbozdemir = new User("mbozdemir", "123");
@@ -60,6 +62,7 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
         gelenEvraklarPage = new GelenEvraklarPage();
         havaleOnayiVerdiklerim = new HavaleOnayiVerdiklerimPage();
         topluEvrakOnizleme = new TopluEvrakOnizleme();
+        havaleEdilenEvrakRaporuPage = new HavaleEdilenEvrakRaporuPage();
     }
 
 
@@ -239,7 +242,6 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .islemMesaji().basariliOlmali();
 
         testStatus(testid,"Test Başladı");
-//        login(mbozdemir);
 
         kaydedilenGelenEvraklarPage
                 .openPage()
@@ -481,7 +483,7 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .openPage()
                 .sayfaKontrol(sayfa1)
                 .evraklariSecTopluHavaleYap(konu1, konu2, true);
-                //checkbox ların checked edildigi kontrolu
+        //checkbox ların checked edildigi kontrolu
 
         topluEvrakOnizleme
                 .ekranKontrol()
@@ -509,4 +511,194 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .evrakNoIleTabloKontrolu(konu1)
                 .evrakNoIleTabloKontrolu(konu2);
     }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, priority = 0, description = "TS440: Toplu evrak havale - kullanıcı listesine")
+    public void TS440() throws InterruptedException {
+        String testid= "TS-440";
+        String konu1 = "TS-440-" + getSysDate();
+        String sayfa1 = "Kaydedilen Gelen Evraklar";
+        String sayfa2 = "Birim Havale Edilenler";
+
+        testStatus(testid,"PreCondition 1. Evrak Oluşturma");
+        gelenEvrakKayitPage
+                .openPage()
+                .konuKoduDoldur(konuKodu)
+                .konuDoldur(konu1)
+                .evrakTuruSec(evrakTuru)
+                .evrakDiliSec(evrakDili)
+                .evrakTarihiDoldur(evrakTarihi)
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .kisiKurumSec(kisiKurum)
+                .geldigiKurumDoldurLovText(geldigiKurum)
+                .evrakSayiSagDoldur()
+                .evrakGelisTipiSec(evrakGelisTipi)
+                .ivedilikSec(ivedilik)
+                .kaydet()
+                .popUpsv2();
+
+        testStatus(testid,"PreCondition 2. Evrak Oluşturma");
+        String konu2 = "TS-440-" + getSysDate();
+
+        login(TestData.usernameZTEKIN, TestData.passwordZTEKIN);
+        gelenEvrakKayitPage
+                .openPage()
+                .konuKoduDoldur(konuKodu)
+                .konuDoldur(konu2)
+                .evrakTuruSec(evrakTuru)
+                .evrakDiliSec(evrakDili)
+                .evrakTarihiDoldur(evrakTarihi)
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .kisiKurumSec(kisiKurum)
+                .geldigiKurumDoldurLovText(geldigiKurum)
+                .evrakSayiSagDoldur()
+                .evrakGelisTipiSec(evrakGelisTipi)
+                .ivedilikSec(ivedilik)
+                .kaydet()
+                .popUpsv2();
+
+
+        testStatus(testid,"Test Başladı");
+        kaydedilenGelenEvraklarPage
+                .openPage()
+                .sayfaKontrol(sayfa1)
+                .evraklariSecTopluHavaleYap(konu1, konu2, true);
+
+        topluEvrakOnizleme
+                .ekranKontrol()
+                .havaleAlanKontrolleri()
+                .havaleIslemleriKisiDoldur(onaylayacakKisi,onayKisiDetails)
+                .eklenenKisiKontrolu(onaylayacakKisi)
+                .gonder()
+                .islemMesaji().basariliOlmali();
+
+        birimHavaleEdilenlerPage
+                .openPage()
+                .sayfaKontrol(sayfa2)
+                .evrakNoIleTabloKontrolu(konu1)
+                .evrakSecIcerikGoster(konu1,true)
+                .ekranKontrolEvrakDetayi()
+                .havaleGeriAl()
+                .notAlanınıDoldur(konu1)
+                .geriAl()
+                .islemMesaji().basariliOlmali();
+
+        birimHavaleEdilenlerPage
+                .openPage()
+                .evrakBulunamadı(konu1);
+
+        birimHavaleEdilenlerPage
+                .openPage()
+                .sayfaKontrol(sayfa2)
+                .evrakNoIleTabloKontrolu(konu2)
+                .evrakSecIcerikGoster(konu2,true)
+                .ekranKontrolEvrakDetayi()
+                .havaleGeriAl()
+                .notAlanınıDoldur(konu2)
+                .geriAl()
+                .islemMesaji().basariliOlmali();
+
+        birimHavaleEdilenlerPage
+                .openPage()
+                .evrakBulunamadı(konu2);
+
+        kaydedilenGelenEvraklarPage
+                .openPage()
+                .tabloEvrakNoileEvrakKontrolu(konu1)
+                .tabloEvrakNoileEvrakKontrolu(konu2)
+                .evraklariSecTopluHavaleYap(konu1, konu2, true);
+
+        topluEvrakOnizleme
+                .ekranKontrol()
+                .havaleIslemleriKisiDoldur(onaylayacakKisi,onayKisiDetails)
+                .eklenenKisiKontrolu(onaylayacakKisi)
+                .gonder()
+                .islemMesaji().basariliOlmali();
+
+        login(TestData.usernameMBOZDEMIR,TestData.passwordMBOZDEMIR);
+        kaydedilenGelenEvraklarPage
+                .openPage()
+                //TODO Aslında evrak buraya düşmüyor, düşmesi gereken yer:
+                //İşlem Bekleyen Evraklar - Gelen Evraklar olmalı. Destek Bekleyen Konularda cevap bekleniyor.
+                //Bu hali ile fail ediyor.
+                .tabloEvrakNoileEvrakKontrolu(konu1)
+                .tabloEvrakNoileEvrakKontrolu(konu2);
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, priority = 0, description = "TS1370: Kaydedilen gelen evrak havalesinin Havale Edilen Evrak Raporundan kontrolü")
+    public void TS1370() throws InterruptedException {
+        String testid= "TS-1370";
+        konu = "TS-1370-" + getSysDate();
+        String evrakTarihi = getSysDateForKis();
+
+        testStatus(testid,"PreCondition Evrak Oluşturma");
+        gelenEvrakKayitPage
+                .openPage()
+                .konuKoduDoldur(konuKodu)
+                .konuDoldur(konu)
+                .evrakTuruSec(evrakTuru)
+                .evrakDiliSec(evrakDili)
+                .evrakTarihiDoldur(evrakTarihi)
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .kisiKurumSec(kisiKurum)
+                .geldigiKurumDoldurLovText(geldigiKurum)
+                .evrakSayiSagDoldur()
+                .evrakGelisTipiSec(evrakGelisTipi)
+                .ivedilikSec(ivedilik)
+                .kaydet()
+                .popUpsv2();
+
+        kaydedilenGelenEvraklarPage
+                .openPage()
+                .evrakNoIleEvrakSec(konu)
+                .tabloEvrakNoileIcerikSec(konu)
+                .icerikHavaleYap()
+                .icerikHavaleIslemleriKisiDoldur(onaylayacakKisi,onayKisiDetails)
+                .icerikHavaleOnayinaGonder()
+                .islemMesaji().basariliOlmali();
+
+        birimHavaleEdilenlerPage
+                .openPage()
+                .evrakNoIleTablodanEvrakSecme(konu)
+                .onizlemeHavaleGeriAl()
+                .onizlemeNotAlanınıDoldur(konu)
+                .onizlemeGeriAl()
+                .islemMesaji().basariliOlmali();
+
+        kaydedilenGelenEvraklarPage
+                .openPage()
+                .tabloEvrakNoileIcerikSec(konu)
+                .ekranKontrolEvrakDetayi()
+                .icerikHavaleYap()
+                .icerikHavaleAlanKontrolleri()
+                .icerikDagitimBilgileriBirimDoldurWithDetails(birim, details)
+                .eklenenIcerikBirimKontrolu(birim)
+                .icerikHavaleIslemleriKisiDoldur(kisi)
+                .eklenenIcerikKisiKontrolu(kisi)
+                .icerikDagitimBilgileriOnaylayanWithDetails(onaylayacakKisi, onayKisiDetails)
+                .eklenenIcerikOnaylayanKontrolu(onaylayacakKisi)
+                .kaydet()
+                .evrakDetayiKaydetPopUpClose()
+                .icerikHavaleOnayinaGonder2()
+                .islemMesaji().basariliOlmali();
+
+        havaleEdilenEvrakRaporuPage
+                .openPage()
+
+                .havaleEdilenEvrakRaporAlanKontrolu()
+                .havaleEdilenBirimDoldur(birim)
+                .havaleTarihAraligiBaslangicDoldur(evrakTarihi)
+                .havaleTarihAraligiBitisDoldur(evrakTarihi)
+                .sorgula()
+                .rapordaEvraklarıListele(konu)
+
+                .havaleEdilenKullaniciDoldur(onaylayacakKisi)
+                .havaleTarihAraligiBaslangicDoldur(evrakTarihi)
+                .havaleTarihAraligiBitisDoldur(evrakTarihi)
+                .sorgula()
+                .rapordaEvraklarıListeleDetayTikla(konu)
+                .ekranKontrolEvrakDetayi();
+    }
+
 }

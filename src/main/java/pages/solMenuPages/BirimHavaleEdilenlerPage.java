@@ -54,6 +54,8 @@ public class BirimHavaleEdilenlerPage extends MainPage {
     ElementsCollection birimEvrakEkleriKontrol = $$("div[id$='ekListesiOnizlemeDataTable'] tr[data-ri]");
     ElementsCollection ilgiBilgileriEkleriKontrol = $$("div[id$='ilgiListesiDataTable'] tr[data-ri]");
 
+    SelenideElement frmInboxItemInfoForm = $("form[id='inboxItemInfoForm']");
+
     SelenideElement lblSayfa = $("[class='ui-inbox-header-title']");
     @Step("Birim Havale Edilenler sayfası aç")
     public BirimHavaleEdilenlerPage openPage() {
@@ -261,5 +263,10 @@ public class BirimHavaleEdilenlerPage extends MainPage {
         return this;
     }
 
-
+    @Step("Evrak Içeriği ekranı açılır\n")
+    public BirimHavaleEdilenlerPage ekranKontrolEvrakDetayi() {
+        Assert.assertEquals(frmInboxItemInfoForm.isDisplayed(),true,"Evrak Içeriği");
+        Allure.addAttachment("Evrak Içeriği sayfası","açılmaktadır");
+        return this;
+    }
 }
