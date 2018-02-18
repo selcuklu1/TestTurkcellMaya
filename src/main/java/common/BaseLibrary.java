@@ -1,6 +1,7 @@
 package common;
 
 import com.codeborne.selenide.*;
+import com.codeborne.selenide.ex.InvalidStateException;
 import data.TestData;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Attachment;
@@ -364,9 +365,32 @@ public class BaseLibrary extends ElementsContainer {
      *
      * @param element
      */
+    @Step("{stepDescription}")
+    public void clickJs(SelenideElement element, String stepDescription) {
+        executeJavaScript("arguments[0].click();", element);
+    }
+
+    /**
+     * JavaSctipt ile click yapılır
+     *
+     * @param element
+     */
     public void clickJs(WebElement element) {
         executeJavaScript("arguments[0].click();", element);
     }
+
+    /**
+     * if input not visible, otherwise use selenide setselected
+     */
+    public void checkboxSelect(SelenideElement element, boolean setSelected){
+        element = element.getTagName().equalsIgnoreCase("input")? element:element.$("input");
+        if (element.isSelected() ^ setSelected) {
+            if (element.getAttribute("readonly") != null)
+                throw new InvalidStateException("Cannot change value of readonly element");
+            clickJs(element);
+        }
+    }
+
 
 //    private String closeAlertAndGetItsText() {
 //        try {

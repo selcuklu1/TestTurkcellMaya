@@ -1,9 +1,11 @@
 package pages.pageComponents;
 
 import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
 import common.BaseLibrary;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
@@ -11,6 +13,8 @@ import org.testng.Assert;
 import java.util.List;
 
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
+import static com.codeborne.selenide.Condition.cssClass;
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$$;
 import static com.codeborne.selenide.Selenide.sleep;
@@ -30,6 +34,7 @@ public class IslemMesajlari extends BaseLibrary {
     private SelenideElement closeMessagePopup = $(".lobibox-close");*/
 
     List<String> messages;
+    //lobibox-notify-warning
     private By messageLocator = By.cssSelector(".lobibox-notify");
     private By bodyLocator = By.cssSelector(".lobibox-notify-body");
     private By titleLocator = By.cssSelector(".lobibox-notify-title");
@@ -119,6 +124,54 @@ public class IslemMesajlari extends BaseLibrary {
     @Step("Dikkat mesajı gelmeli")
     public IslemMesajlari dikkatOlmali(String... expectedMessage) {
         checkMessage(DIKKAT.value(), expectedMessage);
+        return this;
+    }
+
+    @Step("Uyarı messajı kontrolü")
+    public IslemMesajlari warningMessage(){
+        SelenideElement element = getMessageBody();
+        element.shouldBe(visible);
+        takeScreenshot();
+        Allure.addAttachment("İşlem Mesajı title", element.$(titleLocator).text());
+        Allure.addAttachment("İşlem Mesajı", element.$(msgLocator).text());
+        System.out.println("Warining message type: " + element.has(cssClass("lobibox-notify-warning")));
+        System.out.println("Message title: " + element.$(titleLocator).text());
+        System.out.println("Message text: " + element.$(msgLocator).text());
+        Assert.assertTrue(element.has(cssClass("lobibox-notify-warning")),"Warning message olmalı");
+        closeMessage();
+        return this;
+    }
+
+    @Step("Uyarı messajı kontrolü")
+    public IslemMesajlari warningMessage(String message){
+        SelenideElement element = getMessageBody();
+        element.shouldBe(visible);
+        takeScreenshot();
+        Allure.addAttachment("İşlem Mesajı title", element.$(titleLocator).text());
+        Allure.addAttachment("İşlem Mesajı", element.$(msgLocator).text());
+        System.out.println("Warining message type: " + element.has(cssClass("lobibox-notify-warning")));
+        System.out.println("Message title: " + element.$(titleLocator).text());
+        System.out.println("Message text: " + element.$(msgLocator).text());
+        element.shouldHave(cssClass("lobibox-notify-warning"));
+        //Assert.assertTrue(element.has(cssClass("lobibox-notify-warning")),"Warning message olmalı");
+        element.$(msgLocator).shouldHave(text(message));
+        closeMessage();
+        return this;
+    }
+
+    @Step("Uyarı messajı kontrolü")
+    public IslemMesajlari warningMessage(String title, String message){
+        SelenideElement element = getMessageBody();
+        element.shouldBe(visible);
+        takeScreenshot();
+        Allure.addAttachment("İşlem Mesajı title", element.$(titleLocator).text());
+        Allure.addAttachment("İşlem Mesajı", element.$(msgLocator).text());
+        System.out.println("Warining message type: " + element.has(cssClass("lobibox-notify-warning")));
+        System.out.println("Message title: " + element.$(titleLocator).text());
+        System.out.println("Message text: " + element.$(msgLocator).text());
+        element.$(titleLocator).shouldHave(text(title));
+        element.$(msgLocator).shouldHave(text(message));
+        closeMessage();
         return this;
     }
 

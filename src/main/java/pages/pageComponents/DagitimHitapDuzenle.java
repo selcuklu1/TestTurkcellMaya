@@ -6,14 +6,14 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.testng.Assert;
+import pages.MainPage;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import static com.codeborne.selenide.CollectionCondition.*;
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
 
 /**
@@ -21,13 +21,15 @@ import static com.codeborne.selenide.Selenide.$;
  * Tarih: 5.02.2018
  * Açıklama:
  */
-public class DagitimHitapDuzenle {
+public class DagitimHitapDuzenle extends MainPage{
 
+    SelenideElement page;
     SelenideElement container;
 
     SearchTable dagitimPlaniDetayDataTable;
 
     public DagitimHitapDuzenle(SelenideElement page) {
+        this.page = page;
         this.container = page.$("div[id$='hitapDuzenlemeDialog']");
         dagitimPlaniDetayDataTable = new SearchTable(container.$("div[id$='dagitimPlaniDetayDataTableId']"));
     }
@@ -128,6 +130,18 @@ public class DagitimHitapDuzenle {
         return container.$x("descendant::tr[td/label[normalize-space(.)='Özel Hitap']]//input");
     }
 
+    @Step("\"Özel Hitap\" alanın değeri {secilir} seçilir")
+    public DagitimHitapDuzenle ozelHitapSec(boolean secilir){
+        checkboxSelect(getOzelHitapCheckbox(), secilir);
+        return this;
+    }
+
+    @Step("\"Adres Hitapta Görünsün\" alanın değeri {secilir} seçilir")
+    public DagitimHitapDuzenle adresHitaptaGorunsunSec(boolean secilir){
+        checkboxSelect(getAdresHitaptaGorunsunCheckbox(), secilir);
+        return this;
+    }
+
     @Step("\"Adres Hitapta Görünsün\" alanı aranır")
     public SelenideElement getAdresHitaptaGorunsunCheckbox(){
         return container.$x("descendant::tr[td/label[normalize-space(.)='Adres Hitapta Görünsün']]//input");
@@ -158,6 +172,7 @@ public class DagitimHitapDuzenle {
     @Step("Kaydet")
     public DagitimHitapDuzenle kaydet(){
         getKaydetButton("").shouldBe(visible).click();
+        container.should(disappear);
         return this;
     }
 
@@ -203,5 +218,35 @@ public class DagitimHitapDuzenle {
     public SelenideElement getKayitliHitap(String stepDescription){
         return container.$x("descendant::span[.='Kayıtlı Hitap']/ancestor::table[1]");
     }
+
+    @Step("Adres seçilir")
+    public DagitimHitapDuzenle adresSec(String adres, String evraktaGorunecekHitap) {
+        getAdresTextarea().setValue(adres);
+        adresHitaptaGorunsunSec(true);
+        getEvraktaGorunecekHitap("Görünecek Hitap \""+ evraktaGorunecekHitap +"\" olmalı").shouldHave(text(evraktaGorunecekHitap));
+        kaydet();
+        return this;
+    }
+
+    @Step("Özel hitap seçilir ve girilir")
+    public DagitimHitapDuzenle ozelHitapGirilir(String ozelHitap) {
+        ozelHitapSec(true);
+        getHitapTextarea().setValue(ozelHitap);
+        getEvraktaGorunecekHitap("Görünecek Hitap \""+ ozelHitap +"\" olmalı").shouldHave(text(ozelHitap));
+        //getKaydetButton("tıklanır").click();
+        kaydet();
+        return this;
+    }
+
+    @Step("{dagitimElemanlariTipi} dağıtım elemanı eklenir ve ek güncellir")
+    public DagitimHitapDuzenle ekGuncelle(String dagitimElemanlari, String ek, String evraktaGorunecekHitap) {
+        //dagitimHitapDuzenle.getEkOfInput(String.format("\"%s\" alanın ek \"%s\" ile güncelle",dagitimElemanlariTipi,ek), value(dagitimElemanlari)).setValue(ek);
+        getEkOfInput(dagitimElemanlari + " alanın eki " + ek + " yap" ,value(dagitimElemanlari)).setValue(ek);
+        getEvraktaGorunecekHitap(String.format("Görünecek Hitap \"%s%s\" olmalı", dagitimElemanlari,ek)).shouldHave(text(evraktaGorunecekHitap));
+        //getKaydetButton("tıklanır").click();
+        kaydet();
+        return this;
+    }
+
 
 }

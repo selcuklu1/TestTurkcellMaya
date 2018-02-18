@@ -428,7 +428,7 @@ public class EvrakOnizleme extends MainPage {
         SelenideElement next = $("#evrakOnizlemeNotlariDatatableId_paginator_bottom span[class~='ui-paginator-next']");
 
         @Step("Evrak Notları tabı aç")
-        public EvrakNotlari evrakNotlariTabiAc() {
+        public EvrakNotlari tabiAc() {
             $x("//div[@id='mainPreviewForm:evrakOnizlemeTab']//a[.='Evrak Notları']").click();
             return this;
         }
@@ -697,6 +697,105 @@ public class EvrakOnizleme extends MainPage {
 
             switchTo().frame(0);
             return sayi;
+        }
+
+    }
+
+    public class PostaDetayi extends MainPage {
+
+        SelenideElement evrakDetaylariContainer = $x("//div[@id='mainPreviewForm:evrakOnizlemeTab']//fieldset[legend][1]");
+        SelenideElement postalananYerleriContainer = $x("//div[@id='mainPreviewForm:evrakOnizlemeTab']//fieldset[legend][2]");
+        SelenideElement postalananYerleriDataTable = $x("//div[@id='mainPreviewForm:evrakOnizlemeTab']//fieldset[legend][2]//div[contains(@class,'ui-datatable')]");
+        SelenideElement yazdirEvrakDetayClose = $("#postaDetayYazdirForm a.ui-dialog-titlebar-close");
+
+        SearchTable searchTable = new SearchTable(postalananYerleriDataTable);
+
+        @Step("Posta Detayı tabı aç")
+        public PostaDetayi tabiAc() {
+            $x("//div[@id='mainPreviewForm:evrakOnizlemeTab']//a[.='Posta Detayı']").click();
+            return this;
+        }
+
+        @Step("")
+        public SearchTable postalananYerleriListesi(){
+            return searchTable;
+        }
+
+        @Step("Postalanan Yerleri listesinde ara")
+        public PostaDetayi postalananYerlerindeAra(Condition... aramaKriterleri) {
+            searchTable.findRows(aramaKriterleri).shouldHave(CollectionCondition.sizeGreaterThan(0)).getFoundRows().first();
+            return this;
+        }
+
+        @Step("Yazdır")
+        public EvrakDetaylari yazdir() {
+            searchTable.getFoundRow().$x("descendant::button[.='Yazdır']").click();
+            return new EvrakDetaylari();
+        }
+
+        @Step("Orjinalini Yazdır")
+        public PostaDetayi orjinaliniYazdir() {
+            searchTable.getFoundRow().$x("descendant::button[.='Orjinalini Yazdır']").click();
+            return this;
+        }
+    }
+
+    //Posta Detay Yazdır
+    public class EvrakDetaylari extends MainPage {
+        SelenideElement yazdirEvrakDetayForm = $("#postaDetayYazdirForm");
+        SelenideElement yazdirEvrakDetayClose = $("#postaDetayYazdirForm a.ui-dialog-titlebar-close");
+
+        SearchTable ustVerilerListesi = new SearchTable($(By.id("postaDetayYazdirForm:dtPostaEvrakUstVeri")));
+        SearchTable evrakinEkleriListesi = new SearchTable($(By.id("postaDetayYazdirForm:evrakEkListesi")));
+
+        @Step("Evrak Detayları kapa")
+        public EvrakDetaylari close(){
+            yazdirEvrakDetayClose.click();
+            return this;
+        }
+
+        @Step("Yazdır")
+        public EvrakDetaylari ustVerileriYazdir() {
+            ustVerilerListesi.getFoundRow().$x("descendant::button[.='Yazdır']").click();
+            return this;
+        }
+
+        @Step("Yazdır")
+        public EvrakDetaylari evrakinEkleriYazdir() {
+            evrakinEkleriListesi.getFoundRow().$x("descendant::button[.='Yazdır']").click();
+            return this;
+        }
+
+        @Step("Üst Veriler listesi")
+        public SearchTable getYazdirUstVerilerListesi(){
+            return ustVerilerListesi;
+        }
+
+        @Step("Üst Veriler listesinde ara")
+        public EvrakDetaylari ustVerileriListesindeAra(Condition... aramaKriterleri) {
+            ustVerilerListesi.findRows(aramaKriterleri).shouldHave(CollectionCondition.sizeGreaterThan(0)).getFoundRows().first();
+            return this;
+        }
+
+        @Step("Evrakın Ekleri listesi")
+        public SearchTable getYazdirEvrakinEkleriListesi(){
+            return evrakinEkleriListesi;
+        }
+
+        @Step("Evrakın Ekleri listesinde ara")
+        public EvrakDetaylari evrakinEkleriListesindeAra(Condition... aramaKriterleri) {
+            evrakinEkleriListesi.findRows(aramaKriterleri).shouldHave(CollectionCondition.sizeGreaterThan(0)).getFoundRows().first();
+            return this;
+        }
+
+        @Step("Üst Veriler - Yazdır butonu: {stepDescription}")
+        public SelenideElement getUstVerilerYazdirButton(String stepDescription) {
+            return ustVerilerListesi.getFoundRow().$x("descendant::button[.='Yazdır']");
+        }
+
+        @Step("Evrakın ekleri - Yazdır butonu: {stepDescription}")
+        public SelenideElement getEvrakinEkleriYazdirButton(String stepDescription) {
+            return evrakinEkleriListesi.getFoundRow().$x("descendant::button[.='Yazdır']");
         }
 
     }
