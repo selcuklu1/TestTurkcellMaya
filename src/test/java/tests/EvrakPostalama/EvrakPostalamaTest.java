@@ -1018,7 +1018,7 @@ public class EvrakPostalamaTest extends BaseTest {
                 .geregiSecimTipiSec("Kurum")
                 .geregiDoldur("Başbakanlık", "Kurum Adı")
                 //.geregiKurumPostaTipi("APS")
-                .kurumGeregiAlaniKurumPostaTipiKontrol(kurum, "Evrak Servisi Elden")
+                .kurumGeregiAlaniKurumPostaTipiKontrol(kurum, "APS")
                 .onayAkisiKullanicilariTemizle()
                 .onayAkisiEkle()
                 .onayAkisiKullaniciTipiSec("Mehmet BOZDEMİR", "İmzalama")
@@ -1068,7 +1068,6 @@ public class EvrakPostalamaTest extends BaseTest {
         postalanacakEvraklarPage
                 .evrakPostala()
                 //  .KntrlEvrakFizikselEkYaziSayTar()
-                .evrakOnizlemeDagitimSatiriKontrol(dagitimSatiriMesaj)
                 .evrakOnizlemeFizilselEkMesajiKontrolu(fizikselEkMesaji);
         //.postala()
         //.dialogpostalaEvet();
