@@ -108,7 +108,6 @@ public class PostalanacakEvraklarPage extends MainPage {
     SelenideElement txtEvrakinFizikselEkivardir = $x("//*[contains(text(),'Evrakın fiziksel eki vardır, göndermeyi unutmayınız!')]");
     SelenideElement btnIcerikEvrakPostala = $x("//*[@id='inboxItemInfoForm:dialogTabMenuRight:uiRepeat:4:cmdbutton']");
     SelenideElement ktrlIcerikEvrakPostalaEvSayisi = $x("//*[@id='inboxItemInfoForm:evrakDetayPanelGrid']/tbody/tr[3]/td[3]/label");
-
     //Önizleme
 
     SelenideElement formEvrakOnizleme = $(By.id("mainPreviewForm:evrakOnizlemeTab"));
@@ -1145,8 +1144,9 @@ takeScreenshot();
 
     @Step("Icerik Evrak Postalama içi page zoom out")
     public PostalanacakEvraklarPage icerikEvPostPageDown () {
-
-        Selenide.executeJavaScript("scroll(0,350);");
+        SelenideElement  icerikPostalananYerTD = $x("//*[@id='inboxItemInfoForm:postalanacakDataGrid']/tbody/tr/td");
+        icerikPostalananYerTD.click();
+        icerikPostalananYerTD.sendKeys(Keys.PAGE_DOWN);
         return this;
     }
     @Step("Icerik Etiket Bastir butonu")
