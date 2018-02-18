@@ -1148,11 +1148,10 @@ takeScreenshot();
 
     @Step("Icerik Evrak Postalama içi PAGE DOWN")
     public PostalanacakEvraklarPage icerikEvPostPageDown () {
-        //SelenideElement icerikPage = $x("//*[@id='inboxItemInfoForm:postalamaFieldsPanel']");
+        SelenideElement icerikPage = $x("//*[@id='inboxItemInfoForm:postalanacakDataGrid']");
         //icerikPage.sendKeys(Keys.DOWN);
-        tblPostalanacakYerler.click();
-        tblPostalanacakYerler.scrollIntoView(false);
-        tblPostalanacakYerler.sendKeys(Keys.PAGE_DOWN);
+        icerikPage.scrollIntoView(false);
+        icerikPage.sendKeys(Keys.PAGE_DOWN);
         return this;
     }
     @Step("Icerik Etiket Bastir butonu")
