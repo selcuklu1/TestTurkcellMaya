@@ -1,6 +1,7 @@
 package pages.solMenuPages;
 
 import com.codeborne.selenide.*;
+import com.codeborne.selenide.ex.ElementNotFound;
 import com.codeborne.selenide.impl.WebDriverContainer;
 import io.qameta.allure.Allure;
 import io.qameta.allure.AllureResultsWriter;
@@ -1143,13 +1144,13 @@ takeScreenshot();
     }
 
     @Step("Icerik Evrak Postalama içi page zoom out")
-    public PostalanacakEvraklarPage icerikEvPostPageDown () throws ElementNotVisibleException {
+    public PostalanacakEvraklarPage icerikEvPostPageDown () throws ElementNotFound {
         SelenideElement  icerikPostalananYerTD = $x("//*[@id='inboxItemInfoForm:postalanacakDataGrid']/tbody/tr/td");
         try {
             icerikPostalananYerTD.click();
             icerikPostalananYerTD.sendKeys(Keys.PAGE_DOWN);
 
-        } catch (ElementNotVisibleException e) {
+        } catch (ElementNotFound e) {
 
         };
         return this;
@@ -1175,8 +1176,6 @@ takeScreenshot();
 
     @Step("Icerik Evrak Postalama butonu")
     public PostalanacakEvraklarPage btnIcerikEvrakPostalama() {
-        $x("//*[@id='windowItemInfoDialog']").sendKeys(Keys.CONTROL, Keys.DOWN);
-        $x("//*[@id='windowItemInfoDialog']").sendKeys(Keys.CONTROL, Keys.DOWN);
 
         btnIcerikPostalama.click();
         return this;
