@@ -1068,7 +1068,6 @@ public class EvrakPostalamaTest extends BaseTest {
         postalanacakEvraklarPage
                 .evrakPostala()
                 //  .KntrlEvrakFizikselEkYaziSayTar()
-                .evrakOnizlemeDagitimSatiriKontrol(dagitimSatiriMesaj)
                 .evrakOnizlemeFizilselEkMesajiKontrolu(fizikselEkMesaji);
         //.postala()
         //.dialogpostalaEvet();
