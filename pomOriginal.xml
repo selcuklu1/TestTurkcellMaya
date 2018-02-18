@@ -105,48 +105,63 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.20.1</version>
                 <configuration>
-                    <!--*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
-                    Contains a hardcoded TestNG.xml file.
-                    Could also have been dynamically selected via a paremeter
-                    sent by Jenkins. Example:  <file>${suiteXmlFile}</file>
-                    *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-->
                     <suiteXmlFiles>
-                        <file>Tanimli Paketler.xml</file>
+                        <!--<suiteXmlFile>${suiteXmlFile}</suiteXmlFile>-->
+                        <suiteXmlFile>testng.xml</suiteXmlFile>
                     </suiteXmlFiles>
-
-                    <!--*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
-                    Contains test packet(s) to run. Values are selected form and
-                    sent by Jenkins. TestNG will run packet(s) using this list.
-                    *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-->
-                    <properties>
-                        <property>
-                            <name>testnames</name>
-                            <value>${packets}</value>
-                        </property>
-                    </properties>
-
-                    <!--*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
-                    Contains test name(s) to run. Values are selected form and
-                    sent by Jenkins. TestNG will run tests using this list.
-                    *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-->
-                    <!--Test name="Ozel Test Paket">${test}</Test-->
-
-                    <includes>
-                        <include>${test}</include>
-                    </includes>
-
                     <argLine>
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+                        <!-- -Dfile.encoding="UTF-32BE"-->
                     </argLine>
+                    <!--<argLine>-Dfile.encoding=UTF-8</argLine>-->
+                    <!--<properties>
+                        <property>
+                            <name>listener</name>
+                            <value>listeners.RerunFailedTests</value>
+                        </property>
+                    </properties>-->
+                    <!--<systemProperties>-->
+                    <!--<property>-->
+                    <!--<name>allure.results.directory</name>-->
+                    <!--<value>${project.build.directory}/allure-results</value>-->
+                    <!--&lt;!&ndash;<value>test-result/allure-xml</value>&ndash;&gt;-->
+                    <!--</property>-->
+                    <!--</systemProperties>-->
+                    <!--<systemProperties>-->
+                    <!--<property>-->
+                    <!--<name>allure.results.directory</name>-->
+                    <!--<value>/Users/Shared/Jenkins/Home/workspace/test/allure-results</value>-->
+                    <!--</property>-->
+                    <!--<property>-->
+                    <!--<name>allure.results.directory</name>-->
+                    <!--<value>${project.build.directory}/allure-results</value>-->
+                    <!--&lt;!&ndash;<value>test-result/allure-xml</value>&ndash;&gt;-->
+                    <!--</property>-->
+                    <!--</systemProperties>-->
+                    <!--<systemProperties>-->
+                    <!--<property>-->
+                    <!--<name>allure.results.directory</name>-->
+                    <!--<value>/Users/Shared/Jenkins/Home/workspace/test/allure-results</value>-->
+                    <!--</property>-->
+                    <!--<property>-->
+                    <!--<name>allure.results.directory</name>-->
+                    <!--<value>${project.build.directory}/allure-results</value>-->
+                    <!--&lt;!&ndash;<value>test-result/allure-xml</value>&ndash;&gt;-->
+                    <!--</property>-->
+                    <!--</systemProperties>-->
+                    <!--<systemProperties>-->
+                    <!--<property>-->
+                    <!--<name>allure.results.directory</name>-->
+                    <!--<value>/Users/Shared/Jenkins/Home/workspace/test/allure-results</value>-->
+                    <!--</property>-->
+                    <!--</systemProperties>-->
 
                 </configuration>
-
                 <dependencies>
                     <dependency>
                         <groupId>org.aspectj</groupId>
@@ -160,7 +175,11 @@
                 <artifactId>maven-project-info-reports-plugin</artifactId>
                 <version>2.9</version>
             </plugin>
-
+            <!--<plugin>-->
+            <!--<groupId>io.qameta.allure</groupId>-->
+            <!--<artifactId>allure-maven</artifactId>-->
+            <!--<version>2.9</version>-->
+            <!--</plugin>-->
         </plugins>
     </build>
     <!--<reporting>-->
