@@ -112,6 +112,11 @@ public class KullaniciEvrakDevretPage extends MainPage {
         txtAciklama.setValue(aciklama);
         return this;
     }
+    @Step("Açıklama alanı temizlenir.")
+    public KullaniciEvrakDevretPage aciklamaTemizle() {
+        txtAciklama.clear();
+        return this;
+    }
 
     @Step("Devret butonuna tıkla")
     public KullaniciEvrakDevretPage devret() {
@@ -129,7 +134,7 @@ public class KullaniciEvrakDevretPage extends MainPage {
     @Step("Ekran Alan kontrolleri")
     public KullaniciEvrakDevretPage ekranTabKontrolleri() {
         Assert.assertEquals($x("//h3[.='Gelen Evraklar']").isDisplayed(), true);
-        Assert.assertEquals($x("//h3[.='Taslak Evraklar']").isDisplayed(),true);
+        Assert.assertEquals($x("//h3[.='Taslak Evraklar']").isDisplayed(), true);
         Assert.assertEquals($x("//h3[.='İmza Bekleyen Evraklar']").isDisplayed(), true);
         Assert.assertEquals($x("//h3[.='Paraf Bekleyen Evraklar']").isDisplayed(), true);
         Assert.assertEquals($x("//h3[.='Koordine Bekleyen Evraklar']").isDisplayed(), true);
@@ -223,16 +228,24 @@ public class KullaniciEvrakDevretPage extends MainPage {
 
     @Step("Tablo Evrak Seçimi : {konu}")
     public KullaniciEvrakDevretPage tabloEvrakSecimi(String tabName, String konu) {
-
+        ElementsCollection tblTab;
         SelenideElement tab = $x("//a[text()='" + tabName + "']");
-        tab.click();
+        String kontrol = $x("//a[text()='" + tabName + "']/../../h3").getAttribute("aria-expanded");
+        System.out.println(kontrol);
+        if (kontrol.equals("false"))
+            tab.click();
         String tabText = tabName.replaceAll("\\s+", "");
         tabText = clearTurkishChars(tabText);
         System.out.println(tabText);
 
-//        Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", tab);
+        if (tabText.equals("GelenEvraklar")) {
+            tabText = "devredilebilecekEvrakListesi";
+            tblTab = $$("[id='kullaniciEvrakDevretForm:evrakDevretAccordionPanelId:" + tabText + "_data'] tr[data-ri]");
 
-        ElementsCollection tblTab = $$("[id='kullaniciEvrakDevretForm:evrakDevretAccordionPanelId:devir" + tabText + "_data'] tr[data-ri]");
+        } else {
+            tblTab = $$("[id='kullaniciEvrakDevretForm:evrakDevretAccordionPanelId:devir" + tabText + "_data'] tr[data-ri]");
+
+        }
         tblTab
                 .filterBy(text(konu)).first()
                 .$("div[class='ui-chkbox-box ui-widget ui-corner-all ui-state-default']").click();
@@ -241,15 +254,17 @@ public class KullaniciEvrakDevretPage extends MainPage {
 
     @Step("Devralacak popup alan kontrolleri")
     public KullaniciEvrakDevretPage devralacakKisiAlanKontolu() {
-        txtDevralacakKisi.shouldBe(visible);
-        txtAciklama.shouldBe(visible);
-        btnDevretTamam.shouldBe(visible);
-        btnDevretIptal.shouldBe(visible);
+        Assert.assertEquals(txtDevralacakKisi.shouldBe(visible),true,"Devrelecak kişi texti visible.");
+        Assert.assertEquals(txtAciklama.shouldBe(visible),true,"Açıklama texti visible.");
+        Assert.assertEquals(btnDevretTamam.shouldBe(visible),true,"Devret Tamam butonu visible.");
+        Assert.assertEquals(btnDevretIptal.shouldBe(visible),true,"Devret Iptal butonu visible.");
 
         Allure.addAttachment($(By.xpath("//label[normalize-space(text())='Devralacak Kişi']")).text(), "Ekran Kontrolü ok");
         Allure.addAttachment($(By.xpath("//label[normalize-space(text())='Açıklama']")).text(), "Ekran Kontrolü ok");
         Allure.addAttachment(btnDevretTamam.text(), "Ekran Kontrolü ok");
         Allure.addAttachment(btnDevretIptal.text(), "Ekran Kontrolü ok");
+
+        takeScreenshot();
 
         return this;
     }

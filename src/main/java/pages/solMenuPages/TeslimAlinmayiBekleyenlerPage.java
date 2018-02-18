@@ -73,13 +73,15 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     SelenideElement btnIadeEt = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:4:cmdbutton"));
     SelenideElement btnIadeEtIadeEt = $(By.id("mainPreviewForm:iadeEtButton_id"));
     ElementsCollection tblEvrakGecmisi = $$("[id$='hareketGecmisiDataTable_data'] > tr[role='row']");
-
+    SelenideElement txtNot = $(By.id("mainPreviewForm:notTextArea_id"));
     SelenideElement evrakOnizlemeKontrol = $(By.id("mainPreviewForm:eastLayout"));
     ElementsCollection ilgiBilgileriEkleriKontrol = $$("div[id$='ilgiListesiDataTable'] tr[data-ri]");
     ElementsCollection teslimEvrakEkleri = $$("a[href^='#mainPreviewForm']");
     ElementsCollection teslimEvrakEkleriKontrol = $$("div[id$='ekListesiOnizlemeDataTable'] tr[data-ri]");
 
     BelgenetElement txtSecilenlerOnaylayacakKisi = comboLov(By.id("mainPreviewForm:onaylayacakKisiLov:LovText"));
+
+    ElementsCollection tblKaydedilenGelenEvraklar = $$("[id='mainInboxForm:inboxDataTable_data'] tr[data-ri]");
 
     public TeslimAlinmayiBekleyenlerPage openPage() {
         solMenu(SolMenuData.BirimEvraklari.TeslimAlinmayiBekleyenler);
@@ -217,6 +219,15 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Evrak geldiği görünür")
+    public TeslimAlinmayiBekleyenlerPage evrakGeldigiGorunur(String konuKodu) {
+        boolean durum = tblEvraklar
+                .filterBy(Condition.text(konuKodu)).size() == 1;
+        Assert.assertEquals(durum, true);
+        takeScreenshot();
+        return this;
+    }
+
     @Step("Teslim Al ve Havale Et")
     public TeslimAlinmayiBekleyenlerPage teslimAlVeHavaleEt(){
         btnTeslimAlVeKapat2.click();
@@ -298,6 +309,7 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         boolean durum = tableEvraklar
                 .filterBy(text(konu)).size() > 0;
         Assert.assertEquals(durum, false);
+        Allure.addAttachment(konu, "Nolu Evrak Listelenmemiştir.");
         return this;
     }
 
@@ -623,9 +635,31 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Not alanını doldur: {not}")
+    public TeslimAlinmayiBekleyenlerPage iadeEtNotDoldur(String not){
+        txtNot.setValue(not);
+        return this;
+    }
+
     @Step("Teslim Alınan Evrakın Iade Edilmesi ve Iade Et Tıklanması")
     public TeslimAlinmayiBekleyenlerPage iadeEtIadeEt() {
         btnIadeEtIadeEt.click();
+        return this;
+    }
+
+    @Step("Tabloda evrak kontrolü : \"{konu}\"  \"{geldigiKurum}\" \"{evrakTarihi}\" \"{evrakNo}\" ")
+    public TeslimAlinmayiBekleyenlerPage evrakAlanKontrolleri(String konu,String geldigiKurum,String evrakTarihi,String evrakNo) {
+        System.out.println("evrakNo:" +konu + " geldigiKurum" + geldigiKurum +" evrakTarihi" + evrakTarihi + " evrakkayitno" + evrakNo);
+        tblKaydedilenGelenEvraklar
+                .filterBy(Condition.text(konu))
+                .filterBy(Condition.text(geldigiKurum))
+                .filterBy(Condition.text(evrakTarihi))
+                .filterBy(Condition.text(evrakNo))
+                .shouldHaveSize(1);
+        Allure.addAttachment("Konu" ,konu);
+        Allure.addAttachment("EvrakTarihi" ,evrakTarihi);
+        Allure.addAttachment("GeldigiKurum" ,geldigiKurum);
+        Allure.addAttachment("EvrakNo" ,evrakNo);
         return this;
     }
 

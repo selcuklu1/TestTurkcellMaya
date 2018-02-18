@@ -48,6 +48,9 @@ public class GelenEvrakKayitPage extends MainPage {
     SelenideElement dateTxtEvrakBilgileriListPostalanmaTarihi = $(By.id("evrakBilgileriForm:evrakBilgileriList:18:postalanmaTarihi_input"));
     BelgenetElement comboKonuKodu = comboLov("[id$='konuKoduLov:LovText']");
     BelgenetElement comboGeldigiKurum = comboLov("[id$='geldigiKurumLov:LovText']");
+    BelgenetElement cmbGeldigiBirim = comboLov("[id$='geldigiBirimLov:LovText']");
+    By cmbGeldigiBirimBy = By.cssSelector("[id$='geldigiBirimLov:LovText']");
+
     SelenideElement txtKonuKoduTemizle = $("[id='evrakBilgileriForm:evrakBilgileriList:1:konuKoduLov:LovSecilen'] button");
     // Evrak Ekleri sekmesinde bulunanlar
     // Dosya ekle alt sekmesinde bulunanlar
@@ -345,12 +348,14 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
+    @Step("Evrak Ekleri Evrak Filtreleme")
     public GelenEvrakKayitPage ekBilgiFiltreAc() {
 //        btnEvrakEkleri.click();
         clickJs(btnEvrakEkleri);
         return this;
     }
 
+    @Step("Ilgi Bilgileri Evrak Filtreleme")
     public GelenEvrakKayitPage ilgiliBilgiFiltreAc() {
         clickJs(btnIlgiBilgileri);
         return this;
@@ -618,9 +623,19 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("Dağıtım Bilgileri Birim alanında \"{birim}\" seçilir")
+    @Step("Dağıtım Bilgileri Birim alanında \"{opsiyon}\" seçilir")
     public GelenEvrakKayitPage dagitimBilgileriBirimOpsiyon(String opsiyon) {
-        birimSeç.selectOptionByValue(opsiyon);
+//        birimSeç.selectOptionByValue(opsiyon);
+        String gerek = "GEREĞİ İÇİN GÖNDER";
+        String bilgi = "BİLGİ İÇİN GÖNDER";
+        String koordinasyon = "KOORDİNASYON İÇİN GÖNDER";
+
+        if(opsiyon.equals(gerek))
+            birimSeç.selectOptionByValue("G");
+        else if(opsiyon.equals(bilgi))
+            birimSeç.selectOptionByValue("B");
+        else if(opsiyon.equals(koordinasyon))
+            birimSeç.selectOptionByValue("S");
         return this;
     }
 
@@ -860,6 +875,7 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
+    @Step("Evrak Arama")
     public GelenEvrakKayitPage evrakEkTabEvrakAramaDoldur(String arama) {
         txtEvrakEkTabViewevrakArama.sendKeys(arama);
         return this;
@@ -871,6 +887,7 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
+    @Step("Döküman Arama")
     public GelenEvrakKayitPage dokumanAraButton() {
         dokumanAraButton.click();
         return this;
@@ -882,7 +899,7 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-
+    @Step("Ek Ekle Button Tıkla")
     public GelenEvrakKayitPage ekEkleButton1() {
         ekEkleButton1.click();
         return this;
@@ -924,6 +941,7 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
+    @Step("Ilgi Işlemleri Dosya Ekle")
     public GelenEvrakKayitPage ilgiIslemleriTabDosyaEkle() {
         btnIlgiIslemleriTabViewDosyaEkle.click();
         return this;
@@ -1559,26 +1577,41 @@ public class GelenEvrakKayitPage extends MainPage {
         String text = "";
         if(otomatikHavaleCheckbox.isDisplayed()) {
             text += "Otomatik Havale Checkbox,";
+            Assert.assertEquals(otomatikHavaleCheckbox.isDisplayed(),true,"Otomatik Havale Checkbox Görüntülendi");
+            Allure.addAttachment("Otomatik Havale Checkbox Görüntülendi","");
         }
         if(birimKontrol.isDisplayed()) {
             text += "Birim Kontrol,";
+            Assert.assertEquals(birimKontrol.isDisplayed(),true,"Birim Alanı Görüntülendi");
+            Allure.addAttachment("Birim Alanı Görüntülendi","");
         }
         if(kisiKontrol.isDisplayed()) {
             text += "Kisi Kontrol, ";
+            Assert.assertEquals(kisiKontrol.isDisplayed(),true,"Kisi Alanı Görüntülendi");
+            Allure.addAttachment("Kisi Alanı Görüntülendi","");
         }
         if(kullanıcıListeKontrol.isDisplayed()) {
             text += "Kullanıcı Liste,";
+            Assert.assertEquals(kullanıcıListeKontrol.isDisplayed(),true,"Kullanıcı Listesi Alanı Görüntülendi");
+            Allure.addAttachment("Kullanıcı Listesi Alanı Görüntülendi","");
         }
         if(aciklamaKontrol.isDisplayed()) {
             text += "Aciklama,";
+            Assert.assertEquals(aciklamaKontrol.isDisplayed(),true,"Aciklama Alanı Görüntülendi");
+            Allure.addAttachment("Aciklama Alanı Görüntülendi","");
         }
         if(dosyaEkleKontrol.isDisplayed()) {
             text += "Dosya Ekle,";
+            Assert.assertEquals(dosyaEkleKontrol.isDisplayed(),true,"Dosya Kontrol Alanı Görüntülendi");
+            Allure.addAttachment("Dosya Ekle Alanı Görüntülendi","");
         }
         if(islemSureKontrol.isDisplayed()) {
             text += "İslem Sure alanları gösterilmektedir.";
+            Assert.assertEquals(islemSureKontrol.isDisplayed(),true,"İşlem Sure Alanı Görüntülendi");
+            Allure.addAttachment("Işlem Süre Alanı Görüntülendi","");
         }
         Allure.addAttachment("Alan Kontrolleri : ", text);
+        takeScreenshot();
         return this;
     }
 
@@ -1596,6 +1629,39 @@ public class GelenEvrakKayitPage extends MainPage {
                 .filterBy(Condition.text(evrakNo))
                 .first()
                 .click();
+        return this;
+    }
+
+    @Step("Tabloda evrak no kontrolü : \"{evrakNo}\" ")
+    public GelenEvrakKayitPage evrakNoIleTabloKontrolu(String evrakNo) {
+        tblEvraklar
+                .filterBy(Condition.text(evrakNo))
+                .shouldHaveSize(1);
+        return this;
+    }
+
+
+    @Step("Geldiği birim alanında \"{geldigiBirim}\" seç ")
+    public GelenEvrakKayitPage geldigiBirimDoldur(String geldigiBirim) {
+        cmbGeldigiBirim.selectLov(geldigiBirim);
+        return this;
+    }
+
+    @Step("Evrak no alanının, birim kaydederken girilen idari birim kimlik no ile dolduğu görülür")
+    public GelenEvrakKayitPage evrakSayisiKontrolu(String idariBirimKimlikKodu) {
+        Assert.assertEquals(txtEvrakBilgileriListEvrakSayiTextAreaSol.getValue().contains(idariBirimKimlikKodu), true, "Evrak Sayı - İdari Kimlik No");
+        return this;
+    }
+
+    @Step("Gereği alanında Birimin geldiği ve seçilemediği kontrolu - {description} : {birim}")
+    public GelenEvrakKayitPage geregiAlanindaBiriminGeldigiSecilemedigiKontrolu(String birim, String description) {
+
+        int  gorunurSecilemezBirimSize = comboLov(cmbGeldigiBirimBy).type(birim).getSelectableItems().size();
+        Assert.assertEquals(gorunurSecilemezBirimSize==0, true, "Birimin geldiği ve seçilemediği görülür: " + birim);
+        comboLov(cmbGeldigiBirimBy).closeTreePanel();
+        System.out.println("Birimin geldiği ve seçilemediği görülür: " + birim);
+        Allure.addAttachment("Birimin geldiği ve seçilemediği görülür: " + birim, "");
+
         return this;
     }
 

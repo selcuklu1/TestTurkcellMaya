@@ -8,11 +8,11 @@ import io.qameta.allure.Step;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.altMenuPages.EvrakDetayiPage;
-import pages.solMenuPages.GelenEvraklarPage;
-import pages.solMenuPages.ImzaBekleyenlerPage;
-import pages.solMenuPages.TaslakEvraklarPage;
+import pages.solMenuPages.*;
 import pages.ustMenuPages.EvrakOlusturPage;
+import pages.ustMenuPages.GelenEvrakKayitPage;
 import pages.ustMenuPages.KullaniciEvrakDevretPage;
+import tests.BirimeIade.BirimeIadeEdilenlerdenHavaleTest;
 
 
 /****************************************************
@@ -30,6 +30,9 @@ public class EvrakDevretTest extends BaseTest {
     GelenEvraklarPage gelenEvraklarPage;
     EvrakDetayiPage evrakDetayiPage;
     TaslakEvraklarPage taslakEvraklarPage;
+    GelenEvrakKayitPage gelenEvrakKayitPage;
+    TeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage;
+    BirimIadeEdilenlerPage birimIadeEdilenlerPage;
 
     User mbozdemir = new User("mbozdemir", "123");
     User username22n = new User("username22n", "123");
@@ -37,7 +40,7 @@ public class EvrakDevretTest extends BaseTest {
 
 
     //    String konu = "TS2178 20180205135705";
-    String konu = "TS2178 " + getSysDate();
+    String konu = "Evrak Devret " + getSysDate();
     String tur = "IMZALAMA";
     String icerik = "Test Otomasyon " + getSysDate();
     String konuKodu = "010.01";
@@ -49,10 +52,13 @@ public class EvrakDevretTest extends BaseTest {
     String geregi = "Optiim Birim";
     String kullaniciNormal = "USERNAME22N TEST";
     String basariMesaji = "İşlem başarılıdır!";
+    String uyariMesaji = "Zorunlu alanları doldurunuz";
+    String dikkatMesaji = "Evrak seçilmemiştir!";
     String tabName = "İmza Bekleyen Evraklar";
     String nameDA = "Username22N TEST";
     String nameDE = "Username21G TEST";
     String kullaniciTitle = " [Ağ (Network) Uzman Yardımcısı]";
+    String devredecekKisi = "username21g";
     String remoteDownloadPath;
 
 
@@ -64,22 +70,28 @@ public class EvrakDevretTest extends BaseTest {
         gelenEvraklarPage = new GelenEvraklarPage();
         evrakDetayiPage = new EvrakDetayiPage();
         taslakEvraklarPage = new TaslakEvraklarPage();
+        gelenEvrakKayitPage = new GelenEvrakKayitPage();
+        teslimAlinmayiBekleyenlerPage = new TeslimAlinmayiBekleyenlerPage();
+        birimIadeEdilenlerPage = new BirimIadeEdilenlerPage();
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TS2178 : İlgisi olan İşlem Bekleyen Cevap Evrakı Devretme ve Sonrasında Devralandan Silinmesi ve İlginin Kontrolü")
-    public void TS2178() throws InterruptedException {
+    @Test(enabled = true, description = "TS2178a : İlgisi olan İşlem Bekleyen Cevap Evrakı Devretme ve Sonrasında Devralandan Silinmesi ve İlginin Kontrolü")
+    public void TS2178a() throws InterruptedException {
 
         login(mbozdemir);
         evrakOlustur();
         logout();
         login(username21g);
 
+        String btnSilName = "Sil";
+        String aciklamaSil = "Silme işlemi";
 
+        System.out.println(konu);
         kullaniciEvrakDevretPage
                 .openPage()
                 .ekranTabKontrolleri()
-                .devredecekKisiSec("username21g")
+                .devredecekKisiSec(devredecekKisi)
                 .listele()
                 .tabloAlanKontrolleri()
                 .tabloEvrakSecimi(tabName, konu)
@@ -96,30 +108,38 @@ public class EvrakDevretTest extends BaseTest {
 
         taslakEvraklarPage
                 .openPage()
-                .evrakKontrolu(konu,true)
+                .evrakKontrolu(konu, true)
                 .evrakSecKonuyaGore(konu)
                 .evrakOnizlemeveEkiKontrolu(icerik)
-                .evrakOnizlemeButonTikla("Sil")
-                .silAciklamaInputDolduur("Silme işlemi")
+                .evrakOnizlemeButonTikla(btnSilName)
+                .silAciklamaInputDolduur(aciklamaSil)
                 .silSilGonder()
                 .silmeOnayıPopUpEvet()
-                .evrakKontrolu(konu,false);
+                .evrakKontrolu(konu, false);
 
         //gelen kutusu kontrolü ?
     }
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true
-            , dependsOnMethods = {"TS2178"}
+//            , dependsOnMethods = {"TS2178"}
             , description = "TS2179 : Devredilen evrakların devralan kullanıcıda hareket/evrak geçmişinin kontrolü")
     public void TS2179() throws InterruptedException {
-        login(username22n);
         remoteDownloadPath = useChromeWindows151("TS2179");
+        login(mbozdemir);
+
+        System.out.println(remoteDownloadPath);
         String mesaj = nameDE + kullaniciTitle + " ait evrak " + nameDA + kullaniciTitle + " adlı kişiye " + nameDE + kullaniciTitle
                 + " tarafından İmza Bekleyenler menüsünden devredilmiştir. / " + icerik;
+
+        evrakDevret();
+
+        login(username22n);
+
         taslakEvraklarPage
                 .openPage()
                 .konuyaGoreEvrakIcerikGoster(konu);
+
         evrakDetayiPage
                 .sayfaAcilmali()
 //                .evrakBilgileriTabAktifKontrolEt()
@@ -127,19 +147,251 @@ public class EvrakDevretTest extends BaseTest {
                 .tabloKontol(mesaj)
                 .raporAl(remoteDownloadPath)
                 .evrakDetayiKapat();
+
         taslakEvraklarPage
                 .openPage()
                 .evrakSecKonuyaGore(konu)
-                .tabloKontol(mesaj);
+                .evrakGecmisiTikla()
+                .tabloKontol(mesaj)
+                .raporAl(remoteDownloadPath);
 
 
-        //1. adımda gelen evraklara evrak düşmedi...
+        //Evrak Gelen Evraklara düşmediğinden Taslak Evraklara göre yazıldı. Cevap bekleniyor.....
+    }
+
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS0517 : Devredilen evrakların devredilen kullanıcıda kontrol edilmesi")
+    public void TS0517() throws InterruptedException {
+
+        login(mbozdemir);
+
+        String aciklama = "Onay akışı güncelledi.";
+        String btnName = "Kaydet ve Onaya Sun";
+        String onayAkisi = "TC0574";
+        String icerikGuncelle = "İçerik değiştirildi.";
+        String tabEditörName = "Editör";
+
+        System.out.println(remoteDownloadPath);
+        evrakDevret();
+
+        login(username22n);
+
+        taslakEvraklarPage
+                .openPage()
+                .konuyaGoreEvrakIcerikGoster(konu);
+
+        evrakDetayiPage
+                .sayfaAcilmali()
+                .evrakDetayEkraniTabSeçimKontrolu(tabEditörName)
+                .editorTaAc()
+                .editorIcerikDoldur(icerikGuncelle);
+
+        evrakDetayiPage
+                .bilgileriTabAc()
+                .onayAkişGuncelle(onayAkisi);
+
+        evrakDetayiPage
+                .btnTikla(btnName)
+                .kaydetVeOnayaSunAciklama(aciklama)
+                .gonder()
+                .kaydetVeOnayaSunUyariPopUpEvet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TS0574 : Devredilen evrakların devredilen kullanıcıda kontrol edilmesi")
-    public void TS0574() throws InterruptedException {
+    @Test(enabled = true, description = "TS2178b : Havale Onayına Gelen evrakın devredilmesi")
+    public void TS2178b() throws InterruptedException{
 
+        login(mbozdemir);
+        havaleOnayı();
+        logout();
+        login(username21g);
+
+        String tabName = "Havale Onayına Gelen Evraklar";
+
+        System.out.println(konu);
+        kullaniciEvrakDevretPage
+                .openPage()
+                .ekranTabKontrolleri()
+                .devredecekKisiSec(devredecekKisi)
+                .listele()
+                .tabloAlanKontrolleri()
+                .tabloEvrakSecimi(tabName, konu)
+                .devret()
+                .devralacakKisiAlanKontolu()
+                .devralacakKisiSec(kullaniciNormal)
+                .aciklamaDoldur(icerik)
+                .devretTamam()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        logout();
+        login(username22n);
+
+        gelenEvraklarPage
+                .openPage()
+                .tabloKonuyaGoreEvrakKontrol(konu,true);
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS0516 : İlgisi olan gelen evrakın devredilmesi.")
+    public void TS0516() throws InterruptedException{
+
+        login(mbozdemir);
+        gelenEvrak();
+        logout();
+        login(username21g);
+
+        String tabName = "Gelen Evraklar";
+
+        System.out.println(konu);
+        kullaniciEvrakDevretPage
+                .openPage()
+                .ekranTabKontrolleri()
+                .devredecekKisiSec(devredecekKisi)
+                .listele()
+                .tabloAlanKontrolleri()
+                .tabloEvrakSecimi(tabName, konu)
+                .devret()
+                .devralacakKisiAlanKontolu()
+                .devralacakKisiSec(kullaniciNormal)
+                .aciklamaDoldur(icerik)
+                .devretTamam()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        logout();
+        login(username22n);
+
+        gelenEvraklarPage
+                .openPage()
+                .tabloKonuyaGoreEvrakKontrol(konu,true);
+
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS2183 : Evrak devretmede alan kontrolleri")
+    public void TS2183() throws InterruptedException{
+
+        login(username21g);
+
+        kullaniciEvrakDevretPage
+                .openPage()
+                .ekranTabKontrolleri()
+                .listele()
+                .islemMesaji().uyariOlmali(uyariMesaji);
+        kullaniciEvrakDevretPage
+                .devredecekKisiSec(devredecekKisi)
+                .listele()
+                .tabloAlanKontrolleri()
+                .devret()
+                .islemMesaji().dikkatOlmali(dikkatMesaji);
+
+        //TODO 6. step yazılacak...
+
+        kullaniciEvrakDevretPage
+                .devret()
+                .devralacakKisiAlanKontolu()
+                .aciklamaDoldur(icerik)
+                .devretTamam()
+                .islemMesaji().uyariOlmali(uyariMesaji);
+
+        kullaniciEvrakDevretPage
+                .devralacakKisiSec(kullaniciNormal)
+                .aciklamaTemizle()
+                .devretTamam()
+                .islemMesaji().uyariOlmali(uyariMesaji);
+
+        kullaniciEvrakDevretPage
+                .aciklamaDoldur(createRandomText(255))
+                .devretTamam()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+
+
+    }
+
+    @Step("Test datası oluşturuldu.")
+    private void gelenEvrak() throws InterruptedException {
+        String basariMesaji = "İşlem başarılıdır!";
+        String konuKodu = "Diğer";
+        String evrakSayiSag =  createRandomNumber(10);
+        String evrakTarihi = getSysDateForKis();
+        String kurum = "BÜYÜK HARFLERLE KURUM";
+        String pathToFileText = getUploadPath() + "test.txt";
+
+
+        gelenEvrakKayitPage
+                .openPage()
+                .konuKoduDoldur(konuKodu)
+                .konuDoldur(konu)
+                .evrakTarihiDoldur(evrakTarihi)
+                .geldigiKurumDoldurLovText(kurum)
+                .evrakSayiSagDoldur(evrakSayiSag)
+                .havaleIslemleriKisiDoldur("Username21g")
+                .ilgiliBilgiFiltreAc()
+                .ilgiBilgileriDosyaEkleme(pathToFileText)
+                .ilgiBilgileriDosyaEkleEkMetinDoldur(icerik)
+                .ilgiBilgileriTabViewEkle()
+                .kaydet()
+                .popUps();
+    }
+
+    @Step("Test datası oluşturuldu.")
+    private void havaleOnayı() {
+//        String konuKoduRandomTS2178b = "TC2178" + createRandomNumber(15);
+
+        String basariMesaji = "İşlem başarılıdır!";
+        String konuKodu = "Diğer";
+        String evrakSayiSag =  createRandomNumber(10);
+        String evrakTarihi = getSysDateForKis();
+        String kurum = "BÜYÜK HARFLERLE KURUM";
+        String kullaniciAdi = "Yazılım Geliştirme Direktörlüğ";
+
+        gelenEvrakKayitPage
+                .openPage()
+                .konuKoduDoldur(konuKodu)
+                .konuDoldur(konu)
+                .evrakTarihiDoldur(evrakTarihi)
+                .geldigiKurumDoldurLovText(kurum)
+                .evrakSayiSagDoldur(evrakSayiSag)
+                .havaleIslemleriBirimDoldur(kullaniciAdi)
+                .kaydet()
+                .evetDugmesi()
+                .yeniKayitButton();
+        teslimAlinmayiBekleyenlerPage
+                .openPage()
+                .evrakNoIleEvrakSec(konu)
+                .iadeEt()
+                .iadeEtIadeEt();
+        birimIadeEdilenlerPage
+                .openPage()
+                .evrakSec(konu)
+                .teslimAlVeHavaleEt()
+                .onaylanacakKisiDoldur("Username21g Test","YGD")
+                .havaleOnayinaGonder();
+    }
+
+    @Step("Test datası oluşturuldu.")
+    private void evrakDevret() {
+
+        evrakOlustur();
+        login(username21g);
+
+
+        kullaniciEvrakDevretPage
+                .openPage()
+                .ekranTabKontrolleri()
+                .devredecekKisiSec(devredecekKisi)
+                .listele()
+                .tabloEvrakSecimi(tabName, konu)
+                .devret()
+                .devralacakKisiAlanKontolu()
+                .devralacakKisiSec(kullaniciNormal)
+                .aciklamaDoldur(icerik)
+                .devretTamam()
+                .islemMesaji().basariliOlmali(basariMesaji);
     }
 
     @Step("Test datası oluşturuldu.")

@@ -24,6 +24,7 @@ public class HavaleOnayinaSunduklarimPage extends MainPage{
     ElementsCollection tblEvrakGecmisi = $$("[id$='hareketGecmisiDataTable_data'] > tr[role='row']");
 
     SelenideElement havaleBilgisi = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:5:cmdbutton"));
+    SelenideElement txtGeriAlNot = $(By.id("mainPreviewForm:evrakGeriAlInputTextareaId"));
     ElementsCollection kisiKontrol = $$("[id^='mainPreviewForm:dagitimBilgileriKullaniciLov_id:LovSecilenTable:0:j_idt']");
 
 
@@ -39,6 +40,24 @@ public class HavaleOnayinaSunduklarimPage extends MainPage{
                 .filterBy(Condition.text(evrakNo))
                 .first()
                 .click();
+        return this;
+    }
+    
+    @Step("Geri al tıklanır")
+    public HavaleOnayinaSunduklarimPage geriAl(){
+        $("[class='ui-button-icon-left ui-icon evrakGeriAl']").click();
+        return this;
+    }
+
+    @Step("Geri al tıklanır")
+    public HavaleOnayinaSunduklarimPage geriAlGeriAl(){
+        $$("[id='mainPreviewForm:evrakOnizlemeTab'] button").filterBy(Condition.text("Geri Al")).first().click();
+        return this;
+    }
+
+    @Step("Not alanını doldur: {not}")
+    public HavaleOnayinaSunduklarimPage geriAlNotDoldur(String not){
+        txtGeriAlNot.setValue(not);
         return this;
     }
 

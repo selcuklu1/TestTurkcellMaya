@@ -643,14 +643,16 @@ public class VekaletIslemleriTest extends BaseTest {
             , description = "TS2210 : Kullanıcı yönetimi ekranında vekalet kontrolü")
     public void TS2210() throws InterruptedException{
         login(mbozdemir);
+        String gorevliOlduguBirim= "Vekalet";
+
         kullaniciYonetimiPage
                 .openPage()
                 .kullaniciAdiDoldur("usernameva")
                 .ara()
                 .kullaniciListesiTabloKontrolu()
                 .kullaniciListesiGuncelleButonuTikla()
-                .gorevliOlduguBirimlerKontol("Vekalet")
-                .gorevliOlduguBirimlerGuncelle("Vekalet")
+                .gorevliOlduguBirimlerKontol(gorevliOlduguBirim)
+                .gorevliOlduguBirimlerGuncelle(gorevliOlduguBirim)
                 .VekaletBirimiKullaniciBirimAtamaEkranKontrolu();
 
     }
@@ -675,6 +677,6 @@ login(mbozdemir);
                 .popUpKullaniciSecimKontrulu()
                 .popUpKullaniciSecimi(nameVA)
                 .evrakKapamaKullanicilarAlaniKontrolü(nameVA, title,nameVV);
-
     }
+
 }

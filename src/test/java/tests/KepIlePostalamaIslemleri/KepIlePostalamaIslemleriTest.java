@@ -229,10 +229,10 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
 
         birimYonetimiPage
                 .openPage()
-                .birimDoldur(birim)
+                .birimFiltreDoldur(birim)
                 .birimTuruSec(birimTuru)
                 .ara()
-                .ilkBirimGuncelle()
+                .aktiflerIlkBirimGuncelle()
                 .sagAlandaGuncellemeEkranGeldigiGorme()
                 .yeniKepAdresBilgileriEkle()
                 .popupKepAdresiDoldur(kepAdresi1)

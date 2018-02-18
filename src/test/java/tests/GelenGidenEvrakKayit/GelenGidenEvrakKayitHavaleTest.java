@@ -41,10 +41,14 @@ public class GelenGidenEvrakKayitHavaleTest extends BaseTest {
     String ivedilik = "Normal";
     String kisi = "Zübeyde Tekin";
     String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
-    String details = "BİLİŞİM HİZMETLERİ VE UYDU PAZARLAMA GENEL MÜDÜR Y";
+//    String details = "BİLİŞİM HİZMETLERİ VE UYDU PAZARLAMA GENEL MÜDÜR Y";
+    String details = "BHUPGMY";
     String onaylayacakKisi = "Mehmet BOZDEMİR";
-    String onayKisiDetails = "BİLİŞİM HİZMETLERİ VE UYDU PAZARLAMA GENEL MÜDÜR Y";
+    String onayKisiDetails = "BHUPGMY";
     String basariMesaji = "İşlem başarılıdır!";
+    String gerek = "GEREĞİ İÇİN GÖNDER";
+    String bilgi = "BİLGİ İÇİN GÖNDER";
+    String koordinasyon = "KOORDİNASYON İÇİN GÖNDER";
 
     @BeforeMethod
     public void loginBeforeTests() {
@@ -60,6 +64,69 @@ public class GelenGidenEvrakKayitHavaleTest extends BaseTest {
 
     public String getDocPath1() {
         return "C:\\TestAutomation\\BelgenetFTA\\documents\\";
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, priority = 0, description = "TS1683: Gelen evrak kayıt ekranı havale alanları kontrolü")
+    public void TS1683() throws InterruptedException {
+        String testid= "TS-1683";
+        konu = "TS-1683-" + getSysDate();
+        String disKullanici = "distest";
+        String tuzelKisi = "Büyük Küçük Harflerle Tüzel Kişi";
+        String gercekKisi = "Gercek Kisi";
+        String kurum = "Cumhurbaşkanlığı";
+        String ustBirim = "GENEL MÜDÜRLÜK MAKAMI";
+        String dikkatMesaj = "Evrakı kendinize havale edemezsiniz!";
+
+        testStatus(testid,"PreCondition Evrak Oluşturma");
+        gelenEvrakKayitPage
+                .openPage()
+                .konuKoduDoldur(konuKodu)
+                .konuDoldur(konu)
+                .evrakTuruSec(evrakTuru)
+                .evrakDiliSec(evrakDili)
+                .evrakTarihiDoldur(evrakTarihi)
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .kisiKurumSec(kisiKurum)
+                .geldigiKurumDoldurLovText(geldigiKurum)
+                .evrakSayiSagDoldur()
+                .evrakGelisTipiSec(evrakGelisTipi)
+                .ivedilikSec(ivedilik)
+                .kaydet()
+                .popUpsv2();
+
+        kaydedilenGelenEvraklarPage
+                .openPage()
+                .evrakNoIleEvrakSec(konu)
+                .tabloEvrakNoileIcerikSec(konu)
+                .icerikHavaleYap()
+                .icerikHavaleIslemleriKisiDoldur(onaylayacakKisi,onayKisiDetails)
+                .icerikHavaleOnayinaGonder()
+                .islemMesaji().basariliOlmali();
+
+        login(mbozdemir);
+
+        testStatus(testid,"Test Başladı");
+        gelenEvraklarPage
+                .openPage()
+                .tabloEvrakNoSec(konu)
+                .tabHavaleYap()
+                //havale alan kontrolleri
+                .havaleIslemleriKisiKontrol(disKullanici)
+                .havaleIslemleriKisiKontrol(tuzelKisi)
+                .havaleIslemleriKisiKontrol(gercekKisi)
+                .havaleIslemleriKisiKontrol(kurum)
+                .havaleIslemleriBirimKontrol(ustBirim);
+        //TODO: ustbirimden kullanıcı tespit edilemedi "YAZILIM GELİŞTİRME" için
+
+        login(mbozdemir);
+        gelenEvraklarPage
+                .openPage()
+                .tabloEvrakNoSec(konu)
+                .tabHavaleYap()
+                .havaleIslemleriKisiSec(onaylayacakKisi,onayKisiDetails)
+                .havaleYapGonder()
+                .islemMesaji().dikkatOlmali(dikkatMesaj);
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -107,13 +174,12 @@ public class GelenGidenEvrakKayitHavaleTest extends BaseTest {
                 .openPage()
                 .evrakNoIleEvrakSec(konu)
                 .evrakSecIcerikGoster(konu, true)
-                .havaleOnay()
+                .icerikHavaleOnay()
 //        Seçilen havale yerinin doğru geldiği
 //        onayla ve onayı reddet seçeneklerinin geldiği görülür
-                .notAlanınıDoldur(konu)
-                .onayıReddet()
-                .onayıReddetEvet()
-
+                .icerikNotAlanınıDoldur(konu)
+                .icerikOnayıReddet()
+                .icerikOnayıReddetEvet()
                 .islemMesaji().basariliOlmali();
 
         login(ztekin);
@@ -130,13 +196,10 @@ public class GelenGidenEvrakKayitHavaleTest extends BaseTest {
         gelenEvraklarPage
                 .openPage()
                 .evrakNoGelmedigiGorme(konu);
-
-
     }
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, priority = 0, description = "TS2171: Gelen evrak kaydederken havale edilen evrakın geri alınması\n")
-//    @Test(enabled = true, priority = 0, description = "TS2171: Gelen evrak kaydederken havale edilen evrakın geri alınması\n"	)
     public void TS2171() throws InterruptedException {
         String testid= "TS-2171";
         String islemSureci = "Evrak geri alındı ";
@@ -166,10 +229,10 @@ public class GelenGidenEvrakKayitHavaleTest extends BaseTest {
                 .havaleIslemleriKisiDoldur(kisi)
                 .havaleAlanKontrolleri()
                 .dagitimBilgileriBirimDoldurWithDetails(birim, details)
-                .dagitimBilgileriBirimOpsiyon("B")
+                .dagitimBilgileriBirimOpsiyon(bilgi)
                 .dagitimBilgileriKullaniciListesiDoldur("OPTİİM")
-                .dagitimBilgileriBirimOpsiyon("S")
-                .dagitimBilgileriBirimOpsiyon("G")
+                .dagitimBilgileriBirimOpsiyon(gerek)
+                .dagitimBilgileriBirimOpsiyon(koordinasyon)
                 .kaydet()
                 .popUps();
 
@@ -212,6 +275,7 @@ public class GelenGidenEvrakKayitHavaleTest extends BaseTest {
         String pdfName = "Otomasyon.pdf";
         String pathToFileExcel = getUploadPath() + "test.xlsx";
         String excelName = "test.xlsx";
+        String evrakSayiSag = createRandomNumber(5);
 
         testStatus(testid,"Test Başladı");
         gelenEvrakKayitPage
@@ -229,36 +293,39 @@ public class GelenGidenEvrakKayitHavaleTest extends BaseTest {
                 .gizlilikDerecesiSec(gizlilikDerecesi)
                 .kisiKurumSec(kisiKurum)
                 .geldigiKurumDoldurLovText(geldigiKurum)
-                .evrakSayiSagDoldur()
+                .evrakSayiSagDoldur(evrakSayiSag)
                 .evrakGelisTipiSec(evrakGelisTipi)
                 .ivedilikSec(ivedilik)
                 .havaleIslemleriKisiDoldur(kisi)
                 .havaleAlanKontrolleri()
                 .dagitimBilgileriBirimDoldurWithDetails(birim, details)
-                .dagitimBilgileriBirimOpsiyon("B")
+                .dagitimBilgileriBirimOpsiyon(bilgi)
                 .dagitimBilgileriKullaniciListesiDoldur("OPTİİM")
-                .dagitimBilgileriBirimOpsiyon("S")
-                .dagitimBilgileriBirimOpsiyon("G")
+                .dagitimBilgileriBirimOpsiyon(gerek)
+                .dagitimBilgileriBirimOpsiyon(koordinasyon)
                 .kaydet()
                 .popUps();
+
+        birimHavaleEdilenlerPage
+                .openPage()
+                .evrakNoIleTabloKontrolu(konu)
+                .evrakAlanKontrolleri(konu,geldigiKurum,birim,evrakTarihi,evrakSayiSag);
 
         login(mbozdemir);
 
         teslimAlinmayiBekleyenlerPage
                 .openPage()
-                .evrakNoIleEvrakSec(konu);
+                .evrakNoIleEvrakSec(konu)
+                .evrakAlanKontrolleri(konu,geldigiKurum,evrakTarihi,evrakSayiSag);
+
 
         login(ztekin);
 
-        teslimAlinmayiBekleyenlerPage
+        gelenEvraklarPage
                 .openPage()
-                .evrakNoIleEvrakSec(konu);
+                .evrakGeldigiGorme(konu)
+                .evrakAlanKontrolleri(konu,geldigiKurum,evrakTarihi,evrakSayiSag);
 
-        login(yakyol);
-
-        teslimAlinmayiBekleyenlerPage
-                .openPage()
-                .evrakNoIleEvrakSec(konu);
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -463,7 +530,6 @@ public class GelenGidenEvrakKayitHavaleTest extends BaseTest {
                 .evrakNoIleEvrakSec(konu);
     }
 
-
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, priority = 0, description = "TS1582: Evrakın Onaylı havale edilmesi ve güncellenerek onaylanması")
     public void TS1582() throws InterruptedException {
@@ -532,13 +598,6 @@ public class GelenGidenEvrakKayitHavaleTest extends BaseTest {
         teslimAlinmayiBekleyenlerPage
                 .openPage()
                 .evrakNoIleEvrakSec(konu);
-
-
-
-
-
-
-
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -575,10 +634,10 @@ public class GelenGidenEvrakKayitHavaleTest extends BaseTest {
                 .havaleAlanKontrolleri()
 //                .dagitimBilgileriOnaylayanWithDetails(onaylayacakKisi, onayKisiDetails)
                 .dagitimBilgileriBirimDoldurWithDetails(birim, details)
-                .dagitimBilgileriBirimOpsiyon("B")
+                .dagitimBilgileriBirimOpsiyon(bilgi)
                 .dagitimBilgileriKullaniciListesiDoldur("OPTİİM")
-                .dagitimBilgileriBirimOpsiyon("S")
-                .dagitimBilgileriBirimOpsiyon("G")
+                .dagitimBilgileriBirimOpsiyon(gerek)
+                .dagitimBilgileriBirimOpsiyon(koordinasyon)
                 .kaydet()
                 .popUps();
 
@@ -602,7 +661,7 @@ public class GelenGidenEvrakKayitHavaleTest extends BaseTest {
                 .havaleAlanKontrolleri()
 //                .dagitimBilgileriOnaylayanWithDetails(onaylayacakKisi, onayKisiDetails)
                 .havaleIslemleriKisiDoldur(kisi)
-                .dagitimBilgileriKisiOpsiyon("B")
+                .dagitimBilgileriKisiOpsiyon(bilgi)
                 .aciklamaAlaniDoldur(konu)
                 .dosyaEkle()
                 .havaleDosyaEkle(pathToFileText)

@@ -6,8 +6,11 @@ import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.testng.Assert;
 import pages.MainPage;
 import pages.pageData.SolMenuData;
+
+import javax.xml.bind.Element;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.*;
@@ -34,8 +37,14 @@ public class BirimHavaleEdilenlerPage extends MainPage {
     ElementsCollection tblEvraklar = $$("[id^='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
 
     SelenideElement havaleGeriAl = $(By.id("inboxItemInfoForm:dialogTabMenuRight:uiRepeat:4:cmdbutton"));
+    SelenideElement btnOnizlemeHavaleGeriAl = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:4:cmdbutton"));
+
     SelenideElement notAlanıDoldur = $(By.id("inboxItemInfoForm:evrakGeriAlInputTextareaId"));
-    SelenideElement btnGeriAl = $("[class='ui-button-icon-left ui-icon evrakGeriAl']");
+    SelenideElement onizlemeNotAlanıDoldur = $(By.id("mainPreviewForm:evrakGeriAlInputTextareaId"));
+//    SelenideElement btnGeriAl = $("[class='ui-button-icon-left ui-icon evrakGeriAl']");
+    SelenideElement btnGeriAl = $("button[id^='inboxItemInfoForm:j_idt']");
+    SelenideElement onizlemeGeriAl = $("[id^='mainPreviewForm:j_idt']");
+
     SelenideElement btnGeriAlGeriAl = $("[id='mainPreviewForm:evrakOnizlemeTab'] button");
     SelenideElement tctGeriAlNot = $("[id$='evrakGeriAlInputTextareaId']");
     SelenideElement evrakOnizlemeKontrol = $(By.id("mainPreviewForm:eastLayout"));
@@ -45,9 +54,27 @@ public class BirimHavaleEdilenlerPage extends MainPage {
     ElementsCollection birimEvrakEkleriKontrol = $$("div[id$='ekListesiOnizlemeDataTable'] tr[data-ri]");
     ElementsCollection ilgiBilgileriEkleriKontrol = $$("div[id$='ilgiListesiDataTable'] tr[data-ri]");
 
+    SelenideElement frmInboxItemInfoForm = $("form[id='inboxItemInfoForm']");
+
+    SelenideElement lblSayfa = $("[class='ui-inbox-header-title']");
     @Step("Birim Havale Edilenler sayfası aç")
     public BirimHavaleEdilenlerPage openPage() {
         solMenu(SolMenuData.BirimEvraklari.BirimHavaleEdilenler);
+        return this;
+    }
+
+    @Step("Orta alanda \"{sayfa}\" ekranı açılır\n")
+    public BirimHavaleEdilenlerPage sayfaKontrol(String sayfa) {
+        Assert.assertEquals(lblSayfa.getText().equals(sayfa),true,sayfa);
+        Allure.addAttachment(sayfa,"açılmaktadır");
+        return this;
+    }
+
+    @Step("Evrakın liselendiği görülür")
+    public BirimHavaleEdilenlerPage evrakNoIleEvragıGeldigiGorme(String evrakNo){
+    boolean durum = tblEvraklar.filterBy(Condition.text(evrakNo)).size()>0;
+        Assert.assertEquals(durum,true);
+        takeScreenshot();
         return this;
     }
 
@@ -96,17 +123,23 @@ public class BirimHavaleEdilenlerPage extends MainPage {
         return this;
     }
 
-    @Step("Tabloda evrak kontrolü : \"{evrakNo}\"  \"{birim}\" \"{evrakTarihi}\" \"{No}\" ")
-    public BirimHavaleEdilenlerPage evrakAlanKontrolleri(String evrakNo,String birim,String evrakTarihi,String No) {
+    @Step("Tabloda evrak kontrolü : \"{konu}\"  \"{geldigiKurum}\" \"{birim}\" \"{evrakTarihi}\" \"{evrakNo}\" ")
+    public BirimHavaleEdilenlerPage evrakAlanKontrolleri(String konu,String geldigiKurum, String birim,String evrakTarihi,String evrakNo) {
+        System.out.println("evrakNo:" +konu + " geldigiKurum" + geldigiKurum + " birim" + birim +" evrakTarihi" + evrakTarihi + " evrakkayitno" + evrakNo);
         tblKaydedilenGelenEvraklar
-                .filterBy(Condition.text(evrakNo))
+                .filterBy(Condition.text(konu))
                 .filterBy(Condition.text(birim))
+                .filterBy(Condition.text(geldigiKurum))
+                .filterBy(Condition.text(evrakTarihi))
+                .filterBy(Condition.text(evrakNo))
                 .shouldHaveSize(1);
+        Allure.addAttachment("Konu" ,konu);
+        Allure.addAttachment("Birim" ,birim);
+        Allure.addAttachment("EvrakTarihi" ,evrakTarihi);
+        Allure.addAttachment("GeldigiKurum" ,geldigiKurum);
+        Allure.addAttachment("EvrakNo" ,evrakNo);
         return this;
-
-        //        Evrak tarihi  : evrakTarihi
-        //        no alanlarının : evrakSayiSagDoldur()
-    }
+        }
 
     @Step("Tabloda evrak no ile evrak seçme. \"{evrakNo}\" ")
     public BirimHavaleEdilenlerPage evrakNoIleTablodanEvrakSecme(String evrakNo) {
@@ -130,15 +163,41 @@ public class BirimHavaleEdilenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Havale edilen evrak geri alma")
+    public BirimHavaleEdilenlerPage onizlemeHavaleGeriAl() {
+        if (btnOnizlemeHavaleGeriAl.isDisplayed())
+            btnOnizlemeHavaleGeriAl.click();
+        return this;
+    }
+
+    @Step("Havale edilen evrak geri alma button kontrol")
+    public BirimHavaleEdilenlerPage onizlemeHavaleGeriAlKontrol() {
+        Assert.assertEquals(btnOnizlemeHavaleGeriAl.isDisplayed(),true,"Havale Geri Al Kontrol");
+        Allure.addAttachment("Havale Geri Al Kontrol" , "");
+        return this;
+    }
+
     @Step("Not Alanını Doldur")
     public BirimHavaleEdilenlerPage notAlanınıDoldur(String not) {
         notAlanıDoldur.setValue(not);
         return this;
     }
 
+    @Step("Not Alanını Doldur")
+    public BirimHavaleEdilenlerPage onizlemeNotAlanınıDoldur(String not) {
+        onizlemeNotAlanıDoldur.setValue(not);
+        return this;
+    }
+
     @Step("Geri Al Butonu tıkla")
     public BirimHavaleEdilenlerPage geriAl() {
         btnGeriAl.click();
+        return this;
+    }
+
+    @Step("Geri Al Butonu tıkla")
+    public BirimHavaleEdilenlerPage onizlemeGeriAl() {
+        onizlemeGeriAl.click();
         return this;
     }
 
@@ -204,5 +263,10 @@ public class BirimHavaleEdilenlerPage extends MainPage {
         return this;
     }
 
-
+    @Step("Evrak Içeriği ekranı açılır\n")
+    public BirimHavaleEdilenlerPage ekranKontrolEvrakDetayi() {
+        Assert.assertEquals(frmInboxItemInfoForm.isDisplayed(),true,"Evrak Içeriği");
+        Allure.addAttachment("Evrak Içeriği sayfası","açılmaktadır");
+        return this;
+    }
 }

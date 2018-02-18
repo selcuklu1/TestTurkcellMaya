@@ -171,6 +171,14 @@ public class BirimIadeEdilenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Birime Iade Edilenler sayfasında evrakın listede geldiği görünür")
+    public BirimIadeEdilenlerPage evrakNoGeldigiGorme(String konu) {
+        boolean durum = tableEvraklar
+                .filterBy(text(konu)).size() > 0;
+        Assert.assertEquals(durum, true,"Evrak Bulunamamıştır");
+        return this;
+    }
+
     @Step("Evrak no ile icerikten teslim al")
     public BirimIadeEdilenlerPage evrakSecIcerikGoster(String konu, boolean secim) {
         tblEvraklar.filterBy(text(konu)).get(0).$$("[id$='detayGosterButton']").first().click();
@@ -296,6 +304,7 @@ public class BirimIadeEdilenlerPage extends MainPage {
 //            text += "İslem Sure alanları gösterilmektedir.";
 //        }
         Allure.addAttachment("Alan Kontrolleri : ", text);
+        takeScreenshot();
         return this;
     }
 
