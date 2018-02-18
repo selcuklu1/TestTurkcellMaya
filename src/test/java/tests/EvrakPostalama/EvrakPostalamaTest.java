@@ -1018,7 +1018,7 @@ public class EvrakPostalamaTest extends BaseTest {
                 .geregiSecimTipiSec("Kurum")
                 .geregiDoldur("Başbakanlık", "Kurum Adı")
                 //.geregiKurumPostaTipi("APS")
-                .kurumGeregiAlaniKurumPostaTipiKontrol(kurum, "APS")
+                .kurumGeregiAlaniKurumPostaTipiKontrol(kurum, "Evrak Servisi Elden")
                 .onayAkisiKullanicilariTemizle()
                 .onayAkisiEkle()
                 .onayAkisiKullaniciTipiSec("Mehmet BOZDEMİR", "İmzalama")
