@@ -232,7 +232,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
                 .birimFiltreDoldur(birim)
                 .birimTuruSec(birimTuru)
                 .ara()
-                .ilkBirimGuncelle()
+                .aktiflerIlkBirimGuncelle()
                 .sagAlandaGuncellemeEkranGeldigiGorme()
                 .yeniKepAdresBilgileriEkle()
                 .popupKepAdresiDoldur(kepAdresi1)

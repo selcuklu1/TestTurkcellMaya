@@ -941,20 +941,30 @@ public class EvrakPostalamaTest extends BaseTest {
 
         postalananEvrakRaporuPage.cmbpostaSeklisecimi("İç Giden")
                 .postaSorgulama();
+        postalananEvrakRaporuPage.sorgulamasonucKontrol("İç Giden");
         postalananEvrakRaporuPage.cmbpostaSeklisecimi("Dış Giden")
                 .postaSorgulama();
+        postalananEvrakRaporuPage.sorgulamasonucKontrol("Dış Giden");
+
         postalananEvrakRaporuPage.cmbpostaSeklisecimi("Seçiniz");
         postalananEvrakRaporuPage.cmbPostaTipisec("Adi Posta")
                 .postaSorgulama();
+        postalananEvrakRaporuPage.sorgulamasonucKontrol("Adi Posta");
+
         postalananEvrakRaporuPage.cmbPostaTipisec("Seçiniz");
         postalananEvrakRaporuPage.txtPostaAciklama("TS")
                 .postaSorgulama();
+        postalananEvrakRaporuPage.sorgulamasonucKontrol("TS");
+
         postalananEvrakRaporuPage.clearPostaAciklamaAlani();
         postalananEvrakRaporuPage.cmbPostalayanadi("Zübeyde TEKİN")
                 .postaSorgulama();
+        postalananEvrakRaporuPage.sorgulamasonucKontrol("Zübeyde TEKİN");
+
         postalananEvrakRaporuPage.cmbClearPostalayanAdi();
         postalananEvrakRaporuPage.chkboxPostaladiklarim()
                 .postaSorgulama();
+        postalananEvrakRaporuPage.sorgulamasonucKontrol("Postaladiklarim");
 
 
         postalananEvrakRaporuPage
@@ -987,7 +997,7 @@ public class EvrakPostalamaTest extends BaseTest {
         String kurum = "Başbakanlık";
         String fizikselEkMetni = "TS1685 Ek metni";
         String basariMesaji = "İşlem başarılıdır!";
-        String dagitimSatiriMesaj = "KEP posta birimine gönderildi.";
+        String dagitimSatiriMesaj = "Dagitim Mesaj";
         String fizikselEkMesaji = "Evrakın fiziksel eki vardır, göndermeyi unutmayınız!";
 
         evrakOlusturPage
@@ -1008,7 +1018,7 @@ public class EvrakPostalamaTest extends BaseTest {
                 .geregiSecimTipiSec("Kurum")
                 .geregiDoldur("Başbakanlık", "Kurum Adı")
                 //.geregiKurumPostaTipi("APS")
-                .kurumGeregiAlaniKurumPostaTipiKontrol(kurum, "KEP")
+                .kurumGeregiAlaniKurumPostaTipiKontrol(kurum, "Evrak Servisi Elden")
                 .onayAkisiKullanicilariTemizle()
                 .onayAkisiEkle()
                 .onayAkisiKullaniciTipiSec("Mehmet BOZDEMİR", "İmzalama")
@@ -1076,6 +1086,7 @@ public class EvrakPostalamaTest extends BaseTest {
         postalanacakEvraklarPage
                 .inputIcerikPstakod("0310")
                 .inputIcerikPostaAciklama("TS0310 Aciklama");
+        String evsayisi = postalanacakEvraklarPage.icEvrakPosEvSay();
         postalanacakEvraklarPage
                 .btnIcerikPostaYazdir();
         postalanacakEvraklarPage
@@ -1087,19 +1098,22 @@ public class EvrakPostalamaTest extends BaseTest {
                 .txtPopupEtiketAciklama()
                 .btnEtiketpopupkapat();
 
-
         postalanacakEvraklarPage
+                .icerikEvPostPageDown()
                 .btnIcerikEvrakPostalama()
          .btnIcerikPostalamaEvet();
 
         postalanacakEvraklarPage.islemMesaji().isBasarili();
 
-        postalananlarPage.openPage();
-        postalananlarPage.filter().findRowsWith(text(konu1685)).first().click();
-        postalananlarPage.postaDetayiTikla();
-        postalananlarPage.evSay();
-        postalananlarPage.evrakYazdir();
-        postalananlarPage.etiketBastir();
+        postalananlarPage.openPage()
+                .tabloEvrakGeldigiGorme();
+        postalananlarPage.filtretablodankonuileEvrakSeç(konu1685)
+        .postaDetayiTikla();
+        postalananlarPage.evSayisiKontrol(evsayisi);
+        postalananlarPage.evrakYazdir()
+                .popupEvrakyazpdfackapat();
+        postalananlarPage.etiketBastir()
+                .etiketIcerikText();
         postalananlarPage.btnPopupEtiketBastirKapat();
 
 

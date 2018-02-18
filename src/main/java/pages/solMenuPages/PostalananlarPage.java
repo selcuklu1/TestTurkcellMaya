@@ -78,6 +78,8 @@ public class PostalananlarPage extends MainPage {
     SelenideElement tabIcerikKapat = $x("//*[@id='windowItemInfoDialog']/div[1]/a[1]/span");
     SelenideElement tabIcerikKapatmaOnay = $(By.id("kapatButton"));
     SelenideElement btnIcerikPostaDetayi = $x("//*[@id='inboxItemInfoForm:dialogTabMenuRight:uiRepeat:4:cmdbutton']/span[1]");
+    SelenideElement popupEtiketTextIcerik = $x("//*[@id='inboxItemInfoForm:etiketMetinIDPostIslm']");
+
     //
     SelenideElement popupEvrakYazdirma = $x("//*[@id='postaDetayYazdirForm:dtPostaEvrakUstVeri:0:evrakDetayiViewDialogYazdir']");
     SelenideElement tuzelKisiGuncelle = $x("//*[@id='mainPreviewForm:postalananDataGrid']/tbody/tr/td/div/table/tbody/tr[4]/td[8]/div/button[1]");
@@ -305,9 +307,12 @@ public class PostalananlarPage extends MainPage {
         ickKtrl.sendKeys(Keys.PAGE_DOWN);
         ickKtrl.sendKeys(Keys.PAGE_DOWN);
         takeScreenshot();
+        ickKtrl.sendKeys(Keys.SPACE);
+
         ickKtrl.sendKeys(Keys.CONTROL, "a");
         Thread.sleep(500);
-        ickKtrl.sendKeys(Keys.SPACE);
+        ickKtrl.sendKeys(Keys.CONTROL, "c");
+        ickKtrl.sendKeys(Keys.CONTROL, "a");
         ickKtrl.sendKeys(Keys.CONTROL, "c");
 
         String result = "";
@@ -484,7 +489,13 @@ public class PostalananlarPage extends MainPage {
      */
     @Step("Postalanan Evrak Detayları , Sayisi ve kontrolü")
     public String evSay() {
-        return $x("//tbody/tr[3]/td[3]/label").getAttribute("outerText");
+        return  $x("//tbody/tr[3]/td[3]/label").getAttribute("outerText");
+    }
+    @Step("Postalanan Evrak Detayları , Sayisi ve kontrolü")
+    public Boolean evSayisiKontrol(String evsay) {
+        String evsayisi = $x("//tbody/tr[3]/td[3]/label").getAttribute("outerText");
+        Assert.assertEquals(evsayisi, evsay);
+        return true;
     }
 
     @Step("Postalanan Evrak Icerik icindeki Evrak Sayisi")
@@ -523,6 +534,11 @@ public class PostalananlarPage extends MainPage {
     public PostalananlarPage btnIcerikGoster() throws InterruptedException {
         btnIcerikGoster.click();
         Thread.sleep(1000);
+        return this;
+    }
+    @Step("Tablodan evrak seçimi \"{konu}\"")
+    public PostalananlarPage filtretablodankonuileEvrakSeç(String konu) {
+        filter().findRowsWith(text(konu)).first().click();
         return this;
     }
 
@@ -649,7 +665,21 @@ public class PostalananlarPage extends MainPage {
         postalananEvrakYazdir.click();
         return this;
     }
-
+    @Step("Popup Evrak yazdirma, pdf açma ve kapatma")
+    public PostalananlarPage popupEvrakyazpdfackapat() {
+        popupEvrakYazdirma.click();
+        switchTo().window(1);
+        closeNewWindow();
+        switchTo().window(0);
+        popupkapatma();
+        return this;
+    }
+    @Step("Popup Etiket Icerik text kontrol")
+    public  PostalananlarPage etiketIcerikText() {
+        String etiketIceriktext = popupEtiketTextIcerik.getValue();
+        Allure.addAttachment("Etiket Icerik", etiketIceriktext);
+        return this;
+    }
     @Step("Evrak Yazdır Popup içi Üst Veri Pdf yazdırma,Yazışma kontrolü ve kırmızı alan içerik kontrolü, Ekran görüntüsü ve text output alma")
     public PostalananlarPage popupYazpdfkontrolveKapatma() throws InterruptedException {
         popupEvrakYazdirma.click();
@@ -710,6 +740,7 @@ public class PostalananlarPage extends MainPage {
     public PostalananlarPage etiketBastir() {
 
         postalananEvrakEtiketYazdir.click();
+
         return this;
     }
 

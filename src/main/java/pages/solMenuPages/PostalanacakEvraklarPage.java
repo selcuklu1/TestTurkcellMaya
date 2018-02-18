@@ -1,6 +1,7 @@
 package pages.solMenuPages;
 
 import com.codeborne.selenide.*;
+import com.codeborne.selenide.ex.ElementNotFound;
 import com.codeborne.selenide.impl.WebDriverContainer;
 import io.qameta.allure.Allure;
 import io.qameta.allure.AllureResultsWriter;
@@ -9,10 +10,7 @@ import io.qameta.allure.Step;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.apache.poi.EmptyFileException;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Capabilities;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import pages.MainPage;
@@ -110,6 +108,7 @@ public class PostalanacakEvraklarPage extends MainPage {
     SelenideElement btnFizikselEkBulunmaktadirIkon = $x("//span[@class='ui-button-icon-left ui-icon document-typeFizikselEk']");
     SelenideElement txtEvrakinFizikselEkivardir = $x("//*[contains(text(),'Evrakın fiziksel eki vardır, göndermeyi unutmayınız!')]");
     SelenideElement btnIcerikEvrakPostala = $x("//*[@id='inboxItemInfoForm:dialogTabMenuRight:uiRepeat:4:cmdbutton']");
+    SelenideElement ktrlIcerikEvrakPostalaEvSayisi = $x("//*[@id='inboxItemInfoForm:evrakDetayPanelGrid']/tbody/tr[3]/td[3]/label");
     //Önizleme
 
     SelenideElement formEvrakOnizleme = $(By.id("mainPreviewForm:evrakOnizlemeTab"));
@@ -629,10 +628,11 @@ takeScreenshot();
         String bckColr = pdftab.getCssValue("color");
 
         System.out.println(bckColr);
-
+        pdftab.sendKeys(Keys.SPACE);
         pdftab.sendKeys(Keys.CONTROL, "a");
         Thread.sleep(500);
-        pdftab.sendKeys(Keys.SPACE);
+        pdftab.sendKeys(Keys.CONTROL, "c");
+        pdftab.sendKeys(Keys.CONTROL, "a");
         pdftab.sendKeys(Keys.CONTROL, "c");
 
         //pdftab.sendKeys(Keys.CONTROL, "V");
@@ -692,6 +692,10 @@ takeScreenshot();
             is.close();
         }
         return output;
+    }
+    @Step("Icerik Evrak Postala Sayfasindan Evrak Sayisi çekme")
+    public String icEvrakPosEvSay() {
+        return ktrlIcerikEvrakPostalaEvSayisi.getAttribute("outerText");
     }
     @Step("PDF - Evrak sayısı - Yazışma Kuralları kontrol")
     public PostalanacakEvraklarPage pdfEvrakYazismaKuralkontrol() throws IOException {
@@ -1124,7 +1128,7 @@ takeScreenshot();
         return this;
     }
 
-    @Step("Icerik Posta Yazdır popup Yazdir butonu")
+    @Step("Icerik Posta Yazdır popup Yazdir butonu - PDF Geldiği görülür")
     public PostalanacakEvraklarPage btnPopupPostaYazdirma() {
         btnIcerikPopupYazdir.click();
         switchTo().window(1);
@@ -1139,17 +1143,28 @@ takeScreenshot();
         return this;
     }
 
+    @Step("Icerik Evrak Postalama içi page zoom out")
+    public PostalanacakEvraklarPage icerikEvPostPageDown () throws ElementNotFound {
+        SelenideElement  icerikPostalananYerTD = $x("//*[@id='inboxItemInfoForm:postalanacakDataGrid']/tbody/tr/td");
+        try {
+            icerikPostalananYerTD.click();
+            icerikPostalananYerTD.sendKeys(Keys.PAGE_DOWN);
 
+        } catch (ElementNotFound e) {
+
+        };
+        return this;
+    }
     @Step("Icerik Etiket Bastir butonu")
     public PostalanacakEvraklarPage btnIcerikEtiketBastir() {
         btnIcerikEtiketBastir.click();
         return this;
     }
 
-    @Step("Icerik Etiket popup Aciklama kontrol")
+    @Step("Icerik Etiket popup Aciklama kontrol: Tarih no ve Gönderilen yer")
     public PostalanacakEvraklarPage txtPopupEtiketAciklama() {
         String etiketAciklama = btnIcerikEtiketAciklama.getAttribute("innerText");
-        System.out.println(etiketAciklama);
+        Allure.addAttachment("Etiket Icerik", etiketAciklama);
         return this;
     }
 
@@ -1161,8 +1176,6 @@ takeScreenshot();
 
     @Step("Icerik Evrak Postalama butonu")
     public PostalanacakEvraklarPage btnIcerikEvrakPostalama() {
-        $x("//*[@id='windowItemInfoDialog']").sendKeys(Keys.CONTROL, Keys.DOWN);
-        $x("//*[@id='windowItemInfoDialog']").sendKeys(Keys.CONTROL, Keys.DOWN);
 
         btnIcerikPostalama.click();
         return this;

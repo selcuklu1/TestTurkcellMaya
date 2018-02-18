@@ -36,6 +36,7 @@ public class KurumYonetimiPage extends MainPage {
     BelgenetElement txtKurum = comboLov(By.id("kurumYonetimiListingForm:filterPanel:kurumFilterLov:LovText"));
     SelenideElement divFiltreKurum = $(By.id("kurumYonetimiListingForm:filterPanel:kurumFilterLov:lovInputPanel"));
     SelenideElement txtFiltreIdariBirimKimlikKodu = $(By.id("kurumYonetimiListingForm:filterPanel:kurumFilterLov:LovText"));
+    SelenideElement btnKurumIptal = $(By.id("kurumYonetimiEditorForm:cancelSaveKurumButton"));
 
     // Hüseyin
     ElementsCollection tableKurumListesi = $$("div[id='kurumYonetimiListingForm:kurumTreeTable'] tbody > tr[role='row']");
@@ -62,6 +63,7 @@ public class KurumYonetimiPage extends MainPage {
     SelenideElement txtEPosta = $(By.id("kurumBilgileriEditorForm:ePostaInput"));
     SelenideElement txtWebAdresi = $(By.id("kurumBilgileriEditorForm:webAdresiInput"));
     SelenideElement btnIletisimBilgisiKaydet = $(By.id("kurumBilgileriEditorForm:saveIletisimBilgisiButton"));
+    SelenideElement btnIletisimBilgisiIptalEt = $(By.id("kurumBilgileriEditorForm:cancelSaveIletisimBilgisiButton"));
     ElementsCollection listUlkeler = $$("div[id='kurumBilgileriEditorForm:lovUlke:lovTree'] > ul > li");
 
     // Kep Adresi elementleri
@@ -71,6 +73,7 @@ public class KurumYonetimiPage extends MainPage {
     SelenideElement txtKepAdresi = $(By.id("kurumKepAdresBilgiEditorForm:kurumKepAdresBilgiInputTextId"));
     SelenideElement cmbKepHizmetSaglayici = $(By.id("kurumKepAdresBilgiEditorForm:kephs"));
     SelenideElement btnKepAdresiBilgileriKaydet = $(By.id("kurumKepAdresBilgiEditorForm:saveKepAdresiButton"));
+    SelenideElement btnKepAdresiBilgileriIptalEt = $(By.id("kurumKepAdresBilgiEditorForm:cancelSaveIletisimBilgisiButton"));
     SelenideElement btnKurumHiyerarşisiniGuncelle = $("button[id^='kurumYonetimiListingForm:kurumTreeTable:'][id$=':applyChangesButton']");
 
     SelenideElement filtrePanel = $("div[id='kurumYonetimiListingForm:filterPanel'] > h3");
@@ -139,6 +142,12 @@ public class KurumYonetimiPage extends MainPage {
     @Step("Kaydet")
     public KurumYonetimiPage kaydet() {
         btnKurumKaydet.click();
+        return this;
+    }
+
+    @Step("İptal")
+    public KurumYonetimiPage iptal() {
+        btnKurumIptal.click();
         return this;
     }
 
@@ -450,6 +459,12 @@ public class KurumYonetimiPage extends MainPage {
         return this;
     }
 
+    @Step("İletişim bilgisi iptal et")
+    public KurumYonetimiPage iletisimBilgisiIptalEt() {
+        btnIletisimBilgisiIptalEt.click();
+        return this;
+    }
+
     @Step("Kep adresi güncelle")
     public KurumYonetimiPage kepAdresiGuncelle(String kepAdresi, Integer kepIndex) {
 
@@ -497,6 +512,12 @@ public class KurumYonetimiPage extends MainPage {
     @Step("Kep adresi bilgileri kaydet")
     public KurumYonetimiPage kepAdresiBilgileriKaydet() {
         btnKepAdresiBilgileriKaydet.click();
+        return this;
+    }
+
+    @Step("Kep adresi bilgileri iptal et")
+    public KurumYonetimiPage kepAdresiBilgileriIptalEt() {
+        btnKepAdresiBilgileriIptalEt.click();
         return this;
     }
 
@@ -661,14 +682,18 @@ public class KurumYonetimiPage extends MainPage {
         chkTsk.shouldBe(Condition.visible);
         chkKaysisteYerAlmiyor.shouldBe(Condition.visible);
         divKepAdresiBilgileri.shouldBe(Condition.visible);
+        chkOzelHitap.shouldBe(Condition.visible);
 
         Allure.addAttachment("Kurum Ekleme ekranında kontrol.", "Kep Adresi Kullanıyor \n" +
                 "Kaysiste yer almıyor\n" +
                 "Kısa Adı\n" +
                 "Paket Kullanım\n" +
                 "TSK\n" +
+                "Özel Hitap\n" +
                 "KEP adresi bilgileri alanlarının geldiği görülür."
         );
+
+        takeScreenshot();
 
         return this;
     }
@@ -679,6 +704,10 @@ public class KurumYonetimiPage extends MainPage {
         return this;
     }
 
-
+    @Step("Hitap alanının geldiği görülür")
+    public KurumYonetimiPage hitapAlaniKontrolu() {
+      Assert.assertEquals(txtHitap.isDisplayed(), true, "Hitap alanı kontrolu");
+        return this;
+    }
 }
 

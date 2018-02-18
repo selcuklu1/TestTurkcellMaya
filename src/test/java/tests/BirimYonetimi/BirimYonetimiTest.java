@@ -119,4 +119,54 @@ public class BirimYonetimiTest extends BaseTest {
                 .bilgiAlanindaBiriminGeldigiSecilemedigiKontrolu(birimAdi, "Birim Adı")
                 .bilgiAlanindaBiriminGeldigiSecilemedigiKontrolu(idariBirimKimlikKodu, "İdari Birim Kodu ");
     }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS2336: Birimin olur metnini güncelleme")
+    public void TS2336() {
+
+        String birimAdi = "TS2336 Birim";
+
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS1108: Birim Sorgulama")
+    public void TS1108() {
+
+        String aktifIcBirimAdi = "TS1108 Aktif İç Birim";
+        String pasifIcBirimAdi = "TS1108 Pasif İç Birim";
+        String pasifDisBirimAdi = "TS1108 Pasif Dış Birim";
+
+        birimYonetimiPage
+                .openPage()
+
+                .birimTuruSec("İç Birim")
+                .durumSec("Sadece Aktifler")
+                .ara()
+                .pasifYapButonuKontrolu()
+                .aktiflerIlkBirimGuncelle()
+                .disBirimChkBoxBosOlduguKontrolu()
+
+                .birimTuruSec("İç Birim")
+                .durumSec("Sadece Pasifler")
+                .ara()
+                .aktifYapButonuKontrolu()
+                .pasiflerIlkBirimGuncelle()
+                .disBirimChkBoxBosOlduguKontrolu()
+
+                .birimTuruSec("Dış Birim")
+                .filtreSorgulamaPaneliAc()
+                .durumSec("Sadece Aktifler")
+                .ara()
+                .pasifYapButonuKontrolu()
+                .aktiflerIlkBirimGuncelle()
+                .disBirimChkBoxDoluOlduguKontrolu()
+
+                .birimTuruSec("Dış Birim")
+                .durumSec("Sadece Pasifler")
+                .ara()
+                .aktifYapButonuKontrolu()
+                .pasiflerIlkBirimGuncelle()
+                .disBirimChkBoxDoluOlduguKontrolu();
+
+    }
 }
