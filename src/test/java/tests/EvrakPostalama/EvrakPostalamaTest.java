@@ -997,7 +997,7 @@ public class EvrakPostalamaTest extends BaseTest {
         String kurum = "Başbakanlık";
         String fizikselEkMetni = "TS1685 Ek metni";
         String basariMesaji = "İşlem başarılıdır!";
-
+        String dagitimSatiriMesaj = "Dagitim Mesaj";
         String fizikselEkMesaji = "Evrakın fiziksel eki vardır, göndermeyi unutmayınız!";
 
         evrakOlusturPage
