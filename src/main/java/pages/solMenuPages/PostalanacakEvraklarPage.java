@@ -1146,12 +1146,9 @@ takeScreenshot();
         return this;
     }
 
-    @Step("Icerik Evrak Postalama içi PAGE DOWN")
+    @Step("Icerik Evrak Postalama içi page zoom out")
     public PostalanacakEvraklarPage icerikEvPostPageDown () {
-        SelenideElement icerikPage = $x("//*[@id='inboxItemInfoForm:postalanacakDataGrid']");
-        //icerikPage.sendKeys(Keys.DOWN);
-        icerikPage.scrollIntoView(false);
-        icerikPage.sendKeys(Keys.PAGE_DOWN);
+        Selenide.zoom(0.75);
         return this;
     }
     @Step("Icerik Etiket Bastir butonu")
