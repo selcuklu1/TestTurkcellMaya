@@ -1143,10 +1143,15 @@ takeScreenshot();
     }
 
     @Step("Icerik Evrak Postalama içi page zoom out")
-    public PostalanacakEvraklarPage icerikEvPostPageDown () {
+    public PostalanacakEvraklarPage icerikEvPostPageDown () throws ElementNotVisibleException {
         SelenideElement  icerikPostalananYerTD = $x("//*[@id='inboxItemInfoForm:postalanacakDataGrid']/tbody/tr/td");
-        icerikPostalananYerTD.click();
-        icerikPostalananYerTD.sendKeys(Keys.PAGE_DOWN);
+        try {
+            icerikPostalananYerTD.click();
+            icerikPostalananYerTD.sendKeys(Keys.PAGE_DOWN);
+
+        } catch (ElementNotVisibleException e) {
+
+        };
         return this;
     }
     @Step("Icerik Etiket Bastir butonu")
