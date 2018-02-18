@@ -12,7 +12,8 @@ import pages.ustMenuPages.SistemLoglariPage;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 /****************************************************
  * Tarih: 2018-01-23
  * Proje: Türksat Functional Test Automation
@@ -30,6 +31,8 @@ public class EvrakTeslimAlmaTest extends BaseTest {
     BirimHavaleEdilenlerPage birimHavaleEdilenlerPage;
 
     SistemLoglariPage sistemLoglariPage;
+    static final Logger logger = LogManager.getLogger("EvrakTeslimAlmaTest");
+
 
     @BeforeMethod
     public void loginBeforeTests() {
@@ -42,12 +45,16 @@ public class EvrakTeslimAlmaTest extends BaseTest {
         sistemLoglariPage = new SistemLoglariPage();
         gelenEvrakZimmetRaporu = new GelenEvrakZimmetRaporuPage();
         birimHavaleEdilenlerPage = new BirimHavaleEdilenlerPage();
+//        Logger logger = LogManager.getRootLogger();
     }
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS2314: Teslim alınmayı bekleyenler listesinden bir evrakı teslim alma (listeden)")
     public void TS2314() throws InterruptedException {
         String testid= "TS-2314";
+//        System.setProperty("log4j.filename","EvrakTeslimAlmaTest:");
+//        Logger logger1 = LogManager.getLogger();
+        logger.info(testid + " nolu test başladı:");
         String basariMesaji = "İşlem başarılıdır!";
         String konuKodu = "120.05";
         String konu = "TS-2314-" + getSysDate();
@@ -68,6 +75,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
 
         String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
         String details = "BHUPGMY";
+
 
         testStatus(testid,"PreCondition Evrak Oluşturma");
         gelenEvrakKayitPage
@@ -105,6 +113,8 @@ public class EvrakTeslimAlmaTest extends BaseTest {
                 .evrakAdediKontrol(konu)
                 .secilenEvrakEvrakGecmisi()
                 .evrakGecmisi(kisi, islemSureci, evrakTarihi);
+
+        logger.info(testid + " nolu test bitti.");
     }
 
     @Severity(SeverityLevel.CRITICAL)
