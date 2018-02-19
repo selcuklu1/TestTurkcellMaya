@@ -286,7 +286,6 @@ public class EvrakTeslimAlmaTest extends BaseTest {
                 .evrakNoGelmedigiGorme(konu2)
                 .islemMesaji().basariliOlmali(basariMesaji);
 
-
         //TODO: Bu adim test senaryosunda net degildir. Netlesmesi durumunda test case update edilecektir. Bu hali ile test fail etmektedir.
         sistemLoglariPage
                 .openPage()
