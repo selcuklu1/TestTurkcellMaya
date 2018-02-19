@@ -8,6 +8,7 @@ import data.TestData;
 import data.User;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
+import listeners.Deneme1;
 import listeners.DriverEventListener;
 import listeners.ResultListener;
 import org.openqa.selenium.Platform;
@@ -40,6 +41,7 @@ import static io.qameta.allure.util.ResultsUtils.firstNonEmpty;
 //BrowserPerTest.class
 @Listeners({ResultListener.class
         //, MethodInterceptor.class
+        , Deneme1.class
 })
 //@Listeners({RerunFailedTests.class})
 public class BaseTest extends BaseLibrary {
