@@ -116,9 +116,9 @@
                     Could also have been dynamically selected via a paremeter
                     sent by Jenkins. Example:  <file>${suiteXmlFile}</file>
                     *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-->
-                    <suiteXmlFiles>
+                    <!--<suiteXmlFiles>
                         <file>Tanimli Paketler.xml</file>
-                    </suiteXmlFiles>
+                    </suiteXmlFiles>-->
 
                     <!--*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
                     Contains test packet(s) to run. Values are selected form and
