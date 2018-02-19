@@ -108,7 +108,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
         teslimAlinanlarPage
                 .openPage()
                 .evrakNoIleEvrakSec(konu)
-                .evrakAdediKontrol(konu)
+                .evrakAdediKontrolu(konu)
                 .secilenEvrakEvrakGecmisi()
                 .evrakGecmisi(kisi, islemSureci, evrakTarihi);
 
@@ -167,15 +167,19 @@ public class EvrakTeslimAlmaTest extends BaseTest {
         testStatus(testid, "Test Başladı");
         teslimAlinmayiBekleyenlerPage
                 .openPage()
+                .evrakGeldigiGorunur(konu)
                 .evrakSecIcerikGoster(konu, true)
+                .ekranKontrolEvrakDetayi()
                 .içeriktenEvrakTeslimAl()
                 .içeriktenEvrakEvet();
 
         teslimAlinanlarPage
                 .openPage()
+                .evrakAdediKontrolu(konu)
                 .evrakNoIleEvrakSec(konu)
+                .tabKontrol()
                 .secilenEvrakEvrakGecmisi()
-                .evrakGecmisi(kisi, islemSureci);
+                .evrakGecmisi(kisi, islemSureci, evrakTarihi);
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -311,7 +315,6 @@ public class EvrakTeslimAlmaTest extends BaseTest {
         String evrakGelisTipi = "Posta";
         String ivedilik = "Normal";
         String ekMetni = "test otomasyon" + getSysDateForKis();
-        //String aciklama1 = "Test Otomasyon";
         String kisi = "Zübeyde Tekin";
         String islemSureci = "Evrak Teslim Alındı ";
 
@@ -370,6 +373,8 @@ public class EvrakTeslimAlmaTest extends BaseTest {
         testStatus(testid, "Test Başladı");
         teslimAlinmayiBekleyenlerPage
                 .openPage()
+                .evrakNoIleEvrakSec(konu1)
+                .evrakNoIleEvrakSec(konu2)
                 .evrakSecToplu(konu1, konu2, true)
                 .islemMesaji().basariliOlmali(basariMesaji);
 
@@ -377,8 +382,9 @@ public class EvrakTeslimAlmaTest extends BaseTest {
                 .openPage()
                 .evrakNoIleEvrakSec(konu1)
                 .evrakNoIleEvrakSec(konu2)
+                .tabKontrol()
                 .secilenEvrakEvrakGecmisi()
-                .evrakGecmisi(kisi, islemSureci);
+                .evrakGecmisi(kisi, islemSureci, evrakTarihi);
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -447,7 +453,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
         teslimAlinanlarPage
                 .openPage()
                 .evrakNoIleEvrakSec(konu)
-                .evrakAdediKontrol(konu)
+                .evrakAdediKontrolu(konu)
                 .secilenEvrakEvrakGecmisi()
                 .evrakGecmisi(kisi, islemSureci, evrakTarihi);
     }
@@ -519,7 +525,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
         teslimAlinanlarPage
                 .openPage()
                 .evrakNoIleEvrakSec(konu)
-                .evrakAdediKontrol(konu)
+                .evrakAdediKontrolu(konu)
                 .secilenEvrakEvrakGecmisi()
                 .evrakGecmisi(kisi, islemSureci, evrakTarihi);
     }

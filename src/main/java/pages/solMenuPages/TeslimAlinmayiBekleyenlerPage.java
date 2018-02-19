@@ -82,6 +82,7 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     BelgenetElement txtSecilenlerOnaylayacakKisi = comboLov(By.id("mainPreviewForm:onaylayacakKisiLov:LovText"));
 
     ElementsCollection tblKaydedilenGelenEvraklar = $$("[id='mainInboxForm:inboxDataTable_data'] tr[data-ri]");
+    SelenideElement tabEvrakDetayi = $("[id='inboxItemInfoForm']");
 
     public TeslimAlinmayiBekleyenlerPage openPage() {
         solMenu(SolMenuData.BirimEvraklari.TeslimAlinmayiBekleyenler);
@@ -378,6 +379,13 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Evrak Detay ekranı açılır\n")
+    public TeslimAlinmayiBekleyenlerPage ekranKontrolEvrakDetayi() {
+        Assert.assertEquals(tabEvrakDetayi.isDisplayed(), true, "Evrak Detay sayfası");
+        Allure.addAttachment("Evrak Detay sayfası", "açılmaktadır");
+        return this;
+    }
+
     @Step("İçerikten Evrak teslim al")
     public TeslimAlinmayiBekleyenlerPage içeriktenEvrakTeslimAl() {
         evrakTeslimAl.click();
@@ -395,9 +403,8 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     public TeslimAlinmayiBekleyenlerPage evrakSecToplu(String konu1, String konu2, boolean secim) {
         tblEvraklar.filterBy(text(konu1)).get(0).$$("div[class^='ui-chkbox-box']").first().click();
         tblEvraklar.filterBy(text(konu2)).get(0).$$("div[class^='ui-chkbox-box']").first().click();
-
+        takeScreenshot();
         btnTeslimAl.get(0).click();
-
         return this;
     }
 

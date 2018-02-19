@@ -94,6 +94,7 @@ public class SistemLoglariPage extends MainPage {
 
         Assert.assertEquals(elementFound, shouldBeExist,"Rapor bulunamadı.");
         Allure.addAttachment("Aksiyon:" + aksiyon + " Tarih:" + tarih + " Kullanıcı:" + kullanici + " Acıklama:" + aciklama,"");
+        takeScreenshot();
         return this;
     }
 
