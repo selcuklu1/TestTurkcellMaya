@@ -71,12 +71,12 @@ String ad ="TS1005 123041";
                 .openPage()
                 .durumSec("Sadece Aktifler")
                 .ara()
-                .kullaniciListesiTabloKontrolu(ad,true)
+                .kullaniciListesiTablosuKullaniciAdiKontrolu(ad,true)
                 .pasifYap(ad)
                 .islemOnayiPopUpEvetHayır("Evet")
                 .durumSec("Sadece Pasifler")
                 .ara()
-                .kullaniciListesiTabloKontrolu(ad,true);
+                .kullaniciListesiTablosuKullaniciAdiKontrolu(ad,true);
 
 
     }
