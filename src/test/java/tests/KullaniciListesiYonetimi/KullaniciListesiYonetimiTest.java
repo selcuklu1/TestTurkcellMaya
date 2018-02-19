@@ -69,16 +69,19 @@ public class KullaniciListesiYonetimiTest extends BaseTest {
         String ad = "TS1005 123041";
         kullaniciListesiYonetimiPage
                 .openPage()
+                .sorgulaVeFiltreleAdDoldur(ad)
                 .durumSec("Sadece Aktifler")
                 .ara()
-                .kullaniciListesiTabloKontrolu()
                 .kullaniciListesiTablosuKullaniciAdiKontrolu(ad, true)
                 .pasifYap(ad)
                 .islemOnayiPopUpEvetHayır("Evet")
+                .sorgulaVeFiltreleTabAc()
                 .durumSec("Sadece Pasifler")
                 .ara()
-                .kullaniciListesiTablosuKullaniciAdiKontrolu(ad, true);
-
-
+                .kullaniciListesiTablosuKullaniciAdiKontrolu(ad, true)
+                .sorgulaVeFiltreleTabAc()
+                .durumSec("Sadece Aktifler")
+                .ara()
+                .kullaniciListesiTablosuKullaniciAdiKontrolu(ad, false);
     }
 }

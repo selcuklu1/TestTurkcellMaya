@@ -42,6 +42,7 @@ public class KullaniciListesiYonetimiPage extends MainPage {
     SelenideElement btnAra = $(By.id("kullaniciGrubuListingForm:filterPanel:kullaniciGrubuArama_id"));
     ElementsCollection tblKullaniciListesi = $$("tbody[id='kullaniciGrubuListingForm:kullaniciGrubuDataTable_data'] tr[data-ri]");
     SelenideElement btnIslemOnayıEvet = $(By.id("baseConfirmationDialog:confirmButton"));
+    SelenideElement txtSorgulamaVeFiltrelemeAd = $(By.id("kullaniciGrubuListingForm:filterPanel:kullaniciGrubufilterAd_id"));
 
     @Step("Kullanıcı Listesi Yönetimi sayfası açılır.")
     public KullaniciListesiYonetimiPage openPage() {
@@ -133,8 +134,8 @@ public class KullaniciListesiYonetimiPage extends MainPage {
 
         String text = cmbDurum.getText();
 
-        if (tblKullaniciListesi.size()>0)
-            Allure.addAttachment("Tablo Kontrolü : ",text+ " Kayıtlar listelenmiştir.");
+        if (tblKullaniciListesi.size() > 0)
+            Allure.addAttachment("Tablo Kontrolü : ", text + " Kayıtlar listelenmiştir.");
 
         else
             Allure.addAttachment("Tablo Kontrolü : ", "Kayıt bulunamamıştır.");
@@ -144,23 +145,21 @@ public class KullaniciListesiYonetimiPage extends MainPage {
     @Step("Kullanici Listesi tablosu kontrolu : \"{kullaniciAdi}\", \"{shouldBeExist}\" ")
     public KullaniciListesiYonetimiPage kullaniciListesiTablosuKullaniciAdiKontrolu(String kullaniciAdi, boolean shouldBeExist) {
         if (shouldBeExist) {
-            searchTable().searchInAllPages(true).findRows(text(kullaniciAdi)).shouldHave(CollectionCondition.sizeGreaterThan(0));
-//            tblKullaniciListesi
-//                    .filterBy(Condition.text(kullaniciAdi))
-//                    .shouldHave(CollectionCondition.sizeGreaterThan(0));
+//            searchTable().searchInAllPages(true).findRows(text(kullaniciAdi)).shouldHave(CollectionCondition.sizeGreaterThan(0));
+            tblKullaniciListesi
+                    .filterBy(Condition.text(kullaniciAdi))
+                    .shouldHave(CollectionCondition.sizeGreaterThan(0));
         } else {
-            searchTable().searchInAllPages(true).findRows(text(kullaniciAdi)).shouldHaveSize(0);
-//            tblKullaniciListesi
-//                    .filterBy(Condition.text(kullaniciAdi))
-//                    .shouldHaveSize(0);
+//            searchTable().searchInAllPages(true).findRows(text(kullaniciAdi)).shouldHaveSize(0);
+            tblKullaniciListesi
+                    .filterBy(Condition.text(kullaniciAdi))
+                    .shouldHaveSize(0);
         }
         return this;
     }
 
     @Step("Pasif Yap butonu tıklanır.")
     public KullaniciListesiYonetimiPage pasifYap(String kullaniciAdi) {
-
-//        searchTable().searchInAllPages(true).findRows(text(kullaniciAdi)).pasifYapTikla();
 
         tblKullaniciListesi
                 .filterBy(text(kullaniciAdi))
@@ -173,6 +172,18 @@ public class KullaniciListesiYonetimiPage extends MainPage {
     public KullaniciListesiYonetimiPage islemOnayiPopUpEvetHayır(String butonText) {
         SelenideElement btnKapat = $(By.xpath("//div[@id='baseConfirmationDialog:dialog']//span[text()='" + butonText + "']//..//..//button"));
         btnKapat.click();
+        return this;
+    }
+
+    @Step("Sorgula ve Filtrele Ad alanına \"{kullaniciAdi}\" girilir.")
+    public KullaniciListesiYonetimiPage sorgulaVeFiltreleAdDoldur(String kullaniciAdi) {
+        txtSorgulamaVeFiltrelemeAd.sendKeys(kullaniciAdi);
+        return this;
+    }
+
+    @Step("Sorgula ve Filtrele tabı açılır.")
+    public KullaniciListesiYonetimiPage sorgulaVeFiltreleTabAc(){
+        tabSorgulamaVeFiltreleme.click();
         return this;
     }
 }
