@@ -37,11 +37,8 @@ public class TakibimdekiEvraklarPage extends MainPage {
         return this;
     }
 
-    // document-unfollow
-
-    @Step("{konu} konulu evrakı takipten çıkart.")
-    public TakibimdekiEvraklarPage takiptenCikart(String konu){
-
+    @Step("{konu} konulu evrak evrak listesinde olduğu görülür.")
+    public TakibimdekiEvraklarPage takiptenCikart(String konu) {
         tblTakibimdekiEvraklar
                 .filterBy(text(konu))
                 .first()
@@ -50,11 +47,6 @@ public class TakibimdekiEvraklarPage extends MainPage {
 
         return this;
     }
-
-
-
-
-
 
 
 }

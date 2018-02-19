@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
+<suite name="Tanimli Test Paketler" parallel="classes" thread-count="1" verbose="1">
+    <test name="Bakima Al Test">
+        <packages>
+            <package name="tests.BakimaAl"/>
+        </packages>
+    </test>
+    <test name="Birim İçerik Şablonu">
+        <packages>
+            <package name="tests.BirimIcerikSablonu"/>
+        </packages>
+    </test>
+    <test name="Birime Iade Edilenlerden Havale Test">
+        <packages>
+            <package name="tests.BirimeIade"/>
+        </packages>
+    </test>
+    <test name="Dagitim Hitap Guncelleme Test">
+        <packages>
+            <package name="tests.DagitimHitapGuncelleme"/>
+        </packages>
+    </test>
+    <test name="Data Test">
+        <packages>
+            <package name="tests.Data"/>
+        </packages>
+    </test>
+    <test name="Dağıtım Planı Yönetimi">
+        <packages>
+            <package name="tests.DagitimPlaniYonetim"/>
+        </packages>
+    </test>
+    <test name="Ek Ilgi Test">
+        <packages>
+            <package name="tests.EkIlgi"/>
+        </packages>
+    </test>
+    <test name="Evrak Devret Test">
+        <packages>
+            <package name="tests.EvrakDevret"/>
+        </packages>
+    </test>
+    <test name="Evrak Havale Kurallari Test">
+        <packages>
+            <package name="tests.EvrakHavaleKurallari"/>
+        </packages>
+    </test>
+    <test name="Evrak Not Test">
+        <packages>
+            <package name="tests.EvrakNot"/>
+        </packages>
+    </test>
+    <test name="Evrak Paylasma Test">
+        <packages>
+            <package name="tests.EvrakPaylasma"/>
+        </packages>
+    </test>
+    <test name="Evrak Postalama Test">
+        <packages>
+            <package name="tests.EvrakPostalama"/>
+        </packages>
+    </test>
+    <test name="Evrak Teslim Alma Test">
+        <packages>
+            <package name="tests.EvrakTeslimAlma"/>
+        </packages>
+    </test>
+    <test name="Evrakı Beklemeye Alma">
+        <packages>
+            <package name="tests.EvrakBeklemeyeAlma"/>
+        </packages>
+    </test>
+    <test name="Gelen Evraki Cevapli Kapat Test">
+        <packages>
+            <package name="tests.GelenEvrakiCevapliKapat"/>
+        </packages>
+    </test>
+    <test name="Gelen Giden Evrak Kayit Havale Test">
+        <packages>
+            <package name="tests.GelenGidenEvrakKayit"/>
+        </packages>
+    </test>
+    <test name="Gelen Giden Evrak Kayit Test">
+        <packages>
+            <package name="tests.GelenGidenEvrakKayit"/>
+        </packages>
+    </test>
+    <test name="Gercek Kisi Yonetimi Test">
+        <packages>
+            <package name="tests.GercekKisiYonetimi"/>
+        </packages>
+    </test>
+    <test name="Gizlilik Kleransi Test">
+        <packages>
+            <package name="tests.GizlilikKleransi"/>
+        </packages>
+    </test>
+    <test name="Hitapta büyük/küçük harf">
+        <packages>
+            <package name="tests.HitaptaBuyukKucukHarf"/>
+        </packages>
+    </test>
+    <test name="Karar Yazisi Olusturma Test">
+        <packages>
+            <package name="tests.KararYazisiOlusturma"/>
+        </packages>
+    </test>
+    <test name="Kep Ile Postalama Islemleri Test">
+        <packages>
+            <package name="tests.KepIlePostalamaIslemleri"/>
+        </packages>
+    </test>
+    <test name="Kisayol Tuslari Test">
+        <packages>
+            <package name="tests.KisayolTuslari"/>
+        </packages>
+    </test>
+    <test name="Kisisel Islemler Bag Tipi Test">
+        <packages>
+            <package name="tests.KisiselIslemlerBagTipi"/>
+        </packages>
+    </test>
+    <test name="Kurum Yonetimi Test">
+        <packages>
+            <package name="tests.KurumYonetimi"/>
+        </packages>
+    </test>
+    <test name="Olur Yazisi Islemleri Test">
+        <packages>
+            <package name="tests.OlurYazisiIslemleri"/>
+        </packages>
+    </test>
+    <test name="Onay Akisi Test">
+        <packages>
+            <package name="tests.OnayAkisi"/>
+        </packages>
+    </test>
+    <test name="Onay Akisi Test 2">
+        <packages>
+            <package name="tests.OnayAkisi"/>
+        </packages>
+    </test>
+    <test name="Onay Akisi Test 3">
+        <packages>
+            <package name="tests.OnayAkisi"/>
+        </packages>
+    </test>
+    <test name="Onay Akisindaki Evraki Sil Test">
+        <packages>
+            <package name="tests.OnayAkisindakiEvrakiSil"/>
+        </packages>
+    </test>
+    <test name="Pul Yonetimi Test">
+        <packages>
+            <package name="tests.PulYonetimi"/>
+        </packages>
+    </test>
+    <test name="Takibe Evrak Ekleme Test">
+        <packages>
+            <package name="tests.TakibeEvrakEkleme"/>
+        </packages>
+    </test>
+    <test name="Teblig Tebellug Test">
+        <packages>
+            <package name="tests.TebligTebellug"/>
+        </packages>
+    </test>
+    <test name="Teslim Alinmayi Bekleyen Havale Test">
+        <packages>
+            <package name="tests.TeslimAlinmayiBekleyenHavale"/>
+        </packages>
+    </test>
+    <test name="Toplu Postalama Test">
+        <packages>
+            <package name="tests.TopluPostalama"/>
+        </packages>
+    </test>
+    <test name="Tuzel Kisi Yonetimi Test">
+        <packages>
+            <package name="tests.TuzelKisiYonetimi"/>
+        </packages>
+    </test>
+    <test name="Vekalet Islemleri Test">
+        <packages>
+            <package name="tests.VekaletIslemleri"/>
+        </packages>
+    </test>
+    <test name="Yazisma Kurallari Yonetimi Test">
+        <packages>
+            <package name="tests.YazismaKurallariYonetimi"/>
+        </packages>
+    </test>
+    <test name="Yonetim Havuzu Islemleri Test">
+        <packages>
+            <package name="tests.YonetimHavuzuIslemleri"/>
+        </packages>
+    </test>
+</suite>

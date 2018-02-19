@@ -16,8 +16,7 @@
     <!--</suite-files>-->
     <test name="Evrak Not">
         <classes>
-            <class name="tests.EvrakNot.EvrakNotTest2"/>
-
+            <class name="tests.EvrakNot.EvrakNotTest"/>
         </classes>
     </test>
     <!--<test name="TuzelKisiYonetimiTest">

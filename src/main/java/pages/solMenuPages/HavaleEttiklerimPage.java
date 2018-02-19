@@ -10,6 +10,7 @@ import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
@@ -27,14 +28,41 @@ public class HavaleEttiklerimPage extends MainPage {
     SelenideElement btnIcerikGöster = $(By.id("mainInboxForm:inboxDataTable:0:detayGosterButton"));
     SelenideElement btnTamEkranGöster = $(By.id("mainInboxForm:inboxDataTable:0:tamEkranModuButton"));
     SelenideElement tblRapor = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
-    SelenideElement btnHavaleYap = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:6:cmdbutton"));
+    SelenideElement btnHavaleYap = $("[class='ui-button-icon-left ui-icon havaleEt']");
     BelgenetElement txtHavaleYapKisi = comboLov("[id$='dagitimBilgileriKullaniciLov:LovText']");
     BelgenetElement txtHavaleYapKullaniciListesi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKisiListesiLov:LovText"));
+    BelgenetElement txtIcerikGosterHavaleYapKullaniciListesi = comboLov(By.id("inboxItemInfoForm:dagitimBilgileriKisiListesiLov:LovText"));
+    BelgenetElement txtIcerikGosterHavaleYapOnaylayacakKisi = comboLov(By.id("inboxItemInfoForm:onaylayacakKisiLov:LovText"));
     ElementsCollection tblEvraklar = $$("[id^='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
 
     @Step("Havale Ettiklerim sayfası aç")
     public HavaleEttiklerimPage openPage() {
         solMenu(SolMenuData.IslemYaptiklarim.HavaleEttiklerim);
+        return this;
+    }
+
+    @Step("{evrakNo} adlı evrakın içerik göster tıklanır")
+    public HavaleEttiklerimPage evrakNoIleEvrakIcerikGoster(String evrakNo) {
+        tblEvraklar.filterBy(Condition.text(evrakNo)).first().$("[id$='detayGosterButton']").click();
+        return this;
+    }
+
+    @Step("{evrakNo} adlı evrak tıklanır")
+    public HavaleEttiklerimPage evrakNoIleEvrakSec(String evrakNo) {
+        tblEvraklar.filterBy(Condition.text(evrakNo)).first().click();
+        return this;
+    }
+
+    @Step("Evrak Geçmişi tıklanır")
+    public HavaleEttiklerimPage evrakGecmisiSec() {
+        $$("[id='mainPreviewForm:evrakOnizlemeTab'] ul li").filterBy(Condition.text("Evrak Geçmişi")).first().click();
+        return this;
+    }
+
+    @Step("")
+    public HavaleEttiklerimPage evrakGecmisiKisiVeMesajKontrol(String mesaj, String kisi) {
+        $$("[id$='hareketGecmisiDataTable_data'] > tr").filterBy(Condition.text(mesaj))
+                .filterBy(Condition.text(kisi)).first().shouldHave(visible);
         return this;
     }
 
@@ -114,6 +142,31 @@ public class HavaleEttiklerimPage extends MainPage {
     @Step("Havale Yap")
     public HavaleEttiklerimPage havaleYap() {
         btnHavaleYap.click();
+        return this;
+    }
+
+    @Step("Kullanıcı Listesi alanını doldur: {kullaniciListesi}")
+    public HavaleEttiklerimPage icerikGosterHavaleYapKullaniciListesiDoldur(String kullaniciListesi) {
+        txtIcerikGosterHavaleYapKullaniciListesi.selectLov(kullaniciListesi);
+        return this;
+    }
+
+    @Step("Onaylayacak Kişi alanında {onaylayacakKisi} seçilir")
+    public HavaleEttiklerimPage icerikGosterHavaleYapOnaylayacakKisiDoldur(String onaylayacakKisi, String birim) {
+        txtIcerikGosterHavaleYapOnaylayacakKisi.openTreePanel().closeTreePanel();
+        txtIcerikGosterHavaleYapOnaylayacakKisi.selectLov(onaylayacakKisi, birim);
+        return this;
+    }
+
+    @Step("Havale Onayına Gönder")
+    public HavaleEttiklerimPage icerikGosterHavaleYapHavaleOnayinaGonder() {
+        $$("[id='inboxItemInfoForm'] button").filterBy(Condition.text("Havale Onayına Gönder")).first().click();
+        return this;
+    }
+
+    @Step("Kullanıcı Listesi alanınında seçileni Gereği ifadesini bilgi için gönder olarak değiştir")
+    public HavaleEttiklerimPage icerikGosterHavaleyapKullaniciListesiGeregiIcınBilgiIcinDegistir() {
+        $("[id='inboxItemInfoForm:dagitimBilgileriKisiListesiLov:LovSecilenTable_data'] select").selectOption("BİLGİ İÇİN GÖNDER");
         return this;
     }
 

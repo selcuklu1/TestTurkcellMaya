@@ -158,8 +158,6 @@ public class TakibeEvrakEklemeTest extends BaseTest {
         // kapattımlarım <<
 
 
-
-
         Allure.addAttachment("Pre Condition evrak oluşturma", "bitti.");
 
 
@@ -339,7 +337,6 @@ public class TakibeEvrakEklemeTest extends BaseTest {
 
 
     }
-
 
 
 }

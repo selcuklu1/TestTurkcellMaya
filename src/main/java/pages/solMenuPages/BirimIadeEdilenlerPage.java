@@ -17,6 +17,7 @@ import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
+
 /****************************************************
  * Proje: Türksat Functional Test Automation
  * Class: "BirimIadeEdilenlerPage" konulu senaryoları içerir
@@ -108,29 +109,28 @@ public class BirimIadeEdilenlerPage extends MainPage {
     }
 
     @Step("Teslim Al ve Havale Et")
-    public BirimIadeEdilenlerPage teslimAlVeHavaleEt(){
+    public BirimIadeEdilenlerPage teslimAlVeHavaleEt() {
         $("[class='ui-button-icon-left ui-icon teslimAlHavale']").click();
         return this;
     }
 
     @Step("Onaylayacak Kişi doldur: {onaylanacakKisi} - {birim}")
-    public BirimIadeEdilenlerPage onaylanacakKisiDoldur(String onaylanacakKisi,String birim){
-        txtOnaylanacakKisi.selectLov(onaylanacakKisi,birim);
+    public BirimIadeEdilenlerPage onaylanacakKisiDoldur(String onaylanacakKisi, String birim) {
+        txtOnaylanacakKisi.selectLov(onaylanacakKisi, birim);
         return this;
     }
-    
+
     @Step("")
-    public BirimIadeEdilenlerPage havaleOnayinaGonder(){
+    public BirimIadeEdilenlerPage havaleOnayinaGonder() {
         $$("[id='mainPreviewForm:evrakOnizlemeTab'] button").filterBy(Condition.text("Havale Onayına Gönder")).first().click();
         return this;
     }
 
     @Step("Önizleme ekranından Teslim Al butonuna basılır ve Evrakı teslim almak istediğinize emin misiniz? uyarısı Evet ile onaylanır")
-    public BirimIadeEdilenlerPage evrakOnizlemeTeslimAl()
-    {
+    public BirimIadeEdilenlerPage evrakOnizlemeTeslimAl() {
         onizlemeTeslimAl.click();
-         $(By.id("teslimAlEvetButton")).click();
-         return this;
+        $(By.id("teslimAlEvetButton")).click();
+        return this;
     }
 
     @Step("Evrak Sec Toplu ve Teslim Al")
@@ -145,7 +145,7 @@ public class BirimIadeEdilenlerPage extends MainPage {
     }
 
     @Step("Toplu Evrak Sec 3 tane ve Teslim Al Havale Et")
-    public BirimIadeEdilenlerPage evrakSecToplu2(String konu1, String konu2,String konu3, boolean secim) {
+    public BirimIadeEdilenlerPage evrakSecToplu2(String konu1, String konu2, String konu3, boolean secim) {
         tblEvraklar.filterBy(text(konu1)).get(0).$$("div[class^='ui-chkbox-box']").first().click();
         tblEvraklar.filterBy(text(konu2)).get(0).$$("div[class^='ui-chkbox-box']").first().click();
         tblEvraklar.filterBy(text(konu3)).get(0).$$("div[class^='ui-chkbox-box']").first().click();
@@ -167,7 +167,15 @@ public class BirimIadeEdilenlerPage extends MainPage {
     public BirimIadeEdilenlerPage evrakNoGelmedigiGorme(String konu) {
         boolean durum = tableEvraklar
                 .filterBy(text(konu)).size() > 0;
-        Assert.assertEquals(durum, false,"Evrak Bulunamamıştır");
+        Assert.assertEquals(durum, false, "Evrak Bulunamamıştır");
+        return this;
+    }
+
+    @Step("Birime Iade Edilenler sayfasında evrakın listede geldiği görünür")
+    public BirimIadeEdilenlerPage evrakNoGeldigiGorme(String konu) {
+        boolean durum = tableEvraklar
+                .filterBy(text(konu)).size() > 0;
+        Assert.assertEquals(durum, true, "Evrak Bulunamamıştır");
         return this;
     }
 
@@ -236,7 +244,7 @@ public class BirimIadeEdilenlerPage extends MainPage {
 
     @Step("Evrak Onizleme Kontrolu")
     public BirimIadeEdilenlerPage evrakOnizlemeKontrol() {
-        if(evrakOnizlemeKontrol.isDisplayed())
+        if (evrakOnizlemeKontrol.isDisplayed())
             Allure.addAttachment("Evrak Önizleme Ekranı", "açılmıştır");
         return this;
     }
@@ -254,8 +262,8 @@ public class BirimIadeEdilenlerPage extends MainPage {
     }
 
     @Step("Havale İşlemleri Kişi alanında \"{kisi}\" seç")
-    public BirimIadeEdilenlerPage havaleIslemleriKisiDetails(String kisi,String details) {
-        txtHavaleIslemleriKisi.selectLov(kisi,details);
+    public BirimIadeEdilenlerPage havaleIslemleriKisiDetails(String kisi, String details) {
+        txtHavaleIslemleriKisi.selectLov(kisi, details);
         return this;
     }
 
@@ -274,22 +282,22 @@ public class BirimIadeEdilenlerPage extends MainPage {
     @Step("Havale İşlemleri Alanındaki Kontroller")
     public BirimIadeEdilenlerPage havaleAlanKontrolleri() {
         String text = "";
-        if(onaylayacakKisi.isDisplayed()) {
+        if (onaylayacakKisi.isDisplayed()) {
             text += "Onaylayacak Kisi,";
         }
-        if(birimKontrol.isDisplayed()) {
+        if (birimKontrol.isDisplayed()) {
             text += "Birim Kontrol,";
         }
-        if(kisiKontrol.isDisplayed()) {
+        if (kisiKontrol.isDisplayed()) {
             text += "Kisi Kontrol, ";
         }
-        if(kullanıcıListeKontrol.isDisplayed()) {
+        if (kullanıcıListeKontrol.isDisplayed()) {
             text += "Kullanıcı Liste,";
         }
-        if(aciklamaKontrol.isDisplayed()) {
+        if (aciklamaKontrol.isDisplayed()) {
             text += "Aciklama,";
         }
-        if(dosyaEkleKontrol2.isDisplayed()) {
+        if (dosyaEkleKontrol2.isDisplayed()) {
             text += "Dosya Ekle";
         }
 //        if(islemSureKontrol.isDisplayed()) {
@@ -305,7 +313,7 @@ public class BirimIadeEdilenlerPage extends MainPage {
 //        havaleIslemleriBirim.type(birim).getDetailItems()
 //                .filterBy(Condition.exactText(details)).first().click();
 //        havaleIslemleriBirim.closeTreePanel();
-        havaleIslemleriBirim.selectLov(birim,details);
+        havaleIslemleriBirim.selectLov(birim, details);
         return this;
     }
 

@@ -637,30 +637,34 @@ public class VekaletIslemleriTest extends BaseTest {
                 .dagitimBilgileriOnaylayacakKisiAlaniKontrolü(nameVA, kullaniciTitle, nameVV);
 
     }
+
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = false
-            ,dependsOnMethods = {"TS2208"}
+            , dependsOnMethods = {"TS2208"}
             , description = "TS2210 : Kullanıcı yönetimi ekranında vekalet kontrolü")
-    public void TS2210() throws InterruptedException{
+    public void TS2210() throws InterruptedException {
         login(mbozdemir);
+        String gorevliOlduguBirim = "Vekalet";
+
         kullaniciYonetimiPage
                 .openPage()
                 .kullaniciAdiDoldur("usernameva")
                 .ara()
                 .kullaniciListesiTabloKontrolu()
                 .kullaniciListesiGuncelleButonuTikla()
-                .gorevliOlduguBirimlerKontol("Vekalet")
-                .gorevliOlduguBirimlerGuncelle("Vekalet")
+                .gorevliOlduguBirimlerKontol(gorevliOlduguBirim)
+                .gorevliOlduguBirimlerGuncelle(gorevliOlduguBirim)
                 .VekaletBirimiKullaniciBirimAtamaEkranKontrolu();
 
     }
+
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = false
-            ,dependsOnMethods = {"TS2208"}
-            ,description = "TS2204 : Vekalet Alan Kullanıcın Evrak Kapatma Onayında Seçilmesi")
-    public void TS2204() throws InterruptedException{
+            , dependsOnMethods = {"TS2208"}
+            , description = "TS2204 : Vekalet Alan Kullanıcın Evrak Kapatma Onayında Seçilmesi")
+    public void TS2204() throws InterruptedException {
 
-login(mbozdemir);
+        login(mbozdemir);
         String kullaniciTitle = " [Ağ (Network) Uzman Yardımcısı]";
         String title = "Ağ (Network) Uzman Yardımcısı";
         gelenEvraklarPage
@@ -671,10 +675,10 @@ login(mbozdemir);
                 .evrakOnizlemeButonKontrolu("Evrak Kapat")
                 .evrakOnizlemeButonTikla("Evrak Kapat")
                 .evrakKapamaOnayAkisiTikla()
-                .evrakKapamaKullaniciSecWithTitle(nameVV,kullaniciTitle)
+                .evrakKapamaKullaniciSecWithTitle(nameVV, kullaniciTitle)
                 .popUpKullaniciSecimKontrulu()
                 .popUpKullaniciSecimi(nameVA)
-                .evrakKapamaKullanicilarAlaniKontrolü(nameVA, title,nameVV);
-
+                .evrakKapamaKullanicilarAlaniKontrolü(nameVA, title, nameVV);
     }
+
 }

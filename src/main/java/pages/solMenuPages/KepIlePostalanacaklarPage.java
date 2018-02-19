@@ -49,19 +49,19 @@ public class KepIlePostalanacaklarPage extends MainPage {
     }
 
     @Step("{alan} - {kisi} : {gidisSekli} gönderici ve alıcı kep adreslerinin geldiği görülür.")
-    public KepIlePostalanacaklarPage postalanacakYerlerAlanGoreSecimGeldigiGorme(String alan,String kisi, String gidisSekli){
+    public KepIlePostalanacaklarPage postalanacakYerlerAlanGoreSecimGeldigiGorme(String alan, String kisi, String gidisSekli) {
         boolean durum = $$("[id='mainPreviewForm:dataTableId_data'] > tr[role='row']").filterBy(Condition.text(kisi))
-                .filterBy(Condition.text(gidisSekli)).size()==1;
-        Assert.assertEquals(durum,true);
+                .filterBy(Condition.text(gidisSekli)).size() == 1;
+        Assert.assertEquals(durum, true);
         takeScreenshot();
         return this;
     }
 
     @Step("{alan} - {kisi} : {gidisSekli} gönderici ve alıcı kep adreslerinin listelenmediği görülür.")
-    public KepIlePostalanacaklarPage postalanacakYerlerAlanGoreSecimListelenmedigiGorme(String alan,String kisi, String gidisSekli){
+    public KepIlePostalanacaklarPage postalanacakYerlerAlanGoreSecimListelenmedigiGorme(String alan, String kisi, String gidisSekli) {
         boolean durum = $$("[id='mainPreviewForm:dataTableId_data'] > tr[role='row']").filterBy(Condition.text(kisi))
-                .filterBy(Condition.text(gidisSekli)).size()==0;
-        Assert.assertEquals(durum,true);
+                .filterBy(Condition.text(gidisSekli)).size() == 0;
+        Assert.assertEquals(durum, true);
         takeScreenshot();
         return this;
     }

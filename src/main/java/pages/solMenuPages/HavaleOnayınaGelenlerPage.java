@@ -3,6 +3,7 @@ package pages.solMenuPages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
@@ -28,7 +29,9 @@ public class HavaleOnayınaGelenlerPage extends MainPage {
     SelenideElement btnHavaleOnayiOnayla = $(By.id("mainPreviewForm:onaylaButton_id"));
     SelenideElement icerikHavaleOnay = $("button[id='inboxItemInfoForm:dialogTabMenuRight:uiRepeat:4:cmdbutton']");
     SelenideElement notAlanıDoldur = $(By.id("mainPreviewForm:notTextArea_id"));
+    SelenideElement icerikNotAlanıDoldur = $(By.id("inboxItemInfoForm:notTextArea_id"));
     SelenideElement onayıReddet = $(By.id("mainPreviewForm:reddetButton_id"));
+    SelenideElement icerikOnayıReddet = $(By.id("inboxItemInfoForm:reddetButton_id"));
     SelenideElement onizlemeOnayla = $(By.id("mainPreviewForm:onaylaButton_id"));
     BelgenetElement txtHavaleOnayiBirim = comboLov(By.id("mainPreviewForm:dagitimBilgileriBirimLov_id:LovText"));
     BelgenetElement txtHavaleOnayiKisi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKullaniciLov_id:LovText"));
@@ -37,6 +40,7 @@ public class HavaleOnayınaGelenlerPage extends MainPage {
 //      SelenideElement onayıReddetEvet = $("button[id='inboxItemInfoForm:reddetEvetButton_id']");
 //      SelenideElement btnHavaleOnayReddet = $(By.id("inboxItemInfoForm:reddetEvetButton_id"));
     ElementsCollection btnHavaleOnayReddet = $$("[id$='mainPreviewForm:reddetEvetButton_id']");
+    ElementsCollection btnIcerikHavaleOnayReddet = $$("[id$='inboxItemInfoForm:reddetEvetButton_id']");
     ElementsCollection btnHavaleOnayEvet = $$("[id$='mainPreviewForm:evetButton_id']");
     ElementsCollection btnOnayla = $$("[id^='mainInboxForm:inboxDataTable:j_idt'] > [class$='document-accept']");
 
@@ -44,6 +48,12 @@ public class HavaleOnayınaGelenlerPage extends MainPage {
 
     SelenideElement dagitimOnayla = $(By.id("inboxItemInfoForm:onaylaButton_id"));
     ElementsCollection dagitimOnaylaEvet = $$("[id='inboxItemInfoForm:evetButton_id']");
+
+    SelenideElement birimSeç = $("select[id='mainPreviewForm:dagitimBilgileriBirimLov_id:LovSecilenTable:0:selectOneMenu']");
+    SelenideElement txtEklenenKisi = $("div[id^='mainPreviewForm:dagitimBilgileriKullaniciLov_id:LovSecilenTable:0:j_idt']");
+    SelenideElement txtEklenenBirim = $("div[id^='mainPreviewForm:dagitimBilgileriBirimLov_id:LovSecilenTable:0:j_idt']");
+    SelenideElement txtEklenenBirimOpsiyon = $("select[id='mainPreviewForm:dagitimBilgileriBirimLov_id:LovSecilenTable:0:selectOneMenu']");
+
 
     @Step("Birim Havale Onayına Gelenler sayfası aç")
     public HavaleOnayınaGelenlerPage openPage() {
@@ -60,32 +70,56 @@ public class HavaleOnayınaGelenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Evrak no ile evrağın gelmediği görülür: \"{evrakNo}\" ")
+    public HavaleOnayınaGelenlerPage evrakNoIleEvrakGelmedigiGorme(String evrakNo) {
+        boolean durum = tblEvraklar
+                .filterBy(Condition.text(evrakNo)).size() > 0;
+        Assert.assertEquals(durum, false);
+        return this;
+    }
+
     @Step("Havale Onayı")
-    public HavaleOnayınaGelenlerPage havaleOnayi(){
+    public HavaleOnayınaGelenlerPage havaleOnayi() {
         $("[class='ui-button-icon-left ui-icon havaleOnay']").click();
         return this;
     }
 
     @Step("Birim alanını doldur: {birim}")
-    public HavaleOnayınaGelenlerPage havaleOnayiBirimDoldur(String birim){
+    public HavaleOnayınaGelenlerPage havaleOnayiBirimDoldur(String birim) {
         txtHavaleOnayiBirim.selectLov(birim);
         return this;
     }
 
     @Step("Birim alanında seçileni Bilgi için gönder")
-    public HavaleOnayınaGelenlerPage havaleOnayinaBirimGeregiIcinBilgiIcinSec(){
+    public HavaleOnayınaGelenlerPage havaleOnayinaBirimGeregiIcinBilgiIcinSec() {
         $(By.id("mainPreviewForm:dagitimBilgileriBirimLov_id:LovSecilenTable:0:selectOneMenu")).selectOption("BİLGİ İÇİN GÖNDER");
         return this;
     }
 
+    @Step("Dağıtım Bilgileri Birim alanında \"{opsiyon}\" seçilir")
+    public HavaleOnayınaGelenlerPage dagitimBilgileriBirimOpsiyon(String opsiyon) {
+        String gerek = "GEREĞİ İÇİN GÖNDER";
+        String bilgi = "BİLGİ İÇİN GÖNDER";
+        String koordinasyon = "KOORDİNASYON İÇİN GÖNDER";
+
+        if (opsiyon.equals(gerek))
+            birimSeç.selectOptionByValue("G");
+        else if (opsiyon.equals(bilgi))
+            birimSeç.selectOptionByValue("B");
+        else if (opsiyon.equals(koordinasyon))
+            birimSeç.selectOptionByValue("K");
+
+        return this;
+    }
+
     @Step("Kişi alanını doldur: {kisi}")
-    public HavaleOnayınaGelenlerPage havaleOnayiKisiDoldur(String kisi,String birim){
-        txtHavaleOnayiKisi.selectLov(kisi,birim);
+    public HavaleOnayınaGelenlerPage havaleOnayiKisiDoldur(String kisi, String birim) {
+        txtHavaleOnayiKisi.selectLov(kisi, birim);
         return this;
     }
 
     @Step("Evrak Sec Checkbox ile")
-    public HavaleOnayınaGelenlerPage evrakSecCheckBox(String konu1,boolean secim) {
+    public HavaleOnayınaGelenlerPage evrakSecCheckBox(String konu1, boolean secim) {
         tblEvraklar.filterBy(text(konu1)).get(0).$$("div[class^='ui-chkbox-box']").first().click();
 
         btnOnayla.get(0).click();
@@ -105,16 +139,44 @@ public class HavaleOnayınaGelenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Havale Onay İkon Kontrolu tıkla")
+    public HavaleOnayınaGelenlerPage havaleOnayIkonKontrolu() {
+        Assert.assertEquals(btnHavaleOnay.isDisplayed(), true, "Havale Onay Ikon Kontrolu");
+        Allure.addAttachment("Havale Onay Ikon Kontrolu", "");
+        return this;
+    }
+
+    @Step("Havale İşlemleri Kişi alanında eklenen \"{kisi}\" kontrolü")
+    public HavaleOnayınaGelenlerPage eklenenKisiKontrolu(String kisi) {
+        Assert.assertEquals(txtEklenenKisi.isDisplayed(), true, "Kisi Eklendi");
+        Allure.addAttachment("Kisi Eklendi:", kisi);
+        return this;
+    }
+
+    @Step("Havale İşlemleri Kişi alanında eklenen \"{birim}\" kontrolü")
+    public HavaleOnayınaGelenlerPage eklenenBirimKontrolu(String birim) {
+        Assert.assertEquals(txtEklenenBirim.isDisplayed(), true, "Birim Eklendi");
+        Allure.addAttachment("Birim Eklendi:", birim);
+        return this;
+    }
+
+    @Step("Havale İşlemleri Kişi alanında eklenen \"{opsiyon}\" kontrolü")
+    public HavaleOnayınaGelenlerPage eklenenBirimOpsiyonKontrolu(String opsiyon) {
+        Assert.assertEquals(txtEklenenBirimOpsiyon.getSelectedOption().text().equals(opsiyon), true, "Opsiyon Seçildi");
+        Allure.addAttachment("Opsiyon Seçildi:", opsiyon);
+        return this;
+    }
+
     @Step("Havale butonunu tıkla")
     public HavaleOnayınaGelenlerPage havaleOnayiOnayla() {
         btnHavaleOnayiOnayla.pressEnter();
         return this;
     }
-    
+
     @Step("Havaleyi onaylamak üzeresiniz. Kabul ediyor musunuz? Evet / Hayır uyarısını geldiği görülür.")
-    public HavaleOnayınaGelenlerPage havaleyiOnaylamakUzersinizUyariGeldigiGorme(){
-        boolean durum = $$(By.id("mainPreviewForm:evetButton_id")).size()>0;
-        Assert.assertEquals(durum,true);
+    public HavaleOnayınaGelenlerPage havaleyiOnaylamakUzersinizUyariGeldigiGorme() {
+        boolean durum = $$(By.id("mainPreviewForm:evetButton_id")).size() > 0;
+        Assert.assertEquals(durum, true);
         takeScreenshot();
         return this;
     }
@@ -123,7 +185,7 @@ public class HavaleOnayınaGelenlerPage extends MainPage {
     @Step("Evet tıklanır")
     public HavaleOnayınaGelenlerPage havaleyiOnaylamakUzeresinizEvet() {
         $(By.id("mainPreviewForm:evetButton_id")).pressEnter();
-    return this;
+        return this;
     }
 
     @Step("Evrak İçerikten Havale butonunu tıkla")
@@ -138,9 +200,21 @@ public class HavaleOnayınaGelenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Not Alanını Doldur")
+    public HavaleOnayınaGelenlerPage icerikNotAlanınıDoldur(String not) {
+        icerikNotAlanıDoldur.setValue(not);
+        return this;
+    }
+
     @Step("Havale Onay Reddet")
     public HavaleOnayınaGelenlerPage onayıReddet() {
         onayıReddet.click();
+        return this;
+    }
+
+    @Step("Havale Onay Reddet")
+    public HavaleOnayınaGelenlerPage icerikOnayıReddet() {
+        icerikOnayıReddet.click();
         return this;
     }
 
@@ -155,6 +229,14 @@ public class HavaleOnayınaGelenlerPage extends MainPage {
     @Step("Havale Onay Reddet Evet")
     public HavaleOnayınaGelenlerPage onayıReddetEvet() {
         btnHavaleOnayReddet.last().click();
+        return this;
+    }
+
+    // TODO: Her dönen butonu click yapma
+    // 2 tane Evet buttonu dönüyor ve aralarında fark yok
+    @Step("Havale Onay Reddet Evet")
+    public HavaleOnayınaGelenlerPage icerikOnayıReddetEvet() {
+        btnIcerikHavaleOnayReddet.last().click();
         return this;
     }
 

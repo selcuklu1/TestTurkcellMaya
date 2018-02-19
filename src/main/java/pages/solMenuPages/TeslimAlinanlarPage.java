@@ -29,6 +29,8 @@ public class TeslimAlinanlarPage extends MainPage {
     ElementsCollection tblEvraklar = $$("[id^='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
     BelgenetElement txtHavaleYapKisi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKullaniciLov:LovText"));
     BelgenetElement txtHavaleYapKullaniciListesi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKisiListesiLov:LovText"));
+    BelgenetElement txtHavaleYapOnaylanacakKisi = comboLov(By.id("mainPreviewForm:onaylayacakKisiLov:LovText"));
+    BelgenetElement txtHavaleYapBirim = comboLov(By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovText"));
     ElementsCollection tblEvrakGecmisi = $$("[id$='hareketGecmisiDataTable_data'] > tr[role='row']");
 
     @Step("Teslim Alınanlar sayfası aç")
@@ -38,11 +40,11 @@ public class TeslimAlinanlarPage extends MainPage {
     }
 
     @Step("Evrakın listelendiği görülür.")
-    public TeslimAlinanlarPage evrakGeldigiGorme(String konu, String yer, String tarih){
+    public TeslimAlinanlarPage evrakGeldigiGorme(String konu, String yer, String tarih) {
         boolean durum = tblEvraklar.filterBy(Condition.text(konu))
                 .filterBy(Condition.text(yer))
-                .filterBy(Condition.text(tarih)).size() ==1;
-        Assert.assertEquals(durum,true);
+                .filterBy(Condition.text(tarih)).size() == 1;
+        Assert.assertEquals(durum, true);
         takeScreenshot();
         return this;
     }
@@ -103,6 +105,16 @@ public class TeslimAlinanlarPage extends MainPage {
     @Step("Kisi doldur")
     public TeslimAlinanlarPage havaleYapKisiDoldur(String kisi) {
         txtHavaleYapKisi.selectLov(kisi);
+        txtHavaleYapKisi.selectLov(kisi);
+        txtHavaleYapKisi.selectLov(kisi);
+        return this;
+    }
+
+    @Step("Kisi doldur")
+    public TeslimAlinanlarPage havaleYapKisiDoldur(String kisi, String birim) {
+        txtHavaleYapKisi.sendKeys(kisi);
+        txtHavaleYapKisi.pressEnter();
+        $$("[id='mainPreviewForm:dagitimBilgileriKullaniciLov:lovTree'] li").filterBy(Condition.text(kisi)).filterBy(Condition.text(birim)).first().doubleClick();
         return this;
     }
 
@@ -122,6 +134,58 @@ public class TeslimAlinanlarPage extends MainPage {
     @Step("Kullanıcı listesi seçmeye dene")
     public TeslimAlinanlarPage havaleYapKullaniciListesiSecmeyeDene(String kullaniciListesi) {
         txtHavaleYapKullaniciListesi.type(kullaniciListesi).getTitleItems().filterBy(text(kullaniciListesi)).first().click();
+        return this;
+    }
+
+    @Step("Onaylanacak Kişi seçilir {onaylanacakKisi} | {birim}")
+    public TeslimAlinanlarPage havaleYapOnaylanacakKisiDoldur(String onaylanacakKisi, String birim) {
+        txtHavaleYapOnaylanacakKisi.selectLov(onaylanacakKisi, birim);
+        return this;
+    }
+
+    @Step("Kişi listesinde seçilenin üzerindeki kalem ikonunu tıklanır")
+    public TeslimAlinanlarPage kisiListesiSecilenGuncelle() {
+        $("[id='mainPreviewForm:dagitimBilgileriKisiListesiLov:LovSecilenTable_data'] [class='ui-button-icon-left ui-icon update-icon']").click();
+        return this;
+    }
+
+    @Step("Kullanıcı grup detay pop upının açıldığı, kullanıcı listesinde kayıtlı kullanıcıların listelendiği ve her kayıt yanındaki checkboxın işaretli olduğu görülür.")
+    public TeslimAlinanlarPage kisiListesiSecilenGrupDetaySeciliGeldigiGorme() {
+        boolean durum = $$("[id='mainPreviewForm:kullaniciGrubuDetay_data'] [class='ui-chkbox-box ui-widget ui-corner-all ui-state-default ui-state-active']").size() > 0;
+        Assert.assertEquals(durum, true);
+        return this;
+    }
+
+    @Step("Kullanıcılardan birinin işaretini kaldır")
+    public TeslimAlinanlarPage grupDetayKullaniciIsaretKaldir() {
+        $$("[id='mainPreviewForm:kullaniciGrubuDetay_data'] [class='ui-chkbox-box ui-widget ui-corner-all ui-state-default ui-state-active']").last().click();
+        return this;
+    }
+
+    @Step("Kullan butonunu tıkla")
+    public TeslimAlinanlarPage kullaniciGrupDetayKullan() {
+        $$("[id='mainPreviewForm:kullaniciGrubuDetayViewDialog'] button").filterBy(Condition.text("Kullan")).first().click();
+        return this;
+    }
+
+    @Step("Birim alanında {birim} adlı birim seçilir")
+    public TeslimAlinanlarPage havaleYapBirimDoldur(String birim) {
+        txtHavaleYapBirim.openTreePanel().closeTreePanel();
+        txtHavaleYapBirim.selectLov(birim);
+        //txtHavaleYapBirim.type(birim).getTitleItems().filterBy(text(birim)).first().click();
+        return this;
+    }
+
+
+    @Step("Gönder tıklanır")
+    public TeslimAlinanlarPage havaleYapGonder() {
+        $$("[id='mainPreviewForm:evrakOnizlemeTab'] button").filterBy(Condition.text("Gönder")).first().click();
+        return this;
+    }
+
+    @Step("Havale Onayına Gönder tıklanır")
+    public TeslimAlinanlarPage havaleYaphavaleOnayinaGonder() {
+        $$("[id='mainPreviewForm:evrakOnizlemeTab'] button").filterBy(Condition.text("Havale Onayına Gönder")).first().click();
         return this;
     }
 
@@ -145,7 +209,7 @@ public class TeslimAlinanlarPage extends MainPage {
         int dosyaAdedi = tblEvraklar
                 .filterBy(Condition.text(evrakNo))
                 .size();
-        Allure.addAttachment(evrakNo,Integer.valueOf(dosyaAdedi).toString());
+        Allure.addAttachment(evrakNo, Integer.valueOf(dosyaAdedi).toString());
         return this;
     }
 
@@ -164,7 +228,7 @@ public class TeslimAlinanlarPage extends MainPage {
     }
 
     @Step("Evrak Geçmişi Kontrol: \"{teslimAlinan}\" \"{islemSureci}\" \"{tarih}\"")
-    public TeslimAlinanlarPage evrakGecmisi(String teslimAlinan, String islemSureci,String tarih) {
+    public TeslimAlinanlarPage evrakGecmisi(String teslimAlinan, String islemSureci, String tarih) {
         boolean durum = tblEvrakGecmisi.filterBy(Condition.text(islemSureci)).filter(Condition.text(teslimAlinan))
                 .filterBy(Condition.text(tarih)).size() == 1;
         Assert.assertEquals(durum, true);

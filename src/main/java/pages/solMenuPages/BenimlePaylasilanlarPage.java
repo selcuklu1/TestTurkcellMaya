@@ -215,7 +215,7 @@ public class BenimlePaylasilanlarPage extends MainPage {
 
     @Step("{konu} konulu Evrak Listede olmalı mı? : {shouldBeVisible}")
     public BenimlePaylasilanlarPage evrakKontrol(String paylasan, String paylasilmaTarihi, String konu, boolean shouldBeVisible) {
-        if(shouldBeVisible == true) {
+        if (shouldBeVisible == true) {
 
             tableBenimlePaylasilanlar
                     .filterBy(Condition.text("Paylaşan: " + paylasan))

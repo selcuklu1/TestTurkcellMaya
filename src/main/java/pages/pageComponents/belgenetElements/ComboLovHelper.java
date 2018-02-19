@@ -109,7 +109,7 @@ public class ComboLovHelper extends BaseLibrary {
     BelgenetElement clearLastSelectedItem() {
         ElementsCollection items = $$(lovSelectedItems).filterBy(visible);
         int size = items.size();
-        if (size == 0){
+        if (size == 0) {
             Allure.addAttachment("No item to clear", String.valueOf(size));
             return (BelgenetElement) element;
         }
@@ -428,7 +428,9 @@ public class ComboLovHelper extends BaseLibrary {
     @Step("Close tree panel")
     public void closeTreePanel() {
         if ($$(lovTreePanelKapat).last().is(visible)) {
-            $$(lovTreePanelKapat).last().click();
+            //clickJs($$(lovTreePanelKapat).last());
+            //$$(lovTreePanelKapat).last().click();
+            $$(lovTreePanelKapat).last().pressEnter();
         }
     }
     //endregion
@@ -508,8 +510,8 @@ public class ComboLovHelper extends BaseLibrary {
         else
             $(treeButton).click();
 
-        collection = $$(lovTree).last().shouldBe(visible).$$(selectableItemsLocator);
-        collection.shouldHave(sizeGreaterThan(0)).last().shouldBe(visible);
+        collection = $$(lovTree).shouldHave(sizeGreaterThan(0)).filterBy(visible).last().$$(selectableItemsLocator);
+        //collection.shouldHave(sizeGreaterThan(0)).last().shouldBe(visible);
         Allure.addAttachment("Selectable items " + collection.size(), collection.texts().toString());
         Allure.addAttachment("Filter texts " + text.length, Arrays.toString(text));
 

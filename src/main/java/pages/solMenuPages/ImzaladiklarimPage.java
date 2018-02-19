@@ -65,6 +65,10 @@ public class ImzaladiklarimPage extends MainPage {
     ElementsCollection tblOnIzlemeEkler = $$("[id*='ekListesiOnizlemeDataTable'] > tr[role='row']");
     ElementsCollection tblOnIzlemeIlgiBilgileri = $$("[id*='ilgiListesiDataTable_data'] > tr[role='row']");
     ElementsCollection tblOnIzlemeIlisikBilgileri = $$("[id*='ilisikListesiDataTable_data'] > tr[role='row']");
+    BelgenetElement txtKullaniciListesi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKisiListesiLov:LovText"));
+    ElementsCollection tblTakipListesi = $$("tbody[id='evrakTakibimeEkleDialogForm:takipListLov:LovSecilenTable_data'] > tr[role='row']");
+    SelenideElement btnTakipListesiKapat = $("div[id='evrakTakibimeEkleDialogForm:takipDialog'] span[class*='ui-icon-closethick']");
+    BelgenetElement txtTakipListesiKullanicilar = comboLov(By.id("evrakTakibimeEkleDialogForm:takipListLov:LovText"));
 
     @Step("Imzaladiklarim Sayfasini aç")
     public ImzaladiklarimPage openPage() {
@@ -384,10 +388,6 @@ public class ImzaladiklarimPage extends MainPage {
         return this;
     }
 
-    BelgenetElement txtKullaniciListesi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKisiListesiLov:LovText"));
-    ElementsCollection tblTakipListesi = $$("tbody[id='evrakTakibimeEkleDialogForm:takipListLov:LovSecilenTable_data'] > tr[role='row']");
-    SelenideElement btnTakipListesiKapat = $("div[id='evrakTakibimeEkleDialogForm:takipDialog'] span[class*='ui-icon-closethick']");
-
     @Step("{konu} konulu evrak üzerinde Takip Listesi butonuna tıkla.")
     public ImzaladiklarimPage takipListesiAc(String konu) {
         tblImzaladiklarimEvraklar
@@ -400,7 +400,7 @@ public class ImzaladiklarimPage extends MainPage {
     }
 
     @Step("Takip Listesinde {adiSoyadi} kullanıcısının ve {birim} birim bilgisinin olduğu görülür.")
-    public ImzaladiklarimPage takipListesiKontrol(String adiSoyadi, String birim){
+    public ImzaladiklarimPage takipListesiKontrol(String adiSoyadi, String birim) {
         tblTakipListesi.filterBy(text(adiSoyadi)).filterBy(text(birim)).first().shouldBe(visible);
         return this;
     }
@@ -412,13 +412,12 @@ public class ImzaladiklarimPage extends MainPage {
     }
 
     @Step("Takip Listesi ekranında bulunan (X) \"Sayfayı Kapatma\" butonuna basılır. Takip listesi ekranın kapatıldığı görülür.")
-    public ImzaladiklarimPage takipListesiKapat(){
+    public ImzaladiklarimPage takipListesiKapat() {
         btnTakipListesiKapat.click();
         txtKullaniciListesi.shouldNotBe(visible);
         return this;
     }
 
-    BelgenetElement txtTakipListesiKullanicilar = comboLov(By.id("evrakTakibimeEkleDialogForm:takipListLov:LovText"));
     @Step("Takip listesinde {kullanicilar} kullanıcısını seç")
     public ImzaladiklarimPage takipListesiKullanicilarDoldur(String kullanicilar) {
         txtTakipListesiKullanicilar.type(kullanicilar).getTitleItems().filterBy(Condition.text(kullanicilar)).first().click();

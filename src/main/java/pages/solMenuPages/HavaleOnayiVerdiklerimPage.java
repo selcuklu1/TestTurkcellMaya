@@ -16,7 +16,7 @@ import static com.codeborne.selenide.Selenide.$$;
  * Yazan: Serdar Kayis
  ****************************************************/
 
-public class HavaleOnayiVerdiklerimPage extends MainPage{
+public class HavaleOnayiVerdiklerimPage extends MainPage {
     ElementsCollection tblEvraklar = $$("[id^='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
     ElementsCollection tblEvrakGecmisi = $$("[id$='hareketGecmisiDataTable_data'] > tr[role='row']");
 
@@ -35,8 +35,23 @@ public class HavaleOnayiVerdiklerimPage extends MainPage{
         return this;
     }
 
+    @Step("Evrak Geçmişi tıklanır")
+    public HavaleOnayiVerdiklerimPage evrakSecEvrakGecmisiSec() {
+        $$("[id='mainPreviewForm:evrakOnizlemeTab'] ul li").filterBy(Condition.text("Evrak Geçmişi")).first().click();
+        return this;
+    }
+
+    @Step("Evrak geçmişinde {geregiKisi} evrak havale edildi (gereği için) - {bilgiKisiler} evrak havale edildi (bilgi için) kayıtlarının geldiği görülür")
+    public HavaleOnayiVerdiklerimPage evrakGecimisiGeregiVeBilgiGeldigiGorme(String geregi, String geregiKisi, String bilgi, String bilgiKisiler) {
+        boolean durum = $$("[id$='hareketGecmisiDataTable']").filterBy(Condition.text(geregi))
+                .filterBy(Condition.text(bilgi)).size() > 0;
+        Assert.assertEquals(durum, true, "Evrak geçmişinde gereği ve bilgi görülmemiştir.");
+        takeScreenshot();
+        return this;
+    }
+
     @Step("Evrak geldiği görünür.")
-    public HavaleOnayiVerdiklerimPage evrakGeldigiGorme(String evrakNo){
+    public HavaleOnayiVerdiklerimPage evrakGeldigiGorme(String evrakNo) {
         tblEvraklar.filterBy(Condition.text(evrakNo)).shouldHaveSize(1);
         return this;
     }

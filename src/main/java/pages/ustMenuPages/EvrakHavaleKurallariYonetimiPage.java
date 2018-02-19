@@ -103,11 +103,11 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
         clickJs(btnBirimEkleEkle);
         return this;
     }
-    
+
     @Step("Seçilen birim ve alt birimlerin kurala birim olarak atandığı görülür.")
-    public EvrakHavaleKurallariYonetimiPage secilenBirimVeAltBirimlerinAtandigiGorulur(String kullanici){
-        boolean durum = $$("[id='havaleKuralYonetimiEditorForm:kullaniciBirimDataTable']").filterBy(Condition.text(kullanici)).size()==1;
-        Assert.assertEquals(durum,true);
+    public EvrakHavaleKurallariYonetimiPage secilenBirimVeAltBirimlerinAtandigiGorulur(String kullanici) {
+        boolean durum = $$("[id='havaleKuralYonetimiEditorForm:kullaniciBirimDataTable']").filterBy(Condition.text(kullanici)).size() == 1;
+        Assert.assertEquals(durum, true);
         return this;
     }
 
@@ -118,10 +118,10 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
     }
 
     @Step("Kullanıcı / Birim ilişkisini silmek istediğinizden emin misiniz?  Uyarı verdiği görülür.")
-    public EvrakHavaleKurallariYonetimiPage birimIliskisiniSilmekIstemisinizUyariGeldigiGorme(){
-    boolean durum = $$("[id='baseConfirmationDialog:dialog']").size()==1;
-    Assert.assertEquals(durum,true);
-    takeScreenshot();
+    public EvrakHavaleKurallariYonetimiPage birimIliskisiniSilmekIstemisinizUyariGeldigiGorme() {
+        boolean durum = $$("[id='baseConfirmationDialog:dialog']").size() == 1;
+        Assert.assertEquals(durum, true);
+        takeScreenshot();
         return this;
     }
 
@@ -187,7 +187,7 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
     }
 
     @Step("Evrak türü {turu} seçilir")
-    public EvrakHavaleKurallariYonetimiPage evrakTuruSec(int i,String turu) {
+    public EvrakHavaleKurallariYonetimiPage evrakTuruSec(int i, String turu) {
         cmbEvrakTuru.get(0).click();
         cmbEvrakTuruGenelge.get(i).click();
         cmbEvrakTuru.get(0).click();
@@ -202,9 +202,10 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
 
     @Step("Evrak dili Türkçe seçilir")
     public EvrakHavaleKurallariYonetimiPage evrakDiliTurkceSec() {
-       boolean durum =$$(By.id("havaleKuralYonetimiEditorForm:selectedEvrakDiliListId"))
-               .filterBy(Condition.text("Türkçe")).size()==1;
-       if (durum==true){}
+        boolean durum = $$(By.id("havaleKuralYonetimiEditorForm:selectedEvrakDiliListId"))
+                .filterBy(Condition.text("Türkçe")).size() == 1;
+        if (durum == true) {
+        }
         return this;
     }
 
@@ -349,11 +350,11 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
         evrak2.filterBy(text(konu)).get(0).$("[id^='havaleKuralYonetimiListingForm:havaleKuralDataTable'][id$='updateHavaleKuralButton']").click();
         return this;
     }
-    
+
     @Step("Seçilen kuralın bilgilerinin sağda güncellemek için açıldığı görülür.")
-    public EvrakHavaleKurallariYonetimiPage kuralGuncellemeEkraniGeldigiGorme(){
-        boolean durum  = $$(By.id("havaleKuralYonetimiEditorForm:havaleKuralYonetimiEditorPanel_header")).size()==1;
-        Assert.assertEquals(durum,true);
+    public EvrakHavaleKurallariYonetimiPage kuralGuncellemeEkraniGeldigiGorme() {
+        boolean durum = $$(By.id("havaleKuralYonetimiEditorForm:havaleKuralYonetimiEditorPanel_header")).size() == 1;
+        Assert.assertEquals(durum, true);
         takeScreenshot();
         return this;
     }
@@ -367,13 +368,13 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
 
 
     @Step("Havale kuralını silmek istediğinize emin misiniz? - uyarı verdiği görülür")
-    public EvrakHavaleKurallariYonetimiPage havaleKuraliniSilmekIstediginizeEminMisinizGeldigiGorme(){
-    boolean durum = $$("[id='baseConfirmationDialog:dialog']").size()==1;
-    Assert.assertEquals(durum,true);
-    takeScreenshot();
+    public EvrakHavaleKurallariYonetimiPage havaleKuraliniSilmekIstediginizeEminMisinizGeldigiGorme() {
+        boolean durum = $$("[id='baseConfirmationDialog:dialog']").size() == 1;
+        Assert.assertEquals(durum, true);
+        takeScreenshot();
         return this;
     }
-    
+
     @Step("İslem onayı evet")
     public EvrakHavaleKurallariYonetimiPage islemOnayiEvet() {
         btnIslemOnayiEvet.pressEnter();
@@ -387,9 +388,9 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
     }
 
     @Step("Kayıtlı bütün kuralların listelendiği görülür.")
-    public EvrakHavaleKurallariYonetimiPage havaleKurallariListesiGorme(){
-        boolean durum =$$("[id='havaleKuralYonetimiListingForm:havaleKuralDataTable_data'] >tr").size() > 0;
-        Assert.assertEquals(durum,true);
+    public EvrakHavaleKurallariYonetimiPage havaleKurallariListesiGorme() {
+        boolean durum = $$("[id='havaleKuralYonetimiListingForm:havaleKuralDataTable_data'] >tr").size() > 0;
+        Assert.assertEquals(durum, true);
         takeScreenshot();
         return this;
     }
