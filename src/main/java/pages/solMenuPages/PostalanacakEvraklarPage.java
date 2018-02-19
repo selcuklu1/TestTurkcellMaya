@@ -1218,6 +1218,22 @@ public class PostalanacakEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Takip Listesinde {kullanici} kullanıcısının olmadığı görülür.")
+    public PostalanacakEvraklarPage takipListesindeKullaniciOlmamali(String kullanici) {
+        tblTakipListesi.filterBy(text(kullanici)).first().shouldNotBe(visible);
+        return this;
+    }
+
+    @Step("Takip Listesinden {kullanici} kullanıcısını çıkart.")
+    public PostalanacakEvraklarPage takipListesiKullaniciCikart(String kullanici){
+        tblTakipListesi
+                .filterBy(text(kullanici))
+                .first()
+                .$x(".//span[contains(@class, 'delete-icon')]/..")
+                .click();
+        return this;
+    }
+
     @Step("Takip Listesi ekranında bulunan (X) \"Sayfayı Kapatma\" butonuna basılır. Takip listesi ekranın kapatıldığı görülür.")
     public PostalanacakEvraklarPage takipListesiKapat() {
         btnTakipListesiKapat.click();
