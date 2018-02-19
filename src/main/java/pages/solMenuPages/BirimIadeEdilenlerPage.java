@@ -86,6 +86,7 @@ public class BirimIadeEdilenlerPage extends MainPage {
     @Step("Teslim Al button kontrolü ")
     public BirimIadeEdilenlerPage evrakTeslimAlButtonKontrol() {
         teslimAlButton.should(visible);
+        takeScreenshot();
         return this;
     }
 

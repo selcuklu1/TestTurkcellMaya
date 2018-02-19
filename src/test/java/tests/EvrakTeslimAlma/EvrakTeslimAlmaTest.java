@@ -454,6 +454,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
                 .openPage()
                 .evrakNoIleEvrakSec(konu)
                 .evrakAdediKontrolu(konu)
+                .tabKontrol()
                 .secilenEvrakEvrakGecmisi()
                 .evrakGecmisi(kisi, islemSureci, evrakTarihi);
     }
