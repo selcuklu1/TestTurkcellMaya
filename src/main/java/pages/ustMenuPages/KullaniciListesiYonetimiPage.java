@@ -93,6 +93,18 @@ public class KullaniciListesiYonetimiPage extends MainPage {
         return this;
     }
 
+    @Step("Adı alanı temizlenir")
+    public KullaniciListesiYonetimiPage adTemizle() {
+        txtAdi.clear();
+        return this;
+    }
+
+    @Step("Açıklama alanı temizlenir")
+    public KullaniciListesiYonetimiPage aciklamaTemizle() {
+        txtAciklama.clear();
+        return this;
+    }
+
     @Step("Açıklama alanına \"{aciklama}\" girilir.")
     public KullaniciListesiYonetimiPage aciklamaDoldur(String aciklama) {
         txtAciklama.sendKeys(aciklama);
@@ -120,6 +132,21 @@ public class KullaniciListesiYonetimiPage extends MainPage {
     @Step("Durum alanında \"{durum}\" seçilir.")
     public KullaniciListesiYonetimiPage durumSec(String durum) {
         cmbDurum.selectOption(durum);
+        return this;
+    }
+
+    @Step("Durum alanı Kontrolü yapılır.")
+    public KullaniciListesiYonetimiPage durumKontrolu(String text) {
+        String text1 = cmbDurum.getText();
+        System.out.println(text1);
+        Assert.assertEquals(text1,text,"Durumu Sadece Aktifler seçili olarak gelmeli");
+        String[] cmbTexts = cmbDurum.innerText().split("\n");
+        cmbTexts[0].contains("Tümü");
+        cmbTexts[1].contains("Sadece Aktifler");
+        cmbTexts[2].contains("Sadece Pasifler");
+
+        Allure.addAttachment("Durum : ","Durum Combosunda (Tümü, Sadece Aktifler, Sadece Pasifler) seçenekleri mevcuttur. \n" +
+                "Default olarak Sadece Aktifler seçili gelir.");
         return this;
     }
 
@@ -168,6 +195,55 @@ public class KullaniciListesiYonetimiPage extends MainPage {
         return this;
     }
 
+    @Step("Güncelle butonu tıklanır.")
+    public KullaniciListesiYonetimiPage guncelle(String kullaniciAdi) {
+
+        tblKullaniciListesi
+                .filterBy(text(kullaniciAdi))
+                .first()
+                .$("button[id$=':kullaniciGrubuGuncelle_id']").click();
+        return this;
+    }
+
+    @Step("Kullanıcı Listesi tablosunda buton kontrolu.")
+    public KullaniciListesiYonetimiPage tumTabloButonKontrolu() {
+
+        ElementsCollection kisiselPages = $$("th[id='kullaniciGrubuListingForm:kullaniciGrubuDataTable_paginator_top'] > span[class='ui-paginator-pages'] >  span");
+
+
+        for(int i = 0; i<kisiselPages.size();i++){
+            kisiselPages.get(i).click();
+            for (int j = 0; j<tblKullaniciListesi.size();j++) {
+                tblKullaniciListesi.get(j)
+                        .$("button[id$=':kullaniciGrubuGuncelle_id']").shouldBe(Condition.visible);
+                tblKullaniciListesi.get(j)
+                        .$("button[id$=':kullaniciGrubuAktif_id']").shouldBe(Condition.visible);
+            }
+        }
+        return this;
+    }
+
+
+    @Step("Aktif Yap butonu kontrolu")
+    public KullaniciListesiYonetimiPage aktifYapButonKontrolu(String kullaniciAdi) {
+
+        tblKullaniciListesi
+                .filterBy(text(kullaniciAdi))
+                .first()
+                .$("[id$=':kullaniciGrubuAktif_id']").shouldBe(Condition.appear);
+        return this;
+    }
+
+    @Step("Pasif Yap butonu kontrolu")
+    public KullaniciListesiYonetimiPage pasifYapButonKontrolu(String kullaniciAdi) {
+
+        tblKullaniciListesi
+                .filterBy(text(kullaniciAdi))
+                .first()
+                .$("[id$=':kullaniciGrubuAktif_id']").shouldBe(Condition.appear);
+        return this;
+    }
+
     @Step("Aktif Yap butonu tıklanır.")
     public KullaniciListesiYonetimiPage aktifYap(String kullaniciAdi) {
 
@@ -188,6 +264,12 @@ public class KullaniciListesiYonetimiPage extends MainPage {
     @Step("Sorgula ve Filtrele Ad alanına \"{kullaniciAdi}\" girilir.")
     public KullaniciListesiYonetimiPage sorgulaVeFiltreleAdDoldur(String kullaniciAdi) {
         txtSorgulamaVeFiltrelemeAd.sendKeys(kullaniciAdi);
+        return this;
+    }
+
+    @Step("Sorgula ve Filtrele Ad alanına temizlenir.")
+    public KullaniciListesiYonetimiPage sorgulaVeFiltreleAdTemizle() {
+        txtSorgulamaVeFiltrelemeAd.clear();
         return this;
     }
 

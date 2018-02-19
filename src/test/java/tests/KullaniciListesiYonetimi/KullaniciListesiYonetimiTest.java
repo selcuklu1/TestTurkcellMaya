@@ -6,9 +6,7 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pages.pageData.UstMenuData;
 import pages.ustMenuPages.KullaniciListesiYonetimiPage;
-import pages.ustMenuPages.KullaniciYonetimiPage;
 
 /****************************************************
  * Tarih: 2017-12-22
@@ -63,7 +61,7 @@ public class KullaniciListesiYonetimiTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true
-            ,dependsOnMethods = {"TS1005"}
+            , dependsOnMethods = {"TS1005"}
             , description = "TS1001 : Kullanıcı Listesinin Pasif Duruma Getirilmesi")
     public void TS1001() throws InterruptedException {
 
@@ -89,13 +87,13 @@ public class KullaniciListesiYonetimiTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true
-            ,dependsOnMethods = {"TS1001"}
+            , dependsOnMethods = {"TS1001"}
             , description = "TS1003 : Kullanıcı Listesinin Aktif Duruma Getirilmesi")
-    public void TS1003() throws InterruptedException{
+    public void TS1003() throws InterruptedException {
 
         login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
 
-        String btnEvet= "Evet";
+        String btnEvet = "Evet";
 
 //        String ad = "TS1005 142310";
         kullaniciListesiYonetimiPage
@@ -108,27 +106,53 @@ public class KullaniciListesiYonetimiTest extends BaseTest {
                 .islemMesaji().basariliOlmali(basariMesaji);
 
         kullaniciListesiYonetimiPage
-                .kullaniciListesiTablosuKullaniciAdiKontrolu(ad,false)
+                .kullaniciListesiTablosuKullaniciAdiKontrolu(ad, false)
                 .sorgulaVeFiltreleTabAc()
                 .durumSec(durumAktifler)
                 .ara()
-                .kullaniciListesiTablosuKullaniciAdiKontrolu(ad,true)
+                .kullaniciListesiTablosuKullaniciAdiKontrolu(ad, true)
                 .sorgulaVeFiltreleTabAc()
                 .durumSec(durumPasifler)
                 .ara()
-                .kullaniciListesiTablosuKullaniciAdiKontrolu(ad,false);
+                .kullaniciListesiTablosuKullaniciAdiKontrolu(ad, false);
     }
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true
-            ,dependsOnMethods = {"TS1003"}
+            , dependsOnMethods = {"TS1003"}
             , description = "TS1000 : Kullanıcı Listesi Güncelleme")
-    public void TS1000() throws InterruptedException{
+    public void TS1000() throws InterruptedException {
 
         login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
+
+        String guncelAd = ad + " Guncellendi";
 
         kullaniciListesiYonetimiPage
                 .openPage()
                 .ekranAlanKontrolu()
+                .durumKontrolu(durumAktifler)
+                .ara()
+                .tumTabloButonKontrolu()
+                .sorgulaVeFiltreleTabAc()
+                .sorgulaVeFiltreleAdDoldur(ad)
+                .ara()
+                .kullaniciListesiTablosuKullaniciAdiKontrolu(ad, true)
+                .guncelle(ad)
+                .adTemizle()
+                .adDoldur(guncelAd)
+                .aciklamaTemizle()
+                .aciklamaDoldur(aciklama + "Guncellendi")
+                .birimSec("Optiim")
+                .kullanicilarSec("Username20n TEST")
+                .kaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        kullaniciListesiYonetimiPage
+                .sorgulaVeFiltreleTabAc()
+                .sorgulaVeFiltreleAdTemizle()
+                .sorgulaVeFiltreleAdDoldur(guncelAd)
+                .ara()
+                .kullaniciListesiTablosuKullaniciAdiKontrolu(guncelAd, true);
+
     }
 }
