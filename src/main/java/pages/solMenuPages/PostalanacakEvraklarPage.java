@@ -1162,7 +1162,8 @@ takeScreenshot();
     }
 
     @Step("Icerik Etiket popup Aciklama kontrol: Tarih no ve Gönderilen yer")
-    public PostalanacakEvraklarPage txtPopupEtiketAciklama() {
+    public PostalanacakEvraklarPage txtPopupEtiketAciklama() throws InterruptedException {
+        Thread.sleep(1000);
         String etiketAciklama = btnIcerikEtiketAciklama.getAttribute("innerText");
         Allure.addAttachment("Etiket Icerik", etiketAciklama);
         return this;
