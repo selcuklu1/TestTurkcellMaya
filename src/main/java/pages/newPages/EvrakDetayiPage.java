@@ -5,12 +5,13 @@ import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import pages.MainPage;
-import pages.pageComponents.*;
+import pages.pageComponents.DagitimHitapDuzenle;
+import pages.pageComponents.EvrakPageButtons;
+import pages.pageComponents.UstMenuPageHeader;
+import pages.pageComponents.UstYazi;
 import pages.pageComponents.tabs.*;
 import pages.pageData.UstMenuData;
 
-import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
-import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static pages.pageComponents.belgenetElements.Belgenet.$;
 
@@ -45,7 +46,7 @@ public class EvrakDetayiPage extends MainPage {
         return this;
     }
 
-    public UstYazi.EvrakNot evrakNotlari(){
+    public UstYazi.EvrakNot evrakNotlari() {
         return new UstYazi().new EvrakNot($(By.id("inboxItemInfoForm:kisiselNotEkleDataTableId")));
     }
 

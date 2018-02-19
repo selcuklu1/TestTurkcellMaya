@@ -21,17 +21,13 @@ public class TakibimdekiEvraklarPage extends MainPage {
     }
 
     @Step("{konu} konulu evrak evrak listesinde olduğu görülür.")
-    public TakibimdekiEvraklarPage evrakKontrol(String konu){
+    public TakibimdekiEvraklarPage evrakKontrol(String konu) {
         tblTakibimdekiEvraklar
                 .filterBy(text("Konu: " + konu))
                 .first()
                 .shouldBe(visible);
         return this;
     }
-
-
-
-
 
 
 }

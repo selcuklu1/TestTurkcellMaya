@@ -1,8 +1,10 @@
 package pages.ustMenuPages;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -13,6 +15,7 @@ import pages.pageData.UstMenuData;
 
 import java.util.Random;
 
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
@@ -25,7 +28,7 @@ public class BirimYonetimiPage extends MainPage {
     SelenideElement cmbBirimTuru = $(By.id("birimYonetimiFilterForm:accordionPanel:birimTuruSelectBox"));
     SelenideElement btnBirimTurumDropDownButton = $("span[id='birimYonetimiEditorForm:birimTipiAutoComplete'] > button");
     SelenideElement cmbDurum = $(By.id("birimYonetimiFilterForm:accordionPanel:durumSelectBox"));
-    SelenideElement btnArti = $(By.id("birimYonetimiListingForm:birimTreeTable:0:addNewBirimButton"));
+    SelenideElement btnArti = $("[id^='birimYonetimiListingForm:birimTreeTable'] [id$='addNewBirimButton']");
     SelenideElement cmbGorunurlukTipi = $(By.id("birimYonetimiEditorForm:gorunurlukTipiSelect"));
     SelenideElement chkDisBirim = $(By.id("birimYonetimiEditorForm:disBirimCheckbox_input"));
     SelenideElement txtAd = $(By.id("birimYonetimiEditorForm:adInput"));
@@ -49,22 +52,37 @@ public class BirimYonetimiPage extends MainPage {
     SelenideElement txtOlurMetni = $(By.id("birimYonetimiEditorForm:olurMetniText"));
     SelenideElement txtAciklama = $(By.id("birimYonetimiEditorForm:aciklamaMetniText"));
     SelenideElement chkKepAdresiKullaniyor = $(By.id("birimYonetimiEditorForm:kepAdresiKullanimCheckbox_input"));
+    SelenideElement chkSDPnaGoreBirimKlasorleriniOlustur = $(By.id("birimYonetimiEditorForm:birimStandartDosyaPlaninaGore_input"));
     SelenideElement chkYetkiDevriVar = $(By.id("birimYonetimiEditorForm:yetkiDevriCheckbox_input"));
     SelenideElement btnSolUstLogoEkle = $(By.id("birimYonetimiEditorForm:solUstMenuLogoEkle"));
     SelenideElement btnSagUstLogoEkle = $(By.id("birimYonetimiEditorForm:sagUstMenuLogoEkle"));
     SelenideElement btnAltLogoyuDegistir = $(By.id("birimYonetimiEditorForm:altMenuLogoEkle"));
-    SelenideElement txtSolUstLogoBoy = $(By.id("birimYonetimiEditorForm:j_idt11983"));
-    SelenideElement txtSagUstLogoBoy = $(By.id("birimYonetimiEditorForm:j_idt11986"));
-    SelenideElement txtSolUstGenislik = $(By.id("birimYonetimiEditorForm:j_idt11990"));
-    SelenideElement txtSagUstLogoGenislik = $(By.id("birimYonetimiEditorForm:j_idt11993"));
+
+    SelenideElement txtSolUstLogoBoy = $(By.xpath("//label[normalize-space(text())='Sol Üst Logo Boy']"));
+    SelenideElement txtSagUstLogoBoy = $(By.xpath("//label[normalize-space(text())='Sağ Üst Logo Boy']"));
+    SelenideElement txtSolUstGenislik = $(By.xpath("//label[normalize-space(text())='Sol Üst Logo Genişlik']"));
+    SelenideElement txtSagUstLogoGenislik = $(By.xpath("//label[normalize-space(text())='Sağ Üst Logo Genişlik']"));
+
     BelgenetElement txtBirim = comboLov("[id$='birimLov:LovText']");
-    SelenideElement btnTableDuzenle = $(By.id("birimYonetimiListingForm:birimTreeTable:0:updateBirimButton"));
+    SelenideElement btnAktiflerIlkGuncelle = $(By.id("birimYonetimiListingForm:birimTreeTable:0:updateBirimButton"));
+    SelenideElement btnPasiflerIlkGuncelle = $(By.id("birimYonetimiListingForm:pasifBirimlerDataTable:0:updateBirimButton"));
     SelenideElement btnYeniKepAdresBilgileriEkle = $(By.id("birimYonetimiEditorForm:kepBilgileriDataTable:addNewKepAdresiButton"));
 
     SelenideElement txtPopupKepAdresi = $(By.id("kepAdresBilgiEditorForm:kepAdresiInputTextId"));
     SelenideElement cmbPopupHizmetSaglayicisi = $(By.id("kepAdresBilgiEditorForm:kephs"));
     SelenideElement btnPopupKaydet = $(By.id("kepAdresBilgiEditorForm:saveKepAdresiButton"));
     SelenideElement btnKaydet = $(By.id("birimYonetimiEditorForm:saveBirimButton"));
+
+    BelgenetElement cmbPostaBirimi = comboLov(By.id("birimYonetimiEditorForm:postaBirimiLov:LovText"));
+    BelgenetElement cmbKepPostaBirimi = comboLov(By.id("birimYonetimiEditorForm:kepPostaBirimiLov:LovText"));
+    SelenideElement txtAntentBilgisi = $(By.id("birimYonetimiEditorForm:antetBilgisiInput"));
+    ElementsCollection tblBirimYonetimiListesi = $$("[id='birimYonetimiListingForm:birimTreeTable'] > table > tbody > tr");// span[class='ui-chkbox-icon']");
+    SelenideElement btnPasifYap = $("[id$='updateBirimStatusButton'] [class$='to-passive-status-icon']");
+    SelenideElement btnAktifYap = $("[id$='updateBirimStatusButton'] [class$='to-active-status-icon']");
+    SelenideElement chkDisBirimBos = $("[id='birimYonetimiEditorForm:disBirimCheckbox'] [class$='ui-state-default']");
+    SelenideElement chkDisBirimDolu = $("[id='birimYonetimiEditorForm:disBirimCheckbox'] [class$='ui-state-disabled']");
+    SelenideElement filtreSorgulamaPanel = $("[id='birimYonetimiFilterForm'] [id='birimYonetimiFilterForm:accordionPanel']");
+
 
     // Hüseyin TÜMER
 
@@ -116,16 +134,22 @@ public class BirimYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("İlk birimin güncelle butonu tıklanır")
-    public BirimYonetimiPage ilkBirimGuncelle() {
-        btnTableDuzenle.click();
+    @Step("Aktiflerde ilk birimin güncelle butonu tıklanır")
+    public BirimYonetimiPage aktiflerIlkBirimGuncelle() {
+        btnAktiflerIlkGuncelle.click();
+        return this;
+    }
+
+    @Step("Pasiflerde ilk birimin güncelle butonu tıklanır")
+    public BirimYonetimiPage pasiflerIlkBirimGuncelle() {
+        btnPasiflerIlkGuncelle.click();
         return this;
     }
 
     @Step("Sağ alanda Birim Güncelleme ekranı geldiği görülür")
-    public BirimYonetimiPage sagAlandaGuncellemeEkranGeldigiGorme(){
-    boolean durum = $$(By.id("birimYonetimiEditorForm:birimYonetimiEditorPanel_header")).size()==1;
-        Assert.assertEquals(durum,true);
+    public BirimYonetimiPage sagAlandaGuncellemeEkranGeldigiGorme() {
+        boolean durum = $$(By.id("birimYonetimiEditorForm:birimYonetimiEditorPanel_header")).size() == 1;
+        Assert.assertEquals(durum, true);
         takeScreenshot();
         return this;
     }
@@ -214,9 +238,10 @@ public class BirimYonetimiPage extends MainPage {
         return this;
     }
 
+
     @Step("Posta şekli seç")
-    public BirimYonetimiPage postaSekliSec(String value) {
-        cmbPostaSekli.selectOption(value);
+    public BirimYonetimiPage postaSekliSec(String postaSekli) {
+        cmbPostaSekli.selectOption(postaSekli);
         return this;
     }
 
@@ -239,38 +264,44 @@ public class BirimYonetimiPage extends MainPage {
     }
 
     @Step("Birim bağ türü seç")
-    public BirimYonetimiPage birimBagTuruSec(String text) {
-        cmbBirimBagTuru.selectOption(text);
+    public BirimYonetimiPage birimBagTuruSec(String birimBagTuru) {
+        cmbBirimBagTuru.selectOption(birimBagTuru);
         return this;
     }
 
     @Step("Giden evrakları numaratoru doldur")
-    public BirimYonetimiPage gidenEvraklariNumaratoruDoldur(String text) {
-        txtGidenEvrakNumaratoru.setValue(text);
+    public BirimYonetimiPage gidenEvraklariNumaratoruDoldur(String gidenEvrakNumaratoru) {
+        txtGidenEvrakNumaratoru.setValue(gidenEvrakNumaratoru);
+        Selenide.sleep(3000);
+        txtGidenEvrakNumaratoru.sendKeys(Keys.ENTER);
         return this;
     }
 
     @Step("Gelen evraklar numaratoru doldur")
-    public BirimYonetimiPage gelenEvraklariNumaratoruDoldur(String text) {
-        txtGelenEvrakNumaratoru.setValue(text);
+    public BirimYonetimiPage gelenEvraklariNumaratoruDoldur(String gelenEvrakNumaratoru) {
+        txtGelenEvrakNumaratoru.setValue(gelenEvrakNumaratoru);
+        Selenide.sleep(3000);
+        txtGelenEvrakNumaratoru.sendKeys(Keys.ENTER);
         return this;
     }
 
     @Step("Birimi tipi seç")
-    public BirimYonetimiPage birimTipiSec(String value) {
-        cmbBirimTipi.selectOption(value);
+    public BirimYonetimiPage birimTipiSec(String birimTipi) {
+        cmbBirimTipi.setValue(birimTipi);
+        Selenide.sleep(3000);
+        cmbBirimTipi.sendKeys(Keys.ENTER);
         return this;
     }
 
     @Step("İdari kimlik doldur")
-    public BirimYonetimiPage idariKimlikKoduDoldur(String text) {
-        txtIdariKimlikKodu.setValue(text);
+    public BirimYonetimiPage idariKimlikKoduDoldur(String idariBirimKimlikKodu) {
+        txtIdariKimlikKodu.setValue(idariBirimKimlikKodu);
         return this;
     }
 
     @Step("Antet tipi seç")
-    public BirimYonetimiPage antetTipiSec(String value) {
-        cmbAntetTipi.selectOption(value);
+    public BirimYonetimiPage antetTipiSec(String antentTipi) {
+        cmbAntetTipi.selectOption(antentTipi);
         return this;
     }
 
@@ -347,7 +378,7 @@ public class BirimYonetimiPage extends MainPage {
     }
 
     @Step("Birim doldur")
-    public BirimYonetimiPage birimDoldur(String birim) {
+    public BirimYonetimiPage birimFiltreDoldur(String birim) {
         txtBirim.selectLov(birim);
         return this;
     }
@@ -381,4 +412,156 @@ public class BirimYonetimiPage extends MainPage {
         btnBirimKaydet.click();
         return yeniBirimAdi;
     }
+
+    @Step("Üst Birim seç")
+    public BirimYonetimiPage ustBirimSec(String ustBirim, String ustBirimDetail) {
+        txtUstBirim.selectLov(ustBirim, ustBirimDetail);
+        return this;
+    }
+
+    @Step("Posta birimi seç")
+    public BirimYonetimiPage postaBirimiSec(String postaBirim, String postaBirimDetail) {
+        cmbPostaBirimi.selectLov(postaBirim, postaBirimDetail);
+        return this;
+    }
+
+    @Step("Kep Posta birimi seç")
+    public BirimYonetimiPage kepPostaBirimiSec(String kepPostaBirim, String kepPostaBirimDetail) {
+        cmbKepPostaBirimi.selectLov(kepPostaBirim, kepPostaBirimDetail);
+        return this;
+    }
+
+    @Step("Belgenet kullanıyor mu seç: {secim}")
+    public BirimYonetimiPage belgenetKullanıyormuSec(String secim) {
+        cmbBelgenetKullaniyorMu.selectOption(secim);
+        return this;
+    }
+
+    @Step("Antent bilgisi doldur")
+    public BirimYonetimiPage antetBilgisiDoldur(String antentBilgisi) {
+        txtAntentBilgisi.setValue(antentBilgisi);
+        return this;
+    }
+
+    @Step("Birim Yönetimi alan kontrolleri")
+    public BirimYonetimiPage birimYonetimiAlanKontrolleri() {
+
+        Assert.assertEquals(chkDisBirim.isDisplayed(), true, "Dış Birim");
+        Allure.addAttachment("Dış Birim alanı kontrolu başarılı", "");
+
+        Assert.assertEquals(chkOzelHitap.isDisplayed(), true, "Özel Hitap");
+        Allure.addAttachment("Özel Hitap alanı kontrolu başarılı", "");
+
+        Assert.assertEquals(txtKarargahKisaltmasi.isDisplayed(), true, "Karargah Kısaltması");
+        Allure.addAttachment("Karargah Kısaltması alanı kontrolu başarılı", "");
+
+        Assert.assertEquals(treeBagliBirim.isDisplayed(), true, "Bağlı Birim");
+        Allure.addAttachment("Bağlı Birim alanı kontrolu başarılı", "");
+
+        Assert.assertEquals(treeFizikiArsivBirimi.isDisplayed(), true, "Fizik Arşiv Birimi");
+        Allure.addAttachment("Fizik Arşiv Birimi alanı kontrolu başarılı", "");
+
+        Assert.assertEquals(chkArsivBirimi.isDisplayed(), true, "Arşiv Birimi");
+        Allure.addAttachment("Arşiv Birimi alanı kontrolu başarılı", "");
+
+        Assert.assertEquals(chkGenelEvrak.isDisplayed(), true, "Genel Evrak");
+        Allure.addAttachment("Genel Evrak alanı kontrolu başarılı", "");
+
+        Assert.assertEquals(txtOlurMetni.isDisplayed(), true, "Olur Metni");
+        Allure.addAttachment("Olur Metni alanı kontrolu başarılı", "");
+
+        Assert.assertEquals(txtAciklama.isDisplayed(), true, "Açıklama");
+        Allure.addAttachment("Açıklama alanı kontrolu başarılı", "");
+
+        Assert.assertEquals(chkKepAdresiKullaniyor.isDisplayed(), true, "Kep Adresi Kullanılıyor");
+        Allure.addAttachment("Kep Adresi Kullanılıyor alanı kontrolu başarılı", "");
+
+        Assert.assertEquals(chkSDPnaGoreBirimKlasorleriniOlustur.isDisplayed(), true, "SDPna Göre Birim Klasörlerini Oluştur");
+        Allure.addAttachment("SDPna Göre Birim Klasörlerini Oluştur alanı kontrolu başarılı", "");
+
+        Assert.assertEquals(chkYetkiDevriVar.isDisplayed(), true, "Yetki Devri Var");
+        Allure.addAttachment("Yetki Devri Var alanı kontrolu başarılı", "");
+
+        Assert.assertEquals(txtSagUstLogoBoy.isDisplayed(), true, "Sağ Üst Logo Boy");
+        Allure.addAttachment("Sağ Üst Logo Boy alanı kontrolu başarılı", "");
+
+        Assert.assertEquals(txtSolUstLogoBoy.isDisplayed(), true, "Sol Üst Logo Boy");
+        Allure.addAttachment("Sol Üst Logo Boy alanı kontrolu başarılı", "");
+
+        Assert.assertEquals(btnSolUstLogoEkle.isDisplayed(), true, "Sol Üst Logo Ekle");
+        Allure.addAttachment("Sol Üst Logo Ekle alanı kontrolu başarılı", "");
+
+        Assert.assertEquals(btnSagUstLogoEkle.isDisplayed(), true, "Sağ Üst Logo Ekle");
+        Allure.addAttachment("Sağ Üst Logo Ekle alanı kontrolu başarılı", "");
+
+        Assert.assertEquals(txtSagUstLogoGenislik.isDisplayed(), true, "Sağ Üst Logo Genişlik");
+        Allure.addAttachment("Sağ Üst Logo Genişlik alanı kontrolu başarılı", "");
+
+        Assert.assertEquals(txtSolUstGenislik.isDisplayed(), true, "Sol Üst Logo Genişlik");
+        Allure.addAttachment("Sol Üst Logo Genişlik alanı kontrolu başarılı", "");
+
+        Assert.assertEquals(btnBirimAmiriEkle.isDisplayed(), true, "Birim Amiri");
+        Allure.addAttachment("Birim Amiri alanı kontrolu başarılı", "");
+
+        Assert.assertEquals(btnYeniKepAdresBilgileriEkle.isDisplayed(), true, "Kep Adres Bilgiler");
+        Allure.addAttachment("Kep Adres Bilgileri alanı kontrolu başarılı", "");
+
+        takeScreenshot();
+
+        return this;
+    }
+
+    @Step("Eklenen birim sonuç tablosunda listelenir")
+    public BirimYonetimiPage birimKontrolu(String birimAdi) {
+
+        tblBirimYonetimiListesi
+                .filterBy(Condition.text(birimAdi))
+                .shouldHaveSize(1);
+
+        return this;
+    }
+
+    @Step("Pasif yap butonunun aktif olarak geldiği kontrolu")
+    public BirimYonetimiPage pasifYapButonuKontrolu() {
+
+        Assert.assertEquals(btnPasifYap.isDisplayed(), true, "Pasif Yap kontrolu");
+        Allure.addAttachment("Pasif Yap butonu kontrolu başarılı", "");
+
+        return this;
+    }
+
+    @Step("Aktif yap butonunun aktif olarak geldiği")
+    public BirimYonetimiPage aktifYapButonuKontrolu() {
+
+        Assert.assertEquals(btnAktifYap.isDisplayed(), true, "Aktif Yap kontrolu");
+        Allure.addAttachment("Pasif Yap butonu kontrolu başarılı", "");
+
+        return this;
+    }
+
+    @Step("Dış birim check boxının boş olduğu kontrolu")
+    public BirimYonetimiPage disBirimChkBoxBosOlduguKontrolu() {
+
+        Assert.assertEquals(chkDisBirimBos.isDisplayed(), true, "Dış birim check boxının boş olduğu kontrolu");
+        Allure.addAttachment("Dış birim check boxının boş olduğu kontrolu", "");
+
+        return this;
+    }
+
+    @Step(" Dış birim check boxının işaretli olduğu kontrolu")
+    public BirimYonetimiPage disBirimChkBoxDoluOlduguKontrolu() {
+
+        Assert.assertEquals(chkDisBirimDolu.isDisplayed(), true, "Dış birim check boxının işaretli olduğu kontrolu");
+        Allure.addAttachment("Dış birim check boxının işaretli olduğu kontrolu", "");
+
+        return this;
+    }
+
+    @Step("Filtre sorgulama paneli aç")
+    public BirimYonetimiPage filtreSorgulamaPaneliAc() {
+
+        filtreSorgulamaPanel.shouldBe(visible).click();
+        return this;
+    }
+
 }

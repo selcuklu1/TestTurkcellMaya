@@ -22,7 +22,10 @@ public class TebligEttiklerimPage extends MainPage {
     SelenideElement btnTebligHatirlat = $(By.id("mainPreviewForm:tebligHatirlatButton_id"));
 
     SelenideElement txtTebligHatirlatNot = $("div[id='mainPreviewForm:evrakOnizlemeTab'] textarea");
+    SelenideElement btnTebligHatirlatVazgec = $(By.id("mainPreviewForm:tebligHatirlatVazgecButton"));
+    ElementsCollection tableTebligHatirlatEvrakBilgileri = $$("div[id='mainPreviewForm:evrakOnizlemeTab'] > table[class='formTable'] > tbody > tr");
 
+    // document-detail
 
     @Step("Tebliğler sayfasını aç")
     public TebligEttiklerimPage openPage() {
@@ -43,8 +46,6 @@ public class TebligEttiklerimPage extends MainPage {
 
         return this;
     }
-
-    // document-detail
 
     @Step("{konu} konulu evrak Tebliğ Ettiklerim listesi kontrolü. Eğer evrak Tebliğ Ettiklerim lsitesinde ise içerik göster butonuna tıkla.")
     public TebligEttiklerimPage icreikGoster(String konu, String gidecegiYer, String evrakTarihi, String no) {
@@ -103,17 +104,14 @@ public class TebligEttiklerimPage extends MainPage {
         return this;
     }
 
-
     @Step("Tebliğ Hatırlat Notu gir.")
     public TebligEttiklerimPage tebligHatirlatNotuGir(String not) {
         txtTebligHatirlatNot.setValue(not);
         return this;
     }
 
-    SelenideElement btnTebligHatirlatVazgec = $(By.id("mainPreviewForm:tebligHatirlatVazgecButton"));
-
     @Step("Tebliğ hatırlat ekranında Vazgeç butonunun geldiği kontrolü.")
-    public TebligEttiklerimPage tebligHatirlatVazgecButonKontrolu(){
+    public TebligEttiklerimPage tebligHatirlatVazgecButonKontrolu() {
         btnTebligHatirlatVazgec.shouldBe(Condition.visible);
         return this;
     }
@@ -125,16 +123,15 @@ public class TebligEttiklerimPage extends MainPage {
     }
 
     @Step("Tebliğ Hatırlat ekranında Birim, Ad Soyad, Tebellüğ Tarihi, Okundu bilgilerinin geldiği tablo görülür.")
-    public TebligEttiklerimPage tebligHatirlatTabloKontrol(){
+    public TebligEttiklerimPage tebligHatirlatTabloKontrol() {
         $("div[id='mainPreviewForm:tebligDataTable'] table").shouldBe(Condition.visible);
         return this;
     }
 
-    ElementsCollection tableTebligHatirlatEvrakBilgileri = $$("div[id='mainPreviewForm:evrakOnizlemeTab'] > table[class='formTable'] > tbody > tr");
     @Step("Tebliğ Hatırlat ekranında bilgi kontrolü")
-    public TebligEttiklerimPage tebligHatirlatBilgiKontrol(){
+    public TebligEttiklerimPage tebligHatirlatBilgiKontrol() {
 
-        for(int i = 0; i < tableTebligHatirlatEvrakBilgileri.size(); i++){
+        for (int i = 0; i < tableTebligHatirlatEvrakBilgileri.size(); i++) {
 
             String raporAciklama = tableTebligHatirlatEvrakBilgileri
                     .get(i)

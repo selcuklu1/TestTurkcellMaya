@@ -9,24 +9,6 @@
     <version>1.0-SNAPSHOT</version>
 
     <dependencies>
-        <dependency>
-            <groupId>io.qameta.allure</groupId>
-            <artifactId>allure-testng</artifactId>
-            <version>2.0-BETA21</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.codeborne</groupId>
-            <artifactId>selenide</artifactId>
-            <version>4.10.01</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.galenframework</groupId>
-            <artifactId>galen-java-support</artifactId>
-            <version>2.3.6</version>
-        </dependency>
-
         <!--<dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
@@ -37,28 +19,36 @@
             <artifactId>selenium-server</artifactId>
             <version>3.8.1</version>
         </dependency>-->
-
-
-        <!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml -->
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-testng</artifactId>
+            <version>2.0-BETA21</version>
+        </dependency>
+        <dependency>
+            <groupId>com.codeborne</groupId>
+            <artifactId>selenide</artifactId>
+            <version>4.10.01</version>
+        </dependency>
+        <dependency>
+            <groupId>com.galenframework</groupId>
+            <artifactId>galen-java-support</artifactId>
+            <version>2.3.6</version>
+        </dependency>
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
             <version>3.17</version>
         </dependency>
-
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi</artifactId>
             <version>3.17</version>
         </dependency>
-
         <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
             <version>13.0</version>
         </dependency>
-
-        <!-- https://mvnrepository.com/artifact/org.apache.pdfbox/pdfbox -->
         <dependency>
             <groupId>org.apache.pdfbox</groupId>
             <artifactId>pdfbox</artifactId>
@@ -67,10 +57,28 @@
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
-            <version>6.13.1</version>
+            <version>6.14.2</version>
         </dependency>
-
-
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.8.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20180130</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>2.10.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.10.0</version>
+        </dependency>
     </dependencies>
     <properties>
         <aspectj.version>1.8.11</aspectj.version>
@@ -98,7 +106,7 @@
                     </suiteXmlFiles>
                     <argLine>
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
-                        <!-- -Dfile.encoding="UTF-32BE"-->
+                        <!-- -Dfile.encoding="UTF-8"-->
                     </argLine>
                     <!--<argLine>-Dfile.encoding=UTF-8</argLine>-->
                     <!--<properties>
@@ -107,42 +115,19 @@
                             <value>listeners.RerunFailedTests</value>
                         </property>
                     </properties>-->
-                    <!--<systemProperties>-->
-                    <!--<property>-->
-                    <!--<name>allure.results.directory</name>-->
-                    <!--<value>${project.build.directory}/allure-results</value>-->
-                    <!--&lt;!&ndash;<value>test-result/allure-xml</value>&ndash;&gt;-->
-                    <!--</property>-->
-                    <!--</systemProperties>-->
-                    <!--<systemProperties>-->
-                    <!--<property>-->
-                    <!--<name>allure.results.directory</name>-->
-                    <!--<value>/Users/Shared/Jenkins/Home/workspace/test/allure-results</value>-->
-                    <!--</property>-->
-                    <!--<property>-->
-                    <!--<name>allure.results.directory</name>-->
-                    <!--<value>${project.build.directory}/allure-results</value>-->
-                    <!--&lt;!&ndash;<value>test-result/allure-xml</value>&ndash;&gt;-->
-                    <!--</property>-->
-                    <!--</systemProperties>-->
-                    <!--<systemProperties>-->
-                    <!--<property>-->
-                    <!--<name>allure.results.directory</name>-->
-                    <!--<value>/Users/Shared/Jenkins/Home/workspace/test/allure-results</value>-->
-                    <!--</property>-->
-                    <!--<property>-->
-                    <!--<name>allure.results.directory</name>-->
-                    <!--<value>${project.build.directory}/allure-results</value>-->
-                    <!--&lt;!&ndash;<value>test-result/allure-xml</value>&ndash;&gt;-->
-                    <!--</property>-->
-                    <!--</systemProperties>-->
-                    <!--<systemProperties>-->
-                    <!--<property>-->
-                    <!--<name>allure.results.directory</name>-->
-                    <!--<value>/Users/Shared/Jenkins/Home/workspace/test/allure-results</value>-->
-                    <!--</property>-->
-                    <!--</systemProperties>-->
-
+                    <!--<systemProperties>
+                        <property>
+                            <name>allure.results.directory</name>
+                            <value>${project.build.directory}/allure-results</value>
+                            <value>/Users/Shared/Jenkins/Home/workspace/test/allure-results</value>
+                            &lt;!&ndash;<value>test-result/allure-xml</value>&ndash;&gt;
+                        </property>
+                        <property>
+                            <name>allure.results.directory</name>
+                            <value>${project.build.directory}/allure-results</value>
+                            &lt;!&ndash;<value>test-result/allure-xml</value>&ndash;&gt;
+                        </property>
+                    </systemProperties>-->
                 </configuration>
                 <dependencies>
                     <dependency>
@@ -157,21 +142,21 @@
                 <artifactId>maven-project-info-reports-plugin</artifactId>
                 <version>2.9</version>
             </plugin>
-            <!--<plugin>-->
-            <!--<groupId>io.qameta.allure</groupId>-->
-            <!--<artifactId>allure-maven</artifactId>-->
-            <!--<version>2.9</version>-->
-            <!--</plugin>-->
+            <!--<plugin>
+                <groupId>io.qameta.allure</groupId>
+                <artifactId>allure-maven</artifactId>
+                <version>2.9</version>
+            </plugin>-->
         </plugins>
     </build>
-    <!--<reporting>-->
-    <!--<excludeDefaults>true</excludeDefaults>-->
-    <!--<plugins>-->
-    <!--<plugin>-->
-    <!--<groupId>io.qameta.allure</groupId>-->
-    <!--<artifactId>allure-maven</artifactId>-->
-    <!--<version>2.9</version>-->
-    <!--</plugin>-->
-    <!--</plugins>-->
-    <!--</reporting>-->
+    <!--<reporting>
+        <excludeDefaults>true</excludeDefaults>
+            <plugins>
+                <plugin>
+                    <groupId>io.qameta.allure</groupId>
+                    <artifactId>allure-maven</artifactId>
+                    <version>2.9</version>
+                </plugin>
+        </plugins>
+    </reporting>-->
 </project>

@@ -98,6 +98,7 @@ public class KlasorEvrakIslemleriPage extends MainPage {
         chkAltKlasorlerDahil.setSelected(altKlasorler);
         return this;
     }
+
     @Step("Ara tıklanır")
     public KlasorEvrakIslemleriPage ara() throws InterruptedException {
         //click(araButton);

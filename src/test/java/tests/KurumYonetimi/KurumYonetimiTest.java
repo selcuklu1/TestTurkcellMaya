@@ -1,6 +1,7 @@
 package tests.KurumYonetimi;
 
 import common.BaseTest;
+import data.TestData;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.ustMenuPages.EvrakOlusturPage;
@@ -20,10 +21,12 @@ public class KurumYonetimiTest extends BaseTest {
 
     @BeforeMethod
     public void loginBeforeTests() {
+
         kurumYonetimiPage = new KurumYonetimiPage();
         gelenEvrakKayitPage = new GelenEvrakKayitPage();
         evrakOlusturPage = new EvrakOlusturPage();
         gidenEvrakKayitPage = new GidenEvrakKayitPage();
+
     }
 
     @Test(enabled = true, description = "TS01459 : Kurum bilgisi güncelleme")
@@ -74,7 +77,7 @@ public class KurumYonetimiTest extends BaseTest {
 
         String guncellenecekKurumAdi = yeniKurumAdi1;
         String yeniKurumAdi = "kurumm" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
-        ;
+
         String isTelefonNo = "5444444446";
         String faxNumarasi1 = "5444444447";
         String faxNumarasi2 = "5444444448";
@@ -84,7 +87,6 @@ public class KurumYonetimiTest extends BaseTest {
         String guncellenecekKepAdresi = kepAdresi;
         String yeniKepadresi = "hihihaha2223@kepadresim.com";
         String kepHizmetSaglayicisi = "KEPKUR";
-
 
         kurumYonetimiPage
                 .sorgulaKurumDoldur(guncellenecekKurumAdi)
@@ -104,26 +106,30 @@ public class KurumYonetimiTest extends BaseTest {
                 .faxNumarasi1Doldur(faxNumarasi1)
                 .faxNumarasi2Doldur(faxNumarasi2)
                 .adresDoldur(adres)
-               .ulkeDoldur(ulke)
+                .ulkeDoldur(ulke)
                 .ilDoldur(il)
                 .ilceDoldur(ilce)
                 .ePostaDoldur(ePosta)
                 .webAdresiDoldur(webAdresi)
                 .iletisimBilgisiKaydet()
                 .islemMesaji().basariliOlmali();
+
         kurumYonetimiPage
                 .kepAdresiGuncelle(guncellenecekKepAdresi, null)
                 .kepAdresiDoldur(yeniKepadresi)
                 .kepHizmetSaglayiciSec(kepHizmetSaglayicisi)
                 .kepAdresiBilgileriKaydet()
                 .islemMesaji().basariliOlmali();
+
         kurumYonetimiPage
                 .kepAdresiKontrol(yeniKepadresi, 0, true)
                 .kurumKaydet()
                 .islemMesaji().basariliOlmali();
+
         kurumYonetimiPage
                 .kurumHiyerarsisiniGuncelle()
                 .islemMesaji().basariliOlmali();
+
         kurumYonetimiPage
                 .filtrePanelAc()
                 .sorgulaKurumDoldur(yeniKurumAdi)
@@ -136,7 +142,6 @@ public class KurumYonetimiTest extends BaseTest {
                 .kisiKurumSec("Kurum")
                 .geldigiKurumDoldurLovText(yeniKurumAdi)
                 .solEvrakSayiKontrol(idariBirimKimlikKodu);
-
         gelenEvrakKayitPage.panelKapat(false);
 
         evrakOlusturPage
@@ -184,7 +189,7 @@ public class KurumYonetimiTest extends BaseTest {
 
         String yeniKurumAdi = "Yenikurum" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
         String idariBirimKimlikKodu = (new Random().nextInt((900000 - 100000) + 1) + 100000) + "";
-        String yeniKurumKisaAdi = "KISA"+ yeniKurumAdi;
+        String yeniKurumKisaAdi = "KISA" + yeniKurumAdi;
         String ustKurum = "Maliye Bakanlığı";
         String hitap = "Hitap" + yeniKurumAdi;
 
@@ -199,6 +204,7 @@ public class KurumYonetimiTest extends BaseTest {
         String basariMesaji = "İşlem başarılıdır!";
 
         login("mbozdemir", "123");
+
         kurumYonetimiPage
                 .openPage()
                 .yeniKurumEkle()
@@ -209,7 +215,9 @@ public class KurumYonetimiTest extends BaseTest {
                 .kurumAdiDoldur(yeniKurumAdi)
                 .idariBirimKimlikKoduDoldur(idariBirimKimlikKodu)
                 .ustKurumSec(ustKurum);
+
         kontrolEdilecekGeregiDetay = kurumYonetimiPage.ustKurumGetir() + " | " + yeniKurumAdi;
+
         kurumYonetimiPage
                 .yeniIletisimBilgisiEkle()
                 .mobilTelNoDoldur(mobilTelNo)
@@ -358,7 +366,6 @@ public class KurumYonetimiTest extends BaseTest {
                 .kurumTableKontrol(null, "Sadece Pasifler", true)
                 .panelKapat();
 
-
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
@@ -405,6 +412,7 @@ public class KurumYonetimiTest extends BaseTest {
                 .bilgilerTabiAc()
                 .geregiSecimTipiSec("Kurum")
                 .geregiTreeKontrolEt(pasifYapilacakKurum, false);
+
         evrakOlusturPage
                 .evrakOlusturPageKapat();
 
@@ -429,7 +437,6 @@ public class KurumYonetimiTest extends BaseTest {
                 .durumSec("Sadece Pasifler")
                 .ara()
                 .kurumAktifYap(pasifYapilacakKurum);
-
         kurumYonetimiPage.yeniKurumEkle();
 
         kurumYonetimiPage
@@ -464,6 +471,92 @@ public class KurumYonetimiTest extends BaseTest {
                 .kisiKurumSec("Kurum")
                 .geldigiKurumDegerGoruntulemeKontrolu(pasifYapilacakKurum, true)
                 .panelKapat(false);
+
+    }
+
+    @Test(enabled = true, description = "TS2245 : Kurum tanımlamada alan kontrolleri")
+    public void TS2245() {
+
+        String kurumAdi = "TS2245_Kurum_" + getSysDate();
+        String idariBirimKimlikKodu = getSysDate();
+        String ustKurum = "Maliye Bakanlığı";
+        String uyariMesaji = "Zorunlu alanları doldurunuz";
+        String kokBirimDikkatMesaji = "Sistemde bir tane kök birim olabilir!";
+        String ePostaDikkatMesaji = "Lütfen Türkçe karakter ve boşluk içermeyen, @ işareti ve nokta içeren geçerli bir e-mail giriniz!";
+        String kepAdresiDikkatMesaji = "Girilen kep adresi geçersiz!";
+        String kepAdresiBolBirakilamazDikkatMesaji = "Kep adresi boş bırakılamaz! Lütfen bir kep adresi ekleyiniz.";
+        String il = "İSTANBUL";
+        String ePostaYanlisFormat = "TS2245turksat.com.tr";
+        String kepAdresiYanlisFormat = "TS2245turksat.com.tr";
+
+        login(TestData.usernameOPTIIM, TestData.passwordOPTIIM);
+
+        kurumYonetimiPage
+                .openPage()
+                .yeniKurumEkle()
+                .alanKontrolu()
+                .ustKurumSec(ustKurum)
+                .kurumAdiDoldur(kurumAdi)
+                .kaydet()
+                .islemMesaji().uyariOlmali(uyariMesaji);
+
+        kurumYonetimiPage
+                .iptal()
+                .yeniKurumEkle()
+                .idariBirimKimlikKoduDoldur(idariBirimKimlikKodu)
+                .ustKurumSec(ustKurum)
+                .kaydet()
+                .islemMesaji().uyariOlmali(uyariMesaji);
+
+        kurumYonetimiPage
+                .iptal()
+                .yeniKurumEkle()
+                .idariBirimKimlikKoduDoldur(idariBirimKimlikKodu)
+                .kurumAdiDoldur(kurumAdi)
+                .kaydet()
+                .islemMesaji().dikkatOlmali(kokBirimDikkatMesaji);
+
+        kurumYonetimiPage
+                .iptal()
+                .yeniKurumEkle()
+                .idariBirimKimlikKoduDoldur(idariBirimKimlikKodu)
+                .ustKurumSec(ustKurum)
+                .kurumAdiDoldur(kurumAdi)
+                .ozelHitapSec(true)
+                .hitapAlaniKontrolu()
+                .kaydet()
+                .islemMesaji().uyariOlmali(uyariMesaji);
+
+        kurumYonetimiPage
+                .ozelHitapSec(false)
+                .yeniIletisimBilgisiEkle()
+                .iletisimBilgisiKaydet()
+                .islemMesaji().uyariOlmali(uyariMesaji);
+
+        kurumYonetimiPage
+                .ilDoldur(il)
+                .ePostaDoldur(ePostaYanlisFormat)
+                .iletisimBilgisiKaydet()
+                .islemMesaji().dikkatOlmali(ePostaDikkatMesaji);
+
+        kurumYonetimiPage
+                .iletisimBilgisiIptalEt()
+                .kepAdresBilgileriArti()
+                .kepAdresiBilgileriKaydet()
+                .islemMesaji().uyariOlmali(uyariMesaji);
+
+        kurumYonetimiPage
+                .kepAdresiDoldur(kepAdresiYanlisFormat)
+                .kepAdresiBilgileriKaydet()
+                .islemMesaji().dikkatOlmali(kepAdresiDikkatMesaji);
+
+        kurumYonetimiPage
+                .kepAdresiBilgileriIptalEt()
+                .kepAdresiKullaniyorSec(true)
+                .idariBirimKimlikKoduDoldur(idariBirimKimlikKodu) //uyarı popupdan sonra buraları silinior. o yüzden eklendi
+                .kurumAdiDoldur(kurumAdi)  //uyarı popupdan sonra buraları silinior. o yüzden eklendi
+                .kaydet()
+                .islemMesaji().dikkatOlmali(kepAdresiBolBirakilamazDikkatMesaji);
 
     }
 

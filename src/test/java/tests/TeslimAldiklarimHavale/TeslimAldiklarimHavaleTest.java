@@ -38,23 +38,9 @@ public class TeslimAldiklarimHavaleTest extends BaseTest {
     HavaleOnayinaSunduklarimPage havaleOnayinaSunduklarimPage;
     HavaleOnayınaGelenlerPage havaleOnayınaGelenlerPage;
     HavaleEdilenEvrakRaporuPage havaleEdilenEvrakRaporuPage;
-
-    @BeforeMethod
-    public void loginBeforeTests() {
-    gelenEvrakKayitPage = new GelenEvrakKayitPage();
-    teslimAlinmayiBekleyenlerPage = new TeslimAlinmayiBekleyenlerPage();
-    teslimAlinanlarPage = new TeslimAlinanlarPage();
-    birimHavaleEdilenlerPage = new BirimHavaleEdilenlerPage();
-    gelenEvraklarPage = new GelenEvraklarPage();
-    birimIadeEdilenlerPage = new BirimIadeEdilenlerPage();
-    havaleOnayinaSunduklarimPage = new HavaleOnayinaSunduklarimPage();
-    havaleOnayınaGelenlerPage = new HavaleOnayınaGelenlerPage();
-    havaleEdilenEvrakRaporuPage = new HavaleEdilenEvrakRaporuPage();
-    }
-
     String basariMesaji = "İşlem başarılıdır!";
     String konuKodu = "Diğer";
-    String evrakSayiSag =  createRandomNumber(10);
+    String evrakSayiSag = createRandomNumber(10);
     String evrakTarihi = getSysDateForKis();
     String kurum = "BÜYÜK HARFLERLE KURUM";
     String birim = "Yazılım Geliştirme Direktörlüğ";
@@ -62,6 +48,19 @@ public class TeslimAldiklarimHavaleTest extends BaseTest {
     String birim2 = "YGD";
     String not = createRandomText(15);
     String konuKoduRandomTS1597 = "TC-1597_" + createRandomNumber(15);
+
+    @BeforeMethod
+    public void loginBeforeTests() {
+        gelenEvrakKayitPage = new GelenEvrakKayitPage();
+        teslimAlinmayiBekleyenlerPage = new TeslimAlinmayiBekleyenlerPage();
+        teslimAlinanlarPage = new TeslimAlinanlarPage();
+        birimHavaleEdilenlerPage = new BirimHavaleEdilenlerPage();
+        gelenEvraklarPage = new GelenEvraklarPage();
+        birimIadeEdilenlerPage = new BirimIadeEdilenlerPage();
+        havaleOnayinaSunduklarimPage = new HavaleOnayinaSunduklarimPage();
+        havaleOnayınaGelenlerPage = new HavaleOnayınaGelenlerPage();
+        havaleEdilenEvrakRaporuPage = new HavaleEdilenEvrakRaporuPage();
+    }
 
     @Step("Havale onayına gelenler sayfasına evrak düşürmektedir.")
     public void TS1597PreCondition() {
@@ -83,8 +82,9 @@ public class TeslimAldiklarimHavaleTest extends BaseTest {
                 .yeniKayitButton();
         teslimAlinmayiBekleyenlerPage
                 .openPage()
-                .evrakSecNoTeslimAl(konuKoduRandomTS1597,true);
+                .evrakSecNoTeslimAl(konuKoduRandomTS1597, true);
     }
+
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS1597: Havale onayı bekleyen evrakın geri çekilmesi ve tekrar havalesi (içerik ekranından)")
     public void TS1597() {
@@ -104,18 +104,18 @@ public class TeslimAldiklarimHavaleTest extends BaseTest {
                 .openPage()
                 .evrakNoIleEvragıGeldigiGorme(konuKoduRandomTS1597);
 
-        login(usernameYAKYOL,passwordYAKYOL);
+        login(usernameYAKYOL, passwordYAKYOL);
 
         teslimAlinmayiBekleyenlerPage
                 .openPage()
                 .evrakGeldigiGorunur(konuKoduRandomTS1597);
 
-        login(usernameMBOZDEMIR,passwordMBOZDEMIR);
+        login(usernameMBOZDEMIR, passwordMBOZDEMIR);
 
         teslimAlinmayiBekleyenlerPage
                 .openPage()
                 .evrakGeldigiGorunur(konuKoduRandomTS1597);
-   }
+    }
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS1590: Kullanıcı listesinden hariç tutarak evrak havale etme (önizleme ekranından)")
@@ -139,18 +139,18 @@ public class TeslimAldiklarimHavaleTest extends BaseTest {
                 .openPage()
                 .evrakNoIleEvragıGeldigiGorme(konuKoduRandomTS1597);
 
-        login(usernameYAKYOL,passwordYAKYOL);
+        login(usernameYAKYOL, passwordYAKYOL);
 
         gelenEvraklarPage
                 .openPage()
                 .evrakGeldigiGorme(konuKoduRandomTS1597);
 
-        login(usernameMBOZDEMIR,passwordZTEKIN);
+        login(usernameMBOZDEMIR, passwordZTEKIN);
 
         gelenEvraklarPage
                 .openPage()
                 .evrakNoGelmedigiGorme(konuKoduRandomTS1597);
-   }
+    }
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS0446: Birime Evrak Havale ve Havaleyi İade Etme")
@@ -166,7 +166,7 @@ public class TeslimAldiklarimHavaleTest extends BaseTest {
                 .havaleYapGonder()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
-        login(usernameYAKYOL,passwordYAKYOL);
+        login(usernameYAKYOL, passwordYAKYOL);
 
         teslimAlinmayiBekleyenlerPage
                 .openPage()
@@ -175,7 +175,7 @@ public class TeslimAldiklarimHavaleTest extends BaseTest {
                 .iadeEtNotDoldur(not)
                 .iadeEtIadeEt();
 
-        login(usernameZTEKIN,passwordZTEKIN);
+        login(usernameZTEKIN, passwordZTEKIN);
 
         birimIadeEdilenlerPage
                 .openPage()
@@ -192,7 +192,7 @@ public class TeslimAldiklarimHavaleTest extends BaseTest {
                 .openPage()
                 .evrakNoIleEvrakSec(konuKoduRandomTS1597)
                 .havaleYap()
-                .havaleYapOnaylanacakKisiDoldur(kisi,birim2)
+                .havaleYapOnaylanacakKisiDoldur(kisi, birim2)
                 .havaleYaphavaleOnayinaGonder()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
@@ -203,7 +203,7 @@ public class TeslimAldiklarimHavaleTest extends BaseTest {
                 .geriAlNotDoldur(not)
                 .geriAlGeriAl();
 
-        login(usernameMBOZDEMIR,passwordMBOZDEMIR);
+        login(usernameMBOZDEMIR, passwordMBOZDEMIR);
 
         havaleOnayınaGelenlerPage
                 .openPage()
@@ -214,7 +214,7 @@ public class TeslimAldiklarimHavaleTest extends BaseTest {
     @Test(enabled = true, description = "TS1591: Teslim aldıklarım listesinden yapılan havalenin Havale Edilen Evrak Raporundan kontrolü")
     public void TS1591() {
 
-        login(usernameZTEKIN,passwordZTEKIN);
+        login(usernameZTEKIN, passwordZTEKIN);
 
         havaleEdilenEvrakRaporuPage
                 .openPage()

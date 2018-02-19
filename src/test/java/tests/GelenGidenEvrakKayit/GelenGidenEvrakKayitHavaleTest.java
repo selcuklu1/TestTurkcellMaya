@@ -25,7 +25,7 @@ public class GelenGidenEvrakKayitHavaleTest extends BaseTest {
     GelenEvraklarPage gelenEvraklarPage;
     HavaleOnayiVerdiklerimPage havaleOnayiVerdiklerim;
 
-//    User optiim = new User("optiim", "123");
+    //    User optiim = new User("optiim", "123");
     User yakyol = new User("yakyol", "123");
     User mbozdemir = new User("mbozdemir", "123");
     User ztekin = new User("ztekin", "123");
@@ -41,7 +41,7 @@ public class GelenGidenEvrakKayitHavaleTest extends BaseTest {
     String ivedilik = "Normal";
     String kisi = "Zübeyde Tekin";
     String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
-//    String details = "BİLİŞİM HİZMETLERİ VE UYDU PAZARLAMA GENEL MÜDÜR Y";
+    //    String details = "BİLİŞİM HİZMETLERİ VE UYDU PAZARLAMA GENEL MÜDÜR Y";
     String details = "BHUPGMY";
     String onaylayacakKisi = "Mehmet BOZDEMİR";
     String onayKisiDetails = "BHUPGMY";
@@ -69,7 +69,7 @@ public class GelenGidenEvrakKayitHavaleTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, priority = 0, description = "TS1683: Gelen evrak kayıt ekranı havale alanları kontrolü")
     public void TS1683() throws InterruptedException {
-        String testid= "TS-1683";
+        String testid = "TS-1683";
         konu = "TS-1683-" + getSysDate();
         String disKullanici = "distest";
         String tuzelKisi = "Büyük Küçük Harflerle Tüzel Kişi";
@@ -78,7 +78,7 @@ public class GelenGidenEvrakKayitHavaleTest extends BaseTest {
         String ustBirim = "GENEL MÜDÜRLÜK MAKAMI";
         String dikkatMesaj = "Evrakı kendinize havale edemezsiniz!";
 
-        testStatus(testid,"PreCondition Evrak Oluşturma");
+        testStatus(testid, "PreCondition Evrak Oluşturma");
         gelenEvrakKayitPage
                 .openPage()
                 .konuKoduDoldur(konuKodu)
@@ -100,13 +100,13 @@ public class GelenGidenEvrakKayitHavaleTest extends BaseTest {
                 .evrakNoIleEvrakSec(konu)
                 .tabloEvrakNoileIcerikSec(konu)
                 .icerikHavaleYap()
-                .icerikHavaleIslemleriKisiDoldur(onaylayacakKisi,onayKisiDetails)
+                .icerikHavaleIslemleriKisiDoldur(onaylayacakKisi, onayKisiDetails)
                 .icerikHavaleOnayinaGonder()
                 .islemMesaji().basariliOlmali();
 
         login(mbozdemir);
 
-        testStatus(testid,"Test Başladı");
+        testStatus(testid, "Test Başladı");
         gelenEvraklarPage
                 .openPage()
                 .tabloEvrakNoSec(konu)
@@ -124,7 +124,7 @@ public class GelenGidenEvrakKayitHavaleTest extends BaseTest {
                 .openPage()
                 .tabloEvrakNoSec(konu)
                 .tabHavaleYap()
-                .havaleIslemleriKisiSec(onaylayacakKisi,onayKisiDetails)
+                .havaleIslemleriKisiSec(onaylayacakKisi, onayKisiDetails)
                 .havaleYapGonder()
                 .islemMesaji().dikkatOlmali(dikkatMesaj);
     }
@@ -132,14 +132,14 @@ public class GelenGidenEvrakKayitHavaleTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, priority = 0, description = "TS2172: Evrakın Onaylı havale edilmesi ve onayın reddedilmesi (içerikten)")
     public void TS2172() throws InterruptedException {
-        String testid= "TS-2172";
+        String testid = "TS-2172";
         konu = "TS-2172-" + getSysDate();
         String pathToFilePdf = getUploadPath() + "Otomasyon.pdf";
         String pdfName = "Otomasyon.pdf";
         String pathToFileExcel = getUploadPath() + "test.xlsx";
         String excelName = "test.xlsx";
 
-        testStatus(testid,"Test Başladı");
+        testStatus(testid, "Test Başladı");
         gelenEvrakKayitPage
                 .openPage()
                 .evrakBilgileriUstYaziEkle(pathToFilePdf)
@@ -201,13 +201,13 @@ public class GelenGidenEvrakKayitHavaleTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, priority = 0, description = "TS2171: Gelen evrak kaydederken havale edilen evrakın geri alınması\n")
     public void TS2171() throws InterruptedException {
-        String testid= "TS-2171";
+        String testid = "TS-2171";
         String islemSureci = "Evrak geri alındı ";
         konu = "TS-2171-" + getSysDate();
         String pathToFilePdf = getUploadPath() + "Otomasyon.pdf";
         String pdfName = "Otomasyon.pdf";
 
-        testStatus(testid,"PreCondition Evrak Oluşturma");
+        testStatus(testid, "PreCondition Evrak Oluşturma");
         gelenEvrakKayitPage
                 .openPage()
                 .evrakBilgileriUstYaziEkle(pathToFilePdf)
@@ -236,7 +236,7 @@ public class GelenGidenEvrakKayitHavaleTest extends BaseTest {
                 .kaydet()
                 .popUps();
 
-        testStatus(testid,"Test Başladı");
+        testStatus(testid, "Test Başladı");
         login(mbozdemir);
         birimHavaleEdilenlerPage
                 .openPage()
@@ -269,7 +269,7 @@ public class GelenGidenEvrakKayitHavaleTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, priority = 0, description = "TS397: Havale yeri Birim, Kişi, Kullanıcı Listesi seçilerek evrakın havale edilmesi\n")
     public void TS397() throws InterruptedException {
-        String testid= "TS-397";
+        String testid = "TS-397";
         konu = "TS-397-" + getSysDate();
         String pathToFilePdf = getUploadPath() + "Otomasyon.pdf";
         String pdfName = "Otomasyon.pdf";
@@ -277,7 +277,7 @@ public class GelenGidenEvrakKayitHavaleTest extends BaseTest {
         String excelName = "test.xlsx";
         String evrakSayiSag = createRandomNumber(5);
 
-        testStatus(testid,"Test Başladı");
+        testStatus(testid, "Test Başladı");
         gelenEvrakKayitPage
                 .openPage()
                 .evrakBilgileriUstYaziEkle(pathToFilePdf)
@@ -309,14 +309,14 @@ public class GelenGidenEvrakKayitHavaleTest extends BaseTest {
         birimHavaleEdilenlerPage
                 .openPage()
                 .evrakNoIleTabloKontrolu(konu)
-                .evrakAlanKontrolleri(konu,geldigiKurum,birim,evrakTarihi,evrakSayiSag);
+                .evrakAlanKontrolleri(konu, geldigiKurum, birim, evrakTarihi, evrakSayiSag);
 
         login(mbozdemir);
 
         teslimAlinmayiBekleyenlerPage
                 .openPage()
                 .evrakNoIleEvrakSec(konu)
-                .evrakAlanKontrolleri(konu,geldigiKurum,evrakTarihi,evrakSayiSag);
+                .evrakAlanKontrolleri(konu, geldigiKurum, evrakTarihi, evrakSayiSag);
 
 
         login(ztekin);
@@ -324,24 +324,24 @@ public class GelenGidenEvrakKayitHavaleTest extends BaseTest {
         gelenEvraklarPage
                 .openPage()
                 .evrakGeldigiGorme(konu)
-                .evrakAlanKontrolleri(konu,geldigiKurum,evrakTarihi,evrakSayiSag);
+                .evrakAlanKontrolleri(konu, geldigiKurum, evrakTarihi, evrakSayiSag);
 
     }
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, priority = 0, description = "TS407: Ek ve ilgisi olan gelen evrakın havalesi")
     public void TS407() throws InterruptedException {
-        String testid= "TS-407";
+        String testid = "TS-407";
         konu = "TS-407-" + getSysDate();
         String pathToFilePdf = getUploadPath() + "Otomasyon.pdf";
         String pdfName = "Otomasyon.pdf";
         String pathToFileExcel = getUploadPath() + "test.xlsx";
         String excelName = "test.xlsx";
         String ekMetni = "test otomasyon" + getSysDateForKis();
-        String fileName ="test.txt";
+        String fileName = "test.txt";
         String pathToFileText = getUploadPath() + "test.txt";
 
-        testStatus(testid,"Test Başladı");
+        testStatus(testid, "Test Başladı");
         gelenEvrakKayitPage
                 .openPage()
                 .konuKoduDoldur(konuKodu)
@@ -373,13 +373,13 @@ public class GelenGidenEvrakKayitHavaleTest extends BaseTest {
                 .fizikselEkTabViewAciklamaEkle()
                 .dosyaEkleTabTabloKontrolu("Ek-2")
 
-                 .sistemdeKayitliEvrakEkle()
-                 //        evrak tarihi
-                 //        evrakın aranacağı yer
-                 //        evrak arama alanlarının geldiği görülür
-                 .evrakEkTabEvrakAramaDoldur("1")
-                 .dokumanAraButton()
-                 .islemMesaji().basariliOlmali(basariMesaji);
+                .sistemdeKayitliEvrakEkle()
+                //        evrak tarihi
+                //        evrakın aranacağı yer
+                //        evrak arama alanlarının geldiği görülür
+                .evrakEkTabEvrakAramaDoldur("1")
+                .dokumanAraButton()
+                .islemMesaji().basariliOlmali(basariMesaji);
 
         gelenEvrakKayitPage
                 .ekEkleButton1()
@@ -399,7 +399,6 @@ public class GelenGidenEvrakKayitHavaleTest extends BaseTest {
                 .ilgiBilgileriDosyaEkleEkMetinDoldur(ekMetni)
                 .ilgiBilgileriTabViewEkle()
                 .ilgiBilgileridosyaEkleTabloKontrolu("a")
-
 
 
                 .ilgiBilgileriSistemdeKayitliEvrakEkle()
@@ -429,33 +428,33 @@ public class GelenGidenEvrakKayitHavaleTest extends BaseTest {
                 .evrakNoIleTablodanEvrakSecme(konu)
                 .evrakOnizlemeKontrol()
                 .birimEvrakEkleri("Evrak Ekleri")
-                .birimEvrakEkleriKontrol("EK-1","EK-2","EK-3")
+                .birimEvrakEkleriKontrol("EK-1", "EK-2", "EK-3")
                 .birimEvrakEkleri("İlgi Bilgileri")
-                .birimIlgiBilgileriEvrakEkleriKontrol("a","b");
+                .birimIlgiBilgileriEvrakEkleriKontrol("a", "b");
 
-                login(mbozdemir);
+        login(mbozdemir);
 
         teslimAlinmayiBekleyenlerPage
                 .openPage()
                 .evrakNoIleEvrakSec(konu)
                 .evrakOnizlemeKontrol()
                 .teslimEvrakEkleri("Evrak Ekleri")
-                .teslimEvrakEkleriKontrol("EK-1","EK-2","EK-3")
+                .teslimEvrakEkleriKontrol("EK-1", "EK-2", "EK-3")
                 .teslimEvrakEkleri("İlgi Bilgileri")
-                .teslimIlgiBilgileriEvrakEkleriKontrol("a","b");
+                .teslimIlgiBilgileriEvrakEkleriKontrol("a", "b");
     }
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, priority = 0, description = "TS435: Havale onayı bekleyen evrakın geri çekilmesi ve tekrar havalesi (detay ekranından)")
     public void TS435() throws InterruptedException {
-        String testid= "TS-435";
+        String testid = "TS-435";
         konu = "TS-435-" + getSysDate();
         String pathToFilePdf = getUploadPath() + "Otomasyon.pdf";
         String pdfName = "Otomasyon.pdf";
         String pathToFileExcel = getUploadPath() + "test.xlsx";
         String excelName = "test.xlsx";
 
-        testStatus(testid,"Test Başladı");
+        testStatus(testid, "Test Başladı");
         gelenEvrakKayitPage
                 .openPage()
                 .evrakBilgileriUstYaziEkle(pathToFilePdf)
@@ -533,7 +532,7 @@ public class GelenGidenEvrakKayitHavaleTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, priority = 0, description = "TS1582: Evrakın Onaylı havale edilmesi ve güncellenerek onaylanması")
     public void TS1582() throws InterruptedException {
-        String testid= "TS-1582";
+        String testid = "TS-1582";
         konu = "TS-1582-" + getSysDate();
         String pathToFilePdf = getUploadPath() + "Otomasyon.pdf";
         String pdfName = "Otomasyon.pdf";
@@ -541,7 +540,7 @@ public class GelenGidenEvrakKayitHavaleTest extends BaseTest {
         String excelName = "test.xlsx";
         String islemSureci = "Evrak havale edildi";
 
-        testStatus(testid,"Test Başladı");
+        testStatus(testid, "Test Başladı");
         gelenEvrakKayitPage
                 .openPage()
                 .evrakBilgileriUstYaziEkle(pathToFilePdf)
@@ -578,7 +577,7 @@ public class GelenGidenEvrakKayitHavaleTest extends BaseTest {
                 //Gelen Evrak Kayıt Havale-1582 de hata gözüküyor. Adım 19 ve 20 birbiri ile çelişiyor.
                 //19. adım doğru ise 23. adımdan devam ediyor. 20. adım doğru ise 21. adımdan devam ediyor ama 19. adım iptal oluyor.
                 //19. adım baz alınarak test implemente edildi.
-                .evrakSecCheckBox(konu,true)
+                .evrakSecCheckBox(konu, true)
                 .islemMesaji().basariliOlmali();
 
         havaleOnayiVerdiklerim
@@ -603,15 +602,15 @@ public class GelenGidenEvrakKayitHavaleTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, priority = 0, description = "TS405: Havaleden geri alınan evrakın tekrar havalesi\n")
     public void TS405() throws InterruptedException {
-        String testid= "TS-405";
+        String testid = "TS-405";
         String islemSureci = "Evrak geri alındı ";
         konu = "TS-405-" + getSysDate();
         String pathToFilePdf = getUploadPath() + "Otomasyon.pdf";
         String pdfName = "Otomasyon.pdf";
-        String fileName ="test.txt";
+        String fileName = "test.txt";
         String pathToFileText = getUploadPath() + "test.txt";
 
-        testStatus(testid,"PreCondition Evrak Oluşturma");
+        testStatus(testid, "PreCondition Evrak Oluşturma");
         gelenEvrakKayitPage
                 .openPage()
                 .evrakBilgileriUstYaziEkle(pathToFilePdf)
@@ -652,7 +651,7 @@ public class GelenGidenEvrakKayitHavaleTest extends BaseTest {
                 .geriAl()
                 .islemMesaji().basariliOlmali();
 
-        testStatus(testid,"Test Başladı");
+        testStatus(testid, "Test Başladı");
         kaydedilenGelenEvraklarPage
                 .openPage()
                 .evrakNoIleEvrakSec(konu)

@@ -810,8 +810,6 @@ public class TopluPostalamaTest extends BaseTest {
                 .openPage();
 
 
-
-
         topluPostalanacakEvraklarPage
                 .openPage()
                 .gidecegiYerListesiAlfabetikSiraKontrolu()
@@ -1905,7 +1903,7 @@ public class TopluPostalamaTest extends BaseTest {
         int indirimOrani = 50;
         double indirimSonrasiTutarInt = tutarInt - (tutarInt * indirimOrani / 100);
 
-        String indirimOncesiTutar = (""+ tutarInt).replace(',', '.');
+        String indirimOncesiTutar = ("" + tutarInt).replace(',', '.');
         String tutar = ("" + indirimSonrasiTutarInt).replace(',', '.');
 
         int gramaj2 = 2499;
@@ -2061,9 +2059,9 @@ public class TopluPostalamaTest extends BaseTest {
                 .openPage()
                 .filtreleAc()
 //                .postaListesiInboxKontrolu()
-                .postaListesiKontrol("TC1811 20180129165718",false)
+                .postaListesiKontrol("TC1811 20180129165718", false)
                 .postaListesiDoldur(postaListesi)
-                .evrakSec(getSysDateForKis(),geregi,konu[0],"YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ",gidisSekli)
+                .evrakSec(getSysDateForKis(), geregi, konu[0], "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ", gidisSekli)
 //                .evrakSec(konu[0])
                 .evrakOnizlemeKontrolu()
                 .konuyaGorePostaListesindenCikart(konu[1]);
@@ -2166,7 +2164,6 @@ public class TopluPostalamaTest extends BaseTest {
         String[] pdfSayi = new String[2];
 
 
-
         login("mbozdemir", "123");
         //region Parameters
         String konuKodu = "010.01";
@@ -2253,8 +2250,8 @@ public class TopluPostalamaTest extends BaseTest {
                 .openPage()
                 .filtreleAc()
                 .postaListesiDoldur(postaListesi)
-                .evrakKontrol(getSysDateForKis(),geregi,konu[0],evrakHazirlayanBirim,postaTipleri[0],true)
-                .evrakKontrol(getSysDateForKis(),geregi,konu[1],evrakHazirlayanBirim,postaTipleri[0],true)
+                .evrakKontrol(getSysDateForKis(), geregi, konu[0], evrakHazirlayanBirim, postaTipleri[0], true)
+                .evrakKontrol(getSysDateForKis(), geregi, konu[1], evrakHazirlayanBirim, postaTipleri[0], true)
                 .evrakSec(konu[0])
                 .evrakOnizlemeKontrolu()
                 .evrakSec(konu[1])
@@ -2288,7 +2285,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .gidisSekliSec("Kurye")
                 .gidisSekliSec("Ankara İçi APS")
                 .gonderildigiYerSec("Yurt İçi")
-                .gramajDoldur("deneme",false)
+                .gramajDoldur("deneme", false)
 
                 .gramajDoldur(gramaj1)
                 .tutarHesapla()

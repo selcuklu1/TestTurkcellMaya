@@ -1,6 +1,5 @@
 package pages.pageComponents.tabs;
 
-import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
@@ -15,15 +14,11 @@ import pages.pageComponents.SearchTable;
 import pages.pageComponents.UstYazi;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.alanlar.*;
-import pages.ustMenuPages.EvrakOlusturPage;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
-import static com.codeborne.selenide.CollectionCondition.*;
+import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Condition.empty;
 import static com.codeborne.selenide.Selenide.$;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
@@ -470,9 +465,9 @@ public class BilgilerTab extends MainPage {
     }
 
     @Step("\"{secilenGeregi}\" seçilen gereğinin posta tipi: {stepDescription}")
-    public SelenideElement getSecilenGeregiPostaTipi(String stepDescription, String... secilenGeregi){
+    public SelenideElement getSecilenGeregiPostaTipi(String stepDescription, String... secilenGeregi) {
         ElementsCollection collection = getGeregiCombolov().getSelectedItems().shouldHave(sizeGreaterThan(0));
-        for (String v:secilenGeregi) {
+        for (String v : secilenGeregi) {
             collection = collection.filterBy(text(v));
         }
         return collection.shouldHave(sizeGreaterThan(0)).first().$("select").shouldBe(visible);
@@ -862,7 +857,7 @@ public class BilgilerTab extends MainPage {
                 .getSelectableItems()
                 .filterBy(text(kullanici.getFullname()))
                 .filterBy(text(kullanici.getGorev()))
-                .filterBy(text(kullanici.getBirimKisaAdi().isEmpty()?kullanici.getBirimAdi():kullanici.getBirimKisaAdi()))
+                .filterBy(text(kullanici.getBirimKisaAdi().isEmpty() ? kullanici.getBirimAdi() : kullanici.getBirimKisaAdi()))
                 .first().click();
         getAnlikOnayAkisKullanicilarCombolov().closeTreePanel();
 

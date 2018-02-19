@@ -228,13 +228,13 @@ public class TaslakEvraklarPage extends MainPage {
                 .filterBy(Condition.text(text))
                 .shouldHaveSize(1);
 
-        Assert.assertEquals(tblKolonGonderen.isDisplayed(),true);
-        Assert.assertEquals(tblKolonTeslimAlan.isDisplayed(),true);
-        Assert.assertEquals(tblKolonIslemSureci.isDisplayed(),true);
-        Assert.assertEquals(tblKolonIslemTarihi.isDisplayed(),true);
-        Assert.assertEquals(tblKolonAciklama.isDisplayed(),true);
+        Assert.assertEquals(tblKolonGonderen.isDisplayed(), true);
+        Assert.assertEquals(tblKolonTeslimAlan.isDisplayed(), true);
+        Assert.assertEquals(tblKolonIslemSureci.isDisplayed(), true);
+        Assert.assertEquals(tblKolonIslemTarihi.isDisplayed(), true);
+        Assert.assertEquals(tblKolonAciklama.isDisplayed(), true);
 
-        Allure.addAttachment("Tablo kontolü","Aşağıdaki kolonların listelendiği görülür. \n Gönderen\n" +
+        Allure.addAttachment("Tablo kontolü", "Aşağıdaki kolonların listelendiği görülür. \n Gönderen\n" +
                 "Teslim Alan\n" +
                 "İşlem Süreci\n" +
                 "İşlem Tarihi\n" +
@@ -261,9 +261,10 @@ public class TaslakEvraklarPage extends MainPage {
 
     @Step("Evrak Geçmişi tıklanır.")
     public TaslakEvraklarPage evrakGecmisiTikla() {
-   $(By.xpath("//a[text()='Evrak Geçmişi']")).click();
+        $(By.xpath("//a[text()='Evrak Geçmişi']")).click();
         return this;
     }
+
     @Step("Evrak Önizleme Ekranı ve evrak eki açıldığı görülür.")
     public TaslakEvraklarPage evrakOnizlemeveEkiKontrolu(String icerik) {
         Assert.assertEquals($(By.xpath("//div[text()='Evrak Önizleme']")).isDisplayed(), true);
@@ -292,12 +293,11 @@ public class TaslakEvraklarPage extends MainPage {
     }
 
     @Step("Evrak kontrolu : \"{konu}\" , \"{shouldBeExist}\" ")
-    public TaslakEvraklarPage evrakKontrolu(String konu,boolean shouldBeExist) {
-        if(shouldBeExist) {
+    public TaslakEvraklarPage evrakKontrolu(String konu, boolean shouldBeExist) {
+        if (shouldBeExist) {
             tableEvraklar
                     .filterBy(Condition.text("Konu: " + konu)).shouldHaveSize(1);
-        }
-        else {
+        } else {
             tableEvraklar
                     .filterBy(Condition.text("Konu: " + konu)).shouldHaveSize(0);
         }

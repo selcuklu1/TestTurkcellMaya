@@ -64,7 +64,6 @@ public class ParafBekleyenlerPage extends MainPage {
     SelenideElement txtEvrakOnizlemdeSilNotu = $("[id^='mainPreviewForm:j_idt'][class^='ui-inputfield ui-inputtextarea']");
 
 
-
     @Step("Paraf Bekleyenler sayfası aç")
     public ParafBekleyenlerPage openPage() {
         solMenu(SolMenuData.IslemBekleyenEvraklar.ParafBekleyenler);

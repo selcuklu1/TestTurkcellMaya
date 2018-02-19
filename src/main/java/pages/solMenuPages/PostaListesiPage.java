@@ -79,6 +79,7 @@ public class PostaListesiPage extends MainPage {
     SelenideElement txtEtiketBastir = $(By.id("mainPreviewForm:etiketMetinID"));
     SelenideElement txtIndirimOrani2 = $("[id='mainPreviewForm:indirimOraniId'] td:nth-child(2) input");
     ElementsCollection tableEvrakListesi = $$("tbody[id='mainPreviewForm:dataTableId_data'] > tr[role='row']");
+    ElementsCollection listGidisSekli = $$("div[id='mainPreviewForm:postaListesiPostaTipi_panel'] > ul > li");
 
     @Step("Posta Listesi Sayfasını aç")
     public PostaListesiPage openPage() {
@@ -117,7 +118,7 @@ public class PostaListesiPage extends MainPage {
         boolean statu = false;
         boolean x = txtPostaListesi.getValue().isEmpty();
         Assert.assertEquals(x, statu);
-        Allure.addAttachment("Inbox kontrolü : ","Liste seçimi öncesi inbox boş olduğu görülür.");
+        Allure.addAttachment("Inbox kontrolü : ", "Liste seçimi öncesi inbox boş olduğu görülür.");
         return this;
     }
 
@@ -149,8 +150,6 @@ public class PostaListesiPage extends MainPage {
         return this;
     }
 
-    ElementsCollection listGidisSekli = $$("div[id='mainPreviewForm:postaListesiPostaTipi_panel'] > ul > li");
-
     @Step("Gidis Sekli \"{gidisSekli}\" seç")
     public PostaListesiPage gidisSekliSec(String gidisSekli) {
 
@@ -164,7 +163,6 @@ public class PostaListesiPage extends MainPage {
         Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", currentItem);
 
         currentItem.click();
-
 
 
         //cmbGidisSekli.selectComboBox(gidisSekli, true);
@@ -198,7 +196,7 @@ public class PostaListesiPage extends MainPage {
 
     @Step("Gonderildiği Kurum alanının geldiği görülür.")
     public PostaListesiPage gonderildigiKurumAlanKontrolu() {
-            cmbGonderildigiKurum.shouldBe(Condition.visible);
+        cmbGonderildigiKurum.shouldBe(Condition.visible);
         return this;
     }
 
@@ -207,9 +205,10 @@ public class PostaListesiPage extends MainPage {
         setValueJS(txtGramaj, gramaj);
         return this;
     }
+
     @Step("Gramaj alanını doldur : \"{gramaj}\",\"{shouldBe}\" ")
-    public PostaListesiPage gramajDoldur(String gramaj,boolean shouldBe) {
-        if(shouldBe)
+    public PostaListesiPage gramajDoldur(String gramaj, boolean shouldBe) {
+        if (shouldBe)
             setValueJS(txtGramaj, gramaj);
         else
             txtGramaj.sendKeys(gramaj);
@@ -349,17 +348,17 @@ public class PostaListesiPage extends MainPage {
     @Step("Konuye göre evrak seç. \"{konu}\" ")
     public PostaListesiPage evrakSec(String konu) {
 
-       SelenideElement tablo =  $$("tbody[id='mainInboxForm:inboxDataTable_data'] > tr[data-ri]")
+        SelenideElement tablo = $$("tbody[id='mainInboxForm:inboxDataTable_data'] > tr[data-ri]")
                 .filterBy(Condition.text(konu))
                 .first();
-       tablo.click();
+        tablo.click();
         return this;
     }
 
 
     @Step("Evrak önizleme kontrolü")
     public PostaListesiPage evrakOnizlemeKontrolu() {
-        Assert.assertEquals($(By.xpath("//div[text()='Evrak Önizleme']")).is(Condition.visible),true);
+        Assert.assertEquals($(By.xpath("//div[text()='Evrak Önizleme']")).is(Condition.visible), true);
         return this;
     }
 
@@ -515,7 +514,7 @@ public class PostaListesiPage extends MainPage {
 
     @Step("İndirim Öncesi tutar alaninda \"{indirimOncesiTutar}\" değeri olmalı mı? : \"{shouldBeEquals}\" ")
     public PostaListesiPage indirimOncesiTutarKontrol(String indirimOncesiTutar) {
-        if(lblIndirimOncesiTutar.getText().contains(indirimOncesiTutar))
+        if (lblIndirimOncesiTutar.getText().contains(indirimOncesiTutar))
             Assert.assertEquals(true, true);
         else
             Assert.assertEquals(true, false);
@@ -523,7 +522,7 @@ public class PostaListesiPage extends MainPage {
     }
 
     @Step("{0}")
-    public PostaListesiPage indirimOrani(){
+    public PostaListesiPage indirimOrani() {
 
         return this;
     }
@@ -541,7 +540,7 @@ public class PostaListesiPage extends MainPage {
     @Step("İndirim sonrası tutar alaninda \"{tutar}\" değeri olmalı mı? : \"{shouldBeEquals}\" ")
     public PostaListesiPage tutarKontrol(String tutar) {
 
-        if(txtTutar.getValue().contains(tutar))
+        if (txtTutar.getValue().contains(tutar))
             Assert.assertEquals(true, true);
         else
             Assert.assertEquals(true, false);
@@ -576,8 +575,8 @@ public class PostaListesiPage extends MainPage {
 
     @Step("Etiket bastır ekranında Gideceği Yer ve Adres kontrolü")
     public PostaListesiPage etiketBastirEkraniKontrolü(String adres, String konu) {
-        Assert.assertEquals(txtEtiketBastir.text().contains(konu),true);
-        Assert.assertEquals(txtEtiketBastir.text().contains(adres),true);
+        Assert.assertEquals(txtEtiketBastir.text().contains(konu), true);
+        Assert.assertEquals(txtEtiketBastir.text().contains(adres), true);
         return this;
     }
 

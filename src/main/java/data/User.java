@@ -103,7 +103,7 @@ public class User {
     private void splitBirimAdi(String birimAdi) {
         if (birimAdi.isEmpty()) return;
         int lastIndex = birimAdi.lastIndexOf("/");
-        if (lastIndex > 0){
+        if (lastIndex > 0) {
             this.birimAdi = birimAdi.substring(0, lastIndex).trim();
             this.birimKisaAdi = birimAdi.substring(lastIndex + 1).trim();
         } else {
@@ -111,7 +111,7 @@ public class User {
         }
     }
 
-    private ArrayList<String> getAll(){
+    private ArrayList<String> getAll() {
         ArrayList<String> list = new ArrayList<>();
         if (!name.isEmpty()) list.add(name);
         if (!surname.isEmpty()) list.add(surname);

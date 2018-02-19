@@ -93,7 +93,7 @@ public class YazismaKurallariYonetimiTest extends BaseTest {
                 .grupBirimTipleriKaydet()
                 .islemMesaji().basariliOlmali();
         yazismaKurallariYonetimiPage
-                        .yazismakurallariKontrolEt(yeniBirimAdi, true, sinirsizYazilabilir, vekaletSeviyesi, sonImzaSeviyesi);
+                .yazismakurallariKontrolEt(yeniBirimAdi, true, sinirsizYazilabilir, vekaletSeviyesi, sonImzaSeviyesi);
 
 
     }

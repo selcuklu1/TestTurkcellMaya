@@ -73,25 +73,25 @@ public class HavaleOnayınaGelenlerPage extends MainPage {
     @Step("Evrak no ile evrağın gelmediği görülür: \"{evrakNo}\" ")
     public HavaleOnayınaGelenlerPage evrakNoIleEvrakGelmedigiGorme(String evrakNo) {
         boolean durum = tblEvraklar
-                .filterBy(Condition.text(evrakNo)).size()>0;
-        Assert.assertEquals(durum,false);
+                .filterBy(Condition.text(evrakNo)).size() > 0;
+        Assert.assertEquals(durum, false);
         return this;
     }
 
     @Step("Havale Onayı")
-    public HavaleOnayınaGelenlerPage havaleOnayi(){
+    public HavaleOnayınaGelenlerPage havaleOnayi() {
         $("[class='ui-button-icon-left ui-icon havaleOnay']").click();
         return this;
     }
 
     @Step("Birim alanını doldur: {birim}")
-    public HavaleOnayınaGelenlerPage havaleOnayiBirimDoldur(String birim){
+    public HavaleOnayınaGelenlerPage havaleOnayiBirimDoldur(String birim) {
         txtHavaleOnayiBirim.selectLov(birim);
         return this;
     }
 
     @Step("Birim alanında seçileni Bilgi için gönder")
-    public HavaleOnayınaGelenlerPage havaleOnayinaBirimGeregiIcinBilgiIcinSec(){
+    public HavaleOnayınaGelenlerPage havaleOnayinaBirimGeregiIcinBilgiIcinSec() {
         $(By.id("mainPreviewForm:dagitimBilgileriBirimLov_id:LovSecilenTable:0:selectOneMenu")).selectOption("BİLGİ İÇİN GÖNDER");
         return this;
     }
@@ -102,24 +102,24 @@ public class HavaleOnayınaGelenlerPage extends MainPage {
         String bilgi = "BİLGİ İÇİN GÖNDER";
         String koordinasyon = "KOORDİNASYON İÇİN GÖNDER";
 
-        if(opsiyon.equals(gerek))
-          birimSeç.selectOptionByValue("G");
-        else if(opsiyon.equals(bilgi))
-          birimSeç.selectOptionByValue("B");
-        else if(opsiyon.equals(koordinasyon))
-         birimSeç.selectOptionByValue("K");
+        if (opsiyon.equals(gerek))
+            birimSeç.selectOptionByValue("G");
+        else if (opsiyon.equals(bilgi))
+            birimSeç.selectOptionByValue("B");
+        else if (opsiyon.equals(koordinasyon))
+            birimSeç.selectOptionByValue("K");
 
         return this;
     }
 
     @Step("Kişi alanını doldur: {kisi}")
-    public HavaleOnayınaGelenlerPage havaleOnayiKisiDoldur(String kisi,String birim){
-        txtHavaleOnayiKisi.selectLov(kisi,birim);
+    public HavaleOnayınaGelenlerPage havaleOnayiKisiDoldur(String kisi, String birim) {
+        txtHavaleOnayiKisi.selectLov(kisi, birim);
         return this;
     }
 
     @Step("Evrak Sec Checkbox ile")
-    public HavaleOnayınaGelenlerPage evrakSecCheckBox(String konu1,boolean secim) {
+    public HavaleOnayınaGelenlerPage evrakSecCheckBox(String konu1, boolean secim) {
         tblEvraklar.filterBy(text(konu1)).get(0).$$("div[class^='ui-chkbox-box']").first().click();
 
         btnOnayla.get(0).click();
@@ -141,30 +141,29 @@ public class HavaleOnayınaGelenlerPage extends MainPage {
 
     @Step("Havale Onay İkon Kontrolu tıkla")
     public HavaleOnayınaGelenlerPage havaleOnayIkonKontrolu() {
-        Assert.assertEquals(btnHavaleOnay.isDisplayed(),true,"Havale Onay Ikon Kontrolu");
-        Allure.addAttachment("Havale Onay Ikon Kontrolu","");
+        Assert.assertEquals(btnHavaleOnay.isDisplayed(), true, "Havale Onay Ikon Kontrolu");
+        Allure.addAttachment("Havale Onay Ikon Kontrolu", "");
         return this;
     }
 
     @Step("Havale İşlemleri Kişi alanında eklenen \"{kisi}\" kontrolü")
     public HavaleOnayınaGelenlerPage eklenenKisiKontrolu(String kisi) {
-        Assert.assertEquals(txtEklenenKisi.isDisplayed(),true,"Kisi Eklendi");
-        Allure.addAttachment("Kisi Eklendi:" , kisi);
+        Assert.assertEquals(txtEklenenKisi.isDisplayed(), true, "Kisi Eklendi");
+        Allure.addAttachment("Kisi Eklendi:", kisi);
         return this;
     }
 
     @Step("Havale İşlemleri Kişi alanında eklenen \"{birim}\" kontrolü")
     public HavaleOnayınaGelenlerPage eklenenBirimKontrolu(String birim) {
-        Assert.assertEquals(txtEklenenBirim.isDisplayed(),true,"Birim Eklendi");
-        Allure.addAttachment("Birim Eklendi:" , birim);
+        Assert.assertEquals(txtEklenenBirim.isDisplayed(), true, "Birim Eklendi");
+        Allure.addAttachment("Birim Eklendi:", birim);
         return this;
     }
 
     @Step("Havale İşlemleri Kişi alanında eklenen \"{opsiyon}\" kontrolü")
     public HavaleOnayınaGelenlerPage eklenenBirimOpsiyonKontrolu(String opsiyon) {
-        System.out.println("opsiyon" + txtEklenenBirimOpsiyon.getSelectedOption().text());
-        Assert.assertEquals(txtEklenenBirimOpsiyon.getSelectedOption().text().equals(opsiyon),true,"Opsiyon Seçildi");
-        Allure.addAttachment("Opsiyon Seçildi:" , opsiyon);
+        Assert.assertEquals(txtEklenenBirimOpsiyon.getSelectedOption().text().equals(opsiyon), true, "Opsiyon Seçildi");
+        Allure.addAttachment("Opsiyon Seçildi:", opsiyon);
         return this;
     }
 
@@ -173,11 +172,11 @@ public class HavaleOnayınaGelenlerPage extends MainPage {
         btnHavaleOnayiOnayla.pressEnter();
         return this;
     }
-    
+
     @Step("Havaleyi onaylamak üzeresiniz. Kabul ediyor musunuz? Evet / Hayır uyarısını geldiği görülür.")
-    public HavaleOnayınaGelenlerPage havaleyiOnaylamakUzersinizUyariGeldigiGorme(){
-        boolean durum = $$(By.id("mainPreviewForm:evetButton_id")).size()>0;
-        Assert.assertEquals(durum,true);
+    public HavaleOnayınaGelenlerPage havaleyiOnaylamakUzersinizUyariGeldigiGorme() {
+        boolean durum = $$(By.id("mainPreviewForm:evetButton_id")).size() > 0;
+        Assert.assertEquals(durum, true);
         takeScreenshot();
         return this;
     }
@@ -186,7 +185,7 @@ public class HavaleOnayınaGelenlerPage extends MainPage {
     @Step("Evet tıklanır")
     public HavaleOnayınaGelenlerPage havaleyiOnaylamakUzeresinizEvet() {
         $(By.id("mainPreviewForm:evetButton_id")).pressEnter();
-    return this;
+        return this;
     }
 
     @Step("Evrak İçerikten Havale butonunu tıkla")

@@ -76,7 +76,7 @@ public class TebliglerPage extends MainPage {
 
     @Step("Tebliğler menü yazısı kırmızı renk olmalı mı? {kirmiziOlmalimi}")
     public TebliglerPage tebliglerMenuKirmiziKontrolu(boolean kirmiziOlmalimi) {
-        if(kirmiziOlmalimi == true)
+        if (kirmiziOlmalimi == true)
             menuTebligler.shouldHave(Condition.cssClass("ui-menuitem-unread"));
         else
             menuTebligler.shouldNotHave(Condition.cssClass("ui-menuitem-unread"));
