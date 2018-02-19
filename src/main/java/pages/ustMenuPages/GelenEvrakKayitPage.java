@@ -1654,13 +1654,24 @@ public class GelenEvrakKayitPage extends MainPage {
     }
 
     @Step("Gereği alanında Birimin geldiği ve seçilemediği kontrolu - {description} : {birim}")
-    public GelenEvrakKayitPage geregiAlanindaBiriminGeldigiSecilemedigiKontrolu(String birim, String description) {
+    public GelenEvrakKayitPage geregiAlanindaBiriminGeldigiVeSecilemedigiKontrolu(String birim, String description) {
 
         int gorunurSecilemezBirimSize = comboLov(cmbGeldigiBirimBy).type(birim).getSelectableItems().size();
         Assert.assertEquals(gorunurSecilemezBirimSize == 0, true, "Birimin geldiği ve seçilemediği görülür: " + birim);
         comboLov(cmbGeldigiBirimBy).closeTreePanel();
         System.out.println("Birimin geldiği ve seçilemediği görülür: " + birim);
         Allure.addAttachment("Birimin geldiği ve seçilemediği görülür: " + birim, "");
+
+        return this;
+    }
+
+    @Step("Gereği alanında Birimin geldiği ve seçilebildiği kontrolu - {description} : {birim}")
+    public GelenEvrakKayitPage geregiAlanindaBiriminGeldigiVeSecilebildigiKontrolu(String birim, String description) {
+
+        cmbGeldigiBirim.selectLov(birim);
+
+        System.out.println("Birimin geldiği ve seçilebildiği görülür: " + birim);
+        Allure.addAttachment("Birimin geldiği ve seçilebildiği görülür: " + birim, "");
 
         return this;
     }
