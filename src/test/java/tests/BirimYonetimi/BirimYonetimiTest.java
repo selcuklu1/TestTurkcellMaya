@@ -79,13 +79,13 @@ public class BirimYonetimiTest extends BaseTest {
                 .ara()
                 .birimKontrolu(birimAdi);
 
-//TODO: Burada defect var. Seçilme durumu istemnmiş ama seçilemiyor.
+//TODO: Burada defect var. Seçilme durumu istenmiş ama seçilemiyor.
         gelenEvrakKayitPage
                 .openPage()
                 .kisiKurumSecByText("Birim")
                 //.geldigiBirimDoldur(birimAdi)
                 //.evrakSayisiSolAlanKontrolu(idariBirimKimlikKodu) //TS2337_Birim_20180215132100
-                .geregiAlanindaBiriminGeldigiSecilemedigiKontrolu(birimAdi, "Birim Adı"); //TS2337_Birim_20180215155258
+                .geregiAlanindaBiriminGeldigiVeSecilemedigiKontrolu(birimAdi, "Birim Adı"); //TS2337_Birim_20180215155258
 
         gidenEvrakKayitPage
                 .openPage()
@@ -94,8 +94,8 @@ public class BirimYonetimiTest extends BaseTest {
                 .geregiAlanindaBiriminGeldigiSecilemedigiKontrolu(idariBirimKimlikKodu, "İdari Birim Kodu ")
 
                 .bilgiSecimTipiSecByText("Birim")
-                .bilgiAlanindaBiriminGeldigiSecilemedigiKontrolu(birimAdi, "Birim Adı")
-                .bilgiAlanindaBiriminGeldigiSecilemedigiKontrolu(idariBirimKimlikKodu, "İdari Birim Kodu ");
+                .bilgiAlanindaBiriminGeldigiVeSecilemedigiKontrolu(birimAdi, "Birim Adı")
+                .bilgiAlanindaBiriminGeldigiVeSecilemedigiKontrolu(idariBirimKimlikKodu, "İdari Birim Kodu ");
 
         evrakOlusturPage
                 .openPage()
@@ -168,5 +168,91 @@ public class BirimYonetimiTest extends BaseTest {
                 .pasiflerIlkBirimGuncelle()
                 .disBirimChkBoxDoluOlduguKontrolu();
 
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS1109: Yeni birim kayıt ve evrak işlemlerinden kontrolü - Görünür")
+    public void TS1109() {
+
+        String testID = "TS1109";
+        String sistemTarihi = getSysDate();
+        String birimAdi = "TS1109_Birim_" + sistemTarihi;
+        String birimKisaAdi = "ts1109b_" + sistemTarihi;
+        String idariBirimKimlikKodu = sistemTarihi;
+        String birim = "Optiim Birim";
+        String birimDetail = "YGD";
+        String birimTipi = "Genel Müdürlüğü";
+        String gelenEvrakNumaratoru = "Türksat AŞ_numarator - Gelen Evrak";
+        String gidenEvrakNumaratoru = "Türksat AŞ_numarator - Giden Evrak";
+        String basariMesaji = "İşlem başarılıdır!";
+
+        testStatus(testID, "Birim Oluşturma");
+
+        birimYonetimiPage
+                .openPage()
+                .ekle()
+                .birimYonetimiAlanKontrolleri()
+                .gorunurlukTipiSec("Görünür")
+                .adDoldur(birimAdi)
+                .kisaAdiDoldur(birimKisaAdi)
+                .antetTipiSec("Normal")
+                .antetBilgisiDoldur(birimAdi)
+                .idariKimlikKoduDoldur(idariBirimKimlikKodu)
+                .ustBirimSec(birim, birimDetail)
+                .birimTipiSec(birimTipi)
+                .gelenEvraklariNumaratoruDoldur(gelenEvrakNumaratoru)
+                .gidenEvraklariNumaratoruDoldur(gidenEvrakNumaratoru)
+                .birimBagTuruSec("Bağlı Kuruluş")
+                .postaBirimiSec(birim, birimDetail)
+                .kepPostaBirimiSec(birim, birimDetail)
+                .postaSekliSec("Otomatik")
+                .belgenetKullanıyormuSec("Evet")
+                .kaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        birimYonetimiPage
+                .birimFiltreDoldur(birimAdi)
+                .ara()
+                .birimKontrolu(birimAdi);
+
+        gelenEvrakKayitPage
+                .openPage()
+                .kisiKurumSecByText("Birim")
+                .geregiAlanindaBiriminGeldigiVeSecilebildigiKontrolu(birimAdi, "Birim Adı");
+
+        gidenEvrakKayitPage
+                .openPage()
+                .geregiSecimTipiSecByText("Birim")
+                .geregiAlanindaBiriminGeldigiVeSecilebildigiKontrolu(birimAdi, "Birim Adı")
+                .geregiAlanindaBiriminGeldigiVeSecilebildigiKontrolu(idariBirimKimlikKodu, "İdari Birim Kodu ")
+                .geregiTemizle()
+
+                .bilgiSecimTipiSecByText("Birim")
+                .bilgiAlanindaBiriminGeldigiVeSecilebildigiKontrolu(birimAdi, "Birim Adı")
+                .bilgiAlanindaBiriminGeldigiVeSecilebildigiKontrolu(idariBirimKimlikKodu, "İdari Birim Kodu ");
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .geregiSecimTipiSecByText("Birim")
+                .geregiAlanindaBiriminGeldigiVeSecilebildigiKontrolu(birimAdi, "Birim Adı")
+                .geregiAlanindaBiriminGeldigiVeSecilebildigiKontrolu(idariBirimKimlikKodu, "İdari Birim Kodu ")
+                .geregiTemizle()
+
+                .bilgiSecimTipiSecByText("Birim")
+                .bilgiAlanindaBiriminGeldigiVeSecilebildigiKontrolu(birimAdi, "Birim Adı")
+                .bilgiAlanindaBiriminGeldigiVeSecilebildigiKontrolu(idariBirimKimlikKodu, "İdari Birim Kodu ");
+
+        olurYazisiOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .geregiSecimTipiSecByText("Birim")
+                .geregiAlanindaBiriminGeldigiVeSecilebildigiKontrolu(birimAdi, "Birim Adı")
+                .geregiAlanindaBiriminGeldigiVeSecilebildigiKontrolu(idariBirimKimlikKodu, "İdari Birim Kodu ")
+                .geregiTemizle()
+
+                .bilgiSecimTipiSecByText("Birim")
+                .bilgiAlanindaBiriminGeldigiVeSecilebildigiKontrolu(birimAdi, "Birim Adı")
+                .bilgiAlanindaBiriminGeldigiVeSecilebildigiKontrolu(idariBirimKimlikKodu, "İdari Birim Kodu ");
     }
 }

@@ -32,6 +32,9 @@ public class TeslimAlinanlarPage extends MainPage {
     BelgenetElement txtHavaleYapOnaylanacakKisi = comboLov(By.id("mainPreviewForm:onaylayacakKisiLov:LovText"));
     BelgenetElement txtHavaleYapBirim = comboLov(By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovText"));
     ElementsCollection tblEvrakGecmisi = $$("[id$='hareketGecmisiDataTable_data'] > tr[role='row']");
+    SelenideElement tabHavale = $("[id='mainPreviewForm:topluHavaleOnizlemeTab']");
+
+    ElementsCollection tabEvrakGecmisi = $$("[id$='evrakOnizlemeTab'] ul li");
 
     @Step("Teslim Alınanlar sayfası aç")
     public TeslimAlinanlarPage openPage() {
@@ -204,6 +207,14 @@ public class TeslimAlinanlarPage extends MainPage {
         return this;
     }
 
+    @Step("Evrak Geçmiş Tab kontrolü\n")
+    public TeslimAlinanlarPage tabKontrol() {
+        boolean durum = tabEvrakGecmisi.filterBy(Condition.text("Evrak Geçmişi")).get(0).$("a").isDisplayed();
+        Assert.assertEquals(durum,true,"Evrak Geçmiş Tab kontrolü");
+        Allure.addAttachment("Evrak Geçmiş Tab"," gösterilmektedir.");
+        return this;
+    }
+
     @Step("Evrak adedi kontrol: \"{evrakNo}\" ")
     public TeslimAlinanlarPage evrakAdediKontrol(String evrakNo) {
         int dosyaAdedi = tblEvraklar
@@ -215,7 +226,8 @@ public class TeslimAlinanlarPage extends MainPage {
 
     @Step("Evrak geçmişi alanına tıklanır")
     public TeslimAlinanlarPage secilenEvrakEvrakGecmisi() {
-        $$("[id$='evrakOnizlemeTab'] ul li").filterBy(Condition.text("Evrak Geçmişi")).get(0).$("a").click();
+        tabEvrakGecmisi.filterBy(Condition.text("Evrak Geçmişi")).get(0).$("a").click();
+//        $$("[id$='evrakOnizlemeTab'] ul li").filterBy(Condition.text("Evrak Geçmişi")).get(0).$("a").click();
         return this;
     }
 
