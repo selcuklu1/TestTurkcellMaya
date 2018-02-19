@@ -11,7 +11,8 @@ import pages.pageComponents.TopluEvrakOnizleme;
 import pages.solMenuPages.*;
 import pages.ustMenuPages.GelenEvrakKayitPage;
 import pages.ustMenuPages.HavaleEdilenEvrakRaporuPage;
-
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 /****************************************************
  * Tarih: 2018-02-12
  * Proje: Türksat Functional Test Automation
@@ -30,7 +31,12 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
     TopluEvrakOnizleme topluEvrakOnizleme;
     HavaleEdilenEvrakRaporuPage havaleEdilenEvrakRaporuPage;
 
+    static final Logger logger = LogManager.getLogger("KaydedilenGelenEvrakHavaleTest");
+//    User yakyol = new User("yakyol", "123");
+
+
     //    User yakyol = new User("yakyol", "123");
+
     User mbozdemir = new User("mbozdemir", "123");
     User ztekin = new User("ztekin", "123");
     //    User ztekin = new User("ztekin", "123");
@@ -699,6 +705,67 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .sorgula()
                 .rapordaEvraklarıListeleDetayTikla(konu)
                 .ekranKontrolEvrakDetayi();
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, priority = 0, description = "TS2292: Kaydedilen Gelen evraklar listesi - havale ekranı alan kontrolleri")
+    public void TS2292() throws InterruptedException {
+        String testid= "TS-2292";
+        konu = "TS-2292-" + getSysDate();
+        String evrakTarihi = getSysDateForKis();
+        String disKullanici = "distest";
+        String kurum = "Cumhurbaşkanlığı";
+        String ustBirim = "GENEL MÜDÜRLÜK MAKAMI";
+        String pathToFileText = getUploadPath() + "test.txt";
+        String fileName ="test.txt";
+        String personel = "Ali Osman TOPRAK";
+        String dikkatMesaj = "Havaleyi onaylayacak kullanıcıyı seçiniz.";
+
+        logger.info(testid + " nolu test başladı:");
+
+        testStatus(testid,"PreCondition Evrak Oluşturma");
+        gelenEvrakKayitPage
+                .openPage()
+                .konuKoduDoldur(konuKodu)
+                .konuDoldur(konu)
+                .evrakTuruSec(evrakTuru)
+                .evrakDiliSec(evrakDili)
+                .evrakTarihiDoldur(evrakTarihi)
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .kisiKurumSec(kisiKurum)
+                .geldigiKurumDoldurLovText(geldigiKurum)
+                .evrakSayiSagDoldur()
+                .evrakGelisTipiSec(evrakGelisTipi)
+                .ivedilikSec(ivedilik)
+                .kaydet()
+                .popUpsv2();
+
+        testStatus(testid,"Test Başladı");
+        kaydedilenGelenEvraklarPage
+                .openPage()
+                .evrakNoIleEvrakSec(konu)
+                .tabloEvrakNoileIcerikSec(konu)
+                .ekranKontrolEvrakDetayi()
+                .icerikHavaleYap()
+                .icerikHavaleAlanKontrolleri()
+                .ekranKontrolEvrakDetayi()
+                .havaleIslemleriKisiKontrol(disKullanici)
+                .havaleIslemleriBirimKontrol(kurum)
+                .havaleIslemleriBirimKontrol(ustBirim)
+                //TODO: ust birim kullanicisi
+                .icerikHavaleIslemleriKisiDoldur(onaylayacakKisi,onayKisiDetails)
+
+                .icerikDosyaEkle()
+                .icerikHavaleDosyaEkle(pathToFileText)
+                .icerikHavaleDosyaEkleDosyaAdiKontrol(fileName)
+                .icerikDosyaDeleteIcon()
+                .icerikHavaleDosyaEkleDosyaAdiKontrol(fileName,false)
+                .icerikHavaleOnayinaGonder2()
+                .islemMesaji().dikkatOlmali(dikkatMesaj);
+
+        kaydedilenGelenEvraklarPage
+                .havaleIslemleriOnaylayacakKisiKontrol(personel);
+
     }
 
 }
