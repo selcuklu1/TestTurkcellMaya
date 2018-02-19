@@ -135,7 +135,7 @@
                         </property>-->
                         <property>
                             <name>parallel</name>
-                            <value>methods</value>
+                            <value>classes</value>
                         </property>
                         <property>
                             <name>threadCount</name>
