@@ -51,7 +51,7 @@ public class BaseTest extends BaseLibrary {
     public Locale turkishLocal;
 
     @BeforeClass(alwaysRun = true)
-    public void driverSetUp(ITestContext context) {
+    public void driverSetUp() {
 
         log.info("Setup started");
         System.out.println("file.encoding: " + String.format("file.encoding: %s", System.getProperty("file.encoding")));
@@ -120,10 +120,6 @@ public class BaseTest extends BaseLibrary {
         System.out.println("Selenide/Selenium driver has been set up.");*/
 
         AllureEnvironmentUtils.create();
-
-        System.out.println("AAAAAAAAAAAAA");
-        System.out.println(context.getCurrentXmlTest().toXml(""));
-        System.out.println("AAAAAAAAAAAAA");
     }
 
     @BeforeMethod(alwaysRun = true)
