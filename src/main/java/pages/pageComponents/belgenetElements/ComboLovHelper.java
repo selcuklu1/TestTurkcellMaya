@@ -109,7 +109,7 @@ public class ComboLovHelper extends BaseLibrary {
     BelgenetElement clearLastSelectedItem() {
         ElementsCollection items = $$(lovSelectedItems).filterBy(visible);
         int size = items.size();
-        if (size == 0){
+        if (size == 0) {
             Allure.addAttachment("No item to clear", String.valueOf(size));
             return (BelgenetElement) element;
         }

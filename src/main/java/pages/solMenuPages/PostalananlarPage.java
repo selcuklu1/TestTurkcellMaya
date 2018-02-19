@@ -2,11 +2,9 @@ package pages.solMenuPages;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
-import org.apache.xmlbeans.impl.xb.xsdschema.All;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.testng.Assert;
@@ -18,11 +16,10 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
-import java.io.BufferedOutputStream;
 import java.io.IOException;
-import java.security.Key;
 
-import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.Condition.exist;
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.*;
 
 public class PostalananlarPage extends MainPage {
@@ -115,6 +112,7 @@ public class PostalananlarPage extends MainPage {
         btnEvrakEkleri.click();
         return this;
     }
+
     @Step("Postalanan Evrak içi İlgi Bilgileri tıklanır.")
     public PostalananlarPage btnIlgiBilgileri() {
         btnIlgiBilgileri.click();
@@ -122,15 +120,16 @@ public class PostalananlarPage extends MainPage {
     }
 
     @Step("Postalanan Evrak içi Evrak Ekleri kontrolü : \"{ek}\" ")
-    public PostalananlarPage evrakEkleriKontrol (String ek) {
+    public PostalananlarPage evrakEkleriKontrol(String ek) {
         ElementsCollection tblEvrakEkleri = $$("tbody[id^='mainPreviewForm:'][id$=':ekListesiOnizlemeDataTable_data'] tr[data-ri]");
         tblEvrakEkleri
                 .filterBy(Condition.text(ek))
                 .shouldHaveSize(1);
         return this;
     }
+
     @Step("Postalanan Evrak içi İlgi Bilgileri kontrolü : \"{ilgi}\" ")
-    public PostalananlarPage ilgiBilgileriKontrol (String ilgi) {
+    public PostalananlarPage ilgiBilgileriKontrol(String ilgi) {
         ElementsCollection tblIlgiBilgileri = $$("tbody[id^='mainPreviewForm:'][id$=':ilgiListesiDataTable_data'] tr[data-ri]");
         tblIlgiBilgileri
                 .filterBy(Condition.text(ilgi))
@@ -139,8 +138,8 @@ public class PostalananlarPage extends MainPage {
     }
 
     @Step("Posta Detayi Postalanan Evrak Posta Detayi kontrolü.")
-    public PostalananlarPage postaDetayiPostalananYerlerKontrolu (String gonderilenYer,String postaKodu,String aciklama) {
-        ElementsCollection tblPostaDetayiPostalananYerler= $$("tbody[id^='mainPreviewForm:'][id$='_data'] tr[data-ri]");
+    public PostalananlarPage postaDetayiPostalananYerlerKontrolu(String gonderilenYer, String postaKodu, String aciklama) {
+        ElementsCollection tblPostaDetayiPostalananYerler = $$("tbody[id^='mainPreviewForm:'][id$='_data'] tr[data-ri]");
         tblPostaDetayiPostalananYerler
                 .filterBy(Condition.text(gonderilenYer))
                 .filterBy(Condition.text(postaKodu))
@@ -148,9 +147,10 @@ public class PostalananlarPage extends MainPage {
                 .shouldHaveSize(1);
         return this;
     }
+
     @Step("Posta Detayi Postalanan Evrak Posta Detayi Yazdır butonu tıklanır.")
-    public PostalananlarPage postaDetayiPostalananYerlerYazdir(String gonderilenYer,String postaKodu,String aciklama) {
-        ElementsCollection tblPostaDetayiPostalananYerler= $$("tbody[id^='mainPreviewForm:'][id$='_data'] tr[data-ri]");
+    public PostalananlarPage postaDetayiPostalananYerlerYazdir(String gonderilenYer, String postaKodu, String aciklama) {
+        ElementsCollection tblPostaDetayiPostalananYerler = $$("tbody[id^='mainPreviewForm:'][id$='_data'] tr[data-ri]");
         tblPostaDetayiPostalananYerler
                 .filterBy(Condition.text(gonderilenYer))
                 .filterBy(Condition.text(postaKodu))
@@ -194,6 +194,7 @@ public class PostalananlarPage extends MainPage {
                 .filterBy(Condition.text(tarih)).get(0).click();
         return this;
     }
+
     @Step("Evrak seçilir")
     public PostalananlarPage evrakSec(String konu) {
         $$("[id^='mainInboxForm:inboxDataTable_data'] > tr").filterBy(Condition.text(konu)).get(0).click();
@@ -203,13 +204,14 @@ public class PostalananlarPage extends MainPage {
     @Step("Evrak Önizleme \"{btnText}\" buton kontrolü.")
     public PostalananlarPage evrakOnizlemeButonKontrol(String btnText) {
         SelenideElement btnEvrakOnizleme = $(By.xpath("//span[text()='" + btnText + "']/../../..//button"));
-        Assert.assertEquals(btnEvrakOnizleme.isDisplayed(),true);
+        Assert.assertEquals(btnEvrakOnizleme.isDisplayed(), true);
         return this;
     }
+
     @Step("Evrak Önizleme Evrak Ek kontrolü.")
     public PostalananlarPage evrakOnizlemeEvrakEkKontrolu() {
         SelenideElement btnEvrakEk = $(By.xpath("//div[@class='textLayer']"));
-        Assert.assertEquals(btnEvrakEk.isDisplayed(),true);
+        Assert.assertEquals(btnEvrakEk.isDisplayed(), true);
         return this;
     }
 
@@ -221,9 +223,9 @@ public class PostalananlarPage extends MainPage {
     }
 
     @Step("Sağ üstte Posta Detayı ikonunun geldiği görülür.")
-    public PostalananlarPage postaDetayGeldigiGorme(){
-        boolean durum = $$("[class='ui-button-icon-left ui-icon postala']").size()==1;
-        Assert.assertEquals(durum,true);
+    public PostalananlarPage postaDetayGeldigiGorme() {
+        boolean durum = $$("[class='ui-button-icon-left ui-icon postala']").size() == 1;
+        Assert.assertEquals(durum, true);
         takeScreenshot();
         return this;
     }
@@ -242,18 +244,18 @@ public class PostalananlarPage extends MainPage {
     }
 
     @Step("Gönderilen yerlerin listelendiği görülür")
-    public PostalananlarPage gonderilenyerlerKontrol () {
-        boolean durum = $$("[id$='postalananDataGrid']").size()>0;
-        Assert.assertEquals(durum,true);
+    public PostalananlarPage gonderilenyerlerKontrol() {
+        boolean durum = $$("[id$='postalananDataGrid']").size() > 0;
+        Assert.assertEquals(durum, true);
         takeScreenshot();
         return this;
     }
 
     @Step("Tüzel kişi ve kullanıcı satırının açıklama alanının dolu ve doğru geldiği görülür.")
-    public PostalananlarPage tuzelKisiVeAciklamaAlanlarDoluGeldigiGorme(String kisi,String aciklama){
-        boolean durum = $$("[id$='postalananDataGrid']").size()==1;
-        boolean durum2 = $$("[id$='postalananDataGrid']").filterBy(Condition.text(kisi)).size()==1;
-        Assert.assertEquals(durum,durum2);
+    public PostalananlarPage tuzelKisiVeAciklamaAlanlarDoluGeldigiGorme(String kisi, String aciklama) {
+        boolean durum = $$("[id$='postalananDataGrid']").size() == 1;
+        boolean durum2 = $$("[id$='postalananDataGrid']").filterBy(Condition.text(kisi)).size() == 1;
+        Assert.assertEquals(durum, durum2);
         return this;
     }
 
@@ -320,18 +322,15 @@ public class PostalananlarPage extends MainPage {
         Transferable contents = clipboard.getContents(null);
         boolean hasTransferableText =
                 (contents != null) &&
-                        contents.isDataFlavorSupported(DataFlavor.stringFlavor)
-                ;
-        if ( hasTransferableText ) {
+                        contents.isDataFlavorSupported(DataFlavor.stringFlavor);
+        if (hasTransferableText) {
             try {
-                result = (String)contents.getTransferData(DataFlavor.stringFlavor);
-            }
-            catch (UnsupportedFlavorException ex){
+                result = (String) contents.getTransferData(DataFlavor.stringFlavor);
+            } catch (UnsupportedFlavorException ex) {
                 //highly unlikely since we are using a standard DataFlavor
                 System.out.println(ex);
                 ex.printStackTrace();
-            }
-            catch (IOException ex) {
+            } catch (IOException ex) {
                 System.out.println(ex);
                 ex.printStackTrace();
             }
@@ -354,6 +353,7 @@ public class PostalananlarPage extends MainPage {
         return this;
 
     }
+
     @Step("Icerik Detay Posta Detay Butonu")
     public PostalananlarPage icerikDetayPostaDetayi() {
         btnIcerikPostaDetayi.click();
@@ -392,11 +392,12 @@ public class PostalananlarPage extends MainPage {
 
     @Step("Evrak'ın \"{konu}\" adlı konu ile geldiği görünür. Geldiği yer:\"{gidecegiYer}\" Evrak tarihi:\"{evrakTarihi}\"")
     public PostalananlarPage evrakGeldigiGorme(String konu, String gidecegiYer, String evrakTarihi) {
-        boolean durum = $$("[id='mainInboxForm:inboxDataTable_data'] > tr").filterBy(Condition.text(konu)).size()==1;
+        boolean durum = $$("[id='mainInboxForm:inboxDataTable_data'] > tr").filterBy(Condition.text(konu)).size() == 1;
         Assert.assertEquals(durum, true);
         takeScreenshot();
         return this;
     }
+
     @Step("Evrakların listelendiği görülür.")
     public PostalananlarPage tabloEvrakGeldigiGorme() {
         tablePostalananlar.filterBy(Condition.text("Konu:"))
@@ -489,8 +490,9 @@ public class PostalananlarPage extends MainPage {
      */
     @Step("Postalanan Evrak Detayları , Sayisi ve kontrolü")
     public String evSay() {
-        return  $x("//tbody/tr[3]/td[3]/label").getAttribute("outerText");
+        return $x("//tbody/tr[3]/td[3]/label").getAttribute("outerText");
     }
+
     @Step("Postalanan Evrak Detayları , Sayisi ve kontrolü")
     public Boolean evSayisiKontrol(String evsay) {
         String evsayisi = $x("//tbody/tr[3]/td[3]/label").getAttribute("outerText");
@@ -536,6 +538,7 @@ public class PostalananlarPage extends MainPage {
         Thread.sleep(1000);
         return this;
     }
+
     @Step("Tablodan evrak seçimi \"{konu}\"")
     public PostalananlarPage filtretablodankonuileEvrakSeç(String konu) {
         filter().findRowsWith(text(konu)).first().click();
@@ -665,6 +668,7 @@ public class PostalananlarPage extends MainPage {
         postalananEvrakYazdir.click();
         return this;
     }
+
     @Step("Popup Evrak yazdirma, pdf açma ve kapatma")
     public PostalananlarPage popupEvrakyazpdfackapat() {
         popupEvrakYazdirma.click();
@@ -674,12 +678,14 @@ public class PostalananlarPage extends MainPage {
         popupkapatma();
         return this;
     }
+
     @Step("Popup Etiket Icerik text kontrol")
-    public  PostalananlarPage etiketIcerikText() {
+    public PostalananlarPage etiketIcerikText() {
         String etiketIceriktext = popupEtiketTextIcerik.getValue();
         Allure.addAttachment("Etiket Icerik", etiketIceriktext);
         return this;
     }
+
     @Step("Evrak Yazdır Popup içi Üst Veri Pdf yazdırma,Yazışma kontrolü ve kırmızı alan içerik kontrolü, Ekran görüntüsü ve text output alma")
     public PostalananlarPage popupYazpdfkontrolveKapatma() throws InterruptedException {
         popupEvrakYazdirma.click();
@@ -699,18 +705,15 @@ public class PostalananlarPage extends MainPage {
         Transferable contents = clipboard.getContents(null);
         boolean hasTransferableText =
                 (contents != null) &&
-                        contents.isDataFlavorSupported(DataFlavor.stringFlavor)
-                ;
-        if ( hasTransferableText ) {
+                        contents.isDataFlavorSupported(DataFlavor.stringFlavor);
+        if (hasTransferableText) {
             try {
-                result = (String)contents.getTransferData(DataFlavor.stringFlavor);
-            }
-            catch (UnsupportedFlavorException ex){
+                result = (String) contents.getTransferData(DataFlavor.stringFlavor);
+            } catch (UnsupportedFlavorException ex) {
                 //highly unlikely since we are using a standard DataFlavor
                 System.out.println(ex);
                 ex.printStackTrace();
-            }
-            catch (IOException ex) {
+            } catch (IOException ex) {
                 System.out.println(ex);
                 ex.printStackTrace();
             }
@@ -788,7 +791,7 @@ public class PostalananlarPage extends MainPage {
     @Step("İç-dış evrak ikonu kontrolu")
     public PostalananlarPage icDisEvrakIkonuKontrolu() {
 
-       Assert.assertEquals(btnIcDısEvrakIkonu.isDisplayed(), true);
+        Assert.assertEquals(btnIcDısEvrakIkonu.isDisplayed(), true);
         return this;
     }
 
@@ -797,13 +800,13 @@ public class PostalananlarPage extends MainPage {
         System.out.println(user);
         System.out.println(pass);
         return this;
-        }
+    }
 
-        @Step("Postalanan evrak içinde Posta arama \"{}\" ")
-    public PostalananlarPage t2076PostaArama (String konu) {
+    @Step("Postalanan evrak içinde Posta arama \"{}\" ")
+    public PostalananlarPage t2076PostaArama(String konu) {
 
         return this;
-        }
+    }
 
     @Step("Postalananlar Evraklar listesinde evrakın listelenmediği kontrolu")
     public PostalananlarPage konuyaGoreEvrakGelmemeKontrolu(String konu) {

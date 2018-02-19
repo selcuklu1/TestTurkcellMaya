@@ -44,7 +44,7 @@ public class KullaniciYonetimiPage extends MainPage {
     SelenideElement tblGorevliOlduguBirimler = $(By.id("kullaniciYonetimiEditorForm:kullaniciBirimDataTable"));
     SelenideElement btnGorevliOlduguBirimlerGuncelle2 = $("[id^='kullaniciYonetimiEditorForm:kullaniciBirimDataTable][id$='updateKullaniciBirimButton']");
     SelenideElement cmbKullaniciBirimAtamaGizlilikDerecesi = $(By.id("kullaniciBirimEditorForm:kullaniciGuvenlikKoduSelect"));
-    SelenideElement btnKullaniciBirimAtamaIptal =$(By.id("kullaniciBirimEditorForm:cancelSaveKullaniciBirimButton"));
+    SelenideElement btnKullaniciBirimAtamaIptal = $(By.id("kullaniciBirimEditorForm:cancelSaveKullaniciBirimButton"));
     SelenideElement btnKullaniciBirimAtamaKaydet = $(By.id("kullaniciBirimEditorForm:saveKullaniciBirimButton"));
     ElementsCollection tblKullaniciListesi = $$("tbody[id='kullaniciYonetimiListingForm:kullaniciDataTable_data'] tr[data-ri]");
     SelenideElement txtKullaniciBirimAtamaBirim = $(By.xpath("//form[@id='kullaniciBirimEditorForm']//table//tbody//tr//td//div"));
@@ -160,19 +160,19 @@ public class KullaniciYonetimiPage extends MainPage {
     @Step("Vekalati olan kullanıcının Kullanıcı Birim Atama Ekran kontrolü.")
     public KullaniciYonetimiPage VekaletBirimiKullaniciBirimAtamaEkranKontrolu() {
 
-        Assert.assertEquals(txtKullaniciBirimAtamaBirim.is(Condition.empty),false);
+        Assert.assertEquals(txtKullaniciBirimAtamaBirim.is(Condition.empty), false);
 //        Assert.assertEquals(txtKullaniciBirimAtamaBirim.is(Condition.disabled),true);
-        Assert.assertEquals(txtGorev.is(Condition.empty),false);
-        Assert.assertEquals(txtGorev.is(Condition.disabled),true);
-        Assert.assertEquals(txtBaslangicTarihi.is(Condition.empty),false);
-        Assert.assertEquals(txtBaslangicTarihi.is(Condition.disabled),true);
-        Assert.assertEquals(txtBitisTarihi.is(Condition.empty),false);
-        Assert.assertEquals(txtBitisTarihi.is(Condition.disabled),true);
-        Assert.assertEquals(cmbPopupKullaniciBirimAtamaBagTipi.is(Condition.empty),false);
-        Assert.assertEquals(cmbPopupKullaniciBirimAtamaBagTipi.is(Condition.disabled),true);
-        Assert.assertEquals(cmbKullaniciBirimAtamaGizlilikDerecesi.is(Condition.enabled),true);
-        Assert.assertEquals(btnKullaniciBirimAtamaKaydet.isDisplayed(),true);
-        Assert.assertEquals(btnKullaniciBirimAtamaIptal.isDisplayed(),true);
+        Assert.assertEquals(txtGorev.is(Condition.empty), false);
+        Assert.assertEquals(txtGorev.is(Condition.disabled), true);
+        Assert.assertEquals(txtBaslangicTarihi.is(Condition.empty), false);
+        Assert.assertEquals(txtBaslangicTarihi.is(Condition.disabled), true);
+        Assert.assertEquals(txtBitisTarihi.is(Condition.empty), false);
+        Assert.assertEquals(txtBitisTarihi.is(Condition.disabled), true);
+        Assert.assertEquals(cmbPopupKullaniciBirimAtamaBagTipi.is(Condition.empty), false);
+        Assert.assertEquals(cmbPopupKullaniciBirimAtamaBagTipi.is(Condition.disabled), true);
+        Assert.assertEquals(cmbKullaniciBirimAtamaGizlilikDerecesi.is(Condition.enabled), true);
+        Assert.assertEquals(btnKullaniciBirimAtamaKaydet.isDisplayed(), true);
+        Assert.assertEquals(btnKullaniciBirimAtamaIptal.isDisplayed(), true);
 
 //        txtKullaniciBirimAtamaBirim.shouldBe(Condition.disabled);
 //        txtGorev.shouldNotBe(Condition.empty);
@@ -310,7 +310,7 @@ public class KullaniciYonetimiPage extends MainPage {
 
     @Step("Birim Kontrolü")
     public KullaniciYonetimiPage tabloBirimKontrol() {
-        Assert.assertEquals(tblKolonBirim.exists(),true);
+        Assert.assertEquals(tblKolonBirim.exists(), true);
         return this;
     }
 

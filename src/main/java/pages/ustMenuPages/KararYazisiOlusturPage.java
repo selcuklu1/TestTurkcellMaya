@@ -270,8 +270,9 @@ public class KararYazisiOlusturPage extends MainPage {
         @Step("Seçilen akışta vekaleti bulunan kişiler bulunmaktadır. Lütfen evrakın akışında kullanılacak kişileri seçiniz.")
         public BilgilerTab vekaletKaydet() {
 
-            if(btnVekaletKaydet.isDisplayed()) {
-                btnVekaletKaydet.click(); }
+            if (btnVekaletKaydet.isDisplayed()) {
+                btnVekaletKaydet.click();
+            }
             return this;
         }
 

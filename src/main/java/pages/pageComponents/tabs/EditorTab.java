@@ -13,10 +13,8 @@ import pages.pageComponents.belgenetElements.BelgenetElement;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -61,17 +59,17 @@ public class EditorTab extends MainPage {
     }
 
     @Step("Gereği alan aranır")
-    public BelgenetElement getGeregiCombolov(){
+    public BelgenetElement getGeregiCombolov() {
         return comboLov(page, "[id$='geregiKurumLov:LovText']");
     }
 
     @Step("Gereği alan aranır")
-    public BelgenetElement getBilgiCombolov(){
+    public BelgenetElement getBilgiCombolov() {
         return comboLov(page, "[id$='bilgiKurumLov:LovText']");
     }
 
     @Step("\"{fieldName}\" alanı doldur")
-    public EditorTab select(String fieldName, String value){
+    public EditorTab select(String fieldName, String value) {
         BelgenetElement element;
         if (fieldName.equalsIgnoreCase("Gereği"))
             element = getGeregiCombolov();
@@ -85,7 +83,7 @@ public class EditorTab extends MainPage {
     }
 
     @Step("\"{fieldName}\" alanı temizle")
-    public EditorTab clear(String fieldName){
+    public EditorTab clear(String fieldName) {
         BelgenetElement element;
         if (fieldName.equalsIgnoreCase("Gereği"))
             element = getGeregiCombolov();
@@ -370,21 +368,21 @@ public class EditorTab extends MainPage {
             //String styleFirefox = "position:relative; background:rgb(254, 250, 188); padding: 5px;  font-size: 10px; color: #000; width: 200px; margin-bottom:15px; box-shadow: 0px 4px 6px #333; -moz-box-shadow: 0px 4px 6px #333; -webkit-box-shadow: 0px 4px 6px #333;"
             //note.shouldHave(attribute("style", style));
             Assert.assertTrue(note.getCssValue("position").equals("relative")
-                    , "Style position shoul have value \"relative\" but actual value is \"" +note.getCssValue("position")+"\"");
+                    , "Style position shoul have value \"relative\" but actual value is \"" + note.getCssValue("position") + "\"");
 //            Assert.assertTrue(note.getCssValue("background").equals("rgb(254, 250, 188) none repeat scroll 0% 0% / auto padding-box border-box")
 //                    , "Style background should have value \"rgb(254, 250, 188) none repeat scroll 0% 0% / auto padding-box border-box\" but actual value is \"" +note.getCssValue("position")+"\"");
 //            Assert.assertTrue(note.getCssValue("padding").equals("5px")
 //                    , "Style padding should have value \"5px\" but actual value is \"" +note.getCssValue("padding")+"\"");
             Assert.assertTrue(note.getCssValue("font-size").equals("10px")
-                    , "Style font-size should have value \"10px\" but actual value is \"" +note.getCssValue("font-size")+"\"");
+                    , "Style font-size should have value \"10px\" but actual value is \"" + note.getCssValue("font-size") + "\"");
             Assert.assertTrue(note.getCssValue("color").contains("0, 0, 0")
-                    , "Style color should have value \"rgb(0, 0, 0, 1)\" but actual value is \"" +note.getCssValue("color")+"\"");
+                    , "Style color should have value \"rgb(0, 0, 0, 1)\" but actual value is \"" + note.getCssValue("color") + "\"");
             Assert.assertTrue(note.getCssValue("width").equals("200px")
-                    , "Style width should have value \"200px\" but actual value is \"" +note.getCssValue("width")+"\"");
+                    , "Style width should have value \"200px\" but actual value is \"" + note.getCssValue("width") + "\"");
             Assert.assertTrue(note.getCssValue("margin-bottom").equals("15px")
-                    , "Style margin-bottom should have value \"15px\" but actual value is \"" +note.getCssValue("margin-bottom")+"\"");
+                    , "Style margin-bottom should have value \"15px\" but actual value is \"" + note.getCssValue("margin-bottom") + "\"");
             Assert.assertTrue(note.getCssValue("box-shadow").contains("rgb(51, 51, 51) 0px 4px 6px 0px")
-                    , "Style box-shadow should have value \"rgb(51, 51, 51) 0px 4px 6px 0px\" but actual value is \"" +note.getCssValue("box-shadow")+"\"");
+                    , "Style box-shadow should have value \"rgb(51, 51, 51) 0px 4px 6px 0px\" but actual value is \"" + note.getCssValue("box-shadow") + "\"");
             return this;
         }
 

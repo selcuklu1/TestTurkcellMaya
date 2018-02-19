@@ -112,6 +112,7 @@ public class GelenEvraklarPage extends MainPage {
     SelenideElement btnEvrakKapatUyariEvet = $(By.id("mainPreviewForm:tebellugEvrakEvetButton_id"));
 
     ElementsCollection tblKaydedilenGelenEvraklar = $$("[id='mainInboxForm:inboxDataTable_data'] tr[data-ri]");
+    ElementsCollection tblTakipListesi = $$("tbody[id='evrakTakibimeEkleDialogForm:takipListLov:LovSecilenTable_data'] > tr[role='row']");
 
     @Step("Gelen Evraklar Sayfasını aç")
     public GelenEvraklarPage openPage() {
@@ -124,12 +125,11 @@ public class GelenEvraklarPage extends MainPage {
     }
 
     @Step("Evrak geldiği görünür: Konu kodu:{konuKodu}")
-    public GelenEvraklarPage evrakGeldigiGorme(String konuKodu){
-        boolean durum = tblEvrak.filterBy(Condition.text(konuKodu)).size()==1;
-        Assert.assertEquals(durum,true,konuKodu +"nolu evrak bulunmaktadır");
+    public GelenEvraklarPage evrakGeldigiGorme(String konuKodu) {
+        boolean durum = tblEvrak.filterBy(Condition.text(konuKodu)).size() == 1;
+        Assert.assertEquals(durum, true, konuKodu + "nolu evrak bulunmaktadır");
         return this;
     }
-
 
     @Step("Tablodan rapor seç")
     public GelenEvraklarPage gizlilikRaporSecTakibeEkle(String konu, String yer, String tarih, String no) {
@@ -184,7 +184,6 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
-
     @Step("Evrak seçilir")
     public GelenEvraklarPage evrakSec() {
         tblIlkEvrak.click();
@@ -230,7 +229,7 @@ public class GelenEvraklarPage extends MainPage {
         boolean durum = tableEvraklar
                 .filterBy(text(konu)).size() > 0;
         Assert.assertEquals(durum, false);
-        Allure.addAttachment(konu," Nolu Evrak Listelenmemektedir");
+        Allure.addAttachment(konu, " Nolu Evrak Listelenmemektedir");
         return this;
     }
 
@@ -423,7 +422,7 @@ public class GelenEvraklarPage extends MainPage {
     }
 
     @Step("Tebliğ Et kişi alanını temizle.")
-    public GelenEvraklarPage tebligEtKisiTemizle(){
+    public GelenEvraklarPage tebligEtKisiTemizle() {
         txtTebligEtKisi.clearAllSelectedItems();
         return this;
     }
@@ -890,7 +889,6 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
-
     //Cevap yaz sayfası
     @Step("Seçilen onay akışı detail kontrolu: \"{secim}\" ")
     public GelenEvraklarPage onayAkisiDetailKontrol(String secim) {
@@ -968,6 +966,8 @@ public class GelenEvraklarPage extends MainPage {
         return deger.substring(bilgi.length() + 2, deger.length());
     }
 
+    // FAZ 2
+
     @Step("Gelen evraklar tablosunda {satir}. satırdan {bilgi} bilgisi değerini getir.")
     public String degerGetir(int satir, String bilgi) {
         String deger = "";
@@ -977,9 +977,6 @@ public class GelenEvraklarPage extends MainPage {
         return deger.substring(bilgi.length() + 2, deger.length());
     }
 
-    // FAZ 2
-
-    ElementsCollection tblTakipListesi = $$("tbody[id='evrakTakibimeEkleDialogForm:takipListLov:LovSecilenTable_data'] > tr[role='row']");
     @Step("{konu} konulu evrak üzerinde Takip Listesi butonuna tıkla.")
     public GelenEvraklarPage takipListesiAc(String konu) {
         tableEvraklar
@@ -991,21 +988,21 @@ public class GelenEvraklarPage extends MainPage {
     }
 
     @Step("Takip Listesinde {adiSoyadi} kullanıcısının ve {birim} birim bilgisinin olduğu görülür.")
-    public GelenEvraklarPage takipListesiKontrol(String adiSoyadi, String birim){
+    public GelenEvraklarPage takipListesiKontrol(String adiSoyadi, String birim) {
         tblTakipListesi.filterBy(text(adiSoyadi)).filterBy(text(birim)).first().shouldBe(visible);
         return this;
     }
 
     @Step("Evrak Kapatma panelinde evrak kapat butonuna tıkla.")
-    public GelenEvraklarPage evrakiKapat(){
+    public GelenEvraklarPage evrakiKapat() {
         btnEvrakKapatKapat2.click();
-        if(btnEvrakKapatUyariEvet.isDisplayed())
+        if (btnEvrakKapatUyariEvet.isDisplayed())
             btnEvrakKapatUyariEvet.waitUntil(visible, 50000).click();
         return this;
     }
 
     @Step("Takip Listesi ekranında bulunan (X) \"Sayfayı Kapatma\" butonuna basılır. Takip listesi ekranın kapatıldığı görülür.")
-    public GelenEvraklarPage takipListesiKapat(){
+    public GelenEvraklarPage takipListesiKapat() {
         btnTakipListesiKapat.click();
         txtKullaniciListesi.shouldNotBe(visible);
         return this;
@@ -1014,7 +1011,7 @@ public class GelenEvraklarPage extends MainPage {
     @Step("Havale İşlemleri Kişi alanında \"{kisi}\" kontrol")
     public GelenEvraklarPage havaleIslemleriKisiKontrol(String kisi) {
         boolean durum = txtComboLovKisi.isLovValueSelectable(kisi);
-        Assert.assertEquals(durum,false,"Kişi Bulundu:" + kisi);
+        Assert.assertEquals(durum, false, "Kişi Bulundu:" + kisi);
         Allure.addAttachment(kisi, " seçilemedi");
         txtComboLovKisi.closeTreePanel();
         return this;
@@ -1023,33 +1020,33 @@ public class GelenEvraklarPage extends MainPage {
     @Step("Havale İşlemleri Kişi alanında \"{birim}\" kontrol")
     public GelenEvraklarPage havaleIslemleriBirimKontrol(String birim) {
         boolean durum = txtComboLovBirim.isLovValueSelectable(birim);
-        Assert.assertEquals(durum,false,"Birim Bulundu:" + birim);
+        Assert.assertEquals(durum, false, "Birim Bulundu:" + birim);
         Allure.addAttachment(birim, " seçilemedi");
         txtComboLovBirim.closeTreePanel();
         return this;
     }
 
     @Step("Havale İşlemleri Kişi alanında \"{kisi}\" seç")
-    public GelenEvraklarPage havaleIslemleriKisiSec(String kisi,String details) {
-        txtComboLovKisi.selectLov(kisi,details);
+    public GelenEvraklarPage havaleIslemleriKisiSec(String kisi, String details) {
+        txtComboLovKisi.selectLov(kisi, details);
         txtComboLovKisi.closeTreePanel();
         return this;
     }
 
     // //span[contains(@class,'ui-button-icon-left ui-icon document-addFollow')]/..
     @Step("Tabloda evrak kontrolü : \"{konu}\"  \"{geldigiKurum}\" \"{birim}\" \"{evrakTarihi}\" \"{evrakNo}\" ")
-    public GelenEvraklarPage evrakAlanKontrolleri(String konu,String geldigiKurum,String evrakTarihi,String evrakNo) {
-        System.out.println("evrakNo:" +konu + " geldigiKurum" + geldigiKurum + " evrakTarihi" + evrakTarihi + " evrakkayitno" + evrakNo);
+    public GelenEvraklarPage evrakAlanKontrolleri(String konu, String geldigiKurum, String evrakTarihi, String evrakNo) {
+        System.out.println("evrakNo:" + konu + " geldigiKurum" + geldigiKurum + " evrakTarihi" + evrakTarihi + " evrakkayitno" + evrakNo);
         tblKaydedilenGelenEvraklar
                 .filterBy(Condition.text(konu))
                 .filterBy(Condition.text(geldigiKurum))
                 .filterBy(Condition.text(evrakTarihi))
                 .filterBy(Condition.text(evrakNo))
                 .shouldHaveSize(1);
-        Allure.addAttachment("Konu" ,konu);
-        Allure.addAttachment("EvrakTarihi" ,evrakTarihi);
-        Allure.addAttachment("GeldigiKurum" ,geldigiKurum);
-        Allure.addAttachment("EvrakNo" ,evrakNo);
+        Allure.addAttachment("Konu", konu);
+        Allure.addAttachment("EvrakTarihi", evrakTarihi);
+        Allure.addAttachment("GeldigiKurum", geldigiKurum);
+        Allure.addAttachment("EvrakNo", evrakNo);
         return this;
     }
 

@@ -65,21 +65,21 @@ public class MainPage extends BaseLibrary {
     }
 
     @Step("Kullanıcı Adı ve TC Kimlik No alanlarında kullanıcının verileri görüntülenir")
-    public MainPage kullaniciAdiVeTCKimlikNoLoginOlunanKullaniciGeldigiGorme(){
-        Boolean durum1 =  $("[id$='kullaniciAdi']").shouldBe(visible).exists()==true;
-        Boolean durum2 =  $("[id$='tcKimlikNo']").shouldBe(visible).exists()==true;
-        Assert.assertEquals(durum1,durum2);
+    public MainPage kullaniciAdiVeTCKimlikNoLoginOlunanKullaniciGeldigiGorme() {
+        Boolean durum1 = $("[id$='kullaniciAdi']").shouldBe(visible).exists() == true;
+        Boolean durum2 = $("[id$='tcKimlikNo']").shouldBe(visible).exists() == true;
+        Assert.assertEquals(durum1, durum2);
         takeScreenshot();
         return this;
     }
-    
+
     public MainPage kepAdresBaglantisiBaglan2() {
         $("[id='kepForm:kayitliKepDataTable:1:j_idt235']").click();
         return this;
     }
 
     @Step("{kep} kep olan bağlan tıklanır")
-    public MainPage kepAdresleriBaglan(String kep){
+    public MainPage kepAdresleriBaglan(String kep) {
         $$("[id='kepForm:kayitliKepDataTable_data'] tr").filterBy(Condition.text(kep))
                 .get(0).$("button").click();
         return this;

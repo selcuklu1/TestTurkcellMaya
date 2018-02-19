@@ -9,8 +9,6 @@ import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
-import org.testng.TestListenerAdapter;
-import org.testng.TestNG;
 import org.testng.internal.IResultListener2;
 
 //TestNG.ExitCodeListener {

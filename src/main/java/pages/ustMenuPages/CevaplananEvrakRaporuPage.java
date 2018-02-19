@@ -56,8 +56,6 @@ public class CevaplananEvrakRaporuPage extends MainPage {
     SelenideElement tblDetay = $(By.xpath("//*[@id='cevaplananEvrakRaporuForm:cevaplananEvrakRaporOutputTab_data']/tr/td[13]"));
 
 
-
-
     @Step("Cevaplanan Evrak Raporu sayfasını aç")
     public CevaplananEvrakRaporuPage openPage() {
         ustMenu(UstMenuData.Raporlar.CevaplananEvrakRaporu);

@@ -60,7 +60,6 @@ public class OnayAkisYonetimiPage extends MainPage {
     private SelenideElement chkVekilCheckbox = $(By.id("onayAkisiYonetimiEditorForm:onayAkisiYonetimiKullaniciBirimDataTable:1:onayAkisiYonetimiVekilBooleanCheckbox"));
 
 
-
     @Step("Onay akışı sayfası aç")
     public OnayAkisYonetimiPage openPage() {
         ustMenu(UstMenuData.KisiselIslemlerim.OnayAkisiYonetimi);

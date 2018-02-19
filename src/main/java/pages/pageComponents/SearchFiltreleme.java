@@ -27,7 +27,7 @@ public class SearchFiltreleme extends BaseLibrary {
     @Step("\"Sorgulama ve Filtreleme\"yi genişlet")
     public SearchFiltreleme sorgulamaVeFiltrelemeyiGenislet(boolean... genislet) {
         SelenideElement element = parentElement.$("h3[role=tab]");
-        if (!element.attr("aria-expanded").equalsIgnoreCase(String.valueOf(genislet.length>0?genislet[0]:"true")))
+        if (!element.attr("aria-expanded").equalsIgnoreCase(String.valueOf(genislet.length > 0 ? genislet[0] : "true")))
             element.find("a").click();
         return this;
     }

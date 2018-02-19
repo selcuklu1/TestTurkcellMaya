@@ -117,7 +117,7 @@ public class GelenEvrakKayitPage extends MainPage {
 
     SelenideElement btnilgiBilgileriSistemdeKayitliEvrakEkle = $("a[href='#evrakBilgileriForm:ilgiIslemleriTabView:sistemdeKayitliEvragiEkleTab']");
     SelenideElement txtIlgiBilgileriEvrakArama = $(By.id("evrakBilgileriForm:ilgiIslemleriTabView:evrakAramaText"));
-    SelenideElement ilgiBilgileriDokumanAraButton=$(By.id("evrakBilgileriForm:ilgiIslemleriTabView:dokumanAraButton"));
+    SelenideElement ilgiBilgileriDokumanAraButton = $(By.id("evrakBilgileriForm:ilgiIslemleriTabView:dokumanAraButton"));
     SelenideElement ilgiBilgileriEkEkleButton1 = $("button[id^='evrakBilgileriForm:ilgiIslemleriTabView:sistemdeKayitliEvrakListesiDataTable:0']");
 
     SelenideElement txtIlgiIslemleriTabViewDosyaAciklama = $(By.xpath("//*[@id='evrakBilgileriForm:ilgiIslemleriTabView:dosyaAciklama']"));
@@ -236,7 +236,7 @@ public class GelenEvrakKayitPage extends MainPage {
     SelenideElement islemSureKontrol = $(By.id("evrakBilgileriForm:islemSuresiTarih_input"));
 
     SelenideElement ekEkleButton1 = $(By.id("evrakBilgileriForm:evrakEkTabView:sistemdeKayitliEvrakListesiDataTable:0:ekEkleButton1"));
-    SelenideElement dokumanAraButton=$(By.id("evrakBilgileriForm:evrakEkTabView:dokumanAraButton"));
+    SelenideElement dokumanAraButton = $(By.id("evrakBilgileriForm:evrakEkTabView:dokumanAraButton"));
     SelenideElement islemKapat = $(By.id("kapatButton"));
 
     //Evrak Havale Islemleri Form
@@ -545,9 +545,9 @@ public class GelenEvrakKayitPage extends MainPage {
                 .click();
         return this;
     }
-    
+
     @Step("Evrak Sayı değer kontrolü: {evrakSayi} olmalı.")
-    public GelenEvrakKayitPage solEvrakSayiKontrol(String evrakSayi){
+    public GelenEvrakKayitPage solEvrakSayiKontrol(String evrakSayi) {
         txtEvrakBilgileriListEvrakSayiTextAreaSol.shouldHave(value(evrakSayi));
         return this;
     }
@@ -630,11 +630,11 @@ public class GelenEvrakKayitPage extends MainPage {
         String bilgi = "BİLGİ İÇİN GÖNDER";
         String koordinasyon = "KOORDİNASYON İÇİN GÖNDER";
 
-        if(opsiyon.equals(gerek))
+        if (opsiyon.equals(gerek))
             birimSeç.selectOptionByValue("G");
-        else if(opsiyon.equals(bilgi))
+        else if (opsiyon.equals(bilgi))
             birimSeç.selectOptionByValue("B");
-        else if(opsiyon.equals(koordinasyon))
+        else if (opsiyon.equals(koordinasyon))
             birimSeç.selectOptionByValue("S");
         return this;
     }
@@ -708,7 +708,7 @@ public class GelenEvrakKayitPage extends MainPage {
     }
 
     @Step("Dağıtım Bilgileri Onaylayacak Kisi alanı kontrolü.")
-    public GelenEvrakKayitPage dagitimBilgileriOnaylayacakKisiAlaniKontrolü(String vekaletAlan,String title,String vekaletVeren) {
+    public GelenEvrakKayitPage dagitimBilgileriOnaylayacakKisiAlaniKontrolü(String vekaletAlan, String title, String vekaletVeren) {
         List<String> text = cmbHavaleIslemleriOnaylayacakKisi.getSelectedItems().texts();
         System.out.println(text);
 
@@ -1575,40 +1575,40 @@ public class GelenEvrakKayitPage extends MainPage {
     @Step("Havale İşlemleri Alanındaki Kontroller")
     public GelenEvrakKayitPage havaleAlanKontrolleri() {
         String text = "";
-        if(otomatikHavaleCheckbox.isDisplayed()) {
+        if (otomatikHavaleCheckbox.isDisplayed()) {
             text += "Otomatik Havale Checkbox,";
-            Assert.assertEquals(otomatikHavaleCheckbox.isDisplayed(),true,"Otomatik Havale Checkbox Görüntülendi");
-            Allure.addAttachment("Otomatik Havale Checkbox Görüntülendi","");
+            Assert.assertEquals(otomatikHavaleCheckbox.isDisplayed(), true, "Otomatik Havale Checkbox Görüntülendi");
+            Allure.addAttachment("Otomatik Havale Checkbox Görüntülendi", "");
         }
-        if(birimKontrol.isDisplayed()) {
+        if (birimKontrol.isDisplayed()) {
             text += "Birim Kontrol,";
-            Assert.assertEquals(birimKontrol.isDisplayed(),true,"Birim Alanı Görüntülendi");
-            Allure.addAttachment("Birim Alanı Görüntülendi","");
+            Assert.assertEquals(birimKontrol.isDisplayed(), true, "Birim Alanı Görüntülendi");
+            Allure.addAttachment("Birim Alanı Görüntülendi", "");
         }
-        if(kisiKontrol.isDisplayed()) {
+        if (kisiKontrol.isDisplayed()) {
             text += "Kisi Kontrol, ";
-            Assert.assertEquals(kisiKontrol.isDisplayed(),true,"Kisi Alanı Görüntülendi");
-            Allure.addAttachment("Kisi Alanı Görüntülendi","");
+            Assert.assertEquals(kisiKontrol.isDisplayed(), true, "Kisi Alanı Görüntülendi");
+            Allure.addAttachment("Kisi Alanı Görüntülendi", "");
         }
-        if(kullanıcıListeKontrol.isDisplayed()) {
+        if (kullanıcıListeKontrol.isDisplayed()) {
             text += "Kullanıcı Liste,";
-            Assert.assertEquals(kullanıcıListeKontrol.isDisplayed(),true,"Kullanıcı Listesi Alanı Görüntülendi");
-            Allure.addAttachment("Kullanıcı Listesi Alanı Görüntülendi","");
+            Assert.assertEquals(kullanıcıListeKontrol.isDisplayed(), true, "Kullanıcı Listesi Alanı Görüntülendi");
+            Allure.addAttachment("Kullanıcı Listesi Alanı Görüntülendi", "");
         }
-        if(aciklamaKontrol.isDisplayed()) {
+        if (aciklamaKontrol.isDisplayed()) {
             text += "Aciklama,";
-            Assert.assertEquals(aciklamaKontrol.isDisplayed(),true,"Aciklama Alanı Görüntülendi");
-            Allure.addAttachment("Aciklama Alanı Görüntülendi","");
+            Assert.assertEquals(aciklamaKontrol.isDisplayed(), true, "Aciklama Alanı Görüntülendi");
+            Allure.addAttachment("Aciklama Alanı Görüntülendi", "");
         }
-        if(dosyaEkleKontrol.isDisplayed()) {
+        if (dosyaEkleKontrol.isDisplayed()) {
             text += "Dosya Ekle,";
-            Assert.assertEquals(dosyaEkleKontrol.isDisplayed(),true,"Dosya Kontrol Alanı Görüntülendi");
-            Allure.addAttachment("Dosya Ekle Alanı Görüntülendi","");
+            Assert.assertEquals(dosyaEkleKontrol.isDisplayed(), true, "Dosya Kontrol Alanı Görüntülendi");
+            Allure.addAttachment("Dosya Ekle Alanı Görüntülendi", "");
         }
-        if(islemSureKontrol.isDisplayed()) {
+        if (islemSureKontrol.isDisplayed()) {
             text += "İslem Sure alanları gösterilmektedir.";
-            Assert.assertEquals(islemSureKontrol.isDisplayed(),true,"İşlem Sure Alanı Görüntülendi");
-            Allure.addAttachment("Işlem Süre Alanı Görüntülendi","");
+            Assert.assertEquals(islemSureKontrol.isDisplayed(), true, "İşlem Sure Alanı Görüntülendi");
+            Allure.addAttachment("Işlem Süre Alanı Görüntülendi", "");
         }
         Allure.addAttachment("Alan Kontrolleri : ", text);
         takeScreenshot();
@@ -1617,7 +1617,7 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("Evrak Kapatma")
     public GelenEvrakKayitPage evrakKapatma() {
-        ElementsCollection tr =$$("[class='ui-dialog-titlebar ui-widget-header ui-helper-clearfix ui-corner-top']").filterBy(text("Gelen Evrak Kayıt"));
+        ElementsCollection tr = $$("[class='ui-dialog-titlebar ui-widget-header ui-helper-clearfix ui-corner-top']").filterBy(text("Gelen Evrak Kayıt"));
         tr.get(0).$("[href]").click();
         islemKapat.click();
         return this;
@@ -1656,8 +1656,8 @@ public class GelenEvrakKayitPage extends MainPage {
     @Step("Gereği alanında Birimin geldiği ve seçilemediği kontrolu - {description} : {birim}")
     public GelenEvrakKayitPage geregiAlanindaBiriminGeldigiSecilemedigiKontrolu(String birim, String description) {
 
-        int  gorunurSecilemezBirimSize = comboLov(cmbGeldigiBirimBy).type(birim).getSelectableItems().size();
-        Assert.assertEquals(gorunurSecilemezBirimSize==0, true, "Birimin geldiği ve seçilemediği görülür: " + birim);
+        int gorunurSecilemezBirimSize = comboLov(cmbGeldigiBirimBy).type(birim).getSelectableItems().size();
+        Assert.assertEquals(gorunurSecilemezBirimSize == 0, true, "Birimin geldiği ve seçilemediği görülür: " + birim);
         comboLov(cmbGeldigiBirimBy).closeTreePanel();
         System.out.println("Birimin geldiği ve seçilemediği görülür: " + birim);
         Allure.addAttachment("Birimin geldiği ve seçilemediği görülür: " + birim, "");

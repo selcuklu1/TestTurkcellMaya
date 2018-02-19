@@ -17,17 +17,15 @@ import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 public class KapattiklarimPage extends MainPage {
 
     ElementsCollection tblKapattiklarim = $$("tbody[id='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
-
+    BelgenetElement txtKullaniciListesi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKisiListesiLov:LovText"));
+    ElementsCollection tblTakipListesi = $$("tbody[id='evrakTakibimeEkleDialogForm:takipListLov:LovSecilenTable_data'] > tr[role='row']");
+    SelenideElement btnTakipListesiKapat = $("div[id='evrakTakibimeEkleDialogForm:takipDialog'] span[class*='ui-icon-closethick']");
 
     @Step("Kapattıklarım sayfasını aç")
     public KapattiklarimPage openPage() {
         solMenu(SolMenuData.KapatmaIslemleri.Kapattiklarim);
         return this;
     }
-
-    BelgenetElement txtKullaniciListesi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKisiListesiLov:LovText"));
-    ElementsCollection tblTakipListesi = $$("tbody[id='evrakTakibimeEkleDialogForm:takipListLov:LovSecilenTable_data'] > tr[role='row']");
-    SelenideElement btnTakipListesiKapat = $("div[id='evrakTakibimeEkleDialogForm:takipDialog'] span[class*='ui-icon-closethick']");
 
     @Step("{konu} konulu evrak üzerinde Takip Listesi butonuna tıkla.")
     public KapattiklarimPage takipListesiAc(String konu) {
@@ -40,20 +38,17 @@ public class KapattiklarimPage extends MainPage {
     }
 
     @Step("Takip Listesinde {adiSoyadi} kullanıcısının ve {birim} birim bilgisinin olduğu görülür.")
-    public KapattiklarimPage takipListesiKontrol(String adiSoyadi, String birim){
+    public KapattiklarimPage takipListesiKontrol(String adiSoyadi, String birim) {
         tblTakipListesi.filterBy(text(adiSoyadi)).filterBy(text(birim)).first().shouldBe(visible);
         return this;
     }
 
     @Step("Takip Listesi ekranında bulunan (X) \"Sayfayı Kapatma\" butonuna basılır. Takip listesi ekranın kapatıldığı görülür.")
-    public KapattiklarimPage takipListesiKapat(){
+    public KapattiklarimPage takipListesiKapat() {
         btnTakipListesiKapat.click();
         txtKullaniciListesi.shouldNotBe(visible);
         return this;
     }
-
-
-
 
 
 }
