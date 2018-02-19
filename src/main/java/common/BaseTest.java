@@ -20,6 +20,7 @@ import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
+import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 import pages.LoginPage;
@@ -50,7 +51,7 @@ public class BaseTest extends BaseLibrary {
     public Locale turkishLocal;
 
     @BeforeClass(alwaysRun = true)
-    public void driverSetUp() {
+    public void driverSetUp(ITestContext context) {
 
         log.info("Setup started");
         System.out.println("file.encoding: " + String.format("file.encoding: %s", System.getProperty("file.encoding")));
@@ -78,7 +79,7 @@ public class BaseTest extends BaseLibrary {
         Configuration.savePageSource = false;
         Configuration.collectionsTimeout = timeout * 1000;
         Configuration.timeout = timeout * 1000;
-        Configuration.holdBrowserOpen = Configuration.remote == null ? true : false;
+        Configuration.holdBrowserOpen = Configuration.remote == null;
         Configuration.startMaximized = true;
         Configuration.pollingInterval = 100;
         Configuration.collectionsPollingInterval = 100;
@@ -119,6 +120,10 @@ public class BaseTest extends BaseLibrary {
         System.out.println("Selenide/Selenium driver has been set up.");*/
 
         AllureEnvironmentUtils.create();
+
+        System.out.println("AAAAAAAAAAAAA");
+        System.out.println(context.getCurrentXmlTest().toXml(""));
+        System.out.println("AAAAAAAAAAAAA");
     }
 
     @BeforeMethod(alwaysRun = true)
