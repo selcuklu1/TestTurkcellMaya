@@ -17,6 +17,8 @@ import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 public class KaydedilenGelenEvraklarPage extends MainPage {
     SelenideElement f = $(By.xpath("//div[@id='mainInboxForm:inboxDataTable:filtersAccordion']//a[text()='Filtreler']/parent::h3"));
@@ -31,7 +33,7 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
     ElementsCollection tblKaydedilenGelenEvraklar = $$("[id='mainInboxForm:inboxDataTable_data'] tr[data-ri]");
     SelenideElement tblIlkRapor = $(By.id("mainInboxForm:inboxDataTable:0:detayGosterButton"));
     ElementsCollection tblKaydedilenGelenEvraklar2 = $$("tbody[id$='mainInboxForm:inboxDataTable_data'] tr[role='row']");
-
+    static final Logger logger = LogManager.getLogger("KaydedilenGelenEvraklarPage");
 
 //    Evrak Detayları Sayfası
 
@@ -74,7 +76,7 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
     SelenideElement islemSureKontrol = $(By.id("mainPreviewForm:islemSuresiTarih_input"));
     //otomatik havale checkbox kontrol içerikten
     SelenideElement icerikOtomatikHavaleCheckbox = $("[id='inboxItemInfoForm:havaleDagitimLovPanel'] [class='ui-chkbox-box ui-widget ui-corner-all ui-state-default']");
-    SelenideElement icerikBirimKontrol = $(By.id("inboxItemInfoForm:dagitimBilgileriBirimLov:LovText"));
+    SelenideElement txtIcerikBirimKontrol = $(By.id("inboxItemInfoForm:dagitimBilgileriBirimLov:LovText"));
     SelenideElement icerikKisiKontrol = $(By.id("inboxItemInfoForm:dagitimBilgileriKullaniciLov:LovText"));
     SelenideElement icerikKullanıcıListeKontrol = $(By.id("inboxItemInfoForm:dagitimBilgileriKisiListesiLov:LovText"));
     SelenideElement icerikAciklamaKontrol = $(By.id("inboxItemInfoForm:havaleAciklama"));
@@ -82,10 +84,11 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
     SelenideElement icerikIslemSureKontrol = $(By.id("inboxItemInfoForm:islemSuresiTarih_input"));
 
     BelgenetElement txtHavaleIslemleriKisi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKullaniciLov:LovText"));
-    BelgenetElement icerikHavaleIslemleriKisi = comboLov(By.id("inboxItemInfoForm:dagitimBilgileriKullaniciLov:LovText"));
+    BelgenetElement txtIcerikHavaleIslemleriKisi = comboLov(By.id("inboxItemInfoForm:dagitimBilgileriKullaniciLov:LovText"));
     SelenideElement txtEvrakBilgileriAciklama = $(By.id("mainPreviewForm:havaleAciklama"));
     SelenideElement dagitimBilgileriKisiOpsiyon = $("select[id^='mainPreviewForm:dagitimBilgileriKullaniciLov:LovSecilenTable']");
     SelenideElement dosyaPath = $(By.xpath("//input[@id='mainPreviewForm:fileUploadHavaleEk_input']"));
+    SelenideElement icerikDosyaPath = $(By.xpath("//input[@id='inboxItemInfoForm:fileUploadHavaleEk_input']"));
 
     SelenideElement btnKaydet = $("[id='inboxItemInfoForm:dialogTabMenuRight:uiRepeat:3:cmdbutton']");
 
@@ -111,8 +114,8 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
     SelenideElement btnHavaleYeriSecmedinizHayır = $(By.id("hayirDugmesiUstYaziHavaleYer"));
     ElementsCollection visibleEvrakBasarili = $$("[id='evrakKaydetBasariliDialog']");
 
-    BelgenetElement icerikHavaleIslemleriOnaylayacakKisi = comboLov(By.id("inboxItemInfoForm:onaylayacakKisiLov:LovText"));
-    BelgenetElement icerikHavaleIslemleriBirim = comboLov(By.id("inboxItemInfoForm:dagitimBilgileriBirimLov:LovText"));
+    BelgenetElement cmbIcerikHavaleIslemleriOnaylayacakKisi = comboLov(By.id("inboxItemInfoForm:onaylayacakKisiLov:LovText"));
+    BelgenetElement cmbIcerikHavaleIslemleriBirim = comboLov(By.id("inboxItemInfoForm:dagitimBilgileriBirimLov:LovText"));
 
     SelenideElement btnEvrakDetayiKaydetUyarisi = $(By.id("kaydetConfirmForm:kaydetEvetButton"));
 
@@ -128,6 +131,11 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
     SelenideElement txtEklenenKisi = $("div[id^='mainPreviewForm:dagitimBilgileriKullaniciLov:LovSecilenTable:0:j_idt']");
     SelenideElement txtIcerikOnaylayanKisi = $("div[id^='inboxItemInfoForm:onaylayacakKisiLov:j_idt'][class='lovItemTitle']");
     SelenideElement txtOnaylayanKisi = $("div[id^='mainPreviewForm:onaylayacakKisiLov:LovSecilen']");
+
+    SelenideElement btnIcerikDosyaDeleteIcon = $("button[id^='inboxItemInfoForm:j_idt'] span[class='ui-button-icon-left ui-icon delete-icon']");
+
+    BelgenetElement txtComboLovKisi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKullaniciLov:LovText"));
+
     @Step("Kaydedilen gelen evraklar sayfası aç")
     public KaydedilenGelenEvraklarPage openPage() {
         solMenu(SolMenuData.BirimEvraklari.KaydedilenGelenEvraklar);
@@ -268,7 +276,7 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
 
     @Step("Dağıtım Bilgileri Onaylayacak Kisi alanında \"{onaylayan}\" seçilir")
     public KaydedilenGelenEvraklarPage icerikDagitimBilgileriOnaylayanWithDetails(String onaylayan, String details) {
-        icerikHavaleIslemleriOnaylayacakKisi.selectLov(onaylayan, details);
+        cmbIcerikHavaleIslemleriOnaylayacakKisi.selectLov(onaylayan, details);
         return this;
     }
 
@@ -328,10 +336,7 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
 
     @Step("Dağıtım Bilgileri Birim alanında \"{birim}\" seçilir")
     public KaydedilenGelenEvraklarPage icerikDagitimBilgileriBirimDoldurWithDetails(String birim, String details) {
-//        icerikHavaleIslemleriBirim.type(birim).getDetailItems()
-//                .filterBy(Condition.exactText(details)).first().click();
-//        icerikHavaleIslemleriBirim.closeTreePanel();
-        icerikHavaleIslemleriBirim.selectLov(birim,details);
+        cmbIcerikHavaleIslemleriBirim.selectLov(birim,details);
         return this;
     }
 
@@ -349,7 +354,7 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
 
     @Step("İçerikten Havale Onayına Gönder")
     public KaydedilenGelenEvraklarPage icerikHavaleOnayinaGonder2() {
-        btnIcerikHavaleOnayinaGonder.click();
+            btnIcerikHavaleOnayinaGonder.click();
         return this;
     }
 
@@ -449,9 +454,9 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
             Assert.assertEquals(icerikOtomatikHavaleCheckbox.isDisplayed(),true,"Otomatik Havale Checkbox Alanı Görüntülendi");
             Allure.addAttachment("Otomatik Havale Checkbox Alanı Görüntülendi : ","");
         }
-        if(icerikBirimKontrol.isDisplayed()) {
+        if(txtIcerikBirimKontrol.isDisplayed()) {
             text += "Birim Kontrol,";
-            Assert.assertEquals(icerikBirimKontrol.isDisplayed(),true,"Birim Alanı Görüntülendi");
+            Assert.assertEquals(txtIcerikBirimKontrol.isDisplayed(),true,"Birim Alanı Görüntülendi");
             Allure.addAttachment("Birim Kontrol Alanı Görüntülendi : ","");
         }
         if(icerikKisiKontrol.isDisplayed()) {
@@ -489,6 +494,12 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Havale İşlemleminde Dosya Ekle")
+    public KaydedilenGelenEvraklarPage icerikDosyaEkle() {
+        icerikDosyaEkleKontrol.click();
+        return this;
+    }
+
     @Step("Havale İşlemleri Kişi alanında \"{kisi}\" seç")
     public KaydedilenGelenEvraklarPage havaleIslemleriKisiDoldur(String kisi) {
         txtHavaleIslemleriKisi.selectLov(kisi);
@@ -497,13 +508,13 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
 
     @Step("İçerik Havale İşlemleri Kişi alanında \"{kisi}\" seç")
     public KaydedilenGelenEvraklarPage icerikHavaleIslemleriKisiDoldur(String kisi) {
-        icerikHavaleIslemleriKisi.selectLov(kisi);
+        txtIcerikHavaleIslemleriKisi.selectLov(kisi);
         return this;
     }
 
     @Step("İçerik Havale İşlemleri Kişi alanında \"{kisi}\" seç")
     public KaydedilenGelenEvraklarPage icerikHavaleIslemleriKisiDoldur(String kisi,String details) {
-        icerikHavaleIslemleriKisi.selectLov(kisi,details);
+        txtIcerikHavaleIslemleriKisi.selectLov(kisi,details);
         return this;
     }
 
@@ -540,10 +551,33 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Evrak Ekleri Dosya Ekleme : \"{pathToFile}\" ")
+    public KaydedilenGelenEvraklarPage icerikHavaleDosyaEkle(String pathToFile) throws InterruptedException {
+        uploadFile(icerikDosyaPath, pathToFile);
+        Thread.sleep(4000);
+//        WebDriverRunner.getWebDriver()
+//                .findElement(dosyaPath)
+//                .sendKeys(pathToFile);
+        return this;
+    }
+
 
     @Step("Havale dosya ekleme adi kontrol : \"{dosyaAdi}\" ")
     public KaydedilenGelenEvraklarPage havaleDosyaEkleDosyaAdiKontrol(String dosyaAdi) {
         $(byText(dosyaAdi)).shouldBe(Condition.visible);
+        return this;
+    }
+
+    @Step("Havale dosya ekleme adi kontrol : \"{dosyaAdi}\" ")
+    public KaydedilenGelenEvraklarPage icerikHavaleDosyaEkleDosyaAdiKontrol(String dosyaAdi) {
+        $(byText(dosyaAdi)).shouldBe(Condition.visible);
+        return this;
+    }
+
+    @Step("Havale dosya ekleme adi kontrol : \"{dosyaAdi}\" ")
+    public KaydedilenGelenEvraklarPage icerikHavaleDosyaEkleDosyaAdiKontrol(String dosyaAdi,boolean durum) {
+        Assert.assertEquals($(byText(dosyaAdi)).isDisplayed(),durum,"Dosya kaldırıldi:" +dosyaAdi);
+        Allure.addAttachment("Eklenmiş olan dosya, kaldırılmıştır:",dosyaAdi);
         return this;
     }
 
@@ -621,4 +655,37 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
         Allure.addAttachment("Evrak Detay sayfası","açılmaktadır");
         return this;
     }
+
+    @Step("Havale İşlemleri Kişi alanında \"{kisi}\" kontrol")
+    public KaydedilenGelenEvraklarPage havaleIslemleriKisiKontrol(String kisi) {
+        boolean durum = txtIcerikHavaleIslemleriKisi.isLovValueSelectable(kisi);
+        Assert.assertEquals(durum,false,"Kişi Bulundu:" + kisi);
+        Allure.addAttachment(kisi, " seçilemedi");
+        txtIcerikHavaleIslemleriKisi.closeTreePanel();
+        return this;
+    }
+
+    @Step("Havale İşlemleri Onaylayacak Kişi alanında \"{kisi}\" kontrol")
+    public KaydedilenGelenEvraklarPage havaleIslemleriOnaylayacakKisiKontrol(String kisi) {
+        boolean durum = cmbIcerikHavaleIslemleriOnaylayacakKisi.openTreePanel().getSelectableItems().filterBy(Condition.text(kisi)).shouldHaveSize(0).size()==0;
+        Assert.assertEquals(durum,true,"Havale İşlemleri Onaylayacak Kişi bulunamamıştır:" + kisi) ;
+        Allure.addAttachment("Havale İşlemleri Onaylayacak Kişi bulunamamıştır:",kisi);
+        return this;
+    }
+
+    @Step("Havale İşlemleri Kişi alanında \"{birim}\" kontrol")
+    public KaydedilenGelenEvraklarPage havaleIslemleriBirimKontrol(String birim) {
+        boolean durum = cmbIcerikHavaleIslemleriBirim.isLovValueSelectable(birim);
+        Assert.assertEquals(durum,false,"Birim Bulundu:" + birim);
+        Allure.addAttachment(birim, " seçilemedi");
+        cmbIcerikHavaleIslemleriBirim.closeTreePanel();
+        return this;
+    }
+
+    @Step("Evrak Detayı ekranında eklenen dosyayı iptal etme\n")
+    public KaydedilenGelenEvraklarPage icerikDosyaDeleteIcon() {
+        btnIcerikDosyaDeleteIcon.click();
+        return this;
+    }
+
 }
