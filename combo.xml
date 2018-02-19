@@ -128,20 +128,22 @@
                     Contains test packet(s) to run. Values are selected form and
                     sent by Jenkins. TestNG will run packet(s) using this list.
                     *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-->
-                    <!--<properties>
-                        <property>
+                    <properties>
+                        <!--<property>
                             <name>testnames</name>
                             <value>${packets}</value>
-                        </property>
-                        &lt;!&ndash;<property>
-                            <name>tests</name>
+                        </property>-->
+                        <property>
+                            <name>parallel</name>
                             <value>methods</value>
                         </property>
                         <property>
                             <name>threadCount</name>
-                            <value>3</value>
-                        </property>&ndash;&gt;
-                    </properties>-->
+                            <value>5</value>
+                        </property>
+                    </properties>
+                    <parallel>${parallel}</parallel>
+                    <threadCount>${threadCount}</threadCount>
 
                     <!--*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
                     Contains test name(s) to run. Values are selected form and
@@ -156,10 +158,6 @@
                     <argLine>
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
                     </argLine>
-
-                    <parallel>${parallel}</parallel>
-                    <threadCount>${threadCount}</threadCount>
-
                 </configuration>
 
                 <dependencies>
