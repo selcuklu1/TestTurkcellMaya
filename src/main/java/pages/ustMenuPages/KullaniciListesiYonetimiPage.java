@@ -1,5 +1,8 @@
 package pages.ustMenuPages;
 
+import com.codeborne.selenide.CollectionCondition;
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
@@ -10,7 +13,9 @@ import pages.pageComponents.belgenetElements.Belgenet;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.UstMenuData;
 
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
 import static com.codeborne.selenide.Selenide.$x;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
@@ -33,7 +38,10 @@ public class KullaniciListesiYonetimiPage extends MainPage {
     BelgenetElement txtKullanicilar = comboLov(By.id("kullaniciGrubuEditorForm:kullaniciGrubuKullaniciLov_id:LovText"));
     SelenideElement btnKaydet = $(By.id("kullaniciGrubuEditorForm:kullaniciGrubuKaydet_id"));
     SelenideElement btnIptal = $(By.id("kullaniciGrubuEditorForm:kullaniciGrubuKaydetIptal_id"));
-
+    SelenideElement cmbDurum = $(By.id("kullaniciGrubuListingForm:filterPanel:durumSelectBox"));
+    SelenideElement btnAra = $(By.id("kullaniciGrubuListingForm:filterPanel:kullaniciGrubuArama_id"));
+    ElementsCollection tblKullaniciListesi = $$("tbody[id='kullaniciGrubuListingForm:kullaniciGrubuDataTable_data'] tr[data-ri]");
+    SelenideElement btnIslemOnayıEvet = $(By.id("baseConfirmationDialog:confirmButton"));
 
     @Step("Kullanıcı Listesi Yönetimi sayfası açılır.")
     public KullaniciListesiYonetimiPage openPage() {
@@ -108,4 +116,60 @@ public class KullaniciListesiYonetimiPage extends MainPage {
         return this;
     }
 
+    @Step("Durum alanında \"{durum}\" seçilir.")
+    public KullaniciListesiYonetimiPage durumSec(String durum) {
+        cmbDurum.selectOption(durum);
+        return this;
+    }
+
+    @Step("Ara butonuna tıklanır.")
+    public KullaniciListesiYonetimiPage ara() {
+        btnAra.click();
+        return this;
+    }
+
+    @Step("Kullanici Listesi tablosu kontrolü.")
+    public KullaniciListesiYonetimiPage kullaniciListesiTabloKontrolu() {
+
+        String text = cmbDurum.getText();
+
+        if (tblKullaniciListesi.size()>0)
+            Allure.addAttachment("Tablo Kontrolü : ",text+ " Kayıtlar listelenmiştir.");
+
+        else
+            Allure.addAttachment("Tablo Kontrolü : ", "Kayıt bulunamamıştır.");
+        return this;
+    }
+
+    @Step("Kullanici Listesi tablosu kontrolu : \"{kullaniciAdi}\", \"{shouldBeExist}\" ")
+    public KullaniciListesiYonetimiPage kullaniciListesiTablosuKullaniciAdiKontrolu(String kullaniciAdi, boolean shouldBeExist) {
+        if (shouldBeExist) {
+            searchTable().searchInAllPages(true).findRows(text(kullaniciAdi)).shouldHave(CollectionCondition.sizeGreaterThan(0));
+//            tblKullaniciListesi
+//                    .filterBy(Condition.text(kullaniciAdi))
+//                    .shouldHave(CollectionCondition.sizeGreaterThan(0));
+        } else {
+            searchTable().searchInAllPages(true).findRows(text(kullaniciAdi)).shouldHaveSize(0);
+//            tblKullaniciListesi
+//                    .filterBy(Condition.text(kullaniciAdi))
+//                    .shouldHaveSize(0);
+        }
+        return this;
+    }
+
+    @Step("Pasif Yap butonu tıklanır.")
+    public KullaniciListesiYonetimiPage pasifYap(String kullaniciAdi) {
+        tblKullaniciListesi
+                .filterBy(text(kullaniciAdi))
+                .first()
+                .$("[id$=':kullaniciGrubuAktif_id']").click();
+        return this;
+    }
+
+    @Step("İşlem Onayı popUpı \"{butonText}\" butonuna basılarak kapatılır.")
+    public KullaniciListesiYonetimiPage islemOnayiPopUpEvetHayır(String butonText) {
+        SelenideElement btnKapat = $(By.xpath("//div[@id='baseConfirmationDialog:dialog']//span[text()='" + butonText + "']//..//..//button"));
+        btnKapat.click();
+        return this;
+    }
 }
