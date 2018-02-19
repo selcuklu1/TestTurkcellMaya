@@ -50,14 +50,13 @@ public class BirimIcerikSablonuTest extends BaseTest {
 
     @Test(description = "TS1084: Alan aktif durum kontrolleri", enabled = true, priority = 1)
     public void TS1084() {
-        throw new RuntimeException("aaaaa");
-        /*login(user1);
+        login(user1);
         birimIcerikSablonlarPage = new BirimIcerikSablonlarPage().openPage();
         TS1084a(birimIcerikSablonlarPage);
         TS1084b(birimIcerikSablonlarPage);
         TS1084c(birimIcerikSablonlarPage);
         TS1084d(birimIcerikSablonlarPage);
-        TS1084e(birimIcerikSablonlarPage);*/
+        TS1084e(birimIcerikSablonlarPage);
     }
 
     @Test(description = "TS1082: Yeni şablon oluştur (Alt birimler görsün)", enabled = true, priority = 2)

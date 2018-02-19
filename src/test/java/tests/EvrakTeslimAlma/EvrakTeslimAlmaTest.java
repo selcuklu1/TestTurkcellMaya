@@ -629,8 +629,9 @@ public class EvrakTeslimAlmaTest extends BaseTest {
                 .openPage()
                 .evrakNoIleEvrakSec(konu1)
                 .evrakNoIleEvrakSec(konu2)
+                .tabKontrol()
                 .secilenEvrakEvrakGecmisi()
-                .evrakGecmisi(kisi, islemSureci);
+                .evrakGecmisi(kisi, islemSureci,evrakTarihi);
     }
 
     @Severity(SeverityLevel.CRITICAL)
