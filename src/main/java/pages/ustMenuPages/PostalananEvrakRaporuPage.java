@@ -1,7 +1,6 @@
 package pages.ustMenuPages;
 
 import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
@@ -9,15 +8,9 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
 import org.testng.Assert;
-import org.testng.asserts.SoftAssert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.UstMenuData;
@@ -97,16 +90,18 @@ public class PostalananEvrakRaporuPage extends MainPage {
         System.out.println(innertext);
         return this;
     }
+
     @Step("Ağırlık ve Tutar kontrolü")
-    public PostalananEvrakRaporuPage agirliktutarktrl () {
+    public PostalananEvrakRaporuPage agirliktutarktrl() {
         SelenideElement tblagirlik = $x("//*[@id='postalananEvrakRaporuForm:postalananEvrakDataTable_data']/tr[1]/td[11]/div");
         SelenideElement tbltutar = $x("//*[@id='postalananEvrakRaporuForm:postalananEvrakDataTable_data']/tr[1]/td[12]/div");
         tblagirlik.getText();
         tbltutar.getText();
         return this;
     }
+
     @Step("Sorgulama sonucu gelen postalanan evrak sayısı kadar Postalanan yer - gecmiş detay - etiket buton kontrolü")
-    public PostalananEvrakRaporuPage evrakSayiGecmisDetaybtnktrl () {
+    public PostalananEvrakRaporuPage evrakSayiGecmisDetaybtnktrl() {
         String SchildElementCount;
         SchildElementCount = sorguTablosu.getAttribute("childElementCount");
         int childElementCount = Integer.parseInt(SchildElementCount);
@@ -126,6 +121,7 @@ public class PostalananEvrakRaporuPage extends MainPage {
         }
         return this;
     }
+
     @Step("Evrak Geçmişi butonuna tıkla")
     public PostalananEvrakRaporuPage ilkEvrakGecmisi() {
         btnIlkEvrakGecmisi.click();
@@ -143,6 +139,7 @@ public class PostalananEvrakRaporuPage extends MainPage {
         btnEvrakGoster.click();
         return this;
     }
+
     @Step("Icerik Evrak No kontrol")
     public PostalananEvrakRaporuPage chkEvrakNobtn() {
         SelenideElement EvrkNoBtn = $x("//*[@id='windowReadOnlyForm:evrakBilgileriList:0:evrakNoPanelGrid']/tbody/tr/td[3]/div");
@@ -162,8 +159,9 @@ public class PostalananEvrakRaporuPage extends MainPage {
         txtPostaAciklama.setValue(postaAciklama);
         return this;
     }
+
     @Step("Posta açıklama alanı temizle")
-    public PostalananEvrakRaporuPage clearPostaAciklamaAlani () {
+    public PostalananEvrakRaporuPage clearPostaAciklamaAlani() {
         txtPostaAciklama.clear();
         return this;
     }
@@ -173,8 +171,9 @@ public class PostalananEvrakRaporuPage extends MainPage {
         cmbPostalayanAdi.selectLov(postalayanAdi);
         return this;
     }
+
     @Step("Postalayan adi alanını temizle")
-    public PostalananEvrakRaporuPage cmbClearPostalayanAdi () {
+    public PostalananEvrakRaporuPage cmbClearPostalayanAdi() {
         cmbPostalayanAdi.clearAllSelectedItems();
         return this;
     }
@@ -211,11 +210,12 @@ public class PostalananEvrakRaporuPage extends MainPage {
     }
 
     @Step("Dosyanın indirilme kontrolü")
-    public PostalananEvrakRaporuPage ktrlDosyaindirme () {
-        String downloadpath =  getDownloadPath();
+    public PostalananEvrakRaporuPage ktrlDosyaindirme() {
+        String downloadpath = getDownloadPath();
         System.out.println(downloadpath);
         return this;
     }
+
     @Step("Etiket butonuna tıkla")
     public PostalananEvrakRaporuPage btnEtiket() {
         btnEtiketYazdir.click();
@@ -247,8 +247,9 @@ public class PostalananEvrakRaporuPage extends MainPage {
         fromEvrakRapor.click();
         return this;
     }
+
     @Step("Rapor al işlemi başarılıdır kontrülü")
-    public PostalananEvrakRaporuPage raporalbasarilidir () {
+    public PostalananEvrakRaporuPage raporalbasarilidir() {
         islemMesaji().isBasarili();
         return this;
     }
@@ -264,27 +265,29 @@ public class PostalananEvrakRaporuPage extends MainPage {
         String SchildElementCount;
         SchildElementCount = sorguTablosu.getAttribute("childElementCount");
         int childElemCount = Integer.parseInt(SchildElementCount);
-         int i = 1;
-            String paramEvrakSahibi = "//*[@id='postalananEvrakRaporuForm:postalananEvrakDataTable_data']/tr[" + String.valueOf(1) + "]/td[7]/div";
-            SelenideElement evSahibiColumn = $x(paramEvrakSahibi);
-            String evraksahibicol = evSahibiColumn.getAttribute("innerText");
-            Assert.assertEquals(evrakSahibi, evraksahibicol);
+        int i = 1;
+        String paramEvrakSahibi = "//*[@id='postalananEvrakRaporuForm:postalananEvrakDataTable_data']/tr[" + String.valueOf(1) + "]/td[7]/div";
+        SelenideElement evSahibiColumn = $x(paramEvrakSahibi);
+        String evraksahibicol = evSahibiColumn.getAttribute("innerText");
+        Assert.assertEquals(evrakSahibi, evraksahibicol);
 
         return this;
     }
-     @Step("Evrak Sahibi Seçimi Temizleme")
-     public PostalananEvrakRaporuPage cmbClearEvrakSahibi () {
+
+    @Step("Evrak Sahibi Seçimi Temizleme")
+    public PostalananEvrakRaporuPage cmbClearEvrakSahibi() {
         cmbEvrakSahibi.clearAllSelectedItems();
         return this;
-     }
+    }
 
     @Step("Postalanan yer \"{postalananYer}\"seçimi")
     public PostalananEvrakRaporuPage cmbPostalananYerSecimi(String postalananYer) {
         cmbPostalananyer.selectLov(postalananYer);
         return this;
     }
+
     @Step("Postalanan yer seçimini temizleme")
-    public PostalananEvrakRaporuPage cmbPostalananYerSecimiTemizle () {
+    public PostalananEvrakRaporuPage cmbPostalananYerSecimiTemizle() {
         cmbPostalananyer.clearAllSelectedItems();
         return this;
     }
@@ -298,9 +301,9 @@ public class PostalananEvrakRaporuPage extends MainPage {
             String parampostalananyer = "//*[@id='postalananEvrakRaporuForm:postalananEvrakDataTable_data']/tr[" + String.valueOf(i + 1) + "]/td[6]/div";
             SelenideElement postalananyerColumn = $x(parampostalananyer);
             String postalananyercol = postalananyerColumn.getAttribute("innerText");
-            postalananyercol = postalananyercol.replaceAll("\\s+","");
+            postalananyercol = postalananyercol.replaceAll("\\s+", "");
 
-            Assert.assertEquals(postalananyercol ,postalananyer);
+            Assert.assertEquals(postalananyercol, postalananyer);
 
         }
         return this;
@@ -320,7 +323,7 @@ public class PostalananEvrakRaporuPage extends MainPage {
     }
 
     @Step("Etiket İçerik tarih ve yer kontrol")
-    public PostalananEvrakRaporuPage txtktrlEtiketIcerik () {
+    public PostalananEvrakRaporuPage txtktrlEtiketIcerik() {
 
         SelenideElement txtktrl = $x("//*[@id='postalananEvrakRaporuForm:etiketMetinID']");
         txtktrl.exists();
@@ -391,16 +394,17 @@ public class PostalananEvrakRaporuPage extends MainPage {
 
         return this;
     }
+
     @Step("Excel ve Tablo karşılaştırma")
     public PostalananEvrakRaporuPage excelTabloKars(String filepath) throws IOException, InterruptedException {
         Thread.sleep(3000);
-    boolean flag;
-        File dir = new File( filepath);
+        boolean flag;
+        File dir = new File(filepath);
         File[] dir_contents = dir.listFiles();
-        String fileName = filepath ;
+        String fileName = filepath;
         System.out.println(fileName);
-        Pattern p = Pattern.compile( "Rapor_" +"[0-9]+" +".xls");
-      //  Matcher m = p.matcher(fileName);
+        Pattern p = Pattern.compile("Rapor_" + "[0-9]+" + ".xls");
+        //  Matcher m = p.matcher(fileName);
         String s = null;
         for (int i = 0; i < dir_contents.length; i++) {
             String file = dir_contents[i].getName().toString();
@@ -408,10 +412,11 @@ public class PostalananEvrakRaporuPage extends MainPage {
             Matcher m = p.matcher(file);
             while (m.find()) {
 
-            System.out.println(m.group() + " " + m.start() + " " + m.end());
-            s = m.group();
-            fileName = filepath + s;
-        } }
+                System.out.println(m.group() + " " + m.start() + " " + m.end());
+                s = m.group();
+                fileName = filepath + s;
+            }
+        }
 
 
         InputStream ExcelFileToRead = new FileInputStream(fileName);
@@ -425,29 +430,22 @@ public class PostalananEvrakRaporuPage extends MainPage {
 
         Iterator rows = sheet.rowIterator();
 
-        while (rows.hasNext())
-        {
-            row=(HSSFRow) rows.next();
+        while (rows.hasNext()) {
+            row = (HSSFRow) rows.next();
             Iterator cells = row.cellIterator();
 
 
-            while (cells.hasNext())
-            {
-                cell=(HSSFCell  ) cells.next();
+            while (cells.hasNext()) {
+                cell = (HSSFCell) cells.next();
 
-                if (cell.getCellType() == XSSFCell.CELL_TYPE_STRING)
-                {
-                    System.out.print(cell.getStringCellValue()+" ");
-                    Allure.addAttachment("Cell", cell.getStringCellValue()+"");
-                }
-                else if(cell.getCellType() == HSSFCell.CELL_TYPE_NUMERIC)
-                {
-                    System.out.print(cell.getNumericCellValue()+" ");
-                    Allure.addAttachment("Cell", cell.getStringCellValue()+"");
+                if (cell.getCellType() == XSSFCell.CELL_TYPE_STRING) {
+                    System.out.print(cell.getStringCellValue() + " ");
+                    Allure.addAttachment("Cell", cell.getStringCellValue() + "");
+                } else if (cell.getCellType() == HSSFCell.CELL_TYPE_NUMERIC) {
+                    System.out.print(cell.getNumericCellValue() + " ");
+                    Allure.addAttachment("Cell", cell.getStringCellValue() + "");
 
-                }
-                else
-                {
+                } else {
                     //U Can Handel Boolean, Formula, Errors
                 }
             }
@@ -458,21 +456,21 @@ public class PostalananEvrakRaporuPage extends MainPage {
         SchildElementCount = sorguTablosu.getAttribute("childElementCount");
         int childElemCount = Integer.parseInt(SchildElementCount);
         for (int i = 0; i < childElemCount; i++) {
-            for ( int j = 1 ; j<4 ; j++) {
+            for (int j = 1; j < 4; j++) {
 
 
-            String postano = "//*[@id='postalananEvrakRaporuForm:postalananEvrakDataTable_data']/tr[" + String.valueOf(i + 1) + "]/td["+String.valueOf(j)+"]/div";
-            SelenideElement postalananyerColumn = $x(postano);
-            String postanocol = postalananyerColumn.getAttribute("innerText");
-            System.out.println(postanocol+" ");
-            Allure.addAttachment("Tablo" , postanocol+ " ");
+                String postano = "//*[@id='postalananEvrakRaporuForm:postalananEvrakDataTable_data']/tr[" + String.valueOf(i + 1) + "]/td[" + String.valueOf(j) + "]/div";
+                SelenideElement postalananyerColumn = $x(postano);
+                String postanocol = postalananyerColumn.getAttribute("innerText");
+                System.out.println(postanocol + " ");
+                Allure.addAttachment("Tablo", postanocol + " ");
             }
         }
         return this;
     }
 
     @Step("Sorgulama parametresine göre sonuç kontrolü \"{kontrol}\" ")
-    public PostalananEvrakRaporuPage sorgulamasonucKontrol (String kontrol) {
+    public PostalananEvrakRaporuPage sorgulamasonucKontrol(String kontrol) {
         int resultsize = tblSorgulamaSonuc.size();
 
         return this;

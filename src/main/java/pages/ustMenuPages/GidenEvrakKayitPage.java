@@ -424,8 +424,8 @@ public class GidenEvrakKayitPage extends MainPage {
     @Step("Gereği alanında Birimin geldiği ve seçilemediği kontrolu - {description} : {birim}")
     public GidenEvrakKayitPage geregiAlanindaBiriminGeldigiSecilemedigiKontrolu(String birim, String description) {
 
-        int  gorunurSecilemezBirimSize = comboLov(cmbGeregiBy).type(birim).getSelectableItems().size();
-        Assert.assertEquals(gorunurSecilemezBirimSize==0, true, "Birimin geldiği ve seçilemediği görülür: " + birim);
+        int gorunurSecilemezBirimSize = comboLov(cmbGeregiBy).type(birim).getSelectableItems().size();
+        Assert.assertEquals(gorunurSecilemezBirimSize == 0, true, "Birimin geldiği ve seçilemediği görülür: " + birim);
         comboLov(cmbGeregiBy).closeTreePanel();
         System.out.println("Birimin geldiği ve seçilemediği görülür: " + birim);
         Allure.addAttachment("Birimin geldiği ve seçilemediği görülür: " + birim, "");
@@ -436,8 +436,8 @@ public class GidenEvrakKayitPage extends MainPage {
     @Step("Birim alanında Birimin geldiği ve seçilemediği kontrolu - {description} : {birim}")
     public GidenEvrakKayitPage bilgiAlanindaBiriminGeldigiSecilemedigiKontrolu(String birim, String description) {
 
-        int  gorunurSecilemezBirimSize = comboLov(cmbBilgiBy).type(birim).getSelectableItems().size();
-        Assert.assertEquals(gorunurSecilemezBirimSize==0, true, "Birimin geldiği ve seçilemediği görülür: " + birim);
+        int gorunurSecilemezBirimSize = comboLov(cmbBilgiBy).type(birim).getSelectableItems().size();
+        Assert.assertEquals(gorunurSecilemezBirimSize == 0, true, "Birimin geldiği ve seçilemediği görülür: " + birim);
         comboLov(cmbBilgiBy).closeTreePanel();
         System.out.println("Birimin geldiği ve seçilemediği görülür: " + birim);
         Allure.addAttachment("Birimin geldiği ve seçilemediği görülür: " + birim, "");

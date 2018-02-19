@@ -657,7 +657,7 @@ public class TuzelKisiYonetimiTest extends BaseTest {
         evrakOlusturPage
                 .openPage()
                 .editorTabAc()
-                .geregiDoldur(ad,"Ad")
+                .geregiDoldur(ad, "Ad")
                 .secilenGeregiSil()
                 .geregiDoldur(kisaAd, "Kısa Ad")
                 .secilenGeregiSil()

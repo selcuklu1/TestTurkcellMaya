@@ -48,7 +48,7 @@ public class KullaniciEvrakDevretPage extends MainPage {
         return ret;
     }
 
-    @Step("Kullanıcı Evrak Devret sayfasını aç")
+    @Step("Kullanıcı Evrak Devret sayfası açılır.")
     public KullaniciEvrakDevretPage openPage() {
         ustMenu(UstMenuData.AmirIslemleri.KullaniciEvrakDevret);
         return this;
@@ -112,6 +112,7 @@ public class KullaniciEvrakDevretPage extends MainPage {
         txtAciklama.setValue(aciklama);
         return this;
     }
+
     @Step("Açıklama alanı temizlenir.")
     public KullaniciEvrakDevretPage aciklamaTemizle() {
         txtAciklama.clear();
@@ -254,10 +255,10 @@ public class KullaniciEvrakDevretPage extends MainPage {
 
     @Step("Devralacak popup alan kontrolleri")
     public KullaniciEvrakDevretPage devralacakKisiAlanKontolu() {
-        Assert.assertEquals(txtDevralacakKisi.shouldBe(visible),true,"Devrelecak kişi texti visible.");
-        Assert.assertEquals(txtAciklama.shouldBe(visible),true,"Açıklama texti visible.");
-        Assert.assertEquals(btnDevretTamam.shouldBe(visible),true,"Devret Tamam butonu visible.");
-        Assert.assertEquals(btnDevretIptal.shouldBe(visible),true,"Devret Iptal butonu visible.");
+        Assert.assertEquals(txtDevralacakKisi.shouldBe(visible), true, "Devrelecak kişi texti visible.");
+        Assert.assertEquals(txtAciklama.shouldBe(visible), true, "Açıklama texti visible.");
+        Assert.assertEquals(btnDevretTamam.shouldBe(visible), true, "Devret Tamam butonu visible.");
+        Assert.assertEquals(btnDevretIptal.shouldBe(visible), true, "Devret Iptal butonu visible.");
 
         Allure.addAttachment($(By.xpath("//label[normalize-space(text())='Devralacak Kişi']")).text(), "Ekran Kontrolü ok");
         Allure.addAttachment($(By.xpath("//label[normalize-space(text())='Açıklama']")).text(), "Ekran Kontrolü ok");

@@ -5,6 +5,15 @@
 
 
 <suite name="Evrak Not" parallel="classes" verbose="1">
+    <method-selectors>
+        <method-selector>
+            <selector-class name="tests.BirimIcerikSablonu.BirimIcerikSablonuTest">
+                <include name="">
+
+                </include>
+            </selector-class>
+        </method-selector>
+    </method-selectors>
 
     <!--thread-count="10"-->
     <!--<listeners>-->
@@ -16,8 +25,7 @@
     <!--</suite-files>-->
     <test name="Evrak Not">
         <classes>
-            <class name="tests.EvrakNot.EvrakNotTest2"/>
-
+            <class name="tests.EvrakNot.EvrakNotTest"/>
         </classes>
     </test>
     <!--<test name="TuzelKisiYonetimiTest">

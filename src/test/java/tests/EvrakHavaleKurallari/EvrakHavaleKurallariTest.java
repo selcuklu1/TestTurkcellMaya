@@ -275,7 +275,7 @@ public class EvrakHavaleKurallariTest extends BaseTest {
         evrakHavaleKurallariYonetimiPage
                 .openPage()
                 .yeniKural()
-                .evrakTuruSec(5,"Diğer")
+                .evrakTuruSec(5, "Diğer")
                 .kuralinTanimliOlduguBirimlerYeni()
                 .birimEkleBirimDoldur(birim)
                 .birimEkleEkle()
@@ -341,7 +341,7 @@ public class EvrakHavaleKurallariTest extends BaseTest {
         evrakHavaleKurallariYonetimiPage
                 .openPage()
                 .yeniKural()
-                .evrakTuruSec(4,"Tebrik,Davetiye vb.")
+                .evrakTuruSec(4, "Tebrik,Davetiye vb.")
                 .kuralinTanimliOlduguBirimlerYeni()
                 .birimEkleBirimDoldur(birim)
                 .birimEkleEkle()
@@ -401,7 +401,7 @@ public class EvrakHavaleKurallariTest extends BaseTest {
         evrakHavaleKurallariYonetimiPage
                 .openPage()
                 .yeniKural()
-                .evrakTuruSec(0,"Resmi Yazı")
+                .evrakTuruSec(0, "Resmi Yazı")
                 .kuralinTanimliOlduguBirimlerYeni()
                 .birimEkleBirimDoldur(birim)
                 .birimEkleEkle()
@@ -460,7 +460,7 @@ public class EvrakHavaleKurallariTest extends BaseTest {
         evrakHavaleKurallariYonetimiPage
                 .openPage()
                 .yeniKural()
-                .evrakTuruSec(4,"Tebrik,Davetiye vb.")
+                .evrakTuruSec(4, "Tebrik,Davetiye vb.")
                 .kimeHavaleEdilecekKisiDoldur(kisi, birim2)
                 .kuralinTanimliOlduguBirimlerYeni()
                 .birimEkleAltBirimlerDahil(true)

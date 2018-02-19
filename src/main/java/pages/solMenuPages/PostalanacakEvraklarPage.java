@@ -1,17 +1,17 @@
 package pages.solMenuPages;
 
-import com.codeborne.selenide.*;
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.ex.ElementNotFound;
-import com.codeborne.selenide.impl.WebDriverContainer;
 import io.qameta.allure.Allure;
-import io.qameta.allure.AllureResultsWriter;
-import io.qameta.allure.AllureUtils;
 import io.qameta.allure.Step;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.apache.poi.EmptyFileException;
-import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
@@ -26,8 +26,6 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.security.Key;
-import java.sql.Driver;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
@@ -168,6 +166,7 @@ public class PostalanacakEvraklarPage extends MainPage {
                 .filterBy(Condition.text(tarih)).get(0).click();
         return this;
     }
+
     @Step("Evrak seçilir")
     public PostalanacakEvraklarPage evrakSec(String konu) {
         tblEvraklar.filterBy(Condition.text(konu)).get(0).click();
@@ -209,7 +208,7 @@ public class PostalanacakEvraklarPage extends MainPage {
         System.out.println(postaSekli);
         btnComboEvrakGidisSekli.selectOption(postaSekli);
         if (postaSekli == "Adi Posta") {
-           btnComboEvrakGidisSekli.selectOption(1);
+            btnComboEvrakGidisSekli.selectOption(1);
         }
         return this;
 
@@ -283,6 +282,7 @@ public class PostalanacakEvraklarPage extends MainPage {
         $(By.xpath("//div[@id='windowReadOnlyEvrakDialog']//span[@class='ui-icon ui-icon-closethick']")).click();
         return this;
     }
+
     @Step("Evrak Detayları ekranı kapat")
     public PostalanacakEvraklarPage evrakDetaylariEkranKapat() {
         $(By.xpath("//div[@id='postaDetayYazdirForm:dlgPostaDetayYazdir']//span[@class='ui-icon ui-icon-closethick']")).click();
@@ -304,7 +304,7 @@ public class PostalanacakEvraklarPage extends MainPage {
 
     @Step("Kaydet butonuna tıklanır")
     public PostalanacakEvraklarPage dagitimPlaniKaydetl() {
-        SelenideElement btnDagitimPlaniKaydet= $(By.id("mainPreviewForm:dagitimPlaniDetayKaydetViewDialog"));
+        SelenideElement btnDagitimPlaniKaydet = $(By.id("mainPreviewForm:dagitimPlaniDetayKaydetViewDialog"));
         clickJs(btnDagitimPlaniKaydet);
         return this;
     }
@@ -341,7 +341,7 @@ public class PostalanacakEvraklarPage extends MainPage {
         switchTo().window(1);
 
         sleep(3000);
-takeScreenshot();
+        takeScreenshot();
 
         closeNewWindow();
         switchTo().window(0);
@@ -604,9 +604,9 @@ takeScreenshot();
     public PostalanacakEvraklarPage popupOrjYazYazdirButonKonrolleri() {
         postalanacakEvrakOrijinalYazdir.click();
 
-        Assert.assertEquals( true , btnPopUpUstVeriOrjYaz.exists());
-        Assert.assertEquals( true , btnEkleriOrjYazbtn1.exists());
-        Assert.assertEquals( true ,  btnEkleriOrjYazbtn2.exists());
+        Assert.assertEquals(true, btnPopUpUstVeriOrjYaz.exists());
+        Assert.assertEquals(true, btnEkleriOrjYazbtn1.exists());
+        Assert.assertEquals(true, btnEkleriOrjYazbtn2.exists());
 
         return this;
     }
@@ -621,7 +621,7 @@ takeScreenshot();
     }
 
     @Step("UstVeri Orijinal E-Ibaresi ve Kırmızı Yazı kontrolü, Screenshot ve output text olarak yazdırma")
-    public PostalanacakEvraklarPage PDFEibareVeKırmızıYazıktrl () throws InterruptedException {
+    public PostalanacakEvraklarPage PDFEibareVeKırmızıYazıktrl() throws InterruptedException {
         postalanacakEvrakOrjYaz();
         switchTo().window(1);
         SelenideElement pdftab = $x("//*[@id='plugin']");
@@ -642,18 +642,15 @@ takeScreenshot();
         Transferable contents = clipboard.getContents(null);
         boolean hasTransferableText =
                 (contents != null) &&
-                        contents.isDataFlavorSupported(DataFlavor.stringFlavor)
-                ;
-        if ( hasTransferableText ) {
+                        contents.isDataFlavorSupported(DataFlavor.stringFlavor);
+        if (hasTransferableText) {
             try {
-                result = (String)contents.getTransferData(DataFlavor.stringFlavor);
-            }
-            catch (UnsupportedFlavorException ex){
+                result = (String) contents.getTransferData(DataFlavor.stringFlavor);
+            } catch (UnsupportedFlavorException ex) {
                 //highly unlikely since we are using a standard DataFlavor
                 System.out.println(ex);
                 ex.printStackTrace();
-            }
-            catch (IOException ex) {
+            } catch (IOException ex) {
                 System.out.println(ex);
                 ex.printStackTrace();
             }
@@ -665,6 +662,7 @@ takeScreenshot();
 
         return this;
     }
+
     @Step("Kırmızı Yazı kontrolü")
     public PostalanacakEvraklarPage PDFkirmiziyaziktrl() {
 
@@ -674,7 +672,7 @@ takeScreenshot();
     }
 
     @Step("PDF Okuma")
-    public String pdfokuma(String strURL)  throws EmptyFileException, IOException {
+    public String pdfokuma(String strURL) throws EmptyFileException, IOException {
         URL url = new URL(strURL);
         InputStream is = url.openStream();
         BufferedInputStream fileToParse = new BufferedInputStream(is);
@@ -693,10 +691,12 @@ takeScreenshot();
         }
         return output;
     }
+
     @Step("Icerik Evrak Postala Sayfasindan Evrak Sayisi çekme")
     public String icEvrakPosEvSay() {
         return ktrlIcerikEvrakPostalaEvSayisi.getAttribute("outerText");
     }
+
     @Step("PDF - Evrak sayısı - Yazışma Kuralları kontrol")
     public PostalanacakEvraklarPage pdfEvrakYazismaKuralkontrol() throws IOException {
         switchTo().window(1);
@@ -726,15 +726,16 @@ takeScreenshot();
 
         btnPopupYazdir.click();
 
-       // $x("//div[@id='postaDetayYazdirForm:dlgPostaDetayYazdir']//a[span[@class='ui-icon ui-icon-closethick']]").click();
+        // $x("//div[@id='postaDetayYazdirForm:dlgPostaDetayYazdir']//a[span[@class='ui-icon ui-icon-closethick']]").click();
         //btnDagitimYerDetay.click();
         //SelenideElement dgtmdetayTablo = $x("//*[@id='mainPreviewForm:dagitimPlaniDetay_data']");
         //String dgmdty = dgtmdetayTablo.getAttribute("innerText");
         //System.out.println(dgmdty);
         return this;
     }
+
     @Step(" PDF içi sayfa sayısı kontrolü , Hitap kontrolü ve yazışma kuralı karşılaştırma , Güvenlik kodu yazdirma , Ekran görüntüsü alma ")
-    public PostalanacakEvraklarPage dgmpdfhitapguvenktrl () throws InterruptedException {
+    public PostalanacakEvraklarPage dgmpdfhitapguvenktrl() throws InterruptedException {
         switchTo().window(1);
         SelenideElement pdftab = $x("//*[@id='plugin']");
         refresh();
@@ -747,27 +748,24 @@ takeScreenshot();
         takeScreenshot();
         pdftab.sendKeys("bar");
 
-        pdftab.sendKeys(Keys.CONTROL, "a" );
+        pdftab.sendKeys(Keys.CONTROL, "a");
         pdftab.sendKeys(Keys.SPACE);
-        pdftab.sendKeys(Keys.CONTROL,"C");
+        pdftab.sendKeys(Keys.CONTROL, "C");
 
         String result = "";
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
         Transferable contents = clipboard.getContents(null);
         boolean hasTransferableText =
                 (contents != null) &&
-                        contents.isDataFlavorSupported(DataFlavor.stringFlavor)
-                ;
-        if ( hasTransferableText ) {
+                        contents.isDataFlavorSupported(DataFlavor.stringFlavor);
+        if (hasTransferableText) {
             try {
-                result = (String)contents.getTransferData(DataFlavor.stringFlavor);
-            }
-            catch (UnsupportedFlavorException ex){
+                result = (String) contents.getTransferData(DataFlavor.stringFlavor);
+            } catch (UnsupportedFlavorException ex) {
                 //highly unlikely since we are using a standard DataFlavor
                 System.out.println(ex);
                 ex.printStackTrace();
-            }
-            catch (IOException ex) {
+            } catch (IOException ex) {
                 System.out.println(ex);
                 ex.printStackTrace();
             }
@@ -781,6 +779,7 @@ takeScreenshot();
         return this;
 
     }
+
     @Step("Postalancak Eposta")
     public PostalanacakEvraklarPage postalacanakEposta(String eposta) {
 
@@ -916,7 +915,7 @@ takeScreenshot();
     }
 
     public PostalanacakEvraklarPage etiketBastirEkraniKontrolü(String tarih, String gonderilenYer, String evrakNo) {
-        txtEtiketBastir.shouldHave(text(tarih), text(gonderilenYer),text(evrakNo));
+        txtEtiketBastir.shouldHave(text(tarih), text(gonderilenYer), text(evrakNo));
         //Assert.assertEquals(txtEtiketBastir.text().contains(tarih),true);
         //Assert.assertEquals(txtEtiketBastir.text().contains(gonderilenYer),true, gonderilenYer);
         return this;
@@ -1144,17 +1143,19 @@ takeScreenshot();
     }
 
     @Step("Icerik Evrak Postalama içi page zoom out")
-    public PostalanacakEvraklarPage icerikEvPostPageDown () throws ElementNotFound {
-        SelenideElement  icerikPostalananYerTD = $x("//*[@id='inboxItemInfoForm:postalanacakDataGrid']/tbody/tr/td");
+    public PostalanacakEvraklarPage icerikEvPostPageDown() throws ElementNotFound {
+        SelenideElement icerikPostalananYerTD = $x("//*[@id='inboxItemInfoForm:postalanacakDataGrid']/tbody/tr/td");
         try {
             icerikPostalananYerTD.click();
             icerikPostalananYerTD.sendKeys(Keys.PAGE_DOWN);
 
         } catch (ElementNotFound e) {
 
-        };
+        }
+        ;
         return this;
     }
+
     @Step("Icerik Etiket Bastir butonu")
     public PostalanacakEvraklarPage btnIcerikEtiketBastir() {
         btnIcerikEtiketBastir.click();
@@ -1162,7 +1163,8 @@ takeScreenshot();
     }
 
     @Step("Icerik Etiket popup Aciklama kontrol: Tarih no ve Gönderilen yer")
-    public PostalanacakEvraklarPage txtPopupEtiketAciklama() {
+    public PostalanacakEvraklarPage txtPopupEtiketAciklama() throws InterruptedException {
+        Thread.sleep(1000);
         String etiketAciklama = btnIcerikEtiketAciklama.getAttribute("innerText");
         Allure.addAttachment("Etiket Icerik", etiketAciklama);
         return this;
@@ -1216,6 +1218,22 @@ takeScreenshot();
         return this;
     }
 
+    @Step("Takip Listesinde {kullanici} kullanıcısının olmadığı görülür.")
+    public PostalanacakEvraklarPage takipListesindeKullaniciOlmamali(String kullanici) {
+        tblTakipListesi.filterBy(text(kullanici)).first().shouldNotBe(visible);
+        return this;
+    }
+
+    @Step("Takip Listesinden {kullanici} kullanıcısını çıkart.")
+    public PostalanacakEvraklarPage takipListesiKullaniciCikart(String kullanici){
+        tblTakipListesi
+                .filterBy(text(kullanici))
+                .first()
+                .$x(".//span[contains(@class, 'delete-icon')]/..")
+                .click();
+        return this;
+    }
+
     @Step("Takip Listesi ekranında bulunan (X) \"Sayfayı Kapatma\" butonuna basılır. Takip listesi ekranın kapatıldığı görülür.")
     public PostalanacakEvraklarPage takipListesiKapat() {
         btnTakipListesiKapat.click();
@@ -1253,5 +1271,5 @@ takeScreenshot();
     }
 
 
-    }
+}
 

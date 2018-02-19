@@ -336,8 +336,8 @@ public class GercekKisiYonetimPage extends MainPage {
 
     @Step("Eklenen yeni kayıt listede görüntülenir: {kep}")
     public GercekKisiYonetimPage kepAdresBilgileriKayitListedeGeldigiGorulur(String kep) {
-        boolean durum =$("[id='kurumYonetimiEditorForm:kepBilgileriDataTable']").shouldBe(Condition.text(kep)).shouldBe(Condition.visible).exists()==true;
-        Assert.assertEquals(durum,true);
+        boolean durum = $("[id='kurumYonetimiEditorForm:kepBilgileriDataTable']").shouldBe(Condition.text(kep)).shouldBe(Condition.visible).exists() == true;
+        Assert.assertEquals(durum, true);
         return this;
     }
 

@@ -16,7 +16,7 @@ import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 public class TopluEvrakOnizleme extends MainPage {
     SelenideElement tabTopluHavale = $("[id='mainPreviewForm:topluHavaleOnizlemeTab']");
     SelenideElement txtBirim = $("[id='mainPreviewForm:dagitimBilgileriBirimLov:LovText']");
-//    SelenideElement txtKisi = $("[id='mainPreviewForm:dagitimBilgileriKullaniciLov:LovText']");
+    //    SelenideElement txtKisi = $("[id='mainPreviewForm:dagitimBilgileriKullaniciLov:LovText']");
     SelenideElement txtAciklama = $("[id='mainPreviewForm:havaleAciklama']");
     SelenideElement btnDosyaEkle = $("[id='mainPreviewForm:fileUploadHavaleEk']");
     SelenideElement txtKullaniciListesi = $("[id='mainPreviewForm:dagitimBilgileriKisiListesiLov:LovText']");
@@ -34,43 +34,43 @@ public class TopluEvrakOnizleme extends MainPage {
 
     @Step("Toplu Havale Etme ekranı açılır\n")
     public TopluEvrakOnizleme ekranKontrol() {
-        Assert.assertEquals(tabTopluHavale.isDisplayed(),true,"Toplu Havale Etme sayfası");
-        Allure.addAttachment("Toplu Havale Etme sayfası","açılmaktadır");
+        Assert.assertEquals(tabTopluHavale.isDisplayed(), true, "Toplu Havale Etme sayfası");
+        Allure.addAttachment("Toplu Havale Etme sayfası", "açılmaktadır");
         return this;
     }
 
     @Step("Havale İşlemleri Alanındaki Kontroller")
     public TopluEvrakOnizleme havaleAlanKontrolleri() {
         String text = "";
-        if(txtBirim.isDisplayed()) {
+        if (txtBirim.isDisplayed()) {
             text += "Birim Kontrol,";
-            Assert.assertEquals(txtBirim.isDisplayed(),true,"Birim Alanı Görüntülendi");
-            Allure.addAttachment("Birim Kontrol Alanı Görüntülendi : ","");
+            Assert.assertEquals(txtBirim.isDisplayed(), true, "Birim Alanı Görüntülendi");
+            Allure.addAttachment("Birim Kontrol Alanı Görüntülendi : ", "");
         }
-        if(txtKisi.isDisplayed()) {
+        if (txtKisi.isDisplayed()) {
             text += "Kisi Kontrol, ";
-            Assert.assertEquals(txtKisi.isDisplayed(),true,"Kisi Alanı Görüntülendi");
-            Allure.addAttachment("Kisi Alanı Görüntülendi : ","");
+            Assert.assertEquals(txtKisi.isDisplayed(), true, "Kisi Alanı Görüntülendi");
+            Allure.addAttachment("Kisi Alanı Görüntülendi : ", "");
         }
-        if(txtAciklama.isDisplayed()) {
+        if (txtAciklama.isDisplayed()) {
             text += "Aciklama,";
-            Assert.assertEquals(txtAciklama.isDisplayed(),true,"Aciklama Alanı Görüntülendi");
-            Allure.addAttachment("Aciklama Alanı Görüntülendi : ","");
+            Assert.assertEquals(txtAciklama.isDisplayed(), true, "Aciklama Alanı Görüntülendi");
+            Allure.addAttachment("Aciklama Alanı Görüntülendi : ", "");
         }
-        if(btnDosyaEkle.isDisplayed()) {
+        if (btnDosyaEkle.isDisplayed()) {
             text += "Dosya Ekle,";
-            Assert.assertEquals(btnDosyaEkle.isDisplayed(),true,"Dosya Ekle Alanı Görüntülendi");
-            Allure.addAttachment("Dosya Ekle Alanı Görüntülendi : ","");
+            Assert.assertEquals(btnDosyaEkle.isDisplayed(), true, "Dosya Ekle Alanı Görüntülendi");
+            Allure.addAttachment("Dosya Ekle Alanı Görüntülendi : ", "");
         }
-        if(txtKullaniciListesi.isDisplayed()) {
+        if (txtKullaniciListesi.isDisplayed()) {
             text += "Kullanıcı Liste,";
-            Assert.assertEquals(txtKullaniciListesi.isDisplayed(),true,"Kullanıcı Liste Alanı Görüntülendi");
-            Allure.addAttachment("Kullanıcı Liste Alanı Görüntülendi : ","");
+            Assert.assertEquals(txtKullaniciListesi.isDisplayed(), true, "Kullanıcı Liste Alanı Görüntülendi");
+            Allure.addAttachment("Kullanıcı Liste Alanı Görüntülendi : ", "");
         }
-        if(txtOnaylayacakKisi.isDisplayed()) {
+        if (txtOnaylayacakKisi.isDisplayed()) {
             text += "Onaylayacak Kisi,";
-            Assert.assertEquals(txtOnaylayacakKisi.isDisplayed(),true,"Onaylayacak Kisi Alanı Görüntülendi");
-            Allure.addAttachment("Onaylayacak Kisi Alanı Görüntülendi : ","");
+            Assert.assertEquals(txtOnaylayacakKisi.isDisplayed(), true, "Onaylayacak Kisi Alanı Görüntülendi");
+            Allure.addAttachment("Onaylayacak Kisi Alanı Görüntülendi : ", "");
         }
 
         Allure.addAttachment("Alan Kontrolleri : ", text);
@@ -79,15 +79,15 @@ public class TopluEvrakOnizleme extends MainPage {
     }
 
     @Step("Havale İşlemleri Kişi alanında \"{kisi}\" \"{details}\"seç")
-    public TopluEvrakOnizleme havaleIslemleriKisiDoldur(String kisi,String details) {
-        txtKisi.selectLov(kisi,details);
+    public TopluEvrakOnizleme havaleIslemleriKisiDoldur(String kisi, String details) {
+        txtKisi.selectLov(kisi, details);
         return this;
     }
 
     @Step("Havale İşlemleri Kişi alanında eklenen \"{kisi}\" kontrolü")
     public TopluEvrakOnizleme eklenenKisiKontrolu(String kisi) {
-        Assert.assertEquals(txtEklenenKisi.isDisplayed(),true,"Kisi Eklendi");
-        Allure.addAttachment("Kisi Eklendi:" , kisi);
+        Assert.assertEquals(txtEklenenKisi.isDisplayed(), true, "Kisi Eklendi");
+        Allure.addAttachment("Kisi Eklendi:", kisi);
         return this;
     }
 
@@ -112,17 +112,18 @@ public class TopluEvrakOnizleme extends MainPage {
 
     @Step("Havale İşlemleri Kişi Listesi Kontrol \"{kisiliste}\" seç")
     public TopluEvrakOnizleme havaleKisiListesiKontrolu(String kisiliste) {
-        Assert.assertEquals(txtHavaleIslemleriKisiListesiKontrol.isDisplayed(),true,"Kisi Listesi Eklendi");
-        Allure.addAttachment("Kisi Listesi Eklendi" , "");
+        Assert.assertEquals(txtHavaleIslemleriKisiListesiKontrol.isDisplayed(), true, "Kisi Listesi Eklendi");
+        Allure.addAttachment("Kisi Listesi Eklendi", "");
         return this;
     }
 
     @Step("Havale İşlemleri Kişi alanında eklenen \"{opsiyon}\" kontrolü")
     public TopluEvrakOnizleme eklenenKisiListesiOpsiyonKontrolu(String opsiyon) {
-        Assert.assertEquals(txtEklenenKisiListesiOpsiyon.getSelectedOption().text().equals(opsiyon),true,"Opsiyon Seçildi");
-        Allure.addAttachment("Opsiyon Seçildi:" , opsiyon);
+        Assert.assertEquals(txtEklenenKisiListesiOpsiyon.getSelectedOption().text().equals(opsiyon), true, "Opsiyon Seçildi");
+        Allure.addAttachment("Opsiyon Seçildi:", opsiyon);
         return this;
     }
+
     @Step("Açıklama alanına \"{konu}\" girilir")
     public TopluEvrakOnizleme aciklamaDoldur(String konu) {
         txtAciklama.setValue(konu);

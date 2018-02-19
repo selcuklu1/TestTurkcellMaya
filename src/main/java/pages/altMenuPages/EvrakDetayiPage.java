@@ -3,15 +3,11 @@ package pages.altMenuPages;
 import com.codeborne.selenide.*;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
-import org.apache.commons.collections4.list.AbstractLinkedList;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.TextEditor;
 import pages.pageComponents.belgenetElements.BelgenetElement;
-import pages.pageComponents.tabs.BilgilerTab;
-import pages.pageComponents.tabs.EditorTab;
-import pages.ustMenuPages.EvrakOlusturPage;
 
 import static com.codeborne.selenide.Condition.attribute;
 import static com.codeborne.selenide.Condition.visible;
@@ -341,6 +337,7 @@ public class EvrakDetayiPage extends MainPage {
             return this;
         }
     }
+
     public class HareketGecmisiTab extends MainPage {
 
         SelenideElement tabHareketGecmisi = $("button .kullaniciGecmisi");

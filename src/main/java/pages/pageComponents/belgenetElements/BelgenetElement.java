@@ -10,6 +10,11 @@ public interface BelgenetElement extends SelenideElement {
 
     //region ComboLov
 
+    static BelgenetElement $(WebElement parentElement, String cssLocator) {
+        return ElementFinder.wrap(BelgenetElement.class, parentElement, By.cssSelector(cssLocator), 0);
+
+    }
+
     BelgenetElement comboLov(String selector);
 
     BelgenetElement comboLov(By locator);
@@ -102,12 +107,12 @@ public interface BelgenetElement extends SelenideElement {
      */
     ElementsCollection getSelectedDetails();
 
+    //endregion
+
     /**
      * @see pages.pageComponents.belgenetElements.ComboLovHelper
      */
     ElementsCollection getSelectedItems();
-
-    //endregion
 
     //region ComboBox
     BelgenetElement comboBox(String selector);
@@ -115,13 +120,13 @@ public interface BelgenetElement extends SelenideElement {
     BelgenetElement comboBox(By locator);
 
     BelgenetElement selectComboBox(String text, boolean... js);
-
-    ElementsCollection getComboBoxValues();
     //BelgenetElement getComboBoxHtmlList();
     //endregion
 
 
     //region Selenide $ to BelgenetElements
+
+    ElementsCollection getComboBoxValues();
 
     /**
      * ATTENTION! This method doesn't start any search yet!
@@ -171,7 +176,6 @@ public interface BelgenetElement extends SelenideElement {
      * @see com.codeborne.selenide.commands.FindByXpath
      */
     BelgenetElement $x(String xpath, int index);
-
 
     /**
      * <p>
@@ -225,11 +229,6 @@ public interface BelgenetElement extends SelenideElement {
      * @see com.codeborne.selenide.commands.FindAllByXpath
      */
     ElementsCollection $$x(String xpath);
-
-    static BelgenetElement $(WebElement parentElement, String cssLocator) {
-        return ElementFinder.wrap(BelgenetElement.class, parentElement, By.cssSelector(cssLocator), 0);
-
-    }
     //endregion
 }
 

@@ -109,8 +109,8 @@ public class KurumYonetimiPage extends MainPage {
 
     @Step("Eklenen yeni kayıt listede görüntülenir: {kep}")
     public KurumYonetimiPage kepAdresBilgileriKayitListedeGeldigiGorulur(String kep) {
-        boolean durum =$$("[id$='kepBilgileriDataTable_data']").filterBy(Condition.text(kep)).size()==1;
-        Assert.assertEquals(durum,true);
+        boolean durum = $$("[id$='kepBilgileriDataTable_data']").filterBy(Condition.text(kep)).size() == 1;
+        Assert.assertEquals(durum, true);
         return this;
     }
 
@@ -699,14 +699,14 @@ public class KurumYonetimiPage extends MainPage {
     }
 
     @Step("Kısa Adı alanını doldur: {kisaAd}")
-    public KurumYonetimiPage kisaAdiDoldur(String kisaAd){
+    public KurumYonetimiPage kisaAdiDoldur(String kisaAd) {
         txtKisaAdi.setValue(kisaAd);
         return this;
     }
 
     @Step("Hitap alanının geldiği görülür")
     public KurumYonetimiPage hitapAlaniKontrolu() {
-      Assert.assertEquals(txtHitap.isDisplayed(), true, "Hitap alanı kontrolu");
+        Assert.assertEquals(txtHitap.isDisplayed(), true, "Hitap alanı kontrolu");
         return this;
     }
 }

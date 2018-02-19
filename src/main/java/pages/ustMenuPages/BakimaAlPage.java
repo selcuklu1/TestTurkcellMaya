@@ -178,16 +178,16 @@ public class BakimaAlPage extends MainPage {
 
     @Step("\"Bakım Modu\" buton adı \"Bakımdan Çıkar\" olarak değişitiği, \"Sistem ......... tarihinde bakım moduna alınmıştır.Sisteme aşağıda tanımlanan kullanıcılar giriş yapabilecektir.\" Uyarısı verdiği ve bakım moduna geçildiği görülür.")
     public BakimaAlPage bakimdaOlmali() {
-            blinkUyari.shouldBe(Condition.visible);
-            btnBakimdanCikar.shouldBe(Condition.visible);
+        blinkUyari.shouldBe(Condition.visible);
+        btnBakimdanCikar.shouldBe(Condition.visible);
 
         return this;
     }
 
     @Step("\"Sistem ......... tarihinde bakım moduna alınmıştır. Sisteme aşağıda tanımlanan kullanıcılar giriş yapabilecektir.\" Uyarısının kaybolduğu ve \"Bakım Modundan Çıkar\" butonunun \"Bakım Modun\" butonuna çevrildiği görülür.")
     public BakimaAlPage bakimdaOlmamali() {
-            blinkUyari.shouldNotBe(Condition.visible);
-            btnBakimaAl.shouldBe(Condition.visible);
+        blinkUyari.shouldNotBe(Condition.visible);
+        btnBakimaAl.shouldBe(Condition.visible);
         return this;
     }
 
@@ -208,9 +208,9 @@ public class BakimaAlPage extends MainPage {
 
 
     @Step("Sisteme girebilecek kullanıcıların Ad, Soyad ve Görev kontrolü")
-    public BakimaAlPage sistemeGirebilecekKullanicilarBilgiKontrolEt(){
+    public BakimaAlPage sistemeGirebilecekKullanicilarBilgiKontrolEt() {
 
-        for(int i = 0; i <= tableSecilenKullanicilar.size(); i ++){
+        for (int i = 0; i <= tableSecilenKullanicilar.size(); i++) {
             tableSecilenKullanicilar.get(0).$("span[class='lovItemTitle']").shouldBe(Condition.visible);
             tableSecilenKullanicilar.get(0).$("span[class='lovItemDetail']").shouldBe(Condition.visible);
         }

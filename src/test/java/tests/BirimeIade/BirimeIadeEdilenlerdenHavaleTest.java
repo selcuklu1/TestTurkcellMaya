@@ -21,8 +21,8 @@ public class BirimeIadeEdilenlerdenHavaleTest extends BaseTest {
     GelenEvraklarPage gelenEvraklarPage;
 
     User mbozdemir = new User("mbozdemir", "123");
-    User ztekin = new User("ztekin" , "123");
-    User cseker = new User("cseker" , "123");
+    User ztekin = new User("ztekin", "123");
+    User cseker = new User("cseker", "123");
 
     @BeforeMethod
     public void loginBeforeTests() {
@@ -40,7 +40,7 @@ public class BirimeIadeEdilenlerdenHavaleTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS1587: Birim seçilerek evrak havale etme (detay ekranından)")
     public void TS1587() throws InterruptedException {
-        String testid= "TS-1587";
+        String testid = "TS-1587";
         String basariMesaji = "İşlem başarılıdır!";
         String konuKodu = "120.05";
         String konu = "TS-1587-" + getSysDate();
@@ -59,10 +59,10 @@ public class BirimeIadeEdilenlerdenHavaleTest extends BaseTest {
         String kisi = "Zübeyde Tekin";
         String islemSureci = "Evrak Teslim Alındı ";
 
-        String fileName ="test.txt";
+        String fileName = "test.txt";
         String pathToFileText = getUploadPath() + "test.txt";
 
-        testStatus(testid,"PreCondition Evrak Oluşturma");
+        testStatus(testid, "PreCondition Evrak Oluşturma");
         gelenEvrakKayitPage
                 .openPage();
 
@@ -88,7 +88,7 @@ public class BirimeIadeEdilenlerdenHavaleTest extends BaseTest {
         gelenEvrakKayitPage
                 .islemMesaji().basariliOlmali(basariMesaji);
 
-        testStatus(testid,"PreCondition Evrak Iade Et");
+        testStatus(testid, "PreCondition Evrak Iade Et");
         teslimAlinmayiBekleyenlerPage
                 .openPage()
                 .evrakNoIleEvrakSec(konu)
@@ -96,7 +96,7 @@ public class BirimeIadeEdilenlerdenHavaleTest extends BaseTest {
                 .iadeEtIadeEt()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
-        testStatus(testid,"Test Başladı");
+        testStatus(testid, "Test Başladı");
         birimIadeEdilenlerPage
                 .openPage()
                 .evrakSecIcerikGoster(konu, true)
@@ -122,7 +122,7 @@ public class BirimeIadeEdilenlerdenHavaleTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS1588: Kişi seçilerek evrak havalesini onaya sunma (önizleme ekranından)")
     public void TS1588() throws InterruptedException {
-        String testid= "TS-1588";
+        String testid = "TS-1588";
         String basariMesaji = "İşlem başarılıdır!";
         String konuKodu = "120.05";
         String konu = "TS-1588-" + getSysDate();
@@ -144,10 +144,10 @@ public class BirimeIadeEdilenlerdenHavaleTest extends BaseTest {
         String onaylayacakKisi = "Mehmet BOZDEMİR";
         String onayKisiDetails = "YGD";
 
-        String fileName ="test.txt";
+        String fileName = "test.txt";
         String pathToFileText = getUploadPath() + "test.txt";
 
-        testStatus(testid,"PreCondition Evrak Oluşturma");
+        testStatus(testid, "PreCondition Evrak Oluşturma");
         gelenEvrakKayitPage
                 .openPage();
 
@@ -173,7 +173,7 @@ public class BirimeIadeEdilenlerdenHavaleTest extends BaseTest {
         gelenEvrakKayitPage
                 .islemMesaji().basariliOlmali(basariMesaji);
 
-        testStatus(testid,"PreCondition Evrak Iade Et");
+        testStatus(testid, "PreCondition Evrak Iade Et");
         teslimAlinmayiBekleyenlerPage
                 .openPage()
                 .evrakNoIleEvrakSec(konu)
@@ -181,7 +181,7 @@ public class BirimeIadeEdilenlerdenHavaleTest extends BaseTest {
                 .iadeEtIadeEt()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
-        testStatus(testid,"Test Başladı");
+        testStatus(testid, "Test Başladı");
         birimIadeEdilenlerPage
                 .openPage()
                 .evrakSec(konu)
@@ -206,7 +206,7 @@ public class BirimeIadeEdilenlerdenHavaleTest extends BaseTest {
 
         havaleOnayınaGelenlerPage
                 .openPage()
-                .evrakSecIcerikGoster(konu,true)
+                .evrakSecIcerikGoster(konu, true)
                 .icerikHavaleOnay()
                 .dagitimBilgileriBirimDoldur2(birim)
                 //geregi bilgi convert
@@ -235,7 +235,7 @@ public class BirimeIadeEdilenlerdenHavaleTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS463: Birime İade Edilenler listesinden Toplu evrak havale edilmesi")
     public void TS463() throws InterruptedException {
-        String testid= "TS-463";
+        String testid = "TS-463";
         String basariMesaji = "İşlem başarılıdır!";
         String konuKodu = "120.05";
         String konu1 = "TS-463-" + getSysDate();
@@ -259,10 +259,10 @@ public class BirimeIadeEdilenlerdenHavaleTest extends BaseTest {
         String kullanici = "TS2994";
         String kullaniciDetails = "Ts2994";
 
-        String fileName ="test.txt";
+        String fileName = "test.txt";
         String pathToFileText = getUploadPath() + "test.txt";
 
-        testStatus(testid,"PreCondition 1. Evrak Oluşturma");
+        testStatus(testid, "PreCondition 1. Evrak Oluşturma");
         gelenEvrakKayitPage
                 .openPage();
 
@@ -288,7 +288,7 @@ public class BirimeIadeEdilenlerdenHavaleTest extends BaseTest {
 
         String konu2 = "TS-463-" + getSysDate();
 
-        testStatus(testid,"PreCondition 2. Evrak Oluşturma");
+        testStatus(testid, "PreCondition 2. Evrak Oluşturma");
         gelenEvrakKayitPage
                 .openPage();
 
@@ -314,7 +314,7 @@ public class BirimeIadeEdilenlerdenHavaleTest extends BaseTest {
 
         String konu3 = "TS-463-" + getSysDate();
 
-        testStatus(testid,"PreCondition 3. Evrak Oluşturma");
+        testStatus(testid, "PreCondition 3. Evrak Oluşturma");
         gelenEvrakKayitPage
                 .openPage();
 
@@ -339,7 +339,7 @@ public class BirimeIadeEdilenlerdenHavaleTest extends BaseTest {
                 .islemMesaji().basariliOlmali(basariMesaji);
 
 
-        testStatus(testid,"PreCondition 1. Evrak Iade Et");
+        testStatus(testid, "PreCondition 1. Evrak Iade Et");
         teslimAlinmayiBekleyenlerPage
                 .openPage()
                 .evrakNoIleEvrakSec(konu1)
@@ -347,7 +347,7 @@ public class BirimeIadeEdilenlerdenHavaleTest extends BaseTest {
                 .iadeEtIadeEt()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
-        testStatus(testid,"PreCondition 2. Evrak Iade Et");
+        testStatus(testid, "PreCondition 2. Evrak Iade Et");
         teslimAlinmayiBekleyenlerPage
                 .openPage()
                 .evrakNoIleEvrakSec(konu2)
@@ -355,7 +355,7 @@ public class BirimeIadeEdilenlerdenHavaleTest extends BaseTest {
                 .iadeEtIadeEt()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
-        testStatus(testid,"PreCondition 3. Evrak Iade Et");
+        testStatus(testid, "PreCondition 3. Evrak Iade Et");
         teslimAlinmayiBekleyenlerPage
                 .openPage()
                 .evrakNoIleEvrakSec(konu3)
@@ -363,14 +363,14 @@ public class BirimeIadeEdilenlerdenHavaleTest extends BaseTest {
                 .iadeEtIadeEt()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
-        testStatus(testid,"Test Başladı");
+        testStatus(testid, "Test Başladı");
         birimIadeEdilenlerPage
                 .openPage()
                 .evrakSec(konu1)
                 .evrakSec(konu2)
                 .evrakSec(konu3)
-                .evrakSecToplu2(konu1,konu2,konu3,true)
-                .havaleIslemleriKisiDetails(kisi,kisiDetails)
+                .evrakSecToplu2(konu1, konu2, konu3, true)
+                .havaleIslemleriKisiDetails(kisi, kisiDetails)
                 .havaleAlanKontrolleri()
                 .dagitimBilgileriBirimDoldurWithDetails(birim, details)
                 .havaleKisiListesi(kullanici)
@@ -379,9 +379,9 @@ public class BirimeIadeEdilenlerdenHavaleTest extends BaseTest {
 
         birimHavaleEdilenlerPage
                 .openPage()
-                 // TODO: Bu 2 alanıda kontrollere ekle
-                 //        Evrak tarihi  : evrakTarihi
-                 //        no alanlarının : evrakSayiSagDoldur()
+                // TODO: Bu 2 alanıda kontrollere ekle
+                //        Evrak tarihi  : evrakTarihi
+                //        no alanlarının : evrakSayiSagDoldur()
 //                .evrakAlanKontrolleri(konu1,birim,"", "")
                 .evrakNoIleTabloKontrolu(konu1)
                 .evrakNoIleTabloKontrolu(konu2)
@@ -413,7 +413,7 @@ public class BirimeIadeEdilenlerdenHavaleTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS1590: Kullanıcı listesi seçilerek evrak havale etme (listeden)")
     public void TS1590() throws InterruptedException {
-        String testid= "TS-1590";
+        String testid = "TS-1590";
         String basariMesaji = "İşlem başarılıdır!";
         String konuKodu = "120.05";
         String konu = "TS-1590-" + getSysDate();
@@ -437,10 +437,10 @@ public class BirimeIadeEdilenlerdenHavaleTest extends BaseTest {
         String kullanici = "TS2994";
         String kullaniciDetails = "Ts2994";
 
-        String fileName ="test.txt";
+        String fileName = "test.txt";
         String pathToFileText = getUploadPath() + "test.txt";
 
-        testStatus(testid,"PreCondition Evrak Oluşturma");
+        testStatus(testid, "PreCondition Evrak Oluşturma");
         gelenEvrakKayitPage
                 .openPage();
 
@@ -465,7 +465,7 @@ public class BirimeIadeEdilenlerdenHavaleTest extends BaseTest {
                 .islemMesaji().basariliOlmali(basariMesaji);
 
 
-        testStatus(testid,"PreCondition 1. Evrak Iade Et");
+        testStatus(testid, "PreCondition 1. Evrak Iade Et");
         teslimAlinmayiBekleyenlerPage
                 .openPage()
                 .evrakNoIleEvrakSec(konu)
@@ -474,7 +474,7 @@ public class BirimeIadeEdilenlerdenHavaleTest extends BaseTest {
                 .islemMesaji().basariliOlmali(basariMesaji);
 
 
-        testStatus(testid,"Test Başladı");
+        testStatus(testid, "Test Başladı");
         birimIadeEdilenlerPage
                 .openPage()
                 .evrakSec(konu)

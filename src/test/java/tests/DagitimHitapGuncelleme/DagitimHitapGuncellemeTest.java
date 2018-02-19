@@ -31,7 +31,7 @@ public class DagitimHitapGuncellemeTest extends BaseTest {
 
     @BeforeMethod
     public void loginBeforeTests() {
-    evrakOlusturPage =new EvrakOlusturPage();
+        evrakOlusturPage = new EvrakOlusturPage();
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -41,7 +41,7 @@ public class DagitimHitapGuncellemeTest extends BaseTest {
         String geregiSecimTipi = "Birim";
         String geregi = "opt";
 
-        login(usernameZTEKIN,passwordZTEKIN);
+        login(usernameZTEKIN, passwordZTEKIN);
 
         evrakOlusturPage
                 .openPage()
@@ -49,7 +49,7 @@ public class DagitimHitapGuncellemeTest extends BaseTest {
                 .geregiSecimTipiSec(geregiSecimTipi)
                 .geregiSec(geregi)
                 .secilenGeregiDagitimHitapGuncelleme();
-        login(usernameZTEKIN,passwordZTEKIN);
+        login(usernameZTEKIN, passwordZTEKIN);
     }
 
 }

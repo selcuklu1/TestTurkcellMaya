@@ -30,11 +30,16 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
     HavaleOnayiVerdiklerimPage havaleOnayiVerdiklerim;
     TopluEvrakOnizleme topluEvrakOnizleme;
     HavaleEdilenEvrakRaporuPage havaleEdilenEvrakRaporuPage;
+<<<<<<< HEAD
     static final Logger logger = LogManager.getLogger("KaydedilenGelenEvrakHavaleTest");
 //    User yakyol = new User("yakyol", "123");
+=======
+
+    //    User yakyol = new User("yakyol", "123");
+>>>>>>> d4dbb2d011f9c8653b9f6b44c9a3de1649ccf45f
     User mbozdemir = new User("mbozdemir", "123");
-    User ztekin = new User("ztekin" , "123");
-//    User ztekin = new User("ztekin", "123");
+    User ztekin = new User("ztekin", "123");
+    //    User ztekin = new User("ztekin", "123");
     String konuKodu = "010.01";
     String konu = "";
     String evrakTuru = "Resmi Yazışma";
@@ -74,12 +79,12 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, priority = 0, description = "TS422: Kişi seçilerek evrak havale etme (detay ekranından)")
     public void TS422() throws InterruptedException {
-        String testid= "TS-422";
+        String testid = "TS-422";
         konu = "TS-422-" + getSysDate();
         String sayfa1 = "Kaydedilen Gelen Evraklar";
         String sayfa2 = "Birim Havale Edilenler";
 
-        testStatus(testid,"PreCondition Evrak Oluşturma");
+        testStatus(testid, "PreCondition Evrak Oluşturma");
 
         gelenEvrakKayitPage
                 .openPage()
@@ -97,7 +102,7 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .kaydet()
                 .popUpsv2();
 
-        testStatus(testid,"Test Başladı");
+        testStatus(testid, "Test Başladı");
         kaydedilenGelenEvraklarPage
                 .openPage()
                 .sayfaKontrol(sayfa1)
@@ -106,7 +111,7 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .ekranKontrolEvrakDetayi()
                 .icerikHavaleYap()
                 .icerikHavaleAlanKontrolleri()
-                .icerikHavaleIslemleriKisiDoldur(onaylayacakKisi,onayKisiDetails)
+                .icerikHavaleIslemleriKisiDoldur(onaylayacakKisi, onayKisiDetails)
                 .eklenenIcerikKisiKontrolu(onaylayacakKisi)
                 .icerikHavaleOnayinaGonder()
                 .islemMesaji().basariliOlmali();
@@ -116,7 +121,7 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .sayfaKontrol(sayfa2)
                 .evrakNoIleTabloKontrolu(konu);
 
-        login(TestData.usernameMBOZDEMIR,TestData.passwordMBOZDEMIR);
+        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
 
         gelenEvraklarPage
                 .openPage()
@@ -127,11 +132,11 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, priority = 0, description = "TS430: Kişiye havale edilen evrakın geri çekilmesi (önizleme ekranından)")
     public void TS430() throws InterruptedException {
-        String testid= "TS-430";
+        String testid = "TS-430";
         konu = "TS-430-" + getSysDate();
         String sayfa1 = "Birim Havale Edilenler";
 
-        testStatus(testid,"PreCondition Evrak Oluşturma");
+        testStatus(testid, "PreCondition Evrak Oluşturma");
         gelenEvrakKayitPage
                 .openPage()
                 .konuKoduDoldur(konuKodu)
@@ -153,11 +158,11 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .evrakNoIleEvrakSec(konu)
                 .tabloEvrakNoileIcerikSec(konu)
                 .icerikHavaleYap()
-                .icerikHavaleIslemleriKisiDoldur(onaylayacakKisi,onayKisiDetails)
+                .icerikHavaleIslemleriKisiDoldur(onaylayacakKisi, onayKisiDetails)
                 .icerikHavaleOnayinaGonder()
                 .islemMesaji().basariliOlmali();
 
-        testStatus(testid,"Test Başladı");
+        testStatus(testid, "Test Başladı");
         birimHavaleEdilenlerPage
                 .openPage()
                 .sayfaKontrol(sayfa1)
@@ -191,7 +196,7 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .openPage()
                 .evrakNoIleTablodanEvrakSecme(konu);
 
-        login(TestData.usernameMBOZDEMIR,TestData.passwordMBOZDEMIR);
+        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
 
         teslimAlinmayiBekleyenlerPage
                 .openPage()
@@ -201,13 +206,13 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, priority = 0, description = "TS2286: Havaleden geri çekilen evrakın onaylı havale edilmesi (önizleme ekranından)")
     public void TS2286() throws InterruptedException {
-        String testid= "TS-2286";
+        String testid = "TS-2286";
         konu = "TS-2286-" + getSysDate();
         String gerek = "GEREĞİ İÇİN GÖNDER";
         String bilgi = "BİLGİ İÇİN GÖNDER";
         String koordinasyon = "KOORDİNASYON İÇİN GÖNDER";
 
-        testStatus(testid,"PreCondition Evrak Oluşturma");
+        testStatus(testid, "PreCondition Evrak Oluşturma");
 
         gelenEvrakKayitPage
                 .openPage()
@@ -230,7 +235,7 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .evrakNoIleEvrakSec(konu)
                 .tabloEvrakNoileIcerikSec(konu)
                 .icerikHavaleYap()
-                .icerikHavaleIslemleriKisiDoldur(onaylayacakKisi,onayKisiDetails)
+                .icerikHavaleIslemleriKisiDoldur(onaylayacakKisi, onayKisiDetails)
                 .icerikHavaleOnayinaGonder()
                 .islemMesaji().basariliOlmali();
 
@@ -242,7 +247,7 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .onizlemeGeriAl()
                 .islemMesaji().basariliOlmali();
 
-        testStatus(testid,"Test Başladı");
+        testStatus(testid, "Test Başladı");
 
         kaydedilenGelenEvraklarPage
                 .openPage()
@@ -262,7 +267,7 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .icerikHavaleOnayinaGonder2()
                 .islemMesaji().basariliOlmali();
 
-        login(TestData.usernameMBOZDEMIR,TestData.passwordMBOZDEMIR);
+        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
 
         havaleOnayınaGelenlerPage
                 .openPage()
@@ -284,7 +289,7 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .openPage()
                 .evrakNoIleEvrakSec(konu);
 
-        login(TestData.usernameZTEKIN,TestData.passwordZTEKIN);
+        login(TestData.usernameZTEKIN, TestData.passwordZTEKIN);
 
         teslimAlinmayiBekleyenlerPage
                 .openPage()
@@ -298,12 +303,12 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, priority = 0, description = "TS1586: Geri çekilen evrakın tekrar havalesi - toplu")
     public void TS1586() throws InterruptedException {
-        String testid= "TS-1586";
+        String testid = "TS-1586";
         String konu1 = "TS-1586-" + getSysDate();
         String sayfa1 = "Kaydedilen Gelen Evraklar";
         String sayfa2 = "Birim Havale Edilenler";
 
-        testStatus(testid,"PreCondition 1. Evrak Oluşturma");
+        testStatus(testid, "PreCondition 1. Evrak Oluşturma");
         gelenEvrakKayitPage
                 .openPage()
                 .konuKoduDoldur(konuKodu)
@@ -325,7 +330,7 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .evrakNoIleEvrakSec(konu1)
                 .tabloEvrakNoileIcerikSec(konu1)
                 .icerikHavaleYap()
-                .icerikHavaleIslemleriKisiDoldur(onaylayacakKisi,onayKisiDetails)
+                .icerikHavaleIslemleriKisiDoldur(onaylayacakKisi, onayKisiDetails)
                 .icerikHavaleOnayinaGonder()
                 .islemMesaji().basariliOlmali();
 
@@ -337,7 +342,7 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .onizlemeGeriAl()
                 .islemMesaji().basariliOlmali();
 
-        testStatus(testid,"PreCondition 2. Evrak Oluşturma");
+        testStatus(testid, "PreCondition 2. Evrak Oluşturma");
         String konu2 = "TS-1586-" + getSysDate();
 
         login(TestData.usernameZTEKIN, TestData.passwordZTEKIN);
@@ -362,7 +367,7 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .evrakNoIleEvrakSec(konu2)
                 .tabloEvrakNoileIcerikSec(konu2)
                 .icerikHavaleYap()
-                .icerikHavaleIslemleriKisiDoldur(onaylayacakKisi,onayKisiDetails)
+                .icerikHavaleIslemleriKisiDoldur(onaylayacakKisi, onayKisiDetails)
                 .icerikHavaleOnayinaGonder()
                 .islemMesaji().basariliOlmali();
 
@@ -374,7 +379,7 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .onizlemeGeriAl()
                 .islemMesaji().basariliOlmali();
 
-        testStatus(testid,"Test Başladı");
+        testStatus(testid, "Test Başladı");
         kaydedilenGelenEvraklarPage
                 .openPage()
                 .sayfaKontrol(sayfa1)
@@ -383,7 +388,7 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
         topluEvrakOnizleme
                 .ekranKontrol()
                 .havaleAlanKontrolleri()
-                .havaleIslemleriKisiDoldur(onaylayacakKisi,onayKisiDetails)
+                .havaleIslemleriKisiDoldur(onaylayacakKisi, onayKisiDetails)
                 .eklenenKisiKontrolu(onaylayacakKisi)
                 .gonder()
                 .islemMesaji().basariliOlmali();
@@ -398,7 +403,7 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, priority = 0, description = "TS1585: Toplu evrak havale - kullanıcı listesine")
     public void TS1585() throws InterruptedException {
-        String testid= "TS-1585";
+        String testid = "TS-1585";
         String konu1 = "TS-1585-" + getSysDate();
         String sayfa1 = "Kaydedilen Gelen Evraklar";
         String sayfa2 = "Birim Havale Edilenler";
@@ -406,9 +411,9 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
         String kullaniciDetails = "Ts2994";
         String gerek = "GEREĞİ İÇİN GÖNDER";
         String pathToFileText = getUploadPath() + "test.txt";
-        String fileName ="test.txt";
+        String fileName = "test.txt";
 
-        testStatus(testid,"PreCondition 1. Evrak Oluşturma");
+        testStatus(testid, "PreCondition 1. Evrak Oluşturma");
         gelenEvrakKayitPage
                 .openPage()
                 .konuKoduDoldur(konuKodu)
@@ -442,7 +447,7 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
 //                .onizlemeGeriAl()
 //                .islemMesaji().basariliOlmali();
 
-        testStatus(testid,"PreCondition 2. Evrak Oluşturma");
+        testStatus(testid, "PreCondition 2. Evrak Oluşturma");
         String konu2 = "TS-1585-" + getSysDate();
 
         login(TestData.usernameZTEKIN, TestData.passwordZTEKIN);
@@ -479,7 +484,7 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
 //                .onizlemeGeriAl()
 //                .islemMesaji().basariliOlmali();
 
-        testStatus(testid,"Test Başladı");
+        testStatus(testid, "Test Başladı");
         kaydedilenGelenEvraklarPage
                 .openPage()
                 .sayfaKontrol(sayfa1)
@@ -493,7 +498,7 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .kullaniciGrupDetayEvet()
                 .havaleKisiListesiKontrolu(kullanici)
                 .eklenenKisiListesiOpsiyonKontrolu(gerek)
-                .aciklamaDoldur(konu1+" " +konu2)
+                .aciklamaDoldur(konu1 + " " + konu2)
                 .dosyaEkle()
                 .havaleDosyaEkle(pathToFileText)
                 .havaleDosyaEkleDosyaAdiKontrol(fileName)
@@ -506,7 +511,7 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .evrakNoIleTabloKontrolu(konu1)
                 .evrakNoIleTabloKontrolu(konu2);
 
-        login(TestData.usernameMBOZDEMIR,TestData.passwordMBOZDEMIR);
+        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
         gelenEvrakKayitPage
                 .openPage()
                 .evrakNoIleTabloKontrolu(konu1)
@@ -516,12 +521,12 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, priority = 0, description = "TS440: Toplu evrak havale - kullanıcı listesine")
     public void TS440() throws InterruptedException {
-        String testid= "TS-440";
+        String testid = "TS-440";
         String konu1 = "TS-440-" + getSysDate();
         String sayfa1 = "Kaydedilen Gelen Evraklar";
         String sayfa2 = "Birim Havale Edilenler";
 
-        testStatus(testid,"PreCondition 1. Evrak Oluşturma");
+        testStatus(testid, "PreCondition 1. Evrak Oluşturma");
         gelenEvrakKayitPage
                 .openPage()
                 .konuKoduDoldur(konuKodu)
@@ -538,7 +543,7 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .kaydet()
                 .popUpsv2();
 
-        testStatus(testid,"PreCondition 2. Evrak Oluşturma");
+        testStatus(testid, "PreCondition 2. Evrak Oluşturma");
         String konu2 = "TS-440-" + getSysDate();
 
         login(TestData.usernameZTEKIN, TestData.passwordZTEKIN);
@@ -559,7 +564,7 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .popUpsv2();
 
 
-        testStatus(testid,"Test Başladı");
+        testStatus(testid, "Test Başladı");
         kaydedilenGelenEvraklarPage
                 .openPage()
                 .sayfaKontrol(sayfa1)
@@ -568,7 +573,7 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
         topluEvrakOnizleme
                 .ekranKontrol()
                 .havaleAlanKontrolleri()
-                .havaleIslemleriKisiDoldur(onaylayacakKisi,onayKisiDetails)
+                .havaleIslemleriKisiDoldur(onaylayacakKisi, onayKisiDetails)
                 .eklenenKisiKontrolu(onaylayacakKisi)
                 .gonder()
                 .islemMesaji().basariliOlmali();
@@ -577,7 +582,7 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .openPage()
                 .sayfaKontrol(sayfa2)
                 .evrakNoIleTabloKontrolu(konu1)
-                .evrakSecIcerikGoster(konu1,true)
+                .evrakSecIcerikGoster(konu1, true)
                 .ekranKontrolEvrakDetayi()
                 .havaleGeriAl()
                 .notAlanınıDoldur(konu1)
@@ -592,7 +597,7 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .openPage()
                 .sayfaKontrol(sayfa2)
                 .evrakNoIleTabloKontrolu(konu2)
-                .evrakSecIcerikGoster(konu2,true)
+                .evrakSecIcerikGoster(konu2, true)
                 .ekranKontrolEvrakDetayi()
                 .havaleGeriAl()
                 .notAlanınıDoldur(konu2)
@@ -611,12 +616,12 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
 
         topluEvrakOnizleme
                 .ekranKontrol()
-                .havaleIslemleriKisiDoldur(onaylayacakKisi,onayKisiDetails)
+                .havaleIslemleriKisiDoldur(onaylayacakKisi, onayKisiDetails)
                 .eklenenKisiKontrolu(onaylayacakKisi)
                 .gonder()
                 .islemMesaji().basariliOlmali();
 
-        login(TestData.usernameMBOZDEMIR,TestData.passwordMBOZDEMIR);
+        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
         kaydedilenGelenEvraklarPage
                 .openPage()
                 //TODO Aslında evrak buraya düşmüyor, düşmesi gereken yer:
@@ -629,11 +634,11 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, priority = 0, description = "TS1370: Kaydedilen gelen evrak havalesinin Havale Edilen Evrak Raporundan kontrolü")
     public void TS1370() throws InterruptedException {
-        String testid= "TS-1370";
+        String testid = "TS-1370";
         konu = "TS-1370-" + getSysDate();
         String evrakTarihi = getSysDateForKis();
 
-        testStatus(testid,"PreCondition Evrak Oluşturma");
+        testStatus(testid, "PreCondition Evrak Oluşturma");
         gelenEvrakKayitPage
                 .openPage()
                 .konuKoduDoldur(konuKodu)
@@ -655,7 +660,7 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .evrakNoIleEvrakSec(konu)
                 .tabloEvrakNoileIcerikSec(konu)
                 .icerikHavaleYap()
-                .icerikHavaleIslemleriKisiDoldur(onaylayacakKisi,onayKisiDetails)
+                .icerikHavaleIslemleriKisiDoldur(onaylayacakKisi, onayKisiDetails)
                 .icerikHavaleOnayinaGonder()
                 .islemMesaji().basariliOlmali();
 
