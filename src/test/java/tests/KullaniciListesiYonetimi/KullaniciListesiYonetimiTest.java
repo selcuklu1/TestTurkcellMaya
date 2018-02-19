@@ -20,7 +20,7 @@ public class KullaniciListesiYonetimiTest extends BaseTest {
 
     KullaniciListesiYonetimiPage kullaniciListesiYonetimiPage;
 
-    String ad = "TS1005 "+createRandomNumber(6);
+    String ad = "TS1005 " + createRandomNumber(6);
     String aciklama = "TS1005 " + getSysDate();
     String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
     String kullanici1 = "Username22n TEST";
@@ -63,20 +63,21 @@ public class KullaniciListesiYonetimiTest extends BaseTest {
     @Test(enabled = true
 //            ,dependsOnMethods = {"TS1005"}
             , description = "TS1001 : Kullanıcı Listesinin Pasif Duruma Getirilmesi")
-    public void TS1001() throws InterruptedException{
+    public void TS1001() throws InterruptedException {
 
         login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
-String ad ="TS1005 123041";
+        String ad = "TS1005 123041";
         kullaniciListesiYonetimiPage
                 .openPage()
                 .durumSec("Sadece Aktifler")
                 .ara()
-                .kullaniciListesiTablosuKullaniciAdiKontrolu(ad,true)
+                .kullaniciListesiTabloKontrolu()
+                .kullaniciListesiTablosuKullaniciAdiKontrolu(ad, true)
                 .pasifYap(ad)
                 .islemOnayiPopUpEvetHayır("Evet")
                 .durumSec("Sadece Pasifler")
                 .ara()
-                .kullaniciListesiTablosuKullaniciAdiKontrolu(ad,true);
+                .kullaniciListesiTablosuKullaniciAdiKontrolu(ad, true);
 
 
     }

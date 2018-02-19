@@ -159,6 +159,9 @@ public class KullaniciListesiYonetimiPage extends MainPage {
 
     @Step("Pasif Yap butonu tıklanır.")
     public KullaniciListesiYonetimiPage pasifYap(String kullaniciAdi) {
+
+//        searchTable().searchInAllPages(true).findRows(text(kullaniciAdi)).pasifYapTikla();
+
         tblKullaniciListesi
                 .filterBy(text(kullaniciAdi))
                 .first()
