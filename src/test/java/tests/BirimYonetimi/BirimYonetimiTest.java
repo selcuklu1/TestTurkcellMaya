@@ -94,8 +94,8 @@ public class BirimYonetimiTest extends BaseTest {
                 .geregiAlanindaBiriminGeldigiSecilemedigiKontrolu(idariBirimKimlikKodu, "İdari Birim Kodu ")
 
                 .bilgiSecimTipiSecByText("Birim")
-                .bilgiAlanindaBiriminGeldigiSecilemedigiKontrolu(birimAdi, "Birim Adı")
-                .bilgiAlanindaBiriminGeldigiSecilemedigiKontrolu(idariBirimKimlikKodu, "İdari Birim Kodu ");
+                .bilgiAlanindaBiriminGeldigiVeSecilemedigiKontrolu(birimAdi, "Birim Adı")
+                .bilgiAlanindaBiriminGeldigiVeSecilemedigiKontrolu(idariBirimKimlikKodu, "İdari Birim Kodu ");
 
         evrakOlusturPage
                 .openPage()
@@ -188,7 +188,7 @@ public class BirimYonetimiTest extends BaseTest {
 
         testStatus(testID, "Birim Oluşturma");
 
-/*        birimYonetimiPage
+        birimYonetimiPage
                 .openPage()
                 .ekle()
                 .birimYonetimiAlanKontrolleri()
@@ -213,14 +213,46 @@ public class BirimYonetimiTest extends BaseTest {
         birimYonetimiPage
                 .birimFiltreDoldur(birimAdi)
                 .ara()
-                .birimKontrolu(birimAdi);*/
+                .birimKontrolu(birimAdi);
 
         gelenEvrakKayitPage
                 .openPage()
                 .kisiKurumSecByText("Birim")
-                //.geldigiBirimDoldur(birimAdi)
-                //.evrakSayisiSolAlanKontrolu(idariBirimKimlikKodu) //TS2337_Birim_20180215132100
-                .geregiAlanindaBiriminGeldigiVeSecilebildigiKontrolu("TS1109_Birim_20180219133759", "Birim Adı");
+                .geregiAlanindaBiriminGeldigiVeSecilebildigiKontrolu(birimAdi, "Birim Adı");
 
+        gidenEvrakKayitPage
+                .openPage()
+                .geregiSecimTipiSecByText("Birim")
+                .geregiAlanindaBiriminGeldigiVeSecilebildigiKontrolu(birimAdi, "Birim Adı")
+                .geregiAlanindaBiriminGeldigiVeSecilebildigiKontrolu(idariBirimKimlikKodu, "İdari Birim Kodu ")
+                .geregiTemizle()
+
+                .bilgiSecimTipiSecByText("Birim")
+                .bilgiAlanindaBiriminGeldigiVeSecilebildigiKontrolu(birimAdi, "Birim Adı")
+                .bilgiAlanindaBiriminGeldigiVeSecilebildigiKontrolu(idariBirimKimlikKodu, "İdari Birim Kodu ");
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .geregiSecimTipiSecByText("Birim")
+                .geregiAlanindaBiriminGeldigiVeSecilebildigiKontrolu(birimAdi, "Birim Adı")
+                .geregiAlanindaBiriminGeldigiVeSecilebildigiKontrolu(idariBirimKimlikKodu, "İdari Birim Kodu ")
+                .geregiTemizle()
+
+                .bilgiSecimTipiSecByText("Birim")
+                .bilgiAlanindaBiriminGeldigiVeSecilebildigiKontrolu(birimAdi, "Birim Adı")
+                .bilgiAlanindaBiriminGeldigiVeSecilebildigiKontrolu(idariBirimKimlikKodu, "İdari Birim Kodu ");
+
+        olurYazisiOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .geregiSecimTipiSecByText("Birim")
+                .geregiAlanindaBiriminGeldigiVeSecilebildigiKontrolu(birimAdi, "Birim Adı")
+                .geregiAlanindaBiriminGeldigiVeSecilebildigiKontrolu(idariBirimKimlikKodu, "İdari Birim Kodu ")
+                .geregiTemizle()
+
+                .bilgiSecimTipiSecByText("Birim")
+                .bilgiAlanindaBiriminGeldigiVeSecilebildigiKontrolu(birimAdi, "Birim Adı")
+                .bilgiAlanindaBiriminGeldigiVeSecilebildigiKontrolu(idariBirimKimlikKodu, "İdari Birim Kodu ");
     }
 }
