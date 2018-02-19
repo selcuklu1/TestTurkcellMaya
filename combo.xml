@@ -119,10 +119,10 @@
                     <!--<suiteXmlFiles>
                         <file>Tanimli Paketler.xml</file>
                     </suiteXmlFiles>-->
-                    <suiteXmlFiles>
-                        <!--<suiteXmlFile>${suiteXmlFile}</suiteXmlFile>-->
+                    <!--<suiteXmlFiles>
+                        &lt;!&ndash;<suiteXmlFile>${suiteXmlFile}</suiteXmlFile>&ndash;&gt;
                         <suiteXmlFile>testng.xml</suiteXmlFile>
-                    </suiteXmlFiles>
+                    </suiteXmlFiles>-->
 
                     <!--*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
                     Contains test packet(s) to run. Values are selected form and
