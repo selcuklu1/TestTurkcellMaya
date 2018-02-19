@@ -145,6 +145,10 @@
                             <name>parallel</name>
                             <value>methods</value>
                         </property>
+                        <property>
+                            <name>threadCount</name>
+                            <value>5</value>
+                        </property>
                     </properties>
                     <!--<parallel>${parallel}</parallel>
                     <threadCount>${threadCount}</threadCount>-->
