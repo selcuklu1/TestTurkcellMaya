@@ -6,6 +6,8 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import pages.pageData.UstMenuData;
+import pages.ustMenuPages.KullaniciListesiYonetimiPage;
 import pages.ustMenuPages.KullaniciYonetimiPage;
 
 /****************************************************
@@ -16,18 +18,44 @@ import pages.ustMenuPages.KullaniciYonetimiPage;
  ****************************************************/
 public class KullaniciListesiYonetimiTest extends BaseTest {
 
+    KullaniciListesiYonetimiPage kullaniciListesiYonetimiPage;
 
+    String ad = "TS1005 "+createRandomNumber(6);
+    String aciklama = "TS1005 " + getSysDate();
+    String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
+    String kullanici1 = "Username22n TEST";
+    String kullanici2 = "Username21g TEST";
+    String dikkatMesaji = "Kullanıcı grubunda en az 2 kullanıcı olmak zorundadır!";
+    String basariMesaji = "İşlem başarılıdır!";
 
     @BeforeMethod
     public void loginBeforeTests() {
-        
+        kullaniciListesiYonetimiPage = new KullaniciListesiYonetimiPage();
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TS1464 : Kullanıcı Listeleri Aktiflik/Pasiflik Kontrolü")
-    public void TS1464() throws InterruptedException{
+    @Test(enabled = true, description = "TS1005 : Yeni Bir Kullanıcı Listesi Tanımlama")
+    public void TS1005() throws InterruptedException {
 
-        login(TestData.usernameMBOZDEMIR,TestData.usernameMBOZDEMIR);
+        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
+
+        kullaniciListesiYonetimiPage
+                .openPage()
+                .ekranAlanKontrolu()
+                .yeniEkle()
+                .kullaniciListesiEklemeAlanKontrolleri()
+                .adDoldur(ad)
+                .aciklamaDoldur(aciklama)
+                .birimSec(birim)
+                .kullanicilarSec(kullanici1)
+                .kaydet()
+                .islemMesaji().dikkatOlmali(dikkatMesaji);
+
+        kullaniciListesiYonetimiPage
+                .kullanicilarSec(kullanici2)
+                .kaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
 
     }
 }

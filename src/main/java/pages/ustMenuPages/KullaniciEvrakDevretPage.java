@@ -48,7 +48,7 @@ public class KullaniciEvrakDevretPage extends MainPage {
         return ret;
     }
 
-    @Step("Kullanıcı Evrak Devret sayfasını aç")
+    @Step("Kullanıcı Evrak Devret sayfası açılır.")
     public KullaniciEvrakDevretPage openPage() {
         ustMenu(UstMenuData.AmirIslemleri.KullaniciEvrakDevret);
         return this;
