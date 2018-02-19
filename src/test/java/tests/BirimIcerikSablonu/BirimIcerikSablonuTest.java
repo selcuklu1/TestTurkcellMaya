@@ -51,7 +51,15 @@ public class BirimIcerikSablonuTest extends BaseTest {
     @Test(description = "TS1084: Alan aktif durum kontrolleri", enabled = true, priority = 1)
     public void TS1084(ITestContext context) {
         System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        System.out.println(context.getCurrentXmlTest());
+        System.out.println(context.getCurrentXmlTest().toXml(""));
+        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        System.out.println("getXmlPackages");
+        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        System.out.println(context.getCurrentXmlTest().getXmlPackages());
+        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        System.out.println("getXmlClasses");
+        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        System.out.println(context.getCurrentXmlTest().getXmlClasses());
         System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
         login(user1);
         birimIcerikSablonlarPage = new BirimIcerikSablonlarPage().openPage();
