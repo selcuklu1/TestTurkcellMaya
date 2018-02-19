@@ -133,6 +133,14 @@
                             <name>testnames</name>
                             <value>${packets}</value>
                         </property>
+                        <property>
+                            <name>tests</name>
+                            <value>methods</value>
+                        </property>
+                        <property>
+                            <name>threadCount</name>
+                            <value>3</value>
+                        </property>
                     </properties>
 
                     <!--*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
@@ -149,8 +157,10 @@
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
                     </argLine>
 
-                    <parallel>${parallel}</parallel>
-                    <threadCount>${threadCount}</threadCount>
+                    <!--${parallel}-->
+                    <!--${threadCount}-->
+                    <parallel>tests</parallel>
+                    <threadCount>5</threadCount>
 
                 </configuration>
 
