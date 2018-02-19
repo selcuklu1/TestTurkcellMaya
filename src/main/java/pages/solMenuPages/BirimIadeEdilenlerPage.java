@@ -68,6 +68,7 @@ public class BirimIadeEdilenlerPage extends MainPage {
 
     SelenideElement birimTopluTeslimAlGonder = $(By.id("mainPreviewForm:btnTopluTeslimAlGonder"));
     SelenideElement birimTeslimAlGonder = $(By.id("mainPreviewForm:btnTeslimAlGonder"));
+    SelenideElement tabHavale = $("[id='mainPreviewForm:evrakOnizlemeTab']");
 
     public BirimIadeEdilenlerPage openPage() {
         solMenu(SolMenuData.BirimEvraklari.BirimeIadeEdilenler);
@@ -131,6 +132,13 @@ public class BirimIadeEdilenlerPage extends MainPage {
     public BirimIadeEdilenlerPage evrakOnizlemeTeslimAl() {
         onizlemeTeslimAl.click();
         $(By.id("teslimAlEvetButton")).click();
+        return this;
+    }
+
+    @Step("Havale Etme ekranı açılır\n")
+    public BirimIadeEdilenlerPage ekranKontrol() {
+        Assert.assertEquals(tabHavale.isDisplayed(), true, "Havale Etme sayfası");
+        Allure.addAttachment("Havale Etme sayfası", "açılmaktadır");
         return this;
     }
 

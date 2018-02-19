@@ -373,6 +373,15 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Evrak no ile teslim al Ikon Kontrolü")
+    public TeslimAlinmayiBekleyenlerPage teslimAlIkonKontrol(String konu) {
+        boolean durum = tblEvraklar.filterBy(text(konu)).get(0).$$("[class='ui-button-icon-left ui-icon document-delivery']").size()==1;
+        Assert.assertEquals(durum,true,"Ikon Kontrolü");
+        Allure.addAttachment("Teslim Al Ikonu:" + konu,"bulunmaktadır.");
+        return this;
+    }
+
+
     @Step("Evrak no ile içerik göster")
     public TeslimAlinmayiBekleyenlerPage evrakSecIcerikGoster(String konu, boolean secim) {
         tblEvraklar.filterBy(text(konu)).get(0).$$("[id$='detayGosterButton']").first().click();

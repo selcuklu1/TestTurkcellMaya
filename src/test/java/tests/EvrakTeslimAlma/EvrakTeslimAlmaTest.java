@@ -102,6 +102,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
         testStatus(testid, "Test Başladı");
         teslimAlinmayiBekleyenlerPage
                 .openPage()
+                .teslimAlIkonKontrol(konu)
                 .evrakSecNoTeslimAl(konu, true)
                 .islemMesaji().basariliOlmali(basariMesaji);
 
@@ -109,6 +110,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
                 .openPage()
                 .evrakNoIleEvrakSec(konu)
                 .evrakAdediKontrolu(konu)
+                .tabKontrol()
                 .secilenEvrakEvrakGecmisi()
                 .evrakGecmisi(kisi, islemSureci, evrakTarihi);
 
@@ -519,6 +521,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
         birimIadeEdilenlerPage
                 .openPage()
                 .evrakSec(konu)
+                .ekranKontrol()
                 .evrakOnizlemeTeslimAl()
                 .evrakNoGelmedigiGorme(konu)
                 .islemMesaji().basariliOlmali(basariMesaji);
@@ -528,6 +531,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
                 .evrakNoIleEvrakSec(konu)
                 .evrakAdediKontrolu(konu)
                 .secilenEvrakEvrakGecmisi()
+                .tabKontrol()
                 .evrakGecmisi(kisi, islemSureci, evrakTarihi);
     }
 
@@ -662,6 +666,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
         String kisi = "Zübeyde Tekin";
         String islemSureci = "Evrak Teslim Alındı ";
 
+        String sayfa = "Gelen Evrak Zimmet Raporu";
 
         testStatus(testid, "PreCondition 1. Evrak Oluşturma");
         gelenEvrakKayitPage
@@ -740,20 +745,22 @@ public class EvrakTeslimAlmaTest extends BaseTest {
                 .evrakNoGelmedigiGorme(konu2)
                 .islemMesaji().basariliOlmali(basariMesaji);
 
-//        teslimAlinanlarPage
-//                .openPage()
-//                .evrakNoIleEvrakSec(konu1)
-//                .evrakNoIleEvrakSec(konu2)
-//                .secilenEvrakEvrakGecmisi()
-//                .evrakGecmisi(kisi, islemSureci, evrakTarihi);
-
         testStatus(testid, "Test Başladı");
         String kullanici = "Zübeyde TEKİN";
 
         gelenEvrakZimmetRaporu
                 .openPage()
+                .sayfaKontrol(sayfa)
                 .sorgula()
-                .rapordaEvraklarıListele(konu1, konu2)
+
+                .rapordaEvraklarıListele(konu2)
+                .evrakAdediKontrolu(konu2)
+                .rapordaKontrol(konu2,kullanici.toUpperCase(),evrakTarihi)
+
+                .rapordaEvraklarıListele(konu1)
+                .evrakAdediKontrolu(konu1)
+                .rapordaKontrol(konu1,kullanici.toUpperCase(),evrakTarihi)
+
                 .evrakGecmisiButtonTıklama(konu1)
                 .evrakGecmisiKontrolu(konu1, kullanici, islemSureci)
                 .popupKapatma()
