@@ -30,13 +30,13 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
     HavaleOnayiVerdiklerimPage havaleOnayiVerdiklerim;
     TopluEvrakOnizleme topluEvrakOnizleme;
     HavaleEdilenEvrakRaporuPage havaleEdilenEvrakRaporuPage;
-<<<<<<< HEAD
+
     static final Logger logger = LogManager.getLogger("KaydedilenGelenEvrakHavaleTest");
 //    User yakyol = new User("yakyol", "123");
-=======
+
 
     //    User yakyol = new User("yakyol", "123");
->>>>>>> d4dbb2d011f9c8653b9f6b44c9a3de1649ccf45f
+
     User mbozdemir = new User("mbozdemir", "123");
     User ztekin = new User("ztekin", "123");
     //    User ztekin = new User("ztekin", "123");

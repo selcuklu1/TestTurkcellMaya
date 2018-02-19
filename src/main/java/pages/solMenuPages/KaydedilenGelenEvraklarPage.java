@@ -132,13 +132,10 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
     SelenideElement txtIcerikOnaylayanKisi = $("div[id^='inboxItemInfoForm:onaylayacakKisiLov:j_idt'][class='lovItemTitle']");
     SelenideElement txtOnaylayanKisi = $("div[id^='mainPreviewForm:onaylayacakKisiLov:LovSecilen']");
 
-<<<<<<< HEAD
     SelenideElement btnIcerikDosyaDeleteIcon = $("button[id^='inboxItemInfoForm:j_idt'] span[class='ui-button-icon-left ui-icon delete-icon']");
 
     BelgenetElement txtComboLovKisi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKullaniciLov:LovText"));
 
-=======
->>>>>>> d4dbb2d011f9c8653b9f6b44c9a3de1649ccf45f
     @Step("Kaydedilen gelen evraklar sayfası aç")
     public KaydedilenGelenEvraklarPage openPage() {
         solMenu(SolMenuData.BirimEvraklari.KaydedilenGelenEvraklar);
@@ -339,14 +336,11 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
 
     @Step("Dağıtım Bilgileri Birim alanında \"{birim}\" seçilir")
     public KaydedilenGelenEvraklarPage icerikDagitimBilgileriBirimDoldurWithDetails(String birim, String details) {
-<<<<<<< HEAD
         cmbIcerikHavaleIslemleriBirim.selectLov(birim,details);
-=======
 //        icerikHavaleIslemleriBirim.type(birim).getDetailItems()
 //                .filterBy(Condition.exactText(details)).first().click();
 //        icerikHavaleIslemleriBirim.closeTreePanel();
-        icerikHavaleIslemleriBirim.selectLov(birim, details);
->>>>>>> d4dbb2d011f9c8653b9f6b44c9a3de1649ccf45f
+//        icerikHavaleIslemleriBirim.selectLov(birim, details);
         return this;
     }
 
@@ -463,17 +457,14 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
             Assert.assertEquals(icerikOtomatikHavaleCheckbox.isDisplayed(), true, "Otomatik Havale Checkbox Alanı Görüntülendi");
             Allure.addAttachment("Otomatik Havale Checkbox Alanı Görüntülendi : ", "");
         }
-<<<<<<< HEAD
         if(txtIcerikBirimKontrol.isDisplayed()) {
             text += "Birim Kontrol,";
             Assert.assertEquals(txtIcerikBirimKontrol.isDisplayed(),true,"Birim Alanı Görüntülendi");
             Allure.addAttachment("Birim Kontrol Alanı Görüntülendi : ","");
-=======
-        if (icerikBirimKontrol.isDisplayed()) {
-            text += "Birim Kontrol,";
-            Assert.assertEquals(icerikBirimKontrol.isDisplayed(), true, "Birim Alanı Görüntülendi");
-            Allure.addAttachment("Birim Kontrol Alanı Görüntülendi : ", "");
->>>>>>> d4dbb2d011f9c8653b9f6b44c9a3de1649ccf45f
+//        if (icerikBirimKontrol.isDisplayed()) {
+//            text += "Birim Kontrol,";
+//            Assert.assertEquals(icerikBirimKontrol.isDisplayed(), true, "Birim Alanı Görüntülendi");
+//            Allure.addAttachment("Birim Kontrol Alanı Görüntülendi : ", "");
         }
         if (icerikKisiKontrol.isDisplayed()) {
             text += "Kisi Kontrol, ";
@@ -504,6 +495,8 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
         return this;
     }
 
+
+
     @Step("Havale İşlemleminde Dosya Ekle")
     public KaydedilenGelenEvraklarPage dosyaEkle() {
         dosyaEkleKontrol.click();
@@ -529,15 +522,14 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
     }
 
     @Step("İçerik Havale İşlemleri Kişi alanında \"{kisi}\" seç")
-<<<<<<< HEAD
     public KaydedilenGelenEvraklarPage icerikHavaleIslemleriKisiDoldur(String kisi,String details) {
-        txtIcerikHavaleIslemleriKisi.selectLov(kisi,details);
-=======
-    public KaydedilenGelenEvraklarPage icerikHavaleIslemleriKisiDoldur(String kisi, String details) {
-        icerikHavaleIslemleriKisi.selectLov(kisi, details);
->>>>>>> d4dbb2d011f9c8653b9f6b44c9a3de1649ccf45f
+        txtIcerikHavaleIslemleriKisi.selectLov(kisi, details);
         return this;
     }
+//    public KaydedilenGelenEvraklarPage icerikHavaleIslemleriKisiDoldur(String kisi, String details) {
+//        icerikHavaleIslemleriKisi.selectLov(kisi, details);
+//        return this;
+//    }
 
     @Step("Havale İşlemleri Açıklama Alanını Doldur")
     public KaydedilenGelenEvraklarPage aciklamaAlaniDoldur(String aciklama) {
