@@ -425,4 +425,18 @@ public class ImzaladiklarimPage extends MainPage {
         txtTakipListesiKullanicilar.closeTreePanel();
         return this;
     }
+
+    @Step("Takip listesinde {kullanicilar} kullanıcısı seçilememeli.")
+    public ImzaladiklarimPage takipListesiKullaniciSecilmemeli(String kullanicilar) {
+        Assert.assertTrue(txtTakipListesiKullanicilar.isLovValueSelectable(kullanicilar));
+
+        txtTakipListesiKullanicilar
+                .type(kullanicilar)
+                .getTitleItems()
+                .first()
+                .shouldHave(Condition.attribute("class", "lovItemTitle backGreen"));
+        txtTakipListesiKullanicilar
+                .closeTreePanel();
+        return this;
+    }
 }
