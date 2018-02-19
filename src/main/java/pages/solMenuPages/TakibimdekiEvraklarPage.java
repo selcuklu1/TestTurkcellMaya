@@ -20,12 +20,31 @@ public class TakibimdekiEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("{konu} konulu evrak evrak listesinde olmalı mı? : {evrakOlmali}.")
+    public TakibimdekiEvraklarPage evrakKontrol(String konu, boolean evrakOlmali){
+        if(evrakOlmali == true){
+            tblTakibimdekiEvraklar
+                    .filterBy(text("Konu: " + konu))
+                    .first()
+                    .shouldBe(visible);
+        }
+        else {
+            tblTakibimdekiEvraklar
+                    .filterBy(text("Konu: " + konu))
+                    .first()
+                    .shouldNotBe(visible);
+        }
+        return this;
+    }
+
     @Step("{konu} konulu evrak evrak listesinde olduğu görülür.")
-    public TakibimdekiEvraklarPage evrakKontrol(String konu) {
+    public TakibimdekiEvraklarPage takiptenCikart(String konu) {
         tblTakibimdekiEvraklar
-                .filterBy(text("Konu: " + konu))
+                .filterBy(text(konu))
                 .first()
-                .shouldBe(visible);
+                .$x(".//span[contains(@class,'document-unfollow')]/..")
+                .click();
+
         return this;
     }
 

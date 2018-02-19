@@ -1,6 +1,7 @@
 package tests.BirimIcerikSablonu;
 
 import com.codeborne.selenide.SelenideElement;
+import com.google.gson.internal.LinkedTreeMap;
 import common.BaseTest;
 import data.User;
 import io.qameta.allure.Allure;
@@ -412,9 +413,9 @@ public class BirimIcerikSablonuTest extends BaseTest {
 
         editorTab.getEditor().editorShouldHave(text(user1.getBirimAdi()));
 
-        Map staff = new HashMap<String, OnayKullaniciTipi>();
+       /* Map<String, OnayKullaniciTipi> staff = new LinkedTreeMap<>();
         //staff.put(user1.getFullname(), OnayKullaniciTipi.PARAFLAMA);
-        staff.put(user3.getFullname(), OnayKullaniciTipi.IMZALAMA);
+        staff.put(user3.getFullname(), OnayKullaniciTipi.IMZALAMA);*/
         olurYazisiOlusturPage.bilgileriTab().openTab().alanlariDoldur(
                 "310.04"
                 , sablonAdi1082

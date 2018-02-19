@@ -8,6 +8,7 @@ import data.TestData;
 import data.User;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
+import listeners.Deneme1;
 import listeners.DriverEventListener;
 import listeners.ResultListener;
 import org.openqa.selenium.Platform;
@@ -20,6 +21,7 @@ import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
+import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 import pages.LoginPage;
@@ -39,6 +41,7 @@ import static io.qameta.allure.util.ResultsUtils.firstNonEmpty;
 //BrowserPerTest.class
 @Listeners({ResultListener.class
         //, MethodInterceptor.class
+        , Deneme1.class
 })
 //@Listeners({RerunFailedTests.class})
 public class BaseTest extends BaseLibrary {
@@ -78,7 +81,7 @@ public class BaseTest extends BaseLibrary {
         Configuration.savePageSource = false;
         Configuration.collectionsTimeout = timeout * 1000;
         Configuration.timeout = timeout * 1000;
-        Configuration.holdBrowserOpen = Configuration.remote == null ? true : false;
+        Configuration.holdBrowserOpen = Configuration.remote == null;
         Configuration.startMaximized = true;
         Configuration.pollingInterval = 100;
         Configuration.collectionsPollingInterval = 100;
