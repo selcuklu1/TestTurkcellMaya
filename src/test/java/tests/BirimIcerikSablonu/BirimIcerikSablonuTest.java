@@ -9,6 +9,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Step;
 import org.openqa.selenium.Keys;
+import org.testng.ITestContext;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import pages.newPages.OlurYazisiOlusturPage;
@@ -48,7 +49,10 @@ public class BirimIcerikSablonuTest extends BaseTest {
     private OlurYazisiOlusturPage olurYazisiOlusturPage = new OlurYazisiOlusturPage();
 
     @Test(description = "TS1084: Alan aktif durum kontrolleri", enabled = true, priority = 1)
-    public void TS1084() {
+    public void TS1084(ITestContext context) {
+        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        System.out.println(context.getCurrentXmlTest());
+        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
         login(user1);
         birimIcerikSablonlarPage = new BirimIcerikSablonlarPage().openPage();
         TS1084a(birimIcerikSablonlarPage);

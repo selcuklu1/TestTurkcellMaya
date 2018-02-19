@@ -133,14 +133,14 @@
                             <name>testnames</name>
                             <value>${packets}</value>
                         </property>-->
-                        <property>
+                       <!-- <property>
                             <name>parallel</name>
                             <value>tests</value>
                         </property>
                         <property>
-                            <name>threadCount</name>
+                            <name>suitethreadpoolsize</name>
                             <value>5</value>
-                        </property>
+                        </property>-->
                     </properties>
                     <parallel>${parallel}</parallel>
                     <threadCount>${threadCount}</threadCount>
