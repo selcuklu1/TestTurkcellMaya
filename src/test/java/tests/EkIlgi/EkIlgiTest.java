@@ -82,8 +82,11 @@ public class EkIlgiTest extends BaseTest {
         String ekMetniAciklama = " isimli dosya eklendi";
         String fizikselEkMetni = "Dosya eklendi " + getSysDate();
 
-        String evrakNo = "5408";
-        String evrakSayisi = "1402683517-1012";
+        String evrakNo1 = "5408";
+        String evrakSayisi1 = "1402683517-1012";
+
+        String evrakNo2 = "11357";
+        String evrakSayisi2 = "234234234234234234-010.01-11357";
 
         String onayAkisi = "Ts2199 OnayAkisi";
         String kaldirilacakKlasorler = "ESK05";
@@ -101,63 +104,77 @@ public class EkIlgiTest extends BaseTest {
                 //TS2199.pdf
                 .ekleriEkMetniDoldur(dosyaAdiPDF + " " + ekMetniAciklama)
                 .dosyaEkle(pathPDF, "PDF")
-                .dosyaYukleneneKadarBekle()
+                .dosyaYukleneneKadarLoadingBekle()
+                .dosyaYukleneneKadarFileUploadingBekle()
                 .ekleriEklenenDosyaAdiKontrol(dosyaAdiPDF)
                 .ekleriEkle()
+                .dosyaYukleneneKadarLoadingBekle()
                 .listelenenEklerdeKontrol(dosyaAdiPDF, "Dosya Adı")
                 .listelenenEklerdeIndırButonuKontrol(dosyaAdiPDF)
 
                 //TS2199.doc
                 .ekleriEkMetniDoldur(dosyaAdiDOC + " " + ekMetniAciklama)
                 .dosyaEkle(pathDOC, "DOC")
-                .dosyaYukleneneKadarBekle()
+                .dosyaYukleneneKadarLoadingBekle()
+                .dosyaYukleneneKadarFileUploadingBekle()
                 .ekleriEklenenDosyaAdiKontrol(dosyaAdiDOC)
                 .ekleriEkle()
+                .dosyaYukleneneKadarLoadingBekle()
                 .listelenenEklerdeKontrol(dosyaAdiDOC, "Dosya Adı")
                 .listelenenEklerdeIndırButonuKontrol(dosyaAdiDOC)
 
                 //TS2199.docx
                 .ekleriEkMetniDoldur(dosyaAdiDOCX + " " + ekMetniAciklama)
                 .dosyaEkle(pathDOCX, "DOCX")
-                .dosyaYukleneneKadarBekle()
+                .dosyaYukleneneKadarLoadingBekle()
+                .dosyaYukleneneKadarFileUploadingBekle()
                 .ekleriEklenenDosyaAdiKontrol(dosyaAdiDOCX)
                 .ekleriEkle()
+                .dosyaYukleneneKadarLoadingBekle()
                 .listelenenEklerdeKontrol(dosyaAdiDOCX, "Dosya Adı")
                 .listelenenEklerdeIndırButonuKontrol(dosyaAdiDOCX)
 
                 //TS2199.xls
                 .ekleriEkMetniDoldur(dosyaAdiXLS + " " + ekMetniAciklama)
                 .dosyaEkle(pathXLS, "XLS")
-                .dosyaYukleneneKadarBekle()
+                .dosyaYukleneneKadarLoadingBekle()
+                .dosyaYukleneneKadarFileUploadingBekle()
                 .ekleriEklenenDosyaAdiKontrol(dosyaAdiXLS)
                 .ekleriEkle()
+                .dosyaYukleneneKadarLoadingBekle()
                 .listelenenEklerdeKontrol(dosyaAdiXLS, "Dosya Adı")
                 .listelenenEklerdeIndırButonuKontrol(dosyaAdiXLS)
 
                 //TS2199.xlsx
                 .ekleriEkMetniDoldur(dosyaAdiXLSX + " " + ekMetniAciklama)
                 .dosyaEkle(pathXLSX, "XLSX")
-                .dosyaYukleneneKadarBekle()
+                .dosyaYukleneneKadarLoadingBekle()
+                .dosyaYukleneneKadarFileUploadingBekle()
                 .ekleriEklenenDosyaAdiKontrol(dosyaAdiXLSX)
                 .ekleriEkle()
+                .dosyaYukleneneKadarLoadingBekle()
                 .listelenenEklerdeKontrol(dosyaAdiXLSX, "Dosya Adı")
                 .listelenenEklerdeIndırButonuKontrol(dosyaAdiXLS)
 
                 //TS2199.ppt
                 .ekleriEkMetniDoldur(dosyaAdiPPT + " " + ekMetniAciklama)
                 .dosyaEkle(pathPPT, "PPT")
-                .dosyaYukleneneKadarBekle()
+                .dosyaYukleneneKadarLoadingBekle()
+                .dosyaYukleneneKadarFileUploadingBekle()
                 .ekleriEklenenDosyaAdiKontrol(dosyaAdiPPT)
                 .ekleriEkle()
+                .dosyaYukleneneKadarLoadingBekle()
                 .listelenenEklerdeKontrol(dosyaAdiPPT, "Dosya Adı")
                 .listelenenEklerdeIndırButonuKontrol(dosyaAdiPPT)
 
                 //TS2199.pptx
                 .ekleriEkMetniDoldur(dosyaAdiPPTX + " " + ekMetniAciklama)
                 .dosyaEkle(pathPPTX, "PPTX")
-                .dosyaYukleneneKadarBekle()
+                .dosyaYukleneneKadarLoadingBekle()
+                .dosyaYukleneneKadarFileUploadingBekle()
                 .ekleriEklenenDosyaAdiKontrol(dosyaAdiPPTX)
                 .ekleriEkle()
+                .dosyaYukleneneKadarLoadingBekle()
                 .listelenenEklerdeKontrol(dosyaAdiPPTX, "Dosya Adı")
                 .listelenenEklerdeIndırButonuKontrol(dosyaAdiPPTX)
 
@@ -167,21 +184,34 @@ public class EkIlgiTest extends BaseTest {
                 .listelenenEklerdeKontrol(fizikselEkMetni, "Fiziksel Ek Metni")
 
                 .sistemdeKayitliEvrakEkleTabiniAc()
-                .evrakAramaDoldur(evrakNo)
+                .evrakAramaDoldur(evrakNo1)
                 .dokumanAra()
-                .listelenenEvraklardaKontrol(evrakNo)
+                .listelenenEvraklardaKontrol(evrakNo1)
                 .evrakDetayiGoster()
                 .evrakDetayiKontrol()
                 .evrakDetayiSayfasınıKapat()
-                .islemPenceresiKapatmaOnayiPopup("Kapat");
+                .islemPenceresiKapatmaOnayiPopup2("Kapat")
+
+                .evrakAramaDoldur(evrakNo2)
+                .dokumanAra()
+                .listelenenEvraklardaKontrol(evrakNo2)
+                .evrakDetayiGoster()
+                .evrakDetayiKontrol()
+                .evrakDetayiSayfasınıKapat()
+                .islemPenceresiKapatmaOnayiPopup2("Kapat");
 
         evrakOlusturPage
                 .ekleriTabAc()
                 .evrakEkEkle()
-                .listelenenEklerdeKontrol(evrakSayisi, "Evrak Sayisi")
-                .eklenenEklerListesindeDetayGoster(evrakSayisi)
+                .listelenenEklerdeKontrol(evrakSayisi1, "Evrak Sayisi1")
+                .eklenenEklerListesindeDetayGoster(evrakSayisi1)
                 .evrakDetayiSayfasınıKapat()
-                .islemPenceresiKapatmaOnayiPopup("Kapat");
+                .islemPenceresiKapatmaOnayiPopup2("Kapat")
+
+                .listelenenEklerdeKontrol(evrakSayisi2, "Evrak Sayisi2")
+                .eklenenEklerListesindeDetayGoster(evrakSayisi2)
+                .evrakDetayiSayfasınıKapat()
+                .islemPenceresiKapatmaOnayiPopup2("Kapat");
 
         evrakOlusturPage
                 .editorTabAc()
@@ -193,7 +223,8 @@ public class EkIlgiTest extends BaseTest {
                 .editordeEkKontrol(dosyaAdiPPT, "PPT")
                 .editordeEkKontrol(dosyaAdiPPTX, "PPTX")
                 .editordeEkKontrol(fizikselEkMetni, "Fiziksel Ek Metin Açıklama")
-                .editordeEkKontrol(evrakSayisi, "Evrak Sayısı");
+                .editordeEkKontrol(evrakSayisi1, "Evrak Sayısı1")
+                .editordeEkKontrol(evrakSayisi2, "Evrak Sayısı2");
 
         evrakOlusturPage
                 .ekleriTabAc()
@@ -202,13 +233,19 @@ public class EkIlgiTest extends BaseTest {
 
         evrakOlusturPage
                 .ekleriTabAc()
-                .ekIsmineGoreEkSilme(evrakSayisi)
+                .ekIsmineGoreEkSilme(evrakSayisi1)
+                .ekSilmeOnayi("Evet");
+
+        evrakOlusturPage
+                .ekleriTabAc()
+                .ekIsmineGoreEkSilme(evrakSayisi2)
                 .ekSilmeOnayi("Evet");
 
         evrakOlusturPage
                 .editorTabAc()
                 .editordeEkGelmedigiKontrolu(fizikselEkMetni)
-                .editordeEkGelmedigiKontrolu(evrakSayisi);
+                .editordeEkGelmedigiKontrolu(evrakSayisi1)
+                .editordeEkGelmedigiKontrolu(evrakSayisi2);
 
         editor
                 .type("TS2199 nolu senaryonun testi");
@@ -422,7 +459,7 @@ public class EkIlgiTest extends BaseTest {
                 //ek3
                 .ekleriEkMetniDoldur(ekDosya3Aciklama)
                 .dosyaEkle(pathDosya3, dosyaAdi3)
-                .dosyaYukleneneKadarBekle()
+                .dosyaYukleneneKadarLoadingBekle()
                 .ekleriEklenenDosyaAdiKontrol(dosyaAdi3)
                 .ekleriEkle()
                 .listelenenEklereDosyanınGeldigiKontrolu(dosyaAdi3, "Dosya Adı")
@@ -705,7 +742,7 @@ public class EkIlgiTest extends BaseTest {
                 .ekleriTabAc()
                 .ekleriEkMetniDoldur(ekleriAciklamaDosya1)
                 .dosyaEkle(pathDosya1, dosyaAdi1)
-                .dosyaYukleneneKadarBekle()
+                .dosyaYukleneneKadarLoadingBekle()
                 .ekleriEklenenDosyaAdiKontrol(dosyaAdi1)
                 .ekleriEkle()
                 .ekEkleDusukDpiPopupOnayi("Evet")
@@ -886,7 +923,7 @@ public class EkIlgiTest extends BaseTest {
                 .ekleriTabAc()
                 .ekleriEkMetniDoldur(ekleriAciklamaDosya1)
                 .dosyaEkle(pathDosya1, dosyaAdi1)
-                .dosyaYukleneneKadarBekle()
+                .dosyaYukleneneKadarLoadingBekle()
                 .ekleriEklenenDosyaAdiKontrol(dosyaAdi1)
                 .ekleriEkle()
                 .ekEkleDusukDpiPopupOnayi("Evet")
