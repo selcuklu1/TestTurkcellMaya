@@ -141,9 +141,13 @@
                             <name>suitethreadpoolsize</name>
                             <value>5</value>
                         </property>-->
+                        <property>
+                            <name>parallel</name>
+                            <value>methods</value>
+                        </property>
                     </properties>
-                    <parallel>${parallel}</parallel>
-                    <threadCount>${threadCount}</threadCount>
+                    <!--<parallel>${parallel}</parallel>
+                    <threadCount>${threadCount}</threadCount>-->
 
                     <!--*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
                     Contains test name(s) to run. Values are selected form and
