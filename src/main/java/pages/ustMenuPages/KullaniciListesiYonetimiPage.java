@@ -168,6 +168,16 @@ public class KullaniciListesiYonetimiPage extends MainPage {
         return this;
     }
 
+    @Step("Aktif Yap butonu tıklanır.")
+    public KullaniciListesiYonetimiPage aktifYap(String kullaniciAdi) {
+
+        tblKullaniciListesi
+                .filterBy(text(kullaniciAdi))
+                .first()
+                .$("[id$=':kullaniciGrubuAktif_id']").click();
+        return this;
+    }
+
     @Step("İşlem Onayı popUpı \"{butonText}\" butonuna basılarak kapatılır.")
     public KullaniciListesiYonetimiPage islemOnayiPopUpEvetHayır(String butonText) {
         SelenideElement btnKapat = $(By.xpath("//div[@id='baseConfirmationDialog:dialog']//span[text()='" + butonText + "']//..//..//button"));

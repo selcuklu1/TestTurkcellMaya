@@ -27,6 +27,8 @@ public class KullaniciListesiYonetimiTest extends BaseTest {
     String kullanici2 = "Username21g TEST";
     String dikkatMesaji = "Kullanıcı grubunda en az 2 kullanıcı olmak zorundadır!";
     String basariMesaji = "İşlem başarılıdır!";
+    String durumPasifler = "Sadece Pasifler";
+    String durumAktifler = "Sadece Aktifler";
 
     @BeforeMethod
     public void loginBeforeTests() {
@@ -61,27 +63,72 @@ public class KullaniciListesiYonetimiTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true
-//            ,dependsOnMethods = {"TS1005"}
+            ,dependsOnMethods = {"TS1005"}
             , description = "TS1001 : Kullanıcı Listesinin Pasif Duruma Getirilmesi")
     public void TS1001() throws InterruptedException {
 
         login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
-        String ad = "TS1005 123041";
+
         kullaniciListesiYonetimiPage
                 .openPage()
                 .sorgulaVeFiltreleAdDoldur(ad)
-                .durumSec("Sadece Aktifler")
+                .durumSec(durumAktifler)
                 .ara()
                 .kullaniciListesiTablosuKullaniciAdiKontrolu(ad, true)
                 .pasifYap(ad)
                 .islemOnayiPopUpEvetHayır("Evet")
                 .sorgulaVeFiltreleTabAc()
-                .durumSec("Sadece Pasifler")
+                .durumSec(durumPasifler)
                 .ara()
                 .kullaniciListesiTablosuKullaniciAdiKontrolu(ad, true)
                 .sorgulaVeFiltreleTabAc()
-                .durumSec("Sadece Aktifler")
+                .durumSec(durumAktifler)
                 .ara()
                 .kullaniciListesiTablosuKullaniciAdiKontrolu(ad, false);
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true
+            ,dependsOnMethods = {"TS1001"}
+            , description = "TS1003 : Kullanıcı Listesinin Aktif Duruma Getirilmesi")
+    public void TS1003() throws InterruptedException{
+
+        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
+
+        String btnEvet= "Evet";
+
+//        String ad = "TS1005 142310";
+        kullaniciListesiYonetimiPage
+                .openPage()
+                .sorgulaVeFiltreleAdDoldur(ad)
+                .durumSec(durumPasifler)
+                .ara()
+                .aktifYap(ad)
+                .islemOnayiPopUpEvetHayır(btnEvet)
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        kullaniciListesiYonetimiPage
+                .kullaniciListesiTablosuKullaniciAdiKontrolu(ad,false)
+                .sorgulaVeFiltreleTabAc()
+                .durumSec(durumAktifler)
+                .ara()
+                .kullaniciListesiTablosuKullaniciAdiKontrolu(ad,true)
+                .sorgulaVeFiltreleTabAc()
+                .durumSec(durumPasifler)
+                .ara()
+                .kullaniciListesiTablosuKullaniciAdiKontrolu(ad,false);
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true
+            ,dependsOnMethods = {"TS1003"}
+            , description = "TS1000 : Kullanıcı Listesi Güncelleme")
+    public void TS1000() throws InterruptedException{
+
+        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
+
+        kullaniciListesiYonetimiPage
+                .openPage()
+                .ekranAlanKontrolu()
     }
 }
