@@ -150,8 +150,8 @@
                             <value>5</value>
                         </property>-->
                     </properties>
-                    <parallel>methods</parallel>
-                    <threadCount>5</threadCount>
+                    <parallel>${parallel}</parallel>
+                    <threadCount>${threadCount}</threadCount>
 
                     <!--*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
                     Contains test name(s) to run. Values are selected form and
