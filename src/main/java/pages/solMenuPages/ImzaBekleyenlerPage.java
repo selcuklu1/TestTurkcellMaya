@@ -34,6 +34,7 @@ public class ImzaBekleyenlerPage extends MainPage {
     SelenideElement evrakOnIzleme = $("[id^='mainPreviewForm:j_idt'] [class='ui-tabs-panel ui-widget-content ui-corner-bottom']");
     SelenideElement tabEvrakEkleri = $(By.xpath("//a[text()='Evrak Ekleri']"));
 
+    ElementsCollection tblEvrakOnizlemeEkler = $$("[id$='ekListesiOnizlemeDataTable_data'] > tr[role='row']");// span[class='ui-chkbox-icon']");
 
     @Step("İmza bekleyenler sayfası aç")
     public ImzaBekleyenlerPage openPage() {
@@ -310,4 +311,26 @@ public class ImzaBekleyenlerPage extends MainPage {
         tabEvrakEkleri.click();
         return this;
     }
+
+    @Step("Dağıtım yerleri aç - Ek")
+    public ImzaBekleyenlerPage ekeGoreDagitimYerleriAc(String ek) {
+
+        tblEvrakOnizlemeEkler
+                .filterBy(Condition.text(ek))
+                .get(0)
+                .$("[class='ui-selectcheckboxmenu-label ui-corner-all']").click();
+        return this;
+    }
+
+    @Step("Eklerin gonderilecegi yerlerin secimimize uygun geldigi gorulur")
+    public ImzaBekleyenlerPage ekeGoreDagitimYerleriKontrol(String ek) {
+
+        tblEvrakOnizlemeEkler
+                .filterBy(Condition.text(ek))
+                .get(0)
+                .$("[class^='ui-selectcheckboxmenu-item']").shouldBe(visible);
+        return this;
+    }
+
+
 }

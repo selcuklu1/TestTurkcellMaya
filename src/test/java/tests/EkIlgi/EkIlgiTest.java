@@ -35,6 +35,7 @@ public class EkIlgiTest extends BaseTest {
     KoordineBekleyenlerPage koordineBekleyenlerPage;
     PostalanacakEvraklarPage postalanacakEvraklarPage;
     TeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage;
+    GelenEvraklarPage gelenEvraklarPage;
 
     @BeforeMethod
     public void beforeTests(Method method) {
@@ -51,6 +52,7 @@ public class EkIlgiTest extends BaseTest {
         koordineBekleyenlerPage = new KoordineBekleyenlerPage();
         postalanacakEvraklarPage = new PostalanacakEvraklarPage();
         teslimAlinmayiBekleyenlerPage = new TeslimAlinmayiBekleyenlerPage();
+        gelenEvraklarPage = new GelenEvraklarPage();
 
     }
 
@@ -700,7 +702,11 @@ public class EkIlgiTest extends BaseTest {
         String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
         String kullanici = "Sezai ÇELİK";
         String kurum = "Başbakanlık";
-        String evrakSayisi = "234234234234234234-010.01-10910";
+        String kurumPostalanakYerler = "BAŞBAKANLIĞA";
+
+
+        String evrakSayisi1 = "234234234234234234-010.01-10910";
+        String evrakSayisi2 = "6345202-010.01-11845";
 
         String ekleriAciklamaDosya1 = "Ekleri_Dosya1_" + getSysDate();
         String pathDosya1 = getUploadPath() + "TS1493_dosya1.pdf";
@@ -760,17 +766,26 @@ public class EkIlgiTest extends BaseTest {
                 .dagitimYerlerindeBirimKurumKullaniciKaldir()
 
                 //Sistemde kayıtlı evrak ekle
+                //evrak sayisi1
                 .sistemdeKayitliEvrakEkleTabAc()
                 .sistemdeKayitliEvrakEkleAlanKontrolleri()
                 .evrakAranacakYerSec("Birim Evrakları Ara")
-                .evrakAramaDoldur(evrakSayisi)
+                .evrakAramaDoldur(evrakSayisi1)
                 .dokumanAra()
-                .listelenenEvraklardaKontrol(evrakSayisi)
+                .listelenenEvraklardaKontrol(evrakSayisi1)
                 .evrakEkEkle()
-                .listelenenEklereDosyanınGeldigiKontrolu(evrakSayisi, "Evrak Sayısı")
+                .listelenenEklereDosyanınGeldigiKontrolu(evrakSayisi1, "Evrak Sayısı1")
                 .dagitimYerleriAcEk3()
-                .dagitimYerlerindeKullaniciSec();
+                .dagitimYerlerindeKullaniciSecEK3()
 
+                //evrak sayisi2
+                .evrakAramaDoldur(evrakSayisi2)
+                .dokumanAra()
+                .listelenenEvraklardaKontrol(evrakSayisi2)
+                .evrakEkEkle()
+                .listelenenEklereDosyanınGeldigiKontrolu(evrakSayisi2, "Evrak Sayısı2")
+                .dagitimYerleriAcEk4()
+                .dagitimYerlerindeKullaniciSecEK4();
 
         evrakOlusturPage
                 .editorTabAc();
@@ -787,10 +802,11 @@ public class EkIlgiTest extends BaseTest {
                 .pdfKontrol
                 .PDFEk1Kontrolu(ekleriAciklamaDosya1)
                 .PDFEk2Kontrolu(fizikselEkAciklama)
-                .PDFEk3Kontrolu(evrakSayisi)
-                .eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim1(birim, "Ek-2 konulmadı, Ek-3 konulmadı")
-                .eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim2(kurum, "Ek-2 konulmadı, Ek-3 konulmadı")
-                .eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim3(kurum, "Ek-1 konulmadı, Ek-3 konulmadı");
+                .PDFEk3Kontrolu(evrakSayisi1)
+                .PDFEk4Kontrolu(evrakSayisi2)
+                .eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim1(birim, "Ek-2 konulmadı, Ek-3 konulmadı, Ek-4konulmadı")
+                .eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim2(kurum, "Ek-2 konulmadı, Ek-3konulmadı, Ek-4 konulmadı")
+                .eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim(kurum, "Ek-1 konulmadı, Ek-2konulmadı");
 
         closeNewWindow();
         switchTo().window(0);
@@ -838,7 +854,8 @@ public class EkIlgiTest extends BaseTest {
                 .editordeIlgiKontrol(ilgileriEvrakSayisi, "Evrak Sayısı");
 
         evrakOlusturPage
-                .parafla();
+                .parafla()
+                .islemMesaji().basariliOlmali(basariMesaji);
 
         login(TestData.usernameZTEKIN, TestData.passwordZTEKIN); //ztekin
 
@@ -846,9 +863,30 @@ public class EkIlgiTest extends BaseTest {
                 .openPage()
                 .evrakKonusunaGoreKontrol(evrakKonusu)
                 .konuyaGoreEvrakOnizlemedeAc(evrakKonusu)
-                .evrakEkleriTabAc();
+                .evrakEkleriTabAc()
+                .ekeGoreDagitimYerleriAc(ekleriAciklamaDosya1)
+                .ekeGoreDagitimYerleriAc(fizikselEkAciklama)
+                .ekeGoreDagitimYerleriAc(evrakSayisi1)
+                .ekeGoreDagitimYerleriAc(evrakSayisi2);
 
-        //Todo: Defect çözüldükten sonra devam edilecek
+        evrakOlusturPage
+                .evrakImzala()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        postalanacakEvraklarPage
+                .openPage()
+                .konuyaGoreEvrakKontrol(evrakKonusu)
+                .konuyaGoreEvrakOnizlemedeAc(evrakKonusu)
+                .evrakPostala()
+                .evrakPostalanacakYerlereGoreYazdir(kurumPostalanakYerler)
+                .evrakDetaylariEvrakinEkleriKontrol(ekleriAciklamaDosya1);
+
+        login(TestData.usernameSEZAICELIK, TestData.passwordSEZAICELIK); //sezaicelik
+
+        gelenEvraklarPage
+                .openPage();
+
+
     }
 
     @Severity(SeverityLevel.CRITICAL)
