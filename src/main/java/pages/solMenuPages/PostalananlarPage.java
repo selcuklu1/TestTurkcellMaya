@@ -75,7 +75,7 @@ public class PostalananlarPage extends MainPage {
     SelenideElement tabIcerikKapat = $x("//*[@id='windowItemInfoDialog']/div[1]/a[1]/span");
     SelenideElement tabIcerikKapatmaOnay = $(By.id("kapatButton"));
     SelenideElement btnIcerikPostaDetayi = $x("//*[@id='inboxItemInfoForm:dialogTabMenuRight:uiRepeat:4:cmdbutton']/span[1]");
-    SelenideElement popupEtiketTextIcerik = $x("//*[@id='inboxItemInfoForm:etiketMetinIDPostIslm']");
+    SelenideElement popupEtiketTextIcerik = $x("//*[@id='mainPreviewForm:etiketMetinID']");
 
     //
     SelenideElement popupEvrakYazdirma = $x("//*[@id='postaDetayYazdirForm:dtPostaEvrakUstVeri:0:evrakDetayiViewDialogYazdir']");
