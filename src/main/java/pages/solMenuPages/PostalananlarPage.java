@@ -75,8 +75,8 @@ public class PostalananlarPage extends MainPage {
     SelenideElement tabIcerikKapat = $x("//*[@id='windowItemInfoDialog']/div[1]/a[1]/span");
     SelenideElement tabIcerikKapatmaOnay = $(By.id("kapatButton"));
     SelenideElement btnIcerikPostaDetayi = $x("//*[@id='inboxItemInfoForm:dialogTabMenuRight:uiRepeat:4:cmdbutton']/span[1]");
-    SelenideElement popupEtiketTextIcerik = $x("//*[@id='mainPreviewForm:etiketMetinID']");
-
+    SelenideElement popupEtiketTextIcerik = $x("//*[@id='inboxItemInfoForm:etiketMetinIDPostIslm']");
+    SelenideElement popupEtiketText = $x("//*[@id='mainPreviewForm:etiketMetinID']");
     //
     SelenideElement popupEvrakYazdirma = $x("//*[@id='postaDetayYazdirForm:dtPostaEvrakUstVeri:0:evrakDetayiViewDialogYazdir']");
     SelenideElement tuzelKisiGuncelle = $x("//*[@id='mainPreviewForm:postalananDataGrid']/tbody/tr/td/div/table/tbody/tr[4]/td[8]/div/button[1]");
@@ -681,7 +681,7 @@ public class PostalananlarPage extends MainPage {
 
     @Step("Popup Etiket Icerik text kontrol")
     public PostalananlarPage etiketIcerikText() {
-        String etiketIceriktext = popupEtiketTextIcerik.getValue();
+        String etiketIceriktext = popupEtiketText.getValue();
         Allure.addAttachment("Etiket Icerik", etiketIceriktext);
         return this;
     }
