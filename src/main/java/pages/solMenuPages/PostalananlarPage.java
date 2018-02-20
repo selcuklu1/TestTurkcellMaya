@@ -87,7 +87,7 @@ public class PostalananlarPage extends MainPage {
     SelenideElement btnIcerikPDPostaKodGnc = $x("//*[@id='inboxItemInfoForm:postaGuncellePanel']/tbody/tr[2]/td[3]/input");
     SelenideElement btnIcerkPDGuncellemeKaydet = $x("//*[@id='inboxItemInfoForm:postaGuncelleDialog']/div[2]/div/div/button");
     SelenideElement icerikEvrakSayisi = $x("//*[@id='inboxItemInfoForm:evrakDetayPanelGrid']/tbody/tr[3]/td[3]/label");
-    SelenideElement btnEtiketPopupKapat = $x("//*[@id='mainPreviewForm:showAppletContainer']/div/div[1]/a/span");
+    SelenideElement btnEtiketPopupKapat = $x("//*[@id='mainPreviewForm:appletContainer']/div/div[1]/a/span");
     //  SelenideElement btnDagitimYerDetayKapat = $x("//*[@id='mainPreviewForm:dagitimPlaniDetayViewDialog']/div[1]/a/span");
     SelenideElement btnEvrakEkleri = $(By.xpath("//a[text() = 'Evrak Ekleri']"));
     SelenideElement btnIlgiBilgileri = $(By.xpath("//a[text() = 'İlgi Bilgileri']"));
