@@ -12,6 +12,8 @@ public class BelgenetFramework {
         //region ComboLov
         Commands.getInstance().add("selectLov", new ComboLov().new SelectLov());
 
+        Commands.getInstance().add("selectExactLov", new ComboLov().new SelectExactLov());
+
         Commands.getInstance().add("clearLastSelectedItem", new ComboLov().new ClearLastSelectedItem());
 
         Commands.getInstance().add("clearAllSelectedItems", new ComboLov().new ClearAllSelectedItems());
