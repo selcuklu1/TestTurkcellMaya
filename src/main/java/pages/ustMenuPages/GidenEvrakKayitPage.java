@@ -404,6 +404,12 @@ public class GidenEvrakKayitPage extends MainPage {
         return this;
     }
 
+    @Step("Gereği alanını temizle.")
+    public GidenEvrakKayitPage geregiTemizle() {
+        cmbGeregi.clearAllSelectedItems();
+        return this;
+    }
+
     @Step("Başarılı Pop up kontrol")
     public String popUpBasariliKapat() {
         popUpEvrakDefterBasarili.shouldBe(Condition.visible);
@@ -433,14 +439,36 @@ public class GidenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("Birim alanında Birimin geldiği ve seçilemediği kontrolu - {description} : {birim}")
-    public GidenEvrakKayitPage bilgiAlanindaBiriminGeldigiSecilemedigiKontrolu(String birim, String description) {
+    @Step("Bilgi alanında Birimin geldiği ve seçilemediği kontrolu - {description} : {birim}")
+    public GidenEvrakKayitPage bilgiAlanindaBiriminGeldigiVeSecilemedigiKontrolu(String birim, String description) {
 
         int gorunurSecilemezBirimSize = comboLov(cmbBilgiBy).type(birim).getSelectableItems().size();
         Assert.assertEquals(gorunurSecilemezBirimSize == 0, true, "Birimin geldiği ve seçilemediği görülür: " + birim);
         comboLov(cmbBilgiBy).closeTreePanel();
         System.out.println("Birimin geldiği ve seçilemediği görülür: " + birim);
         Allure.addAttachment("Birimin geldiği ve seçilemediği görülür: " + birim, "");
+
+        return this;
+    }
+
+    @Step("Gereği alanında Birimin geldiği ve seçilebildiği kontrolu - {description} : {birim}")
+    public GidenEvrakKayitPage geregiAlanindaBiriminGeldigiVeSecilebildigiKontrolu(String birim, String description) {
+
+        cmbGeregi.selectLov(birim);
+
+        System.out.println("Birimin geldiği ve seçilebildiği görülür: " + birim);
+        Allure.addAttachment("Birimin geldiği ve seçilebildiği görülür: " + birim, "");
+
+        return this;
+    }
+
+    @Step("Bilgi alanında Birimin geldiği ve seçilebildiği kontrolu - {description} : {birim}")
+    public GidenEvrakKayitPage bilgiAlanindaBiriminGeldigiVeSecilebildigiKontrolu(String birim, String description) {
+
+        cmbBilgi.selectLov(birim);
+
+        System.out.println("Birimin geldiği ve seçilebildiği görülür: " + birim);
+        Allure.addAttachment("Birimin geldiği ve seçilebildiği görülür: " + birim, "");
 
         return this;
     }

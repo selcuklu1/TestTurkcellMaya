@@ -72,7 +72,7 @@ public class OlurYazisiOlusturPage extends MainPage {
         SelenideElement cmbIvedik = $("select[id$='ivedilik']");
         SelenideElement dateMiat = $("input[id$='miatCalendar_input']");
         SelenideElement cmbBilgiSecimTipi = $x("//form[@id='yeniOnayEvrakForm']//label[normalize-space(text())='Bilgi Seçim Tipi']/ancestor::tr[@class='ui-datagrid-row']//select");
-        BelgenetElement cmbBilgi = comboLov("input[id$='bilgiLov:LovText']");
+        BelgenetElement cmbBilgi = comboLov("[id^='yeniOnayEvrakForm:evrakBilgileriList'] [id$='bilgiLov:LovText']");
         By cmbBilgiBy = By.cssSelector("[id^='yeniOnayEvrakForm:evrakBilgileriList'][id$='bilgiLov:LovText']");
         SelenideElement cmbGeregiSecimTipi = $x("//form[@id='yeniOnayEvrakForm']//label[normalize-space(text())='Gereği Seçim Tipi']/ancestor::tr[@class='ui-datagrid-row']//select");
         BelgenetElement cmbGeregi = comboLov("[id^='yeniOnayEvrakForm:evrakBilgileriList'][id$='geregiLov:LovText']");
@@ -378,6 +378,12 @@ public class OlurYazisiOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Gereği alanını temizle.")
+        public BilgilerTab geregiTemizle() {
+            cmbGeregi.clearAllSelectedItems();
+            return this;
+        }
+
         @Step("Gereği alanında Birimin geldiği ve seçilemediği kontrolu - {description} : {birim}")
         public BilgilerTab geregiAlanindaBiriminGeldigiSecilemedigiKontrolu(String birim, String description) {
 
@@ -398,6 +404,28 @@ public class OlurYazisiOlusturPage extends MainPage {
             comboLov(cmbBilgiBy).closeTreePanel();
             System.out.println("Birimin geldiği ve seçilemediği görülür: " + birim);
             Allure.addAttachment("Birimin geldiği ve seçilemediği görülür: " + birim, "");
+
+            return this;
+        }
+
+        @Step("Gereği alanında Birimin geldiği ve seçilebildiği kontrolu - {description} : {birim}")
+        public BilgilerTab geregiAlanindaBiriminGeldigiVeSecilebildigiKontrolu(String birim, String description) {
+
+            cmbGeregi.selectLov(birim);
+
+            System.out.println("Birimin geldiği ve seçilebildiği görülür: " + birim);
+            Allure.addAttachment("Birimin geldiği ve seçilebildiği görülür: " + birim, "");
+
+            return this;
+        }
+
+        @Step("Bilgi alanında Birimin geldiği ve seçilebildiği kontrolu - {description} : {birim}")
+        public BilgilerTab bilgiAlanindaBiriminGeldigiVeSecilebildigiKontrolu(String birim, String description) {
+
+            cmbBilgi.selectLov(birim);
+
+            System.out.println("Birimin geldiği ve seçilebildiği görülür: " + birim);
+            Allure.addAttachment("Birimin geldiği ve seçilebildiği görülür: " + birim, "");
 
             return this;
         }

@@ -526,10 +526,6 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
         txtIcerikHavaleIslemleriKisi.selectLov(kisi, details);
         return this;
     }
-//    public KaydedilenGelenEvraklarPage icerikHavaleIslemleriKisiDoldur(String kisi, String details) {
-//        icerikHavaleIslemleriKisi.selectLov(kisi, details);
-//        return this;
-//    }
 
     @Step("Havale İşlemleri Açıklama Alanını Doldur")
     public KaydedilenGelenEvraklarPage aciklamaAlaniDoldur(String aciklama) {
@@ -662,7 +658,7 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
         return this;
     }
 
-    @Step("Ekran Detay ekranı açılır\n")
+    @Step("Evrak Detay ekranı açılır\n")
     public KaydedilenGelenEvraklarPage ekranKontrolEvrakDetayi() {
         Assert.assertEquals(tabEvrakDetayi.isDisplayed(), true, "Evrak Detay sayfası");
         Allure.addAttachment("Evrak Detay sayfası", "açılmaktadır");

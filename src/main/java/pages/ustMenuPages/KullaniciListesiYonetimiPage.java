@@ -42,6 +42,7 @@ public class KullaniciListesiYonetimiPage extends MainPage {
     SelenideElement btnAra = $(By.id("kullaniciGrubuListingForm:filterPanel:kullaniciGrubuArama_id"));
     ElementsCollection tblKullaniciListesi = $$("tbody[id='kullaniciGrubuListingForm:kullaniciGrubuDataTable_data'] tr[data-ri]");
     SelenideElement btnIslemOnayıEvet = $(By.id("baseConfirmationDialog:confirmButton"));
+    SelenideElement txtSorgulamaVeFiltrelemeAd = $(By.id("kullaniciGrubuListingForm:filterPanel:kullaniciGrubufilterAd_id"));
 
     @Step("Kullanıcı Listesi Yönetimi sayfası açılır.")
     public KullaniciListesiYonetimiPage openPage() {
@@ -92,6 +93,18 @@ public class KullaniciListesiYonetimiPage extends MainPage {
         return this;
     }
 
+    @Step("Adı alanı temizlenir")
+    public KullaniciListesiYonetimiPage adTemizle() {
+        txtAdi.clear();
+        return this;
+    }
+
+    @Step("Açıklama alanı temizlenir")
+    public KullaniciListesiYonetimiPage aciklamaTemizle() {
+        txtAciklama.clear();
+        return this;
+    }
+
     @Step("Açıklama alanına \"{aciklama}\" girilir.")
     public KullaniciListesiYonetimiPage aciklamaDoldur(String aciklama) {
         txtAciklama.sendKeys(aciklama);
@@ -122,6 +135,21 @@ public class KullaniciListesiYonetimiPage extends MainPage {
         return this;
     }
 
+    @Step("Durum alanı Kontrolü yapılır.")
+    public KullaniciListesiYonetimiPage durumKontrolu(String text) {
+        String text1 = cmbDurum.getText();
+        System.out.println(text1);
+        Assert.assertEquals(text1,text,"Durumu Sadece Aktifler seçili olarak gelmeli");
+        String[] cmbTexts = cmbDurum.innerText().split("\n");
+        cmbTexts[0].contains("Tümü");
+        cmbTexts[1].contains("Sadece Aktifler");
+        cmbTexts[2].contains("Sadece Pasifler");
+
+        Allure.addAttachment("Durum : ","Durum Combosunda (Tümü, Sadece Aktifler, Sadece Pasifler) seçenekleri mevcuttur. \n" +
+                "Default olarak Sadece Aktifler seçili gelir.");
+        return this;
+    }
+
     @Step("Ara butonuna tıklanır.")
     public KullaniciListesiYonetimiPage ara() {
         btnAra.click();
@@ -133,8 +161,8 @@ public class KullaniciListesiYonetimiPage extends MainPage {
 
         String text = cmbDurum.getText();
 
-        if (tblKullaniciListesi.size()>0)
-            Allure.addAttachment("Tablo Kontrolü : ",text+ " Kayıtlar listelenmiştir.");
+        if (tblKullaniciListesi.size() > 0)
+            Allure.addAttachment("Tablo Kontrolü : ", text + " Kayıtlar listelenmiştir.");
 
         else
             Allure.addAttachment("Tablo Kontrolü : ", "Kayıt bulunamamıştır.");
@@ -144,21 +172,81 @@ public class KullaniciListesiYonetimiPage extends MainPage {
     @Step("Kullanici Listesi tablosu kontrolu : \"{kullaniciAdi}\", \"{shouldBeExist}\" ")
     public KullaniciListesiYonetimiPage kullaniciListesiTablosuKullaniciAdiKontrolu(String kullaniciAdi, boolean shouldBeExist) {
         if (shouldBeExist) {
-            searchTable().searchInAllPages(true).findRows(text(kullaniciAdi)).shouldHave(CollectionCondition.sizeGreaterThan(0));
-//            tblKullaniciListesi
-//                    .filterBy(Condition.text(kullaniciAdi))
-//                    .shouldHave(CollectionCondition.sizeGreaterThan(0));
+//            searchTable().searchInAllPages(true).findRows(text(kullaniciAdi)).shouldHave(CollectionCondition.sizeGreaterThan(0));
+            tblKullaniciListesi
+                    .filterBy(Condition.text(kullaniciAdi))
+                    .shouldHave(CollectionCondition.sizeGreaterThan(0));
         } else {
-            searchTable().searchInAllPages(true).findRows(text(kullaniciAdi)).shouldHaveSize(0);
-//            tblKullaniciListesi
-//                    .filterBy(Condition.text(kullaniciAdi))
-//                    .shouldHaveSize(0);
+//            searchTable().searchInAllPages(true).findRows(text(kullaniciAdi)).shouldHaveSize(0);
+            tblKullaniciListesi
+                    .filterBy(Condition.text(kullaniciAdi))
+                    .shouldHaveSize(0);
         }
         return this;
     }
 
     @Step("Pasif Yap butonu tıklanır.")
     public KullaniciListesiYonetimiPage pasifYap(String kullaniciAdi) {
+
+        tblKullaniciListesi
+                .filterBy(text(kullaniciAdi))
+                .first()
+                .$("[id$=':kullaniciGrubuAktif_id']").click();
+        return this;
+    }
+
+    @Step("Güncelle butonu tıklanır.")
+    public KullaniciListesiYonetimiPage guncelle(String kullaniciAdi) {
+
+        tblKullaniciListesi
+                .filterBy(text(kullaniciAdi))
+                .first()
+                .$("button[id$=':kullaniciGrubuGuncelle_id']").click();
+        return this;
+    }
+
+    @Step("Kullanıcı Listesi tablosunda buton kontrolu.")
+    public KullaniciListesiYonetimiPage tumTabloButonKontrolu() {
+
+        ElementsCollection kisiselPages = $$("th[id='kullaniciGrubuListingForm:kullaniciGrubuDataTable_paginator_top'] > span[class='ui-paginator-pages'] >  span");
+
+
+        for(int i = 0; i<kisiselPages.size();i++){
+            kisiselPages.get(i).click();
+            for (int j = 0; j<tblKullaniciListesi.size();j++) {
+                tblKullaniciListesi.get(j)
+                        .$("button[id$=':kullaniciGrubuGuncelle_id']").shouldBe(Condition.visible);
+                tblKullaniciListesi.get(j)
+                        .$("button[id$=':kullaniciGrubuAktif_id']").shouldBe(Condition.visible);
+            }
+        }
+        return this;
+    }
+
+
+    @Step("Aktif Yap butonu kontrolu")
+    public KullaniciListesiYonetimiPage aktifYapButonKontrolu(String kullaniciAdi) {
+
+        tblKullaniciListesi
+                .filterBy(text(kullaniciAdi))
+                .first()
+                .$("[id$=':kullaniciGrubuAktif_id']").shouldBe(Condition.appear);
+        return this;
+    }
+
+    @Step("Pasif Yap butonu kontrolu")
+    public KullaniciListesiYonetimiPage pasifYapButonKontrolu(String kullaniciAdi) {
+
+        tblKullaniciListesi
+                .filterBy(text(kullaniciAdi))
+                .first()
+                .$("[id$=':kullaniciGrubuAktif_id']").shouldBe(Condition.appear);
+        return this;
+    }
+
+    @Step("Aktif Yap butonu tıklanır.")
+    public KullaniciListesiYonetimiPage aktifYap(String kullaniciAdi) {
+
         tblKullaniciListesi
                 .filterBy(text(kullaniciAdi))
                 .first()
@@ -170,6 +258,24 @@ public class KullaniciListesiYonetimiPage extends MainPage {
     public KullaniciListesiYonetimiPage islemOnayiPopUpEvetHayır(String butonText) {
         SelenideElement btnKapat = $(By.xpath("//div[@id='baseConfirmationDialog:dialog']//span[text()='" + butonText + "']//..//..//button"));
         btnKapat.click();
+        return this;
+    }
+
+    @Step("Sorgula ve Filtrele Ad alanına \"{kullaniciAdi}\" girilir.")
+    public KullaniciListesiYonetimiPage sorgulaVeFiltreleAdDoldur(String kullaniciAdi) {
+        txtSorgulamaVeFiltrelemeAd.sendKeys(kullaniciAdi);
+        return this;
+    }
+
+    @Step("Sorgula ve Filtrele Ad alanına temizlenir.")
+    public KullaniciListesiYonetimiPage sorgulaVeFiltreleAdTemizle() {
+        txtSorgulamaVeFiltrelemeAd.clear();
+        return this;
+    }
+
+    @Step("Sorgula ve Filtrele tabı açılır.")
+    public KullaniciListesiYonetimiPage sorgulaVeFiltreleTabAc(){
+        tabSorgulamaVeFiltreleme.click();
         return this;
     }
 }

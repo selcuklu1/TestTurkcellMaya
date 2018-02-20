@@ -1793,6 +1793,28 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Gereği alanında Birimin geldiği ve seçilebildiği kontrolu - {description} : {birim}")
+        public BilgilerTab geregiAlanindaBiriminGeldigiVeSecilebildigiKontrolu(String birim, String description) {
+
+            cmbGeregi.selectLov(birim);
+
+            System.out.println("Birimin geldiği ve seçilebildiği görülür: " + birim);
+            Allure.addAttachment("Birimin geldiği ve seçilebildiği görülür: " + birim, "");
+
+            return this;
+        }
+
+        @Step("Bilgi alanında Birimin geldiği ve seçilebildiği kontrolu - {description} : {birim}")
+        public BilgilerTab bilgiAlanindaBiriminGeldigiVeSecilebildigiKontrolu(String birim, String description) {
+
+            cmbBilgi.selectLov(birim);
+
+            System.out.println("Birimin geldiği ve seçilebildiği görülür: " + birim);
+            Allure.addAttachment("Birimin geldiği ve seçilebildiği görülür: " + birim, "");
+
+            return this;
+        }
+
         //endregion
 
     }
@@ -2473,17 +2495,25 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Dosya yüklenene kadar 60 dk bekle, 60 dktan fazla sürerse timeout hatası ver")
-        public EkleriTab dosyaYukleneneKadarBekle() {
+        @Step("Dosya yüklenene kadar Loadingi 60 dk bekle, 60 dktan fazla sürerse timeout hatası ver")
+        public EkleriTab dosyaYukleneneKadarLoadingBekle() {
 
             waitForLoadingJS(WebDriverRunner.getWebDriver(), 36000);
 
             return this;
         }
 
+        @Step("Dosya yüklenene kadar File Uploadingi 60 dk bekle, 60 dktan fazla sürerse timeout hatası ver")
+        public EkleriTab dosyaYukleneneKadarFileUploadingBekle() {
+
+            waitForFileUploading(WebDriverRunner.getWebDriver(), 36000);
+
+            return this;
+        }
+
         @Step("Eklenen dosya adi kontrol : {dosyaAdi}")
         public EkleriTab ekleriEklenenDosyaAdiKontrol(String dosyaAdi) {
-
+            lblDosyaAdi.shouldBe(visible);
             Assert.assertEquals(lblDosyaAdi.getText().contains(dosyaAdi), true);
 
             return this;
@@ -2810,6 +2840,27 @@ public class EvrakOlusturPage extends MainPage {
             chkDagitimYerleriKurumEk3.setSelected(true);
             chkDagitimYerleriKullaniciEk3.setSelected(false);
 
+            return this;
+        }
+
+        // İşlem penceresi kapatma onay - popup
+        @Step("Popup : İşlem penceresi kapatma onayi: \"{secim}\" ")
+        public EkleriTab islemPenceresiKapatmaOnayiPopup2(String secim) {
+
+            SelenideElement btnKapat = $(By.id("kapatButton"));
+            SelenideElement btnIptal = $(By.id("kapatButton"));
+            SelenideElement islemPenceresiKapatmaPopup = $(By.id("closeWindowConfirm"));
+
+            if (islemPenceresiKapatmaPopup.isDisplayed()) {
+                switch (secim) {
+                    case "Kapat":
+                        btnKapat.click();
+                        break;
+                    case "İptal":
+                        btnIptal.click();
+                        break;
+                }
+            }
             return this;
         }
     }
