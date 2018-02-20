@@ -32,6 +32,9 @@ public class TeslimAlinanlarPage extends MainPage {
     BelgenetElement txtHavaleYapOnaylanacakKisi = comboLov(By.id("mainPreviewForm:onaylayacakKisiLov:LovText"));
     BelgenetElement txtHavaleYapBirim = comboLov(By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovText"));
     ElementsCollection tblEvrakGecmisi = $$("[id$='hareketGecmisiDataTable_data'] > tr[role='row']");
+    SelenideElement tabHavale = $("[id='mainPreviewForm:topluHavaleOnizlemeTab']");
+
+    ElementsCollection tabEvrakGecmisi = $$("[id$='evrakOnizlemeTab'] ul li");
 
     @Step("Teslim Alınanlar sayfası aç")
     public TeslimAlinanlarPage openPage() {
@@ -204,18 +207,36 @@ public class TeslimAlinanlarPage extends MainPage {
         return this;
     }
 
-    @Step("Evrak adedi kontrol: \"{evrakNo}\" ")
-    public TeslimAlinanlarPage evrakAdediKontrol(String evrakNo) {
-        int dosyaAdedi = tblEvraklar
-                .filterBy(Condition.text(evrakNo))
-                .size();
-        Allure.addAttachment(evrakNo, Integer.valueOf(dosyaAdedi).toString());
+    @Step("Evrak Adedi Kontrolu: \"{evrakNo}\" ")
+    public TeslimAlinanlarPage evrakAdediKontrolu(String evrakNo) {
+        int evrakSayisi = tblEvraklar.filterBy(Condition.text(evrakNo)).size();
+        boolean durum = tblEvraklar.filterBy(Condition.text(evrakNo)).size() == 1;
+        Assert.assertEquals(durum,true, "Evrak Adedi Kontrolü");
+        Allure.addAttachment(evrakNo + " nolu evrak adedi:" + evrakSayisi,"");
         return this;
     }
 
+    @Step("Evrak Geçmiş Tab kontrolü\n")
+    public TeslimAlinanlarPage tabKontrol() {
+        boolean durum = tabEvrakGecmisi.filterBy(Condition.text("Evrak Geçmişi")).get(0).$("a").isDisplayed();
+        Assert.assertEquals(durum,true,"Evrak Geçmiş Tab kontrolü");
+        Allure.addAttachment("Evrak Geçmiş Tab"," gösterilmektedir.");
+        return this;
+    }
+
+//    @Step("Evrak adedi kontrol: \"{evrakNo}\" ")
+//    public TeslimAlinanlarPage evrakAdediKontrol(String evrakNo) {
+//        int dosyaAdedi = tblEvraklar
+//                .filterBy(Condition.text(evrakNo))
+//                .size();
+//        Allure.addAttachment(evrakNo, Integer.valueOf(dosyaAdedi).toString());
+//        return this;
+//    }
+
     @Step("Evrak geçmişi alanına tıklanır")
     public TeslimAlinanlarPage secilenEvrakEvrakGecmisi() {
-        $$("[id$='evrakOnizlemeTab'] ul li").filterBy(Condition.text("Evrak Geçmişi")).get(0).$("a").click();
+        tabEvrakGecmisi.filterBy(Condition.text("Evrak Geçmişi")).get(0).$("a").click();
+//        $$("[id$='evrakOnizlemeTab'] ul li").filterBy(Condition.text("Evrak Geçmişi")).get(0).$("a").click();
         return this;
     }
 
@@ -231,7 +252,8 @@ public class TeslimAlinanlarPage extends MainPage {
     public TeslimAlinanlarPage evrakGecmisi(String teslimAlinan, String islemSureci, String tarih) {
         boolean durum = tblEvrakGecmisi.filterBy(Condition.text(islemSureci)).filter(Condition.text(teslimAlinan))
                 .filterBy(Condition.text(tarih)).size() == 1;
-        Assert.assertEquals(durum, true);
+        Assert.assertEquals(durum, true,"Evrak Geçmişi Kontrol");
+        Allure.addAttachment("Teslim Alinan:" + teslimAlinan + " İşlem Süreci:" + islemSureci + " Tarih:" +  tarih , "");
         takeScreenshot();
         return this;
     }

@@ -76,7 +76,7 @@ public class PostalananlarPage extends MainPage {
     SelenideElement tabIcerikKapatmaOnay = $(By.id("kapatButton"));
     SelenideElement btnIcerikPostaDetayi = $x("//*[@id='inboxItemInfoForm:dialogTabMenuRight:uiRepeat:4:cmdbutton']/span[1]");
     SelenideElement popupEtiketTextIcerik = $x("//*[@id='inboxItemInfoForm:etiketMetinIDPostIslm']");
-
+    SelenideElement popupEtiketText = $x("//*[@id='mainPreviewForm:etiketMetinID']");
     //
     SelenideElement popupEvrakYazdirma = $x("//*[@id='postaDetayYazdirForm:dtPostaEvrakUstVeri:0:evrakDetayiViewDialogYazdir']");
     SelenideElement tuzelKisiGuncelle = $x("//*[@id='mainPreviewForm:postalananDataGrid']/tbody/tr/td/div/table/tbody/tr[4]/td[8]/div/button[1]");
@@ -87,7 +87,7 @@ public class PostalananlarPage extends MainPage {
     SelenideElement btnIcerikPDPostaKodGnc = $x("//*[@id='inboxItemInfoForm:postaGuncellePanel']/tbody/tr[2]/td[3]/input");
     SelenideElement btnIcerkPDGuncellemeKaydet = $x("//*[@id='inboxItemInfoForm:postaGuncelleDialog']/div[2]/div/div/button");
     SelenideElement icerikEvrakSayisi = $x("//*[@id='inboxItemInfoForm:evrakDetayPanelGrid']/tbody/tr[3]/td[3]/label");
-    SelenideElement btnEtiketPopupKapat = $x("//*[@id='mainPreviewForm:showAppletContainer']/div/div[1]/a/span");
+    SelenideElement btnEtiketPopupKapat = $x("//*[@id='mainPreviewForm:appletContainer']/div/div[1]/a/span");
     //  SelenideElement btnDagitimYerDetayKapat = $x("//*[@id='mainPreviewForm:dagitimPlaniDetayViewDialog']/div[1]/a/span");
     SelenideElement btnEvrakEkleri = $(By.xpath("//a[text() = 'Evrak Ekleri']"));
     SelenideElement btnIlgiBilgileri = $(By.xpath("//a[text() = 'İlgi Bilgileri']"));
@@ -681,7 +681,7 @@ public class PostalananlarPage extends MainPage {
 
     @Step("Popup Etiket Icerik text kontrol")
     public PostalananlarPage etiketIcerikText() {
-        String etiketIceriktext = popupEtiketTextIcerik.getValue();
+        String etiketIceriktext = popupEtiketText.getValue();
         Allure.addAttachment("Etiket Icerik", etiketIceriktext);
         return this;
     }

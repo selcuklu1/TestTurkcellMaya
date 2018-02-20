@@ -1163,7 +1163,8 @@ public class PostalanacakEvraklarPage extends MainPage {
     }
 
     @Step("Icerik Etiket popup Aciklama kontrol: Tarih no ve Gönderilen yer")
-    public PostalanacakEvraklarPage txtPopupEtiketAciklama() {
+    public PostalanacakEvraklarPage txtPopupEtiketAciklama() throws InterruptedException {
+        Thread.sleep(1000);
         String etiketAciklama = btnIcerikEtiketAciklama.getAttribute("innerText");
         Allure.addAttachment("Etiket Icerik", etiketAciklama);
         return this;
@@ -1214,6 +1215,22 @@ public class PostalanacakEvraklarPage extends MainPage {
     @Step("Takip Listesinde {adiSoyadi} kullanıcısının ve {birim} birim bilgisinin olduğu görülür.")
     public PostalanacakEvraklarPage takipListesiKontrol(String adiSoyadi, String birim) {
         tblTakipListesi.filterBy(text(adiSoyadi)).filterBy(text(birim)).first().shouldBe(visible);
+        return this;
+    }
+
+    @Step("Takip Listesinde {kullanici} kullanıcısının olmadığı görülür.")
+    public PostalanacakEvraklarPage takipListesindeKullaniciOlmamali(String kullanici) {
+        tblTakipListesi.filterBy(text(kullanici)).first().shouldNotBe(visible);
+        return this;
+    }
+
+    @Step("Takip Listesinden {kullanici} kullanıcısını çıkart.")
+    public PostalanacakEvraklarPage takipListesiKullaniciCikart(String kullanici){
+        tblTakipListesi
+                .filterBy(text(kullanici))
+                .first()
+                .$x(".//span[contains(@class, 'delete-icon')]/..")
+                .click();
         return this;
     }
 

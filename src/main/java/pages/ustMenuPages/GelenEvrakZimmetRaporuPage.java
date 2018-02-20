@@ -1,5 +1,6 @@
 package pages.ustMenuPages;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Allure;
@@ -24,10 +25,18 @@ public class GelenEvrakZimmetRaporuPage extends MainPage {
     ElementsCollection hareketGecmisi = $$("[id='zimmetRaporHareketGecmisiForm:hareketGecmisiDataTableId_data']");
     ElementsCollection pencereListesi1 = $$("[class='ui-dialog-titlebar ui-widget-header ui-helper-clearfix ui-corner-top']");
     ElementsCollection pencereListesi2 = $$("[class='ui-dialog-titlebar ui-widget-header ui-helper-clearfix ui-corner-top']");
+    SelenideElement lblSayfa = $("div[id='window1Dialog'] span[class='ui-dialog-title']");
 
     @Step("GelenEvrakZimmetRaporu sayfasını aç")
     public GelenEvrakZimmetRaporuPage openPage() {
         ustMenu(UstMenuData.Raporlar.GelenEvrakZimmetRaporu);
+        return this;
+    }
+
+    @Step("Orta alanda \"{sayfa}\" ekranı açılır\n")
+    public GelenEvrakZimmetRaporuPage sayfaKontrol(String sayfa) {
+        Assert.assertEquals(lblSayfa.getText().equals(sayfa),true,sayfa);
+        Allure.addAttachment(sayfa,"açılmaktadır");
         return this;
     }
 
@@ -37,11 +46,40 @@ public class GelenEvrakZimmetRaporuPage extends MainPage {
         return this;
     }
 
+    @Step("Gelen Evrak Zimmet Raporu Tablosunda kontrol. Evrak1: {konu}")
+    public GelenEvrakZimmetRaporuPage rapordaEvraklarıListele(String konu) {
+        boolean durum = zimmetEvrakListele.filterBy(text(konu)).size() > 0;
+        Assert.assertEquals(durum, true,"Gelen Evrak Zimmet Raporu Kontrolü");
+        Allure.addAttachment("Gelen Evrak Zimmet Raporu :" + konu,"");
+        return this;
+    }
+
     @Step("Gelen Evrak Zimmet Raporu Tablosunda kontrol. Evrak1: {konu1}, Evrak2: {konu2}")
     public GelenEvrakZimmetRaporuPage rapordaEvraklarıListele(String konu1, String konu2) {
 //        boolean durum = $$("[id='gelenEvrakZimmetRaporuYonetimiTabView:gelenEvrakZimmetRaporuTab1Form:gelenEvrakDataTableTab1'] tbody tr")
         boolean durum = zimmetEvrakListele.filterBy(text(konu1)).size() == 0;
         Assert.assertEquals(durum, false);
+        return this;
+    }
+
+    @Step("Evrak Adedi Kontrolu: \"{evrakNo}\" ")
+    public GelenEvrakZimmetRaporuPage evrakAdediKontrolu(String evrakNo) {
+        int evrakSayisi = zimmetEvrakListele.filterBy(Condition.text(evrakNo)).size();
+        boolean durum = zimmetEvrakListele.filterBy(Condition.text(evrakNo)).size() == 1;
+        Assert.assertEquals(durum,true, "Evrak Adedi Kontrolü");
+        Allure.addAttachment(evrakNo + " nolu evrak adedi:" + evrakSayisi,"");
+        return this;
+    }
+
+    @Step("Raporda Kontroller : \"{konu}\" \"{kullanici}\" \"{tarih}\" ")
+    public GelenEvrakZimmetRaporuPage rapordaKontrol(String konu,String kullanici,String tarih) {
+        boolean durumKonu1 = zimmetEvrakListele
+                .filterBy(text(konu))
+                .filterBy(text(kullanici))
+                .filterBy(text(tarih)).size() > 0;
+        Assert.assertEquals(durumKonu1, true,"Raporda Kontroller" );
+        Allure.addAttachment("Kullanıcı: " + kullanici + " Tarih: " + tarih,"");
+        takeScreenshot();
         return this;
     }
 

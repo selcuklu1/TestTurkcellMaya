@@ -681,4 +681,10 @@ public class VekaletIslemleriTest extends BaseTest {
                 .evrakKapamaKullanicilarAlaniKontrolü(nameVA, title, nameVV);
     }
 
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS2200 : Vekalet verme ekranında alan kontrolleri")
+    public void TS2200() throws InterruptedException{
+
+
+    }
 }

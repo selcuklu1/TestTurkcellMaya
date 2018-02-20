@@ -116,20 +116,42 @@
                     Could also have been dynamically selected via a paremeter
                     sent by Jenkins. Example:  <file>${suiteXmlFile}</file>
                     *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-->
-                    <suiteXmlFiles>
+                    <!--<suiteXmlFiles>
                         <file>Tanimli Paketler.xml</file>
-                    </suiteXmlFiles>
+                    </suiteXmlFiles>-->
+                    <!--<suiteXmlFiles>
+                        &lt;!&ndash;<suiteXmlFile>${suiteXmlFile}</suiteXmlFile>&ndash;&gt;
+                        <suiteXmlFile>testng.xml</suiteXmlFile>
+                    </suiteXmlFiles>-->
 
                     <!--*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
                     Contains test packet(s) to run. Values are selected form and
                     sent by Jenkins. TestNG will run packet(s) using this list.
                     *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-->
                     <properties>
-                        <property>
+                        <!--<property>
                             <name>testnames</name>
                             <value>${packets}</value>
+                        </property>-->
+                       <!-- <property>
+                            <name>parallel</name>
+                            <value>tests</value>
                         </property>
+                        <property>
+                            <name>suitethreadpoolsize</name>
+                            <value>5</value>
+                        </property>-->
+                        <!--<property>
+                            <name>parallel</name>
+                            <value>classes</value>
+                        </property>
+                        <property>
+                            <name>threadCount</name>
+                            <value>5</value>
+                        </property>-->
                     </properties>
+                    <parallel>${parallel}</parallel>
+                    <threadCount>${threadCount}</threadCount>
 
                     <!--*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
                     Contains test name(s) to run. Values are selected form and
@@ -144,7 +166,6 @@
                     <argLine>
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
                     </argLine>
-
                 </configuration>
 
                 <dependencies>
