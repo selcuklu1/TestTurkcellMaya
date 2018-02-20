@@ -49,6 +49,16 @@ class ComboLov {
         }
     }
 
+    class SelectExactLov implements Command<BelgenetElement> {
+        @Override
+        public BelgenetElement execute(SelenideElement proxy, WebElementSource locator, Object[] args) throws IOException {
+            ComboLovHelper comboLovHelper = new ComboLovHelper();
+            comboLovHelper.setLocators(proxy);
+            By by = comboLovHelper.selectExactLov((String[]) args[0]);
+            return ElementFinder.wrap(BelgenetElement.class, null, by, 0);
+        }
+    }
+
     class GetLastSelectedValue implements Command<String> {
         @Override
         public String execute(SelenideElement proxy, WebElementSource locator, Object[] args) throws IOException {

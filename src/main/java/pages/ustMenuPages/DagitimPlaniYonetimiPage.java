@@ -170,7 +170,7 @@ public class DagitimPlaniYonetimiPage extends MainPage {
 
     @Step("\"Kullanıldığı Birim\" alanda \"{text}\" seçilir")
     public DagitimPlaniYonetimiPage kullanildigiBirimSec(String... text) {
-        getKullanildigiBirim().selectLov(text);
+        getKullanildigiBirim().selectExactLov(text);
         return this;
     }
 

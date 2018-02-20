@@ -50,9 +50,8 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
     ArrayList<String[]> dagitimElemenlariTS2270;
     String[] evraktaGorunecekHitap;
 
-    @Test(description = "TS1280: Yeni Kayıt İşlemi", enabled = true)
+    @Test(description = "TS1280: Yeni Kayıt İşlemi tüm Dağıtım Tipi Elemanları ile", enabled = true, priority = 2)
     public void TS1280() {
-        //User user = optiim;
         User user = user1;
         login(user);
 
@@ -62,8 +61,8 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
         dagitimPlanElemanlari = new LinkedHashMap<String, String>();
         dagitimPlanElemanlari.put("Kullanıcı", user.getFullname());
         dagitimPlanElemanlari.put("Birim", user.getBirimAdi());
-        dagitimPlanElemanlari.put("Kurum", "Başbakanlık");
-        dagitimPlanElemanlari.put("Gerçek Kişi", "ZÜBEYDE");
+        dagitimPlanElemanlari.put("Kurum", "Cumhurbaşkanlığı");
+        dagitimPlanElemanlari.put("Gerçek Kişi", "Zübeyde TEKİN");
         dagitimPlanElemanlari.put("Tüzel Kişi", "Türksat Optiim");
 
         page = new DagitimPlaniYonetimiPage().openPage();
@@ -75,6 +74,25 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
 
         dagitimPlanElemanlari.forEach((k, v) -> page.dagitimElemanlariEkle(k, v));
         page.kaydet().islemMesaji().basariliOlmali();
+    }
+
+    @Test(description = "TS1280: Yeni Kayıt İşlemi tek Dağıtım Tipi Elemanı ile", enabled = true, priority = 1)
+    public void TS1280a() {
+        User user = user1;
+        login(user);
+        String planAdi = "TS1280a_";
+        System.out.println("Dağınım Planı: " + planAdi);
+
+        //TS1280 tanımlanıyor
+        Map<String, String> dagitimPlanElemanlari = new LinkedHashMap<>();
+        dagitimPlanElemanlari.put("Kullanıcı", user.getFullname());
+        dagitimPlanElemanlari.put("Birim", user.getBirimAdi());
+        dagitimPlanElemanlari.put("Kurum", "Cumhurbaşkanlığı");
+        dagitimPlanElemanlari.put("Gerçek Kişi", "Zübeyde TEKİN");
+        dagitimPlanElemanlari.put("Tüzel Kişi", "Türksat Optiim");
+
+        page = new DagitimPlaniYonetimiPage().openPage();
+        dagitimPlanElemanlari.forEach((k,v) -> page.dagitimPlaniOlustur(planAdi + getSysDate(), k,user.getBirimAdi(),true, k,v));
     }
 
     @Test(description = "TS1476: Adı Alanının Güncellenmesi", enabled = true)
@@ -435,7 +453,7 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
         switchTo().window(0);
     }
 
-    @Test(description = "TS2296: Dağıtım Planı Kaydet/Güncelle Ekranı Alan Kontrolleri", enabled = true)
+    @Test(description = "TS2296: Dağıtım Planı Kaydet/Güncelle Ekranı Alan Kontrolleri", enabled = true, priority = 3)
     public void TS2296() {
         User user = user1;
         login(user);
@@ -447,40 +465,41 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
         String planAdi = "TS2296_" + getSysDate();
         System.out.println("Dağınım Planı: " + planAdi);
 
-        Map<String, String> dagitimPlanElemanlari = new LinkedHashMap<>();
-        dagitimPlanElemanlari.put("Kullanıcı", user.getFullname());
-        dagitimPlanElemanlari.put("Birim", user.getBirimAdi());
-        dagitimPlanElemanlari.put("Kurum", "Başbakanlık");
-        dagitimPlanElemanlari.put("Gerçek Kişi", "ZÜBEYDE");
-        dagitimPlanElemanlari.put("Tüzel Kişi", "Türksat Optiim");
+        //TS1280 tanımlanıyor
+//        Map<String, String> dagitimPlanElemanlari = new LinkedHashMap<>();
+//        dagitimPlanElemanlari.put("Kullanıcı", user.getFullname());
+//        dagitimPlanElemanlari.put("Birim", user.getBirimAdi());
+//        dagitimPlanElemanlari.put("Kurum", "Cumhurbaşkanlığı");
+//        dagitimPlanElemanlari.put("Gerçek Kişi", "Zübeyde TEKİN");
+//        dagitimPlanElemanlari.put("Tüzel Kişi", "Türksat Optiim");
 
         page = new DagitimPlaniYonetimiPage().openPage();
 
         page.yeni();
 
-        //Step 6
+        //Step 6 Dağıtım elemanları eklemeden kaydet
         page.adiGir(planAdi)
                 .aciklamaGir("TS2296 açıklama")
                 .kullanildigiBirimSec(user.getBirimAdi())
                 .altBirimlerGorsunSec(true)
                 .kaydet().islemMesaji().warningMessage(messageDagitimElemanlari);
 
-        //Step 5
+        //Step 5 Kullanılacak Birim Boş kaydet
         page.dagitimElemanlariEkle("Birim", user.getBirimAdi())
                 .kullanildigiBirimTemizle()
                 .kaydet().islemMesaji().warningMessage(messageZorunluAlanlar);
 
-        //Step 3
+        //Step 3 Adı Boş kaydet
         page.adiGir("")
                 .kullanildigiBirimSec(user.getBirimAdi())
                 .kaydet().islemMesaji().warningMessage(messageZorunluAlanlar);
 
-        //Step 4
+        //Step 4 Açıklama Boş kaydet
         page.adiGir(planAdi)
                 .aciklamaGir("")
                 .kaydet().islemMesaji().warningMessage(messageZorunluAlanlar);
 
-        //Step 6
+        //Step  Dağıtım Elemanı boşken ekleme
         page.aciklamaGir("TS2296 açıklama");
         dagitimPlanElemanlari.forEach((k, v) -> {
             page.dagitimElemanlariTipiSec(k)

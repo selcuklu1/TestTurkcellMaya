@@ -40,6 +40,16 @@ public interface BelgenetElement extends SelenideElement {
     BelgenetElement selectLov(String... text);
 
     /**
+     * Search by text exact words case insensitive
+     * comboLov().selectLov("Optiim TEST, "Optiim Birim", "Danışman")
+     * select first filtered
+     * if empty first will be selected
+     *
+     * @see pages.pageComponents.belgenetElements.ComboLovHelper
+     */
+    BelgenetElement selectExactLov(String... text);
+
+    /**
      * @see pages.pageComponents.belgenetElements.ComboLovHelper
      */
     Boolean isLovSelected();
