@@ -7,6 +7,7 @@ import org.openqa.selenium.By;
 import pages.MainPage;
 import pages.pageComponents.DagitimHitapDuzenle;
 import pages.pageComponents.SearchTable;
+import pages.pageComponents.TuzelKisiEkleDialog;
 import pages.pageComponents.UstMenuPageHeader;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
@@ -54,6 +55,7 @@ public class DagitimPlaniYonetimiPage extends MainPage {
     BelgenetElement dagitimElemanlariCombolov = comboLov("fieldset#dagitimPlaniEditorForm\\:fldStDagitimPlanElemsOutput [id$='LovText']");
     SelenideElement ekleButton = $(By.id("dagitimPlaniEditorForm:dagitimPlaniEkleButton"));
     SelenideElement kaydetButton = $(By.id("dagitimPlaniEditorForm:dagitimPlaniKaydet_id"));
+    SelenideElement tuzelKisiAramaDetaylari = $(By.id("dagitimPlaniEditorForm:dagitimPlaniTuzelKisiEkle_id"));
 
     @Step("Sorgulama ve Filtrelemeyi genişlet")
     public DagitimPlaniYonetimiPage sorgulamayiGenislet(boolean... genislet) {
@@ -209,9 +211,17 @@ public class DagitimPlaniYonetimiPage extends MainPage {
     }
 
     @Step("\"Dağıtım Elemanları\"da \"{text}\" seçilir")
-    public DagitimPlaniYonetimiPage dagitimElemanlariSec(String text) {
-        getDagitimElemanlariCombolov().selectLov(text);
+    public DagitimPlaniYonetimiPage dagitimElemanlariSec(String dagitimElemani) {
+        getDagitimElemanlariCombolov().selectLov(dagitimElemani);
+        /*getSecilenDagitimElemaniSilButton(dagitimElemani, "bulunur").shouldBe(visible);
+        getSecilenDagitimElemaniGuncelleButton(dagitimElemani, "bulunur").shouldBe(visible);*/
         return this;
+    }
+
+    @Step("Tüzel Kişi arama detayları")
+    public TuzelKisiEkleDialog tuzelKisiAramaDetaylari(){
+        tuzelKisiAramaDetaylari.click();
+        return new TuzelKisiEkleDialog();
     }
 
     @Step("Dağıtım Planı \"Ekle\" buton bulunur")
@@ -270,7 +280,8 @@ public class DagitimPlaniYonetimiPage extends MainPage {
         return new DagitimHitapDuzenle(listingForm.$x("ancestor::div[contains(@id,'window') and contains(@id,'Dialog')]"));
     }
 
-    @Step("Listeden Çıkart buton bulunur")
+
+    /*@Step("Listeden Çıkart buton bulunur")
     public SelenideElement getDagitimElemanlariCombolovListedenCikartButton(int... index) {
         return dagitimElemanlariCombolov.getSelectedItems().get(index.length > 0 ? index[0] : 0).$(deleteButtonLocator);
     }
@@ -278,7 +289,27 @@ public class DagitimPlaniYonetimiPage extends MainPage {
     @Step("Dağıtım Hitap Düzenleme buton bulunur")
     public SelenideElement getDagitimElemanlariCombolovDagitimHitapDuzenlemeButton(int... index) {
         return dagitimElemanlariCombolov.getSelectedItems().get(index.length > 0 ? index[0] : 0).$(updteButtonLocator);
+    }*/
+
+    //Seçilen Dağıtım Elemenda Guncelle ve Sil buttonlari
+    public SelenideElement getDagitimHitapDuzenlemeSilButton(String dagitimPlani){
+        return dagitimElemanlariCombolov.getSelectedItems().filterBy(text(dagitimPlani)).first().$(deleteButtonLocator);
     }
+
+    @Step("\"{dagitimPlani}\" dağıtım elemanında sil butonu {stepDescription}")
+    public SelenideElement getDagitimHitapDuzenlemeSilButton(String dagitimPlani, String stepDescription){
+        return getDagitimHitapDuzenlemeSilButton(dagitimPlani);
+    }
+
+    public SelenideElement getDagitimHitapDuzenlemeGuncelleButton(String dagitimPlani){
+        return dagitimElemanlariCombolov.getSelectedItems().filterBy(text(dagitimPlani)).first().$(updteButtonLocator);
+    }
+
+    @Step("\"{dagitimPlani}\" dağıtım elemanında update butonu {stepDescription}")
+    public SelenideElement getDagitimHitapDuzenlemeGuncelleButton(String dagitimPlani, String stepDescription){
+        return getDagitimHitapDuzenlemeGuncelleButton(dagitimPlani);
+    }
+
     //endregion
 
     public DagitimPlaniYonetimiPage openPage() {
@@ -314,8 +345,8 @@ public class DagitimPlaniYonetimiPage extends MainPage {
     public DagitimPlaniYonetimiPage dagitimElemanlariEkle(String dagitimElemanlariTipi, String dagitimElemanlari) {
         dagitimElemanlariTipiSec(dagitimElemanlariTipi)
                 .dagitimElemanlariSec(dagitimElemanlari);
-        getDagitimElemanlariCombolovDagitimHitapDuzenlemeButton().shouldBe(visible);
-        getDagitimElemanlariCombolovListedenCikartButton().shouldBe(visible);
+        getDagitimHitapDuzenlemeSilButton(dagitimElemanlari, "bulunur").shouldBe(visible);
+        getDagitimHitapDuzenlemeGuncelleButton(dagitimElemanlari,"bulunur").shouldBe(visible);
         ekle();
         dagitimPlaniDataTable.findRows(text(dagitimElemanlariTipi), text(dagitimElemanlari)).shouldHaveSize(1);
         getSilButton().shouldBe(visible);

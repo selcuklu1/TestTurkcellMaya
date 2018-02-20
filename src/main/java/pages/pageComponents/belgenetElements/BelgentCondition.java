@@ -65,4 +65,12 @@ public abstract class BelgentCondition extends Condition {
         };
     }
 
+    public static final Condition checkboxIsChecked = new Condition("checkboxIsChecked") {
+        @Override
+        public boolean apply(WebElement element) {
+//            return element.getAttribute("aria-pressed") != null && element.getAttribute("aria-pressed").contains("true");
+            return element.getAttribute("class").contains("ui-state-active");
+        }
+    };
+
 }

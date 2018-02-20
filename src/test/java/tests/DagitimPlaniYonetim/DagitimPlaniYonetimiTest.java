@@ -13,6 +13,7 @@ import org.testng.annotations.Test;
 import pages.newPages.EvrakOlusturPage;
 import pages.pageComponents.EvrakOnizleme;
 import pages.pageComponents.PDFOnizleme;
+import pages.pageComponents.TuzelKisiEkleDialog;
 import pages.pageData.alanlar.BilgiSecimTipi;
 import pages.pageData.alanlar.GeregiSecimTipi;
 import pages.pageData.alanlar.OnayKullaniciTipi;
@@ -20,6 +21,7 @@ import pages.solMenuPages.ImzaBekleyenlerPage;
 import pages.solMenuPages.ImzaladiklarimPage;
 import pages.ustMenuPages.DagitimPlaniYonetimiPage;
 import pages.ustMenuPages.GidenEvrakKayitPage;
+import pages.ustMenuPages.TuzelKisiYonetimiPage;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -517,6 +519,40 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
             *//*page.dagitimElemanlariEkle(k, v)
                     .kaydet().islemMesaji().basariliOlmali();*//*
         });*/
+    }
+
+    @Test(description = "TS2296: Dağıtım Planı Kaydet/Güncelle Ekranı Tüzel Kişi Arama Detayları Alan Kontrolleri", enabled = true, priority = 4)
+    public void TS2296a() {
+        User user = user1;
+        login(user);
+
+        String planAdi = "TS2296a_" + getSysDate();
+        System.out.println("Dağınım Planı: " + planAdi);
+
+        String tuzelKisi = "TS2296a Uydu Tv";
+
+        page = new DagitimPlaniYonetimiPage().openPage();
+
+        page.yeni();
+        //Step 6 Dağıtım elemanları eklemeden kaydet
+        page.adiGir(planAdi)
+                .aciklamaGir("TS2296 açıklama")
+                .kullanildigiBirimSec(user.getBirimAdi())
+                .altBirimlerGorsunSec(true)
+                .dagitimElemanlariTipiSec("Tüzel Kişi");
+
+        page.tuzelKisiAramaDetaylari()
+                .tuzelKisiTipiSecilir("MEDYA ŞİRKETİ")
+                .alanlariKonrolu()
+                .tuzelKisiDoldurulur(tuzelKisi)
+                .uyduTvSecilir(true)
+                .ara()
+                .listelenKayidinCheckboxIsaretlenir(text(tuzelKisi), true)
+                .ekle();
+
+        page.getDagitimHitapDuzenlemeSilButton(tuzelKisi, "bulunur").shouldBe(visible);
+        page.getDagitimHitapDuzenlemeGuncelleButton(tuzelKisi,"bulunur").shouldBe(visible);
+        page.ekle(text(tuzelKisi));
     }
 
     //region Steps
