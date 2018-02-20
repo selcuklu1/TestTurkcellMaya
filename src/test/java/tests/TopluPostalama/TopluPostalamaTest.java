@@ -1306,7 +1306,7 @@ public class TopluPostalamaTest extends BaseTest {
                     .gercekKisiGeregiAlaniPostaTipiSec(gidisSekli)
                     .aciklamaDoldur(konu[i])
                     .onayAkisiEkle()
-                    .onayAkisiEkleIlkImzalaSec(tur)
+                    .onayAkisiEkleIlkSelectSec(tur)
                     .kullan();
 
             Selenide.sleep(1000);
@@ -1419,7 +1419,7 @@ public class TopluPostalamaTest extends BaseTest {
                     .geregiSec(geregi)
                     .gercekKisiGeregiAlaniPostaTipiSec(gidisSekli)
                     .onayAkisiEkle()
-                    .onayAkisiEkleIlkImzalaSec(tur)
+                    .onayAkisiEkleIlkSelectSec(tur)
                     .kullan();
 
             evrakOlusturPage
@@ -2017,7 +2017,7 @@ public class TopluPostalamaTest extends BaseTest {
                     .geregiSec(geregi)
                     .gercekKisiGeregiAlaniPostaTipiSec(gidisSekli)
                     .onayAkisiEkle()
-                    .onayAkisiEkleIlkImzalaSec(tur)
+                    .onayAkisiEkleIlkSelectSec(tur)
                     .kullan();
 
             evrakOlusturPage
@@ -2209,7 +2209,7 @@ public class TopluPostalamaTest extends BaseTest {
                     .geregiSec(geregi)
                     .gercekKisiGeregiAlaniPostaTipiSec(gidisSekli)
                     .onayAkisiEkle()
-                    .onayAkisiEkleIlkImzalaSec(tur)
+                    .onayAkisiEkleIlkSelectSec(tur)
                     .kullan();
 
             evrakOlusturPage
@@ -2414,7 +2414,7 @@ public class TopluPostalamaTest extends BaseTest {
                     .geregiSec(geregi)
                     .gercekKisiGeregiAlaniPostaTipiSec(gidisSekli)
                     .onayAkisiEkle()
-                    .onayAkisiEkleIlkImzalaSec(tur)
+                    .onayAkisiEkleIlkSelectSec(tur)
                     .kullan();
 
             evrakOlusturPage

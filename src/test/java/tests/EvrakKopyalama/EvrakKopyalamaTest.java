@@ -7,6 +7,8 @@
 package tests.EvrakKopyalama;
 
 import common.BaseTest;
+import common.PreCondition;
+import common.ReusableSteps;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
@@ -16,6 +18,7 @@ import org.testng.annotations.Test;
 import pages.solMenuPages.*;
 import pages.ustMenuPages.GelenEvrakKayitPage;
 import pages.ustMenuPages.HavaleEdilenEvrakRaporuPage;
+import tests.EvrakBeklemeyeAlma.TS2095;
 import tests.EvrakPaylasma.EvrakPaylasmaTest;
 
 import static data.TestData.*;
@@ -30,20 +33,23 @@ import static data.TestData.*;
 @Epic("Evrak Kopyalama")
 public class EvrakKopyalamaTest extends BaseTest {
 
+    PreCondition preCondition;
+    PreCondition.BakimaAlinanlarEvrakOlustur bakimaAlinanlarEvrakOlustur;
 
     @BeforeMethod
     public void loginBeforeTests() {
-    }
-
-    @Step("Havale onayına gelenler sayfasına evrak düşürmektedir.")
-    public void TS1597PreCondition() {
-        login(usernameZTEKIN,passwordZTEKIN);
-
-
+        preCondition = new PreCondition();
+        bakimaAlinanlarEvrakOlustur =new PreCondition.BakimaAlinanlarEvrakOlustur();
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true,dependsOnMethods = {"TS2195"},description = "TS1597: Havale onayı bekleyen evrakın geri çekilmesi ve tekrar havalesi (içerik ekranından)")
+    @Test(enabled = true,description = "TS1597: Havale onayı bekleyen evrakın geri çekilmesi ve tekrar havalesi (içerik ekranından)")
     public void TS1597() {
+        login(usernameYAKYOL,passwordYAKYOL);
+
+        bakimaAlinanlarEvrakOlustur
+                .bakimaAlinanlarEvrakOlusturA("Diğer",createRandomText(15),"Diğer", "Birim","BÜYÜK HARFLERLE BİRİM","Yasemin Çakıl Akyol","Paraflama","Zübeyde Tekin","BHUPGMY","İmzalama",createRandomText(15));
+
+        login();
     }
 }

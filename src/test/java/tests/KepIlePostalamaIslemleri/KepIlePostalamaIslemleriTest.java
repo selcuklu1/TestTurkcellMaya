@@ -290,7 +290,7 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
                 .gercekKisiPostaTipiAPSSec(geregiGercekKisi)
                 .onayAkisiEkle()
                 .onayAkisiParaflamaGeldigiGorme()
-                .onayAkisiEkleIlkImzalaSec("İmzalama")
+                .onayAkisiEkleIlkSelectSec("İmzalama")
                 .kullan()
                 .kaldiralacakKlasorlerSec(kaldirilicakKlasor);
 
