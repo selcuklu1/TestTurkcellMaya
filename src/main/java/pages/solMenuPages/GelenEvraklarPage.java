@@ -2,6 +2,7 @@ package pages.solMenuPages;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
@@ -81,6 +82,7 @@ public class GelenEvraklarPage extends MainPage {
     //Evrak Kapat Buttonu div
     SelenideElement btnEvrakKapat = $x("//span[contains(@class, 'evrakKapat')]/..");
     BelgenetElement txtEvrakKapatKonuKodu = comboLov(By.id("mainPreviewForm:konuKoduLov:LovText"));
+    SelenideElement divEvrakKapatKonuKoduLovPanel = $(By.id("mainPreviewForm:konuKoduLov:lovContainer"));
     SelenideElement cmbEvrakKapatKapatmaTipi = $(By.id("mainPreviewForm:kapatmaTipiOneMenu_id"));
     BelgenetElement txtEvrakKapatKaldirilacakKlasorler = comboLov(By.id("mainPreviewForm:klasorLov_id:LovText"));
     SelenideElement txtEvrakKapatNot = $(By.id("mainPreviewForm:notTextArea_id"));
@@ -113,6 +115,9 @@ public class GelenEvraklarPage extends MainPage {
 
     ElementsCollection tblKaydedilenGelenEvraklar = $$("[id='mainInboxForm:inboxDataTable_data'] tr[data-ri]");
     ElementsCollection tblTakipListesi = $$("tbody[id='evrakTakibimeEkleDialogForm:takipListLov:LovSecilenTable_data'] > tr[role='row']");
+
+    SelenideElement btnEvrakKapatmaOnayAkisiEkle = $x("//table[@id='mainPreviewForm:evrakKapatOnayAkisPanelGrid']//span[contains(@class, 'add-icon')]/..");
+    SelenideElement txtEvrakKapatOnayAkisiAdi = $(By.id("mainPreviewForm:akisAdiText_id"));
 
     @Step("Gelen Evraklar Sayfasını aç")
     public GelenEvraklarPage openPage() {
@@ -688,6 +693,7 @@ public class GelenEvraklarPage extends MainPage {
 
     @Step("Evrak Kapat konu kodu doldur")
     public GelenEvraklarPage evrakKapatKonuKodu(String konuKodu) {
+        txtEvrakKapatKonuKodu.clearAllSelectedItems();
         txtEvrakKapatKonuKodu.selectLov(konuKodu);
         return this;
     }
@@ -832,7 +838,7 @@ public class GelenEvraklarPage extends MainPage {
     }
 
     @Step("Onay Akışı İşlemleri alanında Kullanıcılar alanında \"{kullanici}\" seçilir.")
-    public GelenEvraklarPage evrakKapamaKullaniciSec(String kullanici) {
+    public GelenEvraklarPage evrakKapatOnayAkisiKullaniciSec(String kullanici) {
         txtKullanicalar.selectLov(kullanici);
         return this;
     }
@@ -1049,5 +1055,74 @@ public class GelenEvraklarPage extends MainPage {
         Allure.addAttachment("EvrakNo", evrakNo);
         return this;
     }
+
+    @Step("Evrak Kapatma alan kontrolleri")
+    public GelenEvraklarPage evrakKapatmaEkraniKontrol(){
+
+        Assert.assertEquals(cmbEvrakKapatKapatmaTipi.isDisplayed(), true, "Kapatma Tipi");
+        Assert.assertEquals(divEvrakKapatKonuKoduLovPanel.isDisplayed(), true, "Konu Kodu");
+        Assert.assertEquals(txtEvrakKapatKaldirilacakKlasorler.isDisplayed(), true, "Kaldırılacak Klasörler");
+        Assert.assertEquals(txtEvrakKapatNot.isDisplayed(), true, "Not");
+        Assert.assertEquals(txtEvrakKapatOnayAkisi.isDisplayed(), true, "Onay Akışı");
+
+        return this;
+    }
+
+    @Step("Evrak kapatma ekranında onay akışı alanında '+' (Ekle) butonuna tıkla.")
+    public GelenEvraklarPage evrakKapatmaOnayAkisiEkle(){
+        Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", btnEvrakKapatmaOnayAkisiEkle);
+
+        btnEvrakKapatmaOnayAkisiEkle.click();
+        return this;
+    }
+
+    @Step("Onay akışı adı doldur: {onayAkisiAdi}")
+    public GelenEvraklarPage evrakKapatOnayAkisiAdiDoldur(String onayAkisiAdi){
+        txtEvrakKapatOnayAkisiAdi.setValue(onayAkisiAdi);
+        return this;
+    }
+
+    ElementsCollection tblOnayAkisiSecilen = $$("tbody[id='mainPreviewForm:akisAdimLov_id:LovSecilenTable_data'] > tr[role='row']");
+    SelenideElement btnEvrakKapatOnayAkisiKullan = $(By.id("mainPreviewForm:kullanButton_id"));
+
+    @Step("Evrak kapatma ekranında onay akışı alanında {kullanici} kullanıcısını {kullaniciTipi} olarak seç")
+    public GelenEvraklarPage evrakKapatOnayAkisiKullaniciTipiSec(String kullanici, String kullaniciTipi){
+        tblOnayAkisiSecilen
+                .filterBy(text(kullanici))
+                .first()
+                .$("select")
+                .selectOption(kullaniciTipi);
+        return this;
+    }
+
+    @Step("Evrak Kapatma ekranında Onay Akışı alanında Kullan butonuna tıkla.")
+    public GelenEvraklarPage evrakKapatOnayAkisiKullan(){
+        Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", btnEvrakKapatOnayAkisiKullan);
+        btnEvrakKapatOnayAkisiKullan.click();
+        return this;
+    }
+
+    @Step("{konu} konulu evrak listede olmalı mı? {evrakOlmali}")
+    public GelenEvraklarPage evrakKontrol(String konu, boolean evrakOlmali){
+
+        if(evrakOlmali == true){
+
+            tblGelenEvrakListesi
+                    .filterBy(text(konu))
+                    .first()
+                    .shouldBe(visible);
+
+        } else {
+
+            tblGelenEvrakListesi
+                    .filterBy(text(konu))
+                    .first()
+                    .shouldNotBe(visible);
+
+        }
+
+        return this;
+    }
+
 
 }
