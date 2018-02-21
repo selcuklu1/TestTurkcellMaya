@@ -33,8 +33,8 @@ public class ImzaBekleyenlerPage extends MainPage {
     SelenideElement txtEvrakSilmeNotu = $(By.xpath("/html//table[@id='mainPreviewForm:evrakSilPanelGrid']/tbody//table[@class='gridForm']//textarea[@role='textbox']"));
     SelenideElement evrakOnIzleme = $("[id^='mainPreviewForm:j_idt'] [class='ui-tabs-panel ui-widget-content ui-corner-bottom']");
     SelenideElement tabEvrakEkleri = $(By.xpath("//a[text()='Evrak Ekleri']"));
-
-
+    SelenideElement btnBeklemeyeAl = $("[class='ui-button-icon-left ui-icon evrakBeklemeyeAl']");
+    SelenideElement btnBeklemeyeAlUyariEvet = $(By.id("mainInboxForm:beklemeyeAlEvetButton"));
     @Step("İmza bekleyenler sayfası aç")
     public ImzaBekleyenlerPage openPage() {
         solMenu(SolMenuData.IslemBekleyenEvraklar.ImzaBekleyenler);
@@ -255,6 +255,27 @@ public class ImzaBekleyenlerPage extends MainPage {
     }
 
     @Step("Evrak Seç")
+    public ImzaBekleyenlerPage evrakKonuyaGoreSec(String konu) {
+        tblImzaBekleyenler
+                .filterBy(text(konu))
+                .first()
+                .click();
+        return this;
+    }
+
+    @Step("Beklemeye al tıklanır")
+    public ImzaBekleyenlerPage evrakSecBeklemeyeAl(){
+        btnBeklemeyeAl.click();
+        return this;
+    }
+
+    @Step("Uyarı ekranından Evet tıklanır")
+    public ImzaBekleyenlerPage beklemeyeAlUyariEvet(){
+        btnBeklemeyeAlUyariEvet.pressEnter();
+        return this;
+    }
+
+    @Step("Evrak Seç")
     public ImzaBekleyenlerPage evrakSec(String konu, String gidecegiYer, String gonderen) {
         tblImzaBekleyenler
                 .filterBy(text(konu))
@@ -309,5 +330,17 @@ public class ImzaBekleyenlerPage extends MainPage {
     public ImzaBekleyenlerPage evrakEkleriTabAc() {
         tabEvrakEkleri.click();
         return this;
+    }
+
+    @Step("İmza bekleyenler sayfas")
+    public void imzaBekleyenlerEvrakSecBeklemeyeAl(String konu){
+
+        String basariMesaji = "İşlem başarılıdır!";
+
+                openPage()
+                .evrakKonuyaGoreSec(konu)
+                .evrakSecBeklemeyeAl()
+                .beklemeyeAlUyariEvet()
+                .islemMesaji().basariliOlmali(basariMesaji);
     }
 }

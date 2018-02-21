@@ -3854,5 +3854,28 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
     }
+
+    @Step("Evrak oluştur alanında parafla tıklanır")
+    public void evrakOlusturParafla(String konu, String geregiSecimTipi, String geregi, String OnayAkisiKullanici1Turu, String kullanici2, String kullaniciBirim, String OnayAkisiKullanici2Turu) {
+                String konuKodu = "Diğer";
+                String kaldirilacakKlasor = "Diğer";
+                String icerik = createRandomText(15);
+
+                openPage()
+                .bilgilerTabiAc()
+                .konuKoduSec(konuKodu)
+                .konuDoldur(konu)
+                .kaldiralacakKlasorlerSec(kaldirilacakKlasor)
+                .geregiSecimTipiSec(geregiSecimTipi)
+                .geregiSec(geregi)
+                .onayAkisiEkle()
+                .onayAkisiEkleIlkSelectSec(OnayAkisiKullanici1Turu)
+                .kullanicilarDoldur(kullanici2,kullaniciBirim)
+                .kullaniciylaSecimTipiSec(kullanici2,OnayAkisiKullanici2Turu)
+                .kullan();
+                editorTabAc()
+                .editorIcerikDoldur(icerik);
+                parafla();
+    }
     //endregion
 }
