@@ -1033,6 +1033,22 @@ public class BaseLibrary extends ElementsContainer {
         return (new Random().nextInt((endIndex - startIndex) + 1) + startIndex);
     }
 
+    public void waitForFileUploading(WebDriver driver, long timeoutSec) {
+
+        try {
+
+            System.out.println("Count:" + driver.findElements(By.cssSelector("div[style*='display: block;'] .template-upload")).size());
+            new WebDriverWait(driver, timeoutSec, 10).
+                    until(ExpectedConditions.invisibilityOfAllElements(driver.findElements(
+                            By.className("template-upload"))));
+
+        } catch (Exception e) {
+            System.out.println("File uploading error: " + e.getMessage());
+        }
+
+    }
+
+
     //endregion
 
 

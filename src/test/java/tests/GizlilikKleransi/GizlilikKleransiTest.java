@@ -486,7 +486,7 @@ public class GizlilikKleransiTest extends BaseTest {
                 .bilgiSecimTipiSecByText(bilgi)
                 .bilgiDoldur(kurum)
                 .OnayAkisiEkle()
-                .onayAkisiEkleIlkImzalaSec(imzalama)
+                .onayAkisiEkleIlkSelectSec(imzalama)
                 .onayAkisiKullan();
 
         evrakOlusturPage

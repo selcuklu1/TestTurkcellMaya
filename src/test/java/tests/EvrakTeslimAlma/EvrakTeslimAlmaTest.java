@@ -102,13 +102,15 @@ public class EvrakTeslimAlmaTest extends BaseTest {
         testStatus(testid, "Test Başladı");
         teslimAlinmayiBekleyenlerPage
                 .openPage()
+                .teslimAlIkonKontrol(konu)
                 .evrakSecNoTeslimAl(konu, true)
                 .islemMesaji().basariliOlmali(basariMesaji);
 
         teslimAlinanlarPage
                 .openPage()
                 .evrakNoIleEvrakSec(konu)
-                .evrakAdediKontrol(konu)
+                .evrakAdediKontrolu(konu)
+                .tabKontrol()
                 .secilenEvrakEvrakGecmisi()
                 .evrakGecmisi(kisi, islemSureci, evrakTarihi);
 
@@ -167,15 +169,19 @@ public class EvrakTeslimAlmaTest extends BaseTest {
         testStatus(testid, "Test Başladı");
         teslimAlinmayiBekleyenlerPage
                 .openPage()
+                .evrakGeldigiGorunur(konu)
                 .evrakSecIcerikGoster(konu, true)
+                .ekranKontrolEvrakDetayi()
                 .içeriktenEvrakTeslimAl()
                 .içeriktenEvrakEvet();
 
         teslimAlinanlarPage
                 .openPage()
+                .evrakAdediKontrolu(konu)
                 .evrakNoIleEvrakSec(konu)
+                .tabKontrol()
                 .secilenEvrakEvrakGecmisi()
-                .evrakGecmisi(kisi, islemSureci);
+                .evrakGecmisi(kisi, islemSureci, evrakTarihi);
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -286,7 +292,6 @@ public class EvrakTeslimAlmaTest extends BaseTest {
                 .evrakNoGelmedigiGorme(konu2)
                 .islemMesaji().basariliOlmali(basariMesaji);
 
-
         //TODO: Bu adim test senaryosunda net degildir. Netlesmesi durumunda test case update edilecektir. Bu hali ile test fail etmektedir.
         sistemLoglariPage
                 .openPage()
@@ -312,7 +317,6 @@ public class EvrakTeslimAlmaTest extends BaseTest {
         String evrakGelisTipi = "Posta";
         String ivedilik = "Normal";
         String ekMetni = "test otomasyon" + getSysDateForKis();
-        //String aciklama1 = "Test Otomasyon";
         String kisi = "Zübeyde Tekin";
         String islemSureci = "Evrak Teslim Alındı ";
 
@@ -371,6 +375,8 @@ public class EvrakTeslimAlmaTest extends BaseTest {
         testStatus(testid, "Test Başladı");
         teslimAlinmayiBekleyenlerPage
                 .openPage()
+                .evrakNoIleEvrakSec(konu1)
+                .evrakNoIleEvrakSec(konu2)
                 .evrakSecToplu(konu1, konu2, true)
                 .islemMesaji().basariliOlmali(basariMesaji);
 
@@ -378,8 +384,9 @@ public class EvrakTeslimAlmaTest extends BaseTest {
                 .openPage()
                 .evrakNoIleEvrakSec(konu1)
                 .evrakNoIleEvrakSec(konu2)
+                .tabKontrol()
                 .secilenEvrakEvrakGecmisi()
-                .evrakGecmisi(kisi, islemSureci);
+                .evrakGecmisi(kisi, islemSureci, evrakTarihi);
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -448,7 +455,8 @@ public class EvrakTeslimAlmaTest extends BaseTest {
         teslimAlinanlarPage
                 .openPage()
                 .evrakNoIleEvrakSec(konu)
-                .evrakAdediKontrol(konu)
+                .evrakAdediKontrolu(konu)
+                .tabKontrol()
                 .secilenEvrakEvrakGecmisi()
                 .evrakGecmisi(kisi, islemSureci, evrakTarihi);
     }
@@ -513,6 +521,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
         birimIadeEdilenlerPage
                 .openPage()
                 .evrakSec(konu)
+                .ekranKontrol()
                 .evrakOnizlemeTeslimAl()
                 .evrakNoGelmedigiGorme(konu)
                 .islemMesaji().basariliOlmali(basariMesaji);
@@ -520,8 +529,9 @@ public class EvrakTeslimAlmaTest extends BaseTest {
         teslimAlinanlarPage
                 .openPage()
                 .evrakNoIleEvrakSec(konu)
-                .evrakAdediKontrol(konu)
+                .evrakAdediKontrolu(konu)
                 .secilenEvrakEvrakGecmisi()
+                .tabKontrol()
                 .evrakGecmisi(kisi, islemSureci, evrakTarihi);
     }
 
@@ -629,8 +639,9 @@ public class EvrakTeslimAlmaTest extends BaseTest {
                 .openPage()
                 .evrakNoIleEvrakSec(konu1)
                 .evrakNoIleEvrakSec(konu2)
+                .tabKontrol()
                 .secilenEvrakEvrakGecmisi()
-                .evrakGecmisi(kisi, islemSureci);
+                .evrakGecmisi(kisi, islemSureci,evrakTarihi);
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -655,6 +666,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
         String kisi = "Zübeyde Tekin";
         String islemSureci = "Evrak Teslim Alındı ";
 
+        String sayfa = "Gelen Evrak Zimmet Raporu";
 
         testStatus(testid, "PreCondition 1. Evrak Oluşturma");
         gelenEvrakKayitPage
@@ -733,20 +745,22 @@ public class EvrakTeslimAlmaTest extends BaseTest {
                 .evrakNoGelmedigiGorme(konu2)
                 .islemMesaji().basariliOlmali(basariMesaji);
 
-//        teslimAlinanlarPage
-//                .openPage()
-//                .evrakNoIleEvrakSec(konu1)
-//                .evrakNoIleEvrakSec(konu2)
-//                .secilenEvrakEvrakGecmisi()
-//                .evrakGecmisi(kisi, islemSureci, evrakTarihi);
-
         testStatus(testid, "Test Başladı");
         String kullanici = "Zübeyde TEKİN";
 
         gelenEvrakZimmetRaporu
                 .openPage()
+                .sayfaKontrol(sayfa)
                 .sorgula()
-                .rapordaEvraklarıListele(konu1, konu2)
+
+                .rapordaEvraklarıListele(konu2)
+                .evrakAdediKontrolu(konu2)
+                .rapordaKontrol(konu2,kullanici.toUpperCase(),evrakTarihi)
+
+                .rapordaEvraklarıListele(konu1)
+                .evrakAdediKontrolu(konu1)
+                .rapordaKontrol(konu1,kullanici.toUpperCase(),evrakTarihi)
+
                 .evrakGecmisiButtonTıklama(konu1)
                 .evrakGecmisiKontrolu(konu1, kullanici, islemSureci)
                 .popupKapatma()

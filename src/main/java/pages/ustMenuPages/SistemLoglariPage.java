@@ -2,6 +2,7 @@ package pages.ustMenuPages;
 
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
@@ -91,8 +92,9 @@ public class SistemLoglariPage extends MainPage {
 
         }
 
-        Assert.assertEquals(elementFound, shouldBeExist);
-
+        Assert.assertEquals(elementFound, shouldBeExist,"Rapor bulunamadı.");
+        Allure.addAttachment("Aksiyon:" + aksiyon + " Tarih:" + tarih + " Kullanıcı:" + kullanici + " Acıklama:" + aciklama,"");
+        takeScreenshot();
         return this;
     }
 
