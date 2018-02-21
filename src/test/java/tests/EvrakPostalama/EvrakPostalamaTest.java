@@ -332,7 +332,7 @@ public class EvrakPostalamaTest extends BaseTest {
                 .bilgiSecimTipiSecByText(bilgi)
                 .bilgiDoldur(tuzelKisi)
                 .OnayAkisiEkle()
-                .onayAkisiEkleIlkImzalaSec(imzalama)
+                .onayAkisiEkleIlkSelectSec(imzalama)
                 .onayAkisiKullan();
 
         evrakOlusturPage

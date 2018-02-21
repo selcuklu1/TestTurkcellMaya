@@ -33,8 +33,10 @@ public class ImzaBekleyenlerPage extends MainPage {
     SelenideElement txtEvrakSilmeNotu = $(By.xpath("/html//table[@id='mainPreviewForm:evrakSilPanelGrid']/tbody//table[@class='gridForm']//textarea[@role='textbox']"));
     SelenideElement evrakOnIzleme = $("[id^='mainPreviewForm:j_idt'] [class='ui-tabs-panel ui-widget-content ui-corner-bottom']");
     SelenideElement tabEvrakEkleri = $(By.xpath("//a[text()='Evrak Ekleri']"));
-
     ElementsCollection tblEvrakOnizlemeEkler = $$("[id$='ekListesiOnizlemeDataTable_data'] > tr[role='row']");// span[class='ui-chkbox-icon']");
+    SelenideElement btnKapatmaImzala = $x("//span[text()= 'Kapatma İmzala']/../../..//button");
+    SelenideElement btnKapatmayiIptalEt = $(By.id("mainPreviewForm:kapatmayiIptalEtButton"));
+    SelenideElement btnKapatmayiIptalEtEvet = $(By.id("mainPreviewForm:kapatmayiIptalEvetButton_id"));
 
     @Step("İmza bekleyenler sayfası aç")
     public ImzaBekleyenlerPage openPage() {
@@ -332,5 +334,33 @@ public class ImzaBekleyenlerPage extends MainPage {
         return this;
     }
 
+    @Step("{konu} konulu evrak evrak listesinde olmalı mı? : {evrakOlmali}.")
+    public ImzaBekleyenlerPage evrakKontrol(String konu, boolean evrakOlmali){
+        if(evrakOlmali == true){
+            tblImzaBekleyenEvraklar
+                    .filterBy(text("Konu: " + konu))
+                    .first()
+                    .shouldBe(visible);
+        }
+        else {
+            tblImzaBekleyenEvraklar
+                    .filterBy(text("Konu: " + konu))
+                    .first()
+                    .shouldNotBe(visible);
+        }
+        return this;
+    }
 
+    @Step("Kapatma İmzala butonuna tıkla")
+    public ImzaBekleyenlerPage kapatmaImzala(){
+        btnKapatmaImzala.click();
+        return this;
+    }
+
+    @Step("Kapatmayı İptal Et butonuna tıkla")
+    public ImzaBekleyenlerPage kapatmayIptalEt(){
+        btnKapatmayiIptalEt.click();
+        btnKapatmayiIptalEtEvet.click();
+        return this;
+    }
 }

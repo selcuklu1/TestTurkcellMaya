@@ -11,6 +11,7 @@ import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.UstMenuData;
 
 import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
@@ -29,6 +30,7 @@ public class KlasorEvrakIslemleriPage extends MainPage {
     ElementsCollection tableKararIzlemeEvraklar = $$("[id='mainInboxForm:inboxDataTable_data'] tr[role='row']");// span[class='ui-chkbox-icon']");
     SelenideElement tblKlasorEvrakIslemleri = $(By.id("klasorEvrakIslemleriListingForm:klasorEvrakDataTable"));
     SelenideElement f = $(By.xpath("//div[@id='klasorEvrakIslemleriListingForm:filterPanel']//a[text()='Sorgulama ve Filtreleme']/parent::h3"));
+    ElementsCollection tblEvrakListesi = $$("tbody[id='klasorEvrakIslemleriListingForm:klasorEvrakDataTable_data'] > tr[role='row']");
 
     public KlasorEvrakIslemleriPage birimDoldur(String birim) {
         //sendKeys(birimInput, birim, false);
@@ -116,6 +118,27 @@ public class KlasorEvrakIslemleriPage extends MainPage {
     public KlasorEvrakIslemleriPage klasoreTasi() {
         //click(klasoreTasiButton);
         btnKlasoreTasi.click();
+        return this;
+    }
+
+    @Step("Evrak listesinde {konu} konulu evrak olmali mi? {evrakOlmali}")
+    public KlasorEvrakIslemleriPage evrakListesiKontrol(String konu, boolean evrakOlmali){
+        if(evrakOlmali == true){
+
+            tblEvrakListesi
+                    .filterBy(text(konu))
+                    .first()
+                    .shouldBe(visible);
+
+        } else {
+
+            tblEvrakListesi
+                    .filterBy(text(konu))
+                    .first()
+                    .shouldNotBe(visible);
+
+        }
+
         return this;
     }
 }

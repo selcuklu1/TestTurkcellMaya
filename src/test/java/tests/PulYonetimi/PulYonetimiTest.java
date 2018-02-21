@@ -127,7 +127,7 @@ public class PulYonetimiTest extends BaseTest {
                 .geregiSec(geregi)
                 .gercekKisiGeregiAlaniPostaTipiSec(gidisSekli)
                 .onayAkisiEkle()
-                .onayAkisiEkleIlkImzalaSec(tur)
+                .onayAkisiEkleIlkSelectSec(tur)
                 .kullan();
         evrakOlusturPage
                 .editorTabAc()
@@ -211,7 +211,7 @@ public class PulYonetimiTest extends BaseTest {
                 .geregiSec(geregi)
                 .gercekKisiGeregiAlaniPostaTipiSec("Ankara İçi APS")
                 .onayAkisiEkle()
-                .onayAkisiEkleIlkImzalaSec(tur)
+                .onayAkisiEkleIlkSelectSec(tur)
                 .kullan();
         evrakOlusturPage
                 .editorTabAc()

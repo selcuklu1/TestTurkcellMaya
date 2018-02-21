@@ -438,6 +438,12 @@ public class EvrakOlusturPage extends MainPage {
         }
 
         @Step("Kullanıcılar alanı doldur")
+        public BilgilerTab kullanicilarDoldur(String kullanici,String birim) {
+            txtOnayAkisiKullanicilar.selectLov(kullanici,birim);
+            return this;
+        }
+
+        @Step("Kullanıcılar alanı doldur")
         public BilgilerTab kullanicilarDoldur2(String kullanici) {
             txtOnayAkisiKullanicilar.type(kullanici).getTitleItems()
                     .filterBy(Condition.exactText(kullanici + " [Ağ (Network) Uzman Yardımcısı]")).first().click();
@@ -549,7 +555,7 @@ public class EvrakOlusturPage extends MainPage {
         }
 
         @Step("Onay Akışı imzalama seç")
-        public BilgilerTab onayAkisiEkleIlkImzalaSec(String imzalama) {
+        public BilgilerTab onayAkisiEkleIlkSelectSec(String imzalama) {
             cmbKullanicilarIlkImzalama.selectOption(imzalama);
             return this;
         }
@@ -1040,6 +1046,13 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("{deger} adlı kullanıcının tipi {secim} seçilir")
+        public BilgilerTab kullaniciylaSecimTipiSec(String deger,String secim){
+        $$("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='akisAdimLov:LovSecilenTable_data'] > tr").filterBy(Condition.text(deger))
+                .first().$("select").selectOption(secim);
+            return this;
+        }
+        
         @Step("Güncel kullanıcının default paraflama aksiyonu ile geldiği görülür.")
         public BilgilerTab onayAkisiParaflamaGeldigiGorme() {
             boolean durum = $("[id*='akisAdimLov:LovSecilenTable'][id$='selectOneMenu']").getSelectedText().equals("Paraflama");

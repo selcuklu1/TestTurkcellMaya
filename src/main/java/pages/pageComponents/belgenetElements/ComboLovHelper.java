@@ -542,4 +542,52 @@ public class ComboLovHelper extends BaseLibrary {
 
         return By.cssSelector(lovText);
     }
+
+    @Step("Select Lov")
+    public By selectExactLov(String... text) {
+        String selectableItemsLocator = "li span[class*='ui-tree-selectable-node']";
+        ElementsCollection collection;
+
+        if (!$(lovText).isDisplayed() && $(lovInputTextleriTemizle).isDisplayed())
+            $(lovInputTextleriTemizle).click();
+
+        //try used for disabled field with openTree button
+        try {
+            if ($(lovText).isDisplayed()) $(lovText).getWrappedElement().sendKeys(Keys.SHIFT);
+        } catch (Exception ignored) {
+        }
+
+        $(lovText).shouldBe(visible);
+
+        if ($(lovText).isEnabled() && text.length > 0)
+            $(lovText).setValue(text[0]);
+        else
+            $(treeButton).click();
+
+        collection = $$(lovTree).shouldHave(sizeGreaterThan(0)).filterBy(visible).last().$$(selectableItemsLocator);
+        //collection.shouldHave(sizeGreaterThan(0)).last().shouldBe(visible);
+        Allure.addAttachment("Selectable items " + collection.size(), collection.texts().toString());
+        Allure.addAttachment("Filter texts " + text.length, Arrays.toString(text));
+
+        //ElementsCollection collection1 = collection;
+        for (String t : text) {
+            //regex vs türkçe karakterleri
+            collection = collection.filterBy(matchText("(?i)(?u)(?m)\\b" + t.trim().replaceAll("[\\<\\(\\[\\{\\\\\\^\\-\\=\\$\\!\\|\\]\\}\\)‌​\\?\\*\\+\\.\\>]", "\\\\$0") + "\\b"));
+        }
+
+        Allure.addAttachment("Filtered items " + collection.size(), collection.texts().toString());
+        Assert.assertTrue(collection.size() > 0, "Filtered selectable items should have size greater than 0");
+        Allure.addAttachment("First item will be selected", collection.first().text());
+        collection.first().click();
+
+        closeTreePanel();
+
+        SelenideElement selectedItem = multiType
+                ? $$(lovSelectedItems).last().shouldBe(visible)
+                : $$(lovSecilen).last().shouldBe(visible);
+        for (String t : text) Assert.assertTrue(selectedItem.has(text(t)), "Selected item should have text: " + t);
+        Allure.addAttachment("Selected item", $$(lovSecilen).last().text());
+
+        return By.cssSelector(lovText);
+    }
 }

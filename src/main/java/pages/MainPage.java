@@ -47,6 +47,10 @@ public class MainPage extends BaseLibrary {
         return new SolMenu().openMenu(solMenuData);
     }
 
+    public MainPage solMenu2(Enum solMenuData) {
+        return new SolMenu().openMenu2(solMenuData);
+    }
+
     public IslemMesajlari islemMesaji() {
         return new IslemMesajlari();
     }
