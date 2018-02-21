@@ -59,7 +59,6 @@ public class EvrakOlusturPage extends MainPage {
     SelenideElement btnKaydetHayir = $(By.id("kaydetConfirmForm:kaydetHayirButton"));
     SelenideElement btnKaydetOnayaSunGonder = $(By.id("yeniGidenEvrakForm:gonderButton"));
     SelenideElement btnKaydetOnayaSunGonderEvet = $(By.id("kaydetEvetButton"));
-
     //endregion
     ElementsCollection cevapYazImzalama = $$("[id='windowCevapEvrakForm'] [id^='windowCevapEvrakForm'] table div[class='ui-tabmenu ui-tabmenu-right'] td[class='buttonMenuContainerDefault'] button");
     //region Tabs local variables
@@ -1957,10 +1956,13 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Editör İçerik Doldur")
+        @Step("Editör Sayı ve konu bilgileri altında ilgi kontrol")
         public String editorSayiAl() {
             SelenideElement txtSayi = $(By.id("editorEvrakSayiAlani"));
             String sayi = txtSayi.text();
+            SelenideElement ilgiktrl = $x("//*[@id='yeniGidenEvrakForm:ilgiOutPanel']");
+            String ilgikontrl = ilgiktrl.getAttribute("outerText");
+            Allure.addAttachment("Ilgı kontrol", ilgikontrl);
             return sayi;
         }
 
@@ -2038,7 +2040,7 @@ public class EvrakOlusturPage extends MainPage {
             sayisalImzaOnay.click();
             return this;
         }
-
+        @Step("Imzalama popup içinde S imzalama geldiği görme ve tıklama")
         public EditorTab popupSImzalaIslemleri() throws InterruptedException {
             Thread.sleep(10000);
             /*//switchTo().window("");
@@ -3262,7 +3264,13 @@ public class EvrakOlusturPage extends MainPage {
             txtIlgileriSistemdeEvrakArama.setValue(evrakAdi);
             return this;
         }
+        @Step("Ilgileri Tab Sisteme Kayitli Evrak EkleTab Arama başlangıç tarihi")
+        public IlgileriTab sistemeKayitlievrakInputDate (String date) {
+            SelenideElement btnSistemeKayitliEvrakAraTarihBasla = $x("//*[@id='yeniGidenEvrakForm:ilgiIslemleriTabView:ilgiIslemleriEvrakTarihBasId_input']");
 
+            btnSistemeKayitliEvrakAraTarihBasla.setValue(date);
+            return this;
+        }
         @Step("IlgileriTab Sisteme Kayitli Evrak EkleTab Dokuman Ara")
         public IlgileriTab sistemeKayitliDokumanArama() {
             btnIlgileriSistemdeDokumanAra.click();
@@ -3879,6 +3887,29 @@ public class EvrakOlusturPage extends MainPage {
             Assert.assertEquals(pdfEK1.contains(ilgi3), true);
             return this;
         }
+    }
+
+    @Step("Evrak oluştur alanında parafla tıklanır")
+    public void evrakOlusturParafla(String konu, String geregiSecimTipi, String geregi, String OnayAkisiKullanici1Turu, String kullanici2, String kullaniciBirim, String OnayAkisiKullanici2Turu) {
+                String konuKodu = "Diğer";
+                String kaldirilacakKlasor = "Diğer";
+                String icerik = createRandomText(15);
+
+                openPage()
+                .bilgilerTabiAc()
+                .konuKoduSec(konuKodu)
+                .konuDoldur(konu)
+                .kaldiralacakKlasorlerSec(kaldirilacakKlasor)
+                .geregiSecimTipiSec(geregiSecimTipi)
+                .geregiSec(geregi)
+                .onayAkisiEkle()
+                .onayAkisiEkleIlkSelectSec(OnayAkisiKullanici1Turu)
+                .kullanicilarDoldur(kullanici2,kullaniciBirim)
+                .kullaniciylaSecimTipiSec(kullanici2,OnayAkisiKullanici2Turu)
+                .kullan();
+                editorTabAc()
+                .editorIcerikDoldur(icerik);
+                parafla();
     }
     //endregion
 }
