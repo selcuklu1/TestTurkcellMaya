@@ -695,10 +695,14 @@ public class PostalananlarPage extends MainPage {
         pdftab.sendKeys(Keys.PAGE_DOWN);
         pdftab.sendKeys(Keys.PAGE_DOWN);
         takeScreenshot();
-        pdftab.sendKeys(Keys.CONTROL, "a");
+        pdftab.sendKeys(Keys.CONTROL, "A");
         Thread.sleep(500);
-        pdftab.sendKeys(Keys.SPACE);
-        pdftab.sendKeys(Keys.CONTROL, "c");
+
+        pdftab.contextClick();
+        Thread.sleep(1000);
+        pdftab.sendKeys(Keys.CONTROL ,"C");
+        Thread.sleep(500);
+        pdftab.sendKeys(Keys.CONTROL ,"c");
 
         String result = "";
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
