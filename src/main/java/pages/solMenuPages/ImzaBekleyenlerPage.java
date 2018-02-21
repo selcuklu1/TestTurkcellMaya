@@ -387,7 +387,7 @@ public class ImzaBekleyenlerPage extends MainPage {
         return this;
     }
 
-    @Step("İmza bekleyenler sayfas")
+    @Step("İmza bekleyenler sayfası beklemeye Al")
     public void imzaBekleyenlerEvrakSecBeklemeyeAl(String konu) {
 
         String basariMesaji = "İşlem başarılıdır!";
