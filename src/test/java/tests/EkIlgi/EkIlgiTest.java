@@ -1,5 +1,6 @@
 package tests.EkIlgi;
 
+import com.codeborne.selenide.Selenide;
 import common.BaseTest;
 import data.TestData;
 import io.qameta.allure.Severity;
@@ -857,6 +858,7 @@ public class EkIlgiTest extends BaseTest {
                 .parafla()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
+        Selenide.sleep(3000);
         login(TestData.usernameZTEKIN, TestData.passwordZTEKIN); //ztekin
 
         imzaBekleyenlerPage
@@ -865,9 +867,17 @@ public class EkIlgiTest extends BaseTest {
                 .konuyaGoreEvrakOnizlemedeAc(evrakKonusu)
                 .evrakEkleriTabAc()
                 .ekeGoreDagitimYerleriAc(ekleriAciklamaDosya1)
+                .dagitimYerleriKontrol()
+                .dagitimYerleriKapat(ekleriAciklamaDosya1)
                 .ekeGoreDagitimYerleriAc(fizikselEkAciklama)
+                .dagitimYerleriKontrol()
+                .dagitimYerleriKapat(fizikselEkAciklama)
                 .ekeGoreDagitimYerleriAc(evrakSayisi1)
-                .ekeGoreDagitimYerleriAc(evrakSayisi2);
+                .dagitimYerleriKontrol()
+                .dagitimYerleriKapat(evrakSayisi1)
+                .ekeGoreDagitimYerleriAc(evrakSayisi2)
+                .dagitimYerleriKontrol()
+                .dagitimYerleriKapat(evrakSayisi2);
 
         evrakOlusturPage
                 .evrakImzala()
@@ -875,11 +885,12 @@ public class EkIlgiTest extends BaseTest {
 
         postalanacakEvraklarPage
                 .openPage()
-                .konuyaGoreEvrakKontrol(evrakKonusu)
-                .konuyaGoreEvrakOnizlemedeAc(evrakKonusu)
+                .konuyaGoreEvrakKontrol("TS1493_EkIlgi_20180221110730") //evrakKonusu
+                .konuyaGoreEvrakOnizlemedeAc("TS1493_EkIlgi_20180221110730") //evrakKonusu
                 .evrakPostala()
                 .evrakPostalanacakYerlereGoreYazdir(kurumPostalanakYerler)
-                .evrakDetaylariEvrakinEkleriKontrol(ekleriAciklamaDosya1);
+                .evrakDetaylariEvrakinEkleriKontrol("Ekleri_Dosya1_20180221110730"); //ekleriAciklamaDosya1
+
 
         login(TestData.usernameSEZAICELIK, TestData.passwordSEZAICELIK); //sezaicelik
 

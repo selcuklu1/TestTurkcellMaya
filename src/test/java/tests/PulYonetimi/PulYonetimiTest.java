@@ -1,6 +1,7 @@
 package tests.PulYonetimi;
 
 import common.BaseTest;
+import data.TestData;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
@@ -19,12 +20,14 @@ import pages.ustMenuPages.PulYonetimiPage;
  * Yazan: Emre Sencan
  ****************************************************/
 public class PulYonetimiTest extends BaseTest {
+
     MainPage mainPage;
     PulYonetimiPage pulYonetimiPage;
     PostaListesiPage postaListesiPage;
     PostalanacakEvraklarPage postalanacakEvraklarPage;
     EvrakOlusturPage evrakOlusturPage;
     TopluPostalanacakEvraklarPage topluPostalanacakEvraklarPage;
+
     String konuKodu = "010.01";
     String kaldiralacakKlasor = "Diğer";
     String evrakTuru = "Resmi Yazışma";
@@ -39,12 +42,12 @@ public class PulYonetimiTest extends BaseTest {
 
     @BeforeMethod
     public void loginBeforeTests() {
+
         pulYonetimiPage = new PulYonetimiPage();
         postaListesiPage = new PostaListesiPage();
         postalanacakEvraklarPage = new PostalanacakEvraklarPage();
         evrakOlusturPage = new EvrakOlusturPage();
         topluPostalanacakEvraklarPage = new TopluPostalanacakEvraklarPage();
-
 
     }
 
@@ -52,7 +55,6 @@ public class PulYonetimiTest extends BaseTest {
     @Test(enabled = true, description = "TS1732: Pul Yönetimi ekranından yeni tanımlama yapma")
     public void TS1732() {
 
-        login("mbozdemir", "123");
         String basariMesaji = "İşlem başarılıdır!";
 
         String postaTipi = "X";
@@ -67,6 +69,8 @@ public class PulYonetimiTest extends BaseTest {
         String postaTipi1 = "U";
         String gonderimTipi = "YURT_ICI";
         String gonderimSekli = "Ankara İçi APS";
+
+        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
 
         pulYonetimiPage
                 .openPage()
@@ -92,6 +96,13 @@ public class PulYonetimiTest extends BaseTest {
                 .gonderimTipiSec(gonderimTipi)
                 .ara()
                 .tabloKontrolu(gonderimSekli);
+
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS1732: Pul Yönetimi ekranından yeni tanımlama yapma")
+    public void TSDemo() {
+
     }
 
     @Severity(SeverityLevel.CRITICAL)
