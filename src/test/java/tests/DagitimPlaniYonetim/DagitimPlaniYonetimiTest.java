@@ -24,6 +24,7 @@ import pages.ustMenuPages.GidenEvrakKayitPage;
 import pages.ustMenuPages.TuzelKisiYonetimiPage;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
