@@ -20,6 +20,24 @@ public class ReusableSteps extends BaseLibrary{
         imzaBekleyenler.imzaBekleyenlerEvrakSecBeklemeyeAl(konu);
     }
 
+    @Step("Teslim Alınmayı Bekleyenler sayfasında evrak oluştur.")
+    public void teslimAlinmayiBekleyenlerEvrakOlustur(String konu,String kurum,String birim) {
+
+        GelenEvrakKayitPage gelenEvrakKayitPage =  new GelenEvrakKayitPage();
+
+        gelenEvrakKayitPage
+                .gelenEvrakKayitBirimHavaleEt(konu,kurum,birim);
+    }
+
+    @Step("Gelen Evraklar sayfasında evrak oluştur.")
+    public void gelenEvraklarEvrakOlustur(String konu,String kurum,String birim) {
+
+        GelenEvrakKayitPage gelenEvrakKayitPage =  new GelenEvrakKayitPage();
+
+        gelenEvrakKayitPage
+                .gelenEvrakKayitKullaniciHavaleEt(konu,kurum,birim);
+    }
+
     @Step("Beklemeye Alınanlar evrak Oluştur.")
     public void beklemeyeAlinanlarEvrakOlustur(String konu, String geregiSecimTipi, String geregi, User imzaci) {
         new EvrakOlusturPage()

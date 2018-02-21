@@ -10,8 +10,10 @@ import io.qameta.allure.Step;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.apache.poi.EmptyFileException;
+import org.apache.xmlbeans.impl.xb.xsdschema.All;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.interactions.internal.KeysRelatedAction;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
@@ -144,6 +146,11 @@ public class PostalanacakEvraklarPage extends MainPage {
     SelenideElement btnEkleriOrjYazbtn1 = $x("//*[@id='postaDetayYazdirForm:dtPostaEvrakEk_data']/tr[1]/td[7]/div/button");
     SelenideElement btnEkleriOrjYazbtn2 = $x("//*[@id='postaDetayYazdirForm:dtPostaEvrakEk_data']/tr[2]/td[7]/div/button");
 
+    SelenideElement btnPopupUstveriYaz = $x("//*[@id='postaDetayYazdirForm:dtPostaEvrakUstVeri:0:evrakDetayiViewDialogYazdir']");
+    SelenideElement btnEkleriYazbtn1 = $x("//*[@id='postaDetayYazdirForm:dtPostaEvrakEk_data']/tr[1]/td[7]/div/button");
+    SelenideElement btnEkleriYazbtn2 = $x("//*[@id='postaDetayYazdirForm:dtPostaEvrakEk_data']/tr[2]/td[7]/div/button");
+
+
     @Step("Postalanacak Evraklar sayfası aç")
     public PostalanacakEvraklarPage openPage() {
         solMenu(SolMenuData.BirimEvraklari.PostalanacakEvraklar);
@@ -261,7 +268,34 @@ public class PostalanacakEvraklarPage extends MainPage {
         btnEvrakPostala.click();
         return this;
     }
-
+    @Step("Postalanacak yerlerin kontrolü")
+    public PostalanacakEvraklarPage postalanacakKontrol () {
+       int sizetbl =  tabloPostalanacakYerler.size();
+        for (int i = 0 ; i < sizetbl ; i++) {
+            String dataname = "//*[@id='mainPreviewForm:dataTableId_data']/tr[" + String.valueOf(i + 1) +"]/td[2]/div/span";
+        SelenideElement datEelm = $x(dataname);
+        String postalanacakyerlerAd = datEelm.getAttribute("outerText");
+        Allure.addAttachment("Postalanacak yer" , postalanacakyerlerAd);
+        }
+        return this;
+    }
+    @Step("Postalanacak yerler - Posta tipleri ve Elektronik gönderilmiştir kontrolü")
+    public PostalanacakEvraklarPage elektronikGonderilmistirKontrol () {
+        SelenideElement elektronikGonderil = $x("//*[@id='mainPreviewForm:dataTableId_data']/tr[1]/td[3]/div/div/div/table/tbody/tr[3]/td");
+        String elKontrol = elektronikGonderil.getAttribute("outerText");
+        Allure.addAttachment("Elektronik Gonderilmiştir Kontrolü" , elKontrol);
+        return this;
+    }
+    @Step("Postalanacak yerler - Detay buton ve  Detaya tıkla text kontrolü")
+    public PostalanacakEvraklarPage detayTextKontrol () {
+        SelenideElement detaybuton = $x("//*[@id='mainPreviewForm:dataTableId_data']/tr[2]/td[2]/div/button");
+        detaybuton.exists();
+        Allure.addAttachment("Detay butonu", "Detay butonu gelmiştir");
+        SelenideElement detayText = $x("//*[@id='mainPreviewForm:dataTableId_data']/tr[2]/td[3]/div");
+        String detayTextout = detayText.getAttribute("outerText");
+        Allure.addAttachment("Detay Text kontrol", detayTextout);
+        return this;
+    }
 
     @Step("Detay butonuna tıklanır")
     public PostalanacakEvraklarPage detayTikla() {
@@ -598,6 +632,80 @@ public class PostalanacakEvraklarPage extends MainPage {
         return this;
 
     }
+    @Step("Postalanacak Evrak Kullanıcı satir Yazdir butonu")
+    public PostalanacakEvraklarPage kullaniciYazdir() {
+        SelenideElement btnkullYazdir = $x("//*[@id='mainPreviewForm:dataTableId_data']/tr[1]/td[5]/div/table/tbody/tr[1]/td/button");
+        btnkullYazdir.click();
+        return this;
+    }
+    @Step("Postalanacak Evrak Dagitimplani satir Yazdir butonu")
+    public PostalanacakEvraklarPage Dagitimplaniyazdir() {
+        SelenideElement btndagplanYazdir = $x("//*[@id='mainPreviewForm:dataTableId_data']/tr[2]/td[5]/div/table/tbody/tr[1]/td/button");
+        btndagplanYazdir.click();
+        return this;
+    }
+    @Step("Popup Ekleri satirinda ilk Ek yazdir butonu tıklama")
+    public PostalanacakEvraklarPage popupEkleriyazdir() {
+        btnEkleriYazbtn1.click();
+        return this;
+    }
+    @Step("Ekleri dogruluk ve guvenlik kodu kontrolu ")
+    public PostalanacakEvraklarPage popupEklerPdfktrl () throws InterruptedException {
+        switchTo().window(1);
+        SelenideElement ickKtrl = $x("//*[@id='plugin']");
+        ickKtrl.exists();
+        takeScreenshot();
+        ickKtrl.sendKeys(Keys.PAGE_DOWN);
+        ickKtrl.sendKeys(Keys.PAGE_DOWN);
+        takeScreenshot();
+        ickKtrl.sendKeys(Keys.SPACE);
+
+        ickKtrl.sendKeys(Keys.CONTROL, "a");
+        Thread.sleep(500);
+        ickKtrl.sendKeys(Keys.CONTROL, "c");
+        ickKtrl.sendKeys(Keys.CONTROL, "a");
+        ickKtrl.sendKeys(Keys.CONTROL, "c");
+
+        String result = "";
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        Transferable contents = clipboard.getContents(null);
+        boolean hasTransferableText =
+                (contents != null) &&
+                        contents.isDataFlavorSupported(DataFlavor.stringFlavor);
+        if (hasTransferableText) {
+            try {
+                result = (String) contents.getTransferData(DataFlavor.stringFlavor);
+            } catch (UnsupportedFlavorException ex) {
+                //highly unlikely since we are using a standard DataFlavor
+                System.out.println(ex);
+                ex.printStackTrace();
+            } catch (IOException ex) {
+                System.out.println(ex);
+                ex.printStackTrace();
+            }
+        }
+        System.out.println(result);
+        closeNewWindow();
+        switchTo().window(0);
+        return this;
+    }
+    @Step("Dikkat -  Önce üst yazı yazdırılmalıdır kontrülü")
+    public PostalanacakEvraklarPage ktrlonceustyazi() {
+        islemMesaji().isDikkat("Önce üst yazı yazdırılmalıdır ");
+        return this;
+    }
+    @Step("Popup Ust veri yazdir")
+    public PostalanacakEvraklarPage popupUstveriYazdir () {
+        btnPopupUstveriYaz.click();
+        return this;
+    }
+    public PostalanacakEvraklarPage popupUstveriYazdir2 () {
+        btnPopupUstveriYaz.click();
+        switchTo().window(1);
+        closeNewWindow();
+        switchTo().window(0);
+        return this;
+    }
 
     @Step("Postalancak Evrak Orjinal Yazdır")
     public PostalanacakEvraklarPage postalanacakEvrakOrjYaz() throws InterruptedException {
@@ -707,12 +815,21 @@ public class PostalanacakEvraklarPage extends MainPage {
     }
 
     @Step("PDF - Evrak sayısı - Yazışma Kuralları kontrol")
-    public PostalanacakEvraklarPage pdfEvrakYazismaKuralkontrol() throws IOException {
+    public PostalanacakEvraklarPage pdfEvrakYazismaKuralkontrol() throws IOException, InterruptedException {
         switchTo().window(1);
 
-        SelenideElement pdftab1 = $x("//*[@id='plugin']");
+        SelenideElement pdftab = $x("//*[@id='plugin']");
 
-        String ktrl = pdftab1.getValue();
+        String ktrl = pdftab.getValue();
+        pdftab.sendKeys(Keys.CONTROL, "A");
+        Thread.sleep(500);
+
+        pdftab.contextClick();
+        Thread.sleep(1000);
+        pdftab.sendKeys(Keys.CONTROL ,"C");
+        Thread.sleep(500);
+        pdftab.sendKeys(Keys.CONTROL ,"c");
+
         System.out.println(ktrl);
         closeNewWindow();
         switchTo().window(0);
@@ -747,20 +864,26 @@ public class PostalanacakEvraklarPage extends MainPage {
     public PostalanacakEvraklarPage dgmpdfhitapguvenktrl() throws InterruptedException {
         switchTo().window(1);
         SelenideElement pdftab = $x("//*[@id='plugin']");
-        refresh();
         Thread.sleep(2000);
 
         takeScreenshot();
         pdftab.sendKeys(Keys.PAGE_DOWN);
         pdftab.sendKeys(Keys.PAGE_DOWN);
-        Thread.sleep(2000);
+        pdftab.sendKeys(Keys.PAGE_DOWN);
+
+        Thread.sleep(1000);
         takeScreenshot();
-        pdftab.sendKeys("bar");
 
-        pdftab.sendKeys(Keys.CONTROL, "a");
-        pdftab.sendKeys(Keys.SPACE);
-        pdftab.sendKeys(Keys.CONTROL, "C");
+        pdftab.sendKeys(Keys.CONTROL, "A");
+        Thread.sleep(500);
 
+        pdftab.contextClick();
+        Thread.sleep(1000);
+        pdftab.sendKeys(Keys.CONTROL ,"C");
+        Thread.sleep(500);
+        pdftab.sendKeys(Keys.CONTROL ,"c");
+        String source = pdftab.getWrappedDriver().getPageSource();
+        System.out.println(source);
         String result = "";
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
         Transferable contents = clipboard.getContents(null);
@@ -817,7 +940,14 @@ public class PostalanacakEvraklarPage extends MainPage {
         SelenideElement btnkp = $x("//*[@id='postaDetayYazdirForm:dlgPostaDetayYazdir']/div[1]/a/span");
         return this;
     }
+    @Step("Evrak Yazdır popup - Ust veri Ek1 ve Ek2 yazdır buton kontrolleri")
+    public PostalanacakEvraklarPage popupYazdirbutonkontrolleri () {
 
+        Assert.assertEquals(true, btnPopupUstveriYaz.exists());
+        Assert.assertEquals(true, btnEkleriYazbtn1.exists());
+        Assert.assertEquals(true, btnEkleriYazbtn2.exists());
+    return this;
+    }
     @Step("Popup postalanacak Evrak Yazdır")
     public PostalanacakEvraklarPage popupPostalanacakEvrakYazdir() throws InterruptedException {
         btnPopupYazdir.click();
@@ -1281,11 +1411,14 @@ public class PostalanacakEvraklarPage extends MainPage {
 
     @Step("Postalanacak yere göre yazdır butonu tıkla")
     public PostalanacakEvraklarPage evrakPostalanacakYerlereGoreYazdir(String gonderilenYer) {
+
         tblEvrakDetaylariUstVeriler
                 .filterBy(text(gonderilenYer))
                 .first()
-                .$("//button[span[text()='Yazdır']]").click();
-        return this;
+                .$(By.xpath("//span[normalize-space(text())='Yazdır']"))
+                .click();
+
+       return this;
     }
 }
 

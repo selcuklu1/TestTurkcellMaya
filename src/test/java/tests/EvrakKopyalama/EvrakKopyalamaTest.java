@@ -6,6 +6,7 @@
  ****************************************************/
 package tests.EvrakKopyalama;
 
+import common.BaseLibrary;
 import common.BaseTest;
 import common.ReusableSteps;
 import io.qameta.allure.Epic;

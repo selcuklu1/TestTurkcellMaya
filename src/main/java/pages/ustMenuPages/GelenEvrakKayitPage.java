@@ -1676,4 +1676,42 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
+
+    @Step("Teslim Alınmayı Bekleyenler evrak düşürmektedir.")
+    public void gelenEvrakKayitBirimHavaleEt(String konu,String kurum,String birim) {
+        String konuKodu = "Diğer";
+        String evrakSayiSag = createRandomText(15);
+
+        //1.Teslim Alınmayı Bekleyenler evrak düşürmektedir.
+                openPage()
+                .konuKoduDoldur(konuKodu)
+                .konuDoldur(konu)
+                .evrakTarihiDoldur(getSysDate())
+                .geldigiKurumDoldurLovText(kurum)
+                .evrakSayiSagDoldur(evrakSayiSag)
+                .havaleIslemleriBirimDoldur(birim)
+                .kaydet()
+                .evetDugmesi()
+                .yeniKayitButton();
+    }
+
+    @Step("Gelen Evraklar sayfasına evrak düşürmektedir.")
+    public void gelenEvrakKayitKullaniciHavaleEt(String konu,String kurum,String kullanici){
+
+        String konuKodu = "Diğer";
+        String evrakTarihi = getSysDateForKis();
+        String evrakSayiSag = createRandomText(15);
+
+        openPage()
+                .konuKoduDoldur(konuKodu)
+                .konuDoldur(konu)
+                .evrakTarihiDoldur(evrakTarihi)
+                .geldigiKurumDoldurLovText(kurum)
+                .evrakSayiSagDoldur(evrakSayiSag)
+                .havaleIslemleriKisiDoldur(kullanici)
+                .kaydet()
+                .evetDugmesi()
+                .benzerKayit()
+                .yeniKayitButton();
+    }
 }
