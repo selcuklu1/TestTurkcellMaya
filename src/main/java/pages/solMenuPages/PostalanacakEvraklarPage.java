@@ -137,7 +137,8 @@ public class PostalanacakEvraklarPage extends MainPage {
     ElementsCollection tblEvrakDetaylariUstVeriler = $$("tbody[id='postaDetayYazdirForm:dtPostaEvrakUstVeri_data'] tr[data-ri]");
     ElementsCollection tblEvrakDetaylariEvrakinEkleri = $$("tbody[id='postaDetayYazdirForm:dtPostaEvrakEk_data'] tr[data-ri]");
     SelenideElement txtEtiketBastir = $(By.id("mainPreviewForm:etiketMetinIDPostIslm"));
-
+    ElementsCollection tblPostalanacakyerler = $$("tbody[id='mainPreviewForm:dataTableId_data'] tr[data-ri]");
+    ElementsCollection tblEvrakDetaylariEvrakinEKleri = $$("tbody[id='postaDetayYazdirForm:dtPostaEvrakEk_data'] tr[data-ri]");
 
     SelenideElement btnPopUpUstVeriOrjYaz = $x("//*[@id='postaDetayYazdirForm:dtPostaEvrakUstVeri:0:evrakDetayiViewDialogOrjYazdir']");
     SelenideElement btnEkleriOrjYazbtn1 = $x("//*[@id='postaDetayYazdirForm:dtPostaEvrakEk_data']/tr[1]/td[7]/div/button");
@@ -335,6 +336,14 @@ public class PostalanacakEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Popup - Evrak Detayları - Evrakın Eklerinde ek kontrolü")
+    public PostalanacakEvraklarPage evrakDetaylariEvrakinEkleriKontrol(String ek) {
+
+        tblEvrakDetaylariEvrakinEkleri
+                .filterBy(text(ek)).shouldHaveSize(1);
+
+        return this;
+    }
 
     @Step("Pdf kontrolü Yapılır.")
     public PostalanacakEvraklarPage pdfKontrol() {
@@ -1270,6 +1279,13 @@ public class PostalanacakEvraklarPage extends MainPage {
         return this;
     }
 
-
+    @Step("Postalanacak yere göre yazdır butonu tıkla")
+    public PostalanacakEvraklarPage evrakPostalanacakYerlereGoreYazdir(String gonderilenYer) {
+        tblEvrakDetaylariUstVeriler
+                .filterBy(text(gonderilenYer))
+                .first()
+                .$("//button[span[text()='Yazdır']]").click();
+        return this;
+    }
 }
 

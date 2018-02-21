@@ -2302,6 +2302,11 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement chkDagitimYerleriKurumEk3 = $("[id^='yeniGidenEvrakForm:ekListesiDataTable:2:j_idt'] [class*='ui-selectcheckboxmenu-list-item ui-corner-all']:nth-child(2)");
         SelenideElement chkDagitimYerleriBirimEk3 = $("[id^='yeniGidenEvrakForm:ekListesiDataTable:2:j_idt'] [class*='ui-selectcheckboxmenu-list-item ui-corner-all']:nth-child(1)");
 
+        SelenideElement chkDagitimYerleriEk4 = $("[id^='yeniGidenEvrakForm:ekListesiDataTable:3:j_idt'] [class='ui-selectcheckboxmenu-label ui-corner-all']");
+        SelenideElement chkDagitimYerleriKullaniciEk4 = $("[id^='yeniGidenEvrakForm:ekListesiDataTable:3:j_idt'] [class*='ui-selectcheckboxmenu-list-item ui-corner-all']:nth-child(3)");
+        SelenideElement chkDagitimYerleriKurumEk4 = $("[id^='yeniGidenEvrakForm:ekListesiDataTable:3:j_idt'] [class*='ui-selectcheckboxmenu-list-item ui-corner-all']:nth-child(2)");
+        SelenideElement chkDagitimYerleriBirimEk4 = $("[id^='yeniGidenEvrakForm:ekListesiDataTable:3:j_idt'] [class*='ui-selectcheckboxmenu-list-item ui-corner-all']:nth-child(1)");
+
 
         SelenideElement btnTaramaHavuzuTamam = $(By.id("taramaHavuzuFormId:taramaHavuzuTamamButton"));
         ElementsCollection trEklistesi = $$("tbody[id*='yeniGidenEvrakForm:ekListesiDataTable'] tr[role='row']");
@@ -2809,6 +2814,12 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Dağıtım yerleri aç - Ek4")
+        public EkleriTab dagitimYerleriAcEk4() {
+            chkDagitimYerleriEk4.click();
+            return this;
+        }
+
         @Step("Dağıtım yerlerinde birim seç")
         public EkleriTab dagitimYerlerindeBirimSec(boolean secim) {
             chkDagitimYerleriBirimEk1.setSelected(secim);
@@ -2822,7 +2833,7 @@ public class EvrakOlusturPage extends MainPage {
         }
 
         @Step("Dağıtım yerlerinde kullanıcı seç")
-        public EkleriTab dagitimYerlerindeKullaniciSec(boolean secim) {
+        public EkleriTab dagitimYerlerindeKullaniciSecEK3(boolean secim) {
             chkDagitimYerleriKullaniciEk1.setSelected(secim);
             return this;
         }
@@ -2848,7 +2859,7 @@ public class EvrakOlusturPage extends MainPage {
         }
 
         @Step("Dağıtım yerlerinde birim ve kurum seçimlerini kaldır, kullanıcı seç")
-        public EkleriTab dagitimYerlerindeKullaniciSec() {
+        public EkleriTab dagitimYerlerindeKullaniciSecEK3() {
             chkDagitimYerleriBirimEk3.setSelected(true);
             chkDagitimYerleriKurumEk3.setSelected(true);
             chkDagitimYerleriKullaniciEk3.setSelected(false);
@@ -2856,6 +2867,14 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Dağıtım yerlerinde birim ve kurum seçimlerini kaldır, kullanıcı seç")
+        public EkleriTab dagitimYerlerindeKullaniciSecEK4() {
+            chkDagitimYerleriBirimEk4.setSelected(true);
+            chkDagitimYerleriKurumEk4.setSelected(true);
+            chkDagitimYerleriKullaniciEk4.setSelected(false);
+
+            return this;
+        }
         // İşlem penceresi kapatma onay - popup
         @Step("Popup : İşlem penceresi kapatma onayi: \"{secim}\" ")
         public EkleriTab islemPenceresiKapatmaOnayiPopup2(String secim) {
@@ -3793,42 +3812,49 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Pdf EK-1 kontrolu")
         public PDFKontrol PDFEk1Kontrolu(String ek1) {
-            String pdfEK1 = $(By.xpath("//*[@id='viewer']/div/div[2]/div[12]")).getText();
+            String pdfEK1 = $(By.xpath("//*[@id='viewer']/div/div[2]/div[13]")).getText();
             Assert.assertEquals(pdfEK1.contains(ek1), true);
             return this;
         }
 
         @Step("Pdf EK-2 kontrolu")
         public PDFKontrol PDFEk2Kontrolu(String ek2) {
-            String pdfEK1 = $(By.xpath("//*[@id='viewer']/div/div[2]/div[13]")).getText();
+            String pdfEK1 = $(By.xpath("//*[@id='viewer']/div/div[2]/div[14]")).getText();
             Assert.assertEquals(pdfEK1.contains(ek2), true);
             return this;
         }
 
         @Step("Pdf EK-3 kontrolu")
         public PDFKontrol PDFEk3Kontrolu(String ek3) {
-            String pdfEK1 = $(By.xpath("//*[@id='viewer']/div/div[2]/div[14]")).getText();
+            String pdfEK1 = $(By.xpath("//*[@id='viewer']/div/div[2]/div[15]")).getText();
             Assert.assertEquals(pdfEK1.contains(ek3), true);
+            return this;
+        }
+
+        @Step("Pdf EK-4 kontrolu")
+        public PDFKontrol PDFEk4Kontrolu(String ek4) {
+            String pdfEK1 = $(By.xpath("//*[@id='viewer']/div/div[2]/div[16]")).getText();
+            Assert.assertEquals(pdfEK1.contains(ek4), true);
             return this;
         }
 
         @Step("Pdf Dağıtımda eklerin gitmeyeceği yrler kontrolu: {dagitim}")
         public PDFKontrol eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim1(String dagitim, String ekler) {
-            String pdfDagitim1 = $(By.xpath("//*[@id='viewer']/div/div[2]/div[17]")).getText();
+            String pdfDagitim1 = $(By.xpath("//*[@id='viewer']/div/div[2]/div[20]")).getText();
             Assert.assertEquals(ekler.contains(ekler), true);
             return this;
         }
 
         @Step("Pdf Dağıtımda eklerin gitmeyeceği yerler kontrolu: {dagitim}")
         public PDFKontrol eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim2(String dagitim, String ekler) {
-            String pdfDagitim1 = $(By.xpath("//*[@id='viewer']/div/div[2]/div[18]")).getText();
+            String pdfDagitim1 = $(By.xpath("//*[@id='viewer']/div/div[2]/div[21]")).getText();
             Assert.assertEquals(ekler.contains(ekler), true);
             return this;
         }
 
         @Step("Pdf Dağıtımda eklerin gitmeyeceği yerler kontrolu: {dagitim}")
-        public PDFKontrol eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim3(String dagitim, String ekler) {
-            String pdfDagitim1 = $(By.xpath("//*[@id='viewer']/div/div[2]/div[19]")).getText();
+        public PDFKontrol eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim(String dagitim, String ekler) {
+            String pdfDagitim1 = $(By.xpath("//*[@id='viewer']/div/div[2]/div[22]")).getText();
             Assert.assertEquals(ekler.contains(ekler), true);
             return this;
         }

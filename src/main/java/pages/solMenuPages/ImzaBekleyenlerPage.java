@@ -35,6 +35,11 @@ public class ImzaBekleyenlerPage extends MainPage {
     SelenideElement tabEvrakEkleri = $(By.xpath("//a[text()='Evrak Ekleri']"));
     SelenideElement btnBeklemeyeAl = $("[class='ui-button-icon-left ui-icon evrakBeklemeyeAl']");
     SelenideElement btnBeklemeyeAlUyariEvet = $(By.id("mainInboxForm:beklemeyeAlEvetButton"));
+    ElementsCollection tblEvrakOnizlemeEkler = $$("[id$='ekListesiOnizlemeDataTable_data'] > tr[role='row']");// span[class='ui-chkbox-icon']");
+    SelenideElement btnKapatmaImzala = $x("//span[text()= 'Kapatma İmzala']/../../..//button");
+    SelenideElement btnKapatmayiIptalEt = $(By.id("mainPreviewForm:kapatmayiIptalEtButton"));
+    SelenideElement btnKapatmayiIptalEtEvet = $(By.id("mainPreviewForm:kapatmayiIptalEvetButton_id"));
+
     @Step("İmza bekleyenler sayfası aç")
     public ImzaBekleyenlerPage openPage() {
         solMenu(SolMenuData.IslemBekleyenEvraklar.ImzaBekleyenler);
@@ -332,12 +337,62 @@ public class ImzaBekleyenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Dağıtım yerleri aç - Ek")
+    public ImzaBekleyenlerPage ekeGoreDagitimYerleriAc(String ek) {
+
+        tblEvrakOnizlemeEkler
+                .filterBy(Condition.text(ek))
+                .get(0)
+                .$("[class='ui-selectcheckboxmenu-label ui-corner-all']").click();
+        return this;
+    }
+
+    @Step("Eklerin gonderilecegi yerlerin secimimize uygun geldigi gorulur")
+    public ImzaBekleyenlerPage ekeGoreDagitimYerleriKontrol(String ek) {
+
+        tblEvrakOnizlemeEkler
+                .filterBy(Condition.text(ek))
+                .get(0)
+                .$("[class^='ui-selectcheckboxmenu-item']").shouldBe(visible);
+        return this;
+    }
+
+    @Step("{konu} konulu evrak evrak listesinde olmalı mı? : {evrakOlmali}.")
+    public ImzaBekleyenlerPage evrakKontrol(String konu, boolean evrakOlmali){
+        if(evrakOlmali == true){
+            tblImzaBekleyenEvraklar
+                    .filterBy(text("Konu: " + konu))
+                    .first()
+                    .shouldBe(visible);
+        }
+        else {
+            tblImzaBekleyenEvraklar
+                    .filterBy(text("Konu: " + konu))
+                    .first()
+                    .shouldNotBe(visible);
+        }
+        return this;
+    }
+
+    @Step("Kapatma İmzala butonuna tıkla")
+    public ImzaBekleyenlerPage kapatmaImzala(){
+        btnKapatmaImzala.click();
+        return this;
+    }
+
+    @Step("Kapatmayı İptal Et butonuna tıkla")
+    public ImzaBekleyenlerPage kapatmayIptalEt(){
+        btnKapatmayiIptalEt.click();
+        btnKapatmayiIptalEtEvet.click();
+        return this;
+    }
+
     @Step("İmza bekleyenler sayfas")
-    public void imzaBekleyenlerEvrakSecBeklemeyeAl(String konu){
+    public void imzaBekleyenlerEvrakSecBeklemeyeAl(String konu) {
 
         String basariMesaji = "İşlem başarılıdır!";
 
-                openPage()
+        openPage()
                 .evrakKonuyaGoreSec(konu)
                 .evrakSecBeklemeyeAl()
                 .beklemeyeAlUyariEvet()
