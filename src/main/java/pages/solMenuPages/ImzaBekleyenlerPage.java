@@ -37,6 +37,9 @@ public class ImzaBekleyenlerPage extends MainPage {
     SelenideElement btnKapatmaImzala = $x("//span[text()= 'Kapatma İmzala']/../../..//button");
     SelenideElement btnKapatmayiIptalEt = $(By.id("mainPreviewForm:kapatmayiIptalEtButton"));
     SelenideElement btnKapatmayiIptalEtEvet = $(By.id("mainPreviewForm:kapatmayiIptalEvetButton_id"));
+    SelenideElement lblDosyaAdi = $(By.xpath("//span[text()='Dosya Adı']"));
+
+
 
     @Step("İmza bekleyenler sayfası aç")
     public ImzaBekleyenlerPage openPage() {
@@ -324,18 +327,28 @@ public class ImzaBekleyenlerPage extends MainPage {
         return this;
     }
 
-    @Step("Eklerin gonderilecegi yerlerin secimimize uygun geldigi gorulur")
-    public ImzaBekleyenlerPage ekeGoreDagitimYerleriKontrol(String ek) {
+    @Step("Dağıtım yerleri kapat - Ek")
+    public ImzaBekleyenlerPage dagitimYerleriKapat(String ek) {
 
         tblEvrakOnizlemeEkler
                 .filterBy(Condition.text(ek))
                 .get(0)
-                .$("[class^='ui-selectcheckboxmenu-item']").shouldBe(visible);
+                .$("[class='ui-selectcheckboxmenu-label ui-corner-all']").click();
+
+        return this;
+    }
+
+    @Step("Eklerin gonderilecegi yerlerin secimimize uygun geldigi gorulur")
+    public ImzaBekleyenlerPage dagitimYerleriKontrol() {
+
+       Assert.assertEquals($("div[style*='display: block;'] .ui-selectcheckboxmenu-items").isDisplayed(), true);
+
         return this;
     }
 
     @Step("{konu} konulu evrak evrak listesinde olmalı mı? : {evrakOlmali}.")
     public ImzaBekleyenlerPage evrakKontrol(String konu, boolean evrakOlmali){
+
         if(evrakOlmali == true){
             tblImzaBekleyenEvraklar
                     .filterBy(text("Konu: " + konu))

@@ -1281,11 +1281,14 @@ public class PostalanacakEvraklarPage extends MainPage {
 
     @Step("Postalanacak yere göre yazdır butonu tıkla")
     public PostalanacakEvraklarPage evrakPostalanacakYerlereGoreYazdir(String gonderilenYer) {
+
         tblEvrakDetaylariUstVeriler
                 .filterBy(text(gonderilenYer))
                 .first()
-                .$("//button[span[text()='Yazdır']]").click();
-        return this;
+                .$(By.xpath("//span[normalize-space(text())='Yazdır']"))
+                .click();
+
+       return this;
     }
 }
 
