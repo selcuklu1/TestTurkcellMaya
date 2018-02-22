@@ -8,8 +8,7 @@ import io.qameta.allure.Step;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.newPages.EvrakDetayiPage;
-import pages.solMenuPages.GelenEvraklarPage;
-import pages.solMenuPages.TeslimAlinmayiBekleyenlerPage;
+import pages.solMenuPages.*;
 import pages.ustMenuPages.GelenEvrakKayitPage;
 import pages.ustMenuPages.KullaniciListesiYonetimiPage;
 
@@ -26,7 +25,9 @@ public class KullaniciListesiYonetimiTest extends BaseTest {
     GelenEvraklarPage gelenEvraklarPage;
     pages.altMenuPages.EvrakDetayiPage evrakDetayiPage;
     TeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage;
-
+    TeslimAlinanlarPage teslimAlinanlarPage;
+    KaydedilenGelenEvraklarPage kaydedilenGelenEvraklarPage;
+    BirimIadeEdilenlerPage birimIadeEdilenlerPage;
 
     String ad = "TS1005 " + createRandomNumber(6);
     String aciklama = "TS1005 " + getSysDate();
@@ -41,7 +42,7 @@ public class KullaniciListesiYonetimiTest extends BaseTest {
 
 
     String konuKodu = "Diğer";
-    String konu = "TS1466" + createRandomNumber(9);
+    String konu = "TS1466 " + createRandomNumber(9);
     String evrakTarihi = getSysDateForKis();
     String kurum = "BÜYÜK HARFLERLE KURUM";
     String kullaniciAdi = "Mehmet Bozdemir";
@@ -54,6 +55,9 @@ public class KullaniciListesiYonetimiTest extends BaseTest {
         gelenEvraklarPage = new GelenEvraklarPage();
         evrakDetayiPage = new pages.altMenuPages.EvrakDetayiPage();
         teslimAlinmayiBekleyenlerPage = new TeslimAlinmayiBekleyenlerPage();
+        teslimAlinanlarPage =new TeslimAlinanlarPage();
+        kaydedilenGelenEvraklarPage = new KaydedilenGelenEvraklarPage();
+        birimIadeEdilenlerPage = new BirimIadeEdilenlerPage();
 
     }
 
@@ -186,6 +190,7 @@ public class KullaniciListesiYonetimiTest extends BaseTest {
         String ad = "TS1005 121034";
         login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
         String guncelAd = "TS1005 121034 GUNCELLENDİ";
+
         gelenEvrakKayit();
 
         gelenEvraklarPage
@@ -211,9 +216,85 @@ public class KullaniciListesiYonetimiTest extends BaseTest {
 
         teslimAlinmayiBekleyenlerPage
                 .openPage()
-                .konuyaGoreEvrakOnizlemedeAc(guncelAd)
-                .btnTikla("Teslim Al ve Havale Yap")
-                .teslimAlVeHavaleEtKullaniciListesiDoldur(guncelAd, birim);
+                .konuyaGoreIcerikGoster(konu);
+//                .btnTikla("Teslim Al ve Havale Et")
+//                .teslimAlVeHavaleEtKullaniciListesiDoldur(guncelAd);
+
+        evrakDetayiPage
+                .btnTikla("Teslim Al ve Havale Et")
+                .havaleYapKullaniciListesiSec(guncelAd)
+                .evrakDetayiSayfasiKapat()
+                .islemPenceresiKapatmaOnayiPopup("Kapat");
+
+        teslimAlinmayiBekleyenlerPage
+                .konuyaGoreIcerikGoster(konu);
+
+        evrakDetayiPage
+                .btnTikla("Teslim Al")
+                .evrakTeslimAlPopUpEvet();
+
+//        teslimAlinmayiBekleyenlerPage
+//                .openPage()
+//                .konuyaGoreIcerikGoster(konu)
+//                .btnTikla("Teslim Al")
+//                .evrakTeslimAlPopUpEvet();
+
+        teslimAlinanlarPage
+                .openPage()
+                .konuyaGoreEvrakIcerikGoster(konu);
+//                .btnTikla("Havale Yap")
+//                .havaleYapKullaniciListesiSec(guncelAd);
+
+        evrakDetayiPage
+                .btnTikla("Havale Yap")
+                .havaleYapKullaniciListesiSec(guncelAd)
+                .evrakDetayiSayfasiKapat()
+                .islemPenceresiKapatmaOnayiPopup("Kapat");
+//
+//        teslimAlinanlarPage
+//                .openPage()
+//                .konuyaGoreEvrakIcerikGoster(konu)
+//                .btnTikla("Tebliğ Et")
+//                .tebligEtKullaniciListesiSec(guncelAd);
+
+        login(TestData.usernameMBOZDEMIR,TestData.passwordMBOZDEMIR);
+
+        birimeGelenEvrakKayit();
+
+        kaydedilenGelenEvraklarPage
+                .openPage()
+                .tabloKonuyaGoreIcerikSec(konu);
+//                .btnTikla("Havale Yap")
+//                .havaleYapKullaniciListesiSec(guncelAd);
+
+        evrakDetayiPage
+                .btnTikla("Havale Yap")
+                .havaleYapKullaniciListesiSec(guncelAd)
+                .evrakDetayiSayfasiKapat()
+                .islemPenceresiKapatmaOnayiPopup("Kapat");
+
+//        gelenEvrakKayit();
+
+        gelenEvraklarPage
+                .openPage()
+                .konuyaGoreEvrakIcerikGoster(konu);
+
+
+        evrakDetayiPage
+                .btnTikla("İade Et")
+                .iadeEt()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        birimIadeEdilenlerPage
+                .openPage()
+                .evrakSecIcerikGoster(konu,true);
+
+        evrakDetayiPage
+                .btnTikla("Teslim Al ve Havale Et")
+                .havaleYapKullaniciListesiSec(guncelAd)
+                .evrakDetayiSayfasiKapat()
+                .islemPenceresiKapatmaOnayiPopup("Kapat");
+
 
     }
 
@@ -245,6 +326,32 @@ public class KullaniciListesiYonetimiTest extends BaseTest {
                 .evrakSayiSagDoldur()
                 .havaleIslemleriBirimDoldur(birim)
                 .kaydet()
-                .popUps();
+                .popUps(true);
+    }
+
+    @Step("Test datası oluşturuldu.")
+    private void birimeGelenEvrakKayit() {
+        String evrakTuru = "Resmi Yazışma";
+        String kisiKurum = "Kurum";
+        String geldigiKurum = "Esk Kurum 071216 2";
+        String evrakGelisTipi = "Posta";
+        String ivedilik = "Normal";
+        gelenEvrakKayitPage
+                .openPage()
+                .konuKoduDoldur(konuKodu)
+                .konuDoldur(konu)
+                .evrakTuruSec(evrakTuru)
+                .evrakTarihiDoldur(evrakTarihi)
+                .kisiKurumSec(kisiKurum)
+                .geldigiKurumDoldurLovText(geldigiKurum)
+                .evrakSayiSagDoldur()
+                .evrakGelisTipiSec(evrakGelisTipi)
+                .ivedilikSec(ivedilik)
+                .kaydet();
+
+        gelenEvrakKayitPage.popUps();
+
+        gelenEvrakKayitPage
+                .islemMesaji().basariliOlmali(basariMesaji);
     }
 }

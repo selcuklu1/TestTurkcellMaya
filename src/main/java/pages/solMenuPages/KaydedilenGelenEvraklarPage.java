@@ -133,7 +133,7 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
     SelenideElement txtOnaylayanKisi = $("div[id^='mainPreviewForm:onaylayacakKisiLov:LovSecilen']");
 
     SelenideElement btnIcerikDosyaDeleteIcon = $("button[id^='inboxItemInfoForm:j_idt'] span[class='ui-button-icon-left ui-icon delete-icon']");
-
+    BelgenetElement txtHavaleYapKullniciListesi = comboLov(By.id("inboxItemInfoForm:dagitimBilgileriKisiListesiLov:LovText"));
     BelgenetElement txtComboLovKisi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKullaniciLov:LovText"));
 
     @Step("Kaydedilen gelen evraklar sayfası aç")
@@ -396,6 +396,21 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
                 .click();
         return this;
     }
+
+    @Step("\"{text}\" butonu tıklanır.")
+    public KaydedilenGelenEvraklarPage btnTikla(String text) {
+        SelenideElement btn = $(By.xpath("descendant::*[text()='" + text + "']/ancestor::tbody[1]//button"));
+        btn.click();
+        return this;
+    }
+
+    @Step("Kullanici Lisesi alanında \"{kullaniciListesi}\" seçilir. ")
+    public KaydedilenGelenEvraklarPage havaleYapKullaniciListesiSec(String kullaniciListesi){
+        txtHavaleYapKullniciListesi.selectLov(kullaniciListesi);
+        return this;
+    }
+
+
 
     @Step("Evrak listede gözükmemektedir : \"{evrakNo}\" ")
     public KaydedilenGelenEvraklarPage tabloEvrakNoileEvrakGelmediKontrolu(String evrakNo) {
