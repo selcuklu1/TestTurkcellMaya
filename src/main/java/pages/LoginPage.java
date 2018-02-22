@@ -4,6 +4,7 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
+import data.User;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 
@@ -59,5 +60,10 @@ public class LoginPage extends MainPage {
         return this;
     }
 
-
+    @Step("Login")
+    public void login(User user) {
+        login(user.getUsername(), user.getPassword());
+        if (!user.getBirimAdi().isEmpty() && user.getBirimAdi() != null)
+            birimSec(Condition.text(user.getBirimAdi()));
+    }
 }

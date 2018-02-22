@@ -3,8 +3,12 @@ package pages.solMenuPages;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.testng.annotations.Test;
+import pages.LoginPage;
 import pages.MainPage;
 import pages.pageData.SolMenuData;
+import pages.ustMenuPages.EvrakOlusturPage;
+import pages.ustMenuPages.GelenEvrakKayitPage;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
@@ -87,8 +91,6 @@ public class BeklemeyeAlinanlarPage extends MainPage {
         btnEvrakGoster.click();
         return this;
     }
-
-    //TODO: Listede datalar gelmiyor.
 
 }
 

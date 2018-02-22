@@ -1,6 +1,7 @@
 package pages.pageComponents;
 
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
 import io.qameta.allure.Allure;
@@ -58,6 +59,33 @@ public class SolMenu extends BaseLibrary {
                 + "\nNavigationMenu metni: " + menuLink.getText());
     }
 
+    @Step("\"{groupId}\" -> \"{menuText}\" sol menu, use JS {useJS}")
+    private void openMenu2(String groupId, String menuText, boolean useJS) {
+        SelenideElement pageTitle = $("label.ui-inbox-header-title");
+
+        SelenideElement group = $(By.id(groupId));
+        group.click();
+        Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", group);
+        String groupText = group.$("h3").text();
+        SelenideElement menuLink = group
+                .$$("span")
+                .filterBy(text(menuText))
+                .first()
+                .waitUntil(exist, Configuration.timeout);
+
+        if (useJS)
+            executeJavaScript("arguments[0].click();", menuLink);///parent::a
+        else {
+            if (!menuLink.isDisplayed()) group.click();
+            group.$(By.partialLinkText(menuText)).click();
+        }
+
+        pageTitle.shouldHave(text(menuText));
+
+        Allure.addAttachment("NavigationMenu metnileri", "Grup metni: " + groupText
+                + "\nNavigationMenu metni: " + menuLink.getText());
+    }
+
     @Step("\"{solMenuData.groupText}\" -> \"{solMenuData.menuText}\" sol menu aç")
     public MainPage openMenu(Enum solMenuData) {
         String groupId;
@@ -74,6 +102,26 @@ public class SolMenu extends BaseLibrary {
         }
 
         openMenu(groupId, menuText, true);
+
+        return new MainPage();
+    }
+
+    @Step("\"{solMenuData.groupText}\" -> \"{solMenuData.menuText}\" sol menu aç")
+    public MainPage openMenu2(Enum solMenuData) {
+        String groupId;
+        String menuText;
+        try {
+            Method getGroupIdMethod = solMenuData.getClass().getMethod("getGroupId");
+            Method getMenuTextMethod = solMenuData.getClass().getMethod("getMenuText");
+            groupId = getGroupIdMethod.invoke(solMenuData).toString();
+            menuText = getMenuTextMethod.invoke(solMenuData).toString();
+
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
+            throw new RuntimeException("SolMenuData hatası: \n" + e.getMessage());
+        }
+
+        openMenu2(groupId, menuText, true);
 
         return new MainPage();
     }
