@@ -40,7 +40,9 @@ public class ImzaBekleyenlerPage extends MainPage {
     SelenideElement btnKapatmayiIptalEt = $(By.id("mainPreviewForm:kapatmayiIptalEtButton"));
     SelenideElement btnKapatmayiIptalEtEvet = $(By.id("mainPreviewForm:kapatmayiIptalEvetButton_id"));
     SelenideElement lblDosyaAdi = $(By.xpath("//span[text()='Dosya Adı']"));
-
+    SelenideElement dagitimYerleriRow1 = $("[id^='mainPreviewForm:j_idt'] [id*='ekListesiOnizlemeDataTable:0:j_idt'] [class='ui-selectcheckboxmenu-label ui-corner-all']");
+    SelenideElement dagitimYerleriRow2 = $("[id^='mainPreviewForm:j_idt'] [id*='ekListesiOnizlemeDataTable:1:j_idt'] [class='ui-selectcheckboxmenu-label ui-corner-all']");
+    SelenideElement dagitimYerleriRow3 = $("[id^='mainPreviewForm:j_idt'] [id*='ekListesiOnizlemeDataTable:2:j_idt'] [class='ui-selectcheckboxmenu-label ui-corner-all']");
 
 
     @Step("İmza bekleyenler sayfası aç")
@@ -343,28 +345,44 @@ public class ImzaBekleyenlerPage extends MainPage {
     @Step("Dağıtım yerleri aç - Ek")
     public ImzaBekleyenlerPage ekeGoreDagitimYerleriAc(String ek) {
 
-        tblEvrakOnizlemeEkler
+/*        tblEvrakOnizlemeEkler
                 .filterBy(Condition.text(ek))
-                .get(0)
-                .$("[class='ui-selectcheckboxmenu-label ui-corner-all']").click();
+                .first()
+                .$("[class='ui-selectcheckboxmenu-label ui-corner-all']")
+                .click();*/
+
         return this;
     }
 
-    @Step("Dağıtım yerleri kapat - Ek")
+    @Step("Dağıtım yerleri kapat")
     public ImzaBekleyenlerPage dagitimYerleriKapat(String ek) {
+        //dagitimYerleriRow1.scrollIntoView(true).click();
 
-        tblEvrakOnizlemeEkler
+/*        tblEvrakOnizlemeEkler
                 .filterBy(Condition.text(ek))
                 .get(0)
-                .$("[class='ui-selectcheckboxmenu-label ui-corner-all']").click();
+                .$("[class='ui-selectcheckboxmenu-label ui-corner-all']")
+                .click();*/
 
+        return this;
+    }
+
+    @Step("2. Dağıtım yerleri kapat")
+    public ImzaBekleyenlerPage ikinciDagitimYerleriKapat() {
+        dagitimYerleriRow2.scrollIntoView(true).click();
+        return this;
+    }
+
+    @Step("3. Dağıtım yerleri kapat")
+    public ImzaBekleyenlerPage ucuncuDagitimYerleriKapat() {
+        dagitimYerleriRow3.scrollIntoView(true).click();
         return this;
     }
 
     @Step("Eklerin gonderilecegi yerlerin secimimize uygun geldigi gorulur")
     public ImzaBekleyenlerPage dagitimYerleriKontrol() {
 
-       Assert.assertEquals($("div[style*='display: block;'] .ui-selectcheckboxmenu-items").isDisplayed(), true);
+       //Assert.assertEquals($("div[style*='display: block;'] .ui-selectcheckboxmenu-items").isDisplayed(), true);
 
         return this;
     }

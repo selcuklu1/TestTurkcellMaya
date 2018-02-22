@@ -1700,7 +1700,7 @@ public class GelenEvrakKayitPage extends MainPage {
 
         String konuKodu = "Diğer";
         String evrakTarihi = getSysDateForKis();
-        String evrakSayiSag = createRandomText(15);
+        String evrakSayiSag = createRandomNumber(8);
 
         openPage()
                 .konuKoduDoldur(konuKodu)
@@ -1711,7 +1711,6 @@ public class GelenEvrakKayitPage extends MainPage {
                 .havaleIslemleriKisiDoldur(kullanici)
                 .kaydet()
                 .evetDugmesi()
-                .benzerKayit()
                 .yeniKayitButton();
     }
 }
