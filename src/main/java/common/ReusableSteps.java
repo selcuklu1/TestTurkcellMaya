@@ -1,24 +1,15 @@
 package common;
 
-import data.TestData;
 import data.User;
 import io.qameta.allure.Step;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
 import pages.LoginPage;
-import pages.MainPage;
-import pages.altMenuPages.CevapYazPage;
-import pages.solMenuPages.*;
+import pages.solMenuPages.ImzaBekleyenlerPage;
 import pages.ustMenuPages.EvrakOlusturPage;
 import pages.ustMenuPages.GelenEvrakKayitPage;
-import pages.ustMenuPages.KullaniciEvrakDevretPage;
-import pages.ustMenuPages.SistemLoglariPage;
+import pages.ustMenuPages.TuzelKisiYonetimiPage;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-
-import static sun.security.jgss.GSSUtil.login;
+import java.util.Arrays;
+import java.util.List;
 
 public class ReusableSteps extends BaseLibrary{
 
@@ -32,6 +23,11 @@ public class ReusableSteps extends BaseLibrary{
         evrakOlusturPage.evrakOlusturParafla(konu,geregiSecimTipi,geregi,onayAkisiKullanici1Turu,onayAkisiKullanici2,onayAkisiKullaniciBirimi,onayAkisiKullanici2turu);
         loginPage.login(user,password);
         imzaBekleyenler.imzaBekleyenlerEvrakSecBeklemeyeAl(konu);
+    }
+
+    @Step("Beklemeye Alınanlar evrak Oluştur.")
+    public void beklemeyeAlinanlarEvrakOlustur() {
+
     }
 
     @Step("Teslim Alınmayı Bekleyenler sayfasında evrak oluştur.")
@@ -53,11 +49,16 @@ public class ReusableSteps extends BaseLibrary{
     }
 
     @Step("Beklemeye Alınanlar evrak Oluştur.")
-    public void beklemeyeAlinanlarEvrakOlustur(String konu, String geregiSecimTipi, String geregi, User evrakOlusturan, User imzaci) {
+    public void beklemeyeAlinanlarEvrakOlustur(String konu, String geregiSecimTipi, String geregi, User imzaci) {
         new EvrakOlusturPage()
                 .evrakOlusturParafla(konu,geregiSecimTipi,geregi,"Parafla",imzaci.getFullname(), imzaci.getBirimAdi(), "İzmala");
         new LoginPage().login(imzaci);
         new ImzaBekleyenlerPage().imzaBekleyenlerEvrakSecBeklemeyeAl(konu);
+    }
+
+    @Step("Medya şirketi tipinde tüzel kişi ekleme")
+    public List<String> medyaSirketiTuzelKisiEkleme() {
+        return new TuzelKisiYonetimiPage().medyaSirketiTuzelKisiEkleme();
     }
 
 }

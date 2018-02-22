@@ -33,7 +33,7 @@ public class CevapYazPage extends MainPage {
     SelenideElement cmbIvedilik = $(By.id("windowCevapEvrakForm:evrakBilgileriList:10:ivedilik"));
     SelenideElement txtMiat = $(By.id("windowCevapEvrakForm:evrakBilgileriList:11:miatCalendar_input"));
     SelenideElement cmbGeregiSecimTipi = $(By.id("windowCevapEvrakForm:evrakBilgileriList:12:j_idt35921"));
-    SelenideElement txtGeregi = $(By.id("windowCevapEvrakForm:evrakBilgileriList:12:geregiLov:LovText"));
+    BelgenetElement comboLovGeregi = comboLov("[id$='geregiLov:LovText']");
     SelenideElement cmbBilgiSecimTipi = $(By.id("windowCevapEvrakForm:evrakBilgileriList:13:j_idt35912"));
     SelenideElement txtBilgi = $(By.id("windowCevapEvrakForm:evrakBilgileriList:13:bilgiLov:LovText"));
     SelenideElement chkDagitimiEkYap = $(By.id("windowCevapEvrakForm:evrakBilgileriList:16:dagitimEkYapCheckBoxId_input"));
@@ -233,7 +233,7 @@ public class CevapYazPage extends MainPage {
     }
 
     public CevapYazPage geregiDoldur(String geregi) {
-        txtGeregi.sendKeys(geregi);
+        comboLovGeregi.selectLov(geregi);
         return this;
     }
 

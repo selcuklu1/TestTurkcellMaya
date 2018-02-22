@@ -16,7 +16,10 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.altMenuPages.CevapYazPage;
 import pages.solMenuPages.*;
+import pages.ustMenuPages.EvrakOlusturPage;
+import tests.KisiselIslemlerBagTipi.KisiselIslemlerBagTipiTest;
 
+import static common.PreCondition.TS2141;
 import static data.TestData.*;
 
 /****************************************************
@@ -33,6 +36,7 @@ public class EvrakKopyalamaTest extends BaseTest {
     BeklemeyeAlinanlarPage beklemeyeAlinanlarPage;
     GelenEvraklarPage gelenEvraklarPage;
     CevapYazPage cevapYazPage;
+    EvrakOlusturPage evrakOlusturPage;
 
     @BeforeMethod
     public void loginBeforeTests() {
@@ -40,16 +44,18 @@ public class EvrakKopyalamaTest extends BaseTest {
         beklemeyeAlinanlarPage = new BeklemeyeAlinanlarPage();
         gelenEvraklarPage = new GelenEvraklarPage();
         cevapYazPage = new CevapYazPage();
+        evrakOlusturPage = new EvrakOlusturPage();
     }
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true,description = "TS1597: Havale onayı bekleyen evrakın geri çekilmesi ve tekrar havalesi (içerik ekranından)")
     public void TS1597() {
-
         String konuKodu = "TS1597-" + createRandomNumber(15);
         String kurum = "BÜYÜK HARFLERLE BİRİM";
 
         login(usernameYAKYOL,passwordYAKYOL);
+
+        TS2141();
 
         reusableSteps
                 .beklemeyeAlinanlarEvrakOlustur(konuKodu,"Birim",kurum,"Paraflama","Zübeyde Tekin","BHUPGMY","İmzalama",usernameZTEKIN,passwordZTEKIN);
@@ -67,6 +73,8 @@ public class EvrakKopyalamaTest extends BaseTest {
         String birim = "Zübeyde Tekin";
         String kaldirilacakKlasor = "Diğer";
         String geregi = "Optiim Birim";
+        String basariMesaji = "İşlem başarılıdır!";
+        String icerik = createRandomText(15);
 
         login(usernameZTEKIN,passwordZTEKIN);
 
@@ -83,6 +91,12 @@ public class EvrakKopyalamaTest extends BaseTest {
                 .geregiDoldur(geregi)
                 .onayAkisiDoldur("TS2172")
                 .kaydet()
-                .evrakKayitPopupEvet();
+                .evrakKayitPopupEvet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        evrakOlusturPage
+                .editorTabAc()
+                .editorIcerikDoldur(icerik);
+
     }
 }
