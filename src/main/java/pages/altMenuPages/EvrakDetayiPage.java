@@ -38,6 +38,10 @@ public class EvrakDetayiPage extends MainPage {
     SelenideElement txtSilmeNotu = $("[id^='inboxItemInfoForm:j_idt'] [class*=' ui-inputtextarea']");
     SelenideElement btnEvrakNotSil = $("[class='form-buttons'] [id^='inboxItemInfoForm:j_idt']");
 
+    BelgenetElement txtHavaleYapKullniciListesi = comboLov(By.id("inboxItemInfoForm:dagitimBilgileriKisiListesiLov:LovText"));
+    BelgenetElement txtTebligEtKullniciListesi = comboLov(By.id("inboxItemInfoForm:kullaniciGrubuLov_id:LovText"));
+    SelenideElement btnEvrakDetayiClose = $("div[id='windowItemInfoDialog'] span[class='ui-icon ui-icon-closethick']");
+
 
     private HareketGecmisiTab hareketGecmisiTab = new HareketGecmisiTab();
     private EditorTab editorTab = new EditorTab();
@@ -101,6 +105,25 @@ public class EvrakDetayiPage extends MainPage {
     @Step("Gönder butonu tıklanır.")
     public EvrakDetayiPage gonder() {
         btnGonder.click();
+        return this;
+    }
+
+    @Step("Kullanici Lisesi alanında \"{kullaniciListesi}\" seçilir. ")
+    public EvrakDetayiPage havaleYapKullaniciListesiSec(String kullaniciListesi){
+        txtHavaleYapKullniciListesi.selectLov(kullaniciListesi);
+        return this;
+    }
+
+    @Step("Kullanici Lisesi alanında \"{kullaniciListesi}\" seçilir. ")
+    public EvrakDetayiPage tebligEtKullaniciListesiSec(String kullaniciListesi){
+        txtTebligEtKullniciListesi.selectLov(kullaniciListesi);
+        return this;
+    }
+
+
+    @Step("")
+    public EvrakDetayiPage evrakDetayiSayfasiKapat(){
+        btnEvrakDetayiClose.click();
         return this;
     }
 

@@ -4,8 +4,13 @@ import common.BaseTest;
 import data.TestData;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Step;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import pages.newPages.EvrakDetayiPage;
+import pages.solMenuPages.GelenEvraklarPage;
+import pages.solMenuPages.TeslimAlinmayiBekleyenlerPage;
+import pages.ustMenuPages.GelenEvrakKayitPage;
 import pages.ustMenuPages.KullaniciListesiYonetimiPage;
 
 /****************************************************
@@ -17,6 +22,11 @@ import pages.ustMenuPages.KullaniciListesiYonetimiPage;
 public class KullaniciListesiYonetimiTest extends BaseTest {
 
     KullaniciListesiYonetimiPage kullaniciListesiYonetimiPage;
+    GelenEvrakKayitPage gelenEvrakKayitPage;
+    GelenEvraklarPage gelenEvraklarPage;
+    pages.altMenuPages.EvrakDetayiPage evrakDetayiPage;
+    TeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage;
+
 
     String ad = "TS1005 " + createRandomNumber(6);
     String aciklama = "TS1005 " + getSysDate();
@@ -27,10 +37,24 @@ public class KullaniciListesiYonetimiTest extends BaseTest {
     String basariMesaji = "İşlem başarılıdır!";
     String durumPasifler = "Sadece Pasifler";
     String durumAktifler = "Sadece Aktifler";
+    String guncelAd = ad + " Guncellendi";
+
+
+    String konuKodu = "Diğer";
+    String konu = "TS1466" + createRandomNumber(9);
+    String evrakTarihi = getSysDateForKis();
+    String kurum = "BÜYÜK HARFLERLE KURUM";
+    String kullaniciAdi = "Mehmet Bozdemir";
 
     @BeforeMethod
     public void loginBeforeTests() {
+
         kullaniciListesiYonetimiPage = new KullaniciListesiYonetimiPage();
+        gelenEvrakKayitPage = new GelenEvrakKayitPage();
+        gelenEvraklarPage = new GelenEvraklarPage();
+        evrakDetayiPage = new pages.altMenuPages.EvrakDetayiPage();
+        teslimAlinmayiBekleyenlerPage = new TeslimAlinmayiBekleyenlerPage();
+
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -154,5 +178,73 @@ public class KullaniciListesiYonetimiTest extends BaseTest {
                 .ara()
                 .kullaniciListesiTablosuKullaniciAdiKontrolu(guncelAd, true);
 
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS1466 : Kullanıcı Listesi Güncelleme Sonrası Ekranlardan Kontrolü")
+    public void TS1466() throws InterruptedException {
+        String ad = "TS1005 121034";
+        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
+        String guncelAd = "TS1005 121034 GUNCELLENDİ";
+        gelenEvrakKayit();
+
+        gelenEvraklarPage
+                .openPage()
+                .konuyaGoreEvrakIcerikGoster(konu);
+
+        evrakDetayiPage
+                .btnTikla("Havale Yap")
+                .havaleYapKullaniciListesiSec(guncelAd)
+                .evrakDetayiSayfasiKapat()
+                .islemPenceresiKapatmaOnayiPopup("Kapat");
+
+        gelenEvraklarPage
+                .konuyaGoreEvrakIcerikGoster(konu);
+
+        evrakDetayiPage
+                .btnTikla("Tebliğ Et")
+                .tebligEtKullaniciListesiSec(guncelAd)
+                .evrakDetayiSayfasiKapat()
+                .islemPenceresiKapatmaOnayiPopup("Kapat");
+
+        teslimAlinmayiBekleyenEvrak();
+
+        teslimAlinmayiBekleyenlerPage
+                .openPage()
+                .konuyaGoreEvrakOnizlemedeAc(guncelAd)
+                .btnTikla("Teslim Al ve Havale Yap")
+                .teslimAlVeHavaleEtKullaniciListesiDoldur(guncelAd, birim);
+
+    }
+
+
+    @Step("Test datası oluşturuldu.")
+    private void gelenEvrakKayit() {
+
+        gelenEvrakKayitPage
+                .openPage()
+                .konuKoduDoldur(konuKodu)
+                .konuDoldur(konu)
+                .evrakTarihiDoldur(evrakTarihi)
+                .geldigiKurumDoldurLovText(kurum)
+                .evrakSayiSagDoldur()
+                .havaleIslemleriKisiDoldur(kullaniciAdi)
+                .kaydet()
+                .popUps();
+    }
+
+    @Step("Test datası oluşturuldu.")
+    private void teslimAlinmayiBekleyenEvrak() {
+
+        gelenEvrakKayitPage
+                .openPage()
+                .konuKoduDoldur(konuKodu)
+                .konuDoldur(konu)
+                .evrakTarihiDoldur(evrakTarihi)
+                .geldigiKurumDoldurLovText(kurum)
+                .evrakSayiSagDoldur()
+                .havaleIslemleriBirimDoldur(birim)
+                .kaydet()
+                .popUps();
     }
 }

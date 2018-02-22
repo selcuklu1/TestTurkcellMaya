@@ -518,6 +518,14 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         return this;
     }
 
+
+    @Step("\"{text}\" butonu tıklanır.")
+    public TeslimAlinmayiBekleyenlerPage btnTikla(String text) {
+        SelenideElement btn = $(By.xpath("descendant::*[text()='" + text + "']/ancestor::tbody[1]//button"));
+        btn.click();
+        return this;
+    }
+
     @Step("Evrak Ek/İlgi tablarının geldiği kontrolu")
     public TeslimAlinmayiBekleyenlerPage tabKontrolleri() {
 
