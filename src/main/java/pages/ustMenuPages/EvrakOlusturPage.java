@@ -3849,21 +3849,21 @@ public class EvrakOlusturPage extends MainPage {
         @Step("Pdf Dağıtımda eklerin gitmeyeceği yrler kontrolu: {dagitim}")
         public PDFKontrol eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim1(String dagitim, String ekler) {
             String pdfDagitim1 = $(By.xpath("//*[@id='viewer']/div/div[2]/div[19]")).getText();
-            Assert.assertEquals(ekler.contains(ekler), true);
+            Assert.assertEquals(pdfDagitim1.contains(ekler), true);
             return this;
         }
 
         @Step("Pdf Dağıtımda eklerin gitmeyeceği yerler kontrolu: {dagitim}")
         public PDFKontrol eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim2(String dagitim, String ekler) {
-            String pdfDagitim1 = $(By.xpath("//*[@id='viewer']/div/div[2]/div[20]")).getText();
-            Assert.assertEquals(ekler.contains(ekler), true);
+            String pdfDagitim2 = $(By.xpath("//*[@id='viewer']/div/div[2]/div[20]")).getText();
+            Assert.assertEquals(pdfDagitim2.contains(ekler), true);
             return this;
         }
 
         @Step("Pdf Dağıtımda eklerin gitmeyeceği yerler kontrolu: {dagitim}")
         public PDFKontrol eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim(String dagitim, String ekler) {
-            String pdfDagitim1 = $(By.xpath("//*[@id='viewer']/div/div[2]/div[21]")).getText();
-            Assert.assertEquals(ekler.contains(ekler), true);
+            String pdfDagitim3 = $(By.xpath("//*[@id='viewer']/div/div[2]/div[21]")).getText();
+            Assert.assertEquals(pdfDagitim3.contains(ekler), true);
             return this;
         }
 

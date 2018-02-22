@@ -680,5 +680,15 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Teslim Alınmayı Bekleyenler Evrak Ekleri Kontrol : {description}")
+    public TeslimAlinmayiBekleyenlerPage teslimEvrakEkleriKontrol(String ek, String description) {
+
+        teslimEvrakEkleriKontrol
+                .filterBy(Condition.text(ek))
+                .shouldHaveSize(1);
+
+        return this;
+    }
+
 
 }

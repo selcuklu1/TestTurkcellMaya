@@ -7,6 +7,7 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import pages.altMenuPages.EvrakDetayiPage;
 import pages.pageComponents.EvrakPageButtons;
 import pages.pageComponents.TextEditor;
 import pages.solMenuPages.*;
@@ -37,6 +38,7 @@ public class EkIlgiTest extends BaseTest {
     PostalanacakEvraklarPage postalanacakEvraklarPage;
     TeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage;
     GelenEvraklarPage gelenEvraklarPage;
+    EvrakDetayiPage evrakDetayiPage;
 
     @BeforeMethod
     public void beforeTests(Method method) {
@@ -54,6 +56,7 @@ public class EkIlgiTest extends BaseTest {
         postalanacakEvraklarPage = new PostalanacakEvraklarPage();
         teslimAlinmayiBekleyenlerPage = new TeslimAlinmayiBekleyenlerPage();
         gelenEvraklarPage = new GelenEvraklarPage();
+        evrakDetayiPage = new EvrakDetayiPage();
 
     }
 
@@ -896,6 +899,22 @@ public class EkIlgiTest extends BaseTest {
         gelenEvraklarPage
                 .openPage()
                 .tabloKonuyaGoreEvrakKontrol(evrakKonusu, true);
+
+        login(TestData.usernameYAKYOL, TestData.passwordYAKYOL);
+
+        teslimAlinmayiBekleyenlerPage
+                .openPage()
+                .konuyaGoreEvrakKontroluAllPages(evrakKonusu)
+                .konuyaGoreEvrakOnizlemedeAc(evrakKonusu)
+                .tabEvrakEkleriAc()
+                .teslimEvrakEkleriKontrol(ekleriAciklamaDosya1, "Localden eklenen dosya")
+                .evrakSecIcerikGoster(evrakKonusu, true);
+
+        evrakDetayiPage
+                .evrakGoster()
+                .eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim1(birim, "Ek-2 konulmadı, Ek-3 konulmadı")
+                .eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim2(kurum, "Ek-2 konulmadı, Ek-3 konulmadı")
+                .eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim3(kurum, "Ek-1 konulmadı, Ek-2 konulmadı");
 
 
     }
