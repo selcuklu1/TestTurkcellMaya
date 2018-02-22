@@ -207,6 +207,15 @@ public class TeslimAlinanlarPage extends MainPage {
         return this;
     }
 
+    @Step("Evrak Adedi Kontrolu: \"{evrakNo}\" ")
+    public TeslimAlinanlarPage evrakAdediKontrolu(String evrakNo) {
+        int evrakSayisi = tblEvraklar.filterBy(Condition.text(evrakNo)).size();
+        boolean durum = tblEvraklar.filterBy(Condition.text(evrakNo)).size() == 1;
+        Assert.assertEquals(durum,true, "Evrak Adedi Kontrolü");
+        Allure.addAttachment(evrakNo + " nolu evrak adedi:" + evrakSayisi,"");
+        return this;
+    }
+
     @Step("Evrak Geçmiş Tab kontrolü\n")
     public TeslimAlinanlarPage tabKontrol() {
         boolean durum = tabEvrakGecmisi.filterBy(Condition.text("Evrak Geçmişi")).get(0).$("a").isDisplayed();
@@ -215,14 +224,14 @@ public class TeslimAlinanlarPage extends MainPage {
         return this;
     }
 
-    @Step("Evrak adedi kontrol: \"{evrakNo}\" ")
-    public TeslimAlinanlarPage evrakAdediKontrol(String evrakNo) {
-        int dosyaAdedi = tblEvraklar
-                .filterBy(Condition.text(evrakNo))
-                .size();
-        Allure.addAttachment(evrakNo, Integer.valueOf(dosyaAdedi).toString());
-        return this;
-    }
+//    @Step("Evrak adedi kontrol: \"{evrakNo}\" ")
+//    public TeslimAlinanlarPage evrakAdediKontrol(String evrakNo) {
+//        int dosyaAdedi = tblEvraklar
+//                .filterBy(Condition.text(evrakNo))
+//                .size();
+//        Allure.addAttachment(evrakNo, Integer.valueOf(dosyaAdedi).toString());
+//        return this;
+//    }
 
     @Step("Evrak geçmişi alanına tıklanır")
     public TeslimAlinanlarPage secilenEvrakEvrakGecmisi() {
@@ -243,7 +252,8 @@ public class TeslimAlinanlarPage extends MainPage {
     public TeslimAlinanlarPage evrakGecmisi(String teslimAlinan, String islemSureci, String tarih) {
         boolean durum = tblEvrakGecmisi.filterBy(Condition.text(islemSureci)).filter(Condition.text(teslimAlinan))
                 .filterBy(Condition.text(tarih)).size() == 1;
-        Assert.assertEquals(durum, true);
+        Assert.assertEquals(durum, true,"Evrak Geçmişi Kontrol");
+        Allure.addAttachment("Teslim Alinan:" + teslimAlinan + " İşlem Süreci:" + islemSureci + " Tarih:" +  tarih , "");
         takeScreenshot();
         return this;
     }

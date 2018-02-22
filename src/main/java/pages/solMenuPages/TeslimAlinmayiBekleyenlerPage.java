@@ -82,6 +82,7 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     BelgenetElement txtSecilenlerOnaylayacakKisi = comboLov(By.id("mainPreviewForm:onaylayacakKisiLov:LovText"));
 
     ElementsCollection tblKaydedilenGelenEvraklar = $$("[id='mainInboxForm:inboxDataTable_data'] tr[data-ri]");
+    SelenideElement tabEvrakDetayi = $("[id='inboxItemInfoForm']");
 
     public TeslimAlinmayiBekleyenlerPage openPage() {
         solMenu(SolMenuData.BirimEvraklari.TeslimAlinmayiBekleyenler);
@@ -372,9 +373,25 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Evrak no ile teslim al Ikon Kontrolü")
+    public TeslimAlinmayiBekleyenlerPage teslimAlIkonKontrol(String konu) {
+        boolean durum = tblEvraklar.filterBy(text(konu)).get(0).$$("[class='ui-button-icon-left ui-icon document-delivery']").size()==1;
+        Assert.assertEquals(durum,true,"Ikon Kontrolü");
+        Allure.addAttachment("Teslim Al Ikonu:" + konu,"bulunmaktadır.");
+        return this;
+    }
+
+
     @Step("Evrak no ile içerik göster")
     public TeslimAlinmayiBekleyenlerPage evrakSecIcerikGoster(String konu, boolean secim) {
         tblEvraklar.filterBy(text(konu)).get(0).$$("[id$='detayGosterButton']").first().click();
+        return this;
+    }
+
+    @Step("Evrak Detay ekranı açılır\n")
+    public TeslimAlinmayiBekleyenlerPage ekranKontrolEvrakDetayi() {
+        Assert.assertEquals(tabEvrakDetayi.isDisplayed(), true, "Evrak Detay sayfası");
+        Allure.addAttachment("Evrak Detay sayfası", "açılmaktadır");
         return this;
     }
 
@@ -395,9 +412,8 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     public TeslimAlinmayiBekleyenlerPage evrakSecToplu(String konu1, String konu2, boolean secim) {
         tblEvraklar.filterBy(text(konu1)).get(0).$$("div[class^='ui-chkbox-box']").first().click();
         tblEvraklar.filterBy(text(konu2)).get(0).$$("div[class^='ui-chkbox-box']").first().click();
-
+        takeScreenshot();
         btnTeslimAl.get(0).click();
-
         return this;
     }
 

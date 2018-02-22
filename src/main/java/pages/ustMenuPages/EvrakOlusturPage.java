@@ -59,7 +59,6 @@ public class EvrakOlusturPage extends MainPage {
     SelenideElement btnKaydetHayir = $(By.id("kaydetConfirmForm:kaydetHayirButton"));
     SelenideElement btnKaydetOnayaSunGonder = $(By.id("yeniGidenEvrakForm:gonderButton"));
     SelenideElement btnKaydetOnayaSunGonderEvet = $(By.id("kaydetEvetButton"));
-
     //endregion
     ElementsCollection cevapYazImzalama = $$("[id='windowCevapEvrakForm'] [id^='windowCevapEvrakForm'] table div[class='ui-tabmenu ui-tabmenu-right'] td[class='buttonMenuContainerDefault'] button");
     //region Tabs local variables
@@ -438,6 +437,12 @@ public class EvrakOlusturPage extends MainPage {
         }
 
         @Step("Kullanıcılar alanı doldur")
+        public BilgilerTab kullanicilarDoldur(String kullanici,String birim) {
+            txtOnayAkisiKullanicilar.selectLov(kullanici,birim);
+            return this;
+        }
+
+        @Step("Kullanıcılar alanı doldur")
         public BilgilerTab kullanicilarDoldur2(String kullanici) {
             txtOnayAkisiKullanicilar.type(kullanici).getTitleItems()
                     .filterBy(Condition.exactText(kullanici + " [Ağ (Network) Uzman Yardımcısı]")).first().click();
@@ -549,7 +554,7 @@ public class EvrakOlusturPage extends MainPage {
         }
 
         @Step("Onay Akışı imzalama seç")
-        public BilgilerTab onayAkisiEkleIlkImzalaSec(String imzalama) {
+        public BilgilerTab onayAkisiEkleIlkSelectSec(String imzalama) {
             cmbKullanicilarIlkImzalama.selectOption(imzalama);
             return this;
         }
@@ -1040,6 +1045,13 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("{deger} adlı kullanıcının tipi {secim} seçilir")
+        public BilgilerTab kullaniciylaSecimTipiSec(String deger,String secim){
+        $$("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='akisAdimLov:LovSecilenTable_data'] > tr").filterBy(Condition.text(deger))
+                .first().$("select").selectOption(secim);
+            return this;
+        }
+        
         @Step("Güncel kullanıcının default paraflama aksiyonu ile geldiği görülür.")
         public BilgilerTab onayAkisiParaflamaGeldigiGorme() {
             boolean durum = $("[id*='akisAdimLov:LovSecilenTable'][id$='selectOneMenu']").getSelectedText().equals("Paraflama");
@@ -1944,10 +1956,13 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Editör İçerik Doldur")
+        @Step("Editör Sayı ve konu bilgileri altında ilgi kontrol")
         public String editorSayiAl() {
             SelenideElement txtSayi = $(By.id("editorEvrakSayiAlani"));
             String sayi = txtSayi.text();
+            SelenideElement ilgiktrl = $x("//*[@id='yeniGidenEvrakForm:ilgiOutPanel']");
+            String ilgikontrl = ilgiktrl.getAttribute("outerText");
+            Allure.addAttachment("Ilgı kontrol", ilgikontrl);
             return sayi;
         }
 
@@ -2025,7 +2040,7 @@ public class EvrakOlusturPage extends MainPage {
             sayisalImzaOnay.click();
             return this;
         }
-
+        @Step("Imzalama popup içinde S imzalama geldiği görme ve tıklama")
         public EditorTab popupSImzalaIslemleri() throws InterruptedException {
             Thread.sleep(10000);
             /*//switchTo().window("");
@@ -2288,6 +2303,11 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement chkDagitimYerleriKullaniciEk3 = $("[id^='yeniGidenEvrakForm:ekListesiDataTable:2:j_idt'] [class*='ui-selectcheckboxmenu-list-item ui-corner-all']:nth-child(3)");
         SelenideElement chkDagitimYerleriKurumEk3 = $("[id^='yeniGidenEvrakForm:ekListesiDataTable:2:j_idt'] [class*='ui-selectcheckboxmenu-list-item ui-corner-all']:nth-child(2)");
         SelenideElement chkDagitimYerleriBirimEk3 = $("[id^='yeniGidenEvrakForm:ekListesiDataTable:2:j_idt'] [class*='ui-selectcheckboxmenu-list-item ui-corner-all']:nth-child(1)");
+
+        SelenideElement chkDagitimYerleriEk4 = $("[id^='yeniGidenEvrakForm:ekListesiDataTable:3:j_idt'] [class='ui-selectcheckboxmenu-label ui-corner-all']");
+        SelenideElement chkDagitimYerleriKullaniciEk4 = $("[id^='yeniGidenEvrakForm:ekListesiDataTable:3:j_idt'] [class*='ui-selectcheckboxmenu-list-item ui-corner-all']:nth-child(3)");
+        SelenideElement chkDagitimYerleriKurumEk4 = $("[id^='yeniGidenEvrakForm:ekListesiDataTable:3:j_idt'] [class*='ui-selectcheckboxmenu-list-item ui-corner-all']:nth-child(2)");
+        SelenideElement chkDagitimYerleriBirimEk4 = $("[id^='yeniGidenEvrakForm:ekListesiDataTable:3:j_idt'] [class*='ui-selectcheckboxmenu-list-item ui-corner-all']:nth-child(1)");
 
 
         SelenideElement btnTaramaHavuzuTamam = $(By.id("taramaHavuzuFormId:taramaHavuzuTamamButton"));
@@ -2796,6 +2816,12 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Dağıtım yerleri aç - Ek4")
+        public EkleriTab dagitimYerleriAcEk4() {
+            chkDagitimYerleriEk4.click();
+            return this;
+        }
+
         @Step("Dağıtım yerlerinde birim seç")
         public EkleriTab dagitimYerlerindeBirimSec(boolean secim) {
             chkDagitimYerleriBirimEk1.setSelected(secim);
@@ -2809,7 +2835,7 @@ public class EvrakOlusturPage extends MainPage {
         }
 
         @Step("Dağıtım yerlerinde kullanıcı seç")
-        public EkleriTab dagitimYerlerindeKullaniciSec(boolean secim) {
+        public EkleriTab dagitimYerlerindeKullaniciSecEK3(boolean secim) {
             chkDagitimYerleriKullaniciEk1.setSelected(secim);
             return this;
         }
@@ -2835,7 +2861,7 @@ public class EvrakOlusturPage extends MainPage {
         }
 
         @Step("Dağıtım yerlerinde birim ve kurum seçimlerini kaldır, kullanıcı seç")
-        public EkleriTab dagitimYerlerindeKullaniciSec() {
+        public EkleriTab dagitimYerlerindeKullaniciSecEK3() {
             chkDagitimYerleriBirimEk3.setSelected(true);
             chkDagitimYerleriKurumEk3.setSelected(true);
             chkDagitimYerleriKullaniciEk3.setSelected(false);
@@ -2843,6 +2869,14 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Dağıtım yerlerinde birim ve kurum seçimlerini kaldır, kullanıcı seç")
+        public EkleriTab dagitimYerlerindeKullaniciSecEK4() {
+            chkDagitimYerleriBirimEk4.setSelected(true);
+            chkDagitimYerleriKurumEk4.setSelected(true);
+            chkDagitimYerleriKullaniciEk4.setSelected(false);
+
+            return this;
+        }
         // İşlem penceresi kapatma onay - popup
         @Step("Popup : İşlem penceresi kapatma onayi: \"{secim}\" ")
         public EkleriTab islemPenceresiKapatmaOnayiPopup2(String secim) {
@@ -3230,7 +3264,13 @@ public class EvrakOlusturPage extends MainPage {
             txtIlgileriSistemdeEvrakArama.setValue(evrakAdi);
             return this;
         }
+        @Step("Ilgileri Tab Sisteme Kayitli Evrak EkleTab Arama başlangıç tarihi")
+        public IlgileriTab sistemeKayitlievrakInputDate (String date) {
+            SelenideElement btnSistemeKayitliEvrakAraTarihBasla = $x("//*[@id='yeniGidenEvrakForm:ilgiIslemleriTabView:ilgiIslemleriEvrakTarihBasId_input']");
 
+            btnSistemeKayitliEvrakAraTarihBasla.setValue(date);
+            return this;
+        }
         @Step("IlgileriTab Sisteme Kayitli Evrak EkleTab Dokuman Ara")
         public IlgileriTab sistemeKayitliDokumanArama() {
             btnIlgileriSistemdeDokumanAra.click();
@@ -3780,42 +3820,49 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Pdf EK-1 kontrolu")
         public PDFKontrol PDFEk1Kontrolu(String ek1) {
-            String pdfEK1 = $(By.xpath("//*[@id='viewer']/div/div[2]/div[12]")).getText();
+            String pdfEK1 = $(By.xpath("//*[@id='viewer']/div/div[2]/div[13]")).getText();
             Assert.assertEquals(pdfEK1.contains(ek1), true);
             return this;
         }
 
         @Step("Pdf EK-2 kontrolu")
         public PDFKontrol PDFEk2Kontrolu(String ek2) {
-            String pdfEK1 = $(By.xpath("//*[@id='viewer']/div/div[2]/div[13]")).getText();
+            String pdfEK1 = $(By.xpath("//*[@id='viewer']/div/div[2]/div[14]")).getText();
             Assert.assertEquals(pdfEK1.contains(ek2), true);
             return this;
         }
 
         @Step("Pdf EK-3 kontrolu")
         public PDFKontrol PDFEk3Kontrolu(String ek3) {
-            String pdfEK1 = $(By.xpath("//*[@id='viewer']/div/div[2]/div[14]")).getText();
+            String pdfEK1 = $(By.xpath("//*[@id='viewer']/div/div[2]/div[15]")).getText();
             Assert.assertEquals(pdfEK1.contains(ek3), true);
+            return this;
+        }
+
+        @Step("Pdf EK-4 kontrolu")
+        public PDFKontrol PDFEk4Kontrolu(String ek4) {
+            String pdfEK1 = $(By.xpath("//*[@id='viewer']/div/div[2]/div[16]")).getText();
+            Assert.assertEquals(pdfEK1.contains(ek4), true);
             return this;
         }
 
         @Step("Pdf Dağıtımda eklerin gitmeyeceği yrler kontrolu: {dagitim}")
         public PDFKontrol eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim1(String dagitim, String ekler) {
-            String pdfDagitim1 = $(By.xpath("//*[@id='viewer']/div/div[2]/div[17]")).getText();
+            String pdfDagitim1 = $(By.xpath("//*[@id='viewer']/div/div[2]/div[19]")).getText();
             Assert.assertEquals(ekler.contains(ekler), true);
             return this;
         }
 
         @Step("Pdf Dağıtımda eklerin gitmeyeceği yerler kontrolu: {dagitim}")
         public PDFKontrol eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim2(String dagitim, String ekler) {
-            String pdfDagitim1 = $(By.xpath("//*[@id='viewer']/div/div[2]/div[18]")).getText();
+            String pdfDagitim1 = $(By.xpath("//*[@id='viewer']/div/div[2]/div[20]")).getText();
             Assert.assertEquals(ekler.contains(ekler), true);
             return this;
         }
 
         @Step("Pdf Dağıtımda eklerin gitmeyeceği yerler kontrolu: {dagitim}")
-        public PDFKontrol eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim3(String dagitim, String ekler) {
-            String pdfDagitim1 = $(By.xpath("//*[@id='viewer']/div/div[2]/div[19]")).getText();
+        public PDFKontrol eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim(String dagitim, String ekler) {
+            String pdfDagitim1 = $(By.xpath("//*[@id='viewer']/div/div[2]/div[21]")).getText();
             Assert.assertEquals(ekler.contains(ekler), true);
             return this;
         }
@@ -3840,6 +3887,29 @@ public class EvrakOlusturPage extends MainPage {
             Assert.assertEquals(pdfEK1.contains(ilgi3), true);
             return this;
         }
+    }
+
+    @Step("Evrak oluştur alanında parafla tıklanır")
+    public void evrakOlusturParafla(String konu, String geregiSecimTipi, String geregi, String OnayAkisiKullanici1Turu, String kullanici2, String kullaniciBirim, String OnayAkisiKullanici2Turu) {
+                String konuKodu = "Diğer";
+                String kaldirilacakKlasor = "Diğer";
+                String icerik = createRandomText(15);
+
+                openPage()
+                .bilgilerTabiAc()
+                .konuKoduSec(konuKodu)
+                .konuDoldur(konu)
+                .kaldiralacakKlasorlerSec(kaldirilacakKlasor)
+                .geregiSecimTipiSec(geregiSecimTipi)
+                .geregiSec(geregi)
+                .onayAkisiEkle()
+                .onayAkisiEkleIlkSelectSec(OnayAkisiKullanici1Turu)
+                .kullanicilarDoldur(kullanici2,kullaniciBirim)
+                .kullaniciylaSecimTipiSec(kullanici2,OnayAkisiKullanici2Turu)
+                .kullan();
+                editorTabAc()
+                .editorIcerikDoldur(icerik);
+                parafla();
     }
     //endregion
 }

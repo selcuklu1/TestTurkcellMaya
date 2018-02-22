@@ -658,7 +658,7 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
         return this;
     }
 
-    @Step("Ekran Detay ekranı açılır\n")
+    @Step("Evrak Detay ekranı açılır\n")
     public KaydedilenGelenEvraklarPage ekranKontrolEvrakDetayi() {
         Assert.assertEquals(tabEvrakDetayi.isDisplayed(), true, "Evrak Detay sayfası");
         Allure.addAttachment("Evrak Detay sayfası", "açılmaktadır");

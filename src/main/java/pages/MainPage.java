@@ -4,6 +4,7 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
+import data.User;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
@@ -45,6 +46,10 @@ public class MainPage extends BaseLibrary {
 
     public MainPage solMenu(Enum solMenuData) {
         return new SolMenu().openMenu(solMenuData);
+    }
+
+    public MainPage solMenu2(Enum solMenuData) {
+        return new SolMenu().openMenu2(solMenuData);
     }
 
     public IslemMesajlari islemMesaji() {
