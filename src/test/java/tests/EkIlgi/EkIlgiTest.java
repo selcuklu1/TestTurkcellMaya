@@ -707,7 +707,6 @@ public class EkIlgiTest extends BaseTest {
 
 
         String evrakSayisi1 = "234234234234234234-010.01-10910";
-        String evrakSayisi2 = "6345202-010.01-11845";
 
         String ekleriAciklamaDosya1 = "Ekleri_Dosya1_" + getSysDate();
         String pathDosya1 = getUploadPath() + "TS1493_dosya1.pdf";
@@ -721,10 +720,10 @@ public class EkIlgiTest extends BaseTest {
 
         String ilgileriAciklamaDosya3 = "İlgileri_Dosya3_" + getSysDate();
 
-        String ilgileriEvrakSayisi = "6345202-010.01-11057";
+        String ilgileriEvrakSayisi1 = "6345202-010.01-11057";
+        String ilgileriEvrakSayisi2 = "6345202-010.01-11845";
 
         String basariMesaji = "İşlem başarılıdır!";
-
         login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR); //mbozdemir
 
         evrakOlusturPage
@@ -777,16 +776,7 @@ public class EkIlgiTest extends BaseTest {
                 .evrakEkEkle()
                 .listelenenEklereDosyanınGeldigiKontrolu(evrakSayisi1, "Evrak Sayısı1")
                 .dagitimYerleriAcEk3()
-                .dagitimYerlerindeKullaniciSecEK3()
-
-                //evrak sayisi2
-                .evrakAramaDoldur(evrakSayisi2)
-                .dokumanAra()
-                .listelenenEvraklardaKontrol(evrakSayisi2)
-                .evrakEkEkle()
-                .listelenenEklereDosyanınGeldigiKontrolu(evrakSayisi2, "Evrak Sayısı2")
-                .dagitimYerleriAcEk4()
-                .dagitimYerlerindeKullaniciSecEK4();
+                .dagitimYerlerindeKullaniciSecEK3();
 
         evrakOlusturPage
                 .editorTabAc();
@@ -804,9 +794,8 @@ public class EkIlgiTest extends BaseTest {
                 .PDFEk1Kontrolu(ekleriAciklamaDosya1)
                 .PDFEk2Kontrolu(fizikselEkAciklama)
                 .PDFEk3Kontrolu(evrakSayisi1)
-                .PDFEk4Kontrolu(evrakSayisi2)
-                .eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim1(birim, "Ek-2 konulmadı, Ek-3 konulmadı, Ek-4konulmadı")
-                .eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim2(kurum, "Ek-2 konulmadı, Ek-3konulmadı, Ek-4 konulmadı")
+                .eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim1(birim, "Ek-2 konulmadı, Ek-3 konulmadı")
+                .eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim2(kurum, "k-2 konulmadı, Ek-3konulmadı")
                 .eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim(kurum, "Ek-1 konulmadı, Ek-2konulmadı");
 
         closeNewWindow();
@@ -835,15 +824,23 @@ public class EkIlgiTest extends BaseTest {
                 .listelenenIlgilerdeDosyanınGeldigiKontrolu(ilgileriAciklamaDosya3, "Ilgi Metni")
 
                 //sistemde kayıtlı evrak ekle
+                //Evrak sayi1
                 .sistemdeKayitliEvrakEkleTabAc()
                 .evrakAranacakYerSec("Birim Evrakları Ara")
-                .evrakAramaDoldur(ilgileriEvrakSayisi)
+                .evrakAramaDoldur(ilgileriEvrakSayisi1)
                 .dokumanAra()
-                .listelenenEvraklardaKontrol(ilgileriEvrakSayisi)
+                .listelenenEvraklardaKontrol(ilgileriEvrakSayisi1)
                 .evrakEkEkle()
-                .listelenenIlgilerdeDosyanınGeldigiKontrolu(ilgileriEvrakSayisi, "Evrak Sayısı")
+                .listelenenIlgilerdeDosyanınGeldigiKontrolu(ilgileriEvrakSayisi1, "Evrak Sayısı1")
 
-                .ilgiEkListesindeDetayGoster(ilgileriEvrakSayisi)
+                //Evrak sayi2
+                .evrakAramaDoldur(ilgileriEvrakSayisi2)
+                .dokumanAra()
+                .listelenenEvraklardaKontrol(ilgileriEvrakSayisi2)
+                .evrakEkEkle()
+                .listelenenIlgilerdeDosyanınGeldigiKontrolu(ilgileriEvrakSayisi2, "Evrak Sayısı2")
+
+                .ilgiEkListesindeDetayGoster(ilgileriEvrakSayisi2)
                 .evrakDetayiKontrol()
                 .evrakDetayiSayfasınıKapat()
                 .islemPenceresiKapatmaOnayiPopup("Kapat");
@@ -852,7 +849,8 @@ public class EkIlgiTest extends BaseTest {
                 .editorTabAc()
                 .editordeIlgiKontrol(ilgileriAciklamaDosya2, "Dosya Adı")
                 .editordeIlgiKontrol(ilgileriAciklamaDosya3, "Ilgi metni")
-                .editordeIlgiKontrol(ilgileriEvrakSayisi, "Evrak Sayısı");
+                .editordeIlgiKontrol(ilgileriEvrakSayisi1, "Evrak Sayısı1")
+                .editordeIlgiKontrol(ilgileriEvrakSayisi2, "Evrak Sayısı2");
 
         evrakOlusturPage
                 .parafla()
@@ -874,10 +872,7 @@ public class EkIlgiTest extends BaseTest {
                 .dagitimYerleriKapat(fizikselEkAciklama)
                 .ekeGoreDagitimYerleriAc(evrakSayisi1)
                 .dagitimYerleriKontrol()
-                .dagitimYerleriKapat(evrakSayisi1)
-                .ekeGoreDagitimYerleriAc(evrakSayisi2)
-                .dagitimYerleriKontrol()
-                .dagitimYerleriKapat(evrakSayisi2);
+                .dagitimYerleriKapat(evrakSayisi1);
 
         evrakOlusturPage
                 .evrakImzala()
@@ -885,17 +880,22 @@ public class EkIlgiTest extends BaseTest {
 
         postalanacakEvraklarPage
                 .openPage()
-                .konuyaGoreEvrakKontrol("TS1493_EkIlgi_20180221110730") //evrakKonusu
-                .konuyaGoreEvrakOnizlemedeAc("TS1493_EkIlgi_20180221110730") //evrakKonusu
+                .konuyaGoreEvrakKontrol(evrakKonusu) //evrakKonusu
+                .konuyaGoreEvrakOnizlemedeAc(evrakKonusu) //evrakKonusu
                 .evrakPostala()
-                .evrakPostalanacakYerlereGoreYazdir(kurumPostalanakYerler)
-                .evrakDetaylariEvrakinEkleriKontrol("Ekleri_Dosya1_20180221110730"); //ekleriAciklamaDosya1
-
+                .evrakPostalanacakYerlereGoreYazdir()
+                .evrakDetaylariEvrakinEkleriKontrol(ekleriAciklamaDosya1) //ekleriAciklamaDosya1
+                .evrakDetaylariEkranKapat()
+                .dagitimYerineGorePostaSec(kurumPostalanakYerler, "Adi Posta")
+                .postala() //BU adım test stepinde eksikti
+                .dialogpostalaEvet()
+                .islemMesaji().basariliOlmali(basariMesaji);
 
         login(TestData.usernameSEZAICELIK, TestData.passwordSEZAICELIK); //sezaicelik
 
         gelenEvraklarPage
-                .openPage();
+                .openPage()
+                .tabloKonuyaGoreEvrakKontrol(evrakKonusu, true);
 
 
     }

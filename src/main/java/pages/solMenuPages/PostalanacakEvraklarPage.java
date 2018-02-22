@@ -10,10 +10,8 @@ import io.qameta.allure.Step;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.apache.poi.EmptyFileException;
-import org.apache.xmlbeans.impl.xb.xsdschema.All;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.interactions.internal.KeysRelatedAction;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
@@ -150,6 +148,8 @@ public class PostalanacakEvraklarPage extends MainPage {
     SelenideElement btnEkleriYazbtn1 = $x("//*[@id='postaDetayYazdirForm:dtPostaEvrakEk_data']/tr[1]/td[7]/div/button");
     SelenideElement btnEkleriYazbtn2 = $x("//*[@id='postaDetayYazdirForm:dtPostaEvrakEk_data']/tr[2]/td[7]/div/button");
 
+    ElementsCollection tblOnIzlemePostalanacakYerler = $$("[id^='mainPreviewForm:dataTableId_data'] > tr[role='row']");
+
 
     @Step("Postalanacak Evraklar sayfası aç")
     public PostalanacakEvraklarPage openPage() {
@@ -268,6 +268,7 @@ public class PostalanacakEvraklarPage extends MainPage {
         btnEvrakPostala.click();
         return this;
     }
+
     @Step("Postalanacak yerlerin kontrolü")
     public PostalanacakEvraklarPage postalanacakKontrol () {
        int sizetbl =  tabloPostalanacakYerler.size();
@@ -958,7 +959,6 @@ public class PostalanacakEvraklarPage extends MainPage {
 
     @Step("Postalanacak evrak Postala")
     public PostalanacakEvraklarPage postala() {
-
         btnPostala.click();
         return this;
     }
@@ -1409,16 +1409,31 @@ public class PostalanacakEvraklarPage extends MainPage {
         return this;
     }
 
-    @Step("Postalanacak yere göre yazdır butonu tıkla")
-    public PostalanacakEvraklarPage evrakPostalanacakYerlereGoreYazdir(String gonderilenYer) {
+    @Step("Postalanacak yere göre yazdır butonu tıkla ")
+    public PostalanacakEvraklarPage evrakPostalanacakYerlereGoreYazdir() {
 
-        tblEvrakDetaylariUstVeriler
+/*        tblEvrakDetaylariUstVeriler
                 .filterBy(text(gonderilenYer))
                 .first()
                 .$(By.xpath("//span[normalize-space(text())='Yazdır']"))
-                .click();
+                .pressEnter();*/
+
+        SelenideElement btnkullYazdir = $x("//*[@id='mainPreviewForm:dataTableId_data']/tr[2]/td[5]/div/table/tbody/tr[1]/td/button");
+        clickJs(btnkullYazdir);
 
        return this;
+    }
+
+    @Step("Posta Tipi Seç")
+    public PostalanacakEvraklarPage dagitimYerineGorePostaSec(String gonderilenYer, String postaTipi) {
+
+        tblOnIzlemePostalanacakYerler
+                .filterBy(Condition.text(gonderilenYer))
+                .get(0)
+                .$("[class='ui-helper-hidden-accessible' ] [id^='mainPreviewForm:dataTableId:1']")
+                .selectOption(postaTipi);
+
+        return this;
     }
 }
 
