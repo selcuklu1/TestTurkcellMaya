@@ -685,6 +685,8 @@ public class VekaletIslemleriTest extends BaseTest {
     @Test(enabled = true, description = "TS2200 : Vekalet verme ekranında alan kontrolleri")
     public void TS2200() throws InterruptedException{
 
+        login(mbozdemir);
+
 
     }
 }
