@@ -15,11 +15,10 @@ import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.altMenuPages.CevapYazPage;
+import pages.altMenuPages.EvrakDetayiPage;
 import pages.solMenuPages.*;
 import pages.ustMenuPages.EvrakOlusturPage;
 import tests.KisiselIslemlerBagTipi.KisiselIslemlerBagTipiTest;
-
-import static common.PreCondition.TS2141;
 import static data.TestData.*;
 
 /****************************************************
@@ -37,6 +36,8 @@ public class EvrakKopyalamaTest extends BaseTest {
     GelenEvraklarPage gelenEvraklarPage;
     CevapYazPage cevapYazPage;
     EvrakOlusturPage evrakOlusturPage;
+    TaslakEvraklarPage taslakEvraklarPage;
+    EvrakDetayiPage evrakDetayiPage;
 
     @BeforeMethod
     public void loginBeforeTests() {
@@ -45,6 +46,8 @@ public class EvrakKopyalamaTest extends BaseTest {
         gelenEvraklarPage = new GelenEvraklarPage();
         cevapYazPage = new CevapYazPage();
         evrakOlusturPage = new EvrakOlusturPage();
+        taslakEvraklarPage = new TaslakEvraklarPage();
+        evrakDetayiPage = new EvrakDetayiPage();
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -54,8 +57,6 @@ public class EvrakKopyalamaTest extends BaseTest {
         String kurum = "BÜYÜK HARFLERLE BİRİM";
 
         login(usernameYAKYOL,passwordYAKYOL);
-
-        TS2141();
 
         reusableSteps
                 .beklemeyeAlinanlarEvrakOlustur(konuKodu,"Birim",kurum,"Paraflama","Zübeyde Tekin","BHUPGMY","İmzalama",usernameZTEKIN,passwordZTEKIN);
@@ -73,8 +74,11 @@ public class EvrakKopyalamaTest extends BaseTest {
         String birim = "Zübeyde Tekin";
         String kaldirilacakKlasor = "Diğer";
         String geregi = "Optiim Birim";
+        String onayAkisi = "TS2172";
         String basariMesaji = "İşlem başarılıdır!";
+        String basariMesaji2 = "Kopyalanan evraka \"Taslak Evraklar\" kısmından erişebilirsiniz.";
         String icerik = createRandomText(15);
+        String filePath = getUploadPath() + "Otomasyon.pdf";
 
         login(usernameZTEKIN,passwordZTEKIN);
 
@@ -89,7 +93,7 @@ public class EvrakKopyalamaTest extends BaseTest {
         cevapYazPage
                 .kaldirilacakKlasorlerDoldur(kaldirilacakKlasor)
                 .geregiDoldur(geregi)
-                .onayAkisiDoldur("TS2172")
+                .onayAkisiDoldur(onayAkisi)
                 .kaydet()
                 .evrakKayitPopupEvet()
                 .islemMesaji().basariliOlmali(basariMesaji);
@@ -97,6 +101,41 @@ public class EvrakKopyalamaTest extends BaseTest {
         evrakOlusturPage
                 .editorTabAc()
                 .editorIcerikDoldur(icerik);
+
+        evrakOlusturPage
+                .ekleriTabAc();
+
+        cevapYazPage
+                .evrakEkTabViewDosyaEkle(filePath)
+                .evrakEkTabViewEkMetniDoldur(icerik)
+                .evrakEkTabViewEkle()
+                .kaydet()
+                .evrakKayitPopupEvet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        cevapYazPage
+                .evrakKopyala()
+                .evrakKopyalaUyariGeldigiGorme()
+                .evrakKopyalaUyariEvet()
+                .islemMesaji().basariliOlmali(basariMesaji2);
+
+        taslakEvraklarPage
+                .openPage()
+                .kopyaliEvraklarGeldigiGorme(konuKodu)
+                .evrakNoIleIcerikGoster(konuKodu)
+                .editorAlaniGirilenIcerikAyniGeldigiGorme(icerik);
+
+        evrakDetayiPage
+                .bilgileriTabAc()
+                .bilgileriTabKaldirilacakKlasorOnayAkisiGeregiGeldigiGorme(kaldirilacakKlasor,geregi,onayAkisi);
+
+        evrakDetayiPage
+                .ekleriTabAc()
+                .eklenenDosyaninGeldigiGorulur(icerik);
+
+        evrakDetayiPage
+                .ilgileriTabAc()
+                .cevapYazilanEvrakBilgisiGeldigiGorme();
 
     }
 }
