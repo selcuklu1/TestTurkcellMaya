@@ -5,6 +5,11 @@ import io.qameta.allure.Step;
 import pages.LoginPage;
 import pages.solMenuPages.ImzaBekleyenlerPage;
 import pages.ustMenuPages.EvrakOlusturPage;
+import pages.ustMenuPages.GelenEvrakKayitPage;
+import pages.ustMenuPages.TuzelKisiYonetimiPage;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class ReusableSteps extends BaseLibrary{
 
@@ -44,6 +49,11 @@ public class ReusableSteps extends BaseLibrary{
                 .evrakOlusturParafla(konu,geregiSecimTipi,geregi,"Parafla",imzaci.getFullname(), imzaci.getBirimAdi(), "İzmala");
         new LoginPage().login(imzaci);
         new ImzaBekleyenlerPage().imzaBekleyenlerEvrakSecBeklemeyeAl(konu);
+    }
+
+    @Step("Medya şirketi tipinde tüzel kişi ekleme")
+    public List<String> medyaSirketiTuzelKisiEkleme() {
+        return new TuzelKisiYonetimiPage().medyaSirketiTuzelKisiEkleme();
     }
 
 }

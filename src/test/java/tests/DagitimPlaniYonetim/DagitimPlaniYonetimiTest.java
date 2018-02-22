@@ -4,6 +4,7 @@ import com.codeborne.selenide.Selectors;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.WebDriverRunner;
 import common.BaseTest;
+import common.ReusableSteps;
 import data.User;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Step;
@@ -13,7 +14,6 @@ import org.testng.annotations.Test;
 import pages.newPages.EvrakOlusturPage;
 import pages.pageComponents.EvrakOnizleme;
 import pages.pageComponents.PDFOnizleme;
-import pages.pageComponents.TuzelKisiEkleDialog;
 import pages.pageData.alanlar.BilgiSecimTipi;
 import pages.pageData.alanlar.GeregiSecimTipi;
 import pages.pageData.alanlar.OnayKullaniciTipi;
@@ -23,10 +23,7 @@ import pages.ustMenuPages.DagitimPlaniYonetimiPage;
 import pages.ustMenuPages.GidenEvrakKayitPage;
 import pages.ustMenuPages.TuzelKisiYonetimiPage;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Condition.*;
@@ -38,6 +35,7 @@ import static com.codeborne.selenide.Selenide.switchTo;
  * Açıklama:
  */
 @Feature("Dağıtım Planı Yönetimi")
+@Test(suiteName = "SuitName")
 public class DagitimPlaniYonetimiTest extends BaseTest {
 
     User optiim = new User("optiim", "123", "Optiim TEST", "Optiim Birim");
@@ -162,10 +160,7 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
         page = new DagitimPlaniYonetimiPage().openPage();
         page.sorgulamadaAdGir(adi)
                 .ara()
-                .sorgulamaDataTable
-                .searchByColumnName("Dağıtım Planı Ad")
-                .findRows(exactText(adi))
-                .shouldHaveSize(1);//.getFoundRow().$(page.copyButtonLocator).click();
+                .sorgulamaDataTable.searchByColumnName("Dağıtım Planı Ad").findRows(exactText(adi)).shouldHaveSize(1);//.getFoundRow().$(page.copyButtonLocator).click();
         page.sorgulamaDataTableKopyalaButonaTikla();
         checkFields(adi, aciklama, kullanildigiBirim, altBirimlerGorsun, dagitimElemanlariTipi, dagitimElemanlari);
         page.adiGir(newAd)
@@ -210,36 +205,40 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
     @Test(description = "TS2260: Sorgulama ve Filtreleme", enabled = true)
     public void TS2260() {
         User user = optiim;
+
+        String pasifDagitimPlanIsmi = "PASİF";
+        String aktifDagitimPlanIsmi = "TS2260";
+
         login(user);
         page = new DagitimPlaniYonetimiPage().openPage();
 
         step("STEP: Durum \"Sadece Pasifler\"", "Pasifler bulunmalı, aktifler bulunmamalı");
         page.sorgulamadaDurumSec("Sadece Pasifler").ara().sorgulamaDataTable
                 .searchInAllPages(true)
-                .findRows(text("PASİF")).shouldHaveSize(1)
+                .findRows(text(pasifDagitimPlanIsmi)).shouldHaveSize(1)
                 .goToFirstPage()
-                .findRows(text("TS2260")).shouldHaveSize(0);
+                .findRows(text(aktifDagitimPlanIsmi)).shouldHaveSize(0);
 
         step("STEP: Durum \"Sadece Aktifler\"", "Aktifler bulunmalı, pasifler bulunmamalı");
         page.sorgulamadaDurumSec("Sadece Aktifler").ara().sorgulamaDataTable
                 .searchInAllPages(true)
-                .findRows(text("TS2260")).shouldHaveSize(1)
+                .findRows(text(aktifDagitimPlanIsmi)).shouldHaveSize(1)
                 .goToFirstPage()
-                .findRows(text("PASİF")).shouldHaveSize(0);
+                .findRows(text(pasifDagitimPlanIsmi)).shouldHaveSize(0);
 
         step("STEP: Durum \"Tümü\"", "Aktifler ve pasifler bulunmalı");
         page.sorgulamadaDurumSec("Tümü").ara().sorgulamaDataTable
                 .searchInAllPages(true)
-                .findRows(text("PASİF")).shouldHaveSize(1)
+                .findRows(text(pasifDagitimPlanIsmi)).shouldHaveSize(1)
                 .goToFirstPage()
-                .findRows(text("TS2260")).shouldHaveSize(1);
+                .findRows(text(aktifDagitimPlanIsmi)).shouldHaveSize(1);
 
         step("STEP: Durum \"Tümü\" ve Ad girilir", "Sadece adi girilen bulunmalı");
         page.sorgulamadaDurumSec("Tümü")
-                .sorgulamadaAdGir("PASİF")
+                .sorgulamadaAdGir(pasifDagitimPlanIsmi)
                 .ara()
                 .sorgulamaDataTable.searchInAllPages(true)
-                .findRows(text("PASİF")).shouldHaveSize(1);
+                .findRows(text(pasifDagitimPlanIsmi)).shouldHaveSize(1);
     }
 
     @Test(description = "TS2323: Yeni Dağıtım Planı Kayıt (Ekranlardan Kontrolü)", enabled = true
@@ -351,33 +350,32 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
         User user = user1;
         yeniPlanAdi2270 = "TS2270_" + getSysDate();
 
+        String tuzelKisi = "Türksat Optiim";
+        String gercekKisi = "Zübeyde TEKİN";
+
         String adres = "HitapAdres";
         //String dagitimElemanlariTipi, dagitimElemanlari, evraktaGorunecekHitap, kayitliHitap;
         evraktaGorunecekHitap = new String[]{
                 String.format("Sayın %s%s", user.getFullname(), "NA")
                 , user.getBirimAdi() + "E"
-                , "Başbakanlıka"
-                , "Türksat Optiim".toUpperCase() + "E"
-                , String.format("Sayın %s \n %s", "Zübeyde TEKİN", adres)
+                , "CUMHURBAŞKANLIĞINA"
+                , tuzelKisi.toUpperCase() + "E"
+                , String.format("Sayın %s \n %s", gercekKisi, adres)
         };
 
         dagitimElemenlariTS2270 = new ArrayList<>();
         //dagitimElemanlariTipi, dagitimElemanlariEkle, Ek, evraktaGorunecekHitap, kayitliHitap
         dagitimElemenlariTS2270.add(new String[]{"Kullanıcı", user.getFullname(), "NA"});
         dagitimElemenlariTS2270.add(new String[]{"Birim", user.getBirimAdi(), "E", "BirimÖzelHitap"});
-        dagitimElemenlariTS2270.add(new String[]{"Kurum", "Başbakanlık"});
-        dagitimElemenlariTS2270.add(new String[]{"Tüzel Kişi", "Türksat Optiim", "E", "TüzelÖzelHitap"});
-        dagitimElemenlariTS2270.add(new String[]{"Gerçek Kişi", "Zübeyde", adres});
+        dagitimElemenlariTS2270.add(new String[]{"Kurum", "Cumhurbaşkanlığı"});
+        dagitimElemenlariTS2270.add(new String[]{"Tüzel Kişi", tuzelKisi, "E", "TüzelÖzelHitap"});
+        dagitimElemenlariTS2270.add(new String[]{"Gerçek Kişi", gercekKisi, adres});
 
         System.out.println("Dağınım Planı Adı: " + yeniPlanAdi2270);
 
         login(user);
         page = new DagitimPlaniYonetimiPage().openPage();
-        page.yeni()
-                .adiGir(yeniPlanAdi2270)
-                .aciklamaGir("Dağıtım Planı_Dağıtım Hitap Düzenleme")
-                .kullanildigiBirimSec(user.getBirimAdi())
-                .altBirimlerGorsunSec(true);
+        page.yeni();
 
         for (String[] d : dagitimElemenlariTS2270) {
             switch (d[0]) {
@@ -390,21 +388,26 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
                 case "Kurum":
                     page.dagitimElemanlariEkle(d[0], d[1]);
                     break;
-                case "Gerçek Kişi":
-                    page.dagitiminElemaniEkleVeAdresSec(d[0], d[1], d[2], evraktaGorunecekHitap[3]);
-                    break;
                 case "Tüzel Kişi":
-                    page.dagitiminElemaniEkleVeOzelHitapSec(d[0], d[1], evraktaGorunecekHitap[4]);
+                    page.dagitiminElemaniEkleVeOzelHitapSec(d[0], d[1], evraktaGorunecekHitap[3]);
+                    break;
+                case "Gerçek Kişi":
+                    page.dagitiminElemaniEkleVeAdresSec(d[0], d[1], d[2], evraktaGorunecekHitap[4]);
                     break;
                 default:
                     break;
             }
         }
-        page.kaydet().islemMesaji().basariliOlmali();
+        page.adiGir(yeniPlanAdi2270)
+                .aciklamaGir("Dağıtım Planı_Dağıtım Hitap Düzenleme")
+                .kullanildigiBirimSec(user.getBirimAdi())
+                .altBirimlerGorsunSec(true)
+                .kaydet().islemMesaji().basariliOlmali();
     }
 
-    @Test(description = "TS2271: Hitabın oluşturulan evrak üzerinde kontrolü", enabled = true)
-//, dependsOnMethods = "TS2270")
+    @Test(description = "TS2271: Hitabın oluşturulan evrak üzerinde kontrolü", enabled = true
+        , dependsOnMethods = "TS2270"
+    )
     public void TS2271() {
         useFirefox();
         User user = user1;
@@ -419,7 +422,8 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
                 , String.format("Sayın %s \n %s", "Zübeyde TEKİN", adres)
         };*/
 
-        String dagitimPlani = "TS2270_20180212162246";
+        //String dagitimPlani = "TS2270_20180212162246";
+        String dagitimPlani = yeniPlanAdi2270;
         String konu = "TS2271_" + getSysDate();
         evrakOlusturPage = new EvrakOlusturPage().openPage();
         evrakOlusturPage.bilgileriTab()
@@ -440,18 +444,18 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
         //imzaladiklarimPage.searchTable().findRows(text(konu)).getFoundRow().click();
 
         EvrakOnizleme.EvrakDetaylari evrakDetaylari = new EvrakOnizleme().new PostaDetayi().tabiAc()
-                .postalananYerlerindeAra(text("DAĞITIM YERLERİNE"))
+                .postalananYerlerindeAra(text(yeniPlanAdi2270 + "E"))
                 .yazdir();
         evrakDetaylari.ustVerileriListesindeAra(text(konu)).ustVerileriYazdir();
 
         PDFOnizleme pdfOnizleme = new PDFOnizleme();
         WebDriver driver = switchTo().window(1);
         pdfOnizleme.checkTextInAllPages(
-                text(evraktaGorunecekHitap[0])
-                , text(evraktaGorunecekHitap[1])
-                , text(evraktaGorunecekHitap[2])
-                , text(evraktaGorunecekHitap[3])
-                , text(evraktaGorunecekHitap[4]));
+                exactText(evraktaGorunecekHitap[0])
+                , exactText(evraktaGorunecekHitap[1])
+                , exactText(evraktaGorunecekHitap[2])
+                , exactText(evraktaGorunecekHitap[3])
+                , exactText(evraktaGorunecekHitap[4]));
         driver.close();
         switchTo().window(0);
     }
@@ -554,6 +558,36 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
         page.getDagitimHitapDuzenlemeSilButton(tuzelKisi, "bulunur").shouldBe(visible);
         page.getDagitimHitapDuzenlemeGuncelleButton(tuzelKisi,"bulunur").shouldBe(visible);
         page.ekle(text(tuzelKisi));
+    }
+
+    @Test(description = "TS1936: Medya Tipinde Tüzel Kişi Ekleme İşlemleri", enabled = true)
+    public void TS1936() {
+        User user = user1;
+
+        login(user);
+
+        //List<String> tuzelKisi = new ReusableSteps().medyaSirketiTuzelKisiEkleme();
+        List<String> tuzelKisi = new TuzelKisiYonetimiPage().medyaSirketiTuzelKisiEkleme();
+
+        String adi = "TS1936_" + getSysDate();
+        System.out.println("Dağınım Planı: " + adi);
+        page = new DagitimPlaniYonetimiPage().openPage();
+        page.yeni()
+                .adiGir(adi)
+                .aciklamaGir("Medya Şirketi")
+                .kullanildigiBirimSec(user.getBirimAdi())
+                .altBirimlerGorsunSec(true)
+                .dagitimElemanlariTipiSec("Tüzel Kişi")
+                .tuzelKisiAramaDetaylari()
+                .tuzelKisiTipiSecilir("MEDYA ŞİRKETİ")
+                .alanlariKonrolu()
+                .tuzelKisiDoldurulur(tuzelKisi.get(0))
+                .ara()
+                .listelenKayidinCheckboxIsaretlenir(text(tuzelKisi.get(0)), true)
+                .ekle();
+        page.ekle()
+                .kaydet().islemMesaji().basariliOlmali();
+        //page.dagitimPlaniOlustur(adi, "Medya Şirketi", user.getBirimAdi(),true, "Tüzel Kişi", tuzelKisi.get(0));
     }
 
     //region Steps

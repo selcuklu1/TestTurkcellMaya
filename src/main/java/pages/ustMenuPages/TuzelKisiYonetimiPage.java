@@ -11,6 +11,9 @@ import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.UstMenuData;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
@@ -577,6 +580,58 @@ public class TuzelKisiYonetimiPage extends MainPage {
     public TuzelKisiYonetimiPage platformIsletmecisiSe(boolean secim) {
         chkPlatformIsletmecisi.setSelected(secim);
         return this;
+    }
+
+    @Step("Medya şirketi tipinde tüzel kişi ekleme")
+    public List<String> medyaSirketiTuzelKisiEkleme() {
+        String vergiNo = createRandomNumber(10);
+        String kisaAd = createRandomText(7);
+        String ad = "TuzelMedya" + getSysDate();
+        String tuzelKisiTipi = "MEDYA ŞİRKETİ";
+        String adres = "Gültepe Mahallesi";
+        String ulke = "TÜRKİYE";
+        String il = "İst";
+        String ilce = "Kağ";
+        String eposta = kisaAd + "medyasirketi@turksat.com.tr";
+        String webAdres = "www." + kisaAd + "medyasirketi.com";
+        String telNo = "5391111111";
+        String faksNo = "2121111111";
+        String basariMesaji = "İşlem başarılıdır!";
+
+
+        openPage()
+                .yeniTuzelKisiEkle()
+                .tuzelKisiTipiSec(tuzelKisiTipi)
+                .medyaSirketiAlanKontrolleri()
+                .vergiNoDoldur(vergiNo)
+                .adDoldur(ad)
+                .kisaAdDoldur(kisaAd)
+
+                .karasalTVSec("T1")
+                .karasalTVYayindaSec(true)
+                .kabloTVSec("TEK")
+                .kabloTVYayindaSec(true)
+                .istegeBagliTvSec(true)
+                .platformIsletmecisiSe(true)
+
+                .yeniIletisimEkle()
+
+                .mobilTelNoDoldur(telNo)
+                .telNoDoldur(telNo)
+                .faks1NoDoldur(faksNo)
+                .faks2NoDoldur(faksNo)
+                .adresDoldur(adres)
+                .ulkeSec(ulke)
+
+                .ilSec(il)
+                .ilceSec(ilce)
+                .ePostaDoldur(eposta)
+                .webAdresDoldur(webAdres)
+                .iletisimBilgisiKaydet()
+
+                .tuzelKisiKaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+        return Arrays.asList(ad,kisaAd,vergiNo);
     }
 }
 

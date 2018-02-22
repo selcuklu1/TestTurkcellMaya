@@ -81,7 +81,7 @@ public class PDFOnizleme {
     @Step("PDF Önizleme tekst kontrolü")
     public PDFOnizleme checkTextInAllPages(Condition... conditions) {
         for (Condition condition : conditions) {
-            viewer.shouldHave(condition);
+            viewer.shouldHave(condition).scrollIntoView(true);
         }
         return this;
     }
