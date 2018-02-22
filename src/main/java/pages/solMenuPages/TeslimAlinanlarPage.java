@@ -33,6 +33,8 @@ public class TeslimAlinanlarPage extends MainPage {
     BelgenetElement txtHavaleYapBirim = comboLov(By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovText"));
     ElementsCollection tblEvrakGecmisi = $$("[id$='hareketGecmisiDataTable_data'] > tr[role='row']");
     SelenideElement tabHavale = $("[id='mainPreviewForm:topluHavaleOnizlemeTab']");
+    BelgenetElement txtHavaleYapKullniciListesi = comboLov(By.id("inboxItemInfoForm:dagitimBilgileriKisiListesiLov:LovText"));
+    BelgenetElement txtTebligEtKullniciListesi = comboLov(By.id("inboxItemInfoForm:kullaniciGrubuLov_id:LovText"));
 
     ElementsCollection tabEvrakGecmisi = $$("[id$='evrakOnizlemeTab'] ul li");
 
@@ -179,6 +181,37 @@ public class TeslimAlinanlarPage extends MainPage {
         return this;
     }
 
+    @Step("Teslim Alınanlar sayfasında evrakın geldiği kontrolu ve seçme")
+    public TeslimAlinanlarPage konuyaGoreEvrakIcerikGoster(String konu) {
+
+        tblEvraklar
+                .filterBy(text("Konu: " + konu))
+                .first()
+                .$("[id^='mainInboxForm:inboxDataTable'] [id$='detayGosterButton']").click();
+
+        $(By.id("mainPreviewForm:eastLayout")).waitUntil(Condition.visible, 5000);
+        return this;
+    }
+
+    @Step("\"{text}\" butonu tıklanır.")
+    public TeslimAlinanlarPage btnTikla(String text) {
+        SelenideElement btn = $(By.xpath("descendant::*[text()='" + text + "']/ancestor::tbody[1]//button"));
+        btn.click();
+        return this;
+    }
+
+    @Step("Kullanici Lisesi alanında \"{kullaniciListesi}\" seçilir. ")
+    public TeslimAlinanlarPage tebligEtKullaniciListesiSec(String kullaniciListesi){
+        txtTebligEtKullniciListesi.selectLov(kullaniciListesi);
+        return this;
+    }
+
+
+    @Step("Kullanici Lisesi alanında \"{kullaniciListesi}\" seçilir. ")
+    public TeslimAlinanlarPage havaleYapKullaniciListesiSec(String kullaniciListesi){
+        txtHavaleYapKullniciListesi.selectLov(kullaniciListesi);
+        return this;
+    }
 
     @Step("Gönder tıklanır")
     public TeslimAlinanlarPage havaleYapGonder() {

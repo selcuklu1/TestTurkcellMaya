@@ -199,7 +199,7 @@ public class TeslimAldiklarimHavaleTest extends BaseTest {
         havaleOnayinaSunduklarimPage
                 .openPage()
                 .evrakNoIleEvrakSec(konuKoduRandomTS1597)
-                .geriAl()
+                .geriAlSec()
                 .geriAlNotDoldur(not)
                 .geriAlGeriAl();
 

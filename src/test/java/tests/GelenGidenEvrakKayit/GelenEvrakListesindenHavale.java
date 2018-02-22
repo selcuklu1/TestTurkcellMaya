@@ -123,5 +123,65 @@ public class GelenEvrakListesindenHavale extends BaseTest {
                 .evrakNoIleEvrakSec(konu);
     }
 
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, priority = 0, description = "TS1591: Evrakın havale onayından geri çekilmesi")
+    public void TS1591() throws InterruptedException {
+        String testid = "TS-1591";
+        konu = "TS-1591-" + getSysDate();
+
+        testStatus(testid, "PreCondition Evrak Oluşturma");
+        gelenEvrakKayitPage
+                .openPage()
+                .konuKoduDoldur(konuKodu)
+                .konuDoldur(konu)
+                .evrakTuruSec(evrakTuru)
+                .evrakDiliSec(evrakDili)
+                .evrakTarihiDoldur(evrakTarihi)
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .kisiKurumSec(kisiKurum)
+                .geldigiKurumDoldurLovText(geldigiKurum)
+                .evrakSayiSagDoldur()
+                .evrakGelisTipiSec(evrakGelisTipi)
+                .ivedilikSec(ivedilik)
+                .dagitimBilgileriKisiSec(kisi)
+                .kaydet()
+                .popUpsv2();
+
+        login(TestData.usernameZTEKIN,TestData.passwordZTEKIN);
+
+        gelenEvraklarPage
+                .openPage()
+                .tabloEvrakNoSec(konu)
+                .tabloEvrakNoileIcerikSec(konu)
+                .ekranKontrolEvrakDetayi()
+                .icerikHavaleYap()
+                .icerikHavaleAlanKontrolleri()
+                .icerikHavaleIslemleriKisiDoldur(kullanici,details)
+                .eklenenIcerikKisiKontrolu(kisi)
+                .icerikDagitimBilgileriOnaylayanWithDetails(onaylayacakKisi, onayKisiDetails)
+                .eklenenIcerikOnaylayanKontrolu(onaylayacakKisi)
+                .icerikHavaleOnayinaGonder2()
+                .islemMesaji().basariliOlmali();
+
+        testStatus(testid, "Test Başladı");
+        havaleOnayinaSunduklarimPage
+                .openPage()
+                .evrakNoIleEvrakSec(konu)
+                .onizlemeHavaleBilgisiKontrol()
+                .onizlemeGeriAlKontrol()
+                .havaleBilgisiSec()
+                .kisiKontrol(kullanici)
+                .geriAlSec()
+                .notAlaniKontrol()
+                .geriAlNotDoldur(konu)
+                .geriAlGeriAl()
+                .islemMesaji().basariliOlmali();
+
+        gelenEvraklarPage
+                .openPage()
+                .tabloEvrakNoSec(konu);
+    }
+
+
 }
 
