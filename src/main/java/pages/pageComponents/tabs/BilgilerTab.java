@@ -985,6 +985,28 @@ public class BilgilerTab extends MainPage {
     }
 
     @Step("Alanları doldurulur")
+    public BilgilerTab alanlariDoldur(String konu, GeregiSecimTipi geregiSecimTipi, String geregi, User parafci, User imzaci) {
+        konuKoduSec("010.01");
+        konuDoldur(konu);
+        kaldiralacakKlasorleriSec("Diğer");
+        geregiSecimTipiSec(geregiSecimTipi);
+        geregiSec(geregi);
+        onayAkisiTemizle();
+        onayAkisiEkleButonaTikla();
+
+        String kendisi = getAnlikOnayAkisKullanicilarCombolov().getSelectedTitles().first().text();
+        if (kendisi.contains(parafci.getFullname()))
+            anlikOnayAkisKullanicininTipiSec(parafci, OnayKullaniciTipi.PARAFLAMA);
+        else
+            anlikOnayAkisKullaniciVeTipiSec(parafci, OnayKullaniciTipi.PARAFLAMA);
+
+        anlikOnayAkisKullaniciVeTipiSec(imzaci, OnayKullaniciTipi.IMZALAMA);
+        kullanButonaTikla();
+        return this;
+    }
+
+
+    @Step("Alanları doldurulur")
     public BilgilerTab alanlariDoldur(String konuKodu, String konu, String kaldirilacakKlasorleri, Ivedilik ivedilik, GeregiSecimTipi geregiSecimTipi, String geregi, String[][] onayAkisKullaniciTipi) {
         konuKoduSec(konuKodu);
         konuDoldur(konu);

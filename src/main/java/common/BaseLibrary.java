@@ -89,6 +89,7 @@ public class BaseLibrary extends ElementsContainer {
         return userName;
     }
 
+    @Step("Browserdaki Cookieleri temizle")
     public void clearCookies() {
         try {
             Selenide.clearBrowserLocalStorage();

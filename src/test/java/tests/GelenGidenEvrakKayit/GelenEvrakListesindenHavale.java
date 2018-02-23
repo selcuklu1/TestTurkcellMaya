@@ -31,6 +31,7 @@ public class GelenEvrakListesindenHavale extends BaseTest {
     TopluEvrakOnizleme topluEvrakOnizleme;
     HavaleEdilenEvrakRaporuPage havaleEdilenEvrakRaporuPage;
     HavaleOnayinaSunduklarimPage havaleOnayinaSunduklarimPage;
+    HavaleEttiklerimPage havaleEttiklerimPage;
 
     static final Logger logger = LogManager.getLogger("GelenEvrakListesindenHavale");
 
@@ -65,6 +66,7 @@ public class GelenEvrakListesindenHavale extends BaseTest {
         topluEvrakOnizleme = new TopluEvrakOnizleme();
         havaleEdilenEvrakRaporuPage = new HavaleEdilenEvrakRaporuPage();
         havaleOnayinaSunduklarimPage = new HavaleOnayinaSunduklarimPage();
+        havaleEttiklerimPage = new HavaleEttiklerimPage();
     }
 
 
@@ -180,6 +182,104 @@ public class GelenEvrakListesindenHavale extends BaseTest {
         gelenEvraklarPage
                 .openPage()
                 .tabloEvrakNoSec(konu);
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, priority = 0, description = "TS1597: Havale onayından geri çekilen evrakın havale edilmesi")
+    public void TS1597() throws InterruptedException {
+        String testid = "TS-1597";
+        konu = "TS-1597-" + getSysDate();
+        String gerek = "GEREĞİ İÇİN GÖNDER";
+        String bilgi = "BİLGİ İÇİN GÖNDER";
+        String koordinasyon = "KOORDİNASYON İÇİN GÖNDER";
+        String evrakNo;
+
+        testStatus(testid, "PreCondition Evrak Oluşturma");
+        gelenEvrakKayitPage
+                .openPage()
+                .konuKoduDoldur(konuKodu)
+                .konuDoldur(konu)
+                .evrakTuruSec(evrakTuru)
+                .evrakDiliSec(evrakDili)
+                .evrakTarihiDoldur(evrakTarihi)
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .kisiKurumSec(kisiKurum)
+                .geldigiKurumDoldurLovText(geldigiKurum)
+                .evrakSayiSagDoldur()
+                .evrakGelisTipiSec(evrakGelisTipi)
+                .ivedilikSec(ivedilik)
+                .dagitimBilgileriKisiSec(kisi)
+                .kaydet();
+
+        evrakNo = gelenEvrakKayitPage.popUpsv2();
+
+        login(TestData.usernameZTEKIN,TestData.passwordZTEKIN);
+
+        gelenEvraklarPage
+                .openPage()
+                .tabloEvrakNoSec(konu)
+                .tabloEvrakNoileIcerikSec(konu)
+                .ekranKontrolEvrakDetayi()
+                .icerikHavaleYap()
+                .icerikHavaleAlanKontrolleri()
+                .icerikHavaleIslemleriKisiDoldur(kullanici,details)
+                .eklenenIcerikKisiKontrolu(kisi)
+                .icerikDagitimBilgileriOnaylayanWithDetails(onaylayacakKisi, onayKisiDetails)
+                .eklenenIcerikOnaylayanKontrolu(onaylayacakKisi)
+                .icerikHavaleOnayinaGonder2()
+                .islemMesaji().basariliOlmali();
+
+        havaleOnayinaSunduklarimPage
+                .openPage()
+                .evrakNoIleEvrakSec(konu)
+                .onizlemeHavaleBilgisiKontrol()
+                .onizlemeGeriAlKontrol()
+                .havaleBilgisiSec()
+                .kisiKontrol(kullanici)
+                .geriAlSec()
+                .notAlaniKontrol()
+                .geriAlNotDoldur(konu)
+                .geriAlGeriAl()
+                .islemMesaji().basariliOlmali();
+
+
+        testStatus(testid, "Test Başladı");
+
+        gelenEvraklarPage
+                .openPage()
+                .tabloEvrakNoSec(konu)
+                .tabHavaleYapKontrol()
+                .tabHavaleYap()
+                .onizlemeHavaleAlanKontrolleri()
+                .havaleIslemleriKisiSec(kullanici,details)
+                .dagitimBilgileriBirimDoldurWithDetails(birim, details)
+                .eklenenBirimKontrolu(birim)
+                .havaleIslemleriKisiKontrol(kullanici)
+                .eklenenKisiOpsiyonKontrolu(gerek)
+                .havaleIslemleriKisiOpsiyonSec(bilgi)
+                .eklenenKisiOpsiyonKontrolu(bilgi)
+                .havaleYapGonder()
+                .islemMesaji().basariliOlmali();
+
+        havaleEttiklerimPage
+                .openPage()
+                .evrakAlanKontrolleri(konu,geldigiKurum,birim,evrakTarihi,evrakNo);
+
+        login(TestData.usernameMBOZDEMIR,TestData.passwordMBOZDEMIR);
+
+        teslimAlinmayiBekleyenlerPage
+                .openPage()
+                .evrakAlanKontrolleri(konu,geldigiKurum,evrakTarihi,evrakNo);
+
+        login(TestData.usernameYAKYOL,TestData.passwordYAKYOL);
+
+        gelenEvraklarPage
+                .openPage()
+                .evrakAlanKontrolleri(konu,geldigiKurum,evrakTarihi,evrakNo);
+
+        teslimAlinmayiBekleyenlerPage
+                .openPage()
+                .evrakAlanKontrolleri(konu,geldigiKurum,evrakTarihi,evrakNo);
     }
 
 

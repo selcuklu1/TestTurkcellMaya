@@ -39,6 +39,9 @@ public class TestData extends BaseLibrary {
     public static final String usernameOPTIIMTEST76 = "optiimtest6";
     public static final String passwordPTIIMTEST76 = "123";
 
+    public static final String usernameSCELIK = "scelik";
+    public static final String passwordSCELIK = "123";
+
     public static String docPathWindows = "C:\\TestAutomation\\BelgenetFTA\\documents\\";
     //public static String docDownloadPathWindows = "C:\\TestAutomation\\BelgenetFTA\\downloads";
     public static String docDownloadPathWindows = "C:\\Users\\" + getPCUsername() + "\\Downloads\\";

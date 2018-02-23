@@ -23,7 +23,8 @@ public class EvrakDetayiPage extends MainPage {
     SelenideElement btnTebellugEt = $("button .tebellugEt");
     SelenideElement btnPanelHayir = $(By.id("mainInboxForm:tebellugEtHayirButton"));
     SelenideElement dialogTabMenuRight = $(By.id("inboxItemInfoForm:dialogTabMenuRight:dialogTabMenuRight"));
-    SelenideElement btnEvrakGoster = $(By.id("inboxItemInfoForm:dialogTabMenuRight:uiRepeat:4:cmdbutton"));
+    SelenideElement btnTeslimAl = $(By.id("inboxItemInfoForm:dialogTabMenuRight:uiRepeat:4:cmdbutton"));
+    SelenideElement btnEvrakGoster = $(By.id("inboxItemInfoForm:dialogTabMenuRight:uiRepeat:3:cmdbutton"));
     SelenideElement btnHavaleYap = $("[id^='inboxItemInfoForm:dialogTabMenuRight:uiRepeat'] [class$='havaleEt']");
     SelenideElement btnTebligEt = $("[id^='inboxItemInfoForm:dialogTabMenuRight:uiRepeat'] [class$='tebligEt']");
     SelenideElement btnIadeEt = $("[id^='inboxItemInfoForm:dialogTabMenuRight:uiRepeat'] [class$='iadeEt']");
@@ -297,6 +298,43 @@ public class EvrakDetayiPage extends MainPage {
     @Step("\"Evrak Detayı\" ekranının görüntülendiği görülür")
     public EvrakDetayiPage sayfaAcilmasiKontrolu() {
         pageTitle.shouldBe(visible);
+        return this;
+    }
+
+    @Step("Evrak Göster")
+    public EvrakDetayiPage evrakGoster() {
+
+        btnEvrakGoster.click();
+
+        return this;
+    }
+
+    @Step("Pdf Dağıtımda eklerin gitmeyeceği yerler kontrolu: {dagitim}")
+    public EvrakDetayiPage eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim1(String dagitim, String ekler) {
+        String pdfDagitim = $(By.xpath("//*[@id=\"viewer\"]/div/div[2]/div[30]")).getText();
+        Assert.assertEquals(pdfDagitim.contains(ekler), true);
+        return this;
+    }
+
+    @Step("Pdf Dağıtımda eklerin gitmeyeceği yerler kontrolu: {dagitim}")
+    public EvrakDetayiPage eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim2(String dagitim, String ekler) {
+        String pdfDagitim2 = $(By.xpath("//*[@id=\"viewer\"]/div/div[2]/div[31]")).getText();
+        String pdfDagitimDevami = $(By.xpath("//*[@id=\"viewer\"]/div/div[2]/div[32]")).getText();
+
+        String pdfDagitim = pdfDagitim2 + " " + pdfDagitimDevami;
+
+        Assert.assertEquals(pdfDagitim.contains(ekler), true);
+        return this;
+    }
+
+    @Step("Pdf Dağıtımda eklerin gitmeyeceği yerler kontrolu: {dagitim}")
+    public EvrakDetayiPage eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim3(String dagitim, String ekler) {
+        String pdfDagitim3 = $(By.xpath("//*[@id=\"viewer\"]/div/div[2]/div[33]")).getText();
+        String pdfDagitimDevami = $(By.xpath("//*[@id=\"viewer\"]/div/div[2]/div[34]")).getText();
+
+        String pdfDagitim = pdfDagitim3 + " " + pdfDagitimDevami;
+        Assert.assertEquals(pdfDagitim.contains(ekler), true);
+
         return this;
     }
 

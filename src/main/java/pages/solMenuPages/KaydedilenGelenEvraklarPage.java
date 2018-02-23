@@ -291,9 +291,6 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
 
     @Step("Dağıtım Bilgileri Birim alanında \"{birim}\" seçilir")
     public KaydedilenGelenEvraklarPage dagitimBilgileriBirimDoldurWithDetails(String birim, String details) {
-//        cmbHavaleIslemleriBirim.type(birim).getDetailItems()
-//                .filterBy(Condition.exactText(details)).first().click();
-//        cmbHavaleIslemleriBirim.closeTreePanel();
         cmbHavaleIslemleriBirim.selectLov(birim, details);
         return this;
     }

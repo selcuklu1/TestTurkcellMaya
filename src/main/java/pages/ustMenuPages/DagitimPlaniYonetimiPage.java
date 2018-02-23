@@ -11,6 +11,8 @@ import pages.pageComponents.TuzelKisiEkleDialog;
 import pages.pageComponents.UstMenuPageHeader;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
+import java.util.Map;
+
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
@@ -259,8 +261,9 @@ public class DagitimPlaniYonetimiPage extends MainPage {
     }
 
     @Step("Kayır silinir")
-    public DagitimPlaniYonetimiPage sil() {
+    public DagitimPlaniYonetimiPage sil(Condition... silenecekKayit) {
         dagitimPlaniDataTable.getFoundRow().$(deleteButtonLocator).shouldBe(visible).pressEnter();
+        dagitimPlaniDataTable.findRows(silenecekKayit).shouldHaveSize(0);
         return this;
     }
 
@@ -378,7 +381,6 @@ public class DagitimPlaniYonetimiPage extends MainPage {
         return this;
     }
 
-
     @Step("Dağıtım Planı oluştur")
     public DagitimPlaniYonetimiPage dagitimPlaniOlustur(String planAdi, String aciklama, String kullanildigiBirim, boolean altBirimlerGorsun, String dagitimElemanlariTipi, String dagitimElemanlari) {
         yeni();
@@ -391,4 +393,29 @@ public class DagitimPlaniYonetimiPage extends MainPage {
         return this;
     }
 
+    @Step("Dağıtım Planı oluştur")
+    public DagitimPlaniYonetimiPage dagitimPlaniOlustur(String planAdi, String aciklama, String kullanildigiBirim, boolean altBirimlerGorsun, Map<String,String> dagitimElemanlari) {
+        yeni();
+        adiGir(planAdi);
+        aciklamaGir(aciklama);
+        kullanildigiBirimSec(kullanildigiBirim);
+        altBirimlerGorsunSec(altBirimlerGorsun);
+        dagitimElemanlari.forEach((k,v)-> dagitimElemanlariEkle(k, v));
+        kaydet().islemMesaji().basariliOlmali();
+        return this;
+    }
+
+    @Step("Dağıtım Planı oluştur")
+    public DagitimPlaniYonetimiPage dagitimPlaniOlustur(String planAdi, String aciklama, String kullanildigiBirim, boolean altBirimlerGorsun, String[][] dagitimElemanlari) {
+        yeni();
+        adiGir(planAdi);
+        aciklamaGir(aciklama);
+        kullanildigiBirimSec(kullanildigiBirim);
+        altBirimlerGorsunSec(altBirimlerGorsun);
+        for (String[] d:dagitimElemanlari) {
+            dagitimElemanlariEkle(d[0],d[1]);
+        }
+        kaydet().islemMesaji().basariliOlmali();
+        return this;
+    }
 }
