@@ -433,6 +433,7 @@ public class TuzelKisiYonetimiTest extends BaseTest {
                 .switchToDefaultWindow();
     }
 
+
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS1132b: Tüzel kişinin pasif yapılması ve kontrolü")
     public void TS1132b() throws InterruptedException {
