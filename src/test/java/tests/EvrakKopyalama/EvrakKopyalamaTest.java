@@ -20,6 +20,8 @@ import pages.solMenuPages.*;
 import pages.ustMenuPages.EvrakOlusturPage;
 import tests.KisiselIslemlerBagTipi.KisiselIslemlerBagTipiTest;
 import static data.TestData.*;
+import static tests.BirimIcerikSablonu.BirimIcerikSablonuTest.TS1082;
+import static tests.BirimIcerikSablonu.BirimIcerikSablonuTest.sablonAdi1082;
 
 /****************************************************
  * Tarih: 2018-02-20
@@ -38,6 +40,7 @@ public class EvrakKopyalamaTest extends BaseTest {
     EvrakOlusturPage evrakOlusturPage;
     TaslakEvraklarPage taslakEvraklarPage;
     EvrakDetayiPage evrakDetayiPage;
+    ParafladiklarimPage parafladiklarimPage;
 
     @BeforeMethod
     public void loginBeforeTests() {
@@ -48,21 +51,33 @@ public class EvrakKopyalamaTest extends BaseTest {
         evrakOlusturPage = new EvrakOlusturPage();
         taslakEvraklarPage = new TaslakEvraklarPage();
         evrakDetayiPage = new EvrakDetayiPage();
+        parafladiklarimPage = new ParafladiklarimPage();
     }
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true,description = "TS1597: Havale onayı bekleyen evrakın geri çekilmesi ve tekrar havalesi (içerik ekranından)")
-    public void TS1597() {
-        String konuKodu = "TS1597-" + createRandomNumber(15);
-        String kurum = "BÜYÜK HARFLERLE BİRİM";
+    public void TS2175() {
 
-        login(usernameYAKYOL,passwordYAKYOL);
+        String konuKodu = "TS2184-" + createRandomNumber(15);
+        String kurum = "BÜYÜK HARFLERLE KURUM";
+        String birim = "Zübeyde Tekin";
+        String kaldirilacakKlasor = "Diğer";
+        String geregi = "Optiim Birim";
+        String onayAkisi = "TS2172";
+        String basariMesaji = "İşlem başarılıdır!";
+        String basariMesaji2 = "Kopyalanan evraka \"Taslak Evraklar\" kısmından erişebilirsiniz.";
+        String icerik = createRandomText(15);
+        String filePath = getUploadPath() + "Otomasyon.pdf";
 
-        reusableSteps
-                .beklemeyeAlinanlarEvrakOlustur(konuKodu,"Birim",kurum,"Paraflama","Zübeyde Tekin","BHUPGMY","İmzalama",usernameZTEKIN,passwordZTEKIN);
+        TS1082();
 
-        beklemeyeAlinanlarPage
-                .openPage();
+        evrakOlusturPage
+                .evrakOlusturBirimIcerikKullanParafla(konuKodu,"Kurum",kurum,"Paraflama","Zübeyde Tekin","BHUPGMY","İmzalama",sablonAdi1082);
+
+        parafladiklarimPage
+                .openPage()
+                ;
+
     }
 
     @Severity(SeverityLevel.CRITICAL)

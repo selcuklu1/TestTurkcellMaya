@@ -76,6 +76,12 @@ public class ParafladiklarimPage extends MainPage {
         return this;
     }
 
+    @Step("Evrak Seçilir")
+    public ParafladiklarimPage evrakNoGoreEvrakSec(){
+
+        return this;
+    }
+
     @Step("Açıklama doldur")
     public ParafladiklarimPage paylasAciklamaDoldur(String aciklama) {
         txtPaylasAciklama.setValue(aciklama);

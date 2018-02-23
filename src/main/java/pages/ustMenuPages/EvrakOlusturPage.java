@@ -9,6 +9,7 @@ import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.TextEditor;
 import pages.pageComponents.belgenetElements.BelgenetElement;
+import pages.pageComponents.tabs.EditorTab;
 import pages.pageData.UstMenuData;
 
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
@@ -3909,6 +3910,32 @@ public class EvrakOlusturPage extends MainPage {
                 .kullan();
                 editorTabAc()
                 .editorIcerikDoldur(icerik);
+                parafla();
+    }
+
+    @Step("Evrak oluştur alanında birim içerik oluştur kullan parafla tıklanır")
+    public void evrakOlusturBirimIcerikKullanParafla(String konu, String geregiSecimTipi, String geregi, String OnayAkisiKullanici1Turu, String kullanici2, String kullaniciBirim, String OnayAkisiKullanici2Turu,String sablonAdi) {
+                String konuKodu = "Diğer";
+                String kaldirilacakKlasor = "Diğer";
+                String icerik = createRandomText(15);
+                pages.newPages.EvrakOlusturPage evrakOlusturPage = new pages.newPages.EvrakOlusturPage();
+
+                openPage()
+                .bilgilerTabiAc()
+                .konuKoduSec(konuKodu)
+                .konuDoldur(konu)
+                .kaldiralacakKlasorlerSec(kaldirilacakKlasor)
+                .geregiSecimTipiSec(geregiSecimTipi)
+                .geregiSec(geregi)
+                .onayAkisiEkle()
+                .onayAkisiEkleIlkSelectSec(OnayAkisiKullanici1Turu)
+                .kullanicilarDoldur(kullanici2,kullaniciBirim)
+                .kullaniciylaSecimTipiSec(kullanici2,OnayAkisiKullanici2Turu)
+                .kullan();
+                pages.pageComponents.tabs.EditorTab editorTab = evrakOlusturPage.editorTab().openTab();
+                editorTab.getEditor().toolbarButton("Öntanımlı İçerik Şablonu Kullan", true);
+                editorTab.onTanimliSablonuSec(sablonAdi)
+                .onTanimliSablonuUygula();
                 parafla();
     }
     //endregion
