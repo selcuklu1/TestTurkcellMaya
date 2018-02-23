@@ -8,6 +8,9 @@ import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.TextEditor;
 import pages.pageComponents.belgenetElements.BelgenetElement;
+import pages.pageComponents.tabs.EkleriTab;
+import pages.pageComponents.tabs.IlgileriTab;
+import pages.ustMenuPages.EvrakOlusturPage;
 
 import static com.codeborne.selenide.Condition.attribute;
 import static com.codeborne.selenide.Condition.visible;
@@ -47,6 +50,8 @@ public class EvrakDetayiPage extends MainPage {
     private HareketGecmisiTab hareketGecmisiTab = new HareketGecmisiTab();
     private EditorTab editorTab = new EditorTab();
     private BilgileriTab bilgileriTab = new BilgileriTab();
+    private EkleriTab ekleriTab = new EkleriTab();
+    private IlgileriTab ilgileriTab = new IlgileriTab();
 
     @Step("Sayfa geldiği kontrol edilir.")
     public EvrakDetayiPage sayfaAcilmali() {
@@ -63,6 +68,16 @@ public class EvrakDetayiPage extends MainPage {
     @Step("Bilgiler tab aç")
     public BilgileriTab bilgileriTabAc() {
         return bilgileriTab.open();
+    }
+
+    @Step("Ekleri tab aç")
+    public EkleriTab ekleriTabAc() {
+        return ekleriTab.open();
+    }
+
+    @Step("İlgileri tab aç")
+    public IlgileriTab ilgileriTabAc() {
+        return ilgileriTab.open();
     }
 
     @Step("Hareket Geçmisi tab aç")
@@ -373,6 +388,54 @@ public class EvrakDetayiPage extends MainPage {
             txtOnayAkisi.selectLov(onayAkisi);
             return this;
         }
+
+        @Step("Kaldırılacak klasör, Gereği, Onay akışı, bilgilerinin girildiği şekilde geldiği görülür.")
+        public BilgileriTab bilgileriTabKaldirilacakKlasorOnayAkisiGeregiGeldigiGorme(String kaldirilacakKlasor,String geregi,String onayAkisi){
+            boolean durum = $$("[id$='eklenecekKlasorlerLov:LovSecilenTable_data']").filterBy(Condition.text(kaldirilacakKlasor)).size()==1;
+            boolean durum1 = $$("[id$='geregiLov:LovSecilenTable']").filterBy(Condition.text(geregi)).size()==1;
+            boolean durum2 = $$("[id$='akisLov:LovSecilen']").filterBy(Condition.text(onayAkisi)).size()==1;
+            Assert.assertEquals(durum,durum1);
+            Assert.assertEquals(durum2,durum1);
+            return this;
+        }
+    }
+
+    public class EkleriTab extends MainPage {
+
+        SelenideElement tabEkleri = $(By.xpath("//span[. = 'Ekleri']/../../..//button"));
+
+        private EkleriTab open() {
+            tabEkleri.click();
+            return this;
+        }
+
+
+        @Step("Eklenen dosyanın geldiği görülür.")
+        public EkleriTab eklenenDosyaninGeldigiGorulur(String dosya){
+            boolean durum = $$(By.id("inboxItemInfoForm:ekListesiDataTable_data")).filterBy(Condition.text(dosya)).size()==1;
+            Assert.assertEquals(durum,true);
+            return this;
+        }
+
+    }
+
+    public class IlgileriTab extends MainPage {
+
+        SelenideElement tabIlgileri = $(By.xpath("//span[. = 'İlgileri']/../../..//button"));
+
+        private IlgileriTab open() {
+            tabIlgileri.click();
+            return this;
+        }
+
+
+        @Step("Cevap yazılan evrak bilgisinin geldiği görülür.")
+        public IlgileriTab cevapYazilanEvrakBilgisiGeldigiGorme(){
+            boolean durum = $$("[id='inboxItemInfoForm:ilgiListesiDataTable_data'] > tr").size()==1;
+            Assert.assertEquals(durum,true);
+            return this;
+        }
+
     }
 
     public class HareketGecmisiTab extends MainPage {
