@@ -35,6 +35,9 @@ public class EvrakDetayiPage extends MainPage {
     SelenideElement spanBilgileri = $x("//span[. = 'Bilgileri']");
     SelenideElement tabEditor = $("button .editor");
     ElementsCollection tblHareketGecmisi = $$("tbody[id$='hareketGecmisiDataTable_data'] > tr[role='row']");
+    SelenideElement btnKaydet = $("span[class='ui-button-icon-left ui-icon kaydet']");
+    SelenideElement btnKaydetEvet = $(By.id("kaydetConfirmForm:kaydetEvetButton"));
+    SelenideElement btnKaydetHayir = $(By.id("kaydetConfirmForm:kaydetHayirButton"));
 
     SelenideElement txtAciklama = $(By.id("inboxItemInfoForm:onayIslemiAciklama"));
     SelenideElement btnGonder = $(By.id("inboxItemInfoForm:gonderButton"));
@@ -110,6 +113,28 @@ public class EvrakDetayiPage extends MainPage {
     public EvrakDetayiPage btnTikla(String text) {
         SelenideElement btn = $(By.xpath("descendant::*[text()='" + text + "']/ancestor::tbody[1]//button"));
         btn.click();
+        return this;
+    }
+
+    @Step("Kaydet")
+    public EvrakDetayiPage kaydet() {
+        btnKaydet.click();
+        return this;
+    }
+
+    @Step("Evet tıklanır")
+    public EvrakDetayiPage kaydetEvet() {
+        btnKaydetEvet.click();
+        return this;
+    }
+
+    @Step("Kaydet")
+    public EvrakDetayiPage kaydet(boolean save) {
+        btnKaydet.click();
+        if (save)
+            btnKaydetEvet.click();
+        else
+            btnKaydetHayir.click();
         return this;
     }
 
@@ -455,6 +480,13 @@ public class EvrakDetayiPage extends MainPage {
             return this;
         }
 
+        @Step("Kopyası oluşturulan evrak eklerinin aynısının geldiği ve değiştirilebildiği görülür")
+        public EkleriTab eklenenDosyaninKopyalananDosyaAyniGeldigiGorulur(){
+            boolean durum = $$(By.id("inboxItemInfoForm:ekListesiDataTable_data")).filterBy(Condition.text("Listelenecek Veri Bulunamamıştır.")).size()==1;
+            Assert.assertEquals(durum,true);
+            return this;
+        }
+
     }
 
     public class IlgileriTab extends MainPage {
@@ -470,6 +502,13 @@ public class EvrakDetayiPage extends MainPage {
         @Step("Cevap yazılan evrak bilgisinin geldiği görülür.")
         public IlgileriTab cevapYazilanEvrakBilgisiGeldigiGorme(){
             boolean durum = $$("[id='inboxItemInfoForm:ilgiListesiDataTable_data'] > tr").size()==1;
+            Assert.assertEquals(durum,true);
+            return this;
+        }
+
+        @Step("Kopyası oluşturulan evrak ilgilerinin aynısının geldiği ve değiştirilebildiği görülür")
+        public IlgileriTab cevapYazilanEvrakBilgisiKopyalananBosEvrakAyniGeldigiGorme(){
+            boolean durum = $$("[id='inboxItemInfoForm:ilgiListesiDataTable_data'] > tr").filterBy(Condition.text("Listelenecek Veri Bulunamamıştır.")).size()==1;
             Assert.assertEquals(durum,true);
             return this;
         }

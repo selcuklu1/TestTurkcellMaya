@@ -8,6 +8,8 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
+import pages.altMenuPages.CevapYazPage;
+import pages.pageComponents.belgenetElements.Belgenet;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
 import static com.codeborne.selenide.Condition.*;
@@ -19,6 +21,7 @@ import static pages.pageData.SolMenuData.IslemYaptiklarim;
 public class ParafladiklarimPage extends MainPage {
 
     ElementsCollection tblParafladiklarimEvraklar = $$("[id='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
+    SelenideElement btnEvrakSecEvrakKopyala = $("[class='ui-button-icon-left ui-icon evrakKopyala']");
     SelenideElement f = $(By.xpath("//div[@id='mainInboxForm:inboxDataTable:filtersAccordion']//a[text()='Filtreler']/parent::h3"));
     SelenideElement cmbFiltre = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt3011_input"));
     SelenideElement txtSayfadaAra = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt353"));
@@ -41,6 +44,7 @@ public class ParafladiklarimPage extends MainPage {
     SelenideElement btnPaylasPaylas = $(By.id("mainPreviewForm:paylasButtonId"));
     BelgenetElement txtPaylasKisi = comboLov(By.id("mainPreviewForm:evrakPaylasKisiLov:LovText"));
     SelenideElement txtPaylasAciklama = $(By.id("mainPreviewForm:evrakPaylasAciklama"));
+    SelenideElement btnEvrakKopyalaUyariEvet = $(By.id("evrakCopyConfirmForm:copyEvrakEvetButton"));
 
     //Önizleme
     SelenideElement tabEvrakEkleri = $(By.xpath("//*[contains(text(),'Evrak Ekleri')]"));
@@ -73,6 +77,31 @@ public class ParafladiklarimPage extends MainPage {
         $("#mainInboxForm\\:inboxDataTable .ui-inbox-header-title")
                 .shouldHave(text(pageTitle));
         System.out.println("Page: " + pageTitle);
+        return this;
+    }
+
+    @Step("Evrak Seçilir")
+    public ParafladiklarimPage evrakNoGoreEvrakSec(String konuKodu){
+        tblParafladiklarimEvraklar.filterBy(Condition.text(konuKodu)).first().click();
+        return this;
+    }
+
+    @Step("Evrak Kopyala tıklanır")
+    public ParafladiklarimPage evrakSecEvrakKopyala(){
+        btnEvrakSecEvrakKopyala.click();
+        return this;
+    }
+
+    @Step("Evrak kopyalama uyarısının geldiği görülür.")
+    public ParafladiklarimPage evrakKopyalaUyariGeldigiGorme(){
+        boolean durum = $("[id='evrakCopyConfirmForm']").shouldBe(visible).exists()==true;
+        Assert.assertEquals(durum,true);
+        return this;
+    }
+
+    @Step("Evet tıklanır")
+    public ParafladiklarimPage evrakKopyalaUyariEvet(){
+        btnEvrakKopyalaUyariEvet.click();
         return this;
     }
 

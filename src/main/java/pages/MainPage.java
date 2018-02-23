@@ -9,6 +9,7 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.pageComponents.*;
+import pages.ustMenuPages.EvrakOlusturPage;
 
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Condition.matchText;
@@ -199,6 +200,12 @@ public class MainPage extends BaseLibrary {
     public EvrakPageButtons evrakPageButtons() {
         return new EvrakPageButtons();
         //return new EvrakPageButtons($("#mainPreviewForm"));
+    }
+
+    public MainPage evrakOlusturSayfayiKapat() {
+        $$("[id='window1Dialog'] span[class='ui-icon ui-icon-closethick']").first().click();
+        islemPenceresiKaydetPopup("Evet");
+        return this;
     }
 
     @Step("Footer'da açılan sayfa butonu bul")
