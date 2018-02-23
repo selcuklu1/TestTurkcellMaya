@@ -8,6 +8,9 @@ import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.TextEditor;
 import pages.pageComponents.belgenetElements.BelgenetElement;
+import pages.pageComponents.tabs.EkleriTab;
+import pages.pageComponents.tabs.IlgileriTab;
+import pages.ustMenuPages.EvrakOlusturPage;
 
 import static com.codeborne.selenide.Condition.attribute;
 import static com.codeborne.selenide.Condition.visible;
@@ -38,10 +41,17 @@ public class EvrakDetayiPage extends MainPage {
     SelenideElement txtSilmeNotu = $("[id^='inboxItemInfoForm:j_idt'] [class*=' ui-inputtextarea']");
     SelenideElement btnEvrakNotSil = $("[class='form-buttons'] [id^='inboxItemInfoForm:j_idt']");
 
+    BelgenetElement txtHavaleYapKullniciListesi = comboLov(By.id("inboxItemInfoForm:dagitimBilgileriKisiListesiLov:LovText"));
+    BelgenetElement txtTebligEtKullniciListesi = comboLov(By.id("inboxItemInfoForm:kullaniciGrubuLov_id:LovText"));
+    SelenideElement btnEvrakDetayiClose = $("div[id='windowItemInfoDialog'] span[class='ui-icon ui-icon-closethick']");
+    SelenideElement btnIadeEt2 = $(By.id("inboxItemInfoForm:iadeEtButton_id"));
+    SelenideElement btnTeslimAlPopup=$(By.id("teslimAlEvetButton"));
 
     private HareketGecmisiTab hareketGecmisiTab = new HareketGecmisiTab();
     private EditorTab editorTab = new EditorTab();
     private BilgileriTab bilgileriTab = new BilgileriTab();
+    private EkleriTab ekleriTab = new EkleriTab();
+    private IlgileriTab ilgileriTab = new IlgileriTab();
 
     @Step("Sayfa geldiği kontrol edilir.")
     public EvrakDetayiPage sayfaAcilmali() {
@@ -58,6 +68,16 @@ public class EvrakDetayiPage extends MainPage {
     @Step("Bilgiler tab aç")
     public BilgileriTab bilgileriTabAc() {
         return bilgileriTab.open();
+    }
+
+    @Step("Ekleri tab aç")
+    public EkleriTab ekleriTabAc() {
+        return ekleriTab.open();
+    }
+
+    @Step("İlgileri tab aç")
+    public IlgileriTab ilgileriTabAc() {
+        return ilgileriTab.open();
     }
 
     @Step("Hareket Geçmisi tab aç")
@@ -92,6 +112,12 @@ public class EvrakDetayiPage extends MainPage {
         return this;
     }
 
+    @Step("Evrak Teslim Al popupı kapatılır. ")
+    public EvrakDetayiPage evrakTeslimAlPopUpEvet(){
+        btnTeslimAlPopup.click();
+        return this;
+    }
+
     @Step("Açıklama girilir.")
     public EvrakDetayiPage kaydetVeOnayaSunAciklama(String aciklama) {
         txtAciklama.sendKeys(aciklama);
@@ -99,8 +125,34 @@ public class EvrakDetayiPage extends MainPage {
     }
 
     @Step("Gönder butonu tıklanır.")
+    public EvrakDetayiPage iadeEt() {
+        btnIadeEt2.click();
+        return this;
+    }
+
+
+    @Step("Gönder butonu tıklanır.")
     public EvrakDetayiPage gonder() {
         btnGonder.click();
+        return this;
+    }
+
+    @Step("Kullanici Lisesi alanında \"{kullaniciListesi}\" seçilir. ")
+    public EvrakDetayiPage havaleYapKullaniciListesiSec(String kullaniciListesi){
+        txtHavaleYapKullniciListesi.selectLov(kullaniciListesi);
+        return this;
+    }
+
+    @Step("Kullanici Lisesi alanında \"{kullaniciListesi}\" seçilir. ")
+    public EvrakDetayiPage tebligEtKullaniciListesiSec(String kullaniciListesi){
+        txtTebligEtKullniciListesi.selectLov(kullaniciListesi);
+        return this;
+    }
+
+
+    @Step("Evrak Detay sayfası kapatılır.")
+    public EvrakDetayiPage evrakDetayiSayfasiKapat(){
+        btnEvrakDetayiClose.click();
         return this;
     }
 
@@ -336,6 +388,54 @@ public class EvrakDetayiPage extends MainPage {
             txtOnayAkisi.selectLov(onayAkisi);
             return this;
         }
+
+        @Step("Kaldırılacak klasör, Gereği, Onay akışı, bilgilerinin girildiği şekilde geldiği görülür.")
+        public BilgileriTab bilgileriTabKaldirilacakKlasorOnayAkisiGeregiGeldigiGorme(String kaldirilacakKlasor,String geregi,String onayAkisi){
+            boolean durum = $$("[id$='eklenecekKlasorlerLov:LovSecilenTable_data']").filterBy(Condition.text(kaldirilacakKlasor)).size()==1;
+            boolean durum1 = $$("[id$='geregiLov:LovSecilenTable']").filterBy(Condition.text(geregi)).size()==1;
+            boolean durum2 = $$("[id$='akisLov:LovSecilen']").filterBy(Condition.text(onayAkisi)).size()==1;
+            Assert.assertEquals(durum,durum1);
+            Assert.assertEquals(durum2,durum1);
+            return this;
+        }
+    }
+
+    public class EkleriTab extends MainPage {
+
+        SelenideElement tabEkleri = $(By.xpath("//span[. = 'Ekleri']/../../..//button"));
+
+        private EkleriTab open() {
+            tabEkleri.click();
+            return this;
+        }
+
+
+        @Step("Eklenen dosyanın geldiği görülür.")
+        public EkleriTab eklenenDosyaninGeldigiGorulur(String dosya){
+            boolean durum = $$(By.id("inboxItemInfoForm:ekListesiDataTable_data")).filterBy(Condition.text(dosya)).size()==1;
+            Assert.assertEquals(durum,true);
+            return this;
+        }
+
+    }
+
+    public class IlgileriTab extends MainPage {
+
+        SelenideElement tabIlgileri = $(By.xpath("//span[. = 'İlgileri']/../../..//button"));
+
+        private IlgileriTab open() {
+            tabIlgileri.click();
+            return this;
+        }
+
+
+        @Step("Cevap yazılan evrak bilgisinin geldiği görülür.")
+        public IlgileriTab cevapYazilanEvrakBilgisiGeldigiGorme(){
+            boolean durum = $$("[id='inboxItemInfoForm:ilgiListesiDataTable_data'] > tr").size()==1;
+            Assert.assertEquals(durum,true);
+            return this;
+        }
+
     }
 
     public class HareketGecmisiTab extends MainPage {

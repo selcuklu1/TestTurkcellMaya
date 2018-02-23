@@ -124,6 +124,8 @@ public class CevapYazPage extends MainPage {
     SelenideElement btnEvetPopup = $(By.cssSelector("div[class*='ui-confirm-dialog'] button[id='kaydetEvetButton']"));
     SelenideElement btnHayirPopup = $(By.cssSelector("div[class*='ui-confirm-dialog'] button[id='kaydetHayirButton']"));
     SelenideElement btnKaydet = $x("//span[contains(@class, 'kaydet')]/..");
+    SelenideElement btnEvrakKopyala = $("[class='ui-button-icon-left ui-icon evrakKopyala']");
+    SelenideElement btnEvrakKopyalaUyariEvet = $(By.id("evrakCopyConfirmForm:copyEvrakEvetButton"));
     private SelenideElement page = $("#windowCevapEvrakDialog");
 
     public EditorTab editorTab() {
@@ -256,7 +258,7 @@ public class CevapYazPage extends MainPage {
         chkDagitimiEkYap.setSelected(dagitimiEkYap);
         return this;
     }
-
+    @Step("Ek metni alanını doldur: {ekMetin}")
     public CevapYazPage evrakEkTabViewEkMetniDoldur(String ekMetin) {
         txtEvrakEkTabViewEkMetni.sendKeys(ekMetin);
         return this;
@@ -267,11 +269,13 @@ public class CevapYazPage extends MainPage {
         return this;
     }
 
-    public CevapYazPage evrakEkTabViewDosyaEkle() {
-        btnEvrakEkTabViewDosyaEkle.click();
+    @Step("Dosya eklenir")
+    public CevapYazPage evrakEkTabViewDosyaEkle(String filePath) {
+        uploadFile(btnEvrakEkTabViewDosyaEkle,filePath);
         return this;
     }
 
+    @Step("Ekle tıklanır")
     public CevapYazPage evrakEkTabViewEkle() {
         btnEvrakEkTabViewEkle.click();
         return this;
@@ -628,6 +632,25 @@ public class CevapYazPage extends MainPage {
     @Step("Kaydet butonuna tıkla")
     public CevapYazPage kaydet() {
         btnKaydet.click();
+        return this;
+    }
+
+    @Step("Evrak Kopyalanır")
+    public CevapYazPage evrakKopyala(){
+        btnEvrakKopyala.click();
+        return this;
+    }
+
+    @Step("Evrak kopyalama uyarısının geldiği görülür.")
+    public CevapYazPage evrakKopyalaUyariGeldigiGorme(){
+        boolean durum = $("[id='evrakCopyConfirmForm']").shouldBe(visible).exists()==true;
+        Assert.assertEquals(durum,true);
+        return this;
+    }
+
+    @Step("Evet tıklanır")
+    public CevapYazPage evrakKopyalaUyariEvet(){
+        btnEvrakKopyalaUyariEvet.click();
         return this;
     }
 

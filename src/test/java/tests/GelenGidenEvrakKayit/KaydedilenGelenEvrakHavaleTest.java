@@ -689,6 +689,7 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .icerikHavaleOnayinaGonder2()
                 .islemMesaji().basariliOlmali();
 
+        testStatus(testid, "Test Başladı");
         havaleEdilenEvrakRaporuPage
                 .openPage()
 
