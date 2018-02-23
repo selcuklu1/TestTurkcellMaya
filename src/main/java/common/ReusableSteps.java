@@ -3,6 +3,7 @@ package common;
 import data.User;
 import io.qameta.allure.Step;
 import pages.LoginPage;
+import pages.pageData.alanlar.GeregiSecimTipi;
 import pages.solMenuPages.ImzaBekleyenlerPage;
 import pages.ustMenuPages.EvrakOlusturPage;
 import pages.ustMenuPages.GelenEvrakKayitPage;
@@ -59,6 +60,15 @@ public class ReusableSteps extends BaseLibrary{
     @Step("Medya şirketi tipinde tüzel kişi ekleme")
     public List<String> medyaSirketiTuzelKisiEkleme() {
         return new TuzelKisiYonetimiPage().medyaSirketiTuzelKisiEkleme();
+    }
+
+    @Step("Evrak Oluştur kaydet ve parafla")
+    public static void evrakOlusturVeParafla(String konu, GeregiSecimTipi geregiSecimTipi, String geregi, User parafci, User imzaci){
+        pages.newPages.EvrakOlusturPage page = new pages.newPages.EvrakOlusturPage().openPage();
+        page.bilgileriTab().alanlariDoldur(konu, geregiSecimTipi, geregi, parafci, imzaci);
+        page.editorTab().openTab().getEditor().type(konu);
+        //page.evrakPageButtons().evrakKaydet().islemMesaji().basariliOlmali();
+        page.evrakParafla().islemMesaji().basariliOlmali();
     }
 
 }

@@ -83,6 +83,7 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
 
     ElementsCollection tblKaydedilenGelenEvraklar = $$("[id='mainInboxForm:inboxDataTable_data'] tr[data-ri]");
     SelenideElement tabEvrakDetayi = $("[id='inboxItemInfoForm']");
+    SelenideElement btnTeslimAlPopup=$(By.id("teslimAlEvetButton"));
 
     public TeslimAlinmayiBekleyenlerPage openPage() {
         solMenu(SolMenuData.BirimEvraklari.TeslimAlinmayiBekleyenler);
@@ -136,6 +137,13 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     public TeslimAlinmayiBekleyenlerPage teslimAlVeHavaleEtKullaniciListesiDoldur(String kullaniciListesi, String birim) {
         txtHavaleYapKullaniciListesi.type(kullaniciListesi).getTitleItems().filterBy(Condition.text(kullaniciListesi)).first().click();
         txtHavaleYapKullaniciListesi.type(kullaniciListesi).getTitleItems().filterBy(Condition.text(kullaniciListesi)).first().click();
+        return this;
+    }
+
+    @Step("Teslim Al ve Havale ekranında Kullanıcı Listesi alanında \"{kullaniciListesi}\" seçilir.")
+    public TeslimAlinmayiBekleyenlerPage teslimAlVeHavaleEtKullaniciListesiDoldur(String kullaniciListesi) {
+        BelgenetElement  txtHavaleYapKullaniciListesi=comboLov(By.id("inboxItemInfoForm:dagitimBilgileriKisiListesiLov:LovText"));
+        txtHavaleYapKullaniciListesi.selectLov(kullaniciListesi);
         return this;
     }
 
@@ -533,6 +541,32 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
 
         return this;
     }
+
+    @Step("Teslim Alınmayı Bekleyenler Evraklar listesinden evrak önizlemede aç")
+    public TeslimAlinmayiBekleyenlerPage konuyaGoreIcerikGoster(String konu) {
+
+        tblEvraklar
+                .filterBy(Condition.text(konu))
+                .first()
+                .$("[id$='detayGosterButton']").click();
+
+        return this;
+    }
+
+
+    @Step("\"{text}\" butonu tıklanır.")
+    public TeslimAlinmayiBekleyenlerPage btnTikla(String text) {
+        SelenideElement btn = $(By.xpath("descendant::*[text()='" + text + "']/ancestor::tbody[1]//button"));
+        btn.click();
+        return this;
+    }
+
+    @Step("Evrak Teslim Al popupı kapatılır. ")
+    public TeslimAlinmayiBekleyenlerPage evrakTeslimAlPopUpEvet(){
+        btnTeslimAlPopup.click();
+        return this;
+    }
+
 
     @Step("Evrak Ek/İlgi tablarının geldiği kontrolu")
     public TeslimAlinmayiBekleyenlerPage tabKontrolleri() {

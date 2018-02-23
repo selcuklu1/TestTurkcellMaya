@@ -161,10 +161,10 @@ public class HavaleOnayınaGelenlerPage extends MainPage {
     }
 
     @Step("Havale İşlemleri Kişi alanında eklenen \"{opsiyon}\" kontrolü")
-    public HavaleOnayınaGelenlerPage eklenenBirimOpsiyonKontrolu(String opsiyon) {
-        Assert.assertEquals(txtEklenenBirimOpsiyon.getSelectedOption().text().equals(opsiyon), true, "Opsiyon Seçildi");
-        Allure.addAttachment("Opsiyon Seçildi:", opsiyon);
-        return this;
+        public HavaleOnayınaGelenlerPage eklenenBirimOpsiyonKontrolu(String opsiyon) {
+            Assert.assertEquals(txtEklenenBirimOpsiyon.getSelectedOption().text().equals(opsiyon), true, "Opsiyon Seçildi");
+            Allure.addAttachment("Opsiyon Seçildi:", opsiyon);
+            return this;
     }
 
     @Step("Havale butonunu tıkla")

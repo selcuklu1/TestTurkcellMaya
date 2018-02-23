@@ -3,6 +3,7 @@ package pages.solMenuPages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import pages.MainPage;
@@ -167,6 +168,24 @@ public class HavaleEttiklerimPage extends MainPage {
     @Step("Kullanıcı Listesi alanınında seçileni Gereği ifadesini bilgi için gönder olarak değiştir")
     public HavaleEttiklerimPage icerikGosterHavaleyapKullaniciListesiGeregiIcınBilgiIcinDegistir() {
         $("[id='inboxItemInfoForm:dagitimBilgileriKisiListesiLov:LovSecilenTable_data'] select").selectOption("BİLGİ İÇİN GÖNDER");
+        return this;
+    }
+    ElementsCollection tblKaydedilenGelenEvraklar = $$("[id='mainInboxForm:inboxDataTable_data'] tr[data-ri]");
+    @Step("Tabloda evrak kontrolü : \"{konu}\"  \"{geldigiKurum}\" \"{birim}\" \"{evrakTarihi}\" \"{evrakNo}\" ")
+    public HavaleEttiklerimPage evrakAlanKontrolleri(String konu, String geldigiKurum, String birim, String evrakTarihi, String evrakNo) {
+        System.out.println("evrakNo:" + konu + " geldigiKurum" + geldigiKurum + " birim" + birim + " evrakTarihi" + evrakTarihi + " evrakkayitno" + evrakNo);
+        tblKaydedilenGelenEvraklar
+                .filterBy(Condition.text(konu))
+                .filterBy(Condition.text(birim))
+//                .filterBy(Condition.text(geldigiKurum))
+                .filterBy(Condition.text(evrakTarihi))
+                .filterBy(Condition.text(evrakNo))
+                .shouldHaveSize(1);
+        Allure.addAttachment("Konu", konu);
+        Allure.addAttachment("Birim", birim);
+        Allure.addAttachment("EvrakTarihi", evrakTarihi);
+//        Allure.addAttachment("GeldigiKurum", geldigiKurum);
+        Allure.addAttachment("EvrakNo", evrakNo);
         return this;
     }
 

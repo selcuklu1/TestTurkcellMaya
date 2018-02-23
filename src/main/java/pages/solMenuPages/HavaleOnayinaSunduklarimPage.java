@@ -3,6 +3,7 @@ package pages.solMenuPages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
@@ -23,9 +24,12 @@ public class HavaleOnayinaSunduklarimPage extends MainPage {
     ElementsCollection tblEvraklar = $$("[id^='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
     ElementsCollection tblEvrakGecmisi = $$("[id$='hareketGecmisiDataTable_data'] > tr[role='row']");
 
-    SelenideElement havaleBilgisi = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:5:cmdbutton"));
+//    SelenideElement havaleBilgisi = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:5:cmdbutton"));
     SelenideElement txtGeriAlNot = $(By.id("mainPreviewForm:evrakGeriAlInputTextareaId"));
-    ElementsCollection kisiKontrol = $$("[id^='mainPreviewForm:dagitimBilgileriKullaniciLov_id:LovSecilenTable:0:j_idt']");
+    ElementsCollection kisiKontrol = $$("div[id^='mainPreviewForm:dagitimBilgileriKullaniciLov_id:LovSecilenTable:0:j_idt']");
+
+    SelenideElement btnOnizlemeHavaleBilgisi = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:5:cmdbutton"));
+    SelenideElement btnOnizlemeGeriAl = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:4:cmdbutton"));
 
 
     @Step("Birim Havale Onayına Sunduklarim sayfasını aç")
@@ -43,11 +47,13 @@ public class HavaleOnayinaSunduklarimPage extends MainPage {
         return this;
     }
 
-    @Step("Geri al tıklanır")
-    public HavaleOnayinaSunduklarimPage geriAl() {
-        $("[class='ui-button-icon-left ui-icon evrakGeriAl']").click();
-        return this;
-    }
+//    @Step("Geri al tıklanır")
+//    public HavaleOnayinaSunduklarimPage geriAl() {
+//        $("[class='ui-button-icon-left ui-icon evrakGeriAl']").click();
+//        return this;
+//    }
+
+
 
     @Step("Geri al tıklanır")
     public HavaleOnayinaSunduklarimPage geriAlGeriAl() {
@@ -55,23 +61,52 @@ public class HavaleOnayinaSunduklarimPage extends MainPage {
         return this;
     }
 
+
     @Step("Not alanını doldur: {not}")
     public HavaleOnayinaSunduklarimPage geriAlNotDoldur(String not) {
         txtGeriAlNot.setValue(not);
         return this;
     }
 
+    @Step("Not alanını doldur: {not}")
+    public HavaleOnayinaSunduklarimPage notAlaniKontrol() {
+        Assert.assertEquals(txtGeriAlNot.isDisplayed(),true,"Not alanı kontrol");
+        Allure.addAttachment("Not alanı kontrol" , "");
+        return this;
+    }
+
     @Step("Havale Onayına Sunduklarım Havale Bilgisi butonu tıklanır")
-    public HavaleOnayinaSunduklarimPage havaleBilgisi() {
-        havaleBilgisi.click();
+    public HavaleOnayinaSunduklarimPage havaleBilgisiSec() {
+        btnOnizlemeHavaleBilgisi.click();
+        return this;
+    }
+
+    @Step("Havale Onayına Sunduklarım Geri Al butonu tıklanır")
+    public HavaleOnayinaSunduklarimPage geriAlSec() {
+        btnOnizlemeGeriAl.click();
         return this;
     }
 
     @Step("Havale Onayına Sunduklarım Havale Bilgisi Kisi Alanındaki : \"{kisi}\" ")
     public HavaleOnayinaSunduklarimPage kisiKontrol(String kisi) {
-        System.out.println("size" + kisiKontrol.size());
         boolean durum = kisiKontrol.filterBy(Condition.text(kisi)).size() > 0;
         Assert.assertEquals(durum, true);
+        return this;
+    }
+
+    @Step("Önizleme Havale Bilgisi Alanı Kontrol")
+    public HavaleOnayinaSunduklarimPage onizlemeHavaleBilgisiKontrol() {
+        boolean durum = btnOnizlemeHavaleBilgisi.isDisplayed();
+        Assert.assertEquals(durum,true,"Havale Bilgisi Alanı Gelmektedir.");
+        Allure.addAttachment("Havale Bilgisi Alanı Gelmektedir.","");
+        return this;
+    }
+
+    @Step("Önizleme Havale Bilgisi Geri Al Kontrol")
+    public HavaleOnayinaSunduklarimPage onizlemeGeriAlKontrol() {
+        boolean durum = btnOnizlemeGeriAl.isDisplayed();
+        Assert.assertEquals(durum,true,"Havale Bilgisi Geri Al Gelmektedir.");
+        Allure.addAttachment("Havale Bilgisi Geri Al Gelmektedir.","");
         return this;
     }
 

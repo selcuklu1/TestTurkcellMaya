@@ -79,9 +79,9 @@ public class EvrakIadesi extends BaseTest {
                 .gizlilikDerecesiSec("Normal")
                 .onayAkisiEkle()
                 .onayAkisiKullaniciKontrol(user1 , "Paraflama")
-                .onayAkisiKullaniciTipiSec(user1 , "İmzalama")
-//                .onayAkisiKullaniciEkle(user2)
-//                .onayAkisiKullaniciTipiSec(user2,"İmzalama")
+//                .onayAkisiKullaniciTipiSec(user1 , "İmzalama")
+                .onayAkisiKullaniciEkle(user2)
+                .onayAkisiKullaniciTipiSec(user2,"İmzalama")
 //                .onayAkisiKullaniciEkle(user3)
 //                .onayAkisiKullaniciTipiSec(user3,"İmzalama")
                 .kullan();
@@ -94,8 +94,8 @@ public class EvrakIadesi extends BaseTest {
         editor
                 .type(editorIcerik);
 
-        evrakOlusturPage
-                .parafla();
+//        evrakOlusturPage
+//                .parafla();
 //
 //        evrakOlusturPage
 //                .kaydet(true)

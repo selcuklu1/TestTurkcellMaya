@@ -15,10 +15,13 @@ import pages.newPages.EvrakOlusturPage;
 import pages.pageComponents.EvrakOnizleme;
 import pages.pageComponents.PDFOnizleme;
 import pages.pageData.alanlar.BilgiSecimTipi;
+import pages.pageData.alanlar.DagitimElemanlariTipi;
 import pages.pageData.alanlar.GeregiSecimTipi;
 import pages.pageData.alanlar.OnayKullaniciTipi;
+import pages.solMenuPages.GelenEvraklarPage;
 import pages.solMenuPages.ImzaBekleyenlerPage;
 import pages.solMenuPages.ImzaladiklarimPage;
+import pages.solMenuPages.TeslimAlinmayiBekleyenlerPage;
 import pages.ustMenuPages.DagitimPlaniYonetimiPage;
 import pages.ustMenuPages.GidenEvrakKayitPage;
 import pages.ustMenuPages.TuzelKisiYonetimiPage;
@@ -28,6 +31,7 @@ import java.util.*;
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.switchTo;
+import static pages.pageData.alanlar.DagitimElemanlariTipi.*;
 
 /**
  * Yazan: Ilyas Bayraktar
@@ -42,7 +46,10 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
     User ztekin = new User("ztekin", "123", "Zübeyde TEKİN", "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ/YGD");//, "Uzman Test Mühendis");
     User ztekin1 = new User("ztekin", "123", "Zübeyde TEKİN", "Optiim Birim/YGD");//, "Uzman Test Mühendis");
     User user1 = new User("user1", "123", "User1 TEST", "AnaBirim1");//, "Uzman Test Mühendis");
+    User user2 = new User("user2", "123", "User2 TEST", "AnaBirim1");//, "Uzman Test Mühendis");
+    User user4 = new User("user4", "123", "User4 TEST", "AnaBirim2");//, "Uzman Test Mühendis");
     User user5 = new User("user5", "123", "User5 TEST", "AnaBirim1");//, "Uzman Test Mühendis");
+    User mbozdemir = new User("mbozdemir", "123", "Mehmet BoOZDEMİR", "GENEL MÜDÜRLÜK MAKAMI/GENMD");//, "Uzman Test Mühendis");
     DagitimPlaniYonetimiPage page;
     EvrakOlusturPage evrakOlusturPage;
     String yeniPlanAdi1280;
@@ -589,6 +596,63 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
                 .kaydet().islemMesaji().basariliOlmali();
         //page.dagitimPlaniOlustur(adi, "Medya Şirketi", user.getBirimAdi(),true, "Tüzel Kişi", tuzelKisi.get(0));
     }
+
+    @Test(description = "TS1942: Onay Akışındaki sırasında dağıtım planının güncellenemesi", enabled = true)
+    public void TS1942() {
+        User parafci = user1;
+        User imzaci = user5;
+        //User user = optiim;
+        User silenecekDagitimPlanUser = optiim;
+        User birimDagitimPlanUser = user4;
+
+        String konu = "TS1942_" + getSysDate();
+        String dagitimPlanAdi = konu;
+        System.out.println("Dağınım Planı: " + dagitimPlanAdi);
+        String aciklama = "Dağıtım Elemanları: 3 kullanıcı";
+        String[][] dagitimElemanlari = new String[][]{
+                {KULLANICI.getOptionText(), parafci.getFullname()}
+                //,{KULLANICI.getOptionText(), imzaci.getFullname()}
+                ,{KULLANICI.getOptionText(), silenecekDagitimPlanUser.getFullname()}
+                //,{KULLANICI.getOptionText(), user.getFullname()}
+        };
+
+        login(parafci);
+        DagitimPlaniYonetimiPage dagitimPlaniYonetimiPage = new DagitimPlaniYonetimiPage()
+                .openPage()
+                .dagitimPlaniOlustur(dagitimPlanAdi, aciklama, parafci.getBirimAdi(),true, dagitimElemanlari);
+
+        ReusableSteps.evrakOlusturVeParafla(konu, GeregiSecimTipi.DAGITIM_PLANLARI, dagitimPlanAdi, parafci,imzaci);
+
+
+        dagitimPlaniYonetimiPage.openPage()
+                .bulVeGuncelleTikla(dagitimPlanAdi)
+                .dagitimPlaniListesindeAra(text(silenecekDagitimPlanUser.getFullname()))
+                .sil(text(silenecekDagitimPlanUser.getFullname()))
+                .dagitimElemanlariEkle(BIRIM.getOptionText(), birimDagitimPlanUser.getBirimAdi())
+                .kaydet()
+                .islemMesaji().basariliOlmali();
+
+        login(imzaci);
+        new ImzaBekleyenlerPage().openPage()
+                .searchTable().findRowAndSelect(text(konu))
+                .evrakPageButtons().evrakImzala()
+                .islemMesaji().basariliOlmali();
+
+        login(silenecekDagitimPlanUser);
+        new GelenEvraklarPage().openPage()
+                .searchTable().findRows(text(konu)).shouldHaveSize(0);
+
+        login(birimDagitimPlanUser);
+        new TeslimAlinmayiBekleyenlerPage().openPage()
+                .searchTable().findRows(text(konu)).shouldHaveSize(1);
+    }
+
+    @Test(description = "", enabled = true)
+    public void TS1949() {
+
+    }
+
+
 
     //region Steps
     @Step("{name} : {description}")
