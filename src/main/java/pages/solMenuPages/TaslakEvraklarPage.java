@@ -244,6 +244,16 @@ public class TaslakEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Evrakın içerik göster tıklanır")
+    public TaslakEvraklarPage evrakSecKonuyaGoreIcerikGosterSec(String konu) {
+        tableEvraklar
+                .filterBy(Condition.text(konu))
+                .first()
+                .$("[id$='detayGosterButton']")
+                .click();
+        return this;
+    }
+
     @Step("Hareket Geçmişi açıklama kontrolü :\n \"{text}\" ")
     public TaslakEvraklarPage tabloKontol(String text) {
         tblHareketGecmisi

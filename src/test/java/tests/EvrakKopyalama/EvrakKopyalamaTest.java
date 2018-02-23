@@ -55,12 +55,12 @@ public class EvrakKopyalamaTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true,description = "TS1597: Havale onayı bekleyen evrakın geri çekilmesi ve tekrar havalesi (içerik ekranından)")
-    public void TS2175() {
+    @Test(enabled = true,description = "TS2176: form türündeki evrakın kopyalanması")
+    public void TS2176() {
 
-        String konuKodu = "TS2184-" + createRandomNumber(15);
+        String konuKodu = "TS2176-" + createRandomNumber(15);
         String kurum = "BÜYÜK HARFLERLE KURUM";
-        String birim = "Zübeyde Tekin";
+        String kullanici = "Yasemin Çakıl AKYOL";
         String kaldirilacakKlasor = "Diğer";
         String geregi = "Optiim Birim";
         String onayAkisi = "TS2172";
@@ -68,16 +68,61 @@ public class EvrakKopyalamaTest extends BaseTest {
         String basariMesaji2 = "Kopyalanan evraka \"Taslak Evraklar\" kısmından erişebilirsiniz.";
         String icerik = createRandomText(15);
         String filePath = getUploadPath() + "Otomasyon.pdf";
+        String sablon = "Optiim form şablonu";
+
+        login(usernameZTEKIN,passwordZTEKIN);
+
+        evrakOlusturPage
+                .evrakOlusturEvrakTuruneGoreKopyala(konuKodu,"Kurum",kurum,"Paraflama",kullanici,"BHUPGMY","İmzalama","Form",sablon);
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true,description = "TS2175: birim içerik şablonu olan evrakı kopyalama")
+    public void TS2175() {
+
+        String konuKodu = "TS2175-" + createRandomNumber(15);
+        String kurum = "BÜYÜK HARFLERLE KURUM";
+        String kullanici = "Zübeyde Tekin";
+        String kaldirilacakKlasor = "Diğer";
+        String basariMesaji = "İşlem başarılıdır!";
+        String basariMesaji2 = "Kopyalanan evraka \"Taslak Evraklar\" kısmından erişebilirsiniz.";
 
         TS1082();
 
         evrakOlusturPage
-                .evrakOlusturBirimIcerikKullanParafla(konuKodu,"Kurum",kurum,"Paraflama","Zübeyde Tekin","BHUPGMY","İmzalama",sablonAdi1082);
+                .evrakOlusturBirimIcerikKullanParafla(konuKodu,"Kurum",kurum,"Paraflama",kullanici,"BHUPGMY","İmzalama",sablonAdi1082);
 
         parafladiklarimPage
                 .openPage()
-                ;
+                .evrakNoGoreEvrakSec(konuKodu)
+                .evrakSecEvrakKopyala()
+                .evrakKopyalaUyariGeldigiGorme()
+                .evrakKopyalaUyariEvet()
+                .islemMesaji().basariliOlmali(basariMesaji2);
 
+        taslakEvraklarPage
+                .openPage()
+                .evrakSecKonuyaGoreIcerikGosterSec(konuKodu);
+
+        evrakDetayiPage
+                .bilgileriTabAc()
+                .bilgileriTabKaldirilacakKlasorOnayAkisiGeregiGeldigiGorme(kaldirilacakKlasor,kurum,kullanici);
+
+        evrakDetayiPage
+                .ekleriTabAc()
+                .eklenenDosyaninKopyalananDosyaAyniGeldigiGorulur();
+
+        evrakDetayiPage
+                .ilgileriTabAc()
+                .cevapYazilanEvrakBilgisiKopyalananBosEvrakAyniGeldigiGorme();
+
+        evrakDetayiPage
+                .kaydet()
+                .kaydetEvet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        evrakDetayiPage
+                .parafla();
     }
 
     @Severity(SeverityLevel.CRITICAL)
