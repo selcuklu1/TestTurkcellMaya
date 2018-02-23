@@ -4,7 +4,6 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
-import data.User;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
@@ -251,6 +250,17 @@ public class MainPage extends BaseLibrary {
         sImzalaRadioSec();
 //        clickJs($("#imzalaForm\\:imzalaRadio").find(By.tagName("input")));
         evrakImzaOnay();*/
+        return this;
+    }
+
+    @Step("Menülerin geldiği görülür")
+    public MainPage evrakIslemleriIslemYaptiklarimMenuKontrol() {
+
+        Assert.assertEquals($(By.id("topMenuForm2:ust:0:ustMenuEleman")).isDisplayed(), true);
+        Assert.assertEquals(  $(By.id("leftMenuForm:leftMenuIslemBekleyenEvraklar")).isDisplayed(), true);
+
+        takeScreenshot();
+
         return this;
     }
 

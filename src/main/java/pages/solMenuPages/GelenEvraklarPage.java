@@ -1349,4 +1349,15 @@ public class GelenEvraklarPage extends MainPage {
 
         return this;
     }
+
+    @Step("Gelen Evraklar listesinden evrak önizlemede aç")
+    public GelenEvraklarPage konuyaGoreEvrakOnizlemedeAc(String konu) {
+
+        tableEvraklar
+                .filterBy(Condition.text(konu))
+                .get(0)
+                .$("[id$='evrakTable']").click();
+
+        return this;
+    }
 }

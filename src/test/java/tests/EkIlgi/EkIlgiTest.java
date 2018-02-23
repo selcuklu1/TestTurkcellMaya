@@ -1,6 +1,5 @@
 package tests.EkIlgi;
 
-import com.codeborne.selenide.Selenide;
 import common.BaseTest;
 import data.TestData;
 import io.qameta.allure.Severity;
@@ -14,8 +13,6 @@ import pages.solMenuPages.*;
 import pages.ustMenuPages.EvrakOlusturPage;
 
 import java.lang.reflect.Method;
-
-import static com.codeborne.selenide.Selenide.switchTo;
 
 /****************************************************
  * Tarih: 2017-12-22
@@ -727,7 +724,8 @@ public class EkIlgiTest extends BaseTest {
         String ilgileriEvrakSayisi2 = "6345202-010.01-11845";
 
         String basariMesaji = "İşlem başarılıdır!";
-        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR); //mbozdemir
+
+     /*   login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR); //mbozdemir
 
         evrakOlusturPage
                 .openPage()
@@ -899,22 +897,20 @@ public class EkIlgiTest extends BaseTest {
         gelenEvraklarPage
                 .openPage()
                 .tabloKonuyaGoreEvrakKontrol(evrakKonusu, true)
+                .konuyaGoreEvrakOnizlemedeAc(evrakKonusu)
                 .tabEvrakEkleriAc()
-                .gelenEvrakEkleriKontrol(evrakSayisi1, "Localden eklenen dosya");
+                .gelenEvrakEkleriKontrol(evrakSayisi1, "Localden eklenen dosya");*/
 
         login(TestData.usernameYAKYOL, TestData.passwordYAKYOL);
 
         teslimAlinmayiBekleyenlerPage
                 .openPage()
-                .konuyaGoreEvrakKontroluAllPages(evrakKonusu)
-                .konuyaGoreEvrakOnizlemedeAc(evrakKonusu)
+                .konuyaGoreEvrakKontroluAllPages("TS1493_EkIlgi_20180223122232")
+                .konuyaGoreEvrakOnizlemedeAc("TS1493_EkIlgi_20180223122232")
                 .tabEvrakEkleriAc()
-                .teslimEvrakEkleriKontrol(ekleriAciklamaDosya1, "Sistemden eklenen evrak")
-                .evrakSecIcerikGoster(evrakKonusu, true)
 
-                .eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim1(birim, "Ek-2 konulmadı, Ek-3 konulmadı")
-                .eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim2(kurum, "Ek-2 konulmadı, Ek-3 konulmadı")
-                .eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim3(kullanici, "Ek-1 konulmadı, Ek-2 konulmadı");
+                .teslimEvrakEkleriKontrol(ekleriAciklamaDosya1, "Sistemden eklenen evrak")
+                .evrakSecIcerikGoster(evrakKonusu, true);
 
 /*        evrakDetayiPage
                 .evrakGoster()
