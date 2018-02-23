@@ -119,6 +119,9 @@ public class GelenEvraklarPage extends MainPage {
     SelenideElement btnEvrakKapatmaOnayAkisiEkle = $x("//table[@id='mainPreviewForm:evrakKapatOnayAkisPanelGrid']//span[contains(@class, 'add-icon')]/..");
     SelenideElement txtEvrakKapatOnayAkisiAdi = $(By.id("mainPreviewForm:akisAdiText_id"));
 
+    SelenideElement tabEvrakEkleri = $(By.xpath("//*[contains(text(),'Evrak Ekleri')]"));
+    ElementsCollection gelenEvrakEkleriKontrol = $$("div[id$='ekListesiOnizlemeDataTable'] tr[data-ri]");
+
     @Step("Gelen Evraklar Sayfasını aç")
     public GelenEvraklarPage openPage() {
         solMenu(SolMenuData.IslemBekleyenEvraklar.GelenEvraklar);
@@ -1125,4 +1128,20 @@ public class GelenEvraklarPage extends MainPage {
     }
 
 
+    @Step("Gelen Evraklar/Evrak Ekleri tabını aç")
+    public GelenEvraklarPage tabEvrakEkleriAc() {
+        tabEvrakEkleri.click();
+        return this;
+    }
+
+
+    @Step("Gelen Evraklar Ekleri Kontrol : {description}")
+    public GelenEvraklarPage gelenEvrakEkleriKontrol(String ek, String description) {
+
+        gelenEvrakEkleriKontrol
+                .filterBy(Condition.text(ek))
+                .shouldHaveSize(1);
+
+        return this;
+    }
 }

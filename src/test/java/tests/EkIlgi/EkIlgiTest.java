@@ -798,8 +798,8 @@ public class EkIlgiTest extends BaseTest {
                 .PDFEk2Kontrolu(fizikselEkAciklama)
                 .PDFEk3Kontrolu(evrakSayisi1)
                 .eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim1(birim, "Ek-2 konulmadı, Ek-3 konulmadı")
-                .eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim2(kurum, "k-2 konulmadı, Ek-3konulmadı")
-                .eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim(kurum, "Ek-1 konulmadı, Ek-2konulmadı");
+                .eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim2(kurum, "k-2 konulmadı, Ek-3 konulmadı")
+                .eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim(kullanici, "Ek-1 konulmadı, Ek-2 konulmadı");
 
         closeNewWindow();
         switchTo().window(0);
@@ -898,7 +898,9 @@ public class EkIlgiTest extends BaseTest {
 
         gelenEvraklarPage
                 .openPage()
-                .tabloKonuyaGoreEvrakKontrol(evrakKonusu, true);
+                .tabloKonuyaGoreEvrakKontrol(evrakKonusu, true)
+                .tabEvrakEkleriAc()
+                .gelenEvrakEkleriKontrol(evrakSayisi1, "Localden eklenen dosya");
 
         login(TestData.usernameYAKYOL, TestData.passwordYAKYOL);
 
@@ -907,14 +909,18 @@ public class EkIlgiTest extends BaseTest {
                 .konuyaGoreEvrakKontroluAllPages(evrakKonusu)
                 .konuyaGoreEvrakOnizlemedeAc(evrakKonusu)
                 .tabEvrakEkleriAc()
-                .teslimEvrakEkleriKontrol(ekleriAciklamaDosya1, "Localden eklenen dosya")
-                .evrakSecIcerikGoster(evrakKonusu, true);
+                .teslimEvrakEkleriKontrol(ekleriAciklamaDosya1, "Sistemden eklenen evrak")
+                .evrakSecIcerikGoster(evrakKonusu, true)
 
-        evrakDetayiPage
+                .eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim1(birim, "Ek-2 konulmadı, Ek-3 konulmadı")
+                .eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim2(kurum, "Ek-2 konulmadı, Ek-3 konulmadı")
+                .eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim3(kullanici, "Ek-1 konulmadı, Ek-2 konulmadı");
+
+/*        evrakDetayiPage
                 .evrakGoster()
                 .eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim1(birim, "Ek-2 konulmadı, Ek-3 konulmadı")
                 .eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim2(kurum, "Ek-2 konulmadı, Ek-3 konulmadı")
-                .eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim3(kurum, "Ek-1 konulmadı, Ek-2 konulmadı");
+                .eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim3(kullanici, "Ek-1 konulmadı, Ek-2 konulmadı");*/
 
 
     }
