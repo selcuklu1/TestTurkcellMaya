@@ -226,7 +226,7 @@ public class OnayAkisiTest extends BaseTest {
         String imzaciKullanici = "Optiim TEST";
         String kaldirilacakKlasorler = "ESK05";
 
-        login(TestData.usernameOPTIIMTEST76, TestData.passwordPTIIMTEST76); //optiimtest6 123
+        login(TestData.usernameOPTIIMTEST6, TestData.passwordPTIIMTEST6); //optiimtest6 123
 
         evrakOlusturPage
                 .openPage()

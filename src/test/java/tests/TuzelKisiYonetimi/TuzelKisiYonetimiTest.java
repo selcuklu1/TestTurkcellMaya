@@ -28,8 +28,6 @@ public class TuzelKisiYonetimiTest extends BaseTest {
     @BeforeMethod
     public void beforeTests(Method method) {
 
-        log.info(method.getName() + "Nolu test senaryosu başladı.");
-
         login();
         tuzelKisiYonetimiPage = new TuzelKisiYonetimiPage();
         evrakOlusturPage = new EvrakOlusturPage();
@@ -434,6 +432,7 @@ public class TuzelKisiYonetimiTest extends BaseTest {
                 .geregiBilgiAlaniAdresPdfKontrol(birinciKullaniciGeregiAdresi, getIkinciKullaniciAdres)
                 .switchToDefaultWindow();
     }
+
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS1132b: Tüzel kişinin pasif yapılması ve kontrolü")

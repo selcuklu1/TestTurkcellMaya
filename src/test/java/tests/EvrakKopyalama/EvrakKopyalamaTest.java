@@ -20,6 +20,8 @@ import pages.solMenuPages.*;
 import pages.ustMenuPages.EvrakOlusturPage;
 import tests.KisiselIslemlerBagTipi.KisiselIslemlerBagTipiTest;
 import static data.TestData.*;
+import static tests.BirimIcerikSablonu.BirimIcerikSablonuTest.TS1082;
+import static tests.BirimIcerikSablonu.BirimIcerikSablonuTest.sablonAdi1082;
 
 /****************************************************
  * Tarih: 2018-02-20
@@ -38,6 +40,7 @@ public class EvrakKopyalamaTest extends BaseTest {
     EvrakOlusturPage evrakOlusturPage;
     TaslakEvraklarPage taslakEvraklarPage;
     EvrakDetayiPage evrakDetayiPage;
+    ParafladiklarimPage parafladiklarimPage;
 
     @BeforeMethod
     public void loginBeforeTests() {
@@ -48,21 +51,78 @@ public class EvrakKopyalamaTest extends BaseTest {
         evrakOlusturPage = new EvrakOlusturPage();
         taslakEvraklarPage = new TaslakEvraklarPage();
         evrakDetayiPage = new EvrakDetayiPage();
+        parafladiklarimPage = new ParafladiklarimPage();
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true,description = "TS1597: Havale onayı bekleyen evrakın geri çekilmesi ve tekrar havalesi (içerik ekranından)")
-    public void TS1597() {
-        String konuKodu = "TS1597-" + createRandomNumber(15);
-        String kurum = "BÜYÜK HARFLERLE BİRİM";
+    @Test(enabled = true,description = "TS2176: form türündeki evrakın kopyalanması")
+    public void TS2176() {
 
-        login(usernameYAKYOL,passwordYAKYOL);
+        String konuKodu = "TS2176-" + createRandomNumber(15);
+        String kurum = "BÜYÜK HARFLERLE KURUM";
+        String kullanici = "Yasemin Çakıl AKYOL";
+        String kaldirilacakKlasor = "Diğer";
+        String geregi = "Optiim Birim";
+        String onayAkisi = "TS2172";
+        String basariMesaji = "İşlem başarılıdır!";
+        String basariMesaji2 = "Kopyalanan evraka \"Taslak Evraklar\" kısmından erişebilirsiniz.";
+        String icerik = createRandomText(15);
+        String filePath = getUploadPath() + "Otomasyon.pdf";
+        String sablon = "Optiim form şablonu";
 
-        reusableSteps
-                .beklemeyeAlinanlarEvrakOlustur(konuKodu,"Birim",kurum,"Paraflama","Zübeyde Tekin","BHUPGMY","İmzalama",usernameZTEKIN,passwordZTEKIN);
+        login(usernameZTEKIN,passwordZTEKIN);
 
-        beklemeyeAlinanlarPage
-                .openPage();
+        evrakOlusturPage
+                .evrakOlusturEvrakTuruneGoreKopyala(konuKodu,"Kurum",kurum,"Paraflama",kullanici,"BHUPGMY","İmzalama","Form",sablon);
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true,description = "TS2175: birim içerik şablonu olan evrakı kopyalama")
+    public void TS2175() {
+
+        String konuKodu = "TS2175-" + createRandomNumber(15);
+        String kurum = "BÜYÜK HARFLERLE KURUM";
+        String kullanici = "Zübeyde Tekin";
+        String kaldirilacakKlasor = "Diğer";
+        String basariMesaji = "İşlem başarılıdır!";
+        String basariMesaji2 = "Kopyalanan evraka \"Taslak Evraklar\" kısmından erişebilirsiniz.";
+
+        TS1082();
+
+        evrakOlusturPage
+                .evrakOlusturBirimIcerikKullanParafla(konuKodu,"Kurum",kurum,"Paraflama",kullanici,"BHUPGMY","İmzalama",sablonAdi1082);
+
+        parafladiklarimPage
+                .openPage()
+                .evrakNoGoreEvrakSec(konuKodu)
+                .evrakSecEvrakKopyala()
+                .evrakKopyalaUyariGeldigiGorme()
+                .evrakKopyalaUyariEvet()
+                .islemMesaji().basariliOlmali(basariMesaji2);
+
+        taslakEvraklarPage
+                .openPage()
+                .evrakSecKonuyaGoreIcerikGosterSec(konuKodu);
+
+        evrakDetayiPage
+                .bilgileriTabAc()
+                .bilgileriTabKaldirilacakKlasorOnayAkisiGeregiGeldigiGorme(kaldirilacakKlasor,kurum,kullanici);
+
+        evrakDetayiPage
+                .ekleriTabAc()
+                .eklenenDosyaninKopyalananDosyaAyniGeldigiGorulur();
+
+        evrakDetayiPage
+                .ilgileriTabAc()
+                .cevapYazilanEvrakBilgisiKopyalananBosEvrakAyniGeldigiGorme();
+
+        evrakDetayiPage
+                .kaydet()
+                .kaydetEvet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        evrakDetayiPage
+                .parafla();
     }
 
     @Severity(SeverityLevel.CRITICAL)
