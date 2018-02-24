@@ -199,7 +199,7 @@ public class BirimeIadeEdilenlerdenHavaleTest extends BaseTest {
         havaleOnayinaSunduklarimPage
                 .openPage()
                 .evrakNoIleEvrakSec(konu)
-                .havaleBilgisi()
+                .havaleBilgisiSec()
                 .kisiKontrol(kisi);
 
         login(mbozdemir);

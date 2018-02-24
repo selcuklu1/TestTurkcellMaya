@@ -7,8 +7,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.testng.Assert;
 import pages.MainPage;
+import pages.altMenuPages.EvrakDetayiPage;
 import pages.pageComponents.TextEditor;
 import pages.pageComponents.belgenetElements.BelgenetElement;
+import pages.pageComponents.tabs.EditorTab;
 import pages.pageData.UstMenuData;
 
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
@@ -35,6 +37,7 @@ public class EvrakOlusturPage extends MainPage {
     SelenideElement tabEvrakDogrulama = $("button .evrakDogrulamaAktarimIslemleri");
     SelenideElement btnPDFOnizleme = $("button[id^='yeniGidenEvrakForm:rightTab:uiRepeat'] span[class$='pdfOnIzleme']");
     SelenideElement btnKaydet = $("button[id^='yeniGidenEvrakForm:rightTab:uiRepeat'] span[class$='kaydet']");
+    SelenideElement btnEvrakKopyala = $("[class='ui-button-icon-left ui-icon evrakKopyala']");
     SelenideElement btnKaydetOnayaSun = $("button[id^='yeniGidenEvrakForm:rightTab:uiRepeat'] span[class$='kaydetHavaleEt']");
     SelenideElement btnKaydetOnayaSun2 = $("div[class='ui-tabmenu ui-tabmenu-right'] span[class='ui-button-icon-left ui-icon kaydetHavaleEt']");
     SelenideElement txtKaydetOnayaSunAciklama = $("[id$='onayIslemiAciklama']");
@@ -141,6 +144,18 @@ public class EvrakOlusturPage extends MainPage {
         return this;
     }
 
+    @Step("Evrak Kopyala tıklanır")
+    public EvrakOlusturPage evrakKopyala(){
+        btnEvrakKopyala.click();
+        return this;
+    }
+
+    @Step("Evet tıklanır")
+    public EvrakOlusturPage kaydetEvet() {
+        btnKaydetEvet.click();
+        return this;
+    }
+
     @Step("\"{0}\" ekran açılması beklenen statü: {1}")
     public EvrakOlusturPage PDFOnizlemeKisayolGonder(String kisayol) {
 
@@ -181,6 +196,13 @@ public class EvrakOlusturPage extends MainPage {
 
     public EvrakOlusturPage evrakOlusturSayfaKapat() {
         $(By.xpath("//div[@id='window1Dialog']//span[@class='ui-icon ui-icon-closethick']")).click();
+        islemPenceresiKaydetPopup("Evet");
+        return this;
+    }
+
+
+    public EvrakOlusturPage evrakOlusturSayfayiKapat() {
+        $$("[id='window2Dialog'] span[class='ui-icon ui-icon-closethick']").first().click();
         islemPenceresiKaydetPopup("Evet");
         return this;
     }
@@ -1048,7 +1070,7 @@ public class EvrakOlusturPage extends MainPage {
         @Step("{deger} adlı kullanıcının tipi {secim} seçilir")
         public BilgilerTab kullaniciylaSecimTipiSec(String deger,String secim){
         $$("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='akisAdimLov:LovSecilenTable_data'] > tr").filterBy(Condition.text(deger))
-                .first().$("select").selectOption(secim);
+                .last().$("select").selectOption(secim);
             return this;
         }
         
@@ -3849,21 +3871,25 @@ public class EvrakOlusturPage extends MainPage {
         @Step("Pdf Dağıtımda eklerin gitmeyeceği yrler kontrolu: {dagitim}")
         public PDFKontrol eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim1(String dagitim, String ekler) {
             String pdfDagitim1 = $(By.xpath("//*[@id='viewer']/div/div[2]/div[19]")).getText();
-            Assert.assertEquals(ekler.contains(ekler), true);
+            Assert.assertEquals(pdfDagitim1.contains(ekler), true);
             return this;
         }
 
         @Step("Pdf Dağıtımda eklerin gitmeyeceği yerler kontrolu: {dagitim}")
         public PDFKontrol eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim2(String dagitim, String ekler) {
-            String pdfDagitim1 = $(By.xpath("//*[@id='viewer']/div/div[2]/div[20]")).getText();
-            Assert.assertEquals(ekler.contains(ekler), true);
+            String pdfDagitim2 = $(By.xpath("//*[@id='viewer']/div/div[2]/div[20]")).getText();
+            String pdfDagitim2Devam = $(By.xpath("//*[@id='viewer']/div/div[2]/div[21]")).getText();
+            String pdfDagitim = pdfDagitim2 + " " +pdfDagitim2Devam;
+            Assert.assertEquals(pdfDagitim.contains(ekler), true);
             return this;
         }
 
         @Step("Pdf Dağıtımda eklerin gitmeyeceği yerler kontrolu: {dagitim}")
         public PDFKontrol eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim(String dagitim, String ekler) {
-            String pdfDagitim1 = $(By.xpath("//*[@id='viewer']/div/div[2]/div[21]")).getText();
-            Assert.assertEquals(ekler.contains(ekler), true);
+            String pdfDagitim3 = $(By.xpath("//*[@id='viewer']/div/div[2]/div[22]")).getText();
+            String pdfDagitim3Devam = $(By.xpath("//*[@id='viewer']/div/div[2]/div[23]")).getText();
+            String pdfDagitim = pdfDagitim3 + " " +pdfDagitim3Devam;
+            Assert.assertEquals(pdfDagitim.contains(ekler), true);
             return this;
         }
 
@@ -3909,6 +3935,57 @@ public class EvrakOlusturPage extends MainPage {
                 .kullan();
                 editorTabAc()
                 .editorIcerikDoldur(icerik);
+                parafla();
+    }
+
+    @Step("Evrak oluştur alanında parafla tıklanır")
+    public void evrakOlusturEvrakTuruneGoreKopyala(String konu, String geregiSecimTipi, String geregi, String OnayAkisiKullanici1Turu, String kullanici2, String kullaniciBirim, String OnayAkisiKullanici2Turu,String evrakTuru,String sablon) {
+                String konuKodu = "Diğer";
+                String kaldirilacakKlasor = "Diğer";
+                String icerik = createRandomText(15);
+
+                openPage()
+                .bilgilerTabiAc()
+                .konuKoduSec(konuKodu)
+                .konuDoldur(konu)
+                .kaldiralacakKlasorlerSec(kaldirilacakKlasor)
+                .evrakTuruSec(evrakTuru)
+                .formSablonuSec(sablon)
+                .geregiSecimTipiSec(geregiSecimTipi)
+                .geregiSec(geregi)
+                .onayAkisiEkle()
+                .onayAkisiEkleIlkSelectSec(OnayAkisiKullanici1Turu)
+                .kullanicilarDoldur(kullanici2,kullaniciBirim)
+                .kullaniciylaSecimTipiSec(kullanici2,OnayAkisiKullanici2Turu)
+                .kullan();
+                kaydet(true)
+                .evrakKopyala();
+    }
+
+    @Step("Evrak oluştur alanında birim içerik oluştur kullan parafla tıklanır")
+    public void evrakOlusturBirimIcerikKullanParafla(String konu, String geregiSecimTipi, String geregi, String OnayAkisiKullanici1Turu, String kullanici2, String kullaniciBirim, String OnayAkisiKullanici2Turu,String sablonAdi) {
+                String konuKodu = "Diğer";
+                String kaldirilacakKlasor = "Diğer";
+                String icerik = createRandomText(15);
+                pages.newPages.EvrakOlusturPage evrakOlusturPage = new pages.newPages.EvrakOlusturPage();
+
+                openPage()
+                .bilgilerTabiAc()
+                .konuKoduSec(konuKodu)
+                .konuDoldur(konu)
+                .kaldiralacakKlasorlerSec(kaldirilacakKlasor)
+                .geregiSecimTipiSec(geregiSecimTipi)
+                .geregiSec(geregi)
+                .onayAkisiEkle()
+                .onayAkisiEkleIlkSelectSec(OnayAkisiKullanici1Turu)
+                .kullanicilarDoldur(kullanici2,kullaniciBirim)
+                .kullaniciylaSecimTipiSec(kullanici2,OnayAkisiKullanici2Turu)
+                .kullan();
+                pages.pageComponents.tabs.EditorTab editorTab = evrakOlusturPage.editorTab().openTab();
+                editorTab.getEditor().toolbarButton("Öntanımlı İçerik Şablonu Kullan", true);
+                editorTab.onTanimliSablonuSec(sablonAdi)
+                .onTanimliSablonuUygula();
+                bilgilerTabiAc();
                 parafla();
     }
     //endregion

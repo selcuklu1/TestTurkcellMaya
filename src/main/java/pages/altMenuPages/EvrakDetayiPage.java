@@ -8,6 +8,9 @@ import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.TextEditor;
 import pages.pageComponents.belgenetElements.BelgenetElement;
+import pages.pageComponents.tabs.EkleriTab;
+import pages.pageComponents.tabs.IlgileriTab;
+import pages.ustMenuPages.EvrakOlusturPage;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
@@ -19,7 +22,8 @@ public class EvrakDetayiPage extends MainPage {
     SelenideElement btnTebellugEt = $("button .tebellugEt");
     SelenideElement btnPanelHayir = $(By.id("mainInboxForm:tebellugEtHayirButton"));
     SelenideElement dialogTabMenuRight = $(By.id("inboxItemInfoForm:dialogTabMenuRight:dialogTabMenuRight"));
-    SelenideElement btnEvrakGoster = $(By.id("inboxItemInfoForm:dialogTabMenuRight:uiRepeat:4:cmdbutton"));
+    SelenideElement btnTeslimAl = $(By.id("inboxItemInfoForm:dialogTabMenuRight:uiRepeat:4:cmdbutton"));
+    SelenideElement btnEvrakGoster = $(By.id("inboxItemInfoForm:dialogTabMenuRight:uiRepeat:3:cmdbutton"));
     SelenideElement btnHavaleYap = $("[id^='inboxItemInfoForm:dialogTabMenuRight:uiRepeat'] [class$='havaleEt']");
     SelenideElement btnTebligEt = $("[id^='inboxItemInfoForm:dialogTabMenuRight:uiRepeat'] [class$='tebligEt']");
     SelenideElement btnIadeEt = $("[id^='inboxItemInfoForm:dialogTabMenuRight:uiRepeat'] [class$='iadeEt']");
@@ -30,6 +34,9 @@ public class EvrakDetayiPage extends MainPage {
     SelenideElement spanBilgileri = $x("//span[. = 'Bilgileri']");
     SelenideElement tabEditor = $("button .editor");
     ElementsCollection tblHareketGecmisi = $$("tbody[id$='hareketGecmisiDataTable_data'] > tr[role='row']");
+    SelenideElement btnKaydet = $("span[class='ui-button-icon-left ui-icon kaydet']");
+    SelenideElement btnKaydetEvet = $(By.id("kaydetConfirmForm:kaydetEvetButton"));
+    SelenideElement btnKaydetHayir = $(By.id("kaydetConfirmForm:kaydetHayirButton"));
 
     SelenideElement txtAciklama = $(By.id("inboxItemInfoForm:onayIslemiAciklama"));
     SelenideElement btnGonder = $(By.id("inboxItemInfoForm:gonderButton"));
@@ -53,6 +60,8 @@ public class EvrakDetayiPage extends MainPage {
     private HareketGecmisiTab hareketGecmisiTab = new HareketGecmisiTab();
     private EditorTab editorTab = new EditorTab();
     private BilgileriTab bilgileriTab = new BilgileriTab();
+    private EkleriTab ekleriTab = new EkleriTab();
+    private IlgileriTab ilgileriTab = new IlgileriTab();
 
     @Step("Sayfa geldiği kontrol edilir.")
     public EvrakDetayiPage sayfaAcilmali() {
@@ -69,6 +78,16 @@ public class EvrakDetayiPage extends MainPage {
     @Step("Bilgiler tab aç")
     public BilgileriTab bilgileriTabAc() {
         return bilgileriTab.open();
+    }
+
+    @Step("Ekleri tab aç")
+    public EkleriTab ekleriTabAc() {
+        return ekleriTab.open();
+    }
+
+    @Step("İlgileri tab aç")
+    public IlgileriTab ilgileriTabAc() {
+        return ilgileriTab.open();
     }
 
     @Step("Hareket Geçmisi tab aç")
@@ -189,6 +208,28 @@ public class EvrakDetayiPage extends MainPage {
     @Step("Kullanici Grup Detay ekranında Kullan butonu tıklanır.")
     public EvrakDetayiPage kullaniciGrupDetayKullan() {
         clickJs(btnKullaniciGrupDetayKullan);
+        return this;
+    }
+
+    @Step("Kaydet")
+    public EvrakDetayiPage kaydet() {
+        btnKaydet.click();
+        return this;
+    }
+
+    @Step("Evet tıklanır")
+    public EvrakDetayiPage kaydetEvet() {
+        btnKaydetEvet.click();
+        return this;
+    }
+
+    @Step("Kaydet")
+    public EvrakDetayiPage kaydet(boolean save) {
+        btnKaydet.click();
+        if (save)
+            btnKaydetEvet.click();
+        else
+            btnKaydetHayir.click();
         return this;
     }
 
@@ -381,6 +422,43 @@ public class EvrakDetayiPage extends MainPage {
         return this;
     }
 
+    @Step("Evrak Göster")
+    public EvrakDetayiPage evrakGoster() {
+
+        btnEvrakGoster.click();
+
+        return this;
+    }
+
+    @Step("Pdf Dağıtımda eklerin gitmeyeceği yerler kontrolu: {dagitim}")
+    public EvrakDetayiPage eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim1(String dagitim, String ekler) {
+        String pdfDagitim = $(By.xpath("//*[@id=\"viewer\"]/div/div[2]/div[30]")).getText();
+        Assert.assertEquals(pdfDagitim.contains(ekler), true);
+        return this;
+    }
+
+    @Step("Pdf Dağıtımda eklerin gitmeyeceği yerler kontrolu: {dagitim}")
+    public EvrakDetayiPage eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim2(String dagitim, String ekler) {
+        String pdfDagitim2 = $(By.xpath("//*[@id=\"viewer\"]/div/div[2]/div[31]")).getText();
+        String pdfDagitimDevami = $(By.xpath("//*[@id=\"viewer\"]/div/div[2]/div[32]")).getText();
+
+        String pdfDagitim = pdfDagitim2 + " " + pdfDagitimDevami;
+
+        Assert.assertEquals(pdfDagitim.contains(ekler), true);
+        return this;
+    }
+
+    @Step("Pdf Dağıtımda eklerin gitmeyeceği yerler kontrolu: {dagitim}")
+    public EvrakDetayiPage eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim3(String dagitim, String ekler) {
+        String pdfDagitim3 = $(By.xpath("//*[@id=\"viewer\"]/div/div[2]/div[33]")).getText();
+        String pdfDagitimDevami = $(By.xpath("//*[@id=\"viewer\"]/div/div[2]/div[34]")).getText();
+
+        String pdfDagitim = pdfDagitim3 + " " + pdfDagitimDevami;
+        Assert.assertEquals(pdfDagitim.contains(ekler), true);
+
+        return this;
+    }
+
     public class EditorTab extends MainPage {
 
         SelenideElement tabEditor = $(By.xpath("//span[. = 'Editör']/../../..//button"));
@@ -494,6 +572,68 @@ public class EvrakDetayiPage extends MainPage {
             txtOnayAkisi.selectLov(onayAkisi);
             return this;
         }
+
+        @Step("Kaldırılacak klasör, Gereği, Onay akışı, bilgilerinin girildiği şekilde geldiği görülür.")
+        public BilgileriTab bilgileriTabKaldirilacakKlasorOnayAkisiGeregiGeldigiGorme(String kaldirilacakKlasor,String geregi,String onayAkisi){
+            boolean durum = $$("[id$='eklenecekKlasorlerLov:LovSecilenTable_data']").filterBy(Condition.text(kaldirilacakKlasor)).size()==1;
+            boolean durum1 = $$("[id$='geregiLov:LovSecilenTable']").filterBy(Condition.text(geregi)).size()==1;
+            boolean durum2 = $$("[id$='akisLov:LovSecilen']").filterBy(Condition.text(onayAkisi)).size()==1;
+            Assert.assertEquals(durum,durum1);
+            Assert.assertEquals(durum2,durum1);
+            return this;
+        }
+    }
+
+    public class EkleriTab extends MainPage {
+
+        SelenideElement tabEkleri = $(By.xpath("//span[. = 'Ekleri']/../../..//button"));
+
+        private EkleriTab open() {
+            tabEkleri.click();
+            return this;
+        }
+
+
+        @Step("Eklenen dosyanın geldiği görülür.")
+        public EkleriTab eklenenDosyaninGeldigiGorulur(String dosya){
+            boolean durum = $$(By.id("inboxItemInfoForm:ekListesiDataTable_data")).filterBy(Condition.text(dosya)).size()==1;
+            Assert.assertEquals(durum,true);
+            return this;
+        }
+
+        @Step("Kopyası oluşturulan evrak eklerinin aynısının geldiği ve değiştirilebildiği görülür")
+        public EkleriTab eklenenDosyaninKopyalananDosyaAyniGeldigiGorulur(){
+            boolean durum = $$(By.id("inboxItemInfoForm:ekListesiDataTable_data")).filterBy(Condition.text("Listelenecek Veri Bulunamamıştır.")).size()==1;
+            Assert.assertEquals(durum,true);
+            return this;
+        }
+
+    }
+
+    public class IlgileriTab extends MainPage {
+
+        SelenideElement tabIlgileri = $(By.xpath("//span[. = 'İlgileri']/../../..//button"));
+
+        private IlgileriTab open() {
+            tabIlgileri.click();
+            return this;
+        }
+
+
+        @Step("Cevap yazılan evrak bilgisinin geldiği görülür.")
+        public IlgileriTab cevapYazilanEvrakBilgisiGeldigiGorme(){
+            boolean durum = $$("[id='inboxItemInfoForm:ilgiListesiDataTable_data'] > tr").size()==1;
+            Assert.assertEquals(durum,true);
+            return this;
+        }
+
+        @Step("Kopyası oluşturulan evrak ilgilerinin aynısının geldiği ve değiştirilebildiği görülür")
+        public IlgileriTab cevapYazilanEvrakBilgisiKopyalananBosEvrakAyniGeldigiGorme(){
+            boolean durum = $$("[id='inboxItemInfoForm:ilgiListesiDataTable_data'] > tr").filterBy(Condition.text("Listelenecek Veri Bulunamamıştır.")).size()==1;
+            Assert.assertEquals(durum,true);
+            return this;
+        }
+
     }
 
     public class HareketGecmisiTab extends MainPage {

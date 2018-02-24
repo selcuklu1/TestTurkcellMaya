@@ -73,6 +73,28 @@ public class TaslakEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Kopyalanan Evrakların listelendiği görülür")
+    public TaslakEvraklarPage kopyaliEvraklarGeldigiGorme(String konu){
+        boolean durum = tableEvraklar.filterBy(Condition.text(konu)).size()==2;
+        Assert.assertEquals(durum,true);
+        takeScreenshot();
+        return this;
+    }
+
+    @Step("Evrak seçilir")
+    public TaslakEvraklarPage evrakNoIleIcerikGoster(String konu){
+        tableEvraklar.filterBy(Condition.text(konu)).first().$("[id$='detayGosterButton']").click();
+        return this;
+    }
+
+    @Step("Editör alanındaki içeriğin girilenle aynı olduğu görülür.")
+    public TaslakEvraklarPage editorAlaniGirilenIcerikAyniGeldigiGorme(String icerik){
+         boolean durum = $$("[id='inboxItemInfoForm:allPanels']").filterBy(Condition.text(icerik)).size() ==1;
+         Assert.assertEquals(durum,true);
+         takeScreenshot();
+        return this;
+    }
+
     @Step("Evrak notları popup iptal")
     public TaslakEvraklarPage evrakNotlariModalIptalGonder() {
         btnEvrakNotlariModalIptal.click();
@@ -218,6 +240,16 @@ public class TaslakEvraklarPage extends MainPage {
         tableEvraklar
                 .filterBy(Condition.text(konu))
                 .first()
+                .click();
+        return this;
+    }
+
+    @Step("Evrakın içerik göster tıklanır")
+    public TaslakEvraklarPage evrakSecKonuyaGoreIcerikGosterSec(String konu) {
+        tableEvraklar
+                .filterBy(Condition.text(konu))
+                .first()
+                .$("[id$='detayGosterButton']")
                 .click();
         return this;
     }
