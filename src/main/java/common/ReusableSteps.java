@@ -63,7 +63,7 @@ public class ReusableSteps extends BaseLibrary{
     }
 
     @Step("Evrak Oluştur kaydet ve parafla")
-    public static void evrakOlusturVeParafla(String konu, GeregiSecimTipi geregiSecimTipi, String geregi, User parafci, User imzaci){
+    public void evrakOlusturVeParafla(String konu, GeregiSecimTipi geregiSecimTipi, String geregi, User parafci, User imzaci){
         pages.newPages.EvrakOlusturPage page = new pages.newPages.EvrakOlusturPage().openPage();
         page.bilgileriTab().alanlariDoldur(konu, geregiSecimTipi, geregi, parafci, imzaci);
         page.editorTab().openTab().getEditor().type(konu);

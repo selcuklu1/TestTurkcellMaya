@@ -766,7 +766,7 @@ public class GelenEvraklarPage extends MainPage {
 
             text = $("table[id='mainInboxForm:inboxDataTable:" + i + ":evrakTable'] tr:nth-child(3)").getText();
             text = text.split("/")[2];
-            String number = getIntegerInText(text);
+            String number = getNumberFromText(text);
             evrakNo[i] = number;
         }
 //        String text = tblEvraklar.getText();

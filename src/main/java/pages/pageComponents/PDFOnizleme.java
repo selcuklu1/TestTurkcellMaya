@@ -1,10 +1,8 @@
 package pages.pageComponents;
 
-import com.codeborne.selenide.CollectionCondition;
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.*;
 import io.qameta.allure.Step;
+import pages.MainPage;
 
 import static com.codeborne.selenide.Selenide.*;
 
@@ -13,7 +11,7 @@ import static com.codeborne.selenide.Selenide.*;
  * Tarih: 12.02.2018
  * Açıklama:
  */
-public class PDFOnizleme {
+public class PDFOnizleme extends MainPage{
 
     ElementsCollection pages = $$("#viewer .page");
     SelenideElement viewer = $("#viewer");
@@ -24,15 +22,19 @@ public class PDFOnizleme {
 
     public PDFOnizleme(int windowIndex) {
         switchTo().window(windowIndex);
+        waitForLoadingJS(WebDriverRunner.getWebDriver());
     }
 
     public PDFOnizleme(String title) {
         switchTo().window(title);
+        waitForLoadingJS(WebDriverRunner.getWebDriver());
     }
 
-    @Step("")
+    @Step("Set 100% scale")
     public PDFOnizleme setScale100() {
         scaleSelect.selectOption("100%");
+        //byvalue: page-actual
+        //byvalue: 1
         return this;
     }
 
@@ -73,8 +75,11 @@ public class PDFOnizleme {
     public PDFOnizleme checkText(Condition... conditions) {
         SelenideElement page = getPage(0);
         for (Condition condition : conditions) {
-            page.shouldHave(condition);
+            //page.shouldHave(condition);
+            page.waitUntil(condition, 30000);
         }
+        setScale100();
+        takeScreenshot();
         return this;
     }
 

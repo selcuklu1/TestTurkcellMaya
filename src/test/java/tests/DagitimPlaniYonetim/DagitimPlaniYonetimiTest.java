@@ -12,6 +12,7 @@ import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.newPages.EvrakOlusturPage;
+import pages.pageComponents.DagitimHitapDuzenle;
 import pages.pageComponents.EvrakOnizleme;
 import pages.pageComponents.PDFOnizleme;
 import pages.pageData.alanlar.BilgiSecimTipi;
@@ -43,13 +44,15 @@ import static pages.pageData.alanlar.DagitimElemanlariTipi.*;
 public class DagitimPlaniYonetimiTest extends BaseTest {
 
     User optiim = new User("optiim", "123", "Optiim TEST", "Optiim Birim");
-    User ztekin = new User("ztekin", "123", "Zübeyde TEKİN", "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ/YGD");//, "Uzman Test Mühendis");
-    User ztekin1 = new User("ztekin", "123", "Zübeyde TEKİN", "Optiim Birim/YGD");//, "Uzman Test Mühendis");
+    User ztekin = new User("ztekin", "123", "Zübeyde TEKİN", "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ/YGD", "Genel Müdür");//, "Uzman Test Mühendis");
+    User ztekin1 = new User("ztekin", "123", "Zübeyde TEKİN", "AD MÜDÜRLÜĞÜ/YGD");//, "Uzman Test Mühendis");
+    User yakyol = new User("yakyol", "123", "Yasemin Çakıl AKYOL", "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ/YGD");//, "Uzman Test Mühendis");
     User user1 = new User("user1", "123", "User1 TEST", "AnaBirim1");//, "Uzman Test Mühendis");
     User user2 = new User("user2", "123", "User2 TEST", "AnaBirim1");//, "Uzman Test Mühendis");
     User user4 = new User("user4", "123", "User4 TEST", "AnaBirim2");//, "Uzman Test Mühendis");
     User user5 = new User("user5", "123", "User5 TEST", "AnaBirim1");//, "Uzman Test Mühendis");
-    User mbozdemir = new User("mbozdemir", "123", "Mehmet BoOZDEMİR", "GENEL MÜDÜRLÜK MAKAMI/GENMD");//, "Uzman Test Mühendis");
+    //User mbozdemir = new User("mbozdemir", "123", "Mehmet BOZDEMİR", "GENEL MÜDÜRLÜK MAKAMI/GENMD");//, "Uzman Test Mühendis");
+    User mbozdemir = new User("mbozdemir", "123", "Mehmet BOZDEMİR", "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ/YGD", "Antalya İl Müdürü");//, "Uzman Test Mühendis");
     DagitimPlaniYonetimiPage page;
     EvrakOlusturPage evrakOlusturPage;
     String yeniPlanAdi1280;
@@ -59,7 +62,7 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
     String[] evraktaGorunecekHitap;
 
     @Test(description = "TS1280: Yeni Kayıt İşlemi tüm Dağıtım Tipi Elemanları ile", enabled = true, priority = 2)
-    public void TS1280() {
+    public void TS1280a() {
         User user = user1;
         login(user);
 
@@ -85,7 +88,7 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
     }
 
     @Test(description = "TS1280: Yeni Kayıt İşlemi tek Dağıtım Tipi Elemanı ile", enabled = true, priority = 1)
-    public void TS1280a() {
+    public void TS1280b() {
         User user = user1;
         login(user);
         String planAdi = "TS1280a_";
@@ -599,20 +602,23 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
 
     @Test(description = "TS1942: Onay Akışındaki sırasında dağıtım planının güncellenemesi", enabled = true)
     public void TS1942() {
-        User parafci = user1;
-        User imzaci = user5;
+        User parafci = mbozdemir;
+        User imzaci = ztekin;
         //User user = optiim;
-        User silenecekDagitimPlanUser = optiim;
-        User birimDagitimPlanUser = user4;
+        User silenecekDagitimPlanUser = mbozdemir;
+        User birimDagitimPlanUser = ztekin1;
 
         String konu = "TS1942_" + getSysDate();
         String dagitimPlanAdi = konu;
         System.out.println("Dağınım Planı: " + dagitimPlanAdi);
-        String aciklama = "Dağıtım Elemanları: 3 kullanıcı";
+        String aciklama = "Dağıtım Elemanları: 2 kullanıcı + 1 birim";
+
         String[][] dagitimElemanlari = new String[][]{
-                {KULLANICI.getOptionText(), parafci.getFullname()}
-                //,{KULLANICI.getOptionText(), imzaci.getFullname()}
-                ,{KULLANICI.getOptionText(), silenecekDagitimPlanUser.getFullname()}
+                {KULLANICI.getOptionText(), parafci.getFullname(), ""}
+                ,{KULLANICI.getOptionText(), birimDagitimPlanUser.getFullname(), birimDagitimPlanUser.getBirimAdi()}
+                ,{BIRIM.getOptionText(), imzaci.getBirimAdi(), ""}
+
+                //,{KULLANICI.getOptionText(), silenecekDagitimPlanUser.getFullname(), ""}
                 //,{KULLANICI.getOptionText(), user.getFullname()}
         };
 
@@ -621,7 +627,7 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
                 .openPage()
                 .dagitimPlaniOlustur(dagitimPlanAdi, aciklama, parafci.getBirimAdi(),true, dagitimElemanlari);
 
-        ReusableSteps.evrakOlusturVeParafla(konu, GeregiSecimTipi.DAGITIM_PLANLARI, dagitimPlanAdi, parafci,imzaci);
+        new ReusableSteps().evrakOlusturVeParafla(konu, GeregiSecimTipi.DAGITIM_PLANLARI, dagitimPlanAdi, parafci,imzaci);
 
 
         dagitimPlaniYonetimiPage.openPage()
@@ -638,18 +644,41 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
                 .evrakPageButtons().evrakImzala()
                 .islemMesaji().basariliOlmali();
 
-        login(silenecekDagitimPlanUser);
+        //login(silenecekDagitimPlanUser);
         new GelenEvraklarPage().openPage()
                 .searchTable().findRows(text(konu)).shouldHaveSize(0);
 
-        login(birimDagitimPlanUser);
+        //login(birimDagitimPlanUser);
         new TeslimAlinmayiBekleyenlerPage().openPage()
                 .searchTable().findRows(text(konu)).shouldHaveSize(1);
     }
 
-    @Test(description = "", enabled = true)
+    @Test(description = "TS1949: Dağıtım Hitap Düzenleme (Evrak Oluştur Ekranından)", enabled = true)
     public void TS1949() {
+        User user = user1;
+        login(user);
 
+        String planAdi = "TS1280_20180206164745";
+        System.out.println("Dağınım Planı: " + planAdi);
+
+        Map<String,String> dagitimPlanElemanlari = new LinkedHashMap<>();
+        dagitimPlanElemanlari.put("Kullanıcı", "Sayın User1 TEST");
+        dagitimPlanElemanlari.put("Birim", "AnaBirim1E");
+        dagitimPlanElemanlari.put("Kurum", "BAŞBAKANLIĞA");
+        dagitimPlanElemanlari.put("Gerçek Kişi", "Sayın Zübeyde TEKİN");
+        dagitimPlanElemanlari.put("Tüzel Kişi", "Türksat Optiime");
+
+        EvrakOlusturPage page = new EvrakOlusturPage().openPage();
+        page.bilgileriTab()
+                .bilgiSecimTipiSec(BilgiSecimTipi.DAGITIM_PLANLARI)
+                .bilgiSec(planAdi)
+                .secilenBilgiUpdateTiklanır(text(planAdi));
+        DagitimHitapDuzenle dagitimHitapDuzenle = new DagitimHitapDuzenle();
+        dagitimHitapDuzenle.getEvraktaGorunecekHitap("DAĞITIM YERLERİNE olmalı").shouldBe(visible);
+        Assert.assertEquals(dagitimHitapDuzenle.getEvraktaGorunecekHitap("değişikliğin yapılamadığı görülür")
+                .$(Selectors.byText("DAĞITIM YERLERİNE")).getTagName(), "span", "evrakta görünecek hitap span olmalı");
+
+        dagitimHitapDuzenle.dagitimPlaniDetayListesiKontrolu(dagitimPlanElemanlari);
     }
 
 
