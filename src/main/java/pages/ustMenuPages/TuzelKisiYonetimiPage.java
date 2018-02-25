@@ -584,6 +584,7 @@ public class TuzelKisiYonetimiPage extends MainPage {
 
     @Step("Medya şirketi tipinde tüzel kişi ekleme")
     public List<String> medyaSirketiTuzelKisiEkleme() {
+
         String vergiNo = createRandomNumber(10);
         String kisaAd = createRandomText(7);
         String ad = "TuzelMedya" + getSysDate();
@@ -597,7 +598,6 @@ public class TuzelKisiYonetimiPage extends MainPage {
         String telNo = "5391111111";
         String faksNo = "2121111111";
         String basariMesaji = "İşlem başarılıdır!";
-
 
         openPage()
                 .yeniTuzelKisiEkle()

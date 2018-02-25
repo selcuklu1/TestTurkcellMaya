@@ -2,6 +2,7 @@ package tests.BirimIcerikSablonu;
 
 import com.codeborne.selenide.SelenideElement;
 import com.google.gson.internal.LinkedTreeMap;
+import common.BaseLibrary;
 import common.BaseTest;
 import data.User;
 import io.qameta.allure.Allure;
@@ -12,6 +13,7 @@ import org.openqa.selenium.Keys;
 import org.testng.ITestContext;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
+import pages.LoginPage;
 import pages.newPages.OlurYazisiOlusturPage;
 import pages.pageComponents.tabs.EditorTab;
 import pages.pageData.alanlar.GeregiSecimTipi;
@@ -37,8 +39,9 @@ public class BirimIcerikSablonuTest extends BaseTest {
     User user1 = new User("user1", "123", "User1 TEST", "AnaBirim1");
     User user2 = new User("user2", "123", "User2 TEST", "AnaBirim1AltBirim1");
     User user3 = new User("user3", "123", "User3 TEST", "AnaBirim1");
-    private String sablonAdi1082 = "TS1082_" + getSysDate();
-    private String editorText1082;
+    public static BaseLibrary baseLibrary= new BaseLibrary();
+    public static String sablonAdi1082 = "TS1082_" + baseLibrary.getSysDate();
+    public static String editorText1082;
     private String sablonAdi1085 = "TS1085_" + getSysDate();
     private String editorText1085;
     private String sablonAdi1079;
@@ -60,8 +63,15 @@ public class BirimIcerikSablonuTest extends BaseTest {
     }
 
     @Test(description = "TS1082: Yeni şablon oluştur (Alt birimler görsün)", enabled = true, priority = 2)
-    public void TS1082() {
-        login(user1);
+    public static void TS1082() {
+        LoginPage loginPage = new LoginPage();
+        BaseLibrary baseLibrary = new BaseLibrary();
+        String ALT_BIRIMLER_GORMESIN = "ALT BİRİMLER GÖRMESİN";
+        User user1 = new User("user1", "123", "User1 TEST", "AnaBirim1");
+         String onizlemeText = "T.C.\nGENEL MÜDÜRLÜK MAKAMI\nBİLİŞİM HİZMETLERİ GENEL MÜDÜR YARDIMCISI\nYAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ\n";
+         BirimIcerikSablonlarPage birimIcerikSablonlarPage = new BirimIcerikSablonlarPage();
+
+        loginPage.login(user1);
         birimIcerikSablonlarPage
                 .openPage()
                 .yeniSablonOlustur()

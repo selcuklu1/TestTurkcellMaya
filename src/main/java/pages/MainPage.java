@@ -4,12 +4,12 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
-import data.User;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.pageComponents.*;
+import pages.ustMenuPages.EvrakOlusturPage;
 
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Condition.matchText;
@@ -202,6 +202,12 @@ public class MainPage extends BaseLibrary {
         //return new EvrakPageButtons($("#mainPreviewForm"));
     }
 
+    public MainPage evrakOlusturSayfayiKapat() {
+        $$("[id='window1Dialog'] span[class='ui-icon ui-icon-closethick']").first().click();
+        islemPenceresiKaydetPopup("Evet");
+        return this;
+    }
+
     @Step("Footer'da açılan sayfa butonu bul")
     public SelenideElement getFooterPageButton(String pageTitle) {
         return $x("//div[@id='mainTaskBar']//div[@type='button']/span[contains(.,'" + pageTitle + "')]");
@@ -234,6 +240,16 @@ public class MainPage extends BaseLibrary {
         return this;
     }
 
+    @Step("Evrak Guncellendi Imzalanamaz Uyarı Kontrolü ve Tamam")
+    public MainPage evrakGuncellendiImzalanamazUyariKontrol(String uyari) {
+        Assert.assertEquals(switchTo().alert().getText().equals(uyari),true,"Evrak Guncellendi ve Imzalanamaz Uyarı Kontrolü");
+        Allure.addAttachment("Evrak Guncellendi ve Imzalanamaz Uyarı Kontrolü","");
+        switchTo().alert().accept();
+        return this;
+    }
+
+
+
     @Step("Parafla")
     public MainPage evrakParafla() {
         new EvrakPageButtons().evrakParafla();
@@ -251,6 +267,40 @@ public class MainPage extends BaseLibrary {
         sImzalaRadioSec();
 //        clickJs($("#imzalaForm\\:imzalaRadio").find(By.tagName("input")));
         evrakImzaOnay();*/
+        return this;
+    }
+
+    @Step("Icerik Degisti Iptal")
+    public MainPage icerikDegistiIptal() {
+        new EvrakPageButtons().icerikDegistiIptal();
+        return this;
+    }
+
+    @Step("Evrak Icerik Degisti Imzala ve Devam Et (Önceki kullanıcıları akıştan çıkartarak)")
+    public MainPage evrakIcerikDegistiImzalaveDevamEt() {
+        new EvrakPageButtons().evrakIcerikDegistiImzalaveDevamEt();
+        return this;
+    }
+
+    @Step("Evrak Icerik Degisti Kaydet")
+    public MainPage evrakSecmeliDegistiKaydet() {
+        new EvrakPageButtons().evrakSecmeliDegistiKaydet();
+        return this;
+    }
+
+    @Step("Evrak Icerik Degisti Evet")
+    public MainPage evrakSecmeliDegistiEvet() {
+        new EvrakPageButtons().evrakSecmeliDegistiEvet();
+        return this;
+    }
+    @Step("Menülerin geldiği görülür")
+    public MainPage evrakIslemleriIslemYaptiklarimMenuKontrol() {
+
+        Assert.assertEquals($(By.id("topMenuForm2:ust:0:ustMenuEleman")).isDisplayed(), true);
+        Assert.assertEquals(  $(By.id("leftMenuForm:leftMenuIslemBekleyenEvraklar")).isDisplayed(), true);
+
+        takeScreenshot();
+
         return this;
     }
 

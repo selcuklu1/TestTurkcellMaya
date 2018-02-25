@@ -1,11 +1,18 @@
 package tests.BirimYonetimi;
 
+import com.codeborne.selenide.Condition;
 import common.BaseTest;
+import common.ReusableSteps;
+import data.TestData;
+import data.User;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import pages.MainPage;
 import pages.ustMenuPages.*;
+
+import java.util.List;
 
 /****************************************************
  * Tarih: 2018-02-15
@@ -20,17 +27,19 @@ public class BirimYonetimiTest extends BaseTest {
     GidenEvrakKayitPage gidenEvrakKayitPage;
     EvrakOlusturPage evrakOlusturPage;
     OlurYazisiOlusturPage olurYazisiOlusturPage;
+    KullaniciYonetimiPage kullaniciYonetimiPage;
+    MainPage mainPage;
 
     @BeforeMethod
     public void loginBeforeTests() {
-
-        login();
 
         birimYonetimiPage = new BirimYonetimiPage();
         gelenEvrakKayitPage = new GelenEvrakKayitPage();
         gidenEvrakKayitPage = new GidenEvrakKayitPage();
         evrakOlusturPage = new EvrakOlusturPage();
         olurYazisiOlusturPage = new OlurYazisiOlusturPage();
+        kullaniciYonetimiPage = new KullaniciYonetimiPage();
+        mainPage = new MainPage();
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -48,6 +57,8 @@ public class BirimYonetimiTest extends BaseTest {
         String gelenEvrakNumaratoru = "Türksat AŞ_numarator - Gelen Evrak";
         String gidenEvrakNumaratoru = "Türksat AŞ_numarator - Giden Evrak";
         String basariMesaji = "İşlem başarılıdır!";
+
+        login();
 
         testStatus(testID, "Birim Oluşturma");
 
@@ -124,6 +135,8 @@ public class BirimYonetimiTest extends BaseTest {
     @Test(enabled = true, description = "TS2336: Birimin olur metnini güncelleme")
     public void TS2336() {
 
+        login();
+
         String birimAdi = "TS2336 Birim";
 
     }
@@ -135,6 +148,8 @@ public class BirimYonetimiTest extends BaseTest {
         String aktifIcBirimAdi = "TS1108 Aktif İç Birim";
         String pasifIcBirimAdi = "TS1108 Pasif İç Birim";
         String pasifDisBirimAdi = "TS1108 Pasif Dış Birim";
+
+        login();
 
         birimYonetimiPage
                 .openPage()
@@ -185,6 +200,8 @@ public class BirimYonetimiTest extends BaseTest {
         String gelenEvrakNumaratoru = "Türksat AŞ_numarator - Gelen Evrak";
         String gidenEvrakNumaratoru = "Türksat AŞ_numarator - Giden Evrak";
         String basariMesaji = "İşlem başarılıdır!";
+
+        login();
 
         testStatus(testID, "Birim Oluşturma");
 
@@ -254,5 +271,45 @@ public class BirimYonetimiTest extends BaseTest {
                 .bilgiSecimTipiSecByText("Birim")
                 .bilgiAlanindaBiriminGeldigiVeSecilebildigiKontrolu(birimAdi, "Birim Adı")
                 .bilgiAlanindaBiriminGeldigiVeSecilebildigiKontrolu(idariBirimKimlikKodu, "İdari Birim Kodu ");
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS1461: Birime kullanıcı ataması ve sisteme girişi")
+    public void TS1461() {
+
+        User user1 = new User("scelik", "123", "Sezai ÇELİK", "Optiim Birim");
+
+        login(user1);
+
+        //1109 senaryosu yerine pre. con. koşuluyor
+        List<String> birim = new ReusableSteps().yeniBirimKayit();
+
+        String birimAdı = birim.get(0);
+        String birimKisaAdi = birim.get(1);
+        String idariBirimKimlikKodu = birim.get(2);
+
+        kullaniciYonetimiPage
+                .openPage()
+                .kullaniciAdiDoldur("scelik")
+                .ara()
+                .kullaniciListesiGuncelle()
+                .gorevliOlduguBirimlerEkle()
+                .kullaniciBirimAtamaBirimDoldur(birimAdı)
+                .kullaniciBirimAtamaGorevDoldur("Uzman Test Mühendisi")
+                .kullaniciBirimAtamaKaydet()
+                .rolListeriEkle()
+                .yeniRolIliskilendirmeKullaniciBirimDoldur(birimKisaAdi)
+                .yeniRolIliskilendirmeKullaniciRolSec("STANDART KULLANICI YETKİSİ")
+                .yeniRolIliskilendirmeKaydet()
+                .kullaniciGuncelleKaydet();
+
+        clearCookies();
+
+        login(TestData.usernameSCELIK, TestData.passwordSCELIK);
+
+        mainPage
+                .birimSec(Condition.text(birimAdı))
+                .evrakIslemleriIslemYaptiklarimMenuKontrol();
+
     }
 }

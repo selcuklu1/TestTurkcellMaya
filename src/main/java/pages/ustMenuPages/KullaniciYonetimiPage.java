@@ -71,7 +71,11 @@ public class KullaniciYonetimiPage extends MainPage {
     ElementsCollection tblKullaniciBirim = $$("[id='kullaniciYonetimiEditorForm:kullaniciBirimDataTable_data'] tr[data-ri]");
 
 
-    //
+    //Kullancı birim atama
+    BelgenetElement cmbKullaniciBirimAtamaBirim = comboLov(By.id("kullaniciBirimEditorForm:kullaniciBirimIliskiBirimLov:LovText"));
+
+
+
     SelenideElement kaydet = $(By.id("kullaniciYonetimiEditorForm:saveKullaniciButton"));
 
 
@@ -87,6 +91,7 @@ public class KullaniciYonetimiPage extends MainPage {
     SelenideElement txtSifreTekrar = $(By.id("kullaniciYonetimiEditorForm:sifreTekrar"));
     SelenideElement btnGorevliOlduguBirimEkle = $(By.id("kullaniciYonetimiEditorForm:kullaniciBirimDataTable:addNewKullaniciBirimLinkButton"));
     BelgenetElement txtBirim = comboLov(By.id("kullaniciBirimEditorForm:kullaniciBirimIliskiBirimLov:LovText"));
+    BelgenetElement cmbYeniRolIliskilendirmeKullaniciBirim = comboLov(By.id("kullaniciRolEkleEditorForm:kullaniciBirimList:LovText"));
     SelenideElement btnRolEkle = $(By.id("kullaniciYonetimiEditorForm:kullaniciRolBirimDataTable:addNewRolLinkButton"));
     SelenideElement txtGorev = $(By.id("kullaniciBirimEditorForm:unvanAutoComplete_input"));
     BelgenetElement txtRol = comboLov(By.id("kullaniciRolEkleEditorForm:rolEkleLovRolList:LovText"));
@@ -192,7 +197,7 @@ public class KullaniciYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("\"{kullanici}\" Seçilen kullanıcıyı güncelle tıkla")
+    @Step("Seçilen kullanıcıyı güncelle")
     public KullaniciYonetimiPage kullaniciListesiGuncelle() {
         clickJs(btnKullaniciListesiGuncelle);
         return this;
@@ -458,6 +463,70 @@ public class KullaniciYonetimiPage extends MainPage {
     public KullaniciYonetimiPage kullaniciListesiTabloKontrolu() {
         tblKullaniciListesi
                 .shouldHaveSize(1);
+        return this;
+    }
+
+    @Step("Görevli olduğu birimler ekle")
+    public KullaniciYonetimiPage gorevliOlduguBirimlerEkle() {
+        btnGorevliOlduguBirimEkle.shouldBe(visible);
+        clickJs(btnGorevliOlduguBirimEkle);
+        return this;
+    }
+
+
+    @Step("Kullanıcı Birim Atama - Birim doldur")
+    public KullaniciYonetimiPage kullaniciBirimAtamaBirimDoldur(String birim) {
+        cmbKullaniciBirimAtamaBirim.selectLov(birim);
+        return this;
+
+    }
+
+    @Step("Kullanıcı Birim Atama - Görev doldur")
+    public KullaniciYonetimiPage kullaniciBirimAtamaGorevDoldur(String gorev) {
+        txtGorev.setValue(gorev);
+        Selenide.sleep(2000);
+        txtGorev.pressEnter();
+        return this;
+
+    }
+
+    @Step("Kullanıcı Birim Atama - Kaydet")
+    public KullaniciYonetimiPage kullaniciBirimAtamaKaydet() {
+        btnKullaniciBirimAtamaKaydet.click();
+        return this;
+
+    }
+
+    @Step("Rol listesi ekle")
+    public KullaniciYonetimiPage rolListeriEkle() {
+        btnRolEkle.click();
+        return this;
+
+    }
+
+    @Step("Yeni rol ilişkilendirme - Kullanıcı birim doldur")
+    public KullaniciYonetimiPage yeniRolIliskilendirmeKullaniciBirimDoldur(String birim) {
+        cmbYeniRolIliskilendirmeKullaniciBirim.selectLov(birim);
+        return this;
+
+    }
+
+    @Step("Yeni rol ilişkilendirme - Rol Seç")
+    public KullaniciYonetimiPage yeniRolIliskilendirmeKullaniciRolSec(String rol) {
+        txtRol.selectLov(rol);
+        return this;
+
+    }
+
+    @Step("Yeni rol ilişkilendirme - Kaydet")
+    public KullaniciYonetimiPage yeniRolIliskilendirmeKaydet() {
+        btnRolKaydet.click();
+        return this;
+    }
+
+    @Step("Kaydet")
+    public KullaniciYonetimiPage kullaniciGuncelleKaydet() {
+        btnKullaniciGuncelleKaydet.click();
         return this;
     }
 }

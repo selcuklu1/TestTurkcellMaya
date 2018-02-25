@@ -59,7 +59,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
         String bilgiSecimTipi = "Gerçek Kişi";
         String geregiSecimTipi = "Gerçek Kişi";
         String evrakBilgileriListKisiKurumTipi = "Gerçek Kişi";
-        String gercekKisiMesaj = "Seçtiğiniz gerçek kişi gereği / bilgi listesinde ekli olduğu için bu gerçek kişiyi seçemezsiniz.";
+        String gercekKisiMesaj = "Seçtiğiniz gerçek kişi gereği/bilgi listesinde ekli olduğu için bu gerçek kişiyi seçemezsiniz.";
         String basariMesaji = "İşlem başarılıdır!";
 
         gercekKisiYonetimPage

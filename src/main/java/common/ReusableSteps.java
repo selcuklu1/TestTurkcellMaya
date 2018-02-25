@@ -5,11 +5,11 @@ import io.qameta.allure.Step;
 import pages.LoginPage;
 import pages.pageData.alanlar.GeregiSecimTipi;
 import pages.solMenuPages.ImzaBekleyenlerPage;
+import pages.ustMenuPages.BirimYonetimiPage;
 import pages.ustMenuPages.EvrakOlusturPage;
 import pages.ustMenuPages.GelenEvrakKayitPage;
 import pages.ustMenuPages.TuzelKisiYonetimiPage;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class ReusableSteps extends BaseLibrary{
@@ -71,4 +71,8 @@ public class ReusableSteps extends BaseLibrary{
         page.evrakParafla().islemMesaji().basariliOlmali();
     }
 
+    @Step("Yeni birim kayıt")
+    public List<String> yeniBirimKayit() {
+        return new BirimYonetimiPage().yeniBirimKayit();
+    }
 }
