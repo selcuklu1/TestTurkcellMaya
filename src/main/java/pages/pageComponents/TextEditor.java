@@ -35,11 +35,11 @@ public class TextEditor extends MainPage {
 
     public SelenideElement editor() {
         SelenideElement frame = container.$(".cke_wysiwyg_frame");
-        new WebDriverWait(WebDriverRunner.getWebDriver(), Configuration.timeout / 1000, Configuration.pollingInterval)
-                .until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frame));
-
-        SelenideElement editor = $(".cke_editable");
-        return editor;
+        switchTo().frame(container.$(".cke_wysiwyg_frame"));
+        /*new WebDriverWait(WebDriverRunner.getWebDriver(), Configuration.timeout / 1000, Configuration.pollingInterval)
+                .until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frame));*/
+        //SelenideElement editor = $(".cke_editable");
+        return $(".cke_editable");
     }
 
     public String getText() {
@@ -79,6 +79,9 @@ public class TextEditor extends MainPage {
         SelenideElement editor = editor();
         editor.shouldHave(attribute("contenteditable", "true"));
         editor.shouldBe(visible, enabled);
+
+        //container.$$(".cke_button").filterBy()
+
         editor.sendKeys(keysToSend);
         switchTo().defaultContent();
         return this;

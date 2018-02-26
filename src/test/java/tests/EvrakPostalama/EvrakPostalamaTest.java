@@ -858,7 +858,6 @@ public class EvrakPostalamaTest extends BaseTest {
         evrakPostala.getUstVerilerYazdirButton(konu + " satırda bulunmalı").shouldBe(visible);
         evrakPostala.getYazdirEvrakinEkleriListesi().findRows(text(ekleri)).shouldHaveSize(1).getFoundRow().shouldBe(visible);
         evrakPostala.getEvrakinEkleriYazdirButton(ekleri + " satırda bulunur ve tıklanır").shouldBe(visible).click();
-        postalanacakEvraklarPage.pdfKontrol();
         evrakPostala.yazdirClose();
 
 

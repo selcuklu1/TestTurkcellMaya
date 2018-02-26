@@ -9,7 +9,7 @@ import pages.MainPage;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
-import static pages.pageComponents.belgenetElements.BelgentCondition.checkboxIsChecked;
+import static pages.pageComponents.belgenetElements.BelgentCondition.isChecked;
 
 /**
  * Yazan: Ilyas Bayraktar
@@ -120,7 +120,7 @@ public class TuzelKisiEkleDialog extends MainPage {
     @Step("Listelen kayıdın checkbox işaretlenir")
     public TuzelKisiEkleDialog listelenKayidinCheckboxIsaretlenir(Condition aramaKriterleri, boolean checkboxValue){
         SelenideElement checkbox = searchTable.findRows(aramaKriterleri).getFoundRow().$(listelenKayitCheckbox);
-        if (checkbox.is(checkboxIsChecked) != checkboxValue) {
+        if (checkbox.is(isChecked) != checkboxValue) {
             //checkbox.click(1,1);
             clickJs(checkbox);
         }
