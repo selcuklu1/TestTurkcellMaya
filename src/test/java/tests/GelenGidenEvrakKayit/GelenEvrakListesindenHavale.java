@@ -53,6 +53,7 @@ public class GelenEvrakListesindenHavale extends BaseTest {
     String onaylayacakKisi = "Mehmet BOZDEMİR";
     String onayKisiDetails = "BHUPGMY";
     String kullaniciListesi = "TS2994";
+    String onaylayacakPersonel = "Ali Osman TOPRAK";
 
 
     @BeforeMethod
@@ -338,7 +339,7 @@ public class GelenEvrakListesindenHavale extends BaseTest {
                 .havaleIslemleriKisiSec(kullanici,details)
                 .dagitimBilgileriBirimDoldurWithDetails(birim, details)
                 .eklenenBirimKontrolu(birim)
-                .havaleIslemleriKisiKontrol(kullanici)
+                .havaleIslemleriKisiStatusKontrol(kullanici,true)
                 .eklenenKisiOpsiyonKontrolu(gerek)
                 .havaleIslemleriKisiOpsiyonSec(bilgi)
                 .eklenenKisiOpsiyonKontrolu(bilgi)
@@ -443,8 +444,8 @@ public class GelenEvrakListesindenHavale extends BaseTest {
                 .onizlemeIadeEdilecekKullaniciKontrolu(kisi)
                 .iadeEtNotInputDoldur(konu)
                 .onizlemeIadeEtDosyaEkle()
-                .onizlemeHavaleDosyaEkle(pathToFileText)
-                .onizlemeHavaleDosyaEkleDosyaAdiKontrol(fileName)
+                .onizlemeIadeDosyaEkle(pathToFileText)
+                .onizlemeIadeDosyaEkleDosyaAdiKontrol(fileName)
                 .iadeEtIadeEt()
                 .islemMesaji().basariliOlmali();
 
@@ -455,6 +456,80 @@ public class GelenEvrakListesindenHavale extends BaseTest {
                 .tabloEvrakNoSec(konu);
     }
 
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, priority = 0, description = "TS2291: Gelen evrak listesi- havale ekranı alan kontrolleri")
+    public void TS2291() throws InterruptedException {
+        String testid = "TS-2291";
+        konu = "TS-2291-" + getSysDate();
+        String gerek = "GEREĞİ İÇİN GÖNDER";
+        String bilgi = "BİLGİ İÇİN GÖNDER";
+        String koordinasyon = "KOORDİNASYON İÇİN GÖNDER";
+        String evrakNo;
+        String pathToFileText = getUploadPath() + "test.txt";
+        String fileName ="test.txt";
+        String disKullanici = "distest";
+        String kurum = "Cumhurbaşkanlığı";
+        String ustBirim = "GENEL MÜDÜRLÜK MAKAMI";
+        String ustBirimKullanici = "alkanseker";
+        String uyarıMesajı = "Evrakı kendinize havale edemezsiniz!";
+        String uyarıMesajı2 = "Havaleyi onaylayacak kullanıcıyı seçiniz";
+
+        testStatus(testid, "PreCondition Evrak Oluşturma");
+        gelenEvrakKayitPage
+                .openPage()
+                .konuKoduDoldur(konuKodu)
+                .konuDoldur(konu)
+                .evrakTuruSec(evrakTuru)
+                .evrakDiliSec(evrakDili)
+                .evrakTarihiDoldur(evrakTarihi)
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .kisiKurumSec(kisiKurum)
+                .geldigiKurumDoldurLovText(geldigiKurum)
+                .evrakSayiSagDoldur()
+                .evrakGelisTipiSec(evrakGelisTipi)
+                .ivedilikSec(ivedilik)
+                .dagitimBilgileriKisiSec(kisi)
+                .kaydet();
+
+        evrakNo = gelenEvrakKayitPage.popUpsv2();
+
+        login(TestData.usernameZTEKIN,TestData.passwordZTEKIN);
+        testStatus(testid, "Test Başladı");
+        gelenEvraklarPage
+                .openPage()
+                .tabloEvrakNoSec(konu)
+                .tabHavaleYapKontrol()
+                .tabHavaleYap()
+                .onizlemeHavaleAlanKontrolleri()
+
+                .havaleIslemleriKisiStatusKontrol(disKullanici,false)
+                .havaleIslemleriKisiStatusKontrol(ustBirimKullanici,false)
+                .havaleIslemleriBirimStatusKontrol(kurum,false)
+                .havaleIslemleriBirimStatusKontrol(ustBirim,false);
+
+        login(TestData.usernameZTEKIN,TestData.passwordZTEKIN);
+        gelenEvraklarPage
+                .openPage()
+                .tabloEvrakNoSec(konu)
+                .tabHavaleYap()
+                .dagitimBilgileriBirimDoldurWithDetails(birim,details)
+                .havaleIslemleriKisiSec(kisi,details)
+                .havaleYapGonder()
+                .islemMesaji().dikkatOlmali(uyarıMesajı);
+
+        gelenEvraklarPage
+                .onizlemeHavaleEtDosyaEkle()
+                .onizlemeHavaleDosyaEkle(pathToFileText)
+                .onizlemeHavaleDosyaEkleDosyaAdiKontrol(fileName,true)
+                .onizlemeHavaleEklenenDosyaSil()
+                .onizlemeHavaleDosyaEkleDosyaAdiKontrol(fileName,false)
+                .onizlemeHavaleOnayinaGonder()
+                .islemMesaji().dikkatOlmali(uyarıMesajı2);
+
+        gelenEvraklarPage
+                .havaleIslemleriOnaylayacakKisiStatusKontrol(onaylayacakPersonel,false);
+
+    }
 
 
 }
