@@ -240,6 +240,16 @@ public class MainPage extends BaseLibrary {
         return this;
     }
 
+    @Step("Evrak Guncellendi Imzalanamaz Uyarı Kontrolü ve Tamam")
+    public MainPage evrakGuncellendiImzalanamazUyariKontrol(String uyari) {
+        Assert.assertEquals(switchTo().alert().getText().equals(uyari),true,"Evrak Guncellendi ve Imzalanamaz Uyarı Kontrolü");
+        Allure.addAttachment("Evrak Guncellendi ve Imzalanamaz Uyarı Kontrolü","");
+        switchTo().alert().accept();
+        return this;
+    }
+
+
+
     @Step("Parafla")
     public MainPage evrakParafla() {
         new EvrakPageButtons().evrakParafla();
@@ -260,6 +270,29 @@ public class MainPage extends BaseLibrary {
         return this;
     }
 
+    @Step("Icerik Degisti Iptal")
+    public MainPage icerikDegistiIptal() {
+        new EvrakPageButtons().icerikDegistiIptal();
+        return this;
+    }
+
+    @Step("Evrak Icerik Degisti Imzala ve Devam Et (Önceki kullanıcıları akıştan çıkartarak)")
+    public MainPage evrakIcerikDegistiImzalaveDevamEt() {
+        new EvrakPageButtons().evrakIcerikDegistiImzalaveDevamEt();
+        return this;
+    }
+
+    @Step("Evrak Icerik Degisti Kaydet")
+    public MainPage evrakSecmeliDegistiKaydet() {
+        new EvrakPageButtons().evrakSecmeliDegistiKaydet();
+        return this;
+    }
+
+    @Step("Evrak Icerik Degisti Evet")
+    public MainPage evrakSecmeliDegistiEvet() {
+        new EvrakPageButtons().evrakSecmeliDegistiEvet();
+        return this;
+    }
     @Step("Menülerin geldiği görülür")
     public MainPage evrakIslemleriIslemYaptiklarimMenuKontrol() {
 

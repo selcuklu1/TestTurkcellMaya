@@ -662,7 +662,7 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
         Allure.addAttachment("İşlem başarılı PopUp'ı", mesaj4);
 
         SelenideElement vEvrakBasarili = visibleEvrakBasarili.filterBy(Condition.visible).get(0);
-        String evrakNo = getIntegerInText(vEvrakBasarili.getText());
+        String evrakNo = getNumberFromText(vEvrakBasarili.getText());
         clickJs(basariliPopUpKapat);
 
         return evrakNo;

@@ -1,12 +1,16 @@
 package pages.pageComponents;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
+import org.openqa.selenium.By;
 import pages.MainPage;
 
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
 import static com.codeborne.selenide.Selenide.sleep;
 
 /**
@@ -233,4 +237,31 @@ public class EvrakPageButtons extends MainPage {
         return this;
     }
 
+    SelenideElement btnIcerikDegistiIptal = $(By.id("ilkIzBirakacakKullanicidanSonraGuncellenenEvrakIslemForm:evrakSecmeliDegistiVazgecButton"));
+    @Step("Evrak Içerik değişti ve sonrasında gelen uyarı ekranında, Iptal butonu tıklanır")
+    public MainPage icerikDegistiIptal() {
+        btnIcerikDegistiIptal.click();
+        return this;
+    }
+
+    ElementsCollection radioEvrakIcerikDegistiImzalaveDevamEt = $$("table[id='ilkIzBirakacakKullanicidanSonraGuncellenenEvrakIslemForm:secenekTipi'] tr");
+    @Step("Evrak Içerik değişti ve sonrasında gelen uyarı ekranında, İmzala ve devam et (Önceki kullanıcıları akıştan çıkartarak)")
+    public MainPage evrakIcerikDegistiImzalaveDevamEt() {
+        radioEvrakIcerikDegistiImzalaveDevamEt.filterBy(Condition.text("İmzala ve devam et")).get(0).click();
+        return this;
+    }
+
+    SelenideElement btnEvrakIcerikDegistiKaydet = $("button[id$='evrakSecmeliDegistiKaydetButton']");
+    @Step("Evrak Içerik değişti ve Kaydet)")
+    public MainPage evrakSecmeliDegistiKaydet() {
+        btnEvrakIcerikDegistiKaydet.click();
+        return this;
+    }
+
+    SelenideElement btnEvrakIcerikDegistiEvet = $("button[id$='evrakDegistiKaydetButton']");
+    @Step("Evrak Içerik değişti ve Kaydet)")
+    public MainPage evrakSecmeliDegistiEvet() {
+        btnEvrakIcerikDegistiEvet.click();
+        return this;
+    }
 }

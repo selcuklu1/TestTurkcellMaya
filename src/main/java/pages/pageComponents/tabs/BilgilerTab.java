@@ -6,6 +6,7 @@ import com.codeborne.selenide.SelenideElement;
 import data.User;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NotFoundException;
 import org.testng.Assert;
@@ -32,6 +33,10 @@ public class BilgilerTab extends MainPage {
     private final static String tabName = "Bilgileri";
     private SelenideElement container;
     private SearchTable searchTable;
+
+    private By deleteButtonuSelector = By.cssSelector(".delete-icon");
+    private By updateButtonuSelector = By.cssSelector(".update-icon");
+
 
     public BilgilerTab() {
         container = $("html");
@@ -412,6 +417,40 @@ public class BilgilerTab extends MainPage {
         getBilgiCombolov().selectLov(text);
         return this;
     }
+
+    @Step("Seçilen Bilgi alan kotrolü")
+    public BilgilerTab secilenBilgiAlanKotrolu(Condition... conditions){
+        ElementsCollection collection = getBilgiCombolov().getSelectedTitles();
+        for (Condition condition:conditions) {
+            collection = collection.filterBy(condition);
+        }
+        collection.shouldHave(sizeGreaterThan(0));
+        return this;
+    }
+
+    @Step("Seçilen Bilginin delete butonu")
+    public SelenideElement getSecilenBilgiDeleteButton(Condition... conditions){
+        ElementsCollection collection = getBilgiCombolov().getSelectedItems();
+        for (Condition condition:conditions) {
+            collection = collection.filterBy(condition);
+        }
+        return collection.shouldHave(sizeGreaterThan(0)).first().$(deleteButtonuSelector);
+    }
+
+    @Step("Seçilen Bilginin update butonu")
+    public SelenideElement getSecilenBilgiUpdateButton(Condition... conditions){
+        ElementsCollection collection = getBilgiCombolov().getSelectedItems();
+        for (Condition condition:conditions) {
+            collection = collection.filterBy(condition);
+        }
+        return collection.shouldHave(sizeGreaterThan(0)).first().$(updateButtonuSelector);
+    }
+
+    @Step("Seçilen Bilginin update butona tiklanır")
+    public BilgilerTab secilenBilgiUpdateTiklanır(Condition... conditions){
+        getSecilenBilgiUpdateButton(conditions).shouldBe(visible).click();
+        return this;
+    }
     //endregion
 
     //******************************************************
@@ -439,6 +478,40 @@ public class BilgilerTab extends MainPage {
     @Step("Gereği Seçim Tipi seçilir")
     public BilgilerTab geregiSecimTipiSec(GeregiSecimTipi geregiSecimTipi) {
         getGeregiSecimTipi().selectOption(geregiSecimTipi.getOptionText());
+        return this;
+    }
+
+    @Step("Seçilen Bilgi alan kotrolü")
+    public BilgilerTab secilenGeregiAlanKotrolu(Condition... conditions){
+        ElementsCollection collection = getGeregiCombolov().getSelectedTitles();
+        for (Condition condition:conditions) {
+            collection = collection.filterBy(condition);
+        }
+        collection.shouldHave(sizeGreaterThan(0));
+        return this;
+    }
+
+    @Step("Seçilen Bilginin delete butonu")
+    public SelenideElement getSecilenGeregiDeleteButton(Condition... conditions){
+        ElementsCollection collection = getGeregiCombolov().getSelectedItems();
+        for (Condition condition:conditions) {
+            collection = collection.filterBy(condition);
+        }
+        return collection.shouldHave(sizeGreaterThan(0)).first().$(deleteButtonuSelector);
+    }
+
+    @Step("Seçilen Bilginin update butonu")
+    public SelenideElement getSecilenGeregiUpdateButton(Condition... conditions){
+        ElementsCollection collection = getGeregiCombolov().getSelectedItems();
+        for (Condition condition:conditions) {
+            collection = collection.filterBy(condition);
+        }
+        return collection.shouldHave(sizeGreaterThan(0)).first().$(updateButtonuSelector);
+    }
+
+    @Step("Seçilen Bilginin update butona tiklanır")
+    public BilgilerTab secilenGeregiUpdateTiklanır(Condition... conditions){
+        getSecilenGeregiUpdateButton(conditions).shouldBe(visible).click();
         return this;
     }
     //endregion

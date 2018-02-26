@@ -359,6 +359,7 @@ public class BaseLibrary extends ElementsContainer {
      */
     public void clickJs(SelenideElement element) {
         executeJavaScript("arguments[0].click();", element);
+        waitForLoadingJS(WebDriverRunner.getWebDriver());
     }
 
     /**
@@ -452,6 +453,22 @@ public class BaseLibrary extends ElementsContainer {
         String output = sb.toString();
 
         return output;
+    }
+
+    //Random text üretir.
+    public String createRandomTextWithLineBreaks(int textSize) {
+        char[] chars = "abcdefghijklmnopqrstuvwxyz".toCharArray();
+        StringBuilder sb = new StringBuilder();
+        Random random = new Random();
+        int lineBreakEveryChar = 10;
+        int i = 0;
+        while (sb.length() < textSize){
+            if (i!=0 && i%lineBreakEveryChar==0)
+                sb.append(' ');
+            sb.append(chars[random.nextInt(chars.length)]);
+            i++;
+        }
+        return sb.toString();
     }
 
     //yyyyMMddHHmmss formatına göre sysdate alır.
@@ -669,7 +686,7 @@ public class BaseLibrary extends ElementsContainer {
         return null;
     }
 
-    public String getIntegerInText(By by) {
+    public String getNumberFromText(By by) {
         String x = WebDriverRunner.getWebDriver().findElement(by).getText();
         Pattern y = Pattern.compile("\\d+");
         Matcher m = y.matcher(x);
@@ -680,12 +697,12 @@ public class BaseLibrary extends ElementsContainer {
         return number;
     }
 
-    public String getIntegerInText(String text) {
+    public String getNumberFromText(String text) {
         Pattern y = Pattern.compile("\\d+");
         Matcher m = y.matcher(text);
         m.find();
         String number = m.group();
-        System.out.println(number);
+        System.out.println("Get number from text: \"" + text + "\" number: " + number);
         return number;
     }
 
