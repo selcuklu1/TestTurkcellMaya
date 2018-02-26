@@ -2,11 +2,9 @@ package pages.pageComponents;
 
 import com.codeborne.selenide.*;
 import io.qameta.allure.Step;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import pages.MainPage;
+import pages.pageComponents.belgenetElements.BelgentCondition;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,9 +14,7 @@ import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.*;
 import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$x;
-import static com.codeborne.selenide.Selenide.executeJavaScript;
-import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
+import static pages.pageComponents.belgenetElements.BelgentCondition.isChecked;
 
 /**
  * Yazan: Ilyas Bayraktar
@@ -53,14 +49,19 @@ public class DagitimHitapDuzenle extends MainPage {
         return container.$("div[id$='pnlHitapDuzenle']");
     }
 
-    public SelenideElement getParentTableOfDagitimHitapInputByInputText(Condition... conditions) {
+    @Step("Hitap input alanı ara")
+    public SelenideElement getHitapInput(Condition... conditions) {
         ElementsCollection collection = container.$$x("descendant::input[@type='text']")
                 .shouldHave(sizeGreaterThan(0)).filterBy(visible);
 
         for (Condition condition : conditions) {
             collection = collection.filterBy(condition);
         }
-        return collection.first().shouldBe(visible).$x("ancestor::table[1]");
+        return collection.first();
+    }
+
+    public SelenideElement getParentTableOfDagitimHitapInputByInputText(Condition... conditions) {
+        return getHitapInput(conditions).shouldBe(visible).$x("ancestor::table[1]");
         //return container.$x("descendant::table[descendant::input[@value='"+value+"']][last()]");
     }
 
@@ -87,6 +88,12 @@ public class DagitimHitapDuzenle extends MainPage {
     @Step("\"Input\": {stepDescription}")
     public SelenideElement getDagitimHitapInput(String stepDescription, Condition condition, int index) {
         return getParentTableOfDagitimHitapInputByInputText(condition).$x("descendant::input[@type='text'][" + index + "]");
+    }
+
+    @Step("Hitap alanı bulunur")
+    public DagitimHitapDuzenle hitapAlaniBulunurKontorlu(Condition... aramaKriterleri) {
+        getHitapInput(aramaKriterleri).shouldBe(visible);
+        return this;
     }
 
     @Step("\"Ek\": {stepDescription}")
@@ -175,10 +182,22 @@ public class DagitimHitapDuzenle extends MainPage {
         return container.$x("descendant::tr[td/label[normalize-space(.)='Adres']]//textarea");
     }
 
-    @Step("\"Dağıtım Metni\" alanı aranır")
-    public SelenideElement getDagitimMetniTextarea() {
+    @Step("\"Dağıtım Metni\" alanı {stepDescription}")
+    public SelenideElement getDagitimMetniTextarea(String... stepDescription) {
         //return container.$x("descendant::input[3]");
         return container.$x("descendant::tr[td/label[normalize-space(.)='Dağıtım Metni']]//textarea");
+    }
+
+    @Step("\"Dağıtım Metni\" alanın tekst kotrollü")
+    public DagitimHitapDuzenle dagitimMetniTekstKontrol(Condition... conditions) {
+        getDagitimMetniTextarea("").shouldHave(conditions);
+        return this;
+    }
+
+    @Step("\"Dağıtım Metni\" alana metni girilir")
+    public DagitimHitapDuzenle dagitimMetniGirilir(String metni) {
+        getDagitimMetniTextarea().setValue(metni);
+        return this;
     }
 
     @Step("\"Kaydet\" butonu: {stepDescription}")
@@ -209,52 +228,91 @@ public class DagitimHitapDuzenle extends MainPage {
         return container.$$("tr[data-ri][role=row]");
     }*/
 
-    @Step("Dağıtım Planı Detay sırası kontrolü")
+    @Step("Dağıtım Planı eleman listesinin sırası kontrolü")
     public DagitimHitapDuzenle dagitimPlaniDetaySirasiKontrolu(Map<String, String> dagitimPlanElemanlari) {
         //ElementsCollection rows = getDagitimPlaniDetayRows();
-        ElementsCollection rows = dagitimPlaniDetayDataTable.findRows().getFoundRows();
+        ElementsCollection rows = new SearchTable(container.$("div[id$='dagitimPlaniDetayDataTableId']")).findRows().getFoundRows();
 
         Assert.assertEquals(rows.size(), dagitimPlanElemanlari.size(), "Dağıtım Plan Elemanların sayısı dağıtım plan seçilen sayısı ile aynı olmalı");
         List<String> values = new ArrayList<>(dagitimPlanElemanlari.values());
         for (int i = 0; i < rows.size(); i++) {
             Assert.assertTrue(rows.get(i).has(text(values.get(i))));
+            Assert.assertTrue(rows.get(i).$("div.ui-chkbox-box").is(isChecked),"checkbox is checked");
         }
 
         return this;
     }
 
-    @Step("Dağıtım Planı Detay Seçili dağıtım listesinin adı bu alanda görüntülendiği. Kullanıcının bu alanı değişteremediği görülür")
+    @Step("Dağıtım Planı eleman görülür ve checkbox seçili kontrollü")
     public DagitimHitapDuzenle dagitimPlaniDetayListesiKontrolu(Map<String, String> dagitimPlanElemanlari) {
-        ElementsCollection rows = dagitimPlaniDetayDataTable.findRows().getFoundRows();
+        ElementsCollection rows = new SearchTable(container.$("div[id$='dagitimPlaniDetayDataTableId']")).findRows().getFoundRows();
 
         Assert.assertEquals(rows.size(), dagitimPlanElemanlari.size(), "Dağıtım Plan Elemanların sayısı dağıtım plan seçilen sayısı ile aynı olmalı");
 
         List<String> values = new ArrayList<>(dagitimPlanElemanlari.values());
         for (int i = 0; i < rows.size(); i++) {
-            Assert.assertTrue(rows.get(i).has(text(values.get(i))));
-            Assert.assertEquals(rows.get(i).$(byText(values.get(i))).getTagName(),"div"," dağıtım eleman tagname Div olmalı, Kullanıcının bu alanı değişteremediği görülür");
+            Assert.assertTrue(rows.get(i).has(matchText("(?i)(?u)(?m)" + values.get(i))), values.get(i) + " tekst bulunmalı");
+            Assert.assertTrue(rows.get(i).$("div.ui-chkbox-box").is(isChecked),"checkbox is checked");
+        }
+        return this;
+    }
+
+    @Step("Dağıtım Planı eleman adların görüntülendiği, checkbox seçili kontrollü ve kullanıcının bu alanı değişteremediği görülür")
+    public DagitimHitapDuzenle dagitimPlaniDetayListesiKontroluGereksizKontrollu(Map<String, String> dagitimPlanElemanlari) {
+        ElementsCollection rows = new SearchTable(container.$("div[id$='dagitimPlaniDetayDataTableId']")).findRows().getFoundRows();
+
+        Assert.assertEquals(rows.size(), dagitimPlanElemanlari.size(), "Dağıtım Plan Elemanların sayısı dağıtım plan seçilen sayısı ile aynı olmalı");
+
+        List<String> values = new ArrayList<>(dagitimPlanElemanlari.values());
+        for (int i = 0; i < rows.size(); i++) {
+            Assert.assertTrue(rows.get(i).has(matchText("(?i)(?u)(?m)" + values.get(i))),values.get(i) + " tekst bulunmalı");
+            Assert.assertTrue(rows.get(i).$("div.ui-chkbox-box").is(isChecked),"checkbox is checked");
+            //Assert.assertEquals(rows.get(i).$x("descendant::*[contains(text(),'" + values.get(i) + "')]").getTagName(),"div"," dağıtım eleman tagname Div olmalı, Kullanıcının bu alanı değişteremediği görülür");
+            if (rows.get(i).$(Selectors.withText(values.get(i))).exists())
+                Assert.assertEquals(rows.get(i).$(Selectors.withText(values.get(i))).getTagName(),"div"," dağıtım eleman tagname Div olmalı, Kullanıcının bu alanı değişteremediği görülür");
+            else
+                Assert.assertEquals(rows.get(i).$(Selectors.withText(values.get(i).toUpperCase())).getTagName(),"div"," dağıtım eleman tagname Div olmalı, Kullanıcının bu alanı değişteremediği görülür");
         }
 
         return this;
     }
 
-    @Step("Checkbox aranır")
-    public SelenideElement getDagitimPlaniDetayCheckbox() {
-        return dagitimPlaniDetayDataTable.getFoundRow().$("input");
+    @Step("Dağıtım Planı elemanın checkbox {stepDescription}")
+    public SelenideElement getDagitimPlaniDetayBulunanElemaninCheckbox(String... stepDescription) {
+        return dagitimPlaniDetayDataTable.getFoundRow().$("div.ui-chkbox-box");
     }
 
-    @Step("")
+    @Step("Dağıtım Planı listesinde kayıt aranır")
+    public SearchTable dagitimPlaniDetayListesindeAra(Condition... aramaKriteri){
+        dagitimPlaniDetayDataTable.findRows(aramaKriteri);
+        return dagitimPlaniDetayDataTable;
+    }
+
+    @Step("Dağıtım Planı elemanın checkbox değeri {secilir} yapılır")
+    public DagitimHitapDuzenle dagitimPlaniDetayCheckboxSecilir(String dagitimAdi, boolean secilir) {
+        dagitimPlaniDetayDataTable.findRows(text(dagitimAdi));
+        if (dagitimPlaniDetayDataTable.getFoundRow().$("div.ui-chkbox-box").is(isChecked) ^ secilir)
+            dagitimPlaniDetayDataTable.getFoundRow().$("div.ui-chkbox-box").click();
+        return this;
+    }
+
     public String getDagitimPlaniDetayText() {
         return dagitimPlaniDetayDataTable.getFoundRow().text();
     }
 
-    @Step("Evrakta Görünecek Hitap: {stepDescription}")
+    @Step("Evrakta Görünecek Hitap {stepDescription}")
     public SelenideElement getEvraktaGorunecekHitap(String stepDescription) {
         return container.$("table[id$='hitapOnizlemeGrid']");
         //adres eklenince .preformatted_with_line_break 2 element oluyor. bir hitap için bir adres için
     }
 
-    @Step("Kayıtlı Hitap: {stepDescription}")
+    @Step("Evrakta Görünecek Hitap tekst kotrollü")
+    public DagitimHitapDuzenle evraktaGorunecekHitapKotrollu(Condition... conditions) {
+        getEvraktaGorunecekHitap("").shouldHave(conditions);
+        return this;
+    }
+
+    @Step("Kayıtlı Hitap {stepDescription}")
     public SelenideElement getKayitliHitap(String stepDescription) {
         return container.$x("descendant::span[.='Kayıtlı Hitap']/ancestor::table[1]");
     }
@@ -262,6 +320,7 @@ public class DagitimHitapDuzenle extends MainPage {
     @Step("Adres seçilir")
     public DagitimHitapDuzenle adresSec(String adres, String evraktaGorunecekHitap) {
         getAdresTextarea().setValue(adres);
+        //adresHitaptaGorunsunSec(true);
         getEvraktaGorunecekHitap("Görünecek Hitap \"" + evraktaGorunecekHitap + "\" olmalı").shouldHave(text(evraktaGorunecekHitap));
         return this;
     }
@@ -281,7 +340,7 @@ public class DagitimHitapDuzenle extends MainPage {
         return getNumberFromText(getOzelHitapMaxKarakterElement().shouldBe(visible).text());
     }
 
-    @Step("Özel hitap seçilir ve girilir")
+    @Step("Özel hitap seçilir ve \"{ozelHitap}\" girilir")
     public DagitimHitapDuzenle ozelHitapGirilir(String ozelHitap) {
         //ozelHitapSec(true);
         getHitapTextarea().setValue(ozelHitap);
@@ -291,14 +350,14 @@ public class DagitimHitapDuzenle extends MainPage {
         return this;
     }
 
-    @Step("{dagitimElemanlariTipi} dağıtım elemanı eklenir ve ek güncellir")
+    @Step("{dagitimElemanlari} dağıtım elemanı eklenir ve ek güncellir")
     public DagitimHitapDuzenle ekGuncelle(String dagitimElemanlari, String ek) {
         getEkOfDagitimHitapInput(dagitimElemanlari + " alanın eki " + ek + " yap", value(dagitimElemanlari)).setValue(ek);
         getEvraktaGorunecekHitap(String.format("Görünecek Hitap \"%s%s\" olmalı", dagitimElemanlari, ek)).shouldHave(textCaseSensitive(dagitimElemanlari + ek));
         return this;
     }
 
-    @Step("{dagitimElemanlariTipi} dağıtım elemanı eklenir ve ek güncellir")
+    @Step("{dagitimElemanlari} dağıtım elemanı eklenir ve ek güncellir")
     public DagitimHitapDuzenle ekGuncelle(String dagitimElemanlari, String ek, String evraktaGorunecekHitap) {
         //dagitimHitapDuzenle.getEkOfDagitimHitapInput(String.format("\"%s\" alanın ek \"%s\" ile güncelle",dagitimElemanlariTipi,ek), value(dagitimElemanlari)).setValue(ek);
         getEkOfDagitimHitapInput(dagitimElemanlari + " alanın eki " + ek + " yap", value(dagitimElemanlari)).setValue(ek);
@@ -307,11 +366,11 @@ public class DagitimHitapDuzenle extends MainPage {
         //kaydet();
         return this;
     }
-    
-    @Step("")
-    public DagitimHitapDuzenle getDagitimHitap(){
+
+    @Step("Hitap {hitapAramaKriteri} aranır ve {secilir} seçilir")
+    public DagitimHitapDuzenle hitapSec(Condition hitapAramaKriteri, boolean secilir) {
+        checkboxSelect(getCheckboxOfDagitimHitapInput("bulunur", hitapAramaKriteri), secilir);
         return this;
     }
-
 
 }

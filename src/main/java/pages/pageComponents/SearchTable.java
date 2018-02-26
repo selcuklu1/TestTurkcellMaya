@@ -315,7 +315,7 @@ public class SearchTable extends MainPage {
 
     @Step("Evrağı bul ve seç")
     public SearchTable findRowAndSelect(Condition... conditions){
-        findRows(conditions).getFoundRow().click();
+        findRows(conditions).getFoundRow().click(1,1);
         return this;
     }
 
