@@ -15,6 +15,7 @@ import pages.pageData.SolMenuData;
 import java.util.List;
 
 import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static pages.pageComponents.belgenetElements.Belgenet.$x;
@@ -77,6 +78,12 @@ public class GelenEvraklarPage extends MainPage {
     SelenideElement txtIadeEtNot = $(By.id("mainPreviewForm:notTextArea_id"));
     SelenideElement btnIadeEtDosyaEkle = $(By.id("mainPreviewForm:fileUploadIadeEk_input"));
     SelenideElement btnIadeEtIadeEt = $(By.id("mainPreviewForm:iadeEtButton_id"));
+
+    SelenideElement btnOnizlemeIadeEt = $("button[id^='mainPreviewForm:onizlemeRightTab:uiRepeat'] span[class$='iadeEt']");
+    ElementsCollection lblIadeEdilecekKullanici = $$("table[id='mainPreviewForm:iadeBilgileriPanelGrid'] label");
+    SelenideElement btnOnizlemeIadeEtDosyaEkle = $(By.id("mainPreviewForm:fileUploadIadeEk"));
+    SelenideElement dosyaPath = $(By.xpath("//input[@id='mainPreviewForm:fileUploadIadeEk_input']"));
+
     // Cevap Yaz Buttonu
     SelenideElement btnCevapYaz = $x("//span[contains(@class, 'cevapYaz')]/..");
 
@@ -401,6 +408,24 @@ public class GelenEvraklarPage extends MainPage {
 
     public GelenEvraklarPage iadeEtDosyaEkle() {
         btnIadeEtDosyaEkle.click();
+        return this;
+    }
+
+    public GelenEvraklarPage onizlemeIadeEtDosyaEkle() {
+        btnOnizlemeIadeEtDosyaEkle.click();
+        return this;
+    }
+
+    @Step("Evrak Ekleri Dosya Ekleme : \"{pathToFile}\" ")
+    public GelenEvraklarPage onizlemeHavaleDosyaEkle(String pathToFile) throws InterruptedException {
+        uploadFile(dosyaPath, pathToFile);
+        Thread.sleep(4000);
+        return this;
+    }
+
+    @Step("Havale dosya ekleme adi kontrol : \"{dosyaAdi}\" ")
+    public GelenEvraklarPage onizlemeHavaleDosyaEkleDosyaAdiKontrol(String dosyaAdi) {
+        $(byText(dosyaAdi)).shouldBe(Condition.visible);
         return this;
     }
 
@@ -1416,4 +1441,27 @@ public class GelenEvraklarPage extends MainPage {
 
         return this;
     }
+
+    @Step("Iade Et buton kontrolü")
+    public GelenEvraklarPage onizlemeIadeEtKontrol() {
+        Assert.assertEquals(btnOnizlemeIadeEt.isDisplayed(),true,"Iade et buton kontrolü");
+        Allure.addAttachment("Iade et buton kontrolü","");
+        return this;
+    }
+
+    @Step("Iade Et buton kontrolü")
+    public GelenEvraklarPage onizlemeIadeEt() {
+        btnOnizlemeIadeEt.click();
+        return this;
+    }
+
+    @Step("Iade Edilecek Kullanıcı Kontrolü")
+    public GelenEvraklarPage onizlemeIadeEdilecekKullaniciKontrolu(String kisi) {
+        boolean durum = lblIadeEdilecekKullanici.filterBy(Condition.text(kisi)).size() == 1;
+        Assert.assertEquals(durum,true,"Iade Edilecek Kullanıcı Kontrolü");
+        Allure.addAttachment("Iade Edilecek Kullanıcı Kontrolü","");
+        return this;
+    }
+
+
 }
