@@ -1072,7 +1072,7 @@ public class GelenEvrakKayitPage extends MainPage {
         String mesaj4 = "Evrak başarıyla kaydedilmiştir.";
         basariliPopUp.getText().contains(mesaj4);
         Allure.addAttachment("İşlem başarılı PopUp'ı", mesaj4);
-        String evrakNo = getIntegerInText(By.id("evrakKaydetBasariliDialog"));
+        String evrakNo = getNumberFromText(By.id("evrakKaydetBasariliDialog"));
         clickJs(basariliPopUpKapat);
         return evrakNo;
     }
@@ -1145,7 +1145,7 @@ public class GelenEvrakKayitPage extends MainPage {
         Allure.addAttachment("İşlem başarılı PopUp'ı", mesaj4);
 
         SelenideElement vEvrakBasarili = visibleEvrakBasarili.filterBy(Condition.visible).get(0);
-        String evrakNo = getIntegerInText(vEvrakBasarili.getText());
+        String evrakNo = getNumberFromText(vEvrakBasarili.getText());
         clickJs(basariliPopUpKapat);
 
         return evrakNo;

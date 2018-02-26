@@ -3,6 +3,7 @@ package pages.ustMenuPages;
 import com.codeborne.selenide.*;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
+import org.apache.xmlbeans.impl.xb.xsdschema.All;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.testng.Assert;
@@ -75,12 +76,13 @@ public class EvrakOlusturPage extends MainPage {
     private IliskiliEvraklarTab iliskiliEvraklarTab = new IliskiliEvraklarTab();
     private EvrakNotlariTab evrakNotlariTab = new EvrakNotlariTab();
     private SablonIslemleriTab sablonIslemleriTab = new SablonIslemleriTab();
-
+    private EvrakDogrulamaTab evrakDogrulamaTab = new EvrakDogrulamaTab() ;
     @Step("Evrak Oluştur sayfasını aç")
     public EvrakOlusturPage openPage() {
         ustMenu(UstMenuData.EvrakIslemleri.EvrakOlustur);
         return this;
     }
+
 
     SelenideElement lblSayfa = $("[class='ui-inbox-header-title']");
 
@@ -292,7 +294,10 @@ public class EvrakOlusturPage extends MainPage {
     public IliskiliEvraklarTab iliskiliEvraklarTabAc() {
         return iliskiliEvraklarTab.open();
     }
-
+    @Step("Evrak Dogrulama Tab aç")
+    public EvrakDogrulamaTab evrakDogrulamaTabAc () {
+        return evrakDogrulamaTab.open();
+    }
     public EvrakNotlariTab evrakNotlariTabAc() {
         return evrakNotlariTab.open();
     }
@@ -457,9 +462,63 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+
         public boolean isOnTabPage() {
             return divContainer.is(visible);
         }
+
+        @Step("Konu alanı geldiği kontrolü")
+        public BilgilerTab konuAlaniGeldigiGorme() {
+            Assert.assertEquals(true , txtKonu.exists() );
+            return this;
+        }
+        @Step("Konu Kodu alanı geldiği kontrolü")
+        public  BilgilerTab konuKoduAlaniGeldigiKtrl () {
+
+            Assert.assertEquals(true , cmbKonuKodu.exists() );
+            return this;
+        }
+
+        @Step("Gizlilik Derecesi alanı geldiği kontrolü")
+        public BilgilerTab gizlilikDerecesiAlaniKtrl () {
+            Assert.assertEquals(true , cmbGizlilikDerecesi.exists() );
+            return this;
+        }
+
+        @Step("Ivedilik alani geldiği kontrolü")
+        public BilgilerTab ivedilikAlaniKtrl () {
+            Assert.assertEquals(true , cmbIvedik.exists() );
+            return this;
+        }
+
+        @Step("Bilgi alani geldiği kontrolü")
+        public BilgilerTab bilgiAlaniktrol() {
+            Assert.assertEquals(true , txtBilgi.exists() );
+            return this;
+        }
+        @Step("Geregi alani geldiği kontrolü")
+        public BilgilerTab geregiAlanigeldigiKtrol() {
+            Assert.assertEquals(true , txtGeregi.exists() );
+            return this;
+        }
+
+        @Step("Onay akışı alanlarının oldugu ekranın geldigi kontrolü")
+        public BilgilerTab onayAkisiAlangelktrl () {
+            Assert.assertEquals(true , btnOnayAkisiEkle.exists() );
+            return this;
+        }
+
+        @Step("Kaldırılacak klasör alanlarının geldigi kontrolü")
+        public BilgilerTab kaldiralacakKlasoralanKtrol () {
+            Assert.assertEquals(true , cmbKaldiralacakKlasorler.exists() );
+            return this;
+        }
+
+
+
+
+
+
 
         @Step("Konu alanının seçilen evrak ile aynı şekilde dolu geldiği,")
         public BilgilerTab konuAlanıDoluGeldigiGorme(String konu) {
@@ -4103,6 +4162,53 @@ public class EvrakOlusturPage extends MainPage {
             Assert.assertEquals(pdfEK1.contains(ilgi3), true);
             return this;
         }
+    }
+
+    public class EvrakDogrulamaTab extends MainPage {
+
+        SelenideElement chxBoxDogrulanabilirForHiddenCase = $x("//*[@id='yeniGidenEvrakForm:dogrulanabilirPanelGrid']/tbody/tr/td[3]/div/div[2]");
+
+        SelenideElement chxBoxDogrulanabilir = $x("//*[@id='yeniGidenEvrakForm:dogrulanabilirPanelGrid']/tbody/tr/td[3]/div/div[2]/span");
+        @Step("Evrak Dogrulama Tab açma")
+        private EvrakDogrulamaTab open() {
+            tabEvrakDogrulama.shouldBe(exist);
+            clickJs(tabEvrakDogrulama);
+            return this;
+        }
+
+        @Step("Evrak Dogrulanabilir checkbox kontrolü")
+        public EvrakDogrulamaTab chkevrakDogrulanabilirktrol () {
+            chxBoxDogrulanabilir.exists();
+            return this;
+        }
+        @Step("Evrak Dogrulanabilir checkbox dogrulanabilir işaretinin kontrolü")
+        public boolean chkboxEvrakDogrulanabilirclick () {
+            String className = chxBoxDogrulanabilir.getAttribute("className");
+            int compare = className.compareTo("ui-chkbox-icon ui-icon ui-icon-check");
+            if (compare == 0) {
+                Allure.addAttachment("Dogrulanabilir işareti" , "Dogrulanabilir işaretlenmiştir");
+                return true;
+             } else {
+                Allure.addAttachment("Dogrulanabilir işareti" , "Dogrulanabilir işaretlenmemiştir");
+                return false;
+            }
+            }
+
+            @Step("Evrak Dogrulanabilir checkbox durum kontrol ve işaretleme")
+        public EvrakDogrulamaTab chkdogrulanabilirİsaretle () {
+                String className = chxBoxDogrulanabilir.getAttribute("className");
+                int compare = className.compareTo("ui-chkbox-icon ui-icon ui-icon-check");
+                if (compare == 0) {
+                    Allure.addAttachment("Dogrulanabilir Checkbox" , "Checkbox işaretli");
+                } else {
+                    chxBoxDogrulanabilirForHiddenCase.click();
+                    Allure.addAttachment("Dogrulanabilir Checkbox" , "Checkbox işaretlendi");
+
+                }
+                return this;
+            }
+
+
     }
 
     @Step("Evrak oluştur alanında parafla tıklanır")
