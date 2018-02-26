@@ -55,7 +55,7 @@ public class KullaniciListesiYonetimiTest extends BaseTest {
         gelenEvraklarPage = new GelenEvraklarPage();
         evrakDetayiPage = new pages.altMenuPages.EvrakDetayiPage();
         teslimAlinmayiBekleyenlerPage = new TeslimAlinmayiBekleyenlerPage();
-        teslimAlinanlarPage =new TeslimAlinanlarPage();
+        teslimAlinanlarPage = new TeslimAlinanlarPage();
         kaydedilenGelenEvraklarPage = new KaydedilenGelenEvraklarPage();
         birimIadeEdilenlerPage = new BirimIadeEdilenlerPage();
 
@@ -241,7 +241,7 @@ public class KullaniciListesiYonetimiTest extends BaseTest {
                 .evrakDetayiSayfasiKapat()
                 .islemPenceresiKapatmaOnayiPopup("Kapat");
 
-        login(TestData.usernameMBOZDEMIR,TestData.passwordMBOZDEMIR);
+        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
 
         birimeGelenEvrakKayit();
 
@@ -267,7 +267,7 @@ public class KullaniciListesiYonetimiTest extends BaseTest {
 
         birimIadeEdilenlerPage
                 .openPage()
-                .evrakSecIcerikGoster(konu,true);
+                .evrakSecIcerikGoster(konu, true);
 
         evrakDetayiPage
                 .btnTikla("Teslim Al ve Havale Et")
@@ -281,13 +281,15 @@ public class KullaniciListesiYonetimiTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true
             , description = "TS1465 : Yeni Kullanıcı Listesi Tanımlama Sonrası Ekranlardan Kontrolü")
-    public void TS1465() throws InterruptedException{
+    public void TS1465() throws InterruptedException {
 
         TS1005();
-        login(TestData.usernameMBOZDEMIR,TestData.passwordMBOZDEMIR);
+        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
 
         String dikkatMesaji = "Havaleyi onaylayacak kullanıcıyı seçiniz.";
         String kullanici = "Username21g TEST";
+        String onaylayacakKisi = "Zübeyde Tekin";
+
 //String guncelAd="TS1005 142310";
 //String konu = "TS1466 171246305";
 //String konu2 = "TS1466 163471520";
@@ -303,12 +305,12 @@ public class KullaniciListesiYonetimiTest extends BaseTest {
                 .kullaniciListesiDetay()
                 .kullaniciGrupDetayKontrol(kullanici)
                 .kullaniciGrupDetayCheckBoxKontrolu(true)
-                .kullaniciGrupDetayCheckBoxSecimi(kullanici,false)
+                .kullaniciGrupDetayCheckBoxSecimi(kullanici, false)
                 .kullaniciGrupDetayKullan()
                 .havaleYapButon("Gönder");
 //                .islemMesaji().isBasarili(basariMesaji);
 
-        login(TestData.usernameMBOZDEMIR,TestData.passwordMBOZDEMIR);
+        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
         gelenEvrakKayit(konu2);
 
         gelenEvraklarPage
@@ -322,17 +324,18 @@ public class KullaniciListesiYonetimiTest extends BaseTest {
                 .kullaniciGrupDetayKontrol(kullanici)
                 .kullaniciGrupDetayKontrol(kullanici)
                 .kullaniciGrupDetayCheckBoxKontrolu(true)
-                .kullaniciGrupDetayCheckBoxSecimi(kullanici,false)
+                .kullaniciGrupDetayCheckBoxSecimi(kullanici, false)
                 .kullaniciGrupDetayKullan()
                 .havaleYapButon("Havale Onayına Gönder")
                 .islemMesaji().dikkatOlmali(dikkatMesaji);
 
+
         evrakDetayiPage
-                .onaylayacakKisiSec("Zübeyde Tekin")
+                .onaylayacakKisiSec(onaylayacakKisi)
                 .havaleYapHavaleOnayınaGonder()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
-        login(TestData.usernameMBOZDEMIR,TestData.passwordMBOZDEMIR);
+        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
 
         gelenEvrakKayit(konu);
 
@@ -395,7 +398,7 @@ public class KullaniciListesiYonetimiTest extends BaseTest {
                 .evrakDetayiSayfasiKapat()
                 .islemPenceresiKapatmaOnayiPopup("Kapat");
 
-        login(TestData.usernameMBOZDEMIR,TestData.passwordMBOZDEMIR);
+        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
 
         birimeGelenEvrakKayit();
 
@@ -420,7 +423,180 @@ public class KullaniciListesiYonetimiTest extends BaseTest {
 
         birimIadeEdilenlerPage
                 .openPage()
-                .evrakSecIcerikGoster(konu,true);
+                .evrakSecIcerikGoster(konu, true);
+
+        evrakDetayiPage
+                .btnTikla("Teslim Al ve Havale Et")
+                .kullaniciListesiSec(ad)
+                .kullaniciListesiDetay()
+                .kullaniciGrupDetayKontrol(kullanici1)
+                .kullaniciGrupDetayKontrol(kullanici2)
+                .kullaniciGrupDetayEkraniKapat()
+                .evrakDetayiSayfasiKapat()
+                .islemPenceresiKapatmaOnayiPopup("Kapat");
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS1464 : Kullanıcı Listeleri Aktiflik/Pasiflik Kontrolü")
+    public void TS1464() throws InterruptedException {
+
+//        TS1005();
+        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
+
+        String dikkatMesaji = "Havaleyi onaylayacak kullanıcıyı seçiniz.";
+        String kullanici = "Username21g TEST";
+        String onaylayacakKisi = "Zübeyde Tekin";
+
+String ad="TS1005 142310";
+//String konu = "TS1466 171246305";
+//String konu2 = "TS1466 163471520";
+
+        kullaniciListesiYonetimiPage
+                .openPage()
+                .sorgulaVeFiltreleAdDoldur(ad)
+                .durumSec(durumAktifler)
+                .ara()
+                .kullaniciListesiTabloKontrolu()
+                .pasifYap(ad)
+                .islemOnayiPopUpEvetHayır("Evet")
+                .kullaniciListesiTablosuKullaniciAdiKontrolu(ad, false)
+                .sorgulaVeFiltreleTabAc()
+                .durumSec(durumPasifler)
+                .ara()
+                .kullaniciListesiTabloKontrolu()
+                .sorgulaVeFiltreleTabAc()
+                .durumSec(durumAktifler)
+                .ara()
+                .kullaniciListesiTablosuKullaniciAdiKontrolu(ad, false);
+
+        gelenEvrakKayit(konu);
+
+        gelenEvraklarPage
+                .openPage()
+                .konuyaGoreEvrakIcerikGoster(konu);
+
+        evrakDetayiPage
+                .btnTikla("Havale Yap")
+                .kullaniciListesiKontrolu(ad, false);
+
+        gelenEvraklarPage
+                .openPage()
+                .konuyaGoreEvrakIcerikGoster(konu);
+
+        evrakDetayiPage
+                .btnTikla("Tebliğ Et")
+                .tebligEtKullaniciListesiKontrolu(ad, false);
+
+        teslimAlinmayiBekleyenEvrak();
+
+        teslimAlinmayiBekleyenlerPage
+                .openPage()
+                .konuyaGoreIcerikGoster(konu);
+
+        evrakDetayiPage
+                .btnTikla("Teslim Al ve Havale Et")
+                .kullaniciListesiKontrolu(ad,false)
+                .evrakDetayiSayfasiKapat()
+                .islemPenceresiKapatmaOnayiPopup("Kapat");
+
+        teslimAlinmayiBekleyenlerPage
+                .konuyaGoreIcerikGoster(konu);
+
+        evrakDetayiPage
+                .btnTikla("Teslim Al")
+                .evrakTeslimAlPopUpEvet();
+
+        teslimAlinanlarPage
+                .openPage()
+                .konuyaGoreEvrakIcerikGoster(konu);
+
+        evrakDetayiPage
+                .btnTikla("Havale Yap")
+                .kullaniciListesiKontrolu(ad,false)
+                .evrakDetayiSayfasiKapat()
+                .islemPenceresiKapatmaOnayiPopup("Kapat");
+
+        teslimAlinanlarPage
+                .konuyaGoreEvrakIcerikGoster(konu);
+
+        evrakDetayiPage
+                .btnTikla("Tebliğ Et")
+                .tebligEtKullaniciListesiKontrolu(ad,false);
+
+        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
+
+        birimeGelenEvrakKayit();
+
+        kaydedilenGelenEvraklarPage
+                .openPage()
+                .tabloKonuyaGoreIcerikSec(konu);
+
+        evrakDetayiPage
+                .btnTikla("Havale Yap")
+                .kullaniciListesiKontrolu(ad,false)
+                .evrakDetayiSayfasiKapat()
+                .islemPenceresiKapatmaOnayiPopup("Kapat");
+
+        gelenEvraklarPage
+                .openPage()
+                .konuyaGoreEvrakIcerikGoster(konu);
+
+        evrakDetayiPage
+                .btnTikla("İade Et")
+                .iadeEt()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        birimIadeEdilenlerPage
+                .openPage()
+                .evrakSecIcerikGoster(konu, true);
+
+        evrakDetayiPage
+                .btnTikla("Teslim Al ve Havale Et")
+                .kullaniciListesiKontrolu(ad,false);
+
+        kullaniciListesiYonetimiPage
+                .openPage()
+                .durumSec(durumPasifler)
+                .sorgulaVeFiltreleAdDoldur(ad)
+                .ara()
+                .kullaniciListesiTabloKontrolu()
+                .aktifYap(ad)
+                .islemOnayiPopUpEvetHayır("Evet")
+                .kullaniciListesiTablosuKullaniciAdiKontrolu(ad, false)
+                .sorgulaVeFiltreleTabAc()
+                .durumSec(durumAktifler)
+                .ara()
+                .kullaniciListesiTabloKontrolu()
+                .sorgulaVeFiltreleTabAc()
+                .durumSec(durumPasifler)
+                .ara()
+                .kullaniciListesiTablosuKullaniciAdiKontrolu(ad, false);
+
+        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
+
+        gelenEvrakKayit(konu);
+
+        gelenEvraklarPage
+                .openPage()
+                .konuyaGoreEvrakIcerikGoster(konu);
+
+        evrakDetayiPage
+                .btnTikla("Havale Yap")
+                .kullaniciListesiSec(ad);
+
+        gelenEvraklarPage
+                .openPage()
+                .konuyaGoreEvrakIcerikGoster(konu);
+
+        evrakDetayiPage
+                .btnTikla("Tebliğ Et")
+                .tebligEtKullaniciListesiSec(ad);
+
+        teslimAlinmayiBekleyenEvrak();
+
+        teslimAlinmayiBekleyenlerPage
+                .openPage()
+                .konuyaGoreIcerikGoster(konu);
 
         evrakDetayiPage
                 .btnTikla("Teslim Al ve Havale Et")
@@ -428,8 +604,64 @@ public class KullaniciListesiYonetimiTest extends BaseTest {
                 .evrakDetayiSayfasiKapat()
                 .islemPenceresiKapatmaOnayiPopup("Kapat");
 
+        teslimAlinmayiBekleyenlerPage
+                .konuyaGoreIcerikGoster(konu);
+
+        evrakDetayiPage
+                .btnTikla("Teslim Al")
+                .evrakTeslimAlPopUpEvet();
+
+        teslimAlinanlarPage
+                .openPage()
+                .konuyaGoreEvrakIcerikGoster(konu);
+
+        evrakDetayiPage
+                .btnTikla("Havale Yap")
+                .kullaniciListesiSec(ad)
+                .evrakDetayiSayfasiKapat()
+                .islemPenceresiKapatmaOnayiPopup("Kapat");
+
+        teslimAlinanlarPage
+                .konuyaGoreEvrakIcerikGoster(konu);
+
+        evrakDetayiPage
+                .btnTikla("Tebliğ Et")
+                .tebligEtKullaniciListesiSec(ad);
+
+        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
+
+        birimeGelenEvrakKayit();
+
+        kaydedilenGelenEvraklarPage
+                .openPage()
+                .tabloKonuyaGoreIcerikSec(konu);
+
+        evrakDetayiPage
+                .btnTikla("Havale Yap")
+                .kullaniciListesiSec(ad)
+                .evrakDetayiSayfasiKapat()
+                .islemPenceresiKapatmaOnayiPopup("Kapat");
+
+        gelenEvraklarPage
+                .openPage()
+                .konuyaGoreEvrakIcerikGoster(konu);
+
+        evrakDetayiPage
+                .btnTikla("İade Et")
+                .iadeEt()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        birimIadeEdilenlerPage
+                .openPage()
+                .evrakSecIcerikGoster(konu, true);
+
+        evrakDetayiPage
+                .btnTikla("Teslim Al ve Havale Et")
+                .kullaniciListesiSec(ad);
+
 
     }
+
 
     @Step("Test datası oluşturuldu.")
     private void gelenEvrakKayit(String konu) {
