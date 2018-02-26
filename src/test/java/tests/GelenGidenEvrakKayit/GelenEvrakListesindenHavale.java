@@ -54,6 +54,7 @@ public class GelenEvrakListesindenHavale extends BaseTest {
     String onayKisiDetails = "BHUPGMY";
     String kullaniciListesi = "TS2994";
 
+
     @BeforeMethod
     public void loginBeforeTests() {
         login(TestData.usernameZTEKIN,TestData.passwordZTEKIN);
@@ -364,6 +365,96 @@ public class GelenEvrakListesindenHavale extends BaseTest {
                 .openPage()
                 .evrakAlanKontrolleri(konu,geldigiKurum,evrakTarihi,evrakNo);
     }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, priority = 0, description = "TS477: Kullanıcıya havale edilen evrakın iade edilmesi")
+    public void TS477() throws InterruptedException {
+        String testid = "TS-477";
+        konu = "TS-477-" + getSysDate();
+        String gerek = "GEREĞİ İÇİN GÖNDER";
+        String bilgi = "BİLGİ İÇİN GÖNDER";
+        String koordinasyon = "KOORDİNASYON İÇİN GÖNDER";
+        String evrakNo;
+        String pathToFileText = getUploadPath() + "test.txt";
+        String fileName ="test.txt";
+
+        testStatus(testid, "PreCondition Evrak Oluşturma");
+        gelenEvrakKayitPage
+                .openPage()
+                .konuKoduDoldur(konuKodu)
+                .konuDoldur(konu)
+                .evrakTuruSec(evrakTuru)
+                .evrakDiliSec(evrakDili)
+                .evrakTarihiDoldur(evrakTarihi)
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .kisiKurumSec(kisiKurum)
+                .geldigiKurumDoldurLovText(geldigiKurum)
+                .evrakSayiSagDoldur()
+                .evrakGelisTipiSec(evrakGelisTipi)
+                .ivedilikSec(ivedilik)
+                .dagitimBilgileriKisiSec(kisi)
+                .kaydet();
+
+        evrakNo = gelenEvrakKayitPage.popUpsv2();
+
+        login(TestData.usernameZTEKIN,TestData.passwordZTEKIN);
+
+        gelenEvraklarPage
+                .openPage()
+                .tabloEvrakNoSec(konu)
+                .tabHavaleYapKontrol()
+                .tabHavaleYap()
+                .onizlemeHavaleAlanKontrolleri()
+
+                .dagitimBilgileriBirimDoldurWithDetails(birim, details)
+                .eklenenBirimKontrolu(birim)
+                .eklenenBirimOpsiyonKontrolu(gerek)
+
+                .havaleIslemleriKisiSec(onaylayacakKisi,details)
+                .eklenenKisiKontrolu(onaylayacakKisi)
+                .eklenenKisiOpsiyonKontrolu(gerek)
+                .havaleIslemleriKisiOpsiyonSec(bilgi)
+                .eklenenKisiOpsiyonKontrolu(bilgi)
+
+                .kullaniciListesiSec(kullaniciListesi)
+                .kullaniciListesiKullaniciGrupDetayEvet()
+                .eklenenKullaniciListesiKontrolu(kullaniciListesi)
+                .eklenenKullaniciListesiOpsiyonKontrolu(gerek)
+                .havaleIslemleriKullaniciListesiOpsiyonSec(koordinasyon)
+                .eklenenKullaniciListesiOpsiyonKontrolu(koordinasyon)
+                .havaleYapGonder()
+                .islemMesaji().basariliOlmali();
+
+        havaleEttiklerimPage
+                .openPage()
+                .evrakAlanKontrolleri(konu,geldigiKurum,birim,evrakTarihi,evrakNo);
+
+        login(TestData.usernameMBOZDEMIR,TestData.passwordMBOZDEMIR);
+
+        testStatus(testid, "Test Başladı");
+        login(TestData.usernameMBOZDEMIR,TestData.passwordMBOZDEMIR);
+
+        gelenEvraklarPage
+                .openPage()
+                .evrakAlanKontrolleri(konu,geldigiKurum,evrakTarihi,evrakNo)
+                .tabloEvrakNoSec(konu)
+                .onizlemeIadeEtKontrol()
+                .onizlemeIadeEt()
+                .onizlemeIadeEdilecekKullaniciKontrolu(kisi)
+                .iadeEtNotInputDoldur(konu)
+                .onizlemeIadeEtDosyaEkle()
+                .onizlemeHavaleDosyaEkle(pathToFileText)
+                .onizlemeHavaleDosyaEkleDosyaAdiKontrol(fileName)
+                .iadeEtIadeEt()
+                .islemMesaji().basariliOlmali();
+
+        login(TestData.usernameZTEKIN,TestData.passwordZTEKIN);
+
+        gelenEvraklarPage
+                .openPage()
+                .tabloEvrakNoSec(konu);
+    }
+
 
 
 }
