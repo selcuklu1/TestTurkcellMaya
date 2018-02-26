@@ -84,7 +84,18 @@ public class BirimYonetimiPage extends MainPage {
     SelenideElement chkDisBirimBos = $("[id='birimYonetimiEditorForm:disBirimCheckbox'] [class$='ui-state-default']");
     SelenideElement chkDisBirimDolu = $("[id='birimYonetimiEditorForm:disBirimCheckbox'] [class$='ui-state-disabled']");
     SelenideElement filtreSorgulamaPanel = $("[id='birimYonetimiFilterForm'] [id='birimYonetimiFilterForm:accordionPanel']");
+    SelenideElement popupIslemOnaySorusu = $("[id='baseConfirmationDialog:form'] [class='content']");
+    SelenideElement txtPopupIslemOnayAciklama = $(By.id("baseConfirmationDialog:explanationInput"));
+    SelenideElement txtPopupIslemOnayiEvet= $(By.id("baseConfirmationDialog:confirmButton"));
+    SelenideElement txtPopupIslemOnayiHayir= $(By.id("baseConfirmationDialog:baseConfirmationDialogCancelButton"));
 
+    SelenideElement dteBirimAmiriAtamaBaslangicTarihi= $(By.id("birimAmiriEditorForm:gorevBaslangicTarihiCalendar"));
+    SelenideElement dteBirimAmiriAtamaBitisTarihi= $(By.id("birimAmiriEditorForm:gorevBitisTarihiCalendar"));
+
+    SelenideElement dteBirimAmiriAtamaBaslangicTarihiInput= $(By.id("birimAmiriEditorForm:gorevBaslangicTarihiCalendar_input"));
+    SelenideElement dteBirimAmiriAtamaBitisTarihiInput = $(By.id("birimAmiriEditorForm:gorevBitisTarihiCalendar_input"));
+
+    SelenideElement cmbBirimAmiriAtamaBagTipi = $(By.id("birimAmiriEditorForm:birimBagTipiSelect"));
 
     // Hüseyin TÜMER
 
@@ -514,8 +525,23 @@ public class BirimYonetimiPage extends MainPage {
         return this;
     }
 
+    @Step("Birim Yönetimi filtreleme alan kontrolleri")
+    public BirimYonetimiPage birimYonetimiFiltrelemeAlanKontrolleri() {
+
+        Assert.assertEquals(txtBirim.isDisplayed(), true, "Birim");
+        Allure.addAttachment("Birim alanı kontrolu başarılı", "");
+
+        Assert.assertEquals(cmbBirimTuru.isDisplayed(), true, "Birim Türü");
+        Allure.addAttachment("Birim Türü alanı kontrolu başarılı", "");
+
+        Assert.assertEquals(cmbDurum.isDisplayed(), true, "Durum");
+        Allure.addAttachment("Durum alanı kontrolu başarılı", "");
+
+        return this;
+    }
+
     @Step("Eklenen birim sonuç tablosunda listelenir")
-    public BirimYonetimiPage birimKontrolu(String birimAdi) {
+    public BirimYonetimiPage birimKayitKontrolu(String birimAdi) {
 
         tblBirimYonetimiListesi
                 .filterBy(Condition.text(birimAdi))
@@ -523,6 +549,31 @@ public class BirimYonetimiPage extends MainPage {
 
         return this;
     }
+
+    @Step("Birim pasif yap")
+    public BirimYonetimiPage birimPasifYap(String birimAdi) {
+
+        tblBirimYonetimiListesi
+                .filterBy(Condition.text(birimAdi))
+                .first()
+                .$("[id$='updateBirimStatusButton']")
+                .click();
+
+        return this;
+    }
+
+    @Step("Birim güncelle")
+    public BirimYonetimiPage birimGüncelle(String birimAdi) {
+
+        tblBirimYonetimiListesi
+                .filterBy(Condition.text(birimAdi))
+                .first()
+                .$("[id$='updateBirimButton']")
+                .click();
+
+        return this;
+    }
+
 
     @Step("Pasif yap butonunun aktif olarak geldiği kontrolu")
     public BirimYonetimiPage pasifYapButonuKontrolu() {
@@ -604,4 +655,93 @@ public class BirimYonetimiPage extends MainPage {
 
         return Arrays.asList(birimAdi,birimKisaAdi,idariBirimKimlikKodu);
     }
+
+    @Step("\"Birimin ve bağlı alt birimlerin durumunu değiştirmek istediğinize emin misiniz? \" sorusunun sorulduğu İşlem Onayı dialog kontrolu")
+    public BirimYonetimiPage islemOnayiPopupSorusu(String soru) {
+        popupIslemOnaySorusu.shouldBe(visible);
+        Assert.assertEquals(popupIslemOnaySorusu.text().contains(soru), true);
+        return this;
+    }
+
+    @Step("İşlem Onayı - Açıklama doldur")
+    public BirimYonetimiPage popupIslemOnayiAciklamaDoldur(String aciklama) {
+        txtPopupIslemOnayAciklama.setValue(aciklama);
+        return this;
+    }
+
+    @Step("İşlem Onayı - Evet")
+    public BirimYonetimiPage popupIslemOnayiEvet() {
+        txtPopupIslemOnayiEvet.click();
+        return this;
+    }
+
+    @Step("İşlem Onayı - Hayır")
+    public BirimYonetimiPage popupIslemOnayiHayir() {
+        txtPopupIslemOnayiHayir.click();
+        return this;
+    }
+
+    @Step("Birim Amiri ekle")
+    public BirimYonetimiPage birimAmiriEkle() {
+        clickJs(btnBirimAmiriEkle);
+        return this;
+    }
+
+    @Step("Birim Amiri Atama - Kullanıcı doldur")
+    public BirimYonetimiPage txtBirimAmiriAtamaKullaniciDoldur(String kullanici) {
+        txtKullanici.selectLov(kullanici);
+        return this;
+    }
+
+    @Step("Birim Amiri Atama - Kullanıcı doldur")
+    public BirimYonetimiPage txtBirimAmiriAtamaGorevDoldur(String gorev) {
+        txtGorev.setValue(gorev);
+        Selenide.sleep(3000);
+        txtGorev.sendKeys(Keys.ENTER);
+        return this;
+    }
+
+    @Step("Birim Amiri Atama - Başlangıç Tarihi doldur")
+    public BirimYonetimiPage txtBirimAmiriAtamaBaslangicTarihiDoldur(String baslangicTarihi) {
+        dteBirimAmiriAtamaBaslangicTarihiInput.setValue(baslangicTarihi);
+        return this;
+    }
+
+    @Step("Birim Amiri Atama - Bitiş Tarihi doldur")
+    public BirimYonetimiPage txtBirimAmiriAtamaBitiscTarihiDoldur(String bitisTarihi) {
+        dteBirimAmiriAtamaBitisTarihiInput.setValue(bitisTarihi);
+        return this;
+    }
+
+    @Step("Birim Amiri Atama - Başlangıç ve Bitiş Tarihi kontrolu")
+    public BirimYonetimiPage birimAmiriAtamaBaslangicBitisTarihiKontrol() {
+
+        Assert.assertEquals(dteBirimAmiriAtamaBaslangicTarihi.isDisplayed(), true, "Başlangıç Tarihi kontrolu");
+        Allure.addAttachment("Başlangıç Tarihi kontrolu başarılı", "");
+
+        Assert.assertEquals(dteBirimAmiriAtamaBitisTarihi.isDisplayed(), true, "Bitiş Tarihi kontrolu");
+        Allure.addAttachment("Bitiş Tarihi kontrolu başarılı", "");
+
+        return this;
+    }
+
+    @Step("Birim Amiri Atama - Gizlilik derecesi seç")
+    public BirimYonetimiPage cmbBirimAmiriAtamaGizlilikDerecesiSec(String gizlilikDerecesi) {
+        cmbGizlilikDerecesi.selectOption(gizlilikDerecesi);
+        return this;
+    }
+
+    @Step("Birim Amiri Atama - Bağ Tipi seç")
+    public BirimYonetimiPage cmbBirimAmiriAtamaBagTipiSec(String bagTipi) {
+        cmbBirimAmiriAtamaBagTipi.selectOption(bagTipi);
+        return this;
+    }
+
+    @Step("Birim Amiri Atama - Kaydet")
+    public BirimYonetimiPage birimAmiriAtamaKaydet() {
+        btnBirimAmiriKaydet.click();
+        return this;
+    }
+
+
 }
