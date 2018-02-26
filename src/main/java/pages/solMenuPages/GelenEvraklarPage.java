@@ -15,6 +15,7 @@ import pages.pageData.SolMenuData;
 import java.util.List;
 
 import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static pages.pageComponents.belgenetElements.Belgenet.$x;
@@ -58,6 +59,7 @@ public class GelenEvraklarPage extends MainPage {
     ElementsCollection tblVekaletVerenAlan = $$("[id='mainPreviewForm:kullaniciBirimSecenekleriHavaleIcin_data'] tr[role='row']");
 
     BelgenetElement txtKullaniciListesi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKisiListesiLov:LovText"));
+    SelenideElement btnKullaniciListesiGrupDetayEvet = $(By.id("mainPreviewForm:kendinedeGonderilsinViewDialogYes"));
     SelenideElement popUpUyari = $("[id='mainPreviewForm:j_idt5031'] p");
     SelenideElement popUpUyariEvet = $(By.xpath("//body[@class='ui-layout-container']/div[131]//center/button[1]"));
     ElementsCollection tblEvrak = $$("[id^='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
@@ -76,6 +78,12 @@ public class GelenEvraklarPage extends MainPage {
     SelenideElement txtIadeEtNot = $(By.id("mainPreviewForm:notTextArea_id"));
     SelenideElement btnIadeEtDosyaEkle = $(By.id("mainPreviewForm:fileUploadIadeEk_input"));
     SelenideElement btnIadeEtIadeEt = $(By.id("mainPreviewForm:iadeEtButton_id"));
+
+    SelenideElement btnOnizlemeIadeEt = $("button[id^='mainPreviewForm:onizlemeRightTab:uiRepeat'] span[class$='iadeEt']");
+    ElementsCollection lblIadeEdilecekKullanici = $$("table[id='mainPreviewForm:iadeBilgileriPanelGrid'] label");
+    SelenideElement btnOnizlemeIadeEtDosyaEkle = $(By.id("mainPreviewForm:fileUploadIadeEk"));
+    SelenideElement dosyaPath = $(By.xpath("//input[@id='mainPreviewForm:fileUploadIadeEk_input']"));
+
     // Cevap Yaz Buttonu
     SelenideElement btnCevapYaz = $x("//span[contains(@class, 'cevapYaz')]/..");
 
@@ -133,6 +141,7 @@ public class GelenEvraklarPage extends MainPage {
     SelenideElement btnOnizlemeDosyaEkleKontrol = $(By.id("mainPreviewForm:fileUploadHavaleEk"));
 
     SelenideElement txtEklenenBirim = $("div[id^='mainPreviewForm:dagitimBilgileriBirimLov:LovSecilenTable:0:j_idt']");
+    SelenideElement txtEklenenKisi = $("div[id^='mainPreviewForm:dagitimBilgileriKullaniciLov:LovSecilenTable:0:j_idt']");
 
     BelgenetElement txtIcerikHavaleIslemleriKisi = comboLov(By.id("inboxItemInfoForm:dagitimBilgileriKullaniciLov:LovText"));
     SelenideElement txtIcerikEklenenKisi = $("div[id^='inboxItemInfoForm:dagitimBilgileriKullaniciLov:LovSecilenTable:0:j_idt']");
@@ -147,6 +156,8 @@ public class GelenEvraklarPage extends MainPage {
     SelenideElement tabEvrakEkleri = $(By.xpath("//*[contains(text(),'Evrak Ekleri')]"));
     ElementsCollection gelenEvrakEkleriKontrol = $$("div[id$='ekListesiOnizlemeDataTable'] tr[data-ri]");
     SelenideElement txtEklenenKisiOpsiyon = $("select[id='mainPreviewForm:dagitimBilgileriKullaniciLov:LovSecilenTable:0:selectOneMenu']");
+    SelenideElement txtEklenenBirimOpsiyon = $("select[id='mainPreviewForm:dagitimBilgileriBirimLov:LovSecilenTable:0:selectOneMenu']");
+    SelenideElement txtEklenenKullaniciListesiOpsiyon = $("select[id='mainPreviewForm:dagitimBilgileriKisiListesiLov:LovSecilenTable:0:selectOneMenu']");
 
     @Step("Gelen Evraklar Sayfasını aç")
     public GelenEvraklarPage openPage() {
@@ -397,6 +408,24 @@ public class GelenEvraklarPage extends MainPage {
 
     public GelenEvraklarPage iadeEtDosyaEkle() {
         btnIadeEtDosyaEkle.click();
+        return this;
+    }
+
+    public GelenEvraklarPage onizlemeIadeEtDosyaEkle() {
+        btnOnizlemeIadeEtDosyaEkle.click();
+        return this;
+    }
+
+    @Step("Evrak Ekleri Dosya Ekleme : \"{pathToFile}\" ")
+    public GelenEvraklarPage onizlemeHavaleDosyaEkle(String pathToFile) throws InterruptedException {
+        uploadFile(dosyaPath, pathToFile);
+        Thread.sleep(4000);
+        return this;
+    }
+
+    @Step("Havale dosya ekleme adi kontrol : \"{dosyaAdi}\" ")
+    public GelenEvraklarPage onizlemeHavaleDosyaEkleDosyaAdiKontrol(String dosyaAdi) {
+        $(byText(dosyaAdi)).shouldBe(Condition.visible);
         return this;
     }
 
@@ -1002,6 +1031,44 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Kullacici listesi Kullanici Grup Detay Evet")
+    public GelenEvraklarPage kullaniciListesiKullaniciGrupDetayEvet() {
+        btnKullaniciListesiGrupDetayEvet.click();
+        return this;
+    }
+
+    @Step("Havale İşlemleri Kullanıcı Listesi alanında eklenen \"{kisi}\" kontrolü")
+    public GelenEvraklarPage eklenenKullaniciListesiKontrolu(String kisi) {
+        boolean durum = txtKullaniciListesi.isLovValueSelectable(kisi);
+        Assert.assertEquals(durum, true, "Kullanıcı Listesi Bulundu:" + kisi);
+        Allure.addAttachment(kisi, " seçildi");
+        txtComboLovKisi.closeTreePanel();
+        return this;
+    }
+
+    @Step("Havale İşlemleri Kullanici Listesi alanında eklenen \"{opsiyon}\" kontrolü")
+    public GelenEvraklarPage eklenenKullaniciListesiOpsiyonKontrolu(String opsiyon) {
+        Assert.assertEquals(txtEklenenKullaniciListesiOpsiyon.getSelectedOption().text().equals(opsiyon), true, "Opsiyon Seçildi");
+        Allure.addAttachment("Opsiyon Seçildi:", opsiyon);
+        return this;
+    }
+
+    @Step("Dağıtım Bilgileri Kullanıcı Listesi alanında \"{opsiyon}\" seçilir")
+    public GelenEvraklarPage havaleIslemleriKullaniciListesiOpsiyonSec(String opsiyon) {
+        String gerek = "GEREĞİ İÇİN GÖNDER";
+        String bilgi = "BİLGİ İÇİN GÖNDER";
+        String koordinasyon = "KOORDİNASYON İÇİN GÖNDER";
+
+        if (opsiyon.equals(gerek))
+            txtEklenenKullaniciListesiOpsiyon.selectOptionByValue("G");
+        else if (opsiyon.equals(bilgi))
+            txtEklenenKullaniciListesiOpsiyon.selectOptionByValue("B");
+        else if (opsiyon.equals(koordinasyon))
+            txtEklenenKullaniciListesiOpsiyon.selectOptionByValue("S");
+
+        return this;
+    }
+
     @Step("Kullacici listesi seç : \"{kullanici}\" ")
     public GelenEvraklarPage kullanciListesiSec2(String kullanici) {
         txtKullaniciListesi.type(kullanici).getSelectableItems().first().click();
@@ -1121,6 +1188,13 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Havale İşlemleri Kisi alanında eklenen \"{kisi}\" kontrolü")
+    public GelenEvraklarPage eklenenKisiKontrolu(String kisi) {
+        Assert.assertEquals(txtEklenenKisi.isDisplayed(), true, "Kisi Eklendi");
+        Allure.addAttachment("Kisi Eklendi:", kisi);
+        return this;
+    }
+
     // //span[contains(@class,'ui-button-icon-left ui-icon document-addFollow')]/..
     @Step("Tabloda evrak kontrolü : \"{konu}\"  \"{geldigiKurum}\" \"{birim}\" \"{evrakTarihi}\" \"{evrakNo}\" ")
     public GelenEvraklarPage evrakAlanKontrolleri(String konu, String geldigiKurum, String evrakTarihi, String evrakNo) {
@@ -1223,6 +1297,13 @@ public class GelenEvraklarPage extends MainPage {
     public GelenEvraklarPage eklenenBirimKontrolu(String birim) {
         Assert.assertEquals(txtEklenenBirim.isDisplayed(), true, "Birim Eklendi");
         Allure.addAttachment("Birim Eklendi:", birim);
+        return this;
+    }
+
+    @Step("Havale İşlemleri Birim alanında eklenen \"{opsiyon}\" kontrolü")
+    public GelenEvraklarPage eklenenBirimOpsiyonKontrolu(String opsiyon) {
+        Assert.assertEquals(txtEklenenBirimOpsiyon.getSelectedOption().text().equals(opsiyon), true, "Opsiyon Seçildi");
+        Allure.addAttachment("Opsiyon Seçildi:", opsiyon);
         return this;
     }
 
@@ -1360,4 +1441,27 @@ public class GelenEvraklarPage extends MainPage {
 
         return this;
     }
+
+    @Step("Iade Et buton kontrolü")
+    public GelenEvraklarPage onizlemeIadeEtKontrol() {
+        Assert.assertEquals(btnOnizlemeIadeEt.isDisplayed(),true,"Iade et buton kontrolü");
+        Allure.addAttachment("Iade et buton kontrolü","");
+        return this;
+    }
+
+    @Step("Iade Et buton kontrolü")
+    public GelenEvraklarPage onizlemeIadeEt() {
+        btnOnizlemeIadeEt.click();
+        return this;
+    }
+
+    @Step("Iade Edilecek Kullanıcı Kontrolü")
+    public GelenEvraklarPage onizlemeIadeEdilecekKullaniciKontrolu(String kisi) {
+        boolean durum = lblIadeEdilecekKullanici.filterBy(Condition.text(kisi)).size() == 1;
+        Assert.assertEquals(durum,true,"Iade Edilecek Kullanıcı Kontrolü");
+        Allure.addAttachment("Iade Edilecek Kullanıcı Kontrolü","");
+        return this;
+    }
+
+
 }
