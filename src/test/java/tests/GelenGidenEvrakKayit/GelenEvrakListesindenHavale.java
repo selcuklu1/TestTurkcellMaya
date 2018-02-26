@@ -52,6 +52,7 @@ public class GelenEvrakListesindenHavale extends BaseTest {
     String details = "BHUPGMY";
     String onaylayacakKisi = "Mehmet BOZDEMİR";
     String onayKisiDetails = "BHUPGMY";
+    String kullaniciListesi = "TS2994";
 
     @BeforeMethod
     public void loginBeforeTests() {
@@ -182,6 +183,88 @@ public class GelenEvrakListesindenHavale extends BaseTest {
         gelenEvraklarPage
                 .openPage()
                 .tabloEvrakNoSec(konu);
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, priority = 0, description = "TS826: Havale yeri Birim, Kişi, Kullanıcı Listesi seçilerek evrakın havale edilmesi")
+    public void TS826() throws InterruptedException {
+        String testid = "TS-826";
+        konu = "TS-826-" + getSysDate();
+        String gerek = "GEREĞİ İÇİN GÖNDER";
+        String bilgi = "BİLGİ İÇİN GÖNDER";
+        String koordinasyon = "KOORDİNASYON İÇİN GÖNDER";
+        String evrakNo;
+
+        testStatus(testid, "PreCondition Evrak Oluşturma");
+        gelenEvrakKayitPage
+                .openPage()
+                .konuKoduDoldur(konuKodu)
+                .konuDoldur(konu)
+                .evrakTuruSec(evrakTuru)
+                .evrakDiliSec(evrakDili)
+                .evrakTarihiDoldur(evrakTarihi)
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .kisiKurumSec(kisiKurum)
+                .geldigiKurumDoldurLovText(geldigiKurum)
+                .evrakSayiSagDoldur()
+                .evrakGelisTipiSec(evrakGelisTipi)
+                .ivedilikSec(ivedilik)
+                .dagitimBilgileriKisiSec(kisi)
+                .kaydet();
+
+        evrakNo = gelenEvrakKayitPage.popUpsv2();
+
+        login(TestData.usernameZTEKIN,TestData.passwordZTEKIN);
+
+        testStatus(testid, "Test Başladı");
+        gelenEvraklarPage
+                .openPage()
+                .tabloEvrakNoSec(konu)
+                .tabHavaleYapKontrol()
+                .tabHavaleYap()
+                .onizlemeHavaleAlanKontrolleri()
+
+                .dagitimBilgileriBirimDoldurWithDetails(birim, details)
+                .eklenenBirimKontrolu(birim)
+                .eklenenBirimOpsiyonKontrolu(gerek)
+
+                .havaleIslemleriKisiSec(onaylayacakKisi,details)
+                .eklenenKisiKontrolu(onaylayacakKisi)
+                .eklenenKisiOpsiyonKontrolu(gerek)
+                .havaleIslemleriKisiOpsiyonSec(bilgi)
+                .eklenenKisiOpsiyonKontrolu(bilgi)
+
+                .kullaniciListesiSec(kullaniciListesi)
+                .kullaniciListesiKullaniciGrupDetayEvet()
+                .eklenenKullaniciListesiKontrolu(kullaniciListesi)
+                .eklenenKullaniciListesiOpsiyonKontrolu(gerek)
+                .havaleIslemleriKullaniciListesiOpsiyonSec(koordinasyon)
+                .eklenenKullaniciListesiOpsiyonKontrolu(koordinasyon)
+                .havaleYapGonder()
+                .islemMesaji().basariliOlmali();
+
+        havaleEttiklerimPage
+                .openPage()
+                .evrakAlanKontrolleri(konu,geldigiKurum,birim,evrakTarihi,evrakNo);
+
+        login(TestData.usernameMBOZDEMIR,TestData.passwordMBOZDEMIR);
+
+        teslimAlinmayiBekleyenlerPage
+                .openPage()
+                .evrakAlanKontrolleri(konu,geldigiKurum,evrakTarihi,evrakNo);
+
+        login(TestData.usernameMBOZDEMIR,TestData.passwordMBOZDEMIR);
+
+        gelenEvraklarPage
+                .openPage()
+                .evrakAlanKontrolleri(konu,geldigiKurum,evrakTarihi,evrakNo);
+
+        login(TestData.usernameYAKYOL,TestData.passwordYAKYOL);
+
+        gelenEvraklarPage
+                .openPage()
+                .evrakAlanKontrolleri(konu,geldigiKurum,evrakTarihi,evrakNo);
+
     }
 
     @Severity(SeverityLevel.CRITICAL)
