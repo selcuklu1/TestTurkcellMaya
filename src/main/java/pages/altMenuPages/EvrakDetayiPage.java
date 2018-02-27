@@ -56,6 +56,8 @@ public class EvrakDetayiPage extends MainPage {
     SelenideElement btnDetay = $("[id$='inboxItemInfoForm:dagitimBilgileriKisiListesiLov:LovSecilenTable:0:']");
     ElementsCollection tblKullaniciGrupDetay = $$("[id='inboxItemInfoForm:kullaniciGrubuDetay_data'] tr[data-ri]");
     SelenideElement btnKullaniciGrupDetayKullan = $(By.id("inboxItemInfoForm:kullaniciGrubuDetayKullanViewDialog"));
+    SelenideElement btnKullaniciGrupDetayEkraniKapat = $("div[id$='kullaniciGrubuDetayViewDialog'] span[class='ui-icon ui-icon-closethick']");
+
 
     private HareketGecmisiTab hareketGecmisiTab = new HareketGecmisiTab();
     private EditorTab editorTab = new EditorTab();
@@ -151,6 +153,12 @@ public class EvrakDetayiPage extends MainPage {
         return this;
     }
 
+    @Step("Kullanici Grup Detay ekranı kapatılır.")
+    public EvrakDetayiPage kullaniciGrupDetayEkraniKapat(){
+        btnKullaniciGrupDetayEkraniKapat.click();
+        return this;
+    }
+
     @Step("Kullanici Grup Detay ekran kontrolü yapılır.")
     public EvrakDetayiPage tebligEtKullaniciGrupDetayKontrol() {
         SelenideElement popUpKullaniciGrupDetay = $(By.id("inboxItemInfoForm:tebligKullaniciGrubuDetayViewDialog"));
@@ -172,9 +180,9 @@ public class EvrakDetayiPage extends MainPage {
                 Assert.assertEquals(tblKullaniciGrupDetay
                         .get(i)
                         .$("div[class$='ui-state-active']").isDisplayed(), true);
-                Allure.addAttachment("checkbox kontrol", "Seçili");
+                Allure.addAttachment("checkbox kontrol", "Seçili.");
             } else
-                Allure.addAttachment("checkbox kontrol", "Seçili değil");
+                Allure.addAttachment("checkbox kontrol", "Seçili değil.");
         }
         takeScreenshot();
 
@@ -283,6 +291,15 @@ public class EvrakDetayiPage extends MainPage {
         return this;
     }
 
+    @Step("Kullanici Lisesi alanında kullaniciListesi kontrolü. \"{kullaniciListesi}\" , {shouldBeExist}")
+    public EvrakDetayiPage kullaniciListesiKontrolu(String kullaniciListesi,boolean shouldBeExist) {
+        if(shouldBeExist)
+            txtKullaniciListesi.openTreePanel().getSelectableItems().filterBy(text(kullaniciListesi)).shouldHaveSize(1);
+        else
+            txtKullaniciListesi.openTreePanel().getSelectableItems().filterBy(text(kullaniciListesi)).shouldHaveSize(0);
+
+        return this;
+    }
 
     @Step("Onaylayacak Kişi alanında \"{kisi}\" seçilir. ")
     public EvrakDetayiPage onaylayacakKisiSec(String kisi) {
@@ -296,6 +313,15 @@ public class EvrakDetayiPage extends MainPage {
         return this;
     }
 
+    @Step("Kullanici Lisesi alanında kullaniciListesi kontrolü. \"{kullaniciListesi}\" , {shouldBeExist}")
+    public EvrakDetayiPage tebligEtKullaniciListesiKontrolu(String kullaniciListesi,boolean shouldBeExist) {
+        if(shouldBeExist)
+            txtTebligEtKullniciListesi.openTreePanel().getSelectableItems().filterBy(text(kullaniciListesi)).shouldHaveSize(1);
+        else
+            txtTebligEtKullniciListesi.openTreePanel().getSelectableItems().filterBy(text(kullaniciListesi)).shouldHaveSize(0);
+
+        return this;
+    }
 
     @Step("Evrak Detay sayfası kapatılır.")
     public EvrakDetayiPage evrakDetayiSayfasiKapat() {

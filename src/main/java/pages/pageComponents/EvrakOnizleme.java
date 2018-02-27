@@ -365,9 +365,9 @@ public class EvrakOnizleme extends MainPage {
         }
 
         @Step("Yazdır")
-        public EvrakPostala yazdir() {
+        public EvrakDetaylari yazdir() {
             searchTable.getFoundRow().$x("descendant::button[.='Yazdır']").click();
-            return this;
+            return new EvrakDetaylari();
         }
 
         @Step("Yazdır - Üst Veriler listesi")
@@ -392,9 +392,9 @@ public class EvrakOnizleme extends MainPage {
 
 
         @Step("Orjinalini Yazdır")
-        public EvrakPostala orjinaliniYazdir() {
+        public EvrakDetaylari orjinaliniYazdir() {
             searchTable.getFoundRow().$x("descendant::button[.='Orjinalini Yazdır']").click();
-            return this;
+            return new EvrakDetaylari();
         }
 
         @Step("Etiket Bastır")
@@ -791,6 +791,18 @@ public class EvrakOnizleme extends MainPage {
         public SelenideElement getUstVerilerYazdirButton(String stepDescription) {
             return ustVerilerListesi.getFoundRow().$x("descendant::button[.='Yazdır']");
         }
+
+        @Step("Üst Veriler - Orjinalini Yazdır butonu: {stepDescription}")
+        public SelenideElement getUstVerilerOrjinaliniYazdirButton(String stepDescription) {
+            return ustVerilerListesi.getFoundRow().$x("descendant::button[.='Orjinalini Yazdır']");
+        }
+
+        @Step("Üst Veriler - Orjinalini Yazdır")
+        public EvrakDetaylari ustVerilerOrjinaliniYazdir() {
+            getUstVerilerOrjinaliniYazdirButton("bulunur").click();
+            return this;
+        }
+
 
         @Step("Evrakın ekleri - Yazdır butonu: {stepDescription}")
         public SelenideElement getEvrakinEkleriYazdirButton(String stepDescription) {

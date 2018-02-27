@@ -88,7 +88,7 @@ public class BirimYonetimiTest extends BaseTest {
         birimYonetimiPage
                 .birimFiltreDoldur(birimAdi)
                 .ara()
-                .birimKontrolu(birimAdi);
+                .birimKayitKontrolu(birimAdi);
 
 //TODO: Burada defect var. Seçilme durumu istenmiş ama seçilemiyor.
         gelenEvrakKayitPage
@@ -230,7 +230,7 @@ public class BirimYonetimiTest extends BaseTest {
         birimYonetimiPage
                 .birimFiltreDoldur(birimAdi)
                 .ara()
-                .birimKontrolu(birimAdi);
+                .birimKayitKontrolu(birimAdi);
 
         gelenEvrakKayitPage
                 .openPage()
@@ -281,6 +281,7 @@ public class BirimYonetimiTest extends BaseTest {
 
         login(user1);
 
+        testStatus("TS1109", "Birim Oluşturma");
         //1109 senaryosu yerine pre. con. koşuluyor
         List<String> birim = new ReusableSteps().yeniBirimKayit();
 
@@ -311,5 +312,81 @@ public class BirimYonetimiTest extends BaseTest {
                 .birimSec(Condition.text(birimAdı))
                 .evrakIslemleriIslemYaptiklarimMenuKontrol();
 
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS1122: İşlem yapılan birimin silinememesi")
+    public void TS1122() {
+
+        String birim = "TS1122_Birim";
+        String soru = "Birimin ve bağlı alt birimlerin durumunu değiştirmek istediğinize emin misiniz?";
+        String aciklama = "TS2112_Birim pasif yapma";
+        String dikkatMesaji1 = "Birimde tanımlı kullanıcılar bulunmaktadır. Lütfen kullanıcıları başka birime taşıyınız ya da siliniz.";
+
+        login();
+
+        birimYonetimiPage
+                .openPage()
+                .birimYonetimiFiltrelemeAlanKontrolleri()
+                .birimFiltreDoldur(birim)
+
+                .birimKayitKontrolu(birim)
+
+                .birimTuruSec("İç Birim")
+                .durumSec("Sadece Aktifler")
+                .ara()
+                .birimKayitKontrolu(birim)
+                .birimPasifYap(birim)
+
+                .islemOnayiPopupSorusu(soru)
+                .popupIslemOnayiAciklamaDoldur(aciklama)
+                .popupIslemOnayiEvet()
+                .islemMesaji().dikkatOlmali(dikkatMesaji1);
+
+        birimYonetimiPage
+                .popupIslemOnayiHayir();
+
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS1112: Kaydedilen birime amir eklenmesi")
+    public void TS1112() {
+
+        login();
+
+        testStatus("TS1109", "Birim Oluşturma");
+        //1109 senaryosu yerine pre. con. koşuluyor
+        List<String> birim = new ReusableSteps().yeniBirimKayit();
+
+        String birimAdi = birim.get(0);
+        //String birimKisaAdi = birim.get(1);
+        //String idariBirimKimlikKodu = birim.get(2);
+
+        String amirAdi = "Sezai ÇELİK";
+        String gorev = "Uzman Test Mühendisi";
+        String basariMesaji = "İşlem başarılıdır!";
+
+        birimYonetimiPage
+                .birimYonetimiFiltrelemeAlanKontrolleri()
+                .birimFiltreDoldur(birimAdi)
+                .ara()
+                .birimGüncelle(birimAdi)
+
+                .birimAmiriEkle()
+                .txtBirimAmiriAtamaKullaniciDoldur(amirAdi)
+                .txtBirimAmiriAtamaGorevDoldur(gorev)
+                .birimAmiriAtamaBaslangicBitisTarihiKontrol()
+                .cmbBirimAmiriAtamaBagTipiSec("Amir")
+                .cmbBirimAmiriAtamaGizlilikDerecesiSec("Çok Gizli")
+                .birimAmiriAtamaKaydet()
+                .kaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .secilenOnayAkisiSil()
+                .onayAkisiEkle()
+                .onayAkisiKullaniciEkle(amirAdi, birimAdi);
     }
 }
