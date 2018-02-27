@@ -621,5 +621,120 @@ public class GelenEvrakListesindenHavaleTest extends BaseTest {
     }
 
 
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, priority = 0, description = "TS2289: Gelen evrak listesinden havalenin Havale Edilen Evrak Raporundan kontrolü")
+    public void TS2289() throws InterruptedException {
+        String testid = "TS-2289";
+        String konu1 = "TS-2289-" + getSysDate();
+        String gerek = "GEREĞİ İÇİN GÖNDER";
+        String bilgi = "BİLGİ İÇİN GÖNDER";
+        String koordinasyon = "KOORDİNASYON İÇİN GÖNDER";
+        String evrakNo1;
+        String evrakNo2;
+        String pathToFileText = getUploadPath() + "test.txt";
+        String fileName ="test.txt";
+        String kullanici = "TS2994";
+        String kullaniciDetails = "Ts2994";
+
+        testStatus(testid, "PreCondition 1. Evrak Oluşturma");
+        gelenEvrakKayitPage
+                .openPage()
+                .konuKoduDoldur(konuKodu)
+                .konuDoldur(konu1)
+                .evrakTuruSec(evrakTuru)
+                .evrakDiliSec(evrakDili)
+                .evrakTarihiDoldur(evrakTarihi)
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .kisiKurumSec(kisiKurum)
+                .geldigiKurumDoldurLovText(geldigiKurum)
+                .evrakSayiSagDoldur()
+                .evrakGelisTipiSec(evrakGelisTipi)
+                .ivedilikSec(ivedilik)
+                .dagitimBilgileriKisiSec(kisi)
+                .kaydet();
+
+        evrakNo1 = gelenEvrakKayitPage.popUpsv2();
+
+        testStatus(testid, "PreCondition 2. Evrak Oluşturma");
+        String konu2 = "TS-2289-" + getSysDate();
+        login(TestData.usernameZTEKIN, TestData.passwordZTEKIN);
+        gelenEvrakKayitPage
+                .openPage()
+                .konuKoduDoldur(konuKodu)
+                .konuDoldur(konu2)
+                .evrakTuruSec(evrakTuru)
+                .evrakDiliSec(evrakDili)
+                .evrakTarihiDoldur(evrakTarihi)
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .kisiKurumSec(kisiKurum)
+                .geldigiKurumDoldurLovText(geldigiKurum)
+                .evrakSayiSagDoldur()
+                .evrakGelisTipiSec(evrakGelisTipi)
+                .ivedilikSec(ivedilik)
+                .dagitimBilgileriKisiSec(kisi)
+                .kaydet();
+
+        evrakNo2 = gelenEvrakKayitPage.popUpsv2();
+
+        gelenEvraklarPage
+                .openPage()
+                .tabloEvrakNoSec(konu1)
+                .tabloEvrakNoSec(konu2)
+                .evraklariSecTopluHavaleYap(konu1,konu2,true);
+
+        topluEvrakOnizleme
+                .ekranKontrol()
+                .havaleAlanKontrolleri()
+                .havaleKisiListesi(kullanici)
+                .kullaniciGrupDetayEvet()
+                .havaleKisiListesiKontrolu(kullanici)
+                .eklenenKisiListesiOpsiyonKontrolu(gerek)
+                .aciklamaDoldur(konu1 + " " + konu2)
+                .aciklamaKontrol(konu1 + " " + konu2)
+                .dosyaEkle()
+                .havaleDosyaEkle(pathToFileText)
+                .havaleDosyaEkleDosyaAdiKontrol(fileName)
+                .gonder()
+                .islemMesaji().basariliOlmali();
+
+        login(TestData.usernameZTEKIN,TestData.passwordZTEKIN);
+        testStatus(testid, "Test Başladı");
+        havaleEdilenEvrakRaporuPage
+                .openPage()
+                .havaleEdilenEvrakRaporAlanKontrolu()
+                .havaleEdilenBirimDoldur(birim)
+                .havaleTarihAraligiBaslangicDoldur(evrakTarihi)
+                .havaleTarihAraligiBitisDoldur(evrakTarihi)
+                .sorgula()
+                .rapordaEvraklarıListele(konu1)
+                .sorgula()
+                .rapordaEvraklarıListele(konu2);
+
+        login(TestData.usernameZTEKIN,TestData.passwordZTEKIN);
+        havaleEdilenEvrakRaporuPage
+                .openPage()
+                .havaleEdilenKullaniciDoldur(kisi)
+                .havaleTarihAraligiBaslangicDoldur(evrakTarihi)
+                .havaleTarihAraligiBitisDoldur(evrakTarihi)
+                .sorgula()
+                .rapordaEvraklarıListele(konu1)
+                .sorgula()
+                .rapordaEvraklarıListele(konu2)
+                .rapordaEvraklarıListeleDetayTikla(konu2)
+                .ekranKontrolEvrakDetayi();
+
+        login(TestData.usernameZTEKIN,TestData.passwordZTEKIN);
+        havaleEdilenEvrakRaporuPage
+                .openPage()
+                .havaleEdenKullaniciDoldur(kisi)
+                .havaleTarihAraligiBaslangicDoldur(evrakTarihi)
+                .havaleTarihAraligiBitisDoldur(evrakTarihi)
+                .sorgula()
+                .rapordaEvraklarıListele(konu1)
+                .sorgula()
+                .rapordaEvraklarıListele(konu2);
+    }
+
+
 }
 

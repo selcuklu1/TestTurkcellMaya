@@ -27,7 +27,10 @@ public class HavaleEdilenEvrakRaporuPage extends MainPage {
     SelenideElement btnTemizle = $(By.id("havaleEvrakRaporuForm:temizleButton"));
 
     ElementsCollection tblHavaleEdilenEvrakRaporuListele = $$("[id='havaleEvrakRaporuForm:havaleEvrakRaporOutputTab'] tbody tr");
-    SelenideElement paginator_next = $("[id='havaleEvrakRaporuForm:havaleEvrakRaporOutputTab_paginator_bottom'] [class='ui-icon ui-icon-seek-next']");
+    //SelenideElement paginator_next = $("[id='havaleEvrakRaporuForm:havaleEvrakRaporOutputTab_paginator_bottom'] [class='ui-icon ui-icon-seek-next']");
+    SelenideElement paginator_next = $("[id='havaleEvrakRaporuForm:havaleEvrakRaporOutputTab_paginator_bottom'] [class^='ui-paginator-next ui-state-default ui-corner-all']");
+    SelenideElement paginator_next_disabled = $("[id='havaleEvrakRaporuForm:havaleEvrakRaporOutputTab_paginator_bottom'] [class='ui-paginator-next ui-state-default ui-corner-all ui-state-disabled']");
+
 
     SelenideElement frmInboxItemInfoForm = $("form[id='windowReadOnlyForm']");
 
@@ -43,9 +46,15 @@ public class HavaleEdilenEvrakRaporuPage extends MainPage {
         return this;
     }
 
-    @Step("Havale Edilen birim doldur: {birim}")
+    @Step("Havale Edilen kullanici doldur: {kullanici}")
     public HavaleEdilenEvrakRaporuPage havaleEdilenKullaniciDoldur(String kullanici) {
         txtHavaleEdilenKullanici.selectLov(kullanici);
+        return this;
+    }
+
+    @Step("Havale Eden kullanici doldur: {kullanici}")
+    public HavaleEdilenEvrakRaporuPage havaleEdenKullaniciDoldur(String kullanici) {
+        txtHavaleEdenKullanici.selectLov(kullanici);
         return this;
     }
 
@@ -83,48 +92,31 @@ public class HavaleEdilenEvrakRaporuPage extends MainPage {
 
     @Step("Havale Edilen Evrak Raporundaki Kontroller")
     public HavaleEdilenEvrakRaporuPage havaleEdilenEvrakRaporAlanKontrolu() {
-        String text = "";
-        if (txtHavaleEdenBirim.isDisplayed()) {
-            text += "Havale Eden Birim,";
-            Assert.assertEquals(txtHavaleEdenBirim.isDisplayed(), true, "Havale Eden Birim Alanı Görüntülendi");
-            Allure.addAttachment("Havale Eden Birim Alanı Görüntülendi : ", "");
-        }
-        if (txtHavaleEdenKullanici.isDisplayed()) {
-            text += "Havale Eden Kullanıcı,";
-            Assert.assertEquals(txtHavaleEdenKullanici.isDisplayed(), true, "Havale Eden Kullanıcı Alanı Görüntülendi");
-            Allure.addAttachment("Havale Eden Kullanıcı Alanı Görüntülendi : ", "");
-        }
-        if (txtHavaleEdilenBirim.isDisplayed()) {
-            text += "Havale Edilen Birim, ";
-            Assert.assertEquals(txtHavaleEdilenBirim.isDisplayed(), true, "Havale Edilen Birim Görüntülendi");
-            Allure.addAttachment("Havale Edilen Birim Alanı Görüntülendi : ", "");
-        }
-        if (txtHavaleEdilenKullanici.isDisplayed()) {
-            text += "Havale Edilen Kullanici,";
-            Assert.assertEquals(txtHavaleEdilenKullanici.isDisplayed(), true, "Havale Edilen Kullanici Alanı Görüntülendi");
-            Allure.addAttachment("Havale Edilen Kullanici Alanı Görüntülendi : ", "");
-        }
-        if (txtHevaleTarihAraligiBaslangic.isDisplayed()) {
-            text += "Havale Tarih Araligi Baslangic,";
-            Assert.assertEquals(txtHevaleTarihAraligiBaslangic.isDisplayed(), true, "Havale Tarih Araligi Baslangic Alanı Görüntülendi");
-            Allure.addAttachment("Havale Tarih Araligi Baslangic Alanı Görüntülendi : ", "");
-        }
-        if (txtHevaleTarihAraligiBitis.isDisplayed()) {
-            text += "Havale Tarih Araligi Bitis,";
-            Assert.assertEquals(txtHevaleTarihAraligiBitis.isDisplayed(), true, "Havale Tarih Araligi Bitis Alanı Görüntülendi");
-            Allure.addAttachment("Havale Tarih Araligi Bitis Alanı Görüntülendi : ", "");
-        }
-        if (btnTemizle.isDisplayed()) {
-            text += "Temizle,";
-            Assert.assertEquals(btnTemizle.isDisplayed(), true, "Temizle Alani Görüntülendi");
-            Allure.addAttachment("Temizle Alanı Görüntülendi : ", "");
-        }
-        if (btnSorgula.isDisplayed()) {
-            text += "Sorgulama Butonu alanları gösterilmektedir.";
-            Assert.assertEquals(btnSorgula.isDisplayed(), true, "Sorgula Alanı Görüntülendi");
-            Allure.addAttachment("Sorgula Alanı Görüntülendi : ", "");
-        }
-        Allure.addAttachment("Alan Kontrolleri : ", text);
+
+        Assert.assertEquals(txtHavaleEdenBirim.isDisplayed(), true, "Havale Eden Birim Alanı Görüntülendi");
+        Allure.addAttachment("Havale Eden Birim Alanı Görüntülendi : ", "");
+
+        Assert.assertEquals(txtHavaleEdenKullanici.isDisplayed(), true, "Havale Eden Kullanıcı Alanı Görüntülendi");
+        Allure.addAttachment("Havale Eden Kullanıcı Alanı Görüntülendi : ", "");
+
+        Assert.assertEquals(txtHavaleEdilenBirim.isDisplayed(), true, "Havale Edilen Birim Görüntülendi");
+        Allure.addAttachment("Havale Edilen Birim Alanı Görüntülendi : ", "");
+
+        Assert.assertEquals(txtHavaleEdilenKullanici.isDisplayed(), true, "Havale Edilen Kullanici Alanı Görüntülendi");
+        Allure.addAttachment("Havale Edilen Kullanici Alanı Görüntülendi : ", "");
+
+        Assert.assertEquals(txtHevaleTarihAraligiBaslangic.isDisplayed(), true, "Havale Tarih Araligi Baslangic Alanı Görüntülendi");
+        Allure.addAttachment("Havale Tarih Araligi Baslangic Alanı Görüntülendi : ", "");
+
+        Assert.assertEquals(txtHevaleTarihAraligiBitis.isDisplayed(), true, "Havale Tarih Araligi Bitis Alanı Görüntülendi");
+        Allure.addAttachment("Havale Tarih Araligi Bitis Alanı Görüntülendi : ", "");
+
+        Assert.assertEquals(btnTemizle.isDisplayed(), true, "Temizle Alani Görüntülendi");
+        Allure.addAttachment("Temizle Alanı Görüntülendi : ", "");
+
+        Assert.assertEquals(btnSorgula.isDisplayed(), true, "Sorgula Alanı Görüntülendi");
+        Allure.addAttachment("Sorgula Alanı Görüntülendi : ", "");
+
         takeScreenshot();
         return this;
     }
@@ -132,13 +124,21 @@ public class HavaleEdilenEvrakRaporuPage extends MainPage {
     @Step("Havale Edilen Evrak Raporu Tablosunda kontrol. Evrak: {konu}")
     public HavaleEdilenEvrakRaporuPage rapordaEvraklarıListele(String konu) {
         boolean durum = false;
-        while (paginator_next.isDisplayed() && !durum) {
+        System.out.println("konu:" + konu);
+        boolean paginator_next_durum = paginator_next_disabled.isDisplayed();
+        while (!paginator_next_durum && !durum) {
             durum = tblHavaleEdilenEvrakRaporuListele.filterBy(text(konu)).size() > 0;
-            if (durum == false)
+            System.out.println("durum1:" + durum + " paginator_next status1:" + paginator_next_durum);
+
+            paginator_next_durum = paginator_next_disabled.isDisplayed();
+            System.out.println("durum2:" + durum + " paginator_next status2:" + paginator_next_durum);
+
+            if (durum == false && paginator_next_durum == false)
                 paginator_next.click();
+
         }
 
-        Assert.assertEquals(durum, true, "Evrak listelendi");
+        Assert.assertEquals(durum, true, "Evrak listelenmedi");
         Allure.addAttachment("Evrak listelendi", konu);
         return this;
     }
@@ -163,6 +163,7 @@ public class HavaleEdilenEvrakRaporuPage extends MainPage {
     public HavaleEdilenEvrakRaporuPage ekranKontrolEvrakDetayi() {
         Assert.assertEquals(frmInboxItemInfoForm.isDisplayed(), true, "Evrak Detay sayfası");
         Allure.addAttachment("Evrak Detay sayfası", "açılmaktadır");
+        takeScreenshot();
         return this;
     }
 
