@@ -8,7 +8,6 @@ package tests.EvrakPostalama;
  ****************************************************/
 
 import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import common.BaseTest;
 import data.TestData;
@@ -39,7 +38,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Selenide.switchTo;
 import static pages.pageComponents.belgenetElements.Belgenet.comboBox;
 import static pages.pageData.alanlar.GeregiSecimTipi.*;
 
@@ -651,7 +649,7 @@ public class EvrakPostalamaTest extends BaseTest {
         evrakPostala.getUstVerilerYazdirButton(konu + " satırda bulunmalı").shouldBe(visible);
         evrakPostala.getYazdirEvrakinEkleriListesi().findRows(text(ekleri)).shouldHaveSize(1).getFoundRow().shouldBe(visible);
         evrakPostala.getEvrakinEkleriYazdirButton(ekleri + " satırda bulunmalı").shouldBe(visible);
-        evrakPostala.yazdirClose();
+        evrakPostala.evrakDetayDialogClose();
 
         gidisSekliKontrol(DAGITIM_PLANLARI.getOptionText(), "DAĞITIM YERLERİNE", "Detaya tıkla");
         evrakPostala.getDetayButtonInFoundRow("buton bulunur").shouldBe(visible).click();
@@ -858,7 +856,7 @@ public class EvrakPostalamaTest extends BaseTest {
         evrakPostala.getUstVerilerYazdirButton(konu + " satırda bulunmalı").shouldBe(visible);
         evrakPostala.getYazdirEvrakinEkleriListesi().findRows(text(ekleri)).shouldHaveSize(1).getFoundRow().shouldBe(visible);
         evrakPostala.getEvrakinEkleriYazdirButton(ekleri + " satırda bulunur ve tıklanır").shouldBe(visible).click();
-        evrakPostala.yazdirClose();
+        evrakPostala.evrakDetayDialogClose();
 
 
 

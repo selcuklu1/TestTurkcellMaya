@@ -372,7 +372,7 @@ public class EditorTab extends MainPage {
         @Step("Not bulunur")
         public EvrakNot notuBul(Condition... aramaConditions) {
             notlariAra(aramaConditions);
-            note = notes.shouldHave(sizeGreaterThan(0)).first().shouldBe(visible);
+            note = notes.shouldHaveSize(1).first().shouldBe(visible);
             return this;
         }
 

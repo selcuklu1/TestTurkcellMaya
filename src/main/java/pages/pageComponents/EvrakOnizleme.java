@@ -359,7 +359,7 @@ public class EvrakOnizleme extends MainPage {
         }
 
         @Step("Yazdır - penceriyi kapa")
-        public EvrakPostala yazdirClose() {
+        public EvrakPostala evrakDetayDialogClose() {
             yazdirEvrakDetayClose.click();
             return this;
         }
