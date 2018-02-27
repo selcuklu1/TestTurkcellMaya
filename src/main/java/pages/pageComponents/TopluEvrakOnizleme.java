@@ -130,6 +130,13 @@ public class TopluEvrakOnizleme extends MainPage {
         return this;
     }
 
+    @Step("Açıklama alanı kontrol \"{konu}\" girilir")
+    public TopluEvrakOnizleme aciklamaKontrol(String konu) {
+        Assert.assertEquals(txtAciklama.getValue().contains(konu),true,"Açıklama alanı kontrolü");
+        Allure.addAttachment("Açıklama alanı kontrolü" , konu);
+        return this;
+    }
+
     @Step("Havale İşlemleminde Dosya Ekle")
     public TopluEvrakOnizleme dosyaEkle() {
         btnDosyaEkle.click();

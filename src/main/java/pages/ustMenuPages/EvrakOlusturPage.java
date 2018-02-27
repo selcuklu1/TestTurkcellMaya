@@ -39,6 +39,7 @@ public class EvrakOlusturPage extends MainPage {
     SelenideElement btnPDFOnizleme = $("button[id^='yeniGidenEvrakForm:rightTab:uiRepeat'] span[class$='pdfOnIzleme']");
     SelenideElement btnKaydet = $("button[id^='yeniGidenEvrakForm:rightTab:uiRepeat'] span[class$='kaydet']");
     SelenideElement btnEvrakKopyala = $("[class='ui-button-icon-left ui-icon evrakKopyala']");
+    SelenideElement btnEvrakKopyalaEvet = $(By.id("evrakCopyConfirmForm:copyEvrakEvetButton"));
     SelenideElement btnKaydetOnayaSun = $("button[id^='yeniGidenEvrakForm:rightTab:uiRepeat'] span[class$='kaydetHavaleEt']");
     SelenideElement btnKaydetOnayaSun2 = $("div[class='ui-tabmenu ui-tabmenu-right'] span[class='ui-button-icon-left ui-icon kaydetHavaleEt']");
     SelenideElement txtKaydetOnayaSunAciklama = $("[id$='onayIslemiAciklama']");
@@ -163,6 +164,12 @@ public class EvrakOlusturPage extends MainPage {
     @Step("Evrak Kopyala tıklanır")
     public EvrakOlusturPage evrakKopyala(){
         btnEvrakKopyala.click();
+        return this;
+    }
+
+    @Step("Evet tıklanır")
+    public EvrakOlusturPage evrakKopyalaEvet(){
+        btnEvrakKopyalaEvet.click();
         return this;
     }
 
@@ -543,6 +550,7 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Kullanıcılar alanında imzacı seç")
         public BilgilerTab kullanicilarImzaciSec2(String value) {
+            cmbKullanicilarImzaSec2.get(1).click();
             cmbKullanicilarImzaSec2.get(1).selectOption(value);
             return this;
         }
@@ -4234,8 +4242,8 @@ public class EvrakOlusturPage extends MainPage {
                 parafla();
     }
 
-    @Step("Evrak oluştur alanında parafla tıklanır")
-    public void evrakOlusturEvrakTuruneGoreKopyala(String konu, String geregiSecimTipi, String geregi, String OnayAkisiKullanici1Turu, String kullanici2, String kullaniciBirim, String OnayAkisiKullanici2Turu,String evrakTuru,String sablon) {
+    @Step("Evrak türüne göre vrak oluşturulur.")
+    public void evrakOlusturEvrakTuruneGore(String konu, String geregiSecimTipi, String geregi, String OnayAkisiKullanici1Turu, String kullanici2, String kullaniciBirim, String OnayAkisiKullanici2Turu, String evrakTuru, String sablon) {
                 String konuKodu = "Diğer";
                 String kaldirilacakKlasor = "Diğer";
                 String icerik = createRandomText(15);
@@ -4245,17 +4253,17 @@ public class EvrakOlusturPage extends MainPage {
                 .konuKoduSec(konuKodu)
                 .konuDoldur(konu)
                 .kaldiralacakKlasorlerSec(kaldirilacakKlasor)
-                .evrakTuruSec(evrakTuru)
-                .formSablonuSec(sablon)
                 .geregiSecimTipiSec(geregiSecimTipi)
                 .geregiSec(geregi)
                 .onayAkisiEkle()
                 .onayAkisiEkleIlkSelectSec(OnayAkisiKullanici1Turu)
                 .kullanicilarDoldur(kullanici2,kullaniciBirim)
-                .kullaniciylaSecimTipiSec(kullanici2,OnayAkisiKullanici2Turu)
-                .kullan();
-                kaydet(true)
-                .evrakKopyala();
+                .kullanicilarImzaciSec2(OnayAkisiKullanici2Turu)
+                .kullan()
+                .evrakTuruSec(evrakTuru)
+                .formSablonuSec(sablon);
+                kaydet(true);
+                evrakOlusturSayfaKapat();
     }
 
     @Step("Evrak oluştur alanında birim içerik oluştur kullan parafla tıklanır")
