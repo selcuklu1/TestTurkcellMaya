@@ -38,6 +38,7 @@ public class GelenEvraklarPage extends MainPage {
     SelenideElement btnRaporAl = $(By.id("mainInboxForm:inboxDataTable:j_idt682"));
     SelenideElement btnEvrakGoster = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:0:cmdbutton"));
     SelenideElement btnTabHavaleYap = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:4:cmdbutton"));
+    ElementsCollection btnOnizlemeTopluHavale = $$("[id^='mainInboxForm:inboxDataTable:j_idt'] > [class$='document-charge']");
 
 
     //Havale Yap Alt Yapı
@@ -905,6 +906,16 @@ public class GelenEvraklarPage extends MainPage {
                 .filterBy(Condition.text(evrakNo))
                 .first()
                 .click();
+        return this;
+    }
+
+
+    @Step("Evrak Sec Toplu ve Toplu Havale Yap")
+    public GelenEvraklarPage evraklariSecTopluHavaleYap(String konu1, String konu2, boolean secim) {
+        tableEvraklar.filterBy(text(konu1)).get(0).$$("div[class^='ui-chkbox-box']").first().click();
+        tableEvraklar.filterBy(text(konu2)).get(0).$$("div[class^='ui-chkbox-box']").first().click();
+        takeScreenshot();
+        btnOnizlemeTopluHavale.get(0).click();
         return this;
     }
 
