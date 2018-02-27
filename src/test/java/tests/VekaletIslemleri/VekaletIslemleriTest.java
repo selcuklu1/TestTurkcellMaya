@@ -90,7 +90,7 @@ public class VekaletIslemleriTest extends BaseTest {
         String basariMesaji = "İşlem başarılıdır!";
         String[] evrakNo = new String[2];
         aciklama = "onay " + getSysDate() + " evrak";
-        redNedeni = "red " + getSysDate() + " nedeni";
+        redNedeni = "Red Edildi " + createRandomNumber(10) + " nedeni";
 
         if ($("[id='aktifVekaletinizVarUyariMesajiDialog']").isDisplayed()) {
             mainPage
@@ -146,13 +146,15 @@ public class VekaletIslemleriTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, dependsOnMethods = {"TS0025a"}, description = "TS0025b : Onaya göndererek Vekalet Verme işleminde onayın Red edilmesi")
+    @Test(enabled = true
+            , dependsOnMethods = {"TS0025a"}
+            , description = "TS0025b : Onaya göndererek Vekalet Verme işleminde onayın Red edilmesi")
     public void TS0025b() throws InterruptedException {
 
         login(ztekin);
 
 //        String aciklama = "onay 20171206220943 evrak";
-//
+
 //        String not = "red 20171206220943 nedeni";
         vekaletOnaylariPage
                 .openPage()
@@ -182,8 +184,8 @@ public class VekaletIslemleriTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true
-            , priority = 1
-            , description = "TS2208 : Onaya göndererek Vekalet Verme işleminde onayın kabul edilmesi")
+            ,dependsOnMethods = {"TS0025b"}
+            ,description = "TS2208 : Onaya göndererek Vekalet Verme işleminde onayın kabul edilmesi")
     public void TS2208() throws InterruptedException {
 //        Allure.addAttachment("Test Datası", "Test Datası oluşturuluyor.");
         vekaletVer();
@@ -302,7 +304,7 @@ public class VekaletIslemleriTest extends BaseTest {
 
         String evrakNo = parafladiklarimPage.evrakDetayiEvrakNoAl();
 
-        logout();
+//        logout();
         login(usernameVV);
 
         mainPage
