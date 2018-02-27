@@ -209,8 +209,10 @@ public class BaseTest extends BaseLibrary {
     }
 
     @Step("Test Numarası : {testid} {status} ")
-    public void testStatus(String testid, String status) {
-    }
+    public void testStatus(String testid, String status) { }
+
+    @Step("{name} : {description}")
+    public void step(String name, String description) { }
 
     @Step("Login")
     public void login() {

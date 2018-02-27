@@ -8,6 +8,7 @@ import io.qameta.allure.Step;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 import pages.MainPage;
+import pages.pageComponents.SearchTable;
 import pages.pageComponents.TextEditor;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
@@ -148,16 +149,41 @@ public class EditorTab extends MainPage {
         return this;
     }
 
-    @Step("Editör alanı bulunur")
+    @Step("Editör alanı aranır")
     public SelenideElement getEditorArea() {
         return page.$("div[id$='allPanels']");
     }
 
-    @Step("Hitap alanı bulunur")
+    @Step("Hitap alanı aranır")
     public SelenideElement getHitapAlani() {
         return page.$("div[id$=hitapInplace]");
     }
 
+    @Step("Hitapta alanda \"{hitapAramaKriteri}\" tesks bulunmalı")
+    public EditorTab hitapAlanindaTekstBulunmali(Condition... hitapAramaKriteri){
+        getHitapAlani().scrollIntoView(true).shouldHave(hitapAramaKriteri);
+        return this;
+    }
+
+    @Step("Dağıtım Panel aranır")
+    public SelenideElement getDagitimPanel() {
+        return page.$("div[id$=editorDagitimPanel]");
+    }
+
+    @Step("Hitapta alanda \"{dagitimAramaKriteri}\" tesks bulunmalı")
+    public EditorTab dagitimPaneldeTekstBulunmali(Condition... dagitimAramaKriteri){
+        getDagitimPanel().scrollIntoView(true).shouldHave(dagitimAramaKriteri);
+        return this;
+    }
+
+    public SearchTable getGeregiSearchTable() {
+        return new SearchTable(page.$("div[id$=geregiLovTable]").scrollIntoView(true));
+    }
+
+    @Step("Gereği listesinde kayıt ara")
+    public SearchTable geregiListesindeAra(Condition... aramaKriteri){
+        return getGeregiSearchTable().findRows(aramaKriteri);
+    }
 
     @Step("Not Ekle butona basılır")
     public EditorTab notEkleTikla() {
@@ -346,7 +372,7 @@ public class EditorTab extends MainPage {
         @Step("Not bulunur")
         public EvrakNot notuBul(Condition... aramaConditions) {
             notlariAra(aramaConditions);
-            note = notes.shouldHave(sizeGreaterThan(0)).first().shouldBe(visible);
+            note = notes.shouldHaveSize(1).first().shouldBe(visible);
             return this;
         }
 

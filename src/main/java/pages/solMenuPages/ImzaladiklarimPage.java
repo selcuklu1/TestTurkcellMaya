@@ -177,6 +177,12 @@ public class ImzaladiklarimPage extends MainPage {
         return this;
     }
 
+    @Step("Evrak Seçilir")
+    public ImzaladiklarimPage evrakSecEvrakNoyaGore(String konuKodu){
+        tblImzaladiklarimEvraklar.filterBy(Condition.text(konuKodu)).first().click();
+        return this;
+    }
+
     @Step("Evrak Seç")
     public ImzaladiklarimPage evrakSec(String konu, String gidecegiYer, String evrakTarihi, String no) {
 

@@ -8,11 +8,12 @@ import common.BaseTest;
 import data.User;
 import io.qameta.allure.*;
 import org.testng.annotations.Test;
-import pages.MainPage;
 import pages.newPages.EvrakOlusturPage;
+import pages.pageComponents.EvrakOnizleme;
+import pages.pageComponents.PDFOnizleme;
 import pages.pageComponents.SearchTable;
 import pages.pageComponents.SolMenu;
-import pages.pageData.SolMenuData;
+import pages.pageData.SolMenuData.BirimEvraklari;
 import pages.pageData.alanlar.EvrakDili;
 import pages.pageData.alanlar.GeregiSecimTipi;
 import pages.ustMenuPages.SistemSabitleriPage;
@@ -75,11 +76,11 @@ public class HitaptaBuyukKucukHarfTest extends BaseTest {
         hitapKontrol(geregiSecimTipi, geregiHepsiBuyuk, beklenenHepsiBuyukHitap);
 
         String geregiHepsiKucuk = "hepsi küçük harflerle kurum";
-        String beklenenHepsiKucukHitap = "hepsi küçük harflerle kuruma";
+        String beklenenHepsiKucukHitap = "HEPSİ KÜÇÜK HARFLERLE KURUMA";
         hitapKontrol(geregiSecimTipi, geregiHepsiKucuk, beklenenHepsiKucukHitap);
 
         String geregiBuyukKucuk = "Büyük Küçük Harflerle Kurum";
-        String beklenenBuyukKucukHitap = "Büyük Küçük Harflerle Kuruma";
+        String beklenenBuyukKucukHitap = "BÜYÜK KÜÇÜK HARFLERLE KURUMA";
         hitapKontrol(geregiSecimTipi, geregiBuyukKucuk, beklenenBuyukKucukHitap);
 
     }
@@ -98,11 +99,11 @@ public class HitaptaBuyukKucukHarfTest extends BaseTest {
         hitapKontrol(geregiSecimTipi, geregiHepsiBuyuk, beklenenHepsiBuyukHitap);
 
         String geregiHepsiKucuk = "hepsi küçük harflerle birim";
-        String beklenenHepsiKucukHitap = "hepsi küçük harflerle birime";
+        String beklenenHepsiKucukHitap = "HEPSİ KÜÇÜK HARFLERLE BİRİME";
         hitapKontrol(geregiSecimTipi, geregiHepsiKucuk, beklenenHepsiKucukHitap);
 
         String geregiBuyukKucuk = "Büyük Küçük Harflerle Birim";
-        String beklenenBuyukKucukHitap = "Büyük Küçük Harflerle Birime";
+        String beklenenBuyukKucukHitap = "BÜYÜK KÜÇÜK HARFLERLE BİRİME";
         hitapKontrol(geregiSecimTipi, geregiBuyukKucuk, beklenenBuyukKucukHitap);
     }
 
@@ -116,6 +117,10 @@ public class HitaptaBuyukKucukHarfTest extends BaseTest {
 
         String uygulanacakDeger;
         User user = optiim;
+        String dagitimPlani = "KÜÇÜK BİRİM BÜYÜK KURUM";
+        String dagitimPlaniKurum = "BÜYÜK HARFLERLE KURUMA";
+        String dagitimPlaniBirim = "hepsi küçük harflerle birime";
+        String kullaniciHitap = "Sayın " + ztekin.getFullname();
 
         login(user);
         SistemSabitleriPage sistemSabitleriPage = new SistemSabitleriPage().openPage();
@@ -134,9 +139,9 @@ public class HitaptaBuyukKucukHarfTest extends BaseTest {
                 .evrakDiliSec(EvrakDili.Turkce)
                 .kaldiralacakKlasorleriSec("Diğer")
                 .geregiSecimTipiSec(DAGITIM_PLANLARI)
-                .geregiSec("KÜÇÜK BİRİM BÜYÜK KURUM")
+                .geregiSec(dagitimPlani)
                 .geregiSecimTipiSec(KULLANICI)
-                .geregiSec("tekin")
+                .geregiSec(ztekin.getFullname())
                 .onayAkisiEkleButonaTikla()
                 .secilenAnlikOnayAkisKullanicilariKontrolEt(user, PARAFLAMA)
                 .anlikOnayAkisKullanicininTipiSec(user, IMZALAMA)
@@ -145,31 +150,23 @@ public class HitaptaBuyukKucukHarfTest extends BaseTest {
         evrakOlusturPage.editorTab().openTab().getEditor().type("Editör tekst");
         evrakOlusturPage.pageButtons().evrakImzala();
 
-        step9_10(konu);
-
-        searchTable = new SearchTable(Selenide.$("#mainPreviewForm\\:dataTableId"));
-        SelenideElement row = gonderilenYer(uygulanacakDeger, searchTable);
-        postalanackYazdir(row);
-        detayYazdir(konu);
-        yazdirPdf();
-
-        row = gonderilenYer("Sayın " + ztekin.getFullname(), searchTable);
-        postalanackYazdir(row);
-        detayYazdir(konu);
-        Selenide.switchTo().window(1);
-        Selenide.$$x("//*[.='Sayın " + ztekin.getFullname() + "']")
-                .shouldHaveSize(2).first().shouldBe(visible);
-        Allure.addAttachment("Hitap \"Sayın " + ztekin.getFullname() + "\" kontrolü", "");
-        takeScreenshot();
-        Selenide.close();
-    }
-
-    @Step("Postalanacak Evraklarda evrağı bul ve seç")
-    private void step9_10(String konu) {
         login(ztekin);
-        new SolMenu().openMenu(SolMenuData.BirimEvraklari.PostalanacakEvraklar);
-        new MainPage().searchTable().findRows(text(konu)).getFoundRow().click();
-        Selenide.$("button .postala").click();
+        new SolMenu().openMenu(BirimEvraklari.PostalanacakEvraklar).searchTable().findRowAndSelect(text(konu));
+        EvrakOnizleme.EvrakPostala evrakPostala = new EvrakOnizleme().evrakPostala();
+        evrakPostala.postalanacakYerlerdeAra(text(kullaniciHitap))
+                .yazdir()
+                .ustVerileriListesindeAra(text(konu))
+                .ustVerileriYazdir();
+        new PDFOnizleme(1).checkTextAndCloseWindow(textCaseSensitive(kullaniciHitap));
+        evrakPostala.evrakDetayDialogClose();
+
+        evrakPostala.postalanacakYerlerdeAra(text(dagitimPlani))
+                .yazdir()
+                .ustVerileriListesindeAra(text(konu))
+                .ustVerileriYazdir();
+        new PDFOnizleme(1)
+                .checkText(0, textCaseSensitive(dagitimPlaniKurum))
+                .checkText(1, textCaseSensitive(dagitimPlaniBirim));
     }
 
     @Step("Postalanacak Yerler. Gönderilen Yer kontrolü")
@@ -242,11 +239,12 @@ public class HitaptaBuyukKucukHarfTest extends BaseTest {
     @Step("Pdf Önizlemede hitap konrolü yapılır")
     private void hitapKontrolPdfOnIzleme(String beklenenHitap) {
         evrakOlustur.evrakPageButtons().pdfOnizlemeTikla();
-        Selenide.switchTo().window(1);
+        new PDFOnizleme(1).checkTextAndCloseWindow(textCaseSensitive(beklenenHitap));
+        /*Selenide.switchTo().window(1);
         Selenide.sleep(6000);
         Selenide.$x("//*[.='" + beklenenHitap + "']").shouldBe(visible);
         WebDriverRunner.getWebDriver().close();
-        Selenide.switchTo().window(0);
+        Selenide.switchTo().window(0);*/
     }
 
 }

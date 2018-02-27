@@ -1,5 +1,7 @@
 package pages.solMenuPages;
 
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
@@ -12,11 +14,13 @@ import pages.ustMenuPages.GelenEvrakKayitPage;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
 
 public class BeklemeyeAlinanlarPage extends MainPage {
 
     //TODO: Listede datalar gelmiyor.
     SelenideElement cmbFiltrele = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt9553_input"));
+    ElementsCollection tblEvraklar = $$("[id='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
     SelenideElement txtSayfadaAra = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt353"));
     SelenideElement btnGidecegiYerSeciniz = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:gidecegiYerFilterOpenDialogButton"));
     SelenideElement btnGidecegiYerTree = $(By.id("inboxFiltreDialogForm:gidecegiYerFilterLovId:LovText"));
@@ -27,6 +31,8 @@ public class BeklemeyeAlinanlarPage extends MainPage {
     SelenideElement solmenubeklemeyealinanlar = $(By.id("leftMenuForm:edysMenuItem_-566551367"));
     //Filtreler Acordion
     SelenideElement acordion = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion"));
+    SelenideElement btnEvrakKopyala = $("[class='ui-button-icon-left ui-icon evrakKopyala']");
+    SelenideElement btnEvrakKopyalaEvet = $(By.id("evrakCopyConfirmForm:copyEvrakEvetButton"));
 
     @Step("Beklemeye Alınanlar sayfası aç")
     public BeklemeyeAlinanlarPage openPage() {
@@ -35,6 +41,31 @@ public class BeklemeyeAlinanlarPage extends MainPage {
         $("#mainInboxForm\\:inboxDataTable .ui-inbox-header-title")
                 .shouldHave(text(pageTitle));
         System.out.println("Page: " + pageTitle);
+        return this;
+    }
+
+    @Step("Evrak seçilir")
+    public BeklemeyeAlinanlarPage evrakSecKonuyagore(String konuKodu){
+        tblEvraklar.filterBy(Condition.text(konuKodu)).first().click();
+        return this;
+    }
+
+    @Step("Evrak seçilir")
+    public BeklemeyeAlinanlarPage evrakSecKonuyaGoreIcerikGoster(String konuKodu){
+        tblEvraklar.filterBy(Condition.text(konuKodu)).first()
+                .$("[id$='detayGosterButton']").click();
+        return this;
+    }
+
+    @Step("Evrak kopyala tıklanır")
+    public BeklemeyeAlinanlarPage evrakKopyala(){
+        btnEvrakKopyala.click();
+        return this;
+    }
+
+    @Step("Evet tıklanır")
+    public BeklemeyeAlinanlarPage evrakKopyalaEvet(){
+        btnEvrakKopyalaEvet.click();
         return this;
     }
 

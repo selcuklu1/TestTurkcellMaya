@@ -860,10 +860,10 @@ public class BaseLibrary extends ElementsContainer {
 
         switch (secim) {
             case "Evet":
-                btnEvet.click();
+                btnEvet.pressEnter();
                 break;
             case "Hayır":
-                btnHayir.click();
+                btnHayir.pressEnter();
                 break;
             case "İptal":
                 btnIptal.click();

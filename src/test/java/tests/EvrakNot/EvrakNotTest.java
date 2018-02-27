@@ -251,6 +251,7 @@ public class EvrakNotTest extends BaseTest {
                 .notuKontrolEt(user1, notTipi2, aciklama2, date2, time2, kurumLogo)
                 .sonrakiNot()
                 .notuKontrolEt(user1, notTipi1, aciklama1, date1, time1, kurumLogo)
+                .sonrakiNotIsDisabled()
                 .evrakNotlariDialoguKapat();
 
         UstYazi.EvrakNot ustYazi = new UstYazi().evrakNotlariTabiAc();

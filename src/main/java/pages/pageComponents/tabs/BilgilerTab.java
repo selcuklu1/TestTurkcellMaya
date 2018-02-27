@@ -11,6 +11,7 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.NotFoundException;
 import org.testng.Assert;
 import pages.MainPage;
+import pages.pageComponents.DagitimHitapDuzenle;
 import pages.pageComponents.SearchTable;
 import pages.pageComponents.UstYazi;
 import pages.pageComponents.belgenetElements.BelgenetElement;
@@ -428,28 +429,28 @@ public class BilgilerTab extends MainPage {
         return this;
     }
 
-    @Step("Seçilen Bilginin delete butonu")
-    public SelenideElement getSecilenBilgiDeleteButton(Condition... conditions){
+    @Step("Seçilen Bilginin \"Listeden Çıkar\" butonu")
+    public SelenideElement getBilgiGeregiListedenCikarButton(Condition... secilenAramaKriteri){
         ElementsCollection collection = getBilgiCombolov().getSelectedItems();
-        for (Condition condition:conditions) {
+        for (Condition condition:secilenAramaKriteri) {
             collection = collection.filterBy(condition);
         }
         return collection.shouldHave(sizeGreaterThan(0)).first().$(deleteButtonuSelector);
     }
 
-    @Step("Seçilen Bilginin update butonu")
-    public SelenideElement getSecilenBilgiUpdateButton(Condition... conditions){
+    @Step("Seçilen Bilginin \"Dağıtım Hitap Düzenleme\" butonu")
+    public SelenideElement getBilgiDagitimHitapDuzenlemeButton(Condition... secilenAramaKriteri){
         ElementsCollection collection = getBilgiCombolov().getSelectedItems();
-        for (Condition condition:conditions) {
+        for (Condition condition:secilenAramaKriteri) {
             collection = collection.filterBy(condition);
         }
         return collection.shouldHave(sizeGreaterThan(0)).first().$(updateButtonuSelector);
     }
 
-    @Step("Seçilen Bilginin update butona tiklanır")
-    public BilgilerTab secilenBilgiUpdateTiklanır(Condition... conditions){
-        getSecilenBilgiUpdateButton(conditions).shouldBe(visible).click();
-        return this;
+    @Step("Seçilen Bilginin \"Dağıtım Hitap Düzenleme\" butona tiklanır")
+    public DagitimHitapDuzenle bilgiDagitimHitapDuzenlemeTiklanir(Condition... secilenAramaKriteri){
+        getBilgiDagitimHitapDuzenlemeButton(secilenAramaKriteri).shouldBe(visible).click();
+        return new DagitimHitapDuzenle();
     }
     //endregion
 
@@ -481,7 +482,7 @@ public class BilgilerTab extends MainPage {
         return this;
     }
 
-    @Step("Seçilen Bilgi alan kotrolü")
+    @Step("Seçilen Gereği alan kotrolü")
     public BilgilerTab secilenGeregiAlanKotrolu(Condition... conditions){
         ElementsCollection collection = getGeregiCombolov().getSelectedTitles();
         for (Condition condition:conditions) {
@@ -491,28 +492,28 @@ public class BilgilerTab extends MainPage {
         return this;
     }
 
-    @Step("Seçilen Bilginin delete butonu")
-    public SelenideElement getSecilenGeregiDeleteButton(Condition... conditions){
+    @Step("Seçilen Gereği \"Listeden Çıkar\" butonu")
+    public SelenideElement getGeregiGeregiListedenCikarButton(Condition... secilenAramaKriteri){
         ElementsCollection collection = getGeregiCombolov().getSelectedItems();
-        for (Condition condition:conditions) {
+        for (Condition condition:secilenAramaKriteri) {
             collection = collection.filterBy(condition);
         }
         return collection.shouldHave(sizeGreaterThan(0)).first().$(deleteButtonuSelector);
     }
 
-    @Step("Seçilen Bilginin update butonu")
-    public SelenideElement getSecilenGeregiUpdateButton(Condition... conditions){
+    @Step("Seçilen Gereği \"Dağıtım Hitap Düzenleme\" butonu")
+    public SelenideElement getGeregiDagitimHitapDuzenlemeButton(Condition... secilenAramaKriteri){
         ElementsCollection collection = getGeregiCombolov().getSelectedItems();
-        for (Condition condition:conditions) {
+        for (Condition condition:secilenAramaKriteri) {
             collection = collection.filterBy(condition);
         }
         return collection.shouldHave(sizeGreaterThan(0)).first().$(updateButtonuSelector);
     }
 
-    @Step("Seçilen Bilginin update butona tiklanır")
-    public BilgilerTab secilenGeregiUpdateTiklanır(Condition... conditions){
-        getSecilenGeregiUpdateButton(conditions).shouldBe(visible).click();
-        return this;
+    @Step("Seçilen Gereği \"Dağıtım Hitap Düzenleme\" butona tiklanır")
+    public DagitimHitapDuzenle geregiDagitimHitapDuzenlemeTiklanir(Condition... secilenAramaKriteri){
+        getGeregiDagitimHitapDuzenlemeButton(secilenAramaKriteri).shouldBe(visible).click();
+        return new DagitimHitapDuzenle();
     }
     //endregion
 

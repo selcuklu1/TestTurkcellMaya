@@ -112,10 +112,10 @@ public class GelenGidenEvrakKayitHavaleTest extends BaseTest {
                 .tabloEvrakNoSec(konu)
                 .tabHavaleYap()
                 //havale alan kontrolleri
-                .havaleIslemleriKisiKontrol(disKullanici)
-                .havaleIslemleriKisiKontrol(tuzelKisi)
-                .havaleIslemleriKisiKontrol(gercekKisi)
-                .havaleIslemleriKisiKontrol(kurum)
+                .havaleIslemleriKisiStatusKontrol(disKullanici,false)
+                .havaleIslemleriKisiStatusKontrol(tuzelKisi,false)
+                .havaleIslemleriKisiStatusKontrol(gercekKisi,false)
+                .havaleIslemleriKisiStatusKontrol(kurum,false)
                 .havaleIslemleriBirimKontrol(ustBirim);
         //TODO: ustbirimden kullanıcı tespit edilemedi "YAZILIM GELİŞTİRME" için
 

@@ -32,7 +32,8 @@ public class TaslakEvraklarPage extends MainPage {
     SelenideElement btnSilSil = $(By.xpath("//span[text()='Sil']/../../button"));
     SelenideElement btnPopSilEvet = $(By.id("mainPreviewForm:evrakSilEvetButton"));
 
-    SelenideElement btnEvrakKopyala = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:3:cmdbutton"));
+    SelenideElement btnEvrakKopyala = $("[class='ui-button-icon-left ui-icon evrakKopyala']");
+    SelenideElement btnEvrakKopyalaEvet = $(By.id("evrakCopyConfirmForm:copyEvrakEvetButton"));
 
     //Paylaş Button alt div
 
@@ -182,8 +183,15 @@ public class TaslakEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Evrak kopyala tıklanır")
     public TaslakEvraklarPage evrakKopyalaGonder() {
         btnEvrakKopyala.click();
+        return this;
+    }
+
+    @Step("Evet tıklanır")
+    public TaslakEvraklarPage evrakKopyalaEvet(){
+        btnEvrakKopyalaEvet.click();
         return this;
     }
 
