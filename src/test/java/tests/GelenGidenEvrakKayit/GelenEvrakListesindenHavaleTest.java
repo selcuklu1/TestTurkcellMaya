@@ -32,6 +32,7 @@ public class GelenEvrakListesindenHavaleTest extends BaseTest {
     HavaleEdilenEvrakRaporuPage havaleEdilenEvrakRaporuPage;
     HavaleOnayinaSunduklarimPage havaleOnayinaSunduklarimPage;
     HavaleEttiklerimPage havaleEttiklerimPage;
+    BirimIadeEdilenlerPage birimIadeEdilenlerPage;
 
     static final Logger logger = LogManager.getLogger("GelenEvrakListesindenHavale");
 
@@ -70,6 +71,7 @@ public class GelenEvrakListesindenHavaleTest extends BaseTest {
         havaleEdilenEvrakRaporuPage = new HavaleEdilenEvrakRaporuPage();
         havaleOnayinaSunduklarimPage = new HavaleOnayinaSunduklarimPage();
         havaleEttiklerimPage = new HavaleEttiklerimPage();
+        birimIadeEdilenlerPage = new BirimIadeEdilenlerPage();
     }
 
 
@@ -620,7 +622,6 @@ public class GelenEvrakListesindenHavaleTest extends BaseTest {
                 .tabloEvrakNoSec(konu2);
     }
 
-
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, priority = 0, description = "TS2289: Gelen evrak listesinden havalenin Havale Edilen Evrak Raporundan kontrolü")
     public void TS2289() throws InterruptedException {
@@ -735,6 +736,93 @@ public class GelenEvrakListesindenHavaleTest extends BaseTest {
                 .rapordaEvraklarıListele(konu2);
     }
 
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, priority = 0, description = "TS472: Teslim alınmayı bekleyenler listesindeki havale evrakının iade edilmesi")
+    public void TS472() throws InterruptedException {
+        String testid = "TS-472";
+        konu = "TS-472-" + getSysDate();
+        String gerek = "GEREĞİ İÇİN GÖNDER";
+        String bilgi = "BİLGİ İÇİN GÖNDER";
+        String koordinasyon = "KOORDİNASYON İÇİN GÖNDER";
+        String evrakNo;
+        String pathToFileText = getUploadPath() + "test.txt";
+        String fileName ="test.txt";
+
+        testStatus(testid, "PreCondition Evrak Oluşturma");
+        gelenEvrakKayitPage
+                .openPage()
+                .konuKoduDoldur(konuKodu)
+                .konuDoldur(konu)
+                .evrakTuruSec(evrakTuru)
+                .evrakDiliSec(evrakDili)
+                .evrakTarihiDoldur(evrakTarihi)
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .kisiKurumSec(kisiKurum)
+                .geldigiKurumDoldurLovText(geldigiKurum)
+                .evrakSayiSagDoldur()
+                .evrakGelisTipiSec(evrakGelisTipi)
+                .ivedilikSec(ivedilik)
+                .dagitimBilgileriBirimDoldur2(birim)
+                .dagitimBilgileriKisiSec(kisi)
+                .kaydet();
+
+        evrakNo = gelenEvrakKayitPage.popUpsv2();
+
+        login(TestData.usernameZTEKIN,TestData.passwordZTEKIN);
+
+        gelenEvraklarPage
+                .openPage()
+                .tabloEvrakNoSec(konu)
+                .tabHavaleYapKontrol()
+                .tabHavaleYap()
+                .onizlemeHavaleAlanKontrolleri()
+
+                .dagitimBilgileriBirimDoldurWithDetails(birim, details)
+                .eklenenBirimKontrolu(birim)
+                .eklenenBirimOpsiyonKontrolu(gerek)
+
+                .havaleIslemleriKisiSec(onaylayacakKisi,details)
+                .eklenenKisiKontrolu(onaylayacakKisi)
+                .eklenenKisiOpsiyonKontrolu(gerek)
+                .havaleIslemleriKisiOpsiyonSec(bilgi)
+                .eklenenKisiOpsiyonKontrolu(bilgi)
+
+                .kullaniciListesiSec(kullaniciListesi)
+                .kullaniciListesiKullaniciGrupDetayEvet()
+                .eklenenKullaniciListesiKontrolu(kullaniciListesi)
+                .eklenenKullaniciListesiOpsiyonKontrolu(gerek)
+                .havaleIslemleriKullaniciListesiOpsiyonSec(koordinasyon)
+                .eklenenKullaniciListesiOpsiyonKontrolu(koordinasyon)
+                .havaleYapGonder()
+                .islemMesaji().basariliOlmali();
+
+//        havaleEttiklerimPage
+//                .openPage()
+//                .evrakAlanKontrolleri(konu,geldigiKurum,birim,evrakTarihi,evrakNo);
+
+        login(TestData.usernameMBOZDEMIR,TestData.passwordMBOZDEMIR);
+        testStatus(testid, "Test Başladı");
+        teslimAlinmayiBekleyenlerPage
+                .openPage()
+                .evrakNoIleEvrakSec(konu)
+                .evrakAlanKontrolleri(konu,geldigiKurum,evrakTarihi,evrakNo)
+                .onizlemeIadeEtKontrol()
+                .onizlemeIadeEt()
+                .onizlemeIadeEdilecekKullaniciKontrolu(kisi)
+                .iadeEtNotDoldur(konu)
+                .onizlemeIadeEtDosyaEkle()
+                .onizlemeIadeDosyaEkle(pathToFileText)
+                .onizlemeIadeDosyaEkleDosyaAdiKontrol(fileName)
+                .iadeEtIadeEt()
+                .islemMesaji().basariliOlmali();
+
+        login(TestData.usernameZTEKIN,TestData.passwordZTEKIN);
+        //TODO: Bu sayfaya gelmiyor. Sadece birime iade olsa buraya düşebilir.
+        birimIadeEdilenlerPage
+                .openPage()
+                .evrakSec(konu);
+
+    }
 
 }
 

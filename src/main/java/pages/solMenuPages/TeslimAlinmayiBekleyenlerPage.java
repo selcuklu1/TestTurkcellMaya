@@ -14,6 +14,7 @@ import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
@@ -71,9 +72,13 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     ElementsCollection birimDegistirme = $$("a[id^='leftMenuForm:edysMenuItem'] span[class='ui-menuitem-text']");
 
     SelenideElement btnIadeEt = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:4:cmdbutton"));
+    SelenideElement btnOnizlemeIadeEt = $("button[id^='mainPreviewForm:onizlemeRightTab:uiRepeat'] span[class$='iadeEt']");
+    ElementsCollection lblIadeEdilecekKullanici = $$("table[id='mainPreviewForm:iadeBilgileriPanelGrid'] label");
     SelenideElement btnIadeEtIadeEt = $(By.id("mainPreviewForm:iadeEtButton_id"));
     ElementsCollection tblEvrakGecmisi = $$("[id$='hareketGecmisiDataTable_data'] > tr[role='row']");
     SelenideElement txtNot = $(By.id("mainPreviewForm:notTextArea_id"));
+    SelenideElement btnOnizlemeIadeEtDosyaEkle = $(By.id("mainPreviewForm:fileUploadIadeEk"));
+    SelenideElement dosyaPathIade = $(By.xpath("//input[@id='mainPreviewForm:fileUploadIadeEk_input']"));
     SelenideElement evrakOnizlemeKontrol = $(By.id("mainPreviewForm:eastLayout"));
     ElementsCollection ilgiBilgileriEkleriKontrol = $$("div[id$='ilgiListesiDataTable'] tr[data-ri]");
     ElementsCollection teslimEvrakEkleri = $$("a[href^='#mainPreviewForm']");
@@ -686,9 +691,48 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Iade Et buton kontrolü")
+    public TeslimAlinmayiBekleyenlerPage onizlemeIadeEtKontrol() {
+        Assert.assertEquals(btnOnizlemeIadeEt.isDisplayed(),true,"Iade et buton kontrolü");
+        Allure.addAttachment("Iade et buton kontrolü","");
+        return this;
+    }
+
+    @Step("Teslim Alınan Evrakın Iade Edilmesi")
+    public TeslimAlinmayiBekleyenlerPage onizlemeIadeEt() {
+        btnOnizlemeIadeEt.click();
+        return this;
+    }
+
+    @Step("Iade Edilecek Kullanıcı Kontrolü")
+    public TeslimAlinmayiBekleyenlerPage onizlemeIadeEdilecekKullaniciKontrolu(String kisi) {
+        boolean durum = lblIadeEdilecekKullanici.filterBy(Condition.text(kisi)).size() == 1;
+        Assert.assertEquals(durum,true,"Iade Edilecek Kullanıcı Kontrolü");
+        Allure.addAttachment("Iade Edilecek Kullanıcı Kontrolü","");
+        return this;
+    }
+
     @Step("Not alanını doldur: {not}")
     public TeslimAlinmayiBekleyenlerPage iadeEtNotDoldur(String not) {
         txtNot.setValue(not);
+        return this;
+    }
+
+    public TeslimAlinmayiBekleyenlerPage onizlemeIadeEtDosyaEkle() {
+        btnOnizlemeIadeEtDosyaEkle.click();
+        return this;
+    }
+
+    @Step("Dosya Ekleme : \"{pathToFile}\" ")
+    public TeslimAlinmayiBekleyenlerPage onizlemeIadeDosyaEkle(String pathToFile) throws InterruptedException {
+        uploadFile(dosyaPathIade, pathToFile);
+        Thread.sleep(4000);
+        return this;
+    }
+
+    @Step("Havale dosya ekleme adi kontrol : \"{dosyaAdi}\" ")
+    public TeslimAlinmayiBekleyenlerPage onizlemeIadeDosyaEkleDosyaAdiKontrol(String dosyaAdi) {
+        $(byText(dosyaAdi)).shouldBe(Condition.visible);
         return this;
     }
 

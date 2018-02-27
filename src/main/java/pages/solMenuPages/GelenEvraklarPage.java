@@ -1362,39 +1362,25 @@ public class GelenEvraklarPage extends MainPage {
 
     @Step("Havale İşlemleri Alanındaki Kontroller")
     public GelenEvraklarPage onizlemeHavaleAlanKontrolleri() {
-        String text = "";
-        if(txtComboLovBirim.isDisplayed()) {
-            text += "Birim Kontrol,";
+
             Assert.assertEquals(txtComboLovBirim.isDisplayed(),true,"Birim Alanı Görüntülendi");
             Allure.addAttachment("Birim Kontrol Alanı Görüntülendi : ","");
-        }
-        if (txtComboLovKisi.isDisplayed()) {
-            text += "Kisi Kontrol, ";
+
             Assert.assertEquals(txtComboLovKisi.isDisplayed(), true, "Kisi Alanı Görüntülendi");
             Allure.addAttachment("Kisi Alanı Görüntülendi : ", "");
-        }
-        if (txtOnizlemeKullanıcıListeKontrol.isDisplayed()) {
-            text += "Kullanıcı Liste,";
+
             Assert.assertEquals(txtOnizlemeKullanıcıListeKontrol.isDisplayed(), true, "Kullanıcı Liste Alanı Görüntülendi");
             Allure.addAttachment("Kullanıcı Liste Alanı Görüntülendi : ", "");
-        }
-        if (txtHavaleYapAciklama.isDisplayed()) {
-            text += "Aciklama,";
+
             Assert.assertEquals(txtHavaleYapAciklama.isDisplayed(), true, "Aciklama Alanı Görüntülendi");
             Allure.addAttachment("Aciklama Alanı Görüntülendi : ", "");
-        }
-        if (btnOnizlemeDosyaEkleKontrol.isDisplayed()) {
-            text += "Dosya Ekle,";
+
             Assert.assertEquals(btnOnizlemeDosyaEkleKontrol.isDisplayed(), true, "Dosya Ekle Alanı Görüntülendi");
             Allure.addAttachment("Dosya Ekle Alanı Görüntülendi : ", "");
-        }
-        if (txtHavaleYapIslemSuresi.isDisplayed()) {
-            text += "İslem Sure alanları gösterilmektedir.";
+
             Assert.assertEquals(txtHavaleYapIslemSuresi.isDisplayed(), true, "İşlem Süre Alanı Görüntülendi");
             Allure.addAttachment("İslem Sure Alanı Görüntülendi : ", "");
-        }
-        Allure.addAttachment("Alan Kontrolleri : ", text);
-        return this;
+            return this;
     }
 
     @Step("Dağıtım Bilgileri Birim alanında \"{birim}\" seçilir")
