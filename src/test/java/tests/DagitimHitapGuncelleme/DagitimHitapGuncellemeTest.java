@@ -345,7 +345,7 @@ public class DagitimHitapGuncellemeTest extends BaseTest {
         new PDFOnizleme(1).checkText(0, textCaseSensitive(metni1), textCaseSensitive(haricMetni));
         WebDriverRunner.getWebDriver().close();
         Selenide.switchTo().window(0);
-        evrakPostala.yazdirClose();
+        evrakPostala.evrakDetayDialogClose();
 //        evrakOnizleme.new EvrakDetaylari().close();
 
         evrakPostala

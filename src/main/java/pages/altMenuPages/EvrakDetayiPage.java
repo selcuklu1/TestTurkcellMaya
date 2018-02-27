@@ -586,7 +586,7 @@ public class EvrakDetayiPage extends MainPage {
 
         SelenideElement tabBilgileri = $(By.xpath("//span[. = 'Bilgileri']/../../..//button"));
         BelgenetElement txtOnayAkisi = comboLov("[id^='inboxItemInfoForm:evrakBilgileriList:'][id$=':akisLov:LovText']");
-
+        SelenideElement txtKonu = $(By.id("inboxItemInfoForm:evrakBilgileriList:3:konuTextArea"));
         private BilgileriTab open() {
             tabBilgileri.click();
             return this;
@@ -599,6 +599,13 @@ public class EvrakDetayiPage extends MainPage {
             return this;
         }
 
+        @Step("Kopyası oluşturulan evrak bilgilerinin aynısının geldiği ve değiştirilebildiği görülür")
+        public BilgileriTab kopyasiOlusturulanEvrakBilgilerininDegitirilebilgiGorme(){
+            boolean durum = txtKonu.shouldBe(visible).exists();
+            Assert.assertEquals(durum,true);
+            return this;
+        }
+        
         @Step("Kaldırılacak klasör, Gereği, Onay akışı, bilgilerinin girildiği şekilde geldiği görülür.")
         public BilgileriTab bilgileriTabKaldirilacakKlasorOnayAkisiGeregiGeldigiGorme(String kaldirilacakKlasor,String geregi,String onayAkisi){
             boolean durum = $$("[id$='eklenecekKlasorlerLov:LovSecilenTable_data']").filterBy(Condition.text(kaldirilacakKlasor)).size()==1;
@@ -629,6 +636,13 @@ public class EvrakDetayiPage extends MainPage {
 
         @Step("Kopyası oluşturulan evrak eklerinin aynısının geldiği ve değiştirilebildiği görülür")
         public EkleriTab eklenenDosyaninKopyalananDosyaAyniGeldigiGorulur(){
+            boolean durum = $$(By.id("inboxItemInfoForm:ekListesiDataTable_data")).filterBy(Condition.text("Listelenecek Veri Bulunamamıştır.")).size()==1;
+            Assert.assertEquals(durum,true);
+            return this;
+        }
+
+        @Step("Kopyası oluşturulan evrak eklerinin aynısının geldiği ve değiştirilebildiği görülür")
+        public EkleriTab eklenenDosyaninKopyalananDosyaAyniGeldigiGorulurDegistirelbildigiGorme(){
             boolean durum = $$(By.id("inboxItemInfoForm:ekListesiDataTable_data")).filterBy(Condition.text("Listelenecek Veri Bulunamamıştır.")).size()==1;
             Assert.assertEquals(durum,true);
             return this;

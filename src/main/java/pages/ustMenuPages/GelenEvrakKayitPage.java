@@ -14,6 +14,7 @@ import java.util.List;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.value;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
@@ -1009,7 +1010,7 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("Kaydet butonu")
     public GelenEvrakKayitPage kaydet() {
-        btnKaydet.click();
+        btnKaydet.pressEnter();
         return this;
     }
 
@@ -1027,7 +1028,7 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("Benzer Kayıt tıklanır")
     public GelenEvrakKayitPage benzerKayit() {
-        if ($$(("[id$='benzerKayitButton']")).size() == 1) {
+        if ($(("[id$='benzerKayitButton']")).shouldBe(visible).exists() == true) {
             $("[id$='benzerKayitButton']").pressEnter();
         } else {
         }
