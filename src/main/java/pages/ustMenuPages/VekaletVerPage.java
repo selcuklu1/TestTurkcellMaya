@@ -92,6 +92,15 @@ public class VekaletVerPage extends MainPage {
         return this;
     }
 
+    @Step("Vekalet veren alanını kontrolü : \"{vekaletVeren}\" , {shouldBeExist} ")
+    public VekaletVerPage vekaletVerenKontrolu(String vekaletVeren,boolean shouldBeExist) {
+        if(shouldBeExist)
+            txtVekaletVerenCombolov.openTreePanel().getSelectableItems().filterBy(Condition.text(vekaletVeren)).shouldHaveSize(1);
+        else
+            txtVekaletVerenCombolov.openTreePanel().getSelectableItems().filterBy(Condition.text(vekaletVeren)).shouldHaveSize(0);
+        return this;
+    }
+
     @Step("Vekalet alan alanını doldur : \"{vekaletAlan}\" ")
     public VekaletVerPage vekaletAlanDoldur(String vekaletAlan) {
         txtVekaletAlanCombolov.selectLov(vekaletAlan);

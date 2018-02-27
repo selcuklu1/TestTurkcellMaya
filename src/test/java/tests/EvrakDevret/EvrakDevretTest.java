@@ -1,6 +1,7 @@
 package tests.EvrakDevret;
 
 import common.BaseTest;
+import data.TestData;
 import data.User;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
