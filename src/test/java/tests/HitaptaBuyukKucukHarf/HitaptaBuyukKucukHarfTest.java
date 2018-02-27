@@ -75,11 +75,11 @@ public class HitaptaBuyukKucukHarfTest extends BaseTest {
         hitapKontrol(geregiSecimTipi, geregiHepsiBuyuk, beklenenHepsiBuyukHitap);
 
         String geregiHepsiKucuk = "hepsi küçük harflerle kurum";
-        String beklenenHepsiKucukHitap = "hepsi küçük harflerle kuruma";
+        String beklenenHepsiKucukHitap = "HEPSI KÜÇÜK HARFLERLE KURUMA";
         hitapKontrol(geregiSecimTipi, geregiHepsiKucuk, beklenenHepsiKucukHitap);
 
         String geregiBuyukKucuk = "Büyük Küçük Harflerle Kurum";
-        String beklenenBuyukKucukHitap = "Büyük Küçük Harflerle Kuruma";
+        String beklenenBuyukKucukHitap = "BÜYÜK KÜÇÜK HARFLERLE KURUMA";
         hitapKontrol(geregiSecimTipi, geregiBuyukKucuk, beklenenBuyukKucukHitap);
 
     }
@@ -98,11 +98,11 @@ public class HitaptaBuyukKucukHarfTest extends BaseTest {
         hitapKontrol(geregiSecimTipi, geregiHepsiBuyuk, beklenenHepsiBuyukHitap);
 
         String geregiHepsiKucuk = "hepsi küçük harflerle birim";
-        String beklenenHepsiKucukHitap = "hepsi küçük harflerle birime";
+        String beklenenHepsiKucukHitap = "HEPSI KÜÇÜK HARFLERLE BIRIME";
         hitapKontrol(geregiSecimTipi, geregiHepsiKucuk, beklenenHepsiKucukHitap);
 
         String geregiBuyukKucuk = "Büyük Küçük Harflerle Birim";
-        String beklenenBuyukKucukHitap = "Büyük Küçük Harflerle Birime";
+        String beklenenBuyukKucukHitap = "BÜYÜK KÜÇÜK HARFLERLE BIRIME";
         hitapKontrol(geregiSecimTipi, geregiBuyukKucuk, beklenenBuyukKucukHitap);
     }
 
@@ -168,7 +168,7 @@ public class HitaptaBuyukKucukHarfTest extends BaseTest {
     private void step9_10(String konu) {
         login(ztekin);
         new SolMenu().openMenu(SolMenuData.BirimEvraklari.PostalanacakEvraklar);
-        new MainPage().searchTable().findRows(text(konu)).getFoundRow().click();
+        new MainPage().searchTable().findRows(text(konu)).getFoundRow().click(1,1);
         Selenide.$("button .postala").click();
     }
 

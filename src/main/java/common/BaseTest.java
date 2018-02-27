@@ -9,6 +9,7 @@ import data.User;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import listeners.DriverEventListener;
+import listeners.MethodInterceptor;
 import listeners.ResultListener;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;

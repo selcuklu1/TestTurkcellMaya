@@ -250,7 +250,7 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
     }
 
     @Test(description = "TS2323: Yeni Dağıtım Planı Kayıt (Ekranlardan Kontrolü)", enabled = true
-            , dependsOnMethods = {"TS1280"}
+            , dependsOnMethods = {"TS1280a"}
     )
     public void TS2323() {
         //User user = optiim;
