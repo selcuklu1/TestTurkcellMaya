@@ -135,10 +135,10 @@ public class BirimIadeEdilenlerPage extends MainPage {
         return this;
     }
 
-    @Step("Havale Etme ekranı açılır\n")
-    public BirimIadeEdilenlerPage ekranKontrol() {
-        Assert.assertEquals(tabHavale.isDisplayed(), true, "Havale Etme sayfası");
-        Allure.addAttachment("Havale Etme sayfası", "açılmaktadır");
+    @Step("Onizleme ekranı açılır\n")
+    public BirimIadeEdilenlerPage ekranOnizlemeKontrol() {
+        Assert.assertEquals(tabHavale.isDisplayed(), true, "Onizleme sayfası");
+        Allure.addAttachment("Onizleme sayfası", "açılmaktadır");
         return this;
     }
 
