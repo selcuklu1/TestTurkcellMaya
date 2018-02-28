@@ -32,7 +32,7 @@ public class PostaListesiPage extends MainPage {
 
     SelenideElement filterPanelHeader = $("div[id='mainInboxForm:inboxDataTable:filtersAccordion'] > h3");
     SelenideElement txtPostaListesi = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:postaListesiAdi_input"));
-    SelenideElement btnPostala = $(By.id("mainInboxForm:inboxDataTable:j_idt726"));
+    SelenideElement btnPostala = $(By.xpath("//span[text()='Postala']//..//..//button"));
     SelenideElement tblIlkRow = $(By.xpath("//tbody[@id='mainInboxForm:inboxDataTable_data']/tr[@data-ri='0']"));
     BelgenetElement cmbGidisSekli = comboBox(By.id("mainPreviewForm:postaListesiPostaTipi_label"));
     BelgenetElement cmbGonderildigiTuzelKisi = comboLov(By.id("mainPreviewForm:tpbeGonderildigiTuzelKisiLovId:LovSecilen"));
@@ -348,10 +348,13 @@ public class PostaListesiPage extends MainPage {
     @Step("Konuye göre evrak seç. \"{konu}\" ")
     public PostaListesiPage evrakSec(String konu) {
 
-        SelenideElement tablo = $$("tbody[id='mainInboxForm:inboxDataTable_data'] > tr[data-ri]")
+        ElementsCollection tablo = $$("tbody[id='mainInboxForm:inboxDataTable_data'] > tr[data-ri]");
+
+        tablo
                 .filterBy(Condition.text(konu))
-                .first();
-        tablo.click();
+                .first()
+                .click();
+
         return this;
     }
 

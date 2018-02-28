@@ -3,6 +3,7 @@ package tests.TopluPostalama;
 
 import com.codeborne.selenide.Selenide;
 import common.BaseTest;
+import data.TestData;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
@@ -2393,7 +2394,7 @@ public class TopluPostalamaTest extends BaseTest {
         System.out.println(postaListesi);
 
         //endregion
-        login("mbozdemir", "123");
+        login(TestData.usernameMBOZDEMIR,TestData.passwordMBOZDEMIR);
 
         Allure.addAttachment("Test Datası", "Test Datası oluşturuluyor.");
 //        region Test Datası
@@ -2426,6 +2427,8 @@ public class TopluPostalamaTest extends BaseTest {
 
             mainPage
                     .evrakImzala();
+
+         login(TestData.usernameMBOZDEMIR,TestData.passwordMBOZDEMIR);
 
             imzaladiklarimPage
                     .openPage();

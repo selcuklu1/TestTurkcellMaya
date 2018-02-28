@@ -1,6 +1,7 @@
 package tests.TuzelKisiYonetimi;
 
 import common.BaseTest;
+import common.ReusableSteps;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
@@ -8,6 +9,7 @@ import org.testng.annotations.Test;
 import pages.ustMenuPages.*;
 
 import java.lang.reflect.Method;
+import java.util.List;
 
 /****************************************************
  * Tarih: 2017-11-24
@@ -25,8 +27,6 @@ public class TuzelKisiYonetimiTest extends BaseTest {
 
     @BeforeMethod
     public void beforeTests(Method method) {
-
-        log.info(method.getName() + "Nolu test senaryosu başladı.");
 
         login();
         tuzelKisiYonetimiPage = new TuzelKisiYonetimiPage();
@@ -433,6 +433,7 @@ public class TuzelKisiYonetimiTest extends BaseTest {
                 .switchToDefaultWindow();
     }
 
+
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS1132b: Tüzel kişinin pasif yapılması ve kontrolü")
     public void TS1132b() throws InterruptedException {
@@ -606,7 +607,7 @@ public class TuzelKisiYonetimiTest extends BaseTest {
     @Test(enabled = true, description = "TS2246: Medya şirketi tipinde tüzel kişi ekleme")
     public void TS2246() {
 
-        String vergiNo = createRandomNumber(10);
+        /*String vergiNo = createRandomNumber(10);
         String kisaAd = createRandomText(7);
         String ad = kisaAd + " Medya Şirketi";
         String tuzelKisiTipi = "MEDYA ŞİRKETİ";
@@ -654,14 +655,25 @@ public class TuzelKisiYonetimiTest extends BaseTest {
                 .tuzelKisiKaydet()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
-        evrakOlusturPage
+           evrakOlusturPage
                 .openPage()
                 .editorTabAc()
                 .geregiDoldur(ad, "Ad")
                 .secilenGeregiSil()
                 .geregiDoldur(kisaAd, "Kısa Ad")
                 .secilenGeregiSil()
-                .geregiVergiNoDoldur(vergiNo, "Vergi Kimlik No");
+                .geregiVergiNoDoldur(vergiNo, "Vergi Kimlik No");*/
+
+        List<String> medyaKisi = new ReusableSteps().medyaSirketiTuzelKisiEkleme();
+
+        evrakOlusturPage
+                .openPage()
+                .editorTabAc()
+                .geregiDoldur(medyaKisi.get(0), "Ad")
+                .secilenGeregiSil()
+                .geregiDoldur(medyaKisi.get(1), "Kısa Ad")
+                .secilenGeregiSil()
+                .geregiVergiNoDoldur(medyaKisi.get(2), "Vergi Kimlik No");
 
     }
 

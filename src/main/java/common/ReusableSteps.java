@@ -1,137 +1,78 @@
 package common;
 
-import data.TestData;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
-import pages.MainPage;
-import pages.altMenuPages.CevapYazPage;
-import pages.solMenuPages.*;
+import data.User;
+import io.qameta.allure.Step;
+import pages.LoginPage;
+import pages.pageData.alanlar.GeregiSecimTipi;
+import pages.solMenuPages.ImzaBekleyenlerPage;
+import pages.ustMenuPages.BirimYonetimiPage;
 import pages.ustMenuPages.EvrakOlusturPage;
 import pages.ustMenuPages.GelenEvrakKayitPage;
-import pages.ustMenuPages.KullaniciEvrakDevretPage;
-import pages.ustMenuPages.SistemLoglariPage;
+import pages.ustMenuPages.TuzelKisiYonetimiPage;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-
-import static sun.security.jgss.GSSUtil.login;
+import java.util.List;
 
 public class ReusableSteps extends BaseLibrary{
 
-    PaylastiklarimPage paylastiklarimPage;
-    BenimlePaylasilanlarPage benimlePaylasilanlarPage;
-    TaslakEvraklarPage taslakEvraklarPage;
-    ParafBekleyenlerPage parafBekleyenlerPage;
-    EvrakOlusturPage evrakOlusturPage;
-    KullaniciEvrakDevretPage kullaniciEvrakDevretPage;
-    GelenEvrakKayitPage gelenEvrakKayitPage;
-    GelenEvraklarPage gelenEvraklarPage;
-    ImzaladiklarimPage imzaladiklarimPage;
-    SistemLoglariPage sistemLoglariPage;
-    MesajlarPage mesajlarPage;
-    MainPage mainPage;
-    BaseTest baseTest;
+    @Step("Beklemeye Alınanlar evrak Oluştur.")
+    public void beklemeyeAlinanlarEvrakOlustur(String konu,String geregiSecimTipi, String geregi, String onayAkisiKullanici1Turu,String onayAkisiKullanici2,String onayAkisiKullaniciBirimi,String onayAkisiKullanici2turu,String user,String password) {
 
-    @BeforeMethod
-    public void loginBeforeTests() {
-        paylastiklarimPage = new PaylastiklarimPage();
-        benimlePaylasilanlarPage = new BenimlePaylasilanlarPage();
-        taslakEvraklarPage = new TaslakEvraklarPage();
-        parafBekleyenlerPage = new ParafBekleyenlerPage();
-        evrakOlusturPage = new EvrakOlusturPage();
-        kullaniciEvrakDevretPage = new KullaniciEvrakDevretPage();
-        gelenEvrakKayitPage = new GelenEvrakKayitPage();
-        gelenEvraklarPage = new GelenEvraklarPage();
-        imzaladiklarimPage = new ImzaladiklarimPage();
-        sistemLoglariPage = new SistemLoglariPage();
-        mainPage = new MainPage();
-        mesajlarPage = new MesajlarPage();
-        baseTest = new BaseTest();
+        EvrakOlusturPage evrakOlusturPage = new EvrakOlusturPage();
+        LoginPage loginPage = new LoginPage();
+        ImzaBekleyenlerPage imzaBekleyenler = new ImzaBekleyenlerPage();
+
+        evrakOlusturPage.evrakOlusturParafla(konu,geregiSecimTipi,geregi,onayAkisiKullanici1Turu,onayAkisiKullanici2,onayAkisiKullaniciBirimi,onayAkisiKullanici2turu);
+        loginPage.login(user,password);
+        imzaBekleyenler.imzaBekleyenlerEvrakSecBeklemeyeAl(konu);
     }
 
-    @Test(enabled = true, description = "TS2195 : Cevap evrakını paylaşma")
-    public void TS2195() {
+    @Step("Beklemeye Alınanlar evrak Oluştur.")
+    public void beklemeyeAlinanlarEvrakOlustur() {
 
-        String tarihBugun = "" + new SimpleDateFormat("dd.MM.yyyy").format(new Date());
-        GelenEvrakKayitPage gelenEvrakKayitPage = new GelenEvrakKayitPage();
+    }
 
-        String konuKodu = "Entegrasyon İşlemleri";
-        String evrakTuru = "Resmi Yazışma";
-        String evrakDili = "Türkçe";
-        String gizlilikDerecesi = "Hizmete Özel";
-        String ivedilik = "Normal";
-        String evrakGelisTipi = "Posta";
-        String randomNumber = "" + getRandomNumber(1000, 9999999);
-        String konu = "TS2195-" + randomNumber;
-        String geldigiYer = "Yenikurum1485";
-        String evrakTarihi = tarihBugun;
+    @Step("Teslim Alınmayı Bekleyenler sayfasında evrak oluştur.")
+    public void teslimAlinmayiBekleyenlerEvrakOlustur(String konu,String kurum,String birim) {
+
+        GelenEvrakKayitPage gelenEvrakKayitPage =  new GelenEvrakKayitPage();
 
         gelenEvrakKayitPage
-                .openPage()
-                .konuKoduDoldur(konuKodu)
-                .konuDoldur(konu)
-                .evrakTuruSec(evrakTuru)
-                .evrakDiliSec(evrakDili)
-                .evrakTarihiDoldur(getSysDateForKis())
-                .gizlilikDerecesiSec(gizlilikDerecesi)
-                .kisiKurumSec("Kurum")
-                .geldigiKurumDoldurLovText2(geldigiYer)
-                .evrakSayiSagDoldur(randomNumber)
-                .evrakGelisTipiSec(evrakGelisTipi)
-                .ivedilikSec(ivedilik)
-                .dagitimBilgileriKisiSec("Mehmet Bozdemir")
-                .kaydet();
-
-        String evrakNo = gelenEvrakKayitPage.popUps();
-        String kayitTarihiSayi = tarihBugun + " / " + evrakNo;
-        gelenEvrakKayitPage.islemMesaji().basariliOlmali();
-
-        gelenEvraklarPage
-                .openPage()
-                .evrakiSec(konu, geldigiYer, kayitTarihiSayi, evrakTarihi, "")
-                .cevapYaz();
-
-        CevapYazPage cevapYazPage = new CevapYazPage();
-
-        cevapYazPage
-                .konuDoldur(konu + "Cevap")
-                .kaldirilacakKlasorlerDoldur("Diğer")
-                .kaydet()
-                .evrakKayitPopupEvet();
-
-        String evrakAciklamasi = "Cevap evrakını paylaşma NOT 1";
-        String evrakiPaylasan = "Mehmet BOZDEMİR";
-        String basariMesaji = "İşlem başarılıdır!";
-
-        String yeniEvrakPaylasimNotu = "Cevap evrakını paylaşma NOT 2";
-        String yeniPaylasan = "Huser1 TUMER1";
-
-        taslakEvraklarPage
-                .openPage()
-                .evrakSec(konu, geldigiYer, tarihBugun)
-                .paylasTabTikla()
-                .paylasBirimTikla()
-                .paylasKisiDoldur("Huser1 TUMER1")
-                .paylasKisiDoldur("Huser2 TUMER2")
-                .paylasanAciklamaDoldur(evrakAciklamasi)
-                .paylasPaylasGonder();
-
-        String tarihSaatBugun = "" + new SimpleDateFormat("dd.MM.yyyy HH:mm").format(new Date());
-        taslakEvraklarPage
-                .islemMesaji().basariliOlmali(basariMesaji);
-
-        String paylasilanlar = "Huser1 TUMER1 / Huser2 TUMER2";
-
-        paylastiklarimPage
-                .openPage()
-                .evrakSec(konu, "", paylasilanlar, tarihBugun)
-                .evrakOnizlemeTabSec("Evrak Notları")
-                .evrakNotuKontrol(evrakiPaylasan, tarihBugun, evrakAciklamasi)
-                .evrakOnizlemeTabSec("Paylaşılanlar")
-                .paylasilanKontrol("Huser1 TUMER1", "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ", "Paylaşımda", "")
-                .paylasilanKontrol("Huser2 TUMER2", "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ", "Paylaşımda", "");
-
+                .gelenEvrakKayitBirimHavaleEt(konu,kurum,birim);
     }
 
+    @Step("Gelen Evraklar sayfasında evrak oluştur.")
+    public void gelenEvraklarEvrakOlustur(String konu,String kurum,String birim) {
+
+        GelenEvrakKayitPage gelenEvrakKayitPage =  new GelenEvrakKayitPage();
+
+        gelenEvrakKayitPage
+                .gelenEvrakKayitKullaniciHavaleEt(konu,kurum,birim);
+    }
+
+    @Step("Beklemeye Alınanlar evrak Oluştur.")
+    public void beklemeyeAlinanlarEvrakOlustur(String konu, String geregiSecimTipi, String geregi, User imzaci) {
+        new EvrakOlusturPage()
+                .evrakOlusturParafla(konu,geregiSecimTipi,geregi,"Parafla",imzaci.getFullname(), imzaci.getBirimAdi(), "İzmala");
+        new LoginPage().login(imzaci);
+        new ImzaBekleyenlerPage().imzaBekleyenlerEvrakSecBeklemeyeAl(konu);
+    }
+
+    @Step("Medya şirketi tipinde tüzel kişi ekleme")
+    public List<String> medyaSirketiTuzelKisiEkleme() {
+        return new TuzelKisiYonetimiPage().medyaSirketiTuzelKisiEkleme();
+    }
+
+    @Step("Evrak Oluştur kaydet ve parafla")
+    public void evrakOlusturVeParafla(String konu, GeregiSecimTipi geregiSecimTipi, String geregi, User parafci, User imzaci){
+        pages.newPages.EvrakOlusturPage page = new pages.newPages.EvrakOlusturPage().openPage();
+        page.bilgileriTab().alanlariDoldur(konu, geregiSecimTipi, geregi, parafci, imzaci);
+        page.editorTab().openTab().getEditor().type(konu);
+        //page.evrakPageButtons().evrakKaydet().islemMesaji().basariliOlmali();
+        page.evrakParafla().islemMesaji().basariliOlmali();
+    }
+
+    @Step("Yeni birim kayıt")
+    public List<String> yeniBirimKayit() {
+        return new BirimYonetimiPage().yeniBirimKayit();
+    }
 }

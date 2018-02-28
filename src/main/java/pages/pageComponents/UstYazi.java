@@ -387,14 +387,19 @@ public class UstYazi extends MainPage {
 
         @Step("Notları ara")
         public EvrakNot notlariAra(Condition... aramaConditions) {
-            notes = getEvrakNotlariTable().findRows(aramaConditions).getFoundRows();
+            notes = getEvrakNotlariTable()
+                    .goToFirstPage()
+                    .searchInAllPages(true)
+                    .findRows(aramaConditions).getFoundRows();
             return this;
         }
 
         @Step("Not bulunur")
         public EvrakNot notuBul(Condition... aramaConditions) {
             notlariAra(aramaConditions);
-            note = notes.shouldHave(sizeGreaterThan(0)).first().shouldBe(visible);
+            Assert.assertEquals(notes.size(), 1, aramaConditions + " olan not sayıs 1 olmalı");
+            //note = notes.shouldHaveSize(1).first().shouldBe(visible);
+            note = notes.first().shouldBe(visible);
             return this;
         }
 

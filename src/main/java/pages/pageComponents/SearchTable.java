@@ -8,6 +8,7 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
+import pages.MainPage;
 
 import java.util.ArrayList;
 
@@ -22,7 +23,7 @@ import static pages.pageComponents.belgenetElements.BelgentCondition.isTableNavB
  * Tarih: 4.01.2018
  * Açıklama:
  */
-public class SearchTable extends BaseLibrary {
+public class SearchTable extends MainPage {
 
     private static String rowXpathLocator = "tr[@role='row']";
     private static String rowCssLocator = "tbody > tr[role=row]";
@@ -312,6 +313,12 @@ public class SearchTable extends BaseLibrary {
         return this;
     }
 
+    @Step("Evrağı bul ve seç")
+    public SearchTable findRowAndSelect(Condition... conditions){
+        findRows(conditions).getFoundRow().click(1,1);
+        return this;
+    }
+
     public SearchTable useFoundRow(int index) {
         foundRow = foundRows.get(index);
         return this;
@@ -409,7 +416,6 @@ public class SearchTable extends BaseLibrary {
         foundRows.shouldHave(conditions);
         return this;
     }
-
 
 /*
     @Step("Satırları ara")

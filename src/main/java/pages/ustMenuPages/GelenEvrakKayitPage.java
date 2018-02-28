@@ -14,6 +14,7 @@ import java.util.List;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.value;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
@@ -1009,7 +1010,7 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("Kaydet butonu")
     public GelenEvrakKayitPage kaydet() {
-        btnKaydet.click();
+        btnKaydet.pressEnter();
         return this;
     }
 
@@ -1027,7 +1028,7 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("Benzer Kayıt tıklanır")
     public GelenEvrakKayitPage benzerKayit() {
-        if ($$(("[id$='benzerKayitButton']")).size() == 1) {
+        if ($(("[id$='benzerKayitButton']")).shouldBe(visible).exists() == true) {
             $("[id$='benzerKayitButton']").pressEnter();
         } else {
         }
@@ -1072,7 +1073,7 @@ public class GelenEvrakKayitPage extends MainPage {
         String mesaj4 = "Evrak başarıyla kaydedilmiştir.";
         basariliPopUp.getText().contains(mesaj4);
         Allure.addAttachment("İşlem başarılı PopUp'ı", mesaj4);
-        String evrakNo = getIntegerInText(By.id("evrakKaydetBasariliDialog"));
+        String evrakNo = getNumberFromText(By.id("evrakKaydetBasariliDialog"));
         clickJs(basariliPopUpKapat);
         return evrakNo;
     }
@@ -1145,7 +1146,7 @@ public class GelenEvrakKayitPage extends MainPage {
         Allure.addAttachment("İşlem başarılı PopUp'ı", mesaj4);
 
         SelenideElement vEvrakBasarili = visibleEvrakBasarili.filterBy(Condition.visible).get(0);
-        String evrakNo = getIntegerInText(vEvrakBasarili.getText());
+        String evrakNo = getNumberFromText(vEvrakBasarili.getText());
         clickJs(basariliPopUpKapat);
 
         return evrakNo;
@@ -1676,4 +1677,41 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
+
+    @Step("Teslim Alınmayı Bekleyenler evrak düşürmektedir.")
+    public void gelenEvrakKayitBirimHavaleEt(String konu,String kurum,String birim) {
+        String konuKodu = "Diğer";
+        String evrakSayiSag = createRandomText(15);
+
+        //1.Teslim Alınmayı Bekleyenler evrak düşürmektedir.
+                openPage()
+                .konuKoduDoldur(konuKodu)
+                .konuDoldur(konu)
+                .evrakTarihiDoldur(getSysDate())
+                .geldigiKurumDoldurLovText(kurum)
+                .evrakSayiSagDoldur(evrakSayiSag)
+                .havaleIslemleriBirimDoldur(birim)
+                .kaydet()
+                .evetDugmesi()
+                .yeniKayitButton();
+    }
+
+    @Step("Gelen Evraklar sayfasına evrak düşürmektedir.")
+    public void gelenEvrakKayitKullaniciHavaleEt(String konu,String kurum,String kullanici){
+
+        String konuKodu = "Diğer";
+        String evrakTarihi = getSysDateForKis();
+        String evrakSayiSag = createRandomNumber(8);
+
+        openPage()
+                .konuKoduDoldur(konuKodu)
+                .konuDoldur(konu)
+                .evrakTarihiDoldur(evrakTarihi)
+                .geldigiKurumDoldurLovText(kurum)
+                .evrakSayiSagDoldur(evrakSayiSag)
+                .havaleIslemleriKisiDoldur(kullanici)
+                .kaydet()
+                .evetDugmesi()
+                .yeniKayitButton();
+    }
 }

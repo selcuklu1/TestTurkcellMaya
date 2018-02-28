@@ -16,7 +16,7 @@ public class TestData extends BaseLibrary {
     //    public static final String belgenetURL = "http://10.101.20.153:8889/edys-web/sistemeGiris.xhtml";
 
     public static final User optiim = new User("optiim", "123", "Optiim TEST", "Optiim Birim");
-
+    public static final User gsahin = new User("gsahin", "123", "Gökçe ŞAHİN", "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ");
     //Default usernameOPTIIM
     public static final String usernameOPTIIM = "optiim";
     public static final String passwordOPTIIM = "123";
@@ -36,8 +36,22 @@ public class TestData extends BaseLibrary {
     public static final String usernameGSAHIN = "gsahin";
     public static final String passwordGSAHIN = "123";
 
-    public static final String usernameOPTIIMTEST76 = "optiimtest6";
-    public static final String passwordPTIIMTEST76 = "123";
+    public static final String usernameOPTIIMTEST6 = "optiimtest6";
+    public static final String passwordPTIIMTEST6 = "123";
+
+    public static final String usernameSCELIK = "scelik";
+    public static final String passwordSCELIK = "123";
+
+    public static final String username22n = "username22n";
+    public static final String passwor22n = "123";
+
+    public static final String username23t = "username23t";
+    public static final String passwor23t = "123";
+
+    public static final String username21g = "username21g";
+    public static final String passwor21g = "123";
+
+
 
     public static String docPathWindows = "C:\\TestAutomation\\BelgenetFTA\\documents\\";
     //public static String docDownloadPathWindows = "C:\\TestAutomation\\BelgenetFTA\\downloads";

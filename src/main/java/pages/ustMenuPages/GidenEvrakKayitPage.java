@@ -416,7 +416,7 @@ public class GidenEvrakKayitPage extends MainPage {
         String mesaj4 = "Evrak başarıyla kaydedilmiştir.";
         popUpEvrakDefterBasarili.getText().contains(mesaj4);
 
-        String evrakNo = getIntegerInText(By.id("gidenEvrakDefterKaydiBasariliDialogId"));
+        String evrakNo = getNumberFromText(By.id("gidenEvrakDefterKaydiBasariliDialogId"));
         popUpEvrakDefterBasariliKapat.click();
         return evrakNo;
     }

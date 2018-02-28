@@ -6,10 +6,12 @@ import com.codeborne.selenide.SelenideElement;
 import data.User;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NotFoundException;
 import org.testng.Assert;
 import pages.MainPage;
+import pages.pageComponents.DagitimHitapDuzenle;
 import pages.pageComponents.SearchTable;
 import pages.pageComponents.UstYazi;
 import pages.pageComponents.belgenetElements.BelgenetElement;
@@ -32,6 +34,10 @@ public class BilgilerTab extends MainPage {
     private final static String tabName = "Bilgileri";
     private SelenideElement container;
     private SearchTable searchTable;
+
+    private By deleteButtonuSelector = By.cssSelector(".delete-icon");
+    private By updateButtonuSelector = By.cssSelector(".update-icon");
+
 
     public BilgilerTab() {
         container = $("html");
@@ -412,6 +418,40 @@ public class BilgilerTab extends MainPage {
         getBilgiCombolov().selectLov(text);
         return this;
     }
+
+    @Step("Seçilen Bilgi alan kotrolü")
+    public BilgilerTab secilenBilgiAlanKotrolu(Condition... conditions){
+        ElementsCollection collection = getBilgiCombolov().getSelectedTitles();
+        for (Condition condition:conditions) {
+            collection = collection.filterBy(condition);
+        }
+        collection.shouldHave(sizeGreaterThan(0));
+        return this;
+    }
+
+    @Step("Seçilen Bilginin \"Listeden Çıkar\" butonu")
+    public SelenideElement getBilgiGeregiListedenCikarButton(Condition... secilenAramaKriteri){
+        ElementsCollection collection = getBilgiCombolov().getSelectedItems();
+        for (Condition condition:secilenAramaKriteri) {
+            collection = collection.filterBy(condition);
+        }
+        return collection.shouldHave(sizeGreaterThan(0)).first().$(deleteButtonuSelector);
+    }
+
+    @Step("Seçilen Bilginin \"Dağıtım Hitap Düzenleme\" butonu")
+    public SelenideElement getBilgiDagitimHitapDuzenlemeButton(Condition... secilenAramaKriteri){
+        ElementsCollection collection = getBilgiCombolov().getSelectedItems();
+        for (Condition condition:secilenAramaKriteri) {
+            collection = collection.filterBy(condition);
+        }
+        return collection.shouldHave(sizeGreaterThan(0)).first().$(updateButtonuSelector);
+    }
+
+    @Step("Seçilen Bilginin \"Dağıtım Hitap Düzenleme\" butona tiklanır")
+    public DagitimHitapDuzenle bilgiDagitimHitapDuzenlemeTiklanir(Condition... secilenAramaKriteri){
+        getBilgiDagitimHitapDuzenlemeButton(secilenAramaKriteri).shouldBe(visible).click();
+        return new DagitimHitapDuzenle();
+    }
     //endregion
 
     //******************************************************
@@ -440,6 +480,40 @@ public class BilgilerTab extends MainPage {
     public BilgilerTab geregiSecimTipiSec(GeregiSecimTipi geregiSecimTipi) {
         getGeregiSecimTipi().selectOption(geregiSecimTipi.getOptionText());
         return this;
+    }
+
+    @Step("Seçilen Gereği alan kotrolü")
+    public BilgilerTab secilenGeregiAlanKotrolu(Condition... conditions){
+        ElementsCollection collection = getGeregiCombolov().getSelectedTitles();
+        for (Condition condition:conditions) {
+            collection = collection.filterBy(condition);
+        }
+        collection.shouldHave(sizeGreaterThan(0));
+        return this;
+    }
+
+    @Step("Seçilen Gereği \"Listeden Çıkar\" butonu")
+    public SelenideElement getGeregiGeregiListedenCikarButton(Condition... secilenAramaKriteri){
+        ElementsCollection collection = getGeregiCombolov().getSelectedItems();
+        for (Condition condition:secilenAramaKriteri) {
+            collection = collection.filterBy(condition);
+        }
+        return collection.shouldHave(sizeGreaterThan(0)).first().$(deleteButtonuSelector);
+    }
+
+    @Step("Seçilen Gereği \"Dağıtım Hitap Düzenleme\" butonu")
+    public SelenideElement getGeregiDagitimHitapDuzenlemeButton(Condition... secilenAramaKriteri){
+        ElementsCollection collection = getGeregiCombolov().getSelectedItems();
+        for (Condition condition:secilenAramaKriteri) {
+            collection = collection.filterBy(condition);
+        }
+        return collection.shouldHave(sizeGreaterThan(0)).first().$(updateButtonuSelector);
+    }
+
+    @Step("Seçilen Gereği \"Dağıtım Hitap Düzenleme\" butona tiklanır")
+    public DagitimHitapDuzenle geregiDagitimHitapDuzenlemeTiklanir(Condition... secilenAramaKriteri){
+        getGeregiDagitimHitapDuzenlemeButton(secilenAramaKriteri).shouldBe(visible).click();
+        return new DagitimHitapDuzenle();
     }
     //endregion
 
@@ -983,6 +1057,28 @@ public class BilgilerTab extends MainPage {
         kullanButonaTikla();
         return this;
     }
+
+    @Step("Alanları doldurulur")
+    public BilgilerTab alanlariDoldur(String konu, GeregiSecimTipi geregiSecimTipi, String geregi, User parafci, User imzaci) {
+        konuKoduSec("010.01");
+        konuDoldur(konu);
+        kaldiralacakKlasorleriSec("Diğer");
+        geregiSecimTipiSec(geregiSecimTipi);
+        geregiSec(geregi);
+        onayAkisiTemizle();
+        onayAkisiEkleButonaTikla();
+
+        String kendisi = getAnlikOnayAkisKullanicilarCombolov().getSelectedTitles().first().text();
+        if (kendisi.contains(parafci.getFullname()))
+            anlikOnayAkisKullanicininTipiSec(parafci, OnayKullaniciTipi.PARAFLAMA);
+        else
+            anlikOnayAkisKullaniciVeTipiSec(parafci, OnayKullaniciTipi.PARAFLAMA);
+
+        anlikOnayAkisKullaniciVeTipiSec(imzaci, OnayKullaniciTipi.IMZALAMA);
+        kullanButonaTikla();
+        return this;
+    }
+
 
     @Step("Alanları doldurulur")
     public BilgilerTab alanlariDoldur(String konuKodu, String konu, String kaldirilacakKlasorleri, Ivedilik ivedilik, GeregiSecimTipi geregiSecimTipi, String geregi, String[][] onayAkisKullaniciTipi) {

@@ -4,32 +4,33 @@ import com.codeborne.selenide.Selectors;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.WebDriverRunner;
 import common.BaseTest;
+import common.ReusableSteps;
 import data.User;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Step;
-import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.newPages.EvrakOlusturPage;
+import pages.pageComponents.DagitimHitapDuzenle;
 import pages.pageComponents.EvrakOnizleme;
 import pages.pageComponents.PDFOnizleme;
-import pages.pageComponents.TuzelKisiEkleDialog;
 import pages.pageData.alanlar.BilgiSecimTipi;
 import pages.pageData.alanlar.GeregiSecimTipi;
 import pages.pageData.alanlar.OnayKullaniciTipi;
+import pages.solMenuPages.GelenEvraklarPage;
 import pages.solMenuPages.ImzaBekleyenlerPage;
 import pages.solMenuPages.ImzaladiklarimPage;
+import pages.solMenuPages.TeslimAlinmayiBekleyenlerPage;
 import pages.ustMenuPages.DagitimPlaniYonetimiPage;
 import pages.ustMenuPages.GidenEvrakKayitPage;
 import pages.ustMenuPages.TuzelKisiYonetimiPage;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.switchTo;
+import static pages.pageData.alanlar.DagitimElemanlariTipi.*;
 
 /**
  * Yazan: Ilyas Bayraktar
@@ -37,13 +38,19 @@ import static com.codeborne.selenide.Selenide.switchTo;
  * Açıklama:
  */
 @Feature("Dağıtım Planı Yönetimi")
+@Test(suiteName = "SuitName")
 public class DagitimPlaniYonetimiTest extends BaseTest {
 
     User optiim = new User("optiim", "123", "Optiim TEST", "Optiim Birim");
-    User ztekin = new User("ztekin", "123", "Zübeyde TEKİN", "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ/YGD");//, "Uzman Test Mühendis");
-    User ztekin1 = new User("ztekin", "123", "Zübeyde TEKİN", "Optiim Birim/YGD");//, "Uzman Test Mühendis");
+    User ztekin = new User("ztekin", "123", "Zübeyde TEKİN", "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ/YGD", "Genel Müdür");//, "Uzman Test Mühendis");
+    User ztekin1 = new User("ztekin", "123", "Zübeyde TEKİN", "AD MÜDÜRLÜĞÜ/YGD");//, "Uzman Test Mühendis");
+    User yakyol = new User("yakyol", "123", "Yasemin Çakıl AKYOL", "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ/YGD");//, "Uzman Test Mühendis");
     User user1 = new User("user1", "123", "User1 TEST", "AnaBirim1");//, "Uzman Test Mühendis");
+    User user2 = new User("user2", "123", "User2 TEST", "AnaBirim1");//, "Uzman Test Mühendis");
+    User user4 = new User("user4", "123", "User4 TEST", "AnaBirim2");//, "Uzman Test Mühendis");
     User user5 = new User("user5", "123", "User5 TEST", "AnaBirim1");//, "Uzman Test Mühendis");
+    //User mbozdemir = new User("mbozdemir", "123", "Mehmet BOZDEMİR", "GENEL MÜDÜRLÜK MAKAMI/GENMD");//, "Uzman Test Mühendis");
+    User mbozdemir = new User("mbozdemir", "123", "Mehmet BOZDEMİR", "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ/YGD", "Antalya İl Müdürü");//, "Uzman Test Mühendis");
     DagitimPlaniYonetimiPage page;
     EvrakOlusturPage evrakOlusturPage;
     String yeniPlanAdi1280;
@@ -53,7 +60,7 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
     String[] evraktaGorunecekHitap;
 
     @Test(description = "TS1280: Yeni Kayıt İşlemi tüm Dağıtım Tipi Elemanları ile", enabled = true, priority = 2)
-    public void TS1280() {
+    public void TS1280a() {
         User user = user1;
         login(user);
 
@@ -79,7 +86,7 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
     }
 
     @Test(description = "TS1280: Yeni Kayıt İşlemi tek Dağıtım Tipi Elemanı ile", enabled = true, priority = 1)
-    public void TS1280a() {
+    public void TS1280b() {
         User user = user1;
         login(user);
         String planAdi = "TS1280a_";
@@ -161,10 +168,7 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
         page = new DagitimPlaniYonetimiPage().openPage();
         page.sorgulamadaAdGir(adi)
                 .ara()
-                .sorgulamaDataTable
-                .searchByColumnName("Dağıtım Planı Ad")
-                .findRows(exactText(adi))
-                .shouldHaveSize(1);//.getFoundRow().$(page.copyButtonLocator).click();
+                .sorgulamaDataTable.searchByColumnName("Dağıtım Planı Ad").findRows(exactText(adi)).shouldHaveSize(1);//.getFoundRow().$(page.copyButtonLocator).click();
         page.sorgulamaDataTableKopyalaButonaTikla();
         checkFields(adi, aciklama, kullanildigiBirim, altBirimlerGorsun, dagitimElemanlariTipi, dagitimElemanlari);
         page.adiGir(newAd)
@@ -209,40 +213,44 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
     @Test(description = "TS2260: Sorgulama ve Filtreleme", enabled = true)
     public void TS2260() {
         User user = optiim;
+
+        String pasifDagitimPlanIsmi = "PASİF";
+        String aktifDagitimPlanIsmi = "TS2260";
+
         login(user);
         page = new DagitimPlaniYonetimiPage().openPage();
 
         step("STEP: Durum \"Sadece Pasifler\"", "Pasifler bulunmalı, aktifler bulunmamalı");
         page.sorgulamadaDurumSec("Sadece Pasifler").ara().sorgulamaDataTable
                 .searchInAllPages(true)
-                .findRows(text("PASİF")).shouldHaveSize(1)
+                .findRows(text(pasifDagitimPlanIsmi)).shouldHaveSize(1)
                 .goToFirstPage()
-                .findRows(text("TS2260")).shouldHaveSize(0);
+                .findRows(text(aktifDagitimPlanIsmi)).shouldHaveSize(0);
 
         step("STEP: Durum \"Sadece Aktifler\"", "Aktifler bulunmalı, pasifler bulunmamalı");
         page.sorgulamadaDurumSec("Sadece Aktifler").ara().sorgulamaDataTable
                 .searchInAllPages(true)
-                .findRows(text("TS2260")).shouldHaveSize(1)
+                .findRows(text(aktifDagitimPlanIsmi)).shouldHaveSize(1)
                 .goToFirstPage()
-                .findRows(text("PASİF")).shouldHaveSize(0);
+                .findRows(text(pasifDagitimPlanIsmi)).shouldHaveSize(0);
 
         step("STEP: Durum \"Tümü\"", "Aktifler ve pasifler bulunmalı");
         page.sorgulamadaDurumSec("Tümü").ara().sorgulamaDataTable
                 .searchInAllPages(true)
-                .findRows(text("PASİF")).shouldHaveSize(1)
+                .findRows(text(pasifDagitimPlanIsmi)).shouldHaveSize(1)
                 .goToFirstPage()
-                .findRows(text("TS2260")).shouldHaveSize(1);
+                .findRows(text(aktifDagitimPlanIsmi)).shouldHaveSize(1);
 
         step("STEP: Durum \"Tümü\" ve Ad girilir", "Sadece adi girilen bulunmalı");
         page.sorgulamadaDurumSec("Tümü")
-                .sorgulamadaAdGir("PASİF")
+                .sorgulamadaAdGir(pasifDagitimPlanIsmi)
                 .ara()
                 .sorgulamaDataTable.searchInAllPages(true)
-                .findRows(text("PASİF")).shouldHaveSize(1);
+                .findRows(text(pasifDagitimPlanIsmi)).shouldHaveSize(1);
     }
 
     @Test(description = "TS2323: Yeni Dağıtım Planı Kayıt (Ekranlardan Kontrolü)", enabled = true
-            , dependsOnMethods = {"TS1280"}
+            , dependsOnMethods = {"TS1280a"}
     )
     public void TS2323() {
         //User user = optiim;
@@ -350,33 +358,32 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
         User user = user1;
         yeniPlanAdi2270 = "TS2270_" + getSysDate();
 
+        String tuzelKisi = "Türksat Optiim";
+        String gercekKisi = "Zübeyde TEKİN";
+
         String adres = "HitapAdres";
         //String dagitimElemanlariTipi, dagitimElemanlari, evraktaGorunecekHitap, kayitliHitap;
         evraktaGorunecekHitap = new String[]{
                 String.format("Sayın %s%s", user.getFullname(), "NA")
                 , user.getBirimAdi() + "E"
-                , "Başbakanlıka"
-                , "Türksat Optiim".toUpperCase() + "E"
-                , String.format("Sayın %s \n %s", "Zübeyde TEKİN", adres)
+                , "CUMHURBAŞKANLIĞINA"
+                , tuzelKisi.toUpperCase() + "E"
+                , String.format("Sayın %s \n %s", gercekKisi, adres)
         };
 
         dagitimElemenlariTS2270 = new ArrayList<>();
         //dagitimElemanlariTipi, dagitimElemanlariEkle, Ek, evraktaGorunecekHitap, kayitliHitap
         dagitimElemenlariTS2270.add(new String[]{"Kullanıcı", user.getFullname(), "NA"});
         dagitimElemenlariTS2270.add(new String[]{"Birim", user.getBirimAdi(), "E", "BirimÖzelHitap"});
-        dagitimElemenlariTS2270.add(new String[]{"Kurum", "Başbakanlık"});
-        dagitimElemenlariTS2270.add(new String[]{"Tüzel Kişi", "Türksat Optiim", "E", "TüzelÖzelHitap"});
-        dagitimElemenlariTS2270.add(new String[]{"Gerçek Kişi", "Zübeyde", adres});
+        dagitimElemenlariTS2270.add(new String[]{"Kurum", "Cumhurbaşkanlığı"});
+        dagitimElemenlariTS2270.add(new String[]{"Tüzel Kişi", tuzelKisi, "E", "TüzelÖzelHitap"});
+        dagitimElemenlariTS2270.add(new String[]{"Gerçek Kişi", gercekKisi, adres});
 
         System.out.println("Dağınım Planı Adı: " + yeniPlanAdi2270);
 
         login(user);
         page = new DagitimPlaniYonetimiPage().openPage();
-        page.yeni()
-                .adiGir(yeniPlanAdi2270)
-                .aciklamaGir("Dağıtım Planı_Dağıtım Hitap Düzenleme")
-                .kullanildigiBirimSec(user.getBirimAdi())
-                .altBirimlerGorsunSec(true);
+        page.yeni();
 
         for (String[] d : dagitimElemenlariTS2270) {
             switch (d[0]) {
@@ -389,21 +396,26 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
                 case "Kurum":
                     page.dagitimElemanlariEkle(d[0], d[1]);
                     break;
-                case "Gerçek Kişi":
-                    page.dagitiminElemaniEkleVeAdresSec(d[0], d[1], d[2], evraktaGorunecekHitap[3]);
-                    break;
                 case "Tüzel Kişi":
-                    page.dagitiminElemaniEkleVeOzelHitapSec(d[0], d[1], evraktaGorunecekHitap[4]);
+                    page.dagitiminElemaniEkleVeOzelHitapSec(d[0], d[1], evraktaGorunecekHitap[3]);
+                    break;
+                case "Gerçek Kişi":
+                    page.dagitiminElemaniEkleVeAdresSec(d[0], d[1], d[2], evraktaGorunecekHitap[4]);
                     break;
                 default:
                     break;
             }
         }
-        page.kaydet().islemMesaji().basariliOlmali();
+        page.adiGir(yeniPlanAdi2270)
+                .aciklamaGir("Dağıtım Planı_Dağıtım Hitap Düzenleme")
+                .kullanildigiBirimSec(user.getBirimAdi())
+                .altBirimlerGorsunSec(true)
+                .kaydet().islemMesaji().basariliOlmali();
     }
 
-    @Test(description = "TS2271: Hitabın oluşturulan evrak üzerinde kontrolü", enabled = true)
-//, dependsOnMethods = "TS2270")
+    @Test(description = "TS2271: Hitabın oluşturulan evrak üzerinde kontrolü", enabled = true
+        , dependsOnMethods = "TS2270"
+    )
     public void TS2271() {
         useFirefox();
         User user = user1;
@@ -418,7 +430,8 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
                 , String.format("Sayın %s \n %s", "Zübeyde TEKİN", adres)
         };*/
 
-        String dagitimPlani = "TS2270_20180212162246";
+        //String dagitimPlani = "TS2270_20180212162246";
+        String dagitimPlani = yeniPlanAdi2270;
         String konu = "TS2271_" + getSysDate();
         evrakOlusturPage = new EvrakOlusturPage().openPage();
         evrakOlusturPage.bilgileriTab()
@@ -439,19 +452,18 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
         //imzaladiklarimPage.searchTable().findRows(text(konu)).getFoundRow().click();
 
         EvrakOnizleme.EvrakDetaylari evrakDetaylari = new EvrakOnizleme().new PostaDetayi().tabiAc()
-                .postalananYerlerindeAra(text("DAĞITIM YERLERİNE"))
+                .postalananYerlerindeAra(text(yeniPlanAdi2270 + "E"))
                 .yazdir();
         evrakDetaylari.ustVerileriListesindeAra(text(konu)).ustVerileriYazdir();
 
-        PDFOnizleme pdfOnizleme = new PDFOnizleme();
-        WebDriver driver = switchTo().window(1);
-        pdfOnizleme.checkTextInAllPages(
-                text(evraktaGorunecekHitap[0])
-                , text(evraktaGorunecekHitap[1])
-                , text(evraktaGorunecekHitap[2])
-                , text(evraktaGorunecekHitap[3])
-                , text(evraktaGorunecekHitap[4]));
-        driver.close();
+        new PDFOnizleme(1).checkTextInAllPages(
+                exactText(evraktaGorunecekHitap[0])
+                , exactText(evraktaGorunecekHitap[1])
+                , exactText(evraktaGorunecekHitap[2])
+                , exactText(evraktaGorunecekHitap[3])
+                , exactText(evraktaGorunecekHitap[4]));
+        WebDriverRunner.getWebDriver().close();
+
         switchTo().window(0);
     }
 
@@ -555,11 +567,120 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
         page.ekle(text(tuzelKisi));
     }
 
-    //region Steps
-    @Step("{name} : {description}")
-    private void step(String name, String description) {
+    @Test(description = "TS1936: Medya Tipinde Tüzel Kişi Ekleme İşlemleri", enabled = true)
+    public void TS1936() {
+        User user = user1;
+
+        login(user);
+
+        //List<String> tuzelKisi = new ReusableSteps().medyaSirketiTuzelKisiEkleme();
+        List<String> tuzelKisi = new TuzelKisiYonetimiPage().medyaSirketiTuzelKisiEkleme();
+
+        String adi = "TS1936_" + getSysDate();
+        System.out.println("Dağınım Planı: " + adi);
+        page = new DagitimPlaniYonetimiPage().openPage();
+        page.yeni()
+                .adiGir(adi)
+                .aciklamaGir("Medya Şirketi")
+                .kullanildigiBirimSec(user.getBirimAdi())
+                .altBirimlerGorsunSec(true)
+                .dagitimElemanlariTipiSec("Tüzel Kişi")
+                .tuzelKisiAramaDetaylari()
+                .tuzelKisiTipiSecilir("MEDYA ŞİRKETİ")
+                .alanlariKonrolu()
+                .tuzelKisiDoldurulur(tuzelKisi.get(0))
+                .ara()
+                .listelenKayidinCheckboxIsaretlenir(text(tuzelKisi.get(0)), true)
+                .ekle();
+        page.ekle()
+                .kaydet().islemMesaji().basariliOlmali();
+        //page.dagitimPlaniOlustur(adi, "Medya Şirketi", user.getBirimAdi(),true, "Tüzel Kişi", tuzelKisi.get(0));
     }
 
+    @Test(description = "TS1942: Onay Akışındaki sırasında dağıtım planının güncellenemesi", enabled = true)
+    public void TS1942() {
+        User parafci = mbozdemir;
+        User imzaci = ztekin;
+        //User user = optiim;
+        User silenecekDagitimPlanUser = mbozdemir;
+        User birimDagitimPlanUser = ztekin1;
+
+        String konu = "TS1942_" + getSysDate();
+        String dagitimPlanAdi = konu;
+        System.out.println("Dağınım Planı: " + dagitimPlanAdi);
+        String aciklama = "Dağıtım Elemanları: 2 kullanıcı + 1 birim";
+
+        String[][] dagitimElemanlari = new String[][]{
+                {KULLANICI.getOptionText(), parafci.getFullname(), ""}
+                ,{KULLANICI.getOptionText(), birimDagitimPlanUser.getFullname(), birimDagitimPlanUser.getBirimAdi()}
+                ,{BIRIM.getOptionText(), imzaci.getBirimAdi(), ""}
+
+                //,{KULLANICI.getOptionText(), silenecekDagitimPlanUser.getFullname(), ""}
+                //,{KULLANICI.getOptionText(), user.getFullname()}
+        };
+
+        login(parafci);
+        DagitimPlaniYonetimiPage dagitimPlaniYonetimiPage = new DagitimPlaniYonetimiPage()
+                .openPage()
+                .dagitimPlaniOlustur(dagitimPlanAdi, aciklama, parafci.getBirimAdi(),true, dagitimElemanlari);
+
+        new ReusableSteps().evrakOlusturVeParafla(konu, GeregiSecimTipi.DAGITIM_PLANLARI, dagitimPlanAdi, parafci,imzaci);
+
+
+        dagitimPlaniYonetimiPage.openPage()
+                .bulVeGuncelleTikla(dagitimPlanAdi)
+                .dagitimPlaniListesindeAra(text(silenecekDagitimPlanUser.getFullname()))
+                .sil(text(silenecekDagitimPlanUser.getFullname()))
+                .dagitimElemanlariEkle(BIRIM.getOptionText(), birimDagitimPlanUser.getBirimAdi())
+                .kaydet()
+                .islemMesaji().basariliOlmali();
+
+        login(imzaci);
+        new ImzaBekleyenlerPage().openPage()
+                .searchTable().findRowAndSelect(text(konu))
+                .evrakPageButtons().evrakImzala()
+                .islemMesaji().basariliOlmali();
+
+        //login(silenecekDagitimPlanUser);
+        new GelenEvraklarPage().openPage()
+                .searchTable().findRows(text(konu)).shouldHaveSize(0);
+
+        //login(birimDagitimPlanUser);
+        new TeslimAlinmayiBekleyenlerPage().openPage()
+                .searchTable().findRows(text(konu)).shouldHaveSize(1);
+    }
+
+    @Test(description = "TS1949: Dağıtım Hitap Düzenleme (Evrak Oluştur Ekranından)", enabled = true)
+    public void TS1949() {
+        User user = user1;
+        login(user);
+
+        String planAdi = "TS1280_20180206164745";
+        System.out.println("Dağınım Planı: " + planAdi);
+
+        Map<String,String> dagitimPlanElemanlari = new LinkedHashMap<>();
+        dagitimPlanElemanlari.put("Kullanıcı", "Sayın User1 TEST");
+        dagitimPlanElemanlari.put("Birim", "AnaBirim1E");
+        dagitimPlanElemanlari.put("Kurum", "BAŞBAKANLIĞA");
+        dagitimPlanElemanlari.put("Gerçek Kişi", "Sayın Zübeyde TEKİN");
+        dagitimPlanElemanlari.put("Tüzel Kişi", "Türksat Optiime");
+
+        EvrakOlusturPage page = new EvrakOlusturPage().openPage();
+        page.bilgileriTab()
+                .bilgiSecimTipiSec(BilgiSecimTipi.DAGITIM_PLANLARI)
+                .bilgiSec(planAdi)
+                .bilgiDagitimHitapDuzenlemeTiklanir(text(planAdi));
+        DagitimHitapDuzenle dagitimHitapDuzenle = new DagitimHitapDuzenle();
+        dagitimHitapDuzenle.getEvraktaGorunecekHitap("DAĞITIM YERLERİNE olmalı").shouldBe(visible);
+        Assert.assertEquals(dagitimHitapDuzenle.getEvraktaGorunecekHitap("değişikliğin yapılamadığı görülür")
+                .$(Selectors.byText("DAĞITIM YERLERİNE")).getTagName(), "span", "evrakta görünecek hitap span olmalı");
+
+        dagitimHitapDuzenle.dagitimPlaniDetayListesiKontroluGereksizKontrollu(dagitimPlanElemanlari);
+    }
+
+
+
+    //region Steps
     @Step("Evrak Oluştur sayfada pasif yapılan dağıtım planının gereği alanında gelmediği görülür")
     private void evrakOlusturSayfadaPasifKontrolu(String adi) {
         new EvrakOlusturPage().openPage().bilgileriTab()

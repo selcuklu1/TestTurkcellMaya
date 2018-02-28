@@ -32,7 +32,8 @@ public class TaslakEvraklarPage extends MainPage {
     SelenideElement btnSilSil = $(By.xpath("//span[text()='Sil']/../../button"));
     SelenideElement btnPopSilEvet = $(By.id("mainPreviewForm:evrakSilEvetButton"));
 
-    SelenideElement btnEvrakKopyala = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:3:cmdbutton"));
+    SelenideElement btnEvrakKopyala = $("[class='ui-button-icon-left ui-icon evrakKopyala']");
+    SelenideElement btnEvrakKopyalaEvet = $(By.id("evrakCopyConfirmForm:copyEvrakEvetButton"));
 
     //Paylaş Button alt div
 
@@ -70,6 +71,28 @@ public class TaslakEvraklarPage extends MainPage {
         $("#mainInboxForm\\:inboxDataTable .ui-inbox-header-title")
                 .shouldHave(text(pageTitle));
         System.out.println("Page: " + pageTitle);
+        return this;
+    }
+
+    @Step("Kopyalanan Evrakların listelendiği görülür")
+    public TaslakEvraklarPage kopyaliEvraklarGeldigiGorme(String konu){
+        boolean durum = tableEvraklar.filterBy(Condition.text(konu)).size()==2;
+        Assert.assertEquals(durum,true);
+        takeScreenshot();
+        return this;
+    }
+
+    @Step("Evrak seçilir")
+    public TaslakEvraklarPage evrakNoIleIcerikGoster(String konu){
+        tableEvraklar.filterBy(Condition.text(konu)).first().$("[id$='detayGosterButton']").click();
+        return this;
+    }
+
+    @Step("Editör alanındaki içeriğin girilenle aynı olduğu görülür.")
+    public TaslakEvraklarPage editorAlaniGirilenIcerikAyniGeldigiGorme(String icerik){
+         boolean durum = $$("[id='inboxItemInfoForm:allPanels']").filterBy(Condition.text(icerik)).size() ==1;
+         Assert.assertEquals(durum,true);
+         takeScreenshot();
         return this;
     }
 
@@ -160,8 +183,15 @@ public class TaslakEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Evrak kopyala tıklanır")
     public TaslakEvraklarPage evrakKopyalaGonder() {
         btnEvrakKopyala.click();
+        return this;
+    }
+
+    @Step("Evet tıklanır")
+    public TaslakEvraklarPage evrakKopyalaEvet(){
+        btnEvrakKopyalaEvet.click();
         return this;
     }
 
@@ -218,6 +248,16 @@ public class TaslakEvraklarPage extends MainPage {
         tableEvraklar
                 .filterBy(Condition.text(konu))
                 .first()
+                .click();
+        return this;
+    }
+
+    @Step("Evrakın içerik göster tıklanır")
+    public TaslakEvraklarPage evrakSecKonuyaGoreIcerikGosterSec(String konu) {
+        tableEvraklar
+                .filterBy(Condition.text(konu))
+                .first()
+                .$("[id$='detayGosterButton']")
                 .click();
         return this;
     }

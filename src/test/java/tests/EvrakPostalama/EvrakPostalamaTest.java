@@ -38,7 +38,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Selenide.switchTo;
 import static pages.pageComponents.belgenetElements.Belgenet.comboBox;
 import static pages.pageData.alanlar.GeregiSecimTipi.*;
 
@@ -147,11 +146,12 @@ public class EvrakPostalamaTest extends BaseTest {
                 .onayAkisiKullan();
         evrakOlusturPage2 = new pages.newPages.EvrakOlusturPage();
 
-        ilgileriTab();
+        ilgileriTab2(metin308);
 
         evrakOlusturPage
                 .ilgileriTabAc()
                 .sistemeKayitliEvrakEkleTab()
+                .sistemeKayitliEvrakBaslangictarihi("01.12.2017")
                 .sistemeKayitliEvrakAra("yazı")
                 .sistemeKayitliDokumanArama()
                 .tablodaBulunanEvrakiEkle();
@@ -180,9 +180,9 @@ public class EvrakPostalamaTest extends BaseTest {
         evrakOlusturPage
                 .editorTabAc()
                 .editorIcerikDoldur("TS0308")
-                .editorEvrakGeregiSec("YAZILIM GELİ")
                 .editordeEkKontrol("TS0308_PDF", "Ek kontrol")
                 .imzala()
+                .imzaPopupGeldigiGorme()
                 .popupSImzalaIslemleri();
 
 
@@ -201,21 +201,27 @@ public class EvrakPostalamaTest extends BaseTest {
         postalanacakEvraklarPage.tabIlgiBilgileriAc();
         EvrakOnizleme evrakOnizleme = new EvrakOnizleme();
 
-        evrakOnizleme.new IlgiBilgileri().openTab().getDataTable().findRows(text(metni)).shouldHaveSize(1);
+        evrakOnizleme.new IlgiBilgileri().openTab().getDataTable().findRows(text(metin308)).shouldHaveSize(1);
 
 
         postalanacakEvraklarPage.evrakPostala()
-                .gidisSekli("E-Posta")
-                .postalacanakEposta("test@test.com")
-                .postalamaAciklama("Test")
-                .postalanacakEvrakYaz()
-                .popupPostalanacakEvrakYazdir()
+                .postalanacakKontrol()
+                .elektronikGonderilmistirKontrol()
+                .detayTextKontrol()
+                .kullaniciYazdir()
+                .popupYazdirbutonkontrolleri()
+                .popupEkleriyazdir()
+                .ktrlonceustyazi()
+                .popupUstveriYazdir()
+                .dgmpdfhitapguvenktrl()
+                .kullaniciYazdir()
+                .popupUstveriYazdir2()
+                .popupEkleriyazdir()
+                .popupEklerPdfktrl()
                 .popupPostaYazdirmaKapat();
 
-        switchTo().window(1);
-        closeNewWindow();
 
-        switchTo().window(0);
+
         postalanacakEvraklarPage
                 .popupOrjYazYazdirButonKonrolleri()
                 .popupEvrOrjYazKapat()
@@ -643,7 +649,7 @@ public class EvrakPostalamaTest extends BaseTest {
         evrakPostala.getUstVerilerYazdirButton(konu + " satırda bulunmalı").shouldBe(visible);
         evrakPostala.getYazdirEvrakinEkleriListesi().findRows(text(ekleri)).shouldHaveSize(1).getFoundRow().shouldBe(visible);
         evrakPostala.getEvrakinEkleriYazdirButton(ekleri + " satırda bulunmalı").shouldBe(visible);
-        evrakPostala.yazdirClose();
+        evrakPostala.evrakDetayDialogClose();
 
         gidisSekliKontrol(DAGITIM_PLANLARI.getOptionText(), "DAĞITIM YERLERİNE", "Detaya tıkla");
         evrakPostala.getDetayButtonInFoundRow("buton bulunur").shouldBe(visible).click();
@@ -850,8 +856,7 @@ public class EvrakPostalamaTest extends BaseTest {
         evrakPostala.getUstVerilerYazdirButton(konu + " satırda bulunmalı").shouldBe(visible);
         evrakPostala.getYazdirEvrakinEkleriListesi().findRows(text(ekleri)).shouldHaveSize(1).getFoundRow().shouldBe(visible);
         evrakPostala.getEvrakinEkleriYazdirButton(ekleri + " satırda bulunur ve tıklanır").shouldBe(visible).click();
-        postalanacakEvraklarPage.pdfKontrol();
-        evrakPostala.yazdirClose();
+        evrakPostala.evrakDetayDialogClose();
 
 
 
@@ -1146,6 +1151,15 @@ public class EvrakPostalamaTest extends BaseTest {
         altTabs.metinEkleTabiAc().ilgiMetniDoldur(metni).ekleButonaTikla();
         evrakOlusturPage2.ilgileriTab().getIlgliliListesiTablosu().findRows(text(metni)).shouldHaveSize(1);
     }
+    @Step("İlgileri sekmesinde ekleme ve kontrolleri")
+    private void ilgileriTab2(String Metin) {
+        altTabs = evrakOlusturPage2.ilgileriTab().openTab().altTabs();
+        altTabs.getSistemdeKayitliEvrakEkleTab().shouldBe(visible);
+        altTabs.getDosyaEkleTab().shouldBe(visible);
+        altTabs.metinEkleTabiAc().ilgiMetniDoldur(Metin).ekleButonaTikla();
+        evrakOlusturPage2.ilgileriTab().getIlgliliListesiTablosu().findRows(text(Metin)).shouldHaveSize(1);
+    }
+
 
     @Step("İlişkili Evraklar sekmesinde ekleme ve kontrolleri")
     private void iliskiliEvraklar() {

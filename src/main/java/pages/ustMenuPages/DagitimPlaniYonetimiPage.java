@@ -11,6 +11,8 @@ import pages.pageComponents.TuzelKisiEkleDialog;
 import pages.pageComponents.UstMenuPageHeader;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 
+import java.util.Map;
+
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
@@ -211,7 +213,7 @@ public class DagitimPlaniYonetimiPage extends MainPage {
     }
 
     @Step("\"Dağıtım Elemanları\"da \"{text}\" seçilir")
-    public DagitimPlaniYonetimiPage dagitimElemanlariSec(String dagitimElemani) {
+    public DagitimPlaniYonetimiPage dagitimElemanlariSec(String... dagitimElemani) {
         getDagitimElemanlariCombolov().selectLov(dagitimElemani);
         /*getSecilenDagitimElemaniSilButton(dagitimElemani, "bulunur").shouldBe(visible);
         getSecilenDagitimElemaniGuncelleButton(dagitimElemani, "bulunur").shouldBe(visible);*/
@@ -259,8 +261,9 @@ public class DagitimPlaniYonetimiPage extends MainPage {
     }
 
     @Step("Kayır silinir")
-    public DagitimPlaniYonetimiPage sil() {
+    public DagitimPlaniYonetimiPage sil(Condition... silenecekKayit) {
         dagitimPlaniDataTable.getFoundRow().$(deleteButtonLocator).shouldBe(visible).pressEnter();
+        dagitimPlaniDataTable.findRows(silenecekKayit).shouldHaveSize(0);
         return this;
     }
 
@@ -342,13 +345,15 @@ public class DagitimPlaniYonetimiPage extends MainPage {
 
 
     @Step("\"{dagitimElemanlariTipi}\" dağıtım elemanı eklenir")
-    public DagitimPlaniYonetimiPage dagitimElemanlariEkle(String dagitimElemanlariTipi, String dagitimElemanlari) {
-        dagitimElemanlariTipiSec(dagitimElemanlariTipi)
-                .dagitimElemanlariSec(dagitimElemanlari);
-        getDagitimHitapDuzenlemeSilButton(dagitimElemanlari, "bulunur").shouldBe(visible);
-        getDagitimHitapDuzenlemeGuncelleButton(dagitimElemanlari,"bulunur").shouldBe(visible);
+    public DagitimPlaniYonetimiPage dagitimElemanlariEkle(String dagitimElemanlariTipi, String... dagitimElemanlari) {
+
+        dagitimElemanlariTipiSec(dagitimElemanlariTipi);
+        dagitimElemanlariSec(dagitimElemanlari);
+
+        getDagitimHitapDuzenlemeSilButton(dagitimElemanlari[0], "bulunur").shouldBe(visible);
+        getDagitimHitapDuzenlemeGuncelleButton(dagitimElemanlari[0],"bulunur").shouldBe(visible);
         ekle();
-        dagitimPlaniDataTable.findRows(text(dagitimElemanlariTipi), text(dagitimElemanlari)).shouldHaveSize(1);
+        dagitimPlaniDataTable.findRows(text(dagitimElemanlariTipi), text(dagitimElemanlari[0])).shouldHaveSize(1);
         getSilButton().shouldBe(visible);
         getGuncelleButton().shouldBe(visible);
         return this;
@@ -358,7 +363,7 @@ public class DagitimPlaniYonetimiPage extends MainPage {
     public DagitimPlaniYonetimiPage dagitiminElemaniEkleVeAdresSec(String dagitimElemanlariTipi, String dagitimElemanlari, String adres, String evraktaGorunecekHitap) {
         dagitimElemanlariEkle(dagitimElemanlariTipi, dagitimElemanlari);
         DagitimHitapDuzenle dagitimHitapDuzenle = guncelleTikla();
-        dagitimHitapDuzenle.adresSec(adres, evraktaGorunecekHitap);
+        dagitimHitapDuzenle.adresHitaptaGorunsunSec(true).adresSec(adres, evraktaGorunecekHitap).kaydet();;
         return this;
     }
 
@@ -366,7 +371,7 @@ public class DagitimPlaniYonetimiPage extends MainPage {
     public DagitimPlaniYonetimiPage dagitiminElemaniEkleVeOzelHitapSec(String dagitimElemanlariTipi, String dagitimElemanlari, String evraktaGorunecekHitap) {
         dagitimElemanlariEkle(dagitimElemanlariTipi, dagitimElemanlari);
         DagitimHitapDuzenle dagitimHitapDuzenle = guncelleTikla();
-        dagitimHitapDuzenle.ozelHitapGirilir(evraktaGorunecekHitap);
+        dagitimHitapDuzenle.ozelHitapSec(true).ozelHitapGirilir(evraktaGorunecekHitap).kaydet();
         return this;
     }
 
@@ -374,10 +379,9 @@ public class DagitimPlaniYonetimiPage extends MainPage {
     public DagitimPlaniYonetimiPage dagitiminElemaniEkleVeEkGuncelle(String dagitimElemanlariTipi, String dagitimElemanlari, String ek, String evraktaGorunecekHitap) {
         dagitimElemanlariEkle(dagitimElemanlariTipi, dagitimElemanlari);
         DagitimHitapDuzenle dagitimHitapDuzenle = guncelleTikla();
-        dagitimHitapDuzenle.ekGuncelle(dagitimElemanlari, ek, evraktaGorunecekHitap);
+        dagitimHitapDuzenle.ekGuncelle(dagitimElemanlari, ek, evraktaGorunecekHitap).kaydet();
         return this;
     }
-
 
     @Step("Dağıtım Planı oluştur")
     public DagitimPlaniYonetimiPage dagitimPlaniOlustur(String planAdi, String aciklama, String kullanildigiBirim, boolean altBirimlerGorsun, String dagitimElemanlariTipi, String dagitimElemanlari) {
@@ -391,4 +395,29 @@ public class DagitimPlaniYonetimiPage extends MainPage {
         return this;
     }
 
+    @Step("Dağıtım Planı oluştur")
+    public DagitimPlaniYonetimiPage dagitimPlaniOlustur(String planAdi, String aciklama, String kullanildigiBirim, boolean altBirimlerGorsun, Map<String,String> dagitimElemanlari) {
+        yeni();
+        adiGir(planAdi);
+        aciklamaGir(aciklama);
+        kullanildigiBirimSec(kullanildigiBirim);
+        altBirimlerGorsunSec(altBirimlerGorsun);
+        dagitimElemanlari.forEach((k,v)-> dagitimElemanlariEkle(k, v));
+        kaydet().islemMesaji().basariliOlmali();
+        return this;
+    }
+
+    @Step("Dağıtım Planı oluştur")
+    public DagitimPlaniYonetimiPage dagitimPlaniOlustur(String planAdi, String aciklama, String kullanildigiBirim, boolean altBirimlerGorsun, String[][] dagitimElemanlari) {
+        yeni();
+        adiGir(planAdi);
+        aciklamaGir(aciklama);
+        kullanildigiBirimSec(kullanildigiBirim);
+        altBirimlerGorsunSec(altBirimlerGorsun);
+        for (String[] d:dagitimElemanlari) {
+            dagitimElemanlariEkle(d[0],d[1], d[2]);
+        }
+        kaydet().islemMesaji().basariliOlmali();
+        return this;
+    }
 }

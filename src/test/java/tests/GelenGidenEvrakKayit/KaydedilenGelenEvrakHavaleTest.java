@@ -689,22 +689,38 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .icerikHavaleOnayinaGonder2()
                 .islemMesaji().basariliOlmali();
 
+        testStatus(testid, "Test Başladı");
         havaleEdilenEvrakRaporuPage
                 .openPage()
-
                 .havaleEdilenEvrakRaporAlanKontrolu()
                 .havaleEdilenBirimDoldur(birim)
                 .havaleTarihAraligiBaslangicDoldur(evrakTarihi)
                 .havaleTarihAraligiBitisDoldur(evrakTarihi)
                 .sorgula()
-                .rapordaEvraklarıListele(konu)
+                .rapordaEvraklarıListele(konu);
 
+        login(TestData.usernameZTEKIN,TestData.passwordZTEKIN);
+        havaleEdilenEvrakRaporuPage
+                .openPage()
                 .havaleEdilenKullaniciDoldur(onaylayacakKisi)
                 .havaleTarihAraligiBaslangicDoldur(evrakTarihi)
                 .havaleTarihAraligiBitisDoldur(evrakTarihi)
                 .sorgula()
+                .rapordaEvraklarıListele(konu)
+
                 .rapordaEvraklarıListeleDetayTikla(konu)
                 .ekranKontrolEvrakDetayi();
+
+        login(TestData.usernameZTEKIN,TestData.passwordZTEKIN);
+        //Bug: Raporda havaleEden doldurulmuyor
+        havaleEdilenEvrakRaporuPage
+                .openPage()
+                .havaleEdenKullaniciDoldur(onaylayacakKisi)
+                .havaleTarihAraligiBaslangicDoldur(evrakTarihi)
+                .havaleTarihAraligiBitisDoldur(evrakTarihi)
+                .sorgula()
+                .rapordaEvraklarıListele(konu);
+
     }
 
     @Severity(SeverityLevel.CRITICAL)

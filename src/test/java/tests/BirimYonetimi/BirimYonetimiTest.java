@@ -1,11 +1,18 @@
 package tests.BirimYonetimi;
 
+import com.codeborne.selenide.Condition;
 import common.BaseTest;
+import common.ReusableSteps;
+import data.TestData;
+import data.User;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import pages.MainPage;
 import pages.ustMenuPages.*;
+
+import java.util.List;
 
 /****************************************************
  * Tarih: 2018-02-15
@@ -20,17 +27,19 @@ public class BirimYonetimiTest extends BaseTest {
     GidenEvrakKayitPage gidenEvrakKayitPage;
     EvrakOlusturPage evrakOlusturPage;
     OlurYazisiOlusturPage olurYazisiOlusturPage;
+    KullaniciYonetimiPage kullaniciYonetimiPage;
+    MainPage mainPage;
 
     @BeforeMethod
     public void loginBeforeTests() {
-
-        login();
 
         birimYonetimiPage = new BirimYonetimiPage();
         gelenEvrakKayitPage = new GelenEvrakKayitPage();
         gidenEvrakKayitPage = new GidenEvrakKayitPage();
         evrakOlusturPage = new EvrakOlusturPage();
         olurYazisiOlusturPage = new OlurYazisiOlusturPage();
+        kullaniciYonetimiPage = new KullaniciYonetimiPage();
+        mainPage = new MainPage();
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -48,6 +57,8 @@ public class BirimYonetimiTest extends BaseTest {
         String gelenEvrakNumaratoru = "Türksat AŞ_numarator - Gelen Evrak";
         String gidenEvrakNumaratoru = "Türksat AŞ_numarator - Giden Evrak";
         String basariMesaji = "İşlem başarılıdır!";
+
+        login();
 
         testStatus(testID, "Birim Oluşturma");
 
@@ -77,7 +88,7 @@ public class BirimYonetimiTest extends BaseTest {
         birimYonetimiPage
                 .birimFiltreDoldur(birimAdi)
                 .ara()
-                .birimKontrolu(birimAdi);
+                .birimKayitKontrolu(birimAdi);
 
 //TODO: Burada defect var. Seçilme durumu istenmiş ama seçilemiyor.
         gelenEvrakKayitPage
@@ -124,6 +135,8 @@ public class BirimYonetimiTest extends BaseTest {
     @Test(enabled = true, description = "TS2336: Birimin olur metnini güncelleme")
     public void TS2336() {
 
+        login();
+
         String birimAdi = "TS2336 Birim";
 
     }
@@ -135,6 +148,8 @@ public class BirimYonetimiTest extends BaseTest {
         String aktifIcBirimAdi = "TS1108 Aktif İç Birim";
         String pasifIcBirimAdi = "TS1108 Pasif İç Birim";
         String pasifDisBirimAdi = "TS1108 Pasif Dış Birim";
+
+        login();
 
         birimYonetimiPage
                 .openPage()
@@ -186,6 +201,8 @@ public class BirimYonetimiTest extends BaseTest {
         String gidenEvrakNumaratoru = "Türksat AŞ_numarator - Giden Evrak";
         String basariMesaji = "İşlem başarılıdır!";
 
+        login();
+
         testStatus(testID, "Birim Oluşturma");
 
         birimYonetimiPage
@@ -213,7 +230,7 @@ public class BirimYonetimiTest extends BaseTest {
         birimYonetimiPage
                 .birimFiltreDoldur(birimAdi)
                 .ara()
-                .birimKontrolu(birimAdi);
+                .birimKayitKontrolu(birimAdi);
 
         gelenEvrakKayitPage
                 .openPage()
@@ -254,5 +271,186 @@ public class BirimYonetimiTest extends BaseTest {
                 .bilgiSecimTipiSecByText("Birim")
                 .bilgiAlanindaBiriminGeldigiVeSecilebildigiKontrolu(birimAdi, "Birim Adı")
                 .bilgiAlanindaBiriminGeldigiVeSecilebildigiKontrolu(idariBirimKimlikKodu, "İdari Birim Kodu ");
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS1461: Birime kullanıcı ataması ve sisteme girişi")
+    public void TS1461() {
+
+        User user1 = new User("scelik", "123", "Sezai ÇELİK", "Optiim Birim");
+
+        login(user1);
+
+        testStatus("TS1109", "Birim Oluşturma");
+        //1109 senaryosu yerine pre. con. koşuluyor
+        List<String> birim = new ReusableSteps().yeniBirimKayit();
+
+        String birimAdı = birim.get(0);
+        String birimKisaAdi = birim.get(1);
+        String idariBirimKimlikKodu = birim.get(2);
+
+        kullaniciYonetimiPage
+                .openPage()
+                .kullaniciAdiDoldur("scelik")
+                .ara()
+                .kullaniciListesiGuncelle()
+                .gorevliOlduguBirimlerEkle()
+                .kullaniciBirimAtamaBirimDoldur(birimAdı)
+                .kullaniciBirimAtamaGorevDoldur("Uzman Test Mühendisi")
+                .kullaniciBirimAtamaKaydet()
+                .rolListeriEkle()
+                .yeniRolIliskilendirmeKullaniciBirimDoldur(birimKisaAdi)
+                .yeniRolIliskilendirmeKullaniciRolSec("STANDART KULLANICI YETKİSİ")
+                .yeniRolIliskilendirmeKaydet()
+                .kullaniciGuncelleKaydet();
+
+        clearCookies();
+
+        login(TestData.usernameSCELIK, TestData.passwordSCELIK);
+
+        mainPage
+                .birimSec(Condition.text(birimAdı))
+                .evrakIslemleriIslemYaptiklarimMenuKontrol();
+
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS1122: İşlem yapılan birimin silinememesi")
+    public void TS1122() {
+
+        String birim = "TS1122_Birim";
+        String soru = "Birimin ve bağlı alt birimlerin durumunu değiştirmek istediğinize emin misiniz?";
+        String aciklama = "TS2112_Birim pasif yapma";
+        String dikkatMesaji1 = "Birimde tanımlı kullanıcılar bulunmaktadır. Lütfen kullanıcıları başka birime taşıyınız ya da siliniz.";
+
+        login();
+
+        birimYonetimiPage
+                .openPage()
+                .birimYonetimiFiltrelemeAlanKontrolleri()
+                .birimFiltreDoldur(birim)
+
+                .birimKayitKontrolu(birim)
+
+                .birimTuruSec("İç Birim")
+                .durumSec("Sadece Aktifler")
+                .ara()
+                .birimKayitKontrolu(birim)
+                .birimPasifYap(birim)
+
+                .islemOnayiPopupSorusu(soru)
+                .popupIslemOnayiAciklamaDoldur(aciklama)
+                .popupIslemOnayiEvet()
+                .islemMesaji().dikkatOlmali(dikkatMesaji1);
+
+        birimYonetimiPage
+                .popupIslemOnayiHayir();
+
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS1112: Kaydedilen birime amir eklenmesi")
+    public void TS1112() {
+
+        login();
+
+        testStatus("TS1109", "Birim Oluşturma");
+        //1109 senaryosu yerine pre. con. koşuluyor
+        List<String> birim = new ReusableSteps().yeniBirimKayit();
+
+        String birimAdi = birim.get(0);
+        //String birimKisaAdi = birim.get(1);
+        //String idariBirimKimlikKodu = birim.get(2);
+
+        String amirAdi = "Sezai ÇELİK";
+        String gorev = "Uzman Test Mühendisi";
+        String basariMesaji = "İşlem başarılıdır!";
+
+        birimYonetimiPage
+                .birimYonetimiFiltrelemeAlanKontrolleri()
+                .birimFiltreDoldur(birimAdi)
+                .ara()
+                .birimGüncelle(birimAdi)
+
+                .birimAmiriEkle()
+                .txtBirimAmiriAtamaKullaniciDoldur(amirAdi)
+                .txtBirimAmiriAtamaGorevDoldur(gorev)
+                .birimAmiriAtamaBaslangicBitisTarihiKontrol()
+                .cmbBirimAmiriAtamaBagTipiSec("Amir")
+                .cmbBirimAmiriAtamaGizlilikDerecesiSec("Çok Gizli")
+                .birimAmiriAtamaKaydet()
+                .kaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .secilenOnayAkisiSil()
+                .onayAkisiEkle()
+                .onayAkisiKullaniciEkle(amirAdi, birimAdi);
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS1110: Alta yeni ekle fonksiyonu ile yeni birim kaydetme")
+    public void TS1110() {
+
+        String ustBirim = "TS1110 Ust Birim";
+
+        String sistemTarihi = getSysDate();
+        String altBirim = "TS1110_Alt_Birim_" + sistemTarihi;
+        String altBirimKisaAdi = "ts1110altb_" + sistemTarihi;
+        String idariBirimKimlikKodu = sistemTarihi;
+        String birimDetail = "Optiim Birim";
+        String birimTipi = "Genel Müdürlüğü";
+        String gelenEvrakNumaratoru = "Türksat AŞ_numarator - Gelen Evrak";
+        String gidenEvrakNumaratoru = "Türksat AŞ_numarator - Giden Evrak";
+        String basariMesaji = "İşlem başarılıdır!";
+
+        String amirAdi = "Sezai ÇELİK";
+        String gorev = "Uzman Test Mühendisi";
+
+        login();
+
+        birimYonetimiPage
+                .openPage()
+                .birimFiltreDoldur(ustBirim)
+                .ara()
+                .birimKayitKontrolu(ustBirim)
+                .yeniAltBirimEkle()
+                .birimSeciliGeldigiGorme(ustBirim)
+
+                .gorunurlukTipiSec("Görünür")
+                .adDoldur(altBirim)
+                .kisaAdiDoldur(altBirimKisaAdi)
+                .antetTipiSec("Normal")
+                .antetBilgisiDoldur(altBirim)
+                .idariKimlikKoduDoldur(idariBirimKimlikKodu)
+                //.ustBirimSec(birim, birimDetail)
+                .birimTipiSec(birimTipi)
+                .gelenEvraklariNumaratoruDoldur(gelenEvrakNumaratoru)
+                .gidenEvraklariNumaratoruDoldur(gidenEvrakNumaratoru)
+                .birimBagTuruSec("Bağlı Kuruluş")
+                .postaBirimiSec(ustBirim, birimDetail)
+                .kepPostaBirimiSec(ustBirim, birimDetail)
+                .postaSekliSec("Otomatik")
+                .belgenetKullanıyormuSec("Evet")
+
+                .birimAmiriEkle()
+                .txtBirimAmiriAtamaKullaniciDoldur(amirAdi)
+                .txtBirimAmiriAtamaGorevDoldur(gorev)
+                .birimAmiriAtamaBaslangicBitisTarihiKontrol()
+                .cmbBirimAmiriAtamaBagTipiSec("Amir")
+                .cmbBirimAmiriAtamaGizlilikDerecesiSec("Çok Gizli")
+                .birimAmiriAtamaKaydet()
+                .kaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        birimYonetimiPage
+                .birimFiltreDoldur(ustBirim)
+                .ara()
+                .birimKayitKontrolu(ustBirim)
+
+                .altBirimleriAcma()
+                .birimKayitKontrolu(altBirim);
     }
 }

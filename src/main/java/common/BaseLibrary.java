@@ -89,6 +89,7 @@ public class BaseLibrary extends ElementsContainer {
         return userName;
     }
 
+    @Step("Browserdaki Cookieleri temizle")
     public void clearCookies() {
         try {
             Selenide.clearBrowserLocalStorage();
@@ -358,6 +359,7 @@ public class BaseLibrary extends ElementsContainer {
      */
     public void clickJs(SelenideElement element) {
         executeJavaScript("arguments[0].click();", element);
+        waitForLoadingJS(WebDriverRunner.getWebDriver());
     }
 
     /**
@@ -453,6 +455,22 @@ public class BaseLibrary extends ElementsContainer {
         return output;
     }
 
+    //Random text üretir.
+    public String createRandomTextWithLineBreaks(int textSize) {
+        char[] chars = "abcdefghijklmnopqrstuvwxyz".toCharArray();
+        StringBuilder sb = new StringBuilder();
+        Random random = new Random();
+        int lineBreakEveryChar = 10;
+        int i = 0;
+        while (sb.length() < textSize){
+            if (i!=0 && i%lineBreakEveryChar==0)
+                sb.append(' ');
+            sb.append(chars[random.nextInt(chars.length)]);
+            i++;
+        }
+        return sb.toString();
+    }
+
     //yyyyMMddHHmmss formatına göre sysdate alır.
     public String getSysDate() {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
@@ -473,6 +491,15 @@ public class BaseLibrary extends ElementsContainer {
         return sysDate;
     }
 
+    //dd.MM.yyyy HH formatına göre sysdate alır.
+    public String getSysDateForTarihSaat() {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy HH");
+        LocalDateTime now = LocalDateTime.now();
+        System.out.println(dtf.format(now)); // 2016/11/16 12:08:43
+        String sysDate = dtf.format(now);
+
+        return sysDate;
+    }
     //dd.MM.yyyy formatına göre / koyarak sysdate alır.
     public String getSysDateForKis2() {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -668,7 +695,7 @@ public class BaseLibrary extends ElementsContainer {
         return null;
     }
 
-    public String getIntegerInText(By by) {
+    public String getNumberFromText(By by) {
         String x = WebDriverRunner.getWebDriver().findElement(by).getText();
         Pattern y = Pattern.compile("\\d+");
         Matcher m = y.matcher(x);
@@ -679,12 +706,12 @@ public class BaseLibrary extends ElementsContainer {
         return number;
     }
 
-    public String getIntegerInText(String text) {
+    public String getNumberFromText(String text) {
         Pattern y = Pattern.compile("\\d+");
         Matcher m = y.matcher(text);
         m.find();
         String number = m.group();
-        System.out.println(number);
+//        System.out.println("Get number from text: \"" + text + "\" number: " + number);
         return number;
     }
 
@@ -842,10 +869,10 @@ public class BaseLibrary extends ElementsContainer {
 
         switch (secim) {
             case "Evet":
-                btnEvet.click();
+                btnEvet.pressEnter();
                 break;
             case "Hayır":
-                btnHayir.click();
+                btnHayir.pressEnter();
                 break;
             case "İptal":
                 btnIptal.click();
@@ -1046,6 +1073,17 @@ public class BaseLibrary extends ElementsContainer {
             System.out.println("File uploading error: " + e.getMessage());
         }
 
+    }
+
+    public String myip()
+    {
+        WebDriver driver = WebDriverRunner.getWebDriver();
+        driver.get("http://www.whatismyip.com/");
+        String myIP = driver.findElement(By.cssSelector("ul[class='list-group text-center'] h3")).getText();
+        String[] ipString = myIP.split(":");
+        myIP = ipString[1].trim();
+        System.out.println(myIP);
+        return myIP;
     }
 
 
