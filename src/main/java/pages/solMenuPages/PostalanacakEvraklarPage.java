@@ -86,7 +86,7 @@ public class PostalanacakEvraklarPage extends MainPage {
     SelenideElement lblIndirimOrani = $("[id='mainPreviewForm:tutarDialogId'] table:nth-child(2) tbody td:nth-child(2) label");
     SelenideElement lblTutar = $("[id='mainPreviewForm:tutarDialogId'] table:nth-child(3) tbody td:nth-child(2) label");
     SelenideElement popUP = $(By.id("mainPreviewForm:tutarDialogId"));
-    SelenideElement cmbDagitimSekli = $("[id^='mainPreviewForm:dataTableId:0:j_idt'] [class*='ui-selectonemenu'] Select");
+    SelenideElement cmbDagitimSekli = $("[id^='mainPreviewForm:dataTableId'] [class*='ui-selectonemenu'] Select");
     SelenideElement btnIcerikEvrakGoster = $x("//*[@id='inboxItemInfoForm:dialogTabMenuRight:uiRepeat:4:cmdbutton']");
     SelenideElement btnComboEvrakGidisSekli = $x("//*[@id='inboxItemInfoForm:dataTableId_data']/tr[2]/td[3]/div/div/div/table/tbody/tr[3]/td/div/div[1]/select");
     SelenideElement txtEvrakKonuKontrol = $x("//*[@id='mainPreviewForm:evrakDetayPanelGrid']/tbody/tr[1]/td[3]/label");
