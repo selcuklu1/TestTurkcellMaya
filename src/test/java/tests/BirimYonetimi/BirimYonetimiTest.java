@@ -389,4 +389,68 @@ public class BirimYonetimiTest extends BaseTest {
                 .onayAkisiEkle()
                 .onayAkisiKullaniciEkle(amirAdi, birimAdi);
     }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS1110: Alta yeni ekle fonksiyonu ile yeni birim kaydetme")
+    public void TS1110() {
+
+        String ustBirim = "TS1110 Ust Birim";
+
+        String sistemTarihi = getSysDate();
+        String altBirim = "TS1110_Alt_Birim_" + sistemTarihi;
+        String altBirimKisaAdi = "ts1110altb_" + sistemTarihi;
+        String idariBirimKimlikKodu = sistemTarihi;
+        String birimDetail = "Optiim Birim";
+        String birimTipi = "Genel Müdürlüğü";
+        String gelenEvrakNumaratoru = "Türksat AŞ_numarator - Gelen Evrak";
+        String gidenEvrakNumaratoru = "Türksat AŞ_numarator - Giden Evrak";
+        String basariMesaji = "İşlem başarılıdır!";
+
+        String amirAdi = "Sezai ÇELİK";
+        String gorev = "Uzman Test Mühendisi";
+
+        login();
+
+        birimYonetimiPage
+                .openPage()
+                .birimFiltreDoldur(ustBirim)
+                .ara()
+                .birimKayitKontrolu(ustBirim)
+                .yeniAltBirimEkle()
+                .birimSeciliGeldigiGorme(ustBirim)
+
+                .gorunurlukTipiSec("Görünür")
+                .adDoldur(altBirim)
+                .kisaAdiDoldur(altBirimKisaAdi)
+                .antetTipiSec("Normal")
+                .antetBilgisiDoldur(altBirim)
+                .idariKimlikKoduDoldur(idariBirimKimlikKodu)
+                //.ustBirimSec(birim, birimDetail)
+                .birimTipiSec(birimTipi)
+                .gelenEvraklariNumaratoruDoldur(gelenEvrakNumaratoru)
+                .gidenEvraklariNumaratoruDoldur(gidenEvrakNumaratoru)
+                .birimBagTuruSec("Bağlı Kuruluş")
+                .postaBirimiSec(ustBirim, birimDetail)
+                .kepPostaBirimiSec(ustBirim, birimDetail)
+                .postaSekliSec("Otomatik")
+                .belgenetKullanıyormuSec("Evet")
+
+                .birimAmiriEkle()
+                .txtBirimAmiriAtamaKullaniciDoldur(amirAdi)
+                .txtBirimAmiriAtamaGorevDoldur(gorev)
+                .birimAmiriAtamaBaslangicBitisTarihiKontrol()
+                .cmbBirimAmiriAtamaBagTipiSec("Amir")
+                .cmbBirimAmiriAtamaGizlilikDerecesiSec("Çok Gizli")
+                .birimAmiriAtamaKaydet()
+                .kaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        birimYonetimiPage
+                .birimFiltreDoldur(ustBirim)
+                .ara()
+                .birimKayitKontrolu(ustBirim)
+
+                .altBirimleriAcma()
+                .birimKayitKontrolu(altBirim);
+    }
 }

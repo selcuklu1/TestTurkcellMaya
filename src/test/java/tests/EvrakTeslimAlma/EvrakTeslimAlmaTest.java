@@ -678,7 +678,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
                 .dagitimBilgileriBirimDoldurWithDetails(birim, details)
                 .kaydet();
 
-                evrakNo1 = gelenEvrakKayitPage.popUpsv2();
+        evrakNo1 = gelenEvrakKayitPage.popUpsv2();
 
 
 
@@ -706,7 +706,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
                 .dagitimBilgileriBirimDoldurWithDetails(birim, details)
                 .kaydet();
 
-                evrakNo2 = gelenEvrakKayitPage.popUpsv2();
+        evrakNo2 = gelenEvrakKayitPage.popUpsv2();
 //        gelenEvrakKayitPage
 //                .islemMesaji().basariliOlmali(basariMesaji);
 

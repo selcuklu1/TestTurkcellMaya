@@ -59,6 +59,8 @@ public class BirimYonetimiPage extends MainPage {
     SelenideElement btnSolUstLogoEkle = $(By.id("birimYonetimiEditorForm:solUstMenuLogoEkle"));
     SelenideElement btnSagUstLogoEkle = $(By.id("birimYonetimiEditorForm:sagUstMenuLogoEkle"));
     SelenideElement btnAltLogoyuDegistir = $(By.id("birimYonetimiEditorForm:altMenuLogoEkle"));
+    SelenideElement btnYeniAltBirimEkle = $("[id^='birimYonetimiListingForm:birimTreeTable'] [id$='addNewAltBirimButton']");
+    SelenideElement btnAltBirimAcma = $("[id='birimYonetimiListingForm:birimTreeTable_node_0'] [class='ui-treetable-toggler ui-icon ui-icon-triangle-1-e']");
 
     SelenideElement txtSolUstLogoBoy = $(By.xpath("//label[normalize-space(text())='Sol Üst Logo Boy']"));
     SelenideElement txtSagUstLogoBoy = $(By.xpath("//label[normalize-space(text())='Sağ Üst Logo Boy']"));
@@ -86,13 +88,13 @@ public class BirimYonetimiPage extends MainPage {
     SelenideElement filtreSorgulamaPanel = $("[id='birimYonetimiFilterForm'] [id='birimYonetimiFilterForm:accordionPanel']");
     SelenideElement popupIslemOnaySorusu = $("[id='baseConfirmationDialog:form'] [class='content']");
     SelenideElement txtPopupIslemOnayAciklama = $(By.id("baseConfirmationDialog:explanationInput"));
-    SelenideElement txtPopupIslemOnayiEvet= $(By.id("baseConfirmationDialog:confirmButton"));
-    SelenideElement txtPopupIslemOnayiHayir= $(By.id("baseConfirmationDialog:baseConfirmationDialogCancelButton"));
+    SelenideElement txtPopupIslemOnayiEvet = $(By.id("baseConfirmationDialog:confirmButton"));
+    SelenideElement txtPopupIslemOnayiHayir = $(By.id("baseConfirmationDialog:baseConfirmationDialogCancelButton"));
 
-    SelenideElement dteBirimAmiriAtamaBaslangicTarihi= $(By.id("birimAmiriEditorForm:gorevBaslangicTarihiCalendar"));
-    SelenideElement dteBirimAmiriAtamaBitisTarihi= $(By.id("birimAmiriEditorForm:gorevBitisTarihiCalendar"));
+    SelenideElement dteBirimAmiriAtamaBaslangicTarihi = $(By.id("birimAmiriEditorForm:gorevBaslangicTarihiCalendar"));
+    SelenideElement dteBirimAmiriAtamaBitisTarihi = $(By.id("birimAmiriEditorForm:gorevBitisTarihiCalendar"));
 
-    SelenideElement dteBirimAmiriAtamaBaslangicTarihiInput= $(By.id("birimAmiriEditorForm:gorevBaslangicTarihiCalendar_input"));
+    SelenideElement dteBirimAmiriAtamaBaslangicTarihiInput = $(By.id("birimAmiriEditorForm:gorevBaslangicTarihiCalendar_input"));
     SelenideElement dteBirimAmiriAtamaBitisTarihiInput = $(By.id("birimAmiriEditorForm:gorevBitisTarihiCalendar_input"));
 
     SelenideElement cmbBirimAmiriAtamaBagTipi = $(By.id("birimAmiriEditorForm:birimBagTipiSelect"));
@@ -653,7 +655,7 @@ public class BirimYonetimiPage extends MainPage {
                 .kaydet()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
-        return Arrays.asList(birimAdi,birimKisaAdi,idariBirimKimlikKodu);
+        return Arrays.asList(birimAdi, birimKisaAdi, idariBirimKimlikKodu);
     }
 
     @Step("\"Birimin ve bağlı alt birimlerin durumunu değiştirmek istediğinize emin misiniz? \" sorusunun sorulduğu İşlem Onayı dialog kontrolu")
@@ -743,5 +745,24 @@ public class BirimYonetimiPage extends MainPage {
         return this;
     }
 
+    @Step("Yeni alt birim ekle")
+    public BirimYonetimiPage yeniAltBirimEkle() {
+        btnYeniAltBirimEkle.click();
+        return this;
+    }
+
+    @Step("Üst Birim alanında \"{ustBirim}\" aranılan birimin set edilmiş olarak geldiği görülür")
+    public BirimYonetimiPage birimSeciliGeldigiGorme(String ustBirim) {
+        boolean durum = $$("div[id$='ustBirimLov:lovSelectionPanel']").filterBy(Condition.text(ustBirim)).size() == 1;
+        Assert.assertEquals(durum, true);
+        takeScreenshot();
+        return this;
+    }
+
+    @Step("Alt birimleri açma")
+    public BirimYonetimiPage altBirimleriAcma() {
+        btnAltBirimAcma.click();
+        return this;
+    }
 
 }

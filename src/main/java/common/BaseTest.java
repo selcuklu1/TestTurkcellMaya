@@ -78,11 +78,12 @@ public class BaseTest extends BaseLibrary {
         Configuration.screenshots = true;
         Configuration.savePageSource = false;
         Configuration.collectionsTimeout = timeout * 1000;
+        Configuration.holdBrowserOpen = Configuration.remote == null;
         Configuration.timeout = timeout * 1000;
-        Configuration.holdBrowserOpen =false ;
         Configuration.startMaximized = true;
         Configuration.pollingInterval = 100;
         Configuration.collectionsPollingInterval = 100;
+
         //Configuration.headless = false;
         //Configuration.clickViaJs = true;
         //Configuration.closeBrowserTimeoutMs = 34000;

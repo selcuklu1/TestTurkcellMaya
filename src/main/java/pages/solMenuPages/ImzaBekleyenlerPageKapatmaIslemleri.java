@@ -18,6 +18,7 @@ public class ImzaBekleyenlerPageKapatmaIslemleri extends MainPage {
     SelenideElement btnKapatmaImzala = $x("//span[text()= 'Kapatma İmzala']/../../..//button");
     SelenideElement btnKapatmayiIptalEt = $(By.id("mainPreviewForm:kapatmayiIptalEtButton"));
     SelenideElement btnKapatmayiIptalEtEvet = $(By.id("mainPreviewForm:kapatmayiIptalEvetButton_id"));
+    SelenideElement btnKapatmaImzalaImzala = $(By.id("mainPreviewForm:imzalaButton"));
 
     @Step("Kapatma işlemleri altında İmza bekleyenler sayfası aç")
     public ImzaBekleyenlerPageKapatmaIslemleri openPage() {
@@ -87,6 +88,12 @@ public class ImzaBekleyenlerPageKapatmaIslemleri extends MainPage {
     public ImzaBekleyenlerPageKapatmaIslemleri kapatmayIptalEt(){
         btnKapatmayiIptalEt.click();
         btnKapatmayiIptalEtEvet.click();
+        return this;
+    }
+
+    @Step("İmzala butonuna tıkla")
+    public ImzaBekleyenlerPageKapatmaIslemleri kapatmaImzalaImzala(){
+        btnKapatmaImzalaImzala.click();
         return this;
     }
 }

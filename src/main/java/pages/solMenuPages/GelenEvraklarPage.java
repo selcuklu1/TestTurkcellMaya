@@ -98,7 +98,8 @@ public class GelenEvraklarPage extends MainPage {
     SelenideElement txtEvrakKapatNot = $(By.id("mainPreviewForm:notTextArea_id"));
     SelenideElement txtEvrakKapatOnayAkisi = $(By.id("mainPreviewForm:akisLov_id:LovText"));
     SelenideElement btnEvrakKapatKapatmaOnayinaSun = $(By.id("mainPreviewForm:kapatmaOnayinaSunButtonDirektId"));
-    SelenideElement btnEvrakKapatKapat2 = $x("//div[contains(@class, 'kapatButtonDirekt')]//span[contains(., 'Evrak Kapat')]/..");
+
+    SelenideElement btnEvrakKapatKapat2 = $x("//div[contains(@class, 'kapatButtonDirekt')]//span[text() = 'Evrak Kapat']/..");
     ElementsCollection btnEvrakKapatEvrakKapat = $$("[id='mainPreviewForm:evrakOnizlemeTab'] [class='form-buttons kapatButtonDirekt'] button");
     SelenideElement chkEvrakKapatKisiselKlasorler = $(By.id("mainPreviewForm:kisiselKlasorlerimiGetirCheckboxId_input"));
     SelenideElement btnOnayAkisi = $("[id='mainPreviewForm:evrakKapatOnayAkisPanelGrid'] td:nth-child(4) button");

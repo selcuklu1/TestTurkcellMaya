@@ -528,12 +528,6 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-
-
-
-
-
-
         @Step("Konu alanının seçilen evrak ile aynı şekilde dolu geldiği,")
         public BilgilerTab konuAlanıDoluGeldigiGorme(String konu) {
             Assert.assertEquals(txtKonu.getValue(), konu);
