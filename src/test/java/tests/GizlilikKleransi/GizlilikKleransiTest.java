@@ -1,6 +1,7 @@
 package tests.GizlilikKleransi;
 
 import common.BaseTest;
+import data.TestData;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Step;
@@ -529,7 +530,8 @@ public class GizlilikKleransiTest extends BaseTest {
         String unvan = "BT İş Analist / Yazılımcı";
         String gizlilikDerecesi = "Tasnif Dışı";
 
-        login("gsahin", "123");
+//        login("gsahin", "123");
+login(TestData.gsahin);
 
         kullaniciYonetimiPage
                 .openPage()
@@ -572,7 +574,9 @@ public class GizlilikKleransiTest extends BaseTest {
         String ivedilik = "Normal";
         String geregi = "Optiim Birim";
 
-        login("username23t", "123");
+//        login("username23t", "123");
+
+        login(TestData.username23t,TestData.passwor23t);
 
         kullaniciYonetimiPage
                 .openPage()
@@ -632,7 +636,8 @@ public class GizlilikKleransiTest extends BaseTest {
 //9267
         evrakOlustur();
 
-        login("username23t", "123");
+//        login("username23t", "123");
+        login(TestData.username23t,TestData.passwor23t);
         String mesaj = "Gizlilik kleransınız evrakın gizlilik derecesini görüntülemek için yeterli değildir.";
 
 
@@ -658,8 +663,9 @@ public class GizlilikKleransiTest extends BaseTest {
     public void TS2139() throws InterruptedException {
 
         login("username22n", "123");
+        login(TestData.username22n,passwor22n);
 
-        String evrakNo = "10180";
+//        String evrakNo = "10180";
         String aranacagiYer = "Birim Evrakları Ara";
         String aranacagiYer2 = "İşlem Yaptıklarımda Ara";
         String aramaKriteri = "Evrak Sayı";
@@ -707,7 +713,7 @@ public class GizlilikKleransiTest extends BaseTest {
     @Test(enabled = true, dependsOnMethods = {"TS1938"}, description = "TS2226: Genel evrak raporunda gizlilik klerans kontrolü (evrakta izi olan kullanıcı ile)")
     public void TS2226() throws InterruptedException {
 
-        login("gsahin", "123");
+        login(TestData.gsahin);
 
         genelEvrakRaporuPage
                 .openPage()
@@ -722,8 +728,9 @@ public class GizlilikKleransiTest extends BaseTest {
     @Test(enabled = true, dependsOnMethods = {"TS1938"}, description = "TS2140 : Evrak aramada gizlilik kleransı kontrolü (evrakta izi olan kullanıcı ile)\n")
     public void TS2140() throws InterruptedException {
 
-        login("gsahin", "123");
+//        login("gsahin", "123");
 //9261
+        login(TestData.gsahin);
 
         String aranacagiYer = "İşlem Yaptıklarımda Ara";
         String aramaKriteri = "Evrakın Kayıt Sayısı";
@@ -781,7 +788,7 @@ public class GizlilikKleransiTest extends BaseTest {
         String ivedilik = "Normal";
         String geregi = "Esk Kurum 071216 2";
 
-        login(usernameMBOZDEMIR, passwordMBOZDEMIR);
+        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
 
         String kullaniciTasnifDisi = "USERNAME23T TEST";
         String kullaniciOzel = "username24o";
@@ -838,7 +845,7 @@ public class GizlilikKleransiTest extends BaseTest {
         String kullaniciNormal = "USERNAME22N TEST";
         String mesaj = kullaniciNormal + " kullanıcısının gizlilik kleransı evrakı görüntülemek için yeterli değildir.";
 
-        login(usernameMBOZDEMIR, passwordMBOZDEMIR);
+        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
 
         evrakOlusturPage
                 .openPage()
@@ -896,7 +903,7 @@ public class GizlilikKleransiTest extends BaseTest {
                 .islemMesaji().beklenenMesaj(basariMesaji);
 
 //        logout();
-        login(usernameMBOZDEMIR, passwordMBOZDEMIR);
+        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
 
 
         parafBekleyenlerPage
@@ -927,7 +934,7 @@ public class GizlilikKleransiTest extends BaseTest {
         String mesaj2 = "DAGPLAN1 adlı Dağıtım Planınında gizlilik kleransı yetersiz kullanıcılar vardır: " + kullaniciTasnifDisi;
 
 
-        login(usernameMBOZDEMIR, passwordMBOZDEMIR);
+        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
 
 
         evrakOlusturPage
@@ -989,7 +996,7 @@ public class GizlilikKleransiTest extends BaseTest {
         String mesaj = kullaniciTasnifDisi + " kullanıcısının gizlilik kleransı evrakı görüntülemek için yeterli değildir.";
         String mesaj2 = "DAGPLAN1 adlı Dağıtım Planınında gizlilik kleransı yetersiz kullanıcılar vardır: " + kullaniciTasnifDisi;
 
-        login(usernameMBOZDEMIR, passwordMBOZDEMIR);
+        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
 
         //testte kullanılacak data oluşturuluyor.
         gelenEvrakKayitPage
@@ -1075,7 +1082,7 @@ public class GizlilikKleransiTest extends BaseTest {
 
         String mesaj = kullaniciTasnifDisi + " kullanıcısının gizlilik kleransı evrakı görüntülemek için yeterli değildir.";
 
-        login(usernameMBOZDEMIR, passwordMBOZDEMIR);
+        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
 
         //testte kullanılacak data oluşturuluyor.
         gelenEvrakKayitPage
@@ -1146,7 +1153,7 @@ public class GizlilikKleransiTest extends BaseTest {
         String geldigiKurum = "Esk Kurum 071216 2";
         String aciklama = "Yetersiz Klerans";
 
-        login(usernameYAKYOL, passwordYAKYOL);
+        login(TestData.usernameYAKYOL, TestData.passwordYAKYOL);
 
         //testte kullanılacak data oluşturuluyor.
         gelenEvrakKayitPage
