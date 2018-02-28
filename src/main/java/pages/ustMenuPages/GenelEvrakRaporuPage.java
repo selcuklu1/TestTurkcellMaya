@@ -21,7 +21,7 @@ public class GenelEvrakRaporuPage extends MainPage {
 
     SelenideElement txtEvrakNo = $(By.id("genelEvrakRaporuForm:evrakNoId"));
     SelenideElement btnSorgula = $(By.id("genelEvrakRaporuForm:sorgulaButton"));
-    ElementsCollection tblEvrakListesi = $$("[id='genelEvrakRaporuForm:genelEvrakDataTable_data'] tr[role='row']");
+    ElementsCollection tblEvrakListesi = $$("[id='genelEvrakRaporuForm:genelEvrakDataTable_data'] tr[data-ri]");
     SelenideElement btnDetay = $("[id^='genelEvrakRaporuForm:genelEvrakDataTable'][id$='evrakGosterButton']");
 
     public GenelEvrakRaporuPage openPage() {

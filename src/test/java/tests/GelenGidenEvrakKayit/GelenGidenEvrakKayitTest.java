@@ -105,7 +105,11 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .geldigiKurumDoldurLovText(geldigiKurum)
                 .evrakSayiSagDoldur()
                 .evrakGelisTipiSec(evrakGelisTipi)
-                .ivedilikSec(ivedilik)
+                .ivedilikSec(ivedilik);
+
+        Thread.sleep(3000);
+
+        gelenEvrakKayitPage
                 .ekBilgiFiltreAc()
                 .evrakEkleriDosyaEkleme(pathToFileExcel)
                 .evrakEkleriDosyaEkleDosyaAdiKontrol(excelName)

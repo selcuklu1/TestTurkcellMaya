@@ -1,14 +1,12 @@
 package pages.solMenuPages;
 
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.*;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
+import pages.pageComponents.TextEditor;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
 
@@ -18,6 +16,7 @@ import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
+import static com.codeborne.selenide.Selenide.sleep;
 import static pages.pageComponents.belgenetElements.Belgenet.$x;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
@@ -162,6 +161,13 @@ public class GelenEvraklarPage extends MainPage {
     SelenideElement txtEklenenKisiOpsiyon = $("select[id='mainPreviewForm:dagitimBilgileriKullaniciLov:LovSecilenTable:0:selectOneMenu']");
     SelenideElement txtEklenenBirimOpsiyon = $("select[id='mainPreviewForm:dagitimBilgileriBirimLov:LovSecilenTable:0:selectOneMenu']");
     SelenideElement txtEklenenKullaniciListesiOpsiyon = $("select[id='mainPreviewForm:dagitimBilgileriKisiListesiLov:LovSecilenTable:0:selectOneMenu']");
+    ElementsCollection tblHareketGecmisi = $$("tbody[id$='hareketGecmisiDataTable_data'] > tr[role='row']");
+    SelenideElement tblKolonGonderen = $(By.xpath("//span[text()='Gönderen']"));
+    SelenideElement tblKolonTeslimAlan = $(By.xpath("//span[text()='Teslim Alan']"));
+    SelenideElement tblKolonIslemSureci = $(By.xpath("//span[text()='İşlem Süreci']"));
+    SelenideElement tblKolonIslemTarihi = $(By.xpath("//span[normalize-space(text())='İşlem Tarihi']"));
+    SelenideElement tblKolonAciklama = $(By.xpath("//span[text()='Açıklama']"));
+    SelenideElement btnRaporAlExcel = $("[id$='GecmisiDataTable:evrakGecmisiExport']");
 
     @Step("Gelen Evraklar Sayfasını aç")
     public GelenEvraklarPage openPage() {
@@ -684,8 +690,18 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
-    public GelenEvraklarPage raporAl() {
-        btnRaporAl.click();
+    public GelenEvraklarPage raporAl(String remoteDownloadPath) {
+        deleteSpecificFile("Rapor_");
+
+        sleep(3000);
+
+
+        btnRaporAlExcel.click();
+        islemMesaji().basariliOlmali();
+        waitForLoadingJS(WebDriverRunner.getWebDriver(), 180);
+        sleep(3000);
+        searchDownloadedFileWithName(remoteDownloadPath, "Rapor_.xls");
+
         return this;
     }
 
@@ -1507,6 +1523,32 @@ public class GelenEvraklarPage extends MainPage {
         gelenEvrakEkleriKontrol
                 .filterBy(Condition.text(ek))
                 .shouldHaveSize(1);
+
+        return this;
+    }
+    @Step("Evrak Geçmişi tıklanır.")
+    public GelenEvraklarPage evrakGecmisiTikla() {
+        $(By.xpath("//a[text()='Evrak Geçmişi']")).click();
+        return this;
+    }
+
+    @Step("Hareket Geçmişi açıklama kontrolü :\n \"{text}\" ")
+    public GelenEvraklarPage tabloKontol(String text) {
+        tblHareketGecmisi
+                .filterBy(Condition.text(text))
+                .shouldHaveSize(1);
+
+        Assert.assertEquals(tblKolonGonderen.isDisplayed(), true);
+        Assert.assertEquals(tblKolonTeslimAlan.isDisplayed(), true);
+        Assert.assertEquals(tblKolonIslemSureci.isDisplayed(), true);
+        Assert.assertEquals(tblKolonIslemTarihi.isDisplayed(), true);
+        Assert.assertEquals(tblKolonAciklama.isDisplayed(), true);
+
+        Allure.addAttachment("Tablo kontolü", "Aşağıdaki kolonların listelendiği görülür. \n Gönderen\n" +
+                "Teslim Alan\n" +
+                "İşlem Süreci\n" +
+                "İşlem Tarihi\n" +
+                "Açıklama");
 
         return this;
     }
