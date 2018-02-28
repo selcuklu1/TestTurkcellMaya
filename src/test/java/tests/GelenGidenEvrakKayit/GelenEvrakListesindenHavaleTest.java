@@ -762,7 +762,6 @@ public class GelenEvrakListesindenHavaleTest extends BaseTest {
                 .evrakSayiSagDoldur()
                 .evrakGelisTipiSec(evrakGelisTipi)
                 .ivedilikSec(ivedilik)
-                .dagitimBilgileriBirimDoldur2(birim)
                 .dagitimBilgileriKisiSec(kisi)
                 .kaydet();
 
@@ -800,6 +799,7 @@ public class GelenEvrakListesindenHavaleTest extends BaseTest {
 //                .openPage()
 //                .evrakAlanKontrolleri(konu,geldigiKurum,birim,evrakTarihi,evrakNo);
 
+
         login(TestData.usernameMBOZDEMIR,TestData.passwordMBOZDEMIR);
         testStatus(testid, "Test Başladı");
         teslimAlinmayiBekleyenlerPage
@@ -818,6 +818,7 @@ public class GelenEvrakListesindenHavaleTest extends BaseTest {
 
         login(TestData.usernameZTEKIN,TestData.passwordZTEKIN);
         //TODO: Bu sayfaya gelmiyor. Sadece birime iade olsa buraya düşebilir.
+        //gelenEvraklarPage deki kisi ve kullanıcı listesini çıkar
         birimIadeEdilenlerPage
                 .openPage()
                 .evrakSec(konu);
