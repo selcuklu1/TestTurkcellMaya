@@ -31,7 +31,8 @@ public class HavaleOnayınaGelenlerPage extends MainPage {
     SelenideElement notAlanıDoldur = $(By.id("mainPreviewForm:notTextArea_id"));
     SelenideElement icerikNotAlanıDoldur = $(By.id("inboxItemInfoForm:notTextArea_id"));
     SelenideElement onayıReddet = $(By.id("mainPreviewForm:reddetButton_id"));
-    SelenideElement icerikOnayıReddet = $(By.id("inboxItemInfoForm:reddetButton_id"));
+    SelenideElement btnIcerikOnayıReddet = $(By.id("inboxItemInfoForm:reddetButton_id"));
+    SelenideElement btnIcerikOnayla = $(By.id("inboxItemInfoForm:onaylaButton_id"));
     SelenideElement onizlemeOnayla = $(By.id("mainPreviewForm:onaylaButton_id"));
     BelgenetElement txtHavaleOnayiBirim = comboLov(By.id("mainPreviewForm:dagitimBilgileriBirimLov_id:LovText"));
     BelgenetElement txtHavaleOnayiKisi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKullaniciLov_id:LovText"));
@@ -46,7 +47,6 @@ public class HavaleOnayınaGelenlerPage extends MainPage {
 
     BelgenetElement cmbHavaleIslemleriBirim = comboLov(By.id("inboxItemInfoForm:dagitimBilgileriBirimLov_id:LovText"));
 
-    SelenideElement dagitimOnayla = $(By.id("inboxItemInfoForm:onaylaButton_id"));
     ElementsCollection dagitimOnaylaEvet = $$("[id='inboxItemInfoForm:evetButton_id']");
 
     SelenideElement birimSeç = $("select[id='mainPreviewForm:dagitimBilgileriBirimLov_id:LovSecilenTable:0:selectOneMenu']");
@@ -54,10 +54,23 @@ public class HavaleOnayınaGelenlerPage extends MainPage {
     SelenideElement txtEklenenBirim = $("div[id^='mainPreviewForm:dagitimBilgileriBirimLov_id:LovSecilenTable:0:j_idt']");
     SelenideElement txtEklenenBirimOpsiyon = $("select[id='mainPreviewForm:dagitimBilgileriBirimLov_id:LovSecilenTable:0:selectOneMenu']");
 
+    SelenideElement lblSayfa = $("div[id='inboxItemInfo']");
+
+    //Dagitim Kontrolleri
+    SelenideElement dagitimBirimKontrolu = $("div[id^='inboxItemInfoForm:dagitimBilgileriBirimLov_id:LovSecilenTable:0:j_idt']");
+    SelenideElement dagitimKisiKontrolu = $("div[id^='inboxItemInfoForm:dagitimBilgileriKullaniciLov_id:LovSecilenTable:0:j_idt']");
 
     @Step("Birim Havale Onayına Gelenler sayfası aç")
     public HavaleOnayınaGelenlerPage openPage() {
         solMenu(SolMenuData.BirimEvraklari.HavaleOnayinaGelenler);
+        return this;
+    }
+
+
+    @Step("Evrak Içeriği ekranı açılır\n")
+    public HavaleOnayınaGelenlerPage icerikEkranKontrol() {
+        Assert.assertEquals(lblSayfa.isDisplayed(),true,"Evrak Içeriği Ekranı Kontrolü");
+        Allure.addAttachment("Evrak Içeriği Ekranı Kontrolü","");
         return this;
     }
 
@@ -127,7 +140,7 @@ public class HavaleOnayınaGelenlerPage extends MainPage {
         return this;
     }
 
-    @Step("Evrak no ile teslim al")
+    @Step("Evrak no ile seç ve içerik göster")
     public HavaleOnayınaGelenlerPage evrakSecIcerikGoster(String konu, boolean secim) {
         tblEvraklar.filterBy(text(konu)).get(0).$$("[id$='detayGosterButton']").first().click();
         return this;
@@ -194,6 +207,32 @@ public class HavaleOnayınaGelenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Evrak İçerikten Havale Onay butonu kontrolü")
+    public HavaleOnayınaGelenlerPage icerikHavaleOnayButonKontrolu() {
+        Assert.assertEquals(icerikHavaleOnay.isDisplayed(),true,"Havale Onay Buton Kontrolü");
+        Allure.addAttachment("Havale Onay Buton Kontrolü" , "");
+        return this;
+    }
+
+    @Step("Dağıtım Için Gönderilecek Birim Kontrolü")
+    public HavaleOnayınaGelenlerPage dagitimIcinGonderileceklerBirimKontrolu(String birim) {
+        Assert.assertEquals(dagitimBirimKontrolu.getText().contains(birim),true,"Dağıtım Için Gönderilecek Birim Kontrolü");
+        Allure.addAttachment("Dağıtım Için Gönderilecek Birim Kontrolü" , birim);
+        return this;
+    }
+
+    @Step("Dağıtım Için Gönderilecek Kisi Kontrolü")
+    public HavaleOnayınaGelenlerPage dagitimIcinGonderileceklerKisiKontrolu(String kisi) {
+        System.out.println(kisi + "vs" + dagitimKisiKontrolu.getText());
+        Assert.assertEquals(dagitimKisiKontrolu.getText().contains(kisi),true,"Dağıtım Için Gönderilecek Kisi Kontrolü");
+        Allure.addAttachment("Dağıtım Için Gönderilecek Kisi Kontrolü" , kisi);
+        return this;
+    }
+
+
+
+
+
     @Step("Not Alanını Doldur")
     public HavaleOnayınaGelenlerPage notAlanınıDoldur(String not) {
         notAlanıDoldur.setValue(not);
@@ -214,7 +253,21 @@ public class HavaleOnayınaGelenlerPage extends MainPage {
 
     @Step("Havale Onay Reddet")
     public HavaleOnayınaGelenlerPage icerikOnayıReddet() {
-        icerikOnayıReddet.click();
+        btnIcerikOnayıReddet.click();
+        return this;
+    }
+
+    @Step("Havale Onay Reddet Buton Kontrolü")
+    public HavaleOnayınaGelenlerPage icerikOnayıReddetButonKontrolu() {
+        Assert.assertEquals(btnIcerikOnayıReddet.isDisplayed(),true,"Havale Onay Reddet Buton Kontrolü");
+        Allure.addAttachment("Havale Onay Reddet Buton Kontrolü", "");
+        return this;
+    }
+
+    @Step("Havale Onayla Buton Kontrolü")
+    public HavaleOnayınaGelenlerPage icerikOnaylaButonKontrolu() {
+        Assert.assertEquals(btnIcerikOnayla.isDisplayed(),true,"Havale Onayla Buton Kontrolü");
+        Allure.addAttachment("Havale Onayla Buton Kontrolü", "");
         return this;
     }
 
@@ -234,7 +287,7 @@ public class HavaleOnayınaGelenlerPage extends MainPage {
 
     // TODO: Her dönen butonu click yapma
     // 2 tane Evet buttonu dönüyor ve aralarında fark yok
-    @Step("Havale Onay Reddet Evet")
+    @Step("Havale Onay Reddet Evet ve Havale onayini reddetmek üzeresiniz. Kabul ediyor musunuz? kontrolu")
     public HavaleOnayınaGelenlerPage icerikOnayıReddetEvet() {
         btnIcerikHavaleOnayReddet.last().click();
         return this;
@@ -257,7 +310,7 @@ public class HavaleOnayınaGelenlerPage extends MainPage {
 
     @Step("Dagitim Onayla")
     public HavaleOnayınaGelenlerPage dagitimOnayla() {
-        dagitimOnayla.click();
+        btnIcerikOnayla.click();
         return this;
     }
 

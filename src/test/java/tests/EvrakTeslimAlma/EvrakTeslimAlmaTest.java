@@ -654,7 +654,6 @@ public class EvrakTeslimAlmaTest extends BaseTest {
         String evrakNo2="";
         String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
         String details = "BHUPGMY";
-
         String kisi = "Zübeyde Tekin";
         String islemSureci = "Evrak Teslim Alındı ";
 
