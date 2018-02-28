@@ -271,17 +271,16 @@ public class GelenEvrakKayitHavaleTest extends BaseTest {
         birimHavaleEdilenlerPage
                 .openPage()
                 .evrakNoIleTablodanEvrakSecme(konu)
-                .evrakSecIcerikGoster(konu, true)
-                .havaleGeriAl()
-                .notAlanınıDoldur(konu)
-                .geriAl()
+                .onizlemeHavaleGeriAl()
+                .onizlemeNotAlanıKontrol(konu)
+                .onizlemeNotAlanınıDoldur(konu)
+                .onizlemeGeriAl()
                 .islemMesaji().basariliOlmali();
 
         kaydedilenGelenEvraklarPage
                 .openPage()
                 .evrakNoIleEvrakSec(konu)
                 .secilenEvrakEvrakGecmisi()
-                //iade edilmiştir butonu kontrolü yapılabilir
                 .evrakGecmisi(birim, islemSureci);
 
         login(mbozdemir);

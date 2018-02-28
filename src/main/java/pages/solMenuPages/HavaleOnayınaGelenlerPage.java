@@ -223,7 +223,6 @@ public class HavaleOnayınaGelenlerPage extends MainPage {
 
     @Step("Dağıtım Için Gönderilecek Kisi Kontrolü")
     public HavaleOnayınaGelenlerPage dagitimIcinGonderileceklerKisiKontrolu(String kisi) {
-        System.out.println(kisi + "vs" + dagitimKisiKontrolu.getText());
         Assert.assertEquals(dagitimKisiKontrolu.getText().contains(kisi),true,"Dağıtım Için Gönderilecek Kisi Kontrolü");
         Allure.addAttachment("Dağıtım Için Gönderilecek Kisi Kontrolü" , kisi);
         return this;
