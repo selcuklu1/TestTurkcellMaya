@@ -48,6 +48,9 @@ public class TestData extends BaseLibrary {
     public static final String username23t = "username23t";
     public static final String passwor23t = "123";
 
+    public static final String username21g = "username21g";
+    public static final String passwor21g = "123";
+
 
 
     public static String docPathWindows = "C:\\TestAutomation\\BelgenetFTA\\documents\\";

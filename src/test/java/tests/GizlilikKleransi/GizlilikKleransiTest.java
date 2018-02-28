@@ -1,5 +1,6 @@
 package tests.GizlilikKleransi;
 
+import com.codeborne.selenide.WebDriverRunner;
 import common.BaseTest;
 import data.TestData;
 import io.qameta.allure.Severity;
@@ -1153,7 +1154,7 @@ login(TestData.gsahin);
         String geldigiKurum = "Esk Kurum 071216 2";
         String aciklama = "Yetersiz Klerans";
 
-        login(TestData.usernameYAKYOL, TestData.passwordYAKYOL);
+        login(TestData.username21g, TestData.passwor21g);
 
         //testte kullanılacak data oluşturuluyor.
         gelenEvrakKayitPage
@@ -1169,7 +1170,7 @@ login(TestData.gsahin);
                 .evrakSayiSagDoldur()
                 .evrakGelisTipiSec(evrakGelisTipi)
                 .ivedilikSec(ivedilik)
-                .dagitimBilgileriKisiSec("YASEMİN")
+                .dagitimBilgileriKisiSec("username21g")
                 .kaydet();
         String evrakNO2189 = gelenEvrakKayitPage.popUps();
         gelenEvrakKayitPage.islemMesaji().basariliOlmali();
@@ -1177,7 +1178,7 @@ login(TestData.gsahin);
         kullaniciEvrakDevretPage
                 .openPage()
                 .ekranTabKontrolleri()
-                .devredecekKisiSec("Yasemin Çakıl")
+                .devredecekKisiSec("username21g")
                 .listele();
 //                .islemMesaji().basariliOlmali(basariMesaji);
 
@@ -1188,7 +1189,10 @@ login(TestData.gsahin);
                 .devralacakKisiAlanKontolu()
                 .devralacakKisiSec(kullaniciNormal)
                 .aciklamaDoldur(text)
-                .devretTamam()
+                .devretTamam();
+
+        waitForLoadingJS(WebDriverRunner.getWebDriver(),10000);
+        kullaniciEvrakDevretPage
                 .popUpDevredilemeyenEvraklarKontrol()
                 .devredelimeyenEvraklarEvrakKontrolu(text, aciklama);
     }
