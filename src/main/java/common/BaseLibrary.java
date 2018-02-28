@@ -491,6 +491,15 @@ public class BaseLibrary extends ElementsContainer {
         return sysDate;
     }
 
+    //dd.MM.yyyy HH formatına göre sysdate alır.
+    public String getSysDateForTarihSaat() {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy HH");
+        LocalDateTime now = LocalDateTime.now();
+        System.out.println(dtf.format(now)); // 2016/11/16 12:08:43
+        String sysDate = dtf.format(now);
+
+        return sysDate;
+    }
     //dd.MM.yyyy formatına göre / koyarak sysdate alır.
     public String getSysDateForKis2() {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -1064,6 +1073,17 @@ public class BaseLibrary extends ElementsContainer {
             System.out.println("File uploading error: " + e.getMessage());
         }
 
+    }
+
+    public String myip()
+    {
+        WebDriver driver = WebDriverRunner.getWebDriver();
+        driver.get("http://www.whatismyip.com/");
+        String myIP = driver.findElement(By.cssSelector("ul[class='list-group text-center'] h3")).getText();
+        String[] ipString = myIP.split(":");
+        myIP = ipString[1].trim();
+        System.out.println(myIP);
+        return myIP;
     }
 
 
