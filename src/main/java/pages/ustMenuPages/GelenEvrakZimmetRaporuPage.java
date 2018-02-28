@@ -139,7 +139,6 @@ public class GelenEvrakZimmetRaporuPage extends MainPage {
 
     @Step("Gelen Evrak Zimmet Raporu Tablosunda Evrak Geçmiş Kontrolü: Evrak: {konu}")
     public GelenEvrakZimmetRaporuPage evrakDetayKontrolu(String evrakNo,String konuKodu, String konu,String evrakTuru,String evrakTarihi,String evrakDili,String gizlilikDerecesi,String kisiKurum,String geldigiKurum,String ivedilik) {
-        System.out.println("evraktarihi" + evrakTarihiKontrolu.getValue() + "vs" + evrakTarihi);
         Assert.assertEquals(evrakNoKontrolu.getText().contains(evrakNo),true,"Evrak No Kontrolü");
         Allure.addAttachment("Evrak No Kontrolü" , evrakNo);
 

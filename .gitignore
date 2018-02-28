@@ -55,3 +55,7 @@ atlassian-ide-plugin.xml
 documents/*
 /src/test/resources/galen/*/dump/
 /test-result/*
+/debug.log
+src/main/java/pages/solMenuPages/ImzaladiklarimPageKapatmaIslemleri.java
+src/main/java/pages/ustMenuPages/PersonelVeAcikEvrakIstatigiPage.java
+src/test/java/tests/GelenGidenEvrakKayit/GelenEvrakKayitHavaleTest.java

@@ -98,7 +98,8 @@ public class GelenEvraklarPage extends MainPage {
     SelenideElement txtEvrakKapatNot = $(By.id("mainPreviewForm:notTextArea_id"));
     SelenideElement txtEvrakKapatOnayAkisi = $(By.id("mainPreviewForm:akisLov_id:LovText"));
     SelenideElement btnEvrakKapatKapatmaOnayinaSun = $(By.id("mainPreviewForm:kapatmaOnayinaSunButtonDirektId"));
-    SelenideElement btnEvrakKapatKapat2 = $x("//div[contains(@class, 'kapatButtonDirekt')]//span[contains(., 'Evrak Kapat')]/..");
+
+    SelenideElement btnEvrakKapatKapat2 = $x("//div[contains(@class, 'kapatButtonDirekt')]//span[text() = 'Evrak Kapat']/..");
     ElementsCollection btnEvrakKapatEvrakKapat = $$("[id='mainPreviewForm:evrakOnizlemeTab'] [class='form-buttons kapatButtonDirekt'] button");
     SelenideElement chkEvrakKapatKisiselKlasorler = $(By.id("mainPreviewForm:kisiselKlasorlerimiGetirCheckboxId_input"));
     SelenideElement btnOnayAkisi = $("[id='mainPreviewForm:evrakKapatOnayAkisPanelGrid'] td:nth-child(4) button");
@@ -168,7 +169,7 @@ public class GelenEvraklarPage extends MainPage {
     SelenideElement tblKolonIslemTarihi = $(By.xpath("//span[normalize-space(text())='İşlem Tarihi']"));
     SelenideElement tblKolonAciklama = $(By.xpath("//span[text()='Açıklama']"));
     SelenideElement btnRaporAlExcel = $("[id$='GecmisiDataTable:evrakGecmisiExport']");
-
+    SelenideElement evrakOnizleme = $(By.id("mainPreviewForm:evrakOnizlemeTab"));
     @Step("Gelen Evraklar Sayfasını aç")
     public GelenEvraklarPage openPage() {
         solMenu(SolMenuData.IslemBekleyenEvraklar.GelenEvraklar);
@@ -959,8 +960,7 @@ public class GelenEvraklarPage extends MainPage {
     }
 
     @Step("Evrak Önizleme geldiği görülür. ")
-    public GelenEvraklarPage evrakOnizlemeKontrolu(String evrakNo) {
-        SelenideElement evrakOnizleme = $(By.id("mainPreviewForm:evrakOnizlemeTab"));
+    public GelenEvraklarPage evrakOnizlemeKontrolu() {
         evrakOnizleme.isDisplayed();
         return this;
     }
@@ -1223,10 +1223,11 @@ public class GelenEvraklarPage extends MainPage {
     public GelenEvraklarPage havaleIslemleriKisiStatusKontrol(String kisi,boolean status) {
         boolean durum = txtComboLovKisi.isLovValueSelectable(kisi);
         Assert.assertEquals(durum, status, "Kişi Kontrolü:" + kisi);
-        Allure.addAttachment("Kişi Kontrolü", kisi);
+        Allure.addAttachment(kisi, "seçilemedi");
         txtComboLovKisi.closeTreePanel();
         return this;
     }
+
 
 
     @Step("Havale İşlemleri Birim alanında \"{kisi}\" kontrol")
@@ -1286,7 +1287,7 @@ public class GelenEvraklarPage extends MainPage {
     @Step("Havale İşlemleri Kişi alanında \"{birim}\" kontrol")
     public GelenEvraklarPage havaleIslemleriBirimKontrol(String birim) {
         boolean durum = txtComboLovBirim.isLovValueSelectable(birim);
-        Assert.assertEquals(durum, false, "Birim Bulundu:" + birim);
+        Assert.assertEquals(durum, false, "Birim Kontrolü:" + birim);
         Allure.addAttachment(birim, " seçilemedi");
         txtComboLovBirim.closeTreePanel();
         return this;
@@ -1363,22 +1364,25 @@ public class GelenEvraklarPage extends MainPage {
     @Step("Havale İşlemleri Alanındaki Kontroller")
     public GelenEvraklarPage onizlemeHavaleAlanKontrolleri() {
 
-            Assert.assertEquals(txtComboLovBirim.isDisplayed(),true,"Birim Alanı Görüntülendi");
+            Assert.assertEquals(txtComboLovBirim.isDisplayed(),true,"Birim Alanı ");
             Allure.addAttachment("Birim Kontrol Alanı Görüntülendi : ","");
 
-            Assert.assertEquals(txtComboLovKisi.isDisplayed(), true, "Kisi Alanı Görüntülendi");
+            Assert.assertEquals(txtComboLovKisi.isDisplayed(), true, "Kisi Alanı ");
             Allure.addAttachment("Kisi Alanı Görüntülendi : ", "");
 
-            Assert.assertEquals(txtOnizlemeKullanıcıListeKontrol.isDisplayed(), true, "Kullanıcı Liste Alanı Görüntülendi");
+            Assert.assertEquals(txtOnizlemeKullanıcıListeKontrol.isDisplayed(), true, "Kullanıcı Liste Alanı ");
             Allure.addAttachment("Kullanıcı Liste Alanı Görüntülendi : ", "");
 
-            Assert.assertEquals(txtHavaleYapAciklama.isDisplayed(), true, "Aciklama Alanı Görüntülendi");
+            Assert.assertEquals(txtComboLovOnaylayacakKisi.isDisplayed(), true, "Onaylayacak Kişi Alanı ");
+            Allure.addAttachment("Onaylayacak Kisi Alanı Görüntülendi : ", "");
+
+            Assert.assertEquals(txtHavaleYapAciklama.isDisplayed(), true, "Aciklama Alanı ");
             Allure.addAttachment("Aciklama Alanı Görüntülendi : ", "");
 
-            Assert.assertEquals(btnOnizlemeDosyaEkleKontrol.isDisplayed(), true, "Dosya Ekle Alanı Görüntülendi");
+            Assert.assertEquals(btnOnizlemeDosyaEkleKontrol.isDisplayed(), true, "Dosya Ekle Alanı ");
             Allure.addAttachment("Dosya Ekle Alanı Görüntülendi : ", "");
 
-            Assert.assertEquals(txtHavaleYapIslemSuresi.isDisplayed(), true, "İşlem Süre Alanı Görüntülendi");
+            Assert.assertEquals(txtHavaleYapIslemSuresi.isDisplayed(), true, "İşlem Süre Alanı ");
             Allure.addAttachment("İslem Sure Alanı Görüntülendi : ", "");
             return this;
     }
