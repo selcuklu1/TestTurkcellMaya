@@ -83,6 +83,7 @@ public class BaseTest extends BaseLibrary {
         Configuration.startMaximized = true;
         Configuration.pollingInterval = 100;
         Configuration.collectionsPollingInterval = 100;
+
         //Configuration.headless = false;
         //Configuration.clickViaJs = true;
         //Configuration.closeBrowserTimeoutMs = 34000;
