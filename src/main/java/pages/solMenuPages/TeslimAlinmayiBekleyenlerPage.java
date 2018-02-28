@@ -80,6 +80,9 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     SelenideElement btnOnizlemeIadeEtDosyaEkle = $(By.id("mainPreviewForm:fileUploadIadeEk"));
     SelenideElement dosyaPathIade = $(By.xpath("//input[@id='mainPreviewForm:fileUploadIadeEk_input']"));
     SelenideElement evrakOnizlemeKontrol = $(By.id("mainPreviewForm:eastLayout"));
+    SelenideElement evrakHavaleKontrol = $(By.id("mainPreviewForm:onizlemePanel"));
+
+
     ElementsCollection ilgiBilgileriEkleriKontrol = $$("div[id$='ilgiListesiDataTable'] tr[data-ri]");
     ElementsCollection teslimEvrakEkleri = $$("a[href^='#mainPreviewForm']");
     ElementsCollection teslimEvrakEkleriKontrol = $$("div[id$='ekListesiOnizlemeDataTable'] tr[data-ri]");
@@ -296,6 +299,13 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Havale Ekran Kontrolu")
+    public TeslimAlinmayiBekleyenlerPage evrakHavaleEkranKontrol() {
+        if (evrakHavaleKontrol.isDisplayed())
+            Allure.addAttachment("Evrak Havale Ekranı", "açılmıştır");
+        return this;
+    }
+
     @Step("Teslim Alınmayı Bekleyenler Evrak Ekleri Tıklama")
     public TeslimAlinmayiBekleyenlerPage teslimEvrakEkleri(String select) {
         teslimEvrakEkleri.filterBy(Condition.text(select)).get(0).click();
@@ -408,13 +418,14 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         return this;
     }
 
+
     @Step("İçerikten Evrak teslim al")
     public TeslimAlinmayiBekleyenlerPage içeriktenEvrakTeslimAl() {
         evrakTeslimAl.click();
         return this;
     }
 
-    @Step("İçerikten Evrak teslim Alma : Evrakı teslim almak istediğinize emin misiniz? uyarı kontrolü")
+    @Step("Evrakı teslim almak istediğinize emin misiniz? uyarı kontrolü ve Evet butonu tıklanır")
     public TeslimAlinmayiBekleyenlerPage içeriktenEvrakEvet() {
         $(By.id("teslimAlEvetButton")).click();
         return this;

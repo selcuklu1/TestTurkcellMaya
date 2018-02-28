@@ -1042,14 +1042,16 @@ public class EkIlgiTest extends BaseTest {
                 .dokumanAra()
                 .listelenenEvraklardaKontrol(iliskiliEvrakSayisi)
                 .evrakIlisikEkle()
-                .listelenenEvraklaraDosyanınGeldigiKontrolu(iliskiliEvrakSayisi, "Evrak Sayısı");
+                .listelenenEvraklaraDosyanınGeldigiKontrolu(iliskiliEvrakSayisi, "Evrak Sayısı")
+                .islemMesaji().basariliOlmali(basariMesaji);
 
         evrakOlusturPage
                 .kaydet(true)
                 .islemMesaji().basariliOlmali(basariMesaji);
 
         evrakPageButtons
-                .parafla();
+                .parafla()
+                .islemMesaji().basariliOlmali(basariMesaji);
 
         parafladiklarimPage
                 .openPage()

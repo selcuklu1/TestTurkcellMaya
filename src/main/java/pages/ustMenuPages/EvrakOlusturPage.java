@@ -3,15 +3,12 @@ package pages.ustMenuPages;
 import com.codeborne.selenide.*;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
-import org.apache.xmlbeans.impl.xb.xsdschema.All;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.testng.Assert;
 import pages.MainPage;
-import pages.altMenuPages.EvrakDetayiPage;
 import pages.pageComponents.TextEditor;
 import pages.pageComponents.belgenetElements.BelgenetElement;
-import pages.pageComponents.tabs.EditorTab;
 import pages.pageData.UstMenuData;
 
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
@@ -66,6 +63,9 @@ public class EvrakOlusturPage extends MainPage {
     SelenideElement btnKaydetOnayaSunGonderEvet = $(By.id("kaydetEvetButton"));
 
     SelenideElement btnGeregiIptal = $("button[id*='geregiLov'] [class$='delete-icon']");
+    SelenideElement btnEkranKapat = $("[id='window1Dialog'] [class*='ui-dialog-titlebar-close']");
+
+
 
     //endregion
     ElementsCollection cevapYazImzalama = $$("[id='windowCevapEvrakForm'] [id^='windowCevapEvrakForm'] table div[class='ui-tabmenu ui-tabmenu-right'] td[class='buttonMenuContainerDefault'] button");
@@ -153,11 +153,12 @@ public class EvrakOlusturPage extends MainPage {
 
     @Step("Kaydet")
     public EvrakOlusturPage kaydet(boolean save) {
-        btnKaydet.click();
+
+        btnKaydet.shouldBe(visible).click();
         if (save)
-            btnKaydetEvet.click();
+            btnKaydetEvet.shouldBe(visible).click();
         else
-            btnKaydetHayir.click();
+            btnKaydetHayir.shouldBe(visible).click();
         return this;
     }
 
@@ -176,6 +177,12 @@ public class EvrakOlusturPage extends MainPage {
     @Step("Evet tıklanır")
     public EvrakOlusturPage kaydetEvet() {
         btnKaydetEvet.click();
+        return this;
+    }
+
+    @Step("Evrak Oluştur ekranını kapat")
+    public EvrakOlusturPage ekraniKapat() {
+        btnEkranKapat.click();
         return this;
     }
 
@@ -3791,7 +3798,8 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Evrak ilişik ekle")
         public IliskiliEvraklarTab evrakIlisikEkle() {
-            btnEvrakIlisikEkle.click();
+            btnEvrakIlisikEkle.shouldBe(visible);
+            clickJs(btnEvrakIlisikEkle);
             return this;
         }
 
