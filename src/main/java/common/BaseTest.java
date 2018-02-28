@@ -79,7 +79,7 @@ public class BaseTest extends BaseLibrary {
         Configuration.savePageSource = false;
         Configuration.collectionsTimeout = timeout * 1000;
         Configuration.timeout = timeout * 1000;
-        Configuration.holdBrowserOpen =false ;
+        Configuration.holdBrowserOpen =Configuration.remote == null;
         Configuration.startMaximized = true;
         Configuration.pollingInterval = 100;
         Configuration.collectionsPollingInterval = 100;
