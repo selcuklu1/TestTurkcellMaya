@@ -42,4 +42,74 @@ public class RolYonetimiPage extends MainPage {
         return this;
     }
 
+    @Step("Aranacak Rol adı doldurma : \"{RolAd}\" ")
+    public RolYonetimiPage txtRolAdArama(String RolAd) {
+        txtAdfilterinput.setValue(RolAd);
+        return this;
+    }
+
+    @Step("Aranacak durum seçimi : \"{durum}\"")
+    public RolYonetimiPage cmbDurumSecim(String durum) {
+        cmbDurumSecimi.selectComboBox(durum);
+        return this;
+    }
+
+    @Step("Arama butonuna tıkla")
+    public RolYonetimiPage btnRolArama () {
+        btnSorgulamaFiltrelemeArama.click();
+        return this;
+    }
+
+    @Step("Yeni Rol Ekleme butonu")
+    public RolYonetimiPage btnYeniRolekle () {
+        btnYeniRolEkleme.click();
+        return this;
+    }
+    @Step("Yeni Rol ad doldurma : \"{Rolad}\"")
+    public RolYonetimiPage txtYeniRolAd (String Rolad) {
+        txtRolAd.setValue(Rolad);
+        return this;
+    }
+
+    @Step("Yeni Rol Kısa Ad doldurma : \"{RolKısaad}\"")
+    public RolYonetimiPage txtYeniRolKısaAd (String RolKısaad) {
+        txtRolKısaAd.setValue(RolKısaad);
+        return this;
+    }
+
+    @Step("Yeni Rol Etiket doldurma : \"{etiket}\"")
+    public RolYonetimiPage txtYeniRolEtiket (String etiket) {
+        txtRolEtiket.setValue(etiket);
+        return this;
+    }
+
+    @Step("Yeni Rol Deger kod doldurma :\"{degerkod}\"")
+    public RolYonetimiPage txtRolDegerKod (String degerkod) {
+        txtRolDegerKod.setValue(degerkod);
+        return this;
+    }
+
+    @Step("Yeni Rol Açıklama doldurma : \"{aciklama}\"")
+    public RolYonetimiPage txtRolAciklama (String aciklama) {
+        txtRolAciklama.setValue(aciklama);
+        return this;
+    }
+
+    @Step("Yeni Rol Yetki Onceligi doldurma : \"{oncelik}\"")
+    public RolYonetimiPage txtRolYetkiOnceligi (int oncelik) {
+        txtRolYetkiOnceligi.setValue(String.valueOf(oncelik));
+        return this;
+    }
+
+    @Step("Yeni Rol Kaydetme ")
+    public RolYonetimiPage btnYeniRolKaydetme () {
+        btnRolKaydetme.click();
+        return this;
+    }
+
+    @Step("Yeni Rol Kaydetme iptal")
+    public RolYonetimiPage btnYeniRolIptal() {
+        btnRolIptal.click();
+        return this;
+    }
 }
