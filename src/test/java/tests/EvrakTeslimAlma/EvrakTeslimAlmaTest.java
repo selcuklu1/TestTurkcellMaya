@@ -1,6 +1,7 @@
 package tests.EvrakTeslimAlma;
 
 import common.BaseTest;
+import data.TestData;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.apache.logging.log4j.LogManager;
@@ -11,6 +12,9 @@ import pages.solMenuPages.*;
 import pages.ustMenuPages.GelenEvrakKayitPage;
 import pages.ustMenuPages.GelenEvrakZimmetRaporuPage;
 import pages.ustMenuPages.SistemLoglariPage;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /****************************************************
  * Tarih: 2018-01-23

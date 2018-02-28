@@ -2215,9 +2215,9 @@ public class EvrakOlusturPage extends MainPage {
         public String editorSayiAl() {
             SelenideElement txtSayi = $(By.id("editorEvrakSayiAlani"));
             String sayi = txtSayi.text();
-            SelenideElement ilgiktrl = $x("//*[@id='yeniGidenEvrakForm:ilgiOutPanel']");
-            String ilgikontrl = ilgiktrl.getAttribute("outerText");
-            Allure.addAttachment("Ilgı kontrol", ilgikontrl);
+//            SelenideElement ilgiktrl = $x("//*[@id='yeniGidenEvrakForm:ilgiOutPanel']");
+//            String ilgikontrl = ilgiktrl.getAttribute("outerText");
+//            Allure.addAttachment("Ilgı kontrol", ilgikontrl);
             return sayi;
         }
 
