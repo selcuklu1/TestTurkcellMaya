@@ -425,7 +425,7 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         return this;
     }
 
-    @Step("İçerikten Evrak teslim Alma : Evrakı teslim almak istediğinize emin misiniz? uyarı kontrolü")
+    @Step("Evrakı teslim almak istediğinize emin misiniz? uyarı kontrolü ve Evet butonu tıklanır")
     public TeslimAlinmayiBekleyenlerPage içeriktenEvrakEvet() {
         $(By.id("teslimAlEvetButton")).click();
         return this;

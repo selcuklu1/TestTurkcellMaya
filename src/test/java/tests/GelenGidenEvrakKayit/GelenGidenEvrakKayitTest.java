@@ -1,6 +1,7 @@
 package tests.GelenGidenEvrakKayit;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.WebDriverRunner;
 import common.BaseTest;
 import data.User;
 import io.qameta.allure.Severity;
@@ -90,6 +91,17 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
         gelenEvrakKayitPage
                 .openPage()
+                .ekBilgiFiltreAc()
+                .evrakEkleriDosyaEkleme(pathToFileExcel)
+                .evrakEkleriDosyaEkleEkMetinDoldur(ekMetni)
+                .evrakEkTabViewEkle()
+                .dosyaEkleTabTabloKontrolu("Ek-1")
+                .ekBilgiFizikselEkEkle()
+                .evrakEkTabFizikselEkMetniDoldur(ekMetni)
+                .fizikselEkTabViewAciklamaEkle()
+                .dosyaEkleTabTabloKontrolu("Ek-2");
+
+        gelenEvrakKayitPage
                 .evrakBilgileriUstYaziEkle(pathToFilePdf)
                 .ustYaziPdfAdiKontrol(pdfName)
                 .islemMesaji().basariliOlmali();
@@ -107,20 +119,25 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .evrakGelisTipiSec(evrakGelisTipi)
                 .ivedilikSec(ivedilik);
 
-        Thread.sleep(3000);
+//        gelenEvrakKayitPage
+//                .ekBilgiFiltreAc()
+//                .evrakEkleriDosyaEkleme(pathToFileExcel);
+//        waitForLoadingJS(WebDriverRunner.getWebDriver(),1000000000);
+
+
 
         gelenEvrakKayitPage
-                .ekBilgiFiltreAc()
-                .evrakEkleriDosyaEkleme(pathToFileExcel)
-                .evrakEkleriDosyaEkleDosyaAdiKontrol(excelName)
-                .ustYaziDegistirilmisPopUpKontrol(false)
-                .evrakEkleriDosyaEkleEkMetinDoldur(ekMetni)
-                .evrakEkTabViewEkle()
-                .dosyaEkleTabTabloKontrolu("Ek-1")
-                .ekBilgiFizikselEkEkle()
-                .evrakEkTabFizikselEkMetniDoldur(ekMetni)
-                .fizikselEkTabViewAciklamaEkle()
-                .dosyaEkleTabTabloKontrolu("Ek-2")
+//                .ekBilgiFiltreAc()
+//                .evrakEkleriDosyaEkleme(pathToFileExcel)
+//                .evrakEkleriDosyaEkleDosyaAdiKontrol(excelName)
+//                .ustYaziDegistirilmisPopUpKontrol(false)
+//                .evrakEkleriDosyaEkleEkMetinDoldur(ekMetni)
+//                .evrakEkTabViewEkle()
+//                .dosyaEkleTabTabloKontrolu("Ek-1")
+//                .ekBilgiFizikselEkEkle()
+//                .evrakEkTabFizikselEkMetniDoldur(ekMetni)
+//                .fizikselEkTabViewAciklamaEkle()
+//                .dosyaEkleTabTabloKontrolu("Ek-2")
                 .kaydet();
 
         evrakNO321 = gelenEvrakKayitPage.popUps();

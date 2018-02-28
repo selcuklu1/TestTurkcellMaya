@@ -273,7 +273,8 @@ public class KullaniciEvrakDevretPage extends MainPage {
 
     @Step("Devredilemeyen Evraklar popup kontrolü")
     public KullaniciEvrakDevretPage popUpDevredilemeyenEvraklarKontrol() {
-        popUpDevredilemeyenEvraklar.shouldBe(visible);
+//        sleep(5000);
+        Assert.assertEquals(popUpDevredilemeyenEvraklar.isDisplayed(),true,"Devredilemeyen Evraklar popUp gelmeli.");
         return this;
     }
 

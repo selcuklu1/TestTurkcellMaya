@@ -711,7 +711,7 @@ public class BaseLibrary extends ElementsContainer {
         Matcher m = y.matcher(text);
         m.find();
         String number = m.group();
-        System.out.println("Get number from text: \"" + text + "\" number: " + number);
+//        System.out.println("Get number from text: \"" + text + "\" number: " + number);
         return number;
     }
 

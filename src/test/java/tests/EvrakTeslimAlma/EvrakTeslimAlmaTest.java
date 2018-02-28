@@ -128,6 +128,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
         String evrakTuru = "Resmi Yazışma";
         String evrakDili = "Türkçe";
         String evrakTarihi = getSysDateForKis();
+        String evrakTarihiSaat = getSysDateForTarihSaat();
         String gizlilikDerecesi = "Normal";
         String kisiKurum = "Kurum";
         String geldigiKurum = "Esk Kurum 071216 2";
@@ -164,8 +165,8 @@ public class EvrakTeslimAlmaTest extends BaseTest {
                 .popUps();
 
 
-        gelenEvrakKayitPage
-                .islemMesaji().basariliOlmali(basariMesaji);
+//        gelenEvrakKayitPage
+//                .islemMesaji().basariliOlmali(basariMesaji);
 
         testStatus(testid, "Test Başladı");
         teslimAlinmayiBekleyenlerPage
@@ -174,7 +175,8 @@ public class EvrakTeslimAlmaTest extends BaseTest {
                 .evrakSecIcerikGoster(konu, true)
                 .ekranKontrolEvrakDetayi()
                 .içeriktenEvrakTeslimAl()
-                .içeriktenEvrakEvet();
+                .içeriktenEvrakEvet()
+                .islemMesaji().basariliOlmali(basariMesaji);
 
         teslimAlinanlarPage
                 .openPage()
@@ -182,7 +184,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
                 .evrakNoIleEvrakSec(konu)
                 .tabKontrol()
                 .secilenEvrakEvrakGecmisi()
-                .evrakGecmisi(kisi, islemSureci, evrakTarihi);
+                .evrakGecmisi(kisi, islemSureci, evrakTarihiSaat);
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -260,8 +262,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
 
         testStatus(testid, "Test Başladı");
 
-        ipAdress = myip();
-        login(TestData.usernameZTEKIN,TestData.passwordZTEKIN);
+
 
         sistemLoglariPage
                 .openPage()
@@ -269,7 +270,15 @@ public class EvrakTeslimAlmaTest extends BaseTest {
                 .aksiyonSec(aksiyon)
                 .sorgula()
                 .sistemRaporuKontrol(aksiyon, evrakTarihiSaat, kullanici.toUpperCase(), aciklama, true);
-                //TODO Müşterinin onaylaması durumunda bu satır aktiflenecek, çünkü external bir adrese gidiyor.
+
+//      TODO Müşterinin onaylaması durumunda bu satır aktiflenecek, çünkü external bir adrese gidiyor.
+//      ipAdress = myip();
+//      login(TestData.usernameZTEKIN,TestData.passwordZTEKIN);
+//      sistemLoglariPage
+//                .openPage()
+//                .ekranSistemLoglarıKontrol()
+//                .aksiyonSec(aksiyon)
+//                .sorgula()
 //                .sistemRaporuKontrol(aksiyon, evrakTarihiSaat, kullanici.toUpperCase(), aciklama, ipAdress, true);
 
     }
@@ -284,6 +293,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
         String evrakTuru = "Resmi Yazışma";
         String evrakDili = "Türkçe";
         String evrakTarihi = getSysDateForKis();
+        String evrakTarihiSaat = getSysDateForTarihSaat();
         String gizlilikDerecesi = "Normal";
         String kisiKurum = "Kurum";
         String geldigiKurum = "Esk Kurum 071216 2";
@@ -318,8 +328,8 @@ public class EvrakTeslimAlmaTest extends BaseTest {
                 .popUpsv2();
 
 
-        gelenEvrakKayitPage
-                .islemMesaji().basariliOlmali(basariMesaji);
+//        gelenEvrakKayitPage
+//                .islemMesaji().basariliOlmali(basariMesaji);
 
         String konu2 = "TS-2319-" + getSysDate();
 
@@ -343,8 +353,8 @@ public class EvrakTeslimAlmaTest extends BaseTest {
                 .kaydet()
                 .popUpsv2();
 
-        gelenEvrakKayitPage
-                .islemMesaji().basariliOlmali(basariMesaji);
+//        gelenEvrakKayitPage
+//                .islemMesaji().basariliOlmali(basariMesaji);
 
         testStatus(testid, "Test Başladı");
         teslimAlinmayiBekleyenlerPage
@@ -352,6 +362,8 @@ public class EvrakTeslimAlmaTest extends BaseTest {
                 .evrakNoIleEvrakSec(konu1)
                 .evrakNoIleEvrakSec(konu2)
                 .evrakSecToplu(konu1, konu2, true)
+                .evrakNoGelmedigiGorme(konu1)
+                .evrakNoGelmedigiGorme(konu2)
                 .islemMesaji().basariliOlmali(basariMesaji);
 
         teslimAlinanlarPage
@@ -360,7 +372,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
                 .evrakNoIleEvrakSec(konu2)
                 .tabKontrol()
                 .secilenEvrakEvrakGecmisi()
-                .evrakGecmisi(kisi, islemSureci, evrakTarihi);
+                .evrakGecmisi(kisi, islemSureci, evrakTarihiSaat);
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -407,8 +419,8 @@ public class EvrakTeslimAlmaTest extends BaseTest {
                 .popUps();
 
 
-        gelenEvrakKayitPage
-                .islemMesaji().basariliOlmali(basariMesaji);
+//        gelenEvrakKayitPage
+//                .islemMesaji().basariliOlmali(basariMesaji);
 
         testStatus(testid, "PreCondition Evrak Iade Et");
         teslimAlinmayiBekleyenlerPage

@@ -82,7 +82,9 @@ public class VekaletIslemleriTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, priority = 0, description = "TS0025a : Onaya göndererek Vekalet Verme")
+    @Test(enabled = true
+            , priority = 0
+            , description = "TS0025a : Onaya göndererek Vekalet Verme")
     public void TS0025a() throws InterruptedException {
 
         login(usernameVV);
@@ -147,6 +149,7 @@ public class VekaletIslemleriTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true
+//            ,priority = 1
             , dependsOnMethods = {"TS0025a"}
             , description = "TS0025b : Onaya göndererek Vekalet Verme işleminde onayın Red edilmesi")
     public void TS0025b() throws InterruptedException {
@@ -184,6 +187,7 @@ public class VekaletIslemleriTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true
+//            ,priority = 2
             ,dependsOnMethods = {"TS0025b"}
             ,description = "TS2208 : Onaya göndererek Vekalet Verme işleminde onayın kabul edilmesi")
     public void TS2208() throws InterruptedException {
@@ -294,6 +298,7 @@ public class VekaletIslemleriTest extends BaseTest {
                 .sImzaImzala2();
 //                .islemMesaji().basariliOlmali(basariMesaji);
 
+        login(yakyol);
         parafladiklarimPage
                 .openPage()
                 .filtreleAc()
