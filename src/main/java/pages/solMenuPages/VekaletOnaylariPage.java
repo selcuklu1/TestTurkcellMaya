@@ -24,7 +24,7 @@ import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 public class VekaletOnaylariPage extends MainPage {
     SelenideElement f = $(By.xpath("//div[@id='mainInboxForm:inboxDataTable:filtersAccordion']//a[text()='Filtreler']/parent::h3"));
     SelenideElement dateTxtTarih = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:tarihSecCalendar_input"));
-    ElementsCollection tblOnayBekleyenler = $$("[id='mainInboxForm:inboxDataTable_data'] tr[role=row]");
+    ElementsCollection tblOnayBekleyenler = $$("tbody[id='mainInboxForm:inboxDataTable_data'] tr[data-ri]");
     SelenideElement lblVekaletVeren = $("form[id='mainPreviewForm'] tbody tr:nth-child(2) td:nth-child(3)");
     BelgenetElement txtVekaletAlan = comboLov(By.id("mainPreviewForm:previewVekaletAlanLov:LovSecilen"));
     SelenideElement lblAciklama = $("form[id='mainPreviewForm'] tbody tr:nth-child(7) td:nth-child(3)");

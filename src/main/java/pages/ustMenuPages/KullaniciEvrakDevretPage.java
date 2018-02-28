@@ -11,6 +11,7 @@ import pages.pageData.UstMenuData;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$$;
+import static org.testng.Assert.assertEquals;
 import static pages.pageComponents.belgenetElements.Belgenet.*;
 
 
@@ -134,18 +135,18 @@ public class KullaniciEvrakDevretPage extends MainPage {
 
     @Step("Ekran Alan kontrolleri")
     public KullaniciEvrakDevretPage ekranTabKontrolleri() {
-        Assert.assertEquals($x("//h3[.='Gelen Evraklar']").isDisplayed(), true);
-        Assert.assertEquals($x("//h3[.='Taslak Evraklar']").isDisplayed(), true);
-        Assert.assertEquals($x("//h3[.='İmza Bekleyen Evraklar']").isDisplayed(), true);
-        Assert.assertEquals($x("//h3[.='Paraf Bekleyen Evraklar']").isDisplayed(), true);
-        Assert.assertEquals($x("//h3[.='Koordine Bekleyen Evraklar']").isDisplayed(), true);
-        Assert.assertEquals($x("//h3[.='Kontrol Bekleyen Evraklar']").isDisplayed(), true);
-        Assert.assertEquals($x("//h3[.='Havale Onayına Gelen Evraklar']").isDisplayed(), true);
-        Assert.assertEquals($x("//h3[.='Teslim Aldıklarım']").isDisplayed(), true);
-        Assert.assertEquals($x("//h3[.='Kapatma İmzasi Bekleyenler']").isDisplayed(), true);
-        Assert.assertEquals($x("//h3[.='Kapatma Parafı Bekleyenler']").isDisplayed(), true);
-        Assert.assertEquals(btnListele.isDisplayed(), true);
-        Assert.assertEquals(btnDevret.is(disabled), true);
+        assertEquals($x("//h3[.='Gelen Evraklar']").isDisplayed(), true);
+        assertEquals($x("//h3[.='Taslak Evraklar']").isDisplayed(), true);
+        assertEquals($x("//h3[.='İmza Bekleyen Evraklar']").isDisplayed(), true);
+        assertEquals($x("//h3[.='Paraf Bekleyen Evraklar']").isDisplayed(), true);
+        assertEquals($x("//h3[.='Koordine Bekleyen Evraklar']").isDisplayed(), true);
+        assertEquals($x("//h3[.='Kontrol Bekleyen Evraklar']").isDisplayed(), true);
+        assertEquals($x("//h3[.='Havale Onayına Gelen Evraklar']").isDisplayed(), true);
+        assertEquals($x("//h3[.='Teslim Aldıklarım']").isDisplayed(), true);
+        assertEquals($x("//h3[.='Kapatma İmzasi Bekleyenler']").isDisplayed(), true);
+        assertEquals($x("//h3[.='Kapatma Parafı Bekleyenler']").isDisplayed(), true);
+        assertEquals(btnListele.isDisplayed(), true);
+        assertEquals(btnDevret.is(disabled), true);
 //        btnListele.shouldBe(visible);
 //        btnDevret.shouldNotBe(enabled);
 
@@ -255,10 +256,10 @@ public class KullaniciEvrakDevretPage extends MainPage {
 
     @Step("Devralacak popup alan kontrolleri")
     public KullaniciEvrakDevretPage devralacakKisiAlanKontolu() {
-        Assert.assertEquals(txtDevralacakKisi.shouldBe(visible), true, "Devrelecak kişi texti visible.");
-        Assert.assertEquals(txtAciklama.shouldBe(visible), true, "Açıklama texti visible.");
-        Assert.assertEquals(btnDevretTamam.shouldBe(visible), true, "Devret Tamam butonu visible.");
-        Assert.assertEquals(btnDevretIptal.shouldBe(visible), true, "Devret Iptal butonu visible.");
+        Assert.assertEquals(txtDevralacakKisi.isDisplayed(), true, "Devrelecak kişi texti visible.");
+        Assert.assertEquals(txtAciklama.isDisplayed(), true, "Açıklama texti visible.");
+        Assert.assertEquals(btnDevretTamam.isDisplayed(), true, "Devret Tamam butonu visible.");
+        Assert.assertEquals(btnDevretIptal.isDisplayed(), true, "Devret Iptal butonu visible.");
 
         Allure.addAttachment($(By.xpath("//label[normalize-space(text())='Devralacak Kişi']")).text(), "Ekran Kontrolü ok");
         Allure.addAttachment($(By.xpath("//label[normalize-space(text())='Açıklama']")).text(), "Ekran Kontrolü ok");

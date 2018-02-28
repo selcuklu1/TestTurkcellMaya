@@ -45,7 +45,7 @@ public class VekaletVerPage extends MainPage {
 
     //Vekalet Listesi Tabı
     SelenideElement btnSorgula = $(By.id("vekaletVerForm:vekaletLayout:vekaletSorgula_Id"));
-    ElementsCollection tblVekaletListesi = $$("[id='vekaletVerForm:vekaletLayout:bulunanVekaletlerPanel'] tbody tr[role='row']");
+    ElementsCollection tblVekaletListesi = $$("[id='vekaletVerForm:vekaletLayout:bulunanVekaletlerPanel'] tbody tr[data-ri]");
     SelenideElement tblVekaletListesi2 = $(By.xpath("//div[@id='vekaletVerForm:vekaletLayout:bulunanVekaletlerPanel']//div[starts-with(@id,'vekaletVerForm:vekaletLayout:j_idt')]"));
 
     SelenideElement dateTxtVekaletListesiBaslangicTarihi = $(By.id("vekaletVerForm:vekaletLayout:vekaletListeBasTarih_input"));
@@ -89,6 +89,15 @@ public class VekaletVerPage extends MainPage {
     @Step("Vekalet veren alanını doldur : \"{vekaletVeren}\" ")
     public VekaletVerPage vekaletVerenDoldur(String vekaletVeren) {
         txtVekaletVerenCombolov.selectLov(vekaletVeren);
+        return this;
+    }
+
+    @Step("Vekalet veren alanını kontrolü : \"{vekaletVeren}\" , {shouldBeExist} ")
+    public VekaletVerPage vekaletVerenKontrolu(String vekaletVeren, boolean shouldBeExist) {
+        if (shouldBeExist)
+            txtVekaletVerenCombolov.openTreePanel().getSelectableItems().filterBy(Condition.text(vekaletVeren)).shouldHaveSize(1);
+        else
+            txtVekaletVerenCombolov.openTreePanel().getSelectableItems().filterBy(Condition.text(vekaletVeren)).shouldHaveSize(0);
         return this;
     }
 
@@ -198,9 +207,30 @@ public class VekaletVerPage extends MainPage {
 
     @Step("Vekalet Listesi statü tablo kontrolü : \"{statu}\" ")
     public VekaletVerPage vekaletListesiTabloKontrol(int column, String statu) {
-        boolean status = findElementOnTableByColumnInputInAllPages(tblVekaletListesi2, column, statu).isDisplayed();
-        Assert.assertEquals(status, true);
+
+        ElementsCollection kisiselPages = $$("td[id^='vekaletVerForm:vekaletLayout:'][id$='paginator_bottom'] > span[class='ui-paginator-pages'] >  span");
+
+        for (int i = 0; i < kisiselPages.size(); i++) {
+            kisiselPages.get(i).click();
+            int size = tblVekaletListesi
+                    .filterBy(Condition.text(statu))
+                    .size();
+
+            if(size==1)
+                break;
+            //            for (int j = 0; j<tblVekaletListesi.size();j++) {
+//                tblVekaletListesi.get(j)
+//                        .$("button[id$=':kullaniciGrubuGuncelle_id']").shouldBe(Condition.visible);
+//                tblVekaletListesi.get(j)
+//                        .$("button[id$=':kullaniciGrubuAktif_id']").shouldBe(Condition.visible);
+//            }
+        }
         return this;
+
+//        boolean status = findElementOnTableByColumnInputInAllPages(tblVekaletListesi2, column, statu).isDisplayed();
+//
+//        Assert.assertEquals(status, true);
+//        return this;
     }
 
     @Step("Vekalet Listesi Tablo Kontrol")

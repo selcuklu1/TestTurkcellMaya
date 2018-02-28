@@ -5,7 +5,12 @@
 
     <test name="Tüzel Kişi Yönetimi Testleri">
         <packages>
-            <package name="tests.TuzelKisiYonetimi"/>
+            <package name="tests.EvrakHavaleKurallari"/>
+            <package name="tests.EvrakPaylasma"/>
+            <package name="tests.GelenEvrakiCevapliKapat"/>
+            <package name="tests.GizlilikKleransi"/>
+            <package name="tests.KepIlePostalamaIslemleri"/>
+            <package name="tests.KisiselIslemlerBagTipi"/>
         </packages>
     </test>
 </suite>

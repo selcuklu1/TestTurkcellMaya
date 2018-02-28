@@ -8,7 +8,6 @@ import common.ReusableSteps;
 import data.User;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Step;
-import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.newPages.EvrakOlusturPage;
@@ -16,7 +15,6 @@ import pages.pageComponents.DagitimHitapDuzenle;
 import pages.pageComponents.EvrakOnizleme;
 import pages.pageComponents.PDFOnizleme;
 import pages.pageData.alanlar.BilgiSecimTipi;
-import pages.pageData.alanlar.DagitimElemanlariTipi;
 import pages.pageData.alanlar.GeregiSecimTipi;
 import pages.pageData.alanlar.OnayKullaniciTipi;
 import pages.solMenuPages.GelenEvraklarPage;
@@ -252,7 +250,7 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
     }
 
     @Test(description = "TS2323: Yeni Dağıtım Planı Kayıt (Ekranlardan Kontrolü)", enabled = true
-            , dependsOnMethods = {"TS1280"}
+            , dependsOnMethods = {"TS1280a"}
     )
     public void TS2323() {
         //User user = optiim;
@@ -458,15 +456,14 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
                 .yazdir();
         evrakDetaylari.ustVerileriListesindeAra(text(konu)).ustVerileriYazdir();
 
-        PDFOnizleme pdfOnizleme = new PDFOnizleme();
-        WebDriver driver = switchTo().window(1);
-        pdfOnizleme.checkTextInAllPages(
+        new PDFOnizleme(1).checkTextInAllPages(
                 exactText(evraktaGorunecekHitap[0])
                 , exactText(evraktaGorunecekHitap[1])
                 , exactText(evraktaGorunecekHitap[2])
                 , exactText(evraktaGorunecekHitap[3])
                 , exactText(evraktaGorunecekHitap[4]));
-        driver.close();
+        WebDriverRunner.getWebDriver().close();
+
         switchTo().window(0);
     }
 
@@ -672,22 +669,18 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
         page.bilgileriTab()
                 .bilgiSecimTipiSec(BilgiSecimTipi.DAGITIM_PLANLARI)
                 .bilgiSec(planAdi)
-                .secilenBilgiUpdateTiklanır(text(planAdi));
+                .bilgiDagitimHitapDuzenlemeTiklanir(text(planAdi));
         DagitimHitapDuzenle dagitimHitapDuzenle = new DagitimHitapDuzenle();
         dagitimHitapDuzenle.getEvraktaGorunecekHitap("DAĞITIM YERLERİNE olmalı").shouldBe(visible);
         Assert.assertEquals(dagitimHitapDuzenle.getEvraktaGorunecekHitap("değişikliğin yapılamadığı görülür")
                 .$(Selectors.byText("DAĞITIM YERLERİNE")).getTagName(), "span", "evrakta görünecek hitap span olmalı");
 
-        dagitimHitapDuzenle.dagitimPlaniDetayListesiKontrolu(dagitimPlanElemanlari);
+        dagitimHitapDuzenle.dagitimPlaniDetayListesiKontroluGereksizKontrollu(dagitimPlanElemanlari);
     }
 
 
 
     //region Steps
-    @Step("{name} : {description}")
-    private void step(String name, String description) {
-    }
-
     @Step("Evrak Oluştur sayfada pasif yapılan dağıtım planının gereği alanında gelmediği görülür")
     private void evrakOlusturSayfadaPasifKontrolu(String adi) {
         new EvrakOlusturPage().openPage().bilgileriTab()
