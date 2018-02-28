@@ -1,5 +1,6 @@
 package pages.solMenuPages;
 
+import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
@@ -94,6 +95,38 @@ public class KlasoreKaldirdiklarimPage extends MainPage {
         tblKlasoreKaldirdiklarim
                 .filterBy(Condition.text(konu))
                 .shouldHaveSize(1);
+        return this;
+    }
+
+    @Step("{konu} konulu evrak listede olmalı mı? : {evrakOlmali}")
+    public KlasoreKaldirdiklarimPage evrakKontrol(String konu, boolean evrakOlmali){
+
+        if(evrakOlmali == true){
+
+            tblKlasoreKaldirdiklarim
+                    .filterBy(Condition.text(konu))
+                    .shouldHave(CollectionCondition.sizeGreaterThan(0));
+
+            tblKlasoreKaldirdiklarim
+                    .filterBy(Condition.text(konu))
+                    .first()
+                    .shouldBe(Condition.visible);
+
+        } else {
+
+            tblKlasoreKaldirdiklarim
+                    .filterBy(Condition.text(konu))
+                    .shouldHaveSize(0);
+
+            tblKlasoreKaldirdiklarim
+                    .filterBy(Condition.text(konu))
+                    .first()
+                    .shouldNotBe(Condition.visible);
+
+        }
+
+
+
         return this;
     }
 }
