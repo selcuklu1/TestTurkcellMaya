@@ -8,6 +8,7 @@ import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
+import pages.MainPage;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ import static com.codeborne.selenide.Selenide.$$;
 import static com.codeborne.selenide.Selenide.sleep;
 import static pages.pageComponents.IslemMesajlari.MessageTitle.*;
 
-public class IslemMesajlari extends BaseLibrary {
+public class IslemMesajlari extends MainPage {
     //yeni env objeleri
     //div class="lobibox-notify lobibox-notify-success animated-fast fadeInDown notify-mini"
     //                          lobibox-notify-warning
@@ -97,8 +98,8 @@ public class IslemMesajlari extends BaseLibrary {
     @Step("Mesaj kontrolü")
     private void checkMessage(String messageTitle, String... expectedMessage) {
         SelenideElement message = getMessageBody();
-        System.out.println(message.text());
-        takeScreenshot();
+        System.out.println("İşlem Mesajı object text:" + message.text());
+        //takeScreenshot();
         checkTitle(message.$(titleLocator), messageTitle);
         if (expectedMessage.length > 0)
             checkMessageText(message.$(msgLocator), expectedMessage[0]);
@@ -249,7 +250,9 @@ public class IslemMesajlari extends BaseLibrary {
     public void closeMessage() {
         try {
             WebDriverRunner.getWebDriver().findElement(closeButtonLocator).click();
+            System.out.println("Click to close işlem mesajı");
         } catch (Exception ignored) {
+            System.out.println("Click to close işlem mesajı error: " + ignored);
         }
     }
 

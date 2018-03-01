@@ -847,6 +847,16 @@ public class BilgilerTab extends MainPage {
         return this;
     }
 
+    @Step("Anlık onay seçilen Kullanıcı tipi \"Koordeneli\" kontrol et")
+    public BilgilerTab secilenAnlikOnayAkisKullanicilariTipiKoordeneliKontrolEt(Condition... kullaniciAramaKriteri) {
+        ElementsCollection collection = getAnlikOnayAkisKullanicilarCombolov().getSelectedItems().shouldHave(sizeGreaterThan(0));
+        for (Condition condition:kullaniciAramaKriteri) {
+            collection = collection.filterBy(condition);
+        }
+        collection.shouldHave(sizeGreaterThan(0)).last().shouldHave(text("Koordeneli"));
+        return this;
+    }
+
     @Step("Anlık onay seçilen Kullanıcıları kontrol et")
     public BilgilerTab secilenAnlikOnayAkisKullanicilariKontrolEt(String kullanici, String tipi) {
         Allure.addAttachment("Seçlen olmalı kullanicilar", kullanici + " / " + tipi);
@@ -870,7 +880,7 @@ public class BilgilerTab extends MainPage {
         Allure.addAttachment("Seçlen olmalı kullanicilar", kullanici + " / " + tipi);
         Allure.addAttachment("Mevcut seçlen kullanicilar", getAnlikOnayAkisKullanicilarCombolov().getSelectedItems().texts().toString());
         getAnlikOnayAkisKullanicilarCombolov().getSelectedItems().filterBy(text(kullanici.getFullname())).shouldHaveSize(1)
-                .first().$("select").getSelectedOption().shouldHave(text(tipi.getOptionText()));
+                .first().scrollIntoView(true).$("select").getSelectedOption().shouldHave(text(tipi.getOptionText()));
         return this;
     }
 
@@ -894,6 +904,36 @@ public class BilgilerTab extends MainPage {
             getAnlikOnayAkisKullanicilarCombolov().selectLov(text);
         return this;
     }*/
+
+    @Step("Anlık onay akışındaki kullanıcı seçilir")
+    public BilgilerTab anlikOnayAkisKullaniciSec(User kullanici) {
+        String filter = kullanici.getBirimKisaAdi().isEmpty() ? kullanici.getBirimAdi() : kullanici.getBirimKisaAdi();
+        anlikOnayAkisKullanicilarAlaninBirimTumuSec(true);
+
+        getAnlikOnayAkisKullanicilarCombolov()
+                .type(kullanici.getFullname())
+                .getSelectableItems()
+                .filterBy(text(kullanici.getFullname()))
+                .filterBy(text(kullanici.getGorev()))
+                .filterBy(text(filter))
+                .first().click();
+        getAnlikOnayAkisKullanicilarCombolov().closeTreePanel();
+
+        getAnlikOnayAkisKullanicilarCombolov().getSelectedItems().last()
+                .shouldHave(text(kullanici.getFullname()), text(kullanici.getGorev()), text(filter));
+        return this;
+    }
+
+
+    @Step("Anlık onay akışındaki Koordeneli kullanıcı seçilir")
+    public BilgilerTab anlikOnayAkisKoordeneliKullaniciSec(User kullanici) {
+        koodreneliSec(true);
+        anlikOnayAkisKullaniciSec(kullanici);
+        getAnlikOnayAkisKullanicilarCombolov().getSelectedItems().last().scrollIntoView(true)
+                .shouldHave(text("Koordine"));
+        koodreneliSec(false);
+        return this;
+    }
 
     @Step("Anlık onay akışındaki kullanıcı ve tipi seçilir")
     public BilgilerTab anlikOnayAkisKullaniciVeTipiSec(String kullanici, String tipi) {
@@ -975,6 +1015,7 @@ public class BilgilerTab extends MainPage {
         return this;
     }
 
+
     //table[contains(@id,'anlikakisOlusturPanelGrid')]//div[@type='button']/input[@type='checkbox']
     @Step("Anlık onay akışı kullanıcıları alanın Birim/Tümü sec")
     public BilgilerTab anlikOnayAkisKullanicilarAlaninBirimTumuSec(boolean tumu) {
@@ -984,18 +1025,31 @@ public class BilgilerTab extends MainPage {
         return this;
     }
 
-    SelenideElement koordineliCheckbox() {
-        return $("input[id$='koordineliBooleanCheckbox_input']");
+    SelenideElement getKoordineliCheckbox() {
+        return container.$("input[id$='koordineliBooleanCheckbox_input']");
+    }
+
+    @Step("Koordeneli checkobox {secilir} seçilir")
+    public BilgilerTab koodreneliSec(boolean secilir){
+        checkboxSelect(getKoordineliCheckbox(), secilir);
+        return this;
     }
 
     @Step("Anlık onay Kullan buton")
     public SelenideElement getKullanButton() {
-        return $("button[id$='anlikAkisKullanButton']");
+        return container.$("button[id$='anlikAkisKullanButton']");
     }
 
     @Step("Anlık onay akiş Kullan butona tıklanır")
-    public BilgilerTab kullanButonaTikla() {
+    public BilgilerTab kullan() {
         getKullanButton().pressEnter();
+        return this;
+    }
+
+    @Step("Anlık onay akiş Kullan butona tıklanır")
+    public BilgilerTab kullanAndCheck(Condition... conditions) {
+        getKullanButton().pressEnter();
+        container.$("[id$='anlikakisOlusturPanel']").shouldHave(conditions);
         return this;
     }
     //endregion
@@ -1054,7 +1108,7 @@ public class BilgilerTab extends MainPage {
         onayAkisiEkleButonaTikla();
         //anlikOnayAkisKullanicilariTemizle();
         onayAkisKullanici.forEach((k, t) -> anlikOnayAkisKullaniciVeTipiSec(k, t.getOptionText()));
-        kullanButonaTikla();
+        kullan();
         return this;
     }
 
@@ -1075,7 +1129,7 @@ public class BilgilerTab extends MainPage {
             anlikOnayAkisKullaniciVeTipiSec(parafci, OnayKullaniciTipi.PARAFLAMA);
 
         anlikOnayAkisKullaniciVeTipiSec(imzaci, OnayKullaniciTipi.IMZALAMA);
-        kullanButonaTikla();
+        kullan();
         return this;
     }
 
@@ -1099,7 +1153,7 @@ public class BilgilerTab extends MainPage {
             else
                 anlikOnayAkisKullaniciVeTipiSec(kullanici[0], kullanici[1]);
         }
-        kullanButonaTikla();
+        kullan();
         return this;
     }
 
@@ -1111,7 +1165,6 @@ public class BilgilerTab extends MainPage {
         ivedilikSec(ivedilik);
         geregiSecimTipiSec(geregiSecimTipi);
         geregiSec(geregi);
-        onayAkisiTemizle();
         return this;
     }
 
