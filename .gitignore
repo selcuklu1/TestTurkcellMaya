@@ -56,6 +56,11 @@ documents/*
 /src/test/resources/galen/*/dump/
 /test-result/*
 
-/Debug.log
 /debug.log
-/Debug.log*
+
+/debug.log
+
+/debug.log
+
+
+debug.log*
