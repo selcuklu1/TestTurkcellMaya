@@ -1,4 +1,4 @@
-# Eclipse
+﻿# Eclipse
 .classpath
 .project
 .settings/
@@ -57,3 +57,6 @@ documents/*
 /test-result/*
 
 /debug.log
+/debug.log
+/
+debug.log*
