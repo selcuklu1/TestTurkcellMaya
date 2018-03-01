@@ -113,10 +113,10 @@ public class BaseTest extends BaseLibrary {
 
         //System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, "/dev/null");
         //getBrowserName();
-        /*System.out.println("remote: " + Configuration.remote);
+        System.out.println("remote: " + Configuration.remote);
         System.out.println("browser: " + Configuration.browser);
         System.out.println("url: " + Configuration.baseUrl);
-        System.out.println("Upload path: " + getUploadPath());
+        /*System.out.println("Upload path: " + getUploadPath());
         System.out.println("Download path: " + getDownloadPath());
         System.out.println("Selenide/Selenium driver has been set up.");*/
 

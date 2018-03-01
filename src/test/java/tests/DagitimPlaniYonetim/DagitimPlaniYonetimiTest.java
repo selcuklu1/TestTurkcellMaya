@@ -64,7 +64,7 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
         User user = user1;
         login(user);
 
-        yeniPlanAdi1280 = "TS1280_" + getSysDate();
+        yeniPlanAdi1280 = "TS1280a_" + getSysDate();
         System.out.println("Dağınım Planı: " + yeniPlanAdi1280);
 
         dagitimPlanElemanlari = new LinkedHashMap<String, String>();
@@ -89,7 +89,7 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
     public void TS1280b() {
         User user = user1;
         login(user);
-        String planAdi = "TS1280a_";
+        String planAdi = "TS1280b_";
         System.out.println("Dağınım Planı: " + planAdi);
 
         //TS1280 tanımlanıyor
