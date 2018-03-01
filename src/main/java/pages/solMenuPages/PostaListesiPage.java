@@ -164,7 +164,7 @@ public class PostaListesiPage extends MainPage {
 
         Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", currentItem);
 
-        sleep(1000);
+        
         currentItem.click();
 
 
