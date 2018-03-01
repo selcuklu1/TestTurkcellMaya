@@ -22,7 +22,7 @@ public class LoginPage extends MainPage {
 //        clearCookies();
         WebDriverRunner.clearBrowserCache();
         Selenide.open("");
-        maximazeBrowser();
+        //maximazeBrowser();
 
         System.out.println("================================");
         System.out.println("Driver: " + getCapabilities().toString());

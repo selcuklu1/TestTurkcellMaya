@@ -38,6 +38,9 @@ public class DagitimHitapGuncellemeTest extends BaseTest {
 
     User user = new User("user1", "123", "User1 TEST", "AnaBirim1");
 
+    String adres1 = "GÖLBAŞI / ANKARA";
+    String adres2 = "ATAŞEHİR / İSTANBUL";
+
     @Test(description = "TS2089: Dağıtım hitap güncellemede üst kurumun seçilmesi", enabled = true)
     public void TS2089() {
 
@@ -85,7 +88,7 @@ public class DagitimHitapGuncellemeTest extends BaseTest {
                 .bilgiSecimTipiSec(bilgiSecimTipi)
                 .bilgiSec(bilgi)
                 .bilgiDagitimHitapDuzenlemeTiklanir(text(bilgi))
-                .hitapAlaniBulunurKontorlu(text(bilgi));
+                .hitapAlaniBulunurKontorlu(exactValue(bilgi));
                 /*.getCheckboxOfDagitimHitapInput("Hitap alanında seçilen " + bilgiSecimTipi + " geldiği görülür", value(bilgi))
                 .shouldBe(visible);*/
         maxChar = Integer.parseInt(hitapDuzenle.ozelHitapSec(true).ozelHitapMaxKarakterSayisi());
@@ -189,16 +192,16 @@ public class DagitimHitapGuncellemeTest extends BaseTest {
     public Object[][] testData2() {
         return new Object[][]{
                 {"Kullanıcı"
-                        /*bilgi*/, "Mehmet BOZDEMİR", "Mbozdemir Adresi", "Sayın Mehmet BOZDEMİR", "Sayın Mehmet BOZDEMİR\nMbozdemir Adresi"
-                        /*gereği*/, "Zübeyde TEKİN", "Ztekin Adresi", "Sayın Zübeyde TEKİN", "Sayın Zübeyde TEKİN\nZtekin Adresi"}
+                        /*bilgi*/, "Mehmet BOZDEMİR", adres1, "Sayın Mehmet BOZDEMİR", "Sayın Mehmet BOZDEMİR"
+                        /*gereği*/, "Zübeyde TEKİN", adres2, "Sayın Zübeyde TEKİN", "Sayın Zübeyde TEKİN\n" + adres2}
 
                 , {"Kurum"
-                /*bilgi*/, "Cumhurbaşkanlığı", "Cumhurbaşkanlığı Adresi", "Cumhurbaşkanlığına", "Cumhurbaşkanlığına\nCumhurbaşkanlığı Adresi"
-                /*gereği*/, "Maliye Bakanlığı", "Maliye Adresi", "Maliye Bakanlığına", "Maliye Bakanlığına\nMaliye Adresi"}
+                /*bilgi*/, "Cumhurbaşkanlığı", adres1, "Cumhurbaşkanlığına", "Cumhurbaşkanlığına"
+                /*gereği*/, "Maliye Bakanlığı", adres2, "Maliye Bakanlığına", "Maliye Bakanlığına\n" + adres2}
 
                 , {"Tüzel Kişi"
-                /*bilgi*/, "Türksat Optiim", "Türksat Adresi", "Türksat Optiime", "Türksat Optiime\nTürksat Adresi"
-                /*gereği*/, "Optiim İş Çözümleri AŞ", "Optiim Adresi", "Optiim İş Çözümleri AŞNE", "Optiim İş Çözümleri AŞNE\nOptiim Adresi"}
+                /*bilgi*/, "Türksat Optiim", adres1, "Türksat Optiime", "Türksat Optiime"
+                /*gereği*/, "Optiim İş Çözümleri AŞ", adres2, "Optiim İş Çözümleri AŞNE", "Optiim İş Çözümleri AŞNE\n" + adres2}
         };
     }
 
@@ -230,9 +233,13 @@ public class DagitimHitapGuncellemeTest extends BaseTest {
 
         page.pageButtons().pdfOnizlemeTikla();
         new PDFOnizleme(1)
-                .checkText(textCaseSensitive(bilgiPDFGorunecekHitap)
-                    , textCaseSensitive(geregiPDFGorunecekHitap));
+                .checkText(
+                        textCaseSensitive(geregiPDFGorunecekHitap),
+                        textCaseSensitive(bilgiPDFGorunecekHitap),
+                        not(text(bilgiAdres))
+                    );
 
+        /*
         SelenideElement bilgiLabelElement = $(Selectors.byText("Bilgi:"));
         SelenideElement bilgiElement = $(Selectors.byText(bilgiHitap));
         SelenideElement bilgiAdresElement = $(Selectors.byText(bilgiAdres));
@@ -254,7 +261,7 @@ public class DagitimHitapGuncellemeTest extends BaseTest {
                 ,"PDF önizlemede \"Geregi:\" tekst ve \"" + geregi + "\" arasında pixel sayısı");
         Assert.assertEquals(geregiAdresElement.getCoordinates().onPage().getY() - geregiElement.getCoordinates().onPage().getY(), 21
                 ,"PDF önizlemede \""+geregi+"\" tekst ve \"" + geregiAdres + "\" arasında pixel sayısı");
-
+        */
     }
 
     @Test(description = "TS2126: Dağıtım metni kullanma ve hariç tutma", enabled = true)
@@ -377,11 +384,12 @@ public class DagitimHitapGuncellemeTest extends BaseTest {
                 .geregiSec(dagitimPlani);
         hitapDuzenle = page.bilgileriTab()
                 .geregiDagitimHitapDuzenlemeTiklanir(text(dagitimPlani))
-                .hitapAlaniBulunurKontorlu(exactText(hitap));
+                .hitapAlaniBulunurKontorlu(exactValue(hitap));
 
         String eskiEk = hitapDuzenle.getEkValue(value(hitap));
         ek = eskiEk.equalsIgnoreCase("e") ? "NA" : "E";
-        step(String.format("Hitap \"%s\" ek \"%s\" ile değiştirildi", eskiEk, ek), "");
+        step(String.format("Hitapta \"%s\" ek \"%s\" ile değiştirildi", eskiEk, ek), "");
+        hitapDuzenle.kaydet();
 
         page.editorTab().openTab()
                 .geregiListesindeAra(text(hitap + ek)).shouldHaveSize(1);
@@ -419,12 +427,12 @@ public class DagitimHitapGuncellemeTest extends BaseTest {
     public void TS2255() {
         String gercekKisi1 = "Ahmet ÇELİK";
         String hitap1 = "Sayın Ahmet ÇELİK";
-        String adres1 = "GÖLBAŞI / ANKARA";
+        //String adres1 = "GÖLBAŞI / ANKARA";
         String evraktaGorunecekHitap1 = gercekKisi1 + "\n" + adres1;
 
         String gercekKisi2 = "Optiim OTOMASYON";
         String hitap2 = "Sayın Optiim OTOMASYON";
-        String adres2 = "ATAŞEHİR / İSTANBUL";
+        //String adres2 = "ATAŞEHİR / İSTANBUL";
         String evraktaGorunecekHitap2 = gercekKisi2 + "\n" + adres2;
 
         login(user);
@@ -457,12 +465,12 @@ public class DagitimHitapGuncellemeTest extends BaseTest {
     @Test(description = "TS2130: Birim - Dağıtımda adres kullanma", enabled = true)
     public void TS2130() {
         String birim1 = "Optiim Birim";
-        String adres1 = "GÖLBAŞI / ANKARA";
+        //String adres1 = "GÖLBAŞI / ANKARA";
         String hitap1 = birim1 + "e\n" + adres1;
         String evraktaGorunecekHitap1 = birim1.toUpperCase();
 
         String birim2 = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
-        String adres2 = "ATAŞEHİR / İSTANBUL";
+        //String adres2 = "ATAŞEHİR / İSTANBUL";
         String hitap2 = birim2 + "NE\n" + adres2;
         String evraktaGorunecekHitap2 = birim2.toUpperCase();
 

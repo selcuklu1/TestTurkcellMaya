@@ -207,10 +207,11 @@ public class TopluPostaladiklarimPage extends MainPage {
 
     @Step("Toplu Postaladıklarım tablosundan \"{konu}\" konulu evrak seçilir")
     public TopluPostaladiklarimPage topluPostaladiklarimEvrakSec(String konu) {
-        tblPostaListesi
-                .filterBy(Condition.text(konu))
-                .first()
-                .click();
+        searchTable().findRowAndSelect(text(konu));
+//        tblPostaListesi
+//                .filterBy(Condition.text(konu))
+//                .first()
+//                .click();
         return this;
     }
 
@@ -624,8 +625,8 @@ public class TopluPostaladiklarimPage extends MainPage {
 
             SelenideElement konuAlaniPDF = $(By.xpath("//div[@id='viewer']/div[@class='page']//div[.='" + konu + "']"));
 //            SelenideElement konuAlaniPDF = $("div[class='firefinder-match']");
-//            SelenideElement evrakNoAlaniPDF = $(By.xpath("//div[@id='viewer']/div[@class='page']//div[.='" + evrakNo + "']"));
-            SelenideElement evrakNoAlaniPDF = $(".textLayer > div:nth-child(5)");
+            SelenideElement evrakNoAlaniPDF = $(By.xpath("//div[@id='viewer']/div[@class='page']//div[.='" + evrakNo + "']"));
+//            SelenideElement evrakNoAlaniPDF = $(".textLayer > div:nth-child(5)");
             SelenideElement icerikAlaniPDF = $(By.xpath("//div[@id='viewer']/div[@class='page']//div[.='" + icerik + "']"));
             SelenideElement altAntetAdresAlaniPDF = $(By.xpath("//div[@id='viewer']/div[@class='page']//div[.='Ankara Üniversitesi Ankütek Teknopark E Blok Kat:1']"));
             SelenideElement altAntetTelefonAlaniPDF = $(By.xpath("//div[@id='viewer']/div[@class='page']//div[.='Tel: 0312 222 22 22']"));
