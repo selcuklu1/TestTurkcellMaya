@@ -3,11 +3,9 @@ package tests.EvrakHavaleIslemleri;
 import common.BaseTest;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pages.LoginPage;
 import pages.solMenuPages.BirimHavaleEdilenlerPage;
 import pages.solMenuPages.KaydedilenGelenEvraklarPage;
 import pages.solMenuPages.TeslimAlinmayiBekleyenlerPage;
-import pages.ustMenuPages.BakimaAlPage;
 import pages.ustMenuPages.GelenEvrakKayitPage;
 
 import static data.TestData.*;
@@ -57,7 +55,7 @@ public class EvrakHavaleIslemleriTest extends BaseTest {
 
         login(usernameZTEKIN,passwordZTEKIN);
 
-        gelenEvrakKayitPage.gelenEvrakKayitKaydedilenGelenEvraklarEvrakOlustur(konuKodu,kurum);
+        //gelenEvrakKayitPage.gelenEvrakKayitKaydedilenGelenEvraklarEvrakOlustur(konuKodu,kurum);
 
         kaydedilenGelenEvraklarPage
                 .openPage()
