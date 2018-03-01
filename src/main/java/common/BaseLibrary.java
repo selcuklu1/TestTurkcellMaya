@@ -104,9 +104,11 @@ public class BaseLibrary extends ElementsContainer {
     public byte[] takeScreenshot() {
         byte[] bytes = new byte[]{};
         try {
+            System.out.println("Screenshot will be taken");
             bytes = ((TakesScreenshot) WebDriverRunner.getWebDriver()).getScreenshotAs(OutputType.BYTES);
+            System.out.println("Screenshot has been taken");
         } catch (WebDriverException e) {
-            System.out.println("Error takeScreenshot:" + e.getMessage());
+            System.out.println("Take screenshot error:" + e.getMessage());
         }
         return bytes;
     }
@@ -479,6 +481,11 @@ public class BaseLibrary extends ElementsContainer {
         String sysDate = dtf.format(now);
 
         return sysDate;
+    }
+
+    //dd.MM.yyyy HH:mm:ss formatına göre sysdate alır.
+    public String getDateTime() {
+        return DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss").format(LocalDateTime.now());
     }
 
     //dd.MM.yyyy formatına göre sysdate alır.

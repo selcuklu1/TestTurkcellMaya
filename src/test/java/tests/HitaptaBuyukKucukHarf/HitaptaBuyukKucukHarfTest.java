@@ -145,7 +145,7 @@ public class HitaptaBuyukKucukHarfTest extends BaseTest {
                 .onayAkisiEkleButonaTikla()
                 .secilenAnlikOnayAkisKullanicilariKontrolEt(user, PARAFLAMA)
                 .anlikOnayAkisKullanicininTipiSec(user, IMZALAMA)
-                .kullanButonaTikla();
+                .kullan();
         evrakOlusturPage.pageButtons().getImzalaButton().shouldBe(visible);
         evrakOlusturPage.editorTab().openTab().getEditor().type("Editör tekst");
         evrakOlusturPage.pageButtons().evrakImzala();

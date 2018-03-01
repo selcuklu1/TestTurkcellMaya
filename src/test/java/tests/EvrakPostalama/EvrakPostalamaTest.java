@@ -612,7 +612,7 @@ public class EvrakPostalamaTest extends BaseTest {
                 .anlikOnayAkisKullanicilariTemizle()
                 .onayAkisiEkleButonaTikla()
                 .anlikOnayAkisKullanicininTipiSec(user1, OnayKullaniciTipi.IMZALAMA)
-                .kullanButonaTikla();
+                .kullan();
 
         ekleriTab();
         ilgileriTab();
