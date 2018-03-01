@@ -1,5 +1,6 @@
 package tests.EvrakDevret;
 
+import com.codeborne.selenide.WebDriverRunner;
 import common.BaseTest;
 import data.TestData;
 import data.User;
@@ -86,21 +87,29 @@ public class EvrakDevretTest extends BaseTest {
 
         String btnSilName = "Sil";
         String aciklamaSil = "Silme işlemi";
+//        String konu ="Evrak Devret 20180301150342";
 
         System.out.println(konu);
         kullaniciEvrakDevretPage
                 .openPage()
                 .ekranTabKontrolleri()
                 .devredecekKisiSec(devredecekKisi)
-                .listele()
+                .listele();
+
+        waitForLoadingJS(WebDriverRunner.getWebDriver(),12000);
+
+        kullaniciEvrakDevretPage
                 .tabloAlanKontrolleri()
                 .tabloEvrakSecimi(tabName, konu)
                 .devret()
                 .devralacakKisiAlanKontolu()
                 .devralacakKisiSec(kullaniciNormal)
                 .aciklamaDoldur(icerik)
-                .devretTamam()
-                .islemMesaji().basariliOlmali(basariMesaji);
+                .devretTamam();
+
+        waitForLoadingJS(WebDriverRunner.getWebDriver(),12000);
+
+//                .islemMesaji().basariliOlmali(basariMesaji);
         kullaniciEvrakDevretPage
                 .tabloEvrakKontrolu(konu, false);
 
