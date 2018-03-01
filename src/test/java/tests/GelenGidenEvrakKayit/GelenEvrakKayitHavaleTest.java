@@ -186,8 +186,8 @@ public class GelenEvrakKayitHavaleTest extends BaseTest {
                 .eklenenOnaylayanKontrolu(onaylayacakKisi)
                 .dagitimBilgileriBirimDoldurWithDetails(birim, details)
                 .eklenenBirimKontrolu(birim)
-                .dagitimBilgileriBirimOpsiyon(gerek)
-
+//                .dagitimBilgileriBirimOpsiyon(gerek)
+                .eklenenBirimOpsiyonKontrolu(gerek)
                 .kaydet()
                 .gelenEvrakKayitKaydetEvet2()
                 .popUpsv2();
@@ -304,41 +304,73 @@ public class GelenEvrakKayitHavaleTest extends BaseTest {
         String pdfName = "Otomasyon.pdf";
         String pathToFileExcel = getUploadPath() + "test.xlsx";
         String excelName = "test.xlsx";
+        String sayfa = "Gelen Evraklar";
         String evrakSayiSag = createRandomNumber(5);
+        String evrakNo = "";
 
         testStatus(testid, "Test Başladı");
         gelenEvrakKayitPage
                 .openPage()
+                .sayfaKontrol(sayfa)
                 .evrakBilgileriUstYaziEkle(pathToFilePdf)
                 .ustYaziPdfAdiKontrol(pdfName)
                 .islemMesaji().basariliOlmali();
 
         gelenEvrakKayitPage
                 .konuKoduDoldur(konuKodu)
+                .konuKoduKontrol(konuKodu)
                 .konuDoldur(konu)
+                .konuKontrol(konu)
                 .evrakTuruSec(evrakTuru)
+                .evrakTuruKontrolu(evrakTuru)
                 .evrakDiliSec(evrakDili)
+                .evrakDiliKontrol(evrakDili)
+                .evrakTarihiDoldur(evrakTarihi)
                 .evrakTarihiDoldur(evrakTarihi)
                 .gizlilikDerecesiSec(gizlilikDerecesi)
+                .gizlilikDerecesiKontrol(gizlilikDerecesi)
                 .kisiKurumSec(kisiKurum)
+                .kisiKurumKontrol(kisiKurum)
                 .geldigiKurumDoldurLovText(geldigiKurum)
+                .geldigiKurumKontrol(geldigiKurum)
                 .evrakSayiSagDoldur(evrakSayiSag)
+                .evrakSayiSagKontrol(evrakSayiSag)
                 .evrakGelisTipiSec(evrakGelisTipi)
+                .evrakGelisTipiKontrol(evrakGelisTipi)
                 .ivedilikSec(ivedilik)
+                .ivedilikKontrol(ivedilik)
+
                 .havaleIslemleriKisiDoldur(kisi)
                 .havaleAlanKontrolleri()
+
                 .dagitimBilgileriBirimDoldurWithDetails(birim, details)
-                .dagitimBilgileriBirimOpsiyon(bilgi)
+                .eklenenBirimKontrolu(birim)
+                .eklenenBirimOpsiyonKontrolu(gerek)
+
+                .dagitimBilgileriKisiDoldurWithDetails(onaylayacakKisi,onayKisiDetails)
+                .eklenenKisiKontrolu(onaylayacakKisi)
+                .eklenenKisiOpsiyonKontrolu(gerek)
+                .dagitimBilgileriKisiOpsiyon(bilgi)
+                .eklenenKisiOpsiyonKontrolu(bilgi)
+
                 .dagitimBilgileriKullaniciListesiDoldur("OPTİİM")
-                .dagitimBilgileriBirimOpsiyon(gerek)
-                .dagitimBilgileriBirimOpsiyon(koordinasyon)
-                .kaydet()
-                .popUps();
+                .eklenenKullaniciListesiKontrolu("OPTİİM")
+                .dagitimBilgileriKullaniciListesiOpsiyon(gerek)
+                .eklenenKullaniciListesiOpsiyonKontrolu(gerek)
+                .dagitimBilgileriKullaniciListesiOpsiyon(koordinasyon)
+                .eklenenKullaniciListesiOpsiyonKontrolu(koordinasyon)
+
+                .kaydet();
+
+        evrakNo = gelenEvrakKayitPage.popUpsv2();
+
+        gelenEvrakKayitPage
+                .islemMesaji().basariliOlmali();
 
         birimHavaleEdilenlerPage
                 .openPage()
                 .evrakNoIleTabloKontrolu(konu)
-                .evrakAlanKontrolleri(konu, geldigiKurum, birim, evrakTarihi, evrakSayiSag);
+                .evrakAlanKontrolleri(konu, geldigiKurum, birim, evrakTarihi, evrakNo);
 
         login(mbozdemir);
 

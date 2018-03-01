@@ -1308,7 +1308,7 @@ public class GelenEvraklarPage extends MainPage {
     }
 
     // //span[contains(@class,'ui-button-icon-left ui-icon document-addFollow')]/..
-    @Step("Tabloda evrak kontrolü : \"{konu}\"  \"{geldigiKurum}\" \"{birim}\" \"{evrakTarihi}\" \"{evrakNo}\" ")
+    @Step("Tabloda evrak kontrolü : \"{konu}\"  \"{geldigiKurum}\"  \"{evrakTarihi}\" \"{evrakNo}\" ")
     public GelenEvraklarPage evrakAlanKontrolleri(String konu, String geldigiKurum, String evrakTarihi, String evrakNo) {
         System.out.println("evrakNo:" + konu + " geldigiKurum" + geldigiKurum + " evrakTarihi" + evrakTarihi + " evrakkayitno" + evrakNo);
         tblKaydedilenGelenEvraklar

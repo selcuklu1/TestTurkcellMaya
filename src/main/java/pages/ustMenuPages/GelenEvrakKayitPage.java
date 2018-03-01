@@ -100,8 +100,16 @@ public class GelenEvrakKayitPage extends MainPage {
     SelenideElement btnDagitimBilgileriEvragiKapatacakKisi = $(By.id("evrakBilgileriForm:evrakiKapatacakKisiLov:treeButton"));//todo:Evrakı Onaylı Kapat secili olmadan çıkmıyor
     BelgenetElement cmbHavaleIslemleriBirim = comboLov(By.id("evrakBilgileriForm:dagitimBilgileriBirimLov:LovText"));
     SelenideElement txtEklenenBirim = $("div[id^='evrakBilgileriForm:dagitimBilgileriBirimLov:LovSecilenTable:0:j_idt']");
+    SelenideElement txtEklenenKisi = $("div[id^='evrakBilgileriForm:dagitimBilgileriKullaniciLov:LovSecilenTable:0:j_idt']");
+    SelenideElement txtEklenenKullaniciListesi = $("div[id^='evrakBilgileriForm:dagitimBilgileriKisiListesiLov:LovSecilenTable:0:j_idt']");
+    SelenideElement txtEklenenBirimOpsiyon = $("[id='evrakBilgileriForm:dagitimBilgileriBirimLov:LovSecilenTable:0:selectOneMenu']");
+    SelenideElement txtEklenenKisiOpsiyon = $("[id='evrakBilgileriForm:dagitimBilgileriKullaniciLov:LovSecilenTable:0:selectOneMenu']");
+    SelenideElement txtEklenenKullaniciListesiOpsiyon = $("[id='evrakBilgileriForm:dagitimBilgileriKisiListesiLov:LovSecilenTable:0:selectOneMenu']");
 
     SelenideElement birimSeç = $("select[id^='evrakBilgileriForm:dagitimBilgileriBirimLov:LovSecilenTable']");
+    SelenideElement kisiSeç = $("select[id^='evrakBilgileriForm:dagitimBilgileriKullaniciLov:LovSecilenTable']");
+    SelenideElement kullaniciListesiSeç = $("select[id^='evrakBilgileriForm:dagitimBilgileriKisiListesiLov:LovSecilenTable']");
+
     BelgenetElement cmbHavaleIslemleriOnaylayacakKisi = comboLov(By.id("evrakBilgileriForm:onaylayacakKisiLov:LovText"));
     SelenideElement txtEklenenOnaylayan =$(By.id("evrakBilgileriForm:onaylayacakKisiLov:LovSecilen"));
 
@@ -736,6 +744,14 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
+    @Step("Havale İşlemleri Kişi alanında eklenen \"{opsiyon}\" kontrolü")
+    public GelenEvrakKayitPage eklenenKisiOpsiyonKontrolu(String opsiyon) {
+        Assert.assertEquals(txtEklenenKisiOpsiyon.getSelectedText().equals(opsiyon), true, "Opsiyon Seçildi");
+        Allure.addAttachment("Opsiyon Seçildi:", opsiyon);
+        return this;
+    }
+
+
     @Step("Dağıtım Bilgileri Birim alanında \"{opsiyon}\" seçilir")
     public GelenEvrakKayitPage dagitimBilgileriBirimOpsiyon(String opsiyon) {
 //        birimSeç.selectOptionByValue(opsiyon);
@@ -751,6 +767,22 @@ public class GelenEvrakKayitPage extends MainPage {
             birimSeç.selectOptionByValue("S");
         return this;
     }
+
+    @Step("Dağıtım Bilgileri Kisi alanında \"{opsiyon}\" seçilir")
+    public GelenEvrakKayitPage dagitimBilgileriKisiOpsiyon(String opsiyon) {
+        String gerek = "GEREĞİ İÇİN GÖNDER";
+        String bilgi = "BİLGİ İÇİN GÖNDER";
+        String koordinasyon = "KOORDİNASYON İÇİN GÖNDER";
+
+        if (opsiyon.equals(gerek))
+            kisiSeç.selectOptionByValue("G");
+        else if (opsiyon.equals(bilgi))
+            kisiSeç.selectOptionByValue("B");
+        else if (opsiyon.equals(koordinasyon))
+            kisiSeç.selectOptionByValue("S");
+        return this;
+    }
+
 
     @Step("Dağıtım Bilgileri Onaylayacak Kisi alanında \"{onaylayan}\" seçilir")
     public GelenEvrakKayitPage dagitimBilgileriOnaylayanWithDetails(String onaylayan, String details) {
@@ -860,6 +892,27 @@ public class GelenEvrakKayitPage extends MainPage {
     }
 
     @Step("Dağıtım Bilgileri Kişi alanında \"{kisi}\" seçilir")
+    public GelenEvrakKayitPage dagitimBilgileriKisiDoldurWithDetails(String kisi,String details) {
+        txtDagitimBilgileriKisiComboLov.selectLov(kisi,details);
+        return this;
+    }
+
+    @Step("Havale İşlemleri Kisi alanında eklenen \"{kisi}\" kontrolü")
+    public GelenEvrakKayitPage eklenenKisiKontrolu(String kisi) {
+        Assert.assertEquals(txtEklenenKisi.isDisplayed(), true, "Kisi Kontrolü");
+        Allure.addAttachment("Kisi Kontrolü:", kisi);
+        return this;
+    }
+
+    @Step("Havale İşlemleri Birim alanında eklenen \"{opsiyon}\" kontrolü")
+    public GelenEvrakKayitPage eklenenBirimOpsiyonKontrolu(String opsiyon) {
+        Assert.assertEquals(txtEklenenBirimOpsiyon.getSelectedText().equals(opsiyon), true, "Opsiyon Seçildi");
+        Allure.addAttachment("Opsiyon Seçildi:", opsiyon);
+        return this;
+    }
+
+
+    @Step("Dağıtım Bilgileri Kişi alanında \"{kisi}\" seçilir")
     public GelenEvrakKayitPage dagitimBilgileriKisiSec(String kisi, String title) {
         if ($(By.xpath("//table[@id='evrakBilgileriForm:kisiLovContainer']//span[text()='Birim']")).isDisplayed())
             $(By.xpath("//table[@id='evrakBilgileriForm:kisiLovContainer']//span[text()='Birim']")).click();
@@ -882,6 +935,35 @@ public class GelenEvrakKayitPage extends MainPage {
         cmbDagitimBilgileriKullaniciListesi.selectLov(kullaniciListesi);
         return this;
 
+    }
+
+    @Step("Havale İşlemleri Kullanici Listesi alanında eklenen \"{kisi}\" kontrolü")
+    public GelenEvrakKayitPage eklenenKullaniciListesiKontrolu(String kisi) {
+        Assert.assertEquals(txtEklenenKullaniciListesi.isDisplayed(), true, "Kullanici Listesi Kontrolü");
+        Allure.addAttachment("Kullanici Listesi Kontrolü:", kisi);
+        return this;
+    }
+
+    @Step("Havale İşlemleri Kullanici Listesi alanında eklenen \"{opsiyon}\" kontrolü")
+    public GelenEvrakKayitPage eklenenKullaniciListesiOpsiyonKontrolu(String opsiyon) {
+        Assert.assertEquals(txtEklenenKullaniciListesiOpsiyon.getSelectedText().equals(opsiyon), true, "Opsiyon Seçildi");
+        Allure.addAttachment("Opsiyon Seçildi:", opsiyon);
+        return this;
+    }
+
+    @Step("Dağıtım Bilgileri KullaniciListesi alanında \"{opsiyon}\" seçilir")
+    public GelenEvrakKayitPage dagitimBilgileriKullaniciListesiOpsiyon(String opsiyon) {
+        String gerek = "GEREĞİ İÇİN GÖNDER";
+        String bilgi = "BİLGİ İÇİN GÖNDER";
+        String koordinasyon = "KOORDİNASYON İÇİN GÖNDER";
+
+        if (opsiyon.equals(gerek))
+            kullaniciListesiSeç.selectOptionByValue("G");
+        else if (opsiyon.equals(bilgi))
+            kullaniciListesiSeç.selectOptionByValue("B");
+        else if (opsiyon.equals(koordinasyon))
+            kullaniciListesiSeç.selectOptionByValue("S");
+        return this;
     }
 
     @Step("Dağıtım Bilgileri Onaylayacak Kişi eklenir")
@@ -1266,7 +1348,7 @@ public class GelenEvrakKayitPage extends MainPage {
         SelenideElement vEvrakBasarili = visibleEvrakBasarili.filterBy(Condition.visible).get(0);
         String evrakNo = getNumberFromText(vEvrakBasarili.getText());
         clickJs(basariliPopUpKapat);
-
+        Allure.addAttachment("Evrak Başarıyla kaydedilmiştir" , evrakNo);
         return evrakNo;
     }
 
