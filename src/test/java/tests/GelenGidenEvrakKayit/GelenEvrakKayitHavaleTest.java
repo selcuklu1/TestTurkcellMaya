@@ -16,7 +16,7 @@ import pages.ustMenuPages.GelenEvrakKayitPage;
  * Yazan: Serdar Kayis
  ****************************************************/
 
-public class GelenGidenEvrakKayitHavaleTest extends BaseTest {
+public class GelenEvrakKayitHavaleTest extends BaseTest {
     GelenEvrakKayitPage gelenEvrakKayitPage;
     TeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage;
     HavaleOnayınaGelenlerPage havaleOnayınaGelenlerPage;
@@ -39,7 +39,7 @@ public class GelenGidenEvrakKayitHavaleTest extends BaseTest {
     String geldigiKurum = "Esk Kurum 071216 2";
     String evrakGelisTipi = "Posta";
     String ivedilik = "Normal";
-    String kisi = "Zübeyde Tekin";
+    String kisi = "Zübeyde TEKİN";
     String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
     //    String details = "BİLİŞİM HİZMETLERİ VE UYDU PAZARLAMA GENEL MÜDÜR Y";
     String details = "BHUPGMY";
@@ -77,6 +77,7 @@ public class GelenGidenEvrakKayitHavaleTest extends BaseTest {
         String kurum = "Cumhurbaşkanlığı";
         String ustBirim = "GENEL MÜDÜRLÜK MAKAMI";
         String dikkatMesaj = "Evrakı kendinize havale edemezsiniz!";
+        String ustBirimKullanici = "alkanseker";
 
         testStatus(testid, "PreCondition Evrak Oluşturma");
         gelenEvrakKayitPage
@@ -101,8 +102,8 @@ public class GelenGidenEvrakKayitHavaleTest extends BaseTest {
                 .tabloEvrakNoileIcerikSec(konu)
                 .icerikHavaleYap()
                 .icerikHavaleIslemleriKisiDoldur(onaylayacakKisi, onayKisiDetails)
-                .icerikHavaleOnayinaGonder()
-                .islemMesaji().basariliOlmali();
+                .icerikHavaleOnayinaGonder();
+//                .islemMesaji().basariliOlmali();
 
         login(mbozdemir);
 
@@ -110,14 +111,17 @@ public class GelenGidenEvrakKayitHavaleTest extends BaseTest {
         gelenEvraklarPage
                 .openPage()
                 .tabloEvrakNoSec(konu)
+                .evrakOnizlemeKontrolu()
+                .tabHavaleYapKontrol()
                 .tabHavaleYap()
-                //havale alan kontrolleri
+                .onizlemeHavaleAlanKontrolleri()
                 .havaleIslemleriKisiStatusKontrol(disKullanici,false)
                 .havaleIslemleriKisiStatusKontrol(tuzelKisi,false)
                 .havaleIslemleriKisiStatusKontrol(gercekKisi,false)
                 .havaleIslemleriKisiStatusKontrol(kurum,false)
-                .havaleIslemleriBirimKontrol(ustBirim);
-        //TODO: ustbirimden kullanıcı tespit edilemedi "YAZILIM GELİŞTİRME" için
+                .havaleIslemleriBirimKontrol(ustBirim)
+                .havaleIslemleriKisiStatusKontrol(ustBirimKullanici,false);
+
 
         login(mbozdemir);
         gelenEvraklarPage
@@ -138,35 +142,58 @@ public class GelenGidenEvrakKayitHavaleTest extends BaseTest {
         String pdfName = "Otomasyon.pdf";
         String pathToFileExcel = getUploadPath() + "test.xlsx";
         String excelName = "test.xlsx";
+        String sayfa = "Gelen Evraklar";
+        String evrakSayiSag = createRandomNumber(5);
+        String gerek = "GEREĞİ İÇİN GÖNDER";
+        String bilgi = "BİLGİ İÇİN GÖNDER";
+        String koordinasyon = "KOORDİNASYON İÇİN GÖNDER";
 
         testStatus(testid, "Test Başladı");
         gelenEvrakKayitPage
                 .openPage()
+                .sayfaKontrol(sayfa)
                 .evrakBilgileriUstYaziEkle(pathToFilePdf)
                 .ustYaziPdfAdiKontrol(pdfName)
                 .islemMesaji().basariliOlmali();
 
         gelenEvrakKayitPage
                 .konuKoduDoldur(konuKodu)
+                .konuKoduKontrol(konuKodu)
                 .konuDoldur(konu)
+                .konuKontrol(konu)
                 .evrakTuruSec(evrakTuru)
+                .evrakTuruKontrolu(evrakTuru)
                 .evrakDiliSec(evrakDili)
+                .evrakDiliKontrol(evrakDili)
                 .evrakTarihiDoldur(evrakTarihi)
+                .evrakTarihiKontrol(evrakTarihi)
                 .gizlilikDerecesiSec(gizlilikDerecesi)
+                .gizlilikDerecesiKontrol(gizlilikDerecesi)
                 .kisiKurumSec(kisiKurum)
+                .kisiKurumKontrol(kisiKurum)
                 .geldigiKurumDoldurLovText(geldigiKurum)
-                .evrakSayiSagDoldur()
+                .geldigiKurumKontrol(geldigiKurum)
+                .evrakSayiSagDoldur(evrakSayiSag)
+                .evrakSayiSagKontrol(evrakSayiSag)
                 .evrakGelisTipiSec(evrakGelisTipi)
+                .evrakGelisTipiKontrol(evrakGelisTipi)
                 .ivedilikSec(ivedilik)
+                .ivedilikKontrol(ivedilik)
 
                 .havaleIslemleriKisiDoldur(kisi)
                 .havaleAlanKontrolleri()
                 .dagitimBilgileriOnaylayanWithDetails(onaylayacakKisi, onayKisiDetails)
+                .eklenenOnaylayanKontrolu(onaylayacakKisi)
                 .dagitimBilgileriBirimDoldurWithDetails(birim, details)
+                .eklenenBirimKontrolu(birim)
+                .dagitimBilgileriBirimOpsiyon(gerek)
 
                 .kaydet()
                 .gelenEvrakKayitKaydetEvet2()
                 .popUpsv2();
+
+        gelenEvrakKayitPage
+                .islemMesaji().basariliOlmali();
 
         login(mbozdemir);
 
@@ -174,10 +201,14 @@ public class GelenGidenEvrakKayitHavaleTest extends BaseTest {
                 .openPage()
                 .evrakNoIleEvrakSec(konu)
                 .evrakSecIcerikGoster(konu, true)
+                .icerikEkranKontrol()
+                .icerikHavaleOnayButonKontrolu()
                 .icerikHavaleOnay()
-//        Seçilen havale yerinin doğru geldiği
-//        onayla ve onayı reddet seçeneklerinin geldiği görülür
+                .dagitimIcinGonderileceklerBirimKontrolu(birim)
+                .dagitimIcinGonderileceklerKisiKontrolu(kisi)
                 .icerikNotAlanınıDoldur(konu)
+                .icerikOnayıReddetButonKontrolu()
+                .icerikOnaylaButonKontrolu()
                 .icerikOnayıReddet()
                 .icerikOnayıReddetEvet()
                 .islemMesaji().basariliOlmali();
@@ -189,7 +220,6 @@ public class GelenGidenEvrakKayitHavaleTest extends BaseTest {
 
         kaydedilenGelenEvraklarPage
                 .openPage()
-                //iade edilmiştir butonu kontrolü yapılabilir
                 .tabloEvrakNoileEvrakKontrolu(konu);
 
         login(mbozdemir);
@@ -241,17 +271,16 @@ public class GelenGidenEvrakKayitHavaleTest extends BaseTest {
         birimHavaleEdilenlerPage
                 .openPage()
                 .evrakNoIleTablodanEvrakSecme(konu)
-                .evrakSecIcerikGoster(konu, true)
-                .havaleGeriAl()
-                .notAlanınıDoldur(konu)
-                .geriAl()
+                .onizlemeHavaleGeriAl()
+                .onizlemeNotAlanıKontrol(konu)
+                .onizlemeNotAlanınıDoldur(konu)
+                .onizlemeGeriAl()
                 .islemMesaji().basariliOlmali();
 
         kaydedilenGelenEvraklarPage
                 .openPage()
                 .evrakNoIleEvrakSec(konu)
                 .secilenEvrakEvrakGecmisi()
-                //iade edilmiştir butonu kontrolü yapılabilir
                 .evrakGecmisi(birim, islemSureci);
 
         login(mbozdemir);
