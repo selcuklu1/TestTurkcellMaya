@@ -9,6 +9,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import pages.MainPage;
+import pages.newPages.EvrakDetayiPage;
 
 import java.util.ArrayList;
 
@@ -189,12 +190,59 @@ public class SearchTable extends MainPage {
         return this;
     }
 
-    @Step("İçerik Göster butona tıklanır")
-    public SearchTable icerikGosterTikla() {
-        foundRow.$("button[id$='detayGosterButton']").click();
+    @Step("Bulunan kayıtta \"İçerik Göster\" butonu {stepDescription}")
+    public SelenideElement getIcerikGosterButton(String... stepDescription) {
+        return foundRow.$("button[id$='detayGosterButton']");
+    }
+
+    @Step("Bulunan kayıtta \"İçerik Göster\" butona tıklanır")
+    public EvrakDetayiPage icerikGoster() {
+        getIcerikGosterButton().click();
+        return new EvrakDetayiPage();
+    }
+    
+    @Step("Bulunan kayıtta \"Gönderen Notu\" butonu aranır")
+    public SelenideElement getGonderenNotuButton(){
+        return foundRow.$("button[id$='gonderenNotuButton']");
+    }
+
+    @Step("Bulunan kayıtta \"Gönderen Notu\" tooltip kotrollü")
+    public SearchTable gonderenNotuTooltip(String tooltipText){
+        getGonderenNotuButton().hover();
+        $("#tiptip_content").shouldHave(exactText(tooltipText));
         return this;
     }
 
+    @Step("Bulunan kayıtta \"Gönderen Notu\" butona tıklanır")
+    public SearchTable gonderenNotu() {
+        getGonderenNotuButton().click();
+        return this;
+    }
+
+    @Step("Bulunan kayıtta \"Versiyonlarını Sorgula\" butonu {stepDescription}")
+    public SelenideElement getVersiyonlariniSorgulaButton(String... stepDescription){
+        return foundRow.$("button[id$='versiyonlariSorgulaButton']");
+    }
+
+    @Step("Bulunan kayıtta \"Versiyonlarını Sorgula\" butona tıklanır")
+    public SearchTable versiyonlariniSorgula() {
+        getVersiyonlariniSorgulaButton().click();
+        return this;
+    }
+
+    @Step("Bulunan kayıtta \"Tam Ekran\" butonu {stepDescription}")
+    public SelenideElement getTamEkranButton(String... stepDescription) {
+        return foundRow.$("button[id$='detayGosterButton']");
+    }
+
+    @Step("Bulunan kayıtta \"Tam Ekran\" butona tıklanır")
+    public SearchTable tamEkran() {
+        getTamEkranButton().click();
+        return this;
+    }
+    
+    
+    
     @Step
     public SelenideElement getYeniKayitEkleButton() {
 //        return parentElement.$x("descendant::button[span[contains(@class,'add-icon')]]");

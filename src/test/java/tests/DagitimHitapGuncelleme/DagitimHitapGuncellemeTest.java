@@ -328,7 +328,7 @@ public class DagitimHitapGuncellemeTest extends BaseTest {
                 .anlikOnayAkisKullanicilariTemizle()
                 .onayAkisiEkleButonaTikla()
                 .anlikOnayAkisKullanicininTipiSec(user, OnayKullaniciTipi.IMZALAMA)
-                .kullanButonaTikla()
+                .kullan()
                 .evrakPageButtons().evrakImzala()
                 .islemMesaji().basariliOlmali();
 
@@ -587,7 +587,7 @@ public class DagitimHitapGuncellemeTest extends BaseTest {
                 .anlikOnayAkisKullanicilariTemizle()
                 .onayAkisiEkleButonaTikla()
                 .anlikOnayAkisKullanicininTipiSec(user, OnayKullaniciTipi.IMZALAMA)
-                .kullanButonaTikla();
+                .kullan();
 
         page.editorTab().openTab().getEditor().type("editör tekst");
         page.pageButtons().evrakImzala()
@@ -651,7 +651,7 @@ public class DagitimHitapGuncellemeTest extends BaseTest {
                 .anlikOnayAkisKullanicilariTemizle()
                 .onayAkisiEkleButonaTikla()
                 .anlikOnayAkisKullanicininTipiSec(user, OnayKullaniciTipi.IMZALAMA)
-                .kullanButonaTikla();
+                .kullan();
 
         page.editorTab().openTab().getEditor().type("editör tekst");
         page.pageButtons().evrakImzala()

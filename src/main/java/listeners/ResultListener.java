@@ -114,7 +114,12 @@ public class ResultListener extends BaseLibrary implements IResultListener2 {
     @Override
     public void onTestFailure(ITestResult result) {
         if (WebDriverRunner.hasWebDriverStarted())
-            takeScreenshot();
+            try {
+                takeScreenshot();
+            }
+            catch (Exception e){
+                System.out.println("Take Screenshot error: " + e);
+            }
     }
 
     @Override

@@ -72,6 +72,7 @@ public class EvrakPageButtons extends MainPage {
                 break;
             }
         }
+        System.out.println("evrakImzaOnay exit");
         return this;
     }
 
@@ -264,4 +265,46 @@ public class EvrakPageButtons extends MainPage {
         btnEvrakIcerikDegistiEvet.click();
         return this;
     }
+
+    @Step("Geri Al butonu bul")
+    public SelenideElement getGeriAl() {
+        return getButton("Geri Al");
+    }
+
+    @Step("Evrak Önizleme Geri Al")
+    public EvrakPageButtons geriAl() {
+        getGeriAl().click();
+        return this;
+    }
+
+    @Step("Geri Al notu doldur")
+    public EvrakPageButtons geriAlNotDoldur(String not){
+        container.$("[id$='evrakGeriAlInputTextareaId']").setValue(not);
+        return this;
+    }
+    
+    @Step("Geri Al")
+    public EvrakPageButtons geriAlGeriAl(){
+        container.$x("descendant::button[.='Geri Al']").pressEnter();
+        return this;
+    }
+
+
+    @Step("Teslim Al ve Havale Et butonu aranır")
+    public SelenideElement getTeslimAlveHavaleEt() {
+        return getButton("Teslim Al ve Havale Et");
+    }
+
+    @Step("Teslim Al ve Havale Et")
+    public EvrakPageButtons teslimAlveHavaleEt() {
+        getTeslimAlveHavaleEt().click();
+        return this;
+    }
+
+    @Step("Evrak Göster butonu tıklanır")
+    public EvrakPageButtons evrakGoster() {
+        getButton("Evrak Göster").click();
+        return this;
+    }
+
 }

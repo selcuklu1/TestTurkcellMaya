@@ -20,6 +20,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
+import static com.codeborne.selenide.CollectionCondition.sizeGreaterThanOrEqual;
 import static com.codeborne.selenide.CollectionCondition.texts;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
@@ -53,9 +54,12 @@ public class EditorTab extends MainPage {
         if (clickIfOpen.length > 0 || !tab.attr("class").equals("tabMenuContainerSelected"))
             tab.$("button").click();
 
+        System.out.println("[id$=allPanels_content]"+ page.$("[id$=allPanels_content]").getCssValue("class"));
         page.$("[id$=allPanels_content]").shouldBe(visible);
         page.$$("span.cke_toolbar a[id*=cke]").shouldHave(sizeGreaterThan(0));
+        page.$$("span.cke_toolbar a[id*=cke]").filterBy(not(cssClass("cke_button_disabled"))).shouldHave(sizeGreaterThanOrEqual(0));
 //        page.$$("#DOnayDivToolbar span.cke_toolbar a[id*=cke]").shouldHave(sizeGreaterThan(0));
+        sleep(3000);
         return this;
     }
 
