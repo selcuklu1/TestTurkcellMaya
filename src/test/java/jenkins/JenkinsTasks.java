@@ -32,7 +32,7 @@ import java.util.*;
  * Tarih: 21.02.2018
  * Açıklama:
  */
-@Listeners(MethodInterceptor.class)
+//@Listeners(MethodInterceptor.class)
 public class JenkinsTasks {
 
     List<ITestNGMethod> tests;
