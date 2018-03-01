@@ -89,19 +89,20 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
         login(mbozdemir);
 
-        gelenEvrakKayitPage
-                .openPage()
-                .ekBilgiFiltreAc()
-                .evrakEkleriDosyaEkleme(pathToFileExcel)
-                .evrakEkleriDosyaEkleEkMetinDoldur(ekMetni)
-                .evrakEkTabViewEkle()
-                .dosyaEkleTabTabloKontrolu("Ek-1")
-                .ekBilgiFizikselEkEkle()
-                .evrakEkTabFizikselEkMetniDoldur(ekMetni)
-                .fizikselEkTabViewAciklamaEkle()
-                .dosyaEkleTabTabloKontrolu("Ek-2");
+//        gelenEvrakKayitPage
+//                .openPage()
+//                .ekBilgiFiltreAc()
+//                .evrakEkleriDosyaEkleme(pathToFileExcel)
+//                .evrakEkleriDosyaEkleEkMetinDoldur(ekMetni)
+//                .evrakEkTabViewEkle()
+//                .dosyaEkleTabTabloKontrolu("Ek-1")
+//                .ekBilgiFizikselEkEkle()
+//                .evrakEkTabFizikselEkMetniDoldur(ekMetni)
+//                .fizikselEkTabViewAciklamaEkle()
+//                .dosyaEkleTabTabloKontrolu("Ek-2");
 
         gelenEvrakKayitPage
+                .openPage()
                 .evrakBilgileriUstYaziEkle(pathToFilePdf)
                 .ustYaziPdfAdiKontrol(pdfName)
                 .islemMesaji().basariliOlmali();
@@ -127,17 +128,17 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
 
         gelenEvrakKayitPage
-//                .ekBilgiFiltreAc()
-//                .evrakEkleriDosyaEkleme(pathToFileExcel)
-//                .evrakEkleriDosyaEkleDosyaAdiKontrol(excelName)
-//                .ustYaziDegistirilmisPopUpKontrol(false)
-//                .evrakEkleriDosyaEkleEkMetinDoldur(ekMetni)
-//                .evrakEkTabViewEkle()
-//                .dosyaEkleTabTabloKontrolu("Ek-1")
-//                .ekBilgiFizikselEkEkle()
-//                .evrakEkTabFizikselEkMetniDoldur(ekMetni)
-//                .fizikselEkTabViewAciklamaEkle()
-//                .dosyaEkleTabTabloKontrolu("Ek-2")
+                .ekBilgiFiltreAc()
+                .evrakEkleriDosyaEkleme(pathToFileExcel)
+                .evrakEkleriDosyaEkleDosyaAdiKontrol(excelName)
+                .ustYaziDegistirilmisPopUpKontrol(false)
+                .evrakEkleriDosyaEkleEkMetinDoldur(ekMetni)
+                .evrakEkTabViewEkle()
+                .dosyaEkleTabTabloKontrolu("Ek-1")
+                .ekBilgiFizikselEkEkle()
+                .evrakEkTabFizikselEkMetniDoldur(ekMetni)
+                .fizikselEkTabViewAciklamaEkle()
+                .dosyaEkleTabTabloKontrolu("Ek-2")
                 .kaydet();
 
         evrakNO321 = gelenEvrakKayitPage.popUps();
@@ -351,8 +352,12 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 //        String ustYaziAdi = "ustYazi.pdf";  // TestOtomasyon.msg ekini eklememe rağmen ustYazi.pdf  olarak ekrana geliyor.
         gelenEvrakKayitPage
                 .openPage()
-                .evrakBilgileriUstYaziEkle(pathToFileEmail)
-//                .ustYaziMailAdiKontrol(ustYaziAdiMail)
+                .evrakBilgileriUstYaziEkle(pathToFileEmail);
+//                .ustYaziPdfAdiKontrol(pathToFileEmail)
+//                .islemMesaji().basariliOlmali();
+
+        gelenEvrakKayitPage
+                .konuKoduSil()
                 .konuKoduDoldur(konuKodu)
                 .konuDoldur(konu)
                 .evrakTuruSec(evrakTuru)
