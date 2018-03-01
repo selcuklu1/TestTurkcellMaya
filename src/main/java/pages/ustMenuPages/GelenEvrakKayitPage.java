@@ -1585,7 +1585,8 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("Konu kodu sil")
     public GelenEvrakKayitPage konuKoduSil() {
-        comboKonuKodu.clearLastSelectedItem();
+        BelgenetElement cmbkonukodu = comboLov("[id$='konuKoduLov:LovSecilen']");
+        cmbkonukodu.clearLastSelectedItem();
         return this;
     }
 

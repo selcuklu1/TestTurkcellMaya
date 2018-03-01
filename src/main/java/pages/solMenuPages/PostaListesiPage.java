@@ -164,11 +164,18 @@ public class PostaListesiPage extends MainPage {
 
         Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", currentItem);
 
-        
+
         currentItem.click();
 
 
-        //cmbGidisSekli.selectComboBox(gidisSekli, true);
+//        cmbGidisSekli.selectComboBox(gidisSekli, true);
+        return this;
+    }
+
+    @Step("Gidis Sekli \"{gidisSekli}\" seç")
+    public PostaListesiPage gidisSekliSec2(String gidisSekli) {
+
+        cmbGidisSekli.selectComboBox(gidisSekli);
         return this;
     }
 
