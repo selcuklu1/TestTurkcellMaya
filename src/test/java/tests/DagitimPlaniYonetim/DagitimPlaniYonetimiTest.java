@@ -361,7 +361,7 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
         String tuzelKisi = "Türksat Optiim";
         String gercekKisi = "Zübeyde TEKİN";
 
-        String adres = "HitapAdres";
+        String adres = "GÖLBAŞI / ANKARA";
         //String dagitimElemanlariTipi, dagitimElemanlari, evraktaGorunecekHitap, kayitliHitap;
         evraktaGorunecekHitap = new String[]{
                 String.format("Sayın %s%s", user.getFullname(), "NA")
