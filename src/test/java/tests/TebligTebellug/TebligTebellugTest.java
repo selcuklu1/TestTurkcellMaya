@@ -39,7 +39,7 @@ public class TebligTebellugTest extends BaseTest {
         String gizlilikDerecesi = "Hizmete Özel";
         String ivedilik = "Normal";
         String evrakGelisTipi = "Posta";
-        String randomNumber = "" + getRandomNumber(1000, 9999999);
+        String randomNumber = "" + getSysDate();
         String konu = "TS0845-" + randomNumber;
         String geldigiYer = "Yenikurum1485";
         String evrakTarihi = tarihBugun;
@@ -218,7 +218,7 @@ public class TebligTebellugTest extends BaseTest {
         String gizlilikDerecesi = "Hizmete Özel";
         String ivedilik = "Normal";
         String evrakGelisTipi = "Posta";
-        String randomNumber = "" + getRandomNumber(1000, 9999999);
+        String randomNumber = "" + getSysDate();
         String konu = "TS0845-" + randomNumber;
         String geldigiYer = "Yenikurum1485";
         String evrakTarihi = tarihBugun;
@@ -419,7 +419,7 @@ public class TebligTebellugTest extends BaseTest {
         for (int i = 0; i <= 3; i++) {
             login("mbozdemir", "123");
 
-            String randomNumber = "" + getRandomNumber(1000, 9999999);
+            String randomNumber = "" + getSysDate();
             String konu = "TS0847-" + randomNumber;
 
             gelenEvrakKayitPage
