@@ -18,7 +18,6 @@ public class GelenEvrakZimmetRaporuPage extends MainPage {
     SelenideElement sorgula = $(By.id("gelenEvrakZimmetRaporuYonetimiTabView:gelenEvrakZimmetRaporuTab1Form:sorgulaButtonTab1"));
     SelenideElement zimmetRaporTablo = $(By.id("gelenEvrakZimmetRaporuYonetimiTabView:gelenEvrakZimmetRaporuTab1Form:gelenEvrakDataTableTab1_data"));
     SelenideElement popupKapatma = $("[class='ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all ui-state-hover']");
-    SelenideElement konuKontrolu = $(By.id("windowReadOnlyForm:evrakBilgileriList:3:konuTextArea"));
     SelenideElement evrakEtiket = $("[id$='etiketMetinID']");
     SelenideElement islemKapat = $(By.id("kapatButton"));
     ElementsCollection zimmetEvrakListele = $$("[id='gelenEvrakZimmetRaporuYonetimiTabView:gelenEvrakZimmetRaporuTab1Form:gelenEvrakDataTableTab1'] tbody tr");
@@ -37,6 +36,7 @@ public class GelenEvrakZimmetRaporuPage extends MainPage {
     public GelenEvrakZimmetRaporuPage sayfaKontrol(String sayfa) {
         Assert.assertEquals(lblSayfa.getText().equals(sayfa),true,sayfa);
         Allure.addAttachment(sayfa,"açılmaktadır");
+        takeScreenshot();
         return this;
     }
 
@@ -125,10 +125,51 @@ public class GelenEvrakZimmetRaporuPage extends MainPage {
         return this;
     }
 
+    SelenideElement evrakNoKontrolu = $(By.id("windowReadOnlyForm:evrakBilgileriList:0:evrakNoPanelGrid"));
+    SelenideElement konuKoduKontrolu = $(By.id("windowReadOnlyForm:evrakBilgileriList:1:konuKoduLov:LovSecilen"));
+    SelenideElement konuKontrolu = $(By.id("windowReadOnlyForm:evrakBilgileriList:3:konuTextArea"));
+    SelenideElement evrakTuruKontrolu = $(By.id("windowReadOnlyForm:evrakBilgileriList:4:evrakTuruCombo"));
+    SelenideElement evrakTarihiKontrolu = $(By.id("windowReadOnlyForm:evrakBilgileriList:7:evrakTarihi_input"));
+    SelenideElement evrakDiliKontrolu = $(By.id("windowReadOnlyForm:evrakBilgileriList:6:evrakDili"));
+    SelenideElement evrakGizlilikDerecesiKontrolu = $(By.id("windowReadOnlyForm:evrakBilgileriList:8:guvenlikKodu"));
+    SelenideElement evrakKurumKontrolu = $(By.id("windowReadOnlyForm:evrakBilgileriList:9:kisiKurum"));
+    SelenideElement evrakGeldigiKurumKontrolu = $(By.id("windowReadOnlyForm:evrakBilgileriList:9:geldigiKurumLov:LovSecilen"));
+    SelenideElement evrakIvedilikKontrolu = $(By.id("windowReadOnlyForm:evrakBilgileriList:12:ivedilik"));
+
+
     @Step("Gelen Evrak Zimmet Raporu Tablosunda Evrak Geçmiş Kontrolü: Evrak: {konu}")
-    public GelenEvrakZimmetRaporuPage evrakDetayKontrolu(String konu) {
-        boolean durum = konuKontrolu.getText().equals(konu);
-        Assert.assertEquals(durum, true);
+    public GelenEvrakZimmetRaporuPage evrakDetayKontrolu(String evrakNo,String konuKodu, String konu,String evrakTuru,String evrakTarihi,String evrakDili,String gizlilikDerecesi,String kisiKurum,String geldigiKurum,String ivedilik) {
+        Assert.assertEquals(evrakNoKontrolu.getText().contains(evrakNo),true,"Evrak No Kontrolü");
+        Allure.addAttachment("Evrak No Kontrolü" , evrakNo);
+
+        Assert.assertEquals(konuKoduKontrolu.getText().contains(konuKodu),true,"Evrak Konu Kodu Kontrolü");
+        Allure.addAttachment("Evrak Konu Kodu Kontrolü" , konuKodu);
+
+        Assert.assertEquals(konuKontrolu.getText().contains(konu),true,"Evrak Konu Kontrolü");
+        Allure.addAttachment("Evrak Konu Kontrolü" , konu);
+
+        Assert.assertEquals(evrakTuruKontrolu.getText().contains(evrakTuru),true,"Evrak Türü Kontrolü");
+        Allure.addAttachment("Evrak Türü Kontrolü" , evrakTuru);
+
+        Assert.assertEquals(evrakTarihiKontrolu.getValue().contains(evrakTarihi),true,"Evrak Tarihi Kontrolü");
+        Allure.addAttachment("Evrak Tarihi Kontrolü" , evrakTarihi);
+
+        Assert.assertEquals(evrakDiliKontrolu.getText().contains(evrakDili),true,"Evrak Dili Kontrolü");
+        Allure.addAttachment("Evrak Dili Kontrolü" , evrakDili);
+
+        Assert.assertEquals(evrakGizlilikDerecesiKontrolu.getText().contains(gizlilikDerecesi),true,"Evrak Gizlilik Derecesi Kontrolü");
+        Allure.addAttachment("Evrak Gizlilik Derecesi Kontrolü" , gizlilikDerecesi);
+
+        Assert.assertEquals(evrakKurumKontrolu.getText().contains(kisiKurum),true,"Evrak Kurum Kontrolü");
+        Allure.addAttachment("Evrak Kurum Kontrolü" , kisiKurum);
+
+        Assert.assertEquals(evrakGeldigiKurumKontrolu.getText().contains(geldigiKurum),true,"Evrak Geldigi Kurum Kontrolü");
+        Allure.addAttachment("Evrak Geldigi Kurum Kontrolü" , geldigiKurum);
+
+        Assert.assertEquals(evrakIvedilikKontrolu.getText().contains(ivedilik),true,"Evrak Ivedilik Kontrolü");
+        Allure.addAttachment("Evrak Ivedilik Kontrolü" , ivedilik);
+
+
         return this;
     }
 
@@ -137,24 +178,25 @@ public class GelenEvrakZimmetRaporuPage extends MainPage {
         boolean durum = evrakEtiket.isDisplayed();
         Assert.assertEquals(durum, true);
         Allure.addAttachment("Evrak Etiket", "Bulunmaktadır");
+        takeScreenshot();
         return this;
     }
 
 
     @Step("Popup Kapatma")
     public GelenEvrakZimmetRaporuPage popupKapatma() {
-//        ElementsCollection tr =$$("[class='ui-dialog-titlebar ui-widget-header ui-helper-clearfix ui-corner-top']").filterBy(text("Evrak Geçmişi"));
         ElementsCollection tr = pencereListesi1.filterBy(text("Evrak Geçmişi"));
         tr.get(0).$("[href]").click();
+        takeScreenshot();
         return this;
     }
 
     @Step("Evrak Kapatma")
     public GelenEvrakZimmetRaporuPage evrakKapatma() {
-//        ElementsCollection tr =$$("[class='ui-dialog-titlebar ui-widget-header ui-helper-clearfix ui-corner-top']").filterBy(text("Evrak Detayı"));
         ElementsCollection tr = pencereListesi2.filterBy(text("Evrak Detayı"));
         tr.get(0).$("[href]").click();
         islemKapat.click();
+        takeScreenshot();
         return this;
     }
 

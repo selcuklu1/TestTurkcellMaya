@@ -1,6 +1,7 @@
 package tests.EvrakDevret;
 
 import common.BaseTest;
+import data.TestData;
 import data.User;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
@@ -54,8 +55,8 @@ public class EvrakDevretTest extends BaseTest {
     String uyariMesaji = "Zorunlu alanları doldurunuz";
     String dikkatMesaji = "Evrak seçilmemiştir!";
     String tabName = "İmza Bekleyen Evraklar";
-    String nameDA = "Username22N TEST";
-    String nameDE = "Username21G TEST";
+    String nameDA = "Username22n TEST";
+    String nameDE = "Username21g TEST";
     String kullaniciTitle = " [Ağ (Network) Uzman Yardımcısı]";
     String devredecekKisi = "username21g";
     String remoteDownloadPath;
@@ -79,7 +80,7 @@ public class EvrakDevretTest extends BaseTest {
     public void TS2178a() throws InterruptedException {
 
         login(mbozdemir);
-        evrakOlustur();
+        imzaBekleyenEvrakOlustur();
         logout();
         login(username21g);
 
@@ -129,13 +130,16 @@ public class EvrakDevretTest extends BaseTest {
 
         System.out.println(remoteDownloadPath);
         String mesaj = nameDE + kullaniciTitle + " ait evrak " + nameDA + kullaniciTitle + " adlı kişiye " + nameDE + kullaniciTitle
-                + " tarafından İmza Bekleyenler menüsünden devredilmiştir. / " + icerik;
+                + " tarafından Gelen Evraklar menüsünden devredilmiştir. / " + icerik;
 
-        evrakDevret();
+        gelenEvrak();
+
+        evrakDevret("Gelen Evraklar");
+
 
         login(username22n);
 
-        taslakEvraklarPage
+        gelenEvraklarPage
                 .openPage()
                 .konuyaGoreEvrakIcerikGoster(konu);
 
@@ -147,15 +151,12 @@ public class EvrakDevretTest extends BaseTest {
                 .raporAl(remoteDownloadPath)
                 .evrakDetayiKapat();
 
-        taslakEvraklarPage
+        gelenEvraklarPage
                 .openPage()
-                .evrakSecKonuyaGore(konu)
+                .konuyaGoreEvrakOnizlemedeAc(konu)
                 .evrakGecmisiTikla()
                 .tabloKontol(mesaj)
                 .raporAl(remoteDownloadPath);
-
-
-        //Evrak Gelen Evraklara düşmediğinden Taslak Evraklara göre yazıldı. Cevap bekleniyor.....
     }
 
 
@@ -172,7 +173,10 @@ public class EvrakDevretTest extends BaseTest {
         String tabEditörName = "Editör";
 
         System.out.println(remoteDownloadPath);
-        evrakDevret();
+
+        imzaBekleyenEvrakOlustur();
+
+        evrakDevret("İmza Bekleyen Evraklar");
 
         login(username22n);
 
@@ -273,7 +277,12 @@ public class EvrakDevretTest extends BaseTest {
     @Test(enabled = true, description = "TS2183 : Evrak devretmede alan kontrolleri")
     public void TS2183() throws InterruptedException {
 
+        login(mbozdemir);
+        gelenEvrak();
+        logout();
         login(username21g);
+
+        String tabName = "Gelen Evraklar";
 
         kullaniciEvrakDevretPage
                 .openPage()
@@ -287,9 +296,8 @@ public class EvrakDevretTest extends BaseTest {
                 .devret()
                 .islemMesaji().dikkatOlmali(dikkatMesaji);
 
-        //TODO 6. step yazılacak...
-
         kullaniciEvrakDevretPage
+                .tabloEvrakSecimi(tabName, konu)
                 .devret()
                 .devralacakKisiAlanKontolu()
                 .aciklamaDoldur(icerik)
@@ -306,8 +314,6 @@ public class EvrakDevretTest extends BaseTest {
                 .aciklamaDoldur(createRandomText(255))
                 .devretTamam()
                 .islemMesaji().basariliOlmali(basariMesaji);
-
-
     }
 
     @Step("Test datası oluşturuldu.")
@@ -372,9 +378,9 @@ public class EvrakDevretTest extends BaseTest {
     }
 
     @Step("Test datası oluşturuldu.")
-    private void evrakDevret() {
+    private void evrakDevret(String tabName) {
 
-        evrakOlustur();
+//        imzaBekleyenEvrakOlustur();
         login(username21g);
 
 
@@ -393,7 +399,7 @@ public class EvrakDevretTest extends BaseTest {
     }
 
     @Step("Test datası oluşturuldu.")
-    private void evrakOlustur() {
+    private void imzaBekleyenEvrakOlustur() {
         String imzacı = "username21g";
         evrakOlusturPage
                 .openPage()

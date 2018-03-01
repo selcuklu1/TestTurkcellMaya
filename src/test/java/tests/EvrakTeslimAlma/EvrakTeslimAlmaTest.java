@@ -1,6 +1,7 @@
 package tests.EvrakTeslimAlma;
 
 import common.BaseTest;
+import data.TestData;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.apache.logging.log4j.LogManager;
@@ -59,6 +60,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
         String evrakTuru = "Resmi Yazışma";
         String evrakDili = "Türkçe";
         String evrakTarihi = getSysDateForKis();
+        String evrakTarihiSaat = getSysDateForTarihSaat();
         String gizlilikDerecesi = "Normal";
         String kisiKurum = "Kurum";
         String geldigiKurum = "Esk Kurum 071216 2";
@@ -95,8 +97,8 @@ public class EvrakTeslimAlmaTest extends BaseTest {
                 .kaydet()
                 .popUps();
 
-        gelenEvrakKayitPage
-                .islemMesaji().basariliOlmali(basariMesaji);
+//        gelenEvrakKayitPage
+//                .islemMesaji().basariliOlmali(basariMesaji);
 
 
         testStatus(testid, "Test Başladı");
@@ -112,7 +114,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
                 .evrakAdediKontrolu(konu)
                 .tabKontrol()
                 .secilenEvrakEvrakGecmisi()
-                .evrakGecmisi(kisi, islemSureci, evrakTarihi);
+                .evrakGecmisi(kisi, islemSureci, evrakTarihiSaat);
 
         logger.info(testid + " nolu test bitti.");
     }
@@ -127,6 +129,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
         String evrakTuru = "Resmi Yazışma";
         String evrakDili = "Türkçe";
         String evrakTarihi = getSysDateForKis();
+        String evrakTarihiSaat = getSysDateForTarihSaat();
         String gizlilikDerecesi = "Normal";
         String kisiKurum = "Kurum";
         String geldigiKurum = "Esk Kurum 071216 2";
@@ -163,8 +166,8 @@ public class EvrakTeslimAlmaTest extends BaseTest {
                 .popUps();
 
 
-        gelenEvrakKayitPage
-                .islemMesaji().basariliOlmali(basariMesaji);
+//        gelenEvrakKayitPage
+//                .islemMesaji().basariliOlmali(basariMesaji);
 
         testStatus(testid, "Test Başladı");
         teslimAlinmayiBekleyenlerPage
@@ -173,7 +176,8 @@ public class EvrakTeslimAlmaTest extends BaseTest {
                 .evrakSecIcerikGoster(konu, true)
                 .ekranKontrolEvrakDetayi()
                 .içeriktenEvrakTeslimAl()
-                .içeriktenEvrakEvet();
+                .içeriktenEvrakEvet()
+                .islemMesaji().basariliOlmali(basariMesaji);
 
         teslimAlinanlarPage
                 .openPage()
@@ -181,7 +185,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
                 .evrakNoIleEvrakSec(konu)
                 .tabKontrol()
                 .secilenEvrakEvrakGecmisi()
-                .evrakGecmisi(kisi, islemSureci, evrakTarihi);
+                .evrakGecmisi(kisi, islemSureci, evrakTarihiSaat);
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -204,18 +208,18 @@ public class EvrakTeslimAlmaTest extends BaseTest {
         //String aciklama1 = "Test Otomasyon";
         String kisi = "Zübeyde Tekin";
         String islemSureci = "Evrak Teslim Alındı ";
-
+        String ipAdress = "";
 
         String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
         String details = "BHUPGMY";
 
         String aksiyon = "Kaydedilen Gelen Evraklar - Teslim Al";
-
-        String tarihSaatBugun = "" + new SimpleDateFormat("dd.MM.yyyy HH:mm").format(new Date());
+        String evrakTarihiSaat = getSysDateForTarihSaat();
         String kullanici = "Zübeyde Tekin";
-        String aciklama = "ztekin kullanıcısı, " + tarihSaatBugun;
+        String aciklama = "ztekin kullanıcısı, " + evrakTarihiSaat;
 
         testStatus(testid, "PreCondition Evrak Oluşturma");
+
         gelenEvrakKayitPage
                 .openPage();
 
@@ -231,73 +235,53 @@ public class EvrakTeslimAlmaTest extends BaseTest {
                 .evrakSayiSagDoldur()
                 .evrakGelisTipiSec(evrakGelisTipi)
                 .ivedilikSec(ivedilik)
-                .dagitimBilgileriBirimDoldurWithDetails(birim, details)
                 .kaydet()
                 .popUpsv2();
 
 
-        gelenEvrakKayitPage
-                .islemMesaji().basariliOlmali(basariMesaji);
-
-        String konu2 = "TS-2318-" + getSysDate();
-
-        testStatus(testid, "PreCondition 2. Evrak Oluşturma");
-        gelenEvrakKayitPage
-                .openPage();
-
-        gelenEvrakKayitPage
-                .konuKoduDoldur(konuKodu)
-                .konuDoldur(konu2)
-                .evrakTuruSec(evrakTuru)
-                .evrakDiliSec(evrakDili)
-                .evrakTarihiDoldur(evrakTarihi)
-                .gizlilikDerecesiSec(gizlilikDerecesi)
-                .kisiKurumSec(kisiKurum)
-                .geldigiKurumDoldurLovText(geldigiKurum)
-                .evrakSayiSagDoldur()
-                .evrakGelisTipiSec(evrakGelisTipi)
-                .ivedilikSec(ivedilik)
+        kaydedilenGelenEvraklarPage
+                .openPage()
+                .evrakNoIleEvrakSec(konu1)
+                .evrakOnizlemeKontrol()
+                .onizlemeHavaleButtonKontrol()
+                .onizlemeHavaleYap()
+                .havaleAlanKontrolleri()
+                .ekranKontrol()
                 .dagitimBilgileriBirimDoldurWithDetails(birim, details)
-                .kaydet()
-                .popUpsv2();
+                .eklenenBirimKontrolu(birim)
+                .buttonGonder()
+                .islemMesaji().basariliOlmali();
 
-
-        gelenEvrakKayitPage
-                .islemMesaji().basariliOlmali(basariMesaji);
-
-
-        testStatus(testid, "PreCondition 1. Evrak Iade Et");
+        testStatus(testid, "PreCondition 1. Evrak Teslim Al");
         teslimAlinmayiBekleyenlerPage
                 .openPage()
                 .evrakNoIleEvrakSec(konu1)
-                .iadeEt()
-                .iadeEtIadeEt()
-                .islemMesaji().basariliOlmali(basariMesaji);
-
-        testStatus(testid, "PreCondition 2. Evrak Iade Et");
-        teslimAlinmayiBekleyenlerPage
-                .openPage()
-                .evrakNoIleEvrakSec(konu2)
-                .iadeEt()
-                .iadeEtIadeEt()
+                .teslimAlIkonKontrol(konu1)
+                .evrakSecNoTeslimAl(konu1, true)
                 .islemMesaji().basariliOlmali(basariMesaji);
 
 
-        birimIadeEdilenlerPage
-                .openPage()
-                .evrakSec(konu1)
-                .evrakSec(konu2)
-                .evrakSecToplu(konu1, konu2, true)
-                .evrakNoGelmedigiGorme(konu1)
-                .evrakNoGelmedigiGorme(konu2)
-                .islemMesaji().basariliOlmali(basariMesaji);
+        testStatus(testid, "Test Başladı");
 
-        //TODO: Bu adim test senaryosunda net degildir. Netlesmesi durumunda test case update edilecektir. Bu hali ile test fail etmektedir.
+
+
         sistemLoglariPage
                 .openPage()
+                .ekranSistemLoglarıKontrol()
                 .aksiyonSec(aksiyon)
                 .sorgula()
-                .sistemRaporuKontrol(aksiyon, tarihSaatBugun, kullanici.toUpperCase(), aciklama, true);
+                .sistemRaporuKontrol(aksiyon, evrakTarihiSaat, kullanici.toUpperCase(), aciklama, true);
+
+//      TODO Müşterinin onaylaması durumunda bu satır aktiflenecek, çünkü external bir adrese gidiyor.
+//      ipAdress = myip();
+//      login(TestData.usernameZTEKIN,TestData.passwordZTEKIN);
+//      sistemLoglariPage
+//                .openPage()
+//                .ekranSistemLoglarıKontrol()
+//                .aksiyonSec(aksiyon)
+//                .sorgula()
+//                .sistemRaporuKontrol(aksiyon, evrakTarihiSaat, kullanici.toUpperCase(), aciklama, ipAdress, true);
+
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -310,6 +294,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
         String evrakTuru = "Resmi Yazışma";
         String evrakDili = "Türkçe";
         String evrakTarihi = getSysDateForKis();
+        String evrakTarihiSaat = getSysDateForTarihSaat();
         String gizlilikDerecesi = "Normal";
         String kisiKurum = "Kurum";
         String geldigiKurum = "Esk Kurum 071216 2";
@@ -344,8 +329,8 @@ public class EvrakTeslimAlmaTest extends BaseTest {
                 .popUpsv2();
 
 
-        gelenEvrakKayitPage
-                .islemMesaji().basariliOlmali(basariMesaji);
+//        gelenEvrakKayitPage
+//                .islemMesaji().basariliOlmali(basariMesaji);
 
         String konu2 = "TS-2319-" + getSysDate();
 
@@ -369,8 +354,8 @@ public class EvrakTeslimAlmaTest extends BaseTest {
                 .kaydet()
                 .popUpsv2();
 
-        gelenEvrakKayitPage
-                .islemMesaji().basariliOlmali(basariMesaji);
+//        gelenEvrakKayitPage
+//                .islemMesaji().basariliOlmali(basariMesaji);
 
         testStatus(testid, "Test Başladı");
         teslimAlinmayiBekleyenlerPage
@@ -378,6 +363,8 @@ public class EvrakTeslimAlmaTest extends BaseTest {
                 .evrakNoIleEvrakSec(konu1)
                 .evrakNoIleEvrakSec(konu2)
                 .evrakSecToplu(konu1, konu2, true)
+                .evrakNoGelmedigiGorme(konu1)
+                .evrakNoGelmedigiGorme(konu2)
                 .islemMesaji().basariliOlmali(basariMesaji);
 
         teslimAlinanlarPage
@@ -386,7 +373,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
                 .evrakNoIleEvrakSec(konu2)
                 .tabKontrol()
                 .secilenEvrakEvrakGecmisi()
-                .evrakGecmisi(kisi, islemSureci, evrakTarihi);
+                .evrakGecmisi(kisi, islemSureci, evrakTarihiSaat);
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -399,6 +386,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
         String evrakTuru = "Resmi Yazışma";
         String evrakDili = "Türkçe";
         String evrakTarihi = getSysDateForKis();
+        String evrakTarihiSaat = getSysDateForTarihSaat();
         String gizlilikDerecesi = "Normal";
         String kisiKurum = "Kurum";
         String geldigiKurum = "Esk Kurum 071216 2";
@@ -433,8 +421,8 @@ public class EvrakTeslimAlmaTest extends BaseTest {
                 .popUps();
 
 
-        gelenEvrakKayitPage
-                .islemMesaji().basariliOlmali(basariMesaji);
+//        gelenEvrakKayitPage
+//                .islemMesaji().basariliOlmali(basariMesaji);
 
         testStatus(testid, "PreCondition Evrak Iade Et");
         teslimAlinmayiBekleyenlerPage
@@ -458,7 +446,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
                 .evrakAdediKontrolu(konu)
                 .tabKontrol()
                 .secilenEvrakEvrakGecmisi()
-                .evrakGecmisi(kisi, islemSureci, evrakTarihi);
+                .evrakGecmisi(kisi, islemSureci, evrakTarihiSaat);
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -471,6 +459,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
         String evrakTuru = "Resmi Yazışma";
         String evrakDili = "Türkçe";
         String evrakTarihi = getSysDateForKis();
+        String evrakTarihiSaat = getSysDateForTarihSaat();
         String gizlilikDerecesi = "Normal";
         String kisiKurum = "Kurum";
         String geldigiKurum = "Esk Kurum 071216 2";
@@ -505,8 +494,8 @@ public class EvrakTeslimAlmaTest extends BaseTest {
                 .popUps();
 
 
-        gelenEvrakKayitPage
-                .islemMesaji().basariliOlmali(basariMesaji);
+//        gelenEvrakKayitPage
+//                .islemMesaji().basariliOlmali(basariMesaji);
 
         testStatus(testid, "PreCondition Evrak Iade Et");
         teslimAlinmayiBekleyenlerPage
@@ -521,7 +510,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
         birimIadeEdilenlerPage
                 .openPage()
                 .evrakSec(konu)
-                .ekranKontrol()
+                .ekranOnizlemeKontrol()
                 .evrakOnizlemeTeslimAl()
                 .evrakNoGelmedigiGorme(konu)
                 .islemMesaji().basariliOlmali(basariMesaji);
@@ -532,7 +521,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
                 .evrakAdediKontrolu(konu)
                 .secilenEvrakEvrakGecmisi()
                 .tabKontrol()
-                .evrakGecmisi(kisi, islemSureci, evrakTarihi);
+                .evrakGecmisi(kisi, islemSureci, evrakTarihiSaat);
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -545,6 +534,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
         String evrakTuru = "Resmi Yazışma";
         String evrakDili = "Türkçe";
         String evrakTarihi = getSysDateForKis();
+        String evrakTarihiSaat = getSysDateForTarihSaat();
         String gizlilikDerecesi = "Normal";
         String kisiKurum = "Kurum";
         String geldigiKurum = "Esk Kurum 071216 2";
@@ -641,7 +631,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
                 .evrakNoIleEvrakSec(konu2)
                 .tabKontrol()
                 .secilenEvrakEvrakGecmisi()
-                .evrakGecmisi(kisi, islemSureci,evrakTarihi);
+                .evrakGecmisi(kisi, islemSureci,evrakTarihiSaat);
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -654,15 +644,16 @@ public class EvrakTeslimAlmaTest extends BaseTest {
         String evrakTuru = "Resmi Yazışma";
         String evrakDili = "Türkçe";
         String evrakTarihi = getSysDateForKis();
+        String evrakTarihiSaat = getSysDateForTarihSaat();
         String gizlilikDerecesi = "Normal";
         String kisiKurum = "Kurum";
         String geldigiKurum = "Esk Kurum 071216 2";
         String evrakGelisTipi = "Posta";
         String ivedilik = "Normal";
-
+        String evrakNo1="";
+        String evrakNo2="";
         String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
         String details = "BHUPGMY";
-
         String kisi = "Zübeyde Tekin";
         String islemSureci = "Evrak Teslim Alındı ";
 
@@ -685,12 +676,14 @@ public class EvrakTeslimAlmaTest extends BaseTest {
                 .evrakGelisTipiSec(evrakGelisTipi)
                 .ivedilikSec(ivedilik)
                 .dagitimBilgileriBirimDoldurWithDetails(birim, details)
-                .kaydet()
-                .popUpsv2();
+                .kaydet();
+
+        evrakNo1 = gelenEvrakKayitPage.popUpsv2();
 
 
-        gelenEvrakKayitPage
-                .islemMesaji().basariliOlmali(basariMesaji);
+
+//        gelenEvrakKayitPage
+//                .islemMesaji().basariliOlmali(basariMesaji);
 
         String konu2 = "TS-2321-" + getSysDate();
 
@@ -711,12 +704,11 @@ public class EvrakTeslimAlmaTest extends BaseTest {
                 .evrakGelisTipiSec(evrakGelisTipi)
                 .ivedilikSec(ivedilik)
                 .dagitimBilgileriBirimDoldurWithDetails(birim, details)
-                .kaydet()
-                .popUpsv2();
+                .kaydet();
 
-
-        gelenEvrakKayitPage
-                .islemMesaji().basariliOlmali(basariMesaji);
+        evrakNo2 = gelenEvrakKayitPage.popUpsv2();
+//        gelenEvrakKayitPage
+//                .islemMesaji().basariliOlmali(basariMesaji);
 
 
         testStatus(testid, "PreCondition 1. Evrak Iade Et");
@@ -755,20 +747,21 @@ public class EvrakTeslimAlmaTest extends BaseTest {
 
                 .rapordaEvraklarıListele(konu2)
                 .evrakAdediKontrolu(konu2)
-                .rapordaKontrol(konu2,kullanici.toUpperCase(),evrakTarihi)
+                .rapordaKontrol(konu2,kullanici.toUpperCase(),evrakTarihiSaat)
 
                 .rapordaEvraklarıListele(konu1)
                 .evrakAdediKontrolu(konu1)
-                .rapordaKontrol(konu1,kullanici.toUpperCase(),evrakTarihi)
+                .rapordaKontrol(konu1,kullanici.toUpperCase(),evrakTarihiSaat)
 
                 .evrakGecmisiButtonTıklama(konu1)
                 .evrakGecmisiKontrolu(konu1, kullanici, islemSureci)
                 .popupKapatma()
                 .evrakDetayButtonTıklama(konu1)
-                .evrakDetayKontrolu(konu1)
-                .evrakKapatma()
-                .evrakEtiketButtonTıklama(konu1)
-                .evrakEtiketKontrolu();
+                .evrakDetayKontrolu(evrakNo1,konuKodu,konu1,evrakTuru,evrakTarihi,evrakDili,gizlilikDerecesi,kisiKurum,geldigiKurum,ivedilik);
+//                .evrakKapatma()
+//
+//                .evrakEtiketButtonTıklama(konu1)
+//                .evrakEtiketKontrolu();
 
     }
 }

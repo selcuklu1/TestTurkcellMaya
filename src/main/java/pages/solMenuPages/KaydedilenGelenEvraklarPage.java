@@ -383,6 +383,7 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
     public KaydedilenGelenEvraklarPage evrakGecmisi(String teslimAlinan, String islemSureci) {
         boolean durum = tblEvrakGecmisi.filterBy(Condition.text(islemSureci)).filter(Condition.text(teslimAlinan)).size() == 1;
         Assert.assertEquals(durum, true);
+        Allure.addAttachment("Evrak Geçmişi Kontrolü" , "Teslim Alınan:" + teslimAlinan + " Işlem Süreci:" + islemSureci);
         takeScreenshot();
         return this;
     }
