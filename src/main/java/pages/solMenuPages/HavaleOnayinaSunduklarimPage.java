@@ -30,6 +30,7 @@ public class HavaleOnayinaSunduklarimPage extends MainPage {
 
     SelenideElement btnOnizlemeHavaleBilgisi = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:5:cmdbutton"));
     SelenideElement btnOnizlemeGeriAl = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:4:cmdbutton"));
+    SelenideElement lblOnizlemeSayfa = $("div[id='mainPreviewForm:onizlemePanel']");
 
 
     @Step("Birim Havale Onayına Sunduklarim sayfasını aç")
@@ -65,6 +66,13 @@ public class HavaleOnayinaSunduklarimPage extends MainPage {
     @Step("Not alanını doldur: {not}")
     public HavaleOnayinaSunduklarimPage geriAlNotDoldur(String not) {
         txtGeriAlNot.setValue(not);
+        return this;
+    }
+
+    @Step("Not alanını kontrol")
+    public HavaleOnayinaSunduklarimPage geriAlNotKontrol() {
+        Assert.assertEquals(txtGeriAlNot.isDisplayed(),true,"Not alanı kontrol");
+        Allure.addAttachment("Not alanı kontrol" ,"");
         return this;
     }
 
@@ -107,6 +115,13 @@ public class HavaleOnayinaSunduklarimPage extends MainPage {
         boolean durum = btnOnizlemeGeriAl.isDisplayed();
         Assert.assertEquals(durum,true,"Havale Bilgisi Geri Al Gelmektedir.");
         Allure.addAttachment("Havale Bilgisi Geri Al Gelmektedir.","");
+        return this;
+    }
+
+    @Step("Evrak Onizleme ekranı açılır\n")
+    public HavaleOnayinaSunduklarimPage onizlemeEkranKontrol() {
+        Assert.assertEquals(lblOnizlemeSayfa.isDisplayed(),true,"Evrak Onizleme Ekranı Kontrolü");
+        Allure.addAttachment("Evrak Onizleme Ekranı Kontrolü","");
         return this;
     }
 

@@ -209,6 +209,7 @@ public class EvrakOlusturPage extends MainPage {
     public EvrakOlusturPage evrakOlusturPageKapat() {
 
         SelenideElement closeButton = $(By.xpath("//span[@class='ui-dialog-title' and text()='Evrak Oluştur']/..//span[@class='ui-icon ui-icon-closethick']"));
+        closeButton.waitUntil(visible, 5000);
         Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", closeButton);
         closeButton.click();
         btnEvrakOlusturKapatEvet.click();
@@ -2078,7 +2079,7 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement editorHitapKismi = $(By.cssSelector("#yeniGidenEvrakForm\\:hitapInplace > span:nth-child(4)"));
         SelenideElement tblEditorlovSecilenTable = $(By.id("yeniGidenEvrakForm:geregiKurumLov:LovSecilenTable"));
         BelgenetElement tblEditolovGeregiTable = comboLov("input[id='yeniGidenEvrakForm:geregiKurumLov:LovText']");
-        SelenideElement btnImzala = $("button[id^='yeniGidenEvrakForm:rightTab:uiRepeat'] span[class$='imzala']");
+        SelenideElement btnImzala = $x("//span[contains(@class, 'imzala')]/..");
         SelenideElement divImzacılarGnMdV = $("[id='yeniGidenEvrakForm:parafciPanell'] [class='ui-inplace ui-hidden-container']");
         By cmbGeregiBy = By.id("yeniGidenEvrakForm:geregiKurumLov:LovText");
         By cmbBilgiBy = By.id("yeniGidenEvrakForm:bilgiKurumLov:LovText");

@@ -140,7 +140,7 @@ public class TopluPostaladiklarimPage extends MainPage {
 
             SelenideElement postaListesi = tblPostaladiklarim
                     .filterBy(text("Posta Listesi Adı: " + postaListesiAdi))
-                    .filterBy(text("Posta Kodu: " + postaKodu))
+                    .filterBy(text("Barkod No: " + postaKodu))
                     .filterBy(text("Posta Tarihi: " + postaTarihi))
                     .filterBy(text("Posta Gramajı: " + postaGramaji))
                     .filterBy(text("PTT Tutarı: " + pttTutari))
@@ -169,7 +169,7 @@ public class TopluPostaladiklarimPage extends MainPage {
 
             SelenideElement postaListesi = tblPostaladiklarim
                     .filterBy(text("Posta Listesi Adı: " + postaListesiAdi))
-                    .filterBy(text("Posta Kodu: " + postaKodu))
+                    .filterBy(text("Barkod No: " + postaKodu))
                     .filterBy(text("Posta Tarihi: " + postaTarihi))
                     .filterBy(text("Posta Gramajı: " + postaGramaji))
                     .filterBy(text("PTT Tutarı: " + pttTutari + " TL"))
@@ -179,7 +179,7 @@ public class TopluPostaladiklarimPage extends MainPage {
             if (postaListesi.isDisplayed() && postaListesi.exists()) {
                 elementFound = true;
                 Allure.addAttachment("Ekran Alan Kontrolleri", "Posta Listesi Adı: '" + postaListesiAdi + "'\n" +
-                        "Posta Kodu: '" + postaKodu + "'\n" +
+                        "Barkod No: '" + postaKodu + "'\n" +
                         "Posta Tarihi: '" + postaTarihi + "'\n" +
                         "Posta Gramajı: '" + postaGramaji + "'\n" +
                         "PTT Tutarı: '" + pttTutari + " TL " + "bilgileri ile listelendiği görülür.");
