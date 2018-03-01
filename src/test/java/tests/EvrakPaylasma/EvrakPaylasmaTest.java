@@ -607,7 +607,7 @@ public class EvrakPaylasmaTest extends BaseTest {
         String kisi = "Zübeyde Tekin";
         String kisi2 = "Ömer ÖZÜLKÜ";
         String aciklama = createRandomText(15);
-        String birim = "BİLİŞİM HİZMETLERİ VE UYDU PAZARLAMA GENEL MÜDÜR";
+        String birim = "BHUPGMY";
         String anaBirim = "Yazılım Geliştirme Direktörlüğ";
         //TODO Pre Condition Gelen Evraklar sayfası data oluşturmakta
         login(usernameZTEKIN, passwordZTEKIN);

@@ -57,7 +57,7 @@ public class EvrakHavaleIslemleriTest extends BaseTest {
 
         login(usernameZTEKIN,passwordZTEKIN);
 
-        gelenEvrakKayitPage.gelenEvrakKayitKaydedilenGelenEvraklarEvrakOlustur(konuKodu,kurum);
+       // gelenEvrakKayitPage.gelenEvrakKayitKaydedilenGelenEvraklarEvrakOlustur(konuKodu,kurum);
 
         kaydedilenGelenEvraklarPage
                 .openPage()
