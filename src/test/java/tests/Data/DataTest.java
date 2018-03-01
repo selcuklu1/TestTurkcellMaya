@@ -190,6 +190,7 @@ public class DataTest extends BaseTest {
                 .evrakNoIleEvrakSec(konu)
                 .evrakOnizlemeKontrol()
                 .havaleYap()
+                .evrakHavaleEkranKontrol()
                 .dagitimBilgileriBirimDoldurWithDetails(digerBirim, digerDetails)
                 .teslimAlGonder();
 
@@ -203,6 +204,7 @@ public class DataTest extends BaseTest {
         teslimAlinmayiBekleyenlerPage
                 .openPage()
                 .evrakNoIleEvrakSec(konu)
+                .onizlemeIadeEtKontrol()
                 .iadeEt()
                 .iadeEtIadeEt()
                 .islemMesaji().basariliOlmali(basariMesaji);

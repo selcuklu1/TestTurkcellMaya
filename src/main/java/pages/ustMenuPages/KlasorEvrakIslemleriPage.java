@@ -31,6 +31,7 @@ public class KlasorEvrakIslemleriPage extends MainPage {
     SelenideElement tblKlasorEvrakIslemleri = $(By.id("klasorEvrakIslemleriListingForm:klasorEvrakDataTable"));
     SelenideElement f = $(By.xpath("//div[@id='klasorEvrakIslemleriListingForm:filterPanel']//a[text()='Sorgulama ve Filtreleme']/parent::h3"));
     ElementsCollection tblEvrakListesi = $$("tbody[id='klasorEvrakIslemleriListingForm:klasorEvrakDataTable_data'] > tr[role='row']");
+    SelenideElement btnEvrakiKlasordenCikarEvet = $(By.id("baseConfirmationDialog:confirmButton"));
 
     public KlasorEvrakIslemleriPage birimDoldur(String birim) {
         //sendKeys(birimInput, birim, false);
@@ -138,6 +139,33 @@ public class KlasorEvrakIslemleriPage extends MainPage {
                     .shouldNotBe(visible);
 
         }
+
+        return this;
+    }
+
+
+    @Step("{konu} Konulu evrak satırı üzerinde 'Evrakı Klasörden Çıkar' butonuna tıkla ve İşlem Onayı ekranında Evet butonuna tıkla")
+    public KlasorEvrakIslemleriPage evrakiKlasordenCikar(String konu){
+
+        tblEvrakListesi
+                .filterBy(text(konu))
+                .first()
+                .$x(".//span[contains(@class, 'remove-from-folder-icon')]/..")
+                .click();
+
+        btnEvrakiKlasordenCikarEvet.click();
+
+        return this;
+    }
+
+    @Step("{konu} Konulu evrak satırı üzerinde 'Evrakı Klasörden Çıkar' butonunun geldiği görülür. ")
+    public KlasorEvrakIslemleriPage evrakiKlasordenCikarButonKontrolu(String konu){
+
+        tblEvrakListesi
+                .filterBy(text(konu))
+                .first()
+                .$x(".//span[contains(@class, 'remove-from-folder-icon')]/..")
+                .shouldBe(visible);
 
         return this;
     }

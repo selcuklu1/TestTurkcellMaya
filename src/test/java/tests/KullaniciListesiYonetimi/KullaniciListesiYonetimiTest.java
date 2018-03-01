@@ -145,13 +145,13 @@ public class KullaniciListesiYonetimiTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true
-            , dependsOnMethods = {"TS1003"}
+            , dependsOnMethods = {"TS1464"}   //1464 lerden bırı eklenecek
             , description = "TS1000 : Kullanıcı Listesi Güncelleme")
     public void TS1000() throws InterruptedException {
 
         login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
 
-        String guncelAd = ad + " Guncellendi";
+//        String guncelAd = ad + " Guncellendi";
 
         kullaniciListesiYonetimiPage
                 .openPage()
@@ -184,7 +184,7 @@ public class KullaniciListesiYonetimiTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true
-            , dependsOnMethods = {"TS1003"}
+            , dependsOnMethods = {"TS1000"}
             , description = "TS1466 : Kullanıcı Listesi Güncelleme Sonrası Ekranlardan Kontrolü")
     public void TS1466() throws InterruptedException {
 
@@ -280,10 +280,11 @@ public class KullaniciListesiYonetimiTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true
+            ,dependsOnMethods = {"TS1003"}
             , description = "TS1465 : Yeni Kullanıcı Listesi Tanımlama Sonrası Ekranlardan Kontrolü")
     public void TS1465() throws InterruptedException {
 
-        TS1005();
+//        TS1005();
         login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
 
         String dikkatMesaji = "Havaleyi onaylayacak kullanıcıyı seçiniz.";
@@ -437,7 +438,9 @@ public class KullaniciListesiYonetimiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TS1464 : Kullanıcı Listeleri Aktiflik/Pasiflik Kontrolü")
+    @Test(enabled = true
+            ,dependsOnMethods = {"TS1465"}
+            , description = "TS1464 : Kullanıcı Listeleri Aktiflik/Pasiflik Kontrolü")
     public void TS1464() throws InterruptedException {
 
 //        TS1005();

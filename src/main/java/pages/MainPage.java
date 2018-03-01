@@ -208,6 +208,29 @@ public class MainPage extends BaseLibrary {
         return this;
     }
 
+    public MainPage evrakOlusturSayfaKapat() {
+        $$("[id='window1Dialog'] span[class='ui-icon ui-icon-closethick']").first().click();
+        $(By.id("kapatKaydetHayirButton")).pressEnter();
+        return this;
+
+    }
+    @Step("Cevap yaz sayfasında Ekranı kapat.")
+    public MainPage cevapYazSayfaKapat(String cevap) {
+        $("[id='windowCevapEvrakDialog'] [class='ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all']").click();
+        if (cevap == "Evet")
+            $("[id='kapatKaydetEvetButton']").click();
+
+        else if (cevap == "Hayır") {
+            $("[id='kapatKaydetHayirButton']").click();
+        }
+        else if (cevap == "İptal")
+        {
+
+            $(By.id("kapatKaydetIptalButton")).click();
+        }
+        return this;
+    }
+
     @Step("Footer'da açılan sayfa butonu bul")
     public SelenideElement getFooterPageButton(String pageTitle) {
         return $x("//div[@id='mainTaskBar']//div[@type='button']/span[contains(.,'" + pageTitle + "')]");

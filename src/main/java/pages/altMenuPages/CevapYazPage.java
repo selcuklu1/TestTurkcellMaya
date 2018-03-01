@@ -1,6 +1,7 @@
 package pages.altMenuPages;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
@@ -125,6 +126,7 @@ public class CevapYazPage extends MainPage {
     SelenideElement btnHayirPopup = $(By.cssSelector("div[class*='ui-confirm-dialog'] button[id='kaydetHayirButton']"));
     SelenideElement btnKaydet = $x("//span[contains(@class, 'kaydet')]/..");
     SelenideElement btnEvrakKopyala = $("[class='ui-button-icon-left ui-icon evrakKopyala']");
+    ElementsCollection btnEvrakKopyalaEvet = $$("[id='evrakCopyConfirmForm'] button");
     SelenideElement btnEvrakKopyalaUyariEvet = $(By.id("evrakCopyConfirmForm:copyEvrakEvetButton"));
     private SelenideElement page = $("#windowCevapEvrakDialog");
 
@@ -248,7 +250,7 @@ public class CevapYazPage extends MainPage {
         txtBilgi.sendKeys(bilgi);
         return this;
     }
-
+    @Step("Onay akışı alanını {onayAkisi} doldur")
     public CevapYazPage onayAkisiDoldur(String onayAkisi) {
         cmbOnayAkisi.selectLov(onayAkisi);
         return this;
@@ -638,6 +640,12 @@ public class CevapYazPage extends MainPage {
     @Step("Evrak Kopyalanır")
     public CevapYazPage evrakKopyala(){
         btnEvrakKopyala.click();
+        return this;
+    }
+
+    @Step("Evet tıklanır")
+    public CevapYazPage evrakKopyalaEvet(){
+        btnEvrakKopyalaEvet.filterBy(Condition.text("Evet")).first().click();
         return this;
     }
 

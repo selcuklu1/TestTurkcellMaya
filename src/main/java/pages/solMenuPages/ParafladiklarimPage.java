@@ -20,7 +20,7 @@ import static pages.pageData.SolMenuData.IslemYaptiklarim;
 
 public class ParafladiklarimPage extends MainPage {
 
-    ElementsCollection tblParafladiklarimEvraklar = $$("[id='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
+    ElementsCollection tblParafladiklarimEvraklar = $$("[id='mainInboxForm:inboxDataTable_data'] > tr[data-ri]");
     SelenideElement btnEvrakSecEvrakKopyala = $("[class='ui-button-icon-left ui-icon evrakKopyala']");
     SelenideElement f = $(By.xpath("//div[@id='mainInboxForm:inboxDataTable:filtersAccordion']//a[text()='Filtreler']/parent::h3"));
     SelenideElement cmbFiltre = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt3011_input"));
@@ -239,6 +239,14 @@ public class ParafladiklarimPage extends MainPage {
         btnIcerik.click();
         return this;
     }
+
+    @Step("Konuya göre İçerik tıklanır. {konu}")
+    public ParafladiklarimPage icerikTikla(String konu) {
+        tblParafladiklarimEvraklar.filterBy(text(konu)).first()
+                .$("button[id$='detayGosterButton']").click();
+        return this;
+    }
+
 
     @Step("Evrak No al")
     public String evrakDetayiEvrakNoAl() {

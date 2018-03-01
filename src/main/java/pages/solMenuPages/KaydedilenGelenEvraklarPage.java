@@ -56,6 +56,8 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
     ElementsCollection tblEvraklar = $$("[id^='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
     SelenideElement evrakOnizlemeKontrol = $(By.id("mainPreviewForm:eastLayout"));
     SelenideElement icerikHavaleYap = $(By.id("inboxItemInfoForm:dialogTabMenuRight:uiRepeat:5:cmdbutton"));
+    SelenideElement btnHavaleYap = $("[class='ui-button-icon-left ui-icon havaleEt']");
+    BelgenetElement txthavaleYapBirim = comboLov(By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovText"));
     SelenideElement btnOnizlemeHavaleYap = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:4:cmdbutton"));
     BelgenetElement cmbHavaleIslemleriOnaylayacakKisi = comboLov(By.id("mainPreviewForm:onaylayacakKisiLov:LovText"));
     BelgenetElement cmbHavaleIslemleriBirim = comboLov(By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovText"));
@@ -381,6 +383,7 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
     public KaydedilenGelenEvraklarPage evrakGecmisi(String teslimAlinan, String islemSureci) {
         boolean durum = tblEvrakGecmisi.filterBy(Condition.text(islemSureci)).filter(Condition.text(teslimAlinan)).size() == 1;
         Assert.assertEquals(durum, true);
+        Allure.addAttachment("Evrak Geçmişi Kontrolü" , "Teslim Alınan:" + teslimAlinan + " Işlem Süreci:" + islemSureci);
         takeScreenshot();
         return this;
     }
@@ -400,6 +403,24 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
                 .filterBy(Condition.text(evrakNo))
                 .first()
                 .click();
+        return this;
+    }
+
+    @Step("Havale yap tıklanır")
+    public KaydedilenGelenEvraklarPage evrakSecHavaleYap(){
+        btnHavaleYap.click();
+        return this;
+    }
+
+    @Step("Birim alanını doldur: {birim}")
+    public KaydedilenGelenEvraklarPage havaleYapBirimDoldur(String birim){
+        txthavaleYapBirim.selectLov(birim);
+        return this;
+    }
+
+    @Step("Gönder tıklanır")
+    public KaydedilenGelenEvraklarPage havaleYapGonder(){
+        $$("[id='mainPreviewForm:evrakOnizlemeTab'] button").filterBy(Condition.text("Gönder")).first().click();
         return this;
     }
 

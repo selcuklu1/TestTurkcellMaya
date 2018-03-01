@@ -283,7 +283,7 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
 
     @Step("Sorgula butonuna tıkla.")
     public TopluPostalanacakEvraklarPage sorgula() {
-        btnSorgula.click();
+        clickJs(btnSorgula);
         return this;
     }
 
