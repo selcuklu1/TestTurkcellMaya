@@ -50,6 +50,28 @@ public class KapattiklarimPage extends MainPage {
         return this;
     }
 
+    @Step("{konu} konulu evrak listede olmalı mı? {evrakOlmali}")
+    public KapattiklarimPage evrakKontrol(String konu, boolean evrakOlmali){
+
+        if(evrakOlmali == true){
+
+            tblKapattiklarim
+                    .filterBy(text(konu))
+                    .first()
+                    .shouldBe(visible);
+
+        } else {
+
+            tblKapattiklarim
+                    .filterBy(text(konu))
+                    .first()
+                    .shouldNotBe(visible);
+
+        }
+
+        return this;
+    }
+
 
 }
 

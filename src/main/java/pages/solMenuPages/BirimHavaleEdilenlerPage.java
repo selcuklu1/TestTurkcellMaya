@@ -41,7 +41,7 @@ public class BirimHavaleEdilenlerPage extends MainPage {
     SelenideElement onizlemeNotAlanıDoldur = $(By.id("mainPreviewForm:evrakGeriAlInputTextareaId"));
     //    SelenideElement btnGeriAl = $("[class='ui-button-icon-left ui-icon evrakGeriAl']");
     SelenideElement btnGeriAl = $("button[id^='inboxItemInfoForm:j_idt']");
-    SelenideElement onizlemeGeriAl = $("[id^='mainPreviewForm:j_idt']");
+    SelenideElement onizlemeGeriAl = $("button[id^='mainPreviewForm:j_idt']");
 
     SelenideElement btnGeriAlGeriAl = $("[id='mainPreviewForm:evrakOnizlemeTab'] button");
     SelenideElement tctGeriAlNot = $("[id$='evrakGeriAlInputTextareaId']");
@@ -185,6 +185,13 @@ public class BirimHavaleEdilenlerPage extends MainPage {
     @Step("Not Alanını Doldur")
     public BirimHavaleEdilenlerPage onizlemeNotAlanınıDoldur(String not) {
         onizlemeNotAlanıDoldur.setValue(not);
+        return this;
+    }
+
+    @Step("Not Alanı Kontrol")
+    public BirimHavaleEdilenlerPage onizlemeNotAlanıKontrol(String not) {
+        Assert.assertEquals(onizlemeNotAlanıDoldur.isDisplayed(),true,"Not Alanı Kontrol");
+        Allure.addAttachment("Not Alanı Kontrol","");
         return this;
     }
 
