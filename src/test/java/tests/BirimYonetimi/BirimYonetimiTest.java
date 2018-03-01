@@ -288,6 +288,7 @@ public class BirimYonetimiTest extends BaseTest {
         String birimAdı = birim.get(0);
         String birimKisaAdi = birim.get(1);
         String idariBirimKimlikKodu = birim.get(2);
+        String basariMesaji = "İşlem başarılıdır!";
 
         kullaniciYonetimiPage
                 .openPage()
@@ -302,7 +303,8 @@ public class BirimYonetimiTest extends BaseTest {
                 .yeniRolIliskilendirmeKullaniciBirimDoldur(birimKisaAdi)
                 .yeniRolIliskilendirmeKullaniciRolSec("STANDART KULLANICI YETKİSİ")
                 .yeniRolIliskilendirmeKaydet()
-                .kullaniciGuncelleKaydet();
+                .kullaniciGuncelleKaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
 
         clearCookies();
 
@@ -329,7 +331,7 @@ public class BirimYonetimiTest extends BaseTest {
                 .openPage()
                 .birimYonetimiFiltrelemeAlanKontrolleri()
                 .birimFiltreDoldur(birim)
-
+                .ara()
                 .birimKayitKontrolu(birim)
 
                 .birimTuruSec("İç Birim")

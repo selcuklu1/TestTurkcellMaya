@@ -21,7 +21,7 @@ import static com.codeborne.selenide.Selenide.$$;
  ****************************************************/
 public class IptalEdilenEvraklarRaporuPage extends MainPage {
 
-    SelenideElement pageTitle = $(By.xpath("//span[. = 'İptal Edilen Evraklar Raporu\t' and @class = 'ui-dialog-title']"));
+    SelenideElement pageTitle = $(By.xpath("//span[. = 'İptal Edilen Evraklar Raporu' and @class = 'ui-dialog-title']"));
     SelenideElement dateIlkTarih = $(By.id("iptalEdilenEvraklarRaporuForm:ilkTarihCalendar_input"));
     SelenideElement dateSonTarih = $(By.id("iptalEdilenEvraklarRaporuForm:sonTarihCalendar_input"));
     SelenideElement cmbBelgeDurumu = $(By.id("iptalEdilenEvraklarRaporuForm:belgeTipiId_input"));
