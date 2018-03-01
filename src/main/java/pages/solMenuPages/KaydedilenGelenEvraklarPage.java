@@ -55,11 +55,13 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
     ElementsCollection tblEvrakGecmisi = $$("[id$='hareketGecmisiDataTable_data'] > tr[role='row']");
     ElementsCollection tblEvraklar = $$("[id^='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
     SelenideElement evrakOnizlemeKontrol = $(By.id("mainPreviewForm:eastLayout"));
+    SelenideElement havaleDagitimEkranKontrolu = $(By.id("mainPreviewForm:havaleDagitimLovPanel"));
     SelenideElement icerikHavaleYap = $(By.id("inboxItemInfoForm:dialogTabMenuRight:uiRepeat:5:cmdbutton"));
     SelenideElement btnOnizlemeHavaleYap = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:4:cmdbutton"));
     BelgenetElement cmbHavaleIslemleriOnaylayacakKisi = comboLov(By.id("mainPreviewForm:onaylayacakKisiLov:LovText"));
     BelgenetElement cmbHavaleIslemleriBirim = comboLov(By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovText"));
     SelenideElement btnHavaleOnayinaGonder = $("[id^='mainPreviewForm:j_idt'] [class^='ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only havaleIslemleriGonder']");
+    SelenideElement btnHavaleOnayinaGonderDisabled = $("[id^='mainPreviewForm:j_idt'] [class^='ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ui-state-disabled havaleGonderButonClass']");
 
     SelenideElement btnIcerikHavaleOnayinaGonder = $("[id^='inboxItemInfoForm:j_idt'] [class^='ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only havaleIslemleriGonder']");
 
@@ -139,7 +141,7 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
     SelenideElement txtIcerikEklenenKisi = $("div[id^='inboxItemInfoForm:dagitimBilgileriKullaniciLov:LovSecilenTable:0:j_idt']");
     SelenideElement txtEklenenKisi = $("div[id^='mainPreviewForm:dagitimBilgileriKullaniciLov:LovSecilenTable:0:j_idt']");
     SelenideElement txtIcerikOnaylayanKisi = $("div[id^='inboxItemInfoForm:onaylayacakKisiLov:j_idt'][class='lovItemTitle']");
-    SelenideElement txtOnaylayanKisi = $("div[id^='mainPreviewForm:onaylayacakKisiLov:LovSecilen']");
+    SelenideElement txtOnaylayanKisi = $("div[id='mainPreviewForm:onaylayacakKisiLov:LovSecilen']");
 
     SelenideElement btnIcerikDosyaDeleteIcon = $("button[id^='inboxItemInfoForm:j_idt'] span[class='ui-button-icon-left ui-icon delete-icon']");
     BelgenetElement txtHavaleYapKullniciListesi = comboLov(By.id("inboxItemInfoForm:dagitimBilgileriKisiListesiLov:LovText"));
@@ -253,16 +255,27 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
 
     @Step("Evrak Onizleme Kontrolu")
     public KaydedilenGelenEvraklarPage evrakOnizlemeKontrol() {
-        if (evrakOnizlemeKontrol.isDisplayed())
-            Allure.addAttachment("Evrak Önizleme Ekranı", "açılmıştır");
+        Assert.assertEquals(evrakOnizlemeKontrol.isDisplayed(),true,"\"Evrak Onizleme Kontrolu");
+        Allure.addAttachment("Evrak Önizleme Ekranı", "açılmıştır");
         return this;
     }
+
+    @Step("Havale Dagitim Ekran Kontrolu")
+    public KaydedilenGelenEvraklarPage havaleDagitimEkranKontrolu() {
+        Assert.assertEquals(havaleDagitimEkranKontrolu.isDisplayed(),true,"Havale Dağıtım Ekran Kontrolü");
+        Allure.addAttachment("Havale Dagitim Ekran Kontrolü", "");
+        return this;
+    }
+
+
 
     @Step("Onizleme Evrak Havale Yap Butonu Tıklandı")
     public KaydedilenGelenEvraklarPage onizlemeHavaleYap() {
         btnOnizlemeHavaleYap.click();
         return this;
     }
+
+
 
     @Step("Onizleme Evrak Havale Yap Butonu Tıklandı")
     public KaydedilenGelenEvraklarPage onizlemeHavaleButtonKontrol() {
@@ -334,7 +347,7 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
 
     @Step("Havale İşlemleri Onaylayan alanında eklenen \"{kisi}\" kontrolü")
     public KaydedilenGelenEvraklarPage eklenenOnaylayanKontrolu(String kisi) {
-        Assert.assertEquals(txtOnaylayanKisi.isDisplayed(), true, "Onaylayan Kisi Eklendi");
+        Assert.assertEquals(txtOnaylayanKisi.isDisplayed(), true, "Onaylayan Kisi Kontrolü");
         Allure.addAttachment("Onaylayan Kisi Eklendi:", kisi);
         return this;
     }
@@ -353,6 +366,13 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
     @Step("Havale Onayına Gönder")
     public KaydedilenGelenEvraklarPage havaleOnayinaGonder() {
         btnHavaleOnayinaGonder.click();
+        return this;
+    }
+
+    @Step("Havale Onayı Buton Disabled Kontrolü")
+    public KaydedilenGelenEvraklarPage havaleOnayinaGonderDisabled() {
+        Assert.assertEquals(btnHavaleOnayinaGonderDisabled.isDisplayed(),true,"Havale Onayı Buton Disabled");
+        Allure.addAttachment("Havale Onayı Buton Disabled Kontrolü","");
         return this;
     }
 

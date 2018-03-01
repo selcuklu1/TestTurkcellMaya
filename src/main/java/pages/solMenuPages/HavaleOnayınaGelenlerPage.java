@@ -26,6 +26,8 @@ import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 public class HavaleOnayınaGelenlerPage extends MainPage {
     ElementsCollection tblEvraklar = $$("[id^='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
     SelenideElement btnHavaleOnay = $("button[id^='mainPreviewForm:onizlemeRightTab:uiRepeat:4:cmdbutton']");
+    SelenideElement btnEvrakGoster = $("button[id^='mainPreviewForm:onizlemeRightTab:uiRepeat:3:cmdbutton']");
+
     SelenideElement btnHavaleOnayiOnayla = $(By.id("mainPreviewForm:onaylaButton_id"));
     SelenideElement icerikHavaleOnay = $("button[id='inboxItemInfoForm:dialogTabMenuRight:uiRepeat:4:cmdbutton']");
     SelenideElement notAlanıDoldur = $(By.id("mainPreviewForm:notTextArea_id"));
@@ -36,6 +38,12 @@ public class HavaleOnayınaGelenlerPage extends MainPage {
     SelenideElement onizlemeOnayla = $(By.id("mainPreviewForm:onaylaButton_id"));
     BelgenetElement txtHavaleOnayiBirim = comboLov(By.id("mainPreviewForm:dagitimBilgileriBirimLov_id:LovText"));
     BelgenetElement txtHavaleOnayiKisi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKullaniciLov_id:LovText"));
+
+    SelenideElement txtBirimKontrol = $(By.id("mainPreviewForm:dagitimBilgileriBirimLov_id:LovText"));
+    SelenideElement txtKisiKontrol = $(By.id("mainPreviewForm:dagitimBilgileriKullaniciLov_id:LovText"));
+    SelenideElement txtNotKontrol = $(By.id("mainPreviewForm:notTextArea_id"));
+    SelenideElement btnOnaylaKontrol = $(By.id("mainPreviewForm:onaylaButton_id"));
+    SelenideElement btnReddetKontrol = $(By.id("mainPreviewForm:reddetButton_id"));
 
     //      SelenideElement onayıReddetEvet = $(By.id("inboxItemInfoForm:reddetEvetButton_id"));
 //      SelenideElement onayıReddetEvet = $("button[id='inboxItemInfoForm:reddetEvetButton_id']");
@@ -55,6 +63,7 @@ public class HavaleOnayınaGelenlerPage extends MainPage {
     SelenideElement txtEklenenBirimOpsiyon = $("select[id='mainPreviewForm:dagitimBilgileriBirimLov_id:LovSecilenTable:0:selectOneMenu']");
 
     SelenideElement lblSayfa = $("div[id='inboxItemInfo']");
+    SelenideElement lblOnizlemeSayfa = $("div[id='mainPreviewForm:onizlemePanel']");
 
     //Dagitim Kontrolleri
     SelenideElement dagitimBirimKontrolu = $("div[id^='inboxItemInfoForm:dagitimBilgileriBirimLov_id:LovSecilenTable:0:j_idt']");
@@ -71,6 +80,33 @@ public class HavaleOnayınaGelenlerPage extends MainPage {
     public HavaleOnayınaGelenlerPage icerikEkranKontrol() {
         Assert.assertEquals(lblSayfa.isDisplayed(),true,"Evrak Içeriği Ekranı Kontrolü");
         Allure.addAttachment("Evrak Içeriği Ekranı Kontrolü","");
+        return this;
+    }
+
+    @Step("Evrak Onizleme ekranı açılır\n")
+    public HavaleOnayınaGelenlerPage onizlemeEkranKontrol() {
+        Assert.assertEquals(lblOnizlemeSayfa.isDisplayed(),true,"Evrak Onizleme Ekranı Kontrolü");
+        Allure.addAttachment("Evrak Onizleme Ekranı Kontrolü","");
+        return this;
+    }
+
+
+    @Step("Havale Alan Kontrolleri")
+    public HavaleOnayınaGelenlerPage havaleAlanKontrolleri() {
+        Assert.assertEquals(txtBirimKontrol.isDisplayed(),true,"Birim Kontrolü");
+        Allure.addAttachment("Birim Kontrolü Alanı","gelmektedir.");
+
+        Assert.assertEquals(txtKisiKontrol.isDisplayed(),true,"Kisi Kontrolü");
+        Allure.addAttachment("Kisi Kontrolü Alanı","gelmektedir.");
+
+        Assert.assertEquals(txtNotKontrol.isDisplayed(),true,"Not Kontrolü");
+        Allure.addAttachment("Not Kontrolü Alanı","gelmektedir.");
+
+        Assert.assertEquals(btnOnaylaKontrol.isDisplayed(),true,"Onayla Kontrolü");
+        Allure.addAttachment("Onayla Kontrolü","gelmektedir.");
+
+        Assert.assertEquals(btnReddetKontrol.isDisplayed(),true,"Reddet Kontrolü");
+        Allure.addAttachment("Reddet Kontrolü","gelmektedir.");
         return this;
     }
 
@@ -159,6 +195,13 @@ public class HavaleOnayınaGelenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Havale Evrak Goster Buton Kontrolu")
+    public HavaleOnayınaGelenlerPage evrakGosterButonKontrolu() {
+        Assert.assertEquals(btnEvrakGoster.isDisplayed(), true, "Havale Evrak Goster Buton Kontrolu");
+        Allure.addAttachment("Havale Evrak Goster Buton Kontrolu", "");
+        return this;
+    }
+
     @Step("Havale İşlemleri Kişi alanında eklenen \"{kisi}\" kontrolü")
     public HavaleOnayınaGelenlerPage eklenenKisiKontrolu(String kisi) {
         Assert.assertEquals(txtEklenenKisi.isDisplayed(), true, "Kisi Eklendi");
@@ -227,9 +270,6 @@ public class HavaleOnayınaGelenlerPage extends MainPage {
         Allure.addAttachment("Dağıtım Için Gönderilecek Kisi Kontrolü" , kisi);
         return this;
     }
-
-
-
 
 
     @Step("Not Alanını Doldur")

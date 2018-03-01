@@ -24,7 +24,7 @@ public class GelenEvrakKayitHavaleTest extends BaseTest {
     KaydedilenGelenEvraklarPage kaydedilenGelenEvraklarPage;
     GelenEvraklarPage gelenEvraklarPage;
     HavaleOnayiVerdiklerimPage havaleOnayiVerdiklerim;
-
+    HavaleOnayinaSunduklarimPage havaleOnayinaSunduklarimPage;
     //    User optiim = new User("optiim", "123");
     User yakyol = new User("yakyol", "123");
     User mbozdemir = new User("mbozdemir", "123");
@@ -60,6 +60,7 @@ public class GelenEvrakKayitHavaleTest extends BaseTest {
         kaydedilenGelenEvraklarPage = new KaydedilenGelenEvraklarPage();
         gelenEvraklarPage = new GelenEvraklarPage();
         havaleOnayiVerdiklerim = new HavaleOnayiVerdiklerimPage();
+        havaleOnayinaSunduklarimPage = new HavaleOnayinaSunduklarimPage();
     }
 
     public String getDocPath1() {
@@ -326,7 +327,7 @@ public class GelenEvrakKayitHavaleTest extends BaseTest {
                 .evrakDiliSec(evrakDili)
                 .evrakDiliKontrol(evrakDili)
                 .evrakTarihiDoldur(evrakTarihi)
-                .evrakTarihiDoldur(evrakTarihi)
+                .evrakTarihiKontrol(evrakTarihi)
                 .gizlilikDerecesiSec(gizlilikDerecesi)
                 .gizlilikDerecesiKontrol(gizlilikDerecesi)
                 .kisiKurumSec(kisiKurum)
@@ -514,73 +515,107 @@ public class GelenEvrakKayitHavaleTest extends BaseTest {
         String pdfName = "Otomasyon.pdf";
         String pathToFileExcel = getUploadPath() + "test.xlsx";
         String excelName = "test.xlsx";
+        String sayfa = "Gelen Evraklar";
+        String evrakSayiSag = createRandomNumber(5);
 
         testStatus(testid, "Test Başladı");
         gelenEvrakKayitPage
                 .openPage()
+                .sayfaKontrol(sayfa)
                 .evrakBilgileriUstYaziEkle(pathToFilePdf)
                 .ustYaziPdfAdiKontrol(pdfName)
                 .islemMesaji().basariliOlmali();
 
         gelenEvrakKayitPage
                 .konuKoduDoldur(konuKodu)
+                .konuKoduKontrol(konuKodu)
                 .konuDoldur(konu)
+                .konuKontrol(konu)
                 .evrakTuruSec(evrakTuru)
+                .evrakTuruKontrolu(evrakTuru)
                 .evrakDiliSec(evrakDili)
+                .evrakDiliKontrol(evrakDili)
                 .evrakTarihiDoldur(evrakTarihi)
+                .evrakTarihiKontrol(evrakTarihi)
                 .gizlilikDerecesiSec(gizlilikDerecesi)
+                .gizlilikDerecesiKontrol(gizlilikDerecesi)
                 .kisiKurumSec(kisiKurum)
+                .kisiKurumKontrol(kisiKurum)
                 .geldigiKurumDoldurLovText(geldigiKurum)
+                .geldigiKurumKontrol(geldigiKurum)
                 .evrakSayiSagDoldur()
+                .evrakSayiSagKontrol(evrakSayiSag)
                 .evrakGelisTipiSec(evrakGelisTipi)
+                .evrakGelisTipiKontrol(evrakGelisTipi)
                 .ivedilikSec(ivedilik)
+                .ivedilikKontrol(ivedilik)
 
                 .havaleIslemleriKisiDoldur(kisi)
                 .havaleAlanKontrolleri()
+
                 .dagitimBilgileriOnaylayanWithDetails(onaylayacakKisi, onayKisiDetails)
+                .eklenenKisiKontrolu(onaylayacakKisi)
+                .eklenenKisiOpsiyonKontrolu(gerek)
+
                 .dagitimBilgileriBirimDoldurWithDetails(birim, details)
+                .eklenenBirimKontrolu(birim)
+                .eklenenBirimOpsiyonKontrolu(gerek)
 
                 .kaydet()
                 .gelenEvrakKayitKaydetEvet2()
                 .popUpsv2();
 
-        login(mbozdemir);
-
-        havaleOnayınaGelenlerPage
-                .openPage()
-                .evrakNoIleEvrakSec(konu)
-//                .evrakSecIcerikGoster(konu, true)
-                .havaleOnay()
-//        Seçilen havale yerinin doğru geldiği
-//        onayla ve onayı reddet seçeneklerinin geldiği görülür
-                .notAlanınıDoldur(konu)
-                .onayıReddet()
-                .onayıReddetEvet()
-
+        gelenEvrakKayitPage
                 .islemMesaji().basariliOlmali();
 
-        login(ztekin);
+
+        havaleOnayinaSunduklarimPage
+                .openPage()
+                .evrakNoIleEvrakSec(konu)
+                .onizlemeEkranKontrol()
+                .onizlemeHavaleBilgisiKontrol()
+                .onizlemeGeriAlKontrol()
+                .geriAlSec()
+                .geriAlNotKontrol()
+                .geriAlNotDoldur(konu)
+                .geriAlGeriAl()
+                .islemMesaji().basariliOlmali();
+
         kaydedilenGelenEvraklarPage
                 .openPage()
-                //iade edilmiştir butonu kontrolü yapılabilir
                 .tabloEvrakNoileEvrakKontrolu(konu)
                 .evrakNoIleEvrakSec(konu)
                 .evrakOnizlemeKontrol()
                 .onizlemeHavaleYap()
+                .havaleDagitimEkranKontrolu()
+
                 .dagitimBilgileriOnaylayanWithDetails(onaylayacakKisi, onayKisiDetails)
+                .eklenenOnaylayanKontrolu(onaylayacakKisi)
+
+                .havaleOnayinaGonderDisabled()
                 .dagitimBilgileriBirimDoldurWithDetails(birim, details)
+                .eklenenBirimKontrolu(birim)
+
                 .havaleOnayinaGonder()
                 .islemMesaji().basariliOlmali();
 
+
+        havaleOnayinaSunduklarimPage
+                .openPage()
+                .evrakNoIleEvrakSec(konu);
 
         login(mbozdemir);
         havaleOnayınaGelenlerPage
                 .openPage()
                 .evrakNoIleEvrakSec(konu)
+                .onizlemeEkranKontrol()
+                .havaleOnayIkonKontrolu()
+                .evrakGosterButonKontrolu()
                 .havaleOnay()
-//        Seçilen havale yerinin doğru geldiği
-//        onayla ve onayı reddet seçeneklerinin geldiği görülür
+                .onizlemeEkranKontrol()
+                .havaleAlanKontrolleri()
                 .onizlemeOnayla()
+                .havaleyiOnaylamakUzersinizUyariGeldigiGorme()
                 .onayıOnaylaEvet()
                 .islemMesaji().basariliOlmali();
 
