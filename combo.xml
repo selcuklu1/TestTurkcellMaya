@@ -141,17 +141,17 @@
                             <name>suitethreadpoolsize</name>
                             <value>5</value>
                         </property>-->
-                        <property>
+                        <!--<property>
                             <name>parallel</name>
                             <value>classes</value>
                         </property>
                         <property>
                             <name>threadCount</name>
                             <value>5</value>
-                        </property>
+                        </property>-->
                     </properties>
-                    <!--<parallel>${parallel}</parallel>-->
-                    <!--<threadCount>${threadCount}</threadCount>-->
+                    <parallel>${parallel}</parallel>
+                    <threadCount>${threadCount}</threadCount>
 
                     <!--*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
                     Contains test name(s) to run. Values are selected form and
