@@ -1,11 +1,15 @@
 package pages.ustMenuPages;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.UstMenuData;
+
+import javax.xml.crypto.Data;
+
 import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.Belgenet.comboBox;
 
@@ -33,6 +37,22 @@ public class RolYonetimiPage extends MainPage {
     SelenideElement txtRolYetkiOnceligi = $x("//*[@id='rolYonetimiEditorForm:siraInput']");
     SelenideElement btnRolKaydetme = $x("//*[@id='rolYonetimiEditorForm:saveRolButton']");
     SelenideElement btnRolIptal = $x("//*[@id='rolYonetimiEditorForm:cancelSaveRolButton']");
+
+    //Listedeki butonlar
+    String DataRow;
+    String strGuncelle = "//*[@id='rolYonetimiListingForm:rolDataTable:" + DataRow + ":updateRolButton']";
+    String strRolKopyala = "//*[@id='rolYonetimiListingForm:rolDataTable:" + DataRow + ":duplicateRolButton']";
+    String strRolAksiyon = "//*[@id='rolYonetimiListingForm:rolDataTable:" + DataRow + ":rolAksiyonlariButton']";
+    String strRolPasifYap = "//*[@id='rolYonetimiListingForm:rolDataTable:" + DataRow + ":changeRolStatusButton']";
+
+    //Rol Aksiyon sayfası
+    SelenideElement btnYeniAksiyonEkle = $x("//*[@id='rolYonetimiEditorForm:rolAksiyonDataTable:newRolAksiyonButton']");
+    SelenideElement dlgRolAksiyonUpdate = $x("//*[@id='rolAksiyonUpdateDialog']");
+    SelenideElement txtAdSorgulama = $x("//*[@id='rolYonetimiAksiyonFiltrelemeForm:filterPanel:adFilterInput']");
+    SelenideElement btnDialogAksiyonArama = $x("//*[@id='rolYonetimiAksiyonFiltrelemeForm:filterPanel:searchEntitiesButton']");
+    ElementsCollection tblEklenecekAksiyonList = $$("[@id='rolAksiyonEditorForm:eklenecekAksiyonList_data'] tr[data-ri]");
+    SelenideElement btnDialogAksiyonEkle = $x("//*[@id='rolAksiyonEditorForm:addActionButton']");
+
 
 
     @Step("Rol Yönetimi Sayfasını aç")
@@ -112,4 +132,54 @@ public class RolYonetimiPage extends MainPage {
         btnRolIptal.click();
         return this;
     }
+
+    @Step("Arama sonuç tablosundan seçim {secrolad}")
+    public RolYonetimiPage tblRolListeSecim (String secrolad) {
+    tblRolListesi.filter(Condition.text("secrolad")).first().click();
+    return this;
+
+    }
+
+    @Step("Arama sonuç tablosunda seçilen sonuç aksiyon butonu tıklama")
+    public RolYonetimiPage tblRolListeSecimAksiyonButonu () {
+        String datari = tblRolListesi.filter(Condition.text("secrolad")).first().getAttribute("data-ri");
+        DataRow = datari;
+        SelenideElement TablodanRolAksiyon = $x(strRolAksiyon);
+        TablodanRolAksiyon.click();
+        return this;
+    }
+
+    @Step("Yeni Aksiyon Ekle butonu")
+    public RolYonetimiPage btnYeniAksiyonEkle() {
+        btnYeniAksiyonEkle.click();
+        return this;
+    }
+
+    @Step("Dialog içi arama Aksiyon ad : \"{aksiyonAd}\" doldur")
+    public RolYonetimiPage txtDialogAksiyonad (String aksiyonAd) {
+        txtAdSorgulama.setValue(aksiyonAd);
+        return this;
+    }
+    @Step("Dialog içi arama butonu tıklama")
+    public RolYonetimiPage btnDialogAksiyonAra () {
+        btnDialogAksiyonArama.click();
+        return this;
+    }
+    @Step("Dialog Aksiyon sonuç listesinden seçme")
+    public RolYonetimiPage btnDialogselectAction () {
+        tblEklenecekAksiyonList.first().click();
+        return this;
+    }
+    @Step("Dialog Aksiyon Ekle butonu")
+    public RolYonetimiPage btnDialogAksiyonEkle () {
+        btnDialogAksiyonEkle.click();
+        return this;
+    }
+
+
+
+
+
+
+
 }
