@@ -132,7 +132,7 @@ public class BirimYonetimiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TS2336: Birimin olur metnini güncelleme")
+    @Test(enabled = false, description = "TS2336: Birimin olur metnini güncelleme")
     public void TS2336() {
 
         login();
