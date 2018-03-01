@@ -80,7 +80,7 @@ public class DataTest extends BaseTest {
                 .onayAkisiEkleButonaTikla()
                 .secilenAnlikOnayAkisKullanicilariKontrolEt(ztekin, OnayKullaniciTipi.PARAFLAMA)
                 .anlikOnayAkisKullanicininTipiSec(ztekin, OnayKullaniciTipi.IMZALAMA)
-                .kullanButonaTikla();
+                .kullan();
         page.editorTab().openTab()
                 .getEditor().type(editorIcerik);
         page.pageButtons().evrakImzala().islemMesaji().basariliOlmali();
@@ -121,7 +121,7 @@ public class DataTest extends BaseTest {
                 .onayAkisiEkleButonaTikla()
                 .secilenAnlikOnayAkisKullanicilariKontrolEt(ztekin, OnayKullaniciTipi.PARAFLAMA)
                 .anlikOnayAkisKullanicininTipiSec(ztekin, OnayKullaniciTipi.IMZALAMA)
-                .kullanButonaTikla()
+                .kullan()
                 .kaldiralacakKlasorleriSec(kaldirilacakKlasorler);
 
         page.editorTab().openTab().getEditor().type(editorIcerik);
@@ -264,7 +264,7 @@ public class DataTest extends BaseTest {
                 .onayAkisiEkleButonaTikla()
                 .secilenAnlikOnayAkisKullanicilariKontrolEt(user1, OnayKullaniciTipi.PARAFLAMA)
                 .anlikOnayAkisKullaniciVeTipiSec(user5, OnayKullaniciTipi.IMZALAMA)
-                .kullanButonaTikla()
+                .kullan()
                 .kaldiralacakKlasorleriSec("Diğer");
         page.editorTab().openTab()
                 .getEditor().type("Editör tekst");

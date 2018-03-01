@@ -248,8 +248,6 @@ public class MainPage extends BaseLibrary {
         return this;
     }
 
-
-
     @Step("Parafla")
     public MainPage evrakParafla() {
         new EvrakPageButtons().evrakParafla();
@@ -303,5 +301,9 @@ public class MainPage extends BaseLibrary {
 
         return this;
     }
+
+
+
+
 
 }

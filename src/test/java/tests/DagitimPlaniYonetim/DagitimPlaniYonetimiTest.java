@@ -321,7 +321,7 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
                 .onayAkisiTemizle()
                 .onayAkisiEkleButonaTikla()
                 .anlikOnayAkisKullaniciVeTipiSec(user5, OnayKullaniciTipi.IMZALAMA)
-                .kullanButonaTikla()
+                .kullan()
                 .konuKoduSec("010.01")
                 .konuDoldur(konu)
                 .kaldiralacakKlasorleriSec("Diğer")
@@ -443,7 +443,7 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
                 .anlikOnayAkisKullanicilariTemizle()
                 .onayAkisiEkleButonaTikla()
                 .anlikOnayAkisKullanicininTipiSec(user, OnayKullaniciTipi.IMZALAMA)
-                .kullanButonaTikla();
+                .kullan();
         evrakOlusturPage.editorTab().openTab().getEditor().type("Some text");
         evrakOlusturPage.pageButtons().evrakImzala().islemMesaji().basariliOlmali();
 
