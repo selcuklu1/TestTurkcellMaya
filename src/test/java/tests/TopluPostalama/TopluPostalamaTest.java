@@ -47,7 +47,7 @@ public class TopluPostalamaTest extends BaseTest {
                 "Adi Posta"
         };
 
-        String listeAdi = "Liste" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
+        String listeAdi = "Liste" + getSysDate();
         String baslangicTarihi = "01.12.2015";
         String bitisTarihi = "02.12.2015";
 
@@ -57,7 +57,7 @@ public class TopluPostalamaTest extends BaseTest {
         String evrakGidecegiYer = gidecegiYerler[0];
         String evrakHazirlayanBirim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞ";
         String evrakPostaTipi = "Adi Posta";
-        String evrakKonu = "TS1804-" + getRandomNumber(1000, 9000);
+        String evrakKonu = "TS1804-" + getSysDate();
 
         login("mbozdemir", "123");
 
@@ -81,6 +81,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .sImzaImzala()
                 .popupSimzaEvet();
 
+        Selenide.sleep(10000);
 
         evrakOlusturPage
                 .openPage()
@@ -213,7 +214,7 @@ public class TopluPostalamaTest extends BaseTest {
         String postaTipleri = "Adi Posta";
         String gidecegiYer = "Yenikurum6507";
         String evrakPostaTipi = "Adi Posta";
-        String evrakKonu = "TS01808-" + getRandomNumber(1000, 9000);
+        String evrakKonu = "TS01808-" + getSysDate();
 
         login("mbozdemir", "123");
 
@@ -232,13 +233,16 @@ public class TopluPostalamaTest extends BaseTest {
         evrakOlusturPage
                 .editorTabAc()
                 .editorIcerikDoldur("TS01808 için evrak.")
+                .editorIcerikDoldur("TS01808 için evrak.")
                 .imzala()
                 .sImzasec()
                 .sImzaImzala()
                 .popupSimzaEvet();
 
-        String evrakKonu2 = "TS01808-" + getRandomNumber(1000, 9000);
+        String evrakKonu2 = "TS01808-" + getSysDate();
         String gidecegiYer2 = "Yenikurum4105";
+
+        Selenide.sleep(10000);
 
         evrakOlusturPage
                 .openPage()
@@ -255,6 +259,7 @@ public class TopluPostalamaTest extends BaseTest {
         evrakOlusturPage
                 .editorTabAc()
                 .editorIcerikDoldur("TS01808 için evrak.")
+                .editorIcerikDoldur("TS01808 için evrak.")
                 .imzala()
                 .sImzasec()
                 .sImzaImzala()
@@ -264,7 +269,7 @@ public class TopluPostalamaTest extends BaseTest {
         String baslangicTarihi = "01.12.2017";
         String bitisTarihi = "01.12.2018";
 
-        String postaListesi = "Liste" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
+        String postaListesi = "Liste" + getSysDate();
 
         String evrak1KayitTarihiSayi = "";
         String evrak1Sayi = "";
@@ -372,8 +377,8 @@ public class TopluPostalamaTest extends BaseTest {
         String tuzelKisi1 = "TS01807-TK1";
         String tuzelKisi2 = "TS01807-TK2";
 
-        String evrakKonu1 = "TS01807-" + getRandomNumber(1000, 9000);
-        String evrakKonu2 = "TS01807-" + getRandomNumber(1000, 9000);
+        String evrakKonu1 = "TS01807-1" + getSysDate();
+        String evrakKonu2 = "TS01807-2" + getSysDate();
 
 
         login("mbozdemir", "123");
@@ -399,6 +404,8 @@ public class TopluPostalamaTest extends BaseTest {
                 .sImzasec()
                 .sImzaImzala()
                 .popupSimzaEvet();
+
+        Selenide.sleep(10000);
 
         evrakOlusturPage
                 .openPage()
@@ -446,7 +453,7 @@ public class TopluPostalamaTest extends BaseTest {
         String evrak1PostaTipi = "Adi Posta";
 
 
-        String listeAdi = "ListeTS01807-" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
+        String listeAdi = "ListeTS01807-" + getSysDate();
 
 
         topluPostalanacakEvraklarPage
@@ -496,7 +503,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .listeOlustur()
                 .islemMesaji().dikkatOlmali("Bu Liste Adında posta listesi vardır. Yeni Liste Adı verin!");
 
-        listeAdi = "TS01807-1-" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
+        listeAdi = "TS01807-1-" + getSysDate();
 
         topluPostalanacakEvraklarPage
                 .evrakTikSec(evrakKayitTarihiSayi, evrakGidecegiYer, evrakKonu, evrakHazirlayanBirim, evrakPostaTipi, true)
@@ -544,8 +551,8 @@ public class TopluPostalamaTest extends BaseTest {
         String gercekKisi1 = "TS01807GKADD";
         String gercekKisi2 = "TS01807GKYAD";
 
-        String evrakKonu1 = "TS01807A-" + getRandomNumber(1000, 9000);
-        String evrakKonu2 = "TS01807A-" + getRandomNumber(1000, 9000);
+        String evrakKonu1 = "TS01807A-1" + getSysDate();
+        String evrakKonu2 = "TS01807A-2" + getSysDate();
 
 
         login("mbozdemir", "123");
@@ -620,7 +627,7 @@ public class TopluPostalamaTest extends BaseTest {
         String evrak1PostaTipi = "Adi Posta";
 
 
-        String listeAdi = "TS01807A-" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
+        String listeAdi = "TS01807A-" + getSysDate();
 
         login("mbozdemir", "123");
 
@@ -670,7 +677,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .listeOlustur()
                 .islemMesaji().dikkatOlmali("Bu Liste Adında posta listesi vardır. Yeni Liste Adı verin!");
 
-        listeAdi = "TS01807-2-" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
+        listeAdi = "TS01807-2-" + getSysDate();
 
         topluPostalanacakEvraklarPage
                 .evrakTikSec(evrakKayitTarihiSayi, evrakGidecegiYer, evrakKonu, evrakHazirlayanBirim, evrakPostaTipi, true)
@@ -732,7 +739,7 @@ public class TopluPostalamaTest extends BaseTest {
         String evrakKayitTarihiSayi = "";
         String evrakGidecegiYer = kurum1;
         String evrakKonuKodu = "Entegrasyon İşlemleri";
-        String evrakKonu = "TS01805-" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
+        String evrakKonu = "TS01805-" + getSysDate();
         String evrakHazirlayanBirim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞ";
         String evrakPostaTipi = "Adi Posta";
 
@@ -751,15 +758,18 @@ public class TopluPostalamaTest extends BaseTest {
         evrakOlusturPage
                 .editorTabAc()
                 .editorIcerikDoldur("TS1805 için evrak.")
+                .editorIcerikDoldur("TS1805 için evrak.")
                 .imzala()
                 .sImzasec()
                 .sImzaImzala()
                 .popupSimzaEvet();
 
+        Selenide.sleep(10000);
+
         String evrak1KayitTarihiSayi = "";
         String evrak1GidecegiYer = kurum2;
         String evrak1KonuKodu = "Entegrasyon İşlemleri";
-        String evrak1Konu = "TS01805-" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
+        String evrak1Konu = "TS01805-" + getSysDate();
         String evrak1HazirlayanBirim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞ";
         String evrak1PostaTipi = "Adi Posta";
 
@@ -778,12 +788,13 @@ public class TopluPostalamaTest extends BaseTest {
         evrakOlusturPage
                 .editorTabAc()
                 .editorIcerikDoldur("TS1805 için ikinci evrak.")
+                .editorIcerikDoldur("TS1805 için ikinci evrak.")
                 .imzala()
                 .sImzasec()
                 .sImzaImzala()
                 .popupSimzaEvet();
 
-        String listeAdi = "TS01805Liste-" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
+        String listeAdi = "TS01805Liste-" + getSysDate();
 
         topluPostalanacakEvraklarPage
                 .openPage()
@@ -827,7 +838,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .listeOlustur()
                 .islemMesaji().dikkatOlmali("Bu Liste Adında posta listesi vardır. Yeni Liste Adı verin!");
 
-        listeAdi = "TS01805-1-" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
+        listeAdi = "TS01805-1-" + getSysDate();
 
         topluPostalanacakEvraklarPage
                 .evrakTikSec(evrakKayitTarihiSayi, evrakGidecegiYer, evrakKonu, evrakHazirlayanBirim, evrakPostaTipi, true)
@@ -1185,6 +1196,9 @@ public class TopluPostalamaTest extends BaseTest {
         postaTipi = pttRaporuPage.tablodanDegerAl("Gidiş Şekli");
 
         File folder = new File(getDownloadPath());
+
+        //File folder = new File("/Users/huseyintumer/Downloads/");
+
         final File[] files = folder.listFiles(new FilenameFilter() {
             @Override
             public boolean accept(final File dir,
@@ -1488,7 +1502,7 @@ public class TopluPostalamaTest extends BaseTest {
         EvrakOlusturPage evrakOlusturPage = new EvrakOlusturPage();
 
         String tarihBugun = "" + new SimpleDateFormat("dd.MM.yyyy").format(new Date());
-        String listeAdi = "Liste" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
+        String listeAdi = "Liste" + getSysDate();
 
         String gidecegiYer = "Yenikurum6507";
         String baslangicTarihi = "01.12.2015";
@@ -1497,7 +1511,7 @@ public class TopluPostalamaTest extends BaseTest {
         String evrakGidecegiYer = "Yenikurum6507(G)";
         String evrakHazirlayanBirim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞ";
         String evrakPostaTipi = "Adi Posta";
-        String evrakKonu = "TS2087-" + getRandomNumber(1000, 9000);
+        String evrakKonu = "TS2087-" + getSysDate();
 
         login("mbozdemir", "123");
 
@@ -1520,7 +1534,8 @@ public class TopluPostalamaTest extends BaseTest {
                 .sImzasec()
                 .sImzaImzala()
                 .popupSimzaEvet();
-        String evrakKonu2 = "TS2087-" + getRandomNumber(1000, 9000);
+        String evrakKonu2 = "TS2087-" + getSysDate();
+        Selenide.sleep(10000);
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
@@ -1570,7 +1585,7 @@ public class TopluPostalamaTest extends BaseTest {
         String postaTarih = tarihBugun;
         String geriAlAciklama = "CASE TS2087";
         String gonderen = "Mehmet BOZDEMİR";
-        String yeniPostaListesiAdi = "Liste" + (new Random().nextInt((900000 - 100000) + 1) + 100000);
+        String yeniPostaListesiAdi = "Liste" + getSysDate();
 
         postaListesiPage
                 .openPage()
@@ -1667,11 +1682,11 @@ public class TopluPostalamaTest extends BaseTest {
         String evrakKayitTarihiSayi = "";
         String evrakGidecegiYer = kurum1;
         String evrakKonuKodu = "Entegrasyon İşlemleri";
-        String evrakKonu = "TS1809-" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
+        String evrakKonu = "TS1809-" + getSysDate();
         String evrakHazirlayanBirim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞ";
         String evrakPostaTipi = "Adi Posta";
 
-        String listeAdi = "TS1809Liste-" + getRandomNumber(1000, 9999);
+        String listeAdi = "TS1809Liste-" + getSysDate();
 
         evrakOlusturPage
                 .openPage()
@@ -1710,7 +1725,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .openPage()
                 .postaListesiAdiGetir(0);
 
-        postalanmisListeAdi = postalanmisListeAdi.substring(postalanmisListeAdi.indexOf("Posta Listesi Adı:") + 18, postalanmisListeAdi.indexOf("Posta Kodu:") - 1);
+        postalanmisListeAdi = postalanmisListeAdi.substring(postalanmisListeAdi.indexOf("Posta Listesi Adı:") + 18, postalanmisListeAdi.indexOf("Barkod No:") - 1);
 
         postaListesiPage
                 .openPage()
@@ -1726,7 +1741,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .postaListesindenCikart(evrakGidecegiYer, evrakGidecegiYer, evrakKonu, evrakHazirlayanBirim, evrakPostaTipi)
                 .islemMesaji().basariliOlmali();
 
-        listeAdi = "TS1809Liste-" + getRandomNumber(1000, 9999);
+        listeAdi = "TS1809Liste-" + getSysDate();
 
         topluPostalanacakEvraklarPage
                 .openPage()
@@ -1783,11 +1798,11 @@ public class TopluPostalamaTest extends BaseTest {
         String evrakKayitTarihiSayi = "" + new SimpleDateFormat("dd.MM.yyyy").format(new Date());
         String evrakGidecegiYer = kurum1;
         String evrakKonuKodu = "Entegrasyon İşlemleri";
-        String evrakKonu = "TS1817-" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
+        String evrakKonu = "TS1817-" + getSysDate();
         String evrakPostaTipi = "Adi Posta";
         String evrakHazirlayanBirim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
 
-        String listeAdi = "TS1817Liste-" + getRandomNumber(1000, 9000);
+        String listeAdi = "TS1817Liste-" + getSysDate();
 
         evrakOlusturPage
                 .openPage()
@@ -1859,11 +1874,11 @@ public class TopluPostalamaTest extends BaseTest {
         String evrakKayitTarihiSayi = "" + new SimpleDateFormat("dd.MM.yyyy").format(new Date());
         String evrakGidecegiYer = kurum1;
         String evrakKonuKodu = "Entegrasyon İşlemleri";
-        String evrakKonu = "TS1818-" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
+        String evrakKonu = "TS1818-" + getSysDate();
         String evrakPostaTipi = "İadeli APS";
         String evrakHazirlayanBirim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
 
-        String listeAdi = "TS1818Liste-" + getRandomNumber(1000, 9000);
+        String listeAdi = "TS1818Liste-" + getSysDate();
 
         evrakOlusturPage
                 .openPage()
