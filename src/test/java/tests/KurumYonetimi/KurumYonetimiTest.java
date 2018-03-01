@@ -1,5 +1,6 @@
 package tests.KurumYonetimi;
 
+import com.codeborne.selenide.Selenide;
 import common.BaseTest;
 import data.TestData;
 import org.testng.annotations.BeforeMethod;
@@ -32,8 +33,9 @@ public class KurumYonetimiTest extends BaseTest {
     @Test(enabled = true, description = "TS01459 : Kurum bilgisi güncelleme")
     public void TS1459() {
 
-        String yeniKurumAdi1 = "Yenikurum" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
-        String idariBirimKimlikKodu = (new Random().nextInt((900000 - 100000) + 1) + 100000) + "";
+        String yeniKurumAdi1 = "Yenikurum" + getSysDate();
+        String idariBirimKimlikKodu = getSysDate() + "";
+        idariBirimKimlikKodu = idariBirimKimlikKodu.substring(idariBirimKimlikKodu.length() - 8, idariBirimKimlikKodu.length());
         String ustKurum = "Maliye Bakanlığı";
         String hitap = "yeniHitap";
 
@@ -51,13 +53,12 @@ public class KurumYonetimiTest extends BaseTest {
         kurumYonetimiPage
                 .openPage()
                 .yeniKurumEkle()
+                .kaysisteYerAlmiyorSec(false)
                 .ozelHitapSec(true)
                 .hitapDoldur(hitap)
                 .kurumAdiDoldur(yeniKurumAdi1)
                 .idariBirimKimlikKoduDoldur(idariBirimKimlikKodu)
-                .ustKurumSec(ustKurum)
-                .kaysisteYerAlmiyorSec(true)
-                .kaysisteYerAlmiyorSec(false);
+                .ustKurumSec(ustKurum);
 
         kurumYonetimiPage
                 .yeniIletisimBilgisiEkle()
@@ -76,7 +77,7 @@ public class KurumYonetimiTest extends BaseTest {
 
 
         String guncellenecekKurumAdi = yeniKurumAdi1;
-        String yeniKurumAdi = "kurumm" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
+        String yeniKurumAdi = "kurumm" + getSysDate();
 
         String isTelefonNo = "5444444446";
         String faxNumarasi1 = "5444444447";
@@ -171,7 +172,7 @@ public class KurumYonetimiTest extends BaseTest {
                 .ara()
                 .kurumGuncelle(yeniKurumAdi)
                 .kepAdresiKullaniyorSec(false)
-                .kurumKaydet()
+                .kurumKaydet2()
                 .islemMesaji().basariliOlmali();
         kurumYonetimiPage.panelKapat();
 
@@ -180,15 +181,15 @@ public class KurumYonetimiTest extends BaseTest {
                 .bilgilerTabiAc()
                 .geregiSecimTipiSec("Kurum")
                 .geregiSec(yeniKurumAdi)
-                .geregiSecilenKontrol(yeniKurumAdi, kontrolEdilecekGeregiDetay, "Adi Posta");
+                .geregiSecilenKontrol("", kontrolEdilecekGeregiDetay, "Adi Posta");
 
     }
 
     @Test(enabled = true, description = "TS01109 : Kurum tanımlama ve kontrolü")
     public void TS1109() {
 
-        String yeniKurumAdi = "Yenikurum" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
-        String idariBirimKimlikKodu = (new Random().nextInt((900000 - 100000) + 1) + 100000) + "";
+        String yeniKurumAdi = "Yenikurum" + getSysDate();
+        String idariBirimKimlikKodu = getSysDate() + "";
         String yeniKurumKisaAdi = "KISA" + yeniKurumAdi;
         String ustKurum = "Maliye Bakanlığı";
         String hitap = "Hitap" + yeniKurumAdi;
@@ -263,11 +264,14 @@ public class KurumYonetimiTest extends BaseTest {
     @Test(enabled = true, description = "TS01108 : Kurum Sorgulama")
     public void TS1108() {
 
-        String pasifYapilacakKurum = "PasifKurum" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
-        String pasifYapilacakKurumIdariKimlikkodu = (new Random().nextInt((900000 - 100000) + 1) + 100000) + "";
+        String pasifYapilacakKurum = "PasifKurum" + getRandomNumber(10000000, 99999999);
+        String pasifYapilacakKurumIdariKimlikkodu = getRandomNumber(10000000, 99999999) + "";
+        pasifYapilacakKurumIdariKimlikkodu = pasifYapilacakKurumIdariKimlikkodu.substring(pasifYapilacakKurumIdariKimlikkodu.length() - 8, pasifYapilacakKurumIdariKimlikkodu.length());
 
-        String aktifKurumAdi = "Yenikurum" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
-        String aktifIdariBirimKimlikKodu = (new Random().nextInt((900000 - 100000) + 1) + 100000) + "";
+        String aktifKurumAdi = "Yenikurum" + getRandomNumber(10000000, 99999999);
+        String aktifIdariBirimKimlikKodu = getRandomNumber(10000000, 99999999) + "";
+        aktifIdariBirimKimlikKodu = aktifIdariBirimKimlikKodu.substring(aktifIdariBirimKimlikKodu.length() - 8, aktifIdariBirimKimlikKodu.length());
+
         String ustKurum = "Maliye Bakanlığı";
         String hitap = "yeniHitap";
 
@@ -302,7 +306,7 @@ public class KurumYonetimiTest extends BaseTest {
                 .iletisimBilgisiKaydet()
                 .kurumKaydet()
                 .islemMesaji().basariliOlmali();
-
+        Selenide.sleep(5000);
         kurumYonetimiPage
                 .yeniKurumEkle()
                 .ozelHitapSec(true)
@@ -318,7 +322,7 @@ public class KurumYonetimiTest extends BaseTest {
                 .ilDoldur(il)
                 .ePostaDoldur(ePosta)
                 .iletisimBilgisiKaydet()
-                .kurumKaydet()
+                .kurumKaydet2()
                 .islemMesaji().basariliOlmali();
 
         kurumYonetimiPage

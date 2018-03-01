@@ -21,7 +21,7 @@ public class KurumYonetimiPage extends MainPage {
     SelenideElement cmbDurum = $(By.id("kurumYonetimiListingForm:filterPanel:durumSelectBox"));
     SelenideElement txtIdariBirimKimlikKodu = $(By.id("kurumYonetimiEditorForm:kurumEKodInput"));
     SelenideElement txtIdariBirimKimlik = $(By.id("kurumYonetimiEditorForm:kurumAdiInput"));
-    SelenideElement chkKaysisteYerAlmiyor = $(By.id("kurumYonetimiEditorForm:kaysisteVarMiCheckbox_input"));
+    SelenideElement chkKaysisteYerAlmiyor = $(By.id("kurumYonetimiEditorForm:kaysisteVarMiCheckbox"));
     SelenideElement txtKurumAdi = $(By.id("kurumYonetimiEditorForm:kurumAdiInput"));
     SelenideElement chkPaketKullanim = $(By.id("kurumYonetimiEditorForm:paketKullanimCheckbox_input"));
     SelenideElement chkKepAdresiKullaniyor = $(By.id("kurumYonetimiEditorForm:kepAdresiKullanimCheckbox"));
@@ -565,7 +565,19 @@ public class KurumYonetimiPage extends MainPage {
     @Step("Kurum panelinde kaydet butonuna tıklandı.")
     public KurumYonetimiPage kurumKaydet() {
         //btnKurumKaydet.doubleClick();
-        btnKurumKaydet.sendKeys(Keys.SHIFT);
+        //btnKurumKaydet.sendKeys(Keys.SHIFT);
+        if(!btnKurumKaydet.isDisplayed())
+            Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", btnKurumKaydet);
+        btnKurumKaydet.click();
+        //clickJs(btnKurumKaydet);
+        return this;
+    }
+
+    @Step("Kurum panelinde kaydet butonuna tıklandı.")
+    public KurumYonetimiPage kurumKaydet2() {
+        Selenide.sleep(10000);
+        Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", btnKurumKaydet);
+        Selenide.sleep(5000);
         btnKurumKaydet.click();
         //clickJs(btnKurumKaydet);
         return this;
