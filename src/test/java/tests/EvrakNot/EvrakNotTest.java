@@ -231,7 +231,7 @@ public class EvrakNotTest extends BaseTest {
                 .onayAkisiEkleButonaTikla()
                 .anlikOnayAkisKullanicininTipiSec(user1, OnayKullaniciTipi.PARAFLAMA)
                 .anlikOnayAkisKullaniciVeTipiSec(user2, OnayKullaniciTipi.IMZALAMA)
-                .kullanButonaTikla()
+                .kullan()
                 .onayAkisiSecilenKullaniciKontrolEt(user1, OnayKullaniciTipi.PARAFLAMA)
                 .onayAkisiSecilenKullaniciKontrolEt(user2, OnayKullaniciTipi.IMZALAMA);
         page.pageButtons().evrakKaydet();
@@ -268,7 +268,7 @@ public class EvrakNotTest extends BaseTest {
         n.getNoteGuncelleButton("bulunmalı").shouldBe(visible);
         n.getNoteSilButton("bulunmalı").shouldBe(visible);
 
-        searchTable.foundRow().icerikGosterTikla();
+        searchTable.foundRow().icerikGoster();
         EditorTab.EvrakNot evrakNot = new EditorTab().getEvrakNot();
         evrakNot.notuBul(text(user1.getFullname()), text(user1.getGorev()), text(aciklama1), text(date1), text(time1)).postitStyle().getNoteSilButton().shouldBe(visible);
         evrakNot.notuBul(text(user1.getFullname()), text(user1.getGorev()), text(aciklama2), text(date2), text(time2)).postitStyle().getNoteSilButton().shouldBe(visible);
@@ -317,7 +317,7 @@ public class EvrakNotTest extends BaseTest {
     private void parafladiklarimIcerikNotlari() {
         //10. Bilgisi bulunan Taslak evrakın "İçerik Göster" butonun basılır.	Editör tabının açık geldiği, 4 adet notun Post-it görünümde (Notu sil butonu, Notu hazırlayan (kişi adı,soyadı ve görev bilgisi), İşlem tarihi, İşlem saati, Not açıklaması) geldiği görülür.
         // Editör tabının gelmiyor. Evrak Not tabı var.
-        searchTable.foundRow().icerikGosterTikla();
+        searchTable.foundRow().icerikGoster();
         ustYazi = new pages.newPages.EvrakDetayiPage().evrakNotlariTabiAc().evrakNotlari();
         ustYazi.notuBul(text(user1.getFullname()), text(user1.getGorev()), text(notTipi1), text(aciklama1), text(date1), text(time1));
         ustYazi.getNoteGuncelleButton("bulunmalı").shouldBe(visible);
@@ -391,7 +391,7 @@ public class EvrakNotTest extends BaseTest {
     //region imzaBekleyenler
     @Step("Evrak Detay")
     private void imzaBekleyenlerIcerikNotlari() {
-        searchTable.foundRow().icerikGosterTikla();
+        searchTable.foundRow().icerikGoster();
         evrakNot = new EditorTab().getEvrakNot();
         evrakNot.notuBul(text(user1.getFullname()), text(user1.getGorev()), text(aciklama1), text(date1), text(time1)).postitStyle().getNoteSilButton().shouldNotBe(visible);
         evrakNot.notuBul(text(user1.getFullname()), text(user1.getGorev()), text(aciklama3), text(date3), text(time3)).postitStyle().getNoteSilButton().shouldNotBe(visible);
@@ -561,7 +561,7 @@ public class EvrakNotTest extends BaseTest {
                 .anlikOnayAkisKullanicilariTemizle()
                 .onayAkisiEkleButonaTikla()
                 .anlikOnayAkisKullanicininTipiSec(user1, OnayKullaniciTipi.IMZALAMA)
-                .kullanButonaTikla();
+                .kullan();
 
         TextEditor textEditor = page.editorTab().openTab().getEditor();
         textEditor.type("TS2162");

@@ -264,6 +264,7 @@ public class PttRaporuPage extends MainPage {
         }
 
         File root = new File(getDownloadPath());
+        //File root = new File("/Users/huseyintumer/Downloads");
         FilenameFilter beginswithm = new FilenameFilter() {
             public boolean accept(File directory, String filename) {
                 return filename.matches("Rapor_.*\\.xls");

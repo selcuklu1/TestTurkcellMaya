@@ -15,6 +15,7 @@ import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.Belgenet.comboBox;
+import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 /**
  * Yazan: Ilyas Bayraktar
@@ -42,6 +43,18 @@ public class EvrakOnizleme extends MainPage {
     @Step("Evrak önzleme \"{butonIsmi}\" butona tikla")
     public EvrakOnizleme onizlemeButtonClick(String butonIsmi) {
         getOnizlemeButton(butonIsmi).click();
+        return this;
+    }
+
+
+    @Step("PDF Önizleme tekst kontrolü")
+    public EvrakOnizleme pdfOnizlemeKontrol(Condition... kotrolKriteri){
+        sleep(5000);
+        switchTo().frame($(".onizlemeFrame"));
+        for (Condition condition : kotrolKriteri) {
+            $(".textLayer").shouldHave(condition);
+        }
+        switchTo().defaultContent();
         return this;
     }
 
@@ -809,6 +822,85 @@ public class EvrakOnizleme extends MainPage {
             return evrakinEkleriListesi.getFoundRow().$x("descendant::button[.='Yazdır']");
         }
 
+    }
+
+    public class EvrakGecmisi extends MainPage {
+
+        SearchTable searchTable = new SearchTable($("[id$='hareketGecmisiDataTable']"));
+
+        @Step("Evrak Geçmişi tabı aç")
+        public EvrakGecmisi tabiAc() {
+            $x("//div[@id='mainPreviewForm:evrakOnizlemeTab']//a[.='Evrak Geçmişi']").click();
+            return this;
+        }
+
+        @Step("Evrak Geçmişi listesinde {aramaKriterleri} bulunur")
+        public EvrakGecmisi evrakGecmisiListesindeBulunur(Condition... aramaKriterleri) {
+            searchTable.findRows(aramaKriterleri)
+                    .shouldHave(CollectionCondition.sizeGreaterThan(0));
+            return this;
+        }
+
+        @Step("Evrak Geçmişi listesinde son hareket(ilk satır) {kontrolKriterleri} kontrol")
+        public EvrakGecmisi evrakGecmisiListesindeSonHareketKontrol(Condition... kontrolKriterleri) {
+            searchTable.findRows().shouldHave(kontrolKriterleri);
+            return this;
+        }
+
+        @Step("Evrak Geçmişinde bulunan kayıt {kontrolKriterleri} kontrollü")
+        public EvrakGecmisi evrakGecmisiBulununaKayitKontrol(Condition... kontrolKriterleri){
+            searchTable.shouldHave(kontrolKriterleri);
+            return this;
+        }
+    }
+
+    public class TeslimAlveHavaleEt extends MainPage {
+        BelgenetElement birimeHavaleLov = comboLov(container, By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovText"));
+        BelgenetElement kisiyeHavaleLov = comboLov(container, By.id("mainPreviewForm:dagitimBilgileriKullaniciLov:LovText"));
+        BelgenetElement kullaniciListesiLov = comboLov(container, By.id("mainPreviewForm:dagitimBilgileriKisiListesiLov:LovText"));
+        BelgenetElement onaylayacakKisiLov = comboLov(container, By.id("mainPreviewForm:onaylayacakKisiLov:LovText"));
+        SelenideElement aciklamaTextarea = container.$(By.id("mainPreviewForm:aciklamaInputText"));
+        SelenideElement dosyaEkleInput = container.$(By.id("mainPreviewForm:fileUploadTeslimAlHavaleEk_input"));
+        SelenideElement islemSuresiInput = container.$(By.id("mainPreviewForm:islemSuresiTarihTeslimAlHavaleEt_input"));
+        SelenideElement havaleOnayinaGonderButton = container.$x("descendant::button[.='Havale Onayına Gönder']");
+        SelenideElement teslimAlGonderButton = container.$(By.id("mainPreviewForm:btnTeslimAlGonder"));//$x("descendant::button[.='Teslim Al Gönder']");
+        SelenideElement vazgecButton = container.$(By.id("mainPreviewForm:teslimAlHavaleEtVazgecButton"));//$x("descendant::button[.='Teslim Al Gönder']");
+
+        @Step("Kullanıcı seç")
+        public TeslimAlveHavaleEt kullaniciSec(String... text){
+            kullaniciListesiLov.selectLov(text);
+            return this;
+        }
+
+        @Step("Kişiye seç")
+        public TeslimAlveHavaleEt kisiyeSec(String... text){
+            kisiyeHavaleLov.selectLov(text);
+            return this;
+        }
+
+        @Step("Kişiye seç")
+        public TeslimAlveHavaleEt kisiyeSec(User user){
+            String filter = user.getBirimKisaAdi().isEmpty() ? user.getBirimAdi() : user.getBirimKisaAdi();
+            kisiyeHavaleLov.selectLov(user.getFullname());
+
+            kisiyeHavaleLov.type(user.getFullname())
+                    .getSelectableItems()
+                    .filterBy(text(user.getFullname()))
+                    .filterBy(text(user.getGorev()))
+                    .filterBy(text(filter))
+                    .first().click();
+            kisiyeHavaleLov.closeTreePanel();
+
+            kisiyeHavaleLov.getSelectedItems().last()
+                    .shouldHave(text(user.getFullname()), text(user.getGorev()), text(filter));
+            return this;
+        }
+
+        @Step("Teslim Al Gönder")
+        public TeslimAlveHavaleEt teslimAlGonder(){
+            teslimAlGonderButton.pressEnter();
+            return this;
+        }
     }
 
 }

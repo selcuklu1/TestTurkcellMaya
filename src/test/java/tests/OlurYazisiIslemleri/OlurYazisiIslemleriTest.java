@@ -151,7 +151,7 @@ public class OlurYazisiIslemleriTest extends BaseTest {
                 .kaldiralacakKlasorleriSec("Diğer")
                 .onayAkisiEkleButonaTikla()
                 .anlikOnayAkisKullanicininTipiSec(user1, IMZALAMA)
-                .kullanButonaTikla();
+                .kullan();
         olurYazisiOlusturPage2.pageButtons().imzalaButonaTikla()
                 .islemMesaji().dikkatOlmali("Yazı içeriği boş olamaz");
     }
@@ -205,13 +205,13 @@ public class OlurYazisiIslemleriTest extends BaseTest {
                 .anlikOnayAkisKullanicilariTemizle()
                 .onayAkisiEkleButonaTikla()
                 .secilenAnlikOnayAkisKullanicilariKontrolEt(user1, PARAFLAMA)
-                .kullanButonaTikla()
+                .kullan()
                 .islemMesaji().dikkatOlmali("Eklemek istediğiniz onay akışında imzacı bulunmuyor. Lütfen onay akışında en az bir imzacı seçiniz.");
         bilgilerTab.anlikOnayAkisKullaniciVeTipiSec(user2, IMZALAMA)
                 .anlikOnayAkisKullaniciVeTipiSec(user3, IMZALAMA)
                 .anlikOnayAkisKullaniciVeTipiSec(optiim, IMZALAMA)
                 .anlikOnayAkisKullaniciVeTipiSec(ztekin, IMZALAMA)
-                .kullanButonaTikla()
+                .kullan()
                 .onayAkisiSecilenKullaniciKontrolEt(user2, IMZALAMA)
                 .onayAkisiSecilenKullaniciKontrolEt(user3, IMZALAMA)
                 .onayAkisiSecilenKullaniciKontrolEt(optiim, IMZALAMA)
@@ -238,7 +238,7 @@ public class OlurYazisiIslemleriTest extends BaseTest {
                 .anlikOnayAkisKullanicilariTemizle()
                 .anlikOnayAkisKullaniciVeTipiSec(user2, IMZALAMA)
                 .anlikOnayAkisKullaniciVeTipiSec(user3, IMZALAMA)
-                .kullanButonaTikla();
+                .kullan();
     }
 
     @Step("Ekleri sekmesinde ekleme ve kontrolleri")

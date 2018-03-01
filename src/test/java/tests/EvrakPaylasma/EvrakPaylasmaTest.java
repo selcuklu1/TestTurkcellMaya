@@ -55,7 +55,7 @@ public class EvrakPaylasmaTest extends BaseTest {
     @Test(enabled = true, description = "TS1881 : Evrak paylaşımını durdurma")
     public void TS1881() {
         String tarihBugun = "" + new SimpleDateFormat("dd.MM.yyyy").format(new Date());
-        String evrakKonu = "TS1881-" + getRandomNumber(1000, 9000);
+        String evrakKonu = "TS1881-" + getSysDate();
 
         String evrakKonuKodu = "Entegrasyon İşlemleri";
         String kaldirilacakKlasorler = "Diğer";
@@ -230,7 +230,7 @@ public class EvrakPaylasmaTest extends BaseTest {
     @Test(enabled = true, description = "TS1877 : Paylaşılan evrakın geri alınması")
     public void TS1877() {
         String tarihBugun = "" + new SimpleDateFormat("dd.MM.yyyy").format(new Date());
-        String evrakKonu = "TS1881-" + getRandomNumber(1000, 9000);
+        String evrakKonu = "TS1881-" + getSysDate();
 
         String evrakKonuKodu = "Entegrasyon İşlemleri";
         String kaldirilacakKlasorler = "Diğer";
@@ -408,7 +408,7 @@ public class EvrakPaylasmaTest extends BaseTest {
     @Test(enabled = true, description = "TS1876A : Taslak Evrakı kullanıcı ile paylaşma (Tümü aksiyonu ile)")
     public void TS1876A() {
         String tarihBugun = "" + new SimpleDateFormat("dd.MM.yyyy").format(new Date());
-        String evrakkonu = "TS1876A" + getRandomNumber(1000, 9000);
+        String evrakkonu = "TS1876A" + getSysDate();
 
         String evrakKonuKodu = "Entegrasyon İşlemleri";
         String kaldirilacakKlasorler = "Diğer";
@@ -816,7 +816,7 @@ public class EvrakPaylasmaTest extends BaseTest {
         String kullaniciAdi = "Mehmet BOZDEMİR [Antalya İl Müdürü]";
 
         String evrakSablonAdi = "YeniŞablon" + (new Random().nextInt((9000 - 1000) + 1) + 1000);
-        String evrakKonu = "TS2194-" + getRandomNumber(1000, 9000);
+        String evrakKonu = "TS2194-" + getSysDate();
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
@@ -1005,7 +1005,7 @@ public class EvrakPaylasmaTest extends BaseTest {
     @Test(enabled = true, description = "TS2193 : İçeriğinde birim içerik şablonu olan evrakı paylaşma")
     public void TS2193() {
         String tarihBugun = "" + new SimpleDateFormat("dd.MM.yyyy").format(new Date());
-        String evrakKonu = "TS2193-" + getRandomNumber(1000, 9000);
+        String evrakKonu = "TS2193-" + getSysDate();
 
         String evrakAciklamasi = "evrak açıklaması için kontrol";
         String evrakiPaylasan = "Mehmet BOZDEMİR";
@@ -1226,7 +1226,7 @@ public class EvrakPaylasmaTest extends BaseTest {
 
     @Test(enabled = true, description = "TS1876 : İşlem bekleyen Evrakı kullanıcılarla paylaşma")
     public void TS1876B() {
-        String evrakKonu = "TS1876B-" + getRandomNumber(1000, 9000);
+        String evrakKonu = "TS1876B-" + getSysDate();
         String tarihBugun = "" + new SimpleDateFormat("dd.MM.yyyy").format(new Date());
         String evrakAciklamasi = "evrak açıklaması için kontrol";
         String evrakiPaylasan = "Mehmet BOZDEMİR";
