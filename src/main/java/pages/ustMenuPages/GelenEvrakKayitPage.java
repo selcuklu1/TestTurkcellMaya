@@ -1776,26 +1776,26 @@ public class GelenEvrakKayitPage extends MainPage {
     @Step("Havale İşlemleri Alanındaki Kontroller")
     public GelenEvrakKayitPage havaleAlanKontrolleri() {
 
-            Assert.assertEquals(otomatikHavaleCheckbox.isDisplayed(), true, "Otomatik Havale Checkbox Görüntülendi");
-            Allure.addAttachment("Otomatik Havale Checkbox Görüntülendi", "");
+        Assert.assertEquals(otomatikHavaleCheckbox.isDisplayed(), true, "Otomatik Havale Checkbox Görüntülendi");
+        Allure.addAttachment("Otomatik Havale Checkbox Görüntülendi", "");
 
-            Assert.assertEquals(birimKontrol.isDisplayed(), true, "Birim Alanı Görüntülendi");
-            Allure.addAttachment("Birim Alanı Görüntülendi", "");
+        Assert.assertEquals(birimKontrol.isDisplayed(), true, "Birim Alanı Görüntülendi");
+        Allure.addAttachment("Birim Alanı Görüntülendi", "");
 
-            Assert.assertEquals(kisiKontrol.isDisplayed(), true, "Kisi Alanı Görüntülendi");
-            Allure.addAttachment("Kisi Alanı Görüntülendi", "");
+        Assert.assertEquals(kisiKontrol.isDisplayed(), true, "Kisi Alanı Görüntülendi");
+        Allure.addAttachment("Kisi Alanı Görüntülendi", "");
 
-            Assert.assertEquals(kullanıcıListeKontrol.isDisplayed(), true, "Kullanıcı Listesi Alanı Görüntülendi");
-            Allure.addAttachment("Kullanıcı Listesi Alanı Görüntülendi", "");
+        Assert.assertEquals(kullanıcıListeKontrol.isDisplayed(), true, "Kullanıcı Listesi Alanı Görüntülendi");
+        Allure.addAttachment("Kullanıcı Listesi Alanı Görüntülendi", "");
 
-            Assert.assertEquals(aciklamaKontrol.isDisplayed(), true, "Aciklama Alanı Görüntülendi");
-            Allure.addAttachment("Aciklama Alanı Görüntülendi", "");
+        Assert.assertEquals(aciklamaKontrol.isDisplayed(), true, "Aciklama Alanı Görüntülendi");
+        Allure.addAttachment("Aciklama Alanı Görüntülendi", "");
 
-            Assert.assertEquals(dosyaEkleKontrol.isDisplayed(), true, "Dosya Kontrol Alanı Görüntülendi");
-            Allure.addAttachment("Dosya Ekle Alanı Görüntülendi", "");
+        Assert.assertEquals(dosyaEkleKontrol.isDisplayed(), true, "Dosya Kontrol Alanı Görüntülendi");
+        Allure.addAttachment("Dosya Ekle Alanı Görüntülendi", "");
 
-            Assert.assertEquals(islemSureKontrol.isDisplayed(), true, "İşlem Sure Alanı Görüntülendi");
-            Allure.addAttachment("Işlem Süre Alanı Görüntülendi", "");
+        Assert.assertEquals(islemSureKontrol.isDisplayed(), true, "İşlem Sure Alanı Görüntülendi");
+        Allure.addAttachment("Işlem Süre Alanı Görüntülendi", "");
 
         takeScreenshot();
         return this;
@@ -1869,7 +1869,7 @@ public class GelenEvrakKayitPage extends MainPage {
         String evrakSayiSag = createRandomText(15);
 
         //1.Teslim Alınmayı Bekleyenler evrak düşürmektedir.
-                openPage()
+        openPage()
                 .konuKoduDoldur(konuKodu)
                 .konuDoldur(konu)
                 .evrakTarihiDoldur(getSysDate())

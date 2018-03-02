@@ -112,10 +112,10 @@ public class ResultListener extends BaseLibrary implements IResultListener2 {
     }
 
     @Override
+    @Attachment(value = "Page screenshot", type = "image/png")
     public void onTestFailure(ITestResult result) {
-        if (WebDriverRunner.hasWebDriverStarted())
             try {
-                takeScreenshot();
+                ((TakesScreenshot) WebDriverRunner.getWebDriver()).getScreenshotAs(OutputType.BYTES);
             }
             catch (Exception e){
                 System.out.println("Take Screenshot error: " + e);

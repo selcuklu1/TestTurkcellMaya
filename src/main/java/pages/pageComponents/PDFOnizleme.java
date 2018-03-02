@@ -80,7 +80,7 @@ public class PDFOnizleme extends MainPage{
         return this;
     }
 
-    @Step("PDF Önizleme tekst kontrolü")
+    @Step("PDF Önizleme tekst kontrolü {conditions}")
     public PDFOnizleme checkText(Condition... conditions) {
         SelenideElement page = getPage(0).scrollIntoView(true);
         setScale100();
