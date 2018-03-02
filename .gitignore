@@ -55,7 +55,3 @@ atlassian-ide-plugin.xml
 documents/*
 /src/test/resources/galen/*/dump/
 /test-result/*
-
-debug.log
-/debug.log
-debug.log*
