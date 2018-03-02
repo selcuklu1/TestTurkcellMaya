@@ -100,6 +100,8 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
     BelgenetElement txtIcerikHavaleIslemleriKisi = comboLov(By.id("inboxItemInfoForm:dagitimBilgileriKullaniciLov:LovText"));
     SelenideElement txtEvrakBilgileriAciklama = $(By.id("mainPreviewForm:havaleAciklama"));
     SelenideElement dagitimBilgileriKisiOpsiyon = $("select[id^='mainPreviewForm:dagitimBilgileriKullaniciLov:LovSecilenTable']");
+    SelenideElement eklenenKisiOpsiyon = $("select[id='mainPreviewForm:dagitimBilgileriKullaniciLov:LovSecilenTable:0:selectOneMenu']");
+
     SelenideElement dosyaPath = $(By.xpath("//input[@id='mainPreviewForm:fileUploadHavaleEk_input']"));
     SelenideElement icerikDosyaPath = $(By.xpath("//input[@id='inboxItemInfoForm:fileUploadHavaleEk_input']"));
 
@@ -279,7 +281,7 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
 
 
 
-    @Step("Onizleme Evrak Havale Yap Butonu Tıklandı")
+    @Step("Onizleme Evrak Havale Yap Butonu Kontrolü")
     public KaydedilenGelenEvraklarPage onizlemeHavaleButtonKontrol() {
         Assert.assertEquals(btnOnizlemeHavaleYap.isDisplayed(), true, "Evrak Havale Yap butonu bulunmaktadır");
         Allure.addAttachment("Evrak Havale Yap butonu bulunmaktadır", "");
@@ -591,6 +593,13 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Havale İşlemleri Açıklama Alanını Kontrolü")
+    public KaydedilenGelenEvraklarPage aciklamaAlaniKontrolu() {
+        Assert.assertEquals(txtEvrakBilgileriAciklama.isDisplayed(),true,"Açıklama Alanı Kontrolü");
+        Allure.addAttachment("Açıklama Alanı Kontrol","");
+        return this;
+    }
+
     @Step("Dağıtım Bilgileri Birim alanında \"{opsiyon}\" seçilir")
     public KaydedilenGelenEvraklarPage dagitimBilgileriKisiOpsiyon(String opsiyon) {
 //        dagitimBilgileriKisiOpsiyon.selectOptionByValue(opsiyon);
@@ -607,6 +616,14 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
 
         return this;
     }
+
+    @Step("Havale İşlemleri Kisi alanında eklenen \"{opsiyon}\" kontrolü")
+    public KaydedilenGelenEvraklarPage eklenenKisiOpsiyonKontrolu(String opsiyon) {
+        Assert.assertEquals(eklenenKisiOpsiyon.getSelectedText().equals(opsiyon), true, "Opsiyon Seçildi");
+        Allure.addAttachment("Opsiyon Seçildi:", opsiyon);
+        return this;
+    }
+
 
     @Step("Evrak Ekleri Dosya Ekleme : \"{pathToFile}\" ")
     public KaydedilenGelenEvraklarPage havaleDosyaEkle(String pathToFile) throws InterruptedException {

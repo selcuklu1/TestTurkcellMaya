@@ -331,8 +331,8 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .tabloEvrakNoileIcerikSec(konu1)
                 .icerikHavaleYap()
                 .icerikHavaleIslemleriKisiDoldur(onaylayacakKisi, onayKisiDetails)
-                .icerikHavaleOnayinaGonder()
-                .islemMesaji().basariliOlmali();
+                .icerikHavaleOnayinaGonder();
+//                .islemMesaji().basariliOlmali();
 
         birimHavaleEdilenlerPage
                 .openPage()
@@ -368,8 +368,8 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .tabloEvrakNoileIcerikSec(konu2)
                 .icerikHavaleYap()
                 .icerikHavaleIslemleriKisiDoldur(onaylayacakKisi, onayKisiDetails)
-                .icerikHavaleOnayinaGonder()
-                .islemMesaji().basariliOlmali();
+                .icerikHavaleOnayinaGonder();
+//                .islemMesaji().basariliOlmali();
 
         birimHavaleEdilenlerPage
                 .openPage()
