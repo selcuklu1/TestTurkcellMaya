@@ -1,5 +1,6 @@
 package tests.OnayAkisindakiEvrakiSil;
 
+import com.codeborne.selenide.Selenide;
 import common.BaseTest;
 import data.TestData;
 import io.qameta.allure.Severity;
@@ -146,8 +147,9 @@ public class OnayAkisindakiEvrakiSilTest extends BaseTest {
         String konuKodu = "399";
         String kaldirilacakKlasor = "ESK05";
         String kurum = "Başbakanlık";
+        String kurumEditor = "BAŞBAKANLIĞA";
         String onayAkisiDefaultKullanici = "Optiim TEST";
-        String kullanici2 = "Sezai ÇELİK";
+        String kullanici2 = "Zübeyde TEKİN";
         String kullanici3 = "Mehmet BOZDEMİR";
         String basariMesaji = "İşlem başarılıdır!";
         String uyariMesaji = "Zorunlu alanları doldurunuz";
@@ -168,7 +170,7 @@ public class OnayAkisindakiEvrakiSilTest extends BaseTest {
                 .secilenOnayAkisiSil()
                 .onayAkisiEkle()
                 .onayAkisiKullaniciKontrol(onayAkisiDefaultKullanici, "PARAFLAMA")
-                .onayAkisiKullaniciEkle(kullanici2)
+                .onayAkisiKullaniciEkle(kullanici2, "BHUPGMY")
                 .onayAkisiKullaniciTipiSec(kullanici2, "Paraflama")
                 .onayAkisiKullaniciEkle(kullanici3)
                 .onayAkisiKullaniciTipiSec(kullanici3, "İmzalama")
@@ -184,16 +186,19 @@ public class OnayAkisindakiEvrakiSilTest extends BaseTest {
         evrakOlusturPage
                 .editorTabAc()
                 .metinAlaninGeldigiGorme()
-                .editorHitapKontrol("BAŞBAKANLIĞa")
+                .editorHitapKontrol("BAŞBAKANLIĞA")
                 .editordeImzaciKontrol(kullanici3)
-                .geregiAlaniKontrolu(kurum)
+                //.geregiAlaniKontrolu(kurum)
+                .geregiAlaniKontroluText(kurumEditor)
                 .editordeKonuKontrol(evrakKonusu);
 
         evrakOlusturPage
                 .parafla()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
-        login(TestData.usernameSEZAICELIK, TestData.passwordSEZAICELIK); //sezaiceik
+        Selenide.sleep(3000);
+
+        login(TestData.usernameZTEKIN, TestData.passwordZTEKIN); //sezaiceik
 
         parafBekleyenlerPage
                 .openPage()
@@ -209,6 +214,9 @@ public class OnayAkisindakiEvrakiSilTest extends BaseTest {
                 .evrakSilNotuDoldur(evrakKonusu + "Konulu evrak silinecek")
                 .evrakOnizlemedeSil()
                 .silmeOnayiEvrakSilPopup("Evet");
+
+        parafBekleyenlerPage
+                .islemMesaji().basariliOlmali(basariMesaji);
 
         iptalEdilenEvraklarRaporuPage
                 .openPage()
@@ -232,6 +240,7 @@ public class OnayAkisindakiEvrakiSilTest extends BaseTest {
         String konuKodu = "399";
         String kaldirilacakKlasor = "ESK05";
         String kurum = "Başbakanlık";
+        String kurumEditor = "BAŞBAKANLIĞA";
         String onayAkisiDefaultKullanici = "Optiim TEST";
         String kullanici2 = "Sezai ÇELİK";
         String kullanici3 = "Mehmet BOZDEMİR";
@@ -255,7 +264,7 @@ public class OnayAkisindakiEvrakiSilTest extends BaseTest {
                 .secilenOnayAkisiSil()
                 .onayAkisiEkle()
                 .onayAkisiKullaniciKontrol(onayAkisiDefaultKullanici, "PARAFLAMA")
-                .onayAkisiKullaniciEkle(kullanici2)
+                .onayAkisiKullaniciEkle(kullanici2, "YGD")
                 .onayAkisiKullaniciTipiSec(kullanici2, "Paraflama")
                 .onayAkisiKullaniciEkle(kullanici3)
                 .onayAkisiKullaniciTipiSec(kullanici3, "İmzalama")
@@ -271,14 +280,17 @@ public class OnayAkisindakiEvrakiSilTest extends BaseTest {
         evrakOlusturPage
                 .editorTabAc()
                 .metinAlaninGeldigiGorme()
-                .editorHitapKontrol("BAŞBAKANLIĞa")
+                .editorHitapKontrol("BAŞBAKANLIĞA")
                 .editordeImzaciKontrol(kullanici3)
-                .geregiAlaniKontrolu(kurum)
+                //.geregiAlaniKontrolu(kurum)
+                .geregiAlaniKontroluText(kurumEditor)
                 .editordeKonuKontrol(evrakKonusu);
 
         evrakOlusturPage
                 .parafla()
                 .islemMesaji().basariliOlmali(basariMesaji);
+
+        Selenide.sleep(3000);
 
         login(TestData.usernameSEZAICELIK, TestData.passwordSEZAICELIK); //sezaiceik
 

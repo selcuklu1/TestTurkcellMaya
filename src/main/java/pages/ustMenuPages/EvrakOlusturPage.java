@@ -2097,6 +2097,7 @@ public class EvrakOlusturPage extends MainPage {
         ElementsCollection trEditorIlgilistesi = $$("[id$='ilgiOutPanel'] tr");
         SelenideElement lblImzaci = $(" [id^='yeniGidenEvrakForm'][id*='imzaciGridPanel'] > tbody > tr:nth-child(4) > td > span");
         SelenideElement lblKonu = $(By.xpath("//*[@id='yeniGidenEvrakForm:editorTarihKonuSayi']/table/tbody/tr[3]/td[4]"));
+        SelenideElement lblGeregi = $(By.xpath("//*[@id='yeniGidenEvrakForm:geregiLovTable_data']/tr/td[1]/div/span"));
         SelenideElement editorKonuKontrol = $(By.id("yeniGidenEvrakForm:editorTarihKonuSayi"));
         SelenideElement lblDagitimKontrol = $(By.id("yeniGidenEvrakForm:editorDagitimPanel"));
         SelenideElement lblImzaciKontrol = $(By.id("yeniGidenEvrakForm:imzacilarPanel"));
@@ -2525,6 +2526,15 @@ public class EvrakOlusturPage extends MainPage {
 
             boolean status = cmbGeregi.isLovSelected();
             Assert.assertEquals(status, true);
+
+            return this;
+        }
+
+        @Step("Editorde gereği alani kontrolu: {kurum}")
+        public EditorTab geregiAlaniKontroluText(String kurum) {
+
+            String editorGeregi = lblGeregi.getText();
+            Assert.assertEquals(editorGeregi.contains(kurum), true);
 
             return this;
         }

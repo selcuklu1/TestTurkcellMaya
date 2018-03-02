@@ -20,6 +20,7 @@ import java.io.IOException;
 
 import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
 
 public class PostalananlarPage extends MainPage {
@@ -392,7 +393,7 @@ public class PostalananlarPage extends MainPage {
 
     @Step("Evrak'ın \"{konu}\" adlı konu ile geldiği görünür. Geldiği yer:\"{gidecegiYer}\" Evrak tarihi:\"{evrakTarihi}\"")
     public PostalananlarPage evrakGeldigiGorme(String konu, String gidecegiYer, String evrakTarihi) {
-        boolean durum = $$("[id='mainInboxForm:inboxDataTable_data'] > tr").filterBy(Condition.text(konu)).size() == 1;
+        boolean durum = $$("[id='mainInboxForm:inboxDataTable_data'] > tr").filterBy(Condition.text(konu)).first().shouldBe(visible).exists() == true;
         Assert.assertEquals(durum, true);
         takeScreenshot();
         return this;

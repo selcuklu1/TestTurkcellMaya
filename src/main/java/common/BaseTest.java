@@ -75,7 +75,7 @@ public class BaseTest extends BaseLibrary {
         Configuration.driverManagerEnabled = false;
         Configuration.remote = System.getProperty("hub");
         Configuration.reportsFolder = "test-result/reports";
-        Configuration.screenshots = true;
+        Configuration.screenshots = Configuration.remote == null;
         Configuration.savePageSource = false;
         Configuration.collectionsTimeout = timeout * 1000;
         Configuration.holdBrowserOpen = false;
@@ -113,10 +113,10 @@ public class BaseTest extends BaseLibrary {
 
         //System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, "/dev/null");
         //getBrowserName();
-        /*System.out.println("remote: " + Configuration.remote);
+        System.out.println("remote: " + Configuration.remote);
         System.out.println("browser: " + Configuration.browser);
         System.out.println("url: " + Configuration.baseUrl);
-        System.out.println("Upload path: " + getUploadPath());
+        /*System.out.println("Upload path: " + getUploadPath());
         System.out.println("Download path: " + getDownloadPath());
         System.out.println("Selenide/Selenium driver has been set up.");*/
 
@@ -287,7 +287,7 @@ public class BaseTest extends BaseLibrary {
             capabilities.setAcceptInsecureCerts(true);
             WebDriver driver = Configuration.remote == null ?
                     new EventFiringWebDriver(new FirefoxDriver()).register(new DriverEventListener())
-                    : new EventFiringWebDriver(new RemoteWebDriver(new URL(Configuration.remote), capabilities)).register(new DriverEventListener());
+                    : new EventFiringWebDriver(new RemoteWebDriver(new URL(Configuration.remote.toString()), capabilities)).register(new DriverEventListener());
 
             WebDriverRunner.setWebDriver(driver);
         } catch (Exception e) {
