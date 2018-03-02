@@ -233,11 +233,9 @@ public class DagitimHitapGuncellemeTest extends BaseTest {
 
         page.pageButtons().pdfOnizlemeTikla();
         new PDFOnizleme(1)
-                .checkText(
-                        textCaseSensitive(geregiPDFGorunecekHitap),
-                        textCaseSensitive(bilgiPDFGorunecekHitap),
-                        not(text(bilgiAdres))
-                    );
+                .checkText(textCaseSensitive(geregiPDFGorunecekHitap))
+                .checkText(textCaseSensitive(bilgiPDFGorunecekHitap))
+                .checkText(not(text(bilgiAdres)));
 
         /*
         SelenideElement bilgiLabelElement = $(Selectors.byText("Bilgi:"));
@@ -388,8 +386,9 @@ public class DagitimHitapGuncellemeTest extends BaseTest {
 
         String eskiEk = hitapDuzenle.getEkValue(value(hitap));
         ek = eskiEk.equalsIgnoreCase("e") ? "NA" : "E";
-        step(String.format("Hitapta \"%s\" ek \"%s\" ile değiştirildi", eskiEk, ek), "");
-        hitapDuzenle.kaydet();
+        //step(String.format("Hitapta \"%s\" ek \"%s\" ile değiştirildi", eskiEk, ek), "");
+        hitapDuzenle.ekGuncelleEvraktaGorunecekHitapKontolsuz(hitap, ek)
+                .kaydet();
 
         page.editorTab().openTab()
                 .geregiListesindeAra(text(hitap + ek)).shouldHaveSize(1);

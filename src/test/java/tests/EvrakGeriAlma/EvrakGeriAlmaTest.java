@@ -1,7 +1,11 @@
 package tests.EvrakGeriAlma;
 
+import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.logevents.SelenideLogger;
 import common.BaseTest;
 import data.User;
+import io.qameta.allure.Step;
+import org.openqa.selenium.By;
 import org.testng.annotations.Test;
 import pages.newPages.EvrakDetayiPage;
 import pages.newPages.EvrakOlusturPage;
@@ -15,6 +19,8 @@ import pages.solMenuPages.*;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.open;
 import static pages.pageData.alanlar.OnayKullaniciTipi.IMZALAMA;
 import static pages.pageData.alanlar.OnayKullaniciTipi.PARAFLAMA;
 
@@ -302,4 +308,25 @@ public class EvrakGeriAlmaTest extends BaseTest {
 
         new EvrakOnizleme().pdfOnizlemeKontrol(text(yeniEditorTeksti), text(kurum.toUpperCase() + "NA"));
     }
+
+
+
+
+    /*@Test(description = "AAA", enabled = true)
+    public void TSName() {
+
+        open("");
+        mystepmethod();
+    }
+
+    @Step("aaaaaaaaa")
+    public EvrakGeriAlmaTest mystepmethod(){
+        SelenideElement txtUsername = $(By.id("eForm:txtEKullaniciAdi"));
+        SelenideElement txtPassword = $(By.id("eForm:loginESifre"));
+        SelenideElement btnLogin = $(By.id("eForm:egirisYapButton"));
+
+        txtUsername.shouldBe(visible).setValue("a");
+        txtUsername.shouldHave(text("a1"));
+        return this;
+    }*/
 }
