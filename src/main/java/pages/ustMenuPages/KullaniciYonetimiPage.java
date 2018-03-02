@@ -146,7 +146,7 @@ public class KullaniciYonetimiPage extends MainPage {
         tblKullaniciBirim
                 .filterBy(Condition.text(birim))
                 .first()
-                .$("[id^='kullaniciYonetimiEditorForm:kullaniciBirimDataTable:'][id$=':updateKullaniciBirimButton']").click();
+                .$("button[id$=':updateKullaniciBirimButton']").click();
 
 //        clickJs(btnGorevliOlduguBirimlerGuncelle);
         return this;

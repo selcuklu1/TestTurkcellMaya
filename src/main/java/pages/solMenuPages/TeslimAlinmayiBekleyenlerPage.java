@@ -561,6 +561,10 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     @Step("Teslim Alınmayı Bekleyenler Evraklar listesinden evrak önizlemede aç")
     public TeslimAlinmayiBekleyenlerPage konuyaGoreIcerikGoster(String konu) {
 
+//        new TeslimAlinmayiBekleyenlerPage().searchTable()
+//                .findRowAndSelect(text(konu))
+//                .icerikGoster();
+
         tblEvraklar
                 .filterBy(Condition.text(konu))
                 .first()
