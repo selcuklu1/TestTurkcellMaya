@@ -420,7 +420,7 @@ public class EvrakDevretTest extends BaseTest {
                 .evrakDiliSec(evrakDili)
                 .gizlilikDerecesiSec(gizlilikDerecesi)
                 .ivedilikSec(ivedilik)
-                .geregiSec(geregi)
+                .geregiSec2(geregi)
                 .onayAkisiEkle()
                 .kullanicilarDoldur(imzacı)
                 .kullniciIsmineGoreImzaParafSec(imzacı, tur)
