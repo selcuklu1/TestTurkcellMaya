@@ -194,7 +194,7 @@ public class VekaletIslemleriTest extends BaseTest {
 //        Allure.addAttachment("Test Datası", "Test Datası oluşturuluyor.");
         vekaletVer();
 //        Allure.addAttachment("Test Datası", "Test Datası oluşturuldu.");
-
+//emre
         login(ztekin);
 
 //        String aciklama = "onay 20180109134612 evrak";
